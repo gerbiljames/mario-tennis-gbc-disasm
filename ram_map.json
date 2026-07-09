@@ -1,0 +1,640 @@
+{
+  "0xa042": {
+    "name": "sMarioMinigameCompletionFlags1",
+    "note": "[Lower4] Mario Minigame Completion Flags (1/4)\n\nBit 3 - Boo Blast Level 1\nBit 2 - Boo Blast Level 2\nBit 1 - Boo Blast Level 3\nBit 0 - Shooting Star Level 1"
+  },
+  "0xa043": {
+    "name": "sMarioMinigameCompletionFlags2",
+    "note": "[8-bit] Mario Minigame Completion Flags (2/4)\n\nBit 7 - Shooting Star Level 2\nBit 6 - Shooting Star Level 3\nBit 5 - Perfect Shot Level 1\nBit 4 - Perfect Shot Level 2\nBit 3 - Perfect Shot Level 3\nBit 2 - Target Shot Level 1\nBit 1 - Target Shot Level 2\nBit 0 - Target Shot Level 3",
+    "size": 1
+  },
+  "0xa045": {
+    "name": "sMarioMinigameCompletionFlags3",
+    "note": "[8-bit] Mario Minigame Completion Flags (3/4)\n\nBit 7 - Fruit Fantasy Level 1\nBit 6 - Fruit Fantasy Level 2\nBit 5 - Fruit Fantasy Level 3\nBit 4 - Banana Bunch Level 1\nBit 3 - Banana Bunch Level 2\nBit 2 - Banana Bunch Level 3\nBit 1 - Treasure Box Level 1\nBit 0 - Treasure Box Level 2",
+    "size": 1
+  },
+  "0xa046": {
+    "name": "sMarioMinigameCompletionFlags4",
+    "note": "[8-bit] Mario Minigame Completion Flags (4/4)\n\nBit 7 - Treasure Box Level 3\nBit 6 - Medallion Match Level 1\nBit 5 - Medallion Match Level 2\nBit 4 - Medallion Match Level 3\nBit 3 - Two-On-One Level 1\nBit 2 - Two-On-One Level 2\nBit 1 - Two-On-One Level 3",
+    "size": 1
+  },
+  "0xa047": {
+    "name": "sCourtUnlockFlags",
+    "note": "[8-bit] Court Unlock Flags\n\nBit 6 - Star Court\nBit 5 - Castle Court\nBit 4 - Tropics Court\nBit 3 - Jungle Court\nBit 2 - Warehouse Court",
+    "size": 1
+  },
+  "0xc280": {
+    "name": "wStoryModeCurrentLocation",
+    "note": "[8-bit] Story Mode - Current Location\n\n0x00 - Not in Story Mode\n0x05 - Academy Main Building\n0x06 - Academy Wing\n0x07 - Courtyard\n0x08 - Restaurant Plaza\n0x09 - Dorm Entrance\n0x0a - Dormitory\n0x0b, 0x0c - Junior Class Court\n0x0d - Restaurant\n0x0e - Cafeteria\n0x0f - Training Court\n0x10 - Senior Class Court\n0x11 - Training Center\n0x12 - Tennis Machine Room\n0x13 - Wall Practice Room\n0x14 - Academy Entrance\n0x15 - Tournament Courtyard\n0x16 - Court #1\n0x17 - Court #2\n0x18 - Center Court\n0x19 - Tournament\n0x1a - Awards Ceremony\n0x1b - Plane Cutscene\n0x1c - Castle Court\n0x1d - Peach's Castle\n0x1e-0x29 - Final Credits Sequence",
+    "size": 1
+  },
+  "0xc2b4": {
+    "name": "wWaterSpriteMinigameTimer",
+    "note": "[16-bit] Water Sprite Minigame - Timer (Frames)",
+    "size": 2
+  },
+  "0xc2b6": {
+    "name": "wWaterSpriteMinigameSwingCount",
+    "note": "[16-bit] Water Sprite Minigame - Swing Count",
+    "size": 2
+  },
+  "0xc2ba": {
+    "name": "wWaterSpriteMinigameFlag",
+    "note": "[8-bit] Water Sprite Minigame Flag (0x17 when in minigame)",
+    "size": 1
+  },
+  "0xc2d0": {
+    "name": "wStoryModePlayersXPosition",
+    "note": "[16-bit] Story Mode - Player's X Position",
+    "size": 2
+  },
+  "0xc2d2": {
+    "name": "wStoryModePlayersYPosition",
+    "note": "[16-bit] Story Mode - Player's Y Position",
+    "size": 2
+  },
+  "0xc33e": {
+    "name": "wCurrentBGM",
+    "note": "[8-bit] Current BGM\n\n0x00 - Silence\n0x01 - Intro Cutscene\n0x02 - Title Screen\n0x03 - Main Menu\n0x04 - Status Screen\n0x05 - Dictionary\n0x06 - Exhibition Match\n0x07 - Unused\n0x08 - Mario Minigame Screen\n0x09 - You Win\n0x0a - You Lose\n0x0b - Earning EXP\n0x0c - Distributing EXP\n0x0d - Distributing Stats\n0x0e - Tiebreaker\n0x0f - Set/Match Point\n0x10 - Game Point\n0x11 - Star Court\n0x12 - Castle Court/Peach's Castle\n0x13 - Tropic Court/Fruit Fantasy\n0x14 - Warehouse Court/Treasure Box\n0x15 - Two-on-One\n0x16 - Jungle Court/Banana Bunch\n0x17 - Unused\n0x18 - Unused\n0x19 - Shooting Star/Target Shot/Medallion Match\n0x1a - Academy Main Building\n0x1b - Story Mode Outdoors\n0x1c - Dormitory\n0x1d - Story Mode Indoors\n0x1e - Tennis Machine\n0x1f - Wall Practice\n0x20 - Practice Match\n0x21 - Junior Ranking Match\n0x22 - Senior Ranking Match\n0x23 - Varsity Ranking Match\n0x24 - Training Court Match\n0x25 - Training Court Practice\n0x26 - Island Open Beginning Rounds\n0x27 - Island Open Semifinals\n0x28 - Island Open Finals\n0x29 - Dream Match\n0x2a - Unused\n0x2b - Island Open Congratulations\n0x2c - Credits\n0x2d - The End\n0x2e - Done For The Day\n0x2f - Level Up\n0x30 - High Score\n0x31 - Exhibition Match Start\n0x32 - Story Match Start",
+    "size": 1
+  },
+  "0xc376": {
+    "name": "wMinigameLevel",
+    "note": "[8-bit] Minigame Level (0x00-0x03)\n\nValue is current minigame level - 1",
+    "size": 1
+  },
+  "0xc47c": {
+    "name": "wMinigamesCurrentScore",
+    "note": "[16-bit] Minigames - Current Score",
+    "size": 2
+  },
+  "0xc47e": {
+    "name": "wMinigamesTargetScore",
+    "note": "[16-bit] Minigames - Target Score",
+    "size": 2
+  },
+  "0xc4b6": {
+    "name": "wRallyLength",
+    "note": "[8-bit] Rally Length; number of times the ball was hit in the span of a point",
+    "size": 1
+  },
+  "0xc4d3": {
+    "name": "wCurrentServingPlayer",
+    "note": "[8-bit] Current Serving Player (0x00-0x03)",
+    "size": 1
+  },
+  "0xc818": {
+    "name": "wStoryModeMainCharacterLevel",
+    "note": "[8-bit] Story Mode - Main Character Level (0x01-0x63)",
+    "size": 1
+  },
+  "0xc820": {
+    "name": "wStoryModeMainCharacterTopStat",
+    "note": "[8-bit] Story Mode - Main Character Top Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc821": {
+    "name": "wStoryModeMainCharacterSliceStat",
+    "note": "[8-bit] Story Mode - Main Character Slice Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc822": {
+    "name": "wStoryModeMainCharacterServeStat",
+    "note": "[8-bit] Story Mode - Main Character Serve Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc823": {
+    "name": "wStoryModeMainCharacterStrokeStat",
+    "note": "[8-bit] Story Mode - Main Character Stroke Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc824": {
+    "name": "wStoryModeMainCharacterVolleyStat",
+    "note": "[8-bit] Story Mode - Main Character Volley Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc825": {
+    "name": "wStoryModeMainCharacterAngleStat",
+    "note": "[8-bit] Story Mode - Main Character Angle Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc826": {
+    "name": "wStoryModeMainCharacterPlacementStat",
+    "note": "[8-bit] Story Mode - Main Character Placement Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc827": {
+    "name": "wStoryModeMainCharacterSpeedStat",
+    "note": "[8-bit] Story Mode - Main Character Speed Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc828": {
+    "name": "wStoryModeMainCharacterDashStat",
+    "note": "[8-bit] Story Mode - Main Character Dash Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc829": {
+    "name": "wStoryModeMainCharacterReactionStat",
+    "note": "[8-bit] Story Mode - Main Character Reaction Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc82a": {
+    "name": "wStoryModeMainCharacterStopStat",
+    "note": "[8-bit] Story Mode - Main Character Stop Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc82c": {
+    "name": "wStoryModeMainCharacterEXP",
+    "note": "[16-bit] Story Mode - Main Character EXP",
+    "size": 2
+  },
+  "0xc838": {
+    "name": "wStoryModeMainCharacterSpinLevel",
+    "note": "[8-bit] Story Mode - Main Character Spin Level",
+    "size": 1
+  },
+  "0xc839": {
+    "name": "wStoryModeMainCharacterPowerLevel",
+    "note": "[8-bit] Story Mode - Main Character Power Level",
+    "size": 1
+  },
+  "0xc83a": {
+    "name": "wStoryModeMainCharacterControlLevel",
+    "note": "[8-bit] Story Mode - Main Character Control Level",
+    "size": 1
+  },
+  "0xc83b": {
+    "name": "wStoryModeMainCharacterSpeedLevel",
+    "note": "[8-bit] Story Mode - Main Character Speed Level",
+    "size": 1
+  },
+  "0xc858": {
+    "name": "wStoryModePartnerCharacterLevel",
+    "note": "[8-bit] Story Mode - Partner Character Level (0x01-0x63)",
+    "size": 1
+  },
+  "0xc860": {
+    "name": "wStoryModePartnerCharacterTopStat",
+    "note": "[8-bit] Story Mode - Partner Character Top Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc861": {
+    "name": "wStoryModePartnerCharacterSliceStat",
+    "note": "[8-bit] Story Mode - Partner Character Slice Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc862": {
+    "name": "wStoryModePartnerCharacterServeStat",
+    "note": "[8-bit] Story Mode - Partner Character Serve Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc863": {
+    "name": "wStoryModePartnerCharacterStrokeStat",
+    "note": "[8-bit] Story Mode - Partner Character Stroke Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc864": {
+    "name": "wStoryModePartnerCharacterVolleyStat",
+    "note": "[8-bit] Story Mode - Partner Character Volley Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc865": {
+    "name": "wStoryModePartnerCharacterAngleStat",
+    "note": "[8-bit] Story Mode - Partner Character Angle Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc866": {
+    "name": "wStoryModePartnerCharacterPlacementStat",
+    "note": "[8-bit] Story Mode - Partner Character Placement Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc867": {
+    "name": "wStoryModePartnerCharacterSpeedStat",
+    "note": "[8-bit] Story Mode - Partner Character Speed Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc868": {
+    "name": "wStoryModePartnerCharacterDashStat",
+    "note": "[8-bit] Story Mode - Partner Character Dash Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc869": {
+    "name": "wStoryModePartnerCharacterReactionStat",
+    "note": "[8-bit] Story Mode - Partner Character Reaction Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc86a": {
+    "name": "wStoryModePartnerCharacterStopStat",
+    "note": "[8-bit] Story Mode - Partner Character Stop Stat (0x00-0x09)",
+    "size": 1
+  },
+  "0xc86c": {
+    "name": "wStoryModePartnerCharacterEXP",
+    "note": "[16-bit] Story Mode - Partner Character EXP",
+    "size": 2
+  },
+  "0xc878": {
+    "name": "wStoryModePartnerCharacterSpinLevel",
+    "note": "[8-bit] Story Mode - Partner Character Spin Level",
+    "size": 1
+  },
+  "0xc879": {
+    "name": "wStoryModePartnerCharacterPowerLevel",
+    "note": "[8-bit] Story Mode - Partner Character Power Level",
+    "size": 1
+  },
+  "0xc87a": {
+    "name": "wStoryModePartnerCharacterControlLevel",
+    "note": "[8-bit] Story Mode - Partner Character Control Level",
+    "size": 1
+  },
+  "0xc87b": {
+    "name": "wStoryModePartnerCharacterSpeedLevel",
+    "note": "[8-bit] Story Mode - Partner Character Speed Level",
+    "size": 1
+  },
+  "0xc8a4": {
+    "name": "wMessageSpeed",
+    "note": "[8-bit] Message Speed\n\n0x00 - Fast\n0x01 - Normal\n0x02 - Slow",
+    "size": 1
+  },
+  "0xc8a6": {
+    "name": "wGameMode",
+    "note": "[8-bit] Game Mode\n\n0x00 - Not playing tennis\n0x01 - Story Mode - Ranking Match\n0x02 - Story Mode - Island Open Match\n0x03 - Story Mode - Practice Match\n0x04 - Exhibition Mode\n0x05 - Story Mode - Training Court Minigames\n0x06 - Story Mode - Tennis Machine\n0x07 - Story Mode - Wall Practice\n0x08 - Mario Minigames\n0x0a - Story Mode - Dream Match",
+    "size": 1
+  },
+  "0xc8c0": {
+    "name": "wCharacter1ServiceAces",
+    "note": "[8-bit] Character 1 Service Aces",
+    "size": 1
+  },
+  "0xc8c1": {
+    "name": "wCharacter1ReturnAces",
+    "note": "[8-bit] Character 1 Return Aces",
+    "size": 1
+  },
+  "0xc8c2": {
+    "name": "wCharacter1SmashAces",
+    "note": "[8-bit] Character 1 Smash Aces",
+    "size": 1
+  },
+  "0xc8c3": {
+    "name": "wCharacter1LobShotWinners",
+    "note": "[8-bit] Character 1 Lob Shot Winners",
+    "size": 1
+  },
+  "0xc8c4": {
+    "name": "wCharacter1DropShotWinners",
+    "note": "[8-bit] Character 1 Drop Shot Winners",
+    "size": 1
+  },
+  "0xc8c5": {
+    "name": "wCharacter1Faults",
+    "note": "[8-bit] Character 1 Faults",
+    "size": 1
+  },
+  "0xc8c6": {
+    "name": "wCharacter1DoubleFaults",
+    "note": "[8-bit] Character 1 Double Faults",
+    "size": 1
+  },
+  "0xc8c8": {
+    "name": "wCharacter2ServiceAces",
+    "note": "[8-bit] Character 2 Service Aces",
+    "size": 1
+  },
+  "0xc8c9": {
+    "name": "wCharacter2ReturnAces",
+    "note": "[8-bit] Character 2 Return Aces",
+    "size": 1
+  },
+  "0xc8ca": {
+    "name": "wCharacter2SmashAces",
+    "note": "[8-bit] Character 2 Smash Aces",
+    "size": 1
+  },
+  "0xc8cb": {
+    "name": "wCharacter2LobShotWinners",
+    "note": "[8-bit] Character 2 Lob Shot Winners",
+    "size": 1
+  },
+  "0xc8cc": {
+    "name": "wCharacter2DropShotWinners",
+    "note": "[8-bit] Character 2 Drop Shot Winners",
+    "size": 1
+  },
+  "0xc8cd": {
+    "name": "wCharacter2Faults",
+    "note": "[8-bit] Character 2 Faults",
+    "size": 1
+  },
+  "0xc8ce": {
+    "name": "wCharacter2DoubleFaults",
+    "note": "[8-bit] Character 2 Double Faults",
+    "size": 1
+  },
+  "0xc8d0": {
+    "name": "wCharacter3ServiceAces",
+    "note": "[8-bit] Character 3 Service Aces",
+    "size": 1
+  },
+  "0xc8d1": {
+    "name": "wCharacter3ReturnAces",
+    "note": "[8-bit] Character 3 Return Aces",
+    "size": 1
+  },
+  "0xc8d2": {
+    "name": "wCharacter3SmashAces",
+    "note": "[8-bit] Character 3 Smash Aces",
+    "size": 1
+  },
+  "0xc8d3": {
+    "name": "wCharacter3LobShotWinners",
+    "note": "[8-bit] Character 3 Lob Shot Winners",
+    "size": 1
+  },
+  "0xc8d4": {
+    "name": "wCharacter3DropShotWinners",
+    "note": "[8-bit] Character 3 Drop Shot Winners",
+    "size": 1
+  },
+  "0xc8d5": {
+    "name": "wCharacter3DropShotWinners2",
+    "note": "[8-bit] Character 3 Drop Shot Winners",
+    "size": 1
+  },
+  "0xc8d6": {
+    "name": "wCharacter3DoubleFaults",
+    "note": "[8-bit] Character 3 Double Faults",
+    "size": 1
+  },
+  "0xc8d8": {
+    "name": "wCharacter4ServiceAces",
+    "note": "[8-bit] Character 4 Service Aces",
+    "size": 1
+  },
+  "0xc8d9": {
+    "name": "wCharacter4ReturnAces",
+    "note": "[8-bit] Character 4 Return Aces",
+    "size": 1
+  },
+  "0xc8da": {
+    "name": "wCharacter4SmashAces",
+    "note": "[8-bit] Character 4 Smash Aces",
+    "size": 1
+  },
+  "0xc8db": {
+    "name": "wPlayer4LobShotWinners",
+    "note": "[8-bit] Player 4 Lob Shot Winners",
+    "size": 1
+  },
+  "0xc8dc": {
+    "name": "wCharacter4DropShotWinners",
+    "note": "[8-bit] Character 4 Drop Shot Winners",
+    "size": 1
+  },
+  "0xc8dd": {
+    "name": "wCharacter4Faults",
+    "note": "[8-bit] Character 4 Faults",
+    "size": 1
+  },
+  "0xc8de": {
+    "name": "wCharacter4DoubleFaults",
+    "note": "[8-bit] Character 4 Double Faults",
+    "size": 1
+  },
+  "0xc8e0": {
+    "name": "wPlayer1SetsWon",
+    "note": "[8-bit] Player 1 Sets Won (0x00-0x03)",
+    "size": 1
+  },
+  "0xc8e1": {
+    "name": "wPlayer2SetsWon",
+    "note": "[8-bit] Player 2 Sets Won (0x00-0x03)",
+    "size": 1
+  },
+  "0xc8e2": {
+    "name": "wPlayer1GamesWon",
+    "note": "[8-bit] Player 1 Games Won (0x00-0x07)",
+    "size": 1
+  },
+  "0xc8e3": {
+    "name": "wPlayer2GamesWon",
+    "note": "[8-bit] Player 2 Games Won (0x00-0x07)",
+    "size": 1
+  },
+  "0xc8e4": {
+    "name": "wPlayer1PointsWon",
+    "note": "[8-bit] Player 1 Points Won\n\n0x00 - 0\n0x01 - 15\n0x02 - 30\n0x03 - 40\n0x04 - Advantage/Deuce\n0x05-0x07 - Tiebreaker only",
+    "size": 1
+  },
+  "0xc8e5": {
+    "name": "wPlayer2PointsWon",
+    "note": "[8-bit] Player 2 Points Won; for values see 0xc8e4",
+    "size": 1
+  },
+  "0xc8e6": {
+    "name": "wDeuceIndicator",
+    "note": "[8-bit] Deuce Indicator (0x01 when deuce, 0x00 otherwise)",
+    "size": 1
+  },
+  "0xc8e7": {
+    "name": "wTiebreakerIndicator",
+    "note": "[8-bit] Tiebreaker Indicator (0x01 when tiebreaker, 0x00 otherwise)",
+    "size": 1
+  },
+  "0xc8e8": {
+    "name": "wMatchWinLoseFlag",
+    "note": "[8-bit] Match Win/Lose Flag (0x01 - win, 0xff - lose, 0x00 otherwise)",
+    "size": 1
+  },
+  "0xc8e9": {
+    "name": "wSetWinLoseFlag",
+    "note": "[8-bit] Set Win/Lose Flag (0x01 - win, 0xff - lose, 0x00 otherwise)",
+    "size": 1
+  },
+  "0xc8ea": {
+    "name": "wGameWinLoseFlag",
+    "note": "[8-bit] Game Win/Lose Flag (0x01 - win, 0xff - lose, 0x00 otherwise))",
+    "size": 1
+  },
+  "0xc8eb": {
+    "name": "wPointWinLoseFlag",
+    "note": "[8-bit] Point Win/Lose Flag (0x01 - win, 0xff - lose, 0x00 otherwise)",
+    "size": 1
+  },
+  "0xc8ec": {
+    "name": "wTotalGamesWonInMatch",
+    "note": "[8-bit] Total Games Won In Match",
+    "size": 1
+  },
+  "0xc8ed": {
+    "name": "wTotalPointsScoredInCurrentGame",
+    "note": "[8-bit] Total Points Scored In Current Game",
+    "size": 1
+  },
+  "0xc8f0": {
+    "name": "wMatchTypeNumberOfSets",
+    "note": "[8-bit] Match Type - Number Of Sets (0x01, 0x03, 0x05)",
+    "size": 1
+  },
+  "0xc8f1": {
+    "name": "wMatchTypeNumberOfGames",
+    "note": "[8-bit] Match Type - Number Of Games (0x02, 0x06)",
+    "size": 1
+  },
+  "0xc8f4": {
+    "name": "wCurrentlyUsedCourt",
+    "note": "[8-bit] Currently Used Court\n\n0x00 - Hard Court\n0x01 - Clay Court\n0x02 - Grass Court (Exhibition)\n0x03 - Composition Court\n0x04 - Star Court\n0x05 - Castle Court\n0x06 - Tropics Court\n0x07 - Jungle Court\n0x08 - Warehouse Court\n0x09 - Training Court (Practice)\n0x0a - Tennis Machine\n0x0b - Wall Practice\n0x0c - Center Court (Island Open Finals)\n0x0d - Grass Court (Island Open)\n0x0f - Target Shot\n0x10 - Shooting Star\n0x11 - Banana Bunch\n0x12 - Boo Blast\n0x13 - Perfect Shot\n0x14 - Treasure Box\n0x15 - Medallion Match\n0x16 - Fruit Fantasy\n0x17 - Two-On-One\n0x18 - Training Court (Match)",
+    "size": 1
+  },
+  "0xc8f6": {
+    "name": "wCurrentMinigameStoryMatch",
+    "note": "[16-bit BE] Current Minigame/Story Match\n\n0x0000 - Singles Junior Practice Match\n0x0001 - Singles Junior #4\n0x0002 - Singles Junior #3\n0x0003 - Singles Junior #2\n0x0004 - Singles Junior #1\n0x0005 - Singles Senior Practice Match\n0x0006 - Singles Senior #4\n0x0007 - Singles Senior #3\n0x0008 - Singles Senior #2\n0x0009 - Singles Senior #1\n0x000a - Singles Varsity Practice Match\n0x000b - Singles Varsity #4\n0x0010 - Singles Island Open Round 1\n0x0011 - Singles Island Open Round 2\n0x0012 - Singles Island Open Semifinals\n0x0013 - Singles Island Open Finals\n0x0016 - Singles Dream Match (MAX)\n0x0017 - Singles Dream Match (Intense)\n0x0018 - Singles Dream Match (Hard/First time)\n0x0100 - Doubles Junior Practice Match\n0x0102 - Doubles Junior #3\n0x0103 - Doubles Junior #2\n0x0104 - Doubles Junior #1\n0x0105 - Doubles Senior Practice Match\n0x0107 - Doubles Senior #3\n0x0108 - Doubles Senior #2\n0x0109 - Doubles Senior #1\n0x010a - Doubles Varsity Practice Match\n0x010d - Doubles Varsity #2\n0x0111 - Doubles Island Open Round 1\n0x0112 - Doubles Island Open Semifinals\n0x0113 - Doubles Island Open Finals\n0x0116 - Doubles Dream Match (MAX)\n0x0117 - Doubles Dream Match (Intense)\n0x0118 - Doubles Dream Match (Hard/First time)\n0x0200 - Service Match 1\n0x0201 - Service Match 2\n0x0202 - Service Match 3\n0x0203 - Service Practice 1\n0x0204 - Service Practice 2\n0x0205 - Service Practice 3\n0x0206 - Net Play Match 1\n0x0207 - Net Play Match 2\n0x0208 - Net Play Match 3\n0x0209 - Net Play Practice 1\n0x020a - Net Play Practice 2\n0x020b - Net Play Practice 3\n0x020c - Stroke Match 1\n0x020d - Stroke Match 2\n0x020e - Stroke Match 3\n0x020f - Stroke Practice 1\n0x0210 - Stroke Practice 2\n0x0211 - Stroke Practice 3\n0x0212 - Tennis Machine 1\n0x0213 - Tennis Machine 2\n0x0214 - Tennis Machine 3\n0x0215 - Tennis Machine 4\n0x0216 - Wall Practice 1\n0x0217 - Wall Practice 2\n0x0218 - Wall Practice 3\n0x0219 - Wall Practice 4\n0x021a - Tennis Machine High Score\n0x021b - Wall Practice High Score\n0x021c - Boo Blast\n0x021d - Shooting Star\n0x021e - Perfect Shot\n0x021f - Target Shot\n0x0220 - Fruit Fantasy\n0x0221 - Banana Bunch\n0x0222 - Treasure Box\n0x0223 - Medallion Match\n0x0224 - Two-On-One",
+    "size": 2
+  },
+  "0xc900": {
+    "name": "wStoryModeNameOfMainCharacter",
+    "note": "[ASCII, 7 Bytes] Story Mode - Name of Main Character",
+    "size": 7
+  },
+  "0xc90b": {
+    "name": "wStoryModeMainCharacterOverworldSprite",
+    "note": "[8-bit] Story Mode - Main Character Overworld Sprite\n\n0x00 - Alex\n0x01 - Nina\n0x02 - Harry\n0x03 - Kate\nLoops for all other values",
+    "size": 1
+  },
+  "0xc90c": {
+    "name": "wStoryModeMainCharacterOverworldSpriteColor",
+    "note": "[8-bit] Story Mode - Main Character Overworld Sprite Color\n\n0x00 - Green\n0x01 - Pink\n0x02 - Yellow\n0x03 - Red\n0x04 - Blue\nAll other values result in glitched sprite",
+    "size": 1
+  },
+  "0xc93c": {
+    "name": "wEquippedRacket",
+    "note": "[Lower4] Equipped Racket\n\n0x0 - Normal Racket\n0x1 - Large Racket\n0x2 - Small Racket\n0x3 - Iron Racket\n0x4 - Gold Racket\n0x5 - Silver Racket\n0x6 - Drive Racket\n\n[Upper4] Equipped Shoes\n\n0x0 - Normal Shoes\n0x1 - Iron Shoes\n0x2 - Light Shoes"
+  },
+  "0xc940": {
+    "name": "wStoryModeNameOfPartnerCharacter",
+    "note": "[ASCII, 7 Bytes] Story Mode - Name of Partner Character",
+    "size": 7
+  },
+  "0xc94b": {
+    "name": "wStoryModePartnerCharacterOverworldSprite",
+    "note": "[8-bit] Story Mode - Partner Character Overworld Sprite; for values see 0x00c90b",
+    "size": 1
+  },
+  "0xc94c": {
+    "name": "wStoryModePartnerCharacterOverworldSpriteColor",
+    "note": "[8-bit] Story Mode - Partner Character Overworld Sprite Color; for values see 0x00c90c",
+    "size": 1
+  },
+  "0xc9c5": {
+    "name": "wSinglesDoublesIndicator",
+    "note": "[8-bit] Singles/Doubles Indicator (Story & Exhibition Mode)\n\n0x00 - Singles\n0x01 - Doubles",
+    "size": 1
+  },
+  "0xc9c6": {
+    "name": "wStoryModeMatchCompletionFlags1",
+    "note": "[Lower4] Story Mode - Match Completion Flags (1/6)\n\nBit 0 - Doubles Island Open Round 1\nBit 1 - Doubles Island Open Semifinals\nBit 2 - Doubles Island Open Finals\nBit 3 - Doubles Dream Match"
+  },
+  "0xc9c7": {
+    "name": "wStoryModeMatchCompletionFlags2",
+    "note": "[8-bit] Story Mode - Match Completion Flags (2/6)\n\nBit 0 - Singles Island Open Round 1\nBit 1 - Singles Island Open Round 2\nBit 2 - Singles Island Open Semifinals\nBit 3 - Singles Island Open Finals\nBit 4 - Singles Dream Match",
+    "size": 1
+  },
+  "0xc9c8": {
+    "name": "wStoryModeMatchCompletionFlags3",
+    "note": "[8-bit] Story Mode - Match Completion Flags (3/6)\n\nBit 7 - Doubles Junior Rank 3\nBit 6 - Doubles Junior Rank 2\nBit 5 - Doubles Junior Rank 1\nBit 3 - Doubles Senior Rank 3\nBit 2 - Doubles Senior Rank 2\nBit 1 - Doubles Senior Rank 1",
+    "size": 1
+  },
+  "0xc9c9": {
+    "name": "wStoryModeMatchCompletionFlags4",
+    "note": "[Upper4] Story Mode - Match Completion Flags (4/6)\n\nBit 7 - Doubles Varsity Rank 2"
+  },
+  "0xc9ca": {
+    "name": "wStoryModeMatchCompletionFlags5",
+    "note": "[8-bit] Story Mode - Match Completion Flags (5/6)\n\nBit 7 - Singles Junior Rank 4\nBit 6 - Singles Junior Rank 3\nBit 5 - Singles Junior Rank 2\nBit 4 - Singles Junior Rank 1\nBit 3 - Singles Senior Rank 4\nBit 2 - Singles Senior Rank 3\nBit 1 - Singles Senior Rank 2\nBit 0 - Singles Senior Rank 1",
+    "size": 1
+  },
+  "0xc9cb": {
+    "name": "wStoryModeMatchCompletionFlags6",
+    "note": "[Upper4] Story Mode - Match Completion Flags (6/6)\n\nBit 7 - Singles Varsity Rank 4"
+  },
+  "0xc9cc": {
+    "name": "wStoryModeEquipmentFlags1",
+    "note": "[8-bit] Story Mode - Equipment Flags (1/2)\n\nBit 6 - Large Racket\nBit 5 - Small Racket\nBit 4 - Iron Racket\nBit 3 - Silver Racket\nBit 2 - Gold Racket\nBit 1 - Drive Racket\nBit 0 - Iron Shoes",
+    "size": 1
+  },
+  "0xc9cd": {
+    "name": "wStoryModeEquipmentFlags2",
+    "note": "[Upper4] Story Mode - Equipment Flags (2/2)\n\nBit 7 - Light Shoes"
+  },
+  "0xc9d8": {
+    "name": "wStoryModeMinigameCompletionFlags1",
+    "note": "[8-bit] Story Mode - Minigame Completion Flags (1/4)\n\nBit 7 - Service Match 1\nBit 6 - Service Match 2\nBit 5 - Service Match 3\nBit 4 - Service Practice 1\nBit 3 - Service Practice 2\nBit 2 - Service Practice 3\nBit 1 - Net Play Match 1\nBit 0 - Net Play Match 2",
+    "size": 1
+  },
+  "0xc9d9": {
+    "name": "wStoryModeMinigameCompletionFlags2",
+    "note": "[8-bit] Story Mode - Minigame Completion Flags (2/4)\n\nBit 7 - Net Play Match 3\nBit 6 - Net Play Practice 1\nBit 5 - Net Play Practice 2\nBit 4 - Net Play Practice 3\nBit 3 - Stroke Match 1\nBit 2 - Stroke Match 2\nBit 1 - Stroke Match 3\nBit 0 - Stroke Practice 1",
+    "size": 1
+  },
+  "0xc9da": {
+    "name": "wStoryModeMinigameCompletionFlags3",
+    "note": "[8-bit] Story Mode - Minigame Completion Flags (3/4)\n\nBit 7 - Stroke Practice 2\nBit 6 - Stroke Practice 3\nBit 5 - Machine Level 1\nBit 4 - Machine Level 2\nBit 3 - Machine Level 3\nBit 2 - Machine Level 4\nBit 1 - Wall Level 1\nBit 0 - Wall Level 2",
+    "size": 1
+  },
+  "0xc9db": {
+    "name": "wStoryModeMinigameCompletionFlags4",
+    "note": "[Upper4] Story Mode - Minigame Completion Flags (4/4)\n\nBit 7 - Wall Level 3\nBit 6 - Wall Level 4"
+  },
+  "0xca0b": {
+    "name": "wPlayer1CurrentMainCharacter",
+    "note": "[8-bit] Player 1 Current Main Character\n\n0x00 - Alex\n0x01 - Nina\n0x02 - Harry\n0x03 - Kate\n0x04 - Allie\n0x05 - Joy\n0x06 - Brian\n0x07 - Pam\n0x08 - Bob\n0x09 - Beth\n0x0a - Fay\n0x0b - Curt\n0x0c - Mark\n0x0d - Sean\n0x0e - Sammi\n0x0f - Elden\n0x10 - Spike\n0x11 - Emily\n0x12 - B. Coz\n0x13 - A. Coz\n0x14 - Kevin (dummied out)\n0x15 - Tennis Machine\n0x16 - Allie 2 (never shows up?)\n0x17 - Luigi\n0x18 - Donkey Kong\n0x19 - Baby Mario\n0x1a - Mario\n0x1b - Waluigi\n0x1c - Yoshi\n0x1d - Bowser\n0x1e - Wario\n0x1f - Peach",
+    "size": 1
+  },
+  "0xca4b": {
+    "name": "wPlayer1CurrentPartnerCharacter",
+    "note": "[8-bit] Player 1 Current Partner Character; for values see 0xca0b",
+    "size": 1
+  },
+  "0xca5f": {
+    "name": "wExhibitionModePlayerPartnerCharacterDifficulty",
+    "note": "[8-bit] Exhibition Mode - Player Partner Character Difficulty\n\n0x00 - Easy\n0x01 - Normal\n0x02 - Hard\n0x03 - Intense",
+    "size": 1
+  },
+  "0xca8b": {
+    "name": "wPlayer2CurrentMainCharacter",
+    "note": "[8-bit] Player 2 Current Main Character; for values see 0xca0b",
+    "size": 1
+  },
+  "0xca9f": {
+    "name": "wExhibitionModeCPUMainCharacterDifficulty",
+    "note": "[8-bit] Exhibition Mode - CPU Main Character Difficulty; for values see 0x00ca5f",
+    "size": 1
+  },
+  "0xcacb": {
+    "name": "wPlayer2CurrentPartnerCharacter",
+    "note": "[8-bit] Player 2 Current Partner Character; for values see 0xca0b",
+    "size": 1
+  },
+  "0xcadf": {
+    "name": "wExhibitionModeCPUPartnerCharacterDifficulty",
+    "note": "[8-bit] Exhibition Mode - CPU Partner Character Difficulty; for values see 0x00ca5f",
+    "size": 1
+  },
+  "0xcb41": {
+    "name": "wIntroCutsceneCheck",
+    "note": "[8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)",
+    "size": 1
+  },
+  "0xff90": {
+    "name": "hPlayerInputFlags",
+    "note": "[8-bit] Player Input Flags\n\nBit 7 - Down\nBit 6 - Up\nBit 5 - Left\nBit 4 - Right\nBit 3 - Start\nBit 2 - Select\nBit 1 - B\nBit 0 - A",
+    "size": 1
+  },
+  "0xffce": {
+    "name": "hMusic",
+    "note": "[8-bit] Music (0x00 - on, 0x01 - off)",
+    "size": 1
+  }
+}

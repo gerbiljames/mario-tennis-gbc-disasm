@@ -1,0 +1,8 @@
+baserom.gbc
+data/
+build/
+tools/rgbds/
+*.o
+*.gbc
+!*.sym
+__pycache__/

@@ -1,0 +1,92 @@
+# Mario Tennis (GBC) disassembly
+
+A disassembly of **Mario Tennis (USA)** for the Game Boy Color, built with
+[RGBDS](https://rgbds.gbdev.io/).
+
+The repository contains **no copyrighted ROM content**. All game data
+(graphics, audio, text, and any code not yet analyzed) is extracted from a
+user-supplied base ROM at setup time, and the build reproduces that ROM
+byte-for-byte.
+
+## Building
+
+1. Obtain a legal copy of Mario Tennis (USA). Expected file:
+   - SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0` (2,097,152 bytes,
+     `CGBTENNIS`, MBC5+RAM+BATTERY)
+2. Install [RGBDS](https://rgbds.gbdev.io/install) (or place its binaries in
+   `tools/rgbds/`; the Makefile looks there by default — override with
+   `make RGBDS=`).
+3. Extract the data and build:
+
+   ```sh
+   ./setup.sh path/to/rom.gbc   # verifies the ROM, populates data/
+   make                         # builds mariotennis.gbc
+   make compare                 # confirms SHA-1 matches the original
+   ```
+
+## Layout
+
+- `src/bank_XXX.asm` — one file per 16 KiB ROM bank (128 banks). Proven code
+  is disassembled; everything else is an `INCBIN` of a blob in `data/`.
+- `data.manifest` — offset/length list consumed by `tools/extract.py` to
+  slice the base ROM into `data/` (gitignored).
+- `labels.json` — symbol name overrides (`{"0x1234": "SomeName"}`, keys are
+  flat ROM offsets) applied on regeneration.
+- `include/hardware.inc` — standard Game Boy hardware definitions (CC0).
+- `tools/` — the disassembly tooling (see below).
+
+## Workflow: growing the disassembly
+
+Code is identified by **execution coverage** from a real run of the game, not
+guesswork: addresses that the CPU actually executed are code, and a
+conservative recursive descent extends them through direct branch targets
+within the same bank. Everything unproven stays data.
+
+### Option A: BizHawk's native Trace Logger (fastest gameplay)
+
+1. Tools → Trace Logger → log **to file** (not the window — its scrollback is
+   truncated), play, stop logging. Expect roughly 60 MB per emulated second.
+2. Convert the log: `python3 tools/tracelog2cov.py baserom.gbc trace.log
+   coverage/<name>.json`. Banked addresses are resolved by matching the
+   logged opcode bytes against every bank, intersected across instruction
+   runs; lines corrupted by OAM-DMA bus conflicts or the halt bug are
+   rejected by the byte check.
+3. Regenerate (below).
+
+### Option B: the `gbc-disasm` Lua connector / MCP server
+
+Slower during gameplay (the per-instruction Lua hook costs ~4x realtime) but
+needs no log files:
+
+1. Load the ROM in BizHawk with the connector script running.
+2. Start a trace (`trace_start`), play the game (menus, matches, modes —
+   more variety means more code coverage), then write the coverage with
+   `dump_coverage` to an absolute path in `coverage/` (the Lua writes the
+   JSON file directly; `get_coverage` is only needed for summaries).
+3. Regenerate and verify:
+
+   ```sh
+   python3 tools/disasm.py baserom.gbc coverage/*.json
+   python3 tools/extract.py baserom.gbc data.manifest data/
+   make clean && make compare
+   ```
+
+Regeneration overwrites `src/`, so durable annotations belong in
+`labels.json` (names) or in the generator, not in hand-edits to `src/`.
+
+Note on the tracer's address format: raw coverage values are **flat ROM
+offsets** (`banked` pairs reassemble as `tag*0x10000 + value`); values at
+`$ff00+` in `fixed` are HRAM execution (the OAM DMA stub), not ROM. This was
+validated by decode-chain scoring in `tools/disasm.py`'s loader.
+
+## Tools
+
+- `tools/sm83.py` — exhaustive SM83 decoder emitting RGBDS syntax that
+  round-trips byte-exactly through rgbasm (verified encodings: `ldh` vs `ld`,
+  `stop` padding, no auto-`nop` after `halt`, two-operand ALU forms).
+- `tools/disasm.py` — coverage + ROM → `src/*.asm` + `data.manifest`.
+- `tools/extract.py` — `data.manifest` + base ROM → `data/` blobs.
+- `tools/tracelog2cov.py` — BizHawk native Trace Logger file → coverage JSON.
+- `tools/trace_client.py` — standalone client for the BizHawk connector
+  (note: the connector accepts a single client; disconnect the MCP server
+  first).

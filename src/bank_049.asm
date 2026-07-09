@@ -1,0 +1,6 @@
+INCLUDE "hardware.inc"
+INCLUDE "ram_constants.asm"
+
+SECTION "ROM Bank $49", ROMX[$4000], BANK[$49]
+
+	INCBIN "data/bank_049/d_4000.bin" ; $4000, 16384 bytes
