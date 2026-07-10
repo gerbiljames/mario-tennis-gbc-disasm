@@ -2774,4 +2774,6 @@ Func_03_59b1:
 	dec c ; $59c1
 	jr nz, Func_03_59b1 ; $59c2
 	ret ; $59c4
-	INCBIN "data/bank_003/d_59c5.bin" ; $59c5, 9787 bytes
+	INCBIN "data/bank_003/d_59c5.bin" ; $59c5, 227 bytes
+	ret ; $5aa8
+	INCBIN "data/bank_003/d_5aa9.bin" ; $5aa9, 9559 bytes

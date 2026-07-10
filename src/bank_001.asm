@@ -301,14 +301,48 @@ Func_01_5076:
 	pop bc ; $5092
 	pop af ; $5093
 	ret ; $5094
-	INCBIN "data/bank_001/d_5095.bin" ; $5095, 76 bytes
+Func_01_5095:
+	push af ; $5095
+	push bc ; $5096
+	push de ; $5097
+	push hl ; $5098
+	ld hl, $4410 ; $5099
+	ld de, $9200 ; $509c
+	ld c, $20 ; $509f
+	call Func_00_0480 ; $50a1
+	call Func_00_2631 ; $50a4
+	ld hl, $4610 ; $50a7
+	ld de, $9400 ; $50aa
+	ld c, $20 ; $50ad
+	call Func_00_0480 ; $50af
+	call Func_00_2631 ; $50b2
+	ld hl, $4810 ; $50b5
+	ld de, $9600 ; $50b8
+	ld c, $20 ; $50bb
+	call Func_00_0480 ; $50bd
+	call Func_00_2631 ; $50c0
+	ld hl, $5010 ; $50c3
+	ld de, $8e00 ; $50c6
+	ld c, $20 ; $50c9
+	call Func_00_0480 ; $50cb
+	call Func_00_2631 ; $50ce
+	pop hl ; $50d1
+	pop de ; $50d2
+	pop bc ; $50d3
+	pop af ; $50d4
+	ret ; $50d5
+	INCBIN "data/bank_001/d_50d6.bin" ; $50d6, 11 bytes
 	ret ; $50e1
 Func_01_50e2:
 	call Func_01_5050 ; $50e2
 	call Func_01_5062 ; $50e5
 	call Func_01_5076 ; $50e8
 	ret ; $50eb
-	INCBIN "data/bank_001/d_50ec.bin" ; $50ec, 156 bytes
+	call Func_01_5050 ; $50ec
+	call Func_01_5062 ; $50ef
+	call Func_01_5095 ; $50f2
+	ret ; $50f5
+	INCBIN "data/bank_001/d_50f6.bin" ; $50f6, 146 bytes
 Func_01_5188:
 	push af ; $5188
 	push bc ; $5189

@@ -1587,7 +1587,32 @@ Label_00_0c41:
 	rra ; $0c45
 	pop de ; $0c46
 	ret ; $0c47
-	INCBIN "data/bank_000/d_0c48.bin" ; $0c48, 71 bytes
+Func_00_0c48:
+	bit 7, h ; $0c48
+	jr z, Func_00_0c8f ; $0c4a
+	push af ; $0c4c
+	ld a, l ; $0c4d
+	cpl ; $0c4e
+	add a, $01 ; $0c4f
+	ld l, a ; $0c51
+	ld a, h ; $0c52
+	sbc a, $00 ; $0c53
+	cpl ; $0c55
+	ld h, a ; $0c56
+	pop af ; $0c57
+	call Func_00_0c8f ; $0c58
+	push af ; $0c5b
+	ld a, l ; $0c5c
+	cpl ; $0c5d
+	add a, $01 ; $0c5e
+	ld l, a ; $0c60
+	ld a, h ; $0c61
+	sbc a, $00 ; $0c62
+	cpl ; $0c64
+	ld h, a ; $0c65
+	pop af ; $0c66
+	ret ; $0c67
+	INCBIN "data/bank_000/d_0c68.bin" ; $0c68, 39 bytes
 Func_00_0c8f:
 	push de ; $0c8f
 	push bc ; $0c90
@@ -5561,7 +5586,10 @@ Label_00_2b58:
 	dec c ; $2b58
 	jr nz, Func_00_2b46 ; $2b59
 	ret ; $2b5b
-	INCBIN "data/bank_000/d_2b5c.bin" ; $2b5c, 7 bytes
+Func_00_2b5c:
+	ld a, $80 ; $2b5c
+	ld [$c3b2], a ; $2b5e
+	jr Func_00_2b68 ; $2b61
 Func_00_2b63:
 	ld a, $00 ; $2b63
 	ld [$c3b2], a ; $2b65

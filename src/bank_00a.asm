@@ -195,7 +195,9 @@ Label_0a_41e1:
 	pop hl ; $41ef
 	pop af ; $41f0
 	ret ; $41f1
-	INCBIN "data/bank_00a/d_41f2.bin" ; $41f2, 3 bytes
+	rst Rst18 ; $41f2
+	ld a, [bc] ; $41f3
+	dec b ; $41f4
 	ret ; $41f5
 	push bc ; $41f6
 	push de ; $41f7
@@ -417,7 +419,43 @@ Func_0a_4364:
 	inc b ; $436f
 	inc b ; $4370
 	ret ; $4371
-	INCBIN "data/bank_00a/d_4372.bin" ; $4372, 50 bytes
+	call Func_0a_4312 ; $4372
+	push af ; $4375
+	push bc ; $4376
+	ld bc, $0258 ; $4377
+Label_0a_437a:
+	call Func_0a_438a ; $437a
+	jr z, Label_0a_4387 ; $437d
+	call Func_00_2631 ; $437f
+	dec bc ; $4382
+	ld a, c ; $4383
+	or a, b ; $4384
+	jr nz, Label_0a_437a ; $4385
+Label_0a_4387:
+	pop bc ; $4387
+	pop af ; $4388
+	ret ; $4389
+Func_0a_438a:
+	inc h ; $438a
+	dec h ; $438b
+	ret z ; $438c
+	push de ; $438d
+	ld a, $04 ; $438e
+	ldh [$ff96], a ; $4390
+	ldh [rWBK], a ; $4392
+	push hl ; $4394
+	ld a, [hl+] ; $4395
+	ld e, a ; $4396
+	ld a, [hl+] ; $4397
+	ld d, a ; $4398
+	ld a, [hl] ; $4399
+	ld l, e ; $439a
+	ld h, d ; $439b
+	call Func_00_0628 ; $439c
+	pop hl ; $439f
+	cp a, $00 ; $43a0
+	pop de ; $43a2
+	ret ; $43a3
 	call Func_0a_4312 ; $43a4
 	rst Rst18 ; $43a7
 	jr z, Label_0a_43ae ; $43a8
@@ -1784,9 +1822,8 @@ Label_0a_5031:
 	dec b ; $503f
 	jr nz, Label_0a_5048 ; $5040
 	rst Rst18 ; $5042
-	ld [$c306], sp ; $5043
-	push af ; $5046
-	ld c, a ; $5047
+	INCBIN "data/bank_00a/d_5043.bin" ; $5043, 2 bytes
+	jp Label_0a_4ff5 ; $5045
 Label_0a_5048:
 	xor a, a ; $5048
 	ld [$c2a3], a ; $5049
@@ -2164,7 +2201,40 @@ Label_0a_52a9:
 	pop bc ; $52ab
 	pop af ; $52ac
 	ret ; $52ad
-	INCBIN "data/bank_00a/d_52ae.bin" ; $52ae, 71 bytes
+	push af ; $52ae
+	push bc ; $52af
+	push de ; $52b0
+	push hl ; $52b1
+	ld a, [$c8aa] ; $52b2
+	cp a, $ff ; $52b5
+	jr z, Label_0a_52cf ; $52b7
+	ld a, [$c8a9] ; $52b9
+	ld [wStoryModeCurrentLocation], a ; $52bc
+	ld a, [$c8aa] ; $52bf
+	ld [$c295], a ; $52c2
+	ld a, $ff ; $52c5
+	ld [$c294], a ; $52c7
+	ld [$c2a1], a ; $52ca
+	jr Label_0a_52f0 ; $52cd
+Label_0a_52cf:
+	ld hl, $c8ab ; $52cf
+	ld de, $c296 ; $52d2
+	ld bc, $0005 ; $52d5
+	call CopyMemoryBC ; $52d8
+	ld a, [$c8a9] ; $52db
+	ld [wStoryModeCurrentLocation], a ; $52de
+	ld a, $ff ; $52e1
+	ld [$c295], a ; $52e3
+	ld a, $ff ; $52e6
+	ld [$c294], a ; $52e8
+	ld a, $ff ; $52eb
+	ld [$c2a1], a ; $52ed
+Label_0a_52f0:
+	pop hl ; $52f0
+	pop de ; $52f1
+	pop bc ; $52f2
+	pop af ; $52f3
+	ret ; $52f4
 Func_0a_52f5:
 	push af ; $52f5
 	push bc ; $52f6
@@ -3744,7 +3814,17 @@ Label_0a_644c:
 	pop bc ; $6453
 	pop af ; $6454
 	ret ; $6455
-	INCBIN "data/bank_00a/d_6456.bin" ; $6456, 15 bytes
+	push af ; $6456
+	push bc ; $6457
+	push de ; $6458
+	push hl ; $6459
+	ld hl, $6465 ; $645a
+	call Func_00_1bcb ; $645d
+	pop hl ; $6460
+	pop de ; $6461
+	pop bc ; $6462
+	pop af ; $6463
+	ret ; $6464
 	rst Rst30 ; $6465
 	nop ; $6466
 	inc bc ; $6467

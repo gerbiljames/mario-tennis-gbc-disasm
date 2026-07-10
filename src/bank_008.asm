@@ -5165,7 +5165,127 @@ Label_08_6707:
 	ld [hl], d ; $672e
 	pop hl ; $672f
 	ret ; $6730
-	INCBIN "data/bank_008/d_6731.bin" ; $6731, 281 bytes
+	INCBIN "data/bank_008/d_6731.bin" ; $6731, 30 bytes
+	ld c, l ; $674f
+	ld b, h ; $6750
+	ld hl, $c792 ; $6751
+	ld a, e ; $6754
+	ld [hl+], a ; $6755
+	ld [hl], d ; $6756
+	ld hl, $c790 ; $6757
+	ld a, c ; $675a
+	ld [hl+], a ; $675b
+	ld [hl], b ; $675c
+	ret ; $675d
+	ld c, l ; $675e
+	ld b, h ; $675f
+	ld hl, $c796 ; $6760
+	ld a, e ; $6763
+	ld [hl+], a ; $6764
+	ld [hl], d ; $6765
+	ld hl, $c794 ; $6766
+	ld a, c ; $6769
+	ld [hl+], a ; $676a
+	ld [hl], b ; $676b
+	ret ; $676c
+	INCBIN "data/bank_008/d_676d.bin" ; $676d, 85 bytes
+	ldh a, [$ff96] ; $67c2
+	push af ; $67c4
+	ld a, $04 ; $67c5
+	ldh [$ff96], a ; $67c7
+	ldh [rWBK], a ; $67c9
+	ld hl, $c790 ; $67cb
+	ld a, [hl+] ; $67ce
+	ld d, [hl] ; $67cf
+	ld e, a ; $67d0
+	ld hl, $fff0 ; $67d1
+	add hl, de ; $67d4
+	ld e, l ; $67d5
+	ld d, h ; $67d6
+	ld hl, $c402 ; $67d7
+	ld a, [hl+] ; $67da
+	ld h, [hl] ; $67db
+	ld l, a ; $67dc
+	ld a, l ; $67dd
+	sub a, e ; $67de
+	ld l, a ; $67df
+	ld a, h ; $67e0
+	sbc a, d ; $67e1
+	ld h, a ; $67e2
+	bit 7, h ; $67e3
+	jr nz, Label_08_6843 ; $67e5
+	ld hl, $c794 ; $67e7
+	ld a, [hl+] ; $67ea
+	ld d, [hl] ; $67eb
+	ld e, a ; $67ec
+	ld hl, $0010 ; $67ed
+	add hl, de ; $67f0
+	ld e, l ; $67f1
+	ld d, h ; $67f2
+	ld hl, $c402 ; $67f3
+	ld a, [hl+] ; $67f6
+	ld h, [hl] ; $67f7
+	ld l, a ; $67f8
+	ld a, l ; $67f9
+	sub a, e ; $67fa
+	ld l, a ; $67fb
+	ld a, h ; $67fc
+	sbc a, d ; $67fd
+	ld h, a ; $67fe
+	bit 7, h ; $67ff
+	jr z, Label_08_6843 ; $6801
+	ld hl, $c792 ; $6803
+	ld a, [hl+] ; $6806
+	ld d, [hl] ; $6807
+	ld e, a ; $6808
+	ld hl, $fff0 ; $6809
+	add hl, de ; $680c
+	ld e, l ; $680d
+	ld d, h ; $680e
+	ld hl, $c406 ; $680f
+	ld a, [hl+] ; $6812
+	ld h, [hl] ; $6813
+	ld l, a ; $6814
+	ld a, l ; $6815
+	sub a, e ; $6816
+	ld l, a ; $6817
+	ld a, h ; $6818
+	sbc a, d ; $6819
+	ld h, a ; $681a
+	bit 7, h ; $681b
+	jr nz, Label_08_6843 ; $681d
+	ld hl, $c796 ; $681f
+	ld a, [hl+] ; $6822
+	ld d, [hl] ; $6823
+	ld e, a ; $6824
+	ld hl, $0010 ; $6825
+	add hl, de ; $6828
+	ld e, l ; $6829
+	ld d, h ; $682a
+	ld hl, $c406 ; $682b
+	ld a, [hl+] ; $682e
+	ld h, [hl] ; $682f
+	ld l, a ; $6830
+	ld a, l ; $6831
+	sub a, e ; $6832
+	ld l, a ; $6833
+	ld a, h ; $6834
+	sbc a, d ; $6835
+	ld h, a ; $6836
+	bit 7, h ; $6837
+	jr z, Label_08_6843 ; $6839
+	pop af ; $683b
+	ldh [$ff96], a ; $683c
+	ldh [rWBK], a ; $683e
+	xor a, a ; $6840
+	inc a ; $6841
+	ret ; $6842
+Label_08_6843:
+	pop af ; $6843
+	ldh [$ff96], a ; $6844
+	ldh [rWBK], a ; $6846
+	xor a, a ; $6848
+	ret ; $6849
 Func_08_684a:
 	ld [$df0b], a ; $684a
 	ld a, d ; $684d

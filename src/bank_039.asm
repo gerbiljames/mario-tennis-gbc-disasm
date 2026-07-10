@@ -495,7 +495,13 @@ Label_39_4bb8:
 	ld hl, $4bbf ; $4bb8
 	call Func_00_1e9d ; $4bbb
 	ret ; $4bbe
-	INCBIN "data/bank_039/d_4bbf.bin" ; $4bbf, 52 bytes
+	INCBIN "data/bank_039/d_4bbf.bin" ; $4bbf, 41 bytes
+	ld b, $11 ; $4be8
+	ld c, $10 ; $4bea
+	ld de, $9000 ; $4bec
+	rst Rst18 ; $4bef
+	INCBIN "data/bank_039/d_4bf0.bin" ; $4bf0, 2 bytes
+	ret ; $4bf2
 	ldh [$ff8b], a ; $4bf3
 	ldh [$ff8a], a ; $4bf5
 	ld [$c320], a ; $4bf7

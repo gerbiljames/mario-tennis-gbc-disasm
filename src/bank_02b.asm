@@ -139,7 +139,10 @@ Label_2b_4278:
 	ld l, a ; $427a
 	add hl, de ; $427b
 	ret ; $427c
-	INCBIN "data/bank_02b/d_427d.bin" ; $427d, 7203 bytes
+	INCBIN "data/bank_02b/d_427d.bin" ; $427d, 7200 bytes
+	rst Rst18 ; $5e9d
+	ld a, [hl-] ; $5e9e
+	rlca ; $5e9f
 	ld hl, $427d ; $5ea0
 	ld bc, $5ebd ; $5ea3
 	xor a, a ; $5ea6

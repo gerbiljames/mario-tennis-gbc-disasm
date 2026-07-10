@@ -137,4 +137,82 @@ Func_28_6024:
 	ld c, $0c ; $607a
 	call Func_00_0480 ; $607c
 	ret ; $607f
-	INCBIN "data/bank_028/d_6080.bin" ; $6080, 8064 bytes
+	INCBIN "data/bank_028/d_6080.bin" ; $6080, 73 bytes
+	ld a, $01 ; $60c9
+	ldh [$ff96], a ; $60cb
+	ldh [rWBK], a ; $60cd
+	ld hl, $6d1c ; $60cf
+	ld de, $0902 ; $60d2
+	call Func_00_05b0 ; $60d5
+	ld hl, $6d54 ; $60d8
+	ld de, $0002 ; $60db
+	call Func_00_05b0 ; $60de
+	ld hl, $6180 ; $60e1
+	ld de, $d000 ; $60e4
+	call DecompressData ; $60e7
+	ld hl, $d000 ; $60ea
+	ld de, $9000 ; $60ed
+	ld c, $20 ; $60f0
+	call Func_00_0480 ; $60f2
+	push af ; $60f5
+	ldh a, [rLCDC] ; $60f6
+	bit 7, a ; $60f8
+	jr z, Label_28_60ff ; $60fa
+	call Func_00_2631 ; $60fc
+Label_28_60ff:
+	pop af ; $60ff
+	ld hl, $d200 ; $6100
+	ld de, $9200 ; $6103
+	ld c, $20 ; $6106
+	call Func_00_0480 ; $6108
+	push af ; $610b
+	ldh a, [rLCDC] ; $610c
+	bit 7, a ; $610e
+	jr z, Label_28_6115 ; $6110
+	call Func_00_2631 ; $6112
+Label_28_6115:
+	pop af ; $6115
+	ld hl, $d400 ; $6116
+	ld de, $9400 ; $6119
+	ld c, $20 ; $611c
+	call Func_00_0480 ; $611e
+	push af ; $6121
+	ldh a, [rLCDC] ; $6122
+	bit 7, a ; $6124
+	jr z, Label_28_612b ; $6126
+	call Func_00_2631 ; $6128
+Label_28_612b:
+	pop af ; $612b
+	ld hl, $d600 ; $612c
+	ld de, $9600 ; $612f
+	ld c, $20 ; $6132
+	call Func_00_0480 ; $6134
+	push af ; $6137
+	ldh a, [rLCDC] ; $6138
+	bit 7, a ; $613a
+	jr z, Label_28_6141 ; $613c
+	call Func_00_2631 ; $613e
+Label_28_6141:
+	pop af ; $6141
+	ld hl, $d800 ; $6142
+	ld de, $8800 ; $6145
+	ld c, $20 ; $6148
+	ld hl, $da00 ; $614a
+	ld de, $8a00 ; $614d
+	ld c, $20 ; $6150
+	ld hl, $dc00 ; $6152
+	ld de, $8c00 ; $6155
+	ld c, $20 ; $6158
+	ld hl, $de00 ; $615a
+	ld de, $8e00 ; $615d
+	ld c, $20 ; $6160
+	call Func_00_0480 ; $6162
+	push af ; $6165
+	ldh a, [rLCDC] ; $6166
+	bit 7, a ; $6168
+	jr z, Label_28_616f ; $616a
+	call Func_00_2631 ; $616c
+Label_28_616f:
+	pop af ; $616f
+	ret ; $6170
+	INCBIN "data/bank_028/d_6171.bin" ; $6171, 7823 bytes

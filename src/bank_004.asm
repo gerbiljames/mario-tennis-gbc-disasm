@@ -753,7 +753,30 @@ Label_04_44cd:
 	ld d, h ; $44db
 	ld a, $01 ; $44dc
 	ret ; $44de
-	INCBIN "data/bank_004/d_44df.bin" ; $44df, 193 bytes
+	INCBIN "data/bank_004/d_44df.bin" ; $44df, 156 bytes
+	inc de ; $457b
+	push de ; $457c
+	ld hl, $ffea ; $457d
+	ld a, [hl+] ; $4580
+	ld h, [hl] ; $4581
+	add a, $08 ; $4582
+	ld l, a ; $4584
+	ld e, l ; $4585
+	ld d, h ; $4586
+	pop hl ; $4587
+	ld a, [$daf7] ; $4588
+	ld bc, $0004 ; $458b
+	call Func_00_067a ; $458e
+	ld e, l ; $4591
+	ld d, h ; $4592
+	ld hl, $ffea ; $4593
+	ld a, [hl+] ; $4596
+	ld h, [hl] ; $4597
+	add a, $05 ; $4598
+	ld l, a ; $459a
+	set 7, [hl] ; $459b
+	ld a, $01 ; $459d
+	ret ; $459f
 	inc de ; $45a0
 	ld a, [$daf7] ; $45a1
 	ld l, e ; $45a4

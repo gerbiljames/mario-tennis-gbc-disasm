@@ -635,6 +635,7 @@ Label_3e_4e68:
 	ldh [rWBK], a ; $4e7d
 	ret ; $4e7f
 	INCBIN "data/bank_03e/d_4e80.bin" ; $4e80, 530 bytes
+Func_3e_5092:
 	ld a, b ; $5092
 	or a, a ; $5093
 	jr z, Label_3e_50ad ; $5094
@@ -669,6 +670,7 @@ Label_3e_50af:
 	cp a, $ff ; $50bf
 	jr nz, Label_3e_50af ; $50c1
 	ret ; $50c3
+Func_3e_50c4:
 	ld a, b ; $50c4
 	or a, a ; $50c5
 	jr z, Label_3e_50df ; $50c6
@@ -694,7 +696,7 @@ Label_3e_50e1:
 	call Func_00_2631 ; $50e1
 	ld b, $10 ; $50e4
 	rst Rst18 ; $50e6
-	jr nz, Label_3e_5122 ; $50e7
+	jr nz, $5122 ; $50e7
 	ld b, $03 ; $50e9
 	rst Rst18 ; $50eb
 	ld e, $39 ; $50ec
@@ -705,7 +707,20 @@ Label_3e_50f0:
 	or a, a ; $50f1
 	jr nz, Label_3e_50e1 ; $50f2
 	ret ; $50f4
-	INCBIN "data/bank_03e/d_50f5.bin" ; $50f5, 22 bytes
+	rst Rst18 ; $50f5
+	jr z, Label_3e_5131 ; $50f6
+	ld c, $02 ; $50f8
+	call Func_3e_43c9 ; $50fa
+	push af ; $50fd
+	ld hl, $5162 ; $50fe
+	add a, l ; $5101
+	ld l, a ; $5102
+	jr nc, Label_3e_5106 ; $5103
+	inc h ; $5105
+Label_3e_5106:
+	ld c, [hl] ; $5106
+	pop af ; $5107
+	ld hl, $515c ; $5108
 Label_3e_510b:
 	add a, a ; $510b
 	add a, l ; $510c
@@ -723,9 +738,7 @@ Label_3e_5111:
 	push de ; $511c
 	call Func_00_1e9d ; $511d
 	pop de ; $5120
-	INCBIN "data/bank_03e/d_5121.bin" ; $5121, 1 bytes
-Label_3e_5122:
-	ld hl, sp + 23 ; $5122
+	ld hl, $17f8 ; $5121
 	add hl, de ; $5124
 	ld d, h ; $5125
 	ld e, l ; $5126
@@ -733,8 +746,314 @@ Label_3e_5122:
 	ld b, $08 ; $512a
 	ld c, $70 ; $512c
 	call Func_00_1e9d ; $512e
+Label_3e_5131:
 	ret ; $5131
-	INCBIN "data/bank_03e/d_5132.bin" ; $5132, 2663 bytes
+	INCBIN "data/bank_03e/d_5132.bin" ; $5132, 51 bytes
+Func_3e_5165:
+	push af ; $5165
+	push bc ; $5166
+	push de ; $5167
+	push hl ; $5168
+	ld a, c ; $5169
+	or a, a ; $516a
+	jr z, Label_3e_5171 ; $516b
+	ld h, $0c ; $516d
+	jr Label_3e_5173 ; $516f
+Label_3e_5171:
+	ld h, $0d ; $5171
+Label_3e_5173:
+	push hl ; $5173
+	ld hl, $518e ; $5174
+	ld a, b ; $5177
+	add a, a ; $5178
+	add a, l ; $5179
+	ld l, a ; $517a
+	jr nc, Label_3e_517e ; $517b
+	inc h ; $517d
+Label_3e_517e:
+	ld a, [hl+] ; $517e
+	ld d, [hl] ; $517f
+	ld e, a ; $5180
+	pop hl ; $5181
+	ld b, $05 ; $5182
+	ld c, $03 ; $5184
+	rst Rst18 ; $5186
+	inc c ; $5187
+	add hl, sp ; $5188
+	pop hl ; $5189
+	pop de ; $518a
+	pop bc ; $518b
+	pop af ; $518c
+	ret ; $518d
+	INCBIN "data/bank_03e/d_518e.bin" ; $518e, 4 bytes
+	rst Rst08 ; $5192
+	inc bc ; $5193
+	ld hl, rIE ; $5194
+	res 2, [hl] ; $5197
+	call Func_3e_5229 ; $5199
+	ld a, $03 ; $519c
+	ldh [$ff96], a ; $519e
+	ldh [rWBK], a ; $51a0
+	ld a, [$cb11] ; $51a2
+	ld b, a ; $51a5
+	call Func_3e_5092 ; $51a6
+	rst Rst18 ; $51a9
+	inc h ; $51aa
+	add hl, sp ; $51ab
+	ld b, $01 ; $51ac
+	ld c, $01 ; $51ae
+	rst Rst18 ; $51b0
+	ld h, $39 ; $51b1
+	xor a, a ; $51b3
+	ld c, a ; $51b4
+	ld b, $02 ; $51b5
+	call Func_3e_43eb ; $51b7
+	ld a, $01 ; $51ba
+	ld hl, $50f5 ; $51bc
+	call Func_00_1b6a ; $51bf
+	call Func_3e_52b7 ; $51c2
+	ld a, $03 ; $51c5
+	ldh [$ff96], a ; $51c7
+	ldh [rWBK], a ; $51c9
+Label_3e_51cb:
+	call Func_00_2631 ; $51cb
+	ldh a, [$ff91] ; $51ce
+	ld [$cb0d], a ; $51d0
+	ld b, $02 ; $51d3
+	ld c, $01 ; $51d5
+	call Func_3e_413a ; $51d7
+	or a, a ; $51da
+	jr z, Label_3e_51e2 ; $51db
+	rst Rst08 ; $51dd
+	ld e, [hl] ; $51de
+	call Func_3e_52b7 ; $51df
+Label_3e_51e2:
+	ld a, [$cb0d] ; $51e2
+	bit 0, a ; $51e5
+	jr nz, Label_3e_51ef ; $51e7
+	bit 1, a ; $51e9
+	jr nz, Label_3e_5212 ; $51eb
+	jr Label_3e_51cb ; $51ed
+Label_3e_51ef:
+	rst Rst08 ; $51ef
+	ld e, a ; $51f0
+	call Func_00_1b38 ; $51f1
+	ld hl, rIE ; $51f4
+	set 2, [hl] ; $51f7
+	ld b, $01 ; $51f9
+	call Func_3e_50c4 ; $51fb
+	ld a, $01 ; $51fe
+	ld [$cb11], a ; $5200
+	ld c, $02 ; $5203
+	call Func_3e_43c9 ; $5205
+	rst Rst28 ; $5208
+	ldh [rTIMA], a ; $5209
+	or a, a ; $520b
+	jr z, Label_3e_5211 ; $520c
+	rst Rst20 ; $520e
+	ldh [rTIMA], a ; $520f
+Label_3e_5211:
+	ret ; $5211
+Label_3e_5212:
+	rst Rst08 ; $5212
+	ld h, d ; $5213
+	call Func_00_1b38 ; $5214
+	ld hl, rIE ; $5217
+	set 2, [hl] ; $521a
+	ld b, $00 ; $521c
+	call Func_3e_50c4 ; $521e
+	ld a, $00 ; $5221
+	ld [$cb11], a ; $5223
+	ld a, $ff ; $5226
+	ret ; $5228
+Func_3e_5229:
+	ldh a, [$ff96] ; $5229
+	push af ; $522b
+	ld a, $01 ; $522c
+	ldh [$ff96], a ; $522e
+	ldh [rWBK], a ; $5230
+	ld c, $00 ; $5232
+Label_3e_5234:
+	ld a, c ; $5234
+	add a, a ; $5235
+	ld hl, $52af ; $5236
+	add a, l ; $5239
+	ld l, a ; $523a
+	jr nc, Label_3e_523e ; $523b
+	inc h ; $523d
+Label_3e_523e:
+	ld a, [hl+] ; $523e
+	ld h, [hl] ; $523f
+	ld l, a ; $5240
+	push af ; $5241
+	push bc ; $5242
+	push de ; $5243
+	push hl ; $5244
+	ld de, $d000 ; $5245
+	call DecompressDataFromBank ; $5248
+	pop hl ; $524b
+	pop de ; $524c
+	pop bc ; $524d
+	pop af ; $524e
+	ld hl, $52b3 ; $524f
+	ld a, c ; $5252
+	add a, a ; $5253
+	add a, l ; $5254
+	ld l, a ; $5255
+	jr nc, Label_3e_5259 ; $5256
+	inc h ; $5258
+Label_3e_5259:
+	ld a, [hl+] ; $5259
+	ld d, [hl] ; $525a
+	ld e, a ; $525b
+	ld hl, $d000 ; $525c
+	push af ; $525f
+	push bc ; $5260
+	push de ; $5261
+	push hl ; $5262
+	ld bc, $0010 ; $5263
+	call Func_00_0480 ; $5266
+	pop hl ; $5269
+	pop de ; $526a
+	pop bc ; $526b
+	pop af ; $526c
+	ld a, c ; $526d
+	inc a ; $526e
+	ld c, a ; $526f
+	call Func_00_2631 ; $5270
+	ld a, c ; $5273
+	cp a, $02 ; $5274
+	jr nz, Label_3e_5234 ; $5276
+	ld b, $23 ; $5278
+	ld c, $10 ; $527a
+	ld de, $a000 ; $527c
+	rst Rst18 ; $527f
+	INCBIN "data/bank_03e/d_5280.bin" ; $5280, 2 bytes
+	call Func_00_2631 ; $5282
+	ld b, $24 ; $5285
+	ld c, $10 ; $5287
+	ld de, $a100 ; $5289
+	rst Rst18 ; $528c
+	INCBIN "data/bank_03e/d_528d.bin" ; $528d, 2 bytes
+	call Func_00_2631 ; $528f
+	ld b, $1b ; $5292
+	ld c, $04 ; $5294
+	ld de, $a700 ; $5296
+	rst Rst18 ; $5299
+	INCBIN "data/bank_03e/d_529a.bin" ; $529a, 2 bytes
+	call Func_00_2631 ; $529c
+	call Func_00_2631 ; $529f
+	ld b, $08 ; $52a2
+	ld c, $10 ; $52a4
+	rst Rst18 ; $52a6
+	ld c, $39 ; $52a7
+	pop af ; $52a9
+	ldh [$ff96], a ; $52aa
+	ldh [rWBK], a ; $52ac
+	ret ; $52ae
+	INCBIN "data/bank_03e/d_52af.bin" ; $52af, 8 bytes
+Func_3e_52b7:
+	ld a, $03 ; $52b7
+	ldh [$ff96], a ; $52b9
+	ldh [rWBK], a ; $52bb
+	ld b, $00 ; $52bd
+	ld c, $00 ; $52bf
+Label_3e_52c1:
+	call Func_3e_5165 ; $52c1
+	ld a, b ; $52c4
+	inc a ; $52c5
+	ld b, a ; $52c6
+	cp a, $03 ; $52c7
+	jr nz, Label_3e_52c1 ; $52c9
+	ld c, $02 ; $52cb
+	call Func_3e_43c9 ; $52cd
+	ld b, a ; $52d0
+	ld c, $01 ; $52d1
+	call Func_3e_5165 ; $52d3
+	ld c, $02 ; $52d6
+	call Func_3e_43c9 ; $52d8
+	call Func_3e_5320 ; $52db
+	ld a, $03 ; $52de
+	ldh [$ff96], a ; $52e0
+	ldh [rWBK], a ; $52e2
+	ld de, $d1e0 ; $52e4
+	ld b, $14 ; $52e7
+	ld c, $01 ; $52e9
+	ld h, $03 ; $52eb
+	rst Rst18 ; $52ed
+	inc c ; $52ee
+	add hl, sp ; $52ef
+	ld a, $02 ; $52f0
+	ld [$d1e0], a ; $52f2
+	ld a, $04 ; $52f5
+	ld [$d1f3], a ; $52f7
+	ld de, $d201 ; $52fa
+	ld b, $12 ; $52fd
+	ld c, $01 ; $52ff
+	ld h, $20 ; $5301
+	rst Rst18 ; $5303
+	inc c ; $5304
+	add hl, sp ; $5305
+	call Func_3e_5355 ; $5306
+	ld hl, $d4e0 ; $5309
+	ld de, $b8e0 ; $530c
+	ld c, $06 ; $530f
+	call Func_00_0480 ; $5311
+	ld hl, $d1e0 ; $5314
+	ld de, $99e0 ; $5317
+	ld c, $04 ; $531a
+	call Func_00_0480 ; $531c
+	ret ; $531f
+Func_3e_5320:
+	ld hl, $5333 ; $5320
+	add a, a ; $5323
+	add a, l ; $5324
+	ld l, a ; $5325
+	jr nc, Label_3e_5329 ; $5326
+	inc h ; $5328
+Label_3e_5329:
+	ld a, [hl+] ; $5329
+	ld h, [hl] ; $532a
+	ld l, a ; $532b
+	ld de, $0401 ; $532c
+	call Func_00_05b0 ; $532f
+	ret ; $5332
+	INCBIN "data/bank_03e/d_5333.bin" ; $5333, 34 bytes
+Func_3e_5355:
+	ldh a, [$ff96] ; $5355
+	push af ; $5357
+	ld a, $03 ; $5358
+	ldh [$ff96], a ; $535a
+	ldh [rWBK], a ; $535c
+	ld c, $02 ; $535e
+	call Func_3e_43c9 ; $5360
+	ld b, a ; $5363
+	ld hl, $5384 ; $5364
+	add a, a ; $5367
+	add a, l ; $5368
+	ld l, a ; $5369
+	jr nc, Label_3e_536d ; $536a
+	inc h ; $536c
+Label_3e_536d:
+	ld a, [hl+] ; $536d
+	ld d, [hl] ; $536e
+	ld e, a ; $536f
+	ld a, b ; $5370
+	ld hl, $00e2 ; $5371
+	add a, l ; $5374
+	ld l, a ; $5375
+	jr nc, Label_3e_5379 ; $5376
+	inc h ; $5378
+Label_3e_5379:
+	ld c, $20 ; $5379
+	rst Rst18 ; $537b
+	ld [hl], d ; $537c
+	dec b ; $537d
+	pop af ; $537e
+	ldh [$ff96], a ; $537f
+	ldh [rWBK], a ; $5381
+	ret ; $5383
+	INCBIN "data/bank_03e/d_5384.bin" ; $5384, 2069 bytes
 	rst Rst08 ; $5b99
 	inc bc ; $5b9a
 	call Func_00_1b38 ; $5b9b

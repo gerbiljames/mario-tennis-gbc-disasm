@@ -2520,7 +2520,11 @@ Label_05_5c37:
 	nop ; $5c61
 	INCBIN "data/bank_005/d_5c62.bin" ; $5c62, 1 bytes
 	jr Label_05_5ca3 ; $5c63
-	INCBIN "data/bank_005/d_5c65.bin" ; $5c65, 10 bytes
+	INCBIN "data/bank_005/d_5c65.bin" ; $5c65, 5 bytes
+	rst Rst18 ; $5c6a
+	nop ; $5c6b
+	inc sp ; $5c6c
+	jr Label_05_5ca3 ; $5c6d
 	rst Rst18 ; $5c6f
 	nop ; $5c70
 	inc [hl] ; $5c71
@@ -2533,7 +2537,15 @@ Label_05_5c37:
 	nop ; $5c7a
 	INCBIN "data/bank_005/d_5c7b.bin" ; $5c7b, 1 bytes
 	jr Label_05_5ca3 ; $5c7c
-	INCBIN "data/bank_005/d_5c7e.bin" ; $5c7e, 20 bytes
+	rst Rst18 ; $5c7e
+	nop ; $5c7f
+	scf ; $5c80
+	jr Label_05_5ca3 ; $5c81
+	INCBIN "data/bank_005/d_5c83.bin" ; $5c83, 10 bytes
+	rst Rst18 ; $5c8d
+	nop ; $5c8e
+	dec h ; $5c8f
+	jr Label_05_5ca3 ; $5c90
 	rst Rst18 ; $5c92
 	nop ; $5c93
 	INCBIN "data/bank_005/d_5c94.bin" ; $5c94, 1 bytes
@@ -4024,6 +4036,7 @@ Func_05_7214:
 	pop bc ; $7220
 	pop af ; $7221
 	ret ; $7222
+Func_05_7223:
 	push af ; $7223
 	push bc ; $7224
 	push de ; $7225
@@ -4150,7 +4163,12 @@ Func_05_72bd:
 	pop bc ; $72cf
 	pop af ; $72d0
 	ret ; $72d1
-	INCBIN "data/bank_005/d_72d2.bin" ; $72d2, 10 bytes
+	push de ; $72d2
+	ld d, $00 ; $72d3
+	ld e, $20 ; $72d5
+	call Func_05_7223 ; $72d7
+	pop de ; $72da
+	ret ; $72db
 Func_05_72dc:
 	push af ; $72dc
 	push bc ; $72dd

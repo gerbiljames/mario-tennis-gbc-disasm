@@ -2,16 +2,15 @@
 
 ## Where things stand
 
-**85,767 instructions (~139 KB of code) disassembled across 54 of 128 banks;
+**100,836 instructions (~167 KB of code) disassembled across 57 of 128 banks;
 everything rebuilds byte-perfect** (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). The remaining banks are so far
 pure data (graphics/audio/tilemaps). The repo contains no ROM bytes: all data
 is extracted from a user-supplied `baserom.gbc` by `./setup.sh` per
 `data.manifest`.
 
-Largest code banks: $08 (7,982 instrs — match engine), $00 (7,223), $13
-(5,732), $05 (4,643), $1e (4,533), $0f (4,469), $38 (4,391), $3b (4,152),
-$0a (4,133), $11 (3,089).
+Largest code banks: $08 (match engine), $00, $13 (story engine), $05, $1e,
+$1d (story practice-drill engine), $0f, $38, $3b, $0a.
 
 ## Pipeline (all working, all documented in README.md)
 
@@ -61,21 +60,59 @@ commands. 39 tests pass. If BizHawk or the MCP server restarts, reload
   banks $04, $05, $0a, $10-$15, $1c, $1d, $38 (story overworld, dialogue,
   NPCs). The raw logs live in the BizHawk Tools/ dir and can be deleted —
   this JSON is the durable artifact.
+- `story2_overworld.json` — autonomous story-mode drive (2026-07-10, MCP
+  connector): save-slot continue path, story pause menu (status/clear
+  status/options/messages/music), Restaurant interior + NPC dialogue
+  branches, Dorm Entrance/Restaurant Plaza/Training Court maps, Harry
+  dorm event, coach dialogue, and the full **Stroke Practice drill engine**
+  in bank $1d (serve cams, hit/miss branches, star/fail feedback, results
+  board, retry loop — all 4-attempt rounds failed, so the drill *success*
+  handler is still uncovered). +6,326 new seeds; first code in banks $06,
+  $09, $17, $24, $33, $37, $3e.
+- `story3_drillwin.json` — human native-tracer session (2026-07-10):
+  **winning the stroke-practice drill** (success handlers in $1d) plus
+  whatever followed; big new territory in banks $1c (+1,916 — likely the
+  post-practice story/reward flow), $1d (+1,770), $1e (+746), $02 (+427).
+  Union of 42 auto-split segments.
+- `story4_servevolley.json` — human native-tracer session (2026-07-10):
+  the serve-and-volley drill. +945 new seeds — drill framework was already
+  covered, new specifics in banks $17 (+372), $15 (+256), $0b (+250), and
+  first code in $25. Union of segments 41-91 of the same tracer session
+  as story3.
 - `contaminated/` — pre-fix dumps with phantom seeds; never union these.
 
-Known artifact: exactly 3 skipped seeds — the old phantom at rom 0x1d1a0,
-plus 0x22fc6 and 0x789df from the story trace (ambiguous banked runs that
-fell back to the wrong bank; the conflict filter rejects them).
+Known artifact: exactly 6 skipped seeds — the old phantom at rom 0x1d1a0
+plus five ambiguous-banked-run fallbacks from the two native story traces
+(0x1d469, 0x22c9b, 0x22fc6, 0x235cf, 0x789df); the conflict filter rejects
+them all and the build stays byte-perfect.
 
 ## Not yet covered (biggest wins first)
 
-1. **Rest of story mode / Mario Tour** — the intro is now covered (save
-   data exists); the bulk of the RPG (matches vs academy ranks, leveling,
-   later areas) is not. Unlocks the 5 locked minigames.
-2. Match-point → ceremony transition (missed by a polling overshoot; results
-   screens themselves are covered), tiebreaks, deuce.
+1. **Rest of story mode** — story matches (EXP earn/distribute, level-up
+   flow), Tennis Machine room ($12) and Wall Practice room ($13 location)
+   engines in the Training Center (building entrance not yet found — the
+   fence-gap gate at Training Court X≈0x1e leads to the courts, not the
+   building), Academy Main Building/Wing/Junior Class Court maps, later
+   areas. Unlocks the 5 locked minigames. (Stroke-practice success path
+   is now covered — story3_drillwin.json.)
+2. Match-point → ceremony transition, tiebreaks, deuce.
 3. Remaining minigames (locked behind story), Game Boy Tower, tournament.
-4. Grass court init; 6-games/3-sets match configs; more characters.
+4. Grass court init; 6-games/3-sets match configs (Play Menu selection UI
+   now traced, matches themselves not); more characters.
+
+## Story-mode driving notes (2026-07-10 session)
+
+- RAM: $c280 = location id (RA map has the full list), $c2d0/$c2d2 =
+  overworld X/Y — use these to detect blocked movement instead of
+  screenshot-diffing. Dialogue: FAST message speed is set in the save.
+- The stroke-practice drill: coach serves 4 balls/round; swing = A tap
+  (~10-frame window) when the ball is a body-length away — press too early
+  and Alex whiffs (no hold-to-charge auto-swing in this engine). The
+  "target area" for the return appears to be a star-marked spot on her
+  court; all my returns missed it. Savestate replays of the drill are NOT
+  input-deterministic (serve placement varies after load).
+- The dorm-room bottom door sometimes exits to the main menu (story exit)
+  — walk it deliberately and re-Continue if that happens.
 
 ## Repo state
 
