@@ -57,7 +57,7 @@ DataPtr_39_5a:
 DataPtr_39_5c:
 	dw Lz_39_4833 ; $405c
 DataPtr_39_5e:
-	dw Lz_39_4923 ; $405e
+	dw StatLabelTiles ; $405e
 FarPtr_39_60:
 	dw Func_39_6dc2 ; $4060
 FarPtr_39_62:
@@ -85,7 +85,7 @@ DataPtr_39_76:
 DataPtr_39_78:
 	dw Lz_39_725d ; $4078
 DataPtr_39_7a:
-	dw Lz_39_734e ; $407a
+	dw DigitFontTiles ; $407a
 FarPtr_39_7c:
 	dw Func_39_745a ; $407c
 Func_39_407e:
@@ -438,7 +438,7 @@ Lz_39_4809:
 	INCBIN "data/bank_039/lz_4809.bin" ; $4809, 42 bytes
 Lz_39_4833:
 	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 240 bytes
-Lz_39_4923:
+StatLabelTiles:
 	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 243 bytes
 Func_39_4a16:
 	ld c, $04 ; $4a16
@@ -1278,7 +1278,7 @@ Lz_39_7223:
 	INCBIN "data/bank_039/lz_7223.bin" ; $7223, 58 bytes
 Lz_39_725d:
 	INCBIN "data/bank_039/lz_725d.bin" ; $725d, 241 bytes
-Lz_39_734e:
+DigitFontTiles:
 	INCBIN "data/bank_039/lz_734e.bin" ; $734e, 249 bytes
 	INCBIN "data/bank_039/d_7447.bin" ; $7447, 19 bytes
 Func_39_745a:

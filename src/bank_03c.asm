@@ -5,16 +5,16 @@ INCLUDE "ram_constants.asm"
 SECTION "ROM Bank $3c", ROMX[$4000], BANK[$3c]
 
 DataPtr_3c_00:
-	dw Lz_3c_407e ; $4000
+	dw ModeSelectTiles ; $4000
 DataPtr_3c_02:
-	dw Lz_3c_4581 ; $4002
+	dw ModeSelectTilemap ; $4002
 DataPtr_3c_04:
 	dw Lz_3c_468d ; $4004
 	INCBIN "data/bank_03c/d_4006.bin" ; $4006, 2 bytes
 DataPtr_3c_08:
-	dw Lz_3c_4751 ; $4008
+	dw StadiumTiles ; $4008
 DataPtr_3c_0a:
-	dw Lz_3c_50f2 ; $400a
+	dw StadiumTilemap ; $400a
 DataPtr_3c_0c:
 	dw Lz_3c_52e6 ; $400c
 DataPtr_3c_0e:
@@ -38,16 +38,16 @@ DataPtr_3c_1e:
 DataPtr_3c_20:
 	dw Lz_3c_599a ; $4020
 	INCBIN "data/bank_03c/d_4022.bin" ; $4022, 92 bytes
-Lz_3c_407e:
+ModeSelectTiles:
 	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1283 bytes
-Lz_3c_4581:
+ModeSelectTilemap:
 	INCBIN "data/bank_03c/lz_4581.bin" ; $4581, 268 bytes
 Lz_3c_468d:
 	INCBIN "data/bank_03c/lz_468d.bin" ; $468d, 132 bytes
 	INCBIN "data/bank_03c/d_4711.bin" ; $4711, 64 bytes
-Lz_3c_4751:
+StadiumTiles:
 	INCBIN "data/bank_03c/lz_4751.bin" ; $4751, 2465 bytes
-Lz_3c_50f2:
+StadiumTilemap:
 	INCBIN "data/bank_03c/lz_50f2.bin" ; $50f2, 500 bytes
 Lz_3c_52e6:
 	INCBIN "data/bank_03c/lz_52e6.bin" ; $52e6, 107 bytes

@@ -788,7 +788,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                 or src in data_entries or src in jt_entries):
             continue
         stem = "Lz" if kind == "lz" else "Data"
-        label = f"{stem}_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
+        label = labels.get(src) or \
+            f"{stem}_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
         data_marks[src] = (length, label, kind)
         data_labels[src] = label
         if length:

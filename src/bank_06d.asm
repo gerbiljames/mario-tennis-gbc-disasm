@@ -21,16 +21,16 @@ DataPtr_6d_0c:
 DataPtr_6d_0e:
 	dw Lz_6d_4656 ; $400e
 DataPtr_6d_10:
-	dw Lz_6d_4714 ; $4010
+	dw IntroAwesomeTiles ; $4010
 DataPtr_6d_12:
-	dw Lz_6d_4d3d ; $4012
+	dw IntroGreatestPlayerTiles ; $4012
 DataPtr_6d_14:
-	dw Lz_6d_5340 ; $4014
+	dw IntroGreatestPlayerTilemap ; $4014
 DataPtr_6d_16:
 	dw Lz_6d_546b ; $4016
 	INCBIN "data/bank_06d/d_4018.bin" ; $4018, 2 bytes
 DataPtr_6d_1a:
-	dw Lz_6d_54f3 ; $401a
+	dw IntroCharactersTiles ; $401a
 DataPtr_6d_1c:
 	dw Lz_6d_5f18 ; $401c
 DataPtr_6d_1e:
@@ -45,7 +45,7 @@ DataPtr_6d_28:
 	dw Lz_6d_6ac8 ; $4028
 	INCBIN "data/bank_06d/d_402a.bin" ; $402a, 6 bytes
 DataPtr_6d_30:
-	dw Lz_6d_62d5 ; $4030
+	dw TitleScreenTiles ; $4030
 	INCBIN "data/bank_06d/d_4032.bin" ; $4032, 2 bytes
 DataPtr_6d_34:
 	dw Lz_6d_6b13 ; $4034
@@ -113,16 +113,16 @@ Lz_6d_4581:
 	INCBIN "data/bank_06d/lz_4581.bin" ; $4581, 213 bytes
 Lz_6d_4656:
 	INCBIN "data/bank_06d/lz_4656.bin" ; $4656, 190 bytes
-Lz_6d_4714:
+IntroAwesomeTiles:
 	INCBIN "data/bank_06d/lz_4714.bin" ; $4714, 1577 bytes
-Lz_6d_4d3d:
+IntroGreatestPlayerTiles:
 	INCBIN "data/bank_06d/lz_4d3d.bin" ; $4d3d, 1539 bytes
-Lz_6d_5340:
+IntroGreatestPlayerTilemap:
 	INCBIN "data/bank_06d/lz_5340.bin" ; $5340, 299 bytes
 Lz_6d_546b:
 	INCBIN "data/bank_06d/lz_546b.bin" ; $546b, 72 bytes
 	INCBIN "data/bank_06d/d_54b3.bin" ; $54b3, 64 bytes
-Lz_6d_54f3:
+IntroCharactersTiles:
 	INCBIN "data/bank_06d/lz_54f3.bin" ; $54f3, 2597 bytes
 Lz_6d_5f18:
 	INCBIN "data/bank_06d/lz_5f18.bin" ; $5f18, 329 bytes
@@ -133,7 +133,7 @@ Lz_6d_6144:
 	INCBIN "data/bank_06d/lz_6144.bin" ; $6144, 268 bytes
 Lz_6d_6250:
 	INCBIN "data/bank_06d/lz_6250.bin" ; $6250, 133 bytes
-Lz_6d_62d5:
+TitleScreenTiles:
 	INCBIN "data/bank_06d/lz_62d5.bin" ; $62d5, 1962 bytes
 	INCBIN "data/bank_06d/d_6a7f.bin" ; $6a7f, 73 bytes
 Lz_6d_6ac8:

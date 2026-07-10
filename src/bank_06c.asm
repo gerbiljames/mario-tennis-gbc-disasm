@@ -5,14 +5,14 @@ INCLUDE "ram_constants.asm"
 SECTION "ROM Bank $6c", ROMX[$4000], BANK[$6c]
 
 DataPtr_6c_00:
-	dw Lz_6c_406c ; $4000
+	dw CompanyLogosTiles ; $4000
 DataPtr_6c_02:
-	dw Lz_6c_4778 ; $4002
+	dw CompanyLogosTilemap ; $4002
 DataPtr_6c_04:
 	dw Lz_6c_48af ; $4004
 	INCBIN "data/bank_06c/d_4006.bin" ; $4006, 2 bytes
 DataPtr_6c_08:
-	dw Lz_6c_4946 ; $4008
+	dw IntroRalliesTiles ; $4008
 DataPtr_6c_0a:
 	dw Lz_6c_505b ; $400a
 DataPtr_6c_0c:
@@ -45,27 +45,27 @@ DataPtr_6c_26:
 DataPtr_6c_28:
 	dw Lz_6c_57e1 ; $4028
 DataPtr_6c_2a:
-	dw Lz_6c_57f1 ; $402a
+	dw IntroSwingTiles ; $402a
 DataPtr_6c_2c:
 	dw Lz_6c_5c2e ; $402c
 DataPtr_6c_2e:
 	dw Lz_6c_5d0f ; $402e
 	INCBIN "data/bank_06c/d_4030.bin" ; $4030, 2 bytes
 DataPtr_6c_32:
-	dw Lz_6c_5d95 ; $4032
+	dw IntroCloseupTiles ; $4032
 DataPtr_6c_34:
 	dw Lz_6c_61ba ; $4034
 DataPtr_6c_36:
 	dw Lz_6c_6264 ; $4036
 	INCBIN "data/bank_06c/d_4038.bin" ; $4038, 52 bytes
-Lz_6c_406c:
+CompanyLogosTiles:
 	INCBIN "data/bank_06c/lz_406c.bin" ; $406c, 1804 bytes
-Lz_6c_4778:
+CompanyLogosTilemap:
 	INCBIN "data/bank_06c/lz_4778.bin" ; $4778, 311 bytes
 Lz_6c_48af:
 	INCBIN "data/bank_06c/lz_48af.bin" ; $48af, 87 bytes
 	INCBIN "data/bank_06c/d_4906.bin" ; $4906, 64 bytes
-Lz_6c_4946:
+IntroRalliesTiles:
 	INCBIN "data/bank_06c/lz_4946.bin" ; $4946, 1813 bytes
 Lz_6c_505b:
 	INCBIN "data/bank_06c/lz_505b.bin" ; $505b, 92 bytes
@@ -98,14 +98,14 @@ Lz_6c_56f9:
 	INCBIN "data/bank_06c/lz_56f9.bin" ; $56f9, 232 bytes
 Lz_6c_57e1:
 	INCBIN "data/bank_06c/lz_57e1.bin" ; $57e1, 16 bytes
-Lz_6c_57f1:
+IntroSwingTiles:
 	INCBIN "data/bank_06c/lz_57f1.bin" ; $57f1, 1085 bytes
 Lz_6c_5c2e:
 	INCBIN "data/bank_06c/lz_5c2e.bin" ; $5c2e, 225 bytes
 Lz_6c_5d0f:
 	INCBIN "data/bank_06c/lz_5d0f.bin" ; $5d0f, 70 bytes
 	INCBIN "data/bank_06c/d_5d55.bin" ; $5d55, 64 bytes
-Lz_6c_5d95:
+IntroCloseupTiles:
 	INCBIN "data/bank_06c/lz_5d95.bin" ; $5d95, 1061 bytes
 Lz_6c_61ba:
 	INCBIN "data/bank_06c/lz_61ba.bin" ; $61ba, 170 bytes

@@ -35,22 +35,22 @@ DataPtr_3f_1a:
 DataPtr_3f_1c:
 	dw Lz_3f_6219 ; $401c
 DataPtr_3f_1e:
-	dw Lz_3f_62dd ; $401e
+	dw VarsityTeamChartTiles ; $401e
 DataPtr_3f_20:
-	dw Lz_3f_67ff ; $4020
+	dw VarsityTeamChartTilemap ; $4020
 DataPtr_3f_22:
 	dw Lz_3f_6944 ; $4022
 	INCBIN "data/bank_03f/d_4024.bin" ; $4024, 2 bytes
 DataPtr_3f_26:
-	dw Lz_3f_6a11 ; $4026
+	dw VarsityTeamChartTilemap2 ; $4026
 DataPtr_3f_28:
 	dw Lz_3f_6b4e ; $4028
 DataPtr_3f_2a:
 	dw Lz_3f_6bdd ; $402a
 DataPtr_3f_2c:
-	dw Lz_3f_6c03 ; $402c
+	dw MugshotTiles ; $402c
 DataPtr_3f_2e:
-	dw Lz_3f_6feb ; $402e
+	dw TournamentBracketTiles ; $402e
 DataPtr_3f_30:
 	dw Lz_3f_74b3 ; $4030
 DataPtr_3f_32:
@@ -1893,22 +1893,22 @@ Lz_3f_616f:
 	INCBIN "data/bank_03f/lz_616f.bin" ; $616f, 170 bytes
 Lz_3f_6219:
 	INCBIN "data/bank_03f/lz_6219.bin" ; $6219, 196 bytes
-Lz_3f_62dd:
+VarsityTeamChartTiles:
 	INCBIN "data/bank_03f/lz_62dd.bin" ; $62dd, 1314 bytes
-Lz_3f_67ff:
+VarsityTeamChartTilemap:
 	INCBIN "data/bank_03f/lz_67ff.bin" ; $67ff, 325 bytes
 Lz_3f_6944:
 	INCBIN "data/bank_03f/lz_6944.bin" ; $6944, 141 bytes
 	INCBIN "data/bank_03f/d_69d1.bin" ; $69d1, 64 bytes
-Lz_3f_6a11:
+VarsityTeamChartTilemap2:
 	INCBIN "data/bank_03f/lz_6a11.bin" ; $6a11, 317 bytes
 Lz_3f_6b4e:
 	INCBIN "data/bank_03f/lz_6b4e.bin" ; $6b4e, 143 bytes
 Lz_3f_6bdd:
 	INCBIN "data/bank_03f/lz_6bdd.bin" ; $6bdd, 38 bytes
-Lz_3f_6c03:
+MugshotTiles:
 	INCBIN "data/bank_03f/lz_6c03.bin" ; $6c03, 1000 bytes
-Lz_3f_6feb:
+TournamentBracketTiles:
 	INCBIN "data/bank_03f/lz_6feb.bin" ; $6feb, 1224 bytes
 Lz_3f_74b3:
 	INCBIN "data/bank_03f/lz_74b3.bin" ; $74b3, 31 bytes
