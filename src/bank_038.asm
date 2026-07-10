@@ -5939,7 +5939,7 @@ Label_38_71b0:
 	ldh [rWBK], a ; $71b3
 	ret ; $71b5
 Text_38_71b6:
-	INCBIN "data/bank_038/text_71b6.bin" ; $71b6, 106 bytes
+	INCLUDE "data/bank_038/text_71b6.asm" ; $71b6, 106 bytes
 Func_38_7220:
 	ld hl, $722d ; $7220
 	ld a, [$cb04] ; $7223

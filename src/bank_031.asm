@@ -7,7 +7,7 @@ SECTION "ROM Bank $31", ROMX[$4000], BANK[$31]
 FarPtr_31_00:
 	dw Func_31_7bc3 ; $4000
 Text_31_4002:
-	INCBIN "data/bank_031/text_4002.bin" ; $4002, 15297 bytes
+	INCLUDE "data/bank_031/text_4002.asm" ; $4002, 15297 bytes
 Func_31_7bc3:
 	push af ; $7bc3
 	ld a, $00 ; $7bc4

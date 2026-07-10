@@ -1686,7 +1686,7 @@ Label_04_4c26:
 	pop hl ; $4c27
 	ret ; $4c28
 Text_04_4c29:
-	INCBIN "data/bank_004/text_4c29.bin" ; $4c29, 32 bytes
+	INCLUDE "data/bank_004/text_4c29.asm" ; $4c29, 32 bytes
 Func_04_4c49:
 	ld a, e ; $4c49
 	or a, d ; $4c4a

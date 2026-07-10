@@ -21,10 +21,11 @@ build/%.o: src/%.asm | build/rgbdscheck.o
 build/rgbdscheck.o: rgbdscheck.asm | build
 	$(RGBASM) -o $@ $<
 
-# INCLUDE paths resolve via -I include; INCBIN paths are repo-relative.
+# Top-of-file INCLUDE paths resolve via -I include; INCBIN paths and the
+# indented data/ INCLUDEs (generated text source) are repo-relative.
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
 $(foreach src,$(SRCS),$(eval build/$(notdir $(src:.asm=.o)): \
-	$(shell sed -n 's|^INCLUDE "\(.*\)"|include/\1|p; s|^[[:space:]]*INCBIN "\([^"]*\)".*|\1|p' $(src))))
+	$(shell sed -n 's|^INCLUDE "\(.*\)"|include/\1|p; s|^[[:space:]]*INCBIN "\([^"]*\)".*|\1|p; s|^[[:space:]]*INCLUDE "\(data/[^"]*\)".*|\1|p' $(src))))
 endif
 
 build:

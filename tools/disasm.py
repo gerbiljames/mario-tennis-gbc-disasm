@@ -1034,13 +1034,16 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                         letters = sum(1 for b in rom[seg:j]
                                       if 0x61 <= (b | 0x20) <= 0x7A)
                         if n >= 32 and txt >= n * 0.95 and letters >= n // 3:
+                            # text renders as generated db source (still
+                            # under gitignored data/, so no ROM content
+                            # lands in the repository)
+                            blob = f"bank_{bank:03x}/text_{scpu:04x}.asm"
                             lines.append(f"Text_{bank:02x}_{scpu:04x}:")
-                            stem = "text"
+                            lines.append(f'\tINCLUDE "data/{blob}" ; ${scpu:04x}, {n} bytes')
                         else:
-                            stem = "d"
-                        blob = f"bank_{bank:03x}/{stem}_{scpu:04x}.bin"
+                            blob = f"bank_{bank:03x}/d_{scpu:04x}.bin"
+                            lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
                         manifest.append((blob, seg, n))
-                        lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
                     else:
                         lines.append(f"\tds {j - seg}, ${b:02x} "
                                      f"; ${offset_to_cpu(seg):04x}, fill")
