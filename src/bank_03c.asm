@@ -10,7 +10,8 @@ DataPtr_3c_02:
 	dw ModeSelectTilemap ; $4002
 DataPtr_3c_04:
 	dw Lz_3c_468d ; $4004
-	INCBIN "data/bank_03c/d_4006.bin" ; $4006, 2 bytes
+DataPtr_3c_06:
+	dw Data_3c_4711 ; $4006
 DataPtr_3c_08:
 	dw StadiumTiles ; $4008
 DataPtr_3c_0a:
@@ -122,6 +123,7 @@ ModeSelectTilemap:
 	INCBIN "data/bank_03c/lz_4581.bin" ; $4581, 268 bytes
 Lz_3c_468d:
 	INCBIN "data/bank_03c/lz_468d.bin" ; $468d, 132 bytes
+Data_3c_4711:
 	INCBIN "data/bank_03c/d_4711.bin" ; $4711, 64 bytes
 StadiumTiles:
 	INCBIN "data/bank_03c/lz_4751.bin" ; $4751, 2465 bytes

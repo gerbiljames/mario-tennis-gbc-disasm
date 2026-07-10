@@ -46,7 +46,41 @@ FarPtr_39_28:
 	dw Func_39_4b6d ; $4028
 FarPtr_39_2a:
 	dw Func_39_4be8 ; $402a
-	INCBIN "data/bank_039/d_402c.bin" ; $402c, 42 bytes
+	INCBIN "data/bank_039/d_402c.bin" ; $402c, 8 bytes
+DataPtr_39_34:
+	dw Lz_39_47ab ; $4034
+DataPtr_39_36:
+	dw Lz_39_47ab ; $4036
+DataPtr_39_38:
+	dw Lz_39_47ab ; $4038
+DataPtr_39_3a:
+	dw Lz_39_47ab ; $403a
+DataPtr_39_3c:
+	dw Lz_39_47ab ; $403c
+DataPtr_39_3e:
+	dw Lz_39_47ab ; $403e
+DataPtr_39_40:
+	dw Lz_39_47ab ; $4040
+DataPtr_39_42:
+	dw Lz_39_47ab ; $4042
+DataPtr_39_44:
+	dw Lz_39_47ab ; $4044
+DataPtr_39_46:
+	dw Lz_39_47ab ; $4046
+DataPtr_39_48:
+	dw Lz_39_47ab ; $4048
+DataPtr_39_4a:
+	dw Lz_39_47ab ; $404a
+DataPtr_39_4c:
+	dw Lz_39_47ab ; $404c
+DataPtr_39_4e:
+	dw Lz_39_47ab ; $404e
+DataPtr_39_50:
+	dw Lz_39_47ab ; $4050
+DataPtr_39_52:
+	dw Lz_39_47ab ; $4052
+DataPtr_39_54:
+	dw Lz_39_47ab ; $4054
 DataPtr_39_56:
 	dw Lz_39_47ab ; $4056
 DataPtr_39_58:

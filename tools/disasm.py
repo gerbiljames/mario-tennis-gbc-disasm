@@ -519,22 +519,30 @@ class Disassembly:
                     added += 1
         print(f"hook dumps: {entries} captured calls, {added} new data slots")
 
-    def scan_lz_slots(self):
-        """Classify remaining table slots whose pointers hold valid LZ data.
+    def scan_data_slots(self):
+        """Classify remaining table slots whose pointers hold data.
 
-        Only slots inside a table extent already proven by live usage
-        (farcall, inferred entry, or data slot) are considered. A slot is
-        accepted when its pointer's stream decodes cleanly within the bank
-        to a plausible size and the stream overlaps no code, no table
-        region, and no previously accepted blob.
+        Slots are considered inside a per-bank table extent: at least the
+        proven slot usage (farcall, inferred entry, or data slot), extended
+        to the lowest data-blob target when that target delimits the table
+        (the same self-delimiting rule infer_tables uses). A slot whose
+        pointer decodes as a clean LZ stream (plausible size, overlapping no
+        code, table region, or accepted blob) is accepted anywhere; in banks
+        whose table carries no code entries at all, remaining in-extent
+        pointers are accepted as raw data, carved up to the next known blob
+        start (bank 3d's palette sets sit exactly between its LZ streams).
         """
+        import bisect
         from collections import defaultdict
         floors = defaultdict(int)
+        code_table_banks = set()
         for off, (bank, slot, _e, _t) in self.farcalls.items():
             if off in self.instrs:
                 floors[bank] = max(floors[bank], slot + 2)
+                code_table_banks.add(bank)
         for _e, (bank, slot, _t) in self.inferred_entries.items():
             floors[bank] = max(floors[bank], slot + 2)
+            code_table_banks.add(bank)
         for bank, slot, _src, _k in self.data_slots.values():
             floors[bank] = max(floors[bank], slot + 2)
         live_entries = {e for off, (_b, _s, e, _t) in self.farcalls.items()
@@ -544,25 +552,46 @@ class Disassembly:
                          if length)
 
         def overlaps(a, b):
-            import bisect
             i = bisect.bisect_left(claimed, (b, b))
             return i > 0 and claimed[i - 1][1] > a
 
-        accepted = 0
-        for bank, floor in sorted(floors.items()):
+        extents = {}
+        for bank, floor in floors.items():
             base = bank * BANK_SIZE
-            for slot in range(0, floor, 2):
-                entry = base + slot
-                if (entry in self.data_slots or entry in live_entries
-                        or entry in self.code_bytes
-                        or entry + 1 in self.code_bytes):
+            tmin = min((src - base for (b, _s, src, _k) in
+                        self.data_slots.values() if b == bank), default=None)
+            if tmin is not None and floor <= tmin <= 0x100:
+                extents[bank] = tmin
+            else:
+                extents[bank] = floor
+
+        def scannable(bank, slot):
+            entry = bank * BANK_SIZE + slot
+            if (entry in self.data_slots or entry in live_entries
+                    or entry in self.code_bytes
+                    or entry + 1 in self.code_bytes):
+                return None
+            ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
+            if not (BANK_SIZE <= ptr < 0x8000):
+                return None
+            src = bank * BANK_SIZE + ptr - BANK_SIZE
+            if src < bank * BANK_SIZE + extents[bank] or src in self.code_bytes:
+                return None  # points into the table region or at code
+            return entry, src
+
+        accepted_lz = accepted_raw = 0
+        for bank, ext in sorted(extents.items()):
+            base = bank * BANK_SIZE
+            for slot in range(0, ext, 2):
+                cand = scannable(bank, slot)
+                if cand is None:
                     continue
-                ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
-                if not (BANK_SIZE <= ptr < 0x8000):
-                    continue
-                src = base + ptr - BANK_SIZE
-                if src < base + floor:
-                    continue  # points into the table region itself
+                entry, src = cand
+                if src in self.data_blobs:
+                    self.data_slots[entry] = (bank, slot, src,
+                                              self.data_blobs[src][1])
+                    accepted_lz += 1
+                    continue  # alias of an already-accepted blob
                 try:
                     data, length = lz.decompress(self.rom, src, base + BANK_SIZE)
                 except ValueError:
@@ -574,11 +603,45 @@ class Disassembly:
                     continue
                 self.data_slots[entry] = (bank, slot, src, "lz")
                 self.data_blobs.setdefault(src, (length, "lz"))
-                import bisect
                 bisect.insort(claimed, (src, src + length))
-                accepted += 1
-        print(f"lz slot scan: {accepted} additional data slots accepted "
-              f"({len(self.data_slots)} total)")
+                accepted_lz += 1
+
+        # Raw-pointer pass: safe only where no table slot is a code entry,
+        # so an in-range pointer cannot be an unproven function.
+        for bank, ext in sorted(extents.items()):
+            if bank in code_table_banks:
+                continue
+            base = bank * BANK_SIZE
+            starts = sorted(s for s in self.data_blobs
+                            if base <= s < base + BANK_SIZE)
+            for slot in range(0, ext, 2):
+                cand = scannable(bank, slot)
+                if cand is None:
+                    continue
+                entry, src = cand
+                if src in self.data_blobs:
+                    self.data_slots[entry] = (bank, slot, src,
+                                              self.data_blobs[src][1])
+                    accepted_raw += 1
+                    continue
+                if overlaps(src, src + 1):
+                    continue  # inside another blob: nothing to anchor
+                i = bisect.bisect_right(starts, src)
+                nxt = starts[i] if i < len(starts) else base + BANK_SIZE
+                length = nxt - src
+                if not 0 < length <= 0x2000:
+                    length = None
+                if length and any(b in self.code_bytes
+                                  for b in range(src, src + length)):
+                    length = None
+                self.data_slots[entry] = (bank, slot, src, "copy")
+                self.data_blobs.setdefault(src, (length, "copy"))
+                if length:
+                    bisect.insort(claimed, (src, src + length))
+                    bisect.insort(starts, src)
+                accepted_raw += 1
+        print(f"slot scan: {accepted_lz} lz + {accepted_raw} raw data slots "
+              f"accepted ({len(self.data_slots)} total)")
 
     def descend(self):
         work = list(self.instrs.keys())
@@ -948,7 +1011,7 @@ def main():
     if args.hooks:
         dis.load_hook_dumps(args.hooks)
     if helpers or args.hooks:
-        dis.scan_lz_slots()
+        dis.scan_data_slots()
     labels = build_labels(dis, overrides)
     hwregs = load_hwregs(args.hardware_inc)
     ramnames = load_ram_map(args.ram_map, "include/ram_constants.asm")

@@ -89,7 +89,38 @@ DataPtr_3f_52:
 	dw Lz_3f_7a63 ; $4052
 DataPtr_3f_54:
 	dw Lz_3f_7aad ; $4054
-	INCBIN "data/bank_03f/d_4056.bin" ; $4056, 32 bytes
+DataPtr_3f_56:
+	dw Lz_3f_7af7 ; $4056
+DataPtr_3f_58:
+	dw Lz_3f_7af7 ; $4058
+DataPtr_3f_5a:
+	dw Lz_3f_7af7 ; $405a
+DataPtr_3f_5c:
+	dw Lz_3f_7af7 ; $405c
+DataPtr_3f_5e:
+	dw Lz_3f_7af7 ; $405e
+DataPtr_3f_60:
+	dw Lz_3f_7af7 ; $4060
+DataPtr_3f_62:
+	dw Lz_3f_7af7 ; $4062
+DataPtr_3f_64:
+	dw Lz_3f_7af7 ; $4064
+DataPtr_3f_66:
+	dw Lz_3f_7af7 ; $4066
+DataPtr_3f_68:
+	dw Lz_3f_7af7 ; $4068
+DataPtr_3f_6a:
+	dw Lz_3f_7af7 ; $406a
+DataPtr_3f_6c:
+	dw Lz_3f_7af7 ; $406c
+DataPtr_3f_6e:
+	dw Lz_3f_7af7 ; $406e
+DataPtr_3f_70:
+	dw Lz_3f_7af7 ; $4070
+DataPtr_3f_72:
+	dw Lz_3f_7af7 ; $4072
+DataPtr_3f_74:
+	dw Lz_3f_7af7 ; $4074
 DataPtr_3f_76:
 	dw Lz_3f_7af7 ; $4076
 	INCBIN "data/bank_03f/d_4078.bin" ; $4078, 2 bytes

@@ -56,7 +56,15 @@ FarPtr_3e_30:
 	dw Func_3e_4ba3 ; $4030
 DataPtr_3e_32:
 	dw Lz_3e_69d5 ; $4032
-	INCBIN "data/bank_03e/d_4034.bin" ; $4034, 10 bytes
+DataPtr_3e_34:
+	dw Lz_3e_69d5 ; $4034
+DataPtr_3e_36:
+	dw Lz_3e_69d5 ; $4036
+DataPtr_3e_38:
+	dw Lz_3e_69d5 ; $4038
+DataPtr_3e_3a:
+	dw Lz_3e_69d5 ; $403a
+	INCBIN "data/bank_03e/d_403c.bin" ; $403c, 2 bytes
 DataPtr_3e_3e:
 	dw Lz_3e_7466 ; $403e
 DataPtr_3e_40:

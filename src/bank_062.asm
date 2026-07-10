@@ -4,7 +4,8 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $62", ROMX[$4000], BANK[$62]
 
-	INCBIN "data/bank_062/d_4000.bin" ; $4000, 2 bytes
+DataPtr_62_00:
+	dw Data_62_4b13 ; $4000
 DataPtr_62_02:
 	dw Data_62_4040 ; $4002
 DataPtr_62_04:
@@ -15,10 +16,47 @@ DataPtr_62_08:
 	dw Data_62_4b13 ; $4008
 DataPtr_62_0a:
 	dw Data_62_4b3b ; $400a
-	INCBIN "data/bank_062/d_400c.bin" ; $400c, 2 bytes
+DataPtr_62_0c:
+	dw Data_62_4b63 ; $400c
 DataPtr_62_0e:
 	dw Lz_62_4080 ; $400e
-	INCBIN "data/bank_062/d_4010.bin" ; $4010, 48 bytes
+DataPtr_62_10:
+	dw Data_62_5600 ; $4010
+DataPtr_62_12:
+	dw Data_62_4b63 ; $4012
+DataPtr_62_14:
+	dw Lz_62_528d ; $4014
+DataPtr_62_16:
+	dw Lz_62_54e3 ; $4016
+DataPtr_62_18:
+	dw Data_62_5600 ; $4018
+	INCBIN "data/bank_062/d_401a.bin" ; $401a, 4 bytes
+DataPtr_62_1e:
+	dw Lz_62_4ba3 ; $401e
+DataPtr_62_20:
+	dw Data_62_63e1 ; $4020
+	INCBIN "data/bank_062/d_4022.bin" ; $4022, 2 bytes
+DataPtr_62_24:
+	dw Lz_62_5ffc ; $4024
+DataPtr_62_26:
+	dw Lz_62_62cf ; $4026
+DataPtr_62_28:
+	dw Data_62_63e1 ; $4028
+	INCBIN "data/bank_062/d_402a.bin" ; $402a, 4 bytes
+DataPtr_62_2e:
+	dw Lz_62_5690 ; $402e
+DataPtr_62_30:
+	dw Data_62_6f2e ; $4030
+	INCBIN "data/bank_062/d_4032.bin" ; $4032, 2 bytes
+DataPtr_62_34:
+	dw Lz_62_6bc3 ; $4034
+DataPtr_62_36:
+	dw Lz_62_6df5 ; $4036
+DataPtr_62_38:
+	dw Data_62_6f2e ; $4038
+	INCBIN "data/bank_062/d_403a.bin" ; $403a, 4 bytes
+DataPtr_62_3e:
+	dw Lz_62_6471 ; $403e
 Data_62_4040:
 	INCBIN "data/bank_062/d_4040.bin" ; $4040, 64 bytes
 Lz_62_4080:
@@ -31,4 +69,29 @@ Data_62_4b13:
 	INCBIN "data/bank_062/d_4b13.bin" ; $4b13, 40 bytes
 Data_62_4b3b:
 	INCBIN "data/bank_062/d_4b3b.bin" ; $4b3b, 40 bytes
-	INCBIN "data/bank_062/d_4b63.bin" ; $4b63, 13469 bytes
+Data_62_4b63:
+	INCBIN "data/bank_062/d_4b63.bin" ; $4b63, 64 bytes
+Lz_62_4ba3:
+	INCBIN "data/bank_062/lz_4ba3.bin" ; $4ba3, 1770 bytes
+Lz_62_528d:
+	INCBIN "data/bank_062/lz_528d.bin" ; $528d, 598 bytes
+Lz_62_54e3:
+	INCBIN "data/bank_062/lz_54e3.bin" ; $54e3, 285 bytes
+Data_62_5600:
+	INCBIN "data/bank_062/d_5600.bin" ; $5600, 144 bytes
+Lz_62_5690:
+	INCBIN "data/bank_062/lz_5690.bin" ; $5690, 2412 bytes
+Lz_62_5ffc:
+	INCBIN "data/bank_062/lz_5ffc.bin" ; $5ffc, 723 bytes
+Lz_62_62cf:
+	INCBIN "data/bank_062/lz_62cf.bin" ; $62cf, 274 bytes
+Data_62_63e1:
+	INCBIN "data/bank_062/d_63e1.bin" ; $63e1, 144 bytes
+Lz_62_6471:
+	INCBIN "data/bank_062/lz_6471.bin" ; $6471, 1874 bytes
+Lz_62_6bc3:
+	INCBIN "data/bank_062/lz_6bc3.bin" ; $6bc3, 562 bytes
+Lz_62_6df5:
+	INCBIN "data/bank_062/lz_6df5.bin" ; $6df5, 313 bytes
+Data_62_6f2e:
+	INCBIN "data/bank_062/d_6f2e.bin" ; $6f2e, 4306 bytes
