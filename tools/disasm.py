@@ -259,6 +259,64 @@ class Disassembly:
         print(f"inferred {len(self.inferred_entries)} unused farcall-table entries "
               f"({seeded} new code seeds)")
 
+    def _shape(self, off, n=12):
+        """Opcode-shape fingerprint: n instruction opcodes with operands
+        wildcarded, or None if anything decodes invalid."""
+        shape = []
+        for _ in range(n):
+            if off + 1 >= len(self.rom):
+                return None
+            ins = sm83.decode(self.rom, off, offset_to_cpu(off))
+            if not ins.valid:
+                return None
+            shape.append(self.rom[off])
+            if self.rom[off] == 0xCB:
+                shape.append(self.rom[off + 1])
+            if ins.ends_flow and not ins.is_cond:
+                break
+            off += ins.size
+        return tuple(shape)
+
+    def infer_twin_tables(self):
+        """Find untraced banks that are structural twins of traced ones.
+
+        Several groups of data banks each carry a relocated copy of the same
+        bank-local helper, dispatched via farcall slot 0 (e.g. the $a0-byte
+        OAM-frame loader in banks $25/$26/$30-$37/$6e). For banks with no
+        traced farcall usage, accept the dw at $4000 as a slot-0 table entry
+        if its target's opcode shape exactly matches a traced bank's slot-0
+        target. Seeds the twins' helpers as code.
+        """
+        used_banks = {bank for off, (bank, _s, _e, _t) in self.farcalls.items()
+                      if off in self.instrs}
+        fingerprints = {}
+        for off, (bank, slot, _entry, target) in self.farcalls.items():
+            if off in self.instrs and slot == 0:
+                sh = self._shape(target)
+                if sh:
+                    fingerprints.setdefault(sh, bank)
+        found = 0
+        for bank in range(1, len(self.rom) // BANK_SIZE):
+            if bank in used_banks:
+                continue
+            base = bank * BANK_SIZE
+            cpu = self.rom[base] | (self.rom[base + 1] << 8)
+            if not (BANK_SIZE + 2 <= cpu < 0x8000):
+                continue
+            target = base + cpu - BANK_SIZE
+            sh = self._shape(target)
+            if sh is None or sh not in fingerprints:
+                continue
+            self.inferred_entries[base] = (bank, 0, target)
+            ins = self.decode_at(target)
+            if ins.valid and not self.conflicts(target, ins):
+                self.mark(target, ins)
+            found += 1
+            print(f"  bank ${bank:02x}: slot-0 twin of bank "
+                  f"${fingerprints[sh]:02x} (target ${cpu:04x})")
+        print(f"twin-bank scan: {found} untraced twin banks seeded")
+        return found
+
     def parse_jumptables(self):
         """Parse the inline dw jump tables that follow rst $00 sites.
 
@@ -591,6 +649,8 @@ def main():
         dis.descend()
         dis.infer_tables()
         dis.descend()
+        if dis.infer_twin_tables():
+            dis.descend()
         # jump tables and descent feed each other; iterate to a fixed point
         for _ in range(8):
             if not dis.parse_jumptables():

@@ -4,4 +4,59 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $1f", ROMX[$4000], BANK[$1f]
 
-	INCBIN "data/bank_01f/d_4000.bin" ; $4000, 16384 bytes
+FarPtr_1f_00:
+	dw Func_1f_7a8b ; $4000
+	INCBIN "data/bank_01f/d_4002.bin" ; $4002, 14985 bytes
+Func_1f_7a8b:
+	push af ; $7a8b
+	ld a, $00 ; $7a8c
+	call Func_1f_7a9b ; $7a8e
+	pop af ; $7a91
+	ret ; $7a92
+	INCBIN "data/bank_01f/d_7a93.bin" ; $7a93, 8 bytes
+Func_1f_7a9b:
+	push bc ; $7a9b
+	push de ; $7a9c
+	push hl ; $7a9d
+	ld hl, $4004 ; $7a9e
+	sla e ; $7aa1
+	rl d ; $7aa3
+	add hl, de ; $7aa5
+	ld e, [hl] ; $7aa6
+	inc hl ; $7aa7
+	ld d, [hl] ; $7aa8
+	ld hl, $417e ; $7aa9
+	add hl, de ; $7aac
+	or a, a ; $7aad
+	jr nz, Label_1f_7ab7 ; $7aae
+	ld de, $c600 ; $7ab0
+	ld c, $a0 ; $7ab3
+	jr Label_1f_7abc ; $7ab5
+Label_1f_7ab7:
+	ld de, $d880 ; $7ab7
+	ld c, $10 ; $7aba
+Label_1f_7abc:
+	dec c ; $7abc
+	jr z, Label_1f_7ac9 ; $7abd
+	ld a, [hl+] ; $7abf
+	ld [de], a ; $7ac0
+	inc de ; $7ac1
+	or a, a ; $7ac2
+	jr nz, Label_1f_7abc ; $7ac3
+	pop hl ; $7ac5
+	pop de ; $7ac6
+	pop bc ; $7ac7
+	ret ; $7ac8
+Label_1f_7ac9:
+	xor a, a ; $7ac9
+	ld [de], a ; $7aca
+	ldh a, [$ff9e] ; $7acb
+	or a, a ; $7acd
+	jr z, Label_1f_7ad2 ; $7ace
+	sound $2c ; $7ad0
+Label_1f_7ad2:
+	pop hl ; $7ad2
+	pop de ; $7ad3
+	pop bc ; $7ad4
+	ret ; $7ad5
+	INCBIN "data/bank_01f/d_7ad6.bin" ; $7ad6, 1322 bytes

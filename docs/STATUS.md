@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**116,882 instructions (~221 KB of code) disassembled across 63 of 128 banks;
+**116,972 instructions (~221 KB of code) disassembled across 65 of 128 banks;
 everything rebuilds byte-perfect** (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). The remaining banks are so far
 pure data (graphics/audio/tilemaps). The repo contains no ROM bytes: all data
@@ -47,6 +47,16 @@ construct, now emitted as pseudo-ops (macros in include/macros.inc):
   operands look like data pointers (tilemap/copy sources?).
 - `Func_00_07c5` is a register-based far dispatcher (bank in h, same
   $4000 tables) — runtime-computed, not statically exploitable.
+
+**Twin data banks (2026-07-10):** groups of data banks carry relocated
+copies of the same bank-local helper, dispatched via farcall slot 0.
+Confirmed group: an OAM-frame loader (indexes a second dw table at $4004,
+copies $a0 bytes toward $c600) in banks $1f, $25, $26, $30-$37, $5e, $6e —
+13 copies; likely one bank per character's animation frames. disasm.py's
+`infer_twin_tables()` fingerprints traced slot-0 targets (opcode shape,
+operands wildcarded) and matches untraced banks' slot-0 candidates: found
+$1f and $5e statically. Groups with identical slot-0 targets ($20-$23 →
+$7e7d, $29-$2b → $5e9d) are other such families.
 
 Largest code banks: $08 (match engine), $00, $13 (story engine), $05, $1e,
 $1d (story practice-drill engine), $0f, $38, $3b, $0a.

@@ -733,7 +733,9 @@ bank_01e/d_7445.bin 07b445 37
 bank_01e/d_75a6.bin 07b5a6 442
 bank_01e/d_7a30.bin 07ba30 c
 bank_01e/d_7b5a.bin 07bb5a 4a6
-bank_01f/d_4000.bin 07c000 4000
+bank_01f/d_4002.bin 07c002 3a89
+bank_01f/d_7a93.bin 07fa93 8
+bank_01f/d_7ad6.bin 07fad6 52a
 bank_020/d_4012.bin 080012 d
 bank_020/d_403e.bin 08003e 1f
 bank_020/d_4084.bin 080084 34
@@ -1073,7 +1075,9 @@ bank_05a/d_4000.bin 168000 4000
 bank_05b/d_4000.bin 16c000 4000
 bank_05c/d_4000.bin 170000 4000
 bank_05d/d_4000.bin 174000 4000
-bank_05e/d_4000.bin 178000 4000
+bank_05e/d_4002.bin 178002 2e8d
+bank_05e/d_6e97.bin 17ae97 8
+bank_05e/d_6eda.bin 17aeda 1126
 bank_05f/d_4000.bin 17c000 d0
 bank_05f/d_40d2.bin 17c0d2 3f1b
 bank_060/d_400d.bin 18000d 3ff3
