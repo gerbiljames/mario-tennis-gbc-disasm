@@ -8,7 +8,12 @@ DataPtr_71_00:
 	dw Data_71_4014 ; $4000
 DataPtr_71_02:
 	dw Data_71_468d ; $4002
-	INCBIN "data/bank_071/d_4004.bin" ; $4004, 6 bytes
+DataPtr_71_04:
+	dw Data_71_4cfd ; $4004
+DataPtr_71_06:
+	dw Data_71_536d ; $4006
+DataPtr_71_08:
+	dw Data_71_59dd ; $4008
 DataPtr_71_0a:
 	dw Data_71_604d ; $400a
 DataPtr_71_0c:
@@ -22,7 +27,13 @@ DataPtr_71_12:
 Data_71_4014:
 	INCBIN "data/bank_071/d_4014.bin" ; $4014, 1657 bytes
 Data_71_468d:
-	INCBIN "data/bank_071/d_468d.bin" ; $468d, 6592 bytes
+	INCBIN "data/bank_071/d_468d.bin" ; $468d, 1648 bytes
+Data_71_4cfd:
+	INCBIN "data/bank_071/d_4cfd.bin" ; $4cfd, 1648 bytes
+Data_71_536d:
+	INCBIN "data/bank_071/d_536d.bin" ; $536d, 1648 bytes
+Data_71_59dd:
+	INCBIN "data/bank_071/d_59dd.bin" ; $59dd, 1648 bytes
 Data_71_604d:
 	INCBIN "data/bank_071/d_604d.bin" ; $604d, 16 bytes
 	INCBIN "data/bank_071/d_605d.bin" ; $605d, 2415 bytes

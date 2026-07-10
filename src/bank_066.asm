@@ -7,7 +7,7 @@ SECTION "ROM Bank $66", ROMX[$4000], BANK[$66]
 DataPtr_66_00:
 	dw Data_66_4040 ; $4000
 DataPtr_66_02:
-	dw $406a ; $4002
+	dw Data_66_406a ; $4002
 DataPtr_66_04:
 	dw Lz_66_45b6 ; $4004
 DataPtr_66_06:
@@ -19,10 +19,11 @@ DataPtr_66_0a:
 DataPtr_66_0c:
 	dw Data_66_4d4f ; $400c
 DataPtr_66_0e:
-	dw $40aa ; $400e
+	dw Lz_66_40aa ; $400e
 DataPtr_66_10:
 	dw Data_66_4d4f ; $4010
-	INCBIN "data/bank_066/d_4012.bin" ; $4012, 2 bytes
+DataPtr_66_12:
+	dw Data_66_4d79 ; $4012
 DataPtr_66_14:
 	dw Lz_66_55ab ; $4014
 DataPtr_66_16:
@@ -37,7 +38,8 @@ DataPtr_66_1e:
 	dw Lz_66_4db9 ; $401e
 DataPtr_66_20:
 	dw Data_66_5d82 ; $4020
-	INCBIN "data/bank_066/d_4022.bin" ; $4022, 2 bytes
+DataPtr_66_22:
+	dw Data_66_5d8b ; $4022
 DataPtr_66_24:
 	dw Lz_66_66c8 ; $4024
 DataPtr_66_26:
@@ -53,7 +55,7 @@ DataPtr_66_2e:
 DataPtr_66_30:
 	dw Data_66_6df8 ; $4030
 DataPtr_66_32:
-	dw $6e22 ; $4032
+	dw Data_66_6e22 ; $4032
 DataPtr_66_34:
 	dw Lz_66_75de ; $4034
 DataPtr_66_36:
@@ -65,10 +67,13 @@ DataPtr_66_3a:
 DataPtr_66_3c:
 	dw Data_66_7c2d ; $403c
 DataPtr_66_3e:
-	dw $6e62 ; $403e
+	dw Lz_66_6e62 ; $403e
 Data_66_4040:
-	INCBIN "data/bank_066/d_4040.bin" ; $4040, 136 bytes
-	INCBIN "data/bank_066/d_40c8.bin" ; $40c8, 1262 bytes
+	INCBIN "data/bank_066/d_4040.bin" ; $4040, 42 bytes
+Data_66_406a:
+	INCBIN "data/bank_066/d_406a.bin" ; $406a, 64 bytes
+Lz_66_40aa:
+	INCBIN "data/bank_066/lz_40aa.bin" ; $40aa, 1292 bytes
 Lz_66_45b6:
 	INCBIN "data/bank_066/lz_45b6.bin" ; $45b6, 1012 bytes
 Lz_66_49aa:
@@ -78,7 +83,9 @@ Lz_66_4ca2:
 Lz_66_4d07:
 	INCBIN "data/bank_066/lz_4d07.bin" ; $4d07, 72 bytes
 Data_66_4d4f:
-	INCBIN "data/bank_066/d_4d4f.bin" ; $4d4f, 106 bytes
+	INCBIN "data/bank_066/d_4d4f.bin" ; $4d4f, 42 bytes
+Data_66_4d79:
+	INCBIN "data/bank_066/d_4d79.bin" ; $4d79, 64 bytes
 Lz_66_4db9:
 	INCBIN "data/bank_066/lz_4db9.bin" ; $4db9, 2034 bytes
 Lz_66_55ab:
@@ -90,7 +97,9 @@ Lz_66_5c8c:
 Lz_66_5d02:
 	INCBIN "data/bank_066/lz_5d02.bin" ; $5d02, 128 bytes
 Data_66_5d82:
-	INCBIN "data/bank_066/d_5d82.bin" ; $5d82, 73 bytes
+	INCBIN "data/bank_066/d_5d82.bin" ; $5d82, 9 bytes
+Data_66_5d8b:
+	INCBIN "data/bank_066/d_5d8b.bin" ; $5d8b, 64 bytes
 Lz_66_5dcb:
 	INCBIN "data/bank_066/lz_5dcb.bin" ; $5dcb, 2301 bytes
 Lz_66_66c8:
@@ -102,8 +111,11 @@ Lz_66_6d4c:
 Lz_66_6dad:
 	INCBIN "data/bank_066/lz_6dad.bin" ; $6dad, 75 bytes
 Data_66_6df8:
-	INCBIN "data/bank_066/d_6df8.bin" ; $6df8, 136 bytes
-	INCBIN "data/bank_066/d_6e80.bin" ; $6e80, 1886 bytes
+	INCBIN "data/bank_066/d_6df8.bin" ; $6df8, 42 bytes
+Data_66_6e22:
+	INCBIN "data/bank_066/d_6e22.bin" ; $6e22, 64 bytes
+Lz_66_6e62:
+	INCBIN "data/bank_066/lz_6e62.bin" ; $6e62, 1916 bytes
 Lz_66_75de:
 	INCBIN "data/bank_066/lz_75de.bin" ; $75de, 971 bytes
 Lz_66_79a9:

@@ -46,19 +46,26 @@ DataPtr_60_26:
 	dw Lz_60_6be8 ; $4026
 DataPtr_60_28:
 	dw Data_60_6c8e ; $4028
-	INCBIN "data/bank_060/d_402a.bin" ; $402a, 4 bytes
+DataPtr_60_2a:
+	dw Data_60_6cb6 ; $402a
+DataPtr_60_2c:
+	dw Data_60_6cde ; $402c
 DataPtr_60_2e:
 	dw Lz_60_5df1 ; $402e
 DataPtr_60_30:
 	dw Data_60_7bad ; $4030
-	INCBIN "data/bank_060/d_4032.bin" ; $4032, 2 bytes
+DataPtr_60_32:
+	dw Data_60_6cde ; $4032
 DataPtr_60_34:
 	dw Lz_60_78d0 ; $4034
 DataPtr_60_36:
 	dw Lz_60_7b0d ; $4036
 DataPtr_60_38:
 	dw Data_60_7bad ; $4038
-	INCBIN "data/bank_060/d_403a.bin" ; $403a, 4 bytes
+DataPtr_60_3a:
+	dw Data_60_7bd5 ; $403a
+DataPtr_60_3c:
+	dw Data_60_7bfd ; $403c
 DataPtr_60_3e:
 	dw Lz_60_6d1e ; $403e
 Data_60_4040:
@@ -94,7 +101,11 @@ Lz_60_69a2:
 Lz_60_6be8:
 	INCBIN "data/bank_060/lz_6be8.bin" ; $6be8, 166 bytes
 Data_60_6c8e:
-	INCBIN "data/bank_060/d_6c8e.bin" ; $6c8e, 144 bytes
+	INCBIN "data/bank_060/d_6c8e.bin" ; $6c8e, 40 bytes
+Data_60_6cb6:
+	INCBIN "data/bank_060/d_6cb6.bin" ; $6cb6, 40 bytes
+Data_60_6cde:
+	INCBIN "data/bank_060/d_6cde.bin" ; $6cde, 64 bytes
 Lz_60_6d1e:
 	INCBIN "data/bank_060/lz_6d1e.bin" ; $6d1e, 2994 bytes
 Lz_60_78d0:
@@ -102,4 +113,8 @@ Lz_60_78d0:
 Lz_60_7b0d:
 	INCBIN "data/bank_060/lz_7b0d.bin" ; $7b0d, 160 bytes
 Data_60_7bad:
-	INCBIN "data/bank_060/d_7bad.bin" ; $7bad, 1107 bytes
+	INCBIN "data/bank_060/d_7bad.bin" ; $7bad, 40 bytes
+Data_60_7bd5:
+	INCBIN "data/bank_060/d_7bd5.bin" ; $7bd5, 40 bytes
+Data_60_7bfd:
+	INCBIN "data/bank_060/d_7bfd.bin" ; $7bfd, 1027 bytes

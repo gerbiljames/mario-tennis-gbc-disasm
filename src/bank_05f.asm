@@ -14,12 +14,16 @@ DataPtr_5f_06:
 	dw Lz_5f_4ac6 ; $4006
 DataPtr_5f_08:
 	dw Data_5f_4c13 ; $4008
-	INCBIN "data/bank_05f/d_400a.bin" ; $400a, 4 bytes
+DataPtr_5f_0a:
+	dw Data_5f_4c3b ; $400a
+DataPtr_5f_0c:
+	dw Data_5f_4c63 ; $400c
 DataPtr_5f_0e:
 	dw ClubhouseSceneTiles ; $400e
 DataPtr_5f_10:
 	dw Data_5f_5904 ; $4010
-	INCBIN "data/bank_05f/d_4012.bin" ; $4012, 2 bytes
+DataPtr_5f_12:
+	dw Data_5f_4c63 ; $4012
 DataPtr_5f_14:
 	dw CourtyardSceneTilemap ; $4014
 DataPtr_5f_16:
@@ -41,7 +45,11 @@ ClubhouseSceneTilemap:
 Lz_5f_4ac6:
 	INCBIN "data/bank_05f/lz_4ac6.bin" ; $4ac6, 333 bytes
 Data_5f_4c13:
-	INCBIN "data/bank_05f/d_4c13.bin" ; $4c13, 144 bytes
+	INCBIN "data/bank_05f/d_4c13.bin" ; $4c13, 40 bytes
+Data_5f_4c3b:
+	INCBIN "data/bank_05f/d_4c3b.bin" ; $4c3b, 40 bytes
+Data_5f_4c63:
+	INCBIN "data/bank_05f/d_4c63.bin" ; $4c63, 64 bytes
 CourtyardSceneTiles:
 	INCBIN "data/bank_05f/lz_4ca3.bin" ; $4ca3, 2384 bytes
 CourtyardSceneTilemap:

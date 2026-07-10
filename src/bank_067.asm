@@ -6,7 +6,8 @@ SECTION "ROM Bank $67", ROMX[$4000], BANK[$67]
 
 DataPtr_67_00:
 	dw Data_67_4030 ; $4000
-	INCBIN "data/bank_067/d_4002.bin" ; $4002, 2 bytes
+DataPtr_67_02:
+	dw Data_67_404b ; $4002
 DataPtr_67_04:
 	dw Lz_67_4c77 ; $4004
 DataPtr_67_06:
@@ -19,7 +20,10 @@ DataPtr_67_0c:
 	dw Data_67_5440 ; $400c
 DataPtr_67_0e:
 	dw Lz_67_408b ; $400e
-	INCBIN "data/bank_067/d_4010.bin" ; $4010, 4 bytes
+DataPtr_67_10:
+	dw Data_67_5a40 ; $4010
+DataPtr_67_12:
+	dw Data_67_5a6a ; $4012
 DataPtr_67_14:
 	dw Lz_67_63df ; $4014
 DataPtr_67_16:
@@ -35,7 +39,7 @@ DataPtr_67_1e:
 DataPtr_67_20:
 	dw Data_67_6a64 ; $4020
 DataPtr_67_22:
-	dw $6a8e ; $4022
+	dw Data_67_6a8e ; $4022
 DataPtr_67_24:
 	dw Lz_67_73da ; $4024
 DataPtr_67_26:
@@ -47,9 +51,11 @@ DataPtr_67_2a:
 DataPtr_67_2c:
 	dw Data_67_7c9e ; $402c
 DataPtr_67_2e:
-	dw $6ace ; $402e
+	dw Lz_67_6ace ; $402e
 Data_67_4030:
-	INCBIN "data/bank_067/d_4030.bin" ; $4030, 91 bytes
+	INCBIN "data/bank_067/d_4030.bin" ; $4030, 27 bytes
+Data_67_404b:
+	INCBIN "data/bank_067/d_404b.bin" ; $404b, 64 bytes
 Lz_67_408b:
 	INCBIN "data/bank_067/lz_408b.bin" ; $408b, 3052 bytes
 Lz_67_4c77:
@@ -62,7 +68,11 @@ Lz_67_53df:
 	INCBIN "data/bank_067/lz_53df.bin" ; $53df, 83 bytes
 	INCBIN "data/bank_067/d_5432.bin" ; $5432, 14 bytes
 Data_67_5440:
-	INCBIN "data/bank_067/d_5440.bin" ; $5440, 1642 bytes
+	INCBIN "data/bank_067/d_5440.bin" ; $5440, 1536 bytes
+Data_67_5a40:
+	INCBIN "data/bank_067/d_5a40.bin" ; $5a40, 42 bytes
+Data_67_5a6a:
+	INCBIN "data/bank_067/d_5a6a.bin" ; $5a6a, 64 bytes
 Lz_67_5aaa:
 	INCBIN "data/bank_067/lz_5aaa.bin" ; $5aaa, 2357 bytes
 Lz_67_63df:
@@ -74,8 +84,11 @@ Lz_67_69b2:
 Lz_67_6a19:
 	INCBIN "data/bank_067/lz_6a19.bin" ; $6a19, 75 bytes
 Data_67_6a64:
-	INCBIN "data/bank_067/d_6a64.bin" ; $6a64, 136 bytes
-	INCBIN "data/bank_067/d_6aec.bin" ; $6aec, 2286 bytes
+	INCBIN "data/bank_067/d_6a64.bin" ; $6a64, 42 bytes
+Data_67_6a8e:
+	INCBIN "data/bank_067/d_6a8e.bin" ; $6a8e, 64 bytes
+Lz_67_6ace:
+	INCBIN "data/bank_067/lz_6ace.bin" ; $6ace, 2316 bytes
 Lz_67_73da:
 	INCBIN "data/bank_067/lz_73da.bin" ; $73da, 1330 bytes
 Lz_67_790c:

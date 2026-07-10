@@ -661,6 +661,21 @@ class Disassembly:
                 bisect.insort(claimed, (src, src + length))
                 accepted_lz += 1
 
+        def split_blob_at(src):
+            """Split the copy blob covering src so src starts its own blob.
+            A raw blob is just a carve extent, so splitting is free; an lz
+            stream can't be split (its bytes are one compressed unit), so a
+            pointer into one keeps a numeric dw. Returns True on success."""
+            j = bisect.bisect_left(claimed, (src + 1, src + 1)) - 1
+            c_start, c_end = claimed[j]
+            if self.data_blobs.get(c_start, (None, None))[1] != "copy":
+                return False
+            self.data_blobs[c_start] = (src - c_start, "copy")
+            self.data_blobs[src] = (c_end - src, "copy")
+            claimed[j] = (c_start, src)
+            bisect.insort(claimed, (src, c_end))
+            return True
+
         # Raw-pointer pass: safe only where no table slot is a code entry,
         # so an in-range pointer cannot be an unproven function.
         for bank, ext in sorted(extents.items()):
@@ -680,7 +695,11 @@ class Disassembly:
                     accepted_raw += 1
                     continue
                 if overlaps(src, src + 1):
-                    continue  # inside another blob: nothing to anchor
+                    if split_blob_at(src):
+                        bisect.insort(starts, src)
+                        self.data_slots[entry] = (bank, slot, src, "copy")
+                        accepted_raw += 1
+                    continue
                 i = bisect.bisect_right(starts, src)
                 nxt = starts[i] if i < len(starts) else base + BANK_SIZE
                 length = nxt - src
@@ -695,6 +714,18 @@ class Disassembly:
                     bisect.insort(claimed, (src, src + length))
                     bisect.insort(starts, src)
                 accepted_raw += 1
+
+        # Hook-observed copies can overlap: the engine reads both a whole
+        # structure and windows inside it (bank $63 copies 136 bytes from
+        # $5d75 and 64 bytes from $5d9f). Clip each copy blob at the next
+        # blob start so every observed start anchors its own label instead
+        # of being dropped at emit time as a mark inside another extent.
+        starts_all = sorted(s for s, (ln, _k) in self.data_blobs.items() if ln)
+        for idx, s in enumerate(starts_all[:-1]):
+            length, kind = self.data_blobs[s]
+            nxt = starts_all[idx + 1]
+            if kind == "copy" and s + length > nxt:
+                self.data_blobs[s] = (nxt - s, "copy")
         print(f"slot scan: {accepted_lz} lz + {accepted_raw} raw data slots "
               f"accepted ({len(self.data_slots)} total)")
 

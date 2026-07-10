@@ -6,7 +6,8 @@ SECTION "ROM Bank $68", ROMX[$4000], BANK[$68]
 
 DataPtr_68_00:
 	dw Data_68_4030 ; $4000
-	INCBIN "data/bank_068/d_4002.bin" ; $4002, 2 bytes
+DataPtr_68_02:
+	dw Data_68_405a ; $4002
 DataPtr_68_04:
 	dw Lz_68_4c72 ; $4004
 DataPtr_68_06:
@@ -21,7 +22,8 @@ DataPtr_68_0e:
 	dw Lz_68_409a ; $400e
 DataPtr_68_10:
 	dw Data_68_547b ; $4010
-	INCBIN "data/bank_068/d_4012.bin" ; $4012, 2 bytes
+DataPtr_68_12:
+	dw Data_68_54a5 ; $4012
 DataPtr_68_14:
 	dw Lz_68_5d21 ; $4014
 DataPtr_68_16:
@@ -36,7 +38,8 @@ DataPtr_68_1e:
 	dw Lz_68_54e5 ; $401e
 DataPtr_68_20:
 	dw Data_68_6480 ; $4020
-	INCBIN "data/bank_068/d_4022.bin" ; $4022, 2 bytes
+DataPtr_68_22:
+	dw Data_68_6497 ; $4022
 DataPtr_68_24:
 	dw Lz_68_6dec ; $4024
 DataPtr_68_26:
@@ -50,7 +53,9 @@ DataPtr_68_2c:
 DataPtr_68_2e:
 	dw Lz_68_64d7 ; $402e
 Data_68_4030:
-	INCBIN "data/bank_068/d_4030.bin" ; $4030, 106 bytes
+	INCBIN "data/bank_068/d_4030.bin" ; $4030, 42 bytes
+Data_68_405a:
+	INCBIN "data/bank_068/d_405a.bin" ; $405a, 64 bytes
 Lz_68_409a:
 	INCBIN "data/bank_068/lz_409a.bin" ; $409a, 3032 bytes
 Lz_68_4c72:
@@ -62,7 +67,9 @@ Lz_68_53c5:
 Lz_68_5431:
 	INCBIN "data/bank_068/lz_5431.bin" ; $5431, 74 bytes
 Data_68_547b:
-	INCBIN "data/bank_068/d_547b.bin" ; $547b, 106 bytes
+	INCBIN "data/bank_068/d_547b.bin" ; $547b, 42 bytes
+Data_68_54a5:
+	INCBIN "data/bank_068/d_54a5.bin" ; $54a5, 64 bytes
 Lz_68_54e5:
 	INCBIN "data/bank_068/lz_54e5.bin" ; $54e5, 2108 bytes
 Lz_68_5d21:
@@ -74,7 +81,9 @@ Lz_68_63d0:
 Lz_68_6435:
 	INCBIN "data/bank_068/lz_6435.bin" ; $6435, 75 bytes
 Data_68_6480:
-	INCBIN "data/bank_068/d_6480.bin" ; $6480, 87 bytes
+	INCBIN "data/bank_068/d_6480.bin" ; $6480, 23 bytes
+Data_68_6497:
+	INCBIN "data/bank_068/d_6497.bin" ; $6497, 64 bytes
 Lz_68_64d7:
 	INCBIN "data/bank_068/lz_64d7.bin" ; $64d7, 2325 bytes
 Lz_68_6dec:

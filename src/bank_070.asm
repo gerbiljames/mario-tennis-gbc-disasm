@@ -14,7 +14,10 @@ DataPtr_70_06:
 	dw Data_70_61d5 ; $4006
 DataPtr_70_08:
 	dw Data_70_6a55 ; $4008
-	INCBIN "data/bank_070/d_400a.bin" ; $400a, 4 bytes
+DataPtr_70_0a:
+	dw Data_70_70cd ; $400a
+DataPtr_70_0c:
+	dw Data_70_773d ; $400c
 Data_70_400e:
 	INCBIN "data/bank_070/d_400e.bin" ; $400e, 16 bytes
 	INCBIN "data/bank_070/d_401e.bin" ; $401e, 3219 bytes
@@ -27,4 +30,8 @@ Data_70_61d5:
 	INCBIN "data/bank_070/d_61d5.bin" ; $61d5, 16 bytes
 	INCBIN "data/bank_070/d_61e5.bin" ; $61e5, 2160 bytes
 Data_70_6a55:
-	INCBIN "data/bank_070/d_6a55.bin" ; $6a55, 5547 bytes
+	INCBIN "data/bank_070/d_6a55.bin" ; $6a55, 1656 bytes
+Data_70_70cd:
+	INCBIN "data/bank_070/d_70cd.bin" ; $70cd, 1648 bytes
+Data_70_773d:
+	INCBIN "data/bank_070/d_773d.bin" ; $773d, 2243 bytes

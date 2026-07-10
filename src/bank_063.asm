@@ -14,19 +14,24 @@ DataPtr_63_06:
 	dw Lz_63_4af5 ; $4006
 DataPtr_63_08:
 	dw Data_63_4bae ; $4008
-	INCBIN "data/bank_063/d_400a.bin" ; $400a, 4 bytes
+DataPtr_63_0a:
+	dw Data_63_4bd6 ; $400a
+DataPtr_63_0c:
+	dw Data_63_4bfe ; $400c
 DataPtr_63_0e:
 	dw Lz_63_4080 ; $400e
 DataPtr_63_10:
 	dw Data_63_5d25 ; $4010
-	INCBIN "data/bank_063/d_4012.bin" ; $4012, 2 bytes
+DataPtr_63_12:
+	dw Data_63_4bfe ; $4012
 DataPtr_63_14:
 	dw DKCourtTilemap ; $4014
 DataPtr_63_16:
 	dw Lz_63_5be2 ; $4016
 DataPtr_63_18:
 	dw Data_63_5d25 ; $4018
-	INCBIN "data/bank_063/d_401a.bin" ; $401a, 2 bytes
+DataPtr_63_1a:
+	dw Data_63_5d4d ; $401a
 DataPtr_63_1c:
 	dw Data_63_5d75 ; $401c
 DataPtr_63_1e:
@@ -34,7 +39,7 @@ DataPtr_63_1e:
 DataPtr_63_20:
 	dw Data_63_5d75 ; $4020
 DataPtr_63_22:
-	dw $5d9f ; $4022
+	dw Data_63_5d9f ; $4022
 DataPtr_63_24:
 	dw Lz_63_608c ; $4024
 DataPtr_63_26:
@@ -46,7 +51,7 @@ DataPtr_63_2a:
 DataPtr_63_2c:
 	dw Data_63_6331 ; $402c
 DataPtr_63_2e:
-	dw $5ddf ; $402e
+	dw Lz_63_5ddf ; $402e
 	INCBIN "data/bank_063/d_4030.bin" ; $4030, 16 bytes
 Data_63_4040:
 	INCBIN "data/bank_063/d_4040.bin" ; $4040, 64 bytes
@@ -57,7 +62,11 @@ Lz_63_487a:
 Lz_63_4af5:
 	INCBIN "data/bank_063/lz_4af5.bin" ; $4af5, 185 bytes
 Data_63_4bae:
-	INCBIN "data/bank_063/d_4bae.bin" ; $4bae, 144 bytes
+	INCBIN "data/bank_063/d_4bae.bin" ; $4bae, 40 bytes
+Data_63_4bd6:
+	INCBIN "data/bank_063/d_4bd6.bin" ; $4bd6, 40 bytes
+Data_63_4bfe:
+	INCBIN "data/bank_063/d_4bfe.bin" ; $4bfe, 64 bytes
 DKCourtTiles:
 	INCBIN "data/bank_063/lz_4c3e.bin" ; $4c3e, 3291 bytes
 DKCourtTilemap:
@@ -65,10 +74,15 @@ DKCourtTilemap:
 Lz_63_5be2:
 	INCBIN "data/bank_063/lz_5be2.bin" ; $5be2, 323 bytes
 Data_63_5d25:
-	INCBIN "data/bank_063/d_5d25.bin" ; $5d25, 80 bytes
+	INCBIN "data/bank_063/d_5d25.bin" ; $5d25, 40 bytes
+Data_63_5d4d:
+	INCBIN "data/bank_063/d_5d4d.bin" ; $5d4d, 40 bytes
 Data_63_5d75:
-	INCBIN "data/bank_063/d_5d75.bin" ; $5d75, 136 bytes
-	INCBIN "data/bank_063/d_5dfd.bin" ; $5dfd, 655 bytes
+	INCBIN "data/bank_063/d_5d75.bin" ; $5d75, 42 bytes
+Data_63_5d9f:
+	INCBIN "data/bank_063/d_5d9f.bin" ; $5d9f, 64 bytes
+Lz_63_5ddf:
+	INCBIN "data/bank_063/lz_5ddf.bin" ; $5ddf, 685 bytes
 Lz_63_608c:
 	INCBIN "data/bank_063/lz_608c.bin" ; $608c, 274 bytes
 Lz_63_619e:

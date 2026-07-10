@@ -6,7 +6,8 @@ SECTION "ROM Bank $73", ROMX[$4000], BANK[$73]
 
 DataPtr_73_00:
 	dw Data_73_4028 ; $4000
-	INCBIN "data/bank_073/d_4002.bin" ; $4002, 2 bytes
+DataPtr_73_02:
+	dw Data_73_469d ; $4002
 DataPtr_73_04:
 	dw Data_73_4d0d ; $4004
 DataPtr_73_06:
@@ -33,16 +34,20 @@ DataPtr_73_1a:
 	dw Data_73_75bd ; $401a
 DataPtr_73_1c:
 	dw Data_73_765d ; $401c
-	INCBIN "data/bank_073/d_401e.bin" ; $401e, 2 bytes
+DataPtr_73_1e:
+	dw Data_73_784d ; $401e
 DataPtr_73_20:
 	dw Data_73_78ed ; $4020
 DataPtr_73_22:
 	dw Data_73_798d ; $4022
-	INCBIN "data/bank_073/d_4024.bin" ; $4024, 2 bytes
+DataPtr_73_24:
+	dw Data_73_7a2d ; $4024
 DataPtr_73_26:
 	dw Data_73_7acd ; $4026
 Data_73_4028:
-	INCBIN "data/bank_073/d_4028.bin" ; $4028, 3301 bytes
+	INCBIN "data/bank_073/d_4028.bin" ; $4028, 1653 bytes
+Data_73_469d:
+	INCBIN "data/bank_073/d_469d.bin" ; $469d, 1648 bytes
 Data_73_4d0d:
 	INCBIN "data/bank_073/d_4d0d.bin" ; $4d0d, 16 bytes
 	INCBIN "data/bank_073/d_4d1d.bin" ; $4d1d, 480 bytes
@@ -78,12 +83,16 @@ Data_73_75bd:
 	INCBIN "data/bank_073/d_75bd.bin" ; $75bd, 16 bytes
 	INCBIN "data/bank_073/d_75cd.bin" ; $75cd, 144 bytes
 Data_73_765d:
-	INCBIN "data/bank_073/d_765d.bin" ; $765d, 656 bytes
+	INCBIN "data/bank_073/d_765d.bin" ; $765d, 496 bytes
+Data_73_784d:
+	INCBIN "data/bank_073/d_784d.bin" ; $784d, 160 bytes
 Data_73_78ed:
 	INCBIN "data/bank_073/d_78ed.bin" ; $78ed, 16 bytes
 	INCBIN "data/bank_073/d_78fd.bin" ; $78fd, 144 bytes
 Data_73_798d:
-	INCBIN "data/bank_073/d_798d.bin" ; $798d, 320 bytes
+	INCBIN "data/bank_073/d_798d.bin" ; $798d, 160 bytes
+Data_73_7a2d:
+	INCBIN "data/bank_073/d_7a2d.bin" ; $7a2d, 160 bytes
 Data_73_7acd:
 	INCBIN "data/bank_073/d_7acd.bin" ; $7acd, 16 bytes
 	INCBIN "data/bank_073/d_7add.bin" ; $7add, 144 bytes
