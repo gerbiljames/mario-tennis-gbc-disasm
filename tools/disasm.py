@@ -860,6 +860,26 @@ MACRO sound
 	db \\1
 ENDM
 
+; Game text (see the generated data/bank_XXX/text_*.asm): a string is db
+; segments joined by control bytes -- $01 starts a new on-screen line, $02 a
+; new page, $03 terminates. `text` opens a string (or continues an
+; overlong segment), `line`/`page` emit the control byte plus the segment.
+MACRO text
+	db \\#
+ENDM
+
+MACRO line
+	db $01, \\#
+ENDM
+
+MACRO page
+	db $02, \\#
+ENDM
+
+MACRO done
+	db $03
+ENDM
+
 ; rst $20/$28/$30 ($255e/$256b/$2551): set/clear/test a bit in the
 ; wGameFlags array ($c9c0+). Two inline operand bytes: the bit selector in
 ; the top 3 bits of the first (the handlers apply mask $80 >> bit to

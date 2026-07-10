@@ -41,21 +41,71 @@ def solve_table(data: bytes):
     return entries[:good[0]]
 
 
+def render_string(chunk: bytes) -> list:
+    """Render one string as text/line/page macro lines (see macros.inc).
+    Segments are split on the $01/$02 control bytes; unexpected bytes stay
+    numeric args, so any input reassembles identically."""
+    out = []
+    mac = "text"
+    items, buf = [], ""
+
+    def flush_buf():
+        nonlocal buf
+        if buf:
+            items.append(f'"{buf}"')
+            buf = ""
+
+    def flush(next_mac="text"):
+        nonlocal items, mac
+        if items:
+            out.append(f"\t{mac} " + ", ".join(items))
+        elif mac == "line":
+            out.append("\tdb $01")
+        elif mac == "page":
+            out.append("\tdb $02")
+        items, mac = [], next_mac
+
+    for b in chunk:
+        if b in SAFE:
+            buf += chr(b)
+            if len(buf) >= 58:
+                flush_buf()
+                flush()
+        elif b == 0x01:
+            flush_buf()
+            flush("line")
+        elif b == 0x02:
+            flush_buf()
+            flush("page")
+        elif b == 0x03:
+            flush_buf()
+            flush()
+            out.append("\tdone")
+        else:
+            flush_buf()
+            items.append(f"${b:02x}")
+    flush_buf()
+    flush()
+    return out
+
+
 def render_text(data: bytes) -> str:
     """Render a text region so it reassembles identically: the offset table
-    (when present) as commented `dw` lines, strings as literals with their
-    table index, control bytes numeric."""
+    (when present) as label arithmetic, strings via the text macros with
+    their table index. Editing a string keeps the table consistent."""
     entries = solve_table(data)
     if entries is None:
         return render_db(data)
     t = 2 + 2 * len(entries)
     w0 = data[0] | (data[1] << 8)
-    out = [f"\tdw ${w0:04x} ; bank-local string-fetch routine",
-           f"; {len(entries)} string offsets, relative to the end of this table"]
     idx = {}
     for k, e in enumerate(entries):
         idx.setdefault(e, k)
-        out.append(f"\tdw ${e:04x} ; {k}")
+    out = [f"\tdw ${w0:04x} ; bank-local string-fetch routine",
+           f"; {len(entries)} string offsets"]
+    for k, e in enumerate(entries):
+        out.append(f"\tdw .s{idx[e]} - .strings ; {k}")
+    out.append(".strings")
     pos = t
     while pos < len(data):
         start = pos
@@ -63,11 +113,15 @@ def render_text(data: bytes) -> str:
             pos += 1
         if pos < len(data):
             pos += 1
-        body = render_db(data[start:pos]).rstrip("\n").split("\n")
         k = idx.get(start - t)
         if k is not None:
-            body[0] += f" ; [{k}]"
-        out.extend(body)
+            out.append(f".s{k}")
+        if data[pos - 1] == 0x00:
+            chunk, tail = data[start:pos - 1], ["\tdb $00"]
+        else:
+            chunk, tail = data[start:pos], []
+        out.extend(render_string(chunk) if chunk else [])
+        out.extend(tail)
     return "\n".join(out) + "\n"
 
 
