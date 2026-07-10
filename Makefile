@@ -18,6 +18,12 @@ $(ROM): $(OBJS)
 build/%.o: src/%.asm | build
 	$(RGBASM) -E -I include -o $@ $<
 
+# INCLUDE paths resolve via -I include; INCBIN paths are repo-relative.
+ifeq (,$(filter clean,$(MAKECMDGOALS)))
+$(foreach src,$(SRCS),$(eval build/$(notdir $(src:.asm=.o)): \
+	$(shell sed -n 's|^INCLUDE "\(.*\)"|include/\1|p; s|^[[:space:]]*INCBIN "\([^"]*\)".*|\1|p' $(src))))
+endif
+
 build:
 	mkdir -p build
 
