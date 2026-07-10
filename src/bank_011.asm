@@ -4,136 +4,11 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $11", ROMX[$4000], BANK[$11]
 
-	ld [$0140], sp ; $4000
-	ld b, h ; $4003
-	ret nz ; $4004
-	ld d, h ; $4005
-	ld [hl+], a ; $4006
-	ld l, b ; $4007
-	ld e, b ; $4008
-	ld b, b ; $4009
-	ld [hl], c ; $400a
-	ld b, b ; $400b
-	ld d, $40 ; $400c
-	ld l, a ; $400e
-	ld b, c ; $400f
-	sub a, b ; $4010
-	ld b, c ; $4011
-	sbc a, d ; $4012
-	ld b, c ; $4013
-	and a, h ; $4014
-	ld b, c ; $4015
-	nop ; $4016
-	nop ; $4017
-	xor a, c ; $4018
-	ld a, e ; $4019
-	nop ; $401a
-	rrca ; $401b
-	nop ; $401c
-	ld l, $80 ; $401d
-	nop ; $401f
-	dec h ; $4020
-	ld bc, $0000 ; $4021
-	nop ; $4024
-	nop ; $4025
-	xor a, c ; $4026
-	ld a, e ; $4027
-	nop ; $4028
-	dec c ; $4029
-	nop ; $402a
-	inc de ; $402b
-	ld b, b ; $402c
-	nop ; $402d
-	dec h ; $402e
-	ld bc, $0000 ; $402f
-	nop ; $4032
-	nop ; $4033
-	xor a, c ; $4034
-	ld a, e ; $4035
-	nop ; $4036
-	rra ; $4037
-	nop ; $4038
-	ld l, $00 ; $4039
-	nop ; $403b
-	add hl, sp ; $403c
-	ld bc, $0007 ; $403d
-	nop ; $4040
-	nop ; $4041
-	xor a, c ; $4042
-	ld a, e ; $4043
-	nop ; $4044
-	ld hl, $2e00 ; $4045
-	add a, b ; $4048
-	nop ; $4049
-	ld [hl-], a ; $404a
-	ld bc, $0007 ; $404b
-	nop ; $404e
-	nop ; $404f
-	nop ; $4050
-	nop ; $4051
-	nop ; $4052
-	nop ; $4053
-	nop ; $4054
-	nop ; $4055
-	nop ; $4056
-	rst Rst38 ; $4057
-	ld bc, $00c0 ; $4058
-	inc c ; $405b
-	nop ; $405c
-	ld sp, $0000 ; $405d
-	ld [bc], a ; $4060
-	ret nz ; $4061
-	nop ; $4062
-	inc h ; $4063
-	nop ; $4064
-	ld sp, $0000 ; $4065
-	rrca ; $4068
-	ret nz ; $4069
-	nop ; $406a
-	inc c ; $406b
-	nop ; $406c
-	ld sp, $0000 ; $406d
-	rst Rst38 ; $4070
-	ld bc, $00ff ; $4071
-	nop ; $4074
-	pop de ; $4075
-	ld a, e ; $4076
-	add hl, de ; $4077
-	ld bc, rSC ; $4078
-	nop ; $407b
-	nop ; $407c
-	pop de ; $407d
-	ld a, e ; $407e
-	add hl, de ; $407f
-	ld [bc], a ; $4080
-	rst Rst38 ; $4081
-	ld hl, $2450 ; $4082
-	farcall FarPtr_0a_0e ; $4085
-	rst Rst30 ; $4088
-	ldh [rTIMA], a ; $4089
-	jr nz, Label_11_409c ; $408b
-	ld a, [$c2b0] ; $408d
-	cp a, $03 ; $4090
-	jr nz, Label_11_40a9 ; $4092
-	ld hl, $245b ; $4094
-	farcall FarPtr_0a_0e ; $4097
-	jr Label_11_40a9 ; $409a
-Label_11_409c:
-	ld a, [$c2b0] ; $409c
-	cp a, $06 ; $409f
-	jr nz, Label_11_40a9 ; $40a1
-	ld hl, $245b ; $40a3
-	farcall FarPtr_0a_0e ; $40a6
-Label_11_40a9:
-	ld a, $03 ; $40a9
-	farcall FarPtr_0a_08 ; $40ab
-	ret ; $40ae
-	INCBIN "data/bank_011/d_40af.bin" ; $40af, 590 bytes
+	INCBIN "data/bank_011/d_4000.bin" ; $4000, 765 bytes
 	ld a, [$c295] ; $42fd
 	cp a, $ff ; $4300
 	jp z, Label_11_4342 ; $4302
-	rst Rst30 ; $4305
-	ldh [rTIMA], a ; $4306
+	rst30 $05e0 ; $4305
 	jr z, Label_11_4330 ; $4308
 	ld a, $02 ; $430a
 	ld bc, $00ff ; $430c
@@ -360,8 +235,7 @@ Func_11_46cf:
 	ld bc, $1980 ; $484f
 	ld de, $15c0 ; $4852
 	farcall FarPtr_0a_22 ; $4855
-	rst Rst08 ; $4858
-	sbc a, b ; $4859
+	sound $98 ; $4858
 	ld a, $11 ; $485a
 	ld bc, $0010 ; $485c
 	farcall FarPtr_0a_18 ; $485f
@@ -401,8 +275,7 @@ Func_11_46cf:
 	ld bc, $1980 ; $48b5
 	ld de, $14c0 ; $48b8
 	farcall FarPtr_0a_22 ; $48bb
-	rst Rst08 ; $48be
-	sub a, a ; $48bf
+	sound $97 ; $48be
 	push af ; $48c0
 	ld a, $14 ; $48c1
 	farcall FarPtr_0a_04 ; $48c3
@@ -453,8 +326,7 @@ Func_11_46cf:
 	ld bc, $1900 ; $492e
 	ld de, $1e00 ; $4931
 	farcall FarPtr_0a_22 ; $4934
-	rst Rst08 ; $4937
-	sub a, [hl] ; $4938
+	sound $96 ; $4937
 	push af ; $4939
 	ld a, $3c ; $493a
 	farcall FarPtr_0a_04 ; $493c
@@ -676,8 +548,7 @@ Label_11_4b1d:
 	ld bc, $1b80 ; $4b3d
 	ld de, $21c0 ; $4b40
 	farcall FarPtr_0a_22 ; $4b43
-	rst Rst08 ; $4b46
-	sbc a, b ; $4b47
+	sound $98 ; $4b46
 	push af ; $4b48
 	ld a, $28 ; $4b49
 	farcall FarPtr_0a_04 ; $4b4b
@@ -719,8 +590,7 @@ Label_11_4b1d:
 	ld bc, $1a80 ; $4ba0
 	ld de, $21c0 ; $4ba3
 	farcall FarPtr_0a_22 ; $4ba6
-	rst Rst08 ; $4ba9
-	sub a, a ; $4baa
+	sound $97 ; $4ba9
 	ld a, $11 ; $4bab
 	ld de, $ff80 ; $4bad
 	farcall FarPtr_0a_42 ; $4bb0
@@ -782,8 +652,7 @@ Label_11_4b1d:
 	ld bc, $1a80 ; $4c32
 	ld de, $21c0 ; $4c35
 	farcall FarPtr_0a_22 ; $4c38
-	rst Rst08 ; $4c3b
-	sub a, a ; $4c3c
+	sound $97 ; $4c3b
 	push af ; $4c3d
 	ld a, $28 ; $4c3e
 	farcall FarPtr_0a_04 ; $4c40
@@ -865,8 +734,7 @@ Label_11_4b1d:
 Func_11_4cf6:
 	ld a, $01 ; $4cf6
 	farcall FarPtr_0a_1c ; $4cf8
-	rst Rst08 ; $4cfb
-	ld [hl], b ; $4cfc
+	sound $70 ; $4cfb
 	ld a, $03 ; $4cfd
 	farcall FarPtr_0a_40 ; $4cff
 	push af ; $4d02
@@ -983,8 +851,7 @@ Label_11_4df5:
 	ld bc, $1940 ; $4dfc
 	ld de, $11c0 ; $4dff
 	farcall FarPtr_0a_22 ; $4e02
-	rst Rst08 ; $4e05
-	sub a, a ; $4e06
+	sound $97 ; $4e05
 	push af ; $4e07
 	ld a, $28 ; $4e08
 	farcall FarPtr_0a_04 ; $4e0a
@@ -1046,8 +913,7 @@ Label_11_4df5:
 	ld bc, $1940 ; $4e88
 	ld de, $11c0 ; $4e8b
 	farcall FarPtr_0a_22 ; $4e8e
-	rst Rst08 ; $4e91
-	sbc a, b ; $4e92
+	sound $98 ; $4e91
 	push af ; $4e93
 	ld a, $32 ; $4e94
 	farcall FarPtr_0a_04 ; $4e96
@@ -1100,9 +966,7 @@ Label_11_4ee1:
 	farcall FarPtr_0a_0e ; $4efd
 	ld a, $12 ; $4f00
 	farcall FarPtr_0a_08 ; $4f02
-	rst Rst20 ; $4f05
-	ret nz ; $4f06
-	dec b ; $4f07
+	rst20 $05c0 ; $4f05
 	call Func_11_4f1b ; $4f08
 	ret ; $4f0b
 Label_11_4f0c:
@@ -1138,9 +1002,7 @@ Func_11_4f84:
 	ld a, $12 ; $4f8c
 	ld bc, $0018 ; $4f8e
 	farcall FarPtr_0a_18 ; $4f91
-	rst Rst28 ; $4f94
-	ret nz ; $4f95
-	dec b ; $4f96
+	rst28 $05c0 ; $4f94
 	ld a, $12 ; $4f97
 	ld bc, $1800 ; $4f99
 	ld de, $0e00 ; $4f9c
@@ -1166,8 +1028,7 @@ Label_11_4fcf:
 	ld hl, $537d ; $4fd1
 	farcall FarPtr_0a_06 ; $4fd4
 	farcall FarPtr_0a_00 ; $4fd7
-	rst Rst30 ; $4fda
-	ldh [rTIMA], a ; $4fdb
+	rst30 $05e0 ; $4fda
 	jp z, Label_11_501a ; $4fdd
 	ld a, $02 ; $4fe0
 	farcall FarPtr_0a_1c ; $4fe2
@@ -1229,8 +1090,7 @@ Label_11_501a:
 	farcall FarPtr_0a_0e ; $5060
 	ld a, $03 ; $5063
 	farcall FarPtr_0a_08 ; $5065
-	rst Rst30 ; $5068
-	ldh [rTIMA], a ; $5069
+	rst30 $05e0 ; $5068
 	jp z, Label_11_5158 ; $506b
 	ld a, $04 ; $506e
 	ld d, $03 ; $5070
@@ -1583,8 +1443,7 @@ Label_11_53db:
 	ld de, $2f00 ; $53f0
 	farcall FarPtr_0a_3a ; $53f3
 	farcall FarPtr_0a_3e ; $53f6
-	rst Rst30 ; $53f9
-	ldh [rTIMA], a ; $53fa
+	rst30 $05e0 ; $53f9
 	jp z, Label_11_5415 ; $53fc
 	ld a, $02 ; $53ff
 	ld bc, $1800 ; $5401
@@ -1632,17 +1491,13 @@ Label_11_5415:
 	ret ; $5469
 	INCBIN "data/bank_011/d_546a.bin" ; $546a, 24 bytes
 Func_11_5482:
-	rst Rst30 ; $5482
-	ldh [rTIMA], a ; $5483
+	rst30 $05e0 ; $5482
 	jr nz, Label_11_548d ; $5485
-	rst Rst30 ; $5487
-	nop ; $5488
-	INCBIN "data/bank_011/d_5489.bin" ; $5489, 1 bytes
+	rst30 $1600 ; $5487
 	jr nz, Label_11_5493 ; $548a
 	ret ; $548c
 Label_11_548d:
-	rst Rst30 ; $548d
-	jr nz, Func_11_54a6 ; $548e
+	rst30 $1620 ; $548d
 	jr nz, Label_11_5493 ; $5490
 	ret ; $5492
 Label_11_5493:
@@ -1676,20 +1531,73 @@ Label_11_6596:
 	ld a, $02 ; $659e
 	ld bc, $0020 ; $65a0
 	farcall FarPtr_0a_18 ; $65a3
-	rst Rst30 ; $65a6
-	nop ; $65a7
-	ld [$b9ca], sp ; $65a8
-	ld h, l ; $65ab
-	rst Rst30 ; $65ac
-	jr nz, Label_11_65b7 ; $65ad
+	rst30 $0800 ; $65a6
+	jp z, Label_11_65b9 ; $65a9
+	rst30 $0820 ; $65ac
 	jp z, Label_11_6642 ; $65af
-	rst Rst30 ; $65b2
-	ld b, b ; $65b3
-	ld [$02ca], sp ; $65b4
-Label_11_65b7:
-	ld h, a ; $65b7
+	rst30 $0840 ; $65b2
+	jp z, Label_11_6702 ; $65b5
 	ret ; $65b8
-	INCBIN "data/bank_011/d_65b9.bin" ; $65b9, 137 bytes
+Label_11_65b9:
+	ld a, $03 ; $65b9
+	ld b, $00 ; $65bb
+	farcall FarPtr_0a_2e ; $65bd
+	push af ; $65c0
+	ld a, $1e ; $65c1
+	farcall FarPtr_0a_04 ; $65c3
+	pop af ; $65c6
+	ld a, $02 ; $65c7
+	farcall FarPtr_0a_1c ; $65c9
+	xor a, a ; $65cc
+	ld bc, $1900 ; $65cd
+	ld de, $1100 ; $65d0
+	farcall FarPtr_0a_3a ; $65d3
+	ldh a, [$ff95] ; $65d6
+	ld b, a ; $65d8
+	ld a, $08 ; $65d9
+	ld de, $5b70 ; $65db
+	farcall FarPtr_0a_1a ; $65de
+	ldh a, [$ff95] ; $65e1
+	ld b, a ; $65e3
+	ld a, $09 ; $65e4
+	ld de, $5b84 ; $65e6
+	farcall FarPtr_0a_1a ; $65e9
+	ld a, $00 ; $65ec
+	ld bc, $1b00 ; $65ee
+	ld de, $1900 ; $65f1
+	farcall FarPtr_0a_24 ; $65f4
+	push af ; $65f7
+	ld a, $0a ; $65f8
+	farcall FarPtr_0a_04 ; $65fa
+	pop af ; $65fd
+	ld a, $02 ; $65fe
+	ld bc, $1900 ; $6600
+	ld de, $1500 ; $6603
+	farcall FarPtr_0a_24 ; $6606
+	ld a, $00 ; $6609
+	farcall FarPtr_0a_20 ; $660b
+	ld a, $00 ; $660e
+	ld b, $c0 ; $6610
+	farcall FarPtr_0a_2e ; $6612
+	ld a, $02 ; $6615
+	ld b, $c0 ; $6617
+	farcall FarPtr_0a_2e ; $6619
+	push af ; $661c
+	ld a, $3c ; $661d
+	farcall FarPtr_0a_04 ; $661f
+	pop af ; $6622
+	ld a, $0f ; $6623
+	ld [$c294], a ; $6625
+	ld [$c2a1], a ; $6628
+	farcall FarPtr_0a_4a ; $662b
+	ld a, $01 ; $662e
+	ld [wCurrentMinigameStoryMatch], a ; $6630
+	ld a, $02 ; $6633
+	ld [$c8f7], a ; $6635
+	farcall FarPtr_0a_5a ; $6638
+	farcall FarPtr_0a_4c ; $663b
+	farcall FarPtr_0a_4e ; $663e
+	ret ; $6641
 Label_11_6642:
 	ld a, $03 ; $6642
 	ld b, $80 ; $6644
@@ -1776,17 +1684,83 @@ Label_11_6642:
 	farcall FarPtr_0a_4c ; $66fb
 	farcall FarPtr_0a_4e ; $66fe
 	ret ; $6701
-	INCBIN "data/bank_011/d_6702.bin" ; $6702, 158 bytes
+Label_11_6702:
+	ld a, $03 ; $6702
+	ld b, $00 ; $6704
+	farcall FarPtr_0a_2e ; $6706
+	push af ; $6709
+	ld a, $0f ; $670a
+	farcall FarPtr_0a_04 ; $670c
+	pop af ; $670f
+	ld a, $00 ; $6710
+	ld b, $00 ; $6712
+	farcall FarPtr_0a_2e ; $6714
+	ld a, $07 ; $6717
+	ld b, $00 ; $6719
+	farcall FarPtr_0a_2e ; $671b
+	push af ; $671e
+	ld a, $1e ; $671f
+	farcall FarPtr_0a_04 ; $6721
+	pop af ; $6724
+	ld a, $02 ; $6725
+	farcall FarPtr_0a_1c ; $6727
+	xor a, a ; $672a
+	ld bc, $1900 ; $672b
+	ld de, $1100 ; $672e
+	farcall FarPtr_0a_3a ; $6731
+	ldh a, [$ff95] ; $6734
+	ld b, a ; $6736
+	ld a, $04 ; $6737
+	ld de, $5b70 ; $6739
+	farcall FarPtr_0a_1a ; $673c
+	ldh a, [$ff95] ; $673f
+	ld b, a ; $6741
+	ld a, $06 ; $6742
+	ld de, $5b84 ; $6744
+	farcall FarPtr_0a_1a ; $6747
+	ld a, $00 ; $674a
+	ld bc, $1b00 ; $674c
+	ld de, $1900 ; $674f
+	farcall FarPtr_0a_24 ; $6752
+	push af ; $6755
+	ld a, $14 ; $6756
+	farcall FarPtr_0a_04 ; $6758
+	pop af ; $675b
+	ld a, $02 ; $675c
+	ld bc, $1900 ; $675e
+	ld de, $1500 ; $6761
+	farcall FarPtr_0a_24 ; $6764
+	ld a, $00 ; $6767
+	farcall FarPtr_0a_20 ; $6769
+	ld a, $00 ; $676c
+	ld b, $c0 ; $676e
+	farcall FarPtr_0a_2e ; $6770
+	ld a, $02 ; $6773
+	ld b, $c0 ; $6775
+	farcall FarPtr_0a_2e ; $6777
+	push af ; $677a
+	ld a, $3c ; $677b
+	farcall FarPtr_0a_04 ; $677d
+	pop af ; $6780
+	ld a, $0f ; $6781
+	ld [$c294], a ; $6783
+	ld [$c2a1], a ; $6786
+	farcall FarPtr_0a_4a ; $6789
+	ld a, $01 ; $678c
+	ld [wCurrentMinigameStoryMatch], a ; $678e
+	ld a, $04 ; $6791
+	ld [$c8f7], a ; $6793
+	farcall FarPtr_0a_5a ; $6796
+	farcall FarPtr_0a_4c ; $6799
+	farcall FarPtr_0a_4e ; $679c
+	ret ; $679f
 Label_11_67a0:
-	rst Rst30 ; $67a0
-	nop ; $67a1
-	ld [$0b28], sp ; $67a2
-	rst Rst30 ; $67a5
-	jr nz, Label_11_67b0 ; $67a6
+	rst30 $0800 ; $67a0
+	jr z, Label_11_67b0 ; $67a3
+	rst30 $0820 ; $67a5
 	jr z, Label_11_67e7 ; $67a8
-	rst Rst30 ; $67aa
-	ld b, b ; $67ab
-	ld [$5428], sp ; $67ac
+	rst30 $0840 ; $67aa
+	jr z, Label_11_6803 ; $67ad
 	ret ; $67af
 Label_11_67b0:
 	ldh a, [$ff95] ; $67b0
@@ -1828,12 +1802,24 @@ Label_11_67e7:
 	ld a, $05 ; $67fd
 	farcall FarPtr_0a_1e ; $67ff
 	ret ; $6802
-	INCBIN "data/bank_011/d_6803.bin" ; $6803, 362 bytes
+Label_11_6803:
+	ldh a, [$ff95] ; $6803
+	ld b, a ; $6805
+	ld a, $04 ; $6806
+	ld de, $5c7f ; $6808
+	farcall FarPtr_0a_1a ; $680b
+	ldh a, [$ff95] ; $680e
+	ld b, a ; $6810
+	ld a, $06 ; $6811
+	ld de, $5cbf ; $6813
+	farcall FarPtr_0a_1a ; $6816
+	ld a, $04 ; $6819
+	farcall FarPtr_0a_1e ; $681b
+	ret ; $681e
+	INCBIN "data/bank_011/d_681f.bin" ; $681f, 334 bytes
 	ret ; $696d
 	INCBIN "data/bank_011/d_696e.bin" ; $696e, 912 bytes
-	rst Rst30 ; $6cfe
-	nop ; $6cff
-	ld a, [bc] ; $6d00
+	rst30 $0a00 ; $6cfe
 	jr z, Label_11_6d15 ; $6d01
 	ld a, $07 ; $6d03
 	ld bc, $2500 ; $6d05
@@ -1850,10 +1836,70 @@ Label_11_6d15:
 	jp z, Label_11_6e88 ; $6d1f
 	cp a, $0d ; $6d22
 	jp z, Label_11_6e9e ; $6d24
-	rst Rst30 ; $6d27
-	nop ; $6d28
-	ld d, $20 ; $6d29
-	INCBIN "data/bank_011/d_6d2b.bin" ; $6d2b, 290 bytes
+	rst30 $1600 ; $6d27
+	jr nz, Label_11_6d3c ; $6d2a
+	rst30 $15c0 ; $6d2c
+	jr nz, Label_11_6d51 ; $6d2f
+	rst30 $0ae0 ; $6d31
+	jr nz, Label_11_6d66 ; $6d34
+	rst30 $0a60 ; $6d36
+	jr nz, Label_11_6d91 ; $6d39
+	ret ; $6d3b
+Label_11_6d3c:
+	ld hl, $6c68 ; $6d3c
+	ld de, $000c ; $6d3f
+	farcall FarPtr_0a_60 ; $6d42
+	ld a, $04 ; $6d45
+	ld bc, $3f00 ; $6d47
+	ld de, $2900 ; $6d4a
+	farcall FarPtr_0a_22 ; $6d4d
+	ret ; $6d50
+Label_11_6d51:
+	ld hl, $6c27 ; $6d51
+	ld de, $000c ; $6d54
+	farcall FarPtr_0a_60 ; $6d57
+	ld a, $04 ; $6d5a
+	ld bc, $3f00 ; $6d5c
+	ld de, $2900 ; $6d5f
+	farcall FarPtr_0a_22 ; $6d62
+	ret ; $6d65
+Label_11_6d66:
+	ld hl, $6be6 ; $6d66
+	ld de, $000c ; $6d69
+	farcall FarPtr_0a_60 ; $6d6c
+	ld a, $0a ; $6d6f
+	ld bc, $3d00 ; $6d71
+	ld de, $1100 ; $6d74
+	farcall FarPtr_0a_22 ; $6d77
+	ldh a, [$ff95] ; $6d7a
+	ld b, a ; $6d7c
+	ld a, $0a ; $6d7d
+	ld de, $7bbd ; $6d7f
+	farcall FarPtr_0a_1a ; $6d82
+	ld a, $04 ; $6d85
+	ld bc, $3f00 ; $6d87
+	ld de, $2900 ; $6d8a
+	farcall FarPtr_0a_22 ; $6d8d
+	ret ; $6d90
+Label_11_6d91:
+	ld hl, $6ba5 ; $6d91
+	ld de, $000c ; $6d94
+	farcall FarPtr_0a_60 ; $6d97
+	ld a, $0a ; $6d9a
+	ld bc, $3d00 ; $6d9c
+	ld de, $1100 ; $6d9f
+	farcall FarPtr_0a_22 ; $6da2
+	ldh a, [$ff95] ; $6da5
+	ld b, a ; $6da7
+	ld a, $0a ; $6da8
+	ld de, $7bbd ; $6daa
+	farcall FarPtr_0a_1a ; $6dad
+	ld a, $04 ; $6db0
+	ld bc, $3f00 ; $6db2
+	ld de, $2900 ; $6db5
+	farcall FarPtr_0a_22 ; $6db8
+	ret ; $6dbb
+	INCBIN "data/bank_011/d_6dbc.bin" ; $6dbc, 145 bytes
 Label_11_6e4d:
 	ld a, $04 ; $6e4d
 	ldh [$ff96], a ; $6e4f
@@ -1897,11 +1943,11 @@ Label_11_6e9e:
 	sub a, $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8
-	or a, c ; $6ea9
-	ld l, [hl] ; $6eaa
-	ld b, h ; $6eab
-	ld l, a ; $6eac
-	INCBIN "data/bank_011/d_6ead.bin" ; $6ead, 4 bytes
+	dw Label_11_6eb1 ; $6ea9 jumptable
+	dw Label_11_6f44 ; $6eab jumptable
+	dw Label_11_6fdd ; $6ead jumptable
+	dw Label_11_7076 ; $6eaf jumptable
+Label_11_6eb1:
 	call Func_11_7a76 ; $6eb1
 	ld bc, $0040 ; $6eb4
 	farcall FarPtr_0a_38 ; $6eb7
@@ -1960,13 +2006,351 @@ Label_11_6e9e:
 	ld b, $40 ; $6f3e
 	farcall FarPtr_0a_2e ; $6f40
 	ret ; $6f43
-	INCBIN "data/bank_011/d_6f44.bin" ; $6f44, 836 bytes
+Label_11_6f44:
+	call Func_11_7ab3 ; $6f44
+	ld bc, $0040 ; $6f47
+	farcall FarPtr_0a_38 ; $6f4a
+	ld a, $06 ; $6f4d
+	ld bc, $0900 ; $6f4f
+	ld de, $0900 ; $6f52
+	farcall FarPtr_0a_22 ; $6f55
+	ld a, $00 ; $6f58
+	ld bc, $0b00 ; $6f5a
+	ld de, $1400 ; $6f5d
+	farcall FarPtr_0a_22 ; $6f60
+	xor a, a ; $6f63
+	ld bc, $0b00 ; $6f64
+	ld de, $0f00 ; $6f67
+	farcall FarPtr_0a_3a ; $6f6a
+	farcall FarPtr_0a_3e ; $6f6d
+	ld a, $00 ; $6f70
+	ld b, $c0 ; $6f72
+	farcall FarPtr_0a_2e ; $6f74
+	ld a, $06 ; $6f77
+	ld b, $40 ; $6f79
+	farcall FarPtr_0a_2e ; $6f7b
+	ld a, $03 ; $6f7e
+	ld b, $80 ; $6f80
+	farcall FarPtr_0a_2e ; $6f82
+	ld c, $04 ; $6f85
+	call Func_00_1d2e ; $6f87
+	call Func_00_1da4 ; $6f8a
+	ld hl, $0846 ; $6f8d
+	farcall FarPtr_0a_0e ; $6f90
+	ld a, $06 ; $6f93
+	farcall FarPtr_0a_08 ; $6f95
+	ld a, $03 ; $6f98
+	ld de, $ff80 ; $6f9a
+	farcall FarPtr_0a_42 ; $6f9d
+	ld a, $03 ; $6fa0
+	farcall FarPtr_0a_44 ; $6fa2
+	ld hl, $0835 ; $6fa5
+	farcall FarPtr_0a_0e ; $6fa8
+	ld a, $03 ; $6fab
+	farcall FarPtr_0a_08 ; $6fad
+	ldh a, [$ff95] ; $6fb0
+	ld b, a ; $6fb2
+	ld a, $06 ; $6fb3
+	ld de, $76de ; $6fb5
+	farcall FarPtr_0a_1a ; $6fb8
+	ld a, $00 ; $6fbb
+	ld bc, $1300 ; $6fbd
+	ld de, $1500 ; $6fc0
+	farcall FarPtr_0a_24 ; $6fc3
+	ld a, $00 ; $6fc6
+	farcall FarPtr_0a_20 ; $6fc8
+	ld a, $00 ; $6fcb
+	ld b, $40 ; $6fcd
+	farcall FarPtr_0a_2e ; $6fcf
+	call Func_11_7b6b ; $6fd2
+	ld a, $03 ; $6fd5
+	ld b, $40 ; $6fd7
+	farcall FarPtr_0a_2e ; $6fd9
+	ret ; $6fdc
+Label_11_6fdd:
+	call Func_11_7ab3 ; $6fdd
+	ld bc, $0040 ; $6fe0
+	farcall FarPtr_0a_38 ; $6fe3
+	ld a, $05 ; $6fe6
+	ld bc, $0900 ; $6fe8
+	ld de, $0900 ; $6feb
+	farcall FarPtr_0a_22 ; $6fee
+	ld a, $00 ; $6ff1
+	ld bc, $0b00 ; $6ff3
+	ld de, $1400 ; $6ff6
+	farcall FarPtr_0a_22 ; $6ff9
+	xor a, a ; $6ffc
+	ld bc, $0b00 ; $6ffd
+	ld de, $0f00 ; $7000
+	farcall FarPtr_0a_3a ; $7003
+	farcall FarPtr_0a_3e ; $7006
+	ld a, $00 ; $7009
+	ld b, $c0 ; $700b
+	farcall FarPtr_0a_2e ; $700d
+	ld a, $05 ; $7010
+	ld b, $40 ; $7012
+	farcall FarPtr_0a_2e ; $7014
+	ld a, $03 ; $7017
+	ld b, $80 ; $7019
+	farcall FarPtr_0a_2e ; $701b
+	ld c, $04 ; $701e
+	call Func_00_1d2e ; $7020
+	call Func_00_1da4 ; $7023
+	ld hl, $0841 ; $7026
+	farcall FarPtr_0a_0e ; $7029
+	ld a, $05 ; $702c
+	farcall FarPtr_0a_08 ; $702e
+	ld a, $03 ; $7031
+	ld de, $ff80 ; $7033
+	farcall FarPtr_0a_42 ; $7036
+	ld a, $03 ; $7039
+	farcall FarPtr_0a_44 ; $703b
+	ld hl, $0836 ; $703e
+	farcall FarPtr_0a_0e ; $7041
+	ld a, $03 ; $7044
+	farcall FarPtr_0a_08 ; $7046
+	ldh a, [$ff95] ; $7049
+	ld b, a ; $704b
+	ld a, $05 ; $704c
+	ld de, $7717 ; $704e
+	farcall FarPtr_0a_1a ; $7051
+	ld a, $00 ; $7054
+	ld bc, $1300 ; $7056
+	ld de, $1500 ; $7059
+	farcall FarPtr_0a_24 ; $705c
+	ld a, $00 ; $705f
+	farcall FarPtr_0a_20 ; $7061
+	ld a, $00 ; $7064
+	ld b, $40 ; $7066
+	farcall FarPtr_0a_2e ; $7068
+	call Func_11_7b6b ; $706b
+	ld a, $03 ; $706e
+	ld b, $40 ; $7070
+	farcall FarPtr_0a_2e ; $7072
+	ret ; $7075
+Label_11_7076:
+	ld bc, $0040 ; $7076
+	farcall FarPtr_0a_38 ; $7079
+	ld a, $03 ; $707c
+	ld bc, $1300 ; $707e
+	ld de, $1f00 ; $7081
+	farcall FarPtr_0a_22 ; $7084
+	ld a, $04 ; $7087
+	ld bc, $1a00 ; $7089
+	ld de, $0b00 ; $708c
+	farcall FarPtr_0a_22 ; $708f
+	ld a, $00 ; $7092
+	ld bc, $1a00 ; $7094
+	ld de, $1400 ; $7097
+	farcall FarPtr_0a_22 ; $709a
+	xor a, a ; $709d
+	ld bc, $1a00 ; $709e
+	ld de, $1100 ; $70a1
+	farcall FarPtr_0a_3a ; $70a4
+	farcall FarPtr_0a_3e ; $70a7
+	ld a, $00 ; $70aa
+	ld b, $c0 ; $70ac
+	farcall FarPtr_0a_2e ; $70ae
+	ld a, $04 ; $70b1
+	ld b, $40 ; $70b3
+	farcall FarPtr_0a_2e ; $70b5
+	ld a, $03 ; $70b8
+	ld b, $c0 ; $70ba
+	farcall FarPtr_0a_2e ; $70bc
+	call Func_11_7a76 ; $70bf
+	ld c, $04 ; $70c2
+	call Func_00_1d2e ; $70c4
+	call Func_00_1da4 ; $70c7
+	push af ; $70ca
+	ld a, $3c ; $70cb
+	farcall FarPtr_0a_04 ; $70cd
+	pop af ; $70d0
+	ld hl, $0837 ; $70d1
+	farcall FarPtr_0a_0e ; $70d4
+	ld a, $04 ; $70d7
+	ld bc, $1a00 ; $70d9
+	ld de, $0d00 ; $70dc
+	farcall FarPtr_0a_24 ; $70df
+	ld a, $04 ; $70e2
+	farcall FarPtr_0a_20 ; $70e4
+	ld a, $04 ; $70e7
+	ld d, $02 ; $70e9
+	farcall FarPtr_0a_34 ; $70eb
+	ld a, $04 ; $70ee
+	farcall FarPtr_0a_08 ; $70f0
+	ld a, $03 ; $70f3
+	ld d, $03 ; $70f5
+	farcall FarPtr_0a_34 ; $70f7
+	ld a, $03 ; $70fa
+	farcall FarPtr_0a_08 ; $70fc
+	ld a, $04 ; $70ff
+	ld d, $02 ; $7101
+	farcall FarPtr_0a_34 ; $7103
+	ld a, $00 ; $7106
+	ld d, $02 ; $7108
+	farcall FarPtr_0a_34 ; $710a
+	ld a, $00 ; $710d
+	ld b, $40 ; $710f
+	farcall FarPtr_0a_2e ; $7111
+	ld bc, $0010 ; $7114
+	farcall FarPtr_0a_38 ; $7117
+	ld a, $03 ; $711a
+	ld bc, $0010 ; $711c
+	farcall FarPtr_0a_18 ; $711f
+	xor a, a ; $7122
+	ld bc, $1300 ; $7123
+	ld de, $1900 ; $7126
+	farcall FarPtr_0a_3a ; $7129
+	ld a, $03 ; $712c
+	ld bc, $1300 ; $712e
+	ld de, $1b00 ; $7131
+	farcall FarPtr_0a_24 ; $7134
+	ld a, $03 ; $7137
+	farcall FarPtr_0a_20 ; $7139
+	farcall FarPtr_0a_3e ; $713c
+	xor a, a ; $713f
+	ld bc, $1a00 ; $7140
+	ld de, $1400 ; $7143
+	farcall FarPtr_0a_3a ; $7146
+	ld a, $03 ; $7149
+	ld bc, $1a00 ; $714b
+	ld de, $1700 ; $714e
+	farcall FarPtr_0a_24 ; $7151
+	ld a, $03 ; $7154
+	farcall FarPtr_0a_20 ; $7156
+	ld a, $03 ; $7159
+	ld b, $c0 ; $715b
+	farcall FarPtr_0a_2e ; $715d
+	ld a, $03 ; $7160
+	ld d, $02 ; $7162
+	farcall FarPtr_0a_34 ; $7164
+	ld a, $03 ; $7167
+	farcall FarPtr_0a_36 ; $7169
+	ld a, $03 ; $716c
+	farcall FarPtr_0a_08 ; $716e
+	ld a, $00 ; $7171
+	ld d, $03 ; $7173
+	farcall FarPtr_0a_34 ; $7175
+	ld a, $00 ; $7178
+	farcall FarPtr_0a_36 ; $717a
+	ld a, $03 ; $717d
+	ld d, $03 ; $717f
+	farcall FarPtr_0a_34 ; $7181
+	ld a, $03 ; $7184
+	farcall FarPtr_0a_36 ; $7186
+	ld a, $03 ; $7189
+	farcall FarPtr_0a_08 ; $718b
+	ld a, $03 ; $718e
+	ld bc, $1a00 ; $7190
+	ld de, $1600 ; $7193
+	farcall FarPtr_0a_24 ; $7196
+	ld a, $03 ; $7199
+	farcall FarPtr_0a_20 ; $719b
+	ld a, $03 ; $719e
+	ld d, $02 ; $71a0
+	farcall FarPtr_0a_34 ; $71a2
+	ld a, $03 ; $71a5
+	farcall FarPtr_0a_36 ; $71a7
+	push af ; $71aa
+	ld a, $1e ; $71ab
+	farcall FarPtr_0a_04 ; $71ad
+	pop af ; $71b0
+	ld a, $03 ; $71b1
+	ld d, $03 ; $71b3
+	farcall FarPtr_0a_34 ; $71b5
+	ld a, $00 ; $71b8
+	ld d, $03 ; $71ba
+	farcall FarPtr_0a_34 ; $71bc
+	ld a, $00 ; $71bf
+	farcall FarPtr_0a_36 ; $71c1
+	ld a, $00 ; $71c4
+	farcall FarPtr_0a_08 ; $71c6
+	ld a, $03 ; $71c9
+	ld d, $02 ; $71cb
+	farcall FarPtr_0a_34 ; $71cd
+	ld a, $03 ; $71d0
+	farcall FarPtr_0a_36 ; $71d2
+	ld a, $03 ; $71d5
+	farcall FarPtr_0a_08 ; $71d7
+	ld a, $00 ; $71da
+	ld d, $03 ; $71dc
+	farcall FarPtr_0a_34 ; $71de
+	ld a, $00 ; $71e1
+	farcall FarPtr_0a_36 ; $71e3
+	ld a, $03 ; $71e6
+	ld d, $03 ; $71e8
+	farcall FarPtr_0a_34 ; $71ea
+	ld a, $03 ; $71ed
+	farcall FarPtr_0a_36 ; $71ef
+	ld a, $00 ; $71f2
+	ld d, $02 ; $71f4
+	farcall FarPtr_0a_34 ; $71f6
+	ld a, $00 ; $71f9
+	farcall FarPtr_0a_36 ; $71fb
+	ld a, $00 ; $71fe
+	ld b, $c0 ; $7200
+	farcall FarPtr_0a_2e ; $7202
+	ld a, $12 ; $7205
+	ld bc, $1b80 ; $7207
+	ld de, $1280 ; $720a
+	farcall FarPtr_0a_22 ; $720d
+	sound $96 ; $7210
+	push af ; $7212
+	ld a, $28 ; $7213
+	farcall FarPtr_0a_04 ; $7215
+	pop af ; $7218
+	ld a, $04 ; $7219
+	ld d, $02 ; $721b
+	farcall FarPtr_0a_34 ; $721d
+	push af ; $7220
+	ld a, $28 ; $7221
+	farcall FarPtr_0a_04 ; $7223
+	pop af ; $7226
+	ld a, $04 ; $7227
+	ld bc, $1a00 ; $7229
+	ld de, $0e00 ; $722c
+	farcall FarPtr_0a_24 ; $722f
+	ld a, $04 ; $7232
+	farcall FarPtr_0a_20 ; $7234
+	ld a, $12 ; $7237
+	ld bc, $3f00 ; $7239
+	ld de, $3f00 ; $723c
+	farcall FarPtr_0a_22 ; $723f
+	ld a, $04 ; $7242
+	farcall FarPtr_0a_08 ; $7244
+	ld a, $0b ; $7247
+	ld [wStoryModeCurrentLocation], a ; $7249
+	ld a, $01 ; $724c
+	ld [$c295], a ; $724e
+	ld a, $ff ; $7251
+	ld [$c294], a ; $7253
+	ld [$c2a1], a ; $7256
+	ld a, $03 ; $7259
+	ld d, $03 ; $725b
+	farcall FarPtr_0a_34 ; $725d
+	ld a, $03 ; $7260
+	farcall FarPtr_0a_36 ; $7262
+	push af ; $7265
+	ld a, $28 ; $7266
+	farcall FarPtr_0a_04 ; $7268
+	pop af ; $726b
+	ld a, $00 ; $726c
+	ld d, $02 ; $726e
+	farcall FarPtr_0a_34 ; $7270
+	ld a, $00 ; $7273
+	farcall FarPtr_0a_36 ; $7275
+	push af ; $7278
+	ld a, $28 ; $7279
+	farcall FarPtr_0a_04 ; $727b
+	pop af ; $727e
+	ld c, $04 ; $727f
+	call Func_00_1d20 ; $7281
+	call Func_00_1da4 ; $7284
+	ret ; $7287
 Func_11_7288:
 	ld hl, $0822 ; $7288
 	farcall FarPtr_0a_0e ; $728b
-	rst Rst30 ; $728e
-	nop ; $728f
-	ld a, [bc] ; $7290
+	rst30 $0a00 ; $728e
 	jr z, Label_11_7296 ; $7291
 	farcall FarPtr_0a_10 ; $7293
 Label_11_7296:
@@ -2023,24 +2407,15 @@ Label_11_72ec:
 	jr z, Label_11_72e3 ; $7305
 	jp Label_11_72b8 ; $7307
 Func_11_730a:
-	rst Rst30 ; $730a
-	ldh [rTIMA], a ; $730b
+	rst30 $05e0 ; $730a
 	jp nz, Label_11_67a0 ; $730d
-	rst Rst30 ; $7310
-	nop ; $7311
-	ld a, [bc] ; $7312
+	rst30 $0a00 ; $7310
 	jr z, Label_11_7325 ; $7313
-	rst Rst30 ; $7315
-	jr nz, Label_11_7322 ; $7316
+	rst30 $0a20 ; $7315
 	jr z, Label_11_7336 ; $7318
-	rst Rst30 ; $731a
-	ld b, b ; $731b
-	ld a, [bc] ; $731c
+	rst30 $0a40 ; $731a
 	jr z, Label_11_7347 ; $731d
-	rst Rst30 ; $731f
-	ld h, b ; $7320
-	ld a, [bc] ; $7321
-Label_11_7322:
+	rst30 $0a60 ; $731f
 	jr z, Label_11_7358 ; $7322
 	ret ; $7324
 Label_11_7325:
@@ -2080,21 +2455,13 @@ Label_11_7358:
 	farcall FarPtr_0a_1e ; $7365
 	ret ; $7368
 Func_11_7369:
-	rst Rst30 ; $7369
-	nop ; $736a
-	ld a, [bc] ; $736b
+	rst30 $0a00 ; $7369
 	jr z, Label_11_7381 ; $736c
-	rst Rst30 ; $736e
-	jr nz, Label_11_737b ; $736f
+	rst30 $0a20 ; $736e
 	jp z, Label_11_7438 ; $7371
-	rst Rst30 ; $7374
-	ld b, b ; $7375
-	ld a, [bc] ; $7376
+	rst30 $0a40 ; $7374
 	jp z, Label_11_74e3 ; $7377
-	rst Rst30 ; $737a
-Label_11_737b:
-	ld h, b ; $737b
-	ld a, [bc] ; $737c
+	rst30 $0a60 ; $737a
 	jp z, Label_11_7590 ; $737d
 	ret ; $7380
 Label_11_7381:
@@ -2458,20 +2825,14 @@ Label_11_7590:
 	ld a, $03 ; $77d1
 	farcall FarPtr_0a_30 ; $77d3
 	farcall FarPtr_0a_10 ; $77d6
-	rst Rst30 ; $77d9
-	nop ; $77da
-	ld a, [bc] ; $77db
+	rst30 $0a00 ; $77d9
 	jr z, Label_11_77f1 ; $77dc
 	farcall FarPtr_0a_10 ; $77de
-	rst Rst30 ; $77e1
-	jr nz, Label_11_77ee ; $77e2
+	rst30 $0a20 ; $77e1
 	jr z, Label_11_77f1 ; $77e4
 	farcall FarPtr_0a_10 ; $77e6
-	rst Rst30 ; $77e9
-	ld b, b ; $77ea
-	ld a, [bc] ; $77eb
+	rst30 $0a40 ; $77e9
 	jr z, Label_11_77f1 ; $77ec
-Label_11_77ee:
 	farcall FarPtr_0a_10 ; $77ee
 Label_11_77f1:
 	ld a, $03 ; $77f1
@@ -2499,24 +2860,15 @@ Func_11_781d:
 	ld a, $00 ; $781d
 	ld bc, $0020 ; $781f
 	farcall FarPtr_0a_18 ; $7822
-	rst Rst30 ; $7825
-	ldh [rTIMA], a ; $7826
+	rst30 $05e0 ; $7825
 	jp nz, Label_11_6596 ; $7828
-	rst Rst30 ; $782b
-	nop ; $782c
-	ld a, [bc] ; $782d
+	rst30 $0a00 ; $782b
 	jr z, Label_11_7843 ; $782e
-	rst Rst30 ; $7830
-	jr nz, Label_11_783d ; $7831
+	rst30 $0a20 ; $7830
 	jp z, Label_11_78cf ; $7833
-	rst Rst30 ; $7836
-	ld b, b ; $7837
-	ld a, [bc] ; $7838
+	rst30 $0a40 ; $7836
 	jp z, Label_11_795d ; $7839
-	rst Rst30 ; $783c
-Label_11_783d:
-	ld h, b ; $783d
-	ld a, [bc] ; $783e
+	rst30 $0a60 ; $783c
 	jp z, Label_11_79e8 ; $783f
 	ret ; $7842
 Label_11_7843:
@@ -2802,7 +3154,37 @@ Func_11_7a76:
 	ld b, $80 ; $7aad
 	farcall FarPtr_0a_2e ; $7aaf
 	ret ; $7ab2
-	INCBIN "data/bank_011/d_7ab3.bin" ; $7ab3, 122 bytes
+Func_11_7ab3:
+	ld a, $0c ; $7ab3
+	farcall FarPtr_0a_1c ; $7ab5
+	ld a, $0d ; $7ab8
+	farcall FarPtr_0a_1c ; $7aba
+	ld a, $0c ; $7abd
+	ld d, $01 ; $7abf
+	farcall FarPtr_0a_34 ; $7ac1
+	ld a, $0d ; $7ac4
+	ld d, $01 ; $7ac6
+	farcall FarPtr_0a_34 ; $7ac8
+	ld a, $0c ; $7acb
+	ld bc, $0f00 ; $7acd
+	ld de, $0b00 ; $7ad0
+	farcall FarPtr_0a_22 ; $7ad3
+	ld a, $0d ; $7ad6
+	ld bc, $0f00 ; $7ad8
+	ld de, $1300 ; $7adb
+	farcall FarPtr_0a_22 ; $7ade
+	ld a, $0c ; $7ae1
+	ld b, $80 ; $7ae3
+	farcall FarPtr_0a_2e ; $7ae5
+	ld a, $0d ; $7ae8
+	ld b, $80 ; $7aea
+	farcall FarPtr_0a_2e ; $7aec
+	push af ; $7aef
+	ld a, $14 ; $7af0
+	farcall FarPtr_0a_04 ; $7af2
+	pop af ; $7af5
+	ret ; $7af6
+	INCBIN "data/bank_011/d_7af7.bin" ; $7af7, 54 bytes
 Func_11_7b2d:
 	ld a, $0e ; $7b2d
 	ld bc, $1800 ; $7b2f
@@ -2830,562 +3212,68 @@ Func_11_7b2d:
 	ld de, $7c42 ; $7b64
 	farcall FarPtr_0a_1a ; $7b67
 	ret ; $7b6a
-	INCBIN "data/bank_011/d_7b6b.bin" ; $7b6b, 102 bytes
+Func_11_7b6b:
+	ld a, $0c ; $7b6b
+	ld bc, $0800 ; $7b6d
+	ld de, $0b00 ; $7b70
+	farcall FarPtr_0a_24 ; $7b73
+	ld a, $0d ; $7b76
+	ld bc, $0c00 ; $7b78
+	ld de, $1700 ; $7b7b
+	farcall FarPtr_0a_24 ; $7b7e
+	ld a, $0d ; $7b81
+	farcall FarPtr_0a_20 ; $7b83
+	ld a, $0d ; $7b86
+	ld b, $c0 ; $7b88
+	farcall FarPtr_0a_2e ; $7b8a
+	ld a, $0c ; $7b8d
+	farcall FarPtr_0a_20 ; $7b8f
+	ldh a, [$ff95] ; $7b92
+	ld b, a ; $7b94
+	ld a, $0c ; $7b95
+	ld de, $7ca9 ; $7b97
+	farcall FarPtr_0a_1a ; $7b9a
+	ldh a, [$ff95] ; $7b9d
+	ld b, a ; $7b9f
+	ld a, $0d ; $7ba0
+	ld de, $7d10 ; $7ba2
+	farcall FarPtr_0a_1a ; $7ba5
+	ret ; $7ba8
+	INCBIN "data/bank_011/d_7ba9.bin" ; $7ba9, 40 bytes
 	ret ; $7bd1
 	INCBIN "data/bank_011/d_7bd2.bin" ; $7bd2, 451 bytes
 Func_11_7d95:
-	rst Rst30 ; $7d95
-	ldh [rTIMA], a ; $7d96
+	rst30 $05e0 ; $7d95
 	jr nz, Label_11_7dbc ; $7d98
 	ld a, $00 ; $7d9a
-	rst Rst30 ; $7d9c
-	ld h, b ; $7d9d
-	ld a, [bc] ; $7d9e
+	rst30 $0a60 ; $7d9c
 	jr z, Label_11_7db8 ; $7d9f
 	ld a, $02 ; $7da1
-	rst Rst30 ; $7da3
-	ldh [$ff0a], a ; $7da4
+	rst30 $0ae0 ; $7da3
 	jr z, Label_11_7db8 ; $7da6
 	ld a, $04 ; $7da8
-	rst Rst30 ; $7daa
-	ret nz ; $7dab
-	dec d ; $7dac
+	rst30 $15c0 ; $7daa
 	jr z, Label_11_7db8 ; $7dad
 	ld a, $06 ; $7daf
-	rst Rst30 ; $7db1
-	nop ; $7db2
-	ld d, $28 ; $7db3
-	ld [bc], a ; $7db5
+	rst30 $1600 ; $7db1
+	jr z, Label_11_7db8 ; $7db4
 	ld a, $08 ; $7db6
 Label_11_7db8:
 	ld [$c2b0], a ; $7db8
 	ret ; $7dbb
 Label_11_7dbc:
 	ld a, $01 ; $7dbc
-	rst Rst30 ; $7dbe
-	ld b, b ; $7dbf
-	ld [$f528], sp ; $7dc0
+	rst30 $0840 ; $7dbe
+	jr z, Label_11_7db8 ; $7dc1
 	ld a, $03 ; $7dc3
-	rst Rst30 ; $7dc5
-	ret nz ; $7dc6
-	ld [$ee28], sp ; $7dc7
+	rst30 $08c0 ; $7dc5
+	jr z, Label_11_7db8 ; $7dc8
 	ld a, $05 ; $7dca
-	rst Rst30 ; $7dcc
-	ldh [$ff15], a ; $7dcd
+	rst30 $15e0 ; $7dcc
 	jr z, Label_11_7db8 ; $7dcf
 	ld a, $07 ; $7dd1
-	rst Rst30 ; $7dd3
-	jr nz, Label_11_7dec ; $7dd4
+	rst30 $1620 ; $7dd3
 	jr z, Label_11_7db8 ; $7dd6
 	ld a, $09 ; $7dd8
 	jr Label_11_7db8 ; $7dda
-	INCBIN "data/bank_011/d_7ddc.bin" ; $7ddc, 16 bytes
-Label_11_7dec:
-	dec b ; $7dec
-	jr nz, Label_11_7dff ; $7ded
-	rst Rst30 ; $7def
-	ret nz ; $7df0
-	dec d ; $7df1
-	jr z, Label_11_7dfb ; $7df2
-	inc a ; $7df4
-	rst Rst30 ; $7df5
-	nop ; $7df6
-	ld d, $28 ; $7df7
-	INCBIN "data/bank_011/d_7df9.bin" ; $7df9, 2 bytes
-Label_11_7dfb:
-	ld [$c2b0], a ; $7dfb
-	ret ; $7dfe
-Label_11_7dff:
-	rst Rst30 ; $7dff
-	ldh [$ff15], a ; $7e00
-	jr z, Label_11_7dfb ; $7e02
-	inc a ; $7e04
-	rst Rst30 ; $7e05
-	jr nz, Label_11_7e1e ; $7e06
-	jr z, Label_11_7dfb ; $7e08
-	inc a ; $7e0a
-	jr Label_11_7dfb ; $7e0b
-	INCBIN "data/bank_011/d_7e0d.bin" ; $7e0d, 17 bytes
-Label_11_7e1e:
-	rst Rst38 ; $7e1e
-	rst Rst38 ; $7e1f
-	rst Rst38 ; $7e20
-	rst Rst38 ; $7e21
-	rst Rst38 ; $7e22
-	rst Rst38 ; $7e23
-	rst Rst38 ; $7e24
-	rst Rst38 ; $7e25
-	rst Rst38 ; $7e26
-	rst Rst38 ; $7e27
-	rst Rst38 ; $7e28
-	rst Rst38 ; $7e29
-	rst Rst38 ; $7e2a
-	rst Rst38 ; $7e2b
-	rst Rst38 ; $7e2c
-	rst Rst38 ; $7e2d
-	rst Rst38 ; $7e2e
-	rst Rst38 ; $7e2f
-	rst Rst38 ; $7e30
-	rst Rst38 ; $7e31
-	rst Rst38 ; $7e32
-	rst Rst38 ; $7e33
-	rst Rst38 ; $7e34
-	rst Rst38 ; $7e35
-	rst Rst38 ; $7e36
-	rst Rst38 ; $7e37
-	rst Rst38 ; $7e38
-	rst Rst38 ; $7e39
-	rst Rst38 ; $7e3a
-	rst Rst38 ; $7e3b
-	rst Rst38 ; $7e3c
-	rst Rst38 ; $7e3d
-	rst Rst38 ; $7e3e
-	rst Rst38 ; $7e3f
-	rst Rst38 ; $7e40
-	rst Rst38 ; $7e41
-	rst Rst38 ; $7e42
-	rst Rst38 ; $7e43
-	rst Rst38 ; $7e44
-	rst Rst38 ; $7e45
-	rst Rst38 ; $7e46
-	rst Rst38 ; $7e47
-	rst Rst38 ; $7e48
-	rst Rst38 ; $7e49
-	rst Rst38 ; $7e4a
-	rst Rst38 ; $7e4b
-	rst Rst38 ; $7e4c
-	rst Rst38 ; $7e4d
-	rst Rst38 ; $7e4e
-	rst Rst38 ; $7e4f
-	rst Rst38 ; $7e50
-	rst Rst38 ; $7e51
-	rst Rst38 ; $7e52
-	rst Rst38 ; $7e53
-	rst Rst38 ; $7e54
-	rst Rst38 ; $7e55
-	rst Rst38 ; $7e56
-	rst Rst38 ; $7e57
-	rst Rst38 ; $7e58
-	rst Rst38 ; $7e59
-	rst Rst38 ; $7e5a
-	rst Rst38 ; $7e5b
-	rst Rst38 ; $7e5c
-	rst Rst38 ; $7e5d
-	rst Rst38 ; $7e5e
-	rst Rst38 ; $7e5f
-	rst Rst38 ; $7e60
-	rst Rst38 ; $7e61
-	rst Rst38 ; $7e62
-	rst Rst38 ; $7e63
-	rst Rst38 ; $7e64
-	rst Rst38 ; $7e65
-	rst Rst38 ; $7e66
-	rst Rst38 ; $7e67
-	rst Rst38 ; $7e68
-	rst Rst38 ; $7e69
-	rst Rst38 ; $7e6a
-	rst Rst38 ; $7e6b
-	rst Rst38 ; $7e6c
-	rst Rst38 ; $7e6d
-	rst Rst38 ; $7e6e
-	rst Rst38 ; $7e6f
-	rst Rst38 ; $7e70
-	rst Rst38 ; $7e71
-	rst Rst38 ; $7e72
-	rst Rst38 ; $7e73
-	rst Rst38 ; $7e74
-	rst Rst38 ; $7e75
-	rst Rst38 ; $7e76
-	rst Rst38 ; $7e77
-	rst Rst38 ; $7e78
-	rst Rst38 ; $7e79
-	rst Rst38 ; $7e7a
-	rst Rst38 ; $7e7b
-	rst Rst38 ; $7e7c
-	rst Rst38 ; $7e7d
-	rst Rst38 ; $7e7e
-	rst Rst38 ; $7e7f
-	rst Rst38 ; $7e80
-	rst Rst38 ; $7e81
-	rst Rst38 ; $7e82
-	rst Rst38 ; $7e83
-	rst Rst38 ; $7e84
-	rst Rst38 ; $7e85
-	rst Rst38 ; $7e86
-	rst Rst38 ; $7e87
-	rst Rst38 ; $7e88
-	rst Rst38 ; $7e89
-	rst Rst38 ; $7e8a
-	rst Rst38 ; $7e8b
-	rst Rst38 ; $7e8c
-	rst Rst38 ; $7e8d
-	rst Rst38 ; $7e8e
-	rst Rst38 ; $7e8f
-	rst Rst38 ; $7e90
-	rst Rst38 ; $7e91
-	rst Rst38 ; $7e92
-	rst Rst38 ; $7e93
-	rst Rst38 ; $7e94
-	rst Rst38 ; $7e95
-	rst Rst38 ; $7e96
-	rst Rst38 ; $7e97
-	rst Rst38 ; $7e98
-	rst Rst38 ; $7e99
-	rst Rst38 ; $7e9a
-	rst Rst38 ; $7e9b
-	rst Rst38 ; $7e9c
-	rst Rst38 ; $7e9d
-	rst Rst38 ; $7e9e
-	rst Rst38 ; $7e9f
-	rst Rst38 ; $7ea0
-	rst Rst38 ; $7ea1
-	rst Rst38 ; $7ea2
-	rst Rst38 ; $7ea3
-	rst Rst38 ; $7ea4
-	rst Rst38 ; $7ea5
-	rst Rst38 ; $7ea6
-	rst Rst38 ; $7ea7
-	rst Rst38 ; $7ea8
-	rst Rst38 ; $7ea9
-	rst Rst38 ; $7eaa
-	rst Rst38 ; $7eab
-	rst Rst38 ; $7eac
-	rst Rst38 ; $7ead
-	rst Rst38 ; $7eae
-	rst Rst38 ; $7eaf
-	rst Rst38 ; $7eb0
-	rst Rst38 ; $7eb1
-	rst Rst38 ; $7eb2
-	rst Rst38 ; $7eb3
-	rst Rst38 ; $7eb4
-	rst Rst38 ; $7eb5
-	rst Rst38 ; $7eb6
-	rst Rst38 ; $7eb7
-	rst Rst38 ; $7eb8
-	rst Rst38 ; $7eb9
-	rst Rst38 ; $7eba
-	rst Rst38 ; $7ebb
-	rst Rst38 ; $7ebc
-	rst Rst38 ; $7ebd
-	rst Rst38 ; $7ebe
-	rst Rst38 ; $7ebf
-	rst Rst38 ; $7ec0
-	rst Rst38 ; $7ec1
-	rst Rst38 ; $7ec2
-	rst Rst38 ; $7ec3
-	rst Rst38 ; $7ec4
-	rst Rst38 ; $7ec5
-	rst Rst38 ; $7ec6
-	rst Rst38 ; $7ec7
-	rst Rst38 ; $7ec8
-	rst Rst38 ; $7ec9
-	rst Rst38 ; $7eca
-	rst Rst38 ; $7ecb
-	rst Rst38 ; $7ecc
-	rst Rst38 ; $7ecd
-	rst Rst38 ; $7ece
-	rst Rst38 ; $7ecf
-	rst Rst38 ; $7ed0
-	rst Rst38 ; $7ed1
-	rst Rst38 ; $7ed2
-	rst Rst38 ; $7ed3
-	rst Rst38 ; $7ed4
-	rst Rst38 ; $7ed5
-	rst Rst38 ; $7ed6
-	rst Rst38 ; $7ed7
-	rst Rst38 ; $7ed8
-	rst Rst38 ; $7ed9
-	rst Rst38 ; $7eda
-	rst Rst38 ; $7edb
-	rst Rst38 ; $7edc
-	rst Rst38 ; $7edd
-	rst Rst38 ; $7ede
-	rst Rst38 ; $7edf
-	rst Rst38 ; $7ee0
-	rst Rst38 ; $7ee1
-	rst Rst38 ; $7ee2
-	rst Rst38 ; $7ee3
-	rst Rst38 ; $7ee4
-	rst Rst38 ; $7ee5
-	rst Rst38 ; $7ee6
-	rst Rst38 ; $7ee7
-	rst Rst38 ; $7ee8
-	rst Rst38 ; $7ee9
-	rst Rst38 ; $7eea
-	rst Rst38 ; $7eeb
-	rst Rst38 ; $7eec
-	rst Rst38 ; $7eed
-	rst Rst38 ; $7eee
-	rst Rst38 ; $7eef
-	rst Rst38 ; $7ef0
-	rst Rst38 ; $7ef1
-	rst Rst38 ; $7ef2
-	rst Rst38 ; $7ef3
-	rst Rst38 ; $7ef4
-	rst Rst38 ; $7ef5
-	rst Rst38 ; $7ef6
-	rst Rst38 ; $7ef7
-	rst Rst38 ; $7ef8
-	rst Rst38 ; $7ef9
-	rst Rst38 ; $7efa
-	rst Rst38 ; $7efb
-	rst Rst38 ; $7efc
-	rst Rst38 ; $7efd
-	rst Rst38 ; $7efe
-	rst Rst38 ; $7eff
-	rst Rst38 ; $7f00
-	rst Rst38 ; $7f01
-	rst Rst38 ; $7f02
-	rst Rst38 ; $7f03
-	rst Rst38 ; $7f04
-	rst Rst38 ; $7f05
-	rst Rst38 ; $7f06
-	rst Rst38 ; $7f07
-	rst Rst38 ; $7f08
-	rst Rst38 ; $7f09
-	rst Rst38 ; $7f0a
-	rst Rst38 ; $7f0b
-	rst Rst38 ; $7f0c
-	rst Rst38 ; $7f0d
-	rst Rst38 ; $7f0e
-	rst Rst38 ; $7f0f
-	rst Rst38 ; $7f10
-	rst Rst38 ; $7f11
-	rst Rst38 ; $7f12
-	rst Rst38 ; $7f13
-	rst Rst38 ; $7f14
-	rst Rst38 ; $7f15
-	rst Rst38 ; $7f16
-	rst Rst38 ; $7f17
-	rst Rst38 ; $7f18
-	rst Rst38 ; $7f19
-	rst Rst38 ; $7f1a
-	rst Rst38 ; $7f1b
-	rst Rst38 ; $7f1c
-	rst Rst38 ; $7f1d
-	rst Rst38 ; $7f1e
-	rst Rst38 ; $7f1f
-	rst Rst38 ; $7f20
-	rst Rst38 ; $7f21
-	rst Rst38 ; $7f22
-	rst Rst38 ; $7f23
-	rst Rst38 ; $7f24
-	rst Rst38 ; $7f25
-	rst Rst38 ; $7f26
-	rst Rst38 ; $7f27
-	rst Rst38 ; $7f28
-	rst Rst38 ; $7f29
-	rst Rst38 ; $7f2a
-	rst Rst38 ; $7f2b
-	rst Rst38 ; $7f2c
-	rst Rst38 ; $7f2d
-	rst Rst38 ; $7f2e
-	rst Rst38 ; $7f2f
-	rst Rst38 ; $7f30
-	rst Rst38 ; $7f31
-	rst Rst38 ; $7f32
-	rst Rst38 ; $7f33
-	rst Rst38 ; $7f34
-	rst Rst38 ; $7f35
-	rst Rst38 ; $7f36
-	rst Rst38 ; $7f37
-	rst Rst38 ; $7f38
-	rst Rst38 ; $7f39
-	rst Rst38 ; $7f3a
-	rst Rst38 ; $7f3b
-	rst Rst38 ; $7f3c
-	rst Rst38 ; $7f3d
-	rst Rst38 ; $7f3e
-	rst Rst38 ; $7f3f
-	rst Rst38 ; $7f40
-	rst Rst38 ; $7f41
-	rst Rst38 ; $7f42
-	rst Rst38 ; $7f43
-	rst Rst38 ; $7f44
-	rst Rst38 ; $7f45
-	rst Rst38 ; $7f46
-	rst Rst38 ; $7f47
-	rst Rst38 ; $7f48
-	rst Rst38 ; $7f49
-	rst Rst38 ; $7f4a
-	rst Rst38 ; $7f4b
-	rst Rst38 ; $7f4c
-	rst Rst38 ; $7f4d
-	rst Rst38 ; $7f4e
-	rst Rst38 ; $7f4f
-	rst Rst38 ; $7f50
-	rst Rst38 ; $7f51
-	rst Rst38 ; $7f52
-	rst Rst38 ; $7f53
-	rst Rst38 ; $7f54
-	rst Rst38 ; $7f55
-	rst Rst38 ; $7f56
-	rst Rst38 ; $7f57
-	rst Rst38 ; $7f58
-	rst Rst38 ; $7f59
-	rst Rst38 ; $7f5a
-	rst Rst38 ; $7f5b
-	rst Rst38 ; $7f5c
-	rst Rst38 ; $7f5d
-	rst Rst38 ; $7f5e
-	rst Rst38 ; $7f5f
-	rst Rst38 ; $7f60
-	rst Rst38 ; $7f61
-	rst Rst38 ; $7f62
-	rst Rst38 ; $7f63
-	rst Rst38 ; $7f64
-	rst Rst38 ; $7f65
-	rst Rst38 ; $7f66
-	rst Rst38 ; $7f67
-	rst Rst38 ; $7f68
-	rst Rst38 ; $7f69
-	rst Rst38 ; $7f6a
-	rst Rst38 ; $7f6b
-	rst Rst38 ; $7f6c
-	rst Rst38 ; $7f6d
-	rst Rst38 ; $7f6e
-	rst Rst38 ; $7f6f
-	rst Rst38 ; $7f70
-	rst Rst38 ; $7f71
-	rst Rst38 ; $7f72
-	rst Rst38 ; $7f73
-	rst Rst38 ; $7f74
-	rst Rst38 ; $7f75
-	rst Rst38 ; $7f76
-	rst Rst38 ; $7f77
-	rst Rst38 ; $7f78
-	rst Rst38 ; $7f79
-	rst Rst38 ; $7f7a
-	rst Rst38 ; $7f7b
-	rst Rst38 ; $7f7c
-	rst Rst38 ; $7f7d
-	rst Rst38 ; $7f7e
-	rst Rst38 ; $7f7f
-	rst Rst38 ; $7f80
-	rst Rst38 ; $7f81
-	rst Rst38 ; $7f82
-	rst Rst38 ; $7f83
-	rst Rst38 ; $7f84
-	rst Rst38 ; $7f85
-	rst Rst38 ; $7f86
-	rst Rst38 ; $7f87
-	rst Rst38 ; $7f88
-	rst Rst38 ; $7f89
-	rst Rst38 ; $7f8a
-	rst Rst38 ; $7f8b
-	rst Rst38 ; $7f8c
-	rst Rst38 ; $7f8d
-	rst Rst38 ; $7f8e
-	rst Rst38 ; $7f8f
-	rst Rst38 ; $7f90
-	rst Rst38 ; $7f91
-	rst Rst38 ; $7f92
-	rst Rst38 ; $7f93
-	rst Rst38 ; $7f94
-	rst Rst38 ; $7f95
-	rst Rst38 ; $7f96
-	rst Rst38 ; $7f97
-	rst Rst38 ; $7f98
-	rst Rst38 ; $7f99
-	rst Rst38 ; $7f9a
-	rst Rst38 ; $7f9b
-	rst Rst38 ; $7f9c
-	rst Rst38 ; $7f9d
-	rst Rst38 ; $7f9e
-	rst Rst38 ; $7f9f
-	rst Rst38 ; $7fa0
-	rst Rst38 ; $7fa1
-	rst Rst38 ; $7fa2
-	rst Rst38 ; $7fa3
-	rst Rst38 ; $7fa4
-	rst Rst38 ; $7fa5
-	rst Rst38 ; $7fa6
-	rst Rst38 ; $7fa7
-	rst Rst38 ; $7fa8
-	rst Rst38 ; $7fa9
-	rst Rst38 ; $7faa
-	rst Rst38 ; $7fab
-	rst Rst38 ; $7fac
-	rst Rst38 ; $7fad
-	rst Rst38 ; $7fae
-	rst Rst38 ; $7faf
-	rst Rst38 ; $7fb0
-	rst Rst38 ; $7fb1
-	rst Rst38 ; $7fb2
-	rst Rst38 ; $7fb3
-	rst Rst38 ; $7fb4
-	rst Rst38 ; $7fb5
-	rst Rst38 ; $7fb6
-	rst Rst38 ; $7fb7
-	rst Rst38 ; $7fb8
-	rst Rst38 ; $7fb9
-	rst Rst38 ; $7fba
-	rst Rst38 ; $7fbb
-	rst Rst38 ; $7fbc
-	rst Rst38 ; $7fbd
-	rst Rst38 ; $7fbe
-	rst Rst38 ; $7fbf
-	rst Rst38 ; $7fc0
-	rst Rst38 ; $7fc1
-	rst Rst38 ; $7fc2
-	rst Rst38 ; $7fc3
-	rst Rst38 ; $7fc4
-	rst Rst38 ; $7fc5
-	rst Rst38 ; $7fc6
-	rst Rst38 ; $7fc7
-	rst Rst38 ; $7fc8
-	rst Rst38 ; $7fc9
-	rst Rst38 ; $7fca
-	rst Rst38 ; $7fcb
-	rst Rst38 ; $7fcc
-	rst Rst38 ; $7fcd
-	rst Rst38 ; $7fce
-	rst Rst38 ; $7fcf
-	rst Rst38 ; $7fd0
-	rst Rst38 ; $7fd1
-	rst Rst38 ; $7fd2
-	rst Rst38 ; $7fd3
-	rst Rst38 ; $7fd4
-	rst Rst38 ; $7fd5
-	rst Rst38 ; $7fd6
-	rst Rst38 ; $7fd7
-	rst Rst38 ; $7fd8
-	rst Rst38 ; $7fd9
-	rst Rst38 ; $7fda
-	rst Rst38 ; $7fdb
-	rst Rst38 ; $7fdc
-	rst Rst38 ; $7fdd
-	rst Rst38 ; $7fde
-	rst Rst38 ; $7fdf
-	rst Rst38 ; $7fe0
-	rst Rst38 ; $7fe1
-	rst Rst38 ; $7fe2
-	rst Rst38 ; $7fe3
-	rst Rst38 ; $7fe4
-	rst Rst38 ; $7fe5
-	rst Rst38 ; $7fe6
-	rst Rst38 ; $7fe7
-	rst Rst38 ; $7fe8
-	rst Rst38 ; $7fe9
-	rst Rst38 ; $7fea
-	rst Rst38 ; $7feb
-	rst Rst38 ; $7fec
-	rst Rst38 ; $7fed
-	rst Rst38 ; $7fee
-	rst Rst38 ; $7fef
-	rst Rst38 ; $7ff0
-	rst Rst38 ; $7ff1
-	rst Rst38 ; $7ff2
-	rst Rst38 ; $7ff3
-	rst Rst38 ; $7ff4
-	rst Rst38 ; $7ff5
-	rst Rst38 ; $7ff6
-	rst Rst38 ; $7ff7
-	rst Rst38 ; $7ff8
-	rst Rst38 ; $7ff9
-	rst Rst38 ; $7ffa
-	rst Rst38 ; $7ffb
-	rst Rst38 ; $7ffc
-	rst Rst38 ; $7ffd
-	rst Rst38 ; $7ffe
-	rst Rst38 ; $7fff
+	INCBIN "data/bank_011/d_7ddc.bin" ; $7ddc, 548 bytes

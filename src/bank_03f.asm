@@ -102,8 +102,7 @@ Label_3f_4106:
 	call DisableLCDSafely ; $4106
 	farcall FarPtr_01_04 ; $4109
 	call EnableLCD ; $410c
-	rst Rst08 ; $410f
-	dec b ; $4110
+	sound $05 ; $410f
 	call Func_00_2631 ; $4111
 	ld c, $10 ; $4114
 	call Func_00_1d2e ; $4116
@@ -511,12 +510,9 @@ Label_3f_4e89:
 	ld a, $06 ; $4e94
 	ldh [$ff96], a ; $4e96
 	ldh [rWBK], a ; $4e98
-	rst Rst30 ; $4e9a
-	jr nz, Label_3f_4ea0 ; $4e9b
+	rst30 $0320 ; $4e9a
 	jr z, Label_3f_4ea4 ; $4e9d
-	rst Rst08 ; $4e9f
-Label_3f_4ea0:
-	ld e, a ; $4ea0
+	sound $5f ; $4e9f
 	call Func_3f_4e7b ; $4ea1
 Label_3f_4ea4:
 	ld a, [$cb38] ; $4ea4
@@ -1387,8 +1383,7 @@ Func_3f_5588:
 	bit 0, a ; $5592
 	jr z, Label_3f_559e ; $5594
 	pop af ; $5596
-	rst Rst08 ; $5597
-	ld e, a ; $5598
+	sound $5f ; $5597
 	ld a, $04 ; $5599
 	push af ; $559b
 	jr Label_3f_55fc ; $559c
@@ -1396,8 +1391,7 @@ Label_3f_559e:
 	bit 1, a ; $559e
 	jr z, Label_3f_55aa ; $55a0
 	pop af ; $55a2
-	rst Rst08 ; $55a3
-	ld h, d ; $55a4
+	sound $62 ; $55a3
 	ld a, $01 ; $55a5
 	push af ; $55a7
 	jr Label_3f_55fc ; $55a8
@@ -1415,8 +1409,7 @@ Label_3f_55aa:
 	xor a, a ; $55bd
 	call Func_3f_54c8 ; $55be
 	pop af ; $55c1
-	rst Rst08 ; $55c2
-	ld e, [hl] ; $55c3
+	sound $5e ; $55c2
 	ld a, [$cb2e] ; $55c4
 	ld b, a ; $55c7
 	ld a, $01 ; $55c8
@@ -1436,8 +1429,7 @@ Label_3f_55d1:
 	xor a, a ; $55e2
 	call Func_3f_54c8 ; $55e3
 	pop af ; $55e6
-	rst Rst08 ; $55e7
-	ld e, [hl] ; $55e8
+	sound $5e ; $55e7
 	ld a, [$cb2e] ; $55e9
 	ld b, a ; $55ec
 	ld a, $01 ; $55ed
@@ -1465,8 +1457,7 @@ Func_3f_55ff:
 	ldh a, [$ff94] ; $5611
 	bit 0, a ; $5613
 	jp z, Label_3f_56a4 ; $5615
-	rst Rst08 ; $5618
-	ld e, a ; $5619
+	sound $5f ; $5618
 	call Func_3f_4e7b ; $561a
 	ld a, [$cb37] ; $561d
 	set 0, a ; $5620
@@ -1516,13 +1507,9 @@ Label_3f_564e:
 	ld a, $80 ; $5673
 	ld [wMessageSpeed], a ; $5675
 	xor a, a ; $5678
-	rst Rst20 ; $5679
-	ld h, b ; $567a
-	inc b ; $567b
+	rst20 $0460 ; $5679
 	farcall FarPtr_05_60 ; $567c
-	rst Rst28 ; $567f
-	ld h, b ; $5680
-	inc b ; $5681
+	rst28 $0460 ; $567f
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a, a ; $5686
@@ -1541,8 +1528,7 @@ Label_3f_56a4:
 	bit 1, a ; $56a4
 	jr z, Label_3f_56be ; $56a6
 	pop af ; $56a8
-	rst Rst08 ; $56a9
-	ld h, d ; $56aa
+	sound $62 ; $56a9
 	ld a, [$cb34] ; $56ab
 	cp a, $06 ; $56ae
 	jr z, Label_3f_56b8 ; $56b0
@@ -1557,8 +1543,7 @@ Label_3f_56be:
 	ldh a, [$ff91] ; $56be
 	bit 6, a ; $56c0
 	jr z, Label_3f_56ea ; $56c2
-	rst Rst08 ; $56c4
-	ld e, [hl] ; $56c5
+	sound $5e ; $56c4
 	ld a, [$cb2e] ; $56c6
 	dec a ; $56c9
 	cp a, $ff ; $56ca
@@ -1580,8 +1565,7 @@ Label_3f_56e2:
 Label_3f_56ea:
 	bit 7, a ; $56ea
 	jr z, Label_3f_5714 ; $56ec
-	rst Rst08 ; $56ee
-	ld e, [hl] ; $56ef
+	sound $5e ; $56ee
 	ld a, [$cb2e] ; $56f0
 	inc a ; $56f3
 	cp a, $06 ; $56f4
@@ -1607,8 +1591,7 @@ Label_3f_5714:
 	ld a, [$cb37] ; $5718
 	set 2, a ; $571b
 	ld [$cb37], a ; $571d
-	rst Rst08 ; $5720
-	ld e, [hl] ; $5721
+	sound $5e ; $5720
 	call Func_00_2631 ; $5722
 	call Func_3f_5192 ; $5725
 	call Func_3f_5261 ; $5728
@@ -1619,8 +1602,7 @@ Label_3f_572d:
 	ld a, [$cb37] ; $5731
 	set 3, a ; $5734
 	ld [$cb37], a ; $5736
-	rst Rst08 ; $5739
-	ld e, [hl] ; $573a
+	sound $5e ; $5739
 	call Func_00_2631 ; $573b
 	call Func_3f_520f ; $573e
 	call Func_3f_5261 ; $5741
@@ -1730,8 +1712,7 @@ Func_3f_5974:
 	sbc a, [hl] ; $5977
 	pop hl ; $5978
 	or a, b ; $5979
-	rst Rst08 ; $597a
-	or a, a ; $597b
+	sound $b7 ; $597a
 	ret z ; $597c
 	rst Rst38 ; $597d
 	or a, e ; $597e
@@ -1814,15 +1795,12 @@ Func_3f_5e92:
 	rst Rst38 ; $5e95
 	ret nz ; $5e96
 	ldh [$ff9f], a ; $5e97
-	rst Rst08 ; $5e99
-	cp a, a ; $5e9a
+	sound $bf ; $5e99
 	rst Rst38 ; $5e9b
 	sbc a, $be ; $5e9c
 	pop de ; $5e9e
 	or a, c ; $5e9f
-	rst Rst28 ; $5ea0
-	cp a, a ; $5ea1
-	rst Rst28 ; $5ea2
+	rst28 $efbf ; $5ea0
 	cp a, a ; $5ea3
 	rst Rst38 ; $5ea4
 	rst Rst38 ; $5ea5
@@ -1844,7 +1822,6 @@ Func_3f_5f7d:
 	rst Rst38 ; $5f8b
 	rst Rst38 ; $5f8c
 	rst Rst38 ; $5f8d
-Label_3f_5f8e:
 	nop ; $5f8e
 	nop ; $5f8f
 	rst Rst38 ; $5f90
@@ -1856,34 +1833,14 @@ Label_3f_5f8e:
 	scf ; $5f96
 	jr nc, Label_3f_5fc8 ; $5f97
 	rst Rst00 ; $5f99
-	jr nz, Label_3f_5fdb ; $5f9a
-	jr nz, Label_3f_5f8e ; $5f9c
-	INCBIN "data/bank_03f/d_5f9e.bin" ; $5f9e, 42 bytes
+	dw Label_00_3f20 ; $5f9a jumptable
+	INCBIN "data/bank_03f/d_5f9c.bin" ; $5f9c, 44 bytes
 Label_3f_5fc8:
 	jr nz, Label_3f_6009 ; $5fc8
 	ccf ; $5fca
 	nop ; $5fcb
 	rrca ; $5fcc
-	INCBIN "data/bank_03f/d_5fcd.bin" ; $5fcd, 14 bytes
-Label_3f_5fdb:
-	rst Rst38 ; $5fdb
-	add a, b ; $5fdc
-	rst Rst38 ; $5fdd
-	add a, e ; $5fde
-	cp a, d ; $5fdf
-	add a, e ; $5fe0
-	rst Rst38 ; $5fe1
-	cp a, $ff ; $5fe2
-	ld hl, sp + 14 ; $5fe4
-	ld hl, sp + 14 ; $5fe6
-	add sp, 14 ; $5fe8
-	rst Rst38 ; $5fea
-	ret c ; $5feb
-	ld e, $70 ; $5fec
-	ld a, [hl] ; $5fee
-	ret nz ; $5fef
-	cp a, $00 ; $5ff0
-	INCBIN "data/bank_03f/d_5ff2.bin" ; $5ff2, 23 bytes
+	INCBIN "data/bank_03f/d_5fcd.bin" ; $5fcd, 60 bytes
 Label_3f_6009:
 	ld a, h ; $6009
 	ld l, [hl] ; $600a

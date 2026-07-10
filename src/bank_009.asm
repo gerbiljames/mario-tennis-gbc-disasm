@@ -135,12 +135,11 @@ Func_09_40b5:
 	farcall FarPtr_18_46 ; $40ba
 	ld a, [$c4cf] ; $40bd
 	rst Rst00 ; $40c0
-	ld de, $f941 ; $40c1
-	ld b, b ; $40c4
-	pop hl ; $40c5
-	ld b, b ; $40c6
-	ret ; $40c7
-	INCBIN "data/bank_009/d_40c8.bin" ; $40c8, 1 bytes
+	dw Label_09_4111 ; $40c1 jumptable
+	dw Label_09_40f9 ; $40c3 jumptable
+	dw Label_09_40e1 ; $40c5 jumptable
+	dw Label_09_40c9 ; $40c7 jumptable
+Label_09_40c9:
 	ld a, $06 ; $40c9
 	ldh [$ff96], a ; $40cb
 	ldh [rWBK], a ; $40cd
@@ -150,6 +149,7 @@ Func_09_40b5:
 	ld a, [$df7e] ; $40d8
 	ld de, $8140 ; $40db
 	farcall FarPtr_18_46 ; $40de
+Label_09_40e1:
 	ld a, $07 ; $40e1
 	ldh [$ff96], a ; $40e3
 	ldh [rWBK], a ; $40e5
@@ -159,6 +159,7 @@ Func_09_40b5:
 	ld a, [$df7e] ; $40f0
 	ld de, $81c0 ; $40f3
 	farcall FarPtr_18_46 ; $40f6
+Label_09_40f9:
 	ld a, $05 ; $40f9
 	ldh [$ff96], a ; $40fb
 	ldh [rWBK], a ; $40fd
@@ -168,6 +169,7 @@ Func_09_40b5:
 	ld a, [$df7e] ; $4108
 	ld de, $80c0 ; $410b
 	farcall FarPtr_18_46 ; $410e
+Label_09_4111:
 	ld a, $04 ; $4111
 	ldh [$ff96], a ; $4113
 	ldh [rWBK], a ; $4115
@@ -657,10 +659,9 @@ Label_09_4718:
 	ret ; $4763
 	ld a, [$ddfc] ; $4764
 	rst Rst00 ; $4767
-	ld l, h ; $4768
-	ld b, a ; $4769
-	add a, c ; $476a
-	ld b, a ; $476b
+	dw Label_09_476c ; $4768 jumptable
+	dw Label_09_4781 ; $476a jumptable
+Label_09_476c:
 	ld hl, $ddf1 ; $476c
 	set 0, [hl] ; $476f
 	call Func_09_4782 ; $4771
@@ -670,6 +671,7 @@ Label_09_4718:
 Label_09_477d:
 	ld hl, $ddfc ; $477d
 	inc [hl] ; $4780
+Label_09_4781:
 	ret ; $4781
 Func_09_4782:
 	ld a, [$ddfe] ; $4782

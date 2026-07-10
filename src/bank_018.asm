@@ -284,15 +284,13 @@ Func_18_5469:
 	and a, $20 ; $546b
 	jr z, Label_18_5473 ; $546d
 	ld b, $00 ; $546f
-	rst Rst08 ; $5471
-	ld e, [hl] ; $5472
+	sound $5e ; $5471
 Label_18_5473:
 	ldh a, [$ff94] ; $5473
 	and a, $10 ; $5475
 	jr z, Label_18_547d ; $5477
 	ld b, $01 ; $5479
-	rst Rst08 ; $547b
-	ld e, [hl] ; $547c
+	sound $5e ; $547b
 Label_18_547d:
 	ldh a, [$ff94] ; $547d
 	and a, $01 ; $547f
@@ -320,12 +318,10 @@ Label_18_54a7:
 	ld a, b ; $54a7
 	and a, a ; $54a8
 	jr z, Label_18_54ae ; $54a9
-	rst Rst08 ; $54ab
-	ld h, d ; $54ac
+	sound $62 ; $54ab
 	ret ; $54ad
 Label_18_54ae:
-	rst Rst08 ; $54ae
-	ld e, a ; $54af
+	sound $5f ; $54ae
 	ret ; $54b0
 	INCBIN "data/bank_018/d_54b1.bin" ; $54b1, 1296 bytes
 Func_18_59c1:
@@ -490,8 +486,7 @@ Func_18_77bb:
 	ld a, $01 ; $77c9
 	ld hl, $7b6e ; $77cb
 	call Func_00_1b6a ; $77ce
-	rst Rst08 ; $77d1
-	inc l ; $77d2
+	sound $2c ; $77d1
 	call EnableLCD ; $77d3
 	ld c, $02 ; $77d6
 	call Func_00_1d2e ; $77d8
@@ -527,8 +522,7 @@ Label_18_77e8:
 	ld c, $40 ; $7821
 	call Func_00_1d2e ; $7823
 	call Func_00_1da4 ; $7826
-	rst Rst08 ; $7829
-	dec l ; $782a
+	sound $2d ; $7829
 Label_18_782b:
 	call Func_00_2631 ; $782b
 	ldh a, [$ff91] ; $782e
@@ -595,8 +589,7 @@ Func_18_78b1:
 	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 103 bytes
 Func_18_792c:
 	call Func_18_7647 ; $792c
-	rst Rst08 ; $792f
-	add hl, bc ; $7930
+	sound $09 ; $792f
 	call Func_18_7a07 ; $7931
 	farcall FarPtr_39_00 ; $7934
 	farcall FarPtr_39_02 ; $7937
@@ -632,8 +625,7 @@ Label_18_797b:
 	jr z, Label_18_7985 ; $7981
 	jr Label_18_798a ; $7983
 Label_18_7985:
-	rst Rst08 ; $7985
-	inc l ; $7986
+	sound $2c ; $7985
 	farcall FarPtr_0a_a2 ; $7987
 Label_18_798a:
 	ld a, $03 ; $798a
@@ -670,8 +662,7 @@ Label_18_79be:
 	ld a, $01 ; $79d4
 	ld hl, $7a49 ; $79d6
 	call Func_00_1b6a ; $79d9
-	rst Rst08 ; $79dc
-	dec l ; $79dd
+	sound $2d ; $79dc
 Label_18_79de:
 	call Func_00_2631 ; $79de
 	ldh a, [$ff91] ; $79e1

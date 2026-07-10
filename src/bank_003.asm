@@ -2832,8 +2832,7 @@ Func_03_524f:
 	ret ; $526c
 	INCBIN "data/bank_003/d_526d.bin" ; $526d, 3 bytes
 Label_03_5270:
-	rst Rst08 ; $5270
-	ld e, [hl] ; $5271
+	sound $5e ; $5270
 	ld hl, $ffb0 ; $5272
 	ld a, [hl+] ; $5275
 	ld h, [hl] ; $5276
@@ -2911,9 +2910,8 @@ Func_03_5310:
 	ld de, $8000 ; $5313
 	ld c, $02 ; $5316
 	call Func_00_0480 ; $5318
-	rst Rst08 ; $531b
-	ld b, $3e ; $531c
-	inc bc ; $531e
+	sound $06 ; $531b
+	ld a, $03 ; $531d
 	ldh [$ff9e], a ; $531f
 	xor a, a ; $5321
 	ld [$c36c], a ; $5322
@@ -3098,8 +3096,7 @@ Label_03_543a:
 	ld [hl+], a ; $545c
 	call Func_03_52c3 ; $545d
 	pop af ; $5460
-	rst Rst08 ; $5461
-	ld b, c ; $5462
+	sound $41 ; $5461
 	jp Label_03_5344 ; $5463
 Label_03_5466:
 	pop af ; $5466
@@ -3108,8 +3105,7 @@ Label_03_5466:
 Label_03_546d:
 	bit 2, a ; $546d
 	jr z, Label_03_547f ; $546f
-	rst Rst08 ; $5471
-	ld e, a ; $5472
+	sound $5f ; $5471
 	ld a, [$c36c] ; $5473
 	inc a ; $5476
 	and a, $03 ; $5477
@@ -3118,8 +3114,7 @@ Label_03_546d:
 Label_03_547f:
 	bit 3, a ; $547f
 	jr z, Label_03_54ad ; $5481
-	rst Rst08 ; $5483
-	ld e, a ; $5484
+	sound $5f ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
 	bit 0, a ; $5487
 	jr nz, Label_03_549c ; $5489
@@ -3394,14 +3389,11 @@ Func_03_57e2:
 	jr nc, Label_03_5804 ; $57f1
 	or a, a ; $57f3
 	jr nz, Label_03_57fd ; $57f4
-	rst Rst30 ; $57f6
-	jr nz, Label_03_5814 ; $57f7
+	rst30 $1b20 ; $57f6
 	jr z, Label_03_5838 ; $57f9
 	jr Label_03_581e ; $57fb
 Label_03_57fd:
-	rst Rst30 ; $57fd
-	and a, b ; $57fe
-	ld a, [de] ; $57ff
+	rst30 $1aa0 ; $57fd
 	jr z, Label_03_5838 ; $5800
 	jr Label_03_581e ; $5802
 Label_03_5804:
@@ -3415,7 +3407,6 @@ Label_03_5804:
 	ld l, a ; $580f
 	ld h, $00 ; $5810
 	ld a, $20 ; $5812
-Label_03_5814:
 	call Func_00_0926 ; $5814
 	push hl ; $5817
 	pop de ; $5818
@@ -3529,8 +3520,7 @@ Func_03_59c5:
 	call Func_00_05b0 ; $59ec
 	call Func_03_5aa9 ; $59ef
 	call EnableLCD ; $59f2
-	rst Rst08 ; $59f5
-	inc l ; $59f6
+	sound $2c ; $59f5
 	ld c, $08 ; $59f7
 	call Func_00_1d0c ; $59f9
 	call Func_00_1da4 ; $59fc

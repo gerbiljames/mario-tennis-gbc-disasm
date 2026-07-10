@@ -308,11 +308,8 @@ Func_02_421c:
 	ld a, $01 ; $423f
 	ld [wMessageSpeed], a ; $4241
 	farcall FarPtr_08_00 ; $4244
-	rst Rst28 ; $4247
-	ret nz ; $4248
-	INCBIN "data/bank_002/d_4249.bin" ; $4249, 1 bytes
-	rst Rst20 ; $424a
-	ldh [rSB], a ; $424b
+	rst28 $01c0 ; $4247
+	rst20 $01e0 ; $424a
 	ld hl, $c884 ; $424d
 	xor a, a ; $4250
 	ld [hl], $56 ; $4251
@@ -1766,8 +1763,7 @@ Label_02_4e68:
 	ret ; $4e77
 	INCBIN "data/bank_002/d_4e78.bin" ; $4e78, 302 bytes
 Func_02_4fa6:
-	rst Rst08 ; $4fa6
-	dec b ; $4fa7
+	sound $05 ; $4fa6
 	ld a, $01 ; $4fa8
 	ldh [$ff96], a ; $4faa
 	ldh [rWBK], a ; $4fac
@@ -1977,8 +1973,7 @@ Label_02_513f:
 	ld d, $00 ; $514e
 	call Func_02_49be ; $5150
 	pop de ; $5153
-	rst Rst08 ; $5154
-	ld e, [hl] ; $5155
+	sound $5e ; $5154
 	jp Label_02_502a ; $5156
 Label_02_5159:
 	bit 5, a ; $5159
@@ -1988,8 +1983,7 @@ Label_02_5159:
 	ld d, $01 ; $5160
 	call Func_02_49be ; $5162
 	pop de ; $5165
-	rst Rst08 ; $5166
-	ld e, [hl] ; $5167
+	sound $5e ; $5166
 	jp Label_02_502a ; $5168
 Label_02_516b:
 	bit 4, a ; $516b
@@ -1999,8 +1993,7 @@ Label_02_516b:
 	ld d, $02 ; $5172
 	call Func_02_49be ; $5174
 	pop de ; $5177
-	rst Rst08 ; $5178
-	ld e, [hl] ; $5179
+	sound $5e ; $5178
 	jp Label_02_502a ; $517a
 Label_02_517d:
 	bit 7, a ; $517d
@@ -2010,8 +2003,7 @@ Label_02_517d:
 	ld d, $03 ; $5184
 	call Func_02_49be ; $5186
 	pop de ; $5189
-	rst Rst08 ; $518a
-	ld e, [hl] ; $518b
+	sound $5e ; $518a
 	jp Label_02_502a ; $518c
 Label_02_518f:
 	bit 1, a ; $518f
@@ -2019,8 +2011,7 @@ Label_02_518f:
 	push de ; $5193
 	ld a, $01 ; $5194
 	ldh [$ff9e], a ; $5196
-	rst Rst08 ; $5198
-	dec b ; $5199
+	sound $05 ; $5198
 	ld a, $03 ; $519a
 	ldh [$ff9e], a ; $519c
 	pop de ; $519e
@@ -2054,8 +2045,7 @@ Label_02_51a2:
 Label_02_51cb:
 	bit 2, a ; $51cb
 	jr z, Label_02_51e0 ; $51cd
-	rst Rst08 ; $51cf
-	ld e, a ; $51d0
+	sound $5f ; $51cf
 	ld a, [$c36c] ; $51d1
 	inc a ; $51d4
 	cp a, $03 ; $51d5
@@ -2067,8 +2057,7 @@ Label_02_51da:
 Label_02_51e0:
 	bit 3, a ; $51e0
 	jr z, Label_02_51f7 ; $51e2
-	rst Rst08 ; $51e4
-	ld e, a ; $51e5
+	sound $5f ; $51e4
 	push de ; $51e6
 	ld hl, $520a ; $51e7
 	ld de, $0802 ; $51ea

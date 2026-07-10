@@ -189,8 +189,7 @@ Func_3e_44b9:
 	ret ; $44ca
 Func_3e_44cb:
 	call Func_00_2a0e ; $44cb
-	rst Rst08 ; $44ce
-	inc bc ; $44cf
+	sound $03 ; $44ce
 	xor a, a ; $44d0
 	ld [$cb0e], a ; $44d1
 	ld [$cb0f], a ; $44d4
@@ -239,8 +238,7 @@ Label_3e_4525:
 	call Func_3e_413a ; $4534
 	or a, a ; $4537
 	jr z, Label_3e_453f ; $4538
-	rst Rst08 ; $453a
-	ld e, [hl] ; $453b
+	sound $5e ; $453a
 	call Func_3e_4982 ; $453c
 Label_3e_453f:
 	push af ; $453f
@@ -253,8 +251,7 @@ Label_3e_453f:
 	jr nz, Label_3e_4579 ; $454d
 	jr Label_3e_4525 ; $454f
 Label_3e_4551:
-	rst Rst08 ; $4551
-	ld e, a ; $4552
+	sound $5f ; $4551
 	push af ; $4553
 	farcall FarPtr_07_1a ; $4554
 	pop af ; $4557
@@ -273,8 +270,7 @@ Label_3e_4551:
 	set 2, [hl] ; $4576
 	ret ; $4578
 Label_3e_4579:
-	rst Rst08 ; $4579
-	ld h, d ; $457a
+	sound $62 ; $4579
 	push af ; $457b
 	farcall FarPtr_07_1a ; $457c
 	pop af ; $457f
@@ -511,8 +507,7 @@ Func_3e_475d:
 	jr nz, Label_3e_47c0 ; $4766
 	ret ; $4768
 Label_3e_4769:
-	rst Rst08 ; $4769
-	ld e, [hl] ; $476a
+	sound $5e ; $4769
 	ld c, $01 ; $476b
 	call Func_3e_43c9 ; $476d
 	or a, a ; $4770
@@ -557,8 +552,7 @@ Label_3e_47b1:
 	call Func_3e_48bb ; $47bc
 	ret ; $47bf
 Label_3e_47c0:
-	rst Rst08 ; $47c0
-	ld e, [hl] ; $47c1
+	sound $5e ; $47c0
 	ld c, $01 ; $47c2
 	call Func_3e_43c9 ; $47c4
 	or a, a ; $47c7
@@ -1041,15 +1035,13 @@ Label_3e_4c74:
 	ld a, [$cb05] ; $4c74
 	xor a, $01 ; $4c77
 	ld [$cb05], a ; $4c79
-	rst Rst08 ; $4c7c
-	ld e, [hl] ; $4c7d
+	sound $5e ; $4c7c
 	jr Label_3e_4c5a ; $4c7e
 Label_3e_4c80:
 	ld a, [$cb05] ; $4c80
 	or a, a ; $4c83
 	jr nz, Label_3e_4c9b ; $4c84
-	rst Rst08 ; $4c86
-	ld h, b ; $4c87
+	sound $60 ; $4c86
 	ld hl, rIE ; $4c88
 	set 2, [hl] ; $4c8b
 	call Func_00_1b38 ; $4c8d
@@ -1059,8 +1051,7 @@ Label_3e_4c80:
 	ld a, $01 ; $4c98
 	ret ; $4c9a
 Label_3e_4c9b:
-	rst Rst08 ; $4c9b
-	ld h, d ; $4c9c
+	sound $62 ; $4c9b
 	ld hl, rIE ; $4c9d
 	set 2, [hl] ; $4ca0
 	call Func_00_1b38 ; $4ca2
@@ -1280,8 +1271,7 @@ Label_3e_4e68:
 	ret ; $4e7f
 	INCBIN "data/bank_03e/d_4e80.bin" ; $4e80, 32 bytes
 Func_3e_4ea0:
-	rst Rst08 ; $4ea0
-	inc bc ; $4ea1
+	sound $03 ; $4ea0
 	ld hl, rIE ; $4ea2
 	res 2, [hl] ; $4ea5
 	call Func_3e_4f33 ; $4ea7
@@ -1315,8 +1305,7 @@ Label_3e_4edb:
 	call Func_3e_413a ; $4ee7
 	or a, a ; $4eea
 	jr z, Label_3e_4ef2 ; $4eeb
-	rst Rst08 ; $4eed
-	ld e, [hl] ; $4eee
+	sound $5e ; $4eed
 	call Func_3e_4fcf ; $4eef
 Label_3e_4ef2:
 	ld a, [$cb0d] ; $4ef2
@@ -1326,8 +1315,7 @@ Label_3e_4ef2:
 	jr nz, Label_3e_4f1c ; $4efb
 	jr Label_3e_4edb ; $4efd
 Label_3e_4eff:
-	rst Rst08 ; $4eff
-	ld e, a ; $4f00
+	sound $5f ; $4eff
 	call Func_00_1b38 ; $4f01
 	ld hl, rIE ; $4f04
 	set 2, [hl] ; $4f07
@@ -1340,8 +1328,7 @@ Label_3e_4eff:
 	ld [$cb24], a ; $4f18
 	ret ; $4f1b
 Label_3e_4f1c:
-	rst Rst08 ; $4f1c
-	ld h, d ; $4f1d
+	sound $62 ; $4f1c
 	call Func_00_1b38 ; $4f1e
 	ld hl, rIE ; $4f21
 	set 2, [hl] ; $4f24
@@ -1658,8 +1645,7 @@ Label_3e_517e:
 	ret ; $518d
 	INCBIN "data/bank_03e/d_518e.bin" ; $518e, 4 bytes
 Func_3e_5192:
-	rst Rst08 ; $5192
-	inc bc ; $5193
+	sound $03 ; $5192
 	ld hl, rIE ; $5194
 	res 2, [hl] ; $5197
 	call Func_3e_5229 ; $5199
@@ -1693,8 +1679,7 @@ Label_3e_51cb:
 	call Func_3e_413a ; $51d7
 	or a, a ; $51da
 	jr z, Label_3e_51e2 ; $51db
-	rst Rst08 ; $51dd
-	ld e, [hl] ; $51de
+	sound $5e ; $51dd
 	call Func_3e_52b7 ; $51df
 Label_3e_51e2:
 	ld a, [$cb0d] ; $51e2
@@ -1704,8 +1689,7 @@ Label_3e_51e2:
 	jr nz, Label_3e_5212 ; $51eb
 	jr Label_3e_51cb ; $51ed
 Label_3e_51ef:
-	rst Rst08 ; $51ef
-	ld e, a ; $51f0
+	sound $5f ; $51ef
 	call Func_00_1b38 ; $51f1
 	ld hl, rIE ; $51f4
 	set 2, [hl] ; $51f7
@@ -1715,17 +1699,14 @@ Label_3e_51ef:
 	ld [$cb11], a ; $5200
 	ld c, $02 ; $5203
 	call Func_3e_43c9 ; $5205
-	rst Rst28 ; $5208
-	ldh [rTIMA], a ; $5209
+	rst28 $05e0 ; $5208
 	or a, a ; $520b
 	jr z, Label_3e_5211 ; $520c
-	rst Rst20 ; $520e
-	ldh [rTIMA], a ; $520f
+	rst20 $05e0 ; $520e
 Label_3e_5211:
 	ret ; $5211
 Label_3e_5212:
-	rst Rst08 ; $5212
-	ld h, d ; $5213
+	sound $62 ; $5212
 	call Func_00_1b38 ; $5214
 	ld hl, rIE ; $5217
 	set 2, [hl] ; $521a
@@ -1939,8 +1920,7 @@ Label_3e_53b2:
 	call Func_00_2631 ; $53bc
 	jr Label_3e_53b2 ; $53bf
 Label_3e_53c1:
-	rst Rst08 ; $53c1
-	ld e, a ; $53c2
+	sound $5f ; $53c1
 	call Func_00_1b38 ; $53c3
 	ld c, $10 ; $53c6
 	call Func_00_1d20 ; $53c8
@@ -2185,8 +2165,7 @@ Label_3e_55be:
 	ld a, [$d812] ; $55be
 	or a, a ; $55c1
 	jr nz, Label_3e_5601 ; $55c2
-	rst Rst08 ; $55c4
-	ld h, b ; $55c5
+	sound $60 ; $55c4
 	ld a, $01 ; $55c6
 	ld [$d812], a ; $55c8
 	ld a, [$d810] ; $55cb
@@ -2214,8 +2193,7 @@ Label_3e_55ee:
 	ld [wEquippedRacket], a ; $55f5
 	ret ; $55f8
 Label_3e_55f9:
-	rst Rst08 ; $55f9
-	ld h, d ; $55fa
+	sound $62 ; $55f9
 	ld a, $44 ; $55fb
 	ld [$d812], a ; $55fd
 	ret ; $5600
@@ -2226,8 +2204,7 @@ Label_3e_5601:
 	call Func_3e_413a ; $5607
 	or a, a ; $560a
 	jr z, Label_3e_5623 ; $560b
-	rst Rst08 ; $560d
-	ld e, [hl] ; $560e
+	sound $5e ; $560d
 	call Func_3e_5854 ; $560f
 	ld a, [$d813] ; $5612
 	or a, a ; $5615
@@ -2824,8 +2801,7 @@ Label_3e_5b62:
 	ret ; $5b62
 	INCBIN "data/bank_03e/d_5b63.bin" ; $5b63, 54 bytes
 Func_3e_5b99:
-	rst Rst08 ; $5b99
-	inc bc ; $5b9a
+	sound $03 ; $5b99
 	call Func_00_1b38 ; $5b9b
 	ld hl, rIE ; $5b9e
 	res 2, [hl] ; $5ba1
@@ -2860,8 +2836,7 @@ Label_3e_5bd7:
 	call Func_3e_413a ; $5be3
 	or a, a ; $5be6
 	jr z, Label_3e_5bee ; $5be7
-	rst Rst08 ; $5be9
-	ld e, [hl] ; $5bea
+	sound $5e ; $5be9
 	call Func_3e_5f51 ; $5beb
 Label_3e_5bee:
 	ld a, [$cb0d] ; $5bee
@@ -2871,8 +2846,7 @@ Label_3e_5bee:
 	jr nz, Label_3e_5c1e ; $5bf7
 	jr Label_3e_5bd7 ; $5bf9
 Label_3e_5bfb:
-	rst Rst08 ; $5bfb
-	ld h, b ; $5bfc
+	sound $60 ; $5bfb
 	call Func_00_1b38 ; $5bfd
 	ld hl, rIE ; $5c00
 	set 2, [hl] ; $5c03
@@ -2889,8 +2863,7 @@ Label_3e_5bfb:
 	call Func_3e_5cfe ; $5c1a
 	ret ; $5c1d
 Label_3e_5c1e:
-	rst Rst08 ; $5c1e
-	ld h, d ; $5c1f
+	sound $62 ; $5c1e
 	call Func_00_1b38 ; $5c20
 	ld hl, rIE ; $5c23
 	set 2, [hl] ; $5c26
@@ -2907,8 +2880,7 @@ Func_3e_5c38:
 	call Func_00_28f8 ; $5c3b
 	call Func_00_1b38 ; $5c3e
 	call Func_00_2a0e ; $5c41
-	rst Rst08 ; $5c44
-	inc bc ; $5c45
+	sound $03 ; $5c44
 	farcall FarPtr_39_24 ; $5c46
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
@@ -2952,8 +2924,7 @@ Label_3e_5c8c:
 	call Func_3e_413a ; $5c9a
 	or a, a ; $5c9d
 	jr z, Label_3e_5ca5 ; $5c9e
-	rst Rst08 ; $5ca0
-	ld e, [hl] ; $5ca1
+	sound $5e ; $5ca0
 	call Func_3e_5f51 ; $5ca2
 Label_3e_5ca5:
 	ld a, [$cb0d] ; $5ca5
@@ -2963,8 +2934,7 @@ Label_3e_5ca5:
 	jr nz, Label_3e_5cd9 ; $5cae
 	jr Label_3e_5c8c ; $5cb0
 Label_3e_5cb2:
-	rst Rst08 ; $5cb2
-	ld h, b ; $5cb3
+	sound $60 ; $5cb2
 	push af ; $5cb4
 	farcall FarPtr_07_1a ; $5cb5
 	pop af ; $5cb8
@@ -2984,8 +2954,7 @@ Label_3e_5cb2:
 	call Func_3e_5cfe ; $5cd5
 	ret ; $5cd8
 Label_3e_5cd9:
-	rst Rst08 ; $5cd9
-	ld h, d ; $5cda
+	sound $62 ; $5cd9
 	push af ; $5cdb
 	farcall FarPtr_07_1a ; $5cdc
 	pop af ; $5cdf
@@ -3572,8 +3541,7 @@ Func_3e_6518:
 	ld a, [$cb54] ; $6518
 	ld b, a ; $651b
 	call Func_3e_695a ; $651c
-	rst Rst08 ; $651f
-	inc bc ; $6520
+	sound $03 ; $651f
 	call Func_00_1b38 ; $6521
 	ld hl, rIE ; $6524
 	res 2, [hl] ; $6527
@@ -3608,8 +3576,7 @@ Label_3e_655b:
 	call Func_3e_413a ; $6567
 	or a, a ; $656a
 	jr z, Label_3e_6572 ; $656b
-	rst Rst08 ; $656d
-	ld e, [hl] ; $656e
+	sound $5e ; $656d
 	call Func_3e_6824 ; $656f
 Label_3e_6572:
 	ld a, [$cb0d] ; $6572
@@ -3625,12 +3592,10 @@ Label_3e_657f:
 	call Func_3e_697b ; $6585
 	or a, a ; $6588
 	jr nz, Label_3e_658f ; $6589
-	rst Rst08 ; $658b
-	ld h, c ; $658c
+	sound $61 ; $658b
 	jr Label_3e_655b ; $658d
 Label_3e_658f:
-	rst Rst08 ; $658f
-	ld h, b ; $6590
+	sound $60 ; $658f
 	call Func_00_1b38 ; $6591
 	ld hl, rIE ; $6594
 	set 2, [hl] ; $6597
@@ -3647,8 +3612,7 @@ Label_3e_658f:
 	call Func_3e_5cfe ; $65ae
 	ret ; $65b1
 Label_3e_65b2:
-	rst Rst08 ; $65b2
-	ld h, d ; $65b3
+	sound $62 ; $65b2
 	call Func_00_1b38 ; $65b4
 	ld hl, rIE ; $65b7
 	set 2, [hl] ; $65ba
@@ -3664,8 +3628,7 @@ Func_3e_65c9:
 	call Func_00_28f8 ; $65cc
 	call Func_00_1b38 ; $65cf
 	call Func_00_2a0e ; $65d2
-	rst Rst08 ; $65d5
-	inc bc ; $65d6
+	sound $03 ; $65d5
 	ld a, [$cb54] ; $65d7
 	ld b, a ; $65da
 	ld a, [$cb53] ; $65db
@@ -3715,8 +3678,7 @@ Label_3e_6629:
 	call Func_3e_413a ; $6637
 	or a, a ; $663a
 	jr z, Label_3e_6642 ; $663b
-	rst Rst08 ; $663d
-	ld e, [hl] ; $663e
+	sound $5e ; $663d
 	call Func_3e_6824 ; $663f
 Label_3e_6642:
 	ld a, [$cb0d] ; $6642
@@ -3732,12 +3694,10 @@ Label_3e_664f:
 	call Func_3e_697b ; $6655
 	or a, a ; $6658
 	jr nz, Label_3e_665f ; $6659
-	rst Rst08 ; $665b
-	ld h, c ; $665c
+	sound $61 ; $665b
 	jr Label_3e_6629 ; $665d
 Label_3e_665f:
-	rst Rst08 ; $665f
-	ld h, b ; $6660
+	sound $60 ; $665f
 	push af ; $6661
 	farcall FarPtr_07_1a ; $6662
 	pop af ; $6665
@@ -3757,8 +3717,7 @@ Label_3e_665f:
 	call Func_3e_5cfe ; $6682
 	ret ; $6685
 Label_3e_6686:
-	rst Rst08 ; $6686
-	ld h, d ; $6687
+	sound $62 ; $6686
 	push af ; $6688
 	farcall FarPtr_07_1a ; $6689
 	pop af ; $668c

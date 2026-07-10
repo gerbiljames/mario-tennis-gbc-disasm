@@ -362,12 +362,10 @@ Func_0d_4412:
 	ld a, [wPointWinLoseFlag] ; $4412
 	add a, a ; $4415
 	jr c, Label_0d_441c ; $4416
-	rst Rst08 ; $4418
-	add hl, bc ; $4419
+	sound $09 ; $4418
 	jr Label_0d_441e ; $441a
 Label_0d_441c:
-	rst Rst08 ; $441c
-	ld a, [bc] ; $441d
+	sound $0a ; $441c
 Label_0d_441e:
 	farcall FarPtr_08_3e ; $441e
 	ld a, d ; $4421
@@ -817,8 +815,7 @@ Label_0d_485c:
 	ld [$df4a], a ; $48a5
 	ld hl, $073c ; $48a8
 	call Func_00_07c5 ; $48ab
-	rst Rst08 ; $48ae
-	halt ; $48af
+	sound $76 ; $48ae
 	pop af ; $48b0
 	ldh [$ff96], a ; $48b1
 	ldh [rWBK], a ; $48b3
@@ -844,8 +841,7 @@ Func_0d_48ce:
 	ld [$c4c2], a ; $48d5
 	ld a, [wCurrentBGM] ; $48d8
 	push af ; $48db
-	rst Rst08 ; $48dc
-	nop ; $48dd
+	sound $00 ; $48dc
 	ld a, $14 ; $48de
 	farcall FarPtr_08_40 ; $48e0
 	ld a, $03 ; $48e3
@@ -857,8 +853,7 @@ Label_0d_48e5:
 	ld a, [$c492] ; $48ee
 	and a, a ; $48f1
 	jr nz, Label_0d_48f6 ; $48f2
-	rst Rst08 ; $48f4
-	ld [hl], h ; $48f5
+	sound $74 ; $48f4
 Label_0d_48f6:
 	ld a, $11 ; $48f6
 	farcall FarPtr_09_14 ; $48f8
@@ -870,8 +865,7 @@ Label_0d_48f6:
 	ld a, [$c492] ; $4904
 	and a, a ; $4907
 	jr nz, Label_0d_490c ; $4908
-	rst Rst08 ; $490a
-	ld [hl], l ; $490b
+	sound $75 ; $490a
 Label_0d_490c:
 	ld a, $10 ; $490c
 	farcall FarPtr_09_12 ; $490e
@@ -1202,20 +1196,16 @@ Label_0d_5228:
 	ret ; $5230
 	ld a, [$dc72] ; $5231
 	rst Rst00 ; $5234
-	ld b, h ; $5235
-	ld d, d ; $5236
-	ld h, d ; $5237
-	ld d, d ; $5238
-	ld [hl], b ; $5239
-	ld d, d ; $523a
-	adc a, [hl] ; $523b
-	ld d, d ; $523c
-	xor a, [hl] ; $523d
-	inc bc ; $523e
+	dw Label_0d_5244 ; $5235 jumptable
+	dw Label_0d_5262 ; $5237 jumptable
+	dw Label_0d_5270 ; $5239 jumptable
+	dw Label_0d_528e ; $523b jumptable
+	dw Label_00_03ae ; $523d jumptable
 Func_0d_523f:
 	ld hl, $dc72 ; $523f
 	inc [hl] ; $5242
 	ret ; $5243
+Label_0d_5244:
 	ld a, [$dc73] ; $5244
 	and a, a ; $5247
 	jr z, Label_0d_525b ; $5248
@@ -1231,12 +1221,14 @@ Label_0d_525b:
 	xor a, a ; $525b
 	ld [$dc73], a ; $525c
 	call Func_0d_523f ; $525f
+Label_0d_5262:
 	call Func_0d_535f ; $5262
 	call Func_0d_5292 ; $5265
 	and a, a ; $5268
 	ret z ; $5269
 	call Func_0d_52f9 ; $526a
 	jp Func_0d_523f ; $526d
+Label_0d_5270:
 	call Func_0d_539e ; $5270
 	ld hl, $dc73 ; $5273
 	dec [hl] ; $5276
@@ -1252,6 +1244,7 @@ Label_0d_525b:
 	ld de, $fdc0 ; $5285
 	call Func_0d_449a ; $5288
 	jp Func_0d_523f ; $528b
+Label_0d_528e:
 	call Func_0d_535f ; $528e
 	ret ; $5291
 Func_0d_5292:

@@ -53,8 +53,7 @@ Label_37_7b5c:
 	ldh a, [$ff9e] ; $7b5e
 	or a, a ; $7b60
 	jr z, Label_37_7b65 ; $7b61
-	rst Rst08 ; $7b63
-	inc l ; $7b64
+	sound $2c ; $7b63
 Label_37_7b65:
 	pop hl ; $7b65
 	pop de ; $7b66

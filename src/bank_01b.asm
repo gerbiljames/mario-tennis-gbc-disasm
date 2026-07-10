@@ -364,14 +364,12 @@ Label_1b_4ea4:
 	ld a, [$d802] ; $4ea4
 	cp a, $01 ; $4ea7
 	jr nz, Label_1b_4eaf ; $4ea9
-	rst Rst08 ; $4eab
-	dec hl ; $4eac
+	sound $2b ; $4eab
 	jr Label_1b_4eb5 ; $4ead
 Label_1b_4eaf:
 	cp a, $02 ; $4eaf
 	jr nz, Label_1b_4eb5 ; $4eb1
-	rst Rst08 ; $4eb3
-	ld a, [hl+] ; $4eb4
+	sound $2a ; $4eb3
 Label_1b_4eb5:
 	call DisableLCDSafely ; $4eb5
 	call Func_1b_4ef2 ; $4eb8
@@ -394,8 +392,7 @@ Label_1b_4eb5:
 	ld a, [$d85a] ; $4ede
 	or a, a ; $4ee1
 	jr nz, Label_1b_4ee8 ; $4ee2
-	rst Rst08 ; $4ee4
-	ld a, a ; $4ee5
+	sound $7f ; $4ee4
 	ld c, $02 ; $4ee6
 Label_1b_4ee8:
 	call Func_00_1d20 ; $4ee8
@@ -1011,8 +1008,7 @@ Label_1b_618c:
 	ret ; $6191
 	INCBIN "data/bank_01b/d_6192.bin" ; $6192, 40 bytes
 Func_1b_61ba:
-	rst Rst08 ; $61ba
-	inc bc ; $61bb
+	sound $03 ; $61ba
 	farcall FarPtr_02_02 ; $61bc
 	ld a, $00 ; $61bf
 	farcall FarPtr_02_14 ; $61c1
@@ -1189,8 +1185,7 @@ Label_1b_62ef:
 	call Func_00_1da4 ; $62f4
 	ret ; $62f7
 Func_1b_62f8:
-	rst Rst08 ; $62f8
-	inc bc ; $62f9
+	sound $03 ; $62f8
 	ld a, $01 ; $62fa
 	cp a, $ff ; $62fc
 	jr z, Func_1b_62f8 ; $62fe
@@ -1214,8 +1209,7 @@ Func_1b_62f8:
 	farcall FarPtr_03_18 ; $6327
 	jp Label_1b_6408 ; $632a
 Label_1b_632d:
-	rst Rst08 ; $632d
-	inc bc ; $632e
+	sound $03 ; $632d
 	call Func_1b_64b9 ; $632f
 	cp a, $ff ; $6332
 	jr z, Func_1b_62f8 ; $6334
@@ -1238,8 +1232,7 @@ Label_1b_634c:
 	farcall FarPtr_03_1a ; $6355
 	or a, a ; $6358
 	jr z, Label_1b_635f ; $6359
-	rst Rst08 ; $635b
-	ld h, d ; $635c
+	sound $62 ; $635b
 	jr Label_1b_632d ; $635d
 Label_1b_635f:
 	push bc ; $635f
@@ -1368,22 +1361,14 @@ Label_1b_6408:
 	pop de ; $643c
 	pop bc ; $643d
 	pop af ; $643e
-	rst Rst20 ; $643f
-	add a, b ; $6440
-	inc bc ; $6441
+	rst20 $0380 ; $643f
 	ld c, $00 ; $6442
 	farcall FarPtr_1c_00 ; $6444
-	rst Rst28 ; $6447
-	add a, b ; $6448
-	inc bc ; $6449
-	rst Rst20 ; $644a
-	add a, b ; $644b
-	inc bc ; $644c
+	rst28 $0380 ; $6447
+	rst20 $0380 ; $644a
 	ld c, $01 ; $644d
 	farcall FarPtr_1c_00 ; $644f
-	rst Rst28 ; $6452
-	add a, b ; $6453
-	inc bc ; $6454
+	rst28 $0380 ; $6452
 	farcall FarPtr_03_18 ; $6455
 	jr Label_1b_6408 ; $6458
 Label_1b_645a:
@@ -1688,20 +1673,17 @@ Label_1b_6778:
 	jr z, Label_1b_6792 ; $678e
 	jr Label_1b_6796 ; $6790
 Label_1b_6792:
-	rst Rst08 ; $6792
-	ld h, d ; $6793
+	sound $62 ; $6792
 	jr Label_1b_6778 ; $6794
 Label_1b_6796:
-	rst Rst08 ; $6796
-	ld e, a ; $6797
+	sound $5f ; $6796
 	ld hl, $cb1f ; $6798
 	jr Label_1b_67c6 ; $679b
 Label_1b_679d:
 	ldh a, [$ff94] ; $679d
 	and a, $02 ; $679f
 	jr z, Label_1b_67af ; $67a1
-	rst Rst08 ; $67a3
-	ld h, d ; $67a4
+	sound $62 ; $67a3
 	ld hl, $cb1f ; $67a5
 	ld a, $00 ; $67a8
 	ld [hl], a ; $67aa
@@ -1748,8 +1730,7 @@ Func_1b_67f4:
 	ld b, a ; $67f6
 	and a, $f0 ; $67f7
 	jr z, Label_1b_6826 ; $67f9
-	rst Rst08 ; $67fb
-	ld e, [hl] ; $67fc
+	sound $5e ; $67fb
 	ld a, [$c783] ; $67fd
 	ld d, a ; $6800
 	ld a, [$c784] ; $6801
@@ -1886,15 +1867,13 @@ Label_1b_68c2:
 	ld a, [hl] ; $68c2
 	xor a, $01 ; $68c3
 	ld [hl], a ; $68c5
-	rst Rst08 ; $68c6
-	ld e, a ; $68c7
+	sound $5f ; $68c6
 	pop af ; $68c8
 	ldh [$ff96], a ; $68c9
 	ldh [rWBK], a ; $68cb
 	ret ; $68cd
 Label_1b_68ce:
-	rst Rst08 ; $68ce
-	ld h, d ; $68cf
+	sound $62 ; $68ce
 	pop af ; $68d0
 	ldh [$ff96], a ; $68d1
 	ldh [rWBK], a ; $68d3
@@ -2008,8 +1987,7 @@ Label_1b_6b4f:
 	call Func_00_2631 ; $6b55
 	jr Label_1b_6b4f ; $6b58
 Label_1b_6b5a:
-	rst Rst08 ; $6b5a
-	ld e, a ; $6b5b
+	sound $5f ; $6b5a
 	ret ; $6b5c
 Func_1b_6b5d:
 	ld [hl+], a ; $6b5d
@@ -2050,8 +2028,7 @@ Label_1b_6b8e:
 	call Func_00_2631 ; $6b94
 	jr Label_1b_6b8e ; $6b97
 Label_1b_6b99:
-	rst Rst08 ; $6b99
-	ld e, a ; $6b9a
+	sound $5f ; $6b99
 	ret ; $6b9b
 Func_1b_6b9c:
 	ldh a, [$ff96] ; $6b9c
@@ -2377,8 +2354,7 @@ Func_1b_6e1c:
 	ret ; $6e30
 Func_1b_6e31:
 	call Func_00_2f32 ; $6e31
-	rst Rst08 ; $6e34
-	INCBIN "data/bank_01b/d_6e35.bin" ; $6e35, 1 bytes
+	sound $08 ; $6e34
 	ld hl, rIE ; $6e36
 	res 2, [hl] ; $6e39
 	ld a, $03 ; $6e3b
@@ -2417,8 +2393,7 @@ Label_1b_6e78:
 	call Func_1b_4132 ; $6e85
 	or a, a ; $6e88
 	jr z, Label_1b_6e90 ; $6e89
-	rst Rst08 ; $6e8b
-	ld e, [hl] ; $6e8c
+	sound $5e ; $6e8b
 	call Func_1b_6f04 ; $6e8d
 Label_1b_6e90:
 	ld a, [$cb0d] ; $6e90
@@ -2438,12 +2413,10 @@ Label_1b_6e9d:
 	ld a, [$d001] ; $6eab
 	or a, a ; $6eae
 	jr nz, Label_1b_6eb5 ; $6eaf
-	rst Rst08 ; $6eb1
-	ld h, c ; $6eb2
+	sound $61 ; $6eb1
 	jr Label_1b_6e78 ; $6eb3
 Label_1b_6eb5:
-	rst Rst08 ; $6eb5
-	ld e, a ; $6eb6
+	sound $5f ; $6eb5
 	call Func_00_1b38 ; $6eb7
 	ld hl, rIE ; $6eba
 	set 2, [hl] ; $6ebd
@@ -2462,8 +2435,7 @@ Label_1b_6eb5:
 	ld [$d003], a ; $6eda
 	ret ; $6edd
 Label_1b_6ede:
-	rst Rst08 ; $6ede
-	ld h, d ; $6edf
+	sound $62 ; $6ede
 	call Func_00_1b38 ; $6ee0
 	ld hl, rIE ; $6ee3
 	set 2, [hl] ; $6ee6
@@ -2580,9 +2552,8 @@ Label_1b_6f7e:
 	INCBIN "data/bank_01b/d_6f9f.bin" ; $6f9f, 51 bytes
 Func_1b_6fd2:
 	call Func_00_2f32 ; $6fd2
-	rst Rst08 ; $6fd5
-	ld [rAUD4ENV], sp ; $6fd6
-	rst Rst38 ; $6fd9
+	sound $08 ; $6fd5
+	ld hl, rIE ; $6fd7
 	res 2, [hl] ; $6fda
 	ld a, $03 ; $6fdc
 	ldh [$ff96], a ; $6fde
@@ -2620,8 +2591,7 @@ Label_1b_7019:
 	call Func_1b_4132 ; $7026
 	or a, a ; $7029
 	jr z, Label_1b_7031 ; $702a
-	rst Rst08 ; $702c
-	ld e, [hl] ; $702d
+	sound $5e ; $702c
 	call Func_1b_708d ; $702e
 Label_1b_7031:
 	ld a, [$cb0d] ; $7031
@@ -2631,8 +2601,7 @@ Label_1b_7031:
 	jr nz, Label_1b_7067 ; $703a
 	jr Label_1b_7019 ; $703c
 Label_1b_703e:
-	rst Rst08 ; $703e
-	ld e, a ; $703f
+	sound $5f ; $703e
 	call Func_00_1b38 ; $7040
 	ld hl, rIE ; $7043
 	set 2, [hl] ; $7046
@@ -2651,8 +2620,7 @@ Label_1b_703e:
 	ld [$d003], a ; $7063
 	ret ; $7066
 Label_1b_7067:
-	rst Rst08 ; $7067
-	ld h, d ; $7068
+	sound $62 ; $7067
 	call Func_00_1b38 ; $7069
 	ld hl, rIE ; $706c
 	set 2, [hl] ; $706f
@@ -2730,8 +2698,7 @@ Label_1b_70d7:
 	ret ; $70e6
 	INCBIN "data/bank_01b/d_70e7.bin" ; $70e7, 118 bytes
 Func_1b_715d:
-	rst Rst08 ; $715d
-	inc bc ; $715e
+	sound $03 ; $715d
 	ld hl, rIE ; $715f
 	res 2, [hl] ; $7162
 	call Func_1b_720a ; $7164
@@ -2768,8 +2735,7 @@ Label_1b_71a0:
 	call Func_1b_4132 ; $71ac
 	or a, a ; $71af
 	jr z, Label_1b_71b7 ; $71b0
-	rst Rst08 ; $71b2
-	ld e, [hl] ; $71b3
+	sound $5e ; $71b2
 	call Func_1b_7352 ; $71b4
 Label_1b_71b7:
 	ld a, [$cb0d] ; $71b7
@@ -2779,8 +2745,7 @@ Label_1b_71b7:
 	jr nz, Label_1b_71e7 ; $71c0
 	jr Label_1b_71a0 ; $71c2
 Label_1b_71c4:
-	rst Rst08 ; $71c4
-	ld e, a ; $71c5
+	sound $5f ; $71c4
 	call Func_00_1b38 ; $71c6
 	ld hl, rIE ; $71c9
 	set 2, [hl] ; $71cc
@@ -2796,8 +2761,7 @@ Label_1b_71c4:
 	ld [$cb25], a ; $71e3
 	ret ; $71e6
 Label_1b_71e7:
-	rst Rst08 ; $71e7
-	ld h, d ; $71e8
+	sound $62 ; $71e7
 	call Func_00_1b38 ; $71e9
 	ld hl, rIE ; $71ec
 	set 2, [hl] ; $71ef
@@ -3012,8 +2976,7 @@ Label_1b_73bf:
 	ret ; $73c8
 	INCBIN "data/bank_01b/d_73c9.bin" ; $73c9, 20 bytes
 Func_1b_73dd:
-	rst Rst08 ; $73dd
-	inc b ; $73de
+	sound $04 ; $73dd
 	call DisableLCDSafely ; $73df
 	call Func_1b_7449 ; $73e2
 	ld a, $01 ; $73e5
@@ -3046,16 +3009,14 @@ Label_1b_7413:
 	jr nz, Label_1b_7439 ; $7427
 	jr Label_1b_7413 ; $7429
 Label_1b_742b:
-	rst Rst08 ; $742b
-	ld e, a ; $742c
+	sound $5f ; $742b
 	ld c, $10 ; $742d
 	call Func_00_1d20 ; $742f
 	call Func_00_1da4 ; $7432
 	call Func_00_1b38 ; $7435
 	ret ; $7438
 Label_1b_7439:
-	rst Rst08 ; $7439
-	ld h, d ; $743a
+	sound $62 ; $7439
 	ld c, $10 ; $743b
 	call Func_00_1d20 ; $743d
 	call Func_00_1da4 ; $7440
@@ -3123,8 +3084,7 @@ Label_1b_74ba:
 	ret z ; $74c0
 	ld [$cb05], a ; $74c1
 Label_1b_74c4:
-	rst Rst08 ; $74c4
-	ld e, [hl] ; $74c5
+	sound $5e ; $74c4
 	call Func_1b_75ae ; $74c6
 	ret ; $74c9
 Func_1b_74ca:

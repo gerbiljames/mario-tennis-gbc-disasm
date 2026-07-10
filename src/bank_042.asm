@@ -85,28 +85,9 @@ Func_42_49a0:
 	add hl, de ; $49fa
 	rst Rst38 ; $49fb
 	cp a, l ; $49fc
-	rst Rst20 ; $49fd
-	cp a, l ; $49fe
-	rst Rst38 ; $49ff
+	rst20 $ffbd ; $49fd
 	cp a, $eb ; $4a00
 	cp a, $ab ; $4a02
 	ld a, h ; $4a04
 	rst Rst00 ; $4a05
-	rst Rst28 ; $4a06
-	sub a, e ; $4a07
-	rst Rst38 ; $4a08
-	ld l, l ; $4a09
-	rst Rst38 ; $4a0a
-	sub a, $ff ; $4a0b
-	ld a, h ; $4a0d
-	rst Rst00 ; $4a0e
-	ld a, l ; $4a0f
-	rst Rst38 ; $4a10
-	add hl, sp ; $4a11
-	cp a, $92 ; $4a12
-	cp a, $6a ; $4a14
-	rst Rst38 ; $4a16
-	xor a, l ; $4a17
-	rst Rst38 ; $4a18
-	ld e, e ; $4a19
-	INCBIN "data/bank_042/d_4a1a.bin" ; $4a1a, 13798 bytes
+	INCBIN "data/bank_042/d_4a06.bin" ; $4a06, 13818 bytes

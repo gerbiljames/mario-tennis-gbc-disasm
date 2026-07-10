@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**115,883 instructions (~213 KB of code) disassembled across 63 of 128 banks;
+**116,882 instructions (~221 KB of code) disassembled across 63 of 128 banks;
 everything rebuilds byte-perfect** (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). The remaining banks are so far
 pure data (graphics/audio/tilemaps). The repo contains no ROM bytes: all data
@@ -31,6 +31,22 @@ at-or-after the table end. 199 unused entries inferred (135 new code
 seeds) → +12,470 instructions / ~24 KB more static code, biggest gains in
 banks $05, $38, $1a, $03, $07. Banks with no delimitation evidence
 (sparse single-slot tables like $20-$37, $43, $5f) are left alone.
+
+**All rst vectors decoded (2026-07-10).** Every rst is an inline-operand
+construct, now emitted as pseudo-ops (macros in include/macros.inc):
+- `rst $00` → JumpTableDispatch ($06c4): inline dw jump table follows the
+  site, indexed by `a`; flow never resumes past the rst. Parsed with the
+  same lowest-forward-target delimitation as the farcall tables, iterated
+  with descent to a fixed point: 465 entries across 70+ sites (`dw` lines
+  tagged `jumptable`), 147 new code seeds, +5.3K instructions.
+- `rst $08` → sound/music command ($2fb3), one id byte: `sound $xx`
+  (451 sites). A sound-id enum would make these self-documenting.
+- `rst $20/$28/$30` → three commands ($255e/$256b/$2551) sharing an
+  operand fetcher ($253d) that reads an inline dw pointer into de:
+  `rst20/rst28/rst30 $xxxx` (83/57/366 sites). Semantics not yet named;
+  operands look like data pointers (tilemap/copy sources?).
+- `Func_00_07c5` is a register-based far dispatcher (bank in h, same
+  $4000 tables) — runtime-computed, not statically exploitable.
 
 Largest code banks: $08 (match engine), $00, $13 (story engine), $05, $1e,
 $1d (story practice-drill engine), $0f, $38, $3b, $0a.

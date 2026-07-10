@@ -79,9 +79,7 @@ Func_43_5030:
 	nop ; $507d
 	add a, e ; $507e
 	add a, e ; $507f
-	rst Rst28 ; $5080
-	rst Rst28 ; $5081
-	rst Rst38 ; $5082
+	rst28 $ffef ; $5080
 	rst Rst38 ; $5083
 	rst Rst38 ; $5084
 	rst Rst38 ; $5085

@@ -1379,9 +1379,7 @@ Label_04_4a39:
 	ld a, [hl+] ; $4a50
 	ld d, [hl] ; $4a51
 	ld e, a ; $4a52
-	rst Rst30 ; $4a53
-	ret nz ; $4a54
-	dec c ; $4a55
+	rst30 $0dc0 ; $4a53
 	jr z, Label_04_4a61 ; $4a56
 	ld hl, $cb02 ; $4a58
 	ld a, [hl+] ; $4a5b
@@ -1417,9 +1415,7 @@ Label_04_4a6d:
 	ld [hl+], a ; $4a7f
 	ld [hl], b ; $4a80
 	ret ; $4a81
-	rst Rst30 ; $4a82
-	add a, b ; $4a83
-	ld [bc], a ; $4a84
+	rst30 $0280 ; $4a82
 	ret nz ; $4a85
 	ld a, $04 ; $4a86
 	ldh [$ff96], a ; $4a88
@@ -1952,15 +1948,13 @@ Func_04_4f10:
 	jr nz, Label_04_4f2c ; $4f1e
 	ld hl, $4ec8 ; $4f20
 	ld a, $02 ; $4f23
-	rst Rst30 ; $4f25
-	ldh [rTIMA], a ; $4f26
+	rst30 $05e0 ; $4f25
 	jr nz, Label_04_4f3b ; $4f28
 	jr Label_04_4f36 ; $4f2a
 Label_04_4f2c:
 	ld hl, $4ee0 ; $4f2c
 	ld a, $03 ; $4f2f
-	rst Rst30 ; $4f31
-	ldh [rTIMA], a ; $4f32
+	rst30 $05e0 ; $4f31
 	jr nz, Label_04_4f3b ; $4f34
 Label_04_4f36:
 	ld hl, $4ef8 ; $4f36
@@ -2171,11 +2165,9 @@ Label_04_519d:
 	ldh a, [hPlayerInputFlags] ; $519d
 	bit 1, a ; $519f
 	jr z, Label_04_51a6 ; $51a1
-	rst Rst20 ; $51a3
-	jr nz, Label_04_51a8 ; $51a4
+	rst20 $0220 ; $51a3
 Label_04_51a6:
 	ld d, $01 ; $51a6
-Label_04_51a8:
 	ldh a, [hPlayerInputFlags] ; $51a8
 	and a, $f0 ; $51aa
 	jr z, Label_04_51b0 ; $51ac
@@ -2218,10 +2210,8 @@ Label_04_51dd:
 	ld hl, $0015 ; $51ef
 	add hl, bc ; $51f2
 	ld [hl], $40 ; $51f3
-	rst Rst30 ; $51f5
-	jr nz, Label_04_51fa ; $51f6
+	rst30 $0220 ; $51f5
 	jr z, Label_04_520b ; $51f8
-Label_04_51fa:
 	ld a, $01 ; $51fa
 	ld [$daef], a ; $51fc
 	ld de, $0040 ; $51ff
@@ -2262,9 +2252,7 @@ Label_04_5231:
 	ld [hl+], a ; $523d
 	ld [hl], d ; $523e
 Label_04_523f:
-	rst Rst30 ; $523f
-	nop ; $5240
-	ld [bc], a ; $5241
+	rst30 $0200 ; $523f
 	ld d, $00 ; $5242
 	jp nz, Label_04_52b5 ; $5244
 	ld a, [$daea] ; $5247
@@ -2343,11 +2331,9 @@ Label_04_52d5:
 	jr nz, Label_04_52e1 ; $52dd
 	ld [hl], $00 ; $52df
 Label_04_52e1:
-	rst Rst28 ; $52e1
-	jr nz, Label_04_52e6 ; $52e2
+	rst28 $0220 ; $52e1
 	pop bc ; $52e4
 	xor a, a ; $52e5
-Label_04_52e6:
 	ret ; $52e6
 Label_04_52e7:
 	push bc ; $52e7
@@ -3070,8 +3056,7 @@ Label_04_56b2:
 	ret ; $56b2
 	INCBIN "data/bank_004/d_56b3.bin" ; $56b3, 16 bytes
 Func_04_56c3:
-	rst Rst30 ; $56c3
-	ldh [$ff0d], a ; $56c4
+	rst30 $0de0 ; $56c3
 	ret nz ; $56c6
 	ld hl, $0030 ; $56c7
 	add hl, bc ; $56ca

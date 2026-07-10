@@ -108,6 +108,7 @@ class Disassembly:
         self.code_bytes = set()
         self.farcalls = {}    # site offset -> (bank, slot, entry_flat, target_flat)
         self.inferred_entries = {}  # entry_flat -> (bank, slot, target_flat)
+        self.jt_entries = {}  # rst $00 inline jump-table entry offset -> target_flat
 
     def _try_farcall(self, off):
         """Decode `rst $18` + inline `db slot, bank` as a 3-byte pseudo-call.
@@ -136,11 +137,28 @@ class Disassembly:
         return (bank, slot, entry, target)
 
     def decode_at(self, off):
-        if self.rom[off] == 0xDF:  # rst $18: the FarCall convention
+        op = self.rom[off]
+        if op == 0xDF:  # rst $18: the FarCall convention
             fc = self._try_farcall(off)
             if fc is not None:
                 self.farcalls[off] = fc
                 return sm83.Instr(3, "farcall {far}", None, True, False, False, False)
+        elif op == 0xC7:
+            # rst $00: JumpTableDispatch pops the return address as the base
+            # of an inline dw jump table -- flow never resumes after the rst
+            return sm83.Instr(1, "rst {target}", 0x00, True, False, False, True)
+        elif op == 0xCF and off + 2 <= len(self.rom) \
+                and off // BANK_SIZE == (off + 1) // BANK_SIZE:
+            # rst $08: sound/music command, one inline id byte
+            return sm83.Instr(2, f"sound ${self.rom[off+1]:02x}",
+                              None, True, False, False, False)
+        elif op in (0xE7, 0xEF, 0xF7) and off + 3 <= len(self.rom) \
+                and off // BANK_SIZE == (off + 2) // BANK_SIZE:
+            # rst $20/$28/$30: shared convention, one inline dw pointer
+            # operand fetched into de by Func_00_253d
+            ptr = self.rom[off + 1] | (self.rom[off + 2] << 8)
+            name = {0xE7: "rst20", 0xEF: "rst28", 0xF7: "rst30"}[op]
+            return sm83.Instr(3, f"{name} ${ptr:04x}", None, True, False, False, False)
         return sm83.decode(self.rom, off, offset_to_cpu(off))
 
     def mark(self, off, ins):
@@ -240,6 +258,61 @@ class Disassembly:
                 seeded += 1
         print(f"inferred {len(self.inferred_entries)} unused farcall-table entries "
               f"({seeded} new code seeds)")
+
+    def parse_jumptables(self):
+        """Parse the inline dw jump tables that follow rst $00 sites.
+
+        JumpTableDispatch indexes the table at the return address by `a`, so
+        the table starts at site+1 and its length is not encoded. Delimit it
+        the same way as the farcall tables: entries must map to valid code in
+        the site's address space, the table cannot extend past its own lowest
+        forward target (handlers usually follow the table), and it stops at
+        any already-known code. Tables whose accepted region would contain
+        one of their own targets are dropped entirely. Returns the number of
+        new code seeds marked.
+        """
+        new_entries = {}
+        for off in [o for o, i in self.instrs.items()
+                    if self.rom[o] == 0xC7 and i.size == 1]:
+            if off + 1 in self.jt_entries:
+                continue  # already parsed
+            pos = off + 1
+            min_fwd = None
+            entries = []
+            while pos + 1 < len(self.rom) and len(entries) < 128:
+                if pos in self.code_bytes or pos in self.jt_entries:
+                    break
+                if min_fwd is not None and pos >= min_fwd:
+                    break
+                cpu = self.rom[pos] | (self.rom[pos + 1] << 8)
+                t = target_to_offset(cpu, off)
+                if t is None or t + 1 >= len(self.rom):
+                    break
+                if not sm83.decode(self.rom, t, offset_to_cpu(t)).valid:
+                    break
+                entries.append((pos, t))
+                if t > off and (min_fwd is None or t < min_fwd):
+                    min_fwd = t
+                pos += 2
+            if min_fwd is not None:
+                entries = [(p, t) for p, t in entries if p + 1 < min_fwd]
+            table_end = off + 1 + 2 * len(entries)
+            if any(off < t < table_end for _p, t in entries):
+                continue  # a target inside the accepted table: inconsistent
+            for p, t in entries:
+                new_entries[p] = t
+        self.jt_entries.update(new_entries)
+        seeded = 0
+        for t in sorted({t for t in new_entries.values()}):
+            if t in self.instrs:
+                continue
+            ins = self.decode_at(t)
+            if ins.valid and not self.conflicts(t, ins):
+                self.mark(t, ins)
+                seeded += 1
+        print(f"parsed {len(new_entries)} inline jump-table entries "
+              f"({seeded} new code seeds)")
+        return seeded + len(new_entries)
 
     def descend(self):
         work = list(self.instrs.keys())
@@ -344,6 +417,9 @@ def build_labels(dis, overrides=None):
         prev = labels.get(target)
         if prev is None or prev.startswith("Label_"):
             labels[target] = name
+    for target in dis.jt_entries.values():
+        if target in dis.instrs and target not in labels:
+            labels[target] = f"Label_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     return labels
 
 
@@ -382,6 +458,29 @@ MACRO farcall
 	rst Rst18
 	db LOW(\\1), BANK(\\1)
 ENDM
+
+; Sound/music command (handler $2fb3): one inline id byte.
+MACRO sound
+	rst Rst08
+	db \\1
+ENDM
+
+; rst $20/$28/$30 ($255e/$256b/$2551): three related commands sharing an
+; operand fetcher ($253d) that reads one inline dw pointer into de.
+MACRO rst20
+	rst Rst20
+	dw \\1
+ENDM
+
+MACRO rst28
+	rst Rst28
+	dw \\1
+ENDM
+
+MACRO rst30
+	rst Rst30
+	dw \\1
+ENDM
 """
 
 
@@ -405,6 +504,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
     for entry, (bank, slot, target) in dis.inferred_entries.items():
         if entry not in dis.code_bytes and entry + 1 not in dis.code_bytes:
             table_entries.setdefault(entry, (bank, slot, target))
+    jt_entries = {p: t for p, t in dis.jt_entries.items()
+                  if p not in dis.code_bytes and p + 1 not in dis.code_bytes
+                  and p not in table_entries}
     Path(srcdir).parent.joinpath("include", "macros.inc").write_text(MACROS_INC)
 
     for bank in range(nbanks):
@@ -427,6 +529,11 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                 lines.append(f"FarPtr_{tbank:02x}_{slot:02x}:")
                 lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}")
                 off += 2
+            elif off in jt_entries:
+                target = jt_entries[off]
+                tl = labels.get(target, f"${offset_to_cpu(target):04x}")
+                lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x} jumptable")
+                off += 2
             elif off in dis.instrs:
                 if off in labels:
                     lines.append(f"{labels[off]}:")
@@ -444,7 +551,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                 off += ins.size
             else:
                 run_start = off
-                while off < end and off not in dis.instrs and off not in table_entries:
+                while off < end and off not in dis.instrs \
+                        and off not in table_entries and off not in jt_entries:
                     off += 1
                 length = off - run_start
                 cpu = offset_to_cpu(run_start)
@@ -483,6 +591,11 @@ def main():
         dis.descend()
         dis.infer_tables()
         dis.descend()
+        # jump tables and descent feed each other; iterate to a fixed point
+        for _ in range(8):
+            if not dis.parse_jumptables():
+                break
+            dis.descend()
     overrides = None
     if Path(args.labels).exists():
         overrides = json.loads(Path(args.labels).read_text())

@@ -12,24 +12,21 @@ SECTION "ROM Bank $27", ROMX[$4000], BANK[$27]
 	ld a, $0a ; $4d1e
 	ld b, $c0 ; $4d20
 	farcall FarPtr_0a_2e ; $4d22
-	rst Rst08 ; $4d25
-	sub a, [hl] ; $4d26
+	sound $96 ; $4d25
 	ld a, $04 ; $4d27
 	ld bc, $1f80 ; $4d29
 	ld de, $3180 ; $4d2c
 	farcall FarPtr_0a_22 ; $4d2f
 	ld a, $28 ; $4d32
 	call Func_27_7856 ; $4d34
-	rst Rst08 ; $4d37
-	sub a, [hl] ; $4d38
+	sound $96 ; $4d37
 	ld a, $06 ; $4d39
 	ld bc, $2180 ; $4d3b
 	ld de, $3180 ; $4d3e
 	farcall FarPtr_0a_22 ; $4d41
 	ld a, $28 ; $4d44
 	call Func_27_7856 ; $4d46
-	rst Rst08 ; $4d49
-	sub a, [hl] ; $4d4a
+	sound $96 ; $4d49
 	ld a, $04 ; $4d4b
 	ld bc, $2380 ; $4d4d
 	ld de, $3180 ; $4d50
@@ -46,8 +43,7 @@ SECTION "ROM Bank $27", ROMX[$4000], BANK[$27]
 	ld bc, $3f00 ; $4d6d
 	ld de, $3f00 ; $4d70
 	farcall FarPtr_0a_22 ; $4d73
-	rst Rst30 ; $4d76
-	ldh [rTIMA], a ; $4d77
+	rst30 $05e0 ; $4d76
 	jp z, Label_27_4e13 ; $4d79
 	ld a, $02 ; $4d7c
 	farcall FarPtr_0a_1c ; $4d7e
@@ -179,8 +175,7 @@ Label_27_4e59:
 	farcall FarPtr_0a_2e ; $4eba
 	ld a, $0a ; $4ebd
 	call Func_27_7856 ; $4ebf
-	rst Rst30 ; $4ec2
-	ldh [rTIMA], a ; $4ec3
+	rst30 $05e0 ; $4ec2
 	jp z, Label_27_4f62 ; $4ec5
 	ld a, $3c ; $4ec8
 	call Func_27_7856 ; $4eca
@@ -247,8 +242,7 @@ Label_27_4e59:
 	farcall FarPtr_0a_20 ; $4f5c
 	jp Label_27_4fe7 ; $4f5f
 Label_27_4f62:
-	rst Rst08 ; $4f62
-	sub a, [hl] ; $4f63
+	sound $96 ; $4f62
 	ld a, $04 ; $4f64
 	ld bc, $2180 ; $4f66
 	ld de, $3380 ; $4f69
@@ -314,8 +308,7 @@ Func_27_516b:
 	ld a, $0a ; $516c
 	farcall FarPtr_0a_04 ; $516e
 	pop af ; $5171
-	rst Rst08 ; $5172
-	ld a, c ; $5173
+	sound $79 ; $5172
 	ld b, $07 ; $5174
 	ld c, $38 ; $5176
 	ld d, $20 ; $5178
@@ -340,8 +333,7 @@ Func_27_516b:
 	pop af ; $519f
 	ret ; $51a0
 Func_27_51a1:
-	rst Rst08 ; $51a1
-	ld a, c ; $51a2
+	sound $79 ; $51a1
 	ld b, $07 ; $51a3
 	ld c, $38 ; $51a5
 	ld d, $20 ; $51a7

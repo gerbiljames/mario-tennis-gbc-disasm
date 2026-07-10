@@ -9,3 +9,26 @@ MACRO farcall
 	rst Rst18
 	db LOW(\1), BANK(\1)
 ENDM
+
+; Sound/music command (handler $2fb3): one inline id byte.
+MACRO sound
+	rst Rst08
+	db \1
+ENDM
+
+; rst $20/$28/$30 ($255e/$256b/$2551): three related commands sharing an
+; operand fetcher ($253d) that reads one inline dw pointer into de.
+MACRO rst20
+	rst Rst20
+	dw \1
+ENDM
+
+MACRO rst28
+	rst Rst28
+	dw \1
+ENDM
+
+MACRO rst30
+	rst Rst30
+	dw \1
+ENDM

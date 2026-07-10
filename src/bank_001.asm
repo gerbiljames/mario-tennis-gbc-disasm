@@ -193,8 +193,7 @@ Label_01_4138:
 	ld a, $00 ; $418d
 	ld [$c8f7], a ; $418f
 Label_01_4192:
-	rst Rst18 ; $4192
-	db $00, $16 ; farcall operands (slot bytes overlap code)
+	farcall FarPtr_16_00 ; $4192
 	ld a, [$c8f7] ; $4195
 	inc a ; $4198
 	ld [$c8f7], a ; $4199

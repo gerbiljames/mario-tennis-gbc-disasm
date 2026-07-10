@@ -56,8 +56,7 @@ Func_6b_402a:
 	ldh [$ff98], a ; $403a
 	ld hl, rLCDC ; $403c
 	res 3, [hl] ; $403f
-	rst Rst08 ; $4041
-	INCBIN "data/bank_06b/d_4042.bin" ; $4042, 1 bytes
+	sound $01 ; $4041
 	ld a, $01 ; $4043
 	ld hl, $53f1 ; $4045
 	call Func_00_1b6a ; $4048
@@ -1196,8 +1195,7 @@ Func_6b_51ae:
 	ld [$cb40], a ; $51be
 	ld a, $d8 ; $51c1
 	ldh [$ff8a], a ; $51c3
-	rst Rst08 ; $51c5
-	ld h, l ; $51c6
+	sound $65 ; $51c5
 	call EnableLCD ; $51c7
 	ld c, $20 ; $51ca
 	call Func_00_1d2e ; $51cc
@@ -1886,8 +1884,7 @@ Func_6b_75af:
 	ld a, $01 ; $763f
 	ld hl, $76b6 ; $7641
 	call Func_00_1b6a ; $7644
-	rst Rst08 ; $7647
-	ld [bc], a ; $7648
+	sound $02 ; $7647
 	call EnableLCD ; $7649
 	ld c, $04 ; $764c
 	call Func_00_1d2e ; $764e
@@ -1914,10 +1911,8 @@ Label_6b_765f:
 	jr z, Label_6b_76a6 ; $767c
 	jr Label_6b_765f ; $767e
 Label_6b_7680:
-	rst Rst08 ; $7680
-	nop ; $7681
-	rst Rst08 ; $7682
-	ld h, b ; $7683
+	sound $00 ; $7680
+	sound $60 ; $7682
 	call Func_00_1b38 ; $7684
 	ld c, $10 ; $7687
 	call Func_00_1d20 ; $7689
@@ -1926,8 +1921,7 @@ Label_6b_7680:
 	ret ; $7690
 	INCBIN "data/bank_06b/d_7691.bin" ; $7691, 21 bytes
 Label_6b_76a6:
-	rst Rst08 ; $76a6
-	nop ; $76a7
+	sound $00 ; $76a6
 	call Func_00_1b38 ; $76a8
 	ld c, $08 ; $76ab
 	call Func_00_1d20 ; $76ad

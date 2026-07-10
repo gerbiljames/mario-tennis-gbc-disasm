@@ -1225,8 +1225,7 @@ Func_39_6fe7:
 	ldh [rWBK], a ; $7000
 	ret ; $7002
 Func_39_7003:
-	rst Rst08 ; $7003
-	ld h, l ; $7004
+	sound $65 ; $7003
 	farcall FarPtr_3b_34 ; $7005
 	ret ; $7008
 	INCBIN "data/bank_039/d_7009.bin" ; $7009, 1105 bytes

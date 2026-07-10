@@ -328,7 +328,6 @@ Label_00_0367:
 	ret ; $0375
 EnableLCD:
 	ldh a, [rLCDC] ; $0376
-Func_00_0378:
 	or a, $80 ; $0378
 	ldh [rLCDC], a ; $037a
 	call Func_00_1e22 ; $037c
@@ -351,6 +350,7 @@ ClearBytes:
 	ld a, c ; $03aa
 	or a, b ; $03ab
 	jr nz, ClearBytes ; $03ac
+Label_00_03ae:
 	ret ; $03ae
 ClearMemory16:
 	xor a, a ; $03af
@@ -601,8 +601,7 @@ Label_00_0492:
 	ldh a, [$ff9e] ; $04dc
 	or a, a ; $04de
 	jr z, Label_00_04e3 ; $04df
-	rst Rst08 ; $04e1
-	ld l, a ; $04e2
+	sound $6f ; $04e1
 Label_00_04e3:
 	pop hl ; $04e3
 	pop af ; $04e4
@@ -3502,6 +3501,7 @@ Label_00_191c:
 Label_00_191e:
 	dec hl ; $191e
 	ld a, $01 ; $191f
+Label_00_1921:
 	ldh [$ff8e], a ; $1921
 	pop af ; $1923
 	ret ; $1924
@@ -5779,8 +5779,7 @@ Label_00_2958:
 	jr z, Label_00_2974 ; $2960
 	cp a, $02 ; $2962
 	jr z, Label_00_2974 ; $2964
-	rst Rst08 ; $2966
-	ld [hl], d ; $2967
+	sound $72 ; $2966
 	xor a, a ; $2968
 	ldh [$ffd5], a ; $2969
 	ldh [$ffd6], a ; $296b
@@ -5822,8 +5821,7 @@ Func_00_2994:
 	jr z, Label_00_29aa ; $299d
 	cp a, $40 ; $299f
 	jr z, Label_00_29aa ; $29a1
-	rst Rst08 ; $29a3
-	ld [hl], d ; $29a4
+	sound $72 ; $29a3
 	xor a, a ; $29a5
 	ldh [$ffd3], a ; $29a6
 	jr Label_00_29f3 ; $29a8
@@ -7378,6 +7376,7 @@ Label_00_34b7:
 	jp Label_00_30d7 ; $34da
 Label_00_34dd:
 	ldh a, [$ffd3] ; $34dd
+Label_00_34df:
 	ld l, a ; $34df
 	ldh a, [$ffd4] ; $34e0
 	ld h, a ; $34e2
@@ -7773,7 +7772,6 @@ Label_00_374f:
 	sla a ; $374f
 	add a, l ; $3751
 	ld l, a ; $3752
-Label_00_3753:
 	ld a, h ; $3753
 	adc a, $00 ; $3754
 	ld h, a ; $3756
@@ -8485,4 +8483,13 @@ Label_00_3dbc:
 	pop bc ; $3dd1
 	pop de ; $3dd2
 	ret ; $3dd3
-	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 556 bytes
+	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 332 bytes
+Label_00_3f20:
+	ldh a, [$ffe0] ; $3f20
+	ret nc ; $3f22
+	or a, b ; $3f23
+	sub a, b ; $3f24
+	ld [hl], b ; $3f25
+	ld d, b ; $3f26
+	dec [hl] ; $3f27
+	INCBIN "data/bank_000/d_3f28.bin" ; $3f28, 216 bytes

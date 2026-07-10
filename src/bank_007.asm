@@ -1306,8 +1306,7 @@ Func_07_4846:
 	ldh a, [$ffd8] ; $4851
 	or a, a ; $4853
 	jp nz, Label_07_48df ; $4854
-	rst Rst08 ; $4857
-	nop ; $4858
+	sound $00 ; $4857
 	call DisableLCDSafely ; $4859
 	ld a, $01 ; $485c
 	ldh [$ffd8], a ; $485e
@@ -1889,8 +1888,7 @@ Func_07_4c24:
 	jr z, Label_07_4c49 ; $4c35
 	cp a, $02 ; $4c37
 	jr z, Label_07_4c49 ; $4c39
-	rst Rst08 ; $4c3b
-	ld [hl], d ; $4c3c
+	sound $72 ; $4c3b
 	xor a, a ; $4c3d
 	ldh [$ffd5], a ; $4c3e
 	ldh [$ffd6], a ; $4c40
@@ -1932,8 +1930,7 @@ Func_07_4c69:
 	jr z, Label_07_4c7f ; $4c72
 	cp a, $40 ; $4c74
 	jr z, Label_07_4c7f ; $4c76
-	rst Rst08 ; $4c78
-	ld [hl], d ; $4c79
+	sound $72 ; $4c78
 	xor a, a ; $4c7a
 	ldh [$ffd3], a ; $4c7b
 	jr Label_07_4cae ; $4c7d
@@ -2025,14 +2022,22 @@ Label_07_4d0c:
 Func_07_5161:
 	ld a, [$c4a0] ; $5161
 	rst Rst00 ; $5164
-	add a, e ; $5165
-	ld d, c ; $5166
-	sbc a, e ; $5167
-	ld d, c ; $5168
-	or a, e ; $5169
-	ld d, c ; $516a
-	bit 2, c ; $516b
-	INCBIN "data/bank_007/d_516d.bin" ; $516d, 22 bytes
+	dw Label_07_5183 ; $5165 jumptable
+	dw Label_07_519b ; $5167 jumptable
+	dw Label_07_51b3 ; $5169 jumptable
+	dw Label_07_51cb ; $516b jumptable
+	dw Label_07_51e3 ; $516d jumptable
+	dw Label_07_5248 ; $516f jumptable
+	dw Label_07_5222 ; $5171 jumptable
+	dw Label_07_5235 ; $5173 jumptable
+	dw Label_07_520f ; $5175 jumptable
+	dw Label_07_51f9 ; $5177 jumptable
+	dw Label_07_525b ; $5179 jumptable
+	dw Label_07_5268 ; $517b jumptable
+	dw Label_07_5275 ; $517d jumptable
+	dw Label_07_5284 ; $517f jumptable
+	dw Label_07_5293 ; $5181 jumptable
+Label_07_5183:
 	ld hl, $4d31 ; $5183
 	ld a, [$df6e] ; $5186
 	ld d, a ; $5189
@@ -2043,6 +2048,7 @@ Func_07_5161:
 	call Func_07_5345 ; $5194
 	call Func_07_52d7 ; $5197
 	ret ; $519a
+Label_07_519b:
 	ld hl, $4d81 ; $519b
 	ld a, [$df6e] ; $519e
 	ld d, a ; $51a1
@@ -2053,6 +2059,7 @@ Func_07_5161:
 	call Func_07_5345 ; $51ac
 	call Func_07_52d7 ; $51af
 	ret ; $51b2
+Label_07_51b3:
 	ld hl, $4dd1 ; $51b3
 	ld a, [$df6f] ; $51b6
 	ld d, a ; $51b9
@@ -2063,6 +2070,7 @@ Func_07_5161:
 	call Func_07_535c ; $51c4
 	call Func_07_52d7 ; $51c7
 	ret ; $51ca
+Label_07_51cb:
 	ld hl, $4e21 ; $51cb
 	ld a, [$df6f] ; $51ce
 	ld d, a ; $51d1
@@ -2073,6 +2081,7 @@ Func_07_5161:
 	call Func_07_535c ; $51dc
 	call Func_07_52d7 ; $51df
 	ret ; $51e2
+Label_07_51e3:
 	ld hl, $4e71 ; $51e3
 	ld d, $00 ; $51e6
 	ld a, [$df6b] ; $51e8
@@ -2082,6 +2091,7 @@ Func_07_5161:
 	call Func_07_5345 ; $51f2
 	call Func_07_52d7 ; $51f5
 	ret ; $51f8
+Label_07_51f9:
 	ld hl, $4ec1 ; $51f9
 	ld d, $00 ; $51fc
 	ld a, [$df6c] ; $51fe
@@ -2091,6 +2101,7 @@ Func_07_5161:
 	call Func_07_5345 ; $5208
 	call Func_07_52d7 ; $520b
 	ret ; $520e
+Label_07_520f:
 	ld hl, $4f11 ; $520f
 	ld d, $00 ; $5212
 	ld a, [$df6d] ; $5214
@@ -2099,6 +2110,7 @@ Func_07_5161:
 	call Func_07_5301 ; $521b
 	call Func_07_52d7 ; $521e
 	ret ; $5221
+Label_07_5222:
 	ld hl, $4f61 ; $5222
 	ld d, $00 ; $5225
 	ld a, [$df6d] ; $5227
@@ -2107,6 +2119,7 @@ Func_07_5161:
 	call Func_07_52f1 ; $522e
 	call Func_07_52d7 ; $5231
 	ret ; $5234
+Label_07_5235:
 	ld hl, $4fb1 ; $5235
 	ld d, $00 ; $5238
 	ld a, [$df6d] ; $523a
@@ -2115,6 +2128,7 @@ Func_07_5161:
 	call Func_07_531d ; $5241
 	call Func_07_52d7 ; $5244
 	ret ; $5247
+Label_07_5248:
 	ld hl, $5001 ; $5248
 	ld d, $00 ; $524b
 	ld a, [$df6d] ; $524d
@@ -2123,18 +2137,21 @@ Func_07_5161:
 	call Func_07_5301 ; $5254
 	call Func_07_52d7 ; $5257
 	ret ; $525a
+Label_07_525b:
 	ld hl, $5051 ; $525b
 	ld a, [$df92] ; $525e
 	ld d, a ; $5261
 	ld e, $00 ; $5262
 	call Func_07_52a0 ; $5264
 	ret ; $5267
+Label_07_5268:
 	ld hl, $5061 ; $5268
 	ld a, [$df93] ; $526b
 	ld d, a ; $526e
 	ld e, $00 ; $526f
 	call Func_07_52a0 ; $5271
 	ret ; $5274
+Label_07_5275:
 	ld hl, $5071 ; $5275
 	ld a, [$df6e] ; $5278
 	ld d, a ; $527b
@@ -2142,6 +2159,7 @@ Func_07_5161:
 	ld e, a ; $527f
 	call Func_07_52a0 ; $5280
 	ret ; $5283
+Label_07_5284:
 	ld hl, $50c1 ; $5284
 	ld a, [$df6f] ; $5287
 	ld d, a ; $528a
@@ -2149,6 +2167,7 @@ Func_07_5161:
 	ld e, a ; $528e
 	call Func_07_52a0 ; $528f
 	ret ; $5292
+Label_07_5293:
 	ld hl, $5111 ; $5293
 	ld d, $00 ; $5296
 	ld a, [$df6c] ; $5298
@@ -2420,9 +2439,21 @@ Label_07_541c:
 	push hl ; $5440
 	ld a, [$c4a0] ; $5441
 	rst Rst00 ; $5444
-	cp a, [hl] ; $5445
-	ld e, b ; $5446
-	INCBIN "data/bank_007/d_5447.bin" ; $5447, 28 bytes
+	dw Label_07_58be ; $5445 jumptable
+	dw Label_07_58d3 ; $5447 jumptable
+	dw Label_07_58ec ; $5449 jumptable
+	dw Label_07_5901 ; $544b jumptable
+	dw Label_07_59a8 ; $544d jumptable
+	dw Label_07_597c ; $544f jumptable
+	dw Label_07_5952 ; $5451 jumptable
+	dw Label_07_5967 ; $5453 jumptable
+	dw Label_07_593d ; $5455 jumptable
+	dw Label_07_5991 ; $5457 jumptable
+	dw Label_07_591a ; $5459 jumptable
+	dw Label_07_592d ; $545b jumptable
+	dw Label_07_59c5 ; $545d jumptable
+	dw Label_07_59d2 ; $545f jumptable
+	dw Label_07_59df ; $5461 jumptable
 	call Func_07_546b ; $5463
 	xor a, a ; $5466
 	ld [$df4b], a ; $5467
@@ -2696,24 +2727,18 @@ Func_07_5646:
 	and a, $07 ; $5654
 	ld a, a ; $5656
 	rst Rst00 ; $5657
-	ld l, h ; $5658
-	ld d, [hl] ; $5659
-	ld l, b ; $565a
-	ld d, [hl] ; $565b
-	sub a, [hl] ; $565c
-	ld d, [hl] ; $565d
-	add a, l ; $565e
-	ld d, [hl] ; $565f
-	adc a, c ; $5660
-	ld d, [hl] ; $5661
-	sub a, [hl] ; $5662
-	ld d, [hl] ; $5663
-	sub a, [hl] ; $5664
-	ld d, [hl] ; $5665
-	sub a, [hl] ; $5666
-	ld d, [hl] ; $5667
+	dw Label_07_566c ; $5658 jumptable
+	dw Label_07_5668 ; $565a jumptable
+	dw Label_07_5696 ; $565c jumptable
+	dw Label_07_5685 ; $565e jumptable
+	dw Label_07_5689 ; $5660 jumptable
+	dw Label_07_5696 ; $5662 jumptable
+	dw Label_07_5696 ; $5664 jumptable
+	dw Label_07_5696 ; $5666 jumptable
+Label_07_5668:
 	sra d ; $5668
 	rr e ; $566a
+Label_07_566c:
 	ld hl, $c402 ; $566c
 	ld a, [hl+] ; $566f
 	ld h, [hl] ; $5670
@@ -2735,8 +2760,10 @@ Func_07_5646:
 	sub a, d ; $5682
 	ld d, a ; $5683
 	ret ; $5684
+Label_07_5685:
 	sra d ; $5685
 	rr e ; $5687
+Label_07_5689:
 	ld hl, $c402 ; $5689
 	ld a, [hl+] ; $568c
 	ld h, [hl] ; $568d
@@ -2746,6 +2773,7 @@ Func_07_5646:
 	ld d, h ; $5691
 	call Func_07_56e3 ; $5692
 	ret ; $5695
+Label_07_5696:
 	ld hl, $c402 ; $5696
 	ld a, [hl+] ; $5699
 	ld d, [hl] ; $569a
@@ -3157,6 +3185,7 @@ Label_07_58be:
 	call Func_07_571e ; $58cc
 	farcall FarPtr_22_00 ; $58cf
 	ret ; $58d2
+Label_07_58d3:
 	ld hl, $df0f ; $58d3
 	bit 1, [hl] ; $58d6
 	jr nz, Label_07_58be ; $58d8
@@ -3176,6 +3205,7 @@ Label_07_58ec:
 	call Func_07_571e ; $58fa
 	farcall FarPtr_20_00 ; $58fd
 	ret ; $5900
+Label_07_5901:
 	ld hl, $df0f ; $5901
 	bit 1, [hl] ; $5904
 	jr nz, Label_07_58ec ; $5906
@@ -3186,6 +3216,7 @@ Label_07_58ec:
 	call Func_07_571e ; $5913
 	farcall FarPtr_21_00 ; $5916
 	ret ; $5919
+Label_07_591a:
 	call Func_07_5899 ; $591a
 	call Func_07_557e ; $591d
 	call Func_07_54ed ; $5920
@@ -3193,12 +3224,14 @@ Label_07_58ec:
 	farcall FarPtr_07_3e ; $5926
 	farcall FarPtr_24_00 ; $5929
 	ret ; $592c
+Label_07_592d:
 	call Func_07_5899 ; $592d
 	call Func_07_557e ; $5930
 	call Func_07_54de ; $5933
 	call Func_07_571e ; $5936
 	farcall FarPtr_24_02 ; $5939
 	ret ; $593c
+Label_07_593d:
 	call Func_07_5525 ; $593d
 	jr z, Label_07_597c ; $5940
 	call Func_07_5876 ; $5942
@@ -3207,6 +3240,7 @@ Label_07_58ec:
 	call Func_07_571e ; $594b
 	farcall FarPtr_2c_00 ; $594e
 	ret ; $5951
+Label_07_5952:
 	call Func_07_5525 ; $5952
 	jr z, Label_07_597c ; $5955
 	call Func_07_5876 ; $5957
@@ -3215,6 +3249,7 @@ Label_07_58ec:
 	call Func_07_571e ; $5960
 	farcall FarPtr_2c_02 ; $5963
 	ret ; $5966
+Label_07_5967:
 	call Func_07_5525 ; $5967
 	jr z, Label_07_597c ; $596a
 	call Func_07_5876 ; $596c
@@ -3242,6 +3277,7 @@ Label_07_5991:
 	call Func_07_571e ; $59a1
 	farcall FarPtr_24_08 ; $59a4
 	ret ; $59a7
+Label_07_59a8:
 	call Func_07_5525 ; $59a8
 	jr z, Label_07_59b8 ; $59ab
 	ld a, [$df15] ; $59ad
@@ -3255,16 +3291,19 @@ Label_07_59b8:
 	call Func_07_571e ; $59be
 	farcall FarPtr_24_06 ; $59c1
 	ret ; $59c4
+Label_07_59c5:
 	call Func_07_557e ; $59c5
 	call Func_07_571e ; $59c8
 	farcall FarPtr_29_00 ; $59cb
 	call Func_07_5a01 ; $59ce
 	ret ; $59d1
+Label_07_59d2:
 	call Func_07_557e ; $59d2
 	call Func_07_571e ; $59d5
 	farcall FarPtr_2a_00 ; $59d8
 	call Func_07_5a01 ; $59db
 	ret ; $59de
+Label_07_59df:
 	call Func_07_557e ; $59df
 	call Func_07_571e ; $59e2
 	farcall FarPtr_2b_00 ; $59e5

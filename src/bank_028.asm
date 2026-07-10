@@ -54,40 +54,35 @@ Func_28_5efb:
 	jr c, Label_28_5f2a ; $5f00
 	ld a, a ; $5f02
 	rst Rst00 ; $5f03
-	ld [hl], $5f ; $5f04
-	ld [hl], $5f ; $5f06
-	ld [hl], $5f ; $5f08
-	ld [hl], $5f ; $5f0a
-	ld a, [hl-] ; $5f0c
-	ld e, a ; $5f0d
-	ld a, [hl-] ; $5f0e
-	ld e, a ; $5f0f
-	ld a, [hl-] ; $5f10
-	ld e, a ; $5f11
-	ld a, [hl-] ; $5f12
-	ld e, a ; $5f13
-	ld [hl], $5f ; $5f14
-	ld a, [hl-] ; $5f16
-	ld e, a ; $5f17
-	ld l, d ; $5f18
-	ld e, a ; $5f19
-	add a, d ; $5f1a
-	ld e, a ; $5f1b
-	ld a, [hl-] ; $5f1c
-	ld e, a ; $5f1d
-	ld e, e ; $5f1e
-	ld e, a ; $5f1f
-	inc c ; $5f20
-	ld h, b ; $5f21
-	jp hl ; $5f22
-	INCBIN "data/bank_028/d_5f23.bin" ; $5f23, 7 bytes
+	dw Label_28_5f36 ; $5f04 jumptable
+	dw Label_28_5f36 ; $5f06 jumptable
+	dw Label_28_5f36 ; $5f08 jumptable
+	dw Label_28_5f36 ; $5f0a jumptable
+	dw Label_28_5f3a ; $5f0c jumptable
+	dw Label_28_5f3a ; $5f0e jumptable
+	dw Label_28_5f3a ; $5f10 jumptable
+	dw Label_28_5f3a ; $5f12 jumptable
+	dw Label_28_5f36 ; $5f14 jumptable
+	dw Label_28_5f3a ; $5f16 jumptable
+	dw Label_28_5f6a ; $5f18 jumptable
+	dw Label_28_5f82 ; $5f1a jumptable
+	dw Label_28_5f3a ; $5f1c jumptable
+	dw Label_28_5f5b ; $5f1e jumptable
+	dw Label_28_600c ; $5f20 jumptable
+	dw Label_28_5fe9 ; $5f22 jumptable
+	dw Label_28_5fbd ; $5f24 jumptable
+	dw Label_28_5f9a ; $5f26 jumptable
+	dw Label_28_5f2a ; $5f28 jumptable
 Label_28_5f2a:
 	ld hl, $4bf0 ; $5f2a
 	ld de, $a200 ; $5f2d
 	ld c, $20 ; $5f30
 	call Func_00_0480 ; $5f32
 	ret ; $5f35
-	INCBIN "data/bank_028/d_5f36.bin" ; $5f36, 4 bytes
+Label_28_5f36:
+	call Func_28_6024 ; $5f36
+	ret ; $5f39
+Label_28_5f3a:
 	ld hl, $5e30 ; $5f3a
 	ld de, $0b01 ; $5f3d
 	call Func_00_05b0 ; $5f40
@@ -100,7 +95,24 @@ Label_28_5f2a:
 	call Func_00_0480 ; $5f54
 	call Func_28_6024 ; $5f57
 	ret ; $5f5a
-	INCBIN "data/bank_028/d_5f5b.bin" ; $5f5b, 39 bytes
+Label_28_5f5b:
+	ld hl, $4bf0 ; $5f5b
+	ld de, $a200 ; $5f5e
+	ld c, $08 ; $5f61
+	call Func_00_0480 ; $5f63
+	call Func_28_6024 ; $5f66
+	ret ; $5f69
+Label_28_5f6a:
+	ld hl, $5ea0 ; $5f6a
+	ld de, $0e02 ; $5f6d
+	call Func_00_05b0 ; $5f70
+	ld hl, $5470 ; $5f73
+	ld de, $a3c0 ; $5f76
+	ld c, $02 ; $5f79
+	call Func_00_0480 ; $5f7b
+	call Func_28_6024 ; $5f7e
+	ret ; $5f81
+Label_28_5f82:
 	ld hl, $5e68 ; $5f82
 	ld de, $0e02 ; $5f85
 	call Func_00_05b0 ; $5f88
@@ -110,7 +122,61 @@ Label_28_5f2a:
 	call Func_00_0480 ; $5f93
 	call Func_28_6024 ; $5f96
 	ret ; $5f99
-	INCBIN "data/bank_028/d_5f9a.bin" ; $5f9a, 138 bytes
+Label_28_5f9a:
+	ld hl, $5e78 ; $5f9a
+	ld de, $0f01 ; $5f9d
+	call Func_00_05b0 ; $5fa0
+	ld hl, $5490 ; $5fa3
+	ld de, $a200 ; $5fa6
+	ld c, $10 ; $5fa9
+	call Func_00_0480 ; $5fab
+	ld hl, $5470 ; $5fae
+	ld de, $a3c0 ; $5fb1
+	ld c, $02 ; $5fb4
+	call Func_00_0480 ; $5fb6
+	call Func_28_6024 ; $5fb9
+	ret ; $5fbc
+Label_28_5fbd:
+	ld hl, $4bf0 ; $5fbd
+	ld de, $a200 ; $5fc0
+	ld c, $08 ; $5fc3
+	call Func_00_0480 ; $5fc5
+	ld hl, $5e80 ; $5fc8
+	ld de, $0e01 ; $5fcb
+	call Func_00_05b0 ; $5fce
+	ld hl, $5e98 ; $5fd1
+	ld de, $0f01 ; $5fd4
+	call Func_00_05b0 ; $5fd7
+	ld hl, $5470 ; $5fda
+	ld de, $a3c0 ; $5fdd
+	ld c, $02 ; $5fe0
+	call Func_00_0480 ; $5fe2
+	call Func_28_6024 ; $5fe5
+	ret ; $5fe8
+Label_28_5fe9:
+	ld hl, $5e50 ; $5fe9
+	ld de, $0d03 ; $5fec
+	call Func_00_05b0 ; $5fef
+	ld hl, $4e30 ; $5ff2
+	ld de, $a100 ; $5ff5
+	ld c, $10 ; $5ff8
+	call Func_00_0480 ; $5ffa
+	ld hl, $5130 ; $5ffd
+	ld de, $a200 ; $6000
+	ld c, $10 ; $6003
+	call Func_00_0480 ; $6005
+	call Func_28_6024 ; $6008
+	ret ; $600b
+Label_28_600c:
+	ld hl, $5e50 ; $600c
+	ld de, $0d03 ; $600f
+	call Func_00_05b0 ; $6012
+	ld hl, $4e30 ; $6015
+	ld de, $a100 ; $6018
+	ld c, $30 ; $601b
+	call Func_00_0480 ; $601d
+	call Func_28_6024 ; $6020
+	ret ; $6023
 Func_28_6024:
 	ld hl, $5590 ; $6024
 	ld de, $8080 ; $6027

@@ -447,9 +447,7 @@ Label_0b_473f:
 	ld a, $ff ; $4762
 	ld [wPointWinLoseFlag], a ; $4764
 Label_0b_4767:
-	rst Rst30 ; $4767
-	ret nz ; $4768
-	inc bc ; $4769
+	rst30 $03c0 ; $4767
 	jr z, Label_0b_47a7 ; $476a
 	call DisableLCDSafely ; $476c
 	farcall FarPtr_05_76 ; $476f
@@ -478,9 +476,7 @@ Label_0b_479a:
 	call Func_00_1d20 ; $47a1
 	call Func_00_1da4 ; $47a4
 Label_0b_47a7:
-	rst Rst28 ; $47a7
-	ret nz ; $47a8
-	inc bc ; $47a9
+	rst28 $03c0 ; $47a7
 	farcall FarPtr_1e_04 ; $47aa
 	ret ; $47ad
 Label_0b_47ae:
@@ -705,23 +701,18 @@ Func_0b_5d6d:
 	dec a ; $5d76
 	ld a, a ; $5d77
 	rst Rst00 ; $5d78
-	ld a, a ; $5d79
-	ld e, l ; $5d7a
-	cp a, c ; $5d7b
-	ld e, l ; $5d7c
-	di ; $5d7d
-	ld e, l ; $5d7e
+	dw Label_0b_5d7f ; $5d79 jumptable
+	dw Label_0b_5db9 ; $5d7b jumptable
+	dw Label_0b_5df3 ; $5d7d jumptable
+Label_0b_5d7f:
 	ld a, b ; $5d7f
 	ld a, a ; $5d80
 	rst Rst00 ; $5d81
-	adc a, d ; $5d82
-	ld e, l ; $5d83
-	or a, e ; $5d84
-	ld e, l ; $5d85
-	or a, l ; $5d86
-	ld e, l ; $5d87
-	or a, a ; $5d88
-	ld e, l ; $5d89
+	dw Label_0b_5d8a ; $5d82 jumptable
+	dw Label_0b_5db3 ; $5d84 jumptable
+	dw Label_0b_5db5 ; $5d86 jumptable
+	dw Label_0b_5db7 ; $5d88 jumptable
+Label_0b_5d8a:
 	ld a, [$c4d8] ; $5d8a
 	ld hl, $5da9 ; $5d8d
 	add a, l ; $5d90
@@ -743,20 +734,24 @@ Label_0b_5da7:
 	ld a, [hl] ; $5da7
 	ret ; $5da8
 	INCBIN "data/bank_00b/d_5da9.bin" ; $5da9, 10 bytes
+Label_0b_5db3:
 	xor a, a ; $5db3
 	ret ; $5db4
+Label_0b_5db5:
 	xor a, a ; $5db5
 	ret ; $5db6
-	INCBIN "data/bank_00b/d_5db7.bin" ; $5db7, 2 bytes
+Label_0b_5db7:
+	xor a, a ; $5db7
+	ret ; $5db8
+Label_0b_5db9:
 	ld a, b ; $5db9
 	ld a, a ; $5dba
 	rst Rst00 ; $5dbb
-	call nz, $ed5d ; $5dbc
-	ld e, l ; $5dbf
-	rst Rst28 ; $5dc0
-	ld e, l ; $5dc1
-	pop af ; $5dc2
-	ld e, l ; $5dc3
+	dw Label_0b_5dc4 ; $5dbc jumptable
+	dw Label_0b_5ded ; $5dbe jumptable
+	dw Label_0b_5def ; $5dc0 jumptable
+	dw Label_0b_5df1 ; $5dc2 jumptable
+Label_0b_5dc4:
 	ld a, [$c4d8] ; $5dc4
 	ld hl, $5de3 ; $5dc7
 	add a, l ; $5dca
@@ -778,19 +773,24 @@ Label_0b_5de1:
 	ld a, [hl] ; $5de1
 	ret ; $5de2
 	INCBIN "data/bank_00b/d_5de3.bin" ; $5de3, 10 bytes
+Label_0b_5ded:
 	xor a, a ; $5ded
 	ret ; $5dee
+Label_0b_5def:
 	xor a, a ; $5def
 	ret ; $5df0
-	INCBIN "data/bank_00b/d_5df1.bin" ; $5df1, 2 bytes
+Label_0b_5df1:
+	xor a, a ; $5df1
+	ret ; $5df2
+Label_0b_5df3:
 	ld a, b ; $5df3
 	ld a, a ; $5df4
 	rst Rst00 ; $5df5
-	cp a, $5d ; $5df6
-	ld sp, $555e ; $5df8
-	ld e, [hl] ; $5dfb
-	add a, e ; $5dfc
-	ld e, [hl] ; $5dfd
+	dw Label_0b_5dfe ; $5df6 jumptable
+	dw Label_0b_5e31 ; $5df8 jumptable
+	dw Label_0b_5e55 ; $5dfa jumptable
+	dw Label_0b_5e83 ; $5dfc jumptable
+Label_0b_5dfe:
 	ld a, [$c4d8] ; $5dfe
 	ld hl, $5e27 ; $5e01
 	add a, l ; $5e04
@@ -812,6 +812,7 @@ Label_0b_5e1b:
 	ld a, [hl] ; $5e1b
 	ret ; $5e1c
 	INCBIN "data/bank_00b/d_5e1d.bin" ; $5e1d, 20 bytes
+Label_0b_5e31:
 	ld a, $35 ; $5e31
 	ld b, $00 ; $5e33
 	call Func_0b_4534 ; $5e35
@@ -829,6 +830,7 @@ Label_0b_5e1b:
 	dec [hl] ; $5e52
 	xor a, a ; $5e53
 	ret ; $5e54
+Label_0b_5e55:
 	ld a, [$c4b2] ; $5e55
 	cp a, $01 ; $5e58
 	ld a, $00 ; $5e5a
@@ -850,7 +852,9 @@ Label_0b_5e75:
 	ld hl, $c2ea ; $5e7c
 	inc [hl] ; $5e7f
 	jp Label_0b_5e8d ; $5e80
-	INCBIN "data/bank_00b/d_5e83.bin" ; $5e83, 2 bytes
+Label_0b_5e83:
+	xor a, a ; $5e83
+	ret ; $5e84
 Label_0b_5e85:
 	ld a, $01 ; $5e85
 	ld [$c4c3], a ; $5e87
@@ -1037,14 +1041,17 @@ Func_0b_6cf5:
 	dec a ; $6cfe
 	ld a, a ; $6cff
 	rst Rst00 ; $6d00
-	dec b ; $6d01
-	ld l, l ; $6d02
-	ccf ; $6d03
-	ld l, l ; $6d04
+	dw Label_0b_6d05 ; $6d01 jumptable
+	dw Label_0b_6d3f ; $6d03 jumptable
+Label_0b_6d05:
 	ld a, b ; $6d05
 	ld a, a ; $6d06
 	rst Rst00 ; $6d07
-	INCBIN "data/bank_00b/d_6d08.bin" ; $6d08, 8 bytes
+	dw Label_0b_6d10 ; $6d08 jumptable
+	dw Label_0b_6d39 ; $6d0a jumptable
+	dw Label_0b_6d3b ; $6d0c jumptable
+	dw Label_0b_6d3d ; $6d0e jumptable
+Label_0b_6d10:
 	ld a, [$c4d8] ; $6d10
 	ld hl, $6d2f ; $6d13
 	add a, l ; $6d16
@@ -1066,22 +1073,24 @@ Label_0b_6d2d:
 	ld a, [hl] ; $6d2d
 	ret ; $6d2e
 	INCBIN "data/bank_00b/d_6d2f.bin" ; $6d2f, 10 bytes
+Label_0b_6d39:
 	xor a, a ; $6d39
 	ret ; $6d3a
+Label_0b_6d3b:
 	xor a, a ; $6d3b
 	ret ; $6d3c
-	INCBIN "data/bank_00b/d_6d3d.bin" ; $6d3d, 2 bytes
+Label_0b_6d3d:
+	xor a, a ; $6d3d
+	ret ; $6d3e
+Label_0b_6d3f:
 	ld a, b ; $6d3f
 	ld a, a ; $6d40
 	rst Rst00 ; $6d41
-	ld c, d ; $6d42
-	ld l, l ; $6d43
-	ld [hl], e ; $6d44
-	ld l, l ; $6d45
-	ld [hl], l ; $6d46
-	ld l, l ; $6d47
-	sbc a, h ; $6d48
-	ld l, l ; $6d49
+	dw Label_0b_6d4a ; $6d42 jumptable
+	dw Label_0b_6d73 ; $6d44 jumptable
+	dw Label_0b_6d75 ; $6d46 jumptable
+	dw Label_0b_6d9c ; $6d48 jumptable
+Label_0b_6d4a:
 	ld a, [$c4d8] ; $6d4a
 	ld hl, $6d69 ; $6d4d
 	add a, l ; $6d50
@@ -1103,8 +1112,10 @@ Label_0b_6d67:
 	ld a, [hl] ; $6d67
 	ret ; $6d68
 	INCBIN "data/bank_00b/d_6d69.bin" ; $6d69, 10 bytes
+Label_0b_6d73:
 	xor a, a ; $6d73
 	ret ; $6d74
+Label_0b_6d75:
 	ld a, [$c4b2] ; $6d75
 	cp a, $01 ; $6d78
 	ld a, $00 ; $6d7a
@@ -1122,7 +1133,9 @@ Label_0b_6d67:
 	ld hl, $c2ea ; $6d95
 	inc [hl] ; $6d98
 	jp Label_0b_6da6 ; $6d99
-	INCBIN "data/bank_00b/d_6d9c.bin" ; $6d9c, 2 bytes
+Label_0b_6d9c:
+	xor a, a ; $6d9c
+	ret ; $6d9d
 Label_0b_6d9e:
 	ld a, $01 ; $6d9e
 	ld [$c4c3], a ; $6da0

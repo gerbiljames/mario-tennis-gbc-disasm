@@ -4,119 +4,13 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $16", ROMX[$4000], BANK[$16]
 
-	ld [hl], a ; $4000
-	ld b, h ; $4001
-	dec [hl] ; $4002
-	ld e, h ; $4003
-	ld d, l ; $4004
-	ld l, c ; $4005
-	push de ; $4006
-	push bc ; $4007
-	ld c, $00 ; $4008
-	call Func_16_4069 ; $400a
-	ld c, $00 ; $400d
-	call Func_16_4093 ; $400f
-	ld c, $00 ; $4012
-	ld b, $08 ; $4014
-	call Func_00_1f51 ; $4016
-	pop bc ; $4019
-	pop de ; $401a
-	push de ; $401b
-	push bc ; $401c
-	ld a, b ; $401d
-	add a, d ; $401e
-	ld d, a ; $401f
-	push de ; $4020
-	ld c, $01 ; $4021
-	call Func_16_4069 ; $4023
-	ld c, $00 ; $4026
-	call Func_16_4093 ; $4028
-	ld c, $00 ; $402b
-	ld b, $28 ; $402d
-	call Func_00_1f51 ; $402f
-	pop de ; $4032
-	pop bc ; $4033
-	pop de ; $4034
-	push de ; $4035
-	push bc ; $4036
-	ld a, c ; $4037
-	add a, e ; $4038
-	ld e, a ; $4039
-	ld a, b ; $403a
-	add a, d ; $403b
-	ld d, a ; $403c
-	push de ; $403d
-	ld c, $01 ; $403e
-	call Func_16_4069 ; $4040
-	ld c, $01 ; $4043
-	call Func_16_4093 ; $4045
-	ld c, $00 ; $4048
-	ld b, $68 ; $404a
-	call Func_00_1f51 ; $404c
-	pop de ; $404f
-	pop bc ; $4050
-	pop de ; $4051
-	ld a, e ; $4052
-	add a, c ; $4053
-	ld e, a ; $4054
-	push de ; $4055
-	ld c, $00 ; $4056
-	call Func_16_4069 ; $4058
-	ld c, $01 ; $405b
-	call Func_16_4093 ; $405d
-	ld c, $00 ; $4060
-	ld b, $48 ; $4062
-	call Func_00_1f51 ; $4064
-	pop de ; $4067
-	ret ; $4068
-Func_16_4069:
-	ldh a, [$ff8c] ; $4069
-	and a, $0f ; $406b
-	ld hl, $4083 ; $406d
-	add a, l ; $4070
-	ld l, a ; $4071
-	jr nc, Label_16_4075 ; $4072
-	inc h ; $4074
-Label_16_4075:
-	ld a, [hl] ; $4075
-	ld b, a ; $4076
-	ld a, c ; $4077
-	or a, a ; $4078
-	jr z, Label_16_407f ; $4079
-	ld a, b ; $407b
-	add a, d ; $407c
-	ld d, a ; $407d
-	ret ; $407e
-Label_16_407f:
-	ld a, d ; $407f
-	sub a, b ; $4080
-	ld d, a ; $4081
-	ret ; $4082
-	INCBIN "data/bank_016/d_4083.bin" ; $4083, 16 bytes
-Func_16_4093:
-	ldh a, [$ff8c] ; $4093
-	and a, $0f ; $4095
-	ld hl, $40ad ; $4097
-	add a, l ; $409a
-	ld l, a ; $409b
-	jr nc, Label_16_409f ; $409c
-	inc h ; $409e
-Label_16_409f:
-	ld a, [hl] ; $409f
-	ld b, a ; $40a0
-	ld a, c ; $40a1
-	or a, a ; $40a2
-	jr z, Label_16_40a9 ; $40a3
-	ld a, b ; $40a5
-	add a, e ; $40a6
-	ld e, a ; $40a7
-	ret ; $40a8
-Label_16_40a9:
-	ld a, e ; $40a9
-	sub a, b ; $40aa
-	ld e, a ; $40ab
-	ret ; $40ac
-	INCBIN "data/bank_016/d_40ad.bin" ; $40ad, 841 bytes
+FarPtr_16_00:
+	dw Func_16_4477 ; $4000
+FarPtr_16_02:
+	dw Func_16_5c35 ; $4002
+FarPtr_16_04:
+	dw Func_16_6955 ; $4004
+	INCBIN "data/bank_016/d_4006.bin" ; $4006, 1008 bytes
 	farcall FarPtr_39_04 ; $43f6
 	ret ; $43f9
 	INCBIN "data/bank_016/d_43fa.bin" ; $43fa, 125 bytes
@@ -150,12 +44,10 @@ Label_16_449b:
 	ld a, [wMatchWinLoseFlag] ; $44ac
 	cp a, $ff ; $44af
 	jr z, Label_16_44b7 ; $44b1
-	rst Rst08 ; $44b3
-	add hl, bc ; $44b4
+	sound $09 ; $44b3
 	jr Label_16_44b9 ; $44b5
 Label_16_44b7:
-	rst Rst08 ; $44b7
-	ld a, [bc] ; $44b8
+	sound $0a ; $44b7
 Label_16_44b9:
 	call Func_16_4571 ; $44b9
 	farcall FarPtr_39_04 ; $44bc
@@ -202,8 +94,7 @@ Label_16_44f9:
 	jr nz, Label_16_453b ; $4519
 	jr Label_16_44f9 ; $451b
 Label_16_451d:
-	rst Rst08 ; $451d
-	ld e, a ; $451e
+	sound $5f ; $451d
 	call Func_00_1b38 ; $451f
 	ld c, $40 ; $4522
 	call Func_00_1d20 ; $4524

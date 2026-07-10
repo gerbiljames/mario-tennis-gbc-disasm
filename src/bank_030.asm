@@ -60,8 +60,7 @@ Label_30_7dc0:
 	ldh a, [$ff9e] ; $7dc2
 	or a, a ; $7dc4
 	jr z, Label_30_7dc9 ; $7dc5
-	rst Rst08 ; $7dc7
-	inc l ; $7dc8
+	sound $2c ; $7dc7
 Label_30_7dc9:
 	pop hl ; $7dc9
 	pop de ; $7dca
