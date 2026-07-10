@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $5a", ROMX[$4000], BANK[$5a]
 
-	dw UnusedCharSpriteDesc ; $4000
-UnusedCharSpriteDesc:
+	dw BallMachineSpriteDesc ; $4000
+BallMachineSpriteDesc:
 	dw $0005 ; $4002
 	dw $0003 ; $4004
-	dw UnusedCharSpriteFrames ; $4006 frame table
-	dw UnusedCharSpriteAnims ; $4008 animation scripts
+	dw BallMachineSpriteFrames ; $4006 frame table
+	dw BallMachineSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_5a_7ce0 ; $400c per-slot OAM data
-UnusedCharSpriteFrames:
+BallMachineSpriteFrames:
 	dw Data_5a_4130 ; $400e
 	dw Data_5a_4220 ; $4010
 	dw Data_5a_4310 ; $4012
@@ -274,7 +274,7 @@ Data_5a_7650:
 	INCBIN "data/bank_05a/d_7650.bin" ; $7650, 1680 bytes
 Data_5a_7ce0:
 	INCBIN "data/bank_05a/d_7ce0.bin" ; $7ce0, 580 bytes
-UnusedCharSpriteAnims:
+BallMachineSpriteAnims:
 	dw Data_5a_7f4a ; $7f24
 	dw Data_5a_7f4d ; $7f26
 	dw Data_5a_7f57 ; $7f28
