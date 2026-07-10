@@ -30,7 +30,10 @@ SECTION "ROM Bank $0f", ROMX[$4000], BANK[$0f]
 	ld [hl+], a ; $45b1
 	ld a, [bc] ; $45b2
 	jp Label_0f_4661 ; $45b3
-	INCBIN "data/bank_00f/d_45b6.bin" ; $45b6, 171 bytes
+	INCBIN "data/bank_00f/d_45b6.bin" ; $45b6, 168 bytes
+	rst Rst18 ; $465e
+	ld [hl+], a ; $465f
+	ld a, [bc] ; $4660
 Label_0f_4661:
 	call Func_0f_567f ; $4661
 	call Func_0f_567f ; $4664
@@ -4011,7 +4014,15 @@ Label_0f_663b:
 	inc bc ; $6641
 	ld [$c2b0], a ; $6642
 	ret ; $6645
-	INCBIN "data/bank_00f/d_6646.bin" ; $6646, 2862 bytes
+	INCBIN "data/bank_00f/d_6646.bin" ; $6646, 2418 bytes
+	rst Rst18 ; $6fb8
+	ld l, $0a ; $6fb9
+	ld a, $0d ; $6fbb
+	ld b, $40 ; $6fbd
+	rst Rst18 ; $6fbf
+	ld l, $0a ; $6fc0
+	ret ; $6fc2
+	INCBIN "data/bank_00f/d_6fc3.bin" ; $6fc3, 433 bytes
 	rst Rst18 ; $7174
 	inc h ; $7175
 	ld a, [bc] ; $7176

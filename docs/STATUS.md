@@ -2,12 +2,16 @@
 
 ## Where things stand
 
-**67,727 instructions (~114 KB of code) disassembled across 37 of 128 banks;
+**85,767 instructions (~139 KB of code) disassembled across 54 of 128 banks;
 everything rebuilds byte-perfect** (`make compare` → OK against SHA-1
-`414ba58340a27fc27b127bc01455b32764151ff0`). The other 91 banks are so far
+`414ba58340a27fc27b127bc01455b32764151ff0`). The remaining banks are so far
 pure data (graphics/audio/tilemaps). The repo contains no ROM bytes: all data
 is extracted from a user-supplied `baserom.gbc` by `./setup.sh` per
 `data.manifest`.
+
+Largest code banks: $08 (7,982 instrs — match engine), $00 (7,223), $13
+(5,732), $05 (4,643), $1e (4,533), $0f (4,469), $38 (4,391), $3b (4,152),
+$0a (4,133), $11 (3,089).
 
 ## Pipeline (all working, all documented in README.md)
 
@@ -50,17 +54,24 @@ commands. 39 tests pass. If BizHawk or the MCP server restarts, reload
 - `autodrive2_pausemenu_serve.json`, `autodrive2_ceremony_clay.json` — second
   drive (exhibition pause menu/options/camera, serve, match results screens,
   singles + difficulty select, clay court, behind-player camera)
+- `story_intro.json` — human story-mode intro playthrough (2026-07-10),
+  captured with the native Trace Logger (145 auto-split segments, 217M
+  traced instructions, 22 GB of logs) and unioned into one file by
+  tracelog2cov.py + a merge. Added 11,973 new seeds; the RPG engine lit up
+  banks $04, $05, $0a, $10-$15, $1c, $1d, $38 (story overworld, dialogue,
+  NPCs). The raw logs live in the BizHawk Tools/ dir and can be deleted —
+  this JSON is the durable artifact.
 - `contaminated/` — pre-fix dumps with phantom seeds; never union these.
 
-Known artifact: exactly 1 skipped seed (phantom at rom 0x1d1a0 from a
-pre-fix session); fresh dumps produce 0.
+Known artifact: exactly 3 skipped seeds — the old phantom at rom 0x1d1a0,
+plus 0x22fc6 and 0x789df from the story trace (ambiguous banked runs that
+fell back to the wrong bank; the conflict filter rejects them).
 
 ## Not yet covered (biggest wins first)
 
-1. **Story mode / Mario Tour** — the RPG engine (overworld, dialogue, NPCs,
-   leveling). Untouched because entering it creates save data — **needs
-   user's explicit OK**. Save slots are currently all empty. Unlocks the 5
-   locked minigames.
+1. **Rest of story mode / Mario Tour** — the intro is now covered (save
+   data exists); the bulk of the RPG (matches vs academy ranks, leveling,
+   later areas) is not. Unlocks the 5 locked minigames.
 2. Match-point → ceremony transition (missed by a polling overshoot; results
    screens themselves are covered), tiebreaks, deuce.
 3. Remaining minigames (locked behind story), Game Boy Tower, tournament.
@@ -68,9 +79,9 @@ pre-fix session); fresh dumps produce 0.
 
 ## Repo state
 
-git initialized, **nothing committed yet** (user hasn't asked). Untracked:
-all sources, tools, coverage, docs, skill. Gitignored: baserom.gbc, data/,
-build/, tools/rgbds/, *.gbc.
+Initial commit 058ffee holds the pre-story-mode state. The story-intro
+coverage + regenerated sources are uncommitted on top of it. Gitignored:
+baserom.gbc, data/, build/, tools/rgbds/, *.gbc.
 
 ## Annotation state
 
@@ -78,4 +89,5 @@ Bank 0: 31 named routines (docs/bank0_notes.md) — FarCall trampoline, OAM DMA
 stub, joypad, LZ decompressor, sound engine entries, SoftReset, interrupt
 handler bodies. RAM: docs/ram_map.md (129 entries, RetroAchievements-sourced).
 Next annotation targets: bank $08 (biggest code bank — likely the match
-engine), bank $1e, the minigame bank, WRAM map expansion from ram_map gaps.
+engine), bank $13 (biggest story-mode bank), bank $1e, the minigame bank,
+WRAM map expansion from ram_map gaps.

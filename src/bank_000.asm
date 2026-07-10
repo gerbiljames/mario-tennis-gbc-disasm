@@ -48,7 +48,21 @@ SerialInterrupt:
 EntryPoint:
 	nop ; $0100
 	jp Label_00_0150 ; $0101
-	INCBIN "data/bank_000/d_0104.bin" ; $0104, 76 bytes
+	INCBIN "data/bank_000/d_0104.bin" ; $0104, 58 bytes
+Label_00_013e:
+	nop ; $013e
+	ld b, d ; $013f
+	ld c, l ; $0140
+	jr c, Label_00_0188 ; $0141
+	ret nz ; $0143
+	jr nc, Label_00_0177 ; $0144
+	nop ; $0146
+	dec de ; $0147
+	ld b, $03 ; $0148
+	ld bc, $0033 ; $014a
+	and a, l ; $014d
+	ld h, h ; $014e
+	INCBIN "data/bank_000/d_014f.bin" ; $014f, 1 bytes
 Label_00_0150:
 	jp Label_00_2578 ; $0150
 	INCBIN "data/bank_000/d_0153.bin" ; $0153, 11 bytes
@@ -71,6 +85,7 @@ Func_00_015e:
 	jp hl ; $0174
 	push af ; $0175
 	push hl ; $0176
+Label_00_0177:
 	ld hl, sp + 4 ; $0177
 	ld a, [hl] ; $0179
 	ldh [$ff95], a ; $017a
@@ -80,7 +95,33 @@ Func_00_015e:
 	inc sp ; $0181
 	inc sp ; $0182
 	ret ; $0183
-	INCBIN "data/bank_000/d_0184.bin" ; $0184, 50 bytes
+	INCBIN "data/bank_000/d_0184.bin" ; $0184, 4 bytes
+Label_00_0188:
+	ld hl, sp + 4 ; $0188
+	ld [hl], $a7 ; $018a
+	inc hl ; $018c
+	ld [hl], $01 ; $018d
+	inc hl ; $018f
+	ldh a, [$ff95] ; $0190
+	ld [hl], a ; $0192
+	pop af ; $0193
+	ldh [$ff95], a ; $0194
+	ld [$2000], a ; $0196
+	pop hl ; $0199
+	ld a, b ; $019a
+	add a, a ; $019b
+	add a, l ; $019c
+	ld l, a ; $019d
+	jr nc, Label_00_01a1 ; $019e
+	inc h ; $01a0
+Label_00_01a1:
+	ld a, [hl+] ; $01a1
+	ld h, [hl] ; $01a2
+	ld l, a ; $01a3
+	or a, h ; $01a4
+	ret z ; $01a5
+	jp hl ; $01a6
+	INCBIN "data/bank_000/d_01a7.bin" ; $01a7, 15 bytes
 FarCall:
 	push hl ; $01b6
 	push af ; $01b7
@@ -3542,7 +3583,24 @@ Label_00_1ab1:
 	jr c, Label_00_1ab1 ; $1ab3
 	dec a ; $1ab5
 	ret ; $1ab6
-	INCBIN "data/bank_000/d_1ab7.bin" ; $1ab7, 23 bytes
+Func_00_1ab7:
+	push af ; $1ab7
+	push bc ; $1ab8
+	push de ; $1ab9
+	push hl ; $1aba
+	add sp, -10 ; $1abb
+	ld hl, sp + 0 ; $1abd
+	push de ; $1abf
+	ld d, h ; $1ac0
+	ld e, l ; $1ac1
+	ld b, h ; $1ac2
+	ld c, l ; $1ac3
+	ld h, $00 ; $1ac4
+	ld l, a ; $1ac6
+	call FormatHexWord ; $1ac7
+	inc hl ; $1aca
+	inc hl ; $1acb
+	jr Label_00_1b2b ; $1acc
 Func_00_1ace:
 	push af ; $1ace
 	push bc ; $1acf
@@ -4614,7 +4672,69 @@ Func_00_2435:
 	dec hl ; $244e
 	ld [hl], $3b ; $244f
 	ret ; $2451
-	INCBIN "data/bank_000/d_2452.bin" ; $2452, 77 bytes
+Func_00_2452:
+	push af ; $2452
+	push de ; $2453
+	push hl ; $2454
+	ld hl, $c0f0 ; $2455
+	ld de, $c88e ; $2458
+	di ; $245b
+	ld a, [hl+] ; $245c
+	ld [de], a ; $245d
+	inc de ; $245e
+	ld a, [hl+] ; $245f
+	ld [de], a ; $2460
+	inc de ; $2461
+	ld a, [hl+] ; $2462
+	ld [de], a ; $2463
+	inc de ; $2464
+	ld a, [hl+] ; $2465
+	ld [de], a ; $2466
+	inc de ; $2467
+	ei ; $2468
+	pop hl ; $2469
+	pop de ; $246a
+	pop af ; $246b
+	ret ; $246c
+Func_00_246d:
+	push af ; $246d
+	push de ; $246e
+	push hl ; $246f
+	ld de, $c0f0 ; $2470
+	ld hl, $c88e ; $2473
+	di ; $2476
+	ld a, [hl+] ; $2477
+	ld [de], a ; $2478
+	inc de ; $2479
+	ld a, [hl+] ; $247a
+	ld [de], a ; $247b
+	inc de ; $247c
+	ld a, [hl+] ; $247d
+	ld [de], a ; $247e
+	inc de ; $247f
+	ld a, [hl+] ; $2480
+	ld [de], a ; $2481
+	inc de ; $2482
+	ei ; $2483
+	pop hl ; $2484
+	pop de ; $2485
+	pop af ; $2486
+	ret ; $2487
+Func_00_2488:
+	push af ; $2488
+	push hl ; $2489
+	ld hl, $c0f0 ; $248a
+	xor a, a ; $248d
+	di ; $248e
+	ld [hl+], a ; $248f
+	ld [hl+], a ; $2490
+	ld [hl+], a ; $2491
+	ld [hl], a ; $2492
+	ei ; $2493
+	pop hl ; $2494
+	pop af ; $2495
+	ret ; $2496
+	INCBIN "data/bank_000/d_2497.bin" ; $2497, 8 bytes
 Func_00_249f:
 	push hl ; $249f
 	push bc ; $24a0
@@ -4698,7 +4818,22 @@ Func_00_24ef:
 	call Func_00_249f ; $2504
 	pop de ; $2507
 	ret ; $2508
-	INCBIN "data/bank_000/d_2509.bin" ; $2509, 52 bytes
+Func_00_2509:
+	push de ; $2509
+	sla e ; $250a
+	rl d ; $250c
+	sla e ; $250e
+	rl d ; $2510
+	sla e ; $2512
+	rl d ; $2514
+	sla e ; $2516
+	rl d ; $2518
+	sla e ; $251a
+	rl d ; $251c
+	call Func_00_24ba ; $251e
+	pop de ; $2521
+	ret ; $2522
+	INCBIN "data/bank_000/d_2523.bin" ; $2523, 26 bytes
 Func_00_253d:
 	push bc ; $253d
 	ld c, [hl] ; $253e
@@ -7211,6 +7346,7 @@ Label_00_374f:
 	sla a ; $374f
 	add a, l ; $3751
 	ld l, a ; $3752
+Label_00_3753:
 	ld a, h ; $3753
 	adc a, $00 ; $3754
 	ld h, a ; $3756

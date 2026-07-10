@@ -1843,7 +1843,47 @@ Label_03_4cc9:
 	pop de ; $4cd0
 	pop hl ; $4cd1
 	ret ; $4cd2
-	INCBIN "data/bank_003/d_4cd3.bin" ; $4cd3, 145 bytes
+	INCBIN "data/bank_003/d_4cd3.bin" ; $4cd3, 61 bytes
+	ld a, [$c36c] ; $4d10
+	cp a, $03 ; $4d13
+	ret nc ; $4d15
+	call Func_00_2452 ; $4d16
+	ld a, [$c36c] ; $4d19
+	add a, a ; $4d1c
+	ld b, a ; $4d1d
+	ld hl, $c800 ; $4d1e
+	ld de, $0000 ; $4d21
+	call Func_03_4a89 ; $4d24
+	or a, a ; $4d27
+	ret nz ; $4d28
+	ld a, [$c36c] ; $4d29
+	add a, a ; $4d2c
+	ld b, a ; $4d2d
+	ld hl, $c800 ; $4d2e
+	call Func_03_4c14 ; $4d31
+	or a, a ; $4d34
+	ret nz ; $4d35
+	ld a, [$c36c] ; $4d36
+	add a, a ; $4d39
+	add a, $1b ; $4d3a
+	ld b, a ; $4d3c
+	ld hl, $c800 ; $4d3d
+	ld de, $c600 ; $4d40
+	call Func_03_4a89 ; $4d43
+	or a, a ; $4d46
+	ret nz ; $4d47
+	ld a, [$c36c] ; $4d48
+	add a, a ; $4d4b
+	add a, $1b ; $4d4c
+	ld b, a ; $4d4e
+	ld hl, $c800 ; $4d4f
+	call Func_03_4c14 ; $4d52
+	or a, a ; $4d55
+	ret nz ; $4d56
+	call Func_03_56fb ; $4d57
+	xor a, a ; $4d5a
+	ret ; $4d5b
+	INCBIN "data/bank_003/d_4d5c.bin" ; $4d5c, 8 bytes
 	push bc ; $4d64
 	push de ; $4d65
 	push hl ; $4d66
@@ -1959,7 +1999,99 @@ Label_03_4dfe:
 	pop af ; $4e10
 	pop hl ; $4e11
 	ret ; $4e12
-	INCBIN "data/bank_003/d_4e13.bin" ; $4e13, 138 bytes
+	push bc ; $4e13
+	push de ; $4e14
+	push hl ; $4e15
+	ld h, a ; $4e16
+	ld a, $0a ; $4e17
+	ld [$0000], a ; $4e19
+	call Func_03_404a ; $4e1c
+	ld a, [$c36c] ; $4e1f
+	cp a, $03 ; $4e22
+	jp nc, Label_03_4e8a ; $4e24
+	add a, a ; $4e27
+	ld c, a ; $4e28
+	ld a, $00 ; $4e29
+	add a, c ; $4e2b
+	ld b, a ; $4e2c
+	call Func_03_4e90 ; $4e2d
+	inc b ; $4e30
+	call Func_03_4e90 ; $4e31
+	ld a, $1b ; $4e34
+	add a, c ; $4e36
+	ld b, a ; $4e37
+	call Func_03_4e90 ; $4e38
+	inc b ; $4e3b
+	call Func_03_4e90 ; $4e3c
+	call Func_03_48a1 ; $4e3f
+	xor a, a ; $4e42
+	ld [$0000], a ; $4e43
+	call Func_03_5141 ; $4e46
+	ld a, [$c36c] ; $4e49
+	or a, a ; $4e4c
+	jr z, Label_03_4e65 ; $4e4d
+	cp a, $01 ; $4e4f
+	jr z, Label_03_4e77 ; $4e51
+	push de ; $4e53
+	ld de, $0440 ; $4e54
+	rst Rst18 ; $4e57
+	jr nz, Label_03_4e5d ; $4e58
+	pop de ; $4e5a
+	push de ; $4e5b
+	INCBIN "data/bank_003/d_4e5c.bin" ; $4e5c, 1 bytes
+Label_03_4e5d:
+	ret nz ; $4e5d
+	inc b ; $4e5e
+	rst Rst18 ; $4e5f
+	jr nz, Label_03_4e65 ; $4e60
+	pop de ; $4e62
+	jr Label_03_4e87 ; $4e63
+Label_03_4e65:
+	push de ; $4e65
+	ld de, $0400 ; $4e66
+	rst Rst18 ; $4e69
+	jr nz, $4e6f ; $4e6a
+	pop de ; $4e6c
+	push de ; $4e6d
+	ld de, $0480 ; $4e6e
+	rst Rst18 ; $4e71
+	jr nz, Label_03_4e77 ; $4e72
+	pop de ; $4e74
+	jr Label_03_4e87 ; $4e75
+Label_03_4e77:
+	push de ; $4e77
+	ld de, $0420 ; $4e78
+	rst Rst18 ; $4e7b
+	jr nz, Label_03_4e81 ; $4e7c
+	pop de ; $4e7e
+	push de ; $4e7f
+	INCBIN "data/bank_003/d_4e80.bin" ; $4e80, 1 bytes
+Label_03_4e81:
+	and a, b ; $4e81
+	inc b ; $4e82
+	rst Rst18 ; $4e83
+	jr nz, $4e89 ; $4e84
+	pop de ; $4e86
+Label_03_4e87:
+	xor a, a ; $4e87
+	jr Label_03_4e8c ; $4e88
+Label_03_4e8a:
+	ld a, $01 ; $4e8a
+Label_03_4e8c:
+	pop hl ; $4e8c
+	pop de ; $4e8d
+	pop bc ; $4e8e
+	ret ; $4e8f
+Func_03_4e90:
+	ld a, h ; $4e90
+	or a, a ; $4e91
+	jr nz, Label_03_4e99 ; $4e92
+	call Func_03_4f57 ; $4e94
+	jr Label_03_4e9c ; $4e97
+Label_03_4e99:
+	call Func_03_4e9d ; $4e99
+Label_03_4e9c:
+	ret ; $4e9c
 Func_03_4e9d:
 	push hl ; $4e9d
 	push de ; $4e9e
@@ -2028,7 +2160,36 @@ Label_03_4eed:
 	pop de ; $4ef4
 	pop hl ; $4ef5
 	ret ; $4ef6
-	INCBIN "data/bank_003/d_4ef7.bin" ; $4ef7, 183 bytes
+	INCBIN "data/bank_003/d_4ef7.bin" ; $4ef7, 96 bytes
+Func_03_4f57:
+	push hl ; $4f57
+	push de ; $4f58
+	push bc ; $4f59
+	ld a, $00 ; $4f5a
+	ldh [$ff97], a ; $4f5c
+	ld [$4000], a ; $4f5e
+	ld a, b ; $4f61
+	call Func_03_4a79 ; $4f62
+	xor a, a ; $4f65
+	ld [bc], a ; $4f66
+	ld de, $0000 ; $4f67
+	ld hl, $0006 ; $4f6a
+	add hl, bc ; $4f6d
+	ld [hl], e ; $4f6e
+	inc hl ; $4f6f
+	ld [hl], d ; $4f70
+	inc hl ; $4f71
+	ld c, $08 ; $4f72
+	xor a, a ; $4f74
+Label_03_4f75:
+	ld [hl+], a ; $4f75
+	dec c ; $4f76
+	jr nz, Label_03_4f75 ; $4f77
+	pop bc ; $4f79
+	pop de ; $4f7a
+	pop hl ; $4f7b
+	ret ; $4f7c
+	INCBIN "data/bank_003/d_4f7d.bin" ; $4f7d, 49 bytes
 	ld a, $36 ; $4fae
 	ld b, a ; $4fb0
 	ld hl, $c800 ; $4fb1
@@ -2154,7 +2315,61 @@ Label_03_5068:
 	pop bc ; $506f
 	pop af ; $5070
 	ret ; $5071
-	INCBIN "data/bank_003/d_5072.bin" ; $5072, 296 bytes
+	INCBIN "data/bank_003/d_5072.bin" ; $5072, 207 bytes
+Func_03_5141:
+	push af ; $5141
+	push bc ; $5142
+	push de ; $5143
+	push hl ; $5144
+	ldh a, [$ff96] ; $5145
+	push af ; $5147
+	ld a, $07 ; $5148
+	ldh [$ff96], a ; $514a
+	ldh [rWBK], a ; $514c
+	ld a, [$c36c] ; $514e
+	add a, $38 ; $5151
+	ld b, a ; $5153
+	ld hl, $d480 ; $5154
+	call Func_03_4b9b ; $5157
+	xor a, a ; $515a
+	rst Rst18 ; $515b
+	ld [bc], a ; $515c
+	dec c ; $515d
+	ld hl, $d480 ; $515e
+	ld a, e ; $5161
+	ld [hl+], a ; $5162
+	ld [hl], d ; $5163
+	ld a, $01 ; $5164
+	rst Rst18 ; $5166
+	ld [bc], a ; $5167
+	dec c ; $5168
+	ld hl, $d482 ; $5169
+	ld a, e ; $516c
+	ld [hl+], a ; $516d
+	ld [hl], d ; $516e
+	ld a, [$c36c] ; $516f
+	add a, $38 ; $5172
+	ld b, a ; $5174
+	ld hl, $d480 ; $5175
+	ld de, $0000 ; $5178
+	call Func_03_4a89 ; $517b
+	or a, a ; $517e
+	jr nz, Label_03_5190 ; $517f
+	ld a, [$c36c] ; $5181
+	add a, $3b ; $5184
+	ld b, a ; $5186
+	ld hl, $d480 ; $5187
+	ld de, $0000 ; $518a
+	call Func_03_4a89 ; $518d
+Label_03_5190:
+	pop af ; $5190
+	ldh [$ff96], a ; $5191
+	ldh [rWBK], a ; $5193
+	pop hl ; $5195
+	pop de ; $5196
+	pop bc ; $5197
+	pop af ; $5198
+	ret ; $5199
 Func_03_519a:
 	push af ; $519a
 	push bc ; $519b
@@ -2382,6 +2597,7 @@ Label_03_56f1:
 	pop bc ; $56f8
 	pop af ; $56f9
 	ret ; $56fa
+Func_03_56fb:
 	push af ; $56fb
 	push bc ; $56fc
 	push de ; $56fd

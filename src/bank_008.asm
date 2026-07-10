@@ -1598,7 +1598,14 @@ Func_08_4df4:
 	ld a, $0a ; $4e43
 	call Func_08_4428 ; $4e45
 	ret ; $4e48
-	INCBIN "data/bank_008/d_4e49.bin" ; $4e49, 36 bytes
+	INCBIN "data/bank_008/d_4e49.bin" ; $4e49, 9 bytes
+	rst Rst18 ; $4e52
+	inc b ; $4e53
+	ld b, $3e ; $4e54
+	ld a, [bc] ; $4e56
+	call Func_08_4428 ; $4e57
+	ret ; $4e5a
+	INCBIN "data/bank_008/d_4e5b.bin" ; $4e5b, 18 bytes
 	ld a, [$c491] ; $4e6d
 	and a, a ; $4e70
 	ret z ; $4e71

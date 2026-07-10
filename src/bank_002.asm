@@ -295,7 +295,129 @@ Func_02_42c9:
 	ld [de], a ; $42d3
 	inc de ; $42d4
 	ret ; $42d5
-	INCBIN "data/bank_002/d_42d6.bin" ; $42d6, 205 bytes
+Func_02_42d6:
+	push de ; $42d6
+	push hl ; $42d7
+	ldh a, [$ff96] ; $42d8
+	push af ; $42da
+	ld a, $06 ; $42db
+	ldh [$ff96], a ; $42dd
+	ldh [rWBK], a ; $42df
+	ld hl, $c880 ; $42e1
+	ld a, [hl+] ; $42e4
+	or a, [hl] ; $42e5
+	inc hl ; $42e6
+	or a, [hl] ; $42e7
+	inc hl ; $42e8
+	or a, [hl] ; $42e9
+	ld a, $ff ; $42ea
+	jr z, Label_02_433d ; $42ec
+	ld de, $c880 ; $42ee
+	ld hl, $d400 ; $42f1
+	call Func_02_4347 ; $42f4
+	jr z, Label_02_433d ; $42f7
+	call Func_02_4347 ; $42f9
+	jr z, Label_02_433d ; $42fc
+	call Func_02_4347 ; $42fe
+	jr z, Label_02_433d ; $4301
+	call Func_02_4347 ; $4303
+	jr z, Label_02_433d ; $4306
+	ld de, $c880 ; $4308
+	ld hl, $d404 ; $430b
+	call Func_02_4347 ; $430e
+	jr z, Label_02_433d ; $4311
+	call Func_02_4347 ; $4313
+	jr z, Label_02_433d ; $4316
+	call Func_02_4347 ; $4318
+	jr z, Label_02_433d ; $431b
+	call Func_02_4347 ; $431d
+	jr z, Label_02_433d ; $4320
+	ld de, $c880 ; $4322
+	ld hl, $d408 ; $4325
+	call Func_02_4347 ; $4328
+	jr z, Label_02_433d ; $432b
+	call Func_02_4347 ; $432d
+	jr z, Label_02_433d ; $4330
+	call Func_02_4347 ; $4332
+	jr z, Label_02_433d ; $4335
+	call Func_02_4347 ; $4337
+	jr z, Label_02_433d ; $433a
+	xor a, a ; $433c
+Label_02_433d:
+	ld h, a ; $433d
+	pop af ; $433e
+	ldh [$ff96], a ; $433f
+	ldh [rWBK], a ; $4341
+	ld a, h ; $4343
+	pop hl ; $4344
+	pop de ; $4345
+	ret ; $4346
+Func_02_4347:
+	ld a, [de] ; $4347
+	cp a, [hl] ; $4348
+	inc de ; $4349
+	inc hl ; $434a
+	ld a, $ff ; $434b
+	ret ; $434d
+	push af ; $434e
+	push bc ; $434f
+	push de ; $4350
+	push hl ; $4351
+	ld de, $c8bb ; $4352
+	add a, e ; $4355
+	ld e, a ; $4356
+	jr nc, Label_02_435a ; $4357
+	inc d ; $4359
+Label_02_435a:
+	call Func_00_0a3a ; $435a
+	ld a, h ; $435d
+	ld [de], a ; $435e
+	pop hl ; $435f
+	pop de ; $4360
+	pop bc ; $4361
+	pop af ; $4362
+	ret ; $4363
+	push af ; $4364
+	push bc ; $4365
+	push de ; $4366
+	push hl ; $4367
+	ld hl, $c8bb ; $4368
+	ld de, $c880 ; $436b
+	ld a, [hl+] ; $436e
+	ld [de], a ; $436f
+	inc de ; $4370
+	ld a, [hl+] ; $4371
+	ld [de], a ; $4372
+	inc de ; $4373
+	ld a, [hl+] ; $4374
+	ld [de], a ; $4375
+	inc de ; $4376
+	ld a, [hl+] ; $4377
+	ld [de], a ; $4378
+	inc de ; $4379
+Label_02_437a:
+	call Func_02_42d6 ; $437a
+	or a, a ; $437d
+	jr z, Label_02_439e ; $437e
+	call Func_00_0a3a ; $4380
+	ld a, h ; $4383
+	ld [$c880], a ; $4384
+	call Func_00_0a3a ; $4387
+	ld a, h ; $438a
+	ld [$c881], a ; $438b
+	call Func_00_0a3a ; $438e
+	ld a, h ; $4391
+	ld [$c882], a ; $4392
+	call Func_00_0a3a ; $4395
+	ld a, h ; $4398
+	ld [$c883], a ; $4399
+	jr Label_02_437a ; $439c
+Label_02_439e:
+	pop hl ; $439e
+	pop de ; $439f
+	pop bc ; $43a0
+	pop af ; $43a1
+	ret ; $43a2
 Func_02_43a3:
 	push af ; $43a3
 	ld a, d ; $43a4

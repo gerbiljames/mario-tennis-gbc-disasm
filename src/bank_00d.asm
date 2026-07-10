@@ -167,7 +167,21 @@ Label_0d_4139:
 	ld d, [hl] ; $4147
 	ld e, a ; $4148
 	ret ; $4149
-	INCBIN "data/bank_00d/d_414a.bin" ; $414a, 129 bytes
+	INCBIN "data/bank_00d/d_414a.bin" ; $414a, 92 bytes
+	add a, a ; $41a6
+	add a, $b5 ; $41a7
+	ld l, a ; $41a9
+	adc a, $41 ; $41aa
+	sub a, l ; $41ac
+	ld h, a ; $41ad
+	ld a, [hl+] ; $41ae
+	ld h, [hl] ; $41af
+	ld l, a ; $41b0
+	ld a, [hl+] ; $41b1
+	ld d, [hl] ; $41b2
+	ld e, a ; $41b3
+	ret ; $41b4
+	INCBIN "data/bank_00d/d_41b5.bin" ; $41b5, 22 bytes
 Func_0d_41cb:
 	ld hl, $c789 ; $41cb
 	ld a, [hl] ; $41ce

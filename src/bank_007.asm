@@ -41,7 +41,9 @@ Func_07_4077:
 	ldh [rIE], a ; $407d
 	ei ; $407f
 	ret ; $4080
-	INCBIN "data/bank_007/d_4081.bin" ; $4081, 1534 bytes
+	INCBIN "data/bank_007/d_4081.bin" ; $4081, 906 bytes
+	ret ; $440b
+	INCBIN "data/bank_007/d_440c.bin" ; $440c, 627 bytes
 Func_07_467f:
 	di ; $467f
 	ldh a, [rLY] ; $4680

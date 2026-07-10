@@ -73,6 +73,7 @@ Label_01_409a:
 	call EnableLCD ; $409d
 	ld c, $7f ; $40a0
 	call Func_00_1d2e ; $40a2
+Label_01_40a5:
 	ld hl, $c280 ; $40a5
 	ld [hl], $00 ; $40a8
 	ld hl, $c295 ; $40aa
@@ -112,7 +113,149 @@ Label_01_40d8:
 	ld e, h ; $40e7
 	ld a, [bc] ; $40e8
 	jp Label_01_40b2 ; $40e9
-	INCBIN "data/bank_001/d_40ec.bin" ; $40ec, 3940 bytes
+	INCBIN "data/bank_001/d_40ec.bin" ; $40ec, 13 bytes
+Label_01_40f9:
+	ldh a, [$ff91] ; $40f9
+	bit 3, a ; $40fb
+	jr z, Label_01_4113 ; $40fd
+	ld a, $01 ; $40ff
+	ldh [$ff9e], a ; $4101
+	ld hl, $c280 ; $4103
+	ld [hl], $00 ; $4106
+	ld hl, $c295 ; $4108
+	ld [hl], $0a ; $410b
+	rst Rst18 ; $410d
+	ld e, h ; $410e
+	ld a, [bc] ; $410f
+	jp Label_01_40a5 ; $4110
+Label_01_4113:
+	bit 2, a ; $4113
+	jr z, Label_01_411a ; $4115
+	rst Rst18 ; $4117
+	ld d, $01 ; $4118
+Label_01_411a:
+	bit 0, a ; $411a
+	jr z, Label_01_4127 ; $411c
+	ld a, $01 ; $411e
+	ldh [$ff9e], a ; $4120
+Label_01_4122:
+	rst Rst18 ; $4122
+	ld b, [hl] ; $4123
+	rlca ; $4124
+	jr Label_01_4122 ; $4125
+Label_01_4127:
+	bit 1, a ; $4127
+	jr z, Label_01_4138 ; $4129
+	ld a, $01 ; $412b
+	ldh [$ff9e], a ; $412d
+	rst Rst18 ; $412f
+	nop ; $4130
+	dec sp ; $4131
+	rst Rst18 ; $4132
+	inc b ; $4133
+	ld [$2fc3], sp ; $4134
+	ld b, c ; $4137
+Label_01_4138:
+	bit 6, a ; $4138
+	jp z, Label_01_41c2 ; $413a
+	ld a, $01 ; $413d
+	ldh [$ff9e], a ; $413f
+	ld a, $00 ; $4141
+	ld [$c36c], a ; $4143
+	rst Rst18 ; $4146
+	ld a, [de] ; $4147
+	inc bc ; $4148
+	ld b, $00 ; $4149
+	ld c, $04 ; $414b
+	rst Rst18 ; $414d
+	inc e ; $414e
+	dec sp ; $414f
+	ld b, $01 ; $4150
+	ld c, $02 ; $4152
+	rst Rst18 ; $4154
+	inc e ; $4155
+	dec sp ; $4156
+	ld a, $01 ; $4157
+	ld [wCurrentMinigameStoryMatch], a ; $4159
+	ld a, $11 ; $415c
+	ld [$c8f7], a ; $415e
+	ld a, $01 ; $4161
+	ld [wMatchWinLoseFlag], a ; $4163
+	ld a, $00 ; $4166
+	ld [$c36c], a ; $4168
+	rst Rst18 ; $416b
+	ld a, [de] ; $416c
+	inc bc ; $416d
+	ld a, $17 ; $416e
+	ld [wPlayer1CurrentMainCharacter], a ; $4170
+	ld a, $18 ; $4173
+	ld [wPlayer1CurrentPartnerCharacter], a ; $4175
+	ld a, $19 ; $4178
+	ld [wPlayer2CurrentMainCharacter], a ; $417a
+	ld a, $1a ; $417d
+	ld [wPlayer2CurrentPartnerCharacter], a ; $417f
+	ld a, $03 ; $4182
+	ld [$cb0c], a ; $4184
+	ld de, $002f ; $4187
+	call Func_00_2509 ; $418a
+	ld a, $00 ; $418d
+	ld [$c8f7], a ; $418f
+Label_01_4192:
+	rst Rst18 ; $4192
+	nop ; $4193
+	ld d, $fa ; $4194
+	rst Rst30 ; $4196
+	ret z ; $4197
+	inc a ; $4198
+	ld [$c8f7], a ; $4199
+	jr Label_01_4192 ; $419c
+	INCBIN "data/bank_001/d_419e.bin" ; $419e, 36 bytes
+Label_01_41c2:
+	bit 7, a ; $41c2
+	jr z, Label_01_41db ; $41c4
+	ld a, $01 ; $41c6
+	ldh [$ff9e], a ; $41c8
+	ld a, $00 ; $41ca
+	ldh [$ff9e], a ; $41cc
+Label_01_41ce:
+	rst Rst18 ; $41ce
+	nop ; $41cf
+	ld l, e ; $41d0
+	rst Rst18 ; $41d1
+	ld [bc], a ; $41d2
+	ld l, e ; $41d3
+	jr Label_01_41ce ; $41d4
+	INCBIN "data/bank_001/d_41d6.bin" ; $41d6, 5 bytes
+Label_01_41db:
+	bit 4, a ; $41db
+	jr z, Label_01_41f5 ; $41dd
+	ld a, $01 ; $41df
+	ldh [$ff9e], a ; $41e1
+	ld hl, $c280 ; $41e3
+	ld [hl], $03 ; $41e6
+	ld hl, $c295 ; $41e8
+	ld [hl], $0a ; $41eb
+	ld a, $00 ; $41ed
+	ld [wStoryModeMainCharacterOverworldSprite], a ; $41ef
+	rst Rst18 ; $41f2
+	ld e, h ; $41f3
+	ld a, [bc] ; $41f4
+Label_01_41f5:
+	bit 5, a ; $41f5
+	jr z, Label_01_4209 ; $41f7
+	ld a, $01 ; $41f9
+	ldh [$ff9e], a ; $41fb
+	rst Rst18 ; $41fd
+	ld [$3e1a], sp ; $41fe
+	nop ; $4201
+	ldh [$ff9e], a ; $4202
+Label_01_4204:
+	call Func_00_2631 ; $4204
+	jr Label_01_4204 ; $4207
+Label_01_4209:
+	call Func_00_2631 ; $4209
+	jp Label_01_40f9 ; $420c
+	INCBIN "data/bank_001/d_420f.bin" ; $420f, 3649 bytes
 Func_01_5050:
 	push af ; $5050
 	push bc ; $5051
