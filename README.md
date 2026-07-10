@@ -89,6 +89,8 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
 - `tools/disasm.py` — coverage + ROM → `src/*.asm` + `data.manifest`.
 - `tools/extract.py` — `data.manifest` + base ROM → `data/` blobs.
 - `tools/tracelog2cov.py` — BizHawk native Trace Logger file → coverage JSON.
+- `tools/progress.py` — per-bank report of proven-code bytes and label-naming
+  progress (`--unnamed XX` lists a bank's auto-named symbols).
 - `tools/trace_client.py` — standalone client for the BizHawk connector
   (note: the connector accepts a single client; disconnect the MCP server
   first).

@@ -422,6 +422,19 @@ def load_hwregs(path):
     return regs
 
 
+def region_prefix(addr):
+    """Expected name prefix for a RAM address, by memory region."""
+    if 0x8000 <= addr < 0xa000:
+        return "v"
+    if 0xa000 <= addr < 0xc000:
+        return "s"
+    if 0xc000 <= addr < 0xe000:
+        return "w"
+    if addr >= 0xff80:
+        return "h"
+    return None
+
+
 def load_ram_map(path, consts_out):
     """Map RAM addresses to names from ram_map.json; emit the DEF constants file."""
     if not Path(path).exists():
@@ -438,6 +451,10 @@ def load_ram_map(path, consts_out):
         if not name:
             continue
         addr = int(addr_s, 0)
+        exp = region_prefix(addr)
+        if exp and not (name.startswith(exp) and name[1:2].isupper()):
+            print(f"warning: {path}: {addr_s} name {name!r} should be "
+                  f"{exp}PascalCase", file=sys.stderr)
         names[addr] = name
         lines.append(f"DEF {name} EQU ${addr:04x}")
     Path(consts_out).write_text("\n".join(lines) + "\n")
@@ -450,7 +467,11 @@ def build_labels(dis, overrides=None):
         if off in dis.instrs:
             labels[off] = name
     if overrides:
-        labels.update({int(k, 0): v for k, v in overrides.items()})
+        for k, name in overrides.items():
+            if not (name[:1].isupper() and name.isidentifier()):
+                print(f"warning: labels.json: {k} name {name!r} should be "
+                      f"PascalCase", file=sys.stderr)
+            labels[int(k, 0)] = name
     for off, ins in dis.instrs.items():
         if ins.target is None or not (ins.is_jump or ins.is_call):
             continue
