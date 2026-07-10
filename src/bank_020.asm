@@ -1,9 +1,11 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $20", ROMX[$4000], BANK[$20]
 
-	INCBIN "data/bank_020/d_4000.bin" ; $4000, 2 bytes
+FarPtr_20_00:
+	dw Func_20_7e7d ; $4000
 Func_20_4002:
 	push hl ; $4002
 	ld l, e ; $4003
@@ -80,8 +82,7 @@ Label_20_4076:
 	ld e, l ; $407d
 	ld d, h ; $407e
 	pop hl ; $407f
-	rst Rst18 ; $4080
-	ld h, $08 ; $4081
+	farcall FarPtr_08_26 ; $4080
 	ret ; $4083
 	INCBIN "data/bank_020/d_4084.bin" ; $4084, 52 bytes
 	add hl, hl ; $40b8
@@ -117,8 +118,7 @@ Label_20_40d3:
 	ld e, l ; $40da
 	ld d, h ; $40db
 	pop hl ; $40dc
-	rst Rst18 ; $40dd
-	ld h, $08 ; $40de
+	farcall FarPtr_08_26 ; $40dd
 	ld de, $fd40 ; $40e0
 	ld a, [$df0a] ; $40e3
 	and a, $02 ; $40e6
@@ -134,15 +134,13 @@ Label_20_40f0:
 	ld a, e ; $40f3
 	ld [hl+], a ; $40f4
 	ld [hl], d ; $40f5
-	rst Rst18 ; $40f6
-	jr nc, Label_20_4101 ; $40f7
+	farcall FarPtr_08_30 ; $40f6
 	ld e, l ; $40f9
 	ld d, h ; $40fa
 	ld hl, $c450 ; $40fb
 	ld a, e ; $40fe
 	ld [hl+], a ; $40ff
 	ld [hl], d ; $4100
-Label_20_4101:
 	ret ; $4101
 Func_20_4102:
 	xor a, a ; $4102
@@ -179,9 +177,7 @@ Func_20_4102:
 	ret ; $4134
 	INCBIN "data/bank_020/d_4135.bin" ; $4135, 188 bytes
 Label_20_41f1:
-	rst Rst18 ; $41f1
-	inc b ; $41f2
-	inc h ; $41f3
+	farcall FarPtr_24_04 ; $41f1
 	ret ; $41f4
 Func_20_41f5:
 	ld a, [$c43a] ; $41f5
@@ -264,9 +260,8 @@ Label_20_4278:
 	add hl, de ; $427b
 	ret ; $427c
 	INCBIN "data/bank_020/d_427d.bin" ; $427d, 15360 bytes
-	rst Rst18 ; $7e7d
-	ld a, [hl-] ; $7e7e
-	rlca ; $7e7f
+Func_20_7e7d:
+	farcall FarPtr_07_3a ; $7e7d
 	push bc ; $7e80
 	ld hl, $427d ; $7e81
 	ld bc, $7e98 ; $7e84

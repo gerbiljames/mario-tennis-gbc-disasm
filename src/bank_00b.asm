@@ -1,9 +1,11 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $0b", ROMX[$4000], BANK[$0b]
 
-	INCBIN "data/bank_00b/d_4000.bin" ; $4000, 2 bytes
+FarPtr_0b_00:
+	dw Func_0b_4705 ; $4000
 Func_0b_4002:
 	ld hl, $0000 ; $4002
 	add hl, bc ; $4005
@@ -36,8 +38,7 @@ Func_0b_4002:
 	add hl, bc ; $403b
 	ld b, [hl] ; $403c
 	ld c, $00 ; $403d
-	rst Rst18 ; $403f
-	jr $4044 ; $4040
+	farcall FarPtr_02_18 ; $403f
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4042
 	ld [$c3b0], a ; $4045
 	ld a, [$c3b1] ; $4048
@@ -45,8 +46,7 @@ Func_0b_4002:
 	jr z, Label_0b_4055 ; $404d
 	ld b, a ; $404f
 	ld c, $02 ; $4050
-	rst Rst18 ; $4052
-	jr $4057 ; $4053
+	farcall FarPtr_02_18 ; $4052
 Label_0b_4055:
 	pop bc ; $4055
 	ld hl, $0008 ; $4056
@@ -55,17 +55,13 @@ Label_0b_4055:
 	ld d, [hl] ; $405b
 	ld e, a ; $405c
 	ldh a, [$ff95] ; $405d
-	rst Rst18 ; $405f
-	ld c, b ; $4060
-	INCBIN "data/bank_00b/d_4061.bin" ; $4061, 1 bytes
+	farcall FarPtr_08_48 ; $405f
 	ld hl, $000a ; $4062
 	add hl, bc ; $4065
 	ld a, [hl+] ; $4066
 	ld d, [hl] ; $4067
 	ld e, a ; $4068
-	rst Rst18 ; $4069
-	ld c, d ; $406a
-	INCBIN "data/bank_00b/d_406b.bin" ; $406b, 1 bytes
+	farcall FarPtr_08_4a ; $4069
 	ld hl, $000c ; $406c
 	add hl, bc ; $406f
 	ld a, [hl+] ; $4070
@@ -130,9 +126,7 @@ Func_0b_414b:
 	ldh [$ff96], a ; $4150
 	ldh [rWBK], a ; $4152
 	ld a, $00 ; $4154
-	rst Rst18 ; $4156
-	inc e ; $4157
-	INCBIN "data/bank_00b/d_4158.bin" ; $4158, 1 bytes
+	farcall FarPtr_08_1c ; $4156
 	pop af ; $4159
 	ldh [$ff96], a ; $415a
 	ldh [rWBK], a ; $415c
@@ -161,9 +155,7 @@ Label_0b_419c:
 	ld h, [hl] ; $41aa
 	ld l, a ; $41ab
 	push bc ; $41ac
-	rst Rst18 ; $41ad
-	ld d, d ; $41ae
-	INCBIN "data/bank_00b/d_41af.bin" ; $41af, 1 bytes
+	farcall FarPtr_08_52 ; $41ad
 	pop bc ; $41b0
 	ld hl, $0006 ; $41b1
 	add hl, bc ; $41b4
@@ -175,9 +167,7 @@ Label_0b_419c:
 	ld a, [hl+] ; $41bc
 	ld h, [hl] ; $41bd
 	ld l, a ; $41be
-	rst Rst18 ; $41bf
-	ld d, h ; $41c0
-	INCBIN "data/bank_00b/d_41c1.bin" ; $41c1, 1 bytes
+	farcall FarPtr_08_54 ; $41bf
 	ret ; $41c2
 Func_0b_41c3:
 	ld a, [$c2e1] ; $41c3
@@ -199,9 +189,7 @@ Func_0b_41e6:
 	ld a, [$c4b2] ; $41e6
 	cp a, $02 ; $41e9
 	ret nc ; $41eb
-	rst Rst18 ; $41ec
-	ld d, [hl] ; $41ed
-	INCBIN "data/bank_00b/d_41ee.bin" ; $41ee, 1 bytes
+	farcall FarPtr_08_56 ; $41ec
 	jr z, Label_0b_41f6 ; $41ef
 	xor a, a ; $41f1
 	ld [$c78c], a ; $41f2
@@ -247,8 +235,7 @@ Func_0b_43a6:
 	ld a, [hl+] ; $43af
 	ld h, [hl] ; $43b0
 	ld l, a ; $43b1
-	rst Rst18 ; $43b2
-	ld l, $08 ; $43b3
+	farcall FarPtr_08_2e ; $43b2
 	ld a, [$c4d8] ; $43b5
 	cp a, $06 ; $43b8
 	jr z, Label_0b_43dc ; $43ba
@@ -261,68 +248,40 @@ Func_0b_43a6:
 	jr Label_0b_43cf ; $43c8
 Label_0b_43ca:
 	add a, $00 ; $43ca
-	rst Rst18 ; $43cc
-	ld [de], a ; $43cd
-	add hl, bc ; $43ce
+	farcall FarPtr_09_12 ; $43cc
 Label_0b_43cf:
 	ld a, $1e ; $43cf
-	rst Rst18 ; $43d1
-	ld b, b ; $43d2
-	INCBIN "data/bank_00b/d_43d3.bin" ; $43d3, 1 bytes
-	rst Rst18 ; $43d4
-	ld d, $09 ; $43d5
+	farcall FarPtr_08_40 ; $43d1
+	farcall FarPtr_09_16 ; $43d4
 	ld a, $0f ; $43d7
-	rst Rst18 ; $43d9
-	ld b, b ; $43da
-	INCBIN "data/bank_00b/d_43db.bin" ; $43db, 1 bytes
+	farcall FarPtr_08_40 ; $43d9
 Label_0b_43dc:
-	rst Rst18 ; $43dc
-	ld a, [bc] ; $43dd
-	add hl, bc ; $43de
+	farcall FarPtr_09_0a ; $43dc
 	ld a, $0a ; $43df
-	rst Rst18 ; $43e1
-	ld b, b ; $43e2
-	INCBIN "data/bank_00b/d_43e3.bin" ; $43e3, 1 bytes
+	farcall FarPtr_08_40 ; $43e1
 	ld a, $0a ; $43e4
-	rst Rst18 ; $43e6
-	ld b, d ; $43e7
-	INCBIN "data/bank_00b/d_43e8.bin" ; $43e8, 1 bytes
-	rst Rst18 ; $43e9
-	ld h, $09 ; $43ea
+	farcall FarPtr_08_42 ; $43e6
+	farcall FarPtr_09_26 ; $43e9
 	ld a, $0a ; $43ec
-	rst Rst18 ; $43ee
-	ld b, b ; $43ef
-	INCBIN "data/bank_00b/d_43f0.bin" ; $43f0, 1 bytes
+	farcall FarPtr_08_40 ; $43ee
 	ld a, $1e ; $43f1
-	rst Rst18 ; $43f3
-	ld b, d ; $43f4
-	INCBIN "data/bank_00b/d_43f5.bin" ; $43f5, 1 bytes
-	rst Rst18 ; $43f6
-	inc c ; $43f7
-	add hl, bc ; $43f8
+	farcall FarPtr_08_42 ; $43f3
+	farcall FarPtr_09_0c ; $43f6
 	ld a, $46 ; $43f9
-	rst Rst18 ; $43fb
-	ld b, d ; $43fc
-	INCBIN "data/bank_00b/d_43fd.bin" ; $43fd, 1 bytes
+	farcall FarPtr_08_42 ; $43fb
 	ld a, $08 ; $43fe
-	rst Rst18 ; $4400
-	ld b, b ; $4401
-	INCBIN "data/bank_00b/d_4402.bin" ; $4402, 1 bytes
+	farcall FarPtr_08_40 ; $4400
 	ret ; $4403
 Func_0b_4404:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
-	rst Rst18 ; $4407
-	jr Label_0b_440c ; $4408
+	farcall FarPtr_02_18 ; $4407
 	ldh a, [$ff96] ; $440a
-Label_0b_440c:
 	push af ; $440c
 	ld a, $05 ; $440d
 	ldh [$ff96], a ; $440f
 	ldh [rWBK], a ; $4411
-	rst Rst18 ; $4413
-	ld b, h ; $4414
-	rlca ; $4415
+	farcall FarPtr_07_44 ; $4413
 	pop af ; $4416
 	ldh [$ff96], a ; $4417
 	ldh [rWBK], a ; $4419
@@ -404,13 +363,10 @@ Func_0b_4583:
 	ld h, b ; $4591
 	ld l, c ; $4592
 	xor a, a ; $4593
-	rst Rst18 ; $4594
-	ld b, h ; $4595
-	dec b ; $4596
+	farcall FarPtr_05_44 ; $4594
 	ld b, h ; $4597
 	ld c, l ; $4598
-	rst Rst18 ; $4599
-	ld h, $05 ; $459a
+	farcall FarPtr_05_26 ; $4599
 	ld h, b ; $459c
 	ld l, c ; $459d
 	add a, $02 ; $459e
@@ -435,15 +391,12 @@ Func_0b_4583:
 	srl a ; $45bb
 	ld d, a ; $45bd
 	ld e, $06 ; $45be
-	rst Rst18 ; $45c0
-	inc b ; $45c1
-	INCBIN "data/bank_00b/d_45c2.bin" ; $45c2, 1 bytes
+	farcall FarPtr_06_04 ; $45c0
 	ret ; $45c3
 	INCBIN "data/bank_00b/d_45c4.bin" ; $45c4, 321 bytes
-Label_0b_4705:
+Func_0b_4705:
 	push af ; $4705
-	rst Rst18 ; $4706
-	ld b, $08 ; $4707
+	farcall FarPtr_08_06 ; $4706
 	pop af ; $4709
 	cp a, $24 ; $470a
 	jp z, Label_0b_47ae ; $470c
@@ -460,9 +413,7 @@ Label_0b_4705:
 	call Func_0b_4002 ; $471e
 	jr Label_0b_4726 ; $4721
 Label_0b_4723:
-	rst Rst18 ; $4723
-	nop ; $4724
-	dec c ; $4725
+	farcall FarPtr_0d_00 ; $4723
 Label_0b_4726:
 	ld hl, $c2e0 ; $4726
 	ld c, $02 ; $4729
@@ -474,8 +425,7 @@ Label_0b_4726:
 	ld [hl+], a ; $4737
 	ld [hl], a ; $4738
 	ld [$c7a8], a ; $4739
-	rst Rst18 ; $473c
-	INCBIN "data/bank_00b/d_473d.bin" ; $473d, 2 bytes
+	farcall FarPtr_08_08 ; $473c
 Label_0b_473f:
 	xor a, a ; $473f
 	ldh [$ff8b], a ; $4740
@@ -490,7 +440,7 @@ Label_0b_473f:
 	ld a, [$c4de] ; $4752
 	or a, a ; $4755
 	ld a, [$c8f7] ; $4756
-	jp nz, Label_0b_4705 ; $4759
+	jp nz, Func_0b_4705 ; $4759
 	ld a, [$c4c7] ; $475c
 	or a, a ; $475f
 	jr z, Label_0b_4767 ; $4760
@@ -502,23 +452,17 @@ Label_0b_4767:
 	inc bc ; $4769
 	jr z, Label_0b_47a7 ; $476a
 	call DisableLCDSafely ; $476c
-	rst Rst18 ; $476f
-	halt ; $4770
-	dec b ; $4771
+	farcall FarPtr_05_76 ; $476f
 	call Func_0b_47d8 ; $4772
-	rst Rst18 ; $4775
-	ld a, [bc] ; $4776
-	ld bc, $76cd ; $4777
-	inc bc ; $477a
+	farcall FarPtr_01_0a ; $4775
+	call EnableLCD ; $4778
 	ld c, $08 ; $477b
 	call Func_00_1d2e ; $477d
 	call Func_00_1da4 ; $4780
 	ld a, [$c2e3] ; $4783
 	ld l, a ; $4786
 	ld h, $00 ; $4787
-	rst Rst18 ; $4789
-	ld c, b ; $478a
-	dec b ; $478b
+	farcall FarPtr_05_48 ; $4789
 	ld a, [wPointWinLoseFlag] ; $478c
 	inc a ; $478f
 	srl a ; $4790
@@ -529,9 +473,7 @@ Label_0b_4767:
 	inc h ; $4799
 Label_0b_479a:
 	ld a, $80 ; $479a
-	rst Rst18 ; $479c
-	inc [hl] ; $479d
-	dec b ; $479e
+	farcall FarPtr_05_34 ; $479c
 	ld c, $10 ; $479f
 	call Func_00_1d20 ; $47a1
 	call Func_00_1da4 ; $47a4
@@ -539,9 +481,7 @@ Label_0b_47a7:
 	rst Rst28 ; $47a7
 	ret nz ; $47a8
 	inc bc ; $47a9
-	rst Rst18 ; $47aa
-	inc b ; $47ab
-	INCBIN "data/bank_00b/d_47ac.bin" ; $47ac, 1 bytes
+	farcall FarPtr_1e_04 ; $47aa
 	ret ; $47ad
 Label_0b_47ae:
 	call Func_0b_7258 ; $47ae
@@ -707,8 +647,7 @@ Label_0b_5cd6:
 	ret ; $5cd6
 	INCBIN "data/bank_00b/d_5cd7.bin" ; $5cd7, 34 bytes
 Func_0b_5cf9:
-	rst Rst18 ; $5cf9
-	ld h, $09 ; $5cfa
+	farcall FarPtr_09_26 ; $5cf9
 	ld a, [$c2ff] ; $5cfc
 	ld [wPointWinLoseFlag], a ; $5cff
 	cp a, $01 ; $5d02
@@ -718,34 +657,23 @@ Func_0b_5cf9:
 Label_0b_5d0a:
 	call Func_0b_407b ; $5d0a
 	call Func_0b_4574 ; $5d0d
-	rst Rst18 ; $5d10
-	ld e, d ; $5d11
-	INCBIN "data/bank_00b/d_5d12.bin" ; $5d12, 1 bytes
-	rst Rst18 ; $5d13
-	ld e, h ; $5d14
-	INCBIN "data/bank_00b/d_5d15.bin" ; $5d15, 1 bytes
+	farcall FarPtr_08_5a ; $5d10
+	farcall FarPtr_08_5c ; $5d13
 	ld a, [$c2eb] ; $5d16
 	ld [wPlayer1PointsWon], a ; $5d19
 	xor a, a ; $5d1c
 	ld [wPlayer2PointsWon], a ; $5d1d
 	ld a, [wPlayer1PointsWon] ; $5d20
 	ld b, $01 ; $5d23
-	rst Rst18 ; $5d25
-	ld a, [hl+] ; $5d26
-	add hl, bc ; $5d27
+	farcall FarPtr_09_2a ; $5d25
 	ld a, [wPlayer2PointsWon] ; $5d28
 	ld b, $01 ; $5d2b
-	rst Rst18 ; $5d2d
-	inc l ; $5d2e
-	add hl, bc ; $5d2f
-	rst Rst18 ; $5d30
-	ld a, $08 ; $5d31
+	farcall FarPtr_09_2c ; $5d2d
+	farcall FarPtr_08_3e ; $5d30
 	ld a, $01 ; $5d33
 	ld hl, $446e ; $5d35
 	call Func_00_1b6a ; $5d38
-	rst Rst18 ; $5d3b
-	ld e, [hl] ; $5d3c
-	INCBIN "data/bank_00b/d_5d3d.bin" ; $5d3d, 1 bytes
+	farcall FarPtr_08_5e ; $5d3b
 	ld hl, $446e ; $5d3e
 	call Func_00_1bcb ; $5d41
 	call Func_0b_43a6 ; $5d44
@@ -1051,8 +979,7 @@ Label_0b_6c47:
 	ret ; $6c5e
 	INCBIN "data/bank_00b/d_6c5f.bin" ; $6c5f, 34 bytes
 Func_0b_6c81:
-	rst Rst18 ; $6c81
-	ld h, $09 ; $6c82
+	farcall FarPtr_09_26 ; $6c81
 	ld a, [$c2ff] ; $6c84
 	ld [wPointWinLoseFlag], a ; $6c87
 	cp a, $01 ; $6c8a
@@ -1062,34 +989,23 @@ Func_0b_6c81:
 Label_0b_6c92:
 	call Func_0b_407b ; $6c92
 	call Func_0b_4574 ; $6c95
-	rst Rst18 ; $6c98
-	ld e, d ; $6c99
-	INCBIN "data/bank_00b/d_6c9a.bin" ; $6c9a, 1 bytes
-	rst Rst18 ; $6c9b
-	ld e, h ; $6c9c
-	INCBIN "data/bank_00b/d_6c9d.bin" ; $6c9d, 1 bytes
+	farcall FarPtr_08_5a ; $6c98
+	farcall FarPtr_08_5c ; $6c9b
 	ld a, [$c2e9] ; $6c9e
 	ld [wPlayer1PointsWon], a ; $6ca1
 	xor a, a ; $6ca4
 	ld [wPlayer2PointsWon], a ; $6ca5
 	ld a, [wPlayer1PointsWon] ; $6ca8
 	ld b, $01 ; $6cab
-	rst Rst18 ; $6cad
-	ld a, [hl+] ; $6cae
-	add hl, bc ; $6caf
+	farcall FarPtr_09_2a ; $6cad
 	ld a, [wPlayer2PointsWon] ; $6cb0
 	ld b, $01 ; $6cb3
-	rst Rst18 ; $6cb5
-	inc l ; $6cb6
-	add hl, bc ; $6cb7
-	rst Rst18 ; $6cb8
-	ld a, $08 ; $6cb9
+	farcall FarPtr_09_2c ; $6cb5
+	farcall FarPtr_08_3e ; $6cb8
 	ld a, $01 ; $6cbb
 	ld hl, $446e ; $6cbd
 	call Func_00_1b6a ; $6cc0
-	rst Rst18 ; $6cc3
-	ld e, [hl] ; $6cc4
-	INCBIN "data/bank_00b/d_6cc5.bin" ; $6cc5, 1 bytes
+	farcall FarPtr_08_5e ; $6cc3
 	ld hl, $446e ; $6cc6
 	call Func_00_1bcb ; $6cc9
 	call Func_0b_43a6 ; $6ccc
@@ -1218,33 +1134,24 @@ Label_0b_6da6:
 	ld a, $ff ; $6dab
 	ret ; $6dad
 	INCBIN "data/bank_00b/d_6dae.bin" ; $6dae, 916 bytes
-	rst Rst18 ; $7142
-	ld e, d ; $7143
-	ld [$5cdf], sp ; $7144
-	ld [$e9fa], sp ; $7147
-	jp nz, $e4ea ; $714a
-	ret z ; $714d
+	farcall FarPtr_08_5a ; $7142
+	farcall FarPtr_08_5c ; $7145
+	ld a, [$c2e9] ; $7148
+	ld [wPlayer1PointsWon], a ; $714b
 	xor a, a ; $714e
 	ld [wPlayer2PointsWon], a ; $714f
 	ld a, [wPlayer1PointsWon] ; $7152
 	ld b, $01 ; $7155
-	rst Rst18 ; $7157
-	ld a, [hl+] ; $7158
-	add hl, bc ; $7159
+	farcall FarPtr_09_2a ; $7157
 	ld a, [wPlayer2PointsWon] ; $715a
 	ld b, $01 ; $715d
-	rst Rst18 ; $715f
-	inc l ; $7160
-	add hl, bc ; $7161
-	rst Rst18 ; $7162
-	ld a, $08 ; $7163
+	farcall FarPtr_09_2c ; $715f
+	farcall FarPtr_08_3e ; $7162
 	ld a, $01 ; $7165
 	ld hl, $446e ; $7167
 	call Func_00_1b6a ; $716a
-	rst Rst18 ; $716d
-	ld e, [hl] ; $716e
-	ld [$6e21], sp ; $716f
-	ld b, h ; $7172
+	farcall FarPtr_08_5e ; $716d
+	ld hl, $446e ; $7170
 	call Func_00_1bcb ; $7173
 	call Func_0b_43a6 ; $7176
 	ret ; $7179
@@ -1270,21 +1177,51 @@ Func_0b_7258:
 	ld a, b ; $7281
 	ld [$c3b0], a ; $7282
 	ld c, $00 ; $7285
-	rst Rst18 ; $7287
-	jr Label_0b_728c ; $7288
-	INCBIN "data/bank_00b/d_728a.bin" ; $728a, 2 bytes
-Label_0b_728c:
+	farcall FarPtr_02_18 ; $7287
+	ld b, $1b ; $728a
 	ld a, b ; $728c
 	ld [$c3b1], a ; $728d
 	ld c, $02 ; $7290
-	rst Rst18 ; $7292
-	jr Label_0b_7297 ; $7293
-	INCBIN "data/bank_00b/d_7295.bin" ; $7295, 2 bytes
-Label_0b_7297:
+	farcall FarPtr_02_18 ; $7292
+	ld b, $1e ; $7295
 	ld c, $03 ; $7297
-	rst Rst18 ; $7299
-	jr Label_0b_729e ; $729a
-	INCBIN "data/bank_00b/d_729c.bin" ; $729c, 2 bytes
-Label_0b_729e:
-	jp $c687 ; $729e
-	INCBIN "data/bank_00b/d_72a1.bin" ; $72a1, 3423 bytes
+	farcall FarPtr_02_18 ; $7299
+	ld a, [wMinigameLevel] ; $729c
+	add a, a ; $729f
+	add a, $e0 ; $72a0
+	ld l, a ; $72a2
+	adc a, $72 ; $72a3
+	sub a, l ; $72a5
+	ld h, a ; $72a6
+	ld a, [hl+] ; $72a7
+	ld h, [hl] ; $72a8
+	ld l, a ; $72a9
+	ld a, [hl+] ; $72aa
+	ld [wMatchTypeNumberOfGames], a ; $72ab
+	ld a, [hl+] ; $72ae
+	ld [wMatchTypeNumberOfSets], a ; $72af
+	push hl ; $72b2
+	ld a, [hl+] ; $72b3
+	ld [$ca9b], a ; $72b4
+	ld a, [hl+] ; $72b7
+	ld [$ca9c], a ; $72b8
+	ld a, [hl+] ; $72bb
+	ld [$ca9d], a ; $72bc
+	ld a, [hl+] ; $72bf
+	ld [$ca9e], a ; $72c0
+	ld a, [hl+] ; $72c3
+	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $72c4
+	pop hl ; $72c7
+	ld a, [hl+] ; $72c8
+	ld [$cadb], a ; $72c9
+	ld a, [hl+] ; $72cc
+	ld [$cadc], a ; $72cd
+	ld a, [hl+] ; $72d0
+	ld [$cadd], a ; $72d1
+	ld a, [hl+] ; $72d4
+	ld [$cade], a ; $72d5
+	ld a, [hl+] ; $72d8
+	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
+	farcall FarPtr_08_04 ; $72dc
+	ret ; $72df
+	INCBIN "data/bank_00b/d_72e0.bin" ; $72e0, 3360 bytes

@@ -1,9 +1,24 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 
-	INCBIN "data/bank_028/d_4000.bin" ; $4000, 7856 bytes
+FarPtr_28_00:
+	dw Func_28_5eb0 ; $4000
+	INCBIN "data/bank_028/d_4002.bin" ; $4002, 2 bytes
+FarPtr_28_04:
+	dw Func_28_6030 ; $4004
+FarPtr_28_06:
+	dw Func_28_6044 ; $4006
+FarPtr_28_08:
+	dw Func_28_6058 ; $4008
+FarPtr_28_0a:
+	dw Func_28_60c9 ; $400a
+FarPtr_28_0c:
+	dw Func_28_606c ; $400c
+	INCBIN "data/bank_028/d_400e.bin" ; $400e, 7842 bytes
+Func_28_5eb0:
 	ld a, $01 ; $5eb0
 	ldh [$ff96], a ; $5eb2
 	ldh [rWBK], a ; $5eb4
@@ -71,7 +86,20 @@ Label_28_5f2a:
 	ld c, $20 ; $5f30
 	call Func_00_0480 ; $5f32
 	ret ; $5f35
-	INCBIN "data/bank_028/d_5f36.bin" ; $5f36, 76 bytes
+	INCBIN "data/bank_028/d_5f36.bin" ; $5f36, 4 bytes
+	ld hl, $5e30 ; $5f3a
+	ld de, $0b01 ; $5f3d
+	call Func_00_05b0 ; $5f40
+	ld hl, $5e38 ; $5f43
+	ld de, $0d03 ; $5f46
+	call Func_00_05b0 ; $5f49
+	ld hl, $4d30 ; $5f4c
+	ld de, $a100 ; $5f4f
+	ld c, $10 ; $5f52
+	call Func_00_0480 ; $5f54
+	call Func_28_6024 ; $5f57
+	ret ; $5f5a
+	INCBIN "data/bank_028/d_5f5b.bin" ; $5f5b, 39 bytes
 	ld hl, $5e68 ; $5f82
 	ld de, $0e02 ; $5f85
 	call Func_00_05b0 ; $5f88
@@ -88,6 +116,7 @@ Func_28_6024:
 	ld c, $14 ; $602a
 	call Func_00_0480 ; $602c
 	ret ; $602f
+Func_28_6030:
 	rrca ; $6030
 	rrca ; $6031
 	and a, $c0 ; $6032
@@ -100,6 +129,7 @@ Func_28_6024:
 	ld c, $04 ; $603e
 	call Func_00_0480 ; $6040
 	ret ; $6043
+Func_28_6044:
 	rrca ; $6044
 	rrca ; $6045
 	and a, $40 ; $6046
@@ -112,6 +142,7 @@ Func_28_6024:
 	ld c, $04 ; $6052
 	call Func_00_0480 ; $6054
 	ret ; $6057
+Func_28_6058:
 	rrca ; $6058
 	rrca ; $6059
 	and a, $40 ; $605a
@@ -124,6 +155,7 @@ Func_28_6024:
 	ld c, $04 ; $6066
 	call Func_00_0480 ; $6068
 	ret ; $606b
+Func_28_606c:
 	add a, a ; $606c
 	add a, $80 ; $606d
 	ld l, a ; $606f
@@ -138,6 +170,7 @@ Func_28_6024:
 	call Func_00_0480 ; $607c
 	ret ; $607f
 	INCBIN "data/bank_028/d_6080.bin" ; $6080, 73 bytes
+Func_28_60c9:
 	ld a, $01 ; $60c9
 	ldh [$ff96], a ; $60cb
 	ldh [rWBK], a ; $60cd

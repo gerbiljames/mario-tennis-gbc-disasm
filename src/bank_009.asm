@@ -1,9 +1,57 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 
-	INCBIN "data/bank_009/d_4000.bin" ; $4000, 54 bytes
+FarPtr_09_00:
+	dw Func_09_4555 ; $4000
+	INCBIN "data/bank_009/d_4002.bin" ; $4002, 2 bytes
+FarPtr_09_04:
+	dw Func_09_4036 ; $4004
+FarPtr_09_06:
+	dw Func_09_40b5 ; $4006
+FarPtr_09_08:
+	dw Func_09_6c40 ; $4008
+FarPtr_09_0a:
+	dw Func_09_412a ; $400a
+FarPtr_09_0c:
+	dw Func_09_4190 ; $400c
+FarPtr_09_0e:
+	dw Func_09_4242 ; $400e
+FarPtr_09_10:
+	dw Func_09_4282 ; $4010
+FarPtr_09_12:
+	dw Func_09_4367 ; $4012
+FarPtr_09_14:
+	dw Func_09_4371 ; $4014
+FarPtr_09_16:
+	dw Func_09_437b ; $4016
+	INCBIN "data/bank_009/d_4018.bin" ; $4018, 4 bytes
+FarPtr_09_1c:
+	dw Func_09_42d8 ; $401c
+FarPtr_09_1e:
+	dw Func_09_42f6 ; $401e
+	INCBIN "data/bank_009/d_4020.bin" ; $4020, 4 bytes
+FarPtr_09_24:
+	dw Func_09_45c4 ; $4024
+FarPtr_09_26:
+	dw Func_09_4098 ; $4026
+FarPtr_09_28:
+	dw Func_09_6100 ; $4028
+FarPtr_09_2a:
+	dw Func_09_610c ; $402a
+FarPtr_09_2c:
+	dw Func_09_611b ; $402c
+FarPtr_09_2e:
+	dw Func_09_612a ; $402e
+FarPtr_09_30:
+	dw Func_09_6139 ; $4030
+FarPtr_09_32:
+	dw Func_09_422c ; $4032
+FarPtr_09_34:
+	dw Func_09_4238 ; $4034
+Func_09_4036:
 	ld a, [wTiebreakerIndicator] ; $4036
 	and a, a ; $4039
 	jr nz, Label_09_405f ; $403a
@@ -56,6 +104,7 @@ Func_09_4082:
 Label_09_4094:
 	ld a, [wDeuceIndicator] ; $4094
 	ret ; $4097
+Func_09_4098:
 	call Func_09_4082 ; $4098
 	and a, a ; $409b
 	jr nz, Label_09_40b1 ; $409c
@@ -73,11 +122,10 @@ Label_09_4094:
 Label_09_40b1:
 	call Func_09_6148 ; $40b1
 	ret ; $40b4
+Func_09_40b5:
 	ld a, $ff ; $40b5
 	ld de, $8140 ; $40b7
-	rst Rst18 ; $40ba
-	ld b, [hl] ; $40bb
-	INCBIN "data/bank_009/d_40bc.bin" ; $40bc, 1 bytes
+	farcall FarPtr_18_46 ; $40ba
 	ld a, [$c4cf] ; $40bd
 	rst Rst00 ; $40c0
 	ld de, $f941 ; $40c1
@@ -91,54 +139,39 @@ Label_09_40b1:
 	ldh [rWBK], a ; $40cd
 	ld a, [$df7e] ; $40cf
 	ld de, $8100 ; $40d2
-	rst Rst18 ; $40d5
-	ld b, h ; $40d6
-	INCBIN "data/bank_009/d_40d7.bin" ; $40d7, 1 bytes
+	farcall FarPtr_18_44 ; $40d5
 	ld a, [$df7e] ; $40d8
 	ld de, $8140 ; $40db
-	rst Rst18 ; $40de
-	ld b, [hl] ; $40df
-	INCBIN "data/bank_009/d_40e0.bin" ; $40e0, 1 bytes
+	farcall FarPtr_18_46 ; $40de
 	ld a, $07 ; $40e1
 	ldh [$ff96], a ; $40e3
 	ldh [rWBK], a ; $40e5
 	ld a, [$df7e] ; $40e7
 	ld de, $8180 ; $40ea
-	rst Rst18 ; $40ed
-	ld b, h ; $40ee
-	INCBIN "data/bank_009/d_40ef.bin" ; $40ef, 1 bytes
+	farcall FarPtr_18_44 ; $40ed
 	ld a, [$df7e] ; $40f0
 	ld de, $81c0 ; $40f3
-	rst Rst18 ; $40f6
-	ld b, [hl] ; $40f7
-	INCBIN "data/bank_009/d_40f8.bin" ; $40f8, 1 bytes
+	farcall FarPtr_18_46 ; $40f6
 	ld a, $05 ; $40f9
 	ldh [$ff96], a ; $40fb
 	ldh [rWBK], a ; $40fd
 	ld a, [$df7e] ; $40ff
 	ld de, $8080 ; $4102
-	rst Rst18 ; $4105
-	ld b, h ; $4106
-	INCBIN "data/bank_009/d_4107.bin" ; $4107, 1 bytes
+	farcall FarPtr_18_44 ; $4105
 	ld a, [$df7e] ; $4108
 	ld de, $80c0 ; $410b
-	rst Rst18 ; $410e
-	ld b, [hl] ; $410f
-	INCBIN "data/bank_009/d_4110.bin" ; $4110, 1 bytes
+	farcall FarPtr_18_46 ; $410e
 	ld a, $04 ; $4111
 	ldh [$ff96], a ; $4113
 	ldh [rWBK], a ; $4115
 	ld a, [$df7e] ; $4117
 	ld de, $8000 ; $411a
-	rst Rst18 ; $411d
-	ld b, h ; $411e
-	INCBIN "data/bank_009/d_411f.bin" ; $411f, 1 bytes
+	farcall FarPtr_18_44 ; $411d
 	ld a, [$df7e] ; $4120
 	ld de, $8040 ; $4123
-	rst Rst18 ; $4126
-	ld b, [hl] ; $4127
-	INCBIN "data/bank_009/d_4128.bin" ; $4128, 1 bytes
+	farcall FarPtr_18_46 ; $4126
 	ret ; $4129
+Func_09_412a:
 	ld a, $04 ; $412a
 	ldh [$ff96], a ; $412c
 	ldh [rWBK], a ; $412e
@@ -186,6 +219,7 @@ Label_09_4184:
 	ld bc, $dd80 ; $4189
 	call Func_09_460a ; $418c
 	ret ; $418f
+Func_09_4190:
 	ld a, [$c7bb] ; $4190
 	and a, a ; $4193
 	jr nz, Label_09_41b2 ; $4194
@@ -205,15 +239,18 @@ Label_09_41b2:
 	call Func_09_4658 ; $41b8
 	ret ; $41bb
 	INCBIN "data/bank_009/d_41bc.bin" ; $41bc, 112 bytes
+Func_09_422c:
 	ld a, $01 ; $422c
 	ld hl, $420c ; $422e
 	ld bc, $dda0 ; $4231
 	call Func_09_460a ; $4234
 	ret ; $4237
+Func_09_4238:
 	ld hl, $420c ; $4238
 	ld bc, $dda0 ; $423b
 	call Func_09_4658 ; $423e
 	ret ; $4241
+Func_09_4242:
 	call Func_09_4683 ; $4242
 	call Func_09_4310 ; $4245
 	ld a, [$c4d4] ; $4248
@@ -241,6 +278,7 @@ Label_09_4274:
 	add a, $10 ; $427e
 	ld [hl], a ; $4280
 	ret ; $4281
+Func_09_4282:
 	call Func_09_431d ; $4282
 	ld hl, $4298 ; $4285
 	ld bc, $dd80 ; $4288
@@ -250,6 +288,7 @@ Label_09_4274:
 	call Func_09_4658 ; $4294
 	ret ; $4297
 	INCBIN "data/bank_009/d_4298.bin" ; $4298, 64 bytes
+Func_09_42d8:
 	push af ; $42d8
 	ld a, $00 ; $42d9
 	ld hl, $4300 ; $42db
@@ -265,6 +304,7 @@ Label_09_42ef:
 	call Func_09_71ac ; $42ef
 	call Func_09_45bc ; $42f2
 	ret ; $42f5
+Func_09_42f6:
 	ld hl, $4300 ; $42f6
 	ld bc, $dd80 ; $42f9
 	call Func_09_4658 ; $42fc
@@ -282,21 +322,25 @@ Func_09_431d:
 	call Func_09_4658 ; $4323
 	ret ; $4326
 	INCBIN "data/bank_009/d_4327.bin" ; $4327, 64 bytes
+Func_09_4367:
 	push af ; $4367
 	call Func_09_4683 ; $4368
 	pop af ; $436b
 	push af ; $436c
 	call Func_09_4873 ; $436d
 	pop af ; $4370
+Func_09_4371:
 	ld hl, $4385 ; $4371
 	ld bc, $ddb0 ; $4374
 	call Func_09_460a ; $4377
 	ret ; $437a
+Func_09_437b:
 	ld hl, $4385 ; $437b
 	ld bc, $ddb0 ; $437e
 	call Func_09_4658 ; $4381
 	ret ; $4384
 	INCBIN "data/bank_009/d_4385.bin" ; $4385, 464 bytes
+Func_09_4555:
 	ld a, $04 ; $4555
 	ldh [$ff96], a ; $4557
 	ldh [rWBK], a ; $4559
@@ -566,9 +610,7 @@ Label_09_4718:
 	ld hl, $ddf1 ; $4718
 	bit 0, [hl] ; $471b
 	ret z ; $471d
-	rst Rst18 ; $471e
-	inc l ; $471f
-	INCBIN "data/bank_009/d_4720.bin" ; $4720, 1 bytes
+	farcall FarPtr_08_2c ; $471e
 	ld a, b ; $4721
 	ldh [$ff96], a ; $4722
 	ldh [rWBK], a ; $4724
@@ -687,11 +729,13 @@ Func_09_4873:
 	sbc a, a ; $4fa4
 	sbc a, a ; $4fa5
 	ret nc ; $4fa6
-	rst Rst18 ; $4fa7
-	ret nc ; $4fa8
-	ld e, a ; $4fa9
+	farcall FarPtr_5f_d0 ; $4fa7
 	jp nc, $d25d ; $4faa
-	INCBIN "data/bank_009/d_4fad.bin" ; $4fad, 4435 bytes
+	INCBIN "data/bank_009/d_4fad.bin" ; $4fad, 776 bytes
+	rst Rst18 ; $52b5
+	inc bc ; $52b6
+	INCBIN "data/bank_009/d_52b7.bin" ; $52b7, 3657 bytes
+Func_09_6100:
 	ld hl, $616d ; $6100
 	call Func_09_6154 ; $6103
 	ld c, $04 ; $6106
@@ -753,6 +797,7 @@ Label_09_615c:
 	add hl, bc ; $616b
 	ret ; $616c
 	INCBIN "data/bank_009/d_616d.bin" ; $616d, 2771 bytes
+Func_09_6c40:
 	ld a, [wCurrentServingPlayer] ; $6c40
 	add a, a ; $6c43
 	add a, $6e ; $6c44

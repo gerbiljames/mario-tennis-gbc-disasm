@@ -1,9 +1,12 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $29", ROMX[$4000], BANK[$29]
 
-	INCBIN "data/bank_029/d_4000.bin" ; $4000, 152 bytes
+FarPtr_29_00:
+	dw Func_29_5e9d ; $4000
+	INCBIN "data/bank_029/d_4002.bin" ; $4002, 150 bytes
 Func_29_4098:
 	ld a, [hl+] ; $4098
 	ld c, a ; $4099
@@ -63,8 +66,7 @@ Label_29_40d3:
 	ld e, l ; $40da
 	ld d, h ; $40db
 	pop hl ; $40dc
-	rst Rst18 ; $40dd
-	ld h, $08 ; $40de
+	farcall FarPtr_08_26 ; $40dd
 	ld de, $fd40 ; $40e0
 	ld a, [$df0a] ; $40e3
 	and a, $02 ; $40e6
@@ -80,15 +82,13 @@ Label_29_40f0:
 	ld a, e ; $40f3
 	ld [hl+], a ; $40f4
 	ld [hl], d ; $40f5
-	rst Rst18 ; $40f6
-	jr nc, Label_29_4101 ; $40f7
+	farcall FarPtr_08_30 ; $40f6
 	ld e, l ; $40f9
 	ld d, h ; $40fa
 	ld hl, $c450 ; $40fb
 	ld a, e ; $40fe
 	ld [hl+], a ; $40ff
 	ld [hl], d ; $4100
-Label_29_4101:
 	ret ; $4101
 	INCBIN "data/bank_029/d_4102.bin" ; $4102, 330 bytes
 Func_29_424c:
@@ -140,9 +140,8 @@ Label_29_4278:
 	add hl, de ; $427b
 	ret ; $427c
 	INCBIN "data/bank_029/d_427d.bin" ; $427d, 7200 bytes
-	rst Rst18 ; $5e9d
-	ld a, [hl-] ; $5e9e
-	rlca ; $5e9f
+Func_29_5e9d:
+	farcall FarPtr_07_3a ; $5e9d
 	ld hl, $427d ; $5ea0
 	ld bc, $5ebf ; $5ea3
 	ld a, [$df6e] ; $5ea6

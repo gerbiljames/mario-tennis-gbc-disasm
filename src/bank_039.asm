@@ -1,9 +1,68 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 
-	INCBIN "data/bank_039/d_4000.bin" ; $4000, 126 bytes
+FarPtr_39_00:
+	dw Func_39_407e ; $4000
+FarPtr_39_02:
+	dw Func_39_4325 ; $4002
+FarPtr_39_04:
+	dw Func_39_4342 ; $4004
+FarPtr_39_06:
+	dw Func_39_44d3 ; $4006
+	INCBIN "data/bank_039/d_4008.bin" ; $4008, 2 bytes
+FarPtr_39_0a:
+	dw Func_39_4530 ; $400a
+FarPtr_39_0c:
+	dw Func_39_4558 ; $400c
+FarPtr_39_0e:
+	dw Func_39_457f ; $400e
+FarPtr_39_10:
+	dw Func_39_468b ; $4010
+	INCBIN "data/bank_039/d_4012.bin" ; $4012, 2 bytes
+FarPtr_39_14:
+	dw Func_39_4a75 ; $4014
+FarPtr_39_16:
+	dw Func_39_4ac4 ; $4016
+FarPtr_39_18:
+	dw Func_39_4a16 ; $4018
+FarPtr_39_1a:
+	dw Func_39_4a53 ; $401a
+FarPtr_39_1c:
+	dw Func_39_4c38 ; $401c
+FarPtr_39_1e:
+	dw Func_39_4cab ; $401e
+FarPtr_39_20:
+	dw Func_39_4deb ; $4020
+FarPtr_39_22:
+	dw Func_39_4bf3 ; $4022
+FarPtr_39_24:
+	dw Func_39_4b13 ; $4024
+FarPtr_39_26:
+	dw Func_39_4b3a ; $4026
+FarPtr_39_28:
+	dw Func_39_4b6d ; $4028
+FarPtr_39_2a:
+	dw Func_39_4be8 ; $402a
+	INCBIN "data/bank_039/d_402c.bin" ; $402c, 52 bytes
+FarPtr_39_60:
+	dw Func_39_6dc2 ; $4060
+FarPtr_39_62:
+	dw Func_39_6df9 ; $4062
+FarPtr_39_64:
+	dw Func_39_6ec0 ; $4064
+FarPtr_39_66:
+	dw Func_39_6f10 ; $4066
+FarPtr_39_68:
+	dw Func_39_6fe7 ; $4068
+FarPtr_39_6a:
+	dw Func_39_6f67 ; $406a
+	INCBIN "data/bank_039/d_406c.bin" ; $406c, 16 bytes
+FarPtr_39_7c:
+	dw Func_39_745a ; $407c
+Func_39_407e:
 	ld hl, $40f5 ; $407e
 	ld b, $00 ; $4081
 	sla c ; $4083
@@ -68,6 +127,7 @@ SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 	call Func_00_05b0 ; $40f1
 	ret ; $40f4
 	INCBIN "data/bank_039/d_40f5.bin" ; $40f5, 560 bytes
+Func_39_4325:
 	ld a, $03 ; $4325
 	ldh [$ff96], a ; $4327
 	ldh [rWBK], a ; $4329
@@ -80,6 +140,7 @@ SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 	ld c, $40 ; $433c
 	call Func_00_0480 ; $433e
 	ret ; $4341
+Func_39_4342:
 	push af ; $4342
 	push bc ; $4343
 	push de ; $4344
@@ -203,6 +264,7 @@ Label_39_43f9:
 	pop af ; $4401
 	ret ; $4402
 	INCBIN "data/bank_039/d_4403.bin" ; $4403, 208 bytes
+Func_39_44d3:
 	push de ; $44d3
 	ld a, $01 ; $44d4
 	ldh [$ff96], a ; $44d6
@@ -258,6 +320,7 @@ Label_39_4537:
 	pop bc ; $4555
 	pop af ; $4556
 	ret ; $4557
+Func_39_4558:
 	push af ; $4558
 	push bc ; $4559
 	push de ; $455a
@@ -295,6 +358,7 @@ Label_39_455f:
 	pop bc ; $457c
 	pop af ; $457d
 	ret ; $457e
+Func_39_457f:
 	ld e, c ; $457f
 	ld d, $00 ; $4580
 	sla e ; $4582
@@ -340,6 +404,7 @@ Label_39_4698:
 	ldh [rWBK], a ; $46b4
 	ret ; $46b6
 	INCBIN "data/bank_039/d_46b7.bin" ; $46b7, 863 bytes
+Func_39_4a16:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18
 	push de ; $4a1a
@@ -377,6 +442,7 @@ Label_39_4698:
 	ld d, h ; $4a50
 	ld e, l ; $4a51
 	ret ; $4a52
+Func_39_4a53:
 	push af ; $4a53
 	push bc ; $4a54
 	push de ; $4a55
@@ -406,7 +472,20 @@ Label_39_4698:
 	pop bc ; $4a72
 	pop af ; $4a73
 	ret ; $4a74
-	INCBIN "data/bank_039/d_4a75.bin" ; $4a75, 79 bytes
+Func_39_4a75:
+	ldh a, [$ff8c] ; $4a75
+	and a, $3f ; $4a77
+	add a, $84 ; $4a79
+	ld l, a ; $4a7b
+	adc a, $4a ; $4a7c
+	sub a, l ; $4a7e
+	ld h, a ; $4a7f
+	ld a, [hl] ; $4a80
+	add a, e ; $4a81
+	ld e, a ; $4a82
+	ret ; $4a83
+	INCBIN "data/bank_039/d_4a84.bin" ; $4a84, 64 bytes
+Func_39_4ac4:
 	ldh a, [$ff8c] ; $4ac4
 	and a, $3f ; $4ac6
 	add a, $d3 ; $4ac8
@@ -419,6 +498,7 @@ Label_39_4698:
 	ld e, a ; $4ad1
 	ret ; $4ad2
 	INCBIN "data/bank_039/d_4ad3.bin" ; $4ad3, 64 bytes
+Func_39_4b13:
 	ld a, $01 ; $4b13
 	ld [$cb17], a ; $4b15
 	ld a, $01 ; $4b18
@@ -436,6 +516,7 @@ Label_39_4698:
 	xor a, a ; $4b35
 	ld [$cb19], a ; $4b36
 	ret ; $4b39
+Func_39_4b3a:
 	push bc ; $4b3a
 	ld a, c ; $4b3b
 	add a, $08 ; $4b3c
@@ -452,6 +533,7 @@ Label_39_4698:
 	call Func_00_05b0 ; $4b51
 	ret ; $4b54
 	INCBIN "data/bank_039/d_4b55.bin" ; $4b55, 24 bytes
+Func_39_4b6d:
 	ld a, [$cb12] ; $4b6d
 	dec a ; $4b70
 	cp a, $b0 ; $4b71
@@ -496,29 +578,25 @@ Label_39_4bb8:
 	call Func_00_1e9d ; $4bbb
 	ret ; $4bbe
 	INCBIN "data/bank_039/d_4bbf.bin" ; $4bbf, 41 bytes
+Func_39_4be8:
 	ld b, $11 ; $4be8
 	ld c, $10 ; $4bea
 	ld de, $9000 ; $4bec
-	rst Rst18 ; $4bef
-	INCBIN "data/bank_039/d_4bf0.bin" ; $4bf0, 2 bytes
+	farcall FarPtr_39_10 ; $4bef
 	ret ; $4bf2
+Func_39_4bf3:
 	ldh [$ff8b], a ; $4bf3
 	ldh [$ff8a], a ; $4bf5
 	ld [$c320], a ; $4bf7
 	ld [$c321], a ; $4bfa
 	ld [$c322], a ; $4bfd
 	ld [$c323], a ; $4c00
-	rst Rst18 ; $4c03
-	inc e ; $4c04
-	add hl, sp ; $4c05
-	rst Rst18 ; $4c06
-	halt ; $4c07
-	dec b ; $4c08
+	farcall FarPtr_39_1c ; $4c03
+	farcall FarPtr_05_76 ; $4c06
 	ld b, $11 ; $4c09
 	ld c, $10 ; $4c0b
 	ld de, $9000 ; $4c0d
-	rst Rst18 ; $4c10
-	INCBIN "data/bank_039/d_4c11.bin" ; $4c11, 2 bytes
+	farcall FarPtr_39_10 ; $4c10
 	ld a, $05 ; $4c13
 	ldh [$ff96], a ; $4c15
 	ldh [rWBK], a ; $4c17
@@ -530,19 +608,12 @@ Label_39_4bb8:
 	ld e, $0f ; $4c25
 	ld b, $14 ; $4c27
 	ld c, $03 ; $4c29
-	rst Rst18 ; $4c2b
-	ld a, b ; $4c2c
-	dec b ; $4c2d
-	rst Rst18 ; $4c2e
-	ld a, h ; $4c2f
-	dec b ; $4c30
-	rst Rst18 ; $4c31
-	ld a, [hl] ; $4c32
-	dec b ; $4c33
-	rst Rst18 ; $4c34
-	ld [bc], a ; $4c35
-	add hl, sp ; $4c36
+	farcall FarPtr_05_78 ; $4c2b
+	farcall FarPtr_05_7c ; $4c2e
+	farcall FarPtr_05_7e ; $4c31
+	farcall FarPtr_39_02 ; $4c34
 	ret ; $4c37
+Func_39_4c38:
 	ldh a, [$ff96] ; $4c38
 	push af ; $4c3a
 	ld a, $01 ; $4c3b
@@ -588,6 +659,7 @@ Label_39_4bb8:
 	ldh [$ff96], a ; $4ca6
 	ldh [rWBK], a ; $4ca8
 	ret ; $4caa
+Func_39_4cab:
 	push af ; $4cab
 	push bc ; $4cac
 	push de ; $4cad
@@ -720,6 +792,7 @@ Label_39_4de1:
 	pop bc ; $4de8
 	pop af ; $4de9
 	ret ; $4dea
+Func_39_4deb:
 	push af ; $4deb
 	push bc ; $4dec
 	push de ; $4ded
@@ -811,6 +884,7 @@ Label_39_4e59:
 	pop af ; $4e5e
 	ret ; $4e5f
 	INCBIN "data/bank_039/d_4e60.bin" ; $4e60, 8034 bytes
+Func_39_6dc2:
 	push af ; $6dc2
 	push bc ; $6dc3
 	push de ; $6dc4
@@ -840,15 +914,14 @@ Label_39_6de1:
 	ld d, [hl] ; $6de2
 	ld e, a ; $6de3
 	pop hl ; $6de4
-	rst Rst18 ; $6de5
-	inc c ; $6de6
-	add hl, sp ; $6de7
+	farcall FarPtr_39_0c ; $6de5
 	pop hl ; $6de8
 	pop de ; $6de9
 	pop bc ; $6dea
 	pop af ; $6deb
 	ret ; $6dec
 	INCBIN "data/bank_039/d_6ded.bin" ; $6ded, 12 bytes
+Func_39_6df9:
 	ld a, [$cb05] ; $6df9
 	or a, a ; $6dfc
 	jr nz, Label_39_6e64 ; $6dfd
@@ -966,6 +1039,7 @@ Label_39_6ea9:
 Label_39_6eb9:
 	ret ; $6eb9
 	INCBIN "data/bank_039/d_6eba.bin" ; $6eba, 6 bytes
+Func_39_6ec0:
 	push af ; $6ec0
 	push bc ; $6ec1
 	push de ; $6ec2
@@ -990,8 +1064,7 @@ Label_39_6eb9:
 	push bc ; $6ee6
 	ld b, $49 ; $6ee7
 	ld c, $14 ; $6ee9
-	rst Rst18 ; $6eeb
-	INCBIN "data/bank_039/d_6eec.bin" ; $6eec, 2 bytes
+	farcall FarPtr_39_10 ; $6eeb
 	pop bc ; $6eee
 	ld hl, $6f08 ; $6eef
 	ld d, b ; $6ef2
@@ -1002,8 +1075,78 @@ Label_39_6ef9:
 	push bc ; $6ef9
 	ld b, $14 ; $6efa
 	ld c, $18 ; $6efc
-	rst Rst18 ; $6efe
-	INCBIN "data/bank_039/d_6eff.bin" ; $6eff, 104 bytes
+	farcall FarPtr_39_10 ; $6efe
+	pop bc ; $6f01
+	ld c, $0c ; $6f02
+	farcall FarPtr_39_0e ; $6f04
+	ret ; $6f07
+	INCBIN "data/bank_039/d_6f08.bin" ; $6f08, 8 bytes
+Func_39_6f10:
+	push af ; $6f10
+	push bc ; $6f11
+	push de ; $6f12
+	push hl ; $6f13
+	ldh a, [$ff96] ; $6f14
+	push af ; $6f16
+	ld a, $02 ; $6f17
+	ldh [$ff96], a ; $6f19
+	ldh [rWBK], a ; $6f1b
+	push de ; $6f1d
+	ld de, $cb64 ; $6f1e
+	ld a, $00 ; $6f21
+	call Func_00_1972 ; $6f23
+	pop de ; $6f26
+	ld b, $00 ; $6f27
+	ld hl, $cb64 ; $6f29
+Label_39_6f2c:
+	ld a, [hl] ; $6f2c
+	or a, a ; $6f2d
+	jr z, Label_39_6f34 ; $6f2e
+	inc b ; $6f30
+	inc hl ; $6f31
+	jr Label_39_6f2c ; $6f32
+Label_39_6f34:
+	dec hl ; $6f34
+Label_39_6f35:
+	ld a, [hl-] ; $6f35
+	sub a, $30 ; $6f36
+	ld c, a ; $6f38
+	call Func_39_6f4f ; $6f39
+	ld a, d ; $6f3c
+	sub a, $08 ; $6f3d
+	ld d, a ; $6f3f
+	dec b ; $6f40
+	jr z, Label_39_6f45 ; $6f41
+	jr Label_39_6f35 ; $6f43
+Label_39_6f45:
+	pop af ; $6f45
+	ldh [$ff96], a ; $6f46
+	ldh [rWBK], a ; $6f48
+	pop hl ; $6f4a
+	pop de ; $6f4b
+	pop bc ; $6f4c
+	pop af ; $6f4d
+	ret ; $6f4e
+Func_39_6f4f:
+	push af ; $6f4f
+	push bc ; $6f50
+	push de ; $6f51
+	push hl ; $6f52
+	ld a, [$cb6b] ; $6f53
+	ld b, a ; $6f56
+	ld a, c ; $6f57
+	add a, a ; $6f58
+	add a, b ; $6f59
+	ld c, a ; $6f5a
+	ld a, [$cb6c] ; $6f5b
+	ld b, a ; $6f5e
+	call Func_00_1f51 ; $6f5f
+	pop hl ; $6f62
+	pop de ; $6f63
+	pop bc ; $6f64
+	pop af ; $6f65
+	ret ; $6f66
+Func_39_6f67:
 	ldh a, [$ff96] ; $6f67
 	push af ; $6f69
 	ld a, $01 ; $6f6a
@@ -1066,6 +1209,7 @@ Label_39_6fc0:
 	ldh [rWBK], a ; $6fc3
 	ret ; $6fc5
 	INCBIN "data/bank_039/d_6fc6.bin" ; $6fc6, 33 bytes
+Func_39_6fe7:
 	ldh a, [$ff96] ; $6fe7
 	push af ; $6fe9
 	ld a, $01 ; $6fea
@@ -1083,18 +1227,16 @@ Label_39_6fc0:
 Func_39_7003:
 	rst Rst08 ; $7003
 	ld h, l ; $7004
-	rst Rst18 ; $7005
-	inc [hl] ; $7006
-	dec sp ; $7007
+	farcall FarPtr_3b_34 ; $7005
 	ret ; $7008
 	INCBIN "data/bank_039/d_7009.bin" ; $7009, 1105 bytes
-Label_39_745a:
+Func_39_745a:
 	ld a, b ; $745a
 	ld [hl+], a ; $745b
 	inc b ; $745c
 	dec c ; $745d
 	ld a, c ; $745e
 	or a, a ; $745f
-	jr nz, Label_39_745a ; $7460
+	jr nz, Func_39_745a ; $7460
 	ret ; $7462
 	INCBIN "data/bank_039/d_7463.bin" ; $7463, 2973 bytes

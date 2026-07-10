@@ -1,9 +1,22 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $24", ROMX[$4000], BANK[$24]
 
-	INCBIN "data/bank_024/d_4000.bin" ; $4000, 14 bytes
+FarPtr_24_00:
+	dw Func_24_4589 ; $4000
+FarPtr_24_02:
+	dw Func_24_51a0 ; $4002
+FarPtr_24_04:
+	dw Func_24_57fd ; $4004
+FarPtr_24_06:
+	dw Func_24_6644 ; $4006
+FarPtr_24_08:
+	dw Func_24_6696 ; $4008
+	INCBIN "data/bank_024/d_400a.bin" ; $400a, 2 bytes
+FarPtr_24_0c:
+	dw Func_24_7707 ; $400c
 Func_24_400e:
 	push hl ; $400e
 	ld l, e ; $400f
@@ -92,8 +105,7 @@ Label_24_4082:
 	ld e, l ; $4089
 	ld d, h ; $408a
 	pop hl ; $408b
-	rst Rst18 ; $408c
-	ld h, $08 ; $408d
+	farcall FarPtr_08_26 ; $408c
 	ret ; $408f
 Func_24_4090:
 	ld a, [hl+] ; $4090
@@ -110,8 +122,7 @@ Func_24_4090:
 	ld d, [hl] ; $409d
 	ld e, a ; $409e
 	pop hl ; $409f
-	rst Rst18 ; $40a0
-	ld h, $08 ; $40a1
+	farcall FarPtr_08_26 ; $40a0
 	ret ; $40a3
 	INCBIN "data/bank_024/d_40a4.bin" ; $40a4, 197 bytes
 Func_24_4169:
@@ -189,9 +200,7 @@ Func_24_41a2:
 	ret ; $41d4
 	INCBIN "data/bank_024/d_41d5.bin" ; $41d5, 40 bytes
 Label_24_41fd:
-	rst Rst18 ; $41fd
-	inc b ; $41fe
-	inc h ; $41ff
+	farcall FarPtr_24_04 ; $41fd
 	ret ; $4200
 Func_24_4201:
 	ld a, [$c43a] ; $4201
@@ -305,7 +314,9 @@ Label_24_4284:
 	ld l, a ; $4286
 	add hl, de ; $4287
 	ret ; $4288
-	INCBIN "data/bank_024/d_4289.bin" ; $4289, 771 bytes
+	INCBIN "data/bank_024/d_4289.bin" ; $4289, 768 bytes
+Func_24_4589:
+	farcall FarPtr_07_3a ; $4589
 	ld hl, $4289 ; $458c
 	ld bc, $459c ; $458f
 	ld a, [$df92] ; $4592
@@ -422,9 +433,8 @@ Label_24_4d1f:
 	add hl, bc ; $4d45
 	sub a, b ; $4d46
 	INCBIN "data/bank_024/d_4d47.bin" ; $4d47, 1113 bytes
-	rst Rst18 ; $51a0
-	ld a, [hl-] ; $51a1
-	rlca ; $51a2
+Func_24_51a0:
+	farcall FarPtr_07_3a ; $51a0
 	ld hl, $45a0 ; $51a3
 	ld bc, $51b9 ; $51a6
 	call Func_24_422d ; $51a9
@@ -434,6 +444,7 @@ Label_24_4d1f:
 	call Func_24_4169 ; $51b5
 	ret ; $51b8
 	INCBIN "data/bank_024/d_51b9.bin" ; $51b9, 1604 bytes
+Func_24_57fd:
 	ld a, $01 ; $57fd
 	ld [$c4c6], a ; $57ff
 	xor a, a ; $5802
@@ -456,8 +467,7 @@ Label_24_4d1f:
 	ld bc, $00e0 ; $5821
 Label_24_5824:
 	push af ; $5824
-	rst Rst18 ; $5825
-	ld a, $07 ; $5826
+	farcall FarPtr_07_3e ; $5825
 	pop af ; $5828
 	add a, a ; $5829
 	add a, $3c ; $582a
@@ -473,9 +483,8 @@ Label_24_5824:
 	call Func_24_4169 ; $5838
 	ret ; $583b
 	INCBIN "data/bank_024/d_583c.bin" ; $583c, 3592 bytes
-	rst Rst18 ; $6644
-	ld a, [hl-] ; $6645
-	rlca ; $6646
+Func_24_6644:
+	farcall FarPtr_07_3a ; $6644
 	push bc ; $6647
 	ld hl, $5844 ; $6648
 	ld bc, $6656 ; $664b
@@ -483,10 +492,76 @@ Label_24_5824:
 	pop bc ; $6651
 	call Func_24_41a2 ; $6652
 	ret ; $6655
-	INCBIN "data/bank_024/d_6656.bin" ; $6656, 4273 bytes
-	rst Rst18 ; $7707
-	ld a, [hl-] ; $7708
-	rlca ; $7709
+	INCBIN "data/bank_024/d_6656.bin" ; $6656, 64 bytes
+Func_24_6696:
+	farcall FarPtr_07_3a ; $6696
+	push bc ; $6699
+	ld hl, $c48c ; $669a
+	ld a, [hl+] ; $669d
+	ld d, [hl] ; $669e
+	ld e, a ; $669f
+	ld hl, $c406 ; $66a0
+	ld a, [hl+] ; $66a3
+	ld h, [hl] ; $66a4
+	ld l, a ; $66a5
+	bit 7, h ; $66a6
+	jr z, Label_24_66b0 ; $66a8
+	xor a, a ; $66aa
+	sub a, l ; $66ab
+	ld l, a ; $66ac
+	sbc a, a ; $66ad
+	sub a, h ; $66ae
+	ld h, a ; $66af
+Label_24_66b0:
+	add hl, de ; $66b0
+	ld e, l ; $66b1
+	ld d, h ; $66b2
+	ld hl, $c40a ; $66b3
+	ld a, [hl+] ; $66b6
+	ld h, [hl] ; $66b7
+	ld l, a ; $66b8
+	xor a, a ; $66b9
+	sub a, l ; $66ba
+	ld l, a ; $66bb
+	sbc a, a ; $66bc
+	sub a, h ; $66bd
+	ld h, a ; $66be
+	ld c, l ; $66bf
+	ld b, h ; $66c0
+	sra b ; $66c1
+	rr c ; $66c3
+	add hl, bc ; $66c5
+	call Func_00_1416 ; $66c6
+	ld a, [$df6c] ; $66c9
+	add a, a ; $66cc
+	add a, $f2 ; $66cd
+	ld l, a ; $66cf
+	adc a, $66 ; $66d0
+	sub a, l ; $66d2
+	ld h, a ; $66d3
+	ld a, [hl+] ; $66d4
+	ld h, [hl] ; $66d5
+	ld l, a ; $66d6
+	add hl, bc ; $66d7
+	ld c, l ; $66d8
+	ld b, h ; $66d9
+	ld hl, $c43a ; $66da
+	ld a, [hl+] ; $66dd
+	ld d, [hl] ; $66de
+	ld e, a ; $66df
+	pop hl ; $66e0
+	farcall FarPtr_08_26 ; $66e1
+	ld hl, $c48c ; $66e4
+	ld a, [hl+] ; $66e7
+	ld d, [hl] ; $66e8
+	ld e, a ; $66e9
+	ld hl, rJOYP ; $66ea
+	add hl, de ; $66ed
+	call Func_24_4201 ; $66ee
+	ret ; $66f1
+	INCBIN "data/bank_024/d_66f2.bin" ; $66f2, 4117 bytes
+Func_24_7707:
+	farcall FarPtr_07_3a ; $7707
 	push bc ; $770a
 	ld hl, $6707 ; $770b
 	ld bc, $7719 ; $770e

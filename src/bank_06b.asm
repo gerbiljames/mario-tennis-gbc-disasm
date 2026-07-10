@@ -1,9 +1,20 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $6b", ROMX[$4000], BANK[$6b]
 
-	INCBIN "data/bank_06b/d_4000.bin" ; $4000, 42 bytes
+FarPtr_6b_00:
+	dw Func_6b_402a ; $4000
+FarPtr_6b_02:
+	dw Func_6b_75af ; $4002
+	INCBIN "data/bank_06b/d_4004.bin" ; $4004, 14 bytes
+FarPtr_6b_12:
+	dw Func_6b_51ae ; $4012
+FarPtr_6b_14:
+	dw Func_6b_51e7 ; $4014
+	INCBIN "data/bank_06b/d_4016.bin" ; $4016, 20 bytes
+Func_6b_402a:
 	xor a, a ; $402a
 	ld [$cb3f], a ; $402b
 	ld [$cb40], a ; $402e
@@ -182,9 +193,7 @@ Label_6b_420d:
 	ld a, $28 ; $4238
 	ld [$cb47], a ; $423a
 	ld c, $16 ; $423d
-	rst Rst18 ; $423f
-	nop ; $4240
-	add hl, sp ; $4241
+	farcall FarPtr_39_00 ; $423f
 	call Func_6b_520a ; $4242
 	ldh a, [$ff96] ; $4245
 	push af ; $4247
@@ -195,15 +204,11 @@ Label_6b_420d:
 	ld de, $d560 ; $4250
 	ld b, $20 ; $4253
 	ld c, $01 ; $4255
-	rst Rst18 ; $4257
-	inc c ; $4258
-	add hl, sp ; $4259
+	farcall FarPtr_39_0c ; $4257
 	pop af ; $425a
 	ldh [$ff96], a ; $425b
 	ldh [rWBK], a ; $425d
-	rst Rst18 ; $425f
-	ld [bc], a ; $4260
-	add hl, sp ; $4261
+	farcall FarPtr_39_02 ; $425f
 	ld a, $01 ; $4262
 	ldh [$ff96], a ; $4264
 	ldh [rWBK], a ; $4266
@@ -303,9 +308,7 @@ Label_6b_43cc:
 	jp Label_6b_4099 ; $43cc
 	call DisableLCDSafely ; $43cf
 	ld c, $17 ; $43d2
-	rst Rst18 ; $43d4
-	nop ; $43d5
-	add hl, sp ; $43d6
+	farcall FarPtr_39_00 ; $43d4
 	ldh a, [$ff96] ; $43d7
 	push af ; $43d9
 	ld a, $03 ; $43da
@@ -315,15 +318,11 @@ Label_6b_43cc:
 	ld de, $d560 ; $43e2
 	ld b, $20 ; $43e5
 	ld c, $01 ; $43e7
-	rst Rst18 ; $43e9
-	inc c ; $43ea
-	add hl, sp ; $43eb
+	farcall FarPtr_39_0c ; $43e9
 	pop af ; $43ec
 	ldh [$ff96], a ; $43ed
 	ldh [rWBK], a ; $43ef
-	rst Rst18 ; $43f1
-	ld [bc], a ; $43f2
-	add hl, sp ; $43f3
+	farcall FarPtr_39_02 ; $43f1
 	ld a, $01 ; $43f4
 	ldh [$ff96], a ; $43f6
 	ldh [rWBK], a ; $43f8
@@ -425,9 +424,7 @@ Label_6b_43cc:
 	jp Label_6b_407c ; $452b
 	call DisableLCDSafely ; $452e
 	ld c, $18 ; $4531
-	rst Rst18 ; $4533
-	nop ; $4534
-	add hl, sp ; $4535
+	farcall FarPtr_39_00 ; $4533
 	ldh a, [$ff96] ; $4536
 	push af ; $4538
 	ld a, $03 ; $4539
@@ -437,26 +434,18 @@ Label_6b_43cc:
 	ld de, $d500 ; $4541
 	ld b, $20 ; $4544
 	ld c, $01 ; $4546
-	rst Rst18 ; $4548
-	inc c ; $4549
-	add hl, sp ; $454a
+	farcall FarPtr_39_0c ; $4548
 	ld h, $8a ; $454b
 	ld de, $d5c0 ; $454d
 	ld b, $20 ; $4550
 	ld c, $01 ; $4552
-	rst Rst18 ; $4554
-	inc c ; $4555
-	add hl, sp ; $4556
+	farcall FarPtr_39_0c ; $4554
 	pop af ; $4557
 	ldh [$ff96], a ; $4558
 	ldh [rWBK], a ; $455a
-	rst Rst18 ; $455c
-	ld [bc], a ; $455d
-	add hl, sp ; $455e
+	farcall FarPtr_39_02 ; $455c
 	ld c, $19 ; $455f
-	rst Rst18 ; $4561
-	nop ; $4562
-	add hl, sp ; $4563
+	farcall FarPtr_39_00 ; $4561
 	ld a, $08 ; $4564
 	ldh [rSTAT], a ; $4566
 	ld hl, rIE ; $4568
@@ -665,12 +654,8 @@ Label_6b_46ce:
 	INCBIN "data/bank_06b/d_475a.bin" ; $475a, 64 bytes
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
-	rst Rst18 ; $479f
-	nop ; $47a0
-	add hl, sp ; $47a1
-	rst Rst18 ; $47a2
-	ld [bc], a ; $47a3
-	add hl, sp ; $47a4
+	farcall FarPtr_39_00 ; $479f
+	farcall FarPtr_39_02 ; $47a2
 	xor a, a ; $47a5
 	ld [$cb40], a ; $47a6
 	ld a, $b0 ; $47a9
@@ -699,12 +684,8 @@ Label_6b_46ce:
 	jp Label_6b_407c ; $47e4
 	call DisableLCDSafely ; $47e7
 	ld c, $1d ; $47ea
-	rst Rst18 ; $47ec
-	nop ; $47ed
-	add hl, sp ; $47ee
-	rst Rst18 ; $47ef
-	ld [bc], a ; $47f0
-	add hl, sp ; $47f1
+	farcall FarPtr_39_00 ; $47ec
+	farcall FarPtr_39_02 ; $47ef
 	ld a, $94 ; $47f2
 	ld [$cb42], a ; $47f4
 	ldh [$ff8b], a ; $47f7
@@ -734,12 +715,8 @@ Label_6b_46ce:
 	jp Label_6b_407c ; $4833
 	call DisableLCDSafely ; $4836
 	ld c, $1e ; $4839
-	rst Rst18 ; $483b
-	nop ; $483c
-	add hl, sp ; $483d
-	rst Rst18 ; $483e
-	ld [bc], a ; $483f
-	add hl, sp ; $4840
+	farcall FarPtr_39_00 ; $483b
+	farcall FarPtr_39_02 ; $483e
 	ld a, $a8 ; $4841
 	ld [$cb42], a ; $4843
 	ldh [$ff8b], a ; $4846
@@ -1176,14 +1153,11 @@ Func_6b_518d:
 	pop bc ; $51a3
 	ret ; $51a4
 	INCBIN "data/bank_06b/d_51a5.bin" ; $51a5, 9 bytes
+Func_6b_51ae:
 	call DisableLCDSafely ; $51ae
 	ld c, $15 ; $51b1
-	rst Rst18 ; $51b3
-	nop ; $51b4
-	add hl, sp ; $51b5
-	rst Rst18 ; $51b6
-	ld [bc], a ; $51b7
-	add hl, sp ; $51b8
+	farcall FarPtr_39_00 ; $51b3
+	farcall FarPtr_39_02 ; $51b6
 	xor a, a ; $51b9
 	ldh [$ff8b], a ; $51ba
 	ldh [$ff8a], a ; $51bc
@@ -1208,6 +1182,7 @@ Label_6b_51e2:
 	xor a, a ; $51e2
 	ld [$cb40], a ; $51e3
 	ret ; $51e6
+Func_6b_51e7:
 	ld a, $40 ; $51e7
 	ldh [$ff8a], a ; $51e9
 Label_6b_51eb:
@@ -1230,38 +1205,31 @@ Func_6b_520a:
 	ld b, $4d ; $520a
 	ld c, $06 ; $520c
 	ld de, $a000 ; $520e
-	rst Rst18 ; $5211
-	INCBIN "data/bank_06b/d_5212.bin" ; $5212, 2 bytes
+	farcall FarPtr_39_10 ; $5211
 	ld b, $4e ; $5214
 	ld c, $0a ; $5216
 	ld de, $a060 ; $5218
-	rst Rst18 ; $521b
-	INCBIN "data/bank_06b/d_521c.bin" ; $521c, 2 bytes
+	farcall FarPtr_39_10 ; $521b
 	ld b, $4f ; $521e
 	ld c, $10 ; $5220
 	ld de, $a100 ; $5222
-	rst Rst18 ; $5225
-	INCBIN "data/bank_06b/d_5226.bin" ; $5226, 2 bytes
+	farcall FarPtr_39_10 ; $5225
 	ld b, $50 ; $5228
 	ld c, $06 ; $522a
 	ld de, $a200 ; $522c
-	rst Rst18 ; $522f
-	INCBIN "data/bank_06b/d_5230.bin" ; $5230, 2 bytes
+	farcall FarPtr_39_10 ; $522f
 	ld b, $51 ; $5232
 	ld c, $12 ; $5234
 	ld de, $a260 ; $5236
-	rst Rst18 ; $5239
-	INCBIN "data/bank_06b/d_523a.bin" ; $523a, 2 bytes
+	farcall FarPtr_39_10 ; $5239
 	ld b, $52 ; $523c
 	ld c, $10 ; $523e
 	ld de, $a380 ; $5240
-	rst Rst18 ; $5243
-	INCBIN "data/bank_06b/d_5244.bin" ; $5244, 2 bytes
+	farcall FarPtr_39_10 ; $5243
 	ld b, $53 ; $5246
 	ld c, $02 ; $5248
 	ld de, $a480 ; $524a
-	rst Rst18 ; $524d
-	INCBIN "data/bank_06b/d_524e.bin" ; $524e, 2 bytes
+	farcall FarPtr_39_10 ; $524d
 	ld hl, $525a ; $5250
 	ld de, $0802 ; $5253
 	call Func_00_05b0 ; $5256
@@ -1387,12 +1355,8 @@ Label_6b_53c6:
 	ret ; $53fb
 Func_6b_53fc:
 	call DisableLCDSafely ; $53fc
-	rst Rst18 ; $53ff
-	ld l, d ; $5400
-	ld a, [bc] ; $5401
-	rst Rst18 ; $5402
-	nop ; $5403
-	dec b ; $5404
+	farcall FarPtr_0a_6a ; $53ff
+	farcall FarPtr_05_00 ; $5402
 	ld a, $01 ; $5405
 	ldh [$ff96], a ; $5407
 	ldh [rWBK], a ; $5409
@@ -1425,21 +1389,15 @@ Func_6b_53fc:
 	ld a, $24 ; $544f
 	ld [$c323], a ; $5451
 	ld a, $01 ; $5454
-	rst Rst18 ; $5456
-	halt ; $5457
-	ld a, [bc] ; $5458
+	farcall FarPtr_0a_76 ; $5456
 	xor a, a ; $5459
 	ld [$c323], a ; $545a
 	ret ; $545d
 	INCBIN "data/bank_06b/d_545e.bin" ; $545e, 91 bytes
 Func_6b_54b9:
 	call DisableLCDSafely ; $54b9
-	rst Rst18 ; $54bc
-	ld l, d ; $54bd
-	ld a, [bc] ; $54be
-	rst Rst18 ; $54bf
-	nop ; $54c0
-	dec b ; $54c1
+	farcall FarPtr_0a_6a ; $54bc
+	farcall FarPtr_05_00 ; $54bf
 	ld a, $01 ; $54c2
 	ldh [$ff96], a ; $54c4
 	ldh [rWBK], a ; $54c6
@@ -1474,47 +1432,38 @@ Func_6b_54b9:
 	ld a, $24 ; $5512
 	ld [$c323], a ; $5514
 	ld a, $01 ; $5517
-	rst Rst18 ; $5519
-	halt ; $551a
-	ld a, [bc] ; $551b
+	farcall FarPtr_0a_76 ; $5519
 	ret ; $551c
 	INCBIN "data/bank_06b/d_551d.bin" ; $551d, 2904 bytes
 Func_6b_6075:
 	ld b, $54 ; $6075
 	ld c, $10 ; $6077
 	ld de, $a000 ; $6079
-	rst Rst18 ; $607c
-	INCBIN "data/bank_06b/d_607d.bin" ; $607d, 2 bytes
+	farcall FarPtr_39_10 ; $607c
 	ld b, $55 ; $607f
 	ld c, $10 ; $6081
 	ld de, $a100 ; $6083
-	rst Rst18 ; $6086
-	INCBIN "data/bank_06b/d_6087.bin" ; $6087, 2 bytes
+	farcall FarPtr_39_10 ; $6086
 	ld b, $56 ; $6089
 	ld c, $10 ; $608b
 	ld de, $a200 ; $608d
-	rst Rst18 ; $6090
-	INCBIN "data/bank_06b/d_6091.bin" ; $6091, 2 bytes
+	farcall FarPtr_39_10 ; $6090
 	ld b, $57 ; $6093
 	ld c, $10 ; $6095
 	ld de, $a300 ; $6097
-	rst Rst18 ; $609a
-	INCBIN "data/bank_06b/d_609b.bin" ; $609b, 2 bytes
+	farcall FarPtr_39_10 ; $609a
 	ld b, $58 ; $609d
 	ld c, $04 ; $609f
 	ld de, $a400 ; $60a1
-	rst Rst18 ; $60a4
-	INCBIN "data/bank_06b/d_60a5.bin" ; $60a5, 2 bytes
+	farcall FarPtr_39_10 ; $60a4
 	ld b, $59 ; $60a7
 	ld c, $04 ; $60a9
 	ld de, $a440 ; $60ab
-	rst Rst18 ; $60ae
-	INCBIN "data/bank_06b/d_60af.bin" ; $60af, 2 bytes
+	farcall FarPtr_39_10 ; $60ae
 	ld b, $5a ; $60b1
 	ld c, $04 ; $60b3
 	ld de, $a480 ; $60b5
-	rst Rst18 ; $60b8
-	INCBIN "data/bank_06b/d_60b9.bin" ; $60b9, 2 bytes
+	farcall FarPtr_39_10 ; $60b8
 	ld hl, $60c5 ; $60bb
 	ld de, $0802 ; $60be
 	call Func_00_05b0 ; $60c1
@@ -1588,12 +1537,8 @@ Label_6b_612f:
 	INCBIN "data/bank_06b/d_6139.bin" ; $6139, 67 bytes
 Func_6b_617c:
 	call DisableLCDSafely ; $617c
-	rst Rst18 ; $617f
-	ld l, d ; $6180
-	ld a, [bc] ; $6181
-	rst Rst18 ; $6182
-	nop ; $6183
-	dec b ; $6184
+	farcall FarPtr_0a_6a ; $617f
+	farcall FarPtr_05_00 ; $6182
 	ld a, $01 ; $6185
 	ldh [$ff96], a ; $6187
 	ldh [rWBK], a ; $6189
@@ -1630,9 +1575,7 @@ Func_6b_617c:
 	ld [$c322], a ; $61da
 	ld [$c323], a ; $61dd
 	ld a, $01 ; $61e0
-	rst Rst18 ; $61e2
-	halt ; $61e3
-	ld a, [bc] ; $61e4
+	farcall FarPtr_0a_76 ; $61e2
 	ret ; $61e5
 	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 3741 bytes
 	ld a, [$cb44] ; $7083
@@ -1850,6 +1793,7 @@ Func_6b_73f2:
 	ldh [$ff8a], a ; $756c
 	ret ; $756e
 	INCBIN "data/bank_06b/d_756f.bin" ; $756f, 64 bytes
+Func_6b_75af:
 	call Func_00_1b38 ; $75af
 	ld a, $03 ; $75b2
 	ldh [$ff96], a ; $75b4
@@ -1870,52 +1814,40 @@ Func_6b_73f2:
 	call Func_00_1d20 ; $75d8
 	call Func_00_1da4 ; $75db
 	ld c, $1f ; $75de
-	rst Rst18 ; $75e0
-	nop ; $75e1
-	add hl, sp ; $75e2
-	rst Rst18 ; $75e3
-	ld [bc], a ; $75e4
-	add hl, sp ; $75e5
+	farcall FarPtr_39_00 ; $75e0
+	farcall FarPtr_39_02 ; $75e3
 	ld c, $14 ; $75e6
 	ld b, $5b ; $75e8
 	ld de, $a000 ; $75ea
-	rst Rst18 ; $75ed
-	INCBIN "data/bank_06b/d_75ee.bin" ; $75ee, 2 bytes
+	farcall FarPtr_39_10 ; $75ed
 	ld c, $14 ; $75f0
 	ld b, $5c ; $75f2
 	ld de, $a200 ; $75f4
-	rst Rst18 ; $75f7
-	INCBIN "data/bank_06b/d_75f8.bin" ; $75f8, 2 bytes
+	farcall FarPtr_39_10 ; $75f7
 	ld c, $14 ; $75fa
 	ld b, $5d ; $75fc
 	ld de, $a400 ; $75fe
-	rst Rst18 ; $7601
-	INCBIN "data/bank_06b/d_7602.bin" ; $7602, 2 bytes
+	farcall FarPtr_39_10 ; $7601
 	ld c, $14 ; $7604
 	ld b, $5e ; $7606
 	ld de, $a600 ; $7608
-	rst Rst18 ; $760b
-	INCBIN "data/bank_06b/d_760c.bin" ; $760c, 2 bytes
+	farcall FarPtr_39_10 ; $760b
 	ld c, $14 ; $760e
 	ld b, $5f ; $7610
 	ld de, $8000 ; $7612
-	rst Rst18 ; $7615
-	INCBIN "data/bank_06b/d_7616.bin" ; $7616, 2 bytes
+	farcall FarPtr_39_10 ; $7615
 	ld c, $14 ; $7618
 	ld b, $60 ; $761a
 	ld de, $8200 ; $761c
-	rst Rst18 ; $761f
-	INCBIN "data/bank_06b/d_7620.bin" ; $7620, 2 bytes
+	farcall FarPtr_39_10 ; $761f
 	ld c, $14 ; $7622
 	ld b, $61 ; $7624
 	ld de, $8400 ; $7626
-	rst Rst18 ; $7629
-	INCBIN "data/bank_06b/d_762a.bin" ; $762a, 2 bytes
+	farcall FarPtr_39_10 ; $7629
 	ld c, $14 ; $762c
 	ld b, $62 ; $762e
 	ld de, $8600 ; $7630
-	rst Rst18 ; $7633
-	INCBIN "data/bank_06b/d_7634.bin" ; $7634, 2 bytes
+	farcall FarPtr_39_10 ; $7633
 	ld hl, $794f ; $7636
 	ld de, $0801 ; $7639
 	call Func_00_05b0 ; $763c

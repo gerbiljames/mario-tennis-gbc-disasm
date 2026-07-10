@@ -1,4 +1,5 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $00", ROM0[$0000]
@@ -48,21 +49,7 @@ SerialInterrupt:
 EntryPoint:
 	nop ; $0100
 	jp Label_00_0150 ; $0101
-	INCBIN "data/bank_000/d_0104.bin" ; $0104, 58 bytes
-Label_00_013e:
-	nop ; $013e
-	ld b, d ; $013f
-	ld c, l ; $0140
-	jr c, Label_00_0188 ; $0141
-	ret nz ; $0143
-	jr nc, Label_00_0177 ; $0144
-	nop ; $0146
-	dec de ; $0147
-	ld b, $03 ; $0148
-	ld bc, $0033 ; $014a
-	and a, l ; $014d
-	ld h, h ; $014e
-	INCBIN "data/bank_000/d_014f.bin" ; $014f, 1 bytes
+	INCBIN "data/bank_000/d_0104.bin" ; $0104, 76 bytes
 Label_00_0150:
 	jp Label_00_2578 ; $0150
 	INCBIN "data/bank_000/d_0153.bin" ; $0153, 11 bytes
@@ -85,7 +72,6 @@ Func_00_015e:
 	jp hl ; $0174
 	push af ; $0175
 	push hl ; $0176
-Label_00_0177:
 	ld hl, sp + 4 ; $0177
 	ld a, [hl] ; $0179
 	ldh [$ff95], a ; $017a
@@ -95,33 +81,7 @@ Label_00_0177:
 	inc sp ; $0181
 	inc sp ; $0182
 	ret ; $0183
-	INCBIN "data/bank_000/d_0184.bin" ; $0184, 4 bytes
-Label_00_0188:
-	ld hl, sp + 4 ; $0188
-	ld [hl], $a7 ; $018a
-	inc hl ; $018c
-	ld [hl], $01 ; $018d
-	inc hl ; $018f
-	ldh a, [$ff95] ; $0190
-	ld [hl], a ; $0192
-	pop af ; $0193
-	ldh [$ff95], a ; $0194
-	ld [$2000], a ; $0196
-	pop hl ; $0199
-	ld a, b ; $019a
-	add a, a ; $019b
-	add a, l ; $019c
-	ld l, a ; $019d
-	jr nc, Label_00_01a1 ; $019e
-	inc h ; $01a0
-Label_00_01a1:
-	ld a, [hl+] ; $01a1
-	ld h, [hl] ; $01a2
-	ld l, a ; $01a3
-	or a, h ; $01a4
-	ret z ; $01a5
-	jp hl ; $01a6
-	INCBIN "data/bank_000/d_01a7.bin" ; $01a7, 15 bytes
+	INCBIN "data/bank_000/d_0184.bin" ; $0184, 50 bytes
 FarCall:
 	push hl ; $01b6
 	push af ; $01b7
@@ -4015,7 +3975,11 @@ Label_00_1cdd:
 	pop bc ; $1d06
 	pop af ; $1d07
 	ret ; $1d08
-	INCBIN "data/bank_000/d_1d09.bin" ; $1d09, 23 bytes
+	INCBIN "data/bank_000/d_1d09.bin" ; $1d09, 3 bytes
+Func_00_1d0c:
+	push af ; $1d0c
+	jr Label_00_1d34 ; $1d0d
+	INCBIN "data/bank_000/d_1d0f.bin" ; $1d0f, 17 bytes
 Func_00_1d20:
 	push af ; $1d20
 	ldh a, [$ffbc] ; $1d21
@@ -4030,6 +3994,7 @@ Func_00_1d2e:
 	ldh a, [$ffbc] ; $1d2f
 	or a, a ; $1d31
 	jr z, Label_00_1d46 ; $1d32
+Label_00_1d34:
 	ld a, $02 ; $1d34
 	ldh [$ffa2], a ; $1d36
 	xor a, a ; $1d38
@@ -4124,9 +4089,7 @@ Label_00_1da5:
 	or a, a ; $1dac
 	jr z, Label_00_1db6 ; $1dad
 	push af ; $1daf
-	rst Rst18 ; $1db0
-	ld a, [de] ; $1db1
-	rlca ; $1db2
+	farcall FarPtr_07_1a ; $1db0
 	pop af ; $1db3
 	jr Label_00_1db9 ; $1db4
 Label_00_1db6:
@@ -4226,7 +4189,17 @@ Label_00_1e35:
 	dec c ; $1e39
 	jr nz, Label_00_1e35 ; $1e3a
 	ret ; $1e3c
-	INCBIN "data/bank_000/d_1e3d.bin" ; $1e3d, 24 bytes
+Func_00_1e3d:
+	call Func_00_1e1d ; $1e3d
+	ld a, [$c3a7] ; $1e40
+	push af ; $1e43
+	and a, $cf ; $1e44
+	xor a, $05 ; $1e46
+	ld [$c3a7], a ; $1e48
+	call Func_00_1e1d ; $1e4b
+	pop af ; $1e4e
+	ret ; $1e4f
+	INCBIN "data/bank_000/d_1e50.bin" ; $1e50, 5 bytes
 Func_00_1e55:
 	ldh a, [$ff9b] ; $1e55
 	cp a, $a0 ; $1e57
@@ -4938,9 +4911,7 @@ Label_00_2596:
 	ldh a, [$fffe] ; $25a5
 	or a, a ; $25a7
 	jr nz, Label_00_25ad ; $25a8
-	rst Rst18 ; $25aa
-	ld [bc], a ; $25ab
-	INCBIN "data/bank_000/d_25ac.bin" ; $25ac, 1 bytes
+	farcall FarPtr_01_02 ; $25aa
 Label_00_25ad:
 	xor a, a ; $25ad
 	ldh [rVBK], a ; $25ae
@@ -5005,9 +4976,8 @@ Label_00_25ad:
 	ld a, $c0 ; $2624
 	ld [$c3a7], a ; $2626
 	call Func_00_28b9 ; $2629
-	rst Rst18 ; $262c
-	nop ; $262d
-	ld bc, $0010 ; $262e
+	farcall FarPtr_01_00 ; $262c
+	stop ; $262f
 Func_00_2631:
 	push af ; $2631
 	push bc ; $2632
@@ -5350,17 +5320,45 @@ Label_00_2826:
 	pop bc ; $282b
 	pop af ; $282c
 	ret ; $282d
-	INCBIN "data/bank_000/d_282e.bin" ; $282e, 29 bytes
+Func_00_282e:
+	push bc ; $282e
+	ld bc, $c350 ; $282f
+Label_00_2832:
+	ei ; $2832
+	nop ; $2833
+	di ; $2834
+	ldh a, [$ffd7] ; $2835
+	and a, a ; $2837
+	jr nz, Label_00_2843 ; $2838
+	dec bc ; $283a
+	ld a, b ; $283b
+	or a, c ; $283c
+	jr nz, Label_00_2832 ; $283d
+	ei ; $283f
+	scf ; $2840
+	jr Label_00_2848 ; $2841
+Label_00_2843:
+	xor a, a ; $2843
+	ldh [$ffd7], a ; $2844
+	scf ; $2846
+	ccf ; $2847
+Label_00_2848:
+	ei ; $2848
+	pop bc ; $2849
+	ret ; $284a
 Func_00_284b:
-	rst Rst18 ; $284b
-	ld [de], a ; $284c
-	ld a, $c3 ; $284d
-	add a, d ; $284f
-	dec h ; $2850
+	farcall FarPtr_3e_12 ; $284b
+	jp SoftReset ; $284e
 Func_00_2851:
 	call ReadJoypad ; $2851
 	ret ; $2854
-	INCBIN "data/bank_000/d_2855.bin" ; $2855, 12 bytes
+Func_00_2855:
+	xor a, $0f ; $2855
+	jr nz, Label_00_285c ; $2857
+	jp SoftReset ; $2859
+Label_00_285c:
+	ret ; $285c
+	INCBIN "data/bank_000/d_285d.bin" ; $285d, 4 bytes
 Label_00_2861:
 	push af ; $2861
 	push bc ; $2862
@@ -5460,7 +5458,6 @@ Func_00_28f8:
 	ldh [$ffc4], a ; $28ff
 	ldh [$ffc8], a ; $2901
 	ldh [$ffd3], a ; $2903
-Label_00_2905:
 	ldh [$ffd4], a ; $2905
 	ldh [$ffd5], a ; $2907
 	ldh [$ffd6], a ; $2909
@@ -5555,13 +5552,79 @@ Label_00_2988:
 	pop hl ; $2991
 	pop bc ; $2992
 	ret ; $2993
-	INCBIN "data/bank_000/d_2994.bin" ; $2994, 266 bytes
+Func_00_2994:
+	push af ; $2994
+	push bc ; $2995
+	ldh a, [$ffc0] ; $2996
+	ld b, a ; $2998
+	and a, $c0 ; $2999
+	cp a, $80 ; $299b
+	jr z, Label_00_29aa ; $299d
+	cp a, $40 ; $299f
+	jr z, Label_00_29aa ; $29a1
+	rst Rst08 ; $29a3
+	ld [hl], d ; $29a4
+	xor a, a ; $29a5
+	ldh [$ffd3], a ; $29a6
+	jr Label_00_29f3 ; $29a8
+Label_00_29aa:
+	ld a, b ; $29aa
+	and a, $3f ; $29ab
+	cp a, $3f ; $29ad
+	jr nz, Label_00_29b5 ; $29af
+	ld a, $0f ; $29b1
+	jr Label_00_29cf ; $29b3
+Label_00_29b5:
+	cp a, $30 ; $29b5
+	jr nz, Label_00_29bd ; $29b7
+	ld a, $08 ; $29b9
+	jr Label_00_29cf ; $29bb
+Label_00_29bd:
+	cp a, $0c ; $29bd
+	jr nz, Label_00_29c5 ; $29bf
+	ld a, $04 ; $29c1
+	jr Label_00_29cf ; $29c3
+Label_00_29c5:
+	ld c, a ; $29c5
+	and a, $03 ; $29c6
+	ld b, a ; $29c8
+	ld a, c ; $29c9
+	rla ; $29ca
+	rla ; $29cb
+	and a, $f0 ; $29cc
+	or a, b ; $29ce
+Label_00_29cf:
+	ldh [$ffd4], a ; $29cf
+	ldh a, [$ffc2] ; $29d1
+	cp a, $01 ; $29d3
+	jr nz, Label_00_29e0 ; $29d5
+	ldh a, [$ffd5] ; $29d7
+	or a, a ; $29d9
+	jr nz, Label_00_29f1 ; $29da
+	ldh a, [$ffd4] ; $29dc
+	jr Label_00_29f1 ; $29de
+Label_00_29e0:
+	ldh a, [$ffd5] ; $29e0
+	ld b, a ; $29e2
+	ldh a, [$ffde] ; $29e3
+	ldh [$ffd5], a ; $29e5
+	ld a, b ; $29e7
+	ldh [$ffde], a ; $29e8
+	ldh a, [$ffd4] ; $29ea
+	or a, a ; $29ec
+	jr nz, Label_00_29f1 ; $29ed
+	ldh a, [$ffd5] ; $29ef
+Label_00_29f1:
+	ldh [$ffd3], a ; $29f1
+Label_00_29f3:
+	pop bc ; $29f3
+	pop af ; $29f4
+	ret ; $29f5
+	INCBIN "data/bank_000/d_29f6.bin" ; $29f6, 168 bytes
 Func_00_2a9e:
 	push bc ; $2a9e
 	ld c, $11 ; $2a9f
-	rst Rst18 ; $2aa1
-	inc e ; $2aa2
-	dec b ; $2aa3
+	farcall FarPtr_05_1c ; $2aa1
 	pop bc ; $2aa4
 	ret ; $2aa5
 	INCBIN "data/bank_000/d_2aa6.bin" ; $2aa6, 160 bytes

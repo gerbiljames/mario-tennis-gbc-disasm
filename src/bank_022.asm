@@ -1,9 +1,11 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $22", ROMX[$4000], BANK[$22]
 
-	INCBIN "data/bank_022/d_4000.bin" ; $4000, 2 bytes
+FarPtr_22_00:
+	dw Func_22_7e7d ; $4000
 Func_22_4002:
 	push hl ; $4002
 	ld l, e ; $4003
@@ -80,8 +82,7 @@ Label_22_4076:
 	ld e, l ; $407d
 	ld d, h ; $407e
 	pop hl ; $407f
-	rst Rst18 ; $4080
-	ld h, $08 ; $4081
+	farcall FarPtr_08_26 ; $4080
 	ret ; $4083
 	INCBIN "data/bank_022/d_4084.bin" ; $4084, 126 bytes
 Func_22_4102:
@@ -119,9 +120,7 @@ Func_22_4102:
 	ret ; $4134
 	INCBIN "data/bank_022/d_4135.bin" ; $4135, 188 bytes
 Label_22_41f1:
-	rst Rst18 ; $41f1
-	inc b ; $41f2
-	inc h ; $41f3
+	farcall FarPtr_24_04 ; $41f1
 	ret ; $41f4
 Func_22_41f5:
 	ld a, [$c43a] ; $41f5
@@ -204,9 +203,8 @@ Label_22_4278:
 	add hl, de ; $427b
 	ret ; $427c
 	INCBIN "data/bank_022/d_427d.bin" ; $427d, 15360 bytes
-	rst Rst18 ; $7e7d
-	ld a, [hl-] ; $7e7e
-	rlca ; $7e7f
+Func_22_7e7d:
+	farcall FarPtr_07_3a ; $7e7d
 	push bc ; $7e80
 	ld hl, $427d ; $7e81
 	ld bc, $7e98 ; $7e84

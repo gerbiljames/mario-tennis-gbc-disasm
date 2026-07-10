@@ -1,9 +1,13 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $3f", ROMX[$4000], BANK[$3f]
 
-	INCBIN "data/bank_03f/d_4000.bin" ; $4000, 122 bytes
+FarPtr_3f_00:
+	dw Func_3f_407a ; $4000
+	INCBIN "data/bank_03f/d_4002.bin" ; $4002, 120 bytes
+Func_3f_407a:
 	push af ; $407a
 	ld a, $06 ; $407b
 	ldh [$ff96], a ; $407d
@@ -76,9 +80,7 @@ Label_3f_40be:
 	ld [$cb33], a ; $4103
 Label_3f_4106:
 	call DisableLCDSafely ; $4106
-	rst Rst18 ; $4109
-	inc b ; $410a
-	INCBIN "data/bank_03f/d_410b.bin" ; $410b, 1 bytes
+	farcall FarPtr_01_04 ; $4109
 	call EnableLCD ; $410c
 	rst Rst08 ; $410f
 	dec b ; $4110
@@ -157,16 +159,12 @@ Func_3f_4194:
 	ld b, a ; $41ae
 	xor a, a ; $41af
 	call Func_3f_54c8 ; $41b0
-	rst Rst18 ; $41b3
-	ld [hl], b ; $41b4
-	ld a, [bc] ; $41b5
+	farcall FarPtr_0a_70 ; $41b3
 	call Func_00_2631 ; $41b6
 	call DisableLCDSafely ; $41b9
 	call Func_3f_425f ; $41bc
 	ld a, $01 ; $41bf
-	rst Rst18 ; $41c1
-	halt ; $41c2
-	ld a, [bc] ; $41c3
+	farcall FarPtr_0a_76 ; $41c1
 	call EnableLCD ; $41c4
 	call Func_3f_5417 ; $41c7
 	call Func_3f_5261 ; $41ca
@@ -191,16 +189,12 @@ Func_3f_41e0:
 	ld b, a ; $41f7
 	ld a, $01 ; $41f8
 	call Func_3f_54c8 ; $41fa
-	rst Rst18 ; $41fd
-	ld [hl], b ; $41fe
-	ld a, [bc] ; $41ff
+	farcall FarPtr_0a_70 ; $41fd
 	call Func_00_2631 ; $4200
 	call DisableLCDSafely ; $4203
 	call Func_3f_42a0 ; $4206
 	ld a, $01 ; $4209
-	rst Rst18 ; $420b
-	halt ; $420c
-	ld a, [bc] ; $420d
+	farcall FarPtr_0a_76 ; $420b
 	call EnableLCD ; $420e
 	ld a, $06 ; $4211
 	ldh [$ff96], a ; $4213
@@ -457,17 +451,13 @@ Label_3f_4426:
 	ld a, $06 ; $4434
 	ldh [$ff96], a ; $4436
 	ldh [rWBK], a ; $4438
-	rst Rst18 ; $443a
-	ld [hl], b ; $443b
-	ld a, [bc] ; $443c
+	farcall FarPtr_0a_70 ; $443a
 	call DisableLCDSafely ; $443d
 	ld a, $03 ; $4440
 	ldh [$ff96], a ; $4442
 	ldh [rWBK], a ; $4444
 	ld a, $01 ; $4446
-	rst Rst18 ; $4448
-	halt ; $4449
-	ld a, [bc] ; $444a
+	farcall FarPtr_0a_76 ; $4448
 	call EnableLCD ; $444b
 	ret ; $444e
 	INCBIN "data/bank_03f/d_444f.bin" ; $444f, 2586 bytes
@@ -969,9 +959,7 @@ Label_3f_5259:
 	ld [$cb2d], a ; $525d
 	ret ; $5260
 Func_3f_5261:
-	rst Rst18 ; $5261
-	adc a, h ; $5262
-	dec b ; $5263
+	farcall FarPtr_05_8c ; $5261
 	ld a, $03 ; $5264
 	ldh [$ff96], a ; $5266
 	ldh [rWBK], a ; $5268
@@ -1094,9 +1082,7 @@ Label_3f_5302:
 	ld [$c3b3], a ; $530c
 	ld a, c ; $530f
 	ld c, $0c ; $5310
-	rst Rst18 ; $5312
-	inc e ; $5313
-	dec b ; $5314
+	farcall FarPtr_05_1c ; $5312
 	ld c, a ; $5315
 	pop af ; $5316
 	ld [$c3b3], a ; $5317
@@ -1105,8 +1091,7 @@ Label_3f_5302:
 	ld a, b ; $531c
 	cp a, $06 ; $531d
 	jr nz, Label_3f_52d5 ; $531f
-	rst Rst18 ; $5321
-	jr $5329 ; $5322
+	farcall FarPtr_05_18 ; $5321
 	call Func_3f_5334 ; $5324
 	call Func_3f_5749 ; $5327
 	call Func_3f_578f ; $532a
@@ -1151,9 +1136,7 @@ Label_3f_5366:
 	push de ; $5366
 	ld c, $40 ; $5367
 	ld de, $d050 ; $5369
-	rst Rst18 ; $536c
-	ld [hl], d ; $536d
-	dec b ; $536e
+	farcall FarPtr_05_72 ; $536c
 	pop de ; $536f
 	ld a, d ; $5370
 	inc a ; $5371
@@ -1168,9 +1151,7 @@ Label_3f_5377:
 	inc h ; $537e
 Label_3f_537f:
 	ld de, $d05e ; $537f
-	rst Rst18 ; $5382
-	ld [hl], d ; $5383
-	dec b ; $5384
+	farcall FarPtr_05_72 ; $5382
 	ld a, $06 ; $5385
 	ld [$d040], a ; $5387
 Label_3f_538a:
@@ -1494,9 +1475,7 @@ Label_3f_5640:
 	inc h ; $564d
 Label_3f_564e:
 	push hl ; $564e
-	rst Rst18 ; $564f
-	ld e, h ; $5650
-	dec b ; $5651
+	farcall FarPtr_05_5c ; $564f
 	ld a, $05 ; $5652
 	ld [$c3b3], a ; $5654
 	pop hl ; $5657
@@ -1504,16 +1483,12 @@ Label_3f_564e:
 	ld e, $06 ; $565a
 	ld b, $14 ; $565c
 	ld c, $05 ; $565e
-	rst Rst18 ; $5660
-	ld b, $05 ; $5661
+	farcall FarPtr_05_06 ; $5660
 	push hl ; $5663
 	xor a, a ; $5664
-	rst Rst18 ; $5665
-	ld b, h ; $5666
-	dec b ; $5667
+	farcall FarPtr_05_44 ; $5665
 	ld b, $00 ; $5668
-	rst Rst18 ; $566a
-	ld c, $05 ; $566b
+	farcall FarPtr_05_0e ; $566a
 	pop hl ; $566d
 	ld a, [wMessageSpeed] ; $566e
 	push af ; $5671
@@ -1524,24 +1499,16 @@ Label_3f_564e:
 	rst Rst20 ; $5679
 	ld h, b ; $567a
 	inc b ; $567b
-	rst Rst18 ; $567c
-	ld h, b ; $567d
-	dec b ; $567e
+	farcall FarPtr_05_60 ; $567c
 	rst Rst28 ; $567f
 	ld h, b ; $5680
 	inc b ; $5681
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a, a ; $5686
-	rst Rst18 ; $5687
-	ld l, d ; $5688
-	dec b ; $5689
-	rst Rst18 ; $568a
-	ld h, h ; $568b
-	dec b ; $568c
-	rst Rst18 ; $568d
-	ld h, [hl] ; $568e
-	dec b ; $568f
+	farcall FarPtr_05_6a ; $5687
+	farcall FarPtr_05_64 ; $568a
+	farcall FarPtr_05_66 ; $568d
 	ld a, $06 ; $5690
 	ldh [$ff96], a ; $5692
 	ldh [rWBK], a ; $5694

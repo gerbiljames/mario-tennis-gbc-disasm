@@ -2,12 +2,24 @@
 
 ## Where things stand
 
-**100,836 instructions (~167 KB of code) disassembled across 57 of 128 banks;
+**102,576 instructions (~188 KB of code) disassembled across 61 of 128 banks;
 everything rebuilds byte-perfect** (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). The remaining banks are so far
 pure data (graphics/audio/tilemaps). The repo contains no ROM bytes: all data
 is extracted from a user-supplied `baserom.gbc` by `./setup.sh` per
 `data.manifest`.
+
+**Farcall convention decoded (2026-07-10):** `rst $18` + two inline operand
+bytes (`db slot, bank`) dispatch through a per-bank pointer table at $4000
+via the FarCall trampoline ($01b6). `tools/disasm.py` now emits these as
+`farcall FarPtr_bb_ss` (macro in `include/macros.inc`, expands to identical
+bytes via `LOW()`/`BANK()`), renders the tables as labeled `dw` entries, and
+uses every table target as a static descent seed — that alone added ~14.6 KB
+of code (first code in banks $43, $5f, $6b) and gave us the cross-bank call
+graph. 6,441 farcall sites, 3 fall back to raw bytes (slot bytes overlap
+misdecoded code). The old instruction count (105,327) isn't comparable:
+each farcall site now counts as one 3-byte pseudo-op instead of 1-3 bogus
+ops decoded from its operand bytes.
 
 Largest code banks: $08 (match engine), $00, $13 (story engine), $05, $1e,
 $1d (story practice-drill engine), $0f, $38, $3b, $0a.
@@ -79,6 +91,13 @@ commands. 39 tests pass. If BizHawk or the MCP server restarts, reload
   covered, new specifics in banks $17 (+372), $15 (+256), $0b (+250), and
   first code in $25. Union of segments 41-91 of the same tracer session
   as story3.
+- `story5_netplay.json` — autonomous session (2026-07-10): Net Play
+  Practice drill fails/results/retry-decline, coach feedback dialogue.
+  Only 3 new seeds (the user's story4 win had covered the drill).
+- `story6_restaurant_traingame.json` — human native-tracer session
+  (2026-07-10): restaurant visit + a training game. +1,927 new seeds:
+  banks $0e (+501), $0a (+478), $10 (+257), $12 (+214 — tennis-machine
+  location), $0d (+193, Restaurant), first code in $6e. Segments 91-158.
 - `contaminated/` — pre-fix dumps with phantom seeds; never union these.
 
 Known artifact: exactly 6 skipped seeds — the old phantom at rom 0x1d1a0

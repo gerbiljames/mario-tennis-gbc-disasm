@@ -1,9 +1,13 @@
 INCLUDE "hardware.inc"
+INCLUDE "macros.inc"
 INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $33", ROMX[$4000], BANK[$33]
 
-	INCBIN "data/bank_033/d_4000.bin" ; $4000, 15050 bytes
+FarPtr_33_00:
+	dw Func_33_7aca ; $4000
+	INCBIN "data/bank_033/d_4002.bin" ; $4002, 15048 bytes
+Func_33_7aca:
 	push af ; $7aca
 	ld a, $00 ; $7acb
 	call Func_33_7ada ; $7acd
