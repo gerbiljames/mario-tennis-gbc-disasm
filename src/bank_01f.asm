@@ -5,17 +5,24 @@ INCLUDE "ram_constants.asm"
 SECTION "ROM Bank $1f", ROMX[$4000], BANK[$1f]
 
 FarPtr_1f_00:
-	dw Func_1f_7a8b ; $4000
-Text_1f_4002:
-	INCLUDE "data/bank_01f/text_4002.asm" ; $4002, 14985 bytes
-Func_1f_7a8b:
+	dw FetchDialogueText_1f ; $4000
+FarPtr_1f_02:
+	dw FetchShortText_1f ; $4002
+Text_1f_4004:
+	INCLUDE "data/bank_01f/text_4004.asm" ; $4004, 14983 bytes
+FetchDialogueText_1f:
 	push af ; $7a8b
 	ld a, $00 ; $7a8c
-	call Func_1f_7a9b ; $7a8e
+	call FetchText_1f ; $7a8e
 	pop af ; $7a91
 	ret ; $7a92
-	INCBIN "data/bank_01f/d_7a93.bin" ; $7a93, 8 bytes
-Func_1f_7a9b:
+FetchShortText_1f:
+	push af ; $7a93
+	ld a, $01 ; $7a94
+	call FetchText_1f ; $7a96
+	pop af ; $7a99
+	ret ; $7a9a
+FetchText_1f:
 	push bc ; $7a9b
 	push de ; $7a9c
 	push hl ; $7a9d

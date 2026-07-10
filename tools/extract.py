@@ -15,13 +15,13 @@ SAFE = set(range(0x20, 0x7F)) - {0x22, 0x5C, 0x7B, 0x7D}
 
 
 def solve_table(data: bytes):
-    """Detect the text-bank header: dw fetch-routine address, then N
-    ascending string offsets relative to the table's own end. N is solved by
-    requiring every offset to land just past a string terminator; accepted
-    only when exactly one N satisfies all entries (true of every text bank)."""
+    """Detect a string index table: N ascending offsets relative to the
+    table's own end. N is solved by requiring every offset to land just
+    past a string terminator; accepted only when exactly one N satisfies
+    all entries (true of every text bank)."""
     if len(data) < 24:
         return None
-    entries, i, prev = [], 2, -1
+    entries, i, prev = [], 0, -1
     while i + 1 < len(data):
         w = data[i] | (data[i + 1] << 8)
         if w < prev:
@@ -31,7 +31,7 @@ def solve_table(data: bytes):
         i += 2
     good = []
     for n in range(8, len(entries) + 1):
-        t = 2 + 2 * n
+        t = 2 * n
         if all(t + e < len(data)
                and (e == 0 or data[t + e - 1] in (0x00, 0x03))
                for e in entries[:n]):
@@ -96,13 +96,11 @@ def render_text(data: bytes) -> str:
     entries = solve_table(data)
     if entries is None:
         return render_db(data)
-    t = 2 + 2 * len(entries)
-    w0 = data[0] | (data[1] << 8)
+    t = 2 * len(entries)
     idx = {}
     for k, e in enumerate(entries):
         idx.setdefault(e, k)
-    out = [f"\tdw ${w0:04x} ; bank-local string-fetch routine",
-           f"; {len(entries)} string offsets"]
+    out = [f"; {len(entries)} string offsets, relative to .strings"]
     for k, e in enumerate(entries):
         out.append(f"\tdw .s{idx[e]} - .strings ; {k}")
     out.append(".strings")

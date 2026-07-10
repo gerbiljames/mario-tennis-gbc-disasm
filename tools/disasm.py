@@ -688,6 +688,39 @@ class Disassembly:
         print(f"slot scan: {accepted_lz} lz + {accepted_raw} raw data slots "
               f"accepted ({len(self.data_slots)} total)")
 
+    def seed_text_entries(self):
+        """Text banks lay out slots 0/2 of their pointer table as the two
+        string-fetch entry stubs (a = 0 dialogue / a = 1 short), with the
+        stubs and fetch routine sitting after the string pool. Nothing
+        jumps to the slot-2 stub directly, so descent cannot find it; seed
+        it and register both slots as table entries when the pointed-at
+        bytes are exactly the stub shape -- push af; ld a, N; call <next
+        byte after the ret>; pop af; ret. Runtime-validated in $30/$36."""
+        seeded = 0
+        for bank in range(1, len(self.rom) // BANK_SIZE):
+            base = bank * BANK_SIZE
+            w0 = self.rom[base + 2] | (self.rom[base + 3] << 8)
+            if not (BANK_SIZE <= w0 < 0x8000 - 8):
+                continue
+            flat = base + w0 - BANK_SIZE
+            b = self.rom[flat:flat + 8]
+            target = b[4] | (b[5] << 8)
+            if not (b[0] == 0xF5 and b[1] == 0x3E and b[3] == 0xCD
+                    and b[6] == 0xF1 and b[7] == 0xC9 and target == w0 + 8):
+                continue
+            slot0 = self.rom[base] | (self.rom[base + 1] << 8)
+            if slot0 != w0 - 8:  # slot 0 must be the sibling dialogue stub
+                continue
+            if flat not in self.instrs:
+                ins = self.decode_at(flat)
+                if ins.valid and not self.conflicts(flat, ins):
+                    self.mark(flat, ins)
+                    seeded += 1
+            self.inferred_entries.setdefault(base, (bank, 0, flat - 8))
+            self.inferred_entries.setdefault(base + 2, (bank, 2, flat))
+        if seeded:
+            print(f"text-bank entry stubs: {seeded} seeded")
+
     def descend(self):
         work = list(self.instrs.keys())
         added = 0
@@ -1047,13 +1080,25 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                                 break
                             j = k
                         scpu = offset_to_cpu(seg)
-                        # NUL/^A-delimited ASCII dominance marks a text region
+                        # ASCII dominance (plus the $00-$03 text control
+                        # codes) marks a text region; a leading string
+                        # offset table (header word + ascending dw run) is
+                        # binary, so skip it before measuring
                         n = j - seg
-                        txt = sum(1 for b in rom[seg:j]
-                                  if 0x20 <= b < 0x7F or b in (0, 1))
-                        letters = sum(1 for b in rom[seg:j]
+                        p, prev = seg + 2, -1
+                        while p + 1 < j:
+                            w = rom[p] | (rom[p + 1] << 8)
+                            if w < prev:
+                                break
+                            prev, p = w, p + 2
+                        body = seg if p - seg < 18 else p
+                        m = j - body
+                        txt = sum(1 for b in rom[body:j]
+                                  if 0x20 <= b < 0x7F or b <= 3)
+                        letters = sum(1 for b in rom[body:j]
                                       if 0x61 <= (b | 0x20) <= 0x7A)
-                        if n >= 32 and txt >= n * 0.95 and letters >= n // 3:
+                        if n >= 32 and m >= 32 and txt >= m * 0.95 \
+                                and letters >= m // 3:
                             # text renders as generated db source (still
                             # under gitignored data/, so no ROM content
                             # lands in the repository)
@@ -1101,6 +1146,7 @@ def main():
     if not args.no_descent:
         dis.descend()
         dis.infer_tables()
+        dis.seed_text_entries()
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()

@@ -72,7 +72,22 @@ Func_15_4967:
 	ld a, $05 ; $49cd
 	farcall FarPtr_0a_08 ; $49cf
 	ret ; $49d2
-	INCBIN "data/bank_015/d_49d3.bin" ; $49d3, 159 bytes
+	INCBIN "data/bank_015/d_49d3.bin" ; $49d3, 76 bytes
+	ld a, [$c2b0] ; $4a1f
+	add a, a ; $4a22
+	add a, $36 ; $4a23
+	ld l, a ; $4a25
+	adc a, $4a ; $4a26
+	sub a, l ; $4a28
+	ld h, a ; $4a29
+	ld a, [hl+] ; $4a2a
+	ld h, [hl] ; $4a2b
+	ld l, a ; $4a2c
+	farcall FarPtr_0a_0e ; $4a2d
+	ld a, $0a ; $4a30
+	farcall FarPtr_0a_08 ; $4a32
+	ret ; $4a35
+	INCBIN "data/bank_015/d_4a36.bin" ; $4a36, 60 bytes
 	farcall FarPtr_0a_08 ; $4a72
 	ret ; $4a75
 	INCBIN "data/bank_015/d_4a76.bin" ; $4a76, 1864 bytes
