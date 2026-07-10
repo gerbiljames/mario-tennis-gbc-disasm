@@ -6,7 +6,8 @@ SECTION "ROM Bank $1e", ROMX[$4000], BANK[$1e]
 
 FarPtr_1e_00:
 	dw Func_1e_400e ; $4000
-	INCBIN "data/bank_01e/d_4002.bin" ; $4002, 2 bytes
+FarPtr_1e_02:
+	dw Func_1e_6533 ; $4002
 FarPtr_1e_04:
 	dw Func_1e_6534 ; $4004
 FarPtr_1e_06:
@@ -2508,7 +2509,9 @@ Func_1e_5bbb:
 Label_1e_5bde:
 	ld a, $01 ; $5bde
 	ret ; $5be0
-	INCBIN "data/bank_01e/d_5be1.bin" ; $5be1, 2387 bytes
+	INCBIN "data/bank_01e/d_5be1.bin" ; $5be1, 2386 bytes
+Func_1e_6533:
+	ret ; $6533
 Func_1e_6534:
 	ld a, [$c4c7] ; $6534
 	or a, a ; $6537

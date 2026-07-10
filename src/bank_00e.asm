@@ -3708,7 +3708,45 @@ Label_0e_71e2:
 	ld c, $03 ; $71e2
 	call Func_00_1d20 ; $71e4
 	jr Label_0e_71cf ; $71e7
-	INCBIN "data/bank_00e/d_71e9.bin" ; $71e9, 1986 bytes
+	INCBIN "data/bank_00e/d_71e9.bin" ; $71e9, 1762 bytes
+	farcall FarPtr_0a_18 ; $78cb
+	ld a, $00 ; $78ce
+	ld bc, $0f00 ; $78d0
+	ld de, $1d00 ; $78d3
+	farcall FarPtr_0a_24 ; $78d6
+	ld a, $0d ; $78d9
+	ld bc, $0900 ; $78db
+	ld de, $1700 ; $78de
+	farcall FarPtr_0a_24 ; $78e1
+	ld a, $0d ; $78e4
+	farcall FarPtr_0a_20 ; $78e6
+	ld a, $0d ; $78e9
+	ld bc, $0900 ; $78eb
+	ld de, $0d00 ; $78ee
+	farcall FarPtr_0a_24 ; $78f1
+	ld a, $00 ; $78f4
+	farcall FarPtr_0a_20 ; $78f6
+	ld a, $00 ; $78f9
+	ld b, $c0 ; $78fb
+	farcall FarPtr_0a_2e ; $78fd
+	ld a, $0d ; $7900
+	farcall FarPtr_0a_20 ; $7902
+	ld a, $0d ; $7905
+	ld bc, $0d00 ; $7907
+	ld de, $0d00 ; $790a
+	farcall FarPtr_0a_24 ; $790d
+	ld a, $0d ; $7910
+	farcall FarPtr_0a_20 ; $7912
+	ld a, $0d ; $7915
+	ld b, $40 ; $7917
+	farcall FarPtr_0a_2e ; $7919
+	push af ; $791c
+	ld a, $28 ; $791d
+	farcall FarPtr_0a_04 ; $791f
+	pop af ; $7922
+	call Func_0e_7b7f ; $7923
+	ret ; $7926
+	INCBIN "data/bank_00e/d_7927.bin" ; $7927, 132 bytes
 	farcall FarPtr_0a_20 ; $79ab
 	ldh a, [$ff95] ; $79ae
 	ld b, a ; $79b0

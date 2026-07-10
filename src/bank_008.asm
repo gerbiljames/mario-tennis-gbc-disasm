@@ -1675,7 +1675,15 @@ Func_08_4df4:
 	ld a, $0a ; $4e87
 	call Func_08_4428 ; $4e89
 	ret ; $4e8c
-	INCBIN "data/bank_008/d_4e8d.bin" ; $4e8d, 22 bytes
+	ld a, [$c4d8] ; $4e8d
+	add a, $00 ; $4e90
+	farcall FarPtr_09_12 ; $4e92
+	ld a, $1e ; $4e95
+	call Func_08_4428 ; $4e97
+	farcall FarPtr_09_16 ; $4e9a
+	ld a, $0a ; $4e9d
+	call Func_08_4428 ; $4e9f
+	ret ; $4ea2
 Label_08_4ea3:
 	ld a, [wPointWinLoseFlag] ; $4ea3
 	and a, a ; $4ea6

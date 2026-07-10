@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**102,576 instructions (~188 KB of code) disassembled across 61 of 128 banks;
+**103,278 instructions (~190 KB of code) disassembled across 62 of 128 banks;
 everything rebuilds byte-perfect** (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). The remaining banks are so far
 pure data (graphics/audio/tilemaps). The repo contains no ROM bytes: all data
@@ -98,6 +98,11 @@ commands. 39 tests pass. If BizHawk or the MCP server restarts, reload
   (2026-07-10): restaurant visit + a training game. +1,927 new seeds:
   banks $0e (+501), $0a (+478), $10 (+257), $12 (+214 — tennis-machine
   location), $0d (+193, Restaurant), first code in $6e. Segments 91-158.
+- `story7_rankingmatch.json` — human native-tracer session (2026-07-10):
+  a full junior ranking match, won. +1,498 new seeds: banks $11 (+395,
+  ranking-match flow), $16 (+311, first code — likely EXP earn/distribute),
+  $1e (+202), $08 (+167 match engine), $2c, $24, $32 (first code).
+  Segments 158-353.
 - `contaminated/` — pre-fix dumps with phantom seeds; never union these.
 
 Known artifact: exactly 6 skipped seeds — the old phantom at rom 0x1d1a0
@@ -107,13 +112,12 @@ them all and the build stays byte-perfect.
 
 ## Not yet covered (biggest wins first)
 
-1. **Rest of story mode** — story matches (EXP earn/distribute, level-up
-   flow), Tennis Machine room ($12) and Wall Practice room ($13 location)
-   engines in the Training Center (building entrance not yet found — the
-   fence-gap gate at Training Court X≈0x1e leads to the courts, not the
-   building), Academy Main Building/Wing/Junior Class Court maps, later
-   areas. Unlocks the 5 locked minigames. (Stroke-practice success path
-   is now covered — story3_drillwin.json.)
+1. **Rest of story mode** — ranking matches beyond the first (senior/
+   varsity flows), level-up/stat-distribution details, Wall Practice room
+   engine, Academy Main Building/Wing maps, later areas (tournament,
+   Peach's castle). Unlocks the 5 locked minigames. (Covered so far:
+   stroke + net-play drills, tennis machine, restaurant/cafeteria, first
+   junior ranking match with EXP screens.)
 2. Match-point → ceremony transition, tiebreaks, deuce.
 3. Remaining minigames (locked behind story), Game Boy Tower, tournament.
 4. Grass court init; 6-games/3-sets match configs (Play Menu selection UI

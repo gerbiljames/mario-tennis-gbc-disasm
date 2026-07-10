@@ -1562,7 +1562,17 @@ Label_0f_5afb:
 	ld a, $02 ; $5afe
 	farcall FarPtr_0a_08 ; $5b00
 	ret ; $5b03
-	INCBIN "data/bank_00f/d_5b04.bin" ; $5b04, 334 bytes
+	INCBIN "data/bank_00f/d_5b04.bin" ; $5b04, 308 bytes
+	farcall FarPtr_0a_34 ; $5c38
+	ld a, $13 ; $5c3b
+	ld bc, $3f00 ; $5c3d
+	ld de, $3f00 ; $5c40
+	farcall FarPtr_0a_22 ; $5c43
+	ld a, $14 ; $5c46
+	ld bc, $3f00 ; $5c48
+	ld de, $3f00 ; $5c4b
+	farcall FarPtr_0a_22 ; $5c4e
+	ret ; $5c51
 Func_0f_5c52:
 	ld a, $0c ; $5c52
 	ld b, a ; $5c54

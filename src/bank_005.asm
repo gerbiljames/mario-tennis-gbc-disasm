@@ -2769,7 +2769,8 @@ Label_05_5c37:
 	jr Label_05_5ca3 ; $5c5e
 	farcall FarPtr_31_00 ; $5c60
 	jr Label_05_5ca3 ; $5c63
-	INCBIN "data/bank_005/d_5c65.bin" ; $5c65, 5 bytes
+	farcall FarPtr_32_00 ; $5c65
+	jr Label_05_5ca3 ; $5c68
 	farcall FarPtr_33_00 ; $5c6a
 	jr Label_05_5ca3 ; $5c6d
 	farcall FarPtr_34_00 ; $5c6f

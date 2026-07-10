@@ -769,7 +769,23 @@ Func_07_5161:
 	call Func_07_5345 ; $51f2
 	call Func_07_52d7 ; $51f5
 	ret ; $51f8
-	INCBIN "data/bank_007/d_51f9.bin" ; $51f9, 41 bytes
+	ld hl, $4ec1 ; $51f9
+	ld d, $00 ; $51fc
+	ld a, [$df6c] ; $51fe
+	ld e, a ; $5201
+	call Func_07_52a0 ; $5202
+	call Func_07_5301 ; $5205
+	call Func_07_5345 ; $5208
+	call Func_07_52d7 ; $520b
+	ret ; $520e
+	ld hl, $4f11 ; $520f
+	ld d, $00 ; $5212
+	ld a, [$df6d] ; $5214
+	ld e, a ; $5217
+	call Func_07_52a0 ; $5218
+	call Func_07_5301 ; $521b
+	call Func_07_52d7 ; $521e
+	ret ; $5221
 	ld hl, $4f61 ; $5222
 	ld d, $00 ; $5225
 	ld a, [$df6d] ; $5227
