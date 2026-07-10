@@ -51,6 +51,8 @@ def main():
             if not line or line.startswith(";"):
                 continue
             loc, name = line.split()[:2]
+            if "." in name:
+                continue  # generated local labels (text string anchors)
             bank_s, addr_s = loc.split(":")
             bank, addr = int(bank_s, 16), int(addr_s, 16)
             if addr >= 0x8000 or bank >= nbanks:
