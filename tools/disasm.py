@@ -626,6 +626,95 @@ class Disassembly:
             print(f"sprite banks: {len(self.sprite_banks)} carved "
                   f"(${lo:02x}-${hi:02x})")
 
+    def find_sound_banks(self):
+        """Carve the sound banks ($0c, $78-$7f). Each starts with a flat
+        (channel word, stream pointer) pair table — the words are sound-
+        engine channel-struct offsets, always $20-aligned, grouped four to
+        a song in the music banks and singly in the SFX bank — followed by
+        the note/command streams, then $ff fill. The table is delimited by
+        its lowest stream target; a couple of bank $7e channel pointers
+        rewind slightly into a shared prelude, so ascent is not required
+        and blobs are carved at sorted unique targets."""
+        found = []
+        for bank in range(1, len(self.rom) // BANK_SIZE):
+            base = bank * BANK_SIZE
+            if bank in self.sprite_banks \
+                    or any(v[0] == bank for v in self.data_slots.values()) \
+                    or any(base <= s < base + BANK_SIZE for s in self.data_blobs):
+                continue
+            w = lambda o: self.rom[base + o] | (self.rom[base + o + 1] << 8)
+            pairs, o, first = [], 0, None
+            while first is None or o < first - 0x4000:
+                v, p = w(o), w(o + 2)
+                if v >= 0x4000 or v % 0x20 or not 0x4000 <= p < 0x8000:
+                    break
+                pairs.append((v, p))
+                first = p if first is None else min(first, p)
+                o += 4
+            if len(pairs) < 8 or first is None or o != first - 0x4000:
+                continue
+            end = BANK_SIZE
+            while end > 0 and self.rom[base + end - 1] == 0xff:
+                end -= 1
+            targets = sorted({p for _v, p in pairs})
+            if targets[-1] - 0x4000 >= end:
+                continue
+            if any(b in self.code_bytes for b in range(base, base + BANK_SIZE)):
+                continue
+            flat = lambda cpu: base + cpu - 0x4000
+            self.ptr_labels[base] = f"SoundTable_{bank:02x}"
+            for i, (v, p) in enumerate(pairs):
+                self.ptr_words[base + 4 * i] = (None, "")
+                self.ptr_words[base + 4 * i + 2] = (flat(p), "")
+            for a, b in zip(targets, targets[1:] + [0x4000 + end]):
+                self.data_blobs[flat(a)] = (b - a, "copy")
+            found.append(bank)
+        if found:
+            print(f"sound banks: {len(found)} carved "
+                  f"({', '.join(f'${b:02x}' for b in found)})")
+
+    def find_walk_sprite_banks(self):
+        """Carve the overworld walk-sprite banks ($6a, $6f, $77): a bare
+        pointer table at $4000 whose first entry points immediately past
+        the table, each target a character's sprite-set block (a short
+        header, an OAM word list, then ~25 16x16 walk frames), trailing
+        $ff fill after the last block."""
+        found = []
+        for bank in range(1, len(self.rom) // BANK_SIZE):
+            base = bank * BANK_SIZE
+            if bank in self.sprite_banks \
+                    or any(v[0] == bank for v in self.data_slots.values()) \
+                    or any(base <= s < base + BANK_SIZE for s in self.data_blobs):
+                continue
+            w = lambda o: self.rom[base + o] | (self.rom[base + o + 1] << 8)
+            first = w(0)
+            if not 0x4004 <= first < 0x5000 or first % 2:
+                continue
+            n = (first - 0x4000) // 2
+            ptrs = [w(i * 2) for i in range(n)]
+            end = BANK_SIZE
+            while end > 0 and self.rom[base + end - 1] == 0xff:
+                end -= 1
+            if n < 2 or ptrs != sorted(ptrs) or len(set(ptrs)) != n \
+                    or ptrs[-1] - 0x4000 >= end \
+                    or any(not 0x4000 <= p < 0x8000 for p in ptrs):
+                continue
+            sizes = [b - a for a, b in zip(ptrs, ptrs[1:] + [0x4000 + end])]
+            if any(s < 0x100 or s > 0x1000 for s in sizes):
+                continue
+            if any(b in self.code_bytes for b in range(base, base + BANK_SIZE)):
+                continue
+            flat = lambda cpu: base + cpu - 0x4000
+            self.ptr_labels[base] = f"WalkSprites_{bank:02x}"
+            for i, p in enumerate(ptrs):
+                self.ptr_words[base + 2 * i] = (flat(p), "")
+            for a, s in zip(ptrs, sizes):
+                self.data_blobs[flat(a)] = (s, "copy")
+            found.append(bank)
+        if found:
+            print(f"walk-sprite banks: {len(found)} carved "
+                  f"({', '.join(f'${b:02x}' for b in found)})")
+
     def scan_data_slots(self):
         """Classify remaining table slots whose pointers hold data.
 
@@ -1319,6 +1408,8 @@ def main():
     if args.hooks:
         dis.load_hook_dumps(args.hooks)
     dis.find_sprite_banks()
+    dis.find_sound_banks()
+    dis.find_walk_sprite_banks()
     if helpers or args.hooks:
         dis.scan_data_slots()
     labels = build_labels(dis, overrides)
