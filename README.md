@@ -109,6 +109,9 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
 - `tools/tracelog2cov.py` — BizHawk native Trace Logger file → coverage JSON.
 - `tools/progress.py` — per-bank report of proven-code bytes and label-naming
   progress (`--unnamed XX` lists a bank's auto-named symbols).
+- `tools/gfxdump.py` — renders every carved LZ stream to PNG contact sheets
+  (2bpp tiles, palette swatches, `--composites` for tilemap×tilesheet
+  pairing) under gitignored `data/gfx/` for identifying and naming assets.
 - `tools/hook_client.py` — captures the arguments of every distinct
   `CopyDataFromBank`/`DecompressDataFromBank` call while the game runs
   (connector script v2+ register hooks), i.e. the pointer-table slots that
