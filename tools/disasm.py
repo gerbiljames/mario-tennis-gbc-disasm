@@ -460,39 +460,64 @@ class Disassembly:
             hl = regs.get("hl")
             if hl is None:
                 continue
-            bank, slot = hl >> 8, hl & 0xFF
-            if not 0 < bank < nbanks or slot & 1:
+            if self._add_data_slot(hl >> 8, hl & 0xFF, kind,
+                                   regs.get("bc")) is None:
                 continue
-            entry = bank * BANK_SIZE + slot
-            if entry in self.code_bytes or entry + 1 in self.code_bytes:
-                continue
-            ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
-            if not (BANK_SIZE <= ptr < 0x8000):
-                continue
-            src = bank * BANK_SIZE + ptr - BANK_SIZE
-            if src in self.code_bytes:
-                continue
-            if kind == "lz":
-                try:
-                    _, length = lz.decompress(self.rom, src,
-                                              (bank + 1) * BANK_SIZE)
-                except ValueError:
-                    continue  # hl constant likely spurious for this site
-            else:
-                length = regs.get("bc")
-            if length and any(b in self.code_bytes
-                              for b in range(src, src + length)):
-                length = None  # keep the pointer, don't carve into code
             resolved += 1
-            self.data_slots[entry] = (bank, slot, src, kind)
-            prev = self.data_blobs.get(src)
-            if prev is None or (prev[0] is None and length is not None):
-                self.data_blobs[src] = (length, kind)
             if "hl" in ld_offs:
-                self.data_site_notes[ld_offs["hl"]] = (bank, slot)
+                self.data_site_notes[ld_offs["hl"]] = (hl >> 8, hl & 0xFF)
         print(f"data-helper call sites: {sites}, statically resolved: "
               f"{resolved} ({len(self.data_slots)} slots, "
               f"{len(self.data_blobs)} blobs)")
+
+    def _add_data_slot(self, bank, slot, kind, length=None):
+        """Validate and record one data-pointer table slot; returns the
+        blob's flat offset, or None if anything about it is implausible."""
+        if not 0 < bank < len(self.rom) // BANK_SIZE or slot & 1:
+            return None
+        entry = bank * BANK_SIZE + slot
+        if entry in self.code_bytes or entry + 1 in self.code_bytes:
+            return None
+        ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
+        if not (BANK_SIZE <= ptr < 0x8000):
+            return None
+        src = bank * BANK_SIZE + ptr - BANK_SIZE
+        if src in self.code_bytes:
+            return None
+        if kind == "lz":
+            try:
+                _, length = lz.decompress(self.rom, src, (bank + 1) * BANK_SIZE)
+            except ValueError:
+                return None  # claimed stream doesn't decode: reject the slot
+        if length and any(b in self.code_bytes
+                          for b in range(src, src + length)):
+            length = None  # keep the pointer, don't carve into code
+        self.data_slots[entry] = (bank, slot, src, kind)
+        prev = self.data_blobs.get(src)
+        if prev is None or (prev[0] is None and length is not None):
+            self.data_blobs[src] = (length, kind)
+        return src
+
+    def load_hook_dumps(self, paths):
+        """Ingest tools/hook_client.py captures: runtime-observed register
+        snapshots at the data-helper entry points, one (h = bank, l = slot)
+        argument pair per distinct call. Catches the dynamically-computed
+        call sites that static backtracking cannot resolve."""
+        entries = added = 0
+        for p in paths:
+            for e in json.loads(Path(p).read_text()):
+                kind = e.get("kind")
+                if kind not in ("copy", "lz"):
+                    continue
+                entries += 1
+                bank, slot = e.get("h", -1), e.get("l", -1)
+                length = ((e.get("b", 0) << 8) | e.get("c", 0)) \
+                    if kind == "copy" else None
+                key = bank * BANK_SIZE + slot
+                if key not in self.data_slots and \
+                        self._add_data_slot(bank, slot, kind, length):
+                    added += 1
+        print(f"hook dumps: {entries} captured calls, {added} new data slots")
 
     def scan_lz_slots(self):
         """Classify remaining table slots whose pointers hold valid LZ data.
@@ -887,6 +912,8 @@ def main():
     ap.add_argument("--labels", default="labels.json")
     ap.add_argument("--hardware-inc", default="include/hardware.inc")
     ap.add_argument("--ram-map", default="ram_map.json")
+    ap.add_argument("--hooks", nargs="*", default=[],
+                    help="hook_client.py dump(s) of data-helper call captures")
     ap.add_argument("--no-descent", action="store_true")
     args = ap.parse_args()
 
@@ -918,6 +945,9 @@ def main():
                     helpers[int(k, 0)] = kind
     if helpers:
         dis.find_data_slots(helpers)
+    if args.hooks:
+        dis.load_hook_dumps(args.hooks)
+    if helpers or args.hooks:
         dis.scan_lz_slots()
     labels = build_labels(dis, overrides)
     hwregs = load_hwregs(args.hardware_inc)

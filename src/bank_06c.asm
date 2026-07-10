@@ -10,7 +10,8 @@ DataPtr_6c_02:
 	dw CompanyLogosTilemap ; $4002
 DataPtr_6c_04:
 	dw Lz_6c_48af ; $4004
-	INCBIN "data/bank_06c/d_4006.bin" ; $4006, 2 bytes
+DataPtr_6c_06:
+	dw Data_6c_4906 ; $4006
 DataPtr_6c_08:
 	dw IntroRalliesTiles ; $4008
 DataPtr_6c_0a:
@@ -29,7 +30,8 @@ DataPtr_6c_16:
 	dw Lz_6c_525d ; $4016
 DataPtr_6c_18:
 	dw Lz_6c_539e ; $4018
-	INCBIN "data/bank_06c/d_401a.bin" ; $401a, 2 bytes
+DataPtr_6c_1a:
+	dw Data_6c_53e4 ; $401a
 DataPtr_6c_1c:
 	dw Lz_6c_5424 ; $401c
 DataPtr_6c_1e:
@@ -57,13 +59,53 @@ DataPtr_6c_34:
 	dw Lz_6c_61ba ; $4034
 DataPtr_6c_36:
 	dw Lz_6c_6264 ; $4036
-	INCBIN "data/bank_06c/d_4038.bin" ; $4038, 52 bytes
+	INCBIN "data/bank_06c/d_4038.bin" ; $4038, 2 bytes
+DataPtr_6c_3a:
+	dw Lz_6c_62ee ; $403a
+DataPtr_6c_3c:
+	dw Lz_6c_67e0 ; $403c
+DataPtr_6c_3e:
+	dw Lz_6c_68c2 ; $403e
+DataPtr_6c_40:
+	dw Data_6c_690a ; $4040
+DataPtr_6c_42:
+	dw Lz_6c_694a ; $4042
+DataPtr_6c_44:
+	dw Lz_6c_6dee ; $4044
+DataPtr_6c_46:
+	dw Lz_6c_6eab ; $4046
+DataPtr_6c_48:
+	dw Data_6c_6ef3 ; $4048
+DataPtr_6c_4a:
+	dw Lz_6c_6f33 ; $404a
+DataPtr_6c_4c:
+	dw Lz_6c_739e ; $404c
+DataPtr_6c_4e:
+	dw Lz_6c_7453 ; $404e
+DataPtr_6c_50:
+	dw Data_6c_749b ; $4050
+DataPtr_6c_52:
+	dw Lz_6c_74db ; $4052
+DataPtr_6c_54:
+	dw Lz_6c_75a7 ; $4054
+DataPtr_6c_56:
+	dw Lz_6c_7678 ; $4056
+DataPtr_6c_58:
+	dw Lz_6c_7744 ; $4058
+DataPtr_6c_5a:
+	dw Lz_6c_7808 ; $405a
+DataPtr_6c_5c:
+	dw Lz_6c_7836 ; $405c
+DataPtr_6c_5e:
+	dw Lz_6c_786d ; $405e
+	INCBIN "data/bank_06c/d_4060.bin" ; $4060, 12 bytes
 CompanyLogosTiles:
 	INCBIN "data/bank_06c/lz_406c.bin" ; $406c, 1804 bytes
 CompanyLogosTilemap:
 	INCBIN "data/bank_06c/lz_4778.bin" ; $4778, 311 bytes
 Lz_6c_48af:
 	INCBIN "data/bank_06c/lz_48af.bin" ; $48af, 87 bytes
+Data_6c_4906:
 	INCBIN "data/bank_06c/d_4906.bin" ; $4906, 64 bytes
 IntroRalliesTiles:
 	INCBIN "data/bank_06c/lz_4946.bin" ; $4946, 1813 bytes
@@ -83,6 +125,7 @@ Lz_6c_525d:
 	INCBIN "data/bank_06c/lz_525d.bin" ; $525d, 321 bytes
 Lz_6c_539e:
 	INCBIN "data/bank_06c/lz_539e.bin" ; $539e, 70 bytes
+Data_6c_53e4:
 	INCBIN "data/bank_06c/d_53e4.bin" ; $53e4, 64 bytes
 Lz_6c_5424:
 	INCBIN "data/bank_06c/lz_5424.bin" ; $5424, 45 bytes
@@ -111,4 +154,43 @@ Lz_6c_61ba:
 	INCBIN "data/bank_06c/lz_61ba.bin" ; $61ba, 170 bytes
 Lz_6c_6264:
 	INCBIN "data/bank_06c/lz_6264.bin" ; $6264, 74 bytes
-	INCBIN "data/bank_06c/d_62ae.bin" ; $62ae, 7506 bytes
+	INCBIN "data/bank_06c/d_62ae.bin" ; $62ae, 64 bytes
+Lz_6c_62ee:
+	INCBIN "data/bank_06c/lz_62ee.bin" ; $62ee, 1266 bytes
+Lz_6c_67e0:
+	INCBIN "data/bank_06c/lz_67e0.bin" ; $67e0, 226 bytes
+Lz_6c_68c2:
+	INCBIN "data/bank_06c/lz_68c2.bin" ; $68c2, 72 bytes
+Data_6c_690a:
+	INCBIN "data/bank_06c/d_690a.bin" ; $690a, 64 bytes
+Lz_6c_694a:
+	INCBIN "data/bank_06c/lz_694a.bin" ; $694a, 1188 bytes
+Lz_6c_6dee:
+	INCBIN "data/bank_06c/lz_6dee.bin" ; $6dee, 189 bytes
+Lz_6c_6eab:
+	INCBIN "data/bank_06c/lz_6eab.bin" ; $6eab, 72 bytes
+Data_6c_6ef3:
+	INCBIN "data/bank_06c/d_6ef3.bin" ; $6ef3, 64 bytes
+Lz_6c_6f33:
+	INCBIN "data/bank_06c/lz_6f33.bin" ; $6f33, 1131 bytes
+Lz_6c_739e:
+	INCBIN "data/bank_06c/lz_739e.bin" ; $739e, 181 bytes
+Lz_6c_7453:
+	INCBIN "data/bank_06c/lz_7453.bin" ; $7453, 72 bytes
+Data_6c_749b:
+	INCBIN "data/bank_06c/d_749b.bin" ; $749b, 64 bytes
+Lz_6c_74db:
+	INCBIN "data/bank_06c/lz_74db.bin" ; $74db, 204 bytes
+Lz_6c_75a7:
+	INCBIN "data/bank_06c/lz_75a7.bin" ; $75a7, 209 bytes
+Lz_6c_7678:
+	INCBIN "data/bank_06c/lz_7678.bin" ; $7678, 204 bytes
+Lz_6c_7744:
+	INCBIN "data/bank_06c/lz_7744.bin" ; $7744, 196 bytes
+Lz_6c_7808:
+	INCBIN "data/bank_06c/lz_7808.bin" ; $7808, 46 bytes
+Lz_6c_7836:
+	INCBIN "data/bank_06c/lz_7836.bin" ; $7836, 55 bytes
+Lz_6c_786d:
+	INCBIN "data/bank_06c/lz_786d.bin" ; $786d, 39 bytes
+	INCBIN "data/bank_06c/d_7894.bin" ; $7894, 1900 bytes

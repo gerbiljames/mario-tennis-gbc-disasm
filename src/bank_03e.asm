@@ -54,7 +54,20 @@ FarPtr_3e_2e:
 	dw Func_3e_5fad ; $402e
 FarPtr_3e_30:
 	dw Func_3e_4ba3 ; $4030
-	INCBIN "data/bank_03e/d_4032.bin" ; $4032, 264 bytes
+DataPtr_3e_32:
+	dw Lz_3e_69d5 ; $4032
+	INCBIN "data/bank_03e/d_4034.bin" ; $4034, 10 bytes
+DataPtr_3e_3e:
+	dw Lz_3e_7466 ; $403e
+DataPtr_3e_40:
+	dw Lz_3e_757d ; $4040
+DataPtr_3e_42:
+	dw Lz_3e_75e8 ; $4042
+DataPtr_3e_44:
+	dw Lz_3e_769b ; $4044
+DataPtr_3e_46:
+	dw Lz_3e_7752 ; $4046
+	INCBIN "data/bank_03e/d_4048.bin" ; $4048, 242 bytes
 Func_3e_413a:
 	ld a, [$cb04] ; $413a
 	ld d, a ; $413d
@@ -3982,4 +3995,17 @@ Label_3e_69c5:
 	INCBIN "data/bank_03e/d_69ca.bin" ; $69ca, 10 bytes
 Func_3e_69d4:
 	ret ; $69d4
-	INCBIN "data/bank_03e/d_69d5.bin" ; $69d5, 5675 bytes
+Lz_3e_69d5:
+	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2641 bytes
+	INCBIN "data/bank_03e/d_7426.bin" ; $7426, 64 bytes
+Lz_3e_7466:
+	INCBIN "data/bank_03e/lz_7466.bin" ; $7466, 279 bytes
+Lz_3e_757d:
+	INCBIN "data/bank_03e/lz_757d.bin" ; $757d, 107 bytes
+Lz_3e_75e8:
+	INCBIN "data/bank_03e/lz_75e8.bin" ; $75e8, 179 bytes
+Lz_3e_769b:
+	INCBIN "data/bank_03e/lz_769b.bin" ; $769b, 183 bytes
+Lz_3e_7752:
+	INCBIN "data/bank_03e/lz_7752.bin" ; $7752, 179 bytes
+	INCBIN "data/bank_03e/d_7805.bin" ; $7805, 2043 bytes

@@ -46,10 +46,9 @@ FarPtr_39_28:
 	dw Func_39_4b6d ; $4028
 FarPtr_39_2a:
 	dw Func_39_4be8 ; $402a
-	INCBIN "data/bank_039/d_402c.bin" ; $402c, 8 bytes
-DataPtr_39_34:
-	dw Lz_39_47ab ; $4034
-	INCBIN "data/bank_039/d_4036.bin" ; $4036, 34 bytes
+	INCBIN "data/bank_039/d_402c.bin" ; $402c, 42 bytes
+DataPtr_39_56:
+	dw Lz_39_47ab ; $4056
 DataPtr_39_58:
 	dw Lz_39_47fa ; $4058
 DataPtr_39_5a:

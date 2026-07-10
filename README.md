@@ -99,6 +99,12 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
 - `tools/tracelog2cov.py` — BizHawk native Trace Logger file → coverage JSON.
 - `tools/progress.py` — per-bank report of proven-code bytes and label-naming
   progress (`--unnamed XX` lists a bank's auto-named symbols).
+- `tools/hook_client.py` — captures the arguments of every distinct
+  `CopyDataFromBank`/`DecompressDataFromBank` call while the game runs
+  (connector script v2+ register hooks), i.e. the pointer-table slots that
+  dynamically-computed call sites consume. Feed dumps back with
+  `tools/disasm.py --hooks hooks/*.json`; they classify table slots the
+  static backtracking can't reach.
 - `tools/trace_client.py` — standalone client for the BizHawk connector
   (note: the connector accepts a single client; disconnect the MCP server
   first).

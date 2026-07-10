@@ -16,7 +16,15 @@ FarPtr_17_0a:
 	dw Func_17_4487 ; $400a
 FarPtr_17_0c:
 	dw Func_17_6f1b ; $400c
-	INCBIN "data/bank_017/d_400e.bin" ; $400e, 149 bytes
+DataPtr_17_0e:
+	dw Lz_17_7570 ; $400e
+DataPtr_17_10:
+	dw Lz_17_7770 ; $4010
+DataPtr_17_12:
+	dw Lz_17_78a5 ; $4012
+DataPtr_17_14:
+	dw Data_17_78fc ; $4014
+	INCBIN "data/bank_017/d_4016.bin" ; $4016, 141 bytes
 Func_17_40a3:
 	ldh a, [$ff8c] ; $40a3
 	and a, $0f ; $40a5
@@ -3821,4 +3829,12 @@ Label_17_7517:
 	ld h, $03 ; $756a
 	farcall FarPtr_39_1a ; $756c
 	ret ; $756f
-	INCBIN "data/bank_017/d_7570.bin" ; $7570, 2704 bytes
+Lz_17_7570:
+	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes
+Lz_17_7770:
+	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 309 bytes
+Lz_17_78a5:
+	INCBIN "data/bank_017/lz_78a5.bin" ; $78a5, 87 bytes
+Data_17_78fc:
+	INCBIN "data/bank_017/d_78fc.bin" ; $78fc, 64 bytes
+	INCBIN "data/bank_017/d_793c.bin" ; $793c, 1732 bytes

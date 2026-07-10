@@ -15,4 +15,10 @@ SECTION "ROM Bank $60", ROMX[$4000], BANK[$60]
 	or a, c ; $400a
 	ld d, b ; $400b
 	reti ; $400c
-	INCBIN "data/bank_060/d_400d.bin" ; $400d, 16371 bytes
+	INCBIN "data/bank_060/d_400d.bin" ; $400d, 1 bytes
+DataPtr_60_0e:
+	dw Lz_60_4080 ; $400e
+	INCBIN "data/bank_060/d_4010.bin" ; $4010, 112 bytes
+Lz_60_4080:
+	INCBIN "data/bank_060/lz_4080.bin" ; $4080, 3233 bytes
+	INCBIN "data/bank_060/d_4d21.bin" ; $4d21, 13023 bytes
