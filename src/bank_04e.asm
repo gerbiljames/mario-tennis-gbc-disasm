@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $4e", ROMX[$4000], BANK[$4e]
 
-	dw SpriteDesc_4e ; $4000
-SpriteDesc_4e:
+	dw CurtSpriteDesc ; $4000
+CurtSpriteDesc:
 	dw $0007 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_4e ; $4006 frame table
-	dw SpriteAnims_4e ; $4008 animation scripts
+	dw CurtSpriteFrames ; $4006 frame table
+	dw CurtSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_4e_7ce0 ; $400c per-slot OAM data
-SpriteFrames_4e:
+CurtSpriteFrames:
 	dw Data_4e_4130 ; $400e
 	dw Data_4e_4220 ; $4010
 	dw Data_4e_4310 ; $4012
@@ -274,7 +274,7 @@ Data_4e_7650:
 	INCBIN "data/bank_04e/d_7650.bin" ; $7650, 1680 bytes
 Data_4e_7ce0:
 	INCBIN "data/bank_04e/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_4e:
+CurtSpriteAnims:
 	dw Data_4e_7f4a ; $7f24
 	dw Data_4e_7f4d ; $7f26
 	dw Data_4e_7f57 ; $7f28

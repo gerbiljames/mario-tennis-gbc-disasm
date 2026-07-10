@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $52", ROMX[$4000], BANK[$52]
 
-	dw SpriteDesc_52 ; $4000
-SpriteDesc_52:
+	dw YoshiSpriteDesc ; $4000
+YoshiSpriteDesc:
 	dw $0003 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_52 ; $4006 frame table
-	dw SpriteAnims_52 ; $4008 animation scripts
+	dw YoshiSpriteFrames ; $4006 frame table
+	dw YoshiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_52_7ce0 ; $400c per-slot OAM data
-SpriteFrames_52:
+YoshiSpriteFrames:
 	dw Data_52_4130 ; $400e
 	dw Data_52_4220 ; $4010
 	dw Data_52_4310 ; $4012
@@ -274,7 +274,7 @@ Data_52_7650:
 	INCBIN "data/bank_052/d_7650.bin" ; $7650, 1680 bytes
 Data_52_7ce0:
 	INCBIN "data/bank_052/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_52:
+YoshiSpriteAnims:
 	dw Data_52_7f4a ; $7f24
 	dw Data_52_7f4d ; $7f26
 	dw Data_52_7f57 ; $7f28

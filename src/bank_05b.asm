@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $5b", ROMX[$4000], BANK[$5b]
 
-	dw SpriteDesc_5b ; $4000
-SpriteDesc_5b:
+	dw LuigiSpriteDesc ; $4000
+LuigiSpriteDesc:
 	dw $0003 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_5b ; $4006 frame table
-	dw SpriteAnims_5b ; $4008 animation scripts
+	dw LuigiSpriteFrames ; $4006 frame table
+	dw LuigiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_5b_7ce0 ; $400c per-slot OAM data
-SpriteFrames_5b:
+LuigiSpriteFrames:
 	dw Data_5b_4130 ; $400e
 	dw Data_5b_4220 ; $4010
 	dw Data_5b_4310 ; $4012
@@ -274,7 +274,7 @@ Data_5b_7650:
 	INCBIN "data/bank_05b/d_7650.bin" ; $7650, 1680 bytes
 Data_5b_7ce0:
 	INCBIN "data/bank_05b/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_5b:
+LuigiSpriteAnims:
 	dw Data_5b_7f4a ; $7f24
 	dw Data_5b_7f4d ; $7f26
 	dw Data_5b_7f57 ; $7f28

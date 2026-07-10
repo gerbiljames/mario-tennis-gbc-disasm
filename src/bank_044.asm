@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $44", ROMX[$4000], BANK[$44]
 
-	dw SpriteDesc_44 ; $4000
-SpriteDesc_44:
+	dw EmilySpriteDesc ; $4000
+EmilySpriteDesc:
 	dw $0005 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_44 ; $4006 frame table
-	dw SpriteAnims_44 ; $4008 animation scripts
+	dw EmilySpriteFrames ; $4006 frame table
+	dw EmilySpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_44_7ce0 ; $400c per-slot OAM data
-SpriteFrames_44:
+EmilySpriteFrames:
 	dw Data_44_4130 ; $400e
 	dw Data_44_4220 ; $4010
 	dw Data_44_4310 ; $4012
@@ -274,7 +274,7 @@ Data_44_7650:
 	INCBIN "data/bank_044/d_7650.bin" ; $7650, 1680 bytes
 Data_44_7ce0:
 	INCBIN "data/bank_044/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_44:
+EmilySpriteAnims:
 	dw Data_44_7f4a ; $7f24
 	dw Data_44_7f4d ; $7f26
 	dw Data_44_7f57 ; $7f28

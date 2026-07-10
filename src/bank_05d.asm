@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $5d", ROMX[$4000], BANK[$5d]
 
-	dw SpriteDesc_5d ; $4000
-SpriteDesc_5d:
+	dw BabyMarioSpriteDesc ; $4000
+BabyMarioSpriteDesc:
 	dw $0006 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_5d ; $4006 frame table
-	dw SpriteAnims_5d ; $4008 animation scripts
+	dw BabyMarioSpriteFrames ; $4006 frame table
+	dw BabyMarioSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_5d_7ce0 ; $400c per-slot OAM data
-SpriteFrames_5d:
+BabyMarioSpriteFrames:
 	dw Data_5d_4130 ; $400e
 	dw Data_5d_4220 ; $4010
 	dw Data_5d_4310 ; $4012
@@ -274,7 +274,7 @@ Data_5d_7650:
 	INCBIN "data/bank_05d/d_7650.bin" ; $7650, 1680 bytes
 Data_5d_7ce0:
 	INCBIN "data/bank_05d/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_5d:
+BabyMarioSpriteAnims:
 	dw Data_5d_7f4a ; $7f24
 	dw Data_5d_7f4d ; $7f26
 	dw Data_5d_7f57 ; $7f28

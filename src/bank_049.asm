@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $49", ROMX[$4000], BANK[$49]
 
-	dw SpriteDesc_49 ; $4000
-SpriteDesc_49:
+	dw EldenSpriteDesc ; $4000
+EldenSpriteDesc:
 	dw $0005 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_49 ; $4006 frame table
-	dw SpriteAnims_49 ; $4008 animation scripts
+	dw EldenSpriteFrames ; $4006 frame table
+	dw EldenSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_49_7ce0 ; $400c per-slot OAM data
-SpriteFrames_49:
+EldenSpriteFrames:
 	dw Data_49_4130 ; $400e
 	dw Data_49_4220 ; $4010
 	dw Data_49_4310 ; $4012
@@ -274,7 +274,7 @@ Data_49_7650:
 	INCBIN "data/bank_049/d_7650.bin" ; $7650, 1680 bytes
 Data_49_7ce0:
 	INCBIN "data/bank_049/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_49:
+EldenSpriteAnims:
 	dw Data_49_7f4a ; $7f24
 	dw Data_49_7f4d ; $7f26
 	dw Data_49_7f57 ; $7f28

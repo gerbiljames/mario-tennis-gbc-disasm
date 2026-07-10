@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $51", ROMX[$4000], BANK[$51]
 
-	dw SpriteDesc_51 ; $4000
-SpriteDesc_51:
+	dw WaluigiSpriteDesc ; $4000
+WaluigiSpriteDesc:
 	dw $0007 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_51 ; $4006 frame table
-	dw SpriteAnims_51 ; $4008 animation scripts
+	dw WaluigiSpriteFrames ; $4006 frame table
+	dw WaluigiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_51_7ce0 ; $400c per-slot OAM data
-SpriteFrames_51:
+WaluigiSpriteFrames:
 	dw Data_51_4130 ; $400e
 	dw Data_51_4220 ; $4010
 	dw Data_51_4310 ; $4012
@@ -274,7 +274,7 @@ Data_51_7650:
 	INCBIN "data/bank_051/d_7650.bin" ; $7650, 1680 bytes
 Data_51_7ce0:
 	INCBIN "data/bank_051/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_51:
+WaluigiSpriteAnims:
 	dw Data_51_7f4a ; $7f24
 	dw Data_51_7f4d ; $7f26
 	dw Data_51_7f57 ; $7f28

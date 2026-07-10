@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $5c", ROMX[$4000], BANK[$5c]
 
-	dw SpriteDesc_5c ; $4000
-SpriteDesc_5c:
+	dw DKSpriteDesc ; $4000
+DKSpriteDesc:
 	dw $0004 ; $4002
 	dw $0003 ; $4004
-	dw SpriteFrames_5c ; $4006 frame table
-	dw SpriteAnims_5c ; $4008 animation scripts
+	dw DKSpriteFrames ; $4006 frame table
+	dw DKSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
 	dw Data_5c_7ce0 ; $400c per-slot OAM data
-SpriteFrames_5c:
+DKSpriteFrames:
 	dw Data_5c_4130 ; $400e
 	dw Data_5c_4220 ; $4010
 	dw Data_5c_4310 ; $4012
@@ -274,7 +274,7 @@ Data_5c_7650:
 	INCBIN "data/bank_05c/d_7650.bin" ; $7650, 1680 bytes
 Data_5c_7ce0:
 	INCBIN "data/bank_05c/d_7ce0.bin" ; $7ce0, 580 bytes
-SpriteAnims_5c:
+DKSpriteAnims:
 	dw Data_5c_7f4a ; $7f24
 	dw Data_5c_7f4d ; $7f26
 	dw Data_5c_7f57 ; $7f28
