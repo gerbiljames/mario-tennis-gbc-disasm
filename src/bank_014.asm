@@ -880,4 +880,5 @@ Func_14_78a7:
 	sound $7b ; $78ae
 Label_14_78b0:
 	ret ; $78b0
-	INCBIN "data/bank_014/d_78b1.bin" ; $78b1, 1871 bytes
+	INCBIN "data/bank_014/d_78b1.bin" ; $78b1, 612 bytes
+	ds 1259, $ff ; $7b15, fill

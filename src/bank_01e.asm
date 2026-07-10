@@ -4718,4 +4718,4 @@ Func_1e_7b4c:
 	ld c, $0f ; $7b54
 	farcall FarPtr_39_0e ; $7b56
 	ret ; $7b59
-	INCBIN "data/bank_01e/d_7b5a.bin" ; $7b5a, 1190 bytes
+	ds 1190, $ff ; $7b5a, fill

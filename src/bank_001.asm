@@ -237,7 +237,9 @@ Label_01_4204:
 Label_01_4209:
 	call Func_00_2631 ; $4209
 	jp Label_01_40f9 ; $420c
-	INCBIN "data/bank_001/d_420f.bin" ; $420f, 3649 bytes
+	INCBIN "data/bank_001/d_420f.bin" ; $420f, 257 bytes
+	ds 256, $00 ; $4310, fill
+	INCBIN "data/bank_001/d_4410.bin" ; $4410, 3136 bytes
 Func_01_5050:
 	push af ; $5050
 	push bc ; $5051
@@ -369,7 +371,9 @@ Func_01_519a:
 	ld e, $01 ; $51a5
 	call Func_00_05b0 ; $51a7
 	ret ; $51aa
-	INCBIN "data/bank_001/d_51ab.bin" ; $51ab, 3717 bytes
+	INCBIN "data/bank_001/d_51ab.bin" ; $51ab, 261 bytes
+	ds 256, $00 ; $52b0, fill
+	INCBIN "data/bank_001/d_53b0.bin" ; $53b0, 3200 bytes
 Func_01_6030:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032
@@ -578,4 +582,5 @@ Label_01_6b4d:
 	pop af ; $6b60
 Label_01_6b61:
 	jp Label_01_6a8a ; $6b61
-	INCBIN "data/bank_001/d_6b64.bin" ; $6b64, 5276 bytes
+	INCBIN "data/bank_001/d_6b64.bin" ; $6b64, 194 bytes
+	ds 5082, $ff ; $6c26, fill

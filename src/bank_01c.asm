@@ -3385,4 +3385,5 @@ Label_1c_750d:
 	ld hl, $c216 ; $753a
 	farcall FarPtr_1d_14 ; $753d
 	ret ; $7540
-	INCBIN "data/bank_01c/d_7541.bin" ; $7541, 2751 bytes
+	INCBIN "data/bank_01c/d_7541.bin" ; $7541, 2486 bytes
+	ds 265, $ff ; $7ef7, fill

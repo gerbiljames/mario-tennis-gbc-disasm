@@ -8,4 +8,5 @@ DataPtr_4f_00:
 	dw Data_4f_4002 ; $4000
 Data_4f_4002:
 	INCBIN "data/bank_04f/d_4002.bin" ; $4002, 16 bytes
-	INCBIN "data/bank_04f/d_4012.bin" ; $4012, 16366 bytes
+	INCBIN "data/bank_04f/d_4012.bin" ; $4012, 16293 bytes
+	ds 73, $ff ; $7fb7, fill

@@ -3651,4 +3651,5 @@ Func_1b_7896:
 	ldh [$ff96], a ; $78b8
 	ldh [rWBK], a ; $78ba
 	ret ; $78bc
-	INCBIN "data/bank_01b/d_78bd.bin" ; $78bd, 1859 bytes
+	INCBIN "data/bank_01b/d_78bd.bin" ; $78bd, 1781 bytes
+	ds 78, $ff ; $7fb2, fill

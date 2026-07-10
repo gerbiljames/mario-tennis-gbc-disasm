@@ -93,4 +93,5 @@ Func_43_5030:
 	rst Rst38 ; $508d
 	ld [hl], l ; $508e
 	ld a, a ; $508f
-	INCBIN "data/bank_043/d_5090.bin" ; $5090, 12144 bytes
+	INCBIN "data/bank_043/d_5090.bin" ; $5090, 12067 bytes
+	ds 77, $ff ; $7fb3, fill

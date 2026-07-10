@@ -229,4 +229,5 @@ Lz_3c_726a:
 	INCBIN "data/bank_03c/lz_726a.bin" ; $726a, 218 bytes
 Lz_3c_7344:
 	INCBIN "data/bank_03c/lz_7344.bin" ; $7344, 215 bytes
-	INCBIN "data/bank_03c/d_741b.bin" ; $741b, 3045 bytes
+	INCBIN "data/bank_03c/d_741b.bin" ; $741b, 1457 bytes
+	ds 1588, $ff ; $79cc, fill

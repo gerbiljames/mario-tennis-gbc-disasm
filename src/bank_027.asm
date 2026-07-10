@@ -364,4 +364,5 @@ Func_27_7856:
 	farcall FarPtr_0a_04 ; $7858
 	pop af ; $785b
 	ret ; $785c
-	INCBIN "data/bank_027/d_785d.bin" ; $785d, 1955 bytes
+	INCBIN "data/bank_027/d_785d.bin" ; $785d, 612 bytes
+	ds 1343, $ff ; $7ac1, fill

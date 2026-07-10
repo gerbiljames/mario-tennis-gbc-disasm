@@ -5455,4 +5455,5 @@ Func_1d_7cc6:
 	ld [hl+], a ; $7d0c
 	ld [hl], d ; $7d0d
 	ret ; $7d0e
-	INCBIN "data/bank_01d/d_7d0f.bin" ; $7d0f, 753 bytes
+	INCBIN "data/bank_01d/d_7d0f.bin" ; $7d0f, 11 bytes
+	ds 742, $ff ; $7d1a, fill

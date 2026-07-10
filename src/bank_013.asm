@@ -4203,4 +4203,4 @@ Label_13_7d7b:
 	jr z, Label_13_7d77 ; $7d84
 	inc a ; $7d86
 	jr Label_13_7d77 ; $7d87
-	INCBIN "data/bank_013/d_7d89.bin" ; $7d89, 631 bytes
+	ds 631, $ff ; $7d89, fill

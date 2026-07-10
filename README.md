@@ -29,7 +29,10 @@ byte-for-byte.
 ## Layout
 
 - `src/bank_XXX.asm` — one file per 16 KiB ROM bank (128 banks). Proven code
-  is disassembled; everything else is an `INCBIN` of a blob in `data/`.
+  is disassembled; everything else is an `INCBIN` of a blob in `data/`,
+  except long constant-byte padding runs (`$ff`, and `$00` past 256 bytes),
+  which are emitted as `ds` fill directives — unused ROM space, visible as
+  such in the source.
 - `data.manifest` — offset/length list consumed by `tools/extract.py` to
   slice the base ROM into `data/` (gitignored).
 - `labels.json` — symbol name overrides (`{"0x1234": "SomeName"}`, keys are

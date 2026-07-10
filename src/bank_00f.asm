@@ -2447,4 +2447,5 @@ Label_0f_7b3e:
 	ld d, $01 ; $7b51
 	farcall FarPtr_0a_34 ; $7b53
 	ret ; $7b56
-	INCBIN "data/bank_00f/d_7b57.bin" ; $7b57, 1193 bytes
+	INCBIN "data/bank_00f/d_7b57.bin" ; $7b57, 612 bytes
+	ds 581, $ff ; $7dbb, fill

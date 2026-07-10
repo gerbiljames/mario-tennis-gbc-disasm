@@ -573,4 +573,5 @@ Func_24_7707:
 	pop bc ; $7714
 	call Func_24_41a2 ; $7715
 	ret ; $7718
-	INCBIN "data/bank_024/d_7719.bin" ; $7719, 2279 bytes
+	INCBIN "data/bank_024/d_7719.bin" ; $7719, 64 bytes
+	ds 2215, $ff ; $7759, fill

@@ -35,6 +35,12 @@ def main():
         bank = int(off_s, 16) // BANK_SIZE
         data_bytes[bank] = data_bytes.get(bank, 0) + int(len_s, 16)
 
+    fill_re = re.compile(r"^\tds (\d+), \$", re.M)
+    fill_bytes = {}
+    for p in Path("src").glob("bank_*.asm"):
+        bank = int(p.stem.split("_")[1], 16)
+        fill_bytes[bank] = sum(int(n) for n in fill_re.findall(p.read_text()))
+
     nbanks = len(list(Path("src").glob("bank_*.asm"))) or (max(data_bytes) + 1)
 
     syms = {b: [] for b in range(nbanks)}
@@ -61,23 +67,25 @@ def main():
                 print(f"{bank:02x}:{addr:04x} {name}")
         return
 
-    print(f"{'bank':>4}  {'code bytes':>13}  {'code%':>6}  "
+    print(f"{'bank':>4}  {'code bytes':>13}  {'code%':>6}  {'fill':>5}  "
           f"{'labels':>6}  {'named':>5}")
-    tot_code = tot_labels = tot_named = 0
+    tot_code = tot_fill = tot_labels = tot_named = 0
     for bank in range(nbanks):
-        code = BANK_SIZE - data_bytes.get(bank, 0)
+        fill = fill_bytes.get(bank, 0)
+        code = BANK_SIZE - data_bytes.get(bank, 0) - fill
         labels = syms[bank]
         named = [n for _a, n in labels if not AUTO_RE.match(n)]
         tot_code += code
+        tot_fill += fill
         tot_labels += len(labels)
         tot_named += len(named)
         if code == 0 and not args.all:
             continue
         print(f"{bank:>4x}  {code:>5}/{BANK_SIZE}  {code/BANK_SIZE:>6.1%}  "
-              f"{len(labels):>6}  {len(named):>5}")
+              f"{fill:>5}  {len(labels):>6}  {len(named):>5}")
     total = nbanks * BANK_SIZE
     print(f"{'all':>4}  {tot_code:>5}/{total}  {tot_code/total:>6.1%}  "
-          f"{tot_labels:>6}  {tot_named:>5}")
+          f"{tot_fill:>5}  {tot_labels:>6}  {tot_named:>5}")
 
 
 if __name__ == "__main__":

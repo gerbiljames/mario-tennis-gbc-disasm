@@ -2222,4 +2222,5 @@ Label_10_7de4:
 	jr z, Label_10_7de0 ; $7dfe
 	ld a, $09 ; $7e00
 	jr Label_10_7de0 ; $7e02
-	INCBIN "data/bank_010/d_7e04.bin" ; $7e04, 508 bytes
+	INCBIN "data/bank_010/d_7e04.bin" ; $7e04, 49 bytes
+	ds 459, $ff ; $7e35, fill

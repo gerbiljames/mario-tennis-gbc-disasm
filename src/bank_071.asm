@@ -37,4 +37,5 @@ Data_71_7ccc:
 	INCBIN "data/bank_071/d_7cdc.bin" ; $7cdc, 103 bytes
 Data_71_7d43:
 	INCBIN "data/bank_071/d_7d43.bin" ; $7d43, 16 bytes
-	INCBIN "data/bank_071/d_7d53.bin" ; $7d53, 685 bytes
+	INCBIN "data/bank_071/d_7d53.bin" ; $7d53, 166 bytes
+	ds 519, $ff ; $7df9, fill

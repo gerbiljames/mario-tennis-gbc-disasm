@@ -3723,4 +3723,5 @@ Func_07_5df9:
 	ld [$c4ee], a ; $5e9a
 	farcall FarPtr_08_04 ; $5e9d
 	ret ; $5ea0
-	INCBIN "data/bank_007/d_5ea1.bin" ; $5ea1, 8543 bytes
+	INCBIN "data/bank_007/d_5ea1.bin" ; $5ea1, 405 bytes
+	ds 8138, $ff ; $6036, fill

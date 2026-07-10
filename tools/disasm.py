@@ -994,9 +994,40 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                         length = mlen
                     if kind == "lz":
                         prefix = "lz"
-                blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
-                manifest.append((blob, run_start, length))
-                lines.append(f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes')
+                if mark and mark[0]:
+                    blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
+                    manifest.append((blob, run_start, length))
+                    lines.append(f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes')
+                    continue
+                # Unclassified run: split out long constant-byte fills as ds
+                # directives ($ff is the mastering fill; $00 needs a longer
+                # run since zero arrays can be real data).
+                seg = run_start
+                while seg < off:
+                    b = rom[seg]
+                    j = seg
+                    while j < off and rom[j] == b:
+                        j += 1
+                    if not ((b == 0xFF and j - seg >= 64)
+                            or (b == 0x00 and j - seg >= 256)):
+                        j = seg + 1
+                        while j < off:
+                            b = rom[j]
+                            k = j
+                            while k < off and rom[k] == b:
+                                k += 1
+                            if (b == 0xFF and k - j >= 64) \
+                                    or (b == 0x00 and k - j >= 256):
+                                break
+                            j = k
+                        scpu = offset_to_cpu(seg)
+                        blob = f"bank_{bank:03x}/d_{scpu:04x}.bin"
+                        manifest.append((blob, seg, j - seg))
+                        lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {j - seg} bytes')
+                    else:
+                        lines.append(f"\tds {j - seg}, ${b:02x} "
+                                     f"; ${offset_to_cpu(seg):04x}, fill")
+                    seg = j
         lines.append("")
         Path(srcdir, f"bank_{bank:03x}.asm").write_text("\n".join(lines))
     with open(manifest_path, "w") as f:

@@ -260,4 +260,4 @@ Lz_6d_7970:
 	INCBIN "data/bank_06d/lz_7970.bin" ; $7970, 232 bytes
 Lz_6d_7a58:
 	INCBIN "data/bank_06d/lz_7a58.bin" ; $7a58, 757 bytes
-	INCBIN "data/bank_06d/d_7d4d.bin" ; $7d4d, 691 bytes
+	ds 691, $ff ; $7d4d, fill

@@ -153,4 +153,5 @@ Func_2b_5e9d:
 	call Func_2b_424c ; $5eb6
 	call Func_2b_4098 ; $5eb9
 	ret ; $5ebc
-	INCBIN "data/bank_02b/d_5ebd.bin" ; $5ebd, 8515 bytes
+	INCBIN "data/bank_02b/d_5ebd.bin" ; $5ebd, 104 bytes
+	ds 8411, $ff ; $5f25, fill

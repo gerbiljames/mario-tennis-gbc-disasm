@@ -3906,4 +3906,5 @@ Label_0e_7e81:
 	jr z, Label_0e_7e7d ; $7e9b
 	ld a, $09 ; $7e9d
 	jr Label_0e_7e7d ; $7e9f
-	INCBIN "data/bank_00e/d_7ea1.bin" ; $7ea1, 351 bytes
+	INCBIN "data/bank_00e/d_7ea1.bin" ; $7ea1, 49 bytes
+	ds 302, $ff ; $7ed2, fill

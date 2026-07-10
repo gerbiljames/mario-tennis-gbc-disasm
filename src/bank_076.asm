@@ -38,4 +38,5 @@ Data_76_686a:
 	INCBIN "data/bank_076/d_687a.bin" ; $687a, 2672 bytes
 Data_76_72ea:
 	INCBIN "data/bank_076/d_72ea.bin" ; $72ea, 16 bytes
-	INCBIN "data/bank_076/d_72fa.bin" ; $72fa, 3334 bytes
+	INCBIN "data/bank_076/d_72fa.bin" ; $72fa, 483 bytes
+	ds 2851, $ff ; $74dd, fill

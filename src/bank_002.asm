@@ -2173,4 +2173,4 @@ Label_02_5eef:
 Label_02_5ef8:
 	ld a, $01 ; $5ef8
 	ret ; $5efa
-	INCBIN "data/bank_002/d_5efb.bin" ; $5efb, 8453 bytes
+	ds 8453, $ff ; $5efb, fill

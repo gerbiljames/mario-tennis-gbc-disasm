@@ -6757,4 +6757,4 @@ Label_38_777b:
 	cp a, $04 ; $7783
 	jr nz, Label_38_777b ; $7785
 	ret ; $7787
-	INCBIN "data/bank_038/d_7788.bin" ; $7788, 2168 bytes
+	ds 2168, $ff ; $7788, fill

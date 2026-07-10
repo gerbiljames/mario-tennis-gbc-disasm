@@ -59,4 +59,4 @@ Label_5e_6ed6:
 	pop de ; $6ed7
 	pop bc ; $6ed8
 	ret ; $6ed9
-	INCBIN "data/bank_05e/d_6eda.bin" ; $6eda, 4390 bytes
+	ds 4390, $ff ; $6eda, fill

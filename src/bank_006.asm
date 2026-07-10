@@ -2518,4 +2518,4 @@ Label_06_78d3:
 	dec c ; $78d3
 	jr nz, Func_06_78ab ; $78d4
 	ret ; $78d6
-	INCBIN "data/bank_006/d_78d7.bin" ; $78d7, 1833 bytes
+	ds 1833, $ff ; $78d7, fill

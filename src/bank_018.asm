@@ -976,4 +976,5 @@ Label_18_7d81:
 	cp a, $10 ; $7d83
 	jr nz, Label_18_7d64 ; $7d85
 	ret ; $7d87
-	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 632 bytes
+	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 365 bytes
+	ds 267, $ff ; $7ef5, fill

@@ -315,4 +315,5 @@ Label_28_6141:
 Label_28_616f:
 	pop af ; $616f
 	ret ; $6170
-	INCBIN "data/bank_028/d_6171.bin" ; $6171, 7823 bytes
+	INCBIN "data/bank_028/d_6171.bin" ; $6171, 3059 bytes
+	ds 4764, $ff ; $6d64, fill

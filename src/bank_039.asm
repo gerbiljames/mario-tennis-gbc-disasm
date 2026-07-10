@@ -1323,4 +1323,4 @@ Func_39_745a:
 	or a, a ; $745f
 	jr nz, Func_39_745a ; $7460
 	ret ; $7462
-	INCBIN "data/bank_039/d_7463.bin" ; $7463, 2973 bytes
+	ds 2973, $ff ; $7463, fill

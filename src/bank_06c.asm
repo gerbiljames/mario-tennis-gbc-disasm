@@ -220,4 +220,4 @@ Lz_6c_7b92:
 	INCBIN "data/bank_06c/lz_7b92.bin" ; $7b92, 278 bytes
 Lz_6c_7ca8:
 	INCBIN "data/bank_06c/lz_7ca8.bin" ; $7ca8, 118 bytes
-	INCBIN "data/bank_06c/d_7d1e.bin" ; $7d1e, 738 bytes
+	ds 738, $ff ; $7d1e, fill

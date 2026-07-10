@@ -1155,4 +1155,5 @@ Label_16_6961:
 	ld l, a ; $6963
 	call DecompressData ; $6964
 	ret ; $6967
-	INCBIN "data/bank_016/d_6968.bin" ; $6968, 5784 bytes
+	INCBIN "data/bank_016/d_6968.bin" ; $6968, 4583 bytes
+	ds 1201, $ff ; $7b4f, fill

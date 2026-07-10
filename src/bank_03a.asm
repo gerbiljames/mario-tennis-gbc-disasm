@@ -160,4 +160,4 @@ Data_3a_7dba:
 	INCBIN "data/bank_03a/d_7dba.bin" ; $7dba, 64 bytes
 Lz_3a_7dfa:
 	INCBIN "data/bank_03a/lz_7dfa.bin" ; $7dfa, 227 bytes
-	INCBIN "data/bank_03a/d_7edd.bin" ; $7edd, 291 bytes
+	ds 291, $ff ; $7edd, fill

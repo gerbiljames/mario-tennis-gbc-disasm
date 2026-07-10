@@ -1473,4 +1473,5 @@ Label_0d_5421:
 	ret ; $542b
 	INCBIN "data/bank_00d/d_542c.bin" ; $542c, 1165 bytes
 	ret ; $58b9
-	INCBIN "data/bank_00d/d_58ba.bin" ; $58ba, 10054 bytes
+	INCBIN "data/bank_00d/d_58ba.bin" ; $58ba, 1856 bytes
+	ds 8198, $ff ; $5ffa, fill

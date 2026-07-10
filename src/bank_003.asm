@@ -5702,4 +5702,4 @@ Func_03_7829:
 Label_03_7833:
 	dec b ; $7833
 	jr Func_03_7829 ; $7834
-	INCBIN "data/bank_003/d_7836.bin" ; $7836, 1994 bytes
+	ds 1994, $ff ; $7836, fill

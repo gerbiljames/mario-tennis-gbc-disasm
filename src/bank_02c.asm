@@ -287,4 +287,5 @@ Func_2c_7325:
 	pop bc ; $7332
 	call Func_2c_4139 ; $7333
 	ret ; $7336
-	INCBIN "data/bank_02c/d_7337.bin" ; $7337, 3273 bytes
+	INCBIN "data/bank_02c/d_7337.bin" ; $7337, 64 bytes
+	ds 3209, $ff ; $7377, fill

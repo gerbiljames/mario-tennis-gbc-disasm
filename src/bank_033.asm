@@ -59,4 +59,4 @@ Label_33_7b11:
 	pop de ; $7b12
 	pop bc ; $7b13
 	ret ; $7b14
-	INCBIN "data/bank_033/d_7b15.bin" ; $7b15, 1259 bytes
+	ds 1259, $ff ; $7b15, fill

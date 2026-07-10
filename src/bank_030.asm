@@ -66,4 +66,4 @@ Label_30_7dc9:
 	pop de ; $7dca
 	pop bc ; $7dcb
 	ret ; $7dcc
-	INCBIN "data/bank_030/d_7dcd.bin" ; $7dcd, 563 bytes
+	ds 563, $ff ; $7dcd, fill

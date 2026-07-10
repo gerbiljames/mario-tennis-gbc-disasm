@@ -215,4 +215,5 @@ Func_23_7e7d:
 	pop bc ; $7e93
 	call Func_23_4102 ; $7e94
 	ret ; $7e97
-	INCBIN "data/bank_023/d_7e98.bin" ; $7e98, 360 bytes
+	INCBIN "data/bank_023/d_7e98.bin" ; $7e98, 84 bytes
+	ds 276, $ff ; $7eec, fill

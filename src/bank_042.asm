@@ -90,4 +90,5 @@ Func_42_49a0:
 	cp a, $ab ; $4a02
 	ld a, h ; $4a04
 	rst Rst00 ; $4a05
-	INCBIN "data/bank_042/d_4a06.bin" ; $4a06, 13818 bytes
+	INCBIN "data/bank_042/d_4a06.bin" ; $4a06, 13743 bytes
+	ds 75, $ff ; $7fb5, fill

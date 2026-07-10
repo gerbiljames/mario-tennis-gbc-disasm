@@ -45,7 +45,8 @@ TimerInterrupt:
 	INCBIN "data/bank_000/d_0053.bin" ; $0053, 5 bytes
 SerialInterrupt:
 	jp Label_00_2861 ; $0058
-	INCBIN "data/bank_000/d_005b.bin" ; $005b, 165 bytes
+	INCBIN "data/bank_000/d_005b.bin" ; $005b, 8 bytes
+	ds 157, $ff ; $0063, fill
 EntryPoint:
 	nop ; $0100
 	jp Label_00_0150 ; $0101

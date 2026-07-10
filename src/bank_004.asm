@@ -3183,4 +3183,4 @@ Label_04_5767:
 	pop bc ; $5767
 	pop af ; $5768
 	ret ; $5769
-	INCBIN "data/bank_004/d_576a.bin" ; $576a, 10390 bytes
+	ds 10390, $ff ; $576a, fill

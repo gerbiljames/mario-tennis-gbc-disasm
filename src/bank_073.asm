@@ -86,4 +86,5 @@ Data_73_798d:
 	INCBIN "data/bank_073/d_798d.bin" ; $798d, 320 bytes
 Data_73_7acd:
 	INCBIN "data/bank_073/d_7acd.bin" ; $7acd, 16 bytes
-	INCBIN "data/bank_073/d_7add.bin" ; $7add, 1315 bytes
+	INCBIN "data/bank_073/d_7add.bin" ; $7add, 144 bytes
+	ds 1171, $ff ; $7b6d, fill

@@ -3291,4 +3291,5 @@ Label_11_7dbc:
 	jr z, Label_11_7db8 ; $7dd6
 	ld a, $09 ; $7dd8
 	jr Label_11_7db8 ; $7dda
-	INCBIN "data/bank_011/d_7ddc.bin" ; $7ddc, 548 bytes
+	INCBIN "data/bank_011/d_7ddc.bin" ; $7ddc, 49 bytes
+	ds 499, $ff ; $7e0d, fill

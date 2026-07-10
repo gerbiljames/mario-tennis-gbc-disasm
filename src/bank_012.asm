@@ -1896,4 +1896,5 @@ Func_12_64a0:
 	ret ; $7070
 	INCBIN "data/bank_012/d_7071.bin" ; $7071, 2624 bytes
 	ret ; $7ab1
-	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 1358 bytes
+	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 571 bytes
+	ds 787, $ff ; $7ced, fill

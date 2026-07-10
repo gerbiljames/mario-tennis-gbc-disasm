@@ -7233,4 +7233,4 @@ Label_3b_7e9f:
 	cp a, $06 ; $7eb1
 	jr nz, Label_3b_7e9f ; $7eb3
 	ret ; $7eb5
-	INCBIN "data/bank_03b/d_7eb6.bin" ; $7eb6, 330 bytes
+	ds 330, $ff ; $7eb6, fill

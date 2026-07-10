@@ -3840,4 +3840,5 @@ Lz_17_78a5:
 	INCBIN "data/bank_017/lz_78a5.bin" ; $78a5, 87 bytes
 Data_17_78fc:
 	INCBIN "data/bank_017/d_78fc.bin" ; $78fc, 64 bytes
-	INCBIN "data/bank_017/d_793c.bin" ; $793c, 1732 bytes
+	INCBIN "data/bank_017/d_793c.bin" ; $793c, 573 bytes
+	ds 1159, $ff ; $7b79, fill

@@ -1237,4 +1237,5 @@ Func_0b_7258:
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
 	farcall FarPtr_08_04 ; $72dc
 	ret ; $72df
-	INCBIN "data/bank_00b/d_72e0.bin" ; $72e0, 3360 bytes
+	INCBIN "data/bank_00b/d_72e0.bin" ; $72e0, 27 bytes
+	ds 3333, $ff ; $72fb, fill
