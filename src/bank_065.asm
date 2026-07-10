@@ -21,7 +21,7 @@ DataPtr_65_0e:
 	dw Lz_65_408b ; $400e
 	INCBIN "data/bank_065/d_4010.bin" ; $4010, 4 bytes
 DataPtr_65_14:
-	dw Data_65_5ee0 ; $4014
+	dw Lz_65_5ee0 ; $4014
 DataPtr_65_16:
 	dw Lz_65_6269 ; $4016
 DataPtr_65_18:
@@ -62,17 +62,8 @@ Data_65_5120:
 	INCBIN "data/bank_065/d_5120.bin" ; $5120, 1623 bytes
 Lz_65_5777:
 	INCBIN "data/bank_065/lz_5777.bin" ; $5777, 1897 bytes
-Data_65_5ee0:
-	INCBIN "data/bank_065/d_5ee0.bin" ; $5ee0, 671 bytes
-	rst Rst18 ; $617f
-	ld b, b ; $6180
-	ld b, e ; $6181
-	ld e, e ; $6182
-	inc b ; $6183
-	ld c, d ; $6184
-	ld h, c ; $6185
-	add a, b ; $6186
-	INCBIN "data/bank_065/d_6187.bin" ; $6187, 226 bytes
+Lz_65_5ee0:
+	INCBIN "data/bank_065/lz_5ee0.bin" ; $5ee0, 905 bytes
 Lz_65_6269:
 	INCBIN "data/bank_065/lz_6269.bin" ; $6269, 517 bytes
 Lz_65_646e:

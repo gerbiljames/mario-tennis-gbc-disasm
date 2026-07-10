@@ -207,8 +207,15 @@ class Disassembly:
                 return True
         return off in self.code_bytes and off not in self.instrs
 
+    # Seeds proven misattributed: a corrupted native-trace line whose byte
+    # check degenerated to a single opcode byte landed one "executed"
+    # address in bank $65, an otherwise pure data bank (it grew the phantom
+    # farcall that fabricated bank $43's zero-array function).
+    BAD_SEEDS = {0x19617F}
+
     def seed(self, seeds):
         bad = 0
+        seeds = set(seeds) - self.BAD_SEEDS
         for off in sorted(seeds):
             if off in self.instrs:
                 continue
