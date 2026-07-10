@@ -13,7 +13,8 @@ from pathlib import Path
 
 BANK_SIZE = 0x4000
 AUTO_RE = re.compile(
-    r"^(?:Func|Label)_[0-9a-f]{2}_[0-9a-f]{4}$|^FarPtr_[0-9a-f]{2}_[0-9a-f]{2}$")
+    r"^(?:Func|Label|Data|Lz)_[0-9a-f]{2}_[0-9a-f]{4}$"
+    r"|^(?:FarPtr|DataPtr)_[0-9a-f]{2}_[0-9a-f]{2}$")
 
 
 def main():

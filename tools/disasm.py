@@ -20,9 +20,33 @@ HWADDR_RE = re.compile(r"\$ff[0-9a-f]{2}\b")
 MEMADDR_RE = re.compile(r"\[\$([0-9a-f]{4})\]")
 
 sys.path.insert(0, str(Path(__file__).parent))
+import lz
 import sm83
 
 BANK_SIZE = 0x4000
+
+# Backtracking classification for the register-setup scan at data-helper
+# call sites: `ld r16, imm` opcodes we can harvest, opcodes that clobber a
+# pair (making an earlier constant unreliable), and opcodes that touch none
+# of bc/de/hl and may be stepped over. Anything else ends the scan.
+PAIR_IMM = {0x01: "bc", 0x11: "de", 0x21: "hl"}
+PAIR_WRITES = {
+    "bc": {0xC1, 0x03, 0x0B, 0x04, 0x05, 0x0C, 0x0D, 0x06, 0x0E}
+          | set(range(0x40, 0x50)),
+    "de": {0xD1, 0x13, 0x1B, 0x14, 0x15, 0x1C, 0x1D, 0x16, 0x1E}
+          | set(range(0x50, 0x60)),
+    "hl": {0xE1, 0x23, 0x2B, 0x24, 0x25, 0x2C, 0x2D, 0x26, 0x2E,
+           0x09, 0x19, 0x29, 0x39, 0xF8, 0x2A, 0x3A, 0x22, 0x32}
+          | set(range(0x60, 0x70)),
+}
+SAFE_OPS = (
+    {0x00, 0x02, 0x12, 0x0A, 0x1A, 0x3E, 0x3C, 0x3D, 0x34, 0x35,
+     0xE0, 0xF0, 0xE2, 0xF2, 0xEA, 0xFA, 0xC5, 0xD5, 0xE5, 0xF5, 0xF1,
+     0x31, 0x08, 0xF9, 0x07, 0x0F, 0x17, 0x1F, 0x27, 0x2F, 0x37, 0x3F,
+     0xC6, 0xCE, 0xD6, 0xDE, 0xE6, 0xEE, 0xF6, 0xFE}
+    | set(range(0x70, 0x76)) | {0x77} | set(range(0x78, 0x80))
+    | set(range(0x80, 0xC0))
+)
 
 
 def load_coverage(paths, nbanks):
@@ -109,6 +133,9 @@ class Disassembly:
         self.farcalls = {}    # site offset -> (bank, slot, entry_flat, target_flat)
         self.inferred_entries = {}  # entry_flat -> (bank, slot, target_flat)
         self.jt_entries = {}  # rst $00 inline jump-table entry offset -> target_flat
+        self.data_slots = {}  # entry_flat -> (bank, slot, src_flat, kind)
+        self.data_blobs = {}  # src_flat -> (length or None, kind)
+        self.data_site_notes = {}  # `ld hl` setup offset -> (bank, slot)
 
     def _try_farcall(self, off):
         """Decode `rst $18` + inline `db slot, bank` as a 3-byte pseudo-call.
@@ -372,6 +399,162 @@ class Disassembly:
               f"({seeded} new code seeds)")
         return seeded + len(new_entries)
 
+    def _backtrack_consts(self, site):
+        """Walk linearly backward from `site` collecting bc/de/hl constants.
+
+        Stops at block boundaries (control flow, branch targets, anything
+        not provably register-transparent); a non-immediate write to a pair
+        marks it dynamic so an earlier constant is not misattributed.
+        Returns ({pair: value}, {pair: ld_offset}).
+        """
+        regs, ld_offs, done = {}, {}, set()
+        off = site
+        while len(done) < 3:
+            off = self._preds.get(off)
+            if off is None:
+                break
+            op = self.rom[off]
+            pair = PAIR_IMM.get(op)
+            if pair is not None:
+                if pair not in done:
+                    done.add(pair)
+                    regs[pair] = self.rom[off + 1] | (self.rom[off + 2] << 8)
+                    ld_offs[pair] = off
+            else:
+                clobbered = [p for p, ops in PAIR_WRITES.items() if op in ops]
+                if clobbered:
+                    done.update(clobbered)
+                elif op not in SAFE_OPS:
+                    break
+            if off in self._branch_targets:
+                break
+        return regs, ld_offs
+
+    def find_data_slots(self, helpers):
+        """Prove pointer-table slots to be data via the loader helpers.
+
+        CopyDataFromBank/DecompressDataFromBank take h = bank and l = slot of
+        a $4000-table entry whose pointer they read as a data source (bc =
+        byte count for the copier). Backtracking constant register setups at
+        their call sites yields (bank, slot) pairs statically, marking those
+        table entries as data pointers and their targets as blobs -- with an
+        exact extent when the stream length (LZ) or bc (copy) is known.
+        """
+        self._preds = {off + ins.size: off for off, ins in self.instrs.items()}
+        self._branch_targets = set()
+        for off, ins in self.instrs.items():
+            if ins.target is not None and (ins.is_jump or ins.is_call):
+                t = target_to_offset(ins.target, off)
+                if t is not None:
+                    self._branch_targets.add(t)
+        nbanks = len(self.rom) // BANK_SIZE
+        sites = resolved = 0
+        for off, ins in sorted(self.instrs.items()):
+            if ins.target is None or not (ins.is_call or ins.is_jump):
+                continue
+            kind = helpers.get(target_to_offset(ins.target, off))
+            if kind is None:
+                continue
+            sites += 1
+            regs, ld_offs = self._backtrack_consts(off)
+            hl = regs.get("hl")
+            if hl is None:
+                continue
+            bank, slot = hl >> 8, hl & 0xFF
+            if not 0 < bank < nbanks or slot & 1:
+                continue
+            entry = bank * BANK_SIZE + slot
+            if entry in self.code_bytes or entry + 1 in self.code_bytes:
+                continue
+            ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
+            if not (BANK_SIZE <= ptr < 0x8000):
+                continue
+            src = bank * BANK_SIZE + ptr - BANK_SIZE
+            if src in self.code_bytes:
+                continue
+            if kind == "lz":
+                try:
+                    _, length = lz.decompress(self.rom, src,
+                                              (bank + 1) * BANK_SIZE)
+                except ValueError:
+                    continue  # hl constant likely spurious for this site
+            else:
+                length = regs.get("bc")
+            if length and any(b in self.code_bytes
+                              for b in range(src, src + length)):
+                length = None  # keep the pointer, don't carve into code
+            resolved += 1
+            self.data_slots[entry] = (bank, slot, src, kind)
+            prev = self.data_blobs.get(src)
+            if prev is None or (prev[0] is None and length is not None):
+                self.data_blobs[src] = (length, kind)
+            if "hl" in ld_offs:
+                self.data_site_notes[ld_offs["hl"]] = (bank, slot)
+        print(f"data-helper call sites: {sites}, statically resolved: "
+              f"{resolved} ({len(self.data_slots)} slots, "
+              f"{len(self.data_blobs)} blobs)")
+
+    def scan_lz_slots(self):
+        """Classify remaining table slots whose pointers hold valid LZ data.
+
+        Only slots inside a table extent already proven by live usage
+        (farcall, inferred entry, or data slot) are considered. A slot is
+        accepted when its pointer's stream decodes cleanly within the bank
+        to a plausible size and the stream overlaps no code, no table
+        region, and no previously accepted blob.
+        """
+        from collections import defaultdict
+        floors = defaultdict(int)
+        for off, (bank, slot, _e, _t) in self.farcalls.items():
+            if off in self.instrs:
+                floors[bank] = max(floors[bank], slot + 2)
+        for _e, (bank, slot, _t) in self.inferred_entries.items():
+            floors[bank] = max(floors[bank], slot + 2)
+        for bank, slot, _src, _k in self.data_slots.values():
+            floors[bank] = max(floors[bank], slot + 2)
+        live_entries = {e for off, (_b, _s, e, _t) in self.farcalls.items()
+                        if off in self.instrs}
+        claimed = sorted((src, src + length)
+                         for src, (length, _k) in self.data_blobs.items()
+                         if length)
+
+        def overlaps(a, b):
+            import bisect
+            i = bisect.bisect_left(claimed, (b, b))
+            return i > 0 and claimed[i - 1][1] > a
+
+        accepted = 0
+        for bank, floor in sorted(floors.items()):
+            base = bank * BANK_SIZE
+            for slot in range(0, floor, 2):
+                entry = base + slot
+                if (entry in self.data_slots or entry in live_entries
+                        or entry in self.code_bytes
+                        or entry + 1 in self.code_bytes):
+                    continue
+                ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
+                if not (BANK_SIZE <= ptr < 0x8000):
+                    continue
+                src = base + ptr - BANK_SIZE
+                if src < base + floor:
+                    continue  # points into the table region itself
+                try:
+                    data, length = lz.decompress(self.rom, src, base + BANK_SIZE)
+                except ValueError:
+                    continue
+                if not 8 <= len(data) <= 0x1000:
+                    continue
+                if overlaps(src, src + length) or any(
+                        b in self.code_bytes for b in range(src, src + length)):
+                    continue
+                self.data_slots[entry] = (bank, slot, src, "lz")
+                self.data_blobs.setdefault(src, (length, "lz"))
+                import bisect
+                bisect.insort(claimed, (src, src + length))
+                accepted += 1
+        print(f"lz slot scan: {accepted} additional data slots accepted "
+              f"({len(self.data_slots)} total)")
+
     def descend(self):
         work = list(self.instrs.keys())
         added = 0
@@ -580,12 +763,36 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
             dirty_sites.add(off)
         else:
             table_entries[entry] = (bank, slot, target)
+    data_entries = {e: v for e, v in dis.data_slots.items()
+                    if e not in table_entries
+                    and e not in dis.code_bytes and e + 1 not in dis.code_bytes}
     for entry, (bank, slot, target) in dis.inferred_entries.items():
+        if entry in data_entries:
+            continue
         if entry not in dis.code_bytes and entry + 1 not in dis.code_bytes:
             table_entries.setdefault(entry, (bank, slot, target))
     jt_entries = {p: t for p, t in dis.jt_entries.items()
                   if p not in dis.code_bytes and p + 1 not in dis.code_bytes
-                  and p not in table_entries}
+                  and p not in table_entries and p not in data_entries}
+
+    # Blob labels/extents for data-slot targets. A mark can only anchor a
+    # label if it starts outside every other emitted structure; marks inside
+    # an earlier mark's exact extent are dropped (their dw falls back to a
+    # numeric operand).
+    data_marks = {}   # src_flat -> (length or None, label, kind)
+    data_labels = {}  # src_flat -> label
+    prev_end = -1
+    for src in sorted(dis.data_blobs):
+        length, kind = dis.data_blobs[src]
+        if (src < prev_end or src in dis.code_bytes or src in table_entries
+                or src in data_entries or src in jt_entries):
+            continue
+        stem = "Lz" if kind == "lz" else "Data"
+        label = f"{stem}_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
+        data_marks[src] = (length, label, kind)
+        data_labels[src] = label
+        if length:
+            prev_end = max(prev_end, src + length)
     Path(srcdir).parent.joinpath("include", "macros.inc").write_text(MACROS_INC)
 
     for bank in range(nbanks):
@@ -608,6 +815,12 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                 lines.append(f"FarPtr_{tbank:02x}_{slot:02x}:")
                 lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}")
                 off += 2
+            elif off in data_entries:
+                dbank, slot, src, _kind = data_entries[off]
+                tl = data_labels.get(src, f"${offset_to_cpu(src):04x}")
+                lines.append(f"DataPtr_{dbank:02x}_{slot:02x}:")
+                lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}")
+                off += 2
             elif off in jt_entries:
                 target = jt_entries[off]
                 tl = labels.get(target, f"${offset_to_cpu(target):04x}")
@@ -626,16 +839,31 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                     else:
                         lines.append(f"\tfarcall FarPtr_{fbank:02x}_{slot:02x} ; ${cpu:04x}")
                 else:
-                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames)} ; ${cpu:04x}")
+                    note = dis.data_site_notes.get(off)
+                    suffix = (f" -> DataPtr_{note[0]:02x}_{note[1]:02x}"
+                              if note else "")
+                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames)} ; ${cpu:04x}{suffix}")
                 off += ins.size
             else:
                 run_start = off
+                off += 1
                 while off < end and off not in dis.instrs \
-                        and off not in table_entries and off not in jt_entries:
+                        and off not in table_entries and off not in data_entries \
+                        and off not in jt_entries and off not in data_marks:
                     off += 1
                 length = off - run_start
                 cpu = offset_to_cpu(run_start)
-                blob = f"bank_{bank:03x}/d_{cpu:04x}.bin"
+                mark = data_marks.get(run_start)
+                prefix = "d"
+                if mark:
+                    mlen, mlabel, kind = mark
+                    lines.append(f"{mlabel}:")
+                    if mlen and mlen <= length:
+                        off = run_start + mlen
+                        length = mlen
+                    if kind == "lz":
+                        prefix = "lz"
+                blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
                 manifest.append((blob, run_start, length))
                 lines.append(f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes')
         lines.append("")
@@ -680,6 +908,16 @@ def main():
     overrides = None
     if Path(args.labels).exists():
         overrides = json.loads(Path(args.labels).read_text())
+    helpers = {}
+    if overrides:
+        for name, kind in (("CopyDataFromBank", "copy"),
+                           ("DecompressDataFromBank", "lz")):
+            for k, v in overrides.items():
+                if v == name:
+                    helpers[int(k, 0)] = kind
+    if helpers:
+        dis.find_data_slots(helpers)
+        dis.scan_lz_slots()
     labels = build_labels(dis, overrides)
     hwregs = load_hwregs(args.hardware_inc)
     ramnames = load_ram_map(args.ram_map, "include/ram_constants.asm")

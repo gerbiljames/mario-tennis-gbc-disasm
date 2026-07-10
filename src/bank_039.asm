@@ -46,7 +46,18 @@ FarPtr_39_28:
 	dw Func_39_4b6d ; $4028
 FarPtr_39_2a:
 	dw Func_39_4be8 ; $402a
-	INCBIN "data/bank_039/d_402c.bin" ; $402c, 52 bytes
+	INCBIN "data/bank_039/d_402c.bin" ; $402c, 8 bytes
+DataPtr_39_34:
+	dw Lz_39_47ab ; $4034
+	INCBIN "data/bank_039/d_4036.bin" ; $4036, 34 bytes
+DataPtr_39_58:
+	dw Lz_39_47fa ; $4058
+DataPtr_39_5a:
+	dw Lz_39_4809 ; $405a
+DataPtr_39_5c:
+	dw Lz_39_4833 ; $405c
+DataPtr_39_5e:
+	dw Lz_39_4923 ; $405e
 FarPtr_39_60:
 	dw Func_39_6dc2 ; $4060
 FarPtr_39_62:
@@ -59,7 +70,22 @@ FarPtr_39_68:
 	dw Func_39_6fe7 ; $4068
 FarPtr_39_6a:
 	dw Func_39_6f67 ; $406a
-	INCBIN "data/bank_039/d_406c.bin" ; $406c, 16 bytes
+DataPtr_39_6c:
+	dw Lz_39_7009 ; $406c
+DataPtr_39_6e:
+	dw Lz_39_70bb ; $406e
+DataPtr_39_70:
+	dw Lz_39_717d ; $4070
+DataPtr_39_72:
+	dw Lz_39_71b6 ; $4072
+DataPtr_39_74:
+	dw Lz_39_71e8 ; $4074
+DataPtr_39_76:
+	dw Lz_39_7223 ; $4076
+DataPtr_39_78:
+	dw Lz_39_725d ; $4078
+DataPtr_39_7a:
+	dw Lz_39_734e ; $407a
 FarPtr_39_7c:
 	dw Func_39_745a ; $407c
 Func_39_407e:
@@ -403,7 +429,21 @@ Label_39_4698:
 	ldh [$ff96], a ; $46b2
 	ldh [rWBK], a ; $46b4
 	ret ; $46b6
-	INCBIN "data/bank_039/d_46b7.bin" ; $46b7, 863 bytes
+	INCBIN "data/bank_039/d_46b7.bin" ; $46b7, 244 bytes
+Lz_39_47ab:
+	INCBIN "data/bank_039/lz_47ab.bin" ; $47ab, 78 bytes
+	INCBIN "data/bank_039/d_47f9.bin" ; $47f9, 1 bytes
+Lz_39_47fa:
+	INCBIN "data/bank_039/lz_47fa.bin" ; $47fa, 15 bytes
+Lz_39_4809:
+	INCBIN "data/bank_039/lz_4809.bin" ; $4809, 41 bytes
+	INCBIN "data/bank_039/d_4832.bin" ; $4832, 1 bytes
+Lz_39_4833:
+	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 239 bytes
+	INCBIN "data/bank_039/d_4922.bin" ; $4922, 1 bytes
+Lz_39_4923:
+	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 242 bytes
+	INCBIN "data/bank_039/d_4a15.bin" ; $4a15, 1 bytes
 Func_39_4a16:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18
@@ -619,7 +659,7 @@ Func_39_4c38:
 	ld a, $01 ; $4c3b
 	ldh [$ff96], a ; $4c3d
 	ldh [rWBK], a ; $4c3f
-	ld hl, $3c08 ; $4c41
+	ld hl, $3c08 ; $4c41 -> DataPtr_3c_08
 	ld de, $d000 ; $4c44
 	call DecompressDataFromBank ; $4c47
 	ld hl, $d000 ; $4c4a
@@ -633,22 +673,22 @@ Func_39_4c38:
 	ld a, $03 ; $4c60
 	ldh [$ff96], a ; $4c62
 	ldh [rWBK], a ; $4c64
-	ld hl, $3c0a ; $4c66
+	ld hl, $3c0a ; $4c66 -> DataPtr_3c_0a
 	ld de, $d000 ; $4c69
 	call DecompressDataFromBank ; $4c6c
-	ld hl, $3c0a ; $4c6f
+	ld hl, $3c0a ; $4c6f -> DataPtr_3c_0a
 	ld de, $d800 ; $4c72
 	call DecompressDataFromBank ; $4c75
-	ld hl, $3c0c ; $4c78
+	ld hl, $3c0c ; $4c78 -> DataPtr_3c_0c
 	ld de, $d400 ; $4c7b
 	call DecompressDataFromBank ; $4c7e
-	ld hl, $3c0c ; $4c81
+	ld hl, $3c0c ; $4c81 -> DataPtr_3c_0c
 	ld de, $dc00 ; $4c84
 	call DecompressDataFromBank ; $4c87
 	ld a, $01 ; $4c8a
 	ldh [$ff96], a ; $4c8c
 	ldh [rWBK], a ; $4c8e
-	ld hl, $3c0e ; $4c90
+	ld hl, $3c0e ; $4c90 -> DataPtr_3c_0e
 	ld de, $d000 ; $4c93
 	ld bc, $0040 ; $4c96
 	call CopyDataFromBank ; $4c99
@@ -1228,7 +1268,29 @@ Func_39_7003:
 	sound $65 ; $7003
 	farcall FarPtr_3b_34 ; $7005
 	ret ; $7008
-	INCBIN "data/bank_039/d_7009.bin" ; $7009, 1105 bytes
+Lz_39_7009:
+	INCBIN "data/bank_039/lz_7009.bin" ; $7009, 178 bytes
+Lz_39_70bb:
+	INCBIN "data/bank_039/lz_70bb.bin" ; $70bb, 193 bytes
+	INCBIN "data/bank_039/d_717c.bin" ; $717c, 1 bytes
+Lz_39_717d:
+	INCBIN "data/bank_039/lz_717d.bin" ; $717d, 56 bytes
+	INCBIN "data/bank_039/d_71b5.bin" ; $71b5, 1 bytes
+Lz_39_71b6:
+	INCBIN "data/bank_039/lz_71b6.bin" ; $71b6, 49 bytes
+	INCBIN "data/bank_039/d_71e7.bin" ; $71e7, 1 bytes
+Lz_39_71e8:
+	INCBIN "data/bank_039/lz_71e8.bin" ; $71e8, 58 bytes
+	INCBIN "data/bank_039/d_7222.bin" ; $7222, 1 bytes
+Lz_39_7223:
+	INCBIN "data/bank_039/lz_7223.bin" ; $7223, 57 bytes
+	INCBIN "data/bank_039/d_725c.bin" ; $725c, 1 bytes
+Lz_39_725d:
+	INCBIN "data/bank_039/lz_725d.bin" ; $725d, 240 bytes
+	INCBIN "data/bank_039/d_734d.bin" ; $734d, 1 bytes
+Lz_39_734e:
+	INCBIN "data/bank_039/lz_734e.bin" ; $734e, 248 bytes
+	INCBIN "data/bank_039/d_7446.bin" ; $7446, 20 bytes
 Func_39_745a:
 	ld a, b ; $745a
 	ld [hl+], a ; $745b

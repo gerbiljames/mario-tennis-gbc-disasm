@@ -463,21 +463,21 @@ Func_1b_4fa6:
 	ld a, $01 ; $4fa9
 	ldh [$ff96], a ; $4fab
 	ldh [rWBK], a ; $4fad
-	ld hl, $3f30 ; $4faf
+	ld hl, $3f30 ; $4faf -> DataPtr_3f_30
 	ld de, $d000 ; $4fb2
 	call DecompressDataFromBank ; $4fb5
 	ld hl, $d000 ; $4fb8
 	ld de, $a000 ; $4fbb
 	ld c, $10 ; $4fbe
 	call Func_00_0480 ; $4fc0
-	ld hl, $3f32 ; $4fc3
+	ld hl, $3f32 ; $4fc3 -> DataPtr_3f_32
 	ld de, $d000 ; $4fc6
 	call DecompressDataFromBank ; $4fc9
 	ld hl, $d000 ; $4fcc
 	ld de, $a100 ; $4fcf
 	ld c, $10 ; $4fd2
 	call Func_00_0480 ; $4fd4
-	ld hl, $3f34 ; $4fd7
+	ld hl, $3f34 ; $4fd7 -> DataPtr_3f_34
 	ld de, $d000 ; $4fda
 	call DecompressDataFromBank ; $4fdd
 	ld hl, $d000 ; $4fe0

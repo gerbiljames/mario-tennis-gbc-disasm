@@ -86,7 +86,15 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
 - `tools/sm83.py` — exhaustive SM83 decoder emitting RGBDS syntax that
   round-trips byte-exactly through rgbasm (verified encodings: `ldh` vs `ld`,
   `stop` padding, no auto-`nop` after `halt`, two-operand ALU forms).
-- `tools/disasm.py` — coverage + ROM → `src/*.asm` + `data.manifest`.
+- `tools/disasm.py` — coverage + ROM → `src/*.asm` + `data.manifest`. Besides
+  code, it classifies `$4000` pointer-table slots holding *data* pointers:
+  call sites of `CopyDataFromBank`/`DecompressDataFromBank` are backtracked
+  for constant `h = bank, l = slot` setups, and remaining slots in proven
+  table extents are accepted when their pointer decodes as a valid LZ stream
+  overlapping no code. Proven blobs get `Data_`/`Lz_` labels and exact-extent
+  INCBINs (stream length for LZ, `bc` for copies).
+- `tools/lz.py` — codec for the game's LZ format (used by `DecompressData`,
+  `$1797`); also a CLI to decompress a stream from the ROM for inspection.
 - `tools/extract.py` — `data.manifest` + base ROM → `data/` blobs.
 - `tools/tracelog2cov.py` — BizHawk native Trace Logger file → coverage JSON.
 - `tools/progress.py` — per-bank report of proven-code bytes and label-naming

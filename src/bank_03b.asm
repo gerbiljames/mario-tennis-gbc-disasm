@@ -4021,14 +4021,14 @@ Label_3b_6311:
 	ld de, $a500 ; $636c
 	farcall FarPtr_39_10 ; $636f
 	call Func_00_2631 ; $6372
-	ld hl, $6d7e ; $6375
+	ld hl, $6d7e ; $6375 -> DataPtr_6d_7e
 	ld de, $d000 ; $6378
 	call DecompressDataFromBank ; $637b
 	ld hl, $d000 ; $637e
 	ld de, $8200 ; $6381
 	ld c, $10 ; $6384
 	call Func_00_0480 ; $6386
-	ld hl, $6d80 ; $6389
+	ld hl, $6d80 ; $6389 -> DataPtr_6d_80
 	ld de, $d400 ; $638c
 	call DecompressDataFromBank ; $638f
 	ld hl, $d400 ; $6392
@@ -4036,7 +4036,7 @@ Label_3b_6311:
 	ld c, $10 ; $6398
 	call Func_00_0480 ; $639a
 	call Func_00_2631 ; $639d
-	ld hl, $6d82 ; $63a0
+	ld hl, $6d82 ; $63a0 -> DataPtr_6d_82
 	ld de, $d000 ; $63a3
 	call DecompressDataFromBank ; $63a6
 	ld hl, $d000 ; $63a9
@@ -4632,7 +4632,7 @@ Func_3b_686e:
 	ld a, $01 ; $6871
 	ldh [$ff96], a ; $6873
 	ldh [rWBK], a ; $6875
-	ld hl, $3c14 ; $6877
+	ld hl, $3c14 ; $6877 -> DataPtr_3c_14
 	ld de, $d000 ; $687a
 	call DecompressDataFromBank ; $687d
 	ld hl, $d000 ; $6880
@@ -4640,7 +4640,7 @@ Func_3b_686e:
 	ld bc, $0010 ; $6886
 	call Func_00_0480 ; $6889
 	call Func_00_2631 ; $688c
-	ld hl, $3c20 ; $688f
+	ld hl, $3c20 ; $688f -> DataPtr_3c_20
 	ld de, $d000 ; $6892
 	call DecompressDataFromBank ; $6895
 	ld hl, $d000 ; $6898
@@ -5161,7 +5161,7 @@ Func_3b_6d31:
 	ld a, $01 ; $6d88
 	ldh [$ff96], a ; $6d8a
 	ldh [rWBK], a ; $6d8c
-	ld hl, $3d0e ; $6d8e
+	ld hl, $3d0e ; $6d8e -> DataPtr_3d_0e
 	ld de, $d000 ; $6d91
 	call DecompressDataFromBank ; $6d94
 	ld hl, $d000 ; $6d97
@@ -5169,7 +5169,7 @@ Func_3b_6d31:
 	ld c, $10 ; $6d9d
 	call Func_00_0480 ; $6d9f
 	call Func_00_2631 ; $6da2
-	ld hl, $3d10 ; $6da5
+	ld hl, $3d10 ; $6da5 -> DataPtr_3d_10
 	ld de, $d000 ; $6da8
 	call DecompressDataFromBank ; $6dab
 	ld hl, $d000 ; $6dae

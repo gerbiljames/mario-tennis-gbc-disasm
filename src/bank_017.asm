@@ -4,7 +4,14 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 
-	INCBIN "data/bank_017/d_4000.bin" ; $4000, 10 bytes
+	INCBIN "data/bank_017/d_4000.bin" ; $4000, 2 bytes
+DataPtr_17_02:
+	dw Lz_17_4b17 ; $4002
+DataPtr_17_04:
+	dw Lz_17_4d65 ; $4004
+DataPtr_17_06:
+	dw Lz_17_4e42 ; $4006
+	INCBIN "data/bank_017/d_4008.bin" ; $4008, 2 bytes
 FarPtr_17_0a:
 	dw Func_17_4487 ; $400a
 FarPtr_17_0c:
@@ -559,7 +566,15 @@ Func_17_4b0d:
 	ld de, $0803 ; $4b10
 	call Func_00_05b0 ; $4b13
 	ret ; $4b16
-	INCBIN "data/bank_017/d_4b17.bin" ; $4b17, 2664 bytes
+Lz_17_4b17:
+	INCBIN "data/bank_017/lz_4b17.bin" ; $4b17, 589 bytes
+	INCBIN "data/bank_017/d_4d64.bin" ; $4d64, 1 bytes
+Lz_17_4d65:
+	INCBIN "data/bank_017/lz_4d65.bin" ; $4d65, 220 bytes
+	INCBIN "data/bank_017/d_4e41.bin" ; $4e41, 1 bytes
+Lz_17_4e42:
+	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 127 bytes
+	INCBIN "data/bank_017/d_4ec1.bin" ; $4ec1, 1726 bytes
 Label_17_557f:
 	ld a, $03 ; $557f
 	ld [$d82e], a ; $5581
