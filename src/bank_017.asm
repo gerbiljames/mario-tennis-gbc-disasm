@@ -567,14 +567,12 @@ Func_17_4b0d:
 	call Func_00_05b0 ; $4b13
 	ret ; $4b16
 Lz_17_4b17:
-	INCBIN "data/bank_017/lz_4b17.bin" ; $4b17, 589 bytes
-	INCBIN "data/bank_017/d_4d64.bin" ; $4d64, 1 bytes
+	INCBIN "data/bank_017/lz_4b17.bin" ; $4b17, 590 bytes
 Lz_17_4d65:
-	INCBIN "data/bank_017/lz_4d65.bin" ; $4d65, 220 bytes
-	INCBIN "data/bank_017/d_4e41.bin" ; $4e41, 1 bytes
+	INCBIN "data/bank_017/lz_4d65.bin" ; $4d65, 221 bytes
 Lz_17_4e42:
-	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 127 bytes
-	INCBIN "data/bank_017/d_4ec1.bin" ; $4ec1, 1726 bytes
+	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 128 bytes
+	INCBIN "data/bank_017/d_4ec2.bin" ; $4ec2, 1725 bytes
 Label_17_557f:
 	ld a, $03 ; $557f
 	ld [$d82e], a ; $5581

@@ -1886,47 +1886,34 @@ Label_3f_6009:
 	ldh [$ff59], a ; $6017
 	INCBIN "data/bank_03f/d_6019.bin" ; $6019, 27 bytes
 Lz_3f_6034:
-	INCBIN "data/bank_03f/lz_6034.bin" ; $6034, 150 bytes
-	INCBIN "data/bank_03f/d_60ca.bin" ; $60ca, 1 bytes
+	INCBIN "data/bank_03f/lz_6034.bin" ; $6034, 151 bytes
 Lz_3f_60cb:
-	INCBIN "data/bank_03f/lz_60cb.bin" ; $60cb, 163 bytes
-	INCBIN "data/bank_03f/d_616e.bin" ; $616e, 1 bytes
+	INCBIN "data/bank_03f/lz_60cb.bin" ; $60cb, 164 bytes
 Lz_3f_616f:
-	INCBIN "data/bank_03f/lz_616f.bin" ; $616f, 169 bytes
-	INCBIN "data/bank_03f/d_6218.bin" ; $6218, 1 bytes
+	INCBIN "data/bank_03f/lz_616f.bin" ; $616f, 170 bytes
 Lz_3f_6219:
-	INCBIN "data/bank_03f/lz_6219.bin" ; $6219, 195 bytes
-	INCBIN "data/bank_03f/d_62dc.bin" ; $62dc, 1 bytes
+	INCBIN "data/bank_03f/lz_6219.bin" ; $6219, 196 bytes
 Lz_3f_62dd:
-	INCBIN "data/bank_03f/lz_62dd.bin" ; $62dd, 1313 bytes
-	INCBIN "data/bank_03f/d_67fe.bin" ; $67fe, 1 bytes
+	INCBIN "data/bank_03f/lz_62dd.bin" ; $62dd, 1314 bytes
 Lz_3f_67ff:
-	INCBIN "data/bank_03f/lz_67ff.bin" ; $67ff, 324 bytes
-	INCBIN "data/bank_03f/d_6943.bin" ; $6943, 1 bytes
+	INCBIN "data/bank_03f/lz_67ff.bin" ; $67ff, 325 bytes
 Lz_3f_6944:
-	INCBIN "data/bank_03f/lz_6944.bin" ; $6944, 140 bytes
-	INCBIN "data/bank_03f/d_69d0.bin" ; $69d0, 65 bytes
+	INCBIN "data/bank_03f/lz_6944.bin" ; $6944, 141 bytes
+	INCBIN "data/bank_03f/d_69d1.bin" ; $69d1, 64 bytes
 Lz_3f_6a11:
-	INCBIN "data/bank_03f/lz_6a11.bin" ; $6a11, 316 bytes
-	INCBIN "data/bank_03f/d_6b4d.bin" ; $6b4d, 1 bytes
+	INCBIN "data/bank_03f/lz_6a11.bin" ; $6a11, 317 bytes
 Lz_3f_6b4e:
-	INCBIN "data/bank_03f/lz_6b4e.bin" ; $6b4e, 142 bytes
-	INCBIN "data/bank_03f/d_6bdc.bin" ; $6bdc, 1 bytes
+	INCBIN "data/bank_03f/lz_6b4e.bin" ; $6b4e, 143 bytes
 Lz_3f_6bdd:
-	INCBIN "data/bank_03f/lz_6bdd.bin" ; $6bdd, 37 bytes
-	INCBIN "data/bank_03f/d_6c02.bin" ; $6c02, 1 bytes
+	INCBIN "data/bank_03f/lz_6bdd.bin" ; $6bdd, 38 bytes
 Lz_3f_6c03:
-	INCBIN "data/bank_03f/lz_6c03.bin" ; $6c03, 999 bytes
-	INCBIN "data/bank_03f/d_6fea.bin" ; $6fea, 1 bytes
+	INCBIN "data/bank_03f/lz_6c03.bin" ; $6c03, 1000 bytes
 Lz_3f_6feb:
-	INCBIN "data/bank_03f/lz_6feb.bin" ; $6feb, 1223 bytes
-	INCBIN "data/bank_03f/d_74b2.bin" ; $74b2, 1 bytes
+	INCBIN "data/bank_03f/lz_6feb.bin" ; $6feb, 1224 bytes
 Lz_3f_74b3:
-	INCBIN "data/bank_03f/lz_74b3.bin" ; $74b3, 30 bytes
-	INCBIN "data/bank_03f/d_74d1.bin" ; $74d1, 1 bytes
+	INCBIN "data/bank_03f/lz_74b3.bin" ; $74b3, 31 bytes
 Lz_3f_74d2:
-	INCBIN "data/bank_03f/lz_74d2.bin" ; $74d2, 209 bytes
-	INCBIN "data/bank_03f/d_75a3.bin" ; $75a3, 1 bytes
+	INCBIN "data/bank_03f/lz_74d2.bin" ; $74d2, 210 bytes
 Lz_3f_75a4:
 	INCBIN "data/bank_03f/lz_75a4.bin" ; $75a4, 213 bytes
 	INCBIN "data/bank_03f/d_7679.bin" ; $7679, 2439 bytes

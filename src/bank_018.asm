@@ -435,101 +435,74 @@ Label_18_5ae7:
 	ret ; $5aef
 	INCBIN "data/bank_018/d_5af0.bin" ; $5af0, 4160 bytes
 Lz_18_6b30:
-	INCBIN "data/bank_018/lz_6b30.bin" ; $6b30, 66 bytes
-	INCBIN "data/bank_018/d_6b72.bin" ; $6b72, 1 bytes
+	INCBIN "data/bank_018/lz_6b30.bin" ; $6b30, 67 bytes
 Lz_18_6b73:
-	INCBIN "data/bank_018/lz_6b73.bin" ; $6b73, 65 bytes
-	INCBIN "data/bank_018/d_6bb4.bin" ; $6bb4, 1 bytes
+	INCBIN "data/bank_018/lz_6b73.bin" ; $6b73, 66 bytes
 Lz_18_6bb5:
-	INCBIN "data/bank_018/lz_6bb5.bin" ; $6bb5, 61 bytes
-	INCBIN "data/bank_018/d_6bf2.bin" ; $6bf2, 1 bytes
+	INCBIN "data/bank_018/lz_6bb5.bin" ; $6bb5, 62 bytes
 Lz_18_6bf3:
-	INCBIN "data/bank_018/lz_6bf3.bin" ; $6bf3, 47 bytes
-	INCBIN "data/bank_018/d_6c22.bin" ; $6c22, 1 bytes
+	INCBIN "data/bank_018/lz_6bf3.bin" ; $6bf3, 48 bytes
 Lz_18_6c23:
-	INCBIN "data/bank_018/lz_6c23.bin" ; $6c23, 43 bytes
-	INCBIN "data/bank_018/d_6c4e.bin" ; $6c4e, 1 bytes
+	INCBIN "data/bank_018/lz_6c23.bin" ; $6c23, 44 bytes
 Lz_18_6c4f:
 	INCBIN "data/bank_018/lz_6c4f.bin" ; $6c4f, 46 bytes
 Lz_18_6c7d:
-	INCBIN "data/bank_018/lz_6c7d.bin" ; $6c7d, 58 bytes
-	INCBIN "data/bank_018/d_6cb7.bin" ; $6cb7, 1 bytes
+	INCBIN "data/bank_018/lz_6c7d.bin" ; $6c7d, 59 bytes
 Lz_18_6cb8:
-	INCBIN "data/bank_018/lz_6cb8.bin" ; $6cb8, 64 bytes
-	INCBIN "data/bank_018/d_6cf8.bin" ; $6cf8, 1 bytes
+	INCBIN "data/bank_018/lz_6cb8.bin" ; $6cb8, 65 bytes
 Lz_18_6cf9:
-	INCBIN "data/bank_018/lz_6cf9.bin" ; $6cf9, 66 bytes
-	INCBIN "data/bank_018/d_6d3b.bin" ; $6d3b, 1 bytes
+	INCBIN "data/bank_018/lz_6cf9.bin" ; $6cf9, 67 bytes
 Lz_18_6d3c:
-	INCBIN "data/bank_018/lz_6d3c.bin" ; $6d3c, 64 bytes
-	INCBIN "data/bank_018/d_6d7c.bin" ; $6d7c, 1 bytes
+	INCBIN "data/bank_018/lz_6d3c.bin" ; $6d3c, 65 bytes
 Lz_18_6d7d:
-	INCBIN "data/bank_018/lz_6d7d.bin" ; $6d7d, 59 bytes
-	INCBIN "data/bank_018/d_6db8.bin" ; $6db8, 1 bytes
+	INCBIN "data/bank_018/lz_6d7d.bin" ; $6d7d, 60 bytes
 Lz_18_6db9:
-	INCBIN "data/bank_018/lz_6db9.bin" ; $6db9, 49 bytes
-	INCBIN "data/bank_018/d_6dea.bin" ; $6dea, 1 bytes
+	INCBIN "data/bank_018/lz_6db9.bin" ; $6db9, 50 bytes
 Lz_18_6deb:
 	INCBIN "data/bank_018/lz_6deb.bin" ; $6deb, 45 bytes
 Lz_18_6e18:
-	INCBIN "data/bank_018/lz_6e18.bin" ; $6e18, 50 bytes
-	INCBIN "data/bank_018/d_6e4a.bin" ; $6e4a, 1 bytes
+	INCBIN "data/bank_018/lz_6e18.bin" ; $6e18, 51 bytes
 Lz_18_6e4b:
 	INCBIN "data/bank_018/lz_6e4b.bin" ; $6e4b, 61 bytes
 Lz_18_6e88:
-	INCBIN "data/bank_018/lz_6e88.bin" ; $6e88, 65 bytes
-	INCBIN "data/bank_018/d_6ec9.bin" ; $6ec9, 1 bytes
+	INCBIN "data/bank_018/lz_6e88.bin" ; $6e88, 66 bytes
 Lz_18_6eca:
-	INCBIN "data/bank_018/lz_6eca.bin" ; $6eca, 72 bytes
-	INCBIN "data/bank_018/d_6f12.bin" ; $6f12, 1 bytes
+	INCBIN "data/bank_018/lz_6eca.bin" ; $6eca, 73 bytes
 Lz_18_6f13:
 	INCBIN "data/bank_018/lz_6f13.bin" ; $6f13, 68 bytes
 Lz_18_6f57:
-	INCBIN "data/bank_018/lz_6f57.bin" ; $6f57, 63 bytes
-	INCBIN "data/bank_018/d_6f96.bin" ; $6f96, 1 bytes
+	INCBIN "data/bank_018/lz_6f57.bin" ; $6f57, 64 bytes
 Lz_18_6f97:
-	INCBIN "data/bank_018/lz_6f97.bin" ; $6f97, 58 bytes
-	INCBIN "data/bank_018/d_6fd1.bin" ; $6fd1, 1 bytes
+	INCBIN "data/bank_018/lz_6f97.bin" ; $6f97, 59 bytes
 Lz_18_6fd2:
-	INCBIN "data/bank_018/lz_6fd2.bin" ; $6fd2, 52 bytes
-	INCBIN "data/bank_018/d_7006.bin" ; $7006, 1 bytes
+	INCBIN "data/bank_018/lz_6fd2.bin" ; $6fd2, 53 bytes
 Lz_18_7007:
-	INCBIN "data/bank_018/lz_7007.bin" ; $7007, 56 bytes
-	INCBIN "data/bank_018/d_703f.bin" ; $703f, 1 bytes
+	INCBIN "data/bank_018/lz_7007.bin" ; $7007, 57 bytes
 Lz_18_7040:
-	INCBIN "data/bank_018/lz_7040.bin" ; $7040, 65 bytes
-	INCBIN "data/bank_018/d_7081.bin" ; $7081, 1 bytes
+	INCBIN "data/bank_018/lz_7040.bin" ; $7040, 66 bytes
 Lz_18_7082:
-	INCBIN "data/bank_018/lz_7082.bin" ; $7082, 72 bytes
-	INCBIN "data/bank_018/d_70ca.bin" ; $70ca, 1 bytes
+	INCBIN "data/bank_018/lz_7082.bin" ; $7082, 73 bytes
 Lz_18_70cb:
-	INCBIN "data/bank_018/lz_70cb.bin" ; $70cb, 70 bytes
-	INCBIN "data/bank_018/d_7111.bin" ; $7111, 1 bytes
+	INCBIN "data/bank_018/lz_70cb.bin" ; $70cb, 71 bytes
 Lz_18_7112:
 	INCBIN "data/bank_018/lz_7112.bin" ; $7112, 68 bytes
 Lz_18_7156:
-	INCBIN "data/bank_018/lz_7156.bin" ; $7156, 65 bytes
-	INCBIN "data/bank_018/d_7197.bin" ; $7197, 1 bytes
+	INCBIN "data/bank_018/lz_7156.bin" ; $7156, 66 bytes
 Lz_18_7198:
-	INCBIN "data/bank_018/lz_7198.bin" ; $7198, 63 bytes
-	INCBIN "data/bank_018/d_71d7.bin" ; $71d7, 1 bytes
+	INCBIN "data/bank_018/lz_7198.bin" ; $7198, 64 bytes
 Lz_18_71d8:
-	INCBIN "data/bank_018/lz_71d8.bin" ; $71d8, 57 bytes
-	INCBIN "data/bank_018/d_7211.bin" ; $7211, 1 bytes
+	INCBIN "data/bank_018/lz_71d8.bin" ; $71d8, 58 bytes
 Lz_18_7212:
-	INCBIN "data/bank_018/lz_7212.bin" ; $7212, 59 bytes
-	INCBIN "data/bank_018/d_724d.bin" ; $724d, 1 bytes
+	INCBIN "data/bank_018/lz_7212.bin" ; $7212, 60 bytes
 Lz_18_724e:
 	INCBIN "data/bank_018/lz_724e.bin" ; $724e, 68 bytes
 Lz_18_7292:
-	INCBIN "data/bank_018/lz_7292.bin" ; $7292, 72 bytes
-	INCBIN "data/bank_018/d_72da.bin" ; $72da, 1 bytes
+	INCBIN "data/bank_018/lz_7292.bin" ; $7292, 73 bytes
 Lz_18_72db:
-	INCBIN "data/bank_018/lz_72db.bin" ; $72db, 303 bytes
-	INCBIN "data/bank_018/d_740a.bin" ; $740a, 1 bytes
+	INCBIN "data/bank_018/lz_72db.bin" ; $72db, 304 bytes
 Lz_18_740b:
-	INCBIN "data/bank_018/lz_740b.bin" ; $740b, 213 bytes
-	INCBIN "data/bank_018/d_74e0.bin" ; $74e0, 311 bytes
+	INCBIN "data/bank_018/lz_740b.bin" ; $740b, 214 bytes
+	INCBIN "data/bank_018/d_74e1.bin" ; $74e1, 310 bytes
 Func_18_7617:
 	ld a, c ; $7617
 	ld [$cb6d], a ; $7618

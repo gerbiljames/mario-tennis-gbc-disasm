@@ -39,48 +39,36 @@ DataPtr_3c_20:
 	dw Lz_3c_599a ; $4020
 	INCBIN "data/bank_03c/d_4022.bin" ; $4022, 92 bytes
 Lz_3c_407e:
-	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1282 bytes
-	INCBIN "data/bank_03c/d_4580.bin" ; $4580, 1 bytes
+	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1283 bytes
 Lz_3c_4581:
-	INCBIN "data/bank_03c/lz_4581.bin" ; $4581, 267 bytes
-	INCBIN "data/bank_03c/d_468c.bin" ; $468c, 1 bytes
+	INCBIN "data/bank_03c/lz_4581.bin" ; $4581, 268 bytes
 Lz_3c_468d:
 	INCBIN "data/bank_03c/lz_468d.bin" ; $468d, 132 bytes
 	INCBIN "data/bank_03c/d_4711.bin" ; $4711, 64 bytes
 Lz_3c_4751:
 	INCBIN "data/bank_03c/lz_4751.bin" ; $4751, 2465 bytes
 Lz_3c_50f2:
-	INCBIN "data/bank_03c/lz_50f2.bin" ; $50f2, 499 bytes
-	INCBIN "data/bank_03c/d_52e5.bin" ; $52e5, 1 bytes
+	INCBIN "data/bank_03c/lz_50f2.bin" ; $50f2, 500 bytes
 Lz_3c_52e6:
-	INCBIN "data/bank_03c/lz_52e6.bin" ; $52e6, 106 bytes
-	INCBIN "data/bank_03c/d_5350.bin" ; $5350, 1 bytes
+	INCBIN "data/bank_03c/lz_52e6.bin" ; $52e6, 107 bytes
 Data_3c_5351:
 	INCBIN "data/bank_03c/d_5351.bin" ; $5351, 64 bytes
 Lz_3c_5391:
-	INCBIN "data/bank_03c/lz_5391.bin" ; $5391, 70 bytes
-	INCBIN "data/bank_03c/d_53d7.bin" ; $53d7, 1 bytes
+	INCBIN "data/bank_03c/lz_5391.bin" ; $5391, 71 bytes
 Lz_3c_53d8:
-	INCBIN "data/bank_03c/lz_53d8.bin" ; $53d8, 227 bytes
-	INCBIN "data/bank_03c/d_54bb.bin" ; $54bb, 1 bytes
+	INCBIN "data/bank_03c/lz_53d8.bin" ; $53d8, 228 bytes
 Lz_3c_54bc:
-	INCBIN "data/bank_03c/lz_54bc.bin" ; $54bc, 247 bytes
-	INCBIN "data/bank_03c/d_55b3.bin" ; $55b3, 1 bytes
+	INCBIN "data/bank_03c/lz_54bc.bin" ; $54bc, 248 bytes
 Lz_3c_55b4:
-	INCBIN "data/bank_03c/lz_55b4.bin" ; $55b4, 234 bytes
-	INCBIN "data/bank_03c/d_569e.bin" ; $569e, 1 bytes
+	INCBIN "data/bank_03c/lz_55b4.bin" ; $55b4, 235 bytes
 Lz_3c_569f:
-	INCBIN "data/bank_03c/lz_569f.bin" ; $569f, 242 bytes
-	INCBIN "data/bank_03c/d_5791.bin" ; $5791, 1 bytes
+	INCBIN "data/bank_03c/lz_569f.bin" ; $569f, 243 bytes
 Lz_3c_5792:
-	INCBIN "data/bank_03c/lz_5792.bin" ; $5792, 230 bytes
-	INCBIN "data/bank_03c/d_5878.bin" ; $5878, 1 bytes
+	INCBIN "data/bank_03c/lz_5792.bin" ; $5792, 231 bytes
 Lz_3c_5879:
-	INCBIN "data/bank_03c/lz_5879.bin" ; $5879, 237 bytes
-	INCBIN "data/bank_03c/d_5966.bin" ; $5966, 1 bytes
+	INCBIN "data/bank_03c/lz_5879.bin" ; $5879, 238 bytes
 Lz_3c_5967:
-	INCBIN "data/bank_03c/lz_5967.bin" ; $5967, 50 bytes
-	INCBIN "data/bank_03c/d_5999.bin" ; $5999, 1 bytes
+	INCBIN "data/bank_03c/lz_5967.bin" ; $5967, 51 bytes
 Lz_3c_599a:
-	INCBIN "data/bank_03c/lz_599a.bin" ; $599a, 267 bytes
-	INCBIN "data/bank_03c/d_5aa5.bin" ; $5aa5, 9563 bytes
+	INCBIN "data/bank_03c/lz_599a.bin" ; $599a, 268 bytes
+	INCBIN "data/bank_03c/d_5aa6.bin" ; $5aa6, 9562 bytes

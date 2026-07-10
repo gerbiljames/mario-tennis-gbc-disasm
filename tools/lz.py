@@ -7,6 +7,14 @@ two-byte back-reference lo, hi (flag = 0). A back-reference copies
 (hi & $1f) + 3 bytes from 0x800 - (((hi >> 5) << 8) | lo) bytes behind the
 write position; the pair lo = hi = 0 terminates the stream. The window is
 2 KiB and copies may overlap their destination (run-length style).
+
+The original encoder always ends a stream with three zero bytes. When the
+terminating reference starts a fresh flag group, the decoder consumes all
+three ($00 control byte + $0000 reference); mid-group it consumes only the
+$0000 reference and the third byte goes unread. decompress() counts that
+authored-but-unread pad byte in the returned stream length so extents match
+the encoder's output (verified over every stream in the ROM: 142 mid-group
+streams all pad with $00, 22 fresh-group streams have no pad).
 """
 import sys
 from pathlib import Path
@@ -38,6 +46,10 @@ def decompress(rom, off, end=None):
                 lo = rd()
                 hi = rd()
                 if lo == 0 and hi == 0:
+                    if bit > 0:
+                        if pos >= end or rom[pos] != 0:
+                            raise ValueError("missing terminator pad byte")
+                        pos += 1
                     return bytes(out), pos - off
                 start = len(out) - (0x800 - ((hi >> 5 << 8) | lo))
                 if start < 0:

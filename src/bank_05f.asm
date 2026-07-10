@@ -22,20 +22,17 @@ FarPtr_5f_d0:
 	dw Func_5f_7fed ; $40d0
 	INCBIN "data/bank_05f/d_40d2.bin" ; $40d2, 1923 bytes
 Lz_5f_4855:
-	INCBIN "data/bank_05f/lz_4855.bin" ; $4855, 624 bytes
-	INCBIN "data/bank_05f/d_4ac5.bin" ; $4ac5, 1 bytes
+	INCBIN "data/bank_05f/lz_4855.bin" ; $4855, 625 bytes
 Lz_5f_4ac6:
-	INCBIN "data/bank_05f/lz_4ac6.bin" ; $4ac6, 332 bytes
-	INCBIN "data/bank_05f/d_4c12.bin" ; $4c12, 145 bytes
+	INCBIN "data/bank_05f/lz_4ac6.bin" ; $4ac6, 333 bytes
+	INCBIN "data/bank_05f/d_4c13.bin" ; $4c13, 144 bytes
 Lz_5f_4ca3:
-	INCBIN "data/bank_05f/lz_4ca3.bin" ; $4ca3, 2383 bytes
-	INCBIN "data/bank_05f/d_55f2.bin" ; $55f2, 1 bytes
+	INCBIN "data/bank_05f/lz_4ca3.bin" ; $4ca3, 2384 bytes
 Lz_5f_55f3:
-	INCBIN "data/bank_05f/lz_55f3.bin" ; $55f3, 490 bytes
-	INCBIN "data/bank_05f/d_57dd.bin" ; $57dd, 1 bytes
+	INCBIN "data/bank_05f/lz_55f3.bin" ; $55f3, 491 bytes
 Lz_5f_57de:
-	INCBIN "data/bank_05f/lz_57de.bin" ; $57de, 293 bytes
-	INCBIN "data/bank_05f/d_5903.bin" ; $5903, 9962 bytes
+	INCBIN "data/bank_05f/lz_57de.bin" ; $57de, 294 bytes
+	INCBIN "data/bank_05f/d_5904.bin" ; $5904, 9961 bytes
 Func_5f_7fed:
 	rst Rst38 ; $7fed
 	rst Rst38 ; $7fee

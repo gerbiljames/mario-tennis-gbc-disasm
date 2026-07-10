@@ -431,19 +431,15 @@ Label_39_4698:
 	ret ; $46b6
 	INCBIN "data/bank_039/d_46b7.bin" ; $46b7, 244 bytes
 Lz_39_47ab:
-	INCBIN "data/bank_039/lz_47ab.bin" ; $47ab, 78 bytes
-	INCBIN "data/bank_039/d_47f9.bin" ; $47f9, 1 bytes
+	INCBIN "data/bank_039/lz_47ab.bin" ; $47ab, 79 bytes
 Lz_39_47fa:
 	INCBIN "data/bank_039/lz_47fa.bin" ; $47fa, 15 bytes
 Lz_39_4809:
-	INCBIN "data/bank_039/lz_4809.bin" ; $4809, 41 bytes
-	INCBIN "data/bank_039/d_4832.bin" ; $4832, 1 bytes
+	INCBIN "data/bank_039/lz_4809.bin" ; $4809, 42 bytes
 Lz_39_4833:
-	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 239 bytes
-	INCBIN "data/bank_039/d_4922.bin" ; $4922, 1 bytes
+	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 240 bytes
 Lz_39_4923:
-	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 242 bytes
-	INCBIN "data/bank_039/d_4a15.bin" ; $4a15, 1 bytes
+	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 243 bytes
 Func_39_4a16:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18
@@ -1271,26 +1267,20 @@ Func_39_7003:
 Lz_39_7009:
 	INCBIN "data/bank_039/lz_7009.bin" ; $7009, 178 bytes
 Lz_39_70bb:
-	INCBIN "data/bank_039/lz_70bb.bin" ; $70bb, 193 bytes
-	INCBIN "data/bank_039/d_717c.bin" ; $717c, 1 bytes
+	INCBIN "data/bank_039/lz_70bb.bin" ; $70bb, 194 bytes
 Lz_39_717d:
-	INCBIN "data/bank_039/lz_717d.bin" ; $717d, 56 bytes
-	INCBIN "data/bank_039/d_71b5.bin" ; $71b5, 1 bytes
+	INCBIN "data/bank_039/lz_717d.bin" ; $717d, 57 bytes
 Lz_39_71b6:
-	INCBIN "data/bank_039/lz_71b6.bin" ; $71b6, 49 bytes
-	INCBIN "data/bank_039/d_71e7.bin" ; $71e7, 1 bytes
+	INCBIN "data/bank_039/lz_71b6.bin" ; $71b6, 50 bytes
 Lz_39_71e8:
-	INCBIN "data/bank_039/lz_71e8.bin" ; $71e8, 58 bytes
-	INCBIN "data/bank_039/d_7222.bin" ; $7222, 1 bytes
+	INCBIN "data/bank_039/lz_71e8.bin" ; $71e8, 59 bytes
 Lz_39_7223:
-	INCBIN "data/bank_039/lz_7223.bin" ; $7223, 57 bytes
-	INCBIN "data/bank_039/d_725c.bin" ; $725c, 1 bytes
+	INCBIN "data/bank_039/lz_7223.bin" ; $7223, 58 bytes
 Lz_39_725d:
-	INCBIN "data/bank_039/lz_725d.bin" ; $725d, 240 bytes
-	INCBIN "data/bank_039/d_734d.bin" ; $734d, 1 bytes
+	INCBIN "data/bank_039/lz_725d.bin" ; $725d, 241 bytes
 Lz_39_734e:
-	INCBIN "data/bank_039/lz_734e.bin" ; $734e, 248 bytes
-	INCBIN "data/bank_039/d_7446.bin" ; $7446, 20 bytes
+	INCBIN "data/bank_039/lz_734e.bin" ; $734e, 249 bytes
+	INCBIN "data/bank_039/d_7447.bin" ; $7447, 19 bytes
 Func_39_745a:
 	ld a, b ; $745a
 	ld [hl+], a ; $745b
