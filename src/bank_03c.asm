@@ -107,15 +107,15 @@ DataPtr_3c_62:
 DataPtr_3c_64:
 	dw Lz_3c_6f68 ; $4064
 DataPtr_3c_66:
-	dw Lz_3c_7051 ; $4066
+	dw GamesLabelTiles ; $4066
 DataPtr_3c_68:
-	dw Lz_3c_7103 ; $4068
+	dw GamesLabelTiles2 ; $4068
 DataPtr_3c_6a:
-	dw Lz_3c_71ad ; $406a
+	dw OneSetLabelTiles ; $406a
 DataPtr_3c_6c:
-	dw Lz_3c_726a ; $406c
+	dw ThreeSetsLabelTiles ; $406c
 DataPtr_3c_6e:
-	dw Lz_3c_7344 ; $406e
+	dw FiveSetsLabelTiles ; $406e
 	INCBIN "data/bank_03c/d_4070.bin" ; $4070, 14 bytes
 ModeSelectTiles:
 	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1283 bytes
@@ -219,15 +219,15 @@ Lz_3c_6eb9:
 	INCBIN "data/bank_03c/lz_6eb9.bin" ; $6eb9, 175 bytes
 Lz_3c_6f68:
 	INCBIN "data/bank_03c/lz_6f68.bin" ; $6f68, 233 bytes
-Lz_3c_7051:
+GamesLabelTiles:
 	INCBIN "data/bank_03c/lz_7051.bin" ; $7051, 178 bytes
-Lz_3c_7103:
+GamesLabelTiles2:
 	INCBIN "data/bank_03c/lz_7103.bin" ; $7103, 170 bytes
-Lz_3c_71ad:
+OneSetLabelTiles:
 	INCBIN "data/bank_03c/lz_71ad.bin" ; $71ad, 189 bytes
-Lz_3c_726a:
+ThreeSetsLabelTiles:
 	INCBIN "data/bank_03c/lz_726a.bin" ; $726a, 218 bytes
-Lz_3c_7344:
+FiveSetsLabelTiles:
 	INCBIN "data/bank_03c/lz_7344.bin" ; $7344, 215 bytes
 	INCBIN "data/bank_03c/d_741b.bin" ; $741b, 1457 bytes
 	ds 1588, $ff ; $79cc, fill

@@ -63,7 +63,7 @@ DataPtr_6c_36:
 DataPtr_6c_38:
 	dw Data_6c_62ae ; $4038
 DataPtr_6c_3a:
-	dw Lz_6c_62ee ; $403a
+	dw IntroWaveTiles ; $403a
 DataPtr_6c_3c:
 	dw Lz_6c_67e0 ; $403c
 DataPtr_6c_3e:
@@ -71,7 +71,7 @@ DataPtr_6c_3e:
 DataPtr_6c_40:
 	dw Data_6c_690a ; $4040
 DataPtr_6c_42:
-	dw Lz_6c_694a ; $4042
+	dw IntroDiveTiles ; $4042
 DataPtr_6c_44:
 	dw Lz_6c_6dee ; $4044
 DataPtr_6c_46:
@@ -79,7 +79,7 @@ DataPtr_6c_46:
 DataPtr_6c_48:
 	dw Data_6c_6ef3 ; $4048
 DataPtr_6c_4a:
-	dw Lz_6c_6f33 ; $404a
+	dw IntroGirlSwingTiles ; $404a
 DataPtr_6c_4c:
 	dw Lz_6c_739e ; $404c
 DataPtr_6c_4e:
@@ -170,7 +170,7 @@ Lz_6c_6264:
 	INCBIN "data/bank_06c/lz_6264.bin" ; $6264, 74 bytes
 Data_6c_62ae:
 	INCBIN "data/bank_06c/d_62ae.bin" ; $62ae, 64 bytes
-Lz_6c_62ee:
+IntroWaveTiles:
 	INCBIN "data/bank_06c/lz_62ee.bin" ; $62ee, 1266 bytes
 Lz_6c_67e0:
 	INCBIN "data/bank_06c/lz_67e0.bin" ; $67e0, 226 bytes
@@ -178,7 +178,7 @@ Lz_6c_68c2:
 	INCBIN "data/bank_06c/lz_68c2.bin" ; $68c2, 72 bytes
 Data_6c_690a:
 	INCBIN "data/bank_06c/d_690a.bin" ; $690a, 64 bytes
-Lz_6c_694a:
+IntroDiveTiles:
 	INCBIN "data/bank_06c/lz_694a.bin" ; $694a, 1188 bytes
 Lz_6c_6dee:
 	INCBIN "data/bank_06c/lz_6dee.bin" ; $6dee, 189 bytes
@@ -186,7 +186,7 @@ Lz_6c_6eab:
 	INCBIN "data/bank_06c/lz_6eab.bin" ; $6eab, 72 bytes
 Data_6c_6ef3:
 	INCBIN "data/bank_06c/d_6ef3.bin" ; $6ef3, 64 bytes
-Lz_6c_6f33:
+IntroGirlSwingTiles:
 	INCBIN "data/bank_06c/lz_6f33.bin" ; $6f33, 1131 bytes
 Lz_6c_739e:
 	INCBIN "data/bank_06c/lz_739e.bin" ; $739e, 181 bytes

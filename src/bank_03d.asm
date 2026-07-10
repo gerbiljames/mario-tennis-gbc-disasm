@@ -55,7 +55,7 @@ DataPtr_3d_2e:
 DataPtr_3d_30:
 	dw Lz_3d_5073 ; $4030
 DataPtr_3d_32:
-	dw Lz_3d_5148 ; $4032
+	dw LinkingScreenTiles ; $4032
 DataPtr_3d_34:
 	dw Lz_3d_567d ; $4034
 DataPtr_3d_36:
@@ -63,9 +63,9 @@ DataPtr_3d_36:
 DataPtr_3d_38:
 	dw Data_3d_57e1 ; $4038
 DataPtr_3d_3a:
-	dw Lz_3d_5821 ; $403a
+	dw RingShotHudTiles ; $403a
 DataPtr_3d_3c:
-	dw Lz_3d_5ce1 ; $403c
+	dw RingShotHudTilemap ; $403c
 DataPtr_3d_3e:
 	dw Lz_3d_5e25 ; $403e
 DataPtr_3d_40:
@@ -73,7 +73,7 @@ DataPtr_3d_40:
 DataPtr_3d_42:
 	dw Lz_3d_5eea ; $4042
 DataPtr_3d_44:
-	dw Lz_3d_5f99 ; $4044
+	dw MatchStatsTiles ; $4044
 DataPtr_3d_46:
 	dw Lz_3d_67fd ; $4046
 DataPtr_3d_48:
@@ -95,9 +95,9 @@ DataPtr_3d_56:
 DataPtr_3d_58:
 	dw Lz_3d_4fd6 ; $4058
 DataPtr_3d_5a:
-	dw Lz_3d_6f28 ; $405a
+	dw EquipmentSelectTiles ; $405a
 DataPtr_3d_5c:
-	dw Lz_3d_7725 ; $405c
+	dw EquipmentSelectTilemap ; $405c
 DataPtr_3d_5e:
 	dw Lz_3d_77c6 ; $405e
 DataPtr_3d_60:
@@ -158,7 +158,7 @@ Lz_3d_4fd6:
 	INCBIN "data/bank_03d/lz_4fd6.bin" ; $4fd6, 157 bytes
 Lz_3d_5073:
 	INCBIN "data/bank_03d/lz_5073.bin" ; $5073, 213 bytes
-Lz_3d_5148:
+LinkingScreenTiles:
 	INCBIN "data/bank_03d/lz_5148.bin" ; $5148, 1333 bytes
 Lz_3d_567d:
 	INCBIN "data/bank_03d/lz_567d.bin" ; $567d, 241 bytes
@@ -166,9 +166,9 @@ Lz_3d_576e:
 	INCBIN "data/bank_03d/lz_576e.bin" ; $576e, 115 bytes
 Data_3d_57e1:
 	INCBIN "data/bank_03d/d_57e1.bin" ; $57e1, 64 bytes
-Lz_3d_5821:
+RingShotHudTiles:
 	INCBIN "data/bank_03d/lz_5821.bin" ; $5821, 1216 bytes
-Lz_3d_5ce1:
+RingShotHudTilemap:
 	INCBIN "data/bank_03d/lz_5ce1.bin" ; $5ce1, 324 bytes
 Lz_3d_5e25:
 	INCBIN "data/bank_03d/lz_5e25.bin" ; $5e25, 133 bytes
@@ -176,7 +176,7 @@ Data_3d_5eaa:
 	INCBIN "data/bank_03d/d_5eaa.bin" ; $5eaa, 64 bytes
 Lz_3d_5eea:
 	INCBIN "data/bank_03d/lz_5eea.bin" ; $5eea, 175 bytes
-Lz_3d_5f99:
+MatchStatsTiles:
 	INCBIN "data/bank_03d/lz_5f99.bin" ; $5f99, 2148 bytes
 Lz_3d_67fd:
 	INCBIN "data/bank_03d/lz_67fd.bin" ; $67fd, 361 bytes
@@ -196,9 +196,9 @@ Lz_3d_6d39:
 	INCBIN "data/bank_03d/lz_6d39.bin" ; $6d39, 245 bytes
 Lz_3d_6e2e:
 	INCBIN "data/bank_03d/lz_6e2e.bin" ; $6e2e, 250 bytes
-Lz_3d_6f28:
+EquipmentSelectTiles:
 	INCBIN "data/bank_03d/lz_6f28.bin" ; $6f28, 2045 bytes
-Lz_3d_7725:
+EquipmentSelectTilemap:
 	INCBIN "data/bank_03d/lz_7725.bin" ; $7725, 161 bytes
 Lz_3d_77c6:
 	INCBIN "data/bank_03d/lz_77c6.bin" ; $77c6, 106 bytes

@@ -21,14 +21,14 @@ DataPtr_61_10:
 	dw Data_61_5bfb ; $4010
 	INCBIN "data/bank_061/d_4012.bin" ; $4012, 2 bytes
 DataPtr_61_14:
-	dw Lz_61_589a ; $4014
+	dw CenterCourtTilemap ; $4014
 DataPtr_61_16:
 	dw Lz_61_5aee ; $4016
 DataPtr_61_18:
 	dw Data_61_5bfb ; $4018
 	INCBIN "data/bank_061/d_401a.bin" ; $401a, 4 bytes
 DataPtr_61_1e:
-	dw Lz_61_4ca9 ; $401e
+	dw CenterCourtTiles ; $401e
 DataPtr_61_20:
 	dw Data_61_69fb ; $4020
 	INCBIN "data/bank_061/d_4022.bin" ; $4022, 2 bytes
@@ -63,9 +63,9 @@ Lz_61_4b7b:
 	INCBIN "data/bank_061/lz_4b7b.bin" ; $4b7b, 158 bytes
 Data_61_4c19:
 	INCBIN "data/bank_061/d_4c19.bin" ; $4c19, 144 bytes
-Lz_61_4ca9:
+CenterCourtTiles:
 	INCBIN "data/bank_061/lz_4ca9.bin" ; $4ca9, 3057 bytes
-Lz_61_589a:
+CenterCourtTilemap:
 	INCBIN "data/bank_061/lz_589a.bin" ; $589a, 596 bytes
 Lz_61_5aee:
 	INCBIN "data/bank_061/lz_5aee.bin" ; $5aee, 269 bytes

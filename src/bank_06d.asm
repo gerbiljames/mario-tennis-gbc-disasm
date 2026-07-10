@@ -33,13 +33,13 @@ DataPtr_6d_18:
 DataPtr_6d_1a:
 	dw IntroCharactersTiles ; $401a
 DataPtr_6d_1c:
-	dw Lz_6d_5f18 ; $401c
+	dw IntroCharactersTilemap ; $401c
 DataPtr_6d_1e:
 	dw Lz_6d_6061 ; $401e
 DataPtr_6d_20:
 	dw Data_6d_6104 ; $4020
 DataPtr_6d_22:
-	dw Lz_6d_6144 ; $4022
+	dw IntroCharactersTilemap2 ; $4022
 DataPtr_6d_24:
 	dw Lz_6d_6250 ; $4024
 DataPtr_6d_26:
@@ -151,7 +151,7 @@ DataPtr_6d_8e:
 DataPtr_6d_90:
 	dw Lz_6d_7970 ; $4090
 DataPtr_6d_92:
-	dw Lz_6d_7a58 ; $4092
+	dw MarioMiniGamesTiles ; $4092
 Lz_6d_4094:
 	INCBIN "data/bank_06d/lz_4094.bin" ; $4094, 180 bytes
 Lz_6d_4148:
@@ -180,13 +180,13 @@ Data_6d_54b3:
 	INCBIN "data/bank_06d/d_54b3.bin" ; $54b3, 64 bytes
 IntroCharactersTiles:
 	INCBIN "data/bank_06d/lz_54f3.bin" ; $54f3, 2597 bytes
-Lz_6d_5f18:
+IntroCharactersTilemap:
 	INCBIN "data/bank_06d/lz_5f18.bin" ; $5f18, 329 bytes
 Lz_6d_6061:
 	INCBIN "data/bank_06d/lz_6061.bin" ; $6061, 163 bytes
 Data_6d_6104:
 	INCBIN "data/bank_06d/d_6104.bin" ; $6104, 64 bytes
-Lz_6d_6144:
+IntroCharactersTilemap2:
 	INCBIN "data/bank_06d/lz_6144.bin" ; $6144, 268 bytes
 Lz_6d_6250:
 	INCBIN "data/bank_06d/lz_6250.bin" ; $6250, 133 bytes
@@ -258,6 +258,6 @@ Lz_6d_7887:
 	INCBIN "data/bank_06d/lz_7887.bin" ; $7887, 233 bytes
 Lz_6d_7970:
 	INCBIN "data/bank_06d/lz_7970.bin" ; $7970, 232 bytes
-Lz_6d_7a58:
+MarioMiniGamesTiles:
 	INCBIN "data/bank_06d/lz_7a58.bin" ; $7a58, 757 bytes
 	ds 691, $ff ; $7d4d, fill

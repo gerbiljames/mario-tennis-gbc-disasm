@@ -9,7 +9,7 @@ DataPtr_62_00:
 DataPtr_62_02:
 	dw Data_62_4040 ; $4002
 DataPtr_62_04:
-	dw Lz_62_4846 ; $4004
+	dw StarCourtTilemap ; $4004
 DataPtr_62_06:
 	dw Lz_62_4a42 ; $4006
 DataPtr_62_08:
@@ -19,7 +19,7 @@ DataPtr_62_0a:
 DataPtr_62_0c:
 	dw Data_62_4b63 ; $400c
 DataPtr_62_0e:
-	dw Lz_62_4080 ; $400e
+	dw StarCourtTiles ; $400e
 DataPtr_62_10:
 	dw Data_62_5600 ; $4010
 DataPtr_62_12:
@@ -37,14 +37,14 @@ DataPtr_62_20:
 	dw Data_62_63e1 ; $4020
 	INCBIN "data/bank_062/d_4022.bin" ; $4022, 2 bytes
 DataPtr_62_24:
-	dw Lz_62_5ffc ; $4024
+	dw WarioCourtTilemap ; $4024
 DataPtr_62_26:
 	dw Lz_62_62cf ; $4026
 DataPtr_62_28:
 	dw Data_62_63e1 ; $4028
 	INCBIN "data/bank_062/d_402a.bin" ; $402a, 4 bytes
 DataPtr_62_2e:
-	dw Lz_62_5690 ; $402e
+	dw WarioCourtTiles ; $402e
 DataPtr_62_30:
 	dw Data_62_6f2e ; $4030
 	INCBIN "data/bank_062/d_4032.bin" ; $4032, 2 bytes
@@ -59,9 +59,9 @@ DataPtr_62_3e:
 	dw Lz_62_6471 ; $403e
 Data_62_4040:
 	INCBIN "data/bank_062/d_4040.bin" ; $4040, 64 bytes
-Lz_62_4080:
+StarCourtTiles:
 	INCBIN "data/bank_062/lz_4080.bin" ; $4080, 1990 bytes
-Lz_62_4846:
+StarCourtTilemap:
 	INCBIN "data/bank_062/lz_4846.bin" ; $4846, 508 bytes
 Lz_62_4a42:
 	INCBIN "data/bank_062/lz_4a42.bin" ; $4a42, 209 bytes
@@ -79,9 +79,9 @@ Lz_62_54e3:
 	INCBIN "data/bank_062/lz_54e3.bin" ; $54e3, 285 bytes
 Data_62_5600:
 	INCBIN "data/bank_062/d_5600.bin" ; $5600, 144 bytes
-Lz_62_5690:
+WarioCourtTiles:
 	INCBIN "data/bank_062/lz_5690.bin" ; $5690, 2412 bytes
-Lz_62_5ffc:
+WarioCourtTilemap:
 	INCBIN "data/bank_062/lz_5ffc.bin" ; $5ffc, 723 bytes
 Lz_62_62cf:
 	INCBIN "data/bank_062/lz_62cf.bin" ; $62cf, 274 bytes

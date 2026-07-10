@@ -5,7 +5,7 @@ INCLUDE "ram_constants.asm"
 SECTION "ROM Bank $19", ROMX[$4000], BANK[$19]
 
 DataPtr_19_00:
-	dw Lz_19_404c ; $4000
+	dw VictoryCutsceneTiles ; $4000
 DataPtr_19_02:
 	dw Data_19_4c7a ; $4002
 DataPtr_19_04:
@@ -33,7 +33,7 @@ DataPtr_19_18:
 DataPtr_19_1a:
 	dw Lz_19_54ad ; $401a
 DataPtr_19_1c:
-	dw Lz_19_551f ; $401c
+	dw ShopCutsceneTiles ; $401c
 DataPtr_19_1e:
 	dw Data_19_6124 ; $401e
 DataPtr_19_20:
@@ -80,7 +80,7 @@ DataPtr_19_48:
 	dw Lz_19_7c34 ; $4048
 DataPtr_19_4a:
 	dw Lz_19_7d47 ; $404a
-Lz_19_404c:
+VictoryCutsceneTiles:
 	INCBIN "data/bank_019/lz_404c.bin" ; $404c, 3118 bytes
 Data_19_4c7a:
 	INCBIN "data/bank_019/d_4c7a.bin" ; $4c7a, 64 bytes
@@ -108,7 +108,7 @@ Lz_19_53d0:
 	INCBIN "data/bank_019/lz_53d0.bin" ; $53d0, 221 bytes
 Lz_19_54ad:
 	INCBIN "data/bank_019/lz_54ad.bin" ; $54ad, 114 bytes
-Lz_19_551f:
+ShopCutsceneTiles:
 	INCBIN "data/bank_019/lz_551f.bin" ; $551f, 3077 bytes
 Data_19_6124:
 	INCBIN "data/bank_019/d_6124.bin" ; $6124, 64 bytes

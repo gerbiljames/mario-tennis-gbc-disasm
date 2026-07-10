@@ -7,13 +7,13 @@ SECTION "ROM Bank $3f", ROMX[$4000], BANK[$3f]
 FarPtr_3f_00:
 	dw Func_3f_407a ; $4000
 DataPtr_3f_02:
-	dw Lz_3f_57eb ; $4002
+	dw HardCourtLabelTiles ; $4002
 DataPtr_3f_04:
-	dw Lz_3f_58ac ; $4004
+	dw ClayCourtLabelTiles ; $4004
 DataPtr_3f_06:
-	dw Lz_3f_5974 ; $4006
+	dw GrassCourtLabelTiles ; $4006
 DataPtr_3f_08:
-	dw Lz_3f_5a37 ; $4008
+	dw CompositionCourtLabelTiles ; $4008
 DataPtr_3f_0a:
 	dw Lz_3f_5af5 ; $400a
 DataPtr_3f_0c:
@@ -1785,13 +1785,13 @@ Label_3f_57e4:
 	ldh [$ff96], a ; $57e6
 	ldh [rWBK], a ; $57e8
 	ret ; $57ea
-Lz_3f_57eb:
+HardCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_57eb.bin" ; $57eb, 193 bytes
-Lz_3f_58ac:
+ClayCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_58ac.bin" ; $58ac, 200 bytes
-Lz_3f_5974:
+GrassCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_5974.bin" ; $5974, 195 bytes
-Lz_3f_5a37:
+CompositionCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_5a37.bin" ; $5a37, 190 bytes
 Lz_3f_5af5:
 	INCBIN "data/bank_03f/lz_5af5.bin" ; $5af5, 210 bytes

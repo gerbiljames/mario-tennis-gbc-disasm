@@ -6,7 +6,7 @@ SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 
 	INCBIN "data/bank_017/d_4000.bin" ; $4000, 2 bytes
 DataPtr_17_02:
-	dw Lz_17_4b17 ; $4002
+	dw CourtDiagramTiles ; $4002
 DataPtr_17_04:
 	dw Lz_17_4d65 ; $4004
 DataPtr_17_06:
@@ -18,9 +18,9 @@ FarPtr_17_0a:
 FarPtr_17_0c:
 	dw Func_17_6f1b ; $400c
 DataPtr_17_0e:
-	dw Lz_17_7570 ; $400e
+	dw RulesScreenTiles ; $400e
 DataPtr_17_10:
-	dw Lz_17_7770 ; $4010
+	dw RulesScreenTilemap ; $4010
 DataPtr_17_12:
 	dw Lz_17_78a5 ; $4012
 DataPtr_17_14:
@@ -575,7 +575,7 @@ Func_17_4b0d:
 	ld de, $0803 ; $4b10
 	call Func_00_05b0 ; $4b13
 	ret ; $4b16
-Lz_17_4b17:
+CourtDiagramTiles:
 	INCBIN "data/bank_017/lz_4b17.bin" ; $4b17, 590 bytes
 Lz_17_4d65:
 	INCBIN "data/bank_017/lz_4d65.bin" ; $4d65, 221 bytes
@@ -3832,9 +3832,9 @@ Label_17_7517:
 	ld h, $03 ; $756a
 	farcall FarPtr_39_1a ; $756c
 	ret ; $756f
-Lz_17_7570:
+RulesScreenTiles:
 	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes
-Lz_17_7770:
+RulesScreenTilemap:
 	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 309 bytes
 Lz_17_78a5:
 	INCBIN "data/bank_017/lz_78a5.bin" ; $78a5, 87 bytes
