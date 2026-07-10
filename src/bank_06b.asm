@@ -2038,19 +2038,22 @@ Func_6b_790f:
 	nop ; $791a
 	rst Rst38 ; $791b
 	ld a, a ; $791c
-	farcall FarPtr_42_20 ; $791d
+	rst Rst18 ; $791d
+	jr nz, Label_6b_7962 ; $791e
 	ld [bc], a ; $7920
 	nop ; $7921
 	nop ; $7922
 	rra ; $7923
 	ld [bc], a ; $7924
-	farcall FarPtr_42_20 ; $7925
+	rst Rst18 ; $7925
+	jr nz, $796a ; $7926
 	ld [bc], a ; $7928
 	nop ; $7929
 	nop ; $792a
 	ret z ; $792b
 	ld l, b ; $792c
-	farcall FarPtr_42_20 ; $792d
+	rst Rst18 ; $792d
+	jr nz, $7972 ; $792e
 	ld [bc], a ; $7930
 	nop ; $7931
 	nop ; $7932
@@ -2096,6 +2099,7 @@ Func_6b_7957:
 	add sp, -32 ; $795d
 	rst Rst38 ; $795f
 	ldh [rIE], a ; $7960
+Label_6b_7962:
 	ldh [$fff9], a ; $7962
 	ld [bc], a ; $7964
 	cp a, a ; $7965

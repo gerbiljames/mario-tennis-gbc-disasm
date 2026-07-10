@@ -1304,12 +1304,8 @@ bank_03f/d_7b90.bin 0ffb90 b9
 bank_040/d_4002.bin 100002 10
 bank_040/d_4012.bin 100012 3fee
 bank_041/d_4000.bin 104000 3fb5
-bank_042/d_4000.bin 108000 20
-bank_042/d_4022.bin 108022 97e
-bank_042/d_4a06.bin 108a06 35af
-bank_043/d_4000.bin 10c000 40
-bank_043/d_4042.bin 10c042 fee
-bank_043/d_5090.bin 10d090 2f23
+bank_042/d_4000.bin 108000 3fb5
+bank_043/d_4000.bin 10c000 3fb3
 bank_044/d_4000.bin 110000 3fb5
 bank_045/d_4000.bin 114000 3fb5
 bank_046/d_4000.bin 118000 3fb5

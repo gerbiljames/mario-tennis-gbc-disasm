@@ -64,7 +64,9 @@ Lz_65_5777:
 	INCBIN "data/bank_065/lz_5777.bin" ; $5777, 1897 bytes
 Data_65_5ee0:
 	INCBIN "data/bank_065/d_5ee0.bin" ; $5ee0, 671 bytes
-	farcall FarPtr_43_40 ; $617f
+	rst Rst18 ; $617f
+	ld b, b ; $6180
+	ld b, e ; $6181
 	ld e, e ; $6182
 	inc b ; $6183
 	ld c, d ; $6184

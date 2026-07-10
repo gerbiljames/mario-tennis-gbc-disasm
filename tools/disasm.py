@@ -161,6 +161,8 @@ class Disassembly:
         target = bank * BANK_SIZE + target_cpu - BANK_SIZE
         if self.rom[target] == 0xFF:  # rst $38: padding, never a real entry
             return None
+        if self.rom[target] == 0 and self.rom[target + 1] == 0:
+            return None  # nop; nop: zero-filled data, not a function
         if not sm83.decode(self.rom, target, target_cpu).valid:
             return None
         return (bank, slot, entry, target)
@@ -262,6 +264,7 @@ class Disassembly:
                     flat = base + cpu - BANK_SIZE
                     ok = (BANK_SIZE + floor <= cpu < 0x8000
                           and self.rom[flat] != 0xFF
+                          and not (self.rom[flat] == 0 and self.rom[flat + 1] == 0)
                           and sm83.decode(self.rom, flat, cpu).valid)
                     if ok and cpu - BANK_SIZE < extent:
                         extent = cpu - BANK_SIZE
