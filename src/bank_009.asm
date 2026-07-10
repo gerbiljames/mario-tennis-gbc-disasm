@@ -739,7 +739,9 @@ Func_09_4873:
 	sbc a, a ; $4fa4
 	sbc a, a ; $4fa5
 	ret nc ; $4fa6
-	farcall FarPtr_5f_d0 ; $4fa7
+	rst Rst18 ; $4fa7
+	ret nc ; $4fa8
+	ld e, a ; $4fa9
 	jp nc, $d25d ; $4faa
 	INCBIN "data/bank_009/d_4fad.bin" ; $4fad, 776 bytes
 	rst Rst18 ; $52b5

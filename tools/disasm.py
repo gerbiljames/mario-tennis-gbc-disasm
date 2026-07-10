@@ -159,6 +159,8 @@ class Disassembly:
         if not (BANK_SIZE <= target_cpu < 0x8000):
             return None
         target = bank * BANK_SIZE + target_cpu - BANK_SIZE
+        if self.rom[target] == 0xFF:  # rst $38: padding, never a real entry
+            return None
         if not sm83.decode(self.rom, target, target_cpu).valid:
             return None
         return (bank, slot, entry, target)
@@ -256,6 +258,7 @@ class Disassembly:
                     cpu = entry_cpu(s)
                     flat = base + cpu - BANK_SIZE
                     ok = (BANK_SIZE + floor <= cpu < 0x8000
+                          and self.rom[flat] != 0xFF
                           and sm83.decode(self.rom, flat, cpu).valid)
                     if ok and cpu - BANK_SIZE < extent:
                         extent = cpu - BANK_SIZE
@@ -547,6 +550,45 @@ class Disassembly:
             floors[bank] = max(floors[bank], slot + 2)
         live_entries = {e for off, (_b, _s, e, _t) in self.farcalls.items()
                         if off in self.instrs}
+
+        # Bootstrap banks with no proven table usage at all: accept a bank
+        # whose opening bytes form a full in-range pointer array delimited by
+        # its own lowest target, of which at least three targets decode as
+        # valid LZ streams. Bank $5f's scene table has no statically visible
+        # consumer anywhere, yet its shape passes all three tests.
+        for bank in range(1, len(self.rom) // BANK_SIZE):
+            if bank in floors or bank in code_table_banks:
+                continue
+            base = bank * BANK_SIZE
+            ptr = [self.rom[base + s] | (self.rom[base + s + 1] << 8)
+                   for s in range(0, 0x100, 2)]
+            inb = [p for p in ptr if BANK_SIZE < p < 0x8000]
+            if not inb:
+                continue
+            ext = min(inb) - BANK_SIZE
+            if not 2 <= ext <= 0x100 or ext & 1:
+                continue
+            slots = range(0, ext, 2)
+            if not all(BANK_SIZE + ext <= ptr[s // 2] < 0x8000 for s in slots):
+                continue
+            lz_ok = 0
+            for s in slots:
+                src = base + ptr[s // 2] - BANK_SIZE
+                if src in self.code_bytes:
+                    lz_ok = 0
+                    break
+                try:
+                    data, _ln = lz.decompress(self.rom, src, base + BANK_SIZE)
+                    if 8 <= len(data) <= 0x1000:
+                        lz_ok += 1
+                except ValueError:
+                    pass
+            if lz_ok < 3:
+                continue
+            floors[bank] = ext
+            print(f"  bank ${bank:02x}: bootstrapped {ext // 2}-slot data "
+                  f"table ({lz_ok} lz targets)")
+
         claimed = sorted((src, src + length)
                          for src, (length, _k) in self.data_blobs.items()
                          if length)

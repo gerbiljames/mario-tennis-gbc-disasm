@@ -6,26 +6,26 @@ SECTION "ROM Bank $3f", ROMX[$4000], BANK[$3f]
 
 FarPtr_3f_00:
 	dw Func_3f_407a ; $4000
-FarPtr_3f_02:
-	dw Func_3f_57eb ; $4002
-FarPtr_3f_04:
-	dw Func_3f_58ac ; $4004
-FarPtr_3f_06:
-	dw Func_3f_5974 ; $4006
-FarPtr_3f_08:
-	dw Func_3f_5a37 ; $4008
-FarPtr_3f_0a:
-	dw Func_3f_5af5 ; $400a
-FarPtr_3f_0c:
-	dw Func_3f_5bc7 ; $400c
-FarPtr_3f_0e:
-	dw Func_3f_5ca5 ; $400e
-FarPtr_3f_10:
-	dw Func_3f_5da0 ; $4010
-FarPtr_3f_12:
-	dw Func_3f_5e92 ; $4012
-FarPtr_3f_14:
-	dw Func_3f_5f7d ; $4014
+DataPtr_3f_02:
+	dw Lz_3f_57eb ; $4002
+DataPtr_3f_04:
+	dw Lz_3f_58ac ; $4004
+DataPtr_3f_06:
+	dw Lz_3f_5974 ; $4006
+DataPtr_3f_08:
+	dw Lz_3f_5a37 ; $4008
+DataPtr_3f_0a:
+	dw Lz_3f_5af5 ; $400a
+DataPtr_3f_0c:
+	dw Lz_3f_5bc7 ; $400c
+DataPtr_3f_0e:
+	dw Lz_3f_5ca5 ; $400e
+DataPtr_3f_10:
+	dw Lz_3f_5da0 ; $4010
+DataPtr_3f_12:
+	dw Lz_3f_5e92 ; $4012
+DataPtr_3f_14:
+	dw Lz_3f_5f7d ; $4014
 DataPtr_3f_16:
 	dw Lz_3f_6034 ; $4016
 DataPtr_3f_18:
@@ -1785,172 +1785,26 @@ Label_3f_57e4:
 	ldh [$ff96], a ; $57e6
 	ldh [rWBK], a ; $57e8
 	ret ; $57ea
-Func_3f_57eb:
-	rst Rst38 ; $57eb
-	ld a, b ; $57ec
-	rst Rst38 ; $57ed
-	cp a, e ; $57ee
-	call nz, $9ce3 ; $57ef
-	jp $fbb4 ; $57f2
-	INCBIN "data/bank_03f/d_57f5.bin" ; $57f5, 183 bytes
-Func_3f_58ac:
-	rst Rst38 ; $58ac
-	ld a, h ; $58ad
-	rst Rst38 ; $58ae
-	cp a, c ; $58af
-	add a, $e3 ; $58b0
-	sbc a, h ; $58b2
-	jp $ffb4 ; $58b3
-	INCBIN "data/bank_03f/d_58b6.bin" ; $58b6, 190 bytes
-Func_3f_5974:
-	rst Rst38 ; $5974
-	ld b, b ; $5975
-	rst Rst38 ; $5976
-	sbc a, [hl] ; $5977
-	pop hl ; $5978
-	or a, b ; $5979
-	sound $b7 ; $597a
-	ret z ; $597c
-	rst Rst38 ; $597d
-	or a, e ; $597e
-	call z, $ccb3 ; $597f
-	sbc a, [hl] ; $5982
-	pop hl ; $5983
-	ret nz ; $5984
-	cp a, a ; $5985
-	ccf ; $5986
-	nop ; $5987
-	rst Rst38 ; $5988
-	ld a, h ; $5989
-	add a, e ; $598a
-	ld h, [hl] ; $598b
-	sbc a, c ; $598c
-	INCBIN "data/bank_03f/d_598d.bin" ; $598d, 170 bytes
-Func_3f_5a37:
-	cp a, a ; $5a37
-	nop ; $5a38
-	rst Rst38 ; $5a39
-	xor a, $91 ; $5a3a
-	jp z, $feb5 ; $5a3c
-	INCBIN "data/bank_03f/d_5a3f.bin" ; $5a3f, 182 bytes
-Func_3f_5af5:
-	rst Rst38 ; $5af5
-	ld a, a ; $5af6
-	rst Rst38 ; $5af7
-	rst Rst38 ; $5af8
-	ret nz ; $5af9
-	ldh [$ff9f], a ; $5afa
-	ret nz ; $5afc
-	or a, b ; $5afd
-	ei ; $5afe
-	ret nz ; $5aff
-	and a, b ; $5b00
-	cp a, $e1 ; $5b01
-	adc a, [hl] ; $5b03
-	xor a, a ; $5b04
-	rst Rst38 ; $5b05
-	rst Rst38 ; $5b06
-	rst Rst38 ; $5b07
-	rst Rst38 ; $5b08
-	nop ; $5b09
-	nop ; $5b0a
-	rst Rst38 ; $5b0b
-	rra ; $5b0c
-	rra ; $5b0d
-	rra ; $5b0e
-	INCBIN "data/bank_03f/d_5b0f.bin" ; $5b0f, 184 bytes
-Func_3f_5bc7:
-	rst Rst38 ; $5bc7
-	ld a, a ; $5bc8
-	rst Rst38 ; $5bc9
-	rst Rst38 ; $5bca
-	ret nz ; $5bcb
-	INCBIN "data/bank_03f/d_5bcc.bin" ; $5bcc, 217 bytes
-Func_3f_5ca5:
-	rst Rst38 ; $5ca5
-	ld a, a ; $5ca6
-	rst Rst38 ; $5ca7
-	ld a, [$e5c3] ; $5ca8
-	sbc a, [hl] ; $5cab
-	jp $ffbc ; $5cac
-	INCBIN "data/bank_03f/d_5caf.bin" ; $5caf, 241 bytes
-Func_3f_5da0:
-	rst Rst38 ; $5da0
-	ld a, a ; $5da1
-	rst Rst38 ; $5da2
-	rst Rst38 ; $5da3
-	ret nz ; $5da4
-	ldh [$ff9f], a ; $5da5
-	jp z, $ffb5 ; $5da7
-	jp z, $cbb5 ; $5daa
-	or a, a ; $5dad
-	INCBIN "data/bank_03f/d_5dae.bin" ; $5dae, 228 bytes
-Func_3f_5e92:
-	rst Rst38 ; $5e92
-	ld a, a ; $5e93
-	rst Rst38 ; $5e94
-	rst Rst38 ; $5e95
-	ret nz ; $5e96
-	ldh [$ff9f], a ; $5e97
-	sound $bf ; $5e99
-	rst Rst38 ; $5e9b
-	sbc a, $be ; $5e9c
-	pop de ; $5e9e
-	or a, c ; $5e9f
-	rst28 $efbf ; $5ea0
-	cp a, a ; $5ea3
-	rst Rst38 ; $5ea4
-	rst Rst38 ; $5ea5
-	rst Rst38 ; $5ea6
-	INCBIN "data/bank_03f/d_5ea7.bin" ; $5ea7, 214 bytes
-Func_3f_5f7d:
-	rst Rst38 ; $5f7d
-	ld a, a ; $5f7e
-	rst Rst38 ; $5f7f
-	cp a, a ; $5f80
-	ret nz ; $5f81
-	ldh [$ff9f], a ; $5f82
-	ret nz ; $5f84
-	or a, b ; $5f85
-	ei ; $5f86
-	ret nz ; $5f87
-	and a, b ; $5f88
-	cp a, $e3 ; $5f89
-	rst Rst38 ; $5f8b
-	rst Rst38 ; $5f8c
-	rst Rst38 ; $5f8d
-	nop ; $5f8e
-	nop ; $5f8f
-	rst Rst38 ; $5f90
-	rst Rst38 ; $5f91
-	rlca ; $5f92
-	rlca ; $5f93
-	dec e ; $5f94
-	inc e ; $5f95
-	scf ; $5f96
-	jr nc, Label_3f_5fc8 ; $5f97
-	rst Rst00 ; $5f99
-	dw Label_00_3f20 ; $5f9a jumptable
-	INCBIN "data/bank_03f/d_5f9c.bin" ; $5f9c, 44 bytes
-Label_3f_5fc8:
-	jr nz, Label_3f_6009 ; $5fc8
-	ccf ; $5fca
-	nop ; $5fcb
-	rrca ; $5fcc
-	INCBIN "data/bank_03f/d_5fcd.bin" ; $5fcd, 60 bytes
-Label_3f_6009:
-	ld a, h ; $6009
-	ld l, [hl] ; $600a
-	pop hl ; $600b
-	ld d, e ; $600c
-	ldh [$ffbb], a ; $600d
-	add a, e ; $600f
-	ld a, l ; $6010
-	ld bc, $b8bb ; $6011
-	ldh [$ffd4], a ; $6014
-	ld l, h ; $6016
-	ldh [$ff59], a ; $6017
-	INCBIN "data/bank_03f/d_6019.bin" ; $6019, 27 bytes
+Lz_3f_57eb:
+	INCBIN "data/bank_03f/lz_57eb.bin" ; $57eb, 193 bytes
+Lz_3f_58ac:
+	INCBIN "data/bank_03f/lz_58ac.bin" ; $58ac, 200 bytes
+Lz_3f_5974:
+	INCBIN "data/bank_03f/lz_5974.bin" ; $5974, 195 bytes
+Lz_3f_5a37:
+	INCBIN "data/bank_03f/lz_5a37.bin" ; $5a37, 190 bytes
+Lz_3f_5af5:
+	INCBIN "data/bank_03f/lz_5af5.bin" ; $5af5, 210 bytes
+Lz_3f_5bc7:
+	INCBIN "data/bank_03f/lz_5bc7.bin" ; $5bc7, 222 bytes
+Lz_3f_5ca5:
+	INCBIN "data/bank_03f/lz_5ca5.bin" ; $5ca5, 251 bytes
+Lz_3f_5da0:
+	INCBIN "data/bank_03f/lz_5da0.bin" ; $5da0, 242 bytes
+Lz_3f_5e92:
+	INCBIN "data/bank_03f/lz_5e92.bin" ; $5e92, 235 bytes
+Lz_3f_5f7d:
+	INCBIN "data/bank_03f/lz_5f7d.bin" ; $5f7d, 183 bytes
 Lz_3f_6034:
 	INCBIN "data/bank_03f/lz_6034.bin" ; $6034, 151 bytes
 Lz_3f_60cb:

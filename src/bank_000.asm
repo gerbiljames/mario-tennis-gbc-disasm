@@ -8483,13 +8483,4 @@ Label_00_3dbc:
 	pop bc ; $3dd1
 	pop de ; $3dd2
 	ret ; $3dd3
-	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 332 bytes
-Label_00_3f20:
-	ldh a, [$ffe0] ; $3f20
-	ret nc ; $3f22
-	or a, b ; $3f23
-	sub a, b ; $3f24
-	ld [hl], b ; $3f25
-	ld d, b ; $3f26
-	dec [hl] ; $3f27
-	INCBIN "data/bank_000/d_3f28.bin" ; $3f28, 216 bytes
+	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 556 bytes

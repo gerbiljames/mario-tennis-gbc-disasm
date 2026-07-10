@@ -4,18 +4,20 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $60", ROMX[$4000], BANK[$60]
 
-	adc a, c ; $4000
-	ld d, b ; $4001
-	ld b, b ; $4002
-	ld b, b ; $4003
-	ld hl, $7d4d ; $4004
-	ld c, a ; $4007
-	adc a, c ; $4008
-	ld d, b ; $4009
-	or a, c ; $400a
-	ld d, b ; $400b
-	reti ; $400c
-	INCBIN "data/bank_060/d_400d.bin" ; $400d, 1 bytes
+DataPtr_60_00:
+	dw Data_60_5089 ; $4000
+DataPtr_60_02:
+	dw Data_60_4040 ; $4002
+DataPtr_60_04:
+	dw Lz_60_4d21 ; $4004
+DataPtr_60_06:
+	dw Lz_60_4f7d ; $4006
+DataPtr_60_08:
+	dw Data_60_5089 ; $4008
+DataPtr_60_0a:
+	dw Data_60_50b1 ; $400a
+DataPtr_60_0c:
+	dw Data_60_50d9 ; $400c
 DataPtr_60_0e:
 	dw Lz_60_4080 ; $400e
 DataPtr_60_10:
@@ -59,10 +61,18 @@ DataPtr_60_38:
 	INCBIN "data/bank_060/d_403a.bin" ; $403a, 4 bytes
 DataPtr_60_3e:
 	dw Lz_60_6d1e ; $403e
+Data_60_4040:
 	INCBIN "data/bank_060/d_4040.bin" ; $4040, 64 bytes
 Lz_60_4080:
 	INCBIN "data/bank_060/lz_4080.bin" ; $4080, 3233 bytes
-	INCBIN "data/bank_060/d_4d21.bin" ; $4d21, 952 bytes
+Lz_60_4d21:
+	INCBIN "data/bank_060/lz_4d21.bin" ; $4d21, 604 bytes
+Lz_60_4f7d:
+	INCBIN "data/bank_060/lz_4f7d.bin" ; $4f7d, 268 bytes
+Data_60_5089:
+	INCBIN "data/bank_060/d_5089.bin" ; $5089, 40 bytes
+Data_60_50b1:
+	INCBIN "data/bank_060/d_50b1.bin" ; $50b1, 40 bytes
 Data_60_50d9:
 	INCBIN "data/bank_060/d_50d9.bin" ; $50d9, 64 bytes
 Lz_60_5119:
