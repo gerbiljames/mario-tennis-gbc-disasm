@@ -107,6 +107,7 @@ class Disassembly:
         self.instrs = {}      # rom offset -> Instr
         self.code_bytes = set()
         self.farcalls = {}    # site offset -> (bank, slot, entry_flat, target_flat)
+        self.inferred_entries = {}  # entry_flat -> (bank, slot, target_flat)
 
     def _try_farcall(self, off):
         """Decode `rst $18` + inline `db slot, bank` as a 3-byte pseudo-call.
@@ -166,6 +167,79 @@ class Disassembly:
             self.mark(off, ins)
         if bad:
             print(f"note: {bad} coverage seeds decoded invalid/conflicting; skipped")
+
+    def infer_tables(self):
+        """Infer unused farcall-table entries from table shape.
+
+        Live call sites prove a table spans $4000..(max used slot)+2 in each
+        bank that receives farcalls. Tables are contiguous, are limited to
+        $4000-$40ff (the slot operand is one byte), and end where their
+        lowest pointer target begins — so shrink a candidate extent to a
+        fixed point where every entry before the end points at-or-after the
+        end and decodes as valid code. Banks whose proven region contains
+        junk are left alone. Returns {entry_flat: (bank, slot, target_flat)}
+        for the unused slots of consistent tables.
+        """
+        from collections import defaultdict
+        used = defaultdict(set)
+        for off, (bank, slot, _entry, _target) in self.farcalls.items():
+            if off in self.instrs:
+                used[bank].add(slot)
+        self.inferred_entries = {}
+        for bank, slots in sorted(used.items()):
+            base = bank * BANK_SIZE
+            floor = max(slots) + 2
+
+            def entry_cpu(s):
+                return self.rom[base + s] | (self.rom[base + s + 1] << 8)
+
+            min_used = min(entry_cpu(s) for s in slots)
+            if min_used - BANK_SIZE < floor:
+                continue  # a used target lands inside the proven table region
+            if min_used - BANK_SIZE > 0x100:
+                # lowest used target doesn't delimit the table (it lies beyond
+                # the one-byte slot window): no evidence past the used slots,
+                # so only infer the gaps between them
+                extent = floor
+            else:
+                extent = min_used - BANK_SIZE
+            dirty = False
+            changed = True
+            while changed and not dirty:
+                changed = False
+                for s in range(0, extent, 2):
+                    cpu = entry_cpu(s)
+                    flat = base + cpu - BANK_SIZE
+                    ok = (BANK_SIZE + floor <= cpu < 0x8000
+                          and sm83.decode(self.rom, flat, cpu).valid)
+                    if ok and cpu - BANK_SIZE < extent:
+                        extent = cpu - BANK_SIZE
+                        changed = True
+                        break
+                    if not ok:
+                        if s < floor:
+                            dirty = True  # junk inside the proven region
+                        else:
+                            extent = s    # table truncated by first bad entry
+                            changed = True
+                        break
+            if dirty or extent < floor:
+                continue
+            for s in range(0, extent, 2):
+                if s in slots:
+                    continue
+                cpu = entry_cpu(s)
+                self.inferred_entries[base + s] = (bank, s, base + cpu - BANK_SIZE)
+        seeded = 0
+        for _entry, (_bank, _slot, target) in sorted(self.inferred_entries.items()):
+            if target in self.instrs:
+                continue
+            ins = self.decode_at(target)
+            if ins.valid and not self.conflicts(target, ins):
+                self.mark(target, ins)
+                seeded += 1
+        print(f"inferred {len(self.inferred_entries)} unused farcall-table entries "
+              f"({seeded} new code seeds)")
 
     def descend(self):
         work = list(self.instrs.keys())
@@ -260,8 +334,11 @@ def build_labels(dis, overrides=None):
             labels[t] = name
         elif prev.startswith("Label_") and name.startswith("Func_"):
             labels[t] = name
-    for off, (bank, _slot, _entry, target) in dis.farcalls.items():
-        if off not in dis.instrs or target not in dis.instrs:
+    far_targets = [(bank, target) for off, (bank, _s, _e, target) in dis.farcalls.items()
+                   if off in dis.instrs]
+    far_targets += [(bank, target) for bank, _s, target in dis.inferred_entries.values()]
+    for bank, target in far_targets:
+        if target not in dis.instrs:
             continue
         name = f"Func_{bank:02x}_{offset_to_cpu(target):04x}"
         prev = labels.get(target)
@@ -325,6 +402,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
             dirty_sites.add(off)
         else:
             table_entries[entry] = (bank, slot, target)
+    for entry, (bank, slot, target) in dis.inferred_entries.items():
+        if entry not in dis.code_bytes and entry + 1 not in dis.code_bytes:
+            table_entries.setdefault(entry, (bank, slot, target))
     Path(srcdir).parent.joinpath("include", "macros.inc").write_text(MACROS_INC)
 
     for bank in range(nbanks):
@@ -400,6 +480,8 @@ def main():
     print(f"{len(seeds)} coverage seeds")
     dis.seed(seeds)
     if not args.no_descent:
+        dis.descend()
+        dis.infer_tables()
         dis.descend()
     overrides = None
     if Path(args.labels).exists():

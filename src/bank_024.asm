@@ -14,7 +14,8 @@ FarPtr_24_06:
 	dw Func_24_6644 ; $4006
 FarPtr_24_08:
 	dw Func_24_6696 ; $4008
-	INCBIN "data/bank_024/d_400a.bin" ; $400a, 2 bytes
+FarPtr_24_0a:
+	dw Func_24_6706 ; $400a
 FarPtr_24_0c:
 	dw Func_24_7707 ; $400c
 Func_24_400e:
@@ -559,7 +560,10 @@ Label_24_66b0:
 	add hl, de ; $66ed
 	call Func_24_4201 ; $66ee
 	ret ; $66f1
-	INCBIN "data/bank_024/d_66f2.bin" ; $66f2, 4117 bytes
+	INCBIN "data/bank_024/d_66f2.bin" ; $66f2, 20 bytes
+Func_24_6706:
+	ret ; $6706
+	INCBIN "data/bank_024/d_6707.bin" ; $6707, 4096 bytes
 Func_24_7707:
 	farcall FarPtr_07_3a ; $7707
 	push bc ; $770a

@@ -8,12 +8,44 @@ FarPtr_6b_00:
 	dw Func_6b_402a ; $4000
 FarPtr_6b_02:
 	dw Func_6b_75af ; $4002
-	INCBIN "data/bank_06b/d_4004.bin" ; $4004, 14 bytes
+FarPtr_6b_04:
+	dw Func_6b_774e ; $4004
+FarPtr_6b_06:
+	dw Func_6b_7872 ; $4006
+FarPtr_6b_08:
+	dw Func_6b_790f ; $4008
+FarPtr_6b_0a:
+	dw Func_6b_73f2 ; $400a
+FarPtr_6b_0c:
+	dw Func_6b_73f2 ; $400c
+FarPtr_6b_0e:
+	dw Func_6b_73f2 ; $400e
+FarPtr_6b_10:
+	dw Func_6b_73f2 ; $4010
 FarPtr_6b_12:
 	dw Func_6b_51ae ; $4012
 FarPtr_6b_14:
 	dw Func_6b_51e7 ; $4014
-	INCBIN "data/bank_06b/d_4016.bin" ; $4016, 20 bytes
+FarPtr_6b_16:
+	dw Func_6b_6075 ; $4016
+FarPtr_6b_18:
+	dw Func_6b_6126 ; $4018
+FarPtr_6b_1a:
+	dw Func_6b_7957 ; $401a
+FarPtr_6b_1c:
+	dw Func_6b_7a7c ; $401c
+FarPtr_6b_1e:
+	dw Func_6b_7aee ; $401e
+FarPtr_6b_20:
+	dw Func_6b_7c12 ; $4020
+FarPtr_6b_22:
+	dw Func_6b_7c8f ; $4022
+FarPtr_6b_24:
+	dw Func_6b_7db7 ; $4024
+FarPtr_6b_26:
+	dw Func_6b_7e2f ; $4026
+FarPtr_6b_28:
+	dw Func_6b_7f57 ; $4028
 Func_6b_402a:
 	xor a, a ; $402a
 	ld [$cb3f], a ; $402b
@@ -1957,4 +1989,254 @@ Label_6b_7732:
 	ld [$d802], a ; $7749
 Label_6b_774c:
 	ret ; $774c
-	INCBIN "data/bank_06b/d_774d.bin" ; $774d, 2227 bytes
+	INCBIN "data/bank_06b/d_774d.bin" ; $774d, 1 bytes
+Func_6b_774e:
+	push af ; $774e
+	nop ; $774f
+	rst Rst38 ; $7750
+	ldh a, [$ffb6] ; $7751
+	INCBIN "data/bank_06b/d_7753.bin" ; $7753, 276 bytes
+Label_6b_7867:
+	rst Rst38 ; $7867
+	rst Rst38 ; $7868
+	rst Rst38 ; $7869
+	rst Rst38 ; $786a
+	rst Rst38 ; $786b
+	rst Rst38 ; $786c
+	rst Rst38 ; $786d
+	di ; $786e
+	nop ; $786f
+	nop ; $7870
+	nop ; $7871
+Func_6b_7872:
+	xor a, l ; $7872
+	ld c, b ; $7873
+	rst Rst38 ; $7874
+	ldh a, [rIF] ; $7875
+	ld [$f0ff], sp ; $7877
+	jr z, Label_6b_7867 ; $787a
+	ldh [rIF], a ; $787c
+	ld hl, sp - 1 ; $787e
+	ldh [$fff9], a ; $7880
+	pop hl ; $7882
+	add sp, -21 ; $7883
+	ld a, [bc] ; $7885
+	ld [$0909], sp ; $7886
+	inc c ; $7889
+	ld h, e ; $788a
+	inc c ; $788b
+	inc c ; $788c
+	ld a, [$dfe1] ; $788d
+	INCBIN "data/bank_06b/d_7890.bin" ; $7890, 127 bytes
+Func_6b_790f:
+	ld b, d ; $790f
+	ld [bc], a ; $7910
+	nop ; $7911
+	nop ; $7912
+	rst Rst38 ; $7913
+	ld a, a ; $7914
+	rra ; $7915
+	ld [bc], a ; $7916
+	ld b, d ; $7917
+	ld [bc], a ; $7918
+	nop ; $7919
+	nop ; $791a
+	rst Rst38 ; $791b
+	ld a, a ; $791c
+	farcall FarPtr_42_20 ; $791d
+	ld [bc], a ; $7920
+	nop ; $7921
+	nop ; $7922
+	rra ; $7923
+	ld [bc], a ; $7924
+	farcall FarPtr_42_20 ; $7925
+	ld [bc], a ; $7928
+	nop ; $7929
+	nop ; $792a
+	ret z ; $792b
+	ld l, b ; $792c
+	farcall FarPtr_42_20 ; $792d
+	ld [bc], a ; $7930
+	nop ; $7931
+	nop ; $7932
+	rst Rst38 ; $7933
+	ld a, a ; $7934
+	ret z ; $7935
+	ld l, b ; $7936
+	ld b, d ; $7937
+	ld [bc], a ; $7938
+	nop ; $7939
+	nop ; $793a
+	rst Rst38 ; $793b
+	ld a, a ; $793c
+	ld e, a ; $793d
+	inc bc ; $793e
+	ld b, d ; $793f
+	ld [bc], a ; $7940
+	nop ; $7941
+	nop ; $7942
+	ld e, a ; $7943
+	inc bc ; $7944
+	ret z ; $7945
+	ld l, b ; $7946
+	rst Rst38 ; $7947
+	ld a, a ; $7948
+	inc c ; $7949
+	ld a, a ; $794a
+	ret z ; $794b
+	ld l, b ; $794c
+	nop ; $794d
+	nop ; $794e
+	rst Rst38 ; $794f
+	ld a, a ; $7950
+	ld e, a ; $7951
+	ld [bc], a ; $7952
+	ld e, a ; $7953
+	ld bc, $001f ; $7954
+Func_6b_7957:
+	add a, l ; $7957
+	ld bc, $f0ff ; $7958
+	nop ; $795b
+	rst Rst38 ; $795c
+	add sp, -32 ; $795d
+	rst Rst38 ; $795f
+	ldh [rIE], a ; $7960
+	ldh [$fff9], a ; $7962
+	ld [bc], a ; $7964
+	cp a, a ; $7965
+	inc bc ; $7966
+	inc b ; $7967
+	dec b ; $7968
+	ld b, $07 ; $7969
+	INCBIN "data/bank_06b/d_796b.bin" ; $796b, 273 bytes
+Func_6b_7a7c:
+	add a, l ; $7a7c
+	adc a, h ; $7a7d
+	rst Rst38 ; $7a7e
+	ldh a, [$ff08] ; $7a7f
+	rst Rst38 ; $7a81
+	add sp, -32 ; $7a82
+	rst Rst38 ; $7a84
+	ldh [rIE], a ; $7a85
+	ldh [$fff9], a ; $7a87
+	ld a, [bc] ; $7a89
+	cp a, d ; $7a8a
+	rst Rst38 ; $7a8b
+	ldh [$ff0e], a ; $7a8c
+	rst Rst38 ; $7a8e
+	ldh [c], a ; $7a8f
+	dec c ; $7a90
+	dec c ; $7a91
+	dec c ; $7a92
+	ei ; $7a93
+	pop hl ; $7a94
+	ld a, [hl+] ; $7a95
+	ld b, e ; $7a96
+	ld a, [hl+] ; $7a97
+	ld a, [hl+] ; $7a98
+	ldh [$ffec], a ; $7a99
+	pop hl ; $7a9b
+	INCBIN "data/bank_06b/d_7a9c.bin" ; $7a9c, 82 bytes
+Func_6b_7aee:
+	add a, l ; $7aee
+	ld bc, $f0ff ; $7aef
+	nop ; $7af2
+	rst Rst38 ; $7af3
+	add sp, -32 ; $7af4
+	rst Rst38 ; $7af6
+	ldh [rIE], a ; $7af7
+	ldh [$fff9], a ; $7af9
+	ld [bc], a ; $7afb
+	cp a, a ; $7afc
+	inc bc ; $7afd
+	inc b ; $7afe
+	dec b ; $7aff
+	ld b, $07 ; $7b00
+	INCBIN "data/bank_06b/d_7b02.bin" ; $7b02, 272 bytes
+Func_6b_7c12:
+	add a, l ; $7c12
+	adc a, h ; $7c13
+	rst Rst38 ; $7c14
+	ldh a, [$ff08] ; $7c15
+	rst Rst38 ; $7c17
+	add sp, -32 ; $7c18
+	rst Rst38 ; $7c1a
+	ldh [rIE], a ; $7c1b
+	ldh [$fff9], a ; $7c1d
+	ld a, [bc] ; $7c1f
+	ld a, [$e0ff] ; $7c20
+	ld c, $ff ; $7c23
+	INCBIN "data/bank_06b/d_7c25.bin" ; $7c25, 106 bytes
+Func_6b_7c8f:
+	add a, l ; $7c8f
+	ld bc, $f0ff ; $7c90
+	nop ; $7c93
+	rst Rst38 ; $7c94
+	add sp, -32 ; $7c95
+	rst Rst38 ; $7c97
+	ldh [rIE], a ; $7c98
+	ldh [$fff9], a ; $7c9a
+	ld [bc], a ; $7c9c
+	cp a, a ; $7c9d
+	inc bc ; $7c9e
+	inc b ; $7c9f
+	dec b ; $7ca0
+	ld b, $07 ; $7ca1
+	INCBIN "data/bank_06b/d_7ca3.bin" ; $7ca3, 276 bytes
+Func_6b_7db7:
+	add a, l ; $7db7
+	adc a, h ; $7db8
+	rst Rst38 ; $7db9
+	ldh a, [$ff08] ; $7dba
+	rst Rst38 ; $7dbc
+	add sp, -32 ; $7dbd
+	rst Rst38 ; $7dbf
+	ldh [rIE], a ; $7dc0
+	ldh [$fff9], a ; $7dc2
+	ld a, [bc] ; $7dc4
+	cp a, d ; $7dc5
+	rst Rst38 ; $7dc6
+	ldh [$ff0e], a ; $7dc7
+	rst Rst38 ; $7dc9
+	ldh [c], a ; $7dca
+	dec c ; $7dcb
+	dec c ; $7dcc
+	dec c ; $7dcd
+	ei ; $7dce
+	pop hl ; $7dcf
+	ld a, [hl+] ; $7dd0
+	ld b, e ; $7dd1
+	ld a, [hl+] ; $7dd2
+	ld a, [hl+] ; $7dd3
+	ldh [$ffec], a ; $7dd4
+	INCBIN "data/bank_06b/d_7dd6.bin" ; $7dd6, 89 bytes
+Func_6b_7e2f:
+	add a, l ; $7e2f
+	ld bc, $f0ff ; $7e30
+	nop ; $7e33
+	rst Rst38 ; $7e34
+	add sp, -32 ; $7e35
+	rst Rst38 ; $7e37
+	ldh [rIE], a ; $7e38
+	ldh [$fff9], a ; $7e3a
+	ld [bc], a ; $7e3c
+	cp a, a ; $7e3d
+	inc bc ; $7e3e
+	inc b ; $7e3f
+	dec b ; $7e40
+	ld b, $07 ; $7e41
+	INCBIN "data/bank_06b/d_7e43.bin" ; $7e43, 276 bytes
+Func_6b_7f57:
+	add a, l ; $7f57
+	adc a, h ; $7f58
+	rst Rst38 ; $7f59
+	ldh a, [$ff08] ; $7f5a
+	rst Rst38 ; $7f5c
+	add sp, -32 ; $7f5d
+	rst Rst38 ; $7f5f
+	ldh [rIE], a ; $7f60
+	ldh [$fff9], a ; $7f62
+	ld a, [bc] ; $7f64
+	ld a, [$e0ff] ; $7f65
+	ld c, $ff ; $7f68
+	INCBIN "data/bank_06b/d_7f6a.bin" ; $7f6a, 150 bytes

@@ -6,7 +6,8 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 
 FarPtr_09_00:
 	dw Func_09_4555 ; $4000
-	INCBIN "data/bank_009/d_4002.bin" ; $4002, 2 bytes
+FarPtr_09_02:
+	dw Func_09_4695 ; $4002
 FarPtr_09_04:
 	dw Func_09_4036 ; $4004
 FarPtr_09_06:
@@ -27,12 +28,18 @@ FarPtr_09_14:
 	dw Func_09_4371 ; $4014
 FarPtr_09_16:
 	dw Func_09_437b ; $4016
-	INCBIN "data/bank_009/d_4018.bin" ; $4018, 4 bytes
+FarPtr_09_18:
+	dw Func_09_4310 ; $4018
+FarPtr_09_1a:
+	dw Func_09_431d ; $401a
 FarPtr_09_1c:
 	dw Func_09_42d8 ; $401c
 FarPtr_09_1e:
 	dw Func_09_42f6 ; $401e
-	INCBIN "data/bank_009/d_4020.bin" ; $4020, 4 bytes
+FarPtr_09_20:
+	dw Func_09_4555 ; $4020
+FarPtr_09_22:
+	dw Func_09_4555 ; $4022
 FarPtr_09_24:
 	dw Func_09_45c4 ; $4024
 FarPtr_09_26:
@@ -538,6 +545,7 @@ Func_09_4683:
 	ld [$ddb0], a ; $468e
 	ld [$ddc0], a ; $4691
 	ret ; $4694
+Func_09_4695:
 	ld bc, $dd80 ; $4695
 	call Func_09_46b5 ; $4698
 	ld bc, $dd90 ; $469b

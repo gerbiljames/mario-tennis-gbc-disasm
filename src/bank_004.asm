@@ -6,13 +6,22 @@ SECTION "ROM Bank $04", ROMX[$4000], BANK[$04]
 
 FarPtr_04_00:
 	dw Func_04_4041 ; $4000
-	INCBIN "data/bank_004/d_4002.bin" ; $4002, 2 bytes
+FarPtr_04_02:
+	dw Func_04_4055 ; $4002
 FarPtr_04_04:
 	dw Func_04_40ac ; $4004
-	INCBIN "data/bank_004/d_4006.bin" ; $4006, 4 bytes
+FarPtr_04_06:
+	dw Func_04_40c6 ; $4006
+FarPtr_04_08:
+	dw Func_04_4148 ; $4008
 FarPtr_04_0a:
 	dw Func_04_4cf7 ; $400a
-	INCBIN "data/bank_004/d_400c.bin" ; $400c, 6 bytes
+FarPtr_04_0c:
+	dw Func_04_440a ; $400c
+FarPtr_04_0e:
+	dw Func_04_4d2c ; $400e
+FarPtr_04_10:
+	dw Func_04_4032 ; $4010
 FarPtr_04_12:
 	dw Func_04_4b68 ; $4012
 FarPtr_04_14:
@@ -29,7 +38,8 @@ FarPtr_04_1e:
 	dw Func_04_417b ; $401e
 FarPtr_04_20:
 	dw Func_04_41a6 ; $4020
-	INCBIN "data/bank_004/d_4022.bin" ; $4022, 2 bytes
+FarPtr_04_22:
+	dw Func_04_534b ; $4022
 FarPtr_04_24:
 	dw Func_04_53d7 ; $4024
 FarPtr_04_26:
@@ -40,7 +50,8 @@ FarPtr_04_2a:
 	dw Func_04_5726 ; $402a
 FarPtr_04_2c:
 	dw Func_04_4ac3 ; $402c
-	INCBIN "data/bank_004/d_402e.bin" ; $402e, 2 bytes
+FarPtr_04_2e:
+	dw Func_04_4c0b ; $402e
 FarPtr_04_30:
 	dw Func_04_4c1d ; $4030
 Func_04_4032:
@@ -682,6 +693,7 @@ Func_04_4402:
 	ld a, [hl] ; $4406
 	cp a, $01 ; $4407
 	ret nz ; $4409
+Func_04_440a:
 	push af ; $440a
 	push de ; $440b
 	push hl ; $440c
@@ -1650,7 +1662,22 @@ Label_04_4c07:
 	pop de ; $4c08
 	pop af ; $4c09
 	ret ; $4c0a
-	INCBIN "data/bank_004/d_4c0b.bin" ; $4c0b, 18 bytes
+Func_04_4c0b:
+	push bc ; $4c0b
+	push hl ; $4c0c
+	ld hl, $4f75 ; $4c0d
+	ld c, $ff ; $4c10
+Label_04_4c12:
+	inc c ; $4c12
+	ld a, [hl+] ; $4c13
+	ld b, a ; $4c14
+	ld a, [hl+] ; $4c15
+	or a, b ; $4c16
+	jr nz, Label_04_4c12 ; $4c17
+	ld a, c ; $4c19
+	pop hl ; $4c1a
+	pop bc ; $4c1b
+	ret ; $4c1c
 Func_04_4c1d:
 	push hl ; $4c1d
 	ld hl, $4c29 ; $4c1e
@@ -1835,7 +1862,28 @@ Label_04_4d21:
 	pop bc ; $4d29
 	pop af ; $4d2a
 	ret ; $4d2b
-	INCBIN "data/bank_004/d_4d2c.bin" ; $4d2c, 319 bytes
+Func_04_4d2c:
+	ldh a, [$ff95] ; $4d2c
+	ld hl, $4da5 ; $4d2e
+	call Func_04_4c60 ; $4d31
+	call Func_04_415b ; $4d34
+	ldh a, [$ff95] ; $4d37
+	ld hl, $41d1 ; $4d39
+	call Func_04_4055 ; $4d3c
+	ld hl, $1700 ; $4d3f
+	ld de, $1d00 ; $4d42
+	call Func_04_40c6 ; $4d45
+	ld de, $d000 ; $4d48
+	call Func_04_417b ; $4d4b
+	ldh a, [$ff95] ; $4d4e
+	ld hl, $4e05 ; $4d50
+	call Func_04_4c60 ; $4d53
+	ld de, $d000 ; $4d56
+	call Func_04_41a6 ; $4d59
+	ld hl, $4e1d ; $4d5c
+	call Func_04_4cf7 ; $4d5f
+	ret ; $4d62
+	INCBIN "data/bank_004/d_4d63.bin" ; $4d63, 264 bytes
 Func_04_4e6b:
 	push af ; $4e6b
 	push bc ; $4e6c

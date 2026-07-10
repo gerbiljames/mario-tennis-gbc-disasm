@@ -6,7 +6,8 @@ SECTION "ROM Bank $3b", ROMX[$4000], BANK[$3b]
 
 FarPtr_3b_00:
 	dw Func_3b_44a9 ; $4000
-	INCBIN "data/bank_03b/d_4002.bin" ; $4002, 2 bytes
+FarPtr_3b_02:
+	dw Func_3b_44aa ; $4002
 FarPtr_3b_04:
 	dw Func_3b_44aa ; $4004
 FarPtr_3b_06:
@@ -57,7 +58,9 @@ FarPtr_3b_32:
 	dw Func_3b_7d57 ; $4032
 FarPtr_3b_34:
 	dw Func_3b_4b33 ; $4034
-	INCBIN "data/bank_03b/d_4036.bin" ; $4036, 101 bytes
+FarPtr_3b_36:
+	dw Func_3b_619b ; $4036
+	INCBIN "data/bank_03b/d_4038.bin" ; $4038, 99 bytes
 Func_3b_409b:
 	ldh a, [$ff8c] ; $409b
 	and a, $0f ; $409d

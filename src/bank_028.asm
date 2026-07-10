@@ -6,7 +6,8 @@ SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 
 FarPtr_28_00:
 	dw Func_28_5eb0 ; $4000
-	INCBIN "data/bank_028/d_4002.bin" ; $4002, 2 bytes
+FarPtr_28_02:
+	dw Func_28_5efb ; $4002
 FarPtr_28_04:
 	dw Func_28_6030 ; $4004
 FarPtr_28_06:

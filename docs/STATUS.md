@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**103,278 instructions (~190 KB of code) disassembled across 62 of 128 banks;
+**115,883 instructions (~213 KB of code) disassembled across 63 of 128 banks;
 everything rebuilds byte-perfect** (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). The remaining banks are so far
 pure data (graphics/audio/tilemaps). The repo contains no ROM bytes: all data
@@ -20,6 +20,17 @@ graph. 6,441 farcall sites, 3 fall back to raw bytes (slot bytes overlap
 misdecoded code). The old instruction count (105,327) isn't comparable:
 each farcall site now counts as one 3-byte pseudo-op instead of 1-3 bogus
 ops decoded from its operand bytes.
+
+**Table inference (2026-07-10):** the tables are contiguous and (in dense
+banks) self-delimiting — the lowest pointer target is the first byte after
+the table. `infer_tables()` exploits this: interior gaps between used slots
+are always inferable; the extension past the last used slot is inferred
+only when the bank's lowest used target lands within the one-byte slot
+window ($4000-$4100), shrunk to a fixed point where every entry points
+at-or-after the table end. 199 unused entries inferred (135 new code
+seeds) → +12,470 instructions / ~24 KB more static code, biggest gains in
+banks $05, $38, $1a, $03, $07. Banks with no delimitation evidence
+(sparse single-slot tables like $20-$37, $43, $5f) are left alone.
 
 Largest code banks: $08 (match engine), $00, $13 (story engine), $05, $1e,
 $1d (story practice-drill engine), $0f, $38, $3b, $0a.

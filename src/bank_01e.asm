@@ -16,7 +16,8 @@ FarPtr_1e_08:
 	dw Func_1e_7263 ; $4008
 FarPtr_1e_0a:
 	dw Func_1e_45c0 ; $400a
-	INCBIN "data/bank_01e/d_400c.bin" ; $400c, 2 bytes
+FarPtr_1e_0c:
+	dw Func_1e_45c9 ; $400c
 Func_1e_400e:
 	rst Rst28 ; $400e
 	ldh [$ff1f], a ; $400f

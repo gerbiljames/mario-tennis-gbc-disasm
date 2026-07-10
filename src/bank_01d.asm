@@ -8,14 +8,22 @@ FarPtr_1d_00:
 	dw Func_1d_4016 ; $4000
 FarPtr_1d_02:
 	dw Func_1d_5a63 ; $4002
-	INCBIN "data/bank_01d/d_4004.bin" ; $4004, 2 bytes
+FarPtr_1d_04:
+	dw Func_1d_68a3 ; $4004
 FarPtr_1d_06:
 	dw Func_1d_682c ; $4006
 FarPtr_1d_08:
 	dw Func_1d_7cae ; $4008
 FarPtr_1d_0a:
 	dw Func_1d_7cc6 ; $400a
-	INCBIN "data/bank_01d/d_400c.bin" ; $400c, 8 bytes
+FarPtr_1d_0c:
+	dw Func_1d_5be3 ; $400c
+FarPtr_1d_0e:
+	dw Func_1d_5c0b ; $400e
+FarPtr_1d_10:
+	dw Func_1d_5c15 ; $4010
+FarPtr_1d_12:
+	dw Func_1d_5c1e ; $4012
 FarPtr_1d_14:
 	dw Func_1d_7205 ; $4014
 Func_1d_4016:
@@ -3279,7 +3287,16 @@ Func_1d_5c0b:
 	ld bc, $d580 ; $5c0e
 	call Func_1d_4bb6 ; $5c11
 	ret ; $5c14
-	INCBIN "data/bank_01d/d_5c15.bin" ; $5c15, 3095 bytes
+Func_1d_5c15:
+	ld a, $01 ; $5c15
+	ld hl, $48c7 ; $5c17
+	call Func_00_1b6a ; $5c1a
+	ret ; $5c1d
+Func_1d_5c1e:
+	ld hl, $48c7 ; $5c1e
+	call Func_00_1bcb ; $5c21
+	ret ; $5c24
+	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 3079 bytes
 Func_1d_682c:
 	ld a, $06 ; $682c
 	ldh [$ff96], a ; $682e
