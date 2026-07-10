@@ -136,6 +136,9 @@ class Disassembly:
         self.data_slots = {}  # entry_flat -> (bank, slot, src_flat, kind)
         self.data_blobs = {}  # src_flat -> (length or None, kind)
         self.data_site_notes = {}  # `ld hl` setup offset -> (bank, slot)
+        self.ptr_words = {}   # word offset -> (target_flat or None, note)
+        self.ptr_labels = {}  # flat offset -> generated structure label
+        self.sprite_banks = set()
 
     def _try_farcall(self, off):
         """Decode `rst $18` + inline `db slot, bank` as a 3-byte pseudo-call.
@@ -535,6 +538,94 @@ class Disassembly:
                     added += 1
         print(f"hook dumps: {entries} captured calls, {added} new data slots")
 
+    def find_sprite_banks(self):
+        """Carve the character-sprite banks ($40-$5d). Layout, identical in
+        every bank: $4000 points at a six-word descriptor {id, 3, frame
+        table, anim scripts, 0, per-slot OAM data}; the frame table is a
+        run of pointers to 24x40 (a few 32x40) tile records, self-delimited
+        by its lowest target, with consecutive repeats for held frames; a
+        30-byte-per-frame table sits directly below the per-slot OAM words;
+        the animation-script pointer table addresses (frame, duration)
+        streams that run to the trailing $ff mastering fill. Every field
+        must line up exactly or the bank is left alone."""
+        nbanks = len(self.rom) // BANK_SIZE
+        for bank in range(1, nbanks):
+            base = bank * BANK_SIZE
+            w = lambda o: self.rom[base + o] | (self.rom[base + o + 1] << 8)
+            if w(0) != 0x4002:
+                continue
+            ftab, scr, zero, smeta = w(6), w(8), w(10), w(12)
+            if w(4) != 3 or zero != 0 or ftab != 0x400e \
+                    or not 0x4000 < smeta < scr < 0x8000:
+                continue
+            if any(b in self.code_bytes for b in range(base, base + BANK_SIZE)):
+                continue
+
+            ptrs, o, first = [], 0xe, None
+            while first is None or o < first:
+                p = w(o)
+                if not 0x4000 <= p < smeta:
+                    break
+                ptrs.append(p)
+                t = p - 0x4000
+                first = t if first is None else min(first, t)
+                o += 2
+            uniq = sorted(set(ptrs))
+            if len(ptrs) < 8 or o != first or scr - smeta != 4 * len(ptrs):
+                continue
+            meta = smeta - 30 * len(uniq)
+            lens = [b - a for a, b in zip(uniq, uniq[1:])] + [meta - uniq[-1]]
+            if any(l <= 0 or l % 16 or l > 0x400 for l in lens):
+                continue
+
+            sptrs, o, first = [], scr - 0x4000, None
+            while first is None or o < first:
+                p = w(o)
+                if not scr < p < 0x8000 or (sptrs and p < sptrs[-1]):
+                    break
+                sptrs.append(p)
+                first = first or p - 0x4000
+                o += 2
+            end = BANK_SIZE
+            while end > 0 and self.rom[base + end - 1] == 0xff:
+                end -= 1
+            if not sptrs or o != first or sptrs[-1] - 0x4000 >= end:
+                continue
+
+            self.sprite_banks.add(bank)
+            for e in [e for e, v in self.data_slots.items() if v[0] == bank]:
+                del self.data_slots[e]
+            for s in [s for s in self.data_blobs
+                      if base <= s < base + BANK_SIZE]:
+                del self.data_blobs[s]
+
+            flat = lambda cpu: base + cpu - 0x4000
+            self.ptr_labels[flat(0x4002)] = f"SpriteDesc_{bank:02x}"
+            self.ptr_labels[flat(ftab)] = f"SpriteFrames_{bank:02x}"
+            self.ptr_labels[flat(scr)] = f"SpriteAnims_{bank:02x}"
+            self.ptr_words[flat(0x4000)] = (flat(0x4002), "")
+            for off_, tgt, note in (
+                    (0x4002, None, ""), (0x4004, None, ""),
+                    (0x4006, ftab, "frame table"),
+                    (0x4008, scr, "animation scripts"),
+                    (0x400a, None, ""), (0x400c, smeta, "per-slot OAM data")):
+                self.ptr_words[flat(off_)] = (
+                    flat(tgt) if tgt is not None else None, note)
+            for i, p in enumerate(ptrs):
+                self.ptr_words[flat(ftab) + 2 * i] = (flat(p), "")
+            for a, l in zip(uniq, lens):
+                self.data_blobs[flat(a)] = (l, "copy")
+            self.data_blobs[flat(meta)] = (30 * len(uniq), "copy")
+            self.data_blobs[flat(smeta)] = (4 * len(ptrs), "copy")
+            for i, p in enumerate(sptrs):
+                self.ptr_words[flat(scr) + 2 * i] = (flat(p), "")
+            for a, b in zip(sptrs, sptrs[1:] + [0x4000 + end]):
+                self.data_blobs[flat(a)] = (b - a, "copy")
+        if self.sprite_banks:
+            lo, hi = min(self.sprite_banks), max(self.sprite_banks)
+            print(f"sprite banks: {len(self.sprite_banks)} carved "
+                  f"(${lo:02x}-${hi:02x})")
+
     def scan_data_slots(self):
         """Classify remaining table slots whose pointers hold data.
 
@@ -570,7 +661,8 @@ class Disassembly:
         # valid LZ streams. Bank $5f's scene table has no statically visible
         # consumer anywhere, yet its shape passes all three tests.
         for bank in range(1, len(self.rom) // BANK_SIZE):
-            if bank in floors or bank in code_table_banks:
+            if bank in floors or bank in code_table_banks \
+                    or bank in self.sprite_banks:
                 continue
             base = bank * BANK_SIZE
             ptr = [self.rom[base + s] | (self.rom[base + s + 1] << 8)
@@ -1015,7 +1107,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
     for src in sorted(dis.data_blobs):
         length, kind = dis.data_blobs[src]
         if (src < prev_end or src in dis.code_bytes or src in table_entries
-                or src in data_entries or src in jt_entries):
+                or src in data_entries or src in jt_entries
+                or src in dis.ptr_words):
             continue
         stem = "Lz" if kind == "lz" else "Data"
         label = labels.get(src) or \
@@ -1045,6 +1138,20 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                 tl = labels.get(target, f"${offset_to_cpu(target):04x}")
                 lines.append(f"FarPtr_{tbank:02x}_{slot:02x}:")
                 lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}")
+                off += 2
+            elif off in dis.ptr_words:
+                target, note = dis.ptr_words[off]
+                lbl = labels.get(off) or dis.ptr_labels.get(off)
+                if lbl:
+                    lines.append(f"{lbl}:")
+                if target is None:
+                    tl = f"${rom[off] | (rom[off + 1] << 8):04x}"
+                else:
+                    tl = (labels.get(target) or dis.ptr_labels.get(target)
+                          or data_labels.get(target)
+                          or f"${offset_to_cpu(target):04x}")
+                suffix = f" {note}" if note else ""
+                lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}{suffix}")
                 off += 2
             elif off in data_entries:
                 dbank, slot, src, _kind = data_entries[off]
@@ -1080,7 +1187,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                 off += 1
                 while off < end and off not in dis.instrs \
                         and off not in table_entries and off not in data_entries \
-                        and off not in jt_entries and off not in data_marks:
+                        and off not in jt_entries and off not in data_marks \
+                        and off not in dis.ptr_words:
                     off += 1
                 length = off - run_start
                 cpu = offset_to_cpu(run_start)
@@ -1210,6 +1318,7 @@ def main():
         dis.find_data_slots(helpers)
     if args.hooks:
         dis.load_hook_dumps(args.hooks)
+    dis.find_sprite_banks()
     if helpers or args.hooks:
         dis.scan_data_slots()
     labels = build_labels(dis, overrides)
