@@ -4,7 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $15", ROMX[$4000], BANK[$15]
 
-	INCBIN "data/bank_015/d_4000.bin" ; $4000, 2317 bytes
+DataPtr_15_00:
+	dw Data_15_4004 ; $4000
+DataPtr_15_02:
+	dw Data_15_4796 ; $4002
+Data_15_4004:
+	INCBIN "data/bank_015/d_4004.bin" ; $4004, 1938 bytes
+Data_15_4796:
+	INCBIN "data/bank_015/d_4796.bin" ; $4796, 14 bytes
+	INCBIN "data/bank_015/d_47a4.bin" ; $47a4, 361 bytes
 	ld a, [$c295] ; $490d
 	cp a, $ff ; $4910
 	jp z, Label_15_4955 ; $4912

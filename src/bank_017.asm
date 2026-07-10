@@ -11,7 +11,8 @@ DataPtr_17_04:
 	dw Lz_17_4d65 ; $4004
 DataPtr_17_06:
 	dw Lz_17_4e42 ; $4006
-	INCBIN "data/bank_017/d_4008.bin" ; $4008, 2 bytes
+DataPtr_17_08:
+	dw Data_17_4ec2 ; $4008
 FarPtr_17_0a:
 	dw Func_17_4487 ; $400a
 FarPtr_17_0c:
@@ -580,7 +581,9 @@ Lz_17_4d65:
 	INCBIN "data/bank_017/lz_4d65.bin" ; $4d65, 221 bytes
 Lz_17_4e42:
 	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 128 bytes
-	INCBIN "data/bank_017/d_4ec2.bin" ; $4ec2, 1725 bytes
+Data_17_4ec2:
+	INCBIN "data/bank_017/d_4ec2.bin" ; $4ec2, 64 bytes
+	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 1661 bytes
 Label_17_557f:
 	ld a, $03 ; $557f
 	ld [$d82e], a ; $5581

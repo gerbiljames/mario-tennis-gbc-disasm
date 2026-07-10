@@ -4,7 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $12", ROMX[$4000], BANK[$12]
 
-	INCBIN "data/bank_012/d_4000.bin" ; $4000, 111 bytes
+DataPtr_12_00:
+	dw Data_12_4006 ; $4000
+DataPtr_12_02:
+	dw Data_12_467c ; $4002
+DataPtr_12_04:
+	dw Data_12_52f7 ; $4004
+Data_12_4006:
+	INCBIN "data/bank_012/d_4006.bin" ; $4006, 14 bytes
+	INCBIN "data/bank_012/d_4014.bin" ; $4014, 91 bytes
 	ld a, [$c295] ; $406f
 	cp a, $ff ; $4072
 	jp z, Label_12_40b4 ; $4074
@@ -652,6 +660,7 @@ Label_12_44c5:
 	ld [$c294], a ; $4675
 	ld [$c2a1], a ; $4678
 	ret ; $467b
+Data_12_467c:
 	INCBIN "data/bank_012/d_467c.bin" ; $467c, 119 bytes
 	ld a, [$c295] ; $46f3
 	cp a, $ff ; $46f6
@@ -1672,6 +1681,7 @@ Func_12_52c0:
 	farcall FarPtr_0a_2e ; $52f3
 Label_12_52f6:
 	ret ; $52f6
+Data_12_52f7:
 	INCBIN "data/bank_012/d_52f7.bin" ; $52f7, 1888 bytes
 	farcall FarPtr_0a_0e ; $5a57
 	ld a, [$c2b1] ; $5a5a

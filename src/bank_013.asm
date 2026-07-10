@@ -4,7 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $13", ROMX[$4000], BANK[$13]
 
-	INCBIN "data/bank_013/d_4000.bin" ; $4000, 165 bytes
+DataPtr_13_00:
+	dw Data_13_4006 ; $4000
+DataPtr_13_02:
+	dw Data_13_4e20 ; $4002
+DataPtr_13_04:
+	dw Data_13_5c78 ; $4004
+Data_13_4006:
+	INCBIN "data/bank_013/d_4006.bin" ; $4006, 14 bytes
+	INCBIN "data/bank_013/d_4014.bin" ; $4014, 145 bytes
 	ld a, [$c295] ; $40a5
 	cp a, $ff ; $40a8
 	jp z, Label_13_40ea ; $40aa
@@ -1254,7 +1262,9 @@ Func_13_4dcc:
 	ld l, $02 ; $4e1a
 	farcall FarPtr_0a_7e ; $4e1c
 	ret ; $4e1f
-	INCBIN "data/bank_013/d_4e20.bin" ; $4e20, 522 bytes
+Data_13_4e20:
+	INCBIN "data/bank_013/d_4e20.bin" ; $4e20, 14 bytes
+	INCBIN "data/bank_013/d_4e2e.bin" ; $4e2e, 508 bytes
 	xor a, a ; $502a
 	ld [$c2d5], a ; $502b
 	ld a, [$c295] ; $502e
@@ -2529,7 +2539,9 @@ Func_13_5c39:
 	ld a, $03 ; $5c72
 	farcall FarPtr_0a_22 ; $5c74
 	ret ; $5c77
-	INCBIN "data/bank_013/d_5c78.bin" ; $5c78, 562 bytes
+Data_13_5c78:
+	INCBIN "data/bank_013/d_5c78.bin" ; $5c78, 14 bytes
+	INCBIN "data/bank_013/d_5c86.bin" ; $5c86, 548 bytes
 	ld hl, $020f ; $5eaa
 	farcall FarPtr_0a_0e ; $5ead
 	rst30 $05e0 ; $5eb0
