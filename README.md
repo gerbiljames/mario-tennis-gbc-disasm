@@ -15,7 +15,9 @@ byte-for-byte.
      `CGBTENNIS`, MBC5+RAM+BATTERY)
 2. Install [RGBDS](https://rgbds.gbdev.io/install) (or place its binaries in
    `tools/rgbds/`; the Makefile looks there by default — override with
-   `make RGBDS=`).
+   `make RGBDS=`). Requires v1.0.0 or newer; `.rgbds-version` records the
+   version the byte-perfect build is verified against, and `rgbdscheck.asm`
+   fails the build early on older assemblers.
 3. Extract the data and build:
 
    ```sh

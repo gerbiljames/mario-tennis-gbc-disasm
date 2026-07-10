@@ -15,8 +15,11 @@ all: $(ROM)
 $(ROM): $(OBJS)
 	$(RGBLINK) -o $@ -m build/$(ROM:.gbc=.map) -n build/$(ROM:.gbc=.sym) $(OBJS)
 
-build/%.o: src/%.asm | build
+build/%.o: src/%.asm | build/rgbdscheck.o
 	$(RGBASM) -E -I include -o $@ $<
+
+build/rgbdscheck.o: rgbdscheck.asm | build
+	$(RGBASM) -o $@ $<
 
 # INCLUDE paths resolve via -I include; INCBIN paths are repo-relative.
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
