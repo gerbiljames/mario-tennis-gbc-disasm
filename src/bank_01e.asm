@@ -2238,7 +2238,7 @@ Label_1e_5a3f:
 	ld a, [$c604] ; $5a62
 	or a, a ; $5a65
 	jr nz, Label_1e_5aa9 ; $5a66
-	ld a, [$c600] ; $5a68
+	ld a, [wTextBuffer] ; $5a68
 	cp a, $20 ; $5a6b
 	jr z, Label_1e_5a78 ; $5a6d
 	call Func_1e_5afa ; $5a6f
@@ -2268,7 +2268,7 @@ Label_1e_5a98:
 Label_1e_5aa8:
 	ret ; $5aa8
 Label_1e_5aa9:
-	ld a, [$c600] ; $5aa9
+	ld a, [wTextBuffer] ; $5aa9
 	cp a, $20 ; $5aac
 	jr z, Label_1e_5ab9 ; $5aae
 	call Func_1e_5afa ; $5ab0

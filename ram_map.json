@@ -83,6 +83,10 @@
   "note": "[8-bit] Current Serving Player (0x00-0x03)",
   "size": 1
  },
+ "0xc600": {
+  "name": "wTextBuffer",
+  "note": "Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0"
+ },
  "0xc818": {
   "name": "wStoryModeMainCharacterLevel",
   "note": "[8-bit] Story Mode - Main Character Level (0x01-0x63)",
@@ -630,6 +634,10 @@
   "name": "wIntroCutsceneCheck",
   "note": "[8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)",
   "size": 1
+ },
+ "0xd880": {
+  "name": "wShortTextBuffer",
+  "note": "Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0"
  },
  "0xff90": {
   "name": "hPlayerInputFlags",

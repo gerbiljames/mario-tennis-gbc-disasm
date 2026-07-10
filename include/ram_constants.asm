@@ -18,6 +18,7 @@ DEF wMinigamesCurrentScore EQU $c47c
 DEF wMinigamesTargetScore EQU $c47e
 DEF wRallyLength EQU $c4b6
 DEF wCurrentServingPlayer EQU $c4d3
+DEF wTextBuffer EQU $c600
 DEF wStoryModeMainCharacterLevel EQU $c818
 DEF wStoryModeMainCharacterTopStat EQU $c820
 DEF wStoryModeMainCharacterSliceStat EQU $c821
@@ -129,5 +130,6 @@ DEF wExhibitionModeCPUMainCharacterDifficulty EQU $ca9f
 DEF wPlayer2CurrentPartnerCharacter EQU $cacb
 DEF wExhibitionModeCPUPartnerCharacterDifficulty EQU $cadf
 DEF wIntroCutsceneCheck EQU $cb41
+DEF wShortTextBuffer EQU $d880
 DEF hPlayerInputFlags EQU $ff90
 DEF hMusic EQU $ffce

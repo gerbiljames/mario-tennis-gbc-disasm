@@ -14,7 +14,64 @@ from pathlib import Path
 SAFE = set(range(0x20, 0x7F)) - {0x22, 0x5C, 0x7B, 0x7D}
 
 
+def solve_table(data: bytes):
+    """Detect the text-bank header: dw fetch-routine address, then N
+    ascending string offsets relative to the table's own end. N is solved by
+    requiring every offset to land just past a string terminator; accepted
+    only when exactly one N satisfies all entries (true of every text bank)."""
+    if len(data) < 24:
+        return None
+    entries, i, prev = [], 2, -1
+    while i + 1 < len(data):
+        w = data[i] | (data[i + 1] << 8)
+        if w < prev:
+            break
+        entries.append(w)
+        prev = w
+        i += 2
+    good = []
+    for n in range(8, len(entries) + 1):
+        t = 2 + 2 * n
+        if all(t + e < len(data)
+               and (e == 0 or data[t + e - 1] in (0x00, 0x03))
+               for e in entries[:n]):
+            good.append(n)
+    if len(good) != 1:
+        return None
+    return entries[:good[0]]
+
+
 def render_text(data: bytes) -> str:
+    """Render a text region so it reassembles identically: the offset table
+    (when present) as commented `dw` lines, strings as literals with their
+    table index, control bytes numeric."""
+    entries = solve_table(data)
+    if entries is None:
+        return render_db(data)
+    t = 2 + 2 * len(entries)
+    w0 = data[0] | (data[1] << 8)
+    out = [f"\tdw ${w0:04x} ; bank-local string-fetch routine",
+           f"; {len(entries)} string offsets, relative to the end of this table"]
+    idx = {}
+    for k, e in enumerate(entries):
+        idx.setdefault(e, k)
+        out.append(f"\tdw ${e:04x} ; {k}")
+    pos = t
+    while pos < len(data):
+        start = pos
+        while pos < len(data) and data[pos] not in (0x00, 0x03):
+            pos += 1
+        if pos < len(data):
+            pos += 1
+        body = render_db(data[start:pos]).rstrip("\n").split("\n")
+        k = idx.get(start - t)
+        if k is not None:
+            body[0] += f" ; [{k}]"
+        out.extend(body)
+    return "\n".join(out) + "\n"
+
+
+def render_db(data: bytes) -> str:
     """Render bytes as `db` lines that reassemble identically: printable
     runs as string literals, everything else as numeric bytes, one line per
     NUL-terminated string."""
@@ -41,7 +98,7 @@ def render_text(data: bytes) -> str:
         else:
             flush_buf()
             items.append(f"${b:02x}")
-            if b == 0:
+            if b in (0x00, 0x03):
                 flush_line()
         if len(items) >= 8:
             flush_line()
