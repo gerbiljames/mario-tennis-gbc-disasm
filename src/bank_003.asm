@@ -5,23 +5,23 @@ INCLUDE "ram_constants.asm"
 SECTION "ROM Bank $03", ROMX[$4000], BANK[$03]
 
 FarPtr_03_00:
-	dw Func_03_47f9 ; $4000
+	dw WipeAllSaveRam ; $4000
 FarPtr_03_02:
-	dw Func_03_495d ; $4002
+	dw ValidateSaveRam ; $4002
 FarPtr_03_04:
-	dw Func_03_4a89 ; $4004
+	dw WriteSaveBlock ; $4004
 FarPtr_03_06:
-	dw Func_03_4b9b ; $4006
+	dw ReadSaveBlock ; $4006
 FarPtr_03_08:
 	dw Func_03_4c9e ; $4008
 FarPtr_03_0a:
-	dw Func_03_4c14 ; $400a
+	dw VerifySaveBlock ; $400a
 FarPtr_03_0c:
-	dw Func_03_4aff ; $400c
+	dw InvalidateStorySlot ; $400c
 FarPtr_03_0e:
-	dw Func_03_4b54 ; $400e
+	dw ResetAllSaveBlocks ; $400e
 FarPtr_03_10:
-	dw Func_03_4a3c ; $4010
+	dw EraseAndInitSaveRam ; $4010
 FarPtr_03_12:
 	dw Func_03_5669 ; $4012
 FarPtr_03_14:
@@ -31,9 +31,9 @@ FarPtr_03_16:
 FarPtr_03_18:
 	dw Func_03_4d10 ; $4018
 FarPtr_03_1a:
-	dw Func_03_4d64 ; $401a
+	dw CheckStorySlot ; $401a
 FarPtr_03_1c:
-	dw Func_03_4d86 ; $401c
+	dw TestSaveFlag ; $401c
 FarPtr_03_1e:
 	dw Func_03_4db6 ; $401e
 FarPtr_03_20:
@@ -77,8 +77,8 @@ FarPtr_03_44:
 FarPtr_03_46:
 	dw Func_03_5787 ; $4046
 FarPtr_03_48:
-	dw Func_03_4d08 ; $4048
-Func_03_404a:
+	dw SaveStorySlot ; $4048
+InitSaveHeader:
 	push af ; $404a
 	push bc ; $404b
 	push de ; $404c
@@ -88,7 +88,7 @@ Func_03_404a:
 	ld [$4000], a ; $4052
 	ld hl, $47e9 ; $4055
 	ld de, $a020 ; $4058
-	call Func_03_4a69 ; $405b
+	call CopySaveSignature ; $405b
 	ld hl, $a061 ; $405e
 	ld [hl], $00 ; $4061
 	inc hl ; $4063
@@ -1227,7 +1227,7 @@ Func_03_404a:
 	pop af ; $47e7
 	ret ; $47e8
 	INCBIN "data/bank_003/d_47e9.bin" ; $47e9, 16 bytes
-Func_03_47f9:
+WipeAllSaveRam:
 	ld e, $00 ; $47f9
 Label_03_47fb:
 	ld a, e ; $47fb
@@ -1262,7 +1262,7 @@ Label_03_4808:
 	cp a, $04 ; $4820
 	jr c, Label_03_47fb ; $4822
 	ret ; $4824
-Func_03_4825:
+ClearSaveFlagsArea:
 	xor a, a ; $4825
 	ldh [$ff97], a ; $4826
 	ld [$4000], a ; $4828
@@ -1288,7 +1288,7 @@ Label_03_4830:
 	dec c ; $4840
 	jr nz, Label_03_4830 ; $4841
 	ret ; $4843
-Func_03_4844:
+SumSaveHeaderRegion:
 	push af ; $4844
 	push de ; $4845
 	push bc ; $4846
@@ -1315,12 +1315,12 @@ Label_03_485c:
 	pop de ; $4863
 	pop af ; $4864
 	ret ; $4865
-Func_03_4866:
+UpdateSaveHeaderChecksum:
 	push af ; $4866
 	push bc ; $4867
 	push de ; $4868
 	push hl ; $4869
-	call Func_03_4844 ; $486a
+	call SumSaveHeaderRegion ; $486a
 	ld a, l ; $486d
 	ld [$a030], a ; $486e
 	ld a, h ; $4871
@@ -1350,12 +1350,12 @@ Func_03_4866:
 	pop bc ; $489e
 	pop af ; $489f
 	ret ; $48a0
-Func_03_48a1:
+MirrorSaveHeaderToBank1:
 	push af ; $48a1
 	push bc ; $48a2
 	push de ; $48a3
 	push hl ; $48a4
-	call Func_03_4844 ; $48a5
+	call SumSaveHeaderRegion ; $48a5
 	ld a, l ; $48a8
 	ld [$a030], a ; $48a9
 	ld a, h ; $48ac
@@ -1421,10 +1421,10 @@ Func_03_48a1:
 	pop bc ; $4942
 	pop af ; $4943
 	ret ; $4944
-Func_03_4945:
+VerifySaveHeaderChecksum:
 	push hl ; $4945
 	push de ; $4946
-	call Func_03_4844 ; $4947
+	call SumSaveHeaderRegion ; $4947
 	push hl ; $494a
 	ld hl, $a030 ; $494b
 	ld a, [hl+] ; $494e
@@ -1442,7 +1442,7 @@ Func_03_4945:
 	pop de ; $495a
 	pop hl ; $495b
 	ret ; $495c
-Func_03_495d:
+ValidateSaveRam:
 	push hl ; $495d
 	push de ; $495e
 	push bc ; $495f
@@ -1453,9 +1453,9 @@ Func_03_495d:
 	ld [$4000], a ; $4969
 	ld hl, $a020 ; $496c
 	ld de, $47e9 ; $496f
-	call Func_03_4a56 ; $4972
+	call CompareSaveSignature ; $4972
 	jr nz, Label_03_4980 ; $4975
-	call Func_03_4945 ; $4977
+	call VerifySaveHeaderChecksum ; $4977
 	jr nz, Label_03_4980 ; $497a
 	xor a, a ; $497c
 	jp Label_03_4a32 ; $497d
@@ -1518,16 +1518,16 @@ Label_03_4980:
 	call CopyMemoryFast ; $4a0d
 	ld hl, $a000 ; $4a10
 	ld de, $47e9 ; $4a13
-	call Func_03_4a56 ; $4a16
+	call CompareSaveSignature ; $4a16
 	jr nz, Label_03_4a24 ; $4a19
-	call Func_03_4945 ; $4a1b
+	call VerifySaveHeaderChecksum ; $4a1b
 	jr nz, Label_03_4a24 ; $4a1e
 	ld a, $01 ; $4a20
 	jr Label_03_4a32 ; $4a22
 Label_03_4a24:
-	call Func_03_47f9 ; $4a24
-	call Func_03_404a ; $4a27
-	call Func_03_48a1 ; $4a2a
+	call WipeAllSaveRam ; $4a24
+	call InitSaveHeader ; $4a27
+	call MirrorSaveHeaderToBank1 ; $4a2a
 	call Func_03_519a ; $4a2d
 	ld a, $ff ; $4a30
 Label_03_4a32:
@@ -1539,19 +1539,19 @@ Label_03_4a32:
 	pop de ; $4a39
 	pop hl ; $4a3a
 	ret ; $4a3b
-Func_03_4a3c:
+EraseAndInitSaveRam:
 	ld a, $0a ; $4a3c
 	ld [$0000], a ; $4a3e
 	ld a, $00 ; $4a41
 	ldh [$ff97], a ; $4a43
 	ld [$4000], a ; $4a45
-	call Func_03_47f9 ; $4a48
-	call Func_03_404a ; $4a4b
-	call Func_03_48a1 ; $4a4e
+	call WipeAllSaveRam ; $4a48
+	call InitSaveHeader ; $4a4b
+	call MirrorSaveHeaderToBank1 ; $4a4e
 	xor a, a ; $4a51
 	ld [$0000], a ; $4a52
 	ret ; $4a55
-Func_03_4a56:
+CompareSaveSignature:
 	push de ; $4a56
 	push hl ; $4a57
 Label_03_4a58:
@@ -1570,7 +1570,7 @@ Label_03_4a65:
 	pop de ; $4a66
 	or a, a ; $4a67
 	ret ; $4a68
-Func_03_4a69:
+CopySaveSignature:
 	push af ; $4a69
 	push de ; $4a6a
 	push hl ; $4a6b
@@ -1587,7 +1587,7 @@ Label_03_4a75:
 	pop de ; $4a76
 	pop af ; $4a77
 	ret ; $4a78
-Func_03_4a79:
+GetSaveBlockDirEntry:
 	push hl ; $4a79
 	ld l, a ; $4a7a
 	ld h, $00 ; $4a7b
@@ -1601,7 +1601,7 @@ Func_03_4a79:
 	ld c, l ; $4a86
 	pop hl ; $4a87
 	ret ; $4a88
-Func_03_4a89:
+WriteSaveBlock:
 	push hl ; $4a89
 	push de ; $4a8a
 	push bc ; $4a8b
@@ -1610,10 +1610,10 @@ Func_03_4a89:
 	ld a, $00 ; $4a91
 	ldh [$ff97], a ; $4a93
 	ld [$4000], a ; $4a95
-	call Func_03_404a ; $4a98
+	call InitSaveHeader ; $4a98
 	push de ; $4a9b
 	ld a, b ; $4a9c
-	call Func_03_4a79 ; $4a9d
+	call GetSaveBlockDirEntry ; $4a9d
 	push bc ; $4aa0
 	push hl ; $4aa1
 	ld hl, $0001 ; $4aa2
@@ -1678,7 +1678,7 @@ Label_03_4acd:
 	ld [hl+], a ; $4aee
 	ld a, e ; $4aef
 	ld [hl+], a ; $4af0
-	call Func_03_48a1 ; $4af1
+	call MirrorSaveHeaderToBank1 ; $4af1
 	xor a, a ; $4af4
 	push af ; $4af5
 	xor a, a ; $4af6
@@ -1688,7 +1688,7 @@ Label_03_4acd:
 	pop de ; $4afc
 	pop hl ; $4afd
 	ret ; $4afe
-Func_03_4aff:
+InvalidateStorySlot:
 	push hl ; $4aff
 	push de ; $4b00
 	push bc ; $4b01
@@ -1697,11 +1697,11 @@ Func_03_4aff:
 	jr nc, Label_03_4b16 ; $4b05
 	sla a ; $4b07
 	ld b, a ; $4b09
-	call Func_03_4b1c ; $4b0a
+	call InvalidateSaveBlock ; $4b0a
 	or a, a ; $4b0d
 	jr nz, Label_03_4b18 ; $4b0e
 	inc b ; $4b10
-	call Func_03_4b1c ; $4b11
+	call InvalidateSaveBlock ; $4b11
 	jr Label_03_4b18 ; $4b14
 Label_03_4b16:
 	ld a, $ff ; $4b16
@@ -1710,7 +1710,7 @@ Label_03_4b18:
 	pop de ; $4b19
 	pop hl ; $4b1a
 	ret ; $4b1b
-Func_03_4b1c:
+InvalidateSaveBlock:
 	push hl ; $4b1c
 	push de ; $4b1d
 	push bc ; $4b1e
@@ -1719,9 +1719,9 @@ Func_03_4b1c:
 	ld a, $00 ; $4b24
 	ldh [$ff97], a ; $4b26
 	ld [$4000], a ; $4b28
-	call Func_03_404a ; $4b2b
+	call InitSaveHeader ; $4b2b
 	ld a, b ; $4b2e
-	call Func_03_4a79 ; $4b2f
+	call GetSaveBlockDirEntry ; $4b2f
 	xor a, a ; $4b32
 	ld [bc], a ; $4b33
 	ld de, $0000 ; $4b34
@@ -1737,7 +1737,7 @@ Label_03_4b42:
 	ld [hl+], a ; $4b42
 	dec c ; $4b43
 	jr nz, Label_03_4b42 ; $4b44
-	call Func_03_48a1 ; $4b46
+	call MirrorSaveHeaderToBank1 ; $4b46
 	xor a, a ; $4b49
 	push af ; $4b4a
 	xor a, a ; $4b4b
@@ -1747,7 +1747,7 @@ Label_03_4b42:
 	pop de ; $4b51
 	pop hl ; $4b52
 	ret ; $4b53
-Func_03_4b54:
+ResetAllSaveBlocks:
 	ld a, $00 ; $4b54
 	ld [$c36c], a ; $4b56
 	ld a, $00 ; $4b59
@@ -1763,21 +1763,21 @@ Func_03_4b54:
 	ld a, $00 ; $4b72
 	ld [$c36c], a ; $4b74
 	ld b, $36 ; $4b77
-	call Func_03_4b1c ; $4b79
+	call InvalidateSaveBlock ; $4b79
 	ld b, $37 ; $4b7c
-	call Func_03_4b1c ; $4b7e
+	call InvalidateSaveBlock ; $4b7e
 	ld a, $0a ; $4b81
 	ld [$0000], a ; $4b83
 	ld a, $00 ; $4b86
 	ldh [$ff97], a ; $4b88
 	ld [$4000], a ; $4b8a
-	call Func_03_4825 ; $4b8d
-	call Func_03_404a ; $4b90
-	call Func_03_48a1 ; $4b93
+	call ClearSaveFlagsArea ; $4b8d
+	call InitSaveHeader ; $4b90
+	call MirrorSaveHeaderToBank1 ; $4b93
 	xor a, a ; $4b96
 	ld [$0000], a ; $4b97
 	ret ; $4b9a
-Func_03_4b9b:
+ReadSaveBlock:
 	push hl ; $4b9b
 	push de ; $4b9c
 	push bc ; $4b9d
@@ -1787,7 +1787,7 @@ Func_03_4b9b:
 	ldh [$ff97], a ; $4ba5
 	ld [$4000], a ; $4ba7
 	ld a, b ; $4baa
-	call Func_03_4a79 ; $4bab
+	call GetSaveBlockDirEntry ; $4bab
 	ld a, [bc] ; $4bae
 	or a, a ; $4baf
 	jp nz, Label_03_4bb8 ; $4bb0
@@ -1867,7 +1867,7 @@ Label_03_4c0a:
 	pop de ; $4c11
 	pop hl ; $4c12
 	ret ; $4c13
-Func_03_4c14:
+VerifySaveBlock:
 	push hl ; $4c14
 	push de ; $4c15
 	push bc ; $4c16
@@ -1877,7 +1877,7 @@ Func_03_4c14:
 	ldh [$ff97], a ; $4c1e
 	ld [$4000], a ; $4c20
 	ld a, b ; $4c23
-	call Func_03_4a79 ; $4c24
+	call GetSaveBlockDirEntry ; $4c24
 	ld a, [bc] ; $4c27
 	or a, a ; $4c28
 	jp nz, Label_03_4c31 ; $4c29
@@ -1976,7 +1976,7 @@ Func_03_4c9e:
 	ldh [$ff97], a ; $4ca8
 	ld [$4000], a ; $4caa
 	ld a, b ; $4cad
-	call Func_03_4a79 ; $4cae
+	call GetSaveBlockDirEntry ; $4cae
 	ld a, [bc] ; $4cb1
 	or a, a ; $4cb2
 	jp nz, Label_03_4cbb ; $4cb3
@@ -2005,7 +2005,7 @@ Label_03_4cc9:
 	pop hl ; $4cd1
 	ret ; $4cd2
 	INCBIN "data/bank_003/d_4cd3.bin" ; $4cd3, 53 bytes
-Func_03_4d08:
+SaveStorySlot:
 	ld a, [$c36c] ; $4d08
 	cp a, $03 ; $4d0b
 	ret nc ; $4d0d
@@ -2021,14 +2021,14 @@ Label_03_4d19:
 	ld b, a ; $4d1d
 	ld hl, $c800 ; $4d1e
 	ld de, $0000 ; $4d21
-	call Func_03_4a89 ; $4d24
+	call WriteSaveBlock ; $4d24
 	or a, a ; $4d27
 	ret nz ; $4d28
 	ld a, [$c36c] ; $4d29
 	add a, a ; $4d2c
 	ld b, a ; $4d2d
 	ld hl, $c800 ; $4d2e
-	call Func_03_4c14 ; $4d31
+	call VerifySaveBlock ; $4d31
 	or a, a ; $4d34
 	ret nz ; $4d35
 	ld a, [$c36c] ; $4d36
@@ -2037,7 +2037,7 @@ Label_03_4d19:
 	ld b, a ; $4d3c
 	ld hl, $c800 ; $4d3d
 	ld de, $c600 ; $4d40
-	call Func_03_4a89 ; $4d43
+	call WriteSaveBlock ; $4d43
 	or a, a ; $4d46
 	ret nz ; $4d47
 	ld a, [$c36c] ; $4d48
@@ -2045,14 +2045,14 @@ Label_03_4d19:
 	add a, $1b ; $4d4c
 	ld b, a ; $4d4e
 	ld hl, $c800 ; $4d4f
-	call Func_03_4c14 ; $4d52
+	call VerifySaveBlock ; $4d52
 	or a, a ; $4d55
 	ret nz ; $4d56
 	call Func_03_56fb ; $4d57
 	xor a, a ; $4d5a
 	ret ; $4d5b
 	INCBIN "data/bank_003/d_4d5c.bin" ; $4d5c, 8 bytes
-Func_03_4d64:
+CheckStorySlot:
 	push bc ; $4d64
 	push de ; $4d65
 	push hl ; $4d66
@@ -2062,7 +2062,7 @@ Func_03_4d64:
 	add a, a ; $4d6e
 	ld b, a ; $4d6f
 	ld hl, $c800 ; $4d70
-	call Func_03_4b9b ; $4d73
+	call ReadSaveBlock ; $4d73
 	jr Label_03_4d7a ; $4d76
 Label_03_4d78:
 	ld a, $fe ; $4d78
@@ -2072,7 +2072,7 @@ Label_03_4d7a:
 	pop bc ; $4d7c
 	ret ; $4d7d
 	INCBIN "data/bank_003/d_4d7e.bin" ; $4d7e, 8 bytes
-Func_03_4d86:
+TestSaveFlag:
 	push hl ; $4d86
 	push de ; $4d87
 	push bc ; $4d88
@@ -2132,7 +2132,7 @@ Label_03_4dd0:
 	add hl, de ; $4dd7
 	or a, [hl] ; $4dd8
 	ld [hl], a ; $4dd9
-	call Func_03_4866 ; $4dda
+	call UpdateSaveHeaderChecksum ; $4dda
 	xor a, a ; $4ddd
 	ld [$0000], a ; $4dde
 	pop af ; $4de1
@@ -2164,7 +2164,7 @@ Label_03_4dfe:
 	cpl ; $4e06
 	and a, [hl] ; $4e07
 	ld [hl], a ; $4e08
-	call Func_03_4866 ; $4e09
+	call UpdateSaveHeaderChecksum ; $4e09
 	xor a, a ; $4e0c
 	ld [$0000], a ; $4e0d
 	pop af ; $4e10
@@ -2177,7 +2177,7 @@ Func_03_4e13:
 	ld h, a ; $4e16
 	ld a, $0a ; $4e17
 	ld [$0000], a ; $4e19
-	call Func_03_404a ; $4e1c
+	call InitSaveHeader ; $4e1c
 	ld a, [$c36c] ; $4e1f
 	cp a, $03 ; $4e22
 	jp nc, Label_03_4e8a ; $4e24
@@ -2195,7 +2195,7 @@ Func_03_4e13:
 	call Func_03_4e90 ; $4e38
 	inc b ; $4e3b
 	call Func_03_4e90 ; $4e3c
-	call Func_03_48a1 ; $4e3f
+	call MirrorSaveHeaderToBank1 ; $4e3f
 	xor a, a ; $4e42
 	ld [$0000], a ; $4e43
 	call Func_03_5141 ; $4e46
@@ -2260,7 +2260,7 @@ Func_03_4e9d:
 	ldh [$ff97], a ; $4ea2
 	ld [$4000], a ; $4ea4
 	ld a, b ; $4ea7
-	call Func_03_4a79 ; $4ea8
+	call GetSaveBlockDirEntry ; $4ea8
 	push bc ; $4eab
 	push hl ; $4eac
 	ld hl, $0001 ; $4ead
@@ -2329,7 +2329,7 @@ Func_03_4f57:
 	ldh [$ff97], a ; $4f5c
 	ld [$4000], a ; $4f5e
 	ld a, b ; $4f61
-	call Func_03_4a79 ; $4f62
+	call GetSaveBlockDirEntry ; $4f62
 	xor a, a ; $4f65
 	ld [bc], a ; $4f66
 	ld de, $0000 ; $4f67
@@ -2363,7 +2363,7 @@ Func_03_4f7d:
 	call Func_03_586f ; $4f8d
 	ld b, a ; $4f90
 	push bc ; $4f91
-	call Func_03_4a3c ; $4f92
+	call EraseAndInitSaveRam ; $4f92
 	pop bc ; $4f95
 	ld a, b ; $4f96
 	cp a, $fe ; $4f97
@@ -2385,26 +2385,26 @@ Func_03_4fae:
 	ld b, a ; $4fb0
 	ld hl, $c800 ; $4fb1
 	ld de, $0000 ; $4fb4
-	call Func_03_4a89 ; $4fb7
+	call WriteSaveBlock ; $4fb7
 	or a, a ; $4fba
 	ret nz ; $4fbb
 	ld a, $36 ; $4fbc
 	ld b, a ; $4fbe
 	ld hl, $c800 ; $4fbf
-	call Func_03_4c14 ; $4fc2
+	call VerifySaveBlock ; $4fc2
 	or a, a ; $4fc5
 	ret nz ; $4fc6
 	ld a, $37 ; $4fc7
 	ld b, a ; $4fc9
 	ld hl, $c800 ; $4fca
 	ld de, $c600 ; $4fcd
-	call Func_03_4a89 ; $4fd0
+	call WriteSaveBlock ; $4fd0
 	or a, a ; $4fd3
 	ret nz ; $4fd4
 	ld a, $37 ; $4fd5
 	ld b, a ; $4fd7
 	ld hl, $c800 ; $4fd8
-	call Func_03_4c14 ; $4fdb
+	call VerifySaveBlock ; $4fdb
 	or a, a ; $4fde
 	ret nz ; $4fdf
 	xor a, a ; $4fe0
@@ -2417,7 +2417,7 @@ Func_03_4fea:
 	ld a, $36 ; $4fed
 	ld b, a ; $4fef
 	ld hl, $c800 ; $4ff0
-	call Func_03_4b9b ; $4ff3
+	call ReadSaveBlock ; $4ff3
 	jr Label_03_4ffa ; $4ff6
 	INCBIN "data/bank_003/d_4ff8.bin" ; $4ff8, 2 bytes
 Label_03_4ffa:
@@ -2483,7 +2483,7 @@ Label_03_504b:
 	push bc ; $504d
 	ld b, a ; $504e
 	ld hl, $d480 ; $504f
-	call Func_03_4b9b ; $5052
+	call ReadSaveBlock ; $5052
 	pop bc ; $5055
 	ld a, b ; $5056
 	add a, a ; $5057
@@ -2544,7 +2544,7 @@ Label_03_5090:
 	push bc ; $50a3
 	ld b, a ; $50a4
 	ld hl, $d480 ; $50a5
-	call Func_03_4b9b ; $50a8
+	call ReadSaveBlock ; $50a8
 	pop bc ; $50ab
 	ld hl, $de00 ; $50ac
 	ld a, [hl+] ; $50af
@@ -2575,7 +2575,7 @@ Label_03_50cb:
 	ld b, a ; $50ce
 	ld hl, $d480 ; $50cf
 	ld de, $0000 ; $50d2
-	call Func_03_4a89 ; $50d5
+	call WriteSaveBlock ; $50d5
 	pop bc ; $50d8
 	or a, a ; $50d9
 	jr nz, Label_03_512c ; $50da
@@ -2591,7 +2591,7 @@ Label_03_50e7:
 	add a, $38 ; $50e8
 	ld b, a ; $50ea
 	ld hl, $d480 ; $50eb
-	call Func_03_4c14 ; $50ee
+	call VerifySaveBlock ; $50ee
 	pop bc ; $50f1
 	or a, a ; $50f2
 	jr nz, Label_03_512c ; $50f3
@@ -2608,7 +2608,7 @@ Label_03_5100:
 	ld b, a ; $5103
 	ld hl, $d480 ; $5104
 	ld de, $0000 ; $5107
-	call Func_03_4a89 ; $510a
+	call WriteSaveBlock ; $510a
 	pop bc ; $510d
 	or a, a ; $510e
 	jr nz, Label_03_512c ; $510f
@@ -2624,7 +2624,7 @@ Label_03_511c:
 	add a, $3b ; $511d
 	ld b, a ; $511f
 	ld hl, $d480 ; $5120
-	call Func_03_4c14 ; $5123
+	call VerifySaveBlock ; $5123
 	pop bc ; $5126
 	or a, a ; $5127
 	jr nz, Label_03_512c ; $5128
@@ -2661,7 +2661,7 @@ Func_03_5141:
 	add a, $38 ; $5151
 	ld b, a ; $5153
 	ld hl, $d480 ; $5154
-	call Func_03_4b9b ; $5157
+	call ReadSaveBlock ; $5157
 	xor a, a ; $515a
 	farcall FarPtr_0d_02 ; $515b
 	ld hl, $d480 ; $515e
@@ -2679,7 +2679,7 @@ Func_03_5141:
 	ld b, a ; $5174
 	ld hl, $d480 ; $5175
 	ld de, $0000 ; $5178
-	call Func_03_4a89 ; $517b
+	call WriteSaveBlock ; $517b
 	or a, a ; $517e
 	jr nz, Label_03_5190 ; $517f
 	ld a, [$c36c] ; $5181
@@ -2687,7 +2687,7 @@ Func_03_5141:
 	ld b, a ; $5186
 	ld hl, $d480 ; $5187
 	ld de, $0000 ; $518a
-	call Func_03_4a89 ; $518d
+	call WriteSaveBlock ; $518d
 Label_03_5190:
 	pop af ; $5190
 	ldh [$ff96], a ; $5191
@@ -2740,38 +2740,38 @@ Label_03_51ce:
 	ld b, a ; $51d0
 	ld hl, $d480 ; $51d1
 	ld de, $0000 ; $51d4
-	call Func_03_4a89 ; $51d7
+	call WriteSaveBlock ; $51d7
 	or a, a ; $51da
 	jr nz, Label_03_521f ; $51db
 	ld a, $3b ; $51dd
 	ld b, a ; $51df
 	ld hl, $d480 ; $51e0
 	ld de, $0000 ; $51e3
-	call Func_03_4a89 ; $51e6
+	call WriteSaveBlock ; $51e6
 	ld a, $39 ; $51e9
 	ld b, a ; $51eb
 	ld hl, $d480 ; $51ec
 	ld de, $0000 ; $51ef
-	call Func_03_4a89 ; $51f2
+	call WriteSaveBlock ; $51f2
 	or a, a ; $51f5
 	jr nz, Label_03_521f ; $51f6
 	ld a, $3c ; $51f8
 	ld b, a ; $51fa
 	ld hl, $d480 ; $51fb
 	ld de, $0000 ; $51fe
-	call Func_03_4a89 ; $5201
+	call WriteSaveBlock ; $5201
 	ld a, $3a ; $5204
 	ld b, a ; $5206
 	ld hl, $d480 ; $5207
 	ld de, $0000 ; $520a
-	call Func_03_4a89 ; $520d
+	call WriteSaveBlock ; $520d
 	or a, a ; $5210
 	jr nz, Label_03_521f ; $5211
 	ld a, $3d ; $5213
 	ld b, a ; $5215
 	ld hl, $d480 ; $5216
 	ld de, $0000 ; $5219
-	call Func_03_4a89 ; $521c
+	call WriteSaveBlock ; $521c
 Label_03_521f:
 	pop af ; $521f
 	ldh [$ff96], a ; $5220
@@ -2787,7 +2787,7 @@ Func_03_5229:
 	push de ; $522b
 	push hl ; $522c
 	ld b, $3e ; $522d
-	call Func_03_4b9b ; $522f
+	call ReadSaveBlock ; $522f
 	or a, a ; $5232
 	jr z, Label_03_523b ; $5233
 	xor a, a ; $5235
@@ -2805,7 +2805,7 @@ Func_03_5240:
 	push hl ; $5242
 	ld b, $3e ; $5243
 	ld de, $0000 ; $5245
-	call Func_03_4a89 ; $5248
+	call WriteSaveBlock ; $5248
 	pop hl ; $524b
 	pop de ; $524c
 	pop bc ; $524d
@@ -2886,7 +2886,7 @@ Func_03_52b3:
 	ldh [rWBK], a ; $52b7
 	call Func_03_529d ; $52b9
 	ld hl, $d500 ; $52bc
-	call Func_03_4b9b ; $52bf
+	call ReadSaveBlock ; $52bf
 	ret ; $52c2
 Func_03_52c3:
 	ld a, $07 ; $52c3
@@ -2894,7 +2894,7 @@ Func_03_52c3:
 	ldh [rWBK], a ; $52c7
 	call Func_03_529d ; $52c9
 	ld hl, $d500 ; $52cc
-	call Func_03_4a89 ; $52cf
+	call WriteSaveBlock ; $52cf
 	ret ; $52d2
 Func_03_52d3:
 	ld a, $07 ; $52d3
@@ -2902,7 +2902,7 @@ Func_03_52d3:
 	ldh [rWBK], a ; $52d7
 	call Func_03_529d ; $52d9
 	ld hl, $d500 ; $52dc
-	call Func_03_4aff ; $52df
+	call InvalidateStorySlot ; $52df
 	ret ; $52e2
 	INCBIN "data/bank_003/d_52e3.bin" ; $52e3, 45 bytes
 Func_03_5310:
@@ -3138,14 +3138,14 @@ Label_03_54ad:
 	INCBIN "data/bank_003/d_54b0.bin" ; $54b0, 93 bytes
 Func_03_550d:
 	ld hl, $d000 ; $550d
-	call Func_03_4b9b ; $5510
+	call ReadSaveBlock ; $5510
 	cp a, $ff ; $5513
 	ret nz ; $5515
 	push bc ; $5516
 	ld a, $1b ; $5517
 	add a, b ; $5519
 	ld b, a ; $551a
-	call Func_03_4b9b ; $551b
+	call ReadSaveBlock ; $551b
 	or a, a ; $551e
 	jr nz, Label_03_5532 ; $551f
 	ld hl, $d400 ; $5521
@@ -3153,13 +3153,13 @@ Func_03_550d:
 	pop bc ; $5527
 	ld hl, $d000 ; $5528
 	ld de, $d400 ; $552b
-	call Func_03_4a89 ; $552e
+	call WriteSaveBlock ; $552e
 	ret ; $5531
 Label_03_5532:
 	pop bc ; $5532
-	call Func_03_4b1c ; $5533
+	call InvalidateSaveBlock ; $5533
 	inc b ; $5536
-	call Func_03_4b1c ; $5537
+	call InvalidateSaveBlock ; $5537
 	ret ; $553a
 	INCBIN "data/bank_003/d_553b.bin" ; $553b, 302 bytes
 Func_03_5669:
@@ -3178,23 +3178,23 @@ Func_03_5682:
 	ld a, $36 ; $5682
 	ld b, a ; $5684
 	ld hl, $d000 ; $5685
-	call Func_03_4b9b ; $5688
+	call ReadSaveBlock ; $5688
 	cp a, $ff ; $568b
 	ret nz ; $568d
 	push bc ; $568e
 	ld a, $37 ; $568f
 	ld b, a ; $5691
-	call Func_03_4b9b ; $5692
+	call ReadSaveBlock ; $5692
 	or a, a ; $5695
 	jr nz, Label_03_56a3 ; $5696
 	pop bc ; $5698
 	ld hl, $d000 ; $5699
 	ld de, $d400 ; $569c
-	call Func_03_4a89 ; $569f
+	call WriteSaveBlock ; $569f
 	ret ; $56a2
 Label_03_56a3:
 	pop bc ; $56a3
-	call Func_03_4b1c ; $56a4
+	call InvalidateSaveBlock ; $56a4
 	ret ; $56a7
 Func_03_56a8:
 	push af ; $56a8
@@ -3208,7 +3208,7 @@ Func_03_56a8:
 	ldh [rWBK], a ; $56b3
 	ld hl, $d500 ; $56b5
 	ld b, $0b ; $56b8
-	call Func_03_4b9b ; $56ba
+	call ReadSaveBlock ; $56ba
 	or a, a ; $56bd
 	jr nz, Label_03_56f1 ; $56be
 	ld hl, $d500 ; $56c0
@@ -3258,7 +3258,7 @@ Func_03_56fb:
 	ldh [rWBK], a ; $5706
 	ld hl, $d500 ; $5708
 	ld b, $0b ; $570b
-	call Func_03_4b9b ; $570d
+	call ReadSaveBlock ; $570d
 	or a, a ; $5710
 	jp nz, Label_03_577d ; $5711
 	ld hl, $d500 ; $5714
@@ -3318,7 +3318,7 @@ Label_03_5772:
 	ld hl, $d500 ; $5772
 	ld b, $0b ; $5775
 	ld de, $0000 ; $5777
-	call Func_03_4a89 ; $577a
+	call WriteSaveBlock ; $577a
 Label_03_577d:
 	pop af ; $577d
 	ldh [$ff96], a ; $577e
@@ -3340,7 +3340,7 @@ Func_03_5787:
 	ldh [rWBK], a ; $5792
 	ld hl, $d500 ; $5794
 	ld b, $0b ; $5797
-	call Func_03_4b9b ; $5799
+	call ReadSaveBlock ; $5799
 	or a, a ; $579c
 	jp nz, Label_03_57cf ; $579d
 	ld hl, $d502 ; $57a0
@@ -3364,7 +3364,7 @@ Func_03_5787:
 	ld hl, $d500 ; $57c4
 	ld b, $0b ; $57c7
 	ld de, $0000 ; $57c9
-	call Func_03_4a89 ; $57cc
+	call WriteSaveBlock ; $57cc
 Label_03_57cf:
 	pop af ; $57cf
 	ldh [$ff96], a ; $57d0
@@ -3410,7 +3410,7 @@ Label_03_5804:
 	call Func_00_0926 ; $5814
 	push hl ; $5817
 	pop de ; $5818
-	call Func_03_4d86 ; $5819
+	call TestSaveFlag ; $5819
 	jr z, Label_03_5838 ; $581c
 Label_03_581e:
 	ld a, b ; $581e
@@ -3448,17 +3448,17 @@ Func_03_5844:
 	push hl ; $5846
 	ld de, $0000 ; $5847
 	ld b, $06 ; $584a
-	call Func_03_4a89 ; $584c
+	call WriteSaveBlock ; $584c
 	or a, a ; $584f
 	jr nz, Label_03_5869 ; $5850
-	call Func_03_4c14 ; $5852
+	call VerifySaveBlock ; $5852
 	or a, a ; $5855
 	jr nz, Label_03_5869 ; $5856
 	ld b, $21 ; $5858
-	call Func_03_4a89 ; $585a
+	call WriteSaveBlock ; $585a
 	or a, a ; $585d
 	jr nz, Label_03_5869 ; $585e
-	call Func_03_4c14 ; $5860
+	call VerifySaveBlock ; $5860
 	or a, a ; $5863
 	jr nz, Label_03_5869 ; $5864
 	xor a, a ; $5866
@@ -3475,7 +3475,7 @@ Func_03_586f:
 	push de ; $5870
 	push hl ; $5871
 	ld b, $06 ; $5872
-	call Func_03_4b9b ; $5874
+	call ReadSaveBlock ; $5874
 	pop hl ; $5877
 	pop de ; $5878
 	pop bc ; $5879
