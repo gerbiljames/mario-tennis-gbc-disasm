@@ -3389,11 +3389,11 @@ Func_03_57e2:
 	jr nc, Label_03_5804 ; $57f1
 	or a, a ; $57f3
 	jr nz, Label_03_57fd ; $57f4
-	rst30 $1b20 ; $57f6
+	test_flag $1b, 1 ; $57f6
 	jr z, Label_03_5838 ; $57f9
 	jr Label_03_581e ; $57fb
 Label_03_57fd:
-	rst30 $1aa0 ; $57fd
+	test_flag $1a, 5 ; $57fd
 	jr z, Label_03_5838 ; $5800
 	jr Label_03_581e ; $5802
 Label_03_5804:

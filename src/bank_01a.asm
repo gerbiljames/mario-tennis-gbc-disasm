@@ -43,11 +43,11 @@ Func_1a_402c:
 	ldh [$ff96], a ; $4032
 	ldh [rWBK], a ; $4034
 	farcall FarPtr_05_08 ; $4036
-	rst20 $0300 ; $4039
+	set_flag $03, 0 ; $4039
 	ld [$cb26], a ; $403c
 	farcall FarPtr_05_18 ; $403f
 	farcall FarPtr_05_80 ; $4042
-	rst28 $0300 ; $4045
+	clear_flag $03, 0 ; $4045
 	call Func_1a_40a0 ; $4048
 	ld a, [$cb26] ; $404b
 	farcall FarPtr_05_42 ; $404e
@@ -71,9 +71,9 @@ Label_1a_4065:
 	jr nz, Label_1a_407c ; $406e
 Label_1a_4070:
 	ld a, [$cb26] ; $4070
-	rst20 $0300 ; $4073
+	set_flag $03, 0 ; $4073
 	farcall FarPtr_05_7a ; $4076
-	rst28 $0300 ; $4079
+	clear_flag $03, 0 ; $4079
 Label_1a_407c:
 	pop bc ; $407c
 	pop af ; $407d
@@ -240,7 +240,7 @@ Func_1a_437c:
 	ld hl, $049a ; $438c
 	ld bc, $416c ; $438f
 	ld de, $0304 ; $4392
-	rst20 $0620 ; $4395
+	set_flag $06, 1 ; $4395
 	ret ; $4398
 Func_1a_4399:
 	push af ; $4399

@@ -43,7 +43,7 @@ SECTION "ROM Bank $27", ROMX[$4000], BANK[$27]
 	ld bc, $3f00 ; $4d6d
 	ld de, $3f00 ; $4d70
 	farcall FarPtr_0a_22 ; $4d73
-	rst30 $05e0 ; $4d76
+	test_flag $05, 7 ; $4d76
 	jp z, Label_27_4e13 ; $4d79
 	ld a, $02 ; $4d7c
 	farcall FarPtr_0a_1c ; $4d7e
@@ -175,7 +175,7 @@ Label_27_4e59:
 	farcall FarPtr_0a_2e ; $4eba
 	ld a, $0a ; $4ebd
 	call Func_27_7856 ; $4ebf
-	rst30 $05e0 ; $4ec2
+	test_flag $05, 7 ; $4ec2
 	jp z, Label_27_4f62 ; $4ec5
 	ld a, $3c ; $4ec8
 	call Func_27_7856 ; $4eca

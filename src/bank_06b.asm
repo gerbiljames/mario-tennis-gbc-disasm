@@ -870,7 +870,8 @@ Label_6b_46ce:
 	xor a, a ; $4a51
 	ld [$cb40], a ; $4a52
 	jp Label_6b_40af ; $4a55
-	INCBIN "data/bank_06b/d_4a58.bin" ; $4a58, 64 bytes
+Text_6b_4a58:
+	INCBIN "data/bank_06b/text_4a58.bin" ; $4a58, 64 bytes
 	ld a, $04 ; $4a98
 	ldh [$ff96], a ; $4a9a
 	ldh [rWBK], a ; $4a9c

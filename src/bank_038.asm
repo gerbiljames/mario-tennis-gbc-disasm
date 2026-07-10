@@ -3010,7 +3010,7 @@ Label_38_5ae8:
 	ld a, [hl+] ; $5ae8
 	ld d, [hl] ; $5ae9
 	ld e, a ; $5aea
-	call Func_00_249f ; $5aeb
+	call TestGameFlag ; $5aeb
 	jr nz, Label_38_5af2 ; $5aee
 	jr Label_38_5afe ; $5af0
 Label_38_5af2:
@@ -5938,7 +5938,8 @@ Label_38_71b0:
 	ldh [$ff96], a ; $71b1
 	ldh [rWBK], a ; $71b3
 	ret ; $71b5
-	INCBIN "data/bank_038/d_71b6.bin" ; $71b6, 106 bytes
+Text_38_71b6:
+	INCBIN "data/bank_038/text_71b6.bin" ; $71b6, 106 bytes
 Func_38_7220:
 	ld hl, $722d ; $7220
 	ld a, [$cb04] ; $7223
@@ -6353,12 +6354,12 @@ Label_38_74fd:
 	jr z, Label_38_7514 ; $7508
 	ld a, $04 ; $750a
 	ld [$c8f3], a ; $750c
-	rst20 $05e0 ; $750f
+	set_flag $05, 7 ; $750f
 	jr Label_38_751c ; $7512
 Label_38_7514:
 	ld a, $02 ; $7514
 	ld [$c8f3], a ; $7516
-	rst28 $05e0 ; $7519
+	clear_flag $05, 7 ; $7519
 Label_38_751c:
 	ret ; $751c
 	INCBIN "data/bank_038/d_751d.bin" ; $751d, 5 bytes

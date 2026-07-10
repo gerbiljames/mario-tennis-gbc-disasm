@@ -46,7 +46,7 @@ Label_0f_4661:
 	ld bc, $3f00 ; $4690
 	ld de, $3f00 ; $4693
 	farcall FarPtr_0a_22 ; $4696
-	rst30 $05e0 ; $4699
+	test_flag $05, 7 ; $4699
 	jp z, Label_0f_4700 ; $469c
 	ld a, $15 ; $469f
 	ld bc, $3f00 ; $46a1
@@ -1902,7 +1902,7 @@ Func_0f_5e4a:
 	farcall FarPtr_0a_34 ; $655e
 	ld a, $00 ; $6561
 	farcall FarPtr_0a_36 ; $6563
-	rst30 $05e0 ; $6566
+	test_flag $05, 7 ; $6566
 	jr nz, Label_0f_6582 ; $6569
 	ld a, $05 ; $656b
 	ld d, $03 ; $656d
@@ -1911,7 +1911,7 @@ Func_0f_5e4a:
 	farcall FarPtr_0a_36 ; $6574
 	ld a, $05 ; $6577
 	farcall FarPtr_0a_08 ; $6579
-	rst20 $15c0 ; $657c
+	set_flag $15, 6 ; $657c
 	jr Label_0f_65a6 ; $657f
 	INCBIN "data/bank_00f/d_6581.bin" ; $6581, 1 bytes
 Label_0f_6582:
@@ -1929,7 +1929,7 @@ Label_0f_6582:
 	ld b, h ; $659c
 	ld de, $d000 ; $659d
 	farcall FarPtr_04_20 ; $65a0
-	rst20 $15e0 ; $65a3
+	set_flag $15, 7 ; $65a3
 Label_0f_65a6:
 	ld bc, $0018 ; $65a6
 	farcall FarPtr_0a_38 ; $65a9
@@ -1944,21 +1944,21 @@ Label_0f_65a6:
 	ret ; $65c1
 	INCBIN "data/bank_00f/d_65c2.bin" ; $65c2, 77 bytes
 Func_0f_660f:
-	rst30 $05e0 ; $660f
+	test_flag $05, 7 ; $660f
 	jr nz, Label_0f_663b ; $6612
-	rst30 $07a0 ; $6614
+	test_flag $07, 5 ; $6614
 	jr z, Label_0f_661f ; $6617
 	ld a, $03 ; $6619
 	ld [$c2b0], a ; $661b
 	ret ; $661e
 Label_0f_661f:
-	rst30 $07c0 ; $661f
+	test_flag $07, 6 ; $661f
 	jr z, Label_0f_662a ; $6622
 	ld a, $02 ; $6624
 	ld [$c2b0], a ; $6626
 	ret ; $6629
 Label_0f_662a:
-	rst30 $07e0 ; $662a
+	test_flag $07, 7 ; $662a
 	jr z, Label_0f_6635 ; $662d
 	ld a, $01 ; $662f
 	ld [$c2b0], a ; $6631
@@ -1968,13 +1968,13 @@ Label_0f_6635:
 	ld [$c2b0], a ; $6637
 	ret ; $663a
 Label_0f_663b:
-	rst30 $06c0 ; $663b
+	test_flag $06, 6 ; $663b
 	jr z, Label_0f_6646 ; $663e
 	ld a, $03 ; $6640
 	ld [$c2b0], a ; $6642
 	ret ; $6645
 Label_0f_6646:
-	rst30 $06e0 ; $6646
+	test_flag $06, 7 ; $6646
 	jr z, Label_0f_6635 ; $6649
 	ld a, $02 ; $664b
 	ld [$c2b0], a ; $664d
@@ -2033,7 +2033,7 @@ Label_0f_6646:
 	ld [$c294], a ; $71d6
 	ld [$c2a1], a ; $71d9
 	farcall FarPtr_0a_4a ; $71dc
-	rst30 $07a0 ; $71df
+	test_flag $07, 5 ; $71df
 	jr z, Label_0f_71f3 ; $71e2
 	ld a, $00 ; $71e4
 	ld [wCurrentMinigameStoryMatch], a ; $71e6
@@ -2042,7 +2042,7 @@ Label_0f_6646:
 	farcall FarPtr_0a_5a ; $71ee
 	jr Label_0f_7228 ; $71f1
 Label_0f_71f3:
-	rst30 $07c0 ; $71f3
+	test_flag $07, 6 ; $71f3
 	jr z, Label_0f_7207 ; $71f6
 	ld a, $00 ; $71f8
 	ld [wCurrentMinigameStoryMatch], a ; $71fa
@@ -2051,7 +2051,7 @@ Label_0f_71f3:
 	farcall FarPtr_0a_5a ; $7202
 	jr Label_0f_7228 ; $7205
 Label_0f_7207:
-	rst30 $07e0 ; $7207
+	test_flag $07, 7 ; $7207
 	jr z, Label_0f_721b ; $720a
 	ld a, $00 ; $720c
 	ld [wCurrentMinigameStoryMatch], a ; $720e
@@ -2071,7 +2071,7 @@ Label_0f_7228:
 	ret ; $722e
 	INCBIN "data/bank_00f/d_722f.bin" ; $722f, 487 bytes
 Func_0f_7416:
-	rst30 $05e0 ; $7416
+	test_flag $05, 7 ; $7416
 	jr nz, Label_0f_7425 ; $7419
 	ld b, $00 ; $741b
 	ld a, [$c2b0] ; $741d
@@ -2117,7 +2117,7 @@ Func_0f_7434:
 	ld a, $04 ; $75ac
 	ld b, $80 ; $75ae
 	farcall FarPtr_0a_2e ; $75b0
-	rst20 $1720 ; $75b3
+	set_flag $17, 1 ; $75b3
 	ret ; $75b6
 	INCBIN "data/bank_00f/d_75b7.bin" ; $75b7, 336 bytes
 	farcall FarPtr_0a_60 ; $7707
@@ -2254,7 +2254,7 @@ Label_0f_7811:
 	farcall FarPtr_0a_30 ; $7821
 	ld a, $03 ; $7824
 	farcall FarPtr_0a_08 ; $7826
-	rst20 $1720 ; $7829
+	set_flag $17, 1 ; $7829
 	ld a, $02 ; $782c
 	farcall FarPtr_0a_16 ; $782e
 	ld c, l ; $7831
@@ -2267,7 +2267,7 @@ Label_0f_7811:
 	ret ; $78cb
 	INCBIN "data/bank_00f/d_78cc.bin" ; $78cc, 32 bytes
 Func_0f_78ec:
-	rst30 $05e0 ; $78ec
+	test_flag $05, 7 ; $78ec
 	jr nz, Label_0f_7901 ; $78ef
 	ld a, [$c2b0] ; $78f1
 	dec a ; $78f4
@@ -2419,7 +2419,7 @@ Func_0f_7a8e:
 	ret ; $7aae
 	INCBIN "data/bank_00f/d_7aaf.bin" ; $7aaf, 113 bytes
 Func_0f_7b20:
-	rst30 $05e0 ; $7b20
+	test_flag $05, 7 ; $7b20
 	jp z, Label_0f_7b3e ; $7b23
 	ld a, [$c94d] ; $7b26
 	ld d, $58 ; $7b29

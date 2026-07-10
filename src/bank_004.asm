@@ -1379,7 +1379,7 @@ Label_04_4a39:
 	ld a, [hl+] ; $4a50
 	ld d, [hl] ; $4a51
 	ld e, a ; $4a52
-	rst30 $0dc0 ; $4a53
+	test_flag $0d, 6 ; $4a53
 	jr z, Label_04_4a61 ; $4a56
 	ld hl, $cb02 ; $4a58
 	ld a, [hl+] ; $4a5b
@@ -1415,7 +1415,7 @@ Label_04_4a6d:
 	ld [hl+], a ; $4a7f
 	ld [hl], b ; $4a80
 	ret ; $4a81
-	rst30 $0280 ; $4a82
+	test_flag $02, 4 ; $4a82
 	ret nz ; $4a85
 	ld a, $04 ; $4a86
 	ldh [$ff96], a ; $4a88
@@ -1685,18 +1685,19 @@ Label_04_4c26:
 	ld a, [hl] ; $4c26
 	pop hl ; $4c27
 	ret ; $4c28
-	INCBIN "data/bank_004/d_4c29.bin" ; $4c29, 32 bytes
+Text_04_4c29:
+	INCBIN "data/bank_004/text_4c29.bin" ; $4c29, 32 bytes
 Func_04_4c49:
 	ld a, e ; $4c49
 	or a, d ; $4c4a
 	ret z ; $4c4b
 	bit 7, d ; $4c4c
 	jr nz, Label_04_4c54 ; $4c4e
-	call Func_00_249f ; $4c50
+	call TestGameFlag ; $4c50
 	ret ; $4c53
 Label_04_4c54:
 	res 7, d ; $4c54
-	call Func_00_249f ; $4c56
+	call TestGameFlag ; $4c56
 	jr z, Label_04_4c5d ; $4c59
 	xor a, a ; $4c5b
 	ret ; $4c5c
@@ -1948,13 +1949,13 @@ Func_04_4f10:
 	jr nz, Label_04_4f2c ; $4f1e
 	ld hl, $4ec8 ; $4f20
 	ld a, $02 ; $4f23
-	rst30 $05e0 ; $4f25
+	test_flag $05, 7 ; $4f25
 	jr nz, Label_04_4f3b ; $4f28
 	jr Label_04_4f36 ; $4f2a
 Label_04_4f2c:
 	ld hl, $4ee0 ; $4f2c
 	ld a, $03 ; $4f2f
-	rst30 $05e0 ; $4f31
+	test_flag $05, 7 ; $4f31
 	jr nz, Label_04_4f3b ; $4f34
 Label_04_4f36:
 	ld hl, $4ef8 ; $4f36
@@ -2165,7 +2166,7 @@ Label_04_519d:
 	ldh a, [hPlayerInputFlags] ; $519d
 	bit 1, a ; $519f
 	jr z, Label_04_51a6 ; $51a1
-	rst20 $0220 ; $51a3
+	set_flag $02, 1 ; $51a3
 Label_04_51a6:
 	ld d, $01 ; $51a6
 	ldh a, [hPlayerInputFlags] ; $51a8
@@ -2210,7 +2211,7 @@ Label_04_51dd:
 	ld hl, $0015 ; $51ef
 	add hl, bc ; $51f2
 	ld [hl], $40 ; $51f3
-	rst30 $0220 ; $51f5
+	test_flag $02, 1 ; $51f5
 	jr z, Label_04_520b ; $51f8
 	ld a, $01 ; $51fa
 	ld [$daef], a ; $51fc
@@ -2252,7 +2253,7 @@ Label_04_5231:
 	ld [hl+], a ; $523d
 	ld [hl], d ; $523e
 Label_04_523f:
-	rst30 $0200 ; $523f
+	test_flag $02, 0 ; $523f
 	ld d, $00 ; $5242
 	jp nz, Label_04_52b5 ; $5244
 	ld a, [$daea] ; $5247
@@ -2331,7 +2332,7 @@ Label_04_52d5:
 	jr nz, Label_04_52e1 ; $52dd
 	ld [hl], $00 ; $52df
 Label_04_52e1:
-	rst28 $0220 ; $52e1
+	clear_flag $02, 1 ; $52e1
 	pop bc ; $52e4
 	xor a, a ; $52e5
 	ret ; $52e6
@@ -3056,7 +3057,7 @@ Label_04_56b2:
 	ret ; $56b2
 	INCBIN "data/bank_004/d_56b3.bin" ; $56b3, 16 bytes
 Func_04_56c3:
-	rst30 $0de0 ; $56c3
+	test_flag $0d, 7 ; $56c3
 	ret nz ; $56c6
 	ld hl, $0030 ; $56c7
 	add hl, bc ; $56ca

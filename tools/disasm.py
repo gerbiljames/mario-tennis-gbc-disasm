@@ -182,12 +182,15 @@ class Disassembly:
             return sm83.Instr(2, f"sound ${self.rom[off+1]:02x}",
                               None, True, False, False, False)
         elif op in (0xE7, 0xEF, 0xF7) and off + 3 <= len(self.rom) \
-                and off // BANK_SIZE == (off + 2) // BANK_SIZE:
-            # rst $20/$28/$30: shared convention, one inline dw pointer
-            # operand fetched into de by Func_00_253d
-            ptr = self.rom[off + 1] | (self.rom[off + 2] << 8)
-            name = {0xE7: "rst20", 0xEF: "rst28", 0xF7: "rst30"}[op]
-            return sm83.Instr(3, f"{name} ${ptr:04x}", None, True, False, False, False)
+                and off // BANK_SIZE == (off + 2) // BANK_SIZE \
+                and self.rom[off + 1] & 0x1F == 0:
+            # rst $20/$28/$30: event-flag set/clear/test on the wGameFlags
+            # array. Inline operands: bit selector in the top 3 bits of the
+            # first byte (mask = $80 >> bit), flag byte index in the second.
+            bit, byte = self.rom[off + 1] >> 5, self.rom[off + 2]
+            name = {0xE7: "set_flag", 0xEF: "clear_flag", 0xF7: "test_flag"}[op]
+            return sm83.Instr(3, f"{name} ${byte:02x}, {bit}",
+                              None, True, False, False, False)
         return sm83.decode(self.rom, off, offset_to_cpu(off))
 
     def mark(self, off, ins):
@@ -857,21 +860,24 @@ MACRO sound
 	db \\1
 ENDM
 
-; rst $20/$28/$30 ($255e/$256b/$2551): three related commands sharing an
-; operand fetcher ($253d) that reads one inline dw pointer into de.
-MACRO rst20
+; rst $20/$28/$30 ($255e/$256b/$2551): set/clear/test a bit in the
+; wGameFlags array ($c9c0+). Two inline operand bytes: the bit selector in
+; the top 3 bits of the first (the handlers apply mask $80 >> bit to
+; wGameFlags[byte]), the flag byte index in the second.
+; Usage: set_flag byte_index, bit
+MACRO set_flag
 	rst Rst20
-	dw \\1
+	db (\\2) << 5, \\1
 ENDM
 
-MACRO rst28
+MACRO clear_flag
 	rst Rst28
-	dw \\1
+	db (\\2) << 5, \\1
 ENDM
 
-MACRO rst30
+MACRO test_flag
 	rst Rst30
-	dw \\1
+	db (\\2) << 5, \\1
 ENDM
 """
 
@@ -1021,9 +1027,20 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                                 break
                             j = k
                         scpu = offset_to_cpu(seg)
-                        blob = f"bank_{bank:03x}/d_{scpu:04x}.bin"
-                        manifest.append((blob, seg, j - seg))
-                        lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {j - seg} bytes')
+                        # NUL/^A-delimited ASCII dominance marks a text region
+                        n = j - seg
+                        txt = sum(1 for b in rom[seg:j]
+                                  if 0x20 <= b < 0x7F or b in (0, 1))
+                        letters = sum(1 for b in rom[seg:j]
+                                      if 0x61 <= (b | 0x20) <= 0x7A)
+                        if n >= 32 and txt >= n * 0.95 and letters >= n // 3:
+                            lines.append(f"Text_{bank:02x}_{scpu:04x}:")
+                            stem = "text"
+                        else:
+                            stem = "d"
+                        blob = f"bank_{bank:03x}/{stem}_{scpu:04x}.bin"
+                        manifest.append((blob, seg, n))
+                        lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
                     else:
                         lines.append(f"\tds {j - seg}, ${b:02x} "
                                      f"; ${offset_to_cpu(seg):04x}, fill")

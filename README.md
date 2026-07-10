@@ -98,6 +98,10 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
   INCBINs (stream length for LZ, `bc` for copies).
 - `tools/lz.py` — codec for the game's LZ format (used by `DecompressData`,
   `$1797`); also a CLI to decompress a stream from the ROM for inspection.
+- `tools/strings.py` — dumps the game text (NUL-terminated ASCII, `$01` line
+  breaks) from the user's ROM for local inspection. Text regions are
+  classified in `src/` as `Text_XX_YYYY`-labeled `text_*.bin` blobs, but the
+  strings themselves stay out of the repository like all other ROM content.
 - `tools/extract.py` — `data.manifest` + base ROM → `data/` blobs.
 - `tools/tracelog2cov.py` — BizHawk native Trace Logger file → coverage JSON.
 - `tools/progress.py` — per-bank report of proven-code bytes and label-naming

@@ -6,7 +6,8 @@ SECTION "ROM Bank $1f", ROMX[$4000], BANK[$1f]
 
 FarPtr_1f_00:
 	dw Func_1f_7a8b ; $4000
-	INCBIN "data/bank_01f/d_4002.bin" ; $4002, 14985 bytes
+Text_1f_4002:
+	INCBIN "data/bank_01f/text_4002.bin" ; $4002, 14985 bytes
 Func_1f_7a8b:
 	push af ; $7a8b
 	ld a, $00 ; $7a8c

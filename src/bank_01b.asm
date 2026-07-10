@@ -1361,14 +1361,14 @@ Label_1b_6408:
 	pop de ; $643c
 	pop bc ; $643d
 	pop af ; $643e
-	rst20 $0380 ; $643f
+	set_flag $03, 4 ; $643f
 	ld c, $00 ; $6442
 	farcall FarPtr_1c_00 ; $6444
-	rst28 $0380 ; $6447
-	rst20 $0380 ; $644a
+	clear_flag $03, 4 ; $6447
+	set_flag $03, 4 ; $644a
 	ld c, $01 ; $644d
 	farcall FarPtr_1c_00 ; $644f
-	rst28 $0380 ; $6452
+	clear_flag $03, 4 ; $6452
 	farcall FarPtr_03_18 ; $6455
 	jr Label_1b_6408 ; $6458
 Label_1b_645a:

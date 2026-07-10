@@ -16,19 +16,22 @@ MACRO sound
 	db \1
 ENDM
 
-; rst $20/$28/$30 ($255e/$256b/$2551): three related commands sharing an
-; operand fetcher ($253d) that reads one inline dw pointer into de.
-MACRO rst20
+; rst $20/$28/$30 ($255e/$256b/$2551): set/clear/test a bit in the
+; wGameFlags array ($c9c0+). Two inline operand bytes: the bit selector in
+; the top 3 bits of the first (the handlers apply mask $80 >> bit to
+; wGameFlags[byte]), the flag byte index in the second.
+; Usage: set_flag byte_index, bit
+MACRO set_flag
 	rst Rst20
-	dw \1
+	db (\2) << 5, \1
 ENDM
 
-MACRO rst28
+MACRO clear_flag
 	rst Rst28
-	dw \1
+	db (\2) << 5, \1
 ENDM
 
-MACRO rst30
+MACRO test_flag
 	rst Rst30
-	dw \1
+	db (\2) << 5, \1
 ENDM

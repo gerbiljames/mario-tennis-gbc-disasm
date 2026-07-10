@@ -331,7 +331,7 @@ Label_18_456f:
 Label_18_4579:
 	bit 0, e ; $4579
 	jr nz, Label_18_4582 ; $457b
-	call Func_00_249f ; $457d
+	call TestGameFlag ; $457d
 	jr Label_18_4587 ; $4580
 Label_18_4582:
 	res 0, e ; $4582
@@ -750,15 +750,15 @@ Label_18_7958:
 	call Func_00_1d20 ; $7963
 	call Func_00_1da4 ; $7966
 	ld de, $05e0 ; $7969
-	call Func_00_249f ; $796c
+	call TestGameFlag ; $796c
 	jr z, Label_18_797b ; $796f
 	ld de, $1700 ; $7971
-	call Func_00_249f ; $7974
+	call TestGameFlag ; $7974
 	jr z, Label_18_7985 ; $7977
 	jr Label_18_798a ; $7979
 Label_18_797b:
 	ld de, $16e0 ; $797b
-	call Func_00_249f ; $797e
+	call TestGameFlag ; $797e
 	jr z, Label_18_7985 ; $7981
 	jr Label_18_798a ; $7983
 Label_18_7985:
@@ -808,14 +808,14 @@ Label_18_79de:
 	ld de, $0120 ; $79e7
 	farcall FarPtr_03_1e ; $79ea
 	ld de, $05e0 ; $79ed
-	call Func_00_249f ; $79f0
+	call TestGameFlag ; $79f0
 	jr z, Label_18_79fd ; $79f3
 	ld de, $1700 ; $79f5
-	call Func_00_24ba ; $79f8
+	call SetGameFlag ; $79f8
 	jr Label_18_7a03 ; $79fb
 Label_18_79fd:
 	ld de, $16e0 ; $79fd
-	call Func_00_24ba ; $7a00
+	call SetGameFlag ; $7a00
 Label_18_7a03:
 	farcall FarPtr_03_18 ; $7a03
 	ret ; $7a06

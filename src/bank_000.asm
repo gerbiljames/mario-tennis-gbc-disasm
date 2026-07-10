@@ -17,13 +17,13 @@ Rst18:
 	jp FarCall ; $0018
 	INCBIN "data/bank_000/d_001b.bin" ; $001b, 5 bytes
 Rst20:
-	jp Label_00_255e ; $0020
+	jp SetGameFlagCmd ; $0020
 	INCBIN "data/bank_000/d_0023.bin" ; $0023, 5 bytes
 Rst28:
-	jp Label_00_256b ; $0028
+	jp ClearGameFlagCmd ; $0028
 	INCBIN "data/bank_000/d_002b.bin" ; $002b, 5 bytes
 Rst30:
-	jp Label_00_2551 ; $0030
+	jp TestGameFlagCmd ; $0030
 	INCBIN "data/bank_000/d_0033.bin" ; $0033, 5 bytes
 Rst38:
 	rst Rst38 ; $0038
@@ -4971,7 +4971,7 @@ Func_00_2488:
 	pop af ; $2495
 	ret ; $2496
 	INCBIN "data/bank_000/d_2497.bin" ; $2497, 8 bytes
-Func_00_249f:
+TestGameFlag:
 	push hl ; $249f
 	push bc ; $24a0
 	ld b, a ; $24a1
@@ -4994,7 +4994,7 @@ Func_00_249f:
 	pop bc ; $24b7
 	pop hl ; $24b8
 	ret ; $24b9
-Func_00_24ba:
+SetGameFlag:
 	push hl ; $24ba
 	push af ; $24bb
 	ld a, e ; $24bc
@@ -5016,7 +5016,7 @@ Func_00_24ba:
 	pop af ; $24d1
 	pop hl ; $24d2
 	ret ; $24d3
-Func_00_24d4:
+ClearGameFlag:
 	push hl ; $24d4
 	push af ; $24d5
 	ld a, e ; $24d6
@@ -5051,7 +5051,7 @@ Func_00_24ef:
 	rl d ; $24fe
 	sla e ; $2500
 	rl d ; $2502
-	call Func_00_249f ; $2504
+	call TestGameFlag ; $2504
 	pop de ; $2507
 	ret ; $2508
 Func_00_2509:
@@ -5066,7 +5066,7 @@ Func_00_2509:
 	rl d ; $2518
 	sla e ; $251a
 	rl d ; $251c
-	call Func_00_24ba ; $251e
+	call SetGameFlag ; $251e
 	pop de ; $2521
 	ret ; $2522
 Func_00_2523:
@@ -5081,10 +5081,10 @@ Func_00_2523:
 	rl d ; $2532
 	sla e ; $2534
 	rl d ; $2536
-	call Func_00_24d4 ; $2538
+	call ClearGameFlag ; $2538
 	pop de ; $253b
 	ret ; $253c
-Func_00_253d:
+FetchInlineWordOperand:
 	push bc ; $253d
 	ld c, [hl] ; $253e
 	inc hl ; $253f
@@ -5105,30 +5105,30 @@ Func_00_253d:
 	ld [hl], b ; $254e
 	pop bc ; $254f
 	ret ; $2550
-Label_00_2551:
+TestGameFlagCmd:
 	push de ; $2551
 	push hl ; $2552
 	ld hl, sp + 4 ; $2553
-	call Func_00_253d ; $2555
-	call Func_00_249f ; $2558
+	call FetchInlineWordOperand ; $2555
+	call TestGameFlag ; $2558
 	pop hl ; $255b
 	pop de ; $255c
 	ret ; $255d
-Label_00_255e:
+SetGameFlagCmd:
 	push de ; $255e
 	push hl ; $255f
 	ld hl, sp + 4 ; $2560
-	call Func_00_253d ; $2562
-	call Func_00_24ba ; $2565
+	call FetchInlineWordOperand ; $2562
+	call SetGameFlag ; $2565
 	pop hl ; $2568
 	pop de ; $2569
 	ret ; $256a
-Label_00_256b:
+ClearGameFlagCmd:
 	push de ; $256b
 	push hl ; $256c
 	ld hl, sp + 4 ; $256d
-	call Func_00_253d ; $256f
-	call Func_00_24d4 ; $2572
+	call FetchInlineWordOperand ; $256f
+	call ClearGameFlag ; $2572
 	pop hl ; $2575
 	pop de ; $2576
 	ret ; $2577

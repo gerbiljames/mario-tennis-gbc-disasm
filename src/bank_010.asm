@@ -90,12 +90,12 @@ Label_10_4ee8:
 	jr z, Label_10_4eff ; $4ef3
 	ld a, $04 ; $4ef5
 	ld [$c8f3], a ; $4ef7
-	rst20 $05e0 ; $4efa
+	set_flag $05, 7 ; $4efa
 	jr Label_10_4f07 ; $4efd
 Label_10_4eff:
 	ld a, $02 ; $4eff
 	ld [$c8f3], a ; $4f01
-	rst28 $05e0 ; $4f04
+	clear_flag $05, 7 ; $4f04
 Label_10_4f07:
 	ret ; $4f07
 	INCBIN "data/bank_010/d_4f08.bin" ; $4f08, 5 bytes
@@ -254,7 +254,7 @@ Label_10_5073:
 	call Func_00_2488 ; $5073
 	farcall FarPtr_02_16 ; $5076
 	farcall FarPtr_03_18 ; $5079
-	rst30 $02a0 ; $507c
+	test_flag $02, 5 ; $507c
 	jr nz, Label_10_508a ; $507f
 	ld a, $01 ; $5081
 	ld [$c294], a ; $5083
@@ -294,12 +294,12 @@ Label_10_50ca:
 	call Func_00_246d ; $50d0
 	ld a, $00 ; $50d3
 	ld [wGameMode], a ; $50d5
-	rst28 $09e0 ; $50d8
+	clear_flag $09, 7 ; $50d8
 	ld b, $0a ; $50db
 	ld c, $01 ; $50dd
 	farcall FarPtr_0a_62 ; $50df
 	farcall FarPtr_03_18 ; $50e2
-	rst30 $02a0 ; $50e5
+	test_flag $02, 5 ; $50e5
 	jr nz, Label_10_50f5 ; $50e8
 	ld a, [$cb74] ; $50ea
 	ld a, a ; $50ed
@@ -759,14 +759,14 @@ Label_10_55d5:
 	ld a, [wGameMode] ; $55d5
 	cp a, $04 ; $55d8
 	jr nz, Label_10_5604 ; $55da
-	rst28 $09e0 ; $55dc
+	clear_flag $09, 7 ; $55dc
 	xor a, a ; $55df
 	ld [$c8a7], a ; $55e0
 	ld b, $00 ; $55e3
 	ld c, $01 ; $55e5
 	farcall FarPtr_0a_62 ; $55e7
 	farcall FarPtr_03_18 ; $55ea
-	rst30 $02a0 ; $55ed
+	test_flag $02, 5 ; $55ed
 	jr nz, Label_10_55fb ; $55f0
 	ld a, $02 ; $55f2
 	ld [$c294], a ; $55f4
@@ -792,7 +792,7 @@ Label_10_5604:
 Label_10_561e:
 	cp a, $0f ; $561e
 	jr c, Label_10_564d ; $5620
-	rst30 $05e0 ; $5622
+	test_flag $05, 7 ; $5622
 	jr nz, Label_10_563a ; $5625
 	ld a, $19 ; $5627
 	ld [wStoryModeCurrentLocation], a ; $5629
@@ -844,7 +844,7 @@ Label_10_567d:
 	ld [$c2a1], a ; $568c
 	ret ; $568f
 Label_10_5690:
-	rst30 $05e0 ; $5690
+	test_flag $05, 7 ; $5690
 	jr nz, Label_10_56bf ; $5693
 	cp a, $00 ; $5695
 	jr z, Label_10_56ac ; $5697
@@ -922,27 +922,27 @@ Func_10_56fc:
 	ret ; $571d
 	INCBIN "data/bank_010/d_571e.bin" ; $571e, 52 bytes
 Func_10_5752:
-	rst30 $05e0 ; $5752
+	test_flag $05, 7 ; $5752
 	jr nz, Label_10_5770 ; $5755
-	rst30 $0780 ; $5757
+	test_flag $07, 4 ; $5757
 	ld a, $02 ; $575a
 	jr z, Label_10_5789 ; $575c
-	rst30 $1600 ; $575e
+	test_flag $16, 0 ; $575e
 	ld a, $04 ; $5761
 	jr z, Label_10_5789 ; $5763
-	rst30 $1640 ; $5765
+	test_flag $16, 2 ; $5765
 	ld a, $05 ; $5768
 	jr z, Label_10_5789 ; $576a
 	ld a, $02 ; $576c
 	jr Label_10_5789 ; $576e
 Label_10_5770:
-	rst30 $06a0 ; $5770
+	test_flag $06, 5 ; $5770
 	ld a, $02 ; $5773
 	jr z, Label_10_5789 ; $5775
-	rst30 $1620 ; $5777
+	test_flag $16, 1 ; $5777
 	ld a, $04 ; $577a
 	jr z, Label_10_5789 ; $577c
-	rst30 $1660 ; $577e
+	test_flag $16, 3 ; $577e
 	ld a, $05 ; $5781
 	jr z, Label_10_5789 ; $5783
 	ld a, $02 ; $5785
@@ -1002,7 +1002,7 @@ Label_10_5789:
 	ld a, [$c295] ; $5b97
 	cp a, $ff ; $5b9a
 	jp z, Label_10_5bdc ; $5b9c
-	rst30 $05e0 ; $5b9f
+	test_flag $05, 7 ; $5b9f
 	jr z, Label_10_5bca ; $5ba2
 	ld a, $02 ; $5ba4
 	ld bc, $00ff ; $5ba6
@@ -1030,7 +1030,7 @@ Label_10_5bca:
 Label_10_5bdc:
 	ret ; $5bdc
 	INCBIN "data/bank_010/d_5bdd.bin" ; $5bdd, 17 bytes
-	rst28 $0f60 ; $5bee
+	clear_flag $0f, 3 ; $5bee
 	ret ; $5bf1
 	ld a, [$c2b1] ; $5bf2
 	add a, a ; $5bf5
@@ -1239,7 +1239,7 @@ Label_10_5f2a:
 	call Func_10_6103 ; $60ff
 	ret ; $6102
 Func_10_6103:
-	rst30 $0f60 ; $6103
+	test_flag $0f, 3 ; $6103
 	jr z, Label_10_611a ; $6106
 	ld a, $08 ; $6108
 	ld bc, $2140 ; $610a
@@ -1294,7 +1294,7 @@ Func_10_613e:
 	ld a, $02 ; $7000
 	ld b, $c0 ; $7002
 	farcall FarPtr_0a_2e ; $7004
-	rst30 $0780 ; $7007
+	test_flag $07, 4 ; $7007
 	jr nz, Label_10_7029 ; $700a
 	ld a, $04 ; $700c
 	ld bc, $3f00 ; $700e
@@ -1318,7 +1318,7 @@ Label_10_7029:
 	ld hl, $01f2 ; $7043
 	farcall FarPtr_0a_0e ; $7046
 	call Func_10_73ee ; $7049
-	rst30 $05e0 ; $704c
+	test_flag $05, 7 ; $704c
 	jp z, Label_10_7059 ; $704f
 	ld a, $02 ; $7052
 	ld d, $02 ; $7054
@@ -1373,7 +1373,7 @@ Label_10_7095:
 	ld hl, $01f8 ; $70bb
 	farcall FarPtr_0a_0e ; $70be
 	call Func_10_73ee ; $70c1
-	rst30 $05e0 ; $70c4
+	test_flag $05, 7 ; $70c4
 	jp z, Label_10_7101 ; $70c7
 	ld a, $06 ; $70ca
 	ld bc, $2080 ; $70cc
@@ -1504,7 +1504,7 @@ Label_10_71bb:
 	farcall FarPtr_0a_0e ; $71eb
 	jr Label_10_71bb ; $71ee
 Label_10_71f0:
-	rst30 $05e0 ; $71f0
+	test_flag $05, 7 ; $71f0
 	jp z, Label_10_72a9 ; $71f3
 	ld a, $00 ; $71f6
 	ld d, $03 ; $71f8
@@ -1702,7 +1702,7 @@ Func_10_736f:
 	ret ; $739d
 	INCBIN "data/bank_010/d_739e.bin" ; $739e, 80 bytes
 Func_10_73ee:
-	rst30 $05e0 ; $73ee
+	test_flag $05, 7 ; $73ee
 	jr z, Label_10_73fc ; $73f1
 	farcall FarPtr_0a_10 ; $73f3
 	ld a, $03 ; $73f6
@@ -1714,7 +1714,7 @@ Label_10_73fc:
 	farcall FarPtr_0a_10 ; $7401
 	ret ; $7404
 Func_10_7405:
-	rst30 $05e0 ; $7405
+	test_flag $05, 7 ; $7405
 	jr z, Label_10_7413 ; $7408
 	farcall FarPtr_0a_10 ; $740a
 	ld a, $03 ; $740d
@@ -2010,7 +2010,7 @@ Label_10_785b:
 	INCBIN "data/bank_010/d_7980.bin" ; $7980, 80 bytes
 	ld a, $00 ; $79d0
 	call Func_10_79df ; $79d2
-	rst30 $05e0 ; $79d5
+	test_flag $05, 7 ; $79d5
 	ret z ; $79d8
 	ld a, $02 ; $79d9
 	call Func_10_79df ; $79db
@@ -2189,19 +2189,19 @@ Label_10_7b8a:
 	ret ; $7bf9
 	INCBIN "data/bank_010/d_7bfa.bin" ; $7bfa, 451 bytes
 Func_10_7dbd:
-	rst30 $05e0 ; $7dbd
+	test_flag $05, 7 ; $7dbd
 	jr nz, Label_10_7de4 ; $7dc0
 	ld a, $00 ; $7dc2
-	rst30 $0a60 ; $7dc4
+	test_flag $0a, 3 ; $7dc4
 	jr z, Label_10_7de0 ; $7dc7
 	ld a, $02 ; $7dc9
-	rst30 $0ae0 ; $7dcb
+	test_flag $0a, 7 ; $7dcb
 	jr z, Label_10_7de0 ; $7dce
 	ld a, $04 ; $7dd0
-	rst30 $15c0 ; $7dd2
+	test_flag $15, 6 ; $7dd2
 	jr z, Label_10_7de0 ; $7dd5
 	ld a, $06 ; $7dd7
-	rst30 $1600 ; $7dd9
+	test_flag $16, 0 ; $7dd9
 	jr z, Label_10_7de0 ; $7ddc
 	ld a, $08 ; $7dde
 Label_10_7de0:
@@ -2209,16 +2209,16 @@ Label_10_7de0:
 	ret ; $7de3
 Label_10_7de4:
 	ld a, $01 ; $7de4
-	rst30 $0840 ; $7de6
+	test_flag $08, 2 ; $7de6
 	jr z, Label_10_7de0 ; $7de9
 	ld a, $03 ; $7deb
-	rst30 $08c0 ; $7ded
+	test_flag $08, 6 ; $7ded
 	jr z, Label_10_7de0 ; $7df0
 	ld a, $05 ; $7df2
-	rst30 $15e0 ; $7df4
+	test_flag $15, 7 ; $7df4
 	jr z, Label_10_7de0 ; $7df7
 	ld a, $07 ; $7df9
-	rst30 $1620 ; $7dfb
+	test_flag $16, 1 ; $7dfb
 	jr z, Label_10_7de0 ; $7dfe
 	ld a, $09 ; $7e00
 	jr Label_10_7de0 ; $7e02

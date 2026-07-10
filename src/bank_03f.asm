@@ -607,7 +607,7 @@ Label_3f_4e89:
 	ld a, $06 ; $4e94
 	ldh [$ff96], a ; $4e96
 	ldh [rWBK], a ; $4e98
-	rst30 $0320 ; $4e9a
+	test_flag $03, 1 ; $4e9a
 	jr z, Label_3f_4ea4 ; $4e9d
 	sound $5f ; $4e9f
 	call Func_3f_4e7b ; $4ea1
@@ -1604,9 +1604,9 @@ Label_3f_564e:
 	ld a, $80 ; $5673
 	ld [wMessageSpeed], a ; $5675
 	xor a, a ; $5678
-	rst20 $0460 ; $5679
+	set_flag $04, 3 ; $5679
 	farcall FarPtr_05_60 ; $567c
-	rst28 $0460 ; $567f
+	clear_flag $04, 3 ; $567f
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a, a ; $5686

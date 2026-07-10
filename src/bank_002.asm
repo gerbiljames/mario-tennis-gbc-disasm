@@ -308,8 +308,8 @@ Func_02_421c:
 	ld a, $01 ; $423f
 	ld [wMessageSpeed], a ; $4241
 	farcall FarPtr_08_00 ; $4244
-	rst28 $01c0 ; $4247
-	rst20 $01e0 ; $424a
+	clear_flag $01, 6 ; $4247
+	set_flag $01, 7 ; $424a
 	ld hl, $c884 ; $424d
 	xor a, a ; $4250
 	ld [hl], $56 ; $4251

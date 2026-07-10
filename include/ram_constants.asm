@@ -107,6 +107,7 @@ DEF wEquippedRacket EQU $c93c
 DEF wStoryModeNameOfPartnerCharacter EQU $c940
 DEF wStoryModePartnerCharacterOverworldSprite EQU $c94b
 DEF wStoryModePartnerCharacterOverworldSpriteColor EQU $c94c
+DEF wGameFlags EQU $c9c0
 DEF wSinglesDoublesIndicator EQU $c9c5
 DEF wStoryModeMatchCompletionFlags1 EQU $c9c6
 DEF wStoryModeMatchCompletionFlags2 EQU $c9c7

@@ -1911,7 +1911,7 @@ Func_06_6e17:
 	farcall FarPtr_05_00 ; $6e2d
 	ld a, $81 ; $6e30
 	ld [$c3b6], a ; $6e32
-	rst20 $0280 ; $6e35
+	set_flag $02, 4 ; $6e35
 	farcall FarPtr_28_0a ; $6e38
 	call Func_06_7245 ; $6e3b
 	ld d, $00 ; $6e3e
@@ -1961,7 +1961,7 @@ Label_06_6e94:
 	call Func_06_7241 ; $6e94
 	call Func_06_7237 ; $6e97
 	call Func_00_2631 ; $6e9a
-	rst28 $0280 ; $6e9d
+	clear_flag $02, 4 ; $6e9d
 	farcall FarPtr_01_14 ; $6ea0
 	pop af ; $6ea3
 	ldh [$ffdd], a ; $6ea4
@@ -1977,7 +1977,7 @@ Label_06_6eb2:
 	jp z, Label_06_6e52 ; $6eb5
 	pop af ; $6eb8
 	ldh [$ffdd], a ; $6eb9
-	rst28 $0280 ; $6ebb
+	clear_flag $02, 4 ; $6ebb
 	farcall FarPtr_0a_7a ; $6ebe
 	pop af ; $6ec1
 	ldh [$ff96], a ; $6ec2

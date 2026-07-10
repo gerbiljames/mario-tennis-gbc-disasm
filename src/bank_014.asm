@@ -8,8 +8,8 @@ SECTION "ROM Bank $14", ROMX[$4000], BANK[$14]
 	ld a, [$c295] ; $4063
 	cp a, $ff ; $4066
 	jp z, Label_14_4085 ; $4068
-	rst28 $0fa0 ; $406b
-	rst30 $05e0 ; $406e
+	clear_flag $0f, 5 ; $406b
+	test_flag $05, 7 ; $406e
 	jr z, Label_14_4085 ; $4071
 	ld a, $02 ; $4073
 	ld bc, $2b00 ; $4075
@@ -144,7 +144,7 @@ Label_14_41ca:
 	jp z, Label_14_4a00 ; $42ac
 	ret ; $42af
 Label_14_42b0:
-	rst30 $05e0 ; $42b0
+	test_flag $05, 7 ; $42b0
 	jr z, Label_14_42d3 ; $42b3
 	ld a, $02 ; $42b5
 	farcall FarPtr_0a_1c ; $42b7
@@ -177,7 +177,7 @@ Label_14_42d3:
 	ld a, $00 ; $42f4
 	ld bc, $0020 ; $42f6
 	farcall FarPtr_0a_18 ; $42f9
-	rst30 $05e0 ; $42fc
+	test_flag $05, 7 ; $42fc
 	jr z, Label_14_4301 ; $42ff
 Label_14_4301:
 	xor a, a ; $4301
@@ -255,7 +255,7 @@ Label_14_433a:
 	ret ; $43a3
 Func_14_43a4:
 	ld a, $00 ; $43a4
-	rst30 $1a40 ; $43a6
+	test_flag $1a, 2 ; $43a6
 	jp z, Label_14_4429 ; $43a9
 	ld b, $1e ; $43ac
 	ld c, $2c ; $43ae
@@ -265,7 +265,7 @@ Func_14_43a4:
 	ld l, $02 ; $43b6
 	farcall FarPtr_0a_7e ; $43b8
 	ld a, $01 ; $43bb
-	rst30 $1a60 ; $43bd
+	test_flag $1a, 3 ; $43bd
 	jp z, Label_14_4429 ; $43c0
 	ld b, $1e ; $43c3
 	ld c, $30 ; $43c5
@@ -275,7 +275,7 @@ Func_14_43a4:
 	ld l, $02 ; $43cd
 	farcall FarPtr_0a_7e ; $43cf
 	ld a, $02 ; $43d2
-	rst30 $1a80 ; $43d4
+	test_flag $1a, 4 ; $43d4
 	jr z, Label_14_4429 ; $43d7
 	ld b, $1e ; $43d9
 	ld c, $34 ; $43db
@@ -285,7 +285,7 @@ Func_14_43a4:
 	ld l, $02 ; $43e3
 	farcall FarPtr_0a_7e ; $43e5
 	ld a, $03 ; $43e8
-	rst30 $1aa0 ; $43ea
+	test_flag $1a, 5 ; $43ea
 	jr z, Label_14_4429 ; $43ed
 	ld b, $1e ; $43ef
 	ld c, $38 ; $43f1
@@ -311,10 +311,10 @@ Func_14_43a4:
 	ldh [$ff96], a ; $4416
 	ldh [rWBK], a ; $4418
 	ld a, b ; $441a
-	rst30 $1b40 ; $441b
+	test_flag $1b, 2 ; $441b
 	jr z, Label_14_4429 ; $441e
 	ld a, $05 ; $4420
-	rst30 $1b80 ; $4422
+	test_flag $1b, 4 ; $4422
 	jr z, Label_14_4429 ; $4425
 	ld a, $06 ; $4427
 Label_14_4429:
@@ -337,8 +337,8 @@ Func_14_469f:
 Label_14_46c5:
 	xor a, a ; $46c5
 	ld [$c2d5], a ; $46c6
-	rst20 $1c20 ; $46c9
-	rst30 $05e0 ; $46cc
+	set_flag $1c, 1 ; $46c9
+	test_flag $05, 7 ; $46cc
 	jr z, Label_14_46ef ; $46cf
 	ld a, $02 ; $46d1
 	farcall FarPtr_0a_1c ; $46d3
@@ -480,7 +480,7 @@ Label_14_4801:
 	ret ; $4807
 	INCBIN "data/bank_014/d_4808.bin" ; $4808, 58 bytes
 Label_14_4842:
-	rst30 $1b80 ; $4842
+	test_flag $1b, 4 ; $4842
 	jr z, Label_14_484f ; $4845
 	ld a, [wPointWinLoseFlag] ; $4847
 	cp a, $01 ; $484a
@@ -697,9 +697,9 @@ Func_14_4997:
 	farcall FarPtr_0a_2e ; $49fc
 	ret ; $49ff
 Label_14_4a00:
-	rst30 $0fa0 ; $4a00
+	test_flag $0f, 5 ; $4a00
 	jr z, Label_14_4a38 ; $4a03
-	rst20 $1c20 ; $4a05
+	set_flag $1c, 1 ; $4a05
 	ld a, $05 ; $4a08
 	ld bc, $2d00 ; $4a0a
 	ld de, $2900 ; $4a0d

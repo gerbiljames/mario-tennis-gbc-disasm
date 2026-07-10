@@ -483,7 +483,7 @@ Func_05_42ed:
 	call Func_05_7205 ; $42ed
 	ret ; $42f0
 Func_05_42f1:
-	rst30 $0360 ; $42f1
+	test_flag $03, 3 ; $42f1
 	ret nz ; $42f4
 	push af ; $42f5
 	push bc ; $42f6
@@ -2002,7 +2002,7 @@ Label_05_4e6d:
 	ld b, a ; $4e77
 	or a, a ; $4e78
 	jr nz, Label_05_4e85 ; $4e79
-	rst30 $0460 ; $4e7b
+	test_flag $04, 3 ; $4e7b
 	jr nz, Label_05_4e83 ; $4e7e
 	call Func_05_77a3 ; $4e80
 Label_05_4e83:
@@ -2170,9 +2170,9 @@ Label_05_4f71:
 	call Func_00_2631 ; $4fa1
 	ld hl, $4fe3 ; $4fa4
 	call Func_00_1bcb ; $4fa7
-	rst20 $0320 ; $4faa
+	set_flag $03, 1 ; $4faa
 	call Func_00_2631 ; $4fad
-	rst28 $0320 ; $4fb0
+	clear_flag $03, 1 ; $4fb0
 	pop hl ; $4fb3
 	pop de ; $4fb4
 	pop bc ; $4fb5
@@ -2183,7 +2183,7 @@ Label_05_4f71:
 	pop af ; $4fbd
 	ret ; $4fbe
 Func_05_4fbf:
-	rst30 $0360 ; $4fbf
+	test_flag $03, 3 ; $4fbf
 	jr z, Label_05_4fc9 ; $4fc2
 	ld d, $0a ; $4fc4
 	ld e, $11 ; $4fc6
@@ -2262,7 +2262,7 @@ Func_05_501d:
 	ld [$d829], a ; $502e
 Label_05_5031:
 	call Func_05_42f1 ; $5031
-	rst30 $02c0 ; $5034
+	test_flag $02, 6 ; $5034
 	jr nz, Label_05_5061 ; $5037
 	call Func_05_77a3 ; $5039
 	ldh a, [hPlayerInputFlags] ; $503c
@@ -2277,7 +2277,7 @@ Label_05_5044:
 	dec b ; $504d
 	jr nz, Label_05_5044 ; $504e
 Label_05_5050:
-	rst30 $02c0 ; $5050
+	test_flag $02, 6 ; $5050
 	jr nz, Label_05_5061 ; $5053
 	call Func_00_0a3a ; $5055
 	call Func_00_2631 ; $5058
@@ -2835,7 +2835,7 @@ Label_05_54f3:
 	ld a, [hl] ; $54f3
 	cp a, $00 ; $54f4
 	jr z, Label_05_5553 ; $54f6
-	rst30 $0480 ; $54f8
+	test_flag $04, 4 ; $54f8
 	jr nz, Label_05_5505 ; $54fb
 	call Func_05_7681 ; $54fd
 	call Func_05_7607 ; $5500
@@ -3369,9 +3369,9 @@ Label_05_5888:
 	ldh [rWBK], a ; $58a1
 	call Func_05_55e6 ; $58a3
 	ld a, [$d824] ; $58a6
-	rst20 $0460 ; $58a9
+	set_flag $04, 3 ; $58a9
 	call Func_05_6f70 ; $58ac
-	rst28 $0460 ; $58af
+	clear_flag $04, 3 ; $58af
 	call Func_05_7214 ; $58b2
 	call Func_05_5648 ; $58b5
 	ld a, [$d850] ; $58b8
@@ -3468,9 +3468,9 @@ Label_05_5956:
 	call Func_05_55e6 ; $5971
 	call Func_05_436f ; $5974
 	ld a, [$d824] ; $5977
-	rst20 $0460 ; $597a
+	set_flag $04, 3 ; $597a
 	call Func_05_6f70 ; $597d
-	rst28 $0460 ; $5980
+	clear_flag $04, 3 ; $5980
 	call Func_05_7214 ; $5983
 	call Func_05_5648 ; $5986
 	ld a, [$d850] ; $5989
@@ -3542,9 +3542,9 @@ Label_05_59f2:
 	ldh [rWBK], a ; $5a0b
 	call Func_05_55e6 ; $5a0d
 	ld a, [$d824] ; $5a10
-	rst20 $0460 ; $5a13
+	set_flag $04, 3 ; $5a13
 	call Func_05_6f70 ; $5a16
-	rst28 $0460 ; $5a19
+	clear_flag $04, 3 ; $5a19
 	call Func_05_7214 ; $5a1c
 	call Func_05_5648 ; $5a1f
 	ld a, [$d850] ; $5a22
@@ -4049,7 +4049,7 @@ Func_05_5db3:
 	push bc ; $5db4
 	push de ; $5db5
 	push hl ; $5db6
-	rst20 $0480 ; $5db7
+	set_flag $04, 4 ; $5db7
 	push bc ; $5dba
 	push de ; $5dbb
 	push hl ; $5dbc
@@ -4212,7 +4212,7 @@ Label_05_5ebc:
 	pop de ; $5f00
 	pop bc ; $5f01
 	call Func_05_7774 ; $5f02
-	rst28 $0480 ; $5f05
+	clear_flag $04, 4 ; $5f05
 	pop hl ; $5f08
 	pop de ; $5f09
 	pop bc ; $5f0a
@@ -5086,9 +5086,9 @@ Func_05_65a2:
 	push bc ; $65a3
 	push de ; $65a4
 	push hl ; $65a5
-	rst30 $03e0 ; $65a6
+	test_flag $03, 7 ; $65a6
 	jr z, Label_05_65b8 ; $65a9
-	rst20 $03e0 ; $65ab
+	set_flag $03, 7 ; $65ab
 	xor a, a ; $65ae
 	ld [$c715], a ; $65af
 	ld [$c716], a ; $65b2
@@ -6046,7 +6046,7 @@ Label_05_6feb:
 	jr z, Label_05_7011 ; $6ff5
 	ld a, [$cb75] ; $6ff7
 Label_05_6ffa:
-	rst30 $0460 ; $6ffa
+	test_flag $04, 3 ; $6ffa
 	jr z, Label_05_7002 ; $6ffd
 	ld [hl+], a ; $6fff
 	jr Label_05_7005 ; $7000
@@ -6267,7 +6267,7 @@ Func_05_711a:
 	push de ; $711c
 	push hl ; $711d
 	call Func_05_71c4 ; $711e
-	rst20 $0300 ; $7121
+	set_flag $03, 0 ; $7121
 	ld hl, $dc60 ; $7124
 Label_05_7127:
 	ld a, [hl] ; $7127
@@ -6287,7 +6287,7 @@ Label_05_713d:
 	pop af ; $713d
 	jr Label_05_7127 ; $713e
 Label_05_7140:
-	rst28 $0300 ; $7140
+	clear_flag $03, 0 ; $7140
 	pop hl ; $7143
 	pop de ; $7144
 	pop bc ; $7145
@@ -6299,7 +6299,7 @@ Func_05_7148:
 	push de ; $714a
 	push hl ; $714b
 	call Func_05_71c4 ; $714c
-	rst20 $0300 ; $714f
+	set_flag $03, 0 ; $714f
 	ld hl, $dc60 ; $7152
 Label_05_7155:
 	ld a, [hl] ; $7155
@@ -6312,7 +6312,7 @@ Label_05_7155:
 	call Func_05_7176 ; $715e
 	jr Label_05_7155 ; $7161
 Label_05_7163:
-	rst28 $0300 ; $7163
+	clear_flag $03, 0 ; $7163
 	push af ; $7166
 	ldh a, [rLCDC] ; $7167
 	bit 7, a ; $7169
@@ -6482,10 +6482,10 @@ Func_05_7232:
 	jr nz, Label_05_723f ; $723a
 	call Func_05_72dc ; $723c
 Label_05_723f:
-	rst20 $0460 ; $723f
+	set_flag $04, 3 ; $723f
 	ld a, [$d82f] ; $7242
 	call Func_05_6f70 ; $7245
-	rst28 $0460 ; $7248
+	clear_flag $04, 3 ; $7248
 	farcall FarPtr_05_86 ; $724b
 	ld b, h ; $724e
 	ld c, l ; $724f
@@ -6846,7 +6846,7 @@ Func_05_742c:
 	push hl ; $742f
 	ldh a, [$ff96] ; $7430
 	push af ; $7432
-	rst20 $0300 ; $7433
+	set_flag $03, 0 ; $7433
 	push af ; $7436
 	ldh a, [rLCDC] ; $7437
 	bit 7, a ; $7439
@@ -6921,7 +6921,7 @@ Label_05_74a1:
 Label_05_74b5:
 	pop af ; $74b5
 	ld c, $10 ; $74b6
-	rst30 $0440 ; $74b8
+	test_flag $04, 2 ; $74b8
 	jr z, Label_05_74bf ; $74bb
 	ld c, $07 ; $74bd
 Label_05_74bf:
@@ -6935,7 +6935,7 @@ Label_05_74bf:
 	call Func_00_2631 ; $74cd
 Label_05_74d0:
 	pop af ; $74d0
-	rst28 $0300 ; $74d1
+	clear_flag $03, 0 ; $74d1
 	pop af ; $74d4
 	ldh [$ff96], a ; $74d5
 	ldh [rWBK], a ; $74d7
@@ -7262,7 +7262,7 @@ Func_05_771b:
 	ld a, [$d820] ; $7741
 	cp a, b ; $7744
 	jr nz, Label_05_774f ; $7745
-	rst30 $1fa0 ; $7747
+	test_flag $1f, 5 ; $7747
 	jr nz, Label_05_774f ; $774a
 	inc d ; $774c
 	ld e, c ; $774d
@@ -7373,7 +7373,7 @@ Func_05_77dd:
 	push hl ; $77e0
 	ldh a, [$ff96] ; $77e1
 	push af ; $77e3
-	rst20 $0300 ; $77e4
+	set_flag $03, 0 ; $77e4
 	ld a, $07 ; $77e7
 	ldh [$ff96], a ; $77e9
 	ldh [rWBK], a ; $77eb
@@ -7449,7 +7449,7 @@ Label_05_7853:
 Label_05_7856:
 	dec b ; $7856
 	jr nz, Label_05_7838 ; $7857
-	rst28 $0300 ; $7859
+	clear_flag $03, 0 ; $7859
 	pop af ; $785c
 	ldh [$ff96], a ; $785d
 	ldh [rWBK], a ; $785f

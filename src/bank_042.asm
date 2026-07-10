@@ -85,7 +85,9 @@ Func_42_49a0:
 	add hl, de ; $49fa
 	rst Rst38 ; $49fb
 	cp a, l ; $49fc
-	rst20 $ffbd ; $49fd
+	rst Rst20 ; $49fd
+	cp a, l ; $49fe
+	rst Rst38 ; $49ff
 	cp a, $eb ; $4a00
 	cp a, $ab ; $4a02
 	ld a, h ; $4a04

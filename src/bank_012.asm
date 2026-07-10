@@ -16,7 +16,7 @@ Data_12_4006:
 	ld a, [$c295] ; $406f
 	cp a, $ff ; $4072
 	jp z, Label_12_40b4 ; $4074
-	rst30 $05e0 ; $4077
+	test_flag $05, 7 ; $4077
 	jr z, Label_12_40a2 ; $407a
 	ld a, $02 ; $407c
 	ld bc, $00ff ; $407e
@@ -46,7 +46,7 @@ Label_12_40b4:
 	ld a, [$c295] ; $40b5
 	cp a, $ff ; $40b8
 	jp z, Label_12_40fa ; $40ba
-	rst30 $05e0 ; $40bd
+	test_flag $05, 7 ; $40bd
 	jr z, Label_12_40e8 ; $40c0
 	ld a, $02 ; $40c2
 	ld bc, $00ff ; $40c4
@@ -665,8 +665,8 @@ Data_12_467c:
 	ld a, [$c295] ; $46f3
 	cp a, $ff ; $46f6
 	jp z, Label_12_4715 ; $46f8
-	rst28 $0fa0 ; $46fb
-	rst30 $05e0 ; $46fe
+	clear_flag $0f, 5 ; $46fb
+	test_flag $05, 7 ; $46fe
 	jr z, Label_12_4715 ; $4701
 	ld a, $02 ; $4703
 	ld bc, $0f00 ; $4705
@@ -688,7 +688,7 @@ Label_12_4841:
 	call Func_00_1da4 ; $4846
 	xor a, a ; $4849
 	ld [$c2d5], a ; $484a
-	rst30 $1ba0 ; $484d
+	test_flag $1b, 5 ; $484d
 	jr z, Label_12_485c ; $4850
 	ld a, [wPointWinLoseFlag] ; $4852
 	cp a, $01 ; $4855
@@ -953,7 +953,7 @@ Label_12_49e5:
 	ld a, $07 ; $4a67
 	farcall FarPtr_0a_08 ; $4a69
 Label_12_4a6c:
-	rst30 $05e0 ; $4a6c
+	test_flag $05, 7 ; $4a6c
 	jr z, Label_12_4aae ; $4a6f
 	push af ; $4a71
 	ld a, $28 ; $4a72
@@ -1081,7 +1081,7 @@ Label_12_4b2e:
 	ld a, $07 ; $4b7b
 	ld b, $40 ; $4b7d
 	farcall FarPtr_0a_2e ; $4b7f
-	rst30 $05e0 ; $4b82
+	test_flag $05, 7 ; $4b82
 	jr z, Label_12_4b94 ; $4b85
 	ld a, $02 ; $4b87
 	farcall FarPtr_0a_16 ; $4b89
@@ -1174,7 +1174,7 @@ Label_12_4bfc:
 	ld a, $07 ; $4c4f
 	ld b, $40 ; $4c51
 	farcall FarPtr_0a_2e ; $4c53
-	rst30 $05e0 ; $4c56
+	test_flag $05, 7 ; $4c56
 	jr z, Label_12_4c98 ; $4c59
 	push af ; $4c5b
 	ld a, $1e ; $4c5c
@@ -1223,9 +1223,9 @@ Label_12_4c98:
 	ld a, $07 ; $4d09
 	ld b, $40 ; $4d0b
 	farcall FarPtr_0a_2e ; $4d0d
-	rst28 $1c00 ; $4d10
-	rst28 $0fa0 ; $4d13
-	rst30 $05e0 ; $4d16
+	clear_flag $1c, 0 ; $4d10
+	clear_flag $0f, 5 ; $4d13
+	test_flag $05, 7 ; $4d16
 	jr z, Label_12_4d28 ; $4d19
 	ld a, $02 ; $4d1b
 	farcall FarPtr_0a_16 ; $4d1d
@@ -1257,7 +1257,7 @@ Label_12_4d28:
 	call Func_12_52c0 ; $4f35
 	ret ; $4f38
 Label_12_4f39:
-	rst30 $05e0 ; $4f39
+	test_flag $05, 7 ; $4f39
 	jr z, Label_12_4f55 ; $4f3c
 	ld a, $02 ; $4f3e
 	farcall FarPtr_0a_1c ; $4f40
@@ -1292,7 +1292,7 @@ Label_12_4f7e:
 	jp Label_12_4ab5 ; $4f86
 	INCBIN "data/bank_012/d_4f89.bin" ; $4f89, 1 bytes
 Label_12_4f8a:
-	rst30 $05e0 ; $4f8a
+	test_flag $05, 7 ; $4f8a
 	jr z, Label_12_4fa6 ; $4f8d
 	ld a, $02 ; $4f8f
 	farcall FarPtr_0a_1c ; $4f91
@@ -1304,7 +1304,7 @@ Label_12_4f8a:
 	ld b, $c0 ; $4fa1
 	farcall FarPtr_0a_2e ; $4fa3
 Label_12_4fa6:
-	rst20 $1c00 ; $4fa6
+	set_flag $1c, 0 ; $4fa6
 	ld a, $07 ; $4fa9
 	ld bc, $0300 ; $4fab
 	ld de, $3700 ; $4fae
@@ -1392,7 +1392,7 @@ Label_12_505e:
 	ret ; $505e
 Func_12_505f:
 	ld a, $00 ; $505f
-	rst30 $1ac0 ; $5061
+	test_flag $1a, 6 ; $5061
 	jp z, Label_12_50c8 ; $5064
 	ld b, $1e ; $5067
 	ld c, $2c ; $5069
@@ -1402,7 +1402,7 @@ Func_12_505f:
 	ld l, $02 ; $5071
 	farcall FarPtr_0a_7e ; $5073
 	ld a, $01 ; $5076
-	rst30 $1ae0 ; $5078
+	test_flag $1a, 7 ; $5078
 	jr z, Label_12_50c8 ; $507b
 	ld b, $1e ; $507d
 	ld c, $30 ; $507f
@@ -1412,7 +1412,7 @@ Func_12_505f:
 	ld l, $02 ; $5087
 	farcall FarPtr_0a_7e ; $5089
 	ld a, $02 ; $508c
-	rst30 $1b00 ; $508e
+	test_flag $1b, 0 ; $508e
 	jr z, Label_12_50c8 ; $5091
 	ld b, $1e ; $5093
 	ld c, $34 ; $5095
@@ -1422,7 +1422,7 @@ Func_12_505f:
 	ld l, $02 ; $509d
 	farcall FarPtr_0a_7e ; $509f
 	ld a, $03 ; $50a2
-	rst30 $1b20 ; $50a4
+	test_flag $1b, 1 ; $50a4
 	jr z, Label_12_50c8 ; $50a7
 	ld b, $1e ; $50a9
 	ld c, $38 ; $50ab
@@ -1432,16 +1432,16 @@ Func_12_505f:
 	ld l, $02 ; $50b3
 	farcall FarPtr_0a_7e ; $50b5
 	ld a, $04 ; $50b8
-	rst30 $1b60 ; $50ba
+	test_flag $1b, 3 ; $50ba
 	jr z, Label_12_50c8 ; $50bd
 	ld a, $05 ; $50bf
-	rst30 $1ba0 ; $50c1
+	test_flag $1b, 5 ; $50c1
 	jr z, Label_12_50c8 ; $50c4
 	ld a, $06 ; $50c6
 Label_12_50c8:
 	ld [$c2b0], a ; $50c8
 	ret ; $50cb
-	rst30 $1c00 ; $50cc
+	test_flag $1c, 0 ; $50cc
 	jr z, Label_12_50dd ; $50cf
 	ld hl, $1508 ; $50d1
 	farcall FarPtr_0a_0e ; $50d4
@@ -1524,7 +1524,7 @@ Label_12_5111:
 	farcall FarPtr_0a_2e ; $5169
 	ld a, $07 ; $516c
 	farcall FarPtr_0a_08 ; $516e
-	rst30 $05e0 ; $5171
+	test_flag $05, 7 ; $5171
 	jr z, Label_12_5192 ; $5174
 	ld a, $02 ; $5176
 	farcall FarPtr_0a_1c ; $5178
@@ -1547,8 +1547,8 @@ Label_12_5192:
 	farcall FarPtr_0a_24 ; $51a2
 	ld a, $00 ; $51a5
 	farcall FarPtr_0a_20 ; $51a7
-	rst20 $1c00 ; $51aa
-	rst20 $0fa0 ; $51ad
+	set_flag $1c, 0 ; $51aa
+	set_flag $0f, 5 ; $51ad
 	ret ; $51b0
 Label_12_51b1:
 	farcall FarPtr_0a_10 ; $51b1
@@ -1573,7 +1573,7 @@ Label_12_51ba:
 	ld a, $07 ; $51db
 	ld b, $00 ; $51dd
 	farcall FarPtr_0a_2e ; $51df
-	rst30 $05e0 ; $51e2
+	test_flag $05, 7 ; $51e2
 	jr z, Label_12_522c ; $51e5
 	push af ; $51e7
 	ld a, $14 ; $51e8
@@ -1658,9 +1658,9 @@ Label_12_528d:
 	ret ; $52b8
 	INCBIN "data/bank_012/d_52b9.bin" ; $52b9, 7 bytes
 Func_12_52c0:
-	rst30 $0fa0 ; $52c0
+	test_flag $0f, 5 ; $52c0
 	jr z, Label_12_52f6 ; $52c3
-	rst20 $1c00 ; $52c5
+	set_flag $1c, 0 ; $52c5
 	ld a, $07 ; $52c8
 	ld bc, $0300 ; $52ca
 	ld de, $3700 ; $52cd
@@ -1668,7 +1668,7 @@ Func_12_52c0:
 	ld a, $07 ; $52d3
 	ld b, $00 ; $52d5
 	farcall FarPtr_0a_2e ; $52d7
-	rst30 $05e0 ; $52da
+	test_flag $05, 7 ; $52da
 	jr z, Label_12_52f6 ; $52dd
 	ld a, $02 ; $52df
 	farcall FarPtr_0a_1c ; $52e1

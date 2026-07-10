@@ -1720,10 +1720,10 @@ Label_3e_51ef:
 	ld [$cb11], a ; $5200
 	ld c, $02 ; $5203
 	call Func_3e_43c9 ; $5205
-	rst28 $05e0 ; $5208
+	clear_flag $05, 7 ; $5208
 	or a, a ; $520b
 	jr z, Label_3e_5211 ; $520c
-	rst20 $05e0 ; $520e
+	set_flag $05, 7 ; $520e
 Label_3e_5211:
 	ret ; $5211
 Label_3e_5212:

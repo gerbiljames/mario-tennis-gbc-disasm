@@ -447,7 +447,7 @@ Label_0b_473f:
 	ld a, $ff ; $4762
 	ld [wPointWinLoseFlag], a ; $4764
 Label_0b_4767:
-	rst30 $03c0 ; $4767
+	test_flag $03, 6 ; $4767
 	jr z, Label_0b_47a7 ; $476a
 	call DisableLCDSafely ; $476c
 	farcall FarPtr_05_76 ; $476f
@@ -476,7 +476,7 @@ Label_0b_479a:
 	call Func_00_1d20 ; $47a1
 	call Func_00_1da4 ; $47a4
 Label_0b_47a7:
-	rst28 $03c0 ; $47a7
+	clear_flag $03, 6 ; $47a7
 	farcall FarPtr_1e_04 ; $47aa
 	ret ; $47ad
 Label_0b_47ae:

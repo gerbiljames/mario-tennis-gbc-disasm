@@ -17,7 +17,7 @@ Data_11_4008:
 	ld a, [$c295] ; $42fd
 	cp a, $ff ; $4300
 	jp z, Label_11_4342 ; $4302
-	rst30 $05e0 ; $4305
+	test_flag $05, 7 ; $4305
 	jr z, Label_11_4330 ; $4308
 	ld a, $02 ; $430a
 	ld bc, $00ff ; $430c
@@ -977,7 +977,7 @@ Label_11_4ee1:
 	farcall FarPtr_0a_0e ; $4efd
 	ld a, $12 ; $4f00
 	farcall FarPtr_0a_08 ; $4f02
-	rst20 $05c0 ; $4f05
+	set_flag $05, 6 ; $4f05
 	call Func_11_4f1b ; $4f08
 	ret ; $4f0b
 Label_11_4f0c:
@@ -1013,7 +1013,7 @@ Func_11_4f84:
 	ld a, $12 ; $4f8c
 	ld bc, $0018 ; $4f8e
 	farcall FarPtr_0a_18 ; $4f91
-	rst28 $05c0 ; $4f94
+	clear_flag $05, 6 ; $4f94
 	ld a, $12 ; $4f97
 	ld bc, $1800 ; $4f99
 	ld de, $0e00 ; $4f9c
@@ -1039,7 +1039,7 @@ Label_11_4fcf:
 	ld hl, $537d ; $4fd1
 	farcall FarPtr_0a_06 ; $4fd4
 	farcall FarPtr_0a_00 ; $4fd7
-	rst30 $05e0 ; $4fda
+	test_flag $05, 7 ; $4fda
 	jp z, Label_11_501a ; $4fdd
 	ld a, $02 ; $4fe0
 	farcall FarPtr_0a_1c ; $4fe2
@@ -1101,7 +1101,7 @@ Label_11_501a:
 	farcall FarPtr_0a_0e ; $5060
 	ld a, $03 ; $5063
 	farcall FarPtr_0a_08 ; $5065
-	rst30 $05e0 ; $5068
+	test_flag $05, 7 ; $5068
 	jp z, Label_11_5158 ; $506b
 	ld a, $04 ; $506e
 	ld d, $03 ; $5070
@@ -1454,7 +1454,7 @@ Label_11_53db:
 	ld de, $2f00 ; $53f0
 	farcall FarPtr_0a_3a ; $53f3
 	farcall FarPtr_0a_3e ; $53f6
-	rst30 $05e0 ; $53f9
+	test_flag $05, 7 ; $53f9
 	jp z, Label_11_5415 ; $53fc
 	ld a, $02 ; $53ff
 	ld bc, $1800 ; $5401
@@ -1502,13 +1502,13 @@ Label_11_5415:
 	ret ; $5469
 	INCBIN "data/bank_011/d_546a.bin" ; $546a, 24 bytes
 Func_11_5482:
-	rst30 $05e0 ; $5482
+	test_flag $05, 7 ; $5482
 	jr nz, Label_11_548d ; $5485
-	rst30 $1600 ; $5487
+	test_flag $16, 0 ; $5487
 	jr nz, Label_11_5493 ; $548a
 	ret ; $548c
 Label_11_548d:
-	rst30 $1620 ; $548d
+	test_flag $16, 1 ; $548d
 	jr nz, Label_11_5493 ; $5490
 	ret ; $5492
 Label_11_5493:
@@ -1543,11 +1543,11 @@ Label_11_6596:
 	ld a, $02 ; $659e
 	ld bc, $0020 ; $65a0
 	farcall FarPtr_0a_18 ; $65a3
-	rst30 $0800 ; $65a6
+	test_flag $08, 0 ; $65a6
 	jp z, Label_11_65b9 ; $65a9
-	rst30 $0820 ; $65ac
+	test_flag $08, 1 ; $65ac
 	jp z, Label_11_6642 ; $65af
-	rst30 $0840 ; $65b2
+	test_flag $08, 2 ; $65b2
 	jp z, Label_11_6702 ; $65b5
 	ret ; $65b8
 Label_11_65b9:
@@ -1767,11 +1767,11 @@ Label_11_6702:
 	farcall FarPtr_0a_4e ; $679c
 	ret ; $679f
 Label_11_67a0:
-	rst30 $0800 ; $67a0
+	test_flag $08, 0 ; $67a0
 	jr z, Label_11_67b0 ; $67a3
-	rst30 $0820 ; $67a5
+	test_flag $08, 1 ; $67a5
 	jr z, Label_11_67e7 ; $67a8
-	rst30 $0840 ; $67aa
+	test_flag $08, 2 ; $67aa
 	jr z, Label_11_6803 ; $67ad
 	ret ; $67af
 Label_11_67b0:
@@ -1834,7 +1834,7 @@ Data_11_6822:
 	INCBIN "data/bank_011/d_6830.bin" ; $6830, 317 bytes
 	ret ; $696d
 	INCBIN "data/bank_011/d_696e.bin" ; $696e, 912 bytes
-	rst30 $0a00 ; $6cfe
+	test_flag $0a, 0 ; $6cfe
 	jr z, Label_11_6d15 ; $6d01
 	ld a, $07 ; $6d03
 	ld bc, $2500 ; $6d05
@@ -1851,13 +1851,13 @@ Label_11_6d15:
 	jp z, Label_11_6e88 ; $6d1f
 	cp a, $0d ; $6d22
 	jp z, Label_11_6e9e ; $6d24
-	rst30 $1600 ; $6d27
+	test_flag $16, 0 ; $6d27
 	jr nz, Label_11_6d3c ; $6d2a
-	rst30 $15c0 ; $6d2c
+	test_flag $15, 6 ; $6d2c
 	jr nz, Label_11_6d51 ; $6d2f
-	rst30 $0ae0 ; $6d31
+	test_flag $0a, 7 ; $6d31
 	jr nz, Label_11_6d66 ; $6d34
-	rst30 $0a60 ; $6d36
+	test_flag $0a, 3 ; $6d36
 	jr nz, Label_11_6d91 ; $6d39
 	ret ; $6d3b
 Label_11_6d3c:
@@ -2365,7 +2365,7 @@ Label_11_7076:
 Func_11_7288:
 	ld hl, $0822 ; $7288
 	farcall FarPtr_0a_0e ; $728b
-	rst30 $0a00 ; $728e
+	test_flag $0a, 0 ; $728e
 	jr z, Label_11_7296 ; $7291
 	farcall FarPtr_0a_10 ; $7293
 Label_11_7296:
@@ -2422,15 +2422,15 @@ Label_11_72ec:
 	jr z, Label_11_72e3 ; $7305
 	jp Label_11_72b8 ; $7307
 Func_11_730a:
-	rst30 $05e0 ; $730a
+	test_flag $05, 7 ; $730a
 	jp nz, Label_11_67a0 ; $730d
-	rst30 $0a00 ; $7310
+	test_flag $0a, 0 ; $7310
 	jr z, Label_11_7325 ; $7313
-	rst30 $0a20 ; $7315
+	test_flag $0a, 1 ; $7315
 	jr z, Label_11_7336 ; $7318
-	rst30 $0a40 ; $731a
+	test_flag $0a, 2 ; $731a
 	jr z, Label_11_7347 ; $731d
-	rst30 $0a60 ; $731f
+	test_flag $0a, 3 ; $731f
 	jr z, Label_11_7358 ; $7322
 	ret ; $7324
 Label_11_7325:
@@ -2470,13 +2470,13 @@ Label_11_7358:
 	farcall FarPtr_0a_1e ; $7365
 	ret ; $7368
 Func_11_7369:
-	rst30 $0a00 ; $7369
+	test_flag $0a, 0 ; $7369
 	jr z, Label_11_7381 ; $736c
-	rst30 $0a20 ; $736e
+	test_flag $0a, 1 ; $736e
 	jp z, Label_11_7438 ; $7371
-	rst30 $0a40 ; $7374
+	test_flag $0a, 2 ; $7374
 	jp z, Label_11_74e3 ; $7377
-	rst30 $0a60 ; $737a
+	test_flag $0a, 3 ; $737a
 	jp z, Label_11_7590 ; $737d
 	ret ; $7380
 Label_11_7381:
@@ -2840,13 +2840,13 @@ Label_11_7590:
 	ld a, $03 ; $77d1
 	farcall FarPtr_0a_30 ; $77d3
 	farcall FarPtr_0a_10 ; $77d6
-	rst30 $0a00 ; $77d9
+	test_flag $0a, 0 ; $77d9
 	jr z, Label_11_77f1 ; $77dc
 	farcall FarPtr_0a_10 ; $77de
-	rst30 $0a20 ; $77e1
+	test_flag $0a, 1 ; $77e1
 	jr z, Label_11_77f1 ; $77e4
 	farcall FarPtr_0a_10 ; $77e6
-	rst30 $0a40 ; $77e9
+	test_flag $0a, 2 ; $77e9
 	jr z, Label_11_77f1 ; $77ec
 	farcall FarPtr_0a_10 ; $77ee
 Label_11_77f1:
@@ -2875,15 +2875,15 @@ Func_11_781d:
 	ld a, $00 ; $781d
 	ld bc, $0020 ; $781f
 	farcall FarPtr_0a_18 ; $7822
-	rst30 $05e0 ; $7825
+	test_flag $05, 7 ; $7825
 	jp nz, Label_11_6596 ; $7828
-	rst30 $0a00 ; $782b
+	test_flag $0a, 0 ; $782b
 	jr z, Label_11_7843 ; $782e
-	rst30 $0a20 ; $7830
+	test_flag $0a, 1 ; $7830
 	jp z, Label_11_78cf ; $7833
-	rst30 $0a40 ; $7836
+	test_flag $0a, 2 ; $7836
 	jp z, Label_11_795d ; $7839
-	rst30 $0a60 ; $783c
+	test_flag $0a, 3 ; $783c
 	jp z, Label_11_79e8 ; $783f
 	ret ; $7842
 Label_11_7843:
@@ -3258,19 +3258,19 @@ Func_11_7b6b:
 	ret ; $7bd1
 	INCBIN "data/bank_011/d_7bd2.bin" ; $7bd2, 451 bytes
 Func_11_7d95:
-	rst30 $05e0 ; $7d95
+	test_flag $05, 7 ; $7d95
 	jr nz, Label_11_7dbc ; $7d98
 	ld a, $00 ; $7d9a
-	rst30 $0a60 ; $7d9c
+	test_flag $0a, 3 ; $7d9c
 	jr z, Label_11_7db8 ; $7d9f
 	ld a, $02 ; $7da1
-	rst30 $0ae0 ; $7da3
+	test_flag $0a, 7 ; $7da3
 	jr z, Label_11_7db8 ; $7da6
 	ld a, $04 ; $7da8
-	rst30 $15c0 ; $7daa
+	test_flag $15, 6 ; $7daa
 	jr z, Label_11_7db8 ; $7dad
 	ld a, $06 ; $7daf
-	rst30 $1600 ; $7db1
+	test_flag $16, 0 ; $7db1
 	jr z, Label_11_7db8 ; $7db4
 	ld a, $08 ; $7db6
 Label_11_7db8:
@@ -3278,16 +3278,16 @@ Label_11_7db8:
 	ret ; $7dbb
 Label_11_7dbc:
 	ld a, $01 ; $7dbc
-	rst30 $0840 ; $7dbe
+	test_flag $08, 2 ; $7dbe
 	jr z, Label_11_7db8 ; $7dc1
 	ld a, $03 ; $7dc3
-	rst30 $08c0 ; $7dc5
+	test_flag $08, 6 ; $7dc5
 	jr z, Label_11_7db8 ; $7dc8
 	ld a, $05 ; $7dca
-	rst30 $15e0 ; $7dcc
+	test_flag $15, 7 ; $7dcc
 	jr z, Label_11_7db8 ; $7dcf
 	ld a, $07 ; $7dd1
-	rst30 $1620 ; $7dd3
+	test_flag $16, 1 ; $7dd3
 	jr z, Label_11_7db8 ; $7dd6
 	ld a, $09 ; $7dd8
 	jr Label_11_7db8 ; $7dda
