@@ -5,13 +5,47 @@ Strings are plain NUL-terminated ASCII with $01 as a line break, packed
 back-to-back in the text banks. This reads the user's ROM directly (the
 repository ships no text), so run it after setup.sh.
 
-usage: strings.py rom [--bank XX] [--min N] [--grep PATTERN]
+With --index, strings are listed by their game-facing coordinates instead:
+bank and string-table index (matching the `.sN` labels in the generated
+text source), derived by solving each text bank's offset table.
+
+usage: strings.py rom [--bank XX] [--min N] [--grep PATTERN] [--index]
 """
 import argparse
 import re
+import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from extract import solve_table
+
 BANK_SIZE = 0x4000
+
+
+def dump_indexed(rom, want_bank, min_len, pat):
+    for ln in Path("data.manifest").read_text().splitlines():
+        if "/text_" not in ln or not ln.split()[0].endswith(".asm"):
+            continue
+        _p, o, l = ln.split()
+        off, length = int(o, 16), int(l, 16)
+        bank = off // BANK_SIZE
+        if want_bank is not None and bank != want_bank:
+            continue
+        data = rom[off:off + length]
+        entries = solve_table(data)
+        if entries is None:
+            continue
+        t = 2 * len(entries)
+        for k, e in enumerate(entries):
+            end = data.find(b"\x03", t + e)
+            end2 = data.find(b"\x00", t + e)
+            if end < 0 or (0 <= end2 < end):
+                end = end2
+            s = data[t + e:end if end >= 0 else None]
+            txt = s.decode("ascii", "replace") \
+                   .replace("\x01", "\\n").replace("\x02", "\\p")
+            if len(txt) >= min_len and (pat is None or pat.search(txt)):
+                print(f"{bank:02x}:{k} {txt}")
 
 
 def main():
@@ -21,9 +55,15 @@ def main():
     ap.add_argument("--min", type=int, default=4,
                     help="minimum string length (default 4)")
     ap.add_argument("--grep", help="only strings matching this regex")
+    ap.add_argument("--index", action="store_true",
+                    help="list by bank:string-index via the text tables")
     args = ap.parse_args()
 
     rom = Path(args.rom).read_bytes()
+    if args.index:
+        dump_indexed(rom, int(args.bank, 16) if args.bank else None,
+                     args.min, re.compile(args.grep) if args.grep else None)
+        return
     lo, hi = 0, len(rom)
     if args.bank is not None:
         b = int(args.bank, 16)
