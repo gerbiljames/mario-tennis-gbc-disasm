@@ -12,7 +12,8 @@ FarPtr_39_04:
 	dw Func_39_4342 ; $4004
 FarPtr_39_06:
 	dw Func_39_44d3 ; $4006
-	INCBIN "data/bank_039/d_4008.bin" ; $4008, 2 bytes
+FarPtr_39_08:
+	dw Func_39_451e ; $4008
 FarPtr_39_0a:
 	dw Func_39_4530 ; $400a
 FarPtr_39_0c:
@@ -21,7 +22,8 @@ FarPtr_39_0e:
 	dw Func_39_457f ; $400e
 FarPtr_39_10:
 	dw Func_39_468b ; $4010
-	INCBIN "data/bank_039/d_4012.bin" ; $4012, 2 bytes
+FarPtr_39_12:
+	dw Func_39_4661 ; $4012
 FarPtr_39_14:
 	dw Func_39_4a75 ; $4014
 FarPtr_39_16:
@@ -46,7 +48,14 @@ FarPtr_39_28:
 	dw Func_39_4b6d ; $4028
 FarPtr_39_2a:
 	dw Func_39_4be8 ; $402a
-	INCBIN "data/bank_039/d_402c.bin" ; $402c, 8 bytes
+FarPtr_39_2c:
+	dw Func_39_4325 ; $402c
+FarPtr_39_2e:
+	dw Func_39_4325 ; $402e
+FarPtr_39_30:
+	dw Func_39_4325 ; $4030
+FarPtr_39_32:
+	dw Func_39_4325 ; $4032
 DataPtr_39_34:
 	dw Lz_39_47ab ; $4034
 DataPtr_39_36:
@@ -339,7 +348,13 @@ Func_39_44d3:
 	ld de, $0801 ; $44ef
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
-	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 58 bytes
+	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 40 bytes
+Func_39_451e:
+	ld de, $0001 ; $451e
+	ld hl, $4528 ; $4521
+	call LoadPaletteShadow ; $4524
+	ret ; $4527
+	INCBIN "data/bank_039/d_4528.bin" ; $4528, 8 bytes
 Func_39_4530:
 	push af ; $4530
 	push bc ; $4531
@@ -432,7 +447,13 @@ Func_39_457f:
 	ld e, $01 ; $4593
 	call LoadPaletteShadow ; $4595
 	ret ; $4598
-	INCBIN "data/bank_039/d_4599.bin" ; $4599, 242 bytes
+	INCBIN "data/bank_039/d_4599.bin" ; $4599, 200 bytes
+Func_39_4661:
+	ld hl, $466b ; $4661
+	ld de, $0904 ; $4664
+	call LoadPaletteShadow ; $4667
+	ret ; $466a
+	INCBIN "data/bank_039/d_466b.bin" ; $466b, 32 bytes
 Func_39_468b:
 	ldh a, [$ff96] ; $468b
 	push af ; $468d

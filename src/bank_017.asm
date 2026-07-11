@@ -4,7 +4,8 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 
-	INCBIN "data/bank_017/d_4000.bin" ; $4000, 2 bytes
+FarPtr_17_00:
+	dw Func_17_44eb ; $4000
 DataPtr_17_02:
 	dw CourtDiagramTiles ; $4002
 DataPtr_17_04:
@@ -101,7 +102,146 @@ Label_17_44d3:
 Label_17_44e7:
 	call Func_00_1b38 ; $44e7
 	ret ; $44ea
-	INCBIN "data/bank_017/d_44eb.bin" ; $44eb, 361 bytes
+Func_17_44eb:
+	call DisableLCDSafely ; $44eb
+	call Func_17_4960 ; $44ee
+	call EnableLCD ; $44f1
+	xor a, a ; $44f4
+	ld [$cb0b], a ; $44f5
+	ld a, $01 ; $44f8
+	ld hl, $4406 ; $44fa
+	call Func_00_1b6a ; $44fd
+	ld a, $03 ; $4500
+	ld [$cb0c], a ; $4502
+	ld c, $10 ; $4505
+	call Func_00_1d2e ; $4507
+	call Func_00_1da4 ; $450a
+	ld a, $50 ; $450d
+	ld [$d810], a ; $450f
+	ld a, $40 ; $4512
+	ld [$d811], a ; $4514
+	ld a, $01 ; $4517
+	ld hl, $46e2 ; $4519
+	call Func_00_1b6a ; $451c
+	ld a, $30 ; $451f
+	ld [$d812], a ; $4521
+	ld a, $20 ; $4524
+	ld [$d813], a ; $4526
+	ld a, $01 ; $4529
+	ld hl, $470c ; $452b
+	call Func_00_1b6a ; $452e
+	ld a, $60 ; $4531
+	ld [$d81e], a ; $4533
+	ld a, $30 ; $4536
+	ld [$d81f], a ; $4538
+	ld a, $01 ; $453b
+	ld hl, $4736 ; $453d
+	call Func_00_1b6a ; $4540
+	ld a, $01 ; $4543
+	ld [$d82d], a ; $4545
+	ld a, $60 ; $4548
+	ld [$d81c], a ; $454a
+	ld a, $40 ; $454d
+	ld [$d81d], a ; $454f
+	ld a, $01 ; $4552
+	ld hl, $4754 ; $4554
+	call Func_00_1b6a ; $4557
+	ld hl, $00e4 ; $455a
+	call Func_17_4654 ; $455d
+	call Func_17_497e ; $4560
+	call Func_00_1b38 ; $4563
+	ld a, $01 ; $4566
+	ld hl, $4406 ; $4568
+	call Func_00_1b6a ; $456b
+	ld a, $09 ; $456e
+	ld [$d822], a ; $4570
+	ld a, $40 ; $4573
+	ld [$d814], a ; $4575
+	ld a, $32 ; $4578
+	ld [$d815], a ; $457a
+	ld a, $01 ; $457d
+	ld hl, $478e ; $457f
+	call Func_00_1b6a ; $4582
+	ld a, $40 ; $4585
+	ld [$d81a], a ; $4587
+	ld a, $20 ; $458a
+	ld [$d81b], a ; $458c
+	ld a, $50 ; $458f
+	ld [$d820], a ; $4591
+	ld a, $20 ; $4594
+	ld [$d821], a ; $4596
+	ld a, $01 ; $4599
+	ld hl, $47ef ; $459b
+	call Func_00_1b6a ; $459e
+	ld a, $01 ; $45a1
+	ld [$d825], a ; $45a3
+	ld a, $30 ; $45a6
+	ld [$d823], a ; $45a8
+	ld a, $20 ; $45ab
+	ld [$d824], a ; $45ad
+	ld a, $01 ; $45b0
+	ld hl, $481c ; $45b2
+	call Func_00_1b6a ; $45b5
+	ld a, $01 ; $45b8
+	ld [$d826], a ; $45ba
+	ld a, $20 ; $45bd
+	ld [$d816], a ; $45bf
+	ld a, $40 ; $45c2
+	ld [$d817], a ; $45c4
+	ld a, $01 ; $45c7
+	ld hl, $4843 ; $45c9
+	call Func_00_1b6a ; $45cc
+	ld a, $03 ; $45cf
+	ld [$d827], a ; $45d1
+	ld a, $10 ; $45d4
+	ld [$d818], a ; $45d6
+	ld a, $10 ; $45d9
+	ld [$d819], a ; $45db
+	ld a, $01 ; $45de
+	ld hl, $4876 ; $45e0
+	call Func_00_1b6a ; $45e3
+	ld a, $18 ; $45e6
+	ld [$d82a], a ; $45e8
+	ld a, $08 ; $45eb
+	ld [$d82b], a ; $45ed
+	ld a, $20 ; $45f0
+	ld [$d828], a ; $45f2
+	ld a, $40 ; $45f5
+	ld [$d829], a ; $45f7
+	ld a, $01 ; $45fa
+	ld hl, $48c1 ; $45fc
+	call Func_00_1b6a ; $45ff
+	ld hl, $0135 ; $4602
+	call Func_17_4654 ; $4605
+	ld b, $02 ; $4608
+	call Func_17_466c ; $460a
+	ld a, $01 ; $460d
+	ld hl, $4676 ; $460f
+	call Func_00_1b6a ; $4612
+	call Func_17_497e ; $4615
+	call Func_00_1b38 ; $4618
+	ld a, $01 ; $461b
+	ld hl, $4406 ; $461d
+	call Func_00_1b6a ; $4620
+	ld b, $00 ; $4623
+	call Func_17_466c ; $4625
+	ld hl, $00e4 ; $4628
+	call Func_17_4654 ; $462b
+	ld a, $70 ; $462e
+	ld [$d81c], a ; $4630
+	ld a, $20 ; $4633
+	ld [$d81d], a ; $4635
+	ld a, $01 ; $4638
+	ld hl, $4754 ; $463a
+	call Func_00_1b6a ; $463d
+	ld b, $05 ; $4640
+	call Func_17_466c ; $4642
+	ld a, $01 ; $4645
+	ld hl, $4676 ; $4647
+	call Func_00_1b6a ; $464a
+	call Func_17_497e ; $464d
+	call Func_00_1b38 ; $4650
+	ret ; $4653
 Func_17_4654:
 	call Func_17_49ce ; $4654
 	farcall FarPtr_05_8c ; $4657

@@ -233,6 +233,19 @@ class Disassembly:
         if bad:
             print(f"note: {bad} coverage seeds decoded invalid/conflicting; skipped")
 
+    def _looks_like_data_pointer(self, cpu, flat):
+        """A table slot whose target (already known not to decode as code)
+        is a valid LZ stream is a data-pointer entry, not junk. Lets
+        infer_tables tolerate a data-pointer block inside an otherwise
+        code-pointer table without abandoning the whole bank."""
+        if not (BANK_SIZE <= cpu < 0x8000):
+            return False
+        try:
+            lz.decompress(self.rom, flat, (flat // BANK_SIZE + 1) * BANK_SIZE)
+        except (ValueError, IndexError):
+            return False
+        return True
+
     def infer_tables(self):
         """Infer unused farcall-table entries from table shape.
 
@@ -242,8 +255,12 @@ class Disassembly:
         lowest pointer target begins — so shrink a candidate extent to a
         fixed point where every entry before the end points at-or-after the
         end and decodes as valid code. Banks whose proven region contains
-        junk are left alone. Returns {entry_flat: (bank, slot, target_flat)}
-        for the unused slots of consistent tables.
+        junk are left alone. A mixed table (a block of data pointers among
+        the code pointers, e.g. graphics streams) ends the code run at the
+        first data-pointer slot: the code prefix is still recovered even
+        when a later used slot pushes the floor past the data block.
+        Returns {entry_flat: (bank, slot, target_flat)} for the unused slots
+        of consistent tables.
         """
         from collections import defaultdict
         used = defaultdict(set)
@@ -269,6 +286,7 @@ class Disassembly:
             else:
                 extent = min_used - BANK_SIZE
             dirty = False
+            data_block = False
             changed = True
             while changed and not dirty:
                 changed = False
@@ -284,13 +302,22 @@ class Disassembly:
                         changed = True
                         break
                     if not ok:
-                        if s < floor:
+                        # First slot pointing at a decodable LZ stream: the
+                        # code-pointer run ends here, at a data-pointer block
+                        # (e.g. graphics pointers following the code table).
+                        # Recover the code prefix even though a later used
+                        # slot pushes `floor` past this data block.
+                        if self._looks_like_data_pointer(cpu, flat):
+                            extent = s
+                            data_block = True
+                            changed = True
+                        elif s < floor:
                             dirty = True  # junk inside the proven region
                         else:
                             extent = s    # table truncated by first bad entry
                             changed = True
                         break
-            if dirty or extent < floor:
+            if dirty or (extent < floor and not data_block):
                 continue
             for s in range(0, extent, 2):
                 if s in slots:
