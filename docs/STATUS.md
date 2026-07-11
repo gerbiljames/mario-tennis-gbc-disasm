@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~117K instructions / 247,098 bytes of proven code (11.8% of the 2 MiB ROM)
+**~117.6K instructions / 247,379 bytes of proven code (11.8% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -39,7 +39,7 @@ bank-local helper, dispatched via farcall slot 0. Confirmed: an OAM-frame
 loader in $1f/$25/$26/$30-$37/$5e/$6e (one bank per character's animation
 frames); `infer_twin_tables()` fingerprints slot-0 targets by opcode shape.
 
-Largest code banks: $08 (match engine, 94.7% code), $05, $00, $13 (story
+Largest code banks: $08 (match engine, 96.4% code), $05, $00, $13 (story
 engine), $6b, $03 (save engine), $0a, $07.
 
 ### Data banks — carved and named
@@ -158,9 +158,17 @@ save engine (23 named, docs/save_format.md). RAM: docs/ram_map.md (129
 RetroAchievements-sourced entries). Data banks: character/sound/walk-sprite/
 graphics streams named as above.
 
-Next annotation targets: bank $08 (match engine, biggest & densest code bank),
-bank $13 (biggest story bank), bank $1e, sound-command enum for the 451
-`sound $xx` sites, WRAM map expansion from ram_map gaps.
+Bank $08's 39 embedded blobs were classified (data table / stranded code /
+padding); the ~281 bytes of code stranded behind computed jumps were recovered
+as static seeds (`coverage/bank08_static_code.json`), taking the bank from
+94.7% to 96.4% code (blobs 39→29). Remaining blobs are genuine data tables
+(several are `dw` pointer tables and record/curve tables worth structuring;
+`$5dc4` still needs a manual look) plus end-of-region padding.
+
+Next annotation targets: bank $08 (match engine, biggest & densest code bank —
+745 still-unnamed routines; also structure its remaining pointer/record data
+tables), bank $13 (biggest story bank), bank $1e, sound-command enum for the
+451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 

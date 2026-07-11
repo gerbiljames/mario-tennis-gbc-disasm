@@ -351,7 +351,9 @@ Label_08_426e:
 	ld d, $06 ; $426e
 	call Func_08_66f1 ; $4270
 	ret ; $4273
-	INCBIN "data/bank_008/d_4274.bin" ; $4274, 6 bytes
+	ld a, $05 ; $4274
+	call Func_08_6a1c ; $4276
+	ret ; $4279
 Func_08_427a:
 	ld a, [$c4b7] ; $427a
 	and a, a ; $427d
@@ -702,7 +704,20 @@ Func_08_44bd:
 	ret ; $44ee
 Func_08_44ef:
 	ret ; $44ef
-	INCBIN "data/bank_008/d_44f0.bin" ; $44f0, 30 bytes
+	call Func_08_4415 ; $44f0
+	and a, $04 ; $44f3
+	ret z ; $44f5
+	ldh a, [$ff9e] ; $44f6
+	and a, a ; $44f8
+	ret z ; $44f9
+	ld a, $ff ; $44fa
+	ld [$c4c0], a ; $44fc
+	ld [$c4c1], a ; $44ff
+	farcall FarPtr_06_02 ; $4502
+	ld a, $00 ; $4505
+	ld [$c4c0], a ; $4507
+	ld [$c4c1], a ; $450a
+	ret ; $450d
 Func_08_450e:
 	ld a, [wGameMode] ; $450e
 	cp a, $09 ; $4511
@@ -767,7 +782,7 @@ Label_08_4583:
 	ld a, b ; $4583
 	ld [$c494], a ; $4584
 	ret ; $4587
-	INCBIN "data/bank_008/d_4588.bin" ; $4588, 3 bytes
+	jp Func_00_2c26 ; $4588
 Func_08_458b:
 	push hl ; $458b
 	xor a, a ; $458c
@@ -1886,7 +1901,10 @@ Func_08_4c7a:
 	ld [$df0d], a ; $4ca7
 	ld [$df0e], a ; $4caa
 	ret ; $4cad
-	INCBIN "data/bank_008/d_4cae.bin" ; $4cae, 11 bytes
+	INCBIN "data/bank_008/d_4cae.bin" ; $4cae, 4 bytes
+	call Func_08_6098 ; $4cb2
+	call Func_08_6988 ; $4cb5
+	ret ; $4cb8
 Func_08_4cb9:
 	xor a, a ; $4cb9
 	ld [$c4b5], a ; $4cba
@@ -3008,7 +3026,35 @@ Func_08_5482:
 	ret z ; $54bd
 	farcall FarPtr_28_06 ; $54be
 	ret ; $54c1
-	INCBIN "data/bank_008/d_54c2.bin" ; $54c2, 96 bytes
+	INCBIN "data/bank_008/d_54c2.bin" ; $54c2, 40 bytes
+	ld bc, $0000 ; $54ea
+	ld hl, $c432 ; $54ed
+	ld a, [hl+] ; $54f0
+	ld d, [hl] ; $54f1
+	ld e, a ; $54f2
+	ld hl, $c430 ; $54f3
+	ld a, [hl+] ; $54f6
+	ld h, [hl] ; $54f7
+	ld l, a ; $54f8
+	call Func_08_59b8 ; $54f9
+	call Func_08_59bb ; $54fc
+	ld bc, $095e ; $54ff
+	call Func_00_1f51 ; $5502
+	ret ; $5505
+	ld bc, $0000 ; $5506
+	ld hl, $c452 ; $5509
+	ld a, [hl+] ; $550c
+	ld d, [hl] ; $550d
+	ld e, a ; $550e
+	ld hl, $c450 ; $550f
+	ld a, [hl+] ; $5512
+	ld h, [hl] ; $5513
+	ld l, a ; $5514
+	call Func_08_59b8 ; $5515
+	call Func_08_59bb ; $5518
+	ld bc, $0c5e ; $551b
+	call Func_00_1f51 ; $551e
+	ret ; $5521
 Func_08_5522:
 	ld a, [$c78c] ; $5522
 	and a, a ; $5525
@@ -3737,7 +3783,15 @@ Func_08_59bb:
 	add hl, hl ; $59d1
 	ld e, h ; $59d2
 	ret ; $59d3
-	INCBIN "data/bank_008/d_59d4.bin" ; $59d4, 14 bytes
+	bit 7, h ; $59d4
+	jp z, Func_00_0c8f ; $59d6
+	xor a, a ; $59d9
+	sub a, l ; $59da
+	ld l, a ; $59db
+	sbc a, a ; $59dc
+	sub a, h ; $59dd
+	ld h, a ; $59de
+	call Func_00_0c8f ; $59df
 Label_08_59e2:
 	ldh a, [$ffa8] ; $59e2
 	cpl ; $59e4
@@ -3836,7 +3890,8 @@ Func_08_5a51:
 	ld d, l ; $5a5d
 	ld e, a ; $5a5e
 	ret ; $5a5f
-	INCBIN "data/bank_008/d_5a60.bin" ; $5a60, 3 bytes
+	bit 7, d ; $5a60
+	ret z ; $5a62
 Func_08_5a63:
 	cpl ; $5a63
 	inc a ; $5a64
@@ -3858,7 +3913,21 @@ Label_08_5a6e:
 	ld d, a ; $5a74
 	pop af ; $5a75
 	ret ; $5a76
-	INCBIN "data/bank_008/d_5a77.bin" ; $5a77, 16 bytes
+	ld a, e ; $5a77
+	add a, [hl] ; $5a78
+	ld [hl+], a ; $5a79
+	ld a, d ; $5a7a
+	adc a, [hl] ; $5a7b
+	ld [hl+], a ; $5a7c
+	bit 7, d ; $5a7d
+	jr nz, Label_08_5a84 ; $5a7f
+	ret nc ; $5a81
+	inc [hl] ; $5a82
+	ret ; $5a83
+Label_08_5a84:
+	ret c ; $5a84
+	dec [hl] ; $5a85
+	ret ; $5a86
 Func_08_5a87:
 	ld a, [de] ; $5a87
 	add a, [hl] ; $5a88
@@ -4631,7 +4700,18 @@ Label_08_6034:
 	ld hl, $6059 ; $603f
 	call Func_08_6a3a ; $6042
 	ret ; $6045
-	INCBIN "data/bank_008/d_6046.bin" ; $6046, 29 bytes
+	ld a, $06 ; $6046
+	call Func_08_6a1c ; $6048
+	call Func_08_60d8 ; $604b
+	call Func_08_69ae ; $604e
+	ld hl, $df0f ; $6051
+	res 1, [hl] ; $6054
+	res 0, [hl] ; $6056
+	ret ; $6058
+	ld hl, $0fe0 ; $6059
+	ld de, $0fe0 ; $605c
+	call Func_08_6988 ; $605f
+	ret ; $6062
 Func_08_6063:
 	ld de, $df19 ; $6063
 	ld b, $ff ; $6066
@@ -5346,7 +5426,16 @@ Func_08_6527:
 	ld d, [hl] ; $6530
 	ld hl, $6301 ; $6531
 	jp Func_00_1e9d ; $6534
-	INCBIN "data/bank_008/d_6537.bin" ; $6537, 13 bytes
+	ld a, [hl+] ; $6537
+	cp a, $ff ; $6538
+	ret z ; $653a
+	ld c, a ; $653b
+	ld a, [hl+] ; $653c
+	ld b, a ; $653d
+	ld a, [hl+] ; $653e
+	ld e, a ; $653f
+	ld d, [hl] ; $6540
+	jp Func_00_1e55 ; $6541
 Func_08_6544:
 	call Func_08_4070 ; $6544
 	ld a, $02 ; $6547
@@ -7100,7 +7189,36 @@ Label_08_70ab:
 	ld a, [hl] ; $70af
 	ld [$df14], a ; $70b0
 	ret ; $70b3
-	INCBIN "data/bank_008/d_70b4.bin" ; $70b4, 65 bytes
+	INCBIN "data/bank_008/d_70b4.bin" ; $70b4, 16 bytes
+Func_08_70c4:
+	ld hl, $c424 ; $70c4
+	ld a, [hl+] ; $70c7
+	ld d, [hl] ; $70c8
+	ld e, a ; $70c9
+	ld hl, $c44b ; $70ca
+	bit 7, [hl] ; $70cd
+	jr nz, Label_08_70e0 ; $70cf
+	ld l, $00 ; $70d1
+	ld a, [$c44a] ; $70d3
+	ld h, a ; $70d6
+	ld a, [$c44b] ; $70d7
+	call Func_00_0ea6 ; $70da
+	ld e, l ; $70dd
+	ld d, h ; $70de
+	ret ; $70df
+Label_08_70e0:
+	ld l, $ff ; $70e0
+	ld a, [$c44a] ; $70e2
+	cpl ; $70e5
+	ld h, a ; $70e6
+	ld a, [$c44b] ; $70e7
+	cpl ; $70ea
+	call Func_00_0ea6 ; $70eb
+	ld e, l ; $70ee
+	ld d, h ; $70ef
+	ret ; $70f0
+	call Func_08_70c4 ; $70f1
+	ret ; $70f4
 Func_08_70f5:
 	ld hl, $c40e ; $70f5
 	ld a, [hl+] ; $70f8
@@ -7344,7 +7462,10 @@ Func_08_7267:
 	ld [$df4e], a ; $7272
 	ld a, $01 ; $7275
 	ret ; $7277
-	INCBIN "data/bank_008/d_7278.bin" ; $7278, 8 bytes
+	ld a, b ; $7278
+	ld [$df4d], a ; $7279
+	xor a, a ; $727c
+	ld [$df4e], a ; $727d
 Label_08_7280:
 	ld hl, $df4e ; $7280
 	inc [hl] ; $7283
@@ -8231,7 +8352,31 @@ Func_08_780c:
 	ld h, [hl] ; $781c
 	ld l, a ; $781d
 	jp hl ; $781e
-	INCBIN "data/bank_008/d_781f.bin" ; $781f, 54 bytes
+	INCBIN "data/bank_008/d_781f.bin" ; $781f, 14 bytes
+	ldh a, [$ffd3] ; $782d
+	ld [$df1f], a ; $782f
+	ret ; $7832
+	ldh a, [$ffc2] ; $7833
+	cp a, $02 ; $7835
+	jr z, Label_08_784f ; $7837
+	cp a, $01 ; $7839
+	jr z, Label_08_784b ; $783b
+	jr Label_08_7855 ; $783d
+	ldh a, [$ffc2] ; $783f
+	cp a, $02 ; $7841
+	jr z, Label_08_784b ; $7843
+	cp a, $01 ; $7845
+	jr z, Label_08_784f ; $7847
+	jr Label_08_7855 ; $7849
+Label_08_784b:
+	ldh a, [$ffd5] ; $784b
+	jr Label_08_7851 ; $784d
+Label_08_784f:
+	ldh a, [$ffd4] ; $784f
+Label_08_7851:
+	ld [$df1f], a ; $7851
+	ret ; $7854
+Label_08_7855:
 	ldh a, [hPlayerInputFlags] ; $7855
 	and a, $f0 ; $7857
 	ld c, a ; $7859
@@ -8965,7 +9110,9 @@ Label_08_7d23:
 	dw Label_08_7d48 ; $7d31 jumptable
 	dw Label_08_7d55 ; $7d33 jumptable
 	dw Label_08_7d3e ; $7d35 jumptable
-	INCBIN "data/bank_008/d_7d37.bin" ; $7d37, 7 bytes
+	call Func_08_79e0 ; $7d37
+	and a, a ; $7d3a
+	jp nz, Label_08_796d ; $7d3b
 Label_08_7d3e:
 	jp Label_08_7992 ; $7d3e
 Label_08_7d41:
