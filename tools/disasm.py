@@ -23,6 +23,7 @@ LDIMM_RE = re.compile(r"^ld (hl|de|bc), \$([0-9a-f]{1,4})$")
 sys.path.insert(0, str(Path(__file__).parent))
 import lz
 import sm83
+from extract import render_spec
 
 BANK_SIZE = 0x4000
 
@@ -1525,16 +1526,15 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                             j = k
                         scpu = offset_to_cpu(seg)
                         # A declared data table renders as structured source
-                        # (palettes/records/bytes) via extract.py, keyed by
-                        # the manifest spec column.
+                        # (palettes/records/bytes) inline, using the same
+                        # renderer extract.py applies to blobs.
                         if seg in data_tables:
                             spec = data_tables[seg]
-                            kind = spec.split(":")[0]
                             if seg in labels:
                                 lines.append(f"{labels[seg]}:")
-                            blob = f"bank_{bank:03x}/{kind}_{scpu:04x}.asm"
-                            lines.append(f'\tINCLUDE "data/{blob}" ; ${scpu:04x}, {j - seg} bytes')
-                            manifest.append((blob, seg, j - seg, spec))
+                            lines.append(f"\t; ${scpu:04x}, {j - seg} bytes ({spec})")
+                            body = render_spec(rom[seg:j], spec).rstrip("\n")
+                            lines.extend(body.split("\n"))
                             seg = j
                             continue
                         # ASCII dominance (plus the $00-$03 text control

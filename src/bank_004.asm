@@ -1686,7 +1686,11 @@ Label_04_4c26:
 	pop hl ; $4c27
 	ret ; $4c28
 TileIdLookup_04_4c29:
-	INCLUDE "data/bank_004/bytes_4c29.asm" ; $4c29, 32 bytes
+	; $4c29, 32 bytes (bytes:8)
+	db $26, $27, $28, $29, $64, $69, $66, $6a ; 0x00
+	db $68, $6b, $65, $67, $4a, $5e, $5d, $60 ; 0x08
+	db $5f, $49, $62, $61, $4b, $4f, $4f, $6d ; 0x10
+	db $6e, $6f, $2a, $2b, $2c, $2d, $48, $2e ; 0x18
 Func_04_4c49:
 	ld a, e ; $4c49
 	or a, d ; $4c4a

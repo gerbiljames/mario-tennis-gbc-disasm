@@ -440,7 +440,8 @@ Func_08_430f:
 	ld a, [hl] ; $4319
 	call Func_08_6a1c ; $431a
 	ret ; $431d
-	INCLUDE "data/bank_008/bytes_431e.asm" ; $431e, 8 bytes
+	; $431e, 8 bytes (bytes:8)
+	db $00, $02, $01, $02, $02, $01, $06, $07 ; 0x00
 Func_08_4326:
 	ld a, [wRallyLength] ; $4326
 	cp a, $02 ; $4329
@@ -1164,7 +1165,8 @@ Func_08_47cd:
 	ld a, [hl] ; $47d9
 	ld [wTotalPointsScoredInCurrentGame], a ; $47da
 	ret ; $47dd
-	INCLUDE "data/bank_008/bytes_47de.asm" ; $47de, 4 bytes
+	; $47de, 4 bytes (bytes:4)
+	db $00, $12, $0c, $06 ; 0x00
 Func_08_47e2:
 	ld hl, $47ef ; $47e2
 	push hl ; $47e5
@@ -1301,7 +1303,8 @@ Label_08_48c9:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $48dc
 	jp z, Func_08_48ed ; $48df
 	jp Label_08_491a ; $48e2
-	INCLUDE "data/bank_008/bytes_48e5.asm" ; $48e5, 8 bytes
+	; $48e5, 8 bytes (bytes:8)
+	db $d9, $49, $d9, $49, $59, $4b, $99, $4a ; 0x00
 Func_08_48ed:
 	add a, a ; $48ed
 	add a, a ; $48ee
@@ -1901,7 +1904,8 @@ Func_08_4c7a:
 	ld [$df0d], a ; $4ca7
 	ld [$df0e], a ; $4caa
 	ret ; $4cad
-	INCLUDE "data/bank_008/bytes_4cae.asm" ; $4cae, 4 bytes
+	; $4cae, 4 bytes (bytes:4)
+	db $c0, $c0, $40, $40 ; 0x00
 	call Func_08_6098 ; $4cb2
 	call Func_08_6988 ; $4cb5
 	ret ; $4cb8
@@ -2259,7 +2263,8 @@ Label_08_4f37:
 	ld a, [hl] ; $4f9b
 	call Func_08_6a1c ; $4f9c
 	ret ; $4f9f
-	INCLUDE "data/bank_008/bytes_4fa0.asm" ; $4fa0, 4 bytes
+	; $4fa0, 4 bytes (bytes:4)
+	db $03, $05, $04, $05 ; 0x00
 Func_08_4fa4:
 	xor a, a ; $4fa4
 	ld [$c4bc], a ; $4fa5
@@ -2472,7 +2477,16 @@ Label_08_50ca:
 	ld d, a ; $50da
 Label_08_50db:
 	ret ; $50db
-	INCLUDE "data/bank_008/records_50dc.asm" ; $50dc, 64 bytes
+	; $50dc, 64 bytes (records:8)
+; 8 records x 8 bytes
+	dw $0180, $031f, $2a94, $0000 ; record 0
+	dw $0180, $031f, $01df, $0000 ; record 1
+	dw $0180, $031f, $7e00, $0000 ; record 2
+	dw $0180, $031f, $589f, $0000 ; record 3
+	dw $0180, $031f, $03e0, $0000 ; record 4
+	dw $0180, $031f, $4009, $0000 ; record 5
+	dw $0180, $031f, $7fe0, $0000 ; record 6
+	dw $0180, $031f, $7ffe, $0000 ; record 7
 Func_08_511c:
 	xor a, a ; $511c
 	ld [$c4ba], a ; $511d
@@ -2844,7 +2858,9 @@ Func_08_5342:
 	ret z ; $536e
 	farcall FarPtr_28_08 ; $536f
 	ret ; $5372
-	INCLUDE "data/bank_008/bytes_5373.asm" ; $5373, 16 bytes
+	; $5373, 16 bytes (bytes:8)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08
 Func_08_5383:
 	ld hl, $c40a ; $5383
 	ld a, [hl+] ; $5386
@@ -2988,7 +3004,11 @@ Func_08_5436:
 	ret z ; $5467
 	farcall FarPtr_28_04 ; $5468
 	ret ; $546b
-	INCLUDE "data/bank_008/bytes_546c.asm" ; $546c, 16 bytes
+	; $546c, 16 bytes (bytes:4)
+	db $ff, $ff, $ff, $03 ; 0x00
+	db $ff, $ff, $ff, $02 ; 0x04
+	db $ff, $ff, $ff, $01 ; 0x08
+	db $ff, $ff, $ff, $00 ; 0x0c
 Func_08_547c:
 	ld a, $28 ; $547c
 	ld [$c4ab], a ; $547e
@@ -3026,7 +3046,12 @@ Func_08_5482:
 	ret z ; $54bd
 	farcall FarPtr_28_06 ; $54be
 	ret ; $54c1
-	INCLUDE "data/bank_008/bytes_54c2.asm" ; $54c2, 40 bytes
+	; $54c2, 40 bytes (bytes:8)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x10
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x18
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x20
 	ld bc, $0000 ; $54ea
 	ld hl, $c432 ; $54ed
 	ld a, [hl+] ; $54f0
@@ -3116,7 +3141,12 @@ Func_08_5522:
 	ld bc, $0926 ; $5599
 	call Func_00_1e9d ; $559c
 	ret ; $559f
-	INCLUDE "data/bank_008/records_55a0.asm" ; $55a0, 20 bytes
+	; $55a0, 20 bytes (records:5)
+; 4 records x 5 bytes
+	db $10, $08, $00, $00, $80 ; record 0
+	db $10, $01, $00, $00, $80 ; record 1
+	db $09, $08, $00, $00, $80 ; record 2
+	db $09, $01, $00, $00, $80 ; record 3
 Func_08_55b4:
 	ld a, [$c42d] ; $55b4
 	bit 7, a ; $55b7
@@ -4422,7 +4452,32 @@ Label_08_5dbc:
 	add a, a ; $5dc1
 	dec a ; $5dc2
 	ret ; $5dc3
-	INCLUDE "data/bank_008/bytes_5dc4.asm" ; $5dc4, 100 bytes
+	; $5dc4, 100 bytes (bytes:4)
+	db $cd, $cd, $05, $21 ; 0x00
+	db $b3, $99, $04, $22 ; 0x04
+	db $e6, $99, $02, $23 ; 0x08
+	db $f0, $b3, $08, $20 ; 0x0c
+	db $e6, $cd, $0a, $11 ; 0x10
+	db $cd, $b3, $0d, $12 ; 0x14
+	db $f0, $99, $09, $13 ; 0x18
+	db $e6, $e6, $0f, $16 ; 0x1c
+	db $b3, $cd, $0c, $14 ; 0x20
+	db $cd, $b3, $03, $25 ; 0x24
+	db $cd, $b3, $06, $1e ; 0x28
+	db $cd, $b3, $0e, $1f ; 0x2c
+	db $e6, $99, $07, $28 ; 0x30
+	db $e6, $99, $02, $27 ; 0x34
+	db $cd, $b3, $00, $29 ; 0x38
+	db $cd, $b3, $01, $17 ; 0x3c
+	db $e6, $cd, $0a, $18 ; 0x40
+	db $cd, $b3, $00, $16 ; 0x44
+	db $e6, $cd, $0a, $11 ; 0x48
+	db $cd, $b3, $00, $12 ; 0x4c
+	db $b3, $cd, $0c, $14 ; 0x50
+	db $b3, $cd, $0c, $19 ; 0x54
+	db $cd, $b3, $00, $13 ; 0x58
+	db $b3, $cd, $0c, $15 ; 0x5c
+	db $cd, $b3, $03, $24 ; 0x60
 Func_08_5e28:
 	ldh a, [$ff96] ; $5e28
 	push af ; $5e2a
@@ -4788,7 +4843,12 @@ Label_08_60ba:
 	ld h, a ; $60c6
 Label_08_60c7:
 	ret ; $60c7
-	INCLUDE "data/bank_008/records_60c8.asm" ; $60c8, 16 bytes
+	; $60c8, 16 bytes (records:4)
+; 4 records x 4 bytes
+	dw $0120, $04e0 ; record 0
+	dw $0140, $0460 ; record 1
+	dw $00c0, $01c0 ; record 2
+	dw $00c0, $0300 ; record 3
 Func_08_60d8:
 	ld a, [$df09] ; $60d8
 	add a, a ; $60db
@@ -4828,7 +4888,12 @@ Label_08_60fa:
 	ld h, a ; $6105
 Label_08_6106:
 	ret ; $6106
-	INCLUDE "data/bank_008/records_6107.asm" ; $6107, 16 bytes
+	; $6107, 16 bytes (records:4)
+; 4 records x 4 bytes
+	dw $0300, $0240 ; record 0
+	dw $0300, $0240 ; record 1
+	dw $0300, $0180 ; record 2
+	dw $0300, $0180 ; record 3
 Func_08_6117:
 	ld b, $44 ; $6117
 	ld a, [$c8f5] ; $6119
@@ -5157,7 +5222,11 @@ Label_08_62a5:
 	ld [hl+], a ; $62fe
 	ld [hl], d ; $62ff
 	ret ; $6300
-	INCLUDE "data/bank_008/bytes_6301.asm" ; $6301, 13 bytes
+	; $6301, 13 bytes (bytes:4)
+	db $02, $fc, $00, $00 ; 0x00
+	db $02, $04, $02, $00 ; 0x04
+	db $02, $0c, $04, $00 ; 0x08
+	db $80 ; 0x0c
 Func_08_630e:
 	ld a, $ff ; $630e
 	ld [$de00], a ; $6310
@@ -7164,7 +7233,8 @@ Func_08_706b:
 	ld a, [hl] ; $7075
 	ld [$df14], a ; $7076
 	ret ; $7079
-	INCLUDE "data/bank_008/bytes_707a.asm" ; $707a, 4 bytes
+	; $707a, 4 bytes (bytes:4)
+	db $0c, $0c, $0d, $0e ; 0x00
 Func_08_707e:
 	ld a, [$df17] ; $707e
 	add a, a ; $7081
@@ -7182,14 +7252,22 @@ Func_08_707e:
 	ld a, [hl] ; $7096
 	ld [$df14], a ; $7097
 	ret ; $709a
-	INCLUDE "data/bank_008/bytes_709b.asm" ; $709b, 16 bytes
+	; $709b, 16 bytes (bytes:4)
+	db $08, $08, $08, $04 ; 0x00
+	db $08, $06, $0b, $04 ; 0x04
+	db $08, $0a, $07, $04 ; 0x08
+	db $04, $04, $04, $04 ; 0x0c
 Label_08_70ab:
 	ld hl, $70b4 ; $70ab
 	add hl, de ; $70ae
 	ld a, [hl] ; $70af
 	ld [$df14], a ; $70b0
 	ret ; $70b3
-	INCLUDE "data/bank_008/bytes_70b4.asm" ; $70b4, 16 bytes
+	; $70b4, 16 bytes (bytes:4)
+	db $00, $00, $02, $04 ; 0x00
+	db $00, $01, $0b, $04 ; 0x04
+	db $00, $0a, $03, $04 ; 0x08
+	db $04, $04, $04, $04 ; 0x0c
 Func_08_70c4:
 	ld hl, $c424 ; $70c4
 	ld a, [hl+] ; $70c7
@@ -7471,7 +7549,11 @@ Label_08_7280:
 	inc [hl] ; $7283
 	xor a, a ; $7284
 	ret ; $7285
-	INCLUDE "data/bank_008/bytes_7286.asm" ; $7286, 32 bytes
+	; $7286, 32 bytes (bytes:8)
+	db $ff, $00, $80, $ff, $c0, $e0, $a0, $c0 ; 0x00
+	db $40, $20, $60, $40, $ff, $00, $80, $ff ; 0x08
+	db $10, $90, $90, $80, $80, $a0, $a0, $20 ; 0x10
+	db $20, $60, $60, $40, $40, $50, $50, $10 ; 0x18
 Func_08_72a6:
 	ld hl, $df0f ; $72a6
 	bit 2, [hl] ; $72a9
@@ -8060,7 +8142,8 @@ Func_08_7621:
 	ld e, l ; $763e
 	ld d, h ; $763f
 	jp Label_00_2e6b ; $7640
-	INCLUDE "data/bank_008/bytes_7643.asm" ; $7643, 8 bytes
+	; $7643, 8 bytes (bytes:8)
+	db $02, $03, $04, $03, $02, $01, $00, $01 ; 0x00
 Func_08_764b:
 	ld a, [$df51] ; $764b
 	and a, a ; $764e
@@ -8171,7 +8254,8 @@ Label_08_76d4:
 	ld [hl+], a ; $76f9
 	ld [hl], d ; $76fa
 	ret ; $76fb
-	INCLUDE "data/bank_008/bytes_76fc.asm" ; $76fc, 8 bytes
+	; $76fc, 8 bytes (bytes:8)
+	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 Label_08_7704:
 	ld a, [$c4c4] ; $7704
 	and a, a ; $7707
@@ -8352,7 +8436,15 @@ Func_08_780c:
 	ld h, [hl] ; $781c
 	ld l, a ; $781d
 	jp hl ; $781e
-	INCLUDE "data/bank_008/records_781f.asm" ; $781f, 14 bytes
+	; $781f, 14 bytes (records:2)
+; 7 records x 2 bytes
+	dw $7855 ; record 0
+	dw $7863 ; record 1
+	dw $7855 ; record 2
+	dw $7855 ; record 3
+	dw $782d ; record 4
+	dw $7833 ; record 5
+	dw $783f ; record 6
 	ldh a, [$ffd3] ; $782d
 	ld [$df1f], a ; $782f
 	ret ; $7832
@@ -8686,7 +8778,16 @@ Label_08_7a35:
 	ld h, b ; $7a36
 	call Func_08_69ae ; $7a37
 	jp Label_08_7968 ; $7a3a
-	INCLUDE "data/bank_008/records_7a3d.asm" ; $7a3d, 16 bytes
+	; $7a3d, 16 bytes (records:2)
+; 8 records x 2 bytes
+	dw $0020 ; record 0
+	dw $0020 ; record 1
+	dw $0080 ; record 2
+	dw $00e0 ; record 3
+	dw $0140 ; record 4
+	dw $0180 ; record 5
+	dw $0180 ; record 6
+	dw $0180 ; record 7
 Label_08_7a4d:
 	call Func_08_7908 ; $7a4d
 	call Func_08_78be ; $7a50
@@ -8766,7 +8867,8 @@ Label_08_7b02:
 	or a, b ; $7b08
 	ld [hl], a ; $7b09
 	ret ; $7b0a
-	INCLUDE "data/bank_008/bytes_7b0b.asm" ; $7b0b, 8 bytes
+	; $7b0b, 8 bytes (bytes:8)
+	db $10, $10, $10, $10, $20, $20, $20, $20 ; 0x00
 Func_08_7b13:
 	ld c, a ; $7b13
 	call Func_08_43f6 ; $7b14
@@ -8830,7 +8932,8 @@ Func_08_7b62:
 	ld a, [hl] ; $7b6e
 	ld [$df58], a ; $7b6f
 	ret ; $7b72
-	INCLUDE "data/bank_008/bytes_7b73.asm" ; $7b73, 8 bytes
+	; $7b73, 8 bytes (bytes:8)
+	db $10, $10, $10, $20, $20, $30, $30, $30 ; 0x00
 Func_08_7b7b:
 	ld a, [$c4da] ; $7b7b
 	and a, a ; $7b7e

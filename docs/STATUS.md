@@ -163,8 +163,8 @@ padding). The ~281 bytes of code stranded behind computed jumps were recovered
 as static seeds (`coverage/bank08_static_code.json`), taking the bank from
 94.7% to 96.4% code. The 24 genuine data tables were then structured via
 `data_tables.json` render specs (a `records:2` jump table, `records:4/5/8` and
-`bytes:4/8` lookup/record tables) — they now render as in-source `db`/`dw`
-instead of blobs. Strides were verified against the reading code where a direct
+`bytes:4/8` lookup/record tables) — `disasm.py` now renders these inline as
+committed `db`/`dw` in the bank `.asm` (not gitignored INCBIN blobs). Strides were verified against the reading code where a direct
 `ld hl,$xxxx` exists (e.g. `$709b`/`$70b4` are indexed `hl + i*4`; `$55a0`
 strides by 5); tables reached only through computed pointers (`$5dc4`,
 rendered `bytes:4` as a 25×4 grid) got their stride from the byte layout.

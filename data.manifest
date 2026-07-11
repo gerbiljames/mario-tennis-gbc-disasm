@@ -115,7 +115,6 @@ bank_004/d_47ba.bin 0107ba 6a
 bank_004/d_483d.bin 01083d 11
 bank_004/d_497b.bin 01097b 63
 bank_004/d_4a1f.bin 010a1f 8
-bank_004/bytes_4c29.asm 010c29 20 bytes:8
 bank_004/d_4d63.bin 010d63 108
 bank_004/d_4ec8.bin 010ec8 48
 bank_004/d_4f75.bin 010f75 ec
@@ -210,36 +209,11 @@ bank_007/d_5aa7.bin 01daa7 c
 bank_007/d_5c42.bin 01dc42 b2
 bank_007/d_5d1e.bin 01dd1e db
 bank_007/d_5ea1.bin 01dea1 195
-bank_008/bytes_431e.asm 02031e 8 bytes:8
-bank_008/bytes_47de.asm 0207de 4 bytes:4
-bank_008/bytes_48e5.asm 0208e5 8 bytes:8
 bank_008/d_4c18.bin 020c18 1
-bank_008/bytes_4cae.asm 020cae 4 bytes:4
-bank_008/bytes_4fa0.asm 020fa0 4 bytes:4
-bank_008/records_50dc.asm 0210dc 40 records:8
-bank_008/bytes_5373.asm 021373 10 bytes:8
-bank_008/bytes_546c.asm 02146c 10 bytes:4
-bank_008/bytes_54c2.asm 0214c2 28 bytes:8
-bank_008/records_55a0.asm 0215a0 14 records:5
-bank_008/bytes_5dc4.asm 021dc4 64 bytes:4
-bank_008/records_60c8.asm 0220c8 10 records:4
-bank_008/records_6107.asm 022107 10 records:4
-bank_008/bytes_6301.asm 022301 d bytes:4
 bank_008/d_6957.bin 022957 1
 bank_008/d_6d26.bin 022d26 1
-bank_008/bytes_707a.asm 02307a 4 bytes:4
-bank_008/bytes_709b.asm 02309b 10 bytes:4
-bank_008/bytes_70b4.asm 0230b4 10 bytes:4
-bank_008/bytes_7286.asm 023286 20 bytes:8
-bank_008/bytes_7643.asm 023643 8 bytes:8
-bank_008/bytes_76fc.asm 0236fc 8 bytes:8
-bank_008/records_781f.asm 02381f e records:2
-bank_008/records_7a3d.asm 023a3d 10 records:2
 bank_008/d_7a9d.bin 023a9d 40
-bank_008/bytes_7b0b.asm 023b0b 8 bytes:8
-bank_008/bytes_7b73.asm 023b73 8 bytes:8
 bank_008/d_7fc3.bin 023fc3 3d
-bank_009/records_41bc.asm 0241bc 70 records:16
 bank_009/d_4298.bin 024298 40
 bank_009/d_4300.bin 024300 10
 bank_009/d_4327.bin 024327 40
@@ -3989,7 +3963,6 @@ bank_06b/d_436f.bin 1ac36f 40
 bank_06b/d_44d0.bin 1ac4d0 40
 bank_06b/d_475a.bin 1ac75a 40
 bank_06b/d_4885.bin 1ac885 db
-bank_06b/palettes_4a58.asm 1aca58 40 palettes
 bank_06b/d_4c00.bin 1acc00 38
 bank_06b/d_4cc1.bin 1accc1 a0
 bank_06b/d_4d84.bin 1acd84 a9
