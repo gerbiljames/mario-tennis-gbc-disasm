@@ -55,9 +55,7 @@ FarPtr_04_2e:
 FarPtr_04_30:
 	dw LookupTileId_04 ; $4030
 Func_04_4032:
-	ld a, $04 ; $4032
-	ldh [$ff96], a ; $4034
-	ldh [rWBK], a ; $4036
+	wram_bank $04 ; $4032
 	ld hl, $d000 ; $4038
 	ld c, $60 ; $403b
 	call ClearMemory16 ; $403d
@@ -75,9 +73,7 @@ Func_04_4055:
 	push af ; $4055
 	push de ; $4056
 	push hl ; $4057
-	ld a, $04 ; $4058
-	ldh [$ff96], a ; $405a
-	ldh [rWBK], a ; $405c
+	wram_bank $04 ; $4058
 	ld hl, $d000 ; $405e
 	ld c, $18 ; $4061
 Label_04_4063:
@@ -140,9 +136,7 @@ Label_04_40af:
 	push af ; $40af
 	push bc ; $40b0
 	push af ; $40b1
-	ld a, $04 ; $40b2
-	ldh [$ff96], a ; $40b4
-	ldh [rWBK], a ; $40b6
+	wram_bank $04 ; $40b2
 	ld a, l ; $40b8
 	ld [bc], a ; $40b9
 	inc bc ; $40ba
@@ -164,9 +158,7 @@ Func_04_40c6:
 	push af ; $40c9
 	push de ; $40ca
 	push hl ; $40cb
-	ld a, $04 ; $40cc
-	ldh [$ff96], a ; $40ce
-	ldh [rWBK], a ; $40d0
+	wram_bank $04 ; $40cc
 	push hl ; $40d2
 	ld hl, $000e ; $40d3
 	add hl, bc ; $40d6
@@ -200,9 +192,7 @@ Func_04_4148:
 	ret z ; $414a
 	push af ; $414b
 	push hl ; $414c
-	ld a, $04 ; $414d
-	ldh [$ff96], a ; $414f
-	ldh [rWBK], a ; $4151
+	wram_bank $04 ; $414d
 	ld hl, $0020 ; $4153
 	add hl, bc ; $4156
 	ld [hl], d ; $4157
@@ -237,9 +227,7 @@ Func_04_417b:
 	push af ; $417e
 	push de ; $417f
 	push hl ; $4180
-	ld a, $04 ; $4181
-	ldh [$ff96], a ; $4183
-	ldh [rWBK], a ; $4185
+	wram_bank $04 ; $4181
 	ld hl, $0016 ; $4187
 	add hl, bc ; $418a
 	ld a, e ; $418b
@@ -287,9 +275,7 @@ Func_04_41a6:
 	pop af ; $41cf
 	ret ; $41d0
 	INCBIN "data/bank_004/d_41d1.bin" ; $41d1, 22 bytes
-	ld a, $04 ; $41e7
-	ldh [$ff96], a ; $41e9
-	ldh [rWBK], a ; $41eb
+	wram_bank $04 ; $41e7
 	ld hl, $d000 ; $41ed
 	ld c, $18 ; $41f0
 Label_04_41f2:
@@ -697,9 +683,7 @@ Func_04_440a:
 	push af ; $440a
 	push de ; $440b
 	push hl ; $440c
-	ld a, $04 ; $440d
-	ldh [$ff96], a ; $440f
-	ldh [rWBK], a ; $4411
+	wram_bank $04 ; $440d
 	ld hl, $000c ; $4413
 	add hl, bc ; $4416
 	ld a, [hl+] ; $4417
@@ -1417,9 +1401,7 @@ Label_04_4a6d:
 	ret ; $4a81
 	test_flag $02, 4 ; $4a82
 	ret nz ; $4a85
-	ld a, $04 ; $4a86
-	ldh [$ff96], a ; $4a88
-	ldh [rWBK], a ; $4a8a
+	wram_bank $04 ; $4a86
 	call Func_04_4a27 ; $4a8c
 	ld bc, $d000 ; $4a8f
 	ld e, $18 ; $4a92
@@ -1464,9 +1446,7 @@ Func_04_4ac6:
 	push af ; $4ac6
 	push de ; $4ac7
 	push hl ; $4ac8
-	ld a, $04 ; $4ac9
-	ldh [$ff96], a ; $4acb
-	ldh [rWBK], a ; $4acd
+	wram_bank $04 ; $4ac9
 	ld hl, $0021 ; $4acf
 	add hl, bc ; $4ad2
 	ld [hl], d ; $4ad3
@@ -1605,9 +1585,7 @@ Func_04_4bbe:
 	push af ; $4bbe
 	push de ; $4bbf
 	push hl ; $4bc0
-	ld a, $04 ; $4bc1
-	ldh [$ff96], a ; $4bc3
-	ldh [rWBK], a ; $4bc5
+	wram_bank $04 ; $4bc1
 	ld hl, $002e ; $4bc7
 	add hl, bc ; $4bca
 	ld a, [hl] ; $4bcb
@@ -1833,11 +1811,9 @@ Func_04_4cf7:
 	push de ; $4cf9
 	push hl ; $4cfa
 	ld b, a ; $4cfb
-	ldh a, [$ff96] ; $4cfc
+	ldh a, [hWramBank] ; $4cfc
 	push af ; $4cfe
-	ld a, $04 ; $4cff
-	ldh [$ff96], a ; $4d01
-	ldh [rWBK], a ; $4d03
+	wram_bank $04 ; $4cff
 	ld a, b ; $4d05
 Label_04_4d06:
 	push af ; $4d06
@@ -1856,8 +1832,7 @@ Label_04_4d06:
 Label_04_4d21:
 	pop af ; $4d21
 	pop af ; $4d22
-	ldh [$ff96], a ; $4d23
-	ldh [rWBK], a ; $4d25
+	wram_bank ; $4d23
 	pop hl ; $4d27
 	pop de ; $4d28
 	pop bc ; $4d29
@@ -1890,9 +1865,7 @@ Func_04_4e6b:
 	push bc ; $4e6c
 	push de ; $4e6d
 	push hl ; $4e6e
-	ld a, $04 ; $4e6f
-	ldh [$ff96], a ; $4e71
-	ldh [rWBK], a ; $4e73
+	wram_bank $04 ; $4e6f
 	push hl ; $4e75
 	push bc ; $4e76
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4e77
@@ -1945,9 +1918,7 @@ Func_04_4f10:
 	push bc ; $4f11
 	push de ; $4f12
 	push hl ; $4f13
-	ld a, $04 ; $4f14
-	ldh [$ff96], a ; $4f16
-	ldh [rWBK], a ; $4f18
+	wram_bank $04 ; $4f14
 	ld a, [$c94d] ; $4f1a
 	or a, a ; $4f1d
 	jr nz, Label_04_4f2c ; $4f1e
@@ -2140,9 +2111,7 @@ Label_04_5168:
 	pop de ; $5168
 	pop af ; $5169
 	ret ; $516a
-	ld a, $04 ; $516b
-	ldh [$ff96], a ; $516d
-	ldh [rWBK], a ; $516f
+	wram_bank $04 ; $516b
 	call Func_04_5456 ; $5171
 	ld hl, $ffea ; $5174
 	ld a, [hl+] ; $5177
@@ -3113,9 +3082,7 @@ Func_04_5703:
 	push bc ; $5706
 	push de ; $5707
 	push hl ; $5708
-	ld a, $04 ; $5709
-	ldh [$ff96], a ; $570b
-	ldh [rWBK], a ; $570d
+	wram_bank $04 ; $5709
 	ld c, l ; $570f
 	ld b, h ; $5710
 	ld hl, $0012 ; $5711
@@ -3154,9 +3121,7 @@ Func_04_5738:
 	dec h ; $5739
 	ret z ; $573a
 	push hl ; $573b
-	ld a, $04 ; $573c
-	ldh [$ff96], a ; $573e
-	ldh [rWBK], a ; $5740
+	wram_bank $04 ; $573c
 	ld a, $05 ; $5742
 	add a, l ; $5744
 	ld l, a ; $5745

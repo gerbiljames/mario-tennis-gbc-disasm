@@ -611,7 +611,7 @@ Label_00_04e3:
 Label_00_04e7:
 	ldh a, [$ff95] ; $04e7
 	ld [hl+], a ; $04e9
-	ldh a, [$ff96] ; $04ea
+	ldh a, [hWramBank] ; $04ea
 	ld [hl+], a ; $04ec
 	pop bc ; $04ed
 	ld [hl], b ; $04ee
@@ -672,7 +672,7 @@ Func_00_052e:
 	ret z ; $0531
 	ld hl, $c0a0 ; $0532
 	ld c, $0a ; $0535
-	ldh a, [$ff96] ; $0537
+	ldh a, [hWramBank] ; $0537
 	ld e, a ; $0539
 	ldh a, [$ff95] ; $053a
 	ld d, a ; $053c
@@ -687,8 +687,7 @@ Label_00_0540:
 	xor a, a ; $0549
 	ld [hl+], a ; $054a
 	ld a, [hl+] ; $054b
-	ldh [$ff96], a ; $054c
-	ldh [rWBK], a ; $054e
+	wram_bank ; $054c
 	ld e, $51 ; $0550
 	ld a, [hl+] ; $0552
 	ld [de], a ; $0553
@@ -711,8 +710,7 @@ Label_00_0540:
 Label_00_0566:
 	pop de ; $0566
 	ld a, e ; $0567
-	ldh [$ff96], a ; $0568
-	ldh [rWBK], a ; $056a
+	wram_bank ; $0568
 	ld a, d ; $056c
 	ldh [$ff95], a ; $056d
 	ld [$2000], a ; $056f
@@ -1087,60 +1085,44 @@ Func_00_086c:
 	push bc ; $086d
 	push de ; $086e
 	push hl ; $086f
-	ldh a, [$ff96] ; $0870
+	ldh a, [hWramBank] ; $0870
 	push af ; $0872
-	ld a, $01 ; $0873
-	ldh [$ff96], a ; $0875
-	ldh [rWBK], a ; $0877
+	wram_bank $01 ; $0873
 	ld hl, $d000 ; $0879
 	ld de, $c600 ; $087c
 	ld c, $20 ; $087f
 	call CopyMemoryFast ; $0881
-	ld a, $02 ; $0884
-	ldh [$ff96], a ; $0886
-	ldh [rWBK], a ; $0888
+	wram_bank $02 ; $0884
 	ld hl, $c600 ; $088a
 	ld de, $d000 ; $088d
 	call Func_00_07dd ; $0890
-	ld a, $01 ; $0893
-	ldh [$ff96], a ; $0895
-	ldh [rWBK], a ; $0897
+	wram_bank $01 ; $0893
 	ld hl, $d200 ; $0899
 	ld de, $c600 ; $089c
 	ld c, $20 ; $089f
 	call CopyMemoryFast ; $08a1
-	ld a, $02 ; $08a4
-	ldh [$ff96], a ; $08a6
-	ldh [rWBK], a ; $08a8
+	wram_bank $02 ; $08a4
 	ld hl, $c600 ; $08aa
 	ld de, $d800 ; $08ad
 	call Func_00_07dd ; $08b0
 	ld hl, $d800 ; $08b3
 	ld c, $80 ; $08b6
 	call ClearMemory16 ; $08b8
-	ld a, $01 ; $08bb
-	ldh [$ff96], a ; $08bd
-	ldh [rWBK], a ; $08bf
+	wram_bank $01 ; $08bb
 	ld hl, $d400 ; $08c1
 	ld de, $c600 ; $08c4
 	ld c, $20 ; $08c7
 	call CopyMemoryFast ; $08c9
-	ld a, $03 ; $08cc
-	ldh [$ff96], a ; $08ce
-	ldh [rWBK], a ; $08d0
+	wram_bank $03 ; $08cc
 	ld hl, $c600 ; $08d2
 	ld de, $d000 ; $08d5
 	call Func_00_07dd ; $08d8
-	ld a, $01 ; $08db
-	ldh [$ff96], a ; $08dd
-	ldh [rWBK], a ; $08df
+	wram_bank $01 ; $08db
 	ld hl, $d600 ; $08e1
 	ld de, $c600 ; $08e4
 	ld c, $20 ; $08e7
 	call CopyMemoryFast ; $08e9
-	ld a, $03 ; $08ec
-	ldh [$ff96], a ; $08ee
-	ldh [rWBK], a ; $08f0
+	wram_bank $03 ; $08ec
 	ld hl, $c600 ; $08f2
 	ld de, $d800 ; $08f5
 	call Func_00_07dd ; $08f8
@@ -1148,8 +1130,7 @@ Func_00_086c:
 	ld c, $80 ; $08fe
 	call ClearMemory16 ; $0900
 	pop af ; $0903
-	ldh [$ff96], a ; $0904
-	ldh [rWBK], a ; $0906
+	wram_bank ; $0904
 	pop hl ; $0908
 	pop de ; $0909
 	pop bc ; $090a
@@ -4037,7 +4018,7 @@ Func_00_1bff:
 	ret z ; $1c05
 	ldh a, [$ff95] ; $1c06
 	ld d, a ; $1c08
-	ldh a, [$ff96] ; $1c09
+	ldh a, [hWramBank] ; $1c09
 	ld e, a ; $1c0b
 	push de ; $1c0c
 	ld c, $10 ; $1c0d
@@ -4073,8 +4054,7 @@ Label_00_1c2c:
 	ldh [$ff95], a ; $1c34
 	ld [$2000], a ; $1c36
 	ld a, e ; $1c39
-	ldh [$ff96], a ; $1c3a
-	ldh [rWBK], a ; $1c3c
+	wram_bank ; $1c3a
 	ret ; $1c3e
 Func_00_1c3f:
 	ld c, $0f ; $1c3f
@@ -4749,9 +4729,7 @@ Func_00_222c:
 	call Func_00_220e ; $2254
 	pop de ; $2257
 	push hl ; $2258
-	ld a, $02 ; $2259
-	ldh [$ff96], a ; $225b
-	ldh [rWBK], a ; $225d
+	wram_bank $02 ; $2259
 	ld c, $20 ; $225f
 Label_00_2261:
 	ld a, [hl+] ; $2261
@@ -4769,9 +4747,7 @@ Label_00_226e:
 	dec c ; $2271
 	jr nz, Label_00_2261 ; $2272
 	pop hl ; $2274
-	ld a, $03 ; $2275
-	ldh [$ff96], a ; $2277
-	ldh [rWBK], a ; $2279
+	wram_bank $03 ; $2275
 	ld bc, $4020 ; $227b
 	ld a, e ; $227e
 	add a, b ; $227f
@@ -4812,9 +4788,7 @@ Func_00_2299:
 	call Func_00_220e ; $22b3
 	pop de ; $22b6
 	push hl ; $22b7
-	ld a, $02 ; $22b8
-	ldh [$ff96], a ; $22ba
-	ldh [rWBK], a ; $22bc
+	wram_bank $02 ; $22b8
 	ld c, $20 ; $22be
 Label_00_22c0:
 	ld a, [hl] ; $22c0
@@ -4830,9 +4804,7 @@ Label_00_22c0:
 	dec c ; $22cf
 	jr nz, Label_00_22c0 ; $22d0
 	pop hl ; $22d2
-	ld a, $03 ; $22d3
-	ldh [$ff96], a ; $22d5
-	ldh [rWBK], a ; $22d7
+	wram_bank $03 ; $22d3
 	ld bc, $4020 ; $22d9
 	ld a, e ; $22dc
 	add a, b ; $22dd
@@ -5181,18 +5153,15 @@ Label_00_25ad:
 	call Func_00_1e1d ; $25c8
 	call Func_00_1b38 ; $25cb
 	call Func_00_0465 ; $25ce
-	ldh a, [$ff96] ; $25d1
+	ldh a, [hWramBank] ; $25d1
 	push af ; $25d3
-	ld a, $07 ; $25d4
-	ldh [$ff96], a ; $25d6
-	ldh [rWBK], a ; $25d8
+	wram_bank $07 ; $25d4
 	ld hl, $d000 ; $25da
 	ld c, $00 ; $25dd
 	call ClearMemory16 ; $25df
 	call InitAudioEngine ; $25e2
 	pop af ; $25e5
-	ldh [$ff96], a ; $25e6
-	ldh [rWBK], a ; $25e8
+	wram_bank ; $25e6
 	ld a, $07 ; $25ea
 	ldh [rWX], a ; $25ec
 	ld a, $90 ; $25ee
@@ -5252,15 +5221,12 @@ Label_00_2641:
 	and a, $cf ; $264e
 	xor a, $05 ; $2650
 	ld [$c3a7], a ; $2652
-	ldh a, [$ff96] ; $2655
+	ldh a, [hWramBank] ; $2655
 	push af ; $2657
-	ld a, $07 ; $2658
-	ldh [$ff96], a ; $265a
-	ldh [rWBK], a ; $265c
+	wram_bank $07 ; $2658
 	call Func_00_305d ; $265e
 	pop af ; $2661
-	ldh [$ff96], a ; $2662
-	ldh [rWBK], a ; $2664
+	wram_bank ; $2662
 	ldh a, [rLY] ; $2666
 	ld l, a ; $2668
 	ldh a, [$ffa0] ; $2669
@@ -6679,12 +6645,11 @@ UpdateSoundEngine:
 	or a, a ; $2f1e
 	jr nz, Label_00_2f31 ; $2f1f
 	ld [hl], $01 ; $2f21
-	ldh a, [$ff96] ; $2f23
+	ldh a, [hWramBank] ; $2f23
 	push af ; $2f25
 	call Func_00_3373 ; $2f26
 	pop af ; $2f29
-	ldh [$ff96], a ; $2f2a
-	ldh [rWBK], a ; $2f2c
+	wram_bank ; $2f2a
 	xor a, a ; $2f2e
 	ldh [$ffd2], a ; $2f2f
 Label_00_2f31:
@@ -6698,13 +6663,12 @@ Func_00_2f32:
 	bit 0, [hl] ; $2f39
 	jr z, Label_00_2f4d ; $2f3b
 	res 0, [hl] ; $2f3d
-	ldh a, [$ff96] ; $2f3f
+	ldh a, [hWramBank] ; $2f3f
 	push af ; $2f41
 	ld a, [wCurrentBGM] ; $2f42
 	call PlaySound ; $2f45
 	pop af ; $2f48
-	ldh [$ff96], a ; $2f49
-	ldh [rWBK], a ; $2f4b
+	wram_bank ; $2f49
 Label_00_2f4d:
 	pop hl ; $2f4d
 	pop de ; $2f4e
@@ -6720,7 +6684,7 @@ Func_00_2f86:
 	ld b, a ; $2f8a
 	xor a, a ; $2f8b
 	ldh [$ffcd], a ; $2f8c
-	ldh a, [$ff96] ; $2f8e
+	ldh a, [hWramBank] ; $2f8e
 	push af ; $2f90
 	ld a, b ; $2f91
 	and a, $01 ; $2f92
@@ -6738,8 +6702,7 @@ Label_00_2fa5:
 Label_00_2fa6:
 	call PlaySound ; $2fa6
 	pop af ; $2fa9
-	ldh [$ff96], a ; $2faa
-	ldh [rWBK], a ; $2fac
+	wram_bank ; $2faa
 	pop hl ; $2fae
 	pop de ; $2faf
 	pop bc ; $2fb0
@@ -6798,23 +6761,21 @@ Label_00_2ffa:
 	bit 0, [hl] ; $2ffd
 	jr nz, Label_00_301f ; $2fff
 	ld h, a ; $3001
-	ldh a, [$ff96] ; $3002
+	ldh a, [hWramBank] ; $3002
 	push af ; $3004
 	ld a, h ; $3005
 	call PlaySound ; $3006
 	pop af ; $3009
-	ldh [$ff96], a ; $300a
-	ldh [rWBK], a ; $300c
+	wram_bank ; $300a
 	jr Label_00_301f ; $300e
 Label_00_3010:
 	ld h, a ; $3010
-	ldh a, [$ff96] ; $3011
+	ldh a, [hWramBank] ; $3011
 	push af ; $3013
 	ld a, h ; $3014
 	call PlaySound ; $3015
 	pop af ; $3018
-	ldh [$ff96], a ; $3019
-	ldh [rWBK], a ; $301b
+	wram_bank ; $3019
 	jr Label_00_301f ; $301d
 Label_00_301f:
 	pop hl ; $301f
@@ -6850,13 +6811,12 @@ Label_00_3040:
 	ld hl, $ffce ; $3043
 	bit 0, [hl] ; $3046
 	jr nz, Label_00_3058 ; $3048
-	ldh a, [$ff96] ; $304a
+	ldh a, [hWramBank] ; $304a
 	push af ; $304c
 	ld a, [wCurrentBGM] ; $304d
 	call PlaySound ; $3050
 	pop af ; $3053
-	ldh [$ff96], a ; $3054
-	ldh [rWBK], a ; $3056
+	wram_bank ; $3054
 Label_00_3058:
 	pop hl ; $3058
 	pop de ; $3059
@@ -6880,9 +6840,7 @@ Func_00_305d:
 	ld a, [wCurrentBGM] ; $3072
 	jp PlaySound ; $3075
 InitAudioEngine:
-	ld a, $07 ; $3078
-	ldh [$ff96], a ; $307a
-	ldh [rWBK], a ; $307c
+	wram_bank $07 ; $3078
 	ld bc, $0000 ; $307e
 	call Func_00_30b4 ; $3081
 	ld a, $80 ; $3084
@@ -6973,9 +6931,7 @@ Label_00_310b:
 	ld [$d214], a ; $310c
 	ret ; $310f
 Func_00_3110:
-	ld a, $07 ; $3110
-	ldh [$ff96], a ; $3112
-	ldh [rWBK], a ; $3114
+	wram_bank $07 ; $3110
 	ld hl, $d140 ; $3116
 	ld de, $0020 ; $3119
 	ld b, $04 ; $311c
@@ -6995,9 +6951,7 @@ StopAllSound:
 	push bc ; $312a
 	push de ; $312b
 	push hl ; $312c
-	ld a, $07 ; $312d
-	ldh [$ff96], a ; $312f
-	ldh [rWBK], a ; $3131
+	wram_bank $07 ; $312d
 	ld a, $ff ; $3133
 	ld hl, $d140 ; $3135
 	ld de, $0020 ; $3138
@@ -7029,9 +6983,7 @@ PlaySound:
 	ld hl, $31b5 ; $32a5
 	push af ; $32a8
 	push hl ; $32a9
-	ld a, $07 ; $32aa
-	ldh [$ff96], a ; $32ac
-	ldh [rWBK], a ; $32ae
+	wram_bank $07 ; $32aa
 	ld a, $ff ; $32b0
 	ld hl, $d100 ; $32b2
 	ld [hl+], a ; $32b5
@@ -7177,9 +7129,7 @@ Label_00_333f:
 	ld [hl+], a ; $3371
 	ret ; $3372
 Func_00_3373:
-	ld a, $07 ; $3373
-	ldh [$ff96], a ; $3375
-	ldh [rWBK], a ; $3377
+	wram_bank $07 ; $3373
 	ld hl, $ffd0 ; $3379
 	ld de, $d000 ; $337c
 	ld c, $02 ; $337f

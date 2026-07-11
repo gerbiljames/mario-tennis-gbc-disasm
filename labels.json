@@ -273,5 +273,20 @@
  "0x10c29": "TileIdLookup_04_4c29",
  "0x241bc": "ObjTemplates_09_41bc",
  "0x2460a": "LoadObjTemplate_09",
- "0x1aca58": "Palettes_6b_4a58"
+ "0x1aca58": "Palettes_6b_4a58",
+ "0x20fb8": "StartPointEndReactions",
+ "0x20fc7": "CharPointEndReaction",
+ "0x20ff5": "SpreadTeammateTargets",
+ "0x21001": "SpreadBothTeamPairs",
+ "0x21034": "SpreadFarTeamPair",
+ "0x2106e": "ComputePairSpread",
+ "0x2292c": "UpdateAllChars",
+ "0x22958": "UpdateChar",
+ "0x22988": "SetCharPosAndTarget",
+ "0x229ae": "SetCharTarget",
+ "0x22a1c": "SetCharState",
+ "0x22a2c": "SetCharFacing",
+ "0x22a3a": "ForEachCharBank",
+ "0x23541": "MoveCharTowardTarget",
+ "0x238be": "CheckCharNearTarget"
 }

@@ -28,9 +28,7 @@ FarPtr_1d_14:
 	dw Func_1d_7205 ; $4014
 Func_1d_4016:
 	ld b, a ; $4016
-	ld a, $06 ; $4017
-	ldh [$ff96], a ; $4019
-	ldh [rWBK], a ; $401b
+	wram_bank $06 ; $4017
 	ld a, b ; $401d
 	ld [$d149], a ; $401e
 	sound $04 ; $4021
@@ -43,9 +41,7 @@ Func_1d_4016:
 	ld hl, $6334 ; $4034
 	ld de, $0d01 ; $4037
 	call LoadPaletteShadow ; $403a
-	ld a, $01 ; $403d
-	ldh [$ff96], a ; $403f
-	ldh [rWBK], a ; $4041
+	wram_bank $01 ; $403d
 	ld hl, $633c ; $4043
 	ld de, $d000 ; $4046
 	call DecompressData ; $4049
@@ -100,9 +96,7 @@ Func_1d_4016:
 	farcall FarPtr_39_28 ; $40cc
 	ret ; $40cf
 Func_1d_40d0:
-	ld a, $06 ; $40d0
-	ldh [$ff96], a ; $40d2
-	ldh [rWBK], a ; $40d4
+	wram_bank $06 ; $40d0
 	xor a, a ; $40d6
 	ld [$d000], a ; $40d7
 	ld [$d001], a ; $40da
@@ -153,25 +147,19 @@ Func_1d_411e:
 	ld hl, $5c25 ; $4149
 	ld bc, $d390 ; $414c
 	call Func_1d_4bb6 ; $414f
-	ld a, $03 ; $4152
-	ldh [$ff96], a ; $4154
-	ldh [rWBK], a ; $4156
+	wram_bank $03 ; $4152
 	ld hl, $d000 ; $4158
 	ld de, $9800 ; $415b
 	ld c, $24 ; $415e
 	call Func_00_0480 ; $4160
-	ld a, $02 ; $4163
-	ldh [$ff96], a ; $4165
-	ldh [rWBK], a ; $4167
+	wram_bank $02 ; $4163
 	ld hl, $d000 ; $4169
 	ld de, $b800 ; $416c
 	ld c, $24 ; $416f
 	call Func_00_0480 ; $4171
 	ret ; $4174
 Func_1d_4175:
-	ld a, $01 ; $4175
-	ldh [$ff96], a ; $4177
-	ldh [rWBK], a ; $4179
+	wram_bank $01 ; $4175
 	ld hl, $65e4 ; $417b
 	ld de, $d000 ; $417e
 	call DecompressData ; $4181
@@ -179,9 +167,7 @@ Func_1d_4175:
 	ld de, $a140 ; $4187
 	ld c, $0a ; $418a
 	call Func_00_0480 ; $418c
-	ld a, $01 ; $418f
-	ldh [$ff96], a ; $4191
-	ldh [rWBK], a ; $4193
+	wram_bank $01 ; $418f
 	ld hl, $667f ; $4195
 	ld de, $d000 ; $4198
 	call DecompressData ; $419b
@@ -189,9 +175,7 @@ Func_1d_4175:
 	ld de, $a1e0 ; $41a1
 	ld c, $0a ; $41a4
 	call Func_00_0480 ; $41a6
-	ld a, $01 ; $41a9
-	ldh [$ff96], a ; $41ab
-	ldh [rWBK], a ; $41ad
+	wram_bank $01 ; $41a9
 	ld hl, $6721 ; $41af
 	ld de, $d000 ; $41b2
 	call DecompressData ; $41b5
@@ -199,9 +183,7 @@ Func_1d_4175:
 	ld de, $a280 ; $41bb
 	ld c, $08 ; $41be
 	call Func_00_0480 ; $41c0
-	ld a, $01 ; $41c3
-	ldh [$ff96], a ; $41c5
-	ldh [rWBK], a ; $41c7
+	wram_bank $01 ; $41c3
 	ld hl, $67ab ; $41c9
 	ld de, $d000 ; $41cc
 	call DecompressData ; $41cf
@@ -209,117 +191,91 @@ Func_1d_4175:
 	ld de, $a300 ; $41d5
 	ld c, $08 ; $41d8
 	call Func_00_0480 ; $41da
-	ld a, $01 ; $41dd
-	ldh [$ff96], a ; $41df
-	ldh [rWBK], a ; $41e1
+	wram_bank $01 ; $41dd
 	ld hl, $6485 ; $41e3
 	ld de, $d380 ; $41e6
 	call DecompressData ; $41e9
 	ld hl, $d380 ; $41ec
 	ld bc, $0009 ; $41ef
 	call Func_1d_4423 ; $41f2
-	ld a, $01 ; $41f5
-	ldh [$ff96], a ; $41f7
-	ldh [rWBK], a ; $41f9
+	wram_bank $01 ; $41f5
 	ld hl, $6493 ; $41fb
 	ld de, $d380 ; $41fe
 	call DecompressData ; $4201
 	ld hl, $d380 ; $4204
 	ld bc, $0009 ; $4207
 	call Func_1d_4438 ; $420a
-	ld a, $01 ; $420d
-	ldh [$ff96], a ; $420f
-	ldh [rWBK], a ; $4211
+	wram_bank $01 ; $420d
 	ld hl, $6321 ; $4213
 	ld de, $d390 ; $4216
 	call DecompressData ; $4219
 	ld hl, $d390 ; $421c
 	ld bc, $0028 ; $421f
 	call Func_1d_4423 ; $4222
-	ld a, $01 ; $4225
-	ldh [$ff96], a ; $4227
-	ldh [rWBK], a ; $4229
+	wram_bank $01 ; $4225
 	ld hl, $632b ; $422b
 	ld de, $d390 ; $422e
 	call DecompressData ; $4231
 	ld hl, $d390 ; $4234
 	ld bc, $0028 ; $4237
 	call Func_1d_4438 ; $423a
-	ld a, $01 ; $423d
-	ldh [$ff96], a ; $423f
-	ldh [rWBK], a ; $4241
+	wram_bank $01 ; $423d
 	ld hl, $63f4 ; $4243
 	ld de, $d3c0 ; $4246
 	call DecompressData ; $4249
 	ld hl, $d3c0 ; $424c
 	ld bc, $0082 ; $424f
 	call Func_1d_4423 ; $4252
-	ld a, $01 ; $4255
-	ldh [$ff96], a ; $4257
-	ldh [rWBK], a ; $4259
+	wram_bank $01 ; $4255
 	ld hl, $6449 ; $425b
 	ld de, $d3c0 ; $425e
 	call DecompressData ; $4261
 	ld hl, $d3c0 ; $4264
 	ld bc, $0082 ; $4267
 	call Func_1d_4438 ; $426a
-	ld a, $01 ; $426d
-	ldh [$ff96], a ; $426f
-	ldh [rWBK], a ; $4271
+	wram_bank $01 ; $426d
 	ld hl, $63f4 ; $4273
 	ld de, $d450 ; $4276
 	call DecompressData ; $4279
 	ld hl, $d450 ; $427c
 	ld bc, $0082 ; $427f
 	call Func_1d_4423 ; $4282
-	ld a, $01 ; $4285
-	ldh [$ff96], a ; $4287
-	ldh [rWBK], a ; $4289
+	wram_bank $01 ; $4285
 	ld hl, $6449 ; $428b
 	ld de, $d450 ; $428e
 	call DecompressData ; $4291
 	ld hl, $d450 ; $4294
 	ld bc, $0082 ; $4297
 	call Func_1d_4438 ; $429a
-	ld a, $01 ; $429d
-	ldh [$ff96], a ; $429f
-	ldh [rWBK], a ; $42a1
+	wram_bank $01 ; $429d
 	ld hl, $645b ; $42a3
 	ld de, $d4e0 ; $42a6
 	call DecompressData ; $42a9
 	ld hl, $d4e0 ; $42ac
 	ld bc, $001c ; $42af
 	call Func_1d_4423 ; $42b2
-	ld a, $01 ; $42b5
-	ldh [$ff96], a ; $42b7
-	ldh [rWBK], a ; $42b9
+	wram_bank $01 ; $42b5
 	ld hl, $647e ; $42bb
 	ld de, $d4e0 ; $42be
 	call DecompressData ; $42c1
 	ld hl, $d4e0 ; $42c4
 	ld bc, $001c ; $42c7
 	call Func_1d_4438 ; $42ca
-	ld a, $01 ; $42cd
-	ldh [$ff96], a ; $42cf
-	ldh [rWBK], a ; $42d1
+	wram_bank $01 ; $42cd
 	ld hl, $649a ; $42d3
 	ld de, $d500 ; $42d6
 	call DecompressData ; $42d9
 	ld hl, $d500 ; $42dc
 	ld bc, $002a ; $42df
 	call Func_1d_4423 ; $42e2
-	ld a, $01 ; $42e5
-	ldh [$ff96], a ; $42e7
-	ldh [rWBK], a ; $42e9
+	wram_bank $01 ; $42e5
 	ld hl, $64b2 ; $42eb
 	ld de, $d500 ; $42ee
 	call DecompressData ; $42f1
 	ld hl, $d500 ; $42f4
 	ld bc, $002a ; $42f7
 	call Func_1d_4438 ; $42fa
-	ld a, $01 ; $42fd
-	ldh [$ff96], a ; $42ff
-	ldh [rWBK], a ; $4301
+	wram_bank $01 ; $42fd
 	ld hl, $64bb ; $4303
 	ld de, $d000 ; $4306
 	call DecompressData ; $4309
@@ -334,18 +290,14 @@ Func_1d_4175:
 	ld de, $a4c0 ; $4323
 	ld c, $14 ; $4326
 	call Func_00_0480 ; $4328
-	ld a, $01 ; $432b
-	ldh [$ff96], a ; $432d
-	ldh [rWBK], a ; $432f
+	wram_bank $01 ; $432b
 	ld hl, $6550 ; $4331
 	ld de, $d530 ; $4334
 	call DecompressData ; $4337
 	ld hl, $d530 ; $433a
 	ld bc, $001e ; $433d
 	call Func_1d_4423 ; $4340
-	ld a, $01 ; $4343
-	ldh [$ff96], a ; $4345
-	ldh [rWBK], a ; $4347
+	wram_bank $01 ; $4343
 	ld hl, $6568 ; $4349
 	ld de, $d530 ; $434c
 	call DecompressData ; $434f
@@ -371,9 +323,7 @@ Label_1d_436b:
 	ld a, [hl] ; $4374
 	ld de, $0401 ; $4375
 	farcall FarPtr_1b_02 ; $4378
-	ld a, $01 ; $437b
-	ldh [$ff96], a ; $437d
-	ldh [rWBK], a ; $437f
+	wram_bank $01 ; $437b
 	push af ; $4381
 	ld hl, $c900 ; $4382
 	ld a, [$cb00] ; $4385
@@ -422,9 +372,7 @@ Label_1d_43cf:
 	ld a, [hl] ; $43d8
 	ld de, $0101 ; $43d9
 	farcall FarPtr_1b_02 ; $43dc
-	ld a, $01 ; $43df
-	ldh [$ff96], a ; $43e1
-	ldh [rWBK], a ; $43e3
+	wram_bank $01 ; $43df
 	push af ; $43e5
 	ld hl, $c900 ; $43e6
 	ld a, [$cb00] ; $43e9
@@ -456,13 +404,9 @@ Label_1d_43f1:
 	call Func_00_0480 ; $441f
 	ret ; $4422
 Func_1d_4423:
-	ld a, $01 ; $4423
-	ldh [$ff96], a ; $4425
-	ldh [rWBK], a ; $4427
+	wram_bank $01 ; $4423
 	ld d, [hl] ; $4429
-	ld a, $03 ; $442a
-	ldh [$ff96], a ; $442c
-	ldh [rWBK], a ; $442e
+	wram_bank $03 ; $442a
 	ld [hl], d ; $4430
 	inc hl ; $4431
 	dec bc ; $4432
@@ -471,13 +415,9 @@ Func_1d_4423:
 	jr nz, Func_1d_4423 ; $4435
 	ret ; $4437
 Func_1d_4438:
-	ld a, $01 ; $4438
-	ldh [$ff96], a ; $443a
-	ldh [rWBK], a ; $443c
+	wram_bank $01 ; $4438
 	ld d, [hl] ; $443e
-	ld a, $02 ; $443f
-	ldh [$ff96], a ; $4441
-	ldh [rWBK], a ; $4443
+	wram_bank $02 ; $443f
 	ld [hl], d ; $4445
 	inc hl ; $4446
 	dec bc ; $4447
@@ -526,9 +466,7 @@ Label_1d_4485:
 	ld a, [hl] ; $448e
 	ld hl, $d3e3 ; $448f
 	call Func_1d_4793 ; $4492
-	ld a, $06 ; $4495
-	ldh [$ff96], a ; $4497
-	ldh [rWBK], a ; $4499
+	wram_bank $06 ; $4495
 	push af ; $449b
 	ld hl, $c900 ; $449c
 	ld a, [$cb00] ; $449f
@@ -551,9 +489,7 @@ Label_1d_44a7:
 	call Func_00_1a27 ; $44b9
 	ld de, $d3db ; $44bc
 	farcall FarPtr_1c_04 ; $44bf
-	ld a, $06 ; $44c2
-	ldh [$ff96], a ; $44c4
-	ldh [rWBK], a ; $44c6
+	wram_bank $06 ; $44c2
 	push af ; $44c8
 	ld hl, $c900 ; $44c9
 	ld a, [$cb00] ; $44cc
@@ -576,9 +512,7 @@ Label_1d_44d4:
 	call Func_00_1a27 ; $44e6
 	ld de, $d3f9 ; $44e9
 	farcall FarPtr_1c_04 ; $44ec
-	ld a, $06 ; $44ef
-	ldh [$ff96], a ; $44f1
-	ldh [rWBK], a ; $44f3
+	wram_bank $06 ; $44ef
 	push af ; $44f5
 	ld hl, $c900 ; $44f6
 	ld a, [$cb00] ; $44f9
@@ -601,9 +535,7 @@ Label_1d_4501:
 	call Func_00_1a27 ; $4513
 	ld de, $d403 ; $4516
 	farcall FarPtr_1c_04 ; $4519
-	ld a, $06 ; $451c
-	ldh [$ff96], a ; $451e
-	ldh [rWBK], a ; $4520
+	wram_bank $06 ; $451c
 	push af ; $4522
 	ld hl, $c900 ; $4523
 	ld a, [$cb00] ; $4526
@@ -626,9 +558,7 @@ Label_1d_452e:
 	call Func_00_1a27 ; $4540
 	ld de, $d40d ; $4543
 	farcall FarPtr_1c_04 ; $4546
-	ld a, $06 ; $4549
-	ldh [$ff96], a ; $454b
-	ldh [rWBK], a ; $454d
+	wram_bank $06 ; $4549
 	push af ; $454f
 	ld hl, $c900 ; $4550
 	ld a, [$cb00] ; $4553
@@ -654,9 +584,7 @@ Label_1d_455b:
 	call Func_1d_59be ; $4576
 	ld de, $d42f ; $4579
 	call Func_1d_59fc ; $457c
-	ld a, $06 ; $457f
-	ldh [$ff96], a ; $4581
-	ldh [rWBK], a ; $4583
+	wram_bank $06 ; $457f
 	xor a, a ; $4585
 	farcall FarPtr_02_2c ; $4586
 	ld a, $03 ; $4589
@@ -672,9 +600,7 @@ Label_1d_455b:
 	inc de ; $459c
 	ld a, [hl] ; $459d
 	ld [de], a ; $459e
-	ld a, $06 ; $459f
-	ldh [$ff96], a ; $45a1
-	ldh [rWBK], a ; $45a3
+	wram_bank $06 ; $459f
 	push af ; $45a5
 	ld hl, $c900 ; $45a6
 	ld a, [$cb00] ; $45a9
@@ -729,9 +655,7 @@ Label_1d_45ec:
 	ld de, $d45b ; $45f5
 	ld c, $0a ; $45f8
 	call Func_1d_47b0 ; $45fa
-	ld a, $03 ; $45fd
-	ldh [$ff96], a ; $45ff
-	ldh [rWBK], a ; $4601
+	wram_bank $03 ; $45fd
 	ld hl, $5d91 ; $4603
 	ld de, $d450 ; $4606
 	ld b, $09 ; $4609
@@ -753,9 +677,7 @@ Label_1d_461a:
 	ld a, [hl] ; $4623
 	ld hl, $d473 ; $4624
 	call Func_1d_4793 ; $4627
-	ld a, $06 ; $462a
-	ldh [$ff96], a ; $462c
-	ldh [rWBK], a ; $462e
+	wram_bank $06 ; $462a
 	push af ; $4630
 	ld hl, $c900 ; $4631
 	ld a, [$cb00] ; $4634
@@ -778,9 +700,7 @@ Label_1d_463c:
 	call Func_00_1a27 ; $464e
 	ld de, $d46b ; $4651
 	farcall FarPtr_1c_04 ; $4654
-	ld a, $06 ; $4657
-	ldh [$ff96], a ; $4659
-	ldh [rWBK], a ; $465b
+	wram_bank $06 ; $4657
 	push af ; $465d
 	ld hl, $c900 ; $465e
 	ld a, [$cb00] ; $4661
@@ -803,9 +723,7 @@ Label_1d_4669:
 	call Func_00_1a27 ; $467b
 	ld de, $d489 ; $467e
 	farcall FarPtr_1c_04 ; $4681
-	ld a, $06 ; $4684
-	ldh [$ff96], a ; $4686
-	ldh [rWBK], a ; $4688
+	wram_bank $06 ; $4684
 	push af ; $468a
 	ld hl, $c900 ; $468b
 	ld a, [$cb00] ; $468e
@@ -828,9 +746,7 @@ Label_1d_4696:
 	call Func_00_1a27 ; $46a8
 	ld de, $d493 ; $46ab
 	farcall FarPtr_1c_04 ; $46ae
-	ld a, $06 ; $46b1
-	ldh [$ff96], a ; $46b3
-	ldh [rWBK], a ; $46b5
+	wram_bank $06 ; $46b1
 	push af ; $46b7
 	ld hl, $c900 ; $46b8
 	ld a, [$cb00] ; $46bb
@@ -853,9 +769,7 @@ Label_1d_46c3:
 	call Func_00_1a27 ; $46d5
 	ld de, $d49d ; $46d8
 	farcall FarPtr_1c_04 ; $46db
-	ld a, $06 ; $46de
-	ldh [$ff96], a ; $46e0
-	ldh [rWBK], a ; $46e2
+	wram_bank $06 ; $46de
 	push af ; $46e4
 	ld hl, $c900 ; $46e5
 	ld a, [$cb00] ; $46e8
@@ -881,9 +795,7 @@ Label_1d_46f0:
 	call Func_1d_59be ; $470b
 	ld de, $d4bf ; $470e
 	call Func_1d_59fc ; $4711
-	ld a, $06 ; $4714
-	ldh [$ff96], a ; $4716
-	ldh [rWBK], a ; $4718
+	wram_bank $06 ; $4714
 	ld a, $01 ; $471a
 	farcall FarPtr_02_2c ; $471c
 	ld a, $03 ; $471f
@@ -899,9 +811,7 @@ Label_1d_46f0:
 	inc de ; $4732
 	ld a, [hl] ; $4733
 	ld [de], a ; $4734
-	ld a, $06 ; $4735
-	ldh [$ff96], a ; $4737
-	ldh [rWBK], a ; $4739
+	wram_bank $06 ; $4735
 	push af ; $473b
 	ld hl, $c900 ; $473c
 	ld a, [$cb00] ; $473f
@@ -949,14 +859,10 @@ Func_1d_4771:
 Label_1d_477c:
 	ld a, [hl+] ; $477c
 	ld c, a ; $477d
-	ld a, $03 ; $477e
-	ldh [$ff96], a ; $4780
-	ldh [rWBK], a ; $4782
+	wram_bank $03 ; $477e
 	ld a, c ; $4784
 	ld [de], a ; $4785
-	ld a, $02 ; $4786
-	ldh [$ff96], a ; $4788
-	ldh [rWBK], a ; $478a
+	wram_bank $02 ; $4786
 	ld a, b ; $478c
 	ld [de], a ; $478d
 	pop de ; $478e
@@ -967,15 +873,11 @@ Label_1d_4791:
 Func_1d_4793:
 	or a, a ; $4793
 	jr nz, Label_1d_47a0 ; $4794
-	ld a, $03 ; $4796
-	ldh [$ff96], a ; $4798
-	ldh [rWBK], a ; $479a
+	wram_bank $03 ; $4796
 	ld a, $01 ; $479c
 	jr Label_1d_47a8 ; $479e
 Label_1d_47a0:
-	ld a, $03 ; $47a0
-	ldh [$ff96], a ; $47a2
-	ldh [rWBK], a ; $47a4
+	wram_bank $03 ; $47a0
 	ld a, $05 ; $47a6
 Label_1d_47a8:
 	ld [hl+], a ; $47a8
@@ -995,14 +897,10 @@ Func_1d_47b0:
 	cp a, $df ; $47b7
 	jr z, Label_1d_47cf ; $47b9
 	ld b, a ; $47bb
-	ld a, $03 ; $47bc
-	ldh [$ff96], a ; $47be
-	ldh [rWBK], a ; $47c0
+	wram_bank $03 ; $47bc
 	ld a, b ; $47c2
 	ld [de], a ; $47c3
-	ld a, $02 ; $47c4
-	ldh [$ff96], a ; $47c6
-	ldh [rWBK], a ; $47c8
+	wram_bank $02 ; $47c4
 	xor a, a ; $47ca
 	ld [de], a ; $47cb
 	inc de ; $47cc
@@ -1010,18 +908,14 @@ Func_1d_47b0:
 Label_1d_47cf:
 	call Func_1d_47fe ; $47cf
 	ld b, a ; $47d2
-	ld a, $03 ; $47d3
-	ldh [$ff96], a ; $47d5
-	ldh [rWBK], a ; $47d7
+	wram_bank $03 ; $47d3
 	ld a, [de] ; $47d9
 	or a, a ; $47da
 	jr z, Label_1d_47ef ; $47db
 	ld a, b ; $47dd
 	sub a, $30 ; $47de
 	ld [de], a ; $47e0
-	ld a, $02 ; $47e1
-	ldh [$ff96], a ; $47e3
-	ldh [rWBK], a ; $47e5
+	wram_bank $02 ; $47e1
 	ld a, $08 ; $47e7
 	ld [de], a ; $47e9
 	call Func_1d_4806 ; $47ea
@@ -1029,9 +923,7 @@ Label_1d_47cf:
 Label_1d_47ef:
 	ld a, b ; $47ef
 	ld [de], a ; $47f0
-	ld a, $02 ; $47f1
-	ldh [$ff96], a ; $47f3
-	ldh [rWBK], a ; $47f5
+	wram_bank $02 ; $47f1
 	xor a, a ; $47f7
 	ld [de], a ; $47f8
 	call Func_1d_4806 ; $47f9
@@ -1055,9 +947,7 @@ Func_1d_4806:
 Label_1d_480d:
 	ret ; $480d
 Func_1d_480e:
-	ld a, $06 ; $480e
-	ldh [$ff96], a ; $4810
-	ldh [rWBK], a ; $4812
+	wram_bank $06 ; $480e
 	ld a, [hl+] ; $4814
 	ld b, [hl] ; $4815
 	ld c, a ; $4816
@@ -1181,9 +1071,7 @@ Label_1d_48bf:
 	dec c ; $48c2
 	jp nz, Label_1d_482d ; $48c3
 	ret ; $48c6
-	ld a, $06 ; $48c7
-	ldh [$ff96], a ; $48c9
-	ldh [rWBK], a ; $48cb
+	wram_bank $06 ; $48c7
 	ld a, [$d149] ; $48cd
 	or a, a ; $48d0
 	jr nz, Label_1d_48d8 ; $48d1
@@ -1243,9 +1131,7 @@ Label_1d_4932:
 	ld hl, $d147 ; $494a
 	call Func_1d_5997 ; $494d
 	call Func_00_1f51 ; $4950
-	ld a, $06 ; $4953
-	ldh [$ff96], a ; $4955
-	ldh [rWBK], a ; $4957
+	wram_bank $06 ; $4953
 	ld a, [$d12c] ; $4959
 	cp a, $20 ; $495c
 	jr z, Label_1d_496f ; $495e
@@ -1336,80 +1222,60 @@ Func_1d_4a14:
 	jr z, Label_1d_4a63 ; $4a18
 	dec a ; $4a1a
 	jr z, Label_1d_4a40 ; $4a1b
-	ld a, $03 ; $4a1d
-	ldh [$ff96], a ; $4a1f
-	ldh [rWBK], a ; $4a21
+	wram_bank $03 ; $4a1d
 	ld hl, $d000 ; $4a23
 	ld de, $dc60 ; $4a26
 	ld c, $24 ; $4a29
 	call CopyMemoryFast ; $4a2b
-	ld a, $02 ; $4a2e
-	ldh [$ff96], a ; $4a30
-	ldh [rWBK], a ; $4a32
+	wram_bank $02 ; $4a2e
 	ld hl, $d000 ; $4a34
 	ld de, $dc60 ; $4a37
 	ld c, $24 ; $4a3a
 	call CopyMemoryFast ; $4a3c
 	ret ; $4a3f
 Label_1d_4a40:
-	ld a, $03 ; $4a40
-	ldh [$ff96], a ; $4a42
-	ldh [rWBK], a ; $4a44
+	wram_bank $03 ; $4a40
 	ld hl, $d000 ; $4a46
 	ld de, $da20 ; $4a49
 	ld c, $24 ; $4a4c
 	call CopyMemoryFast ; $4a4e
-	ld a, $02 ; $4a51
-	ldh [$ff96], a ; $4a53
-	ldh [rWBK], a ; $4a55
+	wram_bank $02 ; $4a51
 	ld hl, $d000 ; $4a57
 	ld de, $da20 ; $4a5a
 	ld c, $24 ; $4a5d
 	call CopyMemoryFast ; $4a5f
 	ret ; $4a62
 Label_1d_4a63:
-	ld a, $03 ; $4a63
-	ldh [$ff96], a ; $4a65
-	ldh [rWBK], a ; $4a67
+	wram_bank $03 ; $4a63
 	ld hl, $d000 ; $4a69
 	ld de, $d7e0 ; $4a6c
 	ld c, $24 ; $4a6f
 	call CopyMemoryFast ; $4a71
-	ld a, $02 ; $4a74
-	ldh [$ff96], a ; $4a76
-	ldh [rWBK], a ; $4a78
+	wram_bank $02 ; $4a74
 	ld hl, $d000 ; $4a7a
 	ld de, $d7e0 ; $4a7d
 	ld c, $24 ; $4a80
 	call CopyMemoryFast ; $4a82
 	ret ; $4a85
 Label_1d_4a86:
-	ld a, $03 ; $4a86
-	ldh [$ff96], a ; $4a88
-	ldh [rWBK], a ; $4a8a
+	wram_bank $03 ; $4a86
 	ld hl, $d000 ; $4a8c
 	ld de, $d5a0 ; $4a8f
 	ld c, $24 ; $4a92
 	call CopyMemoryFast ; $4a94
-	ld a, $02 ; $4a97
-	ldh [$ff96], a ; $4a99
-	ldh [rWBK], a ; $4a9b
+	wram_bank $02 ; $4a97
 	ld hl, $d000 ; $4a9d
 	ld de, $d5a0 ; $4aa0
 	ld c, $24 ; $4aa3
 	call CopyMemoryFast ; $4aa5
 	ret ; $4aa8
 Func_1d_4aa9:
-	ld a, $03 ; $4aa9
-	ldh [$ff96], a ; $4aab
-	ldh [rWBK], a ; $4aad
+	wram_bank $03 ; $4aa9
 	ld hl, $d5a0 ; $4aaf
 	ld de, $d000 ; $4ab2
 	ld c, $24 ; $4ab5
 	call CopyMemoryFast ; $4ab7
-	ld a, $02 ; $4aba
-	ldh [$ff96], a ; $4abc
-	ldh [rWBK], a ; $4abe
+	wram_bank $02 ; $4aba
 	ld hl, $d5a0 ; $4ac0
 	ld de, $d000 ; $4ac3
 	ld c, $24 ; $4ac6
@@ -1431,9 +1297,7 @@ Func_1d_4aeb:
 	xor a, a ; $4aeb
 	ld [$cb00], a ; $4aec
 	call Func_1d_4e8d ; $4aef
-	ld a, $06 ; $4af2
-	ldh [$ff96], a ; $4af4
-	ldh [rWBK], a ; $4af6
+	wram_bank $06 ; $4af2
 	ld a, [$d00a] ; $4af8
 	ld [$d122], a ; $4afb
 	ld a, [$d00b] ; $4afe
@@ -1468,9 +1332,7 @@ Func_1d_4b50:
 	ld a, $01 ; $4b50
 	ld [$cb00], a ; $4b52
 	call Func_1d_4e8d ; $4b55
-	ld a, $06 ; $4b58
-	ldh [$ff96], a ; $4b5a
-	ldh [rWBK], a ; $4b5c
+	wram_bank $06 ; $4b58
 	ld a, [$d00a] ; $4b5e
 	ld [$d12f], a ; $4b61
 	ld a, [$d00b] ; $4b64
@@ -1525,9 +1387,7 @@ Func_1d_4bb6:
 	jr nc, Label_1d_4bd0 ; $4bcd
 	inc h ; $4bcf
 Label_1d_4bd0:
-	ld a, $06 ; $4bd0
-	ldh [$ff96], a ; $4bd2
-	ldh [rWBK], a ; $4bd4
+	wram_bank $06 ; $4bd0
 	ld a, l ; $4bd6
 	ld [$d08e], a ; $4bd7
 	ld a, h ; $4bda
@@ -1541,14 +1401,10 @@ Label_1d_4bd0:
 	ld h, [hl] ; $4be6
 	ld l, a ; $4be7
 Label_1d_4be8:
-	ld a, $03 ; $4be8
-	ldh [$ff96], a ; $4bea
-	ldh [rWBK], a ; $4bec
+	wram_bank $03 ; $4be8
 	ld a, [hl] ; $4bee
 	ld [de], a ; $4bef
-	ld a, $02 ; $4bf0
-	ldh [$ff96], a ; $4bf2
-	ldh [rWBK], a ; $4bf4
+	wram_bank $02 ; $4bf0
 	ld a, [hl+] ; $4bf6
 	ld [de], a ; $4bf7
 	inc de ; $4bf8
@@ -1561,9 +1417,7 @@ Label_1d_4be8:
 	inc hl ; $4c00
 	inc hl ; $4c01
 	jr Func_1d_4bb6 ; $4c02
-	ld a, $06 ; $4c04
-	ldh [$ff96], a ; $4c06
-	ldh [rWBK], a ; $4c08
+	wram_bank $06 ; $4c04
 	ld a, [$d143] ; $4c0a
 	or a, a ; $4c0d
 	jr nz, Label_1d_4c14 ; $4c0e
@@ -1605,9 +1459,7 @@ Label_1d_4c3f:
 	call Func_00_1e9d ; $4c5c
 	ret ; $4c5f
 Func_1d_4c60:
-	ld a, $06 ; $4c60
-	ldh [$ff96], a ; $4c62
-	ldh [rWBK], a ; $4c64
+	wram_bank $06 ; $4c60
 	ld a, [$d144] ; $4c66
 	rrca ; $4c69
 	and a, $0f ; $4c6a
@@ -1628,9 +1480,7 @@ Func_1d_4c60:
 	ld d, a ; $4c7e
 	ret ; $4c7f
 Func_1d_4c80:
-	ld a, $06 ; $4c80
-	ldh [$ff96], a ; $4c82
-	ldh [rWBK], a ; $4c84
+	wram_bank $06 ; $4c80
 	ld a, [$d144] ; $4c86
 	rrca ; $4c89
 	and a, $0f ; $4c8a
@@ -1648,9 +1498,7 @@ Func_1d_4c80:
 	ret ; $4c9b
 	INCBIN "data/bank_01d/d_4c9c.bin" ; $4c9c, 16 bytes
 Func_1d_4cac:
-	ld a, $06 ; $4cac
-	ldh [$ff96], a ; $4cae
-	ldh [rWBK], a ; $4cb0
+	wram_bank $06 ; $4cac
 	ld a, [$d142] ; $4cb2
 	or a, a ; $4cb5
 	jr z, Label_1d_4cbf ; $4cb6
@@ -1681,9 +1529,7 @@ Label_1d_4cd9:
 	ld a, $01 ; $4cef
 	ld hl, $57d2 ; $4cf1
 	call Func_00_1b6a ; $4cf4
-	ld a, $06 ; $4cf7
-	ldh [$ff96], a ; $4cf9
-	ldh [rWBK], a ; $4cfb
+	wram_bank $06 ; $4cf7
 	ld a, [$d12f] ; $4cfd
 	ld [$d00a], a ; $4d00
 	ld a, [$d130] ; $4d03
@@ -1697,9 +1543,7 @@ Label_1d_4cd9:
 	ld bc, $0006 ; $4d1b
 	call CopyMemoryBC ; $4d1e
 	call Func_1d_543d ; $4d21
-	ld a, $06 ; $4d24
-	ldh [$ff96], a ; $4d26
-	ldh [rWBK], a ; $4d28
+	wram_bank $06 ; $4d24
 	ld a, $02 ; $4d2a
 	ld [$d142], a ; $4d2c
 	ld a, $01 ; $4d2f
@@ -1718,9 +1562,7 @@ Label_1d_4d3a:
 	ld a, $01 ; $4d50
 	ld hl, $57d2 ; $4d52
 	call Func_00_1b6a ; $4d55
-	ld a, $06 ; $4d58
-	ldh [$ff96], a ; $4d5a
-	ldh [rWBK], a ; $4d5c
+	wram_bank $06 ; $4d58
 	ld a, [$d122] ; $4d5e
 	ld [$d00a], a ; $4d61
 	ld a, [$d123] ; $4d64
@@ -1734,9 +1576,7 @@ Label_1d_4d3a:
 	ld bc, $0006 ; $4d7c
 	call CopyMemoryBC ; $4d7f
 	call Func_1d_509c ; $4d82
-	ld a, $06 ; $4d85
-	ldh [$ff96], a ; $4d87
-	ldh [rWBK], a ; $4d89
+	wram_bank $06 ; $4d85
 	ld a, $01 ; $4d8b
 	ld [$d142], a ; $4d8d
 	ld a, $01 ; $4d90
@@ -1767,9 +1607,7 @@ Label_1d_4db3:
 	ld hl, $4e5e ; $4dbd
 	call Func_00_1b6a ; $4dc0
 	call Func_1d_5268 ; $4dc3
-	ld a, $06 ; $4dc6
-	ldh [$ff96], a ; $4dc8
-	ldh [rWBK], a ; $4dca
+	wram_bank $06 ; $4dc6
 	xor a, a ; $4dcc
 	ld [$d142], a ; $4dcd
 	call Func_00_1b38 ; $4dd0
@@ -1811,9 +1649,7 @@ Label_1d_4e12:
 	ld hl, $4e5e ; $4e1c
 	call Func_00_1b6a ; $4e1f
 	call Func_1d_5603 ; $4e22
-	ld a, $06 ; $4e25
-	ldh [$ff96], a ; $4e27
-	ldh [rWBK], a ; $4e29
+	wram_bank $06 ; $4e25
 	xor a, a ; $4e2b
 	ld [$d142], a ; $4e2c
 	call Func_00_1b38 ; $4e2f
@@ -1839,9 +1675,7 @@ Label_1d_4e5b:
 	ret ; $4e5d
 	INCBIN "data/bank_01d/d_4e5e.bin" ; $4e5e, 47 bytes
 Func_1d_4e8d:
-	ld a, $06 ; $4e8d
-	ldh [$ff96], a ; $4e8f
-	ldh [rWBK], a ; $4e91
+	wram_bank $06 ; $4e8d
 	push af ; $4e93
 	ld hl, $c900 ; $4e94
 	ld a, [$cb00] ; $4e97
@@ -2094,9 +1928,7 @@ Label_1d_5007:
 	inc a ; $5011
 	ld [$d018], a ; $5012
 	farcall FarPtr_1c_06 ; $5015
-	ld a, $03 ; $5018
-	ldh [$ff96], a ; $501a
-	ldh [rWBK], a ; $501c
+	wram_bank $03 ; $5018
 	ld hl, $d501 ; $501e
 	ld a, $a3 ; $5021
 	ld [hl+], a ; $5023
@@ -2115,9 +1947,7 @@ Label_1d_5007:
 	ld [hl+], a ; $5032
 	ld [hl+], a ; $5033
 	ld [hl], a ; $5034
-	ld a, $02 ; $5035
-	ldh [$ff96], a ; $5037
-	ldh [rWBK], a ; $5039
+	wram_bank $02 ; $5035
 	ld hl, $d501 ; $503b
 	ld a, $08 ; $503e
 	ld [hl+], a ; $5040
@@ -2152,9 +1982,7 @@ Label_1d_505d:
 	ld de, $d50f ; $5066
 	ld c, $0e ; $5069
 	call Func_1d_47b0 ; $506b
-	ld a, $06 ; $506e
-	ldh [$ff96], a ; $5070
-	ldh [rWBK], a ; $5072
+	wram_bank $06 ; $506e
 	push af ; $5074
 	ld hl, $c900 ; $5075
 	ld a, [$cb00] ; $5078
@@ -2197,9 +2025,7 @@ Func_1d_509c:
 	ld bc, $d390 ; $50c6
 	call Func_1d_4bb6 ; $50c9
 	farcall FarPtr_1c_16 ; $50cc
-	ld a, $06 ; $50cf
-	ldh [$ff96], a ; $50d1
-	ldh [rWBK], a ; $50d3
+	wram_bank $06 ; $50cf
 	ld hl, $d147 ; $50d5
 	ld de, $0020 ; $50d8
 	ld a, e ; $50db
@@ -2219,9 +2045,7 @@ Func_1d_509c:
 	ld bc, $d390 ; $50ff
 	call Func_1d_4bb6 ; $5102
 	farcall FarPtr_1c_16 ; $5105
-	ld a, $06 ; $5108
-	ldh [$ff96], a ; $510a
-	ldh [rWBK], a ; $510c
+	wram_bank $06 ; $5108
 	ld hl, $d145 ; $510e
 	ld de, $ff60 ; $5111
 	ld a, e ; $5114
@@ -2252,9 +2076,7 @@ Func_1d_509c:
 	ld bc, $dc20 ; $5153
 	call Func_1d_4bb6 ; $5156
 	farcall FarPtr_1c_16 ; $5159
-	ld a, $06 ; $515c
-	ldh [$ff96], a ; $515e
-	ldh [rWBK], a ; $5160
+	wram_bank $06 ; $515c
 	ld hl, $d145 ; $5162
 	ld de, $ff80 ; $5165
 	ld a, e ; $5168
@@ -2285,9 +2107,7 @@ Func_1d_509c:
 	ld bc, $dc20 ; $51a7
 	call Func_1d_4bb6 ; $51aa
 	farcall FarPtr_1c_16 ; $51ad
-	ld a, $06 ; $51b0
-	ldh [$ff96], a ; $51b2
-	ldh [rWBK], a ; $51b4
+	wram_bank $06 ; $51b0
 	ld hl, $d145 ; $51b6
 	ld de, $ffa0 ; $51b9
 	ld a, e ; $51bc
@@ -2309,9 +2129,7 @@ Func_1d_509c:
 	ld bc, $dc20 ; $51e0
 	call Func_1d_4bb6 ; $51e3
 	farcall FarPtr_1c_16 ; $51e6
-	ld a, $06 ; $51e9
-	ldh [$ff96], a ; $51eb
-	ldh [rWBK], a ; $51ed
+	wram_bank $06 ; $51e9
 	ld hl, $d145 ; $51ef
 	ld de, $ffc0 ; $51f2
 	ld a, e ; $51f5
@@ -2333,9 +2151,7 @@ Func_1d_509c:
 	ld bc, $dc20 ; $5219
 	call Func_1d_4bb6 ; $521c
 	farcall FarPtr_1c_16 ; $521f
-	ld a, $06 ; $5222
-	ldh [$ff96], a ; $5224
-	ldh [rWBK], a ; $5226
+	wram_bank $06 ; $5222
 	ld hl, $d145 ; $5228
 	ld de, $ffe0 ; $522b
 	ld a, e ; $522e
@@ -2357,9 +2173,7 @@ Func_1d_509c:
 	ld bc, $dc20 ; $5252
 	call Func_1d_4bb6 ; $5255
 	farcall FarPtr_1c_16 ; $5258
-	ld a, $06 ; $525b
-	ldh [$ff96], a ; $525d
-	ldh [rWBK], a ; $525f
+	wram_bank $06 ; $525b
 	ld hl, $d145 ; $5261
 	xor a, a ; $5264
 	ld [hl+], a ; $5265
@@ -2370,9 +2184,7 @@ Func_1d_5268:
 	ld a, [$d002] ; $526b
 	or a, a ; $526e
 	jr nz, Func_1d_5268 ; $526f
-	ld a, $06 ; $5271
-	ldh [$ff96], a ; $5273
-	ldh [rWBK], a ; $5275
+	wram_bank $06 ; $5271
 	ld hl, $d145 ; $5277
 	ld de, $ffe0 ; $527a
 	ld a, e ; $527d
@@ -2389,9 +2201,7 @@ Func_1d_5268:
 	ld bc, $dc20 ; $5298
 	call Func_1d_4bb6 ; $529b
 	farcall FarPtr_1c_16 ; $529e
-	ld a, $06 ; $52a1
-	ldh [$ff96], a ; $52a3
-	ldh [rWBK], a ; $52a5
+	wram_bank $06 ; $52a1
 	ld hl, $d145 ; $52a7
 	ld de, $ffc0 ; $52aa
 	ld a, e ; $52ad
@@ -2413,9 +2223,7 @@ Func_1d_5268:
 	ld bc, $dc20 ; $52d1
 	call Func_1d_4bb6 ; $52d4
 	farcall FarPtr_1c_16 ; $52d7
-	ld a, $06 ; $52da
-	ldh [$ff96], a ; $52dc
-	ldh [rWBK], a ; $52de
+	wram_bank $06 ; $52da
 	ld hl, $d145 ; $52e0
 	ld de, $ffa0 ; $52e3
 	ld a, e ; $52e6
@@ -2446,9 +2254,7 @@ Func_1d_5268:
 	ld bc, $dc20 ; $5325
 	call Func_1d_4bb6 ; $5328
 	farcall FarPtr_1c_16 ; $532b
-	ld a, $06 ; $532e
-	ldh [$ff96], a ; $5330
-	ldh [rWBK], a ; $5332
+	wram_bank $06 ; $532e
 	ld hl, $d145 ; $5334
 	ld de, $ff80 ; $5337
 	ld a, e ; $533a
@@ -2479,9 +2285,7 @@ Func_1d_5268:
 	ld bc, $dc20 ; $5379
 	call Func_1d_4bb6 ; $537c
 	farcall FarPtr_1c_16 ; $537f
-	ld a, $06 ; $5382
-	ldh [$ff96], a ; $5384
-	ldh [rWBK], a ; $5386
+	wram_bank $06 ; $5382
 	ld hl, $d145 ; $5388
 	ld de, $ff60 ; $538b
 	ld a, e ; $538e
@@ -2506,9 +2310,7 @@ Func_1d_5268:
 	ld bc, $d390 ; $53bb
 	call Func_1d_4bb6 ; $53be
 	farcall FarPtr_1c_16 ; $53c1
-	ld a, $06 ; $53c4
-	ldh [$ff96], a ; $53c6
-	ldh [rWBK], a ; $53c8
+	wram_bank $06 ; $53c4
 	ld hl, $d145 ; $53ca
 	ld de, $00a8 ; $53cd
 	ld a, e ; $53d0
@@ -2533,9 +2335,7 @@ Func_1d_5268:
 	ld bc, $d390 ; $53fd
 	call Func_1d_4bb6 ; $5400
 	farcall FarPtr_1c_16 ; $5403
-	ld a, $06 ; $5406
-	ldh [$ff96], a ; $5408
-	ldh [rWBK], a ; $540a
+	wram_bank $06 ; $5406
 	ld hl, $d147 ; $540c
 	xor a, a ; $540f
 	ld [hl+], a ; $5410
@@ -2560,9 +2360,7 @@ Func_1d_543d:
 	ld a, [$d002] ; $5440
 	or a, a ; $5443
 	jr nz, Func_1d_543d ; $5444
-	ld a, $06 ; $5446
-	ldh [$ff96], a ; $5448
-	ldh [rWBK], a ; $544a
+	wram_bank $06 ; $5446
 	ld hl, $d147 ; $544c
 	ld de, $ffe0 ; $544f
 	ld a, e ; $5452
@@ -2582,9 +2380,7 @@ Func_1d_543d:
 	ld bc, $d390 ; $5476
 	call Func_1d_4bb6 ; $5479
 	farcall FarPtr_1c_16 ; $547c
-	ld a, $06 ; $547f
-	ldh [$ff96], a ; $5481
-	ldh [rWBK], a ; $5483
+	wram_bank $06 ; $547f
 	ld hl, $d145 ; $5485
 	ld de, $00a0 ; $5488
 	ld a, e ; $548b
@@ -2618,9 +2414,7 @@ Func_1d_543d:
 	ld bc, $d390 ; $54d3
 	call Func_1d_4bb6 ; $54d6
 	farcall FarPtr_1c_16 ; $54d9
-	ld a, $06 ; $54dc
-	ldh [$ff96], a ; $54de
-	ldh [rWBK], a ; $54e0
+	wram_bank $06 ; $54dc
 	ld hl, $d145 ; $54e2
 	ld de, $0080 ; $54e5
 	ld a, e ; $54e8
@@ -2651,9 +2445,7 @@ Func_1d_543d:
 	ld bc, $de60 ; $5527
 	call Func_1d_4bb6 ; $552a
 	farcall FarPtr_1c_16 ; $552d
-	ld a, $06 ; $5530
-	ldh [$ff96], a ; $5532
-	ldh [rWBK], a ; $5534
+	wram_bank $06 ; $5530
 	ld hl, $d145 ; $5536
 	ld de, $0060 ; $5539
 	ld a, e ; $553c
@@ -2684,9 +2476,7 @@ Func_1d_543d:
 	ld bc, $de60 ; $557b
 	call Func_1d_4bb6 ; $557e
 	farcall FarPtr_1c_16 ; $5581
-	ld a, $06 ; $5584
-	ldh [$ff96], a ; $5586
-	ldh [rWBK], a ; $5588
+	wram_bank $06 ; $5584
 	ld hl, $d145 ; $558a
 	ld de, $0040 ; $558d
 	ld a, e ; $5590
@@ -2708,9 +2498,7 @@ Func_1d_543d:
 	ld bc, $de60 ; $55b4
 	call Func_1d_4bb6 ; $55b7
 	farcall FarPtr_1c_16 ; $55ba
-	ld a, $06 ; $55bd
-	ldh [$ff96], a ; $55bf
-	ldh [rWBK], a ; $55c1
+	wram_bank $06 ; $55bd
 	ld hl, $d145 ; $55c3
 	ld de, $0020 ; $55c6
 	ld a, e ; $55c9
@@ -2732,9 +2520,7 @@ Func_1d_543d:
 	ld bc, $de60 ; $55ed
 	call Func_1d_4bb6 ; $55f0
 	farcall FarPtr_1c_16 ; $55f3
-	ld a, $06 ; $55f6
-	ldh [$ff96], a ; $55f8
-	ldh [rWBK], a ; $55fa
+	wram_bank $06 ; $55f6
 	ld hl, $d145 ; $55fc
 	xor a, a ; $55ff
 	ld [hl+], a ; $5600
@@ -2745,9 +2531,7 @@ Func_1d_5603:
 	ld a, [$d002] ; $5606
 	or a, a ; $5609
 	jr nz, Func_1d_5603 ; $560a
-	ld a, $06 ; $560c
-	ldh [$ff96], a ; $560e
-	ldh [rWBK], a ; $5610
+	wram_bank $06 ; $560c
 	ld hl, $d145 ; $5612
 	ld de, $0020 ; $5615
 	ld a, e ; $5618
@@ -2764,9 +2548,7 @@ Func_1d_5603:
 	ld bc, $de60 ; $5633
 	call Func_1d_4bb6 ; $5636
 	farcall FarPtr_1c_16 ; $5639
-	ld a, $06 ; $563c
-	ldh [$ff96], a ; $563e
-	ldh [rWBK], a ; $5640
+	wram_bank $06 ; $563c
 	ld hl, $d147 ; $5642
 	ld de, $ff60 ; $5645
 	ld a, e ; $5648
@@ -2797,9 +2579,7 @@ Func_1d_5603:
 	ld bc, $de60 ; $5687
 	call Func_1d_4bb6 ; $568a
 	farcall FarPtr_1c_16 ; $568d
-	ld a, $06 ; $5690
-	ldh [$ff96], a ; $5692
-	ldh [rWBK], a ; $5694
+	wram_bank $06 ; $5690
 	ld hl, $d147 ; $5696
 	ld de, $ff80 ; $5699
 	ld a, e ; $569c
@@ -2830,9 +2610,7 @@ Func_1d_5603:
 	ld bc, $de60 ; $56db
 	call Func_1d_4bb6 ; $56de
 	farcall FarPtr_1c_16 ; $56e1
-	ld a, $06 ; $56e4
-	ldh [$ff96], a ; $56e6
-	ldh [rWBK], a ; $56e8
+	wram_bank $06 ; $56e4
 	ld hl, $d147 ; $56ea
 	ld de, $ffa0 ; $56ed
 	ld a, e ; $56f0
@@ -2866,9 +2644,7 @@ Func_1d_5603:
 	ld bc, $d390 ; $5738
 	call Func_1d_4bb6 ; $573b
 	farcall FarPtr_1c_16 ; $573e
-	ld a, $06 ; $5741
-	ldh [$ff96], a ; $5743
-	ldh [rWBK], a ; $5745
+	wram_bank $06 ; $5741
 	ld hl, $d147 ; $5747
 	ld de, $ffc0 ; $574a
 	ld a, e ; $574d
@@ -2893,9 +2669,7 @@ Func_1d_5603:
 	ld bc, $d390 ; $577a
 	call Func_1d_4bb6 ; $577d
 	farcall FarPtr_1c_16 ; $5780
-	ld a, $06 ; $5783
-	ldh [$ff96], a ; $5785
-	ldh [rWBK], a ; $5787
+	wram_bank $06 ; $5783
 	ld hl, $d147 ; $5789
 	ld de, $ffe0 ; $578c
 	ld a, e ; $578f
@@ -2920,9 +2694,7 @@ Func_1d_5603:
 	ld bc, $d390 ; $57bc
 	call Func_1d_4bb6 ; $57bf
 	farcall FarPtr_1c_16 ; $57c2
-	ld a, $06 ; $57c5
-	ldh [$ff96], a ; $57c7
-	ldh [rWBK], a ; $57c9
+	wram_bank $06 ; $57c5
 	ld hl, $d147 ; $57cb
 	xor a, a ; $57ce
 	ld [hl+], a ; $57cf
@@ -2933,9 +2705,7 @@ Func_1d_5997:
 	push bc ; $5997
 	ld b, $00 ; $5998
 	ld c, d ; $599a
-	ld a, $06 ; $599b
-	ldh [$ff96], a ; $599d
-	ldh [rWBK], a ; $599f
+	wram_bank $06 ; $599b
 	ld a, [hl+] ; $59a1
 	ld h, [hl] ; $59a2
 	ld l, a ; $59a3
@@ -3006,9 +2776,7 @@ Label_1d_59f9:
 	ret ; $59fb
 Func_1d_59fc:
 	ld b, a ; $59fc
-	ld a, $03 ; $59fd
-	ldh [$ff96], a ; $59ff
-	ldh [rWBK], a ; $5a01
+	wram_bank $03 ; $59fd
 Label_1d_5a03:
 	ld a, b ; $5a03
 	sub a, $08 ; $5a04
@@ -3098,9 +2866,7 @@ Func_1d_5a63:
 	ld c, $10 ; $5a92
 	call Func_00_1d2e ; $5a94
 	call Func_00_1da4 ; $5a97
-	ld a, $06 ; $5a9a
-	ldh [$ff96], a ; $5a9c
-	ldh [rWBK], a ; $5a9e
+	wram_bank $06 ; $5a9a
 	ld a, $01 ; $5aa0
 	ld [$d025], a ; $5aa2
 Label_1d_5aa5:
@@ -3119,18 +2885,14 @@ Label_1d_5aa5:
 	ld [$d025], a ; $5ac0
 	jr Label_1d_5aa5 ; $5ac3
 Label_1d_5ac5:
-	ld a, $06 ; $5ac5
-	ldh [$ff96], a ; $5ac7
-	ldh [rWBK], a ; $5ac9
+	wram_bank $06 ; $5ac5
 	ld a, [$d025] ; $5acb
 	or a, a ; $5ace
 	jr nz, Label_1d_5ad5 ; $5acf
 	sound $5f ; $5ad1
 	jr Label_1d_5ae2 ; $5ad3
 Label_1d_5ad5:
-	ld a, $06 ; $5ad5
-	ldh [$ff96], a ; $5ad7
-	ldh [rWBK], a ; $5ad9
+	wram_bank $06 ; $5ad5
 	ld a, $01 ; $5adb
 	ld [$d025], a ; $5add
 	sound $62 ; $5ae0
@@ -3140,15 +2902,11 @@ Label_1d_5ae2:
 	call Func_00_1da4 ; $5ae7
 	farcall FarPtr_1c_14 ; $5aea
 	call Func_00_1b38 ; $5aed
-	ld a, $06 ; $5af0
-	ldh [$ff96], a ; $5af2
-	ldh [rWBK], a ; $5af4
+	wram_bank $06 ; $5af0
 	ld a, [$d025] ; $5af6
 	ret ; $5af9
 Func_1d_5afa:
-	ld a, $06 ; $5afa
-	ldh [$ff96], a ; $5afc
-	ldh [rWBK], a ; $5afe
+	wram_bank $06 ; $5afa
 	ld a, [$d025] ; $5b00
 	or a, a ; $5b03
 	jr nz, Label_1d_5b10 ; $5b04
@@ -3184,9 +2942,7 @@ Label_1d_5b31:
 	ld a, [hl] ; $5b3a
 	ld de, $0401 ; $5b3b
 	farcall FarPtr_1b_02 ; $5b3e
-	ld a, $01 ; $5b41
-	ldh [$ff96], a ; $5b43
-	ldh [rWBK], a ; $5b45
+	wram_bank $01 ; $5b41
 	push af ; $5b47
 	ld hl, $c900 ; $5b48
 	ld a, [$cb00] ; $5b4b
@@ -3236,16 +2992,12 @@ Label_1d_5b53:
 	ld bc, $d550 ; $5bb7
 	call Func_1d_4bb6 ; $5bba
 	call Func_1d_5c0b ; $5bbd
-	ld a, $03 ; $5bc0
-	ldh [$ff96], a ; $5bc2
-	ldh [rWBK], a ; $5bc4
+	wram_bank $03 ; $5bc0
 	ld hl, $d000 ; $5bc6
 	ld de, $9800 ; $5bc9
 	ld c, $24 ; $5bcc
 	call Func_00_0480 ; $5bce
-	ld a, $02 ; $5bd1
-	ldh [$ff96], a ; $5bd3
-	ldh [rWBK], a ; $5bd5
+	wram_bank $02 ; $5bd1
 	ld hl, $d000 ; $5bd7
 	ld de, $b800 ; $5bda
 	ld c, $24 ; $5bdd
@@ -3284,16 +3036,12 @@ Func_1d_5c1e:
 	ret ; $5c24
 	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 3079 bytes
 Func_1d_682c:
-	ld a, $06 ; $682c
-	ldh [$ff96], a ; $682e
-	ldh [rWBK], a ; $6830
+	wram_bank $06 ; $682c
 	xor a, a ; $6832
 	ld [$d0b6], a ; $6833
 Label_1d_6836:
 	call Func_1d_68a3 ; $6836
-	ld a, $06 ; $6839
-	ldh [$ff96], a ; $683b
-	ldh [rWBK], a ; $683d
+	wram_bank $06 ; $6839
 	ld hl, $d167 ; $683f
 	ld a, [hl+] ; $6842
 	ld d, [hl] ; $6843
@@ -3325,9 +3073,7 @@ Label_1d_686a:
 	jr z, Label_1d_68a1 ; $6870
 	ret ; $6872
 Label_1d_6873:
-	ld a, $06 ; $6873
-	ldh [$ff96], a ; $6875
-	ldh [rWBK], a ; $6877
+	wram_bank $06 ; $6873
 	ld hl, $d16d ; $6879
 	ld de, $c92c ; $687c
 	ld a, [hl+] ; $687f
@@ -3394,9 +3140,7 @@ Func_1d_68a3:
 	ld c, $10 ; $68f8
 	call Func_00_1d2e ; $68fa
 	call Func_00_1da4 ; $68fd
-	ld a, $06 ; $6900
-	ldh [$ff96], a ; $6902
-	ldh [rWBK], a ; $6904
+	wram_bank $06 ; $6900
 	xor a, a ; $6906
 	ld [$cb00], a ; $6907
 	call Func_1d_7189 ; $690a
@@ -3415,9 +3159,7 @@ Func_1d_68a3:
 	call Func_00_1bcb ; $6930
 	ret ; $6933
 Func_1d_6934:
-	ld a, $06 ; $6934
-	ldh [$ff96], a ; $6936
-	ldh [rWBK], a ; $6938
+	wram_bank $06 ; $6934
 	ld a, [$d0b6] ; $693a
 	or a, a ; $693d
 	jr nz, Label_1d_6967 ; $693e
@@ -3456,27 +3198,21 @@ Func_1d_6977:
 	ld [$cb00], a ; $6989
 	call Func_1d_6de7 ; $698c
 	call Func_1d_6ea2 ; $698f
-	ld a, $01 ; $6992
-	ldh [$ff96], a ; $6994
-	ldh [rWBK], a ; $6996
+	wram_bank $01 ; $6992
 	ld hl, $7822 ; $6998
 	ld de, $d240 ; $699b
 	call DecompressData ; $699e
 	ld hl, $d240 ; $69a1
 	ld bc, $0030 ; $69a4
 	call Func_1d_6aa4 ; $69a7
-	ld a, $01 ; $69aa
-	ldh [$ff96], a ; $69ac
-	ldh [rWBK], a ; $69ae
+	wram_bank $01 ; $69aa
 	ld hl, $7851 ; $69b0
 	ld de, $d240 ; $69b3
 	call DecompressData ; $69b6
 	ld hl, $d240 ; $69b9
 	ld bc, $0030 ; $69bc
 	call Func_1d_6ab9 ; $69bf
-	ld a, $01 ; $69c2
-	ldh [$ff96], a ; $69c4
-	ldh [rWBK], a ; $69c6
+	wram_bank $01 ; $69c2
 	ld hl, $7876 ; $69c8
 	ld de, $d000 ; $69cb
 	call DecompressData ; $69ce
@@ -3484,9 +3220,7 @@ Func_1d_6977:
 	ld de, $a160 ; $69d4
 	ld c, $02 ; $69d7
 	call Func_00_0480 ; $69d9
-	ld a, $01 ; $69dc
-	ldh [$ff96], a ; $69de
-	ldh [rWBK], a ; $69e0
+	wram_bank $01 ; $69dc
 	ld hl, $79c1 ; $69e2
 	ld de, $d000 ; $69e5
 	call DecompressData ; $69e8
@@ -3494,9 +3228,7 @@ Func_1d_6977:
 	ld de, $a180 ; $69ee
 	ld c, $14 ; $69f1
 	call Func_00_0480 ; $69f3
-	ld a, $01 ; $69f6
-	ldh [$ff96], a ; $69f8
-	ldh [rWBK], a ; $69fa
+	wram_bank $01 ; $69f6
 	ld hl, $7a63 ; $69fc
 	ld de, $d000 ; $69ff
 	call DecompressData ; $6a02
@@ -3504,9 +3236,7 @@ Func_1d_6977:
 	ld de, $a2c0 ; $6a08
 	ld c, $18 ; $6a0b
 	call Func_00_0480 ; $6a0d
-	ld a, $01 ; $6a10
-	ldh [$ff96], a ; $6a12
-	ldh [rWBK], a ; $6a14
+	wram_bank $01 ; $6a10
 	ld hl, $7b8a ; $6a16
 	ld de, $d000 ; $6a19
 	call DecompressData ; $6a1c
@@ -3517,9 +3247,7 @@ Func_1d_6977:
 	ld hl, $788f ; $6a2a
 	ld de, $0e02 ; $6a2d
 	call LoadPaletteShadow ; $6a30
-	ld a, $01 ; $6a33
-	ldh [$ff96], a ; $6a35
-	ldh [rWBK], a ; $6a37
+	wram_bank $01 ; $6a33
 	ld hl, $78a7 ; $6a39
 	ld de, $d000 ; $6a3c
 	call DecompressData ; $6a3f
@@ -3527,9 +3255,7 @@ Func_1d_6977:
 	ld de, $a000 ; $6a45
 	ld c, $0c ; $6a48
 	call Func_00_0480 ; $6a4a
-	ld a, $01 ; $6a4d
-	ldh [$ff96], a ; $6a4f
-	ldh [rWBK], a ; $6a51
+	wram_bank $01 ; $6a4d
 	ld hl, $7949 ; $6a53
 	ld de, $d000 ; $6a56
 	call DecompressData ; $6a59
@@ -3537,9 +3263,7 @@ Func_1d_6977:
 	ld de, $a0c0 ; $6a5f
 	ld c, $04 ; $6a62
 	call Func_00_0480 ; $6a64
-	ld a, $01 ; $6a67
-	ldh [$ff96], a ; $6a69
-	ldh [rWBK], a ; $6a6b
+	wram_bank $01 ; $6a67
 	ld hl, $7983 ; $6a6d
 	ld de, $d000 ; $6a70
 	call DecompressData ; $6a73
@@ -3547,29 +3271,21 @@ Func_1d_6977:
 	ld de, $a100 ; $6a79
 	ld c, $06 ; $6a7c
 	call Func_00_0480 ; $6a7e
-	ld a, $03 ; $6a81
-	ldh [$ff96], a ; $6a83
-	ldh [rWBK], a ; $6a85
+	wram_bank $03 ; $6a81
 	ld hl, $d000 ; $6a87
 	ld de, $9800 ; $6a8a
 	ld c, $24 ; $6a8d
 	call Func_00_0480 ; $6a8f
-	ld a, $02 ; $6a92
-	ldh [$ff96], a ; $6a94
-	ldh [rWBK], a ; $6a96
+	wram_bank $02 ; $6a92
 	ld hl, $d000 ; $6a98
 	ld de, $b800 ; $6a9b
 	ld c, $24 ; $6a9e
 	call Func_00_0480 ; $6aa0
 	ret ; $6aa3
 Func_1d_6aa4:
-	ld a, $01 ; $6aa4
-	ldh [$ff96], a ; $6aa6
-	ldh [rWBK], a ; $6aa8
+	wram_bank $01 ; $6aa4
 	ld d, [hl] ; $6aaa
-	ld a, $03 ; $6aab
-	ldh [$ff96], a ; $6aad
-	ldh [rWBK], a ; $6aaf
+	wram_bank $03 ; $6aab
 	ld [hl], d ; $6ab1
 	inc hl ; $6ab2
 	dec bc ; $6ab3
@@ -3578,13 +3294,9 @@ Func_1d_6aa4:
 	jr nz, Func_1d_6aa4 ; $6ab6
 	ret ; $6ab8
 Func_1d_6ab9:
-	ld a, $01 ; $6ab9
-	ldh [$ff96], a ; $6abb
-	ldh [rWBK], a ; $6abd
+	wram_bank $01 ; $6ab9
 	ld d, [hl] ; $6abf
-	ld a, $02 ; $6ac0
-	ldh [$ff96], a ; $6ac2
-	ldh [rWBK], a ; $6ac4
+	wram_bank $02 ; $6ac0
 	ld [hl], d ; $6ac6
 	inc hl ; $6ac7
 	dec bc ; $6ac8
@@ -3593,9 +3305,7 @@ Func_1d_6ab9:
 	jr nz, Func_1d_6ab9 ; $6acb
 	ret ; $6acd
 Func_1d_6ace:
-	ld a, $06 ; $6ace
-	ldh [$ff96], a ; $6ad0
-	ldh [rWBK], a ; $6ad2
+	wram_bank $06 ; $6ace
 	ld hl, $d14e ; $6ad4
 	ld a, [hl+] ; $6ad7
 	ld h, [hl] ; $6ad8
@@ -3609,9 +3319,7 @@ Func_1d_6ace:
 	call Func_1d_6aef ; $6aeb
 	ret ; $6aee
 Func_1d_6aef:
-	ld a, $06 ; $6aef
-	ldh [$ff96], a ; $6af1
-	ldh [rWBK], a ; $6af3
+	wram_bank $06 ; $6aef
 	ld hl, $d14e ; $6af5
 	ld a, [hl+] ; $6af8
 	ld d, [hl] ; $6af9
@@ -3632,9 +3340,7 @@ Label_1d_6b0d:
 	ld de, $d161 ; $6b12
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
-	ld a, $03 ; $6b18
-	ldh [$ff96], a ; $6b1a
-	ldh [rWBK], a ; $6b1c
+	wram_bank $03 ; $6b18
 Label_1d_6b1e:
 	ld a, b ; $6b1e
 	sub a, $08 ; $6b1f
@@ -3697,9 +3403,7 @@ Label_1d_6b63:
 	ret ; $6b68
 	INCBIN "data/bank_01d/d_6b69.bin" ; $6b69, 18 bytes
 Func_1d_6b7b:
-	ld a, $06 ; $6b7b
-	ldh [$ff96], a ; $6b7d
-	ldh [rWBK], a ; $6b7f
+	wram_bank $06 ; $6b7b
 	ld a, [$d0b6] ; $6b81
 	or a, a ; $6b84
 	jp nz, Label_1d_6ccc ; $6b85
@@ -3722,9 +3426,7 @@ Label_1d_6b98:
 	ld de, $d0ec ; $6ba1
 	ld c, $20 ; $6ba4
 	call Func_1d_6d6a ; $6ba6
-	ld a, $06 ; $6ba9
-	ldh [$ff96], a ; $6bab
-	ldh [rWBK], a ; $6bad
+	wram_bank $06 ; $6ba9
 	push af ; $6baf
 	ld hl, $c900 ; $6bb0
 	ld a, [$cb00] ; $6bb3
@@ -3752,9 +3454,7 @@ Label_1d_6bbb:
 	call Func_00_1a27 ; $6bd4
 	ld de, $d06b ; $6bd7
 	farcall FarPtr_1c_04 ; $6bda
-	ld a, $06 ; $6bdd
-	ldh [$ff96], a ; $6bdf
-	ldh [rWBK], a ; $6be1
+	wram_bank $06 ; $6bdd
 	pop af ; $6be3
 	farcall FarPtr_02_30 ; $6be4
 	ld a, l ; $6be7
@@ -3812,9 +3512,7 @@ Label_1d_6c39:
 	ld de, $d20c ; $6c42
 	ld c, $20 ; $6c45
 	call Func_1d_6d6a ; $6c47
-	ld a, $06 ; $6c4a
-	ldh [$ff96], a ; $6c4c
-	ldh [rWBK], a ; $6c4e
+	wram_bank $06 ; $6c4a
 	push af ; $6c50
 	ld hl, $c900 ; $6c51
 	ld a, [$cb00] ; $6c54
@@ -3842,9 +3540,7 @@ Label_1d_6c5c:
 	call Func_00_1a27 ; $6c75
 	ld de, $d18b ; $6c78
 	farcall FarPtr_1c_04 ; $6c7b
-	ld a, $06 ; $6c7e
-	ldh [$ff96], a ; $6c80
-	ldh [rWBK], a ; $6c82
+	wram_bank $06 ; $6c7e
 	pop af ; $6c84
 	farcall FarPtr_02_30 ; $6c85
 	ld a, l ; $6c88
@@ -3904,9 +3600,7 @@ Label_1d_6cdc:
 	ld de, $d0ec ; $6ce5
 	ld c, $20 ; $6ce8
 	call Func_1d_6d6a ; $6cea
-	ld a, $06 ; $6ced
-	ldh [$ff96], a ; $6cef
-	ldh [rWBK], a ; $6cf1
+	wram_bank $06 ; $6ced
 	push af ; $6cf3
 	ld hl, $c900 ; $6cf4
 	ld a, [$cb00] ; $6cf7
@@ -3948,9 +3642,7 @@ Label_1d_6d2b:
 	ld de, $d20c ; $6d34
 	ld c, $20 ; $6d37
 	call Func_1d_6d6a ; $6d39
-	ld a, $06 ; $6d3c
-	ldh [$ff96], a ; $6d3e
-	ldh [rWBK], a ; $6d40
+	wram_bank $06 ; $6d3c
 	push af ; $6d42
 	ld hl, $c900 ; $6d43
 	ld a, [$cb00] ; $6d46
@@ -3975,9 +3667,7 @@ Label_1d_6d4e:
 	farcall FarPtr_1c_04 ; $6d66
 	ret ; $6d69
 Func_1d_6d6a:
-	ld a, $06 ; $6d6a
-	ldh [$ff96], a ; $6d6c
-	ldh [rWBK], a ; $6d6e
+	wram_bank $06 ; $6d6a
 	ld a, [hl+] ; $6d70
 	or a, a ; $6d71
 	ret z ; $6d72
@@ -3986,14 +3676,10 @@ Func_1d_6d6a:
 	cp a, $df ; $6d77
 	jr z, Label_1d_6d8f ; $6d79
 	ld b, a ; $6d7b
-	ld a, $03 ; $6d7c
-	ldh [$ff96], a ; $6d7e
-	ldh [rWBK], a ; $6d80
+	wram_bank $03 ; $6d7c
 	ld a, b ; $6d82
 	ld [de], a ; $6d83
-	ld a, $02 ; $6d84
-	ldh [$ff96], a ; $6d86
-	ldh [rWBK], a ; $6d88
+	wram_bank $02 ; $6d84
 	xor a, a ; $6d8a
 	ld [de], a ; $6d8b
 	inc de ; $6d8c
@@ -4001,9 +3687,7 @@ Func_1d_6d6a:
 Label_1d_6d8f:
 	call Func_1d_6dd5 ; $6d8f
 	ld b, a ; $6d92
-	ld a, $03 ; $6d93
-	ldh [$ff96], a ; $6d95
-	ldh [rWBK], a ; $6d97
+	wram_bank $03 ; $6d93
 	ld a, [de] ; $6d99
 	cp a, $73 ; $6d9a
 	jr z, Label_1d_6da4 ; $6d9c
@@ -4024,9 +3708,7 @@ Label_1d_6da4:
 	ld c, $0c ; $6db3
 	ld a, b ; $6db5
 	ld [de], a ; $6db6
-	ld a, $02 ; $6db7
-	ldh [$ff96], a ; $6db9
-	ldh [rWBK], a ; $6dbb
+	wram_bank $02 ; $6db7
 	ld a, c ; $6dbd
 	ld [de], a ; $6dbe
 	pop bc ; $6dbf
@@ -4035,9 +3717,7 @@ Label_1d_6da4:
 Label_1d_6dc5:
 	ld a, b ; $6dc5
 	ld [de], a ; $6dc6
-	ld a, $02 ; $6dc7
-	ldh [$ff96], a ; $6dc9
-	ldh [rWBK], a ; $6dcb
+	wram_bank $02 ; $6dc7
 	ld a, c ; $6dcd
 	ld [de], a ; $6dce
 	pop bc ; $6dcf
@@ -4062,9 +3742,7 @@ Func_1d_6ddf:
 Label_1d_6de6:
 	ret ; $6de6
 Func_1d_6de7:
-	ld a, $06 ; $6de7
-	ldh [$ff96], a ; $6de9
-	ldh [rWBK], a ; $6deb
+	wram_bank $06 ; $6de7
 	ld a, [$cb00] ; $6ded
 	or a, a ; $6df0
 	jr nz, Label_1d_6dfb ; $6df1
@@ -4097,9 +3775,7 @@ Label_1d_6e20:
 	call Func_1d_6e51 ; $6e23
 	ret ; $6e26
 Label_1d_6e27:
-	ld a, $03 ; $6e27
-	ldh [$ff96], a ; $6e29
-	ldh [rWBK], a ; $6e2b
+	wram_bank $03 ; $6e27
 	ld h, d ; $6e2d
 	ld l, e ; $6e2e
 	dec hl ; $6e2f
@@ -4126,17 +3802,13 @@ Label_1d_6e41:
 	ld [hl+], a ; $6e47
 	inc a ; $6e48
 	ld [hl], a ; $6e49
-	ld a, $06 ; $6e4a
-	ldh [$ff96], a ; $6e4c
-	ldh [rWBK], a ; $6e4e
+	wram_bank $06 ; $6e4a
 	ret ; $6e50
 Func_1d_6e51:
 	sub a, $30 ; $6e51
 	add a, $66 ; $6e53
 	ld b, a ; $6e55
-	ld a, $03 ; $6e56
-	ldh [$ff96], a ; $6e58
-	ldh [rWBK], a ; $6e5a
+	wram_bank $03 ; $6e56
 	ld a, b ; $6e5c
 	ld [de], a ; $6e5d
 	push de ; $6e5e
@@ -4152,16 +3824,12 @@ Label_1d_6e6a:
 	ld a, b ; $6e6a
 	ld [de], a ; $6e6b
 	pop de ; $6e6c
-	ld a, $06 ; $6e6d
-	ldh [$ff96], a ; $6e6f
-	ldh [rWBK], a ; $6e71
+	wram_bank $06 ; $6e6d
 	ret ; $6e73
 Func_1d_6e74:
 	push af ; $6e74
 	push de ; $6e75
-	ld a, $03 ; $6e76
-	ldh [$ff96], a ; $6e78
-	ldh [rWBK], a ; $6e7a
+	wram_bank $03 ; $6e76
 	ld h, d ; $6e7c
 	ld l, e ; $6e7d
 	dec hl ; $6e7e
@@ -4186,16 +3854,12 @@ Label_1d_6e90:
 	ld a, $51 ; $6e95
 	ld [hl+], a ; $6e97
 	ld [hl], a ; $6e98
-	ld a, $06 ; $6e99
-	ldh [$ff96], a ; $6e9b
-	ldh [rWBK], a ; $6e9d
+	wram_bank $06 ; $6e99
 	pop de ; $6e9f
 	pop af ; $6ea0
 	ret ; $6ea1
 Func_1d_6ea2:
-	ld a, $06 ; $6ea2
-	ldh [$ff96], a ; $6ea4
-	ldh [rWBK], a ; $6ea6
+	wram_bank $06 ; $6ea2
 	ld a, [$cb00] ; $6ea8
 	or a, a ; $6eab
 	jr nz, Label_1d_6ed7 ; $6eac
@@ -4244,9 +3908,7 @@ Label_1d_6ee7:
 Label_1d_6efe:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff
-	ld a, $03 ; $6f01
-	ldh [$ff96], a ; $6f03
-	ldh [rWBK], a ; $6f05
+	wram_bank $03 ; $6f01
 Label_1d_6f07:
 	ld a, b ; $6f07
 	sub a, $08 ; $6f08
@@ -4286,9 +3948,7 @@ Label_1d_6f2b:
 	jr Label_1d_6f2b ; $6f33
 	INCBIN "data/bank_01d/d_6f35.bin" ; $6f35, 9 bytes
 Func_1d_6f3e:
-	ld a, $06 ; $6f3e
-	ldh [$ff96], a ; $6f40
-	ldh [rWBK], a ; $6f42
+	wram_bank $06 ; $6f3e
 	ld a, [$d0b6] ; $6f44
 	or a, a ; $6f47
 	jr z, Label_1d_6f51 ; $6f48
@@ -4296,9 +3956,7 @@ Func_1d_6f3e:
 	ld [$d0b6], a ; $6f4b
 	jp Label_1d_7453 ; $6f4e
 Label_1d_6f51:
-	ld a, $06 ; $6f51
-	ldh [$ff96], a ; $6f53
-	ldh [rWBK], a ; $6f55
+	wram_bank $06 ; $6f51
 	ld a, [$d185] ; $6f57
 	and a, $08 ; $6f5a
 	or a, a ; $6f5c
@@ -4324,9 +3982,7 @@ Label_1d_6f77:
 	bit 1, a ; $6f82
 	jr z, Label_1d_6f92 ; $6f84
 	push af ; $6f86
-	ld a, $06 ; $6f87
-	ldh [$ff96], a ; $6f89
-	ldh [rWBK], a ; $6f8b
+	wram_bank $06 ; $6f87
 	xor a, a ; $6f8d
 	ld [$d184], a ; $6f8e
 	pop af ; $6f91
@@ -4337,9 +3993,7 @@ Label_1d_6f92:
 	jp nz, Label_1d_7076 ; $6f99
 	bit 0, a ; $6f9c
 	jp nz, Label_1d_7076 ; $6f9e
-	ld a, $06 ; $6fa1
-	ldh [$ff96], a ; $6fa3
-	ldh [rWBK], a ; $6fa5
+	wram_bank $06 ; $6fa1
 	ld a, $a8 ; $6fa7
 	ld [$d181], a ; $6fa9
 	ld a, $08 ; $6fac
@@ -4355,9 +4009,7 @@ Label_1d_6f92:
 	jr nz, Label_1d_6ff3 ; $6fc2
 	jp Func_1d_6f3e ; $6fc4
 Label_1d_6fc7:
-	ld a, $06 ; $6fc7
-	ldh [$ff96], a ; $6fc9
-	ldh [rWBK], a ; $6fcb
+	wram_bank $06 ; $6fc7
 	ld a, [$cb00] ; $6fcd
 	or a, a ; $6fd0
 	jp z, Func_1d_6f3e ; $6fd1
@@ -4374,9 +4026,7 @@ Label_1d_6fc7:
 	set 0, [hl] ; $6fee
 	jp Func_1d_6f3e ; $6ff0
 Label_1d_6ff3:
-	ld a, $06 ; $6ff3
-	ldh [$ff96], a ; $6ff5
-	ldh [rWBK], a ; $6ff7
+	wram_bank $06 ; $6ff3
 	ld a, [$cb00] ; $6ff9
 	or a, a ; $6ffc
 	jp nz, Func_1d_6f3e ; $6ffd
@@ -4393,9 +4043,7 @@ Label_1d_6ff3:
 	set 0, [hl] ; $701b
 	jp Func_1d_6f3e ; $701d
 Label_1d_7020:
-	ld a, $06 ; $7020
-	ldh [$ff96], a ; $7022
-	ldh [rWBK], a ; $7024
+	wram_bank $06 ; $7020
 	ld a, [$d17f] ; $7026
 	bit 0, a ; $7029
 	jp nz, Func_1d_6f3e ; $702b
@@ -4408,9 +4056,7 @@ Label_1d_7020:
 	or a, a ; $703b
 	jr z, Label_1d_7063 ; $703c
 	sound $62 ; $703e
-	ld a, $06 ; $7040
-	ldh [$ff96], a ; $7042
-	ldh [rWBK], a ; $7044
+	wram_bank $06 ; $7040
 	ld a, [$d183] ; $7046
 	or a, a ; $7049
 	jr nz, Label_1d_704f ; $704a
@@ -4433,9 +4079,7 @@ Label_1d_7070:
 	call Func_1d_7102 ; $7070
 	jp Func_1d_6f3e ; $7073
 Label_1d_7076:
-	ld a, $06 ; $7076
-	ldh [$ff96], a ; $7078
-	ldh [rWBK], a ; $707a
+	wram_bank $06 ; $7076
 	ld a, [$d17f] ; $707c
 	bit 0, a ; $707f
 	jp nz, Func_1d_6f3e ; $7081
@@ -4448,9 +4092,7 @@ Label_1d_7076:
 	or a, a ; $7091
 	jr z, Label_1d_70b9 ; $7092
 	sound $5f ; $7094
-	ld a, $06 ; $7096
-	ldh [$ff96], a ; $7098
-	ldh [rWBK], a ; $709a
+	wram_bank $06 ; $7096
 	ld a, [$d183] ; $709c
 	or a, a ; $709f
 	jr nz, Label_1d_70a5 ; $70a0
@@ -4472,9 +4114,7 @@ Label_1d_70b9:
 Label_1d_70c6:
 	call Func_1d_7133 ; $70c6
 	jp Func_1d_6f3e ; $70c9
-	ld a, $06 ; $70cc
-	ldh [$ff96], a ; $70ce
-	ldh [rWBK], a ; $70d0
+	wram_bank $06 ; $70cc
 	ld a, [$d180] ; $70d2
 	dec a ; $70d5
 	ld [$d180], a ; $70d6
@@ -4484,9 +4124,7 @@ Label_1d_70c6:
 	ld hl, $70cc ; $70df
 	call Func_00_1bcb ; $70e2
 	ret ; $70e5
-	ld a, $06 ; $70e6
-	ldh [$ff96], a ; $70e8
-	ldh [rWBK], a ; $70ea
+	wram_bank $06 ; $70e6
 	ld a, [$d180] ; $70ec
 	inc a ; $70ef
 	ld [$d180], a ; $70f0
@@ -4499,9 +4137,7 @@ Label_1d_70c6:
 	ret ; $7101
 Func_1d_7102:
 	call Func_1d_7168 ; $7102
-	ld a, $06 ; $7105
-	ldh [$ff96], a ; $7107
-	ldh [rWBK], a ; $7109
+	wram_bank $06 ; $7105
 	ld a, [$d181] ; $710b
 	cp a, $a8 ; $710e
 	jr z, Label_1d_711f ; $7110
@@ -4526,9 +4162,7 @@ Label_1d_712d:
 	ret ; $7132
 Func_1d_7133:
 	call Func_1d_7168 ; $7133
-	ld a, $06 ; $7136
-	ldh [$ff96], a ; $7138
-	ldh [rWBK], a ; $713a
+	wram_bank $06 ; $7136
 	ld a, [$d181] ; $713c
 	cp a, $a8 ; $713f
 	jr z, Label_1d_7162 ; $7141
@@ -4556,9 +4190,7 @@ Label_1d_7162:
 	ld [$d181], a ; $7164
 	ret ; $7167
 Func_1d_7168:
-	ld a, $06 ; $7168
-	ldh [$ff96], a ; $716a
-	ldh [rWBK], a ; $716c
+	wram_bank $06 ; $7168
 	ld a, [$cb00] ; $716e
 	or a, a ; $7171
 	jr nz, Label_1d_7179 ; $7172
@@ -4582,9 +4214,7 @@ Func_1d_7189:
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7192
 	ld de, $0201 ; $7195
 	farcall FarPtr_1b_02 ; $7198
-	ld a, $06 ; $719b
-	ldh [$ff96], a ; $719d
-	ldh [rWBK], a ; $719f
+	wram_bank $06 ; $719b
 	ld a, [$d16b] ; $71a1
 	ld [$c13a], a ; $71a4
 	ld a, [$d16c] ; $71a7
@@ -4635,11 +4265,9 @@ Func_1d_7205:
 	ret ; $720f
 Func_1d_7210:
 	push hl ; $7210
-	ldh a, [$ff96] ; $7211
+	ldh a, [hWramBank] ; $7211
 	push af ; $7213
-	ld a, $01 ; $7214
-	ldh [$ff96], a ; $7216
-	ldh [rWBK], a ; $7218
+	wram_bank $01 ; $7214
 	ld a, e ; $721a
 	and a, $1f ; $721b
 	ld [$d000], a ; $721d
@@ -4689,14 +4317,11 @@ Func_1d_7210:
 	or a, d ; $7264
 	ld d, a ; $7265
 	pop af ; $7266
-	ldh [$ff96], a ; $7267
-	ldh [rWBK], a ; $7269
+	wram_bank ; $7267
 	pop hl ; $726b
 	ret ; $726c
 Func_1d_726d:
-	ld a, $06 ; $726d
-	ldh [$ff96], a ; $726f
-	ldh [rWBK], a ; $7271
+	wram_bank $06 ; $726d
 	ld a, [$d14e] ; $7273
 	ld d, a ; $7276
 	ld a, [$d14f] ; $7277
@@ -4777,9 +4402,7 @@ Label_1d_72b6:
 	ld a, $01 ; $72da
 	ret ; $72dc
 Func_1d_72dd:
-	ld a, $06 ; $72dd
-	ldh [$ff96], a ; $72df
-	ldh [rWBK], a ; $72e1
+	wram_bank $06 ; $72dd
 	ld a, [$cb00] ; $72e3
 	or a, a ; $72e6
 	jr nz, Label_1d_7313 ; $72e7
@@ -4863,9 +4486,7 @@ Label_1d_7349:
 	xor a, a ; $7349
 	ret ; $734a
 Func_1d_734b:
-	ld a, $03 ; $734b
-	ldh [$ff96], a ; $734d
-	ldh [rWBK], a ; $734f
+	wram_bank $03 ; $734b
 	ld hl, $d020 ; $7351
 	ld de, $9820 ; $7354
 	ld c, $16 ; $7357
@@ -4885,9 +4506,7 @@ Func_1d_7373:
 	call Func_1d_6ea2 ; $7379
 	ret ; $737c
 Func_1d_737d:
-	ld a, $06 ; $737d
-	ldh [$ff96], a ; $737f
-	ldh [rWBK], a ; $7381
+	wram_bank $06 ; $737d
 	ld a, [$cb00] ; $7383
 	or a, a ; $7386
 	jr nz, Label_1d_73b8 ; $7387
@@ -4941,9 +4560,7 @@ Label_1d_73b8:
 	ld [$d175], a ; $73e3
 	ret ; $73e6
 Func_1d_73e7:
-	ld a, $06 ; $73e7
-	ldh [$ff96], a ; $73e9
-	ldh [rWBK], a ; $73eb
+	wram_bank $06 ; $73e7
 	ld a, [$cb00] ; $73ed
 	or a, a ; $73f0
 	jr nz, Label_1d_7423 ; $73f1
@@ -5003,14 +4620,10 @@ Label_1d_7423:
 	ld [$d179], a ; $744f
 	ret ; $7452
 Label_1d_7453:
-	ld a, $06 ; $7453
-	ldh [$ff96], a ; $7455
-	ldh [rWBK], a ; $7457
+	wram_bank $06 ; $7453
 	ld hl, $d17f ; $7459
 	set 2, [hl] ; $745c
-	ld a, $06 ; $745e
-	ldh [$ff96], a ; $7460
-	ldh [rWBK], a ; $7462
+	wram_bank $06 ; $745e
 	ld a, [$d16b] ; $7464
 	ld [$c13a], a ; $7467
 	ld a, [$d16c] ; $746a
@@ -5065,23 +4678,17 @@ Label_1d_7453:
 	call Func_1d_7505 ; $74f1
 	call Func_00_2725 ; $74f4
 	inc c ; $74f7
-	ld a, $06 ; $74f8
-	ldh [$ff96], a ; $74fa
-	ldh [rWBK], a ; $74fc
+	wram_bank $06 ; $74f8
 	ld a, $01 ; $74fe
 	ld [$d182], a ; $7500
 	jr Label_1d_7528 ; $7503
 Func_1d_7505:
-	ld a, $03 ; $7505
-	ldh [$ff96], a ; $7507
-	ldh [rWBK], a ; $7509
+	wram_bank $03 ; $7505
 	ld hl, $d180 ; $750b
 	ld de, $9980 ; $750e
 	ld c, $0c ; $7511
 	call Func_00_0480 ; $7513
-	ld a, $02 ; $7516
-	ldh [$ff96], a ; $7518
-	ldh [rWBK], a ; $751a
+	wram_bank $02 ; $7516
 	ld hl, $d180 ; $751c
 	ld de, $b980 ; $751f
 	ld c, $0c ; $7522
@@ -5102,16 +4709,12 @@ Label_1d_7528:
 	jr nz, Label_1d_7594 ; $7541
 	jr Label_1d_7528 ; $7543
 Func_1d_7545:
-	ld a, $03 ; $7545
-	ldh [$ff96], a ; $7547
-	ldh [rWBK], a ; $7549
+	wram_bank $03 ; $7545
 	ld hl, $d180 ; $754b
 	ld de, $9980 ; $754e
 	ld c, $0c ; $7551
 	call Func_00_0480 ; $7553
-	ld a, $02 ; $7556
-	ldh [$ff96], a ; $7558
-	ldh [rWBK], a ; $755a
+	wram_bank $02 ; $7556
 	ld hl, $d180 ; $755c
 	ld de, $b980 ; $755f
 	ld c, $0c ; $7562
@@ -5183,9 +4786,7 @@ Label_1d_7594:
 	call Func_1d_7545 ; $75f8
 	call Func_00_2725 ; $75fb
 	ld [bc], a ; $75fe
-	ld a, $06 ; $75ff
-	ldh [$ff96], a ; $7601
-	ldh [rWBK], a ; $7603
+	wram_bank $06 ; $75ff
 	ld hl, $d17f ; $7605
 	res 2, [hl] ; $7608
 	call Func_1d_7189 ; $760a
@@ -5214,9 +4815,7 @@ Func_1d_7610:
 	jr nc, Label_1d_762a ; $7627
 	inc h ; $7629
 Label_1d_762a:
-	ld a, $06 ; $762a
-	ldh [$ff96], a ; $762c
-	ldh [rWBK], a ; $762e
+	wram_bank $06 ; $762a
 	ld a, l ; $7630
 	ld [$d08e], a ; $7631
 	ld a, h ; $7634
@@ -5230,14 +4829,10 @@ Label_1d_762a:
 	ld h, [hl] ; $7640
 	ld l, a ; $7641
 Label_1d_7642:
-	ld a, $03 ; $7642
-	ldh [$ff96], a ; $7644
-	ldh [rWBK], a ; $7646
+	wram_bank $03 ; $7642
 	ld a, [hl] ; $7648
 	ld [de], a ; $7649
-	ld a, $02 ; $764a
-	ldh [$ff96], a ; $764c
-	ldh [rWBK], a ; $764e
+	wram_bank $02 ; $764a
 	ld a, [hl+] ; $7650
 	ld [de], a ; $7651
 	inc de ; $7652
@@ -5250,9 +4845,7 @@ Label_1d_7642:
 	inc hl ; $765a
 	inc hl ; $765b
 	jr Func_1d_7610 ; $765c
-	ld a, $06 ; $765e
-	ldh [$ff96], a ; $7660
-	ldh [rWBK], a ; $7662
+	wram_bank $06 ; $765e
 	ld a, [$d17f] ; $7664
 	bit 0, a ; $7667
 	ret nz ; $7669
@@ -5264,9 +4857,7 @@ Label_1d_7642:
 	ld a, [$cb00] ; $7672
 	or a, a ; $7675
 	jr nz, Label_1d_76cb ; $7676
-	ld a, $06 ; $7678
-	ldh [$ff96], a ; $767a
-	ldh [rWBK], a ; $767c
+	wram_bank $06 ; $7678
 	ld a, [$d161] ; $767e
 	cp a, $64 ; $7681
 	ret nc ; $7683
@@ -5301,9 +4892,7 @@ Label_1d_76b2:
 	call Func_00_1e9d ; $76c7
 	ret ; $76ca
 Label_1d_76cb:
-	ld a, $06 ; $76cb
-	ldh [$ff96], a ; $76cd
-	ldh [rWBK], a ; $76cf
+	wram_bank $06 ; $76cb
 	ld a, [$d170] ; $76d1
 	cp a, $64 ; $76d4
 	ret nc ; $76d6
@@ -5344,9 +4933,7 @@ Func_1d_771e:
 	ld c, a ; $7723
 	ld b, $0e ; $7724
 	ret ; $7726
-	ld a, $06 ; $7727
-	ldh [$ff96], a ; $7729
-	ldh [rWBK], a ; $772b
+	wram_bank $06 ; $7727
 	ld a, [$d180] ; $772d
 	add a, $46 ; $7730
 	ld l, a ; $7732
@@ -5362,9 +4949,7 @@ Func_1d_771e:
 	call Func_00_1e9d ; $7742
 	ret ; $7745
 	INCBIN "data/bank_01d/d_7746.bin" ; $7746, 26 bytes
-	ld a, $06 ; $7760
-	ldh [$ff96], a ; $7762
-	ldh [rWBK], a ; $7764
+	wram_bank $06 ; $7760
 	ld de, $3801 ; $7766
 	ld a, [$d164] ; $7769
 	add a, d ; $776c
@@ -5386,9 +4971,7 @@ Func_1d_771e:
 	jr z, Label_1d_7793 ; $778f
 	ld e, $49 ; $7791
 Label_1d_7793:
-	ld a, $06 ; $7793
-	ldh [$ff96], a ; $7795
-	ldh [rWBK], a ; $7797
+	wram_bank $06 ; $7793
 	ld a, [$d181] ; $7799
 	ld d, a ; $779c
 	ld hl, $79b4 ; $779d
@@ -5396,9 +4979,7 @@ Label_1d_7793:
 	call Func_00_1e9d ; $77a3
 	ret ; $77a6
 Func_1d_77a7:
-	ld a, $06 ; $77a7
-	ldh [$ff96], a ; $77a9
-	ldh [rWBK], a ; $77ab
+	wram_bank $06 ; $77a7
 	ld a, [$d186] ; $77ad
 	or a, a ; $77b0
 	ret z ; $77b1
@@ -5421,9 +5002,7 @@ Func_1d_7cae:
 	push bc ; $7caf
 	push de ; $7cb0
 	push hl ; $7cb1
-	ld a, $06 ; $7cb2
-	ldh [$ff96], a ; $7cb4
-	ldh [rWBK], a ; $7cb6
+	wram_bank $06 ; $7cb2
 	ld hl, $d152 ; $7cb8
 	ld bc, $000f ; $7cbb
 	call ClearBytes ; $7cbe
@@ -5433,9 +5012,7 @@ Func_1d_7cae:
 	pop af ; $7cc4
 	ret ; $7cc5
 Func_1d_7cc6:
-	ld a, $06 ; $7cc6
-	ldh [$ff96], a ; $7cc8
-	ldh [rWBK], a ; $7cca
+	wram_bank $06 ; $7cc6
 	ld a, b ; $7ccc
 	rlca ; $7ccd
 	add a, $d9 ; $7cce

@@ -1141,11 +1141,9 @@ Label_13_49c1:
 	ret ; $4c7d
 	INCBIN "data/bank_013/d_4c7e.bin" ; $4c7e, 94 bytes
 Func_13_4cdc:
-	ldh a, [$ff96] ; $4cdc
+	ldh a, [hWramBank] ; $4cdc
 	push af ; $4cde
-	ld a, $01 ; $4cdf
-	ldh [$ff96], a ; $4ce1
-	ldh [rWBK], a ; $4ce3
+	wram_bank $01 ; $4cdf
 	ld hl, $4d30 ; $4ce5
 	ld de, $a000 ; $4ce8
 	ld c, $04 ; $4ceb
@@ -1154,8 +1152,7 @@ Func_13_4cdc:
 	ld de, $0801 ; $4cf3
 	call LoadPaletteShadow ; $4cf6
 	pop af ; $4cf9
-	ldh [$ff96], a ; $4cfa
-	ldh [rWBK], a ; $4cfc
+	wram_bank ; $4cfa
 	ret ; $4cfe
 Func_13_4cff:
 	ld hl, $4d20 ; $4cff
@@ -1451,9 +1448,7 @@ Func_13_51b0:
 	jr z, Label_13_521b ; $51b5
 	cp a, $01 ; $51b7
 	jr z, Label_13_51d3 ; $51b9
-	ld a, $04 ; $51bb
-	ldh [$ff96], a ; $51bd
-	ldh [rWBK], a ; $51bf
+	wram_bank $04 ; $51bb
 	test_flag $05, 7 ; $51c1
 	jp nz, Label_13_527a ; $51c4
 	ld a, $03 ; $51c7
@@ -2058,11 +2053,9 @@ Label_13_56d4:
 	ld a, $00 ; $5707
 	ld b, $40 ; $5709
 	farcall FarPtr_0a_2e ; $570b
-	ld a, $04 ; $570e
-	ldh [$ff96], a ; $5710
-	ldh [rWBK], a ; $5712
+	wram_bank $04 ; $570e
 	ld a, $01 ; $5714
-	ld [$c8f2], a ; $5716
+	ld [wMatchIsDoubles], a ; $5716
 	call Func_13_5067 ; $5719
 	push af ; $571c
 	ld a, $05 ; $571d
@@ -2095,11 +2088,9 @@ Label_13_574c:
 	ld a, $03 ; $5752
 	farcall FarPtr_0a_08 ; $5754
 	clear_flag $05, 7 ; $5757
-	ld a, $04 ; $575a
-	ldh [$ff96], a ; $575c
-	ldh [rWBK], a ; $575e
+	wram_bank $04 ; $575a
 	ld a, $00 ; $5760
-	ld [$c8f2], a ; $5762
+	ld [wMatchIsDoubles], a ; $5762
 	ld a, $03 ; $5765
 	farcall FarPtr_0a_1c ; $5767
 	ld a, $03 ; $576a
@@ -2140,11 +2131,9 @@ Label_13_5795:
 	ld a, $03 ; $57b2
 	farcall FarPtr_0a_1c ; $57b4
 	clear_flag $05, 7 ; $57b7
-	ld a, $04 ; $57ba
-	ldh [$ff96], a ; $57bc
-	ldh [rWBK], a ; $57be
+	wram_bank $04 ; $57ba
 	ld a, $00 ; $57c0
-	ld [$c8f2], a ; $57c2
+	ld [wMatchIsDoubles], a ; $57c2
 	ld a, $03 ; $57c5
 	ld bc, $0b00 ; $57c7
 	ld de, $0900 ; $57ca
@@ -2193,11 +2182,9 @@ Label_13_5807:
 	ld a, $05 ; $5826
 	farcall FarPtr_0a_04 ; $5828
 	pop af ; $582b
-	ld a, $04 ; $582c
-	ldh [$ff96], a ; $582e
-	ldh [rWBK], a ; $5830
+	wram_bank $04 ; $582c
 	ld a, $01 ; $5832
-	ld [$c8f2], a ; $5834
+	ld [wMatchIsDoubles], a ; $5834
 	set_flag $05, 7 ; $5837
 	call Func_13_5067 ; $583a
 	ld a, $03 ; $583d
@@ -3253,9 +3240,7 @@ Func_13_70d5:
 	ret ; $70eb
 	INCBIN "data/bank_013/d_70ec.bin" ; $70ec, 15 bytes
 Func_13_70fb:
-	ld a, $06 ; $70fb
-	ldh [$ff96], a ; $70fd
-	ldh [rWBK], a ; $70ff
+	wram_bank $06 ; $70fb
 	ldh a, [$ff95] ; $7101
 	ld hl, $739c ; $7103
 	farcall FarPtr_0a_06 ; $7106
@@ -4067,9 +4052,7 @@ Label_13_7991:
 	call Func_13_70fb ; $7991
 	ret ; $7994
 Func_13_7995:
-	ld a, $04 ; $7995
-	ldh [$ff96], a ; $7997
-	ldh [rWBK], a ; $7999
+	wram_bank $04 ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
 	cp a, $01 ; $799e
 	jp z, Label_13_79a4 ; $79a0

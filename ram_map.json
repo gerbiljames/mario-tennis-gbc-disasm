@@ -78,6 +78,11 @@
   "note": "[8-bit] Rally Length; number of times the ball was hit in the span of a point",
   "size": 1
  },
+ "0xc4cf": {
+  "name": "wOnCourtCharCountMinus1",
+  "note": "[8-bit] wOnCourtCharCount - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches",
+  "size": 1
+ },
  "0xc4d3": {
   "name": "wCurrentServingPlayer",
   "note": "[8-bit] Current Serving Player (0x00-0x03)",
@@ -472,6 +477,16 @@
   "note": "[8-bit] Total Games Won In Match",
   "size": 1
  },
+ "0xc8f2": {
+  "name": "wMatchIsDoubles",
+  "note": "[8-bit] Nonzero when the current match is doubles; selects the wider court bound and 4 on-court characters",
+  "size": 1
+ },
+ "0xc8f3": {
+  "name": "wOnCourtCharCount",
+  "note": "[8-bit] Number of characters on court (2 singles, 4 doubles, 3 in Two-On-One); one banked WRAM struct each in banks 4-7",
+  "size": 1
+ },
  "0xc8ed": {
   "name": "wTotalPointsScoredInCurrentGame",
   "note": "[8-bit] Total Points Scored In Current Game",
@@ -642,6 +657,11 @@
  "0xff90": {
   "name": "hPlayerInputFlags",
   "note": "[8-bit] Player Input Flags\n\nBit 7 - Down\nBit 6 - Up\nBit 5 - Left\nBit 4 - Right\nBit 3 - Start\nBit 2 - Select\nBit 1 - B\nBit 0 - A",
+  "size": 1
+ },
+ "0xff96": {
+  "name": "hWramBank",
+  "note": "[8-bit] Shadow of the current WRAM bank (last value written to rSVBK); match engine swaps banks 4-7 for per-character data",
   "size": 1
  },
  "0xffce": {

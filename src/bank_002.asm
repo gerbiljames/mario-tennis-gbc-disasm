@@ -220,14 +220,11 @@ Label_02_4103:
 	ld hl, $002f ; $4113
 	add hl, de ; $4116
 	ld [hl], $02 ; $4117
-	ldh a, [$ff96] ; $4119
+	ldh a, [hWramBank] ; $4119
 	push af ; $411b
-	ld a, $06 ; $411c
-	ldh [$ff96], a ; $411e
-	ldh [rWBK], a ; $4120
+	wram_bank $06 ; $411c
 	pop af ; $4122
-	ldh [$ff96], a ; $4123
-	ldh [rWBK], a ; $4125
+	wram_bank ; $4123
 	ret ; $4127
 Func_02_4128:
 	push hl ; $4128
@@ -323,11 +320,9 @@ Func_02_4261:
 	push bc ; $4262
 	push de ; $4263
 	push hl ; $4264
-	ldh a, [$ff96] ; $4265
+	ldh a, [hWramBank] ; $4265
 	push af ; $4267
-	ld a, $06 ; $4268
-	ldh [$ff96], a ; $426a
-	ldh [rWBK], a ; $426c
+	wram_bank $06 ; $4268
 	xor a, a ; $426e
 	ld c, $0c ; $426f
 	ld hl, $d400 ; $4271
@@ -367,8 +362,7 @@ Label_02_42bb:
 	pop af ; $42bb
 	ld [$c36c], a ; $42bc
 	pop af ; $42bf
-	ldh [$ff96], a ; $42c0
-	ldh [rWBK], a ; $42c2
+	wram_bank ; $42c0
 	pop hl ; $42c4
 	pop de ; $42c5
 	pop bc ; $42c6
@@ -391,11 +385,9 @@ Func_02_42c9:
 Func_02_42d6:
 	push de ; $42d6
 	push hl ; $42d7
-	ldh a, [$ff96] ; $42d8
+	ldh a, [hWramBank] ; $42d8
 	push af ; $42da
-	ld a, $06 ; $42db
-	ldh [$ff96], a ; $42dd
-	ldh [rWBK], a ; $42df
+	wram_bank $06 ; $42db
 	ld hl, $c880 ; $42e1
 	ld a, [hl+] ; $42e4
 	or a, [hl] ; $42e5
@@ -439,8 +431,7 @@ Func_02_42d6:
 Label_02_433d:
 	ld h, a ; $433d
 	pop af ; $433e
-	ldh [$ff96], a ; $433f
-	ldh [rWBK], a ; $4341
+	wram_bank ; $433f
 	ld a, h ; $4343
 	pop hl ; $4344
 	pop de ; $4345
@@ -628,11 +619,10 @@ Func_02_443b:
 	jr nc, Label_02_4471 ; $446e
 	inc h ; $4470
 Label_02_4471:
-	ldh a, [$ff96] ; $4471
+	ldh a, [hWramBank] ; $4471
 	push af ; $4473
 	pop af ; $4474
-	ldh [$ff96], a ; $4475
-	ldh [rWBK], a ; $4477
+	wram_bank ; $4475
 	ret ; $4479
 Func_02_447a:
 	push de ; $447a
@@ -1764,9 +1754,7 @@ Label_02_4e68:
 	INCBIN "data/bank_002/d_4e78.bin" ; $4e78, 302 bytes
 Func_02_4fa6:
 	sound $05 ; $4fa6
-	ld a, $01 ; $4fa8
-	ldh [$ff96], a ; $4faa
-	ldh [rWBK], a ; $4fac
+	wram_bank $01 ; $4fa8
 	ld a, $03 ; $4fae
 	ldh [$ff9e], a ; $4fb0
 	xor a, a ; $4fb2

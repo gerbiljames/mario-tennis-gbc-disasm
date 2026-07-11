@@ -35,39 +35,27 @@ Func_01_4018:
 	farcall FarPtr_03_20 ; $401f
 	pop de ; $4022
 	call DisableLCDSafely ; $4023
-	ld a, $01 ; $4026
-	ldh [$ff96], a ; $4028
-	ldh [rWBK], a ; $402a
+	wram_bank $01 ; $4026
 	ld hl, $d000 ; $402c
 	ld c, $00 ; $402f
 	call ClearMemory16 ; $4031
-	ld a, $02 ; $4034
-	ldh [$ff96], a ; $4036
-	ldh [rWBK], a ; $4038
+	wram_bank $02 ; $4034
 	ld hl, $d000 ; $403a
 	ld c, $00 ; $403d
 	call ClearMemory16 ; $403f
-	ld a, $03 ; $4042
-	ldh [$ff96], a ; $4044
-	ldh [rWBK], a ; $4046
+	wram_bank $03 ; $4042
 	ld hl, $d000 ; $4048
 	ld c, $00 ; $404b
 	call ClearMemory16 ; $404d
-	ld a, $04 ; $4050
-	ldh [$ff96], a ; $4052
-	ldh [rWBK], a ; $4054
+	wram_bank $04 ; $4050
 	ld hl, $d000 ; $4056
 	ld c, $00 ; $4059
 	call ClearMemory16 ; $405b
-	ld a, $05 ; $405e
-	ldh [$ff96], a ; $4060
-	ldh [rWBK], a ; $4062
+	wram_bank $05 ; $405e
 	ld hl, $d000 ; $4064
 	ld c, $00 ; $4067
 	call ClearMemory16 ; $4069
-	ld a, $06 ; $406c
-	ldh [$ff96], a ; $406e
-	ldh [rWBK], a ; $4070
+	wram_bank $06 ; $406c
 	ld hl, $d000 ; $4072
 	ld c, $00 ; $4075
 	call ClearMemory16 ; $4077

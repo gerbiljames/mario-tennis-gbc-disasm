@@ -20,9 +20,7 @@ FarPtr_28_0c:
 	dw Func_28_606c ; $400c
 	INCBIN "data/bank_028/d_400e.bin" ; $400e, 7842 bytes
 Func_28_5eb0:
-	ld a, $01 ; $5eb0
-	ldh [$ff96], a ; $5eb2
-	ldh [rWBK], a ; $5eb4
+	wram_bank $01 ; $5eb0
 	ld hl, $4ba0 ; $5eb6
 	ld de, $0803 ; $5eb9
 	call LoadPaletteShadow ; $5ebc
@@ -238,9 +236,7 @@ Func_28_606c:
 	ret ; $607f
 	INCBIN "data/bank_028/d_6080.bin" ; $6080, 73 bytes
 Func_28_60c9:
-	ld a, $01 ; $60c9
-	ldh [$ff96], a ; $60cb
-	ldh [rWBK], a ; $60cd
+	wram_bank $01 ; $60c9
 	ld hl, $6d1c ; $60cf
 	ld de, $0902 ; $60d2
 	call LoadPaletteShadow ; $60d5

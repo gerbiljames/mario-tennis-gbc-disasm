@@ -126,9 +126,7 @@ DataPtr_3f_76:
 	INCBIN "data/bank_03f/d_4078.bin" ; $4078, 2 bytes
 Func_3f_407a:
 	push af ; $407a
-	ld a, $06 ; $407b
-	ldh [$ff96], a ; $407d
-	ldh [rWBK], a ; $407f
+	wram_bank $06 ; $407b
 	pop af ; $4081
 	ld [$cb34], a ; $4082
 	cp a, $00 ; $4085
@@ -180,9 +178,7 @@ Label_3f_40be:
 	ld a, $b4 ; $40db
 	ld [$cb3d], a ; $40dd
 	call Func_3f_42fe ; $40e0
-	ld a, $06 ; $40e3
-	ldh [$ff96], a ; $40e5
-	ldh [rWBK], a ; $40e7
+	wram_bank $06 ; $40e3
 	xor a, a ; $40e9
 	ld [$cb33], a ; $40ea
 	ld a, [$cb34] ; $40ed
@@ -207,15 +203,11 @@ Label_3f_4106:
 	ld a, $1d ; $411c
 	ld hl, $4e8d ; $411e
 	call Func_00_1b6a ; $4121
-	ld a, $06 ; $4124
-	ldh [$ff96], a ; $4126
-	ldh [rWBK], a ; $4128
+	wram_bank $06 ; $4124
 	ld a, [$cb34] ; $412a
 	cp a, $06 ; $412d
 	jr nz, Label_3f_414a ; $412f
-	ld a, $06 ; $4131
-	ldh [$ff96], a ; $4133
-	ldh [rWBK], a ; $4135
+	wram_bank $06 ; $4131
 	ld a, [$cb37] ; $4137
 	res 0, a ; $413a
 	ld [$cb37], a ; $413c
@@ -268,9 +260,7 @@ Func_3f_4194:
 	ld [$c321], a ; $419e
 	xor a, a ; $41a1
 	ld [$c320], a ; $41a2
-	ld a, $06 ; $41a5
-	ldh [$ff96], a ; $41a7
-	ldh [rWBK], a ; $41a9
+	wram_bank $06 ; $41a5
 	ld a, [$cb2e] ; $41ab
 	ld b, a ; $41ae
 	xor a, a ; $41af
@@ -312,9 +302,7 @@ Func_3f_41e0:
 	ld a, $01 ; $4209
 	farcall FarPtr_0a_76 ; $420b
 	call EnableLCD ; $420e
-	ld a, $06 ; $4211
-	ldh [$ff96], a ; $4213
-	ldh [rWBK], a ; $4215
+	wram_bank $06 ; $4211
 	ld a, [$cb37] ; $4217
 	res 1, a ; $421a
 	ld [$cb37], a ; $421c
@@ -325,9 +313,7 @@ Func_3f_41e0:
 	ret ; $4229
 	INCBIN "data/bank_03f/d_422a.bin" ; $422a, 26 bytes
 Func_3f_4244:
-	ld a, $06 ; $4244
-	ldh [$ff96], a ; $4246
-	ldh [rWBK], a ; $4248
+	wram_bank $06 ; $4244
 	xor a, a ; $424a
 	ldh [$ff8b], a ; $424b
 	ld [$c321], a ; $424d
@@ -340,9 +326,7 @@ Func_3f_4244:
 	ldh [$ffb8], a ; $425c
 	ret ; $425e
 Func_3f_425f:
-	ld a, $01 ; $425f
-	ldh [$ff96], a ; $4261
-	ldh [rWBK], a ; $4263
+	wram_bank $01 ; $425f
 	ld hl, $3a02 ; $4265 -> DataPtr_3a_02
 	ld de, $d000 ; $4268
 	call DecompressDataFromBank ; $426b
@@ -357,18 +341,14 @@ Func_3f_425f:
 	ld hl, $47f6 ; $4284
 	ld de, $0008 ; $4287
 	call Func_00_05e1 ; $428a
-	ld a, $02 ; $428d
-	ldh [$ff96], a ; $428f
-	ldh [rWBK], a ; $4291
+	wram_bank $02 ; $428d
 	ld hl, $4541 ; $4293
 	ld de, $d000 ; $4296
 	call DecompressData ; $4299
 	call Func_3f_42de ; $429c
 	ret ; $429f
 Func_3f_42a0:
-	ld a, $01 ; $42a0
-	ldh [$ff96], a ; $42a2
-	ldh [rWBK], a ; $42a4
+	wram_bank $01 ; $42a0
 	ld hl, $3a00 ; $42a6 -> DataPtr_3a_00
 	ld de, $d000 ; $42a9
 	call DecompressDataFromBank ; $42ac
@@ -383,17 +363,13 @@ Func_3f_42a0:
 	ld hl, $47ae ; $42c5
 	ld de, $0008 ; $42c8
 	call Func_00_05e1 ; $42cb
-	ld a, $02 ; $42ce
-	ldh [$ff96], a ; $42d0
-	ldh [rWBK], a ; $42d2
+	wram_bank $02 ; $42ce
 	ld hl, $44bf ; $42d4
 	ld de, $d000 ; $42d7
 	call DecompressData ; $42da
 	ret ; $42dd
 Func_3f_42de:
-	ld a, $02 ; $42de
-	ldh [$ff96], a ; $42e0
-	ldh [rWBK], a ; $42e2
+	wram_bank $02 ; $42de
 	ld c, $0e ; $42e4
 	ld hl, $4487 ; $42e6
 Label_3f_42e9:
@@ -416,9 +392,7 @@ Label_3f_42e9:
 	jr nz, Label_3f_42e9 ; $42fb
 	ret ; $42fd
 Func_3f_42fe:
-	ld a, $06 ; $42fe
-	ldh [$ff96], a ; $4300
-	ldh [rWBK], a ; $4302
+	wram_bank $06 ; $42fe
 	ld a, [$cb34] ; $4304
 	cp a, $06 ; $4307
 	jr nz, Label_3f_430f ; $4309
@@ -441,9 +415,7 @@ Label_3f_4311:
 	call Func_00_1b38 ; $4328
 	call Func_3f_50f7 ; $432b
 	call Func_3f_511a ; $432e
-	ld a, $01 ; $4331
-	ldh [$ff96], a ; $4333
-	ldh [rWBK], a ; $4335
+	wram_bank $01 ; $4331
 	ld hl, $483e ; $4337
 	ld de, $d000 ; $433a
 	call DecompressData ; $433d
@@ -489,9 +461,7 @@ Label_3f_4311:
 	ld hl, $4e39 ; $43af
 	ld de, $0808 ; $43b2
 	call Func_00_05e1 ; $43b5
-	ld a, $06 ; $43b8
-	ldh [$ff96], a ; $43ba
-	ldh [rWBK], a ; $43bc
+	wram_bank $06 ; $43b8
 	ld a, [$cb34] ; $43be
 	cp a, $06 ; $43c1
 	jr nz, Label_3f_43ca ; $43c3
@@ -500,15 +470,11 @@ Label_3f_4311:
 Label_3f_43ca:
 	call Func_3f_425f ; $43ca
 Label_3f_43cd:
-	ld a, $03 ; $43cd
-	ldh [$ff96], a ; $43cf
-	ldh [rWBK], a ; $43d1
+	wram_bank $03 ; $43cd
 	ld hl, $459c ; $43d3
 	ld de, $d000 ; $43d6
 	call DecompressData ; $43d9
-	ld a, $03 ; $43dc
-	ldh [$ff96], a ; $43de
-	ldh [rWBK], a ; $43e0
+	wram_bank $03 ; $43dc
 	ld c, $0e ; $43e2
 	ld hl, $4487 ; $43e4
 Label_3f_43e7:
@@ -530,14 +496,10 @@ Label_3f_43e7:
 	pop bc ; $43f9
 	dec c ; $43fa
 	jr nz, Label_3f_43e7 ; $43fb
-	ld a, $06 ; $43fd
-	ldh [$ff96], a ; $43ff
-	ldh [rWBK], a ; $4401
+	wram_bank $06 ; $43fd
 	ld a, [$cb34] ; $4403
 	ld c, a ; $4406
-	ld a, $03 ; $4407
-	ldh [$ff96], a ; $4409
-	ldh [rWBK], a ; $440b
+	wram_bank $03 ; $4407
 	inc c ; $440d
 	ld b, $20 ; $440e
 	xor a, a ; $4410
@@ -560,18 +522,12 @@ Label_3f_4426:
 	inc a ; $4427
 	dec c ; $4428
 	jr nz, Label_3f_4426 ; $4429
-	ld a, $06 ; $442b
-	ldh [$ff96], a ; $442d
-	ldh [rWBK], a ; $442f
+	wram_bank $06 ; $442b
 	call EnableLCD ; $4431
-	ld a, $06 ; $4434
-	ldh [$ff96], a ; $4436
-	ldh [rWBK], a ; $4438
+	wram_bank $06 ; $4434
 	farcall FarPtr_0a_70 ; $443a
 	call DisableLCDSafely ; $443d
-	ld a, $03 ; $4440
-	ldh [$ff96], a ; $4442
-	ldh [rWBK], a ; $4444
+	wram_bank $03 ; $4440
 	ld a, $01 ; $4446
 	farcall FarPtr_0a_76 ; $4448
 	call EnableLCD ; $444b
@@ -598,15 +554,13 @@ Func_3f_4e7b:
 Label_3f_4e89:
 	ld [$cb38], a ; $4e89
 	ret ; $4e8c
-	ldh a, [$ff96] ; $4e8d
+	ldh a, [hWramBank] ; $4e8d
 	push af ; $4e8f
 	push af ; $4e90
 	push bc ; $4e91
 	push de ; $4e92
 	push hl ; $4e93
-	ld a, $06 ; $4e94
-	ldh [$ff96], a ; $4e96
-	ldh [rWBK], a ; $4e98
+	wram_bank $06 ; $4e94
 	test_flag $03, 1 ; $4e9a
 	jr z, Label_3f_4ea4 ; $4e9d
 	sound $5f ; $4e9f
@@ -803,8 +757,7 @@ Label_3f_4fec:
 	pop bc ; $4fee
 	pop af ; $4fef
 	pop af ; $4ff0
-	ldh [$ff96], a ; $4ff1
-	ldh [rWBK], a ; $4ff3
+	wram_bank ; $4ff1
 	ret ; $4ff5
 	INCBIN "data/bank_03f/d_4ff6.bin" ; $4ff6, 244 bytes
 Func_3f_50ea:
@@ -822,9 +775,7 @@ Label_3f_50ee:
 	pop af ; $50f5
 	ret ; $50f6
 Func_3f_50f7:
-	ld a, $06 ; $50f7
-	ldh [$ff96], a ; $50f9
-	ldh [rWBK], a ; $50fb
+	wram_bank $06 ; $50f7
 	ld hl, $539e ; $50fd
 	ld c, $00 ; $5100
 	ld a, [$cb32] ; $5102
@@ -844,9 +795,7 @@ Label_3f_5115:
 	ld [$cb2f], a ; $5116
 	ret ; $5119
 Func_3f_511a:
-	ld a, $06 ; $511a
-	ldh [$ff96], a ; $511c
-	ldh [rWBK], a ; $511e
+	wram_bank $06 ; $511a
 	ld hl, $539e ; $5120
 	ld c, $00 ; $5123
 Label_3f_5125:
@@ -913,9 +862,7 @@ Label_3f_5178:
 	ld a, $03 ; $5178
 	ret ; $517a
 Func_3f_517b:
-	ld a, $06 ; $517b
-	ldh [$ff96], a ; $517d
-	ldh [rWBK], a ; $517f
+	wram_bank $06 ; $517b
 	ld a, [$cb2f] ; $5181
 	ld d, a ; $5184
 	ld a, [$cb2e] ; $5185
@@ -928,9 +875,7 @@ Func_3f_517b:
 Label_3f_5191:
 	ret ; $5191
 Func_3f_5192:
-	ld a, $06 ; $5192
-	ldh [$ff96], a ; $5194
-	ldh [rWBK], a ; $5196
+	wram_bank $06 ; $5192
 	ld hl, $539e ; $5198
 	call Func_3f_517b ; $519b
 	ld b, a ; $519e
@@ -1016,9 +961,7 @@ Label_3f_5207:
 	ld [$cb2d], a ; $520b
 	ret ; $520e
 Func_3f_520f:
-	ld a, $06 ; $520f
-	ldh [$ff96], a ; $5211
-	ldh [rWBK], a ; $5213
+	wram_bank $06 ; $520f
 	ld hl, $539e ; $5215
 	ld a, [$cb2f] ; $5218
 	ld b, a ; $521b
@@ -1073,9 +1016,7 @@ Label_3f_5259:
 	ret ; $5260
 Func_3f_5261:
 	farcall FarPtr_05_8c ; $5261
-	ld a, $03 ; $5264
-	ldh [$ff96], a ; $5266
-	ldh [rWBK], a ; $5268
+	wram_bank $03 ; $5264
 	ld c, $0e ; $526a
 	ld hl, $4487 ; $526c
 Label_3f_526f:
@@ -1097,9 +1038,7 @@ Label_3f_526f:
 	pop bc ; $5281
 	dec c ; $5282
 	jr nz, Label_3f_526f ; $5283
-	ld a, $06 ; $5285
-	ldh [$ff96], a ; $5287
-	ldh [rWBK], a ; $5289
+	wram_bank $06 ; $5285
 	ld c, $00 ; $528b
 	ld a, [$cb2d] ; $528d
 	ld b, a ; $5290
@@ -1124,9 +1063,7 @@ Label_3f_529a:
 	push bc ; $52aa
 	push de ; $52ab
 	push hl ; $52ac
-	ld a, $03 ; $52ad
-	ldh [$ff96], a ; $52af
-	ldh [rWBK], a ; $52b1
+	wram_bank $03 ; $52ad
 	pop hl ; $52b3
 	pop de ; $52b4
 	pop bc ; $52b5
@@ -1208,9 +1145,7 @@ Label_3f_5302:
 	call Func_3f_5334 ; $5324
 	call Func_3f_5749 ; $5327
 	call Func_3f_578f ; $532a
-	ld a, $06 ; $532d
-	ldh [$ff96], a ; $532f
-	ldh [rWBK], a ; $5331
+	wram_bank $06 ; $532d
 	ret ; $5333
 Func_3f_5334:
 	call Func_3f_517b ; $5334
@@ -1231,9 +1166,7 @@ Label_3f_534a:
 	jr z, Label_3f_5342 ; $534b
 	dec b ; $534d
 	jr nz, Label_3f_5342 ; $534e
-	ld a, $03 ; $5350
-	ldh [$ff96], a ; $5352
-	ldh [rWBK], a ; $5354
+	wram_bank $03 ; $5350
 	ld a, d ; $5356
 	dec a ; $5357
 	cp a, $ff ; $5358
@@ -1280,9 +1213,7 @@ Label_3f_539d:
 	ret ; $539d
 	INCBIN "data/bank_03f/d_539e.bin" ; $539e, 121 bytes
 Func_3f_5417:
-	ld a, $06 ; $5417
-	ldh [$ff96], a ; $5419
-	ldh [rWBK], a ; $541b
+	wram_bank $06 ; $5417
 	ld c, $00 ; $541d
 	ld hl, $539e ; $541f
 	ld a, [$cb32] ; $5422
@@ -1329,9 +1260,7 @@ Label_3f_545c:
 	ret ; $545e
 	INCBIN "data/bank_03f/d_545f.bin" ; $545f, 9 bytes
 Func_3f_5468:
-	ld a, $06 ; $5468
-	ldh [$ff96], a ; $546a
-	ldh [rWBK], a ; $546c
+	wram_bank $06 ; $5468
 	ld a, [$cb32] ; $546e
 	ld b, a ; $5471
 	call Func_3f_517b ; $5472
@@ -1384,9 +1313,7 @@ Func_3f_54c8:
 Label_3f_54d0:
 	ld hl, $5564 ; $54d0
 Label_3f_54d3:
-	ld a, $03 ; $54d3
-	ldh [$ff96], a ; $54d5
-	ldh [rWBK], a ; $54d7
+	wram_bank $03 ; $54d3
 	ld de, $cfb3 ; $54d9
 	ld c, b ; $54dc
 	inc b ; $54dd
@@ -1465,17 +1392,13 @@ Label_3f_552d:
 Label_3f_5534:
 	ld c, $01 ; $5534
 	call Func_00_0480 ; $5536
-	ld a, $06 ; $5539
-	ldh [$ff96], a ; $553b
-	ldh [rWBK], a ; $553d
+	wram_bank $06 ; $5539
 	ret ; $553f
 	INCBIN "data/bank_03f/d_5540.bin" ; $5540, 72 bytes
 Func_3f_5588:
 	push bc ; $5588
 	push af ; $5589
-	ld a, $06 ; $558a
-	ldh [$ff96], a ; $558c
-	ldh [rWBK], a ; $558e
+	wram_bank $06 ; $558a
 	ldh a, [$ff94] ; $5590
 	bit 0, a ; $5592
 	jr z, Label_3f_559e ; $5594
@@ -1544,9 +1467,7 @@ Label_3f_55fc:
 Func_3f_55ff:
 	push bc ; $55ff
 	push af ; $5600
-	ld a, $06 ; $5601
-	ldh [$ff96], a ; $5603
-	ldh [rWBK], a ; $5605
+	wram_bank $06 ; $5601
 	ld a, [$cb37] ; $5607
 	res 2, a ; $560a
 	res 3, a ; $560c
@@ -1613,9 +1534,7 @@ Label_3f_564e:
 	farcall FarPtr_05_6a ; $5687
 	farcall FarPtr_05_64 ; $568a
 	farcall FarPtr_05_66 ; $568d
-	ld a, $06 ; $5690
-	ldh [$ff96], a ; $5692
-	ldh [rWBK], a ; $5694
+	wram_bank $06 ; $5690
 	ld a, [$cb37] ; $5696
 	res 0, a ; $5699
 	ld [$cb37], a ; $569b
@@ -1709,11 +1628,9 @@ Label_3f_5746:
 	pop bc ; $5747
 	ret ; $5748
 Func_3f_5749:
-	ldh a, [$ff96] ; $5749
+	ldh a, [hWramBank] ; $5749
 	push af ; $574b
-	ld a, $07 ; $574c
-	ldh [$ff96], a ; $574e
-	ldh [rWBK], a ; $5750
+	wram_bank $07 ; $574c
 	ld hl, $d660 ; $5752
 	ld de, $8b60 ; $5755
 	ld c, $18 ; $5758
@@ -1741,15 +1658,12 @@ Label_3f_577d:
 	ld c, $18 ; $5784
 	call Func_00_0480 ; $5786
 	pop af ; $5789
-	ldh [$ff96], a ; $578a
-	ldh [rWBK], a ; $578c
+	wram_bank ; $578a
 	ret ; $578e
 Func_3f_578f:
-	ldh a, [$ff96] ; $578f
+	ldh a, [hWramBank] ; $578f
 	push af ; $5791
-	ld a, $05 ; $5792
-	ldh [$ff96], a ; $5794
-	ldh [rWBK], a ; $5796
+	wram_bank $05 ; $5792
 	ld hl, $d0b0 ; $5798
 	ld de, $98b0 ; $579b
 	ld c, $01 ; $579e
@@ -1782,8 +1696,7 @@ Func_3f_578f:
 Label_3f_57e4:
 	pop af ; $57e4
 	pop af ; $57e5
-	ldh [$ff96], a ; $57e6
-	ldh [rWBK], a ; $57e8
+	wram_bank ; $57e6
 	ret ; $57ea
 HardCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_57eb.bin" ; $57eb, 193 bytes

@@ -133,16 +133,14 @@ Func_09_40b5:
 	ld a, $ff ; $40b5
 	ld de, $8140 ; $40b7
 	farcall FarPtr_18_46 ; $40ba
-	ld a, [$c4cf] ; $40bd
+	ld a, [wOnCourtCharCountMinus1] ; $40bd
 	rst Rst00 ; $40c0
 	dw Label_09_4111 ; $40c1 jumptable
 	dw Label_09_40f9 ; $40c3 jumptable
 	dw Label_09_40e1 ; $40c5 jumptable
 	dw Label_09_40c9 ; $40c7 jumptable
 Label_09_40c9:
-	ld a, $06 ; $40c9
-	ldh [$ff96], a ; $40cb
-	ldh [rWBK], a ; $40cd
+	wram_bank $06 ; $40c9
 	ld a, [$df7e] ; $40cf
 	ld de, $8100 ; $40d2
 	farcall FarPtr_18_44 ; $40d5
@@ -150,9 +148,7 @@ Label_09_40c9:
 	ld de, $8140 ; $40db
 	farcall FarPtr_18_46 ; $40de
 Label_09_40e1:
-	ld a, $07 ; $40e1
-	ldh [$ff96], a ; $40e3
-	ldh [rWBK], a ; $40e5
+	wram_bank $07 ; $40e1
 	ld a, [$df7e] ; $40e7
 	ld de, $8180 ; $40ea
 	farcall FarPtr_18_44 ; $40ed
@@ -160,9 +156,7 @@ Label_09_40e1:
 	ld de, $81c0 ; $40f3
 	farcall FarPtr_18_46 ; $40f6
 Label_09_40f9:
-	ld a, $05 ; $40f9
-	ldh [$ff96], a ; $40fb
-	ldh [rWBK], a ; $40fd
+	wram_bank $05 ; $40f9
 	ld a, [$df7e] ; $40ff
 	ld de, $8080 ; $4102
 	farcall FarPtr_18_44 ; $4105
@@ -170,9 +164,7 @@ Label_09_40f9:
 	ld de, $80c0 ; $410b
 	farcall FarPtr_18_46 ; $410e
 Label_09_4111:
-	ld a, $04 ; $4111
-	ldh [$ff96], a ; $4113
-	ldh [rWBK], a ; $4115
+	wram_bank $04 ; $4111
 	ld a, [$df7e] ; $4117
 	ld de, $8000 ; $411a
 	farcall FarPtr_18_44 ; $411d
@@ -181,9 +173,7 @@ Label_09_4111:
 	farcall FarPtr_18_46 ; $4126
 	ret ; $4129
 Func_09_412a:
-	ld a, $04 ; $412a
-	ldh [$ff96], a ; $412c
-	ldh [rWBK], a ; $412e
+	wram_bank $04 ; $412a
 	call Func_09_4683 ; $4130
 	ld a, [$c494] ; $4133
 	cp a, $03 ; $4136
@@ -192,16 +182,12 @@ Func_09_412a:
 	cpl ; $413d
 	and a, $01 ; $413e
 	ld b, a ; $4140
-	ld a, $04 ; $4141
-	ldh [$ff96], a ; $4143
-	ldh [rWBK], a ; $4145
+	wram_bank $04 ; $4141
 	ld a, [$df0a] ; $4147
 	and a, $02 ; $414a
 	or a, b ; $414c
 	ld b, a ; $414d
-	ld a, $04 ; $414e
-	ldh [$ff96], a ; $4150
-	ldh [rWBK], a ; $4152
+	wram_bank $04 ; $414e
 	push bc ; $4154
 	ld a, b ; $4155
 	ld hl, ObjTemplates_09_41bc ; $4156
@@ -359,9 +345,7 @@ Func_09_437b:
 	ret ; $4384
 	INCBIN "data/bank_009/d_4385.bin" ; $4385, 464 bytes
 Func_09_4555:
-	ld a, $04 ; $4555
-	ldh [$ff96], a ; $4557
-	ldh [rWBK], a ; $4559
+	wram_bank $04 ; $4555
 	ld bc, $dd80 ; $455b
 	call Func_09_4598 ; $455e
 	ld bc, $dd90 ; $4561
@@ -631,15 +615,12 @@ Label_09_4718:
 	ret z ; $471d
 	farcall FarPtr_08_2c ; $471e
 	ld a, b ; $4721
-	ldh [$ff96], a ; $4722
-	ldh [rWBK], a ; $4724
+	wram_bank ; $4722
 	ld a, [$df53] ; $4726
 	ld d, a ; $4729
 	ld a, [$df54] ; $472a
 	ld e, a ; $472d
-	ld a, $04 ; $472e
-	ldh [$ff96], a ; $4730
-	ldh [rWBK], a ; $4732
+	wram_bank $04 ; $472e
 	ld a, [$ddfa] ; $4734
 	ld hl, $ddf6 ; $4737
 	add a, [hl] ; $473a
@@ -852,7 +833,7 @@ Label_09_6c65:
 	ret ; $6c6d
 	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1173 bytes
 Func_09_7103:
-	ld a, [$c4cf] ; $7103
+	ld a, [wOnCourtCharCountMinus1] ; $7103
 	add a, a ; $7106
 	add a, $12 ; $7107
 	ld l, a ; $7109
@@ -865,7 +846,7 @@ Func_09_7103:
 	ret ; $7111
 	INCBIN "data/bank_009/d_7112.bin" ; $7112, 8 bytes
 Func_09_711a:
-	ld a, [$c4cf] ; $711a
+	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a, a ; $711d
 	add a, $29 ; $711e
 	ld l, a ; $7120
@@ -878,7 +859,7 @@ Func_09_711a:
 	ret ; $7128
 	INCBIN "data/bank_009/d_7129.bin" ; $7129, 108 bytes
 Func_09_7195:
-	ld a, [$c4cf] ; $7195
+	ld a, [wOnCourtCharCountMinus1] ; $7195
 	add a, a ; $7198
 	add a, $a4 ; $7199
 	ld l, a ; $719b
@@ -891,7 +872,7 @@ Func_09_7195:
 	ret ; $71a3
 	INCBIN "data/bank_009/d_71a4.bin" ; $71a4, 8 bytes
 Func_09_71ac:
-	ld a, [$c4cf] ; $71ac
+	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a, a ; $71af
 	add a, $bb ; $71b0
 	ld l, a ; $71b2

@@ -1230,6 +1230,25 @@ def build_labels(dis, overrides=None):
     return labels
 
 
+def wram_bank_seq(dis, rom, off, labels):
+    """Collapse the WRAM bank-switch idiom into the wram_bank macro:
+    ldh [$ff96],a + ldh [rWBK],a, optionally preceded by ld a,imm. Only
+    fires when the follow-on instructions are plain proven code with no
+    label or data-site note landing inside the sequence (a mid-sequence
+    jump target keeps its raw instructions). Returns (text, size)."""
+    def plain(o):
+        return (o in dis.instrs and o not in labels
+                and o not in dis.data_site_notes)
+    if off in dis.data_site_notes:
+        return None
+    if (rom[off] == 0x3E and rom[off + 2:off + 6] == b"\xe0\x96\xe0\x70"
+            and plain(off + 2) and plain(off + 4)):
+        return f"wram_bank ${rom[off + 1]:02x}", 6
+    if rom[off:off + 4] == b"\xe0\x96\xe0\x70" and plain(off + 2):
+        return "wram_bank", 4
+    return None
+
+
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None):
     text = ins.text
     # A 16-bit immediate load whose value points at a named data region is a
@@ -1325,6 +1344,18 @@ ENDM
 MACRO test_flag
 	rst Rst30
 	db (\\2) << 5, \\1
+ENDM
+
+; WRAM bank switch: writes rWBK (rSVBK) plus its HRAM shadow hWramBank.
+; With an argument the bank id is loaded into a first; the bare form
+; switches to the bank already in a. The match engine keeps per-character
+; structs in banks 4-7 (see docs/ram_map.md).
+MACRO wram_bank
+	IF _NARG == 1
+	ld a, \\1
+	ENDC
+	ldh [hWramBank], a
+	ldh [rWBK], a
 ENDM
 """
 
@@ -1461,6 +1492,13 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                     lines.append(f"{labels[off]}:")
                 ins = dis.instrs[off]
                 cpu = offset_to_cpu(off)
+                wb = wram_bank_seq(dis, rom, off, labels) \
+                    if 0xFF96 in ramnames else None
+                if wb:
+                    text, size = wb
+                    lines.append(f"\t{text} ; ${cpu:04x}")
+                    off += size
+                    continue
                 if off in dis.farcalls and ins.text == "farcall {far}":
                     fbank, slot, entry, _target = dis.farcalls[off]
                     if off in dirty_sites:

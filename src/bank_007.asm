@@ -1350,17 +1350,11 @@ Label_07_48ae:
 	xor a, a ; $48b7
 	ldh [$ffde], a ; $48b8
 	ld hl, $df1e ; $48ba
-	ld a, $04 ; $48bd
-	ldh [$ff96], a ; $48bf
-	ldh [rWBK], a ; $48c1
+	wram_bank $04 ; $48bd
 	ld [hl], $05 ; $48c3
-	ld a, $05 ; $48c5
-	ldh [$ff96], a ; $48c7
-	ldh [rWBK], a ; $48c9
+	wram_bank $05 ; $48c5
 	ld [hl], $06 ; $48cb
-	ld a, $04 ; $48cd
-	ldh [$ff96], a ; $48cf
-	ldh [rWBK], a ; $48d1
+	wram_bank $04 ; $48cd
 	xor a, a ; $48d3
 	ldh [$ffc0], a ; $48d4
 	ldh [$ffd7], a ; $48d6
@@ -1438,9 +1432,7 @@ Label_07_494a:
 Label_07_494f:
 	call Func_07_4912 ; $494f
 Label_07_4952:
-	ld a, $05 ; $4952
-	ldh [$ff96], a ; $4954
-	ldh [rWBK], a ; $4956
+	wram_bank $05 ; $4952
 	ld hl, $c650 ; $4958
 	ld c, $28 ; $495b
 	call Func_07_49b0 ; $495d
@@ -3689,9 +3681,9 @@ Func_07_5df9:
 	ld a, $62 ; $5e4a
 	ld [wCharacter2ReturnAces], a ; $5e4c
 	ld a, $01 ; $5e4f
-	ld [$c8f2], a ; $5e51
+	ld [wMatchIsDoubles], a ; $5e51
 	ld a, $04 ; $5e54
-	ld [$c8f3], a ; $5e56
+	ld [wOnCourtCharCount], a ; $5e56
 	ld a, $05 ; $5e59
 	ld [wCurrentlyUsedCourt], a ; $5e5b
 	ld a, $03 ; $5e5e

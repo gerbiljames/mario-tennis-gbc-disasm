@@ -22,7 +22,7 @@ Func_0d_4006:
 	ld hl, $0002 ; $4016
 	add hl, bc ; $4019
 	ld a, [hl] ; $401a
-	ld [$c8f3], a ; $401b
+	ld [wOnCourtCharCount], a ; $401b
 	ld hl, $0003 ; $401e
 	add hl, bc ; $4021
 	ld a, [hl] ; $4022
@@ -116,11 +116,9 @@ Func_0d_40cf:
 	ld h, a ; $40f6
 	ld a, [hl] ; $40f7
 	farcall FarPtr_03_2c ; $40f8
-	ldh a, [$ff96] ; $40fb
+	ldh a, [hWramBank] ; $40fb
 	push af ; $40fd
-	ld a, $07 ; $40fe
-	ldh [$ff96], a ; $4100
-	ldh [rWBK], a ; $4102
+	wram_bank $07 ; $40fe
 	ld hl, $de00 ; $4104
 	ld de, $c4ec ; $4107
 	ld a, [hl+] ; $410a
@@ -130,8 +128,7 @@ Func_0d_40cf:
 	ld [de], a ; $410e
 	inc de ; $410f
 	pop af ; $4110
-	ldh [$ff96], a ; $4111
-	ldh [rWBK], a ; $4113
+	wram_bank ; $4111
 	ret ; $4115
 	INCBIN "data/bank_00d/d_4116.bin" ; $4116, 11 bytes
 Func_0d_4121:
@@ -239,11 +236,9 @@ Label_0d_420e:
 	ld a, $01 ; $420e
 	ret ; $4210
 Func_0d_4211:
-	ldh a, [$ff96] ; $4211
+	ldh a, [hWramBank] ; $4211
 	push af ; $4213
-	ld a, $04 ; $4214
-	ldh [$ff96], a ; $4216
-	ldh [rWBK], a ; $4218
+	wram_bank $04 ; $4214
 	ld hl, $dd1e ; $421a
 	ld de, $c7a0 ; $421d
 	ld a, [hl+] ; $4220
@@ -259,8 +254,7 @@ Func_0d_4211:
 	ld [de], a ; $422a
 	inc de ; $422b
 	pop af ; $422c
-	ldh [$ff96], a ; $422d
-	ldh [rWBK], a ; $422f
+	wram_bank ; $422d
 	ld a, $10 ; $4231
 	ld [$c787], a ; $4233
 	ret ; $4236
@@ -382,17 +376,13 @@ Label_0d_441e:
 	ld [$c4c3], a ; $443c
 	ret ; $443f
 Func_0d_4440:
-	ld a, $04 ; $4440
-	ldh [$ff96], a ; $4442
-	ldh [rWBK], a ; $4444
+	wram_bank $04 ; $4440
 	ld hl, $dc00 ; $4446
 	ld c, $07 ; $4449
 	call ClearMemory16 ; $444b
 	ret ; $444e
 Func_0d_444f:
-	ld a, $04 ; $444f
-	ldh [$ff96], a ; $4451
-	ldh [rWBK], a ; $4453
+	wram_bank $04 ; $444f
 	ld hl, $000e ; $4455
 	add hl, bc ; $4458
 	ld a, e ; $4459
@@ -404,9 +394,7 @@ Func_0d_444f:
 	set 1, [hl] ; $4462
 	ret ; $4464
 Func_0d_4465:
-	ld a, $04 ; $4465
-	ldh [$ff96], a ; $4467
-	ldh [rWBK], a ; $4469
+	wram_bank $04 ; $4465
 	push de ; $446b
 	push hl ; $446c
 	push hl ; $446d
@@ -471,9 +459,7 @@ Func_0d_449a:
 	ld [hl+], a ; $44bb
 	ret ; $44bc
 Func_0d_44bd:
-	ld a, $04 ; $44bd
-	ldh [$ff96], a ; $44bf
-	ldh [rWBK], a ; $44c1
+	wram_bank $04 ; $44bd
 	ld hl, $dc00 ; $44c3
 	ld c, $07 ; $44c6
 Label_0d_44c8:
@@ -524,17 +510,13 @@ Func_0d_4678:
 	ld a, e ; $4693
 	ld [hl+], a ; $4694
 	ld [hl], d ; $4695
-	ld a, $04 ; $4696
-	ldh [$ff96], a ; $4698
-	ldh [rWBK], a ; $469a
+	wram_bank $04 ; $4696
 	ld hl, $0000 ; $469c
 	ld de, $0480 ; $469f
 	farcall FarPtr_08_22 ; $46a2
 	ld a, $05 ; $46a5
 	farcall FarPtr_08_1c ; $46a7
-	ld a, $05 ; $46aa
-	ldh [$ff96], a ; $46ac
-	ldh [rWBK], a ; $46ae
+	wram_bank $05 ; $46aa
 	ld a, [$c785] ; $46b0
 	call Func_0d_4926 ; $46b3
 	farcall FarPtr_08_22 ; $46b6
@@ -558,16 +540,13 @@ Func_0d_46d7:
 	ld a, [$c7a7] ; $46dd
 	and a, a ; $46e0
 	jr z, Label_0d_46f6 ; $46e1
-	ldh a, [$ff96] ; $46e3
+	ldh a, [hWramBank] ; $46e3
 	push af ; $46e5
-	ld a, $05 ; $46e6
-	ldh [$ff96], a ; $46e8
-	ldh [rWBK], a ; $46ea
+	wram_bank $05 ; $46e6
 	ld hl, $df81 ; $46ec
 	res 5, [hl] ; $46ef
 	pop af ; $46f1
-	ldh [$ff96], a ; $46f2
-	ldh [rWBK], a ; $46f4
+	wram_bank ; $46f2
 Label_0d_46f6:
 	ret ; $46f6
 Func_0d_46f7:
@@ -587,16 +566,13 @@ Func_0d_46f7:
 Label_0d_470b:
 	ld a, b ; $470b
 	ld [$c784], a ; $470c
-	ldh a, [$ff96] ; $470f
+	ldh a, [hWramBank] ; $470f
 	push af ; $4711
-	ld a, $05 ; $4712
-	ldh [$ff96], a ; $4714
-	ldh [rWBK], a ; $4716
+	wram_bank $05 ; $4712
 	ld d, $05 ; $4718
 	farcall FarPtr_08_20 ; $471a
 	pop af ; $471d
-	ldh [$ff96], a ; $471e
-	ldh [rWBK], a ; $4720
+	wram_bank ; $471e
 	ld a, [$c7a7] ; $4722
 	and a, a ; $4725
 	jr z, Label_0d_472d ; $4726
@@ -624,16 +600,13 @@ Label_0d_472d:
 	ret ; $4750
 	INCBIN "data/bank_00d/d_4751.bin" ; $4751, 12 bytes
 Func_0d_475d:
-	ldh a, [$ff96] ; $475d
+	ldh a, [hWramBank] ; $475d
 	push af ; $475f
-	ld a, $04 ; $4760
-	ldh [$ff96], a ; $4762
-	ldh [rWBK], a ; $4764
+	wram_bank $04 ; $4760
 	ld a, $05 ; $4766
 	farcall FarPtr_08_1c ; $4768
 	pop af ; $476b
-	ldh [$ff96], a ; $476c
-	ldh [rWBK], a ; $476e
+	wram_bank ; $476c
 	call Func_0d_43ba ; $4770
 	farcall FarPtr_08_58 ; $4773
 	add a, a ; $4776
@@ -662,19 +635,14 @@ Func_0d_475d:
 Label_0d_479b:
 	call Func_0d_43df ; $479b
 	push de ; $479e
-	ldh a, [$ff96] ; $479f
+	ldh a, [hWramBank] ; $479f
 	push af ; $47a1
-	ld a, $04 ; $47a2
-	ldh [$ff96], a ; $47a4
-	ldh [rWBK], a ; $47a6
+	wram_bank $04 ; $47a2
 	farcall FarPtr_08_6c ; $47a8
-	ld a, $05 ; $47ab
-	ldh [$ff96], a ; $47ad
-	ldh [rWBK], a ; $47af
+	wram_bank $05 ; $47ab
 	farcall FarPtr_08_6c ; $47b1
 	pop af ; $47b4
-	ldh [$ff96], a ; $47b5
-	ldh [rWBK], a ; $47b7
+	wram_bank ; $47b5
 	pop de ; $47b9
 	call Func_0d_4412 ; $47ba
 	ret ; $47bd
@@ -702,16 +670,13 @@ Func_0d_47e2:
 	ld a, [wRallyLength] ; $47e2
 	cp a, $03 ; $47e5
 	jr nz, Label_0d_47fc ; $47e7
-	ldh a, [$ff96] ; $47e9
+	ldh a, [hWramBank] ; $47e9
 	push af ; $47eb
-	ld a, $05 ; $47ec
-	ldh [$ff96], a ; $47ee
-	ldh [rWBK], a ; $47f0
+	wram_bank $05 ; $47ec
 	ld a, $28 ; $47f2
 	ld [$df10], a ; $47f4
 	pop af ; $47f7
-	ldh [$ff96], a ; $47f8
-	ldh [rWBK], a ; $47fa
+	wram_bank ; $47f8
 Label_0d_47fc:
 	ret ; $47fc
 Func_0d_47fd:
@@ -723,11 +688,9 @@ Func_0d_47fd:
 	ld [wRallyLength], a ; $480a
 	ld a, $02 ; $480d
 	ld [$c4b0], a ; $480f
-	ldh a, [$ff96] ; $4812
+	ldh a, [hWramBank] ; $4812
 	push af ; $4814
-	ld a, $05 ; $4815
-	ldh [$ff96], a ; $4817
-	ldh [rWBK], a ; $4819
+	wram_bank $05 ; $4815
 	ld a, $20 ; $481b
 	ld [$df4b], a ; $481d
 	ld a, [$c784] ; $4820
@@ -817,26 +780,20 @@ Label_0d_485c:
 	call Func_00_07c5 ; $48ab
 	sound $76 ; $48ae
 	pop af ; $48b0
-	ldh [$ff96], a ; $48b1
-	ldh [rWBK], a ; $48b3
+	wram_bank ; $48b1
 	ret ; $48b5
 Func_0d_48b6:
-	ldh a, [$ff96] ; $48b6
+	ldh a, [hWramBank] ; $48b6
 	push af ; $48b8
-	ld a, $05 ; $48b9
-	ldh [$ff96], a ; $48bb
-	ldh [rWBK], a ; $48bd
+	wram_bank $05 ; $48b9
 	ld a, [$c785] ; $48bf
 	call Func_0d_4926 ; $48c2
 	farcall FarPtr_08_66 ; $48c5
 	pop af ; $48c8
-	ldh [$ff96], a ; $48c9
-	ldh [rWBK], a ; $48cb
+	wram_bank ; $48c9
 	ret ; $48cd
 Func_0d_48ce:
-	ld a, $04 ; $48ce
-	ldh [$ff96], a ; $48d0
-	ldh [rWBK], a ; $48d2
+	wram_bank $04 ; $48ce
 	xor a, a ; $48d4
 	ld [$c4c2], a ; $48d5
 	ld a, [wCurrentBGM] ; $48d8
@@ -951,11 +908,9 @@ Func_0d_4abb:
 	ld de, $8484 ; $4ac1
 	call Func_0d_4bea ; $4ac4
 Label_0d_4ac7:
-	ldh a, [$ff96] ; $4ac7
+	ldh a, [hWramBank] ; $4ac7
 	push af ; $4ac9
-	ld a, $04 ; $4aca
-	ldh [$ff96], a ; $4acc
-	ldh [rWBK], a ; $4ace
+	wram_bank $04 ; $4aca
 	ld hl, $dd0c ; $4ad0
 	ld de, $de14 ; $4ad3
 	call Func_0d_4af1 ; $4ad6
@@ -966,8 +921,7 @@ Label_0d_4ac7:
 	ld de, $de1c ; $4ae5
 	call Func_0d_4af1 ; $4ae8
 	pop af ; $4aeb
-	ldh [$ff96], a ; $4aec
-	ldh [rWBK], a ; $4aee
+	wram_bank ; $4aec
 	ret ; $4af0
 Func_0d_4af1:
 	inc hl ; $4af1
@@ -991,41 +945,32 @@ Func_0d_4b01:
 	ld a, e ; $4b0e
 	ld [hl+], a ; $4b0f
 	ld [hl], d ; $4b10
-	ldh a, [$ff96] ; $4b11
+	ldh a, [hWramBank] ; $4b11
 	push af ; $4b13
-	ld a, $04 ; $4b14
-	ldh [$ff96], a ; $4b16
-	ldh [rWBK], a ; $4b18
+	wram_bank $04 ; $4b14
 	ld hl, $0000 ; $4b1a
 	ld de, $04e0 ; $4b1d
 	farcall FarPtr_08_22 ; $4b20
 	pop af ; $4b23
-	ldh [$ff96], a ; $4b24
-	ldh [rWBK], a ; $4b26
+	wram_bank ; $4b24
 	ret ; $4b28
 Func_0d_4b29:
-	ldh a, [$ff96] ; $4b29
+	ldh a, [hWramBank] ; $4b29
 	push af ; $4b2b
-	ld a, $04 ; $4b2c
-	ldh [$ff96], a ; $4b2e
-	ldh [rWBK], a ; $4b30
+	wram_bank $04 ; $4b2c
 	ld a, $05 ; $4b32
 	farcall FarPtr_08_1c ; $4b34
 	pop af ; $4b37
-	ldh [$ff96], a ; $4b38
-	ldh [rWBK], a ; $4b3a
+	wram_bank ; $4b38
 	call Func_0d_43ba ; $4b3c
 	call Func_0d_43df ; $4b3f
 	push de ; $4b42
-	ldh a, [$ff96] ; $4b43
+	ldh a, [hWramBank] ; $4b43
 	push af ; $4b45
-	ld a, $04 ; $4b46
-	ldh [$ff96], a ; $4b48
-	ldh [rWBK], a ; $4b4a
+	wram_bank $04 ; $4b46
 	farcall FarPtr_08_6c ; $4b4c
 	pop af ; $4b4f
-	ldh [$ff96], a ; $4b50
-	ldh [rWBK], a ; $4b52
+	wram_bank ; $4b50
 	pop de ; $4b54
 	call Func_0d_4412 ; $4b55
 	ret ; $4b58
@@ -1085,16 +1030,13 @@ Label_0d_4b70:
 	ld a, [$c4d8] ; $4bae
 	and a, a ; $4bb1
 	ret nz ; $4bb2
-	ldh a, [$ff96] ; $4bb3
+	ldh a, [hWramBank] ; $4bb3
 	push af ; $4bb5
-	ld a, $04 ; $4bb6
-	ldh [$ff96], a ; $4bb8
-	ldh [rWBK], a ; $4bba
+	wram_bank $04 ; $4bb6
 	ld a, $01 ; $4bbc
 	farcall FarPtr_08_1c ; $4bbe
 	pop af ; $4bc1
-	ldh [$ff96], a ; $4bc2
-	ldh [rWBK], a ; $4bc4
+	wram_bank ; $4bc2
 	ret ; $4bc6
 Func_0d_4bc7:
 	ret ; $4bc7

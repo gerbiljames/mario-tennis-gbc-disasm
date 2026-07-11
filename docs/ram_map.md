@@ -135,3 +135,57 @@ Game: Mario Tennis (Game Boy Color). Addresses are real GBC CPU addresses: cartr
 | `0xcb41` | WRAM | `wIntroCutsceneCheck` | [8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise) |
 | `0xff90` | HRAM | `hPlayerInputFlags` | [8-bit] Player Input Flags<br><br>Bit 7 - Down<br>Bit 6 - Up<br>Bit 5 - Left<br>Bit 4 - Right<br>Bit 3 - Start<br>Bit 2 - Select<br>Bit 1 - B<br>Bit 0 - A |
 | `0xffce` | HRAM | `hMusic` | [8-bit] Music (0x00 - on, 0x01 - off) |
+
+## Project-identified addresses (not in the RA notes)
+
+Addresses named by this project from disassembly evidence; also in
+`ram_map.json` so `disasm.py` renders them symbolically.
+
+| Address | Region | Name | Note |
+|---|---|---|---|
+| `0xc4cf` | WRAM | `wOnCourtCharCountMinus1` | [8-bit] `wOnCourtCharCount` - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches (e.g. `$4ff5`, `$6063` in bank $08) |
+| `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
+| `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
+| `0xff96` | HRAM | `hWramBank` | [8-bit] Shadow of the current WRAM bank (last value written to `rSVBK`); always written together with `rSVBK` |
+
+## Match engine per-character structs (WRAM banks 4-7)
+
+The match engine (bank $08) keeps one character struct per **banked WRAM
+bank**, all at the same `$dfxx` addresses; code selects a character by writing
+4-7 to `rSVBK`/`hWramBank`. `ForEachCharBank` ($6a3a) runs a callback in banks
+7,6,5,4 (leaving 4 active). Bank assignment (from the dispatch ladders at
+`$6063`/`$4ff5`, indexed by `wOnCourtCharCountMinus1`):
+
+| Bank | Character | Active when count is |
+|---|---|---|
+| 4 | near-side player 1 | 1, 2, 3, 4 |
+| 5 | far-side player 1 | 2, 3, 4 |
+| 6 | near-side partner | 4 |
+| 7 | far-side partner | 3 (Two-On-One), 4 |
+
+Known fields (addresses valid only while a bank 4-7 is mapped; **not** in
+`ram_map.json` because other WRAM banks reuse `$dfxx` for unrelated data):
+
+| Address | Field |
+|---|---|
+| `$df00-02` | X position (lateral), 24-bit fixed point: fraction byte, then signed 16-bit integer part |
+| `$df03-05` | depth position, same format; signed, net at 0, the two court sides have opposite signs |
+| `$df06-08` | height above court, same format (zeroed by `SetCharPosAndTarget`) |
+| `$df0b` bit 0 | far-side flag: `CharPointEndReaction` negates `wPointWinLoseFlag` through it for `$df57` |
+| `$df0d`/`$df0e` | facing direction: desired / displayed (eased toward desired in `$75c0` by at most `$df68` per frame) |
+| `$df18-1a` | state machine index + substate (jumptable at `$6a77`; set via `SetCharState`) |
+| `$df22` | active flag (`UpdateChar` exits when 0) |
+| `$df40-45` | velocity, 3 x 16-bit (zeroed on placement and at point end) |
+| `$df46/47` | walk-target X (integer part) |
+| `$df48/49` | walk-target depth; `MoveCharTowardTarget` ($7541) walks toward the target and snaps when `CheckCharNearTarget` ($78be) sees both deltas < $18 |
+| `$df53/54` | last projected screen X/Y (`$7672`) |
+| `$df57` | point result from this character's perspective (signed `wPointWinLoseFlag`) |
+
+**Doubles spacing:** at point end, `StartPointEndReactions` ($4fb8) makes every
+character face the result (`CharPointEndReaction` sets state 7 and target :=
+current position), then `SpreadTeammateTargets` ($4ff5) adjusts the walk-target
+depths per team pair — banks (4,6) and (5,7) — via `ComputePairSpread` ($506e):
+teammates whose depths are within $200 of each other get targets exactly $200
+apart, centered on the pair's midpoint but never closer than $100 to the net;
+pairs already $200+ apart keep their positions. Singles skips this entirely
+(the jumptable's count-1/count-2 slots point at a bank-0 `ret`).

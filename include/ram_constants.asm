@@ -17,6 +17,7 @@ DEF wMinigameLevel EQU $c376
 DEF wMinigamesCurrentScore EQU $c47c
 DEF wMinigamesTargetScore EQU $c47e
 DEF wRallyLength EQU $c4b6
+DEF wOnCourtCharCountMinus1 EQU $c4cf
 DEF wCurrentServingPlayer EQU $c4d3
 DEF wTextBuffer EQU $c600
 DEF wStoryModeMainCharacterLevel EQU $c818
@@ -99,6 +100,8 @@ DEF wTotalGamesWonInMatch EQU $c8ec
 DEF wTotalPointsScoredInCurrentGame EQU $c8ed
 DEF wMatchTypeNumberOfSets EQU $c8f0
 DEF wMatchTypeNumberOfGames EQU $c8f1
+DEF wMatchIsDoubles EQU $c8f2
+DEF wOnCourtCharCount EQU $c8f3
 DEF wCurrentlyUsedCourt EQU $c8f4
 DEF wCurrentMinigameStoryMatch EQU $c8f6
 DEF wStoryModeNameOfMainCharacter EQU $c900
@@ -132,4 +135,5 @@ DEF wExhibitionModeCPUPartnerCharacterDifficulty EQU $cadf
 DEF wIntroCutsceneCheck EQU $cb41
 DEF wShortTextBuffer EQU $d880
 DEF hPlayerInputFlags EQU $ff90
+DEF hWramBank EQU $ff96
 DEF hMusic EQU $ffce

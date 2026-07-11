@@ -20,9 +20,7 @@ Func_16_4477:
 	ret nz ; $447c
 	call DisableLCDSafely ; $447d
 	call Func_00_1b38 ; $4480
-	ld a, $03 ; $4483
-	ldh [$ff96], a ; $4485
-	ldh [rWBK], a ; $4487
+	wram_bank $03 ; $4483
 	ld a, [wGameMode] ; $4489
 	cp a, $04 ; $448c
 	jr z, Label_16_4496 ; $448e
@@ -135,9 +133,7 @@ Func_16_4571:
 	ldh [$ff8b], a ; $4575
 	ldh [$ff8a], a ; $4577
 	call Func_16_490c ; $4579
-	ld a, $03 ; $457c
-	ldh [$ff96], a ; $457e
-	ldh [rWBK], a ; $4580
+	wram_bank $03 ; $457c
 	ld de, $d560 ; $4582
 	ld b, $14 ; $4585
 	ld c, $05 ; $4587
@@ -161,11 +157,9 @@ Func_16_4571:
 	call Func_16_4963 ; $45b3
 	ld c, $00 ; $45b6
 	call Func_16_5fe7 ; $45b8
-	ldh a, [$ff96] ; $45bb
+	ldh a, [hWramBank] ; $45bb
 	push af ; $45bd
-	ld a, $01 ; $45be
-	ldh [$ff96], a ; $45c0
-	ldh [rWBK], a ; $45c2
+	wram_bank $01 ; $45be
 	ld hl, $4608 ; $45c4
 	ld de, $d000 ; $45c7
 	call DecompressData ; $45ca
@@ -188,8 +182,7 @@ Func_16_4571:
 	ld de, $a400 ; $45f9
 	farcall FarPtr_39_10 ; $45fc
 	pop af ; $45ff
-	ldh [$ff96], a ; $4600
-	ldh [rWBK], a ; $4602
+	wram_bank ; $4600
 	farcall FarPtr_39_02 ; $4604
 	ret ; $4607
 	INCBIN "data/bank_016/d_4608.bin" ; $4608, 772 bytes
@@ -208,9 +201,7 @@ Label_16_4920:
 	ld de, $002f ; $4920
 	call Func_00_24ef ; $4923
 	jr nz, Label_16_4962 ; $4926
-	ld a, $03 ; $4928
-	ldh [$ff96], a ; $492a
-	ldh [rWBK], a ; $492c
+	wram_bank $03 ; $4928
 	ld hl, $d280 ; $492e
 	ld de, $d08b ; $4931
 	ld b, $09 ; $4934
@@ -582,9 +573,7 @@ Label_16_5c34:
 Func_16_5c35:
 	call DisableLCDSafely ; $5c35
 	farcall FarPtr_01_0a ; $5c38
-	ld a, $03 ; $5c3b
-	ldh [$ff96], a ; $5c3d
-	ldh [rWBK], a ; $5c3f
+	wram_bank $03 ; $5c3b
 	ld a, $01 ; $5c41
 	ld [$d801], a ; $5c43
 	call Func_16_5c8a ; $5c46
@@ -638,9 +627,7 @@ Func_16_5c8a:
 	ld a, $00 ; $5cae
 	ld d, $07 ; $5cb0
 	farcall FarPtr_18_02 ; $5cb2
-	ld a, $03 ; $5cb5
-	ldh [$ff96], a ; $5cb7
-	ldh [rWBK], a ; $5cb9
+	wram_bank $03 ; $5cb5
 	call Func_16_5f92 ; $5cbb
 	call Func_16_4dfe ; $5cbe
 	ld de, $d600 ; $5cc1

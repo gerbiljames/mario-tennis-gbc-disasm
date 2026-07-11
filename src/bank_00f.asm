@@ -2401,21 +2401,16 @@ Label_0f_79b1:
 	ret ; $7a16
 	INCBIN "data/bank_00f/d_7a17.bin" ; $7a17, 119 bytes
 Func_0f_7a8e:
-	ldh a, [$ff96] ; $7a8e
+	ldh a, [hWramBank] ; $7a8e
 	push af ; $7a90
-	ld a, $07 ; $7a91
-	ldh [$ff96], a ; $7a93
-	ldh [rWBK], a ; $7a95
+	wram_bank $07 ; $7a91
 	ld de, $df00 ; $7a97
-	ld a, $05 ; $7a9a
-	ldh [$ff96], a ; $7a9c
-	ldh [rWBK], a ; $7a9e
+	wram_bank $05 ; $7a9a
 	farcall FarPtr_05_4e ; $7aa0
 	ld hl, $df00 ; $7aa3
 	farcall FarPtr_05_46 ; $7aa6
 	pop af ; $7aa9
-	ldh [$ff96], a ; $7aaa
-	ldh [rWBK], a ; $7aac
+	wram_bank ; $7aaa
 	ret ; $7aae
 	INCBIN "data/bank_00f/d_7aaf.bin" ; $7aaf, 113 bytes
 Func_0f_7b20:

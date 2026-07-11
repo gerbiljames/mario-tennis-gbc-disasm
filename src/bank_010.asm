@@ -85,16 +85,16 @@ Label_10_4ee8:
 	ld a, [hl] ; $4ee8
 	ld [wMatchTypeNumberOfGames], a ; $4ee9
 	ld a, [$cb0e] ; $4eec
-	ld [$c8f2], a ; $4eef
+	ld [wMatchIsDoubles], a ; $4eef
 	or a, a ; $4ef2
 	jr z, Label_10_4eff ; $4ef3
 	ld a, $04 ; $4ef5
-	ld [$c8f3], a ; $4ef7
+	ld [wOnCourtCharCount], a ; $4ef7
 	set_flag $05, 7 ; $4efa
 	jr Label_10_4f07 ; $4efd
 Label_10_4eff:
 	ld a, $02 ; $4eff
-	ld [$c8f3], a ; $4f01
+	ld [wOnCourtCharCount], a ; $4f01
 	clear_flag $05, 7 ; $4f04
 Label_10_4f07:
 	ret ; $4f07
@@ -404,9 +404,7 @@ Label_10_51b6:
 	jp z, Label_10_5159 ; $51ca
 Label_10_51cd:
 	ld d, a ; $51cd
-	ld a, $04 ; $51ce
-	ldh [$ff96], a ; $51d0
-	ldh [rWBK], a ; $51d2
+	wram_bank $04 ; $51ce
 	ld a, d ; $51d4
 	ld [wCurrentlyUsedCourt], a ; $51d5
 	call Func_10_4ece ; $51d8
@@ -897,11 +895,9 @@ Label_10_56f1:
 	INCBIN "data/bank_010/d_56f3.bin" ; $56f3, 9 bytes
 Func_10_56fc:
 	push af ; $56fc
-	ldh a, [$ff96] ; $56fd
+	ldh a, [hWramBank] ; $56fd
 	push af ; $56ff
-	ld a, $03 ; $5700
-	ldh [$ff96], a ; $5702
-	ldh [rWBK], a ; $5704
+	wram_bank $03 ; $5700
 	ld hl, $d816 ; $5706
 	ld de, $c8b5 ; $5709
 	ld a, [hl+] ; $570c
@@ -916,8 +912,7 @@ Func_10_56fc:
 	ld a, [hl+] ; $5715
 	ld [de], a ; $5716
 	pop af ; $5717
-	ldh [$ff96], a ; $5718
-	ldh [rWBK], a ; $571a
+	wram_bank ; $5718
 	pop af ; $571c
 	ret ; $571d
 	INCBIN "data/bank_010/d_571e.bin" ; $571e, 52 bytes
@@ -2019,9 +2014,7 @@ Func_10_79df:
 	ld h, a ; $79df
 	ld l, $00 ; $79e0
 	push af ; $79e2
-	ld a, $04 ; $79e3
-	ldh [$ff96], a ; $79e5
-	ldh [rWBK], a ; $79e7
+	wram_bank $04 ; $79e3
 	srl h ; $79e9
 	rr l ; $79eb
 	srl h ; $79ed
@@ -2058,9 +2051,7 @@ Label_10_7a15:
 	and a, $87 ; $7a1a
 	cp a, $06 ; $7a1c
 	jr nz, Label_10_7a2f ; $7a1e
-	ld a, $04 ; $7a20
-	ldh [$ff96], a ; $7a22
-	ldh [rWBK], a ; $7a24
+	wram_bank $04 ; $7a20
 	ld hl, $0020 ; $7a26
 	add hl, bc ; $7a29
 	ld a, [hl] ; $7a2a
@@ -2073,9 +2064,7 @@ Label_10_7a2f:
 	and a, $07 ; $7a33
 	cp a, $06 ; $7a35
 	jr nz, Label_10_7a48 ; $7a37
-	ld a, $04 ; $7a39
-	ldh [$ff96], a ; $7a3b
-	ldh [rWBK], a ; $7a3d
+	wram_bank $04 ; $7a39
 	ld hl, $0020 ; $7a3f
 	add hl, bc ; $7a42
 	ld a, [hl] ; $7a43
@@ -2083,9 +2072,7 @@ Label_10_7a2f:
 	ld [hl], a ; $7a46
 	ret ; $7a47
 Label_10_7a48:
-	ld a, $04 ; $7a48
-	ldh [$ff96], a ; $7a4a
-	ldh [rWBK], a ; $7a4c
+	wram_bank $04 ; $7a48
 	ld hl, $0020 ; $7a4e
 	add hl, bc ; $7a51
 	ld a, $02 ; $7a52
@@ -2093,9 +2080,7 @@ Label_10_7a48:
 	ret ; $7a55
 	INCBIN "data/bank_010/d_7a56.bin" ; $7a56, 114 bytes
 Func_10_7ac8:
-	ld a, $02 ; $7ac8
-	ldh [$ff96], a ; $7aca
-	ldh [rWBK], a ; $7acc
+	wram_bank $02 ; $7ac8
 	ld h, e ; $7ace
 	ld l, $00 ; $7acf
 	srl h ; $7ad1

@@ -1263,9 +1263,7 @@ Func_18_76b4:
 	ld c, $02 ; $76bd
 	call Func_00_1d2e ; $76bf
 	call Func_00_1da4 ; $76c2
-	ld a, $03 ; $76c5
-	ldh [$ff96], a ; $76c7
-	ldh [rWBK], a ; $76c9
+	wram_bank $03 ; $76c5
 	xor a, a ; $76cb
 	ld [$da01], a ; $76cc
 Label_18_76cf:
@@ -1345,9 +1343,7 @@ Func_18_77bb:
 	ld c, $02 ; $77d6
 	call Func_00_1d2e ; $77d8
 	call Func_00_1da4 ; $77db
-	ld a, $03 ; $77de
-	ldh [$ff96], a ; $77e0
-	ldh [rWBK], a ; $77e2
+	wram_bank $03 ; $77de
 	xor a, a ; $77e4
 	ld [$da01], a ; $77e5
 Label_18_77e8:
@@ -1482,9 +1478,7 @@ Label_18_7985:
 	sound $2c ; $7985
 	farcall FarPtr_0a_a2 ; $7987
 Label_18_798a:
-	ld a, $03 ; $798a
-	ldh [$ff96], a ; $798c
-	ldh [rWBK], a ; $798e
+	wram_bank $03 ; $798a
 	xor a, a ; $7990
 	ld [$da00], a ; $7991
 	call Func_00_1b38 ; $7994
@@ -1498,9 +1492,7 @@ Label_18_798a:
 	ld c, $02 ; $79ac
 	call Func_00_1d2e ; $79ae
 	call Func_00_1da4 ; $79b1
-	ld a, $03 ; $79b4
-	ldh [$ff96], a ; $79b6
-	ldh [rWBK], a ; $79b8
+	wram_bank $03 ; $79b4
 	xor a, a ; $79ba
 	ld [$da01], a ; $79bb
 Label_18_79be:
@@ -1569,11 +1561,9 @@ Func_18_7a2d:
 	ret ; $7a40
 	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 397 bytes
 Func_18_7bce:
-	ldh a, [$ff96] ; $7bce
+	ldh a, [hWramBank] ; $7bce
 	push af ; $7bd0
-	ld a, $03 ; $7bd1
-	ldh [$ff96], a ; $7bd3
-	ldh [rWBK], a ; $7bd5
+	wram_bank $03 ; $7bd1
 	ld hl, $d800 ; $7bd7
 	ld bc, $0100 ; $7bda
 	call ClearBytes ; $7bdd
@@ -1632,11 +1622,9 @@ Label_18_7c4c:
 	ret ; $7c52
 	INCBIN "data/bank_018/d_7c53.bin" ; $7c53, 176 bytes
 Func_18_7d03:
-	ldh a, [$ff96] ; $7d03
+	ldh a, [hWramBank] ; $7d03
 	push af ; $7d05
-	ld a, $03 ; $7d06
-	ldh [$ff96], a ; $7d08
-	ldh [rWBK], a ; $7d0a
+	wram_bank $03 ; $7d06
 	ld hl, $d800 ; $7d0c
 	ld bc, $0100 ; $7d0f
 	call ClearBytes ; $7d12

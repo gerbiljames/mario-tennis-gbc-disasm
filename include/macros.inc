@@ -55,3 +55,15 @@ MACRO test_flag
 	rst Rst30
 	db (\2) << 5, \1
 ENDM
+
+; WRAM bank switch: writes rWBK (rSVBK) plus its HRAM shadow hWramBank.
+; With an argument the bank id is loaded into a first; the bare form
+; switches to the bank already in a. The match engine keeps per-character
+; structs in banks 4-7 (see docs/ram_map.md).
+MACRO wram_bank
+	IF _NARG == 1
+	ld a, \1
+	ENDC
+	ldh [hWramBank], a
+	ldh [rWBK], a
+ENDM

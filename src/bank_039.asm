@@ -140,9 +140,7 @@ Func_39_407e:
 	sla c ; $408b
 	rl b ; $408d
 	add hl, bc ; $408f
-	ld a, $01 ; $4090
-	ldh [$ff96], a ; $4092
-	ldh [rWBK], a ; $4094
+	wram_bank $01 ; $4090
 	push hl ; $4096
 	ld a, [hl+] ; $4097
 	ld h, [hl] ; $4098
@@ -164,9 +162,7 @@ Func_39_407e:
 	ld a, [hl+] ; $40ba
 	ld h, [hl] ; $40bb
 	ld l, a ; $40bc
-	ld a, $03 ; $40bd
-	ldh [$ff96], a ; $40bf
-	ldh [rWBK], a ; $40c1
+	wram_bank $03 ; $40bd
 	ld de, $d000 ; $40c3
 	call DecompressDataFromBank ; $40c6
 	pop hl ; $40c9
@@ -184,9 +180,7 @@ Func_39_407e:
 	ld a, [hl+] ; $40d9
 	ld h, [hl] ; $40da
 	ld l, a ; $40db
-	ld a, $01 ; $40dc
-	ldh [$ff96], a ; $40de
-	ldh [rWBK], a ; $40e0
+	wram_bank $01 ; $40dc
 	ld de, $d000 ; $40e2
 	ld bc, $0040 ; $40e5
 	call CopyDataFromBank ; $40e8
@@ -196,9 +190,7 @@ Func_39_407e:
 	ret ; $40f4
 	INCBIN "data/bank_039/d_40f5.bin" ; $40f5, 560 bytes
 Func_39_4325:
-	ld a, $03 ; $4325
-	ldh [$ff96], a ; $4327
-	ldh [rWBK], a ; $4329
+	wram_bank $03 ; $4325
 	ld hl, $d000 ; $432b
 	ld de, $9800 ; $432e
 	ld c, $40 ; $4331
@@ -213,7 +205,7 @@ Func_39_4342:
 	push bc ; $4343
 	push de ; $4344
 	push hl ; $4345
-	ldh a, [$ff96] ; $4346
+	ldh a, [hWramBank] ; $4346
 	push af ; $4348
 	ld a, [$cb0a] ; $4349
 	inc a ; $434c
@@ -235,9 +227,7 @@ Label_39_435f:
 	ld [$cb0a], a ; $435f
 	or a, a ; $4362
 	jp nz, Label_39_43f9 ; $4363
-	ld a, $02 ; $4366
-	ldh [$ff96], a ; $4368
-	ldh [rWBK], a ; $436a
+	wram_bank $02 ; $4366
 	ld a, [$cb09] ; $436c
 	inc a ; $436f
 	ld [$cb09], a ; $4370
@@ -271,9 +261,7 @@ Label_39_4396:
 	ld a, [hl+] ; $4396
 	ld h, [hl] ; $4397
 	ld l, a ; $4398
-	ld a, $01 ; $4399
-	ldh [$ff96], a ; $439b
-	ldh [rWBK], a ; $439d
+	wram_bank $01 ; $4399
 	ld de, $d000 ; $439f
 	call DecompressDataFromBank ; $43a2
 	ld hl, $d000 ; $43a5
@@ -324,8 +312,7 @@ Label_39_43da:
 	call Func_00_0480 ; $43f6
 Label_39_43f9:
 	pop af ; $43f9
-	ldh [$ff96], a ; $43fa
-	ldh [rWBK], a ; $43fc
+	wram_bank ; $43fa
 	pop hl ; $43fe
 	pop de ; $43ff
 	pop bc ; $4400
@@ -334,9 +321,7 @@ Label_39_43f9:
 	INCBIN "data/bank_039/d_4403.bin" ; $4403, 208 bytes
 Func_39_44d3:
 	push de ; $44d3
-	ld a, $01 ; $44d4
-	ldh [$ff96], a ; $44d6
-	ldh [rWBK], a ; $44d8
+	wram_bank $01 ; $44d4
 	ld hl, $44f6 ; $44da
 	ld de, $d000 ; $44dd
 	call DecompressData ; $44e0
@@ -455,7 +440,7 @@ Func_39_4661:
 	ret ; $466a
 	INCBIN "data/bank_039/d_466b.bin" ; $466b, 32 bytes
 Func_39_468b:
-	ldh a, [$ff96] ; $468b
+	ldh a, [hWramBank] ; $468b
 	push af ; $468d
 	ld a, b ; $468e
 	add a, a ; $468f
@@ -470,9 +455,7 @@ Label_39_4698:
 	ld l, a ; $469a
 	push de ; $469b
 	push bc ; $469c
-	ld a, $01 ; $469d
-	ldh [$ff96], a ; $469f
-	ldh [rWBK], a ; $46a1
+	wram_bank $01 ; $469d
 	ld de, $d000 ; $46a3
 	call DecompressDataFromBank ; $46a6
 	pop bc ; $46a9
@@ -480,8 +463,7 @@ Label_39_4698:
 	ld hl, $d000 ; $46ab
 	call Func_00_0480 ; $46ae
 	pop af ; $46b1
-	ldh [$ff96], a ; $46b2
-	ldh [rWBK], a ; $46b4
+	wram_bank ; $46b2
 	ret ; $46b6
 	INCBIN "data/bank_039/d_46b7.bin" ; $46b7, 244 bytes
 Lz_39_47ab:
@@ -687,9 +669,7 @@ Func_39_4bf3:
 	ld c, $10 ; $4c0b
 	ld de, $9000 ; $4c0d
 	farcall FarPtr_39_10 ; $4c10
-	ld a, $05 ; $4c13
-	ldh [$ff96], a ; $4c15
-	ldh [rWBK], a ; $4c17
+	wram_bank $05 ; $4c13
 	ld a, $03 ; $4c19
 	ld [$c3b3], a ; $4c1b
 	ld a, $00 ; $4c1e
@@ -704,11 +684,9 @@ Func_39_4bf3:
 	farcall FarPtr_39_02 ; $4c34
 	ret ; $4c37
 Func_39_4c38:
-	ldh a, [$ff96] ; $4c38
+	ldh a, [hWramBank] ; $4c38
 	push af ; $4c3a
-	ld a, $01 ; $4c3b
-	ldh [$ff96], a ; $4c3d
-	ldh [rWBK], a ; $4c3f
+	wram_bank $01 ; $4c3b
 	ld hl, $3c08 ; $4c41 -> DataPtr_3c_08
 	ld de, $d000 ; $4c44
 	call DecompressDataFromBank ; $4c47
@@ -720,9 +698,7 @@ Func_39_4c38:
 	ld de, $a800 ; $4c58
 	ld c, $80 ; $4c5b
 	call Func_00_0480 ; $4c5d
-	ld a, $03 ; $4c60
-	ldh [$ff96], a ; $4c62
-	ldh [rWBK], a ; $4c64
+	wram_bank $03 ; $4c60
 	ld hl, $3c0a ; $4c66 -> DataPtr_3c_0a
 	ld de, $d000 ; $4c69
 	call DecompressDataFromBank ; $4c6c
@@ -735,9 +711,7 @@ Func_39_4c38:
 	ld hl, $3c0c ; $4c81 -> DataPtr_3c_0c
 	ld de, $dc00 ; $4c84
 	call DecompressDataFromBank ; $4c87
-	ld a, $01 ; $4c8a
-	ldh [$ff96], a ; $4c8c
-	ldh [rWBK], a ; $4c8e
+	wram_bank $01 ; $4c8a
 	ld hl, $3c0e ; $4c90 -> DataPtr_3c_0e
 	ld de, $d000 ; $4c93
 	ld bc, $0040 ; $4c96
@@ -746,19 +720,16 @@ Func_39_4c38:
 	ld de, $0008 ; $4c9f
 	call LoadPaletteShadow ; $4ca2
 	pop af ; $4ca5
-	ldh [$ff96], a ; $4ca6
-	ldh [rWBK], a ; $4ca8
+	wram_bank ; $4ca6
 	ret ; $4caa
 Func_39_4cab:
 	push af ; $4cab
 	push bc ; $4cac
 	push de ; $4cad
 	push hl ; $4cae
-	ldh a, [$ff96] ; $4caf
+	ldh a, [hWramBank] ; $4caf
 	push af ; $4cb1
-	ld a, $03 ; $4cb2
-	ldh [$ff96], a ; $4cb4
-	ldh [rWBK], a ; $4cb6
+	wram_bank $03 ; $4cb2
 	ld a, b ; $4cb8
 	or a, a ; $4cb9
 	jr nz, Label_39_4d1a ; $4cba
@@ -875,8 +846,7 @@ Label_39_4db0:
 	jr Label_39_4de1 ; $4ddf
 Label_39_4de1:
 	pop af ; $4de1
-	ldh [$ff96], a ; $4de2
-	ldh [rWBK], a ; $4de4
+	wram_bank ; $4de2
 	pop hl ; $4de6
 	pop de ; $4de7
 	pop bc ; $4de8
@@ -1176,11 +1146,9 @@ Func_39_6f10:
 	push bc ; $6f11
 	push de ; $6f12
 	push hl ; $6f13
-	ldh a, [$ff96] ; $6f14
+	ldh a, [hWramBank] ; $6f14
 	push af ; $6f16
-	ld a, $02 ; $6f17
-	ldh [$ff96], a ; $6f19
-	ldh [rWBK], a ; $6f1b
+	wram_bank $02 ; $6f17
 	push de ; $6f1d
 	ld de, $cb64 ; $6f1e
 	ld a, $00 ; $6f21
@@ -1210,8 +1178,7 @@ Label_39_6f35:
 	jr Label_39_6f35 ; $6f43
 Label_39_6f45:
 	pop af ; $6f45
-	ldh [$ff96], a ; $6f46
-	ldh [rWBK], a ; $6f48
+	wram_bank ; $6f46
 	pop hl ; $6f4a
 	pop de ; $6f4b
 	pop bc ; $6f4c
@@ -1237,11 +1204,9 @@ Func_39_6f4f:
 	pop af ; $6f65
 	ret ; $6f66
 Func_39_6f67:
-	ldh a, [$ff96] ; $6f67
+	ldh a, [hWramBank] ; $6f67
 	push af ; $6f69
-	ld a, $01 ; $6f6a
-	ldh [$ff96], a ; $6f6c
-	ldh [rWBK], a ; $6f6e
+	wram_bank $01 ; $6f6a
 	ld a, [$cb71] ; $6f70
 	or a, a ; $6f73
 	jr nz, Label_39_6fc0 ; $6f74
@@ -1295,24 +1260,20 @@ Label_39_6fb8:
 	ld [$cb1a], a ; $6fbd
 Label_39_6fc0:
 	pop af ; $6fc0
-	ldh [$ff96], a ; $6fc1
-	ldh [rWBK], a ; $6fc3
+	wram_bank ; $6fc1
 	ret ; $6fc5
 	INCBIN "data/bank_039/d_6fc6.bin" ; $6fc6, 33 bytes
 Func_39_6fe7:
-	ldh a, [$ff96] ; $6fe7
+	ldh a, [hWramBank] ; $6fe7
 	push af ; $6fe9
-	ld a, $01 ; $6fea
-	ldh [$ff96], a ; $6fec
-	ldh [rWBK], a ; $6fee
+	wram_bank $01 ; $6fea
 	xor a, a ; $6ff0
 	ld [$cb1a], a ; $6ff1
 	ld hl, $d000 ; $6ff4
 	ld bc, $0020 ; $6ff7
 	call ClearBytes ; $6ffa
 	pop af ; $6ffd
-	ldh [$ff96], a ; $6ffe
-	ldh [rWBK], a ; $7000
+	wram_bank ; $6ffe
 	ret ; $7002
 Func_39_7003:
 	sound $65 ; $7003

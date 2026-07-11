@@ -18,7 +18,7 @@ Func_0b_4002:
 	ld hl, $0002 ; $4012
 	add hl, bc ; $4015
 	ld a, [hl] ; $4016
-	ld [$c8f3], a ; $4017
+	ld [wOnCourtCharCount], a ; $4017
 	ld hl, $0003 ; $401a
 	add hl, bc ; $401d
 	ld a, [hl] ; $401e
@@ -120,16 +120,13 @@ Label_0b_40b4:
 	ret ; $40bb
 	INCBIN "data/bank_00b/d_40bc.bin" ; $40bc, 143 bytes
 Func_0b_414b:
-	ldh a, [$ff96] ; $414b
+	ldh a, [hWramBank] ; $414b
 	push af ; $414d
-	ld a, $05 ; $414e
-	ldh [$ff96], a ; $4150
-	ldh [rWBK], a ; $4152
+	wram_bank $05 ; $414e
 	ld a, $00 ; $4154
 	farcall FarPtr_08_1c ; $4156
 	pop af ; $4159
-	ldh [$ff96], a ; $415a
-	ldh [rWBK], a ; $415c
+	wram_bank ; $415a
 	ret ; $415e
 	INCBIN "data/bank_00b/d_415f.bin" ; $415f, 50 bytes
 Func_0b_4191:
@@ -276,26 +273,22 @@ Func_0b_4404:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
 	farcall FarPtr_02_18 ; $4407
-	ldh a, [$ff96] ; $440a
+	ldh a, [hWramBank] ; $440a
 	push af ; $440c
-	ld a, $05 ; $440d
-	ldh [$ff96], a ; $440f
-	ldh [rWBK], a ; $4411
+	wram_bank $05 ; $440d
 	farcall FarPtr_07_44 ; $4413
 	pop af ; $4416
-	ldh [$ff96], a ; $4417
-	ldh [rWBK], a ; $4419
+	wram_bank ; $4417
 	ret ; $441b
 	INCBIN "data/bank_00b/d_441c.bin" ; $441c, 43 bytes
 Func_0b_4447:
 	ld b, a ; $4447
-	ldh a, [$ff96] ; $4448
+	ldh a, [hWramBank] ; $4448
 	push af ; $444a
 	ld a, $04 ; $444b
 	add a, b ; $444d
 	ld a, a ; $444e
-	ldh [$ff96], a ; $444f
-	ldh [rWBK], a ; $4451
+	wram_bank ; $444f
 	ld de, $df00 ; $4453
 	ld hl, $0050 ; $4456
 	add hl, de ; $4459
@@ -303,27 +296,22 @@ Func_0b_4447:
 	bit 4, a ; $445b
 	jr z, Label_0b_4467 ; $445d
 	pop af ; $445f
-	ldh [$ff96], a ; $4460
-	ldh [rWBK], a ; $4462
+	wram_bank ; $4460
 	ld a, $01 ; $4464
 	ret ; $4466
 Label_0b_4467:
 	pop af ; $4467
-	ldh [$ff96], a ; $4468
-	ldh [rWBK], a ; $446a
+	wram_bank ; $4468
 	xor a, a ; $446c
 	ret ; $446d
-	ldh a, [$ff96] ; $446e
+	ldh a, [hWramBank] ; $446e
 	push af ; $4470
-	ld a, $05 ; $4471
-	ldh [$ff96], a ; $4473
-	ldh [rWBK], a ; $4475
+	wram_bank $05 ; $4471
 	ld hl, $df57 ; $4477
 	ld a, [wPointWinLoseFlag] ; $447a
 	ld [hl], a ; $447d
 	pop af ; $447e
-	ldh [$ff96], a ; $447f
-	ldh [rWBK], a ; $4481
+	wram_bank ; $447f
 	ret ; $4483
 	INCBIN "data/bank_00b/d_4484.bin" ; $4484, 176 bytes
 Func_0b_4534:
@@ -371,16 +359,13 @@ Func_0b_4583:
 	ld l, c ; $459d
 	add a, $02 ; $459e
 	ld b, a ; $45a0
-	ldh a, [$ff96] ; $45a1
+	ldh a, [hWramBank] ; $45a1
 	push af ; $45a3
-	ld a, $05 ; $45a4
-	ldh [$ff96], a ; $45a6
-	ldh [rWBK], a ; $45a8
+	wram_bank $05 ; $45a4
 	ld a, [$d86f] ; $45aa
 	ld e, a ; $45ad
 	pop af ; $45ae
-	ldh [$ff96], a ; $45af
-	ldh [rWBK], a ; $45b1
+	wram_bank ; $45af
 	ld a, e ; $45b3
 	add a, a ; $45b4
 	inc a ; $45b5
@@ -485,30 +470,22 @@ Label_0b_47ae:
 	INCBIN "data/bank_00b/d_47b4.bin" ; $47b4, 36 bytes
 Func_0b_47d8:
 	call DisableLCDSafely ; $47d8
-	ld a, $02 ; $47db
-	ldh [$ff96], a ; $47dd
-	ldh [rWBK], a ; $47df
+	wram_bank $02 ; $47db
 	ld a, $00 ; $47e1
 	ld hl, $d000 ; $47e3
 	ld bc, $0500 ; $47e6
 	call Func_0b_4823 ; $47e9
-	ld a, $03 ; $47ec
-	ldh [$ff96], a ; $47ee
-	ldh [rWBK], a ; $47f0
+	wram_bank $03 ; $47ec
 	ld a, $20 ; $47f2
 	ld hl, $d000 ; $47f4
 	ld bc, $0500 ; $47f7
 	call Func_0b_4823 ; $47fa
-	ld a, $03 ; $47fd
-	ldh [$ff96], a ; $47ff
-	ldh [rWBK], a ; $4801
+	wram_bank $03 ; $47fd
 	ld hl, $d000 ; $4803
 	ld de, $9800 ; $4806
 	ld c, $24 ; $4809
 	call Func_00_0480 ; $480b
-	ld a, $02 ; $480e
-	ldh [$ff96], a ; $4810
-	ldh [rWBK], a ; $4812
+	wram_bank $02 ; $480e
 	ld hl, $d000 ; $4814
 	ld de, $b800 ; $4817
 	ld c, $24 ; $481a
@@ -1181,9 +1158,9 @@ Func_0b_7258:
 	ld a, $15 ; $726b
 	ld [$c8f8], a ; $726d
 	ld a, $01 ; $7270
-	ld [$c8f2], a ; $7272
+	ld [wMatchIsDoubles], a ; $7272
 	ld a, $03 ; $7275
-	ld [$c8f3], a ; $7277
+	ld [wOnCourtCharCount], a ; $7277
 	ld a, $17 ; $727a
 	ld [wCurrentlyUsedCourt], a ; $727c
 	ld b, $1d ; $727f

@@ -10,7 +10,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `42a301b`); the whole history rebuilds
+Everything below is **committed** (HEAD `8d8afc9`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -33,6 +33,13 @@ include/macros.inc):
   reads an inline `dw` pointer into de: `rst20/rst28/rst30 $xxxx`.
 - `Func_00_07c5` is a register-based far dispatcher — runtime-computed, not
   statically exploitable.
+
+**WRAM bank switches** render as the `wram_bank` macro (macros.inc): the
+`ldh [hWramBank], a` + `ldh [rWBK], a` shadow-write pair, with an optional
+immediate (`wram_bank $04`) when preceded by `ld a, imm`. All 2,020 pairs in
+the ROM collapse (1,596 immediate + 424 bare, e.g. after `pop af`); a
+peephole in `disasm.py`'s emitter (`wram_bank_seq`) skips sites where a jump
+target lands mid-sequence — none exist today.
 
 **Twin data banks:** groups of data banks carry relocated copies of the same
 bank-local helper, dispatched via farcall slot 0. Confirmed: an OAM-frame
@@ -150,13 +157,25 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 380 of 14,882 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 395 of 14,889 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 52 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, SoftReset, interrupt handlers. Bank 3:
 save engine (23 named, docs/save_format.md). RAM: docs/ram_map.md (129
-RetroAchievements-sourced entries). Data banks: character/sound/walk-sprite/
-graphics streams named as above.
+RetroAchievements-sourced entries plus 4 project-identified: `hWramBank`,
+`wMatchIsDoubles`, `wOnCourtCharCount`, `wOnCourtCharCountMinus1`). Data
+banks: character/sound/walk-sprite/graphics streams named as above.
+
+The match engine's **per-character WRAM-bank structs are mapped**
+(docs/ram_map.md "Match engine per-character structs"): banks 4-7 each hold
+one on-court character at the same `$dfxx` addresses (4/6 = near-side pair,
+5/7 = far-side pair; `ForEachCharBank` $6a3a iterates them). Known fields:
+24-bit fixed-point X/depth/height at `$df00/03/06`, state machine at `$df18`,
+walk targets at `$df46/48`, velocity at `$df40`. 15 routines named around
+this: the walk-to-target loop (`MoveCharTowardTarget`/`CheckCharNearTarget`),
+char state/facing/placement setters, and the point-end doubles-spacing chain
+(`StartPointEndReactions` → `SpreadTeammateTargets` → `ComputePairSpread`,
+which spreads a team pair's target depths $200 apart, min $100 from the net).
 
 Bank $08's 39 embedded blobs were classified (data table / stranded code /
 padding). The ~281 bytes of code stranded behind computed jumps were recovered
@@ -175,12 +194,12 @@ key, so one region can hold back-to-back tables. Bank $08 is now down to 4 raw
 blobs, all padding (three 1-byte, one 61-byte `$ff` run).
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
-745 still-unnamed routines; name the now-structured tables, and confirm
+730 still-unnamed routines; name the now-structured tables, and confirm
 `$5dc4`'s semantics via a runtime trace), bank $13 (biggest story bank),
 bank $1e, sound-command enum for the 451 `sound $xx` sites, WRAM map expansion
 from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `42a301b`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `8d8afc9`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.

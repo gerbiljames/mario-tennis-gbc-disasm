@@ -1916,9 +1916,7 @@ Label_11_6d91:
 	ret ; $6dbb
 	INCBIN "data/bank_011/d_6dbc.bin" ; $6dbc, 145 bytes
 Label_11_6e4d:
-	ld a, $04 ; $6e4d
-	ldh [$ff96], a ; $6e4f
-	ldh [rWBK], a ; $6e51
+	wram_bank $04 ; $6e4d
 	ld a, [$c4c7] ; $6e53
 	cp a, $01 ; $6e56
 	jr z, Label_11_6e62 ; $6e58
