@@ -66,7 +66,8 @@ Lz_65_5082:
 	INCBIN "data/bank_065/lz_5082.bin" ; $5082, 70 bytes
 Lz_65_50c8:
 	INCBIN "data/bank_065/lz_50c8.bin" ; $50c8, 73 bytes
-	INCBIN "data/bank_065/d_5111.bin" ; $5111, 15 bytes
+	; $5111, 15 bytes (fill)
+	ds 15, $00
 Data_65_5120:
 	INCBIN "data/bank_065/d_5120.bin" ; $5120, 1536 bytes
 Data_65_5720:
@@ -83,7 +84,8 @@ Lz_65_646e:
 	INCBIN "data/bank_065/lz_646e.bin" ; $646e, 70 bytes
 Lz_65_64b4:
 	INCBIN "data/bank_065/lz_64b4.bin" ; $64b4, 70 bytes
-	INCBIN "data/bank_065/d_64fa.bin" ; $64fa, 6 bytes
+	; $64fa, 6 bytes (fill)
+	ds 6, $00
 Data_65_6500:
 	INCBIN "data/bank_065/d_6500.bin" ; $6500, 1536 bytes
 Data_65_6b00:

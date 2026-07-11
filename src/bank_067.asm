@@ -66,7 +66,8 @@ Lz_67_5375:
 	INCBIN "data/bank_067/lz_5375.bin" ; $5375, 106 bytes
 Lz_67_53df:
 	INCBIN "data/bank_067/lz_53df.bin" ; $53df, 83 bytes
-	INCBIN "data/bank_067/d_5432.bin" ; $5432, 14 bytes
+	; $5432, 14 bytes (fill)
+	ds 14, $00
 Data_67_5440:
 	INCBIN "data/bank_067/d_5440.bin" ; $5440, 1536 bytes
 Data_67_5a40:
