@@ -519,6 +519,29 @@ class Disassembly:
               f"{resolved} ({len(self.data_slots)} slots, "
               f"{len(self.data_blobs)} blobs)")
 
+    # Bank $04's $4f75 sprite/object dispatch table: (slot, bank) words that a
+    # runtime-indexed loader copies as 16-byte object headers to $dad0. The
+    # dynamic index defeats static backtracking, so without a hook a slot's
+    # 16-byte copy length is unknown and its region stays one blob instead of
+    # header + body. Read the table to split bank $72's nine object headers
+    # uniformly (the hooks only caught four). Scoped to $72; the character
+    # banks $40-$5d in the same table are carved by find_sprite_banks.
+    OBJECT_DISPATCH = 0x10F75  # bank $04, $4f75
+
+    def add_object_header_slots(self):
+        off = self.OBJECT_DISPATCH
+        added = 0
+        while off + 1 < len(self.rom):
+            w = self.rom[off] | (self.rom[off + 1] << 8)
+            if w == 0:
+                break
+            slot, bank = w & 0xFF, w >> 8
+            off += 2
+            if bank == 0x72 and self._add_data_slot(bank, slot, "copy", 16):
+                added += 1
+        if added:
+            print(f"object headers: {added} bank $72 slots via $4f75 dispatch table")
+
     def _add_data_slot(self, bank, slot, kind, length=None):
         """Validate and record one data-pointer table slot; returns the
         blob's flat offset, or None if anything about it is implausible."""
@@ -1480,6 +1503,7 @@ def main():
     dis.find_sprite_banks()
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()
+    dis.add_object_header_slots()
     if helpers or args.hooks:
         dis.scan_data_slots()
     labels = build_labels(dis, overrides)
