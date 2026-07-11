@@ -34,10 +34,11 @@ byte-for-byte.
   which are emitted as `ds` fill directives — unused ROM space, visible as
   such in the source. Pointer tables (`FarPtr`/`DataPtr`/jump tables) and the
   sprite/object records of the `$6a`/`$6f`/`$70`-`$77` banks — the 16-byte
-  headers (`db` count/flags + `dw` body pointers) and the `OamPtrs` arrays they
-  reach — render as in-source `dw`/`db` structure. That is layout metadata, not
-  bulk data, so the frame graphics and OAM data those pointers target stay in
-  the extracted (gitignored) blobs.
+  headers (`db` count/flags + `dw` body pointers), their inline `.frames`
+  pointer arrays, and the `OamPtrs` arrays they reach — render as in-source
+  `dw`/`db` structure. That is layout metadata, not bulk data, so the frame
+  graphics and OAM data those pointers target stay in the extracted
+  (gitignored) blobs.
 - `data.manifest` — offset/length list consumed by `tools/extract.py` to
   slice the base ROM into `data/` (gitignored).
 - `labels.json` — symbol name overrides (`{"0x1234": "SomeName"}`, keys are

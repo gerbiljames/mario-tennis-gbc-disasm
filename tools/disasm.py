@@ -603,6 +603,45 @@ class Disassembly:
         if arrays:
             print(f"oam arrays: {arrays} followed, {splits} OAM-data splits")
 
+    def follow_frame_arrays(self):
+        """Follow each header's inline frame-pointer array (words 0/2 point at
+        offset $0a): dw entries -- the first three are header words 3-5, the
+        rest spill into the body -- pointing at the record's 16x16 frame
+        graphics. The array runs until the first non-pointer word (the frame
+        data / $00 padding that follows) or until it reaches the graphics it
+        points at. Render the body continuation as dw labels, split the
+        frames."""
+        starts = sorted(self.object_headers)
+        splits = 0
+        for i, h in enumerate(starts):
+            bank = h // BANK_SIZE
+            base = bank * BANK_SIZE
+            nxt = starts[i + 1] if i + 1 < len(starts) else len(self.rom)
+            rend = nxt if nxt // BANK_SIZE == bank else (bank + 1) * BANK_SIZE
+            if base + (self.rom[h + 4] | (self.rom[h + 5] << 8)) - BANK_SIZE != h + 0x0A:
+                continue
+            tgts, p = [], h + 0x0A
+            while True:
+                w = self.rom[p] | (self.rom[p + 1] << 8)
+                t = base + w - BANK_SIZE
+                if not 0x4000 <= w < 0x8000 or not h + 0x10 <= t < rend:
+                    break  # non-pointer: frame data or padding begins here
+                if tgts and p >= min(tgts):
+                    break  # reached the frames the table points at
+                tgts.append(t)
+                p += 2
+            if len(tgts) < 3:
+                continue
+            for q in range(h + 0x10, p, 2):  # body continuation -> dw labels
+                self.ptr_words[q] = (base + (self.rom[q] | (self.rom[q + 1] << 8))
+                                     - BANK_SIZE, "")
+            for t in sorted(set(tgts)):
+                if t not in self.data_blobs:
+                    self.data_blobs[t] = (None, "copy")
+                    splits += 1
+        if splits:
+            print(f"frame arrays: {splits} frame splits")
+
     def _add_data_slot(self, bank, slot, kind, length=None):
         """Validate and record one data-pointer table slot; returns the
         blob's flat offset, or None if anything about it is implausible."""
@@ -1301,13 +1340,18 @@ def render_object_header(rom, off, data_labels, ptr_labels):
     inside the header itself, or at another record)."""
     b = rom[off:off + 16]
     base = (off // BANK_SIZE) * BANK_SIZE
-    parts = []
-    for i in range(6):
-        w = b[4 + 2 * i] | (b[5 + 2 * i] << 8)
+
+    def lbl(w):
         tgt = base + w - BANK_SIZE
-        parts.append(data_labels.get(tgt) or ptr_labels.get(tgt) or f"${w:04x}")
+        if tgt == off + 0x0A:  # the inline frame-pointer array (words 3-5+)
+            return ".frames"
+        return data_labels.get(tgt) or ptr_labels.get(tgt) or f"${w:04x}"
+
+    w = [b[4 + 2 * i] | (b[5 + 2 * i] << 8) for i in range(6)]
     return [f"\tdb ${b[0]:02x}, ${b[1]:02x}, ${b[2]:02x}, ${b[3]:02x} ; count, flags",
-            f"\tdw {', '.join(parts)} ; body pointers"]
+            f"\tdw {lbl(w[0])}, {lbl(w[1])}, {lbl(w[2])} ; frame array, OAM array, frame array",
+            ".frames:",
+            f"\tdw {lbl(w[3])}, {lbl(w[4])}, {lbl(w[5])} ; frame pointers (continue in body)"]
 
 
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None):
@@ -1595,6 +1639,7 @@ def main():
     dis.add_object_header_slots()
     dis.split_object_bodies()
     dis.follow_oam_arrays()
+    dis.follow_frame_arrays()
     if helpers or args.hooks:
         dis.scan_data_slots()
     labels = build_labels(dis, overrides)

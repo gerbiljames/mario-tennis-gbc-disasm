@@ -15,14 +15,29 @@ WalkSprites_6f:
 	dw Data_6f_6e01 ; $400e
 Data_6f_4010:
 	db $07, $04, $02, $00 ; count, flags
-	dw $401a, OamPtrs_6f_4630, $401a, Data_6f_4030, Data_6f_4130, Data_6f_4230 ; body pointers
-	INCBIN "data/bank_06f/d_4020.bin" ; $4020, 16 bytes
+	dw .frames, OamPtrs_6f_4630, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_4030, Data_6f_4130, Data_6f_4230 ; frame pointers (continue in body)
+	dw Data_6f_4230 ; $4020
+	dw Data_6f_4230 ; $4022
+	dw Data_6f_4230 ; $4024
+	dw Data_6f_4230 ; $4026
+	dw Data_6f_4330 ; $4028
+	dw Data_6f_4430 ; $402a
+	dw Data_6f_4530 ; $402c
+	INCBIN "data/bank_06f/d_402e.bin" ; $402e, 2 bytes
 Data_6f_4030:
 	INCBIN "data/bank_06f/d_4030.bin" ; $4030, 256 bytes
 Data_6f_4130:
 	INCBIN "data/bank_06f/d_4130.bin" ; $4130, 256 bytes
 Data_6f_4230:
-	INCBIN "data/bank_06f/d_4230.bin" ; $4230, 1024 bytes
+	INCBIN "data/bank_06f/d_4230.bin" ; $4230, 256 bytes
+Data_6f_4330:
+	INCBIN "data/bank_06f/d_4330.bin" ; $4330, 256 bytes
+Data_6f_4430:
+	INCBIN "data/bank_06f/d_4430.bin" ; $4430, 256 bytes
+Data_6f_4530:
+	INCBIN "data/bank_06f/d_4530.bin" ; $4530, 256 bytes
 OamPtrs_6f_4630:
 	dw Data_6f_4648 ; $4630
 	dw Data_6f_464b ; $4632
@@ -60,14 +75,29 @@ Data_6f_4696:
 	INCBIN "data/bank_06f/d_4696.bin" ; $4696, 11 bytes
 Data_6f_46a1:
 	db $05, $04, $02, $00 ; count, flags
-	dw $46ab, OamPtrs_6f_4cc0, $46ab, Data_6f_46c0, Data_6f_47c0, Data_6f_48c0 ; body pointers
-	INCBIN "data/bank_06f/d_46b1.bin" ; $46b1, 15 bytes
+	dw .frames, OamPtrs_6f_4cc0, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_46c0, Data_6f_47c0, Data_6f_48c0 ; frame pointers (continue in body)
+	dw Data_6f_48c0 ; $46b1
+	dw Data_6f_48c0 ; $46b3
+	dw Data_6f_48c0 ; $46b5
+	dw Data_6f_48c0 ; $46b7
+	dw Data_6f_49c0 ; $46b9
+	dw Data_6f_4ac0 ; $46bb
+	dw Data_6f_4bc0 ; $46bd
+	INCBIN "data/bank_06f/d_46bf.bin" ; $46bf, 1 bytes
 Data_6f_46c0:
 	INCBIN "data/bank_06f/d_46c0.bin" ; $46c0, 256 bytes
 Data_6f_47c0:
 	INCBIN "data/bank_06f/d_47c0.bin" ; $47c0, 256 bytes
 Data_6f_48c0:
-	INCBIN "data/bank_06f/d_48c0.bin" ; $48c0, 1024 bytes
+	INCBIN "data/bank_06f/d_48c0.bin" ; $48c0, 256 bytes
+Data_6f_49c0:
+	INCBIN "data/bank_06f/d_49c0.bin" ; $49c0, 256 bytes
+Data_6f_4ac0:
+	INCBIN "data/bank_06f/d_4ac0.bin" ; $4ac0, 256 bytes
+Data_6f_4bc0:
+	INCBIN "data/bank_06f/d_4bc0.bin" ; $4bc0, 256 bytes
 OamPtrs_6f_4cc0:
 	dw Data_6f_4cd8 ; $4cc0
 	dw Data_6f_4cdb ; $4cc2
@@ -105,14 +135,29 @@ Data_6f_4d26:
 	INCBIN "data/bank_06f/d_4d26.bin" ; $4d26, 11 bytes
 Data_6f_4d31:
 	db $05, $04, $02, $00 ; count, flags
-	dw $4d3b, OamPtrs_6f_5350, $4d3b, Data_6f_4d50, Data_6f_4e50, Data_6f_4f50 ; body pointers
-	INCBIN "data/bank_06f/d_4d41.bin" ; $4d41, 15 bytes
+	dw .frames, OamPtrs_6f_5350, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_4d50, Data_6f_4e50, Data_6f_4f50 ; frame pointers (continue in body)
+	dw Data_6f_4f50 ; $4d41
+	dw Data_6f_4f50 ; $4d43
+	dw Data_6f_4f50 ; $4d45
+	dw Data_6f_4f50 ; $4d47
+	dw Data_6f_5050 ; $4d49
+	dw Data_6f_5150 ; $4d4b
+	dw Data_6f_5250 ; $4d4d
+	INCBIN "data/bank_06f/d_4d4f.bin" ; $4d4f, 1 bytes
 Data_6f_4d50:
 	INCBIN "data/bank_06f/d_4d50.bin" ; $4d50, 256 bytes
 Data_6f_4e50:
 	INCBIN "data/bank_06f/d_4e50.bin" ; $4e50, 256 bytes
 Data_6f_4f50:
-	INCBIN "data/bank_06f/d_4f50.bin" ; $4f50, 1024 bytes
+	INCBIN "data/bank_06f/d_4f50.bin" ; $4f50, 256 bytes
+Data_6f_5050:
+	INCBIN "data/bank_06f/d_5050.bin" ; $5050, 256 bytes
+Data_6f_5150:
+	INCBIN "data/bank_06f/d_5150.bin" ; $5150, 256 bytes
+Data_6f_5250:
+	INCBIN "data/bank_06f/d_5250.bin" ; $5250, 256 bytes
 OamPtrs_6f_5350:
 	dw Data_6f_5368 ; $5350
 	dw Data_6f_536b ; $5352
@@ -150,14 +195,29 @@ Data_6f_53b6:
 	INCBIN "data/bank_06f/d_53b6.bin" ; $53b6, 11 bytes
 Data_6f_53c1:
 	db $05, $04, $02, $00 ; count, flags
-	dw $53cb, OamPtrs_6f_59e0, $53cb, Data_6f_53e0, Data_6f_54e0, Data_6f_55e0 ; body pointers
-	INCBIN "data/bank_06f/d_53d1.bin" ; $53d1, 15 bytes
+	dw .frames, OamPtrs_6f_59e0, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_53e0, Data_6f_54e0, Data_6f_55e0 ; frame pointers (continue in body)
+	dw Data_6f_55e0 ; $53d1
+	dw Data_6f_55e0 ; $53d3
+	dw Data_6f_55e0 ; $53d5
+	dw Data_6f_55e0 ; $53d7
+	dw Data_6f_56e0 ; $53d9
+	dw Data_6f_57e0 ; $53db
+	dw Data_6f_58e0 ; $53dd
+	INCBIN "data/bank_06f/d_53df.bin" ; $53df, 1 bytes
 Data_6f_53e0:
 	INCBIN "data/bank_06f/d_53e0.bin" ; $53e0, 256 bytes
 Data_6f_54e0:
 	INCBIN "data/bank_06f/d_54e0.bin" ; $54e0, 256 bytes
 Data_6f_55e0:
-	INCBIN "data/bank_06f/d_55e0.bin" ; $55e0, 1024 bytes
+	INCBIN "data/bank_06f/d_55e0.bin" ; $55e0, 256 bytes
+Data_6f_56e0:
+	INCBIN "data/bank_06f/d_56e0.bin" ; $56e0, 256 bytes
+Data_6f_57e0:
+	INCBIN "data/bank_06f/d_57e0.bin" ; $57e0, 256 bytes
+Data_6f_58e0:
+	INCBIN "data/bank_06f/d_58e0.bin" ; $58e0, 256 bytes
 OamPtrs_6f_59e0:
 	dw Data_6f_59f8 ; $59e0
 	dw Data_6f_59fb ; $59e2
@@ -195,14 +255,29 @@ Data_6f_5a46:
 	INCBIN "data/bank_06f/d_5a46.bin" ; $5a46, 11 bytes
 Data_6f_5a51:
 	db $05, $04, $02, $00 ; count, flags
-	dw $5a5b, OamPtrs_6f_6070, $5a5b, Data_6f_5a70, Data_6f_5b70, Data_6f_5c70 ; body pointers
-	INCBIN "data/bank_06f/d_5a61.bin" ; $5a61, 15 bytes
+	dw .frames, OamPtrs_6f_6070, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_5a70, Data_6f_5b70, Data_6f_5c70 ; frame pointers (continue in body)
+	dw Data_6f_5c70 ; $5a61
+	dw Data_6f_5c70 ; $5a63
+	dw Data_6f_5c70 ; $5a65
+	dw Data_6f_5c70 ; $5a67
+	dw Data_6f_5d70 ; $5a69
+	dw Data_6f_5e70 ; $5a6b
+	dw Data_6f_5f70 ; $5a6d
+	INCBIN "data/bank_06f/d_5a6f.bin" ; $5a6f, 1 bytes
 Data_6f_5a70:
 	INCBIN "data/bank_06f/d_5a70.bin" ; $5a70, 256 bytes
 Data_6f_5b70:
 	INCBIN "data/bank_06f/d_5b70.bin" ; $5b70, 256 bytes
 Data_6f_5c70:
-	INCBIN "data/bank_06f/d_5c70.bin" ; $5c70, 1024 bytes
+	INCBIN "data/bank_06f/d_5c70.bin" ; $5c70, 256 bytes
+Data_6f_5d70:
+	INCBIN "data/bank_06f/d_5d70.bin" ; $5d70, 256 bytes
+Data_6f_5e70:
+	INCBIN "data/bank_06f/d_5e70.bin" ; $5e70, 256 bytes
+Data_6f_5f70:
+	INCBIN "data/bank_06f/d_5f70.bin" ; $5f70, 256 bytes
 OamPtrs_6f_6070:
 	dw Data_6f_6088 ; $6070
 	dw Data_6f_608b ; $6072
@@ -240,14 +315,29 @@ Data_6f_60d6:
 	INCBIN "data/bank_06f/d_60d6.bin" ; $60d6, 11 bytes
 Data_6f_60e1:
 	db $07, $04, $02, $00 ; count, flags
-	dw $60eb, OamPtrs_6f_6700, $60eb, Data_6f_6100, Data_6f_6200, Data_6f_6300 ; body pointers
-	INCBIN "data/bank_06f/d_60f1.bin" ; $60f1, 15 bytes
+	dw .frames, OamPtrs_6f_6700, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_6100, Data_6f_6200, Data_6f_6300 ; frame pointers (continue in body)
+	dw Data_6f_6300 ; $60f1
+	dw Data_6f_6300 ; $60f3
+	dw Data_6f_6300 ; $60f5
+	dw Data_6f_6300 ; $60f7
+	dw Data_6f_6400 ; $60f9
+	dw Data_6f_6500 ; $60fb
+	dw Data_6f_6600 ; $60fd
+	INCBIN "data/bank_06f/d_60ff.bin" ; $60ff, 1 bytes
 Data_6f_6100:
 	INCBIN "data/bank_06f/d_6100.bin" ; $6100, 256 bytes
 Data_6f_6200:
 	INCBIN "data/bank_06f/d_6200.bin" ; $6200, 256 bytes
 Data_6f_6300:
-	INCBIN "data/bank_06f/d_6300.bin" ; $6300, 1024 bytes
+	INCBIN "data/bank_06f/d_6300.bin" ; $6300, 256 bytes
+Data_6f_6400:
+	INCBIN "data/bank_06f/d_6400.bin" ; $6400, 256 bytes
+Data_6f_6500:
+	INCBIN "data/bank_06f/d_6500.bin" ; $6500, 256 bytes
+Data_6f_6600:
+	INCBIN "data/bank_06f/d_6600.bin" ; $6600, 256 bytes
 OamPtrs_6f_6700:
 	dw Data_6f_6718 ; $6700
 	dw Data_6f_671b ; $6702
@@ -285,14 +375,29 @@ Data_6f_6766:
 	INCBIN "data/bank_06f/d_6766.bin" ; $6766, 11 bytes
 Data_6f_6771:
 	db $06, $04, $02, $00 ; count, flags
-	dw $677b, OamPtrs_6f_6d90, $677b, Data_6f_6790, Data_6f_6890, Data_6f_6990 ; body pointers
-	INCBIN "data/bank_06f/d_6781.bin" ; $6781, 15 bytes
+	dw .frames, OamPtrs_6f_6d90, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_6790, Data_6f_6890, Data_6f_6990 ; frame pointers (continue in body)
+	dw Data_6f_6990 ; $6781
+	dw Data_6f_6990 ; $6783
+	dw Data_6f_6990 ; $6785
+	dw Data_6f_6990 ; $6787
+	dw Data_6f_6a90 ; $6789
+	dw Data_6f_6b90 ; $678b
+	dw Data_6f_6c90 ; $678d
+	INCBIN "data/bank_06f/d_678f.bin" ; $678f, 1 bytes
 Data_6f_6790:
 	INCBIN "data/bank_06f/d_6790.bin" ; $6790, 256 bytes
 Data_6f_6890:
 	INCBIN "data/bank_06f/d_6890.bin" ; $6890, 256 bytes
 Data_6f_6990:
-	INCBIN "data/bank_06f/d_6990.bin" ; $6990, 1024 bytes
+	INCBIN "data/bank_06f/d_6990.bin" ; $6990, 256 bytes
+Data_6f_6a90:
+	INCBIN "data/bank_06f/d_6a90.bin" ; $6a90, 256 bytes
+Data_6f_6b90:
+	INCBIN "data/bank_06f/d_6b90.bin" ; $6b90, 256 bytes
+Data_6f_6c90:
+	INCBIN "data/bank_06f/d_6c90.bin" ; $6c90, 256 bytes
 OamPtrs_6f_6d90:
 	dw Data_6f_6da8 ; $6d90
 	dw Data_6f_6dab ; $6d92
@@ -330,14 +435,29 @@ Data_6f_6df6:
 	INCBIN "data/bank_06f/d_6df6.bin" ; $6df6, 11 bytes
 Data_6f_6e01:
 	db $03, $04, $02, $00 ; count, flags
-	dw $6e0b, OamPtrs_6f_7420, $6e0b, Data_6f_6e20, Data_6f_6f20, Data_6f_7020 ; body pointers
-	INCBIN "data/bank_06f/d_6e11.bin" ; $6e11, 15 bytes
+	dw .frames, OamPtrs_6f_7420, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6f_6e20, Data_6f_6f20, Data_6f_7020 ; frame pointers (continue in body)
+	dw Data_6f_7020 ; $6e11
+	dw Data_6f_7020 ; $6e13
+	dw Data_6f_7020 ; $6e15
+	dw Data_6f_7020 ; $6e17
+	dw Data_6f_7120 ; $6e19
+	dw Data_6f_7220 ; $6e1b
+	dw Data_6f_7320 ; $6e1d
+	INCBIN "data/bank_06f/d_6e1f.bin" ; $6e1f, 1 bytes
 Data_6f_6e20:
 	INCBIN "data/bank_06f/d_6e20.bin" ; $6e20, 256 bytes
 Data_6f_6f20:
 	INCBIN "data/bank_06f/d_6f20.bin" ; $6f20, 256 bytes
 Data_6f_7020:
-	INCBIN "data/bank_06f/d_7020.bin" ; $7020, 1024 bytes
+	INCBIN "data/bank_06f/d_7020.bin" ; $7020, 256 bytes
+Data_6f_7120:
+	INCBIN "data/bank_06f/d_7120.bin" ; $7120, 256 bytes
+Data_6f_7220:
+	INCBIN "data/bank_06f/d_7220.bin" ; $7220, 256 bytes
+Data_6f_7320:
+	INCBIN "data/bank_06f/d_7320.bin" ; $7320, 256 bytes
 OamPtrs_6f_7420:
 	dw Data_6f_7438 ; $7420
 	dw Data_6f_743b ; $7422

@@ -12,14 +12,29 @@ WalkSprites_6a:
 	dw Data_6a_5a51 ; $4008
 Data_6a_400a:
 	db $05, $04, $02, $00 ; count, flags
-	dw $4014, OamPtrs_6a_4630, $4014, Data_6a_4030, Data_6a_4130, Data_6a_4230 ; body pointers
-	INCBIN "data/bank_06a/d_401a.bin" ; $401a, 22 bytes
+	dw .frames, OamPtrs_6a_4630, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6a_4030, Data_6a_4130, Data_6a_4230 ; frame pointers (continue in body)
+	dw Data_6a_4230 ; $401a
+	dw Data_6a_4230 ; $401c
+	dw Data_6a_4230 ; $401e
+	dw Data_6a_4230 ; $4020
+	dw Data_6a_4330 ; $4022
+	dw Data_6a_4430 ; $4024
+	dw Data_6a_4530 ; $4026
+	INCBIN "data/bank_06a/d_4028.bin" ; $4028, 8 bytes
 Data_6a_4030:
 	INCBIN "data/bank_06a/d_4030.bin" ; $4030, 256 bytes
 Data_6a_4130:
 	INCBIN "data/bank_06a/d_4130.bin" ; $4130, 256 bytes
 Data_6a_4230:
-	INCBIN "data/bank_06a/d_4230.bin" ; $4230, 1024 bytes
+	INCBIN "data/bank_06a/d_4230.bin" ; $4230, 256 bytes
+Data_6a_4330:
+	INCBIN "data/bank_06a/d_4330.bin" ; $4330, 256 bytes
+Data_6a_4430:
+	INCBIN "data/bank_06a/d_4430.bin" ; $4430, 256 bytes
+Data_6a_4530:
+	INCBIN "data/bank_06a/d_4530.bin" ; $4530, 256 bytes
 OamPtrs_6a_4630:
 	dw Data_6a_4648 ; $4630
 	dw Data_6a_464b ; $4632
@@ -57,14 +72,29 @@ Data_6a_4696:
 	INCBIN "data/bank_06a/d_4696.bin" ; $4696, 11 bytes
 Data_6a_46a1:
 	db $05, $04, $02, $00 ; count, flags
-	dw $46ab, OamPtrs_6a_4cc0, $46ab, Data_6a_46c0, Data_6a_47c0, Data_6a_48c0 ; body pointers
-	INCBIN "data/bank_06a/d_46b1.bin" ; $46b1, 15 bytes
+	dw .frames, OamPtrs_6a_4cc0, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6a_46c0, Data_6a_47c0, Data_6a_48c0 ; frame pointers (continue in body)
+	dw Data_6a_48c0 ; $46b1
+	dw Data_6a_48c0 ; $46b3
+	dw Data_6a_48c0 ; $46b5
+	dw Data_6a_48c0 ; $46b7
+	dw Data_6a_49c0 ; $46b9
+	dw Data_6a_4ac0 ; $46bb
+	dw Data_6a_4bc0 ; $46bd
+	INCBIN "data/bank_06a/d_46bf.bin" ; $46bf, 1 bytes
 Data_6a_46c0:
 	INCBIN "data/bank_06a/d_46c0.bin" ; $46c0, 256 bytes
 Data_6a_47c0:
 	INCBIN "data/bank_06a/d_47c0.bin" ; $47c0, 256 bytes
 Data_6a_48c0:
-	INCBIN "data/bank_06a/d_48c0.bin" ; $48c0, 1024 bytes
+	INCBIN "data/bank_06a/d_48c0.bin" ; $48c0, 256 bytes
+Data_6a_49c0:
+	INCBIN "data/bank_06a/d_49c0.bin" ; $49c0, 256 bytes
+Data_6a_4ac0:
+	INCBIN "data/bank_06a/d_4ac0.bin" ; $4ac0, 256 bytes
+Data_6a_4bc0:
+	INCBIN "data/bank_06a/d_4bc0.bin" ; $4bc0, 256 bytes
 OamPtrs_6a_4cc0:
 	dw Data_6a_4cd8 ; $4cc0
 	dw Data_6a_4cdb ; $4cc2
@@ -102,14 +132,29 @@ Data_6a_4d26:
 	INCBIN "data/bank_06a/d_4d26.bin" ; $4d26, 11 bytes
 Data_6a_4d31:
 	db $07, $04, $02, $00 ; count, flags
-	dw $4d3b, OamPtrs_6a_5350, $4d3b, Data_6a_4d50, Data_6a_4e50, Data_6a_4f50 ; body pointers
-	INCBIN "data/bank_06a/d_4d41.bin" ; $4d41, 15 bytes
+	dw .frames, OamPtrs_6a_5350, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6a_4d50, Data_6a_4e50, Data_6a_4f50 ; frame pointers (continue in body)
+	dw Data_6a_4f50 ; $4d41
+	dw Data_6a_4f50 ; $4d43
+	dw Data_6a_4f50 ; $4d45
+	dw Data_6a_4f50 ; $4d47
+	dw Data_6a_5050 ; $4d49
+	dw Data_6a_5150 ; $4d4b
+	dw Data_6a_5250 ; $4d4d
+	INCBIN "data/bank_06a/d_4d4f.bin" ; $4d4f, 1 bytes
 Data_6a_4d50:
 	INCBIN "data/bank_06a/d_4d50.bin" ; $4d50, 256 bytes
 Data_6a_4e50:
 	INCBIN "data/bank_06a/d_4e50.bin" ; $4e50, 256 bytes
 Data_6a_4f50:
-	INCBIN "data/bank_06a/d_4f50.bin" ; $4f50, 1024 bytes
+	INCBIN "data/bank_06a/d_4f50.bin" ; $4f50, 256 bytes
+Data_6a_5050:
+	INCBIN "data/bank_06a/d_5050.bin" ; $5050, 256 bytes
+Data_6a_5150:
+	INCBIN "data/bank_06a/d_5150.bin" ; $5150, 256 bytes
+Data_6a_5250:
+	INCBIN "data/bank_06a/d_5250.bin" ; $5250, 256 bytes
 OamPtrs_6a_5350:
 	dw Data_6a_5368 ; $5350
 	dw Data_6a_536b ; $5352
@@ -147,14 +192,29 @@ Data_6a_53b6:
 	INCBIN "data/bank_06a/d_53b6.bin" ; $53b6, 11 bytes
 Data_6a_53c1:
 	db $06, $04, $02, $00 ; count, flags
-	dw $53cb, OamPtrs_6a_59e0, $53cb, Data_6a_53e0, Data_6a_54e0, Data_6a_55e0 ; body pointers
-	INCBIN "data/bank_06a/d_53d1.bin" ; $53d1, 15 bytes
+	dw .frames, OamPtrs_6a_59e0, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6a_53e0, Data_6a_54e0, Data_6a_55e0 ; frame pointers (continue in body)
+	dw Data_6a_55e0 ; $53d1
+	dw Data_6a_55e0 ; $53d3
+	dw Data_6a_55e0 ; $53d5
+	dw Data_6a_55e0 ; $53d7
+	dw Data_6a_56e0 ; $53d9
+	dw Data_6a_57e0 ; $53db
+	dw Data_6a_58e0 ; $53dd
+	INCBIN "data/bank_06a/d_53df.bin" ; $53df, 1 bytes
 Data_6a_53e0:
 	INCBIN "data/bank_06a/d_53e0.bin" ; $53e0, 256 bytes
 Data_6a_54e0:
 	INCBIN "data/bank_06a/d_54e0.bin" ; $54e0, 256 bytes
 Data_6a_55e0:
-	INCBIN "data/bank_06a/d_55e0.bin" ; $55e0, 1024 bytes
+	INCBIN "data/bank_06a/d_55e0.bin" ; $55e0, 256 bytes
+Data_6a_56e0:
+	INCBIN "data/bank_06a/d_56e0.bin" ; $56e0, 256 bytes
+Data_6a_57e0:
+	INCBIN "data/bank_06a/d_57e0.bin" ; $57e0, 256 bytes
+Data_6a_58e0:
+	INCBIN "data/bank_06a/d_58e0.bin" ; $58e0, 256 bytes
 OamPtrs_6a_59e0:
 	dw Data_6a_59f8 ; $59e0
 	dw Data_6a_59fb ; $59e2
@@ -192,14 +252,29 @@ Data_6a_5a46:
 	INCBIN "data/bank_06a/d_5a46.bin" ; $5a46, 11 bytes
 Data_6a_5a51:
 	db $03, $04, $02, $00 ; count, flags
-	dw $5a5b, OamPtrs_6a_6070, $5a5b, Data_6a_5a70, Data_6a_5b70, Data_6a_5c70 ; body pointers
-	INCBIN "data/bank_06a/d_5a61.bin" ; $5a61, 15 bytes
+	dw .frames, OamPtrs_6a_6070, .frames ; frame array, OAM array, frame array
+.frames:
+	dw Data_6a_5a70, Data_6a_5b70, Data_6a_5c70 ; frame pointers (continue in body)
+	dw Data_6a_5c70 ; $5a61
+	dw Data_6a_5c70 ; $5a63
+	dw Data_6a_5c70 ; $5a65
+	dw Data_6a_5c70 ; $5a67
+	dw Data_6a_5d70 ; $5a69
+	dw Data_6a_5e70 ; $5a6b
+	dw Data_6a_5f70 ; $5a6d
+	INCBIN "data/bank_06a/d_5a6f.bin" ; $5a6f, 1 bytes
 Data_6a_5a70:
 	INCBIN "data/bank_06a/d_5a70.bin" ; $5a70, 256 bytes
 Data_6a_5b70:
 	INCBIN "data/bank_06a/d_5b70.bin" ; $5b70, 256 bytes
 Data_6a_5c70:
-	INCBIN "data/bank_06a/d_5c70.bin" ; $5c70, 1024 bytes
+	INCBIN "data/bank_06a/d_5c70.bin" ; $5c70, 256 bytes
+Data_6a_5d70:
+	INCBIN "data/bank_06a/d_5d70.bin" ; $5d70, 256 bytes
+Data_6a_5e70:
+	INCBIN "data/bank_06a/d_5e70.bin" ; $5e70, 256 bytes
+Data_6a_5f70:
+	INCBIN "data/bank_06a/d_5f70.bin" ; $5f70, 256 bytes
 OamPtrs_6a_6070:
 	dw Data_6a_6088 ; $6070
 	dw Data_6a_608b ; $6072
