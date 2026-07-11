@@ -2,10 +2,10 @@
 
 ## Where things stand
 
-**~114K instructions / 241,373 bytes of proven code (11.5% of the 2 MiB ROM)
+**~117K instructions / 247,098 bytes of proven code (11.8% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
-SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 60 of 128 banks contain
-code; the other 68 are data (graphics/audio/tilemaps/text) — but most of that
+SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
+code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
 data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
