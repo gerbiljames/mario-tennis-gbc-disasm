@@ -168,15 +168,17 @@ committed `db`/`dw` in the bank `.asm` (not gitignored INCBIN blobs). Strides we
 `ld hl,$xxxx` exists (e.g. `$709b`/`$70b4` are indexed `hl + i*4`; `$55a0`
 strides by 5); tables reached only through computed pointers (`$5dc4`,
 rendered `bytes:4` as a 25×4 grid) got their stride from the byte layout.
-Bank $08 is down to 5 raw blobs: four are 1-byte/`$ff` padding, and `$7a9d` is
-a 16-entry `dw` pointer table + 32-byte payload sharing one region (deferred —
-a clean split needs the run broken at the payload boundary).
+`$7a9d` was split into its two structures — a 16-entry `dw` pointer table and
+its 32-byte payload (4×8-byte rows; the pointers land on rows +0/+8/+16/+24) —
+by teaching `disasm.py` to end a data segment at any mid-run `data_tables.json`
+key, so one region can hold back-to-back tables. Bank $08 is now down to 4 raw
+blobs, all padding (three 1-byte, one 61-byte `$ff` run).
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
-745 still-unnamed routines; name the now-structured tables, split/resolve
-`$7a9d`, and confirm `$5dc4`'s semantics via a runtime trace), bank $13
-(biggest story bank), bank $1e, sound-command enum for the 451 `sound $xx`
-sites, WRAM map expansion from ram_map gaps.
+745 still-unnamed routines; name the now-structured tables, and confirm
+`$5dc4`'s semantics via a runtime trace), bank $13 (biggest story bank),
+bank $1e, sound-command enum for the 451 `sound $xx` sites, WRAM map expansion
+from ram_map gaps.
 
 ## Repo state
 

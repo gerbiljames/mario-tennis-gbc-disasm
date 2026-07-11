@@ -1525,6 +1525,14 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                                 break
                             j = k
                         scpu = offset_to_cpu(seg)
+                        # A declared data table starting mid-run ends the
+                        # current segment, so a region can hold several
+                        # back-to-back tables (e.g. a dw pointer table
+                        # followed by its payload).
+                        stop = min((t for t in data_tables
+                                    if seg < t < j), default=0)
+                        if stop:
+                            j = stop
                         # A declared data table renders as structured source
                         # (palettes/records/bytes) inline, using the same
                         # renderer extract.py applies to blobs.

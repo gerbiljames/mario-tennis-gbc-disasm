@@ -8836,7 +8836,29 @@ Label_08_7a95:
 	ld [$df12], a ; $7a97
 Label_08_7a9a:
 	jp Label_08_7968 ; $7a9a
-	INCBIN "data/bank_008/d_7a9d.bin" ; $7a9d, 64 bytes
+	; $7a9d, 32 bytes (records:2)
+; 16 records x 2 bytes
+	dw $7abd ; record 0
+	dw $7ac5 ; record 1
+	dw $7acd ; record 2
+	dw $7ad5 ; record 3
+	dw $7acd ; record 4
+	dw $7acd ; record 5
+	dw $7acd ; record 6
+	dw $7acd ; record 7
+	dw $7acd ; record 8
+	dw $7acd ; record 9
+	dw $7acd ; record 10
+	dw $7acd ; record 11
+	dw $7acd ; record 12
+	dw $7acd ; record 13
+	dw $7acd ; record 14
+	dw $7acd ; record 15
+	; $7abd, 32 bytes (bytes:8)
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00, $00, $01, $01, $01 ; 0x08
+	db $00, $00, $01, $01, $01, $01, $01, $01 ; 0x10
+	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x18
 Label_08_7add:
 	call Func_08_7b62 ; $7add
 	call Func_08_7c10 ; $7ae0
