@@ -567,6 +567,42 @@ class Disassembly:
         if added:
             print(f"object bodies: {added} splits at header pointers")
 
+    def follow_oam_arrays(self):
+        """Follow each header's OAM pointer array (word 1): a self-delimiting
+        dw table (it ends where its lowest target begins) of pointers to the
+        record's per-frame OAM sublists. Render the table as dw labels and
+        split the OAM data it points at into blobs."""
+        starts = sorted(self.object_headers)
+        arrays = splits = 0
+        for i, h in enumerate(starts):
+            bank = h // BANK_SIZE
+            base = bank * BANK_SIZE
+            nxt = starts[i + 1] if i + 1 < len(starts) else len(self.rom)
+            rend = nxt if nxt // BANK_SIZE == bank else (bank + 1) * BANK_SIZE
+            astart = base + (self.rom[h + 6] | (self.rom[h + 7] << 8)) - BANK_SIZE
+            if astart not in self.data_blobs or astart < h + 16:
+                continue
+            span = (base + (self.rom[astart] | (self.rom[astart + 1] << 8))
+                    - BANK_SIZE) - astart  # table end = first (lowest) target
+            if not 4 <= span <= 0x40 or span % 2:
+                continue
+            n = span // 2
+            tgts = [base + (self.rom[astart + 2 * k] | (self.rom[astart + 2 * k + 1] << 8))
+                    - BANK_SIZE for k in range(n)]
+            if not all(astart + span <= t < rend for t in tgts):
+                continue
+            del self.data_blobs[astart]
+            self.ptr_labels[astart] = f"OamPtrs_{bank:02x}_{offset_to_cpu(astart):04x}"
+            for k in range(n):
+                self.ptr_words[astart + 2 * k] = (tgts[k], "")
+            arrays += 1
+            for t in sorted(set(tgts)):
+                if t not in self.data_blobs:
+                    self.data_blobs[t] = (None, "copy")
+                    splits += 1
+        if arrays:
+            print(f"oam arrays: {arrays} followed, {splits} OAM-data splits")
+
     def _add_data_slot(self, bank, slot, kind, length=None):
         """Validate and record one data-pointer table slot; returns the
         blob's flat offset, or None if anything about it is implausible."""
@@ -1253,7 +1289,7 @@ ENDM
 """
 
 
-def render_object_header(rom, off, data_labels):
+def render_object_header(rom, off, data_labels, ptr_labels):
     """Render a 16-byte sprite/object header as committed db/dw source: a
     count byte, three flag bytes, then six pointers into the record's body.
     Bank $04's loader copies these to $dad0 and expands them into an actor
@@ -1268,7 +1304,8 @@ def render_object_header(rom, off, data_labels):
     parts = []
     for i in range(6):
         w = b[4 + 2 * i] | (b[5 + 2 * i] << 8)
-        parts.append(data_labels.get(base + w - BANK_SIZE) or f"${w:04x}")
+        tgt = base + w - BANK_SIZE
+        parts.append(data_labels.get(tgt) or ptr_labels.get(tgt) or f"${w:04x}")
     return [f"\tdb ${b[0]:02x}, ${b[1]:02x}, ${b[2]:02x}, ${b[3]:02x} ; count, flags",
             f"\tdw {', '.join(parts)} ; body pointers"]
 
@@ -1413,7 +1450,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                     if kind == "lz":
                         prefix = "lz"
                 if run_start in dis.object_headers:
-                    lines.extend(render_object_header(rom, run_start, data_labels))
+                    lines.extend(render_object_header(rom, run_start, data_labels,
+                                                      dis.ptr_labels))
                     continue
                 if mark and mark[0]:
                     blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
@@ -1556,6 +1594,7 @@ def main():
     dis.find_walk_sprite_banks()
     dis.add_object_header_slots()
     dis.split_object_bodies()
+    dis.follow_oam_arrays()
     if helpers or args.hooks:
         dis.scan_data_slots()
     labels = build_labels(dis, overrides)
