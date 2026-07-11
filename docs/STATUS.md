@@ -46,8 +46,14 @@ engine), $6b, $03 (save engine), $0a, $07.
 
 - **30 character-sprite banks ($40-$5d)** named after their owners (Mario,
   Peach, etc.); $5a is the **training ball machine**, not a character.
-- **Sound banks** ($0c, $78-$7f) and **walk-sprite banks** ($6a, $6f, $77)
-  carved.
+- **Sound banks** ($0c, $78-$7f) carved.
+- **Sprite/object banks ($6a, $6f, $70-$77)** fully decoded from bank $04's
+  $4f75 dispatch table: each record is a 16-byte header (count/flags + `dw`
+  body pointers), an inline `.frames` pointer array to its 16x16 frame
+  graphics, and an `OamPtrs` array to per-frame OAM sublists. All 92 records'
+  header/array structure renders in-source; only the leaf frame-graphics and
+  OAM bytes stay as gitignored blobs. `disasm.py`: `add_object_header_slots` /
+  `split_object_bodies` / `follow_oam_arrays` / `follow_frame_arrays`.
 - **Menu / court / cutscene graphics streams** named; `tools/gfxdump.py`
   renders PNG contact sheets of the carved LZ streams for identification.
 - Raw blobs are split at interior slot-table targets, overlapping copy blobs
