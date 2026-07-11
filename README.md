@@ -37,6 +37,11 @@ byte-for-byte.
   slice the base ROM into `data/` (gitignored).
 - `labels.json` — symbol name overrides (`{"0x1234": "SomeName"}`, keys are
   flat ROM offsets) applied on regeneration.
+- `data_tables.json` — render overrides for carved data tables
+  (`{"0x1234": "palettes"}`, keys are flat ROM offsets); `disasm.py` emits an
+  `INCLUDE` and `extract.py` renders the region as readable structured source
+  instead of a raw blob. Kinds: `palettes` (BGR555 `dw` colors),
+  `records:N` (fixed N-byte records), `bytes:C` (byte table, C per row).
 - `include/hardware.inc` — standard Game Boy hardware definitions (CC0).
 - `tools/` — the disassembly tooling (see below).
 

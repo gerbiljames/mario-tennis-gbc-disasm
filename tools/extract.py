@@ -159,6 +159,65 @@ def render_db(data: bytes) -> str:
     return "\n".join(lines) + "\n"
 
 
+def render_palettes(data: bytes) -> str:
+    """Render GBC palette data as `dw` colors, four per palette, with the
+    decoded RGB in a comment. Reassembles identically (raw little-endian
+    words)."""
+    out = ["; GBC palettes (BGR555), 4 colors each"]
+    for pi in range(len(data) // 8):
+        words = [data[pi * 8 + c * 2] | (data[pi * 8 + c * 2 + 1] << 8)
+                 for c in range(4)]
+        rgb = []
+        for w in words:
+            r, g, b = w & 0x1F, (w >> 5) & 0x1F, (w >> 10) & 0x1F
+            rgb.append(f"#{r * 255 // 31:02x}{g * 255 // 31:02x}{b * 255 // 31:02x}")
+        cols = ", ".join(f"${w:04x}" for w in words)
+        out.append(f"\tdw {cols} ; pal {pi}: " + " ".join(rgb))
+    tail = len(data) % 8
+    if tail:
+        out.append("\tdb " + ", ".join(f"${b:02x}" for b in data[-tail:]))
+    return "\n".join(out) + "\n"
+
+
+def render_records(data: bytes, stride: int) -> str:
+    """Render a fixed-stride record table, one record per line. Even strides
+    render as `dw` (the loader walks word fields), odd as `db`."""
+    out = [f"; {len(data) // stride} records x {stride} bytes"]
+    for i in range(0, len(data) - stride + 1, stride):
+        rec = data[i:i + stride]
+        if stride % 2 == 0:
+            vals = ", ".join(f"${rec[k] | (rec[k + 1] << 8):04x}"
+                             for k in range(0, stride, 2))
+            out.append(f"\tdw {vals} ; record {i // stride}")
+        else:
+            vals = ", ".join(f"${b:02x}" for b in rec)
+            out.append(f"\tdb {vals} ; record {i // stride}")
+    rem = len(data) % stride
+    if rem:
+        out.append("\tdb " + ", ".join(f"${b:02x}" for b in data[-rem:]))
+    return "\n".join(out) + "\n"
+
+
+def render_byte_table(data: bytes, cols: int) -> str:
+    """Render a byte table as `db` rows of `cols`, index-commented."""
+    out = []
+    for i in range(0, len(data), cols):
+        row = ", ".join(f"${b:02x}" for b in data[i:i + cols])
+        out.append(f"\tdb {row} ; {i:#04x}")
+    return "\n".join(out) + "\n"
+
+
+def render_spec(data: bytes, spec: str) -> str:
+    kind, _, param = spec.partition(":")
+    if kind == "palettes":
+        return render_palettes(data)
+    if kind == "records":
+        return render_records(data, int(param or 16))
+    if kind == "bytes":
+        return render_byte_table(data, int(param or 8))
+    return render_text(data)
+
+
 def main() -> int:
     if len(sys.argv) != 4:
         print(f"usage: {sys.argv[0]} <baserom> <manifest> <outdir>", file=sys.stderr)
@@ -172,14 +231,18 @@ def main() -> int:
         line = line.strip()
         if not line or line.startswith("#"):
             continue
-        path, off_s, len_s = line.split()
+        parts = line.split()
+        path, off_s, len_s = parts[0], parts[1], parts[2]
+        spec = parts[3] if len(parts) > 3 else None
         off, length = int(off_s, 16), int(len_s, 16)
         if off + length > len(rom):
             print(f"error: {path} range {off:#x}+{length:#x} exceeds ROM size", file=sys.stderr)
             return 1
         dest = outdir / path
         dest.parent.mkdir(parents=True, exist_ok=True)
-        if path.endswith(".asm"):
+        if spec:
+            dest.write_text(render_spec(rom[off:off + length], spec))
+        elif path.endswith(".asm"):
             dest.write_text(render_text(rom[off:off + length]))
         else:
             dest.write_bytes(rom[off:off + length])

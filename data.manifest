@@ -1,4 +1,4 @@
-# path  rom_offset(hex)  length(hex) — consumed by tools/extract.py
+# path  rom_offset(hex)  length(hex)  [render-spec] — consumed by tools/extract.py
 bank_000/d_0003.bin 000003 5
 bank_000/d_000b.bin 00000b 5
 bank_000/d_0013.bin 000013 5
@@ -115,7 +115,7 @@ bank_004/d_47ba.bin 0107ba 6a
 bank_004/d_483d.bin 01083d 11
 bank_004/d_497b.bin 01097b 63
 bank_004/d_4a1f.bin 010a1f 8
-bank_004/d_4c29.bin 010c29 20
+bank_004/bytes_4c29.asm 010c29 20 bytes:8
 bank_004/d_4d63.bin 010d63 108
 bank_004/d_4ec8.bin 010ec8 48
 bank_004/d_4f75.bin 010f75 ec
@@ -249,7 +249,7 @@ bank_008/d_7b0b.bin 023b0b 8
 bank_008/d_7b73.bin 023b73 8
 bank_008/d_7d37.bin 023d37 7
 bank_008/d_7fc3.bin 023fc3 3d
-bank_009/d_41bc.bin 0241bc 70
+bank_009/records_41bc.asm 0241bc 70 records:16
 bank_009/d_4298.bin 024298 40
 bank_009/d_4300.bin 024300 10
 bank_009/d_4327.bin 024327 40
@@ -3921,7 +3921,7 @@ bank_06b/d_436f.bin 1ac36f 40
 bank_06b/d_44d0.bin 1ac4d0 40
 bank_06b/d_475a.bin 1ac75a 40
 bank_06b/d_4885.bin 1ac885 db
-bank_06b/d_4a58.bin 1aca58 40
+bank_06b/palettes_4a58.asm 1aca58 40 palettes
 bank_06b/d_4c00.bin 1acc00 38
 bank_06b/d_4cc1.bin 1accc1 a0
 bank_06b/d_4d84.bin 1acd84 a9

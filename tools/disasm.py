@@ -1173,7 +1173,8 @@ ENDM
 """
 
 
-def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
+def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None):
+    data_tables = data_tables or {}
     rom = dis.rom
     nbanks = len(rom) // BANK_SIZE
     manifest = []
@@ -1313,7 +1314,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                         prefix = "lz"
                 if mark and mark[0]:
                     blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
-                    manifest.append((blob, run_start, length))
+                    manifest.append((blob, run_start, length, None))
                     lines.append(f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes')
                     continue
                 # Unclassified run: split out long constant-byte fills as ds
@@ -1338,6 +1339,19 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                                 break
                             j = k
                         scpu = offset_to_cpu(seg)
+                        # A declared data table renders as structured source
+                        # (palettes/records/bytes) via extract.py, keyed by
+                        # the manifest spec column.
+                        if seg in data_tables:
+                            spec = data_tables[seg]
+                            kind = spec.split(":")[0]
+                            if seg in labels:
+                                lines.append(f"{labels[seg]}:")
+                            blob = f"bank_{bank:03x}/{kind}_{scpu:04x}.asm"
+                            lines.append(f'\tINCLUDE "data/{blob}" ; ${scpu:04x}, {j - seg} bytes')
+                            manifest.append((blob, seg, j - seg, spec))
+                            seg = j
+                            continue
                         # ASCII dominance (plus the $00-$03 text control
                         # codes) marks a text region; a leading string
                         # offset table (header word + ascending dw run) is
@@ -1372,7 +1386,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                                 lines.append(f"{labels[seg]}:")
                             blob = f"bank_{bank:03x}/d_{scpu:04x}.bin"
                             lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
-                        manifest.append((blob, seg, n))
+                        manifest.append((blob, seg, n, None))
                     else:
                         lines.append(f"\tds {j - seg}, ${b:02x} "
                                      f"; ${offset_to_cpu(seg):04x}, fill")
@@ -1380,9 +1394,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
         lines.append("")
         Path(srcdir, f"bank_{bank:03x}.asm").write_text("\n".join(lines))
     with open(manifest_path, "w") as f:
-        f.write("# path  rom_offset(hex)  length(hex) — consumed by tools/extract.py\n")
-        for blob, o, l in manifest:
-            f.write(f"{blob} {o:06x} {l:x}\n")
+        f.write("# path  rom_offset(hex)  length(hex)  [render-spec] — consumed by tools/extract.py\n")
+        for blob, o, l, spec in manifest:
+            f.write(f"{blob} {o:06x} {l:x}" + (f" {spec}\n" if spec else "\n"))
     ncode = sum(i.size for i in dis.instrs.values())
     print(f"emitted {nbanks} banks: {len(dis.instrs)} instructions "
           f"({ncode} bytes code, {len(rom)-ncode} bytes data, {len(manifest)} blobs)")
@@ -1395,6 +1409,7 @@ def main():
     ap.add_argument("--srcdir", default="src")
     ap.add_argument("--manifest", default="data.manifest")
     ap.add_argument("--labels", default="labels.json")
+    ap.add_argument("--data-tables", default="data_tables.json")
     ap.add_argument("--hardware-inc", default="include/hardware.inc")
     ap.add_argument("--ram-map", default="ram_map.json")
     ap.add_argument("--hooks", nargs="*", default=[],
@@ -1441,8 +1456,12 @@ def main():
     labels = build_labels(dis, overrides)
     hwregs = load_hwregs(args.hardware_inc)
     ramnames = load_ram_map(args.ram_map, "include/ram_constants.asm")
+    data_tables = {}
+    if Path(args.data_tables).exists():
+        data_tables = {int(k, 0): v
+                       for k, v in json.loads(Path(args.data_tables).read_text()).items()}
     Path(args.srcdir).mkdir(parents=True, exist_ok=True)
-    emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest)
+    emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables)
 
 
 if __name__ == "__main__":

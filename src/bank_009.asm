@@ -248,7 +248,7 @@ Label_09_41b2:
 	call Func_09_4658 ; $41b8
 	ret ; $41bb
 ObjTemplates_09_41bc:
-	INCBIN "data/bank_009/d_41bc.bin" ; $41bc, 112 bytes
+	INCLUDE "data/bank_009/records_41bc.asm" ; $41bc, 112 bytes
 Func_09_422c:
 	ld a, $01 ; $422c
 	ld hl, $420c ; $422e
