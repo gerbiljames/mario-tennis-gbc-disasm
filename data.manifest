@@ -883,9 +883,11 @@ bank_02c/d_4272.bin 0b0272 300f
 bank_02c/d_7293.bin 0b3293 40
 bank_02c/d_72e5.bin 0b32e5 40
 bank_02c/d_7337.bin 0b3337 40
-bank_02d/d_4000.bin 0b4000 2000
+bank_02d/d_4000.bin 0b4000 1000
+bank_02d/d_5000.bin 0b5000 1000
 bank_02e/d_4000.bin 0b8000 3fe0
-bank_02f/d_4000.bin 0bc000 4000
+bank_02f/d_4000.bin 0bc000 2000
+bank_02f/d_6000.bin 0be000 2000
 bank_030/text_4004.asm 0c0004 3d7e
 bank_031/text_4004.asm 0c4004 3bbf
 bank_032/text_4004.asm 0c8004 3aa3

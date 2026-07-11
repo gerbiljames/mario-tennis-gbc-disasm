@@ -1553,10 +1553,13 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
             else:
                 run_start = off
                 off += 1
+                # A curated label inside a data run splits the run so the
+                # symbol anchors its own blob/segment.
                 while off < end and off not in dis.instrs \
                         and off not in table_entries and off not in data_entries \
                         and off not in jt_entries and off not in data_marks \
-                        and off not in dis.ptr_words:
+                        and off not in dis.ptr_words \
+                        and not (off in labels and labels[off] in curated):
                     off += 1
                 length = off - run_start
                 cpu = offset_to_cpu(run_start)

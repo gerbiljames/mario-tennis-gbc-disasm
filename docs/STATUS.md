@@ -67,6 +67,20 @@ engine), $6b, $03 (save engine), $0a, $07.
   header/array structure renders in-source; only the leaf frame-graphics and
   OAM bytes stay as gitignored blobs. `disasm.py`: `add_object_header_slots` /
   `split_object_bodies` / `follow_oam_arrays` / `follow_frame_arrays`.
+- **Bank $2d is the trig ROM**: `SineTable` ($4000, 2048 words,
+  sin(i*pi/2048) in 1.15 fixed point over a half turn) and `CosecantTable`
+  ($5000, 2048 words, 0.5/sin clamped to 1.0). Consumed only by the bank-0
+  trig suite at $1332-$13c9 (`MulSinCos`, `MulSin`, `DivBySin`/`DivByCos`,
+  and `VectorLengthFromAngle`, which picks the better-conditioned reciprocal
+  by quadrant) — used by the match engine's trajectory math. Angle unit:
+  256 = full turn in b, fraction in c.
+- **Banks $2e/$2f complete the 3D pipeline's tables**: `ViewScaleTableA`/
+  `ViewScaleTableB` ($2f: linear multiply LUTs, slopes 103/128 and 234/128)
+  and `PerspectiveScaleTable` ($2e: byte reciprocal, indexed view-depth +
+  $2000). `ProjectWorldToScreen` ($2d8c) combines them: screen-Y from
+  A*depth + B*height, screen-X from X, both scaled by
+  PerspectiveScaleTable[B*depth - A*height] — a fixed-pitch camera
+  (pitch = atan(A/B) ~ 24 deg) with table-driven multiplies throughout.
 - **Menu / court / cutscene graphics streams** named; `tools/gfxdump.py`
   renders PNG contact sheets of the carved LZ streams for identification.
 - Raw blobs are split at interior slot-table targets, overlapping copy blobs
@@ -163,7 +177,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 451 of 14,988 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 470 of 14,993 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt

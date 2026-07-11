@@ -793,7 +793,7 @@ Func_08_45a9:
 	ld a, h ; $45ad
 	ld [$c475], a ; $45ae
 	push de ; $45b1
-	call Func_00_1332 ; $45b2
+	call MulSinCosSigned ; $45b2
 	ld c, l ; $45b5
 	ld b, h ; $45b6
 	xor a, a ; $45b7
@@ -805,7 +805,7 @@ Func_08_45a9:
 	ld l, c ; $45bf
 	ld h, b ; $45c0
 	pop bc ; $45c1
-	call Func_00_1332 ; $45c2
+	call MulSinCosSigned ; $45c2
 	ld c, l ; $45c5
 	ld b, h ; $45c6
 	xor a, a ; $45c7
@@ -853,7 +853,7 @@ Func_08_45e5:
 	ld a, [hl+] ; $4603
 	ld h, [hl] ; $4604
 	ld l, a ; $4605
-	call Func_00_138f ; $4606
+	call VectorLengthFromAngle ; $4606
 	ld e, l ; $4609
 	ld d, h ; $460a
 	ld hl, $c429 ; $460b
@@ -879,7 +879,7 @@ Func_08_45e5:
 	ld a, [hl+] ; $462b
 	ld h, [hl] ; $462c
 	ld l, a ; $462d
-	call Func_00_138f ; $462e
+	call VectorLengthFromAngle ; $462e
 	ld e, l ; $4631
 	ld d, h ; $4632
 	ld hl, $c42c ; $4633
@@ -2935,7 +2935,7 @@ Label_08_571e:
 	ld b, [hl] ; $5728
 	ld c, a ; $5729
 	pop hl ; $572a
-	call Func_00_1332 ; $572b
+	call MulSinCosSigned ; $572b
 	ld c, l ; $572e
 	ld b, h ; $572f
 	ld l, e ; $5730
@@ -3349,7 +3349,7 @@ Label_08_5991:
 Label_08_59b7:
 	ret ; $59b7
 Func_08_59b8:
-	jp Label_00_2d8c ; $59b8
+	jp ProjectWorldToScreen ; $59b8
 Func_08_59bb:
 	ld e, l ; $59bb
 	ld d, h ; $59bc
@@ -7424,7 +7424,7 @@ MoveCharTowardTarget:
 	ld b, a ; $7575
 	ld c, $00 ; $7576
 	ld hl, $1000 ; $7578
-	call Func_00_1340 ; $757b
+	call MulSinCos ; $757b
 	ld c, l ; $757e
 	ld b, h ; $757f
 	ld hl, $df00 ; $7580

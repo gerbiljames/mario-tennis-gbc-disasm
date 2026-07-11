@@ -1600,7 +1600,7 @@ Label_00_0b49:
 	sub a, c ; $0b4f
 	ld b, a ; $0b50
 	ld a, [bc] ; $0b51
-	call Func_00_0dfa ; $0b52
+	call MulHLByASigned ; $0b52
 	ld bc, $0040 ; $0b55
 	add hl, bc ; $0b58
 	add hl, hl ; $0b59
@@ -2092,7 +2092,7 @@ Label_00_0df1:
 	ld h, a ; $0df7
 	pop bc ; $0df8
 	ret ; $0df9
-Func_00_0dfa:
+MulHLByASigned:
 	bit 7, h ; $0dfa
 	jr z, Label_00_0e13 ; $0dfc
 	call Func_00_0e08 ; $0dfe
@@ -2665,9 +2665,9 @@ Label_00_107e:
 	pop af ; $1088
 	ret ; $1089
 	INCBIN "data/bank_000/d_108a.bin" ; $108a, 680 bytes
-Func_00_1332:
+MulSinCosSigned:
 	bit 7, h ; $1332
-	jr z, Func_00_1340 ; $1334
+	jr z, MulSinCos ; $1334
 	xor a, a ; $1336
 	sub a, l ; $1337
 	ld l, a ; $1338
@@ -2677,13 +2677,13 @@ Func_00_1332:
 	ld a, $80 ; $133c
 	add a, b ; $133e
 	ld b, a ; $133f
-Func_00_1340:
+MulSinCos:
 	ld a, c ; $1340
 	and a, $f0 ; $1341
 	ld c, a ; $1343
 	push bc ; $1344
 	push hl ; $1345
-	call Func_00_1351 ; $1346
+	call MulSin ; $1346
 	ld e, l ; $1349
 	ld d, h ; $134a
 	pop hl ; $134b
@@ -2691,11 +2691,11 @@ Func_00_1340:
 	ld a, b ; $134d
 	add a, $40 ; $134e
 	ld b, a ; $1350
-Func_00_1351:
+MulSin:
 	bit 7, b ; $1351
-	jr z, Func_00_1361 ; $1353
+	jr z, MulSinUnsigned ; $1353
 	res 7, b ; $1355
-	call Func_00_1361 ; $1357
+	call MulSinUnsigned ; $1357
 	xor a, a ; $135a
 	sub a, l ; $135b
 	ld l, a ; $135c
@@ -2703,7 +2703,7 @@ Func_00_1351:
 	sub a, h ; $135e
 	ld h, a ; $135f
 	ret ; $1360
-Func_00_1361:
+MulSinUnsigned:
 	push de ; $1361
 	add hl, hl ; $1362
 	ld e, l ; $1363
@@ -2735,7 +2735,7 @@ Func_00_1361:
 	ld [$2000], a ; $138a
 	pop de ; $138d
 	ret ; $138e
-Func_00_138f:
+VectorLengthFromAngle:
 	ld a, b ; $138f
 	and a, $7f ; $1390
 	sub a, $20 ; $1392
@@ -2750,7 +2750,7 @@ Func_00_138f:
 	sub a, h ; $13a0
 	ld h, a ; $13a1
 Label_00_13a2:
-	call Func_00_13ca ; $13a2
+	call DivByCos ; $13a2
 	bit 7, h ; $13a5
 	jr z, Label_00_13af ; $13a7
 	xor a, a ; $13a9
@@ -2773,7 +2773,7 @@ Label_00_13b0:
 	sub a, h ; $13ba
 	ld h, a ; $13bb
 Label_00_13bc:
-	call Func_00_13ce ; $13bc
+	call DivBySin ; $13bc
 	bit 7, h ; $13bf
 	jr z, Label_00_13c9 ; $13c1
 	xor a, a ; $13c3
@@ -2784,15 +2784,15 @@ Label_00_13bc:
 	ld h, a ; $13c8
 Label_00_13c9:
 	ret ; $13c9
-Func_00_13ca:
+DivByCos:
 	ld a, b ; $13ca
 	add a, $40 ; $13cb
 	ld b, a ; $13cd
-Func_00_13ce:
+DivBySin:
 	bit 7, b ; $13ce
-	jr z, Func_00_13de ; $13d0
+	jr z, DivBySinUnsigned ; $13d0
 	res 7, b ; $13d2
-	call Func_00_13de ; $13d4
+	call DivBySinUnsigned ; $13d4
 	xor a, a ; $13d7
 	sub a, l ; $13d8
 	ld l, a ; $13d9
@@ -2800,7 +2800,7 @@ Func_00_13ce:
 	sub a, h ; $13db
 	ld h, a ; $13dc
 	ret ; $13dd
-Func_00_13de:
+DivBySinUnsigned:
 	push de ; $13de
 	ld e, l ; $13df
 	ld d, h ; $13e0
@@ -6350,7 +6350,7 @@ Func_00_2d79:
 	inc c ; $2d89
 	inc c ; $2d8a
 	ret ; $2d8b
-Label_00_2d8c:
+ProjectWorldToScreen:
 	ldh a, [hRomBank] ; $2d8c
 	push af ; $2d8e
 	ld a, $2f ; $2d8f
@@ -6360,23 +6360,23 @@ Label_00_2d8c:
 	push de ; $2d97
 	ld l, e ; $2d98
 	ld h, d ; $2d99
-	call Func_00_2de9 ; $2d9a
+	call MulViewScaleA ; $2d9a
 	ld e, l ; $2d9d
 	ld d, h ; $2d9e
 	ld l, c ; $2d9f
 	ld h, b ; $2da0
-	call Func_00_2e39 ; $2da1
+	call MulViewScaleB ; $2da1
 	add hl, de ; $2da4
 	pop de ; $2da5
 	push hl ; $2da6
 	ld l, e ; $2da7
 	ld h, d ; $2da8
-	call Func_00_2e39 ; $2da9
+	call MulViewScaleB ; $2da9
 	ld e, l ; $2dac
 	ld d, h ; $2dad
 	ld l, c ; $2dae
 	ld h, b ; $2daf
-	call Func_00_2e11 ; $2db0
+	call MulViewScaleANeg ; $2db0
 	add hl, de ; $2db3
 	ld e, l ; $2db4
 	ld d, h ; $2db5
@@ -6389,11 +6389,11 @@ Label_00_2d8c:
 	push hl ; $2dc0
 	ld l, e ; $2dc1
 	ld h, d ; $2dc2
-	call Func_00_2e61 ; $2dc3
+	call GetPerspectiveScale ; $2dc3
 	ld l, c ; $2dc6
 	ld h, b ; $2dc7
 	ld a, d ; $2dc8
-	call Func_00_0dfa ; $2dc9
+	call MulHLByASigned ; $2dc9
 	add hl, hl ; $2dcc
 	ld bc, $0004 ; $2dcd
 	add hl, bc ; $2dd0
@@ -6403,7 +6403,7 @@ Label_00_2d8c:
 	ld b, h ; $2dd4
 	pop hl ; $2dd5
 	ld a, d ; $2dd6
-	call Func_00_0dfa ; $2dd7
+	call MulHLByASigned ; $2dd7
 	add hl, hl ; $2dda
 	ld de, $0004 ; $2ddb
 	add hl, de ; $2dde
@@ -6414,7 +6414,7 @@ Label_00_2d8c:
 	ldh [hRomBank], a ; $2de3
 	ld [$2000], a ; $2de5
 	ret ; $2de8
-Func_00_2de9:
+MulViewScaleA:
 	bit 7, h ; $2de9
 	jr nz, Label_00_2df9 ; $2deb
 	res 0, l ; $2ded
@@ -6448,7 +6448,7 @@ Label_00_2df9:
 	sub a, h ; $2e0e
 	ld h, a ; $2e0f
 	ret ; $2e10
-Func_00_2e11:
+MulViewScaleANeg:
 	bit 7, h ; $2e11
 	jr nz, Label_00_2e27 ; $2e13
 	res 0, l ; $2e15
@@ -6482,7 +6482,7 @@ Label_00_2e27:
 	ld h, [hl] ; $2e36
 	ld l, a ; $2e37
 	ret ; $2e38
-Func_00_2e39:
+MulViewScaleB:
 	bit 7, h ; $2e39
 	jr nz, Label_00_2e49 ; $2e3b
 	res 0, l ; $2e3d
@@ -6516,7 +6516,7 @@ Label_00_2e49:
 	sub a, h ; $2e5e
 	ld h, a ; $2e5f
 	ret ; $2e60
-Func_00_2e61:
+GetPerspectiveScale:
 	ld a, h ; $2e61
 	add a, $20 ; $2e62
 	and a, $3f ; $2e64

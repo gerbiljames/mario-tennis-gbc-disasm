@@ -2942,7 +2942,7 @@ Label_07_572b:
 Label_07_5783:
 	ld de, $0140 ; $5783
 	add hl, de ; $5786
-	call Func_00_13ce ; $5787
+	call DivBySin ; $5787
 	bit 7, h ; $578a
 	jr z, Label_07_5794 ; $578c
 	xor a, a ; $578e
@@ -2981,7 +2981,7 @@ Label_07_5794:
 Label_07_57b8:
 	ld de, $0480 ; $57b8
 	add hl, de ; $57bb
-	call Func_00_13ce ; $57bc
+	call DivBySin ; $57bc
 	bit 7, h ; $57bf
 	jr z, Label_07_57c9 ; $57c1
 	xor a, a ; $57c3
@@ -3007,7 +3007,7 @@ Label_07_57c9:
 	ld c, a ; $57dc
 	ld l, e ; $57dd
 	ld h, d ; $57de
-	call Func_00_1340 ; $57df
+	call MulSinCos ; $57df
 	bit 7, h ; $57e2
 	jr z, Label_07_57ec ; $57e4
 	xor a, a ; $57e6
