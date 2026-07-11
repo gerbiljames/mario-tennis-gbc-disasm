@@ -59,6 +59,8 @@
  "0xcd08": "SaveStorySlot",
  "0xcd64": "CheckStorySlot",
  "0xcd86": "TestSaveFlag",
+ "0xcdb6": "SetSaveFlag",
+ "0xcde4": "ClearSaveFlag",
  "0x1da50": "CharSpriteSetTable",
  "0x5cb17": "CourtDiagramTiles",
  "0x5f570": "RulesScreenTiles",

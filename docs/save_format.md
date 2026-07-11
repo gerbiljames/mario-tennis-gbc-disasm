@@ -12,8 +12,25 @@ file is the four banks concatenated. Verified against a live save with
 | `$a000-$a01f` | zeros |
 | `$a020-$a02f` | signature `"CAMELOTGBTENNIS\0"` (ROM copy at `SaveSignature`, 03:47e9) |
 | `$a030-$a031` | master checksum: 16-bit little-endian byte-sum of `$a038-$a76f` |
-| `$a040-$a05f` | flag bytes read via `TestSaveFlag` (bit masks from table 03:4d7e) |
+| `$a040-$a05f` | 32-byte global progress-flag array (256 bits) |
 | `$a060-...`   | block directory, 16-byte entries |
+
+### Global flag array (`$a040-$a05f`)
+
+Accessed by `TestSaveFlag` / set / clear (bank 3, `FarPtr_03_1c/1e/20`).
+A flag is addressed by two registers: `d` = byte index (0-0x1f into the
+array), `e` = bit selector = `bit << 5` (so `$0720` means byte 7, bit 1).
+The mask is `0x80 >> bit` (table 03:4d7e = `80 40 20 10 08 04 02 01`), and
+the referenced byte is `$a040 + d`. These are *global* flags (not
+per-story-slot): character-roster and mini-game unlocks live here, so
+setting the whole array to `0xFF` unlocks every playable character and
+every mini-game. `Func_3b_4b33` is the engine's own batch-unlock routine
+(it sets a fixed subset of these plus per-slot game flags). Verified
+in-emulator: with the array forced to `0xFF` and the master checksum +
+bank-1 mirror fixed, the ROM boots clean and the Mario cast and all
+mini-games are selectable. `tools/savetool.py unlock` does exactly this.
+Per-story-slot progress is separate (the `wGameFlags` block at slot
++0x1c0) and is left untouched.
 
 The whole header region `$a000-$a7ff` is mirrored verbatim into SRAM
 bank 1 by `MirrorSaveHeaderToBank1` after every write. On boot

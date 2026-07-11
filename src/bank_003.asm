@@ -35,9 +35,9 @@ FarPtr_03_1a:
 FarPtr_03_1c:
 	dw TestSaveFlag ; $401c
 FarPtr_03_1e:
-	dw Func_03_4db6 ; $401e
+	dw SetSaveFlag ; $401e
 FarPtr_03_20:
-	dw Func_03_4de4 ; $4020
+	dw ClearSaveFlag ; $4020
 FarPtr_03_22:
 	dw Func_03_5310 ; $4022
 FarPtr_03_24:
@@ -2107,7 +2107,7 @@ Label_03_4da2:
 	pop de ; $4db3
 	pop hl ; $4db4
 	ret ; $4db5
-Func_03_4db6:
+SetSaveFlag:
 	push hl ; $4db6
 	push af ; $4db7
 	ld a, $0a ; $4db8
@@ -2138,7 +2138,7 @@ Label_03_4dd0:
 	pop af ; $4de1
 	pop hl ; $4de2
 	ret ; $4de3
-Func_03_4de4:
+ClearSaveFlag:
 	push hl ; $4de4
 	push af ; $4de5
 	ld a, $0a ; $4de6

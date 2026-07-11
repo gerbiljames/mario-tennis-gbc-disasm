@@ -14,7 +14,13 @@ usage: savetool.py file.sav verify
        savetool.py file.sav dump [slot]
        savetool.py file.sav set slot FIELD VALUE [FIELD VALUE ...]
        savetool.py file.sav flag slot INDEX BIT 0|1
+       savetool.py file.sav unlock
        savetool.py file.sav fix
+
+`unlock` sets every global progress flag (the 32-byte flag array at 0x40,
+read by the engine's TestSaveFlag) to 0xFF, which unlocks all playable
+characters and all mini-games; story-slot progress lives in the slot
+blocks and is left untouched. Verified in-emulator.
 
 `set` fields: level, exp, top, slice, serve, stroke, volley, angle,
 placement, speed, dash, reaction, stop, spinlv, powerlv, controllv, speedlv
@@ -27,6 +33,7 @@ import sys
 from pathlib import Path
 
 SIG_OFF, CK_OFF, DIR_OFF = 0x20, 0x30, 0x60
+FLAGS_OFF, FLAGS_LEN = 0x40, 0x20
 MASTER_LO, MASTER_HI = 0x38, 0x770
 NDIR = 0x36 + 27 + 1
 SIG = b"CAMELOTGBTENNIS\x00"
@@ -117,7 +124,8 @@ def dump(sav, slot):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("sav")
-    ap.add_argument("cmd", choices=["verify", "dump", "set", "flag", "fix"])
+    ap.add_argument("cmd", choices=["verify", "dump", "set", "flag",
+                                    "unlock", "fix"])
     ap.add_argument("args", nargs="*")
     args = ap.parse_args()
     path = Path(args.sav)
@@ -164,6 +172,13 @@ def main():
         mask = 0x80 >> bit
         o = ent["data"] + 0x1c0 + idx
         sav[o] = (sav[o] | mask) if val else (sav[o] & ~mask)
+    elif args.cmd == "unlock":
+        for o in range(FLAGS_OFF, FLAGS_OFF + FLAGS_LEN):
+            sav[o] = 0xFF
+        fix(sav)
+        path.write_bytes(sav)
+        print("all characters and mini-games unlocked; checksums fixed")
+        return
 
     # propagate the edited primary into its bank-1 backup block
     if args.cmd in ("set", "flag"):
