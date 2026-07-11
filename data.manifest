@@ -221,7 +221,7 @@ bank_008/bytes_5373.asm 021373 10 bytes:8
 bank_008/bytes_546c.asm 02146c 10 bytes:4
 bank_008/bytes_54c2.asm 0214c2 28 bytes:8
 bank_008/records_55a0.asm 0215a0 14 records:5
-bank_008/d_5dc4.bin 021dc4 64
+bank_008/bytes_5dc4.asm 021dc4 64 bytes:4
 bank_008/records_60c8.asm 0220c8 10 records:4
 bank_008/records_6107.asm 022107 10 records:4
 bank_008/bytes_6301.asm 022301 d bytes:4

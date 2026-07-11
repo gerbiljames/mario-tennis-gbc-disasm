@@ -161,19 +161,22 @@ graphics streams named as above.
 Bank $08's 39 embedded blobs were classified (data table / stranded code /
 padding). The ~281 bytes of code stranded behind computed jumps were recovered
 as static seeds (`coverage/bank08_static_code.json`), taking the bank from
-94.7% to 96.4% code. The 23 genuine data tables were then structured via
+94.7% to 96.4% code. The 24 genuine data tables were then structured via
 `data_tables.json` render specs (a `records:2` jump table, `records:4/5/8` and
 `bytes:4/8` lookup/record tables) — they now render as in-source `db`/`dw`
-instead of blobs (bank $08 down to 6 raw blobs). Strides were verified against
-the reading code where a direct `ld hl,$xxxx` exists (e.g. `$709b`/`$70b4` are
-indexed `hl + i*4`; `$55a0` strides by 5). Still raw: `$5dc4` (100 B, 25×4-byte
-records but semantics unclear), `$7a9d` (a `dw` pointer table + payload sharing
-one region — needs a manifest split), and end-of-region padding.
+instead of blobs. Strides were verified against the reading code where a direct
+`ld hl,$xxxx` exists (e.g. `$709b`/`$70b4` are indexed `hl + i*4`; `$55a0`
+strides by 5); tables reached only through computed pointers (`$5dc4`,
+rendered `bytes:4` as a 25×4 grid) got their stride from the byte layout.
+Bank $08 is down to 5 raw blobs: four are 1-byte/`$ff` padding, and `$7a9d` is
+a 16-entry `dw` pointer table + 32-byte payload sharing one region (deferred —
+a clean split needs the run broken at the payload boundary).
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
-745 still-unnamed routines; name the now-structured tables and resolve
-`$5dc4`/`$7a9d`), bank $13 (biggest story bank), bank $1e, sound-command enum
-for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
+745 still-unnamed routines; name the now-structured tables, split/resolve
+`$7a9d`, and confirm `$5dc4`'s semantics via a runtime trace), bank $13
+(biggest story bank), bank $1e, sound-command enum for the 451 `sound $xx`
+sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 

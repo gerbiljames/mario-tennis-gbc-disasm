@@ -4422,7 +4422,7 @@ Label_08_5dbc:
 	add a, a ; $5dc1
 	dec a ; $5dc2
 	ret ; $5dc3
-	INCBIN "data/bank_008/d_5dc4.bin" ; $5dc4, 100 bytes
+	INCLUDE "data/bank_008/bytes_5dc4.asm" ; $5dc4, 100 bytes
 Func_08_5e28:
 	ldh a, [$ff96] ; $5e28
 	push af ; $5e2a
