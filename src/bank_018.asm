@@ -15,7 +15,7 @@ FarPtr_18_06:
 FarPtr_18_08:
 	dw Func_18_438d ; $4008
 FarPtr_18_0a:
-	dw Func_18_43c8 ; $400a
+	dw DrawBox ; $400a
 FarPtr_18_0c:
 	dw Func_18_4353 ; $400c
 FarPtr_18_0e:
@@ -252,7 +252,7 @@ Func_18_43a9:
 	pop bc ; $43c5
 	pop af ; $43c6
 	ret ; $43c7
-Func_18_43c8:
+DrawBox:
 	push af ; $43c8
 	push bc ; $43c9
 	push de ; $43ca
@@ -292,7 +292,7 @@ Label_18_43ed:
 	pop hl ; $43f0
 	pop de ; $43f1
 	pop bc ; $43f2
-	call Func_18_4414 ; $43f3
+	call DrawBoxTopRow ; $43f3
 	ld a, $20 ; $43f6
 	add a, l ; $43f8
 	ld l, a ; $43f9
@@ -302,7 +302,7 @@ Label_18_43fd:
 	dec c ; $43fd
 	dec c ; $43fe
 Label_18_43ff:
-	call Func_18_4427 ; $43ff
+	call DrawBoxSideRow ; $43ff
 	ld a, $20 ; $4402
 	add a, l ; $4404
 	ld l, a ; $4405
@@ -311,13 +311,13 @@ Label_18_43ff:
 Label_18_4409:
 	dec c ; $4409
 	jr nz, Label_18_43ff ; $440a
-	call Func_18_4435 ; $440c
+	call DrawBoxBottomRow ; $440c
 	pop hl ; $440f
 	pop de ; $4410
 	pop bc ; $4411
 	pop af ; $4412
 	ret ; $4413
-Func_18_4414:
+DrawBoxTopRow:
 	push bc ; $4414
 	push hl ; $4415
 	ld a, $02 ; $4416
@@ -334,7 +334,7 @@ Label_18_441b:
 	pop hl ; $4424
 	pop bc ; $4425
 	ret ; $4426
-Func_18_4427:
+DrawBoxSideRow:
 	push hl ; $4427
 	ld [hl], $05 ; $4428
 	ld a, b ; $442a
@@ -347,7 +347,7 @@ Label_18_4431:
 	ld [hl], $06 ; $4431
 	pop hl ; $4433
 	ret ; $4434
-Func_18_4435:
+DrawBoxBottomRow:
 	ld a, $07 ; $4435
 	ld [hl+], a ; $4437
 	dec b ; $4438
@@ -725,7 +725,7 @@ Func_18_5365:
 	ld hl, $d9a0 ; $5365
 	ld de, $dda0 ; $5368
 	ld bc, $0e05 ; $536b
-	call Func_18_43c8 ; $536e
+	call DrawBox ; $536e
 	ret ; $5371
 Func_18_5372:
 	ld a, [$c918] ; $5372
