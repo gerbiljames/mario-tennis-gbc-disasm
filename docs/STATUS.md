@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~118.1K instructions / 251,413 bytes of proven code (12.0% of the 2 MiB ROM)
+**~118.1K instructions / 252,005 bytes of proven code (12.0% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -83,6 +83,20 @@ engine), $6b, $03 (save engine), $0a, $07.
   (pitch = atan(A/B) ~ 24 deg) with table-driven multiplies throughout.
 - **Menu / court / cutscene graphics streams** named; `tools/gfxdump.py`
   renders PNG contact sheets of the carved LZ streams for identification.
+- **Match-scene graphics system mapped**: `SceneGfxSlotTable` ($0a:$59d9,
+  37 records x 8 `dw` slot words, rendered in-source) covers banks $5f-$69;
+  `LoadSceneGraphics` ($0a:$585d, scene id in `a`, stored to $c32e) loads a
+  record's slots: +$0 scene config (camera scroll bounds -> $c329-$c32c at
+  struct offset 2, plus court-line lists; second half is the mirrored
+  swapped-ends copy), +$2 = 8 BG palettes (courts use 2-7), +$4/+$6 = LZ
+  32x32 tilemap/attrmap (attrs all VRAM bank 1), +$e = LZ tiles; +$8/+$a/+$c
+  are filler for court scenes (real layers only in story-scene banks
+  $64-$69). **Bank $60 = scenes 2-5, the four court surfaces — Grass, Hard,
+  Clay, Composition** (hard verified live via the DecompressDataFromBank
+  hook; each ~250-tile set + full-court map + palettes + config, all named,
+  trailing $ff filler at $7bfd). Scene ids: 0-1 clubhouse/courtyard ($5f),
+  6-9 incl. CenterCourt ($61), 10-13 Star/Wario + 2 unnamed ($62), 14-17
+  DK + stadium + 1 more ($63), 18+ story scenes ($64-$69).
 - Raw blobs are split at interior slot-table targets, overlapping copy blobs
   clipped, and LZ stream extents carved exactly (incl. the 3-byte terminator).
 
@@ -177,7 +191,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 470 of 14,993 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 493 of 14,994 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt

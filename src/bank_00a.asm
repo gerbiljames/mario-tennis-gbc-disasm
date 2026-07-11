@@ -112,8 +112,8 @@ FarPtr_0a_68:
 	dw Func_0a_5337 ; $4068
 FarPtr_0a_6a:
 	dw Func_0a_5930 ; $406a
-FarPtr_0a_6c:
-	dw Func_0a_585d ; $406c
+FarPtr_LoadSceneGraphics:
+	dw LoadSceneGraphics ; $406c
 FarPtr_0a_6e:
 	dw Func_0a_575c ; $406e
 FarPtr_0a_70:
@@ -2193,7 +2193,7 @@ Label_0a_4f6f:
 	farcall FarPtr_05_76 ; $4f96
 	farcall FarPtr_0a_6a ; $4f99
 	ld a, [$c281] ; $4f9c
-	farcall FarPtr_0a_6c ; $4f9f
+	farcall FarPtr_LoadSceneGraphics ; $4f9f
 	ld a, $00 ; $4fa2
 	farcall FarPtr_0a_76 ; $4fa4
 	test_flag $0d, 6 ; $4fa7
@@ -3316,7 +3316,7 @@ Label_0a_5844:
 Label_0a_585a:
 	res 2, d ; $585a
 	ret ; $585c
-Func_0a_585d:
+LoadSceneGraphics:
 	push af ; $585d
 	push bc ; $585e
 	push de ; $585f
@@ -3328,7 +3328,7 @@ Func_0a_585d:
 	add hl, hl ; $5868
 	add hl, hl ; $5869
 	add hl, hl ; $586a
-	ld de, $59d9 ; $586b
+	ld de, SceneGfxSlotTable ; $586b
 	add hl, de ; $586e
 	ld a, [hl+] ; $586f
 	ld c, a ; $5870
@@ -3514,7 +3514,46 @@ Label_0a_59ae:
 	add a, [hl] ; $59d5
 	ldh [$ff8b], a ; $59d6
 	ret ; $59d8
-	INCBIN "data/bank_00a/d_59d9.bin" ; $59d9, 592 bytes
+SceneGfxSlotTable:
+	; $59d9, 592 bytes (records:16)
+; 37 records x 16 bytes
+	dw $5f00, $5f02, $5f04, $5f06, $5f08, $5f0a, $5f0c, $5f0e ; record 0
+	dw $5f10, $5f12, $5f14, $5f16, $5f18, $5f1a, $5f1c, $5f1e ; record 1
+	dw $6000, $6002, $6004, $6006, $6008, $600a, $600c, $600e ; record 2
+	dw $6010, $6012, $6014, $6016, $6018, $601a, $601c, $601e ; record 3
+	dw $6020, $6022, $6024, $6026, $6028, $602a, $602c, $602e ; record 4
+	dw $6030, $6032, $6034, $6036, $6038, $603a, $603c, $603e ; record 5
+	dw $6100, $6102, $6104, $6106, $6108, $610a, $610c, $610e ; record 6
+	dw $6110, $6112, $6114, $6116, $6118, $611a, $611c, $611e ; record 7
+	dw $6120, $6122, $6124, $6126, $6128, $612a, $612c, $612e ; record 8
+	dw $6130, $6132, $6134, $6136, $6138, $613a, $613c, $613e ; record 9
+	dw $6200, $6202, $6204, $6206, $6208, $620a, $620c, $620e ; record 10
+	dw $6210, $6212, $6214, $6216, $6218, $621a, $621c, $621e ; record 11
+	dw $6220, $6222, $6224, $6226, $6228, $622a, $622c, $622e ; record 12
+	dw $6230, $6232, $6234, $6236, $6238, $623a, $623c, $623e ; record 13
+	dw $6300, $6302, $6304, $6306, $6308, $630a, $630c, $630e ; record 14
+	dw $6310, $6312, $6314, $6316, $6318, $631a, $631c, $631e ; record 15
+	dw $6320, $6322, $6324, $6326, $6328, $632a, $632c, $632e ; record 16
+	dw $6330, $6332, $6334, $6336, $6338, $633a, $633c, $633e ; record 17
+	dw $6400, $6402, $6404, $6406, $6408, $640a, $640c, $640e ; record 18
+	dw $6410, $6412, $6414, $6416, $6418, $641a, $641c, $641e ; record 19
+	dw $6420, $6422, $6424, $6426, $6428, $642a, $642c, $642e ; record 20
+	dw $6500, $6502, $6504, $6506, $6508, $650a, $650c, $650e ; record 21
+	dw $6510, $6512, $6514, $6516, $6518, $651a, $651c, $651e ; record 22
+	dw $6520, $6522, $6524, $6526, $6528, $652a, $652c, $652e ; record 23
+	dw $6600, $6602, $6604, $6606, $6608, $660a, $660c, $660e ; record 24
+	dw $6610, $6612, $6614, $6616, $6618, $661a, $661c, $661e ; record 25
+	dw $6620, $6622, $6624, $6626, $6628, $662a, $662c, $662e ; record 26
+	dw $6630, $6632, $6634, $6636, $6638, $663a, $663c, $663e ; record 27
+	dw $6700, $6702, $6704, $6706, $6708, $670a, $670c, $670e ; record 28
+	dw $6710, $6712, $6714, $6716, $6718, $671a, $671c, $671e ; record 29
+	dw $6720, $6722, $6724, $6726, $6728, $672a, $672c, $672e ; record 30
+	dw $6800, $6802, $6804, $6806, $6808, $680a, $680c, $680e ; record 31
+	dw $6810, $6812, $6814, $6816, $6818, $681a, $681c, $681e ; record 32
+	dw $6820, $6822, $6824, $6826, $6828, $682a, $682c, $682e ; record 33
+	dw $6900, $6902, $6904, $6906, $6908, $690a, $690c, $690e ; record 34
+	dw $6910, $6912, $6914, $6916, $6918, $691a, $691c, $691e ; record 35
+	dw $6920, $6922, $6924, $6926, $6928, $692a, $692c, $692e ; record 36
 Func_0a_5c29:
 	push af ; $5c29
 	push bc ; $5c2a
@@ -3688,7 +3727,7 @@ Label_0a_5d03:
 	pop bc ; $5d08
 	pop af ; $5d09
 	ret ; $5d0a
-Func_0a_5d0b:
+GetSceneSlotPtr:
 	push af ; $5d0b
 	push bc ; $5d0c
 	push de ; $5d0d
@@ -3700,7 +3739,7 @@ Func_0a_5d0b:
 	add hl, hl ; $5d16
 	add hl, hl ; $5d17
 	add hl, hl ; $5d18
-	ld de, $59d9 ; $5d19
+	ld de, SceneGfxSlotTable ; $5d19
 	add hl, de ; $5d1c
 	ld e, b ; $5d1d
 	sla e ; $5d1e
@@ -3729,7 +3768,7 @@ Func_0a_5d2a:
 	add hl, de ; $5d37
 	ld d, h ; $5d38
 	ld e, l ; $5d39
-	ld hl, $59d9 ; $5d3a
+	ld hl, SceneGfxSlotTable ; $5d3a
 	add hl, de ; $5d3d
 	inc hl ; $5d3e
 	inc hl ; $5d3f
@@ -3823,7 +3862,7 @@ Func_0a_5de2:
 	pop af ; $5de7
 	call Func_0a_5d2a ; $5de8
 	ld a, $00 ; $5deb
-	call Func_0a_5d0b ; $5ded
+	call GetSceneSlotPtr ; $5ded
 	ld de, wTextBuffer ; $5df0
 	ld bc, $0010 ; $5df3
 	call CopyDataFromBank ; $5df6
@@ -3872,7 +3911,7 @@ Func_0a_5e91:
 	call DisableLCDSafely ; $5ebe
 	call Func_0a_5930 ; $5ec1
 	ld a, [$c32e] ; $5ec4
-	call Func_0a_585d ; $5ec7
+	call LoadSceneGraphics ; $5ec7
 	ld a, $00 ; $5eca
 	farcall FarPtr_0a_76 ; $5ecc
 	call EnableLCD ; $5ecf
@@ -4118,7 +4157,7 @@ Func_0a_601c:
 	ldh [$ff8b], a ; $6029
 	dec a ; $602b
 	ld [$c33d], a ; $602c
-	ld hl, $59d9 ; $602f
+	ld hl, SceneGfxSlotTable ; $602f
 	ld bc, rIE ; $6032
 Label_0a_6035:
 	inc bc ; $6035
@@ -4440,7 +4479,7 @@ Func_0a_62f8:
 	add hl, hl ; $6303
 	add hl, hl ; $6304
 	add hl, hl ; $6305
-	ld de, $59d9 ; $6306
+	ld de, SceneGfxSlotTable ; $6306
 	add hl, de ; $6309
 	inc hl ; $630a
 	inc hl ; $630b
@@ -4544,7 +4583,7 @@ Func_0a_639b:
 	ld [hl+], a ; $63bd
 	ld [hl+], a ; $63be
 	ld a, $00 ; $63bf
-	call Func_0a_5d0b ; $63c1
+	call GetSceneSlotPtr ; $63c1
 	ld de, $da80 ; $63c4
 	ld bc, $0088 ; $63c7
 	call CopyDataFromBank ; $63ca
@@ -4792,7 +4831,7 @@ Label_0a_64ef:
 	ld b, h ; $6520
 	ld c, l ; $6521
 	ld a, $06 ; $6522
-	call Func_0a_5d0b ; $6524
+	call GetSceneSlotPtr ; $6524
 	push hl ; $6527
 	push bc ; $6528
 	ld a, h ; $6529
