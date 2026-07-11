@@ -16,31 +16,31 @@ FarPtr_08_08:
 	dw Func_08_6557 ; $4008
 FarPtr_08_0a:
 	dw Func_08_41f7 ; $400a
-FarPtr_08_0c:
+FarPtr_InitChar:
 	dw InitChar ; $400c
-FarPtr_08_0e:
+FarPtr_ClearSpriteSlots:
 	dw ClearSpriteSlots ; $400e
-FarPtr_08_10:
+FarPtr_DrawCharSprite:
 	dw DrawCharSprite ; $4010
 FarPtr_08_12:
 	dw Func_08_7791 ; $4012
 FarPtr_08_14:
 	dw Func_08_7621 ; $4014
-FarPtr_08_16:
+FarPtr_BuildCharSpriteSlots:
 	dw BuildCharSpriteSlots ; $4016
 FarPtr_08_18:
 	dw Func_08_75e8 ; $4018
 FarPtr_08_1a:
 	dw Func_08_75c0 ; $401a
-FarPtr_08_1c:
+FarPtr_SetCharState:
 	dw SetCharState ; $401c
 FarPtr_08_1e:
 	dw Func_08_69c2 ; $401e
 FarPtr_08_20:
 	dw Func_08_69ea ; $4020
-FarPtr_08_22:
+FarPtr_SetCharPosAndTarget:
 	dw SetCharPosAndTarget ; $4022
-FarPtr_08_24:
+FarPtr_SetBallTrailColor:
 	dw SetBallTrailColor ; $4024
 FarPtr_08_26:
 	dw Func_08_45a9 ; $4026
@@ -56,7 +56,7 @@ FarPtr_08_30:
 	dw Func_08_7c86 ; $4030
 FarPtr_08_32:
 	dw Func_08_5a51 ; $4032
-FarPtr_08_34:
+FarPtr_StartBounceEffect:
 	dw StartBounceEffect ; $4034
 FarPtr_08_36:
 	dw Func_08_43f6 ; $4036
@@ -76,7 +76,7 @@ FarPtr_08_44:
 	dw Func_08_59b8 ; $4044
 FarPtr_08_46:
 	dw Func_08_59bb ; $4046
-FarPtr_08_48:
+FarPtr_SetModeHookTable:
 	dw SetModeHookTable ; $4048
 FarPtr_08_4a:
 	dw Func_08_6728 ; $404a
@@ -98,7 +98,7 @@ FarPtr_08_5a:
 	dw Func_08_5c2b ; $405a
 FarPtr_08_5c:
 	dw Func_08_5c14 ; $405c
-FarPtr_08_5e:
+FarPtr_StartPointEndReactions:
 	dw StartPointEndReactions ; $405e
 FarPtr_08_60:
 	dw Func_08_4df4 ; $4060
@@ -106,13 +106,13 @@ FarPtr_08_62:
 	dw Func_08_458b ; $4062
 FarPtr_08_64:
 	dw Func_08_5b7f ; $4064
-FarPtr_08_66:
+FarPtr_SetCharTarget:
 	dw SetCharTarget ; $4066
 FarPtr_08_68:
 	dw Func_08_707e ; $4068
 FarPtr_08_6a:
 	dw Func_08_4452 ; $406a
-FarPtr_08_6c:
+FarPtr_CharPointEndReaction:
 	dw CharPointEndReaction ; $406c
 FarPtr_08_6e:
 	dw Func_08_468b ; $406e

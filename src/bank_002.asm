@@ -334,7 +334,7 @@ Label_02_4274:
 	push af ; $427b
 	ld a, $00 ; $427c
 	ld [$c36c], a ; $427e
-	farcall FarPtr_03_1a ; $4281
+	farcall FarPtr_CheckStorySlot ; $4281
 	cp a, $fe ; $4284
 	jr z, Label_02_4291 ; $4286
 	ld hl, $c880 ; $4288
@@ -343,7 +343,7 @@ Label_02_4274:
 Label_02_4291:
 	ld a, $01 ; $4291
 	ld [$c36c], a ; $4293
-	farcall FarPtr_03_1a ; $4296
+	farcall FarPtr_CheckStorySlot ; $4296
 	cp a, $fe ; $4299
 	jr z, Label_02_42a6 ; $429b
 	ld hl, $c880 ; $429d
@@ -352,7 +352,7 @@ Label_02_4291:
 Label_02_42a6:
 	ld a, $02 ; $42a6
 	ld [$c36c], a ; $42a8
-	farcall FarPtr_03_1a ; $42ab
+	farcall FarPtr_CheckStorySlot ; $42ab
 	cp a, $fe ; $42ae
 	jr z, Label_02_42bb ; $42b0
 	ld hl, $c880 ; $42b2
@@ -1428,10 +1428,10 @@ Func_02_4cb1:
 	pop af ; $4cc0
 	and a, a ; $4cc1
 	jr nz, Label_02_4cc8 ; $4cc2
-	farcall FarPtr_03_20 ; $4cc4
+	farcall FarPtr_ClearSaveFlag ; $4cc4
 	ret ; $4cc7
 Label_02_4cc8:
-	farcall FarPtr_03_1e ; $4cc8
+	farcall FarPtr_SetSaveFlag ; $4cc8
 	ret ; $4ccb
 	INCBIN "data/bank_002/d_4ccc.bin" ; $4ccc, 8 bytes
 Func_02_4cd4:
@@ -1445,7 +1445,7 @@ Func_02_4cd4:
 	ld a, [hl+] ; $4cdf
 	ld d, [hl] ; $4ce0
 	ld e, a ; $4ce1
-	farcall FarPtr_03_1c ; $4ce2
+	farcall FarPtr_TestSaveFlag ; $4ce2
 	jr z, Label_02_4cea ; $4ce5
 	ld a, $01 ; $4ce7
 	ret ; $4ce9
@@ -1467,10 +1467,10 @@ Func_02_4ced:
 	pop af ; $4cfc
 	and a, a ; $4cfd
 	jr nz, Label_02_4d04 ; $4cfe
-	farcall FarPtr_03_20 ; $4d00
+	farcall FarPtr_ClearSaveFlag ; $4d00
 	ret ; $4d03
 Label_02_4d04:
-	farcall FarPtr_03_1e ; $4d04
+	farcall FarPtr_SetSaveFlag ; $4d04
 	ret ; $4d07
 	INCBIN "data/bank_002/d_4d08.bin" ; $4d08, 8 bytes
 Func_02_4d10:
@@ -1484,7 +1484,7 @@ Func_02_4d10:
 	ld a, [hl+] ; $4d1b
 	ld d, [hl] ; $4d1c
 	ld e, a ; $4d1d
-	farcall FarPtr_03_1c ; $4d1e
+	farcall FarPtr_TestSaveFlag ; $4d1e
 	jr z, Label_02_4d26 ; $4d21
 	ld a, $01 ; $4d23
 	ret ; $4d25
@@ -1768,7 +1768,7 @@ Func_02_4fa6:
 	farcall FarPtr_02_02 ; $4fc6
 	ld d, $00 ; $4fc9
 Label_02_4fcb:
-	farcall FarPtr_03_1a ; $4fcb
+	farcall FarPtr_CheckStorySlot ; $4fcb
 	or a, a ; $4fce
 	jr z, Label_02_4fdf ; $4fcf
 	push de ; $4fd1
@@ -2063,7 +2063,7 @@ Func_02_5247:
 	ld c, a ; $524c
 	push bc ; $524d
 	ld [$c36c], a ; $524e
-	farcall FarPtr_03_1a ; $5251
+	farcall FarPtr_CheckStorySlot ; $5251
 	pop bc ; $5254
 	pop de ; $5255
 	or a, a ; $5256

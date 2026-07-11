@@ -52,7 +52,7 @@ FarPtr_04_2c:
 	dw Func_04_4ac3 ; $402c
 FarPtr_04_2e:
 	dw Func_04_4c0b ; $402e
-FarPtr_04_30:
+FarPtr_LookupTileId_04:
 	dw LookupTileId_04 ; $4030
 Func_04_4032:
 	wram_bank $04 ; $4032

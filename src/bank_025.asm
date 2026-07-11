@@ -4,9 +4,9 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $25", ROMX[$4000], BANK[$25]
 
-FarPtr_25_00:
+FarPtr_FetchDialogueText_25:
 	dw FetchDialogueText_25 ; $4000
-FarPtr_25_02:
+FarPtr_FetchShortText_25:
 	dw FetchShortText_25 ; $4002
 Text_25_4004:
 	INCLUDE "data/bank_025/text_4004.asm" ; $4004, 15156 bytes

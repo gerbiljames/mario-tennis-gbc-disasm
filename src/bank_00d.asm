@@ -59,7 +59,7 @@ Label_0d_4059:
 	ld d, [hl] ; $405f
 	ld e, a ; $4060
 	ldh a, [$ff95] ; $4061
-	farcall FarPtr_08_48 ; $4063
+	farcall FarPtr_SetModeHookTable ; $4063
 	ld hl, $000a ; $4066
 	add hl, bc ; $4069
 	ld a, [hl+] ; $406a
@@ -513,15 +513,15 @@ Func_0d_4678:
 	wram_bank $04 ; $4696
 	ld hl, $0000 ; $469c
 	ld de, $0480 ; $469f
-	farcall FarPtr_08_22 ; $46a2
+	farcall FarPtr_SetCharPosAndTarget ; $46a2
 	ld a, $05 ; $46a5
-	farcall FarPtr_08_1c ; $46a7
+	farcall FarPtr_SetCharState ; $46a7
 	wram_bank $05 ; $46aa
 	ld a, [$c785] ; $46b0
 	call Func_0d_4926 ; $46b3
-	farcall FarPtr_08_22 ; $46b6
+	farcall FarPtr_SetCharPosAndTarget ; $46b6
 	ld a, $06 ; $46b9
-	farcall FarPtr_08_1c ; $46bb
+	farcall FarPtr_SetCharState ; $46bb
 	ld a, $04 ; $46be
 	ld [$df6a], a ; $46c0
 	xor a, a ; $46c3
@@ -604,7 +604,7 @@ Func_0d_475d:
 	push af ; $475f
 	wram_bank $04 ; $4760
 	ld a, $05 ; $4766
-	farcall FarPtr_08_1c ; $4768
+	farcall FarPtr_SetCharState ; $4768
 	pop af ; $476b
 	wram_bank ; $476c
 	call Func_0d_43ba ; $4770
@@ -638,9 +638,9 @@ Label_0d_479b:
 	ldh a, [hWramBank] ; $479f
 	push af ; $47a1
 	wram_bank $04 ; $47a2
-	farcall FarPtr_08_6c ; $47a8
+	farcall FarPtr_CharPointEndReaction ; $47a8
 	wram_bank $05 ; $47ab
-	farcall FarPtr_08_6c ; $47b1
+	farcall FarPtr_CharPointEndReaction ; $47b1
 	pop af ; $47b4
 	wram_bank ; $47b5
 	pop de ; $47b9
@@ -788,7 +788,7 @@ Func_0d_48b6:
 	wram_bank $05 ; $48b9
 	ld a, [$c785] ; $48bf
 	call Func_0d_4926 ; $48c2
-	farcall FarPtr_08_66 ; $48c5
+	farcall FarPtr_SetCharTarget ; $48c5
 	pop af ; $48c8
 	wram_bank ; $48c9
 	ret ; $48cd
@@ -950,7 +950,7 @@ Func_0d_4b01:
 	wram_bank $04 ; $4b14
 	ld hl, $0000 ; $4b1a
 	ld de, $04e0 ; $4b1d
-	farcall FarPtr_08_22 ; $4b20
+	farcall FarPtr_SetCharPosAndTarget ; $4b20
 	pop af ; $4b23
 	wram_bank ; $4b24
 	ret ; $4b28
@@ -959,7 +959,7 @@ Func_0d_4b29:
 	push af ; $4b2b
 	wram_bank $04 ; $4b2c
 	ld a, $05 ; $4b32
-	farcall FarPtr_08_1c ; $4b34
+	farcall FarPtr_SetCharState ; $4b34
 	pop af ; $4b37
 	wram_bank ; $4b38
 	call Func_0d_43ba ; $4b3c
@@ -968,7 +968,7 @@ Func_0d_4b29:
 	ldh a, [hWramBank] ; $4b43
 	push af ; $4b45
 	wram_bank $04 ; $4b46
-	farcall FarPtr_08_6c ; $4b4c
+	farcall FarPtr_CharPointEndReaction ; $4b4c
 	pop af ; $4b4f
 	wram_bank ; $4b50
 	pop de ; $4b54
@@ -988,7 +988,7 @@ Func_0d_4b59:
 Label_0d_4b70:
 	ld a, $01 ; $4b70
 	ld [$c4c9], a ; $4b72
-	farcall FarPtr_08_34 ; $4b75
+	farcall FarPtr_StartBounceEffect ; $4b75
 	xor a, a ; $4b78
 	ld [$c4b2], a ; $4b79
 	ld hl, $c4be ; $4b7c
@@ -1034,7 +1034,7 @@ Label_0d_4b70:
 	push af ; $4bb5
 	wram_bank $04 ; $4bb6
 	ld a, $01 ; $4bbc
-	farcall FarPtr_08_1c ; $4bbe
+	farcall FarPtr_SetCharState ; $4bbe
 	pop af ; $4bc1
 	wram_bank ; $4bc2
 	ret ; $4bc6

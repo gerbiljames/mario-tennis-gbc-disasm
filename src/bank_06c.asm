@@ -4,15 +4,15 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $6c", ROMX[$4000], BANK[$6c]
 
-DataPtr_6c_00:
+DataPtr_CompanyLogosTiles:
 	dw CompanyLogosTiles ; $4000
-DataPtr_6c_02:
+DataPtr_CompanyLogosTilemap:
 	dw CompanyLogosTilemap ; $4002
 DataPtr_6c_04:
 	dw Lz_6c_48af ; $4004
 DataPtr_6c_06:
 	dw Data_6c_4906 ; $4006
-DataPtr_6c_08:
+DataPtr_IntroRalliesTiles:
 	dw IntroRalliesTiles ; $4008
 DataPtr_6c_0a:
 	dw Lz_6c_505b ; $400a
@@ -46,7 +46,7 @@ DataPtr_6c_26:
 	dw Lz_6c_56f9 ; $4026
 DataPtr_6c_28:
 	dw Lz_6c_57e1 ; $4028
-DataPtr_6c_2a:
+DataPtr_IntroSwingTiles:
 	dw IntroSwingTiles ; $402a
 DataPtr_6c_2c:
 	dw Lz_6c_5c2e ; $402c
@@ -54,7 +54,7 @@ DataPtr_6c_2e:
 	dw Lz_6c_5d0f ; $402e
 DataPtr_6c_30:
 	dw Data_6c_5d55 ; $4030
-DataPtr_6c_32:
+DataPtr_IntroCloseupTiles:
 	dw IntroCloseupTiles ; $4032
 DataPtr_6c_34:
 	dw Lz_6c_61ba ; $4034
@@ -62,7 +62,7 @@ DataPtr_6c_36:
 	dw Lz_6c_6264 ; $4036
 DataPtr_6c_38:
 	dw Data_6c_62ae ; $4038
-DataPtr_6c_3a:
+DataPtr_IntroWaveTiles:
 	dw IntroWaveTiles ; $403a
 DataPtr_6c_3c:
 	dw Lz_6c_67e0 ; $403c
@@ -70,7 +70,7 @@ DataPtr_6c_3e:
 	dw Lz_6c_68c2 ; $403e
 DataPtr_6c_40:
 	dw Data_6c_690a ; $4040
-DataPtr_6c_42:
+DataPtr_IntroDiveTiles:
 	dw IntroDiveTiles ; $4042
 DataPtr_6c_44:
 	dw Lz_6c_6dee ; $4044
@@ -78,7 +78,7 @@ DataPtr_6c_46:
 	dw Lz_6c_6eab ; $4046
 DataPtr_6c_48:
 	dw Data_6c_6ef3 ; $4048
-DataPtr_6c_4a:
+DataPtr_IntroGirlSwingTiles:
 	dw IntroGirlSwingTiles ; $404a
 DataPtr_6c_4c:
 	dw Lz_6c_739e ; $404c

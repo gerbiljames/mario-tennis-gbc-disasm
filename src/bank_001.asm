@@ -32,7 +32,7 @@ Func_01_4018:
 	call Func_00_28b9 ; $4018
 	push de ; $401b
 	ld de, $07e0 ; $401c
-	farcall FarPtr_03_20 ; $401f
+	farcall FarPtr_ClearSaveFlag ; $401f
 	pop de ; $4022
 	call DisableLCDSafely ; $4023
 	wram_bank $01 ; $4026
@@ -65,7 +65,7 @@ Func_01_4018:
 	call Func_00_188b ; $4082
 	call Func_01_50e2 ; $4085
 	call Func_01_5188 ; $4088
-	farcall FarPtr_03_02 ; $408b
+	farcall FarPtr_ValidateSaveRam ; $408b
 	farcall FarPtr_03_12 ; $408e
 	farcall FarPtr_03_2e ; $4091
 	farcall FarPtr_03_30 ; $4094
@@ -92,7 +92,7 @@ Label_01_40bf:
 	jr z, Label_01_40cf ; $40c3
 	push de ; $40c5
 	ld de, $07e0 ; $40c6
-	farcall FarPtr_03_1e ; $40c9
+	farcall FarPtr_SetSaveFlag ; $40c9
 	pop de ; $40cc
 	jr Label_01_40d8 ; $40cd
 Label_01_40cf:
@@ -150,7 +150,7 @@ Label_01_4138:
 	ldh [$ff9e], a ; $413f
 	ld a, $00 ; $4141
 	ld [$c36c], a ; $4143
-	farcall FarPtr_03_1a ; $4146
+	farcall FarPtr_CheckStorySlot ; $4146
 	ld b, $00 ; $4149
 	ld c, $04 ; $414b
 	farcall FarPtr_3b_1c ; $414d
@@ -165,7 +165,7 @@ Label_01_4138:
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
 	ld [$c36c], a ; $4168
-	farcall FarPtr_03_1a ; $416b
+	farcall FarPtr_CheckStorySlot ; $416b
 	ld a, $17 ; $416e
 	ld [wPlayer1CurrentMainCharacter], a ; $4170
 	ld a, $18 ; $4173

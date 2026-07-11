@@ -8,7 +8,7 @@ DataPtr_62_00:
 	dw Data_62_4b13 ; $4000
 DataPtr_62_02:
 	dw Data_62_4040 ; $4002
-DataPtr_62_04:
+DataPtr_StarCourtTilemap:
 	dw StarCourtTilemap ; $4004
 DataPtr_62_06:
 	dw Lz_62_4a42 ; $4006
@@ -18,7 +18,7 @@ DataPtr_62_0a:
 	dw Data_62_4b3b ; $400a
 DataPtr_62_0c:
 	dw Data_62_4b63 ; $400c
-DataPtr_62_0e:
+DataPtr_StarCourtTiles:
 	dw StarCourtTiles ; $400e
 DataPtr_62_10:
 	dw Data_62_5600 ; $4010
@@ -40,7 +40,7 @@ DataPtr_62_20:
 	dw Data_62_63e1 ; $4020
 DataPtr_62_22:
 	dw Data_62_5650 ; $4022
-DataPtr_62_24:
+DataPtr_WarioCourtTilemap:
 	dw WarioCourtTilemap ; $4024
 DataPtr_62_26:
 	dw Lz_62_62cf ; $4026
@@ -50,7 +50,7 @@ DataPtr_62_2a:
 	dw Data_62_6409 ; $402a
 DataPtr_62_2c:
 	dw Data_62_6431 ; $402c
-DataPtr_62_2e:
+DataPtr_WarioCourtTiles:
 	dw WarioCourtTiles ; $402e
 DataPtr_62_30:
 	dw Data_62_6f2e ; $4030

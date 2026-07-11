@@ -3763,28 +3763,28 @@ Label_05_5c37:
 	ld l, a ; $5c39
 	jp hl ; $5c3a
 	INCBIN "data/bank_005/d_5c3b.bin" ; $5c3b, 32 bytes
-	farcall FarPtr_30_00 ; $5c5b
+	farcall FarPtr_FetchDialogueText_30 ; $5c5b
 	jr Label_05_5ca3 ; $5c5e
-	farcall FarPtr_31_00 ; $5c60
+	farcall FarPtr_FetchDialogueText_31 ; $5c60
 	jr Label_05_5ca3 ; $5c63
-	farcall FarPtr_32_00 ; $5c65
+	farcall FarPtr_FetchDialogueText_32 ; $5c65
 	jr Label_05_5ca3 ; $5c68
-	farcall FarPtr_33_00 ; $5c6a
+	farcall FarPtr_FetchDialogueText_33 ; $5c6a
 	jr Label_05_5ca3 ; $5c6d
-	farcall FarPtr_34_00 ; $5c6f
+	farcall FarPtr_FetchDialogueText_34 ; $5c6f
 	jr Label_05_5ca3 ; $5c72
-	farcall FarPtr_35_00 ; $5c74
+	farcall FarPtr_FetchDialogueText_35 ; $5c74
 	jr Label_05_5ca3 ; $5c77
-	farcall FarPtr_36_00 ; $5c79
+	farcall FarPtr_FetchDialogueText_36 ; $5c79
 	jr Label_05_5ca3 ; $5c7c
-	farcall FarPtr_37_00 ; $5c7e
+	farcall FarPtr_FetchDialogueText_37 ; $5c7e
 	jr Label_05_5ca3 ; $5c81
-	farcall FarPtr_6e_00 ; $5c83
+	farcall FarPtr_FetchDialogueText_6e ; $5c83
 	jr Label_05_5ca3 ; $5c86
 	INCBIN "data/bank_005/d_5c88.bin" ; $5c88, 5 bytes
-	farcall FarPtr_25_00 ; $5c8d
+	farcall FarPtr_FetchDialogueText_25 ; $5c8d
 	jr Label_05_5ca3 ; $5c90
-	farcall FarPtr_26_00 ; $5c92
+	farcall FarPtr_FetchDialogueText_26 ; $5c92
 	jr Label_05_5ca3 ; $5c95
 	INCBIN "data/bank_005/d_5c97.bin" ; $5c97, 5 bytes
 Label_05_5c9c:
@@ -3825,7 +3825,7 @@ Label_05_5cc3:
 	ld l, a ; $5cc5
 	jp hl ; $5cc6
 	INCBIN "data/bank_005/d_5cc7.bin" ; $5cc7, 32 bytes
-	farcall FarPtr_30_02 ; $5ce7
+	farcall FarPtr_FetchShortText_30 ; $5ce7
 	jr Label_05_5d26 ; $5cea
 	INCBIN "data/bank_005/d_5cec.bin" ; $5cec, 58 bytes
 Label_05_5d26:

@@ -1074,7 +1074,7 @@ Label_1b_623c:
 	ld a, $01 ; $6256
 	ld [$cb00], a ; $6258
 	ld de, $0120 ; $625b
-	farcall FarPtr_03_1c ; $625e
+	farcall FarPtr_TestSaveFlag ; $625e
 	jr nz, Label_1b_6293 ; $6261
 	push af ; $6263
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6264
@@ -1177,7 +1177,7 @@ Func_1b_62f8:
 	ld hl, $c800 ; $630c
 	ld b, a ; $630f
 	ld [$c36c], a ; $6310
-	farcall FarPtr_03_1a ; $6313
+	farcall FarPtr_CheckStorySlot ; $6313
 	or a, a ; $6316
 	jp z, Label_1b_6399 ; $6317
 	call Func_1b_61ba ; $631a
@@ -1208,7 +1208,7 @@ Label_1b_634c:
 	ld b, a ; $634e
 	ld hl, $ca00 ; $634f
 	ld [$c36c], a ; $6352
-	farcall FarPtr_03_1a ; $6355
+	farcall FarPtr_CheckStorySlot ; $6355
 	or a, a ; $6358
 	jr z, Label_1b_635f ; $6359
 	sound $62 ; $635b
@@ -1773,7 +1773,7 @@ Func_1b_686f:
 	wram_bank $06 ; $6873
 	ld hl, $d400 ; $6879
 	ld b, $0b ; $687c
-	farcall FarPtr_03_06 ; $687e
+	farcall FarPtr_ReadSaveBlock ; $687e
 	ld b, a ; $6881
 	pop af ; $6882
 	wram_bank ; $6883
@@ -1787,7 +1787,7 @@ Func_1b_688a:
 	ld hl, $d400 ; $6893
 	ld de, $0000 ; $6896
 	ld b, $0b ; $6899
-	farcall FarPtr_03_04 ; $689b
+	farcall FarPtr_WriteSaveBlock ; $689b
 	pop af ; $689e
 	wram_bank ; $689f
 	ret ; $68a3
@@ -2002,7 +2002,7 @@ Label_1b_6be1:
 	ld a, [hl+] ; $6be5
 	ld d, [hl] ; $6be6
 	ld e, a ; $6be7
-	farcall FarPtr_03_1c ; $6be8
+	farcall FarPtr_TestSaveFlag ; $6be8
 	pop hl ; $6beb
 	jr z, Label_1b_6bef ; $6bec
 	inc c ; $6bee
@@ -2012,7 +2012,7 @@ Label_1b_6bef:
 	ld a, [hl+] ; $6bf1
 	ld d, [hl] ; $6bf2
 	ld e, a ; $6bf3
-	farcall FarPtr_03_1c ; $6bf4
+	farcall FarPtr_TestSaveFlag ; $6bf4
 	jr z, Label_1b_6bfa ; $6bf7
 	inc c ; $6bf9
 Label_1b_6bfa:
@@ -2957,7 +2957,7 @@ Label_1b_74f8:
 	ld d, [hl] ; $74f9
 	ld e, a ; $74fa
 	pop hl ; $74fb
-	farcall FarPtr_03_1c ; $74fc
+	farcall FarPtr_TestSaveFlag ; $74fc
 	jr z, Label_1b_7504 ; $74ff
 	ld a, $01 ; $7501
 	ld [hl], a ; $7503
@@ -2990,7 +2990,7 @@ Label_1b_7538:
 	ld d, [hl] ; $7539
 	ld e, a ; $753a
 	pop hl ; $753b
-	farcall FarPtr_03_1c ; $753c
+	farcall FarPtr_TestSaveFlag ; $753c
 	jr z, Label_1b_7544 ; $753f
 	ld a, $01 ; $7541
 	ld [hl], a ; $7543
@@ -3010,7 +3010,7 @@ Func_1b_7560:
 	ld bc, $0012 ; $7566
 	call ClearBytes ; $7569
 	ld de, $06c0 ; $756c
-	farcall FarPtr_03_1c ; $756f
+	farcall FarPtr_TestSaveFlag ; $756f
 	jr z, Label_1b_757b ; $7572
 	ld a, $01 ; $7574
 	ld hl, $d82b ; $7576

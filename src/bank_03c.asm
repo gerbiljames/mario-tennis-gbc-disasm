@@ -4,17 +4,17 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $3c", ROMX[$4000], BANK[$3c]
 
-DataPtr_3c_00:
+DataPtr_ModeSelectTiles:
 	dw ModeSelectTiles ; $4000
-DataPtr_3c_02:
+DataPtr_ModeSelectTilemap:
 	dw ModeSelectTilemap ; $4002
 DataPtr_3c_04:
 	dw Lz_3c_468d ; $4004
 DataPtr_3c_06:
 	dw Data_3c_4711 ; $4006
-DataPtr_3c_08:
+DataPtr_StadiumTiles:
 	dw StadiumTiles ; $4008
-DataPtr_3c_0a:
+DataPtr_StadiumTilemap:
 	dw StadiumTilemap ; $400a
 DataPtr_3c_0c:
 	dw Lz_3c_52e6 ; $400c
@@ -106,15 +106,15 @@ DataPtr_3c_62:
 	dw Lz_3c_6eb9 ; $4062
 DataPtr_3c_64:
 	dw Lz_3c_6f68 ; $4064
-DataPtr_3c_66:
+DataPtr_GamesLabelTiles:
 	dw GamesLabelTiles ; $4066
-DataPtr_3c_68:
+DataPtr_GamesLabelTiles2:
 	dw GamesLabelTiles2 ; $4068
-DataPtr_3c_6a:
+DataPtr_OneSetLabelTiles:
 	dw OneSetLabelTiles ; $406a
-DataPtr_3c_6c:
+DataPtr_ThreeSetsLabelTiles:
 	dw ThreeSetsLabelTiles ; $406c
-DataPtr_3c_6e:
+DataPtr_FiveSetsLabelTiles:
 	dw FiveSetsLabelTiles ; $406e
 	INCBIN "data/bank_03c/d_4070.bin" ; $4070, 14 bytes
 ModeSelectTiles:

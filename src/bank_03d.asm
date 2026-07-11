@@ -54,7 +54,7 @@ DataPtr_3d_2e:
 	dw Lz_3d_4ef4 ; $402e
 DataPtr_3d_30:
 	dw Lz_3d_5073 ; $4030
-DataPtr_3d_32:
+DataPtr_LinkingScreenTiles:
 	dw LinkingScreenTiles ; $4032
 DataPtr_3d_34:
 	dw Lz_3d_567d ; $4034
@@ -62,9 +62,9 @@ DataPtr_3d_36:
 	dw Lz_3d_576e ; $4036
 DataPtr_3d_38:
 	dw Data_3d_57e1 ; $4038
-DataPtr_3d_3a:
+DataPtr_RingShotHudTiles:
 	dw RingShotHudTiles ; $403a
-DataPtr_3d_3c:
+DataPtr_RingShotHudTilemap:
 	dw RingShotHudTilemap ; $403c
 DataPtr_3d_3e:
 	dw Lz_3d_5e25 ; $403e
@@ -72,7 +72,7 @@ DataPtr_3d_40:
 	dw Data_3d_5eaa ; $4040
 DataPtr_3d_42:
 	dw Lz_3d_5eea ; $4042
-DataPtr_3d_44:
+DataPtr_MatchStatsTiles:
 	dw MatchStatsTiles ; $4044
 DataPtr_3d_46:
 	dw Lz_3d_67fd ; $4046
@@ -94,9 +94,9 @@ DataPtr_3d_56:
 	dw Lz_3d_6e2e ; $4056
 DataPtr_3d_58:
 	dw Lz_3d_4fd6 ; $4058
-DataPtr_3d_5a:
+DataPtr_EquipmentSelectTiles:
 	dw EquipmentSelectTiles ; $405a
-DataPtr_3d_5c:
+DataPtr_EquipmentSelectTilemap:
 	dw EquipmentSelectTilemap ; $405c
 DataPtr_3d_5e:
 	dw Lz_3d_77c6 ; $405e

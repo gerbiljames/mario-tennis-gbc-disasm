@@ -4,7 +4,7 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $19", ROMX[$4000], BANK[$19]
 
-DataPtr_19_00:
+DataPtr_VictoryCutsceneTiles:
 	dw VictoryCutsceneTiles ; $4000
 DataPtr_19_02:
 	dw Data_19_4c7a ; $4002
@@ -32,7 +32,7 @@ DataPtr_19_18:
 	dw Lz_19_53d0 ; $4018
 DataPtr_19_1a:
 	dw Lz_19_54ad ; $401a
-DataPtr_19_1c:
+DataPtr_ShopCutsceneTiles:
 	dw ShopCutsceneTiles ; $401c
 DataPtr_19_1e:
 	dw Data_19_6124 ; $401e

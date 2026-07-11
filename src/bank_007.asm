@@ -2652,7 +2652,7 @@ Func_07_557e:
 	ld [$c4a1], a ; $5591
 	ld a, [hl+] ; $5594
 	push hl ; $5595
-	farcall FarPtr_08_24 ; $5596
+	farcall FarPtr_SetBallTrailColor ; $5596
 	pop hl ; $5599
 	ld a, [hl+] ; $559a
 	ld b, [hl] ; $559b

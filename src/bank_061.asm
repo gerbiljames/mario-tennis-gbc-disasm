@@ -24,7 +24,7 @@ DataPtr_61_10:
 	dw Data_61_5bfb ; $4010
 DataPtr_61_12:
 	dw Data_61_4c69 ; $4012
-DataPtr_61_14:
+DataPtr_CenterCourtTilemap:
 	dw CenterCourtTilemap ; $4014
 DataPtr_61_16:
 	dw Lz_61_5aee ; $4016
@@ -34,7 +34,7 @@ DataPtr_61_1a:
 	dw Data_61_5c23 ; $401a
 DataPtr_61_1c:
 	dw Data_61_5c4b ; $401c
-DataPtr_61_1e:
+DataPtr_CenterCourtTiles:
 	dw CenterCourtTiles ; $401e
 DataPtr_61_20:
 	dw Data_61_69fb ; $4020

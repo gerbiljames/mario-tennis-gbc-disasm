@@ -1093,28 +1093,28 @@ Func_38_4b21:
 	ld d, $00 ; $4b5f
 	wram_bank $04 ; $4b61
 	ld a, $00 ; $4b67
-	farcall FarPtr_08_0c ; $4b69
+	farcall FarPtr_InitChar ; $4b69
 	ld a, $01 ; $4b6c
 	farcall FarPtr_02_34 ; $4b6e
 	ld e, a ; $4b71
 	ld d, $01 ; $4b72
 	wram_bank $05 ; $4b74
 	ld a, $01 ; $4b7a
-	farcall FarPtr_08_0c ; $4b7c
+	farcall FarPtr_InitChar ; $4b7c
 	ld a, $02 ; $4b7f
 	farcall FarPtr_02_34 ; $4b81
 	ld e, a ; $4b84
 	ld d, $02 ; $4b85
 	wram_bank $06 ; $4b87
 	ld a, $02 ; $4b8d
-	farcall FarPtr_08_0c ; $4b8f
+	farcall FarPtr_InitChar ; $4b8f
 	ld a, $03 ; $4b92
 	farcall FarPtr_02_34 ; $4b94
 	ld e, a ; $4b97
 	ld d, $03 ; $4b98
 	wram_bank $07 ; $4b9a
 	ld a, $03 ; $4ba0
-	farcall FarPtr_08_0c ; $4ba2
+	farcall FarPtr_InitChar ; $4ba2
 	wram_bank $04 ; $4ba5
 	ret ; $4bab
 Func_38_4bac:
@@ -1204,16 +1204,16 @@ Label_38_4c66:
 Label_38_4ca8:
 	wram_bank $04 ; $4ca8
 	ld hl, $df80 ; $4cae
-	farcall FarPtr_08_10 ; $4cb1
+	farcall FarPtr_DrawCharSprite ; $4cb1
 	wram_bank $05 ; $4cb4
 	ld hl, $df80 ; $4cba
-	farcall FarPtr_08_10 ; $4cbd
+	farcall FarPtr_DrawCharSprite ; $4cbd
 	wram_bank $06 ; $4cc0
 	ld hl, $df80 ; $4cc6
-	farcall FarPtr_08_10 ; $4cc9
+	farcall FarPtr_DrawCharSprite ; $4cc9
 	wram_bank $07 ; $4ccc
 	ld hl, $df80 ; $4cd2
-	farcall FarPtr_08_10 ; $4cd5
+	farcall FarPtr_DrawCharSprite ; $4cd5
 	wram_bank $04 ; $4cd8
 	call Func_38_4d9b ; $4cde
 	ret ; $4ce1
@@ -1239,7 +1239,7 @@ Func_38_4ce2:
 	push de ; $4d02
 	farcall FarPtr_08_14 ; $4d03
 	pop de ; $4d06
-	farcall FarPtr_08_16 ; $4d07
+	farcall FarPtr_BuildCharSpriteSlots ; $4d07
 	pop de ; $4d0a
 	ld hl, $df00 ; $4d0b
 	ld c, $06 ; $4d0e
@@ -2771,7 +2771,7 @@ Label_38_5aa0:
 	and a, e ; $5aa4
 	cp a, $ff ; $5aa5
 	jr z, Label_38_5ab0 ; $5aa7
-	farcall FarPtr_03_1c ; $5aa9
+	farcall FarPtr_TestSaveFlag ; $5aa9
 	jr nz, Label_38_5ab0 ; $5aac
 	jr Label_38_5abc ; $5aae
 Label_38_5ab0:
@@ -2801,7 +2801,7 @@ Label_38_5abc:
 Label_38_5ad1:
 	ld a, c ; $5ad1
 	ld [$c36c], a ; $5ad2
-	farcall FarPtr_03_1a ; $5ad5
+	farcall FarPtr_CheckStorySlot ; $5ad5
 	push bc ; $5ad8
 	ld hl, $d852 ; $5ad9
 	ld b, $00 ; $5adc
@@ -3580,21 +3580,21 @@ Func_38_605b:
 	wram_bank $01 ; $6062
 	ld a, $00 ; $6068
 	ld [$c36c], a ; $606a
-	farcall FarPtr_03_1a ; $606d
+	farcall FarPtr_CheckStorySlot ; $606d
 	ld hl, wStoryModeNameOfMainCharacter ; $6070
 	ld de, $d000 ; $6073
 	ld bc, $0008 ; $6076
 	call CopyMemoryFast ; $6079
 	ld a, $01 ; $607c
 	ld [$c36c], a ; $607e
-	farcall FarPtr_03_1a ; $6081
+	farcall FarPtr_CheckStorySlot ; $6081
 	ld hl, wStoryModeNameOfMainCharacter ; $6084
 	ld de, $d100 ; $6087
 	ld bc, $0008 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
 	ld [$c36c], a ; $6092
-	farcall FarPtr_03_1a ; $6095
+	farcall FarPtr_CheckStorySlot ; $6095
 	ld hl, wStoryModeNameOfMainCharacter ; $6098
 	ld de, $d200 ; $609b
 	ld bc, $0008 ; $609e

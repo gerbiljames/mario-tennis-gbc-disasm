@@ -98,7 +98,7 @@ DataPtr_39_5a:
 	dw Lz_39_4809 ; $405a
 DataPtr_39_5c:
 	dw Lz_39_4833 ; $405c
-DataPtr_39_5e:
+DataPtr_StatLabelTiles:
 	dw StatLabelTiles ; $405e
 FarPtr_39_60:
 	dw Func_39_6dc2 ; $4060
@@ -126,7 +126,7 @@ DataPtr_39_76:
 	dw Lz_39_7223 ; $4076
 DataPtr_39_78:
 	dw Lz_39_725d ; $4078
-DataPtr_39_7a:
+DataPtr_DigitFontTiles:
 	dw DigitFontTiles ; $407a
 FarPtr_39_7c:
 	dw Func_39_745a ; $407c
@@ -687,7 +687,7 @@ Func_39_4c38:
 	ldh a, [hWramBank] ; $4c38
 	push af ; $4c3a
 	wram_bank $01 ; $4c3b
-	ld hl, $3c08 ; $4c41 -> DataPtr_3c_08
+	ld hl, $3c08 ; $4c41 -> DataPtr_StadiumTiles
 	ld de, $d000 ; $4c44
 	call DecompressDataFromBank ; $4c47
 	ld hl, $d000 ; $4c4a
@@ -699,10 +699,10 @@ Func_39_4c38:
 	ld c, $80 ; $4c5b
 	call Func_00_0480 ; $4c5d
 	wram_bank $03 ; $4c60
-	ld hl, $3c0a ; $4c66 -> DataPtr_3c_0a
+	ld hl, $3c0a ; $4c66 -> DataPtr_StadiumTilemap
 	ld de, $d000 ; $4c69
 	call DecompressDataFromBank ; $4c6c
-	ld hl, $3c0a ; $4c6f -> DataPtr_3c_0a
+	ld hl, $3c0a ; $4c6f -> DataPtr_StadiumTilemap
 	ld de, $d800 ; $4c72
 	call DecompressDataFromBank ; $4c75
 	ld hl, $3c0c ; $4c78 -> DataPtr_3c_0c

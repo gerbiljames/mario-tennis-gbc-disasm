@@ -10,7 +10,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `8d8afc9`); the whole history rebuilds
+Everything below is **committed** (HEAD `194c1ae`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -22,7 +22,13 @@ dispatch through a per-bank pointer table at $4000 via the FarCall trampoline
 ($01b6). `tools/disasm.py` emits these as `farcall FarPtr_bb_ss` (macro in
 `include/macros.inc`), renders the tables as labeled `dw` entries, and seeds
 descent from every table target. This gave the cross-bank call graph.
-6,441 farcall sites. `infer_tables()` exploits the self-delimiting layout of
+6,441 farcall sites. **Slot names derive from curated targets
+automatically**: a table slot whose function or data target is named in
+`labels.json` is emitted as `FarPtr_<Name>`/`DataPtr_<Name>` (duplicate
+slots for the same target keep numeric names), so call sites read
+`farcall FarPtr_ClearSpriteSlots` and data-loader notes read
+`-> DataPtr_CourtDiagramTiles` — naming a target names its slot everywhere,
+with no extra annotation. `infer_tables()` exploits the self-delimiting layout of
 dense banks to recover unused entries (+24 KB of statically proven code).
 
 **All rst vectors decoded** as inline-operand pseudo-ops (macros in
@@ -235,5 +241,5 @@ from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `8d8afc9`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `194c1ae`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.

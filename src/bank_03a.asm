@@ -4,9 +4,9 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $3a", ROMX[$4000], BANK[$3a]
 
-DataPtr_3a_00:
+DataPtr_TennisDictionaryTiles:
 	dw TennisDictionaryTiles ; $4000
-DataPtr_3a_02:
+DataPtr_TennisDictionaryListTiles:
 	dw TennisDictionaryListTiles ; $4002
 DataPtr_3a_04:
 	dw Lz_3a_53fb ; $4004
@@ -40,51 +40,51 @@ DataPtr_3a_20:
 	dw Lz_3a_53fb ; $4020
 DataPtr_3a_22:
 	dw Lz_3a_53fb ; $4022
-DataPtr_3a_24:
+DataPtr_ExhibitionSetupTiles:
 	dw ExhibitionSetupTiles ; $4024
-DataPtr_3a_26:
+DataPtr_ExhibitionSetupTilemap:
 	dw ExhibitionSetupTilemap ; $4026
 DataPtr_3a_28:
 	dw Lz_3a_5afa ; $4028
 DataPtr_3a_2a:
 	dw Data_3a_5b67 ; $402a
-DataPtr_3a_2c:
+DataPtr_ExhibitionMenuTiles:
 	dw ExhibitionMenuTiles ; $402c
-DataPtr_3a_2e:
+DataPtr_ExhibitionMenuTilemap:
 	dw ExhibitionMenuTilemap ; $402e
 DataPtr_3a_30:
 	dw Lz_3a_6348 ; $4030
 DataPtr_3a_32:
 	dw Data_3a_63bf ; $4032
-DataPtr_3a_34:
+DataPtr_N64TournamentTiles:
 	dw N64TournamentTiles ; $4034
-DataPtr_3a_36:
+DataPtr_N64TournamentTilemap:
 	dw N64TournamentTilemap ; $4036
 DataPtr_3a_38:
 	dw Lz_3a_6b7d ; $4038
 DataPtr_3a_3a:
 	dw Data_3a_6bf6 ; $403a
-DataPtr_3a_3c:
+DataPtr_N64TournamentTilemap2:
 	dw N64TournamentTilemap2 ; $403c
 DataPtr_3a_3e:
 	dw Lz_3a_6d42 ; $403e
-DataPtr_3a_40:
+DataPtr_WarningScreenTiles:
 	dw WarningScreenTiles ; $4040
-DataPtr_3a_42:
+DataPtr_WarningScreenTilemap:
 	dw WarningScreenTilemap ; $4042
 DataPtr_3a_44:
 	dw Lz_3a_70c9 ; $4044
 DataPtr_3a_46:
 	dw Data_3a_7134 ; $4046
-DataPtr_3a_48:
+DataPtr_JapanesePlayModeTiles:
 	dw JapanesePlayModeTiles ; $4048
-DataPtr_3a_4a:
+DataPtr_JapanesePlayModeTilemap:
 	dw JapanesePlayModeTilemap ; $404a
 DataPtr_3a_4c:
 	dw Lz_3a_7645 ; $404c
 DataPtr_3a_4e:
 	dw Data_3a_76cf ; $404e
-DataPtr_3a_50:
+DataPtr_LinkErrorTiles:
 	dw LinkErrorTiles ; $4050
 DataPtr_3a_52:
 	dw Lz_3a_7c6f ; $4052

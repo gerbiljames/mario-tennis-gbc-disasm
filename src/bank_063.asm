@@ -24,7 +24,7 @@ DataPtr_63_10:
 	dw Data_63_5d25 ; $4010
 DataPtr_63_12:
 	dw Data_63_4bfe ; $4012
-DataPtr_63_14:
+DataPtr_DKCourtTilemap:
 	dw DKCourtTilemap ; $4014
 DataPtr_63_16:
 	dw Lz_63_5be2 ; $4016
@@ -34,7 +34,7 @@ DataPtr_63_1a:
 	dw Data_63_5d4d ; $401a
 DataPtr_63_1c:
 	dw Data_63_5d75 ; $401c
-DataPtr_63_1e:
+DataPtr_DKCourtTiles:
 	dw DKCourtTiles ; $401e
 DataPtr_63_20:
 	dw Data_63_5d75 ; $4020

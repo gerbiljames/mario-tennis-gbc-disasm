@@ -14,7 +14,7 @@ from pathlib import Path
 BANK_SIZE = 0x4000
 AUTO_RE = re.compile(
     r"^(?:Func|Label|Data|Lz|Text)_[0-9a-f]{2}_[0-9a-f]{4}$"
-    r"|^(?:FarPtr|DataPtr)_[0-9a-f]{2}_[0-9a-f]{2}$"
+    r"|^(?:FarPtr|DataPtr)_"  # incl. slot names derived from curated targets
     r"|^Sprite(?:Desc|Frames|Anims)_[0-9a-f]{2}$"
     r"|^(?:SoundTable|WalkSprites)_[0-9a-f]{2}$")
 

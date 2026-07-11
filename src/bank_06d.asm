@@ -20,25 +20,25 @@ DataPtr_6d_0c:
 	dw Lz_6d_4581 ; $400c
 DataPtr_6d_0e:
 	dw Lz_6d_4656 ; $400e
-DataPtr_6d_10:
+DataPtr_IntroAwesomeTiles:
 	dw IntroAwesomeTiles ; $4010
-DataPtr_6d_12:
+DataPtr_IntroGreatestPlayerTiles:
 	dw IntroGreatestPlayerTiles ; $4012
-DataPtr_6d_14:
+DataPtr_IntroGreatestPlayerTilemap:
 	dw IntroGreatestPlayerTilemap ; $4014
 DataPtr_6d_16:
 	dw Lz_6d_546b ; $4016
 DataPtr_6d_18:
 	dw Data_6d_54b3 ; $4018
-DataPtr_6d_1a:
+DataPtr_IntroCharactersTiles:
 	dw IntroCharactersTiles ; $401a
-DataPtr_6d_1c:
+DataPtr_IntroCharactersTilemap:
 	dw IntroCharactersTilemap ; $401c
 DataPtr_6d_1e:
 	dw Lz_6d_6061 ; $401e
 DataPtr_6d_20:
 	dw Data_6d_6104 ; $4020
-DataPtr_6d_22:
+DataPtr_IntroCharactersTilemap2:
 	dw IntroCharactersTilemap2 ; $4022
 DataPtr_6d_24:
 	dw Lz_6d_6250 ; $4024
@@ -52,7 +52,7 @@ DataPtr_6d_2c:
 	dw Lz_6d_6ac8 ; $402c
 DataPtr_6d_2e:
 	dw Lz_6d_6ac8 ; $402e
-DataPtr_6d_30:
+DataPtr_TitleScreenTiles:
 	dw TitleScreenTiles ; $4030
 DataPtr_6d_32:
 	dw Lz_6d_6ac8 ; $4032
@@ -150,7 +150,7 @@ DataPtr_6d_8e:
 	dw Lz_6d_7887 ; $408e
 DataPtr_6d_90:
 	dw Lz_6d_7970 ; $4090
-DataPtr_6d_92:
+DataPtr_MarioMiniGamesTiles:
 	dw MarioMiniGamesTiles ; $4092
 Lz_6d_4094:
 	INCBIN "data/bank_06d/lz_4094.bin" ; $4094, 180 bytes

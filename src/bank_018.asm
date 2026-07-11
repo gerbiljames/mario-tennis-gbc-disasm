@@ -14,7 +14,7 @@ FarPtr_18_06:
 	dw Func_18_437c ; $4006
 FarPtr_18_08:
 	dw Func_18_438d ; $4008
-FarPtr_18_0a:
+FarPtr_DrawBox:
 	dw DrawBox ; $400a
 FarPtr_18_0c:
 	dw Func_18_4353 ; $400c
@@ -493,7 +493,7 @@ Label_18_453b:
 	add hl, hl ; $4544
 	ld d, h ; $4545
 	ld e, l ; $4546
-	farcall FarPtr_03_1c ; $4547
+	farcall FarPtr_TestSaveFlag ; $4547
 	pop de ; $454a
 	pop hl ; $454b
 	ret ; $454c
@@ -532,7 +532,7 @@ Label_18_4579:
 	jr Label_18_4587 ; $4580
 Label_18_4582:
 	res 0, e ; $4582
-	farcall FarPtr_03_1c ; $4584
+	farcall FarPtr_TestSaveFlag ; $4584
 Label_18_4587:
 	pop de ; $4587
 	pop hl ; $4588
@@ -1515,7 +1515,7 @@ Label_18_79de:
 	and a, $03 ; $79e3
 	jr z, Label_18_79de ; $79e5
 	ld de, $0120 ; $79e7
-	farcall FarPtr_03_1e ; $79ea
+	farcall FarPtr_SetSaveFlag ; $79ea
 	ld de, $05e0 ; $79ed
 	call TestGameFlag ; $79f0
 	jr z, Label_18_79fd ; $79f3

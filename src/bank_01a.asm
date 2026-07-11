@@ -2400,7 +2400,7 @@ Func_1a_6f3d:
 	call Func_1a_7096 ; $6f3d
 	wram_bank $06 ; $6f40
 	ld a, [$d002] ; $6f46
-	farcall FarPtr_04_30 ; $6f49
+	farcall FarPtr_LookupTileId_04 ; $6f49
 	ld d, a ; $6f4c
 	wram_bank $04 ; $6f4d
 	ldh a, [$ff95] ; $6f53
@@ -2437,7 +2437,7 @@ Func_1a_6f3d:
 	ld c, $10 ; $6fb1
 	call ClearMemory16 ; $6fb3
 	ld a, $00 ; $6fb6
-	farcall FarPtr_08_0c ; $6fb8
+	farcall FarPtr_InitChar ; $6fb8
 	ld a, $07 ; $6fbb
 	ld [$df37], a ; $6fbd
 	ld de, $8600 ; $6fc0
@@ -2514,7 +2514,7 @@ Func_1a_7012:
 	add a, $80 ; $7084
 	ld [hl+], a ; $7086
 	ld hl, $df80 ; $7087
-	farcall FarPtr_08_10 ; $708a
+	farcall FarPtr_DrawCharSprite ; $708a
 	ret ; $708d
 	INCBIN "data/bank_01a/d_708e.bin" ; $708e, 8 bytes
 Func_1a_7096:

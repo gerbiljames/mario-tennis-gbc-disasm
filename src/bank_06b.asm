@@ -238,7 +238,7 @@ Label_6b_420d:
 	wram_bank ; $425b
 	farcall FarPtr_39_02 ; $425f
 	wram_bank $01 ; $4262
-	ld hl, $6c2a ; $4268 -> DataPtr_6c_2a
+	ld hl, $6c2a ; $4268 -> DataPtr_IntroSwingTiles
 	ld de, $d000 ; $426b
 	call DecompressDataFromBank ; $426e
 	ld hl, $d000 ; $4271
@@ -342,7 +342,7 @@ Label_6b_43cc:
 	wram_bank ; $43ed
 	farcall FarPtr_39_02 ; $43f1
 	wram_bank $01 ; $43f4
-	ld hl, $6c32 ; $43fa -> DataPtr_6c_32
+	ld hl, $6c32 ; $43fa -> DataPtr_IntroCloseupTiles
 	ld de, $d000 ; $43fd
 	call DecompressDataFromBank ; $4400
 	ld hl, $d000 ; $4403
@@ -752,7 +752,7 @@ Label_6b_46ce:
 	ld hl, rLCDC ; $496d
 	set 3, [hl] ; $4970
 	wram_bank $01 ; $4972
-	ld hl, $6d12 ; $4978 -> DataPtr_6d_12
+	ld hl, $6d12 ; $4978 -> DataPtr_IntroGreatestPlayerTiles
 	ld de, $d000 ; $497b
 	call DecompressDataFromBank ; $497e
 	ld hl, $d000 ; $4981
@@ -763,7 +763,7 @@ Label_6b_46ce:
 	ld de, $8800 ; $498f
 	ld c, $80 ; $4992
 	call Func_00_0480 ; $4994
-	ld hl, $6d14 ; $4997 -> DataPtr_6d_14
+	ld hl, $6d14 ; $4997 -> DataPtr_IntroGreatestPlayerTilemap
 	ld de, $d000 ; $499a
 	call DecompressDataFromBank ; $499d
 	ld hl, $6d16 ; $49a0 -> DataPtr_6d_16
@@ -781,7 +781,7 @@ Label_6b_46ce:
 	ld de, $0008 ; $49c2
 	call LoadPaletteShadow ; $49c5
 	wram_bank $01 ; $49c8
-	ld hl, $6d1a ; $49ce -> DataPtr_6d_1a
+	ld hl, $6d1a ; $49ce -> DataPtr_IntroCharactersTiles
 	ld de, $d000 ; $49d1
 	call DecompressDataFromBank ; $49d4
 	ld hl, $d000 ; $49d7
@@ -793,14 +793,14 @@ Label_6b_46ce:
 	ld c, $80 ; $49e8
 	call Func_00_0480 ; $49ea
 	wram_bank $04 ; $49ed
-	ld hl, $6d1c ; $49f3 -> DataPtr_6d_1c
+	ld hl, $6d1c ; $49f3 -> DataPtr_IntroCharactersTilemap
 	ld de, $d800 ; $49f6
 	call DecompressDataFromBank ; $49f9
 	ld hl, $6d1e ; $49fc -> DataPtr_6d_1e
 	ld de, $dc00 ; $49ff
 	call DecompressDataFromBank ; $4a02
 	wram_bank $05 ; $4a05
-	ld hl, $6d22 ; $4a0b -> DataPtr_6d_22
+	ld hl, $6d22 ; $4a0b -> DataPtr_IntroCharactersTilemap2
 	ld de, $d000 ; $4a0e
 	call DecompressDataFromBank ; $4a11
 	ld hl, $6d24 ; $4a14 -> DataPtr_6d_24
@@ -1734,7 +1734,7 @@ Func_6b_73f2:
 	ldh a, [hWramBank] ; $73f2
 	push af ; $73f4
 	wram_bank $01 ; $73f5
-	ld hl, $6d10 ; $73fb -> DataPtr_6d_10
+	ld hl, $6d10 ; $73fb -> DataPtr_IntroAwesomeTiles
 	ld de, $d000 ; $73fe
 	call DecompressDataFromBank ; $7401
 	ld hl, $d000 ; $7404

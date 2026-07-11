@@ -6,13 +6,13 @@ SECTION "ROM Bank $3f", ROMX[$4000], BANK[$3f]
 
 FarPtr_3f_00:
 	dw Func_3f_407a ; $4000
-DataPtr_3f_02:
+DataPtr_HardCourtLabelTiles:
 	dw HardCourtLabelTiles ; $4002
-DataPtr_3f_04:
+DataPtr_ClayCourtLabelTiles:
 	dw ClayCourtLabelTiles ; $4004
-DataPtr_3f_06:
+DataPtr_GrassCourtLabelTiles:
 	dw GrassCourtLabelTiles ; $4006
-DataPtr_3f_08:
+DataPtr_CompositionCourtLabelTiles:
 	dw CompositionCourtLabelTiles ; $4008
 DataPtr_3f_0a:
 	dw Lz_3f_5af5 ; $400a
@@ -34,22 +34,22 @@ DataPtr_3f_1a:
 	dw Lz_3f_616f ; $401a
 DataPtr_3f_1c:
 	dw Lz_3f_6219 ; $401c
-DataPtr_3f_1e:
+DataPtr_VarsityTeamChartTiles:
 	dw VarsityTeamChartTiles ; $401e
-DataPtr_3f_20:
+DataPtr_VarsityTeamChartTilemap:
 	dw VarsityTeamChartTilemap ; $4020
 DataPtr_3f_22:
 	dw Lz_3f_6944 ; $4022
 	INCBIN "data/bank_03f/d_4024.bin" ; $4024, 2 bytes
-DataPtr_3f_26:
+DataPtr_VarsityTeamChartTilemap2:
 	dw VarsityTeamChartTilemap2 ; $4026
 DataPtr_3f_28:
 	dw Lz_3f_6b4e ; $4028
 DataPtr_3f_2a:
 	dw Lz_3f_6bdd ; $402a
-DataPtr_3f_2c:
+DataPtr_MugshotTiles:
 	dw MugshotTiles ; $402c
-DataPtr_3f_2e:
+DataPtr_TournamentBracketTiles:
 	dw TournamentBracketTiles ; $402e
 DataPtr_3f_30:
 	dw Lz_3f_74b3 ; $4030
@@ -327,7 +327,7 @@ Func_3f_4244:
 	ret ; $425e
 Func_3f_425f:
 	wram_bank $01 ; $425f
-	ld hl, $3a02 ; $4265 -> DataPtr_3a_02
+	ld hl, $3a02 ; $4265 -> DataPtr_TennisDictionaryListTiles
 	ld de, $d000 ; $4268
 	call DecompressDataFromBank ; $426b
 	ld hl, $d000 ; $426e
@@ -349,7 +349,7 @@ Func_3f_425f:
 	ret ; $429f
 Func_3f_42a0:
 	wram_bank $01 ; $42a0
-	ld hl, $3a00 ; $42a6 -> DataPtr_3a_00
+	ld hl, $3a00 ; $42a6 -> DataPtr_TennisDictionaryTiles
 	ld de, $d000 ; $42a9
 	call DecompressDataFromBank ; $42ac
 	ld hl, $d000 ; $42af

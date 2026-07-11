@@ -1393,8 +1393,10 @@ def render_object_header(rom, off, data_labels, ptr_labels):
             f"\tdw {lbl(w[3])}, {lbl(w[4])}, {lbl(w[5])} ; frame pointers (continue in body)"]
 
 
-def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None):
+def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
+         curated=None):
     data_tables = data_tables or {}
+    curated = curated or set()
     rom = dis.rom
     nbanks = len(rom) // BANK_SIZE
     manifest = []
@@ -1449,6 +1451,26 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
     # pointer load may reference by name.
     operand_labels = {o: n for o, n in labels.items() if o not in dis.instrs}
 
+    # Semantic slot names: a $4000-table slot whose target carries a curated
+    # name is named after it, so call sites read `farcall FarPtr_DrawBox`
+    # instead of `farcall FarPtr_18_xx`. Duplicate slots for the same target
+    # keep their numeric name (labels must stay unique).
+    far_slot_names = {}   # (bank, slot) -> label
+    data_slot_names = {}  # (bank, slot) -> label
+    used_slot_names = set()
+    for entry in sorted(table_entries):
+        bank, slot, target = table_entries[entry]
+        name = labels.get(target)
+        if name in curated and f"FarPtr_{name}" not in used_slot_names:
+            used_slot_names.add(f"FarPtr_{name}")
+            far_slot_names[(bank, slot)] = f"FarPtr_{name}"
+    for entry in sorted(data_entries):
+        bank, slot, src, _kind = data_entries[entry]
+        name = data_labels.get(src)
+        if name in curated and f"DataPtr_{name}" not in used_slot_names:
+            used_slot_names.add(f"DataPtr_{name}")
+            data_slot_names[(bank, slot)] = f"DataPtr_{name}"
+
     for bank in range(nbanks):
         base = bank * BANK_SIZE
         lines = ['INCLUDE "hardware.inc"', 'INCLUDE "macros.inc"']
@@ -1466,7 +1488,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
             if off in table_entries:
                 tbank, slot, target = table_entries[off]
                 tl = labels.get(target, f"${offset_to_cpu(target):04x}")
-                lines.append(f"FarPtr_{tbank:02x}_{slot:02x}:")
+                sl = far_slot_names.get((tbank, slot),
+                                        f"FarPtr_{tbank:02x}_{slot:02x}")
+                lines.append(f"{sl}:")
                 lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}")
                 off += 2
             elif off in dis.ptr_words:
@@ -1486,7 +1510,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
             elif off in data_entries:
                 dbank, slot, src, _kind = data_entries[off]
                 tl = data_labels.get(src, f"${offset_to_cpu(src):04x}")
-                lines.append(f"DataPtr_{dbank:02x}_{slot:02x}:")
+                sl = data_slot_names.get((dbank, slot),
+                                         f"DataPtr_{dbank:02x}_{slot:02x}")
+                lines.append(f"{sl}:")
                 lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}")
                 off += 2
             elif off in jt_entries:
@@ -1512,11 +1538,16 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                         lines.append(f"\trst Rst18 ; ${cpu:04x}")
                         lines.append(f"\tdb ${slot:02x}, ${fbank:02x} ; farcall operands (slot bytes overlap code)")
                     else:
-                        lines.append(f"\tfarcall FarPtr_{fbank:02x}_{slot:02x} ; ${cpu:04x}")
+                        sl = far_slot_names.get((fbank, slot),
+                                                f"FarPtr_{fbank:02x}_{slot:02x}")
+                        lines.append(f"\tfarcall {sl} ; ${cpu:04x}")
                 else:
                     note = dis.data_site_notes.get(off)
-                    suffix = (f" -> DataPtr_{note[0]:02x}_{note[1]:02x}"
-                              if note else "")
+                    suffix = ""
+                    if note:
+                        sl = data_slot_names.get(
+                            note, f"DataPtr_{note[0]:02x}_{note[1]:02x}")
+                        suffix = f" -> {sl}"
                     lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels)} ; ${cpu:04x}{suffix}")
                 off += ins.size
             else:
@@ -1705,7 +1736,9 @@ def main():
     hwregs = load_hwregs(args.hardware_inc)
     ramnames = load_ram_map(args.ram_map, "include/ram_constants.asm")
     Path(args.srcdir).mkdir(parents=True, exist_ok=True)
-    emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables)
+    curated = set(overrides.values()) if overrides else set()
+    emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables,
+         curated)
 
 
 if __name__ == "__main__":

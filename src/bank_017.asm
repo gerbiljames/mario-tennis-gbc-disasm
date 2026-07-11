@@ -6,7 +6,7 @@ SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 
 FarPtr_17_00:
 	dw Func_17_44eb ; $4000
-DataPtr_17_02:
+DataPtr_CourtDiagramTiles:
 	dw CourtDiagramTiles ; $4002
 DataPtr_17_04:
 	dw Lz_17_4d65 ; $4004
@@ -18,9 +18,9 @@ FarPtr_17_0a:
 	dw Func_17_4487 ; $400a
 FarPtr_17_0c:
 	dw Func_17_6f1b ; $400c
-DataPtr_17_0e:
+DataPtr_RulesScreenTiles:
 	dw RulesScreenTiles ; $400e
-DataPtr_17_10:
+DataPtr_RulesScreenTilemap:
 	dw RulesScreenTilemap ; $4010
 DataPtr_17_12:
 	dw Lz_17_78a5 ; $4012

@@ -187,7 +187,7 @@ Label_10_4fc2:
 	jr z, Label_10_5041 ; $4fdb
 	and a, $7f ; $4fdd
 	ld [$c36c], a ; $4fdf
-	farcall FarPtr_03_1a ; $4fe2
+	farcall FarPtr_CheckStorySlot ; $4fe2
 	cp a, $fe ; $4fe5
 	jr z, Label_10_5041 ; $4fe7
 	farcall FarPtr_1e_06 ; $4fe9
@@ -502,7 +502,7 @@ Label_10_52d1:
 	cp a, $03 ; $52d9
 	jp nc, Label_10_53d4 ; $52db
 	ld [$c36c], a ; $52de
-	farcall FarPtr_03_1a ; $52e1
+	farcall FarPtr_CheckStorySlot ; $52e1
 Label_10_52e4:
 	farcall FarPtr_3b_18 ; $52e4
 	cp a, $ff ; $52e7
@@ -573,7 +573,7 @@ Label_10_5380:
 	call Func_00_1da4 ; $5385
 	farcall FarPtr_3e_0c ; $5388
 	farcall FarPtr_3e_10 ; $538b
-	farcall FarPtr_03_48 ; $538e
+	farcall FarPtr_SaveStorySlot ; $538e
 	call DisableLCDSafely ; $5391
 	farcall FarPtr_01_0a ; $5394
 	farcall FarPtr_39_22 ; $5397
@@ -589,7 +589,7 @@ Label_10_53aa:
 	call Func_00_1da4 ; $53af
 	farcall FarPtr_3e_0e ; $53b2
 	farcall FarPtr_3e_10 ; $53b5
-	farcall FarPtr_03_48 ; $53b8
+	farcall FarPtr_SaveStorySlot ; $53b8
 	call DisableLCDSafely ; $53bb
 	farcall FarPtr_01_0a ; $53be
 	farcall FarPtr_39_22 ; $53c1

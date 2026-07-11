@@ -4,23 +4,23 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $03", ROMX[$4000], BANK[$03]
 
-FarPtr_03_00:
+FarPtr_WipeAllSaveRam:
 	dw WipeAllSaveRam ; $4000
-FarPtr_03_02:
+FarPtr_ValidateSaveRam:
 	dw ValidateSaveRam ; $4002
-FarPtr_03_04:
+FarPtr_WriteSaveBlock:
 	dw WriteSaveBlock ; $4004
-FarPtr_03_06:
+FarPtr_ReadSaveBlock:
 	dw ReadSaveBlock ; $4006
 FarPtr_03_08:
 	dw Func_03_4c9e ; $4008
-FarPtr_03_0a:
+FarPtr_VerifySaveBlock:
 	dw VerifySaveBlock ; $400a
-FarPtr_03_0c:
+FarPtr_InvalidateStorySlot:
 	dw InvalidateStorySlot ; $400c
-FarPtr_03_0e:
+FarPtr_ResetAllSaveBlocks:
 	dw ResetAllSaveBlocks ; $400e
-FarPtr_03_10:
+FarPtr_EraseAndInitSaveRam:
 	dw EraseAndInitSaveRam ; $4010
 FarPtr_03_12:
 	dw Func_03_5669 ; $4012
@@ -30,13 +30,13 @@ FarPtr_03_16:
 	dw Func_03_4e13 ; $4016
 FarPtr_03_18:
 	dw Func_03_4d10 ; $4018
-FarPtr_03_1a:
+FarPtr_CheckStorySlot:
 	dw CheckStorySlot ; $401a
-FarPtr_03_1c:
+FarPtr_TestSaveFlag:
 	dw TestSaveFlag ; $401c
-FarPtr_03_1e:
+FarPtr_SetSaveFlag:
 	dw SetSaveFlag ; $401e
-FarPtr_03_20:
+FarPtr_ClearSaveFlag:
 	dw ClearSaveFlag ; $4020
 FarPtr_03_22:
 	dw Func_03_5310 ; $4022
@@ -76,7 +76,7 @@ FarPtr_03_44:
 	dw Func_03_7719 ; $4044
 FarPtr_03_46:
 	dw Func_03_5787 ; $4046
-FarPtr_03_48:
+FarPtr_SaveStorySlot:
 	dw SaveStorySlot ; $4048
 InitSaveHeader:
 	push af ; $404a
@@ -2207,31 +2207,31 @@ Func_03_4e13:
 	jr z, Label_03_4e77 ; $4e51
 	push de ; $4e53
 	ld de, $0440 ; $4e54
-	farcall FarPtr_03_20 ; $4e57
+	farcall FarPtr_ClearSaveFlag ; $4e57
 	pop de ; $4e5a
 	push de ; $4e5b
 	ld de, $04c0 ; $4e5c
-	farcall FarPtr_03_20 ; $4e5f
+	farcall FarPtr_ClearSaveFlag ; $4e5f
 	pop de ; $4e62
 	jr Label_03_4e87 ; $4e63
 Label_03_4e65:
 	push de ; $4e65
 	ld de, $0400 ; $4e66
-	farcall FarPtr_03_20 ; $4e69
+	farcall FarPtr_ClearSaveFlag ; $4e69
 	pop de ; $4e6c
 	push de ; $4e6d
 	ld de, $0480 ; $4e6e
-	farcall FarPtr_03_20 ; $4e71
+	farcall FarPtr_ClearSaveFlag ; $4e71
 	pop de ; $4e74
 	jr Label_03_4e87 ; $4e75
 Label_03_4e77:
 	push de ; $4e77
 	ld de, $0420 ; $4e78
-	farcall FarPtr_03_20 ; $4e7b
+	farcall FarPtr_ClearSaveFlag ; $4e7b
 	pop de ; $4e7e
 	push de ; $4e7f
 	ld de, $04a0 ; $4e80
-	farcall FarPtr_03_20 ; $4e83
+	farcall FarPtr_ClearSaveFlag ; $4e83
 	pop de ; $4e86
 Label_03_4e87:
 	xor a, a ; $4e87
@@ -3192,23 +3192,23 @@ Func_03_56a8:
 	jr z, Label_03_56f1 ; $56c7
 	push de ; $56c9
 	ld de, $07c0 ; $56ca
-	farcall FarPtr_03_1e ; $56cd
+	farcall FarPtr_SetSaveFlag ; $56cd
 	pop de ; $56d0
 	push de ; $56d1
 	ld de, $0140 ; $56d2
-	farcall FarPtr_03_1e ; $56d5
+	farcall FarPtr_SetSaveFlag ; $56d5
 	pop de ; $56d8
 	push de ; $56d9
 	ld de, $0160 ; $56da
-	farcall FarPtr_03_1e ; $56dd
+	farcall FarPtr_SetSaveFlag ; $56dd
 	pop de ; $56e0
 	push de ; $56e1
 	ld de, $0180 ; $56e2
-	farcall FarPtr_03_1e ; $56e5
+	farcall FarPtr_SetSaveFlag ; $56e5
 	pop de ; $56e8
 	push de ; $56e9
 	ld de, $01a0 ; $56ea
-	farcall FarPtr_03_1e ; $56ed
+	farcall FarPtr_SetSaveFlag ; $56ed
 	pop de ; $56f0
 Label_03_56f1:
 	pop af ; $56f1

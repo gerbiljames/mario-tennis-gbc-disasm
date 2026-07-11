@@ -874,7 +874,7 @@ Func_3b_493f:
 	call ClearMemory16 ; $494f
 	ld hl, $d900 ; $4952
 	ld b, $0b ; $4955
-	farcall FarPtr_03_06 ; $4957
+	farcall FarPtr_ReadSaveBlock ; $4957
 	ld b, a ; $495a
 	pop af ; $495b
 	wram_bank ; $495c
@@ -1125,68 +1125,68 @@ Func_3b_4b19:
 	jp nz, Label_3b_4b2e ; $4b28
 	call Func_3b_4b33 ; $4b2b
 Label_3b_4b2e:
-	farcall FarPtr_03_48 ; $4b2e
+	farcall FarPtr_SaveStorySlot ; $4b2e
 	xor a, a ; $4b31
 	ret ; $4b32
 Func_3b_4b33:
 	ld de, $0720 ; $4b33
-	farcall FarPtr_03_1e ; $4b36
+	farcall FarPtr_SetSaveFlag ; $4b36
 	ld de, $0740 ; $4b39
-	farcall FarPtr_03_1e ; $4b3c
+	farcall FarPtr_SetSaveFlag ; $4b3c
 	ld de, $0760 ; $4b3f
-	farcall FarPtr_03_1e ; $4b42
+	farcall FarPtr_SetSaveFlag ; $4b42
 	ld de, $0780 ; $4b45
-	farcall FarPtr_03_1e ; $4b48
+	farcall FarPtr_SetSaveFlag ; $4b48
 	ld de, $07a0 ; $4b4b
-	farcall FarPtr_03_1e ; $4b4e
+	farcall FarPtr_SetSaveFlag ; $4b4e
 	ld de, $0140 ; $4b51
-	farcall FarPtr_03_1e ; $4b54
+	farcall FarPtr_SetSaveFlag ; $4b54
 	ld de, $0160 ; $4b57
-	farcall FarPtr_03_1e ; $4b5a
+	farcall FarPtr_SetSaveFlag ; $4b5a
 	ld de, $0180 ; $4b5d
-	farcall FarPtr_03_1e ; $4b60
+	farcall FarPtr_SetSaveFlag ; $4b60
 	ld de, $01a0 ; $4b63
-	farcall FarPtr_03_1e ; $4b66
+	farcall FarPtr_SetSaveFlag ; $4b66
 	ld de, $01c0 ; $4b69
-	farcall FarPtr_03_1e ; $4b6c
+	farcall FarPtr_SetSaveFlag ; $4b6c
 	ld de, $01e0 ; $4b6f
-	farcall FarPtr_03_1e ; $4b72
+	farcall FarPtr_SetSaveFlag ; $4b72
 	ld de, $0280 ; $4b75
-	farcall FarPtr_03_1e ; $4b78
+	farcall FarPtr_SetSaveFlag ; $4b78
 	ld de, $02a0 ; $4b7b
-	farcall FarPtr_03_1e ; $4b7e
+	farcall FarPtr_SetSaveFlag ; $4b7e
 	ld de, $02e0 ; $4b81
-	farcall FarPtr_03_1e ; $4b84
+	farcall FarPtr_SetSaveFlag ; $4b84
 	ld de, $0300 ; $4b87
-	farcall FarPtr_03_1e ; $4b8a
+	farcall FarPtr_SetSaveFlag ; $4b8a
 	ld de, $0340 ; $4b8d
-	farcall FarPtr_03_1e ; $4b90
+	farcall FarPtr_SetSaveFlag ; $4b90
 	ld de, $0360 ; $4b93
-	farcall FarPtr_03_1e ; $4b96
+	farcall FarPtr_SetSaveFlag ; $4b96
 	ld de, $03a0 ; $4b99
-	farcall FarPtr_03_1e ; $4b9c
+	farcall FarPtr_SetSaveFlag ; $4b9c
 	ld de, $03c0 ; $4b9f
-	farcall FarPtr_03_1e ; $4ba2
+	farcall FarPtr_SetSaveFlag ; $4ba2
 	ld de, $0500 ; $4ba5
-	farcall FarPtr_03_1e ; $4ba8
+	farcall FarPtr_SetSaveFlag ; $4ba8
 	ld de, $0520 ; $4bab
-	farcall FarPtr_03_1e ; $4bae
+	farcall FarPtr_SetSaveFlag ; $4bae
 	ld de, $0560 ; $4bb1
-	farcall FarPtr_03_1e ; $4bb4
+	farcall FarPtr_SetSaveFlag ; $4bb4
 	ld de, $0580 ; $4bb7
-	farcall FarPtr_03_1e ; $4bba
+	farcall FarPtr_SetSaveFlag ; $4bba
 	ld de, $05c0 ; $4bbd
-	farcall FarPtr_03_1e ; $4bc0
+	farcall FarPtr_SetSaveFlag ; $4bc0
 	ld de, $05e0 ; $4bc3
-	farcall FarPtr_03_1e ; $4bc6
+	farcall FarPtr_SetSaveFlag ; $4bc6
 	ld de, $0620 ; $4bc9
-	farcall FarPtr_03_1e ; $4bcc
+	farcall FarPtr_SetSaveFlag ; $4bcc
 	ld de, $0640 ; $4bcf
-	farcall FarPtr_03_1e ; $4bd2
+	farcall FarPtr_SetSaveFlag ; $4bd2
 	ld de, $0680 ; $4bd5
-	farcall FarPtr_03_1e ; $4bd8
+	farcall FarPtr_SetSaveFlag ; $4bd8
 	ld de, $06a0 ; $4bdb
-	farcall FarPtr_03_1e ; $4bde
+	farcall FarPtr_SetSaveFlag ; $4bde
 	ld a, [$c36c] ; $4be1
 	push af ; $4be4
 	ld c, $00 ; $4be5
@@ -1194,7 +1194,7 @@ Label_3b_4be7:
 	push bc ; $4be7
 	ld a, c ; $4be8
 	ld [$c36c], a ; $4be9
-	farcall FarPtr_03_1a ; $4bec
+	farcall FarPtr_CheckStorySlot ; $4bec
 	cp a, $fe ; $4bef
 	jr z, Label_3b_4c44 ; $4bf1
 	ld de, $1400 ; $4bf3
@@ -1223,7 +1223,7 @@ Label_3b_4be7:
 	call SetGameFlag ; $4c38
 	ld de, $1540 ; $4c3b
 	call SetGameFlag ; $4c3e
-	farcall FarPtr_03_48 ; $4c41
+	farcall FarPtr_SaveStorySlot ; $4c41
 Label_3b_4c44:
 	pop bc ; $4c44
 	inc c ; $4c45
@@ -4257,7 +4257,7 @@ Label_3b_668d:
 	ld a, [hl+] ; $668d
 	ld d, [hl] ; $668e
 	ld e, a ; $668f
-	farcall FarPtr_03_1c ; $6690
+	farcall FarPtr_TestSaveFlag ; $6690
 	jr z, Label_3b_6699 ; $6693
 	ld a, $01 ; $6695
 	or a, b ; $6697
@@ -4871,7 +4871,7 @@ Func_3b_6c3d:
 	call ClearMemory16 ; $6c4c
 	ld hl, $d000 ; $6c4f
 	ld b, $0b ; $6c52
-	farcall FarPtr_03_06 ; $6c54
+	farcall FarPtr_ReadSaveBlock ; $6c54
 	pop af ; $6c57
 	wram_bank ; $6c58
 	ret ; $6c5c
@@ -6748,7 +6748,7 @@ Label_3b_7cd6:
 	or a, e ; $7cda
 	cp a, $ff ; $7cdb
 	jr z, Label_3b_7ce8 ; $7cdd
-	farcall FarPtr_03_1c ; $7cdf
+	farcall FarPtr_TestSaveFlag ; $7cdf
 	jr nz, Label_3b_7ce8 ; $7ce2
 	ld b, $10 ; $7ce4
 	jr Label_3b_7cf2 ; $7ce6
@@ -6922,7 +6922,7 @@ Label_3b_7e0f:
 	cp a, $09 ; $7e12
 	jr nz, Label_3b_7e07 ; $7e14
 	ld de, $07a0 ; $7e16
-	farcall FarPtr_03_1e ; $7e19
+	farcall FarPtr_SetSaveFlag ; $7e19
 	jr Label_3b_7e24 ; $7e1c
 Label_3b_7e1e:
 	inc c ; $7e1e

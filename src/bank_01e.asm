@@ -1107,7 +1107,7 @@ Label_1e_49c8:
 	ld a, d ; $49c8
 	push af ; $49c9
 	ld a, $00 ; $49ca
-	farcall FarPtr_08_0c ; $49cc
+	farcall FarPtr_InitChar ; $49cc
 	ld a, $0f ; $49cf
 	ld [$df37], a ; $49d1
 	ld de, $a000 ; $49d4
@@ -1165,7 +1165,7 @@ Label_1e_4a43:
 	ld a, d ; $4a43
 	push af ; $4a44
 	ld a, $02 ; $4a45
-	farcall FarPtr_08_0c ; $4a47
+	farcall FarPtr_InitChar ; $4a47
 	ld a, $0e ; $4a4a
 	ld [$df37], a ; $4a4c
 	ld de, $a100 ; $4a4f
@@ -1188,7 +1188,7 @@ Label_1e_4a43:
 	xor a, a ; $4a7c
 	call Func_1e_4aa8 ; $4a7d
 	ld hl, $df80 ; $4a80
-	farcall FarPtr_08_10 ; $4a83
+	farcall FarPtr_DrawCharSprite ; $4a83
 	wram_bank $04 ; $4a86
 	test_flag $1f, 7 ; $4a8c
 	ret z ; $4a8f
@@ -1196,7 +1196,7 @@ Label_1e_4a43:
 	ld a, $01 ; $4a96
 	call Func_1e_4aa8 ; $4a98
 	ld hl, $df80 ; $4a9b
-	farcall FarPtr_08_10 ; $4a9e
+	farcall FarPtr_DrawCharSprite ; $4a9e
 	wram_bank $04 ; $4aa1
 	ret ; $4aa7
 Func_1e_4aa8:
@@ -1909,7 +1909,7 @@ Label_1e_5920:
 	xor a, a ; $5926
 	call Func_1e_5954 ; $5927
 	ld hl, $df80 ; $592a
-	farcall FarPtr_08_10 ; $592d
+	farcall FarPtr_DrawCharSprite ; $592d
 	wram_bank $04 ; $5930
 	pop bc ; $5936
 	test_flag $1f, 7 ; $5937
@@ -1921,7 +1921,7 @@ Label_1e_5920:
 	ld a, $01 ; $5942
 	call Func_1e_5954 ; $5944
 	ld hl, $df80 ; $5947
-	farcall FarPtr_08_10 ; $594a
+	farcall FarPtr_DrawCharSprite ; $594a
 	wram_bank $04 ; $594d
 	ret ; $5953
 Func_1e_5954:
@@ -2477,14 +2477,14 @@ Label_1e_66a9:
 	jr z, Label_1e_66be ; $66b4
 	push de ; $66b6
 	ld de, $01c0 ; $66b7
-	farcall FarPtr_03_1e ; $66ba
+	farcall FarPtr_SetSaveFlag ; $66ba
 	pop de ; $66bd
 Label_1e_66be:
 	test_flag $06, 4 ; $66be
 	jr z, Label_1e_66cb ; $66c1
 	push de ; $66c3
 	ld de, $01e0 ; $66c4
-	farcall FarPtr_03_1e ; $66c7
+	farcall FarPtr_SetSaveFlag ; $66c7
 	pop de ; $66ca
 Label_1e_66cb:
 	call Func_1e_6f8d ; $66cb
@@ -2739,7 +2739,7 @@ Func_1e_6967:
 	srl a ; $6986
 	and a, $03 ; $6988
 	ld [$c36c], a ; $698a
-	farcall FarPtr_03_1a ; $698d
+	farcall FarPtr_CheckStorySlot ; $698d
 	ld d, h ; $6990
 	ld e, l ; $6991
 	ld hl, $c8b1 ; $6992
@@ -2756,7 +2756,7 @@ Label_1e_699e:
 	ld a, e ; $69a3
 	ld [hl+], a ; $69a4
 	ld [hl], d ; $69a5
-	farcall FarPtr_03_48 ; $69a6
+	farcall FarPtr_SaveStorySlot ; $69a6
 	pop af ; $69a9
 	ld [$c36c], a ; $69aa
 Label_1e_69ad:
@@ -2801,7 +2801,7 @@ Label_1e_69ec:
 	srl a ; $69ed
 	and a, $03 ; $69ef
 	ld [$c36c], a ; $69f1
-	farcall FarPtr_03_1a ; $69f4
+	farcall FarPtr_CheckStorySlot ; $69f4
 	ld hl, $c8b3 ; $69f7
 	ld a, [hl+] ; $69fa
 	ld h, [hl] ; $69fb
@@ -2816,7 +2816,7 @@ Label_1e_6a03:
 	ld a, e ; $6a08
 	ld [hl+], a ; $6a09
 	ld [hl], d ; $6a0a
-	farcall FarPtr_03_48 ; $6a0b
+	farcall FarPtr_SaveStorySlot ; $6a0b
 	pop af ; $6a0e
 	ld [$c36c], a ; $6a0f
 Label_1e_6a12:
@@ -3097,7 +3097,7 @@ Label_1e_6bc1:
 	ld [hl], a ; $6be6
 	pop af ; $6be7
 	ld [wGameMode], a ; $6be8
-	farcall FarPtr_03_48 ; $6beb
+	farcall FarPtr_SaveStorySlot ; $6beb
 	pop af ; $6bee
 	wram_bank ; $6bef
 	pop hl ; $6bf3
@@ -3378,7 +3378,7 @@ Func_1e_6eb1:
 	jr nz, Label_1e_6ec1 ; $6eb6
 	push de ; $6eb8
 	ld de, $0740 ; $6eb9
-	farcall FarPtr_03_1e ; $6ebc
+	farcall FarPtr_SetSaveFlag ; $6ebc
 	pop de ; $6ebf
 	ret ; $6ec0
 Label_1e_6ec1:
@@ -3386,7 +3386,7 @@ Label_1e_6ec1:
 	jr nz, Label_1e_6ece ; $6ec3
 	push de ; $6ec5
 	ld de, $0760 ; $6ec6
-	farcall FarPtr_03_1e ; $6ec9
+	farcall FarPtr_SetSaveFlag ; $6ec9
 	pop de ; $6ecc
 	ret ; $6ecd
 Label_1e_6ece:
@@ -3394,7 +3394,7 @@ Label_1e_6ece:
 	jr nz, Label_1e_6edb ; $6ed0
 	push de ; $6ed2
 	ld de, $0780 ; $6ed3
-	farcall FarPtr_03_1e ; $6ed6
+	farcall FarPtr_SetSaveFlag ; $6ed6
 	pop de ; $6ed9
 	ret ; $6eda
 Label_1e_6edb:
@@ -3425,7 +3425,7 @@ Label_1e_6ef7:
 	ld a, [hl+] ; $6efb
 	ld d, [hl] ; $6efc
 	ld e, a ; $6efd
-	farcall FarPtr_03_1e ; $6efe
+	farcall FarPtr_SetSaveFlag ; $6efe
 	ret ; $6f01
 	INCBIN "data/bank_01e/d_6f02.bin" ; $6f02, 54 bytes
 Func_1e_6f38:
@@ -3499,7 +3499,7 @@ Label_1e_6f96:
 	jr nz, Label_1e_6f96 ; $6fa3
 	push de ; $6fa5
 	ld de, $0720 ; $6fa6
-	farcall FarPtr_03_1e ; $6fa9
+	farcall FarPtr_SetSaveFlag ; $6fa9
 	pop de ; $6fac
 Label_1e_6fad:
 	pop hl ; $6fad
@@ -3852,7 +3852,7 @@ Label_1e_7218:
 Func_1e_7263:
 	push de ; $7263
 	ld de, $0720 ; $7264
-	farcall FarPtr_03_1c ; $7267
+	farcall FarPtr_TestSaveFlag ; $7267
 	pop de ; $726a
 	jr z, Label_1e_7270 ; $726b
 	set_flag $1f, 6 ; $726d

@@ -55,7 +55,7 @@ Label_0b_4055:
 	ld d, [hl] ; $405b
 	ld e, a ; $405c
 	ldh a, [$ff95] ; $405d
-	farcall FarPtr_08_48 ; $405f
+	farcall FarPtr_SetModeHookTable ; $405f
 	ld hl, $000a ; $4062
 	add hl, bc ; $4065
 	ld a, [hl+] ; $4066
@@ -124,7 +124,7 @@ Func_0b_414b:
 	push af ; $414d
 	wram_bank $05 ; $414e
 	ld a, $00 ; $4154
-	farcall FarPtr_08_1c ; $4156
+	farcall FarPtr_SetCharState ; $4156
 	pop af ; $4159
 	wram_bank ; $415a
 	ret ; $415e
@@ -646,7 +646,7 @@ Label_0b_5d0a:
 	ld a, $01 ; $5d33
 	ld hl, $446e ; $5d35
 	call Func_00_1b6a ; $5d38
-	farcall FarPtr_08_5e ; $5d3b
+	farcall FarPtr_StartPointEndReactions ; $5d3b
 	ld hl, $446e ; $5d3e
 	call Func_00_1bcb ; $5d41
 	call Func_0b_43a6 ; $5d44
@@ -986,7 +986,7 @@ Label_0b_6c92:
 	ld a, $01 ; $6cbb
 	ld hl, $446e ; $6cbd
 	call Func_00_1b6a ; $6cc0
-	farcall FarPtr_08_5e ; $6cc3
+	farcall FarPtr_StartPointEndReactions ; $6cc3
 	ld hl, $446e ; $6cc6
 	call Func_00_1bcb ; $6cc9
 	call Func_0b_43a6 ; $6ccc
@@ -1140,7 +1140,7 @@ Label_0b_6da6:
 	ld a, $01 ; $7165
 	ld hl, $446e ; $7167
 	call Func_00_1b6a ; $716a
-	farcall FarPtr_08_5e ; $716d
+	farcall FarPtr_StartPointEndReactions ; $716d
 	ld hl, $446e ; $7170
 	call Func_00_1bcb ; $7173
 	call Func_0b_43a6 ; $7176

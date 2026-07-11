@@ -8,7 +8,7 @@ DataPtr_5f_00:
 	dw Data_5f_4c13 ; $4000
 DataPtr_5f_02:
 	dw Data_5f_4020 ; $4002
-DataPtr_5f_04:
+DataPtr_ClubhouseSceneTilemap:
 	dw ClubhouseSceneTilemap ; $4004
 DataPtr_5f_06:
 	dw Lz_5f_4ac6 ; $4006
@@ -18,13 +18,13 @@ DataPtr_5f_0a:
 	dw Data_5f_4c3b ; $400a
 DataPtr_5f_0c:
 	dw Data_5f_4c63 ; $400c
-DataPtr_5f_0e:
+DataPtr_ClubhouseSceneTiles:
 	dw ClubhouseSceneTiles ; $400e
 DataPtr_5f_10:
 	dw Data_5f_5904 ; $4010
 DataPtr_5f_12:
 	dw Data_5f_4c63 ; $4012
-DataPtr_5f_14:
+DataPtr_CourtyardSceneTilemap:
 	dw CourtyardSceneTilemap ; $4014
 DataPtr_5f_16:
 	dw Lz_5f_57de ; $4016
@@ -34,7 +34,7 @@ DataPtr_5f_1a:
 	dw Data_5f_592c ; $401a
 DataPtr_5f_1c:
 	dw Data_5f_5954 ; $401c
-DataPtr_5f_1e:
+DataPtr_CourtyardSceneTiles:
 	dw CourtyardSceneTiles ; $401e
 Data_5f_4020:
 	INCBIN "data/bank_05f/d_4020.bin" ; $4020, 64 bytes
