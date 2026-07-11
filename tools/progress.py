@@ -33,7 +33,7 @@ def main():
     for line in Path(args.manifest).read_text().splitlines():
         if not line or line.startswith("#"):
             continue
-        _blob, off_s, len_s = line.split()
+        _blob, off_s, len_s = line.split()[:3]
         bank = int(off_s, 16) // BANK_SIZE
         data_bytes[bank] = data_bytes.get(bank, 0) + int(len_s, 16)
 
