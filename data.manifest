@@ -210,34 +210,34 @@ bank_007/d_5aa7.bin 01daa7 c
 bank_007/d_5c42.bin 01dc42 b2
 bank_007/d_5d1e.bin 01dd1e db
 bank_007/d_5ea1.bin 01dea1 195
-bank_008/d_431e.bin 02031e 8
-bank_008/d_47de.bin 0207de 4
-bank_008/d_48e5.bin 0208e5 8
+bank_008/bytes_431e.asm 02031e 8 bytes:8
+bank_008/bytes_47de.asm 0207de 4 bytes:4
+bank_008/bytes_48e5.asm 0208e5 8 bytes:8
 bank_008/d_4c18.bin 020c18 1
-bank_008/d_4cae.bin 020cae 4
-bank_008/d_4fa0.bin 020fa0 4
-bank_008/d_50dc.bin 0210dc 40
-bank_008/d_5373.bin 021373 10
-bank_008/d_546c.bin 02146c 10
-bank_008/d_54c2.bin 0214c2 28
-bank_008/d_55a0.bin 0215a0 14
+bank_008/bytes_4cae.asm 020cae 4 bytes:4
+bank_008/bytes_4fa0.asm 020fa0 4 bytes:4
+bank_008/records_50dc.asm 0210dc 40 records:8
+bank_008/bytes_5373.asm 021373 10 bytes:8
+bank_008/bytes_546c.asm 02146c 10 bytes:4
+bank_008/bytes_54c2.asm 0214c2 28 bytes:8
+bank_008/records_55a0.asm 0215a0 14 records:5
 bank_008/d_5dc4.bin 021dc4 64
-bank_008/d_60c8.bin 0220c8 10
-bank_008/d_6107.bin 022107 10
-bank_008/d_6301.bin 022301 d
+bank_008/records_60c8.asm 0220c8 10 records:4
+bank_008/records_6107.asm 022107 10 records:4
+bank_008/bytes_6301.asm 022301 d bytes:4
 bank_008/d_6957.bin 022957 1
 bank_008/d_6d26.bin 022d26 1
-bank_008/d_707a.bin 02307a 4
-bank_008/d_709b.bin 02309b 10
-bank_008/d_70b4.bin 0230b4 10
-bank_008/d_7286.bin 023286 20
-bank_008/d_7643.bin 023643 8
-bank_008/d_76fc.bin 0236fc 8
-bank_008/d_781f.bin 02381f e
-bank_008/d_7a3d.bin 023a3d 10
+bank_008/bytes_707a.asm 02307a 4 bytes:4
+bank_008/bytes_709b.asm 02309b 10 bytes:4
+bank_008/bytes_70b4.asm 0230b4 10 bytes:4
+bank_008/bytes_7286.asm 023286 20 bytes:8
+bank_008/bytes_7643.asm 023643 8 bytes:8
+bank_008/bytes_76fc.asm 0236fc 8 bytes:8
+bank_008/records_781f.asm 02381f e records:2
+bank_008/records_7a3d.asm 023a3d 10 records:2
 bank_008/d_7a9d.bin 023a9d 40
-bank_008/d_7b0b.bin 023b0b 8
-bank_008/d_7b73.bin 023b73 8
+bank_008/bytes_7b0b.asm 023b0b 8 bytes:8
+bank_008/bytes_7b73.asm 023b73 8 bytes:8
 bank_008/d_7fc3.bin 023fc3 3d
 bank_009/records_41bc.asm 0241bc 70 records:16
 bank_009/d_4298.bin 024298 40
