@@ -22,7 +22,8 @@ Data_70_400e:
 	INCBIN "data/bank_070/d_400e.bin" ; $400e, 16 bytes
 	INCBIN "data/bank_070/d_401e.bin" ; $401e, 3219 bytes
 Data_70_4cb1:
-	INCBIN "data/bank_070/d_4cb1.bin" ; $4cb1, 3232 bytes
+	INCBIN "data/bank_070/d_4cb1.bin" ; $4cb1, 16 bytes
+	INCBIN "data/bank_070/d_4cc1.bin" ; $4cc1, 3216 bytes
 Data_70_5951:
 	INCBIN "data/bank_070/d_5951.bin" ; $5951, 16 bytes
 	INCBIN "data/bank_070/d_5961.bin" ; $5961, 2164 bytes
@@ -30,8 +31,12 @@ Data_70_61d5:
 	INCBIN "data/bank_070/d_61d5.bin" ; $61d5, 16 bytes
 	INCBIN "data/bank_070/d_61e5.bin" ; $61e5, 2160 bytes
 Data_70_6a55:
-	INCBIN "data/bank_070/d_6a55.bin" ; $6a55, 1656 bytes
+	INCBIN "data/bank_070/d_6a55.bin" ; $6a55, 16 bytes
+	INCBIN "data/bank_070/d_6a65.bin" ; $6a65, 1640 bytes
 Data_70_70cd:
-	INCBIN "data/bank_070/d_70cd.bin" ; $70cd, 1648 bytes
+	INCBIN "data/bank_070/d_70cd.bin" ; $70cd, 16 bytes
+	INCBIN "data/bank_070/d_70dd.bin" ; $70dd, 1632 bytes
 Data_70_773d:
-	INCBIN "data/bank_070/d_773d.bin" ; $773d, 2243 bytes
+	INCBIN "data/bank_070/d_773d.bin" ; $773d, 16 bytes
+	INCBIN "data/bank_070/d_774d.bin" ; $774d, 1632 bytes
+	ds 595, $ff ; $7dad, fill

@@ -523,10 +523,12 @@ class Disassembly:
     # runtime-indexed loader copies as 16-byte object headers to $dad0. The
     # dynamic index defeats static backtracking, so without a hook a slot's
     # 16-byte copy length is unknown and its region stays one blob instead of
-    # header + body. Read the table to split bank $72's nine object headers
-    # uniformly (the hooks only caught four). Scoped to $72; the character
-    # banks $40-$5d in the same table are carved by find_sprite_banks.
+    # header + body. Read the table so every object bank ($6f-$77) splits its
+    # headers uniformly, not just the slots the capture sessions happened to
+    # load. Excludes the character banks $40-$5d, which the same table lists
+    # but find_sprite_banks carves with a richer per-frame structure.
     OBJECT_DISPATCH = 0x10F75  # bank $04, $4f75
+    OBJECT_BANKS = range(0x70, 0x77)  # $70-$76; $6a/$6f/$77 via find_walk_sprite_banks
 
     def add_object_header_slots(self):
         off = self.OBJECT_DISPATCH
@@ -537,10 +539,10 @@ class Disassembly:
                 break
             slot, bank = w & 0xFF, w >> 8
             off += 2
-            if bank == 0x72 and self._add_data_slot(bank, slot, "copy", 16):
+            if bank in self.OBJECT_BANKS and self._add_data_slot(bank, slot, "copy", 16):
                 added += 1
         if added:
-            print(f"object headers: {added} bank $72 slots via $4f75 dispatch table")
+            print(f"object headers: {added} $70-$76 slots via $4f75 dispatch table")
 
     def _add_data_slot(self, bank, slot, kind, length=None):
         """Validate and record one data-pointer table slot; returns the
@@ -729,9 +731,11 @@ class Disassembly:
     def find_walk_sprite_banks(self):
         """Carve the overworld walk-sprite banks ($6a, $6f, $77): a bare
         pointer table at $4000 whose first entry points immediately past
-        the table, each target a character's sprite-set block (a short
-        header, an OAM word list, then ~25 16x16 walk frames), trailing
-        $ff fill after the last block."""
+        the table, each target a character's sprite-set block (a 16-byte
+        object header, an OAM word list, then ~25 16x16 walk frames),
+        trailing $ff fill after the last block. Same object-record layout as
+        the $70-$76 banks, so split the header off (body follows
+        unclassified) for a uniform header + body shape."""
         found = []
         for bank in range(1, len(self.rom) // BANK_SIZE):
             base = bank * BANK_SIZE
@@ -762,7 +766,7 @@ class Disassembly:
             for i, p in enumerate(ptrs):
                 self.ptr_words[base + 2 * i] = (flat(p), "")
             for a, s in zip(ptrs, sizes):
-                self.data_blobs[flat(a)] = (s, "copy")
+                self.data_blobs[flat(a)] = (16, "copy")
             found.append(bank)
         if found:
             print(f"walk-sprite banks: {len(found)} carved "
