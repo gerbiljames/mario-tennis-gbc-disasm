@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~117.2K instructions / 248,113 bytes of proven code (11.8% of the 2 MiB ROM)
+**~118.1K instructions / 251,413 bytes of proven code (12.0% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -10,7 +10,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `194c1ae`); the whole history rebuilds
+Everything below is **committed** (HEAD `e969a2a`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -233,13 +233,26 @@ $ff run that reaches the bank end is now emitted as `ds` fill regardless of
 length (previously needed 64+; this also converted short trailing fills in
 13 other banks).
 
+**Bank $3b got the same treatment — zero blobs, 98.0% code** (was 77.8% with
+67 blobs). Blob classification found ~1.6 KB of genuinely stranded code (70
+static seeds in `coverage/bank3b_static_code.json`): sprite-row renderers
+calling `QueueSprite`, a 529-byte cursor/menu handler at `$41a8` reading
+`$cb04/$cb05`, `wram_bank $03` helpers, and functions reached only via
+`ld hl, addr` + `jp hl` dispatch (e.g. `$6cac` loads `$6f5b`). The other 65
+regions were structured via `data_tables.json`: WRAM `dw` pointer lists,
+self-referencing pointer-table + payload pairs, OAM sprite-template rows
+(`bytes:4` with `$80` terminators), 16-byte permutation tables, and small
+byte lookups; mixed blobs (data + code + data, e.g. `$5278`, `$734f`,
+`$79b6`) were split at exact boundaries. All 753 labels are still
+auto-named — semantics are the next step.
+
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm
-`$5dc4`'s semantics via a runtime trace), bank $13 (biggest story bank),
-bank $1e, sound-command enum for the 451 `sound $xx` sites, WRAM map expansion
-from ram_map gaps.
+`$5dc4`'s semantics via a runtime trace), bank $3b (753 unnamed routines, now
+fully carved), bank $13 (biggest story bank), bank $1e, sound-command enum
+for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `194c1ae`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `e969a2a`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
