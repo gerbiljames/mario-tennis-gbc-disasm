@@ -136,6 +136,7 @@ class Disassembly:
         self.jt_entries = {}  # rst $00 inline jump-table entry offset -> target_flat
         self.data_slots = {}  # entry_flat -> (bank, slot, src_flat, kind)
         self.data_blobs = {}  # src_flat -> (length or None, kind)
+        self.object_headers = set()  # src_flat of 16-byte object headers
         self.data_site_notes = {}  # `ld hl` setup offset -> (bank, slot)
         self.ptr_words = {}   # word offset -> (target_flat or None, note)
         self.ptr_labels = {}  # flat offset -> generated structure label
@@ -539,8 +540,11 @@ class Disassembly:
                 break
             slot, bank = w & 0xFF, w >> 8
             off += 2
-            if bank in self.OBJECT_BANKS and self._add_data_slot(bank, slot, "copy", 16):
-                added += 1
+            if bank in self.OBJECT_BANKS:
+                src = self._add_data_slot(bank, slot, "copy", 16)
+                if src is not None:
+                    self.object_headers.add(src)
+                    added += 1
         if added:
             print(f"object headers: {added} $70-$76 slots via $4f75 dispatch table")
 
@@ -767,6 +771,7 @@ class Disassembly:
                 self.ptr_words[base + 2 * i] = (flat(p), "")
             for a, s in zip(ptrs, sizes):
                 self.data_blobs[flat(a)] = (16, "copy")
+                self.object_headers.add(flat(a))
             found.append(bank)
         if found:
             print(f"walk-sprite banks: {len(found)} carved "
@@ -1229,6 +1234,20 @@ ENDM
 """
 
 
+def render_object_header(rom, off):
+    """Render a 16-byte sprite/object header as committed db/dw source: a
+    count byte, three flag bytes, then six pointers into the record's body.
+    Bank $04's loader copies these to $dad0 and expands them into an actor
+    struct (word 0 -> +$24, word 1 -> +$28, word 2 dereferenced for an
+    8-byte subrecord, word 3 -> +$38). Being structural (a count and
+    pointers, like the DataPtr table above it) they live in the source, not
+    the gitignored data blobs."""
+    b = rom[off:off + 16]
+    words = ", ".join(f"${b[4 + 2 * i] | (b[5 + 2 * i] << 8):04x}" for i in range(6))
+    return [f"\tdb ${b[0]:02x}, ${b[1]:02x}, ${b[2]:02x}, ${b[3]:02x} ; count, flags",
+            f"\tdw {words} ; body pointers"]
+
+
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None):
     data_tables = data_tables or {}
     rom = dis.rom
@@ -1368,6 +1387,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                         length = mlen
                     if kind == "lz":
                         prefix = "lz"
+                if run_start in dis.object_headers:
+                    lines.extend(render_object_header(rom, run_start))
+                    continue
                 if mark and mark[0]:
                     blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
                     manifest.append((blob, run_start, length, None))

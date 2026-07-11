@@ -32,7 +32,10 @@ byte-for-byte.
   is disassembled; everything else is an `INCBIN` of a blob in `data/`,
   except long constant-byte padding runs (`$ff`, and `$00` past 256 bytes),
   which are emitted as `ds` fill directives — unused ROM space, visible as
-  such in the source.
+  such in the source. Pointer tables (`FarPtr`/`DataPtr`/jump tables) and the
+  16-byte sprite/object headers of the `$6a`/`$6f`/`$70`-`$77` banks render as
+  in-source `dw`/`db` structure — layout metadata, not bulk data — so the bulk
+  graphics/audio/text stay in the extracted (gitignored) blobs.
 - `data.manifest` — offset/length list consumed by `tools/extract.py` to
   slice the base ROM into `data/` (gitignored).
 - `labels.json` — symbol name overrides (`{"0x1234": "SomeName"}`, keys are

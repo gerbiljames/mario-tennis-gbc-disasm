@@ -23,30 +23,39 @@ DataPtr_75_0e:
 DataPtr_75_10:
 	dw Data_75_739d ; $4010
 Data_75_4012:
-	INCBIN "data/bank_075/d_4012.bin" ; $4012, 16 bytes
+	db $03, $04, $02, $00 ; count, flags
+	dw $401c, $4630, $401c, $4030, $4130, $4230 ; body pointers
 	INCBIN "data/bank_075/d_4022.bin" ; $4022, 1627 bytes
 Data_75_467d:
-	INCBIN "data/bank_075/d_467d.bin" ; $467d, 16 bytes
+	db $03, $04, $02, $00 ; count, flags
+	dw $4687, $4ca0, $4687, $46a0, $47a0, $48a0 ; body pointers
 	INCBIN "data/bank_075/d_468d.bin" ; $468d, 1632 bytes
 Data_75_4ced:
-	INCBIN "data/bank_075/d_4ced.bin" ; $4ced, 16 bytes
+	db $05, $04, $02, $00 ; count, flags
+	dw $4cf7, $5310, $4cf7, $4d10, $4e10, $4f10 ; body pointers
 	INCBIN "data/bank_075/d_4cfd.bin" ; $4cfd, 1632 bytes
 Data_75_535d:
-	INCBIN "data/bank_075/d_535d.bin" ; $535d, 16 bytes
+	db $05, $04, $02, $00 ; count, flags
+	dw $5367, $5980, $5367, $5380, $5480, $5580 ; body pointers
 	INCBIN "data/bank_075/d_536d.bin" ; $536d, 1632 bytes
 Data_75_59cd:
-	INCBIN "data/bank_075/d_59cd.bin" ; $59cd, 16 bytes
+	db $07, $04, $02, $00 ; count, flags
+	dw $59d7, $5ff0, $59d7, $59f0, $5af0, $5bf0 ; body pointers
 	INCBIN "data/bank_075/d_59dd.bin" ; $59dd, 1632 bytes
 Data_75_603d:
-	INCBIN "data/bank_075/d_603d.bin" ; $603d, 16 bytes
+	db $07, $04, $02, $00 ; count, flags
+	dw $6047, $6660, $6047, $6060, $6160, $6260 ; body pointers
 	INCBIN "data/bank_075/d_604d.bin" ; $604d, 1632 bytes
 Data_75_66ad:
-	INCBIN "data/bank_075/d_66ad.bin" ; $66ad, 16 bytes
+	db $07, $04, $02, $00 ; count, flags
+	dw $66b7, $6cd0, $66b7, $66d0, $67d0, $68d0 ; body pointers
 	INCBIN "data/bank_075/d_66bd.bin" ; $66bd, 1646 bytes
 Data_75_6d2b:
-	INCBIN "data/bank_075/d_6d2b.bin" ; $6d2b, 16 bytes
+	db $07, $04, $02, $00 ; count, flags
+	dw $6d35, $7350, $6d35, $6d50, $6e50, $6f50 ; body pointers
 	INCBIN "data/bank_075/d_6d3b.bin" ; $6d3b, 1634 bytes
 Data_75_739d:
-	INCBIN "data/bank_075/d_739d.bin" ; $739d, 16 bytes
+	db $07, $04, $02, $00 ; count, flags
+	dw $73a7, $7dc0, $73a7, $73c0, $74c0, $75c0 ; body pointers
 	INCBIN "data/bank_075/d_73ad.bin" ; $73ad, 2669 bytes
 	ds 486, $ff ; $7e1a, fill
