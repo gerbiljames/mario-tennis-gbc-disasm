@@ -46,7 +46,7 @@ Func_1c_401a:
 	jp nz, Label_1c_40f1 ; $4034
 	pop bc ; $4037
 Label_1c_4038:
-	call Func_00_1b38 ; $4038
+	call ClearFrameTasks ; $4038
 	call DisableLCDSafely ; $403b
 	xor a, a ; $403e
 	ldh [$ff8b], a ; $403f
@@ -70,16 +70,16 @@ Label_1c_4038:
 	call Func_00_2631 ; $406f
 	ld a, $01 ; $4072
 	ld hl, $4e54 ; $4074
-	call Func_00_1b6a ; $4077
+	call RegisterFrameTask ; $4077
 	ld a, $01 ; $407a
 	ld hl, $5049 ; $407c
-	call Func_00_1b6a ; $407f
+	call RegisterFrameTask ; $407f
 	ld c, $10 ; $4082
 	call Func_00_1d2e ; $4084
 	call Func_00_1da4 ; $4087
 	ld a, $01 ; $408a
 	ld hl, $45fa ; $408c
-	call Func_00_1b6a ; $408f
+	call RegisterFrameTask ; $408f
 	call Func_1c_4682 ; $4092
 	wram_bank $06 ; $4095
 	xor a, a ; $409b
@@ -88,7 +88,7 @@ Label_1c_4038:
 	call Func_1c_495d ; $40a2
 	ld a, $01 ; $40a5
 	ld hl, $54f2 ; $40a7
-	call Func_00_1b6a ; $40aa
+	call RegisterFrameTask ; $40aa
 	jr Label_1c_40b2 ; $40ad
 Label_1c_40af:
 	call Func_1c_5572 ; $40af
@@ -2321,7 +2321,7 @@ Label_1c_52c1:
 	call Func_1c_495d ; $5328
 	ld a, $01 ; $532b
 	ld hl, $5049 ; $532d
-	call Func_00_1b6a ; $5330
+	call RegisterFrameTask ; $5330
 	call Func_1c_48ec ; $5333
 	call Func_1c_489b ; $5336
 	ld hl, $590d ; $5339
@@ -2356,7 +2356,7 @@ Label_1c_52c1:
 	call Func_1c_495d ; $5395
 	ld a, $01 ; $5398
 	ld hl, $54f2 ; $539a
-	call Func_00_1b6a ; $539d
+	call RegisterFrameTask ; $539d
 	jp Func_1c_509d ; $53a0
 Func_1c_53a3:
 	wram_bank $06 ; $53a3
@@ -2626,13 +2626,13 @@ Func_1c_5572:
 	call Func_00_2631 ; $55e6
 	ld a, $01 ; $55e9
 	ld hl, $4e54 ; $55eb
-	call Func_00_1b6a ; $55ee
+	call RegisterFrameTask ; $55ee
 	ld c, $10 ; $55f1
 	call Func_00_1d2e ; $55f3
 	call Func_00_1da4 ; $55f6
 	ld a, $01 ; $55f9
 	ld hl, $45fa ; $55fb
-	call Func_00_1b6a ; $55fe
+	call RegisterFrameTask ; $55fe
 	call Func_1c_48ec ; $5601
 	call Func_1c_489b ; $5604
 	ld hl, $597b ; $5607
@@ -2851,7 +2851,7 @@ Func_1c_728b:
 Func_1c_72ec:
 	ld a, $01 ; $72ec
 	ld hl, $45fa ; $72ee
-	call Func_00_1b6a ; $72f1
+	call RegisterFrameTask ; $72f1
 	ret ; $72f4
 Func_1c_72f5:
 	ld hl, $45fa ; $72f5

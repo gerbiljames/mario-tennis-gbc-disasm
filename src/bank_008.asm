@@ -216,7 +216,7 @@ Label_08_413b:
 	ldh [$ffdd], a ; $4142
 	ret ; $4144
 Func_08_4145:
-	call Func_00_1b38 ; $4145
+	call ClearFrameTasks ; $4145
 	farcall FarPtr_05_76 ; $4148
 	ld a, $02 ; $414b
 	ld [$c3b3], a ; $414d
@@ -567,7 +567,7 @@ Func_08_441d:
 	ldh a, [$ffd8] ; $441d
 	and a, a ; $441f
 	jr nz, Label_08_4425 ; $4420
-	ldh a, [$ff91] ; $4422
+	ldh a, [hInputPressed] ; $4422
 	ret ; $4424
 Label_08_4425:
 	ldh a, [$ffd3] ; $4425

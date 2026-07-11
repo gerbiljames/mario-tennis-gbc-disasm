@@ -87,7 +87,7 @@ Label_01_40b2:
 	ld a, $03 ; $40bb
 	ldh [$ff9e], a ; $40bd
 Label_01_40bf:
-	ldh a, [$ff91] ; $40bf
+	ldh a, [hInputPressed] ; $40bf
 	bit 0, a ; $40c1
 	jr z, Label_01_40cf ; $40c3
 	push de ; $40c5
@@ -111,7 +111,7 @@ Label_01_40d8:
 	jp Label_01_40b2 ; $40e9
 	INCBIN "data/bank_001/d_40ec.bin" ; $40ec, 13 bytes
 Label_01_40f9:
-	ldh a, [$ff91] ; $40f9
+	ldh a, [hInputPressed] ; $40f9
 	bit 3, a ; $40fb
 	jr z, Label_01_4113 ; $40fd
 	ld a, $01 ; $40ff
@@ -426,7 +426,7 @@ Func_01_6a5b:
 	pop hl ; $6a89
 Label_01_6a8a:
 	call Func_00_2631 ; $6a8a
-	ldh a, [$ff91] ; $6a8d
+	ldh a, [hInputPressed] ; $6a8d
 	and a, $c0 ; $6a8f
 	jr z, Label_01_6a97 ; $6a91
 	ld a, b ; $6a93
@@ -436,7 +436,7 @@ Label_01_6a97:
 	ld a, b ; $6a97
 	or a, a ; $6a98
 	jr nz, Label_01_6abd ; $6a99
-	ldh a, [$ff91] ; $6a9b
+	ldh a, [hInputPressed] ; $6a9b
 	bit 4, a ; $6a9d
 	jr z, Label_01_6aa4 ; $6a9f
 	inc d ; $6aa1
@@ -459,7 +459,7 @@ Label_01_6ab2:
 	ld d, $00 ; $6ab9
 	jr Label_01_6add ; $6abb
 Label_01_6abd:
-	ldh a, [$ff91] ; $6abd
+	ldh a, [hInputPressed] ; $6abd
 	bit 4, a ; $6abf
 	jr z, Label_01_6ac6 ; $6ac1
 	inc e ; $6ac3
@@ -529,7 +529,7 @@ Label_01_6b17:
 	call Func_00_1ae4 ; $6b28
 	pop af ; $6b2b
 	pop de ; $6b2c
-	ldh a, [$ff91] ; $6b2d
+	ldh a, [hInputPressed] ; $6b2d
 	bit 0, a ; $6b2f
 	jr z, Label_01_6b61 ; $6b31
 	bit 0, b ; $6b33

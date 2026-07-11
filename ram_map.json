@@ -23,6 +23,11 @@
   "note": "[8-bit] Court Unlock Flags\n\nBit 6 - Star Court\nBit 5 - Castle Court\nBit 4 - Tropics Court\nBit 3 - Jungle Court\nBit 2 - Warehouse Court",
   "size": 1
  },
+ "0xc1c0": {
+  "name": "wFrameTasks",
+  "note": "[64 bytes] Frame task list: 4-byte records [id, ptr lo, ptr hi, rom bank] of banked callbacks run each frame (RegisterFrameTask / ClearFrameTasks)",
+  "size": 1
+ },
  "0xc280": {
   "name": "wStoryModeCurrentLocation",
   "note": "[8-bit] Story Mode - Current Location\n\n0x00 - Not in Story Mode\n0x05 - Academy Main Building\n0x06 - Academy Wing\n0x07 - Courtyard\n0x08 - Restaurant Plaza\n0x09 - Dorm Entrance\n0x0a - Dormitory\n0x0b, 0x0c - Junior Class Court\n0x0d - Restaurant\n0x0e - Cafeteria\n0x0f - Training Court\n0x10 - Senior Class Court\n0x11 - Training Center\n0x12 - Tennis Machine Room\n0x13 - Wall Practice Room\n0x14 - Academy Entrance\n0x15 - Tournament Courtyard\n0x16 - Court #1\n0x17 - Court #2\n0x18 - Center Court\n0x19 - Tournament\n0x1a - Awards Ceremony\n0x1b - Plane Cutscene\n0x1c - Castle Court\n0x1d - Peach's Castle\n0x1e-0x29 - Final Credits Sequence",
@@ -785,6 +790,21 @@
   "note": "[8-bit] Exhibition Mode - CPU Partner Character Difficulty; for values see 0x00ca5f",
   "size": 1
  },
+ "0xcb04": {
+  "name": "wMenuCursorX",
+  "note": "[8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b",
+  "size": 1
+ },
+ "0xcb05": {
+  "name": "wMenuCursorY",
+  "note": "[8-bit] Menu cursor row; MoveMenuCursor wraps it at the row count in c",
+  "size": 1
+ },
+ "0xcb0d": {
+  "name": "wMenuInputPressed",
+  "note": "[8-bit] Menu loop's copy of hInputPressed (same bit layout as hPlayerInputFlags)",
+  "size": 1
+ },
  "0xcb41": {
   "name": "wIntroCutsceneCheck",
   "note": "[8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)",
@@ -794,9 +814,24 @@
   "name": "wShortTextBuffer",
   "note": "Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0"
  },
+ "0xff8f": {
+  "name": "hFrameTasksReady",
+  "note": "[8-bit] Nonzero when wFrameTasks is consistent; cleared while the list is mutated so the frame hook skips it",
+  "size": 1
+ },
  "0xff90": {
   "name": "hPlayerInputFlags",
   "note": "[8-bit] Player Input Flags\n\nBit 7 - Down\nBit 6 - Up\nBit 5 - Left\nBit 4 - Right\nBit 3 - Start\nBit 2 - Select\nBit 1 - B\nBit 0 - A",
+  "size": 1
+ },
+ "0xff91": {
+  "name": "hInputPressed",
+  "note": "[8-bit] Buttons newly pressed this frame (same bit layout as hPlayerInputFlags)",
+  "size": 1
+ },
+ "0xff95": {
+  "name": "hRomBank",
+  "note": "[8-bit] Shadow of the current ROM bank (written together with the MBC register at $2000)",
   "size": 1
  },
  "0xff96": {

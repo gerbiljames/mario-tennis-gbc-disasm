@@ -273,7 +273,7 @@ Label_1a_43cb:
 	ld l, a ; $43d0
 	ld a, $04 ; $43d1
 	ld de, $d000 ; $43d3
-	call Func_00_1972 ; $43d6
+	call FormatDecimalNumber ; $43d6
 	ld hl, $d000 ; $43d9
 	ld de, $0801 ; $43dc
 	ld a, [$cb26] ; $43df
@@ -284,7 +284,7 @@ Label_1a_43cb:
 	ld l, a ; $43ea
 	ld a, $04 ; $43eb
 	ld de, $d000 ; $43ed
-	call Func_00_1972 ; $43f0
+	call FormatDecimalNumber ; $43f0
 	ld hl, $d000 ; $43f3
 	ld de, $0802 ; $43f6
 	ld a, [$cb26] ; $43f9
@@ -378,7 +378,7 @@ Func_1a_44d8:
 	ld c, $10 ; $44e6
 	call Func_00_1d20 ; $44e8
 	call Func_00_1da4 ; $44eb
-	call Func_00_1b38 ; $44ee
+	call ClearFrameTasks ; $44ee
 	farcall FarPtr_05_00 ; $44f1
 	farcall FarPtr_01_0a ; $44f4
 	call DisableLCDSafely ; $44f7
@@ -397,7 +397,7 @@ Func_1a_44d8:
 	call Func_1a_4a7d ; $4510
 	ld a, $0e ; $4513
 	ld hl, $4779 ; $4515
-	call Func_00_1b6a ; $4518
+	call RegisterFrameTask ; $4518
 	call Func_1a_4bb9 ; $451b
 	jp Label_1a_473e ; $451e
 	INCBIN "data/bank_01a/d_4521.bin" ; $4521, 6 bytes
@@ -503,14 +503,14 @@ Label_1a_4564:
 	call Func_00_086c ; $45d4
 	ld a, $0f ; $45d7
 	ld hl, $477a ; $45d9
-	call Func_00_1b6a ; $45dc
+	call RegisterFrameTask ; $45dc
 	call EnableLCD ; $45df
 	ld c, $10 ; $45e2
 	call Func_00_1d2e ; $45e4
 	call Func_00_1da4 ; $45e7
 	ld a, $0f ; $45ea
 	ld hl, $4e65 ; $45ec
-	call Func_00_1b6a ; $45ef
+	call RegisterFrameTask ; $45ef
 	wram_bank $06 ; $45f2
 	pop de ; $45f8
 	pop hl ; $45f9
@@ -699,7 +699,7 @@ Label_1a_473e:
 	call Func_00_086c ; $475a
 	ld a, $0f ; $475d
 	ld hl, $477a ; $475f
-	call Func_00_1b6a ; $4762
+	call RegisterFrameTask ; $4762
 	call EnableLCD ; $4765
 	ld c, $10 ; $4768
 	call Func_00_1d2e ; $476a
@@ -1649,7 +1649,7 @@ Func_1a_67d4:
 	ld [$cb62], a ; $67d5
 	ld [$cb63], a ; $67d8
 Label_1a_67db:
-	call Func_00_1b38 ; $67db
+	call ClearFrameTasks ; $67db
 	call DisableLCDSafely ; $67de
 	farcall FarPtr_01_0a ; $67e1
 	xor a, a ; $67e4
@@ -1677,7 +1677,7 @@ Label_1a_67db:
 	call EnableLCD ; $681d
 	ld a, $01 ; $6820
 	ld hl, $6c28 ; $6822
-	call Func_00_1b6a ; $6825
+	call RegisterFrameTask ; $6825
 	call Func_1a_70c0 ; $6828
 	call Func_1a_6e41 ; $682b
 	call Func_00_2631 ; $682e
@@ -1739,14 +1739,14 @@ Func_1a_686c:
 	call EnableLCD ; $68d5
 	ld a, $01 ; $68d8
 	ld hl, $6ab3 ; $68da
-	call Func_00_1b6a ; $68dd
+	call RegisterFrameTask ; $68dd
 	ld c, $10 ; $68e0
 	call Func_00_1d2e ; $68e2
 	call Func_00_1da4 ; $68e5
 Label_1a_68e8:
 	wram_bank $06 ; $68e8
 	call Func_00_2631 ; $68ee
-	ldh a, [$ff91] ; $68f1
+	ldh a, [hInputPressed] ; $68f1
 	bit 6, a ; $68f3
 	jr nz, Label_1a_691b ; $68f5
 	bit 7, a ; $68f7
@@ -2083,7 +2083,7 @@ Func_1a_6c9f:
 	call Func_1a_7012 ; $6c9f
 	wram_bank $06 ; $6ca2
 	call Func_00_2631 ; $6ca8
-	ldh a, [$ff91] ; $6cab
+	ldh a, [hInputPressed] ; $6cab
 	bit 6, a ; $6cad
 	jr nz, Label_1a_6cd5 ; $6caf
 	bit 7, a ; $6cb1
@@ -2403,7 +2403,7 @@ Func_1a_6f3d:
 	farcall FarPtr_LookupTileId_04 ; $6f49
 	ld d, a ; $6f4c
 	wram_bank $04 ; $6f4d
-	ldh a, [$ff95] ; $6f53
+	ldh a, [hRomBank] ; $6f53
 	ld hl, $6fcf ; $6f55
 	farcall FarPtr_04_0a ; $6f58
 	ld bc, $d000 ; $6f5b

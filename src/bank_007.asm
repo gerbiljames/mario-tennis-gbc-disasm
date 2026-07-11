@@ -1560,7 +1560,7 @@ Func_07_4a13:
 	ldh a, [$ffd6] ; $4a1c
 	ldh [$ffd5], a ; $4a1e
 	call Func_00_2851 ; $4a20
-	ldh a, [$ff91] ; $4a23
+	ldh a, [hInputPressed] ; $4a23
 	ldh [$ffd6], a ; $4a25
 	pop af ; $4a27
 	ret ; $4a28

@@ -30,8 +30,8 @@ FarPtr_3b_16:
 	dw Func_3b_71b0 ; $4016
 FarPtr_3b_18:
 	dw Func_3b_74bf ; $4018
-FarPtr_3b_1a:
-	dw Func_3b_5c2b ; $401a
+FarPtr_PrintNumberRightAligned:
+	dw PrintNumberRightAligned ; $401a
 FarPtr_3b_1c:
 	dw Func_3b_775d ; $401c
 FarPtr_3b_1e:
@@ -54,8 +54,8 @@ FarPtr_3b_2e:
 	dw Func_3b_66b5 ; $402e
 FarPtr_3b_30:
 	dw Func_3b_79f9 ; $4030
-FarPtr_3b_32:
-	dw Func_3b_7d57 ; $4032
+FarPtr_RecordExhibitionVictory:
+	dw RecordExhibitionVictory ; $4032
 FarPtr_3b_34:
 	dw Func_3b_4b33 ; $4034
 FarPtr_3b_36:
@@ -212,15 +212,15 @@ Label_3b_40db:
 	call QueueSprite ; $4125
 	pop de ; $4128
 	ret ; $4129
-Func_3b_412a:
-	ld a, [$cb04] ; $412a
+MoveMenuCursor:
+	ld a, [wMenuCursorX] ; $412a
 	ld d, a ; $412d
-	ld a, [$cb05] ; $412e
+	ld a, [wMenuCursorY] ; $412e
 	ld e, a ; $4131
-	ld a, [$cb0d] ; $4132
+	ld a, [wMenuInputPressed] ; $4132
 	bit 4, a ; $4135
 	jr z, Label_3b_414e ; $4137
-	ld a, [$cb04] ; $4139
+	ld a, [wMenuCursorX] ; $4139
 	inc a ; $413c
 	add a, a ; $413d
 	jr nc, Label_3b_4144 ; $413e
@@ -233,12 +233,12 @@ Label_3b_4144:
 	jr c, Label_3b_4149 ; $4146
 	xor a, a ; $4148
 Label_3b_4149:
-	ld [$cb04], a ; $4149
+	ld [wMenuCursorX], a ; $4149
 	jr Label_3b_4197 ; $414c
 Label_3b_414e:
 	bit 5, a ; $414e
 	jr z, Label_3b_4167 ; $4150
-	ld a, [$cb04] ; $4152
+	ld a, [wMenuCursorX] ; $4152
 	dec a ; $4155
 	add a, a ; $4156
 	jr nc, Label_3b_415d ; $4157
@@ -251,12 +251,12 @@ Label_3b_415d:
 	jr c, Label_3b_4162 ; $415f
 	xor a, a ; $4161
 Label_3b_4162:
-	ld [$cb04], a ; $4162
+	ld [wMenuCursorX], a ; $4162
 	jr Label_3b_4197 ; $4165
 Label_3b_4167:
 	bit 6, a ; $4167
 	jr z, Label_3b_4180 ; $4169
-	ld a, [$cb05] ; $416b
+	ld a, [wMenuCursorY] ; $416b
 	dec a ; $416e
 	add a, a ; $416f
 	jr nc, Label_3b_4176 ; $4170
@@ -269,12 +269,12 @@ Label_3b_4176:
 	jr c, Label_3b_417b ; $4178
 	xor a, a ; $417a
 Label_3b_417b:
-	ld [$cb05], a ; $417b
+	ld [wMenuCursorY], a ; $417b
 	jr Label_3b_4197 ; $417e
 Label_3b_4180:
 	bit 7, a ; $4180
 	jr z, Label_3b_4197 ; $4182
-	ld a, [$cb05] ; $4184
+	ld a, [wMenuCursorY] ; $4184
 	inc a ; $4187
 	add a, a ; $4188
 	jr nc, Label_3b_418f ; $4189
@@ -287,12 +287,12 @@ Label_3b_418f:
 	jr c, Label_3b_4194 ; $4191
 	xor a, a ; $4193
 Label_3b_4194:
-	ld [$cb05], a ; $4194
+	ld [wMenuCursorY], a ; $4194
 Label_3b_4197:
-	ld a, [$cb04] ; $4197
+	ld a, [wMenuCursorX] ; $4197
 	cp a, d ; $419a
 	jr nz, Label_3b_41a5 ; $419b
-	ld a, [$cb05] ; $419d
+	ld a, [wMenuCursorY] ; $419d
 	cp a, e ; $41a0
 	jr nz, Label_3b_41a5 ; $41a1
 	xor a, a ; $41a3
@@ -300,14 +300,15 @@ Label_3b_4197:
 Label_3b_41a5:
 	ld a, $01 ; $41a5
 	ret ; $41a7
-	ld a, [$cb04] ; $41a8
+MoveMenuCursorRepeat:
+	ld a, [wMenuCursorX] ; $41a8
 	ld d, a ; $41ab
-	ld a, [$cb05] ; $41ac
+	ld a, [wMenuCursorY] ; $41ac
 	ld e, a ; $41af
 	ldh a, [$ffd3] ; $41b0
 	bit 4, a ; $41b2
 	jr z, Label_3b_41cb ; $41b4
-	ld a, [$cb04] ; $41b6
+	ld a, [wMenuCursorX] ; $41b6
 	inc a ; $41b9
 	add a, a ; $41ba
 	jr nc, Label_3b_41c1 ; $41bb
@@ -320,12 +321,12 @@ Label_3b_41c1:
 	jr c, Label_3b_41c6 ; $41c3
 	xor a, a ; $41c5
 Label_3b_41c6:
-	ld [$cb04], a ; $41c6
+	ld [wMenuCursorX], a ; $41c6
 	jr Label_3b_4214 ; $41c9
 Label_3b_41cb:
 	bit 5, a ; $41cb
 	jr z, Label_3b_41e4 ; $41cd
-	ld a, [$cb04] ; $41cf
+	ld a, [wMenuCursorX] ; $41cf
 	dec a ; $41d2
 	add a, a ; $41d3
 	jr nc, Label_3b_41da ; $41d4
@@ -338,12 +339,12 @@ Label_3b_41da:
 	jr c, Label_3b_41df ; $41dc
 	xor a, a ; $41de
 Label_3b_41df:
-	ld [$cb04], a ; $41df
+	ld [wMenuCursorX], a ; $41df
 	jr Label_3b_4214 ; $41e2
 Label_3b_41e4:
 	bit 6, a ; $41e4
 	jr z, Label_3b_41fd ; $41e6
-	ld a, [$cb05] ; $41e8
+	ld a, [wMenuCursorY] ; $41e8
 	dec a ; $41eb
 	add a, a ; $41ec
 	jr nc, Label_3b_41f3 ; $41ed
@@ -356,12 +357,12 @@ Label_3b_41f3:
 	jr c, Label_3b_41f8 ; $41f5
 	xor a, a ; $41f7
 Label_3b_41f8:
-	ld [$cb05], a ; $41f8
+	ld [wMenuCursorY], a ; $41f8
 	jr Label_3b_4214 ; $41fb
 Label_3b_41fd:
 	bit 7, a ; $41fd
 	jr z, Label_3b_4214 ; $41ff
-	ld a, [$cb05] ; $4201
+	ld a, [wMenuCursorY] ; $4201
 	inc a ; $4204
 	add a, a ; $4205
 	jr nc, Label_3b_420c ; $4206
@@ -374,12 +375,12 @@ Label_3b_420c:
 	jr c, Label_3b_4211 ; $420e
 	xor a, a ; $4210
 Label_3b_4211:
-	ld [$cb05], a ; $4211
+	ld [wMenuCursorY], a ; $4211
 Label_3b_4214:
-	ld a, [$cb04] ; $4214
+	ld a, [wMenuCursorX] ; $4214
 	cp a, d ; $4217
 	jr nz, Label_3b_4222 ; $4218
-	ld a, [$cb05] ; $421a
+	ld a, [wMenuCursorY] ; $421a
 	cp a, e ; $421d
 	jr nz, Label_3b_4222 ; $421e
 	xor a, a ; $4220
@@ -387,9 +388,9 @@ Label_3b_4214:
 Label_3b_4222:
 	ld a, $01 ; $4222
 	ret ; $4224
-	ld a, [$cb04] ; $4225
+	ld a, [wMenuCursorX] ; $4225
 	ld d, a ; $4228
-	ld a, [$cb05] ; $4229
+	ld a, [wMenuCursorY] ; $4229
 	ld e, a ; $422c
 	ldh a, [$ffc2] ; $422d
 	cp a, $02 ; $422f
@@ -410,7 +411,7 @@ Label_3b_4240:
 	jr nz, Label_3b_42ad ; $4247
 	bit 4, a ; $4249
 	jr z, Label_3b_4262 ; $424b
-	ld a, [$cb04] ; $424d
+	ld a, [wMenuCursorX] ; $424d
 	inc a ; $4250
 	add a, a ; $4251
 	jr nc, Label_3b_4258 ; $4252
@@ -423,12 +424,12 @@ Label_3b_4258:
 	jr c, Label_3b_425d ; $425a
 	xor a, a ; $425c
 Label_3b_425d:
-	ld [$cb04], a ; $425d
+	ld [wMenuCursorX], a ; $425d
 	jr Label_3b_42df ; $4260
 Label_3b_4262:
 	bit 5, a ; $4262
 	jr z, Label_3b_427b ; $4264
-	ld a, [$cb04] ; $4266
+	ld a, [wMenuCursorX] ; $4266
 	dec a ; $4269
 	add a, a ; $426a
 	jr nc, Label_3b_4271 ; $426b
@@ -441,12 +442,12 @@ Label_3b_4271:
 	jr c, Label_3b_4276 ; $4273
 	xor a, a ; $4275
 Label_3b_4276:
-	ld [$cb04], a ; $4276
+	ld [wMenuCursorX], a ; $4276
 	jr Label_3b_42df ; $4279
 Label_3b_427b:
 	bit 6, a ; $427b
 	jr z, Label_3b_4294 ; $427d
-	ld a, [$cb05] ; $427f
+	ld a, [wMenuCursorY] ; $427f
 	dec a ; $4282
 	add a, a ; $4283
 	jr nc, Label_3b_428a ; $4284
@@ -459,12 +460,12 @@ Label_3b_428a:
 	jr c, Label_3b_428f ; $428c
 	xor a, a ; $428e
 Label_3b_428f:
-	ld [$cb05], a ; $428f
+	ld [wMenuCursorY], a ; $428f
 	jr Label_3b_42df ; $4292
 Label_3b_4294:
 	bit 7, a ; $4294
 	jr z, Label_3b_42ad ; $4296
-	ld a, [$cb05] ; $4298
+	ld a, [wMenuCursorY] ; $4298
 	inc a ; $429b
 	add a, a ; $429c
 	jr nc, Label_3b_42a3 ; $429d
@@ -477,7 +478,7 @@ Label_3b_42a3:
 	jr c, Label_3b_42a8 ; $42a5
 	xor a, a ; $42a7
 Label_3b_42a8:
-	ld [$cb05], a ; $42a8
+	ld [wMenuCursorY], a ; $42a8
 	jr Label_3b_42df ; $42ab
 Label_3b_42ad:
 	bit 0, a ; $42ad
@@ -509,10 +510,10 @@ Label_3b_42da:
 Label_3b_42dc:
 	ld [$cb08], a ; $42dc
 Label_3b_42df:
-	ld a, [$cb04] ; $42df
+	ld a, [wMenuCursorX] ; $42df
 	cp a, d ; $42e2
 	jr nz, Label_3b_42ed ; $42e3
-	ld a, [$cb05] ; $42e5
+	ld a, [wMenuCursorY] ; $42e5
 	cp a, e ; $42e8
 	jr nz, Label_3b_42ed ; $42e9
 	xor a, a ; $42eb
@@ -653,7 +654,7 @@ Label_3b_43b6:
 	ld a, $01 ; $43b6
 	ret ; $43b8
 Func_3b_43b9:
-	ld a, [$cb05] ; $43b9
+	ld a, [wMenuCursorY] ; $43b9
 	ld b, a ; $43bc
 	xor a, a ; $43bd
 	inc b ; $43be
@@ -664,7 +665,7 @@ Label_3b_43bf:
 	jr Label_3b_43bf ; $43c3
 Label_3b_43c5:
 	ld b, a ; $43c5
-	ld a, [$cb04] ; $43c6
+	ld a, [wMenuCursorX] ; $43c6
 	add a, b ; $43c9
 	ret ; $43ca
 	push bc ; $43cb
@@ -693,9 +694,9 @@ Label_3b_43de:
 	sub a, b ; $43e2
 	jr Label_3b_43de ; $43e3
 Label_3b_43e5:
-	ld [$cb04], a ; $43e5
+	ld [wMenuCursorX], a ; $43e5
 	ld a, d ; $43e8
-	ld [$cb05], a ; $43e9
+	ld [wMenuCursorY], a ; $43e9
 	ret ; $43ec
 	ld d, $00 ; $43ed
 	ld a, c ; $43ef
@@ -800,7 +801,7 @@ Label_3b_4462:
 	ld h, b ; $4473
 	ld c, e ; $4474
 	ld b, d ; $4475
-	call Func_00_1972 ; $4476
+	call FormatDecimalNumber ; $4476
 	ld l, c ; $4479
 	ld h, b ; $447a
 	pop de ; $447b
@@ -846,21 +847,21 @@ Func_3b_44aa:
 	ld [$cb0b], a ; $44b3
 	ld a, $01 ; $44b6
 	ld hl, $4428 ; $44b8
-	call Func_00_1b6a ; $44bb
+	call RegisterFrameTask ; $44bb
 	ld a, $01 ; $44be
 	ld hl, $4567 ; $44c0
-	call Func_00_1b6a ; $44c3
+	call RegisterFrameTask ; $44c3
 	call EnableLCD ; $44c6
 	ld c, $10 ; $44c9
 	call Func_00_1d2e ; $44cb
 	call Func_00_1da4 ; $44ce
 	wram_bank $03 ; $44d1
 Label_3b_44d7:
-	ldh a, [$ff91] ; $44d7
-	ld [$cb0d], a ; $44d9
+	ldh a, [hInputPressed] ; $44d7
+	ld [wMenuInputPressed], a ; $44d9
 	call Func_3b_450d ; $44dc
 	call Func_00_2631 ; $44df
-	ld a, [$cb0d] ; $44e2
+	ld a, [wMenuInputPressed] ; $44e2
 	bit 0, a ; $44e5
 	jr nz, Label_3b_44ef ; $44e7
 	bit 1, a ; $44e9
@@ -871,18 +872,18 @@ Label_3b_44ef:
 	ld c, $10 ; $44f1
 	call Func_00_1d20 ; $44f3
 	call Func_00_1da4 ; $44f6
-	call Func_00_1b38 ; $44f9
+	call ClearFrameTasks ; $44f9
 	ret ; $44fc
 Label_3b_44fd:
 	sound $62 ; $44fd
 	ld c, $10 ; $44ff
 	call Func_00_1d20 ; $4501
 	call Func_00_1da4 ; $4504
-	call Func_00_1b38 ; $4507
+	call ClearFrameTasks ; $4507
 	ld a, $ff ; $450a
 	ret ; $450c
 Func_3b_450d:
-	ld a, [$cb0d] ; $450d
+	ld a, [wMenuInputPressed] ; $450d
 	bit 5, a ; $4510
 	jr z, Label_3b_4525 ; $4512
 	ld a, [$dc12] ; $4514
@@ -1538,7 +1539,7 @@ Func_3b_4963:
 	ld [$cb0b], a ; $496d
 	ld a, $01 ; $4970
 	ld hl, $4428 ; $4972
-	call Func_00_1b6a ; $4975
+	call RegisterFrameTask ; $4975
 	xor a, a ; $4978
 	ld [$d901], a ; $4979
 	ld [$d900], a ; $497c
@@ -1548,10 +1549,10 @@ Func_3b_4963:
 	call Func_00_1da4 ; $4987
 	wram_bank $03 ; $498a
 Label_3b_4990:
-	ldh a, [$ff91] ; $4990
-	ld [$cb0d], a ; $4992
+	ldh a, [hInputPressed] ; $4990
+	ld [wMenuInputPressed], a ; $4992
 	call Func_00_2631 ; $4995
-	ld a, [$cb0d] ; $4998
+	ld a, [wMenuInputPressed] ; $4998
 	bit 0, a ; $499b
 	jr nz, Label_3b_49bf ; $499d
 	bit 1, a ; $499f
@@ -1580,14 +1581,14 @@ Label_3b_49c6:
 	ld c, $10 ; $49c8
 	call Func_00_1d20 ; $49ca
 	call Func_00_1da4 ; $49cd
-	call Func_00_1b38 ; $49d0
+	call ClearFrameTasks ; $49d0
 	ret ; $49d3
 Label_3b_49d4:
 	sound $62 ; $49d4
 	ld c, $10 ; $49d6
 	call Func_00_1d20 ; $49d8
 	call Func_00_1da4 ; $49db
-	call Func_00_1b38 ; $49de
+	call ClearFrameTasks ; $49de
 	ld a, $ff ; $49e1
 	ret ; $49e3
 	ret ; $49e4
@@ -1966,21 +1967,21 @@ Func_3b_4cfa:
 	ld [$cb0b], a ; $4d03
 	ld a, $01 ; $4d06
 	ld hl, $4428 ; $4d08
-	call Func_00_1b6a ; $4d0b
+	call RegisterFrameTask ; $4d0b
 	ld a, $01 ; $4d0e
 	ld hl, $50d6 ; $4d10
-	call Func_00_1b6a ; $4d13
+	call RegisterFrameTask ; $4d13
 	call EnableLCD ; $4d16
 	ld c, $10 ; $4d19
 	call Func_00_1d2e ; $4d1b
 	call Func_00_1da4 ; $4d1e
 	wram_bank $03 ; $4d21
 Label_3b_4d27:
-	ldh a, [$ff91] ; $4d27
-	ld [$cb0d], a ; $4d29
+	ldh a, [hInputPressed] ; $4d27
+	ld [wMenuInputPressed], a ; $4d29
 	call Func_3b_4d5d ; $4d2c
 	call Func_00_2631 ; $4d2f
-	ld a, [$cb0d] ; $4d32
+	ld a, [wMenuInputPressed] ; $4d32
 	bit 0, a ; $4d35
 	jr nz, Label_3b_4d3f ; $4d37
 	bit 1, a ; $4d39
@@ -1991,18 +1992,18 @@ Label_3b_4d3f:
 	ld c, $10 ; $4d41
 	call Func_00_1d20 ; $4d43
 	call Func_00_1da4 ; $4d46
-	call Func_00_1b38 ; $4d49
+	call ClearFrameTasks ; $4d49
 	ret ; $4d4c
 Label_3b_4d4d:
 	sound $62 ; $4d4d
 	ld c, $10 ; $4d4f
 	call Func_00_1d20 ; $4d51
 	call Func_00_1da4 ; $4d54
-	call Func_00_1b38 ; $4d57
+	call ClearFrameTasks ; $4d57
 	ld a, $ff ; $4d5a
 	ret ; $4d5c
 Func_3b_4d5d:
-	ld a, [$cb0d] ; $4d5d
+	ld a, [wMenuInputPressed] ; $4d5d
 	bit 5, a ; $4d60
 	jr z, Label_3b_4d75 ; $4d62
 	ld a, [$d801] ; $4d64
@@ -2559,24 +2560,24 @@ Func_3b_5148:
 	ld [$cb0b], a ; $5151
 	ld a, $01 ; $5154
 	ld hl, $4428 ; $5156
-	call Func_00_1b6a ; $5159
+	call RegisterFrameTask ; $5159
 	ld a, $01 ; $515c
 	ld hl, $5491 ; $515e
-	call Func_00_1b6a ; $5161
+	call RegisterFrameTask ; $5161
 	ld a, $01 ; $5164
 	ld hl, $558f ; $5166
-	call Func_00_1b6a ; $5169
+	call RegisterFrameTask ; $5169
 	call EnableLCD ; $516c
 	ld c, $10 ; $516f
 	call Func_00_1d2e ; $5171
 	call Func_00_1da4 ; $5174
 	wram_bank $03 ; $5177
 Label_3b_517d:
-	ldh a, [$ff91] ; $517d
-	ld [$cb0d], a ; $517f
+	ldh a, [hInputPressed] ; $517d
+	ld [wMenuInputPressed], a ; $517f
 	call Func_3b_53c6 ; $5182
 	call Func_00_2631 ; $5185
-	ld a, [$cb0d] ; $5188
+	ld a, [wMenuInputPressed] ; $5188
 	bit 0, a ; $518b
 	jr nz, Label_3b_5195 ; $518d
 	bit 1, a ; $518f
@@ -2587,20 +2588,20 @@ Label_3b_5195:
 	ld c, $10 ; $5197
 	call Func_00_1d20 ; $5199
 	call Func_00_1da4 ; $519c
-	call Func_00_1b38 ; $519f
+	call ClearFrameTasks ; $519f
 	ret ; $51a2
 Label_3b_51a3:
 	sound $62 ; $51a3
 	ld c, $10 ; $51a5
 	call Func_00_1d20 ; $51a7
 	call Func_00_1da4 ; $51aa
-	call Func_00_1b38 ; $51ad
+	call ClearFrameTasks ; $51ad
 	ld a, $ff ; $51b0
 	ret ; $51b2
 Func_3b_51b3:
 	xor a, a ; $51b3
-	ld [$cb04], a ; $51b4
-	ld [$cb05], a ; $51b7
+	ld [wMenuCursorX], a ; $51b4
+	ld [wMenuCursorY], a ; $51b7
 	ld c, $12 ; $51ba
 	farcall FarPtr_39_00 ; $51bc
 	wram_bank $03 ; $51bf
@@ -2635,7 +2636,7 @@ Func_3b_5202:
 	push af ; $5208
 	wram_bank $03 ; $5209
 	ld hl, $dc40 ; $520f
-	ld a, [$cb05] ; $5212
+	ld a, [wMenuCursorY] ; $5212
 	add a, l ; $5215
 	ld l, a ; $5216
 	jr nc, Label_3b_521a ; $5217
@@ -2861,7 +2862,7 @@ Label_3b_53c3:
 	pop bc ; $53c4
 	ret ; $53c5
 Func_3b_53c6:
-	ld a, [$cb0d] ; $53c6
+	ld a, [wMenuInputPressed] ; $53c6
 	bit 4, a ; $53c9
 	jr nz, Label_3b_53da ; $53cb
 	bit 5, a ; $53cd
@@ -2872,35 +2873,35 @@ Func_3b_53c6:
 	jr nz, Label_3b_5408 ; $53d7
 	ret ; $53d9
 Label_3b_53da:
-	ld a, [$cb04] ; $53da
+	ld a, [wMenuCursorX] ; $53da
 	cp a, $03 ; $53dd
 	jr z, Label_3b_5416 ; $53df
 	inc a ; $53e1
-	ld [$cb04], a ; $53e2
+	ld [wMenuCursorX], a ; $53e2
 	call Func_3b_5417 ; $53e5
 	jr Label_3b_5416 ; $53e8
 Label_3b_53ea:
-	ld a, [$cb04] ; $53ea
+	ld a, [wMenuCursorX] ; $53ea
 	or a, a ; $53ed
 	jr z, Label_3b_5416 ; $53ee
 	dec a ; $53f0
-	ld [$cb04], a ; $53f1
+	ld [wMenuCursorX], a ; $53f1
 	call Func_3b_5417 ; $53f4
 	jr Label_3b_5416 ; $53f7
 Label_3b_53f9:
-	ld a, [$cb05] ; $53f9
+	ld a, [wMenuCursorY] ; $53f9
 	or a, a ; $53fc
 	jr z, Label_3b_5416 ; $53fd
 	dec a ; $53ff
-	ld [$cb05], a ; $5400
+	ld [wMenuCursorY], a ; $5400
 	call Func_3b_5417 ; $5403
 	jr Label_3b_5416 ; $5406
 Label_3b_5408:
-	ld a, [$cb05] ; $5408
+	ld a, [wMenuCursorY] ; $5408
 	cp a, $0b ; $540b
 	jr z, Label_3b_5416 ; $540d
 	inc a ; $540f
-	ld [$cb05], a ; $5410
+	ld [wMenuCursorY], a ; $5410
 	call Func_3b_5417 ; $5413
 Label_3b_5416:
 	ret ; $5416
@@ -2915,7 +2916,7 @@ Func_3b_5426:
 	ldh a, [hWramBank] ; $5426
 	push af ; $5428
 	wram_bank $03 ; $5429
-	ld a, [$cb04] ; $542f
+	ld a, [wMenuCursorX] ; $542f
 	add a, a ; $5432
 	ld hl, $544e ; $5433
 	add a, l ; $5436
@@ -2965,7 +2966,7 @@ Func_3b_5456:
 	ldh a, [hWramBank] ; $5491
 	push af ; $5493
 	wram_bank $03 ; $5494
-	ld a, [$cb04] ; $549a
+	ld a, [wMenuCursorX] ; $549a
 	cp a, $03 ; $549d
 	jr z, Label_3b_54b2 ; $549f
 	ld de, $7812 ; $54a1
@@ -2976,7 +2977,7 @@ Func_3b_5456:
 	ld h, $00 ; $54ad
 	farcall FarPtr_39_1a ; $54af
 Label_3b_54b2:
-	ld a, [$cb04] ; $54b2
+	ld a, [wMenuCursorX] ; $54b2
 	or a, a ; $54b5
 	jr z, Label_3b_54c9 ; $54b6
 	ld de, $2312 ; $54b8
@@ -2987,7 +2988,7 @@ Label_3b_54b2:
 	ld h, $01 ; $54c4
 	farcall FarPtr_39_1a ; $54c6
 Label_3b_54c9:
-	ld a, [$cb05] ; $54c9
+	ld a, [wMenuCursorY] ; $54c9
 	or a, a ; $54cc
 	jr z, Label_3b_54e0 ; $54cd
 	ld de, $0c26 ; $54cf
@@ -2998,7 +2999,7 @@ Label_3b_54c9:
 	ld h, $02 ; $54db
 	farcall FarPtr_39_1a ; $54dd
 Label_3b_54e0:
-	ld a, [$cb05] ; $54e0
+	ld a, [wMenuCursorY] ; $54e0
 	cp a, $0b ; $54e3
 	jr z, Label_3b_54f8 ; $54e5
 	ld de, $0c82 ; $54e7
@@ -3013,7 +3014,7 @@ Label_3b_54f8:
 	wram_bank ; $54f9
 	ret ; $54fd
 Func_3b_54fe:
-	ld a, [$cb05] ; $54fe
+	ld a, [wMenuCursorY] ; $54fe
 	ld hl, $db00 ; $5501
 	ld bc, $000c ; $5504
 Label_3b_5507:
@@ -3023,7 +3024,7 @@ Label_3b_5507:
 	dec a ; $550b
 	jr Label_3b_5507 ; $550c
 Label_3b_550e:
-	ld a, [$cb04] ; $550e
+	ld a, [wMenuCursorX] ; $550e
 	add a, l ; $5511
 	ld l, a ; $5512
 	jr nc, Label_3b_5516 ; $5513
@@ -3128,7 +3129,7 @@ Label_3b_557c:
 ; 2 records x 2 bytes
 	dw $d115 ; record 0
 	dw $d117 ; record 1
-	ld a, [$cb05] ; $558f
+	ld a, [wMenuCursorY] ; $558f
 	ld hl, $db00 ; $5592
 	ld bc, $000c ; $5595
 Label_3b_5598:
@@ -3144,7 +3145,7 @@ Label_3b_559f:
 	jr nc, Label_3b_55a6 ; $55a3
 	inc h ; $55a5
 Label_3b_55a6:
-	ld a, [$cb04] ; $55a6
+	ld a, [wMenuCursorX] ; $55a6
 	add a, a ; $55a9
 	add a, l ; $55aa
 	ld l, a ; $55ab
@@ -3203,7 +3204,7 @@ Func_3b_55d1:
 	call Func_3b_5800 ; $560c
 	ld a, $7f ; $560f
 	ld hl, $5863 ; $5611
-	call Func_00_1b6a ; $5614
+	call RegisterFrameTask ; $5614
 	call Func_3b_5968 ; $5617
 	call Func_00_28f8 ; $561a
 	farcall FarPtr_39_68 ; $561d
@@ -3211,11 +3212,11 @@ Func_3b_55d1:
 Label_3b_5626:
 	call Func_00_2631 ; $5626
 	farcall FarPtr_39_6a ; $5629
-	ldh a, [$ff91] ; $562c
-	ld [$cb0d], a ; $562e
+	ldh a, [hInputPressed] ; $562c
+	ld [wMenuInputPressed], a ; $562e
 	ld b, $03 ; $5631
 	ld c, $03 ; $5633
-	call Func_3b_412a ; $5635
+	call MoveMenuCursor ; $5635
 	or a, a ; $5638
 	jr nz, Label_3b_563d ; $5639
 	jr Label_3b_5642 ; $563b
@@ -3223,7 +3224,7 @@ Label_3b_563d:
 	sound $5e ; $563d
 	call Func_3b_5968 ; $563f
 Label_3b_5642:
-	ld a, [$cb0d] ; $5642
+	ld a, [wMenuInputPressed] ; $5642
 	bit 0, a ; $5645
 	jr nz, Label_3b_5655 ; $5647
 	bit 1, a ; $5649
@@ -3237,15 +3238,15 @@ Label_3b_5655:
 	ld a, $01 ; $5655
 	ld [$cb71], a ; $5657
 	sound $5f ; $565a
-	call Func_00_1b38 ; $565c
+	call ClearFrameTasks ; $565c
 	ld hl, rIE ; $565f
 	set 2, [hl] ; $5662
 	ld b, $01 ; $5664
 	call Func_3b_5832 ; $5666
-	ld a, [$cb04] ; $5669
+	ld a, [wMenuCursorX] ; $5669
 	cp a, $02 ; $566c
 	jr nz, Label_3b_5685 ; $566e
-	ld a, [$cb05] ; $5670
+	ld a, [wMenuCursorY] ; $5670
 	cp a, $00 ; $5673
 	jr nz, Label_3b_5685 ; $5675
 	ld c, $03 ; $5677
@@ -3264,7 +3265,7 @@ Label_3b_5685:
 Label_3b_5696:
 	sound $62 ; $5696
 	call Func_00_28f8 ; $5698
-	call Func_00_1b38 ; $569b
+	call ClearFrameTasks ; $569b
 	ld hl, rIE ; $569e
 	set 2, [hl] ; $56a1
 	ld b, $00 ; $56a3
@@ -3890,7 +3891,7 @@ Label_3b_5b65:
 	ld l, a ; $5b8d
 	ld de, $d20c ; $5b8e
 	ld bc, $d330 ; $5b91
-	call Func_3b_5c2b ; $5b94
+	call PrintNumberRightAligned ; $5b94
 	pop hl ; $5b97
 	pop de ; $5b98
 	pop bc ; $5b99
@@ -3983,7 +3984,7 @@ Label_3b_5bfd:
 Func_3b_5c27:
 	ld a, $02 ; $5c27
 	jr Label_3b_5c2d ; $5c29
-Func_3b_5c2b:
+PrintNumberRightAligned:
 	ld a, $00 ; $5c2b
 Label_3b_5c2d:
 	push af ; $5c2d
@@ -3992,7 +3993,7 @@ Label_3b_5c2d:
 	push hl ; $5c30
 	ld d, b ; $5c31
 	ld e, c ; $5c32
-	call Func_00_1972 ; $5c33
+	call FormatDecimalNumber ; $5c33
 	pop hl ; $5c36
 	pop de ; $5c37
 	pop bc ; $5c38
@@ -4027,10 +4028,10 @@ Func_3b_5c53:
 	and a, $09 ; $5c59
 	ldh [rIE], a ; $5c5b
 	ei ; $5c5d
-	ld a, [$cb04] ; $5c5e
+	ld a, [wMenuCursorX] ; $5c5e
 	cp a, $02 ; $5c61
 	jr nz, Label_3b_5c6c ; $5c63
-	ld a, [$cb05] ; $5c65
+	ld a, [wMenuCursorY] ; $5c65
 	cp a, $00 ; $5c68
 	jr z, Label_3b_5c70 ; $5c6a
 Label_3b_5c6c:
@@ -4070,7 +4071,7 @@ Label_3b_5ca3:
 	farcall FarPtr_3e_16 ; $5ca3
 	farcall FarPtr_39_04 ; $5ca6
 	call Func_00_2631 ; $5ca9
-	ldh a, [$ff91] ; $5cac
+	ldh a, [hInputPressed] ; $5cac
 	bit 0, a ; $5cae
 	jr nz, Label_3b_5cbb ; $5cb0
 	bit 1, a ; $5cb2
@@ -4122,23 +4123,23 @@ Func_3b_5cf3:
 	call Func_3b_5d80 ; $5d14
 	ld a, $01 ; $5d17
 	ld hl, $60d0 ; $5d19
-	call Func_00_1b6a ; $5d1c
+	call RegisterFrameTask ; $5d1c
 	call Func_3b_6164 ; $5d1f
 	wram_bank $03 ; $5d22
 Label_3b_5d28:
 	call Func_00_2631 ; $5d28
-	ldh a, [$ff91] ; $5d2b
-	ld [$cb0d], a ; $5d2d
+	ldh a, [hInputPressed] ; $5d2b
+	ld [wMenuInputPressed], a ; $5d2d
 	call Func_3b_5f3c ; $5d30
 	ld b, $01 ; $5d33
 	ld c, $03 ; $5d35
-	call Func_3b_412a ; $5d37
+	call MoveMenuCursor ; $5d37
 	or a, a ; $5d3a
 	jr z, Label_3b_5d42 ; $5d3b
 	sound $5e ; $5d3d
 	call Func_3b_6164 ; $5d3f
 Label_3b_5d42:
-	ld a, [$cb0d] ; $5d42
+	ld a, [wMenuInputPressed] ; $5d42
 	bit 0, a ; $5d45
 	jr nz, Label_3b_5d4f ; $5d47
 	bit 1, a ; $5d49
@@ -4148,7 +4149,7 @@ Label_3b_5d4f:
 	sound $5f ; $5d4f
 	ld hl, rIE ; $5d51
 	set 2, [hl] ; $5d54
-	call Func_00_1b38 ; $5d56
+	call ClearFrameTasks ; $5d56
 	ld b, $01 ; $5d59
 	call Func_3b_5f0b ; $5d5b
 	ld a, $01 ; $5d5e
@@ -4160,7 +4161,7 @@ Label_3b_5d69:
 	sound $62 ; $5d69
 	ld hl, rIE ; $5d6b
 	set 2, [hl] ; $5d6e
-	call Func_00_1b38 ; $5d70
+	call ClearFrameTasks ; $5d70
 	ld b, $00 ; $5d73
 	call Func_3b_5f0b ; $5d75
 	ld a, $00 ; $5d78
@@ -4393,7 +4394,7 @@ Label_3b_5f28:
 	jr nz, Label_3b_5f28 ; $5f39
 	ret ; $5f3b
 Func_3b_5f3c:
-	ld a, [$cb0d] ; $5f3c
+	ld a, [wMenuInputPressed] ; $5f3c
 	bit 5, a ; $5f3f
 	jr nz, Label_3b_5f48 ; $5f41
 	bit 4, a ; $5f43
@@ -4786,7 +4787,7 @@ Label_3b_621d:
 	call Func_3b_43db ; $622d
 	ld a, $01 ; $6230
 	ld hl, $646d ; $6232
-	call Func_00_1b6a ; $6235
+	call RegisterFrameTask ; $6235
 	call Func_3b_6569 ; $6238
 	call Func_3b_66f2 ; $623b
 	or a, a ; $623e
@@ -4798,8 +4799,8 @@ Label_3b_6246:
 Label_3b_6249:
 	wram_bank $03 ; $6249
 Label_3b_624f:
-	ldh a, [$ff91] ; $624f
-	ld [$cb0d], a ; $6251
+	ldh a, [hInputPressed] ; $624f
+	ld [wMenuInputPressed], a ; $6251
 	call Func_3b_66f2 ; $6254
 	or a, a ; $6257
 	jr nz, Label_3b_626a ; $6258
@@ -4813,7 +4814,7 @@ Label_3b_624f:
 Label_3b_626a:
 	ld b, $03 ; $626a
 	ld c, $03 ; $626c
-	call Func_3b_412a ; $626e
+	call MoveMenuCursor ; $626e
 	or a, a ; $6271
 	jr z, Label_3b_627c ; $6272
 	sound $5e ; $6274
@@ -4821,7 +4822,7 @@ Label_3b_626a:
 	call Func_3b_65ec ; $6279
 Label_3b_627c:
 	call Func_00_2631 ; $627c
-	ld a, [$cb0d] ; $627f
+	ld a, [wMenuInputPressed] ; $627f
 	bit 0, a ; $6282
 	jr nz, Label_3b_628c ; $6284
 	bit 1, a ; $6286
@@ -4838,7 +4839,7 @@ Label_3b_628c:
 	jr Label_3b_624f ; $629b
 Label_3b_629d:
 	sound $5f ; $629d
-	call Func_00_1b38 ; $629f
+	call ClearFrameTasks ; $629f
 	ld hl, rIE ; $62a2
 	set 2, [hl] ; $62a5
 	call Func_3b_66f2 ; $62a7
@@ -4861,7 +4862,7 @@ Label_3b_62b9:
 	ret ; $62ca
 Label_3b_62cb:
 	sound $62 ; $62cb
-	call Func_00_1b38 ; $62cd
+	call ClearFrameTasks ; $62cd
 	ld hl, rIE ; $62d0
 	set 2, [hl] ; $62d3
 	call Func_3b_66f2 ; $62d5
@@ -5538,20 +5539,20 @@ Func_3b_67a1:
 	call Func_3b_43db ; $67ce
 	ld a, $01 ; $67d1
 	ld hl, $69dc ; $67d3
-	call Func_00_1b6a ; $67d6
+	call RegisterFrameTask ; $67d6
 	call Func_3b_6a7e ; $67d9
 	wram_bank $03 ; $67dc
 Label_3b_67e2:
 	call Func_00_2631 ; $67e2
-	ldh a, [$ff91] ; $67e5
-	ld [$cb0d], a ; $67e7
+	ldh a, [hInputPressed] ; $67e5
+	ld [wMenuInputPressed], a ; $67e7
 	farcall FarPtr_3b_26 ; $67ea
 	or a, a ; $67ed
 	jr z, Label_3b_67f5 ; $67ee
 	sound $5e ; $67f0
 	call Func_3b_6a7e ; $67f2
 Label_3b_67f5:
-	ld a, [$cb0d] ; $67f5
+	ld a, [wMenuInputPressed] ; $67f5
 	bit 0, a ; $67f8
 	jr nz, Label_3b_6802 ; $67fa
 	bit 1, a ; $67fc
@@ -5593,7 +5594,7 @@ Label_3b_6836:
 	jr Label_3b_67e2 ; $6838
 Label_3b_683a:
 	sound $5f ; $683a
-	call Func_00_1b38 ; $683c
+	call ClearFrameTasks ; $683c
 	ld hl, rIE ; $683f
 	set 2, [hl] ; $6842
 	ld b, $01 ; $6844
@@ -5606,7 +5607,7 @@ Label_3b_683a:
 	ret ; $6856
 Label_3b_6857:
 	sound $62 ; $6857
-	call Func_00_1b38 ; $6859
+	call ClearFrameTasks ; $6859
 	ld hl, rIE ; $685c
 	set 2, [hl] ; $685f
 	ld b, $00 ; $6861
@@ -6030,7 +6031,7 @@ Label_3b_6ba3:
 	ld l, a ; $6bcb
 	ld de, $d20c ; $6bcc
 	ld bc, $d330 ; $6bcf
-	call Func_3b_5c2b ; $6bd2
+	call PrintNumberRightAligned ; $6bd2
 	pop hl ; $6bd5
 	pop de ; $6bd6
 	pop bc ; $6bd7
@@ -6137,12 +6138,12 @@ Func_3b_6c7f:
 	call Func_3b_43db ; $6ca7
 	ld a, $01 ; $6caa
 	ld hl, $6f5b ; $6cac
-	call Func_00_1b6a ; $6caf
+	call RegisterFrameTask ; $6caf
 	call Func_3b_6ffb ; $6cb2
 	wram_bank $03 ; $6cb5
 Label_3b_6cbb:
-	ldh a, [$ff91] ; $6cbb
-	ld [$cb0d], a ; $6cbd
+	ldh a, [hInputPressed] ; $6cbb
+	ld [wMenuInputPressed], a ; $6cbd
 	call Func_3b_6e87 ; $6cc0
 	or a, a ; $6cc3
 	jr z, Label_3b_6ccb ; $6cc4
@@ -6150,7 +6151,7 @@ Label_3b_6cbb:
 	call Func_3b_6ffb ; $6cc8
 Label_3b_6ccb:
 	call Func_00_2631 ; $6ccb
-	ld a, [$cb0d] ; $6cce
+	ld a, [wMenuInputPressed] ; $6cce
 	bit 0, a ; $6cd1
 	jr nz, Label_3b_6cdb ; $6cd3
 	bit 1, a ; $6cd5
@@ -6182,7 +6183,7 @@ Label_3b_6cfc:
 	jr Label_3b_6cbb ; $6cfe
 Label_3b_6d00:
 	sound $5f ; $6d00
-	call Func_00_1b38 ; $6d02
+	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
 	set 2, [hl] ; $6d08
 	ld b, $01 ; $6d0a
@@ -6194,7 +6195,7 @@ Label_3b_6d00:
 	ret ; $6d19
 Label_3b_6d1a:
 	sound $62 ; $6d1a
-	call Func_00_1b38 ; $6d1c
+	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
 	set 2, [hl] ; $6d22
 	ld b, $00 ; $6d24
@@ -6352,10 +6353,10 @@ Label_3b_6e73:
 	jr nz, Label_3b_6e73 ; $6e84
 	ret ; $6e86
 Func_3b_6e87:
-	ld a, [$cb05] ; $6e87
+	ld a, [wMenuCursorY] ; $6e87
 	or a, a ; $6e8a
 	jr nz, Label_3b_6ef2 ; $6e8b
-	ld a, [$cb0d] ; $6e8d
+	ld a, [wMenuInputPressed] ; $6e8d
 	bit 4, a ; $6e90
 	jr nz, Label_3b_6ea4 ; $6e92
 	bit 5, a ; $6e94
@@ -6367,7 +6368,7 @@ Func_3b_6e87:
 	xor a, a ; $6ea0
 	jp Label_3b_6f55 ; $6ea1
 Label_3b_6ea4:
-	ld a, [$cb04] ; $6ea4
+	ld a, [wMenuCursorX] ; $6ea4
 	inc a ; $6ea7
 	add a, a ; $6ea8
 	jr nc, Label_3b_6eb0 ; $6ea9
@@ -6380,11 +6381,11 @@ Label_3b_6eb0:
 	jr c, Label_3b_6eb6 ; $6eb3
 	xor a, a ; $6eb5
 Label_3b_6eb6:
-	ld [$cb04], a ; $6eb6
+	ld [wMenuCursorX], a ; $6eb6
 	ld a, $01 ; $6eb9
 	jp Label_3b_6f55 ; $6ebb
 Label_3b_6ebe:
-	ld a, [$cb04] ; $6ebe
+	ld a, [wMenuCursorX] ; $6ebe
 	dec a ; $6ec1
 	add a, a ; $6ec2
 	jr nc, Label_3b_6eca ; $6ec3
@@ -6397,11 +6398,11 @@ Label_3b_6eca:
 	jr c, Label_3b_6ed0 ; $6ecd
 	xor a, a ; $6ecf
 Label_3b_6ed0:
-	ld [$cb04], a ; $6ed0
+	ld [wMenuCursorX], a ; $6ed0
 	ld a, $01 ; $6ed3
 	jr Label_3b_6f55 ; $6ed5
 Label_3b_6ed7:
-	ld a, [$cb04] ; $6ed7
+	ld a, [wMenuCursorX] ; $6ed7
 	ld hl, $6f56 ; $6eda
 	add a, l ; $6edd
 	ld l, a ; $6ede
@@ -6409,14 +6410,14 @@ Label_3b_6ed7:
 	inc h ; $6ee1
 Label_3b_6ee2:
 	ld a, [hl] ; $6ee2
-	ld [$cb04], a ; $6ee3
-	ld a, [$cb05] ; $6ee6
+	ld [wMenuCursorX], a ; $6ee3
+	ld a, [wMenuCursorY] ; $6ee6
 	xor a, $01 ; $6ee9
-	ld [$cb05], a ; $6eeb
+	ld [wMenuCursorY], a ; $6eeb
 	ld a, $01 ; $6eee
 	jr Label_3b_6f55 ; $6ef0
 Label_3b_6ef2:
-	ld a, [$cb0d] ; $6ef2
+	ld a, [wMenuInputPressed] ; $6ef2
 	bit 4, a ; $6ef5
 	jr nz, Label_3b_6f08 ; $6ef7
 	bit 5, a ; $6ef9
@@ -6428,7 +6429,7 @@ Label_3b_6ef2:
 	xor a, a ; $6f05
 	jr Label_3b_6f55 ; $6f06
 Label_3b_6f08:
-	ld a, [$cb04] ; $6f08
+	ld a, [wMenuCursorX] ; $6f08
 	inc a ; $6f0b
 	add a, a ; $6f0c
 	jr nc, Label_3b_6f14 ; $6f0d
@@ -6441,11 +6442,11 @@ Label_3b_6f14:
 	jr c, Label_3b_6f1a ; $6f17
 	xor a, a ; $6f19
 Label_3b_6f1a:
-	ld [$cb04], a ; $6f1a
+	ld [wMenuCursorX], a ; $6f1a
 	ld a, $01 ; $6f1d
 	jr Label_3b_6f55 ; $6f1f
 Label_3b_6f21:
-	ld a, [$cb04] ; $6f21
+	ld a, [wMenuCursorX] ; $6f21
 	dec a ; $6f24
 	add a, a ; $6f25
 	jr nc, Label_3b_6f2d ; $6f26
@@ -6458,11 +6459,11 @@ Label_3b_6f2d:
 	jr c, Label_3b_6f33 ; $6f30
 	xor a, a ; $6f32
 Label_3b_6f33:
-	ld [$cb04], a ; $6f33
+	ld [wMenuCursorX], a ; $6f33
 	ld a, $01 ; $6f36
 	jr Label_3b_6f55 ; $6f38
 Label_3b_6f3a:
-	ld a, [$cb04] ; $6f3a
+	ld a, [wMenuCursorX] ; $6f3a
 	ld hl, $6f59 ; $6f3d
 	add a, l ; $6f40
 	ld l, a ; $6f41
@@ -6470,10 +6471,10 @@ Label_3b_6f3a:
 	inc h ; $6f44
 Label_3b_6f45:
 	ld a, [hl] ; $6f45
-	ld [$cb04], a ; $6f46
-	ld a, [$cb05] ; $6f49
+	ld [wMenuCursorX], a ; $6f46
+	ld a, [wMenuCursorY] ; $6f49
 	xor a, $01 ; $6f4c
-	ld [$cb05], a ; $6f4e
+	ld [wMenuCursorY], a ; $6f4e
 	ld a, $01 ; $6f51
 	jr Label_3b_6f55 ; $6f53
 Label_3b_6f55:
@@ -6733,7 +6734,7 @@ Label_3b_7120:
 	ld l, a ; $7148
 	ld de, $d20c ; $7149
 	ld bc, $d330 ; $714c
-	call Func_3b_5c2b ; $714f
+	call PrintNumberRightAligned ; $714f
 	pop hl ; $7152
 	pop de ; $7153
 	pop bc ; $7154
@@ -6807,22 +6808,22 @@ Func_3b_71b0:
 	call Func_3b_43db ; $71d7
 	ld a, $01 ; $71da
 	ld hl, $734f ; $71dc
-	call Func_00_1b6a ; $71df
+	call RegisterFrameTask ; $71df
 	call Func_3b_73bf ; $71e2
 	wram_bank $03 ; $71e5
 Label_3b_71eb:
 	call Func_00_2631 ; $71eb
-	ldh a, [$ff91] ; $71ee
-	ld [$cb0d], a ; $71f0
+	ldh a, [hInputPressed] ; $71ee
+	ld [wMenuInputPressed], a ; $71f0
 	ld b, $03 ; $71f3
 	ld c, $01 ; $71f5
-	call Func_3b_412a ; $71f7
+	call MoveMenuCursor ; $71f7
 	or a, a ; $71fa
 	jr z, Label_3b_7202 ; $71fb
 	sound $5e ; $71fd
 	call Func_3b_73bf ; $71ff
 Label_3b_7202:
-	ld a, [$cb0d] ; $7202
+	ld a, [wMenuInputPressed] ; $7202
 	bit 0, a ; $7205
 	jr nz, Label_3b_720f ; $7207
 	bit 1, a ; $7209
@@ -6830,7 +6831,7 @@ Label_3b_7202:
 	jr Label_3b_71eb ; $720d
 Label_3b_720f:
 	sound $5f ; $720f
-	call Func_00_1b38 ; $7211
+	call ClearFrameTasks ; $7211
 	ld hl, rIE ; $7214
 	set 2, [hl] ; $7217
 	ld b, $01 ; $7219
@@ -6843,7 +6844,7 @@ Label_3b_720f:
 	ret ; $722b
 Label_3b_722c:
 	sound $62 ; $722c
-	call Func_00_1b38 ; $722e
+	call ClearFrameTasks ; $722e
 	ld hl, rIE ; $7231
 	set 2, [hl] ; $7234
 	ld b, $00 ; $7236
@@ -7212,22 +7213,22 @@ Func_3b_74bf:
 	call Func_3b_43db ; $74e6
 	ld a, $01 ; $74e9
 	ld hl, $76ea ; $74eb
-	call Func_00_1b6a ; $74ee
+	call RegisterFrameTask ; $74ee
 	call Func_3b_760c ; $74f1
 	wram_bank $03 ; $74f4
 Label_3b_74fa:
 	call Func_00_2631 ; $74fa
-	ldh a, [$ff91] ; $74fd
-	ld [$cb0d], a ; $74ff
+	ldh a, [hInputPressed] ; $74fd
+	ld [wMenuInputPressed], a ; $74ff
 	ld b, $02 ; $7502
 	ld c, $02 ; $7504
-	call Func_3b_412a ; $7506
+	call MoveMenuCursor ; $7506
 	or a, a ; $7509
 	jr z, Label_3b_7511 ; $750a
 	sound $5e ; $750c
 	call Func_3b_760c ; $750e
 Label_3b_7511:
-	ld a, [$cb0d] ; $7511
+	ld a, [wMenuInputPressed] ; $7511
 	bit 0, a ; $7514
 	jr nz, Label_3b_751e ; $7516
 	bit 1, a ; $7518
@@ -7235,7 +7236,7 @@ Label_3b_7511:
 	jr Label_3b_74fa ; $751c
 Label_3b_751e:
 	sound $5f ; $751e
-	call Func_00_1b38 ; $7520
+	call ClearFrameTasks ; $7520
 	ld hl, rIE ; $7523
 	set 2, [hl] ; $7526
 	ld b, $01 ; $7528
@@ -7248,7 +7249,7 @@ Label_3b_751e:
 	ret ; $753a
 Label_3b_753b:
 	sound $62 ; $753b
-	call Func_00_1b38 ; $753d
+	call ClearFrameTasks ; $753d
 	ld hl, rIE ; $7540
 	set 2, [hl] ; $7543
 	ld b, $00 ; $7545
@@ -7521,12 +7522,12 @@ Func_3b_775d:
 	call Func_00_1da4 ; $7779
 	ld a, $01 ; $777c
 	ld hl, $79d6 ; $777e
-	call Func_00_1b6a ; $7781
+	call RegisterFrameTask ; $7781
 	sound $78 ; $7784
 	call Func_00_2725 ; $7786
 	ld a, b ; $7789
 Label_3b_778a:
-	ldh a, [$ff91] ; $778a
+	ldh a, [hInputPressed] ; $778a
 	bit 0, a ; $778c
 	jr nz, Label_3b_7799 ; $778e
 	bit 1, a ; $7790
@@ -7535,7 +7536,7 @@ Label_3b_778a:
 	jr Label_3b_778a ; $7797
 Label_3b_7799:
 	sound $5f ; $7799
-	call Func_00_1b38 ; $779b
+	call ClearFrameTasks ; $779b
 	ld c, $10 ; $779e
 	call Func_00_1d20 ; $77a0
 	call Func_00_1da4 ; $77a3
@@ -7865,10 +7866,10 @@ Func_3b_79f9:
 	ld [$cb0c], a ; $7a08
 	ld a, $01 ; $7a0b
 	ld hl, $4428 ; $7a0d
-	call Func_00_1b6a ; $7a10
+	call RegisterFrameTask ; $7a10
 	ld a, $01 ; $7a13
 	ld hl, $7a6d ; $7a15
-	call Func_00_1b6a ; $7a18
+	call RegisterFrameTask ; $7a18
 	call EnableLCD ; $7a1b
 	ld c, $10 ; $7a1e
 	call Func_00_1d2e ; $7a20
@@ -7876,8 +7877,8 @@ Func_3b_79f9:
 	wram_bank $03 ; $7a26
 Label_3b_7a2c:
 	call Func_00_2631 ; $7a2c
-	ldh a, [$ff91] ; $7a2f
-	ld [$cb0d], a ; $7a31
+	ldh a, [hInputPressed] ; $7a2f
+	ld [wMenuInputPressed], a ; $7a31
 	call Func_3b_7e25 ; $7a34
 	or a, a ; $7a37
 	jr z, Label_3b_7a3f ; $7a38
@@ -7886,7 +7887,7 @@ Label_3b_7a2c:
 Label_3b_7a3f:
 	call Func_3b_7bb5 ; $7a3f
 Label_3b_7a42:
-	ld a, [$cb0d] ; $7a42
+	ld a, [wMenuInputPressed] ; $7a42
 	bit 0, a ; $7a45
 	jr nz, Label_3b_7a4f ; $7a47
 	bit 1, a ; $7a49
@@ -7897,14 +7898,14 @@ Label_3b_7a4f:
 	ld c, $10 ; $7a51
 	call Func_00_1d20 ; $7a53
 	call Func_00_1da4 ; $7a56
-	call Func_00_1b38 ; $7a59
+	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
 Label_3b_7a5d:
 	sound $62 ; $7a5d
 	ld c, $10 ; $7a5f
 	call Func_00_1d20 ; $7a61
 	call Func_00_1da4 ; $7a64
-	call Func_00_1b38 ; $7a67
+	call ClearFrameTasks ; $7a67
 	ld a, $ff ; $7a6a
 	ret ; $7a6c
 	ldh a, [hWramBank] ; $7a6d
@@ -7913,7 +7914,7 @@ Label_3b_7a5d:
 	call Func_3b_7e25 ; $7a76
 	or a, a ; $7a79
 	jr z, Label_3b_7adc ; $7a7a
-	ld a, [$cb04] ; $7a7c
+	ld a, [wMenuCursorX] ; $7a7c
 	cp a, $02 ; $7a7f
 	jr z, Label_3b_7a94 ; $7a81
 	ld de, $932f ; $7a83
@@ -7924,7 +7925,7 @@ Label_3b_7a5d:
 	ld h, $00 ; $7a8f
 	farcall FarPtr_39_1a ; $7a91
 Label_3b_7a94:
-	ld a, [$cb04] ; $7a94
+	ld a, [wMenuCursorX] ; $7a94
 	or a, a ; $7a97
 	jr z, Label_3b_7aab ; $7a98
 	ld de, $082f ; $7a9a
@@ -7935,7 +7936,7 @@ Label_3b_7a94:
 	ld h, $01 ; $7aa6
 	farcall FarPtr_39_1a ; $7aa8
 Label_3b_7aab:
-	ld a, [$cb05] ; $7aab
+	ld a, [wMenuCursorY] ; $7aab
 	or a, a ; $7aae
 	jr z, Label_3b_7ac2 ; $7aaf
 	ld de, $0a20 ; $7ab1
@@ -7946,7 +7947,7 @@ Label_3b_7aab:
 	ld h, $02 ; $7abd
 	farcall FarPtr_39_1a ; $7abf
 Label_3b_7ac2:
-	ld a, [$cb05] ; $7ac2
+	ld a, [wMenuCursorY] ; $7ac2
 	cp a, $05 ; $7ac5
 	jr z, Label_3b_7ada ; $7ac7
 	ld de, $0a78 ; $7ac9
@@ -7959,7 +7960,7 @@ Label_3b_7ac2:
 Label_3b_7ada:
 	jr Label_3b_7b0b ; $7ada
 Label_3b_7adc:
-	ld a, [$cb05] ; $7adc
+	ld a, [wMenuCursorY] ; $7adc
 	or a, a ; $7adf
 	jr z, Label_3b_7af3 ; $7ae0
 	ld de, $1a20 ; $7ae2
@@ -7970,7 +7971,7 @@ Label_3b_7adc:
 	ld h, $02 ; $7aee
 	farcall FarPtr_39_1a ; $7af0
 Label_3b_7af3:
-	ld a, [$cb05] ; $7af3
+	ld a, [wMenuCursorY] ; $7af3
 	cp a, $01 ; $7af6
 	jr z, Label_3b_7b0b ; $7af8
 	ld de, $1a78 ; $7afa
@@ -8007,14 +8008,14 @@ Func_3b_7b11:
 	farcall FarPtr_39_02 ; $7b4b
 	ret ; $7b4e
 Func_3b_7b4f:
-	ld a, [$cb0d] ; $7b4f
+	ld a, [wMenuInputPressed] ; $7b4f
 	bit 5, a ; $7b52
 	jr z, Label_3b_7b6a ; $7b54
-	ld a, [$cb04] ; $7b56
+	ld a, [wMenuCursorX] ; $7b56
 	or a, a ; $7b59
 	jr z, Label_3b_7bb4 ; $7b5a
 	dec a ; $7b5c
-	ld [$cb04], a ; $7b5d
+	ld [wMenuCursorX], a ; $7b5d
 	sound $5e ; $7b60
 	call Func_3b_7bea ; $7b62
 	call Func_3b_7c81 ; $7b65
@@ -8022,11 +8023,11 @@ Func_3b_7b4f:
 Label_3b_7b6a:
 	bit 4, a ; $7b6a
 	jr z, Label_3b_7b83 ; $7b6c
-	ld a, [$cb04] ; $7b6e
+	ld a, [wMenuCursorX] ; $7b6e
 	cp a, $02 ; $7b71
 	jr z, Label_3b_7bb4 ; $7b73
 	inc a ; $7b75
-	ld [$cb04], a ; $7b76
+	ld [wMenuCursorX], a ; $7b76
 	sound $5e ; $7b79
 	call Func_3b_7bea ; $7b7b
 	call Func_3b_7c81 ; $7b7e
@@ -8034,11 +8035,11 @@ Label_3b_7b6a:
 Label_3b_7b83:
 	bit 6, a ; $7b83
 	jr z, Label_3b_7b9b ; $7b85
-	ld a, [$cb05] ; $7b87
+	ld a, [wMenuCursorY] ; $7b87
 	or a, a ; $7b8a
 	jr z, Label_3b_7bb4 ; $7b8b
 	dec a ; $7b8d
-	ld [$cb05], a ; $7b8e
+	ld [wMenuCursorY], a ; $7b8e
 	sound $5e ; $7b91
 	call Func_3b_7bea ; $7b93
 	call Func_3b_7c81 ; $7b96
@@ -8046,11 +8047,11 @@ Label_3b_7b83:
 Label_3b_7b9b:
 	bit 7, a ; $7b9b
 	jr z, Label_3b_7bb4 ; $7b9d
-	ld a, [$cb05] ; $7b9f
+	ld a, [wMenuCursorY] ; $7b9f
 	cp a, $05 ; $7ba2
 	jr z, Label_3b_7bb4 ; $7ba4
 	inc a ; $7ba6
-	ld [$cb05], a ; $7ba7
+	ld [wMenuCursorY], a ; $7ba7
 	sound $5e ; $7baa
 	call Func_3b_7bea ; $7bac
 	call Func_3b_7c81 ; $7baf
@@ -8058,14 +8059,14 @@ Label_3b_7b9b:
 Label_3b_7bb4:
 	ret ; $7bb4
 Func_3b_7bb5:
-	ld a, [$cb0d] ; $7bb5
+	ld a, [wMenuInputPressed] ; $7bb5
 	bit 6, a ; $7bb8
 	jr z, Label_3b_7bd0 ; $7bba
-	ld a, [$cb05] ; $7bbc
+	ld a, [wMenuCursorY] ; $7bbc
 	or a, a ; $7bbf
 	jr z, Label_3b_7be9 ; $7bc0
 	dec a ; $7bc2
-	ld [$cb05], a ; $7bc3
+	ld [wMenuCursorY], a ; $7bc3
 	sound $5e ; $7bc6
 	call Func_3b_7bea ; $7bc8
 	call Func_3b_7c81 ; $7bcb
@@ -8073,11 +8074,11 @@ Func_3b_7bb5:
 Label_3b_7bd0:
 	bit 7, a ; $7bd0
 	jr z, Label_3b_7be9 ; $7bd2
-	ld a, [$cb05] ; $7bd4
+	ld a, [wMenuCursorY] ; $7bd4
 	cp a, $01 ; $7bd7
 	jr z, Label_3b_7be9 ; $7bd9
 	inc a ; $7bdb
-	ld [$cb05], a ; $7bdc
+	ld [wMenuCursorY], a ; $7bdc
 	sound $5e ; $7bdf
 	call Func_3b_7bea ; $7be1
 	call Func_3b_7c81 ; $7be4
@@ -8090,7 +8091,7 @@ Func_3b_7bea:
 	or a, a ; $7bf3
 	jr z, Label_3b_7c3c ; $7bf4
 	ld bc, $d0a4 ; $7bf6
-	ld a, [$cb04] ; $7bf9
+	ld a, [wMenuCursorX] ; $7bf9
 	ld hl, $dc01 ; $7bfc
 	add a, l ; $7bff
 	ld l, a ; $7c00
@@ -8099,7 +8100,7 @@ Func_3b_7bea:
 Label_3b_7c04:
 	ld a, $07 ; $7c04
 	call Func_3b_46da ; $7c06
-	ld a, [$cb05] ; $7c09
+	ld a, [wMenuCursorY] ; $7c09
 	ld hl, $dc01 ; $7c0c
 	add a, l ; $7c0f
 	ld l, a ; $7c10
@@ -8108,7 +8109,7 @@ Label_3b_7c04:
 Label_3b_7c14:
 	ld bc, $d0e2 ; $7c14
 	call Func_3b_46c0 ; $7c17
-	ld a, [$cb05] ; $7c1a
+	ld a, [wMenuCursorY] ; $7c1a
 	ld hl, $db00 ; $7c1d
 	ld de, $0010 ; $7c20
 Label_3b_7c23:
@@ -8118,7 +8119,7 @@ Label_3b_7c23:
 	dec a ; $7c27
 	jr Label_3b_7c23 ; $7c28
 Label_3b_7c2a:
-	ld a, [$cb04] ; $7c2a
+	ld a, [wMenuCursorX] ; $7c2a
 	add a, l ; $7c2d
 	ld l, a ; $7c2e
 	jr nc, Label_3b_7c32 ; $7c2f
@@ -8130,7 +8131,7 @@ Label_3b_7c32:
 	jr Label_3b_7c80 ; $7c3a
 Label_3b_7c3c:
 	ld bc, $d0a6 ; $7c3c
-	ld a, [$cb04] ; $7c3f
+	ld a, [wMenuCursorX] ; $7c3f
 	ld hl, $dc01 ; $7c42
 	add a, l ; $7c45
 	ld l, a ; $7c46
@@ -8139,7 +8140,7 @@ Label_3b_7c3c:
 Label_3b_7c4a:
 	ld a, $05 ; $7c4a
 	call Func_3b_46da ; $7c4c
-	ld a, [$cb05] ; $7c4f
+	ld a, [wMenuCursorY] ; $7c4f
 	ld hl, $dc01 ; $7c52
 	add a, l ; $7c55
 	ld l, a ; $7c56
@@ -8148,7 +8149,7 @@ Label_3b_7c4a:
 Label_3b_7c5a:
 	ld bc, $d0e4 ; $7c5a
 	call Func_3b_46c0 ; $7c5d
-	ld a, [$cb05] ; $7c60
+	ld a, [wMenuCursorY] ; $7c60
 	ld hl, $db00 ; $7c63
 	ld de, $0010 ; $7c66
 Label_3b_7c69:
@@ -8158,7 +8159,7 @@ Label_3b_7c69:
 	dec a ; $7c6d
 	jr Label_3b_7c69 ; $7c6e
 Label_3b_7c70:
-	ld a, [$cb04] ; $7c70
+	ld a, [wMenuCursorX] ; $7c70
 	add a, l ; $7c73
 	ld l, a ; $7c74
 	jr nc, Label_3b_7c78 ; $7c75
@@ -8288,7 +8289,7 @@ Label_3b_7d35:
 	pop af ; $7d51
 	wram_bank ; $7d52
 	ret ; $7d56
-Func_3b_7d57:
+RecordExhibitionVictory:
 	ldh a, [hWramBank] ; $7d57
 	push af ; $7d59
 	wram_bank $03 ; $7d5a
@@ -8309,10 +8310,10 @@ Func_3b_7d57:
 	or a, a ; $7d80
 	jr z, Label_3b_7dbd ; $7d81
 	ld a, [wPlayer1CurrentMainCharacter] ; $7d83
-	call Func_3b_7de1 ; $7d86
+	call GetStarCharIndex ; $7d86
 	ld d, a ; $7d89
 	ld a, [wPlayer2CurrentMainCharacter] ; $7d8a
-	call Func_3b_7de1 ; $7d8d
+	call GetStarCharIndex ; $7d8d
 	ld e, a ; $7d90
 	ld hl, $d900 ; $7d91
 	farcall FarPtr_03_32 ; $7d94
@@ -8331,12 +8332,12 @@ Label_3b_7da5:
 	push hl ; $7da5
 	ld d, [hl] ; $7da6
 	ld a, [wExhibitionModeCPUMainCharacterDifficulty] ; $7da7
-	call Func_3b_7dc4 ; $7daa
+	call GetVictoryScore ; $7daa
 	pop hl ; $7dad
 	cp a, d ; $7dae
 	jr c, Label_3b_7dbd ; $7daf
 	ld [hl], a ; $7db1
-	call Func_3b_7df6 ; $7db2
+	call UpdateStarUnlocks ; $7db2
 	ld hl, $d900 ; $7db5
 	farcall FarPtr_03_34 ; $7db8
 Label_3b_7dbb:
@@ -8346,9 +8347,9 @@ Label_3b_7dbd:
 	wram_bank ; $7dbe
 	ret ; $7dc2
 	ret ; $7dc3
-Func_3b_7dc4:
+GetVictoryScore:
 	ld b, a ; $7dc4
-	ld hl, $7dd9 ; $7dc5
+	ld hl, VictoryScoreTable ; $7dc5
 	ld a, [$c8a8] ; $7dc8
 	or a, a ; $7dcb
 	jr z, Label_3b_7dd1 ; $7dcc
@@ -8362,12 +8363,13 @@ Label_3b_7dd1:
 Label_3b_7dd7:
 	ld a, [hl] ; $7dd7
 	ret ; $7dd8
+VictoryScoreTable:
 	; $7dd9, 8 bytes (bytes:4)
 	db $03, $05, $07, $09 ; 0x00
 	db $02, $04, $06, $08 ; 0x04
-Func_3b_7de1:
+GetStarCharIndex:
 	sub a, $17 ; $7de1
-	ld hl, $7ded ; $7de3
+	ld hl, StarCharOrderTable ; $7de3
 	add a, l ; $7de6
 	ld l, a ; $7de7
 	jr nc, Label_3b_7deb ; $7de8
@@ -8375,11 +8377,12 @@ Func_3b_7de1:
 Label_3b_7deb:
 	ld a, [hl] ; $7deb
 	ret ; $7dec
+StarCharOrderTable:
 	; $7ded, 9 bytes (bytes:3)
 	db $01, $05, $03 ; 0x00
 	db $00, $07, $04 ; 0x03
 	db $08, $06, $02 ; 0x06
-Func_3b_7df6:
+UpdateStarUnlocks:
 	ld c, $00 ; $7df6
 Label_3b_7df8:
 	ld hl, $d900 ; $7df8

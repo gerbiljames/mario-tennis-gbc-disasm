@@ -6,6 +6,7 @@ DEF sMarioMinigameCompletionFlags2 EQU $a043
 DEF sMarioMinigameCompletionFlags3 EQU $a045
 DEF sMarioMinigameCompletionFlags4 EQU $a046
 DEF sCourtUnlockFlags EQU $a047
+DEF wFrameTasks EQU $c1c0
 DEF wStoryModeCurrentLocation EQU $c280
 DEF wWaterSpriteMinigameTimer EQU $c2b4
 DEF wWaterSpriteMinigameSwingCount EQU $c2b6
@@ -160,8 +161,14 @@ DEF wPlayer2CurrentMainCharacter EQU $ca8b
 DEF wExhibitionModeCPUMainCharacterDifficulty EQU $ca9f
 DEF wPlayer2CurrentPartnerCharacter EQU $cacb
 DEF wExhibitionModeCPUPartnerCharacterDifficulty EQU $cadf
+DEF wMenuCursorX EQU $cb04
+DEF wMenuCursorY EQU $cb05
+DEF wMenuInputPressed EQU $cb0d
 DEF wIntroCutsceneCheck EQU $cb41
 DEF wShortTextBuffer EQU $d880
+DEF hFrameTasksReady EQU $ff8f
 DEF hPlayerInputFlags EQU $ff90
+DEF hInputPressed EQU $ff91
+DEF hRomBank EQU $ff95
 DEF hWramBank EQU $ff96
 DEF hMusic EQU $ffce

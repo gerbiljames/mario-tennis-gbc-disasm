@@ -58,7 +58,7 @@ Label_0d_4059:
 	ld a, [hl+] ; $405e
 	ld d, [hl] ; $405f
 	ld e, a ; $4060
-	ldh a, [$ff95] ; $4061
+	ldh a, [hRomBank] ; $4061
 	farcall FarPtr_SetModeHookTable ; $4063
 	ld hl, $000a ; $4066
 	add hl, bc ; $4069

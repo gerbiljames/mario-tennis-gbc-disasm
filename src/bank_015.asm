@@ -512,7 +512,7 @@ Label_15_5597:
 Func_15_59c0:
 	xor a, a ; $59c0
 	ld [$c2d5], a ; $59c1
-	ldh a, [$ff95] ; $59c4
+	ldh a, [hRomBank] ; $59c4
 	ld hl, $5c4f ; $59c6
 	farcall FarPtr_0a_06 ; $59c9
 	farcall FarPtr_0a_00 ; $59cc
@@ -3050,17 +3050,17 @@ Func_15_7a96:
 	ld a, $14 ; $7aa2
 	farcall FarPtr_0a_04 ; $7aa4
 	pop af ; $7aa7
-	ldh a, [$ff95] ; $7aa8
+	ldh a, [hRomBank] ; $7aa8
 	ld b, a ; $7aaa
 	ld a, $07 ; $7aab
 	ld de, $7b03 ; $7aad
 	farcall FarPtr_0a_1a ; $7ab0
-	ldh a, [$ff95] ; $7ab3
+	ldh a, [hRomBank] ; $7ab3
 	ld b, a ; $7ab5
 	ld a, $00 ; $7ab6
 	ld de, $7b1a ; $7ab8
 	farcall FarPtr_0a_1a ; $7abb
-	ldh a, [$ff95] ; $7abe
+	ldh a, [hRomBank] ; $7abe
 	ld b, a ; $7ac0
 	ld a, $02 ; $7ac1
 	ld de, $7b25 ; $7ac3
@@ -3095,17 +3095,17 @@ Func_15_7b30:
 	farcall FarPtr_0a_38 ; $7b33
 	ld a, $02 ; $7b36
 	farcall FarPtr_0a_1c ; $7b38
-	ldh a, [$ff95] ; $7b3b
+	ldh a, [hRomBank] ; $7b3b
 	ld b, a ; $7b3d
 	ld a, $12 ; $7b3e
 	ld de, $7b96 ; $7b40
 	farcall FarPtr_0a_1a ; $7b43
-	ldh a, [$ff95] ; $7b46
+	ldh a, [hRomBank] ; $7b46
 	ld b, a ; $7b48
 	ld a, $00 ; $7b49
 	ld de, $7bb3 ; $7b4b
 	farcall FarPtr_0a_1a ; $7b4e
-	ldh a, [$ff95] ; $7b51
+	ldh a, [hRomBank] ; $7b51
 	ld b, a ; $7b53
 	ld a, $02 ; $7b54
 	ld de, $7bbe ; $7b56
@@ -3140,17 +3140,17 @@ Func_15_7bc9:
 	farcall FarPtr_0a_1c ; $7bcb
 	ld bc, $0020 ; $7bce
 	farcall FarPtr_0a_38 ; $7bd1
-	ldh a, [$ff95] ; $7bd4
+	ldh a, [hRomBank] ; $7bd4
 	ld b, a ; $7bd6
 	ld a, $0d ; $7bd7
 	ld de, $7c2f ; $7bd9
 	farcall FarPtr_0a_1a ; $7bdc
-	ldh a, [$ff95] ; $7bdf
+	ldh a, [hRomBank] ; $7bdf
 	ld b, a ; $7be1
 	ld a, $00 ; $7be2
 	ld de, $7c4c ; $7be4
 	farcall FarPtr_0a_1a ; $7be7
-	ldh a, [$ff95] ; $7bea
+	ldh a, [hRomBank] ; $7bea
 	ld b, a ; $7bec
 	ld a, $02 ; $7bed
 	ld de, $7c57 ; $7bef

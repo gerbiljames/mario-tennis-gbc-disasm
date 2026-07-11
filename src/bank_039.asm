@@ -982,10 +982,10 @@ Label_39_6de1:
 	ret ; $6dec
 	INCBIN "data/bank_039/d_6ded.bin" ; $6ded, 12 bytes
 Func_39_6df9:
-	ld a, [$cb05] ; $6df9
+	ld a, [wMenuCursorY] ; $6df9
 	or a, a ; $6dfc
 	jr nz, Label_39_6e64 ; $6dfd
-	ld a, [$cb0d] ; $6dff
+	ld a, [wMenuInputPressed] ; $6dff
 	bit 4, a ; $6e02
 	jr nz, Label_39_6e16 ; $6e04
 	bit 5, a ; $6e06
@@ -997,7 +997,7 @@ Func_39_6df9:
 	xor a, a ; $6e12
 	jp Label_39_6eb9 ; $6e13
 Label_39_6e16:
-	ld a, [$cb04] ; $6e16
+	ld a, [wMenuCursorX] ; $6e16
 	inc a ; $6e19
 	add a, a ; $6e1a
 	jr nc, Label_39_6e22 ; $6e1b
@@ -1010,11 +1010,11 @@ Label_39_6e22:
 	jr c, Label_39_6e28 ; $6e25
 	xor a, a ; $6e27
 Label_39_6e28:
-	ld [$cb04], a ; $6e28
+	ld [wMenuCursorX], a ; $6e28
 	ld a, $01 ; $6e2b
 	jp Label_39_6eb9 ; $6e2d
 Label_39_6e30:
-	ld a, [$cb04] ; $6e30
+	ld a, [wMenuCursorX] ; $6e30
 	dec a ; $6e33
 	add a, a ; $6e34
 	jr nc, Label_39_6e3c ; $6e35
@@ -1027,11 +1027,11 @@ Label_39_6e3c:
 	jr c, Label_39_6e42 ; $6e3f
 	xor a, a ; $6e41
 Label_39_6e42:
-	ld [$cb04], a ; $6e42
+	ld [wMenuCursorX], a ; $6e42
 	ld a, $01 ; $6e45
 	jr Label_39_6eb9 ; $6e47
 Label_39_6e49:
-	ld a, [$cb04] ; $6e49
+	ld a, [wMenuCursorX] ; $6e49
 	ld hl, $6eba ; $6e4c
 	add a, l ; $6e4f
 	ld l, a ; $6e50
@@ -1039,14 +1039,14 @@ Label_39_6e49:
 	inc h ; $6e53
 Label_39_6e54:
 	ld a, [hl] ; $6e54
-	ld [$cb04], a ; $6e55
-	ld a, [$cb05] ; $6e58
+	ld [wMenuCursorX], a ; $6e55
+	ld a, [wMenuCursorY] ; $6e58
 	xor a, $01 ; $6e5b
-	ld [$cb05], a ; $6e5d
+	ld [wMenuCursorY], a ; $6e5d
 	ld a, $01 ; $6e60
 	jr Label_39_6eb9 ; $6e62
 Label_39_6e64:
-	ld a, [$cb0d] ; $6e64
+	ld a, [wMenuInputPressed] ; $6e64
 	bit 4, a ; $6e67
 	jr nz, Label_39_6e7a ; $6e69
 	bit 5, a ; $6e6b
@@ -1058,7 +1058,7 @@ Label_39_6e64:
 	xor a, a ; $6e77
 	jr Label_39_6eb9 ; $6e78
 Label_39_6e7a:
-	ld a, [$cb04] ; $6e7a
+	ld a, [wMenuCursorX] ; $6e7a
 	or a, a ; $6e7d
 	jr z, Label_39_6e83 ; $6e7e
 	xor a, a ; $6e80
@@ -1066,11 +1066,11 @@ Label_39_6e7a:
 Label_39_6e83:
 	ld a, $02 ; $6e83
 Label_39_6e85:
-	ld [$cb04], a ; $6e85
+	ld [wMenuCursorX], a ; $6e85
 	ld a, $01 ; $6e88
 	jr Label_39_6eb9 ; $6e8a
 Label_39_6e8c:
-	ld a, [$cb04] ; $6e8c
+	ld a, [wMenuCursorX] ; $6e8c
 	or a, a ; $6e8f
 	jr z, Label_39_6e95 ; $6e90
 	xor a, a ; $6e92
@@ -1078,11 +1078,11 @@ Label_39_6e8c:
 Label_39_6e95:
 	ld a, $02 ; $6e95
 Label_39_6e97:
-	ld [$cb04], a ; $6e97
+	ld [wMenuCursorX], a ; $6e97
 	ld a, $01 ; $6e9a
 	jr Label_39_6eb9 ; $6e9c
 Label_39_6e9e:
-	ld a, [$cb04] ; $6e9e
+	ld a, [wMenuCursorX] ; $6e9e
 	ld hl, $6ebd ; $6ea1
 	add a, l ; $6ea4
 	ld l, a ; $6ea5
@@ -1090,10 +1090,10 @@ Label_39_6e9e:
 	inc h ; $6ea8
 Label_39_6ea9:
 	ld a, [hl] ; $6ea9
-	ld [$cb04], a ; $6eaa
-	ld a, [$cb05] ; $6ead
+	ld [wMenuCursorX], a ; $6eaa
+	ld a, [wMenuCursorY] ; $6ead
 	xor a, $01 ; $6eb0
-	ld [$cb05], a ; $6eb2
+	ld [wMenuCursorY], a ; $6eb2
 	ld a, $01 ; $6eb5
 	jr Label_39_6eb9 ; $6eb7
 Label_39_6eb9:
@@ -1152,7 +1152,7 @@ Func_39_6f10:
 	push de ; $6f1d
 	ld de, $cb64 ; $6f1e
 	ld a, $00 ; $6f21
-	call Func_00_1972 ; $6f23
+	call FormatDecimalNumber ; $6f23
 	pop de ; $6f26
 	ld b, $00 ; $6f27
 	ld hl, $cb64 ; $6f29

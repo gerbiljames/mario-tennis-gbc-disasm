@@ -64,10 +64,10 @@ Func_04_4041:
 	call Func_04_4032 ; $4041
 	ld a, $10 ; $4044
 	ld hl, $41e7 ; $4046
-	call Func_00_1b6a ; $4049
+	call RegisterFrameTask ; $4049
 	ld a, $01 ; $404c
 	ld hl, $4a82 ; $404e
-	call Func_00_1b6a ; $4051
+	call RegisterFrameTask ; $4051
 	ret ; $4054
 Func_04_4055:
 	push af ; $4055
@@ -206,7 +206,7 @@ Func_04_415b:
 	push af ; $415e
 	push de ; $415f
 	push hl ; $4160
-	ldh a, [$ff95] ; $4161
+	ldh a, [hRomBank] ; $4161
 	ld hl, $41d2 ; $4163
 	call Func_04_40ac ; $4166
 	ld hl, $0005 ; $4169
@@ -233,7 +233,7 @@ Func_04_417b:
 	ld a, e ; $418b
 	ld [hl+], a ; $418c
 	ld [hl], d ; $418d
-	ldh a, [$ff95] ; $418e
+	ldh a, [hRomBank] ; $418e
 	ld hl, $41d8 ; $4190
 	call Func_04_40ac ; $4193
 	ld hl, $0020 ; $4196
@@ -258,7 +258,7 @@ Func_04_41a6:
 	ld a, e ; $41b0
 	ld [hl+], a ; $41b1
 	ld [hl], d ; $41b2
-	ldh a, [$ff95] ; $41b3
+	ldh a, [hRomBank] ; $41b3
 	ld hl, $41dc ; $41b5
 	call Func_04_40ac ; $41b8
 	ld hl, $0005 ; $41bb
@@ -1700,7 +1700,7 @@ Func_04_4c60:
 	call Func_04_4c49 ; $4c69
 	pop de ; $4c6c
 	jr z, Label_04_4c79 ; $4c6d
-	ldh a, [$ff95] ; $4c6f
+	ldh a, [hRomBank] ; $4c6f
 	ld hl, $41d1 ; $4c71
 	call Func_04_4055 ; $4c74
 	jr Label_04_4cf3 ; $4c77
@@ -1839,11 +1839,11 @@ Label_04_4d21:
 	pop af ; $4d2a
 	ret ; $4d2b
 Func_04_4d2c:
-	ldh a, [$ff95] ; $4d2c
+	ldh a, [hRomBank] ; $4d2c
 	ld hl, $4da5 ; $4d2e
 	call Func_04_4c60 ; $4d31
 	call Func_04_415b ; $4d34
-	ldh a, [$ff95] ; $4d37
+	ldh a, [hRomBank] ; $4d37
 	ld hl, $41d1 ; $4d39
 	call Func_04_4055 ; $4d3c
 	ld hl, $1700 ; $4d3f
@@ -1851,7 +1851,7 @@ Func_04_4d2c:
 	call Func_04_40c6 ; $4d45
 	ld de, $d000 ; $4d48
 	call Func_04_417b ; $4d4b
-	ldh a, [$ff95] ; $4d4e
+	ldh a, [hRomBank] ; $4d4e
 	ld hl, $4e05 ; $4d50
 	call Func_04_4c60 ; $4d53
 	ld de, $d000 ; $4d56
@@ -1879,7 +1879,7 @@ Func_04_4e6b:
 	ld a, [hl+] ; $4e84
 	ld h, [hl] ; $4e85
 	ld l, a ; $4e86
-	ldh a, [$ff95] ; $4e87
+	ldh a, [hRomBank] ; $4e87
 	call Func_04_4c60 ; $4e89
 	pop bc ; $4e8c
 	ld a, c ; $4e8d
@@ -1890,7 +1890,7 @@ Func_04_4e6b:
 	call Func_04_40c6 ; $4e98
 	push de ; $4e9b
 	push hl ; $4e9c
-	ldh a, [$ff95] ; $4e9d
+	ldh a, [hRomBank] ; $4e9d
 	ld de, $41d1 ; $4e9f
 	call Func_04_4055 ; $4ea2
 	ld a, $01 ; $4ea5
@@ -1937,7 +1937,7 @@ Label_04_4f36:
 	ld a, $ff ; $4f39
 Label_04_4f3b:
 	ld [$cb5e], a ; $4f3b
-	ldh a, [$ff95] ; $4f3e
+	ldh a, [hRomBank] ; $4f3e
 	call Func_04_4c60 ; $4f40
 	ld a, [$cb5e] ; $4f43
 	cp a, $ff ; $4f46

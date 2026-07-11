@@ -1685,22 +1685,22 @@ Label_12_5a68:
 	ld a, $07 ; $61c7
 	ld b, $80 ; $61c9
 	farcall FarPtr_0a_2e ; $61cb
-	ldh a, [$ff95] ; $61ce
+	ldh a, [hRomBank] ; $61ce
 	ld b, a ; $61d0
 	ld a, $05 ; $61d1
 	ld de, $796f ; $61d3
 	farcall FarPtr_0a_1a ; $61d6
-	ldh a, [$ff95] ; $61d9
+	ldh a, [hRomBank] ; $61d9
 	ld b, a ; $61db
 	ld a, $04 ; $61dc
 	ld de, $7980 ; $61de
 	farcall FarPtr_0a_1a ; $61e1
-	ldh a, [$ff95] ; $61e4
+	ldh a, [hRomBank] ; $61e4
 	ld b, a ; $61e6
 	ld a, $02 ; $61e7
 	ld de, $6d0e ; $61e9
 	farcall FarPtr_0a_1a ; $61ec
-	ldh a, [$ff95] ; $61ef
+	ldh a, [hRomBank] ; $61ef
 	ld b, a ; $61f1
 	ld a, $00 ; $61f2
 	ld de, $6cec ; $61f4
@@ -1745,12 +1745,12 @@ Func_12_64a0:
 	ld a, $10 ; $64c0
 	ld b, $c0 ; $64c2
 	farcall FarPtr_0a_2e ; $64c4
-	ldh a, [$ff95] ; $64c7
+	ldh a, [hRomBank] ; $64c7
 	ld b, a ; $64c9
 	ld a, $0f ; $64ca
 	ld de, $7b89 ; $64cc
 	farcall FarPtr_0a_1a ; $64cf
-	ldh a, [$ff95] ; $64d2
+	ldh a, [hRomBank] ; $64d2
 	ld b, a ; $64d4
 	ld a, $10 ; $64d5
 	ld de, $7bf0 ; $64d7
@@ -1758,12 +1758,12 @@ Func_12_64a0:
 	ret ; $64dd
 	INCBIN "data/bank_012/d_64de.bin" ; $64de, 358 bytes
 	farcall FarPtr_0a_36 ; $6644
-	ldh a, [$ff95] ; $6647
+	ldh a, [hRomBank] ; $6647
 	ld b, a ; $6649
 	ld a, $07 ; $664a
 	ld de, $78ab ; $664c
 	farcall FarPtr_0a_1a ; $664f
-	ldh a, [$ff95] ; $6652
+	ldh a, [hRomBank] ; $6652
 	ld b, a ; $6654
 	ld a, $06 ; $6655
 	ld de, $78c2 ; $6657
@@ -1848,12 +1848,12 @@ Func_12_64a0:
 	ld bc, $2d00 ; $7029
 	ld de, $1d00 ; $702c
 	farcall FarPtr_0a_24 ; $702f
-	ldh a, [$ff95] ; $7032
+	ldh a, [hRomBank] ; $7032
 	ld b, a ; $7034
 	ld a, $07 ; $7035
 	ld de, $7940 ; $7037
 	farcall FarPtr_0a_1a ; $703a
-	ldh a, [$ff95] ; $703d
+	ldh a, [hRomBank] ; $703d
 	ld b, a ; $703f
 	ld a, $06 ; $7040
 	ld de, $7929 ; $7042

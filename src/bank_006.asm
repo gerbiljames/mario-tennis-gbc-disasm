@@ -35,10 +35,10 @@ Func_06_400e:
 	call Func_06_49a7 ; $4033
 	ld a, $0a ; $4036
 	ld hl, $506a ; $4038
-	call Func_00_1b6a ; $403b
+	call RegisterFrameTask ; $403b
 	ld a, $0a ; $403e
 	ld hl, $69c8 ; $4040
-	call Func_00_1b6a ; $4043
+	call RegisterFrameTask ; $4043
 Label_06_4046:
 	xor a, a ; $4046
 	ld [$c4e0], a ; $4047
@@ -84,10 +84,10 @@ Label_06_40a7:
 	call Func_06_49a7 ; $40a9
 	ld a, $0a ; $40ac
 	ld hl, $506a ; $40ae
-	call Func_00_1b6a ; $40b1
+	call RegisterFrameTask ; $40b1
 	ld a, $0a ; $40b4
 	ld hl, $69c8 ; $40b6
-	call Func_00_1b6a ; $40b9
+	call RegisterFrameTask ; $40b9
 	ld b, $00 ; $40bc
 	ld a, [$c4c8] ; $40be
 	and a, a ; $40c1
@@ -260,7 +260,7 @@ Func_06_4316:
 	jr z, Label_06_432a ; $4320
 	ld a, $01 ; $4322
 	ld hl, $4373 ; $4324
-	call Func_00_1b6a ; $4327
+	call RegisterFrameTask ; $4327
 Label_06_432a:
 	farcall FarPtr_05_8c ; $432a
 	ld hl, $c4ea ; $432d
@@ -974,10 +974,10 @@ Func_06_48ad:
 	farcall FarPtr_05_90 ; $48cc
 	ld a, $0a ; $48cf
 	ld hl, $506a ; $48d1
-	call Func_00_1b6a ; $48d4
+	call RegisterFrameTask ; $48d4
 	ld a, $0a ; $48d7
 	ld hl, $69c8 ; $48d9
-	call Func_00_1b6a ; $48dc
+	call RegisterFrameTask ; $48dc
 	farcall FarPtr_08_3e ; $48df
 	call Func_06_45f8 ; $48e2
 	farcall FarPtr_08_3e ; $48e5
@@ -1578,7 +1578,7 @@ Label_06_6bd6:
 	wram_bank ; $6bf1
 	ret ; $6bf5
 Func_06_6bf6:
-	ldh a, [$ff91] ; $6bf6
+	ldh a, [hInputPressed] ; $6bf6
 	ld b, a ; $6bf8
 	ld c, $0b ; $6bf9
 	ld a, [$c4e0] ; $6bfb
@@ -1661,7 +1661,7 @@ Label_06_6c97:
 	ld hl, $c76f ; $6c97
 	jp Label_06_6c9d ; $6c9a
 Label_06_6c9d:
-	ldh a, [$ff91] ; $6c9d
+	ldh a, [hInputPressed] ; $6c9d
 	ld b, a ; $6c9f
 	ld c, $0a ; $6ca0
 	ld a, [hl] ; $6ca2
@@ -1669,7 +1669,7 @@ Label_06_6c9d:
 	ld [hl], a ; $6ca6
 	ret ; $6ca7
 Label_06_6ca8:
-	ldh a, [$ff91] ; $6ca8
+	ldh a, [hInputPressed] ; $6ca8
 	bit 5, a ; $6caa
 	jr nz, Label_06_6cb3 ; $6cac
 	bit 4, a ; $6cae
@@ -1686,7 +1686,7 @@ Label_06_6cb7:
 	ld [hl], a ; $6cb9
 	ret ; $6cba
 Label_06_6cbb:
-	ldh a, [$ff91] ; $6cbb
+	ldh a, [hInputPressed] ; $6cbb
 	bit 5, a ; $6cbd
 	jr nz, Label_06_6cc6 ; $6cbf
 	bit 4, a ; $6cc1

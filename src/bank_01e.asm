@@ -46,7 +46,7 @@ Label_1e_4031:
 	ld hl, $c3b3 ; $403f
 	ld [hl], $03 ; $4042
 	farcall FarPtr_05_8c ; $4044
-	call Func_00_1b38 ; $4047
+	call ClearFrameTasks ; $4047
 	call DisableLCDSafely ; $404a
 	xor a, a ; $404d
 	ldh [$ff8b], a ; $404e
@@ -67,7 +67,7 @@ Label_1e_4031:
 	call Func_00_2631 ; $4075
 	ld a, $01 ; $4078
 	ld hl, $4a76 ; $407a
-	call Func_00_1b6a ; $407d
+	call RegisterFrameTask ; $407d
 	ld c, $10 ; $4080
 	call Func_00_1d2e ; $4082
 	call Func_00_1da4 ; $4085
@@ -1420,7 +1420,7 @@ Label_1e_5438:
 	ld hl, $c3b3 ; $5443
 	ld [hl], $03 ; $5446
 	farcall FarPtr_05_8c ; $5448
-	call Func_00_1b38 ; $544b
+	call ClearFrameTasks ; $544b
 	call DisableLCDSafely ; $544e
 	xor a, a ; $5451
 	ldh [$ff8b], a ; $5452
@@ -1440,10 +1440,10 @@ Label_1e_5438:
 	call Func_00_2631 ; $5478
 	ld a, $01 ; $547b
 	ld hl, $5914 ; $547d
-	call Func_00_1b6a ; $5480
+	call RegisterFrameTask ; $5480
 	ld a, $01 ; $5483
 	ld hl, $5a4e ; $5485
-	call Func_00_1b6a ; $5488
+	call RegisterFrameTask ; $5488
 	ld c, $10 ; $548b
 	call Func_00_1d2e ; $548d
 	call Func_00_1da4 ; $5490
@@ -2760,7 +2760,7 @@ Label_1e_699e:
 	pop af ; $69a9
 	ld [$c36c], a ; $69aa
 Label_1e_69ad:
-	farcall FarPtr_3b_32 ; $69ad
+	farcall FarPtr_RecordExhibitionVictory ; $69ad
 	farcall FarPtr_03_24 ; $69b0
 	ret ; $69b3
 Func_1e_69b4:
@@ -3860,11 +3860,11 @@ Label_1e_7270:
 	set_flag $1f, 5 ; $7270
 	call Func_1e_72af ; $7273
 	clear_flag $1f, 5 ; $7276
-	call Func_00_1b38 ; $7279
+	call ClearFrameTasks ; $7279
 	ret ; $727c
 Func_1e_727d:
 	sound $04 ; $727d
-	call Func_00_1b38 ; $727f
+	call ClearFrameTasks ; $727f
 	call Func_00_1e1d ; $7282
 	xor a, a ; $7285
 	ldh [$ff8b], a ; $7286
@@ -3954,17 +3954,17 @@ Label_1e_730a:
 	ld [$cb0c], a ; $7338
 	ld a, $01 ; $733b
 	ld hl, $737e ; $733d
-	call Func_00_1b6a ; $7340
+	call RegisterFrameTask ; $7340
 	ld a, $01 ; $7343
 	ld hl, $7a8d ; $7345
-	call Func_00_1b6a ; $7348
+	call RegisterFrameTask ; $7348
 	ld c, $10 ; $734b
 	call Func_00_1d2e ; $734d
 	call Func_00_1da4 ; $7350
 Label_1e_7353:
 	call Func_00_2631 ; $7353
 	wram_bank $05 ; $7356
-	ldh a, [$ff91] ; $735c
+	ldh a, [hInputPressed] ; $735c
 	bit 6, a ; $735e
 	call nz, Func_1e_73b0 ; $7360
 	bit 7, a ; $7363

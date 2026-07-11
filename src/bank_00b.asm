@@ -54,7 +54,7 @@ Label_0b_4055:
 	ld a, [hl+] ; $405a
 	ld d, [hl] ; $405b
 	ld e, a ; $405c
-	ldh a, [$ff95] ; $405d
+	ldh a, [hRomBank] ; $405d
 	farcall FarPtr_SetModeHookTable ; $405f
 	ld hl, $000a ; $4062
 	add hl, bc ; $4065
@@ -645,7 +645,7 @@ Label_0b_5d0a:
 	farcall FarPtr_08_3e ; $5d30
 	ld a, $01 ; $5d33
 	ld hl, $446e ; $5d35
-	call Func_00_1b6a ; $5d38
+	call RegisterFrameTask ; $5d38
 	farcall FarPtr_StartPointEndReactions ; $5d3b
 	ld hl, $446e ; $5d3e
 	call Func_00_1bcb ; $5d41
@@ -871,7 +871,7 @@ Label_0b_5e8d:
 	ld [$c2ef], a ; $6bb1
 	ld a, $01 ; $6bb4
 	ld hl, $6bd0 ; $6bb6
-	call Func_00_1b6a ; $6bb9
+	call RegisterFrameTask ; $6bb9
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bbc
 	ld hl, $6bcc ; $6bbf
 	add a, l ; $6bc2
@@ -985,7 +985,7 @@ Label_0b_6c92:
 	farcall FarPtr_08_3e ; $6cb8
 	ld a, $01 ; $6cbb
 	ld hl, $446e ; $6cbd
-	call Func_00_1b6a ; $6cc0
+	call RegisterFrameTask ; $6cc0
 	farcall FarPtr_StartPointEndReactions ; $6cc3
 	ld hl, $446e ; $6cc6
 	call Func_00_1bcb ; $6cc9
@@ -1139,7 +1139,7 @@ Label_0b_6da6:
 	farcall FarPtr_08_3e ; $7162
 	ld a, $01 ; $7165
 	ld hl, $446e ; $7167
-	call Func_00_1b6a ; $716a
+	call RegisterFrameTask ; $716a
 	farcall FarPtr_StartPointEndReactions ; $716d
 	ld hl, $446e ; $7170
 	call Func_00_1bcb ; $7173

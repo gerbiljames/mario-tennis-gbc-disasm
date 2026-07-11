@@ -137,14 +137,14 @@ Label_38_40bb:
 	ret ; $40be
 	INCBIN "data/bank_038/d_40bf.bin" ; $40bf, 75 bytes
 Func_38_410a:
-	ld a, [$cb04] ; $410a
+	ld a, [wMenuCursorX] ; $410a
 	ld d, a ; $410d
-	ld a, [$cb05] ; $410e
+	ld a, [wMenuCursorY] ; $410e
 	ld e, a ; $4111
-	ld a, [$cb0d] ; $4112
+	ld a, [wMenuInputPressed] ; $4112
 	bit 4, a ; $4115
 	jr z, Label_38_412e ; $4117
-	ld a, [$cb04] ; $4119
+	ld a, [wMenuCursorX] ; $4119
 	inc a ; $411c
 	add a, a ; $411d
 	jr nc, Label_38_4124 ; $411e
@@ -157,12 +157,12 @@ Label_38_4124:
 	jr c, Label_38_4129 ; $4126
 	xor a, a ; $4128
 Label_38_4129:
-	ld [$cb04], a ; $4129
+	ld [wMenuCursorX], a ; $4129
 	jr Label_38_4177 ; $412c
 Label_38_412e:
 	bit 5, a ; $412e
 	jr z, Label_38_4147 ; $4130
-	ld a, [$cb04] ; $4132
+	ld a, [wMenuCursorX] ; $4132
 	dec a ; $4135
 	add a, a ; $4136
 	jr nc, Label_38_413d ; $4137
@@ -175,12 +175,12 @@ Label_38_413d:
 	jr c, Label_38_4142 ; $413f
 	xor a, a ; $4141
 Label_38_4142:
-	ld [$cb04], a ; $4142
+	ld [wMenuCursorX], a ; $4142
 	jr Label_38_4177 ; $4145
 Label_38_4147:
 	bit 6, a ; $4147
 	jr z, Label_38_4160 ; $4149
-	ld a, [$cb05] ; $414b
+	ld a, [wMenuCursorY] ; $414b
 	dec a ; $414e
 	add a, a ; $414f
 	jr nc, Label_38_4156 ; $4150
@@ -193,12 +193,12 @@ Label_38_4156:
 	jr c, Label_38_415b ; $4158
 	xor a, a ; $415a
 Label_38_415b:
-	ld [$cb05], a ; $415b
+	ld [wMenuCursorY], a ; $415b
 	jr Label_38_4177 ; $415e
 Label_38_4160:
 	bit 7, a ; $4160
 	jr z, Label_38_4177 ; $4162
-	ld a, [$cb05] ; $4164
+	ld a, [wMenuCursorY] ; $4164
 	inc a ; $4167
 	add a, a ; $4168
 	jr nc, Label_38_416f ; $4169
@@ -211,12 +211,12 @@ Label_38_416f:
 	jr c, Label_38_4174 ; $4171
 	xor a, a ; $4173
 Label_38_4174:
-	ld [$cb05], a ; $4174
+	ld [wMenuCursorY], a ; $4174
 Label_38_4177:
-	ld a, [$cb04] ; $4177
+	ld a, [wMenuCursorX] ; $4177
 	cp a, d ; $417a
 	jr nz, Label_38_4185 ; $417b
-	ld a, [$cb05] ; $417d
+	ld a, [wMenuCursorY] ; $417d
 	cp a, e ; $4180
 	jr nz, Label_38_4185 ; $4181
 	xor a, a ; $4183
@@ -225,14 +225,14 @@ Label_38_4185:
 	ld a, $01 ; $4185
 	ret ; $4187
 Func_38_4188:
-	ld a, [$cb04] ; $4188
+	ld a, [wMenuCursorX] ; $4188
 	ld d, a ; $418b
-	ld a, [$cb05] ; $418c
+	ld a, [wMenuCursorY] ; $418c
 	ld e, a ; $418f
 	ldh a, [$ffd3] ; $4190
 	bit 4, a ; $4192
 	jr z, Label_38_41ab ; $4194
-	ld a, [$cb04] ; $4196
+	ld a, [wMenuCursorX] ; $4196
 	inc a ; $4199
 	add a, a ; $419a
 	jr nc, Label_38_41a1 ; $419b
@@ -245,12 +245,12 @@ Label_38_41a1:
 	jr c, Label_38_41a6 ; $41a3
 	xor a, a ; $41a5
 Label_38_41a6:
-	ld [$cb04], a ; $41a6
+	ld [wMenuCursorX], a ; $41a6
 	jr Label_38_41f4 ; $41a9
 Label_38_41ab:
 	bit 5, a ; $41ab
 	jr z, Label_38_41c4 ; $41ad
-	ld a, [$cb04] ; $41af
+	ld a, [wMenuCursorX] ; $41af
 	dec a ; $41b2
 	add a, a ; $41b3
 	jr nc, Label_38_41ba ; $41b4
@@ -263,12 +263,12 @@ Label_38_41ba:
 	jr c, Label_38_41bf ; $41bc
 	xor a, a ; $41be
 Label_38_41bf:
-	ld [$cb04], a ; $41bf
+	ld [wMenuCursorX], a ; $41bf
 	jr Label_38_41f4 ; $41c2
 Label_38_41c4:
 	bit 6, a ; $41c4
 	jr z, Label_38_41dd ; $41c6
-	ld a, [$cb05] ; $41c8
+	ld a, [wMenuCursorY] ; $41c8
 	dec a ; $41cb
 	add a, a ; $41cc
 	jr nc, Label_38_41d3 ; $41cd
@@ -281,12 +281,12 @@ Label_38_41d3:
 	jr c, Label_38_41d8 ; $41d5
 	xor a, a ; $41d7
 Label_38_41d8:
-	ld [$cb05], a ; $41d8
+	ld [wMenuCursorY], a ; $41d8
 	jr Label_38_41f4 ; $41db
 Label_38_41dd:
 	bit 7, a ; $41dd
 	jr z, Label_38_41f4 ; $41df
-	ld a, [$cb05] ; $41e1
+	ld a, [wMenuCursorY] ; $41e1
 	inc a ; $41e4
 	add a, a ; $41e5
 	jr nc, Label_38_41ec ; $41e6
@@ -299,12 +299,12 @@ Label_38_41ec:
 	jr c, Label_38_41f1 ; $41ee
 	xor a, a ; $41f0
 Label_38_41f1:
-	ld [$cb05], a ; $41f1
+	ld [wMenuCursorY], a ; $41f1
 Label_38_41f4:
-	ld a, [$cb04] ; $41f4
+	ld a, [wMenuCursorX] ; $41f4
 	cp a, d ; $41f7
 	jr nz, Label_38_4202 ; $41f8
-	ld a, [$cb05] ; $41fa
+	ld a, [wMenuCursorY] ; $41fa
 	cp a, e ; $41fd
 	jr nz, Label_38_4202 ; $41fe
 	xor a, a ; $4200
@@ -314,7 +314,7 @@ Label_38_4202:
 	ret ; $4204
 	INCBIN "data/bank_038/d_4205.bin" ; $4205, 404 bytes
 Func_38_4399:
-	ld a, [$cb05] ; $4399
+	ld a, [wMenuCursorY] ; $4399
 	ld b, a ; $439c
 	xor a, a ; $439d
 	inc b ; $439e
@@ -325,7 +325,7 @@ Label_38_439f:
 	jr Label_38_439f ; $43a3
 Label_38_43a5:
 	ld b, a ; $43a5
-	ld a, [$cb04] ; $43a6
+	ld a, [wMenuCursorX] ; $43a6
 	add a, b ; $43a9
 	ret ; $43aa
 	INCBIN "data/bank_038/d_43ab.bin" ; $43ab, 16 bytes
@@ -339,9 +339,9 @@ Label_38_43be:
 	sub a, b ; $43c2
 	jr Label_38_43be ; $43c3
 Label_38_43c5:
-	ld [$cb04], a ; $43c5
+	ld [wMenuCursorX], a ; $43c5
 	ld a, d ; $43c8
-	ld [$cb05], a ; $43c9
+	ld [wMenuCursorY], a ; $43c9
 	ret ; $43cc
 	INCBIN "data/bank_038/d_43cd.bin" ; $43cd, 63 bytes
 Func_38_440c:
@@ -409,7 +409,7 @@ Func_38_4445:
 	ld h, b ; $4453
 	ld c, e ; $4454
 	ld b, d ; $4455
-	call Func_00_1972 ; $4456
+	call FormatDecimalNumber ; $4456
 	ld l, c ; $4459
 	ld h, b ; $445a
 	pop de ; $445b
@@ -451,17 +451,17 @@ Func_38_4489:
 	call Func_38_460f ; $448f
 	ld a, $01 ; $4492
 	ld hl, $458d ; $4494
-	call Func_00_1b6a ; $4497
+	call RegisterFrameTask ; $4497
 	ld a, $01 ; $449a
 	ld hl, $4408 ; $449c
-	call Func_00_1b6a ; $449f
+	call RegisterFrameTask ; $449f
 	call EnableLCD ; $44a2
 	ld c, $10 ; $44a5
 	call Func_00_1d2e ; $44a7
 	call Func_00_1da4 ; $44aa
 Label_38_44ad:
-	ldh a, [$ff91] ; $44ad
-	ld [$cb0d], a ; $44af
+	ldh a, [hInputPressed] ; $44ad
+	ld [wMenuInputPressed], a ; $44af
 	call Func_38_474f ; $44b2
 	ld b, $01 ; $44b5
 	ld c, $03 ; $44b7
@@ -471,7 +471,7 @@ Label_38_44ad:
 	call Func_38_4666 ; $44bf
 Label_38_44c2:
 	call Func_00_2631 ; $44c2
-	ld a, [$cb0d] ; $44c5
+	ld a, [wMenuInputPressed] ; $44c5
 	bit 0, a ; $44c8
 	jr nz, Label_38_44d2 ; $44ca
 	bit 1, a ; $44cc
@@ -482,7 +482,7 @@ Label_38_44d2:
 	ld c, $10 ; $44d4
 	call Func_00_1d20 ; $44d6
 	call Func_00_1da4 ; $44d9
-	call Func_00_1b38 ; $44dc
+	call ClearFrameTasks ; $44dc
 	xor a, a ; $44df
 	ret ; $44e0
 Label_38_44e1:
@@ -490,7 +490,7 @@ Label_38_44e1:
 	ld c, $10 ; $44e3
 	call Func_00_1d20 ; $44e5
 	call Func_00_1da4 ; $44e8
-	call Func_00_1b38 ; $44eb
+	call ClearFrameTasks ; $44eb
 	ld a, $ff ; $44ee
 	ret ; $44f0
 Func_38_44f1:
@@ -501,10 +501,10 @@ Func_38_44f1:
 	call Func_38_460f ; $44fa
 	ld a, $01 ; $44fd
 	ld hl, $458d ; $44ff
-	call Func_00_1b6a ; $4502
+	call RegisterFrameTask ; $4502
 	ld a, $01 ; $4505
 	ld hl, $4408 ; $4507
-	call Func_00_1b6a ; $450a
+	call RegisterFrameTask ; $450a
 	call EnableLCD ; $450d
 	farcall FarPtr_07_32 ; $4510
 	ld c, $10 ; $4513
@@ -521,7 +521,7 @@ Func_38_44f1:
 	sound $14 ; $4527
 Label_38_4529:
 	ldh a, [$ffd3] ; $4529
-	ld [$cb0d], a ; $452b
+	ld [wMenuInputPressed], a ; $452b
 	call Func_38_474f ; $452e
 	ld b, $01 ; $4531
 	ld c, $03 ; $4533
@@ -533,7 +533,7 @@ Label_38_453e:
 	push af ; $453e
 	farcall FarPtr_07_20 ; $453f
 	pop af ; $4542
-	ld a, [$cb0d] ; $4543
+	ld a, [wMenuInputPressed] ; $4543
 	bit 0, a ; $4546
 	jr nz, Label_38_4550 ; $4548
 	bit 1, a ; $454a
@@ -552,7 +552,7 @@ Label_38_4550:
 	call Func_00_1da4 ; $4562
 	sound $00 ; $4565
 	sound $50 ; $4567
-	call Func_00_1b38 ; $4569
+	call ClearFrameTasks ; $4569
 	xor a, a ; $456c
 	ret ; $456d
 Label_38_456e:
@@ -568,7 +568,7 @@ Label_38_456e:
 	call Func_00_1da4 ; $4580
 	sound $00 ; $4583
 	sound $50 ; $4585
-	call Func_00_1b38 ; $4587
+	call ClearFrameTasks ; $4587
 	ld a, $ff ; $458a
 	ret ; $458c
 	INCBIN "data/bank_038/d_458d.bin" ; $458d, 130 bytes
@@ -654,7 +654,7 @@ Label_38_4743:
 	ret ; $4748
 	INCBIN "data/bank_038/d_4749.bin" ; $4749, 6 bytes
 Func_38_474f:
-	ld a, [$cb0d] ; $474f
+	ld a, [wMenuInputPressed] ; $474f
 	bit 5, a ; $4752
 	jr nz, Label_38_475b ; $4754
 	bit 4, a ; $4756
@@ -748,24 +748,24 @@ Func_38_47c7:
 	ld c, $10 ; $4806
 	call ClearMemory16 ; $4808
 	farcall FarPtr_08_02 ; $480b
-	call Func_00_1b38 ; $480e
+	call ClearFrameTasks ; $480e
 	xor a, a ; $4811
 	ld [$cb4f], a ; $4812
 	ld [$cb50], a ; $4815
 	ld [$cb51], a ; $4818
 	call DisableLCDSafely ; $481b
-	call Func_00_1b38 ; $481e
+	call ClearFrameTasks ; $481e
 	call Func_38_4975 ; $4821
 	call Func_38_4bac ; $4824
 	ld a, $01 ; $4827
 	ld hl, $4408 ; $4829
-	call Func_00_1b6a ; $482c
+	call RegisterFrameTask ; $482c
 	ld a, $01 ; $482f
 	ld hl, $4bac ; $4831
-	call Func_00_1b6a ; $4834
+	call RegisterFrameTask ; $4834
 	ld a, $01 ; $4837
 	ld hl, $4e23 ; $4839
-	call Func_00_1b6a ; $483c
+	call RegisterFrameTask ; $483c
 	call EnableLCD ; $483f
 	ld c, $08 ; $4842
 	call Func_00_1d2e ; $4844
@@ -774,10 +774,10 @@ Func_38_47c7:
 	res 2, [hl] ; $484d
 	ld a, $01 ; $484f
 	ld hl, $4e52 ; $4851
-	call Func_00_1b6a ; $4854
+	call RegisterFrameTask ; $4854
 Label_38_4857:
-	ldh a, [$ff91] ; $4857
-	ld [$cb0d], a ; $4859
+	ldh a, [hInputPressed] ; $4857
+	ld [wMenuInputPressed], a ; $4859
 	ld b, $02 ; $485c
 	ld c, $01 ; $485e
 	call Func_38_410a ; $4860
@@ -786,7 +786,7 @@ Label_38_4857:
 	call Func_38_4aae ; $4866
 Label_38_4869:
 	call Func_00_2631 ; $4869
-	ldh a, [$ff91] ; $486c
+	ldh a, [hInputPressed] ; $486c
 	bit 0, a ; $486e
 	jr nz, Label_38_487c ; $4870
 	bit 1, a ; $4872
@@ -832,7 +832,7 @@ Label_38_48b1:
 	ld [hl], a ; $48bd
 	pop af ; $48be
 	push af ; $48bf
-	call Func_00_1b38 ; $48c0
+	call ClearFrameTasks ; $48c0
 	ld hl, rIE ; $48c3
 	set 2, [hl] ; $48c6
 	call DisableLCDSafely ; $48c8
@@ -845,7 +845,7 @@ Label_38_48d3:
 	ld c, $10 ; $48d5
 	call Func_00_1d20 ; $48d7
 	call Func_00_1da4 ; $48da
-	call Func_00_1b38 ; $48dd
+	call ClearFrameTasks ; $48dd
 	ld hl, rIE ; $48e0
 	set 2, [hl] ; $48e3
 	call DisableLCDSafely ; $48e5
@@ -1411,12 +1411,12 @@ Func_38_4e65:
 	res 2, [hl] ; $4e9d
 	ld a, $01 ; $4e9f
 	ld hl, $4e52 ; $4ea1
-	call Func_00_1b6a ; $4ea4
+	call RegisterFrameTask ; $4ea4
 	call Func_38_575e ; $4ea7
 Label_38_4eaa:
 	call Func_00_2631 ; $4eaa
-	ldh a, [$ff91] ; $4ead
-	ld [$cb0d], a ; $4eaf
+	ldh a, [hInputPressed] ; $4ead
+	ld [wMenuInputPressed], a ; $4eaf
 	wram_bank $03 ; $4eb2
 	ld a, [$de00] ; $4eb8
 	push de ; $4ebb
@@ -1438,8 +1438,8 @@ Label_38_4ed7:
 	call Func_38_5195 ; $4ed7
 	call Func_38_52b9 ; $4eda
 	xor a, a ; $4edd
-	ld [$cb0d], a ; $4ede
-	ldh [$ff91], a ; $4ee1
+	ld [wMenuInputPressed], a ; $4ede
+	ldh [hInputPressed], a ; $4ee1
 	ldh a, [hWramBank] ; $4ee3
 	push af ; $4ee5
 	wram_bank $03 ; $4ee6
@@ -1472,7 +1472,7 @@ Label_38_4f15:
 	call Func_38_601c ; $4f23
 	call Func_38_5f4c ; $4f26
 	farcall FarPtr_08_00 ; $4f29
-	call Func_00_1b38 ; $4f2c
+	call ClearFrameTasks ; $4f2c
 	ld hl, rIE ; $4f2f
 	set 2, [hl] ; $4f32
 	xor a, a ; $4f34
@@ -1482,7 +1482,7 @@ Label_38_4f36:
 	ld c, $10 ; $4f38
 	call Func_00_1d20 ; $4f3a
 	call Func_00_1da4 ; $4f3d
-	call Func_00_1b38 ; $4f40
+	call ClearFrameTasks ; $4f40
 	ld hl, rIE ; $4f43
 	set 2, [hl] ; $4f46
 	ld a, $ff ; $4f48
@@ -1613,8 +1613,8 @@ Func_38_5195:
 	ld a, [$d814] ; $519e
 	cp a, $04 ; $51a1
 	jr z, Label_38_51ee ; $51a3
-	ld a, [$cb0d] ; $51a5
-	ldh a, [$ff91] ; $51a8
+	ld a, [wMenuInputPressed] ; $51a5
+	ldh a, [hInputPressed] ; $51a8
 	bit 4, a ; $51aa
 	jr nz, Label_38_51bc ; $51ac
 	bit 5, a ; $51ae
@@ -1632,7 +1632,7 @@ Label_38_51bc:
 	ld [$df00], a ; $51c5
 	call Func_38_525e ; $51c8
 	xor a, a ; $51cb
-	ld [$cb0d], a ; $51cc
+	ld [wMenuInputPressed], a ; $51cc
 	jp Label_38_51ee ; $51cf
 Label_38_51d2:
 	ld a, $02 ; $51d2
@@ -1653,11 +1653,11 @@ Label_38_51ee:
 	wram_bank ; $51ef
 	ret ; $51f3
 Func_38_51f4:
-	ld a, [$cb05] ; $51f4
+	ld a, [wMenuCursorY] ; $51f4
 	or a, a ; $51f7
 	jr z, Label_38_5202 ; $51f8
 	dec a ; $51fa
-	ld [$cb05], a ; $51fb
+	ld [wMenuCursorY], a ; $51fb
 	sound $5e ; $51fe
 	jr Label_38_5218 ; $5200
 Label_38_5202:
@@ -1678,11 +1678,11 @@ Label_38_5218:
 	call Func_38_575e ; $5218
 	ret ; $521b
 Func_38_521c:
-	ld a, [$cb05] ; $521c
+	ld a, [wMenuCursorY] ; $521c
 	inc a ; $521f
 	cp a, $02 ; $5220
 	jr z, Label_38_522b ; $5222
-	ld [$cb05], a ; $5224
+	ld [wMenuCursorY], a ; $5224
 	sound $5e ; $5227
 	jr Label_38_525a ; $5229
 Label_38_522b:
@@ -1718,7 +1718,7 @@ Label_38_525a:
 	call Func_38_575e ; $525a
 	ret ; $525d
 Func_38_525e:
-	ld a, [$cb04] ; $525e
+	ld a, [wMenuCursorX] ; $525e
 	inc a ; $5261
 	cp a, $03 ; $5262
 	jr nz, Label_38_527f ; $5264
@@ -1736,13 +1736,13 @@ Label_38_5279:
 Label_38_527e:
 	xor a, a ; $527e
 Label_38_527f:
-	ld [$cb04], a ; $527f
+	ld [wMenuCursorX], a ; $527f
 	call Func_38_5ce5 ; $5282
 	call Func_38_575e ; $5285
 	sound $5e ; $5288
 	ret ; $528a
 Func_38_528b:
-	ld a, [$cb04] ; $528b
+	ld a, [wMenuCursorX] ; $528b
 	dec a ; $528e
 	cp a, $ff ; $528f
 	jr nz, Label_38_52b0 ; $5291
@@ -1761,12 +1761,12 @@ Label_38_52ab:
 	call Func_38_5ce5 ; $52ab
 	ld a, $02 ; $52ae
 Label_38_52b0:
-	ld [$cb04], a ; $52b0
+	ld [wMenuCursorX], a ; $52b0
 	call Func_38_575e ; $52b3
 	sound $5e ; $52b6
 	ret ; $52b8
 Func_38_52b9:
-	ld a, [$cb0d] ; $52b9
+	ld a, [wMenuInputPressed] ; $52b9
 	bit 0, a ; $52bc
 	jr nz, Label_38_52c9 ; $52be
 	bit 1, a ; $52c0
@@ -1817,9 +1817,9 @@ Func_38_5302:
 	ld a, [$d814] ; $530b
 	ld a, [$d811] ; $530e
 	ld c, a ; $5311
-	ld a, [$cb04] ; $5312
+	ld a, [wMenuCursorX] ; $5312
 	ld d, a ; $5315
-	ld a, [$cb05] ; $5316
+	ld a, [wMenuCursorY] ; $5316
 	ld e, a ; $5319
 	call Func_38_5d42 ; $531a
 	or a, a ; $531d
@@ -3056,9 +3056,9 @@ Func_38_5cb7:
 	ldh a, [hWramBank] ; $5cb7
 	push af ; $5cb9
 	wram_bank $03 ; $5cba
-	ld a, [$cb04] ; $5cc0
+	ld a, [wMenuCursorX] ; $5cc0
 	ld d, a ; $5cc3
-	ld a, [$cb05] ; $5cc4
+	ld a, [wMenuCursorY] ; $5cc4
 	ld e, a ; $5cc7
 	ld a, e ; $5cc8
 	add a, a ; $5cc9
@@ -3880,7 +3880,7 @@ Func_38_6216:
 Label_38_6230:
 	call Func_38_630f ; $6230
 	call Func_38_633b ; $6233
-	ld a, [$cb0d] ; $6236
+	ld a, [wMenuInputPressed] ; $6236
 	bit 0, a ; $6239
 	jr nz, Label_38_628d ; $623b
 	bit 1, a ; $623d
@@ -3993,7 +3993,7 @@ Func_38_62c8:
 	call Func_00_0480 ; $630b
 	ret ; $630e
 Func_38_630f:
-	ld a, [$cb0d] ; $630f
+	ld a, [wMenuInputPressed] ; $630f
 	bit 5, a ; $6312
 	jr nz, Label_38_631b ; $6314
 	bit 4, a ; $6316
@@ -4161,7 +4161,7 @@ Label_38_63fd:
 	ld [$cb72], a ; $645a
 	ld a, $01 ; $645d
 	ld hl, $4e52 ; $645f
-	call Func_00_1b6a ; $6462
+	call RegisterFrameTask ; $6462
 	wram_bank $03 ; $6465
 	call Func_38_575e ; $646b
 Label_38_646e:
@@ -4169,8 +4169,8 @@ Label_38_646e:
 	farcall FarPtr_07_36 ; $646f
 	pop af ; $6472
 	ldh a, [$ffd5] ; $6473
-	ld [$cb0d], a ; $6475
-	ld a, [$cb0d] ; $6478
+	ld [wMenuInputPressed], a ; $6475
+	ld a, [wMenuInputPressed] ; $6478
 	xor a, $0f ; $647b
 	jr nz, Label_38_6482 ; $647d
 	call Func_00_285d ; $647f
@@ -4208,7 +4208,7 @@ Label_38_64b6:
 	jr z, Label_38_6505 ; $64c6
 	jp Label_38_646e ; $64c8
 Label_38_64cb:
-	call Func_00_1b38 ; $64cb
+	call ClearFrameTasks ; $64cb
 	call Func_38_6528 ; $64ce
 	sound $5f ; $64d1
 	push af ; $64d3
@@ -4235,7 +4235,7 @@ Label_38_64f6:
 	xor a, a ; $6503
 	ret ; $6504
 Label_38_6505:
-	call Func_00_1b38 ; $6505
+	call ClearFrameTasks ; $6505
 	sound $62 ; $6508
 	push af ; $650a
 	farcall FarPtr_07_1a ; $650b
@@ -4246,7 +4246,7 @@ Label_38_6505:
 	ld c, $10 ; $6515
 	call Func_00_1d20 ; $6517
 	call Func_00_1da4 ; $651a
-	call Func_00_1b38 ; $651d
+	call ClearFrameTasks ; $651d
 	ld hl, rIE ; $6520
 	set 2, [hl] ; $6523
 	ld a, $ff ; $6525
@@ -4508,10 +4508,10 @@ Label_38_671a:
 	wram_bank ; $671b
 	ret ; $671f
 Func_38_6720:
-	ld a, [$cb0d] ; $6720
+	ld a, [wMenuInputPressed] ; $6720
 	and a, $f0 ; $6723
 	ret nz ; $6725
-	ld a, [$cb0d] ; $6726
+	ld a, [wMenuInputPressed] ; $6726
 	bit 0, a ; $6729
 	jr nz, Label_38_6736 ; $672b
 	bit 1, a ; $672d
@@ -4571,9 +4571,9 @@ Func_38_676f:
 Label_38_678b:
 	ld a, [$d811] ; $678b
 	ld c, a ; $678e
-	ld a, [$cb04] ; $678f
+	ld a, [wMenuCursorX] ; $678f
 	ld d, a ; $6792
-	ld a, [$cb05] ; $6793
+	ld a, [wMenuCursorY] ; $6793
 	ld e, a ; $6796
 	call Func_38_5d42 ; $6797
 	or a, a ; $679a
@@ -4652,8 +4652,8 @@ Label_38_681b:
 	cp a, $fe ; $681b
 	jr nz, Label_38_6834 ; $681d
 	xor a, a ; $681f
-	ld [$cb04], a ; $6820
-	ld [$cb05], a ; $6823
+	ld [wMenuCursorX], a ; $6820
+	ld [wMenuCursorY], a ; $6823
 	ld [$cb06], a ; $6826
 	ld [$cb07], a ; $6829
 	ld [$d811], a ; $682c
@@ -5306,17 +5306,17 @@ Func_38_6e14:
 	ld a, c ; $6e1e
 	ld [$d001], a ; $6e1f
 	call DisableLCDSafely ; $6e22
-	call Func_00_1b38 ; $6e25
+	call ClearFrameTasks ; $6e25
 	call Func_38_6f6e ; $6e28
 	ld a, $01 ; $6e2b
 	ld hl, $4408 ; $6e2d
-	call Func_00_1b6a ; $6e30
+	call RegisterFrameTask ; $6e30
 	ld a, $01 ; $6e33
 	ld hl, $7090 ; $6e35
-	call Func_00_1b6a ; $6e38
+	call RegisterFrameTask ; $6e38
 	ld a, $01 ; $6e3b
 	ld hl, $7385 ; $6e3d
-	call Func_00_1b6a ; $6e40
+	call RegisterFrameTask ; $6e40
 	call EnableLCD ; $6e43
 	ld c, $10 ; $6e46
 	call Func_00_1d2e ; $6e48
@@ -5325,9 +5325,9 @@ Func_38_6e14:
 	res 2, [hl] ; $6e51
 	ld a, $01 ; $6e53
 	ld hl, $4e52 ; $6e55
-	call Func_00_1b6a ; $6e58
+	call RegisterFrameTask ; $6e58
 Label_38_6e5b:
-	ld a, [$cb04] ; $6e5b
+	ld a, [wMenuCursorX] ; $6e5b
 	push de ; $6e5e
 	push af ; $6e5f
 	ld a, a ; $6e60
@@ -5335,8 +5335,8 @@ Label_38_6e5b:
 	call Func_00_1ae4 ; $6e64
 	pop af ; $6e67
 	pop de ; $6e68
-	ldh a, [$ff91] ; $6e69
-	ld [$cb0d], a ; $6e6b
+	ldh a, [hInputPressed] ; $6e69
+	ld [wMenuInputPressed], a ; $6e6b
 	ld b, $0f ; $6e6e
 	ld c, $06 ; $6e70
 	call Func_38_410a ; $6e72
@@ -5345,7 +5345,7 @@ Label_38_6e5b:
 	call Func_38_7072 ; $6e78
 Label_38_6e7b:
 	call Func_00_2631 ; $6e7b
-	ld a, [$cb0d] ; $6e7e
+	ld a, [wMenuInputPressed] ; $6e7e
 	bit 0, a ; $6e81
 	jr nz, Label_38_6e8f ; $6e83
 	bit 1, a ; $6e85
@@ -5354,7 +5354,7 @@ Label_38_6e7b:
 	jr nz, Label_38_6ea7 ; $6e8b
 	jr Label_38_6e5b ; $6e8d
 Label_38_6e8f:
-	ld a, [$cb05] ; $6e8f
+	ld a, [wMenuCursorY] ; $6e8f
 	cp a, $05 ; $6e92
 	jr z, Label_38_6e9b ; $6e94
 	call Func_38_72b3 ; $6e96
@@ -5391,7 +5391,7 @@ Label_38_6ece:
 	ld c, $10 ; $6ed0
 	call Func_00_1d20 ; $6ed2
 	call Func_00_1da4 ; $6ed5
-	call Func_00_1b38 ; $6ed8
+	call ClearFrameTasks ; $6ed8
 	ld hl, rIE ; $6edb
 	set 2, [hl] ; $6ede
 	ld a, $ff ; $6ee0
@@ -5419,7 +5419,7 @@ Label_38_6ee3:
 	ld c, $10 ; $6f13
 	call Func_00_1d20 ; $6f15
 	call Func_00_1da4 ; $6f18
-	call Func_00_1b38 ; $6f1b
+	call ClearFrameTasks ; $6f1b
 	ld hl, rIE ; $6f1e
 	set 2, [hl] ; $6f21
 	ld a, $00 ; $6f23
@@ -5448,7 +5448,7 @@ Label_38_6f26:
 	ld c, $10 ; $6f5b
 	call Func_00_1d20 ; $6f5d
 	call Func_00_1da4 ; $6f60
-	call Func_00_1b38 ; $6f63
+	call ClearFrameTasks ; $6f63
 	ld hl, rIE ; $6f66
 	set 2, [hl] ; $6f69
 	ld a, $00 ; $6f6b
@@ -5550,10 +5550,10 @@ Func_38_6f6e:
 	INCBIN "data/bank_038/d_7063.bin" ; $7063, 15 bytes
 Func_38_7072:
 	sound $5e ; $7072
-	ld a, [$cb05] ; $7074
+	ld a, [wMenuCursorY] ; $7074
 	cp a, $05 ; $7077
 	jr nz, Label_38_708f ; $7079
-	ldh a, [$ff91] ; $707b
+	ldh a, [hInputPressed] ; $707b
 	bit 4, a ; $707d
 	jr nz, Label_38_7087 ; $707f
 	bit 5, a ; $7081
@@ -5636,7 +5636,7 @@ Text_38_71b6:
 	INCLUDE "data/bank_038/text_71b6.asm" ; $71b6, 106 bytes
 Func_38_7220:
 	ld hl, $722d ; $7220
-	ld a, [$cb04] ; $7223
+	ld a, [wMenuCursorX] ; $7223
 	add a, l ; $7226
 	ld l, a ; $7227
 	jr nc, Label_38_722b ; $7228
@@ -5647,26 +5647,26 @@ Label_38_722b:
 	INCBIN "data/bank_038/d_722d.bin" ; $722d, 15 bytes
 Func_38_723c:
 	ld hl, $724c ; $723c
-	ld a, [$cb04] ; $723f
+	ld a, [wMenuCursorX] ; $723f
 	add a, l ; $7242
 	ld l, a ; $7243
 	jr nc, Label_38_7247 ; $7244
 	inc h ; $7246
 Label_38_7247:
 	ld a, [hl] ; $7247
-	ld [$cb04], a ; $7248
+	ld [wMenuCursorX], a ; $7248
 	ret ; $724b
 	INCBIN "data/bank_038/d_724c.bin" ; $724c, 15 bytes
 Func_38_725b:
 	ld hl, $726b ; $725b
-	ld a, [$cb04] ; $725e
+	ld a, [wMenuCursorX] ; $725e
 	add a, l ; $7261
 	ld l, a ; $7262
 	jr nc, Label_38_7266 ; $7263
 	inc h ; $7265
 Label_38_7266:
 	ld a, [hl] ; $7266
-	ld [$cb04], a ; $7267
+	ld [wMenuCursorX], a ; $7267
 	ret ; $726a
 	INCBIN "data/bank_038/d_726b.bin" ; $726b, 15 bytes
 Func_38_727a:
@@ -5768,9 +5768,9 @@ Label_38_7311:
 	cp a, $07 ; $7325
 	jr nz, Label_38_7333 ; $7327
 	ld a, $05 ; $7329
-	ld [$cb05], a ; $732b
+	ld [wMenuCursorY], a ; $732b
 	ld a, $0a ; $732e
-	ld [$cb04], a ; $7330
+	ld [wMenuCursorX], a ; $7330
 Label_38_7333:
 	pop af ; $7333
 	wram_bank ; $7334
@@ -5984,7 +5984,7 @@ Label_38_74a4:
 	ld c, $40 ; $74bf
 	call Func_38_7522 ; $74c1
 Label_38_74c4:
-	call Func_00_1b38 ; $74c4
+	call ClearFrameTasks ; $74c4
 	xor a, a ; $74c7
 	ldh [$ffd8], a ; $74c8
 	call Func_00_28f8 ; $74ca
@@ -6037,7 +6037,7 @@ Label_38_751c:
 	INCBIN "data/bank_038/d_751d.bin" ; $751d, 5 bytes
 Func_38_7522:
 	push bc ; $7522
-	call Func_00_1b38 ; $7523
+	call ClearFrameTasks ; $7523
 	xor a, a ; $7526
 	ldh [$ffd8], a ; $7527
 	call Func_00_28f8 ; $7529
@@ -6181,7 +6181,7 @@ Func_38_7603:
 	push bc ; $7604
 	push de ; $7605
 	push hl ; $7606
-	call Func_00_1b38 ; $7607
+	call ClearFrameTasks ; $7607
 	xor a, a ; $760a
 	ldh [$ffd8], a ; $760b
 	call Func_00_28f8 ; $760d

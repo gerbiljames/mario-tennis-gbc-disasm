@@ -1169,7 +1169,7 @@ Func_05_477f:
 	ld [hl], d ; $47b9
 	ld a, $01 ; $47ba
 	ld hl, $48f1 ; $47bc
-	call Func_00_1b6a ; $47bf
+	call RegisterFrameTask ; $47bf
 	pop hl ; $47c2
 	pop de ; $47c3
 	pop bc ; $47c4
@@ -1181,7 +1181,7 @@ Label_05_47ca:
 	ldh a, [$ff94] ; $47cd
 	bit 0, a ; $47cf
 	jr nz, Label_05_4840 ; $47d1
-	ldh a, [$ff91] ; $47d3
+	ldh a, [hInputPressed] ; $47d3
 	bit 6, a ; $47d5
 	jr z, Label_05_47e5 ; $47d7
 	dec b ; $47d9
@@ -1192,7 +1192,7 @@ Label_05_47ca:
 	ld b, a ; $47e2
 	jr Label_05_47f7 ; $47e3
 Label_05_47e5:
-	ldh a, [$ff91] ; $47e5
+	ldh a, [hInputPressed] ; $47e5
 	and a, $80 ; $47e7
 	jp z, Label_05_486d ; $47e9
 	ld a, [$d831] ; $47ec
@@ -1286,7 +1286,7 @@ Label_05_486d:
 	ld a, $ff ; $4876
 	jp Label_05_48af ; $4878
 Label_05_487b:
-	ldh a, [$ff91] ; $487b
+	ldh a, [hInputPressed] ; $487b
 	and a, $02 ; $487d
 	jp z, Label_05_4888 ; $487f
 	sound $62 ; $4882
@@ -1301,13 +1301,13 @@ Label_05_4888:
 	srl a ; $4894
 	srl a ; $4896
 	jp z, Label_05_47ca ; $4898
-	ldh a, [$ff91] ; $489b
+	ldh a, [hInputPressed] ; $489b
 	and a, $20 ; $489d
 	jp z, Label_05_48a6 ; $489f
 	ld a, $fe ; $48a2
 	jr Label_05_48af ; $48a4
 Label_05_48a6:
-	ldh a, [$ff91] ; $48a6
+	ldh a, [hInputPressed] ; $48a6
 	and a, $10 ; $48a8
 	jp z, Label_05_47ca ; $48aa
 	ld a, $fd ; $48ad
@@ -1517,7 +1517,7 @@ Func_05_49f6:
 	ld [$d846], a ; $4a18
 	ld a, $01 ; $4a1b
 	ld hl, $49dc ; $4a1d
-	call Func_00_1b6a ; $4a20
+	call RegisterFrameTask ; $4a20
 Label_05_4a23:
 	call Func_05_5c18 ; $4a23
 	call Func_05_5745 ; $4a26
@@ -1635,7 +1635,7 @@ Func_05_4aa8:
 	ld [hl], d ; $4aec
 	ld a, $01 ; $4aed
 	ld hl, $4c9d ; $4aef
-	call Func_00_1b6a ; $4af2
+	call RegisterFrameTask ; $4af2
 	pop hl ; $4af5
 	pop de ; $4af6
 	pop bc ; $4af7
@@ -1644,7 +1644,7 @@ Func_05_4aa8:
 	ld b, a ; $4afc
 Label_05_4afd:
 	call Func_00_2631 ; $4afd
-	ldh a, [$ff91] ; $4b00
+	ldh a, [hInputPressed] ; $4b00
 	bit 0, a ; $4b02
 	jp nz, Label_05_4b72 ; $4b04
 	bit 6, a ; $4b07
@@ -1657,7 +1657,7 @@ Label_05_4afd:
 	ld b, a ; $4b14
 	jr Label_05_4b29 ; $4b15
 Label_05_4b17:
-	ldh a, [$ff91] ; $4b17
+	ldh a, [hInputPressed] ; $4b17
 	and a, $80 ; $4b19
 	jp z, Label_05_4ba5 ; $4b1b
 	ld a, [$d831] ; $4b1e
@@ -1757,7 +1757,7 @@ Label_05_4ba5:
 	ld a, $ff ; $4bb6
 	jp Label_05_4c2b ; $4bb8
 Label_05_4bbb:
-	ldh a, [$ff91] ; $4bbb
+	ldh a, [hInputPressed] ; $4bbb
 	and a, $02 ; $4bbd
 	jp z, Label_05_4bd1 ; $4bbf
 	sound $62 ; $4bc2
@@ -1774,7 +1774,7 @@ Label_05_4bd1:
 	call Func_05_4c76 ; $4bd5
 	or a, a ; $4bd8
 	jr z, Label_05_4c00 ; $4bd9
-	ldh a, [$ff91] ; $4bdb
+	ldh a, [hInputPressed] ; $4bdb
 	and a, $20 ; $4bdd
 	jp z, Label_05_4bee ; $4bdf
 	ld a, [$cb2a] ; $4be2
@@ -1783,7 +1783,7 @@ Label_05_4bd1:
 	ld [$cb2a], a ; $4be9
 	jr Label_05_4c30 ; $4bec
 Label_05_4bee:
-	ldh a, [$ff91] ; $4bee
+	ldh a, [hInputPressed] ; $4bee
 	and a, $10 ; $4bf0
 	jr z, Label_05_4c00 ; $4bf2
 	ld a, [$cb2a] ; $4bf4
@@ -1804,13 +1804,13 @@ Label_05_4c00:
 	sra a ; $4c10
 	sra a ; $4c12
 	jp z, Label_05_4afd ; $4c14
-	ldh a, [$ff91] ; $4c17
+	ldh a, [hInputPressed] ; $4c17
 	and a, $20 ; $4c19
 	jp z, Label_05_4c22 ; $4c1b
 	ld a, $fe ; $4c1e
 	jr Label_05_4c2b ; $4c20
 Label_05_4c22:
-	ldh a, [$ff91] ; $4c22
+	ldh a, [hInputPressed] ; $4c22
 	and a, $10 ; $4c24
 	jp z, Label_05_4afd ; $4c26
 	ld a, $fd ; $4c29
@@ -1881,7 +1881,7 @@ Label_05_4c85:
 	rlc b ; $4c8a
 	bit 0, b ; $4c8c
 	jr z, Label_05_4c9a ; $4c8e
-	ldh a, [$ff91] ; $4c90
+	ldh a, [hInputPressed] ; $4c90
 	and a, $c0 ; $4c92
 	jr nz, Label_05_4c9a ; $4c94
 	pop bc ; $4c96
@@ -2080,7 +2080,7 @@ Label_05_4f63:
 	ld b, $0f ; $4f63
 Label_05_4f65:
 	call Func_00_2631 ; $4f65
-	ldh a, [$ff91] ; $4f68
+	ldh a, [hInputPressed] ; $4f68
 	and a, $f3 ; $4f6a
 	jr nz, Label_05_4f71 ; $4f6c
 	dec b ; $4f6e
@@ -2109,7 +2109,7 @@ Label_05_4f71:
 	push hl ; $4f90
 	ld a, $01 ; $4f91
 	ld hl, $4fe3 ; $4f93
-	call Func_00_1b6a ; $4f96
+	call RegisterFrameTask ; $4f96
 	call Func_05_501d ; $4f99
 	ld a, $10 ; $4f9c
 	ld [$d841], a ; $4f9e
@@ -2225,7 +2225,7 @@ Label_05_5050:
 	jr nz, Label_05_5061 ; $5053
 	call Func_00_0a3a ; $5055
 	call Func_00_2631 ; $5058
-	ldh a, [$ff91] ; $505b
+	ldh a, [hInputPressed] ; $505b
 	and a, $f3 ; $505d
 	jr z, Label_05_5050 ; $505f
 Label_05_5061:
@@ -4972,7 +4972,7 @@ Label_05_65b8:
 	call Func_05_7205 ; $660f
 	ld a, $0f ; $6612
 	ld hl, $6581 ; $6614
-	call Func_00_1b6a ; $6617
+	call RegisterFrameTask ; $6617
 Label_05_661a:
 	ldh a, [$ff94] ; $661a
 	bit 1, a ; $661c
@@ -5102,7 +5102,7 @@ Label_05_674a:
 	ld h, $00 ; $6770
 	ld l, a ; $6772
 	ld a, $02 ; $6773
-	call Func_00_1972 ; $6775
+	call FormatDecimalNumber ; $6775
 	ld hl, $c720 ; $6778
 	ld de, $1102 ; $677b
 	ld a, [$c701] ; $677e
@@ -5112,7 +5112,7 @@ Label_05_674a:
 	ld h, $00 ; $678a
 	ld l, a ; $678c
 	ld a, $02 ; $678d
-	call Func_00_1972 ; $678f
+	call FormatDecimalNumber ; $678f
 	ld hl, $c720 ; $6792
 	ld de, $1104 ; $6795
 	ld a, [$c701] ; $6798
@@ -5164,7 +5164,7 @@ Label_05_67f3:
 	ld [$c2a1], a ; $6810
 	jr Label_05_6857 ; $6813
 Label_05_6815:
-	ldh a, [$ff91] ; $6815
+	ldh a, [hInputPressed] ; $6815
 	and a, $c0 ; $6817
 	jr z, Label_05_6825 ; $6819
 	ld hl, $c703 ; $681b
@@ -5210,7 +5210,7 @@ Label_05_6857:
 Func_05_6862:
 	push bc ; $6862
 	ld b, a ; $6863
-	ldh a, [$ff91] ; $6864
+	ldh a, [hInputPressed] ; $6864
 	bit 4, a ; $6866
 	jr nz, Label_05_6871 ; $6868
 	bit 5, a ; $686a

@@ -59,12 +59,12 @@ Func_6b_402a:
 	sound $01 ; $4041
 	ld a, $01 ; $4043
 	ld hl, $53f1 ; $4045
-	call Func_00_1b6a ; $4048
+	call RegisterFrameTask ; $4048
 	call Func_6b_406a ; $404b
 	ld c, $7f ; $404e
 	call Func_00_1d20 ; $4050
 	call Func_00_1da4 ; $4053
-	call Func_00_1b38 ; $4056
+	call ClearFrameTasks ; $4056
 	ld hl, rIE ; $4059
 	res 1, [hl] ; $405c
 	xor a, a ; $405e
@@ -184,10 +184,10 @@ Label_6b_40bc:
 	ld c, $0a ; $41d3
 	call Func_00_1d20 ; $41d5
 	call Func_00_1da4 ; $41d8
-	call Func_00_1b38 ; $41db
+	call ClearFrameTasks ; $41db
 	ld a, $01 ; $41de
 	ld hl, $53f1 ; $41e0
-	call Func_00_1b6a ; $41e3
+	call RegisterFrameTask ; $41e3
 	xor a, a ; $41e6
 	ldh [$ff8b], a ; $41e7
 	ldh [$ff8a], a ; $41e9
@@ -258,7 +258,7 @@ Label_6b_420d:
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
 	ld hl, $526a ; $42a1
-	call Func_00_1b6a ; $42a4
+	call RegisterFrameTask ; $42a4
 	call EnableLCD ; $42a7
 	ld c, $40 ; $42aa
 	call Func_00_1d2e ; $42ac
@@ -362,7 +362,7 @@ Label_6b_43cc:
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
 	ld hl, $52f9 ; $4433
-	call Func_00_1b6a ; $4436
+	call RegisterFrameTask ; $4436
 	ld a, $a0 ; $4439
 	ld [$cb46], a ; $443b
 	ld a, $28 ; $443e
@@ -466,7 +466,7 @@ Label_6b_43cc:
 	ld [$cb01], a ; $4578
 	ld a, $01 ; $457b
 	ld hl, $53db ; $457d
-	call Func_00_1b6a ; $4580
+	call RegisterFrameTask ; $4580
 	ld a, $a0 ; $4583
 	ld [$cb46], a ; $4585
 	ld a, $40 ; $4588
@@ -477,10 +477,10 @@ Label_6b_43cc:
 	ld [$cb45], a ; $4594
 	ld a, $01 ; $4597
 	ld hl, $526a ; $4599
-	call Func_00_1b6a ; $459c
+	call RegisterFrameTask ; $459c
 	ld a, $01 ; $459f
 	ld hl, $52f9 ; $45a1
-	call Func_00_1b6a ; $45a4
+	call RegisterFrameTask ; $45a4
 	call EnableLCD ; $45a7
 	ld c, $10 ; $45aa
 	call Func_00_1d2e ; $45ac
@@ -564,12 +564,12 @@ Label_6b_43cc:
 	call Func_00_1da4 ; $467c
 	ld a, $01 ; $467f
 	ld hl, $7083 ; $4681
-	call Func_00_1b6a ; $4684
+	call RegisterFrameTask ; $4684
 	jp Label_6b_407c ; $4687
-	call Func_00_1b38 ; $468a
+	call ClearFrameTasks ; $468a
 	ld a, $01 ; $468d
 	ld hl, $53f1 ; $468f
-	call Func_00_1b6a ; $4692
+	call RegisterFrameTask ; $4692
 	xor a, a ; $4695
 	ldh [$ff8b], a ; $4696
 	ldh [$ff8a], a ; $4698
@@ -661,7 +661,7 @@ Label_6b_46ce:
 	ld [$cb42], a ; $47ab
 	ld a, $01 ; $47ae
 	ld hl, $7366 ; $47b0
-	call Func_00_1b6a ; $47b3
+	call RegisterFrameTask ; $47b3
 	call EnableLCD ; $47b6
 	ld c, $10 ; $47b9
 	call Func_00_1d2e ; $47bb
@@ -692,7 +692,7 @@ Label_6b_46ce:
 	ld [$cb40], a ; $47fa
 	ld a, $01 ; $47fd
 	ld hl, $7395 ; $47ff
-	call Func_00_1b6a ; $4802
+	call RegisterFrameTask ; $4802
 	call EnableLCD ; $4805
 	ld c, $10 ; $4808
 	call Func_00_1d2e ; $480a
@@ -723,7 +723,7 @@ Label_6b_46ce:
 	ld [$cb40], a ; $4849
 	ld a, $01 ; $484c
 	ld hl, $73c4 ; $484e
-	call Func_00_1b6a ; $4851
+	call RegisterFrameTask ; $4851
 	call EnableLCD ; $4854
 	ld c, $10 ; $4857
 	call Func_00_1d2e ; $4859
@@ -898,7 +898,7 @@ Palettes_6b_4a58:
 	ldh [$ff8a], a ; $4b38
 	ld a, $08 ; $4b3a
 	ld hl, $7569 ; $4b3c
-	call Func_00_1b6a ; $4b3f
+	call RegisterFrameTask ; $4b3f
 	ld hl, $d060 ; $4b42
 	ld de, $9c60 ; $4b45
 	ld c, $10 ; $4b48
@@ -1557,19 +1557,19 @@ Func_6b_617c:
 	jr nz, Label_6b_7096 ; $708c
 	ld a, $01 ; $708e
 	ld hl, $731b ; $7090
-	call Func_00_1b6a ; $7093
+	call RegisterFrameTask ; $7093
 Label_6b_7096:
 	cp a, $aa ; $7096
 	jr nz, Label_6b_70a2 ; $7098
 	ld a, $01 ; $709a
 	ld hl, $72af ; $709c
-	call Func_00_1b6a ; $709f
+	call RegisterFrameTask ; $709f
 Label_6b_70a2:
 	cp a, $01 ; $70a2
 	jr nz, Label_6b_70ae ; $70a4
 	ld a, $01 ; $70a6
 	ld hl, $72dd ; $70a8
-	call Func_00_1b6a ; $70ab
+	call RegisterFrameTask ; $70ab
 Label_6b_70ae:
 	ret ; $70ae
 	INCBIN "data/bank_06b/d_70af.bin" ; $70af, 512 bytes
@@ -1761,7 +1761,7 @@ Func_6b_73f2:
 	ret ; $756e
 	INCBIN "data/bank_06b/d_756f.bin" ; $756f, 64 bytes
 Func_6b_75af:
-	call Func_00_1b38 ; $75af
+	call ClearFrameTasks ; $75af
 	wram_bank $03 ; $75b2
 	xor a, a ; $75b8
 	ldh [$ff8b], a ; $75b9
@@ -1818,7 +1818,7 @@ Func_6b_75af:
 	call LoadPaletteShadow ; $763c
 	ld a, $01 ; $763f
 	ld hl, $76b6 ; $7641
-	call Func_00_1b6a ; $7644
+	call RegisterFrameTask ; $7644
 	sound $02 ; $7647
 	call EnableLCD ; $7649
 	ld c, $04 ; $764c
@@ -1846,7 +1846,7 @@ Label_6b_765f:
 Label_6b_7680:
 	sound $00 ; $7680
 	sound $60 ; $7682
-	call Func_00_1b38 ; $7684
+	call ClearFrameTasks ; $7684
 	ld c, $10 ; $7687
 	call Func_00_1d20 ; $7689
 	call Func_00_1da4 ; $768c
@@ -1855,7 +1855,7 @@ Label_6b_7680:
 	INCBIN "data/bank_06b/d_7691.bin" ; $7691, 21 bytes
 Label_6b_76a6:
 	sound $00 ; $76a6
-	call Func_00_1b38 ; $76a8
+	call ClearFrameTasks ; $76a8
 	ld c, $08 ; $76ab
 	call Func_00_1d20 ; $76ad
 	call Func_00_1da4 ; $76b0

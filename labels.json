@@ -332,5 +332,17 @@
  "0x208e5": "TiebreakPositionPtrs",
  "0x208ed": "LoadPositionRecord",
  "0x20979": "GamePositionTables",
- "0x209d9": "TiebreakPositionTables"
+ "0x209d9": "TiebreakPositionTables",
+ "0x1972": "FormatDecimalNumber",
+ "0x1b38": "ClearFrameTasks",
+ "0x1b6a": "RegisterFrameTask",
+ "0xec12a": "MoveMenuCursor",
+ "0xec1a8": "MoveMenuCursorRepeat",
+ "0xedc2b": "PrintNumberRightAligned",
+ "0xefd57": "RecordExhibitionVictory",
+ "0xefdc4": "GetVictoryScore",
+ "0xefde1": "GetStarCharIndex",
+ "0xefdf6": "UpdateStarUnlocks",
+ "0xefdd9": "VictoryScoreTable",
+ "0xefded": "StarCharOrderTable"
 }

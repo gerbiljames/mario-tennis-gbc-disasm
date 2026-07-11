@@ -242,7 +242,7 @@ Func_18_43a9:
 	ld h, b ; $43b6
 	ld c, e ; $43b7
 	ld b, d ; $43b8
-	call Func_00_1972 ; $43b9
+	call FormatDecimalNumber ; $43b9
 	ld l, c ; $43bc
 	ld h, b ; $43bd
 	pop de ; $43be
@@ -673,7 +673,7 @@ Label_18_4669:
 	ret ; $4679
 	INCBIN "data/bank_018/d_467a.bin" ; $467a, 3172 bytes
 Func_18_52de:
-	call Func_00_1b38 ; $52de
+	call ClearFrameTasks ; $52de
 	call Func_00_1e1d ; $52e1
 	call Func_18_55db ; $52e4
 	call Func_18_5372 ; $52e7
@@ -752,7 +752,7 @@ Func_18_537a:
 	call Func_18_5586 ; $53a7
 	ld a, $0a ; $53aa
 	ld hl, $53b3 ; $53ac
-	call Func_00_1b6a ; $53af
+	call RegisterFrameTask ; $53af
 	ret ; $53b2
 	INCBIN "data/bank_018/d_53b3.bin" ; $53b3, 49 bytes
 Func_18_53e4:
@@ -880,7 +880,7 @@ Func_18_54b1:
 	ld h, b ; $54bf
 	ld c, e ; $54c0
 	ld b, d ; $54c1
-	call Func_00_1972 ; $54c2
+	call FormatDecimalNumber ; $54c2
 	ld l, c ; $54c5
 	ld h, b ; $54c6
 	pop de ; $54c7
@@ -1243,7 +1243,7 @@ Func_18_7632:
 	call Func_00_1d20 ; $7637
 	call Func_00_1da4 ; $763a
 	call DisableLCDSafely ; $763d
-	call Func_00_1b38 ; $7640
+	call ClearFrameTasks ; $7640
 	call Func_18_7647 ; $7643
 	ret ; $7646
 Func_18_7647:
@@ -1281,7 +1281,7 @@ Label_18_76cf:
 	farcall FarPtr_03_44 ; $76e9
 Label_18_76ec:
 	call Func_00_2631 ; $76ec
-	ldh a, [$ff91] ; $76ef
+	ldh a, [hInputPressed] ; $76ef
 	and a, $03 ; $76f1
 	jr z, Label_18_76ec ; $76f3
 	ld c, $10 ; $76f5
@@ -1295,10 +1295,10 @@ Label_18_76ec:
 	call Func_00_1da4 ; $770b
 	ld a, $01 ; $770e
 	ld hl, $775c ; $7710
-	call Func_00_1b6a ; $7713
+	call RegisterFrameTask ; $7713
 Label_18_7716:
 	call Func_00_2631 ; $7716
-	ldh a, [$ff91] ; $7719
+	ldh a, [hInputPressed] ; $7719
 	and a, $03 ; $771b
 	jr z, Label_18_7716 ; $771d
 	ret ; $771f
@@ -1334,10 +1334,10 @@ Func_18_77bb:
 	call Func_18_7bce ; $77be
 	ld a, $01 ; $77c1
 	ld hl, $7b36 ; $77c3
-	call Func_00_1b6a ; $77c6
+	call RegisterFrameTask ; $77c6
 	ld a, $01 ; $77c9
 	ld hl, $7b6e ; $77cb
-	call Func_00_1b6a ; $77ce
+	call RegisterFrameTask ; $77ce
 	sound $2c ; $77d1
 	call EnableLCD ; $77d3
 	ld c, $02 ; $77d6
@@ -1359,7 +1359,7 @@ Label_18_77e8:
 	ld c, $01 ; $77fc
 	call Func_00_1d20 ; $77fe
 	call Func_00_1da4 ; $7801
-	call Func_00_1b38 ; $7804
+	call ClearFrameTasks ; $7804
 	call DisableLCDSafely ; $7807
 	farcall FarPtr_03_36 ; $780a
 	call DisableLCDSafely ; $780d
@@ -1367,7 +1367,7 @@ Label_18_77e8:
 	call Func_18_7855 ; $7813
 	ld a, $01 ; $7816
 	ld hl, $78cd ; $7818
-	call Func_00_1b6a ; $781b
+	call RegisterFrameTask ; $781b
 	call EnableLCD ; $781e
 	ld c, $40 ; $7821
 	call Func_00_1d2e ; $7823
@@ -1375,7 +1375,7 @@ Label_18_77e8:
 	sound $2d ; $7829
 Label_18_782b:
 	call Func_00_2631 ; $782b
-	ldh a, [$ff91] ; $782e
+	ldh a, [hInputPressed] ; $782e
 	and a, $03 ; $7830
 	jr z, Label_18_782b ; $7832
 	ret ; $7834
@@ -1446,17 +1446,17 @@ Func_18_792c:
 	call Func_18_7d03 ; $793a
 	ld a, $01 ; $793d
 	ld hl, $7b36 ; $793f
-	call Func_00_1b6a ; $7942
+	call RegisterFrameTask ; $7942
 	ld a, $01 ; $7945
 	ld hl, $7b6e ; $7947
-	call Func_00_1b6a ; $794a
+	call RegisterFrameTask ; $794a
 	call EnableLCD ; $794d
 	ld c, $01 ; $7950
 	call Func_00_1d2e ; $7952
 	call Func_00_1da4 ; $7955
 Label_18_7958:
 	call Func_00_2631 ; $7958
-	ldh a, [$ff91] ; $795b
+	ldh a, [hInputPressed] ; $795b
 	and a, $03 ; $795d
 	jr z, Label_18_7958 ; $795f
 	ld c, $02 ; $7961
@@ -1481,7 +1481,7 @@ Label_18_798a:
 	wram_bank $03 ; $798a
 	xor a, a ; $7990
 	ld [$da00], a ; $7991
-	call Func_00_1b38 ; $7994
+	call ClearFrameTasks ; $7994
 	call Func_18_7647 ; $7997
 	call DisableLCDSafely ; $799a
 	call Func_18_7a1a ; $799d
@@ -1504,14 +1504,14 @@ Label_18_79be:
 	jr nz, Label_18_79be ; $79ca
 	ld a, $01 ; $79cc
 	ld hl, $7a81 ; $79ce
-	call Func_00_1b6a ; $79d1
+	call RegisterFrameTask ; $79d1
 	ld a, $01 ; $79d4
 	ld hl, $7a49 ; $79d6
-	call Func_00_1b6a ; $79d9
+	call RegisterFrameTask ; $79d9
 	sound $2d ; $79dc
 Label_18_79de:
 	call Func_00_2631 ; $79de
-	ldh a, [$ff91] ; $79e1
+	ldh a, [hInputPressed] ; $79e1
 	and a, $03 ; $79e3
 	jr z, Label_18_79de ; $79e5
 	ld de, $0120 ; $79e7

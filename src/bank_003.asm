@@ -3021,7 +3021,7 @@ Label_03_53d4:
 	pop de ; $53f7
 Label_03_53f8:
 	call Func_00_2631 ; $53f8
-	ldh a, [$ff91] ; $53fb
+	ldh a, [hInputPressed] ; $53fb
 	bit 6, a ; $53fd
 	jr z, Label_03_540c ; $53ff
 	ld bc, $f0f8 ; $5401
@@ -3465,7 +3465,7 @@ Func_03_59b1:
 	jr nz, Func_03_59b1 ; $59c2
 	ret ; $59c4
 Func_03_59c5:
-	call Func_00_1b38 ; $59c5
+	call ClearFrameTasks ; $59c5
 	farcall FarPtr_01_0a ; $59c8
 	call DisableLCDSafely ; $59cb
 	xor a, a ; $59ce
@@ -3566,7 +3566,7 @@ Label_03_5a9a:
 	ld c, $01 ; $5a9a
 	call Func_00_1d20 ; $5a9c
 	call Func_00_1da4 ; $5a9f
-	call Func_00_1b38 ; $5aa2
+	call ClearFrameTasks ; $5aa2
 	farcall FarPtr_01_0a ; $5aa5
 	ret ; $5aa8
 Func_03_5aa9:
@@ -4740,7 +4740,7 @@ Func_03_6ff7:
 	ld [$d1fe], a ; $703b
 	ld a, $01 ; $703e
 	ld hl, $72a0 ; $7040
-	call Func_00_1b6a ; $7043
+	call RegisterFrameTask ; $7043
 Label_03_7046:
 	call Func_00_2631 ; $7046
 	ld a, [$d000] ; $7049

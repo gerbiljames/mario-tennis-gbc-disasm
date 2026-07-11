@@ -64,10 +64,10 @@ Func_00_015e:
 	inc hl ; $0166
 	ld [hl], $01 ; $0167
 	inc hl ; $0169
-	ldh a, [$ff95] ; $016a
+	ldh a, [hRomBank] ; $016a
 	ld [hl], a ; $016c
 	pop af ; $016d
-	ldh [$ff95], a ; $016e
+	ldh [hRomBank], a ; $016e
 	ld [$2000], a ; $0170
 	pop hl ; $0173
 	jp hl ; $0174
@@ -75,7 +75,7 @@ Func_00_015e:
 	push hl ; $0176
 	ld hl, sp + 4 ; $0177
 	ld a, [hl] ; $0179
-	ldh [$ff95], a ; $017a
+	ldh [hRomBank], a ; $017a
 	ld [$2000], a ; $017c
 	pop hl ; $017f
 	pop af ; $0180
@@ -87,7 +87,7 @@ FarCall:
 	push hl ; $01b6
 	push af ; $01b7
 	ld hl, sp + 0 ; $01b8
-	ldh a, [$ff95] ; $01ba
+	ldh a, [hRomBank] ; $01ba
 	ld [hl], a ; $01bc
 	ld hl, sp + 4 ; $01bd
 	push de ; $01bf
@@ -98,7 +98,7 @@ FarCall:
 	inc de ; $01c4
 	ld [hl], a ; $01c5
 	ld a, [de] ; $01c6
-	ldh [$ff95], a ; $01c7
+	ldh [hRomBank], a ; $01c7
 	ld [$2000], a ; $01c9
 	inc de ; $01cc
 	ld a, [hl] ; $01cd
@@ -111,7 +111,7 @@ FarCall:
 	push hl ; $01d6
 	ld hl, sp + 4 ; $01d7
 	ld a, [hl] ; $01d9
-	ldh [$ff95], a ; $01da
+	ldh [hRomBank], a ; $01da
 	ld [$2000], a ; $01dc
 	pop hl ; $01df
 	pop af ; $01e0
@@ -138,10 +138,10 @@ Func_00_01e6:
 	INCBIN "data/bank_000/d_01f6.bin" ; $01f6, 36 bytes
 CopyDataFromBank:
 	push af ; $021a
-	ldh a, [$ff95] ; $021b
+	ldh a, [hRomBank] ; $021b
 	push af ; $021d
 	ld a, h ; $021e
-	ldh [$ff95], a ; $021f
+	ldh [hRomBank], a ; $021f
 	ld [$2000], a ; $0221
 	ld h, $40 ; $0224
 	ld a, [hl+] ; $0226
@@ -149,16 +149,16 @@ CopyDataFromBank:
 	ld l, a ; $0228
 	call CopyMemoryBC ; $0229
 	pop af ; $022c
-	ldh [$ff95], a ; $022d
+	ldh [hRomBank], a ; $022d
 	ld [$2000], a ; $022f
 	pop af ; $0232
 	ret ; $0233
 DecompressDataFromBank:
 	push af ; $0234
-	ldh a, [$ff95] ; $0235
+	ldh a, [hRomBank] ; $0235
 	push af ; $0237
 	ld a, h ; $0238
-	ldh [$ff95], a ; $0239
+	ldh [hRomBank], a ; $0239
 	ld [$2000], a ; $023b
 	ld h, $40 ; $023e
 	ld a, [hl+] ; $0240
@@ -166,7 +166,7 @@ DecompressDataFromBank:
 	ld l, a ; $0242
 	call DecompressData ; $0243
 	pop af ; $0246
-	ldh [$ff95], a ; $0247
+	ldh [hRomBank], a ; $0247
 	ld [$2000], a ; $0249
 	pop af ; $024c
 	ret ; $024d
@@ -294,7 +294,7 @@ Label_00_033c:
 	ld a, b ; $0340
 	ldh [$ff92], a ; $0341
 Label_00_0343:
-	ldh [$ff91], a ; $0343
+	ldh [hInputPressed], a ; $0343
 	ret ; $0345
 DisableLCDSafely:
 	ldh a, [rLCDC] ; $0346
@@ -527,14 +527,14 @@ Func_00_0465:
 	ld c, $05 ; $0468
 	jp ClearMemory16 ; $046a
 Func_00_046d:
-	ldh a, [$ff95] ; $046d
+	ldh a, [hRomBank] ; $046d
 	push af ; $046f
 	ld a, b ; $0470
-	ldh [$ff95], a ; $0471
+	ldh [hRomBank], a ; $0471
 	ld [$2000], a ; $0473
 	call Func_00_0480 ; $0476
 	pop af ; $0479
-	ldh [$ff95], a ; $047a
+	ldh [hRomBank], a ; $047a
 	ld [$2000], a ; $047c
 	ret ; $047f
 Func_00_0480:
@@ -609,7 +609,7 @@ Label_00_04e3:
 	xor a, a ; $04e5
 	ret ; $04e6
 Label_00_04e7:
-	ldh a, [$ff95] ; $04e7
+	ldh a, [hRomBank] ; $04e7
 	ld [hl+], a ; $04e9
 	ldh a, [hWramBank] ; $04ea
 	ld [hl+], a ; $04ec
@@ -674,7 +674,7 @@ Func_00_052e:
 	ld c, $0a ; $0535
 	ldh a, [hWramBank] ; $0537
 	ld e, a ; $0539
-	ldh a, [$ff95] ; $053a
+	ldh a, [hRomBank] ; $053a
 	ld d, a ; $053c
 	push de ; $053d
 	ld d, $ff ; $053e
@@ -682,7 +682,7 @@ Label_00_0540:
 	ld a, [hl] ; $0540
 	or a, a ; $0541
 	jr z, Label_00_0566 ; $0542
-	ldh [$ff95], a ; $0544
+	ldh [hRomBank], a ; $0544
 	ld [$2000], a ; $0546
 	xor a, a ; $0549
 	ld [hl+], a ; $054a
@@ -712,7 +712,7 @@ Label_00_0566:
 	ld a, e ; $0567
 	wram_bank ; $0568
 	ld a, d ; $056c
-	ldh [$ff95], a ; $056d
+	ldh [hRomBank], a ; $056d
 	ld [$2000], a ; $056f
 	ld hl, $c180 ; $0572
 	ld c, $10 ; $0575
@@ -841,31 +841,31 @@ Label_00_0624:
 Func_00_0628:
 	push bc ; $0628
 	ld b, a ; $0629
-	ldh a, [$ff95] ; $062a
+	ldh a, [hRomBank] ; $062a
 	push af ; $062c
 	ld a, b ; $062d
-	ldh [$ff95], a ; $062e
+	ldh [hRomBank], a ; $062e
 	ld [$2000], a ; $0630
 	ld c, [hl] ; $0633
 	pop af ; $0634
-	ldh [$ff95], a ; $0635
+	ldh [hRomBank], a ; $0635
 	ld [$2000], a ; $0637
 	ld a, c ; $063a
 	pop bc ; $063b
 	ret ; $063c
 Func_00_063d:
 	ld b, a ; $063d
-	ldh a, [$ff95] ; $063e
+	ldh a, [hRomBank] ; $063e
 	push af ; $0640
 	ld a, b ; $0641
-	ldh [$ff95], a ; $0642
+	ldh [hRomBank], a ; $0642
 	ld [$2000], a ; $0644
 	ld c, [hl] ; $0647
 	inc hl ; $0648
 	ld b, [hl] ; $0649
 	dec hl ; $064a
 	pop af ; $064b
-	ldh [$ff95], a ; $064c
+	ldh [hRomBank], a ; $064c
 	ld [$2000], a ; $064e
 	ret ; $0651
 Func_00_0652:
@@ -875,7 +875,7 @@ Func_00_0652:
 	ld c, a ; $0657
 	ld a, [hl-] ; $0658
 	ld b, a ; $0659
-	ldh a, [$ff95] ; $065a
+	ldh a, [hRomBank] ; $065a
 	ld [$2000], a ; $065c
 	ei ; $065f
 	ret ; $0660
@@ -883,17 +883,17 @@ Func_00_0652:
 Func_00_067a:
 	push bc ; $067a
 	ld b, a ; $067b
-	ldh a, [$ff95] ; $067c
+	ldh a, [hRomBank] ; $067c
 	ld c, a ; $067e
 	ld a, b ; $067f
-	ldh [$ff95], a ; $0680
+	ldh [hRomBank], a ; $0680
 	ld [$2000], a ; $0682
 	ld a, c ; $0685
 	pop bc ; $0686
 	push af ; $0687
 	call CopyMemoryBC ; $0688
 	pop af ; $068b
-	ldh [$ff95], a ; $068c
+	ldh [hRomBank], a ; $068c
 	ld [$2000], a ; $068e
 	ret ; $0691
 	INCBIN "data/bank_000/d_0692.bin" ; $0692, 26 bytes
@@ -924,10 +924,10 @@ JumpToHL:
 	jp hl ; $06ce
 	INCBIN "data/bank_000/d_06cf.bin" ; $06cf, 246 bytes
 Func_00_07c5:
-	ldh a, [$ff95] ; $07c5
+	ldh a, [hRomBank] ; $07c5
 	push af ; $07c7
 	ld a, h ; $07c8
-	ldh [$ff95], a ; $07c9
+	ldh [hRomBank], a ; $07c9
 	ld [$2000], a ; $07cb
 	ld h, $40 ; $07ce
 	ld a, [hl+] ; $07d0
@@ -935,7 +935,7 @@ Func_00_07c5:
 	ld l, a ; $07d2
 	call JumpToHL ; $07d3
 	pop af ; $07d6
-	ldh [$ff95], a ; $07d7
+	ldh [hRomBank], a ; $07d7
 	ld [$2000], a ; $07d9
 	ret ; $07dc
 Func_00_07dd:
@@ -2721,17 +2721,17 @@ Func_00_1361:
 	ld a, h ; $1373
 	add a, $40 ; $1374
 	ld h, a ; $1376
-	ldh a, [$ff95] ; $1377
+	ldh a, [hRomBank] ; $1377
 	ld b, a ; $1379
 	ld a, $2d ; $137a
-	ldh [$ff95], a ; $137c
+	ldh [hRomBank], a ; $137c
 	ld [$2000], a ; $137e
 	ld a, [hl+] ; $1381
 	ld h, [hl] ; $1382
 	ld l, a ; $1383
 	call Func_00_0d4b ; $1384
 	ld a, b ; $1387
-	ldh [$ff95], a ; $1388
+	ldh [hRomBank], a ; $1388
 	ld [$2000], a ; $138a
 	pop de ; $138d
 	ret ; $138e
@@ -2817,10 +2817,10 @@ Func_00_13de:
 	ld a, h ; $13ef
 	add a, $50 ; $13f0
 	ld h, a ; $13f2
-	ldh a, [$ff95] ; $13f3
+	ldh a, [hRomBank] ; $13f3
 	ld b, a ; $13f5
 	ld a, $2d ; $13f6
-	ldh [$ff95], a ; $13f8
+	ldh [hRomBank], a ; $13f8
 	ld [$2000], a ; $13fa
 	ld a, [hl+] ; $13fd
 	ld h, [hl] ; $13fe
@@ -2834,7 +2834,7 @@ Func_00_13de:
 	rl l ; $140a
 	rl h ; $140c
 	ld a, b ; $140e
-	ldh [$ff95], a ; $140f
+	ldh [hRomBank], a ; $140f
 	ld [$2000], a ; $1411
 	pop de ; $1414
 	ret ; $1415
@@ -3532,7 +3532,7 @@ Label_00_196a:
 	ld [de], a ; $196f
 	pop af ; $1970
 	ret ; $1971
-Func_00_1972:
+FormatDecimalNumber:
 	add sp, -6 ; $1972
 	push bc ; $1974
 	ld b, $00 ; $1975
@@ -3820,7 +3820,7 @@ Func_00_1ae4:
 	ld h, $00 ; $1af1
 	ld l, a ; $1af3
 	ld a, $04 ; $1af4
-	call Func_00_1972 ; $1af6
+	call FormatDecimalNumber ; $1af6
 	jr Label_00_1b2b ; $1af9
 	INCBIN "data/bank_000/d_1afb.bin" ; $1afb, 26 bytes
 Func_00_1b15:
@@ -3840,7 +3840,7 @@ Func_00_1b15:
 	ld b, d ; $1b24
 	ld c, e ; $1b25
 	ld a, $06 ; $1b26
-	call Func_00_1972 ; $1b28
+	call FormatDecimalNumber ; $1b28
 Label_00_1b2b:
 	ld h, b ; $1b2b
 	ld l, c ; $1b2c
@@ -3852,14 +3852,14 @@ Label_00_1b2b:
 	pop bc ; $1b35
 	pop af ; $1b36
 	ret ; $1b37
-Func_00_1b38:
+ClearFrameTasks:
 	xor a, a ; $1b38
-	ldh [$ff8f], a ; $1b39
-	ld hl, $c1c0 ; $1b3b
+	ldh [hFrameTasksReady], a ; $1b39
+	ld hl, wFrameTasks ; $1b3b
 	ld c, $04 ; $1b3e
 	call ClearMemory16 ; $1b40
 	ld a, $01 ; $1b43
-	ldh [$ff8f], a ; $1b45
+	ldh [hFrameTasksReady], a ; $1b45
 	ret ; $1b47
 Func_00_1b48:
 	push hl ; $1b48
@@ -3894,11 +3894,11 @@ Func_00_1b63:
 	or a, [hl] ; $1b67
 	pop hl ; $1b68
 	ret ; $1b69
-Func_00_1b6a:
+RegisterFrameTask:
 	add sp, -4 ; $1b6a
 	push af ; $1b6c
 	xor a, a ; $1b6d
-	ldh [$ff8f], a ; $1b6e
+	ldh [hFrameTasksReady], a ; $1b6e
 	pop af ; $1b70
 	ld d, h ; $1b71
 	ld e, l ; $1b72
@@ -3909,12 +3909,12 @@ Func_00_1b6a:
 	inc hl ; $1b78
 	ld [hl], d ; $1b79
 	inc hl ; $1b7a
-	ldh a, [$ff95] ; $1b7b
+	ldh a, [hRomBank] ; $1b7b
 	ld [hl], a ; $1b7d
 	pop de ; $1b7e
 	inc de ; $1b7f
 	ld bc, $0010 ; $1b80
-	ld hl, $c1c0 ; $1b83
+	ld hl, wFrameTasks ; $1b83
 Label_00_1b86:
 	inc hl ; $1b86
 	call Func_00_1b48 ; $1b87
@@ -3932,7 +3932,7 @@ Label_00_1b96:
 	or a, a ; $1b97
 	jr nz, Label_00_1bc1 ; $1b98
 	ld c, $16 ; $1b9a
-	ld hl, $c1c0 ; $1b9c
+	ld hl, wFrameTasks ; $1b9c
 Label_00_1b9f:
 	inc hl ; $1b9f
 	call Func_00_1b63 ; $1ba0
@@ -3966,14 +3966,14 @@ Label_00_1bb7:
 Label_00_1bc1:
 	call Func_00_1c3f ; $1bc1
 	ld a, $01 ; $1bc4
-	ldh [$ff8f], a ; $1bc6
+	ldh [hFrameTasksReady], a ; $1bc6
 	add sp, 4 ; $1bc8
 	ret ; $1bca
 Func_00_1bcb:
 	add sp, -3 ; $1bcb
 	push af ; $1bcd
 	xor a, a ; $1bce
-	ldh [$ff8f], a ; $1bcf
+	ldh [hFrameTasksReady], a ; $1bcf
 	pop af ; $1bd1
 	ld d, h ; $1bd2
 	ld e, l ; $1bd3
@@ -3983,11 +3983,11 @@ Func_00_1bcb:
 	inc hl ; $1bd8
 	ld [hl], d ; $1bd9
 	inc hl ; $1bda
-	ldh a, [$ff95] ; $1bdb
+	ldh a, [hRomBank] ; $1bdb
 	ld [hl], a ; $1bdd
 	pop de ; $1bde
 	ld c, $10 ; $1bdf
-	ld hl, $c1c0 ; $1be1
+	ld hl, wFrameTasks ; $1be1
 Label_00_1be4:
 	inc hl ; $1be4
 	call Func_00_1b48 ; $1be5
@@ -4007,22 +4007,22 @@ Label_00_1bf2:
 	jr nz, Label_00_1be4 ; $1bf6
 Label_00_1bf8:
 	ld a, $01 ; $1bf8
-	ldh [$ff8f], a ; $1bfa
+	ldh [hFrameTasksReady], a ; $1bfa
 	add sp, 3 ; $1bfc
 	ret ; $1bfe
 Func_00_1bff:
 	and a, $80 ; $1bff
 	ld b, a ; $1c01
-	ldh a, [$ff8f] ; $1c02
+	ldh a, [hFrameTasksReady] ; $1c02
 	or a, a ; $1c04
 	ret z ; $1c05
-	ldh a, [$ff95] ; $1c06
+	ldh a, [hRomBank] ; $1c06
 	ld d, a ; $1c08
 	ldh a, [hWramBank] ; $1c09
 	ld e, a ; $1c0b
 	push de ; $1c0c
 	ld c, $10 ; $1c0d
-	ld hl, $c1c0 ; $1c0f
+	ld hl, wFrameTasks ; $1c0f
 Label_00_1c12:
 	ld a, [hl+] ; $1c12
 	xor a, b ; $1c13
@@ -4036,7 +4036,7 @@ Label_00_1c12:
 	ld a, [hl+] ; $1c1d
 	ld d, a ; $1c1e
 	ld a, [hl] ; $1c1f
-	ldh [$ff95], a ; $1c20
+	ldh [hRomBank], a ; $1c20
 	ld [$2000], a ; $1c22
 	ld l, e ; $1c25
 	ld h, d ; $1c26
@@ -4051,7 +4051,7 @@ Label_00_1c2c:
 	jr nz, Label_00_1c12 ; $1c30
 	pop de ; $1c32
 	ld a, d ; $1c33
-	ldh [$ff95], a ; $1c34
+	ldh [hRomBank], a ; $1c34
 	ld [$2000], a ; $1c36
 	ld a, e ; $1c39
 	wram_bank ; $1c3a
@@ -4059,7 +4059,7 @@ Label_00_1c2c:
 Func_00_1c3f:
 	ld c, $0f ; $1c3f
 Label_00_1c41:
-	ld hl, $c1c0 ; $1c41
+	ld hl, wFrameTasks ; $1c41
 	ld de, $c1c4 ; $1c44
 	ld b, c ; $1c47
 Label_00_1c48:
@@ -5151,7 +5151,7 @@ Label_00_25ad:
 	ld a, $06 ; $25c4
 	ldh [$ffa6], a ; $25c6
 	call Func_00_1e1d ; $25c8
-	call Func_00_1b38 ; $25cb
+	call ClearFrameTasks ; $25cb
 	call Func_00_0465 ; $25ce
 	ldh a, [hWramBank] ; $25d1
 	push af ; $25d3
@@ -5285,7 +5285,7 @@ Label_00_26b5:
 	ldh [$ff9a], a ; $26c0
 	jr Label_00_26f3 ; $26c2
 Label_00_26c4:
-	ldh a, [$ff91] ; $26c4
+	ldh a, [hInputPressed] ; $26c4
 	and a, $f3 ; $26c6
 	jr nz, Label_00_26f3 ; $26c8
 	ldh a, [$ffd8] ; $26ca
@@ -6351,10 +6351,10 @@ Func_00_2d79:
 	inc c ; $2d8a
 	ret ; $2d8b
 Label_00_2d8c:
-	ldh a, [$ff95] ; $2d8c
+	ldh a, [hRomBank] ; $2d8c
 	push af ; $2d8e
 	ld a, $2f ; $2d8f
-	ldh [$ff95], a ; $2d91
+	ldh [hRomBank], a ; $2d91
 	ld [$2000], a ; $2d93
 	push hl ; $2d96
 	push de ; $2d97
@@ -6383,7 +6383,7 @@ Label_00_2d8c:
 	pop bc ; $2db6
 	pop hl ; $2db7
 	ld a, $2e ; $2db8
-	ldh [$ff95], a ; $2dba
+	ldh [hRomBank], a ; $2dba
 	ld [$2000], a ; $2dbc
 	push de ; $2dbf
 	push hl ; $2dc0
@@ -6411,7 +6411,7 @@ Label_00_2d8c:
 	add hl, hl ; $2de0
 	pop de ; $2de1
 	pop af ; $2de2
-	ldh [$ff95], a ; $2de3
+	ldh [hRomBank], a ; $2de3
 	ld [$2000], a ; $2de5
 	ret ; $2de8
 Func_00_2de9:
@@ -6525,10 +6525,10 @@ Func_00_2e61:
 	ld d, [hl] ; $2e69
 	ret ; $2e6a
 Label_00_2e6b:
-	ldh a, [$ff95] ; $2e6b
+	ldh a, [hRomBank] ; $2e6b
 	push af ; $2e6d
 	ld a, [$df22] ; $2e6e
-	ldh [$ff95], a ; $2e71
+	ldh [hRomBank], a ; $2e71
 	ld [$2000], a ; $2e73
 	ld hl, $df38 ; $2e76
 	ld a, [hl+] ; $2e79
@@ -6561,7 +6561,7 @@ Label_00_2e6b:
 	call Func_00_0480 ; $2ea3
 Label_00_2ea6:
 	pop af ; $2ea6
-	ldh [$ff95], a ; $2ea7
+	ldh [hRomBank], a ; $2ea7
 	ld [$2000], a ; $2ea9
 	ret ; $2eac
 Label_00_2ead:
@@ -7015,12 +7015,12 @@ Label_00_32d7:
 	jr nc, Label_00_32dc ; $32d9
 	inc h ; $32db
 Label_00_32dc:
-	ldh a, [$ff95] ; $32dc
+	ldh a, [hRomBank] ; $32dc
 	push af ; $32de
 	ld a, [hl] ; $32df
 	and a, $0f ; $32e0
 	or a, $70 ; $32e2
-	ldh [$ff95], a ; $32e4
+	ldh [hRomBank], a ; $32e4
 	ld [$2000], a ; $32e6
 	ld a, [hl+] ; $32e9
 	swap a ; $32ea
@@ -7048,7 +7048,7 @@ Label_00_32f9:
 	jr nz, Label_00_32f9 ; $3307
 	ei ; $3309
 	pop af ; $330a
-	ldh [$ff95], a ; $330b
+	ldh [hRomBank], a ; $330b
 	ld [$2000], a ; $330d
 	pop hl ; $3310
 	pop de ; $3311
@@ -7093,7 +7093,7 @@ Label_00_333f:
 	ld a, [de] ; $3348
 	inc de ; $3349
 	ld [hl+], a ; $334a
-	ldh a, [$ff95] ; $334b
+	ldh a, [hRomBank] ; $334b
 	ld [hl], a ; $334d
 	inc hl ; $334e
 	inc hl ; $334f
@@ -7140,7 +7140,7 @@ Func_00_3373:
 	ld c, $02 ; $338d
 	jp CopyMemoryFast ; $338f
 Func_00_3392:
-	ldh a, [$ff95] ; $3392
+	ldh a, [hRomBank] ; $3392
 	push af ; $3394
 	ld a, [$d215] ; $3395
 	ld [$d20f], a ; $3398
@@ -7161,7 +7161,7 @@ Label_00_33a6:
 	ld c, $02 ; $33b2
 	call CopyMemoryFast ; $33b4
 	ldh a, [$ffd5] ; $33b7
-	ldh [$ff95], a ; $33b9
+	ldh [hRomBank], a ; $33b9
 	ld [$2000], a ; $33bb
 	ldh a, [$ffd2] ; $33be
 	and a, $03 ; $33c0
@@ -7322,7 +7322,7 @@ Label_00_34b7:
 	ld [$d209], a ; $34cf
 	ldh [rAUDTERM], a ; $34d2
 	pop af ; $34d4
-	ldh [$ff95], a ; $34d5
+	ldh [hRomBank], a ; $34d5
 	ld [$2000], a ; $34d7
 	jp Label_00_30d7 ; $34da
 Label_00_34dd:

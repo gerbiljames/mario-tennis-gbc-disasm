@@ -739,7 +739,7 @@ Label_14_7779:
 	ld [$c2b2], a ; $7795
 	ld a, $01 ; $7798
 	ld hl, $625b ; $779a
-	call Func_00_1b6a ; $779d
+	call RegisterFrameTask ; $779d
 	ld h, $20 ; $77a0
 Label_14_77a2:
 	push af ; $77a2

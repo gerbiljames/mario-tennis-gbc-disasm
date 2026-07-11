@@ -202,7 +202,7 @@ Label_3f_4106:
 	call Func_00_1da4 ; $4119
 	ld a, $1d ; $411c
 	ld hl, $4e8d ; $411e
-	call Func_00_1b6a ; $4121
+	call RegisterFrameTask ; $4121
 	wram_bank $06 ; $4124
 	ld a, [$cb34] ; $412a
 	cp a, $06 ; $412d
@@ -412,7 +412,7 @@ Label_3f_4311:
 	ldh [$ffb9], a ; $4321
 	ldh [$ffb8], a ; $4323
 	call DisableLCDSafely ; $4325
-	call Func_00_1b38 ; $4328
+	call ClearFrameTasks ; $4328
 	call Func_3f_50f7 ; $432b
 	call Func_3f_511a ; $432e
 	wram_bank $01 ; $4331
@@ -1416,7 +1416,7 @@ Label_3f_559e:
 	push af ; $55a7
 	jr Label_3f_55fc ; $55a8
 Label_3f_55aa:
-	ldh a, [$ff91] ; $55aa
+	ldh a, [hInputPressed] ; $55aa
 	bit 6, a ; $55ac
 	jr z, Label_3f_55d1 ; $55ae
 	ld a, [$cb2e] ; $55b0
@@ -1556,7 +1556,7 @@ Label_3f_56b8:
 	push af ; $56ba
 	jp Label_3f_5746 ; $56bb
 Label_3f_56be:
-	ldh a, [$ff91] ; $56be
+	ldh a, [hInputPressed] ; $56be
 	bit 6, a ; $56c0
 	jr z, Label_3f_56ea ; $56c2
 	sound $5e ; $56c4

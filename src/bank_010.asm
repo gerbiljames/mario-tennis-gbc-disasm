@@ -100,13 +100,13 @@ Label_10_4f07:
 	ret ; $4f07
 	INCBIN "data/bank_010/d_4f08.bin" ; $4f08, 5 bytes
 Func_10_4f0d:
-	call Func_00_1b38 ; $4f0d
+	call ClearFrameTasks ; $4f0d
 	sound $00 ; $4f10
 	call Func_00_2f32 ; $4f12
 	ld a, [$c295] ; $4f15
 	cp a, $0a ; $4f18
 	jr nz, Label_10_4f3c ; $4f1a
-	call Func_00_1b38 ; $4f1c
+	call ClearFrameTasks ; $4f1c
 	sound $00 ; $4f1f
 	call Func_00_2f32 ; $4f21
 	xor a, a ; $4f24
@@ -358,7 +358,7 @@ Label_10_5159:
 	farcall FarPtr_38_08 ; $515d
 	call Func_10_56fc ; $5160
 	push af ; $5163
-	call Func_00_1b38 ; $5164
+	call ClearFrameTasks ; $5164
 	call DisableLCDSafely ; $5167
 	farcall FarPtr_01_0a ; $516a
 	farcall FarPtr_39_22 ; $516d
@@ -1563,12 +1563,12 @@ Label_10_71f0:
 	ld a, $02 ; $7282
 	farcall FarPtr_0a_20 ; $7284
 	call Func_10_7339 ; $7287
-	ldh a, [$ff95] ; $728a
+	ldh a, [hRomBank] ; $728a
 	ld b, a ; $728c
 	ld a, $00 ; $728d
 	ld de, $741c ; $728f
 	farcall FarPtr_0a_1a ; $7292
-	ldh a, [$ff95] ; $7295
+	ldh a, [hRomBank] ; $7295
 	ld b, a ; $7297
 	ld a, $02 ; $7298
 	ld de, $741c ; $729a
@@ -1615,7 +1615,7 @@ Label_10_72a9:
 	ld a, $00 ; $72fa
 	farcall FarPtr_0a_20 ; $72fc
 	call Func_10_7339 ; $72ff
-	ldh a, [$ff95] ; $7302
+	ldh a, [hRomBank] ; $7302
 	ld b, a ; $7304
 	ld a, $00 ; $7305
 	ld de, $741c ; $7307
@@ -1726,7 +1726,7 @@ Label_10_7413:
 	sra a ; $771d
 	cp a, $02 ; $771f
 	jr nz, Label_10_772e ; $7721
-	ldh a, [$ff95] ; $7723
+	ldh a, [hRomBank] ; $7723
 	ld b, a ; $7725
 	ld a, $03 ; $7726
 	ld de, $7b8b ; $7728
@@ -1734,7 +1734,7 @@ Label_10_7413:
 Label_10_772e:
 	ld a, $01 ; $772e
 	ld hl, $79d0 ; $7730
-	call Func_00_1b6a ; $7733
+	call RegisterFrameTask ; $7733
 	ld a, [$c295] ; $7736
 	cp a, $0f ; $7739
 	jr nz, Label_10_7740 ; $773b
@@ -1742,7 +1742,7 @@ Label_10_772e:
 Label_10_7740:
 	ret ; $7740
 Func_10_7741:
-	ldh a, [$ff95] ; $7741
+	ldh a, [hRomBank] ; $7741
 	ld hl, $7980 ; $7743
 	farcall FarPtr_0a_06 ; $7746
 	farcall FarPtr_0a_00 ; $7749

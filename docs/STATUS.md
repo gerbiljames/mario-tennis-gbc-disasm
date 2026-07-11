@@ -163,7 +163,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 439 of 14,892 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 451 of 14,988 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -243,8 +243,20 @@ regions were structured via `data_tables.json`: WRAM `dw` pointer lists,
 self-referencing pointer-table + payload pairs, OAM sprite-template rows
 (`bytes:4` with `$80` terminators), 16-byte permutation tables, and small
 byte lookups; mixed blobs (data + code + data, e.g. `$5278`, `$734f`,
-`$79b6`) were split at exact boundaries. All 753 labels are still
-auto-named — semantics are the next step.
+`$79b6`) were split at exact boundaries. First semantics are in: the shared
+**menu cursor system** (`MoveMenuCursor`/`MoveMenuCursorRepeat` on
+`wMenuCursorX/Y`, fed by `hInputPressed`), the stat-number printer
+`PrintNumberRightAligned` (36 call sites in bank $16's match-stats code),
+and the **star-unlock records**: `RecordExhibitionVictory` keeps a 9x9
+best-victory matrix (Mario cast vs Mario cast, scored by difficulty via
+`VictoryScoreTable`) in a save block, and `UpdateStarUnlocks` awards a
+star when a character has beaten all eight others. Bank 0 gained the
+banked **frame-task registry** (`RegisterFrameTask`/`ClearFrameTasks`,
+`wFrameTasks` at $c1c0, gated by `hFrameTasksReady`) — the computed
+dispatch that stranded several of the recovered callbacks — plus
+`FormatDecimalNumber`, `hRomBank` ($ff95), and `hInputPressed` ($ff91).
+Bank $3b's interactive screen builders (the story pause-menu 3x3 grid and
+its sub-screens) still need a live BizHawk session to identify visually.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm

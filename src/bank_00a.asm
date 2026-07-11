@@ -191,7 +191,7 @@ Func_0a_40d0:
 	jr z, Label_0a_4100 ; $40f6
 	ld a, $01 ; $40f8
 	ld hl, $40a4 ; $40fa
-	call Func_00_1b6a ; $40fd
+	call RegisterFrameTask ; $40fd
 Label_0a_4100:
 	pop hl ; $4100
 	pop de ; $4101
@@ -569,7 +569,7 @@ Func_0a_4364:
 	ld c, l ; $4367
 	ld b, h ; $4368
 	ld hl, $4766 ; $4369
-	ldh a, [$ff95] ; $436c
+	ldh a, [hRomBank] ; $436c
 	farcall FarPtr_04_04 ; $436e
 	ret ; $4371
 Func_0a_4372:
@@ -1527,7 +1527,7 @@ Func_0a_48c0:
 	jr nz, Label_0a_48db ; $48d1
 	ld a, $01 ; $48d3
 	ld hl, $4908 ; $48d5
-	call Func_00_1b6a ; $48d8
+	call RegisterFrameTask ; $48d8
 Label_0a_48db:
 	pop af ; $48db
 	cp a, $04 ; $48dc
@@ -1740,7 +1740,7 @@ Func_0a_4bac:
 	push hl ; $4bae
 	ldh a, [hWramBank] ; $4baf
 	push af ; $4bb1
-	call Func_00_1b38 ; $4bb2
+	call ClearFrameTasks ; $4bb2
 	call DisableLCDSafely ; $4bb5
 	farcall FarPtr_01_0a ; $4bb8
 	call EnableLCD ; $4bbb
@@ -2146,10 +2146,10 @@ Func_0a_4f2c:
 	xor a, a ; $4f2c
 	ld [$cb5f], a ; $4f2d
 Label_0a_4f30:
-	call Func_00_1b38 ; $4f30
+	call ClearFrameTasks ; $4f30
 	ld a, $01 ; $4f33
 	ld hl, $4efc ; $4f35
-	call Func_00_1b6a ; $4f38
+	call RegisterFrameTask ; $4f38
 	call Func_0a_4f40 ; $4f3b
 	jr Label_0a_4f30 ; $4f3e
 Func_0a_4f40:
@@ -2242,7 +2242,7 @@ Label_0a_4ff5:
 	jp z, Label_0a_50ca ; $4fff
 	ld bc, $d000 ; $5002
 	ld hl, $4766 ; $5005
-	ldh a, [$ff95] ; $5008
+	ldh a, [hRomBank] ; $5008
 	farcall FarPtr_04_04 ; $500a
 	ld hl, $d000 ; $500d
 	ld de, $0018 ; $5010
@@ -3450,7 +3450,7 @@ Func_0a_5930:
 	ld [$c32c], a ; $595f
 	ld a, $0f ; $5962
 	ld hl, $5976 ; $5964
-	call Func_00_1b6a ; $5967
+	call RegisterFrameTask ; $5967
 	pop hl ; $596a
 	pop de ; $596b
 	pop bc ; $596c
@@ -4146,7 +4146,7 @@ Label_0a_6054:
 	farcall FarPtr_05_00 ; $6059
 	ld a, $01 ; $605c
 	ld hl, $60c1 ; $605e
-	call Func_00_1b6a ; $6061
+	call RegisterFrameTask ; $6061
 	ld a, [$c32e] ; $6064
 	call Func_0a_639b ; $6067
 	pop hl ; $606a
@@ -4641,7 +4641,7 @@ Label_0a_6430:
 Label_0a_6442:
 	ld a, $01 ; $6442
 	ld hl, $6465 ; $6444
-	call Func_00_1b6a ; $6447
+	call RegisterFrameTask ; $6447
 	add sp, 2 ; $644a
 Label_0a_644c:
 	pop af ; $644c
@@ -5238,7 +5238,7 @@ Func_0a_67ca:
 	ld h, b ; $67d8
 	ld c, e ; $67d9
 	ld b, d ; $67da
-	call Func_00_1972 ; $67db
+	call FormatDecimalNumber ; $67db
 	ld l, c ; $67de
 	ld h, b ; $67df
 	pop de ; $67e0
@@ -5595,7 +5595,7 @@ Func_0a_6e74:
 	xor a, a ; $6e8d
 	ld [$cb00], a ; $6e8e
 Label_0a_6e91:
-	call Func_00_1b38 ; $6e91
+	call ClearFrameTasks ; $6e91
 	ld a, [$cb00] ; $6e94
 	add a, a ; $6e97
 	add a, $40 ; $6e98

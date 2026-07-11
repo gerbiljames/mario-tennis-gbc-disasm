@@ -1953,7 +1953,7 @@ Label_02_502a:
 Label_02_513f:
 	call Func_00_2631 ; $513f
 	call Func_00_0a3a ; $5142
-	ldh a, [$ff91] ; $5145
+	ldh a, [hInputPressed] ; $5145
 	bit 6, a ; $5147
 	jr z, Label_02_5159 ; $5149
 	push de ; $514b
