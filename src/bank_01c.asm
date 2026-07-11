@@ -2907,10 +2907,10 @@ Label_1c_6eea:
 Func_1c_7116:
 	ld hl, $598c ; $7116
 	ld de, $0008 ; $7119
-	call Func_00_05b0 ; $711c
+	call LoadPaletteShadow ; $711c
 	ld hl, $598c ; $711f
 	ld de, $0808 ; $7122
-	call Func_00_05b0 ; $7125
+	call LoadPaletteShadow ; $7125
 	ld a, $01 ; $7128
 	ldh [$ff96], a ; $712a
 	ldh [rWBK], a ; $712c
@@ -3237,10 +3237,10 @@ Func_1c_73f4:
 Func_1c_73fb:
 	ld hl, $7541 ; $73fb
 	ld de, $0008 ; $73fe
-	call Func_00_05b0 ; $7401
+	call LoadPaletteShadow ; $7401
 	ld hl, $7541 ; $7404
 	ld de, $0808 ; $7407
-	call Func_00_05b0 ; $740a
+	call LoadPaletteShadow ; $740a
 	ld a, $06 ; $740d
 	ldh [$ff96], a ; $740f
 	ldh [rWBK], a ; $7411

@@ -182,7 +182,7 @@ Func_16_4571:
 	call Func_00_0480 ; $45e9
 	ld hl, $48f4 ; $45ec
 	ld de, $0803 ; $45ef
-	call Func_00_05b0 ; $45f2
+	call LoadPaletteShadow ; $45f2
 	ld b, $09 ; $45f5
 	ld c, $04 ; $45f7
 	ld de, $a400 ; $45f9
@@ -320,20 +320,20 @@ Func_16_4a0f:
 	ld [$cb0b], a ; $4a18
 	ld hl, $4a4e ; $4a1b
 	ld de, $0101 ; $4a1e
-	call Func_00_05b0 ; $4a21
+	call LoadPaletteShadow ; $4a21
 	ld hl, $4a46 ; $4a24
 	ld de, $0201 ; $4a27
-	call Func_00_05b0 ; $4a2a
+	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
 Label_16_4a2e:
 	ld a, $03 ; $4a2e
 	ld [$cb0b], a ; $4a30
 	ld hl, $4a4e ; $4a33
 	ld de, $0201 ; $4a36
-	call Func_00_05b0 ; $4a39
+	call LoadPaletteShadow ; $4a39
 	ld hl, $4a46 ; $4a3c
 	ld de, $0101 ; $4a3f
-	call Func_00_05b0 ; $4a42
+	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
 	INCBIN "data/bank_016/d_4a46.bin" ; $4a46, 16 bytes
 Func_16_4a56:

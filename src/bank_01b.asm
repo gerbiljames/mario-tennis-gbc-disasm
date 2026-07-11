@@ -443,7 +443,7 @@ Label_1b_4f4f:
 	call Func_1b_4fa6 ; $4f4f
 	ld hl, $4f76 ; $4f52
 	ld de, $0806 ; $4f55
-	call Func_00_05b0 ; $4f58
+	call LoadPaletteShadow ; $4f58
 	ld a, $01 ; $4f5b
 	ld hl, $5a45 ; $4f5d
 	call Func_00_1b6a ; $4f60
@@ -1554,7 +1554,7 @@ Func_1b_6618:
 	call DecompressData ; $663d
 	ld hl, $6572 ; $6640
 	ld de, $0008 ; $6643
-	call Func_00_05b0 ; $6646
+	call LoadPaletteShadow ; $6646
 	ret ; $6649
 Func_1b_664a:
 	ret ; $664a
@@ -1896,7 +1896,7 @@ Func_1b_68d6:
 	ldh [rWBK], a ; $68f6
 	ld hl, $6930 ; $68f8
 	ld de, $0801 ; $68fb
-	call Func_00_05b0 ; $68fe
+	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
 	ld hl, $6938 ; $6903
 	call Func_00_1b6a ; $6906
@@ -2293,7 +2293,7 @@ Label_1b_6d9e:
 	ld h, [hl] ; $6d9f
 	ld l, a ; $6da0
 	ld de, $0401 ; $6da1
-	call Func_00_05b0 ; $6da4
+	call LoadPaletteShadow ; $6da4
 	ret ; $6da7
 	INCBIN "data/bank_01b/d_6da8.bin" ; $6da8, 30 bytes
 Func_1b_6dc6:
@@ -2972,7 +2972,7 @@ Label_1b_73bf:
 	ld h, [hl] ; $73c0
 	ld l, a ; $73c1
 	ld de, $0401 ; $73c2
-	call Func_00_05b0 ; $73c5
+	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
 	INCBIN "data/bank_01b/d_73c9.bin" ; $73c9, 20 bytes
 Func_1b_73dd:

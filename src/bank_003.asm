@@ -86,7 +86,7 @@ InitSaveHeader:
 	ld a, $00 ; $404e
 	ldh [$ff97], a ; $4050
 	ld [$4000], a ; $4052
-	ld hl, $47e9 ; $4055
+	ld hl, SaveSignature ; $4055
 	ld de, $a020 ; $4058
 	call CopySaveSignature ; $405b
 	ld hl, $a061 ; $405e
@@ -1226,6 +1226,7 @@ InitSaveHeader:
 	pop bc ; $47e6
 	pop af ; $47e7
 	ret ; $47e8
+SaveSignature:
 	INCBIN "data/bank_003/d_47e9.bin" ; $47e9, 16 bytes
 WipeAllSaveRam:
 	ld e, $00 ; $47f9
@@ -1452,7 +1453,7 @@ ValidateSaveRam:
 	ldh [$ff97], a ; $4967
 	ld [$4000], a ; $4969
 	ld hl, $a020 ; $496c
-	ld de, $47e9 ; $496f
+	ld de, SaveSignature ; $496f
 	call CompareSaveSignature ; $4972
 	jr nz, Label_03_4980 ; $4975
 	call VerifySaveHeaderChecksum ; $4977
@@ -1517,7 +1518,7 @@ Label_03_4980:
 	ld c, $20 ; $4a0b
 	call CopyMemoryFast ; $4a0d
 	ld hl, $a000 ; $4a10
-	ld de, $47e9 ; $4a13
+	ld de, SaveSignature ; $4a13
 	call CompareSaveSignature ; $4a16
 	jr nz, Label_03_4a24 ; $4a19
 	call VerifySaveHeaderChecksum ; $4a1b
@@ -3517,7 +3518,7 @@ Func_03_59c5:
 	call Func_00_1e1d ; $59e3
 	ld hl, $5b20 ; $59e6
 	ld de, $0001 ; $59e9
-	call Func_00_05b0 ; $59ec
+	call LoadPaletteShadow ; $59ec
 	call Func_03_5aa9 ; $59ef
 	call EnableLCD ; $59f2
 	sound $2c ; $59f5
@@ -3695,10 +3696,10 @@ Func_03_5b28:
 	ld [$d000], a ; $5b32
 	ld hl, $65bc ; $5b35
 	ld de, $0a01 ; $5b38
-	call Func_00_05b0 ; $5b3b
+	call LoadPaletteShadow ; $5b3b
 	ld hl, $65c4 ; $5b3e
 	ld de, $0b01 ; $5b41
-	call Func_00_05b0 ; $5b44
+	call LoadPaletteShadow ; $5b44
 	pop af ; $5b47
 	ldh [$ff96], a ; $5b48
 	ldh [rWBK], a ; $5b4a

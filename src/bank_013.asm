@@ -1152,7 +1152,7 @@ Func_13_4cdc:
 	call Func_00_0480 ; $4ced
 	ld hl, $4d70 ; $4cf0
 	ld de, $0801 ; $4cf3
-	call Func_00_05b0 ; $4cf6
+	call LoadPaletteShadow ; $4cf6
 	pop af ; $4cf9
 	ldh [$ff96], a ; $4cfa
 	ldh [rWBK], a ; $4cfc

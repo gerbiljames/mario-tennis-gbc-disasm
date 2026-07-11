@@ -737,7 +737,7 @@ Func_14_6238:
 	call Func_00_0480 ; $6249
 	ld hl, $5e71 ; $624c
 	ld de, $0801 ; $624f
-	call Func_00_05b0 ; $6252
+	call LoadPaletteShadow ; $6252
 	pop af ; $6255
 	ldh [$ff96], a ; $6256
 	ldh [rWBK], a ; $6258

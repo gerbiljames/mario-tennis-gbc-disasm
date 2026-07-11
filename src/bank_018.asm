@@ -118,7 +118,7 @@ Func_18_4328:
 	push hl ; $432b
 	ld hl, $4300 ; $432c
 	ld e, $05 ; $432f
-	call Func_00_05b0 ; $4331
+	call LoadPaletteShadow ; $4331
 	pop hl ; $4334
 	pop de ; $4335
 	pop bc ; $4336
@@ -139,7 +139,7 @@ Func_18_4339:
 	sub a, l ; $4347
 	ld h, a ; $4348
 	ld e, $01 ; $4349
-	call Func_00_05b0 ; $434b
+	call LoadPaletteShadow ; $434b
 	pop hl ; $434e
 	pop de ; $434f
 	pop bc ; $4350
@@ -168,7 +168,7 @@ Label_18_4377:
 Func_18_437c:
 	push hl ; $437c
 	ld hl, $42e0 ; $437d
-	call Func_00_05b0 ; $4380
+	call LoadPaletteShadow ; $4380
 	pop de ; $4383
 	ld hl, $42a0 ; $4384
 	ld c, $04 ; $4387
@@ -399,7 +399,7 @@ Func_18_59c1:
 	call Func_00_0480 ; $59c9
 	ld hl, $59b9 ; $59cc
 	ld de, $0a01 ; $59cf
-	call Func_00_05b0 ; $59d2
+	call LoadPaletteShadow ; $59d2
 	ret ; $59d5
 	INCBIN "data/bank_018/d_59d6.bin" ; $59d6, 227 bytes
 Func_18_5ab9:
@@ -611,7 +611,7 @@ Func_18_7740:
 	farcall FarPtr_39_10 ; $7747
 	ld hl, $7754 ; $774a
 	ld de, $0801 ; $774d
-	call Func_00_05b0 ; $7750
+	call LoadPaletteShadow ; $7750
 	ret ; $7753
 	INCBIN "data/bank_018/d_7754.bin" ; $7754, 103 bytes
 Func_18_77bb:
@@ -689,28 +689,28 @@ Func_18_7855:
 	farcall FarPtr_39_00 ; $785a
 	ld hl, $78a9 ; $785d
 	ld de, $0001 ; $7860
-	call Func_00_05b0 ; $7863
+	call LoadPaletteShadow ; $7863
 	ld hl, $78a9 ; $7866
 	ld de, $0101 ; $7869
-	call Func_00_05b0 ; $786c
+	call LoadPaletteShadow ; $786c
 	ld hl, $78a9 ; $786f
 	ld de, $0201 ; $7872
-	call Func_00_05b0 ; $7875
+	call LoadPaletteShadow ; $7875
 	ld hl, $78a9 ; $7878
 	ld de, $0301 ; $787b
-	call Func_00_05b0 ; $787e
+	call LoadPaletteShadow ; $787e
 	ld hl, $78a9 ; $7881
 	ld de, $0401 ; $7884
-	call Func_00_05b0 ; $7887
+	call LoadPaletteShadow ; $7887
 	ld hl, $78a9 ; $788a
 	ld de, $0501 ; $788d
-	call Func_00_05b0 ; $7890
+	call LoadPaletteShadow ; $7890
 	ld hl, $78a9 ; $7893
 	ld de, $0601 ; $7896
-	call Func_00_05b0 ; $7899
+	call LoadPaletteShadow ; $7899
 	ld hl, $78a9 ; $789c
 	ld de, $0701 ; $789f
-	call Func_00_05b0 ; $78a2
+	call LoadPaletteShadow ; $78a2
 	farcall FarPtr_39_02 ; $78a5
 	ret ; $78a8
 	INCBIN "data/bank_018/d_78a9.bin" ; $78a9, 8 bytes
@@ -721,7 +721,7 @@ Func_18_78b1:
 	farcall FarPtr_39_10 ; $78b8
 	ld hl, $78c5 ; $78bb
 	ld de, $0801 ; $78be
-	call Func_00_05b0 ; $78c1
+	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 103 bytes
 Func_18_792c:
@@ -848,7 +848,7 @@ Func_18_7a2d:
 	farcall FarPtr_39_10 ; $7a34
 	ld hl, $7a41 ; $7a37
 	ld de, $0801 ; $7a3a
-	call Func_00_05b0 ; $7a3d
+	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 397 bytes
 Func_18_7bce:
@@ -878,7 +878,7 @@ Func_18_7be7:
 	farcall FarPtr_39_10 ; $7c02
 	ld hl, $7c0f ; $7c05
 	ld de, $0903 ; $7c08
-	call Func_00_05b0 ; $7c0b
+	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
 	INCBIN "data/bank_018/d_7c0f.bin" ; $7c0f, 24 bytes
 Func_18_7c27:
@@ -941,7 +941,7 @@ Func_18_7d1c:
 	farcall FarPtr_39_10 ; $7d37
 	ld hl, $7d44 ; $7d3a
 	ld de, $0903 ; $7d3d
-	call Func_00_05b0 ; $7d40
+	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
 	INCBIN "data/bank_018/d_7d44.bin" ; $7d44, 24 bytes
 Func_18_7d5c:

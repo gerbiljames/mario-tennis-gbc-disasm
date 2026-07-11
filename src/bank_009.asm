@@ -204,38 +204,38 @@ Func_09_412a:
 	ldh [rWBK], a ; $4152
 	push bc ; $4154
 	ld a, b ; $4155
-	ld hl, $41bc ; $4156
+	ld hl, ObjTemplates_09_41bc ; $4156
 	ld bc, $dd80 ; $4159
-	call Func_09_460a ; $415c
+	call LoadObjTemplate_09 ; $415c
 	call Func_09_7195 ; $415f
 	call Func_09_45bc ; $4162
 	pop bc ; $4165
 	ld a, b ; $4166
 	xor a, $03 ; $4167
-	ld hl, $41bc ; $4169
+	ld hl, ObjTemplates_09_41bc ; $4169
 	ld bc, $dd90 ; $416c
-	call Func_09_460a ; $416f
+	call LoadObjTemplate_09 ; $416f
 	call Func_09_71ac ; $4172
 	call Func_09_45bc ; $4175
 	ld a, $00 ; $4178
 	ld hl, $420c ; $417a
 	ld bc, $dda0 ; $417d
-	call Func_09_460a ; $4180
+	call LoadObjTemplate_09 ; $4180
 	ret ; $4183
 Label_09_4184:
 	ld a, $00 ; $4184
 	ld hl, $41fc ; $4186
 	ld bc, $dd80 ; $4189
-	call Func_09_460a ; $418c
+	call LoadObjTemplate_09 ; $418c
 	ret ; $418f
 Func_09_4190:
 	ld a, [$c7bb] ; $4190
 	and a, a ; $4193
 	jr nz, Label_09_41b2 ; $4194
-	ld hl, $41bc ; $4196
+	ld hl, ObjTemplates_09_41bc ; $4196
 	ld bc, $dd80 ; $4199
 	call Func_09_4658 ; $419c
-	ld hl, $41bc ; $419f
+	ld hl, ObjTemplates_09_41bc ; $419f
 	ld bc, $dd90 ; $41a2
 	call Func_09_4658 ; $41a5
 	ld hl, $420c ; $41a8
@@ -247,12 +247,13 @@ Label_09_41b2:
 	ld bc, $dd80 ; $41b5
 	call Func_09_4658 ; $41b8
 	ret ; $41bb
+ObjTemplates_09_41bc:
 	INCBIN "data/bank_009/d_41bc.bin" ; $41bc, 112 bytes
 Func_09_422c:
 	ld a, $01 ; $422c
 	ld hl, $420c ; $422e
 	ld bc, $dda0 ; $4231
-	call Func_09_460a ; $4234
+	call LoadObjTemplate_09 ; $4234
 	ret ; $4237
 Func_09_4238:
 	ld hl, $420c ; $4238
@@ -265,7 +266,7 @@ Func_09_4242:
 	ld a, [$c4d4] ; $4248
 	ld hl, $4298 ; $424b
 	ld bc, $dd80 ; $424e
-	call Func_09_460a ; $4251
+	call LoadObjTemplate_09 ; $4251
 	call Func_09_7103 ; $4254
 	call Func_09_45bc ; $4257
 	ld a, [$c494] ; $425a
@@ -274,7 +275,7 @@ Func_09_4242:
 	ld a, [$c4d4] ; $4261
 	ld hl, $4298 ; $4264
 	ld bc, $dd90 ; $4267
-	call Func_09_460a ; $426a
+	call LoadObjTemplate_09 ; $426a
 	call Func_09_711a ; $426d
 	call Func_09_45bc ; $4270
 	ret ; $4273
@@ -302,7 +303,7 @@ Func_09_42d8:
 	ld a, $00 ; $42d9
 	ld hl, $4300 ; $42db
 	ld bc, $dd80 ; $42de
-	call Func_09_460a ; $42e1
+	call LoadObjTemplate_09 ; $42e1
 	pop af ; $42e4
 	add a, a ; $42e5
 	jr c, Label_09_42ef ; $42e6
@@ -323,7 +324,7 @@ Func_09_4310:
 	ld a, [$c4d4] ; $4310
 	ld hl, $4327 ; $4313
 	ld bc, $ddc0 ; $4316
-	call Func_09_460a ; $4319
+	call LoadObjTemplate_09 ; $4319
 	ret ; $431c
 Func_09_431d:
 	ld hl, $4327 ; $431d
@@ -341,7 +342,7 @@ Func_09_4367:
 Func_09_4371:
 	ld hl, $4385 ; $4371
 	ld bc, $ddb0 ; $4374
-	call Func_09_460a ; $4377
+	call LoadObjTemplate_09 ; $4377
 	ret ; $437a
 Func_09_437b:
 	ld hl, $4385 ; $437b
@@ -447,7 +448,7 @@ Func_09_45f2:
 	ld [hl], d ; $45f6
 	ret ; $45f7
 	INCBIN "data/bank_009/d_45f8.bin" ; $45f8, 18 bytes
-Func_09_460a:
+LoadObjTemplate_09:
 	push hl ; $460a
 	ld hl, $0000 ; $460b
 	add hl, bc ; $460e

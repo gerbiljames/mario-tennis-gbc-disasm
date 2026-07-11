@@ -3348,6 +3348,7 @@ Func_07_5a43:
 	ld a, [hl] ; $5a4d
 	pop hl ; $5a4e
 	ret ; $5a4f
+CharSpriteSetTable:
 	INCBIN "data/bank_007/d_5a50.bin" ; $5a50, 32 bytes
 Func_07_5a70:
 	push de ; $5a70

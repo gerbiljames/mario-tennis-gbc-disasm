@@ -53,7 +53,7 @@ FarPtr_04_2c:
 FarPtr_04_2e:
 	dw Func_04_4c0b ; $402e
 FarPtr_04_30:
-	dw Func_04_4c1d ; $4030
+	dw LookupTileId_04 ; $4030
 Func_04_4032:
 	ld a, $04 ; $4032
 	ldh [$ff96], a ; $4034
@@ -1674,9 +1674,9 @@ Label_04_4c12:
 	pop hl ; $4c1a
 	pop bc ; $4c1b
 	ret ; $4c1c
-Func_04_4c1d:
+LookupTileId_04:
 	push hl ; $4c1d
-	ld hl, $4c29 ; $4c1e
+	ld hl, TileIdLookup_04_4c29 ; $4c1e
 	add a, l ; $4c21
 	ld l, a ; $4c22
 	jr nc, Label_04_4c26 ; $4c23
@@ -1685,6 +1685,7 @@ Label_04_4c26:
 	ld a, [hl] ; $4c26
 	pop hl ; $4c27
 	ret ; $4c28
+TileIdLookup_04_4c29:
 	INCBIN "data/bank_004/d_4c29.bin" ; $4c29, 32 bytes
 Func_04_4c49:
 	ld a, e ; $4c49

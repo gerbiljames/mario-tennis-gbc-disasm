@@ -334,15 +334,15 @@ Func_3e_459b:
 	ld hl, $45ef ; $45d0
 	ld d, $04 ; $45d3
 	ld e, $01 ; $45d5
-	call Func_00_05b0 ; $45d7
+	call LoadPaletteShadow ; $45d7
 	ld hl, $45f7 ; $45da
 	ld d, $06 ; $45dd
 	ld e, $01 ; $45df
-	call Func_00_05b0 ; $45e1
+	call LoadPaletteShadow ; $45e1
 	ld hl, $45ff ; $45e4
 	ld d, $07 ; $45e7
 	ld e, $01 ; $45e9
-	call Func_00_05b0 ; $45eb
+	call LoadPaletteShadow ; $45eb
 	ret ; $45ee
 	INCBIN "data/bank_03e/d_45ef.bin" ; $45ef, 24 bytes
 Func_3e_4607:
@@ -837,7 +837,7 @@ Label_3e_4a69:
 	ld h, [hl] ; $4a6a
 	ld l, a ; $4a6b
 	ld de, $0501 ; $4a6c
-	call Func_00_05b0 ; $4a6f
+	call LoadPaletteShadow ; $4a6f
 	pop hl ; $4a72
 	pop de ; $4a73
 	pop bc ; $4a74
@@ -947,7 +947,7 @@ Label_3e_4b6b:
 	ld [hl], d ; $4b73
 	ld hl, $d800 ; $4b74
 	ld de, $0301 ; $4b77
-	call Func_00_05b0 ; $4b7a
+	call LoadPaletteShadow ; $4b7a
 	pop af ; $4b7d
 	ldh [$ff96], a ; $4b7e
 	ldh [rWBK], a ; $4b80
@@ -1285,7 +1285,7 @@ Label_3e_4e68:
 	ld [hl], d ; $4e70
 	ld hl, $d810 ; $4e71
 	ld de, $0401 ; $4e74
-	call Func_00_05b0 ; $4e77
+	call LoadPaletteShadow ; $4e77
 	pop af ; $4e7a
 	ldh [$ff96], a ; $4e7b
 	ldh [rWBK], a ; $4e7d
@@ -1505,7 +1505,7 @@ Label_3e_5041:
 	ld h, [hl] ; $5042
 	ld l, a ; $5043
 	ld de, $0401 ; $5044
-	call Func_00_05b0 ; $5047
+	call LoadPaletteShadow ; $5047
 	ret ; $504a
 	INCBIN "data/bank_03e/d_504b.bin" ; $504b, 34 bytes
 Func_3e_506d:
@@ -1879,7 +1879,7 @@ Label_3e_5329:
 	ld h, [hl] ; $532a
 	ld l, a ; $532b
 	ld de, $0401 ; $532c
-	call Func_00_05b0 ; $532f
+	call LoadPaletteShadow ; $532f
 	ret ; $5332
 	INCBIN "data/bank_03e/d_5333.bin" ; $5333, 34 bytes
 Func_3e_5355:
@@ -2116,7 +2116,7 @@ Func_3e_550d:
 	farcall FarPtr_39_10 ; $554b
 	ld hl, $555b ; $554e
 	ld de, $0901 ; $5551
-	call Func_00_05b0 ; $5554
+	call LoadPaletteShadow ; $5554
 	farcall FarPtr_39_02 ; $5557
 	ret ; $555a
 	INCBIN "data/bank_03e/d_555b.bin" ; $555b, 8 bytes
@@ -2336,7 +2336,7 @@ Func_3e_5696:
 	farcall FarPtr_39_10 ; $56f4
 	ld hl, $555b ; $56f7
 	ld de, $0901 ; $56fa
-	call Func_00_05b0 ; $56fd
+	call LoadPaletteShadow ; $56fd
 	farcall FarPtr_39_02 ; $5700
 	ret ; $5703
 Func_3e_5704:
@@ -3354,7 +3354,7 @@ Label_3e_5fe7:
 	ld h, [hl] ; $5fe8
 	ld l, a ; $5fe9
 	ld de, $0401 ; $5fea
-	call Func_00_05b0 ; $5fed
+	call LoadPaletteShadow ; $5fed
 	ret ; $5ff0
 	INCBIN "data/bank_03e/d_5ff1.bin" ; $5ff1, 236 bytes
 Func_3e_60dd:
@@ -3916,7 +3916,7 @@ Label_3e_68cf:
 	ld h, [hl] ; $68d0
 	ld l, a ; $68d1
 	ld de, $0401 ; $68d2
-	call Func_00_05b0 ; $68d5
+	call LoadPaletteShadow ; $68d5
 	ret ; $68d8
 	INCBIN "data/bank_03e/d_68d9.bin" ; $68d9, 129 bytes
 Func_3e_695a:

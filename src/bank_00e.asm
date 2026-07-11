@@ -3573,7 +3573,7 @@ Func_0e_7150:
 	push af ; $7152
 	ld hl, $72ce ; $7153
 	ld de, $0901 ; $7156
-	call Func_00_05b0 ; $7159
+	call LoadPaletteShadow ; $7159
 	ld hl, $72e0 ; $715c
 	ld de, $a000 ; $715f
 	ld c, $18 ; $7162

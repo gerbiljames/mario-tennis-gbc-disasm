@@ -746,7 +746,7 @@ Label_00_0577:
 Label_00_0594:
 	ret ; $0594
 	INCBIN "data/bank_000/d_0595.bin" ; $0595, 27 bytes
-Func_00_05b0:
+LoadPaletteShadow:
 	ldh a, [$ffbc] ; $05b0
 	and a, a ; $05b2
 	jr nz, Func_00_05e1 ; $05b3

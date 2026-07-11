@@ -157,7 +157,7 @@ Label_17_46aa:
 	ld [hl], d ; $46b2
 	ld hl, $d830 ; $46b3
 	ld de, $0201 ; $46b6
-	call Func_00_05b0 ; $46b9
+	call LoadPaletteShadow ; $46b9
 	pop af ; $46bc
 	ldh [$ff96], a ; $46bd
 	ldh [rWBK], a ; $46bf
@@ -573,7 +573,7 @@ Label_17_4aba:
 Func_17_4b0d:
 	ld hl, $5567 ; $4b0d
 	ld de, $0803 ; $4b10
-	call Func_00_05b0 ; $4b13
+	call LoadPaletteShadow ; $4b13
 	ret ; $4b16
 CourtDiagramTiles:
 	INCBIN "data/bank_017/lz_4b17.bin" ; $4b17, 590 bytes
@@ -3414,7 +3414,7 @@ Label_17_711e:
 	sound $5f ; $711e
 	ld hl, $755e ; $7120
 	call Func_00_1bcb ; $7123
-	ld hl, $7570 ; $7126
+	ld hl, RulesScreenTiles ; $7126
 	call Func_00_1bcb ; $7129
 	ld a, $01 ; $712c
 	ld [$dc03], a ; $712e
@@ -3427,7 +3427,7 @@ Label_17_713c:
 	sound $62 ; $713c
 	ld hl, $755e ; $713e
 	call Func_00_1bcb ; $7141
-	ld hl, $7570 ; $7144
+	ld hl, RulesScreenTiles ; $7144
 	call Func_00_1bcb ; $7147
 	ld a, $ff ; $714a
 	ld [$dc02], a ; $714c

@@ -183,7 +183,7 @@ Func_39_407e:
 	call CopyDataFromBank ; $40e8
 	ld hl, $d000 ; $40eb
 	ld de, $0008 ; $40ee
-	call Func_00_05b0 ; $40f1
+	call LoadPaletteShadow ; $40f1
 	ret ; $40f4
 	INCBIN "data/bank_039/d_40f5.bin" ; $40f5, 560 bytes
 Func_39_4325:
@@ -337,7 +337,7 @@ Func_39_44d3:
 	call Func_00_0480 ; $44e9
 	ld hl, $4516 ; $44ec
 	ld de, $0801 ; $44ef
-	call Func_00_05b0 ; $44f2
+	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
 	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 58 bytes
 Func_39_4530:
@@ -430,7 +430,7 @@ Func_39_457f:
 	add hl, de ; $4591
 	ld d, b ; $4592
 	ld e, $01 ; $4593
-	call Func_00_05b0 ; $4595
+	call LoadPaletteShadow ; $4595
 	ret ; $4598
 	INCBIN "data/bank_039/d_4599.bin" ; $4599, 242 bytes
 Func_39_468b:
@@ -592,14 +592,14 @@ Func_39_4b3a:
 	ld d, a ; $4b3e
 	ld e, $01 ; $4b3f
 	ld hl, $4b65 ; $4b41
-	call Func_00_05b0 ; $4b44
+	call LoadPaletteShadow ; $4b44
 	pop bc ; $4b47
 	ld a, b ; $4b48
 	add a, $08 ; $4b49
 	ld d, a ; $4b4b
 	ld e, $01 ; $4b4c
 	ld hl, $4b65 ; $4b4e
-	call Func_00_05b0 ; $4b51
+	call LoadPaletteShadow ; $4b51
 	ret ; $4b54
 	INCBIN "data/bank_039/d_4b55.bin" ; $4b55, 24 bytes
 Func_39_4b6d:
@@ -723,7 +723,7 @@ Func_39_4c38:
 	call CopyDataFromBank ; $4c99
 	ld hl, $d000 ; $4c9c
 	ld de, $0008 ; $4c9f
-	call Func_00_05b0 ; $4ca2
+	call LoadPaletteShadow ; $4ca2
 	pop af ; $4ca5
 	ldh [$ff96], a ; $4ca6
 	ldh [rWBK], a ; $4ca8
@@ -1138,7 +1138,7 @@ Func_39_6ec0:
 	ld hl, $6f08 ; $6eef
 	ld d, b ; $6ef2
 	ld e, $01 ; $6ef3
-	call Func_00_05b0 ; $6ef5
+	call LoadPaletteShadow ; $6ef5
 	ret ; $6ef8
 Label_39_6ef9:
 	push bc ; $6ef9

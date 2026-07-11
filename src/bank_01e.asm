@@ -128,10 +128,10 @@ Func_1e_40be:
 Func_1e_4105:
 	ld hl, $4c40 ; $4105
 	ld de, $0006 ; $4108
-	call Func_00_05b0 ; $410b
+	call LoadPaletteShadow ; $410b
 	ld hl, $4c40 ; $410e
 	ld de, $0801 ; $4111
-	call Func_00_05b0 ; $4114
+	call LoadPaletteShadow ; $4114
 	ld a, $01 ; $4117
 	ldh [$ff96], a ; $4119
 	ldh [rWBK], a ; $411b
@@ -1637,7 +1637,7 @@ Func_1e_54f5:
 Func_1e_551e:
 	ld hl, $5be1 ; $551e
 	ld de, $0003 ; $5521
-	call Func_00_05b0 ; $5524
+	call LoadPaletteShadow ; $5524
 	ld a, $01 ; $5527
 	ldh [$ff96], a ; $5529
 	ldh [rWBK], a ; $552b
@@ -1682,7 +1682,7 @@ Func_1e_551e:
 	call Func_00_0480 ; $5593
 	ld hl, $6495 ; $5596
 	ld de, $0801 ; $5599
-	call Func_00_05b0 ; $559c
+	call LoadPaletteShadow ; $559c
 	ld a, $01 ; $559f
 	ldh [$ff96], a ; $55a1
 	ldh [rWBK], a ; $55a3
@@ -4460,7 +4460,7 @@ Label_1e_7545:
 	ld hl, $7700 ; $7563
 	ld d, $00 ; $7566
 	ld e, $02 ; $7568
-	call Func_00_05b0 ; $756a
+	call LoadPaletteShadow ; $756a
 	pop af ; $756d
 	ldh [$ff96], a ; $756e
 	ldh [rWBK], a ; $7570
@@ -4478,10 +4478,10 @@ Label_1e_7545:
 	call Func_00_0480 ; $7590
 	ld hl, $7810 ; $7593
 	ld de, $0a01 ; $7596
-	call Func_00_05b0 ; $7599
+	call LoadPaletteShadow ; $7599
 	ld hl, $79e0 ; $759c
 	ld de, $0901 ; $759f
-	call Func_00_05b0 ; $75a2
+	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
 	INCBIN "data/bank_01e/d_75a6.bin" ; $75a6, 1090 bytes
 Func_1e_79e8:

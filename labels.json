@@ -5,6 +5,7 @@
  "0x024e": "ClearBothVRAMBanks",
  "0x027f": "LoadBGPaletteData",
  "0x0287": "LoadOBJPaletteData",
+ "0x05b0": "LoadPaletteShadow",
  "0x02a3": "SwitchCPUSpeed",
  "0x02eb": "ReadJoypad",
  "0x0346": "DisableLCDSafely",
@@ -263,5 +264,10 @@
  "0x1b7a58": "MarioMiniGamesTiles",
  "0x1bbb08": "FetchDialogueText_6e",
  "0x1bbb10": "FetchShortText_6e",
- "0x1bbb18": "FetchText_6e"
+ "0x1bbb18": "FetchText_6e",
+ "0x10c1d": "LookupTileId_04",
+ "0x10c29": "TileIdLookup_04_4c29",
+ "0x241bc": "ObjTemplates_09_41bc",
+ "0x2460a": "LoadObjTemplate_09",
+ "0x1aca58": "Palettes_6b_4a58"
 }

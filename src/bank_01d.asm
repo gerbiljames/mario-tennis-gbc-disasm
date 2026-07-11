@@ -42,7 +42,7 @@ Func_1d_4016:
 	call Func_1d_5be3 ; $4031
 	ld hl, $6334 ; $4034
 	ld de, $0d01 ; $4037
-	call Func_00_05b0 ; $403a
+	call LoadPaletteShadow ; $403a
 	ld a, $01 ; $403d
 	ldh [$ff96], a ; $403f
 	ldh [rWBK], a ; $4041
@@ -3516,7 +3516,7 @@ Func_1d_6977:
 	call Func_00_0480 ; $6a27
 	ld hl, $788f ; $6a2a
 	ld de, $0e02 ; $6a2d
-	call Func_00_05b0 ; $6a30
+	call LoadPaletteShadow ; $6a30
 	ld a, $01 ; $6a33
 	ldh [$ff96], a ; $6a35
 	ldh [rWBK], a ; $6a37

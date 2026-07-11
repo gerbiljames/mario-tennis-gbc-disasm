@@ -247,7 +247,7 @@ Func_01_5050:
 	push hl ; $5053
 	ld hl, $5010 ; $5054
 	ld de, $0001 ; $5057
-	call Func_00_05b0 ; $505a
+	call LoadPaletteShadow ; $505a
 	pop hl ; $505d
 	pop de ; $505e
 	pop bc ; $505f
@@ -339,7 +339,7 @@ Func_01_5176:
 	push hl ; $5179
 	ld hl, $87c8 ; $517a
 	ld de, $0305 ; $517d
-	call Func_00_05b0 ; $5180
+	call LoadPaletteShadow ; $5180
 	pop hl ; $5183
 	pop de ; $5184
 	pop bc ; $5185
@@ -352,7 +352,7 @@ Func_01_5188:
 	push hl ; $518b
 	ld hl, $87c8 ; $518c
 	ld de, $0b05 ; $518f
-	call Func_00_05b0 ; $5192
+	call LoadPaletteShadow ; $5192
 	pop hl ; $5195
 	pop de ; $5196
 	pop bc ; $5197
@@ -369,7 +369,7 @@ Func_01_519a:
 	sub a, l ; $51a3
 	ld h, a ; $51a4
 	ld e, $01 ; $51a5
-	call Func_00_05b0 ; $51a7
+	call LoadPaletteShadow ; $51a7
 	ret ; $51aa
 	INCBIN "data/bank_001/d_51ab.bin" ; $51ab, 261 bytes
 	ds 256, $00 ; $52b0, fill

@@ -18,6 +18,7 @@ from pathlib import Path
 
 HWADDR_RE = re.compile(r"\$ff[0-9a-f]{2}\b")
 MEMADDR_RE = re.compile(r"\[\$([0-9a-f]{4})\]")
+LDIMM_RE = re.compile(r"^ld (hl|de|bc), \$([0-9a-f]{1,4})$")
 
 sys.path.insert(0, str(Path(__file__).parent))
 import lz
@@ -1073,8 +1074,23 @@ def build_labels(dis, overrides=None):
     return labels
 
 
-def render_operand(ins, off, labels, hwregs, ramnames):
+def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None):
     text = ins.text
+    # A 16-bit immediate load whose value points at a named data region is a
+    # pointer setup; inline the label. Bounded to data_labels (curated data
+    # offsets) so numeric constants that alias code addresses are untouched.
+    if data_labels and ins.target is None:
+        m = LDIMM_RE.match(text)
+        if m:
+            imm = int(m.group(2), 16)
+            base = (off // BANK_SIZE) * BANK_SIZE
+            flat = None
+            if imm < 0x4000:
+                flat = imm
+            elif base and imm < 0x8000:
+                flat = base + (imm - 0x4000)
+            if flat in data_labels:
+                return f"ld {m.group(1)}, {data_labels[flat]}"
     if "$ff" in text and hwregs:
         m = HWADDR_RE.search(text)
         if m:
@@ -1208,6 +1224,10 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
             prev_end = max(prev_end, src + length)
     Path(srcdir).parent.joinpath("include", "macros.inc").write_text(MACROS_INC)
 
+    # Curated data labels (named non-code offsets) whose address an immediate
+    # pointer load may reference by name.
+    operand_labels = {o: n for o, n in labels.items() if o not in dis.instrs}
+
     for bank in range(nbanks):
         base = bank * BANK_SIZE
         lines = ['INCLUDE "hardware.inc"', 'INCLUDE "macros.inc"']
@@ -1269,7 +1289,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                     note = dis.data_site_notes.get(off)
                     suffix = (f" -> DataPtr_{note[0]:02x}_{note[1]:02x}"
                               if note else "")
-                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames)} ; ${cpu:04x}{suffix}")
+                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels)} ; ${cpu:04x}{suffix}")
                 off += ins.size
             else:
                 run_start = off
@@ -1348,6 +1368,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                             lines.append(f"Text_{bank:02x}_{scpu:04x}:")
                             lines.append(f'\tINCLUDE "data/{blob}" ; ${scpu:04x}, {n} bytes')
                         else:
+                            if seg in labels:
+                                lines.append(f"{labels[seg]}:")
                             blob = f"bank_{bank:03x}/d_{scpu:04x}.bin"
                             lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
                         manifest.append((blob, seg, n))

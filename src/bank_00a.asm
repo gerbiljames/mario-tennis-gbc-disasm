@@ -2806,7 +2806,7 @@ Label_0a_531f:
 Func_0a_5337:
 	ld hl, $5341 ; $5337
 	ld de, $0b05 ; $533a
-	call Func_00_05b0 ; $533d
+	call LoadPaletteShadow ; $533d
 	ret ; $5340
 	INCBIN "data/bank_00a/d_5341.bin" ; $5341, 40 bytes
 Func_0a_5369:
@@ -3519,7 +3519,7 @@ Func_0a_585d:
 	call CopyDataFromBank ; $58f6
 	ld hl, $d010 ; $58f9
 	ld de, $0206 ; $58fc
-	call Func_00_05b0 ; $58ff
+	call LoadPaletteShadow ; $58ff
 	ld a, $06 ; $5902
 	ldh [$ff96], a ; $5904
 	ldh [rWBK], a ; $5906
@@ -4672,10 +4672,10 @@ Func_0a_62f8:
 	call CopyDataFromBank ; $6381
 	ld hl, $d010 ; $6384
 	ld de, $0206 ; $6387
-	call Func_00_05b0 ; $638a
+	call LoadPaletteShadow ; $638a
 	ld hl, $d028 ; $638d
 	ld de, $0b01 ; $6390
-	call Func_00_05b0 ; $6393
+	call LoadPaletteShadow ; $6393
 	pop hl ; $6396
 	pop de ; $6397
 	pop bc ; $6398
