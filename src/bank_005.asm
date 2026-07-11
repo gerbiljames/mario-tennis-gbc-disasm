@@ -166,7 +166,7 @@ Func_05_409a:
 	push af ; $40a0
 	wram_bank $05 ; $40a1
 	call Func_05_5ca8 ; $40a7
-	ld hl, $d880 ; $40aa
+	ld hl, wShortTextBuffer ; $40aa
 Label_05_40ad:
 	ld a, [hl+] ; $40ad
 	ld [de], a ; $40ae
@@ -2348,14 +2348,14 @@ Label_05_519e:
 	INCBIN "data/bank_005/d_51a8.bin" ; $51a8, 64 bytes
 	push af ; $51e8
 	push bc ; $51e9
-	ld hl, $c900 ; $51ea
+	ld hl, wStoryModeNameOfMainCharacter ; $51ea
 	call Func_05_54cf ; $51ed
 	pop bc ; $51f0
 	pop af ; $51f1
 	ret ; $51f2
 	push af ; $51f3
 	push bc ; $51f4
-	ld hl, $c940 ; $51f5
+	ld hl, wStoryModeNameOfPartnerCharacter ; $51f5
 	call Func_05_54cf ; $51f8
 	pop bc ; $51fb
 	pop af ; $51fc
@@ -2425,7 +2425,7 @@ Label_05_5263:
 Func_05_5267:
 	push bc ; $5267
 	push hl ; $5268
-	ld hl, $c900 ; $5269
+	ld hl, wStoryModeNameOfMainCharacter ; $5269
 	ld b, $00 ; $526c
 Label_05_526e:
 	ld a, [hl+] ; $526e
@@ -2444,7 +2444,7 @@ Label_05_527b:
 Func_05_527f:
 	push bc ; $527f
 	push hl ; $5280
-	ld hl, $c940 ; $5281
+	ld hl, wStoryModeNameOfPartnerCharacter ; $5281
 	ld b, $00 ; $5284
 Label_05_5286:
 	ld a, [hl+] ; $5286
@@ -2479,7 +2479,7 @@ Func_05_5298:
 	ld hl, $0000 ; $52ae
 	add hl, bc ; $52b1
 	call Func_05_5ca8 ; $52b2
-	ld hl, $d880 ; $52b5
+	ld hl, wShortTextBuffer ; $52b5
 	ld b, $00 ; $52b8
 Label_05_52ba:
 	ld a, [hl+] ; $52ba
@@ -2904,7 +2904,7 @@ Label_05_561a:
 	and a, $1f ; $5639
 	ld e, a ; $563b
 	pop hl ; $563c
-	ld hl, $c600 ; $563d
+	ld hl, wTextBuffer ; $563d
 	call Func_05_4e23 ; $5640
 Label_05_5643:
 	pop hl ; $5643
@@ -2926,7 +2926,7 @@ Func_05_5654:
 	push bc ; $5655
 	push de ; $5656
 	push hl ; $5657
-	ld hl, $c600 ; $5658
+	ld hl, wTextBuffer ; $5658
 	ld a, [$d84f] ; $565b
 	or a, a ; $565e
 	jr z, Label_05_5667 ; $565f
@@ -3081,7 +3081,7 @@ Func_05_5745:
 	push af ; $5745
 	push de ; $5746
 	push hl ; $5747
-	ld hl, $c600 ; $5748
+	ld hl, wTextBuffer ; $5748
 	xor a, a ; $574b
 	ld b, a ; $574c
 	ld d, a ; $574d
@@ -3971,7 +3971,7 @@ Label_05_5df3:
 	ld c, a ; $5e02
 	ld [$c362], a ; $5e03
 	call Func_05_5c18 ; $5e06
-	ld hl, $c600 ; $5e09
+	ld hl, wTextBuffer ; $5e09
 	xor a, a ; $5e0c
 	ld [$cb78], a ; $5e0d
 	ld a, [$d820] ; $5e10
@@ -4165,7 +4165,7 @@ Func_05_5f52:
 	ld c, a ; $5f70
 	ld [$c362], a ; $5f71
 	call Func_05_5c18 ; $5f74
-	ld hl, $c600 ; $5f77
+	ld hl, wTextBuffer ; $5f77
 	pop af ; $5f7a
 	wram_bank ; $5f7b
 Label_05_5f7f:
@@ -4312,7 +4312,7 @@ Func_05_6055:
 	push de ; $6057
 	push hl ; $6058
 	call Func_05_5c18 ; $6059
-	ld hl, $c600 ; $605c
+	ld hl, wTextBuffer ; $605c
 	call Func_05_600e ; $605f
 	pop hl ; $6062
 	pop de ; $6063
@@ -4453,7 +4453,7 @@ Label_05_620f:
 	cp a, $ff ; $6217
 	jr z, Label_05_6224 ; $6219
 	call Func_05_5c18 ; $621b
-	ld hl, $c600 ; $621e
+	ld hl, wTextBuffer ; $621e
 	call Func_05_4e23 ; $6221
 Label_05_6224:
 	pop af ; $6224
@@ -5453,11 +5453,11 @@ Func_05_6d3b:
 	add hl, de ; $6d4c
 	or a, a ; $6d4d
 	jr nz, Label_05_6d58 ; $6d4e
-	ld de, $c600 ; $6d50
+	ld de, wTextBuffer ; $6d50
 	ld bc, $0180 ; $6d53
 	jr Label_05_6d5e ; $6d56
 Label_05_6d58:
-	ld de, $d880 ; $6d58
+	ld de, wShortTextBuffer ; $6d58
 	ld bc, $0020 ; $6d5b
 Label_05_6d5e:
 	call CopyMemoryBC ; $6d5e
@@ -7336,4 +7336,5 @@ Label_05_78e4:
 	pop de ; $78f0
 	pop bc ; $78f1
 	ret ; $78f2
-	INCBIN "data/bank_005/d_78f3.bin" ; $78f3, 1805 bytes
+	INCBIN "data/bank_005/d_78f3.bin" ; $78f3, 1773 bytes
+	ds 32, $ff ; $7fe0, fill

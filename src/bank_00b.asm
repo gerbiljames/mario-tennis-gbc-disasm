@@ -170,7 +170,7 @@ Func_0b_41c3:
 	ld a, [$c2e1] ; $41c3
 	or a, a ; $41c6
 	ret z ; $41c7
-	ld a, [$c4d8] ; $41c8
+	ld a, [wPointOutcome] ; $41c8
 	or a, a ; $41cb
 	ret nz ; $41cc
 	ld hl, $c2e0 ; $41cd
@@ -189,7 +189,7 @@ Func_0b_41e6:
 	farcall FarPtr_08_56 ; $41ec
 	jr z, Label_0b_41f6 ; $41ef
 	xor a, a ; $41f1
-	ld [$c78c], a ; $41f2
+	ld [wTargetZoneEnabled], a ; $41f2
 	ret ; $41f5
 Label_0b_41f6:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $41f6
@@ -233,7 +233,7 @@ Func_0b_43a6:
 	ld h, [hl] ; $43b0
 	ld l, a ; $43b1
 	farcall FarPtr_08_2e ; $43b2
-	ld a, [$c4d8] ; $43b5
+	ld a, [wPointOutcome] ; $43b5
 	cp a, $06 ; $43b8
 	jr z, Label_0b_43dc ; $43ba
 	cp a, $07 ; $43bc
@@ -527,7 +527,7 @@ Label_0b_4824:
 	xor a, a ; $5c22
 	ld [$c2ed], a ; $5c23
 	ld a, $01 ; $5c26
-	ld [$c78c], a ; $5c28
+	ld [wTargetZoneEnabled], a ; $5c28
 	ld hl, $5cd7 ; $5c2b
 	call Func_0b_4191 ; $5c2e
 	ld a, $40 ; $5c31
@@ -548,7 +548,7 @@ Label_0b_5c49:
 	ret ; $5c4d
 	INCBIN "data/bank_00b/d_5c4e.bin" ; $5c4e, 4 bytes
 	call Func_0b_5d48 ; $5c52
-	ld a, [$c4d8] ; $5c55
+	ld a, [wPointOutcome] ; $5c55
 	cp a, $04 ; $5c58
 	jr z, Label_0b_5c62 ; $5c5a
 	cp a, $05 ; $5c5c
@@ -690,7 +690,7 @@ Label_0b_5d7f:
 	dw Label_0b_5db5 ; $5d86 jumptable
 	dw Label_0b_5db7 ; $5d88 jumptable
 Label_0b_5d8a:
-	ld a, [$c4d8] ; $5d8a
+	ld a, [wPointOutcome] ; $5d8a
 	ld hl, $5da9 ; $5d8d
 	add a, l ; $5d90
 	ld l, a ; $5d91
@@ -701,7 +701,7 @@ Label_0b_5d95:
 	ld a, a ; $5d96
 	ld b, $00 ; $5d97
 	call Func_0b_4534 ; $5d99
-	ld a, [$c4d8] ; $5d9c
+	ld a, [wPointOutcome] ; $5d9c
 	ld hl, $46f1 ; $5d9f
 	add a, l ; $5da2
 	ld l, a ; $5da3
@@ -729,7 +729,7 @@ Label_0b_5db9:
 	dw Label_0b_5def ; $5dc0 jumptable
 	dw Label_0b_5df1 ; $5dc2 jumptable
 Label_0b_5dc4:
-	ld a, [$c4d8] ; $5dc4
+	ld a, [wPointOutcome] ; $5dc4
 	ld hl, $5de3 ; $5dc7
 	add a, l ; $5dca
 	ld l, a ; $5dcb
@@ -740,7 +740,7 @@ Label_0b_5dcf:
 	ld a, a ; $5dd0
 	ld b, $00 ; $5dd1
 	call Func_0b_4534 ; $5dd3
-	ld a, [$c4d8] ; $5dd6
+	ld a, [wPointOutcome] ; $5dd6
 	ld hl, $46fb ; $5dd9
 	add a, l ; $5ddc
 	ld l, a ; $5ddd
@@ -768,7 +768,7 @@ Label_0b_5df3:
 	dw Label_0b_5e55 ; $5dfa jumptable
 	dw Label_0b_5e83 ; $5dfc jumptable
 Label_0b_5dfe:
-	ld a, [$c4d8] ; $5dfe
+	ld a, [wPointOutcome] ; $5dfe
 	ld hl, $5e27 ; $5e01
 	add a, l ; $5e04
 	ld l, a ; $5e05
@@ -779,7 +779,7 @@ Label_0b_5e09:
 	ld a, a ; $5e0a
 	ld b, $00 ; $5e0b
 	call Func_0b_4534 ; $5e0d
-	ld a, [$c4d8] ; $5e10
+	ld a, [wPointOutcome] ; $5e10
 	ld hl, $5e1d ; $5e13
 	add a, l ; $5e16
 	ld l, a ; $5e17
@@ -812,7 +812,7 @@ Label_0b_5e55:
 	cp a, $01 ; $5e58
 	ld a, $00 ; $5e5a
 	ret nz ; $5e5c
-	ld a, [$c4d8] ; $5e5d
+	ld a, [wPointOutcome] ; $5e5d
 	cp a, $04 ; $5e60
 	jr z, Label_0b_5e75 ; $5e62
 	ld a, $2e ; $5e64
@@ -860,7 +860,7 @@ Label_0b_5e8d:
 	ld a, $0a ; $6b98
 	ld [$c2e0], a ; $6b9a
 	xor a, a ; $6b9d
-	ld [$c78c], a ; $6b9e
+	ld [wTargetZoneEnabled], a ; $6b9e
 	ld hl, $6c5f ; $6ba1
 	call Func_0b_4191 ; $6ba4
 	xor a, a ; $6ba7
@@ -887,12 +887,12 @@ Label_0b_6bc7:
 	dec [hl] ; $6bd3
 	ret nz ; $6bd4
 	ld a, $01 ; $6bd5
-	ld [$c78c], a ; $6bd7
+	ld [wTargetZoneEnabled], a ; $6bd7
 	ld hl, $6bd0 ; $6bda
 	call Func_00_1bcb ; $6bdd
 	ret ; $6be0
 	call Func_0b_6cd0 ; $6be1
-	ld a, [$c4d8] ; $6be4
+	ld a, [wPointOutcome] ; $6be4
 	cp a, $05 ; $6be7
 	jr z, Label_0b_6bed ; $6be9
 	jr Label_0b_6bf1 ; $6beb
@@ -1029,7 +1029,7 @@ Label_0b_6d05:
 	dw Label_0b_6d3b ; $6d0c jumptable
 	dw Label_0b_6d3d ; $6d0e jumptable
 Label_0b_6d10:
-	ld a, [$c4d8] ; $6d10
+	ld a, [wPointOutcome] ; $6d10
 	ld hl, $6d2f ; $6d13
 	add a, l ; $6d16
 	ld l, a ; $6d17
@@ -1040,7 +1040,7 @@ Label_0b_6d1b:
 	ld a, a ; $6d1c
 	ld b, $00 ; $6d1d
 	call Func_0b_4534 ; $6d1f
-	ld a, [$c4d8] ; $6d22
+	ld a, [wPointOutcome] ; $6d22
 	ld hl, $46fb ; $6d25
 	add a, l ; $6d28
 	ld l, a ; $6d29
@@ -1068,7 +1068,7 @@ Label_0b_6d3f:
 	dw Label_0b_6d75 ; $6d46 jumptable
 	dw Label_0b_6d9c ; $6d48 jumptable
 Label_0b_6d4a:
-	ld a, [$c4d8] ; $6d4a
+	ld a, [wPointOutcome] ; $6d4a
 	ld hl, $6d69 ; $6d4d
 	add a, l ; $6d50
 	ld l, a ; $6d51
@@ -1079,7 +1079,7 @@ Label_0b_6d55:
 	ld a, a ; $6d56
 	ld b, $00 ; $6d57
 	call Func_0b_4534 ; $6d59
-	ld a, [$c4d8] ; $6d5c
+	ld a, [wPointOutcome] ; $6d5c
 	ld hl, $46f1 ; $6d5f
 	add a, l ; $6d62
 	ld l, a ; $6d63

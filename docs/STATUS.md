@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~117.6K instructions / 247,379 bytes of proven code (11.8% of the 2 MiB ROM)
+**~117.2K instructions / 248,113 bytes of proven code (11.8% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -46,7 +46,7 @@ bank-local helper, dispatched via farcall slot 0. Confirmed: an OAM-frame
 loader in $1f/$25/$26/$30-$37/$5e/$6e (one bank per character's animation
 frames); `infer_twin_tables()` fingerprints slot-0 targets by opcode shape.
 
-Largest code banks: $08 (match engine, 96.4% code), $05, $00, $13 (story
+Largest code banks: $08 (match engine, 99.6% code), $05, $00, $13 (story
 engine), $6b, $03 (save engine), $0a, $07.
 
 ### Data banks — carved and named
@@ -157,14 +157,18 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 395 of 14,889 labels** (`tools/progress.py`; the rest
-are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 52 named routines
+**Human-named symbols: 439 of 14,892 labels** (`tools/progress.py`; the rest
+are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
-decompressor, sound engine entries, SoftReset, interrupt handlers. Bank 3:
-save engine (23 named, docs/save_format.md). RAM: docs/ram_map.md (129
-RetroAchievements-sourced entries plus 4 project-identified: `hWramBank`,
-`wMatchIsDoubles`, `wOnCourtCharCount`, `wOnCourtCharCountMinus1`). Data
-banks: character/sound/walk-sprite/graphics streams named as above.
+decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
+handlers. Bank 3: save engine (23 named, docs/save_format.md). RAM:
+docs/ram_map.md (129 RetroAchievements-sourced entries plus 32
+project-identified: the match ball position, renderer effect/marker state,
+mode-hook table, `hWramBank`, `wMatchIsDoubles`, `wOnCourtCharCount`).
+`disasm.py` now also inlines curated RAM symbols into `ld hl/de/bc, imm`
+pointer setups (same curated-only rule as data labels), so 16-bit fields
+read via pointer render symbolically. Data banks:
+character/sound/walk-sprite/graphics streams named as above.
 
 The match engine's **per-character WRAM-bank structs are mapped**
 (docs/ram_map.md "Match engine per-character structs"): banks 4-7 each hold
@@ -176,6 +180,20 @@ this: the walk-to-target loop (`MoveCharTowardTarget`/`CheckCharNearTarget`),
 char state/facing/placement setters, and the point-end doubles-spacing chain
 (`StartPointEndReactions` → `SpreadTeammateTargets` → `ComputePairSpread`,
 which spreads a team pair's target depths $200 apart, min $100 from the net).
+
+The **match sprite renderer is mapped** (docs/ram_map.md "Match renderer
+sprite slots"): everything on court funnels through 4-byte slot records
+`[tile, attr, Y, X]` ($ff = empty) cleared per frame by `ClearSpriteSlots` —
+ball / ball shadow / trail slots at `$de00+` (bank 4), per-character sprite +
+airborne-shadow + standing-shadow slots at `$df80+` — flushed back-to-front
+by `DrawActorsByDepth` using the `$df96` depth keys. The ball keeps a
+6-record position history ring at `$dd00` for the trail afterimages
+(`BallTrailPalettes` at $50dc colors them by shot type). Direct-draw effects
+(hit spark, special-shot flash, bounce dust, lob landing marker, training
+target zone, off-screen arrows) and the per-mode draw hook
+(`SetModeHookTable`/`CallModeHook`) are named too — 38 routines in this
+pass, plus the bank-0 OAM queuers (`QueueSprite`/`QueueSprite16`/
+`QueueSpriteTemplate`) and `TickTimer`.
 
 Bank $08's 39 embedded blobs were classified (data table / stranded code /
 padding). The ~281 bytes of code stranded behind computed jumps were recovered
@@ -190,11 +208,27 @@ rendered `bytes:4` as a 25×4 grid) got their stride from the byte layout.
 `$7a9d` was split into its two structures — a 16-entry `dw` pointer table and
 its 32-byte payload (4×8-byte rows; the pointers land on rows +0/+8/+16/+24) —
 by teaching `disasm.py` to end a data segment at any mid-run `data_tables.json`
-key, so one region can hold back-to-back tables. Bank $08 is now down to 4 raw
-blobs, all padding (three 1-byte, one 61-byte `$ff` run).
+key, so one region can hold back-to-back tables.
+
+**Bank $08 now has zero data blobs — every byte is committed source.** The
+last four INCBINs fell to three fixes: (1) a 672-byte region at `$4979` that
+had been *misdecoded as code* was reclassified — the rst $00 jumptable at
+`$4836` has only 4 live entries (index = char count - 1), but the parser had
+extended it over the 8 dead pointer bytes at `$483f`, seeding descent into
+data. `parse_jumptables` now stops at any declared `data_tables.json` offset,
+and the region renders as the **court-position tables**: `GamePositionPtrs`/
+`TiebreakPositionPtrs` (per-char-count `dw`, read via split add/adc at
+`$480c`/`$48cd`) into `GamePositionTables` (3 blocks x 4 games x 8-byte
+records) and `TiebreakPositionTables` (3 blocks x 24 points x 8 bytes); each
+record is 4 per-char `$df0a` position codes + 4 per-char `$df09` serve/side
+codes, applied by `AssignCourtPositions`/`LoadPositionRecord`. (2) Two
+stranded `ret` bytes (`$6957`, `$6d26`) joined the static code seeds. (3) A
+$ff run that reaches the bank end is now emitted as `ds` fill regardless of
+length (previously needed 64+; this also converted short trailing fills in
+13 other banks).
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
-730 still-unnamed routines; name the now-structured tables, and confirm
+693 still-unnamed routines; name the now-structured tables, and confirm
 `$5dc4`'s semantics via a runtime trace), bank $13 (biggest story bank),
 bank $1e, sound-command enum for the 451 `sound $xx` sites, WRAM map expansion
 from ram_map gaps.

@@ -607,7 +607,7 @@ Label_09_46f0:
 	ld a, [hl+] ; $4711
 	ld h, [hl] ; $4712
 	ld l, a ; $4713
-	call Func_00_1e9d ; $4714
+	call QueueSpriteTemplate ; $4714
 	ret ; $4717
 Label_09_4718:
 	ld hl, $ddf1 ; $4718
@@ -639,7 +639,7 @@ Label_09_4718:
 	ld a, [hl+] ; $4751
 	ld h, [hl] ; $4752
 	ld l, a ; $4753
-	call Func_00_1e9d ; $4754
+	call QueueSpriteTemplate ; $4754
 	ret ; $4757
 	ld hl, $ddf1 ; $4758
 	set 0, [hl] ; $475b

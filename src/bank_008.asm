@@ -17,17 +17,17 @@ FarPtr_08_08:
 FarPtr_08_0a:
 	dw Func_08_41f7 ; $400a
 FarPtr_08_0c:
-	dw Func_08_684a ; $400c
+	dw InitChar ; $400c
 FarPtr_08_0e:
-	dw Func_08_630e ; $400e
+	dw ClearSpriteSlots ; $400e
 FarPtr_08_10:
-	dw Func_08_650a ; $4010
+	dw DrawCharSprite ; $4010
 FarPtr_08_12:
 	dw Func_08_7791 ; $4012
 FarPtr_08_14:
 	dw Func_08_7621 ; $4014
 FarPtr_08_16:
-	dw Func_08_7672 ; $4016
+	dw BuildCharSpriteSlots ; $4016
 FarPtr_08_18:
 	dw Func_08_75e8 ; $4018
 FarPtr_08_1a:
@@ -41,7 +41,7 @@ FarPtr_08_20:
 FarPtr_08_22:
 	dw SetCharPosAndTarget ; $4022
 FarPtr_08_24:
-	dw Func_08_5189 ; $4024
+	dw SetBallTrailColor ; $4024
 FarPtr_08_26:
 	dw Func_08_45a9 ; $4026
 FarPtr_08_28:
@@ -57,7 +57,7 @@ FarPtr_08_30:
 FarPtr_08_32:
 	dw Func_08_5a51 ; $4032
 FarPtr_08_34:
-	dw Func_08_5383 ; $4034
+	dw StartBounceEffect ; $4034
 FarPtr_08_36:
 	dw Func_08_43f6 ; $4036
 FarPtr_08_38:
@@ -77,7 +77,7 @@ FarPtr_08_44:
 FarPtr_08_46:
 	dw Func_08_59bb ; $4046
 FarPtr_08_48:
-	dw Func_08_671a ; $4048
+	dw SetModeHookTable ; $4048
 FarPtr_08_4a:
 	dw Func_08_6728 ; $404a
 FarPtr_08_4c:
@@ -122,7 +122,7 @@ Func_08_4070:
 	ld hl, $c4e0 ; $4074
 	ld c, $02 ; $4077
 	call ClearMemory16 ; $4079
-	ld hl, $c8f0 ; $407c
+	ld hl, wMatchTypeNumberOfSets ; $407c
 	ld c, $01 ; $407f
 	call ClearMemory16 ; $4081
 	ld hl, $c780 ; $4084
@@ -149,7 +149,7 @@ Func_08_40ab:
 	ld a, [$c8a7] ; $40b9
 	and a, a ; $40bc
 	jr nz, Label_08_40c7 ; $40bd
-	ld hl, $c8c0 ; $40bf
+	ld hl, wCharacter1ServiceAces ; $40bf
 	ld c, $03 ; $40c2
 	call ClearMemory16 ; $40c4
 Label_08_40c7:
@@ -228,10 +228,10 @@ Func_08_4145:
 	call Func_08_5e28 ; $415e
 	wram_bank $04 ; $4161
 	call Func_08_511c ; $4167
-	call Func_08_687f ; $416a
+	call InitAllChars ; $416a
 	farcall FarPtr_09_00 ; $416d
-	call Func_08_630e ; $4170
-	call Func_08_47e2 ; $4173
+	call ClearSpriteSlots ; $4170
+	call AssignCourtPositions ; $4173
 	xor a, a ; $4176
 	ld [$c4cd], a ; $4177
 	farcall FarPtr_09_04 ; $417a
@@ -284,23 +284,23 @@ Func_08_41f7:
 	ld a, [$c4c0] ; $41fd
 	and a, a ; $4200
 	jr nz, Label_08_4226 ; $4201
-	call Func_08_630e ; $4203
+	call ClearSpriteSlots ; $4203
 	call Func_08_61dc ; $4206
 	call UpdateAllChars ; $4209
-	call Func_08_427a ; $420c
+	call HandleBallHitEvent ; $420c
 	call Func_08_43d3 ; $420f
-	call Func_08_5153 ; $4212
+	call UpdateBallVisuals ; $4212
 	call Func_08_4242 ; $4215
 	call Func_08_4352 ; $4218
 	ld d, $00 ; $421b
-	call Func_08_66f1 ; $421d
+	call CallModeHook ; $421d
 	ld hl, $0902 ; $4220
 	call Func_00_07c5 ; $4223
 Label_08_4226:
 	ld a, [$c4c1] ; $4226
 	and a, a ; $4229
 	jr nz, Label_08_422f ; $422a
-	call Func_08_6429 ; $422c
+	call DrawActorsByDepth ; $422c
 Label_08_422f:
 	ld a, [$c4c0] ; $422f
 	and a, a ; $4232
@@ -310,7 +310,7 @@ Label_08_4238:
 	ld a, [$c4c1] ; $4238
 	and a, a ; $423b
 	jr nz, Label_08_4241 ; $423c
-	call Func_08_6481 ; $423e
+	call DrawMarkersAndShadows ; $423e
 Label_08_4241:
 	ret ; $4241
 Func_08_4242:
@@ -326,7 +326,7 @@ Label_08_4250:
 	ld a, [wRallyLength] ; $4250
 	cp a, $01 ; $4253
 	jr nz, Label_08_426e ; $4255
-	ld a, [$c4d8] ; $4257
+	ld a, [wPointOutcome] ; $4257
 	and a, a ; $425a
 	jr nz, Label_08_4262 ; $425b
 	ld a, $01 ; $425d
@@ -339,16 +339,16 @@ Label_08_4262:
 	call ForEachCharBank ; $426b
 Label_08_426e:
 	ld d, $06 ; $426e
-	call Func_08_66f1 ; $4270
+	call CallModeHook ; $4270
 	ret ; $4273
 	ld a, $05 ; $4274
 	call SetCharState ; $4276
 	ret ; $4279
-Func_08_427a:
+HandleBallHitEvent:
 	ld a, [$c4b7] ; $427a
 	and a, a ; $427d
 	ret z ; $427e
-	ld hl, $c4b6 ; $427f
+	ld hl, wRallyLength ; $427f
 	ld a, [hl] ; $4282
 	cp a, $64 ; $4283
 	jr nc, Label_08_4288 ; $4285
@@ -358,8 +358,8 @@ Label_08_4288:
 	ld [$c4b7], a ; $4289
 	ld [$c4bf], a ; $428c
 	ld [$c4da], a ; $428f
-	call Func_08_52da ; $4292
-	call Func_08_53d0 ; $4295
+	call StartLandingMarker ; $4292
+	call StartHitEffect ; $4295
 	wram_bank $07 ; $4298
 	call Func_08_430f ; $429e
 	wram_bank $06 ; $42a1
@@ -370,7 +370,7 @@ Label_08_4288:
 	call Func_08_430f ; $42b9
 	call Func_08_4326 ; $42bc
 	ld d, $04 ; $42bf
-	call Func_08_66f1 ; $42c1
+	call CallModeHook ; $42c1
 	xor a, a ; $42c4
 	ld [$c4b2], a ; $42c5
 	ld a, [wRallyLength] ; $42c8
@@ -428,7 +428,7 @@ Func_08_4326:
 	ld a, [wRallyLength] ; $4326
 	cp a, $02 ; $4329
 	jr nz, Label_08_4348 ; $432b
-	ld a, [$c4d8] ; $432d
+	ld a, [wPointOutcome] ; $432d
 	and a, a ; $4330
 	jr nz, Label_08_4348 ; $4331
 	ld b, $08 ; $4333
@@ -445,7 +445,7 @@ Label_08_4348:
 	ret ; $4348
 Label_08_4349:
 	ld a, b ; $4349
-	ld [$c4d8], a ; $434a
+	ld [wPointOutcome], a ; $434a
 	ld a, c ; $434d
 	ld [$c4d9], a ; $434e
 	ret ; $4351
@@ -466,16 +466,16 @@ Label_08_4360:
 Label_08_4369:
 	xor a, a ; $4369
 	ld [$c4da], a ; $436a
-	call Func_08_5383 ; $436d
+	call StartBounceEffect ; $436d
 	call Func_08_4379 ; $4370
 	ld d, $05 ; $4373
-	call Func_08_66f1 ; $4375
+	call CallModeHook ; $4375
 	ret ; $4378
 Func_08_4379:
 	ld a, [wRallyLength] ; $4379
 	and a, a ; $437c
 	jr z, Label_08_43c9 ; $437d
-	ld a, [$c4d8] ; $437f
+	ld a, [wPointOutcome] ; $437f
 	and a, a ; $4382
 	jr nz, Label_08_43c9 ; $4383
 	ld b, $06 ; $4385
@@ -514,7 +514,7 @@ Label_08_43c9:
 	ret ; $43c9
 Label_08_43ca:
 	ld a, b ; $43ca
-	ld [$c4d8], a ; $43cb
+	ld [wPointOutcome], a ; $43cb
 	ld a, c ; $43ce
 	ld [$c4d9], a ; $43cf
 	ret ; $43d2
@@ -529,11 +529,11 @@ Func_08_43d3:
 	call Func_08_43e5 ; $43e1
 	ret ; $43e4
 Func_08_43e5:
-	ld a, [$c4d8] ; $43e5
+	ld a, [wPointOutcome] ; $43e5
 	and a, a ; $43e8
 	jr nz, Label_08_43f5 ; $43e9
 	ld a, $09 ; $43eb
-	ld [$c4d8], a ; $43ed
+	ld [wPointOutcome], a ; $43ed
 	ld a, $01 ; $43f0
 	ld [$c4d9], a ; $43f2
 Label_08_43f5:
@@ -665,7 +665,7 @@ Func_08_44bd:
 	ld a, [$c4c8] ; $44bd
 	and a, a ; $44c0
 	ret nz ; $44c1
-	call Func_08_47e2 ; $44c2
+	call AssignCourtPositions ; $44c2
 	ld a, [$c4ce] ; $44c5
 	and a, a ; $44c8
 	ret z ; $44c9
@@ -761,7 +761,7 @@ Label_08_4583:
 	ld a, b ; $4583
 	ld [$c494], a ; $4584
 	ret ; $4587
-	jp Func_00_2c26 ; $4588
+	jp TickTimer ; $4588
 Func_08_458b:
 	push hl ; $458b
 	xor a, a ; $458c
@@ -893,7 +893,7 @@ Func_08_463a:
 	ld a, [hl+] ; $463f
 	ld b, [hl] ; $4640
 	ld c, a ; $4641
-	ld hl, $c402 ; $4642
+	ld hl, wBallX ; $4642
 	ld a, [hl+] ; $4645
 	ld h, [hl] ; $4646
 	ld l, a ; $4647
@@ -914,7 +914,7 @@ Label_08_4657:
 	ld a, [hl+] ; $465a
 	ld b, [hl] ; $465b
 	ld c, a ; $465c
-	ld hl, $c406 ; $465d
+	ld hl, wBallDepth ; $465d
 	ld a, [hl+] ; $4660
 	ld h, [hl] ; $4661
 	ld l, a ; $4662
@@ -1074,11 +1074,11 @@ Label_08_4757:
 Label_08_4758:
 	xor a, a ; $4758
 	ld [$c7bd], a ; $4759
-	call Func_08_47e2 ; $475c
+	call AssignCourtPositions ; $475c
 	call Func_08_5f43 ; $475f
 	call Func_08_5f8c ; $4762
 Label_08_4765:
-	call Func_08_47e2 ; $4765
+	call AssignCourtPositions ; $4765
 	call Func_08_4d0f ; $4768
 	ld a, [$c4c3] ; $476b
 	and a, $80 ; $476e
@@ -1107,14 +1107,14 @@ Label_08_4782:
 	ld a, $0f ; $479e
 	call Func_08_4428 ; $47a0
 Label_08_47a3:
-	call Func_08_47e2 ; $47a3
+	call AssignCourtPositions ; $47a3
 	call Func_08_5f43 ; $47a6
 	call Func_08_5f8c ; $47a9
 	call Func_08_4d0f ; $47ac
 	ld a, [$c4c3] ; $47af
 	and a, $80 ; $47b2
 	jr nz, Label_08_47c6 ; $47b4
-	ld hl, $c8ed ; $47b6
+	ld hl, wTotalPointsScoredInCurrentGame ; $47b6
 	ld a, [hl] ; $47b9
 	cp a, $18 ; $47ba
 	jr c, Label_08_47c0 ; $47bc
@@ -1140,7 +1140,7 @@ Func_08_47cd:
 	ret ; $47dd
 	; $47de, 4 bytes (bytes:4)
 	db $00, $12, $0c, $06 ; 0x00
-Func_08_47e2:
+AssignCourtPositions:
 	ld hl, $47ef ; $47e2
 	push hl ; $47e5
 	ld a, [wTiebreakerIndicator] ; $47e6
@@ -1168,7 +1168,7 @@ Label_08_4808:
 	ld l, a ; $4815
 	ld a, [wTotalGamesWonInMatch] ; $4816
 	and a, $03 ; $4819
-	call Func_08_48ed ; $481b
+	call LoadPositionRecord ; $481b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $481e
 	rrca ; $4821
 	ret nc ; $4822
@@ -1186,10 +1186,13 @@ Label_08_4808:
 	dw Label_08_4888 ; $4839 jumptable
 	dw Label_08_4894 ; $483b jumptable
 	dw Label_08_4894 ; $483d jumptable
-	dw Label_08_4979 ; $483f jumptable
-	dw Label_08_4979 ; $4841 jumptable
-	dw Label_08_49b9 ; $4843 jumptable
-	dw Label_08_4999 ; $4845 jumptable
+GamePositionPtrs:
+	; $483f, 8 bytes (records:2)
+; 4 records x 2 bytes
+	dw $4979 ; record 0
+	dw $4979 ; record 1
+	dw $49b9 ; record 2
+	dw $4999 ; record 3
 Label_08_4847:
 	ld b, $01 ; $4847
 	wram_bank $04 ; $4849
@@ -1248,11 +1251,16 @@ Label_08_48c9:
 	ld a, [wTotalGamesWonInMatch] ; $48d7
 	bit 1, a ; $48da
 	ld a, [wTotalPointsScoredInCurrentGame] ; $48dc
-	jp z, Func_08_48ed ; $48df
+	jp z, LoadPositionRecord ; $48df
 	jp Label_08_491a ; $48e2
-	; $48e5, 8 bytes (bytes:8)
-	db $d9, $49, $d9, $49, $59, $4b, $99, $4a ; 0x00
-Func_08_48ed:
+TiebreakPositionPtrs:
+	; $48e5, 8 bytes (records:2)
+; 4 records x 2 bytes
+	dw $49d9 ; record 0
+	dw $49d9 ; record 1
+	dw $4b59 ; record 2
+	dw $4a99 ; record 3
+LoadPositionRecord:
 	add a, a ; $48ed
 	add a, a ; $48ee
 	add a, a ; $48ef
@@ -1322,431 +1330,94 @@ Func_08_4971:
 	xor a, $02 ; $4975
 	ld [hl], a ; $4977
 	ret ; $4978
-Label_08_4979:
-	nop ; $4979
-	inc bc ; $497a
-	add hl, bc ; $497b
-	add hl, bc ; $497c
-	nop ; $497d
-	ld bc, $0909 ; $497e
-	inc bc ; $4981
-	nop ; $4982
-	add hl, bc ; $4983
-	add hl, bc ; $4984
-	ld bc, $0900 ; $4985
-	add hl, bc ; $4988
-	inc bc ; $4989
-	nop ; $498a
-	add hl, bc ; $498b
-	add hl, bc ; $498c
-	nop ; $498d
-	ld bc, $0909 ; $498e
-	nop ; $4991
-	inc bc ; $4992
-	add hl, bc ; $4993
-	add hl, bc ; $4994
-	ld bc, $0900 ; $4995
-	add hl, bc ; $4998
-Label_08_4999:
-	nop ; $4999
-	inc bc ; $499a
-	ld bc, $0002 ; $499b
-	ld bc, $0302 ; $499e
-	inc bc ; $49a1
-	nop ; $49a2
-	ld [bc], a ; $49a3
-	ld bc, $0001 ; $49a4
-	inc bc ; $49a7
-	ld [bc], a ; $49a8
-	ld [bc], a ; $49a9
-	nop ; $49aa
-	inc bc ; $49ab
-	ld bc, $0102 ; $49ac
-	nop ; $49af
-	inc bc ; $49b0
-	nop ; $49b1
-	ld [bc], a ; $49b2
-	ld bc, $0103 ; $49b3
-	ld [bc], a ; $49b6
-	inc bc ; $49b7
-	nop ; $49b8
-Label_08_49b9:
-	nop ; $49b9
-	inc bc ; $49ba
-	add hl, bc ; $49bb
-	ld [bc], a ; $49bc
-	nop ; $49bd
-	ld bc, $0309 ; $49be
-	inc bc ; $49c1
-	nop ; $49c2
-	add hl, bc ; $49c3
-	ld bc, $0001 ; $49c4
-	add hl, bc ; $49c7
-	ld [bc], a ; $49c8
-	inc bc ; $49c9
-	nop ; $49ca
-	add hl, bc ; $49cb
-	ld bc, $0100 ; $49cc
-	add hl, bc ; $49cf
-	inc bc ; $49d0
-	nop ; $49d1
-	ld [bc], a ; $49d2
-	add hl, bc ; $49d3
-	inc bc ; $49d4
-	ld bc, $0902 ; $49d5
-	nop ; $49d8
-	nop ; $49d9
-	inc bc ; $49da
-	add hl, bc ; $49db
-	add hl, bc ; $49dc
-	nop ; $49dd
-	ld bc, $0909 ; $49de
-	ld bc, $0902 ; $49e1
-	add hl, bc ; $49e4
-	ld bc, $0900 ; $49e5
-	add hl, bc ; $49e8
-	nop ; $49e9
-	inc bc ; $49ea
-	add hl, bc ; $49eb
-	add hl, bc ; $49ec
-	ld bc, $0900 ; $49ed
-	add hl, bc ; $49f0
-	ld bc, $0902 ; $49f1
-	add hl, bc ; $49f4
-	nop ; $49f5
-	ld bc, $0909 ; $49f6
-	nop ; $49f9
-	inc bc ; $49fa
-	add hl, bc ; $49fb
-	add hl, bc ; $49fc
-	nop ; $49fd
-	ld bc, $0909 ; $49fe
-	ld bc, $0902 ; $4a01
-	add hl, bc ; $4a04
-	ld bc, $0900 ; $4a05
-	add hl, bc ; $4a08
-	inc bc ; $4a09
-	nop ; $4a0a
-	add hl, bc ; $4a0b
-	add hl, bc ; $4a0c
-	ld bc, $0900 ; $4a0d
-	add hl, bc ; $4a10
-	ld [bc], a ; $4a11
-	ld bc, $0909 ; $4a12
-	nop ; $4a15
-	ld bc, $0909 ; $4a16
-	inc bc ; $4a19
-	nop ; $4a1a
-	add hl, bc ; $4a1b
-	add hl, bc ; $4a1c
-	nop ; $4a1d
-	ld bc, $0909 ; $4a1e
-	ld [bc], a ; $4a21
-	ld bc, $0909 ; $4a22
-	ld bc, $0900 ; $4a25
-	add hl, bc ; $4a28
-	inc bc ; $4a29
-	nop ; $4a2a
-	add hl, bc ; $4a2b
-	add hl, bc ; $4a2c
-	ld bc, $0900 ; $4a2d
-	add hl, bc ; $4a30
-	ld [bc], a ; $4a31
-	ld bc, $0909 ; $4a32
-	nop ; $4a35
-	ld bc, $0909 ; $4a36
-	nop ; $4a39
-	inc bc ; $4a3a
-	add hl, bc ; $4a3b
-	add hl, bc ; $4a3c
-	nop ; $4a3d
-	ld bc, $0909 ; $4a3e
-	ld bc, $0902 ; $4a41
-	add hl, bc ; $4a44
-	ld bc, $0900 ; $4a45
-	add hl, bc ; $4a48
-	nop ; $4a49
-	inc bc ; $4a4a
-	add hl, bc ; $4a4b
-	add hl, bc ; $4a4c
-	ld bc, $0900 ; $4a4d
-	add hl, bc ; $4a50
-	ld bc, $0902 ; $4a51
-	add hl, bc ; $4a54
-	nop ; $4a55
-	ld bc, $0909 ; $4a56
-	nop ; $4a59
-	inc bc ; $4a5a
-	add hl, bc ; $4a5b
-	add hl, bc ; $4a5c
-	nop ; $4a5d
-	ld bc, $0909 ; $4a5e
-	ld bc, $0902 ; $4a61
-	add hl, bc ; $4a64
-	ld bc, $0900 ; $4a65
-	add hl, bc ; $4a68
-	inc bc ; $4a69
-	nop ; $4a6a
-	add hl, bc ; $4a6b
-	add hl, bc ; $4a6c
-	ld bc, $0900 ; $4a6d
-	add hl, bc ; $4a70
-	ld [bc], a ; $4a71
-	ld bc, $0909 ; $4a72
-	nop ; $4a75
-	ld bc, $0909 ; $4a76
-	inc bc ; $4a79
-	nop ; $4a7a
-	add hl, bc ; $4a7b
-	add hl, bc ; $4a7c
-	nop ; $4a7d
-	ld bc, $0909 ; $4a7e
-	ld [bc], a ; $4a81
-	ld bc, $0909 ; $4a82
-	ld bc, $0900 ; $4a85
-	add hl, bc ; $4a88
-	inc bc ; $4a89
-	nop ; $4a8a
-	add hl, bc ; $4a8b
-	add hl, bc ; $4a8c
-	ld bc, $0900 ; $4a8d
-	add hl, bc ; $4a90
-	ld [bc], a ; $4a91
-	ld bc, $0909 ; $4a92
-	nop ; $4a95
-	ld bc, $0909 ; $4a96
-	nop ; $4a99
-	inc bc ; $4a9a
-	ld bc, $0002 ; $4a9b
-	ld bc, $0302 ; $4a9e
-	nop ; $4aa1
-	ld [bc], a ; $4aa2
-	ld bc, $0303 ; $4aa3
-	nop ; $4aa6
-	ld bc, $0002 ; $4aa7
-	inc bc ; $4aaa
-	ld bc, $0102 ; $4aab
-	nop ; $4aae
-	inc bc ; $4aaf
-	ld [bc], a ; $4ab0
-	nop ; $4ab1
-	inc bc ; $4ab2
-	ld bc, $0202 ; $4ab3
-	inc bc ; $4ab6
-	nop ; $4ab7
-	ld bc, $0301 ; $4ab8
-	nop ; $4abb
-	ld [bc], a ; $4abc
-	ld [bc], a ; $4abd
-	ld bc, $0300 ; $4abe
-	nop ; $4ac1
-	inc bc ; $4ac2
-	ld bc, $0302 ; $4ac3
-	ld [bc], a ; $4ac6
-	ld bc, $0300 ; $4ac7
-	ld bc, $0002 ; $4aca
-	ld bc, $0302 ; $4acd
-	nop ; $4ad0
-	ld [bc], a ; $4ad1
-	nop ; $4ad2
-	inc bc ; $4ad3
-	ld bc, $0300 ; $4ad4
-	ld [bc], a ; $4ad7
-	ld bc, $0003 ; $4ad8
-	ld [bc], a ; $4adb
-	ld bc, $0100 ; $4adc
-	ld [bc], a ; $4adf
-	inc bc ; $4ae0
-	inc bc ; $4ae1
-	ld bc, $0002 ; $4ae2
-	inc bc ; $4ae5
-	nop ; $4ae6
-	ld bc, $0302 ; $4ae7
-	nop ; $4aea
-	ld [bc], a ; $4aeb
-	ld bc, $0001 ; $4aec
-	inc bc ; $4aef
-	ld [bc], a ; $4af0
-	inc bc ; $4af1
-	nop ; $4af2
-	ld [bc], a ; $4af3
-	ld bc, $0302 ; $4af4
-	nop ; $4af7
-	ld bc, $0301 ; $4af8
-	nop ; $4afb
-	ld [bc], a ; $4afc
-	ld [bc], a ; $4afd
-	ld bc, $0300 ; $4afe
-	nop ; $4b01
-	inc bc ; $4b02
-	ld bc, $0302 ; $4b03
-	ld [bc], a ; $4b06
-	ld bc, $0000 ; $4b07
-	ld [bc], a ; $4b0a
-	ld bc, $0103 ; $4b0b
-	ld [bc], a ; $4b0e
-	inc bc ; $4b0f
-	nop ; $4b10
-	ld bc, $0003 ; $4b11
-	ld [bc], a ; $4b14
-	nop ; $4b15
-	inc bc ; $4b16
-	ld [bc], a ; $4b17
-	ld bc, $0300 ; $4b18
-	ld bc, $0002 ; $4b1b
-	ld bc, $0302 ; $4b1e
-	nop ; $4b21
-	ld [bc], a ; $4b22
-	ld bc, $0303 ; $4b23
-	nop ; $4b26
-	ld bc, $0302 ; $4b27
-	nop ; $4b2a
-	ld [bc], a ; $4b2b
-	ld bc, $0001 ; $4b2c
-	inc bc ; $4b2f
-	ld [bc], a ; $4b30
-	inc bc ; $4b31
-	nop ; $4b32
-	ld [bc], a ; $4b33
-	ld bc, $0302 ; $4b34
-	nop ; $4b37
-	ld bc, $0002 ; $4b38
-	inc bc ; $4b3b
-	ld bc, $0102 ; $4b3c
-	nop ; $4b3f
-	inc bc ; $4b40
-	inc bc ; $4b41
-	nop ; $4b42
-	ld [bc], a ; $4b43
-	ld bc, $0203 ; $4b44
-	ld bc, $0300 ; $4b47
-	ld bc, $0002 ; $4b4a
-	ld bc, $0302 ; $4b4d
-	nop ; $4b50
-	ld [bc], a ; $4b51
-	nop ; $4b52
-	inc bc ; $4b53
-	ld bc, $0300 ; $4b54
-	ld [bc], a ; $4b57
-	ld bc, $0300 ; $4b58
-	add hl, bc ; $4b5b
-	ld [bc], a ; $4b5c
-	nop ; $4b5d
-	ld bc, $0309 ; $4b5e
-	ld bc, $0902 ; $4b61
-	inc bc ; $4b64
-	ld bc, $0900 ; $4b65
-	ld [bc], a ; $4b68
-	nop ; $4b69
-	inc bc ; $4b6a
-	add hl, bc ; $4b6b
-	ld [bc], a ; $4b6c
-	ld bc, $0900 ; $4b6d
-	ld [bc], a ; $4b70
-	ld bc, $0903 ; $4b71
-	ld [bc], a ; $4b74
-	nop ; $4b75
-	inc bc ; $4b76
-	add hl, bc ; $4b77
-	ld bc, $0300 ; $4b78
-	add hl, bc ; $4b7b
-	ld [bc], a ; $4b7c
-	nop ; $4b7d
-	ld bc, $0309 ; $4b7e
-	ld bc, $0903 ; $4b81
-	ld [bc], a ; $4b84
-	ld bc, $0902 ; $4b85
-	nop ; $4b88
-	inc bc ; $4b89
-	ld bc, $0009 ; $4b8a
-	ld bc, $0902 ; $4b8d
-	nop ; $4b90
-	ld [bc], a ; $4b91
-	nop ; $4b92
-	add hl, bc ; $4b93
-	ld bc, $0300 ; $4b94
-	add hl, bc ; $4b97
-	ld bc, $0003 ; $4b98
-	add hl, bc ; $4b9b
-	ld bc, $0100 ; $4b9c
-	add hl, bc ; $4b9f
-	inc bc ; $4ba0
-	ld [bc], a ; $4ba1
-	ld bc, $0009 ; $4ba2
-	ld bc, $0900 ; $4ba5
-	ld [bc], a ; $4ba8
-	inc bc ; $4ba9
-	nop ; $4baa
-	add hl, bc ; $4bab
-	ld bc, $0001 ; $4bac
-	add hl, bc ; $4baf
-	ld [bc], a ; $4bb0
-	ld [bc], a ; $4bb1
-	nop ; $4bb2
-	add hl, bc ; $4bb3
-	ld bc, $0300 ; $4bb4
-	add hl, bc ; $4bb7
-	ld bc, $0300 ; $4bb8
-	add hl, bc ; $4bbb
-	ld [bc], a ; $4bbc
-	nop ; $4bbd
-	ld bc, $0309 ; $4bbe
-	ld bc, $0903 ; $4bc1
-	ld [bc], a ; $4bc4
-	ld bc, $0902 ; $4bc5
-	nop ; $4bc8
-	nop ; $4bc9
-	ld [bc], a ; $4bca
-	add hl, bc ; $4bcb
-	inc bc ; $4bcc
-	ld bc, $0902 ; $4bcd
-	nop ; $4bd0
-	ld bc, $0903 ; $4bd1
-	ld [bc], a ; $4bd4
-	nop ; $4bd5
-	inc bc ; $4bd6
-	add hl, bc ; $4bd7
-	ld bc, $0300 ; $4bd8
-	add hl, bc ; $4bdb
-	ld [bc], a ; $4bdc
-	nop ; $4bdd
-	ld bc, $0309 ; $4bde
-	ld bc, $0902 ; $4be1
-	inc bc ; $4be4
-	ld bc, $0900 ; $4be5
-	ld [bc], a ; $4be8
-	inc bc ; $4be9
-	nop ; $4bea
-	add hl, bc ; $4beb
-	ld bc, $0001 ; $4bec
-	add hl, bc ; $4bef
-	ld [bc], a ; $4bf0
-	ld [bc], a ; $4bf1
-	nop ; $4bf2
-	add hl, bc ; $4bf3
-	ld bc, $0300 ; $4bf4
-	add hl, bc ; $4bf7
-	ld bc, $0003 ; $4bf8
-	add hl, bc ; $4bfb
-	ld bc, $0100 ; $4bfc
-	add hl, bc ; $4bff
-	inc bc ; $4c00
-	ld [bc], a ; $4c01
-	nop ; $4c02
-	add hl, bc ; $4c03
-	ld bc, $0201 ; $4c04
-	add hl, bc ; $4c07
-	nop ; $4c08
-	inc bc ; $4c09
-	ld bc, $0009 ; $4c0a
-	ld bc, $0902 ; $4c0d
-	nop ; $4c10
-	ld [bc], a ; $4c11
-	nop ; $4c12
-	add hl, bc ; $4c13
-	ld bc, $0300 ; $4c14
-	add hl, bc ; $4c17
-	INCBIN "data/bank_008/d_4c18.bin" ; $4c18, 1 bytes
+GamePositionTables:
+	; $4979, 96 bytes (bytes:8)
+	db $00, $03, $09, $09, $00, $01, $09, $09 ; 0x00
+	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0x08
+	db $03, $00, $09, $09, $00, $01, $09, $09 ; 0x10
+	db $00, $03, $09, $09, $01, $00, $09, $09 ; 0x18
+	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x20
+	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x28
+	db $02, $00, $03, $01, $02, $01, $00, $03 ; 0x30
+	db $00, $02, $01, $03, $01, $02, $03, $00 ; 0x38
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x40
+	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x48
+	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x50
+	db $00, $02, $09, $03, $01, $02, $09, $00 ; 0x58
+TiebreakPositionTables:
+	; $49d9, 576 bytes (bytes:8)
+	db $00, $03, $09, $09, $00, $01, $09, $09 ; 0x00
+	db $01, $02, $09, $09, $01, $00, $09, $09 ; 0x08
+	db $00, $03, $09, $09, $01, $00, $09, $09 ; 0x10
+	db $01, $02, $09, $09, $00, $01, $09, $09 ; 0x18
+	db $00, $03, $09, $09, $00, $01, $09, $09 ; 0x20
+	db $01, $02, $09, $09, $01, $00, $09, $09 ; 0x28
+	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0x30
+	db $02, $01, $09, $09, $00, $01, $09, $09 ; 0x38
+	db $03, $00, $09, $09, $00, $01, $09, $09 ; 0x40
+	db $02, $01, $09, $09, $01, $00, $09, $09 ; 0x48
+	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0x50
+	db $02, $01, $09, $09, $00, $01, $09, $09 ; 0x58
+	db $00, $03, $09, $09, $00, $01, $09, $09 ; 0x60
+	db $01, $02, $09, $09, $01, $00, $09, $09 ; 0x68
+	db $00, $03, $09, $09, $01, $00, $09, $09 ; 0x70
+	db $01, $02, $09, $09, $00, $01, $09, $09 ; 0x78
+	db $00, $03, $09, $09, $00, $01, $09, $09 ; 0x80
+	db $01, $02, $09, $09, $01, $00, $09, $09 ; 0x88
+	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0x90
+	db $02, $01, $09, $09, $00, $01, $09, $09 ; 0x98
+	db $03, $00, $09, $09, $00, $01, $09, $09 ; 0xa0
+	db $02, $01, $09, $09, $01, $00, $09, $09 ; 0xa8
+	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0xb0
+	db $02, $01, $09, $09, $00, $01, $09, $09 ; 0xb8
+	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0xc0
+	db $00, $02, $01, $03, $03, $00, $01, $02 ; 0xc8
+	db $00, $03, $01, $02, $01, $00, $03, $02 ; 0xd0
+	db $00, $03, $01, $02, $02, $03, $00, $01 ; 0xd8
+	db $01, $03, $00, $02, $02, $01, $00, $03 ; 0xe0
+	db $00, $03, $01, $02, $03, $02, $01, $00 ; 0xe8
+	db $03, $01, $02, $00, $01, $02, $03, $00 ; 0xf0
+	db $02, $00, $03, $01, $00, $03, $02, $01 ; 0xf8
+	db $03, $00, $02, $01, $00, $01, $02, $03 ; 0x100
+	db $03, $01, $02, $00, $03, $00, $01, $02 ; 0x108
+	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x110
+	db $03, $00, $02, $01, $02, $03, $00, $01 ; 0x118
+	db $01, $03, $00, $02, $02, $01, $00, $03 ; 0x120
+	db $00, $03, $01, $02, $03, $02, $01, $00 ; 0x128
+	db $00, $02, $01, $03, $01, $02, $03, $00 ; 0x130
+	db $01, $03, $00, $02, $00, $03, $02, $01 ; 0x138
+	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x140
+	db $00, $02, $01, $03, $03, $00, $01, $02 ; 0x148
+	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x150
+	db $03, $00, $02, $01, $02, $03, $00, $01 ; 0x158
+	db $02, $00, $03, $01, $02, $01, $00, $03 ; 0x160
+	db $03, $00, $02, $01, $03, $02, $01, $00 ; 0x168
+	db $03, $01, $02, $00, $01, $02, $03, $00 ; 0x170
+	db $02, $00, $03, $01, $00, $03, $02, $01 ; 0x178
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x180
+	db $01, $02, $09, $03, $01, $00, $09, $02 ; 0x188
+	db $00, $03, $09, $02, $01, $00, $09, $02 ; 0x190
+	db $01, $03, $09, $02, $00, $03, $09, $01 ; 0x198
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x1a0
+	db $01, $03, $09, $02, $01, $02, $09, $00 ; 0x1a8
+	db $03, $01, $09, $00, $01, $02, $09, $00 ; 0x1b0
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x1b8
+	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x1c0
+	db $02, $01, $09, $00, $01, $00, $09, $02 ; 0x1c8
+	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x1d0
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x1d8
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x1e0
+	db $01, $03, $09, $02, $01, $02, $09, $00 ; 0x1e8
+	db $00, $02, $09, $03, $01, $02, $09, $00 ; 0x1f0
+	db $01, $03, $09, $02, $00, $03, $09, $01 ; 0x1f8
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x200
+	db $01, $02, $09, $03, $01, $00, $09, $02 ; 0x208
+	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x210
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x218
+	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x220
+	db $02, $00, $09, $01, $01, $02, $09, $00 ; 0x228
+	db $03, $01, $09, $00, $01, $02, $09, $00 ; 0x230
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x238
 Func_08_4c19:
 	wram_bank $04 ; $4c19
 	ld a, [$df0a] ; $4c1f
@@ -1833,11 +1504,11 @@ Func_08_4cb9:
 	ld [$c491], a ; $4cd5
 	ld [$c4c3], a ; $4cd8
 	ld [$c4d9], a ; $4cdb
-	ld [$c4d8], a ; $4cde
+	ld [wPointOutcome], a ; $4cde
 	ldh [$ffdd], a ; $4ce1
 	ld [$c4c2], a ; $4ce3
 	ld a, $01 ; $4ce6
-	ld [$c4c4], a ; $4ce8
+	ld [wOffscreenArrowsEnabled], a ; $4ce8
 	call Func_08_511c ; $4ceb
 	ld a, [$c7b8] ; $4cee
 	and a, a ; $4cf1
@@ -1870,10 +1541,10 @@ Label_08_4d26:
 	ld a, [$c4c3] ; $4d29
 	and a, $01 ; $4d2c
 	jr nz, Label_08_4d5b ; $4d2e
-	ld a, [$c4d8] ; $4d30
+	ld a, [wPointOutcome] ; $4d30
 	and a, a ; $4d33
 	jr z, Label_08_4d26 ; $4d34
-	ld a, [$c4d8] ; $4d36
+	ld a, [wPointOutcome] ; $4d36
 	cp a, $09 ; $4d39
 	jr nz, Label_08_4d42 ; $4d3b
 	ld a, $28 ; $4d3d
@@ -1981,7 +1652,7 @@ Func_08_4df4:
 	call Func_08_4465 ; $4e03
 	ld hl, $4e22 ; $4e06
 	push hl ; $4e09
-	ld a, [$c4d8] ; $4e0a
+	ld a, [wPointOutcome] ; $4e0a
 	rst Rst00 ; $4e0d
 	dw Label_00_03ae ; $4e0e jumptable
 	dw Label_08_4e8d ; $4e10 jumptable
@@ -2042,7 +1713,7 @@ Label_08_4e6d:
 	call Func_08_4428 ; $4e89
 	ret ; $4e8c
 Label_08_4e8d:
-	ld a, [$c4d8] ; $4e8d
+	ld a, [wPointOutcome] ; $4e8d
 	add a, $00 ; $4e90
 	farcall FarPtr_09_12 ; $4e92
 	ld a, $1e ; $4e95
@@ -2175,9 +1846,9 @@ Label_08_4f37:
 	db $03, $05, $04, $05 ; 0x00
 Func_08_4fa4:
 	xor a, a ; $4fa4
-	ld [$c4bc], a ; $4fa5
+	ld [wBallTrailEnabled], a ; $4fa5
 	xor a, a ; $4fa8
-	call Func_08_5189 ; $4fa9
+	call SetBallTrailColor ; $4fa9
 	xor a, a ; $4fac
 	ld [$c4da], a ; $4fad
 	ld hl, $c4c3 ; $4fb0
@@ -2367,6 +2038,7 @@ Label_08_50ca:
 	ld d, a ; $50da
 Label_08_50db:
 	ret ; $50db
+BallTrailPalettes:
 	; $50dc, 64 bytes (records:8)
 ; 8 records x 8 bytes
 	dw $0180, $031f, $2a94, $0000 ; record 0
@@ -2379,10 +2051,10 @@ Label_08_50db:
 	dw $0180, $031f, $7ffe, $0000 ; record 7
 Func_08_511c:
 	xor a, a ; $511c
-	ld [$c4ba], a ; $511d
-	ld [$c4bb], a ; $5120
-	ld [$c4bc], a ; $5123
-	ld [$c4a8], a ; $5126
+	ld [wBallSpriteEnabled], a ; $511d
+	ld [wBallShadowEnabled], a ; $5120
+	ld [wBallTrailEnabled], a ; $5123
+	ld [wBounceEffectTimer], a ; $5126
 	ld hl, $0380 ; $5129
 	ld de, $0000 ; $512c
 	ld bc, $0000 ; $512f
@@ -2407,14 +2079,14 @@ Func_08_511c:
 	ld [hl+], a ; $514c
 	ld [hl+], a ; $514d
 	xor a, a ; $514e
-	call Func_08_5189 ; $514f
+	call SetBallTrailColor ; $514f
 	ret ; $5152
-Func_08_5153:
+UpdateBallVisuals:
 	call Func_08_5767 ; $5153
-	call Func_08_519d ; $5156
-	call Func_08_51fd ; $5159
-	call Func_08_5253 ; $515c
-	call Func_08_528c ; $515f
+	call BuildBallSlot ; $5156
+	call BuildBallTrailSlots ; $5159
+	call BuildBallShadowSlot ; $515c
+	call BuildNetBallSlot ; $515f
 	call Func_08_5482 ; $5162
 	ld a, [wMatchIsDoubles] ; $5165
 	and a, a ; $5168
@@ -2427,13 +2099,13 @@ Label_08_5170:
 	ld de, $dd00 ; $5173
 	ld bc, $001e ; $5176
 	call CopyMemoryBC ; $5179
-	ld hl, $c4a8 ; $517c
-	call Func_00_2c26 ; $517f
-	ld hl, $c4a9 ; $5182
-	call Func_00_2c26 ; $5185
+	ld hl, wBounceEffectTimer ; $517c
+	call TickTimer ; $517f
+	ld hl, wHitSparkTimer ; $5182
+	call TickTimer ; $5185
 	ret ; $5188
-Func_08_5189:
-	ld [$c4bd], a ; $5189
+SetBallTrailColor:
+	ld [wBallTrailColor], a ; $5189
 	add a, a ; $518c
 	add a, a ; $518d
 	add a, a ; $518e
@@ -2445,16 +2117,16 @@ Func_08_5189:
 	ld de, $0801 ; $5196
 	call Func_00_05b5 ; $5199
 	ret ; $519c
-Func_08_519d:
-	ld hl, $c40a ; $519d
+BuildBallSlot:
+	ld hl, wBallHeight ; $519d
 	ld a, [hl+] ; $51a0
 	ld b, [hl] ; $51a1
 	ld c, a ; $51a2
-	ld hl, $c406 ; $51a3
+	ld hl, wBallDepth ; $51a3
 	ld a, [hl+] ; $51a6
 	ld d, [hl] ; $51a7
 	ld e, a ; $51a8
-	ld hl, $c402 ; $51a9
+	ld hl, wBallX ; $51a9
 	ld a, [hl+] ; $51ac
 	ld h, [hl] ; $51ad
 	ld l, a ; $51ae
@@ -2491,7 +2163,7 @@ Label_08_51d7:
 Label_08_51e1:
 	ld c, a ; $51e1
 	ld b, $08 ; $51e2
-	ld a, [$c4ba] ; $51e4
+	ld a, [wBallSpriteEnabled] ; $51e4
 	and a, a ; $51e7
 	jr z, Label_08_51f4 ; $51e8
 	ld hl, $de04 ; $51ea
@@ -2509,31 +2181,31 @@ Label_08_51f4:
 	ld [hl+], a ; $51fa
 	ld [hl], b ; $51fb
 	ret ; $51fc
-Func_08_51fd:
-	ld a, [$c4bc] ; $51fd
+BuildBallTrailSlots:
+	ld a, [wBallTrailEnabled] ; $51fd
 	and a, a ; $5200
 	jr z, Label_08_5236 ; $5201
 	ld hl, $dd18 ; $5203
 	ld de, $de0c ; $5206
-	call Func_08_5237 ; $5209
+	call BuildTrailSlot ; $5209
 	ld hl, $dd12 ; $520c
 	ld de, $de10 ; $520f
-	call Func_08_5237 ; $5212
-	ld a, [$c4bd] ; $5215
+	call BuildTrailSlot ; $5212
+	ld a, [wBallTrailColor] ; $5215
 	and a, a ; $5218
 	jr z, Label_08_5236 ; $5219
 	ld hl, $dd0c ; $521b
 	ld de, $de14 ; $521e
-	call Func_08_5237 ; $5221
+	call BuildTrailSlot ; $5221
 	ld hl, $dd06 ; $5224
 	ld de, $de18 ; $5227
-	call Func_08_5237 ; $522a
+	call BuildTrailSlot ; $522a
 	ld hl, $dd00 ; $522d
 	ld de, $de1c ; $5230
-	call Func_08_5237 ; $5233
+	call BuildTrailSlot ; $5233
 Label_08_5236:
 	ret ; $5236
-Func_08_5237:
+BuildTrailSlot:
 	push de ; $5237
 	ld a, [hl+] ; $5238
 	ld e, a ; $5239
@@ -2560,13 +2232,13 @@ Func_08_5237:
 	ld [hl+], a ; $5250
 	ld [hl], d ; $5251
 	ret ; $5252
-Func_08_5253:
+BuildBallShadowSlot:
 	ld bc, $0000 ; $5253
-	ld hl, $c406 ; $5256
+	ld hl, wBallDepth ; $5256
 	ld a, [hl+] ; $5259
 	ld d, [hl] ; $525a
 	ld e, a ; $525b
-	ld hl, $c402 ; $525c
+	ld hl, wBallX ; $525c
 	ld a, [hl+] ; $525f
 	ld h, [hl] ; $5260
 	ld l, a ; $5261
@@ -2583,7 +2255,7 @@ Func_08_5253:
 	ld [hl], b ; $5272
 	ld l, e ; $5273
 	ld h, d ; $5274
-	ld a, [$c4bb] ; $5275
+	ld a, [wBallShadowEnabled] ; $5275
 	and a, a ; $5278
 	jr z, Label_08_528b ; $5279
 	call Func_08_59bb ; $527b
@@ -2598,11 +2270,11 @@ Func_08_5253:
 	ld [hl], d ; $528a
 Label_08_528b:
 	ret ; $528b
-Func_08_528c:
-	ld a, [$c4d8] ; $528c
+BuildNetBallSlot:
+	ld a, [wPointOutcome] ; $528c
 	and a, a ; $528f
 	ret z ; $5290
-	ld hl, $c406 ; $5291
+	ld hl, wBallDepth ; $5291
 	ld a, [hl+] ; $5294
 	ld h, [hl] ; $5295
 	ld l, a ; $5296
@@ -2612,7 +2284,7 @@ Func_08_528c:
 	add hl, de ; $529d
 	bit 7, h ; $529e
 	ret nz ; $52a0
-	ld hl, $c402 ; $52a1
+	ld hl, wBallX ; $52a1
 	ld a, [hl+] ; $52a4
 	ld h, [hl] ; $52a5
 	ld l, a ; $52a6
@@ -2651,7 +2323,7 @@ Label_08_52b1:
 	ld [hl+], a ; $52d7
 	ld [hl], d ; $52d8
 	ret ; $52d9
-Func_08_52da:
+StartLandingMarker:
 	ld a, [$c4a0] ; $52da
 	cp a, $0a ; $52dd
 	jr z, Label_08_52e8 ; $52df
@@ -2706,11 +2378,11 @@ Label_08_5326:
 	call Func_08_59b8 ; $5329
 	ld e, l ; $532c
 	ld d, h ; $532d
-	ld hl, $c480 ; $532e
+	ld hl, wLandingMarkerX ; $532e
 	ld a, e ; $5331
 	ld [hl+], a ; $5332
 	ld [hl], d ; $5333
-	ld hl, $c482 ; $5334
+	ld hl, wLandingMarkerY ; $5334
 	ld a, c ; $5337
 	ld [hl+], a ; $5338
 	ld [hl], b ; $5339
@@ -2718,15 +2390,15 @@ Label_08_5326:
 	ld [$c4da], a ; $533c
 	sound $6d ; $533f
 	ret ; $5341
-Func_08_5342:
+DrawLandingMarker:
 	ld a, [$c4da] ; $5342
 	and a, a ; $5345
 	ret z ; $5346
-	ld hl, $c482 ; $5347
+	ld hl, wLandingMarkerY ; $5347
 	ld a, [hl+] ; $534a
 	ld b, [hl] ; $534b
 	ld c, a ; $534c
-	ld hl, $c480 ; $534d
+	ld hl, wLandingMarkerX ; $534d
 	ld a, [hl+] ; $5350
 	ld h, [hl] ; $5351
 	ld l, a ; $5352
@@ -2735,7 +2407,7 @@ Func_08_5342:
 	add a, $08 ; $5357
 	ld e, a ; $5359
 	ld bc, $097c ; $535a
-	call Func_00_1e55 ; $535d
+	call QueueSprite16 ; $535d
 	ldh a, [$ffe9] ; $5360
 	and a, $0f ; $5362
 	add a, $73 ; $5364
@@ -2751,76 +2423,76 @@ Func_08_5342:
 	; $5373, 16 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08
-Func_08_5383:
-	ld hl, $c40a ; $5383
+StartBounceEffect:
+	ld hl, wBallHeight ; $5383
 	ld a, [hl+] ; $5386
 	ld b, [hl] ; $5387
 	ld c, a ; $5388
-	ld hl, $c406 ; $5389
+	ld hl, wBallDepth ; $5389
 	ld a, [hl+] ; $538c
 	ld d, [hl] ; $538d
 	ld e, a ; $538e
-	ld hl, $c402 ; $538f
+	ld hl, wBallX ; $538f
 	ld a, [hl+] ; $5392
 	ld h, [hl] ; $5393
 	ld l, a ; $5394
 	call Func_08_59b8 ; $5395
 	ld e, l ; $5398
 	ld d, h ; $5399
-	ld hl, $c460 ; $539a
+	ld hl, wBounceEffectX ; $539a
 	ld a, e ; $539d
 	ld [hl+], a ; $539e
 	ld [hl], d ; $539f
-	ld hl, $c462 ; $53a0
+	ld hl, wBounceEffectY ; $53a0
 	ld a, c ; $53a3
 	ld [hl+], a ; $53a4
 	ld [hl], b ; $53a5
 	ld a, $14 ; $53a6
-	ld [$c4a8], a ; $53a8
+	ld [wBounceEffectTimer], a ; $53a8
 	ret ; $53ab
-Func_08_53ac:
-	ld a, [$c4a8] ; $53ac
+DrawBounceEffect:
+	ld a, [wBounceEffectTimer] ; $53ac
 	and a, a ; $53af
 	ret z ; $53b0
-	ld hl, $c462 ; $53b1
+	ld hl, wBounceEffectY ; $53b1
 	ld a, [hl+] ; $53b4
 	ld b, [hl] ; $53b5
 	ld c, a ; $53b6
-	ld hl, $c460 ; $53b7
+	ld hl, wBounceEffectX ; $53b7
 	ld a, [hl+] ; $53ba
 	ld h, [hl] ; $53bb
 	ld l, a ; $53bc
 	call Func_08_59bb ; $53bd
 	ld bc, $0a60 ; $53c0
-	ld a, [$c4a8] ; $53c3
+	ld a, [wBounceEffectTimer] ; $53c3
 	cp a, $0a ; $53c6
 	jr nc, Label_08_53cc ; $53c8
 	inc c ; $53ca
 	inc c ; $53cb
 Label_08_53cc:
-	call Func_00_1f51 ; $53cc
+	call QueueSprite ; $53cc
 	ret ; $53cf
-Func_08_53d0:
-	ld hl, $c40a ; $53d0
+StartHitEffect:
+	ld hl, wBallHeight ; $53d0
 	ld a, [hl+] ; $53d3
 	ld b, [hl] ; $53d4
 	ld c, a ; $53d5
-	ld hl, $c406 ; $53d6
+	ld hl, wBallDepth ; $53d6
 	ld a, [hl+] ; $53d9
 	ld d, [hl] ; $53da
 	ld e, a ; $53db
-	ld hl, $c402 ; $53dc
+	ld hl, wBallX ; $53dc
 	ld a, [hl+] ; $53df
 	ld h, [hl] ; $53e0
 	ld l, a ; $53e1
 	call Func_08_59b8 ; $53e2
 	ld e, l ; $53e5
 	ld d, h ; $53e6
-	ld hl, $c464 ; $53e7
+	ld hl, wHitEffectX ; $53e7
 	ld a, e ; $53ea
 	ld [hl+], a ; $53eb
 	ld [hl], d ; $53ec
-	ld hl, $c466 ; $53ed
+	ld hl, wHitEffectY ; $53ed
 	ld a, c ; $53f0
 	ld [hl+], a ; $53f1
 	ld [hl], b ; $53f2
@@ -2831,27 +2503,27 @@ Func_08_53d0:
 	cp a, $3f ; $53fc
 	jr z, Label_08_5406 ; $53fe
 	ld a, $10 ; $5400
-	ld [$c4a9], a ; $5402
+	ld [wHitSparkTimer], a ; $5402
 	ret ; $5405
 Label_08_5406:
 	ld a, $10 ; $5406
-	ld [$c4aa], a ; $5408
+	ld [wSpecialHitTimer], a ; $5408
 	sound $55 ; $540b
 	ret ; $540d
-Func_08_540e:
-	ld a, [$c4a9] ; $540e
+DrawHitSpark:
+	ld a, [wHitSparkTimer] ; $540e
 	and a, a ; $5411
 	ret z ; $5412
-	ld hl, $c466 ; $5413
+	ld hl, wHitEffectY ; $5413
 	ld a, [hl+] ; $5416
 	ld b, [hl] ; $5417
 	ld c, a ; $5418
-	ld hl, $c464 ; $5419
+	ld hl, wHitEffectX ; $5419
 	ld a, [hl+] ; $541c
 	ld h, [hl] ; $541d
 	ld l, a ; $541e
 	call Func_08_59bb ; $541f
-	ld a, [$c4a9] ; $5422
+	ld a, [wHitSparkTimer] ; $5422
 	rra ; $5425
 	rra ; $5426
 	and a, $03 ; $5427
@@ -2861,17 +2533,17 @@ Func_08_540e:
 	add a, $68 ; $542d
 	ld c, a ; $542f
 	ld b, $0a ; $5430
-	call Func_00_1f51 ; $5432
+	call QueueSprite ; $5432
 	ret ; $5435
-Func_08_5436:
-	ld a, [$c4aa] ; $5436
+DrawSpecialHitEffect:
+	ld a, [wSpecialHitTimer] ; $5436
 	and a, a ; $5439
 	ret z ; $543a
-	ld hl, $c466 ; $543b
+	ld hl, wHitEffectY ; $543b
 	ld a, [hl+] ; $543e
 	ld b, [hl] ; $543f
 	ld c, a ; $5440
-	ld hl, $c464 ; $5441
+	ld hl, wHitEffectX ; $5441
 	ld a, [hl+] ; $5444
 	ld h, [hl] ; $5445
 	ld l, a ; $5446
@@ -2880,10 +2552,10 @@ Func_08_5436:
 	add a, $08 ; $544b
 	ld e, a ; $544d
 	ld bc, $0974 ; $544e
-	call Func_00_1e55 ; $5451
-	ld hl, $c4aa ; $5454
-	call Func_00_2c26 ; $5457
-	ld a, [$c4aa] ; $545a
+	call QueueSprite16 ; $5451
+	ld hl, wSpecialHitTimer ; $5454
+	call TickTimer ; $5457
+	ld a, [wSpecialHitTimer] ; $545a
 	add a, $6c ; $545d
 	ld l, a ; $545f
 	adc a, $54 ; $5460
@@ -2919,9 +2591,9 @@ Func_08_5482:
 	ld e, a ; $549d
 	wram_bank $04 ; $549e
 	ld bc, $0a78 ; $54a4
-	call Func_00_1e55 ; $54a7
+	call QueueSprite16 ; $54a7
 	ld hl, $c4ab ; $54aa
-	call Func_00_2c26 ; $54ad
+	call TickTimer ; $54ad
 	ld a, [$c4ab] ; $54b0
 	add a, $c2 ; $54b3
 	ld l, a ; $54b5
@@ -2951,7 +2623,7 @@ Func_08_5482:
 	call Func_08_59b8 ; $54f9
 	call Func_08_59bb ; $54fc
 	ld bc, $095e ; $54ff
-	call Func_00_1f51 ; $5502
+	call QueueSprite ; $5502
 	ret ; $5505
 	ld bc, $0000 ; $5506
 	ld hl, $c452 ; $5509
@@ -2965,17 +2637,17 @@ Func_08_5482:
 	call Func_08_59b8 ; $5515
 	call Func_08_59bb ; $5518
 	ld bc, $0c5e ; $551b
-	call Func_00_1f51 ; $551e
+	call QueueSprite ; $551e
 	ret ; $5521
-Func_08_5522:
-	ld a, [$c78c] ; $5522
+DrawTargetZone:
+	ld a, [wTargetZoneEnabled] ; $5522
 	and a, a ; $5525
 	ret z ; $5526
-	ld hl, $c792 ; $5527
+	ld hl, wTargetZoneDepth1 ; $5527
 	ld a, [hl+] ; $552a
 	ld d, [hl] ; $552b
 	ld e, a ; $552c
-	ld hl, $c790 ; $552d
+	ld hl, wTargetZoneX1 ; $552d
 	ld a, [hl+] ; $5530
 	ld h, [hl] ; $5531
 	ld l, a ; $5532
@@ -2984,12 +2656,12 @@ Func_08_5522:
 	call Func_08_59bb ; $5539
 	ld hl, $55a0 ; $553c
 	ld bc, $0920 ; $553f
-	call Func_00_1e9d ; $5542
-	ld hl, $c792 ; $5545
+	call QueueSpriteTemplate ; $5542
+	ld hl, wTargetZoneDepth1 ; $5545
 	ld a, [hl+] ; $5548
 	ld d, [hl] ; $5549
 	ld e, a ; $554a
-	ld hl, $c794 ; $554b
+	ld hl, wTargetZoneX2 ; $554b
 	ld a, [hl+] ; $554e
 	ld h, [hl] ; $554f
 	ld l, a ; $5550
@@ -2998,12 +2670,12 @@ Func_08_5522:
 	call Func_08_59bb ; $5557
 	ld hl, $55a5 ; $555a
 	ld bc, $0922 ; $555d
-	call Func_00_1e9d ; $5560
-	ld hl, $c796 ; $5563
+	call QueueSpriteTemplate ; $5560
+	ld hl, wTargetZoneDepth2 ; $5563
 	ld a, [hl+] ; $5566
 	ld d, [hl] ; $5567
 	ld e, a ; $5568
-	ld hl, $c790 ; $5569
+	ld hl, wTargetZoneX1 ; $5569
 	ld a, [hl+] ; $556c
 	ld h, [hl] ; $556d
 	ld l, a ; $556e
@@ -3012,12 +2684,12 @@ Func_08_5522:
 	call Func_08_59bb ; $5575
 	ld hl, $55aa ; $5578
 	ld bc, $0924 ; $557b
-	call Func_00_1e9d ; $557e
-	ld hl, $c796 ; $5581
+	call QueueSpriteTemplate ; $557e
+	ld hl, wTargetZoneDepth2 ; $5581
 	ld a, [hl+] ; $5584
 	ld d, [hl] ; $5585
 	ld e, a ; $5586
-	ld hl, $c794 ; $5587
+	ld hl, wTargetZoneX2 ; $5587
 	ld a, [hl+] ; $558a
 	ld h, [hl] ; $558b
 	ld l, a ; $558c
@@ -3026,7 +2698,7 @@ Func_08_5522:
 	call Func_08_59bb ; $5593
 	ld hl, $55af ; $5596
 	ld bc, $0926 ; $5599
-	call Func_00_1e9d ; $559c
+	call QueueSpriteTemplate ; $559c
 	ret ; $559f
 	; $55a0, 20 bytes (records:5)
 ; 4 records x 5 bytes
@@ -3419,7 +3091,7 @@ Func_08_5814:
 	ld a, [hl+] ; $5833
 	ld d, [hl] ; $5834
 	ld e, a ; $5835
-	ld hl, $c40a ; $5836
+	ld hl, wBallHeight ; $5836
 	ld a, [hl+] ; $5839
 	ld h, [hl] ; $583a
 	ld l, a ; $583b
@@ -3427,7 +3099,7 @@ Func_08_5814:
 	bit 7, h ; $583d
 	jr nz, Label_08_58a2 ; $583f
 	sound $5a ; $5841
-	call Func_08_5383 ; $5843
+	call StartBounceEffect ; $5843
 	ld a, $01 ; $5846
 	ld [$c4bf], a ; $5848
 	ld hl, $c404 ; $584b
@@ -3455,7 +3127,7 @@ Func_08_5814:
 	ld a, e ; $586b
 	ld [hl+], a ; $586c
 	ld [hl], d ; $586d
-	ld hl, $c40a ; $586e
+	ld hl, wBallHeight ; $586e
 	ld a, [hl+] ; $5871
 	ld d, [hl] ; $5872
 	ld e, a ; $5873
@@ -3608,7 +3280,7 @@ Label_08_591d:
 	ld [hl], d ; $5947
 	ret ; $5948
 Func_08_5949:
-	ld hl, $c406 ; $5949
+	ld hl, wBallDepth ; $5949
 	ld a, [hl+] ; $594c
 	ld h, [hl] ; $594d
 	ld l, a ; $594e
@@ -3641,7 +3313,7 @@ Label_08_5961:
 	ld a, $02 ; $597c
 	ld [$c4b3], a ; $597e
 Label_08_5981:
-	ld hl, $c402 ; $5981
+	ld hl, wBallX ; $5981
 	ld a, [hl+] ; $5984
 	ld h, [hl] ; $5985
 	ld l, a ; $5986
@@ -3681,7 +3353,7 @@ Func_08_59b8:
 Func_08_59bb:
 	ld e, l ; $59bb
 	ld d, h ; $59bc
-	ld hl, $c478 ; $59bd
+	ld hl, wCameraOffsetX ; $59bd
 	ld a, [hl+] ; $59c0
 	ld h, [hl] ; $59c1
 	ld l, a ; $59c2
@@ -3690,7 +3362,7 @@ Func_08_59bb:
 	add hl, hl ; $59c5
 	add hl, hl ; $59c6
 	ld d, h ; $59c7
-	ld hl, $c47a ; $59c8
+	ld hl, wCameraOffsetY ; $59c8
 	ld a, [hl+] ; $59cb
 	ld h, [hl] ; $59cc
 	ld l, a ; $59cd
@@ -3963,7 +3635,7 @@ Label_08_5b0d:
 	ret ; $5b2d
 Func_08_5b2e:
 	ld a, [wPlayer1PointsWon] ; $5b2e
-	ld hl, $c8e5 ; $5b31
+	ld hl, wPlayer2PointsWon ; $5b31
 	sub a, [hl] ; $5b34
 	jr z, Label_08_5b74 ; $5b35
 	bit 7, a ; $5b37
@@ -3977,7 +3649,7 @@ Label_08_5b3f:
 	ld d, h ; $5b44
 	push de ; $5b45
 	push af ; $5b46
-	ld hl, $c8e0 ; $5b47
+	ld hl, wPlayer1SetsWon ; $5b47
 	ld c, $01 ; $5b4a
 	call CopyMemoryFast ; $5b4c
 	pop af ; $5b4f
@@ -3990,7 +3662,7 @@ Label_08_5b3f:
 	ld a, [wMatchWinLoseFlag] ; $5b62
 	ld [$c4d5], a ; $5b65
 	pop hl ; $5b68
-	ld de, $c8e0 ; $5b69
+	ld de, wPlayer1SetsWon ; $5b69
 	ld c, $01 ; $5b6c
 	call CopyMemoryFast ; $5b6e
 	add sp, 16 ; $5b71
@@ -4014,16 +3686,16 @@ Func_08_5b7f:
 	ld a, $01 ; $5b91
 	ld [$c8ee], a ; $5b93
 	ld a, $01 ; $5b96
-	ld [$c4d8], a ; $5b98
+	ld [wPointOutcome], a ; $5b98
 	ret ; $5b9b
 Label_08_5b9c:
 	ld a, $00 ; $5b9c
 	ld [$c8ee], a ; $5b9e
 	ld a, $02 ; $5ba1
-	ld [$c4d8], a ; $5ba3
+	ld [wPointOutcome], a ; $5ba3
 	ret ; $5ba6
 Func_08_5ba7:
-	ld a, [$c4d8] ; $5ba7
+	ld a, [wPointOutcome] ; $5ba7
 	cp a, $06 ; $5baa
 	ret nz ; $5bac
 	ld a, [wRallyLength] ; $5bad
@@ -4056,9 +3728,9 @@ Func_08_5bdb:
 	ld a, [wSetWinLoseFlag] ; $5bdb
 	add a, a ; $5bde
 	ret z ; $5bdf
-	ld hl, $c8e0 ; $5be0
+	ld hl, wPlayer1SetsWon ; $5be0
 	jr nc, Label_08_5be8 ; $5be3
-	ld hl, $c8e1 ; $5be5
+	ld hl, wPlayer2SetsWon ; $5be5
 Label_08_5be8:
 	inc [hl] ; $5be8
 	xor a, a ; $5be9
@@ -4070,9 +3742,9 @@ Func_08_5bf4:
 	ld a, [wGameWinLoseFlag] ; $5bf4
 	add a, a ; $5bf7
 	ret z ; $5bf8
-	ld hl, $c8e2 ; $5bf9
+	ld hl, wPlayer1GamesWon ; $5bf9
 	jr nc, Label_08_5c01 ; $5bfc
-	ld hl, $c8e3 ; $5bfe
+	ld hl, wPlayer2GamesWon ; $5bfe
 Label_08_5c01:
 	inc [hl] ; $5c01
 	xor a, a ; $5c02
@@ -4080,27 +3752,27 @@ Label_08_5c01:
 	ld [wPlayer2PointsWon], a ; $5c06
 	ld [wTotalPointsScoredInCurrentGame], a ; $5c09
 	ld [wDeuceIndicator], a ; $5c0c
-	ld hl, $c8ec ; $5c0f
+	ld hl, wTotalGamesWonInMatch ; $5c0f
 	inc [hl] ; $5c12
 	ret ; $5c13
 Func_08_5c14:
 	ld a, [wPointWinLoseFlag] ; $5c14
 	add a, a ; $5c17
 	ret z ; $5c18
-	ld hl, $c8e4 ; $5c19
+	ld hl, wPlayer1PointsWon ; $5c19
 	jr nc, Label_08_5c21 ; $5c1c
-	ld hl, $c8e5 ; $5c1e
+	ld hl, wPlayer2PointsWon ; $5c1e
 Label_08_5c21:
 	inc [hl] ; $5c21
 	xor a, a ; $5c22
 	ld [$c8ee], a ; $5c23
-	ld hl, $c8ed ; $5c26
+	ld hl, wTotalPointsScoredInCurrentGame ; $5c26
 	inc [hl] ; $5c29
 	ret ; $5c2a
 Func_08_5c2b:
 	call Func_08_5c47 ; $5c2b
 	call Func_08_5c53 ; $5c2e
-	ld a, [$c4d8] ; $5c31
+	ld a, [wPointOutcome] ; $5c31
 	cp a, $06 ; $5c34
 	ret nz ; $5c36
 	call Func_08_5ca1 ; $5c37
@@ -4110,16 +3782,16 @@ Func_08_5c2b:
 	call Func_08_5c5f ; $5c43
 	ret ; $5c46
 Func_08_5c47:
-	ld a, [$c4d8] ; $5c47
+	ld a, [wPointOutcome] ; $5c47
 	cp a, $01 ; $5c4a
 	ret nz ; $5c4c
-	ld hl, $c8c5 ; $5c4d
+	ld hl, wCharacter1Faults ; $5c4d
 	jp Label_08_5cb2 ; $5c50
 Func_08_5c53:
-	ld a, [$c4d8] ; $5c53
+	ld a, [wPointOutcome] ; $5c53
 	cp a, $02 ; $5c56
 	ret nz ; $5c58
-	ld hl, $c8c6 ; $5c59
+	ld hl, wCharacter1DoubleFaults ; $5c59
 	jp Label_08_5cb2 ; $5c5c
 Func_08_5c5f:
 	ld a, [$c4d0] ; $5c5f
@@ -4127,7 +3799,7 @@ Func_08_5c5f:
 	ret z ; $5c63
 	ld a, $01 ; $5c64
 	ld [$c491], a ; $5c66
-	ld hl, $c8c0 ; $5c69
+	ld hl, wCharacter1ServiceAces ; $5c69
 	jp Label_08_5cb2 ; $5c6c
 Func_08_5c6f:
 	ld a, [$c4d1] ; $5c6f
@@ -4135,7 +3807,7 @@ Func_08_5c6f:
 	ret z ; $5c73
 	ld a, $02 ; $5c74
 	ld [$c491], a ; $5c76
-	ld hl, $c8c1 ; $5c79
+	ld hl, wCharacter1ReturnAces ; $5c79
 	jp Label_08_5cb2 ; $5c7c
 Func_08_5c7f:
 	ld a, [$c4a0] ; $5c7f
@@ -4143,7 +3815,7 @@ Func_08_5c7f:
 	ret nz ; $5c84
 	ld a, $03 ; $5c85
 	ld [$c491], a ; $5c87
-	ld hl, $c8c2 ; $5c8a
+	ld hl, wCharacter1SmashAces ; $5c8a
 	jp Label_08_5cb2 ; $5c8d
 Func_08_5c90:
 	ld a, [$c4a0] ; $5c90
@@ -4151,7 +3823,7 @@ Func_08_5c90:
 	ret nz ; $5c95
 	ld a, $04 ; $5c96
 	ld [$c491], a ; $5c98
-	ld hl, $c8c3 ; $5c9b
+	ld hl, wCharacter1LobShotWinners ; $5c9b
 	jp Label_08_5cb2 ; $5c9e
 Func_08_5ca1:
 	ld a, [$c4a0] ; $5ca1
@@ -4159,7 +3831,7 @@ Func_08_5ca1:
 	ret nz ; $5ca6
 	ld a, $05 ; $5ca7
 	ld [$c491], a ; $5ca9
-	ld hl, $c8c4 ; $5cac
+	ld hl, wCharacter1DropShotWinners ; $5cac
 	jp Label_08_5cb2 ; $5caf
 Label_08_5cb2:
 	ld a, [$c4b8] ; $5cb2
@@ -4181,7 +3853,7 @@ Func_08_5cc3:
 	inc a ; $5cc6
 	srl a ; $5cc7
 	ld b, a ; $5cc9
-	ld hl, $c8e0 ; $5cca
+	ld hl, wPlayer1SetsWon ; $5cca
 	ld a, [hl+] ; $5ccd
 	sub a, [hl] ; $5cce
 	jr z, Label_08_5ce7 ; $5ccf
@@ -4313,7 +3985,7 @@ Label_08_5d98:
 	xor a, a ; $5d98
 	ret ; $5d99
 Func_08_5d9a:
-	ld a, [$c4d8] ; $5d9a
+	ld a, [wPointOutcome] ; $5d9a
 	cp a, $01 ; $5d9d
 	jr z, Label_08_5dba ; $5d9f
 	cp a, $03 ; $5da1
@@ -4454,12 +4126,12 @@ Label_08_5ec7:
 Func_08_5eef:
 	wram_bank $04 ; $5eef
 	push de ; $5ef5
-	ld de, $c600 ; $5ef6
+	ld de, wTextBuffer ; $5ef6
 	ld c, $02 ; $5ef9
 	call CopyMemoryFast ; $5efb
 	pop de ; $5efe
 	wram_bank $02 ; $5eff
-	ld hl, $c600 ; $5f05
+	ld hl, wTextBuffer ; $5f05
 	ld a, [hl+] ; $5f08
 	ld [de], a ; $5f09
 	inc de ; $5f0a
@@ -4569,7 +4241,7 @@ Label_08_5fb4:
 	ret ; $5fbb
 Func_08_5fbc:
 	xor a, a ; $5fbc
-	ld [$c4c4], a ; $5fbd
+	ld [wOffscreenArrowsEnabled], a ; $5fbd
 	call Func_08_511c ; $5fc0
 	call Func_08_6199 ; $5fc3
 	call Func_08_61aa ; $5fc6
@@ -4607,7 +4279,7 @@ Func_08_6010:
 	ld a, $01 ; $6010
 	ld [$c4c2], a ; $6012
 	xor a, a ; $6015
-	ld [$c4c4], a ; $6016
+	ld [wOffscreenArrowsEnabled], a ; $6016
 	call Func_08_6199 ; $6019
 	call Func_08_61c9 ; $601c
 	ld hl, $6046 ; $601f
@@ -5039,7 +4711,7 @@ Label_08_62a5:
 	add hl, de ; $62bb
 	ld e, l ; $62bc
 	ld d, h ; $62bd
-	ld hl, $c478 ; $62be
+	ld hl, wCameraOffsetX ; $62be
 	ld a, e ; $62c1
 	ld [hl+], a ; $62c2
 	ld [hl], d ; $62c3
@@ -5081,17 +4753,18 @@ Label_08_62a5:
 	add hl, de ; $62f7
 	ld e, l ; $62f8
 	ld d, h ; $62f9
-	ld hl, $c47a ; $62fa
+	ld hl, wCameraOffsetY ; $62fa
 	ld a, e ; $62fd
 	ld [hl+], a ; $62fe
 	ld [hl], d ; $62ff
 	ret ; $6300
+StandingShadowOamTemplate:
 	; $6301, 13 bytes (bytes:4)
 	db $02, $fc, $00, $00 ; 0x00
 	db $02, $04, $02, $00 ; 0x04
 	db $02, $0c, $04, $00 ; 0x08
 	db $80 ; 0x0c
-Func_08_630e:
+ClearSpriteSlots:
 	ld a, $ff ; $630e
 	ld [$de00], a ; $6310
 	ld [$de04], a ; $6313
@@ -5122,7 +4795,7 @@ Func_08_630e:
 	ld [$df88], a ; $6366
 	ld [$df8c], a ; $6369
 	ret ; $636c
-Func_08_636d:
+DrawNearTeamChars:
 	ld hl, $df96 ; $636d
 	wram_bank $06 ; $6370
 	ld b, [hl] ; $6376
@@ -5132,22 +4805,22 @@ Func_08_636d:
 	jr c, Label_08_63a0 ; $637f
 	wram_bank $04 ; $6381
 	ld hl, $df80 ; $6387
-	call Func_08_650a ; $638a
+	call DrawCharSprite ; $638a
 	wram_bank $06 ; $638d
 	ld hl, $df80 ; $6393
-	call Func_08_650a ; $6396
+	call DrawCharSprite ; $6396
 	wram_bank $04 ; $6399
 	ret ; $639f
 Label_08_63a0:
 	wram_bank $06 ; $63a0
 	ld hl, $df80 ; $63a6
-	call Func_08_650a ; $63a9
+	call DrawCharSprite ; $63a9
 	wram_bank $04 ; $63ac
 	ld hl, $df80 ; $63b2
-	call Func_08_650a ; $63b5
+	call DrawCharSprite ; $63b5
 	wram_bank $04 ; $63b8
 	ret ; $63be
-Func_08_63bf:
+DrawFarTeamChars:
 	ld hl, $df96 ; $63bf
 	wram_bank $07 ; $63c2
 	ld b, [hl] ; $63c8
@@ -5157,32 +4830,32 @@ Func_08_63bf:
 	jr c, Label_08_63f2 ; $63d1
 	wram_bank $05 ; $63d3
 	ld hl, $df80 ; $63d9
-	call Func_08_650a ; $63dc
+	call DrawCharSprite ; $63dc
 	wram_bank $07 ; $63df
 	ld hl, $df80 ; $63e5
-	call Func_08_650a ; $63e8
+	call DrawCharSprite ; $63e8
 	wram_bank $04 ; $63eb
 	ret ; $63f1
 Label_08_63f2:
 	wram_bank $07 ; $63f2
 	ld hl, $df80 ; $63f8
-	call Func_08_650a ; $63fb
+	call DrawCharSprite ; $63fb
 	wram_bank $05 ; $63fe
 	ld hl, $df80 ; $6404
-	call Func_08_650a ; $6407
+	call DrawCharSprite ; $6407
 	wram_bank $04 ; $640a
 	ret ; $6410
-Func_08_6411:
-	call Func_08_540e ; $6411
-	call Func_08_5436 ; $6414
+DrawBallAndEffects:
+	call DrawHitSpark ; $6411
+	call DrawSpecialHitEffect ; $6414
 	ld hl, $de00 ; $6417
-	call Func_08_64fd ; $641a
+	call DrawSlotSprite ; $641a
 	ld hl, $de04 ; $641d
-	call Func_08_64fd ; $6420
+	call DrawSlotSprite ; $6420
 	ld d, $07 ; $6423
-	call Func_08_66f1 ; $6425
+	call CallModeHook ; $6425
 	ret ; $6428
-Func_08_6429:
+DrawActorsByDepth:
 	ld a, [$c7b8] ; $6429
 	and a, a ; $642c
 	jr nz, Label_08_6477 ; $642d
@@ -5193,73 +4866,73 @@ Func_08_6429:
 	ld a, [hl] ; $643f
 	cp a, b ; $6440
 	jr nc, Label_08_645d ; $6441
-	ld a, [$c4d8] ; $6443
+	ld a, [wPointOutcome] ; $6443
 	and a, a ; $6446
 	jr z, Label_08_6453 ; $6447
-	call Func_08_63bf ; $6449
-	call Func_08_636d ; $644c
-	call Func_08_6411 ; $644f
+	call DrawFarTeamChars ; $6449
+	call DrawNearTeamChars ; $644c
+	call DrawBallAndEffects ; $644f
 	ret ; $6452
 Label_08_6453:
-	call Func_08_63bf ; $6453
-	call Func_08_6411 ; $6456
-	call Func_08_636d ; $6459
+	call DrawFarTeamChars ; $6453
+	call DrawBallAndEffects ; $6456
+	call DrawNearTeamChars ; $6459
 	ret ; $645c
 Label_08_645d:
-	ld a, [$c4d8] ; $645d
+	ld a, [wPointOutcome] ; $645d
 	and a, a ; $6460
 	jr z, Label_08_646d ; $6461
-	call Func_08_636d ; $6463
-	call Func_08_63bf ; $6466
-	call Func_08_6411 ; $6469
+	call DrawNearTeamChars ; $6463
+	call DrawFarTeamChars ; $6466
+	call DrawBallAndEffects ; $6469
 	ret ; $646c
 Label_08_646d:
-	call Func_08_636d ; $646d
-	call Func_08_6411 ; $6470
-	call Func_08_63bf ; $6473
+	call DrawNearTeamChars ; $646d
+	call DrawBallAndEffects ; $6470
+	call DrawFarTeamChars ; $6473
 	ret ; $6476
 Label_08_6477:
-	call Func_08_636d ; $6477
-	call Func_08_6411 ; $647a
-	call Func_08_63bf ; $647d
+	call DrawNearTeamChars ; $6477
+	call DrawBallAndEffects ; $647a
+	call DrawFarTeamChars ; $647d
 	ret ; $6480
-Func_08_6481:
-	call Func_08_5522 ; $6481
-	call Func_08_5342 ; $6484
+DrawMarkersAndShadows:
+	call DrawTargetZone ; $6481
+	call DrawLandingMarker ; $6484
 	ld hl, $de0c ; $6487
-	call Func_08_64fd ; $648a
+	call DrawSlotSprite ; $648a
 	ld hl, $de10 ; $648d
-	call Func_08_64fd ; $6490
+	call DrawSlotSprite ; $6490
 	ld hl, $de14 ; $6493
-	call Func_08_64fd ; $6496
+	call DrawSlotSprite ; $6496
 	ld hl, $de18 ; $6499
-	call Func_08_64fd ; $649c
+	call DrawSlotSprite ; $649c
 	ld hl, $de1c ; $649f
-	call Func_08_64fd ; $64a2
-	call Func_08_53ac ; $64a5
+	call DrawSlotSprite ; $64a2
+	call DrawBounceEffect ; $64a5
 	ld hl, $df88 ; $64a8
 	wram_bank $07 ; $64ab
-	call Func_08_64fd ; $64b1
+	call DrawSlotSprite ; $64b1
 	ld hl, $df88 ; $64b4
 	wram_bank $06 ; $64b7
-	call Func_08_64fd ; $64bd
+	call DrawSlotSprite ; $64bd
 	ld hl, $df88 ; $64c0
 	wram_bank $05 ; $64c3
-	call Func_08_64fd ; $64c9
+	call DrawSlotSprite ; $64c9
 	ld hl, $df88 ; $64cc
 	wram_bank $04 ; $64cf
-	call Func_08_64fd ; $64d5
+	call DrawSlotSprite ; $64d5
 	ld hl, $de08 ; $64d8
-	call Func_08_64fd ; $64db
+	call DrawSlotSprite ; $64db
 	ld hl, $df8c ; $64de
 	wram_bank $05 ; $64e1
-	call Func_08_6527 ; $64e7
+	call DrawStandingShadowSlot ; $64e7
 	ld hl, $df8c ; $64ea
 	wram_bank $04 ; $64ed
-	call Func_08_6527 ; $64f3
+	call DrawStandingShadowSlot ; $64f3
 	wram_bank $04 ; $64f6
 	ret ; $64fc
-Func_08_64fd:
+DrawSlotSprite:
 	ld a, [hl+] ; $64fd
 	cp a, $ff ; $64fe
 	ret z ; $6500
@@ -5269,8 +4942,8 @@ Func_08_64fd:
 	ld a, [hl+] ; $6504
 	ld e, a ; $6505
 	ld d, [hl] ; $6506
-	jp Func_00_1f51 ; $6507
-Func_08_650a:
+	jp QueueSprite ; $6507
+DrawCharSprite:
 	ld a, [hl+] ; $650a
 	cp a, $ff ; $650b
 	ret z ; $650d
@@ -5289,7 +4962,7 @@ Func_08_650a:
 	and a, a ; $6520
 	jp z, Func_00_2c2b ; $6521
 	jp Label_00_2ced ; $6524
-Func_08_6527:
+DrawStandingShadowSlot:
 	ld a, [hl+] ; $6527
 	cp a, $ff ; $6528
 	ret z ; $652a
@@ -5299,8 +4972,8 @@ Func_08_6527:
 	ld a, [hl+] ; $652e
 	ld e, a ; $652f
 	ld d, [hl] ; $6530
-	ld hl, $6301 ; $6531
-	jp Func_00_1e9d ; $6534
+	ld hl, StandingShadowOamTemplate ; $6531
+	jp QueueSpriteTemplate ; $6534
 	ld a, [hl+] ; $6537
 	cp a, $ff ; $6538
 	ret z ; $653a
@@ -5310,7 +4983,7 @@ Func_08_6527:
 	ld a, [hl+] ; $653e
 	ld e, a ; $653f
 	ld d, [hl] ; $6540
-	jp Func_00_1e55 ; $6541
+	jp QueueSprite16 ; $6541
 Func_08_6544:
 	call Func_08_4070 ; $6544
 	ld a, $02 ; $6547
@@ -5375,7 +5048,7 @@ Func_08_65be:
 	ld a, $00 ; $65d0
 	ld [$df7c], a ; $65d2
 	ld d, $03 ; $65d5
-	call Func_08_66f1 ; $65d7
+	call CallModeHook ; $65d7
 	ld a, [$c4c3] ; $65da
 	and a, $80 ; $65dd
 	jr nz, Label_08_6630 ; $65df
@@ -5383,7 +5056,7 @@ Label_08_65e1:
 	call Func_08_6662 ; $65e1
 	call Func_08_4cb9 ; $65e4
 	ld d, $01 ; $65e7
-	call Func_08_66f1 ; $65e9
+	call CallModeHook ; $65e9
 	ld a, [$c4c3] ; $65ec
 	and a, $80 ; $65ef
 	jr nz, Label_08_6630 ; $65f1
@@ -5398,7 +5071,7 @@ Label_08_65ff:
 	and a, $80 ; $6605
 	jr nz, Label_08_6630 ; $6607
 	ld d, $02 ; $6609
-	call Func_08_66f1 ; $660b
+	call CallModeHook ; $660b
 	ld a, [$c4c3] ; $660e
 	and a, $80 ; $6611
 	jr nz, Label_08_6630 ; $6613
@@ -5415,7 +5088,7 @@ Label_08_65ff:
 	jr nc, Label_08_6626 ; $6623
 	inc h ; $6625
 Label_08_6626:
-	ld a, [$c7b4] ; $6626
+	ld a, [wModeHookBank] ; $6626
 	call Func_00_0628 ; $6629
 	cp a, $ff ; $662c
 	jr nz, Label_08_65e1 ; $662e
@@ -5431,11 +5104,11 @@ Label_08_663c:
 	ld a, [$c4c3] ; $663f
 	and a, $01 ; $6642
 	jr nz, Label_08_664c ; $6644
-	ld a, [$c4d8] ; $6646
+	ld a, [wPointOutcome] ; $6646
 	and a, a ; $6649
 	jr z, Label_08_663c ; $664a
 Label_08_664c:
-	ld a, [$c4d8] ; $664c
+	ld a, [wPointOutcome] ; $664c
 	cp a, $09 ; $664f
 	jr nz, Label_08_6658 ; $6651
 	ld a, $28 ; $6653
@@ -5446,7 +5119,7 @@ Label_08_6658:
 	call Func_08_5ba7 ; $665e
 	ret ; $6661
 Func_08_6662:
-	ld a, [$c7b4] ; $6662
+	ld a, [wModeHookBank] ; $6662
 	and a, a ; $6665
 	ret z ; $6666
 	add sp, -8 ; $6667
@@ -5467,7 +5140,7 @@ Func_08_6662:
 	jr nc, Label_08_667f ; $667c
 	inc h ; $667e
 Label_08_667f:
-	ld a, [$c7b4] ; $667f
+	ld a, [wModeHookBank] ; $667f
 	ld bc, $0008 ; $6682
 	call Func_00_067a ; $6685
 	pop hl ; $6688
@@ -5511,15 +5184,15 @@ Label_08_667f:
 	call ForEachCharBank ; $66eb
 	add sp, 8 ; $66ee
 	ret ; $66f0
-Func_08_66f1:
-	ld a, [$c7b4] ; $66f1
+CallModeHook:
+	ld a, [wModeHookBank] ; $66f1
 	and a, a ; $66f4
 	ret z ; $66f5
 	push af ; $66f6
 	push bc ; $66f7
 	push de ; $66f8
 	push hl ; $66f9
-	ld hl, $c7b2 ; $66fa
+	ld hl, wModeHookTable ; $66fa
 	ld a, [hl+] ; $66fd
 	ld h, [hl] ; $66fe
 	ld l, a ; $66ff
@@ -5530,22 +5203,22 @@ Func_08_66f1:
 	jr nc, Label_08_6707 ; $6704
 	inc h ; $6706
 Label_08_6707:
-	ld a, [$c7b4] ; $6707
+	ld a, [wModeHookBank] ; $6707
 	call Func_00_063d ; $670a
 	ld l, c ; $670d
 	ld h, b ; $670e
-	ld a, [$c7b4] ; $670f
+	ld a, [wModeHookBank] ; $670f
 	call Func_00_015e ; $6712
 	pop hl ; $6715
 	pop de ; $6716
 	pop bc ; $6717
 	pop af ; $6718
 	ret ; $6719
-Func_08_671a:
+SetModeHookTable:
 	push af ; $671a
 	push hl ; $671b
-	ld [$c7b4], a ; $671c
-	ld hl, $c7b2 ; $671f
+	ld [wModeHookBank], a ; $671c
+	ld hl, wModeHookTable ; $671f
 	ld a, e ; $6722
 	ld [hl+], a ; $6723
 	ld [hl], d ; $6724
@@ -5587,11 +5260,11 @@ Func_08_6740:
 Func_08_674f:
 	ld c, l ; $674f
 	ld b, h ; $6750
-	ld hl, $c792 ; $6751
+	ld hl, wTargetZoneDepth1 ; $6751
 	ld a, e ; $6754
 	ld [hl+], a ; $6755
 	ld [hl], d ; $6756
-	ld hl, $c790 ; $6757
+	ld hl, wTargetZoneX1 ; $6757
 	ld a, c ; $675a
 	ld [hl+], a ; $675b
 	ld [hl], b ; $675c
@@ -5599,11 +5272,11 @@ Func_08_674f:
 Func_08_675e:
 	ld c, l ; $675e
 	ld b, h ; $675f
-	ld hl, $c796 ; $6760
+	ld hl, wTargetZoneDepth2 ; $6760
 	ld a, e ; $6763
 	ld [hl+], a ; $6764
 	ld [hl], d ; $6765
-	ld hl, $c794 ; $6766
+	ld hl, wTargetZoneX2 ; $6766
 	ld a, c ; $6769
 	ld [hl+], a ; $676a
 	ld [hl], b ; $676b
@@ -5623,7 +5296,7 @@ Func_08_676d:
 	ld a, d ; $677c
 	sbc a, b ; $677d
 	ld d, a ; $677e
-	ld hl, $c406 ; $677f
+	ld hl, wBallDepth ; $677f
 	ld a, [hl+] ; $6782
 	ld h, [hl] ; $6783
 	ld l, a ; $6784
@@ -5641,7 +5314,7 @@ Func_08_676d:
 	ld a, [hl+] ; $6794
 	ld d, [hl] ; $6795
 	ld e, a ; $6796
-	ld hl, $c402 ; $6797
+	ld hl, wBallX ; $6797
 	ld a, [hl+] ; $679a
 	ld h, [hl] ; $679b
 	ld l, a ; $679c
@@ -5657,7 +5330,7 @@ Func_08_676d:
 	ld a, [hl+] ; $67aa
 	ld d, [hl] ; $67ab
 	ld e, a ; $67ac
-	ld hl, $c402 ; $67ad
+	ld hl, wBallX ; $67ad
 	ld a, [hl+] ; $67b0
 	ld h, [hl] ; $67b1
 	ld l, a ; $67b2
@@ -5679,7 +5352,7 @@ Func_08_67c2:
 	ldh a, [hWramBank] ; $67c2
 	push af ; $67c4
 	wram_bank $04 ; $67c5
-	ld hl, $c790 ; $67cb
+	ld hl, wTargetZoneX1 ; $67cb
 	ld a, [hl+] ; $67ce
 	ld d, [hl] ; $67cf
 	ld e, a ; $67d0
@@ -5687,7 +5360,7 @@ Func_08_67c2:
 	add hl, de ; $67d4
 	ld e, l ; $67d5
 	ld d, h ; $67d6
-	ld hl, $c402 ; $67d7
+	ld hl, wBallX ; $67d7
 	ld a, [hl+] ; $67da
 	ld h, [hl] ; $67db
 	ld l, a ; $67dc
@@ -5699,7 +5372,7 @@ Func_08_67c2:
 	ld h, a ; $67e2
 	bit 7, h ; $67e3
 	jr nz, Label_08_6843 ; $67e5
-	ld hl, $c794 ; $67e7
+	ld hl, wTargetZoneX2 ; $67e7
 	ld a, [hl+] ; $67ea
 	ld d, [hl] ; $67eb
 	ld e, a ; $67ec
@@ -5707,7 +5380,7 @@ Func_08_67c2:
 	add hl, de ; $67f0
 	ld e, l ; $67f1
 	ld d, h ; $67f2
-	ld hl, $c402 ; $67f3
+	ld hl, wBallX ; $67f3
 	ld a, [hl+] ; $67f6
 	ld h, [hl] ; $67f7
 	ld l, a ; $67f8
@@ -5719,7 +5392,7 @@ Func_08_67c2:
 	ld h, a ; $67fe
 	bit 7, h ; $67ff
 	jr z, Label_08_6843 ; $6801
-	ld hl, $c792 ; $6803
+	ld hl, wTargetZoneDepth1 ; $6803
 	ld a, [hl+] ; $6806
 	ld d, [hl] ; $6807
 	ld e, a ; $6808
@@ -5727,7 +5400,7 @@ Func_08_67c2:
 	add hl, de ; $680c
 	ld e, l ; $680d
 	ld d, h ; $680e
-	ld hl, $c406 ; $680f
+	ld hl, wBallDepth ; $680f
 	ld a, [hl+] ; $6812
 	ld h, [hl] ; $6813
 	ld l, a ; $6814
@@ -5739,7 +5412,7 @@ Func_08_67c2:
 	ld h, a ; $681a
 	bit 7, h ; $681b
 	jr nz, Label_08_6843 ; $681d
-	ld hl, $c796 ; $681f
+	ld hl, wTargetZoneDepth2 ; $681f
 	ld a, [hl+] ; $6822
 	ld d, [hl] ; $6823
 	ld e, a ; $6824
@@ -5747,7 +5420,7 @@ Func_08_67c2:
 	add hl, de ; $6828
 	ld e, l ; $6829
 	ld d, h ; $682a
-	ld hl, $c406 ; $682b
+	ld hl, wBallDepth ; $682b
 	ld a, [hl+] ; $682e
 	ld h, [hl] ; $682f
 	ld l, a ; $6830
@@ -5769,7 +5442,7 @@ Label_08_6843:
 	wram_bank ; $6844
 	xor a, a ; $6848
 	ret ; $6849
-Func_08_684a:
+InitChar:
 	ld [$df0b], a ; $684a
 	ld a, d ; $684d
 	ld [$df78], a ; $684e
@@ -5792,7 +5465,7 @@ Func_08_684a:
 	ld a, $01 ; $6879
 	ld [$df1e], a ; $687b
 	ret ; $687e
-Func_08_687f:
+InitAllChars:
 	wram_bank $07 ; $687f
 	ld hl, $df00 ; $6885
 	ld c, $10 ; $6888
@@ -5819,7 +5492,7 @@ Func_08_687f:
 	ld b, $01 ; $68c5
 Label_08_68c7:
 	ld a, b ; $68c7
-	ld [$c4ca], a ; $68c8
+	ld [wStandingShadowsEnabled], a ; $68c8
 	ld a, [wOnCourtCharCountMinus1] ; $68cb
 	rst Rst00 ; $68ce
 	dw Label_08_6910 ; $68cf jumptable
@@ -5833,7 +5506,7 @@ Label_08_68d7:
 	ld a, [$ca4c] ; $68e1
 	ld e, a ; $68e4
 	ld a, $02 ; $68e5
-	call Func_08_684a ; $68e7
+	call InitChar ; $68e7
 Label_08_68ea:
 	wram_bank $07 ; $68ea
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $68f0
@@ -5841,7 +5514,7 @@ Label_08_68ea:
 	ld a, [$cacc] ; $68f4
 	ld e, a ; $68f7
 	ld a, $03 ; $68f8
-	call Func_08_684a ; $68fa
+	call InitChar ; $68fa
 Label_08_68fd:
 	wram_bank $05 ; $68fd
 	ld a, [wPlayer2CurrentMainCharacter] ; $6903
@@ -5849,7 +5522,7 @@ Label_08_68fd:
 	ld a, [$ca8c] ; $6907
 	ld e, a ; $690a
 	ld a, $01 ; $690b
-	call Func_08_684a ; $690d
+	call InitChar ; $690d
 Label_08_6910:
 	wram_bank $04 ; $6910
 	ld a, [wPlayer1CurrentMainCharacter] ; $6916
@@ -5857,7 +5530,7 @@ Label_08_6910:
 	ld a, [$ca0c] ; $691a
 	ld e, a ; $691d
 	ld a, $00 ; $691e
-	call Func_08_684a ; $6920
+	call InitChar ; $6920
 	ld a, $00 ; $6923
 	ld [$df1e], a ; $6925
 	farcall FarPtr_09_06 ; $6928
@@ -5873,7 +5546,7 @@ UpdateAllChars:
 	call UpdateChar ; $694d
 	wram_bank $04 ; $6950
 	ret ; $6956
-	INCBIN "data/bank_008/d_6957.bin" ; $6957, 1 bytes
+	ret ; $6957
 UpdateChar:
 	ld a, [$df22] ; $6958
 	and a, a ; $695b
@@ -5889,9 +5562,9 @@ UpdateChar:
 	call Func_08_7791 ; $6975
 	call Func_08_75e8 ; $6978
 	call Func_08_7621 ; $697b
-	call Func_08_7672 ; $697e
+	call BuildCharSpriteSlots ; $697e
 	call Func_08_764b ; $6981
-	call Func_08_7745 ; $6984
+	call BuildAirborneShadowSlot ; $6984
 	ret ; $6987
 SetCharPosAndTarget:
 	ld c, l ; $6988
@@ -6164,9 +5837,9 @@ Label_08_6b3f:
 	ld de, $0000 ; $6b61
 	call Func_08_45a9 ; $6b64
 	ld a, $01 ; $6b67
-	ld [$c4ba], a ; $6b69
-	ld [$c4bb], a ; $6b6c
-	ld [$c4bc], a ; $6b6f
+	ld [wBallSpriteEnabled], a ; $6b69
+	ld [wBallShadowEnabled], a ; $6b6c
+	ld [wBallTrailEnabled], a ; $6b6f
 	ldh a, [hWramBank] ; $6b72
 	push af ; $6b74
 	wram_bank $04 ; $6b75
@@ -6187,7 +5860,7 @@ Label_08_6b8d:
 	ld a, [hl+] ; $6b97
 	ld b, [hl] ; $6b98
 	ld c, a ; $6b99
-	ld hl, $c40a ; $6b9a
+	ld hl, wBallHeight ; $6b9a
 	ld a, [hl+] ; $6b9d
 	ld h, [hl] ; $6b9e
 	ld l, a ; $6b9f
@@ -6399,7 +6072,7 @@ Label_08_6d16:
 	dw Label_08_6a8f ; $6d20 jumptable
 	dw Label_00_1921 ; $6d22 jumptable
 	dw Label_00_34df ; $6d24 jumptable
-	INCBIN "data/bank_008/d_6d26.bin" ; $6d26, 1 bytes
+	ret ; $6d26
 Label_08_6d27:
 	call Func_08_69c2 ; $6d27
 	ld a, [$df57] ; $6d2a
@@ -6487,7 +6160,7 @@ Label_08_6da0:
 	ld a, [hl+] ; $6dad
 	ld d, [hl] ; $6dae
 	ld e, a ; $6daf
-	ld hl, $c40a ; $6db0
+	ld hl, wBallHeight ; $6db0
 	ld a, [hl+] ; $6db3
 	ld h, [hl] ; $6db4
 	ld l, a ; $6db5
@@ -6496,7 +6169,7 @@ Label_08_6da0:
 	add hl, bc ; $6db8
 	bit 7, h ; $6db9
 	jr nz, Label_08_6dd5 ; $6dbb
-	ld hl, $c40a ; $6dbd
+	ld hl, wBallHeight ; $6dbd
 	ld a, [hl+] ; $6dc0
 	ld h, [hl] ; $6dc1
 	ld l, a ; $6dc2
@@ -6599,7 +6272,7 @@ Label_08_6e5e:
 	ld [$df15], a ; $6e60
 	ret ; $6e63
 Func_08_6e64:
-	ld de, $c402 ; $6e64
+	ld de, wBallX ; $6e64
 	ld hl, $df01 ; $6e67
 	ld bc, $c448 ; $6e6a
 	ld a, [de] ; $6e6d
@@ -6612,7 +6285,7 @@ Func_08_6e64:
 	sbc a, [hl] ; $6e74
 	ld [bc], a ; $6e75
 	inc c ; $6e76
-	ld de, $c406 ; $6e77
+	ld de, wBallDepth ; $6e77
 	ld hl, $df04 ; $6e7a
 	ld a, [de] ; $6e7d
 	sub a, [hl] ; $6e7e
@@ -6624,7 +6297,7 @@ Func_08_6e64:
 	sbc a, [hl] ; $6e84
 	ld [bc], a ; $6e85
 	inc c ; $6e86
-	ld de, $c40a ; $6e87
+	ld de, wBallHeight ; $6e87
 	ld hl, $df07 ; $6e8a
 	ld a, [de] ; $6e8d
 	sub a, [hl] ; $6e8e
@@ -6671,7 +6344,7 @@ Func_08_6ec5:
 	ld a, [$df18] ; $6eca
 	cp a, $01 ; $6ecd
 	ret nz ; $6ecf
-	ld a, [$c4d8] ; $6ed0
+	ld a, [wPointOutcome] ; $6ed0
 	and a, a ; $6ed3
 	ret nz ; $6ed4
 	ld hl, $c44a ; $6ed5
@@ -7907,7 +7580,7 @@ Func_08_7666:
 	ld [hl], $00 ; $766c
 	call Func_08_69c2 ; $766e
 	ret ; $7671
-Func_08_7672:
+BuildCharSpriteSlots:
 	ld hl, $df07 ; $7672
 	ld a, [hl+] ; $7675
 	ld b, [hl] ; $7676
@@ -7929,10 +7602,10 @@ Func_08_7672:
 	ld a, d ; $7692
 	add a, $08 ; $7693
 	cp a, $b0 ; $7695
-	jr nc, Label_08_7704 ; $7697
+	jr nc, DrawOffscreenCharArrow ; $7697
 	ld a, e ; $7699
 	cp a, $a0 ; $769a
-	jr nc, Label_08_7704 ; $769c
+	jr nc, DrawOffscreenCharArrow ; $769c
 	ld hl, $df04 ; $769e
 	ld a, [hl+] ; $76a1
 	ld h, [hl] ; $76a2
@@ -7974,7 +7647,7 @@ Label_08_76d4:
 	ld a, e ; $76db
 	ld [hl+], a ; $76dc
 	ld [hl], d ; $76dd
-	ld a, [$c4ca] ; $76de
+	ld a, [wStandingShadowsEnabled] ; $76de
 	and a, a ; $76e1
 	ret z ; $76e2
 	ld hl, $df0f ; $76e3
@@ -7995,8 +7668,8 @@ Label_08_76d4:
 	ret ; $76fb
 	; $76fc, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
-Label_08_7704:
-	ld a, [$c4c4] ; $7704
+DrawOffscreenCharArrow:
+	ld a, [wOffscreenArrowsEnabled] ; $7704
 	and a, a ; $7707
 	ret z ; $7708
 	ldh a, [$ffe9] ; $7709
@@ -8031,9 +7704,9 @@ Label_08_7732:
 	add a, a ; $773d
 	add a, $00 ; $773e
 	ld c, a ; $7740
-	call Func_00_1e55 ; $7741
+	call QueueSprite16 ; $7741
 	ret ; $7744
-Func_08_7745:
+BuildAirborneShadowSlot:
 	ld hl, $df0f ; $7745
 	bit 2, [hl] ; $7748
 	ret z ; $774a
@@ -8864,7 +8537,7 @@ Func_08_7c86:
 	ld a, [hl+] ; $7c89
 	ld b, [hl] ; $7c8a
 	ld c, a ; $7c8b
-	ld hl, $c406 ; $7c8c
+	ld hl, wBallDepth ; $7c8c
 	ld a, [hl+] ; $7c8f
 	ld h, [hl] ; $7c90
 	ld l, a ; $7c91
@@ -8876,7 +8549,7 @@ Func_08_7c86:
 	ld h, a ; $7c97
 	add hl, de ; $7c98
 	call Func_08_5a51 ; $7c99
-	ld hl, $c402 ; $7c9c
+	ld hl, wBallX ; $7c9c
 	ld a, [hl+] ; $7c9f
 	ld h, [hl] ; $7ca0
 	ld l, a ; $7ca1
@@ -9233,7 +8906,7 @@ Label_08_7f31:
 	call Func_08_7c30 ; $7f3b
 	ld a, a ; $7f3e
 	wram_bank ; $7f3f
-	ld hl, $c406 ; $7f43
+	ld hl, wBallDepth ; $7f43
 	ld a, [hl+] ; $7f46
 	ld d, [hl] ; $7f47
 	ld e, a ; $7f48
@@ -9314,4 +8987,4 @@ Label_08_7fbc:
 	ld c, d ; $7fbc
 	call Func_08_7b1f ; $7fbd
 	jp Label_08_7968 ; $7fc0
-	INCBIN "data/bank_008/d_7fc3.bin" ; $7fc3, 61 bytes
+	ds 61, $ff ; $7fc3, fill

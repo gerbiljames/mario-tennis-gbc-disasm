@@ -961,17 +961,17 @@ Label_15_5e74:
 	jp Label_15_5f58 ; $5e81
 	INCBIN "data/bank_015/d_5e84.bin" ; $5e84, 1 bytes
 Label_15_5e85:
-	ld hl, $c2ba ; $5e85
+	ld hl, wWaterSpriteMinigameFlag ; $5e85
 	ld de, $2020 ; $5e88
 	ld a, e ; $5e8b
 	ld [hl+], a ; $5e8c
 	ld [hl], d ; $5e8d
-	ld hl, $c2b4 ; $5e8e
+	ld hl, wWaterSpriteMinigameTimer ; $5e8e
 	ld de, $201d ; $5e91
 	ld a, e ; $5e94
 	ld [hl+], a ; $5e95
 	ld [hl], d ; $5e96
-	ld hl, $c2b6 ; $5e97
+	ld hl, wWaterSpriteMinigameSwingCount ; $5e97
 	test_flag $0a, 3 ; $5e9a
 	jr z, Label_15_5ea4 ; $5e9d
 	ld de, $2023 ; $5e9f
@@ -990,17 +990,17 @@ Label_15_5ea7:
 	call Func_15_5cf3 ; $5eb3
 	ret ; $5eb6
 Label_15_5eb7:
-	ld hl, $c2ba ; $5eb7
+	ld hl, wWaterSpriteMinigameFlag ; $5eb7
 	ld de, $2020 ; $5eba
 	ld a, e ; $5ebd
 	ld [hl+], a ; $5ebe
 	ld [hl], d ; $5ebf
-	ld hl, $c2b4 ; $5ec0
+	ld hl, wWaterSpriteMinigameTimer ; $5ec0
 	ld de, $201d ; $5ec3
 	ld a, e ; $5ec6
 	ld [hl+], a ; $5ec7
 	ld [hl], d ; $5ec8
-	ld hl, $c2b6 ; $5ec9
+	ld hl, wWaterSpriteMinigameSwingCount ; $5ec9
 	ld de, $2031 ; $5ecc
 	ld a, e ; $5ecf
 	ld [hl+], a ; $5ed0
@@ -1013,17 +1013,17 @@ Label_15_5eb7:
 	call Func_15_5cf3 ; $5edb
 	ret ; $5ede
 Label_15_5edf:
-	ld hl, $c2ba ; $5edf
+	ld hl, wWaterSpriteMinigameFlag ; $5edf
 	ld de, $2020 ; $5ee2
 	ld a, e ; $5ee5
 	ld [hl+], a ; $5ee6
 	ld [hl], d ; $5ee7
-	ld hl, $c2b4 ; $5ee8
+	ld hl, wWaterSpriteMinigameTimer ; $5ee8
 	ld de, $201d ; $5eeb
 	ld a, e ; $5eee
 	ld [hl+], a ; $5eef
 	ld [hl], d ; $5ef0
-	ld hl, $c2b6 ; $5ef1
+	ld hl, wWaterSpriteMinigameSwingCount ; $5ef1
 	ld de, $203d ; $5ef4
 	ld a, e ; $5ef7
 	ld [hl+], a ; $5ef8
@@ -1036,7 +1036,7 @@ Label_15_5edf:
 	call Func_15_5cf3 ; $5f03
 	ret ; $5f06
 Label_15_5f07:
-	ld hl, $c2b4 ; $5f07
+	ld hl, wWaterSpriteMinigameTimer ; $5f07
 	ld a, [hl+] ; $5f0a
 	ld h, [hl] ; $5f0b
 	ld l, a ; $5f0c
@@ -1072,7 +1072,7 @@ Label_15_5f48:
 	farcall FarPtr_0a_02 ; $5f54
 	ret ; $5f57
 Label_15_5f58:
-	ld hl, $c2b6 ; $5f58
+	ld hl, wWaterSpriteMinigameSwingCount ; $5f58
 	ld a, [hl+] ; $5f5b
 	ld h, [hl] ; $5f5c
 	ld l, a ; $5f5d
@@ -1087,7 +1087,7 @@ Label_15_5f58:
 	pop af ; $5f73
 	and a, a ; $5f74
 	jr nz, Label_15_5fa2 ; $5f75
-	ld hl, $c2ba ; $5f77
+	ld hl, wWaterSpriteMinigameFlag ; $5f77
 	ld a, [hl+] ; $5f7a
 	ld h, [hl] ; $5f7b
 	ld l, a ; $5f7c
@@ -1106,7 +1106,7 @@ Label_15_5f58:
 	farcall FarPtr_0a_02 ; $5f9e
 	ret ; $5fa1
 Label_15_5fa2:
-	ld hl, $c2ba ; $5fa2
+	ld hl, wWaterSpriteMinigameFlag ; $5fa2
 	ld a, [hl+] ; $5fa5
 	ld h, [hl] ; $5fa6
 	ld l, a ; $5fa7
@@ -1435,19 +1435,19 @@ Label_15_62a1:
 	farcall FarPtr_04_20 ; $62bb
 	ret ; $62be
 Label_15_62bf:
-	ld hl, $c2ba ; $62bf
+	ld hl, wWaterSpriteMinigameFlag ; $62bf
 	ld de, $204d ; $62c2
 	ld a, e ; $62c5
 	ld [hl+], a ; $62c6
 	ld [hl], d ; $62c7
-	ld hl, $c2b4 ; $62c8
+	ld hl, wWaterSpriteMinigameTimer ; $62c8
 	ld de, $204a ; $62cb
 	ld a, e ; $62ce
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
 	test_flag $0a, 3 ; $62d1
 	jr z, Label_15_62ea ; $62d4
-	ld hl, $c2b6 ; $62d6
+	ld hl, wWaterSpriteMinigameSwingCount ; $62d6
 	ld de, $2050 ; $62d9
 	ld a, e ; $62dc
 	ld [hl+], a ; $62dd
@@ -1459,7 +1459,7 @@ Label_15_62bf:
 	ld [hl], d ; $62e7
 	jr Label_15_62fc ; $62e8
 Label_15_62ea:
-	ld hl, $c2b6 ; $62ea
+	ld hl, wWaterSpriteMinigameSwingCount ; $62ea
 	ld de, $204f ; $62ed
 	ld a, e ; $62f0
 	ld [hl+], a ; $62f1
@@ -1473,17 +1473,17 @@ Label_15_62fc:
 	call Func_15_5d74 ; $62fc
 	ret ; $62ff
 Label_15_6300:
-	ld hl, $c2ba ; $6300
+	ld hl, wWaterSpriteMinigameFlag ; $6300
 	ld de, $204d ; $6303
 	ld a, e ; $6306
 	ld [hl+], a ; $6307
 	ld [hl], d ; $6308
-	ld hl, $c2b4 ; $6309
+	ld hl, wWaterSpriteMinigameTimer ; $6309
 	ld de, $204a ; $630c
 	ld a, e ; $630f
 	ld [hl+], a ; $6310
 	ld [hl], d ; $6311
-	ld hl, $c2b6 ; $6312
+	ld hl, wWaterSpriteMinigameSwingCount ; $6312
 	ld de, $205f ; $6315
 	ld a, e ; $6318
 	ld [hl+], a ; $6319
@@ -1496,17 +1496,17 @@ Label_15_6300:
 	call Func_15_5d74 ; $6324
 	ret ; $6327
 Label_15_6328:
-	ld hl, $c2ba ; $6328
+	ld hl, wWaterSpriteMinigameFlag ; $6328
 	ld de, $204d ; $632b
 	ld a, e ; $632e
 	ld [hl+], a ; $632f
 	ld [hl], d ; $6330
-	ld hl, $c2b4 ; $6331
+	ld hl, wWaterSpriteMinigameTimer ; $6331
 	ld de, $204a ; $6334
 	ld a, e ; $6337
 	ld [hl+], a ; $6338
 	ld [hl], d ; $6339
-	ld hl, $c2b6 ; $633a
+	ld hl, wWaterSpriteMinigameSwingCount ; $633a
 	ld de, $206c ; $633d
 	ld a, e ; $6340
 	ld [hl+], a ; $6341
@@ -1519,19 +1519,19 @@ Label_15_6328:
 	call Func_15_5d74 ; $634c
 	ret ; $634f
 Label_15_6350:
-	ld hl, $c2ba ; $6350
+	ld hl, wWaterSpriteMinigameFlag ; $6350
 	ld de, $207b ; $6353
 	ld a, e ; $6356
 	ld [hl+], a ; $6357
 	ld [hl], d ; $6358
-	ld hl, $c2b4 ; $6359
+	ld hl, wWaterSpriteMinigameTimer ; $6359
 	ld de, $2078 ; $635c
 	ld a, e ; $635f
 	ld [hl+], a ; $6360
 	ld [hl], d ; $6361
 	test_flag $0a, 3 ; $6362
 	jr z, Label_15_637b ; $6365
-	ld hl, $c2b6 ; $6367
+	ld hl, wWaterSpriteMinigameSwingCount ; $6367
 	ld de, $207e ; $636a
 	ld a, e ; $636d
 	ld [hl+], a ; $636e
@@ -1543,7 +1543,7 @@ Label_15_6350:
 	ld [hl], d ; $6378
 	jr Label_15_638d ; $6379
 Label_15_637b:
-	ld hl, $c2b6 ; $637b
+	ld hl, wWaterSpriteMinigameSwingCount ; $637b
 	ld de, $207d ; $637e
 	ld a, e ; $6381
 	ld [hl+], a ; $6382
@@ -1557,17 +1557,17 @@ Label_15_638d:
 	call Func_15_5df3 ; $638d
 	ret ; $6390
 Label_15_6391:
-	ld hl, $c2ba ; $6391
+	ld hl, wWaterSpriteMinigameFlag ; $6391
 	ld de, $207b ; $6394
 	ld a, e ; $6397
 	ld [hl+], a ; $6398
 	ld [hl], d ; $6399
-	ld hl, $c2b4 ; $639a
+	ld hl, wWaterSpriteMinigameTimer ; $639a
 	ld de, $2078 ; $639d
 	ld a, e ; $63a0
 	ld [hl+], a ; $63a1
 	ld [hl], d ; $63a2
-	ld hl, $c2b6 ; $63a3
+	ld hl, wWaterSpriteMinigameSwingCount ; $63a3
 	ld de, $2091 ; $63a6
 	ld a, e ; $63a9
 	ld [hl+], a ; $63aa
@@ -1580,17 +1580,17 @@ Label_15_6391:
 	call Func_15_5df3 ; $63b5
 	ret ; $63b8
 Label_15_63b9:
-	ld hl, $c2ba ; $63b9
+	ld hl, wWaterSpriteMinigameFlag ; $63b9
 	ld de, $207b ; $63bc
 	ld a, e ; $63bf
 	ld [hl+], a ; $63c0
 	ld [hl], d ; $63c1
-	ld hl, $c2b4 ; $63c2
+	ld hl, wWaterSpriteMinigameTimer ; $63c2
 	ld de, $2078 ; $63c5
 	ld a, e ; $63c8
 	ld [hl+], a ; $63c9
 	ld [hl], d ; $63ca
-	ld hl, $c2b6 ; $63cb
+	ld hl, wWaterSpriteMinigameSwingCount ; $63cb
 	ld de, $20a3 ; $63ce
 	ld a, e ; $63d1
 	ld [hl+], a ; $63d2
@@ -3284,4 +3284,4 @@ Label_15_7fc3:
 	jr z, Label_15_7fbf ; $7fcc
 	inc a ; $7fce
 	jr Label_15_7fbf ; $7fcf
-	INCBIN "data/bank_015/d_7fd1.bin" ; $7fd1, 47 bytes
+	ds 47, $ff ; $7fd1, fill

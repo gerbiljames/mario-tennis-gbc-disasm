@@ -303,7 +303,7 @@ Label_04_420f:
 	dec c ; $4213
 	jr nz, Label_04_41f2 ; $4214
 	ld hl, $d00c ; $4216
-	ld de, $c2d0 ; $4219
+	ld de, wStoryModePlayersXPosition ; $4219
 	ld bc, $0004 ; $421c
 	call CopyMemoryBC ; $421f
 	ld a, [$d032] ; $4222
@@ -1900,7 +1900,7 @@ Func_04_4e6b:
 	pop hl ; $4eb0
 	pop de ; $4eb1
 	call Func_04_40c6 ; $4eb2
-	ld hl, $c90c ; $4eb5
+	ld hl, wStoryModeMainCharacterOverworldSpriteColor ; $4eb5
 	ld a, [hl] ; $4eb8
 	add a, $03 ; $4eb9
 	ld bc, $d000 ; $4ebb
@@ -2853,7 +2853,7 @@ Label_04_5583:
 	ld a, [hl+] ; $55b3
 	ld b, [hl] ; $55b4
 	ld c, a ; $55b5
-	call Func_00_1e55 ; $55b6
+	call QueueSprite16 ; $55b6
 	pop bc ; $55b9
 	ld hl, $0030 ; $55ba
 	add hl, bc ; $55bd

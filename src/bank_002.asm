@@ -271,7 +271,7 @@ Func_02_41ee:
 	pop af ; $4204
 	ret ; $4205
 Func_02_4206:
-	ld bc, $c900 ; $4206
+	ld bc, wStoryModeNameOfMainCharacter ; $4206
 	or a, a ; $4209
 	ret z ; $420a
 	ld c, $40 ; $420b
@@ -298,7 +298,7 @@ Func_02_421c:
 	ld a, $01 ; $422e
 	ld d, $02 ; $4230
 	call Func_02_43a3 ; $4232
-	ld hl, $c280 ; $4235
+	ld hl, wStoryModeCurrentLocation ; $4235
 	ld [hl], $00 ; $4238
 	ld hl, $c295 ; $423a
 	ld [hl], $02 ; $423d
@@ -581,7 +581,7 @@ Label_02_4405:
 	jr nz, Label_02_4405 ; $4409
 	pop bc ; $440b
 	call Func_02_44e9 ; $440c
-	ld hl, $c900 ; $440f
+	ld hl, wStoryModeNameOfMainCharacter ; $440f
 	ld de, $c800 ; $4412
 	ld c, $08 ; $4415
 	call CopyMemoryFast ; $4417
@@ -589,7 +589,7 @@ Label_02_4405:
 	INCBIN "data/bank_002/d_441b.bin" ; $441b, 32 bytes
 Func_02_443b:
 	push de ; $443b
-	ld hl, $c900 ; $443c
+	ld hl, wStoryModeNameOfMainCharacter ; $443c
 	ld c, $04 ; $443f
 	call ClearMemory16 ; $4441
 	pop de ; $4444
@@ -598,7 +598,7 @@ Func_02_443b:
 	and a, $3f ; $4447
 	ld b, a ; $4449
 	call Func_02_41ee ; $444a
-	ld de, $c900 ; $444d
+	ld de, wStoryModeNameOfMainCharacter ; $444d
 	call Func_02_447a ; $4450
 	ld hl, $000b ; $4453
 	add hl, de ; $4456
@@ -1034,9 +1034,9 @@ Label_02_46e4:
 	ret ; $46ea
 	INCBIN "data/bank_002/d_46eb.bin" ; $46eb, 164 bytes
 Func_02_478f:
-	ld bc, $c900 ; $478f
+	ld bc, wStoryModeNameOfMainCharacter ; $478f
 	call Func_02_44e9 ; $4792
-	ld hl, $c900 ; $4795
+	ld hl, wStoryModeNameOfMainCharacter ; $4795
 	ld de, $c800 ; $4798
 	ld c, $08 ; $479b
 	call CopyMemoryFast ; $479d
@@ -1064,12 +1064,12 @@ Label_02_47bb:
 	call Func_02_44e9 ; $47c2
 	ret ; $47c5
 Func_02_47c6:
-	ld hl, $c93c ; $47c6
+	ld hl, wEquippedRacket ; $47c6
 	ld a, [hl] ; $47c9
 	push af ; $47ca
 	xor a, a ; $47cb
 	ld [hl], a ; $47cc
-	ld bc, $c900 ; $47cd
+	ld bc, wStoryModeNameOfMainCharacter ; $47cd
 	call Func_02_44e9 ; $47d0
 	pop af ; $47d3
 	ld [wEquippedRacket], a ; $47d4
@@ -1820,7 +1820,7 @@ Label_02_5016:
 	pop de ; $5029
 Label_02_502a:
 	push de ; $502a
-	ld bc, $c900 ; $502b
+	ld bc, wStoryModeNameOfMainCharacter ; $502b
 	ld a, [$c36c] ; $502e
 	ld de, $0202 ; $5031
 	call Func_00_1ae4 ; $5034

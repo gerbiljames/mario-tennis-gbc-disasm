@@ -1158,7 +1158,7 @@ Func_13_4cff:
 	ld hl, $4d20 ; $4cff
 	ld c, $00 ; $4d02
 	ld b, $08 ; $4d04
-	call Func_00_1e9d ; $4d06
+	call QueueSpriteTemplate ; $4d06
 	ret ; $4d09
 	ld a, [$c2b0] ; $4d0a
 	ld d, a ; $4d0d
@@ -2511,7 +2511,7 @@ Func_13_5c39:
 	add hl, de ; $5c5d
 	ld e, l ; $5c5e
 	ld d, h ; $5c5f
-	ld hl, $c2ba ; $5c60
+	ld hl, wWaterSpriteMinigameFlag ; $5c60
 	ld a, e ; $5c63
 	ld [hl+], a ; $5c64
 	ld [hl], d ; $5c65
@@ -2519,7 +2519,7 @@ Func_13_5c39:
 	ld a, [hl+] ; $5c69
 	ld b, [hl] ; $5c6a
 	ld c, a ; $5c6b
-	ld hl, $c2ba ; $5c6c
+	ld hl, wWaterSpriteMinigameFlag ; $5c6c
 	ld a, [hl+] ; $5c6f
 	ld d, [hl] ; $5c70
 	ld e, a ; $5c71

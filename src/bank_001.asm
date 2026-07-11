@@ -75,7 +75,7 @@ Func_01_4018:
 	ld c, $7f ; $40a0
 	call Func_00_1d2e ; $40a2
 Label_01_40a5:
-	ld hl, $c280 ; $40a5
+	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], $00 ; $40a8
 	ld hl, $c295 ; $40aa
 	ld [hl], $0a ; $40ad
@@ -103,7 +103,7 @@ Label_01_40cf:
 Label_01_40d8:
 	ld a, $00 ; $40d8
 	ldh [$ff9e], a ; $40da
-	ld hl, $c280 ; $40dc
+	ld hl, wStoryModeCurrentLocation ; $40dc
 	ld [hl], $00 ; $40df
 	ld hl, $c295 ; $40e1
 	ld [hl], $0a ; $40e4
@@ -116,7 +116,7 @@ Label_01_40f9:
 	jr z, Label_01_4113 ; $40fd
 	ld a, $01 ; $40ff
 	ldh [$ff9e], a ; $4101
-	ld hl, $c280 ; $4103
+	ld hl, wStoryModeCurrentLocation ; $4103
 	ld [hl], $00 ; $4106
 	ld hl, $c295 ; $4108
 	ld [hl], $0a ; $410b
@@ -204,7 +204,7 @@ Label_01_41db:
 	jr z, Label_01_41f5 ; $41dd
 	ld a, $01 ; $41df
 	ldh [$ff9e], a ; $41e1
-	ld hl, $c280 ; $41e3
+	ld hl, wStoryModeCurrentLocation ; $41e3
 	ld [hl], $03 ; $41e6
 	ld hl, $c295 ; $41e8
 	ld [hl], $0a ; $41eb

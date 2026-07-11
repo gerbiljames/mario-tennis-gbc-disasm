@@ -289,7 +289,7 @@ Label_6b_4323:
 	ldh a, [hWramBank] ; $4326
 	push af ; $4328
 	wram_bank $03 ; $4329
-	ld hl, $d880 ; $432f
+	ld hl, wShortTextBuffer ; $432f
 	ld de, $9880 ; $4332
 	ld c, $0a ; $4335
 	call Func_00_0480 ; $4337
@@ -397,7 +397,7 @@ Label_6b_43cc:
 	ldh a, [hWramBank] ; $4487
 	push af ; $4489
 	wram_bank $03 ; $448a
-	ld hl, $d880 ; $4490
+	ld hl, wShortTextBuffer ; $4490
 	ld de, $9880 ; $4493
 	ld c, $0a ; $4496
 	call Func_00_0480 ; $4498
@@ -849,7 +849,7 @@ Palettes_6b_4a58:
 	ld c, $10 ; $4aaf
 	call Func_00_0480 ; $4ab1
 	call Func_00_2631 ; $4ab4
-	ld hl, $d880 ; $4ab7
+	ld hl, wShortTextBuffer ; $4ab7
 	ld de, $9c80 ; $4aba
 	ld c, $04 ; $4abd
 	call Func_00_0480 ; $4abf
@@ -1084,7 +1084,7 @@ Label_6b_4e41:
 	ld c, $40 ; $4e47
 	ld b, $09 ; $4e49
 	ld hl, $4e8e ; $4e4b
-	call Func_00_1e9d ; $4e4e
+	call QueueSpriteTemplate ; $4e4e
 	ld a, [$cb40] ; $4e51
 	sub a, $20 ; $4e54
 	add a, a ; $4e56
@@ -1101,7 +1101,7 @@ Label_6b_4e5f:
 	ld c, $44 ; $4e65
 	ld b, $09 ; $4e67
 	ld hl, $4e97 ; $4e69
-	call Func_00_1e9d ; $4e6c
+	call QueueSpriteTemplate ; $4e6c
 	ld a, [$cb40] ; $4e6f
 	sub a, $20 ; $4e72
 	add a, a ; $4e74
@@ -1118,7 +1118,7 @@ Label_6b_4e7d:
 	ld c, $48 ; $4e83
 	ld b, $09 ; $4e85
 	ld hl, $4ea0 ; $4e87
-	call Func_00_1e9d ; $4e8a
+	call QueueSpriteTemplate ; $4e8a
 	ret ; $4e8d
 	INCBIN "data/bank_06b/d_4e8e.bin" ; $4e8e, 767 bytes
 Func_6b_518d:
@@ -1235,7 +1235,7 @@ Func_6b_520a:
 	call Func_6b_53b8 ; $5278
 	ld c, $00 ; $527b
 	ld b, $08 ; $527d
-	call Func_00_1e9d ; $527f
+	call QueueSpriteTemplate ; $527f
 	ld hl, $52c3 ; $5282
 	ld a, [$cb44] ; $5285
 	ld d, $08 ; $5288
@@ -1248,7 +1248,7 @@ Func_6b_520a:
 	call Func_6b_53b8 ; $5293
 	ld c, $06 ; $5296
 	ld b, $08 ; $5298
-	call Func_00_1e9d ; $529a
+	call QueueSpriteTemplate ; $529a
 	ld hl, $52d8 ; $529d
 	ld a, [$cb44] ; $52a0
 	ld d, a ; $52a3
@@ -1259,7 +1259,7 @@ Func_6b_520a:
 	call Func_6b_53b8 ; $52ab
 	ld c, $10 ; $52ae
 	ld b, $08 ; $52b0
-	call Func_00_1e9d ; $52b2
+	call QueueSpriteTemplate ; $52b2
 	ret ; $52b5
 	INCBIN "data/bank_06b/d_52b6.bin" ; $52b6, 67 bytes
 	ld hl, $5360 ; $52f9
@@ -1272,7 +1272,7 @@ Func_6b_520a:
 	call Func_6b_53b8 ; $5307
 	ld c, $20 ; $530a
 	ld b, $09 ; $530c
-	call Func_00_1e9d ; $530e
+	call QueueSpriteTemplate ; $530e
 	ld hl, $536d ; $5311
 	ld a, [$cb46] ; $5314
 	ld d, $08 ; $5317
@@ -1285,7 +1285,7 @@ Func_6b_520a:
 	call Func_6b_53b8 ; $5322
 	ld c, $26 ; $5325
 	ld b, $09 ; $5327
-	call Func_00_1e9d ; $5329
+	call QueueSpriteTemplate ; $5329
 	ld hl, $5392 ; $532c
 	ld a, [$cb46] ; $532f
 	ld d, a ; $5332
@@ -1296,7 +1296,7 @@ Func_6b_520a:
 	call Func_6b_53b8 ; $533a
 	ld c, $38 ; $533d
 	ld b, $09 ; $533f
-	call Func_00_1e9d ; $5341
+	call QueueSpriteTemplate ; $5341
 	ld hl, $53b3 ; $5344
 	ld a, [$cb46] ; $5347
 	ld d, $48 ; $534a
@@ -1309,7 +1309,7 @@ Func_6b_520a:
 	call Func_6b_53b8 ; $5355
 	ld c, $48 ; $5358
 	ld b, $09 ; $535a
-	call Func_00_1e9d ; $535c
+	call QueueSpriteTemplate ; $535c
 	ret ; $535f
 	INCBIN "data/bank_06b/d_5360.bin" ; $5360, 88 bytes
 Func_6b_53b8:
@@ -1510,7 +1510,7 @@ Label_6b_612f:
 	ld c, [hl] ; $612f
 	ld hl, $613d ; $6130
 	ld b, $08 ; $6133
-	call Func_00_1e9d ; $6135
+	call QueueSpriteTemplate ; $6135
 	ret ; $6138
 	INCBIN "data/bank_06b/d_6139.bin" ; $6139, 67 bytes
 Func_6b_617c:
@@ -1882,7 +1882,7 @@ Label_6b_76d6:
 	ld b, [hl] ; $76d6
 	ld de, $2858 ; $76d7
 	ld hl, $76f6 ; $76da
-	call Func_00_1e9d ; $76dd
+	call QueueSpriteTemplate ; $76dd
 	pop af ; $76e0
 	wram_bank ; $76e1
 	ret ; $76e5
@@ -2167,4 +2167,5 @@ Func_6b_7f57:
 	ld a, [bc] ; $7f64
 	ld a, [$e0ff] ; $7f65
 	ld c, $ff ; $7f68
-	INCBIN "data/bank_06b/d_7f6a.bin" ; $7f6a, 150 bytes
+	INCBIN "data/bank_06b/d_7f6a.bin" ; $7f6a, 110 bytes
+	ds 40, $ff ; $7fd8, fill

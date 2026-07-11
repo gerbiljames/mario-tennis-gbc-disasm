@@ -211,7 +211,7 @@ Func_24_4201:
 	call Func_00_1340 ; $4209
 	ld c, l ; $420c
 	ld b, h ; $420d
-	ld hl, $c402 ; $420e
+	ld hl, wBallX ; $420e
 	ld a, [hl+] ; $4211
 	ld h, [hl] ; $4212
 	ld l, a ; $4213
@@ -222,7 +222,7 @@ Func_24_4201:
 	ld a, c ; $421a
 	ld [hl+], a ; $421b
 	ld [hl], b ; $421c
-	ld hl, $c406 ; $421d
+	ld hl, wBallDepth ; $421d
 	ld a, [hl+] ; $4220
 	ld h, [hl] ; $4221
 	ld l, a ; $4222
@@ -241,11 +241,11 @@ Func_24_422d:
 	ld a, [hl+] ; $4232
 	ld b, [hl] ; $4233
 	ld c, a ; $4234
-	ld hl, $c406 ; $4235
+	ld hl, wBallDepth ; $4235
 	ld a, [hl+] ; $4238
 	ld d, [hl] ; $4239
 	ld e, a ; $423a
-	ld hl, $c402 ; $423b
+	ld hl, wBallX ; $423b
 	ld a, [hl+] ; $423e
 	ld h, [hl] ; $423f
 	ld l, a ; $4240
@@ -270,7 +270,7 @@ Label_24_4253:
 Func_24_4258:
 	ld e, l ; $4258
 	ld d, h ; $4259
-	ld hl, $c40a ; $425a
+	ld hl, wBallHeight ; $425a
 	ld a, [hl+] ; $425d
 	ld h, [hl] ; $425e
 	ld l, a ; $425f
@@ -449,7 +449,7 @@ Func_24_57fd:
 	ld a, $01 ; $57fd
 	ld [$c4c6], a ; $57ff
 	xor a, a ; $5802
-	ld [$c4bd], a ; $5803
+	ld [wBallTrailColor], a ; $5803
 	xor a, a ; $5806
 	ld hl, $c41c ; $5807
 	ld [hl+], a ; $580a
@@ -501,7 +501,7 @@ Func_24_6696:
 	ld a, [hl+] ; $669d
 	ld d, [hl] ; $669e
 	ld e, a ; $669f
-	ld hl, $c406 ; $66a0
+	ld hl, wBallDepth ; $66a0
 	ld a, [hl+] ; $66a3
 	ld h, [hl] ; $66a4
 	ld l, a ; $66a5
@@ -517,7 +517,7 @@ Label_24_66b0:
 	add hl, de ; $66b0
 	ld e, l ; $66b1
 	ld d, h ; $66b2
-	ld hl, $c40a ; $66b3
+	ld hl, wBallHeight ; $66b3
 	ld a, [hl+] ; $66b6
 	ld h, [hl] ; $66b7
 	ld l, a ; $66b8

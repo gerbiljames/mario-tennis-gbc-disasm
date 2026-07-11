@@ -26,7 +26,7 @@ Label_14_4113:
 	farcall FarPtr_0a_0e ; $4116
 	ld hl, $000f ; $4119
 	farcall FarPtr_05_48 ; $411c
-	ld hl, $c47c ; $411f
+	ld hl, wMinigamesCurrentScore ; $411f
 	ld a, [hl+] ; $4122
 	ld h, [hl] ; $4123
 	ld l, a ; $4124
@@ -50,7 +50,7 @@ Label_14_4147:
 	farcall FarPtr_0a_0e ; $414a
 	ld hl, $001e ; $414d
 	farcall FarPtr_05_48 ; $4150
-	ld hl, $c47c ; $4153
+	ld hl, wMinigamesCurrentScore ; $4153
 	ld a, [hl+] ; $4156
 	ld h, [hl] ; $4157
 	ld l, a ; $4158
@@ -75,7 +75,7 @@ Label_14_417c:
 	farcall FarPtr_0a_0e ; $417f
 	ld hl, $003c ; $4182
 	farcall FarPtr_05_48 ; $4185
-	ld hl, $c47c ; $4188
+	ld hl, wMinigamesCurrentScore ; $4188
 	ld a, [hl+] ; $418b
 	ld h, [hl] ; $418c
 	ld l, a ; $418d
@@ -100,7 +100,7 @@ Label_14_41b1:
 	farcall FarPtr_0a_0e ; $41b4
 	ld hl, $0064 ; $41b7
 	farcall FarPtr_05_48 ; $41ba
-	ld hl, $c47c ; $41bd
+	ld hl, wMinigamesCurrentScore ; $41bd
 	ld a, [hl+] ; $41c0
 	ld h, [hl] ; $41c1
 	ld l, a ; $41c2
@@ -370,12 +370,12 @@ Label_14_46ef:
 	jp nz, Label_14_474d ; $4714
 	ld hl, $20db ; $4717
 	farcall FarPtr_0a_0e ; $471a
-	ld hl, $c47e ; $471d
+	ld hl, wMinigamesTargetScore ; $471d
 	ld a, [hl+] ; $4720
 	ld h, [hl] ; $4721
 	ld l, a ; $4722
 	farcall FarPtr_05_48 ; $4723
-	ld hl, $c47c ; $4726
+	ld hl, wMinigamesCurrentScore ; $4726
 	ld a, [hl+] ; $4729
 	ld h, [hl] ; $472a
 	ld l, a ; $472b
@@ -487,7 +487,7 @@ Label_14_484f:
 	ldh a, [hWramBank] ; $4852
 	push af ; $4854
 	wram_bank $07 ; $4855
-	ld hl, $c47c ; $485b
+	ld hl, wMinigamesCurrentScore ; $485b
 	ld a, [hl+] ; $485e
 	ld d, [hl] ; $485f
 	ld e, a ; $4860
@@ -523,7 +523,7 @@ Label_14_484f:
 	sbc a, d ; $4893
 	ld h, a ; $4894
 	jp z, Label_14_48be ; $4895
-	ld hl, $c47c ; $4898
+	ld hl, wMinigamesCurrentScore ; $4898
 	ld a, [hl+] ; $489b
 	ld b, [hl] ; $489c
 	ld c, a ; $489d
@@ -549,7 +549,7 @@ Label_14_484f:
 Label_14_48be:
 	ld hl, $20dd ; $48be
 	farcall FarPtr_0a_0e ; $48c1
-	ld hl, $c47c ; $48c4
+	ld hl, wMinigamesCurrentScore ; $48c4
 	ld a, [hl+] ; $48c7
 	ld h, [hl] ; $48c8
 	ld l, a ; $48c9
@@ -560,7 +560,7 @@ Label_14_48d1:
 	call Func_14_4974 ; $48d1
 	ld hl, $20ce ; $48d4
 	farcall FarPtr_0a_0e ; $48d7
-	ld hl, $c47c ; $48da
+	ld hl, wMinigamesCurrentScore ; $48da
 	ld a, [hl+] ; $48dd
 	ld h, [hl] ; $48de
 	ld l, a ; $48df
@@ -598,7 +598,7 @@ Label_14_48f9:
 	call Func_14_4974 ; $491e
 	ld hl, $20d4 ; $4921
 	farcall FarPtr_0a_0e ; $4924
-	ld hl, $c47c ; $4927
+	ld hl, wMinigamesCurrentScore ; $4927
 	ld a, [hl+] ; $492a
 	ld h, [hl] ; $492b
 	ld l, a ; $492c
@@ -622,7 +622,7 @@ Func_14_4974:
 	ldh a, [hWramBank] ; $4974
 	push af ; $4976
 	wram_bank $07 ; $4977
-	ld hl, $c47c ; $497d
+	ld hl, wMinigamesCurrentScore ; $497d
 	ld a, [hl+] ; $4980
 	ld d, [hl] ; $4981
 	ld e, a ; $4982

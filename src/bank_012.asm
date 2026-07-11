@@ -700,7 +700,7 @@ Label_12_485c:
 	call Func_00_1da4 ; $4861
 	xor a, a ; $4864
 	ld [$c2d5], a ; $4865
-	ld hl, $c47c ; $4868
+	ld hl, wMinigamesCurrentScore ; $4868
 	ld a, [hl+] ; $486b
 	ld b, [hl] ; $486c
 	ld c, a ; $486d
@@ -725,14 +725,14 @@ Label_12_485c:
 	sbc a, d ; $488e
 	ld h, a ; $488f
 	jp nc, Label_12_48eb ; $4890
-	ld a, [$c4d8] ; $4893
+	ld a, [wPointOutcome] ; $4893
 	cp a, $09 ; $4896
 	jr nz, Label_12_48a2 ; $4898
 	ld hl, $14fa ; $489a
 	farcall FarPtr_0a_0e ; $489d
 	jr Label_12_48b5 ; $48a0
 Label_12_48a2:
-	ld a, [$c4d8] ; $48a2
+	ld a, [wPointOutcome] ; $48a2
 	and a, $03 ; $48a5
 	add a, a ; $48a7
 	add a, $af ; $48a8
@@ -745,7 +745,7 @@ Label_12_48a2:
 	ld l, a ; $48b1
 	farcall FarPtr_0a_0e ; $48b2
 Label_12_48b5:
-	ld hl, $c47c ; $48b5
+	ld hl, wMinigamesCurrentScore ; $48b5
 	ld a, [hl+] ; $48b8
 	ld h, [hl] ; $48b9
 	ld l, a ; $48ba
@@ -774,7 +774,7 @@ Label_12_48eb:
 	ldh a, [hWramBank] ; $48eb
 	push af ; $48ed
 	wram_bank $07 ; $48ee
-	ld hl, $c47c ; $48f4
+	ld hl, wMinigamesCurrentScore ; $48f4
 	ld a, [hl+] ; $48f7
 	ld d, [hl] ; $48f8
 	ld e, a ; $48f9
@@ -789,7 +789,7 @@ Label_12_48eb:
 	call Func_12_505f ; $490a
 	ld hl, $1828 ; $490d
 	farcall FarPtr_0a_0e ; $4910
-	ld hl, $c47c ; $4913
+	ld hl, wMinigamesCurrentScore ; $4913
 	ld a, [hl+] ; $4916
 	ld h, [hl] ; $4917
 	ld l, a ; $4918
@@ -886,7 +886,7 @@ Label_12_49e5:
 	ldh a, [hWramBank] ; $49e5
 	push af ; $49e7
 	wram_bank $07 ; $49e8
-	ld hl, $c47c ; $49ee
+	ld hl, wMinigamesCurrentScore ; $49ee
 	ld a, [hl+] ; $49f1
 	ld d, [hl] ; $49f2
 	ld e, a ; $49f3
@@ -997,14 +997,14 @@ Label_12_4ad0:
 	ld c, $06 ; $4ad8
 	call Func_00_1d2e ; $4ada
 	call Func_00_1da4 ; $4add
-	ld a, [$c4d8] ; $4ae0
+	ld a, [wPointOutcome] ; $4ae0
 	cp a, $09 ; $4ae3
 	jr nz, Label_12_4aef ; $4ae5
 	ld hl, $14f6 ; $4ae7
 	farcall FarPtr_0a_0e ; $4aea
 	jr Label_12_4b02 ; $4aed
 Label_12_4aef:
-	ld a, [$c4d8] ; $4aef
+	ld a, [wPointOutcome] ; $4aef
 	and a, $03 ; $4af2
 	add a, a ; $4af4
 	add a, $9c ; $4af5
@@ -1322,14 +1322,14 @@ Label_12_4fa6:
 	jr nz, Label_12_505e ; $4fef
 	jr Label_12_502b ; $4ff1
 Label_12_4ff3:
-	ld a, [$c4d8] ; $4ff3
+	ld a, [wPointOutcome] ; $4ff3
 	cp a, $09 ; $4ff6
 	jr nz, Label_12_5002 ; $4ff8
 	ld hl, $14f6 ; $4ffa
 	farcall FarPtr_0a_0e ; $4ffd
 	jr Label_12_5015 ; $5000
 Label_12_5002:
-	ld a, [$c4d8] ; $5002
+	ld a, [wPointOutcome] ; $5002
 	and a, $03 ; $5005
 	add a, a ; $5007
 	add a, $9c ; $5008

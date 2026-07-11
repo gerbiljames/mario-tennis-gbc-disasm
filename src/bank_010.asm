@@ -44,7 +44,7 @@ Data_10_4ccb:
 	farcall FarPtr_0a_24 ; $4d50
 	ld a, $10 ; $4d53
 	farcall FarPtr_0a_20 ; $4d55
-	ld hl, $c2d0 ; $4d58
+	ld hl, wStoryModePlayersXPosition ; $4d58
 	ld de, $c296 ; $4d5b
 	ld bc, $0005 ; $4d5e
 	call CopyMemoryBC ; $4d61

@@ -1362,13 +1362,13 @@ MirrorSaveHeaderToBank1:
 	ld a, h ; $48ac
 	ld [$a031], a ; $48ad
 	ld hl, $a000 ; $48b0
-	ld de, $c600 ; $48b3
+	ld de, wTextBuffer ; $48b3
 	ld c, $20 ; $48b6
 	call CopyMemoryFast ; $48b8
 	ld a, $01 ; $48bb
 	ldh [$ff97], a ; $48bd
 	ld [$4000], a ; $48bf
-	ld hl, $c600 ; $48c2
+	ld hl, wTextBuffer ; $48c2
 	ld de, $a000 ; $48c5
 	ld c, $20 ; $48c8
 	call CopyMemoryFast ; $48ca
@@ -1376,13 +1376,13 @@ MirrorSaveHeaderToBank1:
 	ldh [$ff97], a ; $48cf
 	ld [$4000], a ; $48d1
 	ld hl, $a200 ; $48d4
-	ld de, $c600 ; $48d7
+	ld de, wTextBuffer ; $48d7
 	ld c, $20 ; $48da
 	call CopyMemoryFast ; $48dc
 	ld a, $01 ; $48df
 	ldh [$ff97], a ; $48e1
 	ld [$4000], a ; $48e3
-	ld hl, $c600 ; $48e6
+	ld hl, wTextBuffer ; $48e6
 	ld de, $a200 ; $48e9
 	ld c, $20 ; $48ec
 	call CopyMemoryFast ; $48ee
@@ -1390,13 +1390,13 @@ MirrorSaveHeaderToBank1:
 	ldh [$ff97], a ; $48f3
 	ld [$4000], a ; $48f5
 	ld hl, $a400 ; $48f8
-	ld de, $c600 ; $48fb
+	ld de, wTextBuffer ; $48fb
 	ld c, $20 ; $48fe
 	call CopyMemoryFast ; $4900
 	ld a, $01 ; $4903
 	ldh [$ff97], a ; $4905
 	ld [$4000], a ; $4907
-	ld hl, $c600 ; $490a
+	ld hl, wTextBuffer ; $490a
 	ld de, $a400 ; $490d
 	ld c, $20 ; $4910
 	call CopyMemoryFast ; $4912
@@ -1404,13 +1404,13 @@ MirrorSaveHeaderToBank1:
 	ldh [$ff97], a ; $4917
 	ld [$4000], a ; $4919
 	ld hl, $a600 ; $491c
-	ld de, $c600 ; $491f
+	ld de, wTextBuffer ; $491f
 	ld c, $20 ; $4922
 	call CopyMemoryFast ; $4924
 	ld a, $01 ; $4927
 	ldh [$ff97], a ; $4929
 	ld [$4000], a ; $492b
-	ld hl, $c600 ; $492e
+	ld hl, wTextBuffer ; $492e
 	ld de, $a600 ; $4931
 	ld c, $20 ; $4934
 	call CopyMemoryFast ; $4936
@@ -1465,13 +1465,13 @@ Label_03_4980:
 	ldh [$ff97], a ; $4982
 	ld [$4000], a ; $4984
 	ld hl, $a000 ; $4987
-	ld de, $c600 ; $498a
+	ld de, wTextBuffer ; $498a
 	ld c, $20 ; $498d
 	call CopyMemoryFast ; $498f
 	ld a, $00 ; $4992
 	ldh [$ff97], a ; $4994
 	ld [$4000], a ; $4996
-	ld hl, $c600 ; $4999
+	ld hl, wTextBuffer ; $4999
 	ld de, $a000 ; $499c
 	ld c, $20 ; $499f
 	call CopyMemoryFast ; $49a1
@@ -1479,13 +1479,13 @@ Label_03_4980:
 	ldh [$ff97], a ; $49a6
 	ld [$4000], a ; $49a8
 	ld hl, $a200 ; $49ab
-	ld de, $c600 ; $49ae
+	ld de, wTextBuffer ; $49ae
 	ld c, $20 ; $49b1
 	call CopyMemoryFast ; $49b3
 	ld a, $00 ; $49b6
 	ldh [$ff97], a ; $49b8
 	ld [$4000], a ; $49ba
-	ld hl, $c600 ; $49bd
+	ld hl, wTextBuffer ; $49bd
 	ld de, $a200 ; $49c0
 	ld c, $20 ; $49c3
 	call CopyMemoryFast ; $49c5
@@ -1493,13 +1493,13 @@ Label_03_4980:
 	ldh [$ff97], a ; $49ca
 	ld [$4000], a ; $49cc
 	ld hl, $a400 ; $49cf
-	ld de, $c600 ; $49d2
+	ld de, wTextBuffer ; $49d2
 	ld c, $20 ; $49d5
 	call CopyMemoryFast ; $49d7
 	ld a, $00 ; $49da
 	ldh [$ff97], a ; $49dc
 	ld [$4000], a ; $49de
-	ld hl, $c600 ; $49e1
+	ld hl, wTextBuffer ; $49e1
 	ld de, $a400 ; $49e4
 	ld c, $20 ; $49e7
 	call CopyMemoryFast ; $49e9
@@ -1507,13 +1507,13 @@ Label_03_4980:
 	ldh [$ff97], a ; $49ee
 	ld [$4000], a ; $49f0
 	ld hl, $a600 ; $49f3
-	ld de, $c600 ; $49f6
+	ld de, wTextBuffer ; $49f6
 	ld c, $20 ; $49f9
 	call CopyMemoryFast ; $49fb
 	ld a, $00 ; $49fe
 	ldh [$ff97], a ; $4a00
 	ld [$4000], a ; $4a02
-	ld hl, $c600 ; $4a05
+	ld hl, wTextBuffer ; $4a05
 	ld de, $a600 ; $4a08
 	ld c, $20 ; $4a0b
 	call CopyMemoryFast ; $4a0d
@@ -2037,7 +2037,7 @@ Label_03_4d19:
 	add a, $1b ; $4d3a
 	ld b, a ; $4d3c
 	ld hl, $c800 ; $4d3d
-	ld de, $c600 ; $4d40
+	ld de, wTextBuffer ; $4d40
 	call WriteSaveBlock ; $4d43
 	or a, a ; $4d46
 	ret nz ; $4d47
@@ -2395,7 +2395,7 @@ Func_03_4fae:
 	ld a, $37 ; $4fc7
 	ld b, a ; $4fc9
 	ld hl, $c800 ; $4fca
-	ld de, $c600 ; $4fcd
+	ld de, wTextBuffer ; $4fcd
 	call WriteSaveBlock ; $4fd0
 	or a, a ; $4fd3
 	ret nz ; $4fd4
@@ -3011,13 +3011,13 @@ Label_03_53d4:
 	ld e, a ; $53e4
 	ld bc, $0000 ; $53e5
 	push de ; $53e8
-	call Func_00_1f51 ; $53e9
+	call QueueSprite ; $53e9
 	pop de ; $53ec
 	ld bc, $0000 ; $53ed
 	ld a, d ; $53f0
 	add a, $08 ; $53f1
 	ld d, a ; $53f3
-	call Func_00_1f51 ; $53f4
+	call QueueSprite ; $53f4
 	pop de ; $53f7
 Label_03_53f8:
 	call Func_00_2631 ; $53f8
@@ -3705,7 +3705,7 @@ Label_03_5bc2:
 	ld d, $fe ; $5bdf
 	ld e, $80 ; $5be1
 	ld bc, $0300 ; $5be3
-	call Func_00_1e9d ; $5be6
+	call QueueSpriteTemplate ; $5be6
 	ret ; $5be9
 Label_03_5bea:
 	wram_bank $01 ; $5bea
@@ -3720,7 +3720,7 @@ Label_03_5bea:
 	ld d, $fe ; $5c07
 	ld e, $80 ; $5c09
 	ld bc, $0300 ; $5c0b
-	call Func_00_1e9d ; $5c0e
+	call QueueSpriteTemplate ; $5c0e
 	ret ; $5c11
 Label_03_5c12:
 	wram_bank $01 ; $5c12
@@ -3735,7 +3735,7 @@ Label_03_5c12:
 	ld d, $fe ; $5c2f
 	ld e, $80 ; $5c31
 	ld bc, $0300 ; $5c33
-	call Func_00_1e9d ; $5c36
+	call QueueSpriteTemplate ; $5c36
 	ret ; $5c39
 Label_03_5c3a:
 	wram_bank $01 ; $5c3a
@@ -3750,7 +3750,7 @@ Label_03_5c3a:
 	ld d, $fe ; $5c57
 	ld e, $80 ; $5c59
 	ld bc, $0300 ; $5c5b
-	call Func_00_1e9d ; $5c5e
+	call QueueSpriteTemplate ; $5c5e
 	ret ; $5c61
 Label_03_5c62:
 	wram_bank $01 ; $5c62
@@ -3765,7 +3765,7 @@ Label_03_5c62:
 	ld d, $fe ; $5c7f
 	ld e, $80 ; $5c81
 	ld bc, $0300 ; $5c83
-	call Func_00_1e9d ; $5c86
+	call QueueSpriteTemplate ; $5c86
 	ret ; $5c89
 Label_03_5c8a:
 	wram_bank $01 ; $5c8a
@@ -3780,7 +3780,7 @@ Label_03_5c8a:
 	ld d, $fe ; $5ca7
 	ld e, $80 ; $5ca9
 	ld bc, $0300 ; $5cab
-	call Func_00_1e9d ; $5cae
+	call QueueSpriteTemplate ; $5cae
 	ret ; $5cb1
 Label_03_5cb2:
 	wram_bank $01 ; $5cb2
@@ -3795,7 +3795,7 @@ Label_03_5cb2:
 	ld d, $fe ; $5ccf
 	ld e, $80 ; $5cd1
 	ld bc, $0300 ; $5cd3
-	call Func_00_1e9d ; $5cd6
+	call QueueSpriteTemplate ; $5cd6
 	ret ; $5cd9
 Label_03_5cda:
 	wram_bank $01 ; $5cda
@@ -3810,7 +3810,7 @@ Label_03_5cda:
 	ld d, $fe ; $5cf7
 	ld e, $80 ; $5cf9
 	ld bc, $0300 ; $5cfb
-	call Func_00_1e9d ; $5cfe
+	call QueueSpriteTemplate ; $5cfe
 	ret ; $5d01
 Label_03_5d02:
 	wram_bank $01 ; $5d02
@@ -3825,14 +3825,14 @@ Label_03_5d02:
 	ld d, $fe ; $5d1f
 	ld e, $80 ; $5d21
 	ld bc, $0300 ; $5d23
-	call Func_00_1e9d ; $5d26
+	call QueueSpriteTemplate ; $5d26
 	ret ; $5d29
 Label_03_5d2a:
 	ld hl, $6ebd ; $5d2a
 	ld d, $fe ; $5d2d
 	ld e, $80 ; $5d2f
 	ld bc, $0300 ; $5d31
-	call Func_00_1e9d ; $5d34
+	call QueueSpriteTemplate ; $5d34
 	ret ; $5d37
 Func_03_5d38:
 	wram_bank $06 ; $5d38
@@ -3873,7 +3873,7 @@ Label_03_5d76:
 	ld d, $0e ; $5d93
 	ld e, $80 ; $5d95
 	ld bc, $0204 ; $5d97
-	call Func_00_1e9d ; $5d9a
+	call QueueSpriteTemplate ; $5d9a
 	ret ; $5d9d
 Label_03_5d9e:
 	wram_bank $01 ; $5d9e
@@ -3888,7 +3888,7 @@ Label_03_5d9e:
 	ld d, $0e ; $5dbb
 	ld e, $80 ; $5dbd
 	ld bc, $0204 ; $5dbf
-	call Func_00_1e9d ; $5dc2
+	call QueueSpriteTemplate ; $5dc2
 	ret ; $5dc5
 Label_03_5dc6:
 	wram_bank $01 ; $5dc6
@@ -3903,7 +3903,7 @@ Label_03_5dc6:
 	ld d, $0e ; $5de3
 	ld e, $80 ; $5de5
 	ld bc, $0204 ; $5de7
-	call Func_00_1e9d ; $5dea
+	call QueueSpriteTemplate ; $5dea
 	ret ; $5ded
 Label_03_5dee:
 	wram_bank $01 ; $5dee
@@ -3918,7 +3918,7 @@ Label_03_5dee:
 	ld d, $0e ; $5e0b
 	ld e, $80 ; $5e0d
 	ld bc, $0204 ; $5e0f
-	call Func_00_1e9d ; $5e12
+	call QueueSpriteTemplate ; $5e12
 	ret ; $5e15
 Label_03_5e16:
 	wram_bank $01 ; $5e16
@@ -3933,7 +3933,7 @@ Label_03_5e16:
 	ld d, $0e ; $5e33
 	ld e, $80 ; $5e35
 	ld bc, $0204 ; $5e37
-	call Func_00_1e9d ; $5e3a
+	call QueueSpriteTemplate ; $5e3a
 	ret ; $5e3d
 Label_03_5e3e:
 	wram_bank $01 ; $5e3e
@@ -3948,7 +3948,7 @@ Label_03_5e3e:
 	ld d, $0e ; $5e5b
 	ld e, $80 ; $5e5d
 	ld bc, $0204 ; $5e5f
-	call Func_00_1e9d ; $5e62
+	call QueueSpriteTemplate ; $5e62
 	ret ; $5e65
 Label_03_5e66:
 	wram_bank $01 ; $5e66
@@ -3963,7 +3963,7 @@ Label_03_5e66:
 	ld d, $0e ; $5e83
 	ld e, $80 ; $5e85
 	ld bc, $0204 ; $5e87
-	call Func_00_1e9d ; $5e8a
+	call QueueSpriteTemplate ; $5e8a
 	ret ; $5e8d
 Label_03_5e8e:
 	wram_bank $01 ; $5e8e
@@ -3978,7 +3978,7 @@ Label_03_5e8e:
 	ld d, $0e ; $5eab
 	ld e, $80 ; $5ead
 	ld bc, $0204 ; $5eaf
-	call Func_00_1e9d ; $5eb2
+	call QueueSpriteTemplate ; $5eb2
 	ret ; $5eb5
 Label_03_5eb6:
 	wram_bank $01 ; $5eb6
@@ -3993,14 +3993,14 @@ Label_03_5eb6:
 	ld d, $0e ; $5ed3
 	ld e, $80 ; $5ed5
 	ld bc, $0204 ; $5ed7
-	call Func_00_1e9d ; $5eda
+	call QueueSpriteTemplate ; $5eda
 	ret ; $5edd
 Label_03_5ede:
 	ld hl, $6f0e ; $5ede
 	ld d, $0e ; $5ee1
 	ld e, $80 ; $5ee3
 	ld bc, $0204 ; $5ee5
-	call Func_00_1e9d ; $5ee8
+	call QueueSpriteTemplate ; $5ee8
 	ret ; $5eeb
 Func_03_5eec:
 	wram_bank $06 ; $5eec
@@ -4041,7 +4041,7 @@ Label_03_5f2a:
 	ld d, $1e ; $5f47
 	ld e, $80 ; $5f49
 	ld bc, $0308 ; $5f4b
-	call Func_00_1e9d ; $5f4e
+	call QueueSpriteTemplate ; $5f4e
 	ret ; $5f51
 Label_03_5f52:
 	wram_bank $01 ; $5f52
@@ -4056,7 +4056,7 @@ Label_03_5f52:
 	ld d, $1e ; $5f6f
 	ld e, $80 ; $5f71
 	ld bc, $0308 ; $5f73
-	call Func_00_1e9d ; $5f76
+	call QueueSpriteTemplate ; $5f76
 	ret ; $5f79
 Label_03_5f7a:
 	wram_bank $01 ; $5f7a
@@ -4071,7 +4071,7 @@ Label_03_5f7a:
 	ld d, $1e ; $5f97
 	ld e, $80 ; $5f99
 	ld bc, $0308 ; $5f9b
-	call Func_00_1e9d ; $5f9e
+	call QueueSpriteTemplate ; $5f9e
 	ret ; $5fa1
 Label_03_5fa2:
 	wram_bank $01 ; $5fa2
@@ -4086,7 +4086,7 @@ Label_03_5fa2:
 	ld d, $1e ; $5fbf
 	ld e, $80 ; $5fc1
 	ld bc, $0308 ; $5fc3
-	call Func_00_1e9d ; $5fc6
+	call QueueSpriteTemplate ; $5fc6
 	ret ; $5fc9
 Label_03_5fca:
 	wram_bank $01 ; $5fca
@@ -4101,7 +4101,7 @@ Label_03_5fca:
 	ld d, $1e ; $5fe7
 	ld e, $80 ; $5fe9
 	ld bc, $0308 ; $5feb
-	call Func_00_1e9d ; $5fee
+	call QueueSpriteTemplate ; $5fee
 	ret ; $5ff1
 Label_03_5ff2:
 	wram_bank $01 ; $5ff2
@@ -4116,7 +4116,7 @@ Label_03_5ff2:
 	ld d, $1e ; $600f
 	ld e, $80 ; $6011
 	ld bc, $0308 ; $6013
-	call Func_00_1e9d ; $6016
+	call QueueSpriteTemplate ; $6016
 	ret ; $6019
 Label_03_601a:
 	wram_bank $01 ; $601a
@@ -4131,7 +4131,7 @@ Label_03_601a:
 	ld d, $1e ; $6037
 	ld e, $80 ; $6039
 	ld bc, $0308 ; $603b
-	call Func_00_1e9d ; $603e
+	call QueueSpriteTemplate ; $603e
 	ret ; $6041
 Label_03_6042:
 	wram_bank $01 ; $6042
@@ -4146,7 +4146,7 @@ Label_03_6042:
 	ld d, $1e ; $605f
 	ld e, $80 ; $6061
 	ld bc, $0308 ; $6063
-	call Func_00_1e9d ; $6066
+	call QueueSpriteTemplate ; $6066
 	ret ; $6069
 Label_03_606a:
 	wram_bank $01 ; $606a
@@ -4161,14 +4161,14 @@ Label_03_606a:
 	ld d, $1e ; $6087
 	ld e, $80 ; $6089
 	ld bc, $0308 ; $608b
-	call Func_00_1e9d ; $608e
+	call QueueSpriteTemplate ; $608e
 	ret ; $6091
 Label_03_6092:
 	ld hl, $6f5f ; $6092
 	ld d, $1e ; $6095
 	ld e, $80 ; $6097
 	ld bc, $0308 ; $6099
-	call Func_00_1e9d ; $609c
+	call QueueSpriteTemplate ; $609c
 	ret ; $609f
 Func_03_60a0:
 	wram_bank $06 ; $60a0
@@ -4209,7 +4209,7 @@ Label_03_60de:
 	ld d, $2e ; $60fb
 	ld e, $80 ; $60fd
 	ld bc, $030c ; $60ff
-	call Func_00_1e9d ; $6102
+	call QueueSpriteTemplate ; $6102
 	ret ; $6105
 Label_03_6106:
 	wram_bank $01 ; $6106
@@ -4224,7 +4224,7 @@ Label_03_6106:
 	ld d, $2e ; $6123
 	ld e, $80 ; $6125
 	ld bc, $030c ; $6127
-	call Func_00_1e9d ; $612a
+	call QueueSpriteTemplate ; $612a
 	ret ; $612d
 Label_03_612e:
 	wram_bank $01 ; $612e
@@ -4239,7 +4239,7 @@ Label_03_612e:
 	ld d, $2e ; $614b
 	ld e, $80 ; $614d
 	ld bc, $030c ; $614f
-	call Func_00_1e9d ; $6152
+	call QueueSpriteTemplate ; $6152
 	ret ; $6155
 Label_03_6156:
 	wram_bank $01 ; $6156
@@ -4254,7 +4254,7 @@ Label_03_6156:
 	ld d, $2e ; $6173
 	ld e, $80 ; $6175
 	ld bc, $030c ; $6177
-	call Func_00_1e9d ; $617a
+	call QueueSpriteTemplate ; $617a
 	ret ; $617d
 Label_03_617e:
 	wram_bank $01 ; $617e
@@ -4269,7 +4269,7 @@ Label_03_617e:
 	ld d, $2e ; $619b
 	ld e, $80 ; $619d
 	ld bc, $030c ; $619f
-	call Func_00_1e9d ; $61a2
+	call QueueSpriteTemplate ; $61a2
 	ret ; $61a5
 Label_03_61a6:
 	wram_bank $01 ; $61a6
@@ -4284,7 +4284,7 @@ Label_03_61a6:
 	ld d, $2e ; $61c3
 	ld e, $80 ; $61c5
 	ld bc, $030c ; $61c7
-	call Func_00_1e9d ; $61ca
+	call QueueSpriteTemplate ; $61ca
 	ret ; $61cd
 Label_03_61ce:
 	wram_bank $01 ; $61ce
@@ -4299,7 +4299,7 @@ Label_03_61ce:
 	ld d, $2e ; $61eb
 	ld e, $80 ; $61ed
 	ld bc, $030c ; $61ef
-	call Func_00_1e9d ; $61f2
+	call QueueSpriteTemplate ; $61f2
 	ret ; $61f5
 Label_03_61f6:
 	wram_bank $01 ; $61f6
@@ -4314,7 +4314,7 @@ Label_03_61f6:
 	ld d, $2e ; $6213
 	ld e, $80 ; $6215
 	ld bc, $030c ; $6217
-	call Func_00_1e9d ; $621a
+	call QueueSpriteTemplate ; $621a
 	ret ; $621d
 Label_03_621e:
 	wram_bank $01 ; $621e
@@ -4329,14 +4329,14 @@ Label_03_621e:
 	ld d, $2e ; $623b
 	ld e, $80 ; $623d
 	ld bc, $030c ; $623f
-	call Func_00_1e9d ; $6242
+	call QueueSpriteTemplate ; $6242
 	ret ; $6245
 Label_03_6246:
 	ld hl, $6f90 ; $6246
 	ld d, $2e ; $6249
 	ld e, $80 ; $624b
 	ld bc, $030c ; $624d
-	call Func_00_1e9d ; $6250
+	call QueueSpriteTemplate ; $6250
 	ret ; $6253
 Func_03_6254:
 	wram_bank $06 ; $6254
@@ -4377,7 +4377,7 @@ Label_03_6292:
 	ld d, $36 ; $62af
 	ld e, $80 ; $62b1
 	ld bc, $020e ; $62b3
-	call Func_00_1e9d ; $62b6
+	call QueueSpriteTemplate ; $62b6
 	ret ; $62b9
 Label_03_62ba:
 	wram_bank $01 ; $62ba
@@ -4392,7 +4392,7 @@ Label_03_62ba:
 	ld d, $36 ; $62d7
 	ld e, $80 ; $62d9
 	ld bc, $020e ; $62db
-	call Func_00_1e9d ; $62de
+	call QueueSpriteTemplate ; $62de
 	ret ; $62e1
 Label_03_62e2:
 	wram_bank $01 ; $62e2
@@ -4407,7 +4407,7 @@ Label_03_62e2:
 	ld d, $36 ; $62ff
 	ld e, $80 ; $6301
 	ld bc, $020e ; $6303
-	call Func_00_1e9d ; $6306
+	call QueueSpriteTemplate ; $6306
 	ret ; $6309
 Label_03_630a:
 	wram_bank $01 ; $630a
@@ -4422,7 +4422,7 @@ Label_03_630a:
 	ld d, $36 ; $6327
 	ld e, $80 ; $6329
 	ld bc, $020e ; $632b
-	call Func_00_1e9d ; $632e
+	call QueueSpriteTemplate ; $632e
 	ret ; $6331
 Label_03_6332:
 	wram_bank $01 ; $6332
@@ -4437,7 +4437,7 @@ Label_03_6332:
 	ld d, $36 ; $634f
 	ld e, $80 ; $6351
 	ld bc, $020e ; $6353
-	call Func_00_1e9d ; $6356
+	call QueueSpriteTemplate ; $6356
 	ret ; $6359
 Label_03_635a:
 	wram_bank $01 ; $635a
@@ -4452,7 +4452,7 @@ Label_03_635a:
 	ld d, $36 ; $6377
 	ld e, $80 ; $6379
 	ld bc, $020e ; $637b
-	call Func_00_1e9d ; $637e
+	call QueueSpriteTemplate ; $637e
 	ret ; $6381
 Label_03_6382:
 	wram_bank $01 ; $6382
@@ -4467,7 +4467,7 @@ Label_03_6382:
 	ld d, $36 ; $639f
 	ld e, $80 ; $63a1
 	ld bc, $020e ; $63a3
-	call Func_00_1e9d ; $63a6
+	call QueueSpriteTemplate ; $63a6
 	ret ; $63a9
 Label_03_63aa:
 	wram_bank $01 ; $63aa
@@ -4482,7 +4482,7 @@ Label_03_63aa:
 	ld d, $36 ; $63c7
 	ld e, $80 ; $63c9
 	ld bc, $020e ; $63cb
-	call Func_00_1e9d ; $63ce
+	call QueueSpriteTemplate ; $63ce
 	ret ; $63d1
 Label_03_63d2:
 	wram_bank $01 ; $63d2
@@ -4497,14 +4497,14 @@ Label_03_63d2:
 	ld d, $36 ; $63ef
 	ld e, $80 ; $63f1
 	ld bc, $020e ; $63f3
-	call Func_00_1e9d ; $63f6
+	call QueueSpriteTemplate ; $63f6
 	ret ; $63f9
 Label_03_63fa:
 	ld hl, $6fbd ; $63fa
 	ld d, $36 ; $63fd
 	ld e, $80 ; $63ff
 	ld bc, $020e ; $6401
-	call Func_00_1e9d ; $6404
+	call QueueSpriteTemplate ; $6404
 	ret ; $6407
 Func_03_6408:
 	wram_bank $06 ; $6408
@@ -4545,7 +4545,7 @@ Label_03_6446:
 	ld d, $3e ; $6463
 	ld e, $80 ; $6465
 	ld bc, $0310 ; $6467
-	call Func_00_1e9d ; $646a
+	call QueueSpriteTemplate ; $646a
 	ret ; $646d
 Label_03_646e:
 	wram_bank $01 ; $646e
@@ -4560,7 +4560,7 @@ Label_03_646e:
 	ld d, $3e ; $648b
 	ld e, $80 ; $648d
 	ld bc, $0310 ; $648f
-	call Func_00_1e9d ; $6492
+	call QueueSpriteTemplate ; $6492
 	ret ; $6495
 Label_03_6496:
 	wram_bank $01 ; $6496
@@ -4575,7 +4575,7 @@ Label_03_6496:
 	ld d, $3e ; $64b3
 	ld e, $80 ; $64b5
 	ld bc, $0310 ; $64b7
-	call Func_00_1e9d ; $64ba
+	call QueueSpriteTemplate ; $64ba
 	ret ; $64bd
 Label_03_64be:
 	wram_bank $01 ; $64be
@@ -4590,7 +4590,7 @@ Label_03_64be:
 	ld d, $3e ; $64db
 	ld e, $80 ; $64dd
 	ld bc, $0310 ; $64df
-	call Func_00_1e9d ; $64e2
+	call QueueSpriteTemplate ; $64e2
 	ret ; $64e5
 Label_03_64e6:
 	wram_bank $01 ; $64e6
@@ -4605,7 +4605,7 @@ Label_03_64e6:
 	ld d, $3e ; $6503
 	ld e, $80 ; $6505
 	ld bc, $0310 ; $6507
-	call Func_00_1e9d ; $650a
+	call QueueSpriteTemplate ; $650a
 	ret ; $650d
 Label_03_650e:
 	wram_bank $01 ; $650e
@@ -4620,7 +4620,7 @@ Label_03_650e:
 	ld d, $3e ; $652b
 	ld e, $80 ; $652d
 	ld bc, $0310 ; $652f
-	call Func_00_1e9d ; $6532
+	call QueueSpriteTemplate ; $6532
 	ret ; $6535
 Label_03_6536:
 	wram_bank $01 ; $6536
@@ -4635,7 +4635,7 @@ Label_03_6536:
 	ld d, $3e ; $6553
 	ld e, $80 ; $6555
 	ld bc, $0310 ; $6557
-	call Func_00_1e9d ; $655a
+	call QueueSpriteTemplate ; $655a
 	ret ; $655d
 Label_03_655e:
 	wram_bank $01 ; $655e
@@ -4650,7 +4650,7 @@ Label_03_655e:
 	ld d, $3e ; $657b
 	ld e, $80 ; $657d
 	ld bc, $0310 ; $657f
-	call Func_00_1e9d ; $6582
+	call QueueSpriteTemplate ; $6582
 	ret ; $6585
 Label_03_6586:
 	wram_bank $01 ; $6586
@@ -4665,14 +4665,14 @@ Label_03_6586:
 	ld d, $3e ; $65a3
 	ld e, $80 ; $65a5
 	ld bc, $0310 ; $65a7
-	call Func_00_1e9d ; $65aa
+	call QueueSpriteTemplate ; $65aa
 	ret ; $65ad
 Label_03_65ae:
 	ld hl, $6fea ; $65ae
 	ld d, $3e ; $65b1
 	ld e, $80 ; $65b3
 	ld bc, $0310 ; $65b5
-	call Func_00_1e9d ; $65b8
+	call QueueSpriteTemplate ; $65b8
 	ret ; $65bb
 	INCBIN "data/bank_003/d_65bc.bin" ; $65bc, 93 bytes
 	pop hl ; $6619
@@ -4984,7 +4984,7 @@ Func_03_74f2:
 	ldh a, [hWramBank] ; $74f6
 	push af ; $74f8
 	farcall FarPtr_05_1e ; $74f9
-	ld hl, $c600 ; $74fc
+	ld hl, wTextBuffer ; $74fc
 	wram_bank $01 ; $74ff
 	ld c, $14 ; $7505
 Label_03_7507:

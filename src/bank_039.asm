@@ -528,7 +528,7 @@ Func_39_4a53:
 	push bc ; $4a5d
 	push de ; $4a5e
 	push hl ; $4a5f
-	call Func_00_1f51 ; $4a60
+	call QueueSprite ; $4a60
 	pop hl ; $4a63
 	pop de ; $4a64
 	pop bc ; $4a65
@@ -538,7 +538,7 @@ Func_39_4a53:
 	ld d, a ; $4a6a
 	inc c ; $4a6b
 	inc c ; $4a6c
-	call Func_00_1f51 ; $4a6d
+	call QueueSprite ; $4a6d
 	pop hl ; $4a70
 	pop de ; $4a71
 	pop bc ; $4a72
@@ -647,7 +647,7 @@ Label_39_4ba4:
 	ld [$cb19], a ; $4bb5
 Label_39_4bb8:
 	ld hl, $4bbf ; $4bb8
-	call Func_00_1e9d ; $4bbb
+	call QueueSpriteTemplate ; $4bbb
 	ret ; $4bbe
 	INCBIN "data/bank_039/d_4bbf.bin" ; $4bbf, 41 bytes
 Func_39_4be8:
@@ -1197,7 +1197,7 @@ Func_39_6f4f:
 	ld c, a ; $6f5a
 	ld a, [$cb6c] ; $6f5b
 	ld b, a ; $6f5e
-	call Func_00_1f51 ; $6f5f
+	call QueueSprite ; $6f5f
 	pop hl ; $6f62
 	pop de ; $6f63
 	pop bc ; $6f64

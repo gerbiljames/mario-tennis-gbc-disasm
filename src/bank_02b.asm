@@ -94,7 +94,7 @@ Label_2b_40f0:
 Func_2b_424c:
 	ld e, l ; $424c
 	ld d, h ; $424d
-	ld hl, $c40a ; $424e
+	ld hl, wBallHeight ; $424e
 	ld a, [hl+] ; $4251
 	ld h, [hl] ; $4252
 	ld l, a ; $4253

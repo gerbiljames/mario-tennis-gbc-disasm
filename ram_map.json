@@ -63,6 +63,51 @@
   "note": "[8-bit] Minigame Level (0x00-0x03)\n\nValue is current minigame level - 1",
   "size": 1
  },
+ "0xc402": {
+  "name": "wBallX",
+  "note": "[16-bit] Ball X position, integer part (lateral, signed)",
+  "size": 2
+ },
+ "0xc406": {
+  "name": "wBallDepth",
+  "note": "[16-bit] Ball depth position, integer part (signed, net at 0)",
+  "size": 2
+ },
+ "0xc40a": {
+  "name": "wBallHeight",
+  "note": "[16-bit] Ball height above the court, integer part",
+  "size": 2
+ },
+ "0xc460": {
+  "name": "wBounceEffectX",
+  "note": "[16-bit] Projected X of the ball-bounce dust effect (cached at bounce time)",
+  "size": 2
+ },
+ "0xc462": {
+  "name": "wBounceEffectY",
+  "note": "[16-bit] Projected Y of the ball-bounce dust effect",
+  "size": 2
+ },
+ "0xc464": {
+  "name": "wHitEffectX",
+  "note": "[16-bit] Projected X of the swing-hit effect (cached at hit time)",
+  "size": 2
+ },
+ "0xc466": {
+  "name": "wHitEffectY",
+  "note": "[16-bit] Projected Y of the swing-hit effect",
+  "size": 2
+ },
+ "0xc478": {
+  "name": "wCameraOffsetX",
+  "note": "[16-bit] Camera X offset added before the <<3 screen projection (Func_08_59bb)",
+  "size": 2
+ },
+ "0xc47a": {
+  "name": "wCameraOffsetY",
+  "note": "[16-bit] Camera Y offset added before the <<3 screen projection",
+  "size": 2
+ },
  "0xc47c": {
   "name": "wMinigamesCurrentScore",
   "note": "[16-bit] Minigames - Current Score",
@@ -73,9 +118,64 @@
   "note": "[16-bit] Minigames - Target Score",
   "size": 2
  },
+ "0xc480": {
+  "name": "wLandingMarkerX",
+  "note": "[16-bit] Projected X of the lob landing marker",
+  "size": 2
+ },
+ "0xc482": {
+  "name": "wLandingMarkerY",
+  "note": "[16-bit] Projected Y of the lob landing marker",
+  "size": 2
+ },
+ "0xc4a8": {
+  "name": "wBounceEffectTimer",
+  "note": "[8-bit] Frames left of the ball-bounce dust effect (starts at $14)",
+  "size": 1
+ },
+ "0xc4a9": {
+  "name": "wHitSparkTimer",
+  "note": "[8-bit] Frames left of the normal swing-hit spark (starts at $10)",
+  "size": 1
+ },
+ "0xc4aa": {
+  "name": "wSpecialHitTimer",
+  "note": "[8-bit] Frames left of the special-shot hit flash (starts at $10; drives the bank $28 screen effect)",
+  "size": 1
+ },
  "0xc4b6": {
   "name": "wRallyLength",
   "note": "[8-bit] Rally Length; number of times the ball was hit in the span of a point",
+  "size": 1
+ },
+ "0xc4ba": {
+  "name": "wBallSpriteEnabled",
+  "note": "[8-bit] Nonzero draws the ball sprite slot",
+  "size": 1
+ },
+ "0xc4bb": {
+  "name": "wBallShadowEnabled",
+  "note": "[8-bit] Nonzero draws the ball ground-shadow slot",
+  "size": 1
+ },
+ "0xc4bc": {
+  "name": "wBallTrailEnabled",
+  "note": "[8-bit] Nonzero draws the ball trail afterimages from the position history ring",
+  "size": 1
+ },
+ "0xc4bd": {
+  "name": "wBallTrailColor",
+  "note": "[8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts",
+  "size": 1
+ },
+ "0xc4c4": {
+  "name": "wOffscreenArrowsEnabled",
+  "note": "[8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally)",
+  "size": 1
+ },
+ "0xc4ca": {
+  "name": "wStandingShadowsEnabled",
+  "note": "[8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters",
   "size": 1
  },
  "0xc4cf": {
@@ -88,9 +188,49 @@
   "note": "[8-bit] Current Serving Player (0x00-0x03)",
   "size": 1
  },
+ "0xc4d8": {
+  "name": "wPointOutcome",
+  "note": "[8-bit] 0 while the rally runs; point-end cause code once the point resolves",
+  "size": 1
+ },
  "0xc600": {
   "name": "wTextBuffer",
   "note": "Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0"
+ },
+ "0xc78c": {
+  "name": "wTargetZoneEnabled",
+  "note": "[8-bit] Nonzero draws the 4-corner court target zone (training drills)",
+  "size": 1
+ },
+ "0xc790": {
+  "name": "wTargetZoneX1",
+  "note": "[16-bit] Target zone X bound 1 (world units)",
+  "size": 2
+ },
+ "0xc792": {
+  "name": "wTargetZoneDepth1",
+  "note": "[16-bit] Target zone depth bound 1 (world units)",
+  "size": 2
+ },
+ "0xc794": {
+  "name": "wTargetZoneX2",
+  "note": "[16-bit] Target zone X bound 2 (world units)",
+  "size": 2
+ },
+ "0xc796": {
+  "name": "wTargetZoneDepth2",
+  "note": "[16-bit] Target zone depth bound 2 (world units)",
+  "size": 2
+ },
+ "0xc7b2": {
+  "name": "wModeHookTable",
+  "note": "[16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook)",
+  "size": 2
+ },
+ "0xc7b4": {
+  "name": "wModeHookBank",
+  "note": "[8-bit] ROM bank of the mode callback table (0 = no hooks registered)",
+  "size": 1
  },
  "0xc818": {
   "name": "wStoryModeMainCharacterLevel",
@@ -477,16 +617,6 @@
   "note": "[8-bit] Total Games Won In Match",
   "size": 1
  },
- "0xc8f2": {
-  "name": "wMatchIsDoubles",
-  "note": "[8-bit] Nonzero when the current match is doubles; selects the wider court bound and 4 on-court characters",
-  "size": 1
- },
- "0xc8f3": {
-  "name": "wOnCourtCharCount",
-  "note": "[8-bit] Number of characters on court (2 singles, 4 doubles, 3 in Two-On-One); one banked WRAM struct each in banks 4-7",
-  "size": 1
- },
  "0xc8ed": {
   "name": "wTotalPointsScoredInCurrentGame",
   "note": "[8-bit] Total Points Scored In Current Game",
@@ -500,6 +630,16 @@
  "0xc8f1": {
   "name": "wMatchTypeNumberOfGames",
   "note": "[8-bit] Match Type - Number Of Games (0x02, 0x06)",
+  "size": 1
+ },
+ "0xc8f2": {
+  "name": "wMatchIsDoubles",
+  "note": "[8-bit] Nonzero when the current match is doubles; selects the wider court bound and 4 on-court characters",
+  "size": 1
+ },
+ "0xc8f3": {
+  "name": "wOnCourtCharCount",
+  "note": "[8-bit] Number of characters on court (2 singles, 4 doubles, 3 in Two-On-One); one banked WRAM struct each in banks 4-7",
   "size": 1
  },
  "0xc8f4": {

@@ -388,7 +388,7 @@ Func_16_4cea:
 	ld b, $0a ; $4cfb
 Label_16_4cfd:
 	ld hl, $4d04 ; $4cfd
-	call Func_00_1e9d ; $4d00
+	call QueueSpriteTemplate ; $4d00
 	ret ; $4d03
 	INCBIN "data/bank_016/d_4d04.bin" ; $4d04, 65 bytes
 Func_16_4d45:
@@ -398,7 +398,7 @@ Func_16_4d45:
 	ld c, $20 ; $4d4a
 	ld b, $09 ; $4d4c
 	ld hl, $4d55 ; $4d4e
-	call Func_00_1e9d ; $4d51
+	call QueueSpriteTemplate ; $4d51
 	ret ; $4d54
 	INCBIN "data/bank_016/d_4d55.bin" ; $4d55, 65 bytes
 Func_16_4d96:
@@ -414,7 +414,7 @@ Func_16_4d96:
 	jr z, Label_16_4da9 ; $4da5
 	ld b, $0a ; $4da7
 Label_16_4da9:
-	call Func_00_1f51 ; $4da9
+	call QueueSprite ; $4da9
 	ret ; $4dac
 Func_16_4dad:
 	call Func_16_4dde ; $4dad
@@ -422,7 +422,7 @@ Func_16_4dad:
 	ld d, a ; $4db1
 	ld c, $42 ; $4db2
 	ld b, $09 ; $4db4
-	call Func_00_1f51 ; $4db6
+	call QueueSprite ; $4db6
 	ret ; $4db9
 Func_16_4dba:
 	call Func_16_4dde ; $4dba
@@ -430,7 +430,7 @@ Func_16_4dba:
 	ld d, a ; $4dbe
 	ld c, $40 ; $4dbf
 	ld b, $09 ; $4dc1
-	call Func_00_1f51 ; $4dc3
+	call QueueSprite ; $4dc3
 	ret ; $4dc6
 Func_16_4dc7:
 	call Func_16_4dde ; $4dc7
@@ -445,7 +445,7 @@ Func_16_4dc7:
 	jr z, Label_16_4dda ; $4dd6
 	ld b, $0a ; $4dd8
 Label_16_4dda:
-	call Func_00_1f51 ; $4dda
+	call QueueSprite ; $4dda
 	ret ; $4ddd
 Func_16_4dde:
 	ldh a, [$ff8c] ; $4dde

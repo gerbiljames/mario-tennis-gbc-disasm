@@ -2659,7 +2659,7 @@ Label_3b_588f:
 	ld l, a ; $5891
 	ld b, $08 ; $5892
 	push de ; $5894
-	call Func_00_1e9d ; $5895
+	call QueueSpriteTemplate ; $5895
 	ld c, $03 ; $5898
 	call Func_3b_43b9 ; $589a
 	ld hl, $5936 ; $589d
@@ -2679,7 +2679,7 @@ Label_3b_58a5:
 	ld hl, $5912 ; $58af
 	ld b, $08 ; $58b2
 	ld c, $72 ; $58b4
-	call Func_00_1e9d ; $58b6
+	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
 	INCBIN "data/bank_03b/d_58ba.bin" ; $58ba, 174 bytes
 Func_3b_5968:
@@ -2869,7 +2869,7 @@ Label_3b_5af8:
 	add a, c ; $5b0f
 	ld e, a ; $5b10
 	ld d, b ; $5b11
-	ld hl, $c900 ; $5b12
+	ld hl, wStoryModeNameOfMainCharacter ; $5b12
 	ld bc, $000b ; $5b15
 	call CopyMemoryBC ; $5b18
 	pop bc ; $5b1b
@@ -3653,7 +3653,7 @@ Label_3b_6104:
 	ld b, $08 ; $610a
 	ld hl, $6125 ; $610c
 	push de ; $610f
-	call Func_00_1e9d ; $6110
+	call QueueSpriteTemplate ; $6110
 	pop de ; $6113
 	ld hl, $17f8 ; $6114
 	add hl, de ; $6117
@@ -3662,7 +3662,7 @@ Label_3b_6104:
 	ld hl, $6146 ; $611a
 	ld b, $08 ; $611d
 	ld c, $70 ; $611f
-	call Func_00_1e9d ; $6121
+	call QueueSpriteTemplate ; $6121
 	ret ; $6124
 	INCBIN "data/bank_03b/d_6125.bin" ; $6125, 63 bytes
 Func_3b_6164:
@@ -4059,7 +4059,7 @@ Label_3b_6499:
 	call Func_3b_654d ; $649a
 	ld hl, $64ca ; $649d
 	push de ; $64a0
-	call Func_00_1e9d ; $64a1
+	call QueueSpriteTemplate ; $64a1
 	pop de ; $64a4
 	ld hl, $17f8 ; $64a5
 	add hl, de ; $64a8
@@ -4068,7 +4068,7 @@ Label_3b_6499:
 	ld hl, $64eb ; $64ab
 	ld b, $08 ; $64ae
 	ld c, $70 ; $64b0
-	call Func_00_1e9d ; $64b2
+	call QueueSpriteTemplate ; $64b2
 	ret ; $64b5
 Func_3b_64b6:
 	push de ; $64b6
@@ -4622,7 +4622,7 @@ Label_3b_69f8:
 	ld b, $08 ; $69fe
 	ld hl, $6a19 ; $6a00
 	push de ; $6a03
-	call Func_00_1e9d ; $6a04
+	call QueueSpriteTemplate ; $6a04
 	pop de ; $6a07
 	ld hl, $17f8 ; $6a08
 	add hl, de ; $6a0b
@@ -4631,7 +4631,7 @@ Label_3b_69f8:
 	ld hl, $6a3a ; $6a0e
 	ld b, $08 ; $6a11
 	ld c, $70 ; $6a13
-	call Func_00_1e9d ; $6a15
+	call QueueSpriteTemplate ; $6a15
 	ret ; $6a18
 	INCBIN "data/bank_03b/d_6a19.bin" ; $6a19, 101 bytes
 Func_3b_6a7e:
@@ -5279,7 +5279,7 @@ Label_3b_6f77:
 	ld b, $08 ; $6f7d
 	ld hl, $6f98 ; $6f7f
 	push de ; $6f82
-	call Func_00_1e9d ; $6f83
+	call QueueSpriteTemplate ; $6f83
 	pop de ; $6f86
 	ld hl, $17f8 ; $6f87
 	add hl, de ; $6f8a
@@ -5288,7 +5288,7 @@ Label_3b_6f77:
 	ld hl, $6fb9 ; $6f8d
 	ld b, $08 ; $6f90
 	ld c, $70 ; $6f92
-	call Func_00_1e9d ; $6f94
+	call QueueSpriteTemplate ; $6f94
 	ret ; $6f97
 	INCBIN "data/bank_03b/d_6f98.bin" ; $6f98, 99 bytes
 Func_3b_6ffb:
@@ -6272,7 +6272,7 @@ Label_3b_78d6:
 	ld a, [hl+] ; $78d6
 	ld d, [hl] ; $78d7
 	ld e, a ; $78d8
-	ld hl, $c900 ; $78d9
+	ld hl, wStoryModeNameOfMainCharacter ; $78d9
 	call Func_3b_442c ; $78dc
 	pop hl ; $78df
 	pop de ; $78e0
@@ -6284,10 +6284,10 @@ Func_3b_78ec:
 	ld a, [$d801] ; $78ec
 	cp a, $01 ; $78ef
 	jr nz, Label_3b_791c ; $78f1
-	ld hl, $c900 ; $78f3
+	ld hl, wStoryModeNameOfMainCharacter ; $78f3
 	ld de, $d129 ; $78f6
 	call Func_3b_442c ; $78f9
-	ld hl, $c940 ; $78fc
+	ld hl, wStoryModeNameOfPartnerCharacter ; $78fc
 	ld de, $d169 ; $78ff
 	call Func_3b_442c ; $7902
 	ld hl, $004b ; $7905
@@ -6300,10 +6300,10 @@ Func_3b_78ec:
 	farcall FarPtr_05_72 ; $7918
 	ret ; $791b
 Label_3b_791c:
-	ld hl, $c900 ; $791c
+	ld hl, wStoryModeNameOfMainCharacter ; $791c
 	ld de, $d1a9 ; $791f
 	call Func_3b_442c ; $7922
-	ld hl, $c940 ; $7925
+	ld hl, wStoryModeNameOfPartnerCharacter ; $7925
 	ld de, $d1e9 ; $7928
 	call Func_3b_442c ; $792b
 	ld hl, $004b ; $792e

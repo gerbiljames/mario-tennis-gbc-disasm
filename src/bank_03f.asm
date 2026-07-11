@@ -650,7 +650,7 @@ Label_3f_4f2b:
 Label_3f_4f2e:
 	push hl ; $4f2e
 	ld hl, $50d0 ; $4f2f
-	call Func_00_1e9d ; $4f32
+	call QueueSpriteTemplate ; $4f32
 	pop hl ; $4f35
 	ld a, [hl+] ; $4f36
 	ld c, a ; $4f37
@@ -666,7 +666,7 @@ Label_3f_4f46:
 Label_3f_4f49:
 	push hl ; $4f49
 	ld hl, $50d9 ; $4f4a
-	call Func_00_1e9d ; $4f4d
+	call QueueSpriteTemplate ; $4f4d
 	pop hl ; $4f50
 	ld a, [hl+] ; $4f51
 	ld c, a ; $4f52
@@ -682,7 +682,7 @@ Label_3f_4f61:
 Label_3f_4f64:
 	push hl ; $4f64
 	ld hl, $50d9 ; $4f65
-	call Func_00_1e9d ; $4f68
+	call QueueSpriteTemplate ; $4f68
 	pop hl ; $4f6b
 	ld a, [hl+] ; $4f6c
 	ld c, a ; $4f6d
@@ -697,7 +697,7 @@ Label_3f_4f7c:
 	ld de, $788d ; $4f7c
 Label_3f_4f7f:
 	ld hl, $50d9 ; $4f7f
-	call Func_00_1e9d ; $4f82
+	call QueueSpriteTemplate ; $4f82
 Label_3f_4f85:
 	ld a, [$cb37] ; $4f85
 	bit 1, a ; $4f88
@@ -735,14 +735,14 @@ Label_3f_4fb9:
 	ld d, a ; $4fbc
 	ld hl, $501f ; $4fbd
 	ld bc, $0b28 ; $4fc0
-	call Func_00_1e9d ; $4fc3
+	call QueueSpriteTemplate ; $4fc3
 	ld a, [$cb37] ; $4fc6
 	bit 2, a ; $4fc9
 	jr z, Label_3f_4fd9 ; $4fcb
 	ld hl, $5006 ; $4fcd
 	ld de, $1810 ; $4fd0
 	ld bc, $0d34 ; $4fd3
-	call Func_00_1e9d ; $4fd6
+	call QueueSpriteTemplate ; $4fd6
 Label_3f_4fd9:
 	ld a, [$cb37] ; $4fd9
 	bit 3, a ; $4fdc
@@ -750,7 +750,7 @@ Label_3f_4fd9:
 	ld hl, $5006 ; $4fe0
 	ld de, $8810 ; $4fe3
 	ld bc, $0d3a ; $4fe6
-	call Func_00_1e9d ; $4fe9
+	call QueueSpriteTemplate ; $4fe9
 Label_3f_4fec:
 	pop hl ; $4fec
 	pop de ; $4fed

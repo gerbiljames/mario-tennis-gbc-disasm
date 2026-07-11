@@ -652,7 +652,7 @@ Label_18_4652:
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d
-	ld hl, $c900 ; $465e
+	ld hl, wStoryModeNameOfMainCharacter ; $465e
 	ld a, [$cb00] ; $4661
 	or a, a ; $4664
 	jr z, Label_18_4669 ; $4665
@@ -746,7 +746,7 @@ Func_18_537a:
 	call Func_18_53e4 ; $5395
 	ld de, $d8cb ; $5398
 	call Func_18_5586 ; $539b
-	ld a, [$c790] ; $539e
+	ld a, [wTargetZoneX1] ; $539e
 	call Func_18_53e4 ; $53a1
 	ld de, $d90b ; $53a4
 	call Func_18_5586 ; $53a7
@@ -807,7 +807,7 @@ Label_18_544f:
 	call Func_18_4444 ; $544f
 	push bc ; $5452
 	ld bc, $0650 ; $5453
-	call Func_00_1e55 ; $5456
+	call QueueSprite16 ; $5456
 	pop bc ; $5459
 	call Func_00_2631 ; $545a
 	jr Func_18_5421 ; $545d
@@ -851,7 +851,7 @@ Label_18_5497:
 	call Func_18_4444 ; $5497
 	push bc ; $549a
 	ld bc, $0650 ; $549b
-	call Func_00_1e55 ; $549e
+	call QueueSprite16 ; $549e
 	pop bc ; $54a1
 	call Func_00_2631 ; $54a2
 	jr Func_18_5469 ; $54a5
@@ -923,7 +923,7 @@ Func_18_54dc:
 	add a, e ; $54fb
 	ld e, a ; $54fc
 Label_18_54fd:
-	call Func_00_1f51 ; $54fd
+	call QueueSprite ; $54fd
 	pop hl ; $5500
 	pop de ; $5501
 Label_18_5502:
@@ -1103,7 +1103,7 @@ Label_18_59de:
 	ld h, [hl] ; $59f5
 	ld l, a ; $59f6
 	ld bc, $0240 ; $59f7
-	call Func_00_1e9d ; $59fa
+	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
 	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 108 bytes
 Func_18_5a6a:

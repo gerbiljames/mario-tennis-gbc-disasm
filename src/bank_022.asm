@@ -130,7 +130,7 @@ Func_22_41f5:
 	call Func_00_1340 ; $41fd
 	ld c, l ; $4200
 	ld b, h ; $4201
-	ld hl, $c402 ; $4202
+	ld hl, wBallX ; $4202
 	ld a, [hl+] ; $4205
 	ld h, [hl] ; $4206
 	ld l, a ; $4207
@@ -141,7 +141,7 @@ Func_22_41f5:
 	ld a, c ; $420e
 	ld [hl+], a ; $420f
 	ld [hl], b ; $4210
-	ld hl, $c406 ; $4211
+	ld hl, wBallDepth ; $4211
 	ld a, [hl+] ; $4214
 	ld h, [hl] ; $4215
 	ld l, a ; $4216
@@ -157,7 +157,7 @@ Func_22_41f5:
 Func_22_424c:
 	ld e, l ; $424c
 	ld d, h ; $424d
-	ld hl, $c40a ; $424e
+	ld hl, wBallHeight ; $424e
 	ld a, [hl+] ; $4251
 	ld h, [hl] ; $4252
 	ld l, a ; $4253

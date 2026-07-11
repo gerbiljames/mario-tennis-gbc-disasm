@@ -137,4 +137,4 @@ Data_79_7f7c:
 	INCBIN "data/bank_079/d_7f7c.bin" ; $7f7c, 74 bytes
 Data_79_7fc6:
 	INCBIN "data/bank_079/d_7fc6.bin" ; $7fc6, 44 bytes
-	INCBIN "data/bank_079/d_7ff2.bin" ; $7ff2, 14 bytes
+	ds 14, $ff ; $7ff2, fill

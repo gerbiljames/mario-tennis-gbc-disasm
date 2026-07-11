@@ -143,9 +143,37 @@ Addresses named by this project from disassembly evidence; also in
 
 | Address | Region | Name | Note |
 |---|---|---|---|
+| `0xc402` | WRAM | `wBallX` | [16-bit] Ball X position, integer part (lateral, signed) |
+| `0xc406` | WRAM | `wBallDepth` | [16-bit] Ball depth position, integer part (signed, net at 0) |
+| `0xc40a` | WRAM | `wBallHeight` | [16-bit] Ball height above the court, integer part |
+| `0xc460` | WRAM | `wBounceEffectX` | [16-bit] Projected X of the ball-bounce dust effect (cached at bounce time) |
+| `0xc462` | WRAM | `wBounceEffectY` | [16-bit] Projected Y of the ball-bounce dust effect |
+| `0xc464` | WRAM | `wHitEffectX` | [16-bit] Projected X of the swing-hit effect (cached at hit time) |
+| `0xc466` | WRAM | `wHitEffectY` | [16-bit] Projected Y of the swing-hit effect |
+| `0xc478` | WRAM | `wCameraOffsetX` | [16-bit] Camera X offset added before the <<3 screen projection (Func_08_59bb) |
+| `0xc47a` | WRAM | `wCameraOffsetY` | [16-bit] Camera Y offset added before the <<3 screen projection |
+| `0xc480` | WRAM | `wLandingMarkerX` | [16-bit] Projected X of the lob landing marker |
+| `0xc482` | WRAM | `wLandingMarkerY` | [16-bit] Projected Y of the lob landing marker |
+| `0xc4a8` | WRAM | `wBounceEffectTimer` | [8-bit] Frames left of the ball-bounce dust effect (starts at $14) |
+| `0xc4a9` | WRAM | `wHitSparkTimer` | [8-bit] Frames left of the normal swing-hit spark (starts at $10) |
+| `0xc4aa` | WRAM | `wSpecialHitTimer` | [8-bit] Frames left of the special-shot hit flash (starts at $10; drives the bank $28 screen effect) |
+| `0xc4ba` | WRAM | `wBallSpriteEnabled` | [8-bit] Nonzero draws the ball sprite slot |
+| `0xc4bb` | WRAM | `wBallShadowEnabled` | [8-bit] Nonzero draws the ball ground-shadow slot |
+| `0xc4bc` | WRAM | `wBallTrailEnabled` | [8-bit] Nonzero draws the ball trail afterimages from the position history ring |
+| `0xc4bd` | WRAM | `wBallTrailColor` | [8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts |
+| `0xc4c4` | WRAM | `wOffscreenArrowsEnabled` | [8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally) |
+| `0xc4ca` | WRAM | `wStandingShadowsEnabled` | [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters |
 | `0xc4cf` | WRAM | `wOnCourtCharCountMinus1` | [8-bit] `wOnCourtCharCount` - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches (e.g. `$4ff5`, `$6063` in bank $08) |
 | `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
 | `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
+| `0xc4d8` | WRAM | `wPointOutcome` | [8-bit] 0 while the rally runs; point-end cause code once the point resolves |
+| `0xc78c` | WRAM | `wTargetZoneEnabled` | [8-bit] Nonzero draws the 4-corner court target zone (training drills) |
+| `0xc790` | WRAM | `wTargetZoneX1` | [16-bit] Target zone X bound 1 (world units) |
+| `0xc792` | WRAM | `wTargetZoneDepth1` | [16-bit] Target zone depth bound 1 (world units) |
+| `0xc794` | WRAM | `wTargetZoneX2` | [16-bit] Target zone X bound 2 (world units) |
+| `0xc796` | WRAM | `wTargetZoneDepth2` | [16-bit] Target zone depth bound 2 (world units) |
+| `0xc7b2` | WRAM | `wModeHookTable` | [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook) |
+| `0xc7b4` | WRAM | `wModeHookBank` | [8-bit] ROM bank of the mode callback table (0 = no hooks registered) |
 | `0xff96` | HRAM | `hWramBank` | [8-bit] Shadow of the current WRAM bank (last value written to `rSVBK`); always written together with `rSVBK` |
 
 ## Match engine per-character structs (WRAM banks 4-7)
@@ -171,15 +199,60 @@ Known fields (addresses valid only while a bank 4-7 is mapped; **not** in
 | `$df00-02` | X position (lateral), 24-bit fixed point: fraction byte, then signed 16-bit integer part |
 | `$df03-05` | depth position, same format; signed, net at 0, the two court sides have opposite signs |
 | `$df06-08` | height above court, same format (zeroed by `SetCharPosAndTarget`) |
-| `$df0b` bit 0 | far-side flag: `CharPointEndReaction` negates `wPointWinLoseFlag` through it for `$df57` |
+| `$df09` | serve/side role code, from byte 4-7 of the court-position record (`GamePositionTables`); XORed with 2 to swap court side per point, mapped through the `$4fa0` table to a char state at point start |
+| `$df0a` | court position code, from byte 0-3 of the court-position record (XORed with 3 on the tiebreak side-swap path) |
+| `$df0b` | character index 0-3 (== bank - 4); bit 0 set = far side, so `CharPointEndReaction` negates `wPointWinLoseFlag` through it for `$df57`, and it selects the off-screen edge-arrow sprite (index * 8) |
 | `$df0d`/`$df0e` | facing direction: desired / displayed (eased toward desired in `$75c0` by at most `$df68` per frame) |
+| `$df0f` bit 2 | airborne flag: set on jump (`$6dd5`, with `sound $5c`), cleared on landing; selects which shadow slot is drawn |
 | `$df18-1a` | state machine index + substate (jumptable at `$6a77`; set via `SetCharState`) |
 | `$df22` | active flag (`UpdateChar` exits when 0) |
 | `$df40-45` | velocity, 3 x 16-bit (zeroed on placement and at point end) |
 | `$df46/47` | walk-target X (integer part) |
 | `$df48/49` | walk-target depth; `MoveCharTowardTarget` ($7541) walks toward the target and snaps when `CheckCharNearTarget` ($78be) sees both deltas < $18 |
-| `$df53/54` | last projected screen X/Y (`$7672`) |
+| `$df53/54` | last projected screen X/Y (`BuildCharSpriteSlots`, $7672) |
 | `$df57` | point result from this character's perspective (signed `wPointWinLoseFlag`) |
+| `$df1b-1d` | sprite frame data pointer (hi/lo) + h-flip flag, consumed by `DrawCharSprite` ($650a) |
+| `$df80-83` | sprite-slot record for the character sprite (see below) |
+| `$df88-8b` | sprite-slot record for the airborne shadow: tiles `$50/$52/$54/$56` shrink with jump height, drawn only while `$df0f` bit 2 is set |
+| `$df8c-8f` | sprite-slot record for the standing shadow: tile `$58` through the 3-sprite-wide `StandingShadowOamTemplate` ($6301), drawn on alternate frames (flicker transparency) while grounded, singles only (`wStandingShadowsEnabled`) |
+| `$df96` | draw-order depth key: `(depth * 8) >> 8 + $80`; `DrawActorsByDepth` compares teammates' keys to paint back-to-front |
+
+## Match renderer sprite slots (WRAM bank 4, `$dd00`/`$de00`)
+
+The match engine queues every court sprite through 4-byte **slot records**
+`[tile, attr, screenY, screenX]`; `$ff` in the tile byte means empty.
+`ClearSpriteSlots` ($630e) resets them all each frame; gameplay code fills
+them; the draw stage flushes them into the shadow OAM buffer via
+`QueueSprite` ($1f51), `QueueSprite16` ($1e55), or `QueueSpriteTemplate`
+($1e9d). Fixed slots (in WRAM bank 4, alongside the per-character `$df80+`
+slots above):
+
+| Address | Slot |
+|---|---|
+| `$de00` | ball-at-net marker: tile `$4e`, drawn after the point resolves when the ball rests within `$1e0` of the net, with a 1px X jitter per frame (`BuildNetBallSlot`) |
+| `$de04` | the ball itself: tile picked by height band / off-screen state (`$40/$42/$44`), gated by `wBallSpriteEnabled` (`BuildBallSlot`) |
+| `$de08` | ball ground shadow: tile `$46` at the ball's height-0 projection, gated by `wBallShadowEnabled` (`BuildBallShadowSlot`) |
+| `$de0c-$de1f` | 5 ball-trail afterimages (tile = ball tile + 8), fed from the position history ring; slots 3-5 only when `wBallTrailColor` is nonzero (`BuildBallTrailSlots`) |
+
+`$dd00-$dd23` (bank 4) is the **ball position history ring**: six 6-byte
+records `[projX word, projY word, tile+8, attr]`; `UpdateBallVisuals`
+($5153) shifts it down one record per frame and `BuildBallSlot` writes the
+newest at `$dd1e`. `SetBallTrailColor` ($5189) picks one of the 8 OBJ
+palettes in `BallTrailPalettes` ($50dc) for the trail (shot-type colors).
+
+Effects drawn directly (no slot): swing-hit spark (tiles `$68-$6e`,
+`wHitSparkTimer`), special-shot flash (tile `$74` + bank $28 screen effect,
+`wSpecialHitTimer`), bounce dust (tiles `$60/$62`, `wBounceEffectTimer`),
+lob landing marker (tile `$7c`, `wLandingMarkerX/Y`, started by
+`StartLandingMarker` with `sound $6d`), the 4-corner training target zone
+(tiles `$20-$26`, `wTargetZone*`), and off-screen character edge arrows
+(`DrawOffscreenCharArrow`, gated by `wOffscreenArrowsEnabled`).
+
+Frame flow: `DrawActorsByDepth` ($6429) draws the two team pairs and the
+ball group in painter's order using the `$df96` keys (`DrawNearTeamChars`,
+`DrawFarTeamChars`, `DrawBallAndEffects`), then `DrawMarkersAndShadows`
+($6481) flushes markers, trail, and shadow slots. Modes hook extra draws
+via `SetModeHookTable`/`CallModeHook` (`wModeHookBank`/`wModeHookTable`).
 
 **Doubles spacing:** at point end, `StartPointEndReactions` ($4fb8) makes every
 character face the result (`CharPointEndReaction` sets state 7 and target :=

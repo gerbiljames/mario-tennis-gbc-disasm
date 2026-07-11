@@ -1256,7 +1256,7 @@ Func_06_5045:
 	ld h, [hl] ; $5087
 	ld l, a ; $5088
 	ld bc, $0000 ; $5089
-	call Func_00_1e9d ; $508c
+	call QueueSpriteTemplate ; $508c
 	pop de ; $508f
 	ld a, [$c494] ; $5090
 	cp a, $06 ; $5093
@@ -1272,7 +1272,7 @@ Label_06_50ac:
 	ld d, h ; $50b1
 	push de ; $50b2
 	call Func_06_465e ; $50b3
-	ld hl, $c47c ; $50b6
+	ld hl, wMinigamesCurrentScore ; $50b6
 	ld a, [hl+] ; $50b9
 	ld h, [hl] ; $50ba
 	ld l, a ; $50bb
@@ -1288,7 +1288,7 @@ Label_06_50ac:
 	and a, a ; $50ce
 	ld hl, $c4ec ; $50cf
 	jr nz, Label_06_50d7 ; $50d2
-	ld hl, $c47e ; $50d4
+	ld hl, wMinigamesTargetScore ; $50d4
 Label_06_50d7:
 	ld a, [hl+] ; $50d7
 	ld h, [hl] ; $50d8
@@ -1401,7 +1401,7 @@ Func_06_69b7:
 	call Func_06_465e ; $69bb
 	ld hl, $69e7 ; $69be
 	ld bc, $0000 ; $69c1
-	call Func_00_1e9d ; $69c4
+	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
 	ld h, $05 ; $69c8
 	ld a, [$c4e3] ; $69ca
@@ -1417,7 +1417,7 @@ Func_06_69b7:
 	call Func_06_465e ; $69da
 	ld hl, $6a10 ; $69dd
 	ld bc, $0000 ; $69e0
-	call Func_00_1e9d ; $69e3
+	call QueueSpriteTemplate ; $69e3
 	ret ; $69e6
 	INCBIN "data/bank_006/d_69e7.bin" ; $69e7, 211 bytes
 Func_06_6aba:
@@ -1561,7 +1561,7 @@ Label_06_6bc9:
 	and a, $08 ; $6bc9
 	jr z, Label_06_6bd6 ; $6bcb
 	ld de, $270b ; $6bcd
-	ld hl, $c47c ; $6bd0
+	ld hl, wMinigamesCurrentScore ; $6bd0
 	ld a, e ; $6bd3
 	ld [hl+], a ; $6bd4
 	ld [hl], d ; $6bd5
@@ -1600,12 +1600,12 @@ Func_06_6c13:
 	add a, e ; $6c1f
 	ld e, a ; $6c20
 	ld bc, $0942 ; $6c21
-	call Func_00_1f51 ; $6c24
+	call QueueSprite ; $6c24
 	ld a, d ; $6c27
 	add a, $40 ; $6c28
 	ld d, a ; $6c2a
 	ld bc, $0942 ; $6c2b
-	call Func_00_1f51 ; $6c2e
+	call QueueSprite ; $6c2e
 	ret ; $6c31
 Func_06_6c32:
 	ld a, [$c4e0] ; $6c32
@@ -1961,7 +1961,7 @@ Label_06_6f60:
 	ld a, $ff ; $6f63
 	ret ; $6f65
 Label_06_6f66:
-	ld hl, $c2d0 ; $6f66
+	ld hl, wStoryModePlayersXPosition ; $6f66
 	ld de, $c296 ; $6f69
 	ld bc, $0005 ; $6f6c
 	call CopyMemoryBC ; $6f6f
@@ -1974,7 +1974,7 @@ Label_06_6f66:
 	xor a, a ; $6f82
 	ret ; $6f83
 Label_06_6f84:
-	ld hl, $c2d0 ; $6f84
+	ld hl, wStoryModePlayersXPosition ; $6f84
 	ld de, $c296 ; $6f87
 	ld bc, $0005 ; $6f8a
 	call CopyMemoryBC ; $6f8d
@@ -1986,7 +1986,7 @@ Label_06_6f84:
 	xor a, a ; $6f9e
 	ret ; $6f9f
 Label_06_6fa0:
-	ld hl, $c2d0 ; $6fa0
+	ld hl, wStoryModePlayersXPosition ; $6fa0
 	ld de, $c296 ; $6fa3
 	ld bc, $0005 ; $6fa6
 	call CopyMemoryBC ; $6fa9
@@ -2369,7 +2369,7 @@ Func_06_72ce:
 	call Func_06_465e ; $72d2
 	ld hl, $72df ; $72d5
 	ld bc, $0000 ; $72d8
-	call Func_00_1e9d ; $72db
+	call QueueSpriteTemplate ; $72db
 	ret ; $72de
 	INCBIN "data/bank_006/d_72df.bin" ; $72df, 1223 bytes
 Func_06_77a6:

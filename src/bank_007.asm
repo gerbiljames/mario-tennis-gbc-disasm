@@ -1385,26 +1385,26 @@ Func_07_48f6:
 	call Func_00_28b9 ; $48fa
 	ret ; $48fd
 Func_07_48fe:
-	ld hl, $c600 ; $48fe
+	ld hl, wTextBuffer ; $48fe
 	ld c, $28 ; $4901
 	ld a, $02 ; $4903
 Label_07_4905:
 	ld [hl+], a ; $4905
 	dec c ; $4906
 	jr nz, Label_07_4905 ; $4907
-	ld de, $c600 ; $4909
+	ld de, wTextBuffer ; $4909
 	ld c, $28 ; $490c
 	call Func_07_40b3 ; $490e
 	ret ; $4911
 Func_07_4912:
-	ld hl, $c600 ; $4912
+	ld hl, wTextBuffer ; $4912
 	ld c, $28 ; $4915
 	ld a, $08 ; $4917
 Label_07_4919:
 	ld [hl+], a ; $4919
 	dec c ; $491a
 	jr nz, Label_07_4919 ; $491b
-	ld de, $c600 ; $491d
+	ld de, wTextBuffer ; $491d
 	ld c, $28 ; $4920
 	call Func_07_41ef ; $4922
 	ret ; $4925
@@ -2570,7 +2570,7 @@ Label_07_5521:
 	ld b, h ; $5523
 	ret ; $5524
 Func_07_5525:
-	ld hl, $c406 ; $5525
+	ld hl, wBallDepth ; $5525
 	ld a, [hl+] ; $5528
 	ld h, [hl] ; $5529
 	ld l, a ; $552a
@@ -2592,7 +2592,7 @@ Label_07_5535:
 	rr l ; $553e
 	ld e, l ; $5540
 	ld d, h ; $5541
-	ld hl, $c40a ; $5542
+	ld hl, wBallHeight ; $5542
 	ld a, [hl+] ; $5545
 	ld h, [hl] ; $5546
 	ld l, a ; $5547
@@ -2602,7 +2602,7 @@ Label_07_5535:
 	jr z, Label_07_557d ; $554e
 	call Func_00_1416 ; $5550
 	push bc ; $5553
-	ld hl, $c406 ; $5554
+	ld hl, wBallDepth ; $5554
 	ld a, [hl+] ; $5557
 	ld h, [hl] ; $5558
 	ld l, a ; $5559
@@ -2619,7 +2619,7 @@ Label_07_5564:
 	add hl, de ; $5567
 	ld e, l ; $5568
 	ld d, h ; $5569
-	ld hl, $c40a ; $556a
+	ld hl, wBallHeight ; $556a
 	ld a, [hl+] ; $556d
 	ld h, [hl] ; $556e
 	ld l, a ; $556f
@@ -2731,7 +2731,7 @@ Label_07_5668:
 	sra d ; $5668
 	rr e ; $566a
 Label_07_566c:
-	ld hl, $c402 ; $566c
+	ld hl, wBallX ; $566c
 	ld a, [hl+] ; $566f
 	ld h, [hl] ; $5670
 	ld l, a ; $5671
@@ -2756,7 +2756,7 @@ Label_07_5685:
 	sra d ; $5685
 	rr e ; $5687
 Label_07_5689:
-	ld hl, $c402 ; $5689
+	ld hl, wBallX ; $5689
 	ld a, [hl+] ; $568c
 	ld h, [hl] ; $568d
 	ld l, a ; $568e
@@ -2766,7 +2766,7 @@ Label_07_5689:
 	call Func_07_56e3 ; $5692
 	ret ; $5695
 Label_07_5696:
-	ld hl, $c402 ; $5696
+	ld hl, wBallX ; $5696
 	ld a, [hl+] ; $5699
 	ld d, [hl] ; $569a
 	ld e, a ; $569b
@@ -2881,7 +2881,7 @@ Label_07_572b:
 	ld a, c ; $572e
 	ld [hl+], a ; $572f
 	ld [hl], b ; $5730
-	ld hl, $c406 ; $5731
+	ld hl, wBallDepth ; $5731
 	ld a, [hl+] ; $5734
 	ld h, [hl] ; $5735
 	ld l, a ; $5736
@@ -2900,7 +2900,7 @@ Label_07_572b:
 	ld a, e ; $5749
 	ld [hl+], a ; $574a
 	ld [hl], d ; $574b
-	ld hl, $c402 ; $574c
+	ld hl, wBallX ; $574c
 	ld a, [hl+] ; $574f
 	ld h, [hl] ; $5750
 	ld l, a ; $5751
@@ -2927,7 +2927,7 @@ Label_07_572b:
 	ld a, [hl+] ; $5770
 	ld b, [hl] ; $5771
 	ld c, a ; $5772
-	ld hl, $c406 ; $5773
+	ld hl, wBallDepth ; $5773
 	ld a, [hl+] ; $5776
 	ld h, [hl] ; $5777
 	ld l, a ; $5778
@@ -2966,7 +2966,7 @@ Label_07_5794:
 	ld a, [hl+] ; $57a5
 	ld b, [hl] ; $57a6
 	ld c, a ; $57a7
-	ld hl, $c406 ; $57a8
+	ld hl, wBallDepth ; $57a8
 	ld a, [hl+] ; $57ab
 	ld h, [hl] ; $57ac
 	ld l, a ; $57ad
@@ -3041,7 +3041,7 @@ Label_07_57ec:
 	sub a, d ; $580d
 	ld d, a ; $580e
 Label_07_580f:
-	ld hl, $c402 ; $580f
+	ld hl, wBallX ; $580f
 	ld a, [hl+] ; $5812
 	ld h, [hl] ; $5813
 	ld l, a ; $5814
@@ -3089,7 +3089,7 @@ Label_07_5820:
 	ld [hl+], a ; $584f
 	ld [hl], d ; $5850
 Label_07_5851:
-	ld hl, $c40a ; $5851
+	ld hl, wBallHeight ; $5851
 	ld a, [hl+] ; $5854
 	ld d, [hl] ; $5855
 	ld e, a ; $5856
@@ -3119,7 +3119,7 @@ Label_07_5851:
 	inc de ; $5874
 	ret ; $5875
 Func_07_5876:
-	ld hl, $c40a ; $5876
+	ld hl, wBallHeight ; $5876
 	ld a, [hl+] ; $5879
 	ld d, [hl] ; $587a
 	ld e, a ; $587b
@@ -3137,14 +3137,14 @@ Func_07_5876:
 	ld a, d ; $588f
 	sbc a, h ; $5890
 	ld d, a ; $5891
-	ld hl, $c40a ; $5892
+	ld hl, wBallHeight ; $5892
 	ld a, e ; $5895
 	ld [hl+], a ; $5896
 	ld [hl], d ; $5897
 Label_07_5898:
 	ret ; $5898
 Func_07_5899:
-	ld hl, $c40a ; $5899
+	ld hl, wBallHeight ; $5899
 	ld a, [hl+] ; $589c
 	ld d, [hl] ; $589d
 	ld e, a ; $589e
@@ -3153,7 +3153,7 @@ Func_07_5899:
 	bit 7, h ; $58a3
 	jr nz, Label_07_58b1 ; $58a5
 	ld de, $ffa0 ; $58a7
-	ld hl, $c40a ; $58aa
+	ld hl, wBallHeight ; $58aa
 	ld a, e ; $58ad
 	ld [hl+], a ; $58ae
 	ld [hl], d ; $58af
@@ -3163,7 +3163,7 @@ Label_07_58b1:
 	add hl, de ; $58b4
 	ld e, l ; $58b5
 	ld d, h ; $58b6
-	ld hl, $c40a ; $58b7
+	ld hl, wBallHeight ; $58b7
 	ld a, e ; $58ba
 	ld [hl+], a ; $58bb
 	ld [hl], d ; $58bc
@@ -3303,7 +3303,7 @@ Label_07_59df:
 	ret ; $59eb
 	INCBIN "data/bank_007/d_59ec.bin" ; $59ec, 21 bytes
 Func_07_5a01:
-	ld hl, $c40a ; $5a01
+	ld hl, wBallHeight ; $5a01
 	ld a, [hl+] ; $5a04
 	ld h, [hl] ; $5a05
 	ld l, a ; $5a06

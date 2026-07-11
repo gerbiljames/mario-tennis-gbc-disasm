@@ -437,7 +437,7 @@ Func_0a_4291:
 	xor a, a ; $429c
 	farcall FarPtr_05_44 ; $429d
 	farcall FarPtr_05_1e ; $42a0
-	ld hl, $c600 ; $42a3
+	ld hl, wTextBuffer ; $42a3
 	ld bc, $0180 ; $42a6
 	ld de, $0000 ; $42a9
 Label_0a_42ac:
@@ -2116,7 +2116,7 @@ Func_0a_4ef8:
 	test_flag $04, 0 ; $4efc
 	jr z, Label_0a_4f2b ; $4eff
 	wram_bank $04 ; $4f01
-	ld hl, $c2d0 ; $4f07
+	ld hl, wStoryModePlayersXPosition ; $4f07
 	ld a, [hl+] ; $4f0a
 	ld h, [hl] ; $4f0b
 	ld l, a ; $4f0c
@@ -2128,7 +2128,7 @@ Func_0a_4ef8:
 	call Func_00_1ace ; $4f14
 	pop de ; $4f17
 	pop hl ; $4f18
-	ld hl, $c2d2 ; $4f19
+	ld hl, wStoryModePlayersYPosition ; $4f19
 	ld a, [hl+] ; $4f1c
 	ld h, [hl] ; $4f1d
 	ld l, a ; $4f1e
@@ -2407,7 +2407,7 @@ Func_0a_5114:
 	call Func_0a_574e ; $511b
 	jr Label_0a_5120 ; $511e
 Label_0a_5120:
-	ld de, $c280 ; $5120
+	ld de, wStoryModeCurrentLocation ; $5120
 	ld bc, $0006 ; $5123
 	call CopyMemoryBC ; $5126
 	ld hl, $c282 ; $5129
@@ -2445,7 +2445,7 @@ Func_0a_5161:
 	push de ; $5161
 	push hl ; $5162
 	push hl ; $5163
-	ld hl, $c280 ; $5164
+	ld hl, wStoryModeCurrentLocation ; $5164
 	add hl, de ; $5167
 	pop de ; $5168
 	ld [hl], e ; $5169
@@ -2632,7 +2632,7 @@ Label_0a_5292:
 	ld [$c8a9], a ; $5295
 	ld hl, $c8aa ; $5298
 	ld [hl], $ff ; $529b
-	ld hl, $c2d0 ; $529d
+	ld hl, wStoryModePlayersXPosition ; $529d
 	ld de, $c8ab ; $52a0
 	ld bc, $0005 ; $52a3
 	call CopyMemoryBC ; $52a6
@@ -2702,7 +2702,7 @@ Label_0a_5314:
 Label_0a_531f:
 	farcall FarPtr_05_0a ; $531f
 	wram_bank $05 ; $5322
-	ld hl, $c8a4 ; $5328
+	ld hl, wMessageSpeed ; $5328
 	res 7, [hl] ; $532b
 	pop af ; $532d
 	wram_bank ; $532e
@@ -3824,10 +3824,10 @@ Func_0a_5de2:
 	call Func_0a_5d2a ; $5de8
 	ld a, $00 ; $5deb
 	call Func_0a_5d0b ; $5ded
-	ld de, $c600 ; $5df0
+	ld de, wTextBuffer ; $5df0
 	ld bc, $0010 ; $5df3
 	call CopyDataFromBank ; $5df6
-	ld hl, $c600 ; $5df9
+	ld hl, wTextBuffer ; $5df9
 	ld bc, $0002 ; $5dfc
 	add hl, bc ; $5dff
 	ld a, [hl+] ; $5e00
@@ -5098,7 +5098,7 @@ Label_0a_66e1:
 	ld b, [hl] ; $66ed
 	ld c, a ; $66ee
 	ld hl, $670e ; $66ef
-	call Func_00_1e9d ; $66f2
+	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
 	INCBIN "data/bank_00a/d_66f6.bin" ; $66f6, 33 bytes
 Func_0a_6717:
@@ -5265,7 +5265,7 @@ Func_0a_67f5:
 	add a, a ; $67fb
 	add a, $08 ; $67fc
 	ld c, a ; $67fe
-	call Func_00_1f51 ; $67ff
+	call QueueSprite ; $67ff
 	pop hl ; $6802
 	pop de ; $6803
 Label_0a_6804:
@@ -5517,7 +5517,7 @@ Label_0a_6d90:
 	ld b, [hl] ; $6d9c
 	ld c, a ; $6d9d
 	ld hl, $6dbd ; $6d9e
-	call Func_00_1e9d ; $6da1
+	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
 	INCBIN "data/bank_00a/d_6da5.bin" ; $6da5, 57 bytes
 Func_0a_6dde:

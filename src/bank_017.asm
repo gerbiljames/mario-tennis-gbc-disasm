@@ -310,7 +310,7 @@ Label_17_46aa:
 	ld hl, $4703 ; $46f3
 	ld b, $08 ; $46f6
 	ld c, $00 ; $46f8
-	call Func_00_1e9d ; $46fa
+	call QueueSpriteTemplate ; $46fa
 	pop af ; $46fd
 	wram_bank ; $46fe
 	ret ; $4702
@@ -325,7 +325,7 @@ Label_17_46aa:
 	ld hl, $472d ; $471d
 	ld b, $08 ; $4720
 	ld c, $04 ; $4722
-	call Func_00_1e9d ; $4724
+	call QueueSpriteTemplate ; $4724
 	pop af ; $4727
 	wram_bank ; $4728
 	ret ; $472c
@@ -339,7 +339,7 @@ Label_17_46aa:
 	ld e, a ; $4746
 	ld c, $6e ; $4747
 	ld b, $09 ; $4749
-	call Func_00_1f51 ; $474b
+	call QueueSprite ; $474b
 	pop af ; $474e
 	wram_bank ; $474f
 	ret ; $4753
@@ -363,7 +363,7 @@ Label_17_4773:
 	ld e, a ; $4776
 	ld c, $60 ; $4777
 	ld hl, $4785 ; $4779
-	call Func_00_1e9d ; $477c
+	call QueueSpriteTemplate ; $477c
 	pop af ; $477f
 	wram_bank ; $4780
 	ret ; $4784
@@ -382,7 +382,7 @@ Label_17_4832:
 	ld d, a ; $4835
 	ld a, [$d824] ; $4836
 	ld e, a ; $4839
-	call Func_00_1f51 ; $483a
+	call QueueSprite ; $483a
 	pop af ; $483d
 	wram_bank ; $483e
 	ret ; $4842
@@ -403,7 +403,7 @@ Label_17_488a:
 	ld d, a ; $4890
 	ld a, [$d819] ; $4891
 	ld e, a ; $4894
-	call Func_00_1f51 ; $4895
+	call QueueSprite ; $4895
 	pop af ; $4898
 	wram_bank ; $4899
 	ret ; $489d
@@ -418,7 +418,7 @@ Func_17_48a2:
 	ld c, $72 ; $48b1
 	ld b, $09 ; $48b3
 	ld de, $508c ; $48b5
-	call Func_00_1f51 ; $48b8
+	call QueueSprite ; $48b8
 Label_17_48bb:
 	pop af ; $48bb
 	wram_bank ; $48bc
@@ -442,7 +442,7 @@ Label_17_48d5:
 Label_17_48e0:
 	ld c, $6c ; $48e0
 	ld b, $0a ; $48e2
-	call Func_00_1f51 ; $48e4
+	call QueueSprite ; $48e4
 	ld a, [$d82a] ; $48e7
 	add a, $03 ; $48ea
 	ld b, a ; $48ec
@@ -463,7 +463,7 @@ Label_17_48f9:
 Label_17_4904:
 	ld c, $6c ; $4904
 	ld b, $2a ; $4906
-	call Func_00_1f51 ; $4908
+	call QueueSprite ; $4908
 	ld a, [$d82a] ; $490b
 	add a, $03 ; $490e
 	ld b, a ; $4910
@@ -488,7 +488,7 @@ Label_17_491d:
 Label_17_492f:
 	ld c, $6c ; $492f
 	ld b, $6a ; $4931
-	call Func_00_1f51 ; $4933
+	call QueueSprite ; $4933
 	ld a, [$d828] ; $4936
 	ld d, a ; $4939
 	ldh a, [$ff8c] ; $493a
@@ -509,7 +509,7 @@ Label_17_4941:
 Label_17_4953:
 	ld c, $6c ; $4953
 	ld b, $4a ; $4955
-	call Func_00_1f51 ; $4957
+	call QueueSprite ; $4957
 	pop af ; $495a
 	wram_bank ; $495b
 	ret ; $495f
@@ -3876,7 +3876,7 @@ Label_17_74fd:
 	ld b, [hl] ; $74fd
 	ld de, $7e68 ; $74fe
 	ld hl, $7527 ; $7501
-	call Func_00_1e9d ; $7504
+	call QueueSpriteTemplate ; $7504
 	pop bc ; $7507
 	ld a, $12 ; $7508
 	add a, c ; $750a
@@ -3891,7 +3891,7 @@ Label_17_7517:
 	ld b, [hl] ; $7517
 	ld de, $7e68 ; $7518
 	ld hl, $7527 ; $751b
-	call Func_00_1e9d ; $751e
+	call QueueSpriteTemplate ; $751e
 	pop af ; $7521
 	wram_bank ; $7522
 	ret ; $7526

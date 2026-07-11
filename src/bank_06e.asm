@@ -37,11 +37,11 @@ FetchText_6e:
 	add hl, de ; $7b29
 	or a, a ; $7b2a
 	jr nz, Label_6e_7b34 ; $7b2b
-	ld de, $c600 ; $7b2d
+	ld de, wTextBuffer ; $7b2d
 	ld c, $a0 ; $7b30
 	jr Label_6e_7b39 ; $7b32
 Label_6e_7b34:
-	ld de, $d880 ; $7b34
+	ld de, wShortTextBuffer ; $7b34
 	ld c, $10 ; $7b37
 Label_6e_7b39:
 	dec c ; $7b39

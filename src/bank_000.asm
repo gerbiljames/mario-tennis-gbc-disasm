@@ -1089,20 +1089,20 @@ Func_00_086c:
 	push af ; $0872
 	wram_bank $01 ; $0873
 	ld hl, $d000 ; $0879
-	ld de, $c600 ; $087c
+	ld de, wTextBuffer ; $087c
 	ld c, $20 ; $087f
 	call CopyMemoryFast ; $0881
 	wram_bank $02 ; $0884
-	ld hl, $c600 ; $088a
+	ld hl, wTextBuffer ; $088a
 	ld de, $d000 ; $088d
 	call Func_00_07dd ; $0890
 	wram_bank $01 ; $0893
 	ld hl, $d200 ; $0899
-	ld de, $c600 ; $089c
+	ld de, wTextBuffer ; $089c
 	ld c, $20 ; $089f
 	call CopyMemoryFast ; $08a1
 	wram_bank $02 ; $08a4
-	ld hl, $c600 ; $08aa
+	ld hl, wTextBuffer ; $08aa
 	ld de, $d800 ; $08ad
 	call Func_00_07dd ; $08b0
 	ld hl, $d800 ; $08b3
@@ -1110,20 +1110,20 @@ Func_00_086c:
 	call ClearMemory16 ; $08b8
 	wram_bank $01 ; $08bb
 	ld hl, $d400 ; $08c1
-	ld de, $c600 ; $08c4
+	ld de, wTextBuffer ; $08c4
 	ld c, $20 ; $08c7
 	call CopyMemoryFast ; $08c9
 	wram_bank $03 ; $08cc
-	ld hl, $c600 ; $08d2
+	ld hl, wTextBuffer ; $08d2
 	ld de, $d000 ; $08d5
 	call Func_00_07dd ; $08d8
 	wram_bank $01 ; $08db
 	ld hl, $d600 ; $08e1
-	ld de, $c600 ; $08e4
+	ld de, wTextBuffer ; $08e4
 	ld c, $20 ; $08e7
 	call CopyMemoryFast ; $08e9
 	wram_bank $03 ; $08ec
-	ld hl, $c600 ; $08f2
+	ld hl, wTextBuffer ; $08f2
 	ld de, $d800 ; $08f5
 	call Func_00_07dd ; $08f8
 	ld hl, $d800 ; $08fb
@@ -4418,7 +4418,7 @@ Func_00_1e3d:
 	pop af ; $1e4e
 	ret ; $1e4f
 	INCBIN "data/bank_000/d_1e50.bin" ; $1e50, 5 bytes
-Func_00_1e55:
+QueueSprite16:
 	ldh a, [$ff9b] ; $1e55
 	cp a, $a0 ; $1e57
 	ret z ; $1e59
@@ -4479,7 +4479,7 @@ Label_00_1e80:
 	ld a, l ; $1e99
 	ldh [$ff9b], a ; $1e9a
 	ret ; $1e9c
-Func_00_1e9d:
+QueueSpriteTemplate:
 	add sp, -4 ; $1e9d
 	push hl ; $1e9f
 	ld hl, sp + 2 ; $1ea0
@@ -4572,7 +4572,7 @@ Label_00_1f07:
 	add sp, 4 ; $1f0a
 	ret ; $1f0c
 	INCBIN "data/bank_000/d_1f0d.bin" ; $1f0d, 68 bytes
-Func_00_1f51:
+QueueSprite:
 	ldh a, [$ff9b] ; $1f51
 	cp a, $a0 ; $1f53
 	ret z ; $1f55
@@ -4957,7 +4957,7 @@ TestGameFlag:
 	sub a, l ; $24ab
 	ld h, a ; $24ac
 	ld a, [hl] ; $24ad
-	ld hl, $c9c0 ; $24ae
+	ld hl, wGameFlags ; $24ae
 	ld e, d ; $24b1
 	ld d, $00 ; $24b2
 	add hl, de ; $24b4
@@ -4979,7 +4979,7 @@ SetGameFlag:
 	sub a, l ; $24c5
 	ld h, a ; $24c6
 	ld a, [hl] ; $24c7
-	ld hl, $c9c0 ; $24c8
+	ld hl, wGameFlags ; $24c8
 	ld e, d ; $24cb
 	ld d, $00 ; $24cc
 	add hl, de ; $24ce
@@ -5001,7 +5001,7 @@ ClearGameFlag:
 	sub a, l ; $24df
 	ld h, a ; $24e0
 	ld a, [hl] ; $24e1
-	ld hl, $c9c0 ; $24e2
+	ld hl, wGameFlags ; $24e2
 	ld e, d ; $24e5
 	ld d, $00 ; $24e6
 	add hl, de ; $24e8
@@ -6095,7 +6095,7 @@ Label_00_2c20:
 	xor a, a ; $2c24
 Label_00_2c25:
 	ret ; $2c25
-Func_00_2c26:
+TickTimer:
 	ld a, [hl] ; $2c26
 	and a, a ; $2c27
 	ret z ; $2c28
@@ -6555,7 +6555,7 @@ Label_00_2e6b:
 	ld e, a ; $2e98
 	ld a, [$df27] ; $2e99
 	ld d, a ; $2e9c
-	ld a, [$c4ca] ; $2e9d
+	ld a, [wStandingShadowsEnabled] ; $2e9d
 	and a, a ; $2ea0
 	jr nz, Label_00_2ead ; $2ea1
 	call Func_00_0480 ; $2ea3
@@ -6659,7 +6659,7 @@ Func_00_2f32:
 	push bc ; $2f33
 	push de ; $2f34
 	push hl ; $2f35
-	ld hl, $ffce ; $2f36
+	ld hl, hMusic ; $2f36
 	bit 0, [hl] ; $2f39
 	jr z, Label_00_2f4d ; $2f3b
 	res 0, [hl] ; $2f3d
@@ -6728,7 +6728,7 @@ Label_00_2fc2:
 	jr nc, Label_00_3010 ; $2fc4
 	cp a, $40 ; $2fc6
 	jr c, Label_00_2fe6 ; $2fc8
-	ld hl, $ffce ; $2fca
+	ld hl, hMusic ; $2fca
 	bit 0, [hl] ; $2fcd
 	jr nz, Label_00_301f ; $2fcf
 	ldh [$ffcd], a ; $2fd1
@@ -6748,16 +6748,16 @@ Label_00_2fe6:
 	or a, a ; $2fe9
 	ld a, d ; $2fea
 	jr z, Label_00_2ff3 ; $2feb
-	ld hl, $c33e ; $2fed
+	ld hl, wCurrentBGM ; $2fed
 	ld [hl], a ; $2ff0
 	jr Label_00_301f ; $2ff1
 Label_00_2ff3:
-	ld hl, $c33e ; $2ff3
+	ld hl, wCurrentBGM ; $2ff3
 	cp a, [hl] ; $2ff6
 	jr z, Label_00_301f ; $2ff7
 	ld [hl], a ; $2ff9
 Label_00_2ffa:
-	ld hl, $ffce ; $2ffa
+	ld hl, hMusic ; $2ffa
 	bit 0, [hl] ; $2ffd
 	jr nz, Label_00_301f ; $2fff
 	ld h, a ; $3001
@@ -6808,7 +6808,7 @@ Label_00_3033:
 Label_00_3040:
 	xor a, a ; $3040
 	ldh [$ffcd], a ; $3041
-	ld hl, $ffce ; $3043
+	ld hl, hMusic ; $3043
 	bit 0, [hl] ; $3046
 	jr nz, Label_00_3058 ; $3048
 	ldh a, [hWramBank] ; $304a
@@ -6834,7 +6834,7 @@ Func_00_305d:
 	ret nz ; $3068
 	xor a, a ; $3069
 	ldh [$ffcd], a ; $306a
-	ld hl, $ffce ; $306c
+	ld hl, hMusic ; $306c
 	bit 0, [hl] ; $306f
 	ret nz ; $3071
 	ld a, [wCurrentBGM] ; $3072
@@ -8434,4 +8434,5 @@ Label_00_3dbc:
 	pop bc ; $3dd1
 	pop de ; $3dd2
 	ret ; $3dd3
-	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 556 bytes
+	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 500 bytes
+	ds 56, $ff ; $3fc8, fill

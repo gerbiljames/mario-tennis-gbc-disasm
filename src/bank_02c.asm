@@ -201,7 +201,7 @@ Func_2c_41f9:
 	call Func_00_1340 ; $4201
 	ld c, l ; $4204
 	ld b, h ; $4205
-	ld hl, $c402 ; $4206
+	ld hl, wBallX ; $4206
 	ld a, [hl+] ; $4209
 	ld h, [hl] ; $420a
 	ld l, a ; $420b
@@ -212,7 +212,7 @@ Func_2c_41f9:
 	ld a, c ; $4212
 	ld [hl+], a ; $4213
 	ld [hl], b ; $4214
-	ld hl, $c406 ; $4215
+	ld hl, wBallDepth ; $4215
 	ld a, [hl+] ; $4218
 	ld h, [hl] ; $4219
 	ld l, a ; $421a
@@ -228,7 +228,7 @@ Func_2c_41f9:
 Func_2c_4250:
 	ld e, l ; $4250
 	ld d, h ; $4251
-	ld hl, $c40a ; $4252
+	ld hl, wBallHeight ; $4252
 	ld a, [hl+] ; $4255
 	ld h, [hl] ; $4256
 	ld l, a ; $4257

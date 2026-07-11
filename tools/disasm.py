@@ -135,6 +135,7 @@ class Disassembly:
         self.farcalls = {}    # site offset -> (bank, slot, entry_flat, target_flat)
         self.inferred_entries = {}  # entry_flat -> (bank, slot, target_flat)
         self.jt_entries = {}  # rst $00 inline jump-table entry offset -> target_flat
+        self.data_boundaries = set()  # declared data-table offsets (data_tables.json)
         self.data_slots = {}  # entry_flat -> (bank, slot, src_flat, kind)
         self.data_blobs = {}  # src_flat -> (length or None, kind)
         self.object_headers = set()  # src_flat of 16-byte object headers
@@ -418,6 +419,8 @@ class Disassembly:
             while pos + 1 < len(self.rom) and len(entries) < 128:
                 if pos in self.code_bytes or pos in self.jt_entries:
                     break
+                if pos in self.data_boundaries:
+                    break  # a declared data table delimits the jump table
                 if min_fwd is not None and pos >= min_fwd:
                     break
                 cpu = self.rom[pos] | (self.rom[pos + 1] << 8)
@@ -1266,6 +1269,10 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None):
                 flat = base + (imm - 0x4000)
             if flat in data_labels:
                 return f"ld {m.group(1)}, {data_labels[flat]}"
+            # Same for curated RAM symbols: a word immediate equal to a
+            # named RAM address is a pointer setup, not a constant.
+            if ramnames and imm in ramnames:
+                return f"ld {m.group(1)}, {ramnames[imm]}"
     if "$ff" in text and hwregs:
         m = HWADDR_RE.search(text)
         if m:
@@ -1543,14 +1550,15 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                     continue
                 # Unclassified run: split out long constant-byte fills as ds
                 # directives ($ff is the mastering fill; $00 needs a longer
-                # run since zero arrays can be real data).
+                # run since zero arrays can be real data; any $ff run that
+                # reaches the bank end is trailing fill regardless of length).
                 seg = run_start
                 while seg < off:
                     b = rom[seg]
                     j = seg
                     while j < off and rom[j] == b:
                         j += 1
-                    if not ((b == 0xFF and j - seg >= 64)
+                    if not ((b == 0xFF and (j - seg >= 64 or j == end))
                             or (b == 0x00 and j - seg >= 256)):
                         j = seg + 1
                         while j < off:
@@ -1558,7 +1566,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                             k = j
                             while k < off and rom[k] == b:
                                 k += 1
-                            if (b == 0xFF and k - j >= 64) \
+                            if (b == 0xFF and (k - j >= 64 or k == end)) \
                                     or (b == 0x00 and k - j >= 256):
                                 break
                             j = k
@@ -1650,6 +1658,11 @@ def main():
 
     rom = Path(args.rom).read_bytes()
     dis = Disassembly(rom)
+    data_tables = {}
+    if Path(args.data_tables).exists():
+        data_tables = {int(k, 0): v
+                       for k, v in json.loads(Path(args.data_tables).read_text()).items()}
+    dis.data_boundaries = set(data_tables)
     seeds = load_coverage(args.coverage, len(rom) // BANK_SIZE)
     print(f"{len(seeds)} coverage seeds")
     dis.seed(seeds)
@@ -1691,10 +1704,6 @@ def main():
     labels = build_labels(dis, overrides)
     hwregs = load_hwregs(args.hardware_inc)
     ramnames = load_ram_map(args.ram_map, "include/ram_constants.asm")
-    data_tables = {}
-    if Path(args.data_tables).exists():
-        data_tables = {int(k, 0): v
-                       for k, v in json.loads(Path(args.data_tables).read_text()).items()}
     Path(args.srcdir).mkdir(parents=True, exist_ok=True)
     emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables)
 

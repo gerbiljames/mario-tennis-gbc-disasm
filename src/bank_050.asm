@@ -332,4 +332,4 @@ Data_50_7fb5:
 	INCBIN "data/bank_050/d_7fb5.bin" ; $7fb5, 12 bytes
 Data_50_7fc1:
 	INCBIN "data/bank_050/d_7fc1.bin" ; $7fc1, 8 bytes
-	INCBIN "data/bank_050/d_7fc9.bin" ; $7fc9, 55 bytes
+	ds 55, $ff ; $7fc9, fill

@@ -37,7 +37,7 @@ Func_38_4018:
 	call Func_38_40a5 ; $4021
 	ld c, $00 ; $4024
 	ld b, $08 ; $4026
-	call Func_00_1f51 ; $4028
+	call QueueSprite ; $4028
 	pop bc ; $402b
 	pop de ; $402c
 	push de ; $402d
@@ -52,7 +52,7 @@ Func_38_4018:
 	call Func_38_40a5 ; $403a
 	ld c, $00 ; $403d
 	ld b, $28 ; $403f
-	call Func_00_1f51 ; $4041
+	call QueueSprite ; $4041
 	pop de ; $4044
 	pop bc ; $4045
 	pop de ; $4046
@@ -71,7 +71,7 @@ Func_38_4018:
 	call Func_38_40a5 ; $4057
 	ld c, $00 ; $405a
 	ld b, $68 ; $405c
-	call Func_00_1f51 ; $405e
+	call QueueSprite ; $405e
 	pop de ; $4061
 	pop bc ; $4062
 	pop de ; $4063
@@ -85,7 +85,7 @@ Func_38_4018:
 	call Func_38_40a5 ; $406f
 	ld c, $00 ; $4072
 	ld b, $48 ; $4074
-	call Func_00_1f51 ; $4076
+	call QueueSprite ; $4076
 	pop de ; $4079
 	ret ; $407a
 Func_38_407b:
@@ -815,7 +815,7 @@ Label_38_487c:
 	ld a, [$cb00] ; $489f
 	farcall FarPtr_02_06 ; $48a2
 	push af ; $48a5
-	ld hl, $c900 ; $48a6
+	ld hl, wStoryModeNameOfMainCharacter ; $48a6
 	ld a, [$cb00] ; $48a9
 	or a, a ; $48ac
 	jr z, Label_38_48b1 ; $48ad
@@ -1381,7 +1381,7 @@ Label_38_4e31:
 	ld c, $02 ; $4e42
 Label_38_4e44:
 	ld b, $00 ; $4e44
-	call Func_00_1f51 ; $4e46
+	call QueueSprite ; $4e46
 	ret ; $4e49
 	INCBIN "data/bank_038/d_4e4a.bin" ; $4e4a, 8 bytes
 	farcall FarPtr_39_28 ; $4e52
@@ -2028,7 +2028,7 @@ Func_38_549a:
 	ld de, $0840 ; $549e
 	farcall FarPtr_39_14 ; $54a1
 	ld hl, $54ab ; $54a4
-	call Func_00_1e9d ; $54a7
+	call QueueSpriteTemplate ; $54a7
 	ret ; $54aa
 	INCBIN "data/bank_038/d_54ab.bin" ; $54ab, 33 bytes
 Func_38_54cc:
@@ -2043,13 +2043,13 @@ Func_38_54cc:
 	call Func_38_407b ; $54e1
 	ld c, $10 ; $54e4
 	ld b, $0f ; $54e6
-	call Func_00_1f51 ; $54e8
+	call QueueSprite ; $54e8
 	ld de, $5045 ; $54eb
 	ld c, $00 ; $54ee
 	call Func_38_407b ; $54f0
 	ld c, $12 ; $54f3
 	ld b, $0f ; $54f5
-	call Func_00_1f51 ; $54f7
+	call QueueSprite ; $54f7
 	ld a, [$d811] ; $54fa
 	or a, a ; $54fd
 	jr z, Label_38_5513 ; $54fe
@@ -2060,7 +2060,7 @@ Func_38_54cc:
 	call Func_38_40a5 ; $5509
 	ld c, $14 ; $550c
 	ld b, $0f ; $550e
-	call Func_00_1f51 ; $5510
+	call QueueSprite ; $5510
 Label_38_5513:
 	ld a, [$d811] ; $5513
 	cp a, $01 ; $5516
@@ -2083,7 +2083,7 @@ Label_38_5524:
 	call Func_38_40a5 ; $5535
 	ld c, $16 ; $5538
 	ld b, $0f ; $553a
-	call Func_00_1f51 ; $553c
+	call QueueSprite ; $553c
 Label_38_553f:
 	pop af ; $553f
 	wram_bank ; $5540
@@ -2142,7 +2142,7 @@ Func_38_5589:
 	add a, a ; $5594
 	ld c, a ; $5595
 	push de ; $5596
-	call Func_00_1f51 ; $5597
+	call QueueSprite ; $5597
 	pop de ; $559a
 	ld a, $08 ; $559b
 	add a, d ; $559d
@@ -2150,7 +2150,7 @@ Func_38_5589:
 	ld a, $02 ; $559f
 	add a, c ; $55a1
 	ld c, a ; $55a2
-	call Func_00_1f51 ; $55a3
+	call QueueSprite ; $55a3
 	pop hl ; $55a6
 	pop de ; $55a7
 	pop bc ; $55a8
@@ -3249,7 +3249,7 @@ Label_38_5dc9:
 	add a, c ; $5e00
 	ld e, a ; $5e01
 	ld d, b ; $5e02
-	ld hl, $c900 ; $5e03
+	ld hl, wStoryModeNameOfMainCharacter ; $5e03
 	ld bc, $000b ; $5e06
 	call CopyMemoryBC ; $5e09
 	pop bc ; $5e0c
@@ -3288,7 +3288,7 @@ Label_38_5dc9:
 	add a, c ; $5e4a
 	ld e, a ; $5e4b
 	ld d, b ; $5e4c
-	ld hl, $c940 ; $5e4d
+	ld hl, wStoryModeNameOfPartnerCharacter ; $5e4d
 	ld bc, $000b ; $5e50
 	call CopyMemoryBC ; $5e53
 	pop bc ; $5e56
@@ -3581,21 +3581,21 @@ Func_38_605b:
 	ld a, $00 ; $6068
 	ld [$c36c], a ; $606a
 	farcall FarPtr_03_1a ; $606d
-	ld hl, $c900 ; $6070
+	ld hl, wStoryModeNameOfMainCharacter ; $6070
 	ld de, $d000 ; $6073
 	ld bc, $0008 ; $6076
 	call CopyMemoryFast ; $6079
 	ld a, $01 ; $607c
 	ld [$c36c], a ; $607e
 	farcall FarPtr_03_1a ; $6081
-	ld hl, $c900 ; $6084
+	ld hl, wStoryModeNameOfMainCharacter ; $6084
 	ld de, $d100 ; $6087
 	ld bc, $0008 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
 	ld [$c36c], a ; $6092
 	farcall FarPtr_03_1a ; $6095
-	ld hl, $c900 ; $6098
+	ld hl, wStoryModeNameOfMainCharacter ; $6098
 	ld de, $d200 ; $609b
 	ld bc, $0008 ; $609e
 	call CopyMemoryFast ; $60a1
@@ -3629,7 +3629,7 @@ Label_38_60d0:
 	ld a, [hl+] ; $60d0
 	ld h, [hl] ; $60d1
 	ld l, a ; $60d2
-	ld de, $c900 ; $60d3
+	ld de, wStoryModeNameOfMainCharacter ; $60d3
 	ld bc, $0008 ; $60d6
 	call CopyMemoryFast ; $60d9
 	pop af ; $60dc
@@ -5673,14 +5673,14 @@ Func_38_727a:
 	ld c, $00 ; $727a
 	ld b, $08 ; $727c
 	push de ; $727e
-	call Func_00_1f51 ; $727f
+	call QueueSprite ; $727f
 	pop de ; $7282
 	ld a, $08 ; $7283
 	add a, d ; $7285
 	ld d, a ; $7286
 	ld c, $02 ; $7287
 	ld b, $08 ; $7289
-	call Func_00_1f51 ; $728b
+	call QueueSprite ; $728b
 	ret ; $728e
 Func_38_728f:
 	ldh a, [hWramBank] ; $728f
@@ -5831,7 +5831,7 @@ Label_38_7399:
 	ld c, $10 ; $7399
 	ld b, $0a ; $739b
 	push de ; $739d
-	call Func_00_1f51 ; $739e
+	call QueueSprite ; $739e
 	pop de ; $73a1
 Label_38_73a2:
 	pop bc ; $73a2
@@ -5895,10 +5895,10 @@ Func_38_73fa:
 	ld a, [$cb00] ; $73fa
 	or a, a ; $73fd
 	jr nz, Label_38_7404 ; $73fe
-	ld bc, $c900 ; $7400
+	ld bc, wStoryModeNameOfMainCharacter ; $7400
 	ret ; $7403
 Label_38_7404:
-	ld bc, $c940 ; $7404
+	ld bc, wStoryModeNameOfPartnerCharacter ; $7404
 	ret ; $7407
 Func_38_7408:
 	push bc ; $7408
@@ -6074,12 +6074,12 @@ Label_38_7559:
 	jr z, Label_38_7566 ; $7561
 	call Func_00_284b ; $7563
 Label_38_7566:
-	ld hl, $ca8b ; $7566
-	ld de, $ca0b ; $7569
+	ld hl, wPlayer2CurrentMainCharacter ; $7566
+	ld de, wPlayer1CurrentMainCharacter ; $7569
 	jr Label_38_7574 ; $756c
 Label_38_756e:
-	ld hl, $ca0b ; $756e
-	ld de, $ca8b ; $7571
+	ld hl, wPlayer1CurrentMainCharacter ; $756e
+	ld de, wPlayer2CurrentMainCharacter ; $7571
 Label_38_7574:
 	ld a, c ; $7574
 	or a, a ; $7575

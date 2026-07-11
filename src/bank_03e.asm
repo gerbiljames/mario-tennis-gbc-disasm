@@ -1196,14 +1196,14 @@ Func_3e_4e1c:
 	ld c, $00 ; $4e1c
 	ld b, $08 ; $4e1e
 	push de ; $4e20
-	call Func_00_1f51 ; $4e21
+	call QueueSprite ; $4e21
 	pop de ; $4e24
 	ld a, $08 ; $4e25
 	add a, d ; $4e27
 	ld d, a ; $4e28
 	ld c, $02 ; $4e29
 	ld b, $08 ; $4e2b
-	call Func_00_1f51 ; $4e2d
+	call QueueSprite ; $4e2d
 	farcall FarPtr_39_28 ; $4e30
 	ret ; $4e33
 Func_3e_4e34:
@@ -1563,7 +1563,7 @@ Label_3e_5111:
 	ld b, $08 ; $5117
 	ld hl, $5132 ; $5119
 	push de ; $511c
-	call Func_00_1e9d ; $511d
+	call QueueSpriteTemplate ; $511d
 	pop de ; $5120
 	ld hl, $17f8 ; $5121
 	add hl, de ; $5124
@@ -1572,7 +1572,7 @@ Label_3e_5111:
 	ld hl, $5153 ; $5127
 	ld b, $08 ; $512a
 	ld c, $70 ; $512c
-	call Func_00_1e9d ; $512e
+	call QueueSpriteTemplate ; $512e
 	ret ; $5131
 	INCBIN "data/bank_03e/d_5132.bin" ; $5132, 51 bytes
 Func_3e_5165:
@@ -3139,7 +3139,7 @@ Label_3e_5ec1:
 	ld l, a ; $5ec3
 	ld b, $08 ; $5ec4
 	push de ; $5ec6
-	call Func_00_1e9d ; $5ec7
+	call QueueSpriteTemplate ; $5ec7
 	pop de ; $5eca
 	ld c, $02 ; $5ecb
 	call Func_3e_43c9 ; $5ecd
@@ -3158,7 +3158,7 @@ Label_3e_5ed8:
 	ld hl, $5f38 ; $5edf
 	ld b, $08 ; $5ee2
 	ld c, $72 ; $5ee4
-	call Func_00_1e9d ; $5ee6
+	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
 	INCBIN "data/bank_03e/d_5eea.bin" ; $5eea, 103 bytes
 Func_3e_5f51:

@@ -547,7 +547,7 @@ Func_1b_5511:
 	call Func_1b_569c ; $5511
 	wram_bank $03 ; $5514
 	call Func_1b_558e ; $551a
-	ld hl, $c900 ; $551d
+	ld hl, wStoryModeNameOfMainCharacter ; $551d
 	ld de, $d021 ; $5520
 	call Func_1b_56b3 ; $5523
 	ld b, $01 ; $5526
@@ -645,10 +645,10 @@ Func_1b_55d1:
 	call Func_1b_569c ; $55d1
 	wram_bank $03 ; $55d4
 	call Func_1b_5659 ; $55da
-	ld hl, $c900 ; $55dd
+	ld hl, wStoryModeNameOfMainCharacter ; $55dd
 	ld de, $d041 ; $55e0
 	call Func_1b_56b3 ; $55e3
-	ld hl, $c940 ; $55e6
+	ld hl, wStoryModeNameOfPartnerCharacter ; $55e6
 	ld de, $d081 ; $55e9
 	call Func_1b_56b3 ; $55ec
 	ld b, $02 ; $55ef
@@ -1049,7 +1049,7 @@ Label_1b_622c:
 	xor a, a ; $622c
 	ld [$cb00], a ; $622d
 	push af ; $6230
-	ld hl, $c900 ; $6231
+	ld hl, wStoryModeNameOfMainCharacter ; $6231
 	ld a, [$cb00] ; $6234
 	or a, a ; $6237
 	jr z, Label_1b_623c ; $6238
@@ -1084,7 +1084,7 @@ Label_1b_623c:
 	ld a, [$cb00] ; $626a
 	farcall FarPtr_02_06 ; $626d
 	push af ; $6270
-	ld hl, $c900 ; $6271
+	ld hl, wStoryModeNameOfMainCharacter ; $6271
 	ld a, [$cb00] ; $6274
 	or a, a ; $6277
 	jr z, Label_1b_627c ; $6278
@@ -1132,7 +1132,7 @@ Label_1b_62b9:
 	and a, a ; $62be
 	jr nz, Label_1b_6293 ; $62bf
 	push af ; $62c1
-	ld hl, $c900 ; $62c2
+	ld hl, wStoryModeNameOfMainCharacter ; $62c2
 	ld a, [$cb00] ; $62c5
 	or a, a ; $62c8
 	jr z, Label_1b_62cd ; $62c9
@@ -1153,7 +1153,7 @@ Label_1b_62cd:
 Label_1b_62df:
 	pop af ; $62df
 	ld [$cb00], a ; $62e0
-	ld hl, $c900 ; $62e3
+	ld hl, wStoryModeNameOfMainCharacter ; $62e3
 	ld de, $c800 ; $62e6
 	ld c, $08 ; $62e9
 	call CopyMemoryFast ; $62eb
@@ -2418,7 +2418,7 @@ Label_1b_6f7e:
 	ld b, $08 ; $6f84
 	ld hl, $6f9f ; $6f86
 	push de ; $6f89
-	call Func_00_1e9d ; $6f8a
+	call QueueSpriteTemplate ; $6f8a
 	pop de ; $6f8d
 	ld hl, $17f8 ; $6f8e
 	add hl, de ; $6f91
@@ -2427,7 +2427,7 @@ Label_1b_6f7e:
 	ld hl, $6fc0 ; $6f94
 	ld b, $08 ; $6f97
 	ld c, $70 ; $6f99
-	call Func_00_1e9d ; $6f9b
+	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
 	INCBIN "data/bank_01b/d_6f9f.bin" ; $6f9f, 51 bytes
 Func_1b_6fd2:
@@ -2728,13 +2728,13 @@ Func_1b_72b8:
 	ld de, $0c50 ; $72bc
 	farcall FarPtr_39_16 ; $72bf
 	ld hl, $72fa ; $72c2
-	call Func_00_1e9d ; $72c5
+	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld de, $2448 ; $72cc
 	farcall FarPtr_39_16 ; $72cf
 	ld hl, $7340 ; $72d2
-	call Func_00_1e9d ; $72d5
+	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
 Func_1b_72d9:
 	ld c, $10 ; $72d9
@@ -2742,13 +2742,13 @@ Func_1b_72d9:
 	ld de, $5050 ; $72dd
 	farcall FarPtr_39_16 ; $72e0
 	ld hl, $731b ; $72e3
-	call Func_00_1e9d ; $72e6
+	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld de, $6c48 ; $72ed
 	farcall FarPtr_39_16 ; $72f0
 	ld hl, $7340 ; $72f3
-	call Func_00_1e9d ; $72f6
+	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
 	INCBIN "data/bank_01b/d_72fa.bin" ; $72fa, 88 bytes
 Func_1b_7352:

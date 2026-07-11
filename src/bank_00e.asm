@@ -424,7 +424,7 @@ Label_0e_46e9:
 	ld a, [hl+] ; $4c42
 	ld d, [hl] ; $4c43
 	ld e, a ; $4c44
-	ld hl, $c2b4 ; $4c45
+	ld hl, wWaterSpriteMinigameTimer ; $4c45
 	ld a, e ; $4c48
 	ld [hl+], a ; $4c49
 	ld [hl], d ; $4c4a
@@ -455,7 +455,7 @@ Label_0e_46e9:
 	ld a, [hl+] ; $4c70
 	ld d, [hl] ; $4c71
 	ld e, a ; $4c72
-	ld hl, $c2b6 ; $4c73
+	ld hl, wWaterSpriteMinigameSwingCount ; $4c73
 	ld a, e ; $4c76
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
@@ -470,7 +470,7 @@ Label_0e_46e9:
 	ld a, [hl+] ; $4c99
 	ld d, [hl] ; $4c9a
 	ld e, a ; $4c9b
-	ld hl, $c2b4 ; $4c9c
+	ld hl, wWaterSpriteMinigameTimer ; $4c9c
 	ld a, e ; $4c9f
 	ld [hl+], a ; $4ca0
 	ld [hl], d ; $4ca1
@@ -501,7 +501,7 @@ Label_0e_46e9:
 	ld a, [hl+] ; $4cc7
 	ld d, [hl] ; $4cc8
 	ld e, a ; $4cc9
-	ld hl, $c2b6 ; $4cca
+	ld hl, wWaterSpriteMinigameSwingCount ; $4cca
 	ld a, e ; $4ccd
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
@@ -516,7 +516,7 @@ Label_0e_46e9:
 	ld a, [hl+] ; $4cf0
 	ld d, [hl] ; $4cf1
 	ld e, a ; $4cf2
-	ld hl, $c2b4 ; $4cf3
+	ld hl, wWaterSpriteMinigameTimer ; $4cf3
 	ld a, e ; $4cf6
 	ld [hl+], a ; $4cf7
 	ld [hl], d ; $4cf8
@@ -547,14 +547,14 @@ Label_0e_46e9:
 	ld a, [hl+] ; $4d1e
 	ld d, [hl] ; $4d1f
 	ld e, a ; $4d20
-	ld hl, $c2b6 ; $4d21
+	ld hl, wWaterSpriteMinigameSwingCount ; $4d21
 	ld a, e ; $4d24
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
 	jp Label_0e_4d3c ; $4d27
 	INCBIN "data/bank_00e/d_4d2a.bin" ; $4d2a, 18 bytes
 Label_0e_4d3c:
-	ld hl, $c2b4 ; $4d3c
+	ld hl, wWaterSpriteMinigameTimer ; $4d3c
 	ld a, [hl+] ; $4d3f
 	ld d, [hl] ; $4d40
 	ld e, a ; $4d41
@@ -584,7 +584,7 @@ Label_0e_4d58:
 	ld a, [hl+] ; $4d60
 	ld d, [hl] ; $4d61
 	ld e, a ; $4d62
-	ld hl, $c2b6 ; $4d63
+	ld hl, wWaterSpriteMinigameSwingCount ; $4d63
 	ld a, [hl+] ; $4d66
 	ld h, [hl] ; $4d67
 	ld l, a ; $4d68

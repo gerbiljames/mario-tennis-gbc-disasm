@@ -92,7 +92,7 @@ Func_0d_407f:
 	INCBIN "data/bank_00d/d_4090.bin" ; $4090, 63 bytes
 Func_0d_40cf:
 	xor a, a ; $40cf
-	ld hl, $c47c ; $40d0
+	ld hl, wMinigamesCurrentScore ; $40d0
 	ld [hl+], a ; $40d3
 	ld [hl+], a ; $40d4
 	ld hl, $c780 ; $40d5
@@ -102,7 +102,7 @@ Func_0d_40cf:
 	ld b, a ; $40dd
 	ld a, [$c8f7] ; $40de
 	call Func_0d_4121 ; $40e1
-	ld hl, $c47e ; $40e4
+	ld hl, wMinigamesTargetScore ; $40e4
 	ld a, e ; $40e7
 	ld [hl+], a ; $40e8
 	ld [hl], d ; $40e9
@@ -187,11 +187,11 @@ Func_0d_41cb:
 	inc [hl] ; $41d1
 	ret ; $41d2
 Func_0d_41d3:
-	ld hl, $c47e ; $41d3
+	ld hl, wMinigamesTargetScore ; $41d3
 	ld a, [hl+] ; $41d6
 	ld d, [hl] ; $41d7
 	ld e, a ; $41d8
-	ld hl, $c47c ; $41d9
+	ld hl, wMinigamesCurrentScore ; $41d9
 	ld a, [hl+] ; $41dc
 	ld h, [hl] ; $41dd
 	ld l, a ; $41de
@@ -209,7 +209,7 @@ Label_0d_41ec:
 	xor a, a ; $41ec
 	ret ; $41ed
 Func_0d_41ee:
-	ld hl, $c47c ; $41ee
+	ld hl, wMinigamesCurrentScore ; $41ee
 	ld a, [hl+] ; $41f1
 	ld d, [hl] ; $41f2
 	ld e, a ; $41f3
@@ -263,7 +263,7 @@ Func_0d_4237:
 	and a, a ; $423a
 	ret z ; $423b
 	ld hl, $c787 ; $423c
-	call Func_00_2c26 ; $423f
+	call TickTimer ; $423f
 	ld hl, $c7a2 ; $4242
 	ld a, [hl+] ; $4245
 	ld b, [hl] ; $4246
@@ -286,7 +286,7 @@ Func_0d_4237:
 	farcall FarPtr_0a_9c ; $4262
 	ret ; $4265
 Func_0d_4266:
-	ld hl, $c47c ; $4266
+	ld hl, wMinigamesCurrentScore ; $4266
 	ld a, [hl+] ; $4269
 	ld h, [hl] ; $426a
 	ld l, a ; $426b
@@ -298,21 +298,21 @@ Func_0d_4266:
 	jr nc, Label_0d_4278 ; $4273
 	ld de, $270f ; $4275
 Label_0d_4278:
-	ld hl, $c47c ; $4278
+	ld hl, wMinigamesCurrentScore ; $4278
 	ld a, e ; $427b
 	ld [hl+], a ; $427c
 	ld [hl], d ; $427d
 	ret ; $427e
 	INCBIN "data/bank_00d/d_427f.bin" ; $427f, 315 bytes
 Func_0d_43ba:
-	ld a, [$c4d8] ; $43ba
+	ld a, [wPointOutcome] ; $43ba
 	cp a, $06 ; $43bd
 	jr z, Label_0d_43de ; $43bf
 	cp a, $09 ; $43c1
 	jr z, Label_0d_43de ; $43c3
 	cp a, $0b ; $43c5
 	jr z, Label_0d_43de ; $43c7
-	ld a, [$c4d8] ; $43c9
+	ld a, [wPointOutcome] ; $43c9
 	add a, $00 ; $43cc
 	farcall FarPtr_09_12 ; $43ce
 	ld a, $1e ; $43d1
@@ -326,7 +326,7 @@ Func_0d_43df:
 	ld a, [$c7bc] ; $43df
 	and a, a ; $43e2
 	jr nz, Label_0d_43ee ; $43e3
-	ld a, [$c4d8] ; $43e5
+	ld a, [wPointOutcome] ; $43e5
 	cp a, $0b ; $43e8
 	jr z, Label_0d_43f6 ; $43ea
 	jr Label_0d_440a ; $43ec
@@ -631,7 +631,7 @@ Func_0d_475d:
 	and a, a ; $4794
 	ret z ; $4795
 	ld a, $0b ; $4796
-	ld [$c4d8], a ; $4798
+	ld [wPointOutcome], a ; $4798
 Label_0d_479b:
 	call Func_0d_43df ; $479b
 	push de ; $479e
@@ -651,7 +651,7 @@ Func_0d_47be:
 	ld [$c4c9], a ; $47bf
 	ret ; $47c2
 Func_0d_47c3:
-	ld a, [$c4d8] ; $47c3
+	ld a, [wPointOutcome] ; $47c3
 	and a, a ; $47c6
 	jr nz, Label_0d_47e1 ; $47c7
 	ld a, [wRallyLength] ; $47c9
@@ -661,7 +661,7 @@ Func_0d_47c3:
 	cp a, $01 ; $47d3
 	jr nz, Label_0d_47e1 ; $47d5
 	ld a, $06 ; $47d7
-	ld [$c4d8], a ; $47d9
+	ld [wPointOutcome], a ; $47d9
 	ld a, $01 ; $47dc
 	ld [$c4d9], a ; $47de
 Label_0d_47e1:
@@ -681,9 +681,9 @@ Label_0d_47fc:
 	ret ; $47fc
 Func_0d_47fd:
 	ld a, $01 ; $47fd
-	ld [$c4ba], a ; $47ff
-	ld [$c4bb], a ; $4802
-	ld [$c4bc], a ; $4805
+	ld [wBallSpriteEnabled], a ; $47ff
+	ld [wBallShadowEnabled], a ; $4802
+	ld [wBallTrailEnabled], a ; $4805
 	ld a, $02 ; $4808
 	ld [wRallyLength], a ; $480a
 	ld a, $02 ; $480d
@@ -939,7 +939,7 @@ Func_0d_4af1:
 Func_0d_4b01:
 	call Func_0d_40cf ; $4b01
 	xor a, a ; $4b04
-	ld [$c4ca], a ; $4b05
+	ld [wStandingShadowsEnabled], a ; $4b05
 	ld de, $0000 ; $4b08
 	ld hl, $c488 ; $4b0b
 	ld a, e ; $4b0e
@@ -975,7 +975,7 @@ Func_0d_4b29:
 	call Func_0d_4412 ; $4b55
 	ret ; $4b58
 Func_0d_4b59:
-	ld a, [$c4d8] ; $4b59
+	ld a, [wPointOutcome] ; $4b59
 	and a, a ; $4b5c
 	jr nz, Label_0d_4b70 ; $4b5d
 	ld de, $0001 ; $4b5f
@@ -984,7 +984,7 @@ Func_0d_4b59:
 	and a, a ; $4b68
 	jr z, Label_0d_4b70 ; $4b69
 	ld a, $0b ; $4b6b
-	ld [$c4d8], a ; $4b6d
+	ld [wPointOutcome], a ; $4b6d
 Label_0d_4b70:
 	ld a, $01 ; $4b70
 	ld [$c4c9], a ; $4b72
@@ -1027,7 +1027,7 @@ Label_0d_4b70:
 	ld [hl+], a ; $4bab
 	ld a, d ; $4bac
 	ld [hl+], a ; $4bad
-	ld a, [$c4d8] ; $4bae
+	ld a, [wPointOutcome] ; $4bae
 	and a, a ; $4bb1
 	ret nz ; $4bb2
 	ldh a, [hWramBank] ; $4bb3
@@ -1060,7 +1060,7 @@ Func_0d_4bc8:
 	ld [wRallyLength], a ; $4be6
 	ret ; $4be9
 Func_0d_4bea:
-	ld hl, $c47c ; $4bea
+	ld hl, wMinigamesCurrentScore ; $4bea
 	ld a, [hl+] ; $4bed
 	ld h, [hl] ; $4bee
 	ld l, a ; $4bef
@@ -1197,7 +1197,7 @@ Func_0d_5292:
 	ld a, [hl+] ; $529d
 	ld d, [hl] ; $529e
 	ld e, a ; $529f
-	ld hl, $c402 ; $52a0
+	ld hl, wBallX ; $52a0
 	ld a, [hl+] ; $52a3
 	ld h, [hl] ; $52a4
 	ld l, a ; $52a5
@@ -1223,7 +1223,7 @@ Label_0d_52b6:
 	ld a, [hl+] ; $52bf
 	ld d, [hl] ; $52c0
 	ld e, a ; $52c1
-	ld hl, $c406 ; $52c2
+	ld hl, wBallDepth ; $52c2
 	ld a, [hl+] ; $52c5
 	ld h, [hl] ; $52c6
 	ld l, a ; $52c7
@@ -1245,7 +1245,7 @@ Label_0d_52d8:
 	ld de, rJOYP ; $52d8
 	add hl, de ; $52db
 	jr c, Label_0d_52f7 ; $52dc
-	ld hl, $c40a ; $52de
+	ld hl, wBallHeight ; $52de
 	ld a, [hl+] ; $52e1
 	ld h, [hl] ; $52e2
 	ld l, a ; $52e3
@@ -1306,7 +1306,7 @@ Label_0d_5310:
 	ld b, $07 ; $533f
 	call Func_0d_41cb ; $5341
 	ld a, $06 ; $5344
-	ld [$c4d8], a ; $5346
+	ld [wPointOutcome], a ; $5346
 	ld a, $01 ; $5349
 	ld [$c4d9], a ; $534b
 	ret ; $534e
@@ -1405,7 +1405,7 @@ Label_0d_5416:
 	inc h ; $5420
 Label_0d_5421:
 	push hl ; $5421
-	call Func_00_1f51 ; $5422
+	call QueueSprite ; $5422
 	pop hl ; $5425
 	pop de ; $5426
 	dec e ; $5427

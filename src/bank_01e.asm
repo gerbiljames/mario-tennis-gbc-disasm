@@ -616,7 +616,7 @@ Func_1e_45c0:
 	farcall FarPtr_05_1e ; $45c5
 	pop bc ; $45c8
 Func_1e_45c9:
-	ld hl, $c600 ; $45c9
+	ld hl, wTextBuffer ; $45c9
 Label_1e_45cc:
 	wram_bank $03 ; $45cc
 	ld a, [hl+] ; $45d2
@@ -701,7 +701,7 @@ Func_1e_4634:
 	ret ; $4682
 Func_1e_4683:
 	ld c, $00 ; $4683
-	ld hl, $c600 ; $4685
+	ld hl, wTextBuffer ; $4685
 Label_1e_4688:
 	ld a, [hl+] ; $4688
 	or a, a ; $4689
@@ -757,16 +757,16 @@ Func_1e_46f6:
 	ld h, $00 ; $46f6
 	ld l, a ; $46f8
 	push de ; $46f9
-	ld de, $c600 ; $46fa
+	ld de, wTextBuffer ; $46fa
 	ld a, $01 ; $46fd
 	call Func_00_1a27 ; $46ff
 	pop de ; $4702
-	ld hl, $c600 ; $4703
+	ld hl, wTextBuffer ; $4703
 	ld bc, $0020 ; $4706
 	call Func_1e_45c9 ; $4709
 	ret ; $470c
 Func_1e_470d:
-	ld de, $c600 ; $470d
+	ld de, wTextBuffer ; $470d
 Label_1e_4710:
 	ld a, [hl+] ; $4710
 	ld [de], a ; $4711
@@ -801,7 +801,7 @@ Label_1e_473f:
 	call Func_1e_4563 ; $4745
 	ret ; $4748
 Func_1e_4749:
-	ld hl, $c600 ; $4749
+	ld hl, wTextBuffer ; $4749
 	test_flag $1f, 7 ; $474c
 	jr nz, Label_1e_4790 ; $474f
 	ld a, $34 ; $4751
@@ -896,7 +896,7 @@ Func_1e_47f4:
 	ld de, $d1c1 ; $47f7
 	ld bc, $0020 ; $47fa
 	call Func_1e_4563 ; $47fd
-	ld hl, $c600 ; $4800
+	ld hl, wTextBuffer ; $4800
 	ld a, $31 ; $4803
 	ld [hl], a ; $4805
 	test_flag $1f, 7 ; $4806
@@ -1010,7 +1010,7 @@ Func_1e_489b:
 	call Func_1e_495a ; $48fb
 	ld hl, $d100 ; $48fe
 	call Func_1e_495a ; $4901
-	ld hl, $c900 ; $4904
+	ld hl, wStoryModeNameOfMainCharacter ; $4904
 	call Func_1e_470d ; $4907
 	ld de, $d0c0 ; $490a
 	ld bc, $0020 ; $490d
@@ -1023,9 +1023,9 @@ Func_1e_489b:
 	ld h, $00 ; $4922
 	ld l, a ; $4924
 	ld a, $02 ; $4925
-	ld de, $c600 ; $4927
+	ld de, wTextBuffer ; $4927
 	call Func_00_1a27 ; $492a
-	ld hl, $c600 ; $492d
+	ld hl, wTextBuffer ; $492d
 	ld de, $d104 ; $4930
 	ld bc, $0020 ; $4933
 	call Func_1e_45c9 ; $4936
@@ -1311,7 +1311,7 @@ Label_1e_4b57:
 	ld de, $7a44 ; $4b57
 Label_1e_4b5a:
 	ld bc, $088e ; $4b5a
-	call Func_00_1f51 ; $4b5d
+	call QueueSprite ; $4b5d
 	ret ; $4b60
 Label_1e_4b61:
 	sound $5e ; $4b61
@@ -1649,9 +1649,9 @@ Label_1e_5658:
 	ld l, a ; $567d
 	ld a, $02 ; $567e
 	ld bc, $0020 ; $5680
-	ld de, $c600 ; $5683
+	ld de, wTextBuffer ; $5683
 	call Func_00_1a27 ; $5686
-	ld hl, $c600 ; $5689
+	ld hl, wTextBuffer ; $5689
 	ld de, $d0ce ; $568c
 	call Func_1e_45c9 ; $568f
 	ret ; $5692
@@ -1694,7 +1694,7 @@ Func_1e_5693:
 	ld a, [wGameMode] ; $56fc
 	or a, a ; $56ff
 	jr nz, Label_1e_5707 ; $5700
-	ld bc, $c900 ; $5702
+	ld bc, wStoryModeNameOfMainCharacter ; $5702
 	jr Label_1e_571a ; $5705
 Label_1e_5707:
 	ld bc, $ca00 ; $5707
@@ -1724,9 +1724,9 @@ Label_1e_571a:
 	ld l, a ; $573f
 	ld a, $02 ; $5740
 	ld bc, $0020 ; $5742
-	ld de, $c600 ; $5745
+	ld de, wTextBuffer ; $5745
 	call Func_00_1a27 ; $5748
-	ld hl, $c600 ; $574b
+	ld hl, wTextBuffer ; $574b
 	ld de, $d104 ; $574e
 	ld bc, $0020 ; $5751
 	call Func_1e_45c9 ; $5754
@@ -1770,7 +1770,7 @@ Func_1e_5758:
 	ld a, [wGameMode] ; $57c1
 	or a, a ; $57c4
 	jr nz, Label_1e_57cc ; $57c5
-	ld bc, $c940 ; $57c7
+	ld bc, wStoryModeNameOfPartnerCharacter ; $57c7
 	jr Label_1e_57d9 ; $57ca
 Label_1e_57cc:
 	ld bc, $ca40 ; $57cc
@@ -1798,9 +1798,9 @@ Label_1e_57d9:
 	ld l, a ; $57fe
 	ld a, $02 ; $57ff
 	ld bc, $0020 ; $5801
-	ld de, $c600 ; $5804
+	ld de, wTextBuffer ; $5804
 	call Func_00_1a27 ; $5807
-	ld hl, $c600 ; $580a
+	ld hl, wTextBuffer ; $580a
 	ld de, $d10f ; $580d
 	call Func_1e_45c9 ; $5810
 	ret ; $5813
@@ -2072,7 +2072,7 @@ Label_1e_5a3f:
 	ld h, [hl] ; $5a58
 	ld l, a ; $5a59
 	ld a, $04 ; $5a5a
-	ld de, $c600 ; $5a5c
+	ld de, wTextBuffer ; $5a5c
 	call Func_00_1a27 ; $5a5f
 	ld a, [$c604] ; $5a62
 	or a, a ; $5a65
@@ -2082,28 +2082,28 @@ Label_1e_5a3f:
 	jr z, Label_1e_5a78 ; $5a6d
 	call Func_1e_5afa ; $5a6f
 	ld de, $6b77 ; $5a72
-	call Func_00_1f51 ; $5a75
+	call QueueSprite ; $5a75
 Label_1e_5a78:
 	ld a, [$c601] ; $5a78
 	cp a, $20 ; $5a7b
 	jr z, Label_1e_5a88 ; $5a7d
 	call Func_1e_5afa ; $5a7f
 	ld de, $7377 ; $5a82
-	call Func_00_1f51 ; $5a85
+	call QueueSprite ; $5a85
 Label_1e_5a88:
 	ld a, [$c602] ; $5a88
 	cp a, $20 ; $5a8b
 	jr z, Label_1e_5a98 ; $5a8d
 	call Func_1e_5afa ; $5a8f
 	ld de, $7b77 ; $5a92
-	call Func_00_1f51 ; $5a95
+	call QueueSprite ; $5a95
 Label_1e_5a98:
 	ld a, [$c603] ; $5a98
 	cp a, $20 ; $5a9b
 	jr z, Label_1e_5aa8 ; $5a9d
 	call Func_1e_5afa ; $5a9f
 	ld de, $8377 ; $5aa2
-	call Func_00_1f51 ; $5aa5
+	call QueueSprite ; $5aa5
 Label_1e_5aa8:
 	ret ; $5aa8
 Label_1e_5aa9:
@@ -2112,35 +2112,35 @@ Label_1e_5aa9:
 	jr z, Label_1e_5ab9 ; $5aae
 	call Func_1e_5afa ; $5ab0
 	ld de, $6777 ; $5ab3
-	call Func_00_1f51 ; $5ab6
+	call QueueSprite ; $5ab6
 Label_1e_5ab9:
 	ld a, [$c601] ; $5ab9
 	cp a, $20 ; $5abc
 	jr z, Label_1e_5ac9 ; $5abe
 	call Func_1e_5afa ; $5ac0
 	ld de, $6f77 ; $5ac3
-	call Func_00_1f51 ; $5ac6
+	call QueueSprite ; $5ac6
 Label_1e_5ac9:
 	ld a, [$c602] ; $5ac9
 	cp a, $20 ; $5acc
 	jr z, Label_1e_5ad9 ; $5ace
 	call Func_1e_5afa ; $5ad0
 	ld de, $7777 ; $5ad3
-	call Func_00_1f51 ; $5ad6
+	call QueueSprite ; $5ad6
 Label_1e_5ad9:
 	ld a, [$c603] ; $5ad9
 	cp a, $20 ; $5adc
 	jr z, Label_1e_5ae9 ; $5ade
 	call Func_1e_5afa ; $5ae0
 	ld de, $7f77 ; $5ae3
-	call Func_00_1f51 ; $5ae6
+	call QueueSprite ; $5ae6
 Label_1e_5ae9:
 	ld a, [$c604] ; $5ae9
 	cp a, $20 ; $5aec
 	jr z, Label_1e_5af9 ; $5aee
 	call Func_1e_5afa ; $5af0
 	ld de, $8777 ; $5af3
-	call Func_00_1f51 ; $5af6
+	call QueueSprite ; $5af6
 Label_1e_5af9:
 	ret ; $5af9
 Func_1e_5afa:
@@ -2323,7 +2323,7 @@ Label_1e_6584:
 	and a, a ; $6587
 	jp nz, Label_1e_6695 ; $6588
 	push hl ; $658b
-	ld hl, $c47c ; $658c
+	ld hl, wMinigamesCurrentScore ; $658c
 	ld a, [hl+] ; $658f
 	ld h, [hl] ; $6590
 	ld l, a ; $6591
@@ -2361,7 +2361,7 @@ Label_1e_65cc:
 Label_1e_65cf:
 	jr z, Label_1e_65e6 ; $65cf
 	push hl ; $65d1
-	ld hl, $c47c ; $65d2
+	ld hl, wMinigamesCurrentScore ; $65d2
 	ld a, [hl+] ; $65d5
 	ld h, [hl] ; $65d6
 	ld l, a ; $65d7
@@ -2525,7 +2525,7 @@ Func_1e_6807:
 	or a, a ; $680d
 	ret z ; $680e
 	push hl ; $680f
-	ld hl, $c47c ; $6810
+	ld hl, wMinigamesCurrentScore ; $6810
 	ld a, [hl+] ; $6813
 	ld d, [hl] ; $6814
 	ld e, a ; $6815
@@ -3448,7 +3448,7 @@ Func_1e_6f38:
 	ld a, [hl+] ; $6f5d
 	ld d, [hl] ; $6f5e
 	ld e, a ; $6f5f
-	ld hl, $c47c ; $6f60
+	ld hl, wMinigamesCurrentScore ; $6f60
 	ld a, [hl+] ; $6f63
 	ld b, [hl] ; $6f64
 	ld c, a ; $6f65
@@ -4351,7 +4351,7 @@ Func_1e_7a3c:
 	add a, $00 ; $7a5b
 	ld c, a ; $7a5d
 	ld b, $0a ; $7a5e
-	call Func_00_1e55 ; $7a60
+	call QueueSprite16 ; $7a60
 	pop hl ; $7a63
 	pop de ; $7a64
 	pop bc ; $7a65
@@ -4380,7 +4380,7 @@ Func_1e_7a68:
 	add a, c ; $7a81
 	ld c, a ; $7a82
 	ld b, $0a ; $7a83
-	call Func_00_1e55 ; $7a85
+	call QueueSprite16 ; $7a85
 	pop hl ; $7a88
 	pop de ; $7a89
 	pop bc ; $7a8a

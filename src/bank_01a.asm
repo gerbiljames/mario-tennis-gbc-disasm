@@ -415,7 +415,7 @@ Label_1a_4527:
 	call Func_1a_4fab ; $4535
 	wram_bank $06 ; $4538
 	push af ; $453e
-	ld hl, $c900 ; $453f
+	ld hl, wStoryModeNameOfMainCharacter ; $453f
 	ld a, [$cb00] ; $4542
 	or a, a ; $4545
 	jr z, Label_1a_454a ; $4546
@@ -885,7 +885,7 @@ Func_1a_4b1f:
 	call Func_1a_4b96 ; $4b23
 	wram_bank $01 ; $4b26
 	push af ; $4b2c
-	ld hl, $c900 ; $4b2d
+	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
 	ld a, [$cb00] ; $4b30
 	or a, a ; $4b33
 	jr z, Label_1a_4b38 ; $4b34
@@ -901,7 +901,7 @@ Label_1a_4b38:
 	ld de, $d4c7 ; $4b41
 	call Func_1a_4b73 ; $4b44
 	push af ; $4b47
-	ld hl, $c900 ; $4b48
+	ld hl, wStoryModeNameOfMainCharacter ; $4b48
 	ld a, [$cb00] ; $4b4b
 	or a, a ; $4b4e
 	jr z, Label_1a_4b53 ; $4b4f
@@ -1223,7 +1223,7 @@ Label_1a_5044:
 Func_1a_505e:
 	wram_bank $05 ; $505e
 	farcall FarPtr_05_1e ; $5064
-	ld hl, $c600 ; $5067
+	ld hl, wTextBuffer ; $5067
 	ld de, $d800 ; $506a
 Label_1a_506d:
 	wram_bank $05 ; $506d
@@ -2452,10 +2452,10 @@ Func_1a_6f3d:
 Func_1a_7012:
 	ld bc, $0770 ; $7012
 	ld de, $4615 ; $7015
-	call Func_00_1f51 ; $7018
+	call QueueSprite ; $7018
 	ld bc, $0772 ; $701b
 	ld de, $4e15 ; $701e
-	call Func_00_1f51 ; $7021
+	call QueueSprite ; $7021
 	wram_bank $04 ; $7024
 	ld hl, $df00 ; $702a
 	ld b, h ; $702d
@@ -2627,12 +2627,12 @@ Func_1a_7a1d:
 	jr nz, Label_1a_7a33 ; $7a27
 	ld bc, $0fd4 ; $7a29
 	ld de, $7a0c ; $7a2c
-	call Func_00_1f51 ; $7a2f
+	call QueueSprite ; $7a2f
 	ret ; $7a32
 Label_1a_7a33:
 	ld bc, $0fd4 ; $7a33
 	ld de, $7a14 ; $7a36
-	call Func_00_1f51 ; $7a39
+	call QueueSprite ; $7a39
 	ret ; $7a3c
 Func_1a_7a3d:
 	wram_bank $01 ; $7a3d
@@ -2896,14 +2896,14 @@ Func_1a_7be5:
 	ld de, $142c ; $7c13
 	call Func_1a_7e23 ; $7c16
 	push de ; $7c19
-	call Func_00_1f51 ; $7c1a
+	call QueueSprite ; $7c1a
 	pop de ; $7c1d
 	pop af ; $7c1e
 	or a, a ; $7c1f
 	jr z, Label_1a_7c2b ; $7c20
 	call Func_1a_7e15 ; $7c22
 	call Func_1a_7e38 ; $7c25
-	call Func_00_1f51 ; $7c28
+	call QueueSprite ; $7c28
 Label_1a_7c2b:
 	ld a, [$d0ac] ; $7c2b
 	or a, a ; $7c2e
@@ -2918,14 +2918,14 @@ Label_1a_7c2b:
 	ld de, $143c ; $7c40
 	call Func_1a_7e23 ; $7c43
 	push de ; $7c46
-	call Func_00_1f51 ; $7c47
+	call QueueSprite ; $7c47
 	pop de ; $7c4a
 	pop af ; $7c4b
 	or a, a ; $7c4c
 	jr z, Label_1a_7c58 ; $7c4d
 	call Func_1a_7e15 ; $7c4f
 	call Func_1a_7e38 ; $7c52
-	call Func_00_1f51 ; $7c55
+	call QueueSprite ; $7c55
 Label_1a_7c58:
 	ld a, [$d0ad] ; $7c58
 	or a, a ; $7c5b
@@ -2940,14 +2940,14 @@ Label_1a_7c58:
 	ld de, $1454 ; $7c6d
 	call Func_1a_7e23 ; $7c70
 	push de ; $7c73
-	call Func_00_1f51 ; $7c74
+	call QueueSprite ; $7c74
 	pop de ; $7c77
 	pop af ; $7c78
 	or a, a ; $7c79
 	jr z, Label_1a_7c85 ; $7c7a
 	call Func_1a_7e15 ; $7c7c
 	call Func_1a_7e38 ; $7c7f
-	call Func_00_1f51 ; $7c82
+	call QueueSprite ; $7c82
 Label_1a_7c85:
 	ld a, [$d0ae] ; $7c85
 	or a, a ; $7c88
@@ -2962,14 +2962,14 @@ Label_1a_7c85:
 	ld de, $1464 ; $7c9a
 	call Func_1a_7e23 ; $7c9d
 	push de ; $7ca0
-	call Func_00_1f51 ; $7ca1
+	call QueueSprite ; $7ca1
 	pop de ; $7ca4
 	pop af ; $7ca5
 	or a, a ; $7ca6
 	jr z, Label_1a_7cb2 ; $7ca7
 	call Func_1a_7e15 ; $7ca9
 	call Func_1a_7e38 ; $7cac
-	call Func_00_1f51 ; $7caf
+	call QueueSprite ; $7caf
 Label_1a_7cb2:
 	ld a, [$d0af] ; $7cb2
 	or a, a ; $7cb5
@@ -2984,14 +2984,14 @@ Label_1a_7cb2:
 	ld de, $1474 ; $7cc7
 	call Func_1a_7e23 ; $7cca
 	push de ; $7ccd
-	call Func_00_1f51 ; $7cce
+	call QueueSprite ; $7cce
 	pop de ; $7cd1
 	pop af ; $7cd2
 	or a, a ; $7cd3
 	jr z, Label_1a_7cdf ; $7cd4
 	call Func_1a_7e15 ; $7cd6
 	call Func_1a_7e38 ; $7cd9
-	call Func_00_1f51 ; $7cdc
+	call QueueSprite ; $7cdc
 Label_1a_7cdf:
 	ld a, [$d0b0] ; $7cdf
 	or a, a ; $7ce2
@@ -3006,14 +3006,14 @@ Label_1a_7cdf:
 	ld de, $642c ; $7cf4
 	call Func_1a_7e23 ; $7cf7
 	push de ; $7cfa
-	call Func_00_1f51 ; $7cfb
+	call QueueSprite ; $7cfb
 	pop de ; $7cfe
 	pop af ; $7cff
 	or a, a ; $7d00
 	jr z, Label_1a_7d0c ; $7d01
 	call Func_1a_7e15 ; $7d03
 	call Func_1a_7e38 ; $7d06
-	call Func_00_1f51 ; $7d09
+	call QueueSprite ; $7d09
 Label_1a_7d0c:
 	ld a, [$d0b1] ; $7d0c
 	or a, a ; $7d0f
@@ -3028,14 +3028,14 @@ Label_1a_7d0c:
 	ld de, $643c ; $7d21
 	call Func_1a_7e23 ; $7d24
 	push de ; $7d27
-	call Func_00_1f51 ; $7d28
+	call QueueSprite ; $7d28
 	pop de ; $7d2b
 	pop af ; $7d2c
 	or a, a ; $7d2d
 	jr z, Label_1a_7d39 ; $7d2e
 	call Func_1a_7e15 ; $7d30
 	call Func_1a_7e38 ; $7d33
-	call Func_00_1f51 ; $7d36
+	call QueueSprite ; $7d36
 Label_1a_7d39:
 	ld a, [$d0b2] ; $7d39
 	or a, a ; $7d3c
@@ -3050,14 +3050,14 @@ Label_1a_7d39:
 	ld de, $6454 ; $7d4e
 	call Func_1a_7e23 ; $7d51
 	push de ; $7d54
-	call Func_00_1f51 ; $7d55
+	call QueueSprite ; $7d55
 	pop de ; $7d58
 	pop af ; $7d59
 	or a, a ; $7d5a
 	jr z, Label_1a_7d66 ; $7d5b
 	call Func_1a_7e15 ; $7d5d
 	call Func_1a_7e38 ; $7d60
-	call Func_00_1f51 ; $7d63
+	call QueueSprite ; $7d63
 Label_1a_7d66:
 	ld a, [$d0b3] ; $7d66
 	or a, a ; $7d69
@@ -3072,14 +3072,14 @@ Label_1a_7d66:
 	ld de, $6464 ; $7d7b
 	call Func_1a_7e23 ; $7d7e
 	push de ; $7d81
-	call Func_00_1f51 ; $7d82
+	call QueueSprite ; $7d82
 	pop de ; $7d85
 	pop af ; $7d86
 	or a, a ; $7d87
 	jr z, Label_1a_7d93 ; $7d88
 	call Func_1a_7e15 ; $7d8a
 	call Func_1a_7e38 ; $7d8d
-	call Func_00_1f51 ; $7d90
+	call QueueSprite ; $7d90
 Label_1a_7d93:
 	ld a, [$d0b4] ; $7d93
 	or a, a ; $7d96
@@ -3094,14 +3094,14 @@ Label_1a_7d93:
 	ld de, $6474 ; $7da8
 	call Func_1a_7e23 ; $7dab
 	push de ; $7dae
-	call Func_00_1f51 ; $7daf
+	call QueueSprite ; $7daf
 	pop de ; $7db2
 	pop af ; $7db3
 	or a, a ; $7db4
 	jr z, Label_1a_7dc0 ; $7db5
 	call Func_1a_7e15 ; $7db7
 	call Func_1a_7e38 ; $7dba
-	call Func_00_1f51 ; $7dbd
+	call QueueSprite ; $7dbd
 Label_1a_7dc0:
 	ld a, [$d0b5] ; $7dc0
 	or a, a ; $7dc3
@@ -3116,14 +3116,14 @@ Label_1a_7dc0:
 	ld de, $6484 ; $7dd5
 	call Func_1a_7e23 ; $7dd8
 	push de ; $7ddb
-	call Func_00_1f51 ; $7ddc
+	call QueueSprite ; $7ddc
 	pop de ; $7ddf
 	pop af ; $7de0
 	or a, a ; $7de1
 	jr z, Label_1a_7ded ; $7de2
 	call Func_1a_7e15 ; $7de4
 	call Func_1a_7e38 ; $7de7
-	call Func_00_1f51 ; $7dea
+	call QueueSprite ; $7dea
 Label_1a_7ded:
 	ret ; $7ded
 Func_1a_7dee:
