@@ -48,7 +48,7 @@ byte-for-byte.
   the region inline as readable structured `db`/`dw` source (committed in the
   bank `.asm`) instead of a raw INCBIN blob. Kinds: `palettes` (BGR555 `dw`
   colors), `records:N` (fixed N-byte records), `bytes:C` (byte table, C per
-  row).
+  row), `fill` (padding, rendered as `ds` runs).
 - `include/hardware.inc` — standard Game Boy hardware definitions (CC0).
 - `tools/` — the disassembly tooling (see below).
 

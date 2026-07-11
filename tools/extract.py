@@ -207,6 +207,19 @@ def render_byte_table(data: bytes, cols: int) -> str:
     return "\n".join(out) + "\n"
 
 
+def render_fill(data: bytes) -> str:
+    """Render padding as `ds` runs, one per constant-byte stretch."""
+    out = []
+    i = 0
+    while i < len(data):
+        j = i
+        while j < len(data) and data[j] == data[i]:
+            j += 1
+        out.append(f"\tds {j - i}, ${data[i]:02x}")
+        i = j
+    return "\n".join(out) + "\n"
+
+
 def render_spec(data: bytes, spec: str) -> str:
     kind, _, param = spec.partition(":")
     if kind == "palettes":
@@ -215,6 +228,8 @@ def render_spec(data: bytes, spec: str) -> str:
         return render_records(data, int(param or 16))
     if kind == "bytes":
         return render_byte_table(data, int(param or 8))
+    if kind == "fill":
+        return render_fill(data)
     return render_text(data)
 
 

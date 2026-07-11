@@ -94,6 +94,7 @@ Lz_64_7646:
 	INCBIN "data/bank_064/lz_7646.bin" ; $7646, 147 bytes
 Lz_64_76d9:
 	INCBIN "data/bank_064/lz_76d9.bin" ; $76d9, 79 bytes
-	INCBIN "data/bank_064/d_7728.bin" ; $7728, 8 bytes
+	; $7728, 8 bytes (fill)
+	ds 8, $00
 Data_64_7730:
 	INCBIN "data/bank_064/d_7730.bin" ; $7730, 2256 bytes
