@@ -4,5 +4,6 @@ build/
 tools/rgbds/
 *.o
 *.gbc
+*.sav
 !*.sym
 __pycache__/
