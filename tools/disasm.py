@@ -214,8 +214,10 @@ class Disassembly:
     # Seeds proven misattributed: a corrupted native-trace line whose byte
     # check degenerated to a single opcode byte landed one "executed"
     # address in bank $65, an otherwise pure data bank (it grew the phantom
-    # farcall that fabricated bank $43's zero-array function).
-    BAD_SEEDS = {0x19617F}
+    # farcall that fabricated bank $43's zero-array function). $67682 is the
+    # sole seed in bank $19 (cutscene graphics) -- mid-blob, decoding as
+    # nonsense (ld hl,sp-17 / add sp,100) inside the $6a10 data region.
+    BAD_SEEDS = {0x19617F, 0x67682}
 
     def seed(self, seeds):
         bad = 0

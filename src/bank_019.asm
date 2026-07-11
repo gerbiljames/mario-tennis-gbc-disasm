@@ -61,7 +61,7 @@ DataPtr_19_34:
 DataPtr_19_36:
 	dw Lz_19_6993 ; $4036
 DataPtr_19_38:
-	dw Data_19_6a10 ; $4038
+	dw Lz_19_6a10 ; $4038
 DataPtr_19_3a:
 	dw Data_19_772b ; $403a
 DataPtr_19_3c:
@@ -136,15 +136,8 @@ Lz_19_68b1:
 	INCBIN "data/bank_019/lz_68b1.bin" ; $68b1, 226 bytes
 Lz_19_6993:
 	INCBIN "data/bank_019/lz_6993.bin" ; $6993, 125 bytes
-Data_19_6a10:
-	INCBIN "data/bank_019/d_6a10.bin" ; $6a10, 3186 bytes
-	sound $6c ; $7682
-	ld d, a ; $7684
-	ld hl, sp - 17 ; $7685
-	cp a, a ; $7687
-	pop bc ; $7688
-	add sp, 100 ; $7689
-	INCBIN "data/bank_019/d_768b.bin" ; $768b, 160 bytes
+Lz_19_6a10:
+	INCBIN "data/bank_019/lz_6a10.bin" ; $6a10, 3355 bytes
 Data_19_772b:
 	INCBIN "data/bank_019/d_772b.bin" ; $772b, 64 bytes
 Lz_19_776b:
