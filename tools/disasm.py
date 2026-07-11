@@ -1321,7 +1321,10 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                         # ASCII dominance (plus the $00-$03 text control
                         # codes) marks a text region; a leading string
                         # offset table (header word + ascending dw run) is
-                        # binary, so skip it before measuring
+                        # binary, so skip it before measuring. A word-space
+                        # floor rejects glyph/tile tables that fall in the
+                        # printable range but hold no prose (real game text
+                        # runs 12-33% spaces; such tables hold ~0).
                         n = j - seg
                         p, prev = seg + 2, -1
                         while p + 1 < j:
@@ -1335,8 +1338,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path):
                                   if 0x20 <= b < 0x7F or b <= 3)
                         letters = sum(1 for b in rom[body:j]
                                       if 0x61 <= (b | 0x20) <= 0x7A)
+                        spaces = rom[body:j].count(0x20)
                         if n >= 32 and m >= 32 and txt >= m * 0.95 \
-                                and letters >= m // 3:
+                                and letters >= m // 3 and spaces >= m // 20:
                             # text renders as generated db source (still
                             # under gitignored data/, so no ROM content
                             # lands in the repository)

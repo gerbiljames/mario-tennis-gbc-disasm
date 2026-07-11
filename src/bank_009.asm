@@ -247,8 +247,7 @@ Label_09_41b2:
 	ld bc, $dd80 ; $41b5
 	call Func_09_4658 ; $41b8
 	ret ; $41bb
-Text_09_41bc:
-	INCLUDE "data/bank_009/text_41bc.asm" ; $41bc, 112 bytes
+	INCBIN "data/bank_009/d_41bc.bin" ; $41bc, 112 bytes
 Func_09_422c:
 	ld a, $01 ; $422c
 	ld hl, $420c ; $422e
