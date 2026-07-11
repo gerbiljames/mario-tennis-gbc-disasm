@@ -548,6 +548,25 @@ class Disassembly:
         if added:
             print(f"object headers: {added} $70-$76 slots via $4f75 dispatch table")
 
+    def split_object_bodies(self):
+        """Split each object body at the addresses its 16-byte header points
+        to, so the header's dw entries resolve to labels. One level only: the
+        header's own six pointers, not the arrays those in turn reach."""
+        starts = sorted(self.object_headers)
+        added = 0
+        for i, h in enumerate(starts):
+            bank = h // BANK_SIZE
+            nxt = starts[i + 1] if i + 1 < len(starts) else len(self.rom)
+            rend = nxt if nxt // BANK_SIZE == bank else (bank + 1) * BANK_SIZE
+            for j in range(6):
+                w = self.rom[h + 4 + 2 * j] | (self.rom[h + 5 + 2 * j] << 8)
+                tgt = bank * BANK_SIZE + w - BANK_SIZE
+                if h + 16 <= tgt < rend and tgt not in self.data_blobs:
+                    self.data_blobs[tgt] = (None, "copy")
+                    added += 1
+        if added:
+            print(f"object bodies: {added} splits at header pointers")
+
     def _add_data_slot(self, bank, slot, kind, length=None):
         """Validate and record one data-pointer table slot; returns the
         blob's flat offset, or None if anything about it is implausible."""
@@ -1234,18 +1253,24 @@ ENDM
 """
 
 
-def render_object_header(rom, off):
+def render_object_header(rom, off, data_labels):
     """Render a 16-byte sprite/object header as committed db/dw source: a
     count byte, three flag bytes, then six pointers into the record's body.
     Bank $04's loader copies these to $dad0 and expands them into an actor
     struct (word 0 -> +$24, word 1 -> +$28, word 2 dereferenced for an
     8-byte subrecord, word 3 -> +$38). Being structural (a count and
     pointers, like the DataPtr table above it) they live in the source, not
-    the gitignored data blobs."""
+    the gitignored data blobs. Body pointers resolve to the labels of the
+    sub-blobs split_object_bodies() carved; the rest stay literal (they aim
+    inside the header itself, or at another record)."""
     b = rom[off:off + 16]
-    words = ", ".join(f"${b[4 + 2 * i] | (b[5 + 2 * i] << 8):04x}" for i in range(6))
+    base = (off // BANK_SIZE) * BANK_SIZE
+    parts = []
+    for i in range(6):
+        w = b[4 + 2 * i] | (b[5 + 2 * i] << 8)
+        parts.append(data_labels.get(base + w - BANK_SIZE) or f"${w:04x}")
     return [f"\tdb ${b[0]:02x}, ${b[1]:02x}, ${b[2]:02x}, ${b[3]:02x} ; count, flags",
-            f"\tdw {words} ; body pointers"]
+            f"\tdw {', '.join(parts)} ; body pointers"]
 
 
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None):
@@ -1388,7 +1413,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None)
                     if kind == "lz":
                         prefix = "lz"
                 if run_start in dis.object_headers:
-                    lines.extend(render_object_header(rom, run_start))
+                    lines.extend(render_object_header(rom, run_start, data_labels))
                     continue
                 if mark and mark[0]:
                     blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
@@ -1530,6 +1555,7 @@ def main():
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()
     dis.add_object_header_slots()
+    dis.split_object_bodies()
     if helpers or args.hooks:
         dis.scan_data_slots()
     labels = build_labels(dis, overrides)
