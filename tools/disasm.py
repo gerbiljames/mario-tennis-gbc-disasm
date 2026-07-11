@@ -1605,12 +1605,18 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 break
                             j = k
                         scpu = offset_to_cpu(seg)
-                        # A declared data table starting mid-run ends the
-                        # current segment, so a region can hold several
-                        # back-to-back tables (e.g. a dw pointer table
-                        # followed by its payload).
+                        # A declared data table or a curated label starting
+                        # mid-run ends the current segment, so a region can
+                        # hold several back-to-back tables (e.g. a dw pointer
+                        # table followed by its payload) and named streams
+                        # reached only through non-slot pointers still carve
+                        # out of anonymous blobs.
                         stop = min((t for t in data_tables
                                     if seg < t < j), default=0)
+                        lstop = min((t for t in labels
+                                     if seg < t < j), default=0)
+                        if lstop and (not stop or lstop < stop):
+                            stop = lstop
                         if stop:
                             j = stop
                         # A declared data table renders as structured source

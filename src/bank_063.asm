@@ -4,92 +4,108 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $63", ROMX[$4000], BANK[$63]
 
-DataPtr_63_00:
-	dw Data_63_4bae ; $4000
-DataPtr_63_02:
-	dw Data_63_4040 ; $4002
-DataPtr_63_04:
-	dw Lz_63_487a ; $4004
-DataPtr_63_06:
-	dw Lz_63_4af5 ; $4006
+DataPtr_IslandOpenCourtSceneConfig:
+	dw IslandOpenCourtSceneConfig ; $4000
+DataPtr_IslandOpenCourtPalettes:
+	dw IslandOpenCourtPalettes ; $4002
+DataPtr_IslandOpenCourtTilemap:
+	dw IslandOpenCourtTilemap ; $4004
+DataPtr_IslandOpenCourtAttrmap:
+	dw IslandOpenCourtAttrmap ; $4006
 DataPtr_63_08:
-	dw Data_63_4bae ; $4008
-DataPtr_63_0a:
-	dw Data_63_4bd6 ; $400a
-DataPtr_63_0c:
-	dw Data_63_4bfe ; $400c
-DataPtr_63_0e:
-	dw Lz_63_4080 ; $400e
-DataPtr_63_10:
-	dw Data_63_5d25 ; $4010
+	dw IslandOpenCourtSceneConfig ; $4008
+DataPtr_IslandOpenCourtSceneConfigB:
+	dw IslandOpenCourtSceneConfigB ; $400a
+DataPtr_DKCourtPalettes:
+	dw DKCourtPalettes ; $400c
+DataPtr_IslandOpenCourtTiles:
+	dw IslandOpenCourtTiles ; $400e
+DataPtr_DKCourtSceneConfig:
+	dw DKCourtSceneConfig ; $4010
 DataPtr_63_12:
-	dw Data_63_4bfe ; $4012
+	dw DKCourtPalettes ; $4012
 DataPtr_DKCourtTilemap:
 	dw DKCourtTilemap ; $4014
-DataPtr_63_16:
-	dw Lz_63_5be2 ; $4016
+DataPtr_DKCourtAttrmap:
+	dw DKCourtAttrmap ; $4016
 DataPtr_63_18:
-	dw Data_63_5d25 ; $4018
-DataPtr_63_1a:
-	dw Data_63_5d4d ; $401a
-DataPtr_63_1c:
-	dw Data_63_5d75 ; $401c
+	dw DKCourtSceneConfig ; $4018
+DataPtr_DKCourtSceneConfigB:
+	dw DKCourtSceneConfigB ; $401a
+DataPtr_StarPatternBgSceneConfig:
+	dw StarPatternBgSceneConfig ; $401c
 DataPtr_DKCourtTiles:
 	dw DKCourtTiles ; $401e
 DataPtr_63_20:
-	dw Data_63_5d75 ; $4020
-DataPtr_63_22:
-	dw Data_63_5d9f ; $4022
-DataPtr_63_24:
-	dw Lz_63_608c ; $4024
-DataPtr_63_26:
-	dw Lz_63_619e ; $4026
-DataPtr_63_28:
-	dw Lz_63_62a5 ; $4028
-DataPtr_63_2a:
-	dw Lz_63_62eb ; $402a
-DataPtr_63_2c:
-	dw Data_63_6331 ; $402c
-DataPtr_63_2e:
-	dw Lz_63_5ddf ; $402e
-	INCBIN "data/bank_063/d_4030.bin" ; $4030, 16 bytes
-Data_63_4040:
+	dw StarPatternBgSceneConfig ; $4020
+DataPtr_StarPatternBgPalettes:
+	dw StarPatternBgPalettes ; $4022
+DataPtr_StarPatternBgTilemap:
+	dw StarPatternBgTilemap ; $4024
+DataPtr_StarPatternBgAttrmap:
+	dw StarPatternBgAttrmap ; $4026
+DataPtr_StarPatternBgAuxTilemap:
+	dw StarPatternBgAuxTilemap ; $4028
+DataPtr_StarPatternBgAuxAttrmap:
+	dw StarPatternBgAuxAttrmap ; $402a
+DataPtr_DormInteriorSceneConfig:
+	dw DormInteriorSceneConfig ; $402c
+DataPtr_StarPatternBgTiles:
+	dw StarPatternBgTiles ; $402e
+DormInteriorScenePtrs:
+	; $4030, 16 bytes (records:16)
+; 1 records x 16 bytes
+	dw $6331, $635b, $7151, $770f, $7a10, $7aa3, $7b01, $639b ; record 0
+IslandOpenCourtPalettes:
 	INCBIN "data/bank_063/d_4040.bin" ; $4040, 64 bytes
-Lz_63_4080:
+IslandOpenCourtTiles:
 	INCBIN "data/bank_063/lz_4080.bin" ; $4080, 2042 bytes
-Lz_63_487a:
+IslandOpenCourtTilemap:
 	INCBIN "data/bank_063/lz_487a.bin" ; $487a, 635 bytes
-Lz_63_4af5:
+IslandOpenCourtAttrmap:
 	INCBIN "data/bank_063/lz_4af5.bin" ; $4af5, 185 bytes
-Data_63_4bae:
+IslandOpenCourtSceneConfig:
 	INCBIN "data/bank_063/d_4bae.bin" ; $4bae, 40 bytes
-Data_63_4bd6:
+IslandOpenCourtSceneConfigB:
 	INCBIN "data/bank_063/d_4bd6.bin" ; $4bd6, 40 bytes
-Data_63_4bfe:
+DKCourtPalettes:
 	INCBIN "data/bank_063/d_4bfe.bin" ; $4bfe, 64 bytes
 DKCourtTiles:
 	INCBIN "data/bank_063/lz_4c3e.bin" ; $4c3e, 3291 bytes
 DKCourtTilemap:
 	INCBIN "data/bank_063/lz_5919.bin" ; $5919, 713 bytes
-Lz_63_5be2:
+DKCourtAttrmap:
 	INCBIN "data/bank_063/lz_5be2.bin" ; $5be2, 323 bytes
-Data_63_5d25:
+DKCourtSceneConfig:
 	INCBIN "data/bank_063/d_5d25.bin" ; $5d25, 40 bytes
-Data_63_5d4d:
+DKCourtSceneConfigB:
 	INCBIN "data/bank_063/d_5d4d.bin" ; $5d4d, 40 bytes
-Data_63_5d75:
+StarPatternBgSceneConfig:
 	INCBIN "data/bank_063/d_5d75.bin" ; $5d75, 42 bytes
-Data_63_5d9f:
+StarPatternBgPalettes:
 	INCBIN "data/bank_063/d_5d9f.bin" ; $5d9f, 64 bytes
-Lz_63_5ddf:
+StarPatternBgTiles:
 	INCBIN "data/bank_063/lz_5ddf.bin" ; $5ddf, 685 bytes
-Lz_63_608c:
+StarPatternBgTilemap:
 	INCBIN "data/bank_063/lz_608c.bin" ; $608c, 274 bytes
-Lz_63_619e:
+StarPatternBgAttrmap:
 	INCBIN "data/bank_063/lz_619e.bin" ; $619e, 263 bytes
-Lz_63_62a5:
+StarPatternBgAuxTilemap:
 	INCBIN "data/bank_063/lz_62a5.bin" ; $62a5, 70 bytes
-Lz_63_62eb:
+StarPatternBgAuxAttrmap:
 	INCBIN "data/bank_063/lz_62eb.bin" ; $62eb, 70 bytes
-Data_63_6331:
-	INCBIN "data/bank_063/d_6331.bin" ; $6331, 7375 bytes
+DormInteriorSceneConfig:
+	INCBIN "data/bank_063/d_6331.bin" ; $6331, 42 bytes
+DormInteriorPalettes:
+	INCBIN "data/bank_063/d_635b.bin" ; $635b, 64 bytes
+DormInteriorTiles:
+	INCBIN "data/bank_063/d_639b.bin" ; $639b, 3510 bytes
+DormInteriorTilemap:
+	INCBIN "data/bank_063/d_7151.bin" ; $7151, 1470 bytes
+DormInteriorAttrmap:
+	INCBIN "data/bank_063/d_770f.bin" ; $770f, 769 bytes
+DormInteriorAuxTilemap:
+	INCBIN "data/bank_063/d_7a10.bin" ; $7a10, 147 bytes
+DormInteriorAuxAttrmap:
+	INCBIN "data/bank_063/d_7aa3.bin" ; $7aa3, 94 bytes
+	ds 1279, $ff ; $7b01, fill

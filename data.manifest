@@ -3619,7 +3619,6 @@ bank_062/lz_6df5.bin 18adf5 139
 bank_062/d_6f2e.bin 18af2e 28
 bank_062/d_6f56.bin 18af56 28
 bank_062/d_6f7e.bin 18af7e 1082
-bank_063/d_4030.bin 18c030 10
 bank_063/d_4040.bin 18c040 40
 bank_063/lz_4080.bin 18c080 7fa
 bank_063/lz_487a.bin 18c87a 27b
@@ -3639,7 +3638,13 @@ bank_063/lz_608c.bin 18e08c 112
 bank_063/lz_619e.bin 18e19e 107
 bank_063/lz_62a5.bin 18e2a5 46
 bank_063/lz_62eb.bin 18e2eb 46
-bank_063/d_6331.bin 18e331 1ccf
+bank_063/d_6331.bin 18e331 2a
+bank_063/d_635b.bin 18e35b 40
+bank_063/d_639b.bin 18e39b db6
+bank_063/d_7151.bin 18f151 5be
+bank_063/d_770f.bin 18f70f 301
+bank_063/d_7a10.bin 18fa10 93
+bank_063/d_7aa3.bin 18faa3 5e
 bank_064/d_4030.bin 190030 2a
 bank_064/d_405a.bin 19005a 40
 bank_064/lz_409a.bin 19009a 903

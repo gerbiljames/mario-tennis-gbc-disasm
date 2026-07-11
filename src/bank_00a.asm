@@ -112,8 +112,8 @@ FarPtr_0a_68:
 	dw Func_0a_5337 ; $4068
 FarPtr_0a_6a:
 	dw Func_0a_5930 ; $406a
-FarPtr_LoadSceneGraphics:
-	dw LoadSceneGraphics ; $406c
+FarPtr_LoadStorySceneGraphics:
+	dw LoadStorySceneGraphics ; $406c
 FarPtr_0a_6e:
 	dw Func_0a_575c ; $406e
 FarPtr_0a_70:
@@ -144,8 +144,8 @@ FarPtr_0a_88:
 	dw Func_0a_5f15 ; $4088
 FarPtr_0a_8a:
 	dw Func_0a_5f74 ; $408a
-FarPtr_0a_8c:
-	dw Func_0a_62f8 ; $408c
+FarPtr_LoadCourtSceneGraphics:
+	dw LoadCourtSceneGraphics ; $408c
 FarPtr_0a_8e:
 	dw Func_0a_60c2 ; $408e
 FarPtr_0a_90:
@@ -2193,7 +2193,7 @@ Label_0a_4f6f:
 	farcall FarPtr_05_76 ; $4f96
 	farcall FarPtr_0a_6a ; $4f99
 	ld a, [$c281] ; $4f9c
-	farcall FarPtr_LoadSceneGraphics ; $4f9f
+	farcall FarPtr_LoadStorySceneGraphics ; $4f9f
 	ld a, $00 ; $4fa2
 	farcall FarPtr_0a_76 ; $4fa4
 	test_flag $0d, 6 ; $4fa7
@@ -3316,7 +3316,7 @@ Label_0a_5844:
 Label_0a_585a:
 	res 2, d ; $585a
 	ret ; $585c
-LoadSceneGraphics:
+LoadStorySceneGraphics:
 	push af ; $585d
 	push bc ; $585e
 	push de ; $585f
@@ -3911,7 +3911,7 @@ Func_0a_5e91:
 	call DisableLCDSafely ; $5ebe
 	call Func_0a_5930 ; $5ec1
 	ld a, [$c32e] ; $5ec4
-	call LoadSceneGraphics ; $5ec7
+	call LoadStorySceneGraphics ; $5ec7
 	ld a, $00 ; $5eca
 	farcall FarPtr_0a_76 ; $5ecc
 	call EnableLCD ; $5ecf
@@ -4467,7 +4467,7 @@ Label_0a_628d:
 	ld [hl], a ; $6299
 	ret ; $629a
 	INCBIN "data/bank_00a/d_629b.bin" ; $629b, 93 bytes
-Func_0a_62f8:
+LoadCourtSceneGraphics:
 	push af ; $62f8
 	push bc ; $62f9
 	push de ; $62fa

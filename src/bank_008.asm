@@ -4057,7 +4057,7 @@ Func_08_5e28:
 	ld a, [hl+] ; $5e41
 	ld [$c4ad], a ; $5e42
 	ld a, [hl+] ; $5e45
-	farcall FarPtr_0a_8c ; $5e46
+	farcall FarPtr_LoadCourtSceneGraphics ; $5e46
 	call Func_08_5e52 ; $5e49
 	pop af ; $5e4c
 	wram_bank ; $5e4d
