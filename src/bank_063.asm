@@ -52,10 +52,22 @@ DataPtr_DormInteriorSceneConfig:
 	dw DormInteriorSceneConfig ; $402c
 DataPtr_StarPatternBgTiles:
 	dw StarPatternBgTiles ; $402e
-DormInteriorScenePtrs:
-	; $4030, 16 bytes (records:16)
-; 1 records x 16 bytes
-	dw $6331, $635b, $7151, $770f, $7a10, $7aa3, $7b01, $639b ; record 0
+DataPtr_63_30:
+	dw DormInteriorSceneConfig ; $4030
+DataPtr_DormInteriorPalettes:
+	dw DormInteriorPalettes ; $4032
+DataPtr_DormInteriorTilemap:
+	dw DormInteriorTilemap ; $4034
+DataPtr_DormInteriorAttrmap:
+	dw DormInteriorAttrmap ; $4036
+DataPtr_DormInteriorAuxTilemap:
+	dw DormInteriorAuxTilemap ; $4038
+DataPtr_DormInteriorAuxAttrmap:
+	dw DormInteriorAuxAttrmap ; $403a
+DataPtr_63_3c:
+	dw Data_63_7b01 ; $403c
+DataPtr_DormInteriorTiles:
+	dw DormInteriorTiles ; $403e
 IslandOpenCourtPalettes:
 	INCBIN "data/bank_063/d_4040.bin" ; $4040, 64 bytes
 IslandOpenCourtTiles:
@@ -108,4 +120,5 @@ DormInteriorAuxTilemap:
 	INCBIN "data/bank_063/d_7a10.bin" ; $7a10, 147 bytes
 DormInteriorAuxAttrmap:
 	INCBIN "data/bank_063/d_7aa3.bin" ; $7aa3, 94 bytes
-	ds 1279, $ff ; $7b01, fill
+Data_63_7b01:
+	INCBIN "data/bank_063/d_7b01.bin" ; $7b01, 1279 bytes

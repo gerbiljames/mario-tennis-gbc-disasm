@@ -3533,7 +3533,7 @@ SceneGfxSlotTable:
 	dslot DataPtr_IslandOpenCourtSceneConfig, DataPtr_IslandOpenCourtPalettes, DataPtr_IslandOpenCourtTilemap, DataPtr_IslandOpenCourtAttrmap, DataPtr_63_08, DataPtr_IslandOpenCourtSceneConfigB, DataPtr_DKCourtPalettes, DataPtr_IslandOpenCourtTiles ; record 14
 	dslot DataPtr_DKCourtSceneConfig, DataPtr_63_12, DataPtr_DKCourtTilemap, DataPtr_DKCourtAttrmap, DataPtr_63_18, DataPtr_DKCourtSceneConfigB, DataPtr_StarPatternBgSceneConfig, DataPtr_DKCourtTiles ; record 15
 	dslot DataPtr_63_20, DataPtr_StarPatternBgPalettes, DataPtr_StarPatternBgTilemap, DataPtr_StarPatternBgAttrmap, DataPtr_StarPatternBgAuxTilemap, DataPtr_StarPatternBgAuxAttrmap, DataPtr_DormInteriorSceneConfig, DataPtr_StarPatternBgTiles ; record 16
-	dw $6330, $6332, $6334, $6336, $6338, $633a, $633c, $633e ; record 17
+	dslot DataPtr_63_30, DataPtr_DormInteriorPalettes, DataPtr_DormInteriorTilemap, DataPtr_DormInteriorAttrmap, DataPtr_DormInteriorAuxTilemap, DataPtr_DormInteriorAuxAttrmap, DataPtr_63_3c, DataPtr_DormInteriorTiles ; record 17
 	dslot DataPtr_64_00, DataPtr_64_02, DataPtr_64_04, DataPtr_64_06, DataPtr_64_08, DataPtr_64_0a, DataPtr_64_0c, DataPtr_64_0e ; record 18
 	dslot DataPtr_64_10, DataPtr_64_12, DataPtr_64_14, DataPtr_64_16, DataPtr_64_18, DataPtr_64_1a, DataPtr_64_1c, DataPtr_64_1e ; record 19
 	dslot DataPtr_64_20, DataPtr_64_22, DataPtr_64_24, DataPtr_64_26, DataPtr_64_28, DataPtr_64_2a, DataPtr_64_2c, DataPtr_64_2e ; record 20

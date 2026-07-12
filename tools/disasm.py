@@ -1022,15 +1022,28 @@ class Disassembly:
             i = bisect.bisect_left(claimed, (b, b))
             return i > 0 and claimed[i - 1][1] > a
 
-        extents = {}
-        for bank, floor in floors.items():
-            base = bank * BANK_SIZE
-            tmin = min((src - base for (b, _s, src, _k) in
-                        self.data_slots.values() if b == bank), default=None)
-            if tmin is not None and floor <= tmin <= 0x100:
-                extents[bank] = tmin
-            else:
-                extents[bank] = floor
+        # Acceptance can widen a bank's extent: a newly proven slot's target
+        # may be the lowest one and thus delimit the table (bank $63's slot
+        # $02 points at $4040, proving the full 32-slot table only after the
+        # first pass accepts it). Extents are recomputed and the passes
+        # rerun until a pass accepts nothing.
+        def compute_extents():
+            fl = dict(floors)
+            for bank, slot, _src, _k in self.data_slots.values():
+                fl[bank] = max(fl.get(bank, 0), slot + 2)
+            ext = {}
+            for bank, floor in fl.items():
+                base = bank * BANK_SIZE
+                tmin = min((src - base for (b, _s, src, _k) in
+                            self.data_slots.values() if b == bank),
+                           default=None)
+                if tmin is not None and floor <= tmin <= 0x100:
+                    ext[bank] = tmin
+                else:
+                    ext[bank] = floor
+            return ext
+
+        extents = compute_extents()
 
         def scannable(bank, slot):
             entry = bank * BANK_SIZE + slot
@@ -1045,33 +1058,6 @@ class Disassembly:
             if src < bank * BANK_SIZE + extents[bank] or src in self.code_bytes:
                 return None  # points into the table region or at code
             return entry, src
-
-        accepted_lz = accepted_raw = 0
-        for bank, ext in sorted(extents.items()):
-            base = bank * BANK_SIZE
-            for slot in range(0, ext, 2):
-                cand = scannable(bank, slot)
-                if cand is None:
-                    continue
-                entry, src = cand
-                if src in self.data_blobs:
-                    self.data_slots[entry] = (bank, slot, src,
-                                              self.data_blobs[src][1])
-                    accepted_lz += 1
-                    continue  # alias of an already-accepted blob
-                try:
-                    data, length = lz.decompress(self.rom, src, base + BANK_SIZE)
-                except ValueError:
-                    continue
-                if not 8 <= len(data) <= 0x1000:
-                    continue
-                if overlaps(src, src + length) or any(
-                        b in self.code_bytes for b in range(src, src + length)):
-                    continue
-                self.data_slots[entry] = (bank, slot, src, "lz")
-                self.data_blobs.setdefault(src, (length, "lz"))
-                bisect.insort(claimed, (src, src + length))
-                accepted_lz += 1
 
         def split_blob_at(src):
             """Split the copy blob covering src so src starts its own blob.
@@ -1088,44 +1074,79 @@ class Disassembly:
             bisect.insort(claimed, (src, c_end))
             return True
 
-        # Raw-pointer pass: safe only where no table slot is a code entry,
-        # so an in-range pointer cannot be an unproven function.
-        for bank, ext in sorted(extents.items()):
-            if bank in code_table_banks:
-                continue
-            base = bank * BANK_SIZE
-            starts = sorted(s for s in self.data_blobs
-                            if base <= s < base + BANK_SIZE)
-            for slot in range(0, ext, 2):
-                cand = scannable(bank, slot)
-                if cand is None:
-                    continue
-                entry, src = cand
-                if src in self.data_blobs:
-                    self.data_slots[entry] = (bank, slot, src,
-                                              self.data_blobs[src][1])
-                    accepted_raw += 1
-                    continue
-                if overlaps(src, src + 1):
-                    if split_blob_at(src):
-                        bisect.insort(starts, src)
-                        self.data_slots[entry] = (bank, slot, src, "copy")
-                        accepted_raw += 1
-                    continue
-                i = bisect.bisect_right(starts, src)
-                nxt = starts[i] if i < len(starts) else base + BANK_SIZE
-                length = nxt - src
-                if not 0 < length <= 0x2000:
-                    length = None
-                if length and any(b in self.code_bytes
-                                  for b in range(src, src + length)):
-                    length = None
-                self.data_slots[entry] = (bank, slot, src, "copy")
-                self.data_blobs.setdefault(src, (length, "copy"))
-                if length:
+        accepted_lz = accepted_raw = 0
+        while True:
+            before = len(self.data_slots)
+            for bank, ext in sorted(extents.items()):
+                base = bank * BANK_SIZE
+                for slot in range(0, ext, 2):
+                    cand = scannable(bank, slot)
+                    if cand is None:
+                        continue
+                    entry, src = cand
+                    if src in self.data_blobs:
+                        self.data_slots[entry] = (bank, slot, src,
+                                                  self.data_blobs[src][1])
+                        accepted_lz += 1
+                        continue  # alias of an already-accepted blob
+                    try:
+                        data, length = lz.decompress(self.rom, src,
+                                                     base + BANK_SIZE)
+                    except ValueError:
+                        continue
+                    if not 8 <= len(data) <= 0x1000:
+                        continue
+                    if overlaps(src, src + length) or any(
+                            b in self.code_bytes
+                            for b in range(src, src + length)):
+                        continue
+                    self.data_slots[entry] = (bank, slot, src, "lz")
+                    self.data_blobs.setdefault(src, (length, "lz"))
                     bisect.insort(claimed, (src, src + length))
-                    bisect.insort(starts, src)
-                accepted_raw += 1
+                    accepted_lz += 1
+
+            # Raw-pointer pass: safe only where no table slot is a code
+            # entry, so an in-range pointer cannot be an unproven function.
+            for bank, ext in sorted(extents.items()):
+                if bank in code_table_banks:
+                    continue
+                base = bank * BANK_SIZE
+                starts = sorted(s for s in self.data_blobs
+                                if base <= s < base + BANK_SIZE)
+                for slot in range(0, ext, 2):
+                    cand = scannable(bank, slot)
+                    if cand is None:
+                        continue
+                    entry, src = cand
+                    if src in self.data_blobs:
+                        self.data_slots[entry] = (bank, slot, src,
+                                                  self.data_blobs[src][1])
+                        accepted_raw += 1
+                        continue
+                    if overlaps(src, src + 1):
+                        if split_blob_at(src):
+                            bisect.insort(starts, src)
+                            self.data_slots[entry] = (bank, slot, src, "copy")
+                            accepted_raw += 1
+                        continue
+                    i = bisect.bisect_right(starts, src)
+                    nxt = starts[i] if i < len(starts) else base + BANK_SIZE
+                    length = nxt - src
+                    if not 0 < length <= 0x2000:
+                        length = None
+                    if length and any(b in self.code_bytes
+                                      for b in range(src, src + length)):
+                        length = None
+                    self.data_slots[entry] = (bank, slot, src, "copy")
+                    self.data_blobs.setdefault(src, (length, "copy"))
+                    if length:
+                        bisect.insort(claimed, (src, src + length))
+                        bisect.insort(starts, src)
+                    accepted_raw += 1
+
+            if len(self.data_slots) == before:
+                break
+            extents = compute_extents()
 
         # Hook-observed copies can overlap: the engine reads both a whole
         # structure and windows inside it (bank $63 copies 136 bytes from

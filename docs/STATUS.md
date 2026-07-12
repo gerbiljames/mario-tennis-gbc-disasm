@@ -122,9 +122,11 @@ engine), $6b, $03 (save engine), $0a, $07.
   ($62); 14 IslandOpenCourt (videoboard stadium), 15 DKCourt (Banana
   Bunch), 16 StarPatternBg (star-wallpaper backdrop, loaded via the match
   loader in session1 — likely a minigame/ceremony backdrop), 17
-  DormInterior (64x64 RPG interior map; its slot row lives at $63:$4030 as
-  direct pointers — `DormInteriorScenePtrs` — past the 24-slot table)
-  ($63). Minigame court themes match the minigame host text (Yoshi=Fruit
+  DormInterior (64x64 RPG interior map; slots $30-$3e of bank $63's
+  32-slot table, proven by the iterative slot scan — acceptance recomputes
+  table extents until a pass adds nothing, since a newly proven slot's
+  target can delimit the table; the old `DormInteriorScenePtrs` numeric
+  rendering is superseded) ($63). Minigame court themes match the minigame host text (Yoshi=Fruit
   Fantasy, Peach=Perfect Shot, Bowser=Two-on-One, DK=Banana Bunch,
   Wario=Treasure Box). Scenes 18+ are story maps ($64-$69), still unnamed.
   Generator: curated labels now split anonymous data runs (disasm.py), so
