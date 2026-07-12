@@ -144,7 +144,8 @@ DataPtr_18_88:
 	dw Lz_18_72db ; $4088
 DataPtr_18_8a:
 	dw Lz_18_740b ; $408a
-	INCBIN "data/bank_018/d_408c.bin" ; $408c, 2 bytes
+DataPtr_18_8c:
+	dw Data_18_74e1 ; $408c
 FarPtr_18_8e:
 	dw Func_18_7617 ; $408e
 	INCBIN "data/bank_018/d_4090.bin" ; $4090, 664 bytes
@@ -1219,7 +1220,9 @@ Lz_18_72db:
 	INCBIN "data/bank_018/lz_72db.bin" ; $72db, 304 bytes
 Lz_18_740b:
 	INCBIN "data/bank_018/lz_740b.bin" ; $740b, 214 bytes
-	INCBIN "data/bank_018/d_74e1.bin" ; $74e1, 310 bytes
+Data_18_74e1:
+	INCBIN "data/bank_018/d_74e1.bin" ; $74e1, 64 bytes
+	INCBIN "data/bank_018/d_7521.bin" ; $7521, 246 bytes
 Func_18_7617:
 	ld a, c ; $7617
 	ld [$cb6d], a ; $7618
@@ -1305,7 +1308,7 @@ Label_18_7716:
 Func_18_7720:
 	call Func_18_7647 ; $7720
 	call Func_18_772d ; $7723
-	farcall FarPtr_39_00 ; $7726
+	farcall FarPtr_LoadScreenAssetRecord ; $7726
 	farcall FarPtr_39_02 ; $7729
 	ret ; $772c
 Func_18_772d:
@@ -1382,7 +1385,7 @@ Label_18_782b:
 Func_18_7835:
 	call Func_18_7647 ; $7835
 	call Func_18_7842 ; $7838
-	farcall FarPtr_39_00 ; $783b
+	farcall FarPtr_LoadScreenAssetRecord ; $783b
 	farcall FarPtr_39_02 ; $783e
 	ret ; $7841
 Func_18_7842:
@@ -1399,7 +1402,7 @@ Label_18_784d:
 Func_18_7855:
 	call Func_18_7647 ; $7855
 	ld c, $32 ; $7858
-	farcall FarPtr_39_00 ; $785a
+	farcall FarPtr_LoadScreenAssetRecord ; $785a
 	ld hl, $78a9 ; $785d
 	ld de, $0001 ; $7860
 	call LoadPaletteShadow ; $7863
@@ -1441,7 +1444,7 @@ Func_18_792c:
 	call Func_18_7647 ; $792c
 	sound $09 ; $792f
 	call Func_18_7a07 ; $7931
-	farcall FarPtr_39_00 ; $7934
+	farcall FarPtr_LoadScreenAssetRecord ; $7934
 	farcall FarPtr_39_02 ; $7937
 	call Func_18_7d03 ; $793a
 	ld a, $01 ; $793d
@@ -1485,7 +1488,7 @@ Label_18_798a:
 	call Func_18_7647 ; $7997
 	call DisableLCDSafely ; $799a
 	call Func_18_7a1a ; $799d
-	farcall FarPtr_39_00 ; $79a0
+	farcall FarPtr_LoadScreenAssetRecord ; $79a0
 	farcall FarPtr_39_02 ; $79a3
 	call Func_18_7a2d ; $79a6
 	call EnableLCD ; $79a9

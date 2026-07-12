@@ -116,7 +116,20 @@ DataPtr_ThreeSetsLabelTiles:
 	dw ThreeSetsLabelTiles ; $406c
 DataPtr_FiveSetsLabelTiles:
 	dw FiveSetsLabelTiles ; $406e
-	INCBIN "data/bank_03c/d_4070.bin" ; $4070, 14 bytes
+DataPtr_3c_70:
+	dw Lz_3c_741b ; $4070
+DataPtr_3c_72:
+	dw Lz_3c_75e0 ; $4072
+DataPtr_3c_74:
+	dw Lz_3c_766c ; $4074
+DataPtr_3c_76:
+	dw Data_3c_76c5 ; $4076
+DataPtr_3c_78:
+	dw Lz_3c_7705 ; $4078
+DataPtr_3c_7a:
+	dw Lz_3c_77ec ; $407a
+DataPtr_3c_7c:
+	dw Lz_3c_78cf ; $407c
 ModeSelectTiles:
 	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1283 bytes
 ModeSelectTilemap:
@@ -229,5 +242,18 @@ ThreeSetsLabelTiles:
 	INCBIN "data/bank_03c/lz_726a.bin" ; $726a, 218 bytes
 FiveSetsLabelTiles:
 	INCBIN "data/bank_03c/lz_7344.bin" ; $7344, 215 bytes
-	INCBIN "data/bank_03c/d_741b.bin" ; $741b, 1457 bytes
+Lz_3c_741b:
+	INCBIN "data/bank_03c/lz_741b.bin" ; $741b, 453 bytes
+Lz_3c_75e0:
+	INCBIN "data/bank_03c/lz_75e0.bin" ; $75e0, 140 bytes
+Lz_3c_766c:
+	INCBIN "data/bank_03c/lz_766c.bin" ; $766c, 89 bytes
+Data_3c_76c5:
+	INCBIN "data/bank_03c/d_76c5.bin" ; $76c5, 64 bytes
+Lz_3c_7705:
+	INCBIN "data/bank_03c/lz_7705.bin" ; $7705, 231 bytes
+Lz_3c_77ec:
+	INCBIN "data/bank_03c/lz_77ec.bin" ; $77ec, 227 bytes
+Lz_3c_78cf:
+	INCBIN "data/bank_03c/lz_78cf.bin" ; $78cf, 253 bytes
 	ds 1588, $ff ; $79cc, fill

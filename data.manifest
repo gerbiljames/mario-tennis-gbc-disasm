@@ -607,7 +607,6 @@ bank_017/lz_7770.bin 05f770 135
 bank_017/lz_78a5.bin 05f8a5 57
 bank_017/d_78fc.bin 05f8fc 40
 bank_017/d_793c.bin 05f93c 23d
-bank_018/d_408c.bin 06008c 2
 bank_018/d_4090.bin 060090 298
 bank_018/d_438e.bin 06038e c
 bank_018/d_4468.bin 060468 10
@@ -657,7 +656,8 @@ bank_018/lz_724e.bin 06324e 44
 bank_018/lz_7292.bin 063292 49
 bank_018/lz_72db.bin 0632db 130
 bank_018/lz_740b.bin 06340b d6
-bank_018/d_74e1.bin 0634e1 136
+bank_018/d_74e1.bin 0634e1 40
+bank_018/d_7521.bin 063521 f6
 bank_018/d_7659.bin 063659 5b
 bank_018/d_773a.bin 06373a 6
 bank_018/d_7754.bin 063754 67
@@ -943,7 +943,6 @@ bank_038/d_724c.bin 0e324c f
 bank_038/d_726b.bin 0e326b f
 bank_038/d_7339.bin 0e3339 8
 bank_038/d_751d.bin 0e351d 5
-bank_039/d_40f5.bin 0e40f5 230
 bank_039/d_4403.bin 0e4403 d0
 bank_039/d_44f6.bin 0e44f6 28
 bank_039/d_4528.bin 0e4528 8
@@ -1006,7 +1005,6 @@ bank_03a/lz_7c6f.bin 0ebc6f ef
 bank_03a/lz_7d5e.bin 0ebd5e 5c
 bank_03a/d_7dba.bin 0ebdba 40
 bank_03a/lz_7dfa.bin 0ebdfa e3
-bank_03c/d_4070.bin 0f0070 e
 bank_03c/lz_407e.bin 0f007e 503
 bank_03c/lz_4581.bin 0f0581 10c
 bank_03c/lz_468d.bin 0f068d 84
@@ -1063,7 +1061,13 @@ bank_03c/lz_7103.bin 0f3103 aa
 bank_03c/lz_71ad.bin 0f31ad bd
 bank_03c/lz_726a.bin 0f326a da
 bank_03c/lz_7344.bin 0f3344 d7
-bank_03c/d_741b.bin 0f341b 5b1
+bank_03c/lz_741b.bin 0f341b 1c5
+bank_03c/lz_75e0.bin 0f35e0 8c
+bank_03c/lz_766c.bin 0f366c 59
+bank_03c/d_76c5.bin 0f36c5 40
+bank_03c/lz_7705.bin 0f3705 e7
+bank_03c/lz_77ec.bin 0f37ec e3
+bank_03c/lz_78cf.bin 0f38cf fd
 bank_03d/lz_406e.bin 0f406e 101
 bank_03d/lz_416f.bin 0f416f 102
 bank_03d/lz_4271.bin 0f4271 100
@@ -1115,7 +1119,6 @@ bank_03d/lz_7a5b.bin 0f7a5b 73
 bank_03d/d_7ace.bin 0f7ace 40
 bank_03d/lz_7b0e.bin 0f7b0e 14b
 bank_03d/lz_7c59.bin 0f7c59 66
-bank_03e/d_403c.bin 0f803c 2
 bank_03e/d_4048.bin 0f8048 f2
 bank_03e/d_41b8.bin 0f81b8 211
 bank_03e/d_43db.bin 0f83db 10
@@ -1167,7 +1170,6 @@ bank_03e/lz_757d.bin 0fb57d 6b
 bank_03e/lz_75e8.bin 0fb5e8 b3
 bank_03e/lz_769b.bin 0fb69b b7
 bank_03e/lz_7752.bin 0fb752 b3
-bank_03f/d_4024.bin 0fc024 2
 bank_03f/d_4078.bin 0fc078 2
 bank_03f/d_4145.bin 0fc145 1
 bank_03f/d_422a.bin 0fc22a 1a
@@ -1194,7 +1196,6 @@ bank_03f/lz_6219.bin 0fe219 c4
 bank_03f/lz_62dd.bin 0fe2dd 522
 bank_03f/lz_67ff.bin 0fe7ff 145
 bank_03f/lz_6944.bin 0fe944 8d
-bank_03f/d_69d1.bin 0fe9d1 40
 bank_03f/lz_6a11.bin 0fea11 13d
 bank_03f/lz_6b4e.bin 0feb4e 8f
 bank_03f/lz_6bdd.bin 0febdd 26

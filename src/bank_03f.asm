@@ -38,13 +38,14 @@ DataPtr_VarsityTeamChartTiles:
 	dw VarsityTeamChartTiles ; $401e
 DataPtr_VarsityTeamChartTilemap:
 	dw VarsityTeamChartTilemap ; $4020
-DataPtr_3f_22:
-	dw Lz_3f_6944 ; $4022
-	INCBIN "data/bank_03f/d_4024.bin" ; $4024, 2 bytes
+DataPtr_VarsityTeamChartAttrmap:
+	dw VarsityTeamChartAttrmap ; $4022
+DataPtr_VarsityTeamChartPalettes:
+	dw VarsityTeamChartPalettes ; $4024
 DataPtr_VarsityTeamChartTilemap2:
 	dw VarsityTeamChartTilemap2 ; $4026
-DataPtr_3f_28:
-	dw Lz_3f_6b4e ; $4028
+DataPtr_VarsityTeamChartAttrmap2:
+	dw VarsityTeamChartAttrmap2 ; $4028
 DataPtr_3f_2a:
 	dw Lz_3f_6bdd ; $402a
 DataPtr_MugshotTiles:
@@ -1730,12 +1731,22 @@ VarsityTeamChartTiles:
 	INCBIN "data/bank_03f/lz_62dd.bin" ; $62dd, 1314 bytes
 VarsityTeamChartTilemap:
 	INCBIN "data/bank_03f/lz_67ff.bin" ; $67ff, 325 bytes
-Lz_3f_6944:
+VarsityTeamChartAttrmap:
 	INCBIN "data/bank_03f/lz_6944.bin" ; $6944, 141 bytes
-	INCBIN "data/bank_03f/d_69d1.bin" ; $69d1, 64 bytes
+VarsityTeamChartPalettes:
+	; $69d1, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $67f9, $0000, $0098, $031f ; pal 0: #cdffcd #000000 #c52000 #ffc500
+	dw $0000, $0000, $0000, $0000 ; pal 1: #000000 #000000 #000000 #000000
+	dw $0c63, $0220, $5294, $7ffd ; pal 2: #181818 #008b00 #a4a4a4 #eeffff
+	dw $0000, $67f9, $0098, $031f ; pal 3: #000000 #cdffcd #c52000 #ffc500
+	dw $0c63, $7e80, $5294, $7ffd ; pal 4: #181818 #00a4ff #a4a4a4 #eeffff
+	dw $67f9, $0000, $0098, $031f ; pal 5: #cdffcd #000000 #c52000 #ffc500
+	dw $0000, $4e16, $73ff, $67f9 ; pal 6: #000000 #b4839c #ffffe6 #cdffcd
+	dw $0000, $3140, $7ff6, $7e80 ; pal 7: #000000 #005262 #b4ffff #00a4ff
 VarsityTeamChartTilemap2:
 	INCBIN "data/bank_03f/lz_6a11.bin" ; $6a11, 317 bytes
-Lz_3f_6b4e:
+VarsityTeamChartAttrmap2:
 	INCBIN "data/bank_03f/lz_6b4e.bin" ; $6b4e, 143 bytes
 Lz_3f_6bdd:
 	INCBIN "data/bank_03f/lz_6bdd.bin" ; $6bdd, 38 bytes

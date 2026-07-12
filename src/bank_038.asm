@@ -578,7 +578,7 @@ Func_38_460f:
 	ld c, a ; $4614
 	call Func_38_43bb ; $4615
 	ld c, $00 ; $4618
-	farcall FarPtr_39_00 ; $461a
+	farcall FarPtr_LoadScreenAssetRecord ; $461a
 	farcall FarPtr_05_76 ; $461d
 	ld b, $11 ; $4620
 	ld c, $10 ; $4622
@@ -926,7 +926,7 @@ Func_38_4975:
 	call Func_38_43bb ; $49a9
 	farcall FarPtr_01_0a ; $49ac
 	ld c, $05 ; $49af
-	farcall FarPtr_39_00 ; $49b1
+	farcall FarPtr_LoadScreenAssetRecord ; $49b1
 	call Func_38_492c ; $49b4
 	farcall FarPtr_05_76 ; $49b7
 	ld b, $11 ; $49ba
@@ -1536,7 +1536,7 @@ Func_38_4f6f:
 	ld c, $10 ; $4fc2
 	call Func_00_0480 ; $4fc4
 	ld c, $01 ; $4fc7
-	farcall FarPtr_39_00 ; $4fc9
+	farcall FarPtr_LoadScreenAssetRecord ; $4fc9
 	farcall FarPtr_05_76 ; $4fcc
 	wram_bank $05 ; $4fcf
 	ld a, $03 ; $4fd5
@@ -5465,7 +5465,7 @@ Func_38_6f6e:
 	ld c, $00 ; $6f83
 	call Func_38_43bb ; $6f85
 	ld c, $06 ; $6f88
-	farcall FarPtr_39_00 ; $6f8a
+	farcall FarPtr_LoadScreenAssetRecord ; $6f8a
 	farcall FarPtr_05_76 ; $6f8d
 	ld b, $11 ; $6f90
 	ld c, $10 ; $6f92

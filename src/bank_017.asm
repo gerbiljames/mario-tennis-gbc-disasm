@@ -515,7 +515,7 @@ Label_17_4953:
 	ret ; $495f
 Func_17_4960:
 	ld c, $24 ; $4960
-	farcall FarPtr_39_00 ; $4962
+	farcall FarPtr_LoadScreenAssetRecord ; $4962
 	call Func_17_499f ; $4965
 	wram_bank $03 ; $4968
 	call Func_17_4a99 ; $496e
@@ -3535,7 +3535,7 @@ Func_17_7157:
 	call Func_17_7293 ; $7157
 	farcall FarPtr_01_0a ; $715a
 	ld c, $44 ; $715d
-	farcall FarPtr_39_00 ; $715f
+	farcall FarPtr_LoadScreenAssetRecord ; $715f
 	ldh a, [hWramBank] ; $7162
 	push af ; $7164
 	farcall FarPtr_05_00 ; $7165

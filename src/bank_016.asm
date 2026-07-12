@@ -191,11 +191,11 @@ Func_16_490c:
 	or a, a ; $490f
 	jr z, Label_16_4919 ; $4910
 	ld c, $14 ; $4912
-	farcall FarPtr_39_00 ; $4914
+	farcall FarPtr_LoadScreenAssetRecord ; $4914
 	jr Label_16_4920 ; $4917
 Label_16_4919:
 	ld c, $13 ; $4919
-	farcall FarPtr_39_00 ; $491b
+	farcall FarPtr_LoadScreenAssetRecord ; $491b
 	jr Label_16_4920 ; $491e
 Label_16_4920:
 	ld de, $002f ; $4920
@@ -610,7 +610,7 @@ Label_16_5c7f:
 	ret ; $5c89
 Func_16_5c8a:
 	ld c, $23 ; $5c8a
-	farcall FarPtr_39_00 ; $5c8c
+	farcall FarPtr_LoadScreenAssetRecord ; $5c8c
 	ld de, $a000 ; $5c8f
 	ld c, $00 ; $5c92
 	ld b, $08 ; $5c94

@@ -1,8 +1,8 @@
-# Project status — 2026-07-11
+# Project status — 2026-07-12
 
 ## Where things stand
 
-**~118.1K instructions / 252,021 bytes of proven code (12.0% of the 2 MiB ROM)
+**~118.1K instructions / 252,665 bytes of proven code (12.0% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -83,6 +83,18 @@ engine), $6b, $03 (save engine), $0a, $07.
   (pitch = atan(A/B) ~ 24 deg) with table-driven multiplies throughout.
 - **Menu / court / cutscene graphics streams** named; `tools/gfxdump.py`
   renders PNG contact sheets of the carved LZ streams for identification.
+- **Menu/status screen assets decoded**: `ScreenAssetRecordTable`
+  ($39:$40f5, 70 records x 4 `dw` slot words, rendered in-source) — each
+  record is (LZ tiles, LZ tilemap, LZ attrmap, 64-byte BG palette set) for
+  one full screen; `LoadScreenAssetRecord` ($39:$407e, `farcall
+  FarPtr_LoadScreenAssetRecord`, 20+ sites) walks a record per screen id
+  and feeds the palettes to `LoadPaletteShadow`. The records read their
+  slot words through RAM, invisible to static backtracking, so
+  `disasm.py`'s `add_screen_asset_slots` parses the table directly: +252
+  proven slots across banks $17-$19/$3a/$3c-$3f/$6d etc. (7 placeholder
+  records skipped). Identified via records 37/38: the Varsity Team Chart
+  pages (`VarsityTeamChartTiles/Tilemap/Attrmap/Palettes/...2`, bank $3f;
+  palettes render in-source via the new `palettes` blob spec).
 - **Match-scene graphics system mapped**: `SceneGfxSlotTable` ($0a:$59d9,
   37 records x 8 `dw` slot words, rendered in-source) covers banks $5f-$69.
   Slot layout: +$0 scene config (camera scroll bounds -> $c329-$c32c at
@@ -211,7 +223,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 565 of 15,001 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 570 of 15,022 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt

@@ -224,7 +224,7 @@ Label_6b_420d:
 	ld a, $28 ; $4238
 	ld [$cb47], a ; $423a
 	ld c, $16 ; $423d
-	farcall FarPtr_39_00 ; $423f
+	farcall FarPtr_LoadScreenAssetRecord ; $423f
 	call Func_6b_520a ; $4242
 	ldh a, [hWramBank] ; $4245
 	push af ; $4247
@@ -329,7 +329,7 @@ Label_6b_43cc:
 	jp Label_6b_4099 ; $43cc
 	call DisableLCDSafely ; $43cf
 	ld c, $17 ; $43d2
-	farcall FarPtr_39_00 ; $43d4
+	farcall FarPtr_LoadScreenAssetRecord ; $43d4
 	ldh a, [hWramBank] ; $43d7
 	push af ; $43d9
 	wram_bank $03 ; $43da
@@ -435,7 +435,7 @@ Label_6b_43cc:
 	jp Label_6b_407c ; $452b
 	call DisableLCDSafely ; $452e
 	ld c, $18 ; $4531
-	farcall FarPtr_39_00 ; $4533
+	farcall FarPtr_LoadScreenAssetRecord ; $4533
 	ldh a, [hWramBank] ; $4536
 	push af ; $4538
 	wram_bank $03 ; $4539
@@ -453,7 +453,7 @@ Label_6b_43cc:
 	wram_bank ; $4558
 	farcall FarPtr_39_02 ; $455c
 	ld c, $19 ; $455f
-	farcall FarPtr_39_00 ; $4561
+	farcall FarPtr_LoadScreenAssetRecord ; $4561
 	ld a, $08 ; $4564
 	ldh [rSTAT], a ; $4566
 	ld hl, rIE ; $4568
@@ -653,7 +653,7 @@ Label_6b_46ce:
 	INCBIN "data/bank_06b/d_475a.bin" ; $475a, 64 bytes
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
-	farcall FarPtr_39_00 ; $479f
+	farcall FarPtr_LoadScreenAssetRecord ; $479f
 	farcall FarPtr_39_02 ; $47a2
 	xor a, a ; $47a5
 	ld [$cb40], a ; $47a6
@@ -683,7 +683,7 @@ Label_6b_46ce:
 	jp Label_6b_407c ; $47e4
 	call DisableLCDSafely ; $47e7
 	ld c, $1d ; $47ea
-	farcall FarPtr_39_00 ; $47ec
+	farcall FarPtr_LoadScreenAssetRecord ; $47ec
 	farcall FarPtr_39_02 ; $47ef
 	ld a, $94 ; $47f2
 	ld [$cb42], a ; $47f4
@@ -714,7 +714,7 @@ Label_6b_46ce:
 	jp Label_6b_407c ; $4833
 	call DisableLCDSafely ; $4836
 	ld c, $1e ; $4839
-	farcall FarPtr_39_00 ; $483b
+	farcall FarPtr_LoadScreenAssetRecord ; $483b
 	farcall FarPtr_39_02 ; $483e
 	ld a, $a8 ; $4841
 	ld [$cb42], a ; $4843
@@ -1147,7 +1147,7 @@ Func_6b_518d:
 Func_6b_51ae:
 	call DisableLCDSafely ; $51ae
 	ld c, $15 ; $51b1
-	farcall FarPtr_39_00 ; $51b3
+	farcall FarPtr_LoadScreenAssetRecord ; $51b3
 	farcall FarPtr_39_02 ; $51b6
 	xor a, a ; $51b9
 	ldh [$ff8b], a ; $51ba
@@ -1779,7 +1779,7 @@ Func_6b_75af:
 	call Func_00_1d20 ; $75d8
 	call Func_00_1da4 ; $75db
 	ld c, $1f ; $75de
-	farcall FarPtr_39_00 ; $75e0
+	farcall FarPtr_LoadScreenAssetRecord ; $75e0
 	farcall FarPtr_39_02 ; $75e3
 	ld c, $14 ; $75e6
 	ld b, $5b ; $75e8

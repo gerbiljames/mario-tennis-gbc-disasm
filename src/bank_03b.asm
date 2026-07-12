@@ -985,7 +985,7 @@ Func_3b_45d4:
 	ld [$dc13], a ; $45db
 	ld [$dc12], a ; $45de
 	ld c, $0c ; $45e1
-	farcall FarPtr_39_00 ; $45e3
+	farcall FarPtr_LoadScreenAssetRecord ; $45e3
 	ld de, $aac0 ; $45e6
 	call Func_3b_48f2 ; $45e9
 	ld de, $a000 ; $45ec
@@ -1599,11 +1599,11 @@ Func_3b_49e5:
 	or a, a ; $49f1
 	jr nz, Label_3b_49fb ; $49f2
 	ld c, $0e ; $49f4
-	farcall FarPtr_39_00 ; $49f6
+	farcall FarPtr_LoadScreenAssetRecord ; $49f6
 	jr Label_3b_4a00 ; $49f9
 Label_3b_49fb:
 	ld c, $0d ; $49fb
-	farcall FarPtr_39_00 ; $49fd
+	farcall FarPtr_LoadScreenAssetRecord ; $49fd
 Label_3b_4a00:
 	wram_bank $03 ; $4a00
 	call Func_3b_4a71 ; $4a06
@@ -2054,7 +2054,7 @@ Label_3b_4dbc:
 	ret ; $4dbc
 Func_3b_4dbd:
 	ld c, $0f ; $4dbd
-	farcall FarPtr_39_00 ; $4dbf
+	farcall FarPtr_LoadScreenAssetRecord ; $4dbf
 	wram_bank $03 ; $4dc2
 	xor a, a ; $4dc8
 	ld [$d800], a ; $4dc9
@@ -2603,7 +2603,7 @@ Func_3b_51b3:
 	ld [wMenuCursorX], a ; $51b4
 	ld [wMenuCursorY], a ; $51b7
 	ld c, $12 ; $51ba
-	farcall FarPtr_39_00 ; $51bc
+	farcall FarPtr_LoadScreenAssetRecord ; $51bc
 	wram_bank $03 ; $51bf
 	call Func_3b_523e ; $51c5
 	wram_bank $03 ; $51c8
@@ -7546,7 +7546,7 @@ Func_3b_77a7:
 	or a, a ; $77aa
 	jr nz, Label_3b_77d2 ; $77ab
 	ld c, $25 ; $77ad
-	farcall FarPtr_39_00 ; $77af
+	farcall FarPtr_LoadScreenAssetRecord ; $77af
 	ld b, $69 ; $77b2
 	ld c, $10 ; $77b4
 	ld de, $9000 ; $77b6
@@ -7560,7 +7560,7 @@ Func_3b_77a7:
 	ret ; $77d1
 Label_3b_77d2:
 	ld c, $26 ; $77d2
-	farcall FarPtr_39_00 ; $77d4
+	farcall FarPtr_LoadScreenAssetRecord ; $77d4
 	ld b, $69 ; $77d7
 	ld c, $10 ; $77d9
 	ld de, $9000 ; $77db
@@ -7991,7 +7991,7 @@ Func_3b_7b11:
 	ld [$dc13], a ; $7b18
 	ld [$dc12], a ; $7b1b
 	ld c, $0c ; $7b1e
-	farcall FarPtr_39_00 ; $7b20
+	farcall FarPtr_LoadScreenAssetRecord ; $7b20
 	ld de, $aac0 ; $7b23
 	call Func_3b_48f2 ; $7b26
 	ld de, $a000 ; $7b29

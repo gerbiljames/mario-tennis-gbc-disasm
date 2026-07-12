@@ -64,7 +64,8 @@ DataPtr_3e_38:
 	dw Lz_3e_69d5 ; $4038
 DataPtr_3e_3a:
 	dw Lz_3e_69d5 ; $403a
-	INCBIN "data/bank_03e/d_403c.bin" ; $403c, 2 bytes
+DataPtr_3e_3c:
+	dw Data_3e_7426 ; $403c
 DataPtr_3e_3e:
 	dw Lz_3e_7466 ; $403e
 DataPtr_3e_40:
@@ -778,7 +779,7 @@ Func_3e_49e6:
 	ret ; $4a13
 Func_3e_4a14:
 	ld c, $11 ; $4a14
-	farcall FarPtr_39_00 ; $4a16
+	farcall FarPtr_LoadScreenAssetRecord ; $4a16
 	farcall FarPtr_05_76 ; $4a19
 	ld b, $11 ; $4a1c
 	ld c, $10 ; $4a1e
@@ -854,7 +855,7 @@ Label_3e_4acf:
 	ret ; $4add
 Func_3e_4ade:
 	ld c, $22 ; $4ade
-	farcall FarPtr_39_00 ; $4ae0
+	farcall FarPtr_LoadScreenAssetRecord ; $4ae0
 	farcall FarPtr_05_76 ; $4ae3
 	ld b, $11 ; $4ae6
 	ld c, $10 ; $4ae8
@@ -1061,7 +1062,7 @@ Func_3e_4caf:
 	ld a, $10 ; $4cc4
 	ld [$cb6b], a ; $4cc6
 	ld c, $10 ; $4cc9
-	farcall FarPtr_39_00 ; $4ccb
+	farcall FarPtr_LoadScreenAssetRecord ; $4ccb
 	wram_bank $03 ; $4cce
 	ld de, $d4a3 ; $4cd4
 	ld b, $0e ; $4cd7
@@ -1892,7 +1893,7 @@ Func_3e_53cf:
 	ret ; $53f0
 Func_3e_53f1:
 	ld c, $21 ; $53f1
-	farcall FarPtr_39_00 ; $53f3
+	farcall FarPtr_LoadScreenAssetRecord ; $53f3
 	farcall FarPtr_05_76 ; $53f6
 	ld b, $11 ; $53f9
 	ld c, $10 ; $53fb
@@ -2015,7 +2016,7 @@ Label_3e_5508:
 	ret ; $550c
 Func_3e_550d:
 	ld c, $21 ; $550d
-	farcall FarPtr_39_00 ; $550f
+	farcall FarPtr_LoadScreenAssetRecord ; $550f
 	farcall FarPtr_05_8c ; $5512
 	call Func_3e_57f4 ; $5515
 	ld c, $00 ; $5518
@@ -2220,7 +2221,7 @@ Label_3e_5690:
 	INCBIN "data/bank_03e/d_5695.bin" ; $5695, 1 bytes
 Func_3e_5696:
 	ld c, $21 ; $5696
-	farcall FarPtr_39_00 ; $5698
+	farcall FarPtr_LoadScreenAssetRecord ; $5698
 	farcall FarPtr_05_8c ; $569b
 	call Func_3e_57f4 ; $569e
 	wram_bank $03 ; $56a1
@@ -3871,6 +3872,7 @@ Func_3e_69d4:
 	ret ; $69d4
 Lz_3e_69d5:
 	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2641 bytes
+Data_3e_7426:
 	INCBIN "data/bank_03e/d_7426.bin" ; $7426, 64 bytes
 Lz_3e_7466:
 	INCBIN "data/bank_03e/lz_7466.bin" ; $7466, 279 bytes

@@ -552,6 +552,49 @@ class Disassembly:
         if added:
             print(f"object headers: {added} $70-$76 slots via $4f75 dispatch table")
 
+    # Bank $39's $40f5 screen-asset table: 70 8-byte records of (bank<<8|slot)
+    # words -- lz tiles, lz tilemap, lz attrmap, then a 64-byte palette set
+    # copied to LoadPaletteShadow. Func_39_407e walks one record per screen
+    # id, reading each word through RAM, so static backtracking never sees
+    # the (bank, slot) pairs. Records whose four targets don't all validate
+    # (two placeholder records point at code/junk) are skipped whole.
+    SCREEN_ASSETS = 0xE40F5  # bank $39, $40f5
+    SCREEN_ASSETS_END = 0xE4325
+    SCREEN_ASSET_KINDS = ("lz", "lz", "lz", "copy")
+
+    def add_screen_asset_slots(self):
+        added = skipped = 0
+        for off in range(self.SCREEN_ASSETS, self.SCREEN_ASSETS_END, 8):
+            words = [self.rom[off + i] | (self.rom[off + i + 1] << 8)
+                     for i in range(0, 8, 2)]
+            ok = True
+            for w, kind in zip(words, self.SCREEN_ASSET_KINDS):
+                bank, slot = w >> 8, w & 0xFF
+                entry = bank * BANK_SIZE + slot
+                ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
+                if not (BANK_SIZE <= ptr < 0x8000):
+                    ok = False
+                    break
+                src = bank * BANK_SIZE + ptr - BANK_SIZE
+                if src in self.code_bytes:
+                    ok = False
+                    break
+                if kind == "lz":
+                    try:
+                        lz.decompress(self.rom, src, (bank + 1) * BANK_SIZE)
+                    except ValueError:
+                        ok = False
+                        break
+            if not ok:
+                skipped += 1
+                continue
+            for w, kind in zip(words, self.SCREEN_ASSET_KINDS):
+                if self._add_data_slot(w >> 8, w & 0xFF, kind,
+                                       64 if kind == "copy" else None):
+                    added += 1
+        print(f"screen assets: {added} slots via $39:$40f5 record table "
+              f"({skipped} placeholder records skipped)")
+
     def split_object_bodies(self):
         """Split each object body at the addresses its 16-byte header points
         to, so the header's dw entries resolve to labels. One level only: the
@@ -1578,6 +1621,13 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                                       dis.ptr_labels))
                     continue
                 if mark and mark[0]:
+                    if run_start in data_tables:
+                        spec = data_tables[run_start]
+                        lines.append(f"\t; ${cpu:04x}, {length} bytes ({spec})")
+                        body = render_spec(rom[run_start:run_start + length],
+                                           spec).rstrip("\n")
+                        lines.extend(body.split("\n"))
+                        continue
                     blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
                     manifest.append((blob, run_start, length, None))
                     lines.append(f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes')
@@ -1736,6 +1786,7 @@ def main():
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()
     dis.add_object_header_slots()
+    dis.add_screen_asset_slots()
     dis.split_object_bodies()
     dis.follow_oam_arrays()
     dis.follow_frame_arrays()

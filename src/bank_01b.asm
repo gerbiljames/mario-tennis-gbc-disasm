@@ -418,14 +418,14 @@ Func_1b_4ef2:
 	or a, a ; $4f28
 	jr z, Label_1b_4f3e ; $4f29
 	ld c, $2a ; $4f2b
-	farcall FarPtr_39_00 ; $4f2d
+	farcall FarPtr_LoadScreenAssetRecord ; $4f2d
 	wram_bank $03 ; $4f30
 	call Func_1b_55d1 ; $4f36
 	call Func_1b_5829 ; $4f39
 	jr Label_1b_4f4f ; $4f3c
 Label_1b_4f3e:
 	ld c, $29 ; $4f3e
-	farcall FarPtr_39_00 ; $4f40
+	farcall FarPtr_LoadScreenAssetRecord ; $4f40
 	wram_bank $03 ; $4f43
 	call Func_1b_5511 ; $4f49
 	call Func_1b_5710 ; $4f4c
@@ -2867,7 +2867,7 @@ Label_1b_7439:
 	ret ; $7448
 Func_1b_7449:
 	ld c, $2b ; $7449
-	farcall FarPtr_39_00 ; $744b
+	farcall FarPtr_LoadScreenAssetRecord ; $744b
 	xor a, a ; $744e
 	ld [wMenuCursorX], a ; $744f
 	ld [wMenuCursorY], a ; $7452
