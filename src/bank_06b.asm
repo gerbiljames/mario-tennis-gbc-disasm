@@ -8,12 +8,12 @@ FarPtr_6b_00:
 	dw Func_6b_402a ; $4000
 FarPtr_6b_02:
 	dw Func_6b_75af ; $4002
-FarPtr_6b_04:
-	dw Func_6b_774e ; $4004
-FarPtr_6b_06:
-	dw Func_6b_7872 ; $4006
-FarPtr_6b_08:
-	dw Func_6b_790f ; $4008
+DataPtr_TitleScreenTilemap:
+	dw TitleScreenTilemap ; $4004
+DataPtr_TitleScreenAttrmap:
+	dw TitleScreenAttrmap ; $4006
+DataPtr_TitleScreenPalettes:
+	dw TitleScreenPalettes ; $4008
 FarPtr_6b_0a:
 	dw Func_6b_73f2 ; $400a
 FarPtr_6b_0c:
@@ -30,22 +30,22 @@ FarPtr_6b_16:
 	dw Func_6b_6075 ; $4016
 FarPtr_6b_18:
 	dw Func_6b_6126 ; $4018
-FarPtr_6b_1a:
-	dw Func_6b_7957 ; $401a
-FarPtr_6b_1c:
-	dw Func_6b_7a7c ; $401c
-FarPtr_6b_1e:
-	dw Func_6b_7aee ; $401e
-FarPtr_6b_20:
-	dw Func_6b_7c12 ; $4020
-FarPtr_6b_22:
-	dw Func_6b_7c8f ; $4022
-FarPtr_6b_24:
-	dw Func_6b_7db7 ; $4024
-FarPtr_6b_26:
-	dw Func_6b_7e2f ; $4026
-FarPtr_6b_28:
-	dw Func_6b_7f57 ; $4028
+DataPtr_AwardCeremonyTilemap:
+	dw AwardCeremonyTilemap ; $401a
+DataPtr_AwardCeremonyAttrmap:
+	dw AwardCeremonyAttrmap ; $401c
+DataPtr_AwardCeremonyTilemap2:
+	dw AwardCeremonyTilemap2 ; $401e
+DataPtr_AwardCeremonyAttrmap2:
+	dw AwardCeremonyAttrmap2 ; $4020
+DataPtr_AwardCeremonyTilemap3:
+	dw AwardCeremonyTilemap3 ; $4022
+DataPtr_AwardCeremonyAttrmap3:
+	dw AwardCeremonyAttrmap3 ; $4024
+DataPtr_AwardCeremonyTilemap4:
+	dw AwardCeremonyTilemap4 ; $4026
+DataPtr_AwardCeremonyAttrmap4:
+	dw AwardCeremonyAttrmap4 ; $4028
 Func_6b_402a:
 	xor a, a ; $402a
 	ld [$cb3f], a ; $402b
@@ -250,10 +250,10 @@ Label_6b_420d:
 	ld c, $80 ; $4282
 	call Func_00_0480 ; $4284
 	wram_bank $03 ; $4287
-	ld hl, $6c2c ; $428d -> DataPtr_6c_2c
+	ld hl, $6c2c ; $428d -> DataPtr_IntroSwingTilemap
 	ld de, $d800 ; $4290
 	call DecompressDataFromBank ; $4293
-	ld hl, $6c2e ; $4296 -> DataPtr_6c_2e
+	ld hl, $6c2e ; $4296 -> DataPtr_IntroSwingAttrmap
 	ld de, $dc00 ; $4299
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
@@ -354,10 +354,10 @@ Label_6b_43cc:
 	ld c, $80 ; $4414
 	call Func_00_0480 ; $4416
 	wram_bank $03 ; $4419
-	ld hl, $6c34 ; $441f -> DataPtr_6c_34
+	ld hl, $6c34 ; $441f -> DataPtr_IntroCloseupTilemap
 	ld de, $d800 ; $4422
 	call DecompressDataFromBank ; $4425
-	ld hl, $6c36 ; $4428 -> DataPtr_6c_36
+	ld hl, $6c36 ; $4428 -> DataPtr_IntroCloseupAttrmap
 	ld de, $dc00 ; $442b
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
@@ -766,7 +766,7 @@ Label_6b_46ce:
 	ld hl, $6d14 ; $4997 -> DataPtr_IntroGreatestPlayerTilemap
 	ld de, $d000 ; $499a
 	call DecompressDataFromBank ; $499d
-	ld hl, $6d16 ; $49a0 -> DataPtr_6d_16
+	ld hl, $6d16 ; $49a0 -> DataPtr_IntroGreatestPlayerAttrmap
 	ld de, $d400 ; $49a3
 	call DecompressDataFromBank ; $49a6
 	ld hl, $d000 ; $49a9
@@ -1914,258 +1914,36 @@ Label_6b_7732:
 Label_6b_774c:
 	ret ; $774c
 	INCBIN "data/bank_06b/d_774d.bin" ; $774d, 1 bytes
-Func_6b_774e:
-	push af ; $774e
-	nop ; $774f
-	rst Rst38 ; $7750
-	ldh a, [$ffb6] ; $7751
-	INCBIN "data/bank_06b/d_7753.bin" ; $7753, 276 bytes
-Label_6b_7867:
-	rst Rst38 ; $7867
-	rst Rst38 ; $7868
-	rst Rst38 ; $7869
-	rst Rst38 ; $786a
-	rst Rst38 ; $786b
-	rst Rst38 ; $786c
-	rst Rst38 ; $786d
-	di ; $786e
-	nop ; $786f
-	nop ; $7870
-	nop ; $7871
-Func_6b_7872:
-	xor a, l ; $7872
-	ld c, b ; $7873
-	rst Rst38 ; $7874
-	ldh a, [rIF] ; $7875
-	ld [$f0ff], sp ; $7877
-	jr z, Label_6b_7867 ; $787a
-	ldh [rIF], a ; $787c
-	ld hl, sp - 1 ; $787e
-	ldh [$fff9], a ; $7880
-	pop hl ; $7882
-	add sp, -21 ; $7883
-	ld a, [bc] ; $7885
-	ld [$0909], sp ; $7886
-	inc c ; $7889
-	ld h, e ; $788a
-	inc c ; $788b
-	inc c ; $788c
-	ld a, [$dfe1] ; $788d
-	INCBIN "data/bank_06b/d_7890.bin" ; $7890, 127 bytes
-Func_6b_790f:
-	ld b, d ; $790f
-	ld [bc], a ; $7910
-	nop ; $7911
-	nop ; $7912
-	rst Rst38 ; $7913
-	ld a, a ; $7914
-	rra ; $7915
-	ld [bc], a ; $7916
-	ld b, d ; $7917
-	ld [bc], a ; $7918
-	nop ; $7919
-	nop ; $791a
-	rst Rst38 ; $791b
-	ld a, a ; $791c
-	rst Rst18 ; $791d
-	jr nz, Label_6b_7962 ; $791e
-	ld [bc], a ; $7920
-	nop ; $7921
-	nop ; $7922
-	rra ; $7923
-	ld [bc], a ; $7924
-	rst Rst18 ; $7925
-	jr nz, $796a ; $7926
-	ld [bc], a ; $7928
-	nop ; $7929
-	nop ; $792a
-	ret z ; $792b
-	ld l, b ; $792c
-	rst Rst18 ; $792d
-	jr nz, $7972 ; $792e
-	ld [bc], a ; $7930
-	nop ; $7931
-	nop ; $7932
-	rst Rst38 ; $7933
-	ld a, a ; $7934
-	ret z ; $7935
-	ld l, b ; $7936
-	ld b, d ; $7937
-	ld [bc], a ; $7938
-	nop ; $7939
-	nop ; $793a
-	rst Rst38 ; $793b
-	ld a, a ; $793c
-	ld e, a ; $793d
-	inc bc ; $793e
-	ld b, d ; $793f
-	ld [bc], a ; $7940
-	nop ; $7941
-	nop ; $7942
-	ld e, a ; $7943
-	inc bc ; $7944
-	ret z ; $7945
-	ld l, b ; $7946
-	rst Rst38 ; $7947
-	ld a, a ; $7948
-	inc c ; $7949
-	ld a, a ; $794a
-	ret z ; $794b
-	ld l, b ; $794c
-	nop ; $794d
-	nop ; $794e
-	rst Rst38 ; $794f
-	ld a, a ; $7950
-	ld e, a ; $7951
-	ld [bc], a ; $7952
-	ld e, a ; $7953
-	ld bc, $001f ; $7954
-Func_6b_7957:
-	add a, l ; $7957
-	ld bc, $f0ff ; $7958
-	nop ; $795b
-	rst Rst38 ; $795c
-	add sp, -32 ; $795d
-	rst Rst38 ; $795f
-	ldh [rIE], a ; $7960
-Label_6b_7962:
-	ldh [$fff9], a ; $7962
-	ld [bc], a ; $7964
-	cp a, a ; $7965
-	inc bc ; $7966
-	inc b ; $7967
-	dec b ; $7968
-	ld b, $07 ; $7969
-	INCBIN "data/bank_06b/d_796b.bin" ; $796b, 273 bytes
-Func_6b_7a7c:
-	add a, l ; $7a7c
-	adc a, h ; $7a7d
-	rst Rst38 ; $7a7e
-	ldh a, [$ff08] ; $7a7f
-	rst Rst38 ; $7a81
-	add sp, -32 ; $7a82
-	rst Rst38 ; $7a84
-	ldh [rIE], a ; $7a85
-	ldh [$fff9], a ; $7a87
-	ld a, [bc] ; $7a89
-	cp a, d ; $7a8a
-	rst Rst38 ; $7a8b
-	ldh [$ff0e], a ; $7a8c
-	rst Rst38 ; $7a8e
-	ldh [c], a ; $7a8f
-	dec c ; $7a90
-	dec c ; $7a91
-	dec c ; $7a92
-	ei ; $7a93
-	pop hl ; $7a94
-	ld a, [hl+] ; $7a95
-	ld b, e ; $7a96
-	ld a, [hl+] ; $7a97
-	ld a, [hl+] ; $7a98
-	ldh [$ffec], a ; $7a99
-	pop hl ; $7a9b
-	INCBIN "data/bank_06b/d_7a9c.bin" ; $7a9c, 82 bytes
-Func_6b_7aee:
-	add a, l ; $7aee
-	ld bc, $f0ff ; $7aef
-	nop ; $7af2
-	rst Rst38 ; $7af3
-	add sp, -32 ; $7af4
-	rst Rst38 ; $7af6
-	ldh [rIE], a ; $7af7
-	ldh [$fff9], a ; $7af9
-	ld [bc], a ; $7afb
-	cp a, a ; $7afc
-	inc bc ; $7afd
-	inc b ; $7afe
-	dec b ; $7aff
-	ld b, $07 ; $7b00
-	INCBIN "data/bank_06b/d_7b02.bin" ; $7b02, 272 bytes
-Func_6b_7c12:
-	add a, l ; $7c12
-	adc a, h ; $7c13
-	rst Rst38 ; $7c14
-	ldh a, [$ff08] ; $7c15
-	rst Rst38 ; $7c17
-	add sp, -32 ; $7c18
-	rst Rst38 ; $7c1a
-	ldh [rIE], a ; $7c1b
-	ldh [$fff9], a ; $7c1d
-	ld a, [bc] ; $7c1f
-	ld a, [$e0ff] ; $7c20
-	ld c, $ff ; $7c23
-	INCBIN "data/bank_06b/d_7c25.bin" ; $7c25, 106 bytes
-Func_6b_7c8f:
-	add a, l ; $7c8f
-	ld bc, $f0ff ; $7c90
-	nop ; $7c93
-	rst Rst38 ; $7c94
-	add sp, -32 ; $7c95
-	rst Rst38 ; $7c97
-	ldh [rIE], a ; $7c98
-	ldh [$fff9], a ; $7c9a
-	ld [bc], a ; $7c9c
-	cp a, a ; $7c9d
-	inc bc ; $7c9e
-	inc b ; $7c9f
-	dec b ; $7ca0
-	ld b, $07 ; $7ca1
-	INCBIN "data/bank_06b/d_7ca3.bin" ; $7ca3, 276 bytes
-Func_6b_7db7:
-	add a, l ; $7db7
-	adc a, h ; $7db8
-	rst Rst38 ; $7db9
-	ldh a, [$ff08] ; $7dba
-	rst Rst38 ; $7dbc
-	add sp, -32 ; $7dbd
-	rst Rst38 ; $7dbf
-	ldh [rIE], a ; $7dc0
-	ldh [$fff9], a ; $7dc2
-	ld a, [bc] ; $7dc4
-	cp a, d ; $7dc5
-	rst Rst38 ; $7dc6
-	ldh [$ff0e], a ; $7dc7
-	rst Rst38 ; $7dc9
-	ldh [c], a ; $7dca
-	dec c ; $7dcb
-	dec c ; $7dcc
-	dec c ; $7dcd
-	ei ; $7dce
-	pop hl ; $7dcf
-	ld a, [hl+] ; $7dd0
-	ld b, e ; $7dd1
-	ld a, [hl+] ; $7dd2
-	ld a, [hl+] ; $7dd3
-	ldh [$ffec], a ; $7dd4
-	INCBIN "data/bank_06b/d_7dd6.bin" ; $7dd6, 89 bytes
-Func_6b_7e2f:
-	add a, l ; $7e2f
-	ld bc, $f0ff ; $7e30
-	nop ; $7e33
-	rst Rst38 ; $7e34
-	add sp, -32 ; $7e35
-	rst Rst38 ; $7e37
-	ldh [rIE], a ; $7e38
-	ldh [$fff9], a ; $7e3a
-	ld [bc], a ; $7e3c
-	cp a, a ; $7e3d
-	inc bc ; $7e3e
-	inc b ; $7e3f
-	dec b ; $7e40
-	ld b, $07 ; $7e41
-	INCBIN "data/bank_06b/d_7e43.bin" ; $7e43, 276 bytes
-Func_6b_7f57:
-	add a, l ; $7f57
-	adc a, h ; $7f58
-	rst Rst38 ; $7f59
-	ldh a, [$ff08] ; $7f5a
-	rst Rst38 ; $7f5c
-	add sp, -32 ; $7f5d
-	rst Rst38 ; $7f5f
-	ldh [rIE], a ; $7f60
-	ldh [$fff9], a ; $7f62
-	ld a, [bc] ; $7f64
-	ld a, [$e0ff] ; $7f65
-	ld c, $ff ; $7f68
-	INCBIN "data/bank_06b/d_7f6a.bin" ; $7f6a, 110 bytes
+TitleScreenTilemap:
+	INCBIN "data/bank_06b/lz_774e.bin" ; $774e, 292 bytes
+TitleScreenAttrmap:
+	INCBIN "data/bank_06b/lz_7872.bin" ; $7872, 157 bytes
+TitleScreenPalettes:
+	; $790f, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0242, $0000, $7fff, $021f ; pal 0: #109400 #000000 #ffffff #ff8300
+	dw $0242, $0000, $7fff, $20df ; pal 1: #109400 #000000 #ffffff #ff3141
+	dw $0242, $0000, $021f, $20df ; pal 2: #109400 #000000 #ff8300 #ff3141
+	dw $0242, $0000, $68c8, $20df ; pal 3: #109400 #000000 #4131d5 #ff3141
+	dw $0242, $0000, $7fff, $68c8 ; pal 4: #109400 #000000 #ffffff #4131d5
+	dw $0242, $0000, $7fff, $035f ; pal 5: #109400 #000000 #ffffff #ffd500
+	dw $0242, $0000, $035f, $68c8 ; pal 6: #109400 #000000 #ffd500 #4131d5
+	dw $7fff, $7f0c, $68c8, $0000 ; pal 7: #ffffff #62c5ff #4131d5 #000000
+	INCBIN "data/bank_06b/d_794f.bin" ; $794f, 8 bytes
+AwardCeremonyTilemap:
+	INCBIN "data/bank_06b/lz_7957.bin" ; $7957, 293 bytes
+AwardCeremonyAttrmap:
+	INCBIN "data/bank_06b/lz_7a7c.bin" ; $7a7c, 114 bytes
+AwardCeremonyTilemap2:
+	INCBIN "data/bank_06b/lz_7aee.bin" ; $7aee, 292 bytes
+AwardCeremonyAttrmap2:
+	INCBIN "data/bank_06b/lz_7c12.bin" ; $7c12, 125 bytes
+AwardCeremonyTilemap3:
+	INCBIN "data/bank_06b/lz_7c8f.bin" ; $7c8f, 296 bytes
+AwardCeremonyAttrmap3:
+	INCBIN "data/bank_06b/lz_7db7.bin" ; $7db7, 120 bytes
+AwardCeremonyTilemap4:
+	INCBIN "data/bank_06b/lz_7e2f.bin" ; $7e2f, 296 bytes
+AwardCeremonyAttrmap4:
+	INCBIN "data/bank_06b/lz_7f57.bin" ; $7f57, 129 bytes
 	ds 40, $ff ; $7fd8, fill

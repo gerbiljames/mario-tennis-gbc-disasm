@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~118.1K instructions / 252,665 bytes of proven code (12.0% of the 2 MiB ROM)
+**~117.9K instructions / 254,166 bytes of proven code (12.1% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -92,9 +92,19 @@ engine), $6b, $03 (save engine), $0a, $07.
   slot words through RAM, invisible to static backtracking, so
   `disasm.py`'s `add_slot_record_tables` walks the table, anchored on the curated label and delimited by proven code: +252
   proven slots across banks $17-$19/$3a/$3c-$3f/$6d etc. (7 placeholder
-  records skipped). Identified via records 37/38: the Varsity Team Chart
-  pages (`VarsityTeamChartTiles/Tilemap/Attrmap/Palettes/...2`, bank $3f;
-  palettes render in-source via the new `palettes` blob spec).
+  records skipped). All 70 records rendered offline and identified: the
+  full menu/UI screen set (title, company logos, intro attract slides,
+  play-mode / exhibition / equipment selects, link screens, tournament +
+  N64-tournament charts, brackets, Ring Shot HUD, rules, Varsity Team
+  Chart) plus the story cutscene sets (victory poses, shop scenes, award
+  ceremony, champion medal + photos) — every record's
+  tilemap/attrmap/palette blob is named after its curated tile stem, and
+  all palette sets render in-source via the `palettes` blob spec. The
+  proven slots are also fed to `infer_tables` as ground truth: a data
+  target whose bytes decode as instructions is no longer claimed as an
+  unused code entry (this retracted ~230 false instructions in bank $6b
+  that had eaten the title-screen tilemap/attrmap/palettes and the
+  ceremony maps).
 - **Match-scene graphics system mapped**: `SceneGfxSlotTable` ($0a:$59d9,
   37 records x 8 slot words, rendered as `dslot` slot-label lines) covers banks $5f-$69.
   Slot layout: +$0 scene config (camera scroll bounds -> $c329-$c32c at
@@ -225,7 +235,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 570 of 15,022 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 697 of 15,036 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt

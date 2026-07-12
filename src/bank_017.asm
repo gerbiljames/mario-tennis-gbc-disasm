@@ -8,12 +8,12 @@ FarPtr_17_00:
 	dw Func_17_44eb ; $4000
 DataPtr_CourtDiagramTiles:
 	dw CourtDiagramTiles ; $4002
-DataPtr_17_04:
-	dw Lz_17_4d65 ; $4004
-DataPtr_17_06:
-	dw Lz_17_4e42 ; $4006
-DataPtr_17_08:
-	dw Data_17_4ec2 ; $4008
+DataPtr_CourtDiagramTilemap:
+	dw CourtDiagramTilemap ; $4004
+DataPtr_CourtDiagramAttrmap:
+	dw CourtDiagramAttrmap ; $4006
+DataPtr_CourtDiagramPalettes:
+	dw CourtDiagramPalettes ; $4008
 FarPtr_17_0a:
 	dw Func_17_4487 ; $400a
 FarPtr_17_0c:
@@ -22,10 +22,10 @@ DataPtr_RulesScreenTiles:
 	dw RulesScreenTiles ; $400e
 DataPtr_RulesScreenTilemap:
 	dw RulesScreenTilemap ; $4010
-DataPtr_17_12:
-	dw Lz_17_78a5 ; $4012
-DataPtr_17_14:
-	dw Data_17_78fc ; $4014
+DataPtr_RulesScreenAttrmap:
+	dw RulesScreenAttrmap ; $4012
+DataPtr_RulesScreenPalettes:
+	dw RulesScreenPalettes ; $4014
 	INCBIN "data/bank_017/d_4016.bin" ; $4016, 141 bytes
 Func_17_40a3:
 	ldh a, [$ff8c] ; $40a3
@@ -684,12 +684,21 @@ Func_17_4b0d:
 	ret ; $4b16
 CourtDiagramTiles:
 	INCBIN "data/bank_017/lz_4b17.bin" ; $4b17, 590 bytes
-Lz_17_4d65:
+CourtDiagramTilemap:
 	INCBIN "data/bank_017/lz_4d65.bin" ; $4d65, 221 bytes
-Lz_17_4e42:
+CourtDiagramAttrmap:
 	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 128 bytes
-Data_17_4ec2:
-	INCBIN "data/bank_017/d_4ec2.bin" ; $4ec2, 64 bytes
+CourtDiagramPalettes:
+	; $4ec2, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $01bf, $0000, $7fff ; pal 0: #b4b4b4 #ff6a00 #000000 #ffffff
+	dw $7e40, $3fc1, $7fe1, $7fe0 ; pal 1: #0094ff #08f67b #08ffff #00ffff
+	dw $0e40, $01bf, $035f, $7fff ; pal 2: #009418 #ff6a00 #ffd500 #ffffff
+	dw $0300, $0240, $0180, $0100 ; pal 3: #00c500 #009400 #006200 #004100
+	dw $0000, $0000, $0000, $0000 ; pal 4: #000000 #000000 #000000 #000000
+	dw $035f, $01bf, $0e40, $7fff ; pal 5: #ffd500 #ff6a00 #009418 #ffffff
+	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
 	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 1661 bytes
 Label_17_557f:
 	ld a, $03 ; $557f
@@ -3908,9 +3917,18 @@ RulesScreenTiles:
 	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes
 RulesScreenTilemap:
 	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 309 bytes
-Lz_17_78a5:
+RulesScreenAttrmap:
 	INCBIN "data/bank_017/lz_78a5.bin" ; $78a5, 87 bytes
-Data_17_78fc:
-	INCBIN "data/bank_017/d_78fc.bin" ; $78fc, 64 bytes
+RulesScreenPalettes:
+	; $78fc, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1cc4, $015f, $0000, $7fff ; pal 0: #203139 #ff5200 #000000 #ffffff
+	dw $0300, $0240, $0180, $0100 ; pal 1: #00c500 #009400 #006200 #004100
+	dw $03e0, $3316, $1e4c, $2508 ; pal 2: #00ff00 #b4c562 #629439 #41414a
+	dw $5334, $015f, $0000, $1b06 ; pal 3: #a4cda4 #ff5200 #000000 #31c531
+	dw $5299, $015f, $0000, $141f ; pal 4: #cda4a4 #ff5200 #000000 #ff0029
+	dw $5eb7, $015f, $0000, $7d59 ; pal 5: #bdacbd #ff5200 #000000 #cd52ff
+	dw $2508, $2508, $2508, $2508 ; pal 6: #41414a #41414a #41414a #41414a
+	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
 	INCBIN "data/bank_017/d_793c.bin" ; $793c, 573 bytes
 	ds 1159, $ff ; $7b79, fill

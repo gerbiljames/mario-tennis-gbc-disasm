@@ -26,10 +26,10 @@ DataPtr_IntroGreatestPlayerTiles:
 	dw IntroGreatestPlayerTiles ; $4012
 DataPtr_IntroGreatestPlayerTilemap:
 	dw IntroGreatestPlayerTilemap ; $4014
-DataPtr_6d_16:
-	dw Lz_6d_546b ; $4016
-DataPtr_6d_18:
-	dw Data_6d_54b3 ; $4018
+DataPtr_IntroGreatestPlayerAttrmap:
+	dw IntroGreatestPlayerAttrmap ; $4016
+DataPtr_IntroGreatestPlayerPalettes:
+	dw IntroGreatestPlayerPalettes ; $4018
 DataPtr_IntroCharactersTiles:
 	dw IntroCharactersTiles ; $401a
 DataPtr_IntroCharactersTilemap:
@@ -174,10 +174,19 @@ IntroGreatestPlayerTiles:
 	INCBIN "data/bank_06d/lz_4d3d.bin" ; $4d3d, 1539 bytes
 IntroGreatestPlayerTilemap:
 	INCBIN "data/bank_06d/lz_5340.bin" ; $5340, 299 bytes
-Lz_6d_546b:
+IntroGreatestPlayerAttrmap:
 	INCBIN "data/bank_06d/lz_546b.bin" ; $546b, 72 bytes
-Data_6d_54b3:
-	INCBIN "data/bank_06d/d_54b3.bin" ; $54b3, 64 bytes
+IntroGreatestPlayerPalettes:
+	; $54b3, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7fff, $4252, $214a, $0000 ; pal 0: #ffffff #949483 #525241 #000000
+	dw $214a, $4252, $214a, $0000 ; pal 1: #525241 #949483 #525241 #000000
+	dw $214a, $4252, $214a, $0000 ; pal 2: #525241 #949483 #525241 #000000
+	dw $214a, $4252, $4252, $0000 ; pal 3: #525241 #949483 #949483 #000000
+	dw $214a, $4252, $4252, $0000 ; pal 4: #525241 #949483 #949483 #000000
+	dw $214a, $214a, $4252, $0000 ; pal 5: #525241 #525241 #949483 #000000
+	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 IntroCharactersTiles:
 	INCBIN "data/bank_06d/lz_54f3.bin" ; $54f3, 2597 bytes
 IntroCharactersTilemap:

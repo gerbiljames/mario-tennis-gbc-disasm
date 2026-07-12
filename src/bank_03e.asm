@@ -54,22 +54,22 @@ FarPtr_3e_2e:
 	dw Func_3e_5fad ; $402e
 FarPtr_3e_30:
 	dw Func_3e_4ba3 ; $4030
-DataPtr_3e_32:
-	dw Lz_3e_69d5 ; $4032
+DataPtr_AwardCeremonyTiles:
+	dw AwardCeremonyTiles ; $4032
 DataPtr_3e_34:
-	dw Lz_3e_69d5 ; $4034
+	dw AwardCeremonyTiles ; $4034
 DataPtr_3e_36:
-	dw Lz_3e_69d5 ; $4036
+	dw AwardCeremonyTiles ; $4036
 DataPtr_3e_38:
-	dw Lz_3e_69d5 ; $4038
+	dw AwardCeremonyTiles ; $4038
 DataPtr_3e_3a:
-	dw Lz_3e_69d5 ; $403a
-DataPtr_3e_3c:
-	dw Data_3e_7426 ; $403c
-DataPtr_3e_3e:
-	dw Lz_3e_7466 ; $403e
-DataPtr_3e_40:
-	dw Lz_3e_757d ; $4040
+	dw AwardCeremonyTiles ; $403a
+DataPtr_AwardCeremonyPalettes:
+	dw AwardCeremonyPalettes ; $403c
+DataPtr_AwardCeremonyTilemap5:
+	dw AwardCeremonyTilemap5 ; $403e
+DataPtr_AwardCeremonyAttrmap5:
+	dw AwardCeremonyAttrmap5 ; $4040
 DataPtr_3e_42:
 	dw Lz_3e_75e8 ; $4042
 DataPtr_3e_44:
@@ -3870,13 +3870,22 @@ Label_3e_69c5:
 	INCBIN "data/bank_03e/d_69ca.bin" ; $69ca, 10 bytes
 Func_3e_69d4:
 	ret ; $69d4
-Lz_3e_69d5:
+AwardCeremonyTiles:
 	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2641 bytes
-Data_3e_7426:
-	INCBIN "data/bank_03e/d_7426.bin" ; $7426, 64 bytes
-Lz_3e_7466:
+AwardCeremonyPalettes:
+	; $7426, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $3230, $294a, $294a, $294a ; pal 0: #838b62 #525252 #525252 #525252
+	dw $0003, $261f, $1913, $1412 ; pal 1: #180000 #ff834a #9c4131 #940029
+	dw $0000, $001f, $7e93, $69cc ; pal 2: #000000 #ff0000 #9ca4ff #6273d5
+	dw $6bff, $001f, $021f, $0000 ; pal 3: #ffffd5 #ff0000 #ff8300 #000000
+	dw $7e93, $69cc, $021f, $0000 ; pal 4: #9ca4ff #6273d5 #ff8300 #000000
+	dw $7e93, $6bff, $021f, $0000 ; pal 5: #9ca4ff #ffffd5 #ff8300 #000000
+	dw $7e93, $6bff, $001f, $0000 ; pal 6: #9ca4ff #ffffd5 #ff0000 #000000
+	dw $7e93, $6bff, $505c, $0000 ; pal 7: #9ca4ff #ffffd5 #e610a4 #000000
+AwardCeremonyTilemap5:
 	INCBIN "data/bank_03e/lz_7466.bin" ; $7466, 279 bytes
-Lz_3e_757d:
+AwardCeremonyAttrmap5:
 	INCBIN "data/bank_03e/lz_757d.bin" ; $757d, 107 bytes
 Lz_3e_75e8:
 	INCBIN "data/bank_03e/lz_75e8.bin" ; $75e8, 179 bytes

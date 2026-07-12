@@ -295,6 +295,8 @@ class Disassembly:
             while changed and not dirty:
                 changed = False
                 for s in range(0, extent, 2):
+                    if base + s in self.data_slots:
+                        continue  # proven data slot (slot-record tables)
                     cpu = entry_cpu(s)
                     flat = base + cpu - BANK_SIZE
                     ok = (BANK_SIZE + floor <= cpu < 0x8000
@@ -324,7 +326,7 @@ class Disassembly:
             if dirty or (extent < floor and not data_block):
                 continue
             for s in range(0, extent, 2):
-                if s in slots:
+                if s in slots or base + s in self.data_slots:
                     continue
                 cpu = entry_cpu(s)
                 self.inferred_entries[base + s] = (bank, s, base + cpu - BANK_SIZE)
@@ -1859,8 +1861,17 @@ def main():
     seeds = load_coverage(args.coverage, len(rom) // BANK_SIZE)
     print(f"{len(seeds)} coverage seeds")
     dis.seed(seeds)
+    overrides = None
+    if Path(args.labels).exists():
+        overrides = json.loads(Path(args.labels).read_text())
     if not args.no_descent:
         dis.descend()
+        # Slot-record tables are ground truth that their referenced slots
+        # hold data pointers; prove them before table inference so a data
+        # target whose bytes happen to decode as instructions (bank $6b's
+        # title-screen tilemap) isn't claimed as an unused code entry and
+        # seeded as false code.
+        dis.add_slot_record_tables(overrides)
         dis.infer_tables()
         dis.seed_text_entries()
         dis.descend()
@@ -1871,9 +1882,6 @@ def main():
             if not dis.parse_jumptables():
                 break
             dis.descend()
-    overrides = None
-    if Path(args.labels).exists():
-        overrides = json.loads(Path(args.labels).read_text())
     helpers = {}
     if overrides:
         for name, kind in (("CopyDataFromBank", "copy"),
@@ -1889,7 +1897,6 @@ def main():
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()
     dis.add_object_header_slots()
-    dis.add_slot_record_tables(overrides)
     dis.split_object_bodies()
     dis.follow_oam_arrays()
     dis.follow_frame_arrays()

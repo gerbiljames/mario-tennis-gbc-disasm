@@ -8,10 +8,10 @@ DataPtr_ModeSelectTiles:
 	dw ModeSelectTiles ; $4000
 DataPtr_ModeSelectTilemap:
 	dw ModeSelectTilemap ; $4002
-DataPtr_3c_04:
-	dw Lz_3c_468d ; $4004
-DataPtr_3c_06:
-	dw Data_3c_4711 ; $4006
+DataPtr_ModeSelectAttrmap:
+	dw ModeSelectAttrmap ; $4004
+DataPtr_ModeSelectPalettes:
+	dw ModeSelectPalettes ; $4006
 DataPtr_StadiumTiles:
 	dw StadiumTiles ; $4008
 DataPtr_StadiumTilemap:
@@ -134,10 +134,19 @@ ModeSelectTiles:
 	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1283 bytes
 ModeSelectTilemap:
 	INCBIN "data/bank_03c/lz_4581.bin" ; $4581, 268 bytes
-Lz_3c_468d:
+ModeSelectAttrmap:
 	INCBIN "data/bank_03c/lz_468d.bin" ; $468d, 132 bytes
-Data_3c_4711:
-	INCBIN "data/bank_03c/d_4711.bin" ; $4711, 64 bytes
+ModeSelectPalettes:
+	; $4711, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $01bf, $0000, $7fff ; pal 0: #b4b4b4 #ff6a00 #000000 #ffffff
+	dw $0300, $0240, $0180, $0100 ; pal 1: #00c500 #009400 #006200 #004100
+	dw $7fff, $4e73, $02df, $0000 ; pal 2: #ffffff #9c9c9c #ffb400 #000000
+	dw $01df, $6bff, $1e40, $0000 ; pal 3: #ff7300 #ffffd5 #009439 #000000
+	dw $225f, $6bff, $505c, $0000 ; pal 4: #ff9441 #ffffd5 #e610a4 #000000
+	dw $3f9f, $6bff, $01df, $0000 ; pal 5: #ffe67b #ffffd5 #ff7300 #000000
+	dw $4a1f, $6bff, $001f, $0000 ; pal 6: #ff8394 #ffffd5 #ff0000 #000000
+	dw $505c, $6bff, $7d4a, $0000 ; pal 7: #e610a4 #ffffd5 #5252ff #000000
 StadiumTiles:
 	INCBIN "data/bank_03c/lz_4751.bin" ; $4751, 2465 bytes
 StadiumTilemap:

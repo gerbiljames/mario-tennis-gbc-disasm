@@ -6,154 +6,181 @@ SECTION "ROM Bank $19", ROMX[$4000], BANK[$19]
 
 DataPtr_VictoryCutsceneTiles:
 	dw VictoryCutsceneTiles ; $4000
-DataPtr_19_02:
-	dw Data_19_4c7a ; $4002
-DataPtr_19_04:
-	dw Lz_19_4cba ; $4004
-DataPtr_19_06:
-	dw Lz_19_4dc3 ; $4006
-DataPtr_19_08:
-	dw Lz_19_4e26 ; $4008
-DataPtr_19_0a:
-	dw Lz_19_4f28 ; $400a
-DataPtr_19_0c:
-	dw Lz_19_4fa3 ; $400c
-DataPtr_19_0e:
-	dw Lz_19_50b2 ; $400e
-DataPtr_19_10:
-	dw Lz_19_5106 ; $4010
-DataPtr_19_12:
-	dw Lz_19_5209 ; $4012
-DataPtr_19_14:
-	dw Lz_19_5273 ; $4014
-DataPtr_19_16:
-	dw Lz_19_5344 ; $4016
-DataPtr_19_18:
-	dw Lz_19_53d0 ; $4018
-DataPtr_19_1a:
-	dw Lz_19_54ad ; $401a
+DataPtr_VictoryCutscenePalettes:
+	dw VictoryCutscenePalettes ; $4002
+DataPtr_VictoryCutsceneTilemap:
+	dw VictoryCutsceneTilemap ; $4004
+DataPtr_VictoryCutsceneAttrmap:
+	dw VictoryCutsceneAttrmap ; $4006
+DataPtr_VictoryCutsceneTilemap2:
+	dw VictoryCutsceneTilemap2 ; $4008
+DataPtr_VictoryCutsceneAttrmap2:
+	dw VictoryCutsceneAttrmap2 ; $400a
+DataPtr_VictoryCutsceneTilemap3:
+	dw VictoryCutsceneTilemap3 ; $400c
+DataPtr_VictoryCutsceneAttrmap3:
+	dw VictoryCutsceneAttrmap3 ; $400e
+DataPtr_VictoryCutsceneTilemap4:
+	dw VictoryCutsceneTilemap4 ; $4010
+DataPtr_VictoryCutsceneAttrmap4:
+	dw VictoryCutsceneAttrmap4 ; $4012
+DataPtr_VictoryCutsceneTilemap5:
+	dw VictoryCutsceneTilemap5 ; $4014
+DataPtr_VictoryCutsceneAttrmap5:
+	dw VictoryCutsceneAttrmap5 ; $4016
+DataPtr_VictoryCutsceneTilemap6:
+	dw VictoryCutsceneTilemap6 ; $4018
+DataPtr_VictoryCutsceneAttrmap6:
+	dw VictoryCutsceneAttrmap6 ; $401a
 DataPtr_ShopCutsceneTiles:
 	dw ShopCutsceneTiles ; $401c
-DataPtr_19_1e:
-	dw Data_19_6124 ; $401e
-DataPtr_19_20:
-	dw Lz_19_6164 ; $4020
-DataPtr_19_22:
-	dw Lz_19_6265 ; $4022
-DataPtr_19_24:
-	dw Lz_19_62e6 ; $4024
-DataPtr_19_26:
-	dw Lz_19_63e0 ; $4026
-DataPtr_19_28:
-	dw Lz_19_644e ; $4028
-DataPtr_19_2a:
-	dw Lz_19_655d ; $402a
-DataPtr_19_2c:
-	dw Lz_19_65e1 ; $402c
-DataPtr_19_2e:
-	dw Lz_19_66e9 ; $402e
-DataPtr_19_30:
-	dw Lz_19_676d ; $4030
-DataPtr_19_32:
-	dw Lz_19_6844 ; $4032
-DataPtr_19_34:
-	dw Lz_19_68b1 ; $4034
-DataPtr_19_36:
-	dw Lz_19_6993 ; $4036
-DataPtr_19_38:
-	dw Lz_19_6a10 ; $4038
-DataPtr_19_3a:
-	dw Data_19_772b ; $403a
-DataPtr_19_3c:
-	dw Lz_19_776b ; $403c
-DataPtr_19_3e:
-	dw Lz_19_787e ; $403e
-DataPtr_19_40:
-	dw Lz_19_78fe ; $4040
-DataPtr_19_42:
-	dw Lz_19_7a11 ; $4042
-DataPtr_19_44:
-	dw Lz_19_7a8e ; $4044
-DataPtr_19_46:
-	dw Lz_19_7ba1 ; $4046
-DataPtr_19_48:
-	dw Lz_19_7c34 ; $4048
-DataPtr_19_4a:
-	dw Lz_19_7d47 ; $404a
+DataPtr_ShopCutscenePalettes:
+	dw ShopCutscenePalettes ; $401e
+DataPtr_ShopCutsceneTilemap:
+	dw ShopCutsceneTilemap ; $4020
+DataPtr_ShopCutsceneAttrmap:
+	dw ShopCutsceneAttrmap ; $4022
+DataPtr_ShopCutsceneTilemap2:
+	dw ShopCutsceneTilemap2 ; $4024
+DataPtr_ShopCutsceneAttrmap2:
+	dw ShopCutsceneAttrmap2 ; $4026
+DataPtr_ShopCutsceneTilemap3:
+	dw ShopCutsceneTilemap3 ; $4028
+DataPtr_ShopCutsceneAttrmap3:
+	dw ShopCutsceneAttrmap3 ; $402a
+DataPtr_ShopCutsceneTilemap4:
+	dw ShopCutsceneTilemap4 ; $402c
+DataPtr_ShopCutsceneAttrmap4:
+	dw ShopCutsceneAttrmap4 ; $402e
+DataPtr_ShopCutsceneTilemap5:
+	dw ShopCutsceneTilemap5 ; $4030
+DataPtr_ShopCutsceneAttrmap5:
+	dw ShopCutsceneAttrmap5 ; $4032
+DataPtr_ShopCutsceneTilemap6:
+	dw ShopCutsceneTilemap6 ; $4034
+DataPtr_ShopCutsceneAttrmap6:
+	dw ShopCutsceneAttrmap6 ; $4036
+DataPtr_ChampionMedalTiles:
+	dw ChampionMedalTiles ; $4038
+DataPtr_ChampionMedalPalettes:
+	dw ChampionMedalPalettes ; $403a
+DataPtr_ChampionMedalTilemap:
+	dw ChampionMedalTilemap ; $403c
+DataPtr_ChampionMedalAttrmap:
+	dw ChampionMedalAttrmap ; $403e
+DataPtr_ChampionMedalTilemap2:
+	dw ChampionMedalTilemap2 ; $4040
+DataPtr_ChampionMedalAttrmap2:
+	dw ChampionMedalAttrmap2 ; $4042
+DataPtr_ChampionMedalTilemap3:
+	dw ChampionMedalTilemap3 ; $4044
+DataPtr_ChampionMedalAttrmap3:
+	dw ChampionMedalAttrmap3 ; $4046
+DataPtr_ChampionMedalTilemap4:
+	dw ChampionMedalTilemap4 ; $4048
+DataPtr_ChampionMedalAttrmap4:
+	dw ChampionMedalAttrmap4 ; $404a
 VictoryCutsceneTiles:
 	INCBIN "data/bank_019/lz_404c.bin" ; $404c, 3118 bytes
-Data_19_4c7a:
-	INCBIN "data/bank_019/d_4c7a.bin" ; $4c7a, 64 bytes
-Lz_19_4cba:
+VictoryCutscenePalettes:
+	; $4c7a, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
+	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 2: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
+	dw $7e80, $6bff, $505c, $0000 ; pal 4: #00a4ff #ffffd5 #e610a4 #000000
+	dw $7e80, $6bff, $01df, $0000 ; pal 5: #00a4ff #ffffd5 #ff7300 #000000
+	dw $7e80, $6bff, $011f, $0000 ; pal 6: #00a4ff #ffffd5 #ff4100 #000000
+	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+VictoryCutsceneTilemap:
 	INCBIN "data/bank_019/lz_4cba.bin" ; $4cba, 265 bytes
-Lz_19_4dc3:
+VictoryCutsceneAttrmap:
 	INCBIN "data/bank_019/lz_4dc3.bin" ; $4dc3, 99 bytes
-Lz_19_4e26:
+VictoryCutsceneTilemap2:
 	INCBIN "data/bank_019/lz_4e26.bin" ; $4e26, 258 bytes
-Lz_19_4f28:
+VictoryCutsceneAttrmap2:
 	INCBIN "data/bank_019/lz_4f28.bin" ; $4f28, 123 bytes
-Lz_19_4fa3:
+VictoryCutsceneTilemap3:
 	INCBIN "data/bank_019/lz_4fa3.bin" ; $4fa3, 271 bytes
-Lz_19_50b2:
+VictoryCutsceneAttrmap3:
 	INCBIN "data/bank_019/lz_50b2.bin" ; $50b2, 84 bytes
-Lz_19_5106:
+VictoryCutsceneTilemap4:
 	INCBIN "data/bank_019/lz_5106.bin" ; $5106, 259 bytes
-Lz_19_5209:
+VictoryCutsceneAttrmap4:
 	INCBIN "data/bank_019/lz_5209.bin" ; $5209, 106 bytes
-Lz_19_5273:
+VictoryCutsceneTilemap5:
 	INCBIN "data/bank_019/lz_5273.bin" ; $5273, 209 bytes
-Lz_19_5344:
+VictoryCutsceneAttrmap5:
 	INCBIN "data/bank_019/lz_5344.bin" ; $5344, 140 bytes
-Lz_19_53d0:
+VictoryCutsceneTilemap6:
 	INCBIN "data/bank_019/lz_53d0.bin" ; $53d0, 221 bytes
-Lz_19_54ad:
+VictoryCutsceneAttrmap6:
 	INCBIN "data/bank_019/lz_54ad.bin" ; $54ad, 114 bytes
 ShopCutsceneTiles:
 	INCBIN "data/bank_019/lz_551f.bin" ; $551f, 3077 bytes
-Data_19_6124:
-	INCBIN "data/bank_019/d_6124.bin" ; $6124, 64 bytes
-Lz_19_6164:
+ShopCutscenePalettes:
+	; $6124, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $0000, $0000, $0000 ; pal 0: #b4b4b4 #000000 #000000 #000000
+	dw $79ea, $6bff, $7f2a, $0000 ; pal 1: #527bf6 #ffffd5 #52cdff #000000
+	dw $79ea, $6bff, $011f, $0000 ; pal 2: #527bf6 #ffffd5 #ff4100 #000000
+	dw $79ea, $6bff, $01df, $0000 ; pal 3: #527bf6 #ffffd5 #ff7300 #000000
+	dw $79ea, $6bff, $505c, $0000 ; pal 4: #527bf6 #ffffd5 #e610a4 #000000
+	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 5: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
+	dw $281f, $6bff, $2a00, $0000 ; pal 6: #ff0052 #ffffd5 #008352 #000000
+	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 7: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
+ShopCutsceneTilemap:
 	INCBIN "data/bank_019/lz_6164.bin" ; $6164, 257 bytes
-Lz_19_6265:
+ShopCutsceneAttrmap:
 	INCBIN "data/bank_019/lz_6265.bin" ; $6265, 129 bytes
-Lz_19_62e6:
+ShopCutsceneTilemap2:
 	INCBIN "data/bank_019/lz_62e6.bin" ; $62e6, 250 bytes
-Lz_19_63e0:
+ShopCutsceneAttrmap2:
 	INCBIN "data/bank_019/lz_63e0.bin" ; $63e0, 110 bytes
-Lz_19_644e:
+ShopCutsceneTilemap3:
 	INCBIN "data/bank_019/lz_644e.bin" ; $644e, 271 bytes
-Lz_19_655d:
+ShopCutsceneAttrmap3:
 	INCBIN "data/bank_019/lz_655d.bin" ; $655d, 132 bytes
-Lz_19_65e1:
+ShopCutsceneTilemap4:
 	INCBIN "data/bank_019/lz_65e1.bin" ; $65e1, 264 bytes
-Lz_19_66e9:
+ShopCutsceneAttrmap4:
 	INCBIN "data/bank_019/lz_66e9.bin" ; $66e9, 132 bytes
-Lz_19_676d:
+ShopCutsceneTilemap5:
 	INCBIN "data/bank_019/lz_676d.bin" ; $676d, 215 bytes
-Lz_19_6844:
+ShopCutsceneAttrmap5:
 	INCBIN "data/bank_019/lz_6844.bin" ; $6844, 109 bytes
-Lz_19_68b1:
+ShopCutsceneTilemap6:
 	INCBIN "data/bank_019/lz_68b1.bin" ; $68b1, 226 bytes
-Lz_19_6993:
+ShopCutsceneAttrmap6:
 	INCBIN "data/bank_019/lz_6993.bin" ; $6993, 125 bytes
-Lz_19_6a10:
+ChampionMedalTiles:
 	INCBIN "data/bank_019/lz_6a10.bin" ; $6a10, 3355 bytes
-Data_19_772b:
-	INCBIN "data/bank_019/d_772b.bin" ; $772b, 64 bytes
-Lz_19_776b:
+ChampionMedalPalettes:
+	; $772b, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
+	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
+	dw $3a9f, $77ff, $01d6, $0000 ; pal 2: #ffa473 #ffffee #b47300 #000000
+	dw $3a9f, $6154, $01d6, $0000 ; pal 3: #ffa473 #a452c5 #b47300 #000000
+	dw $6154, $77ff, $505c, $0000 ; pal 4: #a452c5 #ffffee #e610a4 #000000
+	dw $3a9f, $77ff, $6154, $0000 ; pal 5: #ffa473 #ffffee #a452c5 #000000
+	dw $6154, $77ff, $011f, $0000 ; pal 6: #a452c5 #ffffee #ff4100 #000000
+	dw $6154, $77ff, $01df, $0000 ; pal 7: #a452c5 #ffffee #ff7300 #000000
+ChampionMedalTilemap:
 	INCBIN "data/bank_019/lz_776b.bin" ; $776b, 275 bytes
-Lz_19_787e:
+ChampionMedalAttrmap:
 	INCBIN "data/bank_019/lz_787e.bin" ; $787e, 128 bytes
-Lz_19_78fe:
+ChampionMedalTilemap2:
 	INCBIN "data/bank_019/lz_78fe.bin" ; $78fe, 275 bytes
-Lz_19_7a11:
+ChampionMedalAttrmap2:
 	INCBIN "data/bank_019/lz_7a11.bin" ; $7a11, 125 bytes
-Lz_19_7a8e:
+ChampionMedalTilemap3:
 	INCBIN "data/bank_019/lz_7a8e.bin" ; $7a8e, 275 bytes
-Lz_19_7ba1:
+ChampionMedalAttrmap3:
 	INCBIN "data/bank_019/lz_7ba1.bin" ; $7ba1, 147 bytes
-Lz_19_7c34:
+ChampionMedalTilemap4:
 	INCBIN "data/bank_019/lz_7c34.bin" ; $7c34, 275 bytes
-Lz_19_7d47:
+ChampionMedalAttrmap4:
 	INCBIN "data/bank_019/lz_7d47.bin" ; $7d47, 144 bytes
 	ds 553, $ff ; $7dd7, fill

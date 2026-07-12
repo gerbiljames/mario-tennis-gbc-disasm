@@ -140,12 +140,12 @@ DataPtr_18_84:
 	dw Lz_18_724e ; $4084
 DataPtr_18_86:
 	dw Lz_18_7292 ; $4086
-DataPtr_18_88:
-	dw Lz_18_72db ; $4088
-DataPtr_18_8a:
-	dw Lz_18_740b ; $408a
-DataPtr_18_8c:
-	dw Data_18_74e1 ; $408c
+DataPtr_MarioMiniGamesTilemap:
+	dw MarioMiniGamesTilemap ; $4088
+DataPtr_MarioMiniGamesAttrmap:
+	dw MarioMiniGamesAttrmap ; $408a
+DataPtr_MarioMiniGamesPalettes:
+	dw MarioMiniGamesPalettes ; $408c
 FarPtr_18_8e:
 	dw Func_18_7617 ; $408e
 	INCBIN "data/bank_018/d_4090.bin" ; $4090, 664 bytes
@@ -1216,12 +1216,21 @@ Lz_18_724e:
 	INCBIN "data/bank_018/lz_724e.bin" ; $724e, 68 bytes
 Lz_18_7292:
 	INCBIN "data/bank_018/lz_7292.bin" ; $7292, 73 bytes
-Lz_18_72db:
+MarioMiniGamesTilemap:
 	INCBIN "data/bank_018/lz_72db.bin" ; $72db, 304 bytes
-Lz_18_740b:
+MarioMiniGamesAttrmap:
 	INCBIN "data/bank_018/lz_740b.bin" ; $740b, 214 bytes
-Data_18_74e1:
-	INCBIN "data/bank_018/d_74e1.bin" ; $74e1, 64 bytes
+MarioMiniGamesPalettes:
+	; $74e1, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $01bf, $0000, $6bff ; pal 0: #b4b4b4 #ff6a00 #000000 #ffffd5
+	dw $0300, $0240, $0180, $0100 ; pal 1: #00c500 #009400 #006200 #004100
+	dw $0000, $0000, $0000, $0000 ; pal 2: #000000 #000000 #000000 #000000
+	dw $7fff, $6bff, $1e40, $0000 ; pal 3: #ffffff #ffffd5 #009439 #000000
+	dw $225f, $6bff, $505c, $0000 ; pal 4: #ff9441 #ffffd5 #e610a4 #000000
+	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
+	dw $029f, $6bff, $001f, $0000 ; pal 6: #ffa400 #ffffd5 #ff0000 #000000
+	dw $318c, $6bff, $7d4a, $0000 ; pal 7: #626262 #ffffd5 #5252ff #000000
 	INCBIN "data/bank_018/d_7521.bin" ; $7521, 246 bytes
 Func_18_7617:
 	ld a, c ; $7617
