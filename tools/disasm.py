@@ -1812,14 +1812,17 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                 # Unclassified run: split out long constant-byte fills as ds
                 # directives ($ff is the mastering fill; $00 needs a longer
                 # run since zero arrays can be real data; any $ff run that
-                # reaches the bank end is trailing fill regardless of length).
+                # reaches the bank end is trailing fill regardless of length;
+                # a run that is entirely $ff is padding whatever its length,
+                # e.g. the 5-byte gaps between the rst/interrupt vectors).
                 seg = run_start
                 while seg < off:
                     b = rom[seg]
                     j = seg
                     while j < off and rom[j] == b:
                         j += 1
-                    if not ((b == 0xFF and (j - seg >= 64 or j == end))
+                    if not ((b == 0xFF and (j - seg >= 64 or j == end
+                                            or (seg == run_start and j == off)))
                             or (b == 0x00 and j - seg >= 256)):
                         j = seg + 1
                         while j < off:

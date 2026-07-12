@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~118.8K instructions / 257,139 bytes of proven code (12.3% of the 2 MiB ROM)
+**~119.4K instructions / 258,727 bytes of proven code (12.3% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -390,6 +390,21 @@ same `(length, pointer)` format as `SoundTable_0c` — in per-sound groups of
 `voices` channel records. They render through a new `sound_entry bank, voices,
 record` macro (`data_tables.json` spec `sound_index`, macro in
 `include/macros.inc`) instead of opaque bytes, e.g. `sound_entry $78, 4, 0`.
+
+A second pass took bank $00 from 51 data blobs to 9. ~600 more instructions
+of stranded utility code were seeded (`coverage/bank00_static_code.json`, now
+68 entries) — bank-switch/dispatch trampolines, VRAM/tilemap clears, the
+number/hex formatters, the interrupt-config family at `$2a1a`, and
+`JoypadInterrupt` (`$0060`, a `jp JumpTableDispatch` stranded in the vector
+table). Each blob was verified to decode as clean code that tiles to its
+boundary and whose descent never leaks into a protected data region; blobs
+holding back-to-back functions got one seed per post-`ret` entry. The
+rst/interrupt vector padding now renders as `ds` (an all-`$ff` unclassified
+run is fill at any length, not just >=64). `HexDigits` (the `FormatHexWord`
+nibble table) and `QuarterSineTable` (a `128*sin` easing curve) were named
+and structured. The 9 remaining blobs are genuine data: the cartridge
+header/logo, the sprite-transform's embedded tables, small sound lookups, and
+the `$3dd4` sound block.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm
