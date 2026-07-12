@@ -151,7 +151,7 @@ Label_02_409f:
 	add hl, de ; $40b1
 	ld [hl], $03 ; $40b2
 	ret ; $40b4
-	INCBIN "data/bank_002/d_40b5.bin" ; $40b5, 1 bytes
+	ret ; $40b5
 Label_02_40b6:
 	push hl ; $40b6
 	ld c, $04 ; $40b7

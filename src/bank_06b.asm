@@ -1913,7 +1913,7 @@ Label_6b_7732:
 	ld [$d802], a ; $7749
 Label_6b_774c:
 	ret ; $774c
-	INCBIN "data/bank_06b/d_774d.bin" ; $774d, 1 bytes
+	ret ; $774d
 TitleScreenTilemap:
 	INCBIN "data/bank_06b/lz_774e.bin" ; $774e, 292 bytes
 TitleScreenAttrmap:

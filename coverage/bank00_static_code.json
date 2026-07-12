@@ -1,0 +1,21 @@
+{
+ "_comment": "Static code-entry seeds for bank $00 blobs reached only through computed dispatch (pointer tables, farcall trampolines); recovered by blob disassembly classification. Bank 0 is identity-mapped so flat ROM offset = cpu address.",
+ "rom": [
+  1743,
+  1783,
+  1830,
+  1874,
+  1918,
+  1962,
+  4234,
+  8043,
+  8113,
+  8369,
+  8421,
+  8475,
+  8950,
+  8979,
+  9088
+ ],
+ "other": []
+}

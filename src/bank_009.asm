@@ -552,7 +552,7 @@ Func_09_4695:
 	ld bc, $ddc0 ; $46ad
 	call Func_09_46b5 ; $46b0
 	ret ; $46b3
-	INCBIN "data/bank_009/d_46b4.bin" ; $46b4, 1 bytes
+	ret ; $46b4
 Func_09_46b5:
 	ld hl, $0000 ; $46b5
 	add hl, bc ; $46b8

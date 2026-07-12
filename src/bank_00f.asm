@@ -1913,7 +1913,7 @@ Func_0f_5e4a:
 	farcall FarPtr_0a_08 ; $6579
 	set_flag $15, 6 ; $657c
 	jr Label_0f_65a6 ; $657f
-	INCBIN "data/bank_00f/d_6581.bin" ; $6581, 1 bytes
+	ret ; $6581
 Label_0f_6582:
 	farcall FarPtr_0a_10 ; $6582
 	ld a, $04 ; $6585

@@ -25,7 +25,8 @@ Data_6f_4010:
 	dw Data_6f_4330 ; $4028
 	dw Data_6f_4430 ; $402a
 	dw Data_6f_4530 ; $402c
-	INCBIN "data/bank_06f/d_402e.bin" ; $402e, 2 bytes
+	db $00 ; $402e
+	db $00 ; $402f
 Data_6f_4030:
 	INCBIN "data/bank_06f/d_4030.bin" ; $4030, 256 bytes
 Data_6f_4130:
@@ -85,7 +86,7 @@ Data_6f_46a1:
 	dw Data_6f_49c0 ; $46b9
 	dw Data_6f_4ac0 ; $46bb
 	dw Data_6f_4bc0 ; $46bd
-	INCBIN "data/bank_06f/d_46bf.bin" ; $46bf, 1 bytes
+	db $00 ; $46bf
 Data_6f_46c0:
 	INCBIN "data/bank_06f/d_46c0.bin" ; $46c0, 256 bytes
 Data_6f_47c0:
@@ -145,7 +146,7 @@ Data_6f_4d31:
 	dw Data_6f_5050 ; $4d49
 	dw Data_6f_5150 ; $4d4b
 	dw Data_6f_5250 ; $4d4d
-	INCBIN "data/bank_06f/d_4d4f.bin" ; $4d4f, 1 bytes
+	db $00 ; $4d4f
 Data_6f_4d50:
 	INCBIN "data/bank_06f/d_4d50.bin" ; $4d50, 256 bytes
 Data_6f_4e50:
@@ -205,7 +206,7 @@ Data_6f_53c1:
 	dw Data_6f_56e0 ; $53d9
 	dw Data_6f_57e0 ; $53db
 	dw Data_6f_58e0 ; $53dd
-	INCBIN "data/bank_06f/d_53df.bin" ; $53df, 1 bytes
+	db $00 ; $53df
 Data_6f_53e0:
 	INCBIN "data/bank_06f/d_53e0.bin" ; $53e0, 256 bytes
 Data_6f_54e0:
@@ -265,7 +266,7 @@ Data_6f_5a51:
 	dw Data_6f_5d70 ; $5a69
 	dw Data_6f_5e70 ; $5a6b
 	dw Data_6f_5f70 ; $5a6d
-	INCBIN "data/bank_06f/d_5a6f.bin" ; $5a6f, 1 bytes
+	db $00 ; $5a6f
 Data_6f_5a70:
 	INCBIN "data/bank_06f/d_5a70.bin" ; $5a70, 256 bytes
 Data_6f_5b70:
@@ -325,7 +326,7 @@ Data_6f_60e1:
 	dw Data_6f_6400 ; $60f9
 	dw Data_6f_6500 ; $60fb
 	dw Data_6f_6600 ; $60fd
-	INCBIN "data/bank_06f/d_60ff.bin" ; $60ff, 1 bytes
+	db $00 ; $60ff
 Data_6f_6100:
 	INCBIN "data/bank_06f/d_6100.bin" ; $6100, 256 bytes
 Data_6f_6200:
@@ -385,7 +386,7 @@ Data_6f_6771:
 	dw Data_6f_6a90 ; $6789
 	dw Data_6f_6b90 ; $678b
 	dw Data_6f_6c90 ; $678d
-	INCBIN "data/bank_06f/d_678f.bin" ; $678f, 1 bytes
+	db $00 ; $678f
 Data_6f_6790:
 	INCBIN "data/bank_06f/d_6790.bin" ; $6790, 256 bytes
 Data_6f_6890:
@@ -445,7 +446,7 @@ Data_6f_6e01:
 	dw Data_6f_7120 ; $6e19
 	dw Data_6f_7220 ; $6e1b
 	dw Data_6f_7320 ; $6e1d
-	INCBIN "data/bank_06f/d_6e1f.bin" ; $6e1f, 1 bytes
+	db $00 ; $6e1f
 Data_6f_6e20:
 	INCBIN "data/bank_06f/d_6e20.bin" ; $6e20, 256 bytes
 Data_6f_6f20:

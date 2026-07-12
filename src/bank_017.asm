@@ -3395,7 +3395,7 @@ Func_17_6f1b:
 	call ClearFrameTasks ; $6f89
 	ld a, [$dc02] ; $6f8c
 	ret ; $6f8f
-	INCBIN "data/bank_017/d_6f90.bin" ; $6f90, 1 bytes
+	ret ; $6f90
 Func_17_6f91:
 	ldh a, [hWramBank] ; $6f91
 	push af ; $6f93

@@ -1086,7 +1086,7 @@ Func_06_49a7:
 	dw Label_06_49f4 ; $49ce jumptable
 	dw Label_00_03ae ; $49d0 jumptable
 	dw Label_00_03ae ; $49d2 jumptable
-	INCBIN "data/bank_006/d_49d4.bin" ; $49d4, 1 bytes
+	ret ; $49d4
 Label_06_49d5:
 	ld de, $0504 ; $49d5
 	ld c, $04 ; $49d8

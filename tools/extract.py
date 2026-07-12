@@ -207,6 +207,39 @@ def render_byte_table(data: bytes, cols: int) -> str:
     return "\n".join(out) + "\n"
 
 
+def render_squares(data: bytes) -> str:
+    """Render an n-squared lookup table (i^2 as 16-bit LE) as a compile-time
+    FOR loop instead of 256 literal dw rows. The longest i^2 prefix becomes
+    the loop; any trailing words (e.g. a sentinel) stay literal. Falls back
+    to literal dw if the bytes aren't a squares table (keeps byte-perfect)."""
+    words = [data[i] | (data[i + 1] << 8) for i in range(0, len(data) - 1, 2)]
+    k = 0
+    while k < len(words) and words[k] == (k * k) & 0xFFFF:
+        k += 1
+    if k < 8:
+        return render_records(data, 2)
+    out = [f"FOR i, {k}", "\tdw (i * i) & $ffff", "ENDR"]
+    out += [f"\tdw ${w:04x}" for w in words[k:]]
+    if len(data) % 2:
+        out.append(f"\tdb ${data[-1]:02x}")
+    return "\n".join(out) + "\n"
+
+
+def render_sound_index(data: bytes) -> str:
+    """Render a PlaySound index table as `sound_entry bank, voices, record`
+    macro calls (see include/macros.inc). First byte packs voice count (high
+    nibble) and bank low nibble (bank = $70 | nibble); second byte is the
+    first channel-record index into that bank's SoundTable_*."""
+    out = []
+    for i in range(0, len(data) - 1, 2):
+        b0, b1 = data[i], data[i + 1]
+        out.append(f"\tsound_entry ${0x70 | (b0 & 0x0f):02x}, "
+                   f"{b0 >> 4}, {b1} ; sound {i // 2}")
+    if len(data) % 2:
+        out.append(f"\tdb ${data[-1]:02x}")
+    return "\n".join(out) + "\n"
+
+
 def render_fill(data: bytes) -> str:
     """Render padding as `ds` runs, one per constant-byte stretch."""
     out = []
@@ -228,6 +261,10 @@ def render_spec(data: bytes, spec: str) -> str:
         return render_records(data, int(param or 16))
     if kind == "bytes":
         return render_byte_table(data, int(param or 8))
+    if kind == "sound_index":
+        return render_sound_index(data)
+    if kind == "squares":
+        return render_squares(data)
     if kind == "fill":
         return render_fill(data)
     return render_text(data)

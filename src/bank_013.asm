@@ -1292,22 +1292,22 @@ Func_13_5067:
 	test_flag $0b, 0 ; $506c
 	jr nz, Label_13_5074 ; $506f
 	jr Label_13_50de ; $5071
-	INCBIN "data/bank_013/d_5073.bin" ; $5073, 1 bytes
+	ret ; $5073
 Label_13_5074:
 	test_flag $15, 6 ; $5074
 	jr z, Label_13_508c ; $5077
 	jr Label_13_50de ; $5079
-	INCBIN "data/bank_013/d_507b.bin" ; $507b, 1 bytes
+	ret ; $507b
 Label_13_507c:
 	test_flag $09, 0 ; $507c
 	jr nz, Label_13_5084 ; $507f
 	jr Label_13_50de ; $5081
-	INCBIN "data/bank_013/d_5083.bin" ; $5083, 1 bytes
+	ret ; $5083
 Label_13_5084:
 	test_flag $15, 7 ; $5084
 	jr z, Label_13_508c ; $5087
 	jr Label_13_50de ; $5089
-	INCBIN "data/bank_013/d_508b.bin" ; $508b, 1 bytes
+	ret ; $508b
 Label_13_508c:
 	ld a, $f1 ; $508c
 	ld d, $08 ; $508e
@@ -3209,7 +3209,7 @@ Label_13_7090:
 	and a, a ; $70a5
 	jr z, Label_13_70ac ; $70a6
 	jp Label_13_6fb6 ; $70a8
-	INCBIN "data/bank_013/d_70ab.bin" ; $70ab, 1 bytes
+	ret ; $70ab
 Label_13_70ac:
 	ld a, $03 ; $70ac
 	farcall FarPtr_0a_08 ; $70ae

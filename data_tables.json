@@ -1,4 +1,11 @@
 {
+ "0x1130": "squares",
+ "0x1565": "records:2",
+ "0x3151": "sound_index",
+ "0x31b5": "sound_index",
+ "0x3b1d": "records:2",
+ "0x3b4d": "bytes:16",
+ "0x3c4d": "bytes:16",
  "0x10c29": "bytes:8",
  "0x2031e": "bytes:8",
  "0x207de": "bytes:4",

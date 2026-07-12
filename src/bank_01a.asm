@@ -1701,7 +1701,7 @@ Label_1a_6854:
 	call EnableLCD ; $6862
 	call Func_00_2631 ; $6865
 	jp Label_1a_67db ; $6868
-	INCBIN "data/bank_01a/d_686b.bin" ; $686b, 1 bytes
+	ret ; $686b
 Func_1a_686c:
 	wram_bank $06 ; $686c
 	xor a, a ; $6872

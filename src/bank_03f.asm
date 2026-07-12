@@ -124,7 +124,8 @@ DataPtr_Lz_3f_7af7Alias15:
 	dw Lz_3f_7af7 ; $4074
 DataPtr_Lz_3f_7af7Alias16:
 	dw Lz_3f_7af7 ; $4076
-	INCBIN "data/bank_03f/d_4078.bin" ; $4078, 2 bytes
+	db $90 ; $4078
+	db $7b ; $4079
 Func_3f_407a:
 	push af ; $407a
 	wram_bank $06 ; $407b
@@ -214,7 +215,7 @@ Label_3f_4106:
 	ld [$cb37], a ; $413c
 	call Func_3f_4e69 ; $413f
 	call Func_00_2725 ; $4142
-	INCBIN "data/bank_03f/d_4145.bin" ; $4145, 1 bytes
+	db $01 ; $4145
 	ld a, $02 ; $4146
 	jr Label_3f_4154 ; $4148
 Label_3f_414a:

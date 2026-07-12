@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~118.1K instructions / 254,814 bytes of proven code (12.2% of the 2 MiB ROM)
+**~118.8K instructions / 257,139 bytes of proven code (12.3% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -360,6 +360,36 @@ dispatch that stranded several of the recovered callbacks — plus
 `FormatDecimalNumber`, `hRomBank` ($ff95), and `hInputPressed` ($ff91).
 Bank $3b's interactive screen builders (the story pause-menu 3x3 grid and
 its sub-screens) still need a live BizHawk session to identify visually.
+
+**Bank $00's remaining blobs were classified** (math tables / stranded code /
+sound tables). ~679 instructions of code reached only through computed
+dispatch (pointer tables, farcall trampolines) were recovered as static seeds
+(`coverage/bank00_static_code.json`): `AngleFromVector` (an atan2-style CORDIC,
+the inverse of the `MulSinCos` suite), six banked-dispatch trampolines
+(`FarDispatchIndexed`/`FarCopyIndexed`/`FarCallIndexed1..3`/`FarReadPtrIndexed`,
+each mapping a bank into `H` and calling/copying via its `$4000` table), the
+world-to-screen sprite transform (`PositionSpriteWorld`/`2` — camera-subtract,
+cull against 22x20 tiles, x8 to pixels, then `QueueSprite`), and the tilemap
+scroll blitters (`GetScrollBufferAddr`/`BlitBGStrip`/`2`). Two of these blobs
+were code with embedded data tables interleaved; descent split them at the
+exact `ret` boundaries. The genuine data tables were named and, where the
+stride was clear, structured inline via `data_tables.json`: `SquaresTable`
+(i² for i=0..255 + an `$ffff` sentinel, used for squared-distance checks via
+the `$106e` lookup — emitted as a compile-time `FOR i, 256 / dw (i * i) &
+$ffff` loop, `squares` spec, since the exact integer formula rebuilds
+byte-perfect), `TangentTable` (signed 8.8 fixed-point, clamped ±$7fff near
+90°, read by `Func_00_1767` — kept as literal `dw` because it's a
+game-generated table whose custom rounding and overflow tail no compile-time
+`tan` reproduces exactly), and the sound driver's `SfxIndexTable`/
+`MusicIndexTable` (split at ID $50 by `PlaySound`). The sound engine's internal
+`NotePeriodTable` (12-semitone GB period values, octave-shifted then subtracted
+from 2048 to form the frequency register), `SoundChannelMaskTable`, and
+`SoundPitchTable` were named and structured inline (`records:2`/`bytes:16`).
+The `SfxIndexTable`/`MusicIndexTable` entries index `SoundTable_$78..$7f` — the
+same `(length, pointer)` format as `SoundTable_0c` — in per-sound groups of
+`voices` channel records. They render through a new `sound_entry bank, voices,
+record` macro (`data_tables.json` spec `sound_index`, macro in
+`include/macros.inc`) instead of opaque bytes, e.g. `sound_entry $78, 4, 0`.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm

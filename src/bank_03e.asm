@@ -2218,7 +2218,7 @@ Label_3e_5690:
 	farcall FarPtr_02_10 ; $5690
 	xor a, a ; $5693
 	ret ; $5694
-	INCBIN "data/bank_03e/d_5695.bin" ; $5695, 1 bytes
+	ret ; $5695
 Func_3e_5696:
 	ld c, $21 ; $5696
 	farcall FarPtr_LoadScreenAssetRecord ; $5698

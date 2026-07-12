@@ -2016,7 +2016,7 @@ Label_05_4ead:
 	call Func_05_4122 ; $4ee3
 	pop af ; $4ee6
 	ret ; $4ee7
-	INCBIN "data/bank_005/d_4ee8.bin" ; $4ee8, 1 bytes
+	ret ; $4ee8
 	push af ; $4ee9
 	push bc ; $4eea
 	push hl ; $4eeb
@@ -2460,7 +2460,7 @@ Label_05_5293:
 	pop hl ; $5294
 	pop bc ; $5295
 	ret ; $5296
-	INCBIN "data/bank_005/d_5297.bin" ; $5297, 1 bytes
+	ret ; $5297
 Func_05_5298:
 	push bc ; $5298
 	push hl ; $5299
@@ -5533,7 +5533,7 @@ Label_05_6dfe:
 Label_05_6e03:
 	call Func_00_2631 ; $6e03
 	jr Label_05_6de3 ; $6e06
-	INCBIN "data/bank_005/d_6e08.bin" ; $6e08, 1 bytes
+	ret ; $6e08
 Func_05_6e09:
 	push af ; $6e09
 	push bc ; $6e0a

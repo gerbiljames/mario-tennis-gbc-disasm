@@ -67,6 +67,16 @@ MACRO test_flag
 	db (\2) << 5, \1
 ENDM
 
+; Sound/music index entry (PlaySound, $3297): selects one sound. The first
+; byte packs the voice count (high nibble) and the data-bank low nibble
+; (bank = $70 | nibble, i.e. $78-$7f); the second is the first channel
+; record's index into that bank's SoundTable_* ((length, pointer) records,
+; one per voice, `voices` consecutive records per sound).
+; Usage: sound_entry bank, voices, record
+MACRO sound_entry
+	db ((\2) << 4) | ((\1) & $0f), \3
+ENDM
+
 ; WRAM bank switch: writes rWBK (rSVBK) plus its HRAM shadow hWramBank.
 ; With an argument the bank id is loaded into a first; the bare form
 ; switches to the bank already in a. The match engine keeps per-character

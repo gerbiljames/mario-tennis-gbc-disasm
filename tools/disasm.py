@@ -27,6 +27,10 @@ from extract import render_spec
 
 BANK_SIZE = 0x4000
 
+# Unclassified data runs this short (alignment padding, stray constants
+# between code) render as inline `db` instead of a standalone blob file.
+INLINE_DB_MAX = 2
+
 # Backtracking classification for the register-setup scan at data-helper
 # call sites: `ld r16, imm` opcodes we can harvest, opcodes that clobber a
 # pair (making an earlier constant unreliable), and opcodes that touch none
@@ -1536,6 +1540,16 @@ MACRO test_flag
 	db (\\2) << 5, \\1
 ENDM
 
+; Sound/music index entry (PlaySound, $3297): selects one sound. The first
+; byte packs the voice count (high nibble) and the data-bank low nibble
+; (bank = $70 | nibble, i.e. $78-$7f); the second is the first channel
+; record's index into that bank's SoundTable_* ((length, pointer) records,
+; one per voice, `voices` consecutive records per sound).
+; Usage: sound_entry bank, voices, record
+MACRO sound_entry
+	db ((\\2) << 4) | ((\\1) & $0f), \\3
+ENDM
+
 ; WRAM bank switch: writes rWBK (rSVBK) plus its HRAM shadow hWramBank.
 ; With an argument the bank id is loaded into a first; the bare form
 ; switches to the bank already in a. The match engine keeps per-character
@@ -1904,12 +1918,26 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             blob = f"bank_{bank:03x}/text_{scpu:04x}.asm"
                             lines.append(f"Text_{bank:02x}_{scpu:04x}:")
                             lines.append(f'\tINCLUDE "data/{blob}" ; ${scpu:04x}, {n} bytes')
+                            manifest.append((blob, seg, n, None))
+                        elif n <= INLINE_DB_MAX:
+                            # A tiny inter-code run (alignment padding, a stray
+                            # constant, or a stranded ret) renders inline rather
+                            # than as a standalone one/two-byte blob file. A
+                            # lone $c9 wedged between code is a `ret` descent
+                            # never reached (its function is entered through a
+                            # computed jump/call), so emit it as the ret it is.
+                            if seg in labels:
+                                lines.append(f"{labels[seg]}:")
+                            for k in range(n):
+                                b = rom[seg + k]
+                                mn = "ret" if b == 0xC9 else f"db ${b:02x}"
+                                lines.append(f"\t{mn} ; ${offset_to_cpu(seg + k):04x}")
                         else:
                             if seg in labels:
                                 lines.append(f"{labels[seg]}:")
                             blob = f"bank_{bank:03x}/d_{scpu:04x}.bin"
                             lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
-                        manifest.append((blob, seg, n, None))
+                            manifest.append((blob, seg, n, None))
                     else:
                         lines.append(f"\tds {j - seg}, ${b:02x} "
                                      f"; ${offset_to_cpu(seg):04x}, fill")

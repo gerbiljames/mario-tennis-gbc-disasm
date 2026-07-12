@@ -253,7 +253,7 @@ Data_77_6031:
 	dw Data_77_6350 ; $6049
 	dw Data_77_6450 ; $604b
 	dw Data_77_6550 ; $604d
-	INCBIN "data/bank_077/d_604f.bin" ; $604f, 1 bytes
+	db $00 ; $604f
 Data_77_6050:
 	INCBIN "data/bank_077/d_6050.bin" ; $6050, 256 bytes
 Data_77_6150:
@@ -313,7 +313,7 @@ Data_77_66c1:
 	dw Data_77_69e0 ; $66d9
 	dw Data_77_6ae0 ; $66db
 	dw Data_77_6be0 ; $66dd
-	INCBIN "data/bank_077/d_66df.bin" ; $66df, 1 bytes
+	db $00 ; $66df
 Data_77_66e0:
 	INCBIN "data/bank_077/d_66e0.bin" ; $66e0, 256 bytes
 Data_77_67e0:
@@ -373,7 +373,7 @@ Data_77_6d51:
 	dw Data_77_7070 ; $6d69
 	dw Data_77_7170 ; $6d6b
 	dw Data_77_7270 ; $6d6d
-	INCBIN "data/bank_077/d_6d6f.bin" ; $6d6f, 1 bytes
+	db $00 ; $6d6f
 Data_77_6d70:
 	INCBIN "data/bank_077/d_6d70.bin" ; $6d70, 256 bytes
 Data_77_6e70:

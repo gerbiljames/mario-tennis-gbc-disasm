@@ -886,7 +886,7 @@ Func_0e_4fbf:
 	ld de, $0f00 ; $4fd1
 	farcall FarPtr_0a_22 ; $4fd4
 	jp Label_0e_5015 ; $4fd7
-	INCBIN "data/bank_00e/d_4fda.bin" ; $4fda, 1 bytes
+	ret ; $4fda
 Func_0e_4fdb:
 	ld a, $0c ; $4fdb
 	ld [$c2b1], a ; $4fdd
@@ -903,7 +903,7 @@ Func_0e_4fdb:
 	ld de, $1300 ; $4ffb
 	farcall FarPtr_0a_22 ; $4ffe
 	jp Label_0e_5015 ; $5001
-	INCBIN "data/bank_00e/d_5004.bin" ; $5004, 1 bytes
+	ret ; $5004
 Func_0e_5005:
 	ld a, [wWaterSpriteMinigameFlag] ; $5005
 	ld b, a ; $5008
@@ -984,7 +984,7 @@ Func_0e_509f:
 	ld de, $0f00 ; $50a9
 	farcall FarPtr_0a_22 ; $50ac
 	jp Label_0e_50dd ; $50af
-	INCBIN "data/bank_00e/d_50b2.bin" ; $50b2, 1 bytes
+	ret ; $50b2
 Func_0e_50b3:
 	ld a, $0c ; $50b3
 	ld [$c2b1], a ; $50b5
@@ -1001,7 +1001,7 @@ Func_0e_50b3:
 	ld de, $1300 ; $50d3
 	farcall FarPtr_0a_22 ; $50d6
 	jp Label_0e_50dd ; $50d9
-	INCBIN "data/bank_00e/d_50dc.bin" ; $50dc, 1 bytes
+	ret ; $50dc
 Label_0e_50dd:
 	xor a, a ; $50dd
 	ld [$c2d5], a ; $50de

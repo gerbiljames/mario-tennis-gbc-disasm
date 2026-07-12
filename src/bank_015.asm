@@ -838,7 +838,7 @@ Label_15_5d69:
 	dw Label_15_5f07 ; $5d6d jumptable
 	dw Label_15_5fc2 ; $5d6f jumptable
 	dw Label_15_5e74 ; $5d71 jumptable
-	INCBIN "data/bank_015/d_5d73.bin" ; $5d73, 1 bytes
+	ret ; $5d73
 Func_15_5d74:
 	xor a, a ; $5d74
 	ld [$c2d5], a ; $5d75
@@ -894,7 +894,7 @@ Label_15_5dea:
 	dw Label_15_5f58 ; $5dec jumptable
 	dw Label_15_5f07 ; $5dee jumptable
 	dw Label_15_5fc2 ; $5df0 jumptable
-	INCBIN "data/bank_015/d_5df2.bin" ; $5df2, 1 bytes
+	ret ; $5df2
 Func_15_5df3:
 	xor a, a ; $5df3
 	ld [$c2d5], a ; $5df4
@@ -951,7 +951,7 @@ Label_15_5e69:
 	dw Label_15_5f07 ; $5e6d jumptable
 	dw Label_15_5fc2 ; $5e6f jumptable
 	dw Label_15_5e74 ; $5e71 jumptable
-	INCBIN "data/bank_015/d_5e73.bin" ; $5e73, 1 bytes
+	ret ; $5e73
 Label_15_5e74:
 	ld a, $00 ; $5e74
 	ld de, rLCDC ; $5e76
@@ -959,7 +959,7 @@ Label_15_5e74:
 	ld a, $00 ; $5e7c
 	farcall FarPtr_0a_44 ; $5e7e
 	jp Label_15_5f58 ; $5e81
-	INCBIN "data/bank_015/d_5e84.bin" ; $5e84, 1 bytes
+	ret ; $5e84
 Label_15_5e85:
 	ld hl, wWaterSpriteMinigameFlag ; $5e85
 	ld de, $2020 ; $5e88
@@ -1176,7 +1176,7 @@ Func_15_6042:
 	sub a, $04 ; $604d
 	jp c, Label_15_6056 ; $604f
 	jp Label_15_60af ; $6052
-	INCBIN "data/bank_015/d_6055.bin" ; $6055, 1 bytes
+	ret ; $6055
 Label_15_6056:
 	ld a, [$c2b1] ; $6056
 	ld bc, $0030 ; $6059
@@ -1299,7 +1299,7 @@ Func_15_6179:
 	sub a, $04 ; $6183
 	jr c, Label_15_61d5 ; $6185
 	jp Label_15_6214 ; $6187
-	INCBIN "data/bank_015/d_618a.bin" ; $618a, 1 bytes
+	ret ; $618a
 Label_15_618b:
 	ld a, [$c2b1] ; $618b
 	ld bc, $1300 ; $618e
@@ -1391,7 +1391,7 @@ Func_15_6253:
 	sub a, $04 ; $625d
 	jr c, Label_15_6283 ; $625f
 	jp Label_15_62a1 ; $6261
-	INCBIN "data/bank_015/d_6264.bin" ; $6264, 1 bytes
+	ret ; $6264
 Label_15_6265:
 	ld a, $00 ; $6265
 	ld bc, $1300 ; $6267

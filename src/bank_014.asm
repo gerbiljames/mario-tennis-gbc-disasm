@@ -56,7 +56,7 @@ Label_14_4147:
 	ld l, a ; $4158
 	farcall FarPtr_05_48 ; $4159
 	jp Label_14_474e ; $415c
-	INCBIN "data/bank_014/d_415f.bin" ; $415f, 1 bytes
+	ret ; $415f
 Label_14_4160:
 	call Func_14_4997 ; $4160
 	ld hl, $20b7 ; $4163
@@ -81,7 +81,7 @@ Label_14_417c:
 	ld l, a ; $418d
 	farcall FarPtr_05_48 ; $418e
 	jp Label_14_474e ; $4191
-	INCBIN "data/bank_014/d_4194.bin" ; $4194, 1 bytes
+	ret ; $4194
 Label_14_4195:
 	call Func_14_4997 ; $4195
 	ld hl, $20be ; $4198
@@ -106,7 +106,7 @@ Label_14_41b1:
 	ld l, a ; $41c2
 	farcall FarPtr_05_48 ; $41c3
 	jp Label_14_474e ; $41c6
-	INCBIN "data/bank_014/d_41c9.bin" ; $41c9, 1 bytes
+	ret ; $41c9
 Label_14_41ca:
 	call Func_14_4997 ; $41ca
 	ld hl, $20c5 ; $41cd
@@ -555,7 +555,7 @@ Label_14_48be:
 	ld l, a ; $48c9
 	farcall FarPtr_05_48 ; $48ca
 	jp Label_14_474e ; $48cd
-	INCBIN "data/bank_014/d_48d0.bin" ; $48d0, 1 bytes
+	ret ; $48d0
 Label_14_48d1:
 	call Func_14_4974 ; $48d1
 	ld hl, $20ce ; $48d4

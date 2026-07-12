@@ -2417,7 +2417,8 @@ Func_03_4fea:
 	ld hl, $c800 ; $4ff0
 	call ReadSaveBlock ; $4ff3
 	jr Label_03_4ffa ; $4ff6
-	INCBIN "data/bank_003/d_4ff8.bin" ; $4ff8, 2 bytes
+	db $3e ; $4ff8
+	db $fe ; $4ff9
 Label_03_4ffa:
 	pop hl ; $4ffa
 	pop de ; $4ffb
@@ -3109,7 +3110,7 @@ Label_03_549c:
 	call Func_00_1906 ; $54a3
 	call Func_03_52d3 ; $54a6
 	jp Label_03_53b1 ; $54a9
-	INCBIN "data/bank_003/d_54ac.bin" ; $54ac, 1 bytes
+	db $d1 ; $54ac
 Label_03_54ad:
 	jp Label_03_53c8 ; $54ad
 	INCBIN "data/bank_003/d_54b0.bin" ; $54b0, 93 bytes

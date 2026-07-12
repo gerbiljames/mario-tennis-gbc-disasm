@@ -4080,7 +4080,8 @@ Func_38_6396:
 	pop af ; $63b5
 	wram_bank ; $63b6
 	ret ; $63ba
-	INCBIN "data/bank_038/d_63bb.bin" ; $63bb, 2 bytes
+	ret ; $63bb
+	ret ; $63bc
 Func_38_63bd:
 	xor a, a ; $63bd
 	ldh [$ffd8], a ; $63be

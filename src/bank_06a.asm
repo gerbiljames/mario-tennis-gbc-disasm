@@ -82,7 +82,7 @@ Data_6a_46a1:
 	dw Data_6a_49c0 ; $46b9
 	dw Data_6a_4ac0 ; $46bb
 	dw Data_6a_4bc0 ; $46bd
-	INCBIN "data/bank_06a/d_46bf.bin" ; $46bf, 1 bytes
+	db $00 ; $46bf
 Data_6a_46c0:
 	INCBIN "data/bank_06a/d_46c0.bin" ; $46c0, 256 bytes
 Data_6a_47c0:
@@ -142,7 +142,7 @@ Data_6a_4d31:
 	dw Data_6a_5050 ; $4d49
 	dw Data_6a_5150 ; $4d4b
 	dw Data_6a_5250 ; $4d4d
-	INCBIN "data/bank_06a/d_4d4f.bin" ; $4d4f, 1 bytes
+	db $00 ; $4d4f
 Data_6a_4d50:
 	INCBIN "data/bank_06a/d_4d50.bin" ; $4d50, 256 bytes
 Data_6a_4e50:
@@ -202,7 +202,7 @@ Data_6a_53c1:
 	dw Data_6a_56e0 ; $53d9
 	dw Data_6a_57e0 ; $53db
 	dw Data_6a_58e0 ; $53dd
-	INCBIN "data/bank_06a/d_53df.bin" ; $53df, 1 bytes
+	db $00 ; $53df
 Data_6a_53e0:
 	INCBIN "data/bank_06a/d_53e0.bin" ; $53e0, 256 bytes
 Data_6a_54e0:
@@ -262,7 +262,7 @@ Data_6a_5a51:
 	dw Data_6a_5d70 ; $5a69
 	dw Data_6a_5e70 ; $5a6b
 	dw Data_6a_5f70 ; $5a6d
-	INCBIN "data/bank_06a/d_5a6f.bin" ; $5a6f, 1 bytes
+	db $00 ; $5a6f
 Data_6a_5a70:
 	INCBIN "data/bank_06a/d_5a70.bin" ; $5a70, 256 bytes
 Data_6a_5b70:

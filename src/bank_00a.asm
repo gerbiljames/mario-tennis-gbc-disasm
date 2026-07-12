@@ -3177,7 +3177,8 @@ Func_0a_574e:
 	sub a, l ; $5757
 	ld h, a ; $5758
 	ret ; $5759
-	INCBIN "data/bank_00a/d_575a.bin" ; $575a, 2 bytes
+	db $ff ; $575a
+	ret ; $575b
 Func_0a_575c:
 	push af ; $575c
 	push bc ; $575d

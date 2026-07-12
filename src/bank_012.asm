@@ -769,7 +769,7 @@ Label_12_48b5:
 	ld a, $07 ; $48e2
 	farcall FarPtr_0a_36 ; $48e4
 	jp Label_12_528d ; $48e7
-	INCBIN "data/bank_012/d_48ea.bin" ; $48ea, 1 bytes
+	ret ; $48ea
 Label_12_48eb:
 	ldh a, [hWramBank] ; $48eb
 	push af ; $48ed
@@ -805,7 +805,7 @@ Label_12_48eb:
 	and a, a ; $492e
 	jp nz, Label_12_4b2e ; $492f
 	jp Label_12_528d ; $4932
-	INCBIN "data/bank_012/d_4935.bin" ; $4935, 1 bytes
+	ret ; $4935
 Label_12_4936:
 	ld hl, $1829 ; $4936
 	farcall FarPtr_0a_0e ; $4939
@@ -1275,7 +1275,7 @@ Label_12_4f7e:
 	cp a, $05 ; $4f81
 	jp nc, Label_12_4841 ; $4f83
 	jp Label_12_4ab5 ; $4f86
-	INCBIN "data/bank_012/d_4f89.bin" ; $4f89, 1 bytes
+	ret ; $4f89
 Label_12_4f8a:
 	test_flag $05, 7 ; $4f8a
 	jr z, Label_12_4fa6 ; $4f8d

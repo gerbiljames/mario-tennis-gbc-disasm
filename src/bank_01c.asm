@@ -886,7 +886,7 @@ Label_1c_468d:
 	ld [$d026], a ; $47f4
 	call Func_1c_495d ; $47f7
 	call Func_00_2725 ; $47fa
-	INCBIN "data/bank_01c/d_47fd.bin" ; $47fd, 1 bytes
+	db $06 ; $47fd
 	ld hl, $58ea ; $47fe
 	ld bc, $d370 ; $4801
 	call Func_1c_490f ; $4804

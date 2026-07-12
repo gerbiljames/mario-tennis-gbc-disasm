@@ -1348,7 +1348,7 @@ Label_1b_645a:
 Label_1b_6460:
 	call Func_1b_6b6f ; $6460
 	jp Label_1b_6408 ; $6463
-	INCBIN "data/bank_01b/d_6466.bin" ; $6466, 1 bytes
+	ret ; $6466
 Func_1b_6467:
 	push bc ; $6467
 	push de ; $6468
@@ -1484,14 +1484,16 @@ Func_1b_65fa:
 	ld bc, $0020 ; $6600
 	call CopyMemoryBC ; $6603
 	ret ; $6606
-	INCBIN "data/bank_01b/d_6607.bin" ; $6607, 2 bytes
+	db $0b ; $6607
+	db $0c ; $6608
 Func_1b_6609:
 	ld hl, $6592 ; $6609
 	ld de, $ce40 ; $660c
 	ld bc, $0080 ; $660f
 	call CopyMemoryBC ; $6612
 	ret ; $6615
-	INCBIN "data/bank_01b/d_6616.bin" ; $6616, 2 bytes
+	db $08 ; $6616
+	db $09 ; $6617
 Func_1b_6618:
 	ld hl, $d000 ; $6618
 	ld de, $b000 ; $661b
