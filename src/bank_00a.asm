@@ -3515,45 +3515,44 @@ Label_0a_59ae:
 	ldh [$ff8b], a ; $59d6
 	ret ; $59d8
 SceneGfxSlotTable:
-	; $59d9, 592 bytes (records:16)
-; 37 records x 16 bytes
-	dw $5f00, $5f02, $5f04, $5f06, $5f08, $5f0a, $5f0c, $5f0e ; record 0
-	dw $5f10, $5f12, $5f14, $5f16, $5f18, $5f1a, $5f1c, $5f1e ; record 1
-	dw $6000, $6002, $6004, $6006, $6008, $600a, $600c, $600e ; record 2
-	dw $6010, $6012, $6014, $6016, $6018, $601a, $601c, $601e ; record 3
-	dw $6020, $6022, $6024, $6026, $6028, $602a, $602c, $602e ; record 4
-	dw $6030, $6032, $6034, $6036, $6038, $603a, $603c, $603e ; record 5
-	dw $6100, $6102, $6104, $6106, $6108, $610a, $610c, $610e ; record 6
-	dw $6110, $6112, $6114, $6116, $6118, $611a, $611c, $611e ; record 7
-	dw $6120, $6122, $6124, $6126, $6128, $612a, $612c, $612e ; record 8
-	dw $6130, $6132, $6134, $6136, $6138, $613a, $613c, $613e ; record 9
-	dw $6200, $6202, $6204, $6206, $6208, $620a, $620c, $620e ; record 10
-	dw $6210, $6212, $6214, $6216, $6218, $621a, $621c, $621e ; record 11
-	dw $6220, $6222, $6224, $6226, $6228, $622a, $622c, $622e ; record 12
-	dw $6230, $6232, $6234, $6236, $6238, $623a, $623c, $623e ; record 13
-	dw $6300, $6302, $6304, $6306, $6308, $630a, $630c, $630e ; record 14
-	dw $6310, $6312, $6314, $6316, $6318, $631a, $631c, $631e ; record 15
-	dw $6320, $6322, $6324, $6326, $6328, $632a, $632c, $632e ; record 16
+	; $59d9, 592 bytes (37 records x 8 slot words)
+	dslot DataPtr_5f_00, DataPtr_5f_02, DataPtr_ClubhouseSceneTilemap, DataPtr_5f_06, DataPtr_5f_08, DataPtr_5f_0a, DataPtr_5f_0c, DataPtr_ClubhouseSceneTiles ; record 0
+	dslot DataPtr_5f_10, DataPtr_5f_12, DataPtr_CourtyardSceneTilemap, DataPtr_5f_16, DataPtr_5f_18, DataPtr_5f_1a, DataPtr_5f_1c, DataPtr_CourtyardSceneTiles ; record 1
+	dslot DataPtr_GrassCourtSceneConfig, DataPtr_GrassCourtPalettes, DataPtr_GrassCourtTilemap, DataPtr_GrassCourtAttrmap, DataPtr_60_08, DataPtr_GrassCourtSceneConfigB, DataPtr_HardCourtPalettes, DataPtr_GrassCourtTiles ; record 2
+	dslot DataPtr_HardCourtSceneConfig, DataPtr_60_12, DataPtr_HardCourtTilemap, DataPtr_HardCourtAttrmap, DataPtr_60_18, DataPtr_HardCourtSceneConfigB, DataPtr_ClayCourtPalettes, DataPtr_HardCourtTiles ; record 3
+	dslot DataPtr_ClayCourtSceneConfig, DataPtr_60_22, DataPtr_ClayCourtTilemap, DataPtr_ClayCourtAttrmap, DataPtr_60_28, DataPtr_ClayCourtSceneConfigB, DataPtr_CompositionCourtPalettes, DataPtr_ClayCourtTiles ; record 4
+	dslot DataPtr_CompositionCourtSceneConfig, DataPtr_60_32, DataPtr_CompositionCourtTilemap, DataPtr_CompositionCourtAttrmap, DataPtr_60_38, DataPtr_CompositionCourtSceneConfigB, DataPtr_60_3c, DataPtr_CompositionCourtTiles ; record 5
+	dslot DataPtr_MachineCourtSceneConfig, DataPtr_MachineCourtPalettes, DataPtr_MachineCourtTilemap, DataPtr_MachineCourtAttrmap, DataPtr_61_08, DataPtr_MachineCourtSceneConfigB, DataPtr_CenterCourtPalettes, DataPtr_MachineCourtTiles ; record 6
+	dslot DataPtr_CenterCourtSceneConfig, DataPtr_61_12, DataPtr_CenterCourtTilemap, DataPtr_CenterCourtAttrmap, DataPtr_61_18, DataPtr_CenterCourtSceneConfigB, DataPtr_PracticeCourtPalettes, DataPtr_CenterCourtTiles ; record 7
+	dslot DataPtr_PracticeCourtSceneConfig, DataPtr_61_22, DataPtr_PracticeCourtTilemap, DataPtr_PracticeCourtAttrmap, DataPtr_61_28, DataPtr_PracticeCourtSceneConfigB, DataPtr_YoshiCourtPalettes, DataPtr_PracticeCourtTiles ; record 8
+	dslot DataPtr_YoshiCourtSceneConfig, DataPtr_61_32, DataPtr_YoshiCourtTilemap, DataPtr_YoshiCourtAttrmap, DataPtr_61_38, DataPtr_YoshiCourtSceneConfigB, DataPtr_61_3c, DataPtr_YoshiCourtTiles ; record 9
+	dslot DataPtr_StarCourtSceneConfig, DataPtr_StarCourtPalettes, DataPtr_StarCourtTilemap, DataPtr_StarCourtAttrmap, DataPtr_62_08, DataPtr_StarCourtSceneConfigB, DataPtr_BowserCourtPalettes, DataPtr_StarCourtTiles ; record 10
+	dslot DataPtr_BowserCourtSceneConfig, DataPtr_62_12, DataPtr_BowserCourtTilemap, DataPtr_BowserCourtAttrmap, DataPtr_62_18, DataPtr_BowserCourtSceneConfigB, DataPtr_WarioCourtPalettes, DataPtr_BowserCourtTiles ; record 11
+	dslot DataPtr_WarioCourtSceneConfig, DataPtr_62_22, DataPtr_WarioCourtTilemap, DataPtr_WarioCourtAttrmap, DataPtr_62_28, DataPtr_WarioCourtSceneConfigB, DataPtr_PeachCourtPalettes, DataPtr_WarioCourtTiles ; record 12
+	dslot DataPtr_PeachCourtSceneConfig, DataPtr_62_32, DataPtr_PeachCourtTilemap, DataPtr_PeachCourtAttrmap, DataPtr_62_38, DataPtr_PeachCourtSceneConfigB, DataPtr_62_3c, DataPtr_PeachCourtTiles ; record 13
+	dslot DataPtr_IslandOpenCourtSceneConfig, DataPtr_IslandOpenCourtPalettes, DataPtr_IslandOpenCourtTilemap, DataPtr_IslandOpenCourtAttrmap, DataPtr_63_08, DataPtr_IslandOpenCourtSceneConfigB, DataPtr_DKCourtPalettes, DataPtr_IslandOpenCourtTiles ; record 14
+	dslot DataPtr_DKCourtSceneConfig, DataPtr_63_12, DataPtr_DKCourtTilemap, DataPtr_DKCourtAttrmap, DataPtr_63_18, DataPtr_DKCourtSceneConfigB, DataPtr_StarPatternBgSceneConfig, DataPtr_DKCourtTiles ; record 15
+	dslot DataPtr_63_20, DataPtr_StarPatternBgPalettes, DataPtr_StarPatternBgTilemap, DataPtr_StarPatternBgAttrmap, DataPtr_StarPatternBgAuxTilemap, DataPtr_StarPatternBgAuxAttrmap, DataPtr_DormInteriorSceneConfig, DataPtr_StarPatternBgTiles ; record 16
 	dw $6330, $6332, $6334, $6336, $6338, $633a, $633c, $633e ; record 17
-	dw $6400, $6402, $6404, $6406, $6408, $640a, $640c, $640e ; record 18
-	dw $6410, $6412, $6414, $6416, $6418, $641a, $641c, $641e ; record 19
-	dw $6420, $6422, $6424, $6426, $6428, $642a, $642c, $642e ; record 20
-	dw $6500, $6502, $6504, $6506, $6508, $650a, $650c, $650e ; record 21
-	dw $6510, $6512, $6514, $6516, $6518, $651a, $651c, $651e ; record 22
-	dw $6520, $6522, $6524, $6526, $6528, $652a, $652c, $652e ; record 23
-	dw $6600, $6602, $6604, $6606, $6608, $660a, $660c, $660e ; record 24
-	dw $6610, $6612, $6614, $6616, $6618, $661a, $661c, $661e ; record 25
-	dw $6620, $6622, $6624, $6626, $6628, $662a, $662c, $662e ; record 26
-	dw $6630, $6632, $6634, $6636, $6638, $663a, $663c, $663e ; record 27
-	dw $6700, $6702, $6704, $6706, $6708, $670a, $670c, $670e ; record 28
-	dw $6710, $6712, $6714, $6716, $6718, $671a, $671c, $671e ; record 29
-	dw $6720, $6722, $6724, $6726, $6728, $672a, $672c, $672e ; record 30
-	dw $6800, $6802, $6804, $6806, $6808, $680a, $680c, $680e ; record 31
-	dw $6810, $6812, $6814, $6816, $6818, $681a, $681c, $681e ; record 32
-	dw $6820, $6822, $6824, $6826, $6828, $682a, $682c, $682e ; record 33
-	dw $6900, $6902, $6904, $6906, $6908, $690a, $690c, $690e ; record 34
-	dw $6910, $6912, $6914, $6916, $6918, $691a, $691c, $691e ; record 35
-	dw $6920, $6922, $6924, $6926, $6928, $692a, $692c, $692e ; record 36
+	dslot DataPtr_64_00, DataPtr_64_02, DataPtr_64_04, DataPtr_64_06, DataPtr_64_08, DataPtr_64_0a, DataPtr_64_0c, DataPtr_64_0e ; record 18
+	dslot DataPtr_64_10, DataPtr_64_12, DataPtr_64_14, DataPtr_64_16, DataPtr_64_18, DataPtr_64_1a, DataPtr_64_1c, DataPtr_64_1e ; record 19
+	dslot DataPtr_64_20, DataPtr_64_22, DataPtr_64_24, DataPtr_64_26, DataPtr_64_28, DataPtr_64_2a, DataPtr_64_2c, DataPtr_64_2e ; record 20
+	dslot DataPtr_65_00, DataPtr_65_02, DataPtr_65_04, DataPtr_65_06, DataPtr_65_08, DataPtr_65_0a, DataPtr_65_0c, DataPtr_65_0e ; record 21
+	dslot DataPtr_65_10, DataPtr_65_12, DataPtr_65_14, DataPtr_65_16, DataPtr_65_18, DataPtr_65_1a, DataPtr_65_1c, DataPtr_65_1e ; record 22
+	dslot DataPtr_65_20, DataPtr_65_22, DataPtr_65_24, DataPtr_65_26, DataPtr_65_28, DataPtr_65_2a, DataPtr_65_2c, DataPtr_65_2e ; record 23
+	dslot DataPtr_66_00, DataPtr_66_02, DataPtr_66_04, DataPtr_66_06, DataPtr_66_08, DataPtr_66_0a, DataPtr_66_0c, DataPtr_66_0e ; record 24
+	dslot DataPtr_66_10, DataPtr_66_12, DataPtr_66_14, DataPtr_66_16, DataPtr_66_18, DataPtr_66_1a, DataPtr_66_1c, DataPtr_66_1e ; record 25
+	dslot DataPtr_66_20, DataPtr_66_22, DataPtr_66_24, DataPtr_66_26, DataPtr_66_28, DataPtr_66_2a, DataPtr_66_2c, DataPtr_66_2e ; record 26
+	dslot DataPtr_66_30, DataPtr_66_32, DataPtr_66_34, DataPtr_66_36, DataPtr_66_38, DataPtr_66_3a, DataPtr_66_3c, DataPtr_66_3e ; record 27
+	dslot DataPtr_67_00, DataPtr_67_02, DataPtr_67_04, DataPtr_67_06, DataPtr_67_08, DataPtr_67_0a, DataPtr_67_0c, DataPtr_67_0e ; record 28
+	dslot DataPtr_67_10, DataPtr_67_12, DataPtr_67_14, DataPtr_67_16, DataPtr_67_18, DataPtr_67_1a, DataPtr_67_1c, DataPtr_67_1e ; record 29
+	dslot DataPtr_67_20, DataPtr_67_22, DataPtr_67_24, DataPtr_67_26, DataPtr_67_28, DataPtr_67_2a, DataPtr_67_2c, DataPtr_67_2e ; record 30
+	dslot DataPtr_68_00, DataPtr_68_02, DataPtr_68_04, DataPtr_68_06, DataPtr_68_08, DataPtr_68_0a, DataPtr_68_0c, DataPtr_68_0e ; record 31
+	dslot DataPtr_68_10, DataPtr_68_12, DataPtr_68_14, DataPtr_68_16, DataPtr_68_18, DataPtr_68_1a, DataPtr_68_1c, DataPtr_68_1e ; record 32
+	dslot DataPtr_68_20, DataPtr_68_22, DataPtr_68_24, DataPtr_68_26, DataPtr_68_28, DataPtr_68_2a, DataPtr_68_2c, DataPtr_68_2e ; record 33
+	dslot DataPtr_69_00, DataPtr_69_02, DataPtr_69_04, DataPtr_69_06, DataPtr_69_08, DataPtr_69_0a, DataPtr_69_0c, DataPtr_69_0e ; record 34
+	dslot DataPtr_69_10, DataPtr_69_12, DataPtr_69_14, DataPtr_69_16, DataPtr_69_18, DataPtr_69_1a, DataPtr_69_1c, DataPtr_69_1e ; record 35
+	dslot DataPtr_69_20, DataPtr_69_22, DataPtr_69_24, DataPtr_69_26, DataPtr_69_28, DataPtr_69_2a, DataPtr_69_2c, DataPtr_69_2e ; record 36
 Func_0a_5c29:
 	push af ; $5c29
 	push bc ; $5c2a

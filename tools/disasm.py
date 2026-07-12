@@ -567,9 +567,19 @@ class Disassembly:
     SLOT_RECORD_TABLES = {
         "ScreenAssetRecordTable": ("lz", "lz", "lz", ("copy", 64)),
     }
+    # Same rendering, but no slot proving: tables whose columns aren't one
+    # fixed kind (SceneGfxSlotTable's +$8/+$a slots are copied raw by the
+    # match loader but lz-decompressed by the story loader, and +$c is never
+    # read). Their slots are proven elsewhere (hooks, bank bootstrap).
+    SLOT_RECORD_RENDERS = {
+        "SceneGfxSlotTable": 8,  # words per record
+    }
 
     def add_slot_record_tables(self, overrides):
         bases = {v: int(k, 0) for k, v in (overrides or {}).items()}
+        for name, nwords in self.SLOT_RECORD_RENDERS.items():
+            if name in bases:
+                self.slot_record_tables[bases[name]] = nwords
         for name, kinds in self.SLOT_RECORD_TABLES.items():
             base = bases.get(name)
             if base is None:

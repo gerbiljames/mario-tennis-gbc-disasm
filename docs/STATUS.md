@@ -96,7 +96,7 @@ engine), $6b, $03 (save engine), $0a, $07.
   pages (`VarsityTeamChartTiles/Tilemap/Attrmap/Palettes/...2`, bank $3f;
   palettes render in-source via the new `palettes` blob spec).
 - **Match-scene graphics system mapped**: `SceneGfxSlotTable` ($0a:$59d9,
-  37 records x 8 `dw` slot words, rendered in-source) covers banks $5f-$69.
+  37 records x 8 slot words, rendered as `dslot` slot-label lines) covers banks $5f-$69.
   Slot layout: +$0 scene config (camera scroll bounds -> $c329-$c32c at
   struct offset 2, plus court-line lists; second half is the mirrored
   swapped-ends copy), +$2 = 8 BG palettes (courts use 2-7), +$4/+$6 = LZ
