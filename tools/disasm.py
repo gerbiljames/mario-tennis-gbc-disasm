@@ -552,48 +552,64 @@ class Disassembly:
         if added:
             print(f"object headers: {added} $70-$76 slots via $4f75 dispatch table")
 
-    # Bank $39's $40f5 screen-asset table: 70 8-byte records of (bank<<8|slot)
-    # words -- lz tiles, lz tilemap, lz attrmap, then a 64-byte palette set
-    # copied to LoadPaletteShadow. Func_39_407e walks one record per screen
-    # id, reading each word through RAM, so static backtracking never sees
-    # the (bank, slot) pairs. Records whose four targets don't all validate
-    # (two placeholder records point at code/junk) are skipped whole.
-    SCREEN_ASSETS = 0xE40F5  # bank $39, $40f5
-    SCREEN_ASSETS_END = 0xE4325
-    SCREEN_ASSET_KINDS = ("lz", "lz", "lz", "copy")
+    # Record tables of (bank<<8|slot) words whose loaders read each word
+    # through RAM (e.g. LoadScreenAssetRecord, $39:$407e: lz tiles, lz
+    # tilemap, lz attrmap, then a 64-byte palette set for LoadPaletteShadow,
+    # one record per screen id), so no helper call site ever holds a constant
+    # hl and static backtracking never proves the slots. Keyed by curated
+    # label so the address lives in labels.json; the extent is walked until
+    # proven code (the next routine delimits the table). Records whose
+    # targets don't all validate (placeholder records point at code/junk)
+    # are skipped whole; runs of them occur mid-table, so only the code
+    # boundary ends the walk (validation needs multiple clean lz decodes,
+    # so junk past an unproven end can't slip through as records).
+    SLOT_RECORD_TABLES = {
+        "ScreenAssetRecordTable": ("lz", "lz", "lz", ("copy", 64)),
+    }
 
-    def add_screen_asset_slots(self):
-        added = skipped = 0
-        for off in range(self.SCREEN_ASSETS, self.SCREEN_ASSETS_END, 8):
-            words = [self.rom[off + i] | (self.rom[off + i + 1] << 8)
-                     for i in range(0, 8, 2)]
-            ok = True
-            for w, kind in zip(words, self.SCREEN_ASSET_KINDS):
-                bank, slot = w >> 8, w & 0xFF
-                entry = bank * BANK_SIZE + slot
-                ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
-                if not (BANK_SIZE <= ptr < 0x8000):
-                    ok = False
-                    break
-                src = bank * BANK_SIZE + ptr - BANK_SIZE
-                if src in self.code_bytes:
-                    ok = False
-                    break
-                if kind == "lz":
-                    try:
-                        lz.decompress(self.rom, src, (bank + 1) * BANK_SIZE)
-                    except ValueError:
-                        ok = False
-                        break
-            if not ok:
-                skipped += 1
+    def add_slot_record_tables(self, overrides):
+        bases = {v: int(k, 0) for k, v in (overrides or {}).items()}
+        for name, kinds in self.SLOT_RECORD_TABLES.items():
+            base = bases.get(name)
+            if base is None:
                 continue
-            for w, kind in zip(words, self.SCREEN_ASSET_KINDS):
-                if self._add_data_slot(w >> 8, w & 0xFF, kind,
-                                       64 if kind == "copy" else None):
-                    added += 1
-        print(f"screen assets: {added} slots via $39:$40f5 record table "
-              f"({skipped} placeholder records skipped)")
+            stride = 2 * len(kinds)
+            bank_end = (base // BANK_SIZE + 1) * BANK_SIZE
+            added = skipped = 0
+            for off in range(base, bank_end - stride + 1, stride):
+                if any(b in self.code_bytes for b in range(off, off + stride)):
+                    break
+                words = [self.rom[off + i] | (self.rom[off + i + 1] << 8)
+                         for i in range(0, stride, 2)]
+                if not self._valid_slot_record(words, kinds):
+                    skipped += 1
+                    continue
+                for w, kind in zip(words, kinds):
+                    kind, length = kind if isinstance(kind, tuple) \
+                        else (kind, None)
+                    if self._add_data_slot(w >> 8, w & 0xFF, kind, length):
+                        added += 1
+            print(f"slot records: {added} slots via {name} "
+                  f"({skipped} placeholder records skipped)")
+
+    def _valid_slot_record(self, words, kinds):
+        for w, kind in zip(words, kinds):
+            bank, slot = w >> 8, w & 0xFF
+            if not 0 < bank < len(self.rom) // BANK_SIZE or slot & 1:
+                return False
+            entry = bank * BANK_SIZE + slot
+            ptr = self.rom[entry] | (self.rom[entry + 1] << 8)
+            if not (BANK_SIZE <= ptr < 0x8000):
+                return False
+            src = bank * BANK_SIZE + ptr - BANK_SIZE
+            if src in self.code_bytes:
+                return False
+            if kind == "lz":
+                try:
+                    lz.decompress(self.rom, src, (bank + 1) * BANK_SIZE)
+                except ValueError:
+                    return False
+        return True
 
     def split_object_bodies(self):
         """Split each object body at the addresses its 16-byte header points
@@ -1786,7 +1802,7 @@ def main():
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()
     dis.add_object_header_slots()
-    dis.add_screen_asset_slots()
+    dis.add_slot_record_tables(overrides)
     dis.split_object_bodies()
     dis.follow_oam_arrays()
     dis.follow_frame_arrays()
