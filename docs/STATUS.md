@@ -10,7 +10,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `2587c7c`); the whole history rebuilds
+Everything below is **committed** (HEAD `1bb0d01`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -90,7 +90,7 @@ engine), $6b, $03 (save engine), $0a, $07.
   FarPtr_LoadScreenAssetRecord`, 20+ sites) walks a record per screen id
   and feeds the palettes to `LoadPaletteShadow`. The records read their
   slot words through RAM, invisible to static backtracking, so
-  `disasm.py`'s `add_screen_asset_slots` parses the table directly: +252
+  `disasm.py`'s `add_slot_record_tables` walks the table, anchored on the curated label and delimited by proven code: +252
   proven slots across banks $17-$19/$3a/$3c-$3f/$6d etc. (7 placeholder
   records skipped). Identified via records 37/38: the Varsity Team Chart
   pages (`VarsityTeamChartTiles/Tilemap/Attrmap/Palettes/...2`, bank $3f;
@@ -326,5 +326,5 @@ for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `2587c7c`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `1bb0d01`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
