@@ -1197,6 +1197,81 @@ class Disassembly:
         if seeded:
             print(f"text-bank entry stubs: {seeded} seeded")
 
+    # Story match-launcher stubs: uniform 14-byte functions that store a
+    # 16-bit match id into wCurrentMinigameStoryMatch ($c8f6/$c8f7, big
+    # endian) and farcall the match starter (FarPtr_0a_5a). The story flow
+    # reaches them through dw tables read via RAM, so descent never sees
+    # them, and the trace-to-coverage bank matcher keeps only their
+    # distinctive farcall/ret bytes (bare `ld` lines are bank-ambiguous),
+    # stranding stub tails mid-data. The rigid shape self-validates; a run
+    # of three or more is required so byte coincidences cannot seed code.
+    STUB_LEN = 14
+
+    def _launcher_stub_at(self, off):
+        r = self.rom
+        return (r[off] == 0x3E and r[off + 2:off + 5] == b"\xea\xf6\xc8"
+                and r[off + 5] == 0x3E and r[off + 7:off + 10] == b"\xea\xf7\xc8"
+                and r[off + 10] == 0xDF and not r[off + 11] & 1
+                and 0 < r[off + 12] < len(self.rom) // BANK_SIZE
+                and r[off + 13] == 0xC9)
+
+    def seed_launcher_stubs(self):
+        runs = []
+        off = BANK_SIZE
+        end = len(self.rom) - self.STUB_LEN
+        while off < end:
+            if not self._launcher_stub_at(off):
+                off += 1
+                continue
+            run = [off]
+            while self._launcher_stub_at(run[-1] + self.STUB_LEN):
+                run.append(run[-1] + self.STUB_LEN)
+            off = run[-1] + self.STUB_LEN
+            if len(run) >= 3:
+                runs.append(run)
+        starts = set()
+        seeded = 0
+        for run in runs:
+            for s in run:
+                o, todo = s, []
+                while o < s + self.STUB_LEN:
+                    ins = self.instrs.get(o)
+                    if ins is None:
+                        ins = self.decode_at(o)
+                        if not ins.valid or self.conflicts(o, ins):
+                            todo = None
+                            break
+                        todo.append((o, ins))
+                    o += ins.size
+                if todo is None:
+                    continue
+                for o, ins in todo:
+                    self.mark(o, ins)
+                    seeded += 1
+                starts.add(s)
+        # Launcher dw tables: same-bank runs of two or more words pointing
+        # at stub starts, outside code. Registered as ptr_words so they
+        # render as labeled dw entries and delimit the surrounding blobs.
+        words = 0
+        for bank in sorted({s // BANK_SIZE for s in starts}):
+            base = bank * BANK_SIZE
+            cand = set()
+            for i in range(base, base + BANK_SIZE - 1):
+                if i in self.code_bytes or i + 1 in self.code_bytes:
+                    continue
+                t = base + (self.rom[i] | (self.rom[i + 1] << 8)) - BANK_SIZE
+                if t in starts:
+                    cand.add(i)
+            for i in sorted(cand):
+                if i - 2 in cand or i + 2 in cand:
+                    t = base + (self.rom[i] | (self.rom[i + 1] << 8)) - BANK_SIZE
+                    if i not in self.ptr_words:
+                        self.ptr_words[i] = (t, "")
+                        words += 1
+        if starts:
+            print(f"launcher stubs: {len(starts)} seeded in "
+                  f"{len(runs)} runs, {words} launcher-table dw words")
+
     def descend(self):
         work = list(self.instrs.keys())
         added = 0
@@ -1324,6 +1399,9 @@ def build_labels(dis, overrides=None):
     for target in dis.jt_entries.values():
         if target in dis.instrs and target not in labels:
             labels[target] = f"Label_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    for target, _note in dis.ptr_words.values():
+        if target is not None and target in dis.instrs and target not in labels:
+            labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     return labels
 
 
@@ -1874,6 +1952,7 @@ def main():
         dis.add_slot_record_tables(overrides)
         dis.infer_tables()
         dis.seed_text_entries()
+        dis.seed_launcher_stubs()
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()

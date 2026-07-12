@@ -3859,7 +3859,55 @@ Func_0e_7b7f:
 	farcall FarPtr_0a_4c ; $7ba5
 	farcall FarPtr_0a_4e ; $7ba8
 	ret ; $7bab
-	INCBIN "data/bank_00e/d_7bac.bin" ; $7bac, 686 bytes
+	dw Func_0e_7bb8 ; $7bac
+	dw Func_0e_7bc6 ; $7bae
+	dw Func_0e_7bd4 ; $7bb0
+	dw Func_0e_7be2 ; $7bb2
+	dw Func_0e_7bf0 ; $7bb4
+	dw Func_0e_7bfe ; $7bb6
+Func_0e_7bb8:
+	ld a, $00 ; $7bb8
+	ld [wCurrentMinigameStoryMatch], a ; $7bba
+	ld a, $18 ; $7bbd
+	ld [$c8f7], a ; $7bbf
+	farcall FarPtr_0a_5a ; $7bc2
+	ret ; $7bc5
+Func_0e_7bc6:
+	ld a, $00 ; $7bc6
+	ld [wCurrentMinigameStoryMatch], a ; $7bc8
+	ld a, $17 ; $7bcb
+	ld [$c8f7], a ; $7bcd
+	farcall FarPtr_0a_5a ; $7bd0
+	ret ; $7bd3
+Func_0e_7bd4:
+	ld a, $00 ; $7bd4
+	ld [wCurrentMinigameStoryMatch], a ; $7bd6
+	ld a, $16 ; $7bd9
+	ld [$c8f7], a ; $7bdb
+	farcall FarPtr_0a_5a ; $7bde
+	ret ; $7be1
+Func_0e_7be2:
+	ld a, $01 ; $7be2
+	ld [wCurrentMinigameStoryMatch], a ; $7be4
+	ld a, $18 ; $7be7
+	ld [$c8f7], a ; $7be9
+	farcall FarPtr_0a_5a ; $7bec
+	ret ; $7bef
+Func_0e_7bf0:
+	ld a, $01 ; $7bf0
+	ld [wCurrentMinigameStoryMatch], a ; $7bf2
+	ld a, $17 ; $7bf5
+	ld [$c8f7], a ; $7bf7
+	farcall FarPtr_0a_5a ; $7bfa
+	ret ; $7bfd
+Func_0e_7bfe:
+	ld a, $01 ; $7bfe
+	ld [wCurrentMinigameStoryMatch], a ; $7c00
+	ld a, $16 ; $7c03
+	ld [$c8f7], a ; $7c05
+	farcall FarPtr_0a_5a ; $7c08
+	ret ; $7c0b
+	INCBIN "data/bank_00e/d_7c0c.bin" ; $7c0c, 590 bytes
 Func_0e_7e5a:
 	test_flag $05, 7 ; $7e5a
 	jr nz, Label_0e_7e81 ; $7e5d

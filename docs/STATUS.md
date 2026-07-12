@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~117.9K instructions / 254,166 bytes of proven code (12.1% of the 2 MiB ROM)
+**~118.1K instructions / 254,700 bytes of proven code (12.1% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -39,6 +39,14 @@ include/macros.inc):
   reads an inline `dw` pointer into de: `rst20/rst28/rst30 $xxxx`.
 - `Func_00_07c5` is a register-based far dispatcher — runtime-computed, not
   statically exploitable.
+
+**Match-launcher stubs** (`seed_launcher_stubs`): banks $10/$0e hold runs of
+uniform 14-byte functions that store a match id into
+`wCurrentMinigameStoryMatch` and `farcall FarPtr_0a_5a` (the match starter),
+reached via dw tables read through RAM. The rigid shape is scanned and
+seeded statically (runs of 3+), and the launcher dw tables render as
+labeled `ptr_words` entries — 41 stubs + a 35-entry table in bank $10's
+story match-select data.
 
 **WRAM bank switches** render as the `wram_bank` macro (macros.inc): the
 `ldh [hWramBank], a` + `ldh [rWBK], a` shadow-write pair, with an optional
