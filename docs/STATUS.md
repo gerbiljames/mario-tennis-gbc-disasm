@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~120.2K instructions / 260,298 bytes of proven code (12.4% of the 2 MiB ROM)
+**~120.2K instructions / 260,631 bytes of proven code (12.4% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -431,6 +431,18 @@ with a 6-pointer header, split across `SceneFrameData_27` (`$4018`) and
 `SceneFrameDataHi_27` (`$51d0`) with the script code between; `SceneSharedData_27`
 (`$785d`) is referenced by every record's tail. The exact record field layout
 and which cutscene it is (flag `$05.7`-gated) are not yet pinned down.
+
+**Bank $28** is a story-match/minigame graphics loader: a proper 9-slot
+farcall table (`FarPtr_28_00`..`_10`, called from the match engine $08 and
+story $06/$0d) of functions that load tiles + palettes into VRAM for the
+current match (dispatched off `wCurrentMinigameStoryMatch`, `$c8f5`/`$c8f7`).
+Each function decompresses an LZ tile stream (`MatchGfxTilesA_28`/`B` at
+`$45e0`/`$6180`) and applies palette sets via `LoadPaletteShadow`. Three
+palette blocks are carved to inline `palettes` source
+(`MatchGfxPalettes{A,B,C}_28` = 10/16/9 palettes); the LZ tiles and raw
+tilemap copies stay gitignored graphics blobs. The two unproven farcall slots
+(`$0e`/`$10` -> `$60a0`/`$6086`, small SRAM-record copiers interleaved with
+their index tables) were seeded as code.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm

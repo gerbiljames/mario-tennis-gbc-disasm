@@ -18,10 +18,46 @@ FarPtr_28_0a:
 	dw Func_28_60c9 ; $400a
 FarPtr_28_0c:
 	dw Func_28_606c ; $400c
-	INCBIN "data/bank_028/d_400e.bin" ; $400e, 7842 bytes
+	INCBIN "data/bank_028/d_400e.bin" ; $400e, 1490 bytes
+MatchGfxTilesA_28:
+	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
+MatchGfxPalettesA_28:
+	; $4ba0, 80 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0180, $031f, $2a94, $0000 ; pal 0: #006200 #ffc500 #a4a452 #000000
+	dw $0260, $00ff, $27ff, $0000 ; pal 1: #009c00 #ff3900 #ffff4a #000000
+	dw $7e60, $00ff, $7fff, $0000 ; pal 2: #009cff #ff3900 #ffffff #000000
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 3: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 4: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 5: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 6: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 7: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $0600, $9e40, $0000, $7fff ; pal 8: #008308 #009439 #000000 #ffffff
+	dw $a7ff, $015f, $0000, $7fff ; pal 9: #ffff4a #ff5200 #000000 #ffffff
+MatchGfxMapsA_28:
+	INCBIN "data/bank_028/d_4bf0.bin" ; $4bf0, 4672 bytes
+MatchGfxPalettesB_28:
+	; $5e30, 128 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $294a, $7e00, $7fff, $0000 ; pal 0: #525252 #0083ff #ffffff #000000
+	dw $294a, $02c0, $7fff, $0000 ; pal 1: #525252 #00b400 #ffffff #000000
+	dw $294a, $009f, $7fff, $0000 ; pal 2: #525252 #ff2000 #ffffff #000000
+	dw $294a, $023f, $7fff, $0000 ; pal 3: #525252 #ff8b00 #ffffff #000000
+	dw $294a, $02c0, $7fff, $0000 ; pal 4: #525252 #00b400 #ffffff #000000
+	dw $294a, $009f, $7fff, $0000 ; pal 5: #525252 #ff2000 #ffffff #000000
+	dw $294a, $023f, $7fff, $0000 ; pal 6: #525252 #ff8b00 #ffffff #000000
+	dw $294a, $009f, $4bff, $000c ; pal 7: #525252 #ff2000 #ffff94 #620000
+	dw $294a, $021f, $4bff, $00cc ; pal 8: #525252 #ff8300 #ffff94 #623100
+	dw $294a, $02c0, $4bff, $0140 ; pal 9: #525252 #00b400 #ffff94 #005200
+	dw $294a, $7e00, $4bff, $3880 ; pal 10: #525252 #0083ff #ffff94 #002073
+	dw $294a, $02c0, $4bff, $0140 ; pal 11: #525252 #00b400 #ffff94 #005200
+	dw $294a, $009f, $4bff, $000c ; pal 12: #525252 #ff2000 #ffff94 #620000
+	dw $294a, $021f, $4bff, $00cc ; pal 13: #525252 #ff8300 #ffff94 #623100
+	dw $294a, $001f, $7fff, $0000 ; pal 14: #525252 #ff0000 #ffffff #000000
+	dw $0260, $00ff, $27ff, $0000 ; pal 15: #009c00 #ff3900 #ffff4a #000000
 Func_28_5eb0:
 	wram_bank $01 ; $5eb0
-	ld hl, $4ba0 ; $5eb6
+	ld hl, MatchGfxPalettesA_28 ; $5eb6
 	ld de, $0803 ; $5eb9
 	call LoadPaletteShadow ; $5ebc
 	ld hl, $4be0 ; $5ebf
@@ -31,7 +67,7 @@ Func_28_5eb0:
 	ld de, $a400 ; $5ecb
 	ld c, $40 ; $5ece
 	call Func_00_0480 ; $5ed0
-	ld hl, $45e0 ; $5ed3
+	ld hl, MatchGfxTilesA_28 ; $5ed3
 	ld de, $d000 ; $5ed6
 	call DecompressData ; $5ed9
 	ld hl, $d000 ; $5edc
@@ -72,7 +108,7 @@ Func_28_5efb:
 	dw Label_28_5f9a ; $5f26 jumptable
 	dw Label_28_5f2a ; $5f28 jumptable
 Label_28_5f2a:
-	ld hl, $4bf0 ; $5f2a
+	ld hl, MatchGfxMapsA_28 ; $5f2a
 	ld de, $a200 ; $5f2d
 	ld c, $20 ; $5f30
 	call Func_00_0480 ; $5f32
@@ -81,7 +117,7 @@ Label_28_5f36:
 	call Func_28_6024 ; $5f36
 	ret ; $5f39
 Label_28_5f3a:
-	ld hl, $5e30 ; $5f3a
+	ld hl, MatchGfxPalettesB_28 ; $5f3a
 	ld de, $0b01 ; $5f3d
 	call LoadPaletteShadow ; $5f40
 	ld hl, $5e38 ; $5f43
@@ -94,7 +130,7 @@ Label_28_5f3a:
 	call Func_28_6024 ; $5f57
 	ret ; $5f5a
 Label_28_5f5b:
-	ld hl, $4bf0 ; $5f5b
+	ld hl, MatchGfxMapsA_28 ; $5f5b
 	ld de, $a200 ; $5f5e
 	ld c, $08 ; $5f61
 	call Func_00_0480 ; $5f63
@@ -135,7 +171,7 @@ Label_28_5f9a:
 	call Func_28_6024 ; $5fb9
 	ret ; $5fbc
 Label_28_5fbd:
-	ld hl, $4bf0 ; $5fbd
+	ld hl, MatchGfxMapsA_28 ; $5fbd
 	ld de, $a200 ; $5fc0
 	ld c, $08 ; $5fc3
 	call Func_00_0480 ; $5fc5
@@ -234,16 +270,56 @@ Func_28_606c:
 	ld c, $0c ; $607a
 	call Func_00_0480 ; $607c
 	ret ; $607f
-	INCBIN "data/bank_028/d_6080.bin" ; $6080, 73 bytes
+	INCBIN "data/bank_028/d_6080.bin" ; $6080, 6 bytes
+	add a, a ; $6086
+	add a, $9a ; $6087
+	ld l, a ; $6089
+	adc a, $60 ; $608a
+	sub a, l ; $608c
+	ld h, a ; $608d
+	ld a, [hl+] ; $608e
+	ld h, [hl] ; $608f
+	ld l, a ; $6090
+	ld de, $a300 ; $6091
+	ld c, $0c ; $6094
+	call Func_00_0480 ; $6096
+	ret ; $6099
+	INCBIN "data/bank_028/d_609a.bin" ; $609a, 6 bytes
+	ld h, $00 ; $60a0
+	ld l, a ; $60a2
+	add hl, hl ; $60a3
+	add hl, hl ; $60a4
+	add hl, hl ; $60a5
+	add hl, hl ; $60a6
+	add hl, hl ; $60a7
+	add hl, hl ; $60a8
+	ld e, l ; $60a9
+	ld d, h ; $60aa
+	ld a, b ; $60ab
+	add a, a ; $60ac
+	add a, $c1 ; $60ad
+	ld l, a ; $60af
+	adc a, $60 ; $60b0
+	sub a, l ; $60b2
+	ld h, a ; $60b3
+	ld a, [hl+] ; $60b4
+	ld h, [hl] ; $60b5
+	ld l, a ; $60b6
+	add hl, de ; $60b7
+	ld de, $a300 ; $60b8
+	ld c, $04 ; $60bb
+	call Func_00_0480 ; $60bd
+	ret ; $60c0
+	INCBIN "data/bank_028/d_60c1.bin" ; $60c1, 8 bytes
 Func_28_60c9:
 	wram_bank $01 ; $60c9
-	ld hl, $6d1c ; $60cf
+	ld hl, MatchGfxPalettesC_28 ; $60cf
 	ld de, $0902 ; $60d2
 	call LoadPaletteShadow ; $60d5
 	ld hl, $6d54 ; $60d8
 	ld de, $0002 ; $60db
 	call LoadPaletteShadow ; $60de
-	ld hl, $6180 ; $60e1
+	ld hl, MatchGfxTilesB_28 ; $60e1
 	ld de, $d000 ; $60e4
 	call DecompressData ; $60e7
 	ld hl, $d000 ; $60ea
@@ -311,5 +387,19 @@ Label_28_6141:
 Label_28_616f:
 	pop af ; $616f
 	ret ; $6170
-	INCBIN "data/bank_028/d_6171.bin" ; $6171, 3059 bytes
+	INCBIN "data/bank_028/d_6171.bin" ; $6171, 15 bytes
+MatchGfxTilesB_28:
+	INCBIN "data/bank_028/d_6180.bin" ; $6180, 2972 bytes
+MatchGfxPalettesC_28:
+	; $6d1c, 72 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0260, $00ff, $27ff, $0000 ; pal 0: #009c00 #ff3900 #ffff4a #000000
+	dw $7e60, $00ff, $7fff, $0000 ; pal 1: #009cff #ff3900 #ffffff #000000
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 2: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 3: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 4: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 5: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $7f18, $7f18, $7f18, $7f18 ; pal 6: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
+	dw $0600, $9e40, $0000, $7fff ; pal 7: #008308 #009439 #000000 #ffffff
+	dw $a7ff, $015f, $0000, $7fff ; pal 8: #ffff4a #ff5200 #000000 #ffffff
 	ds 4764, $ff ; $6d64, fill

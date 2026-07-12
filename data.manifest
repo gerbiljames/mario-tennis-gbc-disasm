@@ -768,9 +768,14 @@ bank_027/d_4018.bin 09c018 cfc
 bank_027/d_51d0.bin 09d1d0 68d
 bank_027/d_585d.bin 09d85d 1ff9
 bank_027/d_785d.bin 09f85d 264
-bank_028/d_400e.bin 0a000e 1ea2
-bank_028/d_6080.bin 0a2080 49
-bank_028/d_6171.bin 0a2171 bf3
+bank_028/d_400e.bin 0a000e 5d2
+bank_028/d_45e0.bin 0a05e0 5c0
+bank_028/d_4bf0.bin 0a0bf0 1240
+bank_028/d_6080.bin 0a2080 6
+bank_028/d_609a.bin 0a209a 6
+bank_028/d_60c1.bin 0a20c1 8
+bank_028/d_6171.bin 0a2171 f
+bank_028/d_6180.bin 0a2180 b9c
 bank_029/d_4002.bin 0a4002 96
 bank_029/d_4102.bin 0a4102 14a
 bank_029/d_427d.bin 0a427d 1c20
