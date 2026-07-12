@@ -10,9 +10,9 @@ FarPtr_1b_02:
 	dw Func_1b_4e58 ; $4002
 FarPtr_1b_04:
 	dw Func_1b_4e7f ; $4004
-FarPtr_1b_06:
+FarPtr_Func_1b_4e80:
 	dw Func_1b_4e80 ; $4006
-FarPtr_1b_08:
+FarPtr_Func_1b_4e80Alias1:
 	dw Func_1b_4e80 ; $4008
 FarPtr_1b_0a:
 	dw Func_1b_4e57 ; $400a
@@ -444,7 +444,7 @@ Label_1b_4f4f:
 	ld hl, $5a04 ; $4f6c
 	call RegisterFrameTask ; $4f6f
 Label_1b_4f72:
-	farcall FarPtr_39_02 ; $4f72
+	farcall FarPtr_Func_39_4325 ; $4f72
 	ret ; $4f75
 	INCBIN "data/bank_01b/d_4f76.bin" ; $4f76, 48 bytes
 Func_1b_4fa6:
@@ -2898,7 +2898,7 @@ Label_1b_7490:
 Label_1b_7493:
 	call Func_1b_76ee ; $7493
 	call Func_1b_77fb ; $7496
-	farcall FarPtr_39_02 ; $7499
+	farcall FarPtr_Func_39_4325 ; $7499
 	ret ; $749c
 Func_1b_749d:
 	call Func_1b_787f ; $749d

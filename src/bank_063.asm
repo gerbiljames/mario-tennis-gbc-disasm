@@ -12,7 +12,7 @@ DataPtr_IslandOpenCourtTilemap:
 	dw IslandOpenCourtTilemap ; $4004
 DataPtr_IslandOpenCourtAttrmap:
 	dw IslandOpenCourtAttrmap ; $4006
-DataPtr_63_08:
+DataPtr_IslandOpenCourtSceneConfigAlias1:
 	dw IslandOpenCourtSceneConfig ; $4008
 DataPtr_IslandOpenCourtSceneConfigB:
 	dw IslandOpenCourtSceneConfigB ; $400a
@@ -22,13 +22,13 @@ DataPtr_IslandOpenCourtTiles:
 	dw IslandOpenCourtTiles ; $400e
 DataPtr_DKCourtSceneConfig:
 	dw DKCourtSceneConfig ; $4010
-DataPtr_63_12:
+DataPtr_DKCourtPalettesAlias1:
 	dw DKCourtPalettes ; $4012
 DataPtr_DKCourtTilemap:
 	dw DKCourtTilemap ; $4014
 DataPtr_DKCourtAttrmap:
 	dw DKCourtAttrmap ; $4016
-DataPtr_63_18:
+DataPtr_DKCourtSceneConfigAlias1:
 	dw DKCourtSceneConfig ; $4018
 DataPtr_DKCourtSceneConfigB:
 	dw DKCourtSceneConfigB ; $401a
@@ -36,7 +36,7 @@ DataPtr_StarPatternBgSceneConfig:
 	dw StarPatternBgSceneConfig ; $401c
 DataPtr_DKCourtTiles:
 	dw DKCourtTiles ; $401e
-DataPtr_63_20:
+DataPtr_StarPatternBgSceneConfigAlias1:
 	dw StarPatternBgSceneConfig ; $4020
 DataPtr_StarPatternBgPalettes:
 	dw StarPatternBgPalettes ; $4022
@@ -52,7 +52,7 @@ DataPtr_DormInteriorSceneConfig:
 	dw DormInteriorSceneConfig ; $402c
 DataPtr_StarPatternBgTiles:
 	dw StarPatternBgTiles ; $402e
-DataPtr_63_30:
+DataPtr_DormInteriorSceneConfigAlias1:
 	dw DormInteriorSceneConfig ; $4030
 DataPtr_DormInteriorPalettes:
 	dw DormInteriorPalettes ; $4032

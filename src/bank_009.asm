@@ -4,7 +4,7 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 
-FarPtr_09_00:
+FarPtr_Func_09_4555:
 	dw Func_09_4555 ; $4000
 FarPtr_09_02:
 	dw Func_09_4695 ; $4002
@@ -36,9 +36,9 @@ FarPtr_09_1c:
 	dw Func_09_42d8 ; $401c
 FarPtr_09_1e:
 	dw Func_09_42f6 ; $401e
-FarPtr_09_20:
+FarPtr_Func_09_4555Alias1:
 	dw Func_09_4555 ; $4020
-FarPtr_09_22:
+FarPtr_Func_09_4555Alias2:
 	dw Func_09_4555 ; $4022
 FarPtr_09_24:
 	dw Func_09_45c4 ; $4024

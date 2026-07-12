@@ -8,7 +8,7 @@ FarPtr_38_00:
 	dw Func_38_47c7 ; $4000
 FarPtr_38_02:
 	dw Func_38_4489 ; $4002
-FarPtr_38_04:
+FarPtr_Func_38_7408:
 	dw Func_38_7408 ; $4004
 FarPtr_38_06:
 	dw Func_38_6e14 ; $4006
@@ -20,7 +20,7 @@ FarPtr_38_0c:
 	dw Func_38_63bd ; $400c
 FarPtr_38_0e:
 	dw Func_38_44f1 ; $400e
-FarPtr_38_10:
+FarPtr_Func_38_7408Alias1:
 	dw Func_38_7408 ; $4010
 FarPtr_38_12:
 	dw Func_38_407b ; $4012
@@ -597,7 +597,7 @@ Func_38_460f:
 	farcall FarPtr_05_7c ; $4645
 	farcall FarPtr_05_7e ; $4648
 	call Func_38_4722 ; $464b
-	farcall FarPtr_39_02 ; $464e
+	farcall FarPtr_Func_39_4325 ; $464e
 	ld de, $a000 ; $4651
 	farcall FarPtr_39_06 ; $4654
 	ld b, $08 ; $4657
@@ -998,7 +998,7 @@ Label_38_4a61:
 	ld b, $08 ; $4a6b
 	ld c, $0c ; $4a6d
 	farcall FarPtr_39_0e ; $4a6f
-	farcall FarPtr_39_02 ; $4a72
+	farcall FarPtr_Func_39_4325 ; $4a72
 	wram_bank $02 ; $4a75
 	xor a, a ; $4a7b
 	ld [$cb4f], a ; $4a7c
@@ -1580,7 +1580,7 @@ Func_38_4f6f:
 	call Func_38_5a1b ; $5035
 	call Func_38_5424 ; $5038
 	call Func_38_598b ; $503b
-	farcall FarPtr_39_02 ; $503e
+	farcall FarPtr_Func_39_4325 ; $503e
 	ld de, $a000 ; $5041
 	farcall FarPtr_39_06 ; $5044
 	ld hl, $507f ; $5047
@@ -5545,7 +5545,7 @@ Func_38_6f6e:
 	pop af ; $7057
 	wram_bank ; $7058
 	call Func_38_728f ; $705c
-	farcall FarPtr_39_02 ; $705f
+	farcall FarPtr_Func_39_4325 ; $705f
 	ret ; $7062
 	INCBIN "data/bank_038/d_7063.bin" ; $7063, 15 bytes
 Func_38_7072:

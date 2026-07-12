@@ -4,99 +4,99 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $67", ROMX[$4000], BANK[$67]
 
-DataPtr_67_00:
-	dw Data_67_4030 ; $4000
-DataPtr_67_02:
-	dw Data_67_404b ; $4002
-DataPtr_67_04:
-	dw Lz_67_4c77 ; $4004
-DataPtr_67_06:
-	dw Lz_67_50c4 ; $4006
-DataPtr_67_08:
-	dw Lz_67_5375 ; $4008
-DataPtr_67_0a:
-	dw Lz_67_53df ; $400a
+DataPtr_FountainCourtSceneConfig:
+	dw FountainCourtSceneConfig ; $4000
+DataPtr_FountainCourtPalettes:
+	dw FountainCourtPalettes ; $4002
+DataPtr_FountainCourtTilemap:
+	dw FountainCourtTilemap ; $4004
+DataPtr_FountainCourtAttrmap:
+	dw FountainCourtAttrmap ; $4006
+DataPtr_FountainCourtAuxTilemap:
+	dw FountainCourtAuxTilemap ; $4008
+DataPtr_FountainCourtAuxAttrmap:
+	dw FountainCourtAuxAttrmap ; $400a
 DataPtr_67_0c:
 	dw Data_67_5440 ; $400c
-DataPtr_67_0e:
-	dw Lz_67_408b ; $400e
-DataPtr_67_10:
-	dw Data_67_5a40 ; $4010
-DataPtr_67_12:
-	dw Data_67_5a6a ; $4012
-DataPtr_67_14:
-	dw Lz_67_63df ; $4014
-DataPtr_67_16:
-	dw Lz_67_6779 ; $4016
-DataPtr_67_18:
-	dw Lz_67_69b2 ; $4018
-DataPtr_67_1a:
-	dw Lz_67_6a19 ; $401a
-DataPtr_67_1c:
-	dw Data_67_6a64 ; $401c
-DataPtr_67_1e:
-	dw Lz_67_5aaa ; $401e
-DataPtr_67_20:
-	dw Data_67_6a64 ; $4020
-DataPtr_67_22:
-	dw Data_67_6a8e ; $4022
-DataPtr_67_24:
-	dw Lz_67_73da ; $4024
-DataPtr_67_26:
-	dw Lz_67_790c ; $4026
-DataPtr_67_28:
-	dw Lz_67_7bd2 ; $4028
-DataPtr_67_2a:
-	dw Lz_67_7c52 ; $402a
+DataPtr_FountainCourtTiles:
+	dw FountainCourtTiles ; $400e
+DataPtr_CafeCourtSceneConfig:
+	dw CafeCourtSceneConfig ; $4010
+DataPtr_CafeCourtPalettes:
+	dw CafeCourtPalettes ; $4012
+DataPtr_CafeCourtTilemap:
+	dw CafeCourtTilemap ; $4014
+DataPtr_CafeCourtAttrmap:
+	dw CafeCourtAttrmap ; $4016
+DataPtr_CafeCourtAuxTilemap:
+	dw CafeCourtAuxTilemap ; $4018
+DataPtr_CafeCourtAuxAttrmap:
+	dw CafeCourtAuxAttrmap ; $401a
+DataPtr_CourtComplexSceneConfig:
+	dw CourtComplexSceneConfig ; $401c
+DataPtr_CafeCourtTiles:
+	dw CafeCourtTiles ; $401e
+DataPtr_CourtComplexSceneConfigAlias1:
+	dw CourtComplexSceneConfig ; $4020
+DataPtr_CourtComplexPalettes:
+	dw CourtComplexPalettes ; $4022
+DataPtr_CourtComplexTilemap:
+	dw CourtComplexTilemap ; $4024
+DataPtr_CourtComplexAttrmap:
+	dw CourtComplexAttrmap ; $4026
+DataPtr_CourtComplexAuxTilemap:
+	dw CourtComplexAuxTilemap ; $4028
+DataPtr_CourtComplexAuxAttrmap:
+	dw CourtComplexAuxAttrmap ; $402a
 DataPtr_67_2c:
 	dw Data_67_7c9e ; $402c
-DataPtr_67_2e:
-	dw Lz_67_6ace ; $402e
-Data_67_4030:
+DataPtr_CourtComplexTiles:
+	dw CourtComplexTiles ; $402e
+FountainCourtSceneConfig:
 	INCBIN "data/bank_067/d_4030.bin" ; $4030, 27 bytes
-Data_67_404b:
+FountainCourtPalettes:
 	INCBIN "data/bank_067/d_404b.bin" ; $404b, 64 bytes
-Lz_67_408b:
+FountainCourtTiles:
 	INCBIN "data/bank_067/lz_408b.bin" ; $408b, 3052 bytes
-Lz_67_4c77:
+FountainCourtTilemap:
 	INCBIN "data/bank_067/lz_4c77.bin" ; $4c77, 1101 bytes
-Lz_67_50c4:
+FountainCourtAttrmap:
 	INCBIN "data/bank_067/lz_50c4.bin" ; $50c4, 689 bytes
-Lz_67_5375:
+FountainCourtAuxTilemap:
 	INCBIN "data/bank_067/lz_5375.bin" ; $5375, 106 bytes
-Lz_67_53df:
+FountainCourtAuxAttrmap:
 	INCBIN "data/bank_067/lz_53df.bin" ; $53df, 83 bytes
 	; $5432, 14 bytes (fill)
 	ds 14, $00
 Data_67_5440:
 	INCBIN "data/bank_067/d_5440.bin" ; $5440, 1536 bytes
-Data_67_5a40:
+CafeCourtSceneConfig:
 	INCBIN "data/bank_067/d_5a40.bin" ; $5a40, 42 bytes
-Data_67_5a6a:
+CafeCourtPalettes:
 	INCBIN "data/bank_067/d_5a6a.bin" ; $5a6a, 64 bytes
-Lz_67_5aaa:
+CafeCourtTiles:
 	INCBIN "data/bank_067/lz_5aaa.bin" ; $5aaa, 2357 bytes
-Lz_67_63df:
+CafeCourtTilemap:
 	INCBIN "data/bank_067/lz_63df.bin" ; $63df, 922 bytes
-Lz_67_6779:
+CafeCourtAttrmap:
 	INCBIN "data/bank_067/lz_6779.bin" ; $6779, 569 bytes
-Lz_67_69b2:
+CafeCourtAuxTilemap:
 	INCBIN "data/bank_067/lz_69b2.bin" ; $69b2, 103 bytes
-Lz_67_6a19:
+CafeCourtAuxAttrmap:
 	INCBIN "data/bank_067/lz_6a19.bin" ; $6a19, 75 bytes
-Data_67_6a64:
+CourtComplexSceneConfig:
 	INCBIN "data/bank_067/d_6a64.bin" ; $6a64, 42 bytes
-Data_67_6a8e:
+CourtComplexPalettes:
 	INCBIN "data/bank_067/d_6a8e.bin" ; $6a8e, 64 bytes
-Lz_67_6ace:
+CourtComplexTiles:
 	INCBIN "data/bank_067/lz_6ace.bin" ; $6ace, 2316 bytes
-Lz_67_73da:
+CourtComplexTilemap:
 	INCBIN "data/bank_067/lz_73da.bin" ; $73da, 1330 bytes
-Lz_67_790c:
+CourtComplexAttrmap:
 	INCBIN "data/bank_067/lz_790c.bin" ; $790c, 710 bytes
-Lz_67_7bd2:
+CourtComplexAuxTilemap:
 	INCBIN "data/bank_067/lz_7bd2.bin" ; $7bd2, 128 bytes
-Lz_67_7c52:
+CourtComplexAuxAttrmap:
 	INCBIN "data/bank_067/lz_7c52.bin" ; $7c52, 76 bytes
 Data_67_7c9e:
 	INCBIN "data/bank_067/d_7c9e.bin" ; $7c9e, 866 bytes

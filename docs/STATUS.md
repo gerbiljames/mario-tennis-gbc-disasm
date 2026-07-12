@@ -146,9 +146,32 @@ engine), $6b, $03 (save engine), $0a, $07.
   target can delimit the table; the old `DormInteriorScenePtrs` numeric
   rendering is superseded) ($63). Minigame court themes match the minigame host text (Yoshi=Fruit
   Fantasy, Peach=Perfect Shot, Bowser=Two-on-One, DK=Banana Bunch,
-  Wario=Treasure Box). Scenes 18+ are story maps ($64-$69), still unnamed.
+  Wario=Treasure Box).
   Generator: curated labels now split anonymous data runs (disasm.py), so
   streams reached only through non-slot pointers carve out of blobs.
+- **All 19 story-mode scene maps in banks $64-$69 (records 18-36) identified
+  and named**, rendered offline full-color (tilemap + attrmap palette-select
+  + tiles decompressed from the ROM). These are 64x64 overworld/interior maps
+  (vs the 32x32 courts), each with a 32x32 aux tilemap/attr layer at slots
+  +$8/+$a. (record: name): 18 DormBedroom (player room interiors, pink/blue),
+  19 Countryside (field + cottage + road), 20 AcademyGrounds (campus court +
+  buildings) ($64); 21 Seaside (ocean/island/boat), 22 HedgeCourt, 23
+  ClayCourtGrounds ($65); 24 HardCourtGrounds, 25 SpaResort (pink resort), 26
+  MainBuilding (grand hall + courts), 27 GardenPavilion ($66); 28
+  FountainCourt, 29 CafeCourt, 30 CourtComplex (mixed courts + lake) ($67);
+  31 ClubCourt, 32 StadiumGrounds (grandstand stadium), 33 CeremonyHall
+  (trophy/award hall) ($68); 34 TrainingHall (Lv1-4 court-select interior),
+  35 CenterCourtHall (CENTER A/B courts + pool interior), 36 ClubroomInterior
+  ($69). Names are descriptive (tile-derived), not confirmed canonical.
+- **Duplicate $4000-table pointer entries are alias-named.** When several
+  slots point at one target (dual-purpose/dead scene slots that alias a real
+  asset; defaulted fan-in ranges like bank $39's 18 slots -> `Lz_39_47ab`),
+  the first entry is `DataPtr_<Target>`/`FarPtr_<Target>` and the rest are
+  `<Target>Alias1`, `Alias2`, ... (`disasm.py assign_slot_names`), so every
+  duplicate reads back to its target instead of an opaque `DataPtr_bb_ss`.
+  158 duplicate entries across 16 banks ($39/$3a/$3d-$3f/$5f-$69/$6d) now
+  carry a target-derived name; singletons whose target isn't curated keep
+  their numeric slot name.
 - Raw blobs are split at interior slot-table targets, overlapping copy blobs
   clipped, and LZ stream extents carved exactly (incl. the 3-byte terminator).
 

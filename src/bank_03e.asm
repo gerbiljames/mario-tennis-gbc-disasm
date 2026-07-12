@@ -56,13 +56,13 @@ FarPtr_3e_30:
 	dw Func_3e_4ba3 ; $4030
 DataPtr_AwardCeremonyTiles:
 	dw AwardCeremonyTiles ; $4032
-DataPtr_3e_34:
+DataPtr_AwardCeremonyTilesAlias1:
 	dw AwardCeremonyTiles ; $4034
-DataPtr_3e_36:
+DataPtr_AwardCeremonyTilesAlias2:
 	dw AwardCeremonyTiles ; $4036
-DataPtr_3e_38:
+DataPtr_AwardCeremonyTilesAlias3:
 	dw AwardCeremonyTiles ; $4038
-DataPtr_3e_3a:
+DataPtr_AwardCeremonyTilesAlias4:
 	dw AwardCeremonyTiles ; $403a
 DataPtr_AwardCeremonyPalettes:
 	dw AwardCeremonyPalettes ; $403c
@@ -799,7 +799,7 @@ Func_3e_4a14:
 	farcall FarPtr_05_7e ; $4a44
 	wram_bank $03 ; $4a47
 	farcall FarPtr_05_8c ; $4a4d
-	farcall FarPtr_39_02 ; $4a50
+	farcall FarPtr_Func_39_4325 ; $4a50
 	ret ; $4a53
 Func_3e_4a54:
 	push af ; $4a54
@@ -884,7 +884,7 @@ Func_3e_4ade:
 	ld c, $12 ; $4b2b
 	farcall FarPtr_05_1c ; $4b2d
 	farcall FarPtr_05_90 ; $4b30
-	farcall FarPtr_39_02 ; $4b33
+	farcall FarPtr_Func_39_4325 ; $4b33
 	ret ; $4b36
 Func_3e_4b37:
 	ldh a, [hWramBank] ; $4b37
@@ -1183,7 +1183,7 @@ Label_3e_4def:
 	ld c, $04 ; $4e00
 	farcall FarPtr_05_1c ; $4e02
 	farcall FarPtr_05_90 ; $4e05
-	farcall FarPtr_39_02 ; $4e08
+	farcall FarPtr_Func_39_4325 ; $4e08
 	ret ; $4e0b
 	ld de, $7376 ; $4e0c
 	ld a, [wMenuCursorY] ; $4e0f
@@ -1889,7 +1889,7 @@ Func_3e_53cf:
 	call Func_3e_5458 ; $53e4
 	call Func_3e_5486 ; $53e7
 	farcall FarPtr_05_90 ; $53ea
-	farcall FarPtr_39_02 ; $53ed
+	farcall FarPtr_Func_39_4325 ; $53ed
 	ret ; $53f0
 Func_3e_53f1:
 	ld c, $21 ; $53f1
@@ -2041,7 +2041,7 @@ Func_3e_550d:
 	ld hl, $555b ; $554e
 	ld de, $0901 ; $5551
 	call LoadPaletteShadow ; $5554
-	farcall FarPtr_39_02 ; $5557
+	farcall FarPtr_Func_39_4325 ; $5557
 	ret ; $555a
 	INCBIN "data/bank_03e/d_555b.bin" ; $555b, 8 bytes
 Func_3e_5563:
@@ -2257,7 +2257,7 @@ Func_3e_5696:
 	ld hl, $555b ; $56f7
 	ld de, $0901 ; $56fa
 	call LoadPaletteShadow ; $56fd
-	farcall FarPtr_39_02 ; $5700
+	farcall FarPtr_Func_39_4325 ; $5700
 	ret ; $5703
 Func_3e_5704:
 	farcall FarPtr_05_8c ; $5704

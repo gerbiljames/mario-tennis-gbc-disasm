@@ -12,7 +12,7 @@ DataPtr_StarCourtTilemap:
 	dw StarCourtTilemap ; $4004
 DataPtr_StarCourtAttrmap:
 	dw StarCourtAttrmap ; $4006
-DataPtr_62_08:
+DataPtr_StarCourtSceneConfigAlias1:
 	dw StarCourtSceneConfig ; $4008
 DataPtr_StarCourtSceneConfigB:
 	dw StarCourtSceneConfigB ; $400a
@@ -22,13 +22,13 @@ DataPtr_StarCourtTiles:
 	dw StarCourtTiles ; $400e
 DataPtr_BowserCourtSceneConfig:
 	dw BowserCourtSceneConfig ; $4010
-DataPtr_62_12:
+DataPtr_BowserCourtPalettesAlias1:
 	dw BowserCourtPalettes ; $4012
 DataPtr_BowserCourtTilemap:
 	dw BowserCourtTilemap ; $4014
 DataPtr_BowserCourtAttrmap:
 	dw BowserCourtAttrmap ; $4016
-DataPtr_62_18:
+DataPtr_BowserCourtSceneConfigAlias1:
 	dw BowserCourtSceneConfig ; $4018
 DataPtr_BowserCourtSceneConfigB:
 	dw BowserCourtSceneConfigB ; $401a
@@ -38,13 +38,13 @@ DataPtr_BowserCourtTiles:
 	dw BowserCourtTiles ; $401e
 DataPtr_WarioCourtSceneConfig:
 	dw WarioCourtSceneConfig ; $4020
-DataPtr_62_22:
+DataPtr_WarioCourtPalettesAlias1:
 	dw WarioCourtPalettes ; $4022
 DataPtr_WarioCourtTilemap:
 	dw WarioCourtTilemap ; $4024
 DataPtr_WarioCourtAttrmap:
 	dw WarioCourtAttrmap ; $4026
-DataPtr_62_28:
+DataPtr_WarioCourtSceneConfigAlias1:
 	dw WarioCourtSceneConfig ; $4028
 DataPtr_WarioCourtSceneConfigB:
 	dw WarioCourtSceneConfigB ; $402a
@@ -54,13 +54,13 @@ DataPtr_WarioCourtTiles:
 	dw WarioCourtTiles ; $402e
 DataPtr_PeachCourtSceneConfig:
 	dw PeachCourtSceneConfig ; $4030
-DataPtr_62_32:
+DataPtr_PeachCourtPalettesAlias1:
 	dw PeachCourtPalettes ; $4032
 DataPtr_PeachCourtTilemap:
 	dw PeachCourtTilemap ; $4034
 DataPtr_PeachCourtAttrmap:
 	dw PeachCourtAttrmap ; $4036
-DataPtr_62_38:
+DataPtr_PeachCourtSceneConfigAlias1:
 	dw PeachCourtSceneConfig ; $4038
 DataPtr_PeachCourtSceneConfigB:
 	dw PeachCourtSceneConfigB ; $403a

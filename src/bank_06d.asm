@@ -44,17 +44,17 @@ DataPtr_6d_24:
 	dw Lz_6d_6250 ; $4024
 DataPtr_6d_26:
 	dw Data_6d_6a7f ; $4026
-DataPtr_6d_28:
+DataPtr_Lz_6d_6ac8:
 	dw Lz_6d_6ac8 ; $4028
-DataPtr_6d_2a:
+DataPtr_Lz_6d_6ac8Alias1:
 	dw Lz_6d_6ac8 ; $402a
-DataPtr_6d_2c:
+DataPtr_Lz_6d_6ac8Alias2:
 	dw Lz_6d_6ac8 ; $402c
-DataPtr_6d_2e:
+DataPtr_Lz_6d_6ac8Alias3:
 	dw Lz_6d_6ac8 ; $402e
 DataPtr_TitleScreenTiles:
 	dw TitleScreenTiles ; $4030
-DataPtr_6d_32:
+DataPtr_Lz_6d_6ac8Alias4:
 	dw Lz_6d_6ac8 ; $4032
 DataPtr_6d_34:
 	dw Lz_6d_6b13 ; $4034
@@ -86,39 +86,39 @@ DataPtr_6d_4e:
 	dw Lz_6d_6e9e ; $404e
 DataPtr_6d_50:
 	dw Lz_6d_6ee6 ; $4050
-DataPtr_6d_52:
+DataPtr_Lz_6d_6f2e:
 	dw Lz_6d_6f2e ; $4052
-DataPtr_6d_54:
+DataPtr_Lz_6d_6f2eAlias1:
 	dw Lz_6d_6f2e ; $4054
-DataPtr_6d_56:
+DataPtr_Lz_6d_6f2eAlias2:
 	dw Lz_6d_6f2e ; $4056
-DataPtr_6d_58:
+DataPtr_Lz_6d_6f2eAlias3:
 	dw Lz_6d_6f2e ; $4058
-DataPtr_6d_5a:
+DataPtr_Lz_6d_6f2eAlias4:
 	dw Lz_6d_6f2e ; $405a
-DataPtr_6d_5c:
+DataPtr_Lz_6d_6f2eAlias5:
 	dw Lz_6d_6f2e ; $405c
-DataPtr_6d_5e:
+DataPtr_Lz_6d_6f2eAlias6:
 	dw Lz_6d_6f2e ; $405e
-DataPtr_6d_60:
+DataPtr_Lz_6d_6f2eAlias7:
 	dw Lz_6d_6f2e ; $4060
-DataPtr_6d_62:
+DataPtr_Lz_6d_6f2eAlias8:
 	dw Lz_6d_6f2e ; $4062
-DataPtr_6d_64:
+DataPtr_Lz_6d_6f2eAlias9:
 	dw Lz_6d_6f2e ; $4064
-DataPtr_6d_66:
+DataPtr_Lz_6d_6f2eAlias10:
 	dw Lz_6d_6f2e ; $4066
-DataPtr_6d_68:
+DataPtr_Lz_6d_6f2eAlias11:
 	dw Lz_6d_6f2e ; $4068
-DataPtr_6d_6a:
+DataPtr_Lz_6d_6f2eAlias12:
 	dw Lz_6d_6f2e ; $406a
-DataPtr_6d_6c:
+DataPtr_Lz_6d_6f2eAlias13:
 	dw Lz_6d_6f2e ; $406c
-DataPtr_6d_6e:
+DataPtr_Lz_6d_6f2eAlias14:
 	dw Lz_6d_6f2e ; $406e
-DataPtr_6d_70:
+DataPtr_Lz_6d_6f2eAlias15:
 	dw Lz_6d_6f2e ; $4070
-DataPtr_6d_72:
+DataPtr_Lz_6d_6f2eAlias16:
 	dw Lz_6d_6f2e ; $4072
 DataPtr_6d_74:
 	dw Lz_6d_6fd3 ; $4074

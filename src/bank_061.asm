@@ -12,7 +12,7 @@ DataPtr_MachineCourtTilemap:
 	dw MachineCourtTilemap ; $4004
 DataPtr_MachineCourtAttrmap:
 	dw MachineCourtAttrmap ; $4006
-DataPtr_61_08:
+DataPtr_MachineCourtSceneConfigAlias1:
 	dw MachineCourtSceneConfig ; $4008
 DataPtr_MachineCourtSceneConfigB:
 	dw MachineCourtSceneConfigB ; $400a
@@ -22,13 +22,13 @@ DataPtr_MachineCourtTiles:
 	dw MachineCourtTiles ; $400e
 DataPtr_CenterCourtSceneConfig:
 	dw CenterCourtSceneConfig ; $4010
-DataPtr_61_12:
+DataPtr_CenterCourtPalettesAlias1:
 	dw CenterCourtPalettes ; $4012
 DataPtr_CenterCourtTilemap:
 	dw CenterCourtTilemap ; $4014
 DataPtr_CenterCourtAttrmap:
 	dw CenterCourtAttrmap ; $4016
-DataPtr_61_18:
+DataPtr_CenterCourtSceneConfigAlias1:
 	dw CenterCourtSceneConfig ; $4018
 DataPtr_CenterCourtSceneConfigB:
 	dw CenterCourtSceneConfigB ; $401a
@@ -38,13 +38,13 @@ DataPtr_CenterCourtTiles:
 	dw CenterCourtTiles ; $401e
 DataPtr_PracticeCourtSceneConfig:
 	dw PracticeCourtSceneConfig ; $4020
-DataPtr_61_22:
+DataPtr_PracticeCourtPalettesAlias1:
 	dw PracticeCourtPalettes ; $4022
 DataPtr_PracticeCourtTilemap:
 	dw PracticeCourtTilemap ; $4024
 DataPtr_PracticeCourtAttrmap:
 	dw PracticeCourtAttrmap ; $4026
-DataPtr_61_28:
+DataPtr_PracticeCourtSceneConfigAlias1:
 	dw PracticeCourtSceneConfig ; $4028
 DataPtr_PracticeCourtSceneConfigB:
 	dw PracticeCourtSceneConfigB ; $402a
@@ -54,13 +54,13 @@ DataPtr_PracticeCourtTiles:
 	dw PracticeCourtTiles ; $402e
 DataPtr_YoshiCourtSceneConfig:
 	dw YoshiCourtSceneConfig ; $4030
-DataPtr_61_32:
+DataPtr_YoshiCourtPalettesAlias1:
 	dw YoshiCourtPalettes ; $4032
 DataPtr_YoshiCourtTilemap:
 	dw YoshiCourtTilemap ; $4034
 DataPtr_YoshiCourtAttrmap:
 	dw YoshiCourtAttrmap ; $4036
-DataPtr_61_38:
+DataPtr_YoshiCourtSceneConfigAlias1:
 	dw YoshiCourtSceneConfig ; $4038
 DataPtr_YoshiCourtSceneConfigB:
 	dw YoshiCourtSceneConfigB ; $403a

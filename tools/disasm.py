@@ -1634,25 +1634,36 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
     # pointer load may reference by name.
     operand_labels = {o: n for o, n in labels.items() if o not in dis.instrs}
 
-    # Semantic slot names: a $4000-table slot whose target carries a curated
-    # name is named after it, so call sites read `farcall FarPtr_DrawBox`
-    # instead of `farcall FarPtr_18_xx`. Duplicate slots for the same target
-    # keep their numeric name (labels must stay unique).
+    # Semantic slot names: a $4000-table slot whose target carries a label is
+    # named after it, so call sites read `farcall FarPtr_DrawBox` instead of
+    # `farcall FarPtr_18_xx`. When several slots point at the same target
+    # (dual-purpose scene slots, defaulted fan-in ranges), the first is
+    # <Prefix>_<Target> and the rest are <Prefix>_<Target>Alias1, Alias2, ...
+    # so every duplicate reads back to its target instead of an opaque numeric
+    # slot. A singleton whose target isn't curated keeps its numeric name.
     far_slot_names = {}   # (bank, slot) -> label
     data_slot_names = {}  # (bank, slot) -> label
     used_slot_names = set()
-    for entry in sorted(table_entries):
-        bank, slot, target = table_entries[entry]
-        name = labels.get(target)
-        if name in curated and f"FarPtr_{name}" not in used_slot_names:
-            used_slot_names.add(f"FarPtr_{name}")
-            far_slot_names[(bank, slot)] = f"FarPtr_{name}"
-    for entry in sorted(data_entries):
-        bank, slot, src, _kind = data_entries[entry]
-        name = data_labels.get(src)
-        if name in curated and f"DataPtr_{name}" not in used_slot_names:
-            used_slot_names.add(f"DataPtr_{name}")
-            data_slot_names[(bank, slot)] = f"DataPtr_{name}"
+
+    def assign_slot_names(entries, label_of, prefix, out):
+        groups = {}
+        for entry in sorted(entries):
+            groups.setdefault(entries[entry][2], []).append(entry)
+        for target, ents in groups.items():
+            label = label_of(target)
+            if not label or (len(ents) == 1 and label not in curated):
+                continue
+            base = f"{prefix}_{label}"
+            for i, entry in enumerate(ents):
+                name = base if i == 0 else f"{base}Alias{i}"
+                while name in used_slot_names:
+                    name += "_"
+                used_slot_names.add(name)
+                bank, slot = entries[entry][:2]
+                out[(bank, slot)] = name
+
+    assign_slot_names(table_entries, labels.get, "FarPtr", far_slot_names)
+    assign_slot_names(data_entries, data_labels.get, "DataPtr", data_slot_names)
 
     def slot_ref(w):
         """The emitted label of the $4000-table slot a (bank<<8|slot) word

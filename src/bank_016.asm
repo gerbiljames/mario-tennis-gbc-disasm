@@ -183,7 +183,7 @@ Func_16_4571:
 	farcall FarPtr_39_10 ; $45fc
 	pop af ; $45ff
 	wram_bank ; $4600
-	farcall FarPtr_39_02 ; $4604
+	farcall FarPtr_Func_39_4325 ; $4604
 	ret ; $4607
 	INCBIN "data/bank_016/d_4608.bin" ; $4608, 772 bytes
 Func_16_490c:
@@ -639,7 +639,7 @@ Func_16_5c8a:
 	ld c, $01 ; $5cd0
 	call Func_16_5fe7 ; $5cd2
 	call Func_16_5d2f ; $5cd5
-	farcall FarPtr_39_02 ; $5cd8
+	farcall FarPtr_Func_39_4325 ; $5cd8
 	ret ; $5cdb
 Func_16_5cdc:
 	ld de, $002f ; $5cdc

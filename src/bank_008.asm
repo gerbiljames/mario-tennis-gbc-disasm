@@ -229,7 +229,7 @@ Func_08_4145:
 	wram_bank $04 ; $4161
 	call Func_08_511c ; $4167
 	call InitAllChars ; $416a
-	farcall FarPtr_09_00 ; $416d
+	farcall FarPtr_Func_09_4555 ; $416d
 	call ClearSpriteSlots ; $4170
 	call AssignCourtPositions ; $4173
 	xor a, a ; $4176

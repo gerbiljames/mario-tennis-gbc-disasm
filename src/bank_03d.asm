@@ -22,15 +22,15 @@ DataPtr_3d_0e:
 	dw Lz_3d_4682 ; $400e
 DataPtr_3d_10:
 	dw Lz_3d_475c ; $4010
-DataPtr_3d_12:
+DataPtr_Lz_3d_4830:
 	dw Lz_3d_4830 ; $4012
-DataPtr_3d_14:
+DataPtr_Lz_3d_4830Alias1:
 	dw Lz_3d_4830 ; $4014
-DataPtr_3d_16:
+DataPtr_Lz_3d_4830Alias2:
 	dw Lz_3d_4830 ; $4016
-DataPtr_3d_18:
+DataPtr_Lz_3d_4830Alias3:
 	dw Lz_3d_4830 ; $4018
-DataPtr_3d_1a:
+DataPtr_Lz_3d_4830Alias4:
 	dw Lz_3d_4830 ; $401a
 DataPtr_3d_1c:
 	dw Lz_3d_48e3 ; $401c

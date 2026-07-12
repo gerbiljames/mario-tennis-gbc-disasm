@@ -4,7 +4,7 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $5f", ROMX[$4000], BANK[$5f]
 
-DataPtr_5f_00:
+DataPtr_Data_5f_4c13:
 	dw Data_5f_4c13 ; $4000
 DataPtr_5f_02:
 	dw Data_5f_4020 ; $4002
@@ -12,23 +12,23 @@ DataPtr_ClubhouseSceneTilemap:
 	dw ClubhouseSceneTilemap ; $4004
 DataPtr_5f_06:
 	dw Lz_5f_4ac6 ; $4006
-DataPtr_5f_08:
+DataPtr_Data_5f_4c13Alias1:
 	dw Data_5f_4c13 ; $4008
 DataPtr_5f_0a:
 	dw Data_5f_4c3b ; $400a
-DataPtr_5f_0c:
+DataPtr_Data_5f_4c63:
 	dw Data_5f_4c63 ; $400c
 DataPtr_ClubhouseSceneTiles:
 	dw ClubhouseSceneTiles ; $400e
-DataPtr_5f_10:
+DataPtr_Data_5f_5904:
 	dw Data_5f_5904 ; $4010
-DataPtr_5f_12:
+DataPtr_Data_5f_4c63Alias1:
 	dw Data_5f_4c63 ; $4012
 DataPtr_CourtyardSceneTilemap:
 	dw CourtyardSceneTilemap ; $4014
 DataPtr_5f_16:
 	dw Lz_5f_57de ; $4016
-DataPtr_5f_18:
+DataPtr_Data_5f_5904Alias1:
 	dw Data_5f_5904 ; $4018
 DataPtr_5f_1a:
 	dw Data_5f_592c ; $401a

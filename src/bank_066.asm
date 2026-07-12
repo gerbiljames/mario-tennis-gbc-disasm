@@ -4,125 +4,125 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $66", ROMX[$4000], BANK[$66]
 
-DataPtr_66_00:
-	dw Data_66_4040 ; $4000
-DataPtr_66_02:
-	dw Data_66_406a ; $4002
-DataPtr_66_04:
-	dw Lz_66_45b6 ; $4004
-DataPtr_66_06:
-	dw Lz_66_49aa ; $4006
-DataPtr_66_08:
-	dw Lz_66_4ca2 ; $4008
-DataPtr_66_0a:
-	dw Lz_66_4d07 ; $400a
-DataPtr_66_0c:
-	dw Data_66_4d4f ; $400c
-DataPtr_66_0e:
-	dw Lz_66_40aa ; $400e
-DataPtr_66_10:
-	dw Data_66_4d4f ; $4010
-DataPtr_66_12:
-	dw Data_66_4d79 ; $4012
-DataPtr_66_14:
-	dw Lz_66_55ab ; $4014
-DataPtr_66_16:
-	dw Lz_66_59e9 ; $4016
-DataPtr_66_18:
-	dw Lz_66_5c8c ; $4018
-DataPtr_66_1a:
-	dw Lz_66_5d02 ; $401a
-DataPtr_66_1c:
-	dw Data_66_5d82 ; $401c
-DataPtr_66_1e:
-	dw Lz_66_4db9 ; $401e
-DataPtr_66_20:
-	dw Data_66_5d82 ; $4020
-DataPtr_66_22:
-	dw Data_66_5d8b ; $4022
-DataPtr_66_24:
-	dw Lz_66_66c8 ; $4024
-DataPtr_66_26:
-	dw Lz_66_6b10 ; $4026
-DataPtr_66_28:
-	dw Lz_66_6d4c ; $4028
-DataPtr_66_2a:
-	dw Lz_66_6dad ; $402a
-DataPtr_66_2c:
-	dw Data_66_6df8 ; $402c
-DataPtr_66_2e:
-	dw Lz_66_5dcb ; $402e
-DataPtr_66_30:
-	dw Data_66_6df8 ; $4030
-DataPtr_66_32:
-	dw Data_66_6e22 ; $4032
-DataPtr_66_34:
-	dw Lz_66_75de ; $4034
-DataPtr_66_36:
-	dw Lz_66_79a9 ; $4036
-DataPtr_66_38:
-	dw Lz_66_7b83 ; $4038
-DataPtr_66_3a:
-	dw Lz_66_7be2 ; $403a
+DataPtr_HardCourtGroundsSceneConfig:
+	dw HardCourtGroundsSceneConfig ; $4000
+DataPtr_HardCourtGroundsPalettes:
+	dw HardCourtGroundsPalettes ; $4002
+DataPtr_HardCourtGroundsTilemap:
+	dw HardCourtGroundsTilemap ; $4004
+DataPtr_HardCourtGroundsAttrmap:
+	dw HardCourtGroundsAttrmap ; $4006
+DataPtr_HardCourtGroundsAuxTilemap:
+	dw HardCourtGroundsAuxTilemap ; $4008
+DataPtr_HardCourtGroundsAuxAttrmap:
+	dw HardCourtGroundsAuxAttrmap ; $400a
+DataPtr_SpaResortSceneConfig:
+	dw SpaResortSceneConfig ; $400c
+DataPtr_HardCourtGroundsTiles:
+	dw HardCourtGroundsTiles ; $400e
+DataPtr_SpaResortSceneConfigAlias1:
+	dw SpaResortSceneConfig ; $4010
+DataPtr_SpaResortPalettes:
+	dw SpaResortPalettes ; $4012
+DataPtr_SpaResortTilemap:
+	dw SpaResortTilemap ; $4014
+DataPtr_SpaResortAttrmap:
+	dw SpaResortAttrmap ; $4016
+DataPtr_SpaResortAuxTilemap:
+	dw SpaResortAuxTilemap ; $4018
+DataPtr_SpaResortAuxAttrmap:
+	dw SpaResortAuxAttrmap ; $401a
+DataPtr_MainBuildingSceneConfig:
+	dw MainBuildingSceneConfig ; $401c
+DataPtr_SpaResortTiles:
+	dw SpaResortTiles ; $401e
+DataPtr_MainBuildingSceneConfigAlias1:
+	dw MainBuildingSceneConfig ; $4020
+DataPtr_MainBuildingPalettes:
+	dw MainBuildingPalettes ; $4022
+DataPtr_MainBuildingTilemap:
+	dw MainBuildingTilemap ; $4024
+DataPtr_MainBuildingAttrmap:
+	dw MainBuildingAttrmap ; $4026
+DataPtr_MainBuildingAuxTilemap:
+	dw MainBuildingAuxTilemap ; $4028
+DataPtr_MainBuildingAuxAttrmap:
+	dw MainBuildingAuxAttrmap ; $402a
+DataPtr_GardenPavilionSceneConfig:
+	dw GardenPavilionSceneConfig ; $402c
+DataPtr_MainBuildingTiles:
+	dw MainBuildingTiles ; $402e
+DataPtr_GardenPavilionSceneConfigAlias1:
+	dw GardenPavilionSceneConfig ; $4030
+DataPtr_GardenPavilionPalettes:
+	dw GardenPavilionPalettes ; $4032
+DataPtr_GardenPavilionTilemap:
+	dw GardenPavilionTilemap ; $4034
+DataPtr_GardenPavilionAttrmap:
+	dw GardenPavilionAttrmap ; $4036
+DataPtr_GardenPavilionAuxTilemap:
+	dw GardenPavilionAuxTilemap ; $4038
+DataPtr_GardenPavilionAuxAttrmap:
+	dw GardenPavilionAuxAttrmap ; $403a
 DataPtr_66_3c:
 	dw Data_66_7c2d ; $403c
-DataPtr_66_3e:
-	dw Lz_66_6e62 ; $403e
-Data_66_4040:
+DataPtr_GardenPavilionTiles:
+	dw GardenPavilionTiles ; $403e
+HardCourtGroundsSceneConfig:
 	INCBIN "data/bank_066/d_4040.bin" ; $4040, 42 bytes
-Data_66_406a:
+HardCourtGroundsPalettes:
 	INCBIN "data/bank_066/d_406a.bin" ; $406a, 64 bytes
-Lz_66_40aa:
+HardCourtGroundsTiles:
 	INCBIN "data/bank_066/lz_40aa.bin" ; $40aa, 1292 bytes
-Lz_66_45b6:
+HardCourtGroundsTilemap:
 	INCBIN "data/bank_066/lz_45b6.bin" ; $45b6, 1012 bytes
-Lz_66_49aa:
+HardCourtGroundsAttrmap:
 	INCBIN "data/bank_066/lz_49aa.bin" ; $49aa, 760 bytes
-Lz_66_4ca2:
+HardCourtGroundsAuxTilemap:
 	INCBIN "data/bank_066/lz_4ca2.bin" ; $4ca2, 101 bytes
-Lz_66_4d07:
+HardCourtGroundsAuxAttrmap:
 	INCBIN "data/bank_066/lz_4d07.bin" ; $4d07, 72 bytes
-Data_66_4d4f:
+SpaResortSceneConfig:
 	INCBIN "data/bank_066/d_4d4f.bin" ; $4d4f, 42 bytes
-Data_66_4d79:
+SpaResortPalettes:
 	INCBIN "data/bank_066/d_4d79.bin" ; $4d79, 64 bytes
-Lz_66_4db9:
+SpaResortTiles:
 	INCBIN "data/bank_066/lz_4db9.bin" ; $4db9, 2034 bytes
-Lz_66_55ab:
+SpaResortTilemap:
 	INCBIN "data/bank_066/lz_55ab.bin" ; $55ab, 1086 bytes
-Lz_66_59e9:
+SpaResortAttrmap:
 	INCBIN "data/bank_066/lz_59e9.bin" ; $59e9, 675 bytes
-Lz_66_5c8c:
+SpaResortAuxTilemap:
 	INCBIN "data/bank_066/lz_5c8c.bin" ; $5c8c, 118 bytes
-Lz_66_5d02:
+SpaResortAuxAttrmap:
 	INCBIN "data/bank_066/lz_5d02.bin" ; $5d02, 128 bytes
-Data_66_5d82:
+MainBuildingSceneConfig:
 	INCBIN "data/bank_066/d_5d82.bin" ; $5d82, 9 bytes
-Data_66_5d8b:
+MainBuildingPalettes:
 	INCBIN "data/bank_066/d_5d8b.bin" ; $5d8b, 64 bytes
-Lz_66_5dcb:
+MainBuildingTiles:
 	INCBIN "data/bank_066/lz_5dcb.bin" ; $5dcb, 2301 bytes
-Lz_66_66c8:
+MainBuildingTilemap:
 	INCBIN "data/bank_066/lz_66c8.bin" ; $66c8, 1096 bytes
-Lz_66_6b10:
+MainBuildingAttrmap:
 	INCBIN "data/bank_066/lz_6b10.bin" ; $6b10, 572 bytes
-Lz_66_6d4c:
+MainBuildingAuxTilemap:
 	INCBIN "data/bank_066/lz_6d4c.bin" ; $6d4c, 97 bytes
-Lz_66_6dad:
+MainBuildingAuxAttrmap:
 	INCBIN "data/bank_066/lz_6dad.bin" ; $6dad, 75 bytes
-Data_66_6df8:
+GardenPavilionSceneConfig:
 	INCBIN "data/bank_066/d_6df8.bin" ; $6df8, 42 bytes
-Data_66_6e22:
+GardenPavilionPalettes:
 	INCBIN "data/bank_066/d_6e22.bin" ; $6e22, 64 bytes
-Lz_66_6e62:
+GardenPavilionTiles:
 	INCBIN "data/bank_066/lz_6e62.bin" ; $6e62, 1916 bytes
-Lz_66_75de:
+GardenPavilionTilemap:
 	INCBIN "data/bank_066/lz_75de.bin" ; $75de, 971 bytes
-Lz_66_79a9:
+GardenPavilionAttrmap:
 	INCBIN "data/bank_066/lz_79a9.bin" ; $79a9, 474 bytes
-Lz_66_7b83:
+GardenPavilionAuxTilemap:
 	INCBIN "data/bank_066/lz_7b83.bin" ; $7b83, 95 bytes
-Lz_66_7be2:
+GardenPavilionAuxAttrmap:
 	INCBIN "data/bank_066/lz_7be2.bin" ; $7be2, 75 bytes
 Data_66_7c2d:
 	INCBIN "data/bank_066/d_7c2d.bin" ; $7c2d, 979 bytes

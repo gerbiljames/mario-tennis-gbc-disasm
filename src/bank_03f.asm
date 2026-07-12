@@ -90,39 +90,39 @@ DataPtr_3f_52:
 	dw Lz_3f_7a63 ; $4052
 DataPtr_3f_54:
 	dw Lz_3f_7aad ; $4054
-DataPtr_3f_56:
+DataPtr_Lz_3f_7af7:
 	dw Lz_3f_7af7 ; $4056
-DataPtr_3f_58:
+DataPtr_Lz_3f_7af7Alias1:
 	dw Lz_3f_7af7 ; $4058
-DataPtr_3f_5a:
+DataPtr_Lz_3f_7af7Alias2:
 	dw Lz_3f_7af7 ; $405a
-DataPtr_3f_5c:
+DataPtr_Lz_3f_7af7Alias3:
 	dw Lz_3f_7af7 ; $405c
-DataPtr_3f_5e:
+DataPtr_Lz_3f_7af7Alias4:
 	dw Lz_3f_7af7 ; $405e
-DataPtr_3f_60:
+DataPtr_Lz_3f_7af7Alias5:
 	dw Lz_3f_7af7 ; $4060
-DataPtr_3f_62:
+DataPtr_Lz_3f_7af7Alias6:
 	dw Lz_3f_7af7 ; $4062
-DataPtr_3f_64:
+DataPtr_Lz_3f_7af7Alias7:
 	dw Lz_3f_7af7 ; $4064
-DataPtr_3f_66:
+DataPtr_Lz_3f_7af7Alias8:
 	dw Lz_3f_7af7 ; $4066
-DataPtr_3f_68:
+DataPtr_Lz_3f_7af7Alias9:
 	dw Lz_3f_7af7 ; $4068
-DataPtr_3f_6a:
+DataPtr_Lz_3f_7af7Alias10:
 	dw Lz_3f_7af7 ; $406a
-DataPtr_3f_6c:
+DataPtr_Lz_3f_7af7Alias11:
 	dw Lz_3f_7af7 ; $406c
-DataPtr_3f_6e:
+DataPtr_Lz_3f_7af7Alias12:
 	dw Lz_3f_7af7 ; $406e
-DataPtr_3f_70:
+DataPtr_Lz_3f_7af7Alias13:
 	dw Lz_3f_7af7 ; $4070
-DataPtr_3f_72:
+DataPtr_Lz_3f_7af7Alias14:
 	dw Lz_3f_7af7 ; $4072
-DataPtr_3f_74:
+DataPtr_Lz_3f_7af7Alias15:
 	dw Lz_3f_7af7 ; $4074
-DataPtr_3f_76:
+DataPtr_Lz_3f_7af7Alias16:
 	dw Lz_3f_7af7 ; $4076
 	INCBIN "data/bank_03f/d_4078.bin" ; $4078, 2 bytes
 Func_3f_407a:

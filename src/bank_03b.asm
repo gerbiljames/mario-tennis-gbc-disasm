@@ -6,9 +6,9 @@ SECTION "ROM Bank $3b", ROMX[$4000], BANK[$3b]
 
 FarPtr_3b_00:
 	dw Func_3b_44a9 ; $4000
-FarPtr_3b_02:
+FarPtr_Func_3b_44aa:
 	dw Func_3b_44aa ; $4002
-FarPtr_3b_04:
+FarPtr_Func_3b_44aaAlias1:
 	dw Func_3b_44aa ; $4004
 FarPtr_3b_06:
 	dw Func_3b_4963 ; $4006
@@ -1010,7 +1010,7 @@ Label_3b_4602:
 	ld de, $d0e4 ; $4621
 	ld a, $07 ; $4624
 	call Func_3b_46ed ; $4626
-	farcall FarPtr_39_02 ; $4629
+	farcall FarPtr_Func_39_4325 ; $4629
 	ret ; $462c
 Func_3b_462d:
 	wram_bank $03 ; $462d
@@ -1649,7 +1649,7 @@ Label_3b_4a25:
 	ld de, $d1e2 ; $4a67
 	call Func_3b_4af1 ; $4a6a
 Label_3b_4a6d:
-	farcall FarPtr_39_02 ; $4a6d
+	farcall FarPtr_Func_39_4325 ; $4a6d
 	ret ; $4a70
 Func_3b_4a71:
 	ld a, [$d819] ; $4a71
@@ -2074,7 +2074,7 @@ Func_3b_4dbd:
 	call Func_3b_4f45 ; $4df2
 	call Func_3b_4f81 ; $4df5
 	call Func_3b_5000 ; $4df8
-	farcall FarPtr_39_02 ; $4dfb
+	farcall FarPtr_Func_39_4325 ; $4dfb
 	ret ; $4dfe
 Func_3b_4dff:
 	wram_bank $03 ; $4dff
@@ -2625,7 +2625,7 @@ Func_3b_51b3:
 	call Func_3b_5202 ; $51f5
 	call Func_3b_5426 ; $51f8
 	call Func_3b_54fe ; $51fb
-	farcall FarPtr_39_02 ; $51fe
+	farcall FarPtr_Func_39_4325 ; $51fe
 	ret ; $5201
 Func_3b_5202:
 	push af ; $5202
@@ -7556,7 +7556,7 @@ Func_3b_77a7:
 	call Func_3b_7804 ; $77c5
 	call Func_3b_786c ; $77c8
 	call Func_3b_7945 ; $77cb
-	farcall FarPtr_39_02 ; $77ce
+	farcall FarPtr_Func_39_4325 ; $77ce
 	ret ; $77d1
 Label_3b_77d2:
 	ld c, $26 ; $77d2
@@ -7570,7 +7570,7 @@ Label_3b_77d2:
 	call Func_3b_7804 ; $77ea
 	call Func_3b_78ec ; $77ed
 	call Func_3b_7945 ; $77f0
-	farcall FarPtr_39_02 ; $77f3
+	farcall FarPtr_Func_39_4325 ; $77f3
 	ret ; $77f6
 Func_3b_77f7:
 	ld de, $d509 ; $77f7
@@ -8005,7 +8005,7 @@ Func_3b_7b11:
 	call Func_3b_7e43 ; $7b42
 	call Func_3b_4783 ; $7b45
 	call Func_3b_7bea ; $7b48
-	farcall FarPtr_39_02 ; $7b4b
+	farcall FarPtr_Func_39_4325 ; $7b4b
 	ret ; $7b4e
 Func_3b_7b4f:
 	ld a, [wMenuInputPressed] ; $7b4f

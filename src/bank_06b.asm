@@ -14,13 +14,13 @@ DataPtr_TitleScreenAttrmap:
 	dw TitleScreenAttrmap ; $4006
 DataPtr_TitleScreenPalettes:
 	dw TitleScreenPalettes ; $4008
-FarPtr_6b_0a:
+FarPtr_Func_6b_73f2:
 	dw Func_6b_73f2 ; $400a
-FarPtr_6b_0c:
+FarPtr_Func_6b_73f2Alias1:
 	dw Func_6b_73f2 ; $400c
-FarPtr_6b_0e:
+FarPtr_Func_6b_73f2Alias2:
 	dw Func_6b_73f2 ; $400e
-FarPtr_6b_10:
+FarPtr_Func_6b_73f2Alias3:
 	dw Func_6b_73f2 ; $4010
 FarPtr_6b_12:
 	dw Func_6b_51ae ; $4012
@@ -236,7 +236,7 @@ Label_6b_420d:
 	farcall FarPtr_39_0c ; $4257
 	pop af ; $425a
 	wram_bank ; $425b
-	farcall FarPtr_39_02 ; $425f
+	farcall FarPtr_Func_39_4325 ; $425f
 	wram_bank $01 ; $4262
 	ld hl, $6c2a ; $4268 -> DataPtr_IntroSwingTiles
 	ld de, $d000 ; $426b
@@ -340,7 +340,7 @@ Label_6b_43cc:
 	farcall FarPtr_39_0c ; $43e9
 	pop af ; $43ec
 	wram_bank ; $43ed
-	farcall FarPtr_39_02 ; $43f1
+	farcall FarPtr_Func_39_4325 ; $43f1
 	wram_bank $01 ; $43f4
 	ld hl, $6c32 ; $43fa -> DataPtr_IntroCloseupTiles
 	ld de, $d000 ; $43fd
@@ -451,7 +451,7 @@ Label_6b_43cc:
 	farcall FarPtr_39_0c ; $4554
 	pop af ; $4557
 	wram_bank ; $4558
-	farcall FarPtr_39_02 ; $455c
+	farcall FarPtr_Func_39_4325 ; $455c
 	ld c, $19 ; $455f
 	farcall FarPtr_LoadScreenAssetRecord ; $4561
 	ld a, $08 ; $4564
@@ -654,7 +654,7 @@ Label_6b_46ce:
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
 	farcall FarPtr_LoadScreenAssetRecord ; $479f
-	farcall FarPtr_39_02 ; $47a2
+	farcall FarPtr_Func_39_4325 ; $47a2
 	xor a, a ; $47a5
 	ld [$cb40], a ; $47a6
 	ld a, $b0 ; $47a9
@@ -684,7 +684,7 @@ Label_6b_46ce:
 	call DisableLCDSafely ; $47e7
 	ld c, $1d ; $47ea
 	farcall FarPtr_LoadScreenAssetRecord ; $47ec
-	farcall FarPtr_39_02 ; $47ef
+	farcall FarPtr_Func_39_4325 ; $47ef
 	ld a, $94 ; $47f2
 	ld [$cb42], a ; $47f4
 	ldh [$ff8b], a ; $47f7
@@ -715,7 +715,7 @@ Label_6b_46ce:
 	call DisableLCDSafely ; $4836
 	ld c, $1e ; $4839
 	farcall FarPtr_LoadScreenAssetRecord ; $483b
-	farcall FarPtr_39_02 ; $483e
+	farcall FarPtr_Func_39_4325 ; $483e
 	ld a, $a8 ; $4841
 	ld [$cb42], a ; $4843
 	ldh [$ff8b], a ; $4846
@@ -1148,7 +1148,7 @@ Func_6b_51ae:
 	call DisableLCDSafely ; $51ae
 	ld c, $15 ; $51b1
 	farcall FarPtr_LoadScreenAssetRecord ; $51b3
-	farcall FarPtr_39_02 ; $51b6
+	farcall FarPtr_Func_39_4325 ; $51b6
 	xor a, a ; $51b9
 	ldh [$ff8b], a ; $51ba
 	ldh [$ff8a], a ; $51bc
@@ -1780,7 +1780,7 @@ Func_6b_75af:
 	call Func_00_1da4 ; $75db
 	ld c, $1f ; $75de
 	farcall FarPtr_LoadScreenAssetRecord ; $75e0
-	farcall FarPtr_39_02 ; $75e3
+	farcall FarPtr_Func_39_4325 ; $75e3
 	ld c, $14 ; $75e6
 	ld b, $5b ; $75e8
 	ld de, $a000 ; $75ea

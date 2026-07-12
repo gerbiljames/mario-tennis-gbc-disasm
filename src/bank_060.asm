@@ -12,7 +12,7 @@ DataPtr_GrassCourtTilemap:
 	dw GrassCourtTilemap ; $4004
 DataPtr_GrassCourtAttrmap:
 	dw GrassCourtAttrmap ; $4006
-DataPtr_60_08:
+DataPtr_GrassCourtSceneConfigAlias1:
 	dw GrassCourtSceneConfig ; $4008
 DataPtr_GrassCourtSceneConfigB:
 	dw GrassCourtSceneConfigB ; $400a
@@ -22,13 +22,13 @@ DataPtr_GrassCourtTiles:
 	dw GrassCourtTiles ; $400e
 DataPtr_HardCourtSceneConfig:
 	dw HardCourtSceneConfig ; $4010
-DataPtr_60_12:
+DataPtr_HardCourtPalettesAlias1:
 	dw HardCourtPalettes ; $4012
 DataPtr_HardCourtTilemap:
 	dw HardCourtTilemap ; $4014
 DataPtr_HardCourtAttrmap:
 	dw HardCourtAttrmap ; $4016
-DataPtr_60_18:
+DataPtr_HardCourtSceneConfigAlias1:
 	dw HardCourtSceneConfig ; $4018
 DataPtr_HardCourtSceneConfigB:
 	dw HardCourtSceneConfigB ; $401a
@@ -38,13 +38,13 @@ DataPtr_HardCourtTiles:
 	dw HardCourtTiles ; $401e
 DataPtr_ClayCourtSceneConfig:
 	dw ClayCourtSceneConfig ; $4020
-DataPtr_60_22:
+DataPtr_ClayCourtPalettesAlias1:
 	dw ClayCourtPalettes ; $4022
 DataPtr_ClayCourtTilemap:
 	dw ClayCourtTilemap ; $4024
 DataPtr_ClayCourtAttrmap:
 	dw ClayCourtAttrmap ; $4026
-DataPtr_60_28:
+DataPtr_ClayCourtSceneConfigAlias1:
 	dw ClayCourtSceneConfig ; $4028
 DataPtr_ClayCourtSceneConfigB:
 	dw ClayCourtSceneConfigB ; $402a
@@ -54,13 +54,13 @@ DataPtr_ClayCourtTiles:
 	dw ClayCourtTiles ; $402e
 DataPtr_CompositionCourtSceneConfig:
 	dw CompositionCourtSceneConfig ; $4030
-DataPtr_60_32:
+DataPtr_CompositionCourtPalettesAlias1:
 	dw CompositionCourtPalettes ; $4032
 DataPtr_CompositionCourtTilemap:
 	dw CompositionCourtTilemap ; $4034
 DataPtr_CompositionCourtAttrmap:
 	dw CompositionCourtAttrmap ; $4036
-DataPtr_60_38:
+DataPtr_CompositionCourtSceneConfigAlias1:
 	dw CompositionCourtSceneConfig ; $4038
 DataPtr_CompositionCourtSceneConfigB:
 	dw CompositionCourtSceneConfigB ; $403a

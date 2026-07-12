@@ -950,7 +950,7 @@ Label_10_546c:
 	ld c, $10 ; $5470
 	call Func_00_1d20 ; $5472
 	call Func_00_1da4 ; $5475
-	farcall FarPtr_3b_04 ; $5478
+	farcall FarPtr_Func_3b_44aaAlias1 ; $5478
 	call DisableLCDSafely ; $547b
 	farcall FarPtr_01_0a ; $547e
 	farcall FarPtr_39_22 ; $5481

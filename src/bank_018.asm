@@ -1318,7 +1318,7 @@ Func_18_7720:
 	call Func_18_7647 ; $7720
 	call Func_18_772d ; $7723
 	farcall FarPtr_LoadScreenAssetRecord ; $7726
-	farcall FarPtr_39_02 ; $7729
+	farcall FarPtr_Func_39_4325 ; $7729
 	ret ; $772c
 Func_18_772d:
 	ld a, [$cb6d] ; $772d
@@ -1395,7 +1395,7 @@ Func_18_7835:
 	call Func_18_7647 ; $7835
 	call Func_18_7842 ; $7838
 	farcall FarPtr_LoadScreenAssetRecord ; $783b
-	farcall FarPtr_39_02 ; $783e
+	farcall FarPtr_Func_39_4325 ; $783e
 	ret ; $7841
 Func_18_7842:
 	ld a, [$cb6d] ; $7842
@@ -1436,7 +1436,7 @@ Func_18_7855:
 	ld hl, $78a9 ; $789c
 	ld de, $0701 ; $789f
 	call LoadPaletteShadow ; $78a2
-	farcall FarPtr_39_02 ; $78a5
+	farcall FarPtr_Func_39_4325 ; $78a5
 	ret ; $78a8
 	INCBIN "data/bank_018/d_78a9.bin" ; $78a9, 8 bytes
 Func_18_78b1:
@@ -1454,7 +1454,7 @@ Func_18_792c:
 	sound $09 ; $792f
 	call Func_18_7a07 ; $7931
 	farcall FarPtr_LoadScreenAssetRecord ; $7934
-	farcall FarPtr_39_02 ; $7937
+	farcall FarPtr_Func_39_4325 ; $7937
 	call Func_18_7d03 ; $793a
 	ld a, $01 ; $793d
 	ld hl, $7b36 ; $793f
@@ -1498,7 +1498,7 @@ Label_18_798a:
 	call DisableLCDSafely ; $799a
 	call Func_18_7a1a ; $799d
 	farcall FarPtr_LoadScreenAssetRecord ; $79a0
-	farcall FarPtr_39_02 ; $79a3
+	farcall FarPtr_Func_39_4325 ; $79a3
 	call Func_18_7a2d ; $79a6
 	call EnableLCD ; $79a9
 	ld c, $02 ; $79ac

@@ -8,23 +8,23 @@ DataPtr_TennisDictionaryTiles:
 	dw TennisDictionaryTiles ; $4000
 DataPtr_TennisDictionaryListTiles:
 	dw TennisDictionaryListTiles ; $4002
-DataPtr_3a_04:
+DataPtr_Lz_3a_53fb:
 	dw Lz_3a_53fb ; $4004
-DataPtr_3a_06:
+DataPtr_Lz_3a_53fbAlias1:
 	dw Lz_3a_53fb ; $4006
-DataPtr_3a_08:
+DataPtr_Lz_3a_53fbAlias2:
 	dw Lz_3a_53fb ; $4008
-DataPtr_3a_0a:
+DataPtr_Lz_3a_53fbAlias3:
 	dw Lz_3a_53fb ; $400a
-DataPtr_3a_0c:
+DataPtr_Lz_3a_53fbAlias4:
 	dw Lz_3a_53fb ; $400c
-DataPtr_3a_0e:
+DataPtr_Lz_3a_53fbAlias5:
 	dw Lz_3a_53fb ; $400e
-DataPtr_3a_10:
+DataPtr_Lz_3a_53fbAlias6:
 	dw Lz_3a_53fb ; $4010
-DataPtr_3a_12:
+DataPtr_Lz_3a_53fbAlias7:
 	dw Lz_3a_53fb ; $4012
-DataPtr_3a_14:
+DataPtr_Lz_3a_53fbAlias8:
 	dw Lz_3a_53fb ; $4014
 DataPtr_3a_16:
 	dw Lz_3a_5468 ; $4016
@@ -32,13 +32,13 @@ DataPtr_3a_18:
 	dw Lz_3a_54d8 ; $4018
 DataPtr_3a_1a:
 	dw Lz_3a_5545 ; $401a
-DataPtr_3a_1c:
+DataPtr_Lz_3a_53fbAlias9:
 	dw Lz_3a_53fb ; $401c
-DataPtr_3a_1e:
+DataPtr_Lz_3a_53fbAlias10:
 	dw Lz_3a_53fb ; $401e
-DataPtr_3a_20:
+DataPtr_Lz_3a_53fbAlias11:
 	dw Lz_3a_53fb ; $4020
-DataPtr_3a_22:
+DataPtr_Lz_3a_53fbAlias12:
 	dw Lz_3a_53fb ; $4022
 DataPtr_ExhibitionSetupTiles:
 	dw ExhibitionSetupTiles ; $4024

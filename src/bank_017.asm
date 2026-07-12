@@ -520,7 +520,7 @@ Func_17_4960:
 	wram_bank $03 ; $4968
 	call Func_17_4a99 ; $496e
 	call Func_17_4b0d ; $4971
-	farcall FarPtr_39_02 ; $4974
+	farcall FarPtr_Func_39_4325 ; $4974
 	wram_bank $03 ; $4977
 	ret ; $497d
 Func_17_497e:
@@ -3579,7 +3579,7 @@ Func_17_7157:
 	ld a, $01 ; $71b1
 	ld hl, $74db ; $71b3
 	call RegisterFrameTask ; $71b6
-	farcall FarPtr_39_02 ; $71b9
+	farcall FarPtr_Func_39_4325 ; $71b9
 	ret ; $71bc
 Func_17_71bd:
 	ldh a, [hWramBank] ; $71bd
