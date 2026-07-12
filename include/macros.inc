@@ -16,6 +16,17 @@ MACRO sound
 	db \1
 ENDM
 
+; One (slot, bank) word per argument, referencing a $4000-table slot by its
+; FarPtr_*/DataPtr_* label -- the same encoding as farcall's operand bytes.
+; Used by slot-record tables (e.g. ScreenAssetRecordTable) whose loaders
+; read the words through RAM.
+MACRO dslot
+	REPT _NARG
+	db LOW(\1), BANK(\1)
+	SHIFT
+	ENDR
+ENDM
+
 ; Game text (see the generated data/bank_XXX/text_*.asm): a string is db
 ; segments joined by control bytes -- $01 starts a new on-screen line, $02 a
 ; new page, $03 terminates. `text` opens a string (or continues an

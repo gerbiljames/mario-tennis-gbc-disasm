@@ -84,7 +84,7 @@ engine), $6b, $03 (save engine), $0a, $07.
 - **Menu / court / cutscene graphics streams** named; `tools/gfxdump.py`
   renders PNG contact sheets of the carved LZ streams for identification.
 - **Menu/status screen assets decoded**: `ScreenAssetRecordTable`
-  ($39:$40f5, 70 records x 4 `dw` slot words, rendered in-source) — each
+  ($39:$40f5, 70 records x 4 slot words, rendered in-source as `dslot` lines of FarPtr_/DataPtr_ slot labels — the farcall operand encoding — so records read as their targets' curated names) — each
   record is (LZ tiles, LZ tilemap, LZ attrmap, 64-byte BG palette set) for
   one full screen; `LoadScreenAssetRecord` ($39:$407e, `farcall
   FarPtr_LoadScreenAssetRecord`, 20+ sites) walks a record per screen id

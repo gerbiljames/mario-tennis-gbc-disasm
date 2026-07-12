@@ -142,6 +142,7 @@ class Disassembly:
         self.data_site_notes = {}  # `ld hl` setup offset -> (bank, slot)
         self.ptr_words = {}   # word offset -> (target_flat or None, note)
         self.ptr_labels = {}  # flat offset -> generated structure label
+        self.slot_record_tables = {}  # base flat -> words per record
         self.sprite_banks = set()
 
     def _try_farcall(self, off):
@@ -573,6 +574,7 @@ class Disassembly:
             base = bases.get(name)
             if base is None:
                 continue
+            self.slot_record_tables[base] = len(kinds)
             stride = 2 * len(kinds)
             bank_end = (base // BANK_SIZE + 1) * BANK_SIZE
             added = skipped = 0
@@ -1372,6 +1374,17 @@ MACRO sound
 	db \\1
 ENDM
 
+; One (slot, bank) word per argument, referencing a $4000-table slot by its
+; FarPtr_*/DataPtr_* label -- the same encoding as farcall's operand bytes.
+; Used by slot-record tables (e.g. ScreenAssetRecordTable) whose loaders
+; read the words through RAM.
+MACRO dslot
+	REPT _NARG
+	db LOW(\\1), BANK(\\1)
+	SHIFT
+	ENDR
+ENDM
+
 ; Game text (see the generated data/bank_XXX/text_*.asm): a string is db
 ; segments joined by control bytes -- $01 starts a new on-screen line, $02 a
 ; new page, $03 terminates. `text` opens a string (or continues an
@@ -1530,6 +1543,18 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
             used_slot_names.add(f"DataPtr_{name}")
             data_slot_names[(bank, slot)] = f"DataPtr_{name}"
 
+    def slot_ref(w):
+        """The emitted label of the $4000-table slot a (bank<<8|slot) word
+        references, or None if that entry isn't a labeled dw."""
+        entry = (w >> 8) * BANK_SIZE + (w & 0xFF)
+        if entry in data_entries:
+            b, s = data_entries[entry][:2]
+            return data_slot_names.get((b, s), f"DataPtr_{b:02x}_{s:02x}")
+        if entry in table_entries:
+            b, s, _t = table_entries[entry]
+            return far_slot_names.get((b, s), f"FarPtr_{b:02x}_{s:02x}")
+        return None
+
     for bank in range(nbanks):
         base = bank * BANK_SIZE
         lines = ['INCLUDE "hardware.inc"', 'INCLUDE "macros.inc"']
@@ -1685,6 +1710,37 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             stop = lstop
                         if stop:
                             j = stop
+                        # A slot-record table renders each record as a
+                        # `dslot` line of $4000-table slot labels, so the
+                        # words track their targets' curated names; a record
+                        # whose entries aren't all labeled dw slots falls
+                        # back to numeric words.
+                        if seg in dis.slot_record_tables:
+                            nw = dis.slot_record_tables[seg]
+                            stride = 2 * nw
+                            if seg in labels:
+                                lines.append(f"{labels[seg]}:")
+                            lines.append(f"\t; ${scpu:04x}, {j - seg} bytes "
+                                         f"({(j - seg) // stride} records x "
+                                         f"{nw} slot words)")
+                            for r in range((j - seg) // stride):
+                                ro = seg + r * stride
+                                ws = [rom[ro + k * 2] | (rom[ro + k * 2 + 1] << 8)
+                                      for k in range(nw)]
+                                refs = [slot_ref(w) for w in ws]
+                                if all(refs):
+                                    lines.append("\tdslot " + ", ".join(refs)
+                                                 + f" ; record {r}")
+                                else:
+                                    lines.append("\tdw " + ", ".join(
+                                        f"${w:04x}" for w in ws)
+                                        + f" ; record {r}")
+                            tail = (j - seg) % stride
+                            if tail:
+                                lines.append("\tdb " + ", ".join(
+                                    f"${b:02x}" for b in rom[j - tail:j]))
+                            seg = j
+                            continue
                         # A declared data table renders as structured source
                         # (palettes/records/bytes) inline, using the same
                         # renderer extract.py applies to blobs.
