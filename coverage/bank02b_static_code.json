@@ -1,0 +1,25 @@
+{
+ "_comment": "Static code-entry seeds for bank $2b stranded helper functions ($4002-$4097, $4102-$424b) reached only through computed dispatch; the $4000 farcall table has a single live slot. Flat ROM offset = 0x2b*0x4000 + (cpu - 0x4000).",
+ "rom": [
+  704514,
+  704530,
+  704543,
+  704573,
+  704574,
+  704604,
+  704605,
+  704643,
+  704644,
+  704663,
+  704770,
+  704821,
+  704861,
+  704918,
+  704969,
+  705009,
+  705012,
+  705013,
+  705057
+ ],
+ "other": []
+}

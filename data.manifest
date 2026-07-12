@@ -779,10 +779,7 @@ bank_02a/d_4002.bin 0a8002 96
 bank_02a/d_4102.bin 0a8102 14a
 bank_02a/d_427d.bin 0a827d 1c20
 bank_02a/d_5ebf.bin 0a9ebf 68
-bank_02b/d_4002.bin 0ac002 96
-bank_02b/d_4102.bin 0ac102 14a
 bank_02b/d_427d.bin 0ac27d 1c20
-bank_02b/d_5ebd.bin 0adebd 68
 bank_02c/d_409c.bin 0b009c 9d
 bank_02c/d_4161.bin 0b0161 6c
 bank_02c/d_41f5.bin 0b01f5 4
