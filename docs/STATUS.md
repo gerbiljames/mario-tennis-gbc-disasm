@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~119.7K instructions / 259,311 bytes of proven code (12.4% of the 2 MiB ROM)
+**~119.9K instructions / 259,895 bytes of proven code (12.4% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -406,17 +406,19 @@ and structured. The 9 remaining blobs are genuine data: the cartridge
 header/logo, the sprite-transform's embedded tables, small sound lookups, and
 the `$3dd4` sound block.
 
-**Bank $2b (4 blobs -> 1)** is a ball-height positioning bank called from the
-match engine (bank $07's `FarPtr_2b_00` -> `Func_2b_5e9d`; bank $2a is its
-twin, dispatched the same way). Its opening `$4000` "table" is a single live
-farcall slot followed by stranded multiply/scale helpers (`$4002`-`$424b`),
-now seeded as code (`coverage/bank02b_static_code.json`). The real pointer
-tables are `BallPos{Block,Sub,Height}Offsets` at `$5ebd` — three `dw` offset
-arrays into `BallPosData` (`$427d`), a 7200-byte block addressed as
-`[10 outer][10 $df6c][12 ball-height] x 6-byte position records`
-(`10*720 = 7200` exactly). `Func_2b_426e`/`424c` do `BallPosData + word[table
+**Banks $2a/$2b (each 4 blobs -> 1)** are twin ball-height positioning banks
+called from the match engine (bank $07's `FarPtr_2{a,b}_00` -> `Func_2*_5e9d`,
+dispatched the same way; their `$4002`-`$424b` helpers are byte-identical).
+Each opening `$4000` "table" is a single live farcall slot followed by
+stranded multiply/scale helpers, now seeded as code
+(`coverage/bank02{a,b}_static_code.json`). The real pointer tables are
+`BallPos{Block,Sub,Height}Offsets_2{a,b}` (`$5ebf`/`$5ebd`) — three `dw`
+offset arrays into `BallPosData_2{a,b}` (`$427d`), a 7200-byte block addressed
+as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
+(`10*720 = 7200` exactly). `Func_2*_426e`/`424c` do `BallPosData + word[table
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
-record.
+record. The one twin difference: $2a indexes the outer block by `$df6f`, while
+$2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm

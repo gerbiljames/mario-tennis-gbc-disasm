@@ -1,0 +1,25 @@
+{
+ "_comment": "Static code-entry seeds for bank $2a stranded helper functions ($4002-$4097, $4102-$424b), byte-identical twin of bank $2b; single live farcall slot. Flat ROM offset = 0x2a*0x4000 + (cpu - 0x4000).",
+ "rom": [
+  688130,
+  688146,
+  688159,
+  688189,
+  688190,
+  688220,
+  688221,
+  688259,
+  688260,
+  688279,
+  688386,
+  688437,
+  688477,
+  688534,
+  688585,
+  688625,
+  688628,
+  688629,
+  688673
+ ],
+ "other": []
+}

@@ -484,22 +484,22 @@ Label_2b_4278:
 	ld l, a ; $427a
 	add hl, de ; $427b
 	ret ; $427c
-BallPosData:
+BallPosData_2b:
 	INCBIN "data/bank_02b/d_427d.bin" ; $427d, 7200 bytes
 Func_2b_5e9d:
 	farcall FarPtr_07_3a ; $5e9d
-	ld hl, BallPosData ; $5ea0
-	ld bc, BallPosBlockOffsets ; $5ea3
+	ld hl, BallPosData_2b ; $5ea0
+	ld bc, BallPosBlockOffsets_2b ; $5ea3
 	xor a, a ; $5ea6
 	call Func_2b_426e ; $5ea7
-	ld bc, BallPosSubOffsets ; $5eaa
+	ld bc, BallPosSubOffsets_2b ; $5eaa
 	ld a, [$df6c] ; $5ead
 	call Func_2b_426e ; $5eb0
-	ld bc, BallPosHeightOffsets ; $5eb3
+	ld bc, BallPosHeightOffsets_2b ; $5eb3
 	call Func_2b_424c ; $5eb6
 	call Func_2b_4098 ; $5eb9
 	ret ; $5ebc
-BallPosBlockOffsets:
+BallPosBlockOffsets_2b:
 	; $5ebd, 20 bytes (records:2)
 ; 10 records x 2 bytes
 	dw $0000 ; record 0
@@ -512,7 +512,7 @@ BallPosBlockOffsets:
 	dw $13b0 ; record 7
 	dw $1680 ; record 8
 	dw $1950 ; record 9
-BallPosSubOffsets:
+BallPosSubOffsets_2b:
 	; $5ed1, 20 bytes (records:2)
 ; 10 records x 2 bytes
 	dw $0000 ; record 0
@@ -525,7 +525,7 @@ BallPosSubOffsets:
 	dw $01f8 ; record 7
 	dw $0240 ; record 8
 	dw $0288 ; record 9
-BallPosHeightOffsets:
+BallPosHeightOffsets_2b:
 	; $5ee5, 64 bytes (records:2)
 ; 32 records x 2 bytes
 	dw $0000 ; record 0
