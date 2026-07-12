@@ -764,9 +764,9 @@ bank_024/d_6707.bin 092707 1000
 bank_024/d_7719.bin 093719 40
 bank_025/text_4004.asm 094004 3b34
 bank_026/text_4004.asm 098004 3b13
-bank_027/d_4000.bin 09c000 d14
-bank_027/d_4ff0.bin 09cff0 17b
-bank_027/d_51d0.bin 09d1d0 2686
+bank_027/d_4018.bin 09c018 cfc
+bank_027/d_51d0.bin 09d1d0 68d
+bank_027/d_585d.bin 09d85d 1ff9
 bank_027/d_785d.bin 09f85d 264
 bank_028/d_400e.bin 0a000e 1ea2
 bank_028/d_6080.bin 0a2080 49

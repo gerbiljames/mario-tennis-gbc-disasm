@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~119.9K instructions / 259,895 bytes of proven code (12.4% of the 2 MiB ROM)
+**~120.2K instructions / 260,298 bytes of proven code (12.4% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,18 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $27** is a self-contained story presentation/cutscene: a script that
+stages VRAM graphics/tilemap loads through bank $0a's DMA queue
+(`FarPtr_0a_22`/`_24`, dest tile-pages `$3180`/`$3500`/`$3b00`/`$3f00`), plays
+`sound $96`/`$79`, frame-delays via `Func_27_7856`, and branches on story flag
+`$05.7` between two variants (the second, `$4ff0`-`$516a`, was stranded code
+now seeded in `coverage/bank027_static_code.json`). Its opening `$4000` is a
+12-entry `dw` pointer table (`SceneFramePtrs_27`) into 12 frame records, each
+with a 6-pointer header, split across `SceneFrameData_27` (`$4018`) and
+`SceneFrameDataHi_27` (`$51d0`) with the script code between; `SceneSharedData_27`
+(`$785d`) is referenced by every record's tail. The exact record field layout
+and which cutscene it is (flag `$05.7`-gated) are not yet pinned down.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm

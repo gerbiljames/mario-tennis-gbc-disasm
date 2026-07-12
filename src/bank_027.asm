@@ -4,7 +4,23 @@ INCLUDE "ram_constants.asm"
 
 SECTION "ROM Bank $27", ROMX[$4000], BANK[$27]
 
-	INCBIN "data/bank_027/d_4000.bin" ; $4000, 3348 bytes
+SceneFramePtrs_27:
+	; $4000, 24 bytes (records:2)
+; 12 records x 2 bytes
+	dw $4018 ; record 0
+	dw $460c ; record 1
+	dw $4bbc ; record 2
+	dw $5211 ; record 3
+	dw $55f0 ; record 4
+	dw $5e15 ; record 5
+	dw $617f ; record 6
+	dw $6447 ; record 7
+	dw $6622 ; record 8
+	dw $6c18 ; record 9
+	dw $6edf ; record 10
+	dw $7213 ; record 11
+SceneFrameData_27:
+	INCBIN "data/bank_027/d_4018.bin" ; $4018, 3324 bytes
 	farcall FarPtr_0a_2e ; $4d14
 	ld a, $09 ; $4d17
 	ld b, $c0 ; $4d19
@@ -302,7 +318,161 @@ Label_27_4fe7:
 	ld [$c294], a ; $4fe9
 	ld [$c2a1], a ; $4fec
 	ret ; $4fef
-	INCBIN "data/bank_027/d_4ff0.bin" ; $4ff0, 379 bytes
+	ldh a, [hRomBank] ; $4ff0
+	ld hl, $51dd ; $4ff2
+	farcall FarPtr_0a_06 ; $4ff5
+	farcall FarPtr_0a_00 ; $4ff8
+	ld a, $04 ; $4ffb
+	ld d, $06 ; $4ffd
+	farcall FarPtr_0a_34 ; $4fff
+	test_flag $05, 7 ; $5002
+	jp z, Label_27_503c ; $5005
+	ld a, $02 ; $5008
+	farcall FarPtr_0a_1c ; $500a
+	ld a, $00 ; $500d
+	ld bc, $1f00 ; $500f
+	ld de, $3400 ; $5012
+	farcall FarPtr_0a_22 ; $5015
+	ld a, $02 ; $5018
+	ld bc, $2100 ; $501a
+	ld de, $3400 ; $501d
+	farcall FarPtr_0a_22 ; $5020
+	ld a, $02 ; $5023
+	ld b, $c0 ; $5025
+	farcall FarPtr_0a_2e ; $5027
+	test_flag $07, 4 ; $502a
+	jr nz, Label_27_5057 ; $502d
+	ld a, $04 ; $502f
+	ld bc, $3f00 ; $5031
+	ld de, $3f00 ; $5034
+	farcall FarPtr_0a_22 ; $5037
+	jr Label_27_5057 ; $503a
+Label_27_503c:
+	ld a, $00 ; $503c
+	ld bc, $2000 ; $503e
+	ld de, $3400 ; $5041
+	farcall FarPtr_0a_22 ; $5044
+	test_flag $06, 5 ; $5047
+	jr nz, Label_27_5057 ; $504a
+	ld a, $05 ; $504c
+	ld bc, $3f00 ; $504e
+	ld de, $3f00 ; $5051
+	farcall FarPtr_0a_22 ; $5054
+Label_27_5057:
+	ld a, $00 ; $5057
+	ld b, $c0 ; $5059
+	farcall FarPtr_0a_2e ; $505b
+	xor a, a ; $505e
+	ld [$c2d5], a ; $505f
+	ld c, $04 ; $5062
+	call Func_00_1d2e ; $5064
+	call Func_00_1da4 ; $5067
+	test_flag $05, 7 ; $506a
+	jp z, Label_27_50ff ; $506d
+	ld a, $00 ; $5070
+	ld d, $03 ; $5072
+	farcall FarPtr_0a_34 ; $5074
+	ld a, $00 ; $5077
+	farcall FarPtr_0a_36 ; $5079
+	ld a, $03 ; $507c
+	ld d, $03 ; $507e
+	farcall FarPtr_0a_34 ; $5080
+	ld a, $03 ; $5083
+	farcall FarPtr_0a_36 ; $5085
+	ld a, $3c ; $5088
+	call Func_27_7856 ; $508a
+	ld a, $02 ; $508d
+	ld b, a ; $508f
+	ld a, $00 ; $5090
+	farcall FarPtr_0a_32 ; $5092
+	ld a, $1e ; $5095
+	call Func_27_7856 ; $5097
+	ld a, $00 ; $509a
+	ld d, $03 ; $509c
+	farcall FarPtr_0a_34 ; $509e
+	ld a, $02 ; $50a1
+	ld d, $03 ; $50a3
+	farcall FarPtr_0a_34 ; $50a5
+	ld a, $02 ; $50a8
+	farcall FarPtr_0a_36 ; $50aa
+	ld a, $02 ; $50ad
+	ld b, $40 ; $50af
+	farcall FarPtr_0a_2e ; $50b1
+	ld a, $00 ; $50b4
+	ld bc, $2100 ; $50b6
+	ld de, $3600 ; $50b9
+	farcall FarPtr_0a_24 ; $50bc
+	ld a, $00 ; $50bf
+	farcall FarPtr_0a_20 ; $50c1
+	ld a, $00 ; $50c4
+	ld bc, $2100 ; $50c6
+	ld de, $3700 ; $50c9
+	farcall FarPtr_0a_24 ; $50cc
+	ld a, $02 ; $50cf
+	ld bc, $2100 ; $50d1
+	ld de, $3500 ; $50d4
+	farcall FarPtr_0a_24 ; $50d7
+	ld a, $02 ; $50da
+	farcall FarPtr_0a_20 ; $50dc
+	call Func_27_516b ; $50df
+	ldh a, [hRomBank] ; $50e2
+	ld b, a ; $50e4
+	ld a, $00 ; $50e5
+	ld de, SceneFrameDataHi_27 ; $50e7
+	farcall FarPtr_0a_1a ; $50ea
+	ldh a, [hRomBank] ; $50ed
+	ld b, a ; $50ef
+	ld a, $02 ; $50f0
+	ld de, SceneFrameDataHi_27 ; $50f2
+	farcall FarPtr_0a_1a ; $50f5
+	ld a, $14 ; $50f8
+	call Func_27_7856 ; $50fa
+	jr Label_27_514f ; $50fd
+Label_27_50ff:
+	ld a, $00 ; $50ff
+	ld d, $03 ; $5101
+	farcall FarPtr_0a_34 ; $5103
+	ld a, $00 ; $5106
+	farcall FarPtr_0a_36 ; $5108
+	ld a, $03 ; $510b
+	ld d, $03 ; $510d
+	farcall FarPtr_0a_34 ; $510f
+	ld a, $03 ; $5112
+	farcall FarPtr_0a_36 ; $5114
+	ld a, $3c ; $5117
+	call Func_27_7856 ; $5119
+	ld a, $00 ; $511c
+	ld bc, $2100 ; $511e
+	ld de, $3400 ; $5121
+	farcall FarPtr_0a_24 ; $5124
+	ld a, $00 ; $5127
+	farcall FarPtr_0a_20 ; $5129
+	ld a, $00 ; $512c
+	ld bc, $2100 ; $512e
+	ld de, $3700 ; $5131
+	farcall FarPtr_0a_24 ; $5134
+	ld a, $00 ; $5137
+	farcall FarPtr_0a_20 ; $5139
+	call Func_27_516b ; $513c
+	ldh a, [hRomBank] ; $513f
+	ld b, a ; $5141
+	ld a, $00 ; $5142
+	ld de, SceneFrameDataHi_27 ; $5144
+	farcall FarPtr_0a_1a ; $5147
+	ld a, $14 ; $514a
+	call Func_27_7856 ; $514c
+Label_27_514f:
+	call Func_27_51a1 ; $514f
+	ld a, $3c ; $5152
+	call Func_27_7856 ; $5154
+	set_flag $0d, 5 ; $5157
+	ld c, $04 ; $515a
+	call Func_00_1d20 ; $515c
+	call Func_00_1da4 ; $515f
+	ld a, $01 ; $5162
+	ld [$c294], a ; $5164
+	ld [$c2a1], a ; $5167
+	ret ; $516a
 Func_27_516b:
 	push af ; $516b
 	ld a, $0a ; $516c
@@ -357,7 +527,10 @@ Func_27_51a1:
 	farcall FarPtr_0a_04 ; $51cb
 	pop af ; $51ce
 	ret ; $51cf
-	INCBIN "data/bank_027/d_51d0.bin" ; $51d0, 9862 bytes
+SceneFrameDataHi_27:
+	INCBIN "data/bank_027/d_51d0.bin" ; $51d0, 1677 bytes
+SceneSharedData_27:
+	INCBIN "data/bank_027/d_585d.bin" ; $585d, 8185 bytes
 Func_27_7856:
 	push af ; $7856
 	ld a, a ; $7857
