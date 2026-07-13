@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~126.5K instructions / 281,527 bytes of proven code (13.4% of the 2 MiB ROM)
+**~126.5K instructions / 281,903 bytes of proven code (13.4% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -639,6 +639,21 @@ anywhere (`coverage/bank002_static_code.json`) were carved as code and, like
 bank $6b's dead handlers, labeled `Unused_02_*`: `SignExtendL`, `ListForEach`
 (indexes a 64-byte table, left as data), `StorySlotVariant` (near-dup of
 `Func_02_5247`), and `CharGroupFind`.
+
+**Bank $01 (hidden debug/developer test menu)** partially carved, 6.3% ->
+8.6% code, 10 -> 6 blobs. `Func_01_4018` is a button dispatcher into test modes
+(match test -> `FarPtr_16_00`, intro/title test -> `FarPtr_6b`, story-location
+tests) plus a sound test (`Func_01_6a5b`: adjust two hex indices on the d-pad
+and play sounds). Converted to committed source: `DebugMenuPalettes_01`
+(`$50f6`, 16 palettes, selected by `Func_01_519a`) and the sound-test tables
+(`SoundTestStrings_01` tilemap labels + `SoundTestSoundsA_01`/`B` sound-id
+tables read at `$6b3c`/`$6b52`). Three unreferenced handler fragments carved as
+code, labeled `Unused_01_*` (`coverage/bank001_static_code.json`): `MenuRedraw`,
+`MatchSetup`, `$41d6`. The remaining 6 blobs are tile/LZ graphics that stay
+gitignored (no ROM bytes) but are now named: `MenuTilesA_01`/`MenuTilesB_01`,
+the two LZ streams `MenuGfxLZ_01`/`MenuGfxLZ2_01` (split out of one blob, refs
+now symbolic), and `UnusedTiles_01_51ab`/`_53b0` (~3.4 KB of graphics
+referenced by nothing).
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm

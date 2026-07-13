@@ -109,7 +109,12 @@ Label_01_40d8:
 	ld [hl], $0a ; $40e4
 	farcall FarPtr_0a_5c ; $40e6
 	jp Label_01_40b2 ; $40e9
-	INCBIN "data/bank_001/d_40ec.bin" ; $40ec, 13 bytes
+Unused_01_MenuRedraw:
+	ld hl, $0153 ; $40ec
+	ld de, $0511 ; $40ef
+	call Func_00_1906 ; $40f2
+	ld a, $03 ; $40f5
+	ldh [$ff9e], a ; $40f7
 Label_01_40f9:
 	ldh a, [hInputPressed] ; $40f9
 	bit 3, a ; $40fb
@@ -186,7 +191,20 @@ Label_01_4192:
 	inc a ; $4198
 	ld [$c8f7], a ; $4199
 	jr Label_01_4192 ; $419c
-	INCBIN "data/bank_001/d_419e.bin" ; $419e, 36 bytes
+Unused_01_MatchSetup:
+	farcall FarPtr_3e_10 ; $419e
+	ld de, $002f ; $41a1
+	call Func_00_2523 ; $41a4
+	ld a, $04 ; $41a7
+	ld [wGameMode], a ; $41a9
+	farcall FarPtr_16_02 ; $41ac
+	farcall FarPtr_3e_12 ; $41af
+	farcall FarPtr_3e_04 ; $41b2
+	farcall FarPtr_3e_0e ; $41b5
+	farcall FarPtr_3e_0c ; $41b8
+	ld a, $01 ; $41bb
+	ldh [$ff9e], a ; $41bd
+	farcall FarPtr_1a_08 ; $41bf
 Label_01_41c2:
 	bit 7, a ; $41c2
 	jr z, Label_01_41db ; $41c4
@@ -198,7 +216,10 @@ Label_01_41ce:
 	farcall FarPtr_6b_00 ; $41ce
 	farcall FarPtr_6b_02 ; $41d1
 	jr Label_01_41ce ; $41d4
-	INCBIN "data/bank_001/d_41d6.bin" ; $41d6, 5 bytes
+Unused_01_41d6:
+	jp Label_01_40a5 ; $41d6
+	db $18 ; $41d9
+	db $ef ; $41da
 Label_01_41db:
 	bit 4, a ; $41db
 	jr z, Label_01_41f5 ; $41dd
@@ -225,8 +246,10 @@ Label_01_4204:
 Label_01_4209:
 	call Func_00_2631 ; $4209
 	jp Label_01_40f9 ; $420c
+MenuTilesA_01:
 	INCBIN "data/bank_001/d_420f.bin" ; $420f, 257 bytes
 	ds 256, $00 ; $4310, fill
+MenuTilesB_01:
 	INCBIN "data/bank_001/d_4410.bin" ; $4410, 3136 bytes
 Func_01_5050:
 	push af ; $5050
@@ -260,7 +283,7 @@ Func_01_5076:
 	push bc ; $5077
 	push de ; $5078
 	push hl ; $5079
-	ld hl, $4410 ; $507a
+	ld hl, MenuTilesB_01 ; $507a
 	ld de, $9200 ; $507d
 	ld c, $60 ; $5080
 	call Func_00_0480 ; $5082
@@ -278,7 +301,7 @@ Func_01_5095:
 	push bc ; $5096
 	push de ; $5097
 	push hl ; $5098
-	ld hl, $4410 ; $5099
+	ld hl, MenuTilesB_01 ; $5099
 	ld de, $9200 ; $509c
 	ld c, $20 ; $509f
 	call Func_00_0480 ; $50a1
@@ -319,7 +342,25 @@ Func_01_50ec:
 	call Func_01_5062 ; $50ef
 	call Func_01_5095 ; $50f2
 	ret ; $50f5
-	INCBIN "data/bank_001/d_50f6.bin" ; $50f6, 128 bytes
+DebugMenuPalettes_01:
+	; $50f6, 128 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2928, $7fff, $39ce, $0000 ; pal 0: #414a52 #ffffff #737373 #000000
+	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 2: #525252 #525252 #525252 #525252
+	dw $1adc, $6bff, $1e40, $0000 ; pal 3: #e6b431 #ffffd5 #009439 #000000
+	dw $225f, $6bff, $505c, $0000 ; pal 4: #ff9441 #ffffd5 #e610a4 #000000
+	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
+	dw $5a9f, $6bff, $001f, $0000 ; pal 6: #ffa4b4 #ffffd5 #ff0000 #000000
+	dw $3acc, $6bff, $7d4a, $0000 ; pal 7: #62b473 #ffffd5 #5252ff #000000
+	dw $6e43, $679f, $258f, $0000 ; pal 8: #1894de #ffe6cd #7b624a #000000
+	dw $294a, $294a, $294a, $294a ; pal 9: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 10: #525252 #525252 #525252 #525252
+	dw $01ff, $011f, $7fff, $0000 ; pal 11: #ff7b00 #ff4100 #ffffff #000000
+	dw $01ff, $011f, $7fff, $0000 ; pal 12: #ff7b00 #ff4100 #ffffff #000000
+	dw $01ff, $011f, $7fff, $0000 ; pal 13: #ff7b00 #ff4100 #ffffff #000000
+	dw $01ff, $011f, $7fff, $0000 ; pal 14: #ff7b00 #ff4100 #ffffff #000000
+	dw $01ff, $011f, $7fff, $0000 ; pal 15: #ff7b00 #ff4100 #ffffff #000000
 Func_01_5176:
 	push af ; $5176
 	push bc ; $5177
@@ -359,13 +400,15 @@ Func_01_519a:
 	ld e, $01 ; $51a5
 	call LoadPaletteShadow ; $51a7
 	ret ; $51aa
+UnusedTiles_01_51ab:
 	INCBIN "data/bank_001/d_51ab.bin" ; $51ab, 261 bytes
 	ds 256, $00 ; $52b0, fill
+UnusedTiles_01_53b0:
 	INCBIN "data/bank_001/d_53b0.bin" ; $53b0, 3200 bytes
 Func_01_6030:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032
-	ld hl, $607c ; $6034
+	ld hl, MenuGfxLZ_01 ; $6034
 	ld de, $d000 ; $6037
 	call DecompressData ; $603a
 	ld hl, $d000 ; $603d
@@ -376,7 +419,7 @@ Func_01_6030:
 	ld de, $8800 ; $604b
 	ld c, $80 ; $604e
 	call CopyMemoryFast ; $6050
-	ld hl, $6903 ; $6053
+	ld hl, MenuGfxLZ2_01 ; $6053
 	ld de, $d000 ; $6056
 	call DecompressData ; $6059
 	ld hl, $d000 ; $605c
@@ -395,7 +438,10 @@ Func_01_6030:
 Label_01_6077:
 	call Func_00_2631 ; $6077
 	jr Label_01_6077 ; $607a
-	INCBIN "data/bank_001/d_607c.bin" ; $607c, 2527 bytes
+MenuGfxLZ_01:
+	INCBIN "data/bank_001/d_607c.bin" ; $607c, 2183 bytes
+MenuGfxLZ2_01:
+	INCBIN "data/bank_001/d_6903.bin" ; $6903, 344 bytes
 Func_01_6a5b:
 	push af ; $6a5b
 	push bc ; $6a5c
@@ -412,7 +458,7 @@ Func_01_6a5b:
 	ldh [$ff9e], a ; $6a6e
 	push hl ; $6a70
 	push de ; $6a71
-	ld hl, $6b64 ; $6a72
+	ld hl, SoundTestStrings_01 ; $6a72
 	ld de, $0d09 ; $6a75
 	call Func_00_1906 ; $6a78
 	pop de ; $6a7b
@@ -570,5 +616,24 @@ Label_01_6b4d:
 	pop af ; $6b60
 Label_01_6b61:
 	jp Label_01_6a8a ; $6b61
-	INCBIN "data/bank_001/d_6b64.bin" ; $6b64, 194 bytes
+SoundTestStrings_01:
+	; $6b64, 17 bytes (bytes:16)
+	db $4d, $55, $53, $49, $43, $00, $45, $46, $46, $45, $43, $54, $00, $3e, $00, $20 ; 0x00
+	db $00 ; 0x10
+SoundTestSoundsA_01:
+	; $6b75, 63 bytes (bytes:16)
+	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
+	db $10, $11, $12, $13, $14, $15, $16, $17, $18, $16, $11, $12, $14, $19, $13, $15 ; 0x10
+	db $14, $1a, $1b, $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24, $25, $26, $27, $28 ; 0x20
+	db $29, $2a, $2b, $2c, $2d, $2e, $2f, $30, $31, $32, $41, $42, $43, $44, $45 ; 0x30
+SoundTestSoundsB_01:
+	; $6bb4, 114 bytes (bytes:16)
+	db $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $5a, $5b, $5c, $5d, $5e, $5f ; 0x00
+	db $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $6a, $6b, $6c, $6d, $6e, $6f ; 0x10
+	db $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $7a, $7b, $7c, $7d, $7e, $7f ; 0x20
+	db $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $8a, $8b, $8c, $8d, $8e, $8f ; 0x30
+	db $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $9a, $9b, $9c, $9d, $9e, $9f ; 0x40
+	db $a0, $a1, $a2, $a3, $a4, $a5, $a6, $a7, $a8, $a9, $aa, $ab, $ac, $ad, $ae, $af ; 0x50
+	db $b0, $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf ; 0x60
+	db $c0, $c1 ; 0x70
 	ds 5082, $ff ; $6c26, fill
