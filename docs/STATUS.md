@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~120.2K instructions / 260,631 bytes of proven code (12.4% of the 2 MiB ROM)
+**~121.3K instructions / 262,497 bytes of proven code (12.5% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,26 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Banks $20/$21/$22/$23 are four more ball-position banks** in the same
+family as $2a/$2b — each dispatched from the same bank-7 shot-placement
+selector (`FarPtr_20/21/22/23_00` at $58fd/$5916/…, alongside `_2a`/`_2b`),
+so the selector picks one of six placement tables per shot/mode. Each is a
+15360-byte position table (`BallPosData_2{0-3}` at `$427d`) addressed as
+`base + heightOffset[ballHeightBand] + blockOffset[$df6f]` then a 6-byte
+record. The two offset tables (byte-identical across all four banks, and to
+each other's structure) are carved inline: `BallPosHeightOffsets` ($7e98, 32
+words; ball height `& $1f` quantizes to 4 bands `{0, $0f00, $1e00, $2d00}`,
+each = 3840 bytes) and `BallPosBlockOffsets` ($7ed8, 10 words, step $180 =
+384 bytes/block). So 15360 = 4 bands × 10 blocks × 384 = 4×10×64 six-byte
+records. Everything else ($4012-$424b) is stranded per-axis
+coordinate-projection helper code (variants of `Func_2*_4102`: `MulSinCos`
+placement, stride-4/stride-6 table search, record scale), reached only
+through computed dispatch — seeded as static code
+(`coverage/bank02{0,1,2,3}_static_code.json`, byte-identical helpers). Each
+bank went from 5 helper-code blobs + 2 anonymous offset tables down to just
+the named `BallPosData` INCBIN (94% of the bank). $2a/$2b differ only in
+using a third (sub) offset dimension and a 7200-byte table.
 
 **Bank $27** is a self-contained story presentation/cutscene: a script that
 stages VRAM graphics/tilemap loads through bank $0a's DMA queue

@@ -1,0 +1,15 @@
+{
+ "_comment": "Static code-entry seeds for bank $22 stranded coordinate-projection helpers, reached only through computed dispatch from the bank-7 shot-placement selector (farcall FarPtr_22_00). Byte-identical helper code to sibling ball-position banks $20/$21/$22/$23. Flat ROM offset = 0x22*0x4000 + (cpu - 0x4000).",
+ "rom": [
+  557074,
+  557118,
+  557188,
+  557208,
+  557365,
+  557405,
+  557462,
+  557513,
+  557601
+ ],
+ "other": []
+}

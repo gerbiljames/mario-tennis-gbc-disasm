@@ -22,7 +22,19 @@ Func_20_4002:
 	pop de ; $400f
 	add hl, de ; $4010
 	ret ; $4011
-	INCBIN "data/bank_020/d_4012.bin" ; $4012, 13 bytes
+Func_20_4012:
+	push hl ; $4012
+	ld l, e ; $4013
+	ld h, d ; $4014
+	add hl, hl ; $4015
+	add hl, hl ; $4016
+	ld l, h ; $4017
+	ld h, $00 ; $4018
+	add hl, hl ; $401a
+	add hl, hl ; $401b
+	pop de ; $401c
+	add hl, de ; $401d
+	ret ; $401e
 Func_20_401f:
 	ld a, [$c48e] ; $401f
 	ld d, a ; $4022
@@ -49,7 +61,32 @@ Label_20_403b:
 	jr Label_20_4027 ; $403b
 Label_20_403d:
 	ret ; $403d
-	INCBIN "data/bank_020/d_403e.bin" ; $403e, 31 bytes
+Func_20_403e:
+	ld a, [$c48e] ; $403e
+	ld d, a ; $4041
+	ld a, [$c48f] ; $4042
+	ld e, a ; $4045
+Label_20_4046:
+	push hl ; $4046
+	ld a, [hl+] ; $4047
+	ld h, [hl] ; $4048
+	ld l, a ; $4049
+	add hl, bc ; $404a
+	pop hl ; $404b
+	jr c, Label_20_405c ; $404c
+	ld a, d ; $404e
+	cp a, e ; $404f
+	jr nc, Label_20_405c ; $4050
+	inc d ; $4052
+	ld a, $04 ; $4053
+	add a, l ; $4055
+	ld l, a ; $4056
+	jr nc, Label_20_405a ; $4057
+	inc h ; $4059
+Label_20_405a:
+	jr Label_20_4046 ; $405a
+Label_20_405c:
+	ret ; $405c
 Func_20_405d:
 	ld a, [hl+] ; $405d
 	ld c, a ; $405e
@@ -84,7 +121,48 @@ Label_20_4076:
 	pop hl ; $407f
 	farcall FarPtr_08_26 ; $4080
 	ret ; $4083
-	INCBIN "data/bank_020/d_4084.bin" ; $4084, 52 bytes
+Func_20_4084:
+	ld a, [hl+] ; $4084
+	ld c, a ; $4085
+	ld a, [hl+] ; $4086
+	ld b, a ; $4087
+	push bc ; $4088
+	ld a, [hl+] ; $4089
+	ld c, a ; $408a
+	ld a, [hl+] ; $408b
+	ld b, a ; $408c
+	ld hl, $c43a ; $408d
+	ld a, [hl+] ; $4090
+	ld d, [hl] ; $4091
+	ld e, a ; $4092
+	pop hl ; $4093
+	farcall FarPtr_08_26 ; $4094
+	ret ; $4097
+	ld a, [hl+] ; $4098
+	ld c, a ; $4099
+	ld a, [hl+] ; $409a
+	ld b, a ; $409b
+	push hl ; $409c
+	ld hl, $c476 ; $409d
+	ld a, c ; $40a0
+	ld [hl+], a ; $40a1
+	ld [hl], b ; $40a2
+	ld hl, $c434 ; $40a3
+	ld a, [hl+] ; $40a6
+	ld h, [hl] ; $40a7
+	ld l, a ; $40a8
+	bit 7, h ; $40a9
+	jr z, Label_20_40b3 ; $40ab
+	xor a, a ; $40ad
+	sub a, l ; $40ae
+	ld l, a ; $40af
+	sbc a, a ; $40b0
+	sub a, h ; $40b1
+	ld h, a ; $40b2
+Label_20_40b3:
+	add hl, hl ; $40b3
+	ld a, b ; $40b4
+	call Func_00_0bd4 ; $40b5
 	add hl, hl ; $40b8
 	add hl, hl ; $40b9
 	add hl, bc ; $40ba
@@ -175,7 +253,123 @@ Func_20_4102:
 	rr l ; $412f
 	call Func_20_41f5 ; $4131
 	ret ; $4134
-	INCBIN "data/bank_020/d_4135.bin" ; $4135, 188 bytes
+	xor a, a ; $4135
+	sub a, c ; $4136
+	ld c, a ; $4137
+	sbc a, a ; $4138
+	sub a, b ; $4139
+	ld b, a ; $413a
+	ld a, [$c48a] ; $413b
+	ld e, a ; $413e
+	ld a, [$c48b] ; $413f
+	ld d, a ; $4142
+	call Func_20_4002 ; $4143
+	call Func_20_401f ; $4146
+	push de ; $4149
+	call Func_20_405d ; $414a
+	pop de ; $414d
+	ld h, d ; $414e
+	ld l, $00 ; $414f
+	sra h ; $4151
+	rr l ; $4153
+	sra h ; $4155
+	rr l ; $4157
+	call Func_20_41f5 ; $4159
+	ret ; $415c
+	push hl ; $415d
+	ld hl, $c43a ; $415e
+	ld a, [hl+] ; $4161
+	ld b, [hl] ; $4162
+	ld c, a ; $4163
+	ld hl, $c436 ; $4164
+	ld a, [hl+] ; $4167
+	ld d, [hl] ; $4168
+	ld e, a ; $4169
+	ld hl, $c434 ; $416a
+	ld a, [hl+] ; $416d
+	ld h, [hl] ; $416e
+	ld l, a ; $416f
+	call VectorLengthFromAngle ; $4170
+	ld e, l ; $4173
+	ld d, h ; $4174
+	ld hl, $c48c ; $4175
+	ld a, [hl+] ; $4178
+	ld h, [hl] ; $4179
+	ld l, a ; $417a
+	ld a, l ; $417b
+	sub a, e ; $417c
+	ld l, a ; $417d
+	ld a, h ; $417e
+	sbc a, d ; $417f
+	ld h, a ; $4180
+	jr nc, Label_20_4189 ; $4181
+	ld hl, $c48c ; $4183
+	ld a, [hl+] ; $4186
+	ld d, [hl] ; $4187
+	ld e, a ; $4188
+Label_20_4189:
+	pop hl ; $4189
+	push de ; $418a
+	call Func_20_4002 ; $418b
+	call Func_20_405d ; $418e
+	pop hl ; $4191
+	call Func_20_41f5 ; $4192
+	ret ; $4195
+	xor a, a ; $4196
+	sub a, c ; $4197
+	ld c, a ; $4198
+	sbc a, a ; $4199
+	sub a, b ; $419a
+	ld b, a ; $419b
+	ld a, [$c48a] ; $419c
+	ld e, a ; $419f
+	ld a, [$c48b] ; $41a0
+	ld d, a ; $41a3
+	call Func_20_4012 ; $41a4
+	push hl ; $41a7
+	ld a, [hl+] ; $41a8
+	ld h, [hl] ; $41a9
+	ld l, a ; $41aa
+	add hl, bc ; $41ab
+	ld e, l ; $41ac
+	ld d, h ; $41ad
+	pop hl ; $41ae
+	jp c, Label_20_41f1 ; $41af
+	call Func_20_403e ; $41b2
+	push de ; $41b5
+	call Func_20_4084 ; $41b6
+	pop de ; $41b9
+	ld h, d ; $41ba
+	ld l, $00 ; $41bb
+	sra h ; $41bd
+	rr l ; $41bf
+	sra h ; $41c1
+	rr l ; $41c3
+	call Func_20_41f5 ; $41c5
+	ret ; $41c8
+	xor a, a ; $41c9
+	sub a, c ; $41ca
+	ld c, a ; $41cb
+	sbc a, a ; $41cc
+	sub a, b ; $41cd
+	ld b, a ; $41ce
+	ld a, [$c48a] ; $41cf
+	ld e, a ; $41d2
+	ld a, [$c48b] ; $41d3
+	ld d, a ; $41d6
+	call Func_20_4012 ; $41d7
+	call Func_20_403e ; $41da
+	push de ; $41dd
+	call Func_20_4084 ; $41de
+	pop de ; $41e1
+	ld h, d ; $41e2
+	ld l, $00 ; $41e3
+	sra h ; $41e5
+	rr l ; $41e7
+	sra h ; $41e9
+	rr l ; $41eb
+	call Func_20_41f5 ; $41ed
+	ret ; $41f0
 Label_20_41f1:
 	farcall FarPtr_24_04 ; $41f1
 	ret ; $41f4
@@ -210,7 +404,38 @@ Func_20_41f5:
 	ld [hl+], a ; $421e
 	ld [hl], d ; $421f
 	ret ; $4220
-	INCBIN "data/bank_020/d_4221.bin" ; $4221, 43 bytes
+	push hl ; $4221
+	push bc ; $4222
+	ld hl, $c43a ; $4223
+	ld a, [hl+] ; $4226
+	ld b, [hl] ; $4227
+	ld c, a ; $4228
+	ld hl, wBallDepth ; $4229
+	ld a, [hl+] ; $422c
+	ld d, [hl] ; $422d
+	ld e, a ; $422e
+	ld hl, wBallX ; $422f
+	ld a, [hl+] ; $4232
+	ld h, [hl] ; $4233
+	ld l, a ; $4234
+	call VectorLengthFromAngle ; $4235
+	add hl, hl ; $4238
+	ld a, h ; $4239
+	and a, $1f ; $423a
+	ld [$c472], a ; $423c
+	add a, a ; $423f
+	pop hl ; $4240
+	pop de ; $4241
+	add a, l ; $4242
+	ld l, a ; $4243
+	jr nc, Label_20_4247 ; $4244
+	inc h ; $4246
+Label_20_4247:
+	ld a, [hl+] ; $4247
+	ld h, [hl] ; $4248
+	ld l, a ; $4249
+	add hl, de ; $424a
+	ret ; $424b
 Func_20_424c:
 	ld e, l ; $424c
 	ld d, h ; $424d
@@ -259,18 +484,66 @@ Label_20_4278:
 	ld l, a ; $427a
 	add hl, de ; $427b
 	ret ; $427c
+BallPosData_20:
 	INCBIN "data/bank_020/d_427d.bin" ; $427d, 15360 bytes
 Func_20_7e7d:
 	farcall FarPtr_07_3a ; $7e7d
 	push bc ; $7e80
-	ld hl, $427d ; $7e81
-	ld bc, $7e98 ; $7e84
+	ld hl, BallPosData_20 ; $7e81
+	ld bc, BallPosHeightOffsets_20 ; $7e84
 	call Func_20_424c ; $7e87
-	ld bc, $7ed8 ; $7e8a
+	ld bc, BallPosBlockOffsets_20 ; $7e8a
 	ld a, [$df6f] ; $7e8d
 	call Func_20_426e ; $7e90
 	pop bc ; $7e93
 	call Func_20_4102 ; $7e94
 	ret ; $7e97
-	INCBIN "data/bank_020/d_7e98.bin" ; $7e98, 84 bytes
+BallPosHeightOffsets_20:
+	; $7e98, 64 bytes (records:2)
+; 32 records x 2 bytes
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+	dw $0000 ; record 5
+	dw $0f00 ; record 6
+	dw $0f00 ; record 7
+	dw $0f00 ; record 8
+	dw $1e00 ; record 9
+	dw $1e00 ; record 10
+	dw $1e00 ; record 11
+	dw $2d00 ; record 12
+	dw $2d00 ; record 13
+	dw $2d00 ; record 14
+	dw $2d00 ; record 15
+	dw $2d00 ; record 16
+	dw $2d00 ; record 17
+	dw $2d00 ; record 18
+	dw $2d00 ; record 19
+	dw $2d00 ; record 20
+	dw $2d00 ; record 21
+	dw $2d00 ; record 22
+	dw $2d00 ; record 23
+	dw $2d00 ; record 24
+	dw $2d00 ; record 25
+	dw $2d00 ; record 26
+	dw $2d00 ; record 27
+	dw $2d00 ; record 28
+	dw $2d00 ; record 29
+	dw $2d00 ; record 30
+	dw $2d00 ; record 31
+BallPosBlockOffsets_20:
+	; $7ed8, 20 bytes (records:2)
+; 10 records x 2 bytes
+	dw $0000 ; record 0
+	dw $0180 ; record 1
+	dw $0300 ; record 2
+	dw $0480 ; record 3
+	dw $0600 ; record 4
+	dw $0780 ; record 5
+	dw $0900 ; record 6
+	dw $0a80 ; record 7
+	dw $0c00 ; record 8
+	dw $0d80 ; record 9
 	ds 276, $ff ; $7eec, fill
