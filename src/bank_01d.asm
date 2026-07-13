@@ -4653,37 +4653,37 @@ Label_1d_7453:
 	call Func_1d_7610 ; $749e
 	call Func_1d_7505 ; $74a1
 	call Func_00_2725 ; $74a4
-	ld [bc], a ; $74a7
+	db $02 ; $74a7 inline arg
 	ld hl, $7814 ; $74a8
 	ld bc, $d240 ; $74ab
 	call Func_1d_7610 ; $74ae
 	call Func_1d_7505 ; $74b1
 	call Func_00_2725 ; $74b4
-	ld [bc], a ; $74b7
+	db $02 ; $74b7 inline arg
 	ld hl, $7807 ; $74b8
 	ld bc, $d240 ; $74bb
 	call Func_1d_7610 ; $74be
 	call Func_1d_7505 ; $74c1
 	call Func_00_2725 ; $74c4
-	ld [bc], a ; $74c7
+	db $02 ; $74c7 inline arg
 	ld hl, $77f6 ; $74c8
 	ld bc, $d240 ; $74cb
 	call Func_1d_7610 ; $74ce
 	call Func_1d_7505 ; $74d1
 	call Func_00_2725 ; $74d4
-	ld [bc], a ; $74d7
+	db $02 ; $74d7 inline arg
 	ld hl, $77e1 ; $74d8
 	ld bc, $d240 ; $74db
 	call Func_1d_7610 ; $74de
 	call Func_1d_7505 ; $74e1
 	call Func_00_2725 ; $74e4
-	ld [bc], a ; $74e7
+	db $02 ; $74e7 inline arg
 	ld hl, DrillDisplayData2_1d ; $74e8
 	ld bc, $d240 ; $74eb
 	call Func_1d_7610 ; $74ee
 	call Func_1d_7505 ; $74f1
 	call Func_00_2725 ; $74f4
-	inc c ; $74f7
+	db $0c ; $74f7 inline arg
 	wram_bank $06 ; $74f8
 	ld a, $01 ; $74fe
 	ld [$d182], a ; $7500
@@ -4759,39 +4759,39 @@ Label_1d_7594:
 	call Func_1d_7610 ; $759f
 	call Func_1d_7545 ; $75a2
 	call Func_00_2725 ; $75a5
-	ld [bc], a ; $75a8
+	db $02 ; $75a8 inline arg
 	farcall FarPtr_1c_0a ; $75a9
 	ld hl, $77f6 ; $75ac
 	ld bc, $d240 ; $75af
 	call Func_1d_7610 ; $75b2
 	call Func_1d_7545 ; $75b5
 	call Func_00_2725 ; $75b8
-	ld [bc], a ; $75bb
+	db $02 ; $75bb inline arg
 	farcall FarPtr_1c_0a ; $75bc
 	ld hl, $7807 ; $75bf
 	ld bc, $d240 ; $75c2
 	call Func_1d_7610 ; $75c5
 	call Func_1d_7545 ; $75c8
 	call Func_00_2725 ; $75cb
-	ld [bc], a ; $75ce
+	db $02 ; $75ce inline arg
 	farcall FarPtr_1c_0a ; $75cf
 	ld hl, $7814 ; $75d2
 	ld bc, $d240 ; $75d5
 	call Func_1d_7610 ; $75d8
 	call Func_1d_7545 ; $75db
 	call Func_00_2725 ; $75de
-	ld [bc], a ; $75e1
+	db $02 ; $75e1 inline arg
 	farcall FarPtr_1c_0a ; $75e2
 	ld hl, $781d ; $75e5
 	ld bc, $d240 ; $75e8
 	call Func_1d_7610 ; $75eb
 	call Func_1d_7545 ; $75ee
 	call Func_00_2725 ; $75f1
-	ld [bc], a ; $75f4
+	db $02 ; $75f4 inline arg
 	farcall FarPtr_1c_0a ; $75f5
 	call Func_1d_7545 ; $75f8
 	call Func_00_2725 ; $75fb
-	ld [bc], a ; $75fe
+	db $02 ; $75fe inline arg
 	wram_bank $06 ; $75ff
 	ld hl, $d17f ; $7605
 	res 2, [hl] ; $7608

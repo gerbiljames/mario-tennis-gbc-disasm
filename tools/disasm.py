@@ -137,6 +137,7 @@ class Disassembly:
         self.instrs = {}      # rom offset -> Instr
         self.code_bytes = set()
         self.farcalls = {}    # site offset -> (bank, slot, entry_flat, target_flat)
+        self.inline_arg_calls = {}  # call site offset -> inline arg byte
         self.inferred_entries = {}  # entry_flat -> (bank, slot, target_flat)
         self.jt_entries = {}  # rst $00 inline jump-table entry offset -> target_flat
         self.data_boundaries = set()  # declared data-table offsets (data_tables.json)
@@ -195,6 +196,16 @@ class Disassembly:
             # rst $08: sound/music command, one inline id byte
             return sm83.Instr(2, f"sound ${self.rom[off+1]:02x}",
                               None, True, False, False, False)
+        elif op == 0xCD and off + 4 <= len(self.rom) \
+                and off // BANK_SIZE == (off + 3) // BANK_SIZE \
+                and (self.rom[off+1] | (self.rom[off+2] << 8)) in self.INLINE_ARG_CALLS:
+            # call to a ROM0 helper that reads one inline byte after the
+            # call and bumps its return address past it (Func_00_2725), so
+            # the operand byte is data, not the next instruction.
+            self.inline_arg_calls[off] = self.rom[off+3]
+            return sm83.Instr(4, "call {target}",
+                              self.rom[off+1] | (self.rom[off+2] << 8),
+                              True, False, False, False)
         elif op in (0xE7, 0xEF, 0xF7) and off + 3 <= len(self.rom) \
                 and off // BANK_SIZE == (off + 2) // BANK_SIZE \
                 and self.rom[off + 1] & 0x1F == 0:
@@ -230,6 +241,11 @@ class Disassembly:
     # data-reads during the copy, not execution -- they split the one blob
     # into three and decode graphics bytes as rst/inc.
     BAD_SEEDS = {0x19617F, 0x67682, 0x24F99, 0x252B5}
+
+    # ROM0 helpers that consume one inline byte after the `call` (they read
+    # the byte at the return address and step the return past it). The byte
+    # is data; without this the decoder would treat it as the next opcode.
+    INLINE_ARG_CALLS = {0x2725}
 
     def seed(self, seeds):
         bad = 0
@@ -1855,6 +1871,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         sl = far_slot_names.get((fbank, slot),
                                                 f"FarPtr_{fbank:02x}_{slot:02x}")
                         lines.append(f"\tfarcall {sl} ; ${cpu:04x}")
+                elif off in dis.inline_arg_calls and ins.size == 4:
+                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels)} ; ${cpu:04x}")
+                    lines.append(f"\tdb ${rom[off+3]:02x} ; ${offset_to_cpu(off+3):04x} inline arg")
                 else:
                     note = dis.data_site_notes.get(off)
                     suffix = ""

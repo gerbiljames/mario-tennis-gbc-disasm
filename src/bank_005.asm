@@ -6779,9 +6779,8 @@ Func_05_6d85:
 	call Func_00_1da4 ; $6d94
 	call Func_05_436f ; $6d97
 	call Func_00_2725 ; $6d9a
-	ld e, $cd ; $6d9d
-	ld b, [hl] ; $6d9f
-	inc bc ; $6da0
+	db $1e ; $6d9d inline arg
+	call DisableLCDSafely ; $6d9e
 	call Func_05_6e09 ; $6da1
 	ld de, $d000 ; $6da4
 	ld hl, $c3b4 ; $6da7

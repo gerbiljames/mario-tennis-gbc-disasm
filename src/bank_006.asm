@@ -2086,7 +2086,8 @@ Label_06_702f:
 	jr Label_06_70a8 ; $7084
 Label_06_7086:
 	call Func_00_2725 ; $7086
-	ld [$013e], sp ; $7089
+	db $08 ; $7089 inline arg
+	ld a, $01 ; $708a
 	ld [$c4c7], a ; $708c
 	ld a, $ff ; $708f
 	ld [$c4c3], a ; $7091

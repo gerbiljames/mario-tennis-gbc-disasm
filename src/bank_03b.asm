@@ -4090,9 +4090,8 @@ Label_3b_5cbb:
 	jr Label_3b_5ce0 ; $5cd5
 Label_3b_5cd7:
 	call Func_00_2725 ; $5cd7
-	ld b, $df ; $5cda
-	nop ; $5cdc
-	rlca ; $5cdd
+	db $06 ; $5cda inline arg
+	farcall FarPtr_07_00 ; $5cdb
 	jr c, Label_3b_5c78 ; $5cde
 Label_3b_5ce0:
 	ret ; $5ce0
@@ -7521,7 +7520,7 @@ Func_3b_775d:
 	call RegisterFrameTask ; $7781
 	sound $78 ; $7784
 	call Func_00_2725 ; $7786
-	ld a, b ; $7789
+	db $78 ; $7789 inline arg
 Label_3b_778a:
 	ldh a, [hInputPressed] ; $778a
 	bit 0, a ; $778c

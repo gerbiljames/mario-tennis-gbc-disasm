@@ -790,9 +790,8 @@ Label_1b_4eb5:
 	wram_bank $03 ; $4ec6
 	call Func_1b_4ff1 ; $4ecc
 	call Func_00_2725 ; $4ecf
-	ld e, $cd ; $4ed2
-	rlca ; $4ed4
-	ld d, l ; $4ed5
+	db $1e ; $4ed2 inline arg
+	call Func_1b_5507 ; $4ed3
 	ld c, $20 ; $4ed6
 	ld a, [$d802] ; $4ed8
 	or a, a ; $4edb
@@ -954,7 +953,13 @@ Label_1b_504a:
 	ld h, [hl] ; $504b
 	ld l, a ; $504c
 	jp hl ; $504d
-	INCBIN "data/bank_01b/d_504e.bin" ; $504e, 1219 bytes
+	INCBIN "data/bank_01b/d_504e.bin" ; $504e, 1209 bytes
+Func_1b_5507:
+	call Func_00_2631 ; $5507
+	ldh a, [hInputPressed] ; $550a
+	and a, $03 ; $550c
+	jr z, Func_1b_5507 ; $550e
+	ret ; $5510
 Func_1b_5511:
 	call Func_1b_569c ; $5511
 	wram_bank $03 ; $5514

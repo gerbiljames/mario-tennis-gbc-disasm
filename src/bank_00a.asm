@@ -2230,7 +2230,7 @@ Label_0a_4fd6:
 	jr Label_0a_4ff5 ; $4fef
 Label_0a_4ff1:
 	call Func_00_2725 ; $4ff1
-	inc b ; $4ff4
+	db $04 ; $4ff4 inline arg
 Label_0a_4ff5:
 	wram_bank $04 ; $4ff5
 	call Func_0a_5104 ; $4ffb

@@ -1484,7 +1484,7 @@ Label_1e_5438:
 	call Func_00_1d2e ; $548d
 	call Func_00_1da4 ; $5490
 	call Func_00_2725 ; $5493
-	inc d ; $5496
+	db $14 ; $5496 inline arg
 	call Func_1e_5b03 ; $5497
 	ld c, $10 ; $549a
 	call Func_00_1d20 ; $549c
@@ -2225,7 +2225,7 @@ Func_1e_5b19:
 	ret ; $5b5f
 Label_1e_5b60:
 	call Func_00_2725 ; $5b60
-	ld a, [bc] ; $5b63
+	db $0a ; $5b63 inline arg
 	xor a, a ; $5b64
 	ret ; $5b65
 Func_1e_5b66:

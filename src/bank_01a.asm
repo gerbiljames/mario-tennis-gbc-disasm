@@ -535,7 +535,7 @@ Label_1a_460d:
 	jr nz, Label_1a_462a ; $4620
 	sound $5e ; $4622
 	call Func_00_2725 ; $4624
-	inc b ; $4627
+	db $04 ; $4627 inline arg
 	jr Label_1a_460d ; $4628
 Label_1a_462a:
 	ld a, $01 ; $462a
@@ -610,7 +610,7 @@ Label_1a_46af:
 	call Func_1a_50d3 ; $46b0
 	sound $5f ; $46b3
 	call Func_00_2725 ; $46b5
-	inc d ; $46b8
+	db $14 ; $46b8 inline arg
 	wram_bank $06 ; $46b9
 	ld hl, $c370 ; $46bf
 	ld a, [hl+] ; $46c2

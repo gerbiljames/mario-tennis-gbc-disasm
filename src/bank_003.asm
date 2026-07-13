@@ -5051,7 +5051,7 @@ Func_03_751e:
 	call Func_00_1d2e ; $7597
 	call Func_00_1da4 ; $759a
 	call Func_00_2725 ; $759d
-	ld a, b ; $75a0
+	db $78 ; $75a0 inline arg
 	pop af ; $75a1
 	wram_bank ; $75a2
 	pop hl ; $75a6

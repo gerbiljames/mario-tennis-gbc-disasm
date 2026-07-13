@@ -882,7 +882,7 @@ Label_1c_468d:
 	ld [$d026], a ; $47f4
 	call Func_1c_495d ; $47f7
 	call Func_00_2725 ; $47fa
-	db $06 ; $47fd
+	db $06 ; $47fd inline arg
 	ld hl, $58ea ; $47fe
 	ld bc, $d370 ; $4801
 	call Func_1c_490f ; $4804

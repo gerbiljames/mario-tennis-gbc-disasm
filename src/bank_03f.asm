@@ -211,7 +211,7 @@ Label_3f_4106:
 	ld [$cb37], a ; $413c
 	call Func_3f_4e69 ; $413f
 	call Func_00_2725 ; $4142
-	db $01 ; $4145
+	db $01 ; $4145 inline arg
 	ld a, $02 ; $4146
 	jr Label_3f_4154 ; $4148
 Label_3f_414a:

@@ -70,7 +70,7 @@ Func_10_40ef:
 	farcall FarPtr_0a_00 ; $40ef
 	farcall FarPtr_03_36 ; $40f2
 	call Func_00_2725 ; $40f5
-	inc a ; $40f8
+	db $3c ; $40f8 inline arg
 	call EnableLCD ; $40f9
 	farcall FarPtr_03_38 ; $40fc
 	ld c, $04 ; $40ff
@@ -81,19 +81,19 @@ Func_10_40ef:
 	ld hl, $4141 ; $410b
 	call RegisterFrameTask ; $410e
 	call Func_00_2725 ; $4111
-	ld a, b ; $4114
+	db $78 ; $4114 inline arg
 	call Func_00_2725 ; $4115
-	rst Rst38 ; $4118
+	db $ff ; $4118 inline arg
 	call Func_00_2725 ; $4119
-	rst Rst38 ; $411c
+	db $ff ; $411c inline arg
 	call Func_00_2725 ; $411d
-	rst Rst38 ; $4120
+	db $ff ; $4120 inline arg
 	call Func_00_2725 ; $4121
-	rst Rst38 ; $4124
+	db $ff ; $4124 inline arg
 	call Func_00_2725 ; $4125
-	rst Rst38 ; $4128
+	db $ff ; $4128 inline arg
 	call Func_00_2725 ; $4129
-	rst Rst38 ; $412c
+	db $ff ; $412c inline arg
 	ld hl, $4141 ; $412d
 	call Func_00_1bcb ; $4130
 	farcall FarPtr_0a_02 ; $4133
