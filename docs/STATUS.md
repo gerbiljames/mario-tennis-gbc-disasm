@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~125.4K instructions / 273,343 bytes of proven code (13.0% of the 2 MiB ROM)
+**~125.9K instructions / 274,805 bytes of proven code (13.1% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,16 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $0e (story match/launcher bank) — code recovered** (51.6% → 60.5%
+code; 29 → 22 blobs). Seeded 8 stranded code blobs + farcall scripts (`$5bba`
+774 B / 95 farcalls, `$43a6`, `$5422`). The big pointer-tables (`$75f6`,
+`$5248`) and `$4006`'s targets were verified to point at `01 c0 00 …` data
+records (not code) and left as data. Two bank-switch **code heads** (`$71e9`,
+`$7c0c`) were tried but *reverted*: they run code straight into embedded data
+with no `ret`, so seeding them misframed the adjacent `$75f6` data table into
+`jp`/code — the recurring interleave trap (byte-perfect doesn't catch it). Left
+as blobs pending runtime coverage.
 
 **Bank $10 (story match-select) — code recovered** (31.9% → 39.5% code;
 37 → 27 blobs). Seeded 16 stranded code blobs + two jump tables
