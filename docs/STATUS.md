@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~123.7K instructions / 268,536 bytes of proven code (12.8% of the 2 MiB ROM)
+**~124.1K instructions / 269,668 bytes of proven code (12.9% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,17 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $1b (dispatch bank) — code recovered, dispatch tables remain**
+(38.2% → 45.1% code). Seeded 11 stranded handler blobs
+(`coverage/bank01b_static_code.json`, function starts + internal flow targets);
+the two code+data-interleaved ones (`$5f5f`, `$664b`) split correctly, leaving
+their embedded tables (`$5f69`, `$6035`, `$6671`) as data. The bank's bulk is
+large irregular **jump-table + inline-handler** regions (`$504e` 1219 B,
+`$5856` 987 B stride-16 stubs, `$5c8d` 708 B stride-48, `$402e` resource-pointer
+table) and a 2.4 KB `$446d` blob — each is a few leading `dw` pointers then
+runs of handler stubs, reached via `jp hl`. These need per-table extent
+analysis (or runtime coverage) to seed safely and were left for a later pass.
 
 **Bank $1e (reward/results screen-resource bank) fully identified**
 (52.7% → 61.5% code). Turned out to be a screen-resource bank: sequences of

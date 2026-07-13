@@ -35,3 +35,17 @@ internal call/jump targets only**, and let descent stop at `ret`; data-only
 regions (reached via `ld hl`/`ld de`, not control flow) stay data. Recover
 externally-dispatched handlers by seeding jump-table targets, not by blind
 per-byte seeding.
+
+**Screen-resource banks (bank $1e):** some code banks bundle graphics as
+chained LZ streams + palette sets loaded locally via `ld hl,src; call
+DecompressData` (LZ) and `ld hl,src; call LoadPaletteShadow` (`de` low byte =
+palette count). To carve exactly: grep every such load site for its `src`,
+add a `labels.json` name per stream (`Lz_1e_XXXX` / `Palettes_1e_XXXX`) plus a
+`data_tables.json` `palettes` spec on the palette ones. Because the streams
+chain contiguously, label-splitting yields each stream's exact compressed
+length (verify with `python3 tools/lz.py baserom.gbc <flat_off>` — prints
+`N bytes compressed`). Loaders then read `ld hl, Lz_1e_XXXX` and palettes
+render inline as BGR555. This converts a few giant opaque blobs into many
+exact, named, self-documenting streams. Watch out: once a `ld hl,$XXXX` is
+relabeled to `ld hl, Name`, a hex regex won't re-find it — enumerate in one
+pass or include already-labeled heads explicitly.
