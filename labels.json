@@ -781,5 +781,11 @@
  "0x1548f": "ControlCodeHandlers_05",
  "0x153a2": "PowersOfTen_05",
  "0x16488": "HexDigitChars_05",
- "0x166de": "TextSubcmdHandlers_05"
+ "0x166de": "TextSubcmdHandlers_05",
+ "0xe16c9": "SubHandlers_38_56c9",
+ "0xe19ba": "SubHandlers_38_59ba",
+ "0xe1c8f": "SubHandlers_38_5c8f",
+ "0xe1feb": "SubHandlers_38_5feb",
+ "0xe29c1": "SubHandlers_38_69c1",
+ "0xe3171": "EnterNameText_38"
 }

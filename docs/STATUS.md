@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~122.5K instructions / 265,667 bytes of proven code (12.7% of the 2 MiB ROM)
+**~123.1K instructions / 267,016 bytes of proven code (12.7% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,23 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $38 (interactive story-screen bank) de-blobbed** (46 blobs → 37;
+70.7% → 79.0% code). Its stranded "data" was menu/cursor handler code
+(reading `$cb04/$cb05/$cb0e` + input `$ffd4/$ffd5`, kin to bank $3b's
+pause-menu builders) reached only through computed dispatch, now seeded
+(`coverage/bank038_static_code.json`, function starts + internal call/jump
+targets — *not* blind per-byte entries, so trailing data tables like the
+`$45ff` parameter table are left as data). Five **6-entry `dw` jump tables +
+their inline handler runs** were structured and named
+(`SubHandlers_38_{56c9,59ba,5c8f,5feb,69c1}`, loaded via `ld hl,SubHandlers…`
+from multiple sites) and their handler targets seeded. `EnterNameText_38`
+(`$7171`, "Enter Name") named. The 37 remaining blobs are genuine data: menu
+cursor coordinate grids (x,y pairs), OAM/position record tables, tile-id
+lists, and self-referential pointer-table+record structures (e.g. `$4695`).
+Caution learned here: seeding *every* per-byte "entry" a linear decoder emits
+can decode a code-adjacent data table as instructions (it briefly mislabeled
+`$45ff` as `jr` code); seed function starts + internal flow targets instead.
 
 **Bank $05 (text control-code engine) largely de-blobbed** (42 blobs → 12;
 69.9% → 85.4% code). Most "data" blobs were stranded handler code reached
