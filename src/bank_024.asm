@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $24", ROMX[$4000], BANK[$24]
 
 FarPtr_24_00:

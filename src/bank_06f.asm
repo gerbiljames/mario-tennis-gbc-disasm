@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $6f", ROMX[$4000], BANK[$6f]
 
 WalkSprites_6f:

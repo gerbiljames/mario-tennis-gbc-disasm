@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $3e", ROMX[$4000], BANK[$3e]
 
 FarPtr_3e_00:

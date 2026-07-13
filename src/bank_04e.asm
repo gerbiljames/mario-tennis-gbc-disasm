@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $4e", ROMX[$4000], BANK[$4e]
 
 	dw CurtSpriteDesc ; $4000

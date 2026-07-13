@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $03", ROMX[$4000], BANK[$03]
 
 FarPtr_WipeAllSaveRam:

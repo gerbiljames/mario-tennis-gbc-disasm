@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $5c", ROMX[$4000], BANK[$5c]
 
 	dw DKSpriteDesc ; $4000

@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $52", ROMX[$4000], BANK[$52]
 
 	dw YoshiSpriteDesc ; $4000

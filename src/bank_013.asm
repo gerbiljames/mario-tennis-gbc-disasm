@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $13", ROMX[$4000], BANK[$13]
 
 DataPtr_StoryCmdHandlersA_13:

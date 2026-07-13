@@ -209,7 +209,9 @@ offset, so a corrupt header always falls through to a full wipe.
 2. `tools/disasm.py baserom.gbc coverage/*.json` — regenerates `src/` from
    coverage seeds + conservative recursive descent. Symbol sources: fixed
    vector names, `labels.json`, hardware.inc registers, and `ram_map.json`
-   (RetroAchievements-documented RAM → `include/ram_constants.asm`). Fails
+   (RetroAchievements-documented RAM → `ram.asm` +
+   `ram/{sram,wram,hram}.asm`, one fixed-address SECTION per region with
+   `::`-exported labels the linker resolves into every bank). Fails
    early on unsupported RGBDS versions; enforces a naming-convention lint.
 3. `tools/extract.py` + `make clean && make -j compare` — verify byte-perfect.
 

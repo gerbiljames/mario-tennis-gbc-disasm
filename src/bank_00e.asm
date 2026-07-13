@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $0e", ROMX[$4000], BANK[$0e]
 
 DataPtr_0e_00:

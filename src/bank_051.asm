@@ -1,7 +1,3 @@
-INCLUDE "hardware.inc"
-INCLUDE "macros.inc"
-INCLUDE "ram_constants.asm"
-
 SECTION "ROM Bank $51", ROMX[$4000], BANK[$51]
 
 	dw WaluigiSpriteDesc ; $4000

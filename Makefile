@@ -4,7 +4,8 @@ RGBLINK := $(RGBDS)rgblink
 
 ROM     := mariotennis.gbc
 SRCS    := $(wildcard src/bank_*.asm)
-OBJS    := $(SRCS:src/%.asm=build/%.o)
+OBJS    := $(SRCS:src/%.asm=build/%.o) build/ram.o
+RAM_SRCS := ram.asm $(wildcard ram/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 
@@ -15,8 +16,15 @@ all: $(ROM)
 $(ROM): $(OBJS)
 	$(RGBLINK) -o $@ -m build/$(ROM:.gbc=.map) -n build/$(ROM:.gbc=.sym) $(OBJS)
 
-build/%.o: src/%.asm | build/rgbdscheck.o
-	$(RGBASM) -E -I include -o $@ $<
+# hardware.inc + macros.inc are preincluded for every bank via -P instead of a
+# repeated INCLUDE at the top of each source file.
+PRELUDE := include/hardware.inc include/macros.inc
+
+build/%.o: src/%.asm $(PRELUDE) | build/rgbdscheck.o
+	$(RGBASM) -E -I include $(PRELUDE:%=-P %) -o $@ $<
+
+build/ram.o: $(RAM_SRCS) | build/rgbdscheck.o
+	$(RGBASM) -E -I include -I . -o $@ ram.asm
 
 build/rgbdscheck.o: rgbdscheck.asm | build
 	$(RGBASM) -o $@ $<
