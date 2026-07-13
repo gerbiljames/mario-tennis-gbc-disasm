@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~125.9K instructions / 274,805 bytes of proven code (13.1% of the 2 MiB ROM)
+**~126.5K instructions / 276,198 bytes of proven code (13.2% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,17 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $17 (serve-volley drill / menu bank) — code recovered** (50.1% →
+58.6% code; 32 → 31 blobs). Seeded a big dispatcher (`$40bd` 841 B) + `$440a`
+and, in a second pass, 10 more **cursor/menu handler** blobs (`$4016`-`$4443`,
+reading `$cb04/$cb05` + bank-switch stubs) that the first classification had
+mislabeled as data because they follow data tables. The remaining 31 blobs are
+genuine data: uniform position/animation record arrays (`55 00 44 00 3a 00 …`,
+several byte-identical — per-character/frame tables), LZ graphics, and OAM
+templates. Lesson reinforced: after the first seed pass, re-scan the *new*
+blobs — splitting a dispatcher exposes handler code that pattern-matches
+(`fa 04 cb …` cursor reads, `f0 96 f5` bank swaps) but wasn't reached.
 
 **Bank $0e (story match/launcher bank) — code recovered** (51.6% → 60.5%
 code; 29 → 22 blobs). Seeded 8 stranded code blobs + farcall scripts (`$5bba`
