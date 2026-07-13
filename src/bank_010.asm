@@ -8,7 +8,14 @@ DataPtr_10_04:
 	dw Data_10_4ccb ; $4004
 DataPtr_MatchSelectHandlersA_10:
 	dw MatchSelectHandlersA_10 ; $4006
-	INCBIN "data/bank_010/d_4008.bin" ; $4008, 8 bytes
+DataPtr_10_08:
+	dw Data_10_57f6 ; $4008
+DataPtr_10_0a:
+	dw Data_10_5a80 ; $400a
+DataPtr_10_0c:
+	dw Data_10_61b1 ; $400c
+DataPtr_10_0e:
+	dw Data_10_74a9 ; $400e
 	and a, [hl] ; $4010
 	ld b, b ; $4011
 	xor a, a ; $4012
@@ -1688,6 +1695,7 @@ Label_10_57f3:
 	pop bc ; $57f3
 	pop af ; $57f4
 	ret ; $57f5
+Data_10_57f6:
 	INCBIN "data/bank_010/d_57f6.bin" ; $57f6, 140 bytes
 	ld a, [$c2b0] ; $5882
 	add a, a ; $5885
@@ -1737,6 +1745,7 @@ Label_10_57f3:
 	call EnableLCD ; $5a79
 	call Func_10_7b5f ; $5a7c
 	ret ; $5a7f
+Data_10_5a80:
 	INCBIN "data/bank_010/d_5a80.bin" ; $5a80, 279 bytes
 	ld a, [$c295] ; $5b97
 	cp a, $ff ; $5b9a
@@ -2084,6 +2093,7 @@ Func_10_613e:
 	ld de, $3f00 ; $61aa
 	farcall FarPtr_0a_22 ; $61ad
 	ret ; $61b0
+Data_10_61b1:
 	INCBIN "data/bank_010/d_61b1.bin" ; $61b1, 3649 bytes
 	farcall FarPtr_0a_22 ; $6ff2
 	ld a, $02 ; $6ff5
@@ -2595,6 +2605,7 @@ Label_10_7490:
 Label_10_74a5:
 	ld [$c2b0], a ; $74a5
 	ret ; $74a8
+Data_10_74a9:
 	INCBIN "data/bank_010/d_74a9.bin" ; $74a9, 622 bytes
 	call Func_10_7dbd ; $7717
 	ld a, [$c2b0] ; $771a

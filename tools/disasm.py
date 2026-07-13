@@ -755,6 +755,25 @@ class Disassembly:
             self.data_blobs[src] = (length, kind)
         return src
 
+    def add_static_data_slots(self):
+        """Data-pointer $4000-table slots the traces never exercise, so no
+        hook proves them and they fall through to raw blobs. Bank $10's
+        header is the story match-select sub-table directory: hooks resolve
+        slots $02-$06, but slots $08-$0e (-> $57f6/$5a80/$61b1/$74a9, each a
+        pointer sub-table) are only reached through RAM-driven dispatch.
+        Register them as data slots so they render as DataPtr words over
+        labeled sub-tables. Slot $00 -> $4010 is a jump table entangled with
+        live code (the $40b0 setup routine is reached only through it), so it
+        is deliberately omitted and left decoded."""
+        slots = {0x10: (0x08, 0x0a, 0x0c, 0x0e)}
+        added = 0
+        for bank, sl in slots.items():
+            for slot in sl:
+                if self._add_data_slot(bank, slot, "copy") is not None:
+                    added += 1
+        if added:
+            print(f"static data slots: {added} carved")
+
     def load_hook_dumps(self, paths):
         """Ingest tools/hook_client.py captures: runtime-observed register
         snapshots at the data-helper entry points, one (h = bank, l = slot)
@@ -2088,6 +2107,7 @@ def main():
         dis.find_data_slots(helpers)
     if args.hooks:
         dis.load_hook_dumps(args.hooks)
+    dis.add_static_data_slots()
     dis.find_sprite_banks()
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()
