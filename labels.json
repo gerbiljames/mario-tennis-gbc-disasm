@@ -787,5 +787,8 @@
  "0xe1c8f": "SubHandlers_38_5c8f",
  "0xe1feb": "SubHandlers_38_5feb",
  "0xe29c1": "SubHandlers_38_69c1",
- "0xe3171": "EnterNameText_38"
+ "0xe3171": "EnterNameText_38",
+ "0x77cd9": "DrillSubHandlers_1d",
+ "0x75c25": "DrillDisplayData_1d",
+ "0x777c8": "DrillDisplayData2_1d"
 }

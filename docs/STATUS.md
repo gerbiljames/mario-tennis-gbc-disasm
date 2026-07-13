@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~123.1K instructions / 267,016 bytes of proven code (12.7% of the 2 MiB ROM)
+**~123.1K instructions / 267,094 bytes of proven code (12.7% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,22 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $1d (stroke-practice drill engine) — partial, careful carve.**
+Recovered the clean stranded code (bank-swap routine `$4e5e` — its `$4e76`
+data table correctly left as data — and the `$7cd9` `jp hl` jump table's 5
+handler targets incl. `$7d0f`, structured as `DrillSubHandlers_1d`) and named
+the drill's display-data tables: `DrillDisplayData_1d` (`$5c25`, 3079 B,
+loaded from 7 sites, WRAM-offset records copied to `$d000`+ via
+`Func_1d_4bb6`) and `DrillDisplayData2_1d` (`$77c8`). **`$57d2` (453 B) was
+deliberately left as a blob**: it interleaves sprite-drawing code with inline
+OAM/sprite-template data (`ld de,$591c/$5944`) with no `ret` before the data,
+so static seeding decodes straight through the templates and misframes them
+(a data pointer lands mid-instruction) — this needs runtime coverage to
+separate, not a static seed. The remaining blobs are genuine drill data
+(display records, tile-id/curve lookup tables). Net code % barely moved
+because the big code region was correctly declined; see
+[[stranded-code-carving]].
 
 **Bank $38 (interactive story-screen bank) de-blobbed** (46 blobs → 37;
 70.7% → 79.0% code). Its stranded "data" was menu/cursor handler code

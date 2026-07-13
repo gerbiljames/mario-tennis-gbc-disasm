@@ -1,0 +1,12 @@
+{
+ "_comment": "Static code-entry seeds for bank $1d (stroke-practice drill engine): bank-swap routine $4e5e (its $4e76 data table left as data), the $7cd9 jp-hl jump table's 5 handler targets incl $7d0f. NOTE: $57d2 deliberately NOT seeded -- it interleaves code with sprite-template data (ld de,$591c/$5944) with no ret before the data, so blind seeding misframes it; needs runtime coverage. Flat = 0x1d*0x4000 + (cpu-0x4000).",
+ "rom": [
+  478814,
+  490723,
+  490734,
+  490745,
+  490756,
+  490767
+ ],
+ "other": []
+}

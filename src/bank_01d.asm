@@ -144,7 +144,7 @@ Func_1d_411e:
 	call Func_1d_4acc ; $4141
 	ld a, $01 ; $4144
 	call Func_1d_4a14 ; $4146
-	ld hl, $5c25 ; $4149
+	ld hl, DrillDisplayData_1d ; $4149
 	ld bc, $d390 ; $414c
 	call Func_1d_4bb6 ; $414f
 	wram_bank $03 ; $4152
@@ -1673,7 +1673,16 @@ Label_1d_4e58:
 Label_1d_4e5b:
 	sound $5f ; $4e5b
 	ret ; $4e5d
-	INCBIN "data/bank_01d/d_4e5e.bin" ; $4e5e, 47 bytes
+	wram_bank $06 ; $4e5e
+	ld a, [$d143] ; $4e64
+	add a, $04 ; $4e67
+	ld [$d143], a ; $4e69
+	cp a, $40 ; $4e6c
+	ret c ; $4e6e
+	ld hl, $4e5e ; $4e6f
+	call Func_00_1bcb ; $4e72
+	ret ; $4e75
+	INCBIN "data/bank_01d/d_4e76.bin" ; $4e76, 23 bytes
 Func_1d_4e8d:
 	wram_bank $06 ; $4e8d
 	push af ; $4e93
@@ -2021,7 +2030,7 @@ Func_1d_509c:
 	ld hl, $5e73 ; $50ba
 	ld bc, $d9e0 ; $50bd
 	call Func_1d_4bb6 ; $50c0
-	ld hl, $5c25 ; $50c3
+	ld hl, DrillDisplayData_1d ; $50c3
 	ld bc, $d390 ; $50c6
 	call Func_1d_4bb6 ; $50c9
 	farcall FarPtr_1c_16 ; $50cc
@@ -2331,7 +2340,7 @@ Func_1d_5268:
 	ld hl, $5e73 ; $53f1
 	ld bc, $d9e0 ; $53f4
 	call Func_1d_4bb6 ; $53f7
-	ld hl, $5c25 ; $53fa
+	ld hl, DrillDisplayData_1d ; $53fa
 	ld bc, $d390 ; $53fd
 	call Func_1d_4bb6 ; $5400
 	farcall FarPtr_1c_16 ; $5403
@@ -2350,7 +2359,7 @@ Func_1d_5268:
 	ld hl, $5e34 ; $5427
 	ld bc, $d9e0 ; $542a
 	call Func_1d_4bb6 ; $542d
-	ld hl, $5c25 ; $5430
+	ld hl, DrillDisplayData_1d ; $5430
 	ld bc, $d390 ; $5433
 	call Func_1d_4bb6 ; $5436
 	farcall FarPtr_1c_16 ; $5439
@@ -2376,7 +2385,7 @@ Func_1d_543d:
 	ld hl, $5f6f ; $546a
 	ld bc, $d9e0 ; $546d
 	call Func_1d_4bb6 ; $5470
-	ld hl, $5c25 ; $5473
+	ld hl, DrillDisplayData_1d ; $5473
 	ld bc, $d390 ; $5476
 	call Func_1d_4bb6 ; $5479
 	farcall FarPtr_1c_16 ; $547c
@@ -2665,7 +2674,7 @@ Func_1d_5603:
 	ld hl, $5f6f ; $576e
 	ld bc, $d9e0 ; $5771
 	call Func_1d_4bb6 ; $5774
-	ld hl, $5c25 ; $5777
+	ld hl, DrillDisplayData_1d ; $5777
 	ld bc, $d390 ; $577a
 	call Func_1d_4bb6 ; $577d
 	farcall FarPtr_1c_16 ; $5780
@@ -2690,7 +2699,7 @@ Func_1d_5603:
 	ld hl, $5e34 ; $57b0
 	ld bc, $d9e0 ; $57b3
 	call Func_1d_4bb6 ; $57b6
-	ld hl, $5c25 ; $57b9
+	ld hl, DrillDisplayData_1d ; $57b9
 	ld bc, $d390 ; $57bc
 	call Func_1d_4bb6 ; $57bf
 	farcall FarPtr_1c_16 ; $57c2
@@ -3034,6 +3043,7 @@ Func_1d_5c1e:
 	ld hl, $48c7 ; $5c1e
 	call Func_00_1bcb ; $5c21
 	ret ; $5c24
+DrillDisplayData_1d:
 	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 3079 bytes
 Func_1d_682c:
 	wram_bank $06 ; $682c
@@ -4672,7 +4682,7 @@ Label_1d_7453:
 	call Func_1d_7505 ; $74e1
 	call Func_00_2725 ; $74e4
 	ld [bc], a ; $74e7
-	ld hl, $77c8 ; $74e8
+	ld hl, DrillDisplayData2_1d ; $74e8
 	ld bc, $d240 ; $74eb
 	call Func_1d_7610 ; $74ee
 	call Func_1d_7505 ; $74f1
@@ -4996,6 +5006,7 @@ Label_1d_77be:
 	sound $00 ; $77c3
 	sound $2f ; $77c5
 	ret ; $77c7
+DrillDisplayData2_1d:
 	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 1254 bytes
 Func_1d_7cae:
 	push af ; $7cae
@@ -5024,7 +5035,35 @@ Func_1d_7cc6:
 	ld h, [hl] ; $7cd6
 	ld l, a ; $7cd7
 	jp hl ; $7cd8
-	INCBIN "data/bank_01d/d_7cd9.bin" ; $7cd9, 43 bytes
+DrillSubHandlers_1d:
+	; $7cd9, 10 bytes (records:2)
+; 5 records x 2 bytes
+	dw $7ce3 ; record 0
+	dw $7cee ; record 1
+	dw $7cf9 ; record 2
+	dw $7d04 ; record 3
+	dw $7d0f ; record 4
+	ld a, c ; $7ce3
+	ld [$d15c], a ; $7ce4
+	ld hl, $d152 ; $7ce7
+	ld a, e ; $7cea
+	ld [hl+], a ; $7ceb
+	ld [hl], d ; $7cec
+	ret ; $7ced
+	ld a, c ; $7cee
+	ld [$d15d], a ; $7cef
+	ld hl, $d154 ; $7cf2
+	ld a, e ; $7cf5
+	ld [hl+], a ; $7cf6
+	ld [hl], d ; $7cf7
+	ret ; $7cf8
+	ld a, c ; $7cf9
+	ld [$d15e], a ; $7cfa
+	ld hl, $d156 ; $7cfd
+	ld a, e ; $7d00
+	ld [hl+], a ; $7d01
+	ld [hl], d ; $7d02
+	ret ; $7d03
 	ld a, c ; $7d04
 	ld [$d15f], a ; $7d05
 	ld hl, $d158 ; $7d08
@@ -5032,5 +5071,11 @@ Func_1d_7cc6:
 	ld [hl+], a ; $7d0c
 	ld [hl], d ; $7d0d
 	ret ; $7d0e
-	INCBIN "data/bank_01d/d_7d0f.bin" ; $7d0f, 11 bytes
+	ld a, c ; $7d0f
+	ld [$d160], a ; $7d10
+	ld hl, $d15a ; $7d13
+	ld a, e ; $7d16
+	ld [hl+], a ; $7d17
+	ld [hl], d ; $7d18
+	ret ; $7d19
 	ds 742, $ff ; $7d1a, fill
