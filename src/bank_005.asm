@@ -8630,7 +8630,7 @@ Label_05_7838:
 	call Func_00_2631 ; $784e
 	jr Label_05_7856 ; $7851
 Label_05_7853:
-	farcall FarPtr_08_3e ; $7853
+	farcall FarPtr_StepMatchFrame ; $7853
 Label_05_7856:
 	dec b ; $7856
 	jr nz, Label_05_7838 ; $7857

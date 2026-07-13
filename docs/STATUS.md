@@ -655,8 +655,16 @@ the two LZ streams `MenuGfxLZ_01`/`MenuGfxLZ2_01` (split out of one blob, refs
 now symbolic), and `UnusedTiles_01_51ab`/`_53b0` (~3.4 KB of graphics
 referenced by nothing).
 
+Bank $08's core match-loop API is now named: `StepMatchFrame` (`$4465`,
+vblank-sync + one update step, 40 call sites) and its multi-frame wrapper
+`StepMatchFrames` (`$4428`, early-exits on the `$c492` point-over flag), plus
+the input readers `ReadMatchInputPressed` (`$4415`, `$ff94` edge-pressed) and
+`ReadMatchInputRepeat` (`$441d`, `hInputPressed` autorepeat) — both fall back to
+`$ffd3` in link mode. Names propagate through the `FarPtr_08` slots to all
+call sites automatically.
+
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
-693 still-unnamed routines; name the now-structured tables, and confirm
+~690 still-unnamed routines; name the now-structured tables, and confirm
 `$5dc4`'s semantics via a runtime trace), bank $3b (753 unnamed routines, now
 fully carved), bank $13 (biggest story bank), bank $1e, sound-command enum
 for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.

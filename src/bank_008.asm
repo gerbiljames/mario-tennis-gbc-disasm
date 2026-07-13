@@ -62,14 +62,14 @@ FarPtr_08_36:
 	dw Func_08_43f6 ; $4036
 FarPtr_08_38:
 	dw Func_08_440d ; $4038
-FarPtr_08_3a:
-	dw Func_08_4415 ; $403a
-FarPtr_08_3c:
-	dw Func_08_441d ; $403c
-FarPtr_08_3e:
-	dw Func_08_4465 ; $403e
-FarPtr_08_40:
-	dw Func_08_4428 ; $4040
+FarPtr_ReadMatchInputPressed:
+	dw ReadMatchInputPressed ; $403a
+FarPtr_ReadMatchInputRepeat:
+	dw ReadMatchInputRepeat ; $403c
+FarPtr_StepMatchFrame:
+	dw StepMatchFrame ; $403e
+FarPtr_StepMatchFrames:
+	dw StepMatchFrames ; $4040
 FarPtr_08_42:
 	dw Func_08_4436 ; $4042
 FarPtr_08_44:
@@ -557,13 +557,13 @@ Func_08_440d:
 	jr nz, Label_08_4425 ; $4410
 	ldh a, [hPlayerInputFlags] ; $4412
 	ret ; $4414
-Func_08_4415:
+ReadMatchInputPressed:
 	ldh a, [$ffd8] ; $4415
 	and a, a ; $4417
 	jr nz, Label_08_4425 ; $4418
 	ldh a, [$ff94] ; $441a
 	ret ; $441c
-Func_08_441d:
+ReadMatchInputRepeat:
 	ldh a, [$ffd8] ; $441d
 	and a, a ; $441f
 	jr nz, Label_08_4425 ; $4420
@@ -572,13 +572,13 @@ Func_08_441d:
 Label_08_4425:
 	ldh a, [$ffd3] ; $4425
 	ret ; $4427
-Func_08_4428:
+StepMatchFrames:
 	ld b, a ; $4428
 Label_08_4429:
 	ld a, [$c492] ; $4429
 	and a, a ; $442c
 	jr nz, Label_08_4435 ; $442d
-	call Func_08_4465 ; $442f
+	call StepMatchFrame ; $442f
 	dec b ; $4432
 	jr nz, Label_08_4429 ; $4433
 Label_08_4435:
@@ -589,7 +589,7 @@ Label_08_4437:
 	ld a, [$c492] ; $4437
 	and a, a ; $443a
 	jr nz, Label_08_4451 ; $443b
-	call Func_08_4465 ; $443d
+	call StepMatchFrame ; $443d
 	call Func_08_440d ; $4440
 	and a, $03 ; $4443
 	jr nz, Label_08_4451 ; $4445
@@ -604,14 +604,14 @@ Func_08_4452:
 	ld a, [$c492] ; $4452
 	and a, a ; $4455
 	jr nz, Label_08_4464 ; $4456
-	call Func_08_4465 ; $4458
+	call StepMatchFrame ; $4458
 	call Func_08_440d ; $445b
 	and a, $f3 ; $445e
 	jr nz, Label_08_4464 ; $4460
 	jr Func_08_4452 ; $4462
 Label_08_4464:
 	ret ; $4464
-Func_08_4465:
+StepMatchFrame:
 	push af ; $4465
 	push bc ; $4466
 	push de ; $4467
@@ -643,7 +643,7 @@ Label_08_448c:
 	pop af ; $4494
 	ret ; $4495
 Func_08_4496:
-	call Func_08_4415 ; $4496
+	call ReadMatchInputPressed ; $4496
 	and a, $08 ; $4499
 	ret z ; $449b
 	ld a, [$c4c2] ; $449c
@@ -683,7 +683,7 @@ Func_08_44bd:
 	ret ; $44ee
 Func_08_44ef:
 	ret ; $44ef
-	call Func_08_4415 ; $44f0
+	call ReadMatchInputPressed ; $44f0
 	and a, $04 ; $44f3
 	ret z ; $44f5
 	ldh a, [$ff9e] ; $44f6
@@ -1102,10 +1102,10 @@ Label_08_4782:
 	ld a, $0f ; $4791
 	farcall FarPtr_09_12 ; $4793
 	ld a, $50 ; $4796
-	call Func_08_4428 ; $4798
+	call StepMatchFrames ; $4798
 	farcall FarPtr_09_16 ; $479b
 	ld a, $0f ; $479e
-	call Func_08_4428 ; $47a0
+	call StepMatchFrames ; $47a0
 Label_08_47a3:
 	call AssignCourtPositions ; $47a3
 	call Func_08_5f43 ; $47a6
@@ -1532,12 +1532,12 @@ Func_08_4d0f:
 	ld hl, $c4c8 ; $4d12
 	res 1, [hl] ; $4d15
 	farcall FarPtr_09_08 ; $4d17
-	call Func_08_4465 ; $4d1a
+	call StepMatchFrame ; $4d1a
 	call Func_08_4d8c ; $4d1d
 	ld hl, $4f91 ; $4d20
 	call ForEachCharBank ; $4d23
 Label_08_4d26:
-	call Func_08_4465 ; $4d26
+	call StepMatchFrame ; $4d26
 	ld a, [$c4c3] ; $4d29
 	and a, $01 ; $4d2c
 	jr nz, Label_08_4d5b ; $4d2e
@@ -1548,14 +1548,14 @@ Label_08_4d26:
 	cp a, $09 ; $4d39
 	jr nz, Label_08_4d42 ; $4d3b
 	ld a, $28 ; $4d3d
-	call Func_08_4428 ; $4d3f
+	call StepMatchFrames ; $4d3f
 Label_08_4d42:
 	call Func_08_4fa4 ; $4d42
 	farcall FarPtr_09_26 ; $4d45
 	call Func_08_5ad7 ; $4d48
-	call Func_08_4465 ; $4d4b
+	call StepMatchFrame ; $4d4b
 	farcall FarPtr_09_04 ; $4d4e
-	call Func_08_4465 ; $4d51
+	call StepMatchFrame ; $4d51
 	call StartPointEndReactions ; $4d54
 	call Func_08_4df4 ; $4d57
 	ret ; $4d5a
@@ -1631,12 +1631,12 @@ Label_08_4ddb:
 	ld bc, $ddb0 ; $4ddb
 	farcall FarPtr_09_24 ; $4dde
 	ld a, $0a ; $4de1
-	call Func_08_4428 ; $4de3
+	call StepMatchFrames ; $4de3
 	ld a, $1e ; $4de6
 	call Func_08_4436 ; $4de8
 	farcall FarPtr_09_16 ; $4deb
 	ld a, $0a ; $4dee
-	call Func_08_4428 ; $4df0
+	call StepMatchFrames ; $4df0
 Label_08_4df3:
 	ret ; $4df3
 Func_08_4df4:
@@ -1649,7 +1649,7 @@ Func_08_4df4:
 	ld h, [hl] ; $4dfe
 	ld l, a ; $4dff
 	call Func_08_61c9 ; $4e00
-	call Func_08_4465 ; $4e03
+	call StepMatchFrame ; $4e03
 	ld hl, $4e22 ; $4e06
 	push hl ; $4e09
 	ld a, [wPointOutcome] ; $4e0a
@@ -1679,7 +1679,7 @@ Func_08_4df4:
 	ld a, $46 ; $4e3e
 	call Func_08_4436 ; $4e40
 	ld a, $0a ; $4e43
-	call Func_08_4428 ; $4e45
+	call StepMatchFrames ; $4e45
 	ret ; $4e48
 Label_08_4e49:
 	ld hl, $0174 ; $4e49
@@ -1687,7 +1687,7 @@ Label_08_4e49:
 	ld bc, $0a07 ; $4e4f
 	farcall FarPtr_06_04 ; $4e52
 	ld a, $0a ; $4e55
-	call Func_08_4428 ; $4e57
+	call StepMatchFrames ; $4e57
 	ret ; $4e5a
 Label_08_4e5b:
 	ld hl, $0175 ; $4e5b
@@ -1695,7 +1695,7 @@ Label_08_4e5b:
 	ld bc, $0f07 ; $4e61
 	farcall FarPtr_06_04 ; $4e64
 	ld a, $0a ; $4e67
-	call Func_08_4428 ; $4e69
+	call StepMatchFrames ; $4e69
 	ret ; $4e6c
 Label_08_4e6d:
 	ld a, [$c491] ; $4e6d
@@ -1705,22 +1705,22 @@ Label_08_4e6d:
 	add a, $17 ; $4e75
 	farcall FarPtr_09_12 ; $4e77
 	ld a, $0a ; $4e7a
-	call Func_08_4428 ; $4e7c
+	call StepMatchFrames ; $4e7c
 	ld a, $1e ; $4e7f
 	call Func_08_4436 ; $4e81
 	farcall FarPtr_09_16 ; $4e84
 	ld a, $0a ; $4e87
-	call Func_08_4428 ; $4e89
+	call StepMatchFrames ; $4e89
 	ret ; $4e8c
 Label_08_4e8d:
 	ld a, [wPointOutcome] ; $4e8d
 	add a, $00 ; $4e90
 	farcall FarPtr_09_12 ; $4e92
 	ld a, $1e ; $4e95
-	call Func_08_4428 ; $4e97
+	call StepMatchFrames ; $4e97
 	farcall FarPtr_09_16 ; $4e9a
 	ld a, $0a ; $4e9d
-	call Func_08_4428 ; $4e9f
+	call StepMatchFrames ; $4e9f
 	ret ; $4ea2
 Label_08_4ea3:
 	ld a, [wPointWinLoseFlag] ; $4ea3
@@ -1728,18 +1728,18 @@ Label_08_4ea3:
 	ret z ; $4ea7
 	farcall FarPtr_09_0a ; $4ea8
 	ld a, $0a ; $4eab
-	call Func_08_4428 ; $4ead
+	call StepMatchFrames ; $4ead
 	ld a, $0a ; $4eb0
 	call Func_08_4436 ; $4eb2
 	ld a, [wDeuceIndicator] ; $4eb5
 	and a, a ; $4eb8
 	jr z, Label_08_4ec0 ; $4eb9
 	sound $69 ; $4ebb
-	call Func_08_4465 ; $4ebd
+	call StepMatchFrame ; $4ebd
 Label_08_4ec0:
 	farcall FarPtr_09_26 ; $4ec0
 	ld a, $0a ; $4ec3
-	call Func_08_4428 ; $4ec5
+	call StepMatchFrames ; $4ec5
 	ld a, $1e ; $4ec8
 	call Func_08_4436 ; $4eca
 	farcall FarPtr_09_0c ; $4ecd
@@ -1764,11 +1764,11 @@ Label_08_4eee:
 	ld a, $0d ; $4eee
 	farcall FarPtr_09_12 ; $4ef0
 	ld a, $0a ; $4ef3
-	call Func_08_4428 ; $4ef5
+	call StepMatchFrames ; $4ef5
 	ld a, [wGameWinLoseFlag] ; $4ef8
 	farcall FarPtr_09_1c ; $4efb
 	ld a, $0a ; $4efe
-	call Func_08_4428 ; $4f00
+	call StepMatchFrames ; $4f00
 	ld a, $2d ; $4f03
 	call Func_08_4436 ; $4f05
 	farcall FarPtr_09_1e ; $4f08
@@ -1793,23 +1793,23 @@ Label_08_4f23:
 	ld d, $0b ; $4f33
 	jr Label_08_4f37 ; $4f35
 Label_08_4f37:
-	call Func_08_4465 ; $4f37
+	call StepMatchFrame ; $4f37
 	ld a, d ; $4f3a
 	farcall FarPtr_09_12 ; $4f3b
 	ld a, $0a ; $4f3e
-	call Func_08_4428 ; $4f40
+	call StepMatchFrames ; $4f40
 	ld a, [wGameWinLoseFlag] ; $4f43
 	farcall FarPtr_09_1c ; $4f46
 	ld a, $0a ; $4f49
-	call Func_08_4428 ; $4f4b
+	call StepMatchFrames ; $4f4b
 	ld a, $28 ; $4f4e
 	call Func_08_4436 ; $4f50
 	farcall FarPtr_09_1e ; $4f53
 	ld a, $0a ; $4f56
-	call Func_08_4428 ; $4f58
+	call StepMatchFrames ; $4f58
 	farcall FarPtr_09_32 ; $4f5b
 	ld a, $0a ; $4f5e
-	call Func_08_4428 ; $4f60
+	call StepMatchFrames ; $4f60
 	ld a, $28 ; $4f63
 	call Func_08_4436 ; $4f65
 	farcall FarPtr_09_34 ; $4f68
@@ -1861,7 +1861,7 @@ StartPointEndReactions:
 	call ForEachCharBank ; $4fbb
 	call SpreadTeammateTargets ; $4fbe
 	ld a, $0a ; $4fc1
-	call Func_08_4428 ; $4fc3
+	call StepMatchFrames ; $4fc3
 	ret ; $4fc6
 CharPointEndReaction:
 	ld a, [wPointWinLoseFlag] ; $4fc7
@@ -4198,9 +4198,9 @@ Func_08_5f43:
 	ld a, $ff ; $5f50
 	ld [$c4c0], a ; $5f52
 	ld [$c4c1], a ; $5f55
-	call Func_08_4465 ; $5f58
+	call StepMatchFrame ; $5f58
 	call Func_08_5e93 ; $5f5b
-	call Func_08_4465 ; $5f5e
+	call StepMatchFrame ; $5f5e
 	wram_bank $02 ; $5f61
 	ld hl, $d180 ; $5f67
 	ld de, $9980 ; $5f6a
@@ -4225,15 +4225,15 @@ Func_08_5f8c:
 	ld a, [$c4cd] ; $5f97
 	and a, a ; $5f9a
 	jr z, Label_08_5fb4 ; $5f9b
-	call Func_08_4465 ; $5f9d
+	call StepMatchFrame ; $5f9d
 	ld a, $00 ; $5fa0
 	farcall FarPtr_09_12 ; $5fa2
-	call Func_08_4465 ; $5fa5
+	call StepMatchFrame ; $5fa5
 Label_08_5fa8:
-	call Func_08_4465 ; $5fa8
+	call StepMatchFrame ; $5fa8
 	call Func_08_5fbc ; $5fab
 	farcall FarPtr_09_16 ; $5fae
-	call Func_08_4465 ; $5fb1
+	call StepMatchFrame ; $5fb1
 Label_08_5fb4:
 	xor a, a ; $5fb4
 	ld [$c4cc], a ; $5fb5
@@ -4248,8 +4248,8 @@ Func_08_5fbc:
 	ld hl, $5fe5 ; $5fc9
 	call ForEachCharBank ; $5fcc
 Label_08_5fcf:
-	call Func_08_4465 ; $5fcf
-	call Func_08_4415 ; $5fd2
+	call StepMatchFrame ; $5fcf
+	call ReadMatchInputPressed ; $5fd2
 	and a, $0b ; $5fd5
 	jr nz, Label_08_5fde ; $5fd7
 	call Func_08_6063 ; $5fd9
@@ -4285,15 +4285,15 @@ Func_08_6010:
 	ld hl, $6046 ; $601f
 	call ForEachCharBank ; $6022
 Label_08_6025:
-	call Func_08_4465 ; $6025
-	call Func_08_4415 ; $6028
+	call StepMatchFrame ; $6025
+	call ReadMatchInputPressed ; $6028
 	and a, $0b ; $602b
 	jr nz, Label_08_6034 ; $602d
 	call Func_08_6063 ; $602f
 	jr z, Label_08_6025 ; $6032
 Label_08_6034:
 	ld a, $14 ; $6034
-	call Func_08_4428 ; $6036
+	call StepMatchFrames ; $6036
 	call Func_08_6199 ; $6039
 	call Func_08_61aa ; $603c
 	ld hl, $6059 ; $603f
@@ -4453,7 +4453,7 @@ Label_08_6132:
 	ld a, e ; $6139
 	ldh [$ff8a], a ; $613a
 	ld a, $05 ; $613c
-	call Func_08_4428 ; $613e
+	call StepMatchFrames ; $613e
 	ld b, $30 ; $6141
 	ld hl, $0200 ; $6143
 	call Func_08_6178 ; $6146
@@ -4488,10 +4488,10 @@ Func_08_6178:
 	ld a, e ; $6181
 	add a, l ; $6182
 	ld e, a ; $6183
-	call Func_08_4415 ; $6184
+	call ReadMatchInputPressed ; $6184
 	and a, $0b ; $6187
 	jr nz, Label_08_6191 ; $6189
-	call Func_08_4465 ; $618b
+	call StepMatchFrame ; $618b
 	dec b ; $618e
 	jr nz, Func_08_6178 ; $618f
 Label_08_6191:
@@ -5096,11 +5096,11 @@ Label_08_6630:
 	ret ; $6630
 Func_08_6631:
 	farcall FarPtr_09_08 ; $6631
-	call Func_08_4465 ; $6634
+	call StepMatchFrame ; $6634
 	ld a, $01 ; $6637
 	ld [$c4c5], a ; $6639
 Label_08_663c:
-	call Func_08_4465 ; $663c
+	call StepMatchFrame ; $663c
 	ld a, [$c4c3] ; $663f
 	and a, $01 ; $6642
 	jr nz, Label_08_664c ; $6644
@@ -5112,7 +5112,7 @@ Label_08_664c:
 	cp a, $09 ; $664f
 	jr nz, Label_08_6658 ; $6651
 	ld a, $28 ; $6653
-	call Func_08_4428 ; $6655
+	call StepMatchFrames ; $6655
 Label_08_6658:
 	call Func_08_4fa4 ; $6658
 	call Func_08_5b7f ; $665b

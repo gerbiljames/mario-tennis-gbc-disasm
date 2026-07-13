@@ -21,15 +21,15 @@ FarPtr_06_0c:
 Func_06_400e:
 	ldh a, [hWramBank] ; $400e
 	push af ; $4010
-	farcall FarPtr_08_3e ; $4011
+	farcall FarPtr_StepMatchFrame ; $4011
 	call Func_06_4915 ; $4014
-	farcall FarPtr_08_3e ; $4017
+	farcall FarPtr_StepMatchFrame ; $4017
 	call Func_06_5c8a ; $401a
 	ld hl, $5280 ; $401d
 	ld de, $8640 ; $4020
 	ld c, $04 ; $4023
 	call Func_00_0480 ; $4025
-	farcall FarPtr_08_3e ; $4028
+	farcall FarPtr_StepMatchFrame ; $4028
 	wram_bank $02 ; $402b
 	ld b, $00 ; $4031
 	call Func_06_49a7 ; $4033
@@ -54,7 +54,7 @@ Label_06_4046:
 	call Func_00_1bcb ; $4062
 	call Func_06_45aa ; $4065
 	call Func_06_45f8 ; $4068
-	farcall FarPtr_08_3e ; $406b
+	farcall FarPtr_StepMatchFrame ; $406b
 	pop af ; $406e
 	wram_bank ; $406f
 	ret ; $4073
@@ -63,21 +63,21 @@ Func_06_4074:
 	push af ; $4076
 	ldh a, [$ffdd] ; $4077
 	push af ; $4079
-	farcall FarPtr_08_3e ; $407a
-	farcall FarPtr_08_3e ; $407d
+	farcall FarPtr_StepMatchFrame ; $407a
+	farcall FarPtr_StepMatchFrame ; $407d
 	sound $63 ; $4080
 	xor a, a ; $4082
 	ld [$c4e0], a ; $4083
 	ld a, $02 ; $4086
 	ldh [$ffdd], a ; $4088
 	call Func_06_4915 ; $408a
-	farcall FarPtr_08_3e ; $408d
+	farcall FarPtr_StepMatchFrame ; $408d
 	call Func_06_5c8a ; $4090
 	ld hl, $5280 ; $4093
 	ld de, $8640 ; $4096
 	ld c, $04 ; $4099
 	call Func_00_0480 ; $409b
-	farcall FarPtr_08_3e ; $409e
+	farcall FarPtr_StepMatchFrame ; $409e
 	wram_bank $02 ; $40a1
 Label_06_40a7:
 	ld b, $00 ; $40a7
@@ -121,8 +121,8 @@ Label_06_40ef:
 	call Func_00_1bcb ; $40f8
 	call Func_06_45aa ; $40fb
 	call Func_06_45f8 ; $40fe
-	farcall FarPtr_08_3e ; $4101
-	farcall FarPtr_08_3e ; $4104
+	farcall FarPtr_StepMatchFrame ; $4101
+	farcall FarPtr_StepMatchFrame ; $4104
 	pop af ; $4107
 	ldh [$ffdd], a ; $4108
 	pop af ; $410a
@@ -284,12 +284,12 @@ Label_06_432a:
 Label_06_434e:
 	ld de, $0106 ; $434e
 	call Func_06_4574 ; $4351
-	farcall FarPtr_08_3e ; $4354
+	farcall FarPtr_StepMatchFrame ; $4354
 	farcall FarPtr_05_90 ; $4357
 	call Func_06_45f8 ; $435a
 Label_06_435d:
-	farcall FarPtr_08_3e ; $435d
-	farcall FarPtr_08_3a ; $4360
+	farcall FarPtr_StepMatchFrame ; $435d
+	farcall FarPtr_ReadMatchInputPressed ; $4360
 	and a, $03 ; $4363
 	jr z, Label_06_435d ; $4365
 	sound $5f ; $4367
@@ -319,12 +319,12 @@ Label_06_4380:
 	call Func_06_4574 ; $43ad
 	farcall FarPtr_05_90 ; $43b0
 	call Func_06_45f8 ; $43b3
-	farcall FarPtr_08_3e ; $43b6
+	farcall FarPtr_StepMatchFrame ; $43b6
 Label_06_43b9:
-	farcall FarPtr_08_3a ; $43b9
+	farcall FarPtr_ReadMatchInputPressed ; $43b9
 	and a, $03 ; $43bc
 	jr nz, Label_06_43e8 ; $43be
-	farcall FarPtr_08_3a ; $43c0
+	farcall FarPtr_ReadMatchInputPressed ; $43c0
 	and a, $40 ; $43c3
 	jr z, Label_06_43e3 ; $43c5
 	ldh a, [$ff9e] ; $43c7
@@ -341,7 +341,7 @@ Label_06_43b9:
 	wram_bank ; $43dd
 	jr Label_06_43e8 ; $43e1
 Label_06_43e3:
-	farcall FarPtr_08_3e ; $43e3
+	farcall FarPtr_StepMatchFrame ; $43e3
 	jr Label_06_43b9 ; $43e6
 Label_06_43e8:
 	call Func_06_45aa ; $43e8
@@ -491,7 +491,7 @@ Func_06_44fe:
 	wram_bank $02 ; $4505
 	ld a, $01 ; $450b
 	ld [$c4c0], a ; $450d
-	farcall FarPtr_08_3e ; $4510
+	farcall FarPtr_StepMatchFrame ; $4510
 	push bc ; $4513
 	push de ; $4514
 	push hl ; $4515
@@ -520,15 +520,15 @@ Func_06_44fe:
 	farcall FarPtr_05_90 ; $4538
 	call Func_06_45f8 ; $453b
 	ld a, $1e ; $453e
-	farcall FarPtr_08_40 ; $4540
+	farcall FarPtr_StepMatchFrames ; $4540
 Label_06_4543:
-	farcall FarPtr_08_3e ; $4543
-	farcall FarPtr_08_3a ; $4546
+	farcall FarPtr_StepMatchFrame ; $4543
+	farcall FarPtr_ReadMatchInputPressed ; $4546
 	and a, $0f ; $4549
 	jr z, Label_06_4543 ; $454b
 	call Func_06_45aa ; $454d
 	call Func_06_45f8 ; $4550
-	farcall FarPtr_08_3e ; $4553
+	farcall FarPtr_StepMatchFrame ; $4553
 	xor a, a ; $4556
 	ld [$c4c0], a ; $4557
 	pop af ; $455a
@@ -729,7 +729,7 @@ Func_06_46e7:
 	call Func_06_45e9 ; $46fc
 	jr Label_06_4733 ; $46ff
 Label_06_4701:
-	farcall FarPtr_08_3a ; $4701
+	farcall FarPtr_ReadMatchInputPressed ; $4701
 	and a, $0a ; $4704
 	jr z, Label_06_4711 ; $4706
 	sound $62 ; $4708
@@ -737,13 +737,13 @@ Label_06_4701:
 	ld [$c4e0], a ; $470c
 	jr Label_06_4776 ; $470f
 Label_06_4711:
-	farcall FarPtr_08_3a ; $4711
+	farcall FarPtr_ReadMatchInputPressed ; $4711
 	and a, $01 ; $4714
 	jr z, Label_06_471c ; $4716
 	sound $5f ; $4718
 	jr Label_06_4776 ; $471a
 Label_06_471c:
-	farcall FarPtr_08_3c ; $471c
+	farcall FarPtr_ReadMatchInputRepeat ; $471c
 	and a, $30 ; $471f
 	jr z, Label_06_476e ; $4721
 	ld b, a ; $4723
@@ -779,15 +779,15 @@ Label_06_4733:
 	call Func_06_4584 ; $475c
 	call Func_06_477a ; $475f
 	farcall FarPtr_05_90 ; $4762
-	farcall FarPtr_08_3e ; $4765
+	farcall FarPtr_StepMatchFrame ; $4765
 	call Func_06_45f8 ; $4768
-	farcall FarPtr_08_3e ; $476b
+	farcall FarPtr_StepMatchFrame ; $476b
 Label_06_476e:
 	call Func_06_4873 ; $476e
-	farcall FarPtr_08_3e ; $4771
+	farcall FarPtr_StepMatchFrame ; $4771
 	jr Label_06_4701 ; $4774
 Label_06_4776:
-	farcall FarPtr_08_3e ; $4776
+	farcall FarPtr_StepMatchFrame ; $4776
 	ret ; $4779
 Func_06_477a:
 	ld a, [$c494] ; $477a
@@ -961,9 +961,9 @@ Label_06_488a:
 Func_06_48ad:
 	ldh a, [hWramBank] ; $48ad
 	push af ; $48af
-	farcall FarPtr_08_3e ; $48b0
+	farcall FarPtr_StepMatchFrame ; $48b0
 	call Func_06_4915 ; $48b3
-	farcall FarPtr_08_3e ; $48b6
+	farcall FarPtr_StepMatchFrame ; $48b6
 	ld a, $05 ; $48b9
 	ld [$c4e3], a ; $48bb
 	call Func_06_5c8a ; $48be
@@ -978,15 +978,15 @@ Func_06_48ad:
 	ld a, $0a ; $48d7
 	ld hl, $69c8 ; $48d9
 	call RegisterFrameTask ; $48dc
-	farcall FarPtr_08_3e ; $48df
+	farcall FarPtr_StepMatchFrame ; $48df
 	call Func_06_45f8 ; $48e2
-	farcall FarPtr_08_3e ; $48e5
+	farcall FarPtr_StepMatchFrame ; $48e5
 	wram_bank $02 ; $48e8
 Label_06_48ee:
-	farcall FarPtr_08_3a ; $48ee
+	farcall FarPtr_ReadMatchInputPressed ; $48ee
 	and a, $0f ; $48f1
 	jr nz, Label_06_48fa ; $48f3
-	farcall FarPtr_08_3e ; $48f5
+	farcall FarPtr_StepMatchFrame ; $48f5
 	jr Label_06_48ee ; $48f8
 Label_06_48fa:
 	ld hl, $506a ; $48fa
@@ -995,7 +995,7 @@ Label_06_48fa:
 	call Func_00_1bcb ; $4903
 	call Func_06_45aa ; $4906
 	call Func_06_45f8 ; $4909
-	farcall FarPtr_08_3e ; $490c
+	farcall FarPtr_StepMatchFrame ; $490c
 	pop af ; $490f
 	wram_bank ; $4910
 	ret ; $4914
@@ -1034,7 +1034,7 @@ Label_06_4955:
 Label_06_495e:
 	wram_bank $04 ; $495e
 	farcall FarPtr_08_1e ; $4964
-	farcall FarPtr_08_3e ; $4967
+	farcall FarPtr_StepMatchFrame ; $4967
 	ld a, [$c8f5] ; $496a
 	cp a, $02 ; $496d
 	jr z, Label_06_49a0 ; $496f
@@ -1054,7 +1054,7 @@ Label_06_495e:
 	ld b, $01 ; $4995
 	ld de, $86c0 ; $4997
 	farcall FarPtr_09_28 ; $499a
-	farcall FarPtr_08_3e ; $499d
+	farcall FarPtr_StepMatchFrame ; $499d
 Label_06_49a0:
 	wram_bank $02 ; $49a0
 	ret ; $49a6
@@ -1534,7 +1534,7 @@ Func_06_6b78:
 Func_06_6b84:
 	ldh a, [hWramBank] ; $6b84
 	push af ; $6b86
-	farcall FarPtr_08_3e ; $6b87
+	farcall FarPtr_StepMatchFrame ; $6b87
 	farcall FarPtr_01_12 ; $6b8a
 	wram_bank $04 ; $6b8d
 	ld hl, $df00 ; $6b93
@@ -1542,20 +1542,20 @@ Func_06_6b84:
 	ld c, $08 ; $6b99
 	call CopyMemoryFast ; $6b9b
 	wram_bank $02 ; $6b9e
-	farcall FarPtr_08_3e ; $6ba4
+	farcall FarPtr_StepMatchFrame ; $6ba4
 	xor a, a ; $6ba7
 	ld [$c4e0], a ; $6ba8
 	call Func_06_6aba ; $6bab
 	call Func_06_6af3 ; $6bae
 	call Func_06_45f8 ; $6bb1
-	farcall FarPtr_08_3e ; $6bb4
+	farcall FarPtr_StepMatchFrame ; $6bb4
 Label_06_6bb7:
-	farcall FarPtr_08_3a ; $6bb7
+	farcall FarPtr_ReadMatchInputPressed ; $6bb7
 	and a, $0d ; $6bba
 	jr nz, Label_06_6bc9 ; $6bbc
 	call Func_06_6bf6 ; $6bbe
 	call Func_06_45f3 ; $6bc1
-	farcall FarPtr_08_3e ; $6bc4
+	farcall FarPtr_StepMatchFrame ; $6bc4
 	jr Label_06_6bb7 ; $6bc7
 Label_06_6bc9:
 	and a, $08 ; $6bc9
@@ -1568,7 +1568,7 @@ Label_06_6bc9:
 Label_06_6bd6:
 	call Func_06_45aa ; $6bd6
 	call Func_06_45f8 ; $6bd9
-	farcall FarPtr_08_3e ; $6bdc
+	farcall FarPtr_StepMatchFrame ; $6bdc
 	wram_bank $04 ; $6bdf
 	ld hl, $c700 ; $6be5
 	ld de, $df00 ; $6be8
@@ -1727,7 +1727,7 @@ Func_06_6d10:
 	call Func_06_6d99 ; $6d16
 	jr Label_06_6d4d ; $6d19
 Label_06_6d1b:
-	farcall FarPtr_08_3a ; $6d1b
+	farcall FarPtr_ReadMatchInputPressed ; $6d1b
 	and a, $0a ; $6d1e
 	jr z, Label_06_6d2b ; $6d20
 	sound $62 ; $6d22
@@ -1735,13 +1735,13 @@ Label_06_6d1b:
 	ld [$c4e0], a ; $6d26
 	jr Label_06_6d70 ; $6d29
 Label_06_6d2b:
-	farcall FarPtr_08_3a ; $6d2b
+	farcall FarPtr_ReadMatchInputPressed ; $6d2b
 	and a, $01 ; $6d2e
 	jr z, Label_06_6d36 ; $6d30
 	sound $5f ; $6d32
 	jr Label_06_6d70 ; $6d34
 Label_06_6d36:
-	farcall FarPtr_08_3c ; $6d36
+	farcall FarPtr_ReadMatchInputRepeat ; $6d36
 	and a, $30 ; $6d39
 	jr z, Label_06_6d68 ; $6d3b
 	ld b, a ; $6d3d
@@ -2145,7 +2145,7 @@ Label_06_70f8:
 	add a, [hl] ; $7101
 	call Func_06_7283 ; $7102
 Label_06_7105:
-	farcall FarPtr_08_3a ; $7105
+	farcall FarPtr_ReadMatchInputPressed ; $7105
 	and a, $02 ; $7108
 	jr z, Label_06_7115 ; $710a
 	sound $62 ; $710c
@@ -2153,13 +2153,13 @@ Label_06_7105:
 	ld [$c4e0], a ; $7110
 	jr Label_06_7172 ; $7113
 Label_06_7115:
-	farcall FarPtr_08_3a ; $7115
+	farcall FarPtr_ReadMatchInputPressed ; $7115
 	and a, $01 ; $7118
 	jr z, Label_06_7120 ; $711a
 	sound $5f ; $711c
 	jr Label_06_7172 ; $711e
 Label_06_7120:
-	farcall FarPtr_08_3c ; $7120
+	farcall FarPtr_ReadMatchInputRepeat ; $7120
 	and a, $30 ; $7123
 	jr z, Label_06_715b ; $7125
 	ld b, a ; $7127
@@ -2237,7 +2237,7 @@ Label_06_71ac:
 	add a, [hl] ; $71bb
 	call Func_06_7283 ; $71bc
 Label_06_71bf:
-	farcall FarPtr_08_3a ; $71bf
+	farcall FarPtr_ReadMatchInputPressed ; $71bf
 	and a, $02 ; $71c2
 	jr z, Label_06_71cf ; $71c4
 	sound $62 ; $71c6
@@ -2245,13 +2245,13 @@ Label_06_71bf:
 	ld [$c4e0], a ; $71ca
 	jr Label_06_722a ; $71cd
 Label_06_71cf:
-	farcall FarPtr_08_3a ; $71cf
+	farcall FarPtr_ReadMatchInputPressed ; $71cf
 	and a, $01 ; $71d2
 	jr z, Label_06_71da ; $71d4
 	sound $5f ; $71d6
 	jr Label_06_722a ; $71d8
 Label_06_71da:
-	farcall FarPtr_08_3c ; $71da
+	farcall FarPtr_ReadMatchInputRepeat ; $71da
 	and a, $30 ; $71dd
 	jr z, Label_06_7213 ; $71df
 	ld b, a ; $71e1

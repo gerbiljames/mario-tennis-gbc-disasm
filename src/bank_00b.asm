@@ -248,26 +248,26 @@ Label_0b_43ca:
 	farcall FarPtr_09_12 ; $43cc
 Label_0b_43cf:
 	ld a, $1e ; $43cf
-	farcall FarPtr_08_40 ; $43d1
+	farcall FarPtr_StepMatchFrames ; $43d1
 	farcall FarPtr_09_16 ; $43d4
 	ld a, $0f ; $43d7
-	farcall FarPtr_08_40 ; $43d9
+	farcall FarPtr_StepMatchFrames ; $43d9
 Label_0b_43dc:
 	farcall FarPtr_09_0a ; $43dc
 	ld a, $0a ; $43df
-	farcall FarPtr_08_40 ; $43e1
+	farcall FarPtr_StepMatchFrames ; $43e1
 	ld a, $0a ; $43e4
 	farcall FarPtr_08_42 ; $43e6
 	farcall FarPtr_09_26 ; $43e9
 	ld a, $0a ; $43ec
-	farcall FarPtr_08_40 ; $43ee
+	farcall FarPtr_StepMatchFrames ; $43ee
 	ld a, $1e ; $43f1
 	farcall FarPtr_08_42 ; $43f3
 	farcall FarPtr_09_0c ; $43f6
 	ld a, $46 ; $43f9
 	farcall FarPtr_08_42 ; $43fb
 	ld a, $08 ; $43fe
-	farcall FarPtr_08_40 ; $4400
+	farcall FarPtr_StepMatchFrames ; $4400
 	ret ; $4403
 Func_0b_4404:
 	ld b, a ; $4404
@@ -642,7 +642,7 @@ Label_0b_5d0a:
 	ld a, [wPlayer2PointsWon] ; $5d28
 	ld b, $01 ; $5d2b
 	farcall FarPtr_09_2c ; $5d2d
-	farcall FarPtr_08_3e ; $5d30
+	farcall FarPtr_StepMatchFrame ; $5d30
 	ld a, $01 ; $5d33
 	ld hl, $446e ; $5d35
 	call RegisterFrameTask ; $5d38
@@ -982,7 +982,7 @@ Label_0b_6c92:
 	ld a, [wPlayer2PointsWon] ; $6cb0
 	ld b, $01 ; $6cb3
 	farcall FarPtr_09_2c ; $6cb5
-	farcall FarPtr_08_3e ; $6cb8
+	farcall FarPtr_StepMatchFrame ; $6cb8
 	ld a, $01 ; $6cbb
 	ld hl, $446e ; $6cbd
 	call RegisterFrameTask ; $6cc0
@@ -1136,7 +1136,7 @@ Label_0b_6da6:
 	ld a, [wPlayer2PointsWon] ; $715a
 	ld b, $01 ; $715d
 	farcall FarPtr_09_2c ; $715f
-	farcall FarPtr_08_3e ; $7162
+	farcall FarPtr_StepMatchFrame ; $7162
 	ld a, $01 ; $7165
 	ld hl, $446e ; $7167
 	call RegisterFrameTask ; $716a

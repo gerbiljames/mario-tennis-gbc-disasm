@@ -316,10 +316,10 @@ Func_0d_43ba:
 	add a, $00 ; $43cc
 	farcall FarPtr_09_12 ; $43ce
 	ld a, $1e ; $43d1
-	farcall FarPtr_08_40 ; $43d3
+	farcall FarPtr_StepMatchFrames ; $43d3
 	farcall FarPtr_09_16 ; $43d6
 	ld a, $0a ; $43d9
-	farcall FarPtr_08_40 ; $43db
+	farcall FarPtr_StepMatchFrames ; $43db
 Label_0d_43de:
 	ret ; $43de
 Func_0d_43df:
@@ -361,17 +361,17 @@ Func_0d_4412:
 Label_0d_441c:
 	sound $0a ; $441c
 Label_0d_441e:
-	farcall FarPtr_08_3e ; $441e
+	farcall FarPtr_StepMatchFrame ; $441e
 	ld a, d ; $4421
 	farcall FarPtr_09_12 ; $4422
 	ld a, $0a ; $4425
-	farcall FarPtr_08_40 ; $4427
+	farcall FarPtr_StepMatchFrames ; $4427
 	ld a, $2d ; $442a
 	farcall FarPtr_08_42 ; $442c
 	farcall FarPtr_08_6a ; $442f
 	farcall FarPtr_09_16 ; $4432
 	ld a, $0f ; $4435
-	farcall FarPtr_08_40 ; $4437
+	farcall FarPtr_StepMatchFrames ; $4437
 	ld a, $80 ; $443a
 	ld [$c4c3], a ; $443c
 	ret ; $443f
@@ -577,7 +577,7 @@ Label_0d_470b:
 	and a, a ; $4725
 	jr z, Label_0d_472d ; $4726
 	ld a, $0f ; $4728
-	farcall FarPtr_08_40 ; $472a
+	farcall FarPtr_StepMatchFrames ; $472a
 Label_0d_472d:
 	ld hl, $c780 ; $472d
 	ld a, [hl+] ; $4730
@@ -626,7 +626,7 @@ Func_0d_475d:
 	sub a, l ; $478b
 	ld h, a ; $478c
 	ld a, [hl] ; $478d
-	farcall FarPtr_08_40 ; $478e
+	farcall FarPtr_StepMatchFrames ; $478e
 	call Func_0d_41d3 ; $4791
 	and a, a ; $4794
 	ret z ; $4795
@@ -800,7 +800,7 @@ Func_0d_48ce:
 	push af ; $48db
 	sound $00 ; $48dc
 	ld a, $14 ; $48de
-	farcall FarPtr_08_40 ; $48e0
+	farcall FarPtr_StepMatchFrames ; $48e0
 	ld a, $03 ; $48e3
 Label_0d_48e5:
 	push af ; $48e5
@@ -815,7 +815,7 @@ Label_0d_48f6:
 	ld a, $11 ; $48f6
 	farcall FarPtr_09_14 ; $48f8
 	ld a, $28 ; $48fb
-	farcall FarPtr_08_40 ; $48fd
+	farcall FarPtr_StepMatchFrames ; $48fd
 	pop af ; $4900
 	dec a ; $4901
 	jr nz, Label_0d_48e5 ; $4902
@@ -827,7 +827,7 @@ Label_0d_490c:
 	ld a, $10 ; $490c
 	farcall FarPtr_09_12 ; $490e
 	ld a, $28 ; $4911
-	farcall FarPtr_08_40 ; $4913
+	farcall FarPtr_StepMatchFrames ; $4913
 	farcall FarPtr_09_16 ; $4916
 	pop af ; $4919
 	ld b, a ; $491a

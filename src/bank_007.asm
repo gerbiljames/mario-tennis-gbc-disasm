@@ -4030,7 +4030,7 @@ Func_07_5ed3:
 	ld a, [wPlayer2PointsWon] ; $5eea
 	ld b, $01 ; $5eed
 	farcall FarPtr_09_2c ; $5eef
-	farcall FarPtr_08_3e ; $5ef2
+	farcall FarPtr_StepMatchFrame ; $5ef2
 	farcall FarPtr_StartPointEndReactions ; $5ef5
 	farcall FarPtr_08_60 ; $5ef8
 	ret ; $5efb
@@ -4041,7 +4041,7 @@ ModeHookTable_07:
 	ld a, $01 ; $5f11
 	ld [$c4c0], a ; $5f13
 	ld a, $14 ; $5f16
-	farcall FarPtr_08_40 ; $5f18
+	farcall FarPtr_StepMatchFrames ; $5f18
 	ld a, $00 ; $5f1b
 	ld [$c4c0], a ; $5f1d
 	clear_flag $0c, 4 ; $5f20
