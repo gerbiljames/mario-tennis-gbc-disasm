@@ -149,6 +149,9 @@
  "0x15cc7": "ShortTextFetchers_05",
  "0x16488": "HexDigitChars_05",
  "0x166de": "TextSubcmdHandlers_05",
+ "0x17322": "DrawGlyph",
+ "0x1737a": "PlotGlyphRow",
+ "0x17920": "FontGlyphs",
  "0x1da50": "CharSpriteSetTable",
  "0x1defc": "ModeHookTable_07",
  "0x2027a": "HandleBallHitEvent",
@@ -212,6 +215,11 @@
  "0x238be": "CheckCharNearTarget",
  "0x241bc": "ObjTemplates_09_41bc",
  "0x2460a": "LoadObjTemplate_09",
+ "0x247ae": "MoveCurveTable_09",
+ "0x2488a": "VramTileset_09",
+ "0x24900": "TilesetTiles_09",
+ "0x2616d": "VramGfxPtrTable_09_616d",
+ "0x26c6e": "ServeGfxPtrTable_09",
  "0x2985d": "LoadStorySceneGraphics",
  "0x299d9": "SceneGfxSlotTable",
  "0x29d0b": "GetSceneSlotPtr",
@@ -876,8 +884,5 @@
  "0x1b7a58": "MarioMiniGamesTiles",
  "0x1bbb08": "FetchDialogueText_6e",
  "0x1bbb10": "FetchShortText_6e",
- "0x1bbb18": "FetchText_6e",
- "0x17322": "DrawGlyph",
- "0x1737a": "PlotGlyphRow",
- "0x17920": "FontGlyphs"
+ "0x1bbb18": "FetchText_6e"
 }

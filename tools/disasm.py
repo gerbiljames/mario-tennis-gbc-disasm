@@ -225,7 +225,11 @@ class Disassembly:
     # farcall that fabricated bank $43's zero-array function). $67682 is the
     # sole seed in bank $19 (cutscene graphics) -- mid-blob, decoding as
     # nonsense (ld hl,sp-17 / add sp,100) inside the $6a10 data region.
-    BAD_SEEDS = {0x19617F, 0x67682}
+    # $24f99 and $252b5 are lone seeds inside bank $09's VRAM tileset
+    # ($488a table -> $4900-$60ff tiles, copied by Func_09_4873): trace
+    # data-reads during the copy, not execution -- they split the one blob
+    # into three and decode graphics bytes as rst/inc.
+    BAD_SEEDS = {0x19617F, 0x67682, 0x24F99, 0x252B5}
 
     def seed(self, seeds):
         bad = 0

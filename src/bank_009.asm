@@ -691,6 +691,7 @@ Label_09_47a7:
 Label_09_47ac:
 	xor a, a ; $47ac
 	ret ; $47ad
+MoveCurveTable_09:
 	INCBIN "data/bank_009/d_47ae.bin" ; $47ae, 197 bytes
 Func_09_4873:
 	add a, a ; $4873
@@ -710,44 +711,56 @@ Func_09_4873:
 	ld de, $8200 ; $4883
 	call Func_00_0480 ; $4886
 	ret ; $4889
-	INCBIN "data/bank_009/d_488a.bin" ; $488a, 1807 bytes
-	rst Rst18 ; $4f99
-	rst Rst38 ; $4f9a
-	sub a, b ; $4f9b
-	rst Rst38 ; $4f9c
-	rst Rst38 ; $4f9d
-	nop ; $4f9e
-	nop ; $4f9f
-	nop ; $4fa0
-	nop ; $4fa1
-	nop ; $4fa2
-	nop ; $4fa3
-	sbc a, a ; $4fa4
-	sbc a, a ; $4fa5
-	ret nc ; $4fa6
-	rst Rst18 ; $4fa7
-	ret nc ; $4fa8
-	ld e, a ; $4fa9
-	jp nc, $d25d ; $4faa
-	INCBIN "data/bank_009/d_4fad.bin" ; $4fad, 776 bytes
-	rst Rst18 ; $52b5
-	inc bc ; $52b6
-	INCBIN "data/bank_009/d_52b7.bin" ; $52b7, 3657 bytes
+VramTileset_09:
+	; $488a, 118 bytes (records:4)
+; 29 records x 4 bytes
+	dw $4900, $0020 ; record 0
+	dw $4b00, $0008 ; record 1
+	dw $4b80, $0010 ; record 2
+	dw $4c80, $0008 ; record 3
+	dw $4ce0, $0008 ; record 4
+	dw $4d40, $0008 ; record 5
+	dw $4da0, $000a ; record 6
+	dw $4e40, $0010 ; record 7
+	dw $4f40, $0010 ; record 8
+	dw $5040, $0010 ; record 9
+	dw $5140, $0010 ; record 10
+	dw $5240, $0010 ; record 11
+	dw $52c0, $0010 ; record 12
+	dw $5340, $0010 ; record 13
+	dw $53c0, $0008 ; record 14
+	dw $5420, $0020 ; record 15
+	dw $5620, $0010 ; record 16
+	dw $4900, $0001 ; record 17
+	dw $5780, $000e ; record 18
+	dw $5860, $000e ; record 19
+	dw $5940, $000e ; record 20
+	dw $5a20, $000e ; record 21
+	dw $5b00, $000e ; record 22
+	dw $5be0, $000e ; record 23
+	dw $5cc0, $0010 ; record 24
+	dw $5dc0, $0010 ; record 25
+	dw $5ec0, $0010 ; record 26
+	dw $5fc0, $0004 ; record 27
+	dw $6000, $0010 ; record 28
+	db $00, $00
+TilesetTiles_09:
+	INCBIN "data/bank_009/d_4900.bin" ; $4900, 6144 bytes
 Func_09_6100:
-	ld hl, $616d ; $6100
+	ld hl, VramGfxPtrTable_09_616d ; $6100
 	call Func_09_6154 ; $6103
 	ld c, $04 ; $6106
 	call Func_00_0480 ; $6108
 	ret ; $610b
 Func_09_610c:
-	ld hl, $616d ; $610c
+	ld hl, VramGfxPtrTable_09_616d ; $610c
 	call Func_09_6154 ; $610f
 	ld de, $8780 ; $6112
 	ld c, $04 ; $6115
 	call Func_00_0480 ; $6117
 	ret ; $611a
 Func_09_611b:
-	ld hl, $616d ; $611b
+	ld hl, VramGfxPtrTable_09_616d ; $611b
 	call Func_09_6154 ; $611e
 	ld de, $87c0 ; $6121
 	ld c, $04 ; $6124
@@ -794,6 +807,7 @@ Label_09_615c:
 	rr c ; $6169
 	add hl, bc ; $616b
 	ret ; $616c
+VramGfxPtrTable_09_616d:
 	INCBIN "data/bank_009/d_616d.bin" ; $616d, 2771 bytes
 Func_09_6c40:
 	ld a, [wCurrentServingPlayer] ; $6c40
@@ -827,6 +841,7 @@ Label_09_6c65:
 	ld c, $04 ; $6c68
 	call Func_00_0480 ; $6c6a
 	ret ; $6c6d
+ServeGfxPtrTable_09:
 	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1173 bytes
 Func_09_7103:
 	ld a, [wOnCourtCharCountMinus1] ; $7103
