@@ -134,11 +134,18 @@ Label_6b_40af:
 	jr z, Func_6b_406a ; $40ba
 Label_6b_40bc:
 	ret ; $40bc
-	INCBIN "data/bank_06b/d_40bd.bin" ; $40bd, 169 bytes
+	INCBIN "data/bank_06b/d_40bd.bin" ; $40bd, 156 bytes
+Unused_6b_UpdateHandler_4159:
+	jp Label_6b_407c ; $4159
+	jp Label_6b_40af ; $415c
+Unused_6b_ExitHandler_415f:
+	xor a, a ; $415f
+	ld [$cb40], a ; $4160
+	jp Label_6b_40af ; $4163
 	ld a, $01 ; $4166
 	ld [wIntroCutsceneCheck], a ; $4168
 	jp Label_6b_407c ; $416b
-	INCBIN "data/bank_06b/d_416e.bin" ; $416e, 3 bytes
+	jp Label_6b_407c ; $416e
 	xor a, a ; $4171
 	ld [$cb40], a ; $4172
 	jp Label_6b_407c ; $4175
@@ -263,7 +270,17 @@ Label_6b_420d:
 	ld c, $40 ; $42aa
 	call Func_00_1d2e ; $42ac
 	jp Label_6b_407c ; $42af
-	INCBIN "data/bank_06b/d_42b2.bin" ; $42b2, 64 bytes
+Palettes_6b_42b2:
+	; $42b2, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $18c6, $294a, $294a, $294a ; pal 0: #313131 #525252 #525252 #525252
+	dw $7e08, $7d84, $6940, $5100 ; pal 1: #4183ff #2062ff #0052d5 #0041a4
+	dw $7fff, $4252, $214a, $0000 ; pal 2: #ffffff #949483 #525241 #000000
+	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 4: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 	ld hl, $526a ; $42f2
 	call Func_00_1bcb ; $42f5
 	xor a, a ; $42f8
@@ -613,7 +630,7 @@ Label_6b_46ce:
 	ldh a, [hWramBank] ; $46ed
 	push af ; $46ef
 	wram_bank $05 ; $46f0
-	ld hl, $475a ; $46f6
+	ld hl, Palettes_6b_475a ; $46f6
 	ld de, $0008 ; $46f9
 	call LoadPaletteShadow ; $46fc
 	ld hl, $d0c0 ; $46ff
@@ -650,7 +667,17 @@ Label_6b_46ce:
 	cp a, $64 ; $4752
 	jp z, Label_6b_4099 ; $4754
 	jp Label_6b_407c ; $4757
-	INCBIN "data/bank_06b/d_475a.bin" ; $475a, 64 bytes
+Palettes_6b_475a:
+	; $475a, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7f00, $7f60, $7fe0, $0000 ; pal 0: #00c5ff #00deff #00ffff #000000
+	dw $7f00, $6bff, $7d8a, $0000 ; pal 1: #00c5ff #ffffd5 #5262ff #000000
+	dw $0240, $7e9f, $7f00, $0000 ; pal 2: #009400 #ffa4ff #00c5ff #000000
+	dw $6bff, $0280, $7f00, $0000 ; pal 3: #ffffd5 #00a400 #00c5ff #000000
+	dw $025f, $6bff, $7f00, $0000 ; pal 4: #ff9400 #ffffd5 #00c5ff #000000
+	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
+	dw $7fff, $4252, $214a, $0000 ; pal 6: #ffffff #949483 #525241 #000000
+	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
 	farcall FarPtr_LoadScreenAssetRecord ; $479f
@@ -743,7 +770,101 @@ Label_6b_46ce:
 	cp a, $2b ; $487d
 	jp z, Label_6b_4099 ; $487f
 	jp Label_6b_407c ; $4882
-	INCBIN "data/bank_06b/d_4885.bin" ; $4885, 219 bytes
+Unused_6b_State11_Init:
+	call DisableLCDSafely ; $4885
+	ld c, $20 ; $4888
+	farcall FarPtr_LoadScreenAssetRecord ; $488a
+	ld a, $01 ; $488d
+	ldh [$ff98], a ; $488f
+	ld hl, rLCDC ; $4891
+	set 3, [hl] ; $4894
+	wram_bank $03 ; $4896
+	ld hl, $d000 ; $489c
+	ld de, $9c00 ; $489f
+	ld c, $40 ; $48a2
+	call Func_00_0480 ; $48a4
+	ld hl, $d400 ; $48a7
+	ld de, $bc00 ; $48aa
+	ld c, $40 ; $48ad
+	call Func_00_0480 ; $48af
+	call Func_6b_545e ; $48b2
+	call Func_6b_6075 ; $48b5
+	call EnableLCD ; $48b8
+	ld c, $20 ; $48bb
+	call Func_00_1d2e ; $48bd
+	call Func_00_1da4 ; $48c0
+	xor a, a ; $48c3
+	ld [$cb40], a ; $48c4
+	jp Label_6b_407c ; $48c7
+Unused_6b_State11_Exit:
+	ld a, $00 ; $48ca
+	ldh [$ff98], a ; $48cc
+	ld hl, rLCDC ; $48ce
+	res 3, [hl] ; $48d1
+	ld hl, $5d25 ; $48d3
+	ld de, $0008 ; $48d6
+	call LoadPaletteShadow ; $48d9
+	xor a, a ; $48dc
+	ld [$cb40], a ; $48dd
+	jp Label_6b_40af ; $48e0
+Unused_6b_State11_Update:
+	ld a, [$cb40] ; $48e3
+	inc a ; $48e6
+	ld [$cb40], a ; $48e7
+	cp a, $70 ; $48ea
+	jp z, Label_6b_4099 ; $48ec
+	jp Label_6b_407c ; $48ef
+Unused_6b_State12_Init:
+	xor a, a ; $48f2
+	ld [$cb40], a ; $48f3
+	ld [$cb45], a ; $48f6
+	xor a, a ; $48f9
+	ld [$c322], a ; $48fa
+	ld a, $24 ; $48fd
+	ld [$c323], a ; $48ff
+	ld a, $00 ; $4902
+	ld [$cb4d], a ; $4904
+	ld [$cb4c], a ; $4907
+	ld de, $015c ; $490a
+	ld hl, $cb48 ; $490d
+	ld a, e ; $4910
+	ld [hl+], a ; $4911
+	ld [hl], d ; $4912
+	ld de, $0120 ; $4913
+	ld hl, $cb4a ; $4916
+	ld a, e ; $4919
+	ld [hl+], a ; $491a
+	ld [hl], d ; $491b
+	jp Label_6b_407c ; $491c
+Unused_6b_State12_Exit:
+	ld c, $04 ; $491f
+	call Func_00_1d20 ; $4921
+	call Func_00_1da4 ; $4924
+	jp Label_6b_40af ; $4927
+Unused_6b_State12_Update:
+	ld a, [$cb45] ; $492a
+	cp a, $0a ; $492d
+	jr z, Label_6b_493b ; $492f
+	inc a ; $4931
+	ld [$cb45], a ; $4932
+	call Func_6b_60f8 ; $4935
+	jp Label_6b_407c ; $4938
+Label_6b_493b:
+	ld a, [$cb40] ; $493b
+	inc a ; $493e
+	ld [$cb40], a ; $493f
+	cp a, $80 ; $4942
+	jp z, Label_6b_4099 ; $4944
+	cp a, $64 ; $4947
+	jr nc, Label_6b_494e ; $4949
+	call Func_6b_6115 ; $494b
+Label_6b_494e:
+	call Func_6b_4d61 ; $494e
+	call Func_6b_4c9e ; $4951
+	call Func_6b_60d5 ; $4954
+	call Func_6b_60f8 ; $4957
+	call Func_6b_4e2d ; $495a
+	jp Label_6b_407c ; $495d
 	call DisableLCDSafely ; $4960
 	call Func_6b_53fc ; $4963
 	call Func_6b_6075 ; $4966
@@ -858,7 +979,7 @@ Palettes_6b_4a58:
 	ld c, $04 ; $4ac8
 	call Func_00_0480 ; $4aca
 	call Func_00_2631 ; $4acd
-	ld hl, $4c00 ; $4ad0
+	ld hl, Palettes_6b_4c00 ; $4ad0
 	ld de, $0107 ; $4ad3
 	call LoadPaletteShadow ; $4ad6
 	xor a, a ; $4ad9
@@ -871,7 +992,7 @@ Palettes_6b_4a58:
 	jp z, Label_6b_4099 ; $4ae9
 	jp Label_6b_407c ; $4aec
 	jp Label_6b_40af ; $4aef
-	ld hl, $756f ; $4af2
+	ld hl, Palettes_6b_756f ; $4af2
 	ld de, $0008 ; $4af5
 	call LoadPaletteShadow ; $4af8
 	wram_bank $05 ; $4afb
@@ -916,7 +1037,7 @@ Palettes_6b_4a58:
 	ld de, $bc00 ; $4b69
 	ld c, $08 ; $4b6c
 	call Func_00_0480 ; $4b6e
-	ld hl, $4c00 ; $4b71
+	ld hl, Palettes_6b_4c00 ; $4b71
 	ld de, $0107 ; $4b74
 	call LoadPaletteShadow ; $4b77
 	call Func_00_2631 ; $4b7a
@@ -968,7 +1089,16 @@ Label_6b_4be3:
 	ld a, $00 ; $4bf9
 	ldh [$ff98], a ; $4bfb
 	jp Label_6b_40af ; $4bfd
-	INCBIN "data/bank_06b/d_4c00.bin" ; $4c00, 56 bytes
+Palettes_6b_4c00:
+	; $4c00, 56 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5902, $7fff, $0090, $0000 ; pal 0: #1041b4 #ffffff #832000 #000000
+	dw $191f, $035f, $5902, $0000 ; pal 1: #ff4131 #ffd500 #1041b4 #000000
+	dw $5902, $7fff, $331f, $0000 ; pal 2: #1041b4 #ffffff #ffc562 #000000
+	dw $191f, $7fff, $331f, $0000 ; pal 3: #ff4131 #ffffff #ffc562 #000000
+	dw $191f, $0090, $331f, $0000 ; pal 4: #ff4131 #832000 #ffc562 #000000
+	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 	ld hl, $5d25 ; $4c38
 	ld de, $0008 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
@@ -1143,7 +1273,13 @@ Func_6b_518d:
 	pop hl ; $51a2
 	pop bc ; $51a3
 	ret ; $51a4
-	INCBIN "data/bank_06b/d_51a5.bin" ; $51a5, 9 bytes
+Label_6b_51a5:
+	ldh a, [$ff94] ; $51a5
+	bit 0, a ; $51a7
+	jr nz, Label_6b_51ad ; $51a9
+	jr Label_6b_51a5 ; $51ab
+Label_6b_51ad:
+	ret ; $51ad
 Func_6b_51ae:
 	call DisableLCDSafely ; $51ae
 	ld c, $15 ; $51b1
@@ -1220,11 +1356,15 @@ Func_6b_520a:
 	ld c, $02 ; $5248
 	ld de, $a480 ; $524a
 	farcall FarPtr_39_10 ; $524d
-	ld hl, $525a ; $5250
+	ld hl, Palettes_6b_525a ; $5250
 	ld de, $0802 ; $5253
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
-	INCBIN "data/bank_06b/d_525a.bin" ; $525a, 16 bytes
+Palettes_6b_525a:
+	; $525a, 16 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $569f, $73ff, $115f, $0000 ; pal 0: #ffa4ac #ffffe6 #ff5220 #000000
+	dw $331f, $77ff, $025f, $0000 ; pal 1: #ffc562 #ffffee #ff9400 #000000
 	ld hl, $52b6 ; $526a
 	ld a, [$cb44] ; $526d
 	ld d, $10 ; $5270
@@ -1377,7 +1517,37 @@ Func_6b_53fc:
 	xor a, a ; $5459
 	ld [$c323], a ; $545a
 	ret ; $545d
-	INCBIN "data/bank_06b/d_545e.bin" ; $545e, 91 bytes
+Func_6b_545e:
+	call DisableLCDSafely ; $545e
+	farcall FarPtr_0a_6a ; $5461
+	farcall FarPtr_05_00 ; $5464
+	wram_bank $01 ; $5467
+	ld hl, $551d ; $546d
+	ld de, $d000 ; $5470
+	call DecompressData ; $5473
+	ld hl, $d000 ; $5476
+	ld de, $9000 ; $5479
+	ld c, $80 ; $547c
+	call Func_00_0480 ; $547e
+	ld hl, $d800 ; $5481
+	ld de, $8800 ; $5484
+	ld c, $80 ; $5487
+	call Func_00_0480 ; $5489
+	wram_bank $02 ; $548c
+	ld hl, $5bd7 ; $5492
+	ld de, $d000 ; $5495
+	call DecompressData ; $5498
+	wram_bank $03 ; $549b
+	ld hl, $59d7 ; $54a1
+	ld de, $d000 ; $54a4
+	call DecompressData ; $54a7
+	xor a, a ; $54aa
+	ld [$c322], a ; $54ab
+	ld a, $24 ; $54ae
+	ld [$c323], a ; $54b0
+	ld a, $01 ; $54b3
+	farcall FarPtr_0a_76 ; $54b5
+	ret ; $54b8
 Func_6b_54b9:
 	call DisableLCDSafely ; $54b9
 	farcall FarPtr_0a_6a ; $54bc
@@ -1442,11 +1612,15 @@ Func_6b_6075:
 	ld c, $04 ; $60b3
 	ld de, $a480 ; $60b5
 	farcall FarPtr_39_10 ; $60b8
-	ld hl, $60c5 ; $60bb
+	ld hl, Palettes_6b_60c5 ; $60bb
 	ld de, $0802 ; $60be
 	call LoadPaletteShadow ; $60c1
 	ret ; $60c4
-	INCBIN "data/bank_06b/d_60c5.bin" ; $60c5, 16 bytes
+Palettes_6b_60c5:
+	; $60c5, 16 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c1f, $033f, $01af, $0000 ; pal 0: #ff00ff #ffcd00 #7b6a00 #000000
+	dw $7f4e, $7f73, $7fb9, $7fff ; pal 1: #73d5ff #9cdeff #cdeeff #ffffff
 Func_6b_60d5:
 	ld hl, $cb4a ; $60d5
 	ld a, [hl+] ; $60d8
@@ -1759,7 +1933,17 @@ Func_6b_73f2:
 	ld a, [$cb44] ; $7569
 	ldh [$ff8a], a ; $756c
 	ret ; $756e
-	INCBIN "data/bank_06b/d_756f.bin" ; $756f, 64 bytes
+Palettes_6b_756f:
+	; $756f, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0000, $0000, $0000, $0000 ; pal 0: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 1: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 2: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 3: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 4: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 5: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
+	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
 Func_6b_75af:
 	call ClearFrameTasks ; $75af
 	wram_bank $03 ; $75b2
@@ -1813,7 +1997,7 @@ Func_6b_75af:
 	ld b, $62 ; $762e
 	ld de, $8600 ; $7630
 	farcall FarPtr_39_10 ; $7633
-	ld hl, $794f ; $7636
+	ld hl, Palettes_6b_794f ; $7636
 	ld de, $0801 ; $7639
 	call LoadPaletteShadow ; $763c
 	ld a, $01 ; $763f
@@ -1852,7 +2036,15 @@ Label_6b_7680:
 	call Func_00_1da4 ; $768c
 	xor a, a ; $768f
 	ret ; $7690
-	INCBIN "data/bank_06b/d_7691.bin" ; $7691, 21 bytes
+	sound $00 ; $7691
+	call ClearFrameTasks ; $7693
+	ld c, $20 ; $7696
+	call Func_00_1d20 ; $7698
+	call Func_00_1da4 ; $769b
+	ld hl, rIE ; $769e
+	res 1, [hl] ; $76a1
+	ld a, $01 ; $76a3
+	ret ; $76a5
 Label_6b_76a6:
 	sound $00 ; $76a6
 	call ClearFrameTasks ; $76a8
@@ -1929,7 +2121,10 @@ TitleScreenPalettes:
 	dw $0242, $0000, $7fff, $035f ; pal 5: #109400 #000000 #ffffff #ffd500
 	dw $0242, $0000, $035f, $68c8 ; pal 6: #109400 #000000 #ffd500 #4131d5
 	dw $7fff, $7f0c, $68c8, $0000 ; pal 7: #ffffff #62c5ff #4131d5 #000000
-	INCBIN "data/bank_06b/d_794f.bin" ; $794f, 8 bytes
+Palettes_6b_794f:
+	; $794f, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7fff, $025f, $015f, $001f ; pal 0: #ffffff #ff9400 #ff5200 #ff0000
 AwardCeremonyTilemap:
 	INCBIN "data/bank_06b/lz_7957.bin" ; $7957, 293 bytes
 AwardCeremonyAttrmap:

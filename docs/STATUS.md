@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~126.5K instructions / 276,198 bytes of proven code (13.2% of the 2 MiB ROM)
+**~126.5K instructions / 276,842 bytes of proven code (13.2% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -601,6 +601,27 @@ palette blocks are carved to inline `palettes` source
 tilemap copies stay gitignored graphics blobs. The two unproven farcall slots
 (`$0e`/`$10` -> `$60a0`/`$6086`, small SRAM-record copiers interleaved with
 their index tables) were seeded as code.
+
+**Bank $6b (intro cutscene / title / award-ceremony driver)** carved: 40 -> 28
+blobs, 28.6% -> 30.7% code. The bank is a state machine — `$cb3f` indexes an
+18-word state->record pointer table at `$40bd` into 20 x 6-byte
+`{init,update,exit}` handler records, and the records' handlers sat inside data
+blobs (the two-level indirection is invisible to descent). 13 static seeds
+(`coverage/bank06b_static_code.json`, function starts + internal flow targets)
+recovered them: state 17's live exit/init/update tail (`$415c`/`$4166`/`$416e`,
+which folded the `$40bd` blob down to a clean 156-byte table) and three
+farcall/computed-reached helpers (`$51a5` button-wait loop, `$545e`
+decompress-setup sibling of `Func_6b_53fc`, `$7691` teardown). Decoding the
+full table exposed dead content: **records 11 and 12 are targeted by no state**
+(their `$4885`/`$48f2` handler trio is a complete but unwired intro segment that
+decompresses + scrolls character/logo tiles), and two orphaned handler snippets
+(`$4159`/`$415f`) flank the live `$415c`. These decode as clean, function-calling
+handlers (not data), so they are disassembled and marked `Unused_6b_*` rather
+than hidden in blobs. Seven palette blobs
+(`$42b2/475a/4c00/525a/60c5/756f/794f`) render inline via the `palettes` spec
+and are named `Palettes_6b_*`, so their `LoadPaletteShadow` call sites read
+symbolically. The remaining blobs are genuine data — LZ tile/tilemap streams,
+metasprite templates, and frame-indexed animation curves.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm
