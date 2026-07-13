@@ -4977,12 +4977,14 @@ Label_00_1ca7:
 	ret c ; $1ca9
 	ld a, $1f ; $1caa
 	ret ; $1cac
+Func_00_1cad:
 	push af ; $1cad
 	call Func_00_1c6a ; $1cae
 	call Func_00_1ca0 ; $1cb1
 	call Func_00_1c83 ; $1cb4
 	pop af ; $1cb7
 	ret ; $1cb8
+Func_00_1cb9:
 	push af ; $1cb9
 	call Func_00_1c6a ; $1cba
 	push af ; $1cbd
@@ -4993,6 +4995,7 @@ Label_00_1ca7:
 	call Func_00_1c83 ; $1cc4
 	pop af ; $1cc7
 	ret ; $1cc8
+Func_00_1cc9:
 	push af ; $1cc9
 	call Func_00_1c6a ; $1cca
 	push af ; $1ccd

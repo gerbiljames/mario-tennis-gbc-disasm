@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~121.5K instructions / 263,120 bytes of proven code (12.5% of the 2 MiB ROM)
+**~122.5K instructions / 265,667 bytes of proven code (12.7% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,24 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $05 (text control-code engine) largely de-blobbed** (42 blobs → 12;
+69.9% → 85.4% code). Most "data" blobs were stranded handler code reached
+only through the engine's control-code jump tables (read via `jp hl` through
+pointers, invisible to static descent), now seeded
+(`coverage/bank005_static_code.json`, ~105 entries): bank-swap copiers,
+input-wait loops, array initializers, and the per-source **text-fetch handler
+stubs** (5-byte `farcall $bb:02` + `jr`, one per text bank
+`$31-$37/$6e/$1f/$25/$26/$5e`). Four dispatch tables were structured inline as
+`dw` and named: `ControlCodeHandlers_05` (`$548f`, 32 entries, the main
+control-code table loaded by `ld hl,$548f`; its 5 leading `$c9` bytes are
+no-op `ret` handlers), `DialogueTextFetchers_05`/`ShortTextFetchers_05`
+(`$5c3b`/`$5cc7`, 16 each), and `TextSubcmdHandlers_05` (`$66de`). Two data
+tables named: `PowersOfTen_05` (`$53a2`, 1/10/100/1000/10000 for decimal
+formatting) and `HexDigitChars_05` (`$6488`, "0123456789ABCDEF"). The 12
+remaining blobs are genuine data: font/glyph tiles (`$7942` 1694 B, `$6886`),
+a glyph-width table (`$60cb`, id/width pairs), small parameter/word tables,
+and text strings (e.g. `$67b7` "- ENTER NO -").
 
 **Bank $07's stranded code was recovered** (14 blobs → 8 genuine data tables;
 36.5% → 40.3% code). Its "data" blobs held ~600 bytes of code reached only

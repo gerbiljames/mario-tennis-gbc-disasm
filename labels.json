@@ -775,5 +775,11 @@
  "0x1b7a58": "MarioMiniGamesTiles",
  "0x1bbb08": "FetchDialogueText_6e",
  "0x1bbb10": "FetchShortText_6e",
- "0x1bbb18": "FetchText_6e"
+ "0x1bbb18": "FetchText_6e",
+ "0x15c3b": "DialogueTextFetchers_05",
+ "0x15cc7": "ShortTextFetchers_05",
+ "0x1548f": "ControlCodeHandlers_05",
+ "0x153a2": "PowersOfTen_05",
+ "0x16488": "HexDigitChars_05",
+ "0x166de": "TextSubcmdHandlers_05"
 }
