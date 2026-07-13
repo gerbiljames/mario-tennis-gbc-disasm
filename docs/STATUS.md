@@ -1,8 +1,8 @@
-# Project status — 2026-07-12
+# Project status — 2026-07-14
 
 ## Where things stand
 
-**~126.5K instructions / 281,903 bytes of proven code (13.4% of the 2 MiB ROM)
+**~128.7K instructions / 282,273 bytes of proven code (13.5% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -39,6 +39,13 @@ include/macros.inc):
   reads an inline `dw` pointer into de: `rst20/rst28/rst30 $xxxx`.
 - `Func_00_07c5` is a register-based far dispatcher — runtime-computed, not
   statically exploitable.
+
+**Inline-argument calls** (`INLINE_ARG_CALLS`): `Func_00_2725` is a ROM0 helper
+that reads the byte at its return address (a repeat count) and steps the return
+past it, so every `call $2725` is followed by one inline data byte. `decode_at`
+emits it as a 4-byte pseudo-op rendering `call Func_00_2725` + `db $xx ; inline
+arg` (mirrors the rst08/farcall inline handling). Fixed 33 mis-decoded sites
+across 12 banks (the arg byte had been swallowing the next real instruction).
 
 **Match-launcher stubs** (`seed_launcher_stubs`): banks $10/$0e hold runs of
 uniform 14-byte functions that store a match id into
@@ -452,6 +459,25 @@ match-select **data**: big self-referential pointer-table + record structures
 (`$61b1` 3649 B, `$468d`, `$74a9`, `$5a80` — each entry a `dw` into a
 `01 40 00 …`-header record, verified *not* code before declining to seed) and
 `$0cXX`-valued lookup tables (`$5ddc`/`$5f30`/`$5c34`/`$5899`/`$5982`).
+
+**Bank $10 `$4000` header + `$4010` handler tree fully carved.** The bank's
+`$4000` table is an 8-slot directory of match-select sub-tables; hooks proved
+slots `$02-$06`, and `add_static_data_slots` resolves slots `$00`/`$08-$0e` (RAM-
+dispatched, so no capture) as `DataPtr_10_*` over labeled sub-tables. Slot 0's
+`$4010` was mis-decoded as code by a coarse `$4010` static seed that swept in the
+whole pointer table and flowed into the setup routine that follows; the seed was
+moved to its real entry (`$40b0`). `$4010` is now a 7-`dw` pointer table +
+`MatchSelectEntries_10` (nine 14-byte records) + tail, all rendered inline.
+Entry [3] `$4145` = `MatchSelectHandlerTable_10` (9 records `{id,$ff,$0000,dw
+handler,$0000}`) whose handlers (`$40b0/$4195/$41da/$4450/$448d/$44cc/$4640/
+`$40ef/$4137`, now `Func_10_*`) were carved out of the `d_40ef` blob.
+
+**Bank $09 tileset de-blobbed.** The VRAM tileset at `$488a` (29-record
+`{dw src, db tiles, db 0}` descriptor + `$4900-$60ff` tiles → VRAM `$8200`, loaded
+by `Func_09_4873`) was split into three blobs by two lone coverage seeds
+(`$24f99`/`$252b5`) that are data reads during the copy, not execution; added to
+`BAD_SEEDS`, it is now one `VramTileset_09` + descriptor table. Also named
+`MoveCurveTable_09`, `VramGfxPtrTable_09_616d`, `ServeGfxPtrTable_09`.
 
 **Bank $13 (story engine, biggest story bank) de-blobbed** (56.0% → 70.8%
 code; 29 → 16 blobs). The bulk of its "data" was **story-command handler code**
