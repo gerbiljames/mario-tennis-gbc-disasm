@@ -70,6 +70,8 @@
  "0x241bc": "records:16",
  "0x2488a": "records:4",
  "0x40010": "records:2",
+ "0x40020": "bytes:14",
+ "0x4009e": "bytes:16",
  "0x40e6c": "records:2",
  "0x40fc6": "records:2",
  "0x4c006": "records:2",
