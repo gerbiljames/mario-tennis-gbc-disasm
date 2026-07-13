@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~123.1K instructions / 267,094 bytes of proven code (12.7% of the 2 MiB ROM)
+**~123.7K instructions / 268,536 bytes of proven code (12.8% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,22 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $1e (reward/results screen-resource bank) fully identified**
+(52.7% → 61.5% code). Turned out to be a screen-resource bank: sequences of
+LZ-compressed graphics streams (loaded via `ld hl,src; call DecompressData`)
+and small palette sets (`call LoadPaletteShadow`, `de` low byte = palette
+count) bundled per reward/results screen. Three giant opaque blobs ($4c40 2 KB,
+$5be1 2.4 KB, $75a6 1 KB) were carved into **21 exactly-bounded named streams**
+(`Lz_1e_*` × 15, `Palettes_1e_*` × 6) by enumerating every DecompressData/
+LoadPaletteShadow source and labeling each — the streams chain contiguously,
+so label-splitting yields the exact compressed length (verified against
+`tools/lz.py`, e.g. `Lz_1e_4c70` = 1455 B comp / 2816 decomp). Loaders now read
+`ld hl, Lz_1e_4c70` / `ld hl, Palettes_1e_4c40`, and palette sets render inline
+as BGR555 colors. Also recovered the stranded handler code (bank-swap/VRAM
+copiers, a farcall stub) and structured three jump tables
+(`RewardSubHandlers{A,B,C}_1e`). Remaining blobs are small coordinate/OAM/
+lookup tables. See [[stranded-code-carving]].
 
 **Bank $1d (stroke-practice drill engine) — partial, careful carve.**
 Recovered the clean stranded code (bank-swap routine `$4e5e` — its `$4e76`
