@@ -1,0 +1,10 @@
+{
+ "_comment": "Static code-entry seeds for bank $02 (story-mode character/roster/equipment manager). Four stranded-but-valid helper functions the disassembler blobbed, unreferenced anywhere (no in-bank call/jp, not in FarPtr_02 table) -> kept as code, labeled Unused_02_* in labels.json: $4257 sign-extend l->h, $4b99 list-foreach (indexes the $4c18 table, left as data), $5284 story-slot variant of Func_02_5247, $5ec8 char-group-find variant of Func_02_5ee2. Flat = 0x02*0x4000 + (cpu-0x4000).",
+ "rom": [
+  33367,
+  35737,
+  37508,
+  40648
+ ],
+ "other": []
+}

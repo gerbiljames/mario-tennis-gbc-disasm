@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~126.5K instructions / 276,842 bytes of proven code (13.2% of the 2 MiB ROM)
+**~126.5K instructions / 281,527 bytes of proven code (13.4% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -622,6 +622,23 @@ than hidden in blobs. Seven palette blobs
 and are named `Palettes_6b_*`, so their `LoadPaletteShadow` call sites read
 symbolically. The remaining blobs are genuine data — LZ tile/tilemap streams,
 metasprite templates, and frame-indexed animation curves.
+
+**Bank $02 (story-mode character/roster/equipment manager) has zero data
+blobs — 19.8% -> 48.4% committed source.** It owns the player character record
+(`wStoryModeNameOfMainCharacter`, `$c800`), a 100-entry roster DB, equipment,
+and save flags, exporting ~34 functions via `FarPtr_02`. All 18 blobs were
+classified and structured (`data_tables.json`): `StoryCharacterRecords_02`
+(`$52cf`, 100 x 29-byte records; stride proven by `Func_02_41ee` + the
+`ld c,$1d` copy) followed by `CharGroupTable_02` (`$5e23`, 9 x 16-byte group
+rows, searched by `Func_02_5eb3`/`5ee2`); `EquipRecordPtrs_02`/`EquipRecords_02`
+(`$47f2` 4-ptr table -> 4 x 113-byte records); two `SaveFlagPtrs_02` word
+tables (feeding Clear/Set/TestSaveFlag); `CharIconMasks_02`, `NameTextRemap_02`,
+`MenuTilemaps_02` (null-terminated tile strings via `Func_00_1906`), and the
+`Value100000_02` 24-bit cap constant. Four stranded-but-valid helpers unreferenced
+anywhere (`coverage/bank002_static_code.json`) were carved as code and, like
+bank $6b's dead handlers, labeled `Unused_02_*`: `SignExtendL`, `ListForEach`
+(indexes a 64-byte table, left as data), `StorySlotVariant` (near-dup of
+`Func_02_5247`), and `CharGroupFind`.
 
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 693 still-unnamed routines; name the now-structured tables, and confirm
