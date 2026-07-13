@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~121.3K instructions / 262,497 bytes of proven code (12.5% of the 2 MiB ROM)
+**~121.5K instructions / 263,120 bytes of proven code (12.5% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,22 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $07's stranded code was recovered** (14 blobs → 8 genuine data tables;
+36.5% → 40.3% code). Its "data" blobs held ~600 bytes of code reached only
+through computed dispatch, now seeded (`coverage/bank007_static_code.json`):
+a link-cable serial-exchange stub (`$45f8`, drives `[$ff01]`/`[$ff02]`), a
+match-id clamp (`$4cb1`), a sprite-field table blitter (`$5d1e`), a
+delay/serial stub (`$41b1`), a ball-height guard (`$59ec`), and a
+**self-contained target-zone mode implementation at `$5ea1`**: the setup
+routine puts 2 chars on court, sets `wTargetZoneEnabled`, and installs a
+mode-hook table (`ModeHookTable_07` at `$5efc`, via `SetModeHookTable`) plus
+its FarPtr_08_4a data at `$5ff6`; the seven hook callbacks/stubs
+(`$5ed2/$5ed3/$5f0d/$5f24/$5f25/$5f49/$5f4d/$5f75/$5f8e`) interleave with those
+tables and were seeded around them. The 8 remaining blobs are genuine data:
+`$4d21` (1088 B, indexed `$4d21 + [$ffdd]*4` by `Func_07_4cfe`),
+`CharSpriteSetTable` (`$5a50`, already named), the `$5f94` mode data, and
+five small lookup tables.
 
 **Banks $20/$21/$22/$23 are four more ball-position banks** in the same
 family as $2a/$2b — each dispatched from the same bank-7 shot-placement

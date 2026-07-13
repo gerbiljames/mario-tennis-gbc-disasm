@@ -1,0 +1,21 @@
+{
+ "_comment": "Static code-entry seeds for bank $07 stranded functions reached only through computed dispatch. $41b1 delay/serial stub, $45f8 link-cable serial exchange, $4cb1 match-id clamp, $59ec ball-height guard, $5d1e sprite-field table blitter, and a self-contained target-zone mode implementation at $5ea1: setup ($5ea1) installs ModeHookTable_07 ($5efc) via SetModeHookTable, plus its hook callbacks/stubs ($5ed2/$5ed3/$5f0d/$5f24/$5f25/$5f49/$5f4d/$5f75/$5f8e) around embedded data tables at $5efc/$5f94/$5ff6. Flat ROM offset = 0x07*0x4000 + (cpu - 0x4000).",
+ "rom": [
+  115121,
+  116216,
+  117937,
+  121324,
+  122142,
+  122529,
+  122578,
+  122579,
+  122637,
+  122660,
+  122661,
+  122697,
+  122701,
+  122741,
+  122766
+ ],
+ "other": []
+}

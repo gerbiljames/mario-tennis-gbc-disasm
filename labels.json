@@ -107,6 +107,7 @@
  "0x10c1d": "LookupTileId_04",
  "0x10c29": "TileIdLookup_04_4c29",
  "0x1da50": "CharSpriteSetTable",
+ "0x1defc": "ModeHookTable_07",
  "0x2027a": "HandleBallHitEvent",
  "0x207e2": "AssignCourtPositions",
  "0x2083f": "GamePositionPtrs",
