@@ -759,13 +759,14 @@ class Disassembly:
         """Data-pointer $4000-table slots the traces never exercise, so no
         hook proves them and they fall through to raw blobs. Bank $10's
         header is the story match-select sub-table directory: hooks resolve
-        slots $02-$06, but slots $08-$0e (-> $57f6/$5a80/$61b1/$74a9, each a
-        pointer sub-table) are only reached through RAM-driven dispatch.
-        Register them as data slots so they render as DataPtr words over
-        labeled sub-tables. Slot $00 -> $4010 is a jump table entangled with
-        live code (the $40b0 setup routine is reached only through it), so it
-        is deliberately omitted and left decoded."""
-        slots = {0x10: (0x08, 0x0a, 0x0c, 0x0e)}
+        slots $02-$06, but slots $00 and $08-$0e (-> $4010/$57f6/$5a80/$61b1/
+        $74a9, each a pointer sub-table) are only reached through RAM-driven
+        dispatch. Register them as data slots so they render as DataPtr words
+        over labeled sub-tables. Slot $00 -> $4010 is a 7-entry pointer table
+        + records; the $40b0 setup routine that physically follows it is
+        seeded directly in coverage/bank010_static_code.json (a coarse seed
+        at $4010 previously swept the table in as mis-decoded code)."""
+        slots = {0x10: (0x00, 0x08, 0x0a, 0x0c, 0x0e)}
         added = 0
         for bank, sl in slots.items():
             for slot in sl:

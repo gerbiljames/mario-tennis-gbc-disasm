@@ -1,7 +1,7 @@
 SECTION "ROM Bank $10", ROMX[$4000], BANK[$10]
 
-	db $10 ; $4000
-	db $40 ; $4001
+DataPtr_10_00:
+	dw Data_10_4010 ; $4000
 DataPtr_10_02:
 	dw Data_10_468d ; $4002
 DataPtr_10_04:
@@ -16,136 +16,19 @@ DataPtr_10_0c:
 	dw Data_10_61b1 ; $400c
 DataPtr_10_0e:
 	dw Data_10_74a9 ; $400e
-	and a, [hl] ; $4010
-	ld b, b ; $4011
-	xor a, a ; $4012
-	ld b, b ; $4013
-	ld e, $40 ; $4014
-	ld b, l ; $4016
-	ld b, c ; $4017
-	adc a, [hl] ; $4018
-	ld b, c ; $4019
-	adc a, a ; $401a
-	ld b, c ; $401b
-	sub a, b ; $401c
-	ld b, c ; $401d
-	nop ; $401e
-	nop ; $401f
-	pop de ; $4020
-	ld a, e ; $4021
-	nop ; $4022
-	rlca ; $4023
-	nop ; $4024
-	ld de, $0040 ; $4025
-	ld c, c ; $4028
-	ld bc, $0000 ; $4029
-	nop ; $402c
-	nop ; $402d
-	pop de ; $402e
-	ld a, e ; $402f
-	nop ; $4030
-	rlca ; $4031
-	nop ; $4032
-	rlca ; $4033
-	add a, b ; $4034
-	nop ; $4035
-	ld b, [hl] ; $4036
-	ld bc, $0003 ; $4037
-	nop ; $403a
-	nop ; $403b
-	pop de ; $403c
-	ld a, e ; $403d
-	nop ; $403e
-	dec c ; $403f
-	nop ; $4040
-	rlca ; $4041
-	add a, b ; $4042
-	nop ; $4043
-	ld b, a ; $4044
-	ld bc, $0003 ; $4045
-	nop ; $4048
-	nop ; $4049
-	pop de ; $404a
-	ld a, e ; $404b
-	nop ; $404c
-	rlca ; $404d
-	nop ; $404e
-	dec bc ; $404f
-	ld b, b ; $4050
-	nop ; $4051
-	ld d, h ; $4052
-	ld bc, $0003 ; $4053
-	nop ; $4056
-	nop ; $4057
-	pop de ; $4058
-	ld a, e ; $4059
-	nop ; $405a
-	dec c ; $405b
-	nop ; $405c
-	dec bc ; $405d
-	ld b, b ; $405e
-	nop ; $405f
-	ld d, l ; $4060
-	ld bc, $0003 ; $4061
-	nop ; $4064
-	nop ; $4065
-	pop de ; $4066
-	ld a, e ; $4067
-	nop ; $4068
-	dec c ; $4069
-	nop ; $406a
-	ld de, $0040 ; $406b
-	ld l, h ; $406e
-	ld bc, $0005 ; $406f
-	nop ; $4072
-	nop ; $4073
-	pop de ; $4074
-	ld a, e ; $4075
-	nop ; $4076
-	dec b ; $4077
-	nop ; $4078
-	ld c, $40 ; $4079
-	nop ; $407b
-	ld b, e ; $407c
-	ld bc, $0003 ; $407d
-	nop ; $4080
-	nop ; $4081
-	pop de ; $4082
-	ld a, e ; $4083
-	nop ; $4084
-	ld de, $0e00 ; $4085
-	ld b, b ; $4088
-	nop ; $4089
-	ld b, e ; $408a
-	ld bc, $0003 ; $408b
-	nop ; $408e
-	nop ; $408f
-	pop de ; $4090
-	ld a, e ; $4091
-	nop ; $4092
-	ld de, $0c00 ; $4093
-	ld b, b ; $4096
-	nop ; $4097
-	ld b, e ; $4098
-	ld bc, $0003 ; $4099
-	nop ; $409c
-	nop ; $409d
-	nop ; $409e
-	nop ; $409f
-	nop ; $40a0
-	nop ; $40a1
-	nop ; $40a2
-	nop ; $40a3
-	nop ; $40a4
-	rst Rst38 ; $40a5
-	ld bc, $00c0 ; $40a6
-	ld a, [bc] ; $40a9
-	nop ; $40aa
-	add hl, bc ; $40ab
-	nop ; $40ac
-	nop ; $40ad
-	rst Rst38 ; $40ae
-	rst Rst38 ; $40af
+Data_10_4010:
+	; $4010, 14 bytes (records:2)
+; 7 records x 2 bytes
+	dw $40a6 ; record 0
+	dw $40af ; record 1
+	dw $401e ; record 2
+	dw $4145 ; record 3
+	dw $418e ; record 4
+	dw $418f ; record 5
+	dw $4190 ; record 6
+MatchSelectRecords_10:
+	INCBIN "data/bank_010/d_401e.bin" ; $401e, 146 bytes
+Func_10_40b0:
 	farcall FarPtr_0a_00 ; $40b0
 	ld c, $10 ; $40b3
 	call Func_00_1d20 ; $40b5

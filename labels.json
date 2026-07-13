@@ -224,6 +224,8 @@
  "0x299d9": "SceneGfxSlotTable",
  "0x29d0b": "GetSceneSlotPtr",
  "0x2a2f8": "LoadCourtSceneGraphics",
+ "0x4001e": "MatchSelectRecords_10",
+ "0x400b0": "Func_10_40b0",
  "0x40e6c": "MatchSelectHandlersA_10",
  "0x40fc6": "MatchSelectHandlersB_10",
  "0x4c006": "StoryCmdHandlersA_13",
