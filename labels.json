@@ -876,5 +876,8 @@
  "0x1b7a58": "MarioMiniGamesTiles",
  "0x1bbb08": "FetchDialogueText_6e",
  "0x1bbb10": "FetchShortText_6e",
- "0x1bbb18": "FetchText_6e"
+ "0x1bbb18": "FetchText_6e",
+ "0x17322": "DrawGlyph",
+ "0x1737a": "PlotGlyphRow",
+ "0x17920": "FontGlyphs"
 }

@@ -7758,7 +7758,7 @@ Func_05_730d:
 	pop hl ; $731f
 	pop af ; $7320
 	ret ; $7321
-Func_05_7322:
+DrawGlyph:
 	push af ; $7322
 	push bc ; $7323
 	push hl ; $7324
@@ -7770,13 +7770,13 @@ Func_05_7322:
 	add hl, hl ; $732c
 	add hl, hl ; $732d
 	add hl, hl ; $732e
-	ld bc, $7920 ; $732f
+	ld bc, FontGlyphs ; $732f
 	add hl, bc ; $7332
 	push de ; $7333
 	ld c, $10 ; $7334
 Label_05_7336:
 	ld a, [hl+] ; $7336
-	call Func_05_737a ; $7337
+	call PlotGlyphRow ; $7337
 	ld a, $08 ; $733a
 	add a, e ; $733c
 	ld e, a ; $733d
@@ -7828,7 +7828,7 @@ Func_05_7370:
 Label_05_7378:
 	ld c, [hl] ; $7378
 	ret ; $7379
-Func_05_737a:
+PlotGlyphRow:
 	push bc ; $737a
 	push de ; $737b
 	push hl ; $737c
@@ -7900,7 +7900,7 @@ Func_05_73cb:
 	ld de, $d300 ; $73cf
 	ld b, $80 ; $73d2
 Label_05_73d4:
-	ld hl, $7920 ; $73d4
+	ld hl, FontGlyphs ; $73d4
 	ld c, $01 ; $73d7
 	call CopyMemoryFast ; $73d9
 	dec b ; $73dc
@@ -7945,7 +7945,7 @@ Func_05_73e4:
 	ld e, l ; $7415
 	wram_bank $07 ; $7416
 Label_05_741c:
-	ld hl, $7920 ; $741c
+	ld hl, FontGlyphs ; $741c
 	ld c, $01 ; $741f
 	call CopyMemoryFast ; $7421
 	dec b ; $7424
@@ -8092,7 +8092,7 @@ Label_05_7505:
 	ld c, a ; $751b
 	jr Label_05_7505 ; $751c
 Label_05_751e:
-	call Func_05_7322 ; $751e
+	call DrawGlyph ; $751e
 	jr Label_05_7505 ; $7521
 Label_05_7523:
 	pop af ; $7523
@@ -8191,7 +8191,7 @@ Label_05_75b8:
 	push af ; $75b8
 	wram_bank $07 ; $75b9
 	pop af ; $75bf
-	call Func_05_7322 ; $75c0
+	call DrawGlyph ; $75c0
 Label_05_75c3:
 	ld hl, $c3b7 ; $75c3
 	ld a, e ; $75c6
@@ -8361,7 +8361,7 @@ Label_05_76b6:
 	push af ; $76b6
 	wram_bank $07 ; $76b7
 	pop af ; $76bd
-	call Func_05_7322 ; $76be
+	call DrawGlyph ; $76be
 Label_05_76c1:
 	ld hl, $c3b7 ; $76c1
 	ld a, e ; $76c4
@@ -8747,7 +8747,7 @@ Label_05_7907:
 	ld a, [hl+] ; $7907
 	cp a, $00 ; $7908
 	jr z, Label_05_7911 ; $790a
-	call Func_05_7322 ; $790c
+	call DrawGlyph ; $790c
 	jr Label_05_7907 ; $790f
 Label_05_7911:
 	pop hl ; $7911
@@ -8755,47 +8755,8 @@ Label_05_7911:
 	pop bc ; $7913
 	pop af ; $7914
 	ret ; $7915
-	nop ; $7916
-	nop ; $7917
-	nop ; $7918
-	nop ; $7919
-	nop ; $791a
-	nop ; $791b
-	nop ; $791c
-	nop ; $791d
-	nop ; $791e
-	nop ; $791f
-	rst Rst38 ; $7920
-	nop ; $7921
-	rst Rst38 ; $7922
-	nop ; $7923
-	rst Rst38 ; $7924
-	nop ; $7925
-	rst Rst38 ; $7926
-	nop ; $7927
-	rst Rst38 ; $7928
-	nop ; $7929
-	rst Rst38 ; $792a
-	nop ; $792b
-	rst Rst38 ; $792c
-	nop ; $792d
-	rst Rst38 ; $792e
-	nop ; $792f
-	rst Rst38 ; $7930
-	ld b, b ; $7931
-	rst Rst18 ; $7932
-	ld h, b ; $7933
-	rst Rst18 ; $7934
-	ld h, b ; $7935
-	rst Rst18 ; $7936
-	ld h, b ; $7937
-	rst Rst18 ; $7938
-	ld h, b ; $7939
-	rst Rst18 ; $793a
-	jr nz, $793c ; $793b
-	ld b, b ; $793d
-	rst Rst18 ; $793e
-	jr nz, $7940 ; $793f
-	ret c ; $7941
-	INCBIN "data/bank_005/d_7942.bin" ; $7942, 1694 bytes
+	; $7916, 10 bytes (fill)
+	ds 10, $00
+FontGlyphs:
+	INCBIN "data/bank_005/d_7920.bin" ; $7920, 1728 bytes
 	ds 32, $ff ; $7fe0, fill
