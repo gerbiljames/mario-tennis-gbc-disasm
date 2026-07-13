@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~124.1K instructions / 269,668 bytes of proven code (12.9% of the 2 MiB ROM)
+**~124.9K instructions / 272,093 bytes of proven code (13.0% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,19 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $13 (story engine, biggest story bank) de-blobbed** (56.0% → 70.8%
+code; 29 → 16 blobs). The bulk of its "data" was **story-command handler code**
+reached through four small dispatch tables (`StoryCmdHandlers{A,B,C,D}_13` at
+`$4006/$4e20/$526a/$5c78`, 7-8 `dw` entries each) whose targets point into the
+data blobs — seeding those targets recovered the handlers
+(`coverage/bank013_static_code.json`). A second pass recovered a run of
+~22-byte story-command handler stubs (`$5968-$5a1a`), farcall "script"
+sequences (`$6a89`, `$43a1`, `$4357`), small routines (`$7b4e`/`$7b53`,
+`$5c27`), and code behind a 5-byte pointer header (`$4ef4`). The 16 remaining
+blobs are genuine story data: scene/actor records (`$472c`/`$4c7e`/`$6638`
+share a `00 00 25 7b …` record header), coordinate tables, and small lookups.
+See [[stranded-code-carving]].
 
 **Bank $1b (dispatch bank) — code recovered, dispatch tables remain**
 (38.2% → 45.1% code). Seeded 11 stranded handler blobs

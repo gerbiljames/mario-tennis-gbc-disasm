@@ -175,5 +175,9 @@
  "0x7b810": "palettes",
  "0x7b9e0": "palettes",
  "0x78c40": "palettes",
- "0x79be1": "palettes"
+ "0x79be1": "palettes",
+ "0x4c006": "records:2",
+ "0x4ce20": "records:2",
+ "0x4d26a": "records:2",
+ "0x4dc78": "records:2"
 }

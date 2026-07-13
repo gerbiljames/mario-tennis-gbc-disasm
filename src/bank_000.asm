@@ -39,7 +39,10 @@ VBlankInterrupt:
 	ds 5, $ff ; $0043, fill
 LCDStatInterrupt:
 	jp LCDStatHandler ; $0048
-	ds 5, $ff ; $004b, fill
+	ds 3, $ff ; $004b, fill
+Func_00_004e:
+	rst Rst38 ; $004e
+	rst Rst38 ; $004f
 TimerInterrupt:
 	jp TimerHandler ; $0050
 	ds 5, $ff ; $0053, fill

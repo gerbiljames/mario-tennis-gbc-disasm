@@ -814,5 +814,9 @@
  "0x7a495": "Palettes_1e_6495",
  "0x7b700": "Palettes_1e_7700",
  "0x7b810": "Palettes_1e_7810",
- "0x7b9e0": "Palettes_1e_79e0"
+ "0x7b9e0": "Palettes_1e_79e0",
+ "0x4c006": "StoryCmdHandlersA_13",
+ "0x4ce20": "StoryCmdHandlersB_13",
+ "0x4d26a": "StoryCmdHandlersC_13",
+ "0x4dc78": "StoryCmdHandlersD_13"
 }
