@@ -818,5 +818,7 @@
  "0x4c006": "StoryCmdHandlersA_13",
  "0x4ce20": "StoryCmdHandlersB_13",
  "0x4d26a": "StoryCmdHandlersC_13",
- "0x4dc78": "StoryCmdHandlersD_13"
+ "0x4dc78": "StoryCmdHandlersD_13",
+ "0x40e6c": "MatchSelectHandlersA_10",
+ "0x40fc6": "MatchSelectHandlersB_10"
 }

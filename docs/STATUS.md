@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~124.9K instructions / 272,093 bytes of proven code (13.0% of the 2 MiB ROM)
+**~125.4K instructions / 273,343 bytes of proven code (13.0% of the 2 MiB ROM)
 disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
 SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -419,6 +419,16 @@ as `[10 outer][10 sub][12 ball-height] x 6-byte position records`
 + index*2]`; ball height (`wBallHeight`, scaled `& $1f`) selects the innermost
 record. The one twin difference: $2a indexes the outer block by `$df6f`, while
 $2b hardcodes it to 0 (`xor a`), so $2b's tables sit two bytes earlier.
+
+**Bank $10 (story match-select) — code recovered** (31.9% → 39.5% code;
+37 → 27 blobs). Seeded 16 stranded code blobs + two jump tables
+(`MatchSelectHandlers{A,B}_10` at `$4e6c`/`$4fc6`) and several farcall
+"scripts" (`$448d` 435 B, `$4450`, `$7443`, `$7472`, `$7bfa`)
+(`coverage/bank010_static_code.json`). The remaining blobs are genuine
+match-select **data**: big self-referential pointer-table + record structures
+(`$61b1` 3649 B, `$468d`, `$74a9`, `$5a80` — each entry a `dw` into a
+`01 40 00 …`-header record, verified *not* code before declining to seed) and
+`$0cXX`-valued lookup tables (`$5ddc`/`$5f30`/`$5c34`/`$5899`/`$5982`).
 
 **Bank $13 (story engine, biggest story bank) de-blobbed** (56.0% → 70.8%
 code; 29 → 16 blobs). The bulk of its "data" was **story-command handler code**
