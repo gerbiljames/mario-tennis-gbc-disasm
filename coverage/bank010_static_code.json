@@ -1,7 +1,12 @@
 {
- "_comment": "Static code-entry seeds for bank $10 (story match-select) stranded handlers: 13 code blobs (safe function-start + internal flow targets) + targets of two jump tables ($4e6c/$4fc6). Flat = 0x10*0x4000 + (cpu-0x4000). Plus farcall scripts $448d/$7443/$7472. $40b0 is the setup routine after the $4010 data pointer table (a coarse $4010 seed used to sweep that table in as mis-decoded code).",
+ "_comment": "Static code-entry seeds for bank $10 (story match-select) stranded handlers: 13 code blobs (safe function-start + internal flow targets) + targets of two jump tables ($4e6c/$4fc6). Flat = 0x10*0x4000 + (cpu-0x4000). Plus farcall scripts $448d/$7443/$7472. $40b0 is the setup routine after the $4010 data pointer table (a coarse $4010 seed used to sweep that table in as mis-decoded code). $40ef/$4137/$4190/$4195/$41da are the match-select handlers reached via the $4010 -> $4145 pointer tree.",
  "rom": [
   262320,
+  262383,
+  262455,
+  262544,
+  262549,
+  262618,
   262687,
   263248,
   263309,

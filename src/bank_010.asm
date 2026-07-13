@@ -66,7 +66,123 @@ Func_10_40b0:
 	ld [$c2a1], a ; $40e8
 	farcall FarPtr_0a_02 ; $40eb
 	ret ; $40ee
-	INCBIN "data/bank_010/d_40ef.bin" ; $40ef, 304 bytes
+Func_10_40ef:
+	farcall FarPtr_0a_00 ; $40ef
+	farcall FarPtr_03_36 ; $40f2
+	call Func_00_2725 ; $40f5
+	inc a ; $40f8
+	call EnableLCD ; $40f9
+	farcall FarPtr_03_38 ; $40fc
+	ld c, $04 ; $40ff
+	call Func_00_1d2e ; $4101
+	call Func_00_1da4 ; $4104
+	sound $14 ; $4107
+	ld a, $01 ; $4109
+	ld hl, $4141 ; $410b
+	call RegisterFrameTask ; $410e
+	call Func_00_2725 ; $4111
+	ld a, b ; $4114
+	call Func_00_2725 ; $4115
+	rst Rst38 ; $4118
+	call Func_00_2725 ; $4119
+	rst Rst38 ; $411c
+	call Func_00_2725 ; $411d
+	rst Rst38 ; $4120
+	call Func_00_2725 ; $4121
+	rst Rst38 ; $4124
+	call Func_00_2725 ; $4125
+	rst Rst38 ; $4128
+	call Func_00_2725 ; $4129
+	rst Rst38 ; $412c
+	ld hl, $4141 ; $412d
+	call Func_00_1bcb ; $4130
+	farcall FarPtr_0a_02 ; $4133
+	ret ; $4136
+Func_10_4137:
+	farcall FarPtr_0a_00 ; $4137
+	farcall FarPtr_0a_a2 ; $413a
+	farcall FarPtr_0a_02 ; $413d
+	ret ; $4140
+	INCBIN "data/bank_010/d_4141.bin" ; $4141, 4 bytes
+MatchSelectHandlerTable_10:
+	; $4145, 75 bytes (records:8)
+; 9 records x 8 bytes
+	dw $ff03, $0000, $40b0, $0000 ; record 0
+	dw $ff04, $0000, $4195, $0000 ; record 1
+	dw $ff05, $0000, $41da, $0000 ; record 2
+	dw $ff06, $0000, $4450, $0000 ; record 3
+	dw $ff07, $0000, $448d, $0000 ; record 4
+	dw $ff08, $0000, $44cc, $0000 ; record 5
+	dw $ff09, $0000, $4640, $0000 ; record 6
+	dw $ff0a, $0000, $40ef, $0000 ; record 7
+	dw $ff0b, $0000, $4137, $0000 ; record 8
+	db $ff, $ff, $ff
+Func_10_4190:
+	xor a, a ; $4190
+	ld [$c2d5], a ; $4191
+	ret ; $4194
+Func_10_4195:
+	ld hl, $0484 ; $4195
+	ld de, $0101 ; $4198
+	ld a, $05 ; $419b
+	farcall FarPtr_05_3e ; $419d
+	cp a, $ff ; $41a0
+	jp z, Label_10_421f ; $41a2
+	ld [$c2b0], a ; $41a5
+	ld hl, wStoryModePlayersXPosition ; $41a8
+	ld de, $c296 ; $41ab
+	ld bc, $0005 ; $41ae
+	call CopyMemoryBC ; $41b1
+	ld a, $ff ; $41b4
+	ld [$c295], a ; $41b6
+	ld [$c294], a ; $41b9
+	ld [$c2a1], a ; $41bc
+	farcall FarPtr_0a_4a ; $41bf
+	ld a, [$c2b0] ; $41c2
+	add a, a ; $41c5
+	add a, $20 ; $41c6
+	ld l, a ; $41c8
+	adc a, $42 ; $41c9
+	sub a, l ; $41cb
+	ld h, a ; $41cc
+	ld a, [hl+] ; $41cd
+	ld h, [hl] ; $41ce
+	ld l, a ; $41cf
+	call JumpToHL ; $41d0
+	farcall FarPtr_0a_4c ; $41d3
+	farcall FarPtr_0a_4e ; $41d6
+	ret ; $41d9
+Func_10_41da:
+	ld hl, $0489 ; $41da
+	ld de, $0101 ; $41dd
+	ld a, $04 ; $41e0
+	farcall FarPtr_05_3e ; $41e2
+	cp a, $ff ; $41e5
+	jp z, Label_10_421f ; $41e7
+	ld [$c2b0], a ; $41ea
+	ld hl, wStoryModePlayersXPosition ; $41ed
+	ld de, $c296 ; $41f0
+	ld bc, $0005 ; $41f3
+	call CopyMemoryBC ; $41f6
+	ld a, $ff ; $41f9
+	ld [$c295], a ; $41fb
+	ld [$c294], a ; $41fe
+	ld [$c2a1], a ; $4201
+	farcall FarPtr_0a_4a ; $4204
+	ld a, [$c2b0] ; $4207
+	add a, a ; $420a
+	add a, $46 ; $420b
+	ld l, a ; $420d
+	adc a, $42 ; $420e
+	sub a, l ; $4210
+	ld h, a ; $4211
+	ld a, [hl+] ; $4212
+	ld h, [hl] ; $4213
+	ld l, a ; $4214
+	call JumpToHL ; $4215
+	farcall FarPtr_0a_4c ; $4218
+	farcall FarPtr_0a_4e ; $421b
+	ret ; $421e
 Label_10_421f:
 	ret ; $421f
 	dw Func_10_4354 ; $4220
