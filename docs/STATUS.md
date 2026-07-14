@@ -10,7 +10,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `7dec621`); the whole history rebuilds
+Everything below is **committed** (HEAD `60fa906`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -275,7 +275,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 697 of 15,036 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 980 of 15,850 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -699,5 +699,5 @@ for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `7dec621`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `60fa906`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
