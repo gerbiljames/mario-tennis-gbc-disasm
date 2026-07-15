@@ -2,8 +2,8 @@ SECTION "ROM Bank $07", ROMX[$4000], BANK[$07]
 
 FarPtr_07_00:
 	dw Func_07_4048 ; $4000
-FarPtr_07_02:
-	dw Func_07_4077 ; $4002
+FarPtr_EnableSerialAndVBlankInterrupts:
+	dw EnableSerialAndVBlankInterrupts ; $4002
 FarPtr_07_04:
 	dw Func_07_4081 ; $4004
 FarPtr_07_06:
@@ -16,8 +16,8 @@ FarPtr_07_0c:
 	dw Func_07_442a ; $400c
 FarPtr_07_0e:
 	dw Func_07_44c1 ; $400e
-FarPtr_07_10:
-	dw Func_07_4656 ; $4010
+FarPtr_UnpackBytesToNibbles:
+	dw UnpackBytesToNibbles ; $4010
 FarPtr_07_12:
 	dw Func_07_467f ; $4012
 FarPtr_07_14:
@@ -58,18 +58,18 @@ FarPtr_07_36:
 	dw Func_07_4bf3 ; $4036
 FarPtr_07_38:
 	dw Func_07_496e ; $4038
-FarPtr_07_3a:
-	dw Func_07_5161 ; $403a
+FarPtr_ComputeShotPlacement:
+	dw ComputeShotPlacement ; $403a
 FarPtr_07_3c:
 	dw Func_07_53b0 ; $403c
 FarPtr_07_3e:
 	dw Func_07_571e ; $403e
-FarPtr_07_40:
-	dw Func_07_5a43 ; $4040
+FarPtr_LookupCharSpriteSet:
+	dw LookupCharSpriteSet ; $4040
 FarPtr_07_42:
 	dw Func_07_5a70 ; $4042
-FarPtr_07_44:
-	dw Func_07_5ab3 ; $4044
+FarPtr_LoadCharacterAttributes:
+	dw LoadCharacterAttributes ; $4044
 FarPtr_07_46:
 	dw Func_07_5df9 ; $4046
 Func_07_4048:
@@ -102,7 +102,7 @@ Label_07_4061:
 	scf ; $4075
 Label_07_4076:
 	ret ; $4076
-Func_07_4077:
+EnableSerialAndVBlankInterrupts:
 	di ; $4077
 	xor a, a ; $4078
 	ldh [rIF], a ; $4079
@@ -141,12 +141,12 @@ Func_07_40b3:
 	push bc ; $40b4
 	push de ; $40b5
 	push hl ; $40b6
-	call Func_07_4656 ; $40b7
+	call UnpackBytesToNibbles ; $40b7
 	jr nc, Label_07_40bf ; $40ba
 	call Func_00_284b ; $40bc
 Label_07_40bf:
 	ld c, a ; $40bf
-	call Func_07_440c ; $40c0
+	call ComputeNibbleBufferChecksum ; $40c0
 Label_07_40c3:
 	call Func_00_2821 ; $40c3
 	call Func_00_2821 ; $40c6
@@ -337,12 +337,12 @@ Func_07_41ef:
 	push bc ; $41f0
 	push de ; $41f1
 	push hl ; $41f2
-	call Func_07_4656 ; $41f3
+	call UnpackBytesToNibbles ; $41f3
 	jr nc, Label_07_41fb ; $41f6
 	call Func_00_284b ; $41f8
 Label_07_41fb:
 	ld c, a ; $41fb
-	call Func_07_440c ; $41fc
+	call ComputeNibbleBufferChecksum ; $41fc
 Label_07_41ff:
 	di ; $41ff
 	ld a, $c4 ; $4200
@@ -655,7 +655,7 @@ Func_07_43f6:
 	or a, l ; $4409
 	ld l, a ; $440a
 	ret ; $440b
-Func_07_440c:
+ComputeNibbleBufferChecksum:
 	push af ; $440c
 	push bc ; $440d
 	push de ; $440e
@@ -685,7 +685,7 @@ Func_07_442a:
 	push bc ; $442b
 	push de ; $442c
 	push hl ; $442d
-	call Func_07_4656 ; $442e
+	call UnpackBytesToNibbles ; $442e
 	jr nc, Label_07_4437 ; $4431
 	scf ; $4433
 	jp Label_07_44bc ; $4434
@@ -785,7 +785,7 @@ Func_07_44c1:
 	push bc ; $44c2
 	push de ; $44c3
 	push hl ; $44c4
-	call Func_07_4077 ; $44c5
+	call EnableSerialAndVBlankInterrupts ; $44c5
 Label_07_44c8:
 	ld a, $c4 ; $44c8
 	ld b, $c3 ; $44ca
@@ -1045,7 +1045,7 @@ Label_07_464e:
 Label_07_4654:
 	pop bc ; $4654
 	ret ; $4655
-Func_07_4656:
+UnpackBytesToNibbles:
 	ld hl, $ce40 ; $4656
 	ld a, c ; $4659
 	add a, a ; $465a
@@ -1501,7 +1501,7 @@ Label_07_4952:
 	wram_bank $05 ; $4952
 	ld hl, $c650 ; $4958
 	ld c, $28 ; $495b
-	call Func_07_49b0 ; $495d
+	call PackNibblesToBytes ; $495d
 	ld a, $01 ; $4960
 	ldh [$ffd8], a ; $4962
 	di ; $4964
@@ -1541,14 +1541,14 @@ Label_07_499b:
 Label_07_49a0:
 	call Func_07_41ef ; $49a0
 Label_07_49a3:
-	call Func_07_49b0 ; $49a3
+	call PackNibblesToBytes ; $49a3
 	di ; $49a6
 	ld a, $09 ; $49a7
 	ldh [rIF], a ; $49a9
 	ei ; $49ab
 	call EnableLCD ; $49ac
 	ret ; $49af
-Func_07_49b0:
+PackNibblesToBytes:
 	ld a, c ; $49b0
 	add a, a ; $49b1
 	cp a, $5f ; $49b2
@@ -1758,7 +1758,7 @@ Func_07_4afe:
 	push hl ; $4afe
 	push de ; $4aff
 	push bc ; $4b00
-	call Func_07_4077 ; $4b01
+	call EnableSerialAndVBlankInterrupts ; $4b01
 	di ; $4b04
 	ldh a, [rIF] ; $4b05
 	and a, $f7 ; $4b07
@@ -1798,7 +1798,7 @@ Func_07_4b38:
 	push hl ; $4b38
 	push de ; $4b39
 	push bc ; $4b3a
-	call Func_07_4077 ; $4b3b
+	call EnableSerialAndVBlankInterrupts ; $4b3b
 	di ; $4b3e
 	ldh a, [rSC] ; $4b3f
 	and a, $7f ; $4b41
@@ -2110,7 +2110,7 @@ Label_07_4d0c:
 	pop bc ; $4d1f
 	ret ; $4d20
 	INCBIN "data/bank_007/d_4d21.bin" ; $4d21, 1088 bytes
-Func_07_5161:
+ComputeShotPlacement:
 	ld a, [$c4a0] ; $5161
 	rst Rst00 ; $5164
 	dw Label_07_5183 ; $5165 jumptable
@@ -3439,7 +3439,7 @@ Func_07_5a01:
 	ld [$c4a6], a ; $5a1f
 	ret ; $5a22
 	INCBIN "data/bank_007/d_5a23.bin" ; $5a23, 32 bytes
-Func_07_5a43:
+LookupCharSpriteSet:
 	push hl ; $5a43
 	and a, $3f ; $5a44
 	add a, $50 ; $5a46
@@ -3486,7 +3486,7 @@ Func_07_5a70:
 	farcall FarPtr_08_1e ; $5aa3
 	ret ; $5aa6
 	INCBIN "data/bank_007/d_5aa7.bin" ; $5aa7, 12 bytes
-Func_07_5ab3:
+LoadCharacterAttributes:
 	ld a, [$df0b] ; $5ab3
 	add a, a ; $5ab6
 	add a, $42 ; $5ab7

@@ -5446,13 +5446,13 @@ InitChar:
 	farcall FarPtr_02_36 ; $6854
 	ld [$df7e], a ; $6857
 	ld a, [$df7e] ; $685a
-	farcall FarPtr_07_40 ; $685d
+	farcall FarPtr_LookupCharSpriteSet ; $685d
 	ld d, a ; $6860
 	ld a, e ; $6861
 	add a, $03 ; $6862
 	ld e, a ; $6864
 	farcall FarPtr_07_42 ; $6865
-	farcall FarPtr_07_44 ; $6868
+	farcall FarPtr_LoadCharacterAttributes ; $6868
 	ld a, $00 ; $686b
 	call SetCharState ; $686d
 	ld hl, $03c0 ; $6870

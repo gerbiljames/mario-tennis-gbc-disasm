@@ -483,7 +483,7 @@ Label_23_4278:
 BallPosData_23:
 	INCBIN "data/bank_023/d_427d.bin" ; $427d, 15360 bytes
 Func_23_7e7d:
-	farcall FarPtr_07_3a ; $7e7d
+	farcall FarPtr_ComputeShotPlacement ; $7e7d
 	push bc ; $7e80
 	ld hl, BallPosData_23 ; $7e81
 	ld bc, BallPosHeightOffsets_23 ; $7e84

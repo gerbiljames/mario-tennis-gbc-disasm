@@ -483,7 +483,7 @@ Label_2b_4278:
 BallPosData_2b:
 	INCBIN "data/bank_02b/d_427d.bin" ; $427d, 7200 bytes
 Func_2b_5e9d:
-	farcall FarPtr_07_3a ; $5e9d
+	farcall FarPtr_ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_2b ; $5ea0
 	ld bc, BallPosBlockOffsets_2b ; $5ea3
 	xor a, a ; $5ea6

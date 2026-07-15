@@ -272,7 +272,7 @@ Func_0b_4404:
 	ldh a, [hWramBank] ; $440a
 	push af ; $440c
 	wram_bank $05 ; $440d
-	farcall FarPtr_07_44 ; $4413
+	farcall FarPtr_LoadCharacterAttributes ; $4413
 	pop af ; $4416
 	wram_bank ; $4417
 	ret ; $441b

@@ -255,7 +255,7 @@ Label_2c_426d:
 	ret ; $4271
 	INCBIN "data/bank_02c/d_4272.bin" ; $4272, 12303 bytes
 Func_2c_7281:
-	farcall FarPtr_07_3a ; $7281
+	farcall FarPtr_ComputeShotPlacement ; $7281
 	push bc ; $7284
 	ld hl, $4281 ; $7285
 	ld bc, $7293 ; $7288
@@ -265,7 +265,7 @@ Func_2c_7281:
 	ret ; $7292
 	INCBIN "data/bank_02c/d_7293.bin" ; $7293, 64 bytes
 Func_2c_72d3:
-	farcall FarPtr_07_3a ; $72d3
+	farcall FarPtr_ComputeShotPlacement ; $72d3
 	push bc ; $72d6
 	ld hl, $4e81 ; $72d7
 	ld bc, $72e5 ; $72da
@@ -275,7 +275,7 @@ Func_2c_72d3:
 	ret ; $72e4
 	INCBIN "data/bank_02c/d_72e5.bin" ; $72e5, 64 bytes
 Func_2c_7325:
-	farcall FarPtr_07_3a ; $7325
+	farcall FarPtr_ComputeShotPlacement ; $7325
 	push bc ; $7328
 	ld hl, $6081 ; $7329
 	ld bc, $7337 ; $732c

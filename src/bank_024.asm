@@ -313,7 +313,7 @@ Label_24_4284:
 	ret ; $4288
 	INCBIN "data/bank_024/d_4289.bin" ; $4289, 768 bytes
 Func_24_4589:
-	farcall FarPtr_07_3a ; $4589
+	farcall FarPtr_ComputeShotPlacement ; $4589
 	ld hl, $4289 ; $458c
 	ld bc, $459c ; $458f
 	ld a, [$df92] ; $4592
@@ -431,7 +431,7 @@ Label_24_4d1f:
 	sub a, b ; $4d46
 	INCBIN "data/bank_024/d_4d47.bin" ; $4d47, 1113 bytes
 Func_24_51a0:
-	farcall FarPtr_07_3a ; $51a0
+	farcall FarPtr_ComputeShotPlacement ; $51a0
 	ld hl, $45a0 ; $51a3
 	ld bc, $51b9 ; $51a6
 	call Func_24_422d ; $51a9
@@ -481,7 +481,7 @@ Label_24_5824:
 	ret ; $583b
 	INCBIN "data/bank_024/d_583c.bin" ; $583c, 3592 bytes
 Func_24_6644:
-	farcall FarPtr_07_3a ; $6644
+	farcall FarPtr_ComputeShotPlacement ; $6644
 	push bc ; $6647
 	ld hl, $5844 ; $6648
 	ld bc, $6656 ; $664b
@@ -491,7 +491,7 @@ Func_24_6644:
 	ret ; $6655
 	INCBIN "data/bank_024/d_6656.bin" ; $6656, 64 bytes
 Func_24_6696:
-	farcall FarPtr_07_3a ; $6696
+	farcall FarPtr_ComputeShotPlacement ; $6696
 	push bc ; $6699
 	ld hl, $c48c ; $669a
 	ld a, [hl+] ; $669d
@@ -561,7 +561,7 @@ Func_24_6706:
 	ret ; $6706
 	INCBIN "data/bank_024/d_6707.bin" ; $6707, 4096 bytes
 Func_24_7707:
-	farcall FarPtr_07_3a ; $7707
+	farcall FarPtr_ComputeShotPlacement ; $7707
 	push bc ; $770a
 	ld hl, $6707 ; $770b
 	ld bc, $7719 ; $770e

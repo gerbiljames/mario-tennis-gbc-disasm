@@ -483,7 +483,7 @@ Label_20_4278:
 BallPosData_20:
 	INCBIN "data/bank_020/d_427d.bin" ; $427d, 15360 bytes
 Func_20_7e7d:
-	farcall FarPtr_07_3a ; $7e7d
+	farcall FarPtr_ComputeShotPlacement ; $7e7d
 	push bc ; $7e80
 	ld hl, BallPosData_20 ; $7e81
 	ld bc, BallPosHeightOffsets_20 ; $7e84
