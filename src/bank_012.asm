@@ -1227,7 +1227,7 @@ Label_12_4d28:
 	ld [$c32c], a ; $4f17
 	call DisableLCDSafely ; $4f1a
 	ld a, $00 ; $4f1d
-	farcall FarPtr_0a_76 ; $4f1f
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4f1f
 	call EnableLCD ; $4f22
 	call Func_12_505f ; $4f25
 	ld a, [$c295] ; $4f28
@@ -1715,12 +1715,12 @@ Label_12_5a68:
 	ld a, $0f ; $6213
 	ld [$c294], a ; $6215
 	ld [$c2a1], a ; $6218
-	farcall FarPtr_0a_4a ; $621b
+	farcall FarPtr_InitStoryMatchSettings ; $621b
 	ld a, $01 ; $621e
 	ld [wCurrentMinigameStoryMatch], a ; $6220
 	ld a, $09 ; $6223
 	ld [$c8f7], a ; $6225
-	farcall FarPtr_0a_5a ; $6228
+	farcall FarPtr_LoadMatchSettingsFromTable ; $6228
 	farcall FarPtr_0a_4c ; $622b
 	farcall FarPtr_0a_4e ; $622e
 	ret ; $6231

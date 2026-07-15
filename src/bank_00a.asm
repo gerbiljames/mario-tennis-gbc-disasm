@@ -74,24 +74,24 @@ FarPtr_0a_46:
 	dw Func_0a_42cf ; $4046
 FarPtr_0a_48:
 	dw Func_0a_472e ; $4048
-FarPtr_0a_4a:
-	dw Func_0a_4931 ; $404a
+FarPtr_InitStoryMatchSettings:
+	dw InitStoryMatchSettings ; $404a
 FarPtr_0a_4c:
 	dw Func_0a_4962 ; $404c
 FarPtr_0a_4e:
 	dw Func_0a_4991 ; $404e
-FarPtr_0a_50:
-	dw Func_0a_4a41 ; $4050
+FarPtr_SetMatchDoublesMode:
+	dw SetMatchDoublesMode ; $4050
 FarPtr_0a_52:
 	dw Func_0a_4a4c ; $4052
-FarPtr_0a_54:
-	dw Func_0a_4a50 ; $4054
-FarPtr_0a_56:
-	dw Func_0a_4a54 ; $4056
-FarPtr_0a_58:
-	dw Func_0a_4a58 ; $4058
-FarPtr_0a_5a:
-	dw Func_0a_4a5c ; $405a
+FarPtr_SetCurrentlyUsedCourt:
+	dw SetCurrentlyUsedCourt ; $4054
+FarPtr_SetMatchNumberOfSets:
+	dw SetMatchNumberOfSets ; $4056
+FarPtr_SetMatchNumberOfGames:
+	dw SetMatchNumberOfGames ; $4058
+FarPtr_LoadMatchSettingsFromTable:
+	dw LoadMatchSettingsFromTable ; $405a
 FarPtr_0a_5c:
 	dw Func_0a_4f2c ; $405c
 FarPtr_0a_5e:
@@ -106,22 +106,22 @@ FarPtr_0a_66:
 	dw Func_0a_574b ; $4066
 FarPtr_0a_68:
 	dw Func_0a_5337 ; $4068
-FarPtr_0a_6a:
-	dw Func_0a_5930 ; $406a
+FarPtr_InitSceneScroll:
+	dw InitSceneScroll ; $406a
 FarPtr_LoadStorySceneGraphics:
 	dw LoadStorySceneGraphics ; $406c
-FarPtr_0a_6e:
-	dw Func_0a_575c ; $406e
-FarPtr_0a_70:
-	dw Func_0a_5976 ; $4070
+FarPtr_CopySceneTilemapToVram:
+	dw CopySceneTilemapToVram ; $406e
+FarPtr_UpdateSceneScroll:
+	dw UpdateSceneScroll ; $4070
 FarPtr_0a_72:
 	dw Func_0a_601c ; $4072
 FarPtr_0a_74:
 	dw Func_0a_5e91 ; $4074
-FarPtr_0a_76:
-	dw Func_0a_5c29 ; $4076
-FarPtr_0a_78:
-	dw Func_0a_5de2 ; $4078
+FarPtr_CopyScrolledSceneTilemapToVram:
+	dw CopyScrolledSceneTilemapToVram ; $4076
+FarPtr_LoadAndDisplayScene:
+	dw LoadAndDisplayScene ; $4078
 FarPtr_0a_7a:
 	dw Func_0a_639b ; $407a
 FarPtr_0a_7c:
@@ -146,8 +146,8 @@ FarPtr_0a_8e:
 	dw Func_0a_60c2 ; $408e
 FarPtr_0a_90:
 	dw Func_0a_52f5 ; $4090
-FarPtr_0a_92:
-	dw Func_0a_5823 ; $4092
+FarPtr_CopySceneTilemapChunk:
+	dw CopySceneTilemapChunk ; $4092
 FarPtr_0a_94:
 	dw Func_0a_4ef8 ; $4094
 FarPtr_0a_96:
@@ -160,8 +160,8 @@ FarPtr_0a_9c:
 	dw Func_0a_67ca ; $409c
 FarPtr_0a_9e:
 	dw Func_0a_6774 ; $409e
-FarPtr_0a_a0:
-	dw Func_0a_596f ; $40a0
+FarPtr_StopSceneScrollTask:
+	dw StopSceneScrollTask ; $40a0
 FarPtr_0a_a2:
 	dw Func_0a_6e74 ; $40a2
 	INCBIN "data/bank_00a/d_40a4.bin" ; $40a4, 44 bytes
@@ -432,7 +432,7 @@ Func_0a_4291:
 	dec hl ; $429b
 	xor a, a ; $429c
 	farcall FarPtr_05_44 ; $429d
-	farcall FarPtr_05_1e ; $42a0
+	farcall FarPtr_FetchDialogueText ; $42a0
 	ld hl, wTextBuffer ; $42a3
 	ld bc, $0180 ; $42a6
 	ld de, $0000 ; $42a9
@@ -1581,7 +1581,7 @@ Label_0a_4929:
 	pop bc ; $492e
 	pop af ; $492f
 	ret ; $4930
-Func_0a_4931:
+InitStoryMatchSettings:
 	farcall FarPtr_08_00 ; $4931
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4934
 	ld [$c3b0], a ; $4937
@@ -1662,7 +1662,7 @@ Label_0a_49d2:
 Label_0a_49d8:
 	ret ; $49d8
 	INCBIN "data/bank_00a/d_49d9.bin" ; $49d9, 104 bytes
-Func_0a_4a41:
+SetMatchDoublesMode:
 	ld [wMatchIsDoubles], a ; $4a41
 	sla a ; $4a44
 	add a, $02 ; $4a46
@@ -1671,16 +1671,16 @@ Func_0a_4a41:
 Func_0a_4a4c:
 	ld [$c3b1], a ; $4a4c
 	ret ; $4a4f
-Func_0a_4a50:
+SetCurrentlyUsedCourt:
 	ld [wCurrentlyUsedCourt], a ; $4a50
 	ret ; $4a53
-Func_0a_4a54:
+SetMatchNumberOfSets:
 	ld [wMatchTypeNumberOfSets], a ; $4a54
 	ret ; $4a57
-Func_0a_4a58:
+SetMatchNumberOfGames:
 	ld [wMatchTypeNumberOfGames], a ; $4a58
 	ret ; $4a5b
-Func_0a_4a5c:
+LoadMatchSettingsFromTable:
 	ld de, $4ab2 ; $4a5c
 	ld a, [wCurrentMinigameStoryMatch] ; $4a5f
 	cp a, $01 ; $4a62
@@ -1689,7 +1689,7 @@ Func_0a_4a5c:
 	inc a ; $4a68
 	ld de, $4b2f ; $4a69
 Label_0a_4a6c:
-	call Func_0a_4a41 ; $4a6c
+	call SetMatchDoublesMode ; $4a6c
 	ld a, [$c8f7] ; $4a6f
 	ld l, a ; $4a72
 	ld h, $00 ; $4a73
@@ -1745,7 +1745,7 @@ Func_0a_4bac:
 	ld c, $02 ; $4bc7
 	call ClearMemory16 ; $4bc9
 	farcall FarPtr_05_76 ; $4bcc
-	call Func_0a_4d2c ; $4bcf
+	call ClearBgTilemaps ; $4bcf
 	ld d, $00 ; $4bd2
 	ld e, $0b ; $4bd4
 	ld b, $14 ; $4bd6
@@ -1893,18 +1893,18 @@ Label_0a_4d1e:
 	pop de ; $4d29
 	pop bc ; $4d2a
 	ret ; $4d2b
-Func_0a_4d2c:
+ClearBgTilemaps:
 	call DisableLCDSafely ; $4d2c
 	wram_bank $02 ; $4d2f
 	ld a, $00 ; $4d35
 	ld hl, $d000 ; $4d37
 	ld bc, $0500 ; $4d3a
-	call Func_0a_4d77 ; $4d3d
+	call FillMemoryFast ; $4d3d
 	wram_bank $03 ; $4d40
 	ld a, $20 ; $4d46
 	ld hl, $d000 ; $4d48
 	ld bc, $0500 ; $4d4b
-	call Func_0a_4d77 ; $4d4e
+	call FillMemoryFast ; $4d4e
 	wram_bank $03 ; $4d51
 	ld hl, $d000 ; $4d57
 	ld de, $9800 ; $4d5a
@@ -1917,7 +1917,7 @@ Func_0a_4d2c:
 	call Func_00_0480 ; $4d70
 	call EnableLCD ; $4d73
 	ret ; $4d76
-Func_0a_4d77:
+FillMemoryFast:
 	ld e, a ; $4d77
 Label_0a_4d78:
 	ld [hl], e ; $4d78
@@ -2187,11 +2187,11 @@ Label_0a_4f6f:
 	farcall FarPtr_0a_68 ; $4f90
 	call DisableLCDSafely ; $4f93
 	farcall FarPtr_05_76 ; $4f96
-	farcall FarPtr_0a_6a ; $4f99
+	farcall FarPtr_InitSceneScroll ; $4f99
 	ld a, [$c281] ; $4f9c
 	farcall FarPtr_LoadStorySceneGraphics ; $4f9f
 	ld a, $00 ; $4fa2
-	farcall FarPtr_0a_76 ; $4fa4
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4fa4
 	test_flag $0d, 6 ; $4fa7
 	jr nz, Label_0a_4faf ; $4faa
 	farcall FarPtr_01_0a ; $4fac
@@ -3175,7 +3175,7 @@ Func_0a_574e:
 	ret ; $5759
 	db $ff ; $575a
 	ret ; $575b
-Func_0a_575c:
+CopySceneTilemapToVram:
 	push af ; $575c
 	push bc ; $575d
 	push de ; $575e
@@ -3216,57 +3216,57 @@ Func_0a_575c:
 	ldh [rVBK], a ; $5797
 	push de ; $5799
 	push hl ; $579a
-	call Func_0a_5823 ; $579b
-	call Func_0a_5823 ; $579e
-	call Func_0a_5823 ; $57a1
-	call Func_0a_5823 ; $57a4
-	call Func_0a_5823 ; $57a7
-	call Func_0a_5823 ; $57aa
-	call Func_0a_5823 ; $57ad
-	call Func_0a_5823 ; $57b0
-	call Func_0a_5823 ; $57b3
-	call Func_0a_5823 ; $57b6
-	call Func_0a_5823 ; $57b9
-	call Func_0a_5823 ; $57bc
-	call Func_0a_5823 ; $57bf
-	call Func_0a_5823 ; $57c2
-	call Func_0a_5823 ; $57c5
-	call Func_0a_5823 ; $57c8
-	call Func_0a_5823 ; $57cb
-	call Func_0a_5823 ; $57ce
-	call Func_0a_5823 ; $57d1
-	call Func_0a_5823 ; $57d4
+	call CopySceneTilemapChunk ; $579b
+	call CopySceneTilemapChunk ; $579e
+	call CopySceneTilemapChunk ; $57a1
+	call CopySceneTilemapChunk ; $57a4
+	call CopySceneTilemapChunk ; $57a7
+	call CopySceneTilemapChunk ; $57aa
+	call CopySceneTilemapChunk ; $57ad
+	call CopySceneTilemapChunk ; $57b0
+	call CopySceneTilemapChunk ; $57b3
+	call CopySceneTilemapChunk ; $57b6
+	call CopySceneTilemapChunk ; $57b9
+	call CopySceneTilemapChunk ; $57bc
+	call CopySceneTilemapChunk ; $57bf
+	call CopySceneTilemapChunk ; $57c2
+	call CopySceneTilemapChunk ; $57c5
+	call CopySceneTilemapChunk ; $57c8
+	call CopySceneTilemapChunk ; $57cb
+	call CopySceneTilemapChunk ; $57ce
+	call CopySceneTilemapChunk ; $57d1
+	call CopySceneTilemapChunk ; $57d4
 	pop hl ; $57d7
 	pop de ; $57d8
 	wram_bank $03 ; $57d9
 	xor a, a ; $57df
 	ldh [rVBK], a ; $57e0
-	call Func_0a_5823 ; $57e2
-	call Func_0a_5823 ; $57e5
-	call Func_0a_5823 ; $57e8
-	call Func_0a_5823 ; $57eb
-	call Func_0a_5823 ; $57ee
-	call Func_0a_5823 ; $57f1
-	call Func_0a_5823 ; $57f4
-	call Func_0a_5823 ; $57f7
-	call Func_0a_5823 ; $57fa
-	call Func_0a_5823 ; $57fd
-	call Func_0a_5823 ; $5800
-	call Func_0a_5823 ; $5803
-	call Func_0a_5823 ; $5806
-	call Func_0a_5823 ; $5809
-	call Func_0a_5823 ; $580c
-	call Func_0a_5823 ; $580f
-	call Func_0a_5823 ; $5812
-	call Func_0a_5823 ; $5815
-	call Func_0a_5823 ; $5818
-	call Func_0a_5823 ; $581b
+	call CopySceneTilemapChunk ; $57e2
+	call CopySceneTilemapChunk ; $57e5
+	call CopySceneTilemapChunk ; $57e8
+	call CopySceneTilemapChunk ; $57eb
+	call CopySceneTilemapChunk ; $57ee
+	call CopySceneTilemapChunk ; $57f1
+	call CopySceneTilemapChunk ; $57f4
+	call CopySceneTilemapChunk ; $57f7
+	call CopySceneTilemapChunk ; $57fa
+	call CopySceneTilemapChunk ; $57fd
+	call CopySceneTilemapChunk ; $5800
+	call CopySceneTilemapChunk ; $5803
+	call CopySceneTilemapChunk ; $5806
+	call CopySceneTilemapChunk ; $5809
+	call CopySceneTilemapChunk ; $580c
+	call CopySceneTilemapChunk ; $580f
+	call CopySceneTilemapChunk ; $5812
+	call CopySceneTilemapChunk ; $5815
+	call CopySceneTilemapChunk ; $5818
+	call CopySceneTilemapChunk ; $581b
 	pop hl ; $581e
 	pop de ; $581f
 	pop bc ; $5820
 	pop af ; $5821
 	ret ; $5822
-Func_0a_5823:
+CopySceneTilemapChunk:
 	push de ; $5823
 	push hl ; $5824
 	ld c, $16 ; $5825
@@ -3422,7 +3422,7 @@ LoadStorySceneGraphics:
 	pop bc ; $592d
 	pop af ; $592e
 	ret ; $592f
-Func_0a_5930:
+InitSceneScroll:
 	push af ; $5930
 	push bc ; $5931
 	push de ; $5932
@@ -3453,11 +3453,11 @@ Func_0a_5930:
 	pop bc ; $596c
 	pop af ; $596d
 	ret ; $596e
-Func_0a_596f:
+StopSceneScrollTask:
 	ld hl, $5976 ; $596f
 	call UnregisterFrameTask ; $5972
 	ret ; $5975
-Func_0a_5976:
+UpdateSceneScroll:
 	ld a, [$c325] ; $5976
 	ld h, a ; $5979
 	ld a, [$c323] ; $597a
@@ -3550,7 +3550,7 @@ SceneGfxSlotTable:
 	dslot DataPtr_TrainingHallSceneConfig, DataPtr_TrainingHallPalettes, DataPtr_TrainingHallTilemap, DataPtr_TrainingHallAttrmap, DataPtr_TrainingHallAuxTilemap, DataPtr_TrainingHallAuxAttrmap, DataPtr_CenterCourtHallSceneConfig, DataPtr_TrainingHallTiles ; record 34
 	dslot DataPtr_CenterCourtHallSceneConfigAlias1, DataPtr_CenterCourtHallPalettes, DataPtr_CenterCourtHallTilemap, DataPtr_CenterCourtHallAttrmap, DataPtr_CenterCourtHallAuxTilemap, DataPtr_CenterCourtHallAuxAttrmap, DataPtr_ClubroomInteriorSceneConfig, DataPtr_CenterCourtHallTiles ; record 35
 	dslot DataPtr_ClubroomInteriorSceneConfigAlias1, DataPtr_ClubroomInteriorPalettes, DataPtr_ClubroomInteriorTilemap, DataPtr_ClubroomInteriorAttrmap, DataPtr_ClubroomInteriorAuxTilemap, DataPtr_ClubroomInteriorAuxAttrmap, DataPtr_69_2c, DataPtr_ClubroomInteriorTiles ; record 36
-Func_0a_5c29:
+CopyScrolledSceneTilemapToVram:
 	push af ; $5c29
 	push bc ; $5c2a
 	push de ; $5c2b
@@ -3851,7 +3851,7 @@ Func_0a_5d2a:
 	pop bc ; $5ddf
 	pop af ; $5de0
 	ret ; $5de1
-Func_0a_5de2:
+LoadAndDisplayScene:
 	push bc ; $5de2
 	push af ; $5de3
 	call DisableLCDSafely ; $5de4
@@ -3875,7 +3875,7 @@ Func_0a_5de2:
 	ld [$c32c], a ; $5e0d
 	pop bc ; $5e10
 	ld a, b ; $5e11
-	call Func_0a_5c29 ; $5e12
+	call CopyScrolledSceneTilemapToVram ; $5e12
 	call EnableLCD ; $5e15
 	call AdvanceFrame ; $5e18
 	call AdvanceFrame ; $5e1b
@@ -3905,11 +3905,11 @@ Func_0a_5e91:
 	ld b, $01 ; $5eb9
 	farcall FarPtr_05_76 ; $5ebb
 	call DisableLCDSafely ; $5ebe
-	call Func_0a_5930 ; $5ec1
+	call InitSceneScroll ; $5ec1
 	ld a, [$c32e] ; $5ec4
 	call LoadStorySceneGraphics ; $5ec7
 	ld a, $00 ; $5eca
-	farcall FarPtr_0a_76 ; $5ecc
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5ecc
 	call EnableLCD ; $5ecf
 	ld a, [$c32e] ; $5ed2
 	call Func_0a_639b ; $5ed5
@@ -4173,7 +4173,7 @@ Label_0a_6035:
 	jr nz, Label_0a_6054 ; $604b
 	and a, $7f ; $604d
 	ld b, $00 ; $604f
-	call Func_0a_5de2 ; $6051
+	call LoadAndDisplayScene ; $6051
 Label_0a_6054:
 	xor a, a ; $6054
 	ldh [$ffb9], a ; $6055

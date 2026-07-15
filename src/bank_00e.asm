@@ -873,7 +873,7 @@ Func_0e_4f3c:
 	wram_bank $07 ; $4f3f
 	ld de, $df00 ; $4f45
 	wram_bank $05 ; $4f48
-	farcall FarPtr_05_4e ; $4f4e
+	farcall FarPtr_FetchShortTextToBuffer ; $4f4e
 	ld hl, $df00 ; $4f51
 	farcall FarPtr_05_46 ; $4f54
 	pop af ; $4f57
@@ -4453,7 +4453,7 @@ Func_0e_7b7f:
 	ld a, $ff ; $7b89
 	ld [$c294], a ; $7b8b
 	ld [$c2a1], a ; $7b8e
-	farcall FarPtr_0a_4a ; $7b91
+	farcall FarPtr_InitStoryMatchSettings ; $7b91
 	ld a, [wWaterSpriteMinigameTimer] ; $7b94
 	add a, a ; $7b97
 	add a, $ac ; $7b98
@@ -4479,42 +4479,42 @@ Func_0e_7bb8:
 	ld [wCurrentMinigameStoryMatch], a ; $7bba
 	ld a, $18 ; $7bbd
 	ld [$c8f7], a ; $7bbf
-	farcall FarPtr_0a_5a ; $7bc2
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7bc2
 	ret ; $7bc5
 Func_0e_7bc6:
 	ld a, $00 ; $7bc6
 	ld [wCurrentMinigameStoryMatch], a ; $7bc8
 	ld a, $17 ; $7bcb
 	ld [$c8f7], a ; $7bcd
-	farcall FarPtr_0a_5a ; $7bd0
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7bd0
 	ret ; $7bd3
 Func_0e_7bd4:
 	ld a, $00 ; $7bd4
 	ld [wCurrentMinigameStoryMatch], a ; $7bd6
 	ld a, $16 ; $7bd9
 	ld [$c8f7], a ; $7bdb
-	farcall FarPtr_0a_5a ; $7bde
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7bde
 	ret ; $7be1
 Func_0e_7be2:
 	ld a, $01 ; $7be2
 	ld [wCurrentMinigameStoryMatch], a ; $7be4
 	ld a, $18 ; $7be7
 	ld [$c8f7], a ; $7be9
-	farcall FarPtr_0a_5a ; $7bec
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7bec
 	ret ; $7bef
 Func_0e_7bf0:
 	ld a, $01 ; $7bf0
 	ld [wCurrentMinigameStoryMatch], a ; $7bf2
 	ld a, $17 ; $7bf5
 	ld [$c8f7], a ; $7bf7
-	farcall FarPtr_0a_5a ; $7bfa
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7bfa
 	ret ; $7bfd
 Func_0e_7bfe:
 	ld a, $01 ; $7bfe
 	ld [wCurrentMinigameStoryMatch], a ; $7c00
 	ld a, $16 ; $7c03
 	ld [$c8f7], a ; $7c05
-	farcall FarPtr_0a_5a ; $7c08
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7c08
 	ret ; $7c0b
 	INCBIN "data/bank_00e/d_7c0c.bin" ; $7c0c, 590 bytes
 Func_0e_7e5a:

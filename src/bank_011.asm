@@ -1597,12 +1597,12 @@ Label_11_65b9:
 	ld a, $0f ; $6623
 	ld [$c294], a ; $6625
 	ld [$c2a1], a ; $6628
-	farcall FarPtr_0a_4a ; $662b
+	farcall FarPtr_InitStoryMatchSettings ; $662b
 	ld a, $01 ; $662e
 	ld [wCurrentMinigameStoryMatch], a ; $6630
 	ld a, $02 ; $6633
 	ld [$c8f7], a ; $6635
-	farcall FarPtr_0a_5a ; $6638
+	farcall FarPtr_LoadMatchSettingsFromTable ; $6638
 	farcall FarPtr_0a_4c ; $663b
 	farcall FarPtr_0a_4e ; $663e
 	ret ; $6641
@@ -1683,12 +1683,12 @@ Label_11_6642:
 	ld a, $0f ; $66e3
 	ld [$c294], a ; $66e5
 	ld [$c2a1], a ; $66e8
-	farcall FarPtr_0a_4a ; $66eb
+	farcall FarPtr_InitStoryMatchSettings ; $66eb
 	ld a, $01 ; $66ee
 	ld [wCurrentMinigameStoryMatch], a ; $66f0
 	ld a, $03 ; $66f3
 	ld [$c8f7], a ; $66f5
-	farcall FarPtr_0a_5a ; $66f8
+	farcall FarPtr_LoadMatchSettingsFromTable ; $66f8
 	farcall FarPtr_0a_4c ; $66fb
 	farcall FarPtr_0a_4e ; $66fe
 	ret ; $6701
@@ -1753,12 +1753,12 @@ Label_11_6702:
 	ld a, $0f ; $6781
 	ld [$c294], a ; $6783
 	ld [$c2a1], a ; $6786
-	farcall FarPtr_0a_4a ; $6789
+	farcall FarPtr_InitStoryMatchSettings ; $6789
 	ld a, $01 ; $678c
 	ld [wCurrentMinigameStoryMatch], a ; $678e
 	ld a, $04 ; $6791
 	ld [$c8f7], a ; $6793
-	farcall FarPtr_0a_5a ; $6796
+	farcall FarPtr_LoadMatchSettingsFromTable ; $6796
 	farcall FarPtr_0a_4c ; $6799
 	farcall FarPtr_0a_4e ; $679c
 	ret ; $679f
@@ -2934,12 +2934,12 @@ Label_11_7843:
 	ld a, $0f ; $78b0
 	ld [$c294], a ; $78b2
 	ld [$c2a1], a ; $78b5
-	farcall FarPtr_0a_4a ; $78b8
+	farcall FarPtr_InitStoryMatchSettings ; $78b8
 	ld a, $00 ; $78bb
 	ld [wCurrentMinigameStoryMatch], a ; $78bd
 	ld a, $01 ; $78c0
 	ld [$c8f7], a ; $78c2
-	farcall FarPtr_0a_5a ; $78c5
+	farcall FarPtr_LoadMatchSettingsFromTable ; $78c5
 	farcall FarPtr_0a_4c ; $78c8
 	farcall FarPtr_0a_4e ; $78cb
 	ret ; $78ce
@@ -2999,12 +2999,12 @@ Label_11_78cf:
 	ld a, $0f ; $793e
 	ld [$c294], a ; $7940
 	ld [$c2a1], a ; $7943
-	farcall FarPtr_0a_4a ; $7946
+	farcall FarPtr_InitStoryMatchSettings ; $7946
 	ld a, $00 ; $7949
 	ld [wCurrentMinigameStoryMatch], a ; $794b
 	ld a, $02 ; $794e
 	ld [$c8f7], a ; $7950
-	farcall FarPtr_0a_5a ; $7953
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7953
 	farcall FarPtr_0a_4c ; $7956
 	farcall FarPtr_0a_4e ; $7959
 	ret ; $795c
@@ -3063,12 +3063,12 @@ Label_11_795d:
 	ld a, $0f ; $79c9
 	ld [$c294], a ; $79cb
 	ld [$c2a1], a ; $79ce
-	farcall FarPtr_0a_4a ; $79d1
+	farcall FarPtr_InitStoryMatchSettings ; $79d1
 	ld a, $00 ; $79d4
 	ld [wCurrentMinigameStoryMatch], a ; $79d6
 	ld a, $03 ; $79d9
 	ld [$c8f7], a ; $79db
-	farcall FarPtr_0a_5a ; $79de
+	farcall FarPtr_LoadMatchSettingsFromTable ; $79de
 	farcall FarPtr_0a_4c ; $79e1
 	farcall FarPtr_0a_4e ; $79e4
 	ret ; $79e7
@@ -3128,12 +3128,12 @@ Label_11_79e8:
 	ld a, $0f ; $7a57
 	ld [$c294], a ; $7a59
 	ld [$c2a1], a ; $7a5c
-	farcall FarPtr_0a_4a ; $7a5f
+	farcall FarPtr_InitStoryMatchSettings ; $7a5f
 	ld a, $00 ; $7a62
 	ld [wCurrentMinigameStoryMatch], a ; $7a64
 	ld a, $04 ; $7a67
 	ld [$c8f7], a ; $7a69
-	farcall FarPtr_0a_5a ; $7a6c
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7a6c
 	farcall FarPtr_0a_4c ; $7a6f
 	farcall FarPtr_0a_4e ; $7a72
 	ret ; $7a75

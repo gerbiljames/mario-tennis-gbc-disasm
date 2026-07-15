@@ -1481,7 +1481,7 @@ Label_6b_53c6:
 	ret ; $53fb
 Func_6b_53fc:
 	call DisableLCDSafely ; $53fc
-	farcall FarPtr_0a_6a ; $53ff
+	farcall FarPtr_InitSceneScroll ; $53ff
 	farcall FarPtr_05_00 ; $5402
 	wram_bank $01 ; $5405
 	ld hl, $551d ; $540b
@@ -1509,13 +1509,13 @@ Func_6b_53fc:
 	ld a, $24 ; $544f
 	ld [$c323], a ; $5451
 	ld a, $01 ; $5454
-	farcall FarPtr_0a_76 ; $5456
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5456
 	xor a, a ; $5459
 	ld [$c323], a ; $545a
 	ret ; $545d
 Func_6b_545e:
 	call DisableLCDSafely ; $545e
-	farcall FarPtr_0a_6a ; $5461
+	farcall FarPtr_InitSceneScroll ; $5461
 	farcall FarPtr_05_00 ; $5464
 	wram_bank $01 ; $5467
 	ld hl, $551d ; $546d
@@ -1542,11 +1542,11 @@ Func_6b_545e:
 	ld a, $24 ; $54ae
 	ld [$c323], a ; $54b0
 	ld a, $01 ; $54b3
-	farcall FarPtr_0a_76 ; $54b5
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $54b5
 	ret ; $54b8
 Func_6b_54b9:
 	call DisableLCDSafely ; $54b9
-	farcall FarPtr_0a_6a ; $54bc
+	farcall FarPtr_InitSceneScroll ; $54bc
 	farcall FarPtr_05_00 ; $54bf
 	wram_bank $01 ; $54c2
 	ld hl, $551d ; $54c8
@@ -1576,7 +1576,7 @@ Func_6b_54b9:
 	ld a, $24 ; $5512
 	ld [$c323], a ; $5514
 	ld a, $01 ; $5517
-	farcall FarPtr_0a_76 ; $5519
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 	INCBIN "data/bank_06b/d_551d.bin" ; $551d, 2904 bytes
 Func_6b_6075:
@@ -1685,7 +1685,7 @@ Label_6b_612f:
 	INCBIN "data/bank_06b/d_6139.bin" ; $6139, 67 bytes
 Func_6b_617c:
 	call DisableLCDSafely ; $617c
-	farcall FarPtr_0a_6a ; $617f
+	farcall FarPtr_InitSceneScroll ; $617f
 	farcall FarPtr_05_00 ; $6182
 	wram_bank $01 ; $6185
 	ld hl, $61e6 ; $618b
@@ -1717,7 +1717,7 @@ Func_6b_617c:
 	ld [$c322], a ; $61da
 	ld [$c323], a ; $61dd
 	ld a, $01 ; $61e0
-	farcall FarPtr_0a_76 ; $61e2
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 3741 bytes
 	ld a, [$cb44] ; $7083

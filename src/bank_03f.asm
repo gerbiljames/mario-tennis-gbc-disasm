@@ -263,12 +263,12 @@ Func_3f_4194:
 	ld b, a ; $41ae
 	xor a, a ; $41af
 	call Func_3f_54c8 ; $41b0
-	farcall FarPtr_0a_70 ; $41b3
+	farcall FarPtr_UpdateSceneScroll ; $41b3
 	call AdvanceFrame ; $41b6
 	call DisableLCDSafely ; $41b9
 	call Func_3f_425f ; $41bc
 	ld a, $01 ; $41bf
-	farcall FarPtr_0a_76 ; $41c1
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $41c1
 	call EnableLCD ; $41c4
 	call Func_3f_5417 ; $41c7
 	call Func_3f_5261 ; $41ca
@@ -293,12 +293,12 @@ Func_3f_41e0:
 	ld b, a ; $41f7
 	ld a, $01 ; $41f8
 	call Func_3f_54c8 ; $41fa
-	farcall FarPtr_0a_70 ; $41fd
+	farcall FarPtr_UpdateSceneScroll ; $41fd
 	call AdvanceFrame ; $4200
 	call DisableLCDSafely ; $4203
 	call Func_3f_42a0 ; $4206
 	ld a, $01 ; $4209
-	farcall FarPtr_0a_76 ; $420b
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $420b
 	call EnableLCD ; $420e
 	wram_bank $06 ; $4211
 	ld a, [$cb37] ; $4217
@@ -523,11 +523,11 @@ Label_3f_4426:
 	wram_bank $06 ; $442b
 	call EnableLCD ; $4431
 	wram_bank $06 ; $4434
-	farcall FarPtr_0a_70 ; $443a
+	farcall FarPtr_UpdateSceneScroll ; $443a
 	call DisableLCDSafely ; $443d
 	wram_bank $03 ; $4440
 	ld a, $01 ; $4446
-	farcall FarPtr_0a_76 ; $4448
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4448
 	call EnableLCD ; $444b
 	ret ; $444e
 	INCBIN "data/bank_03f/d_444f.bin" ; $444f, 2586 bytes

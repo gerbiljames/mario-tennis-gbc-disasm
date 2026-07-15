@@ -198,7 +198,7 @@ Func_1a_4145:
 	ld a, l ; $4156
 	add a, e ; $4157
 	ld e, a ; $4158
-	farcall FarPtr_05_58 ; $4159
+	farcall FarPtr_GetTilemapCellAddress ; $4159
 	ld h, d ; $415c
 	ld l, e ; $415d
 	ld de, $3000 ; $415e
@@ -1218,7 +1218,7 @@ Label_1a_5044:
 	ret ; $505d
 Func_1a_505e:
 	wram_bank $05 ; $505e
-	farcall FarPtr_05_1e ; $5064
+	farcall FarPtr_FetchDialogueText ; $5064
 	ld hl, wTextBuffer ; $5067
 	ld de, $d800 ; $506a
 Label_1a_506d:

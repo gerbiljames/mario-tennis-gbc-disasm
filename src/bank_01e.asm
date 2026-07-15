@@ -625,7 +625,7 @@ Func_1e_45c0:
 	push bc ; $45c0
 	xor a, a ; $45c1
 	farcall FarPtr_05_44 ; $45c2
-	farcall FarPtr_05_1e ; $45c5
+	farcall FarPtr_FetchDialogueText ; $45c5
 	pop bc ; $45c8
 Func_1e_45c9:
 	ld hl, wTextBuffer ; $45c9

@@ -2028,14 +2028,14 @@ Label_0f_6646:
 	ld a, $ff ; $71d4
 	ld [$c294], a ; $71d6
 	ld [$c2a1], a ; $71d9
-	farcall FarPtr_0a_4a ; $71dc
+	farcall FarPtr_InitStoryMatchSettings ; $71dc
 	test_flag $07, 5 ; $71df
 	jr z, Label_0f_71f3 ; $71e2
 	ld a, $00 ; $71e4
 	ld [wCurrentMinigameStoryMatch], a ; $71e6
 	ld a, $13 ; $71e9
 	ld [$c8f7], a ; $71eb
-	farcall FarPtr_0a_5a ; $71ee
+	farcall FarPtr_LoadMatchSettingsFromTable ; $71ee
 	jr Label_0f_7228 ; $71f1
 Label_0f_71f3:
 	test_flag $07, 6 ; $71f3
@@ -2044,7 +2044,7 @@ Label_0f_71f3:
 	ld [wCurrentMinigameStoryMatch], a ; $71fa
 	ld a, $12 ; $71fd
 	ld [$c8f7], a ; $71ff
-	farcall FarPtr_0a_5a ; $7202
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7202
 	jr Label_0f_7228 ; $7205
 Label_0f_7207:
 	test_flag $07, 7 ; $7207
@@ -2053,14 +2053,14 @@ Label_0f_7207:
 	ld [wCurrentMinigameStoryMatch], a ; $720e
 	ld a, $11 ; $7211
 	ld [$c8f7], a ; $7213
-	farcall FarPtr_0a_5a ; $7216
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7216
 	jr Label_0f_7228 ; $7219
 Label_0f_721b:
 	ld a, $00 ; $721b
 	ld [wCurrentMinigameStoryMatch], a ; $721d
 	ld a, $10 ; $7220
 	ld [$c8f7], a ; $7222
-	farcall FarPtr_0a_5a ; $7225
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7225
 Label_0f_7228:
 	farcall FarPtr_0a_4c ; $7228
 	farcall FarPtr_0a_4e ; $722b
@@ -2402,7 +2402,7 @@ Func_0f_7a8e:
 	wram_bank $07 ; $7a91
 	ld de, $df00 ; $7a97
 	wram_bank $05 ; $7a9a
-	farcall FarPtr_05_4e ; $7aa0
+	farcall FarPtr_FetchShortTextToBuffer ; $7aa0
 	ld hl, $df00 ; $7aa3
 	farcall FarPtr_05_46 ; $7aa6
 	pop af ; $7aa9

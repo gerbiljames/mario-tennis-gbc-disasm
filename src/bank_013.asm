@@ -1947,7 +1947,7 @@ Func_13_5130:
 	ld [$c32c], a ; $519d
 	call DisableLCDSafely ; $51a0
 	ld a, $00 ; $51a3
-	farcall FarPtr_0a_76 ; $51a5
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $51a5
 	call EnableLCD ; $51a8
 	ret ; $51ab
 Label_13_51ac:
@@ -4215,12 +4215,12 @@ Func_13_6a10:
 	farcall FarPtr_0a_1a ; $6a6a
 	ld a, $05 ; $6a6d
 	farcall FarPtr_0a_1e ; $6a6f
-	farcall FarPtr_0a_4a ; $6a72
+	farcall FarPtr_InitStoryMatchSettings ; $6a72
 	ld a, $00 ; $6a75
 	ld [wCurrentMinigameStoryMatch], a ; $6a77
 	ld a, $0a ; $6a7a
 	ld [$c8f7], a ; $6a7c
-	farcall FarPtr_0a_5a ; $6a7f
+	farcall FarPtr_LoadMatchSettingsFromTable ; $6a7f
 	farcall FarPtr_0a_4c ; $6a82
 	farcall FarPtr_0a_4e ; $6a85
 	ret ; $6a88
@@ -4276,12 +4276,12 @@ Func_13_6a10:
 	farcall FarPtr_0a_3e ; $6afa
 	ld a, $05 ; $6afd
 	farcall FarPtr_0a_1e ; $6aff
-	farcall FarPtr_0a_4a ; $6b02
+	farcall FarPtr_InitStoryMatchSettings ; $6b02
 	ld a, $01 ; $6b05
 	ld [wCurrentMinigameStoryMatch], a ; $6b07
 	ld a, $0a ; $6b0a
 	ld [$c8f7], a ; $6b0c
-	farcall FarPtr_0a_5a ; $6b0f
+	farcall FarPtr_LoadMatchSettingsFromTable ; $6b0f
 	farcall FarPtr_0a_4c ; $6b12
 	farcall FarPtr_0a_4e ; $6b15
 	ret ; $6b18
@@ -4398,12 +4398,12 @@ Label_13_6fb6:
 	farcall FarPtr_0a_3e ; $705e
 	ld a, $04 ; $7061
 	farcall FarPtr_0a_1e ; $7063
-	farcall FarPtr_0a_4a ; $7066
+	farcall FarPtr_InitStoryMatchSettings ; $7066
 	ld a, $01 ; $7069
 	ld [wCurrentMinigameStoryMatch], a ; $706b
 	ld a, $0d ; $706e
 	ld [$c8f7], a ; $7070
-	farcall FarPtr_0a_5a ; $7073
+	farcall FarPtr_LoadMatchSettingsFromTable ; $7073
 	farcall FarPtr_0a_4c ; $7076
 	farcall FarPtr_0a_4e ; $7079
 	ret ; $707c

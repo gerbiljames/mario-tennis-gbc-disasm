@@ -208,7 +208,7 @@ Label_02_4103:
 	ld d, h ; $4108
 	ld e, l ; $4109
 	pop hl ; $410a
-	farcall FarPtr_05_4e ; $410b
+	farcall FarPtr_FetchShortTextToBuffer ; $410b
 	pop de ; $410e
 	pop af ; $410f
 	bit 6, a ; $4110
@@ -555,7 +555,7 @@ InitPlayerRecordFromTemplate:
 	add a, c ; $43d4
 	ld e, a ; $43d5
 	ld d, b ; $43d6
-	farcall FarPtr_05_4e ; $43d7
+	farcall FarPtr_FetchShortTextToBuffer ; $43d7
 	pop de ; $43da
 	ld a, d ; $43db
 	add a, $1b ; $43dc

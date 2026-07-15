@@ -30,8 +30,8 @@ FarPtr_05_1a:
 	dw Func_05_431d ; $401a
 FarPtr_05_1c:
 	dw Func_05_5db3 ; $401c
-FarPtr_05_1e:
-	dw Func_05_5c18 ; $401e
+FarPtr_FetchDialogueText:
+	dw FetchDialogueText ; $401e
 FarPtr_05_20:
 	dw Func_05_4552 ; $4020
 FarPtr_05_22:
@@ -46,8 +46,8 @@ FarPtr_05_2a:
 	dw Func_05_44f9 ; $402a
 FarPtr_05_2c:
 	dw Func_05_4510 ; $402c
-FarPtr_05_2e:
-	dw Func_05_4e23 ; $402e
+FarPtr_RenderTextString:
+	dw RenderTextString ; $402e
 FarPtr_05_30:
 	dw Func_05_5648 ; $4030
 FarPtr_05_32:
@@ -78,8 +78,8 @@ FarPtr_05_4a:
 	dw Func_05_517a ; $404a
 FarPtr_05_4c:
 	dw Func_05_53ae ; $404c
-FarPtr_05_4e:
-	dw Func_05_409a ; $404e
+FarPtr_FetchShortTextToBuffer:
+	dw FetchShortTextToBuffer ; $404e
 FarPtr_05_50:
 	dw Func_05_65a2 ; $4050
 FarPtr_05_52:
@@ -88,8 +88,8 @@ FarPtr_05_54:
 	dw Func_05_67c4 ; $4054
 FarPtr_05_56:
 	dw Func_05_600e ; $4056
-FarPtr_05_58:
-	dw Func_05_4122 ; $4058
+FarPtr_GetTilemapCellAddress:
+	dw GetTilemapCellAddress ; $4058
 FarPtr_05_5a:
 	dw Func_05_6055 ; $405a
 FarPtr_05_5c:
@@ -153,7 +153,7 @@ FarPtr_05_94:
 Func_05_4096:
 	call Func_05_6e09 ; $4096
 	ret ; $4099
-Func_05_409a:
+FetchShortTextToBuffer:
 	push af ; $409a
 	push bc ; $409b
 	push de ; $409c
@@ -161,7 +161,7 @@ Func_05_409a:
 	ldh a, [hWramBank] ; $409e
 	push af ; $40a0
 	wram_bank $05 ; $40a1
-	call Func_05_5ca8 ; $40a7
+	call FetchShortText ; $40a7
 	ld hl, wShortTextBuffer ; $40aa
 Label_05_40ad:
 	ld a, [hl+] ; $40ad
@@ -215,7 +215,7 @@ Func_05_40fb:
 	push af ; $40fe
 	wram_bank $05 ; $40ff
 	pop af ; $4105
-	call Func_05_4122 ; $4106
+	call GetTilemapCellAddress ; $4106
 	or a, a ; $4109
 	jr z, Label_05_410d ; $410a
 	ld [de], a ; $410c
@@ -229,12 +229,12 @@ Label_05_410d:
 	push af ; $4113
 	wram_bank $05 ; $4114
 	pop af ; $411a
-	call Func_05_4122 ; $411b
+	call GetTilemapCellAddress ; $411b
 	ld a, [de] ; $411e
 	pop de ; $411f
 	pop af ; $4120
 	ret ; $4121
-Func_05_4122:
+GetTilemapCellAddress:
 	push af ; $4122
 	push bc ; $4123
 	push hl ; $4124
@@ -969,7 +969,7 @@ Func_05_4552:
 Label_05_4560:
 	push de ; $4560
 	push bc ; $4561
-	call Func_05_4122 ; $4562
+	call GetTilemapCellAddress ; $4562
 Label_05_4565:
 	ld a, [hl] ; $4565
 	inc hl ; $4566
@@ -1024,7 +1024,7 @@ Label_05_459c:
 Label_05_459e:
 	ld a, $00 ; $459e
 	push de ; $45a0
-	call Func_05_4122 ; $45a1
+	call GetTilemapCellAddress ; $45a1
 	ld [de], a ; $45a4
 	pop de ; $45a5
 	dec b ; $45a6
@@ -1207,7 +1207,7 @@ Func_05_46b0:
 	push de ; $46b1
 	push hl ; $46b2
 	wram_bank $05 ; $46b3
-	call Func_05_5c18 ; $46b9
+	call FetchDialogueText ; $46b9
 	push hl ; $46bc
 	ld h, d ; $46bd
 	ld l, e ; $46be
@@ -1221,7 +1221,7 @@ Func_05_46b0:
 	and a, $1f ; $46c9
 	ld e, a ; $46cb
 	pop hl ; $46cc
-	call Func_05_5745 ; $46cd
+	call MeasureTextDimensions ; $46cd
 	ld a, c ; $46d0
 	dec a ; $46d1
 	sra a ; $46d2
@@ -1360,7 +1360,7 @@ Func_05_477f:
 	sla a ; $47ab
 	add a, e ; $47ad
 	ld e, a ; $47ae
-	call Func_05_4122 ; $47af
+	call GetTilemapCellAddress ; $47af
 	xor a, a ; $47b2
 	ld hl, $d841 ; $47b3
 	ld [hl+], a ; $47b6
@@ -1443,7 +1443,7 @@ Label_05_47f7:
 	add a, e ; $482c
 	ld e, a ; $482d
 	push hl ; $482e
-	call Func_05_4122 ; $482f
+	call GetTilemapCellAddress ; $482f
 	ld hl, $d842 ; $4832
 	ld [hl], e ; $4835
 	inc hl ; $4836
@@ -1733,8 +1733,8 @@ Func_05_49f6:
 	ld hl, $49dc ; $4a1d
 	call RegisterFrameTask ; $4a20
 Label_05_4a23:
-	call Func_05_5c18 ; $4a23
-	call Func_05_5745 ; $4a26
+	call FetchDialogueText ; $4a23
+	call MeasureTextDimensions ; $4a26
 	ld a, $01 ; $4a29
 	sra b ; $4a2b
 	add a, b ; $4a2d
@@ -1840,7 +1840,7 @@ Func_05_4aa8:
 	sla a ; $4ade
 	add a, e ; $4ae0
 	ld e, a ; $4ae1
-	call Func_05_4122 ; $4ae2
+	call GetTilemapCellAddress ; $4ae2
 	xor a, a ; $4ae5
 	ld hl, $d841 ; $4ae6
 	ld [hl+], a ; $4ae9
@@ -1922,7 +1922,7 @@ Label_05_4b29:
 	add a, e ; $4b5e
 	ld e, a ; $4b5f
 	push hl ; $4b60
-	call Func_05_4122 ; $4b61
+	call GetTilemapCellAddress ; $4b61
 	ld hl, $d842 ; $4b64
 	ld [hl], e ; $4b67
 	inc hl ; $4b68
@@ -2294,7 +2294,7 @@ Func_05_4e10:
 Label_05_4e20:
 	ld a, $01 ; $4e20
 	ret ; $4e22
-Func_05_4e23:
+RenderTextString:
 	push bc ; $4e23
 	ld a, [$d84f] ; $4e24
 	or a, a ; $4e27
@@ -2326,7 +2326,7 @@ Label_05_4e48:
 	ld a, e ; $4e54
 	and a, $1f ; $4e55
 	ld [$d82b], a ; $4e57
-	call Func_05_4122 ; $4e5a
+	call GetTilemapCellAddress ; $4e5a
 Label_05_4e5d:
 	ld a, [$d850] ; $4e5d
 	or a, a ; $4e60
@@ -2375,7 +2375,7 @@ Label_05_4e9f:
 	ld [$c361], a ; $4ea1
 	pop af ; $4ea4
 Label_05_4ea5:
-	call Func_05_546c ; $4ea5
+	call DispatchControlCode ; $4ea5
 	call Func_05_42f1 ; $4ea8
 	jr Label_05_4e5d ; $4eab
 Label_05_4ead:
@@ -2409,7 +2409,7 @@ Label_05_4ead:
 	ld e, a ; $4ede
 	ld a, [$d82a] ; $4edf
 	ld d, a ; $4ee2
-	call Func_05_4122 ; $4ee3
+	call GetTilemapCellAddress ; $4ee3
 	pop af ; $4ee6
 	ret ; $4ee7
 	ret ; $4ee8
@@ -2506,7 +2506,7 @@ Label_05_4f71:
 	ld a, $01 ; $4f76
 	call Func_05_5413 ; $4f78
 	call Func_05_4fbf ; $4f7b
-	call Func_05_4122 ; $4f7e
+	call GetTilemapCellAddress ; $4f7e
 	ld [de], a ; $4f81
 	call Func_05_42f1 ; $4f82
 	xor a, a ; $4f85
@@ -2951,7 +2951,7 @@ Label_05_5257:
 	ld a, [hl+] ; $5257
 	or a, a ; $5258
 	jr z, Label_05_5263 ; $5259
-	call Func_05_7366 ; $525b
+	call GetGlyphWidth ; $525b
 	ld a, c ; $525e
 	add a, b ; $525f
 	ld b, a ; $5260
@@ -2961,7 +2961,7 @@ Label_05_5263:
 	pop hl ; $5264
 	pop bc ; $5265
 	ret ; $5266
-Func_05_5267:
+MeasureMainCharacterNameWidth:
 	push bc ; $5267
 	push hl ; $5268
 	ld hl, wStoryModeNameOfMainCharacter ; $5269
@@ -2970,7 +2970,7 @@ Label_05_526e:
 	ld a, [hl+] ; $526e
 	cp a, $00 ; $526f
 	jr z, Label_05_527b ; $5271
-	call Func_05_7366 ; $5273
+	call GetGlyphWidth ; $5273
 	ld a, c ; $5276
 	add a, b ; $5277
 	ld b, a ; $5278
@@ -2980,7 +2980,7 @@ Label_05_527b:
 	pop hl ; $527c
 	pop bc ; $527d
 	ret ; $527e
-Func_05_527f:
+MeasurePartnerCharacterNameWidth:
 	push bc ; $527f
 	push hl ; $5280
 	ld hl, wStoryModeNameOfPartnerCharacter ; $5281
@@ -2989,7 +2989,7 @@ Label_05_5286:
 	ld a, [hl+] ; $5286
 	cp a, $00 ; $5287
 	jr z, Label_05_5293 ; $5289
-	call Func_05_7366 ; $528b
+	call GetGlyphWidth ; $528b
 	ld a, c ; $528e
 	add a, b ; $528f
 	ld b, a ; $5290
@@ -3017,7 +3017,7 @@ Func_05_5298:
 	ld c, l ; $52ad
 	ld hl, $0000 ; $52ae
 	add hl, bc ; $52b1
-	call Func_05_5ca8 ; $52b2
+	call FetchShortText ; $52b2
 	ld hl, wShortTextBuffer ; $52b5
 	ld b, $00 ; $52b8
 Label_05_52ba:
@@ -3165,7 +3165,7 @@ Label_05_538f:
 	add hl, de ; $538f
 	ld c, $30 ; $5390
 	add a, c ; $5392
-	call Func_05_7366 ; $5393
+	call GetGlyphWidth ; $5393
 	ld a, c ; $5396
 	add a, b ; $5397
 	ld b, a ; $5398
@@ -3208,7 +3208,7 @@ Func_05_53ae:
 	inc h ; $53d7
 Label_05_53d8:
 	ld de, $c6c0 ; $53d8
-	call Func_05_409a ; $53db
+	call FetchShortTextToBuffer ; $53db
 	pop de ; $53de
 	ld hl, $c6c0 ; $53df
 	call Func_05_54cf ; $53e2
@@ -3227,14 +3227,14 @@ Func_05_53e8:
 	inc h ; $53f5
 Label_05_53f6:
 	ld de, $c6c0 ; $53f6
-	farcall FarPtr_05_4e ; $53f9
+	farcall FarPtr_FetchShortTextToBuffer ; $53f9
 	ld hl, $c6c0 ; $53fc
 	ld b, $00 ; $53ff
 Label_05_5401:
 	ld a, [hl+] ; $5401
 	cp a, $00 ; $5402
 	jr z, Label_05_540e ; $5404
-	call Func_05_7366 ; $5406
+	call GetGlyphWidth ; $5406
 	ld a, c ; $5409
 	add a, b ; $540a
 	ld b, a ; $540b
@@ -3308,7 +3308,7 @@ Label_05_5462:
 	pop hl ; $5469
 	pop af ; $546a
 	ret ; $546b
-Func_05_546c:
+DispatchControlCode:
 	push hl ; $546c
 	ld hl, $5488 ; $546d
 	push hl ; $5470
@@ -3629,7 +3629,7 @@ Label_05_561a:
 	push hl ; $562b
 	ld h, b ; $562c
 	ld l, c ; $562d
-	call Func_05_5c18 ; $562e
+	call FetchDialogueText ; $562e
 	pop hl ; $5631
 	ld a, [hl+] ; $5632
 	inc a ; $5633
@@ -3641,7 +3641,7 @@ Label_05_561a:
 	ld e, a ; $563b
 	pop hl ; $563c
 	ld hl, wTextBuffer ; $563d
-	call Func_05_4e23 ; $5640
+	call RenderTextString ; $5640
 Label_05_5643:
 	pop hl ; $5643
 	pop de ; $5644
@@ -3710,7 +3710,7 @@ Label_05_5692:
 Label_05_569d:
 	cp a, $07 ; $569d
 	jr nz, Label_05_56a8 ; $569f
-	call Func_05_5267 ; $56a1
+	call MeasureMainCharacterNameWidth ; $56a1
 	add a, b ; $56a4
 	ld b, a ; $56a5
 	jr Label_05_566b ; $56a6
@@ -3724,7 +3724,7 @@ Label_05_56a8:
 Label_05_56b3:
 	cp a, $0b ; $56b3
 	jr nz, Label_05_56be ; $56b5
-	call Func_05_527f ; $56b7
+	call MeasurePartnerCharacterNameWidth ; $56b7
 	add a, b ; $56ba
 	ld b, a ; $56bb
 	jr Label_05_566b ; $56bc
@@ -3742,7 +3742,7 @@ Label_05_56cd:
 	jp c, Label_05_566b ; $56cf
 	cp a, $7b ; $56d2
 	jp nc, Label_05_566b ; $56d4
-	call Func_05_7366 ; $56d7
+	call GetGlyphWidth ; $56d7
 	ld a, c ; $56da
 	add a, b ; $56db
 	ld b, a ; $56dc
@@ -3813,7 +3813,7 @@ Label_05_570b:
 	pop bc ; $5742
 	pop af ; $5743
 	ret ; $5744
-Func_05_5745:
+MeasureTextDimensions:
 	push af ; $5745
 	push de ; $5746
 	push hl ; $5747
@@ -3855,7 +3855,7 @@ Label_05_5779:
 	jr c, Label_05_574f ; $577b
 	cp a, $7b ; $577d
 	jr nc, Label_05_574f ; $577f
-	call Func_05_7366 ; $5781
+	call GetGlyphWidth ; $5781
 	ld a, c ; $5784
 	add a, b ; $5785
 	ld b, a ; $5786
@@ -4302,7 +4302,7 @@ Label_05_5aee:
 	ld d, $00 ; $5b01
 	call Func_05_4688 ; $5b03
 	pop hl ; $5b06
-	call Func_05_5c18 ; $5b07
+	call FetchDialogueText ; $5b07
 	call Func_05_5654 ; $5b0a
 	xor a, a ; $5b0d
 	ld [$d866], a ; $5b0e
@@ -4407,7 +4407,7 @@ Func_05_5ba0:
 	ld c, $07 ; $5bab
 	call Func_05_4688 ; $5bad
 	pop hl ; $5bb0
-	call Func_05_5c18 ; $5bb1
+	call FetchDialogueText ; $5bb1
 	call Func_05_5654 ; $5bb4
 	pop de ; $5bb7
 	ld a, [$d824] ; $5bb8
@@ -4464,7 +4464,7 @@ Func_05_5bfc:
 	ldh a, [hWramBank] ; $5bfd
 	push af ; $5bff
 	wram_bank $05 ; $5c00
-	call Func_05_5c18 ; $5c06
+	call FetchDialogueText ; $5c06
 	call Func_05_5654 ; $5c09
 	ld a, [$d854] ; $5c0c
 	ld b, a ; $5c0f
@@ -4473,7 +4473,7 @@ Func_05_5bfc:
 	ld a, b ; $5c15
 	pop bc ; $5c16
 	ret ; $5c17
-Func_05_5c18:
+FetchDialogueText:
 	push af ; $5c18
 	push bc ; $5c19
 	push de ; $5c1a
@@ -4557,7 +4557,7 @@ Label_05_5ca3:
 	pop bc ; $5ca5
 	pop af ; $5ca6
 	ret ; $5ca7
-Func_05_5ca8:
+FetchShortText:
 	push af ; $5ca8
 	push bc ; $5ca9
 	push de ; $5caa
@@ -4769,7 +4769,7 @@ Label_05_5df3:
 	inc a ; $5e01
 	ld c, a ; $5e02
 	ld [$c362], a ; $5e03
-	call Func_05_5c18 ; $5e06
+	call FetchDialogueText ; $5e06
 	ld hl, wTextBuffer ; $5e09
 	xor a, a ; $5e0c
 	ld [$cb78], a ; $5e0d
@@ -4838,16 +4838,16 @@ Label_05_5e34:
 	pop af ; $5e66
 	wram_bank ; $5e67
 	pop af ; $5e6b
-	call Func_05_546c ; $5e6c
+	call DispatchControlCode ; $5e6c
 	inc hl ; $5e6f
 	jr Label_05_5e24 ; $5e70
 	pop hl ; $5e72
 	ld a, $0d ; $5e73
-	call Func_05_546c ; $5e75
+	call DispatchControlCode ; $5e75
 	inc hl ; $5e78
 	jr Label_05_5e24 ; $5e79
 	pop hl ; $5e7b
-	call Func_05_546c ; $5e7c
+	call DispatchControlCode ; $5e7c
 	inc hl ; $5e7f
 	jr Label_05_5e24 ; $5e80
 	db $e1 ; $5e82
@@ -5006,7 +5006,7 @@ Func_05_5f52:
 	inc a ; $5f6f
 	ld c, a ; $5f70
 	ld [$c362], a ; $5f71
-	call Func_05_5c18 ; $5f74
+	call FetchDialogueText ; $5f74
 	ld hl, wTextBuffer ; $5f77
 	pop af ; $5f7a
 	wram_bank ; $5f7b
@@ -5153,7 +5153,7 @@ Func_05_6055:
 	push bc ; $6056
 	push de ; $6057
 	push hl ; $6058
-	call Func_05_5c18 ; $6059
+	call FetchDialogueText ; $6059
 	ld hl, wTextBuffer ; $605c
 	call Func_05_600e ; $605f
 	pop hl ; $6062
@@ -5171,7 +5171,7 @@ Func_05_6055:
 	ld [$c360], a ; $6071
 	ld a, b ; $6074
 	ld hl, $0136 ; $6075
-	call Func_05_5c18 ; $6078
+	call FetchDialogueText ; $6078
 	ld hl, wTextBuffer ; $607b
 	call Func_05_600e ; $607e
 	xor a, a ; $6081
@@ -5313,9 +5313,9 @@ Label_05_620f:
 	ld a, h ; $6216
 	cp a, $ff ; $6217
 	jr z, Label_05_6224 ; $6219
-	call Func_05_5c18 ; $621b
+	call FetchDialogueText ; $621b
 	ld hl, wTextBuffer ; $621e
-	call Func_05_4e23 ; $6221
+	call RenderTextString ; $6221
 Label_05_6224:
 	pop af ; $6224
 	wram_bank ; $6225
@@ -5490,7 +5490,7 @@ Func_05_634f:
 	ld c, $07 ; $635a
 	call Func_05_4688 ; $635c
 	pop hl ; $635f
-	call Func_05_5c18 ; $6360
+	call FetchDialogueText ; $6360
 	pop de ; $6363
 	ld a, [$d824] ; $6364
 	call Func_05_6eea ; $6367
@@ -6649,7 +6649,7 @@ Label_05_6c77:
 	inc a ; $6ca9
 	ld c, a ; $6caa
 	ld [$c362], a ; $6cab
-	call Func_05_5c18 ; $6cae
+	call FetchDialogueText ; $6cae
 	ld hl, wTextBuffer ; $6cb1
 	pop af ; $6cb4
 	wram_bank ; $6cb5
@@ -6669,7 +6669,7 @@ Label_05_6cb9:
 	jr nz, Label_05_6cd6 ; $6ccc
 	ld a, $0d ; $6cce
 Label_05_6cd0:
-	call Func_05_546c ; $6cd0
+	call DispatchControlCode ; $6cd0
 	inc hl ; $6cd3
 	jr Label_05_6cb9 ; $6cd4
 Label_05_6cd6:
@@ -7786,7 +7786,7 @@ Label_05_7341:
 	jr nz, Label_05_7336 ; $7342
 	pop de ; $7344
 	pop af ; $7345
-	call Func_05_7370 ; $7346
+	call GetGlyphWidthByIndex ; $7346
 	ld a, e ; $7349
 	and a, $07 ; $734a
 	add a, c ; $734c
@@ -7810,15 +7810,15 @@ Label_05_7359:
 	pop bc ; $7363
 	pop af ; $7364
 	ret ; $7365
-Func_05_7366:
+GetGlyphWidth:
 	push af ; $7366
 	push hl ; $7367
 	sub a, $20 ; $7368
-	call Func_05_7370 ; $736a
+	call GetGlyphWidthByIndex ; $736a
 	pop hl ; $736d
 	pop af ; $736e
 	ret ; $736f
-Func_05_7370:
+GetGlyphWidthByIndex:
 	ld hl, $7f80 ; $7370
 	add a, l ; $7373
 	ld l, a ; $7374

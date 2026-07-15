@@ -4725,7 +4725,7 @@ Func_03_6ff7:
 	ld c, $10 ; $701d
 	call Func_00_0480 ; $701f
 	call AdvanceFrame ; $7022
-	farcall FarPtr_0a_a0 ; $7025
+	farcall FarPtr_StopSceneScrollTask ; $7025
 	ld a, $90 ; $7028
 	ldh [rWY], a ; $702a
 	wram_bank $06 ; $702c
@@ -4980,7 +4980,7 @@ Func_03_74f2:
 	push hl ; $74f5
 	ldh a, [hWramBank] ; $74f6
 	push af ; $74f8
-	farcall FarPtr_05_1e ; $74f9
+	farcall FarPtr_FetchDialogueText ; $74f9
 	ld hl, wTextBuffer ; $74fc
 	wram_bank $01 ; $74ff
 	ld c, $14 ; $7505

@@ -127,7 +127,7 @@ Label_14_41ca:
 	ld [$c32c], a ; $4289
 	call DisableLCDSafely ; $428c
 	ld a, $00 ; $428f
-	farcall FarPtr_0a_76 ; $4291
+	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4291
 	call EnableLCD ; $4294
 	call Func_14_43a4 ; $4297
 	farcall FarPtr_0a_3e ; $429a
