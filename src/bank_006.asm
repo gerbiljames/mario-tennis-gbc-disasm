@@ -45,9 +45,9 @@ Label_06_4046:
 	cp a, $ff ; $4055
 	jr z, Label_06_4046 ; $4057
 	ld hl, $506a ; $4059
-	call Func_00_1bcb ; $405c
+	call UnregisterFrameTask ; $405c
 	ld hl, $69c8 ; $405f
-	call Func_00_1bcb ; $4062
+	call UnregisterFrameTask ; $4062
 	call Func_06_45aa ; $4065
 	call Func_06_45f8 ; $4068
 	farcall FarPtr_StepMatchFrame ; $406b
@@ -112,9 +112,9 @@ Label_06_40c6:
 	jr z, Label_06_40a7 ; $40ed
 Label_06_40ef:
 	ld hl, $506a ; $40ef
-	call Func_00_1bcb ; $40f2
+	call UnregisterFrameTask ; $40f2
 	ld hl, $69c8 ; $40f5
-	call Func_00_1bcb ; $40f8
+	call UnregisterFrameTask ; $40f8
 	call Func_06_45aa ; $40fb
 	call Func_06_45f8 ; $40fe
 	farcall FarPtr_StepMatchFrame ; $4101
@@ -126,7 +126,7 @@ Label_06_40ef:
 	ret ; $410f
 Label_06_4110:
 	ld hl, $506a ; $4110
-	call Func_00_1bcb ; $4113
+	call UnregisterFrameTask ; $4113
 	call Func_06_45aa ; $4116
 	ld hl, $412f ; $4119
 	push hl ; $411c
@@ -290,7 +290,7 @@ Label_06_435d:
 	jr z, Label_06_435d ; $4365
 	sound $5f ; $4367
 	ld hl, $4373 ; $4369
-	call Func_00_1bcb ; $436c
+	call UnregisterFrameTask ; $436c
 	pop hl ; $436f
 	jr Func_06_4316 ; $4370
 Label_06_4372:
@@ -298,7 +298,7 @@ Label_06_4372:
 	INCBIN "data/bank_006/d_4373.bin" ; $4373, 13 bytes
 Label_06_4380:
 	ld hl, $506a ; $4380
-	call Func_00_1bcb ; $4383
+	call UnregisterFrameTask ; $4383
 	call Func_06_45aa ; $4386
 	ld de, $0002 ; $4389
 	ld bc, $130e ; $438c
@@ -379,7 +379,7 @@ Label_06_441e:
 	cp a, $ff ; $442f
 	jr z, Label_06_4439 ; $4431
 	ld [$c4dd], a ; $4433
-	farcall FarPtr_02_3c ; $4436
+	farcall FarPtr_SetStorySlotFlagB ; $4436
 Label_06_4439:
 	ret ; $4439
 Label_06_443a:
@@ -398,7 +398,7 @@ Label_06_443a:
 	jr z, Label_06_4461 ; $4458
 	ldh a, [hMusic] ; $445a
 	and a, $01 ; $445c
-	farcall FarPtr_02_40 ; $445e
+	farcall FarPtr_SetStorySlotFlagA ; $445e
 Label_06_4461:
 	ret ; $4461
 Label_06_4462:
@@ -570,7 +570,7 @@ Func_06_4584:
 	ld hl, $1303 ; $4590
 	ld a, $01 ; $4593
 	ld [$c3b2], a ; $4595
-	call Func_00_2b68 ; $4598
+	call DrawWindowFrame ; $4598
 	pop de ; $459b
 	ld hl, $0101 ; $459c
 	add hl, de ; $459f
@@ -986,9 +986,9 @@ Label_06_48ee:
 	jr Label_06_48ee ; $48f8
 Label_06_48fa:
 	ld hl, $506a ; $48fa
-	call Func_00_1bcb ; $48fd
+	call UnregisterFrameTask ; $48fd
 	ld hl, $69c8 ; $4900
-	call Func_00_1bcb ; $4903
+	call UnregisterFrameTask ; $4903
 	call Func_06_45aa ; $4906
 	call Func_06_45f8 ; $4909
 	farcall FarPtr_StepMatchFrame ; $490c
@@ -1763,10 +1763,10 @@ Label_06_6d4d:
 	call Func_06_7237 ; $6d65
 Label_06_6d68:
 	call Func_06_6ddd ; $6d68
-	call Func_00_2631 ; $6d6b
+	call AdvanceFrame ; $6d6b
 	jr Label_06_6d1b ; $6d6e
 Label_06_6d70:
-	call Func_00_2631 ; $6d70
+	call AdvanceFrame ; $6d70
 	ret ; $6d73
 Func_06_6d74:
 	ld b, a ; $6d74
@@ -1860,7 +1860,7 @@ Func_06_6e17:
 	farcall FarPtr_0a_7c ; $6e1a
 	ldh a, [$ffdd] ; $6e1d
 	push af ; $6e1f
-	call Func_00_2631 ; $6e20
+	call AdvanceFrame ; $6e20
 	sound $63 ; $6e23
 	xor a, a ; $6e25
 	ld [$c4e0], a ; $6e26
@@ -1877,7 +1877,7 @@ Func_06_6e17:
 	ld b, $13 ; $6e42
 	ld c, $03 ; $6e44
 	farcall FarPtr_05_78 ; $6e46
-	call Func_00_2631 ; $6e49
+	call AdvanceFrame ; $6e49
 	wram_bank $05 ; $6e4c
 Label_06_6e52:
 	ld hl, $5280 ; $6e52
@@ -1916,7 +1916,7 @@ Label_06_6e8e:
 Label_06_6e94:
 	call Func_06_7241 ; $6e94
 	call Func_06_7237 ; $6e97
-	call Func_00_2631 ; $6e9a
+	call AdvanceFrame ; $6e9a
 	clear_flag $02, 4 ; $6e9d
 	farcall FarPtr_01_14 ; $6ea0
 	pop af ; $6ea3
@@ -2046,7 +2046,7 @@ Label_06_7013:
 	call Func_00_2f86 ; $7024
 	ldh a, [hMusic] ; $7027
 	and a, $01 ; $7029
-	farcall FarPtr_02_40 ; $702b
+	farcall FarPtr_SetStorySlotFlagA ; $702b
 Label_06_702e:
 	ret ; $702e
 Label_06_702f:
@@ -2196,10 +2196,10 @@ Label_06_715b:
 	ld d, [hl] ; $7167
 	ld e, a ; $7168
 	call Func_06_72ce ; $7169
-	call Func_00_2631 ; $716c
+	call AdvanceFrame ; $716c
 	jp Label_06_7105 ; $716f
 Label_06_7172:
-	call Func_00_2631 ; $7172
+	call AdvanceFrame ; $7172
 	ret ; $7175
 	INCBIN "data/bank_006/d_7176.bin" ; $7176, 4 bytes
 Label_06_717a:
@@ -2286,11 +2286,11 @@ Label_06_7213:
 	ld d, [hl] ; $721f
 	ld e, a ; $7220
 	call Func_06_72ce ; $7221
-	call Func_00_2631 ; $7224
+	call AdvanceFrame ; $7224
 	jp Label_06_71bf ; $7227
 Label_06_722a:
 	call Func_06_7245 ; $722a
-	call Func_00_2631 ; $722d
+	call AdvanceFrame ; $722d
 	ret ; $7230
 	INCBIN "data/bank_006/d_7231.bin" ; $7231, 6 bytes
 Func_06_7237:

@@ -326,7 +326,7 @@ Func_28_60c9:
 	ldh a, [rLCDC] ; $60f6
 	bit 7, a ; $60f8
 	jr z, Label_28_60ff ; $60fa
-	call Func_00_2631 ; $60fc
+	call AdvanceFrame ; $60fc
 Label_28_60ff:
 	pop af ; $60ff
 	ld hl, $d200 ; $6100
@@ -337,7 +337,7 @@ Label_28_60ff:
 	ldh a, [rLCDC] ; $610c
 	bit 7, a ; $610e
 	jr z, Label_28_6115 ; $6110
-	call Func_00_2631 ; $6112
+	call AdvanceFrame ; $6112
 Label_28_6115:
 	pop af ; $6115
 	ld hl, $d400 ; $6116
@@ -348,7 +348,7 @@ Label_28_6115:
 	ldh a, [rLCDC] ; $6122
 	bit 7, a ; $6124
 	jr z, Label_28_612b ; $6126
-	call Func_00_2631 ; $6128
+	call AdvanceFrame ; $6128
 Label_28_612b:
 	pop af ; $612b
 	ld hl, $d600 ; $612c
@@ -359,7 +359,7 @@ Label_28_612b:
 	ldh a, [rLCDC] ; $6138
 	bit 7, a ; $613a
 	jr z, Label_28_6141 ; $613c
-	call Func_00_2631 ; $613e
+	call AdvanceFrame ; $613e
 Label_28_6141:
 	pop af ; $6141
 	ld hl, $d800 ; $6142
@@ -379,7 +379,7 @@ Label_28_6141:
 	ldh a, [rLCDC] ; $6166
 	bit 7, a ; $6168
 	jr z, Label_28_616f ; $616a
-	call Func_00_2631 ; $616c
+	call AdvanceFrame ; $616c
 Label_28_616f:
 	pop af ; $616f
 	ret ; $6170

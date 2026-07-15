@@ -995,7 +995,7 @@ Func_17_4654:
 	farcall FarPtr_05_1c ; $465f
 	farcall FarPtr_05_90 ; $4662
 	call Func_17_49f9 ; $4665
-	call Func_00_2631 ; $4668
+	call AdvanceFrame ; $4668
 	ret ; $466b
 Func_17_466c:
 	call Func_17_4a32 ; $466c
@@ -1323,7 +1323,7 @@ Func_17_4960:
 	wram_bank $03 ; $4977
 	ret ; $497d
 Func_17_497e:
-	call Func_00_2631 ; $497e
+	call AdvanceFrame ; $497e
 	ldh a, [$ff94] ; $4981
 	and a, $03 ; $4983
 	jr nz, Label_17_498c ; $4985
@@ -1332,7 +1332,7 @@ Func_17_497e:
 Label_17_498c:
 	ret ; $498c
 Func_17_498d:
-	call Func_00_2631 ; $498d
+	call AdvanceFrame ; $498d
 	ldh a, [$ff94] ; $4990
 	and a, $03 ; $4992
 	jr nz, Label_17_499e ; $4994
@@ -4475,7 +4475,7 @@ Label_17_70f4:
 	farcall FarPtr_05_90 ; $7101
 	call Func_17_724d ; $7104
 Label_17_7107:
-	call Func_00_2631 ; $7107
+	call AdvanceFrame ; $7107
 	ldh a, [$ff94] ; $710a
 	bit 0, a ; $710c
 	jr nz, Label_17_711e ; $710e
@@ -4489,9 +4489,9 @@ Label_17_7107:
 Label_17_711e:
 	sound $5f ; $711e
 	ld hl, $755e ; $7120
-	call Func_00_1bcb ; $7123
+	call UnregisterFrameTask ; $7123
 	ld hl, RulesScreenTiles ; $7126
-	call Func_00_1bcb ; $7129
+	call UnregisterFrameTask ; $7129
 	ld a, $01 ; $712c
 	ld [$dc03], a ; $712e
 	ld [$dc05], a ; $7131
@@ -4502,9 +4502,9 @@ Label_17_711e:
 Label_17_713c:
 	sound $62 ; $713c
 	ld hl, $755e ; $713e
-	call Func_00_1bcb ; $7141
+	call UnregisterFrameTask ; $7141
 	ld hl, RulesScreenTiles ; $7144
-	call Func_00_1bcb ; $7147
+	call UnregisterFrameTask ; $7147
 	ld a, $ff ; $714a
 	ld [$dc02], a ; $714c
 	pop hl ; $714f
@@ -4640,12 +4640,12 @@ Label_17_726b:
 	ld de, $b880 ; $726e
 	ld c, $02 ; $7271
 	call Func_00_0480 ; $7273
-	call Func_00_2631 ; $7276
+	call AdvanceFrame ; $7276
 	ld hl, $d100 ; $7279
 	ld de, $9900 ; $727c
 	ld c, $0a ; $727f
 	call Func_00_0480 ; $7281
-	call Func_00_2631 ; $7284
+	call AdvanceFrame ; $7284
 	ld hl, $d1a0 ; $7287
 	ld de, $99a0 ; $728a
 	ld c, $08 ; $728d

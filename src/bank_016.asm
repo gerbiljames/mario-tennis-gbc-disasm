@@ -69,7 +69,7 @@ Label_16_44b9:
 	ld hl, $4c9d ; $44f3
 	call RegisterFrameTask ; $44f6
 Label_16_44f9:
-	call Func_00_2631 ; $44f9
+	call AdvanceFrame ; $44f9
 	ld a, [$c8f7] ; $44fc
 	push de ; $44ff
 	push af ; $4500
@@ -590,7 +590,7 @@ Label_16_5c5f:
 	jr nz, Label_16_5c7f ; $5c6a
 	bit 1, a ; $5c6c
 	jr nz, Label_16_5c7f ; $5c6e
-	call Func_00_2631 ; $5c70
+	call AdvanceFrame ; $5c70
 	jr Label_16_5c5f ; $5c73
 Label_16_5c75:
 	ld c, $40 ; $5c75

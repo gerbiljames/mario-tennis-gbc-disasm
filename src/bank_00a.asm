@@ -206,7 +206,7 @@ Func_0a_4105:
 	ld de, $d000 ; $4113
 	farcall FarPtr_04_1e ; $4116
 	ld hl, $40a4 ; $4119
-	call Func_00_1bcb ; $411c
+	call UnregisterFrameTask ; $411c
 	clear_flag $02, 6 ; $411f
 	ldh a, [hWramBank] ; $4122
 	push af ; $4124
@@ -231,7 +231,7 @@ Label_0a_4148:
 	or a, a ; $4148
 	jr z, Label_0a_4151 ; $4149
 	ld c, a ; $414b
-	call Func_00_2740 ; $414c
+	call WaitFrames ; $414c
 	pop bc ; $414f
 	pop af ; $4150
 Label_0a_4151:
@@ -576,7 +576,7 @@ Func_0a_4372:
 Label_0a_437a:
 	call Func_0a_438a ; $437a
 	jr z, Label_0a_4387 ; $437d
-	call Func_00_2631 ; $437f
+	call AdvanceFrame ; $437f
 	dec bc ; $4382
 	ld a, c ; $4383
 	or a, b ; $4384
@@ -1313,7 +1313,7 @@ Label_0a_4792:
 	call Func_0a_476c ; $4792
 	and a, a ; $4795
 	jr z, Label_0a_47a0 ; $4796
-	call Func_00_2631 ; $4798
+	call AdvanceFrame ; $4798
 	dec bc ; $479b
 	ld a, b ; $479c
 	or a, c ; $479d
@@ -1379,10 +1379,10 @@ Label_0a_47e0:
 	ld a, h ; $47f3
 	ldh [$ffeb], a ; $47f4
 	call Func_0a_43d8 ; $47f6
-	call Func_00_2631 ; $47f9
+	call AdvanceFrame ; $47f9
 	farcall FarPtr_05_18 ; $47fc
 	ld b, $05 ; $47ff
-	call Func_00_2631 ; $4801
+	call AdvanceFrame ; $4801
 	ld c, $7f ; $4804
 	call Func_00_1d2e ; $4806
 	call Func_00_1da4 ; $4809
@@ -1462,10 +1462,10 @@ Label_0a_485f:
 	ld a, h ; $4872
 	ldh [$ffeb], a ; $4873
 	call Func_0a_43d8 ; $4875
-	call Func_00_2631 ; $4878
+	call AdvanceFrame ; $4878
 	farcall FarPtr_05_18 ; $487b
 	ld b, $05 ; $487e
-	call Func_00_2631 ; $4880
+	call AdvanceFrame ; $4880
 	ld c, $7f ; $4883
 	call Func_00_1d2e ; $4885
 	call Func_00_1da4 ; $4888
@@ -1539,7 +1539,7 @@ Label_0a_48e4:
 	ld [$c368], a ; $48ed
 	ld [$c369], a ; $48f0
 	ld hl, $4908 ; $48f3
-	call Func_00_1bcb ; $48f6
+	call UnregisterFrameTask ; $48f6
 	ld a, $ff ; $48f9
 Label_0a_48fb:
 	ld [$c363], a ; $48fb
@@ -1561,7 +1561,7 @@ Label_0a_4911:
 	rl c ; $4912
 	dec a ; $4914
 	jr nz, Label_0a_4911 ; $4915
-	call Func_00_0a3a ; $4917
+	call AdvanceRandomSeed ; $4917
 	ld a, h ; $491a
 	and a, c ; $491b
 	jr nc, Label_0a_4920 ; $491c
@@ -2161,7 +2161,7 @@ Func_0a_4f40:
 	call Func_0a_516f ; $4f52
 	ld a, $00 ; $4f55
 	ld [wGameMode], a ; $4f57
-	call Func_00_2631 ; $4f5a
+	call AdvanceFrame ; $4f5a
 	test_flag $0d, 6 ; $4f5d
 	jr nz, Label_0a_4f6f ; $4f60
 	ld a, [$c284] ; $4f62
@@ -2340,7 +2340,7 @@ Label_0a_50ca:
 	ld bc, $d000 ; $50cd
 	farcall FarPtr_04_1c ; $50d0
 Label_0a_50d3:
-	call Func_00_2631 ; $50d3
+	call AdvanceFrame ; $50d3
 	call Func_0a_5104 ; $50d6
 	and a, a ; $50d9
 	jr z, Label_0a_50d3 ; $50da
@@ -2689,7 +2689,7 @@ Func_0a_52f5:
 	farcall FarPtr_05_36 ; $530f
 	ld b, $50 ; $5312
 Label_0a_5314:
-	call Func_00_2631 ; $5314
+	call AdvanceFrame ; $5314
 	ldh a, [hPlayerInputFlags] ; $5317
 	and a, a ; $5319
 	jr nz, Label_0a_531f ; $531a
@@ -3455,7 +3455,7 @@ Func_0a_5930:
 	ret ; $596e
 Func_0a_596f:
 	ld hl, $5976 ; $596f
-	call Func_00_1bcb ; $5972
+	call UnregisterFrameTask ; $5972
 	ret ; $5975
 Func_0a_5976:
 	ld a, [$c325] ; $5976
@@ -3877,8 +3877,8 @@ Func_0a_5de2:
 	ld a, b ; $5e11
 	call Func_0a_5c29 ; $5e12
 	call EnableLCD ; $5e15
-	call Func_00_2631 ; $5e18
-	call Func_00_2631 ; $5e1b
+	call AdvanceFrame ; $5e18
+	call AdvanceFrame ; $5e1b
 	ret ; $5e1e
 	INCBIN "data/bank_00a/d_5e1f.bin" ; $5e1f, 114 bytes
 Func_0a_5e91:
@@ -4165,7 +4165,7 @@ Label_0a_6035:
 	ld h, b ; $603c
 	ld l, c ; $603d
 	ld de, $0009 ; $603e
-	call Func_00_0987 ; $6041
+	call DivHLByDE ; $6041
 	ld a, l ; $6044
 	ld [$c32d], a ; $6045
 	pop af ; $6048
@@ -4692,7 +4692,7 @@ Func_0a_6456:
 	push de ; $6458
 	push hl ; $6459
 	ld hl, $6465 ; $645a
-	call Func_00_1bcb ; $645d
+	call UnregisterFrameTask ; $645d
 	pop hl ; $6460
 	pop de ; $6461
 	pop bc ; $6462

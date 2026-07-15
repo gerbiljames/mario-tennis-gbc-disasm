@@ -65,7 +65,7 @@ Label_11_45db:
 	farcall FarPtr_0a_08 ; $466c
 	ret ; $466f
 	INCBIN "data/bank_011/d_4670.bin" ; $4670, 65 bytes
-	call Func_11_7d95 ; $46b1
+	call ComputeRankingProgressIndex ; $46b1
 	call Func_11_5482 ; $46b4
 	call Func_11_54a6 ; $46b7
 	ld a, [$c295] ; $46ba
@@ -2356,7 +2356,7 @@ Label_11_7076:
 	call Func_00_1d20 ; $7281
 	call Func_00_1da4 ; $7284
 	ret ; $7287
-Func_11_7288:
+PromptChallengeRankingOpponent:
 	ld hl, $0822 ; $7288
 	farcall FarPtr_0a_0e ; $728b
 	test_flag $0a, 0 ; $728e
@@ -2388,7 +2388,7 @@ Label_11_72b8:
 	farcall FarPtr_0a_0e ; $72c7
 	ld a, $03 ; $72ca
 	farcall FarPtr_0a_08 ; $72cc
-	call Func_11_781d ; $72cf
+	call StartNextRankingMatch ; $72cf
 	ld a, $00 ; $72d2
 	ld bc, $0018 ; $72d4
 	farcall FarPtr_0a_18 ; $72d7
@@ -2399,7 +2399,7 @@ Label_11_72b8:
 Label_11_72e3:
 	ld a, $03 ; $72e3
 	farcall FarPtr_0a_08 ; $72e5
-	call Func_11_730a ; $72e8
+	call LoadRankingOpponentGraphics ; $72e8
 	ret ; $72eb
 Label_11_72ec:
 	ld hl, $0825 ; $72ec
@@ -2415,7 +2415,7 @@ Label_11_72ec:
 	and a, a ; $7304
 	jr z, Label_11_72e3 ; $7305
 	jp Label_11_72b8 ; $7307
-Func_11_730a:
+LoadRankingOpponentGraphics:
 	test_flag $05, 7 ; $730a
 	jp nz, Label_11_67a0 ; $730d
 	test_flag $0a, 0 ; $7310
@@ -2463,7 +2463,7 @@ Label_11_7358:
 	ld a, $04 ; $7363
 	farcall FarPtr_0a_1e ; $7365
 	ret ; $7368
-Func_11_7369:
+DrawRankingOpponentInfo:
 	test_flag $0a, 0 ; $7369
 	jr z, Label_11_7381 ; $736c
 	test_flag $0a, 1 ; $736e
@@ -2846,7 +2846,7 @@ Label_11_7590:
 Label_11_77f1:
 	ld a, $03 ; $77f1
 	farcall FarPtr_0a_08 ; $77f3
-	call Func_11_7369 ; $77f6
+	call DrawRankingOpponentInfo ; $77f6
 	ld a, $00 ; $77f9
 	ld b, $c0 ; $77fb
 	farcall FarPtr_0a_2e ; $77fd
@@ -2859,13 +2859,13 @@ Label_11_77f1:
 	farcall FarPtr_0a_34 ; $780b
 	ld a, $03 ; $780e
 	farcall FarPtr_0a_36 ; $7810
-	call Func_11_7288 ; $7813
+	call PromptChallengeRankingOpponent ; $7813
 	ret ; $7816
 Label_11_7817:
 	ld a, $03 ; $7817
 	farcall FarPtr_0a_08 ; $7819
 	ret ; $781c
-Func_11_781d:
+StartNextRankingMatch:
 	ld a, $00 ; $781d
 	ld bc, $0020 ; $781f
 	farcall FarPtr_0a_18 ; $7822
@@ -3251,7 +3251,7 @@ Func_11_7b6b:
 	INCBIN "data/bank_011/d_7ba9.bin" ; $7ba9, 40 bytes
 	ret ; $7bd1
 	INCBIN "data/bank_011/d_7bd2.bin" ; $7bd2, 451 bytes
-Func_11_7d95:
+ComputeRankingProgressIndex:
 	test_flag $05, 7 ; $7d95
 	jr nz, Label_11_7dbc ; $7d98
 	ld a, $00 ; $7d9a

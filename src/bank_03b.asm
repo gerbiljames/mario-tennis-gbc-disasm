@@ -856,7 +856,7 @@ Label_3b_44d7:
 	ldh a, [hInputPressed] ; $44d7
 	ld [wMenuInputPressed], a ; $44d9
 	call Func_3b_450d ; $44dc
-	call Func_00_2631 ; $44df
+	call AdvanceFrame ; $44df
 	ld a, [wMenuInputPressed] ; $44e2
 	bit 0, a ; $44e5
 	jr nz, Label_3b_44ef ; $44e7
@@ -1056,7 +1056,7 @@ Label_3b_466f:
 	ld de, $b8a0 ; $4685
 	ld c, $08 ; $4688
 	call Func_00_0480 ; $468a
-	call Func_00_2631 ; $468d
+	call AdvanceFrame ; $468d
 	ld hl, $d120 ; $4690
 	ld de, $9920 ; $4693
 	ld c, $08 ; $4696
@@ -1065,7 +1065,7 @@ Label_3b_466f:
 	ld de, $b920 ; $469e
 	ld c, $08 ; $46a1
 	call Func_00_0480 ; $46a3
-	call Func_00_2631 ; $46a6
+	call AdvanceFrame ; $46a6
 	ld hl, $d1a0 ; $46a9
 	ld de, $99a0 ; $46ac
 	ld c, $04 ; $46af
@@ -1547,7 +1547,7 @@ Func_3b_4963:
 Label_3b_4990:
 	ldh a, [hInputPressed] ; $4990
 	ld [wMenuInputPressed], a ; $4992
-	call Func_00_2631 ; $4995
+	call AdvanceFrame ; $4995
 	ld a, [wMenuInputPressed] ; $4998
 	bit 0, a ; $499b
 	jr nz, Label_3b_49bf ; $499d
@@ -1976,7 +1976,7 @@ Label_3b_4d27:
 	ldh a, [hInputPressed] ; $4d27
 	ld [wMenuInputPressed], a ; $4d29
 	call Func_3b_4d5d ; $4d2c
-	call Func_00_2631 ; $4d2f
+	call AdvanceFrame ; $4d2f
 	ld a, [wMenuInputPressed] ; $4d32
 	bit 0, a ; $4d35
 	jr nz, Label_3b_4d3f ; $4d37
@@ -2476,7 +2476,7 @@ Func_3b_508d:
 	ld de, $b8a0 ; $509b
 	ld c, $08 ; $509e
 	call Func_00_0480 ; $50a0
-	call Func_00_2631 ; $50a3
+	call AdvanceFrame ; $50a3
 	ld hl, $d120 ; $50a6
 	ld de, $9920 ; $50a9
 	ld c, $08 ; $50ac
@@ -2485,7 +2485,7 @@ Func_3b_508d:
 	ld de, $b920 ; $50b4
 	ld c, $08 ; $50b7
 	call Func_00_0480 ; $50b9
-	call Func_00_2631 ; $50bc
+	call AdvanceFrame ; $50bc
 	ld hl, $d1a0 ; $50bf
 	ld de, $99a0 ; $50c2
 	ld c, $08 ; $50c5
@@ -2572,7 +2572,7 @@ Label_3b_517d:
 	ldh a, [hInputPressed] ; $517d
 	ld [wMenuInputPressed], a ; $517f
 	call Func_3b_53c6 ; $5182
-	call Func_00_2631 ; $5185
+	call AdvanceFrame ; $5185
 	ld a, [wMenuInputPressed] ; $5188
 	bit 0, a ; $518b
 	jr nz, Label_3b_5195 ; $518d
@@ -2949,7 +2949,7 @@ Func_3b_5456:
 	ld de, $b8c0 ; $546f
 	ld c, $08 ; $5472
 	call Func_00_0480 ; $5474
-	call Func_00_2631 ; $5477
+	call AdvanceFrame ; $5477
 	ld hl, $d140 ; $547a
 	ld de, $9940 ; $547d
 	ld c, $0c ; $5480
@@ -3174,7 +3174,7 @@ Label_3b_55c9:
 	jr nz, Label_3b_55b4 ; $55ce
 	ret ; $55d0
 Func_3b_55d1:
-	call Func_00_28b9 ; $55d1
+	call InitSerialLink ; $55d1
 	sound $03 ; $55d4
 	ld hl, rIE ; $55d6
 	res 2, [hl] ; $55d9
@@ -3202,11 +3202,11 @@ Func_3b_55d1:
 	ld hl, $5863 ; $5611
 	call RegisterFrameTask ; $5614
 	call Func_3b_5968 ; $5617
-	call Func_00_28f8 ; $561a
+	call ResetSerialState ; $561a
 	farcall FarPtr_39_68 ; $561d
 	wram_bank $03 ; $5620
 Label_3b_5626:
-	call Func_00_2631 ; $5626
+	call AdvanceFrame ; $5626
 	farcall FarPtr_39_6a ; $5629
 	ldh a, [hInputPressed] ; $562c
 	ld [wMenuInputPressed], a ; $562e
@@ -3260,7 +3260,7 @@ Label_3b_5685:
 	ret ; $5695
 Label_3b_5696:
 	sound $62 ; $5696
-	call Func_00_28f8 ; $5698
+	call ResetSerialState ; $5698
 	call ClearFrameTasks ; $569b
 	ld hl, rIE ; $569e
 	set 2, [hl] ; $56a1
@@ -3336,7 +3336,7 @@ Label_3b_56f4:
 	ld a, c ; $5708
 	inc a ; $5709
 	ld c, a ; $570a
-	call Func_00_2631 ; $570b
+	call AdvanceFrame ; $570b
 	ld a, c ; $570e
 	cp a, $06 ; $570f
 	jr nz, Label_3b_56cf ; $5711
@@ -3347,7 +3347,7 @@ Label_3b_56f4:
 	farcall FarPtr_1b_10 ; $5721
 	ld de, $b680 ; $5724
 	farcall FarPtr_1b_18 ; $5727
-	call Func_00_2631 ; $572a
+	call AdvanceFrame ; $572a
 	wram_bank $03 ; $572d
 	ld a, $01 ; $5733
 	ld [$c36c], a ; $5735
@@ -3355,7 +3355,7 @@ Label_3b_56f4:
 	farcall FarPtr_1b_10 ; $573b
 	ld de, $b710 ; $573e
 	farcall FarPtr_1b_18 ; $5741
-	call Func_00_2631 ; $5744
+	call AdvanceFrame ; $5744
 	wram_bank $03 ; $5747
 	ld a, $02 ; $574d
 	ld [$c36c], a ; $574f
@@ -3363,42 +3363,42 @@ Label_3b_56f4:
 	farcall FarPtr_1b_10 ; $5755
 	ld de, $af00 ; $5758
 	farcall FarPtr_1b_18 ; $575b
-	call Func_00_2631 ; $575e
+	call AdvanceFrame ; $575e
 	ld b, $1c ; $5761
 	ld c, $10 ; $5763
 	ld de, $a000 ; $5765
 	farcall FarPtr_39_10 ; $5768
-	call Func_00_2631 ; $576b
+	call AdvanceFrame ; $576b
 	ld b, $1d ; $576e
 	ld c, $10 ; $5770
 	ld de, $a100 ; $5772
 	farcall FarPtr_39_10 ; $5775
-	call Func_00_2631 ; $5778
+	call AdvanceFrame ; $5778
 	ld b, $1e ; $577b
 	ld c, $12 ; $577d
 	ld de, $a200 ; $577f
 	farcall FarPtr_39_10 ; $5782
-	call Func_00_2631 ; $5785
+	call AdvanceFrame ; $5785
 	ld b, $1f ; $5788
 	ld c, $10 ; $578a
 	ld de, $a320 ; $578c
 	farcall FarPtr_39_10 ; $578f
-	call Func_00_2631 ; $5792
+	call AdvanceFrame ; $5792
 	ld b, $20 ; $5795
 	ld c, $10 ; $5797
 	ld de, $a420 ; $5799
 	farcall FarPtr_39_10 ; $579c
-	call Func_00_2631 ; $579f
+	call AdvanceFrame ; $579f
 	ld b, $21 ; $57a2
 	ld c, $10 ; $57a4
 	ld de, $a520 ; $57a6
 	farcall FarPtr_39_10 ; $57a9
-	call Func_00_2631 ; $57ac
+	call AdvanceFrame ; $57ac
 	ld b, $22 ; $57af
 	ld c, $10 ; $57b1
 	ld de, $a620 ; $57b3
 	farcall FarPtr_39_10 ; $57b6
-	call Func_00_2631 ; $57b9
+	call AdvanceFrame ; $57b9
 	ld b, $1b ; $57bc
 	ld c, $04 ; $57be
 	ld de, $a720 ; $57c0
@@ -3406,7 +3406,7 @@ Label_3b_56f4:
 	ld b, $08 ; $57c6
 	ld c, $10 ; $57c8
 	farcall FarPtr_39_0e ; $57ca
-	call Func_00_2631 ; $57cd
+	call AdvanceFrame ; $57cd
 	ld b, $3e ; $57d0
 	ld c, $14 ; $57d2
 	ld de, $8000 ; $57d4
@@ -3437,7 +3437,7 @@ Func_3b_5800:
 	jr z, Label_3b_581b ; $5802
 	ld c, $00 ; $5804
 Label_3b_5806:
-	call Func_00_2631 ; $5806
+	call AdvanceFrame ; $5806
 	ld b, $00 ; $5809
 	farcall FarPtr_39_20 ; $580b
 	ld b, $00 ; $580e
@@ -3451,7 +3451,7 @@ Label_3b_5806:
 Label_3b_581b:
 	ld c, $09 ; $581b
 Label_3b_581d:
-	call Func_00_2631 ; $581d
+	call AdvanceFrame ; $581d
 	ld b, $01 ; $5820
 	farcall FarPtr_39_20 ; $5822
 	ld b, $00 ; $5825
@@ -3468,7 +3468,7 @@ Func_3b_5832:
 	jr z, Label_3b_584d ; $5834
 	ld c, $00 ; $5836
 Label_3b_5838:
-	call Func_00_2631 ; $5838
+	call AdvanceFrame ; $5838
 	ld b, $01 ; $583b
 	farcall FarPtr_39_20 ; $583d
 	ld b, $00 ; $5840
@@ -3482,7 +3482,7 @@ Label_3b_5838:
 Label_3b_584d:
 	ld c, $0f ; $584d
 Label_3b_584f:
-	call Func_00_2631 ; $584f
+	call AdvanceFrame ; $584f
 	ld b, $00 ; $5852
 	farcall FarPtr_39_20 ; $5854
 	ld b, $00 ; $5857
@@ -4066,7 +4066,7 @@ Label_3b_5ca0:
 Label_3b_5ca3:
 	farcall FarPtr_3e_16 ; $5ca3
 	farcall FarPtr_39_04 ; $5ca6
-	call Func_00_2631 ; $5ca9
+	call AdvanceFrame ; $5ca9
 	ldh a, [hInputPressed] ; $5cac
 	bit 0, a ; $5cae
 	jr nz, Label_3b_5cbb ; $5cb0
@@ -4122,7 +4122,7 @@ Func_3b_5cf3:
 	call Func_3b_6164 ; $5d1f
 	wram_bank $03 ; $5d22
 Label_3b_5d28:
-	call Func_00_2631 ; $5d28
+	call AdvanceFrame ; $5d28
 	ldh a, [hInputPressed] ; $5d2b
 	ld [wMenuInputPressed], a ; $5d2d
 	call Func_3b_5f3c ; $5d30
@@ -4256,7 +4256,7 @@ Label_3b_5e1c:
 	ld a, c ; $5e30
 	inc a ; $5e31
 	ld c, a ; $5e32
-	call Func_00_2631 ; $5e33
+	call AdvanceFrame ; $5e33
 	ld a, c ; $5e36
 	cp a, $07 ; $5e37
 	jr nz, Label_3b_5df7 ; $5e39
@@ -4264,47 +4264,47 @@ Label_3b_5e1c:
 	ld c, $10 ; $5e3d
 	ld de, $a000 ; $5e3f
 	farcall FarPtr_39_10 ; $5e42
-	call Func_00_2631 ; $5e45
+	call AdvanceFrame ; $5e45
 	ld b, $24 ; $5e48
 	ld c, $10 ; $5e4a
 	ld de, $a100 ; $5e4c
 	farcall FarPtr_39_10 ; $5e4f
-	call Func_00_2631 ; $5e52
+	call AdvanceFrame ; $5e52
 	ld b, $25 ; $5e55
 	ld c, $10 ; $5e57
 	ld de, $a200 ; $5e59
 	farcall FarPtr_39_10 ; $5e5c
-	call Func_00_2631 ; $5e5f
+	call AdvanceFrame ; $5e5f
 	ld b, $26 ; $5e62
 	ld c, $10 ; $5e64
 	ld de, $a300 ; $5e66
 	farcall FarPtr_39_10 ; $5e69
-	call Func_00_2631 ; $5e6c
+	call AdvanceFrame ; $5e6c
 	ld b, $27 ; $5e6f
 	ld c, $10 ; $5e71
 	ld de, $a400 ; $5e73
 	farcall FarPtr_39_10 ; $5e76
-	call Func_00_2631 ; $5e79
+	call AdvanceFrame ; $5e79
 	ld b, $28 ; $5e7c
 	ld c, $10 ; $5e7e
 	ld de, $a500 ; $5e80
 	farcall FarPtr_39_10 ; $5e83
-	call Func_00_2631 ; $5e86
+	call AdvanceFrame ; $5e86
 	ld b, $29 ; $5e89
 	ld c, $10 ; $5e8b
 	ld de, $a600 ; $5e8d
 	farcall FarPtr_39_10 ; $5e90
-	call Func_00_2631 ; $5e93
+	call AdvanceFrame ; $5e93
 	ld b, $1b ; $5e96
 	ld c, $04 ; $5e98
 	ld de, $a700 ; $5e9a
 	farcall FarPtr_39_10 ; $5e9d
-	call Func_00_2631 ; $5ea0
+	call AdvanceFrame ; $5ea0
 	ld b, $3f ; $5ea3
 	ld c, $14 ; $5ea5
 	ld de, $8000 ; $5ea7
 	farcall FarPtr_39_10 ; $5eaa
-	call Func_00_2631 ; $5ead
+	call AdvanceFrame ; $5ead
 	ld b, $08 ; $5eb0
 	ld c, $10 ; $5eb2
 	farcall FarPtr_39_0e ; $5eb4
@@ -4332,7 +4332,7 @@ Func_3b_5ed9:
 	jr z, Label_3b_5ef4 ; $5edb
 	ld c, $00 ; $5edd
 Label_3b_5edf:
-	call Func_00_2631 ; $5edf
+	call AdvanceFrame ; $5edf
 	ld b, $02 ; $5ee2
 	farcall FarPtr_39_20 ; $5ee4
 	ld b, $00 ; $5ee7
@@ -4346,7 +4346,7 @@ Label_3b_5edf:
 Label_3b_5ef4:
 	ld c, $0a ; $5ef4
 Label_3b_5ef6:
-	call Func_00_2631 ; $5ef6
+	call AdvanceFrame ; $5ef6
 	ld b, $03 ; $5ef9
 	farcall FarPtr_39_20 ; $5efb
 	ld b, $00 ; $5efe
@@ -4363,7 +4363,7 @@ Func_3b_5f0b:
 	jr z, Label_3b_5f26 ; $5f0d
 	ld c, $00 ; $5f0f
 Label_3b_5f11:
-	call Func_00_2631 ; $5f11
+	call AdvanceFrame ; $5f11
 	ld b, $03 ; $5f14
 	farcall FarPtr_39_20 ; $5f16
 	ld b, $00 ; $5f19
@@ -4377,7 +4377,7 @@ Label_3b_5f11:
 Label_3b_5f26:
 	ld c, $0d ; $5f26
 Label_3b_5f28:
-	call Func_00_2631 ; $5f28
+	call AdvanceFrame ; $5f28
 	ld b, $02 ; $5f2b
 	farcall FarPtr_39_20 ; $5f2d
 	ld b, $00 ; $5f30
@@ -4816,7 +4816,7 @@ Label_3b_626a:
 	call Func_3b_6569 ; $6276
 	call Func_3b_65ec ; $6279
 Label_3b_627c:
-	call Func_00_2631 ; $627c
+	call AdvanceFrame ; $627c
 	ld a, [wMenuInputPressed] ; $627f
 	bit 0, a ; $6282
 	jr nz, Label_3b_628c ; $6284
@@ -4902,7 +4902,7 @@ Label_3b_6311:
 	ld c, $09 ; $6317
 	call Func_00_0480 ; $6319
 	pop bc ; $631c
-	call Func_00_2631 ; $631d
+	call AdvanceFrame ; $631d
 	ld a, c ; $6320
 	inc a ; $6321
 	ld c, a ; $6322
@@ -4912,32 +4912,32 @@ Label_3b_6311:
 	ld c, $10 ; $6329
 	ld de, $a000 ; $632b
 	farcall FarPtr_39_10 ; $632e
-	call Func_00_2631 ; $6331
+	call AdvanceFrame ; $6331
 	ld b, $34 ; $6334
 	ld c, $10 ; $6336
 	ld de, $a100 ; $6338
 	farcall FarPtr_39_10 ; $633b
-	call Func_00_2631 ; $633e
+	call AdvanceFrame ; $633e
 	ld b, $35 ; $6341
 	ld c, $10 ; $6343
 	ld de, $a200 ; $6345
 	farcall FarPtr_39_10 ; $6348
-	call Func_00_2631 ; $634b
+	call AdvanceFrame ; $634b
 	ld b, $36 ; $634e
 	ld c, $10 ; $6350
 	ld de, $a300 ; $6352
 	farcall FarPtr_39_10 ; $6355
-	call Func_00_2631 ; $6358
+	call AdvanceFrame ; $6358
 	ld b, $37 ; $635b
 	ld c, $10 ; $635d
 	ld de, $a400 ; $635f
 	farcall FarPtr_39_10 ; $6362
-	call Func_00_2631 ; $6365
+	call AdvanceFrame ; $6365
 	ld b, $38 ; $6368
 	ld c, $10 ; $636a
 	ld de, $a500 ; $636c
 	farcall FarPtr_39_10 ; $636f
-	call Func_00_2631 ; $6372
+	call AdvanceFrame ; $6372
 	ld hl, $6d7e ; $6375 -> DataPtr_6d_7e
 	ld de, $d000 ; $6378
 	call DecompressDataFromBank ; $637b
@@ -4952,7 +4952,7 @@ Label_3b_6311:
 	ld de, $8300 ; $6395
 	ld c, $10 ; $6398
 	call Func_00_0480 ; $639a
-	call Func_00_2631 ; $639d
+	call AdvanceFrame ; $639d
 	ld hl, $6d82 ; $63a0 -> DataPtr_6d_82
 	ld de, $d000 ; $63a3
 	call DecompressDataFromBank ; $63a6
@@ -4960,17 +4960,17 @@ Label_3b_6311:
 	ld de, $8400 ; $63ac
 	ld c, $10 ; $63af
 	call Func_00_0480 ; $63b1
-	call Func_00_2631 ; $63b4
+	call AdvanceFrame ; $63b4
 	ld b, $6f ; $63b7
 	ld c, $12 ; $63b9
 	ld de, $8500 ; $63bb
 	farcall FarPtr_39_10 ; $63be
-	call Func_00_2631 ; $63c1
+	call AdvanceFrame ; $63c1
 	ld b, $47 ; $63c4
 	ld c, $14 ; $63c6
 	ld de, $8000 ; $63c8
 	farcall FarPtr_39_10 ; $63cb
-	call Func_00_2631 ; $63ce
+	call AdvanceFrame ; $63ce
 	ld b, $1b ; $63d1
 	ld c, $04 ; $63d3
 	ld de, $a700 ; $63d5
@@ -5005,7 +5005,7 @@ Func_3b_640a:
 	jr z, Label_3b_6425 ; $640c
 	ld c, $00 ; $640e
 Label_3b_6410:
-	call Func_00_2631 ; $6410
+	call AdvanceFrame ; $6410
 	ld b, $04 ; $6413
 	farcall FarPtr_39_20 ; $6415
 	ld b, $00 ; $6418
@@ -5019,7 +5019,7 @@ Label_3b_6410:
 Label_3b_6425:
 	ld c, $0c ; $6425
 Label_3b_6427:
-	call Func_00_2631 ; $6427
+	call AdvanceFrame ; $6427
 	ld b, $05 ; $642a
 	farcall FarPtr_39_20 ; $642c
 	ld b, $00 ; $642f
@@ -5036,7 +5036,7 @@ Func_3b_643c:
 	jr z, Label_3b_6457 ; $643e
 	ld c, $00 ; $6440
 Label_3b_6442:
-	call Func_00_2631 ; $6442
+	call AdvanceFrame ; $6442
 	ld b, $05 ; $6445
 	farcall FarPtr_39_20 ; $6447
 	ld b, $00 ; $644a
@@ -5050,7 +5050,7 @@ Label_3b_6442:
 Label_3b_6457:
 	ld c, $0d ; $6457
 Label_3b_6459:
-	call Func_00_2631 ; $6459
+	call AdvanceFrame ; $6459
 	ld b, $04 ; $645c
 	farcall FarPtr_39_20 ; $645e
 	ld b, $00 ; $6461
@@ -5429,7 +5429,7 @@ Func_3b_6700:
 	jr z, Label_3b_671b ; $6702
 	ld c, $00 ; $6704
 Label_3b_6706:
-	call Func_00_2631 ; $6706
+	call AdvanceFrame ; $6706
 	ld b, $16 ; $6709
 	farcall FarPtr_39_20 ; $670b
 	ld b, $02 ; $670e
@@ -5443,7 +5443,7 @@ Label_3b_6706:
 Label_3b_671b:
 	ld c, $0c ; $671b
 Label_3b_671d:
-	call Func_00_2631 ; $671d
+	call AdvanceFrame ; $671d
 	ld b, $17 ; $6720
 	farcall FarPtr_39_20 ; $6722
 	ld b, $02 ; $6725
@@ -5460,7 +5460,7 @@ Func_3b_6732:
 	jr z, Label_3b_674d ; $6734
 	ld c, $00 ; $6736
 Label_3b_6738:
-	call Func_00_2631 ; $6738
+	call AdvanceFrame ; $6738
 	ld b, $17 ; $673b
 	farcall FarPtr_39_20 ; $673d
 	ld b, $02 ; $6740
@@ -5474,7 +5474,7 @@ Label_3b_6738:
 Label_3b_674d:
 	ld c, $0d ; $674d
 Label_3b_674f:
-	call Func_00_2631 ; $674f
+	call AdvanceFrame ; $674f
 	ld b, $16 ; $6752
 	farcall FarPtr_39_20 ; $6754
 	ld b, $02 ; $6757
@@ -5538,7 +5538,7 @@ Func_3b_67a1:
 	call Func_3b_6a7e ; $67d9
 	wram_bank $03 ; $67dc
 Label_3b_67e2:
-	call Func_00_2631 ; $67e2
+	call AdvanceFrame ; $67e2
 	ldh a, [hInputPressed] ; $67e5
 	ld [wMenuInputPressed], a ; $67e7
 	farcall FarPtr_3b_26 ; $67ea
@@ -5622,7 +5622,7 @@ Func_3b_686e:
 	ld de, $a800 ; $6883
 	ld bc, $0010 ; $6886
 	call Func_00_0480 ; $6889
-	call Func_00_2631 ; $688c
+	call AdvanceFrame ; $688c
 	ld hl, $3c20 ; $688f -> DataPtr_3c_20
 	ld de, $d000 ; $6892
 	call DecompressDataFromBank ; $6895
@@ -5630,7 +5630,7 @@ Func_3b_686e:
 	ld de, $a900 ; $689b
 	ld bc, $0010 ; $689e
 	call Func_00_0480 ; $68a1
-	call Func_00_2631 ; $68a4
+	call AdvanceFrame ; $68a4
 	wram_bank $03 ; $68a7
 	ld a, $00 ; $68ad
 	ld [$c36c], a ; $68af
@@ -5638,7 +5638,7 @@ Func_3b_686e:
 	farcall FarPtr_1b_10 ; $68b5
 	ld de, $b680 ; $68b8
 	farcall FarPtr_1b_18 ; $68bb
-	call Func_00_2631 ; $68be
+	call AdvanceFrame ; $68be
 	wram_bank $03 ; $68c1
 	ld a, $01 ; $68c7
 	ld [$c36c], a ; $68c9
@@ -5646,7 +5646,7 @@ Func_3b_686e:
 	farcall FarPtr_1b_10 ; $68cf
 	ld de, $b710 ; $68d2
 	farcall FarPtr_1b_18 ; $68d5
-	call Func_00_2631 ; $68d8
+	call AdvanceFrame ; $68d8
 	wram_bank $03 ; $68db
 	ld a, $02 ; $68e1
 	ld [$c36c], a ; $68e3
@@ -5654,42 +5654,42 @@ Func_3b_686e:
 	farcall FarPtr_1b_10 ; $68e9
 	ld de, $af00 ; $68ec
 	farcall FarPtr_1b_18 ; $68ef
-	call Func_00_2631 ; $68f2
+	call AdvanceFrame ; $68f2
 	ld b, $2a ; $68f5
 	ld c, $10 ; $68f7
 	ld de, $a000 ; $68f9
 	farcall FarPtr_39_10 ; $68fc
-	call Func_00_2631 ; $68ff
+	call AdvanceFrame ; $68ff
 	ld b, $2b ; $6902
 	ld c, $10 ; $6904
 	ld de, $a100 ; $6906
 	farcall FarPtr_39_10 ; $6909
-	call Func_00_2631 ; $690c
+	call AdvanceFrame ; $690c
 	ld b, $2c ; $690f
 	ld c, $10 ; $6911
 	ld de, $a200 ; $6913
 	farcall FarPtr_39_10 ; $6916
-	call Func_00_2631 ; $6919
+	call AdvanceFrame ; $6919
 	ld b, $2d ; $691c
 	ld c, $10 ; $691e
 	ld de, $a300 ; $6920
 	farcall FarPtr_39_10 ; $6923
-	call Func_00_2631 ; $6926
+	call AdvanceFrame ; $6926
 	ld b, $76 ; $6929
 	ld c, $10 ; $692b
 	ld de, $a400 ; $692d
 	farcall FarPtr_39_10 ; $6930
-	call Func_00_2631 ; $6933
+	call AdvanceFrame ; $6933
 	ld b, $1b ; $6936
 	ld c, $04 ; $6938
 	ld de, $a700 ; $693a
 	farcall FarPtr_39_10 ; $693d
-	call Func_00_2631 ; $6940
+	call AdvanceFrame ; $6940
 	ld b, $42 ; $6943
 	ld c, $14 ; $6945
 	ld de, $8000 ; $6947
 	farcall FarPtr_39_10 ; $694a
-	call Func_00_2631 ; $694d
+	call AdvanceFrame ; $694d
 	ld b, $08 ; $6950
 	ld c, $10 ; $6952
 	farcall FarPtr_39_0e ; $6954
@@ -5717,7 +5717,7 @@ Func_3b_686e:
 	jr z, Label_3b_6994 ; $697b
 	ld c, $00 ; $697d
 Label_3b_697f:
-	call Func_00_2631 ; $697f
+	call AdvanceFrame ; $697f
 	ld b, $06 ; $6982
 	farcall FarPtr_39_20 ; $6984
 	ld b, $02 ; $6987
@@ -5731,7 +5731,7 @@ Label_3b_697f:
 Label_3b_6994:
 	ld c, $0a ; $6994
 Label_3b_6996:
-	call Func_00_2631 ; $6996
+	call AdvanceFrame ; $6996
 	ld b, $07 ; $6999
 	farcall FarPtr_39_20 ; $699b
 	ld b, $02 ; $699e
@@ -5747,7 +5747,7 @@ Label_3b_6996:
 	jr z, Label_3b_69c6 ; $69ad
 	ld c, $00 ; $69af
 Label_3b_69b1:
-	call Func_00_2631 ; $69b1
+	call AdvanceFrame ; $69b1
 	ld b, $07 ; $69b4
 	farcall FarPtr_39_20 ; $69b6
 	ld b, $02 ; $69b9
@@ -5761,7 +5761,7 @@ Label_3b_69b1:
 Label_3b_69c6:
 	ld c, $0c ; $69c6
 Label_3b_69c8:
-	call Func_00_2631 ; $69c8
+	call AdvanceFrame ; $69c8
 	ld b, $06 ; $69cb
 	farcall FarPtr_39_20 ; $69cd
 	ld b, $02 ; $69d0
@@ -6145,7 +6145,7 @@ Label_3b_6cbb:
 	sound $5e ; $6cc6
 	call Func_3b_6ffb ; $6cc8
 Label_3b_6ccb:
-	call Func_00_2631 ; $6ccb
+	call AdvanceFrame ; $6ccb
 	ld a, [wMenuInputPressed] ; $6cce
 	bit 0, a ; $6cd1
 	jr nz, Label_3b_6cdb ; $6cd3
@@ -6210,7 +6210,7 @@ Func_3b_6d31:
 	farcall FarPtr_1b_10 ; $6d48
 	ld de, $b680 ; $6d4b
 	farcall FarPtr_1b_18 ; $6d4e
-	call Func_00_2631 ; $6d51
+	call AdvanceFrame ; $6d51
 	wram_bank $03 ; $6d54
 	ld a, $01 ; $6d5a
 	ld [$c36c], a ; $6d5c
@@ -6218,7 +6218,7 @@ Func_3b_6d31:
 	farcall FarPtr_1b_10 ; $6d62
 	ld de, $b710 ; $6d65
 	farcall FarPtr_1b_18 ; $6d68
-	call Func_00_2631 ; $6d6b
+	call AdvanceFrame ; $6d6b
 	wram_bank $03 ; $6d6e
 	ld a, $02 ; $6d74
 	ld [$c36c], a ; $6d76
@@ -6226,7 +6226,7 @@ Func_3b_6d31:
 	farcall FarPtr_1b_10 ; $6d7c
 	ld de, $af00 ; $6d7f
 	farcall FarPtr_1b_18 ; $6d82
-	call Func_00_2631 ; $6d85
+	call AdvanceFrame ; $6d85
 	wram_bank $01 ; $6d88
 	ld hl, $3d0e ; $6d8e -> DataPtr_3d_0e
 	ld de, $d000 ; $6d91
@@ -6235,7 +6235,7 @@ Func_3b_6d31:
 	ld de, $a800 ; $6d9a
 	ld c, $10 ; $6d9d
 	call Func_00_0480 ; $6d9f
-	call Func_00_2631 ; $6da2
+	call AdvanceFrame ; $6da2
 	ld hl, $3d10 ; $6da5 -> DataPtr_3d_10
 	ld de, $d000 ; $6da8
 	call DecompressDataFromBank ; $6dab
@@ -6243,42 +6243,42 @@ Func_3b_6d31:
 	ld de, $a900 ; $6db1
 	ld c, $10 ; $6db4
 	call Func_00_0480 ; $6db6
-	call Func_00_2631 ; $6db9
+	call AdvanceFrame ; $6db9
 	ld b, $2e ; $6dbc
 	ld c, $10 ; $6dbe
 	ld de, $a000 ; $6dc0
 	farcall FarPtr_39_10 ; $6dc3
-	call Func_00_2631 ; $6dc6
+	call AdvanceFrame ; $6dc6
 	ld b, $2f ; $6dc9
 	ld c, $10 ; $6dcb
 	ld de, $a100 ; $6dcd
 	farcall FarPtr_39_10 ; $6dd0
-	call Func_00_2631 ; $6dd3
+	call AdvanceFrame ; $6dd3
 	ld b, $30 ; $6dd6
 	ld c, $10 ; $6dd8
 	ld de, $a200 ; $6dda
 	farcall FarPtr_39_10 ; $6ddd
-	call Func_00_2631 ; $6de0
+	call AdvanceFrame ; $6de0
 	ld b, $31 ; $6de3
 	ld c, $10 ; $6de5
 	ld de, $a300 ; $6de7
 	farcall FarPtr_39_10 ; $6dea
-	call Func_00_2631 ; $6ded
+	call AdvanceFrame ; $6ded
 	ld b, $32 ; $6df0
 	ld c, $10 ; $6df2
 	ld de, $a400 ; $6df4
 	farcall FarPtr_39_10 ; $6df7
-	call Func_00_2631 ; $6dfa
+	call AdvanceFrame ; $6dfa
 	ld b, $1b ; $6dfd
 	ld c, $04 ; $6dff
 	ld de, $a700 ; $6e01
 	farcall FarPtr_39_10 ; $6e04
-	call Func_00_2631 ; $6e07
+	call AdvanceFrame ; $6e07
 	ld b, $41 ; $6e0a
 	ld c, $14 ; $6e0c
 	ld de, $8000 ; $6e0e
 	farcall FarPtr_39_10 ; $6e11
-	call Func_00_2631 ; $6e14
+	call AdvanceFrame ; $6e14
 	ld b, $08 ; $6e17
 	ld c, $10 ; $6e19
 	farcall FarPtr_39_0e ; $6e1b
@@ -6291,7 +6291,7 @@ Func_3b_6e24:
 	jr z, Label_3b_6e3f ; $6e26
 	ld c, $00 ; $6e28
 Label_3b_6e2a:
-	call Func_00_2631 ; $6e2a
+	call AdvanceFrame ; $6e2a
 	ld b, $08 ; $6e2d
 	farcall FarPtr_39_20 ; $6e2f
 	ld b, $02 ; $6e32
@@ -6305,7 +6305,7 @@ Label_3b_6e2a:
 Label_3b_6e3f:
 	ld c, $0b ; $6e3f
 Label_3b_6e41:
-	call Func_00_2631 ; $6e41
+	call AdvanceFrame ; $6e41
 	ld b, $09 ; $6e44
 	farcall FarPtr_39_20 ; $6e46
 	ld b, $02 ; $6e49
@@ -6322,7 +6322,7 @@ Func_3b_6e56:
 	jr z, Label_3b_6e71 ; $6e58
 	ld c, $00 ; $6e5a
 Label_3b_6e5c:
-	call Func_00_2631 ; $6e5c
+	call AdvanceFrame ; $6e5c
 	ld b, $09 ; $6e5f
 	farcall FarPtr_39_20 ; $6e61
 	ld b, $02 ; $6e64
@@ -6336,7 +6336,7 @@ Label_3b_6e5c:
 Label_3b_6e71:
 	ld c, $0e ; $6e71
 Label_3b_6e73:
-	call Func_00_2631 ; $6e73
+	call AdvanceFrame ; $6e73
 	ld b, $08 ; $6e76
 	farcall FarPtr_39_20 ; $6e78
 	ld b, $02 ; $6e7b
@@ -6807,7 +6807,7 @@ Func_3b_71b0:
 	call Func_3b_73bf ; $71e2
 	wram_bank $03 ; $71e5
 Label_3b_71eb:
-	call Func_00_2631 ; $71eb
+	call AdvanceFrame ; $71eb
 	ldh a, [hInputPressed] ; $71ee
 	ld [wMenuInputPressed], a ; $71f0
 	ld b, $03 ; $71f3
@@ -6900,7 +6900,7 @@ Label_3b_7273:
 	ld a, c ; $7287
 	inc a ; $7288
 	ld c, a ; $7289
-	call Func_00_2631 ; $728a
+	call AdvanceFrame ; $728a
 	ld a, c ; $728d
 	cp a, $03 ; $728e
 	jr nz, Label_3b_724e ; $7290
@@ -6908,27 +6908,27 @@ Label_3b_7273:
 	ld c, $10 ; $7294
 	ld de, $a000 ; $7296
 	farcall FarPtr_39_10 ; $7299
-	call Func_00_2631 ; $729c
+	call AdvanceFrame ; $729c
 	ld b, $1d ; $729f
 	ld c, $10 ; $72a1
 	ld de, $a100 ; $72a3
 	farcall FarPtr_39_10 ; $72a6
-	call Func_00_2631 ; $72a9
+	call AdvanceFrame ; $72a9
 	ld b, $3a ; $72ac
 	ld c, $10 ; $72ae
 	ld de, $a200 ; $72b0
 	farcall FarPtr_39_10 ; $72b3
-	call Func_00_2631 ; $72b6
+	call AdvanceFrame ; $72b6
 	ld b, $1b ; $72b9
 	ld c, $04 ; $72bb
 	ld de, $a700 ; $72bd
 	farcall FarPtr_39_10 ; $72c0
-	call Func_00_2631 ; $72c3
+	call AdvanceFrame ; $72c3
 	ld b, $43 ; $72c6
 	ld c, $14 ; $72c8
 	ld de, $8000 ; $72ca
 	farcall FarPtr_39_10 ; $72cd
-	call Func_00_2631 ; $72d0
+	call AdvanceFrame ; $72d0
 	ld b, $08 ; $72d3
 	ld c, $10 ; $72d5
 	farcall FarPtr_39_0e ; $72d7
@@ -6948,7 +6948,7 @@ Func_3b_72ec:
 	jr z, Label_3b_7307 ; $72ee
 	ld c, $00 ; $72f0
 Label_3b_72f2:
-	call Func_00_2631 ; $72f2
+	call AdvanceFrame ; $72f2
 	ld b, $0a ; $72f5
 	farcall FarPtr_39_20 ; $72f7
 	ld b, $03 ; $72fa
@@ -6962,7 +6962,7 @@ Label_3b_72f2:
 Label_3b_7307:
 	ld c, $0a ; $7307
 Label_3b_7309:
-	call Func_00_2631 ; $7309
+	call AdvanceFrame ; $7309
 	ld b, $0b ; $730c
 	farcall FarPtr_39_20 ; $730e
 	ld b, $03 ; $7311
@@ -6979,7 +6979,7 @@ Func_3b_731e:
 	jr z, Label_3b_7339 ; $7320
 	ld c, $00 ; $7322
 Label_3b_7324:
-	call Func_00_2631 ; $7324
+	call AdvanceFrame ; $7324
 	ld b, $0b ; $7327
 	farcall FarPtr_39_20 ; $7329
 	ld b, $03 ; $732c
@@ -6993,7 +6993,7 @@ Label_3b_7324:
 Label_3b_7339:
 	ld c, $0c ; $7339
 Label_3b_733b:
-	call Func_00_2631 ; $733b
+	call AdvanceFrame ; $733b
 	ld b, $0a ; $733e
 	farcall FarPtr_39_20 ; $7340
 	ld b, $03 ; $7343
@@ -7212,7 +7212,7 @@ Func_3b_74bf:
 	call Func_3b_760c ; $74f1
 	wram_bank $03 ; $74f4
 Label_3b_74fa:
-	call Func_00_2631 ; $74fa
+	call AdvanceFrame ; $74fa
 	ldh a, [hInputPressed] ; $74fd
 	ld [wMenuInputPressed], a ; $74ff
 	ld b, $02 ; $7502
@@ -7305,7 +7305,7 @@ Label_3b_7582:
 	ld a, c ; $7596
 	inc a ; $7597
 	ld c, a ; $7598
-	call Func_00_2631 ; $7599
+	call AdvanceFrame ; $7599
 	ld a, c ; $759c
 	cp a, $04 ; $759d
 	jr nz, Label_3b_755d ; $759f
@@ -7313,32 +7313,32 @@ Label_3b_7582:
 	ld c, $10 ; $75a3
 	ld de, $a000 ; $75a5
 	farcall FarPtr_39_10 ; $75a8
-	call Func_00_2631 ; $75ab
+	call AdvanceFrame ; $75ab
 	ld b, $73 ; $75ae
 	ld c, $10 ; $75b0
 	ld de, $a100 ; $75b2
 	farcall FarPtr_39_10 ; $75b5
-	call Func_00_2631 ; $75b8
+	call AdvanceFrame ; $75b8
 	ld b, $3c ; $75bb
 	ld c, $10 ; $75bd
 	ld de, $a200 ; $75bf
 	farcall FarPtr_39_10 ; $75c2
-	call Func_00_2631 ; $75c5
+	call AdvanceFrame ; $75c5
 	ld b, $3d ; $75c8
 	ld c, $10 ; $75ca
 	ld de, $a300 ; $75cc
 	farcall FarPtr_39_10 ; $75cf
-	call Func_00_2631 ; $75d2
+	call AdvanceFrame ; $75d2
 	ld b, $1b ; $75d5
 	ld c, $04 ; $75d7
 	ld de, $a700 ; $75d9
 	farcall FarPtr_39_10 ; $75dc
-	call Func_00_2631 ; $75df
+	call AdvanceFrame ; $75df
 	ld b, $44 ; $75e2
 	ld c, $14 ; $75e4
 	ld de, $8000 ; $75e6
 	farcall FarPtr_39_10 ; $75e9
-	call Func_00_2631 ; $75ec
+	call AdvanceFrame ; $75ec
 	ld b, $08 ; $75ef
 	ld c, $10 ; $75f1
 	farcall FarPtr_39_0e ; $75f3
@@ -7527,7 +7527,7 @@ Label_3b_778a:
 	jr nz, Label_3b_7799 ; $778e
 	bit 1, a ; $7790
 	jr nz, Label_3b_7799 ; $7792
-	call Func_00_2631 ; $7794
+	call AdvanceFrame ; $7794
 	jr Label_3b_778a ; $7797
 Label_3b_7799:
 	sound $5f ; $7799
@@ -7871,7 +7871,7 @@ Func_3b_79f9:
 	call Func_00_1da4 ; $7a23
 	wram_bank $03 ; $7a26
 Label_3b_7a2c:
-	call Func_00_2631 ; $7a2c
+	call AdvanceFrame ; $7a2c
 	ldh a, [hInputPressed] ; $7a2f
 	ld [wMenuInputPressed], a ; $7a31
 	call Func_3b_7e25 ; $7a34
@@ -8174,7 +8174,7 @@ Func_3b_7c81:
 	ld de, $b8a0 ; $7c8f
 	ld c, $08 ; $7c92
 	call Func_00_0480 ; $7c94
-	call Func_00_2631 ; $7c97
+	call AdvanceFrame ; $7c97
 	ld hl, $d120 ; $7c9a
 	ld de, $9920 ; $7c9d
 	ld c, $08 ; $7ca0
@@ -8183,7 +8183,7 @@ Func_3b_7c81:
 	ld de, $b920 ; $7ca8
 	ld c, $08 ; $7cab
 	call Func_00_0480 ; $7cad
-	call Func_00_2631 ; $7cb0
+	call AdvanceFrame ; $7cb0
 	ld hl, $d1a0 ; $7cb3
 	ld de, $99a0 ; $7cb6
 	ld c, $04 ; $7cb9

@@ -945,7 +945,7 @@ Label_04_4608:
 	cpl ; $4659
 	inc a ; $465a
 Label_04_465b:
-	call Func_00_106e ; $465b
+	call GetSquareOfByte ; $465b
 	push hl ; $465e
 	ld hl, $000b ; $465f
 	add hl, bc ; $4662
@@ -958,7 +958,7 @@ Label_04_465b:
 	cpl ; $466d
 	inc a ; $466e
 Label_04_466f:
-	call Func_00_106e ; $466f
+	call GetSquareOfByte ; $466f
 	pop de ; $4672
 	add hl, de ; $4673
 	ld a, h ; $4674
@@ -1171,7 +1171,7 @@ Func_04_48c3:
 	ld a, [hl+] ; $48c7
 	ld b, [hl] ; $48c8
 	ld c, a ; $48c9
-	call Func_00_0a3a ; $48ca
+	call AdvanceRandomSeed ; $48ca
 	ld a, l ; $48cd
 	and a, $fc ; $48ce
 	ld [$daf4], a ; $48d0
@@ -2436,7 +2436,7 @@ Label_04_5395:
 	and a, a ; $539a
 	jr nz, Label_04_53d2 ; $539b
 	ld a, l ; $539d
-	call Func_00_106e ; $539e
+	call GetSquareOfByte ; $539e
 	ld e, l ; $53a1
 	ld d, h ; $53a2
 	ld hl, $d008 ; $53a3
@@ -2464,7 +2464,7 @@ Label_04_53b9:
 	and a, a ; $53be
 	jr nz, Label_04_53d2 ; $53bf
 	ld a, l ; $53c1
-	call Func_00_106e ; $53c2
+	call GetSquareOfByte ; $53c2
 	add hl, de ; $53c5
 	jr c, Label_04_53d2 ; $53c6
 	ld de, $4000 ; $53c8
@@ -2531,7 +2531,7 @@ Label_04_540f:
 	and a, a ; $5410
 	jr nz, Label_04_544f ; $5411
 	ld a, l ; $5413
-	call Func_00_106e ; $5414
+	call GetSquareOfByte ; $5414
 	push hl ; $5417
 	ld hl, $daf0 ; $5418
 	ld a, [hl+] ; $541b
@@ -2562,7 +2562,7 @@ Label_04_5435:
 	and a, a ; $5437
 	jr nz, Label_04_544f ; $5438
 	ld a, l ; $543a
-	call Func_00_106e ; $543b
+	call GetSquareOfByte ; $543b
 	add hl, de ; $543e
 	jr c, Label_04_544f ; $543f
 	ld de, $1f00 ; $5441
@@ -3105,7 +3105,7 @@ Func_04_5726:
 Label_04_572a:
 	call Func_04_5703 ; $572a
 	jr z, Label_04_5735 ; $572d
-	call Func_00_2631 ; $572f
+	call AdvanceFrame ; $572f
 	dec c ; $5732
 	jr nz, Label_04_572a ; $5733
 Label_04_5735:
@@ -3140,7 +3140,7 @@ Func_04_5755:
 Label_04_575a:
 	call Func_04_5738 ; $575a
 	jr z, Label_04_5767 ; $575d
-	call Func_00_2631 ; $575f
+	call AdvanceFrame ; $575f
 	dec bc ; $5762
 	ld a, c ; $5763
 	or a, b ; $5764

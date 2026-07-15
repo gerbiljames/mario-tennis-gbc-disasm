@@ -182,7 +182,7 @@ Label_3f_40be:
 	ld a, [$cb34] ; $40ed
 	cp a, $06 ; $40f0
 	jr z, Label_3f_4106 ; $40f2
-	call Func_00_2631 ; $40f4
+	call AdvanceFrame ; $40f4
 	call Func_3f_5261 ; $40f7
 	ld a, [$cb34] ; $40fa
 	cp a, $05 ; $40fd
@@ -194,7 +194,7 @@ Label_3f_4106:
 	farcall FarPtr_01_04 ; $4109
 	call EnableLCD ; $410c
 	sound $05 ; $410f
-	call Func_00_2631 ; $4111
+	call AdvanceFrame ; $4111
 	ld c, $10 ; $4114
 	call Func_00_1d2e ; $4116
 	call Func_00_1da4 ; $4119
@@ -220,7 +220,7 @@ Label_3f_414a:
 	ld [$cb37], a ; $414f
 	ld a, $08 ; $4152
 Label_3f_4154:
-	call Func_00_2631 ; $4154
+	call AdvanceFrame ; $4154
 	cp a, $04 ; $4157
 	jp z, Label_3f_4170 ; $4159
 	cp a, $10 ; $415c
@@ -248,7 +248,7 @@ Label_3f_4178:
 	pop af ; $4189
 	call Func_3f_4244 ; $418a
 	ld hl, $4e8d ; $418d
-	call Func_00_1bcb ; $4190
+	call UnregisterFrameTask ; $4190
 	ret ; $4193
 Func_3f_4194:
 	ld c, $10 ; $4194
@@ -264,7 +264,7 @@ Func_3f_4194:
 	xor a, a ; $41af
 	call Func_3f_54c8 ; $41b0
 	farcall FarPtr_0a_70 ; $41b3
-	call Func_00_2631 ; $41b6
+	call AdvanceFrame ; $41b6
 	call DisableLCDSafely ; $41b9
 	call Func_3f_425f ; $41bc
 	ld a, $01 ; $41bf
@@ -294,7 +294,7 @@ Func_3f_41e0:
 	ld a, $01 ; $41f8
 	call Func_3f_54c8 ; $41fa
 	farcall FarPtr_0a_70 ; $41fd
-	call Func_00_2631 ; $4200
+	call AdvanceFrame ; $4200
 	call DisableLCDSafely ; $4203
 	call Func_3f_42a0 ; $4206
 	ld a, $01 ; $4209
@@ -1205,7 +1205,7 @@ Label_3f_538a:
 	call Func_00_0480 ; $5392
 	or a, a ; $5395
 	jr nz, Label_3f_539d ; $5396
-	call Func_00_2631 ; $5398
+	call AdvanceFrame ; $5398
 	jr Label_3f_538a ; $539b
 Label_3f_539d:
 	ret ; $539d
@@ -1606,7 +1606,7 @@ Label_3f_5714:
 	set 2, a ; $571b
 	ld [$cb37], a ; $571d
 	sound $5e ; $5720
-	call Func_00_2631 ; $5722
+	call AdvanceFrame ; $5722
 	call Func_3f_5192 ; $5725
 	call Func_3f_5261 ; $5728
 	jr Label_3f_5746 ; $572b
@@ -1617,7 +1617,7 @@ Label_3f_572d:
 	set 3, a ; $5734
 	ld [$cb37], a ; $5736
 	sound $5e ; $5739
-	call Func_00_2631 ; $573b
+	call AdvanceFrame ; $573b
 	call Func_3f_520f ; $573e
 	call Func_3f_5261 ; $5741
 	jr Label_3f_5746 ; $5744
@@ -1637,7 +1637,7 @@ Func_3f_5749:
 	ldh a, [rLCDC] ; $575e
 	bit 7, a ; $5760
 	jr z, Label_3f_5767 ; $5762
-	call Func_00_2631 ; $5764
+	call AdvanceFrame ; $5764
 Label_3f_5767:
 	pop af ; $5767
 	ld hl, $d7e0 ; $5768
@@ -1648,7 +1648,7 @@ Label_3f_5767:
 	ldh a, [rLCDC] ; $5774
 	bit 7, a ; $5776
 	jr z, Label_3f_577d ; $5778
-	call Func_00_2631 ; $577a
+	call AdvanceFrame ; $577a
 Label_3f_577d:
 	pop af ; $577d
 	ld hl, $d960 ; $577e
@@ -1690,7 +1690,7 @@ Func_3f_578f:
 	ldh a, [rLCDC] ; $57db
 	bit 7, a ; $57dd
 	jr z, Label_3f_57e4 ; $57df
-	call Func_00_2631 ; $57e1
+	call AdvanceFrame ; $57e1
 Label_3f_57e4:
 	pop af ; $57e4
 	pop af ; $57e5

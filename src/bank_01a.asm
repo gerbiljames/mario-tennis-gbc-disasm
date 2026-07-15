@@ -287,7 +287,7 @@ Label_1a_43cb:
 	farcall FarPtr_05_56 ; $43fc
 	farcall FarPtr_05_18 ; $43ff
 	farcall FarPtr_05_10 ; $4402
-	call Func_00_2631 ; $4405
+	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
 	and a, $01 ; $440a
 	jr z, Label_1a_4418 ; $440c
@@ -350,12 +350,12 @@ Func_1a_4473:
 	or a, a ; $4474
 	jr nz, Label_1a_447d ; $4475
 	push bc ; $4477
-	farcall FarPtr_02_28 ; $4478
+	farcall FarPtr_AddPlayerExp ; $4478
 	pop bc ; $447b
 	ret ; $447c
 Label_1a_447d:
 	push bc ; $447d
-	farcall FarPtr_02_28 ; $447e
+	farcall FarPtr_AddPlayerExp ; $447e
 	pop bc ; $4481
 	ret ; $4482
 	INCBIN "data/bank_01a/d_4483.bin" ; $4483, 85 bytes
@@ -464,7 +464,7 @@ Label_1a_4564:
 	ld a, l ; $458a
 	ld [$d254], a ; $458b
 	ld de, $0000 ; $458e
-	farcall FarPtr_02_2c ; $4591
+	farcall FarPtr_GetExpRemainingToNextLevel ; $4591
 	ld d, h ; $4594
 	ld e, l ; $4595
 	ld hl, $d23c ; $4596
@@ -572,7 +572,7 @@ Label_1a_4664:
 	call Func_1a_4f30 ; $4670
 	call Func_1a_4f30 ; $4673
 Label_1a_4676:
-	call Func_00_2631 ; $4676
+	call AdvanceFrame ; $4676
 	jr Label_1a_460d ; $4679
 Label_1a_467b:
 	sound $5f ; $467b
@@ -599,7 +599,7 @@ Label_1a_469b:
 	inc a ; $46a2
 	ld [hl], a ; $46a3
 Label_1a_46a4:
-	call Func_00_2631 ; $46a4
+	call AdvanceFrame ; $46a4
 	dec b ; $46a7
 	jr z, Label_1a_46af ; $46a8
 	ldh a, [$ff94] ; $46aa
@@ -651,7 +651,7 @@ Label_1a_46f5:
 	inc a ; $46fc
 	ld [hl], a ; $46fd
 Label_1a_46fe:
-	call Func_00_2631 ; $46fe
+	call AdvanceFrame ; $46fe
 	dec b ; $4701
 	jr z, Label_1a_4709 ; $4702
 	ldh a, [$ff94] ; $4704
@@ -662,10 +662,10 @@ Label_1a_4709:
 	call Func_00_1d20 ; $470b
 	call Func_00_1da4 ; $470e
 	ld hl, $477a ; $4711
-	call Func_00_1bcb ; $4714
+	call UnregisterFrameTask ; $4714
 	ld hl, $4e65 ; $4717
-	call Func_00_1bcb ; $471a
-	call Func_00_2631 ; $471d
+	call UnregisterFrameTask ; $471a
+	call AdvanceFrame ; $471d
 	pop de ; $4720
 	pop hl ; $4721
 	pop af ; $4722
@@ -680,7 +680,7 @@ Label_1a_4709:
 	or a, e ; $4735
 	ret z ; $4736
 	ld a, [$d254] ; $4737
-	farcall FarPtr_02_28 ; $473a
+	farcall FarPtr_AddPlayerExp ; $473a
 	ret ; $473d
 Label_1a_473e:
 	wram_bank $01 ; $473e
@@ -1046,7 +1046,7 @@ Func_1a_4c22:
 	push de ; $4c23
 	ld hl, $0020 ; $4c24
 	ld a, c ; $4c27
-	call Func_00_0926 ; $4c28
+	call MulHLByA ; $4c28
 	ld d, $00 ; $4c2b
 	ld e, b ; $4c2d
 	add hl, de ; $4c2e
@@ -1623,7 +1623,7 @@ Label_1a_54cd:
 	ld a, [$d151] ; $54ea
 	or a, $01 ; $54ed
 	ld [$d151], a ; $54ef
-	call Func_00_2631 ; $54f2
+	call AdvanceFrame ; $54f2
 	wram_bank $01 ; $54f5
 	ld hl, $d000 ; $54fb
 	ld de, $b800 ; $54fe
@@ -1633,7 +1633,7 @@ Label_1a_54cd:
 	ld de, $9800 ; $5509
 	ld c, $08 ; $550c
 	call Func_00_0480 ; $550e
-	call Func_00_2631 ; $5511
+	call AdvanceFrame ; $5511
 	wram_bank $06 ; $5514
 	ld a, [$d151] ; $551a
 	and a, $fe ; $551d
@@ -1676,18 +1676,18 @@ Label_1a_67db:
 	call RegisterFrameTask ; $6825
 	call Func_1a_70c0 ; $6828
 	call Func_1a_6e41 ; $682b
-	call Func_00_2631 ; $682e
+	call AdvanceFrame ; $682e
 	wram_bank $06 ; $6831
 	ld a, [$d002] ; $6837
 	ld de, $8700 ; $683a
 	farcall FarPtr_18_44 ; $683d
-	call Func_00_2631 ; $6840
+	call AdvanceFrame ; $6840
 	ld c, $10 ; $6843
 	call Func_00_1d2e ; $6845
 	call Func_00_1da4 ; $6848
 	call Func_1a_6c9f ; $684b
 	ld hl, $6c28 ; $684e
-	call Func_00_1bcb ; $6851
+	call UnregisterFrameTask ; $6851
 Label_1a_6854:
 	ld c, $10 ; $6854
 	call Func_00_1d20 ; $6856
@@ -1695,7 +1695,7 @@ Label_1a_6854:
 	call DisableLCDSafely ; $685c
 	farcall FarPtr_01_0a ; $685f
 	call EnableLCD ; $6862
-	call Func_00_2631 ; $6865
+	call AdvanceFrame ; $6865
 	jp Label_1a_67db ; $6868
 	ret ; $686b
 Func_1a_686c:
@@ -1741,7 +1741,7 @@ Func_1a_686c:
 	call Func_00_1da4 ; $68e5
 Label_1a_68e8:
 	wram_bank $06 ; $68e8
-	call Func_00_2631 ; $68ee
+	call AdvanceFrame ; $68ee
 	ldh a, [hInputPressed] ; $68f1
 	bit 6, a ; $68f3
 	jr nz, Label_1a_691b ; $68f5
@@ -1842,11 +1842,11 @@ Label_1a_69a9:
 	ld de, $9820 ; $69ba
 	ld c, $20 ; $69bd
 	call Func_00_0480 ; $69bf
-	call Func_00_2631 ; $69c2
+	call AdvanceFrame ; $69c2
 	jp Label_1a_68e8 ; $69c5
 Label_1a_69c8:
 	ld hl, $6ab3 ; $69c8
-	call Func_00_1bcb ; $69cb
+	call UnregisterFrameTask ; $69cb
 	sound $5f ; $69ce
 	ld a, [$cb62] ; $69d0
 	rlca ; $69d3
@@ -1860,7 +1860,7 @@ Label_1a_69c8:
 	ret ; $69df
 Label_1a_69e0:
 	ld hl, $6ab3 ; $69e0
-	call Func_00_1bcb ; $69e3
+	call UnregisterFrameTask ; $69e3
 	sound $62 ; $69e6
 	ld a, $ff ; $69e8
 	ret ; $69ea
@@ -2078,7 +2078,7 @@ Func_1a_6c0b:
 Func_1a_6c9f:
 	call Func_1a_7012 ; $6c9f
 	wram_bank $06 ; $6ca2
-	call Func_00_2631 ; $6ca8
+	call AdvanceFrame ; $6ca8
 	ldh a, [hInputPressed] ; $6cab
 	bit 6, a ; $6cad
 	jr nz, Label_1a_6cd5 ; $6caf
@@ -2241,7 +2241,7 @@ Label_1a_6e1d:
 	ret ; $6e1f
 Label_1a_6e20:
 	call Func_1a_6e41 ; $6e20
-	call Func_00_2631 ; $6e23
+	call AdvanceFrame ; $6e23
 	jp Func_1a_6c9f ; $6e26
 Label_1a_6e29:
 	ld a, [$d005] ; $6e29
@@ -2571,7 +2571,7 @@ Func_1a_7945:
 	ld c, $24 ; $79a4
 	call Func_00_0480 ; $79a6
 	call EnableLCD ; $79a9
-	call Func_00_2631 ; $79ac
+	call AdvanceFrame ; $79ac
 	farcall FarPtr_1c_12 ; $79af
 	farcall FarPtr_1d_10 ; $79b2
 	ld c, $10 ; $79b5
@@ -2582,7 +2582,7 @@ Func_1a_7945:
 	ld [$d025], a ; $79c5
 Label_1a_79c8:
 	call Func_1a_7a1d ; $79c8
-	call Func_00_2631 ; $79cb
+	call AdvanceFrame ; $79cb
 	ldh a, [$ff94] ; $79ce
 	bit 0, a ; $79d0
 	jr nz, Label_1a_79e8 ; $79d2
@@ -2727,7 +2727,7 @@ CharDataScreen_BuildStats:
 	ld a, [wEquippedRacket] ; $7acf
 	or a, a ; $7ad2
 	ret z ; $7ad3
-	farcall FarPtr_02_12 ; $7ad4
+	farcall FarPtr_RecomputeStatsWithoutRacket ; $7ad4
 	ld hl, $c920 ; $7ad7
 	ld de, $d0a0 ; $7ada
 	ld a, [hl+] ; $7add
@@ -2828,7 +2828,7 @@ CharDataScreen_BuildStats:
 	dec a ; $7b7c
 	sub a, c ; $7b7d
 	ld [$d0b5], a ; $7b7e
-	farcall FarPtr_02_10 ; $7b81
+	farcall FarPtr_RefreshMainCharacterStats ; $7b81
 	ret ; $7b84
 CharDataScreen_LoadGfx:
 	ld hl, $7e7e ; $7b85

@@ -2,24 +2,24 @@ SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 
 FarPtr_02_00:
 	dw Func_02_4fa6 ; $4000
-FarPtr_02_02:
-	dw Func_02_421c ; $4002
+FarPtr_InitStoryModeState:
+	dw InitStoryModeState ; $4002
 FarPtr_02_04:
 	dw Func_02_4044 ; $4004
-FarPtr_02_06:
-	dw Func_02_43a3 ; $4006
-FarPtr_02_08:
-	dw Func_02_443b ; $4008
-FarPtr_02_0a:
-	dw Func_02_49be ; $400a
+FarPtr_InitPlayerRecordFromTemplate:
+	dw InitPlayerRecordFromTemplate ; $4006
+FarPtr_LoadMainCharacterFromRoster:
+	dw LoadMainCharacterFromRoster ; $4008
+FarPtr_LevelUpPlayer:
+	dw LevelUpPlayer ; $400a
 FarPtr_02_0c:
 	dw Func_02_4a00 ; $400c
-FarPtr_02_0e:
-	dw Func_02_4485 ; $400e
-FarPtr_02_10:
-	dw Func_02_478f ; $4010
-FarPtr_02_12:
-	dw Func_02_47c6 ; $4012
+FarPtr_RefreshPlayerStatsAndGetPtr:
+	dw RefreshPlayerStatsAndGetPtr ; $400e
+FarPtr_RefreshMainCharacterStats:
+	dw RefreshMainCharacterStats ; $4010
+FarPtr_RecomputeStatsWithoutRacket:
+	dw RecomputeStatsWithoutRacket ; $4012
 FarPtr_02_14:
 	dw Func_02_434e ; $4014
 FarPtr_02_16:
@@ -28,46 +28,46 @@ FarPtr_02_18:
 	dw Func_02_4066 ; $4018
 FarPtr_02_1a:
 	dw Func_02_52aa ; $401a
-FarPtr_02_1c:
-	dw Func_02_4d30 ; $401c
-FarPtr_02_1e:
-	dw Func_02_4d54 ; $401e
-FarPtr_02_20:
-	dw Func_02_4d61 ; $4020
+FarPtr_AddExpCapped:
+	dw AddExpCapped ; $401c
+FarPtr_Compare24Bit:
+	dw Compare24Bit ; $401e
+FarPtr_ClearCa00RecordExp:
+	dw ClearCa00RecordExp ; $4020
 FarPtr_02_22:
 	dw Func_02_4d6d ; $4022
 FarPtr_02_24:
 	dw Func_02_4d71 ; $4024
-FarPtr_02_26:
-	dw Func_02_4d74 ; $4026
-FarPtr_02_28:
-	dw Func_02_4d8f ; $4028
-FarPtr_02_2a:
-	dw Func_02_4d99 ; $402a
-FarPtr_02_2c:
-	dw Func_02_4dc8 ; $402c
-FarPtr_02_2e:
-	dw Func_02_4e02 ; $402e
-FarPtr_02_30:
-	dw Func_02_4e3a ; $4030
+FarPtr_AddExpToCa00Record:
+	dw AddExpToCa00Record ; $4026
+FarPtr_AddPlayerExp:
+	dw AddPlayerExp ; $4028
+FarPtr_HasReachedNextLevelExp:
+	dw HasReachedNextLevelExp ; $402a
+FarPtr_GetExpRemainingToNextLevel:
+	dw GetExpRemainingToNextLevel ; $402c
+FarPtr_GetExpProgressInCurrentLevel:
+	dw GetExpProgressInCurrentLevel ; $402e
+FarPtr_GetExpRequiredForLevel:
+	dw GetExpRequiredForLevel ; $4030
 FarPtr_02_32:
 	dw Func_02_4128 ; $4032
 FarPtr_02_34:
 	dw Func_02_4173 ; $4034
 FarPtr_02_36:
 	dw Func_02_4c58 ; $4036
-FarPtr_02_38:
-	dw Func_02_5eb3 ; $4038
-FarPtr_02_3a:
-	dw Func_02_5ee2 ; $403a
-FarPtr_02_3c:
-	dw Func_02_4cb1 ; $403c
-FarPtr_02_3e:
-	dw Func_02_4cd4 ; $403e
-FarPtr_02_40:
-	dw Func_02_4ced ; $4040
-FarPtr_02_42:
-	dw Func_02_4d10 ; $4042
+FarPtr_GetCharGroupEntry:
+	dw GetCharGroupEntry ; $4038
+FarPtr_DoesCharGroupRowContain:
+	dw DoesCharGroupRowContain ; $403a
+FarPtr_SetStorySlotFlagB:
+	dw SetStorySlotFlagB ; $403c
+FarPtr_TestStorySlotFlagB:
+	dw TestStorySlotFlagB ; $403e
+FarPtr_SetStorySlotFlagA:
+	dw SetStorySlotFlagA ; $4040
+FarPtr_TestStorySlotFlagA:
+	dw TestStorySlotFlagA ; $4042
 Func_02_4044:
 	ld a, [$c9b4] ; $4044
 	cp a, $64 ; $4047
@@ -99,7 +99,7 @@ Func_02_4066:
 	ld a, b ; $4066
 	push af ; $4067
 	ld a, c ; $4068
-	call Func_02_420e ; $4069
+	call GetCa00RecordPtr ; $4069
 	ld l, c ; $406c
 	ld h, b ; $406d
 	pop af ; $406e
@@ -166,7 +166,7 @@ Label_02_40c4:
 	pop af ; $40cc
 	push af ; $40cd
 	push de ; $40ce
-	call Func_02_41ee ; $40cf
+	call GetStoryCharacterRecordPtr ; $40cf
 	ld b, a ; $40d2
 	push de ; $40d3
 	ld a, $0f ; $40d4
@@ -257,7 +257,7 @@ Table_02_417e:
 	db $04, $04, $04, $03, $03, $03, $01, $01, $01, $00, $04, $03, $02, $00, $04, $03 ; 0x40
 	db $02, $03, $03, $02, $02, $00, $04, $03, $02, $00, $04, $03, $03, $03, $03, $03 ; 0x50
 	db $03, $02, $02, $02, $02, $02, $04, $03, $02, $00, $04, $03, $02, $00, $04, $03 ; 0x60
-Func_02_41ee:
+GetStoryCharacterRecordPtr:
 	push af ; $41ee
 	push de ; $41ef
 	push bc ; $41f0
@@ -279,13 +279,13 @@ Func_02_41ee:
 	pop de ; $4203
 	pop af ; $4204
 	ret ; $4205
-Func_02_4206:
+GetPlayerRecordPtr:
 	ld bc, wStoryModeNameOfMainCharacter ; $4206
 	or a, a ; $4209
 	ret z ; $420a
 	ld c, $40 ; $420b
 	ret ; $420d
-Func_02_420e:
+GetCa00RecordPtr:
 	and a, $03 ; $420e
 	swap a ; $4210
 	add a, a ; $4212
@@ -296,17 +296,17 @@ Func_02_420e:
 	sub a, c ; $4219
 	ld b, a ; $421a
 	ret ; $421b
-Func_02_421c:
-	call Func_02_4261 ; $421c
+InitStoryModeState:
+	call CacheStorySlotSummaries ; $421c
 	ld hl, $c800 ; $421f
 	ld c, $30 ; $4222
 	call ClearMemory16 ; $4224
 	ld a, $00 ; $4227
 	ld d, $00 ; $4229
-	call Func_02_43a3 ; $422b
+	call InitPlayerRecordFromTemplate ; $422b
 	ld a, $01 ; $422e
 	ld d, $02 ; $4230
-	call Func_02_43a3 ; $4232
+	call InitPlayerRecordFromTemplate ; $4232
 	ld hl, wStoryModeCurrentLocation ; $4235
 	ld [hl], $00 ; $4238
 	ld hl, $c295 ; $423a
@@ -331,7 +331,7 @@ Unused_02_SignExtendL:
 Label_02_425e:
 	ld h, $ff ; $425e
 	ret ; $4260
-Func_02_4261:
+CacheStorySlotSummaries:
 	push af ; $4261
 	push bc ; $4262
 	push de ; $4263
@@ -355,7 +355,7 @@ Label_02_4274:
 	jr z, Label_02_4291 ; $4286
 	ld hl, $c880 ; $4288
 	ld de, $d400 ; $428b
-	call Func_02_42c9 ; $428e
+	call Copy4Bytes ; $428e
 Label_02_4291:
 	ld a, $01 ; $4291
 	ld [$c36c], a ; $4293
@@ -364,7 +364,7 @@ Label_02_4291:
 	jr z, Label_02_42a6 ; $429b
 	ld hl, $c880 ; $429d
 	ld de, $d404 ; $42a0
-	call Func_02_42c9 ; $42a3
+	call Copy4Bytes ; $42a3
 Label_02_42a6:
 	ld a, $02 ; $42a6
 	ld [$c36c], a ; $42a8
@@ -373,7 +373,7 @@ Label_02_42a6:
 	jr z, Label_02_42bb ; $42b0
 	ld hl, $c880 ; $42b2
 	ld de, $d408 ; $42b5
-	call Func_02_42c9 ; $42b8
+	call Copy4Bytes ; $42b8
 Label_02_42bb:
 	pop af ; $42bb
 	ld [$c36c], a ; $42bc
@@ -384,7 +384,7 @@ Label_02_42bb:
 	pop bc ; $42c6
 	pop af ; $42c7
 	ret ; $42c8
-Func_02_42c9:
+Copy4Bytes:
 	ld a, [hl+] ; $42c9
 	ld [de], a ; $42ca
 	inc de ; $42cb
@@ -415,33 +415,33 @@ Func_02_42d6:
 	jr z, Label_02_433d ; $42ec
 	ld de, $c880 ; $42ee
 	ld hl, $d400 ; $42f1
-	call Func_02_4347 ; $42f4
+	call CompareNextByte ; $42f4
 	jr z, Label_02_433d ; $42f7
-	call Func_02_4347 ; $42f9
+	call CompareNextByte ; $42f9
 	jr z, Label_02_433d ; $42fc
-	call Func_02_4347 ; $42fe
+	call CompareNextByte ; $42fe
 	jr z, Label_02_433d ; $4301
-	call Func_02_4347 ; $4303
+	call CompareNextByte ; $4303
 	jr z, Label_02_433d ; $4306
 	ld de, $c880 ; $4308
 	ld hl, $d404 ; $430b
-	call Func_02_4347 ; $430e
+	call CompareNextByte ; $430e
 	jr z, Label_02_433d ; $4311
-	call Func_02_4347 ; $4313
+	call CompareNextByte ; $4313
 	jr z, Label_02_433d ; $4316
-	call Func_02_4347 ; $4318
+	call CompareNextByte ; $4318
 	jr z, Label_02_433d ; $431b
-	call Func_02_4347 ; $431d
+	call CompareNextByte ; $431d
 	jr z, Label_02_433d ; $4320
 	ld de, $c880 ; $4322
 	ld hl, $d408 ; $4325
-	call Func_02_4347 ; $4328
+	call CompareNextByte ; $4328
 	jr z, Label_02_433d ; $432b
-	call Func_02_4347 ; $432d
+	call CompareNextByte ; $432d
 	jr z, Label_02_433d ; $4330
-	call Func_02_4347 ; $4332
+	call CompareNextByte ; $4332
 	jr z, Label_02_433d ; $4335
-	call Func_02_4347 ; $4337
+	call CompareNextByte ; $4337
 	jr z, Label_02_433d ; $433a
 	xor a, a ; $433c
 Label_02_433d:
@@ -452,7 +452,7 @@ Label_02_433d:
 	pop hl ; $4344
 	pop de ; $4345
 	ret ; $4346
-Func_02_4347:
+CompareNextByte:
 	ld a, [de] ; $4347
 	cp a, [hl] ; $4348
 	inc de ; $4349
@@ -470,7 +470,7 @@ Func_02_434e:
 	jr nc, Label_02_435a ; $4357
 	inc d ; $4359
 Label_02_435a:
-	call Func_00_0a3a ; $435a
+	call AdvanceRandomSeed ; $435a
 	ld a, h ; $435d
 	ld [de], a ; $435e
 	pop hl ; $435f
@@ -501,16 +501,16 @@ Label_02_437a:
 	call Func_02_42d6 ; $437a
 	or a, a ; $437d
 	jr z, Label_02_439e ; $437e
-	call Func_00_0a3a ; $4380
+	call AdvanceRandomSeed ; $4380
 	ld a, h ; $4383
 	ld [$c880], a ; $4384
-	call Func_00_0a3a ; $4387
+	call AdvanceRandomSeed ; $4387
 	ld a, h ; $438a
 	ld [$c881], a ; $438b
-	call Func_00_0a3a ; $438e
+	call AdvanceRandomSeed ; $438e
 	ld a, h ; $4391
 	ld [$c882], a ; $4392
-	call Func_00_0a3a ; $4395
+	call AdvanceRandomSeed ; $4395
 	ld a, h ; $4398
 	ld [$c883], a ; $4399
 	jr Label_02_437a ; $439c
@@ -520,14 +520,14 @@ Label_02_439e:
 	pop bc ; $43a0
 	pop af ; $43a1
 	ret ; $43a2
-Func_02_43a3:
+InitPlayerRecordFromTemplate:
 	push af ; $43a3
 	ld a, d ; $43a4
 	and a, $03 ; $43a5
 	ld d, a ; $43a7
 	pop af ; $43a8
 	and a, $01 ; $43a9
-	call Func_02_4206 ; $43ab
+	call GetPlayerRecordPtr ; $43ab
 	push bc ; $43ae
 	ld l, c ; $43af
 	ld h, b ; $43b0
@@ -596,7 +596,7 @@ Label_02_4405:
 	dec c ; $4408
 	jr nz, Label_02_4405 ; $4409
 	pop bc ; $440b
-	call Func_02_44e9 ; $440c
+	call RecomputeCharacterStats ; $440c
 	ld hl, wStoryModeNameOfMainCharacter ; $440f
 	ld de, $c800 ; $4412
 	ld c, $08 ; $4415
@@ -606,7 +606,7 @@ Table_02_441b:
 	; $441b, 32 bytes (bytes:16)
 	db $00, $01, $00, $01, $00, $01, $00, $00, $00, $01, $00, $01, $00, $01, $00, $00 ; 0x00
 	db $00, $00, $00, $01, $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10
-Func_02_443b:
+LoadMainCharacterFromRoster:
 	push de ; $443b
 	ld hl, wStoryModeNameOfMainCharacter ; $443c
 	ld c, $04 ; $443f
@@ -616,7 +616,7 @@ Func_02_443b:
 	ld a, d ; $4446
 	and a, $3f ; $4447
 	ld b, a ; $4449
-	call Func_02_41ee ; $444a
+	call GetStoryCharacterRecordPtr ; $444a
 	ld de, wStoryModeNameOfMainCharacter ; $444d
 	call Func_02_447a ; $4450
 	ld hl, $000b ; $4453
@@ -654,11 +654,11 @@ Label_02_447d:
 	jr nz, Label_02_447d ; $4481
 	pop de ; $4483
 	ret ; $4484
-Func_02_4485:
-	call Func_02_4206 ; $4485
+RefreshPlayerStatsAndGetPtr:
+	call GetPlayerRecordPtr ; $4485
 	ld hl, $0018 ; $4488
 	add hl, bc ; $448b
-	call Func_02_44e9 ; $448c
+	call RecomputeCharacterStats ; $448c
 	ld hl, $0018 ; $448f
 	add hl, bc ; $4492
 	ret ; $4493
@@ -670,8 +670,8 @@ Label_02_4498:
 	push bc ; $4499
 	ld c, [hl] ; $449a
 	ld l, b ; $449b
-	call Func_00_091b ; $449c
-	call Func_00_090d ; $449f
+	call SignExtendCToBC ; $449c
+	call SignExtendLToHL ; $449f
 	ld a, l ; $44a2
 	sub a, c ; $44a3
 	ld l, a ; $44a4
@@ -694,7 +694,7 @@ Label_02_4498:
 Func_02_44b7:
 	ld l, [hl] ; $44b7
 	ld h, $00 ; $44b8
-	call Func_00_0926 ; $44ba
+	call MulHLByA ; $44ba
 	push hl ; $44bd
 	ld hl, $0018 ; $44be
 	add hl, bc ; $44c1
@@ -728,7 +728,7 @@ Label_02_44e3:
 Label_02_44e6:
 	ld b, $81 ; $44e6
 	ret ; $44e8
-Func_02_44e9:
+RecomputeCharacterStats:
 	push bc ; $44e9
 	ld hl, $000b ; $44ea
 	add hl, bc ; $44ed
@@ -974,7 +974,7 @@ Label_02_465f:
 	push bc ; $4666
 	ld a, c ; $4667
 	or a, a ; $4668
-	call z, Func_02_468e ; $4669
+	call z, ApplyStatModifiers ; $4669
 	pop bc ; $466c
 	ret ; $466d
 CharIconMasks_02:
@@ -995,7 +995,7 @@ CharIconMasks_02:
 	db $00, $20 ; 0x1a
 	db $00, $40 ; 0x1c
 	db $00, $80 ; 0x1e
-Func_02_468e:
+ApplyStatModifiers:
 	push af ; $468e
 	push bc ; $468f
 	push de ; $4690
@@ -1006,7 +1006,7 @@ Func_02_468e:
 	ld a, [hl] ; $4697
 	and a, $0f ; $4698
 	ld d, $00 ; $469a
-	call Func_02_46b3 ; $469c
+	call ApplyStatModifierRow ; $469c
 	pop bc ; $469f
 	ld hl, $003c ; $46a0
 	add hl, bc ; $46a3
@@ -1014,13 +1014,13 @@ Func_02_468e:
 	swap a ; $46a5
 	and a, $0f ; $46a7
 	ld d, $01 ; $46a9
-	call Func_02_46b3 ; $46ab
+	call ApplyStatModifierRow ; $46ab
 	pop hl ; $46ae
 	pop de ; $46af
 	pop bc ; $46b0
 	pop af ; $46b1
 	ret ; $46b2
-Func_02_46b3:
+ApplyStatModifierRow:
 	push bc ; $46b3
 	ld c, a ; $46b4
 	ld a, d ; $46b5
@@ -1085,9 +1085,9 @@ CharStatClampData_02:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x70
 	db $00, $00, $00, $00, $00, $00, $00, $fe, $fe, $fe, $fe, $00, $00, $00, $00, $00 ; 0x80
 	db $00, $00, $00, $00, $00, $00, $00, $02, $02, $fe, $fe, $00, $00, $00, $00, $00 ; 0x90
-Func_02_478f:
+RefreshMainCharacterStats:
 	ld bc, wStoryModeNameOfMainCharacter ; $478f
-	call Func_02_44e9 ; $4792
+	call RecomputeCharacterStats ; $4792
 	ld hl, wStoryModeNameOfMainCharacter ; $4795
 	ld de, $c800 ; $4798
 	ld c, $08 ; $479b
@@ -1113,16 +1113,16 @@ Label_02_47bb:
 	ld a, b ; $47bb
 	ld [$c83c], a ; $47bc
 	ld bc, $c800 ; $47bf
-	call Func_02_44e9 ; $47c2
+	call RecomputeCharacterStats ; $47c2
 	ret ; $47c5
-Func_02_47c6:
+RecomputeStatsWithoutRacket:
 	ld hl, wEquippedRacket ; $47c6
 	ld a, [hl] ; $47c9
 	push af ; $47ca
 	xor a, a ; $47cb
 	ld [hl], a ; $47cc
 	ld bc, wStoryModeNameOfMainCharacter ; $47cd
-	call Func_02_44e9 ; $47d0
+	call RecomputeCharacterStats ; $47d0
 	pop af ; $47d3
 	ld [wEquippedRacket], a ; $47d4
 	ret ; $47d7
@@ -1168,9 +1168,9 @@ EquipRecords_02:
 	db $09, $0e, $12, $16, $1b, $20, $27, $2f, $fd, $04, $09, $0d, $12, $17, $1d, $24 ; 0x1a0
 	db $2d, $04, $0a, $0f, $13, $17, $1c, $21, $28, $30, $06, $0b, $0f, $12, $16, $19 ; 0x1b0
 	db $1e, $23, $2a, $ff ; 0x1c0
-Func_02_49be:
-	call Func_02_4206 ; $49be
-Func_02_49c1:
+LevelUpPlayer:
+	call GetPlayerRecordPtr ; $49be
+LevelUpPlayerRecord:
 	ld hl, $0018 ; $49c1
 	add hl, bc ; $49c4
 	ld a, [hl] ; $49c5
@@ -1208,7 +1208,7 @@ Label_02_49f7:
 	ld hl, $0018 ; $49f7
 	add hl, bc ; $49fa
 	inc [hl] ; $49fb
-	call Func_02_44e9 ; $49fc
+	call RecomputeCharacterStats ; $49fc
 Label_02_49ff:
 	ret ; $49ff
 Func_02_4a00:
@@ -1224,7 +1224,7 @@ Func_02_4a00:
 	ld a, h ; $4a0e
 	ldh [$ffb3], a ; $4a0f
 	ld a, e ; $4a11
-	call Func_02_4206 ; $4a12
+	call GetPlayerRecordPtr ; $4a12
 	push bc ; $4a15
 	push bc ; $4a16
 	push de ; $4a17
@@ -1236,7 +1236,7 @@ Func_02_4a00:
 	call CopyMemoryFast ; $4a1f
 	pop de ; $4a22
 	pop bc ; $4a23
-	call Func_02_49c1 ; $4a24
+	call LevelUpPlayerRecord ; $4a24
 	ld hl, $ffb2 ; $4a27
 	ld a, [hl+] ; $4a2a
 	ld h, [hl] ; $4a2b
@@ -1501,7 +1501,7 @@ Unused_02_ListForEach:
 Label_02_4ba3:
 	push hl ; $4ba3
 	ld d, $ff ; $4ba4
-	call Func_02_49be ; $4ba6
+	call LevelUpPlayer ; $4ba6
 	pop hl ; $4ba9
 	ld a, [hl+] ; $4baa
 Label_02_4bab:
@@ -1510,7 +1510,7 @@ Label_02_4bab:
 	push af ; $4bae
 	push hl ; $4baf
 	ld d, $00 ; $4bb0
-	call Func_02_49be ; $4bb2
+	call LevelUpPlayer ; $4bb2
 	pop hl ; $4bb5
 	pop af ; $4bb6
 	dec a ; $4bb7
@@ -1523,7 +1523,7 @@ Label_02_4bbb:
 	push af ; $4bbe
 	push hl ; $4bbf
 	ld d, $01 ; $4bc0
-	call Func_02_49be ; $4bc2
+	call LevelUpPlayer ; $4bc2
 	pop hl ; $4bc5
 	pop af ; $4bc6
 	dec a ; $4bc7
@@ -1536,7 +1536,7 @@ Label_02_4bcb:
 	push af ; $4bce
 	push hl ; $4bcf
 	ld d, $02 ; $4bd0
-	call Func_02_49be ; $4bd2
+	call LevelUpPlayer ; $4bd2
 	pop hl ; $4bd5
 	pop af ; $4bd6
 	dec a ; $4bd7
@@ -1549,7 +1549,7 @@ Label_02_4bdb:
 	push af ; $4bde
 	push hl ; $4bdf
 	ld d, $03 ; $4be0
-	call Func_02_49be ; $4be2
+	call LevelUpPlayer ; $4be2
 	pop hl ; $4be5
 	pop af ; $4be6
 	dec a ; $4be7
@@ -1621,7 +1621,7 @@ NameTextRemap_02:
 	db $09, $09, $09, $04, $04, $04, $08, $08, $08, $0c, $0c, $0c, $0c, $0c, $0c, $0c ; 0x20
 	db $0c, $1a, $1a, $1f, $0c, $0c, $0c, $0c, $0c, $0c, $0c, $1a, $1a, $1a, $1a, $1a ; 0x30
 	db $1a, $1f, $1f, $1f, $1a, $1a, $1a ; 0x40
-Func_02_4cb1:
+SetStorySlotFlagB:
 	push af ; $4cb1
 	ld a, [$c36c] ; $4cb2
 	add a, a ; $4cb5
@@ -1648,7 +1648,7 @@ SaveFlagPtrs_02_4ccc:
 	dw $04a0 ; record 1
 	dw $04c0 ; record 2
 	dw $04e0 ; record 3
-Func_02_4cd4:
+TestStorySlotFlagB:
 	ld a, [$c36c] ; $4cd4
 	add a, a ; $4cd7
 	add a, $cc ; $4cd8
@@ -1666,7 +1666,7 @@ Func_02_4cd4:
 Label_02_4cea:
 	ld a, $00 ; $4cea
 	ret ; $4cec
-Func_02_4ced:
+SetStorySlotFlagA:
 	push af ; $4ced
 	ld a, [$c36c] ; $4cee
 	add a, a ; $4cf1
@@ -1693,7 +1693,7 @@ SaveFlagPtrs_02_4d08:
 	dw $0420 ; record 1
 	dw $0440 ; record 2
 	dw $0460 ; record 3
-Func_02_4d10:
+TestStorySlotFlagA:
 	ld a, [$c36c] ; $4d10
 	add a, a ; $4d13
 	add a, $08 ; $4d14
@@ -1719,7 +1719,7 @@ Func_02_4d29:
 	ld a, c ; $4d2d
 	pop bc ; $4d2e
 	ret ; $4d2f
-Func_02_4d30:
+AddExpCapped:
 	ld a, [hl] ; $4d30
 	add a, e ; $4d31
 	ld [hl+], a ; $4d32
@@ -1732,7 +1732,7 @@ Func_02_4d30:
 	dec hl ; $4d3a
 	dec hl ; $4d3b
 	ld de, Value100000_02 ; $4d3c
-	call Func_02_4d54 ; $4d3f
+	call Compare24Bit ; $4d3f
 	ret z ; $4d42
 	dec hl ; $4d43
 	dec hl ; $4d44
@@ -1750,7 +1750,7 @@ Func_02_4d30:
 Value100000_02:
 	; $4d50, 4 bytes (bytes:4)
 	db $9f, $86, $01, $c9 ; 0x00
-Func_02_4d54:
+Compare24Bit:
 	ld a, [de] ; $4d54
 	inc de ; $4d55
 	sub a, [hl] ; $4d56
@@ -1763,8 +1763,8 @@ Func_02_4d54:
 	sbc a, [hl] ; $4d5d
 	bit 7, a ; $4d5e
 	ret ; $4d60
-Func_02_4d61:
-	call Func_02_420e ; $4d61
+ClearCa00RecordExp:
+	call GetCa00RecordPtr ; $4d61
 	ld hl, $002c ; $4d64
 	add hl, bc ; $4d67
 	xor a, a ; $4d68
@@ -1777,23 +1777,23 @@ Func_02_4d6d:
 	ret z ; $4d70
 Func_02_4d71:
 	call Func_02_4d7e ; $4d71
-Func_02_4d74:
-	call Func_02_420e ; $4d74
+AddExpToCa00Record:
+	call GetCa00RecordPtr ; $4d74
 	ld hl, $002c ; $4d77
 	add hl, bc ; $4d7a
-	jp Func_02_4d30 ; $4d7b
+	jp AddExpCapped ; $4d7b
 Func_02_4d7e:
 	ret ; $4d7e
 Table_02_4d7f:
 	; $4d7f, 16 bytes (bytes:16)
 	db $02, $02, $03, $04, $05, $07, $07, $07, $02, $02, $02, $03, $02, $02, $02, $02 ; 0x00
-Func_02_4d8f:
-	call Func_02_4206 ; $4d8f
+AddPlayerExp:
+	call GetPlayerRecordPtr ; $4d8f
 	ld hl, $002c ; $4d92
 	add hl, bc ; $4d95
-	jp Func_02_4d30 ; $4d96
-Func_02_4d99:
-	call Func_02_4206 ; $4d99
+	jp AddExpCapped ; $4d96
+HasReachedNextLevelExp:
+	call GetPlayerRecordPtr ; $4d99
 	ld hl, $0018 ; $4d9c
 	add hl, bc ; $4d9f
 	ld a, [hl] ; $4da0
@@ -1822,13 +1822,13 @@ Label_02_4db7:
 	add a, c ; $4dbe
 	ld e, a ; $4dbf
 	ld d, b ; $4dc0
-	jp Func_02_4d54 ; $4dc1
+	jp Compare24Bit ; $4dc1
 Label_02_4dc4:
 	ld a, $80 ; $4dc4
 	or a, a ; $4dc6
 	ret ; $4dc7
-Func_02_4dc8:
-	call Func_02_4206 ; $4dc8
+GetExpRemainingToNextLevel:
+	call GetPlayerRecordPtr ; $4dc8
 	ld hl, $0018 ; $4dcb
 	add hl, bc ; $4dce
 	ld a, [hl] ; $4dcf
@@ -1873,8 +1873,8 @@ Label_02_4de6:
 Label_02_4dfe:
 	ld hl, $0000 ; $4dfe
 	ret ; $4e01
-Func_02_4e02:
-	call Func_02_4206 ; $4e02
+GetExpProgressInCurrentLevel:
+	call GetPlayerRecordPtr ; $4e02
 	ld hl, $0018 ; $4e05
 	add hl, bc ; $4e08
 	ld a, [hl] ; $4e09
@@ -1918,7 +1918,7 @@ Label_02_4e20:
 Label_02_4e36:
 	ld hl, $0000 ; $4e36
 	ret ; $4e39
-Func_02_4e3a:
+GetExpRequiredForLevel:
 	push af ; $4e3a
 	dec a ; $4e3b
 	ld h, $00 ; $4e3c
@@ -2013,7 +2013,7 @@ Func_02_4fa6:
 	call Func_00_1d20 ; $4fbe
 	ld c, $7f ; $4fc1
 	call Func_00_1d2e ; $4fc3
-	farcall FarPtr_02_02 ; $4fc6
+	farcall FarPtr_InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9
 Label_02_4fcb:
 	farcall FarPtr_CheckStorySlot ; $4fcb
@@ -2199,15 +2199,15 @@ Label_02_502a:
 	call PrintDecimalByte ; $513b
 	pop de ; $513e
 Label_02_513f:
-	call Func_00_2631 ; $513f
-	call Func_00_0a3a ; $5142
+	call AdvanceFrame ; $513f
+	call AdvanceRandomSeed ; $5142
 	ldh a, [hInputPressed] ; $5145
 	bit 6, a ; $5147
 	jr z, Label_02_5159 ; $5149
 	push de ; $514b
 	ld a, $00 ; $514c
 	ld d, $00 ; $514e
-	call Func_02_49be ; $5150
+	call LevelUpPlayer ; $5150
 	pop de ; $5153
 	sound $5e ; $5154
 	jp Label_02_502a ; $5156
@@ -2217,7 +2217,7 @@ Label_02_5159:
 	push de ; $515d
 	ld a, $00 ; $515e
 	ld d, $01 ; $5160
-	call Func_02_49be ; $5162
+	call LevelUpPlayer ; $5162
 	pop de ; $5165
 	sound $5e ; $5166
 	jp Label_02_502a ; $5168
@@ -2227,7 +2227,7 @@ Label_02_516b:
 	push de ; $516f
 	ld a, $00 ; $5170
 	ld d, $02 ; $5172
-	call Func_02_49be ; $5174
+	call LevelUpPlayer ; $5174
 	pop de ; $5177
 	sound $5e ; $5178
 	jp Label_02_502a ; $517a
@@ -2237,7 +2237,7 @@ Label_02_517d:
 	push de ; $5181
 	ld a, $00 ; $5182
 	ld d, $03 ; $5184
-	call Func_02_49be ; $5186
+	call LevelUpPlayer ; $5186
 	pop de ; $5189
 	sound $5e ; $518a
 	jp Label_02_502a ; $518c
@@ -2259,7 +2259,7 @@ Label_02_51a2:
 	push bc ; $51a7
 	push de ; $51a8
 	push hl ; $51a9
-	farcall FarPtr_02_02 ; $51aa
+	farcall FarPtr_InitStoryModeState ; $51aa
 	pop hl ; $51ad
 	pop de ; $51ae
 	pop bc ; $51af
@@ -2271,7 +2271,7 @@ Label_02_51a2:
 	xor a, a ; $51b6
 	push de ; $51b7
 	res 2, d ; $51b8
-	call Func_02_43a3 ; $51ba
+	call InitPlayerRecordFromTemplate ; $51ba
 	pop de ; $51bd
 	bit 2, d ; $51be
 	jp z, Label_02_502a ; $51c0
@@ -2310,7 +2310,7 @@ MenuTilemaps_02:
 	db $20, $20, $20, $20, $20, $20, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x20
 	db $09, $0a, $0b, $0c, $0d, $00, $00, $00, $00, $00, $00, $00, $00, $4d, $41, $52 ; 0x30
 	db $49, $4f, $20, $47, $4f, $4c, $46, $20, $47, $42, $20, $43, $48 ; 0x40
-Func_02_5247:
+LoadStorySlot:
 	push de ; $5247
 	ld hl, $c800 ; $5248
 	ld b, a ; $524b
@@ -2380,7 +2380,7 @@ Func_02_52aa:
 	bit 7, a ; $52ae
 	jr z, Label_02_52c4 ; $52b0
 	res 7, a ; $52b2
-	call Func_02_5247 ; $52b4
+	call LoadStorySlot ; $52b4
 	ld hl, $ca00 ; $52b7
 	ld de, $ca80 ; $52ba
 	ld c, $08 ; $52bd
@@ -2510,7 +2510,7 @@ CharGroupTable_02:
 	db $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21 ; 0x60
 	db $11, $11, $20, $22, $30, $21, $21, $21, $12, $12, $12, $12, $12, $12, $12, $12 ; 0x70
 	db $11, $11, $11, $11, $30, $22, $12, $12, $21, $21, $21, $21, $21, $21, $21, $21 ; 0x80
-Func_02_5eb3:
+GetCharGroupEntry:
 	add a, a ; $5eb3
 	add a, a ; $5eb4
 	add a, a ; $5eb5
@@ -2551,7 +2551,7 @@ Label_02_5ed5:
 Label_02_5edf:
 	ld a, $01 ; $5edf
 	ret ; $5ee1
-Func_02_5ee2:
+DoesCharGroupRowContain:
 	add a, a ; $5ee2
 	add a, a ; $5ee3
 	add a, a ; $5ee4

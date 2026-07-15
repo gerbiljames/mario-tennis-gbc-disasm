@@ -816,7 +816,7 @@ Func_39_4cab:
 	ld hl, $d460 ; $4cdf
 	ld de, $b860 ; $4ce2
 	call Func_00_0480 ; $4ce5
-	call Func_00_2631 ; $4ce8
+	call AdvanceFrame ; $4ce8
 	ld c, $06 ; $4ceb
 	ld hl, $d0e0 ; $4ced
 	ld de, $98e0 ; $4cf0
@@ -853,7 +853,7 @@ Label_39_4d1a:
 	ld hl, $d480 ; $4d41
 	ld de, $b880 ; $4d44
 	call Func_00_0480 ; $4d47
-	call Func_00_2631 ; $4d4a
+	call AdvanceFrame ; $4d4a
 	ld c, $06 ; $4d4d
 	ld hl, $d140 ; $4d4f
 	ld de, $9940 ; $4d52
@@ -882,7 +882,7 @@ Label_39_4d65:
 	ld hl, $d480 ; $4d8c
 	ld de, $b880 ; $4d8f
 	call Func_00_0480 ; $4d92
-	call Func_00_2631 ; $4d95
+	call AdvanceFrame ; $4d95
 	ld c, $06 ; $4d98
 	ld hl, $d120 ; $4d9a
 	ld de, $9920 ; $4d9d
@@ -901,7 +901,7 @@ Label_39_4db0:
 	ld hl, $d400 ; $4dbd
 	ld de, $b800 ; $4dc0
 	call Func_00_0480 ; $4dc3
-	call Func_00_2631 ; $4dc6
+	call AdvanceFrame ; $4dc6
 	ld c, $06 ; $4dc9
 	ld hl, $d0e0 ; $4dcb
 	ld de, $98e0 ; $4dce

@@ -83,7 +83,7 @@ Func_07_4048:
 	call Func_07_4b38 ; $4054
 	jr nc, Label_07_4076 ; $4057
 	push af ; $4059
-	call Func_00_28f8 ; $405a
+	call ResetSerialState ; $405a
 	pop af ; $405d
 	scf ; $405e
 	jr Label_07_4076 ; $405f
@@ -98,7 +98,7 @@ Label_07_4061:
 	ldh [$ffc2], a ; $406b
 	call Func_07_4afe ; $406d
 	jr nc, Label_07_4076 ; $4070
-	call Func_00_28f8 ; $4072
+	call ResetSerialState ; $4072
 	scf ; $4075
 Label_07_4076:
 	ret ; $4076
@@ -994,7 +994,7 @@ Label_07_45fb:
 	ld a, $83 ; $4604
 	ldh [rSC], a ; $4606
 	pop af ; $4608
-	call Func_00_2631 ; $4609
+	call AdvanceFrame ; $4609
 	ldh a, [$ffc0] ; $460c
 	cp a, $00 ; $460e
 	jr z, Label_07_461d ; $4610
@@ -1094,7 +1094,7 @@ Func_07_467f:
 	ldh [rSC], a ; $4693
 	pop af ; $4695
 	ei ; $4696
-	call Func_00_2631 ; $4697
+	call AdvanceFrame ; $4697
 	ldh a, [$ffc0] ; $469a
 	ld b, a ; $469c
 	cp a, $00 ; $469d
@@ -1113,7 +1113,7 @@ Label_07_46af:
 	ld a, [hl] ; $46b6
 	cp a, $0a ; $46b7
 	jr nc, Label_07_46c1 ; $46b9
-	call Func_00_2814 ; $46bb
+	call WaitVBlank ; $46bb
 	jp Func_07_467f ; $46be
 Label_07_46c1:
 	call Func_00_284b ; $46c1
@@ -1129,11 +1129,11 @@ Label_07_46c7:
 	ld a, [hl] ; $46d2
 	cp a, $02 ; $46d3
 	jr nc, Label_07_46e0 ; $46d5
-	call Func_00_2814 ; $46d7
-	call Func_00_2814 ; $46da
+	call WaitVBlank ; $46d7
+	call WaitVBlank ; $46da
 	jp Func_07_467f ; $46dd
 Label_07_46e0:
-	call Func_00_28b9 ; $46e0
+	call InitSerialLink ; $46e0
 	call Func_00_284b ; $46e3
 Label_07_46e6:
 	ld a, b ; $46e6
@@ -1146,7 +1146,7 @@ Func_07_46ef:
 	call Func_07_4a29 ; $46ef
 	jr c, Label_07_470c ; $46f2
 	push bc ; $46f4
-	call Func_00_2631 ; $46f5
+	call AdvanceFrame ; $46f5
 	pop bc ; $46f8
 	di ; $46f9
 	cp a, $00 ; $46fa
@@ -1448,7 +1448,7 @@ Label_07_48f1:
 Func_07_48f6:
 	xor a, a ; $48f6
 	ld [$c33f], a ; $48f7
-	call Func_00_28b9 ; $48fa
+	call InitSerialLink ; $48fa
 	ret ; $48fd
 Func_07_48fe:
 	ld hl, wTextBuffer ; $48fe
@@ -1514,7 +1514,7 @@ Func_07_496e:
 	push hl ; $496e
 	push de ; $496f
 	push bc ; $4970
-	call Func_00_2814 ; $4971
+	call WaitVBlank ; $4971
 	call DisableLCDSafely ; $4974
 	di ; $4977
 	ldh a, [rIF] ; $4978
@@ -1749,7 +1749,7 @@ Label_07_4ae8:
 	ldh [$ffde], a ; $4aef
 	ld a, $01 ; $4af1
 	ldh [$ffdf], a ; $4af3
-	call Func_00_2a0e ; $4af5
+	call EnableTimerInterrupt ; $4af5
 	xor a, a ; $4af8
 	ldh [$ffe7], a ; $4af9
 	ldh [$ffe9], a ; $4afb
@@ -2959,7 +2959,7 @@ Func_07_570d:
 	ld l, a ; $5710
 	ld h, $00 ; $5711
 	ld a, [$df6a] ; $5713
-	call Func_00_0926 ; $5716
+	call MulHLByA ; $5716
 	add hl, hl ; $5719
 	add hl, hl ; $571a
 	add hl, hl ; $571b
@@ -3986,9 +3986,9 @@ Func_07_5df9:
 	ld c, $03 ; $5e89
 	farcall FarPtr_02_18 ; $5e8b
 	ld a, $00 ; $5e8e
-	farcall FarPtr_02_3c ; $5e90
+	farcall FarPtr_SetStorySlotFlagB ; $5e90
 	ld a, $01 ; $5e93
-	farcall FarPtr_02_40 ; $5e95
+	farcall FarPtr_SetStorySlotFlagA ; $5e95
 	ld a, $fe ; $5e98
 	ld [$c4ee], a ; $5e9a
 	farcall FarPtr_08_04 ; $5e9d

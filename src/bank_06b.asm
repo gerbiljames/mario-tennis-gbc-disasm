@@ -87,7 +87,7 @@ Label_6b_407c:
 	ld a, [wIntroCutsceneCheck] ; $407c
 	or a, a ; $407f
 	jr nz, Label_6b_40bc ; $4080
-	call Func_00_2631 ; $4082
+	call AdvanceFrame ; $4082
 	ld a, [$cb3f] ; $4085
 	ld l, a ; $4088
 	ld h, $00 ; $4089
@@ -278,7 +278,7 @@ Palettes_6b_42b2:
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 	ld hl, $526a ; $42f2
-	call Func_00_1bcb ; $42f5
+	call UnregisterFrameTask ; $42f5
 	xor a, a ; $42f8
 	ld [$cb40], a ; $42f9
 	ld [$cb42], a ; $42fc
@@ -310,7 +310,7 @@ Label_6b_4323:
 	ld de, $b880 ; $433d
 	ld c, $0a ; $4340
 	call Func_00_0480 ; $4342
-	call Func_00_2631 ; $4345
+	call AdvanceFrame ; $4345
 	ld hl, $d920 ; $4348
 	ld de, $9920 ; $434b
 	ld c, $0a ; $434e
@@ -388,7 +388,7 @@ Label_6b_43cc:
 	call Func_00_1da4 ; $444f
 	jp Label_6b_407c ; $4452
 	ld hl, $52f9 ; $4455
-	call Func_00_1bcb ; $4458
+	call UnregisterFrameTask ; $4458
 	xor a, a ; $445b
 	ld [$cb40], a ; $445c
 	ld [$cb43], a ; $445f
@@ -418,7 +418,7 @@ Label_6b_43cc:
 	ld de, $b880 ; $449e
 	ld c, $0a ; $44a1
 	call Func_00_0480 ; $44a3
-	call Func_00_2631 ; $44a6
+	call AdvanceFrame ; $44a6
 	ld hl, $d920 ; $44a9
 	ld de, $9920 ; $44ac
 	ld c, $0a ; $44af
@@ -515,12 +515,12 @@ Label_6b_43cc:
 	pop af ; $45d9
 	wram_bank ; $45da
 	ld hl, $526a ; $45de
-	call Func_00_1bcb ; $45e1
+	call UnregisterFrameTask ; $45e1
 	ld hl, $53db ; $45e4
-	call Func_00_1bcb ; $45e7
+	call UnregisterFrameTask ; $45e7
 	xor a, a ; $45ea
 	ldh [$ff8b], a ; $45eb
-	call Func_00_2631 ; $45ed
+	call AdvanceFrame ; $45ed
 	ldh a, [hWramBank] ; $45f0
 	push af ; $45f2
 	wram_bank $03 ; $45f3
@@ -535,8 +535,8 @@ Label_6b_43cc:
 	pop af ; $460f
 	wram_bank ; $4610
 	ld hl, $52f9 ; $4614
-	call Func_00_1bcb ; $4617
-	call Func_00_2631 ; $461a
+	call UnregisterFrameTask ; $4617
+	call AdvanceFrame ; $461a
 	jp Label_6b_40af ; $461d
 	ld a, [$cb40] ; $4620
 	inc a ; $4623
@@ -637,7 +637,7 @@ Label_6b_46ce:
 	ld de, $b8c0 ; $470d
 	ld c, $10 ; $4710
 	call Func_00_0480 ; $4712
-	call Func_00_2631 ; $4715
+	call AdvanceFrame ; $4715
 	ld hl, $d080 ; $4718
 	ld de, $9880 ; $471b
 	ld c, $04 ; $471e
@@ -646,7 +646,7 @@ Label_6b_46ce:
 	ld de, $b880 ; $4726
 	ld c, $04 ; $4729
 	call Func_00_0480 ; $472b
-	call Func_00_2631 ; $472e
+	call AdvanceFrame ; $472e
 	pop af ; $4731
 	wram_bank ; $4732
 	jp Label_6b_407c ; $4736
@@ -694,7 +694,7 @@ Palettes_6b_475a:
 	call Func_00_1d20 ; $47c6
 	call Func_00_1da4 ; $47c9
 	ld hl, $7366 ; $47cc
-	call Func_00_1bcb ; $47cf
+	call UnregisterFrameTask ; $47cf
 	xor a, a ; $47d2
 	ldh [$ff8b], a ; $47d3
 	jp Label_6b_40af ; $47d5
@@ -725,7 +725,7 @@ Palettes_6b_475a:
 	call Func_00_1d20 ; $4815
 	call Func_00_1da4 ; $4818
 	ld hl, $7395 ; $481b
-	call Func_00_1bcb ; $481e
+	call UnregisterFrameTask ; $481e
 	xor a, a ; $4821
 	ldh [$ff8b], a ; $4822
 	jp Label_6b_40af ; $4824
@@ -756,7 +756,7 @@ Palettes_6b_475a:
 	call Func_00_1d20 ; $4864
 	call Func_00_1da4 ; $4867
 	ld hl, $73c4 ; $486a
-	call Func_00_1bcb ; $486d
+	call UnregisterFrameTask ; $486d
 	xor a, a ; $4870
 	ldh [$ff8b], a ; $4871
 	jp Label_6b_40af ; $4873
@@ -965,7 +965,7 @@ Palettes_6b_4a58:
 	ld de, $bcc0 ; $4aac
 	ld c, $10 ; $4aaf
 	call Func_00_0480 ; $4ab1
-	call Func_00_2631 ; $4ab4
+	call AdvanceFrame ; $4ab4
 	ld hl, wShortTextBuffer ; $4ab7
 	ld de, $9c80 ; $4aba
 	ld c, $04 ; $4abd
@@ -974,7 +974,7 @@ Palettes_6b_4a58:
 	ld de, $bc80 ; $4ac5
 	ld c, $04 ; $4ac8
 	call Func_00_0480 ; $4aca
-	call Func_00_2631 ; $4acd
+	call AdvanceFrame ; $4acd
 	ld hl, Palettes_6b_4c00 ; $4ad0
 	ld de, $0107 ; $4ad3
 	call LoadPaletteShadow ; $4ad6
@@ -1000,7 +1000,7 @@ Palettes_6b_4a58:
 	ld de, $be60 ; $4b0f
 	ld c, $10 ; $4b12
 	call Func_00_0480 ; $4b14
-	call Func_00_2631 ; $4b17
+	call AdvanceFrame ; $4b17
 	ld hl, $d160 ; $4b1a
 	ld de, $9d60 ; $4b1d
 	ld c, $10 ; $4b20
@@ -1009,7 +1009,7 @@ Palettes_6b_4a58:
 	ld de, $bd60 ; $4b28
 	ld c, $10 ; $4b2b
 	call Func_00_0480 ; $4b2d
-	call Func_00_2631 ; $4b30
+	call AdvanceFrame ; $4b30
 	ld a, $48 ; $4b33
 	ld [$cb44], a ; $4b35
 	ldh [$ff8a], a ; $4b38
@@ -1024,7 +1024,7 @@ Palettes_6b_4a58:
 	ld de, $bc60 ; $4b50
 	ld c, $10 ; $4b53
 	call Func_00_0480 ; $4b55
-	call Func_00_2631 ; $4b58
+	call AdvanceFrame ; $4b58
 	ld hl, $d000 ; $4b5b
 	ld de, $9c00 ; $4b5e
 	ld c, $08 ; $4b61
@@ -1036,33 +1036,33 @@ Palettes_6b_4a58:
 	ld hl, Palettes_6b_4c00 ; $4b71
 	ld de, $0107 ; $4b74
 	call LoadPaletteShadow ; $4b77
-	call Func_00_2631 ; $4b7a
+	call AdvanceFrame ; $4b7a
 	wram_bank $01 ; $4b7d
 	ld hl, $d000 ; $4b83
 	ld de, $9000 ; $4b86
 	ld c, $20 ; $4b89
 	call Func_00_0480 ; $4b8b
-	call Func_00_2631 ; $4b8e
+	call AdvanceFrame ; $4b8e
 	ld hl, $d200 ; $4b91
 	ld de, $9200 ; $4b94
 	ld c, $20 ; $4b97
 	call Func_00_0480 ; $4b99
-	call Func_00_2631 ; $4b9c
+	call AdvanceFrame ; $4b9c
 	ld hl, $d400 ; $4b9f
 	ld de, $9400 ; $4ba2
 	ld c, $20 ; $4ba5
 	call Func_00_0480 ; $4ba7
-	call Func_00_2631 ; $4baa
+	call AdvanceFrame ; $4baa
 	ld hl, $d600 ; $4bad
 	ld de, $9600 ; $4bb0
 	ld c, $20 ; $4bb3
 	call Func_00_0480 ; $4bb5
-	call Func_00_2631 ; $4bb8
+	call AdvanceFrame ; $4bb8
 	ld hl, $d800 ; $4bbb
 	ld de, $8800 ; $4bbe
 	ld c, $20 ; $4bc1
 	call Func_00_0480 ; $4bc3
-	call Func_00_2631 ; $4bc6
+	call AdvanceFrame ; $4bc6
 	xor a, a ; $4bc9
 	ld [$cb40], a ; $4bca
 	jp Label_6b_407c ; $4bcd
@@ -1080,7 +1080,7 @@ Label_6b_4be3:
 	ld [$cb40], a ; $4be7
 	jp Label_6b_407c ; $4bea
 	ld hl, $7569 ; $4bed
-	call Func_00_1bcb ; $4bf0
+	call UnregisterFrameTask ; $4bf0
 	wram_bank $03 ; $4bf3
 	ld a, $00 ; $4bf9
 	ldh [$ff98], a ; $4bfb
@@ -1293,7 +1293,7 @@ Func_6b_51ae:
 	call Func_00_1d2e ; $51cc
 	call Func_00_1da4 ; $51cf
 Label_6b_51d2:
-	call Func_00_2631 ; $51d2
+	call AdvanceFrame ; $51d2
 	ld a, [$cb40] ; $51d5
 	inc a ; $51d8
 	ld [$cb40], a ; $51d9
@@ -1308,7 +1308,7 @@ Func_6b_51e7:
 	ld a, $40 ; $51e7
 	ldh [$ff8a], a ; $51e9
 Label_6b_51eb:
-	call Func_00_2631 ; $51eb
+	call AdvanceFrame ; $51eb
 	ld a, [$cb40] ; $51ee
 	inc a ; $51f1
 	ld [$cb40], a ; $51f2
@@ -1766,7 +1766,7 @@ Label_6b_72cf:
 	ret ; $72d5
 Label_6b_72d6:
 	ld hl, $72af ; $72d6
-	call Func_00_1bcb ; $72d9
+	call UnregisterFrameTask ; $72d9
 	ret ; $72dc
 	ldh a, [$ff8c] ; $72dd
 	and a, $03 ; $72df
@@ -1801,7 +1801,7 @@ Label_6b_730d:
 	ret ; $7313
 Label_6b_7314:
 	ld hl, $72dd ; $7314
-	call Func_00_1bcb ; $7317
+	call UnregisterFrameTask ; $7317
 	ret ; $731a
 	ldh a, [$ff8c] ; $731b
 	and a, $03 ; $731d
@@ -1844,7 +1844,7 @@ Label_6b_7358:
 	ret ; $735e
 Label_6b_735f:
 	ld hl, $731b ; $735f
-	call Func_00_1bcb ; $7362
+	call UnregisterFrameTask ; $7362
 	ret ; $7365
 	ld a, [$cb40] ; $7366
 	cp a, $10 ; $7369
@@ -2009,7 +2009,7 @@ Func_6b_75af:
 	ld [$d800], a ; $765c
 Label_6b_765f:
 	call Func_6b_771f ; $765f
-	call Func_00_2631 ; $7662
+	call AdvanceFrame ; $7662
 	ldh a, [$ff94] ; $7665
 	bit 0, a ; $7667
 	jr nz, Label_6b_7680 ; $7669

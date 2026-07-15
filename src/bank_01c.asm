@@ -12,8 +12,8 @@ FarPtr_1c_08:
 	dw Func_1c_48c9 ; $4008
 FarPtr_1c_0a:
 	dw Func_1c_48ec ; $400a
-FarPtr_1c_0c:
-	dw Func_1c_7300 ; $400c
+FarPtr_BackupCharData:
+	dw BackupCharData ; $400c
 FarPtr_1c_0e:
 	dw Func_1c_731f ; $400e
 FarPtr_1c_10:
@@ -38,7 +38,7 @@ Func_1c_401a:
 	jr nz, Label_1c_4038 ; $402d
 	push bc ; $402f
 	ld a, c ; $4030
-	farcall FarPtr_02_2a ; $4031
+	farcall FarPtr_HasReachedNextLevelExp ; $4031
 	jp nz, Label_1c_40f1 ; $4034
 	pop bc ; $4037
 Label_1c_4038:
@@ -63,7 +63,7 @@ Label_1c_4038:
 	or a, a ; $4069
 	jr nz, Label_1c_40af ; $406a
 	call EnableLCD ; $406c
-	call Func_00_2631 ; $406f
+	call AdvanceFrame ; $406f
 	ld a, $01 ; $4072
 	ld hl, $4e54 ; $4074
 	call RegisterFrameTask ; $4077
@@ -99,16 +99,16 @@ Label_1c_40b2:
 	ld c, $08 ; $40c4
 	call CopyMemoryFast ; $40c6
 	ld hl, $4e54 ; $40c9
-	call Func_00_1bcb ; $40cc
+	call UnregisterFrameTask ; $40cc
 	ld hl, $5049 ; $40cf
-	call Func_00_1bcb ; $40d2
+	call UnregisterFrameTask ; $40d2
 	ld hl, $45fa ; $40d5
-	call Func_00_1bcb ; $40d8
+	call UnregisterFrameTask ; $40d8
 	sound $00 ; $40db
 	call DisableLCDSafely ; $40dd
 	farcall FarPtr_01_0a ; $40e0
 	call EnableLCD ; $40e3
-	call Func_00_2631 ; $40e6
+	call AdvanceFrame ; $40e6
 	pop bc ; $40e9
 	pop af ; $40ea
 	wram_bank ; $40eb
@@ -234,11 +234,11 @@ Label_1c_41b2:
 	ld [$d00d], a ; $41bf
 Label_1c_41c2:
 	ld a, [$cb00] ; $41c2
-	farcall FarPtr_02_2a ; $41c5
+	farcall FarPtr_HasReachedNextLevelExp ; $41c5
 	jr nz, Label_1c_41d8 ; $41c8
 	ld a, [$cb00] ; $41ca
 	ld d, $00 ; $41cd
-	farcall FarPtr_02_0a ; $41cf
+	farcall FarPtr_LevelUpPlayer ; $41cf
 	ld hl, $d003 ; $41d2
 	inc [hl] ; $41d5
 	jr Label_1c_41c2 ; $41d6
@@ -762,7 +762,7 @@ Func_1c_4682:
 	call Func_1c_48c9 ; $4684
 	wram_bank $06 ; $4687
 Label_1c_468d:
-	call Func_00_2631 ; $468d
+	call AdvanceFrame ; $468d
 	ld a, [$d002] ; $4690
 	or a, a ; $4693
 	jr nz, Label_1c_468d ; $4694
@@ -1056,7 +1056,7 @@ Label_1c_4979:
 	ld de, $b9e0 ; $4993
 	ld c, $06 ; $4996
 	call Func_00_0480 ; $4998
-	call Func_00_2631 ; $499b
+	call AdvanceFrame ; $499b
 	ret ; $499e
 Label_1c_499f:
 	wram_bank $03 ; $499f
@@ -1069,7 +1069,7 @@ Label_1c_499f:
 	ld de, $b8e0 ; $49b9
 	ld c, $10 ; $49bc
 	call Func_00_0480 ; $49be
-	call Func_00_2631 ; $49c1
+	call AdvanceFrame ; $49c1
 	ret ; $49c4
 Label_1c_49c5:
 	wram_bank $03 ; $49c5
@@ -1082,7 +1082,7 @@ Label_1c_49c5:
 	ld de, $b800 ; $49df
 	ld c, $0e ; $49e2
 	call Func_00_0480 ; $49e4
-	call Func_00_2631 ; $49e7
+	call AdvanceFrame ; $49e7
 	ret ; $49ea
 Func_1c_49eb:
 	wram_bank $06 ; $49eb
@@ -1181,7 +1181,7 @@ Label_1c_4a86:
 	jr nz, Label_1c_4a86 ; $4a88
 	ld [$d029], a ; $4a8a
 	ld a, [$cb00] ; $4a8d
-	farcall FarPtr_02_0e ; $4a90
+	farcall FarPtr_RefreshPlayerStatsAndGetPtr ; $4a90
 	ret ; $4a93
 Func_1c_4a94:
 	wram_bank $06 ; $4a94
@@ -2059,7 +2059,7 @@ Func_1c_509d:
 	ld a, [$d0b6] ; $50a3
 	or a, a ; $50a6
 	jp nz, Label_1c_51a3 ; $50a7
-	call Func_00_2631 ; $50aa
+	call AdvanceFrame ; $50aa
 	ldh a, [$ff94] ; $50ad
 	push af ; $50af
 	test_flag $03, 4 ; $50b0
@@ -2127,7 +2127,7 @@ Label_1c_512a:
 	sound $5f ; $5138
 	ld d, a ; $513a
 	ld a, [$cb00] ; $513b
-	farcall FarPtr_02_0a ; $513e
+	farcall FarPtr_LevelUpPlayer ; $513e
 	wram_bank $06 ; $5141
 	ld hl, $d009 ; $5147
 	dec [hl] ; $514a
@@ -2146,7 +2146,7 @@ Label_1c_512a:
 	test_flag $03, 4 ; $5162
 	jr nz, Label_1c_5171 ; $5165
 	ld a, [$cb00] ; $5167
-	farcall FarPtr_02_2a ; $516a
+	farcall FarPtr_HasReachedNextLevelExp ; $516a
 	jr nz, Label_1c_51a3 ; $516d
 	jr Label_1c_518e ; $516f
 Label_1c_5171:
@@ -2182,7 +2182,7 @@ Label_1c_51a3:
 	or a, a ; $51ac
 	jp nz, Label_1c_528d ; $51ad
 	ld hl, $54f2 ; $51b0
-	call Func_00_1bcb ; $51b3
+	call UnregisterFrameTask ; $51b3
 	call Func_1c_4c43 ; $51b6
 	call CharDataScreen_DrawStats ; $51b9
 	call Func_1c_48ec ; $51bc
@@ -2215,7 +2215,7 @@ Label_1c_51a3:
 	ld a, $03 ; $5214
 	ld [$d027], a ; $5216
 	ld hl, $5049 ; $5219
-	call Func_00_1bcb ; $521c
+	call UnregisterFrameTask ; $521c
 	call Func_1c_48ec ; $521f
 	call Func_1c_489b ; $5222
 	call Func_1c_495d ; $5225
@@ -2258,7 +2258,7 @@ Label_1c_528d:
 	ld [$d0b6], a ; $528e
 Label_1c_5291:
 	call Func_1c_53a3 ; $5291
-	call Func_00_2631 ; $5294
+	call AdvanceFrame ; $5294
 	ldh a, [$ff94] ; $5297
 	bit 0, a ; $5299
 	jr nz, Label_1c_52b1 ; $529b
@@ -2491,7 +2491,7 @@ Label_1c_548e:
 	ld [hl], a ; $549a
 	ld [$d00d], a ; $549b
 	ld a, [$cb00] ; $549e
-	farcall FarPtr_02_0e ; $54a1
+	farcall FarPtr_RefreshPlayerStatsAndGetPtr ; $54a1
 	ld a, [$d029] ; $54a4
 	ld c, a ; $54a7
 	ld b, $00 ; $54a8
@@ -2508,7 +2508,7 @@ Label_1c_54aa:
 	ld a, [hl] ; $54b6
 	ld d, a ; $54b7
 	ld a, [$cb00] ; $54b8
-	farcall FarPtr_02_0a ; $54bb
+	farcall FarPtr_LevelUpPlayer ; $54bb
 	pop bc ; $54be
 	inc b ; $54bf
 	jr Label_1c_54aa ; $54c0
@@ -2619,7 +2619,7 @@ Func_1c_5572:
 	ld [$d025], a ; $55dd
 	ld [$d028], a ; $55e0
 	call EnableLCD ; $55e3
-	call Func_00_2631 ; $55e6
+	call AdvanceFrame ; $55e6
 	ld a, $01 ; $55e9
 	ld hl, $4e54 ; $55eb
 	call RegisterFrameTask ; $55ee
@@ -2851,12 +2851,12 @@ Func_1c_72ec:
 	ret ; $72f4
 Func_1c_72f5:
 	ld hl, $45fa ; $72f5
-	call Func_00_1bcb ; $72f8
+	call UnregisterFrameTask ; $72f8
 	ret ; $72fb
 Func_1c_72fc:
 	call Func_1c_495d ; $72fc
 	ret ; $72ff
-Func_1c_7300:
+BackupCharData:
 	wram_bank $06 ; $7300
 	ld hl, $d003 ; $7306
 	ld de, $d0b7 ; $7309
@@ -2968,7 +2968,7 @@ Label_1c_73c5:
 	ld [hl], a ; $73d1
 	ld [$d00d], a ; $73d2
 	xor a, a ; $73d5
-	farcall FarPtr_02_0e ; $73d6
+	farcall FarPtr_RefreshPlayerStatsAndGetPtr ; $73d6
 	wram_bank $06 ; $73d9
 	ld hl, $d02a ; $73df
 	ld a, [$d029] ; $73e2
@@ -2979,7 +2979,7 @@ Label_1c_73e6:
 	push hl ; $73e8
 	ld d, a ; $73e9
 	xor a, a ; $73ea
-	farcall FarPtr_02_0a ; $73eb
+	farcall FarPtr_LevelUpPlayer ; $73eb
 	pop hl ; $73ee
 	pop bc ; $73ef
 	dec b ; $73f0

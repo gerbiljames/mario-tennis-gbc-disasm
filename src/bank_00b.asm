@@ -644,7 +644,7 @@ Label_0b_5d0a:
 	call RegisterFrameTask ; $5d38
 	farcall FarPtr_StartPointEndReactions ; $5d3b
 	ld hl, $446e ; $5d3e
-	call Func_00_1bcb ; $5d41
+	call UnregisterFrameTask ; $5d41
 	call Func_0b_43a6 ; $5d44
 	ret ; $5d47
 Func_0b_5d48:
@@ -885,7 +885,7 @@ Label_0b_6bc7:
 	ld a, $01 ; $6bd5
 	ld [wTargetZoneEnabled], a ; $6bd7
 	ld hl, $6bd0 ; $6bda
-	call Func_00_1bcb ; $6bdd
+	call UnregisterFrameTask ; $6bdd
 	ret ; $6be0
 	call Func_0b_6cd0 ; $6be1
 	ld a, [wPointOutcome] ; $6be4
@@ -984,7 +984,7 @@ Label_0b_6c92:
 	call RegisterFrameTask ; $6cc0
 	farcall FarPtr_StartPointEndReactions ; $6cc3
 	ld hl, $446e ; $6cc6
-	call Func_00_1bcb ; $6cc9
+	call UnregisterFrameTask ; $6cc9
 	call Func_0b_43a6 ; $6ccc
 	ret ; $6ccf
 Func_0b_6cd0:
@@ -1138,7 +1138,7 @@ Label_0b_6da6:
 	call RegisterFrameTask ; $716a
 	farcall FarPtr_StartPointEndReactions ; $716d
 	ld hl, $446e ; $7170
-	call Func_00_1bcb ; $7173
+	call UnregisterFrameTask ; $7173
 	call Func_0b_43a6 ; $7176
 	ret ; $7179
 	INCBIN "data/bank_00b/d_717a.bin" ; $717a, 222 bytes

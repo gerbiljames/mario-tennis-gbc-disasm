@@ -206,7 +206,7 @@ Func_3e_44b9:
 	call Func_00_1d2e ; $44c7
 	ret ; $44ca
 Func_3e_44cb:
-	call Func_00_2a0e ; $44cb
+	call EnableTimerInterrupt ; $44cb
 	sound $03 ; $44ce
 	xor a, a ; $44d0
 	ld [$cb0e], a ; $44d1
@@ -214,7 +214,7 @@ Func_3e_44cb:
 	ld [$cb10], a ; $44d7
 	xor a, a ; $44da
 	ldh [$ffd8], a ; $44db
-	call Func_00_28f8 ; $44dd
+	call ResetSerialState ; $44dd
 	call Func_3e_4607 ; $44e0
 	wram_bank $03 ; $44e3
 	ld a, [$cb11] ; $44e9
@@ -271,8 +271,8 @@ Label_3e_4551:
 	pop af ; $4557
 	xor a, a ; $4558
 	ldh [$ffd8], a ; $4559
-	call Func_00_28f8 ; $455b
-	call Func_00_2a0e ; $455e
+	call ResetSerialState ; $455b
+	call EnableTimerInterrupt ; $455e
 	call ClearFrameTasks ; $4561
 	ld b, $01 ; $4564
 	call Func_3e_472c ; $4566
@@ -290,7 +290,7 @@ Label_3e_4579:
 	pop af ; $457f
 	xor a, a ; $4580
 	ldh [$ffd8], a ; $4581
-	call Func_00_28f8 ; $4583
+	call ResetSerialState ; $4583
 	call ClearFrameTasks ; $4586
 	ld b, $00 ; $4589
 	call Func_3e_472c ; $458b
@@ -390,7 +390,7 @@ Label_3e_4637:
 	ld a, c ; $464b
 	inc a ; $464c
 	ld c, a ; $464d
-	call Func_00_2631 ; $464e
+	call AdvanceFrame ; $464e
 	ld a, c ; $4651
 	cp a, $07 ; $4652
 	jr nz, Label_3e_4612 ; $4654
@@ -398,47 +398,47 @@ Label_3e_4637:
 	ld c, $10 ; $4658
 	ld de, $a000 ; $465a
 	farcall FarPtr_39_10 ; $465d
-	call Func_00_2631 ; $4660
+	call AdvanceFrame ; $4660
 	ld b, $24 ; $4663
 	ld c, $10 ; $4665
 	ld de, $a100 ; $4667
 	farcall FarPtr_39_10 ; $466a
-	call Func_00_2631 ; $466d
+	call AdvanceFrame ; $466d
 	ld b, $25 ; $4670
 	ld c, $10 ; $4672
 	ld de, $a200 ; $4674
 	farcall FarPtr_39_10 ; $4677
-	call Func_00_2631 ; $467a
+	call AdvanceFrame ; $467a
 	ld b, $26 ; $467d
 	ld c, $10 ; $467f
 	ld de, $a300 ; $4681
 	farcall FarPtr_39_10 ; $4684
-	call Func_00_2631 ; $4687
+	call AdvanceFrame ; $4687
 	ld b, $27 ; $468a
 	ld c, $10 ; $468c
 	ld de, $a400 ; $468e
 	farcall FarPtr_39_10 ; $4691
-	call Func_00_2631 ; $4694
+	call AdvanceFrame ; $4694
 	ld b, $28 ; $4697
 	ld c, $10 ; $4699
 	ld de, $a500 ; $469b
 	farcall FarPtr_39_10 ; $469e
-	call Func_00_2631 ; $46a1
+	call AdvanceFrame ; $46a1
 	ld b, $29 ; $46a4
 	ld c, $10 ; $46a6
 	ld de, $a600 ; $46a8
 	farcall FarPtr_39_10 ; $46ab
-	call Func_00_2631 ; $46ae
+	call AdvanceFrame ; $46ae
 	ld b, $1b ; $46b1
 	ld c, $04 ; $46b3
 	ld de, $a700 ; $46b5
 	farcall FarPtr_39_10 ; $46b8
-	call Func_00_2631 ; $46bb
+	call AdvanceFrame ; $46bb
 	ld b, $3f ; $46be
 	ld c, $14 ; $46c0
 	ld de, $8000 ; $46c2
 	farcall FarPtr_39_10 ; $46c5
-	call Func_00_2631 ; $46c8
+	call AdvanceFrame ; $46c8
 	ld b, $08 ; $46cb
 	ld c, $10 ; $46cd
 	farcall FarPtr_39_0e ; $46cf
@@ -452,7 +452,7 @@ Func_3e_46f4:
 	jr z, Label_3e_4712 ; $46f6
 	ld c, $00 ; $46f8
 Label_3e_46fa:
-	call Func_00_2631 ; $46fa
+	call AdvanceFrame ; $46fa
 	ld b, $02 ; $46fd
 	farcall FarPtr_39_20 ; $46ff
 	ld b, $00 ; $4702
@@ -462,12 +462,12 @@ Label_3e_46fa:
 	ld c, a ; $4709
 	cp a, $0e ; $470a
 	jr nz, Label_3e_46fa ; $470c
-	call Func_00_2631 ; $470e
+	call AdvanceFrame ; $470e
 	ret ; $4711
 Label_3e_4712:
 	ld c, $0a ; $4712
 Label_3e_4714:
-	call Func_00_2631 ; $4714
+	call AdvanceFrame ; $4714
 	ld b, $03 ; $4717
 	farcall FarPtr_39_20 ; $4719
 	ld b, $00 ; $471c
@@ -477,7 +477,7 @@ Label_3e_4714:
 	ld c, a ; $4723
 	cp a, $ff ; $4724
 	jr nz, Label_3e_4714 ; $4726
-	call Func_00_2631 ; $4728
+	call AdvanceFrame ; $4728
 	ret ; $472b
 Func_3e_472c:
 	ld a, b ; $472c
@@ -485,7 +485,7 @@ Func_3e_472c:
 	jr z, Label_3e_4747 ; $472e
 	ld c, $00 ; $4730
 Label_3e_4732:
-	call Func_00_2631 ; $4732
+	call AdvanceFrame ; $4732
 	ld b, $03 ; $4735
 	farcall FarPtr_39_20 ; $4737
 	ld b, $00 ; $473a
@@ -499,7 +499,7 @@ Label_3e_4732:
 Label_3e_4747:
 	ld c, $0d ; $4747
 Label_3e_4749:
-	call Func_00_2631 ; $4749
+	call AdvanceFrame ; $4749
 	ld b, $02 ; $474c
 	farcall FarPtr_39_20 ; $474e
 	ld b, $00 ; $4751
@@ -825,7 +825,7 @@ Label_3e_4a69:
 	ret ; $4a76
 	INCBIN "data/bank_03e/d_4a77.bin" ; $4a77, 48 bytes
 Func_3e_4aa7:
-	call Func_00_28b9 ; $4aa7
+	call InitSerialLink ; $4aa7
 	call DisableLCDSafely ; $4aaa
 	call ClearFrameTasks ; $4aad
 	call Func_00_1e3d ; $4ab0
@@ -842,7 +842,7 @@ Func_3e_4aa7:
 	call Func_00_1d2e ; $4ac9
 	call Func_00_1da4 ; $4acc
 Label_3e_4acf:
-	call Func_00_2631 ; $4acf
+	call AdvanceFrame ; $4acf
 	call Func_3e_4b37 ; $4ad2
 	ldh a, [$ff94] ; $4ad5
 	or a, a ; $4ad7
@@ -1005,7 +1005,7 @@ Func_3e_4c12:
 	call RegisterFrameTask ; $4c51
 	wram_bank $03 ; $4c54
 Label_3e_4c5a:
-	call Func_00_2631 ; $4c5a
+	call AdvanceFrame ; $4c5a
 	ldh a, [hInputPressed] ; $4c5d
 	ld [wMenuInputPressed], a ; $4c5f
 	bit 0, a ; $4c62
@@ -1270,7 +1270,7 @@ Func_3e_4ea0:
 	call Func_3e_4fcf ; $4ed2
 	wram_bank $03 ; $4ed5
 Label_3e_4edb:
-	call Func_00_2631 ; $4edb
+	call AdvanceFrame ; $4edb
 	ldh a, [hInputPressed] ; $4ede
 	ld [wMenuInputPressed], a ; $4ee0
 	ld b, $02 ; $4ee3
@@ -1363,7 +1363,7 @@ Label_3e_4f63:
 	ld a, c ; $4f77
 	inc a ; $4f78
 	ld c, a ; $4f79
-	call Func_00_2631 ; $4f7a
+	call AdvanceFrame ; $4f7a
 	ld a, c ; $4f7d
 	cp a, $02 ; $4f7e
 	jr nz, Label_3e_4f3e ; $4f80
@@ -1371,22 +1371,22 @@ Label_3e_4f63:
 	ld c, $10 ; $4f84
 	ld de, $a000 ; $4f86
 	farcall FarPtr_39_10 ; $4f89
-	call Func_00_2631 ; $4f8c
+	call AdvanceFrame ; $4f8c
 	ld b, $4b ; $4f8f
 	ld c, $10 ; $4f91
 	ld de, $a100 ; $4f93
 	farcall FarPtr_39_10 ; $4f96
-	call Func_00_2631 ; $4f99
+	call AdvanceFrame ; $4f99
 	ld b, $1b ; $4f9c
 	ld c, $04 ; $4f9e
 	ld de, $a700 ; $4fa0
 	farcall FarPtr_39_10 ; $4fa3
-	call Func_00_2631 ; $4fa6
+	call AdvanceFrame ; $4fa6
 	ld b, $4c ; $4fa9
 	ld c, $14 ; $4fab
 	ld de, $8000 ; $4fad
 	farcall FarPtr_39_10 ; $4fb0
-	call Func_00_2631 ; $4fb3
+	call AdvanceFrame ; $4fb3
 	ld b, $08 ; $4fb6
 	ld c, $10 ; $4fb8
 	farcall FarPtr_39_0e ; $4fba
@@ -1478,7 +1478,7 @@ Func_3e_5092:
 	jr z, Label_3e_50ad ; $5094
 	ld c, $00 ; $5096
 Label_3e_5098:
-	call Func_00_2631 ; $5098
+	call AdvanceFrame ; $5098
 	ld b, $10 ; $509b
 	farcall FarPtr_39_20 ; $509d
 	ld b, $03 ; $50a0
@@ -1492,7 +1492,7 @@ Label_3e_5098:
 Label_3e_50ad:
 	ld c, $08 ; $50ad
 Label_3e_50af:
-	call Func_00_2631 ; $50af
+	call AdvanceFrame ; $50af
 	ld b, $11 ; $50b2
 	farcall FarPtr_39_20 ; $50b4
 	ld b, $03 ; $50b7
@@ -1509,7 +1509,7 @@ Func_3e_50c4:
 	jr z, Label_3e_50df ; $50c6
 	ld c, $00 ; $50c8
 Label_3e_50ca:
-	call Func_00_2631 ; $50ca
+	call AdvanceFrame ; $50ca
 	ld b, $11 ; $50cd
 	farcall FarPtr_39_20 ; $50cf
 	ld b, $03 ; $50d2
@@ -1523,7 +1523,7 @@ Label_3e_50ca:
 Label_3e_50df:
 	ld c, $0c ; $50df
 Label_3e_50e1:
-	call Func_00_2631 ; $50e1
+	call AdvanceFrame ; $50e1
 	ld b, $10 ; $50e4
 	farcall FarPtr_39_20 ; $50e6
 	ld b, $03 ; $50e9
@@ -1630,7 +1630,7 @@ Func_3e_5192:
 	call Func_3e_52b7 ; $51c2
 	wram_bank $03 ; $51c5
 Label_3e_51cb:
-	call Func_00_2631 ; $51cb
+	call AdvanceFrame ; $51cb
 	ldh a, [hInputPressed] ; $51ce
 	ld [wMenuInputPressed], a ; $51d0
 	ld b, $02 ; $51d3
@@ -1727,7 +1727,7 @@ Label_3e_5259:
 	ld a, c ; $526d
 	inc a ; $526e
 	ld c, a ; $526f
-	call Func_00_2631 ; $5270
+	call AdvanceFrame ; $5270
 	ld a, c ; $5273
 	cp a, $02 ; $5274
 	jr nz, Label_3e_5234 ; $5276
@@ -1735,18 +1735,18 @@ Label_3e_5259:
 	ld c, $10 ; $527a
 	ld de, $a000 ; $527c
 	farcall FarPtr_39_10 ; $527f
-	call Func_00_2631 ; $5282
+	call AdvanceFrame ; $5282
 	ld b, $24 ; $5285
 	ld c, $10 ; $5287
 	ld de, $a100 ; $5289
 	farcall FarPtr_39_10 ; $528c
-	call Func_00_2631 ; $528f
+	call AdvanceFrame ; $528f
 	ld b, $1b ; $5292
 	ld c, $04 ; $5294
 	ld de, $a700 ; $5296
 	farcall FarPtr_39_10 ; $5299
-	call Func_00_2631 ; $529c
-	call Func_00_2631 ; $529f
+	call AdvanceFrame ; $529c
+	call AdvanceFrame ; $529f
 	ld b, $08 ; $52a2
 	ld c, $10 ; $52a4
 	farcall FarPtr_39_0e ; $52a6
@@ -1848,8 +1848,8 @@ Func_3e_5388:
 	ld c, $10 ; $538b
 	call Func_00_1d20 ; $538d
 	call Func_00_1da4 ; $5390
-	call Func_00_2631 ; $5393
-	call Func_00_2631 ; $5396
+	call AdvanceFrame ; $5393
+	call AdvanceFrame ; $5396
 	call DisableLCDSafely ; $5399
 	farcall FarPtr_01_0a ; $539c
 	xor a, a ; $539f
@@ -1866,7 +1866,7 @@ Label_3e_53b2:
 	jr nz, Label_3e_53c1 ; $53b6
 	bit 1, a ; $53b8
 	jr nz, Label_3e_53c1 ; $53ba
-	call Func_00_2631 ; $53bc
+	call AdvanceFrame ; $53bc
 	jr Label_3e_53b2 ; $53bf
 Label_3e_53c1:
 	sound $5f ; $53c1
@@ -1993,7 +1993,7 @@ Label_3e_54de:
 	cp a, $14 ; $54eb
 	jr nc, Label_3e_54f4 ; $54ed
 Label_3e_54ef:
-	call Func_00_2631 ; $54ef
+	call AdvanceFrame ; $54ef
 	jr Label_3e_54de ; $54f2
 Label_3e_54f4:
 	push af ; $54f4
@@ -2007,7 +2007,7 @@ Label_3e_54f4:
 	ld a, $ff ; $5505
 	ret ; $5507
 Label_3e_5508:
-	farcall FarPtr_02_10 ; $5508
+	farcall FarPtr_RefreshMainCharacterStats ; $5508
 	xor a, a ; $550b
 	ret ; $550c
 Func_3e_550d:
@@ -2197,7 +2197,7 @@ Label_3e_5666:
 	cp a, $14 ; $5673
 	jr nc, Label_3e_567c ; $5675
 Label_3e_5677:
-	call Func_00_2631 ; $5677
+	call AdvanceFrame ; $5677
 	jr Label_3e_5666 ; $567a
 Label_3e_567c:
 	push af ; $567c
@@ -2211,7 +2211,7 @@ Label_3e_567c:
 	ld a, $ff ; $568d
 	ret ; $568f
 Label_3e_5690:
-	farcall FarPtr_02_10 ; $5690
+	farcall FarPtr_RefreshMainCharacterStats ; $5690
 	xor a, a ; $5693
 	ret ; $5694
 	ret ; $5695
@@ -2752,7 +2752,7 @@ Func_3e_5b99:
 	call Func_3e_5f51 ; $5bce
 	wram_bank $03 ; $5bd1
 Label_3e_5bd7:
-	call Func_00_2631 ; $5bd7
+	call AdvanceFrame ; $5bd7
 	ldh a, [hInputPressed] ; $5bda
 	ld [wMenuInputPressed], a ; $5bdc
 	ld b, $02 ; $5bdf
@@ -2801,9 +2801,9 @@ Label_3e_5c1e:
 Func_3e_5c38:
 	xor a, a ; $5c38
 	ldh [$ffd8], a ; $5c39
-	call Func_00_28f8 ; $5c3b
+	call ResetSerialState ; $5c3b
 	call ClearFrameTasks ; $5c3e
-	call Func_00_2a0e ; $5c41
+	call EnableTimerInterrupt ; $5c41
 	sound $03 ; $5c44
 	farcall FarPtr_39_24 ; $5c46
 	ld b, $01 ; $5c49
@@ -2861,8 +2861,8 @@ Label_3e_5cb2:
 	call ClearFrameTasks ; $5cb9
 	xor a, a ; $5cbc
 	ldh [$ffd8], a ; $5cbd
-	call Func_00_28f8 ; $5cbf
-	call Func_00_2a0e ; $5cc2
+	call ResetSerialState ; $5cbf
+	call EnableTimerInterrupt ; $5cc2
 	ld a, $01 ; $5cc5
 	ld [$cb11], a ; $5cc7
 	ld c, $02 ; $5cca
@@ -2880,7 +2880,7 @@ Label_3e_5cd9:
 	pop af ; $5cdf
 	xor a, a ; $5ce0
 	ldh [$ffd8], a ; $5ce1
-	call Func_00_28f8 ; $5ce3
+	call ResetSerialState ; $5ce3
 	call ClearFrameTasks ; $5ce6
 	ld b, $00 ; $5ce9
 	call Func_3e_5e62 ; $5ceb
@@ -3040,7 +3040,7 @@ Func_3e_5e2a:
 	jr z, Label_3e_5e48 ; $5e2c
 	ld c, $00 ; $5e2e
 Label_3e_5e30:
-	call Func_00_2631 ; $5e30
+	call AdvanceFrame ; $5e30
 	ld b, $12 ; $5e33
 	farcall FarPtr_39_20 ; $5e35
 	ld b, $02 ; $5e38
@@ -3050,12 +3050,12 @@ Label_3e_5e30:
 	ld c, a ; $5e3f
 	cp a, $0d ; $5e40
 	jr nz, Label_3e_5e30 ; $5e42
-	call Func_00_2631 ; $5e44
+	call AdvanceFrame ; $5e44
 	ret ; $5e47
 Label_3e_5e48:
 	ld c, $0a ; $5e48
 Label_3e_5e4a:
-	call Func_00_2631 ; $5e4a
+	call AdvanceFrame ; $5e4a
 	ld b, $13 ; $5e4d
 	farcall FarPtr_39_20 ; $5e4f
 	ld b, $02 ; $5e52
@@ -3065,7 +3065,7 @@ Label_3e_5e4a:
 	ld c, a ; $5e59
 	cp a, $ff ; $5e5a
 	jr nz, Label_3e_5e4a ; $5e5c
-	call Func_00_2631 ; $5e5e
+	call AdvanceFrame ; $5e5e
 	ret ; $5e61
 Func_3e_5e62:
 	ld a, b ; $5e62
@@ -3073,7 +3073,7 @@ Func_3e_5e62:
 	jr z, Label_3e_5e7d ; $5e64
 	ld c, $00 ; $5e66
 Label_3e_5e68:
-	call Func_00_2631 ; $5e68
+	call AdvanceFrame ; $5e68
 	ld b, $13 ; $5e6b
 	farcall FarPtr_39_20 ; $5e6d
 	ld b, $02 ; $5e70
@@ -3087,7 +3087,7 @@ Label_3e_5e68:
 Label_3e_5e7d:
 	ld c, $0c ; $5e7d
 Label_3e_5e7f:
-	call Func_00_2631 ; $5e7f
+	call AdvanceFrame ; $5e7f
 	ld b, $12 ; $5e82
 	farcall FarPtr_39_20 ; $5e84
 	ld b, $02 ; $5e87
@@ -3279,7 +3279,7 @@ Func_3e_610b:
 	call Func_3e_617a ; $610b
 	call Func_3e_6118 ; $610e
 	call Func_3e_615f ; $6111
-	call Func_00_2631 ; $6114
+	call AdvanceFrame ; $6114
 	ret ; $6117
 Func_3e_6118:
 	ldh a, [hWramBank] ; $6118
@@ -3464,7 +3464,7 @@ Func_3e_6518:
 	call Func_3e_6824 ; $6552
 	wram_bank $03 ; $6555
 Label_3e_655b:
-	call Func_00_2631 ; $655b
+	call AdvanceFrame ; $655b
 	ldh a, [hInputPressed] ; $655e
 	ld [wMenuInputPressed], a ; $6560
 	ld b, $03 ; $6563
@@ -3521,9 +3521,9 @@ Label_3e_65b2:
 Func_3e_65c9:
 	xor a, a ; $65c9
 	ldh [$ffd8], a ; $65ca
-	call Func_00_28f8 ; $65cc
+	call ResetSerialState ; $65cc
 	call ClearFrameTasks ; $65cf
-	call Func_00_2a0e ; $65d2
+	call EnableTimerInterrupt ; $65d2
 	sound $03 ; $65d5
 	ld a, [$cb54] ; $65d7
 	ld b, a ; $65da
@@ -3596,8 +3596,8 @@ Label_3e_665f:
 	call ClearFrameTasks ; $6666
 	xor a, a ; $6669
 	ldh [$ffd8], a ; $666a
-	call Func_00_28f8 ; $666c
-	call Func_00_2a0e ; $666f
+	call ResetSerialState ; $666c
+	call EnableTimerInterrupt ; $666f
 	ld a, $01 ; $6672
 	ld [$cb11], a ; $6674
 	ld c, $03 ; $6677
@@ -3615,7 +3615,7 @@ Label_3e_6686:
 	pop af ; $668c
 	xor a, a ; $668d
 	ldh [$ffd8], a ; $668e
-	call Func_00_28f8 ; $6690
+	call ResetSerialState ; $6690
 	call ClearFrameTasks ; $6693
 	ld b, $00 ; $6696
 	call Func_3e_66e3 ; $6698
@@ -3632,7 +3632,7 @@ Func_3e_66ab:
 	jr z, Label_3e_66c9 ; $66ad
 	ld c, $00 ; $66af
 Label_3e_66b1:
-	call Func_00_2631 ; $66b1
+	call AdvanceFrame ; $66b1
 	ld b, $14 ; $66b4
 	farcall FarPtr_39_20 ; $66b6
 	ld b, $00 ; $66b9
@@ -3642,12 +3642,12 @@ Label_3e_66b1:
 	ld c, a ; $66c0
 	cp a, $0f ; $66c1
 	jr nz, Label_3e_66b1 ; $66c3
-	call Func_00_2631 ; $66c5
+	call AdvanceFrame ; $66c5
 	ret ; $66c8
 Label_3e_66c9:
 	ld c, $09 ; $66c9
 Label_3e_66cb:
-	call Func_00_2631 ; $66cb
+	call AdvanceFrame ; $66cb
 	ld b, $15 ; $66ce
 	farcall FarPtr_39_20 ; $66d0
 	ld b, $00 ; $66d3
@@ -3657,7 +3657,7 @@ Label_3e_66cb:
 	ld c, a ; $66da
 	cp a, $ff ; $66db
 	jr nz, Label_3e_66cb ; $66dd
-	call Func_00_2631 ; $66df
+	call AdvanceFrame ; $66df
 	ret ; $66e2
 Func_3e_66e3:
 	ld a, b ; $66e3
@@ -3665,7 +3665,7 @@ Func_3e_66e3:
 	jr z, Label_3e_66fe ; $66e5
 	ld c, $00 ; $66e7
 Label_3e_66e9:
-	call Func_00_2631 ; $66e9
+	call AdvanceFrame ; $66e9
 	ld b, $15 ; $66ec
 	farcall FarPtr_39_20 ; $66ee
 	ld b, $00 ; $66f1
@@ -3679,7 +3679,7 @@ Label_3e_66e9:
 Label_3e_66fe:
 	ld c, $0e ; $66fe
 Label_3e_6700:
-	call Func_00_2631 ; $6700
+	call AdvanceFrame ; $6700
 	ld b, $14 ; $6703
 	farcall FarPtr_39_20 ; $6705
 	ld b, $00 ; $6708

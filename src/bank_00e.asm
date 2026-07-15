@@ -4235,7 +4235,7 @@ Func_0e_7150:
 	call RegisterFrameTask ; $71c6
 	wram_bank $06 ; $71c9
 Label_0e_71cf:
-	call Func_00_2631 ; $71cf
+	call AdvanceFrame ; $71cf
 	ld a, [$d002] ; $71d2
 	cp a, $1e ; $71d5
 	jr z, Label_0e_71e2 ; $71d7

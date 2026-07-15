@@ -241,7 +241,7 @@ Func_08_4190:
 	ld c, $20 ; $4190
 	call Func_00_1d20 ; $4192
 	call Func_00_1da4 ; $4195
-	call Func_00_2631 ; $4198
+	call AdvanceFrame ; $4198
 	call DisableLCDSafely ; $419b
 	call Func_08_4145 ; $419e
 	call EnableLCD ; $41a1
@@ -269,10 +269,10 @@ Func_08_4190:
 	ld c, $20 ; $41df
 	call Func_00_1d20 ; $41e1
 	call Func_00_1da4 ; $41e4
-	call Func_00_2631 ; $41e7
+	call AdvanceFrame ; $41e7
 	farcall FarPtr_RunMatchWinLoseScreen ; $41ea
 	farcall FarPtr_01_0a ; $41ed
-	call Func_00_2631 ; $41f0
+	call AdvanceFrame ; $41f0
 	farcall FarPtr_1e_04 ; $41f3
 	ret ; $41f6
 Func_08_41f7:
@@ -620,7 +620,7 @@ StepMatchFrame:
 	farcall FarPtr_07_1c ; $4471
 	jr Label_08_4480 ; $4474
 Label_08_4476:
-	call Func_00_2631 ; $4476
+	call AdvanceFrame ; $4476
 	call Func_08_41f7 ; $4479
 	ld hl, $ffe9 ; $447c
 	inc [hl] ; $447f
@@ -703,7 +703,7 @@ Func_08_450e:
 	ld a, [wGameMode] ; $451c
 	cp a, $08 ; $451f
 	jr z, Label_08_452e ; $4521
-	farcall FarPtr_02_3e ; $4523
+	farcall FarPtr_TestStorySlotFlagB ; $4523
 	ld [$c4dd], a ; $4526
 	xor a, a ; $4529
 	ld [$c4c8], a ; $452a
@@ -718,7 +718,7 @@ Func_08_4539:
 	ld a, [wGameMode] ; $4539
 	cp a, $09 ; $453c
 	jr z, Label_08_4547 ; $453e
-	farcall FarPtr_02_42 ; $4540
+	farcall FarPtr_TestStorySlotFlagA ; $4540
 	call Func_00_2f86 ; $4543
 	ret ; $4546
 Label_08_4547:
@@ -4993,7 +4993,7 @@ Func_08_6557:
 	ld c, $20 ; $6557
 	call Func_00_1d20 ; $6559
 	call Func_00_1da4 ; $655c
-	call Func_00_2631 ; $655f
+	call AdvanceFrame ; $655f
 	call DisableLCDSafely ; $6562
 	call Func_08_4145 ; $6565
 	call EnableLCD ; $6568
@@ -5008,9 +5008,9 @@ Func_08_6557:
 	ld c, $20 ; $6580
 	call Func_00_1d20 ; $6582
 	call Func_00_1da4 ; $6585
-	call Func_00_2631 ; $6588
+	call AdvanceFrame ; $6588
 	farcall FarPtr_01_0a ; $658b
-	call Func_00_2631 ; $658e
+	call AdvanceFrame ; $658e
 	ret ; $6591
 Func_08_6592:
 	ld a, [$c4c7] ; $6592
@@ -8368,7 +8368,7 @@ Func_08_7b7b:
 	jr z, Label_08_7b92 ; $7b7f
 	ld b, $30 ; $7b81
 	ld a, [$df7d] ; $7b83
-	farcall FarPtr_02_3a ; $7b86
+	farcall FarPtr_DoesCharGroupRowContain ; $7b86
 	and a, a ; $7b89
 	jr z, Label_08_7b92 ; $7b8a
 	ld a, $30 ; $7b8c
@@ -8397,7 +8397,7 @@ Label_08_7ba9:
 	jr nz, Label_08_7c00 ; $7baf
 	ld b, $12 ; $7bb1
 	ld a, [$df7d] ; $7bb3
-	farcall FarPtr_02_3a ; $7bb6
+	farcall FarPtr_DoesCharGroupRowContain ; $7bb6
 	and a, a ; $7bb9
 	jr z, Label_08_7c00 ; $7bba
 	ld a, [wMatchIsDoubles] ; $7bbc
@@ -8444,7 +8444,7 @@ Label_08_7c00:
 	and a, $0f ; $7c03
 	ld b, a ; $7c05
 	ld a, [$df7d] ; $7c06
-	farcall FarPtr_02_38 ; $7c09
+	farcall FarPtr_GetCharGroupEntry ; $7c09
 	ld [$df58], a ; $7c0c
 	ret ; $7c0f
 Func_08_7c10:

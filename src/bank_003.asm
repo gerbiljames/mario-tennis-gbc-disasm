@@ -2011,7 +2011,7 @@ Func_03_4d10:
 	ld a, [$c36c] ; $4d10
 	cp a, $03 ; $4d13
 	ret nc ; $4d15
-	call Func_00_2452 ; $4d16
+	call SaveGameTimer ; $4d16
 Label_03_4d19:
 	ld a, [$c36c] ; $4d19
 	add a, a ; $4d1c
@@ -2802,7 +2802,7 @@ Func_03_524f:
 	ld l, a ; $525a
 	ld b, l ; $525b
 	ld e, c ; $525c
-	call Func_00_0914 ; $525d
+	call SignExtendEToDE ; $525d
 	add hl, de ; $5260
 	ld a, h ; $5261
 	and a, $03 ; $5262
@@ -2902,7 +2902,7 @@ SaveSlotDebugEditor:
 	call Func_00_1d20 ; $5336
 	ld c, $7f ; $5339
 	call Func_00_1d2e ; $533b
-	farcall FarPtr_02_02 ; $533e
+	farcall FarPtr_InitStoryModeState ; $533e
 	ld de, $0000 ; $5341
 Label_03_5344:
 	call ReadCurrentSlotBlock ; $5344
@@ -3017,7 +3017,7 @@ Label_03_53d4:
 	call QueueSprite ; $53f4
 	pop de ; $53f7
 Label_03_53f8:
-	call Func_00_2631 ; $53f8
+	call AdvanceFrame ; $53f8
 	ldh a, [hInputPressed] ; $53fb
 	bit 6, a ; $53fd
 	jr z, Label_03_540c ; $53ff
@@ -3368,7 +3368,7 @@ Label_03_5804:
 	ld l, a ; $580f
 	ld h, $00 ; $5810
 	ld a, $20 ; $5812
-	call Func_00_0926 ; $5814
+	call MulHLByA ; $5814
 	push hl ; $5817
 	pop de ; $5818
 	call TestSaveFlag ; $5819
@@ -3549,7 +3549,7 @@ Label_03_5a7e:
 	and a, $0b ; $5a80
 	jr nz, Label_03_5a9a ; $5a82
 Label_03_5a84:
-	call Func_00_2631 ; $5a84
+	call AdvanceFrame ; $5a84
 	wram_bank $03 ; $5a87
 	xor a, a ; $5a8d
 	ld b, $40 ; $5a8e
@@ -4724,7 +4724,7 @@ Func_03_6ff7:
 	ld de, $9c00 ; $701a
 	ld c, $10 ; $701d
 	call Func_00_0480 ; $701f
-	call Func_00_2631 ; $7022
+	call AdvanceFrame ; $7022
 	farcall FarPtr_0a_a0 ; $7025
 	ld a, $90 ; $7028
 	ldh [rWY], a ; $702a
@@ -4739,13 +4739,13 @@ Func_03_6ff7:
 	ld hl, $72a0 ; $7040
 	call RegisterFrameTask ; $7043
 Label_03_7046:
-	call Func_00_2631 ; $7046
+	call AdvanceFrame ; $7046
 	ld a, [$d000] ; $7049
 	or a, a ; $704c
 	jr z, Label_03_7046 ; $704d
 	ld a, $20 ; $704f
 Label_03_7051:
-	call Func_00_2631 ; $7051
+	call AdvanceFrame ; $7051
 	dec a ; $7054
 	or a, a ; $7055
 	jr nz, Label_03_7051 ; $7056
@@ -4759,7 +4759,7 @@ Label_03_7051:
 	ld b, $20 ; $7072
 	ld de, $0100 ; $7074
 	call FillMemoryDE ; $7077
-	call Func_00_2631 ; $707a
+	call AdvanceFrame ; $707a
 	pop af ; $707d
 	call Func_03_7333 ; $707e
 	call Func_03_7452 ; $7081
@@ -4800,7 +4800,7 @@ Label_03_734b:
 	ld c, $00 ; $7357
 Label_03_7359:
 	call Func_03_7403 ; $7359
-	call Func_00_2631 ; $735c
+	call AdvanceFrame ; $735c
 	inc hl ; $735f
 	inc hl ; $7360
 	inc c ; $7361
@@ -4831,7 +4831,7 @@ Func_03_7403:
 	ld l, $00 ; $7414
 	jr Label_03_741b ; $7416
 Label_03_7418:
-	call Func_00_0926 ; $7418
+	call MulHLByA ; $7418
 Label_03_741b:
 	ld de, $d063 ; $741b
 	add hl, de ; $741e
@@ -4853,7 +4853,7 @@ Label_03_742f:
 Label_03_7435:
 	ld c, $50 ; $7435
 	call Func_03_74f2 ; $7437
-	call Func_00_2631 ; $743a
+	call AdvanceFrame ; $743a
 	ld a, $50 ; $743d
 	add a, e ; $743f
 	ld e, a ; $7440
@@ -4887,7 +4887,7 @@ Label_03_7468:
 	ld d, $00 ; $7469
 	ld c, $00 ; $746b
 Label_03_746d:
-	call Func_00_2631 ; $746d
+	call AdvanceFrame ; $746d
 	ld e, $14 ; $7470
 Label_03_7472:
 	call Func_03_7490 ; $7472
@@ -4896,7 +4896,7 @@ Label_03_7472:
 	jr nz, Label_03_7472 ; $7477
 	ld e, $ff ; $7479
 Label_03_747b:
-	call Func_00_2631 ; $747b
+	call AdvanceFrame ; $747b
 	dec e ; $747e
 	jr nz, Label_03_747b ; $747f
 	inc d ; $7481
@@ -4965,7 +4965,7 @@ Label_03_74d1:
 	ld de, $9c00 ; $74dd
 	ld c, $10 ; $74e0
 	call Func_00_0480 ; $74e2
-	call Func_00_2631 ; $74e5
+	call AdvanceFrame ; $74e5
 	pop af ; $74e8
 	wram_bank ; $74e9
 	pop hl ; $74ed
@@ -5046,7 +5046,7 @@ Func_03_751e:
 	ld [$c321], a ; $7589
 	ld [$c322], a ; $758c
 	ld [$c323], a ; $758f
-	call Func_00_2631 ; $7592
+	call AdvanceFrame ; $7592
 	ld c, $04 ; $7595
 	call Func_00_1d2e ; $7597
 	call Func_00_1da4 ; $759a
@@ -5192,7 +5192,7 @@ Func_03_7687:
 	ld l, d ; $7694
 	ld h, $00 ; $7695
 	ld de, $001f ; $7697
-	call Func_00_0987 ; $769a
+	call DivHLByDE ; $769a
 	ld a, l ; $769d
 	ld [$d1f9], a ; $769e
 	ld hl, $d1e0 ; $76a1
@@ -5287,7 +5287,7 @@ Label_03_7722:
 Label_03_7725:
 	and a, a ; $7725
 	jr z, Label_03_772e ; $7726
-	call Func_00_2631 ; $7728
+	call AdvanceFrame ; $7728
 	dec a ; $772b
 	jr Label_03_7725 ; $772c
 Label_03_772e:
@@ -5312,7 +5312,7 @@ Label_03_773c:
 	ld d, $00 ; $7748
 	ld e, $10 ; $774a
 	call Func_00_05b5 ; $774c
-	call Func_00_2631 ; $774f
+	call AdvanceFrame ; $774f
 	ld hl, $d1f0 ; $7752
 	ld a, [hl] ; $7755
 	dec a ; $7756

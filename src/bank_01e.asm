@@ -60,7 +60,7 @@ Label_1e_4031:
 	call Func_1e_40be ; $406c
 	call Func_1e_498f ; $406f
 	call EnableLCD ; $4072
-	call Func_00_2631 ; $4075
+	call AdvanceFrame ; $4075
 	ld a, $01 ; $4078
 	ld hl, $4a76 ; $407a
 	call RegisterFrameTask ; $407d
@@ -72,7 +72,7 @@ Label_1e_4031:
 	call Func_00_1d20 ; $408d
 	call Func_00_1da4 ; $4090
 	ld hl, $4a76 ; $4093
-	call Func_00_1bcb ; $4096
+	call UnregisterFrameTask ; $4096
 	farcall FarPtr_01_0a ; $4099
 	wram_bank $06 ; $409c
 	ld hl, $d005 ; $40a2
@@ -1301,7 +1301,7 @@ Label_1e_4af9:
 	INCBIN "data/bank_01e/d_4b24.bin" ; $4b24, 8 bytes
 Func_1e_4b2c:
 	call Func_1e_4b46 ; $4b2c
-	call Func_00_2631 ; $4b2f
+	call AdvanceFrame ; $4b2f
 	ldh a, [$ff94] ; $4b32
 	bit 6, a ; $4b34
 	jr nz, Label_1e_4b61 ; $4b36
@@ -1473,7 +1473,7 @@ Label_1e_5438:
 	call Func_1e_54f5 ; $546f
 	call Func_1e_498f ; $5472
 	call EnableLCD ; $5475
-	call Func_00_2631 ; $5478
+	call AdvanceFrame ; $5478
 	ld a, $01 ; $547b
 	ld hl, $5914 ; $547d
 	call RegisterFrameTask ; $5480
@@ -1490,9 +1490,9 @@ Label_1e_5438:
 	call Func_00_1d20 ; $549c
 	call Func_00_1da4 ; $549f
 	ld hl, $5914 ; $54a2
-	call Func_00_1bcb ; $54a5
+	call UnregisterFrameTask ; $54a5
 	ld hl, $5a4e ; $54a8
-	call Func_00_1bcb ; $54ab
+	call UnregisterFrameTask ; $54ab
 	wram_bank $06 ; $54ae
 	ld hl, $d005 ; $54b4
 	ld a, [hl+] ; $54b7
@@ -2188,7 +2188,7 @@ Func_1e_5afa:
 	ret ; $5b02
 Func_1e_5b03:
 	wram_bank $06 ; $5b03
-	call Func_00_2631 ; $5b09
+	call AdvanceFrame ; $5b09
 	call Func_1e_5b19 ; $5b0c
 	or a, a ; $5b0f
 	ret z ; $5b10
@@ -2237,11 +2237,11 @@ Func_1e_5b66:
 	ld a, d ; $5b72
 	or a, e ; $5b73
 	ret z ; $5b74
-	call Func_00_2631 ; $5b75
+	call AdvanceFrame ; $5b75
 	ldh a, [$ff94] ; $5b78
 	and a, $03 ; $5b7a
 	jr nz, Label_1e_5b9b ; $5b7c
-	call Func_00_2631 ; $5b7e
+	call AdvanceFrame ; $5b7e
 	ldh a, [$ff94] ; $5b81
 	and a, $03 ; $5b83
 	jr nz, Label_1e_5b9b ; $5b85
@@ -2278,7 +2278,7 @@ Label_1e_5b9b:
 Func_1e_5bad:
 	ld c, $b4 ; $5bad
 Label_1e_5baf:
-	call Func_00_2631 ; $5baf
+	call AdvanceFrame ; $5baf
 	ldh a, [$ff94] ; $5bb2
 	and a, $03 ; $5bb4
 	ret nz ; $5bb6
@@ -2796,7 +2796,7 @@ Func_1e_68cf:
 	add hl, bc ; $68d1
 	ld l, [hl] ; $68d2
 	ld h, $00 ; $68d3
-	call Func_00_0926 ; $68d5
+	call MulHLByA ; $68d5
 	add hl, de ; $68d8
 	ld e, l ; $68d9
 	ld d, h ; $68da
@@ -4399,7 +4399,7 @@ Label_1e_730a:
 	call Func_00_1d2e ; $734d
 	call Func_00_1da4 ; $7350
 Label_1e_7353:
-	call Func_00_2631 ; $7353
+	call AdvanceFrame ; $7353
 	wram_bank $05 ; $7356
 	ldh a, [hInputPressed] ; $735c
 	bit 6, a ; $735e

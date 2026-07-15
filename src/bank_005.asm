@@ -527,7 +527,7 @@ Label_05_42cf:
 	pop de ; $42d7
 	pop bc ; $42d8
 	pop af ; $42d9
-	call Func_00_2631 ; $42da
+	call AdvanceFrame ; $42da
 	ld a, d ; $42dd
 	add a, $07 ; $42de
 	ld d, a ; $42e0
@@ -668,7 +668,7 @@ Label_05_438c:
 	ldh a, [rLCDC] ; $439a
 	bit 7, a ; $439c
 	jr z, Label_05_43a3 ; $439e
-	call Func_00_2631 ; $43a0
+	call AdvanceFrame ; $43a0
 Label_05_43a3:
 	pop af ; $43a3
 	dec c ; $43a4
@@ -1377,7 +1377,7 @@ Func_05_477f:
 	ld a, [$d830] ; $47c6
 	ld b, a ; $47c9
 Label_05_47ca:
-	call Func_00_2631 ; $47ca
+	call AdvanceFrame ; $47ca
 	ldh a, [$ff94] ; $47cd
 	bit 0, a ; $47cf
 	jr nz, Label_05_4840 ; $47d1
@@ -1462,8 +1462,8 @@ Label_05_4840:
 	push de ; $4848
 	push hl ; $4849
 	ld hl, $48f1 ; $484a
-	call Func_00_1bcb ; $484d
-	call Func_00_2631 ; $4850
+	call UnregisterFrameTask ; $484d
+	call AdvanceFrame ; $4850
 	ld a, [$d830] ; $4853
 	sla a ; $4856
 	inc a ; $4858
@@ -1518,8 +1518,8 @@ Label_05_48af:
 	push de ; $48b4
 	push hl ; $48b5
 	ld hl, $48f1 ; $48b6
-	call Func_00_1bcb ; $48b9
-	call Func_00_2631 ; $48bc
+	call UnregisterFrameTask ; $48b9
+	call AdvanceFrame ; $48bc
 	ld a, [$d83e] ; $48bf
 	or a, a ; $48c2
 	jr z, Label_05_48e2 ; $48c3
@@ -1797,7 +1797,7 @@ Label_05_4a90:
 	add sp, 3 ; $4a93
 	push af ; $4a95
 	ld hl, $49dc ; $4a96
-	call Func_00_1bcb ; $4a99
+	call UnregisterFrameTask ; $4a99
 	pop af ; $4a9c
 	ld b, a ; $4a9d
 	pop af ; $4a9e
@@ -1857,7 +1857,7 @@ Func_05_4aa8:
 	ld a, [$d830] ; $4af9
 	ld b, a ; $4afc
 Label_05_4afd:
-	call Func_00_2631 ; $4afd
+	call AdvanceFrame ; $4afd
 	ldh a, [hInputPressed] ; $4b00
 	bit 0, a ; $4b02
 	jp nz, Label_05_4b72 ; $4b04
@@ -1944,8 +1944,8 @@ Label_05_4b72:
 	push de ; $4b80
 	push hl ; $4b81
 	ld hl, $4c9d ; $4b82
-	call Func_00_1bcb ; $4b85
-	call Func_00_2631 ; $4b88
+	call UnregisterFrameTask ; $4b85
+	call AdvanceFrame ; $4b88
 	ld a, [$d830] ; $4b8b
 	sla a ; $4b8e
 	inc a ; $4b90
@@ -2043,8 +2043,8 @@ Label_05_4c37:
 	push de ; $4c39
 	push hl ; $4c3a
 	ld hl, $4c9d ; $4c3b
-	call Func_00_1bcb ; $4c3e
-	call Func_00_2631 ; $4c41
+	call UnregisterFrameTask ; $4c3e
+	call AdvanceFrame ; $4c41
 	ld a, [$d83e] ; $4c44
 	or a, a ; $4c47
 	jr z, Label_05_4c67 ; $4c48
@@ -2473,7 +2473,7 @@ Label_05_4f1f:
 Label_05_4f45:
 	ld a, $1e ; $4f45
 Label_05_4f47:
-	call Func_00_2631 ; $4f47
+	call AdvanceFrame ; $4f47
 	dec a ; $4f4a
 	jr nz, Label_05_4f47 ; $4f4b
 	pop af ; $4f4d
@@ -2491,7 +2491,7 @@ Label_05_4f47:
 Label_05_4f63:
 	ld b, $0f ; $4f63
 Label_05_4f65:
-	call Func_00_2631 ; $4f65
+	call AdvanceFrame ; $4f65
 	ldh a, [hInputPressed] ; $4f68
 	and a, $f3 ; $4f6a
 	jr nz, Label_05_4f71 ; $4f6c
@@ -2525,11 +2525,11 @@ Label_05_4f71:
 	call Func_05_501d ; $4f99
 	ld a, $10 ; $4f9c
 	ld [$d841], a ; $4f9e
-	call Func_00_2631 ; $4fa1
+	call AdvanceFrame ; $4fa1
 	ld hl, $4fe3 ; $4fa4
-	call Func_00_1bcb ; $4fa7
+	call UnregisterFrameTask ; $4fa7
 	set_flag $03, 1 ; $4faa
-	call Func_00_2631 ; $4fad
+	call AdvanceFrame ; $4fad
 	clear_flag $03, 1 ; $4fb0
 	pop hl ; $4fb3
 	pop de ; $4fb4
@@ -2626,7 +2626,7 @@ Label_05_5031:
 	jr z, Label_05_5050 ; $5040
 	ld b, $1e ; $5042
 Label_05_5044:
-	call Func_00_2631 ; $5044
+	call AdvanceFrame ; $5044
 	ldh a, [hPlayerInputFlags] ; $5047
 	and a, $f3 ; $5049
 	jr z, Label_05_5050 ; $504b
@@ -2635,8 +2635,8 @@ Label_05_5044:
 Label_05_5050:
 	test_flag $02, 6 ; $5050
 	jr nz, Label_05_5061 ; $5053
-	call Func_00_0a3a ; $5055
-	call Func_00_2631 ; $5058
+	call AdvanceRandomSeed ; $5055
+	call AdvanceFrame ; $5058
 	ldh a, [hInputPressed] ; $505b
 	and a, $f3 ; $505d
 	jr z, Label_05_5050 ; $505f
@@ -2657,7 +2657,7 @@ Label_05_5061:
 Label_05_5078:
 	ld b, $96 ; $5078
 Label_05_507a:
-	call Func_00_2631 ; $507a
+	call AdvanceFrame ; $507a
 	ldh a, [hInputPressed] ; $507d
 	and a, $f3 ; $507f
 	jr nz, Label_05_5086 ; $5081
@@ -3912,7 +3912,7 @@ Label_05_57b9:
 	call Func_00_3024 ; $57cd
 	pop bc ; $57d0
 Label_05_57d1:
-	call Func_00_2631 ; $57d1
+	call AdvanceFrame ; $57d1
 	ldh a, [hPlayerInputFlags] ; $57d4
 	and a, $f3 ; $57d6
 	jr nz, Label_05_57dd ; $57d8
@@ -5336,7 +5336,7 @@ Func_05_622e:
 	ldh a, [rLCDC] ; $6243
 	bit 7, a ; $6245
 	jr z, Label_05_624c ; $6247
-	call Func_00_2631 ; $6249
+	call AdvanceFrame ; $6249
 Label_05_624c:
 	pop af ; $624c
 	ld hl, $d4b0 ; $624d
@@ -5347,7 +5347,7 @@ Label_05_624c:
 	ldh a, [rLCDC] ; $6259
 	bit 7, a ; $625b
 	jr z, Label_05_6262 ; $625d
-	call Func_00_2631 ; $625f
+	call AdvanceFrame ; $625f
 Label_05_6262:
 	pop af ; $6262
 	pop af ; $6263
@@ -5922,7 +5922,7 @@ Label_05_665c:
 	ld a, [$c719] ; $6677
 	call Func_05_7205 ; $667a
 Label_05_667d:
-	call Func_00_2631 ; $667d
+	call AdvanceFrame ; $667d
 	jp Label_05_661a ; $6680
 Label_05_6683:
 	ld a, [$c717] ; $6683
@@ -5932,7 +5932,7 @@ Label_05_6683:
 	ld a, [$c719] ; $668f
 	call Func_05_72bd ; $6692
 	ld hl, $6581 ; $6695
-	call Func_00_1bcb ; $6698
+	call UnregisterFrameTask ; $6698
 	pop hl ; $669b
 	pop de ; $669c
 	pop bc ; $669d
@@ -6090,7 +6090,7 @@ Func_05_67c4:
 	call Func_05_4684 ; $67e7
 	ld [$c701], a ; $67ea
 	call Func_05_672d ; $67ed
-	call Func_00_2631 ; $67f0
+	call AdvanceFrame ; $67f0
 Label_05_67f3:
 	ldh a, [$ff94] ; $67f3
 	and a, $02 ; $67f5
@@ -6140,7 +6140,7 @@ Label_05_6840:
 	call Func_05_672d ; $684d
 	jr Label_05_6852 ; $6850
 Label_05_6852:
-	call Func_00_2631 ; $6852
+	call AdvanceFrame ; $6852
 	jr Label_05_67f3 ; $6855
 Label_05_6857:
 	ld a, [$c701] ; $6857
@@ -6286,7 +6286,7 @@ Label_05_6a06:
 	ld d, $ff ; $6a0a
 	jr Label_05_6a25 ; $6a0c
 Label_05_6a0e:
-	call Func_00_2631 ; $6a0e
+	call AdvanceFrame ; $6a0e
 	jr Label_05_69e8 ; $6a11
 Label_05_6a13:
 	ld a, e ; $6a13
@@ -6414,13 +6414,13 @@ Label_05_6ae5:
 	ld a, e ; $6aeb
 	and a, $0f ; $6aec
 	ld [$c713], a ; $6aee
-	call Func_00_2631 ; $6af1
+	call AdvanceFrame ; $6af1
 	jr Label_05_6ab2 ; $6af4
 Label_05_6af6:
 	ld a, [$c710] ; $6af6
 	call Func_05_72bd ; $6af9
 	ld hl, $6b03 ; $6afc
-	call Func_00_1bcb ; $6aff
+	call UnregisterFrameTask ; $6aff
 	ret ; $6b02
 	INCBIN "data/bank_005/d_6b03.bin" ; $6b03, 105 bytes
 Func_05_6b6c:
@@ -6831,7 +6831,7 @@ Label_05_6dfe:
 	jr z, Label_05_6e03 ; $6e00
 	inc [hl] ; $6e02
 Label_05_6e03:
-	call Func_00_2631 ; $6e03
+	call AdvanceFrame ; $6e03
 	jr Label_05_6de3 ; $6e06
 	ret ; $6e08
 Func_05_6e09:
@@ -7411,7 +7411,7 @@ Label_05_7127:
 	ldh a, [rLCDC] ; $7134
 	bit 7, a ; $7136
 	jr z, Label_05_713d ; $7138
-	call Func_00_2631 ; $713a
+	call AdvanceFrame ; $713a
 Label_05_713d:
 	pop af ; $713d
 	jr Label_05_7127 ; $713e
@@ -7446,7 +7446,7 @@ Label_05_7163:
 	ldh a, [rLCDC] ; $7167
 	bit 7, a ; $7169
 	jr z, Label_05_7170 ; $716b
-	call Func_00_2631 ; $716d
+	call AdvanceFrame ; $716d
 Label_05_7170:
 	pop af ; $7170
 	pop hl ; $7171
@@ -7929,7 +7929,7 @@ Func_05_73e4:
 	inc b ; $73fe
 	ld l, b ; $73ff
 	ld h, $00 ; $7400
-	call Func_00_0926 ; $7402
+	call MulHLByA ; $7402
 	ld b, l ; $7405
 	ld de, $d300 ; $7406
 	ld a, [$c3bb] ; $7409
@@ -7966,7 +7966,7 @@ Func_05_742c:
 	ldh a, [rLCDC] ; $7437
 	bit 7, a ; $7439
 	jr z, Label_05_7440 ; $743b
-	call Func_00_2631 ; $743d
+	call AdvanceFrame ; $743d
 Label_05_7440:
 	pop af ; $7440
 	ld hl, $8c00 ; $7441
@@ -7995,7 +7995,7 @@ Label_05_7454:
 	ldh a, [rLCDC] ; $7470
 	bit 7, a ; $7472
 	jr z, Label_05_7479 ; $7474
-	call Func_00_2631 ; $7476
+	call AdvanceFrame ; $7476
 Label_05_7479:
 	pop af ; $7479
 	ld hl, $d400 ; $747a
@@ -8006,7 +8006,7 @@ Label_05_7479:
 	ldh a, [rLCDC] ; $7484
 	bit 7, a ; $7486
 	jr z, Label_05_748d ; $7488
-	call Func_00_2631 ; $748a
+	call AdvanceFrame ; $748a
 Label_05_748d:
 	pop af ; $748d
 	ld hl, $d500 ; $748e
@@ -8017,7 +8017,7 @@ Label_05_748d:
 	ldh a, [rLCDC] ; $7498
 	bit 7, a ; $749a
 	jr z, Label_05_74a1 ; $749c
-	call Func_00_2631 ; $749e
+	call AdvanceFrame ; $749e
 Label_05_74a1:
 	pop af ; $74a1
 	ld hl, $d600 ; $74a2
@@ -8028,7 +8028,7 @@ Label_05_74a1:
 	ldh a, [rLCDC] ; $74ac
 	bit 7, a ; $74ae
 	jr z, Label_05_74b5 ; $74b0
-	call Func_00_2631 ; $74b2
+	call AdvanceFrame ; $74b2
 Label_05_74b5:
 	pop af ; $74b5
 	ld c, $10 ; $74b6
@@ -8043,7 +8043,7 @@ Label_05_74bf:
 	ldh a, [rLCDC] ; $74c7
 	bit 7, a ; $74c9
 	jr z, Label_05_74d0 ; $74cb
-	call Func_00_2631 ; $74cd
+	call AdvanceFrame ; $74cd
 Label_05_74d0:
 	pop af ; $74d0
 	clear_flag $03, 0 ; $74d1
@@ -8622,7 +8622,7 @@ Label_05_7838:
 	ld a, [$c33f] ; $7848
 	or a, a ; $784b
 	jr nz, Label_05_7853 ; $784c
-	call Func_00_2631 ; $784e
+	call AdvanceFrame ; $784e
 	jr Label_05_7856 ; $7851
 Label_05_7853:
 	farcall FarPtr_StepMatchFrame ; $7853

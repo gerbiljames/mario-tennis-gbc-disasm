@@ -95,7 +95,7 @@ Func_10_40ef:
 	call Func_00_2725 ; $4129
 	db $ff ; $412c inline arg
 	ld hl, $4141 ; $412d
-	call Func_00_1bcb ; $4130
+	call UnregisterFrameTask ; $4130
 	farcall FarPtr_0a_02 ; $4133
 	ret ; $4136
 Func_10_4137:
@@ -638,7 +638,7 @@ MatchSelectHandlersA_10:
 	ld de, $3f00 ; $4ebe
 	farcall FarPtr_0a_22 ; $4ec1
 	call Func_10_4f0d ; $4ec4
-	farcall FarPtr_02_42 ; $4ec7
+	farcall FarPtr_TestStorySlotFlagA ; $4ec7
 	call Func_00_2f86 ; $4eca
 	ret ; $4ecd
 Func_10_4ece:
@@ -741,7 +741,7 @@ Label_10_4f7c:
 	ld a, $03 ; $4fa5
 	ld [$cb0c], a ; $4fa7
 	call Func_00_2f32 ; $4faa
-	call Func_00_28b9 ; $4fad
+	call InitSerialLink ; $4fad
 	farcall FarPtr_3b_0c ; $4fb0
 	cp a, $ff ; $4fb3
 	jp z, Label_10_4f31 ; $4fb5
@@ -796,7 +796,7 @@ Label_10_5006:
 	ld c, $00 ; $500d
 	farcall FarPtr_1e_00 ; $500f
 	push af ; $5012
-	call Func_00_246d ; $5013
+	call RestoreGameTimer ; $5013
 	pop af ; $5016
 	or a, a ; $5017
 	jp z, Label_10_5093 ; $5018
@@ -838,7 +838,7 @@ Label_10_5041:
 	call Func_00_1d2e ; $506d
 	jp Label_10_4f7c ; $5070
 Label_10_5073:
-	call Func_00_2488 ; $5073
+	call ResetGameTimer ; $5073
 	farcall FarPtr_02_16 ; $5076
 	farcall FarPtr_03_18 ; $5079
 	test_flag $02, 5 ; $507c
@@ -863,7 +863,7 @@ Label_10_50a4:
 	xor a, a ; $50a4
 	ld [$c8a5], a ; $50a5
 	ld [$c8a7], a ; $50a8
-	call Func_00_246d ; $50ab
+	call RestoreGameTimer ; $50ab
 	farcall FarPtr_03_18 ; $50ae
 	call Func_10_5752 ; $50b1
 	ld [$cb74], a ; $50b4
@@ -878,7 +878,7 @@ Label_10_50a4:
 Label_10_50ca:
 	call Func_10_5752 ; $50ca
 	ld [$cb74], a ; $50cd
-	call Func_00_246d ; $50d0
+	call RestoreGameTimer ; $50d0
 	ld a, $00 ; $50d3
 	ld [wGameMode], a ; $50d5
 	clear_flag $09, 7 ; $50d8
@@ -929,7 +929,7 @@ Label_10_5137:
 	ld [$c8a8], a ; $5138
 	ld a, $03 ; $513b
 	ld [$c36c], a ; $513d
-	farcall FarPtr_02_02 ; $5140
+	farcall FarPtr_InitStoryModeState ; $5140
 	farcall FarPtr_08_00 ; $5143
 	farcall FarPtr_03_26 ; $5146
 Label_10_5149:
@@ -1083,11 +1083,11 @@ Label_10_526e:
 	jp Label_10_4f7c ; $529d
 	ld a, $03 ; $52a0
 	ld [$c36c], a ; $52a2
-	farcall FarPtr_02_02 ; $52a5
+	farcall FarPtr_InitStoryModeState ; $52a5
 	farcall FarPtr_08_00 ; $52a8
 	farcall FarPtr_Func_38_7408Alias1 ; $52ab
 	push af ; $52ae
-	call Func_00_28b9 ; $52af
+	call InitSerialLink ; $52af
 	pop af ; $52b2
 	cp a, $ff ; $52b3
 	jp z, Label_10_4f7c ; $52b5

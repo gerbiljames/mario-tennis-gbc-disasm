@@ -589,7 +589,7 @@ Label_0d_472d:
 	ld l, a ; $4740
 	ld h, $00 ; $4741
 	ld de, $0003 ; $4743
-	call Func_00_0987 ; $4746
+	call DivHLByDE ; $4746
 	ld a, l ; $4749
 	ld [$c786], a ; $474a
 	call Func_0d_48b6 ; $474d
@@ -1290,7 +1290,7 @@ Label_0d_5310:
 	sub a, e ; $532b
 	ld d, a ; $532c
 	ld a, [de] ; $532d
-	call Func_00_0926 ; $532e
+	call MulHLByA ; $532e
 	ld e, l ; $5331
 	ld d, h ; $5332
 	ld hl, $c782 ; $5333

@@ -1502,19 +1502,19 @@ Func_00_086c:
 	pop bc ; $090a
 	pop af ; $090b
 	ret ; $090c
-Func_00_090d:
+SignExtendLToHL:
 	ld h, $00 ; $090d
 	bit 7, l ; $090f
 	ret z ; $0911
 	dec h ; $0912
 	ret ; $0913
-Func_00_0914:
+SignExtendEToDE:
 	ld d, $00 ; $0914
 	bit 7, e ; $0916
 	ret z ; $0918
 	dec d ; $0919
 	ret ; $091a
-Func_00_091b:
+SignExtendCToBC:
 	ld b, $00 ; $091b
 	bit 7, c ; $091d
 	ret z ; $091f
@@ -1523,7 +1523,7 @@ Func_00_091b:
 Label_00_0922:
 	ld hl, $0000 ; $0922
 	ret ; $0925
-Func_00_0926:
+MulHLByA:
 	or a, a ; $0926
 	jr z, Label_00_0922 ; $0927
 	push af ; $0929
@@ -1617,7 +1617,7 @@ Label_00_0984:
 	pop de ; $0984
 	pop af ; $0985
 	ret ; $0986
-Func_00_0987:
+DivHLByDE:
 	push af ; $0987
 	push bc ; $0988
 	xor a, a ; $0989
@@ -1768,7 +1768,7 @@ Label_00_0a35:
 	pop bc ; $0a37
 	pop af ; $0a38
 	ret ; $0a39
-Func_00_0a3a:
+AdvanceRandomSeed:
 	push af ; $0a3a
 	push de ; $0a3b
 	ldh a, [$fffc] ; $0a3c
@@ -1835,7 +1835,7 @@ Label_00_0a88:
 	add hl, hl ; $0a8a
 	add hl, hl ; $0a8b
 Label_00_0a8c:
-	call Func_00_0987 ; $0a8c
+	call DivHLByDE ; $0a8c
 	ld c, $0f ; $0a8f
 	ld a, h ; $0a91
 	or a, a ; $0a92
@@ -1940,7 +1940,7 @@ Label_00_0b1a:
 	sub a, c ; $0b20
 	ld b, a ; $0b21
 	ld a, [bc] ; $0b22
-	call Func_00_0926 ; $0b23
+	call MulHLByA ; $0b23
 	ld bc, $0040 ; $0b26
 	add hl, bc ; $0b29
 	add hl, hl ; $0b2a
@@ -1991,7 +1991,7 @@ QuarterSineTable:
 	db $80 ; 0x40
 Func_00_0b9d:
 	bit 7, h ; $0b9d
-	jp z, Func_00_0926 ; $0b9f
+	jp z, MulHLByA ; $0b9f
 	push af ; $0ba2
 	xor a, a ; $0ba3
 	sub a, l ; $0ba4
@@ -2000,7 +2000,7 @@ Func_00_0b9d:
 	sub a, h ; $0ba7
 	ld h, a ; $0ba8
 	pop af ; $0ba9
-	call Func_00_0926 ; $0baa
+	call MulHLByA ; $0baa
 	push af ; $0bad
 	xor a, a ; $0bae
 	sub a, l ; $0baf
@@ -3052,7 +3052,7 @@ Label_00_106b:
 	ld a, b ; $106b
 	pop bc ; $106c
 	ret ; $106d
-Func_00_106e:
+GetSquareOfByte:
 	push af ; $106e
 	add a, a ; $106f
 	jr c, Label_00_107e ; $1070
@@ -4643,7 +4643,7 @@ Unused_00_PrintDecimalByteSigned:
 	ld c, l ; $1b07
 	ld h, $00 ; $1b08
 	ld l, a ; $1b0a
-	call Func_00_090d ; $1b0b
+	call SignExtendLToHL ; $1b0b
 	ld a, $04 ; $1b0e
 	call FormatDecimalNumber ; $1b10
 	jr Label_00_1b2b ; $1b13
@@ -4685,7 +4685,7 @@ ClearFrameTasks:
 	ld a, $01 ; $1b43
 	ldh [hFrameTasksReady], a ; $1b45
 	ret ; $1b47
-Func_00_1b48:
+Compare3Bytes:
 	push hl ; $1b48
 	push de ; $1b49
 	ld a, [de] ; $1b4a
@@ -4710,7 +4710,7 @@ Label_00_1b60:
 	pop de ; $1b60
 	pop hl ; $1b61
 	ret ; $1b62
-Func_00_1b63:
+Check3BytesZero:
 	push hl ; $1b63
 	ld a, [hl+] ; $1b64
 	or a, [hl] ; $1b65
@@ -4741,7 +4741,7 @@ RegisterFrameTask:
 	ld hl, wFrameTasks ; $1b83
 Label_00_1b86:
 	inc hl ; $1b86
-	call Func_00_1b48 ; $1b87
+	call Compare3Bytes ; $1b87
 	jr nz, Label_00_1b90 ; $1b8a
 	ld b, $01 ; $1b8c
 	jr Label_00_1b96 ; $1b8e
@@ -4759,7 +4759,7 @@ Label_00_1b96:
 	ld hl, wFrameTasks ; $1b9c
 Label_00_1b9f:
 	inc hl ; $1b9f
-	call Func_00_1b63 ; $1ba0
+	call Check3BytesZero ; $1ba0
 	jr nz, Label_00_1bb7 ; $1ba3
 	dec hl ; $1ba5
 	dec de ; $1ba6
@@ -4788,12 +4788,12 @@ Label_00_1bb7:
 	or a, a ; $1bbe
 	jr nz, Label_00_1bc1 ; $1bbf
 Label_00_1bc1:
-	call Func_00_1c3f ; $1bc1
+	call SortFrameTasks ; $1bc1
 	ld a, $01 ; $1bc4
 	ldh [hFrameTasksReady], a ; $1bc6
 	add sp, 4 ; $1bc8
 	ret ; $1bca
-Func_00_1bcb:
+UnregisterFrameTask:
 	add sp, -3 ; $1bcb
 	push af ; $1bcd
 	xor a, a ; $1bce
@@ -4814,7 +4814,7 @@ Func_00_1bcb:
 	ld hl, wFrameTasks ; $1be1
 Label_00_1be4:
 	inc hl ; $1be4
-	call Func_00_1b48 ; $1be5
+	call Compare3Bytes ; $1be5
 	jr nz, Label_00_1bf2 ; $1be8
 	dec hl ; $1bea
 	xor a, a ; $1beb
@@ -4834,7 +4834,7 @@ Label_00_1bf8:
 	ldh [hFrameTasksReady], a ; $1bfa
 	add sp, 3 ; $1bfc
 	ret ; $1bfe
-Func_00_1bff:
+RunFrameTasks:
 	and a, $80 ; $1bff
 	ld b, a ; $1c01
 	ldh a, [hFrameTasksReady] ; $1c02
@@ -4880,7 +4880,7 @@ Label_00_1c2c:
 	ld a, e ; $1c39
 	wram_bank ; $1c3a
 	ret ; $1c3e
-Func_00_1c3f:
+SortFrameTasks:
 	ld c, $0f ; $1c3f
 Label_00_1c41:
 	ld hl, wFrameTasks ; $1c41
@@ -5176,7 +5176,7 @@ Label_00_1da5:
 	pop af ; $1db3
 	jr Label_00_1db9 ; $1db4
 Label_00_1db6:
-	call Func_00_2631 ; $1db6
+	call AdvanceFrame ; $1db6
 Label_00_1db9:
 	jr Label_00_1da5 ; $1db9
 Label_00_1dbb:
@@ -6187,7 +6187,7 @@ Label_00_23c6:
 	ld a, $01 ; $23d8
 	ldh [$ffb9], a ; $23da
 	ret ; $23dc
-Func_00_23dd:
+UpdateGameTimer:
 	ld a, [$c0f4] ; $23dd
 	cp a, $01 ; $23e0
 	call z, Func_00_2435 ; $23e2
@@ -6269,7 +6269,7 @@ Func_00_2435:
 	dec hl ; $244e
 	ld [hl], $3b ; $244f
 	ret ; $2451
-Func_00_2452:
+SaveGameTimer:
 	push af ; $2452
 	push de ; $2453
 	push hl ; $2454
@@ -6293,7 +6293,7 @@ Func_00_2452:
 	pop de ; $246a
 	pop af ; $246b
 	ret ; $246c
-Func_00_246d:
+RestoreGameTimer:
 	push af ; $246d
 	push de ; $246e
 	push hl ; $246f
@@ -6317,7 +6317,7 @@ Func_00_246d:
 	pop de ; $2485
 	pop af ; $2486
 	ret ; $2487
-Func_00_2488:
+ResetGameTimer:
 	push af ; $2488
 	push hl ; $2489
 	ld hl, $c0f0 ; $248a
@@ -6585,10 +6585,10 @@ Label_00_25ad:
 	ldh [$ffa4], a ; $2622
 	ld a, $c0 ; $2624
 	ld [$c3a7], a ; $2626
-	call Func_00_28b9 ; $2629
+	call InitSerialLink ; $2629
 	farcall FarPtr_01_00 ; $262c
 	stop ; $262f
-Func_00_2631:
+AdvanceFrame:
 	push af ; $2631
 	push bc ; $2632
 	push de ; $2633
@@ -6605,7 +6605,7 @@ Label_00_2641:
 	xor a, a ; $2644
 	ldh [$ff8d], a ; $2645
 	xor a, a ; $2647
-	call Func_00_1bff ; $2648
+	call RunFrameTasks ; $2648
 	ld a, [$c3a7] ; $264b
 	and a, $cf ; $264e
 	xor a, $05 ; $2650
@@ -6767,13 +6767,13 @@ Func_00_2725:
 	ld [hl], d ; $2738
 	pop hl ; $2739
 	pop de ; $273a
-	call Func_00_2740 ; $273b
+	call WaitFrames ; $273b
 	pop bc ; $273e
 	ret ; $273f
-Func_00_2740:
+WaitFrames:
 	push af ; $2740
 Label_00_2741:
-	call Func_00_2631 ; $2741
+	call AdvanceFrame ; $2741
 	dec c ; $2744
 	jr nz, Label_00_2741 ; $2745
 	pop af ; $2747
@@ -6846,9 +6846,9 @@ Label_00_27b1:
 	ldh a, [hPlayerInputFlags] ; $27b9
 	cp a, $0f ; $27bb
 	jp z, SoftReset ; $27bd
-	call Func_00_0a3a ; $27c0
+	call AdvanceRandomSeed ; $27c0
 Label_00_27c3:
-	call Func_00_23dd ; $27c3
+	call UpdateGameTimer ; $27c3
 	call Func_00_1d5e ; $27c6
 	call Func_00_1d48 ; $27c9
 	call UpdateSoundEngine ; $27cc
@@ -6903,7 +6903,7 @@ Label_00_2811:
 	pop bc ; $2811
 	pop af ; $2812
 	reti ; $2813
-Func_00_2814:
+WaitVBlank:
 	xor a, a ; $2814
 	ldh [$ff8d], a ; $2815
 Label_00_2817:
@@ -7032,7 +7032,7 @@ Func_00_28af:
 	ldh [$ffc8], a ; $28b6
 Label_00_28b8:
 	ret ; $28b8
-Func_00_28b9:
+InitSerialLink:
 	ld a, $c0 ; $28b9
 	ldh [rSB], a ; $28bb
 	xor a, a ; $28bd
@@ -7066,7 +7066,7 @@ Func_00_28b9:
 	ldh [$ffe7], a ; $28f3
 	ldh [$ffe9], a ; $28f5
 	ret ; $28f7
-Func_00_28f8:
+ResetSerialState:
 	xor a, a ; $28f8
 	ldh [$ffc0], a ; $28f9
 	ldh [$ffc1], a ; $28fb
@@ -7250,7 +7250,7 @@ Label_00_29f3:
 	ldh [rIE], a ; $2a0a
 	ei ; $2a0c
 	ret ; $2a0d
-Func_00_2a0e:
+EnableTimerInterrupt:
 	di ; $2a0e
 	xor a, a ; $2a0f
 	ldh [rIF], a ; $2a10
@@ -7484,11 +7484,11 @@ Label_00_2b58:
 Func_00_2b5c:
 	ld a, $80 ; $2b5c
 	ld [$c3b2], a ; $2b5e
-	jr Func_00_2b68 ; $2b61
+	jr DrawWindowFrame ; $2b61
 Func_00_2b63:
 	ld a, $00 ; $2b63
 	ld [$c3b2], a ; $2b65
-Func_00_2b68:
+DrawWindowFrame:
 	push af ; $2b68
 	push bc ; $2b69
 	push de ; $2b6a
@@ -7534,7 +7534,7 @@ Label_00_2b94:
 	pop hl ; $2b97
 	pop de ; $2b98
 	pop bc ; $2b99
-	call Func_00_2bbb ; $2b9a
+	call DrawWindowFrameTop ; $2b9a
 	ld a, $20 ; $2b9d
 	add a, l ; $2b9f
 	ld l, a ; $2ba0
@@ -7544,7 +7544,7 @@ Label_00_2ba4:
 	dec c ; $2ba4
 	dec c ; $2ba5
 Label_00_2ba6:
-	call Func_00_2bce ; $2ba6
+	call DrawWindowFrameSides ; $2ba6
 	ld a, $20 ; $2ba9
 	add a, l ; $2bab
 	ld l, a ; $2bac
@@ -7553,13 +7553,13 @@ Label_00_2ba6:
 Label_00_2bb0:
 	dec c ; $2bb0
 	jr nz, Label_00_2ba6 ; $2bb1
-	call Func_00_2bdc ; $2bb3
+	call DrawWindowFrameBottom ; $2bb3
 	pop hl ; $2bb6
 	pop de ; $2bb7
 	pop bc ; $2bb8
 	pop af ; $2bb9
 	ret ; $2bba
-Func_00_2bbb:
+DrawWindowFrameTop:
 	push bc ; $2bbb
 	push hl ; $2bbc
 	ld a, $02 ; $2bbd
@@ -7576,7 +7576,7 @@ Label_00_2bc2:
 	pop hl ; $2bcb
 	pop bc ; $2bcc
 	ret ; $2bcd
-Func_00_2bce:
+DrawWindowFrameSides:
 	push hl ; $2bce
 	ld [hl], $05 ; $2bcf
 	ld a, b ; $2bd1
@@ -7589,7 +7589,7 @@ Label_00_2bd8:
 	ld [hl], $06 ; $2bd8
 	pop hl ; $2bda
 	ret ; $2bdb
-Func_00_2bdc:
+DrawWindowFrameBottom:
 	ld a, $07 ; $2bdc
 	ld [hl+], a ; $2bde
 	dec b ; $2bdf
@@ -8388,7 +8388,7 @@ Func_00_302a:
 	or a, a ; $3030
 	jr z, Label_00_3058 ; $3031
 Label_00_3033:
-	call Func_00_2631 ; $3033
+	call AdvanceFrame ; $3033
 	ldh a, [hPlayerInputFlags] ; $3036
 	or a, a ; $3038
 	jr nz, Label_00_3040 ; $3039

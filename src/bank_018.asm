@@ -633,11 +633,11 @@ Func_18_463b:
 	or a, a ; $4645
 	jr z, Label_18_464e ; $4646
 	ld a, b ; $4648
-	farcall FarPtr_02_08 ; $4649
+	farcall FarPtr_LoadMainCharacterFromRoster ; $4649
 	jr Label_18_4652 ; $464c
 Label_18_464e:
 	ld a, b ; $464e
-	farcall FarPtr_02_06 ; $464f
+	farcall FarPtr_InitPlayerRecordFromTemplate ; $464f
 Label_18_4652:
 	pop af ; $4652
 	add a, a ; $4653
@@ -806,7 +806,7 @@ Label_18_544f:
 	ld bc, $0650 ; $5453
 	call QueueSprite16 ; $5456
 	pop bc ; $5459
-	call Func_00_2631 ; $545a
+	call AdvanceFrame ; $545a
 	jr Func_18_5421 ; $545d
 Label_18_545f:
 	ld a, b ; $545f
@@ -850,7 +850,7 @@ Label_18_5497:
 	ld bc, $0650 ; $549b
 	call QueueSprite16 ; $549e
 	pop bc ; $54a1
-	call Func_00_2631 ; $54a2
+	call AdvanceFrame ; $54a2
 	jr Func_18_5469 ; $54a5
 Label_18_54a7:
 	ld a, b ; $54a7
@@ -1275,7 +1275,7 @@ Func_18_76b4:
 	xor a, a ; $76cb
 	ld [$da01], a ; $76cc
 Label_18_76cf:
-	call Func_00_2631 ; $76cf
+	call AdvanceFrame ; $76cf
 	ld a, [$da01] ; $76d2
 	inc a ; $76d5
 	ld [$da01], a ; $76d6
@@ -1288,7 +1288,7 @@ Label_18_76cf:
 	farcall FarPtr_03_42 ; $76e6
 	farcall FarPtr_03_44 ; $76e9
 Label_18_76ec:
-	call Func_00_2631 ; $76ec
+	call AdvanceFrame ; $76ec
 	ldh a, [hInputPressed] ; $76ef
 	and a, $03 ; $76f1
 	jr z, Label_18_76ec ; $76f3
@@ -1305,7 +1305,7 @@ Label_18_76ec:
 	ld hl, $775c ; $7710
 	call RegisterFrameTask ; $7713
 Label_18_7716:
-	call Func_00_2631 ; $7716
+	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719
 	and a, $03 ; $771b
 	jr z, Label_18_7716 ; $771d
@@ -1355,7 +1355,7 @@ Func_18_77bb:
 	xor a, a ; $77e4
 	ld [$da01], a ; $77e5
 Label_18_77e8:
-	call Func_00_2631 ; $77e8
+	call AdvanceFrame ; $77e8
 	ldh a, [$ff8c] ; $77eb
 	and a, $03 ; $77ed
 	jr nz, Label_18_77e8 ; $77ef
@@ -1382,7 +1382,7 @@ Label_18_77e8:
 	call Func_00_1da4 ; $7826
 	sound $2d ; $7829
 Label_18_782b:
-	call Func_00_2631 ; $782b
+	call AdvanceFrame ; $782b
 	ldh a, [hInputPressed] ; $782e
 	and a, $03 ; $7830
 	jr z, Label_18_782b ; $7832
@@ -1463,7 +1463,7 @@ Func_18_792c:
 	call Func_00_1d2e ; $7952
 	call Func_00_1da4 ; $7955
 Label_18_7958:
-	call Func_00_2631 ; $7958
+	call AdvanceFrame ; $7958
 	ldh a, [hInputPressed] ; $795b
 	and a, $03 ; $795d
 	jr z, Label_18_7958 ; $795f
@@ -1504,7 +1504,7 @@ Label_18_798a:
 	xor a, a ; $79ba
 	ld [$da01], a ; $79bb
 Label_18_79be:
-	call Func_00_2631 ; $79be
+	call AdvanceFrame ; $79be
 	ld a, [$da01] ; $79c1
 	inc a ; $79c4
 	ld [$da01], a ; $79c5
@@ -1518,7 +1518,7 @@ Label_18_79be:
 	call RegisterFrameTask ; $79d9
 	sound $2d ; $79dc
 Label_18_79de:
-	call Func_00_2631 ; $79de
+	call AdvanceFrame ; $79de
 	ldh a, [hInputPressed] ; $79e1
 	and a, $03 ; $79e3
 	jr z, Label_18_79de ; $79e5

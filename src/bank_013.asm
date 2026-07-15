@@ -650,7 +650,7 @@ Func_13_44f1:
 	ld a, $06 ; $45ac
 	farcall FarPtr_0a_08 ; $45ae
 	ld hl, $4d0a ; $45b1
-	call Func_00_1bcb ; $45b4
+	call UnregisterFrameTask ; $45b4
 	xor a, a ; $45b7
 	ld bc, $3200 ; $45b8
 	ld de, $1300 ; $45bb
@@ -708,7 +708,7 @@ Func_13_44f1:
 	ld a, $06 ; $462d
 	farcall FarPtr_0a_08 ; $462f
 	ld hl, $4d0a ; $4632
-	call Func_00_1bcb ; $4635
+	call UnregisterFrameTask ; $4635
 	xor a, a ; $4638
 	ld bc, $3200 ; $4639
 	ld de, $0d00 ; $463c
@@ -2025,7 +2025,7 @@ Label_13_521b:
 	set 4, [hl] ; $524b
 	ret ; $524d
 Func_13_524e:
-	call Func_00_0a3a ; $524e
+	call AdvanceRandomSeed ; $524e
 	ld a, l ; $5251
 	and a, $07 ; $5252
 	add a, a ; $5254

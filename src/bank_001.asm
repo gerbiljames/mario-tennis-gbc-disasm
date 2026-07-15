@@ -25,7 +25,7 @@ FarPtr_01_14:
 FarPtr_01_16:
 	dw Func_01_6a5b ; $4016
 Func_01_4018:
-	call Func_00_28b9 ; $4018
+	call InitSerialLink ; $4018
 	push de ; $401b
 	ld de, $07e0 ; $401c
 	farcall FarPtr_ClearSaveFlag ; $401f
@@ -65,7 +65,7 @@ Func_01_4018:
 	farcall FarPtr_RepairAllSaveSlots ; $408e
 	farcall FarPtr_03_2e ; $4091
 	farcall FarPtr_03_30 ; $4094
-	farcall FarPtr_02_02 ; $4097
+	farcall FarPtr_InitStoryModeState ; $4097
 	farcall FarPtr_08_00 ; $409a
 	call EnableLCD ; $409d
 	ld c, $7f ; $40a0
@@ -94,7 +94,7 @@ Label_01_40bf:
 Label_01_40cf:
 	bit 3, a ; $40cf
 	jr nz, Label_01_40d8 ; $40d1
-	call Func_00_2631 ; $40d3
+	call AdvanceFrame ; $40d3
 	jr Label_01_40bf ; $40d6
 Label_01_40d8:
 	ld a, $00 ; $40d8
@@ -237,10 +237,10 @@ Label_01_41f5:
 	ld a, $00 ; $4200
 	ldh [$ff9e], a ; $4202
 Label_01_4204:
-	call Func_00_2631 ; $4204
+	call AdvanceFrame ; $4204
 	jr Label_01_4204 ; $4207
 Label_01_4209:
-	call Func_00_2631 ; $4209
+	call AdvanceFrame ; $4209
 	jp Label_01_40f9 ; $420c
 MenuTilesA_01:
 	INCBIN "data/bank_001/d_420f.bin" ; $420f, 257 bytes
@@ -301,22 +301,22 @@ Func_01_5095:
 	ld de, $9200 ; $509c
 	ld c, $20 ; $509f
 	call Func_00_0480 ; $50a1
-	call Func_00_2631 ; $50a4
+	call AdvanceFrame ; $50a4
 	ld hl, $4610 ; $50a7
 	ld de, $9400 ; $50aa
 	ld c, $20 ; $50ad
 	call Func_00_0480 ; $50af
-	call Func_00_2631 ; $50b2
+	call AdvanceFrame ; $50b2
 	ld hl, $4810 ; $50b5
 	ld de, $9600 ; $50b8
 	ld c, $20 ; $50bb
 	call Func_00_0480 ; $50bd
-	call Func_00_2631 ; $50c0
+	call AdvanceFrame ; $50c0
 	ld hl, $5010 ; $50c3
 	ld de, $8e00 ; $50c6
 	ld c, $20 ; $50c9
 	call Func_00_0480 ; $50cb
-	call Func_00_2631 ; $50ce
+	call AdvanceFrame ; $50ce
 	pop hl ; $50d1
 	pop de ; $50d2
 	pop bc ; $50d3
@@ -432,7 +432,7 @@ Func_01_6030:
 	ldh [rLCDC], a ; $6074
 	ei ; $6076
 Label_01_6077:
-	call Func_00_2631 ; $6077
+	call AdvanceFrame ; $6077
 	jr Label_01_6077 ; $607a
 MenuGfxLZ_01:
 	INCBIN "data/bank_001/d_607c.bin" ; $607c, 2183 bytes
@@ -467,7 +467,7 @@ Func_01_6a5b:
 	pop de ; $6a88
 	pop hl ; $6a89
 Label_01_6a8a:
-	call Func_00_2631 ; $6a8a
+	call AdvanceFrame ; $6a8a
 	ldh a, [hInputPressed] ; $6a8d
 	and a, $c0 ; $6a8f
 	jr z, Label_01_6a97 ; $6a91

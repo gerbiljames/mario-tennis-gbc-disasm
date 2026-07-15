@@ -816,7 +816,7 @@ Label_38_44ad:
 	jr z, Label_38_44c2 ; $44bd
 	call Func_38_4666 ; $44bf
 Label_38_44c2:
-	call Func_00_2631 ; $44c2
+	call AdvanceFrame ; $44c2
 	ld a, [wMenuInputPressed] ; $44c5
 	bit 0, a ; $44c8
 	jr nz, Label_38_44d2 ; $44ca
@@ -842,7 +842,7 @@ Label_38_44e1:
 Func_38_44f1:
 	xor a, a ; $44f1
 	ldh [$ffd8], a ; $44f2
-	call Func_00_28f8 ; $44f4
+	call ResetSerialState ; $44f4
 	call DisableLCDSafely ; $44f7
 	call Func_38_460f ; $44fa
 	ld a, $01 ; $44fd
@@ -892,7 +892,7 @@ Label_38_4550:
 	pop af ; $4556
 	xor a, a ; $4557
 	ldh [$ffd8], a ; $4558
-	call Func_00_28f8 ; $455a
+	call ResetSerialState ; $455a
 	ld c, $10 ; $455d
 	call Func_00_1d20 ; $455f
 	call Func_00_1da4 ; $4562
@@ -908,7 +908,7 @@ Label_38_456e:
 	pop af ; $4574
 	xor a, a ; $4575
 	ldh [$ffd8], a ; $4576
-	call Func_00_28f8 ; $4578
+	call ResetSerialState ; $4578
 	ld c, $10 ; $457b
 	call Func_00_1d20 ; $457d
 	call Func_00_1da4 ; $4580
@@ -1198,7 +1198,7 @@ Label_38_4857:
 	jr z, Label_38_4869 ; $4864
 	call Func_38_4aae ; $4866
 Label_38_4869:
-	call Func_00_2631 ; $4869
+	call AdvanceFrame ; $4869
 	ldh a, [hInputPressed] ; $486c
 	bit 0, a ; $486e
 	jr nz, Label_38_487c ; $4870
@@ -1226,7 +1226,7 @@ Label_38_487c:
 	push af ; $489d
 	ld d, a ; $489e
 	ld a, [$cb00] ; $489f
-	farcall FarPtr_02_06 ; $48a2
+	farcall FarPtr_InitPlayerRecordFromTemplate ; $48a2
 	push af ; $48a5
 	ld hl, wStoryModeNameOfMainCharacter ; $48a6
 	ld a, [$cb00] ; $48a9
@@ -1832,7 +1832,7 @@ Func_38_4e65:
 	call RegisterFrameTask ; $4ea4
 	call Func_38_575e ; $4ea7
 Label_38_4eaa:
-	call Func_00_2631 ; $4eaa
+	call AdvanceFrame ; $4eaa
 	ldh a, [hInputPressed] ; $4ead
 	ld [wMenuInputPressed], a ; $4eaf
 	wram_bank $03 ; $4eb2
@@ -4208,7 +4208,7 @@ Func_38_605b:
 	pop af ; $60ac
 	ld a, $03 ; $60ad
 	ld [$c36c], a ; $60af
-	farcall FarPtr_02_02 ; $60b2
+	farcall FarPtr_InitStoryModeState ; $60b2
 	farcall FarPtr_08_00 ; $60b5
 	ret ; $60b8
 Func_38_60b9:
@@ -4690,8 +4690,8 @@ Func_38_63bd:
 	ld [$cb06], a ; $63c2
 	ld [$cb07], a ; $63c5
 	ldh [$ffe3], a ; $63c8
-	call Func_00_28f8 ; $63ca
-	call Func_00_2a0e ; $63cd
+	call ResetSerialState ; $63ca
+	call EnableTimerInterrupt ; $63cd
 	sound $03 ; $63d0
 	wram_bank $03 ; $63d2
 	ld a, $02 ; $63d8
@@ -4818,8 +4818,8 @@ Label_38_64cb:
 	pop af ; $64d7
 	xor a, a ; $64d8
 	ldh [$ffd8], a ; $64d9
-	call Func_00_28f8 ; $64db
-	call Func_00_2a0e ; $64de
+	call ResetSerialState ; $64db
+	call EnableTimerInterrupt ; $64de
 	call Func_38_5e6e ; $64e1
 	call Func_38_6a7f ; $64e4
 	call Func_38_601c ; $64e7
@@ -4827,7 +4827,7 @@ Label_38_64cb:
 	ldh a, [$ffc2] ; $64ed
 	cp a, $01 ; $64ef
 	jr nz, Label_38_64f6 ; $64f1
-	call Func_00_2814 ; $64f3
+	call WaitVBlank ; $64f3
 Label_38_64f6:
 	ld c, $08 ; $64f6
 	call Func_00_1d20 ; $64f8
@@ -4844,7 +4844,7 @@ Label_38_6505:
 	pop af ; $650e
 	xor a, a ; $650f
 	ldh [$ffd8], a ; $6510
-	call Func_00_28f8 ; $6512
+	call ResetSerialState ; $6512
 	ld c, $10 ; $6515
 	call Func_00_1d20 ; $6517
 	call Func_00_1da4 ; $651a
@@ -6232,7 +6232,7 @@ Label_38_6e5b:
 	jr z, Label_38_6e7b ; $6e76
 	call Func_38_7072 ; $6e78
 Label_38_6e7b:
-	call Func_00_2631 ; $6e7b
+	call AdvanceFrame ; $6e7b
 	ld a, [wMenuInputPressed] ; $6e7e
 	bit 0, a ; $6e81
 	jr nz, Label_38_6e8f ; $6e83
@@ -6331,7 +6331,7 @@ Label_38_6f26:
 	ld de, $98a0 ; $6f4e
 	ld c, $04 ; $6f51
 	call Func_00_0480 ; $6f53
-	call Func_00_2631 ; $6f56
+	call AdvanceFrame ; $6f56
 	sound $5f ; $6f59
 	ld c, $10 ; $6f5b
 	call Func_00_1d20 ; $6f5d
@@ -6843,7 +6843,7 @@ Label_38_745f:
 	call Func_00_1d2e ; $7478
 	xor a, a ; $747b
 	ldh [$ffd8], a ; $747c
-	call Func_00_28f8 ; $747e
+	call ResetSerialState ; $747e
 	ld a, $01 ; $7481
 	ld [$cb11], a ; $7483
 	call Func_38_74e3 ; $7486
@@ -6879,15 +6879,15 @@ Label_38_74c4:
 	call ClearFrameTasks ; $74c4
 	xor a, a ; $74c7
 	ldh [$ffd8], a ; $74c8
-	call Func_00_28f8 ; $74ca
-	call Func_00_2a0e ; $74cd
+	call ResetSerialState ; $74ca
+	call EnableTimerInterrupt ; $74cd
 	ld a, $01 ; $74d0
 	ld [$c33f], a ; $74d2
 	farcall FarPtr_08_04 ; $74d5
 	ld a, $01 ; $74d8
 Label_38_74da:
 	push af ; $74da
-	call Func_00_28b9 ; $74db
+	call InitSerialLink ; $74db
 	pop af ; $74de
 	pop hl ; $74df
 	pop de ; $74e0
@@ -6932,7 +6932,7 @@ Func_38_7522:
 	call ClearFrameTasks ; $7523
 	xor a, a ; $7526
 	ldh [$ffd8], a ; $7527
-	call Func_00_28f8 ; $7529
+	call ResetSerialState ; $7529
 	sound $50 ; $752c
 	sound $00 ; $752e
 	farcall FarPtr_07_32 ; $7530
@@ -6944,11 +6944,11 @@ Func_38_7522:
 	pop af ; $753c
 	xor a, a ; $753d
 	ldh [$ffd8], a ; $753e
-	call Func_00_28f8 ; $7540
+	call ResetSerialState ; $7540
 	ldh a, [$ffc2] ; $7543
 	cp a, $01 ; $7545
 	jr nz, Label_38_754c ; $7547
-	call Func_00_2814 ; $7549
+	call WaitVBlank ; $7549
 Label_38_754c:
 	pop bc ; $754c
 	push bc ; $754d
@@ -7076,7 +7076,7 @@ Func_38_7603:
 	call ClearFrameTasks ; $7607
 	xor a, a ; $760a
 	ldh [$ffd8], a ; $760b
-	call Func_00_28f8 ; $760d
+	call ResetSerialState ; $760d
 	sound $50 ; $7610
 	sound $00 ; $7612
 	farcall FarPtr_07_32 ; $7614
@@ -7088,11 +7088,11 @@ Func_38_7603:
 	pop af ; $7620
 	xor a, a ; $7621
 	ldh [$ffd8], a ; $7622
-	call Func_00_28f8 ; $7624
+	call ResetSerialState ; $7624
 	ldh a, [$ffc2] ; $7627
 	cp a, $01 ; $7629
 	jr nz, Label_38_7630 ; $762b
-	call Func_00_2814 ; $762d
+	call WaitVBlank ; $762d
 Label_38_7630:
 	ld hl, $cb55 ; $7630
 	ld de, $cb59 ; $7633
@@ -7100,7 +7100,7 @@ Label_38_7630:
 	farcall FarPtr_07_38 ; $7638
 	xor a, a ; $763b
 	ldh [$ffd8], a ; $763c
-	call Func_00_28f8 ; $763e
+	call ResetSerialState ; $763e
 	pop hl ; $7641
 	pop de ; $7642
 	pop bc ; $7643
