@@ -1,4 +1,4 @@
-# Project status — 2026-07-14
+# Project status — 2026-07-16
 
 ## Where things stand
 
@@ -10,7 +10,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `60fa906`); the whole history rebuilds
+Everything below is **committed** (HEAD `9adc660`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -275,7 +275,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 980 of 15,850 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 994 of 15,849 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -683,6 +683,28 @@ the two LZ streams `MenuGfxLZ_01`/`MenuGfxLZ2_01` (split out of one blob, refs
 now symbolic), and `UnusedTiles_01_51ab`/`_53b0` (~3.4 KB of graphics
 referenced by nothing).
 
+**Status/records viewer (banks $1a/$1b/$1c) identified via live driving.**
+Driving the game to Status → file → Character Data (the two-panel per-character
+stat screen, Alex/Harry) under an MCP execution trace pinned the subsystem:
+bank $1b is the menu shell/state machine, bank $1a holds the per-screen
+renderers (reached through the `FarPtr_1a` dispatch table), bank $1c the draw
+helpers. The Character-Data screen's handlers are named from observed coverage:
+`CharDataScreen_LoadGfx`/`_LoadScreen` (decompress tiles+sprites into VRAM),
+`CharDataScreen_BuildStats`/`_DrawStats` (compute base+modifier per stat, format
+digits, write gauge bars into the parallel bank-3 tile / bank-2 attribute
+buffers), and the shared `CopyWram1ToWram2`/`CopyWram1ToWram3` block copiers.
+
+The bank-0 **number-formatting subsystem** was named as signed/unsigned pairs:
+`FormatDecimalNumber` (signed, pre-existing) + `FormatDecimalNumberUnsigned`
+(`$1a27`) are near-duplicate value→padded-ASCII formatters differing only in
+sign handling, each with its own inlined digit extractor
+(`ExtractDecimalDigit`/`ExtractDecimalDigitUnsigned`, whose loop bodies now use
+`.loop` locals). Five draw-to-tilemap wrappers sit on top (`PrintHexByte`,
+`PrintHexWord`, `PrintDecimalByte`, `PrintDecimalWord`, and dead-code
+`Unused_00_PrintDecimalByteSigned`), all sharing a tail that renders the
+formatted string via `Func_00_1906`. `tools/disasm.py`'s labels.json validator
+now accepts `.local` labels alongside PascalCase (the internal-label convention).
+
 Bank $08's core match-loop API is now named: `StepMatchFrame` (`$4465`,
 vblank-sync + one update step, 40 call sites) and its multi-frame wrapper
 `StepMatchFrames` (`$4428`, early-exits on the `$c492` point-over flag), plus
@@ -694,10 +716,12 @@ call sites automatically.
 Next annotation targets: bank $08 (match engine, biggest & densest code bank —
 ~690 still-unnamed routines; name the now-structured tables, and confirm
 `$5dc4`'s semantics via a runtime trace), bank $3b (753 unnamed routines, now
-fully carved), bank $13 (biggest story bank), bank $1e, sound-command enum
-for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
+fully carved), bank $13 (biggest story bank), bank $1e, the rest of the
+Status viewer subsystem ($1a/$1b/$1c — shell state machine + the other file
+submenu screens), sound-command enum for the 451 `sound $xx` sites, WRAM map
+expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `60fa906`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `9adc660`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
