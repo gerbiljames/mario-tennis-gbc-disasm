@@ -1841,7 +1841,7 @@ Label_38_4eaa:
 	push af ; $4ebc
 	ld a, a ; $4ebd
 	ld de, $0301 ; $4ebe
-	call Func_00_1ae4 ; $4ec1
+	call PrintDecimalByte ; $4ec1
 	pop af ; $4ec4
 	pop de ; $4ec5
 	ld a, [$d824] ; $4ec6
@@ -5781,14 +5781,14 @@ Label_38_6b56:
 	push af ; $6b57
 	ld a, [$d839] ; $6b58
 	ld de, $0303 ; $6b5b
-	call Func_00_1ae4 ; $6b5e
+	call PrintDecimalByte ; $6b5e
 	pop af ; $6b61
 	pop de ; $6b62
 	push de ; $6b63
 	push af ; $6b64
 	ld a, [$d826] ; $6b65
 	ld de, $0304 ; $6b68
-	call Func_00_1ae4 ; $6b6b
+	call PrintDecimalByte ; $6b6b
 	pop af ; $6b6e
 	pop de ; $6b6f
 	call Func_38_6bd7 ; $6b70
@@ -6220,7 +6220,7 @@ Label_38_6e5b:
 	push af ; $6e5f
 	ld a, a ; $6e60
 	ld de, $0303 ; $6e61
-	call Func_00_1ae4 ; $6e64
+	call PrintDecimalByte ; $6e64
 	pop af ; $6e67
 	pop de ; $6e68
 	ldh a, [hInputPressed] ; $6e69
@@ -6986,14 +6986,14 @@ Label_38_7574:
 	push af ; $757f
 	ld a, [wPlayer1CurrentMainCharacter] ; $7580
 	ld de, $0a01 ; $7583
-	call Func_00_1ab7 ; $7586
+	call PrintHexByte ; $7586
 	pop af ; $7589
 	pop de ; $758a
 	push de ; $758b
 	push af ; $758c
 	ld a, [wPlayer2CurrentMainCharacter] ; $758d
 	ld de, $0a02 ; $7590
-	call Func_00_1ab7 ; $7593
+	call PrintHexByte ; $7593
 	pop af ; $7596
 	pop de ; $7597
 	pop hl ; $7598
@@ -7013,14 +7013,14 @@ Label_38_75a4:
 	push af ; $75a9
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $75aa
 	ld de, $0a03 ; $75ad
-	call Func_00_1ab7 ; $75b0
+	call PrintHexByte ; $75b0
 	pop af ; $75b3
 	pop de ; $75b4
 	push de ; $75b5
 	push af ; $75b6
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $75b7
 	ld de, $0a04 ; $75ba
-	call Func_00_1ab7 ; $75bd
+	call PrintHexByte ; $75bd
 	pop af ; $75c0
 	pop de ; $75c1
 	pop hl ; $75c2

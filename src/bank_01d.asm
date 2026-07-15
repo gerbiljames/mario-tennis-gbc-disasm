@@ -124,7 +124,7 @@ Func_1d_40d0:
 	ld [$d023], a ; $411a
 	ret ; $411d
 Func_1d_411e:
-	farcall FarPtr_1c_02 ; $411e
+	farcall FarPtr_CharDataScreen_LoadScreen ; $411e
 	call Func_1d_4175 ; $4121
 	xor a, a ; $4124
 	call Func_1d_4a14 ; $4125
@@ -482,7 +482,7 @@ Label_1d_44a7:
 	ld l, a ; $44b3
 	ld a, $02 ; $44b4
 	ld de, $d08e ; $44b6
-	call Func_00_1a27 ; $44b9
+	call FormatDecimalNumberUnsigned ; $44b9
 	ld de, $d3db ; $44bc
 	farcall FarPtr_1c_04 ; $44bf
 	wram_bank $06 ; $44c2
@@ -505,7 +505,7 @@ Label_1d_44d4:
 	ld l, a ; $44e0
 	ld a, $02 ; $44e1
 	ld de, $d08e ; $44e3
-	call Func_00_1a27 ; $44e6
+	call FormatDecimalNumberUnsigned ; $44e6
 	ld de, $d3f9 ; $44e9
 	farcall FarPtr_1c_04 ; $44ec
 	wram_bank $06 ; $44ef
@@ -528,7 +528,7 @@ Label_1d_4501:
 	ld l, a ; $450d
 	ld a, $02 ; $450e
 	ld de, $d08e ; $4510
-	call Func_00_1a27 ; $4513
+	call FormatDecimalNumberUnsigned ; $4513
 	ld de, $d403 ; $4516
 	farcall FarPtr_1c_04 ; $4519
 	wram_bank $06 ; $451c
@@ -551,7 +551,7 @@ Label_1d_452e:
 	ld l, a ; $453a
 	ld a, $02 ; $453b
 	ld de, $d08e ; $453d
-	call Func_00_1a27 ; $4540
+	call FormatDecimalNumberUnsigned ; $4540
 	ld de, $d40d ; $4543
 	farcall FarPtr_1c_04 ; $4546
 	wram_bank $06 ; $4549
@@ -574,7 +574,7 @@ Label_1d_455b:
 	ld l, a ; $4567
 	ld a, $02 ; $4568
 	ld de, $d08e ; $456a
-	call Func_00_1a27 ; $456d
+	call FormatDecimalNumberUnsigned ; $456d
 	ld de, $d417 ; $4570
 	farcall FarPtr_1c_04 ; $4573
 	call Func_1d_59be ; $4576
@@ -585,7 +585,7 @@ Label_1d_455b:
 	farcall FarPtr_02_2c ; $4586
 	ld a, $03 ; $4589
 	ld de, $d08e ; $458b
-	call Func_00_1a27 ; $458e
+	call FormatDecimalNumberUnsigned ; $458e
 	ld hl, $d08e ; $4591
 	ld de, $d12c ; $4594
 	ld a, [hl+] ; $4597
@@ -693,7 +693,7 @@ Label_1d_463c:
 	ld l, a ; $4648
 	ld a, $02 ; $4649
 	ld de, $d08e ; $464b
-	call Func_00_1a27 ; $464e
+	call FormatDecimalNumberUnsigned ; $464e
 	ld de, $d46b ; $4651
 	farcall FarPtr_1c_04 ; $4654
 	wram_bank $06 ; $4657
@@ -716,7 +716,7 @@ Label_1d_4669:
 	ld l, a ; $4675
 	ld a, $02 ; $4676
 	ld de, $d08e ; $4678
-	call Func_00_1a27 ; $467b
+	call FormatDecimalNumberUnsigned ; $467b
 	ld de, $d489 ; $467e
 	farcall FarPtr_1c_04 ; $4681
 	wram_bank $06 ; $4684
@@ -739,7 +739,7 @@ Label_1d_4696:
 	ld l, a ; $46a2
 	ld a, $02 ; $46a3
 	ld de, $d08e ; $46a5
-	call Func_00_1a27 ; $46a8
+	call FormatDecimalNumberUnsigned ; $46a8
 	ld de, $d493 ; $46ab
 	farcall FarPtr_1c_04 ; $46ae
 	wram_bank $06 ; $46b1
@@ -762,7 +762,7 @@ Label_1d_46c3:
 	ld l, a ; $46cf
 	ld a, $02 ; $46d0
 	ld de, $d08e ; $46d2
-	call Func_00_1a27 ; $46d5
+	call FormatDecimalNumberUnsigned ; $46d5
 	ld de, $d49d ; $46d8
 	farcall FarPtr_1c_04 ; $46db
 	wram_bank $06 ; $46de
@@ -785,7 +785,7 @@ Label_1d_46f0:
 	ld l, a ; $46fc
 	ld a, $02 ; $46fd
 	ld de, $d08e ; $46ff
-	call Func_00_1a27 ; $4702
+	call FormatDecimalNumberUnsigned ; $4702
 	ld de, $d4a7 ; $4705
 	farcall FarPtr_1c_04 ; $4708
 	call Func_1d_59be ; $470b
@@ -796,7 +796,7 @@ Label_1d_46f0:
 	farcall FarPtr_02_2c ; $471c
 	ld a, $03 ; $471f
 	ld de, $d08e ; $4721
-	call Func_00_1a27 ; $4724
+	call FormatDecimalNumberUnsigned ; $4724
 	ld hl, $d08e ; $4727
 	ld de, $d139 ; $472a
 	ld a, [hl+] ; $472d
@@ -954,7 +954,7 @@ Func_1d_480e:
 	ld l, c ; $481d
 	ld de, $d08f ; $481e
 	ld a, $05 ; $4821
-	call Func_00_1a27 ; $4823
+	call FormatDecimalNumberUnsigned ; $4823
 	ld hl, $d08e ; $4826
 	ld a, [hl] ; $4829
 	and a, a ; $482a
@@ -1087,7 +1087,7 @@ Label_1d_48db:
 	ld l, a ; $48e8
 	ld a, $02 ; $48e9
 	ld de, $d08e ; $48eb
-	call Func_00_1a27 ; $48ee
+	call FormatDecimalNumberUnsigned ; $48ee
 	ld a, [$d08e] ; $48f1
 	cp a, $20 ; $48f4
 	jr z, Label_1d_4907 ; $48f6
@@ -1108,7 +1108,7 @@ Label_1d_4907:
 	ld l, a ; $491e
 	ld a, $02 ; $491f
 	ld de, $d08e ; $4921
-	call Func_00_1a27 ; $4924
+	call FormatDecimalNumberUnsigned ; $4924
 	ld a, [$d08e] ; $4927
 	cp a, $20 ; $492a
 	jr z, Label_1d_4930 ; $492c
@@ -1932,7 +1932,7 @@ Label_1d_5007:
 	ld a, [hl] ; $5010
 	inc a ; $5011
 	ld [$d018], a ; $5012
-	farcall FarPtr_1c_06 ; $5015
+	farcall FarPtr_CharDataScreen_DrawStats ; $5015
 	wram_bank $03 ; $5018
 	ld hl, $d501 ; $501e
 	ld a, $a3 ; $5021
@@ -2007,7 +2007,7 @@ Label_1d_5080:
 	ld l, a ; $508c
 	ld a, $02 ; $508d
 	ld de, $d08e ; $508f
-	call Func_00_1a27 ; $5092
+	call FormatDecimalNumberUnsigned ; $5092
 	ld de, $d519 ; $5095
 	farcall FarPtr_1c_04 ; $5098
 	ret ; $509b
@@ -2926,7 +2926,7 @@ Label_1d_5b10:
 	ret ; $5b19
 Func_1d_5b1a:
 	push af ; $5b1a
-	farcall FarPtr_1c_02 ; $5b1b
+	farcall FarPtr_CharDataScreen_LoadScreen ; $5b1b
 	farcall FarPtr_1c_10 ; $5b1e
 	pop af ; $5b21
 	ld [$cb00], a ; $5b22
@@ -3318,7 +3318,7 @@ Func_1d_6ace:
 	ld l, a ; $6ad9
 	ld a, $05 ; $6ada
 	ld de, $d08e ; $6adc
-	call Func_00_1a27 ; $6adf
+	call FormatDecimalNumberUnsigned ; $6adf
 	ld hl, $d08e ; $6ae2
 	ld de, $d201 ; $6ae5
 	call Func_1d_6d6a ; $6ae8
@@ -3457,7 +3457,7 @@ Label_1d_6bbb:
 	ld l, a ; $6bce
 	ld a, $02 ; $6bcf
 	ld de, $d08e ; $6bd1
-	call Func_00_1a27 ; $6bd4
+	call FormatDecimalNumberUnsigned ; $6bd4
 	ld de, $d06b ; $6bd7
 	farcall FarPtr_1c_04 ; $6bda
 	wram_bank $06 ; $6bdd
@@ -3543,7 +3543,7 @@ Label_1d_6c5c:
 	ld l, a ; $6c6f
 	ld a, $02 ; $6c70
 	ld de, $d08e ; $6c72
-	call Func_00_1a27 ; $6c75
+	call FormatDecimalNumberUnsigned ; $6c75
 	ld de, $d18b ; $6c78
 	farcall FarPtr_1c_04 ; $6c7b
 	wram_bank $06 ; $6c7e
@@ -3626,7 +3626,7 @@ Label_1d_6cff:
 	ld l, a ; $6d0b
 	ld a, $02 ; $6d0c
 	ld de, $d08e ; $6d0e
-	call Func_00_1a27 ; $6d11
+	call FormatDecimalNumberUnsigned ; $6d11
 	ld de, $d06b ; $6d14
 	farcall FarPtr_1c_04 ; $6d17
 	ld a, $01 ; $6d1a
@@ -3668,7 +3668,7 @@ Label_1d_6d4e:
 	ld l, a ; $6d5a
 	ld a, $02 ; $6d5b
 	ld de, $d08e ; $6d5d
-	call Func_00_1a27 ; $6d60
+	call FormatDecimalNumberUnsigned ; $6d60
 	ld de, $d18b ; $6d63
 	farcall FarPtr_1c_04 ; $6d66
 	ret ; $6d69
@@ -3767,7 +3767,7 @@ Label_1d_6e01:
 	ld l, a ; $6e0b
 	ld a, $02 ; $6e0c
 	ld de, $d08e ; $6e0e
-	call Func_00_1a27 ; $6e11
+	call FormatDecimalNumberUnsigned ; $6e11
 	pop de ; $6e14
 	ld hl, $d08e ; $6e15
 	ld a, [hl] ; $6e18
@@ -4873,7 +4873,7 @@ Label_1d_7642:
 	ld l, a ; $7689
 	ld a, $03 ; $768a
 	ld de, $d08e ; $768c
-	call Func_00_1a27 ; $768f
+	call FormatDecimalNumberUnsigned ; $768f
 	ld a, [$d08e] ; $7692
 	cp a, $20 ; $7695
 	jr z, Label_1d_76a2 ; $7697
@@ -4908,7 +4908,7 @@ Label_1d_76cb:
 	ld l, a ; $76dc
 	ld a, $03 ; $76dd
 	ld de, $d08e ; $76df
-	call Func_00_1a27 ; $76e2
+	call FormatDecimalNumberUnsigned ; $76e2
 	ld a, [$d08e] ; $76e5
 	cp a, $20 ; $76e8
 	jr z, Label_1d_76f5 ; $76ea

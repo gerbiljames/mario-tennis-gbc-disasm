@@ -2844,7 +2844,7 @@ Label_03_5270:
 	inc a ; $5295
 	ld e, a ; $5296
 	pop hl ; $5297
-	call Func_00_1ace ; $5298
+	call PrintHexWord ; $5298
 	xor a, a ; $529b
 	ret ; $529c
 Func_03_529d:
@@ -2943,7 +2943,7 @@ Label_03_5382:
 	ld a, h ; $5387
 	sub a, $d3 ; $5388
 	ld h, a ; $538a
-	call Func_00_1ace ; $538b
+	call PrintHexWord ; $538b
 	pop hl ; $538e
 	pop de ; $538f
 	inc d ; $5390
@@ -2958,7 +2958,7 @@ Label_03_5396:
 	ld h, a ; $5399
 	push de ; $539a
 	push bc ; $539b
-	call Func_00_1ace ; $539c
+	call PrintHexWord ; $539c
 	pop bc ; $539f
 	pop de ; $53a0
 	pop hl ; $53a1
@@ -2982,10 +2982,10 @@ Label_03_53b1:
 	ld h, [hl] ; $53b6
 	ld l, a ; $53b7
 	ld de, $1011 ; $53b8
-	call Func_00_1ace ; $53bb
+	call PrintHexWord ; $53bb
 	ld a, [$c36c] ; $53be
 	ld de, $0011 ; $53c1
-	call Func_00_1ae4 ; $53c4
+	call PrintDecimalByte ; $53c4
 	pop de ; $53c7
 Label_03_53c8:
 	ldh a, [hPlayerInputFlags] ; $53c8

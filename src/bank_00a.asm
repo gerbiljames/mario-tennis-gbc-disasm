@@ -2121,7 +2121,7 @@ Func_0a_4ef8:
 	ld h, h ; $4f0f
 	ld l, l ; $4f10
 	ld de, $1000 ; $4f11
-	call Func_00_1ace ; $4f14
+	call PrintHexWord ; $4f14
 	pop de ; $4f17
 	pop hl ; $4f18
 	ld hl, wStoryModePlayersYPosition ; $4f19
@@ -2133,7 +2133,7 @@ Func_0a_4ef8:
 	ld h, h ; $4f21
 	ld l, l ; $4f22
 	ld de, $1001 ; $4f23
-	call Func_00_1ace ; $4f26
+	call PrintHexWord ; $4f26
 	pop de ; $4f29
 	pop hl ; $4f2a
 Label_0a_4f2b:
@@ -4013,7 +4013,7 @@ Func_0a_5f4f:
 	push af ; $5f66
 	ld a, a ; $5f67
 	ld de, $0e0e ; $5f68
-	call Func_00_1ab7 ; $5f6b
+	call PrintHexByte ; $5f6b
 	pop af ; $5f6e
 	pop de ; $5f6f
 	pop hl ; $5f70

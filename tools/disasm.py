@@ -1485,9 +1485,11 @@ def build_labels(dis, overrides=None):
             labels[off] = name
     if overrides:
         for k, name in overrides.items():
-            if not (name[:1].isupper() and name.isidentifier()):
+            ok = (name[:1].isupper() and name.isidentifier()) or \
+                 (name.startswith(".") and name[1:].isidentifier())
+            if not ok:
                 print(f"warning: labels.json: {k} name {name!r} should be "
-                      f"PascalCase", file=sys.stderr)
+                      f"PascalCase or a .local label", file=sys.stderr)
             labels[int(k, 0)] = name
     for off, ins in dis.instrs.items():
         if ins.target is None or not (ins.is_jump or ins.is_call):

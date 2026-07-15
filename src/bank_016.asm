@@ -75,7 +75,7 @@ Label_16_44f9:
 	push af ; $4500
 	ld a, a ; $4501
 	ld de, $0303 ; $4502
-	call Func_00_1ae4 ; $4505
+	call PrintDecimalByte ; $4505
 	pop af ; $4508
 	pop de ; $4509
 	ldh a, [hInputPressed] ; $450a

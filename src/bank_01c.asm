@@ -2,12 +2,12 @@ SECTION "ROM Bank $1c", ROMX[$4000], BANK[$1c]
 
 FarPtr_1c_00:
 	dw Func_1c_401a ; $4000
-FarPtr_1c_02:
-	dw Func_1c_7116 ; $4002
+FarPtr_CharDataScreen_LoadScreen:
+	dw CharDataScreen_LoadScreen ; $4002
 FarPtr_1c_04:
 	dw Func_1c_44cc ; $4004
-FarPtr_1c_06:
-	dw Func_1c_42f6 ; $4006
+FarPtr_CharDataScreen_DrawStats:
+	dw CharDataScreen_DrawStats ; $4006
 FarPtr_1c_08:
 	dw Func_1c_48c9 ; $4008
 FarPtr_1c_0a:
@@ -247,7 +247,7 @@ Label_1c_41d8:
 	ret ; $41db
 Func_1c_41dc:
 	call Func_1c_4208 ; $41dc
-	call Func_1c_42f6 ; $41df
+	call CharDataScreen_DrawStats ; $41df
 	call Func_1c_459a ; $41e2
 	wram_bank $03 ; $41e5
 	ld hl, $d000 ; $41eb
@@ -261,65 +261,65 @@ Func_1c_41dc:
 	call Func_00_0480 ; $4204
 	ret ; $4207
 Func_1c_4208:
-	call Func_1c_7116 ; $4208
+	call CharDataScreen_LoadScreen ; $4208
 	wram_bank $01 ; $420b
 	ld hl, $682e ; $4211
 	ld de, $d3e0 ; $4214
 	call DecompressData ; $4217
 	ld hl, $d3e0 ; $421a
 	ld bc, $0021 ; $421d
-	call Func_1c_42cc ; $4220
+	call CopyWram1ToWram3 ; $4220
 	wram_bank $01 ; $4223
 	ld hl, $6848 ; $4229
 	ld de, $d3e0 ; $422c
 	call DecompressData ; $422f
 	ld hl, $d3e0 ; $4232
 	ld bc, $0021 ; $4235
-	call Func_1c_42e1 ; $4238
+	call CopyWram1ToWram2 ; $4238
 	wram_bank $01 ; $423b
 	ld hl, $684f ; $4241
 	ld de, $d410 ; $4244
 	call DecompressData ; $4247
 	ld hl, $d410 ; $424a
 	ld bc, $0018 ; $424d
-	call Func_1c_42cc ; $4250
+	call CopyWram1ToWram3 ; $4250
 	wram_bank $01 ; $4253
 	ld hl, $686b ; $4259
 	ld de, $d410 ; $425c
 	call DecompressData ; $425f
 	ld hl, $d410 ; $4262
 	ld bc, $0018 ; $4265
-	call Func_1c_42e1 ; $4268
+	call CopyWram1ToWram2 ; $4268
 	wram_bank $01 ; $426b
 	ld hl, $67fe ; $4271
 	ld de, $d3a0 ; $4274
 	call DecompressData ; $4277
 	ld hl, $d3a0 ; $427a
 	ld bc, $0033 ; $427d
-	call Func_1c_42cc ; $4280
+	call CopyWram1ToWram3 ; $4280
 	wram_bank $01 ; $4283
 	ld hl, $6825 ; $4289
 	ld de, $d3a0 ; $428c
 	call DecompressData ; $428f
 	ld hl, $d3a0 ; $4292
 	ld bc, $0033 ; $4295
-	call Func_1c_42e1 ; $4298
+	call CopyWram1ToWram2 ; $4298
 	wram_bank $01 ; $429b
 	ld hl, $67da ; $42a1
 	ld de, $d380 ; $42a4
 	call DecompressData ; $42a7
 	ld hl, $d380 ; $42aa
 	ld bc, $001e ; $42ad
-	call Func_1c_42cc ; $42b0
+	call CopyWram1ToWram3 ; $42b0
 	wram_bank $01 ; $42b3
 	ld hl, $67f2 ; $42b9
 	ld de, $d380 ; $42bc
 	call DecompressData ; $42bf
 	ld hl, $d380 ; $42c2
 	ld bc, $001e ; $42c5
-	call Func_1c_42e1 ; $42c8
+	call CopyWram1ToWram2 ; $42c8
 	ret ; $42cb
-Func_1c_42cc:
+CopyWram1ToWram3:
 	wram_bank $01 ; $42cc
 	ld d, [hl] ; $42d2
 	wram_bank $03 ; $42d3
@@ -328,9 +328,9 @@ Func_1c_42cc:
 	dec bc ; $42db
 	ld a, b ; $42dc
 	or a, c ; $42dd
-	jr nz, Func_1c_42cc ; $42de
+	jr nz, CopyWram1ToWram3 ; $42de
 	ret ; $42e0
-Func_1c_42e1:
+CopyWram1ToWram2:
 	wram_bank $01 ; $42e1
 	ld d, [hl] ; $42e7
 	wram_bank $02 ; $42e8
@@ -339,16 +339,16 @@ Func_1c_42e1:
 	dec bc ; $42f0
 	ld a, b ; $42f1
 	or a, c ; $42f2
-	jr nz, Func_1c_42e1 ; $42f3
+	jr nz, CopyWram1ToWram2 ; $42f3
 	ret ; $42f5
-Func_1c_42f6:
+CharDataScreen_DrawStats:
 	wram_bank $06 ; $42f6
 	ld a, [$d0b6] ; $42fc
 	or a, a ; $42ff
 	jr z, Label_1c_4305 ; $4300
 	call Func_1c_4c43 ; $4302
 Label_1c_4305:
-	farcall FarPtr_1a_0e ; $4305
+	farcall FarPtr_CharDataScreen_BuildStats ; $4305
 	wram_bank $06 ; $4308
 	ld a, [$d00e] ; $430e
 	ld c, a ; $4311
@@ -359,7 +359,7 @@ Label_1c_4305:
 	ld l, a ; $4319
 	ld a, $02 ; $431a
 	ld de, $d08e ; $431c
-	call Func_00_1a27 ; $431f
+	call FormatDecimalNumberUnsigned ; $431f
 	ld de, $d251 ; $4322
 	call Func_1c_44cc ; $4325
 	pop af ; $4328
@@ -376,7 +376,7 @@ Label_1c_4305:
 	ld l, a ; $4342
 	ld a, $02 ; $4343
 	ld de, $d08e ; $4345
-	call Func_00_1a27 ; $4348
+	call FormatDecimalNumberUnsigned ; $4348
 	ld de, $d265 ; $434b
 	call Func_1c_44cc ; $434e
 	pop af ; $4351
@@ -393,7 +393,7 @@ Label_1c_4305:
 	ld l, a ; $436b
 	ld a, $02 ; $436c
 	ld de, $d08e ; $436e
-	call Func_00_1a27 ; $4371
+	call FormatDecimalNumberUnsigned ; $4371
 	ld de, $d291 ; $4374
 	call Func_1c_44cc ; $4377
 	pop af ; $437a
@@ -410,7 +410,7 @@ Label_1c_4305:
 	ld l, a ; $4394
 	ld a, $02 ; $4395
 	ld de, $d08e ; $4397
-	call Func_00_1a27 ; $439a
+	call FormatDecimalNumberUnsigned ; $439a
 	ld de, $d2a5 ; $439d
 	call Func_1c_44cc ; $43a0
 	pop af ; $43a3
@@ -427,7 +427,7 @@ Label_1c_4305:
 	ld l, a ; $43bd
 	ld a, $02 ; $43be
 	ld de, $d08e ; $43c0
-	call Func_00_1a27 ; $43c3
+	call FormatDecimalNumberUnsigned ; $43c3
 	ld de, $d2b9 ; $43c6
 	call Func_1c_44cc ; $43c9
 	pop af ; $43cc
@@ -444,7 +444,7 @@ Label_1c_4305:
 	ld l, a ; $43e6
 	ld a, $02 ; $43e7
 	ld de, $d08e ; $43e9
-	call Func_00_1a27 ; $43ec
+	call FormatDecimalNumberUnsigned ; $43ec
 	ld de, $d2e1 ; $43ef
 	call Func_1c_44cc ; $43f2
 	pop af ; $43f5
@@ -461,7 +461,7 @@ Label_1c_4305:
 	ld l, a ; $440f
 	ld a, $02 ; $4410
 	ld de, $d08e ; $4412
-	call Func_00_1a27 ; $4415
+	call FormatDecimalNumberUnsigned ; $4415
 	ld de, $d2f5 ; $4418
 	call Func_1c_44cc ; $441b
 	pop af ; $441e
@@ -478,7 +478,7 @@ Label_1c_4305:
 	ld l, a ; $4438
 	ld a, $02 ; $4439
 	ld de, $d08e ; $443b
-	call Func_00_1a27 ; $443e
+	call FormatDecimalNumberUnsigned ; $443e
 	ld de, $d321 ; $4441
 	call Func_1c_44cc ; $4444
 	pop af ; $4447
@@ -495,7 +495,7 @@ Label_1c_4305:
 	ld l, a ; $4461
 	ld a, $02 ; $4462
 	ld de, $d08e ; $4464
-	call Func_00_1a27 ; $4467
+	call FormatDecimalNumberUnsigned ; $4467
 	ld de, $d335 ; $446a
 	call Func_1c_44cc ; $446d
 	pop af ; $4470
@@ -512,7 +512,7 @@ Label_1c_4305:
 	ld l, a ; $448a
 	ld a, $02 ; $448b
 	ld de, $d08e ; $448d
-	call Func_00_1a27 ; $4490
+	call FormatDecimalNumberUnsigned ; $4490
 	ld de, $d349 ; $4493
 	call Func_1c_44cc ; $4496
 	pop af ; $4499
@@ -529,7 +529,7 @@ Label_1c_4305:
 	ld l, a ; $44b3
 	ld a, $02 ; $44b4
 	ld de, $d08e ; $44b6
-	call Func_00_1a27 ; $44b9
+	call FormatDecimalNumberUnsigned ; $44b9
 	ld de, $d35d ; $44bc
 	call Func_1c_44cc ; $44bf
 	pop af ; $44c2
@@ -1808,7 +1808,7 @@ Label_1c_4e6f:
 	ld h, $00 ; $4e75
 	ld a, $02 ; $4e77
 	ld de, $d08e ; $4e79
-	call Func_00_1a27 ; $4e7c
+	call FormatDecimalNumberUnsigned ; $4e7c
 	pop bc ; $4e7f
 	push bc ; $4e80
 	ld a, [$d08e] ; $4e81
@@ -1857,7 +1857,7 @@ Label_1c_4ec9:
 	ld h, $00 ; $4ecf
 	ld a, $02 ; $4ed1
 	ld de, $d08e ; $4ed3
-	call Func_00_1a27 ; $4ed6
+	call FormatDecimalNumberUnsigned ; $4ed6
 	pop bc ; $4ed9
 	push bc ; $4eda
 	ld a, [$d08e] ; $4edb
@@ -1906,7 +1906,7 @@ Label_1c_4f26:
 	ld h, $00 ; $4f2c
 	ld a, $02 ; $4f2e
 	ld de, $d08e ; $4f30
-	call Func_00_1a27 ; $4f33
+	call FormatDecimalNumberUnsigned ; $4f33
 	pop bc ; $4f36
 	push bc ; $4f37
 	ld a, [$d08e] ; $4f38
@@ -1955,7 +1955,7 @@ Label_1c_4f83:
 	ld h, $00 ; $4f89
 	ld a, $02 ; $4f8b
 	ld de, $d08e ; $4f8d
-	call Func_00_1a27 ; $4f90
+	call FormatDecimalNumberUnsigned ; $4f90
 	pop bc ; $4f93
 	push bc ; $4f94
 	ld a, [$d08e] ; $4f95
@@ -2020,7 +2020,7 @@ Label_1c_4fe2:
 	ld l, a ; $5058
 	ld a, $02 ; $5059
 	ld de, $d08e ; $505b
-	call Func_00_1a27 ; $505e
+	call FormatDecimalNumberUnsigned ; $505e
 	ld a, [$d08e] ; $5061
 	sub a, $30 ; $5064
 	rlca ; $5066
@@ -2114,7 +2114,7 @@ Label_1c_5110:
 	ld [$d024], a ; $5112
 	call Func_1c_48ec ; $5115
 	call Func_1c_4c43 ; $5118
-	call Func_1c_42f6 ; $511b
+	call CharDataScreen_DrawStats ; $511b
 	call Func_1c_4882 ; $511e
 	call Func_1c_4dd6 ; $5121
 	call Func_1c_495d ; $5124
@@ -2171,7 +2171,7 @@ Label_1c_5180:
 Label_1c_518e:
 	call Func_1c_48ec ; $518e
 	call Func_1c_4c43 ; $5191
-	call Func_1c_42f6 ; $5194
+	call CharDataScreen_DrawStats ; $5194
 	call Func_1c_4882 ; $5197
 	call Func_1c_4dd6 ; $519a
 	call Func_1c_495d ; $519d
@@ -2184,7 +2184,7 @@ Label_1c_51a3:
 	ld hl, $54f2 ; $51b0
 	call Func_00_1bcb ; $51b3
 	call Func_1c_4c43 ; $51b6
-	call Func_1c_42f6 ; $51b9
+	call CharDataScreen_DrawStats ; $51b9
 	call Func_1c_48ec ; $51bc
 	call Func_1c_489b ; $51bf
 	ld hl, $5904 ; $51c2
@@ -2284,7 +2284,7 @@ Label_1c_52c1:
 	call Func_1c_54e3 ; $52c3
 	call Func_1c_48ec ; $52c6
 	call Func_1c_4c43 ; $52c9
-	call Func_1c_42f6 ; $52cc
+	call CharDataScreen_DrawStats ; $52cc
 	call Func_1c_489b ; $52cf
 	ld hl, $593a ; $52d2
 	ld bc, $d3e0 ; $52d5
@@ -2385,7 +2385,7 @@ Label_1c_53d1:
 	jr z, Label_1c_53f1 ; $53dc
 	call Func_1c_48ec ; $53de
 	call Func_1c_4a94 ; $53e1
-	call Func_1c_42f6 ; $53e4
+	call CharDataScreen_DrawStats ; $53e4
 	call Func_1c_4882 ; $53e7
 	call Func_1c_4dd6 ; $53ea
 	call Func_1c_495d ; $53ed
@@ -2393,7 +2393,7 @@ Label_1c_53d1:
 Label_1c_53f1:
 	call Func_1c_48ec ; $53f1
 	call Func_1c_4c43 ; $53f4
-	call Func_1c_42f6 ; $53f7
+	call CharDataScreen_DrawStats ; $53f7
 	call Func_1c_4882 ; $53fa
 	call Func_1c_4dd6 ; $53fd
 	call Func_1c_495d ; $5400
@@ -2520,7 +2520,7 @@ Label_1c_54c2:
 	ld [$d024], a ; $54cb
 	call Func_1c_48ec ; $54ce
 	call Func_1c_4c43 ; $54d1
-	call Func_1c_42f6 ; $54d4
+	call CharDataScreen_DrawStats ; $54d4
 	call Func_1c_4882 ; $54d7
 	call Func_1c_4dd6 ; $54da
 	call Func_1c_495d ; $54dd
@@ -2701,7 +2701,7 @@ Label_1c_6eea:
 	nop ; $6f27
 	jr nz, Label_1c_6eea ; $6f28
 	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 492 bytes
-Func_1c_7116:
+CharDataScreen_LoadScreen:
 	ld hl, $598c ; $7116
 	ld de, $0008 ; $7119
 	call LoadPaletteShadow ; $711c
@@ -2716,7 +2716,7 @@ Func_1c_7116:
 	ld de, $a000 ; $713a
 	ld c, $14 ; $713d
 	call Func_00_0480 ; $713f
-	farcall FarPtr_1a_10 ; $7142
+	farcall FarPtr_CharDataScreen_LoadGfx ; $7142
 	wram_bank $01 ; $7145
 	ld hl, $59cc ; $714b
 	ld de, $d000 ; $714e
@@ -2735,84 +2735,84 @@ Func_1c_7116:
 	call DecompressData ; $7176
 	ld hl, $d000 ; $7179
 	ld bc, $0240 ; $717c
-	call Func_1c_42cc ; $717f
+	call CopyWram1ToWram3 ; $717f
 	wram_bank $01 ; $7182
 	ld hl, $6469 ; $7188
 	ld de, $d000 ; $718b
 	call DecompressData ; $718e
 	ld hl, $d000 ; $7191
 	ld bc, $0240 ; $7194
-	call Func_1c_42e1 ; $7197
+	call CopyWram1ToWram2 ; $7197
 	wram_bank $01 ; $719a
 	ld hl, $6549 ; $71a0
 	ld de, $d240 ; $71a3
 	call DecompressData ; $71a6
 	ld hl, $d240 ; $71a9
 	ld bc, $0032 ; $71ac
-	call Func_1c_42cc ; $71af
+	call CopyWram1ToWram3 ; $71af
 	wram_bank $01 ; $71b2
 	ld hl, $657f ; $71b8
 	ld de, $d240 ; $71bb
 	call DecompressData ; $71be
 	ld hl, $d240 ; $71c1
 	ld bc, $0032 ; $71c4
-	call Func_1c_42e1 ; $71c7
+	call CopyWram1ToWram2 ; $71c7
 	wram_bank $01 ; $71ca
 	ld hl, $65c8 ; $71d0
 	ld de, $d280 ; $71d3
 	call DecompressData ; $71d6
 	ld hl, $d280 ; $71d9
 	ld bc, $0046 ; $71dc
-	call Func_1c_42cc ; $71df
+	call CopyWram1ToWram3 ; $71df
 	wram_bank $01 ; $71e2
 	ld hl, $660b ; $71e8
 	ld de, $d280 ; $71eb
 	call DecompressData ; $71ee
 	ld hl, $d280 ; $71f1
 	ld bc, $0046 ; $71f4
-	call Func_1c_42e1 ; $71f7
+	call CopyWram1ToWram2 ; $71f7
 	wram_bank $01 ; $71fa
 	ld hl, $6668 ; $7200
 	ld de, $d2d0 ; $7203
 	call DecompressData ; $7206
 	ld hl, $d2d0 ; $7209
 	ld bc, $0032 ; $720c
-	call Func_1c_42cc ; $720f
+	call CopyWram1ToWram3 ; $720f
 	wram_bank $01 ; $7212
 	ld hl, $66a2 ; $7218
 	ld de, $d2d0 ; $721b
 	call DecompressData ; $721e
 	ld hl, $d2d0 ; $7221
 	ld bc, $0032 ; $7224
-	call Func_1c_42e1 ; $7227
+	call CopyWram1ToWram2 ; $7227
 	wram_bank $01 ; $722a
 	ld hl, $66ec ; $7230
 	ld de, $d310 ; $7233
 	call DecompressData ; $7236
 	ld hl, $d310 ; $7239
 	ld bc, $005a ; $723c
-	call Func_1c_42cc ; $723f
+	call CopyWram1ToWram3 ; $723f
 	wram_bank $01 ; $7242
 	ld hl, $6734 ; $7248
 	ld de, $d310 ; $724b
 	call DecompressData ; $724e
 	ld hl, $d310 ; $7251
 	ld bc, $005a ; $7254
-	call Func_1c_42e1 ; $7257
+	call CopyWram1ToWram2 ; $7257
 	wram_bank $01 ; $725a
 	ld hl, $67c5 ; $7260
 	ld de, $d370 ; $7263
 	call DecompressData ; $7266
 	ld hl, $d370 ; $7269
 	ld bc, $0009 ; $726c
-	call Func_1c_42cc ; $726f
+	call CopyWram1ToWram3 ; $726f
 	wram_bank $01 ; $7272
 	ld hl, $67d3 ; $7278
 	ld de, $d370 ; $727b
 	call DecompressData ; $727e
 	ld hl, $d370 ; $7281
 	ld bc, $0009 ; $7284
-	call Func_1c_42e1 ; $7287
+	call CopyWram1ToWram2 ; $7287
 	ret ; $728a
 Func_1c_728b:
 	wram_bank $01 ; $728b
@@ -2821,28 +2821,28 @@ Func_1c_728b:
 	call DecompressData ; $7297
 	ld hl, $d550 ; $729a
 	ld bc, $0021 ; $729d
-	call Func_1c_42cc ; $72a0
+	call CopyWram1ToWram3 ; $72a0
 	wram_bank $01 ; $72a3
 	ld hl, $6848 ; $72a9
 	ld de, $d550 ; $72ac
 	call DecompressData ; $72af
 	ld hl, $d550 ; $72b2
 	ld bc, $0021 ; $72b5
-	call Func_1c_42e1 ; $72b8
+	call CopyWram1ToWram2 ; $72b8
 	wram_bank $01 ; $72bb
 	ld hl, $684f ; $72c1
 	ld de, $d580 ; $72c4
 	call DecompressData ; $72c7
 	ld hl, $d580 ; $72ca
 	ld bc, $0018 ; $72cd
-	call Func_1c_42cc ; $72d0
+	call CopyWram1ToWram3 ; $72d0
 	wram_bank $01 ; $72d3
 	ld hl, $686b ; $72d9
 	ld de, $d580 ; $72dc
 	call DecompressData ; $72df
 	ld hl, $d580 ; $72e2
 	ld bc, $0018 ; $72e5
-	call Func_1c_42e1 ; $72e8
+	call CopyWram1ToWram2 ; $72e8
 	ret ; $72eb
 Func_1c_72ec:
 	ld a, $01 ; $72ec
@@ -3027,14 +3027,14 @@ Func_1c_73fb:
 	call DecompressData ; $7468
 	ld hl, $d000 ; $746b
 	ld bc, $0240 ; $746e
-	call Func_1c_42cc ; $7471
+	call CopyWram1ToWram3 ; $7471
 	wram_bank $01 ; $7474
 	ld hl, $7e1f ; $747a
 	ld de, $d000 ; $747d
 	call DecompressData ; $7480
 	ld hl, $d000 ; $7483
 	ld bc, $0240 ; $7486
-	call Func_1c_42e1 ; $7489
+	call CopyWram1ToWram2 ; $7489
 	ret ; $748c
 Func_1c_748d:
 	xor a, a ; $748d

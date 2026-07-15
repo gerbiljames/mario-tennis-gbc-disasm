@@ -14,10 +14,10 @@ FarPtr_1a_0a:
 	dw Func_1a_44d8 ; $400a
 FarPtr_1a_0c:
 	dw Func_1a_7945 ; $400c
-FarPtr_1a_0e:
-	dw Func_1a_7ab5 ; $400e
-FarPtr_1a_10:
-	dw Func_1a_7b85 ; $4010
+FarPtr_CharDataScreen_BuildStats:
+	dw CharDataScreen_BuildStats ; $400e
+FarPtr_CharDataScreen_LoadGfx:
+	dw CharDataScreen_LoadGfx ; $4010
 FarPtr_1a_12:
 	dw Func_1a_7be5 ; $4012
 Func_1a_4014:
@@ -152,10 +152,10 @@ Label_1a_4108:
 	push de ; $410c
 	push hl ; $410d
 	ld de, $0404 ; $410e
-	call Func_00_1ab7 ; $4111
+	call PrintHexByte ; $4111
 	ld a, [$c8a3] ; $4114
 	ld de, $0405 ; $4117
-	call Func_00_1ab7 ; $411a
+	call PrintHexByte ; $411a
 	pop hl ; $411d
 	pop de ; $411e
 	pop bc ; $411f
@@ -2706,7 +2706,7 @@ Label_1a_7a99:
 	inc hl ; $7ab1
 	inc hl ; $7ab2
 	jr Func_1a_7a67 ; $7ab3
-Func_1a_7ab5:
+CharDataScreen_BuildStats:
 	ld a, [$cb00] ; $7ab5
 	or a, a ; $7ab8
 	ret nz ; $7ab9
@@ -2830,7 +2830,7 @@ Func_1a_7ab5:
 	ld [$d0b5], a ; $7b7e
 	farcall FarPtr_02_10 ; $7b81
 	ret ; $7b84
-Func_1a_7b85:
+CharDataScreen_LoadGfx:
 	ld hl, $7e7e ; $7b85
 	ld de, $0c02 ; $7b88
 	call LoadPaletteShadow ; $7b8b

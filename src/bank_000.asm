@@ -4376,25 +4376,25 @@ Label_00_1995:
 	ld l, c ; $199b
 	ld h, b ; $199c
 	ld bc, $d8f0 ; $199d
-	call Func_00_1a20 ; $19a0
+	call ExtractDecimalDigit ; $19a0
 	ld bc, $2710 ; $19a3
 	add hl, bc ; $19a6
 	ld [de], a ; $19a7
 	inc de ; $19a8
 	ld bc, $fc18 ; $19a9
-	call Func_00_1a20 ; $19ac
+	call ExtractDecimalDigit ; $19ac
 	ld bc, $03e8 ; $19af
 	add hl, bc ; $19b2
 	ld [de], a ; $19b3
 	inc de ; $19b4
 	ld bc, $ff9c ; $19b5
-	call Func_00_1a20 ; $19b8
+	call ExtractDecimalDigit ; $19b8
 	ld bc, $0064 ; $19bb
 	add hl, bc ; $19be
 	ld [de], a ; $19bf
 	inc de ; $19c0
 	ld bc, $fff6 ; $19c1
-	call Func_00_1a20 ; $19c4
+	call ExtractDecimalDigit ; $19c4
 	ld bc, $000a ; $19c7
 	add hl, bc ; $19ca
 	ld [de], a ; $19cb
@@ -4463,15 +4463,15 @@ Label_00_1a12:
 	pop bc ; $1a1c
 	add sp, 6 ; $1a1d
 	ret ; $1a1f
-Func_00_1a20:
+ExtractDecimalDigit:
 	xor a, a ; $1a20
-Label_00_1a21:
+.loop:
 	inc a ; $1a21
 	add hl, bc ; $1a22
-	jr c, Label_00_1a21 ; $1a23
+	jr c, .loop ; $1a23
 	dec a ; $1a25
 	ret ; $1a26
-Func_00_1a27:
+FormatDecimalNumberUnsigned:
 	add sp, -6 ; $1a27
 	push bc ; $1a29
 	ld b, $00 ; $1a2a
@@ -4493,25 +4493,25 @@ Func_00_1a27:
 	ld l, c ; $1a3e
 	ld h, b ; $1a3f
 	ld bc, $d8f0 ; $1a40
-	call Func_00_1ab0 ; $1a43
+	call ExtractDecimalDigitUnsigned ; $1a43
 	ld bc, $2710 ; $1a46
 	add hl, bc ; $1a49
 	ld [de], a ; $1a4a
 	inc de ; $1a4b
 	ld bc, $fc18 ; $1a4c
-	call Func_00_1ab0 ; $1a4f
+	call ExtractDecimalDigitUnsigned ; $1a4f
 	ld bc, $03e8 ; $1a52
 	add hl, bc ; $1a55
 	ld [de], a ; $1a56
 	inc de ; $1a57
 	ld bc, $ff9c ; $1a58
-	call Func_00_1ab0 ; $1a5b
+	call ExtractDecimalDigitUnsigned ; $1a5b
 	ld bc, $0064 ; $1a5e
 	add hl, bc ; $1a61
 	ld [de], a ; $1a62
 	inc de ; $1a63
 	ld bc, $fff6 ; $1a64
-	call Func_00_1ab0 ; $1a67
+	call ExtractDecimalDigitUnsigned ; $1a67
 	ld bc, $000a ; $1a6a
 	add hl, bc ; $1a6d
 	ld [de], a ; $1a6e
@@ -4568,15 +4568,15 @@ Label_00_1aa2:
 	pop bc ; $1aac
 	add sp, 6 ; $1aad
 	ret ; $1aaf
-Func_00_1ab0:
+ExtractDecimalDigitUnsigned:
 	xor a, a ; $1ab0
-Label_00_1ab1:
+.loop:
 	inc a ; $1ab1
 	add hl, bc ; $1ab2
-	jr c, Label_00_1ab1 ; $1ab3
+	jr c, .loop ; $1ab3
 	dec a ; $1ab5
 	ret ; $1ab6
-Func_00_1ab7:
+PrintHexByte:
 	push af ; $1ab7
 	push bc ; $1ab8
 	push de ; $1ab9
@@ -4594,7 +4594,7 @@ Func_00_1ab7:
 	inc hl ; $1aca
 	inc hl ; $1acb
 	jr Label_00_1b2b ; $1acc
-Func_00_1ace:
+PrintHexWord:
 	push af ; $1ace
 	push bc ; $1acf
 	push de ; $1ad0
@@ -4612,7 +4612,7 @@ Func_00_1ace:
 	ld c, e ; $1ade
 	call FormatHexWord ; $1adf
 	jr Label_00_1b2b ; $1ae2
-Func_00_1ae4:
+PrintDecimalByte:
 	push af ; $1ae4
 	push bc ; $1ae5
 	push de ; $1ae6
@@ -4629,6 +4629,7 @@ Func_00_1ae4:
 	ld a, $04 ; $1af4
 	call FormatDecimalNumber ; $1af6
 	jr Label_00_1b2b ; $1af9
+Unused_00_PrintDecimalByteSigned:
 	push af ; $1afb
 	push bc ; $1afc
 	push de ; $1afd
@@ -4646,7 +4647,7 @@ Func_00_1ae4:
 	ld a, $04 ; $1b0e
 	call FormatDecimalNumber ; $1b10
 	jr Label_00_1b2b ; $1b13
-Func_00_1b15:
+PrintDecimalWord:
 	push af ; $1b15
 	push bc ; $1b16
 	push de ; $1b17

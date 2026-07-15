@@ -561,14 +561,14 @@ Label_01_6b17:
 	push af ; $6b18
 	ld a, d ; $6b19
 	ld de, $0e0a ; $6b1a
-	call Func_00_1ae4 ; $6b1d
+	call PrintDecimalByte ; $6b1d
 	pop af ; $6b20
 	pop de ; $6b21
 	push de ; $6b22
 	push af ; $6b23
 	ld a, e ; $6b24
 	ld de, $0e0c ; $6b25
-	call Func_00_1ae4 ; $6b28
+	call PrintDecimalByte ; $6b28
 	pop af ; $6b2b
 	pop de ; $6b2c
 	ldh a, [hInputPressed] ; $6b2d
