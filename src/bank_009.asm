@@ -1,15 +1,15 @@
 SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 
-FarPtr_Func_09_4555:
-	dw Func_09_4555 ; $4000
-FarPtr_09_02:
-	dw Func_09_4695 ; $4002
+FarPtr_InitAllObjSlots:
+	dw InitAllObjSlots ; $4000
+FarPtr_UpdateAllObjSprites:
+	dw UpdateAllObjSprites ; $4002
 FarPtr_09_04:
 	dw Func_09_4036 ; $4004
-FarPtr_09_06:
-	dw Func_09_40b5 ; $4006
-FarPtr_09_08:
-	dw Func_09_6c40 ; $4008
+FarPtr_LoadOnCourtCharacterGfx:
+	dw LoadOnCourtCharacterGfx ; $4006
+FarPtr_LoadServeGfx:
+	dw LoadServeGfx ; $4008
 FarPtr_09_0a:
 	dw Func_09_412a ; $400a
 FarPtr_09_0c:
@@ -32,10 +32,10 @@ FarPtr_09_1c:
 	dw Func_09_42d8 ; $401c
 FarPtr_09_1e:
 	dw Func_09_42f6 ; $401e
-FarPtr_Func_09_4555Alias1:
-	dw Func_09_4555 ; $4020
-FarPtr_Func_09_4555Alias2:
-	dw Func_09_4555 ; $4022
+FarPtr_InitAllObjSlotsAlias1:
+	dw InitAllObjSlots ; $4020
+FarPtr_InitAllObjSlotsAlias2:
+	dw InitAllObjSlots ; $4022
 FarPtr_09_24:
 	dw Func_09_45c4 ; $4024
 FarPtr_09_26:
@@ -125,7 +125,7 @@ Func_09_4098:
 Label_09_40b1:
 	call Func_09_6148 ; $40b1
 	ret ; $40b4
-Func_09_40b5:
+LoadOnCourtCharacterGfx:
 	ld a, $ff ; $40b5
 	ld de, $8140 ; $40b7
 	farcall FarPtr_18_46 ; $40ba
@@ -170,7 +170,7 @@ Label_09_4111:
 	ret ; $4129
 Func_09_412a:
 	wram_bank $04 ; $412a
-	call Func_09_4683 ; $4130
+	call ClearAllObjSlots ; $4130
 	ld a, [$c494] ; $4133
 	cp a, $03 ; $4136
 	jr z, Label_09_4184 ; $4138
@@ -251,7 +251,7 @@ Func_09_4238:
 	call Func_09_4658 ; $423e
 	ret ; $4241
 Func_09_4242:
-	call Func_09_4683 ; $4242
+	call ClearAllObjSlots ; $4242
 	call Func_09_4310 ; $4245
 	ld a, [$c4d4] ; $4248
 	ld hl, $4298 ; $424b
@@ -324,10 +324,10 @@ Func_09_431d:
 	INCBIN "data/bank_009/d_4327.bin" ; $4327, 64 bytes
 Func_09_4367:
 	push af ; $4367
-	call Func_09_4683 ; $4368
+	call ClearAllObjSlots ; $4368
 	pop af ; $436b
 	push af ; $436c
-	call Func_09_4873 ; $436d
+	call LoadTilesetGfx ; $436d
 	pop af ; $4370
 Func_09_4371:
 	ld hl, $4385 ; $4371
@@ -340,32 +340,32 @@ Func_09_437b:
 	call Func_09_4658 ; $4381
 	ret ; $4384
 	INCBIN "data/bank_009/d_4385.bin" ; $4385, 464 bytes
-Func_09_4555:
+InitAllObjSlots:
 	wram_bank $04 ; $4555
 	ld bc, $dd80 ; $455b
-	call Func_09_4598 ; $455e
+	call InitObjSlot ; $455e
 	ld bc, $dd90 ; $4561
-	call Func_09_4598 ; $4564
+	call InitObjSlot ; $4564
 	ld bc, $dda0 ; $4567
-	call Func_09_4598 ; $456a
+	call InitObjSlot ; $456a
 	ld d, $01 ; $456d
 	call Func_09_45d2 ; $456f
 	ld d, $30 ; $4572
 	call Func_09_45cc ; $4574
 	ld bc, $ddb0 ; $4577
-	call Func_09_4598 ; $457a
+	call InitObjSlot ; $457a
 	ld d, $01 ; $457d
 	call Func_09_45d2 ; $457f
 	ld d, $20 ; $4582
 	call Func_09_45cc ; $4584
 	ld bc, $ddc0 ; $4587
-	call Func_09_4598 ; $458a
+	call InitObjSlot ; $458a
 	ld d, $01 ; $458d
 	call Func_09_45d2 ; $458f
 	ld d, $38 ; $4592
 	call Func_09_45cc ; $4594
 	ret ; $4597
-Func_09_4598:
+InitObjSlot:
 	push bc ; $4598
 	ld l, c ; $4599
 	ld h, b ; $459a
@@ -528,7 +528,7 @@ Label_09_4675:
 	ld d, [hl] ; $467e
 	call Func_09_45ec ; $467f
 	ret ; $4682
-Func_09_4683:
+ClearAllObjSlots:
 	ld a, $ff ; $4683
 	ld [$dd80], a ; $4685
 	ld [$dd90], a ; $4688
@@ -536,20 +536,20 @@ Func_09_4683:
 	ld [$ddb0], a ; $468e
 	ld [$ddc0], a ; $4691
 	ret ; $4694
-Func_09_4695:
+UpdateAllObjSprites:
 	ld bc, $dd80 ; $4695
-	call Func_09_46b5 ; $4698
+	call ProcessObjSlot ; $4698
 	ld bc, $dd90 ; $469b
-	call Func_09_46b5 ; $469e
+	call ProcessObjSlot ; $469e
 	ld bc, $dda0 ; $46a1
-	call Func_09_46b5 ; $46a4
+	call ProcessObjSlot ; $46a4
 	ld bc, $ddb0 ; $46a7
-	call Func_09_46b5 ; $46aa
+	call ProcessObjSlot ; $46aa
 	ld bc, $ddc0 ; $46ad
-	call Func_09_46b5 ; $46b0
+	call ProcessObjSlot ; $46b0
 	ret ; $46b3
 	ret ; $46b4
-Func_09_46b5:
+ProcessObjSlot:
 	ld hl, $0000 ; $46b5
 	add hl, bc ; $46b8
 	ld a, [hl] ; $46b9
@@ -650,7 +650,7 @@ Label_09_4718:
 Label_09_476c:
 	ld hl, $ddf1 ; $476c
 	set 0, [hl] ; $476f
-	call Func_09_4782 ; $4771
+	call GetNextMoveCurveValue ; $4771
 	jp z, Label_09_477d ; $4774
 	ret ; $4777
 	INCBIN "data/bank_009/d_4778.bin" ; $4778, 5 bytes
@@ -659,7 +659,7 @@ Label_09_477d:
 	inc [hl] ; $4780
 Label_09_4781:
 	ret ; $4781
-Func_09_4782:
+GetNextMoveCurveValue:
 	ld a, [$ddfe] ; $4782
 	add a, a ; $4785
 	add a, $ae ; $4786
@@ -693,7 +693,7 @@ Label_09_47ac:
 	ret ; $47ad
 MoveCurveTable_09:
 	INCBIN "data/bank_009/d_47ae.bin" ; $47ae, 197 bytes
-Func_09_4873:
+LoadTilesetGfx:
 	add a, a ; $4873
 	add a, a ; $4874
 	add a, $8a ; $4875
@@ -748,34 +748,34 @@ TilesetTiles_09:
 	INCBIN "data/bank_009/d_4900.bin" ; $4900, 6144 bytes
 Func_09_6100:
 	ld hl, VramGfxPtrTable_09_616d ; $6100
-	call Func_09_6154 ; $6103
+	call GetGfxSourcePtr ; $6103
 	ld c, $04 ; $6106
 	call Func_00_0480 ; $6108
 	ret ; $610b
 Func_09_610c:
 	ld hl, VramGfxPtrTable_09_616d ; $610c
-	call Func_09_6154 ; $610f
+	call GetGfxSourcePtr ; $610f
 	ld de, $8780 ; $6112
 	ld c, $04 ; $6115
 	call Func_00_0480 ; $6117
 	ret ; $611a
 Func_09_611b:
 	ld hl, VramGfxPtrTable_09_616d ; $611b
-	call Func_09_6154 ; $611e
+	call GetGfxSourcePtr ; $611e
 	ld de, $87c0 ; $6121
 	ld c, $04 ; $6124
 	call Func_00_0480 ; $6126
 	ret ; $6129
 Func_09_612a:
 	ld hl, $6171 ; $612a
-	call Func_09_6154 ; $612d
+	call GetGfxSourcePtr ; $612d
 	ld de, $8300 ; $6130
 	ld c, $04 ; $6133
 	call Func_00_0480 ; $6135
 	ret ; $6138
 Func_09_6139:
 	ld hl, $6175 ; $6139
-	call Func_09_6154 ; $613c
+	call GetGfxSourcePtr ; $613c
 	ld de, $8340 ; $613f
 	ld c, $04 ; $6142
 	call Func_00_0480 ; $6144
@@ -786,7 +786,7 @@ Func_09_6148:
 	ld c, $08 ; $614e
 	call Func_00_0480 ; $6150
 	ret ; $6153
-Func_09_6154:
+GetGfxSourcePtr:
 	push af ; $6154
 	ld a, b ; $6155
 	add a, a ; $6156
@@ -809,7 +809,7 @@ Label_09_615c:
 	ret ; $616c
 VramGfxPtrTable_09_616d:
 	INCBIN "data/bank_009/d_616d.bin" ; $616d, 2771 bytes
-Func_09_6c40:
+LoadServeGfx:
 	ld a, [wCurrentServingPlayer] ; $6c40
 	add a, a ; $6c43
 	add a, $6e ; $6c44

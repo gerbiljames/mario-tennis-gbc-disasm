@@ -1348,7 +1348,7 @@ Label_10_54e8:
 	ld a, b ; $5513
 	ld [$c36c], a ; $5514
 	ld a, $00 ; $5517
-	farcall FarPtr_03_16 ; $5519
+	farcall FarPtr_EraseStorySlotSaveData ; $5519
 	xor a, a ; $551c
 	ld [$cb1b], a ; $551d
 Label_10_5520:
@@ -1368,7 +1368,7 @@ Label_10_5520:
 	farcall FarPtr_3e_06 ; $5543
 	or a, a ; $5546
 	jr z, Label_10_554c ; $5547
-	farcall FarPtr_03_28 ; $5549
+	farcall FarPtr_ClearSaveBlock11 ; $5549
 Label_10_554c:
 	call DisableLCDSafely ; $554c
 	farcall FarPtr_01_0a ; $554f
@@ -1398,7 +1398,7 @@ Label_10_554c:
 	ld [$cb1b], a ; $558c
 	jp Label_10_54d6 ; $558f
 Label_10_5592:
-	farcall FarPtr_03_14 ; $5592
+	farcall FarPtr_ReinitSaveRamPreservingBlock6 ; $5592
 	call DisableLCDSafely ; $5595
 	farcall FarPtr_01_0a ; $5598
 	farcall FarPtr_39_22 ; $559b

@@ -1785,7 +1785,7 @@ Func_1b_62f8:
 	cp a, $ff ; $631d
 	jp z, Func_1b_62f8 ; $631f
 	ld a, $01 ; $6322
-	farcall FarPtr_03_16 ; $6324
+	farcall FarPtr_EraseStorySlotSaveData ; $6324
 	farcall FarPtr_03_18 ; $6327
 	jp Label_1b_6408 ; $632a
 Label_1b_632d:
@@ -1801,7 +1801,7 @@ Label_1b_632d:
 	jr nz, Label_1b_634c ; $6340
 	or a, a ; $6342
 	jr nz, Label_1b_632d ; $6343
-	farcall FarPtr_03_14 ; $6345
+	farcall FarPtr_ReinitSaveRamPreservingBlock6 ; $6345
 	ld b, $01 ; $6348
 	jr Label_1b_632d ; $634a
 Label_1b_634c:
@@ -1838,7 +1838,7 @@ Label_1b_6375:
 	ld a, b ; $6380
 	ld [$c36c], a ; $6381
 	ld a, $00 ; $6384
-	farcall FarPtr_03_16 ; $6386
+	farcall FarPtr_EraseStorySlotSaveData ; $6386
 	ld b, $01 ; $6389
 	jp Label_1b_632d ; $638b
 Label_1b_638e:

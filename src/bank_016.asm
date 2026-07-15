@@ -1,16 +1,16 @@
 SECTION "ROM Bank $16", ROMX[$4000], BANK[$16]
 
-FarPtr_16_00:
-	dw Func_16_4477 ; $4000
-FarPtr_16_02:
-	dw Func_16_5c35 ; $4002
+FarPtr_RunMatchWinLoseScreen:
+	dw RunMatchWinLoseScreen ; $4000
+FarPtr_RunMatchStatsScreen:
+	dw RunMatchStatsScreen ; $4002
 FarPtr_16_04:
 	dw Func_16_6955 ; $4004
 	INCBIN "data/bank_016/d_4006.bin" ; $4006, 1008 bytes
 	farcall FarPtr_39_04 ; $43f6
 	ret ; $43f9
 	INCBIN "data/bank_016/d_43fa.bin" ; $43fa, 125 bytes
-Func_16_4477:
+RunMatchWinLoseScreen:
 	ld a, [$c4c3] ; $4477
 	bit 7, a ; $447a
 	ret nz ; $447c
@@ -43,7 +43,7 @@ Label_16_449b:
 Label_16_44b7:
 	sound $0a ; $44b7
 Label_16_44b9:
-	call Func_16_4571 ; $44b9
+	call InitMatchWinLoseScreen ; $44b9
 	farcall FarPtr_39_04 ; $44bc
 	ld a, $01 ; $44bf
 	ld hl, $43f6 ; $44c1
@@ -107,13 +107,13 @@ Label_16_453b:
 	ld hl, rIE ; $4543
 	res 1, [hl] ; $4546
 	call ClearFrameTasks ; $4548
-	call Func_16_5c35 ; $454b
+	call RunMatchStatsScreen ; $454b
 	push af ; $454e
 	ld a, [$cb73] ; $454f
 	ld [wMatchWinLoseFlag], a ; $4552
 	pop af ; $4555
 	cp a, $ff ; $4556
-	jp nz, Func_16_4477 ; $4558
+	jp nz, RunMatchWinLoseScreen ; $4558
 	call ClearFrameTasks ; $455b
 	ld c, $08 ; $455e
 	call Func_00_1d20 ; $4560
@@ -123,7 +123,7 @@ Label_16_453b:
 	ld a, $03 ; $456b
 	ld [$cb0c], a ; $456d
 	ret ; $4570
-Func_16_4571:
+InitMatchWinLoseScreen:
 	call ClearFrameTasks ; $4571
 	xor a, a ; $4574
 	ldh [$ff8b], a ; $4575
@@ -147,7 +147,7 @@ Func_16_4571:
 	ld a, $00 ; $45a3
 	ld d, $07 ; $45a5
 	farcall FarPtr_18_02 ; $45a7
-	call Func_16_4a0f ; $45aa
+	call LoadMatchResultPalettes ; $45aa
 	call Func_16_4a56 ; $45ad
 	call Func_16_4dfe ; $45b0
 	call Func_16_4963 ; $45b3
@@ -299,7 +299,7 @@ Label_16_49f6:
 	farcall FarPtr_39_0c ; $4a0b
 Label_16_4a0e:
 	ret ; $4a0e
-Func_16_4a0f:
+LoadMatchResultPalettes:
 	ld a, [wMatchWinLoseFlag] ; $4a0f
 	cp a, $ff ; $4a12
 	jr z, Label_16_4a2e ; $4a14
@@ -566,14 +566,14 @@ Label_16_5c30:
 	ret ; $5c33
 Label_16_5c34:
 	ret ; $5c34
-Func_16_5c35:
+RunMatchStatsScreen:
 	call DisableLCDSafely ; $5c35
 	farcall FarPtr_01_0a ; $5c38
 	wram_bank $03 ; $5c3b
 	ld a, $01 ; $5c41
 	ld [$d801], a ; $5c43
-	call Func_16_5c8a ; $5c46
-	call Func_16_4a0f ; $5c49
+	call InitMatchStatsScreen ; $5c46
+	call LoadMatchResultPalettes ; $5c49
 	ld a, $01 ; $5c4c
 	ld hl, $43f6 ; $5c4e
 	call RegisterFrameTask ; $5c51
@@ -582,7 +582,7 @@ Func_16_5c35:
 	call Func_00_1d2e ; $5c59
 	call Func_00_1da4 ; $5c5c
 Label_16_5c5f:
-	call Func_16_5fce ; $5c5f
+	call PrintMatchSetScores ; $5c5f
 	ldh a, [hInputPressed] ; $5c62
 	bit 5, a ; $5c64
 	jr nz, Label_16_5c75 ; $5c66
@@ -604,7 +604,7 @@ Label_16_5c7f:
 	call Func_00_1da4 ; $5c84
 	ld a, $ff ; $5c87
 	ret ; $5c89
-Func_16_5c8a:
+InitMatchStatsScreen:
 	ld c, $23 ; $5c8a
 	farcall FarPtr_LoadScreenAssetRecord ; $5c8c
 	ld de, $a000 ; $5c8f
@@ -634,7 +634,7 @@ Func_16_5c8a:
 	call Func_16_5cdc ; $5ccd
 	ld c, $01 ; $5cd0
 	call Func_16_5fe7 ; $5cd2
-	call Func_16_5d2f ; $5cd5
+	call PrintMatchStatistics ; $5cd5
 	farcall FarPtr_Func_39_4325 ; $5cd8
 	ret ; $5cdb
 Func_16_5cdc:
@@ -675,18 +675,18 @@ Label_16_5d16:
 	farcall FarPtr_39_0c ; $5d2b
 Label_16_5d2e:
 	ret ; $5d2e
-Func_16_5d2f:
+PrintMatchStatistics:
 	call Func_16_5f61 ; $5d2f
 	ld de, $002f ; $5d32
 	call Func_00_24ef ; $5d35
 	jr z, Label_16_5d3f ; $5d38
-	call Func_16_5df8 ; $5d3a
+	call PrintDoublesMatchStats ; $5d3a
 	jr Label_16_5d42 ; $5d3d
 Label_16_5d3f:
-	call Func_16_5d43 ; $5d3f
+	call PrintSinglesMatchStats ; $5d3f
 Label_16_5d42:
 	ret ; $5d42
-Func_16_5d43:
+PrintSinglesMatchStats:
 	ld a, [wCharacter1ServiceAces] ; $5d43
 	ld h, $00 ; $5d46
 	ld l, a ; $5d48
@@ -760,7 +760,7 @@ Func_16_5d43:
 	ld de, $d210 ; $5df1
 	farcall FarPtr_PrintNumberRightAligned ; $5df4
 	ret ; $5df7
-Func_16_5df8:
+PrintDoublesMatchStats:
 	ld a, [wCharacter1ServiceAces] ; $5df8
 	ld h, $00 ; $5dfb
 	ld l, a ; $5dfd
@@ -953,7 +953,7 @@ Func_16_5f92:
 	ld c, $04 ; $5fc8
 	farcall FarPtr_39_0a ; $5fca
 	ret ; $5fcd
-Func_16_5fce:
+PrintMatchSetScores:
 	ld a, [wPlayer1SetsWon] ; $5fce
 	ld h, $00 ; $5fd1
 	ld l, a ; $5fd3

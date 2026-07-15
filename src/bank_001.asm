@@ -62,7 +62,7 @@ Func_01_4018:
 	call Func_01_50e2 ; $4085
 	call Func_01_5188 ; $4088
 	farcall FarPtr_ValidateSaveRam ; $408b
-	farcall FarPtr_03_12 ; $408e
+	farcall FarPtr_RepairAllSaveSlots ; $408e
 	farcall FarPtr_03_2e ; $4091
 	farcall FarPtr_03_30 ; $4094
 	farcall FarPtr_02_02 ; $4097
@@ -182,7 +182,7 @@ Label_01_4138:
 	ld a, $00 ; $418d
 	ld [$c8f7], a ; $418f
 Label_01_4192:
-	farcall FarPtr_16_00 ; $4192
+	farcall FarPtr_RunMatchWinLoseScreen ; $4192
 	ld a, [$c8f7] ; $4195
 	inc a ; $4198
 	ld [$c8f7], a ; $4199
@@ -193,7 +193,7 @@ Unused_01_MatchSetup:
 	call Func_00_2523 ; $41a4
 	ld a, $04 ; $41a7
 	ld [wGameMode], a ; $41a9
-	farcall FarPtr_16_02 ; $41ac
+	farcall FarPtr_RunMatchStatsScreen ; $41ac
 	farcall FarPtr_3e_12 ; $41af
 	farcall FarPtr_3e_04 ; $41b2
 	farcall FarPtr_3e_0e ; $41b5

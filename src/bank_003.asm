@@ -8,8 +8,8 @@ FarPtr_WriteSaveBlock:
 	dw WriteSaveBlock ; $4004
 FarPtr_ReadSaveBlock:
 	dw ReadSaveBlock ; $4006
-FarPtr_03_08:
-	dw Func_03_4c9e ; $4008
+FarPtr_ReadSaveBlockTag:
+	dw ReadSaveBlockTag ; $4008
 FarPtr_VerifySaveBlock:
 	dw VerifySaveBlock ; $400a
 FarPtr_InvalidateStorySlot:
@@ -18,12 +18,12 @@ FarPtr_ResetAllSaveBlocks:
 	dw ResetAllSaveBlocks ; $400e
 FarPtr_EraseAndInitSaveRam:
 	dw EraseAndInitSaveRam ; $4010
-FarPtr_03_12:
-	dw Func_03_5669 ; $4012
-FarPtr_03_14:
-	dw Func_03_4f7d ; $4014
-FarPtr_03_16:
-	dw Func_03_4e13 ; $4016
+FarPtr_RepairAllSaveSlots:
+	dw RepairAllSaveSlots ; $4012
+FarPtr_ReinitSaveRamPreservingBlock6:
+	dw ReinitSaveRamPreservingBlock6 ; $4014
+FarPtr_EraseStorySlotSaveData:
+	dw EraseStorySlotSaveData ; $4016
 FarPtr_03_18:
 	dw Func_03_4d10 ; $4018
 FarPtr_CheckStorySlot:
@@ -34,14 +34,14 @@ FarPtr_SetSaveFlag:
 	dw SetSaveFlag ; $401e
 FarPtr_ClearSaveFlag:
 	dw ClearSaveFlag ; $4020
-FarPtr_03_22:
-	dw Func_03_5310 ; $4022
+FarPtr_SaveSlotDebugEditor:
+	dw SaveSlotDebugEditor ; $4022
 FarPtr_03_24:
 	dw Func_03_4fea ; $4024
 FarPtr_03_26:
 	dw Func_03_4fae ; $4026
-FarPtr_03_28:
-	dw Func_03_4ffe ; $4028
+FarPtr_ClearSaveBlock11:
+	dw ClearSaveBlock11 ; $4028
 FarPtr_03_2a:
 	dw Func_03_5072 ; $402a
 FarPtr_03_2c:
@@ -1748,15 +1748,15 @@ ResetAllSaveBlocks:
 	ld a, $00 ; $4b54
 	ld [$c36c], a ; $4b56
 	ld a, $00 ; $4b59
-	call Func_03_4e13 ; $4b5b
+	call EraseStorySlotSaveData ; $4b5b
 	ld a, $01 ; $4b5e
 	ld [$c36c], a ; $4b60
 	ld a, $00 ; $4b63
-	call Func_03_4e13 ; $4b65
+	call EraseStorySlotSaveData ; $4b65
 	ld a, $02 ; $4b68
 	ld [$c36c], a ; $4b6a
 	ld a, $00 ; $4b6d
-	call Func_03_4e13 ; $4b6f
+	call EraseStorySlotSaveData ; $4b6f
 	ld a, $00 ; $4b72
 	ld [$c36c], a ; $4b74
 	ld b, $36 ; $4b77
@@ -1963,7 +1963,7 @@ Label_03_4c94:
 	pop de ; $4c9b
 	pop hl ; $4c9c
 	ret ; $4c9d
-Func_03_4c9e:
+ReadSaveBlockTag:
 	push hl ; $4c9e
 	push de ; $4c9f
 	push bc ; $4ca0
@@ -2167,7 +2167,7 @@ Label_03_4dfe:
 	pop af ; $4e10
 	pop hl ; $4e11
 	ret ; $4e12
-Func_03_4e13:
+EraseStorySlotSaveData:
 	push bc ; $4e13
 	push de ; $4e14
 	push hl ; $4e15
@@ -2243,13 +2243,13 @@ Func_03_4e90:
 	ld a, h ; $4e90
 	or a, a ; $4e91
 	jr nz, Label_03_4e99 ; $4e92
-	call Func_03_4f57 ; $4e94
+	call ClearSaveBlockEntry ; $4e94
 	jr Label_03_4e9c ; $4e97
 Label_03_4e99:
-	call Func_03_4e9d ; $4e99
+	call ClearSaveBlockData ; $4e99
 Label_03_4e9c:
 	ret ; $4e9c
-Func_03_4e9d:
+ClearSaveBlockData:
 	push hl ; $4e9d
 	push de ; $4e9e
 	push bc ; $4e9f
@@ -2318,7 +2318,7 @@ Label_03_4eed:
 	pop hl ; $4ef5
 	ret ; $4ef6
 	INCBIN "data/bank_003/d_4ef7.bin" ; $4ef7, 96 bytes
-Func_03_4f57:
+ClearSaveBlockEntry:
 	push hl ; $4f57
 	push de ; $4f58
 	push bc ; $4f59
@@ -2346,7 +2346,7 @@ Label_03_4f75:
 	pop de ; $4f7a
 	pop hl ; $4f7b
 	ret ; $4f7c
-Func_03_4f7d:
+ReinitSaveRamPreservingBlock6:
 	push af ; $4f7d
 	push bc ; $4f7e
 	push de ; $4f7f
@@ -2355,7 +2355,7 @@ Func_03_4f7d:
 	push af ; $4f83
 	wram_bank $01 ; $4f84
 	ld hl, $d000 ; $4f8a
-	call Func_03_586f ; $4f8d
+	call ReadBlock6 ; $4f8d
 	ld b, a ; $4f90
 	push bc ; $4f91
 	call EraseAndInitSaveRam ; $4f92
@@ -2364,7 +2364,7 @@ Func_03_4f7d:
 	cp a, $fe ; $4f97
 	jr z, Label_03_4fa1 ; $4f99
 	ld hl, $d000 ; $4f9b
-	call Func_03_5844 ; $4f9e
+	call WriteBlock6WithBackup ; $4f9e
 Label_03_4fa1:
 	call Func_03_519a ; $4fa1
 	pop af ; $4fa4
@@ -2420,14 +2420,14 @@ Label_03_4ffa:
 	pop de ; $4ffb
 	pop bc ; $4ffc
 	ret ; $4ffd
-Func_03_4ffe:
+ClearSaveBlock11:
 	push bc ; $4ffe
 	push de ; $4fff
 	push hl ; $5000
 	ld a, $0a ; $5001
 	ld [$0000], a ; $5003
 	ld b, $0b ; $5006
-	call Func_03_4e9d ; $5008
+	call ClearSaveBlockData ; $5008
 	push af ; $500b
 	xor a, a ; $500c
 	ld [$0000], a ; $500d
@@ -2459,7 +2459,7 @@ Label_03_502f:
 	ld hl, $d480 ; $5033
 	ld c, $02 ; $5036
 	xor a, a ; $5038
-	call Func_03_59b1 ; $5039
+	call FillMemory16 ; $5039
 	pop hl ; $503c
 	pop de ; $503d
 	pop bc ; $503e
@@ -2525,7 +2525,7 @@ Label_03_5090:
 	ld hl, $d480 ; $5094
 	ld c, $02 ; $5097
 	xor a, a ; $5099
-	call Func_03_59b1 ; $509a
+	call FillMemory16 ; $509a
 	pop hl ; $509d
 	pop de ; $509e
 	pop bc ; $509f
@@ -2697,7 +2697,7 @@ Func_03_519a:
 	ld hl, $d480 ; $51ab
 	ld c, $02 ; $51ae
 	xor a, a ; $51b0
-	call Func_03_59b1 ; $51b1
+	call FillMemory16 ; $51b1
 	pop hl ; $51b4
 	pop de ; $51b5
 	pop bc ; $51b6
@@ -2774,7 +2774,7 @@ Func_03_5229:
 	jr z, Label_03_523b ; $5233
 	xor a, a ; $5235
 	ld c, $06 ; $5236
-	call Func_03_59b1 ; $5238
+	call FillMemory16 ; $5238
 Label_03_523b:
 	pop hl ; $523b
 	pop de ; $523c
@@ -2847,7 +2847,7 @@ Label_03_5270:
 	call PrintHexWord ; $5298
 	xor a, a ; $529b
 	ret ; $529c
-Func_03_529d:
+GetCurrentSlotBlockId:
 	push af ; $529d
 	push hl ; $529e
 	ld a, [$c36c] ; $529f
@@ -2862,26 +2862,26 @@ Func_03_529d:
 	pop af ; $52ad
 	ret ; $52ae
 	INCBIN "data/bank_003/d_52af.bin" ; $52af, 4 bytes
-Func_03_52b3:
+ReadCurrentSlotBlock:
 	wram_bank $07 ; $52b3
-	call Func_03_529d ; $52b9
+	call GetCurrentSlotBlockId ; $52b9
 	ld hl, $d500 ; $52bc
 	call ReadSaveBlock ; $52bf
 	ret ; $52c2
-Func_03_52c3:
+WriteCurrentSlotBlock:
 	wram_bank $07 ; $52c3
-	call Func_03_529d ; $52c9
+	call GetCurrentSlotBlockId ; $52c9
 	ld hl, $d500 ; $52cc
 	call WriteSaveBlock ; $52cf
 	ret ; $52d2
-Func_03_52d3:
+InvalidateCurrentSlotBlock:
 	wram_bank $07 ; $52d3
-	call Func_03_529d ; $52d9
+	call GetCurrentSlotBlockId ; $52d9
 	ld hl, $d500 ; $52dc
 	call InvalidateStorySlot ; $52df
 	ret ; $52e2
 	INCBIN "data/bank_003/d_52e3.bin" ; $52e3, 45 bytes
-Func_03_5310:
+SaveSlotDebugEditor:
 	ld hl, $52f0 ; $5310
 	ld de, $8000 ; $5313
 	ld c, $02 ; $5316
@@ -2905,7 +2905,7 @@ Func_03_5310:
 	farcall FarPtr_02_02 ; $533e
 	ld de, $0000 ; $5341
 Label_03_5344:
-	call Func_03_52b3 ; $5344
+	call ReadCurrentSlotBlock ; $5344
 	or a, a ; $5347
 	jr z, Label_03_5360 ; $5348
 	push de ; $534a
@@ -3053,7 +3053,7 @@ Label_03_543a:
 	push af ; $5441
 	ld a, $03 ; $5442
 	ld [$c36c], a ; $5444
-	call Func_03_52b3 ; $5447
+	call ReadCurrentSlotBlock ; $5447
 	or a, a ; $544a
 	jr nz, Label_03_5466 ; $544b
 	ld hl, $d300 ; $544d
@@ -3068,7 +3068,7 @@ Label_03_543a:
 	ld [hl+], a ; $545a
 	ld [hl+], a ; $545b
 	ld [hl+], a ; $545c
-	call Func_03_52c3 ; $545d
+	call WriteCurrentSlotBlock ; $545d
 	pop af ; $5460
 	sound $41 ; $5461
 	jp Label_03_5344 ; $5463
@@ -3096,7 +3096,7 @@ Label_03_547f:
 	ld hl, $54c8 ; $548c
 	ld de, $0511 ; $548f
 	call Func_00_1906 ; $5492
-	call Func_03_52c3 ; $5495
+	call WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
 	jp Label_03_53b1 ; $5499
 Label_03_549c:
@@ -3104,13 +3104,13 @@ Label_03_549c:
 	ld hl, $54d4 ; $549d
 	ld de, $0511 ; $54a0
 	call Func_00_1906 ; $54a3
-	call Func_03_52d3 ; $54a6
+	call InvalidateCurrentSlotBlock ; $54a6
 	jp Label_03_53b1 ; $54a9
 	db $d1 ; $54ac
 Label_03_54ad:
 	jp Label_03_53c8 ; $54ad
 	INCBIN "data/bank_003/d_54b0.bin" ; $54b0, 93 bytes
-Func_03_550d:
+RestoreStoryBlockFromBackup:
 	ld hl, $d000 ; $550d
 	call ReadSaveBlock ; $5510
 	cp a, $ff ; $5513
@@ -3123,7 +3123,7 @@ Func_03_550d:
 	or a, a ; $551e
 	jr nz, Label_03_5532 ; $551f
 	ld hl, $d400 ; $5521
-	call Func_03_4c9e ; $5524
+	call ReadSaveBlockTag ; $5524
 	pop bc ; $5527
 	ld hl, $d000 ; $5528
 	ld de, $d400 ; $552b
@@ -3136,17 +3136,17 @@ Label_03_5532:
 	call InvalidateSaveBlock ; $5537
 	ret ; $553a
 	INCBIN "data/bank_003/d_553b.bin" ; $553b, 302 bytes
-Func_03_5669:
+RepairAllSaveSlots:
 	wram_bank $01 ; $5669
 	ld b, $00 ; $566f
-	call Func_03_550d ; $5671
+	call RestoreStoryBlockFromBackup ; $5671
 	ld b, $02 ; $5674
-	call Func_03_550d ; $5676
+	call RestoreStoryBlockFromBackup ; $5676
 	ld b, $04 ; $5679
-	call Func_03_550d ; $567b
-	call Func_03_5682 ; $567e
+	call RestoreStoryBlockFromBackup ; $567b
+	call RestoreBlock36FromBackup ; $567e
 	ret ; $5681
-Func_03_5682:
+RestoreBlock36FromBackup:
 	ld a, $36 ; $5682
 	ld b, a ; $5684
 	ld hl, $d000 ; $5685
@@ -3402,7 +3402,7 @@ Label_03_583a:
 	pop de ; $5841
 	pop bc ; $5842
 	ret ; $5843
-Func_03_5844:
+WriteBlock6WithBackup:
 	push bc ; $5844
 	push de ; $5845
 	push hl ; $5846
@@ -3430,7 +3430,7 @@ Label_03_586b:
 	pop de ; $586c
 	pop bc ; $586d
 	ret ; $586e
-Func_03_586f:
+ReadBlock6:
 	push bc ; $586f
 	push de ; $5870
 	push hl ; $5871
@@ -3441,7 +3441,7 @@ Func_03_586f:
 	pop bc ; $5879
 	ret ; $587a
 	INCBIN "data/bank_003/d_587b.bin" ; $587b, 310 bytes
-Func_03_59b1:
+FillMemory16:
 	ld [hl+], a ; $59b1
 	ld [hl+], a ; $59b2
 	ld [hl+], a ; $59b3
@@ -3459,7 +3459,7 @@ Func_03_59b1:
 	ld [hl+], a ; $59bf
 	ld [hl+], a ; $59c0
 	dec c ; $59c1
-	jr nz, Func_03_59b1 ; $59c2
+	jr nz, FillMemory16 ; $59c2
 	ret ; $59c4
 Func_03_59c5:
 	call ClearFrameTasks ; $59c5
@@ -3582,7 +3582,7 @@ Func_03_5aa9:
 	ld bc, $0400 ; $5ac6
 	ld d, $00 ; $5ac9
 	ld hl, $d000 ; $5acb
-	call Func_03_5af9 ; $5ace
+	call FillMemoryBC ; $5ace
 	ld hl, $d000 ; $5ad1
 	ld de, $b800 ; $5ad4
 	ld c, $40 ; $5ad7
@@ -3591,19 +3591,19 @@ Func_03_5aa9:
 	ld bc, $0400 ; $5ae2
 	ld d, $20 ; $5ae5
 	ld hl, $d000 ; $5ae7
-	call Func_03_5af9 ; $5aea
+	call FillMemoryBC ; $5aea
 	ld hl, $d000 ; $5aed
 	ld de, $9800 ; $5af0
 	ld c, $40 ; $5af3
 	call Func_00_0480 ; $5af5
 	ret ; $5af8
-Func_03_5af9:
+FillMemoryBC:
 	ld [hl], d ; $5af9
 	inc hl ; $5afa
 	dec bc ; $5afb
 	ld a, b ; $5afc
 	or a, c ; $5afd
-	jr nz, Func_03_5af9 ; $5afe
+	jr nz, FillMemoryBC ; $5afe
 	ret ; $5b00
 Func_03_5b01:
 	ldh a, [$ff8a] ; $5b01
@@ -4694,13 +4694,13 @@ Label_03_65ae:
 	rra ; $662f
 	ld a, [$31e7] ; $6630
 	INCBIN "data/bank_003/d_6633.bin" ; $6633, 2492 bytes
-Func_03_6fef:
+FillMemoryDE:
 	ld a, b ; $6fef
 	ld [hl+], a ; $6ff0
 	dec de ; $6ff1
 	ld a, d ; $6ff2
 	or a, e ; $6ff3
-	jr nz, Func_03_6fef ; $6ff4
+	jr nz, FillMemoryDE ; $6ff4
 	ret ; $6ff6
 Func_03_6ff7:
 	push af ; $6ff7
@@ -4753,12 +4753,12 @@ Label_03_7051:
 	ld hl, $d000 ; $705e
 	ld b, $20 ; $7061
 	ld de, $0300 ; $7063
-	call Func_03_6fef ; $7066
+	call FillMemoryDE ; $7066
 	wram_bank $05 ; $7069
 	ld hl, $d000 ; $706f
 	ld b, $20 ; $7072
 	ld de, $0100 ; $7074
-	call Func_03_6fef ; $7077
+	call FillMemoryDE ; $7077
 	call Func_00_2631 ; $707a
 	pop af ; $707d
 	call Func_03_7333 ; $707e
@@ -5015,12 +5015,12 @@ Func_03_751e:
 	ld hl, $d000 ; $752b
 	ld de, $0240 ; $752e
 	ld b, $00 ; $7531
-	call Func_03_6fef ; $7533
+	call FillMemoryDE ; $7533
 	wram_bank $03 ; $7536
 	ld hl, $d000 ; $753c
 	ld de, $0240 ; $753f
 	ld b, $20 ; $7542
-	call Func_03_6fef ; $7544
+	call FillMemoryDE ; $7544
 	ld hl, $3140 ; $7547
 	ld de, $d0c0 ; $754a
 	ld bc, $0020 ; $754d

@@ -225,7 +225,7 @@ Func_08_4145:
 	wram_bank $04 ; $4161
 	call Func_08_511c ; $4167
 	call InitAllChars ; $416a
-	farcall FarPtr_Func_09_4555 ; $416d
+	farcall FarPtr_InitAllObjSlots ; $416d
 	call ClearSpriteSlots ; $4170
 	call AssignCourtPositions ; $4173
 	xor a, a ; $4176
@@ -270,7 +270,7 @@ Func_08_4190:
 	call Func_00_1d20 ; $41e1
 	call Func_00_1da4 ; $41e4
 	call Func_00_2631 ; $41e7
-	farcall FarPtr_16_00 ; $41ea
+	farcall FarPtr_RunMatchWinLoseScreen ; $41ea
 	farcall FarPtr_01_0a ; $41ed
 	call Func_00_2631 ; $41f0
 	farcall FarPtr_1e_04 ; $41f3
@@ -670,7 +670,7 @@ Func_08_44bd:
 	call Func_08_61dc ; $44d0
 	ld hl, $4cb2 ; $44d3
 	call ForEachCharBank ; $44d6
-	farcall FarPtr_09_08 ; $44d9
+	farcall FarPtr_LoadServeGfx ; $44d9
 	ld a, [$c4d2] ; $44dc
 	wram_bank ; $44df
 	ld a, $03 ; $44e3
@@ -1527,7 +1527,7 @@ Func_08_4d0f:
 	call Func_08_4cb9 ; $4d0f
 	ld hl, $c4c8 ; $4d12
 	res 1, [hl] ; $4d15
-	farcall FarPtr_09_08 ; $4d17
+	farcall FarPtr_LoadServeGfx ; $4d17
 	call StepMatchFrame ; $4d1a
 	call Func_08_4d8c ; $4d1d
 	ld hl, $4f91 ; $4d20
@@ -5091,7 +5091,7 @@ Label_08_6626:
 Label_08_6630:
 	ret ; $6630
 Func_08_6631:
-	farcall FarPtr_09_08 ; $6631
+	farcall FarPtr_LoadServeGfx ; $6631
 	call StepMatchFrame ; $6634
 	ld a, $01 ; $6637
 	ld [$c4c5], a ; $6639
@@ -5529,7 +5529,7 @@ Label_08_6910:
 	call InitChar ; $6920
 	ld a, $00 ; $6923
 	ld [$df1e], a ; $6925
-	farcall FarPtr_09_06 ; $6928
+	farcall FarPtr_LoadOnCourtCharacterGfx ; $6928
 	ret ; $692b
 UpdateAllChars:
 	wram_bank $04 ; $692c

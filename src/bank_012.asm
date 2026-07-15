@@ -646,7 +646,7 @@ Label_12_44c5:
 	farcall FarPtr_0a_62 ; $465b
 	farcall FarPtr_03_18 ; $465e
 	ld a, $01 ; $4661
-	farcall FarPtr_03_16 ; $4663
+	farcall FarPtr_EraseStorySlotSaveData ; $4663
 	farcall FarPtr_03_18 ; $4666
 	sound $00 ; $4669
 	ld c, $04 ; $466b
