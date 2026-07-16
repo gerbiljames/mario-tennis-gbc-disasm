@@ -1,0 +1,8 @@
+{
+ "_comment": "Static code-entry seeds for bank $6d: $6a7f screen-setup routine (sound + farcalls + RegisterFrameTask) and its $6abf task callback, stranded between data blobs. Flat = 0x6d*0x4000 + (cpu-0x4000).",
+ "rom": [
+  1796735,
+  1796799
+ ],
+ "other": []
+}

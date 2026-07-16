@@ -38,8 +38,8 @@ DataPtr_IntroCharactersTilemap2:
 	dw IntroCharactersTilemap2 ; $4022
 DataPtr_6d_24:
 	dw Lz_6d_6250 ; $4024
-DataPtr_6d_26:
-	dw Data_6d_6a7f ; $4026
+	db $7f ; $4026
+	db $6a ; $4027
 DataPtr_Lz_6d_6ac8:
 	dw Lz_6d_6ac8 ; $4028
 DataPtr_Lz_6d_6ac8Alias1:
@@ -190,15 +190,53 @@ IntroCharactersTilemap:
 Lz_6d_6061:
 	INCBIN "data/bank_06d/lz_6061.bin" ; $6061, 163 bytes
 Data_6d_6104:
-	INCBIN "data/bank_06d/d_6104.bin" ; $6104, 64 bytes
+	; $6104, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $294a, $294a, $294a, $294a ; pal 0: #525252 #525252 #525252 #525252
+	dw $5902, $7fff, $0090, $0000 ; pal 1: #1041b4 #ffffff #832000 #000000
+	dw $191f, $035f, $5902, $0000 ; pal 2: #ff4131 #ffd500 #1041b4 #000000
+	dw $5902, $7fff, $331f, $0000 ; pal 3: #1041b4 #ffffff #ffc562 #000000
+	dw $191f, $7fff, $331f, $0000 ; pal 4: #ff4131 #ffffff #ffc562 #000000
+	dw $191f, $0090, $331f, $0000 ; pal 5: #ff4131 #832000 #ffc562 #000000
+	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 IntroCharactersTilemap2:
 	INCBIN "data/bank_06d/lz_6144.bin" ; $6144, 268 bytes
 Lz_6d_6250:
 	INCBIN "data/bank_06d/lz_6250.bin" ; $6250, 133 bytes
 TitleScreenTiles:
 	INCBIN "data/bank_06d/lz_62d5.bin" ; $62d5, 1962 bytes
-Data_6d_6a7f:
-	INCBIN "data/bank_06d/d_6a7f.bin" ; $6a7f, 73 bytes
+	sound $22 ; $6a7f
+	call DisableLCDSafely ; $6a81
+	call ClearFrameTasks ; $6a84
+	xor a, a ; $6a87
+	ldh [$ff8a], a ; $6a88
+	ldh [$ff8b], a ; $6a8a
+	ld c, $28 ; $6a8c
+	farcall FarPtr_LoadScreenAssetRecord ; $6a8e
+	farcall FarPtr_6b_16 ; $6a91
+	farcall FarPtr_Func_39_4325 ; $6a94
+	ld a, $01 ; $6a97
+	ld hl, $6abf ; $6a99
+	call RegisterFrameTask ; $6a9c
+	call EnableLCD ; $6a9f
+	ld c, $10 ; $6aa2
+	call Func_00_1d2e ; $6aa4
+	call Func_00_1da4 ; $6aa7
+Label_6d_6aaa:
+	call AdvanceFrame ; $6aaa
+	ldh a, [hInputPressed] ; $6aad
+	and a, $03 ; $6aaf
+	jr z, Label_6d_6aaa ; $6ab1
+	ld c, $01 ; $6ab3
+	call Func_00_1d20 ; $6ab5
+	call Func_00_1da4 ; $6ab8
+	call ClearFrameTasks ; $6abb
+	ret ; $6abe
+	ld de, $4020 ; $6abf
+	ld c, $03 ; $6ac2
+	farcall FarPtr_6b_18 ; $6ac4
+	ret ; $6ac7
 Lz_6d_6ac8:
 	INCBIN "data/bank_06d/lz_6ac8.bin" ; $6ac8, 75 bytes
 Lz_6d_6b13:

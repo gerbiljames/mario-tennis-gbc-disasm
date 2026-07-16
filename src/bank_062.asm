@@ -65,7 +65,16 @@ DataPtr_62_3c:
 DataPtr_PeachCourtTiles:
 	dw PeachCourtTiles ; $403e
 StarCourtPalettes:
-	INCBIN "data/bank_062/d_4040.bin" ; $4040, 64 bytes
+	; $4040, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $000f, $2118, $0000 ; pal 1: #004a00 #7b0000 #c54141 #000000
+	dw $034b, $025f, $7fff, $7e60 ; pal 2: #5ad500 #ff9400 #ffffff #009cff
+	dw $0247, $011f, $7fff, $0046 ; pal 3: #399400 #ff4100 #ffffff #311000
+	dw $034b, $7d9f, $7fff, $0046 ; pal 4: #5ad500 #ff62ff #ffffff #311000
+	dw $0247, $025f, $7fff, $0046 ; pal 5: #399400 #ff9400 #ffffff #311000
+	dw $0247, $034b, $7fff, $0046 ; pal 6: #399400 #5ad500 #ffffff #311000
+	dw $7fff, $034b, $0247, $0163 ; pal 7: #ffffff #5ad500 #399400 #185a00
 StarCourtTiles:
 	INCBIN "data/bank_062/lz_4080.bin" ; $4080, 1990 bytes
 StarCourtTilemap:
@@ -77,7 +86,16 @@ StarCourtSceneConfig:
 StarCourtSceneConfigB:
 	INCBIN "data/bank_062/d_4b3b.bin" ; $4b3b, 40 bytes
 BowserCourtPalettes:
-	INCBIN "data/bank_062/d_4b63.bin" ; $4b63, 64 bytes
+	; $4b63, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $000f, $2118, $0000 ; pal 1: #004a00 #7b0000 #c54141 #000000
+	dw $7fff, $0012, $011f, $005d ; pal 2: #ffffff #940000 #ff4100 #ee1000
+	dw $7fff, $0012, $011f, $01bf ; pal 3: #ffffff #940000 #ff4100 #ff6a00
+	dw $0012, $419c, $731f, $2cd0 ; pal 4: #940000 #e66283 #ffc5e6 #83315a
+	dw $011f, $0012, $7fff, $140a ; pal 5: #ff4100 #940000 #ffffff #520029
+	dw $0012, $6985, $7fff, $140a ; pal 6: #940000 #2962d5 #ffffff #520029
+	dw $005d, $3118, $629f, $140a ; pal 7: #ee1000 #c54162 #ffa4c5 #520029
 BowserCourtTiles:
 	INCBIN "data/bank_062/lz_4ba3.bin" ; $4ba3, 1770 bytes
 BowserCourtTilemap:
@@ -89,7 +107,16 @@ BowserCourtSceneConfig:
 BowserCourtSceneConfigB:
 	INCBIN "data/bank_062/d_5628.bin" ; $5628, 40 bytes
 WarioCourtPalettes:
-	INCBIN "data/bank_062/d_5650.bin" ; $5650, 64 bytes
+	; $5650, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $000f, $2118, $0000 ; pal 1: #004a00 #7b0000 #c54141 #000000
+	dw $025f, $1dfc, $1153, $0488 ; pal 2: #ff9400 #e67b39 #9c5220 #412008
+	dw $4b1f, $1995, $10ed, $2481 ; pal 3: #ffc594 #ac6231 #6a3920 #08204a
+	dw $33ff, $02c0, $001c, $28a2 ; pal 4: #ffff62 #00b400 #e60000 #102952
+	dw $025f, $4810, $7fff, $28a2 ; pal 5: #ff9400 #830094 #ffffff #102952
+	dw $025f, $4810, $7fff, $40df ; pal 6: #ff9400 #830094 #ffffff #ff3183
+	dw $025f, $02c0, $33ff, $28a2 ; pal 7: #ff9400 #00b400 #ffff62 #102952
 WarioCourtTiles:
 	INCBIN "data/bank_062/lz_5690.bin" ; $5690, 2412 bytes
 WarioCourtTilemap:
@@ -101,7 +128,16 @@ WarioCourtSceneConfig:
 WarioCourtSceneConfigB:
 	INCBIN "data/bank_062/d_6409.bin" ; $6409, 40 bytes
 PeachCourtPalettes:
-	INCBIN "data/bank_062/d_6431.bin" ; $6431, 64 bytes
+	; $6431, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0000, $0000, $0000, $0000 ; pal 1: #000000 #000000 #000000 #000000
+	dw $02c0, $7d5f, $7fff, $2cc3 ; pal 2: #00b400 #ff52ff #ffffff #18315a
+	dw $02c0, $7f00, $7fff, $2cc3 ; pal 3: #00b400 #00c5ff #ffffff #18315a
+	dw $02c0, $7fff, $5650, $2cc3 ; pal 4: #00b400 #ffffff #8394ac #18315a
+	dw $7e3f, $7d5f, $7fff, $2cc3 ; pal 5: #ff8bff #ff52ff #ffffff #18315a
+	dw $5019, $7d5f, $7fff, $02df ; pal 6: #cd00a4 #ff52ff #ffffff #ffb400
+	dw $7e3f, $7d5f, $7fff, $02df ; pal 7: #ff8bff #ff52ff #ffffff #ffb400
 PeachCourtTiles:
 	INCBIN "data/bank_062/lz_6471.bin" ; $6471, 1874 bytes
 PeachCourtTilemap:
@@ -113,4 +149,4 @@ PeachCourtSceneConfig:
 PeachCourtSceneConfigB:
 	INCBIN "data/bank_062/d_6f56.bin" ; $6f56, 40 bytes
 Data_62_6f7e:
-	INCBIN "data/bank_062/d_6f7e.bin" ; $6f7e, 4226 bytes
+	ds 4226, $ff ; $6f7e, fill

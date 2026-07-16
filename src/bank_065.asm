@@ -69,7 +69,16 @@ Data_65_5120:
 HedgeCourtSceneConfig:
 	INCBIN "data/bank_065/d_5720.bin" ; $5720, 23 bytes
 HedgeCourtPalettes:
-	INCBIN "data/bank_065/d_5737.bin" ; $5737, 64 bytes
+	; $5737, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0080, $5520, $7ea0, $4460 ; pal 0: #002000 #004aac #00acff #00188b
+	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+	dw $02c0, $005f, $7d80, $029f ; pal 2: #00b400 #ff1000 #0062ff #ffa400
+	dw $7c1f, $7c1f, $7c1f, $7c1f ; pal 3: #ff00ff #ff00ff #ff00ff #ff00ff
+	dw $01bf, $03f8, $02c0, $08ca ; pal 4: #ff6a00 #c5ff00 #00b400 #523110
+	dw $7f80, $02c0, $7fff, $08ca ; pal 5: #00e6ff #00b400 #ffffff #523110
+	dw $02c0, $7fff, $4a52, $08ca ; pal 6: #00b400 #ffffff #949494 #523110
+	dw $7fff, $029f, $699f, $08ca ; pal 7: #ffffff #ffa400 #ff62d5 #523110
 HedgeCourtTiles:
 	INCBIN "data/bank_065/lz_5777.bin" ; $5777, 1897 bytes
 HedgeCourtTilemap:
@@ -87,7 +96,16 @@ Data_65_6500:
 ClayCourtGroundsSceneConfig:
 	INCBIN "data/bank_065/d_6b00.bin" ; $6b00, 42 bytes
 ClayCourtGroundsPalettes:
-	INCBIN "data/bank_065/d_6b2a.bin" ; $6b2a, 64 bytes
+	; $6b2a, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0080, $5520, $7ea0, $4460 ; pal 0: #002000 #004aac #00acff #00188b
+	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+	dw $025d, $7fff, $3def, $1006 ; pal 2: #ee9400 #ffffff #7b7b7b #310020
+	dw $0220, $0310, $7fff, $1006 ; pal 3: #008b00 #83c500 #ffffff #310020
+	dw $025d, $0310, $0220, $1006 ; pal 4: #ee9400 #83c500 #008b00 #310020
+	dw $195c, $7fff, $025d, $1006 ; pal 5: #e65231 #ffffff #ee9400 #310020
+	dw $7f60, $0220, $7fff, $1006 ; pal 6: #00deff #008b00 #ffffff #310020
+	dw $7dff, $0220, $7fff, $1006 ; pal 7: #ff7bff #008b00 #ffffff #310020
 ClayCourtGroundsTiles:
 	INCBIN "data/bank_065/lz_6b6a.bin" ; $6b6a, 2286 bytes
 ClayCourtGroundsTilemap:
@@ -99,4 +117,4 @@ ClayCourtGroundsAuxTilemap:
 ClayCourtGroundsAuxAttrmap:
 	INCBIN "data/bank_065/lz_7d05.bin" ; $7d05, 81 bytes
 Data_65_7d56:
-	INCBIN "data/bank_065/d_7d56.bin" ; $7d56, 682 bytes
+	ds 682, $ff ; $7d56, fill

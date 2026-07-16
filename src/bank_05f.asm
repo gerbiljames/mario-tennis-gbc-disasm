@@ -33,7 +33,16 @@ DataPtr_5f_1c:
 DataPtr_CourtyardSceneTiles:
 	dw CourtyardSceneTiles ; $401e
 Data_5f_4020:
-	INCBIN "data/bank_05f/d_4020.bin" ; $4020, 64 bytes
+	; $4020, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $000f, $0154, $0000 ; pal 1: #004a00 #7b0000 #a45200 #000000
+	dw $421f, $2959, $7fff, $004f ; pal 2: #ff8383 #cd5252 #ffffff #7b1000
+	dw $03f4, $0300, $2959, $004f ; pal 3: #a4ff00 #00c500 #cd5252 #7b1000
+	dw $0300, $01df, $7fff, $008c ; pal 4: #00c500 #ff7300 #ffffff #622000
+	dw $03f4, $0300, $7fff, $01a0 ; pal 5: #a4ff00 #00c500 #ffffff #006a00
+	dw $02e0, $7f20, $7fff, $6d20 ; pal 6: #00bd00 #00cdff #ffffff #004ade
+	dw $7fff, $601f, $4e33, $2088 ; pal 7: #ffffff #ff00c5 #9c8b9c #412041
 ClubhouseSceneTiles:
 	INCBIN "data/bank_05f/lz_4060.bin" ; $4060, 2037 bytes
 ClubhouseSceneTilemap:
@@ -45,7 +54,16 @@ Data_5f_4c13:
 Data_5f_4c3b:
 	INCBIN "data/bank_05f/d_4c3b.bin" ; $4c3b, 40 bytes
 Data_5f_4c63:
-	INCBIN "data/bank_05f/d_4c63.bin" ; $4c63, 64 bytes
+	; $4c63, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0000, $0000, $0000, $0000 ; pal 1: #000000 #000000 #000000 #000000
+	dw $02c0, $7d5f, $7fff, $2cc3 ; pal 2: #00b400 #ff52ff #ffffff #18315a
+	dw $02c0, $7ec0, $7fff, $2cc3 ; pal 3: #00b400 #00b4ff #ffffff #18315a
+	dw $02c0, $7fff, $5650, $2cc3 ; pal 4: #00b400 #ffffff #8394ac #18315a
+	dw $7e3f, $7d5f, $7fff, $2cc3 ; pal 5: #ff8bff #ff52ff #ffffff #18315a
+	dw $7e3f, $304c, $7fff, $02df ; pal 6: #ff8bff #621062 #ffffff #ffb400
+	dw $7e3f, $7d5f, $7fff, $02df ; pal 7: #ff8bff #ff52ff #ffffff #ffb400
 CourtyardSceneTiles:
 	INCBIN "data/bank_05f/lz_4ca3.bin" ; $4ca3, 2384 bytes
 CourtyardSceneTilemap:

@@ -1920,6 +1920,11 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                            spec).rstrip("\n")
                         lines.extend(body.split("\n"))
                         continue
+                    if all(b == 0xFF for b in rom[run_start:run_start + length]):
+                        # Pointer-targeted but pure mastering fill (unused
+                        # trailing $4000-table slots in the scene banks).
+                        lines.append(f"\tds {length}, $ff ; ${cpu:04x}, fill")
+                        continue
                     blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
                     manifest.append((blob, run_start, length, None))
                     lines.append(f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes')

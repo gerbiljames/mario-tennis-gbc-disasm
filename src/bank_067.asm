@@ -51,7 +51,16 @@ DataPtr_CourtComplexTiles:
 FountainCourtSceneConfig:
 	INCBIN "data/bank_067/d_4030.bin" ; $4030, 27 bytes
 FountainCourtPalettes:
-	INCBIN "data/bank_067/d_404b.bin" ; $404b, 64 bytes
+	; $404b, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
+	dw $0220, $7d9f, $7fff, $1006 ; pal 2: #008b00 #ff62ff #ffffff #310020
+	dw $0220, $0310, $7fff, $1006 ; pal 3: #008b00 #83c500 #ffffff #310020
+	dw $0220, $4611, $7fff, $1006 ; pal 4: #008b00 #8b838b #ffffff #310020
+	dw $021a, $0310, $0220, $1006 ; pal 5: #d58300 #83c500 #008b00 #310020
+	dw $021a, $0288, $7fff, $1006 ; pal 6: #d58300 #41a400 #ffffff #310020
+	dw $4611, $7f40, $7fff, $1006 ; pal 7: #8b838b #00d5ff #ffffff #310020
 FountainCourtTiles:
 	INCBIN "data/bank_067/lz_408b.bin" ; $408b, 3052 bytes
 FountainCourtTilemap:
@@ -69,7 +78,16 @@ Data_67_5440:
 CafeCourtSceneConfig:
 	INCBIN "data/bank_067/d_5a40.bin" ; $5a40, 42 bytes
 CafeCourtPalettes:
-	INCBIN "data/bank_067/d_5a6a.bin" ; $5a6a, 64 bytes
+	; $5a6a, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $7fff, $0000, $0000 ; pal 1: #004a00 #ffffff #000000 #000000
+	dw $0220, $7d9f, $7fff, $1006 ; pal 2: #008b00 #ff62ff #ffffff #310020
+	dw $0220, $0310, $7fff, $1006 ; pal 3: #008b00 #83c500 #ffffff #310020
+	dw $0220, $0310, $021a, $1006 ; pal 4: #008b00 #83c500 #d58300 #310020
+	dw $0220, $7fff, $4611, $1006 ; pal 5: #008b00 #ffffff #8b838b #310020
+	dw $021a, $0288, $7fff, $1006 ; pal 6: #d58300 #41a400 #ffffff #310020
+	dw $0220, $7f00, $7fff, $1006 ; pal 7: #008b00 #00c5ff #ffffff #310020
 CafeCourtTiles:
 	INCBIN "data/bank_067/lz_5aaa.bin" ; $5aaa, 2357 bytes
 CafeCourtTilemap:
@@ -83,7 +101,16 @@ CafeCourtAuxAttrmap:
 CourtComplexSceneConfig:
 	INCBIN "data/bank_067/d_6a64.bin" ; $6a64, 42 bytes
 CourtComplexPalettes:
-	INCBIN "data/bank_067/d_6a8e.bin" ; $6a8e, 64 bytes
+	; $6a8e, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0080, $5520, $7ea0, $4460 ; pal 0: #002000 #004aac #00acff #00188b
+	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+	dw $195c, $0330, $7fff, $1006 ; pal 2: #e65231 #83cd00 #ffffff #310020
+	dw $0260, $0330, $7fff, $1006 ; pal 3: #009c00 #83cd00 #ffffff #310020
+	dw $025d, $0330, $0260, $1006 ; pal 4: #ee9400 #83cd00 #009c00 #310020
+	dw $7f60, $0260, $7fff, $1006 ; pal 5: #00deff #009c00 #ffffff #310020
+	dw $025d, $7fff, $3def, $1006 ; pal 6: #ee9400 #ffffff #7b7b7b #310020
+	dw $7e20, $01bf, $0260, $7fff ; pal 7: #008bff #ff6a00 #009c00 #ffffff
 CourtComplexTiles:
 	INCBIN "data/bank_067/lz_6ace.bin" ; $6ace, 2316 bytes
 CourtComplexTilemap:
@@ -95,4 +122,4 @@ CourtComplexAuxTilemap:
 CourtComplexAuxAttrmap:
 	INCBIN "data/bank_067/lz_7c52.bin" ; $7c52, 76 bytes
 Data_67_7c9e:
-	INCBIN "data/bank_067/d_7c9e.bin" ; $7c9e, 866 bytes
+	ds 866, $ff ; $7c9e, fill

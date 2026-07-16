@@ -51,7 +51,16 @@ DataPtr_ClubroomInteriorTiles:
 TrainingHallSceneConfig:
 	INCBIN "data/bank_069/d_4030.bin" ; $4030, 42 bytes
 TrainingHallPalettes:
-	INCBIN "data/bank_069/d_405a.bin" ; $405a, 64 bytes
+	; $405a, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $3d63, $0000, $35ad, $4e94 ; pal 0: #185a7b #000000 #6a6a6a #a4a49c
+	dw $7c1f, $7c1f, $7c1f, $7c1f ; pal 1: #ff00ff #ff00ff #ff00ff #ff00ff
+	dw $7fff, $5272, $7e80, $28a0 ; pal 2: #ffffff #949ca4 #00a4ff #002952
+	dw $5f9f, $4297, $25af, $04a7 ; pal 3: #ffe6bd #bda483 #7b6a4a #392908
+	dw $285d, $7fff, $1ee4, $10c1 ; pal 4: #ee1052 #ffffff #20bd39 #083120
+	dw $7fff, $4b8f, $2a88, $1183 ; pal 5: #ffffff #7be694 #41a452 #186220
+	dw $7f14, $6e4e, $5d88, $50e3 ; pal 6: #a4c5ff #7394de #4162bd #1839a4
+	dw $7fff, $5272, $3569, $1860 ; pal 7: #ffffff #949ca4 #4a5a6a #001831
 TrainingHallTiles:
 	INCBIN "data/bank_069/lz_409a.bin" ; $409a, 3011 bytes
 TrainingHallTilemap:
@@ -65,7 +74,16 @@ TrainingHallAuxAttrmap:
 CenterCourtHallSceneConfig:
 	INCBIN "data/bank_069/d_5514.bin" ; $5514, 42 bytes
 CenterCourtHallPalettes:
-	INCBIN "data/bank_069/d_553e.bin" ; $553e, 64 bytes
+	; $553e, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
+	dw $7fff, $36eb, $2628, $1584 ; pal 2: #ffffff #5abd6a #418b4a #206229
+	dw $7fff, $7e69, $61c5, $4500 ; pal 3: #ffffff #4a9cff #2973c5 #00418b
+	dw $309f, $7fff, $1344, $10c1 ; pal 4: #ff2062 #ffffff #20d520 #083120
+	dw $7f14, $6e4e, $5d88, $50e3 ; pal 5: #a4c5ff #7394de #4162bd #1839a4
+	dw $04a7, $4297, $25af, $5f9f ; pal 6: #392908 #bda483 #7b6a4a #ffe6bd
+	dw $5675, $7fff, $3d6f, $1886 ; pal 7: #ac9cac #ffffff #7b5a7b #312031
 CenterCourtHallTiles:
 	INCBIN "data/bank_069/lz_557e.bin" ; $557e, 2082 bytes
 CenterCourtHallTilemap:
@@ -79,7 +97,16 @@ CenterCourtHallAuxAttrmap:
 ClubroomInteriorSceneConfig:
 	INCBIN "data/bank_069/d_6542.bin" ; $6542, 27 bytes
 ClubroomInteriorPalettes:
-	INCBIN "data/bank_069/d_655d.bin" ; $655d, 64 bytes
+	; $655d, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
+	dw $6bff, $001f, $021f, $0000 ; pal 2: #ffffd5 #ff0000 #ff8300 #000000
+	dw $6bff, $0244, $7d8a, $0000 ; pal 3: #ffffd5 #209400 #5262ff #000000
+	dw $021a, $0244, $6bff, $0000 ; pal 4: #d58300 #209400 #ffffd5 #000000
+	dw $6bff, $0244, $7d3f, $0000 ; pal 5: #ffffd5 #209400 #ff4aff #000000
+	dw $0244, $6bff, $4e53, $0000 ; pal 6: #209400 #ffffd5 #9c949c #000000
+	dw $021a, $6bff, $4e53, $0000 ; pal 7: #d58300 #ffffd5 #9c949c #000000
 ClubroomInteriorTiles:
 	INCBIN "data/bank_069/lz_659d.bin" ; $659d, 2486 bytes
 ClubroomInteriorTilemap:

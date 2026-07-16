@@ -51,7 +51,16 @@ DataPtr_CeremonyHallTiles:
 ClubCourtSceneConfig:
 	INCBIN "data/bank_068/d_4030.bin" ; $4030, 42 bytes
 ClubCourtPalettes:
-	INCBIN "data/bank_068/d_405a.bin" ; $405a, 64 bytes
+	; $405a, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
+	dw $0220, $7d9f, $7fff, $1006 ; pal 2: #008b00 #ff62ff #ffffff #310020
+	dw $0220, $0310, $7fff, $1006 ; pal 3: #008b00 #83c500 #ffffff #310020
+	dw $0220, $0310, $021a, $1006 ; pal 4: #008b00 #83c500 #d58300 #310020
+	dw $0220, $7fff, $4611, $1006 ; pal 5: #008b00 #ffffff #8b838b #310020
+	dw $021a, $0288, $7fff, $1006 ; pal 6: #d58300 #41a400 #ffffff #310020
+	dw $0220, $7f00, $7fff, $1006 ; pal 7: #008b00 #00c5ff #ffffff #310020
 ClubCourtTiles:
 	INCBIN "data/bank_068/lz_409a.bin" ; $409a, 3032 bytes
 ClubCourtTilemap:
@@ -65,7 +74,16 @@ ClubCourtAuxAttrmap:
 StadiumGroundsSceneConfig:
 	INCBIN "data/bank_068/d_547b.bin" ; $547b, 42 bytes
 StadiumGroundsPalettes:
-	INCBIN "data/bank_068/d_54a5.bin" ; $54a5, 64 bytes
+	; $54a5, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
+	dw $7fff, $394e, $017f, $1886 ; pal 2: #ffffff #735273 #ff5a00 #312031
+	dw $50df, $0280, $7fff, $1006 ; pal 3: #ff31a4 #00a400 #ffffff #310020
+	dw $3bff, $021f, $394e, $1886 ; pal 4: #ffff73 #ff8300 #735273 #312031
+	dw $5254, $7fff, $394e, $1886 ; pal 5: #a494a4 #ffffff #735273 #312031
+	dw $0312, $0280, $7fff, $1006 ; pal 6: #94c500 #00a400 #ffffff #310020
+	dw $7fff, $394e, $7e60, $1886 ; pal 7: #ffffff #735273 #009cff #312031
 StadiumGroundsTiles:
 	INCBIN "data/bank_068/lz_54e5.bin" ; $54e5, 2108 bytes
 StadiumGroundsTilemap:
@@ -79,7 +97,16 @@ StadiumGroundsAuxAttrmap:
 CeremonyHallSceneConfig:
 	INCBIN "data/bank_068/d_6480.bin" ; $6480, 23 bytes
 CeremonyHallPalettes:
-	INCBIN "data/bank_068/d_6497.bin" ; $6497, 64 bytes
+	; $6497, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
+	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
+	dw $7956, $7fff, $021f, $008d ; pal 2: #b452f6 #ffffff #ff8300 #6a2000
+	dw $209f, $7fff, $027f, $008d ; pal 3: #ff2041 #ffffff #ff9c00 #6a2000
+	dw $7e1f, $7fff, $021f, $008d ; pal 4: #ff83ff #ffffff #ff8300 #6a2000
+	dw $7fff, $005f, $7d80, $0340 ; pal 5: #ffffff #ff1000 #0062ff #00d500
+	dw $7e1f, $6b9f, $3e37, $08ca ; pal 6: #ff83ff #ffe6d5 #bd8b7b #523110
+	dw $7fff, $7fec, $4967, $1886 ; pal 7: #ffffff #62ffff #395a94 #312031
 CeremonyHallTiles:
 	INCBIN "data/bank_068/lz_64d7.bin" ; $64d7, 2325 bytes
 CeremonyHallTilemap:

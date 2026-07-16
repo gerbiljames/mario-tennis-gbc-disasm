@@ -67,7 +67,16 @@ DataPtr_GardenPavilionTiles:
 HardCourtGroundsSceneConfig:
 	INCBIN "data/bank_066/d_4040.bin" ; $4040, 42 bytes
 HardCourtGroundsPalettes:
-	INCBIN "data/bank_066/d_406a.bin" ; $406a, 64 bytes
+	; $406a, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0080, $5520, $7ea0, $2cb7 ; pal 0: #002000 #004aac #00acff #bd295a
+	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+	dw $7ef0, $0214, $781f, $781f ; pal 2: #83bdff #a48300 #ff00f6 #ff00f6
+	dw $0220, $02d0, $7fff, $1006 ; pal 3: #008b00 #83b400 #ffffff #310020
+	dw $021a, $02d0, $0220, $1006 ; pal 4: #d58300 #83b400 #008b00 #310020
+	dw $7ef0, $7e28, $7fff, $1006 ; pal 5: #83bdff #418bff #ffffff #310020
+	dw $0214, $7fff, $3e93, $1006 ; pal 6: #a48300 #ffffff #9ca47b #310020
+	dw $7ef0, $7fff, $3def, $1006 ; pal 7: #83bdff #ffffff #7b7b7b #310020
 HardCourtGroundsTiles:
 	INCBIN "data/bank_066/lz_40aa.bin" ; $40aa, 1292 bytes
 HardCourtGroundsTilemap:
@@ -81,7 +90,16 @@ HardCourtGroundsAuxAttrmap:
 SpaResortSceneConfig:
 	INCBIN "data/bank_066/d_4d4f.bin" ; $4d4f, 42 bytes
 SpaResortPalettes:
-	INCBIN "data/bank_066/d_4d79.bin" ; $4d79, 64 bytes
+	; $4d79, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $3d60, $0000, $35ad, $4e94 ; pal 0: #005a7b #000000 #6a6a6a #a4a49c
+	dw $7c1f, $7c1f, $7c1f, $7c1f ; pal 1: #ff00ff #ff00ff #ff00ff #ff00ff
+	dw $7fff, $7f10, $5e09, $3924 ; pal 2: #ffffff #83c5ff #4a83bd #204a73
+	dw $019f, $7fff, $7de0, $208c ; pal 3: #ff6200 #ffffff #007bff #622041
+	dw $285d, $7fff, $02c0, $208c ; pal 4: #ee1052 #ffffff #00b400 #622041
+	dw $7fff, $5a5f, $415b, $2cb5 ; pal 5: #ffffff #ff94b4 #de5283 #ac295a
+	dw $7fe0, $7fff, $5eb7, $356d ; pal 6: #00ffff #ffffff #bdacbd #6a5a6a
+	dw $7fff, $36ba, $1db1, $0cc9 ; pal 7: #ffffff #d5ac6a #8b6a39 #4a3118
 SpaResortTiles:
 	INCBIN "data/bank_066/lz_4db9.bin" ; $4db9, 2034 bytes
 SpaResortTilemap:
@@ -95,7 +113,16 @@ SpaResortAuxAttrmap:
 MainBuildingSceneConfig:
 	INCBIN "data/bank_066/d_5d82.bin" ; $5d82, 9 bytes
 MainBuildingPalettes:
-	INCBIN "data/bank_066/d_5d8b.bin" ; $5d8b, 64 bytes
+	; $5d8b, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7ce0, $5520, $7ea0, $3400 ; pal 0: #0039ff #004aac #00acff #00006a
+	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+	dw $781f, $781f, $781f, $781f ; pal 2: #ff00f6 #ff00f6 #ff00f6 #ff00f6
+	dw $0220, $02d0, $7fff, $1006 ; pal 3: #008b00 #83b400 #ffffff #310020
+	dw $021a, $02d0, $0220, $1006 ; pal 4: #d58300 #83b400 #008b00 #310020
+	dw $0220, $7fff, $4631, $1006 ; pal 5: #008b00 #ffffff #8b8b8b #310020
+	dw $0220, $011f, $7fff, $1006 ; pal 6: #008b00 #ff4100 #ffffff #310020
+	dw $7e40, $3236, $7fff, $1006 ; pal 7: #0094ff #b48b62 #ffffff #310020
 MainBuildingTiles:
 	INCBIN "data/bank_066/lz_5dcb.bin" ; $5dcb, 2301 bytes
 MainBuildingTilemap:
@@ -109,7 +136,16 @@ MainBuildingAuxAttrmap:
 GardenPavilionSceneConfig:
 	INCBIN "data/bank_066/d_6df8.bin" ; $6df8, 42 bytes
 GardenPavilionPalettes:
-	INCBIN "data/bank_066/d_6e22.bin" ; $6e22, 64 bytes
+	; $6e22, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0080, $5520, $7ea0, $00e0 ; pal 0: #002000 #004aac #00acff #003900
+	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+	dw $0220, $019f, $7fff, $1006 ; pal 2: #008b00 #ff6200 #ffffff #310020
+	dw $0220, $02d0, $7fff, $1006 ; pal 3: #008b00 #83b400 #ffffff #310020
+	dw $021a, $02d0, $0220, $1006 ; pal 4: #d58300 #83b400 #008b00 #310020
+	dw $0220, $7fff, $4631, $1006 ; pal 5: #008b00 #ffffff #8b8b8b #310020
+	dw $599f, $1c12, $7fff, $1006 ; pal 6: #ff62b4 #940039 #ffffff #310020
+	dw $7fe4, $3236, $7fff, $1006 ; pal 7: #20ffff #b48b62 #ffffff #310020
 GardenPavilionTiles:
 	INCBIN "data/bank_066/lz_6e62.bin" ; $6e62, 1916 bytes
 GardenPavilionTilemap:
@@ -121,4 +157,4 @@ GardenPavilionAuxTilemap:
 GardenPavilionAuxAttrmap:
 	INCBIN "data/bank_066/lz_7be2.bin" ; $7be2, 75 bytes
 Data_66_7c2d:
-	INCBIN "data/bank_066/d_7c2d.bin" ; $7c2d, 979 bytes
+	ds 979, $ff ; $7c2d, fill

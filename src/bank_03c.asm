@@ -150,7 +150,16 @@ StadiumTilemap:
 Lz_3c_52e6:
 	INCBIN "data/bank_03c/lz_52e6.bin" ; $52e6, 107 bytes
 Data_3c_5351:
-	INCBIN "data/bank_03c/d_5351.bin" ; $5351, 64 bytes
+	; $5351, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
+	dw $7fff, $2fec, $1b47, $2289 ; pal 1: #ffffff #62ff5a #39d531 #4aa441
+	dw $0004, $014a, $1100, $3324 ; pal 2: #200000 #525200 #004120 #20cd62
+	dw $7fff, $6714, $3206, $7f00 ; pal 3: #ffffff #a4c5cd #318362 #00c5ff
+	dw $225f, $6bff, $505c, $0000 ; pal 4: #ff9441 #ffffd5 #e610a4 #000000
+	dw $5294, $7fff, $294a, $0000 ; pal 5: #a4a4a4 #ffffff #525252 #000000
+	dw $5a9f, $6bff, $001f, $0000 ; pal 6: #ffa4b4 #ffffd5 #ff0000 #000000
+	dw $3acc, $6bff, $7d4a, $0000 ; pal 7: #62b473 #ffffd5 #5252ff #000000
 Lz_3c_5391:
 	INCBIN "data/bank_03c/lz_5391.bin" ; $5391, 71 bytes
 Lz_3c_53d8:
@@ -254,7 +263,16 @@ Lz_3c_75e0:
 Lz_3c_766c:
 	INCBIN "data/bank_03c/lz_766c.bin" ; $766c, 89 bytes
 Data_3c_76c5:
-	INCBIN "data/bank_03c/d_76c5.bin" ; $76c5, 64 bytes
+	; $76c5, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
+	dw $280a, $280a, $280a, $280a ; pal 1: #520052 #520052 #520052 #520052
+	dw $0004, $014a, $1100, $3324 ; pal 2: #200000 #525200 #004120 #20cd62
+	dw $0300, $0240, $0180, $0100 ; pal 3: #00c500 #009400 #006200 #004100
+	dw $7bde, $6318, $4a52, $318c ; pal 4: #f6f6f6 #c5c5c5 #949494 #626262
+	dw $7bde, $6318, $4a52, $318c ; pal 5: #f6f6f6 #c5c5c5 #949494 #626262
+	dw $7bde, $6318, $4a52, $318c ; pal 6: #f6f6f6 #c5c5c5 #949494 #626262
+	dw $7bde, $6318, $4a52, $318c ; pal 7: #f6f6f6 #c5c5c5 #949494 #626262
 Lz_3c_7705:
 	INCBIN "data/bank_03c/lz_7705.bin" ; $7705, 231 bytes
 Lz_3c_77ec:
