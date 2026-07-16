@@ -1,0 +1,27 @@
+{
+ "_comment": "Static code-entry seeds for bank $0d (minigame engine): object-template behavior entries ($450a/$4515/$4969/$4974/$4c08/$4c1b named by the 16-byte headers), the $4dad dispatch targets, and the $58ba call/ret stub farm. Flat = 0x0d*0x4000 + (cpu-0x4000).",
+ "rom": [
+  214282,
+  214293,
+  215401,
+  215412,
+  216072,
+  216091,
+  216273,
+  216277,
+  216509,
+  216523,
+  216530,
+  216554,
+  216558,
+  216562,
+  216600,
+  219322,
+  219329,
+  219333,
+  219337,
+  219341,
+  219345
+ ],
+ "other": []
+}

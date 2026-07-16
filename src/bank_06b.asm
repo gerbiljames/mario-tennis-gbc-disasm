@@ -130,7 +130,86 @@ Label_6b_40af:
 	jr z, Func_6b_406a ; $40ba
 Label_6b_40bc:
 	ret ; $40bc
-	INCBIN "data/bank_06b/d_40bd.bin" ; $40bd, 156 bytes
+	; $40bd, 156 bytes (records:2)
+; 78 records x 2 bytes
+	dw $40e1 ; record 0
+	dw $413b ; record 1
+	dw $40e7 ; record 2
+	dw $40ed ; record 3
+	dw $40f3 ; record 4
+	dw $40f9 ; record 5
+	dw $40ff ; record 6
+	dw $4105 ; record 7
+	dw $410b ; record 8
+	dw $412f ; record 9
+	dw $4111 ; record 10
+	dw $4117 ; record 11
+	dw $411d ; record 12
+	dw $4141 ; record 13
+	dw $4147 ; record 14
+	dw $414d ; record 15
+	dw $4153 ; record 16
+	dw $4135 ; record 17
+	dw $418e ; record 18
+	dw $41fa ; record 19
+	dw $41d3 ; record 20
+	dw $421f ; record 21
+	dw $4304 ; record 22
+	dw $42f2 ; record 23
+	dw $4326 ; record 24
+	dw $43be ; record 25
+	dw $43af ; record 26
+	dw $43cf ; record 27
+	dw $4467 ; record 28
+	dw $4455 ; record 29
+	dw $4487 ; record 30
+	dw $451f ; record 31
+	dw $4510 ; record 32
+	dw $452e ; record 33
+	dw $4620 ; record 34
+	dw $45b5 ; record 35
+	dw $463d ; record 36
+	dw $464f ; record 37
+	dw $4644 ; record 38
+	dw $465e ; record 39
+	dw $46a9 ; record 40
+	dw $468a ; record 41
+	dw $479a ; record 42
+	dw $47d8 ; record 43
+	dw $47c4 ; record 44
+	dw $47e7 ; record 45
+	dw $4827 ; record 46
+	dw $4813 ; record 47
+	dw $4836 ; record 48
+	dw $4876 ; record 49
+	dw $4862 ; record 50
+	dw $4885 ; record 51
+	dw $48e3 ; record 52
+	dw $48ca ; record 53
+	dw $48f2 ; record 54
+	dw $492a ; record 55
+	dw $491f ; record 56
+	dw $46e5 ; record 57
+	dw $474b ; record 58
+	dw $4739 ; record 59
+	dw $4166 ; record 60
+	dw $416e ; record 61
+	dw $415c ; record 62
+	dw $4171 ; record 63
+	dw $417f ; record 64
+	dw $4178 ; record 65
+	dw $4960 ; record 66
+	dw $4a42 ; record 67
+	dw $4a51 ; record 68
+	dw $4a98 ; record 69
+	dw $4ae0 ; record 70
+	dw $4aef ; record 71
+	dw $4af2 ; record 72
+	dw $4bd0 ; record 73
+	dw $4bed ; record 74
+	dw $4c38 ; record 75
+	dw $4c79 ; record 76
+	dw $4c6e ; record 77
 Unused_6b_UpdateHandler_4159:
 	jp Label_6b_407c ; $4159
 	jp Label_6b_40af ; $415c
@@ -433,7 +512,16 @@ Label_6b_43cc:
 	ld de, $0008 ; $44c7
 	call Func_00_05b5 ; $44ca
 	jp Label_6b_407c ; $44cd
-	INCBIN "data/bank_06b/d_44d0.bin" ; $44d0, 64 bytes
+	; $44d0, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
+	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $0000 ; pal 2: #525252 #525252 #525252 #000000
+	dw $1adc, $73ff, $1e40, $0000 ; pal 3: #e6b431 #ffffe6 #009439 #000000
+	dw $225f, $73ff, $505c, $0000 ; pal 4: #ff9441 #ffffe6 #e610a4 #000000
+	dw $42dc, $73ff, $021f, $0000 ; pal 5: #e6b483 #ffffe6 #ff8300 #000000
+	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
+	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
 	ld c, $06 ; $4510
 	call Func_00_1d20 ; $4512
 	call Func_00_1da4 ; $4515
@@ -1246,7 +1334,199 @@ Label_6b_4e7d:
 	ld hl, $4ea0 ; $4e87
 	call QueueSpriteTemplate ; $4e8a
 	ret ; $4e8d
-	INCBIN "data/bank_06b/d_4e8e.bin" ; $4e8e, 767 bytes
+	; $4e8e, 767 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $10, $10, $02, $00 ; 0x04
+	db $80, $10, $08, $00 ; 0x08
+	db $00, $10, $10, $02 ; 0x0c
+	db $00, $80, $10, $08 ; 0x10
+	db $00, $00, $80, $3c ; 0x14
+	db $34, $3c, $34, $3c ; 0x18
+	db $34, $3c, $34, $3b ; 0x1c
+	db $35, $3b, $35, $3b ; 0x20
+	db $35, $3b, $35, $3a ; 0x24
+	db $36, $3a, $36, $3a ; 0x28
+	db $36, $3a, $36, $39 ; 0x2c
+	db $37, $39, $37, $39 ; 0x30
+	db $37, $39, $37, $38 ; 0x34
+	db $38, $38, $38, $38 ; 0x38
+	db $38, $38, $38, $37 ; 0x3c
+	db $39, $37, $39, $37 ; 0x40
+	db $39, $37, $39, $36 ; 0x44
+	db $3a, $36, $3a, $36 ; 0x48
+	db $3a, $36, $3a, $35 ; 0x4c
+	db $3b, $35, $3b, $35 ; 0x50
+	db $3b, $35, $3b, $34 ; 0x54
+	db $3c, $34, $3c, $34 ; 0x58
+	db $3c, $34, $3c, $34 ; 0x5c
+	db $3c, $34, $3c, $34 ; 0x60
+	db $3c, $34, $3c, $34 ; 0x64
+	db $3c, $34, $3c, $34 ; 0x68
+	db $3c, $34, $3c, $34 ; 0x6c
+	db $3c, $34, $3c, $34 ; 0x70
+	db $3c, $34, $3c, $34 ; 0x74
+	db $3c, $34, $3c, $34 ; 0x78
+	db $3c, $34, $3c, $34 ; 0x7c
+	db $3c, $34, $3c, $34 ; 0x80
+	db $3c, $34, $3c, $34 ; 0x84
+	db $3c, $34, $3c, $34 ; 0x88
+	db $3c, $34, $3c, $34 ; 0x8c
+	db $3c, $34, $3c, $34 ; 0x90
+	db $3c, $34, $3c, $34 ; 0x94
+	db $3c, $34, $3c, $34 ; 0x98
+	db $3c, $34, $3c, $34 ; 0x9c
+	db $3c, $34, $3c, $34 ; 0xa0
+	db $3c, $34, $3c, $34 ; 0xa4
+	db $3c, $34, $3c, $34 ; 0xa8
+	db $3c, $34, $3c, $34 ; 0xac
+	db $3c, $34, $3c, $34 ; 0xb0
+	db $3c, $34, $3c, $34 ; 0xb4
+	db $3c, $34, $3c, $34 ; 0xb8
+	db $3c, $34, $3c, $34 ; 0xbc
+	db $3c, $34, $3c, $34 ; 0xc0
+	db $3c, $34, $3c, $34 ; 0xc4
+	db $3c, $34, $3c, $34 ; 0xc8
+	db $3c, $34, $3c, $34 ; 0xcc
+	db $3c, $34, $3c, $34 ; 0xd0
+	db $3c, $34, $3c, $34 ; 0xd4
+	db $3c, $34, $3c, $34 ; 0xd8
+	db $3c, $34, $3c, $34 ; 0xdc
+	db $3c, $34, $3c, $34 ; 0xe0
+	db $3c, $34, $3c, $34 ; 0xe4
+	db $3c, $34, $3c, $34 ; 0xe8
+	db $3c, $34, $3c, $34 ; 0xec
+	db $3c, $34, $3c, $34 ; 0xf0
+	db $3c, $34, $3c, $34 ; 0xf4
+	db $3c, $34, $3c, $34 ; 0xf8
+	db $3c, $34, $3c, $34 ; 0xfc
+	db $3c, $34, $3c, $34 ; 0x100
+	db $3c, $34, $3c, $43 ; 0x104
+	db $2d, $43, $2d, $43 ; 0x108
+	db $2d, $42, $2e, $42 ; 0x10c
+	db $2e, $42, $2e, $40 ; 0x110
+	db $2f, $40, $2f, $40 ; 0x114
+	db $2f, $3f, $30, $3f ; 0x118
+	db $30, $3f, $30, $3e ; 0x11c
+	db $31, $3e, $31, $3e ; 0x120
+	db $31, $3d, $32, $3d ; 0x124
+	db $32, $3d, $32, $3c ; 0x128
+	db $33, $3c, $33, $3c ; 0x12c
+	db $33, $3b, $34, $3b ; 0x130
+	db $34, $3b, $34, $3a ; 0x134
+	db $35, $3a, $35, $3a ; 0x138
+	db $35, $39, $36, $39 ; 0x13c
+	db $36, $39, $36, $38 ; 0x140
+	db $37, $38, $37, $38 ; 0x144
+	db $37, $38, $37, $37 ; 0x148
+	db $38, $37, $38, $37 ; 0x14c
+	db $38, $37, $38, $36 ; 0x150
+	db $39, $36, $39, $36 ; 0x154
+	db $39, $36, $39, $36 ; 0x158
+	db $39, $36, $39, $35 ; 0x15c
+	db $3a, $35, $3a, $35 ; 0x160
+	db $3a, $35, $3a, $34 ; 0x164
+	db $3b, $34, $3b, $34 ; 0x168
+	db $3b, $34, $3b, $34 ; 0x16c
+	db $3c, $34, $3c, $34 ; 0x170
+	db $3c, $34, $3c, $34 ; 0x174
+	db $3c, $34, $3c, $34 ; 0x178
+	db $3c, $34, $3c, $34 ; 0x17c
+	db $3c, $34, $3c, $34 ; 0x180
+	db $3c, $34, $3c, $34 ; 0x184
+	db $3c, $34, $3c, $34 ; 0x188
+	db $3c, $34, $3c, $34 ; 0x18c
+	db $3c, $34, $3c, $34 ; 0x190
+	db $3c, $34, $3c, $34 ; 0x194
+	db $3c, $34, $3c, $34 ; 0x198
+	db $3c, $34, $3c, $34 ; 0x19c
+	db $3c, $34, $3c, $34 ; 0x1a0
+	db $3c, $34, $3c, $34 ; 0x1a4
+	db $3c, $34, $3c, $34 ; 0x1a8
+	db $3c, $34, $3c, $34 ; 0x1ac
+	db $3c, $34, $3c, $34 ; 0x1b0
+	db $3c, $34, $3c, $34 ; 0x1b4
+	db $3c, $34, $3c, $34 ; 0x1b8
+	db $3c, $34, $3c, $34 ; 0x1bc
+	db $3c, $34, $3c, $34 ; 0x1c0
+	db $3c, $34, $3c, $34 ; 0x1c4
+	db $3c, $34, $3c, $34 ; 0x1c8
+	db $3c, $34, $3c, $34 ; 0x1cc
+	db $3c, $34, $3c, $34 ; 0x1d0
+	db $3c, $34, $3c, $34 ; 0x1d4
+	db $3c, $34, $3c, $34 ; 0x1d8
+	db $3c, $34, $3c, $53 ; 0x1dc
+	db $1d, $53, $1d, $52 ; 0x1e0
+	db $1e, $52, $1e, $51 ; 0x1e4
+	db $1f, $51, $1f, $50 ; 0x1e8
+	db $20, $50, $20, $4f ; 0x1ec
+	db $21, $4f, $21, $4e ; 0x1f0
+	db $22, $4e, $22, $4d ; 0x1f4
+	db $23, $4d, $23, $4c ; 0x1f8
+	db $24, $4c, $24, $4b ; 0x1fc
+	db $25, $4b, $25, $4a ; 0x200
+	db $26, $4a, $26, $49 ; 0x204
+	db $27, $49, $27, $48 ; 0x208
+	db $28, $48, $28, $47 ; 0x20c
+	db $29, $47, $29, $46 ; 0x210
+	db $2a, $46, $2a, $45 ; 0x214
+	db $2b, $45, $2b, $44 ; 0x218
+	db $2c, $44, $2c, $43 ; 0x21c
+	db $2d, $43, $2d, $43 ; 0x220
+	db $2d, $42, $2e, $42 ; 0x224
+	db $2e, $42, $2e, $41 ; 0x228
+	db $2f, $41, $2f, $41 ; 0x22c
+	db $2f, $40, $30, $40 ; 0x230
+	db $30, $40, $30, $3f ; 0x234
+	db $31, $3f, $31, $3f ; 0x238
+	db $31, $3e, $32, $3e ; 0x23c
+	db $32, $3e, $32, $3d ; 0x240
+	db $33, $3d, $33, $3d ; 0x244
+	db $33, $3c, $34, $3c ; 0x248
+	db $34, $3c, $34, $3b ; 0x24c
+	db $35, $3b, $35, $3b ; 0x250
+	db $35, $3a, $36, $3a ; 0x254
+	db $36, $3a, $36, $39 ; 0x258
+	db $37, $39, $37, $39 ; 0x25c
+	db $37, $38, $37, $38 ; 0x260
+	db $37, $38, $38, $37 ; 0x264
+	db $38, $37, $38, $37 ; 0x268
+	db $39, $36, $39, $36 ; 0x26c
+	db $3a, $36, $3a, $35 ; 0x270
+	db $3a, $35, $3b, $34 ; 0x274
+	db $3c, $34, $3c, $34 ; 0x278
+	db $3c, $34, $3c, $34 ; 0x27c
+	db $3c, $34, $3c, $34 ; 0x280
+	db $3c, $34, $3c, $34 ; 0x284
+	db $3c, $34, $3c, $34 ; 0x288
+	db $3c, $34, $3c, $34 ; 0x28c
+	db $3c, $34, $3c, $34 ; 0x290
+	db $3c, $34, $3c, $34 ; 0x294
+	db $3c, $34, $3c, $34 ; 0x298
+	db $3c, $34, $3c, $34 ; 0x29c
+	db $3c, $34, $3c, $34 ; 0x2a0
+	db $3c, $34, $3c, $34 ; 0x2a4
+	db $3c, $34, $3c, $34 ; 0x2a8
+	db $3c, $34, $3c, $34 ; 0x2ac
+	db $3c, $34, $3c, $34 ; 0x2b0
+	db $3c, $34, $3c, $34 ; 0x2b4
+	db $3c, $34, $3c, $34 ; 0x2b8
+	db $3c, $34, $3c, $34 ; 0x2bc
+	db $3c, $34, $3c, $34 ; 0x2c0
+	db $3c, $34, $3c, $34 ; 0x2c4
+	db $3c, $34, $3c, $34 ; 0x2c8
+	db $3c, $34, $3c, $34 ; 0x2cc
+	db $3c, $34, $3c, $34 ; 0x2d0
+	db $3c, $34, $3c, $34 ; 0x2d4
+	db $3c, $34, $3c, $34 ; 0x2d8
+	db $3c, $34, $3c, $34 ; 0x2dc
+	db $3c, $34, $3c, $34 ; 0x2e0
+	db $3c, $34, $3c, $34 ; 0x2e4
+	db $3c, $34, $3c, $34 ; 0x2e8
+	db $3c, $34, $3c, $34 ; 0x2ec
+	db $3c, $34, $3c, $34 ; 0x2f0
+	db $3c, $34, $3c, $34 ; 0x2f4
+	db $3c, $34, $3c, $34 ; 0x2f8
+	db $3c, $34, $3c ; 0x2fc
 Func_6b_518d:
 	push bc ; $518d
 	push hl ; $518e
@@ -1397,7 +1677,24 @@ Palettes_6b_525a:
 	ld b, $08 ; $52b0
 	call QueueSpriteTemplate ; $52b2
 	ret ; $52b5
-	INCBIN "data/bank_06b/d_52b6.bin" ; $52b6, 67 bytes
+	; $52b6, 67 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $10, $10, $02, $00 ; 0x04
+	db $10, $18, $04, $00 ; 0x08
+	db $80, $10, $08, $00 ; 0x0c
+	db $00, $10, $10, $02 ; 0x10
+	db $00, $10, $18, $04 ; 0x14
+	db $00, $10, $20, $06 ; 0x18
+	db $00, $10, $28, $08 ; 0x1c
+	db $00, $80, $10, $08 ; 0x20
+	db $00, $00, $10, $10 ; 0x24
+	db $02, $00, $10, $18 ; 0x28
+	db $04, $00, $10, $20 ; 0x2c
+	db $06, $00, $10, $28 ; 0x30
+	db $08, $00, $10, $30 ; 0x34
+	db $0a, $00, $10, $38 ; 0x38
+	db $0c, $00, $10, $40 ; 0x3c
+	db $0e, $00, $80 ; 0x40
 	ld hl, $5360 ; $52f9
 	ld a, [$cb46] ; $52fc
 	ld d, $18 ; $52ff
@@ -1447,7 +1744,29 @@ Palettes_6b_525a:
 	ld b, $09 ; $535a
 	call QueueSpriteTemplate ; $535c
 	ret ; $535f
-	INCBIN "data/bank_06b/d_5360.bin" ; $5360, 88 bytes
+	; $5360, 88 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $10, $10, $02, $00 ; 0x04
+	db $10, $18, $04, $00 ; 0x08
+	db $80, $10, $08, $00 ; 0x0c
+	db $00, $10, $10, $02 ; 0x10
+	db $00, $10, $18, $04 ; 0x14
+	db $00, $10, $20, $06 ; 0x18
+	db $00, $10, $28, $08 ; 0x1c
+	db $00, $10, $30, $0a ; 0x20
+	db $00, $10, $38, $0c ; 0x24
+	db $00, $10, $40, $0e ; 0x28
+	db $00, $10, $48, $10 ; 0x2c
+	db $00, $80, $10, $08 ; 0x30
+	db $00, $00, $10, $10 ; 0x34
+	db $02, $00, $10, $18 ; 0x38
+	db $04, $00, $10, $20 ; 0x3c
+	db $06, $00, $10, $28 ; 0x40
+	db $08, $00, $10, $30 ; 0x44
+	db $0a, $00, $10, $38 ; 0x48
+	db $0c, $00, $10, $40 ; 0x4c
+	db $0e, $00, $80, $10 ; 0x50
+	db $08, $00, $00, $80 ; 0x54
 Func_6b_53b8:
 	push hl ; $53b8
 	ld a, [$cb40] ; $53b9
@@ -1682,7 +2001,24 @@ Label_6b_612f:
 	ld b, $08 ; $6133
 	call QueueSpriteTemplate ; $6135
 	ret ; $6138
-	INCBIN "data/bank_06b/d_6139.bin" ; $6139, 67 bytes
+	; $6139, 67 bytes (bytes:4)
+	db $00, $10, $20, $30 ; 0x00
+	db $10, $08, $00, $00 ; 0x04
+	db $20, $08, $02, $00 ; 0x08
+	db $10, $10, $04, $00 ; 0x0c
+	db $20, $10, $06, $00 ; 0x10
+	db $10, $18, $08, $00 ; 0x14
+	db $20, $18, $0a, $00 ; 0x18
+	db $10, $20, $0c, $00 ; 0x1c
+	db $20, $20, $0e, $00 ; 0x20
+	db $80, $fa, $40, $cb ; 0x24
+	db $fe, $14, $38, $16 ; 0x28
+	db $fa, $23, $c3, $b7 ; 0x2c
+	db $28, $10, $fa, $23 ; 0x30
+	db $c3, $67, $fa, $22 ; 0x34
+	db $c3, $6f, $7c, $ea ; 0x38
+	db $23, $c3, $7d, $ea ; 0x3c
+	db $22, $c3, $c9 ; 0x40
 Func_6b_617c:
 	call DisableLCDSafely ; $617c
 	farcall FarPtr_InitSceneScroll ; $617f
@@ -1742,7 +2078,72 @@ Label_6b_70a2:
 	call RegisterFrameTask ; $70ab
 Label_6b_70ae:
 	ret ; $70ae
-	INCBIN "data/bank_06b/d_70af.bin" ; $70af, 512 bytes
+	; $70af, 512 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7f00, $7ee2, $7f00, $76e0 ; pal 1: #00c5ff #10bdff #00c5ff #00bdee
+	dw $7f00, $7f04, $7ee1, $6ea0 ; pal 2: #00c5ff #20c5ff #08bdff #00acde
+	dw $7f00, $7b26, $7ec2, $6680 ; pal 3: #00c5ff #31cdf6 #10b4ff #00a4cd
+	dw $7f00, $7b28, $7ea2, $5e40 ; pal 4: #00c5ff #41cdf6 #10acff #0094bd
+	dw $7f00, $7b4a, $7e83, $5600 ; pal 5: #00c5ff #52d5f6 #18a4ff #0083ac
+	dw $7f00, $774c, $7e84, $4de0 ; pal 6: #00c5ff #62d5ee #20a4ff #007b9c
+	dw $7f00, $776e, $7e64, $45a0 ; pal 7: #00c5ff #73deee #209cff #006a8b
+	dw $7f00, $7770, $7e45, $3d80 ; pal 8: #00c5ff #83deee #2994ff #00627b
+	dw $7f00, $7392, $7e26, $3540 ; pal 9: #00c5ff #94e6e6 #318bff #00526a
+	dw $7f00, $7394, $7e06, $2d00 ; pal 10: #00c5ff #a4e6e6 #3183ff #00415a
+	dw $7f00, $73b6, $7e07, $24e0 ; pal 11: #00c5ff #b4eee6 #3983ff #00394a
+	dw $7f00, $6fb8, $7de8, $1ca0 ; pal 12: #00c5ff #c5eede #417bff #002939
+	dw $7f00, $6fda, $7dc8, $1480 ; pal 13: #00c5ff #d5f6de #4173ff #002029
+	dw $7f00, $6fdc, $7da9, $0c40 ; pal 14: #00c5ff #e6f6de #4a6aff #001018
+	dw $7f00, $6bff, $7d8a, $0000 ; pal 15: #00c5ff #ffffd5 #5262ff #000000
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 16: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7700, $7f02, $7f00, $76e0 ; pal 17: #00c5ee #10c5ff #00c5ff #00bdee
+	dw $6b00, $7f04, $7f00, $6ea0 ; pal 18: #00c5d5 #20c5ff #00c5ff #00acde
+	dw $66e0, $7f06, $7f00, $6680 ; pal 19: #00bdcd #31c5ff #00c5ff #00a4cd
+	dw $5ee0, $7ee8, $7f00, $5e40 ; pal 20: #00bdbd #41bdff #00c5ff #0094bd
+	dw $56c0, $7eea, $7f00, $5600 ; pal 21: #00b4ac #52bdff #00c5ff #0083ac
+	dw $4ec0, $7eec, $7f00, $4de0 ; pal 22: #00b49c #62bdff #00c5ff #007b9c
+	dw $46a0, $7eee, $7f00, $45a0 ; pal 23: #00ac8b #73bdff #00c5ff #006a8b
+	dw $3ea0, $7ed0, $7f00, $3d80 ; pal 24: #00ac7b #83b4ff #00c5ff #00627b
+	dw $36a0, $7ed2, $7f00, $3540 ; pal 25: #00ac6a #94b4ff #00c5ff #00526a
+	dw $2e80, $7ed4, $7f00, $2d00 ; pal 26: #00a45a #a4b4ff #00c5ff #00415a
+	dw $2680, $7ed6, $7f00, $24e0 ; pal 27: #00a44a #b4b4ff #00c5ff #00394a
+	dw $1e80, $7eb8, $7f00, $1ca0 ; pal 28: #00a439 #c5acff #00c5ff #002939
+	dw $1660, $7eba, $7f00, $1480 ; pal 29: #009c29 #d5acff #00c5ff #002029
+	dw $0e60, $7ebc, $7f00, $0c40 ; pal 30: #009c18 #e6acff #00c5ff #001018
+	dw $0240, $7e9f, $7f00, $0000 ; pal 31: #009400 #ffa4ff #00c5ff #000000
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 32: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7ee2, $7700, $7f00, $76e0 ; pal 33: #10bdff #00c5ee #00c5ff #00bdee
+	dw $7f04, $6b00, $7f00, $6ea0 ; pal 34: #20c5ff #00c5d5 #00c5ff #00acde
+	dw $7b26, $66e0, $7f00, $6680 ; pal 35: #31cdf6 #00bdcd #00c5ff #00a4cd
+	dw $7b28, $5ee0, $7f00, $5e40 ; pal 36: #41cdf6 #00bdbd #00c5ff #0094bd
+	dw $7b4a, $56c0, $7f00, $5600 ; pal 37: #52d5f6 #00b4ac #00c5ff #0083ac
+	dw $774c, $4ec0, $7f00, $4de0 ; pal 38: #62d5ee #00b49c #00c5ff #007b9c
+	dw $776e, $46a0, $7f00, $45a0 ; pal 39: #73deee #00ac8b #00c5ff #006a8b
+	dw $7770, $3ea0, $7f00, $3d80 ; pal 40: #83deee #00ac7b #00c5ff #00627b
+	dw $7392, $36a0, $7f00, $3540 ; pal 41: #94e6e6 #00ac6a #00c5ff #00526a
+	dw $7394, $2e80, $7f00, $2d00 ; pal 42: #a4e6e6 #00a45a #00c5ff #00415a
+	dw $73b6, $2680, $7f00, $24e0 ; pal 43: #b4eee6 #00a44a #00c5ff #00394a
+	dw $6fb8, $1e80, $7f00, $1ca0 ; pal 44: #c5eede #00a439 #00c5ff #002939
+	dw $6fda, $1660, $7f00, $1480 ; pal 45: #d5f6de #009c29 #00c5ff #002029
+	dw $6fdc, $0e60, $7f00, $0c40 ; pal 46: #e6f6de #009c18 #00c5ff #001018
+	dw $6bff, $0240, $7f00, $0000 ; pal 47: #ffffd5 #009400 #00c5ff #000000
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 48: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7702, $7ee2, $7f00, $76e0 ; pal 49: #10c5ee #10bdff #00c5ff #00bdee
+	dw $6f04, $7f04, $7f00, $6ea0 ; pal 50: #20c5de #20c5ff #00c5ff #00acde
+	dw $66e6, $7b26, $7f00, $6680 ; pal 51: #31bdcd #31cdf6 #00c5ff #00a4cd
+	dw $5ee8, $7b28, $7f00, $5e40 ; pal 52: #41bdbd #41cdf6 #00c5ff #0094bd
+	dw $56ca, $7b4a, $7f00, $5600 ; pal 53: #52b4ac #52d5f6 #00c5ff #0083ac
+	dw $4ecc, $774c, $7f00, $4de0 ; pal 54: #62b49c #62d5ee #00c5ff #007b9c
+	dw $46ce, $776e, $7f00, $45a0 ; pal 55: #73b48b #73deee #00c5ff #006a8b
+	dw $3eb0, $7770, $7f00, $3d80 ; pal 56: #83ac7b #83deee #00c5ff #00627b
+	dw $36b2, $7392, $7f00, $3540 ; pal 57: #94ac6a #94e6e6 #00c5ff #00526a
+	dw $2e94, $7394, $7f00, $2d00 ; pal 58: #a4a45a #a4e6e6 #00c5ff #00415a
+	dw $2696, $73b6, $7f00, $24e0 ; pal 59: #b4a44a #b4eee6 #00c5ff #00394a
+	dw $1e98, $6fb8, $7f00, $1ca0 ; pal 60: #c5a439 #c5eede #00c5ff #002939
+	dw $167a, $6fda, $7f00, $1480 ; pal 61: #d59c29 #d5f6de #00c5ff #002029
+	dw $0e7c, $6fdc, $7f00, $0c40 ; pal 62: #e69c18 #e6f6de #00c5ff #001018
+	dw $025f, $6bff, $7f00, $0000 ; pal 63: #ff9400 #ffffd5 #00c5ff #000000
 	ldh a, [$ff8c] ; $72af
 	and a, $03 ; $72b1
 	cp a, $03 ; $72b3

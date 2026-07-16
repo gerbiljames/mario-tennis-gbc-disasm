@@ -85,7 +85,40 @@ StartMinigameByID:
 	ld c, a ; $408b
 	call InitMinigameFromConfig ; $408c
 	ret ; $408f
-	INCBIN "data/bank_00d/d_4090.bin" ; $4090, 63 bytes
+	; $4090, 63 bytes (records:2)
+; 31 records x 2 bytes
+	dw $44fa ; record 0
+	dw $4959 ; record 1
+	dw $49b6 ; record 2
+	dw $4a13 ; record 3
+	dw $4a70 ; record 4
+	dw $4bf8 ; record 5
+	dw $4c43 ; record 6
+	dw $4c8e ; record 7
+	dw $4cd9 ; record 8
+	dw $4d3b ; record 9
+	dw $5615 ; record 10
+	dw $5194 ; record 11
+	dw $586e ; record 12
+	dw $4d8b ; record 13
+	dw $5f32 ; record 14
+	dw $54ec ; record 15
+	dw $59cb ; record 16
+	dw $5cea ; record 17
+	dw $0900 ; record 18
+	dw $0909 ; record 19
+	dw $0900 ; record 20
+	dw $0909 ; record 21
+	dw $00ff ; record 22
+	dw $0903 ; record 23
+	dw $0109 ; record 24
+	dw $0900 ; record 25
+	dw $ff09 ; record 26
+	dw $0300 ; record 27
+	dw $0909 ; record 28
+	dw $0100 ; record 29
+	dw $0909 ; record 30
+	db $ff
 InitMinigameScore:
 	xor a, a ; $40cf
 	ld hl, wMinigamesCurrentScore ; $40d0
@@ -159,7 +192,54 @@ Label_0d_4139:
 	ld d, [hl] ; $4147
 	ld e, a ; $4148
 	ret ; $4149
-	INCBIN "data/bank_00d/d_414a.bin" ; $414a, 92 bytes
+	; $414a, 92 bytes (records:2)
+; 46 records x 2 bytes
+	dw $000f ; record 0
+	dw $001e ; record 1
+	dw $003c ; record 2
+	dw $0064 ; record 3
+	dw $0032 ; record 4
+	dw $0032 ; record 5
+	dw $0032 ; record 6
+	dw $0032 ; record 7
+	dw $270f ; record 8
+	dw $270f ; record 9
+	dw $001e ; record 10
+	dw $003c ; record 11
+	dw $270f ; record 12
+	dw $0000 ; record 13
+	dw $001e ; record 14
+	dw $003c ; record 15
+	dw $270f ; record 16
+	dw $0000 ; record 17
+	dw $0015 ; record 18
+	dw $0015 ; record 19
+	dw $270f ; record 20
+	dw $0000 ; record 21
+	dw $001e ; record 22
+	dw $003c ; record 23
+	dw $270f ; record 24
+	dw $0000 ; record 25
+	dw $0032 ; record 26
+	dw $0064 ; record 27
+	dw $270f ; record 28
+	dw $0000 ; record 29
+	dw $001e ; record 30
+	dw $003c ; record 31
+	dw $270f ; record 32
+	dw $0000 ; record 33
+	dw $00c8 ; record 34
+	dw $012c ; record 35
+	dw $270f ; record 36
+	dw $0000 ; record 37
+	dw $0064 ; record 38
+	dw $012c ; record 39
+	dw $270f ; record 40
+	dw $0000 ; record 41
+	dw $0001 ; record 42
+	dw $0001 ; record 43
+	dw $270f ; record 44
+	dw $0000 ; record 45
 Func_0d_41a6:
 	add a, a ; $41a6
 	add a, $b5 ; $41a7
@@ -299,7 +379,160 @@ Label_0d_4278:
 	ld [hl+], a ; $427c
 	ld [hl], d ; $427d
 	ret ; $427e
-	INCBIN "data/bank_00d/d_427f.bin" ; $427f, 315 bytes
+	; $427f, 64 bytes (bytes:4)
+	db $08, $08, $08, $08 ; 0x00
+	db $0a, $0b, $1a, $1b ; 0x04
+	db $0d, $0e, $1d, $1e ; 0x08
+	db $0d, $0e, $1d, $1e ; 0x0c
+	db $9a, $9b, $a8, $a9 ; 0x10
+	db $9c, $9d, $aa, $a9 ; 0x14
+	db $b3, $b4, $aa, $b6 ; 0x18
+	db $b3, $9b, $b7, $b8 ; 0x1c
+	db $08, $08, $08, $08 ; 0x20
+	db $0c, $0c, $0c, $0c ; 0x24
+	db $0e, $0e, $0e, $0e ; 0x28
+	db $0d, $0d, $0d, $0d ; 0x2c
+	db $0c, $0c, $0c, $0c ; 0x30
+	db $0c, $0c, $0c, $0c ; 0x34
+	db $0c, $0c, $0c, $0c ; 0x38
+	db $0c, $0c, $0c, $0c ; 0x3c
+Func_0d_42bf:
+	ldh a, [hWramBank] ; $42bf
+	push af ; $42c1
+	wram_bank $04 ; $42c2
+	ld hl, $dd1e ; $42c8
+	ld a, [hl+] ; $42cb
+	ld d, [hl] ; $42cc
+	ld e, a ; $42cd
+	ld hl, $dd20 ; $42ce
+	ld a, [hl+] ; $42d1
+	ld b, [hl] ; $42d2
+	ld c, a ; $42d3
+	pop af ; $42d4
+	wram_bank ; $42d5
+	ld a, d ; $42d9
+	add a, $0f ; $42da
+	set 0, a ; $42dc
+	ld d, a ; $42de
+	ld a, b ; $42df
+	add a, $10 ; $42e0
+	res 0, a ; $42e2
+	ld e, a ; $42e4
+	ld a, d ; $42e5
+	sub a, $09 ; $42e6
+	srl a ; $42e8
+	ld b, a ; $42ea
+	cp a, $07 ; $42eb
+	jr nc, Label_0d_42ff ; $42ed
+	ld a, e ; $42ef
+	sub a, $08 ; $42f0
+	srl a ; $42f2
+	ld c, a ; $42f4
+	cp a, $03 ; $42f5
+	jr nc, Label_0d_42ff ; $42f7
+	ld a, c ; $42f9
+	add a, a ; $42fa
+	add a, a ; $42fb
+	add a, a ; $42fc
+	add a, b ; $42fd
+	ret ; $42fe
+Label_0d_42ff:
+	ld a, $ff ; $42ff
+	ret ; $4301
+Func_0d_4302:
+	ld hl, $c7c0 ; $4302
+	ld c, $00 ; $4305
+	ld b, $18 ; $4307
+Label_0d_4309:
+	ld a, [hl+] ; $4309
+	and a, a ; $430a
+	jr z, Label_0d_4316 ; $430b
+	push bc ; $430d
+	push hl ; $430e
+	ld b, a ; $430f
+	ld a, c ; $4310
+	call Func_0d_431b ; $4311
+	pop hl ; $4314
+	pop bc ; $4315
+Label_0d_4316:
+	inc c ; $4316
+	dec b ; $4317
+	jr nz, Label_0d_4309 ; $4318
+	ret ; $431a
+Func_0d_431b:
+	add a, a ; $431b
+	add a, $73 ; $431c
+	ld l, a ; $431e
+	adc a, $43 ; $431f
+	sub a, l ; $4321
+	ld h, a ; $4322
+	ld a, [hl+] ; $4323
+	ld d, [hl] ; $4324
+	ld e, a ; $4325
+	ld a, b ; $4326
+	add a, a ; $4327
+	add a, a ; $4328
+	add a, $9f ; $4329
+	ld l, a ; $432b
+	adc a, $42 ; $432c
+	sub a, l ; $432e
+	ld h, a ; $432f
+	push hl ; $4330
+	push hl ; $4331
+	ld a, b ; $4332
+	add a, a ; $4333
+	add a, a ; $4334
+	add a, $7f ; $4335
+	ld l, a ; $4337
+	adc a, $42 ; $4338
+	sub a, l ; $433a
+	ld h, a ; $433b
+	push hl ; $433c
+	push hl ; $433d
+	pop hl ; $433e
+	push de ; $433f
+	ld a, d ; $4340
+	add a, $d8 ; $4341
+	ld d, a ; $4343
+	ld bc, $0202 ; $4344
+	call Func_00_2b46 ; $4347
+	pop de ; $434a
+	pop hl ; $434b
+	push de ; $434c
+	ld a, d ; $434d
+	add a, $d0 ; $434e
+	ld d, a ; $4350
+	ld bc, $0202 ; $4351
+	call Func_00_2b46 ; $4354
+	pop de ; $4357
+	pop hl ; $4358
+	push de ; $4359
+	ld a, d ; $435a
+	add a, $dc ; $435b
+	ld d, a ; $435d
+	ld bc, $0202 ; $435e
+	call Func_00_2b46 ; $4361
+	pop de ; $4364
+	pop hl ; $4365
+	push de ; $4366
+	ld a, d ; $4367
+	add a, $d4 ; $4368
+	ld d, a ; $436a
+	ld bc, $0202 ; $436b
+	call Func_00_2b46 ; $436e
+	pop de ; $4371
+	ret ; $4372
+	INCBIN "data/bank_00d/d_4373.bin" ; $4373, 48 bytes
+Func_0d_43a3:
+	ld hl, $d120 ; $43a3
+	ld de, $9920 ; $43a6
+	ld c, $0a ; $43a9
+	call Func_00_0480 ; $43ab
+	ld hl, $d520 ; $43ae
+	ld de, $b920 ; $43b1
+	ld c, $0a ; $43b4
+	call Func_00_0480 ; $43b6
+	ret ; $43b9
 Func_0d_43ba:
 	ld a, [wPointOutcome] ; $43ba
 	cp a, $06 ; $43bd
@@ -490,7 +723,30 @@ UpdateMinigameActor:
 	pop bc ; $44f7
 	pop af ; $44f8
 	ret ; $44f9
-	INCBIN "data/bank_00d/d_44fa.bin" ; $44fa, 382 bytes
+	INCBIN "data/bank_00d/d_44fa.bin" ; $44fa, 16 bytes
+	ld a, $01 ; $450a
+	ld [$c7b8], a ; $450c
+	ld a, $00 ; $450f
+	ld [wMinigameLevel], a ; $4511
+	ret ; $4514
+	ld l, $45 ; $4515
+	ld [hl-], a ; $4517
+	ld b, l ; $4518
+	ld [hl], $45 ; $4519
+	dec h ; $451b
+	ld b, l ; $451c
+	ld b, d ; $451d
+	ld b, l ; $451e
+	ld a, $45 ; $451f
+	ld a, [hl-] ; $4521
+	ld b, l ; $4522
+	xor a, [hl] ; $4523
+	inc bc ; $4524
+	ld a, $01 ; $4525
+	ld [$c785], a ; $4527
+	call Func_0d_4678 ; $452a
+	ret ; $452d
+	INCBIN "data/bank_00d/d_452e.bin" ; $452e, 330 bytes
 Func_0d_4678:
 	call InitMinigameScore ; $4678
 	ld hl, $0000 ; $467b
@@ -875,7 +1131,33 @@ Func_0d_493a:
 	xor a, a ; $4954
 	ld [$c4c9], a ; $4955
 	ret ; $4958
-	INCBIN "data/bank_00d/d_4959.bin" ; $4959, 295 bytes
+	INCBIN "data/bank_00d/d_4959.bin" ; $4959, 16 bytes
+	ld a, $01 ; $4969
+	ld [$c7b8], a ; $496b
+	ld a, $01 ; $496e
+	ld [wMinigameLevel], a ; $4970
+	ret ; $4973
+	adc a, l ; $4974
+	ld c, c ; $4975
+	sub a, c ; $4976
+	ld c, c ; $4977
+	and a, [hl] ; $4978
+	ld c, c ; $4979
+	add a, h ; $497a
+	ld c, c ; $497b
+	or a, d ; $497c
+	ld c, c ; $497d
+	xor a, [hl] ; $497e
+	ld c, c ; $497f
+	xor a, d ; $4980
+	ld c, c ; $4981
+	xor a, [hl] ; $4982
+	inc bc ; $4983
+	ld a, $01 ; $4984
+	ld [$c785], a ; $4986
+	call Func_0d_4678 ; $4989
+	ret ; $498c
+	INCBIN "data/bank_00d/d_498d.bin" ; $498d, 243 bytes
 	ld a, $01 ; $4a80
 	ld [$c7b9], a ; $4a82
 	ld a, $00 ; $4a85
@@ -973,15 +1255,15 @@ Func_0d_4b29:
 Func_0d_4b59:
 	ld a, [wPointOutcome] ; $4b59
 	and a, a ; $4b5c
-	jr nz, Label_0d_4b70 ; $4b5d
+	jr nz, Func_0d_4b70 ; $4b5d
 	ld de, $0001 ; $4b5f
 	call AddToMinigameScore ; $4b62
 	call IsMinigameTargetReached ; $4b65
 	and a, a ; $4b68
-	jr z, Label_0d_4b70 ; $4b69
+	jr z, Func_0d_4b70 ; $4b69
 	ld a, $0b ; $4b6b
 	ld [wPointOutcome], a ; $4b6d
-Label_0d_4b70:
+Func_0d_4b70:
 	ld a, $01 ; $4b70
 	ld [$c4c9], a ; $4b72
 	farcall FarPtr_StartBounceEffect ; $4b75
@@ -1064,11 +1346,227 @@ DrawMinigameScore:
 	ld a, $04 ; $4bf2
 	farcall FarPtr_0a_9c ; $4bf4
 	ret ; $4bf7
-	INCBIN "data/bank_00d/d_4bf8.bin" ; $4bf8, 216 bytes
+	INCBIN "data/bank_00d/d_4bf8.bin" ; $4bf8, 16 bytes
+	ld a, $01 ; $4c08
+	ld [$c7b9], a ; $4c0a
+	ld a, $01 ; $4c0d
+	ld [wMinigameLevel], a ; $4c0f
+	farcall FarPtr_0a_96 ; $4c12
+	ld a, $01 ; $4c15
+	farcall FarPtr_0a_9a ; $4c17
+	ret ; $4c1a
+	dec hl ; $4c1b
+	ld c, h ; $4c1c
+	cpl ; $4c1d
+	ld c, h ; $4c1e
+	inc sp ; $4c1f
+	ld c, h ; $4c20
+	xor a, [hl] ; $4c21
+	inc bc ; $4c22
+	ccf ; $4c23
+	ld c, h ; $4c24
+	dec sp ; $4c25
+	ld c, h ; $4c26
+	scf ; $4c27
+	ld c, h ; $4c28
+	xor a, [hl] ; $4c29
+	inc bc ; $4c2a
+	call Func_0d_4abb ; $4c2b
+	ret ; $4c2e
+	INCBIN "data/bank_00d/d_4c2f.bin" ; $4c2f, 161 bytes
 	ret ; $4cd0
-	INCBIN "data/bank_00d/d_4cd1.bin" ; $4cd1, 219 bytes
+	call Func_0d_4bc7 ; $4cd1
+	ret ; $4cd4
+	call Func_0d_4bc8 ; $4cd5
+	ret ; $4cd8
+	INCBIN "data/bank_00d/d_4cd9.bin" ; $4cd9, 211 bytes
 	ret ; $4dac
-	INCBIN "data/bank_00d/d_4dad.bin" ; $4dad, 1015 bytes
+	; $4dad, 16 bytes (records:2)
+; 8 records x 2 bytes
+	dw $4dcb ; record 0
+	dw $4dd2 ; record 1
+	dw $4dea ; record 2
+	dw $4dbd ; record 3
+	dw $4e18 ; record 4
+	dw $4df2 ; record 5
+	dw $4dee ; record 6
+	dw $03ae ; record 7
+	ld a, $01 ; $4dbd
+	ld [$c785], a ; $4dbf
+	call Func_0d_4678 ; $4dc2
+	ld a, $01 ; $4dc5
+	ld [wTargetZoneEnabled], a ; $4dc7
+	ret ; $4dca
+	call Func_0d_46d7 ; $4dcb
+	call Func_0d_4e1c ; $4dce
+	ret ; $4dd1
+	call Func_0d_4e20 ; $4dd2
+	farcall FarPtr_AdvanceMatchRng ; $4dd5
+	and a, $01 ; $4dd8
+	inc a ; $4dda
+	ld hl, $c785 ; $4ddb
+	add a, [hl] ; $4dde
+	cp a, $03 ; $4ddf
+	jr c, Label_0d_4de5 ; $4de1
+	sub a, $03 ; $4de3
+Label_0d_4de5:
+	ld [hl], a ; $4de5
+	call Func_0d_46f7 ; $4de6
+	ret ; $4de9
+	call Func_0d_475d ; $4dea
+	ret ; $4ded
+	call Func_0d_47be ; $4dee
+	ret ; $4df1
+	ld a, [wPointOutcome] ; $4df2
+	and a, a ; $4df5
+	ret nz ; $4df6
+	call Func_0d_47c3 ; $4df7
+	call Func_0d_4e80 ; $4dfa
+	ld a, [wPointOutcome] ; $4dfd
+	cp a, $06 ; $4e00
+	ret nz ; $4e02
+	call Func_0d_4e96 ; $4e03
+	ld d, $00 ; $4e06
+	ld e, a ; $4e08
+	ld hl, $c782 ; $4e09
+	ld a, e ; $4e0c
+	ld [hl+], a ; $4e0d
+	ld [hl], d ; $4e0e
+	call AddToMinigameScore ; $4e0f
+	call StartScorePopup ; $4e12
+	sound $97 ; $4e15
+	ret ; $4e17
+	call Func_0d_47e2 ; $4e18
+	ret ; $4e1b
+Func_0d_4e1c:
+	call UpdateScorePopup ; $4e1c
+	ret ; $4e1f
+Func_0d_4e20:
+	ldh a, [hWramBank] ; $4e20
+	push af ; $4e22
+	wram_bank $02 ; $4e23
+	ld a, [wMinigameLevel] ; $4e29
+	add a, a ; $4e2c
+	add a, $5a ; $4e2d
+	ld l, a ; $4e2f
+	adc a, $4e ; $4e30
+	sub a, l ; $4e32
+	ld h, a ; $4e33
+	ld a, [hl+] ; $4e34
+	ld h, [hl] ; $4e35
+	ld l, a ; $4e36
+	farcall FarPtr_AdvanceMatchRng ; $4e37
+	and a, $0f ; $4e3a
+	add a, l ; $4e3c
+	ld l, a ; $4e3d
+	jr nc, Label_0d_4e41 ; $4e3e
+	inc h ; $4e40
+Label_0d_4e41:
+	ld a, [hl] ; $4e41
+	ld [$c7a5], a ; $4e42
+	ld a, [$c7a5] ; $4e45
+	call Func_0d_5148 ; $4e48
+	ld a, [$c7a5] ; $4e4b
+	call Func_0d_50fa ; $4e4e
+	call Func_0d_43a3 ; $4e51
+	pop af ; $4e54
+	wram_bank ; $4e55
+	ret ; $4e59
+	INCBIN "data/bank_00d/d_4e5a.bin" ; $4e5a, 38 bytes
+Func_0d_4e80:
+	ld a, [$c4b8] ; $4e80
+	and a, $01 ; $4e83
+	ret nz ; $4e85
+	farcall FarPtr_IsBallInTargetZone ; $4e86
+	and a, a ; $4e89
+	ret nz ; $4e8a
+	ld a, $05 ; $4e8b
+	ld [wPointOutcome], a ; $4e8d
+	ld a, $ff ; $4e90
+	ld [$c4d9], a ; $4e92
+	ret ; $4e95
+Func_0d_4e96:
+	ld hl, $4ec1 ; $4e96
+Label_0d_4e99:
+	ld a, [hl+] ; $4e99
+	cp a, $ff ; $4e9a
+	jr z, Label_0d_4ebe ; $4e9c
+	ld e, a ; $4e9e
+	ld a, [hl+] ; $4e9f
+	ld d, a ; $4ea0
+	ld a, [hl+] ; $4ea1
+	ld c, a ; $4ea2
+	ld a, [hl+] ; $4ea3
+	ld b, a ; $4ea4
+	ld a, [$c7a5] ; $4ea5
+	cp a, e ; $4ea8
+	jr nz, Label_0d_4e99 ; $4ea9
+	ld a, [$c490] ; $4eab
+	cp a, d ; $4eae
+	jr nz, Label_0d_4e99 ; $4eaf
+	ld a, c ; $4eb1
+	cp a, $ff ; $4eb2
+	jr z, Label_0d_4ebc ; $4eb4
+	ld a, [$c4a0] ; $4eb6
+	cp a, c ; $4eb9
+	jr nz, Label_0d_4e99 ; $4eba
+Label_0d_4ebc:
+	ld a, b ; $4ebc
+	ret ; $4ebd
+Label_0d_4ebe:
+	ld a, $01 ; $4ebe
+	ret ; $4ec0
+	INCBIN "data/bank_00d/d_4ec1.bin" ; $4ec1, 569 bytes
+Func_0d_50fa:
+	add a, a ; $50fa
+	add a, $3a ; $50fb
+	ld l, a ; $50fd
+	adc a, $51 ; $50fe
+	sub a, l ; $5100
+	ld h, a ; $5101
+	ld a, [hl+] ; $5102
+	ld b, [hl] ; $5103
+	ld c, a ; $5104
+	ld hl, $5000 ; $5105
+	add hl, bc ; $5108
+	push hl ; $5109
+	push hl ; $510a
+	ld hl, $4f06 ; $510b
+	add hl, bc ; $510e
+	push hl ; $510f
+	push hl ; $5110
+	pop hl ; $5111
+	ld de, $d92b ; $5112
+	ld bc, $0a05 ; $5115
+	call Func_00_2b46 ; $5118
+	pop hl ; $511b
+	ld de, $d12b ; $511c
+	ld bc, $0a05 ; $511f
+	call Func_00_2b46 ; $5122
+	pop hl ; $5125
+	ld de, $dd2b ; $5126
+	ld bc, $0a05 ; $5129
+	call Func_00_2b46 ; $512c
+	pop hl ; $512f
+	ld de, $d52b ; $5130
+	ld bc, $0a05 ; $5133
+	call Func_00_2b46 ; $5136
+	ret ; $5139
+	INCBIN "data/bank_00d/d_513a.bin" ; $513a, 14 bytes
+Func_0d_5148:
+	add a, a ; $5148
+	add a, a ; $5149
+	add a, a ; $514a
+	add a, $5c ; $514b
+	ld l, a ; $514d
+	adc a, $51 ; $514e
+	sub a, l ; $5150
+	ld h, a ; $5151
+	ld de, wTargetZoneX1 ; $5152
+	ld bc, $0008 ; $5155
+	call CopyMemoryBC ; $5158
+	ret ; $515b
+	INCBIN "data/bank_00d/d_515c.bin" ; $515c, 72 bytes
 	ld a, $01 ; $51a4
 	ld [$c7b8], a ; $51a6
 	ld a, [wMinigameLevel] ; $51a9
@@ -1078,7 +1576,16 @@ DrawMinigameScore:
 	ld [$c7bc], a ; $51b2
 Label_0d_51b5:
 	ret ; $51b5
-	INCBIN "data/bank_00d/d_51b6.bin" ; $51b6, 16 bytes
+	; $51b6, 16 bytes (records:2)
+; 8 records x 2 bytes
+	dw $51d2 ; record 0
+	dw $51dd ; record 1
+	dw $51f5 ; record 2
+	dw $51c6 ; record 3
+	dw $5201 ; record 4
+	dw $51fd ; record 5
+	dw $51f9 ; record 6
+	dw $51d9 ; record 7
 	call Func_0d_5205 ; $51c6
 	ld a, $01 ; $51c9
 	ld [$c785], a ; $51cb
@@ -1325,7 +1832,11 @@ Func_0d_535f:
 	ret z ; $5379
 	farcall FarPtr_28_0c ; $537a
 	ret ; $537d
-	INCBIN "data/bank_00d/d_537e.bin" ; $537e, 32 bytes
+	; $537e, 32 bytes (bytes:8)
+	db $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
+	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x08
+	db $02, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
+	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x18
 Func_0d_539e:
 	call Func_0d_53aa ; $539e
 	ld c, $3c ; $53a1
@@ -1409,7 +1920,184 @@ Label_0d_5421:
 	dec e ; $5429
 	dec e ; $542a
 	ret ; $542b
-	INCBIN "data/bank_00d/d_542c.bin" ; $542c, 1165 bytes
+	INCBIN "data/bank_00d/d_542c.bin" ; $542c, 392 bytes
+Func_0d_55b4:
+	wram_bank $02 ; $55b4
+	ld de, $c7c0 ; $55ba
+	ld bc, $0018 ; $55bd
+	call CopyMemoryBC ; $55c0
+	call Func_0d_4302 ; $55c3
+	farcall FarPtr_FlushTilemapToVram ; $55c6
+	ret ; $55c9
+	INCBIN "data/bank_00d/d_55ca.bin" ; $55ca, 751 bytes
 	ret ; $58b9
-	INCBIN "data/bank_00d/d_58ba.bin" ; $58ba, 1856 bytes
+	call Func_0d_4b01 ; $58ba
+	call Func_0d_5979 ; $58bd
+	ret ; $58c0
+	call Func_0d_4b29 ; $58c1
+	ret ; $58c4
+	call Func_0d_58d1 ; $58c5
+	ret ; $58c8
+	call Func_0d_4bc7 ; $58c9
+	ret ; $58cc
+	call Func_0d_4bc8 ; $58cd
+	ret ; $58d0
+Func_0d_58d1:
+	call Func_0d_4b70 ; $58d1
+	call Func_0d_42bf ; $58d4
+	cp a, $ff ; $58d7
+	ret z ; $58d9
+	ld b, a ; $58da
+	add a, $c0 ; $58db
+	ld l, a ; $58dd
+	adc a, $c7 ; $58de
+	sub a, l ; $58e0
+	ld h, a ; $58e1
+	ld a, [hl] ; $58e2
+	cp a, $01 ; $58e3
+	ret z ; $58e5
+	ldh a, [hWramBank] ; $58e6
+	push af ; $58e8
+	wram_bank $02 ; $58e9
+	ld a, $01 ; $58ef
+	ld [hl], a ; $58f1
+	ld a, b ; $58f2
+	ld b, $01 ; $58f3
+	call Func_0d_431b ; $58f5
+	farcall FarPtr_FlushTilemapToVram ; $58f8
+	pop af ; $58fb
+	wram_bank ; $58fc
+	sound $97 ; $5900
+	ld a, [$c7a6] ; $5902
+	inc a ; $5905
+	ld e, a ; $5906
+	ld d, $00 ; $5907
+	call AddToMinigameScore ; $5909
+	call IsMinigameTargetReached ; $590c
+	and a, a ; $590f
+	jr z, Label_0d_5918 ; $5910
+	ld a, $0b ; $5912
+	ld [wPointOutcome], a ; $5914
+	ret ; $5917
+Label_0d_5918:
+	call Func_0d_59b7 ; $5918
+	and a, a ; $591b
+	ret z ; $591c
+	ld hl, $c7a6 ; $591d
+	ld a, [hl] ; $5920
+	cp a, $09 ; $5921
+	jr nc, Label_0d_5926 ; $5923
+	inc [hl] ; $5925
+Label_0d_5926:
+	ldh a, [hWramBank] ; $5926
+	push af ; $5928
+	wram_bank $02 ; $5929
+	ld a, $01 ; $592f
+	ld [$c4c0], a ; $5931
+	call Func_0d_598b ; $5934
+	xor a, a ; $5937
+	ld [$c4c0], a ; $5938
+	pop af ; $593b
+	wram_bank ; $593c
+	ret ; $5940
+	INCBIN "data/bank_00d/d_5941.bin" ; $5941, 56 bytes
+Func_0d_5979:
+	ld hl, $5941 ; $5979
+	call Func_0d_55b4 ; $597c
+	ld a, $01 ; $597f
+	ld [$c7c7], a ; $5981
+	ld [$c7cf], a ; $5984
+	ld [$c7d7], a ; $5987
+	ret ; $598a
+Func_0d_598b:
+	ld a, $02 ; $598b
+	farcall FarPtr_StepMatchFrames ; $598d
+	ld hl, $5941 ; $5990
+	ld b, $18 ; $5993
+	ld c, $00 ; $5995
+Label_0d_5997:
+	ld a, [hl+] ; $5997
+	cp a, $00 ; $5998
+	jr z, Label_0d_59af ; $599a
+	push bc ; $599c
+	push hl ; $599d
+	ld b, a ; $599e
+	ld a, c ; $599f
+	call Func_0d_431b ; $59a0
+	farcall FarPtr_FlushTilemapToVram ; $59a3
+	sound $94 ; $59a6
+	ld a, $08 ; $59a8
+	farcall FarPtr_StepMatchFrames ; $59aa
+	pop hl ; $59ad
+	pop bc ; $59ae
+Label_0d_59af:
+	inc c ; $59af
+	dec b ; $59b0
+	jr nz, Label_0d_5997 ; $59b1
+	call Func_0d_5979 ; $59b3
+	ret ; $59b6
+Func_0d_59b7:
+	ld hl, $c7c0 ; $59b7
+	ld c, $18 ; $59ba
+	xor a, a ; $59bc
+Label_0d_59bd:
+	ld a, [hl+] ; $59bd
+	cp a, $01 ; $59be
+	jr nz, Label_0d_59c8 ; $59c0
+	dec c ; $59c2
+	jr nz, Label_0d_59bd ; $59c3
+	ld a, $01 ; $59c5
+	ret ; $59c7
+Label_0d_59c8:
+	ld a, $00 ; $59c8
+	ret ; $59ca
+	INCBIN "data/bank_00d/d_59cb.bin" ; $59cb, 935 bytes
+	; $5d72, 648 bytes (bytes:14)
+	db $00, $cd, $bd, $5d, $21, $80, $00, $11, $40, $fe, $01, $10, $dc, $3e ; 0x00
+	db $01, $cd, $bd, $5d, $21, $c0, $00, $11, $80, $fd, $01, $20, $dc, $3e ; 0x0e
+	db $02, $cd, $bd, $5d, $21, $c0, $ff, $11, $00, $ff, $01, $30, $dc, $3e ; 0x1c
+	db $03, $cd, $bd, $5d, $21, $80, $ff, $11, $40, $fe, $01, $40, $dc, $3e ; 0x2a
+	db $04, $cd, $bd, $5d, $21, $40, $ff, $11, $80, $fd, $01, $50, $dc, $3e ; 0x38
+	db $05, $cd, $bd, $5d, $c9, $f5, $c5, $d5, $e5, $11, $ee, $5d, $cd, $4f ; 0x46
+	db $44, $e1, $d1, $c1, $f1, $e5, $21, $01, $00, $09, $77, $e1, $cd, $65 ; 0x54
+	db $44, $c9, $af, $ea, $89, $c7, $af, $ea, $02, $dc, $ea, $12, $dc, $ea ; 0x62
+	db $22, $dc, $ea, $32, $dc, $ea, $42, $dc, $ea, $52, $dc, $c9, $fa, $72 ; 0x70
+	db $dc, $c7, $01, $5e, $04, $5e, $12, $5e, $33, $5e, $ae, $03, $21, $72 ; 0x7e
+	db $dc, $34, $c9, $cd, $fc, $5d, $cd, $f2, $5e, $cd, $37, $5e, $a7, $c8 ; 0x8c
+	db $cd, $9e, $5e, $c3, $fc, $5d, $cd, $13, $5f, $21, $73, $dc, $35, $7e ; 0x9a
+	db $a7, $c0, $21, $78, $dc, $2a, $56, $5f, $df, $36, $08, $26, $00, $6f ; 0xa8
+	db $29, $01, $00, $ff, $09, $cd, $9a, $44, $c3, $fc, $5d, $cd, $f2, $5e ; 0xb6
+	db $c9, $fa, $b8, $c4, $e6, $01, $c2, $9c, $5e, $21, $76, $dc, $2a, $56 ; 0xc4
+	db $5f, $21, $02, $c4, $2a, $66, $6f, $7d, $93, $6f, $7c, $9a, $67, $cb ; 0xd2
+	db $7c, $28, $06, $af, $95, $6f, $9f, $94, $67, $11, $a0, $ff, $19, $38 ; 0xe0
+	db $3b, $21, $78, $dc, $2a, $56, $5f, $21, $06, $c4, $2a, $66, $6f, $7d ; 0xee
+	db $93, $6f, $7c, $9a, $67, $cb, $7c, $28, $06, $af, $95, $6f, $9f, $94 ; 0xfc
+	db $67, $11, $80, $ff, $19, $38, $19, $21, $0a, $c4, $2a, $66, $6f, $cb ; 0x10a
+	db $7c, $28, $06, $af, $95, $6f, $9f, $94, $67, $11, $40, $ff, $19, $38 ; 0x118
+	db $03, $3e, $01, $c9, $af, $c9, $3e, $10, $ea, $73, $dc, $21, $01, $00 ; 0x126
+	db $fa, $a0, $c4, $fe, $09, $20, $08, $3e, $20, $ea, $73, $dc, $21, $02 ; 0x134
+	db $00, $fa, $89, $c7, $c6, $e4, $5f, $ce, $5e, $93, $57, $1a, $cd, $24 ; 0x142
+	db $30, $fa, $89, $c7, $c6, $ec, $5f, $ce, $5e, $93, $57, $1a, $cd, $26 ; 0x150
+	db $09, $5d, $54, $21, $82, $c7, $7b, $22, $72, $cd, $66, $42, $cd, $11 ; 0x15e
+	db $42, $21, $89, $c7, $34, $c9, $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x16c
+	db $01, $05, $1e, $46, $96, $fa, $cd, $1f, $5f, $f0, $8c, $21, $7a, $dc ; 0x17a
+	db $86, $cb, $3f, $cb, $3f, $cb, $3f, $e6, $03, $c6, $0f, $6f, $ce, $5f ; 0x188
+	db $95, $67, $4e, $cd, $55, $1e, $c9, $20, $24, $28, $2c, $cd, $1f, $5f ; 0x196
+	db $0e, $3c, $fa, $73, $dc, $cd, $f6, $53, $c9, $21, $7a, $dc, $2a, $5f ; 0x1a4
+	db $2a, $57, $2a, $4f, $2a, $47, $6b, $62, $df, $46, $08, $06, $0f, $c9 ; 0x1b2
+	db $00, $16, $01, $08, $20, $13, $00, $1c, $61, $5f, $b4, $40, $42, $5f ; 0x1c0
+	db $00, $00, $df, $96, $0a, $3e, $06, $df, $9a, $0a, $3e, $01, $ea, $a4 ; 0x1ce
+	db $c7, $3e, $01, $ea, $b9, $c7, $fa, $76, $c3, $fe, $02, $20, $05, $3e ; 0x1dc
+	db $01, $ea, $bc, $c7, $c9, $72, $5f, $79, $5f, $dc, $5f, $71, $5f, $e8 ; 0x1ea
+	db $5f, $e4, $5f, $e0, $5f, $ae, $03, $c9, $cd, $bb, $4a, $cd, $ec, $5f ; 0x1f8
+	db $c9, $cd, $01, $4b, $fa, $76, $c3, $87, $c6, $8e, $6f, $ce, $5f, $95 ; 0x206
+	db $67, $2a, $66, $6f, $cd, $b4, $55, $c9, $94, $5f, $ac, $5f, $c4, $5f ; 0x214
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x222
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $05, $05 ; 0x230
+	db $00, $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $04 ; 0x23e
+	db $00, $07, $07, $00, $00, $00, $00, $04, $04, $00, $06, $06, $00, $00 ; 0x24c
+	db $07, $00, $00, $05, $00, $00, $07, $00, $00, $07, $07, $00, $07, $07 ; 0x25a
+	db $00, $00, $cd, $29, $4b, $c9, $cd, $f0, $5f, $c9, $cd, $c7, $4b, $c9 ; 0x268
+	db $cd, $c8, $4b, $c9, $cd, $ca, $55, $c9, $cd, $70, $4b, $cd, $bf, $42 ; 0x276
+	db $ea, $bf, $c7, $c9 ; 0x284
 	ds 8198, $ff ; $5ffa, fill
