@@ -1,0 +1,29 @@
+{
+ "_comment": "Static code-entry seeds for bank $0b (minigame object bank): fall-through code heads, and behavior code entries pointed by 16-byte object-template headers ($5e95/$6dae). Flat = 0x0b*0x4000 + (cpu-0x4000).",
+ "rom": [
+  180416,
+  180477,
+  180575,
+  180698,
+  180747,
+  180787,
+  180823,
+  181276,
+  181291,
+  181380,
+  181490,
+  181573,
+  181592,
+  182543,
+  182552,
+  182553,
+  182711,
+  188069,
+  188075,
+  188109,
+  191934,
+  191940,
+  192890
+ ],
+ "other": []
+}
