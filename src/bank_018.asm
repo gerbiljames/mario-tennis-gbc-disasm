@@ -210,7 +210,11 @@ Func_18_437c:
 	ret ; $438c
 Func_18_438d:
 	ret ; $438d
-	INCBIN "data/bank_018/d_438e.bin" ; $438e, 12 bytes
+	ld hl, $40a0 ; $438e
+	ld de, $9000 ; $4391
+	ld c, $10 ; $4394
+	call Func_00_0480 ; $4396
+	ret ; $4399
 Func_18_439a:
 	push bc ; $439a
 	ld c, $20 ; $439b
@@ -385,7 +389,8 @@ Func_18_4444:
 	pop af ; $4465
 	pop hl ; $4466
 	ret ; $4467
-	INCBIN "data/bank_018/d_4468.bin" ; $4468, 16 bytes
+	; $4468, 16 bytes (bytes:16)
+	db $00, $01, $01, $01, $02, $02, $03, $04, $03, $02, $02, $01, $01, $01, $00, $00 ; 0x00
 Func_18_4478:
 	push af ; $4478
 	push hl ; $4479
@@ -494,7 +499,14 @@ Label_18_453b:
 	pop de ; $454a
 	pop hl ; $454b
 	ret ; $454c
-	INCBIN "data/bank_018/d_454d.bin" ; $454d, 10 bytes
+	cp a, $10 ; $454d
+	jr nc, Label_18_4555 ; $454f
+	ld a, $01 ; $4551
+	and a, a ; $4553
+	ret ; $4554
+Label_18_4555:
+	xor a, a ; $4555
+	ret ; $4556
 Func_18_4557:
 	bit 7, a ; $4557
 	jr z, Label_18_4564 ; $4559
@@ -751,7 +763,30 @@ Func_18_537a:
 	ld hl, $53b3 ; $53ac
 	call RegisterFrameTask ; $53af
 	ret ; $53b2
-	INCBIN "data/bank_018/d_53b3.bin" ; $53b3, 49 bytes
+	ld a, [$c78a] ; $53b3
+	ld h, $00 ; $53b6
+	ld l, a ; $53b8
+	ld de, $4404 ; $53b9
+	ld b, $03 ; $53bc
+	ld a, $02 ; $53be
+	call DrawDecimalNumberSprites ; $53c0
+	ld a, [$c780] ; $53c3
+	cp a, $03 ; $53c6
+	jr nz, Label_18_53cf ; $53c8
+	ld a, $01 ; $53ca
+	ld [$c783], a ; $53cc
+Label_18_53cf:
+	ld hl, $c78b ; $53cf
+	ld a, [hl+] ; $53d2
+	ld h, [hl] ; $53d3
+	ld l, a ; $53d4
+	ld de, $4454 ; $53d5
+	ld b, $01 ; $53d8
+	ld a, $03 ; $53da
+	call DrawDecimalNumberSprites ; $53dc
+	xor a, a ; $53df
+	ld [$c783], a ; $53e0
+	ret ; $53e3
 Func_18_53e4:
 	add a, $04 ; $53e4
 	and a, $0f ; $53e6
@@ -767,7 +802,24 @@ Func_18_53e4:
 	ld de, $d800 ; $53f3
 	add hl, de ; $53f6
 	ret ; $53f7
-	INCBIN "data/bank_018/d_53f8.bin" ; $53f8, 32 bytes
+	; $53f8, 32 bytes (records:2)
+; 16 records x 2 bytes
+	dw $0016 ; record 0
+	dw $0056 ; record 1
+	dw $0096 ; record 2
+	dw $00d6 ; record 3
+	dw $0116 ; record 4
+	dw $0156 ; record 5
+	dw $0196 ; record 6
+	dw $01d6 ; record 7
+	dw $0216 ; record 8
+	dw $0016 ; record 9
+	dw $0016 ; record 10
+	dw $0016 ; record 11
+	dw $0016 ; record 12
+	dw $0016 ; record 13
+	dw $0016 ; record 14
+	dw $0016 ; record 15
 ForceFlushBgMapToVram:
 	ld a, $ff ; $5418
 	ld [$cb61], a ; $541a
@@ -1263,7 +1315,44 @@ Func_18_7647:
 	ld [$c322], a ; $7652
 	ld [$c323], a ; $7655
 	ret ; $7658
-	INCBIN "data/bank_018/d_7659.bin" ; $7659, 91 bytes
+	call Func_18_7632 ; $7659
+	ld c, $00 ; $765c
+Label_18_765e:
+	push bc ; $765e
+	ld a, c ; $765f
+	ld hl, $769c ; $7660
+	add a, l ; $7663
+	ld l, a ; $7664
+	jr nc, Label_18_7668 ; $7665
+	inc h ; $7667
+Label_18_7668:
+	ld c, [hl] ; $7668
+	push bc ; $7669
+	ld c, $10 ; $766a
+	call Func_00_1d20 ; $766c
+	call Func_00_1da4 ; $766f
+	call DisableLCDSafely ; $7672
+	pop bc ; $7675
+	farcall FarPtr_LoadScreenAssetRecord ; $7676
+	farcall FarPtr_Func_39_4325 ; $7679
+	call EnableLCD ; $767c
+	ld c, $10 ; $767f
+	call Func_00_1d2e ; $7681
+	call Func_00_1da4 ; $7684
+Label_18_7687:
+	call AdvanceFrame ; $7687
+	ldh a, [hInputPressed] ; $768a
+	or a, a ; $768c
+	jr z, Label_18_7687 ; $768d
+	pop bc ; $768f
+	ld a, c ; $7690
+	inc a ; $7691
+	ld c, a ; $7692
+	cp a, $18 ; $7693
+	jr nz, Label_18_765e ; $7695
+	ld c, $00 ; $7697
+	jr Label_18_765e ; $7699
+	INCBIN "data/bank_018/d_769b.bin" ; $769b, 25 bytes
 Func_18_76b4:
 	call Func_18_7720 ; $76b4
 	call Func_18_7740 ; $76b7
@@ -1336,7 +1425,35 @@ Func_18_7740:
 	ld de, $0801 ; $774d
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
-	INCBIN "data/bank_018/d_7754.bin" ; $7754, 103 bytes
+	INCBIN "data/bank_018/d_7754.bin" ; $7754, 8 bytes
+	ld hl, $776a ; $775c
+	ld de, $283a ; $775f
+	ld c, $00 ; $7762
+	ld b, $00 ; $7764
+	call QueueSpriteTemplate ; $7766
+	ret ; $7769
+	; $776a, 81 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $20, $08, $02, $00 ; 0x04
+	db $10, $10, $04, $00 ; 0x08
+	db $20, $10, $06, $00 ; 0x0c
+	db $10, $18, $08, $00 ; 0x10
+	db $20, $18, $0a, $00 ; 0x14
+	db $10, $20, $0c, $00 ; 0x18
+	db $20, $20, $0e, $00 ; 0x1c
+	db $10, $28, $10, $00 ; 0x20
+	db $20, $28, $12, $00 ; 0x24
+	db $10, $30, $14, $00 ; 0x28
+	db $20, $30, $16, $00 ; 0x2c
+	db $10, $38, $18, $00 ; 0x30
+	db $20, $38, $1a, $00 ; 0x34
+	db $10, $40, $1c, $00 ; 0x38
+	db $20, $40, $1e, $00 ; 0x3c
+	db $10, $48, $20, $00 ; 0x40
+	db $20, $48, $22, $00 ; 0x44
+	db $10, $50, $24, $00 ; 0x48
+	db $20, $50, $26, $00 ; 0x4c
+	db $80 ; 0x50
 Func_18_77bb:
 	call Func_18_7835 ; $77bb
 	call Func_18_7bce ; $77be
@@ -1444,7 +1561,35 @@ Func_18_78b1:
 	ld de, $0801 ; $78be
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
-	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 103 bytes
+	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 8 bytes
+	ld hl, $78db ; $78cd
+	ld de, $283a ; $78d0
+	ld c, $00 ; $78d3
+	ld b, $00 ; $78d5
+	call QueueSpriteTemplate ; $78d7
+	ret ; $78da
+	; $78db, 81 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $20, $08, $02, $00 ; 0x04
+	db $10, $10, $04, $00 ; 0x08
+	db $20, $10, $06, $00 ; 0x0c
+	db $10, $18, $08, $00 ; 0x10
+	db $20, $18, $0a, $00 ; 0x14
+	db $10, $20, $0c, $00 ; 0x18
+	db $20, $20, $0e, $00 ; 0x1c
+	db $10, $28, $10, $00 ; 0x20
+	db $20, $28, $12, $00 ; 0x24
+	db $10, $30, $14, $00 ; 0x28
+	db $20, $30, $16, $00 ; 0x2c
+	db $10, $38, $18, $00 ; 0x30
+	db $20, $38, $1a, $00 ; 0x34
+	db $10, $40, $1c, $00 ; 0x38
+	db $20, $40, $1e, $00 ; 0x3c
+	db $10, $48, $20, $00 ; 0x40
+	db $20, $48, $22, $00 ; 0x44
+	db $10, $50, $24, $00 ; 0x48
+	db $20, $50, $26, $00 ; 0x4c
+	db $80 ; 0x50
 Func_18_792c:
 	call Func_18_7647 ; $792c
 	sound $09 ; $792f
@@ -1567,7 +1712,108 @@ Func_18_7a2d:
 	ld de, $0801 ; $7a3a
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
-	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 397 bytes
+	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 8 bytes
+	ld hl, $7a57 ; $7a49
+	ld de, $2840 ; $7a4c
+	ld c, $00 ; $7a4f
+	ld b, $00 ; $7a51
+	call QueueSpriteTemplate ; $7a53
+	ret ; $7a56
+	; $7a57, 375 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $10, $10, $02, $00 ; 0x04
+	db $10, $18, $04, $00 ; 0x08
+	db $10, $20, $06, $00 ; 0x0c
+	db $10, $28, $08, $00 ; 0x10
+	db $10, $30, $0a, $00 ; 0x14
+	db $10, $38, $0c, $00 ; 0x18
+	db $10, $40, $0e, $00 ; 0x1c
+	db $10, $48, $10, $00 ; 0x20
+	db $10, $50, $12, $00 ; 0x24
+	db $80, $c9, $f0, $96 ; 0x28
+	db $f5, $3e, $03, $e0 ; 0x2c
+	db $96, $e0, $70, $fa ; 0x30
+	db $00, $da, $fe, $10 ; 0x34
+	db $28, $1e, $87, $87 ; 0x38
+	db $87, $21, $b5, $7a ; 0x3c
+	db $85, $6f, $30, $01 ; 0x40
+	db $24, $11, $01, $08 ; 0x44
+	db $cd, $b5, $05, $f0 ; 0x48
+	db $8c, $e6, $03, $20 ; 0x4c
+	db $07, $fa, $00, $da ; 0x50
+	db $3c, $ea, $00, $da ; 0x54
+	db $f1, $e0, $96, $e0 ; 0x58
+	db $70, $c9, $80, $02 ; 0x5c
+	db $dd, $3a, $3e, $53 ; 0x60
+	db $bf, $6f, $80, $02 ; 0x64
+	db $dd, $3e, $fe, $4e ; 0x68
+	db $3f, $63, $80, $02 ; 0x6c
+	db $fd, $46, $de, $4e ; 0x70
+	db $df, $5a, $80, $02 ; 0x74
+	db $1d, $4f, $be, $4e ; 0x78
+	db $7f, $52, $80, $02 ; 0x7c
+	db $3d, $53, $9e, $4e ; 0x80
+	db $1f, $4a, $80, $02 ; 0x84
+	db $5d, $5b, $7e, $4a ; 0x88
+	db $9f, $41, $80, $02 ; 0x8c
+	db $7d, $63, $5e, $4a ; 0x90
+	db $3f, $39, $80, $02 ; 0x94
+	db $9d, $67, $3e, $4a ; 0x98
+	db $df, $30, $80, $02 ; 0x9c
+	db $bd, $6f, $1e, $4a ; 0xa0
+	db $7f, $28, $80, $02 ; 0xa4
+	db $de, $77, $fe, $49 ; 0xa8
+	db $1f, $20, $80, $02 ; 0xac
+	db $de, $77, $fb, $49 ; 0xb0
+	db $19, $20, $80, $02 ; 0xb4
+	db $de, $77, $f9, $49 ; 0xb8
+	db $14, $20, $80, $02 ; 0xbc
+	db $de, $7b, $f6, $4d ; 0xc0
+	db $0f, $24, $80, $02 ; 0xc4
+	db $de, $7b, $f4, $4d ; 0xc8
+	db $0a, $24, $80, $02 ; 0xcc
+	db $de, $7b, $f1, $4d ; 0xd0
+	db $05, $24, $80, $02 ; 0xd4
+	db $ff, $7f, $ef, $51 ; 0xd8
+	db $00, $28, $c9, $0e ; 0xdc
+	db $00, $c5, $21, $00 ; 0xe0
+	db $d8, $79, $87, $87 ; 0xe4
+	db $87, $87, $85, $6f ; 0xe8
+	db $30, $01, $24, $2a ; 0xec
+	db $47, $23, $2a, $57 ; 0xf0
+	db $23, $2a, $5f, $23 ; 0xf4
+	db $23, $7e, $4f, $f5 ; 0xf8
+	db $c5, $d5, $e5, $cd ; 0xfc
+	db $51, $1f, $e1, $d1 ; 0x100
+	db $c1, $f1, $3e, $08 ; 0x104
+	db $82, $57, $0c, $0c ; 0x108
+	db $cd, $51, $1f, $c1 ; 0x10c
+	db $0c, $79, $fe, $10 ; 0x110
+	db $20, $cb, $c9, $0e ; 0x114
+	db $00, $c5, $21, $00 ; 0x118
+	db $d8, $79, $87, $87 ; 0x11c
+	db $87, $87, $85, $6f ; 0x120
+	db $30, $01, $24, $44 ; 0x124
+	db $4d, $21, $05, $00 ; 0x128
+	db $09, $7e, $5f, $21 ; 0x12c
+	db $01, $00, $09, $2a ; 0x130
+	db $66, $6f, $16, $00 ; 0x134
+	db $19, $54, $5d, $21 ; 0x138
+	db $01, $00, $09, $73 ; 0x13c
+	db $23, $72, $21, $06 ; 0x140
+	db $00, $09, $7e, $5f ; 0x144
+	db $21, $03, $00, $09 ; 0x148
+	db $2a, $66, $6f, $16 ; 0x14c
+	db $00, $19, $54, $5d ; 0x150
+	db $21, $03, $00, $09 ; 0x154
+	db $73, $23, $72, $21 ; 0x158
+	db $09, $00, $09, $2a ; 0x15c
+	db $66, $6f, $e9, $21 ; 0x160
+	db $04, $00, $09, $7e ; 0x164
+	db $fe, $c0, $38, $03 ; 0x168
+	db $3e, $10, $77, $c1 ; 0x16c
+	db $0c, $79, $fe, $10 ; 0x170
+	db $20, $a3, $c9 ; 0x174
 Func_18_7bce:
 	ldh a, [hWramBank] ; $7bce
 	push af ; $7bd0
@@ -1595,7 +1841,10 @@ Func_18_7be7:
 	ld de, $0903 ; $7c08
 	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
-	INCBIN "data/bank_018/d_7c0f.bin" ; $7c0f, 24 bytes
+	; $7c0f, 24 bytes (bytes:8)
+	db $ff, $6b, $df, $5a, $ff, $20, $00, $00 ; 0x00
+	db $ff, $6b, $b8, $3b, $80, $12, $00, $00 ; 0x08
+	db $ff, $6b, $bf, $53, $9f, $02, $00, $00 ; 0x10
 Func_18_7c27:
 	ld c, $00 ; $7c27
 	ld hl, $7c53 ; $7c29
