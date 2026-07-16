@@ -10,7 +10,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `9adc660`); the whole history rebuilds
+Everything below is **committed** (HEAD `22f3813`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -275,7 +275,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 994 of 15,849 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 1,337 of 15,849 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -713,15 +713,42 @@ the input readers `ReadMatchInputPressed` (`$4415`, `$ff94` edge-pressed) and
 `$ffd3` in link mode. Names propagate through the `FarPtr_08` slots to all
 call sites automatically.
 
-Next annotation targets: bank $08 (match engine, biggest & densest code bank —
-~690 still-unnamed routines; name the now-structured tables, and confirm
-`$5dc4`'s semantics via a runtime trace), bank $3b (753 unnamed routines, now
-fully carved), bank $13 (biggest story bank), bank $1e, the rest of the
-Status viewer subsystem ($1a/$1b/$1c — shell state machine + the other file
-submenu screens), sound-command enum for the 451 `sound $xx` sites, WRAM map
+**Broad function-naming pass (subagent-driven, +343 names).** A sweep across
+the code banks named ~343 functions whose purpose is unambiguous from the code,
+leaving deep physics/AI/scene-scripting and screen-specific builders (which need
+runtime/visual identification) unnamed. Highlights:
+- **Match engine ($08):** the full scoring/flow state machine — RunMatch ->
+  RunMatchPlayLoop -> PlaySet -> PlayPoint; tennis win-by-2 scoring (Award/Check
+  Point/Game/Set/Match, EvalWinByTwo, deuce/advantage); the 9 match-statistic
+  recorders; ball physics head (StepBallPhysics, HandleBallNetCrossing); court
+  camera; and the per-character state machine (UpdateCharStateMachine,
+  Step/SetCharAnimation, CheckCharBallContact, ReadCharInput).
+- **Story/roster ($02, $04, $06, $0d):** the overworld actor engine (spawn/
+  script-VM/animation/camera in $04), the parallel match/story menu system ($06),
+  the roster/EXP/stat manager ($02 — record getters, RecomputeCharacterStats, the
+  EXP arithmetic family, per-slot save flags), and the minigame engine ($0d —
+  scoring, actors, ball, countdown, score popups).
+- **Screens:** match win/lose + statistics ($16), EXP-gain/Status char-data
+  ($1a — ShowExpGainScreen, confirming Func_00_086c builds its two-panel
+  row-doubled tilemap), reward/results ($1e), rules ($17), name-entry + match-type
+  menus ($38), and the drill result/level-up screens ($1d).
+- **Core/engine ($00, $03, $05, $09, $0a):** bank-0 utilities (sign-extend,
+  mul/div, AdvanceRandomSeed, the frame-task registry, game timer, frame sync,
+  window-frame drawing, the Format/Print number family), the save engine's
+  block read/clear/restore helpers ($03), the text control-code interpreter
+  ($05 — RenderTextString, DispatchControlCode, glyph-width measurement), VRAM
+  gfx/object loaders ($09), and the scene tilemap scroll/blit system ($0a).
+All applied via `labels.json` and verified byte-perfect each wave. Names were
+gated on concrete in-code evidence and spot-checked against the source.
+
+Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
+integrators, the CPU-AI behaviour state machine — need runtime traces), the
+bank $05 text control-code handlers, bank $3b's screen-specific pause-menu
+builders and bank $13/$15's scene-scripting beats (need visual/script
+identification), sound-command enum for the 451 `sound $xx` sites, WRAM map
 expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `9adc660`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `22f3813`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
