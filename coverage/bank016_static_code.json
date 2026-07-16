@@ -1,0 +1,11 @@
+{
+ "_comment": "Static code-entry seeds for bank $16 (match win/lose + statistics screens): fall-through code heads $4006/$43fa, palette-then-code split at $4a56, and the $4a70 ret + $4a71 computed-dispatch reader of the $4abd data-record pointer table. Flat = 0x16*0x4000 + (cpu-0x4000).",
+ "rom": [
+  360454,
+  361466,
+  363094,
+  363120,
+  363121
+ ],
+ "other": []
+}
