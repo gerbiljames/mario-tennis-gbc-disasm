@@ -1,0 +1,9 @@
+{
+ "_comment": "Static code-entry seeds for bank $39: interrupt-save stub pair at $7448/$7451 (plus stray ret $7447). Flat = 0x39*0x4000 + (cpu-0x4000).",
+ "rom": [
+  947271,
+  947272,
+  947281
+ ],
+ "other": []
+}

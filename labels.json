@@ -1252,5 +1252,6 @@
  "0x1b7a58": "MarioMiniGamesTiles",
  "0x1bbb08": "FetchDialogueText_6e",
  "0x1bbb10": "FetchShortText_6e",
- "0x1bbb18": "FetchText_6e"
+ "0x1bbb18": "FetchText_6e",
+ "0xa427d": "BallPosData_29"
 }

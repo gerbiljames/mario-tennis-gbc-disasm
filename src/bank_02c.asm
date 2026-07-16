@@ -138,7 +138,89 @@ Func_2c_4088:
 	pop hl ; $4097
 	farcall FarPtr_08_26 ; $4098
 	ret ; $409b
-	INCBIN "data/bank_02c/d_409c.bin" ; $409c, 157 bytes
+	ld a, [hl+] ; $409c
+	ld c, a ; $409d
+	ld a, [hl+] ; $409e
+	ld b, a ; $409f
+	push hl ; $40a0
+	ld hl, $c476 ; $40a1
+	ld a, c ; $40a4
+	ld [hl+], a ; $40a5
+	ld [hl], b ; $40a6
+	ld hl, $c434 ; $40a7
+	ld a, [hl+] ; $40aa
+	ld h, [hl] ; $40ab
+	ld l, a ; $40ac
+	bit 7, h ; $40ad
+	jr z, Label_2c_40b7 ; $40af
+	xor a, a ; $40b1
+	sub a, l ; $40b2
+	ld l, a ; $40b3
+	sbc a, a ; $40b4
+	sub a, h ; $40b5
+	ld h, a ; $40b6
+Label_2c_40b7:
+	add hl, hl ; $40b7
+	ld a, b ; $40b8
+	call Func_00_0bd4 ; $40b9
+	add hl, hl ; $40bc
+	add hl, hl ; $40bd
+	add hl, bc ; $40be
+	ld c, l ; $40bf
+	ld b, h ; $40c0
+	pop hl ; $40c1
+	push bc ; $40c2
+	ld a, [hl+] ; $40c3
+	ld c, a ; $40c4
+	ld a, [hl+] ; $40c5
+	ld b, a ; $40c6
+	ld a, [hl+] ; $40c7
+	ld e, a ; $40c8
+	ld a, [hl+] ; $40c9
+	ld d, a ; $40ca
+	ld a, [$c4a7] ; $40cb
+	and a, a ; $40ce
+	jr z, Label_2c_40d7 ; $40cf
+	xor a, a ; $40d1
+	sub a, e ; $40d2
+	ld e, a ; $40d3
+	sbc a, a ; $40d4
+	sub a, d ; $40d5
+	ld d, a ; $40d6
+Label_2c_40d7:
+	ld hl, $c43a ; $40d7
+	ld a, [hl+] ; $40da
+	ld h, [hl] ; $40db
+	ld l, a ; $40dc
+	add hl, de ; $40dd
+	ld e, l ; $40de
+	ld d, h ; $40df
+	pop hl ; $40e0
+	farcall FarPtr_08_26 ; $40e1
+	ld de, $fd40 ; $40e4
+	ld a, [$df0a] ; $40e7
+	and a, $02 ; $40ea
+	jr z, Label_2c_40f4 ; $40ec
+	xor a, a ; $40ee
+	sub a, e ; $40ef
+	ld e, a ; $40f0
+	sbc a, a ; $40f1
+	sub a, d ; $40f2
+	ld d, a ; $40f3
+Label_2c_40f4:
+	ld hl, $c452 ; $40f4
+	ld a, e ; $40f7
+	ld [hl+], a ; $40f8
+	ld [hl], d ; $40f9
+	farcall FarPtr_08_30 ; $40fa
+	ld e, l ; $40fd
+	ld d, h ; $40fe
+	ld hl, $c450 ; $40ff
+	ld a, e ; $4102
+	ld [hl+], a ; $4103
+	ld [hl], d ; $4104
+	ret ; $4105
+	INCBIN "data/bank_02c/d_4106.bin" ; $4106, 51 bytes
 Func_2c_4139:
 	xor a, a ; $4139
 	sub a, c ; $413a
@@ -163,7 +245,46 @@ Func_2c_4139:
 	rr l ; $415b
 	call Func_2c_41f9 ; $415d
 	ret ; $4160
-	INCBIN "data/bank_02c/d_4161.bin" ; $4161, 108 bytes
+	push hl ; $4161
+	ld hl, $c43a ; $4162
+	ld a, [hl+] ; $4165
+	ld b, [hl] ; $4166
+	ld c, a ; $4167
+	ld hl, $c436 ; $4168
+	ld a, [hl+] ; $416b
+	ld d, [hl] ; $416c
+	ld e, a ; $416d
+	ld hl, $c434 ; $416e
+	ld a, [hl+] ; $4171
+	ld h, [hl] ; $4172
+	ld l, a ; $4173
+	call VectorLengthFromAngle ; $4174
+	ld e, l ; $4177
+	ld d, h ; $4178
+	ld hl, $c48c ; $4179
+	ld a, [hl+] ; $417c
+	ld h, [hl] ; $417d
+	ld l, a ; $417e
+	ld a, l ; $417f
+	sub a, e ; $4180
+	ld l, a ; $4181
+	ld a, h ; $4182
+	sbc a, d ; $4183
+	ld h, a ; $4184
+	jr nc, Label_2c_418d ; $4185
+	ld hl, $c48c ; $4187
+	ld a, [hl+] ; $418a
+	ld d, [hl] ; $418b
+	ld e, a ; $418c
+Label_2c_418d:
+	pop hl ; $418d
+	push de ; $418e
+	call Func_2c_4006 ; $418f
+	call Func_2c_4061 ; $4192
+	pop hl ; $4195
+	call Func_2c_41f9 ; $4196
+	ret ; $4199
+	INCBIN "data/bank_02c/d_419a.bin" ; $419a, 51 bytes
 Func_2c_41cd:
 	xor a, a ; $41cd
 	sub a, c ; $41ce
@@ -188,7 +309,8 @@ Func_2c_41cd:
 	rr l ; $41ef
 	call Func_2c_41f9 ; $41f1
 	ret ; $41f4
-	INCBIN "data/bank_02c/d_41f5.bin" ; $41f5, 4 bytes
+	farcall FarPtr_24_04 ; $41f5
+	ret ; $41f8
 Func_2c_41f9:
 	ld a, [$c43a] ; $41f9
 	ld c, a ; $41fc
@@ -220,7 +342,38 @@ Func_2c_41f9:
 	ld [hl+], a ; $4222
 	ld [hl], d ; $4223
 	ret ; $4224
-	INCBIN "data/bank_02c/d_4225.bin" ; $4225, 43 bytes
+	push hl ; $4225
+	push bc ; $4226
+	ld hl, $c43a ; $4227
+	ld a, [hl+] ; $422a
+	ld b, [hl] ; $422b
+	ld c, a ; $422c
+	ld hl, wBallDepth ; $422d
+	ld a, [hl+] ; $4230
+	ld d, [hl] ; $4231
+	ld e, a ; $4232
+	ld hl, wBallX ; $4233
+	ld a, [hl+] ; $4236
+	ld h, [hl] ; $4237
+	ld l, a ; $4238
+	call VectorLengthFromAngle ; $4239
+	add hl, hl ; $423c
+	ld a, h ; $423d
+	and a, $1f ; $423e
+	ld [$c472], a ; $4240
+	add a, a ; $4243
+	pop hl ; $4244
+	pop de ; $4245
+	add a, l ; $4246
+	ld l, a ; $4247
+	jr nc, Label_2c_424b ; $4248
+	inc h ; $424a
+Label_2c_424b:
+	ld a, [hl+] ; $424b
+	ld h, [hl] ; $424c
+	ld l, a ; $424d
+	add hl, de ; $424e
+	ret ; $424f
 Func_2c_4250:
 	ld e, l ; $4250
 	ld d, h ; $4251
@@ -253,7 +406,22 @@ Label_2c_426d:
 	ld l, a ; $426f
 	add hl, de ; $4270
 	ret ; $4271
-	INCBIN "data/bank_02c/d_4272.bin" ; $4272, 12303 bytes
+	ld e, l ; $4272
+	ld d, h ; $4273
+	add a, a ; $4274
+	ld l, c ; $4275
+	ld h, b ; $4276
+	add a, l ; $4277
+	ld l, a ; $4278
+	jr nc, Label_2c_427c ; $4279
+	inc h ; $427b
+Label_2c_427c:
+	ld a, [hl+] ; $427c
+	ld h, [hl] ; $427d
+	ld l, a ; $427e
+	add hl, de ; $427f
+	ret ; $4280
+	INCBIN "data/bank_02c/d_4281.bin" ; $4281, 12288 bytes
 Func_2c_7281:
 	farcall FarPtr_ComputeShotPlacement ; $7281
 	push bc ; $7284
@@ -263,7 +431,40 @@ Func_2c_7281:
 	pop bc ; $728e
 	call Func_2c_41cd ; $728f
 	ret ; $7292
-	INCBIN "data/bank_02c/d_7293.bin" ; $7293, 64 bytes
+	; $7293, 64 bytes (records:2)
+; 32 records x 2 bytes
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+	dw $0000 ; record 5
+	dw $0000 ; record 6
+	dw $0100 ; record 7
+	dw $0200 ; record 8
+	dw $0300 ; record 9
+	dw $0400 ; record 10
+	dw $0500 ; record 11
+	dw $0600 ; record 12
+	dw $0700 ; record 13
+	dw $0800 ; record 14
+	dw $0900 ; record 15
+	dw $0a00 ; record 16
+	dw $0b00 ; record 17
+	dw $0b00 ; record 18
+	dw $0b00 ; record 19
+	dw $0b00 ; record 20
+	dw $0b00 ; record 21
+	dw $0b00 ; record 22
+	dw $0b00 ; record 23
+	dw $0b00 ; record 24
+	dw $0b00 ; record 25
+	dw $0b00 ; record 26
+	dw $0b00 ; record 27
+	dw $0b00 ; record 28
+	dw $0b00 ; record 29
+	dw $0b00 ; record 30
+	dw $0b00 ; record 31
 Func_2c_72d3:
 	farcall FarPtr_ComputeShotPlacement ; $72d3
 	push bc ; $72d6
@@ -273,7 +474,40 @@ Func_2c_72d3:
 	pop bc ; $72e0
 	call Func_2c_4139 ; $72e1
 	ret ; $72e4
-	INCBIN "data/bank_02c/d_72e5.bin" ; $72e5, 64 bytes
+	; $72e5, 64 bytes (records:2)
+; 32 records x 2 bytes
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+	dw $0000 ; record 5
+	dw $0000 ; record 6
+	dw $0180 ; record 7
+	dw $0300 ; record 8
+	dw $0480 ; record 9
+	dw $0600 ; record 10
+	dw $0780 ; record 11
+	dw $0900 ; record 12
+	dw $0a80 ; record 13
+	dw $0c00 ; record 14
+	dw $0d80 ; record 15
+	dw $0f00 ; record 16
+	dw $1080 ; record 17
+	dw $1080 ; record 18
+	dw $1080 ; record 19
+	dw $1080 ; record 20
+	dw $1080 ; record 21
+	dw $1080 ; record 22
+	dw $1080 ; record 23
+	dw $1080 ; record 24
+	dw $1080 ; record 25
+	dw $1080 ; record 26
+	dw $1080 ; record 27
+	dw $1080 ; record 28
+	dw $1080 ; record 29
+	dw $1080 ; record 30
+	dw $1080 ; record 31
 Func_2c_7325:
 	farcall FarPtr_ComputeShotPlacement ; $7325
 	push bc ; $7328
@@ -283,5 +517,38 @@ Func_2c_7325:
 	pop bc ; $7332
 	call Func_2c_4139 ; $7333
 	ret ; $7336
-	INCBIN "data/bank_02c/d_7337.bin" ; $7337, 64 bytes
+	; $7337, 64 bytes (records:2)
+; 32 records x 2 bytes
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+	dw $0000 ; record 5
+	dw $0000 ; record 6
+	dw $0180 ; record 7
+	dw $0300 ; record 8
+	dw $0480 ; record 9
+	dw $0600 ; record 10
+	dw $0780 ; record 11
+	dw $0900 ; record 12
+	dw $0a80 ; record 13
+	dw $0c00 ; record 14
+	dw $0d80 ; record 15
+	dw $0f00 ; record 16
+	dw $1080 ; record 17
+	dw $1080 ; record 18
+	dw $1080 ; record 19
+	dw $1080 ; record 20
+	dw $1080 ; record 21
+	dw $1080 ; record 22
+	dw $1080 ; record 23
+	dw $1080 ; record 24
+	dw $1080 ; record 25
+	dw $1080 ; record 26
+	dw $1080 ; record 27
+	dw $1080 ; record 28
+	dw $1080 ; record 29
+	dw $1080 ; record 30
+	dw $1080 ; record 31
 	ds 3209, $ff ; $7377, fill
