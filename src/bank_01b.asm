@@ -123,7 +123,7 @@ Label_1b_40e3:
 	call QueueSprite ; $412d
 	pop de ; $4130
 	ret ; $4131
-Func_1b_4132:
+MoveMenuCursorGrid:
 	ld a, [wMenuCursorX] ; $4132
 	ld d, a ; $4135
 	ld a, [wMenuCursorY] ; $4136
@@ -541,7 +541,7 @@ Label_1b_43b0:
 Label_1b_43be:
 	ld a, $01 ; $43be
 	ret ; $43c0
-Func_1b_43c1:
+GetMenuCursorIndex:
 	ld a, [wMenuCursorY] ; $43c1
 	ld b, a ; $43c4
 	xor a, a ; $43c5
@@ -572,7 +572,7 @@ Label_1b_43de:
 	add a, b ; $43e0
 	pop bc ; $43e1
 	ret ; $43e2
-Func_1b_43e3:
+SetMenuCursorFromIndex:
 	ld d, $00 ; $43e3
 	ld a, c ; $43e5
 Label_1b_43e6:
@@ -791,7 +791,7 @@ Label_1b_4eb5:
 	call Func_1b_4ff1 ; $4ecc
 	call Func_00_2725 ; $4ecf
 	db $1e ; $4ed2 inline arg
-	call Func_1b_5507 ; $4ed3
+	call WaitForAOrBPress ; $4ed3
 	ld c, $20 ; $4ed6
 	ld a, [$d802] ; $4ed8
 	or a, a ; $4edb
@@ -954,11 +954,11 @@ Label_1b_504a:
 	ld l, a ; $504c
 	jp hl ; $504d
 	INCBIN "data/bank_01b/d_504e.bin" ; $504e, 1209 bytes
-Func_1b_5507:
+WaitForAOrBPress:
 	call AdvanceFrame ; $5507
 	ldh a, [hInputPressed] ; $550a
 	and a, $03 ; $550c
-	jr z, Func_1b_5507 ; $550e
+	jr z, WaitForAOrBPress ; $550e
 	ret ; $5510
 Func_1b_5511:
 	call Func_1b_569c ; $5511
@@ -1169,7 +1169,7 @@ Func_1b_569c:
 	farcall FarPtr_05_8c ; $56af
 	ret ; $56b2
 Func_1b_56b3:
-	call Func_1b_56c2 ; $56b3
+	call GetStringLength ; $56b3
 	cp a, $06 ; $56b6
 	jr nc, Label_1b_56be ; $56b8
 	call Func_1b_4434 ; $56ba
@@ -1177,7 +1177,7 @@ Func_1b_56b3:
 Label_1b_56be:
 	call Func_1b_56cf ; $56be
 	ret ; $56c1
-Func_1b_56c2:
+GetStringLength:
 	push hl ; $56c2
 	push bc ; $56c3
 	ld c, $ff ; $56c4
@@ -1961,7 +1961,7 @@ Func_1b_6467:
 	farcall FarPtr_01_0a ; $6473
 	call DisableLCDSafely ; $6476
 	farcall FarPtr_05_76 ; $6479
-	call Func_1b_651e ; $647c
+	call ClearScreenMaps ; $647c
 	wram_bank $05 ; $647f
 	ld d, $02 ; $6485
 	ld e, $02 ; $6487
@@ -1997,7 +1997,7 @@ Func_1b_64b9:
 	farcall FarPtr_01_0a ; $64c5
 	call EnableLCD ; $64c8
 	farcall FarPtr_05_76 ; $64cb
-	call Func_1b_651e ; $64ce
+	call ClearScreenMaps ; $64ce
 	call Func_1b_686f ; $64d1
 	wram_bank $06 ; $64d4
 	ld hl, $d400 ; $64da
@@ -2032,7 +2032,7 @@ Label_1b_64e7:
 	pop de ; $651b
 	pop bc ; $651c
 	ret ; $651d
-Func_1b_651e:
+ClearScreenMaps:
 	call DisableLCDSafely ; $651e
 	wram_bank $02 ; $6521
 	ld a, $00 ; $6527
@@ -2836,7 +2836,7 @@ Func_1b_6d3d:
 	or a, a ; $6d49
 	jr nz, Label_1b_6d63 ; $6d4a
 	ld c, $03 ; $6d4c
-	call Func_1b_43c1 ; $6d4e
+	call GetMenuCursorIndex ; $6d4e
 	cp a, $01 ; $6d51
 	jr nz, Label_1b_6d63 ; $6d53
 	wram_bank $03 ; $6d55
@@ -2846,7 +2846,7 @@ Func_1b_6d3d:
 Label_1b_6d63:
 	wram_bank $03 ; $6d63
 	ld c, $03 ; $6d69
-	call Func_1b_43c1 ; $6d6b
+	call GetMenuCursorIndex ; $6d6b
 	ld b, a ; $6d6e
 	ld hl, $6d8f ; $6d6f
 	add a, a ; $6d72
@@ -2950,7 +2950,7 @@ Func_1b_6e31:
 	ld a, [$d001] ; $6e58
 	ld c, a ; $6e5b
 	ld b, $02 ; $6e5c
-	call Func_1b_43e3 ; $6e5e
+	call SetMenuCursorFromIndex ; $6e5e
 	wram_bank $03 ; $6e61
 	ld a, $01 ; $6e67
 	ld hl, $6f62 ; $6e69
@@ -2963,7 +2963,7 @@ Label_1b_6e78:
 	ld [wMenuInputPressed], a ; $6e7d
 	call Func_1b_6e1c ; $6e80
 	ld c, $01 ; $6e83
-	call Func_1b_4132 ; $6e85
+	call MoveMenuCursorGrid ; $6e85
 	or a, a ; $6e88
 	jr z, Label_1b_6e90 ; $6e89
 	sound $5e ; $6e8b
@@ -2977,7 +2977,7 @@ Label_1b_6e90:
 	jr Label_1b_6e78 ; $6e9b
 Label_1b_6e9d:
 	ld c, $03 ; $6e9d
-	call Func_1b_43c1 ; $6e9f
+	call GetMenuCursorIndex ; $6e9f
 	or a, a ; $6ea2
 	jr z, Label_1b_6eb5 ; $6ea3
 	wram_bank $02 ; $6ea5
@@ -2998,7 +2998,7 @@ Label_1b_6eb5:
 	ld [$cb11], a ; $6ecc
 	wram_bank $02 ; $6ecf
 	ld c, $03 ; $6ed5
-	call Func_1b_43c1 ; $6ed7
+	call GetMenuCursorIndex ; $6ed7
 	ld [$d003], a ; $6eda
 	ret ; $6edd
 Label_1b_6ede:
@@ -3027,12 +3027,12 @@ Label_1b_6f0e:
 	cp a, $02 ; $6f14
 	jr nz, Label_1b_6f0e ; $6f16
 	ld c, $02 ; $6f18
-	call Func_1b_43c1 ; $6f1a
+	call GetMenuCursorIndex ; $6f1a
 	ld b, a ; $6f1d
 	ld c, $01 ; $6f1e
 	call Func_1b_6f35 ; $6f20
 	ld c, $03 ; $6f23
-	call Func_1b_43c1 ; $6f25
+	call GetMenuCursorIndex ; $6f25
 	call Func_1b_6d95 ; $6f28
 	call Func_1b_6deb ; $6f2b
 	call Func_1b_6d3d ; $6f2e
@@ -3075,7 +3075,7 @@ Label_1b_6f4e:
 	INCBIN "data/bank_01b/d_6f5e.bin" ; $6f5e, 4 bytes
 	farcall FarPtr_39_28 ; $6f62
 	ld c, $03 ; $6f65
-	call Func_1b_43c1 ; $6f67
+	call GetMenuCursorIndex ; $6f67
 	push af ; $6f6a
 	ld hl, $6fcf ; $6f6b
 	add a, l ; $6f6e
@@ -3128,7 +3128,7 @@ Func_1b_6fd2:
 	ld a, [$d001] ; $6ff9
 	ld c, a ; $6ffc
 	ld b, $03 ; $6ffd
-	call Func_1b_43e3 ; $6fff
+	call SetMenuCursorFromIndex ; $6fff
 	wram_bank $03 ; $7002
 	ld a, $01 ; $7008
 	ld hl, $70ed ; $700a
@@ -3141,7 +3141,7 @@ Label_1b_7019:
 	ld [wMenuInputPressed], a ; $701e
 	call Func_1b_6e1c ; $7021
 	ld c, $01 ; $7024
-	call Func_1b_4132 ; $7026
+	call MoveMenuCursorGrid ; $7026
 	or a, a ; $7029
 	jr z, Label_1b_7031 ; $702a
 	sound $5e ; $702c
@@ -3165,7 +3165,7 @@ Label_1b_703e:
 	ld [$cb11], a ; $7055
 	wram_bank $02 ; $7058
 	ld c, $03 ; $705e
-	call Func_1b_43c1 ; $7060
+	call GetMenuCursorIndex ; $7060
 	ld [$d003], a ; $7063
 	ret ; $7066
 Label_1b_7067:
@@ -3194,12 +3194,12 @@ Label_1b_7097:
 	cp a, $03 ; $709d
 	jr nz, Label_1b_7097 ; $709f
 	ld c, $02 ; $70a1
-	call Func_1b_43c1 ; $70a3
+	call GetMenuCursorIndex ; $70a3
 	ld b, a ; $70a6
 	ld c, $01 ; $70a7
 	call Func_1b_70be ; $70a9
 	ld c, $03 ; $70ac
-	call Func_1b_43c1 ; $70ae
+	call GetMenuCursorIndex ; $70ae
 	call Func_1b_6d95 ; $70b1
 	call Func_1b_6deb ; $70b4
 	call Func_1b_6d3d ; $70b7
@@ -3256,7 +3256,7 @@ Func_1b_715d:
 	ld a, [$cb25] ; $717e
 	ld c, a ; $7181
 	ld b, $02 ; $7182
-	call Func_1b_43e3 ; $7184
+	call SetMenuCursorFromIndex ; $7184
 	ld a, $01 ; $7187
 	ld hl, $72a4 ; $7189
 	call RegisterFrameTask ; $718c
@@ -3271,7 +3271,7 @@ Label_1b_71a0:
 	ld [wMenuInputPressed], a ; $71a5
 	ld b, $02 ; $71a8
 	ld c, $01 ; $71aa
-	call Func_1b_4132 ; $71ac
+	call MoveMenuCursorGrid ; $71ac
 	or a, a ; $71af
 	jr z, Label_1b_71b7 ; $71b0
 	sound $5e ; $71b2
@@ -3294,7 +3294,7 @@ Label_1b_71c4:
 	ld a, $01 ; $71d9
 	ld [$cb11], a ; $71db
 	ld c, $02 ; $71de
-	call Func_1b_43c1 ; $71e0
+	call GetMenuCursorIndex ; $71e0
 	ld [$cb25], a ; $71e3
 	ret ; $71e6
 Label_1b_71e7:
@@ -3395,7 +3395,7 @@ Label_1b_723a:
 	INCBIN "data/bank_01b/d_729a.bin" ; $729a, 13 bytes
 	ret ; $72a7
 	ld c, $02 ; $72a8
-	call Func_1b_43c1 ; $72aa
+	call GetMenuCursorIndex ; $72aa
 	or a, a ; $72ad
 	jr nz, Label_1b_72b4 ; $72ae
 	call Func_1b_72b8 ; $72b0
@@ -3444,12 +3444,12 @@ Label_1b_735c:
 	cp a, $02 ; $7362
 	jr nz, Label_1b_735c ; $7364
 	ld c, $02 ; $7366
-	call Func_1b_43c1 ; $7368
+	call GetMenuCursorIndex ; $7368
 	ld b, a ; $736b
 	ld c, $01 ; $736c
 	call Func_1b_6f35 ; $736e
 	ld c, $03 ; $7371
-	call Func_1b_43c1 ; $7373
+	call GetMenuCursorIndex ; $7373
 	call Func_1b_73b6 ; $7376
 	call Func_1b_6deb ; $7379
 	call Func_1b_7383 ; $737c
@@ -3460,7 +3460,7 @@ Func_1b_7383:
 	push af ; $7385
 	wram_bank $03 ; $7386
 	ld c, $03 ; $738c
-	call Func_1b_43c1 ; $738e
+	call GetMenuCursorIndex ; $738e
 	ld b, a ; $7391
 	ld hl, $73b2 ; $7392
 	add a, a ; $7395

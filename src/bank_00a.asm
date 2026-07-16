@@ -1582,7 +1582,7 @@ Label_0a_4929:
 	pop af ; $492f
 	ret ; $4930
 InitStoryMatchSettings:
-	farcall FarPtr_08_00 ; $4931
+	farcall FarPtr_InitDefaultMatchSettings ; $4931
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4934
 	ld [$c3b0], a ; $4937
 	xor a, a ; $493a
@@ -1607,7 +1607,7 @@ Func_0a_4962:
 	call Func_00_1d20 ; $4964
 	call Func_00_1da4 ; $4967
 	call Func_0a_49aa ; $496a
-	farcall FarPtr_08_04 ; $496d
+	farcall FarPtr_RunMatch ; $496d
 	ld a, [$c8a5] ; $4970
 	or a, a ; $4973
 	jr z, Label_0a_498c ; $4974

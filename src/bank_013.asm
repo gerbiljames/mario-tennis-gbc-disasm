@@ -3630,7 +3630,7 @@ Label_13_5f4d:
 	ld [$c295], a ; $5f63
 	ld [$c294], a ; $5f66
 	ld [$c2a1], a ; $5f69
-	call Func_13_6a10 ; $5f6c
+	call SetupStoryMinigameMatch0 ; $5f6c
 	ret ; $5f6f
 	INCBIN "data/bank_013/d_5f70.bin" ; $5f70, 500 bytes
 	ld bc, $00ff ; $6164
@@ -4172,7 +4172,7 @@ Label_13_636c:
 	ld [$c2a1], a ; $6634
 	ret ; $6637
 	INCBIN "data/bank_013/d_6638.bin" ; $6638, 984 bytes
-Func_13_6a10:
+SetupStoryMinigameMatch0:
 	ld a, $05 ; $6a10
 	farcall FarPtr_0a_1c ; $6a12
 	ld a, $05 ; $6a15

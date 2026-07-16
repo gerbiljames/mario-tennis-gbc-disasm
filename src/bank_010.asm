@@ -641,7 +641,7 @@ MatchSelectHandlersA_10:
 	farcall FarPtr_TestStorySlotFlagA ; $4ec7
 	call Func_00_2f86 ; $4eca
 	ret ; $4ecd
-Func_10_4ece:
+ApplyMatchTypeSettings:
 	ld hl, $4f08 ; $4ece
 	ld a, [$cb10] ; $4ed1
 	add a, l ; $4ed4
@@ -698,7 +698,7 @@ Label_10_4f31:
 	cp a, $01 ; $4f38
 	jr z, Label_10_4f28 ; $4f3a
 Label_10_4f3c:
-	farcall FarPtr_08_00 ; $4f3c
+	farcall FarPtr_InitDefaultMatchSettings ; $4f3c
 	xor a, a ; $4f3f
 	ld [$cb1b], a ; $4f40
 	ld [$cb1c], a ; $4f43
@@ -930,7 +930,7 @@ Label_10_5137:
 	ld a, $03 ; $513b
 	ld [$c36c], a ; $513d
 	farcall FarPtr_InitStoryModeState ; $5140
-	farcall FarPtr_08_00 ; $5143
+	farcall FarPtr_InitDefaultMatchSettings ; $5143
 	farcall FarPtr_03_26 ; $5146
 Label_10_5149:
 	farcall FarPtr_3b_0e ; $5149
@@ -994,7 +994,7 @@ Label_10_51cd:
 	wram_bank $04 ; $51ce
 	ld a, d ; $51d4
 	ld [wCurrentlyUsedCourt], a ; $51d5
-	call Func_10_4ece ; $51d8
+	call ApplyMatchTypeSettings ; $51d8
 Label_10_51db:
 	ld a, $03 ; $51db
 	ld [$c36c], a ; $51dd
@@ -1003,7 +1003,7 @@ Label_10_51db:
 	farcall FarPtr_03_26 ; $51e4
 	ld a, $04 ; $51e7
 	ld [wGameMode], a ; $51e9
-	farcall FarPtr_08_04 ; $51ec
+	farcall FarPtr_RunMatch ; $51ec
 	ld a, [$c8a5] ; $51ef
 	or a, a ; $51f2
 	jr z, Label_10_51fd ; $51f3
@@ -1084,7 +1084,7 @@ Label_10_526e:
 	ld a, $03 ; $52a0
 	ld [$c36c], a ; $52a2
 	farcall FarPtr_InitStoryModeState ; $52a5
-	farcall FarPtr_08_00 ; $52a8
+	farcall FarPtr_InitDefaultMatchSettings ; $52a8
 	farcall FarPtr_Func_38_7408Alias1 ; $52ab
 	push af ; $52ae
 	call InitSerialLink ; $52af
@@ -1413,7 +1413,7 @@ Label_10_5592:
 	jp Label_10_54d6 ; $55b2
 	ret ; $55b5
 Label_10_55b6:
-	farcall FarPtr_08_04 ; $55b6
+	farcall FarPtr_RunMatch ; $55b6
 	ld a, [$c8a5] ; $55b9
 	or a, a ; $55bc
 	jr z, Label_10_55d5 ; $55bd

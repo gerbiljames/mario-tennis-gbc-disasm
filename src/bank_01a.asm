@@ -2228,7 +2228,7 @@ Label_1a_6de4:
 Label_1a_6e00:
 	ld d, [hl] ; $6e00
 	wram_bank $04 ; $6e01
-	farcall FarPtr_08_20 ; $6e07
+	farcall FarPtr_SetCharAnimation ; $6e07
 	wram_bank $06 ; $6e0a
 	jr Label_1a_6e20 ; $6e10
 Label_1a_6e12:
@@ -2456,7 +2456,7 @@ Func_1a_7012:
 	ld hl, $df00 ; $702a
 	ld b, h ; $702d
 	ld c, l ; $702e
-	farcall FarPtr_08_12 ; $702f
+	farcall FarPtr_StepCharAnimation ; $702f
 	wram_bank $06 ; $7032
 	ld a, [$d005] ; $7038
 	ld d, a ; $703b

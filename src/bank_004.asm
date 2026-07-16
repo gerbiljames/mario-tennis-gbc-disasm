@@ -1571,7 +1571,7 @@ Func_04_4b68:
 	ld [hl+], a ; $4bb3
 	ld [hl+], a ; $4bb4
 	ld d, $01 ; $4bb5
-	farcall FarPtr_08_20 ; $4bb7
+	farcall FarPtr_SetCharAnimation ; $4bb7
 	ret ; $4bba
 Func_04_4bbb:
 	inc b ; $4bbb

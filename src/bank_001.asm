@@ -66,7 +66,7 @@ Func_01_4018:
 	farcall FarPtr_03_2e ; $4091
 	farcall FarPtr_03_30 ; $4094
 	farcall FarPtr_InitStoryModeState ; $4097
-	farcall FarPtr_08_00 ; $409a
+	farcall FarPtr_InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d
 	ld c, $7f ; $40a0
 	call Func_00_1d2e ; $40a2
@@ -142,7 +142,7 @@ Label_01_4127:
 	ldh [$ff9e], a ; $412d
 Label_01_412f:
 	farcall FarPtr_3b_00 ; $412f
-	farcall FarPtr_08_04 ; $4132
+	farcall FarPtr_RunMatch ; $4132
 	jp Label_01_412f ; $4135
 Label_01_4138:
 	bit 6, a ; $4138

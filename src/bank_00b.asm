@@ -182,7 +182,7 @@ Func_0b_41e6:
 	ld a, [$c4b2] ; $41e6
 	cp a, $02 ; $41e9
 	ret nc ; $41eb
-	farcall FarPtr_08_56 ; $41ec
+	farcall FarPtr_IsBallInTargetZone ; $41ec
 	jr z, Label_0b_41f6 ; $41ef
 	xor a, a ; $41f1
 	ld [wTargetZoneEnabled], a ; $41f2
@@ -626,8 +626,8 @@ Func_0b_5cf9:
 Label_0b_5d0a:
 	call Func_0b_407b ; $5d0a
 	call Func_0b_4574 ; $5d0d
-	farcall FarPtr_08_5a ; $5d10
-	farcall FarPtr_08_5c ; $5d13
+	farcall FarPtr_UpdatePointStats ; $5d10
+	farcall FarPtr_AwardPoint ; $5d13
 	ld a, [$c2eb] ; $5d16
 	ld [wPlayer1PointsWon], a ; $5d19
 	xor a, a ; $5d1c
@@ -966,8 +966,8 @@ Func_0b_6c81:
 Label_0b_6c92:
 	call Func_0b_407b ; $6c92
 	call Func_0b_4574 ; $6c95
-	farcall FarPtr_08_5a ; $6c98
-	farcall FarPtr_08_5c ; $6c9b
+	farcall FarPtr_UpdatePointStats ; $6c98
+	farcall FarPtr_AwardPoint ; $6c9b
 	ld a, [$c2e9] ; $6c9e
 	ld [wPlayer1PointsWon], a ; $6ca1
 	xor a, a ; $6ca4
@@ -1120,8 +1120,8 @@ Label_0b_6da6:
 	ld a, $ff ; $6dab
 	ret ; $6dad
 	INCBIN "data/bank_00b/d_6dae.bin" ; $6dae, 916 bytes
-	farcall FarPtr_08_5a ; $7142
-	farcall FarPtr_08_5c ; $7145
+	farcall FarPtr_UpdatePointStats ; $7142
+	farcall FarPtr_AwardPoint ; $7145
 	ld a, [$c2e9] ; $7148
 	ld [wPlayer1PointsWon], a ; $714b
 	xor a, a ; $714e
@@ -1208,7 +1208,7 @@ Func_0b_7258:
 	ld [$cade], a ; $72d5
 	ld a, [hl+] ; $72d8
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
-	farcall FarPtr_08_04 ; $72dc
+	farcall FarPtr_RunMatch ; $72dc
 	ret ; $72df
 	INCBIN "data/bank_00b/d_72e0.bin" ; $72e0, 27 bytes
 	ds 3333, $ff ; $72fb, fill

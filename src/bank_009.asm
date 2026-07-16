@@ -609,7 +609,7 @@ Label_09_4718:
 	ld hl, $ddf1 ; $4718
 	bit 0, [hl] ; $471b
 	ret z ; $471d
-	farcall FarPtr_08_2c ; $471e
+	farcall FarPtr_FindServerCharBank ; $471e
 	ld a, b ; $4721
 	wram_bank ; $4722
 	ld a, [$df53] ; $4726

@@ -118,7 +118,7 @@ Func_07_4081:
 	call Func_00_2994 ; $4089
 	ldh a, [$ffd3] ; $408c
 	call Func_00_2855 ; $408e
-	farcall FarPtr_08_0a ; $4091
+	farcall FarPtr_UpdateMatchFrame ; $4091
 	call Func_00_2924 ; $4094
 	pop hl ; $4097
 	pop bc ; $4098
@@ -131,7 +131,7 @@ Func_07_409a:
 	call Func_00_2994 ; $40a2
 	ldh a, [$ffd3] ; $40a5
 	call Func_00_2855 ; $40a7
-	farcall FarPtr_08_0a ; $40aa
+	farcall FarPtr_UpdateMatchFrame ; $40aa
 	call Func_00_2924 ; $40ad
 	pop hl ; $40b0
 	pop bc ; $40b1
@@ -2955,7 +2955,7 @@ Label_07_5703:
 Label_07_570c:
 	ret ; $570c
 Func_07_570d:
-	farcall FarPtr_08_36 ; $570d
+	farcall FarPtr_AdvanceMatchRng ; $570d
 	ld l, a ; $5710
 	ld h, $00 ; $5711
 	ld a, [$df6a] ; $5713
@@ -3991,7 +3991,7 @@ Func_07_5df9:
 	farcall FarPtr_SetStorySlotFlagA ; $5e95
 	ld a, $fe ; $5e98
 	ld [$c4ee], a ; $5e9a
-	farcall FarPtr_08_04 ; $5e9d
+	farcall FarPtr_RunMatch ; $5e9d
 	ret ; $5ea0
 	farcall FarPtr_08_06 ; $5ea1
 	ld a, $02 ; $5ea4
@@ -4016,10 +4016,10 @@ Func_07_5ed2:
 	ret ; $5ed2
 Func_07_5ed3:
 	farcall FarPtr_09_26 ; $5ed3
-	farcall FarPtr_08_58 ; $5ed6
+	farcall FarPtr_ResolvePointWinner ; $5ed6
 	ld [wPointWinLoseFlag], a ; $5ed9
-	farcall FarPtr_08_5a ; $5edc
-	farcall FarPtr_08_5c ; $5edf
+	farcall FarPtr_UpdatePointStats ; $5edc
+	farcall FarPtr_AwardPoint ; $5edf
 	ld a, [wPlayer1PointsWon] ; $5ee2
 	ld b, $01 ; $5ee5
 	farcall FarPtr_09_2a ; $5ee7
@@ -4028,7 +4028,7 @@ Func_07_5ed3:
 	farcall FarPtr_09_2c ; $5eef
 	farcall FarPtr_StepMatchFrame ; $5ef2
 	farcall FarPtr_StartPointEndReactions ; $5ef5
-	farcall FarPtr_08_60 ; $5ef8
+	farcall FarPtr_ResolvePointOutcome ; $5ef8
 	ret ; $5efb
 ModeHookTable_07:
 	INCBIN "data/bank_007/d_5efc.bin" ; $5efc, 17 bytes
@@ -4043,9 +4043,9 @@ ModeHookTable_07:
 	clear_flag $0c, 4 ; $5f20
 	ret ; $5f23
 	ret ; $5f24
-	farcall FarPtr_08_56 ; $5f25
+	farcall FarPtr_IsBallInTargetZone ; $5f25
 	jr z, Label_07_5f48 ; $5f28
-	farcall FarPtr_08_36 ; $5f2a
+	farcall FarPtr_AdvanceMatchRng ; $5f2a
 	ld h, $00 ; $5f2d
 	ld l, a ; $5f2f
 	add hl, hl ; $5f30
@@ -4058,7 +4058,7 @@ ModeHookTable_07:
 	ld e, l ; $5f37
 	ld d, h ; $5f38
 	farcall FarPtr_08_52 ; $5f39
-	farcall FarPtr_08_36 ; $5f3c
+	farcall FarPtr_AdvanceMatchRng ; $5f3c
 	ld h, $00 ; $5f3f
 	ld l, a ; $5f41
 	add hl, hl ; $5f42

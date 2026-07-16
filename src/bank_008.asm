@@ -1,39 +1,39 @@
 SECTION "ROM Bank $08", ROMX[$4000], BANK[$08]
 
-FarPtr_08_00:
-	dw Func_08_4070 ; $4000
-FarPtr_08_02:
-	dw Func_08_40ab ; $4002
-FarPtr_08_04:
-	dw Func_08_4190 ; $4004
+FarPtr_InitDefaultMatchSettings:
+	dw InitDefaultMatchSettings ; $4000
+FarPtr_ResetMatchState:
+	dw ResetMatchState ; $4002
+FarPtr_RunMatch:
+	dw RunMatch ; $4004
 FarPtr_08_06:
 	dw Func_08_6544 ; $4006
 FarPtr_08_08:
 	dw Func_08_6557 ; $4008
-FarPtr_08_0a:
-	dw Func_08_41f7 ; $400a
+FarPtr_UpdateMatchFrame:
+	dw UpdateMatchFrame ; $400a
 FarPtr_InitChar:
 	dw InitChar ; $400c
 FarPtr_ClearSpriteSlots:
 	dw ClearSpriteSlots ; $400e
 FarPtr_DrawCharSprite:
 	dw DrawCharSprite ; $4010
-FarPtr_08_12:
-	dw Func_08_7791 ; $4012
+FarPtr_StepCharAnimation:
+	dw StepCharAnimation ; $4012
 FarPtr_08_14:
 	dw Func_08_7621 ; $4014
 FarPtr_BuildCharSpriteSlots:
 	dw BuildCharSpriteSlots ; $4016
 FarPtr_08_18:
 	dw Func_08_75e8 ; $4018
-FarPtr_08_1a:
-	dw Func_08_75c0 ; $401a
+FarPtr_EaseCharFacing:
+	dw EaseCharFacing ; $401a
 FarPtr_SetCharState:
 	dw SetCharState ; $401c
 FarPtr_08_1e:
 	dw Func_08_69c2 ; $401e
-FarPtr_08_20:
-	dw Func_08_69ea ; $4020
+FarPtr_SetCharAnimation:
+	dw SetCharAnimation ; $4020
 FarPtr_SetCharPosAndTarget:
 	dw SetCharPosAndTarget ; $4022
 FarPtr_SetBallTrailColor:
@@ -44,8 +44,8 @@ FarPtr_08_28:
 	dw Func_08_45d8 ; $4028
 FarPtr_08_2a:
 	dw Func_08_463a ; $402a
-FarPtr_08_2c:
-	dw Func_08_46e7 ; $402c
+FarPtr_FindServerCharBank:
+	dw FindServerCharBank ; $402c
 FarPtr_08_2e:
 	dw Func_08_61c9 ; $402e
 FarPtr_08_30:
@@ -54,10 +54,10 @@ FarPtr_08_32:
 	dw Func_08_5a51 ; $4032
 FarPtr_StartBounceEffect:
 	dw StartBounceEffect ; $4034
-FarPtr_08_36:
-	dw Func_08_43f6 ; $4036
-FarPtr_08_38:
-	dw Func_08_440d ; $4038
+FarPtr_AdvanceMatchRng:
+	dw AdvanceMatchRng ; $4036
+FarPtr_ReadMatchInputHeld:
+	dw ReadMatchInputHeld ; $4038
 FarPtr_ReadMatchInputPressed:
 	dw ReadMatchInputPressed ; $403a
 FarPtr_ReadMatchInputRepeat:
@@ -86,22 +86,22 @@ FarPtr_08_52:
 	dw Func_08_674f ; $4052
 FarPtr_08_54:
 	dw Func_08_675e ; $4054
-FarPtr_08_56:
-	dw Func_08_67c2 ; $4056
-FarPtr_08_58:
-	dw Func_08_5d9a ; $4058
-FarPtr_08_5a:
-	dw Func_08_5c2b ; $405a
-FarPtr_08_5c:
-	dw Func_08_5c14 ; $405c
+FarPtr_IsBallInTargetZone:
+	dw IsBallInTargetZone ; $4056
+FarPtr_ResolvePointWinner:
+	dw ResolvePointWinner ; $4058
+FarPtr_UpdatePointStats:
+	dw UpdatePointStats ; $405a
+FarPtr_AwardPoint:
+	dw AwardPoint ; $405c
 FarPtr_StartPointEndReactions:
 	dw StartPointEndReactions ; $405e
-FarPtr_08_60:
-	dw Func_08_4df4 ; $4060
+FarPtr_ResolvePointOutcome:
+	dw ResolvePointOutcome ; $4060
 FarPtr_08_62:
 	dw Func_08_458b ; $4062
-FarPtr_08_64:
-	dw Func_08_5b7f ; $4064
+FarPtr_HandleServeFault:
+	dw HandleServeFault ; $4064
 FarPtr_SetCharTarget:
 	dw SetCharTarget ; $4066
 FarPtr_08_68:
@@ -112,7 +112,7 @@ FarPtr_CharPointEndReaction:
 	dw CharPointEndReaction ; $406c
 FarPtr_08_6e:
 	dw Func_08_468b ; $406e
-Func_08_4070:
+InitDefaultMatchSettings:
 	xor a, a ; $4070
 	ld [$c8a7], a ; $4071
 	ld hl, $c4e0 ; $4074
@@ -137,7 +137,7 @@ Func_08_4070:
 	ld a, $11 ; $40a5
 	ld [$c8f8], a ; $40a7
 	ret ; $40aa
-Func_08_40ab:
+ResetMatchState:
 	wram_bank $04 ; $40ab
 	ld hl, $c400 ; $40b1
 	ld c, $0e ; $40b4
@@ -211,19 +211,19 @@ Label_08_413b:
 	xor a, a ; $4141
 	ldh [$ffdd], a ; $4142
 	ret ; $4144
-Func_08_4145:
+InitMatchScene:
 	call ClearFrameTasks ; $4145
 	farcall FarPtr_05_76 ; $4148
 	ld a, $02 ; $414b
 	ld [$c3b3], a ; $414d
 	ld a, $00 ; $4150
 	ld [$c3b6], a ; $4152
-	call Func_08_40ab ; $4155
+	call ResetMatchState ; $4155
 	call Func_08_450e ; $4158
 	call Func_08_4539 ; $415b
-	call Func_08_5e28 ; $415e
+	call LoadCourtSceneData ; $415e
 	wram_bank $04 ; $4161
-	call Func_08_511c ; $4167
+	call ResetBallState ; $4167
 	call InitAllChars ; $416a
 	farcall FarPtr_InitAllObjSlots ; $416d
 	call ClearSpriteSlots ; $4170
@@ -237,13 +237,13 @@ Func_08_4145:
 	farcall FarPtr_28_00 ; $4186
 	wram_bank $04 ; $4189
 	ret ; $418f
-Func_08_4190:
+RunMatch:
 	ld c, $20 ; $4190
 	call Func_00_1d20 ; $4192
 	call Func_00_1da4 ; $4195
 	call AdvanceFrame ; $4198
 	call DisableLCDSafely ; $419b
-	call Func_08_4145 ; $419e
+	call InitMatchScene ; $419e
 	call EnableLCD ; $41a1
 	farcall FarPtr_07_22 ; $41a4
 	ld a, [$c8f8] ; $41a7
@@ -256,10 +256,10 @@ Func_08_4190:
 	ld c, $20 ; $41ba
 	call Func_00_1d2e ; $41bc
 	wram_bank $04 ; $41bf
-	call Func_08_6117 ; $41c5
+	call PlayCourtIntro ; $41c5
 	xor a, a ; $41c8
 	ld [$c4c0], a ; $41c9
-	call Func_08_4714 ; $41cc
+	call RunMatchPlayLoop ; $41cc
 	ldh a, [$ffc2] ; $41cf
 	ld [$c493], a ; $41d1
 	farcall FarPtr_07_24 ; $41d4
@@ -275,19 +275,19 @@ Func_08_4190:
 	call AdvanceFrame ; $41f0
 	farcall FarPtr_1e_04 ; $41f3
 	ret ; $41f6
-Func_08_41f7:
+UpdateMatchFrame:
 	wram_bank $04 ; $41f7
 	ld a, [$c4c0] ; $41fd
 	and a, a ; $4200
 	jr nz, Label_08_4226 ; $4201
 	call ClearSpriteSlots ; $4203
-	call Func_08_61dc ; $4206
+	call UpdateMatchCamera ; $4206
 	call UpdateAllChars ; $4209
 	call HandleBallHitEvent ; $420c
 	call Func_08_43d3 ; $420f
 	call UpdateBallVisuals ; $4212
 	call Func_08_4242 ; $4215
-	call Func_08_4352 ; $4218
+	call HandleBallBounceEvent ; $4218
 	ld d, $00 ; $421b
 	call CallModeHook ; $421d
 	ld hl, $0902 ; $4220
@@ -445,7 +445,7 @@ Label_08_4349:
 	ld a, c ; $434d
 	ld [$c4d9], a ; $434e
 	ret ; $4351
-Func_08_4352:
+HandleBallBounceEvent:
 	ld a, [$c4b3] ; $4352
 	and a, a ; $4355
 	ret z ; $4356
@@ -534,7 +534,7 @@ Func_08_43e5:
 	ld [$c4d9], a ; $43f2
 Label_08_43f5:
 	ret ; $43f5
-Func_08_43f6:
+AdvanceMatchRng:
 	push hl ; $43f6
 	ld a, [$c8df] ; $43f7
 	add a, $73 ; $43fa
@@ -547,7 +547,7 @@ Func_08_43f6:
 	ld [$c8df], a ; $4408
 	pop hl ; $440b
 	ret ; $440c
-Func_08_440d:
+ReadMatchInputHeld:
 	ldh a, [$ffd8] ; $440d
 	and a, a ; $440f
 	jr nz, Label_08_4425 ; $4410
@@ -586,7 +586,7 @@ Label_08_4437:
 	and a, a ; $443a
 	jr nz, Label_08_4451 ; $443b
 	call StepMatchFrame ; $443d
-	call Func_08_440d ; $4440
+	call ReadMatchInputHeld ; $4440
 	and a, $03 ; $4443
 	jr nz, Label_08_4451 ; $4445
 	ld a, [$c4ee] ; $4447
@@ -601,7 +601,7 @@ Func_08_4452:
 	and a, a ; $4455
 	jr nz, Label_08_4464 ; $4456
 	call StepMatchFrame ; $4458
-	call Func_08_440d ; $445b
+	call ReadMatchInputHeld ; $445b
 	and a, $f3 ; $445e
 	jr nz, Label_08_4464 ; $4460
 	jr Func_08_4452 ; $4462
@@ -621,14 +621,14 @@ StepMatchFrame:
 	jr Label_08_4480 ; $4474
 Label_08_4476:
 	call AdvanceFrame ; $4476
-	call Func_08_41f7 ; $4479
+	call UpdateMatchFrame ; $4479
 	ld hl, $ffe9 ; $447c
 	inc [hl] ; $447f
 Label_08_4480:
 	ld a, [$c4c0] ; $4480
 	and a, a ; $4483
 	jr nz, Label_08_448c ; $4484
-	call Func_08_4496 ; $4486
+	call HandlePauseMenu ; $4486
 	call Func_08_44ef ; $4489
 Label_08_448c:
 	pop af ; $448c
@@ -638,7 +638,7 @@ Label_08_448c:
 	pop bc ; $4493
 	pop af ; $4494
 	ret ; $4495
-Func_08_4496:
+HandlePauseMenu:
 	call ReadMatchInputPressed ; $4496
 	and a, $08 ; $4499
 	ret z ; $449b
@@ -667,7 +667,7 @@ Func_08_44bd:
 	ret z ; $44c9
 	call Func_08_5f43 ; $44ca
 	call Func_08_6192 ; $44cd
-	call Func_08_61dc ; $44d0
+	call UpdateMatchCamera ; $44d0
 	ld hl, $4cb2 ; $44d3
 	call ForEachCharBank ; $44d6
 	farcall FarPtr_LoadServeGfx ; $44d9
@@ -1006,7 +1006,7 @@ Func_08_46b0:
 	ld a, d ; $46e4
 	ld [hl+], a ; $46e5
 	ret ; $46e6
-Func_08_46e7:
+FindServerCharBank:
 	ld hl, $df09 ; $46e7
 	ld b, $04 ; $46ea
 	ld a, b ; $46ec
@@ -1030,7 +1030,7 @@ Func_08_46e7:
 Label_08_470d:
 	wram_bank $04 ; $470d
 	ret ; $4713
-Func_08_4714:
+RunMatchPlayLoop:
 	ld a, [wGameMode] ; $4714
 	cp a, $02 ; $4717
 	jr z, Label_08_4721 ; $4719
@@ -1041,7 +1041,7 @@ Label_08_4721:
 	ld hl, $c4cc ; $4721
 	ld [hl], $01 ; $4724
 Label_08_4726:
-	call Func_08_4737 ; $4726
+	call PlaySet ; $4726
 	ld a, [$c4c3] ; $4729
 	and a, $80 ; $472c
 	jr nz, Label_08_4736 ; $472e
@@ -1050,7 +1050,7 @@ Label_08_4726:
 	jr z, Label_08_4726 ; $4734
 Label_08_4736:
 	ret ; $4736
-Func_08_4737:
+PlaySet:
 	ld hl, $4745 ; $4737
 	push hl ; $473a
 	ld a, [wTiebreakerIndicator] ; $473b
@@ -1062,7 +1062,7 @@ Func_08_4737:
 	jr nz, Label_08_4757 ; $474a
 	ld a, [wSetWinLoseFlag] ; $474c
 	and a, a ; $474f
-	jr z, Func_08_4737 ; $4750
+	jr z, PlaySet ; $4750
 	ld a, $01 ; $4752
 	ld [$c4cc], a ; $4754
 Label_08_4757:
@@ -1075,7 +1075,7 @@ Label_08_4758:
 	call Func_08_5f8c ; $4762
 Label_08_4765:
 	call AssignCourtPositions ; $4765
-	call Func_08_4d0f ; $4768
+	call PlayPoint ; $4768
 	ld a, [$c4c3] ; $476b
 	and a, $80 ; $476e
 	jr nz, Label_08_4781 ; $4770
@@ -1106,7 +1106,7 @@ Label_08_47a3:
 	call AssignCourtPositions ; $47a3
 	call Func_08_5f43 ; $47a6
 	call Func_08_5f8c ; $47a9
-	call Func_08_4d0f ; $47ac
+	call PlayPoint ; $47ac
 	ld a, [$c4c3] ; $47af
 	and a, $80 ; $47b2
 	jr nz, Label_08_47c6 ; $47b4
@@ -1146,7 +1146,7 @@ AssignCourtPositions:
 	call Func_08_4c19 ; $47ef
 	call Func_08_4c33 ; $47f2
 	call Func_08_4c4e ; $47f5
-	call Func_08_4c7a ; $47f8
+	call IdentifyServingPlayer ; $47f8
 	ld hl, $4c99 ; $47fb
 	call ForEachCharBank ; $47fe
 	wram_bank $04 ; $4801
@@ -1458,8 +1458,8 @@ Func_08_4c4e:
 	wram_bank $04 ; $4c70
 	call Func_08_6a33 ; $4c76
 	ret ; $4c79
-Func_08_4c7a:
-	call Func_08_46e7 ; $4c7a
+IdentifyServingPlayer:
+	call FindServerCharBank ; $4c7a
 	ld a, b ; $4c7d
 	wram_bank ; $4c7e
 	ld a, b ; $4c82
@@ -1486,7 +1486,7 @@ Func_08_4c7a:
 	call Func_08_6098 ; $4cb2
 	call SetCharPosAndTarget ; $4cb5
 	ret ; $4cb8
-Func_08_4cb9:
+ResetPointState:
 	xor a, a ; $4cb9
 	ld [$c4b5], a ; $4cba
 	ld [$c4b2], a ; $4cbd
@@ -1505,7 +1505,7 @@ Func_08_4cb9:
 	ld [$c4c2], a ; $4ce3
 	ld a, $01 ; $4ce6
 	ld [wOffscreenArrowsEnabled], a ; $4ce8
-	call Func_08_511c ; $4ceb
+	call ResetBallState ; $4ceb
 	ld a, [$c7b8] ; $4cee
 	and a, a ; $4cf1
 	ret nz ; $4cf2
@@ -1523,13 +1523,13 @@ Func_08_4cb9:
 	ld hl, $4f6f ; $4d08
 	call ForEachCharBank ; $4d0b
 	ret ; $4d0e
-Func_08_4d0f:
-	call Func_08_4cb9 ; $4d0f
+PlayPoint:
+	call ResetPointState ; $4d0f
 	ld hl, $c4c8 ; $4d12
 	res 1, [hl] ; $4d15
 	farcall FarPtr_LoadServeGfx ; $4d17
 	call StepMatchFrame ; $4d1a
-	call Func_08_4d8c ; $4d1d
+	call AnnouncePointSituation ; $4d1d
 	ld hl, $4f91 ; $4d20
 	call ForEachCharBank ; $4d23
 Label_08_4d26:
@@ -1548,12 +1548,12 @@ Label_08_4d26:
 Label_08_4d42:
 	call Func_08_4fa4 ; $4d42
 	farcall FarPtr_09_26 ; $4d45
-	call Func_08_5ad7 ; $4d48
+	call ScorePoint ; $4d48
 	call StepMatchFrame ; $4d4b
 	farcall FarPtr_09_04 ; $4d4e
 	call StepMatchFrame ; $4d51
 	call StartPointEndReactions ; $4d54
-	call Func_08_4df4 ; $4d57
+	call ResolvePointOutcome ; $4d57
 	ret ; $4d5a
 Label_08_4d5b:
 	ld hl, $c4c3 ; $4d5b
@@ -1561,7 +1561,7 @@ Label_08_4d5b:
 	and a, $fe ; $4d5f
 	ld [hl], a ; $4d61
 	ret ; $4d62
-Func_08_4d63:
+SetPointSituationBgm:
 	ld d, $0f ; $4d63
 	ld a, [$c4d5] ; $4d65
 	and a, a ; $4d68
@@ -1584,9 +1584,9 @@ Label_08_4d87:
 	ld a, d ; $4d87
 	call Func_00_3024 ; $4d88
 	ret ; $4d8b
-Func_08_4d8c:
-	call Func_08_5b2e ; $4d8c
-	call Func_08_4d63 ; $4d8f
+AnnouncePointSituation:
+	call EvaluatePointSituation ; $4d8c
+	call SetPointSituationBgm ; $4d8f
 	ld d, $0a ; $4d92
 	ld a, [$c4d5] ; $4d94
 	and a, a ; $4d97
@@ -1635,7 +1635,7 @@ Label_08_4ddb:
 	call StepMatchFrames ; $4df0
 Label_08_4df3:
 	ret ; $4df3
-Func_08_4df4:
+ResolvePointOutcome:
 	ld hl, $c442 ; $4df4
 	ld a, [hl+] ; $4df7
 	ld d, [hl] ; $4df8
@@ -1816,7 +1816,7 @@ Label_08_4f37:
 	call Func_08_6098 ; $4f74
 	call SetCharPosAndTarget ; $4f77
 	ld d, $01 ; $4f7a
-	call Func_08_69ea ; $4f7c
+	call SetCharAnimation ; $4f7c
 	ld hl, $df0f ; $4f7f
 	res 0, [hl] ; $4f82
 	res 1, [hl] ; $4f84
@@ -2045,7 +2045,7 @@ BallTrailPalettes:
 	dw $0180, $031f, $4009, $0000 ; record 5
 	dw $0180, $031f, $7fe0, $0000 ; record 6
 	dw $0180, $031f, $7ffe, $0000 ; record 7
-Func_08_511c:
+ResetBallState:
 	xor a, a ; $511c
 	ld [wBallSpriteEnabled], a ; $511d
 	ld [wBallShadowEnabled], a ; $5120
@@ -2078,7 +2078,7 @@ Func_08_511c:
 	call SetBallTrailColor ; $514f
 	ret ; $5152
 UpdateBallVisuals:
-	call Func_08_5767 ; $5153
+	call StepBallPhysics ; $5153
 	call BuildBallSlot ; $5156
 	call BuildBallTrailSlots ; $5159
 	call BuildBallShadowSlot ; $515c
@@ -2976,7 +2976,7 @@ Label_08_571e:
 	ld [$c41d], a ; $5763
 Label_08_5766:
 	ret ; $5766
-Func_08_5767:
+StepBallPhysics:
 	xor a, a ; $5767
 	ld [$c4b3], a ; $5768
 	ld hl, $c400 ; $576b
@@ -2993,7 +2993,7 @@ Func_08_5767:
 	ld de, $c426 ; $578c
 	call Func_08_5a87 ; $578f
 	call Func_08_5949 ; $5792
-	call Func_08_5814 ; $5795
+	call HandleBallNetCrossing ; $5795
 	ld b, $00 ; $5798
 	ld a, [$c407] ; $579a
 	add a, a ; $579d
@@ -3069,7 +3069,7 @@ Label_08_57c6:
 	ld [hl+], a ; $5812
 Label_08_5813:
 	ret ; $5813
-Func_08_5814:
+HandleBallNetCrossing:
 	xor a, a ; $5814
 	ld [$c4b4], a ; $5815
 	ld hl, $c407 ; $5818
@@ -3177,7 +3177,7 @@ Label_08_58a3:
 	sub a, d ; $58bd
 	ld d, a ; $58be
 Label_08_58bf:
-	call Func_08_43f6 ; $58bf
+	call AdvanceMatchRng ; $58bf
 	ld h, $00 ; $58c2
 	ld l, a ; $58c4
 	add hl, hl ; $58c5
@@ -3244,7 +3244,7 @@ Label_08_58f5:
 	sub a, d ; $591b
 	ld d, a ; $591c
 Label_08_591d:
-	call Func_08_43f6 ; $591d
+	call AdvanceMatchRng ; $591d
 	ld h, $00 ; $5920
 	ld l, a ; $5922
 	add hl, hl ; $5923
@@ -3594,42 +3594,42 @@ Label_08_5ad4:
 	ret c ; $5ad4
 	dec b ; $5ad5
 	ret ; $5ad6
-Func_08_5ad7:
-	call Func_08_5b7f ; $5ad7
-	call Func_08_5ba7 ; $5ada
-	call Func_08_5d9a ; $5add
+ScorePoint:
+	call HandleServeFault ; $5ad7
+	call FlagServiceReturnAce ; $5ada
+	call ResolvePointWinner ; $5add
 	ld [wPointWinLoseFlag], a ; $5ae0
-	call Func_08_5c2b ; $5ae3
-Func_08_5ae6:
+	call UpdatePointStats ; $5ae3
+ApplyPointToScore:
 	ld a, [wTiebreakerIndicator] ; $5ae6
 	and a, a ; $5ae9
 	jr nz, Label_08_5b0d ; $5aea
-	call Func_08_5c14 ; $5aec
+	call AwardPoint ; $5aec
 	ld b, $04 ; $5aef
-	call Func_08_5bc6 ; $5af1
-	call Func_08_5d37 ; $5af4
+	call ResetAdvantageToDeuce ; $5af1
+	call CheckGameWon ; $5af4
 	ld [wGameWinLoseFlag], a ; $5af7
-	call Func_08_5bf4 ; $5afa
-	call Func_08_5ce9 ; $5afd
+	call AwardGame ; $5afa
+	call CheckSetWon ; $5afd
 	ld [wSetWinLoseFlag], a ; $5b00
-	call Func_08_5bdb ; $5b03
-	call Func_08_5cc3 ; $5b06
+	call AwardSet ; $5b03
+	call CheckMatchWon ; $5b06
 	ld [wMatchWinLoseFlag], a ; $5b09
 	ret ; $5b0c
 Label_08_5b0d:
-	call Func_08_5c14 ; $5b0d
+	call AwardPoint ; $5b0d
 	ld b, $07 ; $5b10
-	call Func_08_5bc6 ; $5b12
-	call Func_08_5d54 ; $5b15
+	call ResetAdvantageToDeuce ; $5b12
+	call CheckTiebreakGameWon ; $5b15
 	ld [wGameWinLoseFlag], a ; $5b18
-	call Func_08_5bf4 ; $5b1b
-	call Func_08_5ce9 ; $5b1e
+	call AwardGame ; $5b1b
+	call CheckSetWon ; $5b1e
 	ld [wSetWinLoseFlag], a ; $5b21
-	call Func_08_5bdb ; $5b24
-	call Func_08_5cc3 ; $5b27
+	call AwardSet ; $5b24
+	call CheckMatchWon ; $5b27
 	ld [wMatchWinLoseFlag], a ; $5b2a
 	ret ; $5b2d
-Func_08_5b2e:
+EvaluatePointSituation:
 	ld a, [wPlayer1PointsWon] ; $5b2e
 	ld hl, wPlayer2PointsWon ; $5b31
 	sub a, [hl] ; $5b34
@@ -3650,7 +3650,7 @@ Label_08_5b3f:
 	call CopyMemoryFast ; $5b4c
 	pop af ; $5b4f
 	ld [wPointWinLoseFlag], a ; $5b50
-	call Func_08_5ae6 ; $5b53
+	call ApplyPointToScore ; $5b53
 	ld a, [wGameWinLoseFlag] ; $5b56
 	ld [$c4d7], a ; $5b59
 	ld a, [wSetWinLoseFlag] ; $5b5c
@@ -3669,7 +3669,7 @@ Label_08_5b74:
 	ld [$c4d6], a ; $5b78
 	ld [$c4d5], a ; $5b7b
 	ret ; $5b7e
-Func_08_5b7f:
+HandleServeFault:
 	ld a, [wRallyLength] ; $5b7f
 	cp a, $01 ; $5b82
 	ret nz ; $5b84
@@ -3690,7 +3690,7 @@ Label_08_5b9c:
 	ld a, $02 ; $5ba1
 	ld [wPointOutcome], a ; $5ba3
 	ret ; $5ba6
-Func_08_5ba7:
+FlagServiceReturnAce:
 	ld a, [wPointOutcome] ; $5ba7
 	cp a, $06 ; $5baa
 	ret nz ; $5bac
@@ -3707,7 +3707,7 @@ Label_08_5bb9:
 	ld [$c4d1], a ; $5bc2
 Label_08_5bc5:
 	ret ; $5bc5
-Func_08_5bc6:
+ResetAdvantageToDeuce:
 	ld a, [wPlayer1PointsWon] ; $5bc6
 	cp a, b ; $5bc9
 	jr nz, Label_08_5bda ; $5bca
@@ -3720,7 +3720,7 @@ Func_08_5bc6:
 	ld [wPlayer2PointsWon], a ; $5bd7
 Label_08_5bda:
 	ret ; $5bda
-Func_08_5bdb:
+AwardSet:
 	ld a, [wSetWinLoseFlag] ; $5bdb
 	add a, a ; $5bde
 	ret z ; $5bdf
@@ -3734,7 +3734,7 @@ Label_08_5be8:
 	ld [wPlayer2GamesWon], a ; $5bed
 	ld [wTiebreakerIndicator], a ; $5bf0
 	ret ; $5bf3
-Func_08_5bf4:
+AwardGame:
 	ld a, [wGameWinLoseFlag] ; $5bf4
 	add a, a ; $5bf7
 	ret z ; $5bf8
@@ -3751,7 +3751,7 @@ Label_08_5c01:
 	ld hl, wTotalGamesWonInMatch ; $5c0f
 	inc [hl] ; $5c12
 	ret ; $5c13
-Func_08_5c14:
+AwardPoint:
 	ld a, [wPointWinLoseFlag] ; $5c14
 	add a, a ; $5c17
 	ret z ; $5c18
@@ -3765,31 +3765,31 @@ Label_08_5c21:
 	ld hl, wTotalPointsScoredInCurrentGame ; $5c26
 	inc [hl] ; $5c29
 	ret ; $5c2a
-Func_08_5c2b:
-	call Func_08_5c47 ; $5c2b
-	call Func_08_5c53 ; $5c2e
+UpdatePointStats:
+	call RecordFaultStat ; $5c2b
+	call RecordDoubleFaultStat ; $5c2e
 	ld a, [wPointOutcome] ; $5c31
 	cp a, $06 ; $5c34
 	ret nz ; $5c36
-	call Func_08_5ca1 ; $5c37
-	call Func_08_5c90 ; $5c3a
-	call Func_08_5c7f ; $5c3d
-	call Func_08_5c6f ; $5c40
-	call Func_08_5c5f ; $5c43
+	call RecordDropShotWinnerStat ; $5c37
+	call RecordLobWinnerStat ; $5c3a
+	call RecordSmashAceStat ; $5c3d
+	call RecordReturnAceStat ; $5c40
+	call RecordServiceAceStat ; $5c43
 	ret ; $5c46
-Func_08_5c47:
+RecordFaultStat:
 	ld a, [wPointOutcome] ; $5c47
 	cp a, $01 ; $5c4a
 	ret nz ; $5c4c
 	ld hl, wCharacter1Faults ; $5c4d
 	jp Label_08_5cb2 ; $5c50
-Func_08_5c53:
+RecordDoubleFaultStat:
 	ld a, [wPointOutcome] ; $5c53
 	cp a, $02 ; $5c56
 	ret nz ; $5c58
 	ld hl, wCharacter1DoubleFaults ; $5c59
 	jp Label_08_5cb2 ; $5c5c
-Func_08_5c5f:
+RecordServiceAceStat:
 	ld a, [$c4d0] ; $5c5f
 	and a, a ; $5c62
 	ret z ; $5c63
@@ -3797,7 +3797,7 @@ Func_08_5c5f:
 	ld [$c491], a ; $5c66
 	ld hl, wCharacter1ServiceAces ; $5c69
 	jp Label_08_5cb2 ; $5c6c
-Func_08_5c6f:
+RecordReturnAceStat:
 	ld a, [$c4d1] ; $5c6f
 	and a, a ; $5c72
 	ret z ; $5c73
@@ -3805,7 +3805,7 @@ Func_08_5c6f:
 	ld [$c491], a ; $5c76
 	ld hl, wCharacter1ReturnAces ; $5c79
 	jp Label_08_5cb2 ; $5c7c
-Func_08_5c7f:
+RecordSmashAceStat:
 	ld a, [$c4a0] ; $5c7f
 	cp a, $09 ; $5c82
 	ret nz ; $5c84
@@ -3813,7 +3813,7 @@ Func_08_5c7f:
 	ld [$c491], a ; $5c87
 	ld hl, wCharacter1SmashAces ; $5c8a
 	jp Label_08_5cb2 ; $5c8d
-Func_08_5c90:
+RecordLobWinnerStat:
 	ld a, [$c4a0] ; $5c90
 	cp a, $0a ; $5c93
 	ret nz ; $5c95
@@ -3821,7 +3821,7 @@ Func_08_5c90:
 	ld [$c491], a ; $5c98
 	ld hl, wCharacter1LobShotWinners ; $5c9b
 	jp Label_08_5cb2 ; $5c9e
-Func_08_5ca1:
+RecordDropShotWinnerStat:
 	ld a, [$c4a0] ; $5ca1
 	cp a, $0b ; $5ca4
 	ret nz ; $5ca6
@@ -3844,7 +3844,7 @@ Label_08_5cbd:
 	ret nc ; $5cc0
 	inc [hl] ; $5cc1
 	ret ; $5cc2
-Func_08_5cc3:
+CheckMatchWon:
 	ld a, [wMatchTypeNumberOfSets] ; $5cc3
 	inc a ; $5cc6
 	srl a ; $5cc7
@@ -3869,7 +3869,7 @@ Label_08_5cde:
 Label_08_5ce7:
 	xor a, a ; $5ce7
 	ret ; $5ce8
-Func_08_5ce9:
+CheckSetWon:
 	ld a, [wMatchTypeNumberOfGames] ; $5ce9
 	cp a, $02 ; $5cec
 	jp z, Label_08_5d14 ; $5cee
@@ -3887,7 +3887,7 @@ Label_08_5cfa:
 Label_08_5d03:
 	ld b, $06 ; $5d03
 	ld c, $06 ; $5d05
-	call Func_08_5d71 ; $5d07
+	call EvalWinByTwo ; $5d07
 	cp a, $80 ; $5d0a
 	ret nz ; $5d0c
 	ld a, $01 ; $5d0d
@@ -3909,14 +3909,14 @@ Label_08_5d1d:
 Label_08_5d26:
 	ld b, $02 ; $5d26
 	ld c, $02 ; $5d28
-	call Func_08_5d71 ; $5d2a
+	call EvalWinByTwo ; $5d2a
 	cp a, $80 ; $5d2d
 	ret nz ; $5d2f
 	ld a, $01 ; $5d30
 	ld [wTiebreakerIndicator], a ; $5d32
 	xor a, a ; $5d35
 	ret ; $5d36
-Func_08_5d37:
+CheckGameWon:
 	xor a, a ; $5d37
 	ld [wDeuceIndicator], a ; $5d38
 	ld b, $03 ; $5d3b
@@ -3925,14 +3925,14 @@ Func_08_5d37:
 	ld d, a ; $5d42
 	ld a, [wPlayer2PointsWon] ; $5d43
 	ld e, a ; $5d46
-	call Func_08_5d71 ; $5d47
+	call EvalWinByTwo ; $5d47
 	cp a, $80 ; $5d4a
 	ret nz ; $5d4c
 	ld a, $01 ; $5d4d
 	ld [wDeuceIndicator], a ; $5d4f
 	xor a, a ; $5d52
 	ret ; $5d53
-Func_08_5d54:
+CheckTiebreakGameWon:
 	xor a, a ; $5d54
 	ld [wDeuceIndicator], a ; $5d55
 	ld b, $06 ; $5d58
@@ -3941,14 +3941,14 @@ Func_08_5d54:
 	ld d, a ; $5d5f
 	ld a, [wPlayer2PointsWon] ; $5d60
 	ld e, a ; $5d63
-	call Func_08_5d71 ; $5d64
+	call EvalWinByTwo ; $5d64
 	cp a, $80 ; $5d67
 	ret nz ; $5d69
 	ld a, $01 ; $5d6a
 	ld [wDeuceIndicator], a ; $5d6c
 	xor a, a ; $5d6f
 	ret ; $5d70
-Func_08_5d71:
+EvalWinByTwo:
 	ld a, d ; $5d71
 	sub a, e ; $5d72
 	jr z, Label_08_5d91 ; $5d73
@@ -3980,7 +3980,7 @@ Label_08_5d91:
 Label_08_5d98:
 	xor a, a ; $5d98
 	ret ; $5d99
-Func_08_5d9a:
+ResolvePointWinner:
 	ld a, [wPointOutcome] ; $5d9a
 	cp a, $01 ; $5d9d
 	jr z, Label_08_5dba ; $5d9f
@@ -4033,7 +4033,7 @@ Label_08_5dbc:
 	db $cd, $b3, $00, $13 ; 0x58
 	db $b3, $cd, $0c, $15 ; 0x5c
 	db $cd, $b3, $03, $24 ; 0x60
-Func_08_5e28:
+LoadCourtSceneData:
 	ldh a, [hWramBank] ; $5e28
 	push af ; $5e2a
 	xor a, a ; $5e2b
@@ -4238,7 +4238,7 @@ Label_08_5fb4:
 Func_08_5fbc:
 	xor a, a ; $5fbc
 	ld [wOffscreenArrowsEnabled], a ; $5fbd
-	call Func_08_511c ; $5fc0
+	call ResetBallState ; $5fc0
 	call Func_08_6199 ; $5fc3
 	call Func_08_61aa ; $5fc6
 	ld hl, $5fe5 ; $5fc9
@@ -4426,7 +4426,7 @@ Label_08_6106:
 	dw $0300, $0240 ; record 1
 	dw $0300, $0180 ; record 2
 	dw $0300, $0180 ; record 3
-Func_08_6117:
+PlayCourtIntro:
 	ld b, $44 ; $6117
 	ld a, [$c8f5] ; $6119
 	and a, a ; $611c
@@ -4452,28 +4452,28 @@ Label_08_6132:
 	call StepMatchFrames ; $613e
 	ld b, $30 ; $6141
 	ld hl, $0200 ; $6143
-	call Func_08_6178 ; $6146
+	call PanCamera ; $6146
 	jr nz, Label_08_6171 ; $6149
 	ld b, $38 ; $614b
 	ld hl, $0002 ; $614d
-	call Func_08_6178 ; $6150
+	call PanCamera ; $6150
 	jr nz, Label_08_6171 ; $6153
 	ld b, $30 ; $6155
 	ld hl, $fe00 ; $6157
-	call Func_08_6178 ; $615a
+	call PanCamera ; $615a
 	jr nz, Label_08_6171 ; $615d
 	ld b, $1e ; $615f
 	ld hl, $00fe ; $6161
-	call Func_08_6178 ; $6164
+	call PanCamera ; $6164
 	jr nz, Label_08_6171 ; $6167
 	ld b, $1a ; $6169
 	ld hl, $0200 ; $616b
-	call Func_08_6178 ; $616e
+	call PanCamera ; $616e
 Label_08_6171:
 	call Func_08_6192 ; $6171
-	call Func_08_61dc ; $6174
+	call UpdateMatchCamera ; $6174
 	ret ; $6177
-Func_08_6178:
+PanCamera:
 	ld a, d ; $6178
 	ldh [$ff8b], a ; $6179
 	ld a, e ; $617b
@@ -4489,7 +4489,7 @@ Func_08_6178:
 	jr nz, Label_08_6191 ; $6189
 	call StepMatchFrame ; $618b
 	dec b ; $618e
-	jr nz, Func_08_6178 ; $618f
+	jr nz, PanCamera ; $618f
 Label_08_6191:
 	ret ; $6191
 Func_08_6192:
@@ -4541,7 +4541,7 @@ Func_08_61c9:
 	xor a, a ; $61d7
 	ld [$c4c9], a ; $61d8
 	ret ; $61db
-Func_08_61dc:
+UpdateMatchCamera:
 	ld a, [$c4c9] ; $61dc
 	and a, a ; $61df
 	jr z, Label_08_61f4 ; $61e0
@@ -4981,7 +4981,7 @@ DrawStandingShadowSlot:
 	ld d, [hl] ; $6540
 	jp QueueSprite16 ; $6541
 Func_08_6544:
-	call Func_08_4070 ; $6544
+	call InitDefaultMatchSettings ; $6544
 	ld a, $02 ; $6547
 	ld [$c8f5], a ; $6549
 	ld a, $01 ; $654c
@@ -4995,7 +4995,7 @@ Func_08_6557:
 	call Func_00_1da4 ; $655c
 	call AdvanceFrame ; $655f
 	call DisableLCDSafely ; $6562
-	call Func_08_4145 ; $6565
+	call InitMatchScene ; $6565
 	call EnableLCD ; $6568
 	ld a, [$c8f8] ; $656b
 	call Func_00_3024 ; $656e
@@ -5050,7 +5050,7 @@ Func_08_65be:
 	jr nz, Label_08_6630 ; $65df
 Label_08_65e1:
 	call Func_08_6662 ; $65e1
-	call Func_08_4cb9 ; $65e4
+	call ResetPointState ; $65e4
 	ld d, $01 ; $65e7
 	call CallModeHook ; $65e9
 	ld a, [$c4c3] ; $65ec
@@ -5111,8 +5111,8 @@ Label_08_664c:
 	call StepMatchFrames ; $6655
 Label_08_6658:
 	call Func_08_4fa4 ; $6658
-	call Func_08_5b7f ; $665b
-	call Func_08_5ba7 ; $665e
+	call HandleServeFault ; $665b
+	call FlagServiceReturnAce ; $665e
 	ret ; $6661
 Func_08_6662:
 	ld a, [wModeHookBank] ; $6662
@@ -5175,7 +5175,7 @@ Label_08_667f:
 	and a, $03 ; $66dc
 	ld [de], a ; $66de
 	wram_bank $04 ; $66df
-	call Func_08_4c7a ; $66e5
+	call IdentifyServingPlayer ; $66e5
 	ld hl, $4c99 ; $66e8
 	call ForEachCharBank ; $66eb
 	add sp, 8 ; $66ee
@@ -5344,7 +5344,7 @@ Func_08_676d:
 Label_08_67c0:
 	xor a, a ; $67c0
 	ret ; $67c1
-Func_08_67c2:
+IsBallInTargetZone:
 	ldh a, [hWramBank] ; $67c2
 	push af ; $67c4
 	wram_bank $04 ; $67c5
@@ -5548,14 +5548,14 @@ UpdateChar:
 	and a, a ; $695b
 	ret z ; $695c
 	call Func_08_6e64 ; $695d
-	call Func_08_780c ; $6960
-	call Func_08_6a62 ; $6963
-	call Func_08_6ec5 ; $6966
+	call ReadCharInput ; $6960
+	call UpdateCharStateMachine ; $6963
+	call CheckCharBallContact ; $6966
 	call Func_08_73ca ; $6969
 	call Func_08_72de ; $696c
 	call Func_08_72a6 ; $696f
-	call Func_08_75c0 ; $6972
-	call Func_08_7791 ; $6975
+	call EaseCharFacing ; $6972
+	call StepCharAnimation ; $6975
 	call Func_08_75e8 ; $6978
 	call Func_08_7621 ; $697b
 	call BuildCharSpriteSlots ; $697e
@@ -5626,7 +5626,7 @@ Func_08_69d5:
 	ld hl, $0110 ; $69e3
 	call Func_00_07c5 ; $69e6
 	ret ; $69e9
-Func_08_69ea:
+SetCharAnimation:
 	ld hl, $df2e ; $69ea
 	ld a, [hl] ; $69ed
 	cp a, d ; $69ee
@@ -5696,7 +5696,7 @@ ForEachCharBank:
 	pop hl ; $6a5a
 	wram_bank $04 ; $6a5b
 	jp hl ; $6a61
-Func_08_6a62:
+UpdateCharStateMachine:
 	xor a, a ; $6a62
 	ld [$df56], a ; $6a63
 	ld hl, $df10 ; $6a66
@@ -5776,7 +5776,7 @@ Label_08_6ae2:
 	dw Label_08_6bc2 ; $6aee jumptable
 	dw Label_08_6a8f ; $6af0 jumptable
 Label_08_6af2:
-	call Func_08_511c ; $6af2
+	call ResetBallState ; $6af2
 	xor a, a ; $6af5
 	ld [$df16], a ; $6af6
 	ld [$df17], a ; $6af9
@@ -5801,7 +5801,7 @@ Label_08_6af2:
 	wram_bank ; $6b25
 Label_08_6b29:
 	ld d, $11 ; $6b29
-	call Func_08_69ea ; $6b2b
+	call SetCharAnimation ; $6b2b
 	ld hl, $df19 ; $6b2e
 	inc [hl] ; $6b31
 	ret ; $6b32
@@ -5843,7 +5843,7 @@ Label_08_6b3f:
 	pop af ; $6b7e
 	wram_bank ; $6b7f
 	ld d, $0f ; $6b83
-	call Func_08_69ea ; $6b85
+	call SetCharAnimation ; $6b85
 	ld hl, $df19 ; $6b88
 	inc [hl] ; $6b8b
 Label_08_6b8c:
@@ -5872,7 +5872,7 @@ Label_08_6ba9:
 	ld a, $07 ; $6baf
 	ld [$df15], a ; $6bb1
 	ld d, a ; $6bb4
-	call Func_08_69ea ; $6bb5
+	call SetCharAnimation ; $6bb5
 	ld hl, $df19 ; $6bb8
 	inc [hl] ; $6bbb
 	ld hl, $c4c8 ; $6bbc
@@ -5922,7 +5922,7 @@ Label_08_6bf8:
 	ld a, $08 ; $6c0f
 	add a, [hl] ; $6c11
 	ld d, a ; $6c12
-	call Func_08_69ea ; $6c13
+	call SetCharAnimation ; $6c13
 	ld hl, $df0f ; $6c16
 	set 5, [hl] ; $6c19
 	xor a, a ; $6c1b
@@ -5951,7 +5951,7 @@ Label_08_6c47:
 	call Func_08_6d5a ; $6c47
 	ld hl, $df15 ; $6c4a
 	ld d, [hl] ; $6c4d
-	call Func_08_69ea ; $6c4e
+	call SetCharAnimation ; $6c4e
 	sound $59 ; $6c51
 	xor a, a ; $6c53
 	ld [$df51], a ; $6c54
@@ -5999,7 +5999,7 @@ Label_08_6ca6:
 	bit 2, [hl] ; $6ca9
 	jr nz, Label_08_6cb2 ; $6cab
 	ld d, $01 ; $6cad
-	call Func_08_69ea ; $6caf
+	call SetCharAnimation ; $6caf
 Label_08_6cb2:
 	ld a, [$df2e] ; $6cb2
 	cp a, $01 ; $6cb5
@@ -6078,7 +6078,7 @@ Label_08_6d27:
 	jr nc, Label_08_6d36 ; $6d32
 	ld d, $04 ; $6d34
 Label_08_6d36:
-	call Func_08_69ea ; $6d36
+	call SetCharAnimation ; $6d36
 Label_08_6d39:
 	ld hl, $df19 ; $6d39
 	inc [hl] ; $6d3c
@@ -6098,7 +6098,7 @@ Func_08_6d4b:
 	jr nz, Label_08_6d56 ; $6d52
 	ld d, $01 ; $6d54
 Label_08_6d56:
-	call Func_08_69ea ; $6d56
+	call SetCharAnimation ; $6d56
 	ret ; $6d59
 Func_08_6d5a:
 	ld a, [$df90] ; $6d5a
@@ -6333,7 +6333,7 @@ Label_08_6eaf:
 	bit 1, [hl] ; $6ec1
 	ret z ; $6ec3
 	ret ; $6ec4
-Func_08_6ec5:
+CheckCharBallContact:
 	ld a, [$df16] ; $6ec5
 	and a, a ; $6ec8
 	ret nz ; $6ec9
@@ -7460,7 +7460,7 @@ Label_08_7599:
 	res 4, [hl] ; $75bc
 	xor a, a ; $75be
 	ret ; $75bf
-Func_08_75c0:
+EaseCharFacing:
 	ld hl, $df0f ; $75c0
 	bit 1, [hl] ; $75c3
 	ret nz ; $75c5
@@ -7755,7 +7755,7 @@ Label_08_7780:
 	ld [hl+], a ; $778e
 	ld [hl], d ; $778f
 	ret ; $7790
-Func_08_7791:
+StepCharAnimation:
 	ld a, [$df2f] ; $7791
 	and a, a ; $7794
 	jr nz, Label_08_77f6 ; $7795
@@ -7790,7 +7790,7 @@ Label_08_77bd:
 	ld [$df2d], a ; $77c8
 	jr Label_08_7797 ; $77cb
 Label_08_77cd:
-	call Func_08_69ea ; $77cd
+	call SetCharAnimation ; $77cd
 	jr Label_08_7797 ; $77d0
 Label_08_77d2:
 	ld hl, $df37 ; $77d2
@@ -7830,7 +7830,7 @@ Label_08_77fa:
 	set 6, [hl] ; $7809
 Label_08_780b:
 	ret ; $780b
-Func_08_780c:
+ReadCharInput:
 	xor a, a ; $780c
 	ld [$df1f], a ; $780d
 	ld a, [$df1e] ; $7810
@@ -8156,7 +8156,7 @@ Label_08_7a02:
 	ld a, b ; $7a0e
 	or a, c ; $7a0f
 	jr nz, Label_08_7a22 ; $7a10
-	call Func_08_43f6 ; $7a12
+	call AdvanceMatchRng ; $7a12
 	and a, $07 ; $7a15
 	add a, a ; $7a17
 	add a, $3d ; $7a18
@@ -8226,7 +8226,7 @@ Label_08_7a5f:
 	ld a, [hl+] ; $7a7d
 	ld h, [hl] ; $7a7e
 	ld l, a ; $7a7f
-	call Func_08_43f6 ; $7a80
+	call AdvanceMatchRng ; $7a80
 	and a, $07 ; $7a83
 	add a, l ; $7a85
 	ld l, a ; $7a86
@@ -8282,7 +8282,7 @@ Func_08_7aeb:
 	ld b, a ; $7af2
 	jr Label_08_7b02 ; $7af3
 Label_08_7af5:
-	call Func_08_43f6 ; $7af5
+	call AdvanceMatchRng ; $7af5
 	and a, $07 ; $7af8
 	add a, $0b ; $7afa
 	ld l, a ; $7afc
@@ -8301,7 +8301,7 @@ Label_08_7b02:
 	db $10, $10, $10, $10, $20, $20, $20, $20 ; 0x00
 Func_08_7b13:
 	ld c, a ; $7b13
-	call Func_08_43f6 ; $7b14
+	call AdvanceMatchRng ; $7b14
 	ld hl, $df7c ; $7b17
 	cp a, [hl] ; $7b1a
 	ld b, $00 ; $7b1b
@@ -8323,7 +8323,7 @@ Func_08_7b1f:
 	ld l, a ; $7b36
 	pop af ; $7b37
 	wram_bank ; $7b38
-	call Func_08_43f6 ; $7b3c
+	call AdvanceMatchRng ; $7b3c
 	and a, $03 ; $7b3f
 	jr z, Label_08_7b51 ; $7b41
 	cp a, $01 ; $7b43
@@ -8350,7 +8350,7 @@ Label_08_7b59:
 	ld [hl], a ; $7b60
 	ret ; $7b61
 Func_08_7b62:
-	call Func_08_43f6 ; $7b62
+	call AdvanceMatchRng ; $7b62
 	and a, $07 ; $7b65
 	add a, $73 ; $7b67
 	ld l, a ; $7b69
@@ -8375,7 +8375,7 @@ Func_08_7b7b:
 	ld [$df58], a ; $7b8e
 	ret ; $7b91
 Label_08_7b92:
-	call Func_08_43f6 ; $7b92
+	call AdvanceMatchRng ; $7b92
 	and a, $01 ; $7b95
 	jr nz, Label_08_7c00 ; $7b97
 	ld hl, $c44a ; $7b99
@@ -8403,7 +8403,7 @@ Label_08_7ba9:
 	ld a, [wMatchIsDoubles] ; $7bbc
 	and a, a ; $7bbf
 	jr z, Label_08_7bcb ; $7bc0
-	call Func_08_43f6 ; $7bc2
+	call AdvanceMatchRng ; $7bc2
 	and a, $03 ; $7bc5
 	jr nz, Label_08_7c00 ; $7bc7
 	jr Label_08_7bfa ; $7bc9
@@ -8440,7 +8440,7 @@ Label_08_7bfa:
 	ld [$df58], a ; $7bfc
 	ret ; $7bff
 Label_08_7c00:
-	call Func_08_43f6 ; $7c00
+	call AdvanceMatchRng ; $7c00
 	and a, $0f ; $7c03
 	ld b, a ; $7c05
 	ld a, [$df7d] ; $7c06
@@ -8621,7 +8621,7 @@ Label_08_7d0a:
 	jr z, Label_08_7d17 ; $7d12
 	ld hl, $df79 ; $7d14
 Label_08_7d17:
-	call Func_08_43f6 ; $7d17
+	call AdvanceMatchRng ; $7d17
 	and a, $03 ; $7d1a
 	add a, [hl] ; $7d1c
 	ld [$df12], a ; $7d1d
@@ -8814,7 +8814,7 @@ Label_08_7e7e:
 	ld a, [wRallyLength] ; $7e7e
 	cp a, $02 ; $7e81
 	ret c ; $7e83
-	call Func_08_43f6 ; $7e84
+	call AdvanceMatchRng ; $7e84
 	and a, $03 ; $7e87
 	ld hl, $df79 ; $7e89
 	add a, [hl] ; $7e8c
@@ -8832,7 +8832,7 @@ Label_08_7e99:
 	ld [$df59], a ; $7eab
 	jp Label_08_7968 ; $7eae
 Label_08_7eb1:
-	call Func_08_43f6 ; $7eb1
+	call AdvanceMatchRng ; $7eb1
 	and a, $03 ; $7eb4
 	ld hl, $df7a ; $7eb6
 	add a, [hl] ; $7eb9

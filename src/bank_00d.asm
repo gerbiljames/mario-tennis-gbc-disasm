@@ -566,7 +566,7 @@ Label_0d_470b:
 	push af ; $4711
 	wram_bank $05 ; $4712
 	ld d, $05 ; $4718
-	farcall FarPtr_08_20 ; $471a
+	farcall FarPtr_SetCharAnimation ; $471a
 	pop af ; $471d
 	wram_bank ; $471e
 	ld a, [$c7a7] ; $4722
@@ -604,7 +604,7 @@ Func_0d_475d:
 	pop af ; $476b
 	wram_bank ; $476c
 	call Func_0d_43ba ; $4770
-	farcall FarPtr_08_58 ; $4773
+	farcall FarPtr_ResolvePointWinner ; $4773
 	add a, a ; $4776
 	jr c, Label_0d_479b ; $4777
 	ld a, [$c784] ; $4779
@@ -721,7 +721,7 @@ LaunchBall:
 	adc a, $45 ; $484e
 	sub a, l ; $4850
 	ld h, a ; $4851
-	farcall FarPtr_08_36 ; $4852
+	farcall FarPtr_AdvanceMatchRng ; $4852
 	and a, $0f ; $4855
 	add a, l ; $4857
 	ld l, a ; $4858
@@ -763,7 +763,7 @@ Label_0d_485c:
 	ld h, [hl] ; $4893
 	ld l, a ; $4894
 	farcall FarPtr_08_62 ; $4895
-	farcall FarPtr_08_36 ; $4898
+	farcall FarPtr_AdvanceMatchRng ; $4898
 	and a, $07 ; $489b
 	add a, $43 ; $489d
 	ld l, a ; $489f
@@ -1090,7 +1090,7 @@ Label_0d_51b5:
 	call UpdateMinigameActors ; $51d9
 	ret ; $51dc
 	call Func_0d_521e ; $51dd
-	farcall FarPtr_08_36 ; $51e0
+	farcall FarPtr_AdvanceMatchRng ; $51e0
 	and a, $01 ; $51e3
 	inc a ; $51e5
 	ld hl, $c785 ; $51e6
@@ -1147,7 +1147,7 @@ Label_0d_5244:
 	ld a, [$dc73] ; $5244
 	and a, a ; $5247
 	jr z, Label_0d_525b ; $5248
-	farcall FarPtr_08_36 ; $524a
+	farcall FarPtr_AdvanceMatchRng ; $524a
 	ld h, $00 ; $524d
 	ld l, a ; $524f
 	add hl, hl ; $5250
@@ -1173,7 +1173,7 @@ Label_0d_5270:
 	ld a, [hl] ; $5277
 	and a, a ; $5278
 	ret nz ; $5279
-	farcall FarPtr_08_36 ; $527a
+	farcall FarPtr_AdvanceMatchRng ; $527a
 	ld h, $00 ; $527d
 	ld l, a ; $527f
 	add hl, hl ; $5280

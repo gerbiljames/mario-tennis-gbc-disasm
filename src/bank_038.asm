@@ -1160,7 +1160,7 @@ Func_38_47c7:
 	ld hl, $df00 ; $4803
 	ld c, $10 ; $4806
 	call ClearMemory16 ; $4808
-	farcall FarPtr_08_02 ; $480b
+	farcall FarPtr_ResetMatchState ; $480b
 	call ClearFrameTasks ; $480e
 	xor a, a ; $4811
 	ld [$cb4f], a ; $4812
@@ -1644,8 +1644,8 @@ Func_38_4ce2:
 	ld de, $df00 ; $4cee
 	ld c, $08 ; $4cf1
 	call CopyMemoryFast ; $4cf3
-	farcall FarPtr_08_1a ; $4cf6
-	farcall FarPtr_08_12 ; $4cf9
+	farcall FarPtr_EaseCharFacing ; $4cf6
+	farcall FarPtr_StepCharAnimation ; $4cf9
 	ld d, $02 ; $4cfc
 	ld a, d ; $4cfe
 	ld [$df32], a ; $4cff
@@ -1661,21 +1661,21 @@ Func_38_4ce2:
 Func_38_4d14:
 	wram_bank $04 ; $4d14
 	ld d, $00 ; $4d1a
-	farcall FarPtr_08_20 ; $4d1c
+	farcall FarPtr_SetCharAnimation ; $4d1c
 	wram_bank $05 ; $4d1f
 	ld d, $00 ; $4d25
-	farcall FarPtr_08_20 ; $4d27
+	farcall FarPtr_SetCharAnimation ; $4d27
 	wram_bank $06 ; $4d2a
 	ld d, $00 ; $4d30
-	farcall FarPtr_08_20 ; $4d32
+	farcall FarPtr_SetCharAnimation ; $4d32
 	wram_bank $07 ; $4d35
 	ld d, $00 ; $4d3b
-	farcall FarPtr_08_20 ; $4d3d
+	farcall FarPtr_SetCharAnimation ; $4d3d
 	call Func_38_4dfa ; $4d40
 	ld a, b ; $4d43
 	wram_bank ; $4d44
 	ld d, $05 ; $4d48
-	farcall FarPtr_08_20 ; $4d4a
+	farcall FarPtr_SetCharAnimation ; $4d4a
 	wram_bank $04 ; $4d4d
 	ldh a, [hWramBank] ; $4d53
 	push af ; $4d55
@@ -1730,7 +1730,7 @@ Func_38_4d9b:
 	and a, $1f ; $4dc6
 	jr nz, Label_38_4df9 ; $4dc8
 	ld d, $05 ; $4dca
-	farcall FarPtr_08_20 ; $4dcc
+	farcall FarPtr_SetCharAnimation ; $4dcc
 	ldh a, [hWramBank] ; $4dcf
 	push af ; $4dd1
 	wram_bank $02 ; $4dd2
@@ -1745,7 +1745,7 @@ Func_38_4d9b:
 	ld a, b ; $4dea
 	wram_bank ; $4deb
 	ld d, $07 ; $4def
-	farcall FarPtr_08_20 ; $4df1
+	farcall FarPtr_SetCharAnimation ; $4df1
 Label_38_4df4:
 	pop af ; $4df4
 	wram_bank ; $4df5
@@ -1889,7 +1889,7 @@ Label_38_4f15:
 	call Func_38_5ea6 ; $4f20
 	call Func_38_601c ; $4f23
 	call Func_38_5f4c ; $4f26
-	farcall FarPtr_08_00 ; $4f29
+	farcall FarPtr_InitDefaultMatchSettings ; $4f29
 	call ClearFrameTasks ; $4f2c
 	ld hl, rIE ; $4f2f
 	set 2, [hl] ; $4f32
@@ -2021,7 +2021,7 @@ Func_38_4f6f:
 	ld c, $14 ; $5073
 	ld de, $a300 ; $5075
 	farcall FarPtr_39_10 ; $5078
-	farcall FarPtr_08_00 ; $507b
+	farcall FarPtr_InitDefaultMatchSettings ; $507b
 	ret ; $507e
 	INCBIN "data/bank_038/d_507f.bin" ; $507f, 278 bytes
 Func_38_5195:
@@ -4209,7 +4209,7 @@ Func_38_605b:
 	ld a, $03 ; $60ad
 	ld [$c36c], a ; $60af
 	farcall FarPtr_InitStoryModeState ; $60b2
-	farcall FarPtr_08_00 ; $60b5
+	farcall FarPtr_InitDefaultMatchSettings ; $60b5
 	ret ; $60b8
 Func_38_60b9:
 	push af ; $60b9
@@ -6883,7 +6883,7 @@ Label_38_74c4:
 	call EnableTimerInterrupt ; $74cd
 	ld a, $01 ; $74d0
 	ld [$c33f], a ; $74d2
-	farcall FarPtr_08_04 ; $74d5
+	farcall FarPtr_RunMatch ; $74d5
 	ld a, $01 ; $74d8
 Label_38_74da:
 	push af ; $74da

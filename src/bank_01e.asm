@@ -1131,7 +1131,7 @@ Label_1e_49c8:
 	ld [hl], $00 ; $49e0
 	ld bc, $df00 ; $49e2
 	ld d, $03 ; $49e5
-	farcall FarPtr_08_20 ; $49e7
+	farcall FarPtr_SetCharAnimation ; $49e7
 	pop af ; $49ea
 	farcall FarPtr_02_34 ; $49eb
 	ld de, $0f01 ; $49ee
@@ -1189,7 +1189,7 @@ Label_1e_4a43:
 	ld [hl], $10 ; $4a5b
 	ld bc, $df00 ; $4a5d
 	ld d, $03 ; $4a60
-	farcall FarPtr_08_20 ; $4a62
+	farcall FarPtr_SetCharAnimation ; $4a62
 	pop af ; $4a65
 	farcall FarPtr_02_34 ; $4a66
 	ld de, $0e01 ; $4a69
@@ -1216,7 +1216,7 @@ Func_1e_4aa8:
 	ld hl, $df00 ; $4aa9
 	ld b, h ; $4aac
 	ld c, l ; $4aad
-	farcall FarPtr_08_12 ; $4aae
+	farcall FarPtr_StepCharAnimation ; $4aae
 	ld d, $00 ; $4ab1
 	push de ; $4ab3
 	farcall FarPtr_08_14 ; $4ab4
@@ -1965,7 +1965,7 @@ Func_1e_5954:
 	ld hl, $df00 ; $5955
 	ld b, h ; $5958
 	ld c, l ; $5959
-	farcall FarPtr_08_12 ; $595a
+	farcall FarPtr_StepCharAnimation ; $595a
 	ld d, $00 ; $595d
 	ld a, d ; $595f
 	ld [$df32], a ; $5960
