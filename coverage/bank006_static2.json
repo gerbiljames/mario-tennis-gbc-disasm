@@ -1,0 +1,13 @@
+{
+ "_comment": "Static code-entry seeds for bank $06 (match/story menu system): fall-through code heads between its OAM/tile record tables. Flat = 0x06*0x4000 + (cpu-0x4000).",
+ "rom": [
+  98607,
+  99187,
+  99582,
+  110279,
+  110570,
+  110764,
+  110788
+ ],
+ "other": []
+}
