@@ -1,0 +1,15 @@
+{
+ "_comment": "Static code-entry seeds for bank $3e: stranded code heads between its record/palette tables. Flat = 0x3e*0x4000 + (cpu-0x4000).",
+ "rom": [
+  1015880,
+  1016248,
+  1016829,
+  1016892,
+  1018097,
+  1018297,
+  1022139,
+  1022413,
+  1025812
+ ],
+ "other": []
+}
