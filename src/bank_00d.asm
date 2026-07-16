@@ -1,12 +1,12 @@
 SECTION "ROM Bank $0d", ROMX[$4000], BANK[$0d]
 
-FarPtr_0d_00:
-	dw Func_0d_407f ; $4000
+FarPtr_StartMinigameByID:
+	dw StartMinigameByID ; $4000
 FarPtr_0d_02:
 	dw Func_0d_41a6 ; $4002
-FarPtr_0d_04:
-	dw Func_0d_4412 ; $4004
-Func_0d_4006:
+FarPtr_ShowMinigamePointResult:
+	dw ShowMinigamePointResult ; $4004
+InitMinigameFromConfig:
 	ld hl, $0000 ; $4006
 	add hl, bc ; $4009
 	ld a, [hl] ; $400a
@@ -73,7 +73,7 @@ Label_0d_4059:
 	call JumpToHL ; $407b
 Label_0d_407e:
 	ret ; $407e
-Func_0d_407f:
+StartMinigameByID:
 	sub a, $12 ; $407f
 	ld l, a ; $4081
 	ld h, $00 ; $4082
@@ -83,10 +83,10 @@ Func_0d_407f:
 	ld a, [hl+] ; $4089
 	ld b, [hl] ; $408a
 	ld c, a ; $408b
-	call Func_0d_4006 ; $408c
+	call InitMinigameFromConfig ; $408c
 	ret ; $408f
 	INCBIN "data/bank_00d/d_4090.bin" ; $4090, 63 bytes
-Func_0d_40cf:
+InitMinigameScore:
 	xor a, a ; $40cf
 	ld hl, wMinigamesCurrentScore ; $40d0
 	ld [hl+], a ; $40d3
@@ -97,7 +97,7 @@ Func_0d_40cf:
 	ld a, [wMinigameLevel] ; $40da
 	ld b, a ; $40dd
 	ld a, [$c8f7] ; $40de
-	call Func_0d_4121 ; $40e1
+	call GetMinigameTargetScore ; $40e1
 	ld hl, wMinigamesTargetScore ; $40e4
 	ld a, e ; $40e7
 	ld [hl+], a ; $40e8
@@ -127,7 +127,7 @@ Func_0d_40cf:
 	wram_bank ; $4111
 	ret ; $4115
 	INCBIN "data/bank_00d/d_4116.bin" ; $4116, 11 bytes
-Func_0d_4121:
+GetMinigameTargetScore:
 	ld de, $0000 ; $4121
 	cp a, $12 ; $4124
 	ret c ; $4126
@@ -182,7 +182,7 @@ Func_0d_41cb:
 	ret nc ; $41d0
 	inc [hl] ; $41d1
 	ret ; $41d2
-Func_0d_41d3:
+IsMinigameTargetReached:
 	ld hl, wMinigamesTargetScore ; $41d3
 	ld a, [hl+] ; $41d6
 	ld d, [hl] ; $41d7
@@ -231,7 +231,7 @@ Func_0d_41ee:
 Label_0d_420e:
 	ld a, $01 ; $420e
 	ret ; $4210
-Func_0d_4211:
+StartScorePopup:
 	ldh a, [hWramBank] ; $4211
 	push af ; $4213
 	wram_bank $04 ; $4214
@@ -254,7 +254,7 @@ Func_0d_4211:
 	ld a, $10 ; $4231
 	ld [$c787], a ; $4233
 	ret ; $4236
-Func_0d_4237:
+UpdateScorePopup:
 	ld a, [$c787] ; $4237
 	and a, a ; $423a
 	ret z ; $423b
@@ -281,7 +281,7 @@ Func_0d_4237:
 	ld a, $01 ; $4260
 	farcall FarPtr_0a_9c ; $4262
 	ret ; $4265
-Func_0d_4266:
+AddToMinigameScore:
 	ld hl, wMinigamesCurrentScore ; $4266
 	ld a, [hl+] ; $4269
 	ld h, [hl] ; $426a
@@ -318,7 +318,7 @@ Func_0d_43ba:
 	farcall FarPtr_StepMatchFrames ; $43db
 Label_0d_43de:
 	ret ; $43de
-Func_0d_43df:
+DetermineMinigamePointResult:
 	ld a, [$c7bc] ; $43df
 	and a, a ; $43e2
 	jr nz, Label_0d_43ee ; $43e3
@@ -348,7 +348,7 @@ Label_0d_440a:
 	ld [wPointWinLoseFlag], a ; $440c
 	ld d, $17 ; $440f
 	ret ; $4411
-Func_0d_4412:
+ShowMinigamePointResult:
 	ld a, [wPointWinLoseFlag] ; $4412
 	add a, a ; $4415
 	jr c, Label_0d_441c ; $4416
@@ -371,13 +371,13 @@ Label_0d_441e:
 	ld a, $80 ; $443a
 	ld [$c4c3], a ; $443c
 	ret ; $443f
-Func_0d_4440:
+ClearMinigameActors:
 	wram_bank $04 ; $4440
 	ld hl, $dc00 ; $4446
 	ld c, $07 ; $4449
 	call ClearMemory16 ; $444b
 	ret ; $444e
-Func_0d_444f:
+SetMinigameActorHandler:
 	wram_bank $04 ; $444f
 	ld hl, $000e ; $4455
 	add hl, bc ; $4458
@@ -454,18 +454,18 @@ Func_0d_449a:
 	ld a, b ; $44ba
 	ld [hl+], a ; $44bb
 	ret ; $44bc
-Func_0d_44bd:
+UpdateMinigameActors:
 	wram_bank $04 ; $44bd
 	ld hl, $dc00 ; $44c3
 	ld c, $07 ; $44c6
 Label_0d_44c8:
-	call Func_0d_44d3 ; $44c8
+	call UpdateMinigameActor ; $44c8
 	ld de, $0010 ; $44cb
 	add hl, de ; $44ce
 	dec c ; $44cf
 	jr nz, Label_0d_44c8 ; $44d0
 	ret ; $44d2
-Func_0d_44d3:
+UpdateMinigameActor:
 	bit 0, [hl] ; $44d3
 	ret z ; $44d5
 	push af ; $44d6
@@ -492,7 +492,7 @@ Func_0d_44d3:
 	ret ; $44f9
 	INCBIN "data/bank_00d/d_44fa.bin" ; $44fa, 382 bytes
 Func_0d_4678:
-	call Func_0d_40cf ; $4678
+	call InitMinigameScore ; $4678
 	ld hl, $0000 ; $467b
 	ld de, $fe00 ; $467e
 	call Func_0d_493a ; $4681
@@ -528,11 +528,11 @@ Func_0d_4678:
 	ld a, $01 ; $46ce
 	ld [$c7a7], a ; $46d0
 Label_0d_46d3:
-	call Func_0d_48ce ; $46d3
+	call PlayMinigameCountdown ; $46d3
 	ret ; $46d6
 Func_0d_46d7:
 	ld de, $8403 ; $46d7
-	call Func_0d_4bea ; $46da
+	call DrawMinigameScore ; $46da
 	ld a, [$c7a7] ; $46dd
 	and a, a ; $46e0
 	jr z, Label_0d_46f6 ; $46e1
@@ -584,7 +584,7 @@ Label_0d_472d:
 	ld a, e ; $4737
 	ld [hl+], a ; $4738
 	ld [hl], d ; $4739
-	call Func_0d_47fd ; $473a
+	call LaunchBall ; $473a
 	ld a, [$c785] ; $473d
 	ld l, a ; $4740
 	ld h, $00 ; $4741
@@ -623,13 +623,13 @@ Func_0d_475d:
 	ld h, a ; $478c
 	ld a, [hl] ; $478d
 	farcall FarPtr_StepMatchFrames ; $478e
-	call Func_0d_41d3 ; $4791
+	call IsMinigameTargetReached ; $4791
 	and a, a ; $4794
 	ret z ; $4795
 	ld a, $0b ; $4796
 	ld [wPointOutcome], a ; $4798
 Label_0d_479b:
-	call Func_0d_43df ; $479b
+	call DetermineMinigamePointResult ; $479b
 	push de ; $479e
 	ldh a, [hWramBank] ; $479f
 	push af ; $47a1
@@ -640,7 +640,7 @@ Label_0d_479b:
 	pop af ; $47b4
 	wram_bank ; $47b5
 	pop de ; $47b9
-	call Func_0d_4412 ; $47ba
+	call ShowMinigamePointResult ; $47ba
 	ret ; $47bd
 Func_0d_47be:
 	xor a, a ; $47be
@@ -675,7 +675,7 @@ Func_0d_47e2:
 	wram_bank ; $47f8
 Label_0d_47fc:
 	ret ; $47fc
-Func_0d_47fd:
+LaunchBall:
 	ld a, $01 ; $47fd
 	ld [wBallSpriteEnabled], a ; $47ff
 	ld [wBallShadowEnabled], a ; $4802
@@ -788,7 +788,7 @@ Func_0d_48b6:
 	pop af ; $48c8
 	wram_bank ; $48c9
 	ret ; $48cd
-Func_0d_48ce:
+PlayMinigameCountdown:
 	wram_bank $04 ; $48ce
 	xor a, a ; $48d4
 	ld [$c4c2], a ; $48d5
@@ -902,7 +902,7 @@ Func_0d_4abb:
 	and a, a ; $4abe
 	jr nz, Label_0d_4ac7 ; $4abf
 	ld de, $8484 ; $4ac1
-	call Func_0d_4bea ; $4ac4
+	call DrawMinigameScore ; $4ac4
 Label_0d_4ac7:
 	ldh a, [hWramBank] ; $4ac7
 	push af ; $4ac9
@@ -933,7 +933,7 @@ Func_0d_4af1:
 	ld [de], a ; $4aff
 	ret ; $4b00
 Func_0d_4b01:
-	call Func_0d_40cf ; $4b01
+	call InitMinigameScore ; $4b01
 	xor a, a ; $4b04
 	ld [wStandingShadowsEnabled], a ; $4b05
 	ld de, $0000 ; $4b08
@@ -959,7 +959,7 @@ Func_0d_4b29:
 	pop af ; $4b37
 	wram_bank ; $4b38
 	call Func_0d_43ba ; $4b3c
-	call Func_0d_43df ; $4b3f
+	call DetermineMinigamePointResult ; $4b3f
 	push de ; $4b42
 	ldh a, [hWramBank] ; $4b43
 	push af ; $4b45
@@ -968,15 +968,15 @@ Func_0d_4b29:
 	pop af ; $4b4f
 	wram_bank ; $4b50
 	pop de ; $4b54
-	call Func_0d_4412 ; $4b55
+	call ShowMinigamePointResult ; $4b55
 	ret ; $4b58
 Func_0d_4b59:
 	ld a, [wPointOutcome] ; $4b59
 	and a, a ; $4b5c
 	jr nz, Label_0d_4b70 ; $4b5d
 	ld de, $0001 ; $4b5f
-	call Func_0d_4266 ; $4b62
-	call Func_0d_41d3 ; $4b65
+	call AddToMinigameScore ; $4b62
+	call IsMinigameTargetReached ; $4b65
 	and a, a ; $4b68
 	jr z, Label_0d_4b70 ; $4b69
 	ld a, $0b ; $4b6b
@@ -1055,7 +1055,7 @@ Func_0d_4bc8:
 	ld a, $02 ; $4be4
 	ld [wRallyLength], a ; $4be6
 	ret ; $4be9
-Func_0d_4bea:
+DrawMinigameScore:
 	ld hl, wMinigamesCurrentScore ; $4bea
 	ld a, [hl+] ; $4bed
 	ld h, [hl] ; $4bee
@@ -1085,9 +1085,9 @@ Label_0d_51b5:
 	call Func_0d_4678 ; $51ce
 	ret ; $51d1
 	call Func_0d_46d7 ; $51d2
-	call Func_0d_4237 ; $51d5
+	call UpdateScorePopup ; $51d5
 	ret ; $51d8
-	call Func_0d_44bd ; $51d9
+	call UpdateMinigameActors ; $51d9
 	ret ; $51dc
 	call Func_0d_521e ; $51dd
 	farcall FarPtr_08_36 ; $51e0
@@ -1111,10 +1111,10 @@ Label_0d_51f0:
 	call Func_0d_47e2 ; $5201
 	ret ; $5204
 Func_0d_5205:
-	call Func_0d_4440 ; $5205
+	call ClearMinigameActors ; $5205
 	ld de, $5231 ; $5208
 	ld bc, $dc00 ; $520b
-	call Func_0d_444f ; $520e
+	call SetMinigameActorHandler ; $520e
 	ld hl, $0000 ; $5211
 	ld de, $fdc0 ; $5214
 	ld bc, $dc00 ; $5217
@@ -1161,10 +1161,10 @@ Label_0d_525b:
 	call Func_0d_523f ; $525f
 Label_0d_5262:
 	call Func_0d_535f ; $5262
-	call Func_0d_5292 ; $5265
+	call IsBallInHitZone ; $5265
 	and a, a ; $5268
 	ret z ; $5269
-	call Func_0d_52f9 ; $526a
+	call AwardHitScore ; $526a
 	jp Func_0d_523f ; $526d
 Label_0d_5270:
 	call Func_0d_539e ; $5270
@@ -1185,7 +1185,7 @@ Label_0d_5270:
 Label_0d_528e:
 	call Func_0d_535f ; $528e
 	ret ; $5291
-Func_0d_5292:
+IsBallInHitZone:
 	ld a, [$c4b8] ; $5292
 	and a, $01 ; $5295
 	jp nz, Label_0d_52f7 ; $5297
@@ -1262,7 +1262,7 @@ Label_0d_52ee:
 Label_0d_52f7:
 	xor a, a ; $52f7
 	ret ; $52f8
-Func_0d_52f9:
+AwardHitScore:
 	ld a, $10 ; $52f9
 	ld [$dc73], a ; $52fb
 	ld hl, $0001 ; $52fe
@@ -1297,8 +1297,8 @@ Label_0d_5310:
 	ld a, e ; $5336
 	ld [hl+], a ; $5337
 	ld [hl], d ; $5338
-	call Func_0d_4266 ; $5339
-	call Func_0d_4211 ; $533c
+	call AddToMinigameScore ; $5339
+	call StartScorePopup ; $533c
 	ld b, $07 ; $533f
 	call Func_0d_41cb ; $5341
 	ld a, $06 ; $5344

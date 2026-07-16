@@ -394,7 +394,7 @@ Func_0b_4705:
 	call Func_0b_4002 ; $471e
 	jr Label_0b_4726 ; $4721
 Label_0b_4723:
-	farcall FarPtr_0d_00 ; $4723
+	farcall FarPtr_StartMinigameByID ; $4723
 Label_0b_4726:
 	ld hl, $c2e0 ; $4726
 	ld c, $02 ; $4729

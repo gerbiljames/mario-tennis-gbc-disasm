@@ -1748,13 +1748,13 @@ Label_08_4ed1:
 	add a, a ; $4edb
 	jr nc, Label_08_4ee4 ; $4edc
 	ld d, $17 ; $4ede
-	farcall FarPtr_0d_04 ; $4ee0
+	farcall FarPtr_ShowMinigamePointResult ; $4ee0
 	ret ; $4ee3
 Label_08_4ee4:
 	ld a, [wMinigameLevel] ; $4ee4
 	add a, $12 ; $4ee7
 	ld d, a ; $4ee9
-	farcall FarPtr_0d_04 ; $4eea
+	farcall FarPtr_ShowMinigamePointResult ; $4eea
 	ret ; $4eed
 Label_08_4eee:
 	ld a, $0d ; $4eee
