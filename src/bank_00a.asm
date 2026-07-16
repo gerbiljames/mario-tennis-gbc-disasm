@@ -164,7 +164,31 @@ FarPtr_StopSceneScrollTask:
 	dw StopSceneScrollTask ; $40a0
 FarPtr_0a_a2:
 	dw Func_0a_6e74 ; $40a2
-	INCBIN "data/bank_00a/d_40a4.bin" ; $40a4, 44 bytes
+	push af ; $40a4
+	push bc ; $40a5
+	push de ; $40a6
+	push hl ; $40a7
+	ldh a, [$ff94] ; $40a8
+	and a, $08 ; $40aa
+	jr z, Label_0a_40cb ; $40ac
+	test_flag $02, 6 ; $40ae
+	jr z, Label_0a_40c0 ; $40b1
+	clear_flag $02, 6 ; $40b3
+	ld a, [wMessageSpeed] ; $40b6
+	or a, $80 ; $40b9
+	ld [wMessageSpeed], a ; $40bb
+	jr Label_0a_40cb ; $40be
+Label_0a_40c0:
+	set_flag $02, 6 ; $40c0
+	ld a, [wMessageSpeed] ; $40c3
+	and a, $7f ; $40c6
+	ld [wMessageSpeed], a ; $40c8
+Label_0a_40cb:
+	pop hl ; $40cb
+	pop de ; $40cc
+	pop bc ; $40cd
+	pop af ; $40ce
+	ret ; $40cf
 Func_0a_40d0:
 	push af ; $40d0
 	push bc ; $40d1
@@ -3880,7 +3904,57 @@ LoadAndDisplayScene:
 	call AdvanceFrame ; $5e18
 	call AdvanceFrame ; $5e1b
 	ret ; $5e1e
-	INCBIN "data/bank_00a/d_5e1f.bin" ; $5e1f, 114 bytes
+Func_0a_5e1f:
+	ldh a, [$ff94] ; $5e1f
+	bit 1, a ; $5e21
+	ret z ; $5e23
+	ld a, [$c32d] ; $5e24
+	dec a ; $5e27
+	srl a ; $5e28
+	srl a ; $5e2a
+	inc a ; $5e2c
+	push af ; $5e2d
+	ld a, [$c32e] ; $5e2e
+	ld [$c33d], a ; $5e31
+	call Func_0a_6456 ; $5e34
+	pop af ; $5e37
+	ld hl, $0176 ; $5e38
+	farcall FarPtr_05_3e ; $5e3b
+	ld [$c32e], a ; $5e3e
+	cp a, $ff ; $5e41
+	jp z, Label_0a_5e51 ; $5e43
+	ld b, $01 ; $5e46
+	call LoadAndDisplayScene ; $5e48
+	ld a, [$c32e] ; $5e4b
+	call Func_0a_639b ; $5e4e
+Label_0a_5e51:
+	ret ; $5e51
+	ld hl, $0176 ; $5e52
+	ld d, $01 ; $5e55
+	ld e, $01 ; $5e57
+	farcall FarPtr_05_08 ; $5e59
+	ld a, [$d820] ; $5e5c
+	ld [$d82f], a ; $5e5f
+	farcall FarPtr_05_18 ; $5e62
+	farcall FarPtr_05_10 ; $5e65
+Label_0a_5e68:
+	call AdvanceFrame ; $5e68
+	ldh a, [hPlayerInputFlags] ; $5e6b
+	and a, $02 ; $5e6d
+	jr nz, Label_0a_5e68 ; $5e6f
+	farcall FarPtr_05_3c ; $5e71
+	ld [$c32e], a ; $5e74
+	ld a, [$d82f] ; $5e77
+	farcall FarPtr_05_7a ; $5e7a
+	ld a, [$c32e] ; $5e7d
+	cp a, $ff ; $5e80
+	jp z, Label_0a_5e90 ; $5e82
+	ld a, [$c32e] ; $5e85
+	ld b, $01 ; $5e88
+	call LoadAndDisplayScene ; $5e8a
+	farcall FarPtr_05_18 ; $5e8d
+Label_0a_5e90:
+	ret ; $5e90
 Func_0a_5e91:
 	push af ; $5e91
 	push bc ; $5e92
@@ -4189,7 +4263,52 @@ Label_0a_6054:
 	pop bc ; $606c
 	pop af ; $606d
 	ret ; $606e
-	INCBIN "data/bank_00a/d_606f.bin" ; $606f, 83 bytes
+	ld hl, $60c1 ; $606f
+	call UnregisterFrameTask ; $6072
+	ret ; $6075
+Func_0a_6076:
+	push af ; $6076
+	push bc ; $6077
+	push de ; $6078
+	push hl ; $6079
+	xor a, a ; $607a
+	ldh [$ff8a], a ; $607b
+	ldh [$ff8b], a ; $607d
+	ld hl, SceneGfxSlotTable ; $607f
+	ld bc, rIE ; $6082
+Label_0a_6085:
+	inc c ; $6085
+	ld a, [hl+] ; $6086
+	ld d, a ; $6087
+	ld a, [hl+] ; $6088
+	or a, d ; $6089
+	jr nz, Label_0a_6085 ; $608a
+	ld h, b ; $608c
+	ld l, c ; $608d
+	ld de, $0009 ; $608e
+	call DivHLByDE ; $6091
+	ld a, l ; $6094
+	ld [$c32d], a ; $6095
+	ld a, $00 ; $6098
+	ld [$c32e], a ; $609a
+	ld b, $00 ; $609d
+	call LoadAndDisplayScene ; $609f
+	farcall FarPtr_05_00 ; $60a2
+	farcall FarPtr_05_18 ; $60a5
+	ld a, [$c32e] ; $60a8
+	call Func_0a_639b ; $60ab
+	pop hl ; $60ae
+	pop de ; $60af
+	pop bc ; $60b0
+	pop af ; $60b1
+	ret ; $60b2
+	call Func_0a_6076 ; $60b3
+Label_0a_60b6:
+	call Func_0a_60c2 ; $60b6
+	call Func_0a_5e1f ; $60b9
+	call AdvanceFrame ; $60bc
+	jr Label_0a_60b6 ; $60bf
+	ret ; $60c1
 Func_0a_60c2:
 	ld a, [$c321] ; $60c2
 	push af ; $60c5

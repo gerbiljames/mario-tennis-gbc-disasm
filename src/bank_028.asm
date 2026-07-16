@@ -14,7 +14,11 @@ FarPtr_28_0a:
 	dw Func_28_60c9 ; $400a
 FarPtr_28_0c:
 	dw Func_28_606c ; $400c
-	INCBIN "data/bank_028/d_400e.bin" ; $400e, 1490 bytes
+FarPtr_28_0e:
+	dw Func_28_60a0 ; $400e
+FarPtr_28_10:
+	dw Func_28_6086 ; $4010
+	INCBIN "data/bank_028/d_4012.bin" ; $4012, 1486 bytes
 MatchGfxTilesA_28:
 	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
 MatchGfxPalettesA_28:
@@ -267,6 +271,7 @@ Func_28_606c:
 	call Func_00_0480 ; $607c
 	ret ; $607f
 	INCBIN "data/bank_028/d_6080.bin" ; $6080, 6 bytes
+Func_28_6086:
 	add a, a ; $6086
 	add a, $9a ; $6087
 	ld l, a ; $6089
@@ -281,6 +286,7 @@ Func_28_606c:
 	call Func_00_0480 ; $6096
 	ret ; $6099
 	INCBIN "data/bank_028/d_609a.bin" ; $609a, 6 bytes
+Func_28_60a0:
 	ld h, $00 ; $60a0
 	ld l, a ; $60a2
 	add hl, hl ; $60a3

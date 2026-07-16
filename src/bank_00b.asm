@@ -1848,7 +1848,15 @@ Label_0b_6da6:
 	call Func_0b_719f ; $717c
 	ld [$c2ff], a ; $717f
 	ret ; $7182
-	INCBIN "data/bank_00b/d_7183.bin" ; $7183, 28 bytes
+	ld a, $01 ; $7183
+	call Func_0b_719f ; $7185
+	ld [$c2ff], a ; $7188
+	ret ; $718b
+	ld a, $02 ; $718c
+	call Func_0b_719f ; $718e
+	ld [$c2ff], a ; $7191
+	ret ; $7194
+	INCBIN "data/bank_00b/d_7195.bin" ; $7195, 10 bytes
 Func_0b_719f:
 	ld b, a ; $719f
 	ld a, [$c2ff] ; $71a0

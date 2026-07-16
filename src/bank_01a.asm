@@ -255,7 +255,70 @@ GetTilemapBufferCellDest:
 	xor a, a ; $41d6
 	ld [$cb2c], a ; $41d7
 	jp Label_1a_42ce ; $41da
-	INCBIN "data/bank_01a/d_41dd.bin" ; $41dd, 142 bytes
+	; $41dd, 4 bytes (records:2)
+; 2 records x 2 bytes
+	dw $41e1 ; record 0
+	dw $420f ; record 1
+	ld a, [$cb2a] ; $41e1
+	and a, $0f ; $41e4
+	jr z, Label_1a_41f8 ; $41e6
+	cp a, $03 ; $41e8
+	jr z, Label_1a_41f8 ; $41ea
+	sound $9b ; $41ec
+	bit 0, a ; $41ee
+	jr z, Label_1a_41f6 ; $41f0
+	res 0, a ; $41f2
+	jr Label_1a_41f8 ; $41f4
+Label_1a_41f6:
+	set 0, a ; $41f6
+Label_1a_41f8:
+	ld a, [$cb2a] ; $41f8
+	or a, $c0 ; $41fb
+	ld [$cb2a], a ; $41fd
+	ld a, [$d830] ; $4200
+	ld [$cb27], a ; $4203
+	ld bc, $41dd ; $4206
+	ld a, [$cb26] ; $4209
+	jp Label_1a_4048 ; $420c
+	ld a, [$cb2a] ; $420f
+	and a, $0f ; $4212
+	and a, a ; $4214
+	jr z, Label_1a_4227 ; $4215
+	cp a, $03 ; $4217
+	jr z, Label_1a_4227 ; $4219
+	sound $9b ; $421b
+	bit 1, a ; $421d
+	jr z, Label_1a_4225 ; $421f
+	res 1, a ; $4221
+	jr Label_1a_4227 ; $4223
+Label_1a_4225:
+	set 1, a ; $4225
+Label_1a_4227:
+	ld a, [$cb2a] ; $4227
+	or a, $c0 ; $422a
+	ld [$cb2a], a ; $422c
+	ld a, [$d830] ; $422f
+	ld [$cb27], a ; $4232
+	ld bc, $41dd ; $4235
+	ld a, [$cb26] ; $4238
+	jp Label_1a_4048 ; $423b
+	call Func_1a_4092 ; $423e
+	ld a, $c0 ; $4241
+	ld [$cb2a], a ; $4243
+	ld hl, $cb28 ; $4246
+	ld [hl], $83 ; $4249
+	ld hl, $cb29 ; $424b
+	ld [hl], $83 ; $424e
+	ld hl, $049b ; $4250
+	ld bc, $41dd ; $4253
+	ld de, $0305 ; $4256
+	set_flag $06, 0 ; $4259
+	call Func_1a_402c ; $425c
+	call Func_1a_4092 ; $425f
+	ld hl, $cb2a ; $4262
+	set 7, [hl] ; $4265
+	clear_flag $06, 0 ; $4267
+	ret ; $426a
 Func_1a_426b:
 	ld a, [$cb2a] ; $426b
 	and a, $0f ; $426e
@@ -1411,6 +1474,7 @@ Label_1a_4bb4:
 Func_1a_4bb9:
 	ret ; $4bb9
 	ret ; $4bba
+Func_1a_4bbb:
 	push af ; $4bbb
 	push bc ; $4bbc
 	push de ; $4bbd
@@ -1778,7 +1842,198 @@ Label_1a_4da4:
 	pop bc ; $4da5
 	pop af ; $4da6
 	ret ; $4da7
-	INCBIN "data/bank_01a/d_4da8.bin" ; $4da8, 392 bytes
+	ret ; $4da8
+	push af ; $4da9
+	push bc ; $4daa
+	push de ; $4dab
+	push hl ; $4dac
+	ldh a, [hWramBank] ; $4dad
+	push af ; $4daf
+	wram_bank $06 ; $4db0
+	ld a, [$d151] ; $4db6
+	or a, $01 ; $4db9
+	ld [$d151], a ; $4dbb
+	call AdvanceFrame ; $4dbe
+	call Func_1a_4a18 ; $4dc1
+	ld hl, $4483 ; $4dc4
+	call Func_1a_4bbb ; $4dc7
+	ld hl, $449b ; $4dca
+	call Func_1a_4bbb ; $4dcd
+	wram_bank $01 ; $4dd0
+	ld hl, $d000 ; $4dd6
+	ld de, $b800 ; $4dd9
+	ld c, $08 ; $4ddc
+	call Func_00_0480 ; $4dde
+	ld hl, $d400 ; $4de1
+	ld de, $9800 ; $4de4
+	ld c, $08 ; $4de7
+	call Func_00_0480 ; $4de9
+	call AdvanceFrame ; $4dec
+	wram_bank $06 ; $4def
+	ld a, [$d151] ; $4df5
+	and a, $fe ; $4df8
+	ld [$d151], a ; $4dfa
+	pop af ; $4dfd
+	wram_bank ; $4dfe
+	pop hl ; $4e02
+	pop de ; $4e03
+	pop bc ; $4e04
+	pop af ; $4e05
+	ret ; $4e06
+	push af ; $4e07
+	push bc ; $4e08
+	push de ; $4e09
+	push hl ; $4e0a
+	ldh a, [hWramBank] ; $4e0b
+	push af ; $4e0d
+	wram_bank $06 ; $4e0e
+	ld a, [$d151] ; $4e14
+	or a, $01 ; $4e17
+	ld [$d151], a ; $4e19
+	call AdvanceFrame ; $4e1c
+	call Func_1a_4a18 ; $4e1f
+	ld hl, $44a8 ; $4e22
+	call Func_1a_4bbb ; $4e25
+	ld hl, $44c1 ; $4e28
+	call Func_1a_4bbb ; $4e2b
+	wram_bank $01 ; $4e2e
+	ld hl, $d000 ; $4e34
+	ld de, $b800 ; $4e37
+	ld c, $08 ; $4e3a
+	call Func_00_0480 ; $4e3c
+	ld hl, $d400 ; $4e3f
+	ld de, $9800 ; $4e42
+	ld c, $08 ; $4e45
+	call Func_00_0480 ; $4e47
+	call AdvanceFrame ; $4e4a
+	wram_bank $06 ; $4e4d
+	ld a, [$d151] ; $4e53
+	and a, $fe ; $4e56
+	ld [$d151], a ; $4e58
+	pop af ; $4e5b
+	wram_bank ; $4e5c
+	pop hl ; $4e60
+	pop de ; $4e61
+	pop bc ; $4e62
+	pop af ; $4e63
+	ret ; $4e64
+	wram_bank $06 ; $4e65
+	ld hl, $d232 ; $4e6b
+	ld a, [hl+] ; $4e6e
+	ld h, [hl] ; $4e6f
+	ld l, a ; $4e70
+	ld de, $d24e ; $4e71
+	ld a, $05 ; $4e74
+	call FormatDecimalNumberUnsigned ; $4e76
+	ld hl, $d234 ; $4e79
+	ld d, [hl] ; $4e7c
+	inc hl ; $4e7d
+	ld e, [hl] ; $4e7e
+	ld hl, $d24e ; $4e7f
+	ld a, $05 ; $4e82
+	call Func_1a_4f02 ; $4e84
+	wram_bank $06 ; $4e87
+	push af ; $4e8d
+	ld hl, wStoryModeNameOfMainCharacter ; $4e8e
+	ld a, [$cb00] ; $4e91
+	or a, a ; $4e94
+	jr z, Label_1a_4e99 ; $4e95
+	ld l, $40 ; $4e97
+Label_1a_4e99:
+	ld a, l ; $4e99
+	add a, $18 ; $4e9a
+	ld l, a ; $4e9c
+	ld a, h ; $4e9d
+	adc a, $00 ; $4e9e
+	ld h, a ; $4ea0
+	pop af ; $4ea1
+	ld a, [hl] ; $4ea2
+	cp a, $63 ; $4ea3
+	ret z ; $4ea5
+	ld a, [$d000] ; $4ea6
+	and a, a ; $4ea9
+	jp nz, Label_1a_4ee5 ; $4eaa
+	ld a, [$d23b] ; $4ead
+	and a, a ; $4eb0
+	ret nz ; $4eb1
+	ld hl, $d242 ; $4eb2
+	ld a, [hl+] ; $4eb5
+	ld h, [hl] ; $4eb6
+	ld l, a ; $4eb7
+	ld a, h ; $4eb8
+	or a, l ; $4eb9
+	jr z, Label_1a_4ed3 ; $4eba
+	ld de, $d244 ; $4ebc
+	ld a, $05 ; $4ebf
+	call FormatDecimalNumberUnsigned ; $4ec1
+	ld hl, $d23e ; $4ec4
+	ld d, [hl] ; $4ec7
+	inc hl ; $4ec8
+	ld e, [hl] ; $4ec9
+	ld hl, $d244 ; $4eca
+	ld a, $05 ; $4ecd
+	call Func_1a_4f82 ; $4ecf
+	ret ; $4ed2
+Label_1a_4ed3:
+	ld a, [$d23b] ; $4ed3
+	and a, a ; $4ed6
+	ret nz ; $4ed7
+	ld a, [$d151] ; $4ed8
+	or a, $80 ; $4edb
+	ld [$d151], a ; $4edd
+	ld a, $01 ; $4ee0
+	ld [$d23b], a ; $4ee2
+Label_1a_4ee5:
+	ld hl, $d23c ; $4ee5
+	ld a, [hl+] ; $4ee8
+	ld h, [hl] ; $4ee9
+	ld l, a ; $4eea
+	ld de, $d244 ; $4eeb
+	ld a, $05 ; $4eee
+	call FormatDecimalNumberUnsigned ; $4ef0
+	ld hl, $d23e ; $4ef3
+	ld d, [hl] ; $4ef6
+	inc hl ; $4ef7
+	ld e, [hl] ; $4ef8
+	ld hl, $d244 ; $4ef9
+	ld a, $05 ; $4efc
+	call Func_1a_4f82 ; $4efe
+	ret ; $4f01
+Func_1a_4f02:
+	push af ; $4f02
+	push de ; $4f03
+	ld a, [$d23a] ; $4f04
+	add a, d ; $4f07
+	ld d, a ; $4f08
+	push hl ; $4f09
+	push bc ; $4f0a
+	ld a, [hl] ; $4f0b
+	sub a, $20 ; $4f0c
+	jr z, Label_1a_4f22 ; $4f0e
+	sub a, $10 ; $4f10
+	add a, a ; $4f12
+	ld b, a ; $4f13
+	ld a, [$d236] ; $4f14
+	ld c, a ; $4f17
+	ld a, b ; $4f18
+	add a, c ; $4f19
+	ld c, a ; $4f1a
+	ld a, [$d237] ; $4f1b
+	ld b, a ; $4f1e
+	call QueueSprite ; $4f1f
+Label_1a_4f22:
+	pop bc ; $4f22
+	pop hl ; $4f23
+	pop de ; $4f24
+	dec bc ; $4f25
+	inc hl ; $4f26
+	ld a, d ; $4f27
+	add a, $08 ; $4f28
+	ld d, a ; $4f2a
+	pop af ; $4f2b
+	dec a ; $4f2c
+	jr nz, Func_1a_4f02 ; $4f2d
+	ret ; $4f2f
 AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
 	ld a, [$d238] ; $4f36
@@ -1838,7 +2093,7 @@ Label_1a_4f7b:
 	ld [hl+], a ; $4f7f
 	ld [hl+], a ; $4f80
 	ret ; $4f81
-Label_1a_4f82:
+Func_1a_4f82:
 	push af ; $4f82
 	push de ; $4f83
 	push hl ; $4f84
@@ -1868,7 +2123,7 @@ Label_1a_4f9d:
 	ld d, a ; $4fa5
 	pop af ; $4fa6
 	dec a ; $4fa7
-	jr nz, Label_1a_4f82 ; $4fa8
+	jr nz, Func_1a_4f82 ; $4fa8
 	ret ; $4faa
 Func_1a_4fab:
 	and a, a ; $4fab
@@ -2706,7 +2961,15 @@ Func_1a_6a9b:
 	ld de, $964a ; $6acc
 	call QueueSprite ; $6acf
 	jr Label_1a_6af4 ; $6ad2
-	INCBIN "data/bank_01a/d_6ad4.bin" ; $6ad4, 22 bytes
+	ld b, $0a ; $6ad4
+	ld c, $84 ; $6ad6
+	ld de, $0a4a ; $6ad8
+	call QueueSprite ; $6adb
+	ld b, $0a ; $6ade
+	ld c, $86 ; $6ae0
+	ld de, $964a ; $6ae2
+	call QueueSprite ; $6ae5
+	jr Label_1a_6af4 ; $6ae8
 Label_1a_6aea:
 	ld b, $0a ; $6aea
 	ld c, $84 ; $6aec

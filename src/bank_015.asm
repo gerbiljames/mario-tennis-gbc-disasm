@@ -910,7 +910,43 @@ Label_15_4ad1:
 	ld a, $0f ; $4ad1
 	farcall FarPtr_0a_08 ; $4ad3
 	ret ; $4ad6
-	INCBIN "data/bank_015/d_4ad7.bin" ; $4ad7, 74 bytes
+	; $4ad7, 10 bytes (records:2)
+; 5 records x 2 bytes
+	dw $1a83 ; record 0
+	dw $1a88 ; record 1
+	dw $1a8b ; record 2
+	dw $1a8b ; record 3
+	dw $1a8b ; record 4
+	ld a, [$c2b0] ; $4ae1
+	add a, a ; $4ae4
+	add a, $17 ; $4ae5
+	ld l, a ; $4ae7
+	adc a, $4b ; $4ae8
+	sub a, l ; $4aea
+	ld h, a ; $4aeb
+	ld a, [hl+] ; $4aec
+	ld h, [hl] ; $4aed
+	ld l, a ; $4aee
+	farcall FarPtr_0a_0e ; $4aef
+	ld a, [$c2b0] ; $4af2
+	cp a, $02 ; $4af5
+	jr c, Label_15_4b11 ; $4af7
+	ld a, $10 ; $4af9
+	farcall FarPtr_0a_0a ; $4afb
+	farcall FarPtr_0a_12 ; $4afe
+	farcall FarPtr_0a_0c ; $4b01
+	push af ; $4b04
+	ld a, $05 ; $4b05
+	farcall FarPtr_0a_04 ; $4b07
+	pop af ; $4b0a
+	and a, a ; $4b0b
+	jr z, Label_15_4b11 ; $4b0c
+	farcall FarPtr_0a_10 ; $4b0e
+Label_15_4b11:
+	ld a, $10 ; $4b11
+	farcall FarPtr_0a_08 ; $4b13
+	ret ; $4b16
+	INCBIN "data/bank_015/d_4b17.bin" ; $4b17, 10 bytes
 	ld a, $13 ; $4b21
 	ld b, $00 ; $4b23
 	farcall FarPtr_0a_3c ; $4b25
@@ -2282,12 +2318,27 @@ Func_15_5898:
 	pop af ; $58b5
 	wram_bank ; $58b6
 	ret ; $58ba
+Func_15_58bb:
 	ld hl, $57ad ; $58bb
 	ld c, $00 ; $58be
 	ld b, $08 ; $58c0
 	call QueueSpriteTemplate ; $58c2
 	ret ; $58c5
-	INCBIN "data/bank_015/d_58c6.bin" ; $58c6, 30 bytes
+Func_15_58c6:
+	ld hl, $57ba ; $58c6
+	ld c, $06 ; $58c9
+	ld b, $08 ; $58cb
+	call QueueSpriteTemplate ; $58cd
+	ret ; $58d0
+	ld a, [wWaterSpriteMinigameFlag] ; $58d1
+	ld d, a ; $58d4
+	ld e, $18 ; $58d5
+	call Func_15_58bb ; $58d7
+	ld a, [$c2bb] ; $58da
+	ld d, a ; $58dd
+	ld e, $18 ; $58de
+	call Func_15_58c6 ; $58e0
+	ret ; $58e3
 Func_15_58e4:
 	call Func_15_5898 ; $58e4
 	ld a, $e8 ; $58e7
@@ -3591,7 +3642,90 @@ Label_15_64a2:
 	ld a, $01 ; $6580
 	farcall FarPtr_0b_00 ; $6582
 	ret ; $6585
-	INCBIN "data/bank_015/d_6586.bin" ; $6586, 193 bytes
+	ld a, $06 ; $6586
+	ld b, a ; $6588
+	ld a, $02 ; $6589
+	farcall FarPtr_0a_30 ; $658b
+	ld hl, $2034 ; $658e
+	farcall FarPtr_0a_0e ; $6591
+	ld a, $06 ; $6594
+	farcall FarPtr_0a_0a ; $6596
+	farcall FarPtr_0a_12 ; $6599
+	farcall FarPtr_0a_0c ; $659c
+	push af ; $659f
+	ld a, $05 ; $65a0
+	farcall FarPtr_0a_04 ; $65a2
+	pop af ; $65a5
+	and a, a ; $65a6
+	jp nz, Label_15_64a2 ; $65a7
+	farcall FarPtr_0a_10 ; $65aa
+	ld a, $06 ; $65ad
+	farcall FarPtr_0a_0a ; $65af
+	farcall FarPtr_0a_12 ; $65b2
+	farcall FarPtr_0a_0c ; $65b5
+	push af ; $65b8
+	ld a, $05 ; $65b9
+	farcall FarPtr_0a_04 ; $65bb
+	pop af ; $65be
+	and a, a ; $65bf
+	jp nz, Label_15_64a2 ; $65c0
+	farcall FarPtr_0a_10 ; $65c3
+	ld a, $06 ; $65c6
+	farcall FarPtr_0a_08 ; $65c8
+	ld a, $06 ; $65cb
+	ld d, $03 ; $65cd
+	farcall FarPtr_0a_34 ; $65cf
+	ld a, $06 ; $65d2
+	farcall FarPtr_0a_36 ; $65d4
+	ld a, $06 ; $65d7
+	ld b, $00 ; $65d9
+	farcall FarPtr_0a_2e ; $65db
+	push af ; $65de
+	ld a, $28 ; $65df
+	farcall FarPtr_0a_04 ; $65e1
+	pop af ; $65e4
+	ld a, $00 ; $65e5
+	ld b, a ; $65e7
+	ld a, $06 ; $65e8
+	farcall FarPtr_0a_30 ; $65ea
+	ld a, $06 ; $65ed
+	farcall FarPtr_0a_08 ; $65ef
+	ld a, $06 ; $65f2
+	ld d, $03 ; $65f4
+	farcall FarPtr_0a_34 ; $65f6
+	ld a, $06 ; $65f9
+	farcall FarPtr_0a_36 ; $65fb
+	ld a, $06 ; $65fe
+	farcall FarPtr_0a_08 ; $6600
+	push af ; $6603
+	ld a, $28 ; $6604
+	farcall FarPtr_0a_04 ; $6606
+	pop af ; $6609
+	ld a, $06 ; $660a
+	ld d, $02 ; $660c
+	farcall FarPtr_0a_34 ; $660e
+	ld a, $06 ; $6611
+	farcall FarPtr_0a_36 ; $6613
+	ld a, $06 ; $6616
+	farcall FarPtr_0a_08 ; $6618
+	ld a, $06 ; $661b
+	ld d, $03 ; $661d
+	farcall FarPtr_0a_34 ; $661f
+	ld a, $06 ; $6622
+	farcall FarPtr_0a_36 ; $6624
+	ld a, $06 ; $6627
+	farcall FarPtr_0a_08 ; $6629
+	call Func_15_668f ; $662c
+	ld a, $0f ; $662f
+	ld [wStoryModeCurrentLocation], a ; $6631
+	ld a, $0a ; $6634
+	ld [$c295], a ; $6636
+	ld a, $ff ; $6639
+	ld [$c294], a ; $663b
+	ld [$c2a1], a ; $663e
+	ld a, $02 ; $6641
+	farcall FarPtr_0b_00 ; $6643
+	ret ; $6646
 Func_15_6647:
 	test_flag $05, 7 ; $6647
 	jr z, Label_15_667b ; $664a

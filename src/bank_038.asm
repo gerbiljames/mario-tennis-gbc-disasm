@@ -1277,7 +1277,22 @@ Label_38_48f1:
 	pop af ; $4904
 	wram_bank ; $4905
 	jp Label_38_4857 ; $4909
-	INCBIN "data/bank_038/d_490c.bin" ; $490c, 32 bytes
+	ld c, $02 ; $490c
+	call GetMenuCursorLinearIndex ; $490e
+	add a, a ; $4911
+	ld hl, $4924 ; $4912
+	add a, l ; $4915
+	ld l, a ; $4916
+	jr nc, Label_38_491a ; $4917
+	inc h ; $4919
+Label_38_491a:
+	ld a, [hl+] ; $491a
+	ld d, [hl] ; $491b
+	ld e, a ; $491c
+	ld bc, $3018 ; $491d
+	call DrawSelectedOptionBox ; $4920
+	ret ; $4923
+	INCBIN "data/bank_038/d_4924.bin" ; $4924, 8 bytes
 Func_38_492c:
 	ld b, $04 ; $492c
 	ld c, $0b ; $492e
@@ -6155,7 +6170,26 @@ Label_38_6dba:
 	ld a, $02 ; $6dbe
 	ld [$d822], a ; $6dc0
 	ret ; $6dc3
-	INCBIN "data/bank_038/d_6dc4.bin" ; $6dc4, 35 bytes
+	ld a, [$d814] ; $6dc4
+	ld a, [$d811] ; $6dc7
+	ld c, a ; $6dca
+	ld a, [$cb06] ; $6dcb
+	ld d, a ; $6dce
+	ld a, [$cb07] ; $6dcf
+	ld e, a ; $6dd2
+	call Func_38_5d42 ; $6dd3
+	or a, a ; $6dd6
+	jr nz, Label_38_6dff ; $6dd7
+	call GetGridSlotFromCursor ; $6dd9
+	ld b, a ; $6ddc
+	ld hl, $da00 ; $6ddd
+	add a, a ; $6de0
+	add a, a ; $6de1
+	add a, l ; $6de2
+	ld l, a ; $6de3
+	jr nc, Label_38_6de7 ; $6de4
+	inc h ; $6de6
+Label_38_6de7:
 	ld a, [hl] ; $6de7
 	cp a, $ff ; $6de8
 	jr z, Label_38_6dff ; $6dea

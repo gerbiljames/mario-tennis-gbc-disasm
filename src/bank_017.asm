@@ -1185,7 +1185,26 @@ Label_17_4832:
 	pop af ; $483d
 	wram_bank ; $483e
 	ret ; $4842
-	INCBIN "data/bank_017/d_4843.bin" ; $4843, 51 bytes
+	ldh a, [hWramBank] ; $4843
+	push af ; $4845
+	wram_bank $03 ; $4846
+	ld c, $64 ; $484c
+	ld b, $09 ; $484e
+	ld a, [$d826] ; $4850
+	cp a, $01 ; $4853
+	jr z, Label_17_4859 ; $4855
+	ld b, $29 ; $4857
+Label_17_4859:
+	ld a, [$d816] ; $4859
+	ld d, a ; $485c
+	ld a, [$d817] ; $485d
+	ld e, a ; $4860
+	ld hl, $486d ; $4861
+	call QueueSpriteTemplate ; $4864
+	pop af ; $4867
+	wram_bank ; $4868
+	ret ; $486c
+	INCBIN "data/bank_017/d_486d.bin" ; $486d, 9 bytes
 	ldh a, [hWramBank] ; $4876
 	push af ; $4878
 	wram_bank $03 ; $4879
@@ -1392,7 +1411,16 @@ Func_17_49f9:
 	ld c, $0c ; $49ff
 	call Func_00_0480 ; $4a01
 	ret ; $4a04
-	INCBIN "data/bank_017/d_4a05.bin" ; $4a05, 45 bytes
+	ret ; $4a05
+	ld hl, $0135 ; $4a06
+	ld de, $d1c1 ; $4a09
+	farcall FarPtr_05_1c ; $4a0c
+	ld hl, $d1a0 ; $4a0f
+	ld de, $99a0 ; $4a12
+	ld c, $0c ; $4a15
+	call Func_00_0480 ; $4a17
+	ret ; $4a1a
+	INCBIN "data/bank_017/d_4a1b.bin" ; $4a1b, 23 bytes
 Func_17_4a32:
 	push af ; $4a32
 	push bc ; $4a33
@@ -1495,7 +1523,28 @@ Label_17_4ab8:
 	jr Label_17_4a9c ; $4ab8
 Label_17_4aba:
 	ret ; $4aba
-	INCBIN "data/bank_017/d_4abb.bin" ; $4abb, 82 bytes
+	; $4abb, 82 bytes (bytes:4)
+	db $02, $4f, $00, $80 ; 0x00
+	db $3d, $4f, $40, $80 ; 0x04
+	db $7c, $4f, $80, $80 ; 0x08
+	db $0b, $50, $20, $81 ; 0x0c
+	db $9a, $50, $c0, $81 ; 0x10
+	db $2d, $51, $60, $82 ; 0x14
+	db $8f, $51, $c0, $82 ; 0x18
+	db $f1, $51, $60, $83 ; 0x1c
+	db $80, $52, $00, $84 ; 0x20
+	db $0f, $53, $a0, $84 ; 0x24
+	db $a0, $53, $40, $85 ; 0x28
+	db $09, $54, $a0, $85 ; 0x2c
+	db $6d, $54, $00, $86 ; 0x30
+	db $b7, $54, $40, $86 ; 0x34
+	db $d8, $54, $80, $86 ; 0x38
+	db $ff, $54, $a0, $86 ; 0x3c
+	db $11, $55, $c0, $86 ; 0x40
+	db $23, $55, $e0, $86 ; 0x44
+	db $36, $55, $00, $87 ; 0x48
+	db $4e, $55, $20, $87 ; 0x4c
+	db $00, $00 ; 0x50
 Func_17_4b0d:
 	ld hl, $5567 ; $4b0d
 	ld de, $0803 ; $4b10
@@ -1788,7 +1837,54 @@ Func_17_571b:
 	ld b, [hl] ; $57b6
 	call Func_17_466c ; $57b7
 	ret ; $57ba
-	INCBIN "data/bank_017/d_57bb.bin" ; $57bb, 92 bytes
+	; $57bb, 92 bytes (records:2)
+; 46 records x 2 bytes
+	dw $0054 ; record 0
+	dw $0044 ; record 1
+	dw $003a ; record 2
+	dw $0044 ; record 3
+	dw $003a ; record 4
+	dw $0003 ; record 5
+	dw $0054 ; record 6
+	dw $0003 ; record 7
+	dw $004e ; record 8
+	dw $0038 ; record 9
+	dw $0056 ; record 10
+	dw $0038 ; record 11
+	dw $0056 ; record 12
+	dw $0028 ; record 13
+	dw $004e ; record 14
+	dw $0028 ; record 15
+	dw $0100 ; record 16
+	dw $0001 ; record 17
+	dw $003a ; record 18
+	dw $0024 ; record 19
+	dw $0064 ; record 20
+	dw $0024 ; record 21
+	dw $0064 ; record 22
+	dw $0034 ; record 23
+	dw $003a ; record 24
+	dw $0034 ; record 25
+	dw $0003 ; record 26
+	dw $0201 ; record 27
+	dw $0052 ; record 28
+	dw $0040 ; record 29
+	dw $004d ; record 30
+	dw $0040 ; record 31
+	dw $004d ; record 32
+	dw $0016 ; record 33
+	dw $0052 ; record 34
+	dw $0016 ; record 35
+	dw $0104 ; record 36
+	dw $0302 ; record 37
+	dw $0040 ; record 38
+	dw $0024 ; record 39
+	dw $005d ; record 40
+	dw $0024 ; record 41
+	dw $005d ; record 42
+	dw $0039 ; record 43
+	dw $0040 ; record 44
+	dw $0039 ; record 45
 Label_17_5817:
 	ld a, $03 ; $5817
 	ld [$d82e], a ; $5819
@@ -2264,7 +2360,73 @@ Label_17_5bb3:
 	ld b, [hl] ; $5be0
 	call Func_17_466c ; $5be1
 	ret ; $5be4
-	INCBIN "data/bank_017/d_5be5.bin" ; $5be5, 130 bytes
+	; $5be5, 130 bytes (records:2)
+; 65 records x 2 bytes
+	dw $0052 ; record 0
+	dw $0044 ; record 1
+	dw $003d ; record 2
+	dw $0044 ; record 3
+	dw $003d ; record 4
+	dw $0000 ; record 5
+	dw $0052 ; record 6
+	dw $0000 ; record 7
+	dw $004e ; record 8
+	dw $0038 ; record 9
+	dw $0056 ; record 10
+	dw $0038 ; record 11
+	dw $0056 ; record 12
+	dw $0028 ; record 13
+	dw $004e ; record 14
+	dw $0028 ; record 15
+	dw $0100 ; record 16
+	dw $0001 ; record 17
+	dw $003a ; record 18
+	dw $0024 ; record 19
+	dw $0064 ; record 20
+	dw $0024 ; record 21
+	dw $0064 ; record 22
+	dw $0034 ; record 23
+	dw $003a ; record 24
+	dw $0034 ; record 25
+	dw $0003 ; record 26
+	dw $0201 ; record 27
+	dw $0052 ; record 28
+	dw $0040 ; record 29
+	dw $004d ; record 30
+	dw $0040 ; record 31
+	dw $004d ; record 32
+	dw $0016 ; record 33
+	dw $0052 ; record 34
+	dw $0016 ; record 35
+	dw $0104 ; record 36
+	dw $0302 ; record 37
+	dw $0040 ; record 38
+	dw $0024 ; record 39
+	dw $005d ; record 40
+	dw $0024 ; record 41
+	dw $005d ; record 42
+	dw $0039 ; record 43
+	dw $0040 ; record 44
+	dw $0039 ; record 45
+	dw $0046 ; record 46
+	dw $0028 ; record 47
+	dw $005e ; record 48
+	dw $0028 ; record 49
+	dw $0049 ; record 50
+	dw $002f ; record 51
+	dw $0056 ; record 52
+	dw $002f ; record 53
+	dw $0001 ; record 54
+	dw $0030 ; record 55
+	dw $0022 ; record 56
+	dw $006f ; record 57
+	dw $0022 ; record 58
+	dw $0609 ; record 59
+	dw $0708 ; record 60
+	dw $0061 ; record 61
+	dw $0044 ; record 62
+	dw $0026 ; record 63
+	dw $0044 ; record 64
 Label_17_5c67:
 	ld a, $03 ; $5c67
 	ld [$d82e], a ; $5c69
@@ -2610,7 +2772,78 @@ Func_17_5e74:
 	ld b, [hl] ; $5f01
 	call Func_17_466c ; $5f02
 	ret ; $5f05
-	INCBIN "data/bank_017/d_5f06.bin" ; $5f06, 140 bytes
+	; $5f06, 140 bytes (records:2)
+; 70 records x 2 bytes
+	dw $0055 ; record 0
+	dw $0044 ; record 1
+	dw $003a ; record 2
+	dw $0044 ; record 3
+	dw $003a ; record 4
+	dw $0003 ; record 5
+	dw $0055 ; record 6
+	dw $0003 ; record 7
+	dw $004f ; record 8
+	dw $0044 ; record 9
+	dw $0040 ; record 10
+	dw $0044 ; record 11
+	dw $0040 ; record 12
+	dw $0003 ; record 13
+	dw $004f ; record 14
+	dw $0003 ; record 15
+	dw $004e ; record 16
+	dw $0038 ; record 17
+	dw $0056 ; record 18
+	dw $0038 ; record 19
+	dw $0056 ; record 20
+	dw $0028 ; record 21
+	dw $004e ; record 22
+	dw $0028 ; record 23
+	dw $0100 ; record 24
+	dw $0001 ; record 25
+	dw $003a ; record 26
+	dw $0024 ; record 27
+	dw $0064 ; record 28
+	dw $0024 ; record 29
+	dw $0064 ; record 30
+	dw $0034 ; record 31
+	dw $003a ; record 32
+	dw $0034 ; record 33
+	dw $0042 ; record 34
+	dw $0020 ; record 35
+	dw $005d ; record 36
+	dw $0020 ; record 37
+	dw $005d ; record 38
+	dw $0038 ; record 39
+	dw $0042 ; record 40
+	dw $0038 ; record 41
+	dw $0003 ; record 42
+	dw $0201 ; record 43
+	dw $0052 ; record 44
+	dw $0040 ; record 45
+	dw $004d ; record 46
+	dw $0040 ; record 47
+	dw $004d ; record 48
+	dw $0016 ; record 49
+	dw $0052 ; record 50
+	dw $0016 ; record 51
+	dw $0104 ; record 52
+	dw $0302 ; record 53
+	dw $0048 ; record 54
+	dw $0024 ; record 55
+	dw $0055 ; record 56
+	dw $0024 ; record 57
+	dw $0055 ; record 58
+	dw $0039 ; record 59
+	dw $0048 ; record 60
+	dw $0039 ; record 61
+	dw $0050 ; record 62
+	dw $0036 ; record 63
+	dw $0048 ; record 64
+	dw $0036 ; record 65
+	dw $0048 ; record 66
+	dw $0021 ; record 67
+	dw $0050 ; record 68
+	dw $0021 ; record 69
 Label_17_5f92:
 	ld a, $52 ; $5f92
 	ld [$d810], a ; $5f94
@@ -2879,7 +3112,70 @@ Func_17_60ec:
 	ld a, b ; $61af
 	ld [$d824], a ; $61b0
 	ret ; $61b3
-	INCBIN "data/bank_017/d_61b4.bin" ; $61b4, 124 bytes
+	; $61b4, 124 bytes (records:2)
+; 62 records x 2 bytes
+	dw $0052 ; record 0
+	dw $0030 ; record 1
+	dw $003c ; record 2
+	dw $0030 ; record 3
+	dw $003c ; record 4
+	dw $0018 ; record 5
+	dw $0052 ; record 6
+	dw $0018 ; record 7
+	dw $0034 ; record 8
+	dw $0006 ; record 9
+	dw $005a ; record 10
+	dw $0006 ; record 11
+	dw $005a ; record 12
+	dw $0048 ; record 13
+	dw $0034 ; record 14
+	dw $0048 ; record 15
+	dw $005d ; record 16
+	dw $001c ; record 17
+	dw $0047 ; record 18
+	dw $001c ; record 19
+	dw $0047 ; record 20
+	dw $0046 ; record 21
+	dw $005d ; record 22
+	dw $0046 ; record 23
+	dw $0001 ; record 24
+	dw $0100 ; record 25
+	dw $0064 ; record 26
+	dw $0014 ; record 27
+	dw $003a ; record 28
+	dw $0014 ; record 29
+	dw $003a ; record 30
+	dw $0044 ; record 31
+	dw $0064 ; record 32
+	dw $0044 ; record 33
+	dw $0201 ; record 34
+	dw $0003 ; record 35
+	dw $0046 ; record 36
+	dw $0016 ; record 37
+	dw $005a ; record 38
+	dw $0016 ; record 39
+	dw $005a ; record 40
+	dw $0040 ; record 41
+	dw $0046 ; record 42
+	dw $0040 ; record 43
+	dw $0000 ; record 44
+	dw $0101 ; record 45
+	dw $005b ; record 46
+	dw $0021 ; record 47
+	dw $0045 ; record 48
+	dw $0021 ; record 49
+	dw $0045 ; record 50
+	dw $0037 ; record 51
+	dw $005b ; record 52
+	dw $0037 ; record 53
+	dw $0052 ; record 54
+	dw $0012 ; record 55
+	dw $003e ; record 56
+	dw $0012 ; record 57
+	dw $003e ; record 58
+	dw $003c ; record 59
+	dw $0052 ; record 60
+	dw $003c ; record 61
 Label_17_6230:
 	ld a, $55 ; $6230
 	ld [$d810], a ; $6232
@@ -3171,7 +3467,70 @@ Label_17_64b0:
 	jp z, Label_17_6421 ; $64b6
 	call ClearFrameTasks ; $64b9
 	ret ; $64bc
-	INCBIN "data/bank_017/d_64bd.bin" ; $64bd, 124 bytes
+	; $64bd, 124 bytes (records:2)
+; 62 records x 2 bytes
+	dw $0055 ; record 0
+	dw $0044 ; record 1
+	dw $003a ; record 2
+	dw $0044 ; record 3
+	dw $003a ; record 4
+	dw $0003 ; record 5
+	dw $0055 ; record 6
+	dw $0003 ; record 7
+	dw $0034 ; record 8
+	dw $0006 ; record 9
+	dw $005a ; record 10
+	dw $0006 ; record 11
+	dw $005a ; record 12
+	dw $0046 ; record 13
+	dw $0034 ; record 14
+	dw $0046 ; record 15
+	dw $0050 ; record 16
+	dw $0037 ; record 17
+	dw $0054 ; record 18
+	dw $0037 ; record 19
+	dw $0054 ; record 20
+	dw $0028 ; record 21
+	dw $0050 ; record 22
+	dw $0028 ; record 23
+	dw $0001 ; record 24
+	dw $0100 ; record 25
+	dw $0064 ; record 26
+	dw $0014 ; record 27
+	dw $003a ; record 28
+	dw $0014 ; record 29
+	dw $003a ; record 30
+	dw $0044 ; record 31
+	dw $0064 ; record 32
+	dw $0044 ; record 33
+	dw $0003 ; record 34
+	dw $0201 ; record 35
+	dw $0054 ; record 36
+	dw $003d ; record 37
+	dw $004c ; record 38
+	dw $003d ; record 39
+	dw $004c ; record 40
+	dw $0016 ; record 41
+	dw $0054 ; record 42
+	dw $0016 ; record 43
+	dw $0000 ; record 44
+	dw $0101 ; record 45
+	dw $005b ; record 46
+	dw $0021 ; record 47
+	dw $0045 ; record 48
+	dw $0021 ; record 49
+	dw $0045 ; record 50
+	dw $0037 ; record 51
+	dw $005b ; record 52
+	dw $0037 ; record 53
+	dw $003e ; record 54
+	dw $0022 ; record 55
+	dw $0052 ; record 56
+	dw $0022 ; record 57
+	dw $0052 ; record 58
+	dw $003c ; record 59
+	dw $003e ; record 60
+	dw $003c ; record 61
 Label_17_6539:
 	ld a, $55 ; $6539
 	ld [$d810], a ; $653b
@@ -3463,7 +3822,70 @@ Label_17_67b9:
 	jp z, Label_17_672a ; $67bf
 	call ClearFrameTasks ; $67c2
 	ret ; $67c5
-	INCBIN "data/bank_017/d_67c6.bin" ; $67c6, 124 bytes
+	; $67c6, 124 bytes (records:2)
+; 62 records x 2 bytes
+	dw $0055 ; record 0
+	dw $0044 ; record 1
+	dw $003a ; record 2
+	dw $0044 ; record 3
+	dw $003a ; record 4
+	dw $0003 ; record 5
+	dw $0055 ; record 6
+	dw $0003 ; record 7
+	dw $0034 ; record 8
+	dw $0006 ; record 9
+	dw $005a ; record 10
+	dw $0006 ; record 11
+	dw $005a ; record 12
+	dw $0046 ; record 13
+	dw $0034 ; record 14
+	dw $0046 ; record 15
+	dw $0050 ; record 16
+	dw $0037 ; record 17
+	dw $0054 ; record 18
+	dw $0037 ; record 19
+	dw $0054 ; record 20
+	dw $0028 ; record 21
+	dw $0050 ; record 22
+	dw $0028 ; record 23
+	dw $0001 ; record 24
+	dw $0100 ; record 25
+	dw $0064 ; record 26
+	dw $0014 ; record 27
+	dw $003a ; record 28
+	dw $0014 ; record 29
+	dw $003a ; record 30
+	dw $0044 ; record 31
+	dw $0064 ; record 32
+	dw $0044 ; record 33
+	dw $0003 ; record 34
+	dw $0201 ; record 35
+	dw $0054 ; record 36
+	dw $003d ; record 37
+	dw $004c ; record 38
+	dw $003d ; record 39
+	dw $004c ; record 40
+	dw $0016 ; record 41
+	dw $0054 ; record 42
+	dw $0016 ; record 43
+	dw $0000 ; record 44
+	dw $0101 ; record 45
+	dw $005b ; record 46
+	dw $0021 ; record 47
+	dw $0045 ; record 48
+	dw $0021 ; record 49
+	dw $0045 ; record 50
+	dw $0037 ; record 51
+	dw $005b ; record 52
+	dw $0037 ; record 53
+	dw $003e ; record 54
+	dw $0022 ; record 55
+	dw $0052 ; record 56
+	dw $0022 ; record 57
+	dw $0052 ; record 58
+	dw $003c ; record 59
+	dw $003e ; record 60
+	dw $003c ; record 61
 Label_17_6842:
 	ld a, $55 ; $6842
 	ld [$d810], a ; $6844
@@ -3689,7 +4111,60 @@ Func_17_6965:
 	ld a, b ; $6a06
 	ld [$d819], a ; $6a07
 	ret ; $6a0a
-	INCBIN "data/bank_017/d_6a0b.bin" ; $6a0b, 104 bytes
+	; $6a0b, 104 bytes (records:2)
+; 52 records x 2 bytes
+	dw $0055 ; record 0
+	dw $0044 ; record 1
+	dw $003a ; record 2
+	dw $0044 ; record 3
+	dw $003a ; record 4
+	dw $0003 ; record 5
+	dw $0055 ; record 6
+	dw $0003 ; record 7
+	dw $003a ; record 8
+	dw $0003 ; record 9
+	dw $0055 ; record 10
+	dw $0003 ; record 11
+	dw $0055 ; record 12
+	dw $0044 ; record 13
+	dw $003a ; record 14
+	dw $0044 ; record 15
+	dw $0050 ; record 16
+	dw $0037 ; record 17
+	dw $0054 ; record 18
+	dw $0037 ; record 19
+	dw $0054 ; record 20
+	dw $0028 ; record 21
+	dw $0050 ; record 22
+	dw $0028 ; record 23
+	dw $0100 ; record 24
+	dw $0001 ; record 25
+	dw $003a ; record 26
+	dw $0014 ; record 27
+	dw $0064 ; record 28
+	dw $0014 ; record 29
+	dw $0064 ; record 30
+	dw $0044 ; record 31
+	dw $003a ; record 32
+	dw $0044 ; record 33
+	dw $0003 ; record 34
+	dw $0201 ; record 35
+	dw $0054 ; record 36
+	dw $003d ; record 37
+	dw $004c ; record 38
+	dw $003d ; record 39
+	dw $004c ; record 40
+	dw $0016 ; record 41
+	dw $0054 ; record 42
+	dw $0016 ; record 43
+	dw $003e ; record 44
+	dw $0012 ; record 45
+	dw $0052 ; record 46
+	dw $0012 ; record 47
+	dw $0052 ; record 48
+	dw $0042 ; record 49
+	dw $003e ; record 50
+	dw $0042 ; record 51
 Label_17_6a73:
 	ld a, $55 ; $6a73
 	ld [$d810], a ; $6a75
@@ -3943,7 +4418,70 @@ Func_17_6ba6:
 	ld a, b ; $6c69
 	ld [$d815], a ; $6c6a
 	ret ; $6c6d
-	INCBIN "data/bank_017/d_6c6e.bin" ; $6c6e, 124 bytes
+	; $6c6e, 124 bytes (records:2)
+; 62 records x 2 bytes
+	dw $0055 ; record 0
+	dw $0044 ; record 1
+	dw $003a ; record 2
+	dw $0044 ; record 3
+	dw $003a ; record 4
+	dw $0003 ; record 5
+	dw $0055 ; record 6
+	dw $0003 ; record 7
+	dw $003a ; record 8
+	dw $0003 ; record 9
+	dw $0055 ; record 10
+	dw $0003 ; record 11
+	dw $0055 ; record 12
+	dw $0044 ; record 13
+	dw $003a ; record 14
+	dw $0044 ; record 15
+	dw $0050 ; record 16
+	dw $0037 ; record 17
+	dw $0054 ; record 18
+	dw $0037 ; record 19
+	dw $0054 ; record 20
+	dw $0028 ; record 21
+	dw $0050 ; record 22
+	dw $0028 ; record 23
+	dw $0100 ; record 24
+	dw $0001 ; record 25
+	dw $003a ; record 26
+	dw $0014 ; record 27
+	dw $0064 ; record 28
+	dw $0014 ; record 29
+	dw $0064 ; record 30
+	dw $0044 ; record 31
+	dw $003a ; record 32
+	dw $0044 ; record 33
+	dw $0003 ; record 34
+	dw $0201 ; record 35
+	dw $0054 ; record 36
+	dw $003d ; record 37
+	dw $004c ; record 38
+	dw $003d ; record 39
+	dw $004c ; record 40
+	dw $0016 ; record 41
+	dw $0054 ; record 42
+	dw $0016 ; record 43
+	dw $003e ; record 44
+	dw $0012 ; record 45
+	dw $0052 ; record 46
+	dw $0012 ; record 47
+	dw $0052 ; record 48
+	dw $0042 ; record 49
+	dw $003e ; record 50
+	dw $0042 ; record 51
+	dw $0003 ; record 52
+	dw $0300 ; record 53
+	dw $002f ; record 54
+	dw $0044 ; record 55
+	dw $0049 ; record 56
+	dw $0044 ; record 57
+	dw $0049 ; record 58
+	dw $0003 ; record 59
+	dw $002f ; record 60
+	dw $0003 ; record 61
 Label_17_6cea:
 	ld a, $55 ; $6cea
 	ld [$d810], a ; $6cec
@@ -4169,7 +4707,60 @@ Func_17_6e0d:
 	ld a, b ; $6eae
 	ld [$d824], a ; $6eaf
 	ret ; $6eb2
-	INCBIN "data/bank_017/d_6eb3.bin" ; $6eb3, 104 bytes
+	; $6eb3, 104 bytes (records:2)
+; 52 records x 2 bytes
+	dw $0055 ; record 0
+	dw $0044 ; record 1
+	dw $003a ; record 2
+	dw $0044 ; record 3
+	dw $003a ; record 4
+	dw $0003 ; record 5
+	dw $0055 ; record 6
+	dw $0003 ; record 7
+	dw $003a ; record 8
+	dw $0003 ; record 9
+	dw $0055 ; record 10
+	dw $0003 ; record 11
+	dw $0055 ; record 12
+	dw $0044 ; record 13
+	dw $003a ; record 14
+	dw $0044 ; record 15
+	dw $0061 ; record 16
+	dw $002f ; record 17
+	dw $0043 ; record 18
+	dw $002f ; record 19
+	dw $0043 ; record 20
+	dw $002c ; record 21
+	dw $0061 ; record 22
+	dw $002c ; record 23
+	dw $0001 ; record 24
+	dw $0100 ; record 25
+	dw $0064 ; record 26
+	dw $0014 ; record 27
+	dw $003a ; record 28
+	dw $0014 ; record 29
+	dw $003a ; record 30
+	dw $0044 ; record 31
+	dw $0064 ; record 32
+	dw $0044 ; record 33
+	dw $0000 ; record 34
+	dw $0101 ; record 35
+	dw $005f ; record 36
+	dw $0034 ; record 37
+	dw $0042 ; record 38
+	dw $0034 ; record 39
+	dw $0042 ; record 40
+	dw $001c ; record 41
+	dw $005f ; record 42
+	dw $001c ; record 43
+	dw $005d ; record 44
+	dw $0012 ; record 45
+	dw $003e ; record 46
+	dw $0012 ; record 47
+	dw $003e ; record 48
+	dw $0042 ; record 49
+	dw $005d ; record 50
+	dw $0042 ; record 51
 ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank $03 ; $6f1c
@@ -4836,7 +5427,54 @@ Label_17_7479:
 	pop af ; $7479
 	wram_bank ; $747a
 	ret ; $747e
-	INCBIN "data/bank_017/d_747f.bin" ; $747f, 92 bytes
+	; $747f, 92 bytes (records:2)
+; 46 records x 2 bytes
+	dw $0100 ; record 0
+	dw $0000 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0001 ; record 4
+	dw $0000 ; record 5
+	dw $0000 ; record 6
+	dw $0100 ; record 7
+	dw $0000 ; record 8
+	dw $0000 ; record 9
+	dw $0000 ; record 10
+	dw $0001 ; record 11
+	dw $0100 ; record 12
+	dw $0000 ; record 13
+	dw $0001 ; record 14
+	dw $0000 ; record 15
+	dw $0402 ; record 16
+	dw $0404 ; record 17
+	dw $0502 ; record 18
+	dw $0402 ; record 19
+	dw $0202 ; record 20
+	dw $0302 ; record 21
+	dw $0402 ; record 22
+	dw $0402 ; record 23
+	dw $0304 ; record 24
+	dw $0204 ; record 25
+	dw $0204 ; record 26
+	dw $0404 ; record 27
+	dw $0402 ; record 28
+	dw $0402 ; record 29
+	dw $0402 ; record 30
+	dw $0402 ; record 31
+	dw $0402 ; record 32
+	dw $0402 ; record 33
+	dw $0402 ; record 34
+	dw $0202 ; record 35
+	dw $0304 ; record 36
+	dw $0204 ; record 37
+	dw $0204 ; record 38
+	dw $0204 ; record 39
+	dw $0402 ; record 40
+	dw $0402 ; record 41
+	dw $0402 ; record 42
+	dw $0202 ; record 43
+	dw $0302 ; record 44
+	dw $0402 ; record 45
 	ldh a, [hWramBank] ; $74db
 	push af ; $74dd
 	wram_bank $03 ; $74de
@@ -4879,7 +5517,21 @@ Label_17_7517:
 	pop af ; $7521
 	wram_bank ; $7522
 	ret ; $7526
-	INCBIN "data/bank_017/d_7527.bin" ; $7527, 55 bytes
+	; $7527, 55 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $20, $08, $02, $00 ; 0x04
+	db $30, $08, $04, $00 ; 0x08
+	db $10, $10, $06, $00 ; 0x0c
+	db $20, $10, $08, $00 ; 0x10
+	db $30, $10, $0a, $00 ; 0x14
+	db $10, $18, $0c, $00 ; 0x18
+	db $20, $18, $0e, $00 ; 0x1c
+	db $30, $18, $10, $00 ; 0x20
+	db $80, $00, $24, $48 ; 0x24
+	db $10, $34, $58, $01 ; 0x28
+	db $01, $01, $09, $09 ; 0x2c
+	db $09, $02, $02, $02 ; 0x30
+	db $0a, $0a, $0a ; 0x34
 	ld de, $7888 ; $755e
 	ld c, $00 ; $7561
 	call Func_17_40a3 ; $7563

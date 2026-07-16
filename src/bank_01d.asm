@@ -2705,7 +2705,219 @@ Func_1d_5603:
 	ld [hl+], a ; $57cf
 	ld [hl], a ; $57d0
 	ret ; $57d1
-	INCBIN "data/bank_01d/d_57d2.bin" ; $57d2, 453 bytes
+	wram_bank $06 ; $57d2
+	ld b, $0f ; $57d8
+	ld a, [$d00a] ; $57da
+	ld l, a ; $57dd
+	cp a, $0a ; $57de
+	jr c, Label_1d_581a ; $57e0
+	push bc ; $57e2
+	ld h, $00 ; $57e3
+	ld a, $02 ; $57e5
+	ld de, $d08e ; $57e7
+	call FormatDecimalNumberUnsigned ; $57ea
+	pop bc ; $57ed
+	push bc ; $57ee
+	ld a, [$d08e] ; $57ef
+	sub a, $30 ; $57f2
+	rlca ; $57f4
+	ld c, a ; $57f5
+	ld de, $051c ; $57f6
+	xor a, a ; $57f9
+	ld hl, $d145 ; $57fa
+	call Func_1d_5997 ; $57fd
+	call QueueSprite ; $5800
+	pop bc ; $5803
+	ld a, [$d08f] ; $5804
+	sub a, $30 ; $5807
+	rlca ; $5809
+	ld c, a ; $580a
+	ld de, $0c1c ; $580b
+	xor a, a ; $580e
+	ld hl, $d145 ; $580f
+	call Func_1d_5997 ; $5812
+	call QueueSprite ; $5815
+	jr Label_1d_582a ; $5818
+Label_1d_581a:
+	ld a, l ; $581a
+	rlca ; $581b
+	ld c, a ; $581c
+	ld de, $091c ; $581d
+	xor a, a ; $5820
+	ld hl, $d145 ; $5821
+	call Func_1d_5997 ; $5824
+	call QueueSprite ; $5827
+Label_1d_582a:
+	ld b, $0f ; $582a
+	ld a, [$d00b] ; $582c
+	ld l, a ; $582f
+	cp a, $0a ; $5830
+	jr c, Label_1d_586e ; $5832
+	push bc ; $5834
+	ld h, $00 ; $5835
+	ld a, $02 ; $5837
+	ld de, $d08e ; $5839
+	call FormatDecimalNumberUnsigned ; $583c
+	pop bc ; $583f
+	push bc ; $5840
+	ld a, [$d08e] ; $5841
+	sub a, $30 ; $5844
+	rlca ; $5846
+	ld c, a ; $5847
+	ld de, $0544 ; $5848
+	ld a, $01 ; $584b
+	ld hl, $d145 ; $584d
+	call Func_1d_5997 ; $5850
+	call QueueSprite ; $5853
+	pop bc ; $5856
+	ld a, [$d08f] ; $5857
+	sub a, $30 ; $585a
+	rlca ; $585c
+	ld c, a ; $585d
+	ld de, $0c44 ; $585e
+	ld a, $01 ; $5861
+	ld hl, $d145 ; $5863
+	call Func_1d_5997 ; $5866
+	call QueueSprite ; $5869
+	jr Label_1d_587f ; $586c
+Label_1d_586e:
+	ld a, l ; $586e
+	rlca ; $586f
+	ld c, a ; $5870
+	ld de, $0944 ; $5871
+	ld a, $01 ; $5874
+	ld hl, $d145 ; $5876
+	call Func_1d_5997 ; $5879
+	call QueueSprite ; $587c
+Label_1d_587f:
+	ld b, $0f ; $587f
+	ld a, [$d00c] ; $5881
+	ld l, a ; $5884
+	cp a, $0a ; $5885
+	jr c, Label_1d_58c3 ; $5887
+	push bc ; $5889
+	ld h, $00 ; $588a
+	ld a, $02 ; $588c
+	ld de, $d08e ; $588e
+	call FormatDecimalNumberUnsigned ; $5891
+	pop bc ; $5894
+	push bc ; $5895
+	ld a, [$d08e] ; $5896
+	sub a, $30 ; $5899
+	rlca ; $589b
+	ld c, a ; $589c
+	ld de, $551c ; $589d
+	ld a, $02 ; $58a0
+	ld hl, $d145 ; $58a2
+	call Func_1d_5997 ; $58a5
+	call QueueSprite ; $58a8
+	pop bc ; $58ab
+	ld a, [$d08f] ; $58ac
+	sub a, $30 ; $58af
+	rlca ; $58b1
+	ld c, a ; $58b2
+	ld de, $5c1c ; $58b3
+	ld a, $02 ; $58b6
+	ld hl, $d145 ; $58b8
+	call Func_1d_5997 ; $58bb
+	call QueueSprite ; $58be
+	jr Label_1d_58d4 ; $58c1
+Label_1d_58c3:
+	ld a, l ; $58c3
+	rlca ; $58c4
+	ld c, a ; $58c5
+	ld de, $591c ; $58c6
+	ld a, $02 ; $58c9
+	ld hl, $d145 ; $58cb
+	call Func_1d_5997 ; $58ce
+	call QueueSprite ; $58d1
+Label_1d_58d4:
+	ld b, $0f ; $58d4
+	ld a, [$d00d] ; $58d6
+	ld l, a ; $58d9
+	cp a, $0a ; $58da
+	jr c, Label_1d_5918 ; $58dc
+	push bc ; $58de
+	ld h, $00 ; $58df
+	ld a, $02 ; $58e1
+	ld de, $d08e ; $58e3
+	call FormatDecimalNumberUnsigned ; $58e6
+	pop bc ; $58e9
+	push bc ; $58ea
+	ld a, [$d08e] ; $58eb
+	sub a, $30 ; $58ee
+	rlca ; $58f0
+	ld c, a ; $58f1
+	ld de, $5544 ; $58f2
+	ld a, $03 ; $58f5
+	ld hl, $d145 ; $58f7
+	call Func_1d_5997 ; $58fa
+	call QueueSprite ; $58fd
+	pop bc ; $5900
+	ld a, [$d08f] ; $5901
+	sub a, $30 ; $5904
+	rlca ; $5906
+	ld c, a ; $5907
+	ld de, $5c44 ; $5908
+	ld a, $03 ; $590b
+	ld hl, $d145 ; $590d
+	call Func_1d_5997 ; $5910
+	call QueueSprite ; $5913
+	jr Label_1d_5929 ; $5916
+Label_1d_5918:
+	ld a, l ; $5918
+	rlca ; $5919
+	ld c, a ; $591a
+	ld de, $5944 ; $591b
+	ld a, $03 ; $591e
+	ld hl, $d145 ; $5920
+	call Func_1d_5997 ; $5923
+	call QueueSprite ; $5926
+Label_1d_5929:
+	ld a, [$d13d] ; $5929
+	cp a, $20 ; $592c
+	jr z, Label_1d_593f ; $592e
+	call Func_1d_59b5 ; $5930
+	ld de, $2984 ; $5933
+	ld hl, $d145 ; $5936
+	call Func_1d_5997 ; $5939
+	call QueueSprite ; $593c
+Label_1d_593f:
+	ld a, [$d13e] ; $593f
+	cp a, $20 ; $5942
+	jr z, Label_1d_5955 ; $5944
+	call Func_1d_59b5 ; $5946
+	ld de, $3184 ; $5949
+	ld hl, $d145 ; $594c
+	call Func_1d_5997 ; $594f
+	call QueueSprite ; $5952
+Label_1d_5955:
+	ld a, [$d13f] ; $5955
+	cp a, $20 ; $5958
+	jr z, Label_1d_596b ; $595a
+	call Func_1d_59b5 ; $595c
+	ld de, $3984 ; $595f
+	ld hl, $d145 ; $5962
+	call Func_1d_5997 ; $5965
+	call QueueSprite ; $5968
+Label_1d_596b:
+	ld a, [$d140] ; $596b
+	cp a, $20 ; $596e
+	jr z, Label_1d_5981 ; $5970
+	call Func_1d_59b5 ; $5972
+	ld de, $4184 ; $5975
+	ld hl, $d145 ; $5978
+	call Func_1d_5997 ; $597b
+	call QueueSprite ; $597e
+Label_1d_5981:
+	ld a, [$d141] ; $5981
+	call Func_1d_59b5 ; $5984
+	ld de, $4984 ; $5987
+	ld hl, $d145 ; $598a
+	call Func_1d_5997 ; $598d
+	call QueueSprite ; $5990
+	farcall FarPtr_1a_12 ; $5993
+	ret ; $5996
 Func_1d_5997:
 	push bc ; $5997
 	ld b, $00 ; $5998

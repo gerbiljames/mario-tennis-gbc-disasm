@@ -6422,7 +6422,79 @@ Label_05_6af6:
 	ld hl, $6b03 ; $6afc
 	call UnregisterFrameTask ; $6aff
 	ret ; $6b02
-	INCBIN "data/bank_005/d_6b03.bin" ; $6b03, 105 bytes
+	ld a, [$c320] ; $6b03
+	rlca ; $6b06
+	rlca ; $6b07
+	rlca ; $6b08
+	add a, $04 ; $6b09
+	and a, $07 ; $6b0b
+	ld h, a ; $6b0d
+	ld a, [$c322] ; $6b0e
+	rlca ; $6b11
+	rlca ; $6b12
+	rlca ; $6b13
+	add a, $04 ; $6b14
+	and a, $07 ; $6b16
+	ld l, a ; $6b18
+	ld a, [$c712] ; $6b19
+	add a, a ; $6b1c
+	add a, a ; $6b1d
+	add a, a ; $6b1e
+	add a, $18 ; $6b1f
+	sub a, h ; $6b21
+	ld d, a ; $6b22
+	ld a, [$c713] ; $6b23
+	add a, a ; $6b26
+	add a, a ; $6b27
+	add a, a ; $6b28
+	add a, $18 ; $6b29
+	sub a, l ; $6b2b
+	ld e, a ; $6b2c
+	ld b, $01 ; $6b2d
+	ld c, $60 ; $6b2f
+	push hl ; $6b31
+	call QueueSprite16 ; $6b32
+	pop hl ; $6b35
+	ld a, $50 ; $6b36
+	sub a, l ; $6b38
+	ld e, a ; $6b39
+	ld b, $00 ; $6b3a
+	ld a, $08 ; $6b3c
+Label_05_6b3e:
+	push af ; $6b3e
+	push hl ; $6b3f
+	ld a, $20 ; $6b40
+	sub a, h ; $6b42
+	ld d, a ; $6b43
+	ld c, $66 ; $6b44
+	push de ; $6b46
+	call QueueSprite ; $6b47
+	pop de ; $6b4a
+	ld a, d ; $6b4b
+	add a, $08 ; $6b4c
+	ld d, a ; $6b4e
+	inc c ; $6b4f
+	inc c ; $6b50
+	push de ; $6b51
+	call QueueSprite ; $6b52
+	pop de ; $6b55
+	ld a, d ; $6b56
+	add a, $08 ; $6b57
+	ld d, a ; $6b59
+	inc c ; $6b5a
+	inc c ; $6b5b
+	push de ; $6b5c
+	call QueueSprite ; $6b5d
+	pop de ; $6b60
+	ld a, e ; $6b61
+	add a, $08 ; $6b62
+	ld e, a ; $6b64
+	inc b ; $6b65
+	pop hl ; $6b66
+	pop af ; $6b67
+	dec a ; $6b68
+	jr nz, Label_05_6b3e ; $6b69
+	ret ; $6b6b
 Func_05_6b6c:
 	ld hl, $6890 ; $6b6c
 	ld de, $8600 ; $6b6f

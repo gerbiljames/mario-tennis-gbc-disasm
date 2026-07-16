@@ -1,9 +1,9 @@
 {
- "_comment": "Static code-entry seeds for bank $17 (rules screens): stranded heads. Flat = bank*0x4000 + (cpu-0x4000).",
+ "_comment": "Static code-entry seeds for bank $17 (rules screens): stranded heads. Flat = 0x17*0x4000 + (cpu-0x4000).",
  "rom": [
-  362563,
-  363013,
-  363014
+  378947,
+  379397,
+  379398
  ],
  "other": []
 }

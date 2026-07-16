@@ -3246,7 +3246,145 @@ Label_03_5532:
 	ret nz ; $5543
 	call InvalidateSaveBlock ; $5544
 	ret ; $5547
-	INCBIN "data/bank_003/d_5548.bin" ; $5548, 289 bytes
+	ld hl, $d000 ; $5548
+	call ReadSaveBlock ; $554b
+	cp a, $ff ; $554e
+	ret nz ; $5550
+	push bc ; $5551
+	ld a, $1b ; $5552
+	add a, b ; $5554
+	ld b, a ; $5555
+	call ReadSaveBlock ; $5556
+	or a, a ; $5559
+	jr nz, Label_03_5567 ; $555a
+	pop bc ; $555c
+	ld hl, $d000 ; $555d
+	ld de, $0000 ; $5560
+	call WriteSaveBlock ; $5563
+	ret ; $5566
+Label_03_5567:
+	push bc ; $5567
+	ld hl, $d000 ; $5568
+	ld c, $20 ; $556b
+	call ClearMemory16 ; $556d
+	pop bc ; $5570
+	ld hl, $d000 ; $5571
+	ld de, $0000 ; $5574
+	call WriteSaveBlock ; $5577
+	ret ; $557a
+	ld b, $06 ; $557b
+	ld hl, $d000 ; $557d
+	call ReadSaveBlock ; $5580
+	cp a, $ff ; $5583
+	ret nz ; $5585
+	ld b, $21 ; $5586
+	call ReadSaveBlock ; $5588
+	or a, a ; $558b
+	jr nz, Label_03_559a ; $558c
+	ld b, $06 ; $558e
+	ld hl, $d000 ; $5590
+	ld de, $0000 ; $5593
+	call WriteSaveBlock ; $5596
+	ret ; $5599
+Label_03_559a:
+	ld b, $06 ; $559a
+	call InvalidateSaveBlock ; $559c
+	ld b, $21 ; $559f
+	call InvalidateSaveBlock ; $55a1
+	ret ; $55a4
+	ld b, $07 ; $55a5
+	ld hl, $d000 ; $55a7
+	call ReadSaveBlock ; $55aa
+	cp a, $ff ; $55ad
+	ret nz ; $55af
+	ld b, $22 ; $55b0
+	call ReadSaveBlock ; $55b2
+	or a, a ; $55b5
+	jr nz, Label_03_55c4 ; $55b6
+	ld b, $07 ; $55b8
+	ld hl, $d000 ; $55ba
+	ld de, $0000 ; $55bd
+	call WriteSaveBlock ; $55c0
+	ret ; $55c3
+Label_03_55c4:
+	ld b, $07 ; $55c4
+	call InvalidateSaveBlock ; $55c6
+	ld b, $22 ; $55c9
+	call InvalidateSaveBlock ; $55cb
+	ret ; $55ce
+	ld b, $08 ; $55cf
+	ld hl, $d000 ; $55d1
+	call ReadSaveBlock ; $55d4
+	cp a, $ff ; $55d7
+	ret nz ; $55d9
+	ld b, $23 ; $55da
+	call ReadSaveBlock ; $55dc
+	or a, a ; $55df
+	jr nz, Label_03_55ee ; $55e0
+	ld b, $08 ; $55e2
+	ld hl, $d000 ; $55e4
+	ld de, $0000 ; $55e7
+	call WriteSaveBlock ; $55ea
+	ret ; $55ed
+Label_03_55ee:
+	ld b, $08 ; $55ee
+	call InvalidateSaveBlock ; $55f0
+	ld b, $23 ; $55f3
+	call InvalidateSaveBlock ; $55f5
+	ret ; $55f8
+	ld b, $09 ; $55f9
+	ld hl, $d000 ; $55fb
+	call ReadSaveBlock ; $55fe
+	cp a, $ff ; $5601
+	ret nz ; $5603
+	ld b, $24 ; $5604
+	call ReadSaveBlock ; $5606
+	or a, a ; $5609
+	jr nz, Label_03_5618 ; $560a
+	ld b, $09 ; $560c
+	ld hl, $d000 ; $560e
+	ld de, $0000 ; $5611
+	call WriteSaveBlock ; $5614
+	ret ; $5617
+Label_03_5618:
+	ld b, $09 ; $5618
+	call InvalidateSaveBlock ; $561a
+	ld b, $24 ; $561d
+	call InvalidateSaveBlock ; $561f
+	ret ; $5622
+	ld b, $0a ; $5623
+	ld hl, $d000 ; $5625
+	call ReadSaveBlock ; $5628
+	cp a, $ff ; $562b
+	ret nz ; $562d
+	ld b, $25 ; $562e
+	call ReadSaveBlock ; $5630
+	or a, a ; $5633
+	jr nz, Label_03_5642 ; $5634
+	ld b, $0a ; $5636
+	ld hl, $d000 ; $5638
+	ld de, $0000 ; $563b
+	call WriteSaveBlock ; $563e
+	ret ; $5641
+Label_03_5642:
+	ld b, $0a ; $5642
+	call InvalidateSaveBlock ; $5644
+	ld b, $25 ; $5647
+	call InvalidateSaveBlock ; $5649
+	ret ; $564c
+	ld hl, $d000 ; $564d
+	call ReadSaveBlock ; $5650
+	or a, a ; $5653
+	ret z ; $5654
+	push bc ; $5655
+	ld hl, $d000 ; $5656
+	ld c, $28 ; $5659
+	call ClearMemory16 ; $565b
+	pop bc ; $565e
+	ld hl, $d000 ; $565f
+	ld de, $0000 ; $5662
+	call WriteSaveBlock ; $5665
+	ret ; $5668
 RepairAllSaveSlots:
 	wram_bank $01 ; $5669
 	ld b, $00 ; $566f
@@ -3578,7 +3716,186 @@ Label_03_58a2:
 	pop de ; $58a3
 	pop bc ; $58a4
 	ret ; $58a5
-	INCBIN "data/bank_003/d_58a6.bin" ; $58a6, 267 bytes
+	push bc ; $58a6
+	push de ; $58a7
+	push hl ; $58a8
+	ld b, $07 ; $58a9
+	call ReadSaveBlock ; $58ab
+	pop hl ; $58ae
+	pop de ; $58af
+	pop bc ; $58b0
+	ret ; $58b1
+	push bc ; $58b2
+	push de ; $58b3
+	push hl ; $58b4
+	ld de, $0000 ; $58b5
+	ld b, $08 ; $58b8
+	call WriteSaveBlock ; $58ba
+	or a, a ; $58bd
+	jr nz, Label_03_58d7 ; $58be
+	call VerifySaveBlock ; $58c0
+	or a, a ; $58c3
+	jr nz, Label_03_58d7 ; $58c4
+	ld b, $23 ; $58c6
+	call WriteSaveBlock ; $58c8
+	or a, a ; $58cb
+	jr nz, Label_03_58d7 ; $58cc
+	call VerifySaveBlock ; $58ce
+	or a, a ; $58d1
+	jr nz, Label_03_58d7 ; $58d2
+	xor a, a ; $58d4
+	jr Label_03_58d9 ; $58d5
+Label_03_58d7:
+	ld a, $ff ; $58d7
+Label_03_58d9:
+	pop hl ; $58d9
+	pop de ; $58da
+	pop bc ; $58db
+	ret ; $58dc
+	push bc ; $58dd
+	push de ; $58de
+	push hl ; $58df
+	ld b, $08 ; $58e0
+	call ReadSaveBlock ; $58e2
+	pop hl ; $58e5
+	pop de ; $58e6
+	pop bc ; $58e7
+	ret ; $58e8
+	push bc ; $58e9
+	push de ; $58ea
+	push hl ; $58eb
+	ld de, $0000 ; $58ec
+	ld b, $09 ; $58ef
+	call WriteSaveBlock ; $58f1
+	or a, a ; $58f4
+	jr nz, Label_03_590e ; $58f5
+	call VerifySaveBlock ; $58f7
+	or a, a ; $58fa
+	jr nz, Label_03_590e ; $58fb
+	ld b, $24 ; $58fd
+	call WriteSaveBlock ; $58ff
+	or a, a ; $5902
+	jr nz, Label_03_590e ; $5903
+	call VerifySaveBlock ; $5905
+	or a, a ; $5908
+	jr nz, Label_03_590e ; $5909
+	xor a, a ; $590b
+	jr Label_03_5910 ; $590c
+Label_03_590e:
+	ld a, $ff ; $590e
+Label_03_5910:
+	pop hl ; $5910
+	pop de ; $5911
+	pop bc ; $5912
+	ret ; $5913
+	push bc ; $5914
+	push de ; $5915
+	push hl ; $5916
+	ld b, $09 ; $5917
+	call ReadSaveBlock ; $5919
+	pop hl ; $591c
+	pop de ; $591d
+	pop bc ; $591e
+	ret ; $591f
+	push bc ; $5920
+	push de ; $5921
+	push hl ; $5922
+	ld de, $0000 ; $5923
+	ld b, $0a ; $5926
+	call WriteSaveBlock ; $5928
+	or a, a ; $592b
+	jr nz, Label_03_5945 ; $592c
+	call VerifySaveBlock ; $592e
+	or a, a ; $5931
+	jr nz, Label_03_5945 ; $5932
+	ld b, $25 ; $5934
+	call WriteSaveBlock ; $5936
+	or a, a ; $5939
+	jr nz, Label_03_5945 ; $593a
+	call VerifySaveBlock ; $593c
+	or a, a ; $593f
+	jr nz, Label_03_5945 ; $5940
+	xor a, a ; $5942
+	jr Label_03_5947 ; $5943
+Label_03_5945:
+	ld a, $ff ; $5945
+Label_03_5947:
+	pop hl ; $5947
+	pop de ; $5948
+	pop bc ; $5949
+	ret ; $594a
+	push bc ; $594b
+	push de ; $594c
+	push hl ; $594d
+	ld b, $0a ; $594e
+	call ReadSaveBlock ; $5950
+	pop hl ; $5953
+	pop de ; $5954
+	pop bc ; $5955
+	ret ; $5956
+	ld d, h ; $5957
+	ld b, l ; $5958
+	ld d, e ; $5959
+	ld d, h ; $595a
+	ld b, e ; $595b
+	ld b, c ; $595c
+	ld d, d ; $595d
+	ld d, h ; $595e
+	ld c, c ; $595f
+	ld b, h ; $5960
+	ld d, h ; $5961
+	ld b, l ; $5962
+	ld d, e ; $5963
+	ld d, h ; $5964
+	ld b, e ; $5965
+	ld b, c ; $5966
+	ld d, d ; $5967
+	ld d, h ; $5968
+	ld c, c ; $5969
+	ld b, h ; $596a
+	ld d, h ; $596b
+	ld b, l ; $596c
+	ld d, e ; $596d
+	ld d, h ; $596e
+	ld b, e ; $596f
+	ld b, c ; $5970
+	ld d, d ; $5971
+	ld d, h ; $5972
+	ld c, c ; $5973
+	ld b, h ; $5974
+	push af ; $5975
+	push bc ; $5976
+	push de ; $5977
+	push hl ; $5978
+	wram_bank $07 ; $5979
+	ld hl, $de00 ; $597f
+	ld de, $270f ; $5982
+	ld a, e ; $5985
+	ld [hl+], a ; $5986
+	ld [hl], d ; $5987
+	xor a, a ; $5988
+	call Func_03_5072 ; $5989
+	ld hl, $de00 ; $598c
+	ld de, $03e7 ; $598f
+	ld a, e ; $5992
+	ld [hl+], a ; $5993
+	ld [hl], d ; $5994
+	ld a, $01 ; $5995
+	call Func_03_5072 ; $5997
+	ld hl, $de00 ; $599a
+	ld de, $0000 ; $599d
+	ld a, e ; $59a0
+	ld [hl+], a ; $59a1
+	ld [hl], d ; $59a2
+	xor a, a ; $59a3
+	call Func_03_5015 ; $59a4
+	ld a, $01 ; $59a7
+	call Func_03_5015 ; $59a9
+	pop hl ; $59ac
+	pop de ; $59ad
+	pop bc ; $59ae
+	pop af ; $59af
+	ret ; $59b0
 FillMemory16:
 	ld [hl+], a ; $59b1
 	ld [hl+], a ; $59b2

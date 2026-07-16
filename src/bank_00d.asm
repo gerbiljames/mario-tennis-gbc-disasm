@@ -850,7 +850,12 @@ Label_0d_472d:
 	ld [$c786], a ; $474a
 	call Func_0d_48b6 ; $474d
 	ret ; $4750
-	INCBIN "data/bank_00d/d_4751.bin" ; $4751, 12 bytes
+Func_0d_4751:
+	farcall FarPtr_ResolvePointWinner ; $4751
+	add a, a ; $4754
+	jr c, Func_0d_475d ; $4755
+	ld de, $0001 ; $4757
+	call AddToMinigameScore ; $475a
 Func_0d_475d:
 	ldh a, [hWramBank] ; $475d
 	push af ; $475f
@@ -1157,7 +1162,159 @@ Func_0d_493a:
 	ld [$c785], a ; $4986
 	call Func_0d_4678 ; $4989
 	ret ; $498c
-	INCBIN "data/bank_00d/d_498d.bin" ; $498d, 243 bytes
+	call Func_0d_46d7 ; $498d
+	ret ; $4990
+	farcall FarPtr_AdvanceMatchRng ; $4991
+	and a, $01 ; $4994
+	inc a ; $4996
+	ld hl, $c785 ; $4997
+	add a, [hl] ; $499a
+	cp a, $03 ; $499b
+	jr c, Label_0d_49a1 ; $499d
+	sub a, $03 ; $499f
+Label_0d_49a1:
+	ld [hl], a ; $49a1
+	call Func_0d_46f7 ; $49a2
+	ret ; $49a5
+	call Func_0d_4751 ; $49a6
+	ret ; $49a9
+	call Func_0d_47be ; $49aa
+	ret ; $49ad
+	call Func_0d_47c3 ; $49ae
+	ret ; $49b1
+	call Func_0d_47e2 ; $49b2
+	ret ; $49b5
+	dec d ; $49b6
+	ld a, [bc] ; $49b7
+	ld [bc], a ; $49b8
+	ld b, $14 ; $49b9
+	ld e, $00 ; $49bb
+	add a, b ; $49bd
+	pop de ; $49be
+	ld c, c ; $49bf
+	cp a, l ; $49c0
+	ld b, b ; $49c1
+	add a, $49 ; $49c2
+	nop ; $49c4
+	nop ; $49c5
+	ld a, $01 ; $49c6
+	ld [$c7b8], a ; $49c8
+	ld a, $02 ; $49cb
+	ld [wMinigameLevel], a ; $49cd
+	ret ; $49d0
+	ld [$ee49], a ; $49d1
+	ld c, c ; $49d4
+	inc bc ; $49d5
+	ld c, d ; $49d6
+	pop hl ; $49d7
+	ld c, c ; $49d8
+	rrca ; $49d9
+	ld c, d ; $49da
+	dec bc ; $49db
+	ld c, d ; $49dc
+	rlca ; $49dd
+	ld c, d ; $49de
+	xor a, [hl] ; $49df
+	inc bc ; $49e0
+	ld a, $04 ; $49e1
+	ld [$c785], a ; $49e3
+	call Func_0d_4678 ; $49e6
+	ret ; $49e9
+	call Func_0d_46d7 ; $49ea
+	ret ; $49ed
+	farcall FarPtr_AdvanceMatchRng ; $49ee
+	and a, $03 ; $49f1
+	inc a ; $49f3
+	ld hl, $c785 ; $49f4
+	add a, [hl] ; $49f7
+	cp a, $06 ; $49f8
+	jr c, Label_0d_49fe ; $49fa
+	sub a, $06 ; $49fc
+Label_0d_49fe:
+	ld [hl], a ; $49fe
+	call Func_0d_46f7 ; $49ff
+	ret ; $4a02
+	call Func_0d_4751 ; $4a03
+	ret ; $4a06
+	call Func_0d_47be ; $4a07
+	ret ; $4a0a
+	call Func_0d_47c3 ; $4a0b
+	ret ; $4a0e
+	call Func_0d_47e2 ; $4a0f
+	ret ; $4a12
+	dec d ; $4a13
+	ld a, [bc] ; $4a14
+	ld [bc], a ; $4a15
+	ld b, $15 ; $4a16
+	ld e, $00 ; $4a18
+	add a, b ; $4a1a
+	ld l, $4a ; $4a1b
+	cp a, l ; $4a1d
+	ld b, b ; $4a1e
+	inc hl ; $4a1f
+	ld c, d ; $4a20
+	nop ; $4a21
+	nop ; $4a22
+	ld a, $01 ; $4a23
+	ld [$c7b8], a ; $4a25
+	ld a, $03 ; $4a28
+	ld [wMinigameLevel], a ; $4a2a
+	ret ; $4a2d
+	ld b, a ; $4a2e
+	ld c, d ; $4a2f
+	ld c, e ; $4a30
+	ld c, d ; $4a31
+	ld h, b ; $4a32
+	ld c, d ; $4a33
+	ld a, $4a ; $4a34
+	ld l, h ; $4a36
+	ld c, d ; $4a37
+	ld l, b ; $4a38
+	ld c, d ; $4a39
+	ld h, h ; $4a3a
+	ld c, d ; $4a3b
+	xor a, [hl] ; $4a3c
+	inc bc ; $4a3d
+	ld a, $04 ; $4a3e
+	ld [$c785], a ; $4a40
+	call Func_0d_4678 ; $4a43
+	ret ; $4a46
+	call Func_0d_46d7 ; $4a47
+	ret ; $4a4a
+	farcall FarPtr_AdvanceMatchRng ; $4a4b
+	and a, $07 ; $4a4e
+	inc a ; $4a50
+	ld hl, $c785 ; $4a51
+	add a, [hl] ; $4a54
+	cp a, $09 ; $4a55
+	jr c, Label_0d_4a5b ; $4a57
+	sub a, $09 ; $4a59
+Label_0d_4a5b:
+	ld [hl], a ; $4a5b
+	call Func_0d_46f7 ; $4a5c
+	ret ; $4a5f
+	call Func_0d_4751 ; $4a60
+	ret ; $4a63
+	call Func_0d_47be ; $4a64
+	ret ; $4a67
+	call Func_0d_47c3 ; $4a68
+	ret ; $4a6b
+	call Func_0d_47e2 ; $4a6c
+	ret ; $4a6f
+	nop ; $4a70
+	dec bc ; $4a71
+	ld bc, $1607 ; $4a72
+	rra ; $4a75
+	nop ; $4a76
+	add a, b ; $4a77
+	sub a, e ; $4a78
+	ld c, d ; $4a79
+	or a, h ; $4a7a
+	ld b, b ; $4a7b
+	add a, b ; $4a7c
+	ld c, d ; $4a7d
+	nop ; $4a7e
+	nop ; $4a7f
 	ld a, $01 ; $4a80
 	ld [$c7b9], a ; $4a82
 	ld a, $00 ; $4a85
@@ -1373,13 +1530,230 @@ DrawMinigameScore:
 	inc bc ; $4c2a
 	call Func_0d_4abb ; $4c2b
 	ret ; $4c2e
-	INCBIN "data/bank_00d/d_4c2f.bin" ; $4c2f, 161 bytes
+	call Func_0d_4b01 ; $4c2f
+	ret ; $4c32
+	call Func_0d_4b29 ; $4c33
+	ret ; $4c36
+	call Func_0d_4b59 ; $4c37
+	ret ; $4c3a
+	call Func_0d_4bc7 ; $4c3b
+	ret ; $4c3e
+	call Func_0d_4bc8 ; $4c3f
+	ret ; $4c42
+	nop ; $4c43
+	dec bc ; $4c44
+	ld bc, $1807 ; $4c45
+	rra ; $4c48
+	nop ; $4c49
+	add a, b ; $4c4a
+	ld h, [hl] ; $4c4b
+	ld c, h ; $4c4c
+	or a, h ; $4c4d
+	ld b, b ; $4c4e
+	ld d, e ; $4c4f
+	ld c, h ; $4c50
+	nop ; $4c51
+	nop ; $4c52
+	ld a, $01 ; $4c53
+	ld [$c7b9], a ; $4c55
+	ld a, $02 ; $4c58
+	ld [wMinigameLevel], a ; $4c5a
+	farcall FarPtr_0a_96 ; $4c5d
+	ld a, $02 ; $4c60
+	farcall FarPtr_0a_9a ; $4c62
+	ret ; $4c65
+	halt ; $4c66
+	ld c, h ; $4c67
+	ld a, d ; $4c68
+	ld c, h ; $4c69
+	ld a, [hl] ; $4c6a
+	ld c, h ; $4c6b
+	xor a, [hl] ; $4c6c
+	inc bc ; $4c6d
+	adc a, d ; $4c6e
+	ld c, h ; $4c6f
+	add a, [hl] ; $4c70
+	ld c, h ; $4c71
+	add a, d ; $4c72
+	ld c, h ; $4c73
+	xor a, [hl] ; $4c74
+	inc bc ; $4c75
+	call Func_0d_4abb ; $4c76
+	ret ; $4c79
+	call Func_0d_4b01 ; $4c7a
+	ret ; $4c7d
+	call Func_0d_4b29 ; $4c7e
+	ret ; $4c81
+	call Func_0d_4b59 ; $4c82
+	ret ; $4c85
+	call Func_0d_4bc7 ; $4c86
+	ret ; $4c89
+	call Func_0d_4bc8 ; $4c8a
+	ret ; $4c8d
+	nop ; $4c8e
+	dec bc ; $4c8f
+	ld bc, $1907 ; $4c90
+	rra ; $4c93
+	nop ; $4c94
+	add a, b ; $4c95
+	or a, c ; $4c96
+	ld c, h ; $4c97
+	or a, h ; $4c98
+	ld b, b ; $4c99
+	sbc a, [hl] ; $4c9a
+	ld c, h ; $4c9b
+	nop ; $4c9c
+	nop ; $4c9d
+	ld a, $01 ; $4c9e
+	ld [$c7b9], a ; $4ca0
+	ld a, $03 ; $4ca3
+	ld [wMinigameLevel], a ; $4ca5
+	farcall FarPtr_0a_96 ; $4ca8
+	ld a, $03 ; $4cab
+	farcall FarPtr_0a_9a ; $4cad
+	ret ; $4cb0
+	pop bc ; $4cb1
+	ld c, h ; $4cb2
+	push bc ; $4cb3
+	ld c, h ; $4cb4
+	ret ; $4cb5
+	ld c, h ; $4cb6
+	xor a, [hl] ; $4cb7
+	inc bc ; $4cb8
+	push de ; $4cb9
+	ld c, h ; $4cba
+	pop de ; $4cbb
+	ld c, h ; $4cbc
+	call $ae4c ; $4cbd
+	inc bc ; $4cc0
+	call Func_0d_4abb ; $4cc1
+	ret ; $4cc4
+	call Func_0d_4b01 ; $4cc5
+	ret ; $4cc8
+	call Func_0d_4b29 ; $4cc9
+	ret ; $4ccc
+	call Func_0d_4b59 ; $4ccd
 	ret ; $4cd0
 	call Func_0d_4bc7 ; $4cd1
 	ret ; $4cd4
 	call Func_0d_4bc8 ; $4cd5
 	ret ; $4cd8
-	INCBIN "data/bank_00d/d_4cd9.bin" ; $4cd9, 211 bytes
+	INCBIN "data/bank_00d/d_4cd9.bin" ; $4cd9, 32 bytes
+	ld [de], a ; $4cf9
+	ld c, l ; $4cfa
+	ld d, $4d ; $4cfb
+	dec hl ; $4cfd
+	ld c, l ; $4cfe
+	add hl, bc ; $4cff
+	ld c, l ; $4d00
+	scf ; $4d01
+	ld c, l ; $4d02
+	inc sp ; $4d03
+	ld c, l ; $4d04
+	cpl ; $4d05
+	ld c, l ; $4d06
+	xor a, [hl] ; $4d07
+	inc bc ; $4d08
+	ld a, $04 ; $4d09
+	ld [$c785], a ; $4d0b
+	call Func_0d_4678 ; $4d0e
+	ret ; $4d11
+	call Func_0d_46d7 ; $4d12
+	ret ; $4d15
+	farcall FarPtr_AdvanceMatchRng ; $4d16
+	and a, $07 ; $4d19
+	inc a ; $4d1b
+	ld hl, $c785 ; $4d1c
+	add a, [hl] ; $4d1f
+	cp a, $09 ; $4d20
+	jr c, Label_0d_4d26 ; $4d22
+	sub a, $09 ; $4d24
+Label_0d_4d26:
+	ld [hl], a ; $4d26
+	call Func_0d_46f7 ; $4d27
+	ret ; $4d2a
+	call Func_0d_4751 ; $4d2b
+	ret ; $4d2e
+	call Func_0d_47be ; $4d2f
+	ret ; $4d32
+	call Func_0d_47c3 ; $4d33
+	ret ; $4d36
+	call Func_0d_47e2 ; $4d37
+	ret ; $4d3a
+	nop ; $4d3b
+	dec bc ; $4d3c
+	ld bc, $1b07 ; $4d3d
+	rra ; $4d40
+	nop ; $4d41
+	add a, b ; $4d42
+	ld h, e ; $4d43
+	ld c, l ; $4d44
+	or a, h ; $4d45
+	ld b, b ; $4d46
+	ld c, e ; $4d47
+	ld c, l ; $4d48
+	nop ; $4d49
+	nop ; $4d4a
+	ld a, $01 ; $4d4b
+	ld [$c7bc], a ; $4d4d
+	ld a, $01 ; $4d50
+	ld [$c7b9], a ; $4d52
+	ld a, $04 ; $4d55
+	ld [wMinigameLevel], a ; $4d57
+	farcall FarPtr_0a_96 ; $4d5a
+	ld a, $04 ; $4d5d
+	farcall FarPtr_0a_9a ; $4d5f
+	ret ; $4d62
+	ld [hl], e ; $4d63
+	ld c, l ; $4d64
+	ld [hl], a ; $4d65
+	ld c, l ; $4d66
+	ld a, e ; $4d67
+	ld c, l ; $4d68
+	xor a, [hl] ; $4d69
+	inc bc ; $4d6a
+	add a, a ; $4d6b
+	ld c, l ; $4d6c
+	add a, e ; $4d6d
+	ld c, l ; $4d6e
+	ld a, a ; $4d6f
+	ld c, l ; $4d70
+	xor a, [hl] ; $4d71
+	inc bc ; $4d72
+	call Func_0d_4abb ; $4d73
+	ret ; $4d76
+	call Func_0d_4b01 ; $4d77
+	ret ; $4d7a
+	call Func_0d_4b29 ; $4d7b
+	ret ; $4d7e
+	call Func_0d_4b59 ; $4d7f
+	ret ; $4d82
+	call Func_0d_4bc7 ; $4d83
+	ret ; $4d86
+	call Func_0d_4bc8 ; $4d87
+	ret ; $4d8a
+	dec d ; $4d8b
+	rrca ; $4d8c
+	ld [bc], a ; $4d8d
+	ld [$191f], sp ; $4d8e
+	nop ; $4d91
+	add hl, de ; $4d92
+	xor a, l ; $4d93
+	ld c, l ; $4d94
+	cp a, l ; $4d95
+	ld b, b ; $4d96
+	sbc a, e ; $4d97
+	ld c, l ; $4d98
+	nop ; $4d99
+	nop ; $4d9a
+	ld a, $01 ; $4d9b
+	ld [$c7b8], a ; $4d9d
+	ld a, [wMinigameLevel] ; $4da0
+	cp a, $02 ; $4da3
+	jr nz, Label_0d_4dac ; $4da5
+	ld a, $01 ; $4da7
+	ld [$c7bc], a ; $4da9
+Label_0d_4dac:
 	ret ; $4dac
 	; $4dad, 16 bytes (records:2)
 ; 8 records x 2 bytes
@@ -1888,7 +2262,18 @@ Func_0d_53d8:
 	call Func_0d_540a ; $53ef
 	call Func_0d_540a ; $53f2
 	ret ; $53f5
-	INCBIN "data/bank_00d/d_53f6.bin" ; $53f6, 20 bytes
+	and a, $0f ; $53f6
+	cpl ; $53f8
+	inc a ; $53f9
+	add a, $0f ; $53fa
+	add a, $2c ; $53fc
+	ld l, a ; $53fe
+	adc a, $54 ; $53ff
+	sub a, l ; $5401
+	ld h, a ; $5402
+	call Func_0d_540a ; $5403
+	call Func_0d_540a ; $5406
+	ret ; $5409
 Func_0d_540a:
 	push de ; $540a
 	ld a, [hl] ; $540b
@@ -1929,7 +2314,432 @@ Func_0d_55b4:
 	call Func_0d_4302 ; $55c3
 	farcall FarPtr_FlushTilemapToVram ; $55c6
 	ret ; $55c9
-	INCBIN "data/bank_00d/d_55ca.bin" ; $55ca, 751 bytes
+	ld hl, $c78e ; $55ca
+	ld a, [hl] ; $55cd
+	and a, a ; $55ce
+	ret z ; $55cf
+	ld [hl], $00 ; $55d0
+	ld a, [$c78d] ; $55d2
+	cp a, $ff ; $55d5
+	jr z, Label_0d_55fd ; $55d7
+	ld a, [$c78d] ; $55d9
+	add a, $f9 ; $55dc
+	ld l, a ; $55de
+	adc a, $55 ; $55df
+	sub a, l ; $55e1
+	ld h, a ; $55e2
+	ld e, [hl] ; $55e3
+	ld d, $00 ; $55e4
+	call AddToMinigameScore ; $55e6
+	ld a, $ff ; $55e9
+	ld [$c78d], a ; $55eb
+	call IsMinigameTargetReached ; $55ee
+	and a, a ; $55f1
+	ret z ; $55f2
+	ld a, $0b ; $55f3
+	ld [wPointOutcome], a ; $55f5
+	ret ; $55f8
+	INCBIN "data/bank_00d/d_55f9.bin" ; $55f9, 4 bytes
+Label_0d_55fd:
+	ld a, [$c7bf] ; $55fd
+	cp a, $ff ; $5600
+	ret z ; $5602
+	add a, $c0 ; $5603
+	ld l, a ; $5605
+	adc a, $c7 ; $5606
+	sub a, l ; $5608
+	ld h, a ; $5609
+	ld a, [hl] ; $560a
+	and a, a ; $560b
+	ret z ; $560c
+	sub a, $04 ; $560d
+	farcall FarPtr_0a_9e ; $560f
+	sound $77 ; $5612
+	ret ; $5614
+	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 67 bytes
+	ld l, a ; $5658
+	ld d, [hl] ; $5659
+	ld a, d ; $565a
+	ld d, [hl] ; $565b
+	ld a, [hl] ; $565c
+	ld d, [hl] ; $565d
+	ld l, b ; $565e
+	ld d, [hl] ; $565f
+	adc a, l ; $5660
+	ld d, [hl] ; $5661
+	adc a, c ; $5662
+	ld d, [hl] ; $5663
+	add a, l ; $5664
+	ld d, [hl] ; $5665
+	halt ; $5666
+	ld d, [hl] ; $5667
+	call Func_0d_5691 ; $5668
+	call Func_0d_56b0 ; $566b
+	ret ; $566e
+	call Func_0d_56b4 ; $566f
+	call UpdateScorePopup ; $5672
+	ret ; $5675
+	call UpdateMinigameActors ; $5676
+	ret ; $5679
+	call Func_0d_56bb ; $567a
+	ret ; $567d
+	call Func_0d_56aa ; $567e
+	call Func_0d_56c0 ; $5681
+	ret ; $5684
+	call Func_0d_56ee ; $5685
+	ret ; $5688
+	call Func_0d_56ef ; $5689
+	ret ; $568c
+	call Func_0d_56f0 ; $568d
+	ret ; $5690
+Func_0d_5691:
+	call ClearMinigameActors ; $5691
+	ld de, $5719 ; $5694
+	ld bc, $dc00 ; $5697
+	call SetMinigameActorHandler ; $569a
+	ld hl, $0000 ; $569d
+	ld de, $0000 ; $56a0
+	ld bc, $dc00 ; $56a3
+	call Func_0d_4465 ; $56a6
+	ret ; $56a9
+Func_0d_56aa:
+	ld hl, $dc00 ; $56aa
+	res 0, [hl] ; $56ad
+	ret ; $56af
+Func_0d_56b0:
+	call InitMinigameScore ; $56b0
+	ret ; $56b3
+Func_0d_56b4:
+	ld de, $8403 ; $56b4
+	call DrawMinigameScore ; $56b7
+	ret ; $56ba
+Func_0d_56bb:
+	xor a, a ; $56bb
+	ld [wOffscreenArrowsEnabled], a ; $56bc
+	ret ; $56bf
+Func_0d_56c0:
+	call Func_0d_43ba ; $56c0
+	call DetermineMinigamePointResult ; $56c3
+	push de ; $56c6
+	ldh a, [hWramBank] ; $56c7
+	push af ; $56c9
+	wram_bank $04 ; $56ca
+	farcall FarPtr_CharPointEndReaction ; $56d0
+	ld a, [$df57] ; $56d3
+	push af ; $56d6
+	wram_bank $05 ; $56d7
+	farcall FarPtr_CharPointEndReaction ; $56dd
+	pop af ; $56e0
+	ld [$df57], a ; $56e1
+	pop af ; $56e4
+	wram_bank ; $56e5
+	pop de ; $56e9
+	call ShowMinigamePointResult ; $56ea
+	ret ; $56ed
+Func_0d_56ee:
+	ret ; $56ee
+Func_0d_56ef:
+	ret ; $56ef
+Func_0d_56f0:
+	ld a, [$c4b8] ; $56f0
+	and a, $01 ; $56f3
+	jr nz, Label_0d_56ff ; $56f5
+	ld a, [$c788] ; $56f7
+	and a, a ; $56fa
+	jr z, Label_0d_5710 ; $56fb
+	jr Label_0d_570b ; $56fd
+Label_0d_56ff:
+	ld a, [$c788] ; $56ff
+	and a, a ; $5702
+	jr nz, Label_0d_570b ; $5703
+	xor a, a ; $5705
+	ld [$c789], a ; $5706
+	jr Label_0d_5710 ; $5709
+Label_0d_570b:
+	ld b, $07 ; $570b
+	call Func_0d_41cb ; $570d
+Label_0d_5710:
+	xor a, a ; $5710
+	ld [$c788], a ; $5711
+	xor a, a ; $5714
+	ld [$dc02], a ; $5715
+	ret ; $5718
+	ld a, [$dc72] ; $5719
+	rst Rst00 ; $571c
+	dw Label_0d_572c ; $571d jumptable
+	dw Label_0d_572f ; $571f jumptable
+	dw Label_0d_573d ; $5721 jumptable
+	dw Label_0d_575b ; $5723 jumptable
+	dw Label_00_03ae ; $5725 jumptable
+Func_0d_5727:
+	ld hl, $dc72 ; $5727
+	inc [hl] ; $572a
+	ret ; $572b
+Label_0d_572c:
+	call Func_0d_5727 ; $572c
+Label_0d_572f:
+	call Func_0d_57fd ; $572f
+	call Func_0d_575f ; $5732
+	and a, a ; $5735
+	ret z ; $5736
+	call Func_0d_57be ; $5737
+	jp Func_0d_5727 ; $573a
+Label_0d_573d:
+	call Func_0d_583c ; $573d
+	ld hl, $dc73 ; $5740
+	dec [hl] ; $5743
+	ld a, [hl] ; $5744
+	and a, a ; $5745
+	ret nz ; $5746
+	farcall FarPtr_AdvanceMatchRng ; $5747
+	ld h, $00 ; $574a
+	ld l, a ; $574c
+	add hl, hl ; $574d
+	ld de, rJOYP ; $574e
+	add hl, de ; $5751
+	ld de, $0000 ; $5752
+	call Func_0d_449a ; $5755
+	jp Func_0d_5727 ; $5758
+Label_0d_575b:
+	call Func_0d_57fd ; $575b
+	ret ; $575e
+Func_0d_575f:
+	ld hl, $dc76 ; $575f
+	ld a, [hl+] ; $5762
+	ld d, [hl] ; $5763
+	ld e, a ; $5764
+	ld hl, wBallX ; $5765
+	ld a, [hl+] ; $5768
+	ld h, [hl] ; $5769
+	ld l, a ; $576a
+	ld a, l ; $576b
+	sub a, e ; $576c
+	ld l, a ; $576d
+	ld a, h ; $576e
+	sbc a, d ; $576f
+	ld h, a ; $5770
+	bit 7, h ; $5771
+	jr z, Label_0d_577b ; $5773
+	xor a, a ; $5775
+	sub a, l ; $5776
+	ld l, a ; $5777
+	sbc a, a ; $5778
+	sub a, h ; $5779
+	ld h, a ; $577a
+Label_0d_577b:
+	ld de, $ff80 ; $577b
+	add hl, de ; $577e
+	jr c, Label_0d_57bc ; $577f
+	ld hl, $dc78 ; $5781
+	ld a, [hl+] ; $5784
+	ld d, [hl] ; $5785
+	ld e, a ; $5786
+	ld hl, wBallDepth ; $5787
+	ld a, [hl+] ; $578a
+	ld h, [hl] ; $578b
+	ld l, a ; $578c
+	ld a, l ; $578d
+	sub a, e ; $578e
+	ld l, a ; $578f
+	ld a, h ; $5790
+	sbc a, d ; $5791
+	ld h, a ; $5792
+	bit 7, h ; $5793
+	jr z, Label_0d_579d ; $5795
+	xor a, a ; $5797
+	sub a, l ; $5798
+	ld l, a ; $5799
+	sbc a, a ; $579a
+	sub a, h ; $579b
+	ld h, a ; $579c
+Label_0d_579d:
+	ld de, $fec0 ; $579d
+	add hl, de ; $57a0
+	jr c, Label_0d_57bc ; $57a1
+	ld hl, wBallHeight ; $57a3
+	ld a, [hl+] ; $57a6
+	ld h, [hl] ; $57a7
+	ld l, a ; $57a8
+	bit 7, h ; $57a9
+	jr z, Label_0d_57b3 ; $57ab
+	xor a, a ; $57ad
+	sub a, l ; $57ae
+	ld l, a ; $57af
+	sbc a, a ; $57b0
+	sub a, h ; $57b1
+	ld h, a ; $57b2
+Label_0d_57b3:
+	ld de, rJOYP ; $57b3
+	add hl, de ; $57b6
+	jr c, Label_0d_57bc ; $57b7
+	ld a, $01 ; $57b9
+	ret ; $57bb
+Label_0d_57bc:
+	xor a, a ; $57bc
+	ret ; $57bd
+Func_0d_57be:
+	ld a, $10 ; $57be
+	ld [$dc73], a ; $57c0
+	ld a, $01 ; $57c3
+	ld [$c788], a ; $57c5
+	sound $86 ; $57c8
+	ld a, [$c789] ; $57ca
+	add a, $f5 ; $57cd
+	ld e, a ; $57cf
+	adc a, $57 ; $57d0
+	sub a, e ; $57d2
+	ld d, a ; $57d3
+	ld a, [de] ; $57d4
+	ld hl, $0001 ; $57d5
+	call MulHLByA ; $57d8
+	ld e, l ; $57db
+	ld d, h ; $57dc
+	ld hl, $c782 ; $57dd
+	ld a, e ; $57e0
+	ld [hl+], a ; $57e1
+	ld [hl], d ; $57e2
+	call AddToMinigameScore ; $57e3
+	call StartScorePopup ; $57e6
+	call IsMinigameTargetReached ; $57e9
+	and a, a ; $57ec
+	jr z, Label_0d_57f4 ; $57ed
+	ld a, $0b ; $57ef
+	ld [wPointOutcome], a ; $57f1
+Label_0d_57f4:
+	ret ; $57f4
+	ld bc, $0402 ; $57f5
+	ld [$2010], sp ; $57f8
+	ld b, b ; $57fb
+	add a, b ; $57fc
+Func_0d_57fd:
+	call Func_0d_5848 ; $57fd
+	ld c, $30 ; $5800
+	ld h, $fc ; $5802
+	ld l, $f1 ; $5804
+	call Func_00_2c2b ; $5806
+	ldh a, [$ff8c] ; $5809
+	and a, $1f ; $580b
+	add a, $1c ; $580d
+	ld l, a ; $580f
+	adc a, $58 ; $5810
+	sub a, l ; $5812
+	ld h, a ; $5813
+	ld a, [hl] ; $5814
+	cp a, $ff ; $5815
+	ret z ; $5817
+	farcall FarPtr_28_10 ; $5818
+	ret ; $581b
+	nop ; $581c
+	rst Rst38 ; $581d
+	rst Rst38 ; $581e
+	rst Rst38 ; $581f
+	rst Rst38 ; $5820
+	rst Rst38 ; $5821
+	rst Rst38 ; $5822
+	rst Rst38 ; $5823
+	ld bc, rIE ; $5824
+	rst Rst38 ; $5827
+	rst Rst38 ; $5828
+	rst Rst38 ; $5829
+	rst Rst38 ; $582a
+	rst Rst38 ; $582b
+	ld [bc], a ; $582c
+	rst Rst38 ; $582d
+	rst Rst38 ; $582e
+	rst Rst38 ; $582f
+	rst Rst38 ; $5830
+	rst Rst38 ; $5831
+	rst Rst38 ; $5832
+	rst Rst38 ; $5833
+	ld bc, rIE ; $5834
+	rst Rst38 ; $5837
+	rst Rst38 ; $5838
+	rst Rst38 ; $5839
+	rst Rst38 ; $583a
+	rst Rst38 ; $583b
+Func_0d_583c:
+	call Func_0d_5848 ; $583c
+	ld c, $3c ; $583f
+	ld a, [$dc73] ; $5841
+	call Func_0d_53ce ; $5844
+	ret ; $5847
+Func_0d_5848:
+	ld hl, $dc7a ; $5848
+	ld a, [hl+] ; $584b
+	ld e, a ; $584c
+	ld a, [hl+] ; $584d
+	ld d, a ; $584e
+	ld a, [hl+] ; $584f
+	ld c, a ; $5850
+	ld a, [hl+] ; $5851
+	ld b, a ; $5852
+	ld l, e ; $5853
+	ld h, d ; $5854
+	farcall FarPtr_08_46 ; $5855
+	ld a, [$c789] ; $5858
+	add a, $66 ; $585b
+	ld l, a ; $585d
+	adc a, $58 ; $585e
+	sub a, l ; $5860
+	ld h, a ; $5861
+	ld b, [hl] ; $5862
+	ld b, $0e ; $5863
+	ret ; $5865
+	rrca ; $5866
+	ld c, $0e ; $5867
+	ld c, $0e ; $5869
+	ld c, $0e ; $586b
+	dec c ; $586d
+	nop ; $586e
+	inc de ; $586f
+	ld bc, $1e08 ; $5870
+	ld [de], a ; $5873
+	nop ; $5874
+	rra ; $5875
+	and a, [hl] ; $5876
+	ld e, b ; $5877
+	or a, h ; $5878
+	ld b, b ; $5879
+	ld a, [hl] ; $587a
+	ld e, b ; $587b
+	nop ; $587c
+	nop ; $587d
+	ld a, $01 ; $587e
+	ld [$c7b9], a ; $5880
+	ld a, [wMinigameLevel] ; $5883
+	cp a, $02 ; $5886
+	jr nz, Label_0d_588f ; $5888
+	ld a, $01 ; $588a
+	ld [$c7bc], a ; $588c
+Label_0d_588f:
+	farcall FarPtr_0a_96 ; $588f
+	ld a, [wMinigameLevel] ; $5892
+	add a, $a3 ; $5895
+	ld l, a ; $5897
+	adc a, $58 ; $5898
+	sub a, l ; $589a
+	ld h, a ; $589b
+	ld a, [hl] ; $589c
+	and a, a ; $589d
+	ret z ; $589e
+	farcall FarPtr_0a_9a ; $589f
+	ret ; $58a2
+	nop ; $58a3
+	rlca ; $58a4
+	ld [$58b6], sp ; $58a5
+	cp a, d ; $58a8
+	ld e, b ; $58a9
+	pop bc ; $58aa
+	ld e, b ; $58ab
+	xor a, [hl] ; $58ac
+	inc bc ; $58ad
+	call $c958 ; $58ae
+	ld e, b ; $58b1
+	push bc ; $58b2
+	ld e, b ; $58b3
+	xor a, [hl] ; $58b4
+	inc bc ; $58b5
+	call Func_0d_4abb ; $58b6
 	ret ; $58b9
 	call Func_0d_4b01 ; $58ba
 	call Func_0d_5979 ; $58bd
