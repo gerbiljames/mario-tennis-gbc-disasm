@@ -12,7 +12,7 @@ SECTION "ROM Bank $0f", ROMX[$4000], BANK[$0f]
 	farcall FarPtr_0a_22 ; $459e
 	sound $96 ; $45a1
 	ld a, $78 ; $45a3
-	call Func_0f_5678 ; $45a5
+	call DelayFrames ; $45a5
 	ld a, $14 ; $45a8
 	ld bc, $3f00 ; $45aa
 	ld de, $3f00 ; $45ad
@@ -37,7 +37,7 @@ Label_0f_4661:
 	ld b, $00 ; $4684
 	farcall FarPtr_0a_2e ; $4686
 	ld a, $01 ; $4689
-	call Func_0f_5678 ; $468b
+	call DelayFrames ; $468b
 	ld a, $16 ; $468e
 	ld bc, $3f00 ; $4690
 	ld de, $3f00 ; $4693
@@ -69,7 +69,7 @@ Label_0f_4661:
 	ld de, $1b00 ; $46d4
 	farcall FarPtr_0a_22 ; $46d7
 	ld a, $01 ; $46da
-	call Func_0f_5678 ; $46dc
+	call DelayFrames ; $46dc
 	ld a, $00 ; $46df
 	ld b, $40 ; $46e1
 	farcall FarPtr_0a_2e ; $46e3
@@ -77,7 +77,7 @@ Label_0f_4661:
 	ld b, $40 ; $46e8
 	farcall FarPtr_0a_2e ; $46ea
 	ld a, $01 ; $46ed
-	call Func_0f_5678 ; $46ef
+	call DelayFrames ; $46ef
 	ld a, $02 ; $46f2
 	farcall FarPtr_0a_16 ; $46f4
 	ld c, l ; $46f7
@@ -94,7 +94,7 @@ Label_0f_4700:
 	ld b, $40 ; $470d
 	farcall FarPtr_0a_2e ; $470f
 	ld a, $01 ; $4712
-	call Func_0f_5678 ; $4714
+	call DelayFrames ; $4714
 	ld a, $03 ; $4717
 	farcall FarPtr_0a_16 ; $4719
 	ld c, l ; $471c
@@ -135,13 +135,13 @@ Label_0f_4700:
 	ld b, $40 ; $4857
 	farcall FarPtr_0a_2e ; $4859
 	ld a, $14 ; $485c
-	call Func_0f_5678 ; $485e
+	call DelayFrames ; $485e
 	ld a, $0f ; $4861
 	ld bc, $1180 ; $4863
 	ld de, $1600 ; $4866
 	farcall FarPtr_0a_22 ; $4869
 	ld a, $14 ; $486c
-	call Func_0f_5678 ; $486e
+	call DelayFrames ; $486e
 	call Func_0f_5e4a ; $4871
 	ld d, $5c ; $4874
 	ld a, $11 ; $4876
@@ -180,11 +180,11 @@ Label_0f_4700:
 	ld a, $0f ; $48ca
 	farcall FarPtr_0a_20 ; $48cc
 	ld a, $1e ; $48cf
-	call Func_0f_5678 ; $48d1
+	call DelayFrames ; $48d1
 	ld a, $0c ; $48d4
 	farcall FarPtr_0a_08 ; $48d6
 	ld a, $1e ; $48d9
-	call Func_0f_5678 ; $48db
+	call DelayFrames ; $48db
 	ld a, $0c ; $48de
 	ld bc, $0e00 ; $48e0
 	ld de, $1040 ; $48e3
@@ -196,7 +196,7 @@ Label_0f_4700:
 	ld a, $0f ; $48f4
 	farcall FarPtr_0a_20 ; $48f6
 	ld a, $05 ; $48f9
-	call Func_0f_5678 ; $48fb
+	call DelayFrames ; $48fb
 	ld a, $0c ; $48fe
 	ld b, $01 ; $4900
 	farcall FarPtr_0a_2c ; $4902
@@ -213,7 +213,7 @@ Label_0f_4700:
 	ld b, $c0 ; $491e
 	farcall FarPtr_0a_2e ; $4920
 	ld a, $14 ; $4923
-	call Func_0f_5678 ; $4925
+	call DelayFrames ; $4925
 	ld a, $0f ; $4928
 	ld bc, $3f00 ; $492a
 	ld de, $3f00 ; $492d
@@ -231,7 +231,7 @@ Label_0f_4700:
 	farcall FarPtr_0a_22 ; $494c
 	sound $98 ; $494f
 	ld a, $78 ; $4951
-	call Func_0f_5678 ; $4953
+	call DelayFrames ; $4953
 	ld a, $15 ; $4956
 	ld bc, $3f00 ; $4958
 	ld de, $3f00 ; $495b
@@ -272,7 +272,7 @@ Label_0f_4700:
 	ld a, $0c ; $49a6
 	farcall FarPtr_0a_08 ; $49a8
 	ld a, $1e ; $49ab
-	call Func_0f_5678 ; $49ad
+	call DelayFrames ; $49ad
 	ld a, $0c ; $49b0
 	ld bc, $0e00 ; $49b2
 	ld de, $1300 ; $49b5
@@ -289,7 +289,7 @@ Label_0f_4700:
 	ld b, $c0 ; $49d2
 	farcall FarPtr_0a_2e ; $49d4
 	ld a, $14 ; $49d7
-	call Func_0f_5678 ; $49d9
+	call DelayFrames ; $49d9
 	ld a, $0e ; $49dc
 	ld bc, $0010 ; $49de
 	farcall FarPtr_0a_18 ; $49e1
@@ -306,13 +306,13 @@ Label_0f_4700:
 	ld b, $40 ; $49fe
 	farcall FarPtr_0a_2e ; $4a00
 	ld a, $14 ; $4a03
-	call Func_0f_5678 ; $4a05
+	call DelayFrames ; $4a05
 	ld a, $0e ; $4a08
 	ld bc, $1080 ; $4a0a
 	ld de, $1600 ; $4a0d
 	farcall FarPtr_0a_22 ; $4a10
 	ld a, $14 ; $4a13
-	call Func_0f_5678 ; $4a15
+	call DelayFrames ; $4a15
 	ld d, $74 ; $4a18
 	ld a, $10 ; $4a1a
 	farcall FarPtr_0a_16 ; $4a1c
@@ -458,11 +458,11 @@ Label_0f_4700:
 	ld a, $0e ; $4b75
 	farcall FarPtr_0a_20 ; $4b77
 	ld a, $1e ; $4b7a
-	call Func_0f_5678 ; $4b7c
+	call DelayFrames ; $4b7c
 	ld a, $0c ; $4b7f
 	farcall FarPtr_0a_08 ; $4b81
 	ld a, $1e ; $4b84
-	call Func_0f_5678 ; $4b86
+	call DelayFrames ; $4b86
 	ld a, $0c ; $4b89
 	ld bc, $0a00 ; $4b8b
 	ld de, $0fc0 ; $4b8e
@@ -474,7 +474,7 @@ Label_0f_4700:
 	ld a, $0e ; $4b9f
 	farcall FarPtr_0a_20 ; $4ba1
 	ld a, $05 ; $4ba4
-	call Func_0f_5678 ; $4ba6
+	call DelayFrames ; $4ba6
 	ld a, $12 ; $4ba9
 	ld d, $02 ; $4bab
 	farcall FarPtr_0a_34 ; $4bad
@@ -496,7 +496,7 @@ Label_0f_4700:
 	ld b, $c0 ; $4bd5
 	farcall FarPtr_0a_2e ; $4bd7
 	ld a, $14 ; $4bda
-	call Func_0f_5678 ; $4bdc
+	call DelayFrames ; $4bdc
 	ld a, $0e ; $4bdf
 	ld bc, $3f00 ; $4be1
 	ld de, $3f00 ; $4be4
@@ -518,7 +518,7 @@ Label_0f_4700:
 	farcall FarPtr_0a_22 ; $4c0f
 	sound $98 ; $4c12
 	ld a, $78 ; $4c14
-	call Func_0f_5678 ; $4c16
+	call DelayFrames ; $4c16
 	ld a, $15 ; $4c19
 	ld bc, $3f00 ; $4c1b
 	ld de, $3f00 ; $4c1e
@@ -538,7 +538,7 @@ Label_0f_4700:
 	ld a, $0c ; $4c41
 	farcall FarPtr_0a_08 ; $4c43
 	ld a, $1e ; $4c46
-	call Func_0f_5678 ; $4c48
+	call DelayFrames ; $4c48
 	ld a, $0c ; $4c4b
 	ld bc, $0a00 ; $4c4d
 	ld de, $1300 ; $4c50
@@ -570,13 +570,13 @@ Label_0f_4700:
 	ld b, $40 ; $4c94
 	farcall FarPtr_0a_2e ; $4c96
 	ld a, $14 ; $4c99
-	call Func_0f_5678 ; $4c9b
+	call DelayFrames ; $4c9b
 	ld a, $0d ; $4c9e
 	ld bc, $0f80 ; $4ca0
 	ld de, $1600 ; $4ca3
 	farcall FarPtr_0a_22 ; $4ca6
 	ld a, $14 ; $4ca9
-	call Func_0f_5678 ; $4cab
+	call DelayFrames ; $4cab
 	ld d, $74 ; $4cae
 	ld a, $10 ; $4cb0
 	farcall FarPtr_0a_16 ; $4cb2
@@ -698,7 +698,7 @@ Label_0f_4700:
 	ld a, $0c ; $4dd0
 	farcall FarPtr_0a_08 ; $4dd2
 	ld a, $14 ; $4dd5
-	call Func_0f_5678 ; $4dd7
+	call DelayFrames ; $4dd7
 	ld a, $0c ; $4dda
 	ld bc, $0c00 ; $4ddc
 	ld de, $0f80 ; $4ddf
@@ -738,7 +738,7 @@ Label_0f_4700:
 	ld b, $00 ; $4e34
 	farcall FarPtr_0a_2e ; $4e36
 	ld a, $3c ; $4e39
-	call Func_0f_5678 ; $4e3b
+	call DelayFrames ; $4e3b
 	ld a, [$c90d] ; $4e3e
 	ld d, $26 ; $4e41
 	add a, d ; $4e43
@@ -767,7 +767,7 @@ Label_0f_4700:
 	farcall FarPtr_0a_3a ; $4e76
 	farcall FarPtr_0a_3e ; $4e79
 	ld a, $b4 ; $4e7c
-	call Func_0f_5678 ; $4e7e
+	call DelayFrames ; $4e7e
 	ld c, $01 ; $4e81
 	call Func_00_1d20 ; $4e83
 	call Func_00_1da4 ; $4e86
@@ -790,7 +790,7 @@ Label_0f_4700:
 	ld b, $c0 ; $4ed6
 	farcall FarPtr_0a_2e ; $4ed8
 	ld a, $3c ; $4edb
-	call Func_0f_5678 ; $4edd
+	call DelayFrames ; $4edd
 	call Func_0f_5c52 ; $4ee0
 	ld a, $00 ; $4ee3
 	ld b, $40 ; $4ee5
@@ -811,7 +811,7 @@ Label_0f_4700:
 	ld a, $04 ; $4f06
 	farcall FarPtr_0a_20 ; $4f08
 	ld a, $0a ; $4f0b
-	call Func_0f_5678 ; $4f0d
+	call DelayFrames ; $4f0d
 	ld a, $05 ; $4f10
 	farcall FarPtr_0a_1c ; $4f12
 	call Func_0f_5c96 ; $4f15
@@ -851,7 +851,7 @@ Label_0f_4700:
 	ld de, $5665 ; $4f65
 	farcall FarPtr_0a_1a ; $4f68
 	ld a, $b4 ; $4f6b
-	call Func_0f_5678 ; $4f6d
+	call DelayFrames ; $4f6d
 	call Func_0f_5641 ; $4f70
 	ld a, $16 ; $4f73
 	ld bc, $0d00 ; $4f75
@@ -977,7 +977,7 @@ Label_0f_4700:
 	ld b, $40 ; $5097
 	farcall FarPtr_0a_2e ; $5099
 	ld a, $14 ; $509c
-	call Func_0f_5678 ; $509e
+	call DelayFrames ; $509e
 	ld a, $0e ; $50a1
 	ld bc, $3f00 ; $50a3
 	ld de, $3f00 ; $50a6
@@ -987,7 +987,7 @@ Label_0f_4700:
 	ld de, $1600 ; $50b1
 	farcall FarPtr_0a_22 ; $50b4
 	ld a, $14 ; $50b7
-	call Func_0f_5678 ; $50b9
+	call DelayFrames ; $50b9
 	ld d, $25 ; $50bc
 	ld a, $09 ; $50be
 	farcall FarPtr_0a_16 ; $50c0
@@ -1087,11 +1087,11 @@ Label_0f_4700:
 	ld a, $0f ; $51b5
 	farcall FarPtr_0a_20 ; $51b7
 	ld a, $1e ; $51ba
-	call Func_0f_5678 ; $51bc
+	call DelayFrames ; $51bc
 	ld a, $0c ; $51bf
 	farcall FarPtr_0a_08 ; $51c1
 	ld a, $1e ; $51c4
-	call Func_0f_5678 ; $51c6
+	call DelayFrames ; $51c6
 	ld a, $0c ; $51c9
 	ld bc, $0a00 ; $51cb
 	ld de, $1000 ; $51ce
@@ -1103,7 +1103,7 @@ Label_0f_4700:
 	ld a, $0f ; $51df
 	farcall FarPtr_0a_20 ; $51e1
 	ld a, $05 ; $51e4
-	call Func_0f_5678 ; $51e6
+	call DelayFrames ; $51e6
 	ld a, $13 ; $51e9
 	ld d, $02 ; $51eb
 	farcall FarPtr_0a_34 ; $51ed
@@ -1125,7 +1125,7 @@ Label_0f_4700:
 	ld b, $c0 ; $5215
 	farcall FarPtr_0a_2e ; $5217
 	ld a, $32 ; $521a
-	call Func_0f_5678 ; $521c
+	call DelayFrames ; $521c
 	ld a, $0f ; $521f
 	ld bc, $3f00 ; $5221
 	ld de, $3f00 ; $5224
@@ -1136,7 +1136,7 @@ Label_0f_4700:
 	farcall FarPtr_0a_22 ; $5232
 	sound $99 ; $5235
 	ld a, $50 ; $5237
-	call Func_0f_5678 ; $5239
+	call DelayFrames ; $5239
 	ld a, $04 ; $523c
 	ld bc, $3f00 ; $523e
 	ld de, $3f00 ; $5241
@@ -1156,7 +1156,7 @@ Label_0f_4700:
 	farcall FarPtr_0a_22 ; $5265
 	sound $98 ; $5268
 	ld a, $78 ; $526a
-	call Func_0f_5678 ; $526c
+	call DelayFrames ; $526c
 	ld a, $05 ; $526f
 	ld bc, $3f00 ; $5271
 	ld de, $3f00 ; $5274
@@ -1183,7 +1183,7 @@ Label_0f_4700:
 	ld b, $80 ; $52a7
 	farcall FarPtr_0a_2e ; $52a9
 	ld a, $3c ; $52ac
-	call Func_0f_5678 ; $52ae
+	call DelayFrames ; $52ae
 	ld a, $16 ; $52b1
 	ld b, $40 ; $52b3
 	farcall FarPtr_0a_2e ; $52b5
@@ -1205,7 +1205,7 @@ Label_0f_4700:
 	ld a, $0c ; $52dc
 	farcall FarPtr_0a_08 ; $52de
 	ld a, $1e ; $52e1
-	call Func_0f_5678 ; $52e3
+	call DelayFrames ; $52e3
 	ld a, $0c ; $52e6
 	ld bc, $0a00 ; $52e8
 	ld de, $1300 ; $52eb
@@ -1222,7 +1222,7 @@ Label_0f_4700:
 	ld b, $c0 ; $5308
 	farcall FarPtr_0a_2e ; $530a
 	ld a, $14 ; $530d
-	call Func_0f_5678 ; $530f
+	call DelayFrames ; $530f
 	ld a, $0d ; $5312
 	ld bc, $0010 ; $5314
 	farcall FarPtr_0a_18 ; $5317
@@ -1236,13 +1236,13 @@ Label_0f_4700:
 	ld b, $40 ; $532c
 	farcall FarPtr_0a_2e ; $532e
 	ld a, $14 ; $5331
-	call Func_0f_5678 ; $5333
+	call DelayFrames ; $5333
 	ld a, $0d ; $5336
 	ld bc, $0f80 ; $5338
 	ld de, $1600 ; $533b
 	farcall FarPtr_0a_22 ; $533e
 	ld a, $14 ; $5341
-	call Func_0f_5678 ; $5343
+	call DelayFrames ; $5343
 	ld a, $10 ; $5346
 	ld bc, $3f00 ; $5348
 	ld de, $3f00 ; $534b
@@ -1322,11 +1322,11 @@ Label_0f_4700:
 	ld a, $0d ; $540e
 	farcall FarPtr_0a_20 ; $5410
 	ld a, $1e ; $5413
-	call Func_0f_5678 ; $5415
+	call DelayFrames ; $5415
 	ld a, $0c ; $5418
 	farcall FarPtr_0a_08 ; $541a
 	ld a, $0a ; $541d
-	call Func_0f_5678 ; $541f
+	call DelayFrames ; $541f
 	ld a, $11 ; $5422
 	ld d, $03 ; $5424
 	farcall FarPtr_0a_34 ; $5426
@@ -1335,7 +1335,7 @@ Label_0f_4700:
 	ld a, $11 ; $542e
 	farcall FarPtr_0a_08 ; $5430
 	ld a, $14 ; $5433
-	call Func_0f_5678 ; $5435
+	call DelayFrames ; $5435
 	ld a, $0d ; $5438
 	ld bc, $0e40 ; $543a
 	ld de, $1100 ; $543d
@@ -1351,7 +1351,7 @@ Label_0f_4700:
 	ld a, $0d ; $5459
 	farcall FarPtr_0a_20 ; $545b
 	ld a, $04 ; $545e
-	call Func_0f_5678 ; $5460
+	call DelayFrames ; $5460
 	ld a, $0c ; $5463
 	ld b, $c0 ; $5465
 	farcall FarPtr_0a_2e ; $5467
@@ -1362,11 +1362,11 @@ Label_0f_4700:
 	ld a, $0d ; $5475
 	farcall FarPtr_0a_20 ; $5477
 	ld a, $14 ; $547a
-	call Func_0f_5678 ; $547c
+	call DelayFrames ; $547c
 	ld a, $0c ; $547f
 	farcall FarPtr_0a_08 ; $5481
 	ld a, $1e ; $5484
-	call Func_0f_5678 ; $5486
+	call DelayFrames ; $5486
 	ld a, $0c ; $5489
 	ld bc, $0d00 ; $548b
 	ld de, $1000 ; $548e
@@ -1378,7 +1378,7 @@ Label_0f_4700:
 	ld a, $0d ; $549f
 	farcall FarPtr_0a_20 ; $54a1
 	ld a, $05 ; $54a4
-	call Func_0f_5678 ; $54a6
+	call DelayFrames ; $54a6
 	ld a, $0c ; $54a9
 	ld b, $01 ; $54ab
 	farcall FarPtr_0a_2c ; $54ad
@@ -1421,7 +1421,7 @@ Label_0f_4700:
 	ld b, $00 ; $5507
 	farcall FarPtr_0a_2e ; $5509
 	ld a, $3c ; $550c
-	call Func_0f_5678 ; $550e
+	call DelayFrames ; $550e
 	ld a, [$c90d] ; $5511
 	ld d, $26 ; $5514
 	add a, d ; $5516
@@ -1450,7 +1450,7 @@ Label_0f_4700:
 	farcall FarPtr_0a_3a ; $5549
 	farcall FarPtr_0a_3e ; $554c
 	ld a, $b4 ; $554f
-	call Func_0f_5678 ; $5551
+	call DelayFrames ; $5551
 	ld c, $01 ; $5554
 	call Func_00_1d20 ; $5556
 	call Func_00_1da4 ; $5559
@@ -1492,7 +1492,7 @@ Func_0f_5641:
 	farcall FarPtr_0a_22 ; $5661
 	ret ; $5664
 	INCBIN "data/bank_00f/d_5665.bin" ; $5665, 19 bytes
-Func_0f_5678:
+DelayFrames:
 	push af ; $5678
 	ld a, a ; $5679
 	farcall FarPtr_0a_04 ; $567a
@@ -1508,11 +1508,11 @@ Func_0f_567f:
 	ld a, $02 ; $568e
 	farcall FarPtr_0a_40 ; $5690
 	ld a, $08 ; $5693
-	call Func_0f_5678 ; $5695
+	call DelayFrames ; $5695
 	ld a, $01 ; $5698
 	farcall FarPtr_0a_40 ; $569a
 	ld a, $08 ; $569d
-	call Func_0f_5678 ; $569f
+	call DelayFrames ; $569f
 	ld a, $00 ; $56a2
 	farcall FarPtr_0a_40 ; $56a4
 	ret ; $56a7
@@ -1566,7 +1566,7 @@ Func_0f_5c52:
 	ld a, $0b ; $5c55
 	farcall FarPtr_0a_32 ; $5c57
 	ld a, $1e ; $5c5a
-	call Func_0f_5678 ; $5c5c
+	call DelayFrames ; $5c5c
 	ld a, $0b ; $5c5f
 	ld d, $03 ; $5c61
 	farcall FarPtr_0a_34 ; $5c63
@@ -1578,7 +1578,7 @@ Func_0f_5c52:
 	ld a, $0c ; $5c72
 	farcall FarPtr_0a_36 ; $5c74
 	ld a, $1e ; $5c77
-	call Func_0f_5678 ; $5c79
+	call DelayFrames ; $5c79
 	ld a, $0b ; $5c7c
 	ld b, $00 ; $5c7e
 	farcall FarPtr_0a_2e ; $5c80
@@ -1618,7 +1618,7 @@ Func_0f_5c96:
 	ret ; $5cce
 Func_0f_5ccf:
 	ld a, $1e ; $5ccf
-	call Func_0f_5678 ; $5cd1
+	call DelayFrames ; $5cd1
 	ld a, $0b ; $5cd4
 	farcall FarPtr_0a_08 ; $5cd6
 	ld a, $0b ; $5cd9
@@ -1630,7 +1630,7 @@ Func_0f_5ccf:
 	ld b, $c0 ; $5ce7
 	farcall FarPtr_0a_2e ; $5ce9
 	ld a, $1e ; $5cec
-	call Func_0f_5678 ; $5cee
+	call DelayFrames ; $5cee
 	ld a, $0b ; $5cf1
 	ld b, $01 ; $5cf3
 	farcall FarPtr_0a_2c ; $5cf5
@@ -1656,7 +1656,7 @@ Func_0f_5ccf:
 	ld b, $00 ; $5d28
 	farcall FarPtr_0a_2e ; $5d2a
 	ld a, $1e ; $5d2d
-	call Func_0f_5678 ; $5d2f
+	call DelayFrames ; $5d2f
 	ld a, $0c ; $5d32
 	ld d, $03 ; $5d34
 	farcall FarPtr_0a_34 ; $5d36
@@ -1698,7 +1698,7 @@ Func_0f_5ccf:
 	ld a, $0c ; $5d8e
 	farcall FarPtr_0a_36 ; $5d90
 	ld a, $3c ; $5d93
-	call Func_0f_5678 ; $5d95
+	call DelayFrames ; $5d95
 	ld a, $0c ; $5d98
 	ld bc, $0800 ; $5d9a
 	ld de, $1700 ; $5d9d
@@ -1718,7 +1718,7 @@ Func_0f_5ccf:
 	ld b, $00 ; $5dc1
 	farcall FarPtr_0a_2e ; $5dc3
 	ld a, $1e ; $5dc6
-	call Func_0f_5678 ; $5dc8
+	call DelayFrames ; $5dc8
 	ld a, $0b ; $5dcb
 	farcall FarPtr_0a_08 ; $5dcd
 	ld d, $30 ; $5dd0
@@ -1754,7 +1754,7 @@ Func_0f_5ccf:
 	ld b, $40 ; $5e15
 	farcall FarPtr_0a_2e ; $5e17
 	ld a, $1e ; $5e1a
-	call Func_0f_5678 ; $5e1c
+	call DelayFrames ; $5e1c
 	xor a, a ; $5e1f
 	ld bc, $0c00 ; $5e20
 	ld de, $1100 ; $5e23
@@ -2239,7 +2239,7 @@ Label_0f_7763:
 	jr nc, Label_0f_7811 ; $780e
 	inc h ; $7810
 Label_0f_7811:
-	call Func_0f_7a8e ; $7811
+	call QueueShortText ; $7811
 	ld a, $04 ; $7814
 	ld b, a ; $7816
 	ld a, $00 ; $7817
@@ -2273,7 +2273,7 @@ Func_0f_78ec:
 	jr nc, Label_0f_78fd ; $78fa
 	inc h ; $78fc
 Label_0f_78fd:
-	call Func_0f_7a8e ; $78fd
+	call QueueShortText ; $78fd
 	ret ; $7900
 Label_0f_7901:
 	ld a, [$c2b0] ; $7901
@@ -2284,7 +2284,7 @@ Label_0f_7901:
 	jr nc, Label_0f_790d ; $790a
 	inc h ; $790c
 Label_0f_790d:
-	call Func_0f_7a8e ; $790d
+	call QueueShortText ; $790d
 	ret ; $7910
 Func_0f_7911:
 	ld a, $06 ; $7911
@@ -2353,7 +2353,7 @@ Func_0f_7911:
 	jr nc, Label_0f_79b1 ; $79ae
 	inc h ; $79b0
 Label_0f_79b1:
-	call Func_0f_7a8e ; $79b1
+	call QueueShortText ; $79b1
 	ld a, $06 ; $79b4
 	farcall FarPtr_0a_08 ; $79b6
 	ld a, $07 ; $79b9
@@ -2396,7 +2396,7 @@ Label_0f_79b1:
 	farcall FarPtr_0a_3e ; $7a13
 	ret ; $7a16
 	INCBIN "data/bank_00f/d_7a17.bin" ; $7a17, 119 bytes
-Func_0f_7a8e:
+QueueShortText:
 	ldh a, [hWramBank] ; $7a8e
 	push af ; $7a90
 	wram_bank $07 ; $7a91

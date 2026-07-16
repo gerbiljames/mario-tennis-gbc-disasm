@@ -4086,7 +4086,7 @@ Label_07_5f48:
 	ld hl, $013f ; $5f75
 	ld de, $000b ; $5f78
 	ld bc, $1305 ; $5f7b
-	farcall FarPtr_06_04 ; $5f7e
+	farcall FarPtr_ShowMessageWindow ; $5f7e
 	call Func_07_5ed3 ; $5f81
 	ld a, [wCharacter1ServiceAces] ; $5f84
 	ld hl, wCharacter2ServiceAces ; $5f87

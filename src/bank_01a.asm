@@ -1658,7 +1658,7 @@ Label_1a_67db:
 	ld a, $90 ; $67f5
 	ldh [rWY], a ; $67f7
 	call Func_00_1e1d ; $67f9
-	farcall FarPtr_04_00 ; $67fc
+	farcall FarPtr_InitActorEngine ; $67fc
 	farcall FarPtr_05_76 ; $67ff
 	call Func_1a_686c ; $6802
 	cp a, $ff ; $6805
@@ -2401,7 +2401,7 @@ Func_1a_6f3d:
 	wram_bank $04 ; $6f4d
 	ldh a, [hRomBank] ; $6f53
 	ld hl, $6fcf ; $6f55
-	farcall FarPtr_04_0a ; $6f58
+	farcall FarPtr_SpawnActorsFromList ; $6f58
 	ld bc, $d000 ; $6f5b
 	farcall FarPtr_04_2c ; $6f5e
 	ld bc, $d040 ; $6f61

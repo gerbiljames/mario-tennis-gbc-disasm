@@ -1,31 +1,31 @@
 SECTION "ROM Bank $04", ROMX[$4000], BANK[$04]
 
-FarPtr_04_00:
-	dw Func_04_4041 ; $4000
-FarPtr_04_02:
-	dw Func_04_4055 ; $4002
-FarPtr_04_04:
-	dw Func_04_40ac ; $4004
-FarPtr_04_06:
-	dw Func_04_40c6 ; $4006
-FarPtr_04_08:
-	dw Func_04_4148 ; $4008
-FarPtr_04_0a:
-	dw Func_04_4cf7 ; $400a
-FarPtr_04_0c:
-	dw Func_04_440a ; $400c
+FarPtr_InitActorEngine:
+	dw InitActorEngine ; $4000
+FarPtr_SpawnActor:
+	dw SpawnActor ; $4002
+FarPtr_SetActorScript:
+	dw SetActorScript ; $4004
+FarPtr_SetActorPosition:
+	dw SetActorPosition ; $4006
+FarPtr_SetActorMode:
+	dw SetActorMode ; $4008
+FarPtr_SpawnActorsFromList:
+	dw SpawnActorsFromList ; $400a
+FarPtr_UpdateCameraToActor:
+	dw UpdateCameraToActor ; $400c
 FarPtr_04_0e:
 	dw Func_04_4d2c ; $400e
-FarPtr_04_10:
-	dw Func_04_4032 ; $4010
+FarPtr_ClearActorSlots:
+	dw ClearActorSlots ; $4010
 FarPtr_04_12:
 	dw Func_04_4b68 ; $4012
-FarPtr_04_14:
-	dw Func_04_4c49 ; $4014
+FarPtr_EvalFlagCondition:
+	dw EvalFlagCondition ; $4014
 FarPtr_04_16:
 	dw Func_04_4bbb ; $4016
-FarPtr_04_18:
-	dw Func_04_4e6b ; $4018
+FarPtr_SpawnMainCharacterActor:
+	dw SpawnMainCharacterActor ; $4018
 FarPtr_04_1a:
 	dw Func_04_4f10 ; $401a
 FarPtr_04_1c:
@@ -46,18 +46,18 @@ FarPtr_04_2a:
 	dw Func_04_5726 ; $402a
 FarPtr_04_2c:
 	dw Func_04_4ac3 ; $402c
-FarPtr_04_2e:
-	dw Func_04_4c0b ; $402e
+FarPtr_GetObjectDefCount:
+	dw GetObjectDefCount ; $402e
 FarPtr_LookupTileId_04:
 	dw LookupTileId_04 ; $4030
-Func_04_4032:
+ClearActorSlots:
 	wram_bank $04 ; $4032
 	ld hl, $d000 ; $4038
 	ld c, $60 ; $403b
 	call ClearMemory16 ; $403d
 	ret ; $4040
-Func_04_4041:
-	call Func_04_4032 ; $4041
+InitActorEngine:
+	call ClearActorSlots ; $4041
 	ld a, $10 ; $4044
 	ld hl, $41e7 ; $4046
 	call RegisterFrameTask ; $4049
@@ -65,7 +65,7 @@ Func_04_4041:
 	ld hl, $4a82 ; $404e
 	call RegisterFrameTask ; $4051
 	ret ; $4054
-Func_04_4055:
+SpawnActor:
 	push af ; $4055
 	push de ; $4056
 	push hl ; $4057
@@ -124,7 +124,7 @@ Label_04_4076:
 	pop de ; $40a8
 	pop af ; $40a9
 	jr Label_04_40af ; $40aa
-Func_04_40ac:
+SetActorScript:
 	inc b ; $40ac
 	dec b ; $40ad
 	ret z ; $40ae
@@ -147,7 +147,7 @@ Label_04_40af:
 	pop bc ; $40c3
 	pop af ; $40c4
 	ret ; $40c5
-Func_04_40c6:
+SetActorPosition:
 	inc b ; $40c6
 	dec b ; $40c7
 	ret z ; $40c8
@@ -182,7 +182,7 @@ Func_04_40c6:
 	pop af ; $40f2
 	ret ; $40f3
 	INCBIN "data/bank_004/d_40f4.bin" ; $40f4, 84 bytes
-Func_04_4148:
+SetActorMode:
 	inc b ; $4148
 	dec b ; $4149
 	ret z ; $414a
@@ -204,7 +204,7 @@ Func_04_415b:
 	push hl ; $4160
 	ldh a, [hRomBank] ; $4161
 	ld hl, $41d2 ; $4163
-	call Func_04_40ac ; $4166
+	call SetActorScript ; $4166
 	ld hl, $0005 ; $4169
 	add hl, bc ; $416c
 	res 3, [hl] ; $416d
@@ -231,7 +231,7 @@ Func_04_417b:
 	ld [hl], d ; $418d
 	ldh a, [hRomBank] ; $418e
 	ld hl, $41d8 ; $4190
-	call Func_04_40ac ; $4193
+	call SetActorScript ; $4193
 	ld hl, $0020 ; $4196
 	add hl, bc ; $4199
 	ld [hl], $01 ; $419a
@@ -256,7 +256,7 @@ Func_04_41a6:
 	ld [hl], d ; $41b2
 	ldh a, [hRomBank] ; $41b3
 	ld hl, $41dc ; $41b5
-	call Func_04_40ac ; $41b8
+	call SetActorScript ; $41b8
 	ld hl, $0005 ; $41bb
 	add hl, bc ; $41be
 	res 3, [hl] ; $41bf
@@ -287,7 +287,7 @@ Label_04_41f2:
 	ldh [$ffeb], a ; $41fd
 	ld c, l ; $41ff
 	ld b, h ; $4200
-	call Func_04_4229 ; $4201
+	call StepActorScript ; $4201
 	call Func_04_426e ; $4204
 	call Func_04_42ae ; $4207
 	call Func_04_4402 ; $420a
@@ -305,7 +305,7 @@ Label_04_420f:
 	ld a, [$d032] ; $4222
 	ld [$c2d4], a ; $4225
 	ret ; $4228
-Func_04_4229:
+StepActorScript:
 	ld hl, $0005 ; $4229
 	add hl, bc ; $422c
 	bit 0, [hl] ; $422d
@@ -675,7 +675,7 @@ Func_04_4402:
 	ld a, [hl] ; $4406
 	cp a, $01 ; $4407
 	ret nz ; $4409
-Func_04_440a:
+UpdateCameraToActor:
 	push af ; $440a
 	push de ; $440b
 	push hl ; $440c
@@ -932,7 +932,7 @@ Label_04_4608:
 	inc de ; $4643
 	ld a, [hl+] ; $4644
 	ld [de], a ; $4645
-	call Func_04_475a ; $4646
+	call IsActorAtTarget ; $4646
 	jr z, Label_04_46ad ; $4649
 	ld hl, $0009 ; $464b
 	add hl, bc ; $464e
@@ -1000,7 +1000,7 @@ Label_04_46ad:
 	xor a, a ; $46ae
 	ret ; $46af
 	INCBIN "data/bank_004/d_46b0.bin" ; $46b0, 170 bytes
-Func_04_475a:
+IsActorAtTarget:
 	ld hl, $000c ; $475a
 	add hl, bc ; $475d
 	ld a, $08 ; $475e
@@ -1190,7 +1190,7 @@ Func_04_48c3:
 	ld h, a ; $48e7
 	ld a, [$daf6] ; $48e8
 	ld l, a ; $48eb
-	call Func_04_535c ; $48ec
+	call TestPointInBox ; $48ec
 	pop hl ; $48ef
 	pop de ; $48f0
 	and a, a ; $48f1
@@ -1233,7 +1233,7 @@ Func_04_48c3:
 	ld b, [hl] ; $4936
 	ld c, a ; $4937
 	pop hl ; $4938
-	call Func_04_5061 ; $4939
+	call SetActorMoveTarget ; $4939
 	ld hl, $0005 ; $493c
 	add hl, bc ; $493f
 	set 7, [hl] ; $4940
@@ -1325,7 +1325,7 @@ Label_04_4a1a:
 	ld a, $01 ; $4a1c
 	ret ; $4a1e
 	INCBIN "data/bank_004/d_4a1f.bin" ; $4a1f, 8 bytes
-Func_04_4a27:
+ComputeSpriteScrollOffset:
 	ld hl, $c320 ; $4a27
 	ld a, [hl+] ; $4a2a
 	ld d, [hl] ; $4a2b
@@ -1398,7 +1398,7 @@ Label_04_4a6d:
 	test_flag $02, 4 ; $4a82
 	ret nz ; $4a85
 	wram_bank $04 ; $4a86
-	call Func_04_4a27 ; $4a8c
+	call ComputeSpriteScrollOffset ; $4a8c
 	ld bc, $d000 ; $4a8f
 	ld e, $18 ; $4a92
 Label_04_4a94:
@@ -1438,7 +1438,7 @@ Func_04_4ac3:
 	inc b ; $4ac3
 	dec b ; $4ac4
 	ret z ; $4ac5
-Func_04_4ac6:
+LoadActorObjectDef:
 	push af ; $4ac6
 	push de ; $4ac7
 	push hl ; $4ac8
@@ -1526,7 +1526,7 @@ Label_04_4b51:
 	ld [hl+], a ; $4b5d
 	ld [hl+], a ; $4b5e
 	ld d, $00 ; $4b5f
-	call Func_04_4bbe ; $4b61
+	call SetActorAnimation ; $4b61
 	pop hl ; $4b64
 	pop de ; $4b65
 	pop af ; $4b66
@@ -1577,7 +1577,7 @@ Func_04_4bbb:
 	inc b ; $4bbb
 	dec b ; $4bbc
 	ret z ; $4bbd
-Func_04_4bbe:
+SetActorAnimation:
 	push af ; $4bbe
 	push de ; $4bbf
 	push hl ; $4bc0
@@ -1632,7 +1632,7 @@ Label_04_4c07:
 	pop de ; $4c08
 	pop af ; $4c09
 	ret ; $4c0a
-Func_04_4c0b:
+GetObjectDefCount:
 	push bc ; $4c0b
 	push hl ; $4c0c
 	ld hl, $4f75 ; $4c0d
@@ -1665,7 +1665,7 @@ TileIdLookup_04_4c29:
 	db $68, $6b, $65, $67, $4a, $5e, $5d, $60 ; 0x08
 	db $5f, $49, $62, $61, $4b, $4f, $4f, $6d ; 0x10
 	db $6e, $6f, $2a, $2b, $2c, $2d, $48, $2e ; 0x18
-Func_04_4c49:
+EvalFlagCondition:
 	ld a, e ; $4c49
 	or a, d ; $4c4a
 	ret z ; $4c4b
@@ -1683,7 +1683,7 @@ Label_04_4c5d:
 	xor a, a ; $4c5d
 	inc a ; $4c5e
 	ret ; $4c5f
-Func_04_4c60:
+SpawnActorFromTemplate:
 	push af ; $4c60
 	push de ; $4c61
 	push hl ; $4c62
@@ -1693,12 +1693,12 @@ Func_04_4c60:
 	ld e, a ; $4c66
 	ld a, [hl+] ; $4c67
 	ld d, a ; $4c68
-	call Func_04_4c49 ; $4c69
+	call EvalFlagCondition ; $4c69
 	pop de ; $4c6c
 	jr z, Label_04_4c79 ; $4c6d
 	ldh a, [hRomBank] ; $4c6f
 	ld hl, $41d1 ; $4c71
-	call Func_04_4055 ; $4c74
+	call SpawnActor ; $4c74
 	jr Label_04_4cf3 ; $4c77
 Label_04_4c79:
 	ld a, [hl+] ; $4c79
@@ -1709,7 +1709,7 @@ Label_04_4c79:
 	push hl ; $4c7e
 	ld l, e ; $4c7f
 	ld h, d ; $4c80
-	call Func_04_4055 ; $4c81
+	call SpawnActor ; $4c81
 	pop hl ; $4c84
 	inc b ; $4c85
 	dec b ; $4c86
@@ -1759,10 +1759,10 @@ Label_04_4c79:
 	inc hl ; $4cb8
 	ld a, [hl+] ; $4cb9
 	ld d, a ; $4cba
-	call Func_04_4ac6 ; $4cbb
+	call LoadActorObjectDef ; $4cbb
 	ld a, [hl+] ; $4cbe
 	ld d, a ; $4cbf
-	call Func_04_4bbe ; $4cc0
+	call SetActorAnimation ; $4cc0
 	ld a, [hl] ; $4cc3
 	cp a, $00 ; $4cc4
 	jr z, Label_04_4ccf ; $4cc6
@@ -1801,7 +1801,7 @@ Label_04_4cf3:
 	pop de ; $4cf4
 	pop af ; $4cf5
 	ret ; $4cf6
-Func_04_4cf7:
+SpawnActorsFromList:
 	push af ; $4cf7
 	push bc ; $4cf8
 	push de ; $4cf9
@@ -1822,7 +1822,7 @@ Label_04_4d06:
 	pop af ; $4d16
 	push hl ; $4d17
 	ld hl, $dac0 ; $4d18
-	call Func_04_4c60 ; $4d1b
+	call SpawnActorFromTemplate ; $4d1b
 	pop hl ; $4d1e
 	jr Label_04_4d06 ; $4d1f
 Label_04_4d21:
@@ -1837,26 +1837,26 @@ Label_04_4d21:
 Func_04_4d2c:
 	ldh a, [hRomBank] ; $4d2c
 	ld hl, $4da5 ; $4d2e
-	call Func_04_4c60 ; $4d31
+	call SpawnActorFromTemplate ; $4d31
 	call Func_04_415b ; $4d34
 	ldh a, [hRomBank] ; $4d37
 	ld hl, $41d1 ; $4d39
-	call Func_04_4055 ; $4d3c
+	call SpawnActor ; $4d3c
 	ld hl, $1700 ; $4d3f
 	ld de, $1d00 ; $4d42
-	call Func_04_40c6 ; $4d45
+	call SetActorPosition ; $4d45
 	ld de, $d000 ; $4d48
 	call Func_04_417b ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
 	ld hl, $4e05 ; $4d50
-	call Func_04_4c60 ; $4d53
+	call SpawnActorFromTemplate ; $4d53
 	ld de, $d000 ; $4d56
 	call Func_04_41a6 ; $4d59
 	ld hl, $4e1d ; $4d5c
-	call Func_04_4cf7 ; $4d5f
+	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
 	INCBIN "data/bank_004/d_4d63.bin" ; $4d63, 264 bytes
-Func_04_4e6b:
+SpawnMainCharacterActor:
 	push af ; $4e6b
 	push bc ; $4e6c
 	push de ; $4e6d
@@ -1876,26 +1876,26 @@ Func_04_4e6b:
 	ld h, [hl] ; $4e85
 	ld l, a ; $4e86
 	ldh a, [hRomBank] ; $4e87
-	call Func_04_4c60 ; $4e89
+	call SpawnActorFromTemplate ; $4e89
 	pop bc ; $4e8c
 	ld a, c ; $4e8d
 	ld [$d014], a ; $4e8e
 	ld [$daea], a ; $4e91
 	pop hl ; $4e94
 	ld bc, $d000 ; $4e95
-	call Func_04_40c6 ; $4e98
+	call SetActorPosition ; $4e98
 	push de ; $4e9b
 	push hl ; $4e9c
 	ldh a, [hRomBank] ; $4e9d
 	ld de, $41d1 ; $4e9f
-	call Func_04_4055 ; $4ea2
+	call SpawnActor ; $4ea2
 	ld a, $01 ; $4ea5
-	call Func_04_4148 ; $4ea7
+	call SetActorMode ; $4ea7
 	ld de, $d000 ; $4eaa
 	call Func_04_417b ; $4ead
 	pop hl ; $4eb0
 	pop de ; $4eb1
-	call Func_04_40c6 ; $4eb2
+	call SetActorPosition ; $4eb2
 	ld hl, wStoryModeMainCharacterOverworldSpriteColor ; $4eb5
 	ld a, [hl] ; $4eb8
 	add a, $03 ; $4eb9
@@ -1934,7 +1934,7 @@ Label_04_4f36:
 Label_04_4f3b:
 	ld [$cb5e], a ; $4f3b
 	ldh a, [hRomBank] ; $4f3e
-	call Func_04_4c60 ; $4f40
+	call SpawnActorFromTemplate ; $4f40
 	ld a, [$cb5e] ; $4f43
 	cp a, $ff ; $4f46
 	jr z, Label_04_4f70 ; $4f48
@@ -1959,7 +1959,7 @@ Label_04_4f3b:
 	ld a, [hl+] ; $4f6a
 	ld h, [hl] ; $4f6b
 	ld l, a ; $4f6c
-	call Func_04_40c6 ; $4f6d
+	call SetActorPosition ; $4f6d
 Label_04_4f70:
 	pop hl ; $4f70
 	pop de ; $4f71
@@ -1967,7 +1967,7 @@ Label_04_4f70:
 	pop af ; $4f73
 	ret ; $4f74
 	INCBIN "data/bank_004/d_4f75.bin" ; $4f75, 236 bytes
-Func_04_5061:
+SetActorMoveTarget:
 	push hl ; $5061
 	ld hl, $000a ; $5062
 	add hl, bc ; $5065
@@ -2108,7 +2108,7 @@ Label_04_5168:
 	pop af ; $5169
 	ret ; $516a
 	wram_bank $04 ; $516b
-	call Func_04_5456 ; $5171
+	call BuildNearbyActorList ; $5171
 	ld hl, $ffea ; $5174
 	ld a, [hl+] ; $5177
 	ld b, [hl] ; $5178
@@ -2286,7 +2286,7 @@ Label_04_52b5:
 	add a, d ; $52bf
 	call Func_04_5113 ; $52c0
 	call Func_04_5141 ; $52c3
-	call Func_04_5061 ; $52c6
+	call SetActorMoveTarget ; $52c6
 	ld hl, $0005 ; $52c9
 	add hl, bc ; $52cc
 	set 7, [hl] ; $52cd
@@ -2378,7 +2378,7 @@ Func_04_534b:
 Label_04_535a:
 	pop de ; $535a
 	ret ; $535b
-Func_04_535c:
+TestPointInBox:
 	ld a, b ; $535c
 	dec a ; $535d
 	sub a, h ; $535e
@@ -2581,7 +2581,7 @@ Label_04_5452:
 	pop de ; $5453
 	pop bc ; $5454
 	ret ; $5455
-Func_04_5456:
+BuildNearbyActorList:
 	push af ; $5456
 	push bc ; $5457
 	push de ; $5458
@@ -2746,21 +2746,21 @@ Label_04_5523:
 	pop de ; $5524
 	ret ; $5525
 Func_04_5526:
-	call Func_04_5542 ; $5526
+	call DrawActorSprite ; $5526
 	ld hl, $0030 ; $5529
 	add hl, bc ; $552c
 	bit 7, [hl] ; $552d
 	jr nz, Label_04_5538 ; $552f
 	bit 3, [hl] ; $5531
 	ret z ; $5533
-	call Func_04_55c1 ; $5534
+	call AdvanceActorAnimation ; $5534
 	ret ; $5537
 Label_04_5538:
-	call Func_04_55c1 ; $5538
+	call AdvanceActorAnimation ; $5538
 	call Func_04_5673 ; $553b
 	call Func_04_56c3 ; $553e
 	ret ; $5541
-Func_04_5542:
+DrawActorSprite:
 	ld hl, $0030 ; $5542
 	add hl, bc ; $5545
 	res 7, [hl] ; $5546
@@ -2856,7 +2856,7 @@ Label_04_5583:
 	set 7, [hl] ; $55be
 Label_04_55c0:
 	ret ; $55c0
-Func_04_55c1:
+AdvanceActorAnimation:
 	ld hl, $0030 ; $55c1
 	add hl, bc ; $55c4
 	bit 1, [hl] ; $55c5
@@ -2911,7 +2911,7 @@ Label_04_55fb:
 	ld [hl], d ; $560e
 	jr Label_04_55d1 ; $560f
 Label_04_5611:
-	call Func_04_4bbe ; $5611
+	call SetActorAnimation ; $5611
 	jr Label_04_55d1 ; $5614
 Label_04_5616:
 	ld hl, $002f ; $5616

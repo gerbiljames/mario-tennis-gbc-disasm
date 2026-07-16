@@ -4,14 +4,14 @@ FarPtr_06_00:
 	dw Func_06_4074 ; $4000
 FarPtr_06_02:
 	dw Func_06_6b84 ; $4002
-FarPtr_06_04:
-	dw Func_06_44fe ; $4004
+FarPtr_ShowMessageWindow:
+	dw ShowMessageWindow ; $4004
 FarPtr_06_06:
 	dw Func_06_48ad ; $4006
-FarPtr_06_08:
-	dw Func_06_6e17 ; $4008
-FarPtr_06_0a:
-	dw Func_06_45f8 ; $400a
+FarPtr_RunStoryModeMenu:
+	dw RunStoryModeMenu ; $4008
+FarPtr_FlushTilemapToVram:
+	dw FlushTilemapToVram ; $400a
 FarPtr_06_0c:
 	dw Func_06_400e ; $400c
 Func_06_400e:
@@ -48,8 +48,8 @@ Label_06_4046:
 	call UnregisterFrameTask ; $405c
 	ld hl, $69c8 ; $405f
 	call UnregisterFrameTask ; $4062
-	call Func_06_45aa ; $4065
-	call Func_06_45f8 ; $4068
+	call RestoreBgTilemap ; $4065
+	call FlushTilemapToVram ; $4068
 	farcall FarPtr_StepMatchFrame ; $406b
 	pop af ; $406e
 	wram_bank ; $406f
@@ -92,7 +92,7 @@ Label_06_40a7:
 Label_06_40c6:
 	ld a, b ; $40c6
 	ld [$c4e6], a ; $40c7
-	call Func_06_46e7 ; $40ca
+	call RunMatchMenu ; $40ca
 	ld a, [$c4e0] ; $40cd
 	cp a, $ff ; $40d0
 	jr z, Label_06_40ef ; $40d2
@@ -115,8 +115,8 @@ Label_06_40ef:
 	call UnregisterFrameTask ; $40f2
 	ld hl, $69c8 ; $40f5
 	call UnregisterFrameTask ; $40f8
-	call Func_06_45aa ; $40fb
-	call Func_06_45f8 ; $40fe
+	call RestoreBgTilemap ; $40fb
+	call FlushTilemapToVram ; $40fe
 	farcall FarPtr_StepMatchFrame ; $4101
 	farcall FarPtr_StepMatchFrame ; $4104
 	pop af ; $4107
@@ -127,7 +127,7 @@ Label_06_40ef:
 Label_06_4110:
 	ld hl, $506a ; $4110
 	call UnregisterFrameTask ; $4113
-	call Func_06_45aa ; $4116
+	call RestoreBgTilemap ; $4116
 	ld hl, $412f ; $4119
 	push hl ; $411c
 	ld a, [wGameMode] ; $411d
@@ -282,7 +282,7 @@ Label_06_434e:
 	call Func_06_4574 ; $4351
 	farcall FarPtr_StepMatchFrame ; $4354
 	farcall FarPtr_05_90 ; $4357
-	call Func_06_45f8 ; $435a
+	call FlushTilemapToVram ; $435a
 Label_06_435d:
 	farcall FarPtr_StepMatchFrame ; $435d
 	farcall FarPtr_ReadMatchInputPressed ; $4360
@@ -299,7 +299,7 @@ Label_06_4372:
 Label_06_4380:
 	ld hl, $506a ; $4380
 	call UnregisterFrameTask ; $4383
-	call Func_06_45aa ; $4386
+	call RestoreBgTilemap ; $4386
 	ld de, $0002 ; $4389
 	ld bc, $130e ; $438c
 	call Func_06_4564 ; $438f
@@ -314,7 +314,7 @@ Label_06_4380:
 	ld hl, $0159 ; $43aa
 	call Func_06_4574 ; $43ad
 	farcall FarPtr_05_90 ; $43b0
-	call Func_06_45f8 ; $43b3
+	call FlushTilemapToVram ; $43b3
 	farcall FarPtr_StepMatchFrame ; $43b6
 Label_06_43b9:
 	farcall FarPtr_ReadMatchInputPressed ; $43b9
@@ -340,11 +340,11 @@ Label_06_43e3:
 	farcall FarPtr_StepMatchFrame ; $43e3
 	jr Label_06_43b9 ; $43e6
 Label_06_43e8:
-	call Func_06_45aa ; $43e8
+	call RestoreBgTilemap ; $43e8
 	sound $62 ; $43eb
 	ret ; $43ed
 Label_06_43ee:
-	call Func_06_45c1 ; $43ee
+	call RestoreBgTilemapRegion ; $43ee
 	ld a, [$c4c8] ; $43f1
 	and a, a ; $43f4
 	jr nz, Label_06_443a ; $43f5
@@ -353,7 +353,7 @@ Label_06_43ee:
 Label_06_43fb:
 	ld a, $02 ; $43fb
 	ld [$c4e6], a ; $43fd
-	call Func_06_46e7 ; $4400
+	call RunMatchMenu ; $4400
 	ld a, [$c4e0] ; $4403
 	cp a, $ff ; $4406
 	jr z, Label_06_441d ; $4408
@@ -374,7 +374,7 @@ Label_06_441e:
 	ld [$c4e0], a ; $4421
 	ld a, $03 ; $4424
 	ld [$c4e6], a ; $4426
-	call Func_06_46e7 ; $4429
+	call RunMatchMenu ; $4429
 	ld a, [$c4e0] ; $442c
 	cp a, $ff ; $442f
 	jr z, Label_06_4439 ; $4431
@@ -388,7 +388,7 @@ Label_06_443a:
 	ld [$c4e0], a ; $443e
 	ld a, $04 ; $4441
 	ld [$c4e6], a ; $4443
-	call Func_06_46e7 ; $4446
+	call RunMatchMenu ; $4446
 	ld a, [$c4e0] ; $4449
 	cp a, $ff ; $444c
 	jr z, Label_06_4461 ; $444e
@@ -402,7 +402,7 @@ Label_06_443a:
 Label_06_4461:
 	ret ; $4461
 Label_06_4462:
-	call Func_06_45c1 ; $4462
+	call RestoreBgTilemapRegion ; $4462
 	ld a, [wGameMode] ; $4465
 	add a, $f3 ; $4468
 	ld l, a ; $446a
@@ -417,15 +417,15 @@ Label_06_4462:
 	ld a, $08 ; $4479
 	ld [$c4e6], a ; $447b
 Label_06_447e:
-	call Func_06_4820 ; $447e
+	call GetMatchMenuItemCount ; $447e
 	dec a ; $4481
 	ld [$c4e0], a ; $4482
 Func_06_4485:
-	call Func_06_46e7 ; $4485
+	call RunMatchMenu ; $4485
 	ld a, [$c4e0] ; $4488
 	cp a, $ff ; $448b
 	ret z ; $448d
-	call Func_06_480a ; $448e
+	call GetMatchMenuItemId ; $448e
 	sub a, $0a ; $4491
 	ld a, a ; $4493
 	rst Rst00 ; $4494
@@ -477,7 +477,7 @@ Label_06_44e5:
 	ld [$c492], a ; $44ef
 	ret ; $44f2
 	INCBIN "data/bank_006/d_44f3.bin" ; $44f3, 11 bytes
-Func_06_44fe:
+ShowMessageWindow:
 	push af ; $44fe
 	push bc ; $44ff
 	push de ; $4500
@@ -514,7 +514,7 @@ Func_06_44fe:
 	pop hl ; $4534
 	farcall FarPtr_05_1c ; $4535
 	farcall FarPtr_05_90 ; $4538
-	call Func_06_45f8 ; $453b
+	call FlushTilemapToVram ; $453b
 	ld a, $1e ; $453e
 	farcall FarPtr_StepMatchFrames ; $4540
 Label_06_4543:
@@ -522,8 +522,8 @@ Label_06_4543:
 	farcall FarPtr_ReadMatchInputPressed ; $4546
 	and a, $0f ; $4549
 	jr z, Label_06_4543 ; $454b
-	call Func_06_45aa ; $454d
-	call Func_06_45f8 ; $4550
+	call RestoreBgTilemap ; $454d
+	call FlushTilemapToVram ; $4550
 	farcall FarPtr_StepMatchFrame ; $4553
 	xor a, a ; $4556
 	ld [$c4c0], a ; $4557
@@ -580,7 +580,7 @@ Func_06_4584:
 	pop hl ; $45a5
 	call Func_00_2a9e ; $45a6
 	ret ; $45a9
-Func_06_45aa:
+RestoreBgTilemap:
 	ld hl, $d800 ; $45aa
 	ld de, $d000 ; $45ad
 	ld c, $40 ; $45b0
@@ -590,7 +590,7 @@ Func_06_45aa:
 	ld c, $40 ; $45bb
 	call CopyMemoryFast ; $45bd
 	ret ; $45c0
-Func_06_45c1:
+RestoreBgTilemapRegion:
 	ld e, $0a ; $45c1
 	call Func_06_464b ; $45c3
 	ld c, l ; $45c6
@@ -623,11 +623,11 @@ Func_06_45e9:
 	or a, c ; $45ef
 	jr nz, Func_06_45e9 ; $45f0
 	ret ; $45f2
-Func_06_45f3:
+FlushTilemapToVramIfDirty:
 	ld a, [$c4e2] ; $45f3
 	and a, a ; $45f6
 	ret z ; $45f7
-Func_06_45f8:
+FlushTilemapToVram:
 	xor a, a ; $45f8
 	ld [$c4e2], a ; $45f9
 	ld e, $00 ; $45fc
@@ -713,10 +713,10 @@ Func_06_465e:
 	ld e, a ; $466d
 	ret ; $466e
 	INCBIN "data/bank_006/d_466f.bin" ; $466f, 120 bytes
-Func_06_46e7:
-	call Func_06_4820 ; $46e7
+RunMatchMenu:
+	call GetMatchMenuItemCount ; $46e7
 	ld [$c4e7], a ; $46ea
-	call Func_06_482f ; $46ed
+	call DrawMatchMenuItems ; $46ed
 	ld e, $0c ; $46f0
 	call Func_06_464b ; $46f2
 	ld de, $d400 ; $46f5
@@ -762,9 +762,9 @@ Label_06_4733:
 	ld [hl+], a ; $4745
 	ld [hl+], a ; $4746
 	ld a, [$c4e0] ; $4747
-	call Func_06_480a ; $474a
+	call GetMatchMenuItemId ; $474a
 	push af ; $474d
-	call Func_06_5219 ; $474e
+	call LoadMatchMenuItemGfx ; $474e
 	pop af ; $4751
 	add a, $3f ; $4752
 	ld l, a ; $4754
@@ -776,10 +776,10 @@ Label_06_4733:
 	call Func_06_477a ; $475f
 	farcall FarPtr_05_90 ; $4762
 	farcall FarPtr_StepMatchFrame ; $4765
-	call Func_06_45f8 ; $4768
+	call FlushTilemapToVram ; $4768
 	farcall FarPtr_StepMatchFrame ; $476b
 Label_06_476e:
-	call Func_06_4873 ; $476e
+	call DrawMatchMenuCursor ; $476e
 	farcall FarPtr_StepMatchFrame ; $4771
 	jr Label_06_4701 ; $4774
 Label_06_4776:
@@ -868,7 +868,7 @@ Label_06_47df:
 	ld hl, $015c ; $4803
 	call Func_06_4574 ; $4806
 	ret ; $4809
-Func_06_480a:
+GetMatchMenuItemId:
 	ld b, a ; $480a
 	ld a, [$c4e6] ; $480b
 	add a, a ; $480e
@@ -887,7 +887,7 @@ Func_06_480a:
 Label_06_481e:
 	ld a, [hl] ; $481e
 	ret ; $481f
-Func_06_4820:
+GetMatchMenuItemCount:
 	ld a, [$c4e6] ; $4820
 	add a, a ; $4823
 	add a, a ; $4824
@@ -899,7 +899,7 @@ Func_06_4820:
 	ld h, a ; $482c
 	ld a, [hl] ; $482d
 	ret ; $482e
-Func_06_482f:
+DrawMatchMenuItems:
 	ld a, [$c4e7] ; $482f
 	add a, a ; $4832
 	add a, $57 ; $4833
@@ -921,8 +921,8 @@ Label_06_4843:
 	push bc ; $4847
 	push hl ; $4848
 	ld a, b ; $4849
-	call Func_06_480a ; $484a
-	call Func_06_6802 ; $484d
+	call GetMatchMenuItemId ; $484a
+	call DrawMatchMenuItem ; $484d
 	pop hl ; $4850
 	pop bc ; $4851
 	inc b ; $4852
@@ -930,7 +930,7 @@ Label_06_4843:
 	jr nz, Label_06_4843 ; $4854
 	ret ; $4856
 	INCBIN "data/bank_006/d_4857.bin" ; $4857, 28 bytes
-Func_06_4873:
+DrawMatchMenuCursor:
 	ld a, [$c4e7] ; $4873
 	add a, a ; $4876
 	add a, $91 ; $4877
@@ -951,7 +951,7 @@ Label_06_488a:
 	ld a, [hl+] ; $488a
 	ld d, [hl] ; $488b
 	ld e, a ; $488c
-	call Func_06_69b7 ; $488d
+	call QueueMatchMenuCursorSprite ; $488d
 	ret ; $4890
 	INCBIN "data/bank_006/d_4891.bin" ; $4891, 28 bytes
 Func_06_48ad:
@@ -975,7 +975,7 @@ Func_06_48ad:
 	ld hl, $69c8 ; $48d9
 	call RegisterFrameTask ; $48dc
 	farcall FarPtr_StepMatchFrame ; $48df
-	call Func_06_45f8 ; $48e2
+	call FlushTilemapToVram ; $48e2
 	farcall FarPtr_StepMatchFrame ; $48e5
 	wram_bank $02 ; $48e8
 Label_06_48ee:
@@ -989,8 +989,8 @@ Label_06_48fa:
 	call UnregisterFrameTask ; $48fd
 	ld hl, $69c8 ; $4900
 	call UnregisterFrameTask ; $4903
-	call Func_06_45aa ; $4906
-	call Func_06_45f8 ; $4909
+	call RestoreBgTilemap ; $4906
+	call FlushTilemapToVram ; $4909
 	farcall FarPtr_StepMatchFrame ; $490c
 	pop af ; $490f
 	wram_bank ; $4910
@@ -1294,7 +1294,7 @@ Label_06_50d7:
 	farcall FarPtr_0a_9c ; $50de
 	ret ; $50e1
 	INCBIN "data/bank_006/d_50e2.bin" ; $50e2, 311 bytes
-Func_06_5219:
+LoadMatchMenuItemGfx:
 	add a, a ; $5219
 	add a, $44 ; $521a
 	ld l, a ; $521c
@@ -1353,7 +1353,7 @@ Label_06_5ca6:
 	wram_bank ; $5cc4
 	ret ; $5cc8
 	INCBIN "data/bank_006/d_5cc9.bin" ; $5cc9, 2873 bytes
-Func_06_6802:
+DrawMatchMenuItem:
 	push af ; $6802
 	push de ; $6803
 	add a, a ; $6804
@@ -1390,7 +1390,7 @@ Func_06_6802:
 	call Func_00_2b46 ; $6831
 	ret ; $6834
 	INCBIN "data/bank_006/d_6835.bin" ; $6835, 386 bytes
-Func_06_69b7:
+QueueMatchMenuCursorSprite:
 	ld a, d ; $69b7
 	add a, $fc ; $69b8
 	ld d, a ; $69ba
@@ -1543,14 +1543,14 @@ Func_06_6b84:
 	ld [$c4e0], a ; $6ba8
 	call Func_06_6aba ; $6bab
 	call Func_06_6af3 ; $6bae
-	call Func_06_45f8 ; $6bb1
+	call FlushTilemapToVram ; $6bb1
 	farcall FarPtr_StepMatchFrame ; $6bb4
 Label_06_6bb7:
 	farcall FarPtr_ReadMatchInputPressed ; $6bb7
 	and a, $0d ; $6bba
 	jr nz, Label_06_6bc9 ; $6bbc
 	call Func_06_6bf6 ; $6bbe
-	call Func_06_45f3 ; $6bc1
+	call FlushTilemapToVramIfDirty ; $6bc1
 	farcall FarPtr_StepMatchFrame ; $6bc4
 	jr Label_06_6bb7 ; $6bc7
 Label_06_6bc9:
@@ -1562,8 +1562,8 @@ Label_06_6bc9:
 	ld [hl+], a ; $6bd4
 	ld [hl], d ; $6bd5
 Label_06_6bd6:
-	call Func_06_45aa ; $6bd6
-	call Func_06_45f8 ; $6bd9
+	call RestoreBgTilemap ; $6bd6
+	call FlushTilemapToVram ; $6bd9
 	farcall FarPtr_StepMatchFrame ; $6bdc
 	wram_bank $04 ; $6bdf
 	ld hl, $c700 ; $6be5
@@ -1717,10 +1717,10 @@ Label_06_6cd3:
 	ld [hl], e ; $6cde
 	ret ; $6cdf
 	INCBIN "data/bank_006/d_6ce0.bin" ; $6ce0, 48 bytes
-Func_06_6d10:
-	call Func_06_6d8a ; $6d10
+RunStoryMenu:
+	call GetStoryMenuItemCount ; $6d10
 	ld [$c4e7], a ; $6d13
-	call Func_06_6d99 ; $6d16
+	call DrawStoryMenuItems ; $6d16
 	jr Label_06_6d4d ; $6d19
 Label_06_6d1b:
 	farcall FarPtr_ReadMatchInputPressed ; $6d1b
@@ -1749,9 +1749,9 @@ Label_06_6d36:
 	sound $5e ; $6d4b
 Label_06_6d4d:
 	ld a, [$c4e0] ; $6d4d
-	call Func_06_6d74 ; $6d50
+	call GetStoryMenuItemId ; $6d50
 	push af ; $6d53
-	call Func_06_7283 ; $6d54
+	call LoadStoryMenuItemGfx ; $6d54
 	pop af ; $6d57
 	add a, $62 ; $6d58
 	ld l, a ; $6d5a
@@ -1762,13 +1762,13 @@ Label_06_6d4d:
 	call Func_06_724f ; $6d62
 	call Func_06_7237 ; $6d65
 Label_06_6d68:
-	call Func_06_6ddd ; $6d68
+	call DrawStoryMenuCursor ; $6d68
 	call AdvanceFrame ; $6d6b
 	jr Label_06_6d1b ; $6d6e
 Label_06_6d70:
 	call AdvanceFrame ; $6d70
 	ret ; $6d73
-Func_06_6d74:
+GetStoryMenuItemId:
 	ld b, a ; $6d74
 	ld a, [$c4e6] ; $6d75
 	add a, a ; $6d78
@@ -1787,7 +1787,7 @@ Func_06_6d74:
 Label_06_6d88:
 	ld a, [hl] ; $6d88
 	ret ; $6d89
-Func_06_6d8a:
+GetStoryMenuItemCount:
 	ld a, [$c4e6] ; $6d8a
 	add a, a ; $6d8d
 	add a, a ; $6d8e
@@ -1799,7 +1799,7 @@ Func_06_6d8a:
 	ld h, a ; $6d96
 	ld a, [hl] ; $6d97
 	ret ; $6d98
-Func_06_6d99:
+DrawStoryMenuItems:
 	ld a, [$c4e7] ; $6d99
 	add a, a ; $6d9c
 	add a, $c1 ; $6d9d
@@ -1821,8 +1821,8 @@ Label_06_6dad:
 	push bc ; $6db1
 	push hl ; $6db2
 	ld a, b ; $6db3
-	call Func_06_6d74 ; $6db4
-	call Func_06_77a6 ; $6db7
+	call GetStoryMenuItemId ; $6db4
+	call DrawStoryMenuItem ; $6db7
 	pop hl ; $6dba
 	pop bc ; $6dbb
 	inc b ; $6dbc
@@ -1830,7 +1830,7 @@ Label_06_6dad:
 	jr nz, Label_06_6dad ; $6dbe
 	ret ; $6dc0
 	INCBIN "data/bank_006/d_6dc1.bin" ; $6dc1, 28 bytes
-Func_06_6ddd:
+DrawStoryMenuCursor:
 	ld a, [$c4e7] ; $6ddd
 	add a, a ; $6de0
 	add a, $fb ; $6de1
@@ -1851,10 +1851,10 @@ Label_06_6df4:
 	ld a, [hl+] ; $6df4
 	ld d, [hl] ; $6df5
 	ld e, a ; $6df6
-	call Func_06_72ce ; $6df7
+	call QueueStoryMenuCursorSprite ; $6df7
 	ret ; $6dfa
 	INCBIN "data/bank_006/d_6dfb.bin" ; $6dfb, 28 bytes
-Func_06_6e17:
+RunStoryModeMenu:
 	ldh a, [hWramBank] ; $6e17
 	push af ; $6e19
 	farcall FarPtr_0a_7c ; $6e1a
@@ -1886,7 +1886,7 @@ Label_06_6e52:
 	call Func_00_0480 ; $6e5a
 	ld a, $00 ; $6e5d
 	ld [$c4e6], a ; $6e5f
-	call Func_06_6d10 ; $6e62
+	call RunStoryMenu ; $6e62
 	ld a, [$c4e0] ; $6e65
 	cp a, $ff ; $6e68
 	jr z, Label_06_6e94 ; $6e6a
@@ -1944,7 +1944,7 @@ Label_06_6f42:
 	ld [$c4e0], a ; $6f46
 	ld a, $01 ; $6f49
 	ld [$c4e6], a ; $6f4b
-	call Func_06_6d10 ; $6f4e
+	call RunStoryMenu ; $6f4e
 	ld a, [$c4e0] ; $6f51
 	cp a, $ff ; $6f54
 	jr z, Label_06_6f60 ; $6f56
@@ -2002,7 +2002,7 @@ Label_06_6fbc:
 Label_06_6fc7:
 	ld a, $02 ; $6fc7
 	ld [$c4e6], a ; $6fc9
-	call Func_06_6d10 ; $6fcc
+	call RunStoryMenu ; $6fcc
 	ld a, [$c4e0] ; $6fcf
 	cp a, $ff ; $6fd2
 	jr z, Label_06_6fe9 ; $6fd4
@@ -2058,7 +2058,7 @@ Label_06_702f:
 	ld [$c4e0], a ; $703d
 	ld a, $05 ; $7040
 	ld [$c4e6], a ; $7042
-	call Func_06_6d10 ; $7045
+	call RunStoryMenu ; $7045
 	ld a, [$c4e0] ; $7048
 	cp a, $ff ; $704b
 	jr z, Label_06_70a9 ; $704d
@@ -2117,11 +2117,11 @@ Func_06_70bc:
 Label_06_70cc:
 	ld a, [$c4e1] ; $70cc
 	ld de, $050a ; $70cf
-	call Func_06_77a6 ; $70d2
+	call DrawStoryMenuItem ; $70d2
 	ld a, [$c4e1] ; $70d5
 	inc a ; $70d8
 	ld de, $0b0a ; $70d9
-	call Func_06_77a6 ; $70dc
+	call DrawStoryMenuItem ; $70dc
 	ld a, [$c4e1] ; $70df
 	cp a, $0b ; $70e2
 	jr z, Label_06_70f8 ; $70e4
@@ -2140,7 +2140,7 @@ Label_06_70f8:
 	ld a, [$c4e0] ; $70fb
 	ld hl, $c4e1 ; $70fe
 	add a, [hl] ; $7101
-	call Func_06_7283 ; $7102
+	call LoadStoryMenuItemGfx ; $7102
 Label_06_7105:
 	farcall FarPtr_ReadMatchInputPressed ; $7105
 	and a, $02 ; $7108
@@ -2183,7 +2183,7 @@ Label_06_7151:
 	ld a, [$c4e0] ; $7151
 	ld hl, $c4e1 ; $7154
 	add a, [hl] ; $7157
-	call Func_06_7283 ; $7158
+	call LoadStoryMenuItemGfx ; $7158
 Label_06_715b:
 	ld a, [$c4e0] ; $715b
 	add a, a ; $715e
@@ -2195,7 +2195,7 @@ Label_06_715b:
 	ld a, [hl+] ; $7166
 	ld d, [hl] ; $7167
 	ld e, a ; $7168
-	call Func_06_72ce ; $7169
+	call QueueStoryMenuCursorSprite ; $7169
 	call AdvanceFrame ; $716c
 	jp Label_06_7105 ; $716f
 Label_06_7172:
@@ -2206,16 +2206,16 @@ Label_06_717a:
 	call Func_06_7245 ; $717a
 	ld a, [$c4e1] ; $717d
 	ld de, $030a ; $7180
-	call Func_06_77a6 ; $7183
+	call DrawStoryMenuItem ; $7183
 	ld a, [$c4e1] ; $7186
 	inc a ; $7189
 	ld de, $080a ; $718a
-	call Func_06_77a6 ; $718d
+	call DrawStoryMenuItem ; $718d
 	ld a, [$c4e1] ; $7190
 	inc a ; $7193
 	inc a ; $7194
 	ld de, $0d0a ; $7195
-	call Func_06_77a6 ; $7198
+	call DrawStoryMenuItem ; $7198
 	ld a, [$c4e1] ; $719b
 	cp a, $06 ; $719e
 	ld hl, $c4e0 ; $71a0
@@ -2232,7 +2232,7 @@ Label_06_71ac:
 	ld a, [$c4e0] ; $71b5
 	ld hl, $c4e1 ; $71b8
 	add a, [hl] ; $71bb
-	call Func_06_7283 ; $71bc
+	call LoadStoryMenuItemGfx ; $71bc
 Label_06_71bf:
 	farcall FarPtr_ReadMatchInputPressed ; $71bf
 	and a, $02 ; $71c2
@@ -2273,7 +2273,7 @@ Label_06_7200:
 	ld a, [$c4e0] ; $7209
 	ld hl, $c4e1 ; $720c
 	add a, [hl] ; $720f
-	call Func_06_7283 ; $7210
+	call LoadStoryMenuItemGfx ; $7210
 Label_06_7213:
 	ld a, [$c4e0] ; $7213
 	add a, a ; $7216
@@ -2285,7 +2285,7 @@ Label_06_7213:
 	ld a, [hl+] ; $721e
 	ld d, [hl] ; $721f
 	ld e, a ; $7220
-	call Func_06_72ce ; $7221
+	call QueueStoryMenuCursorSprite ; $7221
 	call AdvanceFrame ; $7224
 	jp Label_06_71bf ; $7227
 Label_06_722a:
@@ -2336,7 +2336,7 @@ Label_06_727a:
 	or a, c ; $727f
 	jr nz, Label_06_727a ; $7280
 	ret ; $7282
-Func_06_7283:
+LoadStoryMenuItemGfx:
 	add a, a ; $7283
 	add a, $ae ; $7284
 	ld l, a ; $7286
@@ -2359,7 +2359,7 @@ Func_06_7283:
 	wram_bank ; $72a9
 	ret ; $72ad
 	INCBIN "data/bank_006/d_72ae.bin" ; $72ae, 32 bytes
-Func_06_72ce:
+QueueStoryMenuCursorSprite:
 	ld a, d ; $72ce
 	add a, $fc ; $72cf
 	ld d, a ; $72d1
@@ -2369,7 +2369,7 @@ Func_06_72ce:
 	call QueueSpriteTemplate ; $72db
 	ret ; $72de
 	INCBIN "data/bank_006/d_72df.bin" ; $72df, 1223 bytes
-Func_06_77a6:
+DrawStoryMenuItem:
 	push de ; $77a6
 	add a, a ; $77a7
 	add a, $cb ; $77a8

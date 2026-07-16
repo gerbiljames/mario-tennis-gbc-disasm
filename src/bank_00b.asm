@@ -372,7 +372,7 @@ Func_0b_4583:
 	srl a ; $45bb
 	ld d, a ; $45bd
 	ld e, $06 ; $45be
-	farcall FarPtr_06_04 ; $45c0
+	farcall FarPtr_ShowMessageWindow ; $45c0
 	ret ; $45c3
 	INCBIN "data/bank_00b/d_45c4.bin" ; $45c4, 321 bytes
 Func_0b_4705:

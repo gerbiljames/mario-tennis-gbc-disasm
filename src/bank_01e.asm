@@ -54,7 +54,7 @@ Label_1e_4031:
 	ld a, $90 ; $405e
 	ldh [rWY], a ; $4060
 	call Func_00_1e1d ; $4062
-	farcall FarPtr_04_00 ; $4065
+	farcall FarPtr_InitActorEngine ; $4065
 	pop bc ; $4068
 	call Func_1e_40ac ; $4069
 	call Func_1e_40be ; $406c
@@ -1468,7 +1468,7 @@ Label_1e_5438:
 	ld a, $90 ; $5462
 	ldh [rWY], a ; $5464
 	call Func_00_1e1d ; $5466
-	farcall FarPtr_04_00 ; $5469
+	farcall FarPtr_InitActorEngine ; $5469
 	call Func_1e_54bb ; $546c
 	call Func_1e_54f5 ; $546f
 	call Func_1e_498f ; $5472

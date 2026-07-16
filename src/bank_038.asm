@@ -1333,7 +1333,7 @@ Func_38_4975:
 	call Func_00_1e1d ; $499a
 	ld a, $02 ; $499d
 	ld [wOnCourtCharCount], a ; $499f
-	farcall FarPtr_04_00 ; $49a2
+	farcall FarPtr_InitActorEngine ; $49a2
 	ld b, $02 ; $49a5
 	ld c, $00 ; $49a7
 	call Func_38_43bb ; $49a9

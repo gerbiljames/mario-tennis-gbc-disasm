@@ -1681,7 +1681,7 @@ Label_08_4e49:
 	ld hl, $0174 ; $4e49
 	ld de, $0504 ; $4e4c
 	ld bc, $0a07 ; $4e4f
-	farcall FarPtr_06_04 ; $4e52
+	farcall FarPtr_ShowMessageWindow ; $4e52
 	ld a, $0a ; $4e55
 	call StepMatchFrames ; $4e57
 	ret ; $4e5a
@@ -1689,7 +1689,7 @@ Label_08_4e5b:
 	ld hl, $0175 ; $4e5b
 	ld de, $0204 ; $4e5e
 	ld bc, $0f07 ; $4e61
-	farcall FarPtr_06_04 ; $4e64
+	farcall FarPtr_ShowMessageWindow ; $4e64
 	ld a, $0a ; $4e67
 	call StepMatchFrames ; $4e69
 	ret ; $4e6c

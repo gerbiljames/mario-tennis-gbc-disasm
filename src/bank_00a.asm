@@ -558,7 +558,7 @@ Func_0a_4350:
 	ld b, h ; $435d
 	ld l, e ; $435e
 	ld h, d ; $435f
-	farcall FarPtr_04_04 ; $4360
+	farcall FarPtr_SetActorScript ; $4360
 	ret ; $4363
 Func_0a_4364:
 	call Func_0a_4312 ; $4364
@@ -566,7 +566,7 @@ Func_0a_4364:
 	ld b, h ; $4368
 	ld hl, $4766 ; $4369
 	ldh a, [hRomBank] ; $436c
-	farcall FarPtr_04_04 ; $436e
+	farcall FarPtr_SetActorScript ; $436e
 	ret ; $4371
 Func_0a_4372:
 	call Func_0a_4312 ; $4372
@@ -2239,7 +2239,7 @@ Label_0a_4ff5:
 	ld bc, $d000 ; $5002
 	ld hl, $4766 ; $5005
 	ldh a, [hRomBank] ; $5008
-	farcall FarPtr_04_04 ; $500a
+	farcall FarPtr_SetActorScript ; $500a
 	ld hl, $d000 ; $500d
 	ld de, $0018 ; $5010
 	add hl, de ; $5013
@@ -2267,7 +2267,7 @@ Label_0a_5031:
 	call Func_0a_4892 ; $503a
 	test_flag $05, 6 ; $503d
 	jr nz, Label_0a_5048 ; $5040
-	farcall FarPtr_06_08 ; $5042
+	farcall FarPtr_RunStoryModeMenu ; $5042
 	jp Label_0a_4ff5 ; $5045
 Label_0a_5048:
 	xor a, a ; $5048
@@ -2801,7 +2801,7 @@ Label_0a_53e7:
 	push de ; $5405
 	ld e, c ; $5406
 	ld d, b ; $5407
-	farcall FarPtr_04_14 ; $5408
+	farcall FarPtr_EvalFlagCondition ; $5408
 	pop de ; $540b
 	jr nz, Label_0a_5410 ; $540c
 	jr Label_0a_5419 ; $540e
@@ -2865,7 +2865,7 @@ Func_0a_5466:
 	push af ; $546a
 	push hl ; $546b
 	wram_bank $04 ; $546c
-	farcall FarPtr_04_00 ; $5472
+	farcall FarPtr_InitActorEngine ; $5472
 	ld hl, $c29a ; $5475
 	ld c, [hl] ; $5478
 	ld hl, $c298 ; $5479
@@ -2876,11 +2876,11 @@ Func_0a_5466:
 	ld a, [hl+] ; $5482
 	ld h, [hl] ; $5483
 	ld l, a ; $5484
-	farcall FarPtr_04_18 ; $5485
+	farcall FarPtr_SpawnMainCharacterActor ; $5485
 	pop hl ; $5488
 	pop af ; $5489
 	farcall FarPtr_04_1a ; $548a
-	farcall FarPtr_04_0a ; $548d
+	farcall FarPtr_SpawnActorsFromList ; $548d
 	pop hl ; $5490
 	pop de ; $5491
 	pop bc ; $5492
