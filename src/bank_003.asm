@@ -2001,7 +2001,42 @@ Label_03_4cc9:
 	pop de ; $4cd0
 	pop hl ; $4cd1
 	ret ; $4cd2
-	INCBIN "data/bank_003/d_4cd3.bin" ; $4cd3, 53 bytes
+	push hl ; $4cd3
+	push de ; $4cd4
+	push bc ; $4cd5
+	ld a, $0a ; $4cd6
+	ld [$0000], a ; $4cd8
+	ld a, $00 ; $4cdb
+	ldh [$ff97], a ; $4cdd
+	ld [$4000], a ; $4cdf
+	ld a, b ; $4ce2
+	call GetSaveBlockDirEntry ; $4ce3
+	ld a, [bc] ; $4ce6
+	or a, a ; $4ce7
+	jp nz, Label_03_4cf0 ; $4ce8
+	ld a, $fe ; $4ceb
+	jp Label_03_4cc9 ; $4ced
+Label_03_4cf0:
+	ld a, $08 ; $4cf0
+	add a, c ; $4cf2
+	ld e, a ; $4cf3
+	ld d, b ; $4cf4
+	ld c, $02 ; $4cf5
+Label_03_4cf7:
+	ld a, [de] ; $4cf7
+	ld [hl+], a ; $4cf8
+	inc de ; $4cf9
+	dec c ; $4cfa
+	jr nz, Label_03_4cf7 ; $4cfb
+	xor a, a ; $4cfd
+	push af ; $4cfe
+	xor a, a ; $4cff
+	ld [$0000], a ; $4d00
+	pop af ; $4d03
+	pop bc ; $4d04
+	pop de ; $4d05
+	pop hl ; $4d06
+	ret ; $4d07
 SaveStorySlot:
 	ld a, [$c36c] ; $4d08
 	cp a, $03 ; $4d0b
@@ -2317,7 +2352,77 @@ Label_03_4eed:
 	pop de ; $4ef4
 	pop hl ; $4ef5
 	ret ; $4ef6
-	INCBIN "data/bank_003/d_4ef7.bin" ; $4ef7, 96 bytes
+	push hl ; $4ef7
+	push de ; $4ef8
+	push bc ; $4ef9
+	ld a, $00 ; $4efa
+	ldh [$ff97], a ; $4efc
+	ld [$4000], a ; $4efe
+	ld a, b ; $4f01
+	call GetSaveBlockDirEntry ; $4f02
+	push bc ; $4f05
+	push hl ; $4f06
+	ld hl, $0001 ; $4f07
+	add hl, bc ; $4f0a
+	ld c, [hl] ; $4f0b
+	push bc ; $4f0c
+	inc hl ; $4f0d
+	ld a, [hl+] ; $4f0e
+	ld e, a ; $4f0f
+	ld a, [hl+] ; $4f10
+	ld d, a ; $4f11
+	ld a, [hl+] ; $4f12
+	ld b, [hl] ; $4f13
+	ld c, a ; $4f14
+	ld hl, $a000 ; $4f15
+	add hl, de ; $4f18
+	ld d, h ; $4f19
+	ld e, l ; $4f1a
+	ld hl, $0008 ; $4f1b
+	add hl, de ; $4f1e
+	ld d, h ; $4f1f
+	ld e, l ; $4f20
+	pop hl ; $4f21
+	ld a, l ; $4f22
+	ldh [$ff97], a ; $4f23
+	ld [$4000], a ; $4f25
+	pop hl ; $4f28
+	push hl ; $4f29
+	push bc ; $4f2a
+Label_03_4f2b:
+	xor a, a ; $4f2b
+	ld [de], a ; $4f2c
+	inc de ; $4f2d
+	dec bc ; $4f2e
+	ld a, b ; $4f2f
+	or a, c ; $4f30
+	jr nz, Label_03_4f2b ; $4f31
+	pop bc ; $4f33
+	pop hl ; $4f34
+	ld de, $0000 ; $4f35
+	ld a, $00 ; $4f38
+	ldh [$ff97], a ; $4f3a
+	ld [$4000], a ; $4f3c
+	pop bc ; $4f3f
+	ld a, $01 ; $4f40
+	ld [bc], a ; $4f42
+	ld hl, $0006 ; $4f43
+	add hl, bc ; $4f46
+	ld [hl], e ; $4f47
+	inc hl ; $4f48
+	ld [hl], d ; $4f49
+	inc hl ; $4f4a
+	ld c, $08 ; $4f4b
+Label_03_4f4d:
+	xor a, a ; $4f4d
+	ld [hl+], a ; $4f4e
+	dec c ; $4f4f
+	jr nz, Label_03_4f4d ; $4f50
+	xor a, a ; $4f52
+	pop bc ; $4f53
+	pop de ; $4f54
+	pop hl ; $4f55
+	ret ; $4f56
 ClearSaveBlockEntry:
 	push hl ; $4f57
 	push de ; $4f58
@@ -3135,7 +3240,13 @@ Label_03_5532:
 	inc b ; $5536
 	call InvalidateSaveBlock ; $5537
 	ret ; $553a
-	INCBIN "data/bank_003/d_553b.bin" ; $553b, 302 bytes
+	ld hl, $d000 ; $553b
+	call ReadSaveBlock ; $553e
+	cp a, $ff ; $5541
+	ret nz ; $5543
+	call InvalidateSaveBlock ; $5544
+	ret ; $5547
+	INCBIN "data/bank_003/d_5548.bin" ; $5548, 289 bytes
 RepairAllSaveSlots:
 	wram_bank $01 ; $5669
 	ld b, $00 ; $566f
@@ -3440,7 +3551,34 @@ ReadBlock6:
 	pop de ; $5878
 	pop bc ; $5879
 	ret ; $587a
-	INCBIN "data/bank_003/d_587b.bin" ; $587b, 310 bytes
+	push bc ; $587b
+	push de ; $587c
+	push hl ; $587d
+	ld de, $0000 ; $587e
+	ld b, $07 ; $5881
+	call WriteSaveBlock ; $5883
+	or a, a ; $5886
+	jr nz, Label_03_58a0 ; $5887
+	call VerifySaveBlock ; $5889
+	or a, a ; $588c
+	jr nz, Label_03_58a0 ; $588d
+	ld b, $22 ; $588f
+	call WriteSaveBlock ; $5891
+	or a, a ; $5894
+	jr nz, Label_03_58a0 ; $5895
+	call VerifySaveBlock ; $5897
+	or a, a ; $589a
+	jr nz, Label_03_58a0 ; $589b
+	xor a, a ; $589d
+	jr Label_03_58a2 ; $589e
+Label_03_58a0:
+	ld a, $ff ; $58a0
+Label_03_58a2:
+	pop hl ; $58a2
+	pop de ; $58a3
+	pop bc ; $58a4
+	ret ; $58a5
+	INCBIN "data/bank_003/d_58a6.bin" ; $58a6, 267 bytes
 FillMemory16:
 	ld [hl+], a ; $59b1
 	ld [hl+], a ; $59b2
@@ -4671,7 +4809,20 @@ Label_03_65ae:
 	ld bc, $0310 ; $65b5
 	call QueueSpriteTemplate ; $65b8
 	ret ; $65bb
-	INCBIN "data/bank_003/d_65bc.bin" ; $65bc, 93 bytes
+	; $65bc, 93 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7fff, $03fe, $01dd, $0046 ; pal 0: #ffffff #f6ff00 #ee7300 #311000
+	dw $7fff, $0200, $03e6, $0046 ; pal 1: #ffffff #008300 #31ff00 #311000
+	dw $0000, $0000, $0467, $0004 ; pal 2: #000000 #000000 #391808 #200000
+	dw $e1ff, $e8fa, $2420, $e1ee ; pal 3: #ff7bc5 #d539d5 #00084a #737bc5
+	dw $243b, $e820, $00e2, $9292 ; pal 4: #de084a #0008d5 #103900 #94a420
+	dw $e2fa, $e2db, $105b, $d480 ; pal 5: #d5bdc5 #deb4c5 #de1020 #0020ac
+	dw $90e1, $ce90, $02e1, $e2e8 ; pal 6: #083920 #83a49c #08bd00 #41bdc5
+	dw $9003, $0090, $0000, $05d7 ; pal 7: #180020 #832000 #000000 #bd7308
+	dw $0005, $e1ff, $fa0d, $21e7 ; pal 8: #290000 #ff7bc5 #6a83f6 #397b41
+	dw $f62c, $e1ee, $212c, $e1e8 ; pal 9: #628bee #737bc5 #624a41 #417bc5
+	dw $0101, $b6b6, $e0dc, $fbe1 ; pal 10: #084100 #b4ac6a #e631c5 #08fff6
+	db $e2, $00, $10, $a0, $d4
 	pop hl ; $6619
 	or a, h ; $661a
 	or a, h ; $661b
@@ -5075,7 +5226,21 @@ Label_03_75ba:
 	pop af ; $75c4
 	wram_bank ; $75c5
 	ret ; $75c9
-	INCBIN "data/bank_003/d_75ca.bin" ; $75ca, 31 bytes
+	ldh a, [hWramBank] ; $75ca
+	push af ; $75cc
+	wram_bank $06 ; $75cd
+	xor a, a ; $75d3
+	ld hl, $d1e0 ; $75d4
+	ld b, $10 ; $75d7
+Label_03_75d9:
+	ld [hl+], a ; $75d9
+	dec b ; $75da
+	jr nz, Label_03_75d9 ; $75db
+	call Func_03_75e9 ; $75dd
+	call Func_03_7606 ; $75e0
+	pop af ; $75e3
+	wram_bank ; $75e4
+	ret ; $75e8
 Func_03_75e9:
 	ld hl, $c200 ; $75e9
 	ld de, $d140 ; $75ec
@@ -5096,7 +5261,18 @@ Label_03_75ff:
 	dec b ; $7602
 	jr nz, Label_03_75ff ; $7603
 	ret ; $7605
-	INCBIN "data/bank_003/d_7606.bin" ; $7606, 16 bytes
+Func_03_7606:
+	ld hl, $d0a0 ; $7606
+	ld b, $40 ; $7609
+	ld de, $0000 ; $760b
+Label_03_760e:
+	ld a, e ; $760e
+	ld [hl+], a ; $760f
+	ld [hl], d ; $7610
+	inc hl ; $7611
+	dec b ; $7612
+	jr nz, Label_03_760e ; $7613
+	ret ; $7615
 Func_03_7616:
 	ld hl, $d0a0 ; $7616
 	ld de, $d1f2 ; $7619

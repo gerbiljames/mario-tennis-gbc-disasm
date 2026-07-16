@@ -1,0 +1,11 @@
+{
+ "_comment": "Static code-entry seeds for bank $13 (story engine): verified handler-table targets around the $5f70 tables. Flat = bank*0x4000 + (cpu-0x4000).",
+ "rom": [
+  311759,
+  319672,
+  319768,
+  322579,
+  322624
+ ],
+ "other": []
+}
