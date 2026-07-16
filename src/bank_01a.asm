@@ -1680,7 +1680,7 @@ Label_1a_67db:
 	wram_bank $06 ; $6831
 	ld a, [$d002] ; $6837
 	ld de, $8700 ; $683a
-	farcall FarPtr_18_44 ; $683d
+	farcall FarPtr_LoadOnCourtCharTilesA ; $683d
 	call AdvanceFrame ; $6840
 	ld c, $10 ; $6843
 	call Func_00_1d2e ; $6845

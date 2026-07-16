@@ -3002,10 +3002,10 @@ Func_1e_6a13:
 	push hl ; $6a19
 	ldh a, [hWramBank] ; $6a1a
 	push af ; $6a1c
-	farcall FarPtr_1d_08 ; $6a1d
+	farcall FarPtr_ClearDrillResultBuffer ; $6a1d
 	ld b, $03 ; $6a20
 	ld c, $01 ; $6a22
-	farcall FarPtr_1d_0a ; $6a24
+	farcall FarPtr_RecordDrillResult ; $6a24
 	ld c, $01 ; $6a27
 	call Func_1e_400e ; $6a29
 	pop af ; $6a2c
@@ -3025,7 +3025,7 @@ Func_1e_6a36:
 	push hl ; $6a3c
 	ldh a, [hWramBank] ; $6a3d
 	push af ; $6a3f
-	farcall FarPtr_1d_08 ; $6a40
+	farcall FarPtr_ClearDrillResultBuffer ; $6a40
 	ld b, $03 ; $6a43
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
@@ -3041,7 +3041,7 @@ Label_1e_6a56:
 	jr nz, Label_1e_6a5c ; $6a58
 	ld c, $04 ; $6a5a
 Label_1e_6a5c:
-	farcall FarPtr_1d_0a ; $6a5c
+	farcall FarPtr_RecordDrillResult ; $6a5c
 	ld c, $01 ; $6a5f
 	call Func_1e_400e ; $6a61
 	pop af ; $6a64
@@ -3061,10 +3061,10 @@ Func_1e_6a6e:
 	push hl ; $6a74
 	ldh a, [hWramBank] ; $6a75
 	push af ; $6a77
-	farcall FarPtr_1d_08 ; $6a78
+	farcall FarPtr_ClearDrillResultBuffer ; $6a78
 	ld b, $01 ; $6a7b
 	ld c, $00 ; $6a7d
-	farcall FarPtr_1d_0a ; $6a7f
+	farcall FarPtr_RecordDrillResult ; $6a7f
 	xor a, a ; $6a82
 	test_flag $05, 7 ; $6a83
 	jr z, Label_1e_6a8a ; $6a86
@@ -3096,10 +3096,10 @@ Func_1e_6aa4:
 	push hl ; $6aaa
 	ldh a, [hWramBank] ; $6aab
 	push af ; $6aad
-	farcall FarPtr_1d_08 ; $6aae
+	farcall FarPtr_ClearDrillResultBuffer ; $6aae
 	ld b, $02 ; $6ab1
 	ld c, $00 ; $6ab3
-	farcall FarPtr_1d_0a ; $6ab5
+	farcall FarPtr_RecordDrillResult ; $6ab5
 	xor a, a ; $6ab8
 	test_flag $05, 7 ; $6ab9
 	jr z, Label_1e_6ac0 ; $6abc
@@ -3130,10 +3130,10 @@ Label_1e_6ad0:
 	push hl ; $6ae0
 	ldh a, [hWramBank] ; $6ae1
 	push af ; $6ae3
-	farcall FarPtr_1d_08 ; $6ae4
+	farcall FarPtr_ClearDrillResultBuffer ; $6ae4
 	ld b, $00 ; $6ae7
 	ld c, $00 ; $6ae9
-	farcall FarPtr_1d_0a ; $6aeb
+	farcall FarPtr_RecordDrillResult ; $6aeb
 	ld c, $01 ; $6aee
 	call Func_1e_400e ; $6af0
 	pop af ; $6af3
@@ -3193,7 +3193,7 @@ Label_1e_6b40:
 	or a, l ; $6b41
 	jp z, Label_1e_6bfa ; $6b42
 	push hl ; $6b45
-	farcall FarPtr_1d_08 ; $6b46
+	farcall FarPtr_ClearDrillResultBuffer ; $6b46
 	ld hl, $c9b0 ; $6b49
 	ld a, [hl+] ; $6b4c
 	ld d, [hl] ; $6b4d
@@ -3217,7 +3217,7 @@ Label_1e_6b65:
 	jr z, Label_1e_6b70 ; $6b67
 	ld b, $00 ; $6b69
 	ld c, $00 ; $6b6b
-	farcall FarPtr_1d_0a ; $6b6d
+	farcall FarPtr_RecordDrillResult ; $6b6d
 Label_1e_6b70:
 	ld hl, $c8b1 ; $6b70
 	ld a, [hl+] ; $6b73
@@ -3228,7 +3228,7 @@ Label_1e_6b70:
 	jr z, Label_1e_6b81 ; $6b78
 	ld b, $01 ; $6b7a
 	ld c, $00 ; $6b7c
-	farcall FarPtr_1d_0a ; $6b7e
+	farcall FarPtr_RecordDrillResult ; $6b7e
 Label_1e_6b81:
 	ld hl, $c8b3 ; $6b81
 	ld a, [hl+] ; $6b84
@@ -3239,7 +3239,7 @@ Label_1e_6b81:
 	jr z, Label_1e_6b92 ; $6b89
 	ld b, $02 ; $6b8b
 	ld c, $00 ; $6b8d
-	farcall FarPtr_1d_0a ; $6b8f
+	farcall FarPtr_RecordDrillResult ; $6b8f
 Label_1e_6b92:
 	wram_bank $06 ; $6b92
 	ld hl, $d036 ; $6b98
@@ -3251,7 +3251,7 @@ Label_1e_6b92:
 	jr z, Label_1e_6ba9 ; $6ba0
 	ld b, $04 ; $6ba2
 	ld c, $00 ; $6ba4
-	farcall FarPtr_1d_0a ; $6ba6
+	farcall FarPtr_RecordDrillResult ; $6ba6
 Label_1e_6ba9:
 	xor a, a ; $6ba9
 	test_flag $05, 7 ; $6baa
@@ -4004,7 +4004,7 @@ Func_1e_6ffb:
 	jr z, Label_1e_707f ; $7076
 	ld b, $04 ; $7078
 	ld c, $00 ; $707a
-	farcall FarPtr_1d_0a ; $707c
+	farcall FarPtr_RecordDrillResult ; $707c
 Label_1e_707f:
 	ld hl, $d02a ; $707f
 	ld a, [hl+] ; $7082
@@ -4015,7 +4015,7 @@ Label_1e_707f:
 	jr z, Label_1e_7090 ; $7087
 	ld b, $04 ; $7089
 	ld c, $01 ; $708b
-	farcall FarPtr_1d_0a ; $708d
+	farcall FarPtr_RecordDrillResult ; $708d
 Label_1e_7090:
 	ld hl, $d02c ; $7090
 	ld a, [hl+] ; $7093
@@ -4026,7 +4026,7 @@ Label_1e_7090:
 	jr z, Label_1e_70a1 ; $7098
 	ld b, $04 ; $709a
 	ld c, $02 ; $709c
-	farcall FarPtr_1d_0a ; $709e
+	farcall FarPtr_RecordDrillResult ; $709e
 Label_1e_70a1:
 	ld hl, $d02e ; $70a1
 	ld a, [hl+] ; $70a4
@@ -4037,7 +4037,7 @@ Label_1e_70a1:
 	jr z, Label_1e_70b2 ; $70a9
 	ld b, $04 ; $70ab
 	ld c, $03 ; $70ad
-	farcall FarPtr_1d_0a ; $70af
+	farcall FarPtr_RecordDrillResult ; $70af
 Label_1e_70b2:
 	ld hl, $d030 ; $70b2
 	ld a, [hl+] ; $70b5
@@ -4048,7 +4048,7 @@ Label_1e_70b2:
 	jr z, Label_1e_70c3 ; $70ba
 	ld b, $04 ; $70bc
 	ld c, $04 ; $70be
-	farcall FarPtr_1d_0a ; $70c0
+	farcall FarPtr_RecordDrillResult ; $70c0
 Label_1e_70c3:
 	ld hl, $d032 ; $70c3
 	ld a, [hl+] ; $70c6
@@ -4059,7 +4059,7 @@ Label_1e_70c3:
 	jr z, Label_1e_70d4 ; $70cb
 	ld b, $04 ; $70cd
 	ld c, $05 ; $70cf
-	farcall FarPtr_1d_0a ; $70d1
+	farcall FarPtr_RecordDrillResult ; $70d1
 Label_1e_70d4:
 	pop af ; $70d4
 	wram_bank ; $70d5

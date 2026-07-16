@@ -879,7 +879,7 @@ Func_0e_4f3c:
 	pop af ; $4f57
 	wram_bank ; $4f58
 	ret ; $4f5c
-Func_0e_4f5d:
+GetEquippedRacketNibble:
 	ld a, [$c2bc] ; $4f5d
 	and a, a ; $4f60
 	jr z, Label_0e_4f65 ; $4f61
@@ -899,7 +899,7 @@ Func_0e_4f73:
 	jr z, Label_0e_4f7b ; $4f77
 	jr Label_0e_4f8a ; $4f79
 Label_0e_4f7b:
-	call Func_0e_4f5d ; $4f7b
+	call GetEquippedRacketNibble ; $4f7b
 	ld hl, $00e5 ; $4f7e
 	add a, l ; $4f81
 	ld l, a ; $4f82
@@ -909,7 +909,7 @@ Label_0e_4f86:
 	call Func_0e_4f3c ; $4f86
 	ret ; $4f89
 Label_0e_4f8a:
-	call Func_0e_4f5d ; $4f8a
+	call GetEquippedRacketNibble ; $4f8a
 	ld hl, $00f4 ; $4f8d
 	add a, l ; $4f90
 	ld l, a ; $4f91
@@ -924,7 +924,7 @@ Func_0e_4f99:
 	jr z, Label_0e_4fa1 ; $4f9d
 	jr Label_0e_4fb0 ; $4f9f
 Label_0e_4fa1:
-	call Func_0e_4f5d ; $4fa1
+	call GetEquippedRacketNibble ; $4fa1
 	ld hl, $2403 ; $4fa4
 	add a, l ; $4fa7
 	ld l, a ; $4fa8
@@ -934,7 +934,7 @@ Label_0e_4fac:
 	farcall FarPtr_0a_0e ; $4fac
 	ret ; $4faf
 Label_0e_4fb0:
-	call Func_0e_4f5d ; $4fb0
+	call GetEquippedRacketNibble ; $4fb0
 	ld hl, $240a ; $4fb3
 	add a, l ; $4fb6
 	ld l, a ; $4fb7
@@ -973,7 +973,7 @@ Func_0e_4fdb:
 	farcall FarPtr_0a_22 ; $4ffe
 	jp Label_0e_5015 ; $5001
 	ret ; $5004
-Func_0e_5005:
+CompareEquippedRacketToMinigameFlag:
 	ld a, [wWaterSpriteMinigameFlag] ; $5005
 	ld b, a ; $5008
 	ld a, [wEquippedRacket] ; $5009
@@ -990,7 +990,7 @@ Label_0e_5015:
 	ld c, $08 ; $5019
 	call Func_00_1d2e ; $501b
 	call Func_00_1da4 ; $501e
-	call Func_0e_5005 ; $5021
+	call CompareEquippedRacketToMinigameFlag ; $5021
 	cp a, $ff ; $5024
 	jp nz, Label_0e_5056 ; $5026
 	ld a, [$c2bc] ; $5029
@@ -4286,7 +4286,7 @@ Data_0e_75f6:
 	ld a, $28 ; $791d
 	farcall FarPtr_0a_04 ; $791f
 	pop af ; $7922
-	call Func_0e_7b7f ; $7923
+	call PrepareStoryMatch ; $7923
 	ret ; $7926
 	INCBIN "data/bank_00e/d_7927.bin" ; $7927, 132 bytes
 	farcall FarPtr_0a_20 ; $79ab
@@ -4442,10 +4442,10 @@ Label_0e_7a66:
 	ld a, $3c ; $7b07
 	farcall FarPtr_0a_04 ; $7b09
 	pop af ; $7b0c
-	call Func_0e_7b7f ; $7b0d
+	call PrepareStoryMatch ; $7b0d
 	ret ; $7b10
 	INCBIN "data/bank_00e/d_7b11.bin" ; $7b11, 110 bytes
-Func_0e_7b7f:
+PrepareStoryMatch:
 	ld a, $1c ; $7b7f
 	ld [wStoryModeCurrentLocation], a ; $7b81
 	ld a, $0a ; $7b84

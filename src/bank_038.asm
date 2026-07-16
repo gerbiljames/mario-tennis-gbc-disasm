@@ -2844,7 +2844,7 @@ Label_38_5747:
 	push bc ; $5748
 	push de ; $5749
 	push hl ; $574a
-	farcall FarPtr_18_44 ; $574b
+	farcall FarPtr_LoadOnCourtCharTilesA ; $574b
 	pop hl ; $574e
 	pop de ; $574f
 	pop bc ; $5750

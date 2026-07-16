@@ -206,7 +206,7 @@ Label_15_52f4:
 	farcall FarPtr_0a_08 ; $52fc
 	ret ; $52ff
 	INCBIN "data/bank_015/d_5300.bin" ; $5300, 46 bytes
-	call Func_15_7fa0 ; $532e
+	call ComputeTrainingCourtProgressIndex ; $532e
 	ld a, [$c2b0] ; $5331
 	cp a, $05 ; $5334
 	jr c, Label_15_5340 ; $5336
@@ -3253,7 +3253,7 @@ Label_15_7d49:
 	INCBIN "data/bank_015/d_7d6d.bin" ; $7d6d, 40 bytes
 	ret ; $7d95
 	INCBIN "data/bank_015/d_7d96.bin" ; $7d96, 522 bytes
-Func_15_7fa0:
+ComputeTrainingCourtProgressIndex:
 	ld a, $00 ; $7fa0
 	test_flag $0a, 3 ; $7fa2
 	jr z, Label_15_7fbf ; $7fa5

@@ -44,10 +44,10 @@ FarPtr_3b_28:
 	dw Func_3b_48f2 ; $4028
 FarPtr_3b_2a:
 	dw Func_3b_48fa ; $402a
-FarPtr_3b_2c:
-	dw Func_3b_667f ; $402c
-FarPtr_3b_2e:
-	dw Func_3b_66b5 ; $402e
+FarPtr_BuildStarCharUnlockMask:
+	dw BuildStarCharUnlockMask ; $402c
+FarPtr_GetUnlockedStarCharAtGridSlot:
+	dw GetUnlockedStarCharAtGridSlot ; $402e
 FarPtr_3b_30:
 	dw Func_3b_79f9 ; $4030
 FarPtr_RecordExhibitionVictory:
@@ -4757,7 +4757,7 @@ Func_3b_61f0:
 	sound $08 ; $61f5
 	xor a, a ; $61f7
 	ld [$cb70], a ; $61f8
-	call Func_3b_667f ; $61fb
+	call BuildStarCharUnlockMask ; $61fb
 	call Func_3b_62ef ; $61fe
 	wram_bank $03 ; $6201
 	call Func_3b_66f2 ; $6207
@@ -4827,7 +4827,7 @@ Label_3b_628c:
 	ld c, $03 ; $628c
 	call Func_3b_43b9 ; $628e
 	ld c, a ; $6291
-	call Func_3b_66b5 ; $6292
+	call GetUnlockedStarCharAtGridSlot ; $6292
 	cp a, $15 ; $6295
 	jr nz, Label_3b_629d ; $6297
 	sound $61 ; $6299
@@ -4881,7 +4881,7 @@ Func_3b_62ef:
 	ld c, $00 ; $62f8
 Label_3b_62fa:
 	push bc ; $62fa
-	call Func_3b_66b5 ; $62fb
+	call GetUnlockedStarCharAtGridSlot ; $62fb
 	ld b, a ; $62fe
 	ld de, $d000 ; $62ff
 	farcall FarPtr_16_04 ; $6302
@@ -5163,7 +5163,7 @@ Func_3b_654d:
 	ld c, $03 ; $6550
 	call Func_3b_43b9 ; $6552
 	ld c, a ; $6555
-	call Func_3b_66b5 ; $6556
+	call GetUnlockedStarCharAtGridSlot ; $6556
 	cp a, $15 ; $6559
 	jr z, Label_3b_6561 ; $655b
 	pop de ; $655d
@@ -5205,7 +5205,7 @@ Func_3b_65a0:
 	call Func_3b_43b9 ; $65a8
 	push af ; $65ab
 	ld c, a ; $65ac
-	call Func_3b_66b5 ; $65ad
+	call GetUnlockedStarCharAtGridSlot ; $65ad
 	cp a, $15 ; $65b0
 	jr nz, Label_3b_65bd ; $65b2
 	pop af ; $65b4
@@ -5327,12 +5327,12 @@ Label_3b_6654:
 	dw $d56e ; record 8
 Func_3b_6672:
 	ld c, a ; $6672
-	call Func_3b_66de ; $6673
+	call GetStarCharAtGridSlot ; $6673
 	farcall FarPtr_02_34 ; $6676
 	ld d, $04 ; $6679
 	farcall FarPtr_18_02 ; $667b
 	ret ; $667e
-Func_3b_667f:
+BuildStarCharUnlockMask:
 	ld c, $00 ; $667f
 	ld b, $00 ; $6681
 Label_3b_6683:
@@ -5372,8 +5372,8 @@ Label_3b_66a4:
 	dw $0160 ; record 3
 	dw $0140 ; record 4
 	dw $01c0 ; record 5
-Func_3b_66b5:
-	call Func_3b_66de ; $66b5
+GetUnlockedStarCharAtGridSlot:
+	call GetStarCharAtGridSlot ; $66b5
 	cp a, $17 ; $66b8
 	ret z ; $66ba
 	cp a, $19 ; $66bb
@@ -5399,7 +5399,7 @@ Label_3b_66d6:
 	ret ; $66d7
 	; $66d8, 6 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20 ; 0x00
-Func_3b_66de:
+GetStarCharAtGridSlot:
 	ld hl, $66e9 ; $66de
 	ld a, c ; $66e1
 	add a, l ; $66e2
@@ -5415,7 +5415,7 @@ Label_3b_66e7:
 	db $1e, $1b, $1d ; 0x06
 Func_3b_66f2:
 	ld c, $06 ; $66f2
-	call Func_3b_66b5 ; $66f4
+	call GetUnlockedStarCharAtGridSlot ; $66f4
 	cp a, $15 ; $66f7
 	jr nz, Label_3b_66fd ; $66f9
 	xor a, a ; $66fb

@@ -128,7 +128,7 @@ Label_09_40b1:
 LoadOnCourtCharacterGfx:
 	ld a, $ff ; $40b5
 	ld de, $8140 ; $40b7
-	farcall FarPtr_18_46 ; $40ba
+	farcall FarPtr_LoadOnCourtCharTilesB ; $40ba
 	ld a, [wOnCourtCharCountMinus1] ; $40bd
 	rst Rst00 ; $40c0
 	dw Label_09_4111 ; $40c1 jumptable
@@ -139,34 +139,34 @@ Label_09_40c9:
 	wram_bank $06 ; $40c9
 	ld a, [$df7e] ; $40cf
 	ld de, $8100 ; $40d2
-	farcall FarPtr_18_44 ; $40d5
+	farcall FarPtr_LoadOnCourtCharTilesA ; $40d5
 	ld a, [$df7e] ; $40d8
 	ld de, $8140 ; $40db
-	farcall FarPtr_18_46 ; $40de
+	farcall FarPtr_LoadOnCourtCharTilesB ; $40de
 Label_09_40e1:
 	wram_bank $07 ; $40e1
 	ld a, [$df7e] ; $40e7
 	ld de, $8180 ; $40ea
-	farcall FarPtr_18_44 ; $40ed
+	farcall FarPtr_LoadOnCourtCharTilesA ; $40ed
 	ld a, [$df7e] ; $40f0
 	ld de, $81c0 ; $40f3
-	farcall FarPtr_18_46 ; $40f6
+	farcall FarPtr_LoadOnCourtCharTilesB ; $40f6
 Label_09_40f9:
 	wram_bank $05 ; $40f9
 	ld a, [$df7e] ; $40ff
 	ld de, $8080 ; $4102
-	farcall FarPtr_18_44 ; $4105
+	farcall FarPtr_LoadOnCourtCharTilesA ; $4105
 	ld a, [$df7e] ; $4108
 	ld de, $80c0 ; $410b
-	farcall FarPtr_18_46 ; $410e
+	farcall FarPtr_LoadOnCourtCharTilesB ; $410e
 Label_09_4111:
 	wram_bank $04 ; $4111
 	ld a, [$df7e] ; $4117
 	ld de, $8000 ; $411a
-	farcall FarPtr_18_44 ; $411d
+	farcall FarPtr_LoadOnCourtCharTilesA ; $411d
 	ld a, [$df7e] ; $4120
 	ld de, $8040 ; $4123
-	farcall FarPtr_18_46 ; $4126
+	farcall FarPtr_LoadOnCourtCharTilesB ; $4126
 	ret ; $4129
 Func_09_412a:
 	wram_bank $04 ; $412a

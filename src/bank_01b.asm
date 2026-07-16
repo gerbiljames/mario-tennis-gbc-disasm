@@ -1641,7 +1641,7 @@ Label_1b_621a:
 	ld a, $01 ; $621a
 	farcall FarPtr_02_14 ; $621c
 	ld a, $00 ; $621f
-	farcall FarPtr_1d_02 ; $6221
+	farcall FarPtr_PromptCharDataConfirm ; $6221
 	and a, a ; $6224
 	jr nz, Label_1b_61f2 ; $6225
 	ld a, $02 ; $6227
@@ -1729,7 +1729,7 @@ Label_1b_62b3:
 	jr Label_1b_6293 ; $62b7
 Label_1b_62b9:
 	ld a, $01 ; $62b9
-	farcall FarPtr_1d_02 ; $62bb
+	farcall FarPtr_PromptCharDataConfirm ; $62bb
 	and a, a ; $62be
 	jr nz, Label_1b_6293 ; $62bf
 	push af ; $62c1
@@ -1917,15 +1917,15 @@ Label_1b_6408:
 	push bc ; $6419
 	push de ; $641a
 	push hl ; $641b
-	farcall FarPtr_1d_08 ; $641c
+	farcall FarPtr_ClearDrillResultBuffer ; $641c
 	ld b, $00 ; $641f
 	ld c, $00 ; $6421
 	ld de, $0040 ; $6423
-	farcall FarPtr_1d_0a ; $6426
+	farcall FarPtr_RecordDrillResult ; $6426
 	ld b, $04 ; $6429
 	ld c, $01 ; $642b
 	ld de, $0077 ; $642d
-	farcall FarPtr_1d_0a ; $6430
+	farcall FarPtr_RecordDrillResult ; $6430
 	ld c, $01 ; $6433
 	farcall FarPtr_1e_00 ; $6435
 	farcall FarPtr_1d_06 ; $6438
@@ -2479,7 +2479,7 @@ Func_1b_6982:
 	xor a, a ; $6993
 	ld [$c7bc], a ; $6994
 	ld [$c7c8], a ; $6997
-	farcall FarPtr_18_2e ; $699a
+	farcall FarPtr_ForceFlushBgMapToVram ; $699a
 	call EnableLCD ; $699d
 	ld c, $20 ; $69a0
 	call Func_00_1d2e ; $69a2
@@ -2588,7 +2588,7 @@ Func_1b_6ade:
 	ld hl, $047c ; $6b38
 	ld de, $d8c3 ; $6b3b
 	farcall FarPtr_18_04 ; $6b3e
-	farcall FarPtr_18_2e ; $6b41
+	farcall FarPtr_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
 	ld c, $20 ; $6b47
 	call Func_00_1d2e ; $6b49
@@ -2627,7 +2627,7 @@ Func_1b_6b6f:
 	call Func_00_1d20 ; $6b77
 	call Func_00_1da4 ; $6b7a
 	call DisableLCDSafely ; $6b7d
-	farcall FarPtr_18_2e ; $6b80
+	farcall FarPtr_ForceFlushBgMapToVram ; $6b80
 	call EnableLCD ; $6b83
 	ld c, $20 ; $6b86
 	call Func_00_1d2e ; $6b88
@@ -3609,7 +3609,7 @@ Label_1b_74c4:
 	call Func_1b_75ae ; $74c6
 	ret ; $74c9
 Func_1b_74ca:
-	farcall FarPtr_3b_2c ; $74ca
+	farcall FarPtr_BuildStarCharUnlockMask ; $74ca
 	call Func_1b_74df ; $74cd
 	call Func_1b_751f ; $74d0
 	call Func_1b_7560 ; $74d3
@@ -3771,7 +3771,7 @@ Func_1b_7604:
 	ld b, $00 ; $7611
 Label_1b_7613:
 	push bc ; $7613
-	farcall FarPtr_3b_2e ; $7614
+	farcall FarPtr_GetUnlockedStarCharAtGridSlot ; $7614
 	pop bc ; $7617
 	cp a, $15 ; $7618
 	jr nz, Label_1b_7621 ; $761a
@@ -3800,7 +3800,7 @@ Func_1b_7634:
 	ld b, $00 ; $763f
 Label_1b_7641:
 	push bc ; $7641
-	farcall FarPtr_3b_2e ; $7642
+	farcall FarPtr_GetUnlockedStarCharAtGridSlot ; $7642
 	pop bc ; $7645
 	cp a, $15 ; $7646
 	jr nz, Label_1b_764f ; $7648
@@ -4123,7 +4123,7 @@ Func_1b_787f:
 	push de ; $7880
 	push hl ; $7881
 	ld c, $04 ; $7882
-	farcall FarPtr_3b_2e ; $7884
+	farcall FarPtr_GetUnlockedStarCharAtGridSlot ; $7884
 	cp a, $15 ; $7887
 	jr nz, Label_1b_7890 ; $7889
 	pop hl ; $788b

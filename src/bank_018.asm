@@ -12,12 +12,12 @@ FarPtr_18_08:
 	dw Func_18_438d ; $4008
 FarPtr_DrawBox:
 	dw DrawBox ; $400a
-FarPtr_18_0c:
-	dw Func_18_4353 ; $400c
+FarPtr_FlushBgMapShadowToVram:
+	dw FlushBgMapShadowToVram ; $400c
 FarPtr_18_0e:
 	dw Func_18_43a6 ; $400e
-FarPtr_18_10:
-	dw Func_18_43a2 ; $4010
+FarPtr_DrawStringToTilemap:
+	dw DrawStringToTilemap ; $4010
 FarPtr_18_12:
 	dw Func_18_4444 ; $4012
 FarPtr_18_14:
@@ -26,8 +26,8 @@ FarPtr_18_16:
 	dw Func_18_449b ; $4016
 FarPtr_18_18:
 	dw Func_18_44ee ; $4018
-FarPtr_18_1a:
-	dw Func_18_43a9 ; $401a
+FarPtr_DrawDecimalNumberToTilemap:
+	dw DrawDecimalNumberToTilemap ; $401a
 FarPtr_18_1c:
 	dw Func_18_44ef ; $401c
 FarPtr_18_1e:
@@ -46,8 +46,8 @@ FarPtr_18_2a:
 	dw Func_18_45ca ; $402a
 FarPtr_18_2c:
 	dw Func_18_463b ; $402c
-FarPtr_18_2e:
-	dw Func_18_5418 ; $402e
+FarPtr_ForceFlushBgMapToVram:
+	dw ForceFlushBgMapToVram ; $402e
 FarPtr_18_30:
 	dw Func_18_5365 ; $4030
 FarPtr_18_32:
@@ -62,16 +62,16 @@ FarPtr_18_3a:
 	dw Func_18_5372 ; $403a
 FarPtr_18_3c:
 	dw Func_18_5379 ; $403c
-FarPtr_18_3e:
-	dw Func_18_54b1 ; $403e
+FarPtr_DrawDecimalNumberSprites:
+	dw DrawDecimalNumberSprites ; $403e
 FarPtr_18_40:
 	dw Func_18_5561 ; $4040
 FarPtr_18_42:
 	dw Func_18_5586 ; $4042
-FarPtr_18_44:
-	dw Func_18_5ab9 ; $4044
-FarPtr_18_46:
-	dw Func_18_5ace ; $4046
+FarPtr_LoadOnCourtCharTilesA:
+	dw LoadOnCourtCharTilesA ; $4044
+FarPtr_LoadOnCourtCharTilesB:
+	dw LoadOnCourtCharTilesB ; $4046
 DataPtr_18_48:
 	dw Lz_18_6b30 ; $4048
 DataPtr_18_4a:
@@ -179,7 +179,7 @@ Func_18_4339:
 	pop bc ; $4350
 	pop af ; $4351
 	ret ; $4352
-Func_18_4353:
+FlushBgMapShadowToVram:
 	ld a, [$cb61] ; $4353
 	and a, $0f ; $4356
 	jr z, Label_18_4365 ; $4358
@@ -217,14 +217,14 @@ Func_18_439a:
 	farcall FarPtr_05_1c ; $439d
 	pop bc ; $43a0
 	ret ; $43a1
-Func_18_43a2:
+DrawStringToTilemap:
 	farcall FarPtr_05_6c ; $43a2
 	ret ; $43a5
 Func_18_43a6:
 	ld [de], a ; $43a6
 	inc de ; $43a7
 	ret ; $43a8
-Func_18_43a9:
+DrawDecimalNumberToTilemap:
 	push af ; $43a9
 	push bc ; $43aa
 	push hl ; $43ab
@@ -243,7 +243,7 @@ Func_18_43a9:
 	ld l, c ; $43bc
 	ld h, b ; $43bd
 	pop de ; $43be
-	call Func_18_43a2 ; $43bf
+	call DrawStringToTilemap ; $43bf
 	add sp, 10 ; $43c2
 	pop hl ; $43c4
 	pop bc ; $43c5
@@ -672,7 +672,7 @@ Label_18_4669:
 Func_18_52de:
 	call ClearFrameTasks ; $52de
 	call Func_00_1e1d ; $52e1
-	call Func_18_55db ; $52e4
+	call ClearTileVramBothBanks ; $52e4
 	call Func_18_5372 ; $52e7
 	xor a, a ; $52ea
 	ld [$c783], a ; $52eb
@@ -768,10 +768,10 @@ Func_18_53e4:
 	add hl, de ; $53f6
 	ret ; $53f7
 	INCBIN "data/bank_018/d_53f8.bin" ; $53f8, 32 bytes
-Func_18_5418:
+ForceFlushBgMapToVram:
 	ld a, $ff ; $5418
 	ld [$cb61], a ; $541a
-	call Func_18_4353 ; $541d
+	call FlushBgMapShadowToVram ; $541d
 	ret ; $5420
 Func_18_5421:
 	ldh a, [$ff94] ; $5421
@@ -861,7 +861,7 @@ Label_18_54a7:
 Label_18_54ae:
 	sound $5f ; $54ae
 	ret ; $54b0
-Func_18_54b1:
+DrawDecimalNumberSprites:
 	push af ; $54b1
 	push bc ; $54b2
 	push hl ; $54b3
@@ -882,21 +882,21 @@ Func_18_54b1:
 	ld h, b ; $54c6
 	pop de ; $54c7
 	pop bc ; $54c8
-	call Func_18_54d2 ; $54c9
+	call DrawStringSprites ; $54c9
 	add sp, 10 ; $54cc
 	pop hl ; $54ce
 	pop bc ; $54cf
 	pop af ; $54d0
 	ret ; $54d1
-Func_18_54d2:
+DrawStringSprites:
 	ld a, [hl+] ; $54d2
 	and a, a ; $54d3
 	jr z, Label_18_54db ; $54d4
-	call Func_18_54dc ; $54d6
-	jr Func_18_54d2 ; $54d9
+	call DrawGlyphSprite ; $54d6
+	jr DrawStringSprites ; $54d9
 Label_18_54db:
 	ret ; $54db
-Func_18_54dc:
+DrawGlyphSprite:
 	sub a, $30 ; $54dc
 	jr c, Label_18_5502 ; $54de
 	push de ; $54e0
@@ -1028,7 +1028,7 @@ Func_18_55b9:
 	ld [de], a ; $55d8
 	inc de ; $55d9
 	ret ; $55da
-Func_18_55db:
+ClearTileVramBothBanks:
 	ld hl, $8000 ; $55db
 	ld c, $80 ; $55de
 	call ClearMemory16 ; $55e0
@@ -1116,7 +1116,7 @@ Func_18_5a6a:
 	ld e, a ; $5a77
 	ret ; $5a78
 	INCBIN "data/bank_018/d_5a79.bin" ; $5a79, 64 bytes
-Func_18_5ab9:
+LoadOnCourtCharTilesA:
 	ld h, a ; $5ab9
 	ld l, $00 ; $5aba
 	srl h ; $5abc
@@ -1128,7 +1128,7 @@ Func_18_5ab9:
 	ld c, $04 ; $5ac8
 	call Func_00_0480 ; $5aca
 	ret ; $5acd
-Func_18_5ace:
+LoadOnCourtCharTilesB:
 	cp a, $ff ; $5ace
 	jr z, Label_18_5ae7 ; $5ad0
 	ld h, a ; $5ad2
@@ -1296,7 +1296,7 @@ Label_18_76ec:
 	call Func_00_1d20 ; $76f7
 	call Func_00_1da4 ; $76fa
 	call DisableLCDSafely ; $76fd
-	call Func_18_7855 ; $7700
+	call FillAllBgPalettes ; $7700
 	call EnableLCD ; $7703
 	ld c, $10 ; $7706
 	call Func_00_1d2e ; $7708
@@ -1372,7 +1372,7 @@ Label_18_77e8:
 	farcall FarPtr_03_36 ; $780a
 	call DisableLCDSafely ; $780d
 	call Func_18_78b1 ; $7810
-	call Func_18_7855 ; $7813
+	call FillAllBgPalettes ; $7813
 	ld a, $01 ; $7816
 	ld hl, $78cd ; $7818
 	call RegisterFrameTask ; $781b
@@ -1404,7 +1404,7 @@ Label_18_784d:
 	ld c, [hl] ; $784d
 	ret ; $784e
 	INCBIN "data/bank_018/d_784f.bin" ; $784f, 6 bytes
-Func_18_7855:
+FillAllBgPalettes:
 	call Func_18_7647 ; $7855
 	ld c, $32 ; $7858
 	farcall FarPtr_LoadScreenAssetRecord ; $785a

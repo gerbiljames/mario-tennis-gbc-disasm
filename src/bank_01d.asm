@@ -2,16 +2,16 @@ SECTION "ROM Bank $1d", ROMX[$4000], BANK[$1d]
 
 FarPtr_1d_00:
 	dw Func_1d_4016 ; $4000
-FarPtr_1d_02:
-	dw Func_1d_5a63 ; $4002
+FarPtr_PromptCharDataConfirm:
+	dw PromptCharDataConfirm ; $4002
 FarPtr_1d_04:
 	dw Func_1d_68a3 ; $4004
 FarPtr_1d_06:
 	dw Func_1d_682c ; $4006
-FarPtr_1d_08:
-	dw Func_1d_7cae ; $4008
-FarPtr_1d_0a:
-	dw Func_1d_7cc6 ; $400a
+FarPtr_ClearDrillResultBuffer:
+	dw ClearDrillResultBuffer ; $4008
+FarPtr_RecordDrillResult:
+	dw RecordDrillResult ; $400a
 FarPtr_1d_0c:
 	dw Func_1d_5be3 ; $400c
 FarPtr_1d_0e:
@@ -74,7 +74,7 @@ Func_1d_4016:
 	ld c, $10 ; $409b
 	call Func_00_1d2e ; $409d
 	call Func_00_1da4 ; $40a0
-	call Func_1d_4cac ; $40a3
+	call RunDrillResultInputLoop ; $40a3
 	ld hl, rIE ; $40a6
 	set 2, [hl] ; $40a9
 	ld c, $10 ; $40ab
@@ -91,7 +91,7 @@ Func_1d_4016:
 	ret ; $40cb
 	farcall FarPtr_39_28 ; $40cc
 	ret ; $40cf
-Func_1d_40d0:
+InitDrillWorkRam:
 	wram_bank $06 ; $40d0
 	xor a, a ; $40d6
 	ld [$d000], a ; $40d7
@@ -577,7 +577,7 @@ Label_1d_455b:
 	call FormatDecimalNumberUnsigned ; $456d
 	ld de, $d417 ; $4570
 	farcall FarPtr_1c_04 ; $4573
-	call Func_1d_59be ; $4576
+	call ComputeExpProgressBar ; $4576
 	ld de, $d42f ; $4579
 	call Func_1d_59fc ; $457c
 	wram_bank $06 ; $457f
@@ -788,7 +788,7 @@ Label_1d_46f0:
 	call FormatDecimalNumberUnsigned ; $4702
 	ld de, $d4a7 ; $4705
 	farcall FarPtr_1c_04 ; $4708
-	call Func_1d_59be ; $470b
+	call ComputeExpProgressBar ; $470b
 	ld de, $d4bf ; $470e
 	call Func_1d_59fc ; $4711
 	wram_bank $06 ; $4714
@@ -1292,7 +1292,7 @@ Func_1d_4acc:
 Func_1d_4aeb:
 	xor a, a ; $4aeb
 	ld [$cb00], a ; $4aec
-	call Func_1d_4e8d ; $4aef
+	call BuildCharStatDisplay ; $4aef
 	wram_bank $06 ; $4af2
 	ld a, [$d00a] ; $4af8
 	ld [$d122], a ; $4afb
@@ -1327,7 +1327,7 @@ Func_1d_4aeb:
 Func_1d_4b50:
 	ld a, $01 ; $4b50
 	ld [$cb00], a ; $4b52
-	call Func_1d_4e8d ; $4b55
+	call BuildCharStatDisplay ; $4b55
 	wram_bank $06 ; $4b58
 	ld a, [$d00a] ; $4b5e
 	ld [$d12f], a ; $4b61
@@ -1493,7 +1493,7 @@ Func_1d_4c80:
 	ld d, a ; $4c9a
 	ret ; $4c9b
 	INCBIN "data/bank_01d/d_4c9c.bin" ; $4c9c, 16 bytes
-Func_1d_4cac:
+RunDrillResultInputLoop:
 	wram_bank $06 ; $4cac
 	ld a, [$d142] ; $4cb2
 	or a, a ; $4cb5
@@ -1679,7 +1679,7 @@ Label_1d_4e5b:
 	call UnregisterFrameTask ; $4e72
 	ret ; $4e75
 	INCBIN "data/bank_01d/d_4e76.bin" ; $4e76, 23 bytes
-Func_1d_4e8d:
+BuildCharStatDisplay:
 	wram_bank $06 ; $4e8d
 	push af ; $4e93
 	ld hl, wStoryModeNameOfMainCharacter ; $4e94
@@ -2735,7 +2735,7 @@ Func_1d_59b5:
 	ld c, a ; $59ba
 	ld b, $08 ; $59bb
 	ret ; $59bd
-Func_1d_59be:
+ComputeExpProgressBar:
 	ld a, [$cb00] ; $59be
 	farcall FarPtr_GetExpRemainingToNextLevel ; $59c1
 	ld a, h ; $59c4
@@ -2749,12 +2749,12 @@ Func_1d_59be:
 	add hl, de ; $59d2
 	pop de ; $59d3
 	ld b, $40 ; $59d4
-	call Func_1d_59dc ; $59d6
+	call ScaleValueToBar ; $59d6
 	ret ; $59d9
 Label_1d_59da:
 	xor a, a ; $59da
 	ret ; $59db
-Func_1d_59dc:
+ScaleValueToBar:
 	push bc ; $59dc
 	push hl ; $59dd
 	ld h, $00 ; $59de
@@ -2848,7 +2848,7 @@ Label_1d_5a4e:
 	ld [de], a ; $5a4f
 	ret ; $5a50
 	INCBIN "data/bank_01d/d_5a51.bin" ; $5a51, 18 bytes
-Func_1d_5a63:
+PromptCharDataConfirm:
 	push af ; $5a63
 	call ClearFrameTasks ; $5a64
 	call DisableLCDSafely ; $5a67
@@ -2862,7 +2862,7 @@ Func_1d_5a63:
 	ld a, $90 ; $5a7b
 	ldh [rWY], a ; $5a7d
 	call Func_00_1e1d ; $5a7f
-	call Func_1d_40d0 ; $5a82
+	call InitDrillWorkRam ; $5a82
 	pop af ; $5a85
 	call Func_1d_5b1a ; $5a86
 	call EnableLCD ; $5a89
@@ -2977,7 +2977,7 @@ Label_1d_5b53:
 	ld de, $b400 ; $5b7c
 	ld c, $03 ; $5b7f
 	call Func_00_0480 ; $5b81
-	call Func_1d_4e8d ; $5b84
+	call BuildCharStatDisplay ; $5b84
 	ld hl, $5cbb ; $5b87
 	ld bc, $d240 ; $5b8a
 	call Func_1d_4bb6 ; $5b8d
@@ -3022,7 +3022,7 @@ Func_1d_5be3:
 	ldh [rWY], a ; $5bfc
 	call Func_00_1e1d ; $5bfe
 	farcall FarPtr_01_0a ; $5c01
-	call Func_1d_40d0 ; $5c04
+	call InitDrillWorkRam ; $5c04
 	call Func_1d_411e ; $5c07
 	ret ; $5c0a
 Func_1d_5c0b:
@@ -3124,7 +3124,7 @@ Func_1d_68a3:
 	ldh [rWY], a ; $68bf
 	call Func_00_1e1d ; $68c1
 	pop hl ; $68c4
-	call Func_1d_6934 ; $68c5
+	call InitLevelUpScreenState ; $68c5
 	farcall FarPtr_1c_18 ; $68c8
 	call Func_1d_6977 ; $68cb
 	call EnableLCD ; $68ce
@@ -3164,7 +3164,7 @@ Func_1d_68a3:
 	ld hl, $765e ; $692d
 	call UnregisterFrameTask ; $6930
 	ret ; $6933
-Func_1d_6934:
+InitLevelUpScreenState:
 	wram_bank $06 ; $6934
 	ld a, [$d0b6] ; $693a
 	or a, a ; $693d
@@ -3342,7 +3342,7 @@ Func_1d_6aef:
 	rr e ; $6b0b
 Label_1d_6b0d:
 	ld b, $58 ; $6b0d
-	call Func_1d_59dc ; $6b0f
+	call ScaleValueToBar ; $6b0f
 	ld de, $d161 ; $6b12
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
@@ -3886,7 +3886,7 @@ Label_1d_6ebe:
 	ld h, [hl] ; $6ec8
 	ld l, a ; $6ec9
 	ld b, $40 ; $6eca
-	call Func_1d_59dc ; $6ecc
+	call ScaleValueToBar ; $6ecc
 	ld [$d164], a ; $6ecf
 	ld de, $d027 ; $6ed2
 	jr Label_1d_6efe ; $6ed5
@@ -3908,7 +3908,7 @@ Label_1d_6ee7:
 	ld h, [hl] ; $6ef1
 	ld l, a ; $6ef2
 	ld b, $40 ; $6ef3
-	call Func_1d_59dc ; $6ef5
+	call ScaleValueToBar ; $6ef5
 	ld [$d173], a ; $6ef8
 	ld de, $d147 ; $6efb
 Label_1d_6efe:
@@ -5004,7 +5004,7 @@ Label_1d_77be:
 	ret ; $77c7
 DrillDisplayData2_1d:
 	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 1254 bytes
-Func_1d_7cae:
+ClearDrillResultBuffer:
 	push af ; $7cae
 	push bc ; $7caf
 	push de ; $7cb0
@@ -5018,7 +5018,7 @@ Func_1d_7cae:
 	pop bc ; $7cc3
 	pop af ; $7cc4
 	ret ; $7cc5
-Func_1d_7cc6:
+RecordDrillResult:
 	wram_bank $06 ; $7cc6
 	ld a, b ; $7ccc
 	rlca ; $7ccd
