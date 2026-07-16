@@ -46,7 +46,88 @@ FarPtr_1b_2a:
 	dw Func_1b_715d ; $402a
 FarPtr_1b_2c:
 	dw Func_1b_73dd ; $402c
-	INCBIN "data/bank_01b/d_402e.bin" ; $402e, 159 bytes
+	; $402e, 159 bytes (records:2)
+; 79 records x 2 bytes
+	dw $78bd ; record 0
+	dw $7970 ; record 1
+	dw $79c0 ; record 2
+	dw $7a78 ; record 3
+	dw $7ab5 ; record 4
+	dw $7af6 ; record 5
+	dw $7b37 ; record 6
+	dw $7d2e ; record 7
+	dw $7e6f ; record 8
+	dw $c5d5 ; record 9
+	dw $000e ; record 10
+	dw $a3cd ; record 11
+	dw $0e40 ; record 12
+	dw $cd00 ; record 13
+	dw $40cd ; record 14
+	dw $000e ; record 15
+	dw $0806 ; record 16
+	dw $51cd ; record 17
+	dw $c11f ; record 18
+	dw $d5d1 ; record 19
+	dw $78c5 ; record 20
+	dw $5782 ; record 21
+	dw $0ed5 ; record 22
+	dw $cd01 ; record 23
+	dw $40a3 ; record 24
+	dw $000e ; record 25
+	dw $cdcd ; record 26
+	dw $0e40 ; record 27
+	dw $0600 ; record 28
+	dw $cd28 ; record 29
+	dw $1f51 ; record 30
+	dw $c1d1 ; record 31
+	dw $d5d1 ; record 32
+	dw $79c5 ; record 33
+	dw $5f83 ; record 34
+	dw $8278 ; record 35
+	dw $d557 ; record 36
+	dw $010e ; record 37
+	dw $a3cd ; record 38
+	dw $0e40 ; record 39
+	dw $cd01 ; record 40
+	dw $40cd ; record 41
+	dw $000e ; record 42
+	dw $6806 ; record 43
+	dw $51cd ; record 44
+	dw $d11f ; record 45
+	dw $d1c1 ; record 46
+	dw $817b ; record 47
+	dw $d55f ; record 48
+	dw $000e ; record 49
+	dw $a3cd ; record 50
+	dw $0e40 ; record 51
+	dw $cd01 ; record 52
+	dw $40cd ; record 53
+	dw $000e ; record 54
+	dw $4806 ; record 55
+	dw $51cd ; record 56
+	dw $d11f ; record 57
+	dw $f0c9 ; record 58
+	dw $e68c ; record 59
+	dw $210f ; record 60
+	dw $40bd ; record 61
+	dw $6f85 ; record 62
+	dw $0130 ; record 63
+	dw $7e24 ; record 64
+	dw $7947 ; record 65
+	dw $28b7 ; record 66
+	dw $7804 ; record 67
+	dw $5782 ; record 68
+	dw $7ac9 ; record 69
+	dw $5790 ; record 70
+	dw $00c9 ; record 71
+	dw $0000 ; record 72
+	dw $0101 ; record 73
+	dw $0101 ; record 74
+	dw $0101 ; record 75
+	dw $0101 ; record 76
+	dw $0000 ; record 77
+	dw $0000 ; record 78
+	db $00
 Func_1b_40cd:
 	ldh a, [$ff8c] ; $40cd
 	and a, $0f ; $40cf
@@ -298,9 +379,20 @@ Label_1b_421c:
 Label_1b_422a:
 	ld a, $01 ; $422a
 	ret ; $422c
-	INCBIN "data/bank_01b/d_422d.bin" ; $422d, 21 bytes
+	ld a, [wMenuCursorX] ; $422d
+	ld d, a ; $4230
+	ld a, [wMenuCursorY] ; $4231
+	ld e, a ; $4234
+	ldh a, [$ffc2] ; $4235
+	cp a, $02 ; $4237
+	jr z, Label_1b_4246 ; $4239
+	cp a, $01 ; $423b
+	jr z, Label_1b_4242 ; $423d
+	call Func_00_284b ; $423f
+Label_1b_4242:
 	ldh a, [$ffd5] ; $4242
 	jr Label_1b_4248 ; $4244
+Label_1b_4246:
 	ldh a, [$ffd4] ; $4246
 Label_1b_4248:
 	ld h, a ; $4248
@@ -586,7 +678,18 @@ Label_1b_43ed:
 	ld a, d ; $43f0
 	ld [wMenuCursorY], a ; $43f1
 	ret ; $43f4
-	INCBIN "data/bank_01b/d_43f5.bin" ; $43f5, 13 bytes
+	ld d, $00 ; $43f5
+	ld a, c ; $43f7
+Label_1b_43f8:
+	cp a, b ; $43f8
+	jr c, Label_1b_43ff ; $43f9
+	inc d ; $43fb
+	sub a, b ; $43fc
+	jr Label_1b_43f8 ; $43fd
+Label_1b_43ff:
+	ld [hl+], a ; $43ff
+	ld a, d ; $4400
+	ld [hl], a ; $4401
 	ret ; $4402
 	ldh a, [hWramBank] ; $4403
 	push af ; $4405
@@ -658,7 +761,58 @@ Label_1b_446a:
 	pop bc ; $446a
 	pop af ; $446b
 	ret ; $446c
-	INCBIN "data/bank_01b/d_446d.bin" ; $446d, 2463 bytes
+	push af ; $446d
+	push bc ; $446e
+	push hl ; $446f
+	add sp, -10 ; $4470
+	push bc ; $4472
+	push de ; $4473
+	ld c, l ; $4474
+	ld b, h ; $4475
+	ld hl, sp + 4 ; $4476
+	ld e, l ; $4478
+	ld d, h ; $4479
+	ld l, c ; $447a
+	ld h, b ; $447b
+	ld c, e ; $447c
+	ld b, d ; $447d
+	call FormatDecimalNumber ; $447e
+	ld l, c ; $4481
+	ld h, b ; $4482
+	pop de ; $4483
+	pop bc ; $4484
+	call Func_1b_448e ; $4485
+	add sp, 10 ; $4488
+	pop hl ; $448a
+	pop bc ; $448b
+	pop af ; $448c
+	ret ; $448d
+Func_1b_448e:
+	ld a, [hl+] ; $448e
+	and a, a ; $448f
+	jr z, Label_1b_4497 ; $4490
+	call Func_1b_4498 ; $4492
+	jr Func_1b_448e ; $4495
+Label_1b_4497:
+	ret ; $4497
+Func_1b_4498:
+	push hl ; $4498
+	ld hl, $d240 ; $4499
+	sub a, $30 ; $449c
+	jr c, Label_1b_44ae ; $449e
+	add a, $30 ; $44a0
+	ld b, a ; $44a2
+	wram_bank $03 ; $44a3
+	ld a, b ; $44a9
+	ld [de], a ; $44aa
+	inc de ; $44ab
+	pop hl ; $44ac
+	ret ; $44ad
+Label_1b_44ae:
+	inc de ; $44ae
+	pop hl ; $44af
+	ret ; $44b0
+	INCBIN "data/bank_01b/d_44b1.bin" ; $44b1, 2395 bytes
 Func_1b_4e0c:
 	ret ; $4e0c
 Func_1b_4e0d:
@@ -857,7 +1011,14 @@ Label_1b_4f4f:
 Label_1b_4f72:
 	farcall FarPtr_Func_39_4325 ; $4f72
 	ret ; $4f75
-	INCBIN "data/bank_01b/d_4f76.bin" ; $4f76, 48 bytes
+	; $4f76, 48 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $00ab, $01dc, $039f, $7fff ; pal 0: #5a2900 #e67300 #ffe600 #ffffff
+	dw $5900, $7a00, $7bc5, $7fff ; pal 1: #0041b4 #0083f6 #29f6f6 #ffffff
+	dw $002f, $011d, $225f, $7fff ; pal 2: #7b0800 #ee4100 #ff9441 #ffffff
+	dw $484c, $7c91, $7e38, $7fff ; pal 3: #621094 #8b20ff #c58bff #ffffff
+	dw $0260, $00ff, $27ff, $0000 ; pal 4: #009c00 #ff3900 #ffff4a #000000
+	dw $0260, $68af, $6e1f, $0000 ; pal 5: #009c00 #7b29d5 #ff83de #000000
 Func_1b_4fa6:
 	ldh a, [hWramBank] ; $4fa6
 	push af ; $4fa8
@@ -953,7 +1114,613 @@ Label_1b_504a:
 	ld h, [hl] ; $504b
 	ld l, a ; $504c
 	jp hl ; $504d
-	INCBIN "data/bank_01b/d_504e.bin" ; $504e, 1209 bytes
+	; $504e, 1209 bytes (records:2)
+; 604 records x 2 bytes
+	dw $77c9 ; record 0
+	dw $7750 ; record 1
+	dw $6f50 ; record 2
+	dw $7351 ; record 3
+	dw $eb52 ; record 4
+	dw $ff52 ; record 5
+	dw $ff52 ; record 6
+	dw $2252 ; record 7
+	dw $4953 ; record 8
+	dw $6853 ; record 9
+	dw $8753 ; record 10
+	dw $8753 ; record 11
+	dw $fa53 ; record 12
+	dw $6d53 ; record 13
+	dw $a054 ; record 14
+	dw $a354 ; record 15
+	dw $a354 ; record 16
+	dw $c254 ; record 17
+	dw $e554 ; record 18
+	dw $0454 ; record 19
+	dw $3e55 ; record 20
+	dw $2101 ; record 21
+	dw $5912 ; record 22
+	dw $6acd ; record 23
+	dw $cd1b ; record 24
+	dw $2725 ; record 25
+	dw $cf8c ; record 26
+	dw $0e78 ; record 27
+	dw $cd00 ; record 28
+	dw $5f51 ; record 29
+	dw $a511 ; record 30
+	dw $cd5b ; record 31
+	dw $5aa4 ; record 32
+	dw $010e ; record 33
+	dw $51cd ; record 34
+	dw $115f ; record 35
+	dw $5bb2 ; record 36
+	dw $89cd ; record 37
+	dw $065a ; record 38
+	dw $cd01 ; record 39
+	dw $5750 ; record 40
+	dw $c5cd ; record 41
+	dw $cd58 ; record 42
+	dw $2725 ; record 43
+	dw $cf1e ; record 44
+	dw $0e80 ; record 45
+	dw $cd03 ; record 46
+	dw $5f51 ; record 47
+	dw $9411 ; record 48
+	dw $cd5b ; record 49
+	dw $5a6e ; record 50
+	dw $040e ; record 51
+	dw $51cd ; record 52
+	dw $115f ; record 53
+	dw $5b94 ; record 54
+	dw $89cd ; record 55
+	dw $cd5a ; record 56
+	dw $2725 ; record 57
+	dw $cf5a ; record 58
+	dw $0e78 ; record 59
+	dw $cd03 ; record 60
+	dw $5f51 ; record 61
+	dw $a511 ; record 62
+	dw $cd5b ; record 63
+	dw $5aa4 ; record 64
+	dw $040e ; record 65
+	dw $51cd ; record 66
+	dw $115f ; record 67
+	dw $5bb2 ; record 68
+	dw $89cd ; record 69
+	dw $065a ; record 70
+	dw $cd02 ; record 71
+	dw $5750 ; record 72
+	dw $c5cd ; record 73
+	dw $cd58 ; record 74
+	dw $2725 ; record 75
+	dw $cf1e ; record 76
+	dw $0e80 ; record 77
+	dw $cd06 ; record 78
+	dw $5f51 ; record 79
+	dw $9d11 ; record 80
+	dw $cd5b ; record 81
+	dw $5a6e ; record 82
+	dw $070e ; record 83
+	dw $51cd ; record 84
+	dw $115f ; record 85
+	dw $5b9d ; record 86
+	dw $89cd ; record 87
+	dw $cd5a ; record 88
+	dw $2725 ; record 89
+	dw $cf5a ; record 90
+	dw $0e78 ; record 91
+	dw $cd06 ; record 92
+	dw $5f51 ; record 93
+	dw $a511 ; record 94
+	dw $cd5b ; record 95
+	dw $5aa4 ; record 96
+	dw $070e ; record 97
+	dw $51cd ; record 98
+	dw $115f ; record 99
+	dw $5b95 ; record 100
+	dw $89cd ; record 101
+	dw $065a ; record 102
+	dw $cd03 ; record 103
+	dw $5750 ; record 104
+	dw $c5cd ; record 105
+	dw $cd58 ; record 106
+	dw $2725 ; record 107
+	dw $cf1e ; record 108
+	dw $0e80 ; record 109
+	dw $cd09 ; record 110
+	dw $5f51 ; record 111
+	dw $9d11 ; record 112
+	dw $cd5b ; record 113
+	dw $5a6e ; record 114
+	dw $0a0e ; record 115
+	dw $51cd ; record 116
+	dw $115f ; record 117
+	dw $5b9d ; record 118
+	dw $89cd ; record 119
+	dw $cd5a ; record 120
+	dw $2725 ; record 121
+	dw $cf5a ; record 122
+	dw $0e78 ; record 123
+	dw $cd09 ; record 124
+	dw $5f51 ; record 125
+	dw $a511 ; record 126
+	dw $cd5b ; record 127
+	dw $5aa4 ; record 128
+	dw $0a0e ; record 129
+	dw $51cd ; record 130
+	dw $115f ; record 131
+	dw $5b95 ; record 132
+	dw $89cd ; record 133
+	dw $065a ; record 134
+	dw $cd04 ; record 135
+	dw $5750 ; record 136
+	dw $c5cd ; record 137
+	dw $cd58 ; record 138
+	dw $2725 ; record 139
+	dw $3e1e ; record 140
+	dw $ea01 ; record 141
+	dw $d858 ; record 142
+	dw $4ec3 ; record 143
+	dw $3e50 ; record 144
+	dw $2101 ; record 145
+	dw $5912 ; record 146
+	dw $6acd ; record 147
+	dw $cd1b ; record 148
+	dw $2725 ; record 149
+	dw $cf8c ; record 150
+	dw $0e78 ; record 151
+	dw $cd00 ; record 152
+	dw $5f51 ; record 153
+	dw $bb11 ; record 154
+	dw $cd5b ; record 155
+	dw $5aa4 ; record 156
+	dw $020e ; record 157
+	dw $51cd ; record 158
+	dw $115f ; record 159
+	dw $5bcc ; record 160
+	dw $89cd ; record 161
+	dw $065a ; record 162
+	dw $cd05 ; record 163
+	dw $5750 ; record 164
+	dw $c5cd ; record 165
+	dw $cd58 ; record 166
+	dw $2725 ; record 167
+	dw $cf1e ; record 168
+	dw $0e80 ; record 169
+	dw $cd05 ; record 170
+	dw $5f51 ; record 171
+	dw $bb11 ; record 172
+	dw $cd5b ; record 173
+	dw $5a89 ; record 174
+	dw $25cd ; record 175
+	dw $0427 ; record 176
+	dw $030e ; record 177
+	dw $51cd ; record 178
+	dw $115f ; record 179
+	dw $5bc3 ; record 180
+	dw $6ecd ; record 181
+	dw $cd5a ; record 182
+	dw $2725 ; record 183
+	dw $cf78 ; record 184
+	dw $0e78 ; record 185
+	dw $cd05 ; record 186
+	dw $5f51 ; record 187
+	dw $cc11 ; record 188
+	dw $cd5b ; record 189
+	dw $5abf ; record 190
+	dw $030e ; record 191
+	dw $51cd ; record 192
+	dw $115f ; record 193
+	dw $5bd4 ; record 194
+	dw $6ecd ; record 195
+	dw $065a ; record 196
+	dw $cd06 ; record 197
+	dw $5750 ; record 198
+	dw $c5cd ; record 199
+	dw $cd58 ; record 200
+	dw $2725 ; record 201
+	dw $cf1e ; record 202
+	dw $0e80 ; record 203
+	dw $cd08 ; record 204
+	dw $5f51 ; record 205
+	dw $cd11 ; record 206
+	dw $cd5b ; record 207
+	dw $5a89 ; record 208
+	dw $25cd ; record 209
+	dw $0427 ; record 210
+	dw $060e ; record 211
+	dw $51cd ; record 212
+	dw $115f ; record 213
+	dw $5bd4 ; record 214
+	dw $6ecd ; record 215
+	dw $cd5a ; record 216
+	dw $2725 ; record 217
+	dw $cf5a ; record 218
+	dw $0e78 ; record 219
+	dw $cd08 ; record 220
+	dw $5f51 ; record 221
+	dw $cc11 ; record 222
+	dw $cd5b ; record 223
+	dw $5abf ; record 224
+	dw $060e ; record 225
+	dw $51cd ; record 226
+	dw $115f ; record 227
+	dw $5bc3 ; record 228
+	dw $6ecd ; record 229
+	dw $065a ; record 230
+	dw $cd07 ; record 231
+	dw $5750 ; record 232
+	dw $c5cd ; record 233
+	dw $cd58 ; record 234
+	dw $2725 ; record 235
+	dw $cf1e ; record 236
+	dw $0e80 ; record 237
+	dw $cd0b ; record 238
+	dw $5f51 ; record 239
+	dw $cd11 ; record 240
+	dw $cd5b ; record 241
+	dw $5a89 ; record 242
+	dw $25cd ; record 243
+	dw $0427 ; record 244
+	dw $090e ; record 245
+	dw $51cd ; record 246
+	dw $115f ; record 247
+	dw $5bd4 ; record 248
+	dw $6ecd ; record 249
+	dw $cd5a ; record 250
+	dw $2725 ; record 251
+	dw $cf5a ; record 252
+	dw $0e78 ; record 253
+	dw $cd0b ; record 254
+	dw $5f51 ; record 255
+	dw $bc11 ; record 256
+	dw $cd5b ; record 257
+	dw $5a89 ; record 258
+	dw $090e ; record 259
+	dw $51cd ; record 260
+	dw $115f ; record 261
+	dw $5bbb ; record 262
+	dw $a4cd ; record 263
+	dw $065a ; record 264
+	dw $cd08 ; record 265
+	dw $5750 ; record 266
+	dw $c5cd ; record 267
+	dw $cd58 ; record 268
+	dw $2725 ; record 269
+	dw $3e1e ; record 270
+	dw $ea01 ; record 271
+	dw $d858 ; record 272
+	dw $4ec3 ; record 273
+	dw $3e50 ; record 274
+	dw $2101 ; record 275
+	dw $5912 ; record 276
+	dw $6acd ; record 277
+	dw $cd1b ; record 278
+	dw $2725 ; record 279
+	dw $cf8c ; record 280
+	dw $0e78 ; record 281
+	dw $cd00 ; record 282
+	dw $5f51 ; record 283
+	dw $e711 ; record 284
+	dw $cd5b ; record 285
+	dw $5aa4 ; record 286
+	dw $050e ; record 287
+	dw $51cd ; record 288
+	dw $115f ; record 289
+	dw $5bd4 ; record 290
+	dw $6ecd ; record 291
+	dw $065a ; record 292
+	dw $cd09 ; record 293
+	dw $5750 ; record 294
+	dw $c5cd ; record 295
+	dw $cd58 ; record 296
+	dw $2725 ; record 297
+	dw $cf5a ; record 298
+	dw $0e80 ; record 299
+	dw $cd08 ; record 300
+	dw $5f51 ; record 301
+	dw $d411 ; record 302
+	dw $cd5b ; record 303
+	dw $5a6e ; record 304
+	dw $090e ; record 305
+	dw $51cd ; record 306
+	dw $115f ; record 307
+	dw $5bd4 ; record 308
+	dw $89cd ; record 309
+	dw $cd5a ; record 310
+	dw $2725 ; record 311
+	dw $cf5a ; record 312
+	dw $0e78 ; record 313
+	dw $cd08 ; record 314
+	dw $5f51 ; record 315
+	dw $9511 ; record 316
+	dw $cd5b ; record 317
+	dw $5a6e ; record 318
+	dw $090e ; record 319
+	dw $51cd ; record 320
+	dw $115f ; record 321
+	dw $5c0c ; record 322
+	dw $bfcd ; record 323
+	dw $065a ; record 324
+	dw $cd0a ; record 325
+	dw $5750 ; record 326
+	dw $c5cd ; record 327
+	dw $cd58 ; record 328
+	dw $2725 ; record 329
+	dw $3e1e ; record 330
+	dw $ea01 ; record 331
+	dw $d858 ; record 332
+	dw $4ec3 ; record 333
+	dw $3e50 ; record 334
+	dw $2101 ; record 335
+	dw $5912 ; record 336
+	dw $6acd ; record 337
+	dw $cd1b ; record 338
+	dw $2725 ; record 339
+	dw $3e8c ; record 340
+	dw $ea01 ; record 341
+	dw $d858 ; record 342
+	dw $4ec3 ; record 343
+	dw $cd50 ; record 344
+	dw $2725 ; record 345
+	dw $cf14 ; record 346
+	dw $0e80 ; record 347
+	dw $cd00 ; record 348
+	dw $5f51 ; record 349
+	dw $9411 ; record 350
+	dw $cd5b ; record 351
+	dw $5a6e ; record 352
+	dw $010e ; record 353
+	dw $51cd ; record 354
+	dw $115f ; record 355
+	dw $5b94 ; record 356
+	dw $89cd ; record 357
+	dw $cd5a ; record 358
+	dw $2725 ; record 359
+	dw $c314 ; record 360
+	dw $504e ; record 361
+	dw $25cd ; record 362
+	dw $0a27 ; record 363
+	dw $80cf ; record 364
+	dw $020e ; record 365
+	dw $51cd ; record 366
+	dw $115f ; record 367
+	dw $5bbb ; record 368
+	dw $89cd ; record 369
+	dw $cd5a ; record 370
+	dw $2725 ; record 371
+	dw $0e04 ; record 372
+	dw $cd00 ; record 373
+	dw $5f51 ; record 374
+	dw $c311 ; record 375
+	dw $cd5b ; record 376
+	dw $5a6e ; record 377
+	dw $25cd ; record 378
+	dw $1427 ; record 379
+	dw $4ec3 ; record 380
+	dw $cd50 ; record 381
+	dw $2725 ; record 382
+	dw $cf14 ; record 383
+	dw $0e80 ; record 384
+	dw $cd00 ; record 385
+	dw $5f51 ; record 386
+	dw $9411 ; record 387
+	dw $cd5b ; record 388
+	dw $5a6e ; record 389
+	dw $050e ; record 390
+	dw $51cd ; record 391
+	dw $115f ; record 392
+	dw $5b94 ; record 393
+	dw $89cd ; record 394
+	dw $c35a ; record 395
+	dw $504e ; record 396
+	dw $25cd ; record 397
+	dw $1e27 ; record 398
+	dw $80cf ; record 399
+	dw $000e ; record 400
+	dw $51cd ; record 401
+	dw $115f ; record 402
+	dw $5bdd ; record 403
+	dw $6ecd ; record 404
+	dw $0e5a ; record 405
+	dw $cd09 ; record 406
+	dw $5f51 ; record 407
+	dw $e211 ; record 408
+	dw $cd5b ; record 409
+	dw $5a89 ; record 410
+	dw $4ec3 ; record 411
+	dw $3e50 ; record 412
+	dw $2101 ; record 413
+	dw $5912 ; record 414
+	dw $6acd ; record 415
+	dw $cd1b ; record 416
+	dw $2725 ; record 417
+	dw $cf8c ; record 418
+	dw $0e78 ; record 419
+	dw $cd00 ; record 420
+	dw $5f51 ; record 421
+	dw $f711 ; record 422
+	dw $cd5b ; record 423
+	dw $5aa4 ; record 424
+	dw $010e ; record 425
+	dw $51cd ; record 426
+	dw $115f ; record 427
+	dw $5bd4 ; record 428
+	dw $89cd ; record 429
+	dw $065a ; record 430
+	dw $cd01 ; record 431
+	dw $5846 ; record 432
+	dw $c5cd ; record 433
+	dw $cd58 ; record 434
+	dw $2725 ; record 435
+	dw $cf5a ; record 436
+	dw $0e80 ; record 437
+	dw $cd03 ; record 438
+	dw $5f51 ; record 439
+	dw $d411 ; record 440
+	dw $cd5b ; record 441
+	dw $5a6e ; record 442
+	dw $040e ; record 443
+	dw $51cd ; record 444
+	dw $115f ; record 445
+	dw $5b9d ; record 446
+	dw $89cd ; record 447
+	dw $cd5a ; record 448
+	dw $2725 ; record 449
+	dw $cf5a ; record 450
+	dw $0e78 ; record 451
+	dw $cd03 ; record 452
+	dw $5f51 ; record 453
+	dw $f711 ; record 454
+	dw $cd5b ; record 455
+	dw $5aa4 ; record 456
+	dw $040e ; record 457
+	dw $51cd ; record 458
+	dw $115f ; record 459
+	dw $5bc5 ; record 460
+	dw $89cd ; record 461
+	dw $065a ; record 462
+	dw $cd02 ; record 463
+	dw $5846 ; record 464
+	dw $c5cd ; record 465
+	dw $cd58 ; record 466
+	dw $2725 ; record 467
+	dw $c35a ; record 468
+	dw $504e ; record 469
+	dw $013e ; record 470
+	dw $1221 ; record 471
+	dw $cd59 ; record 472
+	dw $1b6a ; record 473
+	dw $25cd ; record 474
+	dw $8c27 ; record 475
+	dw $78cf ; record 476
+	dw $000e ; record 477
+	dw $51cd ; record 478
+	dw $115f ; record 479
+	dw $5bef ; record 480
+	dw $a4cd ; record 481
+	dw $0e5a ; record 482
+	dw $cd02 ; record 483
+	dw $5f51 ; record 484
+	dw $cc11 ; record 485
+	dw $cd5b ; record 486
+	dw $5a89 ; record 487
+	dw $0306 ; record 488
+	dw $46cd ; record 489
+	dw $cd58 ; record 490
+	dw $58c5 ; record 491
+	dw $25cd ; record 492
+	dw $5a27 ; record 493
+	dw $80cf ; record 494
+	dw $030e ; record 495
+	dw $51cd ; record 496
+	dw $115f ; record 497
+	dw $5bd4 ; record 498
+	dw $6ecd ; record 499
+	dw $0e5a ; record 500
+	dw $cd05 ; record 501
+	dw $5f51 ; record 502
+	dw $cc11 ; record 503
+	dw $cd5b ; record 504
+	dw $5a89 ; record 505
+	dw $25cd ; record 506
+	dw $8c27 ; record 507
+	dw $78cf ; record 508
+	dw $030e ; record 509
+	dw $51cd ; record 510
+	dw $115f ; record 511
+	dw $5bef ; record 512
+	dw $a4cd ; record 513
+	dw $0e5a ; record 514
+	dw $cd05 ; record 515
+	dw $5f51 ; record 516
+	dw $bb11 ; record 517
+	dw $cd5b ; record 518
+	dw $5a89 ; record 519
+	dw $0406 ; record 520
+	dw $46cd ; record 521
+	dw $cd58 ; record 522
+	dw $58c5 ; record 523
+	dw $25cd ; record 524
+	dw $1e27 ; record 525
+	dw $4ec3 ; record 526
+	dw $3e50 ; record 527
+	dw $2101 ; record 528
+	dw $5912 ; record 529
+	dw $6acd ; record 530
+	dw $cd1b ; record 531
+	dw $2725 ; record 532
+	dw $cf8c ; record 533
+	dw $0e78 ; record 534
+	dw $cd00 ; record 535
+	dw $5f51 ; record 536
+	dw $9811 ; record 537
+	dw $cd5b ; record 538
+	dw $5a6e ; record 539
+	dw $030e ; record 540
+	dw $51cd ; record 541
+	dw $115f ; record 542
+	dw $5b94 ; record 543
+	dw $89cd ; record 544
+	dw $065a ; record 545
+	dw $cd06 ; record 546
+	dw $5846 ; record 547
+	dw $c5cd ; record 548
+	dw $cd58 ; record 549
+	dw $2725 ; record 550
+	dw $c31e ; record 551
+	dw $504e ; record 552
+	dw $4ec3 ; record 553
+	dw $cd50 ; record 554
+	dw $2725 ; record 555
+	dw $cf1e ; record 556
+	dw $0e80 ; record 557
+	dw $cd00 ; record 558
+	dw $5f51 ; record 559
+	dw $9411 ; record 560
+	dw $cd5b ; record 561
+	dw $5a6e ; record 562
+	dw $010e ; record 563
+	dw $51cd ; record 564
+	dw $115f ; record 565
+	dw $5b94 ; record 566
+	dw $89cd ; record 567
+	dw $c35a ; record 568
+	dw $504e ; record 569
+	dw $25cd ; record 570
+	dw $1e27 ; record 571
+	dw $80cf ; record 572
+	dw $020e ; record 573
+	dw $51cd ; record 574
+	dw $115f ; record 575
+	dw $5bbb ; record 576
+	dw $89cd ; record 577
+	dw $cd5a ; record 578
+	dw $2725 ; record 579
+	dw $0e08 ; record 580
+	dw $cd00 ; record 581
+	dw $5f51 ; record 582
+	dw $9411 ; record 583
+	dw $cd5b ; record 584
+	dw $5a6e ; record 585
+	dw $4ec3 ; record 586
+	dw $cd50 ; record 587
+	dw $2725 ; record 588
+	dw $cf1e ; record 589
+	dw $0e80 ; record 590
+	dw $cd00 ; record 591
+	dw $5f51 ; record 592
+	dw $9411 ; record 593
+	dw $cd5b ; record 594
+	dw $5a6e ; record 595
+	dw $030e ; record 596
+	dw $51cd ; record 597
+	dw $115f ; record 598
+	dw $5b9d ; record 599
+	dw $89cd ; record 600
+	dw $c35a ; record 601
+	dw $504e ; record 602
+	dw $4ec3 ; record 603
+	db $50
 WaitForAOrBPress:
 	call AdvanceFrame ; $5507
 	ldh a, [hInputPressed] ; $550a
@@ -1011,7 +1778,32 @@ Label_1b_5551:
 	pop bc ; $555b
 	pop af ; $555c
 	ret ; $555d
-	INCBIN "data/bank_01b/d_555e.bin" ; $555e, 48 bytes
+	; $555e, 48 bytes (records:2)
+; 24 records x 2 bytes
+	dw $0000 ; record 0
+	dw $0029 ; record 1
+	dw $002b ; record 2
+	dw $002d ; record 3
+	dw $004e ; record 4
+	dw $002c ; record 5
+	dw $004f ; record 6
+	dw $0028 ; record 7
+	dw $004b ; record 8
+	dw $002e ; record 9
+	dw $002a ; record 10
+	dw $0027 ; record 11
+	dw $d021 ; record 12
+	dw $d081 ; record 13
+	dw $d0e1 ; record 14
+	dw $d141 ; record 15
+	dw $d1a1 ; record 16
+	dw $d201 ; record 17
+	dw $d02e ; record 18
+	dw $d08e ; record 19
+	dw $d0ee ; record 20
+	dw $d14e ; record 21
+	dw $d1ae ; record 22
+	dw $d20e ; record 23
 Func_1b_558e:
 	push af ; $558e
 	push bc ; $558f
@@ -1112,7 +1904,33 @@ Label_1b_561a:
 	pop bc ; $5624
 	pop af ; $5625
 	ret ; $5626
-	INCBIN "data/bank_01b/d_5627.bin" ; $5627, 50 bytes
+	; $5627, 50 bytes (records:2)
+; 25 records x 2 bytes
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $0029 ; record 2
+	dw $0028 ; record 3
+	dw $002b ; record 4
+	dw $002a ; record 5
+	dw $002e ; record 6
+	dw $002d ; record 7
+	dw $004e ; record 8
+	dw $0050 ; record 9
+	dw $004b ; record 10
+	dw $004c ; record 11
+	dw $002b ; record 12
+	dw $d041 ; record 13
+	dw $d081 ; record 14
+	dw $d0e1 ; record 15
+	dw $d121 ; record 16
+	dw $d181 ; record 17
+	dw $d1c1 ; record 18
+	dw $d04e ; record 19
+	dw $d08e ; record 20
+	dw $d0ee ; record 21
+	dw $d12e ; record 22
+	dw $d18e ; record 23
+	dw $d1ce ; record 24
 Func_1b_5659:
 	push af ; $5659
 	push bc ; $565a
@@ -1278,7 +2096,108 @@ Label_1b_575c:
 	ld l, a ; $575e
 	jp hl ; $575f
 	ret ; $5760
-	INCBIN "data/bank_01b/d_5761.bin" ; $5761, 200 bytes
+	; $5761, 200 bytes (records:2)
+; 100 records x 2 bytes
+	dw $5779 ; record 0
+	dw $5779 ; record 1
+	dw $5789 ; record 2
+	dw $5799 ; record 3
+	dw $57a9 ; record 4
+	dw $57b9 ; record 5
+	dw $57c9 ; record 6
+	dw $57d9 ; record 7
+	dw $57e9 ; record 8
+	dw $57f9 ; record 9
+	dw $5809 ; record 10
+	dw $5819 ; record 11
+	dw $4021 ; record 12
+	dw $11d2 ; record 13
+	dw $d026 ; record 14
+	dw $0506 ; record 15
+	dw $020e ; record 16
+	dw $0adf ; record 17
+	dw $c339 ; record 18
+	dw $5760 ; record 19
+	dw $8021 ; record 20
+	dw $11d2 ; record 21
+	dw $d146 ; record 22
+	dw $0406 ; record 23
+	dw $020e ; record 24
+	dw $0adf ; record 25
+	dw $c339 ; record 26
+	dw $5760 ; record 27
+	dw $4421 ; record 28
+	dw $11d2 ; record 29
+	dw $d02a ; record 30
+	dw $0406 ; record 31
+	dw $020e ; record 32
+	dw $0adf ; record 33
+	dw $c339 ; record 34
+	dw $5760 ; record 35
+	dw $8421 ; record 36
+	dw $11d2 ; record 37
+	dw $d14a ; record 38
+	dw $0406 ; record 39
+	dw $020e ; record 40
+	dw $0adf ; record 41
+	dw $c339 ; record 42
+	dw $5760 ; record 43
+	dw $c021 ; record 44
+	dw $11d2 ; record 45
+	dw $d026 ; record 46
+	dw $0406 ; record 47
+	dw $070e ; record 48
+	dw $0adf ; record 49
+	dw $c339 ; record 50
+	dw $5760 ; record 51
+	dw $c821 ; record 52
+	dw $11d2 ; record 53
+	dw $d146 ; record 54
+	dw $0406 ; record 55
+	dw $070e ; record 56
+	dw $0adf ; record 57
+	dw $c339 ; record 58
+	dw $5760 ; record 59
+	dw $c421 ; record 60
+	dw $11d2 ; record 61
+	dw $d02a ; record 62
+	dw $0406 ; record 63
+	dw $070e ; record 64
+	dw $0adf ; record 65
+	dw $c339 ; record 66
+	dw $5760 ; record 67
+	dw $cc21 ; record 68
+	dw $11d2 ; record 69
+	dw $d14a ; record 70
+	dw $0406 ; record 71
+	dw $070e ; record 72
+	dw $0adf ; record 73
+	dw $c339 ; record 74
+	dw $5760 ; record 75
+	dw $1421 ; record 76
+	dw $11d0 ; record 77
+	dw $d026 ; record 78
+	dw $0406 ; record 79
+	dw $100e ; record 80
+	dw $0adf ; record 81
+	dw $c339 ; record 82
+	dw $5760 ; record 83
+	dw $1821 ; record 84
+	dw $11d0 ; record 85
+	dw $d02a ; record 86
+	dw $0406 ; record 87
+	dw $100e ; record 88
+	dw $0adf ; record 89
+	dw $c339 ; record 90
+	dw $5760 ; record 91
+	dw $1421 ; record 92
+	dw $11d0 ; record 93
+	dw $d026 ; record 94
+	dw $0806 ; record 95
+	dw $100e ; record 96
+	dw $0adf ; record 97
+	dw $c339 ; record 98
+	dw $5760 ; record 99
 Func_1b_5829:
 	ld a, [$d801] ; $5829
 	or a, a ; $582c
@@ -1394,7 +2313,16 @@ Label_1b_5f5d:
 	inc hl ; $5f66
 	pop af ; $5f67
 	ret ; $5f68
-	INCBIN "data/bank_01b/d_5f69.bin" ; $5f69, 89 bytes
+	push hl ; $5f69
+	push af ; $5f6a
+	inc hl ; $5f6b
+	ld a, [hl] ; $5f6c
+	add a, b ; $5f6d
+	ld [hl], a ; $5f6e
+	pop af ; $5f6f
+	pop hl ; $5f70
+	ret ; $5f71
+	INCBIN "data/bank_01b/d_5f72.bin" ; $5f72, 80 bytes
 	ld h, h ; $5fc2
 	nop ; $5fc3
 Func_1b_5fc4:
@@ -1409,16 +2337,19 @@ Func_1b_5fcb:
 	ld e, a ; $5fd1
 	pop hl ; $5fd2
 	ret ; $5fd3
+Func_1b_5fd4:
 	ld hl, $5f7c ; $5fd4
 	ld de, $c7a0 ; $5fd7
 	ld bc, $0020 ; $5fda
 	call CopyMemoryBC ; $5fdd
 	ret ; $5fe0
+Func_1b_5fe1:
 	ld hl, $5f9c ; $5fe1
 	ld de, $ce40 ; $5fe4
 	ld bc, $0080 ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
+Func_1b_5fee:
 	ld hl, $5f7c ; $5fee
 	ld de, $d000 ; $5ff1
 	call DecompressData ; $5ff4
@@ -1440,12 +2371,19 @@ Func_1b_5fcb:
 	ld de, $0008 ; $6022
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
+Func_1b_6029:
 	farcall FarPtr_18_20 ; $6029
 	ld a, $0a ; $602c
 	ld hl, $6035 ; $602e
 	call RegisterFrameTask ; $6031
 	ret ; $6034
-	INCBIN "data/bank_01b/d_6035.bin" ; $6035, 16 bytes
+	ld a, [$c781] ; $6035
+	ld de, $0004 ; $6038
+	call Func_1b_5fcb ; $603b
+	ld a, [$c781] ; $603e
+	farcall FarPtr_18_22 ; $6041
+	ret ; $6044
+Func_1b_6045:
 	ld hl, $d000 ; $6045
 	ld de, $9000 ; $6048
 	ld c, $10 ; $604b
@@ -1463,6 +2401,7 @@ Label_1b_6068:
 	ld de, $da01 ; $6068
 	farcall FarPtr_18_04 ; $606b
 	ret ; $606e
+Func_1b_606f:
 	farcall FarPtr_1b_0c ; $606f
 	ld hl, $ce40 ; $6072
 Label_1b_6075:
@@ -1503,7 +2442,41 @@ Label_1b_60ab:
 	ld a, [$d58b] ; $60b6
 	farcall FarPtr_1b_12 ; $60b9
 	ret ; $60bc
-	INCBIN "data/bank_01b/d_60bd.bin" ; $60bd, 92 bytes
+	and a, $01 ; $60bd
+	ld [wTargetZoneX2], a ; $60bf
+	call ClearFrameTasks ; $60c2
+	call AdvanceFrame ; $60c5
+	push de ; $60c8
+	call Func_1b_5fd4 ; $60c9
+	call Func_1b_5fe1 ; $60cc
+	pop de ; $60cf
+	ld a, d ; $60d0
+	ld [$c783], a ; $60d1
+	ld a, e ; $60d4
+	ld [$c784], a ; $60d5
+	farcall FarPtr_1b_1c ; $60d8
+	ld a, [$c781] ; $60db
+	ld [$c782], a ; $60de
+	ld c, $20 ; $60e1
+	call Func_00_1d20 ; $60e3
+	call Func_00_1da4 ; $60e6
+	call DisableLCDSafely ; $60e9
+	call Func_1b_5fee ; $60ec
+	call Func_1b_606f ; $60ef
+	call Func_1b_6045 ; $60f2
+	ld hl, $dc00 ; $60f5
+	ld de, $b800 ; $60f8
+	ld c, $24 ; $60fb
+	call Func_00_0480 ; $60fd
+	ld hl, $d800 ; $6100
+	ld de, $9800 ; $6103
+	ld c, $24 ; $6106
+	call Func_00_0480 ; $6108
+	call EnableLCD ; $610b
+	ld c, $20 ; $610e
+	call Func_00_1d2e ; $6110
+	call Func_00_1da4 ; $6113
+	call Func_1b_6029 ; $6116
 Label_1b_6119:
 	wram_bank $01 ; $6119
 	ldh a, [$ff94] ; $611f
@@ -2130,7 +3103,12 @@ Func_1b_664a:
 	ld hl, $6671 ; $666a
 	call RegisterFrameTask ; $666d
 	ret ; $6670
-	INCBIN "data/bank_01b/d_6671.bin" ; $6671, 16 bytes
+	ld de, $2cfa ; $6671
+	farcall FarPtr_18_1e ; $6674
+	ld hl, $6572 ; $6677
+	ld bc, $0050 ; $667a
+	call QueueSpriteTemplate ; $667d
+	ret ; $6680
 Func_1b_6681:
 	farcall FarPtr_18_20 ; $6681
 	ld a, $0a ; $6684
@@ -2503,7 +3481,21 @@ Func_1b_6982:
 Func_1b_69d6:
 	ret ; $69d6
 	ret ; $69d7
-	INCBIN "data/bank_01b/d_69d8.bin" ; $69d8, 43 bytes
+	ret ; $69d8
+	ld hl, $c7bc ; $69d9
+	ld [hl], $01 ; $69dc
+	wram_bank $01 ; $69de
+	ld c, $20 ; $69e4
+	call Func_00_1d20 ; $69e6
+	call Func_00_1da4 ; $69e9
+	call DisableLCDSafely ; $69ec
+	farcall FarPtr_18_36 ; $69ef
+	call Func_1b_6aad ; $69f2
+	farcall FarPtr_ForceFlushBgMapToVram ; $69f5
+	call EnableLCD ; $69f8
+	ld c, $20 ; $69fb
+	call Func_00_1d2e ; $69fd
+	call Func_00_1da4 ; $6a00
 Label_1b_6a03:
 	and a, a ; $6a03
 	jr nz, Label_1b_6a03 ; $6a04
@@ -2511,13 +3503,23 @@ Label_1b_6a03:
 	farcall FarPtr_18_3c ; $6a08
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
-	INCBIN "data/bank_01b/d_6a0f.bin" ; $6a0f, 146 bytes
+	ld hl, $ca00 ; $6a0f
+	farcall FarPtr_05_46 ; $6a12
+	ld de, $d9c1 ; $6a15
+	call Func_1b_6aae ; $6a18
+	ld hl, $046a ; $6a1b
+	farcall FarPtr_18_04 ; $6a1e
+	farcall FarPtr_18_40 ; $6a21
+	ret ; $6a24
+	INCBIN "data/bank_01b/d_6a25.bin" ; $6a25, 124 bytes
 	ld hl, $da00 ; $6aa1
 	ld de, $9a00 ; $6aa4
 	ld c, $01 ; $6aa7
 	call Func_00_0480 ; $6aa9
 	ret ; $6aac
+Func_1b_6aad:
 	ret ; $6aad
+Func_1b_6aae:
 	push de ; $6aae
 	ld hl, wStoryModeNameOfMainCharacter ; $6aaf
 	pop de ; $6ab2
@@ -2709,7 +3711,45 @@ Label_1b_6c09:
 	ld a, [hl] ; $6c09
 	ld [$d002], a ; $6c0a
 	ret ; $6c0d
-	INCBIN "data/bank_01b/d_6c0e.bin" ; $6c0e, 75 bytes
+	INCBIN "data/bank_01b/d_6c0e.bin" ; $6c0e, 3 bytes
+	; $6c11, 72 bytes (records:2)
+; 36 records x 2 bytes
+	dw $6c23 ; record 0
+	dw $6c29 ; record 1
+	dw $6c2f ; record 2
+	dw $6c35 ; record 3
+	dw $6c3b ; record 4
+	dw $6c41 ; record 5
+	dw $6c47 ; record 6
+	dw $6c4d ; record 7
+	dw $6c53 ; record 8
+	dw $0280 ; record 9
+	dw $02a0 ; record 10
+	dw $02c0 ; record 11
+	dw $02e0 ; record 12
+	dw $0300 ; record 13
+	dw $0320 ; record 14
+	dw $0340 ; record 15
+	dw $0360 ; record 16
+	dw $0380 ; record 17
+	dw $03a0 ; record 18
+	dw $03c0 ; record 19
+	dw $03e0 ; record 20
+	dw $0500 ; record 21
+	dw $0520 ; record 22
+	dw $0540 ; record 23
+	dw $0560 ; record 24
+	dw $0580 ; record 25
+	dw $05a0 ; record 26
+	dw $05c0 ; record 27
+	dw $05e0 ; record 28
+	dw $0600 ; record 29
+	dw $0620 ; record 30
+	dw $0640 ; record 31
+	dw $0660 ; record 32
+	dw $0680 ; record 33
+	dw $06a0 ; record 34
+	dw $06c0 ; record 35
 Func_1b_6c59:
 	ldh a, [hWramBank] ; $6c59
 	push af ; $6c5b
@@ -2827,7 +3867,16 @@ Label_1b_6cee:
 	pop af ; $6d27
 	wram_bank ; $6d28
 	ret ; $6d2c
-	INCBIN "data/bank_01b/d_6d2d.bin" ; $6d2d, 16 bytes
+	; $6d2d, 16 bytes (records:2)
+; 8 records x 2 bytes
+	dw $6d8a ; record 0
+	dw $6d8c ; record 1
+	dw $6d8e ; record 2
+	dw $6d90 ; record 3
+	dw $a800 ; record 4
+	dw $a900 ; record 5
+	dw $aa00 ; record 6
+	dw $a900 ; record 7
 Func_1b_6d3d:
 	ldh a, [hWramBank] ; $6d3d
 	push af ; $6d3f
@@ -2885,7 +3934,15 @@ Label_1b_6d9e:
 	ld de, $0401 ; $6da1
 	call LoadPaletteShadow ; $6da4
 	ret ; $6da7
-	INCBIN "data/bank_01b/d_6da8.bin" ; $6da8, 30 bytes
+	; $6da8, 6 bytes (records:2)
+; 3 records x 2 bytes
+	dw $6dae ; record 0
+	dw $6dbe ; record 1
+	dw $6db6 ; record 2
+	; $6dae, 24 bytes (bytes:8)
+	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
+	db $b7, $5e, $ff, $6b, $93, $7c, $00, $00 ; 0x08
+	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x10
 Func_1b_6dc6:
 	ldh a, [hWramBank] ; $6dc6
 	push af ; $6dc8
@@ -3499,7 +4556,13 @@ Label_1b_73bf:
 	ld de, $0401 ; $73c2
 	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
-	INCBIN "data/bank_01b/d_73c9.bin" ; $73c9, 20 bytes
+	; $73c9, 4 bytes (records:2)
+; 2 records x 2 bytes
+	dw $73cd ; record 0
+	dw $73d5 ; record 1
+	; $73cd, 16 bytes (bytes:8)
+	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
+	db $bf, $02, $ff, $6b, $1b, $18, $00, $00 ; 0x08
 Func_1b_73dd:
 	sound $04 ; $73dd
 	call DisableLCDSafely ; $73df
@@ -3650,7 +4713,17 @@ Label_1b_7504:
 	cp a, $09 ; $7508
 	jr nz, Label_1b_74ed ; $750a
 	ret ; $750c
-	INCBIN "data/bank_01b/d_750d.bin" ; $750d, 18 bytes
+	; $750d, 18 bytes (records:2)
+; 9 records x 2 bytes
+	dw $0280 ; record 0
+	dw $02e0 ; record 1
+	dw $0340 ; record 2
+	dw $03a0 ; record 3
+	dw $0500 ; record 4
+	dw $0560 ; record 5
+	dw $05c0 ; record 6
+	dw $0620 ; record 7
+	dw $0680 ; record 8
 Func_1b_751f:
 	ld hl, $d812 ; $751f
 	ld bc, $0009 ; $7522
@@ -3683,7 +4756,18 @@ Label_1b_7544:
 	cp a, $09 ; $7548
 	jr nz, Label_1b_752d ; $754a
 	ret ; $754c
-	INCBIN "data/bank_01b/d_754d.bin" ; $754d, 19 bytes
+	; $754d, 19 bytes (records:2)
+; 9 records x 2 bytes
+	dw $02a0 ; record 0
+	dw $0300 ; record 1
+	dw $0360 ; record 2
+	dw $03c0 ; record 3
+	dw $0520 ; record 4
+	dw $0580 ; record 5
+	dw $05e0 ; record 6
+	dw $0640 ; record 7
+	dw $06a0 ; record 8
+	db $c9
 Func_1b_7560:
 	ldh a, [hWramBank] ; $7560
 	push af ; $7562
@@ -4004,7 +5088,26 @@ Label_1b_7764:
 	pop bc ; $7785
 	pop af ; $7786
 	ret ; $7787
-	INCBIN "data/bank_01b/d_7788.bin" ; $7788, 36 bytes
+	; $7788, 36 bytes (records:2)
+; 18 records x 2 bytes
+	dw $778e ; record 0
+	dw $7798 ; record 1
+	dw $77a2 ; record 2
+	dw $d0c6 ; record 3
+	dw $d106 ; record 4
+	dw $d146 ; record 5
+	dw $d186 ; record 6
+	dw $d1c6 ; record 7
+	dw $d0ca ; record 8
+	dw $d10a ; record 9
+	dw $d14a ; record 10
+	dw $d18a ; record 11
+	dw $d1ca ; record 12
+	dw $d0ce ; record 13
+	dw $d10e ; record 14
+	dw $d14e ; record 15
+	dw $d18e ; record 16
+	dw $d1ce ; record 17
 Func_1b_77ac:
 	ld hl, $d095 ; $77ac
 	ld de, $d0c6 ; $77af
