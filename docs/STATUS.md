@@ -2,18 +2,63 @@
 
 ## Where things stand
 
-**~128.7K instructions / 282,273 bytes of proven code (13.5% of the 2 MiB ROM)
-disassembled; everything rebuilds byte-perfect** (`make compare` → OK against
-SHA-1 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
+**~150.1K instructions / 387,593 bytes of proven code+structured source
+(18.5% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+(`make compare` → OK against SHA-1
+`414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
 data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-Everything below is **committed** (HEAD `22f3813`); the whole history rebuilds
+**Every remaining anonymous blob has been classified as code, table, or data**
+(see "Blob classification pass" below): a ROM-wide code-shape screen of all
+5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
+resource descriptors, record arrays, or fill.
+
+Everything below is **committed** (HEAD `b3c19ef`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Blob classification pass (2026-07-16)
+
+A systematic sweep classified every remaining anonymous blob (code vs table vs
+data), raising proven source from 282 KB to 388 KB and cutting the manifest
+from 5,288 to ~5,000 entries. Highlights:
+
+- **Shared menu-screen architecture** discovered and carved across banks
+  $0e/$0f/$10/$11/$12/$14/$15 (each now 75-92% code): 7-slot dw trees whose
+  slots are 14-byte entry records, `{id,$ff,0,dw handler,...}` handler tables,
+  and a slot-6 code entry; every in-bank handler target was decode-verified
+  and seeded (`coverage/bank0XX_static_code.json`), tables render inline via
+  `data_tables.json`. Each bank ends with a ~600-byte resource-descriptor
+  blob (`$10`-headed, $f9ff/$fbff/$fcff terminators) that the entry records
+  point into — some with embedded 1-5 byte micro-handlers (seeded).
+- **Bank $0c is an unreferenced leftover music bank**: same 4-channel
+  `(channel word, stream ptr)` song format as $78-$7f, but `PlaySound` can
+  only bank-switch to `$70|nibble` and no code anywhere switches to $0c.
+- **Banks $2d/$2e/$2f** were already-named math tables (SineTable,
+  CosecantTable, PerspectiveScaleTable, ViewScaleTableA/B).
+- **Scene banks $5f-$69**: per-scene (metatile map, 8-palette set) groups —
+  36 palette blobs render via `palettes`; pointer-targeted all-$ff tails
+  (unused $4000-slot targets) now collapse to `ds N, $ff` in the emitter.
+- **Ball-position twins $24/$29/$2c** carry local helper code ahead of their
+  6-byte record payloads (seeded), like $20-$23/$2a/$2b.
+- **Stub farms and continuation heads** in the engine/screen banks
+  ($03/$04/$05/$06/$0a/$0b/$0d/$13/$16/$17/$18/$1a/$1b/$1c/$1d/$38/$39/$3e/$3f)
+  were bulk-seeded after perfect-tiling verification
+  (`coverage/bank_misc_static.json` et al). Bank $16 went 15%→83%, $06
+  27%→89%, $12 26%→86%, $39 16%→70%.
+- **What remains binary is data**: 2bpp graphics, the menu resource
+  descriptors, `04 00`-family param records, OAM coordinate lists, level
+  definitions (bank $0b's $47b4 directory), zeroed buffer templates and
+  fill. Known deliberate hold-out: bank $0e `$71e9` (code head that flows
+  into embedded data with no terminator — needs runtime coverage).
+- Verification loop per bank: pattern carver (handler-table / record-run /
+  dw-table detectors) → decode-verify every candidate before seeding →
+  regen with `--hooks` → `make compare` → re-screen; a final ROM-wide
+  code-shape screen over all blobs returns only known data.
 
 ### Code structure — solved conventions
 
