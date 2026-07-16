@@ -1049,7 +1049,7 @@ Label_10_5241:
 	ld c, a ; $524a
 	ld a, [wMinigameLevel] ; $524b
 	add a, c ; $524e
-	farcall FarPtr_17_0c ; $524f
+	farcall FarPtr_ShowRulesScreen ; $524f
 	cp a, $ff ; $5252
 	jr nz, Label_10_526e ; $5254
 	call DisableLCDSafely ; $5256

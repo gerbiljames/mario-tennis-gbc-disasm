@@ -3507,7 +3507,7 @@ Label_03_59ff:
 	wram_bank $03 ; $5a28
 	ld de, $d000 ; $5a2e
 	ld c, $10 ; $5a31
-	farcall FarPtr_1e_0a ; $5a33
+	farcall FarPtr_FetchAndDrawDialogueText ; $5a33
 	call Func_03_5b1a ; $5a36
 	and a, a ; $5a39
 	jr nz, Label_03_5a49 ; $5a3a
@@ -5024,11 +5024,11 @@ Func_03_751e:
 	ld hl, $3140 ; $7547
 	ld de, $d0c0 ; $754a
 	ld bc, $0020 ; $754d
-	farcall FarPtr_1e_0a ; $7550
+	farcall FarPtr_FetchAndDrawDialogueText ; $7550
 	ld hl, $3142 ; $7553
 	ld de, $d180 ; $7556
 	ld bc, $0020 ; $7559
-	farcall FarPtr_1e_0a ; $755c
+	farcall FarPtr_FetchAndDrawDialogueText ; $755c
 	wram_bank $02 ; $755f
 	ld hl, $d000 ; $7565
 	ld de, $b800 ; $7568

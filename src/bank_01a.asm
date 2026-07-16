@@ -10,8 +10,8 @@ FarPtr_1a_06:
 	dw Func_1a_4399 ; $4006
 FarPtr_1a_08:
 	dw Func_1a_67d4 ; $4008
-FarPtr_1a_0a:
-	dw Func_1a_44d8 ; $400a
+FarPtr_ShowExpGainScreen:
+	dw ShowExpGainScreen ; $400a
 FarPtr_1a_0c:
 	dw Func_1a_7945 ; $400c
 FarPtr_CharDataScreen_BuildStats:
@@ -178,10 +178,10 @@ Label_1a_4137:
 	ret ; $413b
 Func_1a_413c:
 	ld h, $80 ; $413c
-	call Func_1a_4145 ; $413e
+	call GetTilemapBufferCellDest ; $413e
 	call Func_00_0507 ; $4141
 	ret ; $4144
-Func_1a_4145:
+GetTilemapBufferCellDest:
 	push af ; $4145
 	push bc ; $4146
 	push hl ; $4147
@@ -359,7 +359,7 @@ Label_1a_447d:
 	pop bc ; $4481
 	ret ; $4482
 	INCBIN "data/bank_01a/d_4483.bin" ; $4483, 85 bytes
-Func_1a_44d8:
+ShowExpGainScreen:
 	push bc ; $44d8
 	push de ; $44d9
 	push hl ; $44da
@@ -523,7 +523,7 @@ Label_1a_4564:
 	or a, l ; $4609
 	jp z, Label_1a_46de ; $460a
 Label_1a_460d:
-	call Func_1a_4f30 ; $460d
+	call AdvanceExpGaugeFill ; $460d
 	ld a, [$d238] ; $4610
 	and a, a ; $4613
 	jr nz, Label_1a_467b ; $4614
@@ -541,7 +541,7 @@ Label_1a_462a:
 	ld a, $01 ; $462a
 	ld [$d239], a ; $462c
 	sound $5f ; $462f
-	call Func_1a_4f30 ; $4631
+	call AdvanceExpGaugeFill ; $4631
 	ld hl, $d230 ; $4634
 	ld a, [hl+] ; $4637
 	ld h, [hl] ; $4638
@@ -556,21 +556,21 @@ Label_1a_462a:
 	ld de, $d8f0 ; $4646
 	add hl, de ; $4649
 	jr nc, Label_1a_4664 ; $464a
-	call Func_1a_4f30 ; $464c
-	call Func_1a_4f30 ; $464f
-	call Func_1a_4f30 ; $4652
-	call Func_1a_4f30 ; $4655
-	call Func_1a_4f30 ; $4658
-	call Func_1a_4f30 ; $465b
-	call Func_1a_4f30 ; $465e
-	call Func_1a_4f30 ; $4661
+	call AdvanceExpGaugeFill ; $464c
+	call AdvanceExpGaugeFill ; $464f
+	call AdvanceExpGaugeFill ; $4652
+	call AdvanceExpGaugeFill ; $4655
+	call AdvanceExpGaugeFill ; $4658
+	call AdvanceExpGaugeFill ; $465b
+	call AdvanceExpGaugeFill ; $465e
+	call AdvanceExpGaugeFill ; $4661
 Label_1a_4664:
-	call Func_1a_4f30 ; $4664
-	call Func_1a_4f30 ; $4667
-	call Func_1a_4f30 ; $466a
-	call Func_1a_4f30 ; $466d
-	call Func_1a_4f30 ; $4670
-	call Func_1a_4f30 ; $4673
+	call AdvanceExpGaugeFill ; $4664
+	call AdvanceExpGaugeFill ; $4667
+	call AdvanceExpGaugeFill ; $466a
+	call AdvanceExpGaugeFill ; $466d
+	call AdvanceExpGaugeFill ; $4670
+	call AdvanceExpGaugeFill ; $4673
 Label_1a_4676:
 	call AdvanceFrame ; $4676
 	jr Label_1a_460d ; $4679
@@ -819,7 +819,7 @@ Label_1a_4a28:
 	inc hl ; $4a2f
 	ld a, [hl] ; $4a30
 	ld e, a ; $4a31
-	call Func_1a_4c38 ; $4a32
+	call WriteTileBufferCell ; $4a32
 	inc hl ; $4a35
 	inc b ; $4a36
 	jr Label_1a_4a28 ; $4a37
@@ -855,7 +855,7 @@ Label_1a_4a90:
 	inc hl ; $4a97
 	ld a, [hl] ; $4a98
 	ld e, a ; $4a99
-	call Func_1a_4c38 ; $4a9a
+	call WriteTileBufferCell ; $4a9a
 	inc hl ; $4a9d
 	inc b ; $4a9e
 	jr Label_1a_4a90 ; $4a9f
@@ -967,7 +967,7 @@ Label_1a_4ba3:
 	cp a, $0d ; $4ba4
 	jr z, Label_1a_4bb1 ; $4ba6
 	ld de, $2000 ; $4ba8
-	call Func_1a_4c38 ; $4bab
+	call WriteTileBufferCell ; $4bab
 	inc b ; $4bae
 	jr Label_1a_4ba3 ; $4baf
 Label_1a_4bb1:
@@ -982,7 +982,7 @@ Label_1a_4bb4:
 Func_1a_4bb9:
 	ret ; $4bb9
 	INCBIN "data/bank_01a/d_4bba.bin" ; $4bba, 22 bytes
-Func_1a_4bd0:
+DrawStringToTileBuffer:
 	push af ; $4bd0
 	push bc ; $4bd1
 	push de ; $4bd2
@@ -1000,7 +1000,7 @@ Label_1a_4bd4:
 	cp a, $df ; $4be5
 	jr z, Label_1a_4bf1 ; $4be7
 	ld d, a ; $4be9
-	call Func_1a_4c38 ; $4bea
+	call WriteTileBufferCell ; $4bea
 	inc b ; $4bed
 	inc hl ; $4bee
 	jr Label_1a_4bd4 ; $4bef
@@ -1014,7 +1014,7 @@ Label_1a_4bf1:
 	jr z, Label_1a_4c03 ; $4bf8
 	pop af ; $4bfa
 	ld d, a ; $4bfb
-	call Func_1a_4c38 ; $4bfc
+	call WriteTileBufferCell ; $4bfc
 	pop bc ; $4bff
 	inc hl ; $4c00
 	jr Label_1a_4bd4 ; $4c01
@@ -1030,7 +1030,7 @@ Label_1a_4c03:
 Label_1a_4c12:
 	ld de, $030b ; $4c12
 Label_1a_4c15:
-	call Func_1a_4c38 ; $4c15
+	call WriteTileBufferCell ; $4c15
 	pop de ; $4c18
 	pop bc ; $4c19
 	inc hl ; $4c1a
@@ -1041,7 +1041,7 @@ Label_1a_4c1d:
 	pop bc ; $4c1f
 	pop af ; $4c20
 	ret ; $4c21
-Func_1a_4c22:
+GetTileBufferCellAddr:
 	push af ; $4c22
 	push de ; $4c23
 	ld hl, $0020 ; $4c24
@@ -1057,7 +1057,7 @@ Func_1a_4c22:
 	pop de ; $4c35
 	pop af ; $4c36
 	ret ; $4c37
-Func_1a_4c38:
+WriteTileBufferCell:
 	push af ; $4c38
 	push bc ; $4c39
 	push de ; $4c3a
@@ -1065,7 +1065,7 @@ Func_1a_4c38:
 	ldh a, [hWramBank] ; $4c3c
 	push af ; $4c3e
 	wram_bank $01 ; $4c3f
-	call Func_1a_4c22 ; $4c45
+	call GetTileBufferCellAddr ; $4c45
 	ld a, e ; $4c48
 	ld [hl], a ; $4c49
 	push de ; $4c4a
@@ -1082,7 +1082,7 @@ Func_1a_4c38:
 	pop af ; $4c5a
 	ret ; $4c5b
 	INCBIN "data/bank_01a/d_4c5c.bin" ; $4c5c, 724 bytes
-Func_1a_4f30:
+AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
 	ld a, [$d238] ; $4f36
 	and a, a ; $4f39
@@ -1158,36 +1158,36 @@ Func_1a_4fab:
 	ret ; $4fbe
 Label_1a_4fbf:
 	ld hl, $04ee ; $4fbf
-	call Func_1a_505e ; $4fc2
+	call LoadDialogueTextToBuffer ; $4fc2
 	wram_bank $01 ; $4fc5
 	ld hl, $d800 ; $4fcb
 	ld bc, $0302 ; $4fce
 	ld e, $01 ; $4fd1
-	call Func_1a_4bd0 ; $4fd3
+	call DrawStringToTileBuffer ; $4fd3
 	ret ; $4fd6
 Label_1a_4fd7:
 	ld hl, $04ef ; $4fd7
-	call Func_1a_505e ; $4fda
+	call LoadDialogueTextToBuffer ; $4fda
 	wram_bank $01 ; $4fdd
 	ld hl, $d800 ; $4fe3
 	ld bc, $0101 ; $4fe6
 	ld e, $01 ; $4fe9
-	call Func_1a_4bd0 ; $4feb
+	call DrawStringToTileBuffer ; $4feb
 	ld hl, $04f0 ; $4fee
-	call Func_1a_505e ; $4ff1
+	call LoadDialogueTextToBuffer ; $4ff1
 	ld hl, $d800 ; $4ff4
 	ld bc, $0103 ; $4ff7
 	ld e, $01 ; $4ffa
-	call Func_1a_4bd0 ; $4ffc
+	call DrawStringToTileBuffer ; $4ffc
 	ret ; $4fff
 Label_1a_5000:
 	ld hl, $04f1 ; $5000
-	call Func_1a_505e ; $5003
+	call LoadDialogueTextToBuffer ; $5003
 	wram_bank $01 ; $5006
 	ld hl, $d800 ; $500c
 	ld bc, $0110 ; $500f
 	ld e, $01 ; $5012
-	call Func_1a_4bd0 ; $5014
+	call DrawStringToTileBuffer ; $5014
 	ret ; $5017
 Label_1a_5018:
 	wram_bank $03 ; $5018
@@ -1199,24 +1199,24 @@ Label_1a_5018:
 	ret ; $502b
 Label_1a_502c:
 	ld hl, $04f3 ; $502c
-	call Func_1a_505e ; $502f
+	call LoadDialogueTextToBuffer ; $502f
 	wram_bank $01 ; $5032
 	ld hl, $d800 ; $5038
 	ld bc, $0302 ; $503b
 	ld e, $01 ; $503e
-	call Func_1a_4bd0 ; $5040
+	call DrawStringToTileBuffer ; $5040
 	ret ; $5043
 Label_1a_5044:
 	sound $00 ; $5044
 	ld hl, $04f4 ; $5046
-	call Func_1a_505e ; $5049
+	call LoadDialogueTextToBuffer ; $5049
 	wram_bank $01 ; $504c
 	ld hl, $d800 ; $5052
 	ld bc, $0a10 ; $5055
 	ld e, $01 ; $5058
-	call Func_1a_4bd0 ; $505a
+	call DrawStringToTileBuffer ; $505a
 	ret ; $505d
-Func_1a_505e:
+LoadDialogueTextToBuffer:
 	wram_bank $05 ; $505e
 	farcall FarPtr_FetchDialogueText ; $5064
 	ld hl, wTextBuffer ; $5067
@@ -1255,7 +1255,7 @@ Func_1a_5082:
 	ldh a, [hWramBank] ; $50a0
 	push af ; $50a2
 	ld a, $01 ; $50a3
-	call Func_1a_44d8 ; $50a5
+	call ShowExpGainScreen ; $50a5
 	wram_bank $06 ; $50a8
 	ld a, [$d23b] ; $50ae
 	and a, a ; $50b1
@@ -1266,7 +1266,7 @@ Func_1a_5082:
 	ld a, $01 ; $50bf
 	ld de, $0000 ; $50c1
 	ld h, $04 ; $50c4
-	call Func_1a_44d8 ; $50c6
+	call ShowExpGainScreen ; $50c6
 Label_1a_50c9:
 	pop af ; $50c9
 	wram_bank ; $50ca
@@ -1310,315 +1310,315 @@ Func_1a_50d3:
 	jp Label_1a_5486 ; $511e
 Label_1a_5121:
 	ld hl, $04f5 ; $5121
-	call Func_1a_505e ; $5124
+	call LoadDialogueTextToBuffer ; $5124
 	wram_bank $01 ; $5127
 	ld hl, $d800 ; $512d
 	ld bc, $0201 ; $5130
 	ld e, $01 ; $5133
-	call Func_1a_4bd0 ; $5135
+	call DrawStringToTileBuffer ; $5135
 	jp Label_1a_54cd ; $5138
 Label_1a_513b:
 	ld hl, $04f6 ; $513b
-	call Func_1a_505e ; $513e
+	call LoadDialogueTextToBuffer ; $513e
 	wram_bank $01 ; $5141
 	ld hl, $d800 ; $5147
 	ld bc, $0201 ; $514a
 	ld e, $01 ; $514d
-	call Func_1a_4bd0 ; $514f
+	call DrawStringToTileBuffer ; $514f
 	jp Label_1a_54cd ; $5152
 Label_1a_5155:
 	ld hl, $04f7 ; $5155
-	call Func_1a_505e ; $5158
+	call LoadDialogueTextToBuffer ; $5158
 	wram_bank $01 ; $515b
 	ld hl, $d800 ; $5161
 	ld bc, $0201 ; $5164
 	ld e, $01 ; $5167
-	call Func_1a_4bd0 ; $5169
+	call DrawStringToTileBuffer ; $5169
 	jp Label_1a_54cd ; $516c
 Label_1a_516f:
 	ld hl, $04f8 ; $516f
-	call Func_1a_505e ; $5172
+	call LoadDialogueTextToBuffer ; $5172
 	wram_bank $01 ; $5175
 	ld hl, $d800 ; $517b
 	ld bc, $0201 ; $517e
 	ld e, $01 ; $5181
-	call Func_1a_4bd0 ; $5183
+	call DrawStringToTileBuffer ; $5183
 	ld hl, $001f ; $5186
-	call Func_1a_505e ; $5189
+	call LoadDialogueTextToBuffer ; $5189
 	wram_bank $01 ; $518c
 	ld hl, $d800 ; $5192
 	ld bc, $0601 ; $5195
 	ld e, $01 ; $5198
-	call Func_1a_4bd0 ; $519a
+	call DrawStringToTileBuffer ; $519a
 	ld hl, $04f9 ; $519d
-	call Func_1a_505e ; $51a0
+	call LoadDialogueTextToBuffer ; $51a0
 	wram_bank $01 ; $51a3
 	ld hl, $d800 ; $51a9
 	ld bc, $0901 ; $51ac
 	ld e, $01 ; $51af
-	call Func_1a_4bd0 ; $51b1
+	call DrawStringToTileBuffer ; $51b1
 	jp Label_1a_54cd ; $51b4
 Label_1a_51b7:
 	ld hl, $04f8 ; $51b7
-	call Func_1a_505e ; $51ba
+	call LoadDialogueTextToBuffer ; $51ba
 	wram_bank $01 ; $51bd
 	ld hl, $d800 ; $51c3
 	ld bc, $0201 ; $51c6
 	ld e, $01 ; $51c9
-	call Func_1a_4bd0 ; $51cb
+	call DrawStringToTileBuffer ; $51cb
 	ld hl, $0020 ; $51ce
-	call Func_1a_505e ; $51d1
+	call LoadDialogueTextToBuffer ; $51d1
 	wram_bank $01 ; $51d4
 	ld hl, $d800 ; $51da
 	ld bc, $0601 ; $51dd
 	ld e, $01 ; $51e0
-	call Func_1a_4bd0 ; $51e2
+	call DrawStringToTileBuffer ; $51e2
 	ld hl, $04f9 ; $51e5
-	call Func_1a_505e ; $51e8
+	call LoadDialogueTextToBuffer ; $51e8
 	wram_bank $01 ; $51eb
 	ld hl, $d800 ; $51f1
 	ld bc, $0a01 ; $51f4
 	ld e, $01 ; $51f7
-	call Func_1a_4bd0 ; $51f9
+	call DrawStringToTileBuffer ; $51f9
 	jp Label_1a_54cd ; $51fc
 Label_1a_51ff:
 	ld hl, $04f8 ; $51ff
-	call Func_1a_505e ; $5202
+	call LoadDialogueTextToBuffer ; $5202
 	wram_bank $01 ; $5205
 	ld hl, $d800 ; $520b
 	ld bc, $0201 ; $520e
 	ld e, $01 ; $5211
-	call Func_1a_4bd0 ; $5213
+	call DrawStringToTileBuffer ; $5213
 	ld hl, $0021 ; $5216
-	call Func_1a_505e ; $5219
+	call LoadDialogueTextToBuffer ; $5219
 	wram_bank $01 ; $521c
 	ld hl, $d800 ; $5222
 	ld bc, $0601 ; $5225
 	ld e, $01 ; $5228
-	call Func_1a_4bd0 ; $522a
+	call DrawStringToTileBuffer ; $522a
 	ld hl, $04f9 ; $522d
-	call Func_1a_505e ; $5230
+	call LoadDialogueTextToBuffer ; $5230
 	wram_bank $01 ; $5233
 	ld hl, $d800 ; $5239
 	ld bc, $0a01 ; $523c
 	ld e, $01 ; $523f
-	call Func_1a_4bd0 ; $5241
+	call DrawStringToTileBuffer ; $5241
 	jp Label_1a_54cd ; $5244
 Label_1a_5247:
 	ld hl, $04f8 ; $5247
-	call Func_1a_505e ; $524a
+	call LoadDialogueTextToBuffer ; $524a
 	wram_bank $01 ; $524d
 	ld hl, $d800 ; $5253
 	ld bc, $0201 ; $5256
 	ld e, $01 ; $5259
-	call Func_1a_4bd0 ; $525b
+	call DrawStringToTileBuffer ; $525b
 	ld hl, $0022 ; $525e
-	call Func_1a_505e ; $5261
+	call LoadDialogueTextToBuffer ; $5261
 	wram_bank $01 ; $5264
 	ld hl, $d800 ; $526a
 	ld bc, $0601 ; $526d
 	ld e, $01 ; $5270
-	call Func_1a_4bd0 ; $5272
+	call DrawStringToTileBuffer ; $5272
 	ld hl, $04f9 ; $5275
-	call Func_1a_505e ; $5278
+	call LoadDialogueTextToBuffer ; $5278
 	wram_bank $01 ; $527b
 	ld hl, $d800 ; $5281
 	ld bc, $0901 ; $5284
 	ld e, $01 ; $5287
-	call Func_1a_4bd0 ; $5289
+	call DrawStringToTileBuffer ; $5289
 	jp Label_1a_54cd ; $528c
 Label_1a_528f:
 	ld hl, $04f8 ; $528f
-	call Func_1a_505e ; $5292
+	call LoadDialogueTextToBuffer ; $5292
 	wram_bank $01 ; $5295
 	ld hl, $d800 ; $529b
 	ld bc, $0201 ; $529e
 	ld e, $01 ; $52a1
-	call Func_1a_4bd0 ; $52a3
+	call DrawStringToTileBuffer ; $52a3
 	ld hl, $0023 ; $52a6
-	call Func_1a_505e ; $52a9
+	call LoadDialogueTextToBuffer ; $52a9
 	wram_bank $01 ; $52ac
 	ld hl, $d800 ; $52b2
 	ld bc, $0601 ; $52b5
 	ld e, $01 ; $52b8
-	call Func_1a_4bd0 ; $52ba
+	call DrawStringToTileBuffer ; $52ba
 	ld hl, $04f9 ; $52bd
-	call Func_1a_505e ; $52c0
+	call LoadDialogueTextToBuffer ; $52c0
 	wram_bank $01 ; $52c3
 	ld hl, $d800 ; $52c9
 	ld bc, $0901 ; $52cc
 	ld e, $01 ; $52cf
-	call Func_1a_4bd0 ; $52d1
+	call DrawStringToTileBuffer ; $52d1
 	jp Label_1a_54cd ; $52d4
 Label_1a_52d7:
 	ld hl, $04f8 ; $52d7
-	call Func_1a_505e ; $52da
+	call LoadDialogueTextToBuffer ; $52da
 	wram_bank $01 ; $52dd
 	ld hl, $d800 ; $52e3
 	ld bc, $0201 ; $52e6
 	ld e, $01 ; $52e9
-	call Func_1a_4bd0 ; $52eb
+	call DrawStringToTileBuffer ; $52eb
 	ld hl, $0024 ; $52ee
-	call Func_1a_505e ; $52f1
+	call LoadDialogueTextToBuffer ; $52f1
 	wram_bank $01 ; $52f4
 	ld hl, $d800 ; $52fa
 	ld bc, $0601 ; $52fd
 	ld e, $01 ; $5300
-	call Func_1a_4bd0 ; $5302
+	call DrawStringToTileBuffer ; $5302
 	ld hl, $04f9 ; $5305
-	call Func_1a_505e ; $5308
+	call LoadDialogueTextToBuffer ; $5308
 	wram_bank $01 ; $530b
 	ld hl, $d800 ; $5311
 	ld bc, $0a01 ; $5314
 	ld e, $01 ; $5317
-	call Func_1a_4bd0 ; $5319
+	call DrawStringToTileBuffer ; $5319
 	jp Label_1a_54cd ; $531c
 Label_1a_531f:
 	ld hl, $04f8 ; $531f
-	call Func_1a_505e ; $5322
+	call LoadDialogueTextToBuffer ; $5322
 	wram_bank $01 ; $5325
 	ld hl, $d800 ; $532b
 	ld bc, $0201 ; $532e
 	ld e, $01 ; $5331
-	call Func_1a_4bd0 ; $5333
+	call DrawStringToTileBuffer ; $5333
 	ld hl, $0025 ; $5336
-	call Func_1a_505e ; $5339
+	call LoadDialogueTextToBuffer ; $5339
 	wram_bank $01 ; $533c
 	ld hl, $d800 ; $5342
 	ld bc, $0601 ; $5345
 	ld e, $01 ; $5348
-	call Func_1a_4bd0 ; $534a
+	call DrawStringToTileBuffer ; $534a
 	ld hl, $04f9 ; $534d
-	call Func_1a_505e ; $5350
+	call LoadDialogueTextToBuffer ; $5350
 	wram_bank $01 ; $5353
 	ld hl, $d800 ; $5359
 	ld bc, $0a01 ; $535c
 	ld e, $01 ; $535f
-	call Func_1a_4bd0 ; $5361
+	call DrawStringToTileBuffer ; $5361
 	jp Label_1a_54cd ; $5364
 Label_1a_5367:
 	ld hl, $04f8 ; $5367
-	call Func_1a_505e ; $536a
+	call LoadDialogueTextToBuffer ; $536a
 	wram_bank $01 ; $536d
 	ld hl, $d800 ; $5373
 	ld bc, $0201 ; $5376
 	ld e, $01 ; $5379
-	call Func_1a_4bd0 ; $537b
+	call DrawStringToTileBuffer ; $537b
 	ld hl, $0026 ; $537e
-	call Func_1a_505e ; $5381
+	call LoadDialogueTextToBuffer ; $5381
 	wram_bank $01 ; $5384
 	ld hl, $d800 ; $538a
 	ld bc, $0601 ; $538d
 	ld e, $01 ; $5390
-	call Func_1a_4bd0 ; $5392
+	call DrawStringToTileBuffer ; $5392
 	ld hl, $04f9 ; $5395
-	call Func_1a_505e ; $5398
+	call LoadDialogueTextToBuffer ; $5398
 	wram_bank $01 ; $539b
 	ld hl, $d800 ; $53a1
 	ld bc, $0901 ; $53a4
 	ld e, $01 ; $53a7
-	call Func_1a_4bd0 ; $53a9
+	call DrawStringToTileBuffer ; $53a9
 	jp Label_1a_54cd ; $53ac
 Label_1a_53af:
 	ld hl, $04f8 ; $53af
-	call Func_1a_505e ; $53b2
+	call LoadDialogueTextToBuffer ; $53b2
 	wram_bank $01 ; $53b5
 	ld hl, $d800 ; $53bb
 	ld bc, $0201 ; $53be
 	ld e, $01 ; $53c1
-	call Func_1a_4bd0 ; $53c3
+	call DrawStringToTileBuffer ; $53c3
 	ld hl, $0027 ; $53c6
-	call Func_1a_505e ; $53c9
+	call LoadDialogueTextToBuffer ; $53c9
 	wram_bank $01 ; $53cc
 	ld hl, $d800 ; $53d2
 	ld bc, $0601 ; $53d5
 	ld e, $01 ; $53d8
-	call Func_1a_4bd0 ; $53da
+	call DrawStringToTileBuffer ; $53da
 	ld hl, $04f9 ; $53dd
-	call Func_1a_505e ; $53e0
+	call LoadDialogueTextToBuffer ; $53e0
 	wram_bank $01 ; $53e3
 	ld hl, $d800 ; $53e9
 	ld bc, $0901 ; $53ec
 	ld e, $01 ; $53ef
-	call Func_1a_4bd0 ; $53f1
+	call DrawStringToTileBuffer ; $53f1
 	jp Label_1a_54cd ; $53f4
 Label_1a_53f7:
 	ld hl, $04f8 ; $53f7
-	call Func_1a_505e ; $53fa
+	call LoadDialogueTextToBuffer ; $53fa
 	wram_bank $01 ; $53fd
 	ld hl, $d800 ; $5403
 	ld bc, $0201 ; $5406
 	ld e, $01 ; $5409
-	call Func_1a_4bd0 ; $540b
+	call DrawStringToTileBuffer ; $540b
 	ld hl, $0028 ; $540e
-	call Func_1a_505e ; $5411
+	call LoadDialogueTextToBuffer ; $5411
 	wram_bank $01 ; $5414
 	ld hl, $d800 ; $541a
 	ld bc, $0601 ; $541d
 	ld e, $01 ; $5420
-	call Func_1a_4bd0 ; $5422
+	call DrawStringToTileBuffer ; $5422
 	ld hl, $04f9 ; $5425
-	call Func_1a_505e ; $5428
+	call LoadDialogueTextToBuffer ; $5428
 	wram_bank $01 ; $542b
 	ld hl, $d800 ; $5431
 	ld bc, $0a01 ; $5434
 	ld e, $01 ; $5437
-	call Func_1a_4bd0 ; $5439
+	call DrawStringToTileBuffer ; $5439
 	jp Label_1a_54cd ; $543c
 Label_1a_543f:
 	ld hl, $04f8 ; $543f
-	call Func_1a_505e ; $5442
+	call LoadDialogueTextToBuffer ; $5442
 	wram_bank $01 ; $5445
 	ld hl, $d800 ; $544b
 	ld bc, $0201 ; $544e
 	ld e, $01 ; $5451
-	call Func_1a_4bd0 ; $5453
+	call DrawStringToTileBuffer ; $5453
 	ld hl, $0029 ; $5456
-	call Func_1a_505e ; $5459
+	call LoadDialogueTextToBuffer ; $5459
 	wram_bank $01 ; $545c
 	ld hl, $d800 ; $5462
 	ld bc, $0601 ; $5465
 	ld e, $01 ; $5468
-	call Func_1a_4bd0 ; $546a
+	call DrawStringToTileBuffer ; $546a
 	ld hl, $04f9 ; $546d
-	call Func_1a_505e ; $5470
+	call LoadDialogueTextToBuffer ; $5470
 	wram_bank $01 ; $5473
 	ld hl, $d800 ; $5479
 	ld bc, $0b01 ; $547c
 	ld e, $01 ; $547f
-	call Func_1a_4bd0 ; $5481
+	call DrawStringToTileBuffer ; $5481
 	jr Label_1a_54cd ; $5484
 Label_1a_5486:
 	ld hl, $04f8 ; $5486
-	call Func_1a_505e ; $5489
+	call LoadDialogueTextToBuffer ; $5489
 	wram_bank $01 ; $548c
 	ld hl, $d800 ; $5492
 	ld bc, $0201 ; $5495
 	ld e, $01 ; $5498
-	call Func_1a_4bd0 ; $549a
+	call DrawStringToTileBuffer ; $549a
 	ld hl, $002a ; $549d
-	call Func_1a_505e ; $54a0
+	call LoadDialogueTextToBuffer ; $54a0
 	wram_bank $01 ; $54a3
 	ld hl, $d800 ; $54a9
 	ld bc, $0601 ; $54ac
 	ld e, $01 ; $54af
-	call Func_1a_4bd0 ; $54b1
+	call DrawStringToTileBuffer ; $54b1
 	ld hl, $04f9 ; $54b4
-	call Func_1a_505e ; $54b7
+	call LoadDialogueTextToBuffer ; $54b7
 	wram_bank $01 ; $54ba
 	ld hl, $d800 ; $54c0
 	ld bc, $0901 ; $54c3
 	ld e, $01 ; $54c6
-	call Func_1a_4bd0 ; $54c8
+	call DrawStringToTileBuffer ; $54c8
 	jr Label_1a_54cd ; $54cb
 Label_1a_54cd:
 	ld hl, $04f4 ; $54cd
-	call Func_1a_505e ; $54d0
+	call LoadDialogueTextToBuffer ; $54d0
 	wram_bank $01 ; $54d3
 	ld hl, $d800 ; $54d9
 	ld bc, $0203 ; $54dc
 	ld e, $01 ; $54df
-	call Func_1a_4bd0 ; $54e1
+	call DrawStringToTileBuffer ; $54e1
 	wram_bank $06 ; $54e4
 	ld a, [$d151] ; $54ea
 	or a, $01 ; $54ed
@@ -1871,14 +1871,14 @@ Func_1a_69eb:
 	call DecompressData ; $69f7
 	ld hl, $d000 ; $69fa
 	ld bc, $0240 ; $69fd
-	call Func_1a_6be1 ; $6a00
+	call CopyBank1ToBank3Buffer ; $6a00
 	wram_bank $01 ; $6a03
 	ld hl, $78ec ; $6a09
 	ld de, $d000 ; $6a0c
 	call DecompressData ; $6a0f
 	ld hl, $d000 ; $6a12
 	ld bc, $0240 ; $6a15
-	call Func_1a_6bf6 ; $6a18
+	call CopyBank1ToBank2Buffer ; $6a18
 	wram_bank $02 ; $6a1b
 	ld hl, $d021 ; $6a21
 	ld c, $10 ; $6a24
@@ -1996,14 +1996,14 @@ Func_1a_6b55:
 	call DecompressData ; $6b8f
 	ld hl, $d000 ; $6b92
 	ld bc, $0240 ; $6b95
-	call Func_1a_6be1 ; $6b98
+	call CopyBank1ToBank3Buffer ; $6b98
 	wram_bank $01 ; $6b9b
 	ld hl, $7831 ; $6ba1
 	ld de, $d000 ; $6ba4
 	call DecompressData ; $6ba7
 	ld hl, $d000 ; $6baa
 	ld bc, $0240 ; $6bad
-	call Func_1a_6bf6 ; $6bb0
+	call CopyBank1ToBank2Buffer ; $6bb0
 	wram_bank $02 ; $6bb3
 	ld hl, $d1e1 ; $6bb9
 	xor a, a ; $6bbc
@@ -2041,7 +2041,7 @@ Func_1a_6b55:
 	ld [hl+], a ; $6bde
 	ld [hl+], a ; $6bdf
 	ret ; $6be0
-Func_1a_6be1:
+CopyBank1ToBank3Buffer:
 	wram_bank $01 ; $6be1
 	ld d, [hl] ; $6be7
 	wram_bank $03 ; $6be8
@@ -2050,9 +2050,9 @@ Func_1a_6be1:
 	dec bc ; $6bf0
 	ld a, b ; $6bf1
 	or a, c ; $6bf2
-	jr nz, Func_1a_6be1 ; $6bf3
+	jr nz, CopyBank1ToBank3Buffer ; $6bf3
 	ret ; $6bf5
-Func_1a_6bf6:
+CopyBank1ToBank2Buffer:
 	wram_bank $01 ; $6bf6
 	ld d, [hl] ; $6bfc
 	wram_bank $02 ; $6bfd
@@ -2061,7 +2061,7 @@ Func_1a_6bf6:
 	dec bc ; $6c05
 	ld a, b ; $6c06
 	or a, c ; $6c07
-	jr nz, Func_1a_6bf6 ; $6c08
+	jr nz, CopyBank1ToBank2Buffer ; $6c08
 	ret ; $6c0a
 Func_1a_6c0b:
 	wram_bank $06 ; $6c0b

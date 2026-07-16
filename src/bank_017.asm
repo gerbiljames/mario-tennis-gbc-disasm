@@ -12,8 +12,8 @@ DataPtr_CourtDiagramPalettes:
 	dw CourtDiagramPalettes ; $4008
 FarPtr_17_0a:
 	dw Func_17_4487 ; $400a
-FarPtr_17_0c:
-	dw Func_17_6f1b ; $400c
+FarPtr_ShowRulesScreen:
+	dw ShowRulesScreen ; $400c
 DataPtr_RulesScreenTiles:
 	dw RulesScreenTiles ; $400e
 DataPtr_RulesScreenTilemap:
@@ -893,7 +893,7 @@ Func_17_44eb:
 	call RegisterFrameTask ; $4557
 	ld hl, $00e4 ; $455a
 	call Func_17_4654 ; $455d
-	call Func_17_497e ; $4560
+	call WaitForInputBlinking ; $4560
 	call ClearFrameTasks ; $4563
 	ld a, $01 ; $4566
 	ld hl, $4406 ; $4568
@@ -963,7 +963,7 @@ Func_17_44eb:
 	ld a, $01 ; $460d
 	ld hl, $4676 ; $460f
 	call RegisterFrameTask ; $4612
-	call Func_17_497e ; $4615
+	call WaitForInputBlinking ; $4615
 	call ClearFrameTasks ; $4618
 	ld a, $01 ; $461b
 	ld hl, $4406 ; $461d
@@ -984,7 +984,7 @@ Func_17_44eb:
 	ld a, $01 ; $4645
 	ld hl, $4676 ; $4647
 	call RegisterFrameTask ; $464a
-	call Func_17_497e ; $464d
+	call WaitForInputBlinking ; $464d
 	call ClearFrameTasks ; $4650
 	ret ; $4653
 Func_17_4654:
@@ -1207,7 +1207,7 @@ Label_17_488a:
 	wram_bank ; $4899
 	ret ; $489d
 	INCBIN "data/bank_017/d_489e.bin" ; $489e, 4 bytes
-Func_17_48a2:
+DrawBlinkingPrompt:
 	ldh a, [hWramBank] ; $48a2
 	push af ; $48a4
 	wram_bank $03 ; $48a5
@@ -1317,28 +1317,28 @@ Func_17_4960:
 	farcall FarPtr_LoadScreenAssetRecord ; $4962
 	call Func_17_499f ; $4965
 	wram_bank $03 ; $4968
-	call Func_17_4a99 ; $496e
+	call DecompressGraphicsList ; $496e
 	call Func_17_4b0d ; $4971
 	farcall FarPtr_Func_39_4325 ; $4974
 	wram_bank $03 ; $4977
 	ret ; $497d
-Func_17_497e:
+WaitForInputBlinking:
 	call AdvanceFrame ; $497e
 	ldh a, [$ff94] ; $4981
 	and a, $03 ; $4983
 	jr nz, Label_17_498c ; $4985
-	call Func_17_48a2 ; $4987
-	jr Func_17_497e ; $498a
+	call DrawBlinkingPrompt ; $4987
+	jr WaitForInputBlinking ; $498a
 Label_17_498c:
 	ret ; $498c
-Func_17_498d:
+AdvanceFrameCheckInput:
 	call AdvanceFrame ; $498d
 	ldh a, [$ff94] ; $4990
 	and a, $03 ; $4992
 	jr nz, Label_17_499e ; $4994
 	dec c ; $4996
 	jr z, Label_17_499c ; $4997
-	call Func_17_48a2 ; $4999
+	call DrawBlinkingPrompt ; $4999
 Label_17_499c:
 	ld a, $00 ; $499c
 Label_17_499e:
@@ -1465,7 +1465,7 @@ Label_17_4a64:
 	ld b, $02 ; $4a91
 	nop ; $4a93
 	INCBIN "data/bank_017/d_4a94.bin" ; $4a94, 5 bytes
-Func_17_4a99:
+DecompressGraphicsList:
 	ld hl, $4abb ; $4a99
 Label_17_4a9c:
 	ld a, [hl+] ; $4a9c
@@ -1546,7 +1546,7 @@ Label_17_557f:
 Label_17_55bc:
 	call Func_17_570f ; $55bc
 	ld c, $00 ; $55bf
-	call Func_17_498d ; $55c1
+	call AdvanceFrameCheckInput ; $55c1
 	and a, a ; $55c4
 	jp z, Label_17_55bc ; $55c5
 	call ClearFrameTasks ; $55c8
@@ -1580,7 +1580,7 @@ Label_17_55bc:
 Label_17_5612:
 	call Func_17_570f ; $5612
 	ld c, $00 ; $5615
-	call Func_17_498d ; $5617
+	call AdvanceFrameCheckInput ; $5617
 	and a, a ; $561a
 	jp z, Label_17_5612 ; $561b
 	call ClearFrameTasks ; $561e
@@ -1637,7 +1637,7 @@ Label_17_5612:
 	call RegisterFrameTask ; $56a1
 	ld hl, $1ab2 ; $56a4
 	call Func_17_4654 ; $56a7
-	call Func_17_497e ; $56aa
+	call WaitForInputBlinking ; $56aa
 	call ClearFrameTasks ; $56ad
 	ld a, $01 ; $56b0
 	ld hl, $4406 ; $56b2
@@ -1672,7 +1672,7 @@ Label_17_5612:
 Label_17_56ff:
 	call Func_17_570f ; $56ff
 	ld c, $01 ; $5702
-	call Func_17_498d ; $5704
+	call AdvanceFrameCheckInput ; $5704
 	and a, a ; $5707
 	jp z, Label_17_56ff ; $5708
 	call ClearFrameTasks ; $570b
@@ -1816,7 +1816,7 @@ Label_17_5817:
 Label_17_5854:
 	call Func_17_5a75 ; $5854
 	ld c, $00 ; $5857
-	call Func_17_498d ; $5859
+	call AdvanceFrameCheckInput ; $5859
 	and a, a ; $585c
 	jp z, Label_17_5854 ; $585d
 	call ClearFrameTasks ; $5860
@@ -1850,7 +1850,7 @@ Label_17_5854:
 Label_17_58aa:
 	call Func_17_5a75 ; $58aa
 	ld c, $00 ; $58ad
-	call Func_17_498d ; $58af
+	call AdvanceFrameCheckInput ; $58af
 	and a, a ; $58b2
 	jp z, Label_17_58aa ; $58b3
 	call ClearFrameTasks ; $58b6
@@ -1907,7 +1907,7 @@ Label_17_58aa:
 	call RegisterFrameTask ; $5939
 	ld hl, $1ab6 ; $593c
 	call Func_17_4654 ; $593f
-	call Func_17_497e ; $5942
+	call WaitForInputBlinking ; $5942
 	call ClearFrameTasks ; $5945
 	ld a, $01 ; $5948
 	ld hl, $4406 ; $594a
@@ -1951,7 +1951,7 @@ Label_17_58aa:
 	call RegisterFrameTask ; $59ac
 	ld hl, $1ab7 ; $59af
 	call Func_17_4654 ; $59b2
-	call Func_17_497e ; $59b5
+	call WaitForInputBlinking ; $59b5
 	call ClearFrameTasks ; $59b8
 	ld a, $01 ; $59bb
 	ld hl, $4406 ; $59bd
@@ -1990,7 +1990,7 @@ Label_17_5a07:
 Label_17_5a11:
 	call Func_17_5b21 ; $5a11
 	ld c, $00 ; $5a14
-	call Func_17_498d ; $5a16
+	call AdvanceFrameCheckInput ; $5a16
 	and a, a ; $5a19
 	jp z, Label_17_5a11 ; $5a1a
 	call ClearFrameTasks ; $5a1d
@@ -2023,7 +2023,7 @@ Label_17_5a11:
 Label_17_5a65:
 	call Func_17_5a75 ; $5a65
 	ld c, $01 ; $5a68
-	call Func_17_498d ; $5a6a
+	call AdvanceFrameCheckInput ; $5a6a
 	and a, a ; $5a6d
 	jp z, Label_17_5a65 ; $5a6e
 	call ClearFrameTasks ; $5a71
@@ -2292,7 +2292,7 @@ Label_17_5c67:
 Label_17_5ca4:
 	call Func_17_5dd0 ; $5ca4
 	ld c, $00 ; $5ca7
-	call Func_17_498d ; $5ca9
+	call AdvanceFrameCheckInput ; $5ca9
 	and a, a ; $5cac
 	jp z, Label_17_5ca4 ; $5cad
 	call ClearFrameTasks ; $5cb0
@@ -2342,7 +2342,7 @@ Label_17_5cfa:
 	ld a, b ; $5d13
 	ld [$d811], a ; $5d14
 	ld c, $00 ; $5d17
-	call Func_17_498d ; $5d19
+	call AdvanceFrameCheckInput ; $5d19
 	and a, a ; $5d1c
 	jp z, Label_17_5cfa ; $5d1d
 	call ClearFrameTasks ; $5d20
@@ -2379,7 +2379,7 @@ Label_17_5cfa:
 	call RegisterFrameTask ; $5d71
 	ld hl, $1abd ; $5d74
 	call Func_17_4654 ; $5d77
-	call Func_17_497e ; $5d7a
+	call WaitForInputBlinking ; $5d7a
 	call ClearFrameTasks ; $5d7d
 	ld a, $01 ; $5d80
 	ld hl, $4406 ; $5d82
@@ -2408,7 +2408,7 @@ Label_17_5cfa:
 Label_17_5dc0:
 	call Func_17_5e68 ; $5dc0
 	ld c, $01 ; $5dc3
-	call Func_17_498d ; $5dc5
+	call AdvanceFrameCheckInput ; $5dc5
 	and a, a ; $5dc8
 	jp z, Label_17_5dc0 ; $5dc9
 	call ClearFrameTasks ; $5dcc
@@ -2658,7 +2658,7 @@ Label_17_5f92:
 	call RegisterFrameTask ; $6000
 	ld hl, $1abf ; $6003
 	call Func_17_4654 ; $6006
-	call Func_17_497e ; $6009
+	call WaitForInputBlinking ; $6009
 	call ClearFrameTasks ; $600c
 	ld a, $01 ; $600f
 	ld hl, $4406 ; $6011
@@ -2694,7 +2694,7 @@ Label_17_5f92:
 	call RegisterFrameTask ; $6061
 	ld hl, $1ac0 ; $6064
 	call Func_17_4654 ; $6067
-	call Func_17_497e ; $606a
+	call WaitForInputBlinking ; $606a
 	call ClearFrameTasks ; $606d
 	ld a, $01 ; $6070
 	ld hl, $4406 ; $6072
@@ -2735,7 +2735,7 @@ Label_17_5f92:
 Label_17_60cf:
 	call Func_17_60df ; $60cf
 	ld c, $01 ; $60d2
-	call Func_17_498d ; $60d4
+	call AdvanceFrameCheckInput ; $60d4
 	and a, a ; $60d7
 	jp z, Label_17_60cf ; $60d8
 	call ClearFrameTasks ; $60db
@@ -2933,7 +2933,7 @@ Label_17_6230:
 	call RegisterFrameTask ; $62ad
 	ld hl, $1ac2 ; $62b0
 	call Func_17_4654 ; $62b3
-	call Func_17_497e ; $62b6
+	call WaitForInputBlinking ; $62b6
 	call ClearFrameTasks ; $62b9
 	ld a, $01 ; $62bc
 	ld hl, $4406 ; $62be
@@ -2968,7 +2968,7 @@ Label_17_6230:
 	call RegisterFrameTask ; $6309
 	ld hl, $1ac3 ; $630c
 	call Func_17_4654 ; $630f
-	call Func_17_497e ; $6312
+	call WaitForInputBlinking ; $6312
 	call ClearFrameTasks ; $6315
 	ld a, $01 ; $6318
 	ld hl, $4406 ; $631a
@@ -3024,7 +3024,7 @@ Label_17_6230:
 	call RegisterFrameTask ; $639b
 	ld hl, $1ac4 ; $639e
 	call Func_17_4654 ; $63a1
-	call Func_17_497e ; $63a4
+	call WaitForInputBlinking ; $63a4
 	call ClearFrameTasks ; $63a7
 	ld a, $01 ; $63aa
 	ld hl, $4406 ; $63ac
@@ -3166,7 +3166,7 @@ Label_17_6421:
 	ld [$d819], a ; $64ad
 Label_17_64b0:
 	ld c, $01 ; $64b0
-	call Func_17_498d ; $64b2
+	call AdvanceFrameCheckInput ; $64b2
 	and a, a ; $64b5
 	jp z, Label_17_6421 ; $64b6
 	call ClearFrameTasks ; $64b9
@@ -3225,7 +3225,7 @@ Label_17_6539:
 	call RegisterFrameTask ; $65b6
 	ld hl, $1ac6 ; $65b9
 	call Func_17_4654 ; $65bc
-	call Func_17_497e ; $65bf
+	call WaitForInputBlinking ; $65bf
 	call ClearFrameTasks ; $65c2
 	ld a, $01 ; $65c5
 	ld hl, $4406 ; $65c7
@@ -3260,7 +3260,7 @@ Label_17_6539:
 	call RegisterFrameTask ; $6612
 	ld hl, $1ac7 ; $6615
 	call Func_17_4654 ; $6618
-	call Func_17_497e ; $661b
+	call WaitForInputBlinking ; $661b
 	call ClearFrameTasks ; $661e
 	ld a, $01 ; $6621
 	ld hl, $4406 ; $6623
@@ -3316,7 +3316,7 @@ Label_17_6539:
 	call RegisterFrameTask ; $66a4
 	ld hl, $1ac8 ; $66a7
 	call Func_17_4654 ; $66aa
-	call Func_17_497e ; $66ad
+	call WaitForInputBlinking ; $66ad
 	call ClearFrameTasks ; $66b0
 	ld a, $01 ; $66b3
 	ld hl, $4406 ; $66b5
@@ -3458,7 +3458,7 @@ Label_17_672a:
 	ld [$d819], a ; $67b6
 Label_17_67b9:
 	ld c, $01 ; $67b9
-	call Func_17_498d ; $67bb
+	call AdvanceFrameCheckInput ; $67bb
 	and a, a ; $67be
 	jp z, Label_17_672a ; $67bf
 	call ClearFrameTasks ; $67c2
@@ -3497,7 +3497,7 @@ Label_17_6842:
 	call RegisterFrameTask ; $688c
 	ld hl, $1c03 ; $688f
 	call Func_17_4654 ; $6892
-	call Func_17_497e ; $6895
+	call WaitForInputBlinking ; $6895
 	call ClearFrameTasks ; $6898
 	ld a, $01 ; $689b
 	ld hl, $4406 ; $689d
@@ -3529,7 +3529,7 @@ Label_17_6842:
 	call RegisterFrameTask ; $68e2
 	ld hl, $1c04 ; $68e5
 	call Func_17_4654 ; $68e8
-	call Func_17_497e ; $68eb
+	call WaitForInputBlinking ; $68eb
 	call ClearFrameTasks ; $68ee
 	ld a, $01 ; $68f1
 	ld hl, $4406 ; $68f3
@@ -3567,7 +3567,7 @@ Label_17_6842:
 Label_17_6948:
 	call Func_17_6958 ; $6948
 	ld c, $01 ; $694b
-	call Func_17_498d ; $694d
+	call AdvanceFrameCheckInput ; $694d
 	and a, a ; $6950
 	jp z, Label_17_6948 ; $6951
 	call ClearFrameTasks ; $6954
@@ -3723,7 +3723,7 @@ Label_17_6a73:
 	call RegisterFrameTask ; $6abd
 	ld hl, $1c06 ; $6ac0
 	call Func_17_4654 ; $6ac3
-	call Func_17_497e ; $6ac6
+	call WaitForInputBlinking ; $6ac6
 	call ClearFrameTasks ; $6ac9
 	ld a, $01 ; $6acc
 	ld hl, $4406 ; $6ace
@@ -3758,7 +3758,7 @@ Label_17_6a73:
 	call RegisterFrameTask ; $6b1b
 	ld hl, $1c07 ; $6b1e
 	call Func_17_4654 ; $6b21
-	call Func_17_497e ; $6b24
+	call WaitForInputBlinking ; $6b24
 	call ClearFrameTasks ; $6b27
 	ld a, $01 ; $6b2a
 	ld hl, $4406 ; $6b2c
@@ -3799,7 +3799,7 @@ Label_17_6a73:
 Label_17_6b89:
 	call Func_17_6b99 ; $6b89
 	ld c, $01 ; $6b8c
-	call Func_17_498d ; $6b8e
+	call AdvanceFrameCheckInput ; $6b8e
 	and a, a ; $6b91
 	jp z, Label_17_6b89 ; $6b92
 	call ClearFrameTasks ; $6b95
@@ -3977,7 +3977,7 @@ Label_17_6cea:
 	call RegisterFrameTask ; $6d34
 	ld hl, $1c09 ; $6d37
 	call Func_17_4654 ; $6d3a
-	call Func_17_497e ; $6d3d
+	call WaitForInputBlinking ; $6d3d
 	call ClearFrameTasks ; $6d40
 	ld a, $01 ; $6d43
 	ld hl, $4406 ; $6d45
@@ -4009,7 +4009,7 @@ Label_17_6cea:
 	call RegisterFrameTask ; $6d8a
 	ld hl, $1c0a ; $6d8d
 	call Func_17_4654 ; $6d90
-	call Func_17_497e ; $6d93
+	call WaitForInputBlinking ; $6d93
 	call ClearFrameTasks ; $6d96
 	ld a, $01 ; $6d99
 	ld hl, $4406 ; $6d9b
@@ -4047,7 +4047,7 @@ Label_17_6cea:
 Label_17_6df0:
 	call Func_17_6e00 ; $6df0
 	ld c, $01 ; $6df3
-	call Func_17_498d ; $6df5
+	call AdvanceFrameCheckInput ; $6df5
 	and a, a ; $6df8
 	jp z, Label_17_6df0 ; $6df9
 	call ClearFrameTasks ; $6dfc
@@ -4170,7 +4170,7 @@ Func_17_6e0d:
 	ld [$d824], a ; $6eaf
 	ret ; $6eb2
 	INCBIN "data/bank_017/d_6eb3.bin" ; $6eb3, 104 bytes
-Func_17_6f1b:
+ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank $03 ; $6f1c
 	pop af ; $6f22
@@ -4187,7 +4187,7 @@ Func_17_6f1b:
 	call Func_00_1d20 ; $6f3e
 	call Func_00_1da4 ; $6f41
 	call DisableLCDSafely ; $6f44
-	call Func_17_7157 ; $6f47
+	call LoadRulesScreen ; $6f47
 	ld a, $01 ; $6f4a
 	ld [$cb0b], a ; $6f4c
 	ld a, $03 ; $6f4f
@@ -4515,7 +4515,7 @@ Label_17_7153:
 	pop hl ; $7153
 	sound $60 ; $7154
 	ret ; $7156
-Func_17_7157:
+LoadRulesScreen:
 	call Func_17_7293 ; $7157
 	farcall FarPtr_01_0a ; $715a
 	ld c, $44 ; $715d

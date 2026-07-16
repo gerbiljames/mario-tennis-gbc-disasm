@@ -1665,7 +1665,7 @@ Label_1b_623c:
 	pop af ; $6244
 	ld c, [hl] ; $6245
 	ld b, $00 ; $6246
-	farcall FarPtr_38_06 ; $6248
+	farcall FarPtr_RunNameEntryScreen ; $6248
 	and a, a ; $624b
 	jr nz, Label_1b_621a ; $624c
 	pop af ; $624e
@@ -1700,7 +1700,7 @@ Label_1b_627c:
 	pop af ; $6284
 	ld c, [hl] ; $6285
 	ld b, $01 ; $6286
-	farcall FarPtr_38_06 ; $6288
+	farcall FarPtr_RunNameEntryScreen ; $6288
 	ld b, a ; $628b
 	pop af ; $628c
 	ld a, b ; $628d
@@ -1748,7 +1748,7 @@ Label_1b_62cd:
 	pop af ; $62d5
 	ld c, [hl] ; $62d6
 	ld b, $01 ; $62d7
-	farcall FarPtr_38_06 ; $62d9
+	farcall FarPtr_RunNameEntryScreen ; $62d9
 	and a, a ; $62dc
 	jr nz, Label_1b_62b9 ; $62dd
 Label_1b_62df:
@@ -1867,7 +1867,7 @@ Label_1b_6399:
 	ld h, $01 ; $63bd
 	ld l, $00 ; $63bf
 	ld a, $01 ; $63c1
-	farcall FarPtr_1a_0a ; $63c3
+	farcall FarPtr_ShowExpGainScreen ; $63c3
 	ld c, $00 ; $63c6
 	farcall FarPtr_1c_00 ; $63c8
 Label_1b_63cb:
@@ -1887,7 +1887,7 @@ Label_1b_63cb:
 	ld h, $01 ; $63e6
 	ld l, $01 ; $63e8
 	ld a, $01 ; $63ea
-	farcall FarPtr_1a_0a ; $63ec
+	farcall FarPtr_ShowExpGainScreen ; $63ec
 	ld c, $01 ; $63ef
 	farcall FarPtr_1c_00 ; $63f1
 Label_1b_63f4:

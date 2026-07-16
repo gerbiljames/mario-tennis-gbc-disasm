@@ -10,10 +10,10 @@ FarPtr_1e_06:
 	dw Func_1e_6afd ; $4006
 FarPtr_1e_08:
 	dw Func_1e_7263 ; $4008
-FarPtr_1e_0a:
-	dw Func_1e_45c0 ; $400a
-FarPtr_1e_0c:
-	dw Func_1e_45c9 ; $400c
+FarPtr_FetchAndDrawDialogueText:
+	dw FetchAndDrawDialogueText ; $400a
+FarPtr_WriteTextToTilemap:
+	dw WriteTextToTilemap ; $400c
 Func_1e_400e:
 	clear_flag $1f, 7 ; $400e
 	ld a, [wGameMode] ; $4011
@@ -58,7 +58,7 @@ Label_1e_4031:
 	pop bc ; $4068
 	call Func_1e_40ac ; $4069
 	call Func_1e_40be ; $406c
-	call Func_1e_498f ; $406f
+	call InitResultsScreenCharacters ; $406f
 	call EnableLCD ; $4072
 	call AdvanceFrame ; $4075
 	ld a, $01 ; $4078
@@ -90,7 +90,7 @@ Func_1e_40ac:
 	ld [$d002], a ; $40ba
 	ret ; $40bd
 Func_1e_40be:
-	call Func_1e_4105 ; $40be
+	call LoadResultsScreenGraphics ; $40be
 	ld hl, $04d2 ; $40c1
 	ld de, $d041 ; $40c4
 	ld bc, $0020 ; $40c7
@@ -113,7 +113,7 @@ Func_1e_40be:
 	call Func_00_0480 ; $40fe
 	farcall FarPtr_05_90 ; $4101
 	ret ; $4104
-Func_1e_4105:
+LoadResultsScreenGraphics:
 	ld hl, Palettes_1e_4c40 ; $4105
 	ld de, $0006 ; $4108
 	call LoadPaletteShadow ; $410b
@@ -190,11 +190,11 @@ Func_1e_41b1:
 	ld a, $03 ; $41cb
 	ld hl, $d001 ; $41cd
 	ld c, $12 ; $41d0
-	call Func_1e_4461 ; $41d2
+	call FillMemoryC ; $41d2
 	ld a, $08 ; $41d5
 	ld hl, $d081 ; $41d7
 	ld c, $12 ; $41da
-	call Func_1e_4461 ; $41dc
+	call FillMemoryC ; $41dc
 	ld a, $05 ; $41df
 	ld [$d020], a ; $41e1
 	ld [$d040], a ; $41e4
@@ -206,18 +206,18 @@ Func_1e_41b1:
 	ld a, $20 ; $41f5
 	ld hl, $d021 ; $41f7
 	ld c, $12 ; $41fa
-	call Func_1e_4461 ; $41fc
+	call FillMemoryC ; $41fc
 	ld hl, $d041 ; $41ff
 	ld c, $12 ; $4202
-	call Func_1e_4461 ; $4204
+	call FillMemoryC ; $4204
 	ld hl, $d061 ; $4207
 	ld c, $12 ; $420a
-	call Func_1e_4461 ; $420c
+	call FillMemoryC ; $420c
 	wram_bank $02 ; $420f
 	xor a, a ; $4215
 	ld hl, $d000 ; $4216
 	ld c, $a0 ; $4219
-	call Func_1e_4461 ; $421b
+	call FillMemoryC ; $421b
 	ld hl, $d041 ; $421e
 	call Func_1e_4572 ; $4221
 	wram_bank $03 ; $4224
@@ -232,11 +232,11 @@ Func_1e_41b1:
 	ld a, $03 ; $423e
 	ld hl, $d1a1 ; $4240
 	ld c, $12 ; $4243
-	call Func_1e_4461 ; $4245
+	call FillMemoryC ; $4245
 	ld a, $08 ; $4248
 	ld hl, $d221 ; $424a
 	ld c, $12 ; $424d
-	call Func_1e_4461 ; $424f
+	call FillMemoryC ; $424f
 	ld a, $05 ; $4252
 	ld [$d1c0], a ; $4254
 	ld [$d1e0], a ; $4257
@@ -248,18 +248,18 @@ Func_1e_41b1:
 	ld a, $20 ; $4268
 	ld hl, $d1c1 ; $426a
 	ld c, $12 ; $426d
-	call Func_1e_4461 ; $426f
+	call FillMemoryC ; $426f
 	ld hl, $d1e1 ; $4272
 	ld c, $12 ; $4275
-	call Func_1e_4461 ; $4277
+	call FillMemoryC ; $4277
 	ld hl, $d201 ; $427a
 	ld c, $12 ; $427d
-	call Func_1e_4461 ; $427f
+	call FillMemoryC ; $427f
 	wram_bank $02 ; $4282
 	xor a, a ; $4288
 	ld hl, $d1a0 ; $4289
 	ld c, $a0 ; $428c
-	call Func_1e_4461 ; $428e
+	call FillMemoryC ; $428e
 	wram_bank $03 ; $4291
 	ld a, $02 ; $4297
 	ld [$d0ce], a ; $4299
@@ -295,25 +295,25 @@ Func_1e_41b1:
 	ld hl, $04d5 ; $42da
 	ld de, $d0f0 ; $42dd
 	ld bc, $0020 ; $42e0
-	call Func_1e_45c0 ; $42e3
+	call FetchAndDrawDialogueText ; $42e3
 	ld hl, $04d6 ; $42e6
 	ld de, $d110 ; $42e9
 	ld bc, $0020 ; $42ec
-	call Func_1e_45c0 ; $42ef
+	call FetchAndDrawDialogueText ; $42ef
 	wram_bank $02 ; $42f2
 	xor a, a ; $42f8
 	ld hl, $d0ce ; $42f9
 	ld c, $06 ; $42fc
-	call Func_1e_4461 ; $42fe
+	call FillMemoryC ; $42fe
 	ld hl, $d0ee ; $4301
 	ld c, $06 ; $4304
-	call Func_1e_4461 ; $4306
+	call FillMemoryC ; $4306
 	ld hl, $d10e ; $4309
 	ld c, $06 ; $430c
-	call Func_1e_4461 ; $430e
+	call FillMemoryC ; $430e
 	ld hl, $d12e ; $4311
 	ld c, $06 ; $4314
-	call Func_1e_4461 ; $4316
+	call FillMemoryC ; $4316
 	ld a, [wGameMode] ; $4319
 	or a, a ; $431c
 	jp z, Label_1e_4466 ; $431d
@@ -354,7 +354,7 @@ Func_1e_435a:
 	ld a, $20 ; $4376
 	ld hl, $d1a1 ; $4378
 	ld c, $05 ; $437b
-	call Func_1e_4461 ; $437d
+	call FillMemoryC ; $437d
 	ld a, $05 ; $4380
 	ld [$d1a0], a ; $4382
 	ld a, $08 ; $4385
@@ -375,19 +375,19 @@ Label_1e_4396:
 	ld a, $20 ; $43af
 	ld hl, $d181 ; $43b1
 	ld c, $12 ; $43b4
-	call Func_1e_4461 ; $43b6
+	call FillMemoryC ; $43b6
 	ld hl, $d1a1 ; $43b9
 	ld c, $12 ; $43bc
-	call Func_1e_4461 ; $43be
+	call FillMemoryC ; $43be
 	ld hl, $d161 ; $43c1
 	ld c, $05 ; $43c4
-	call Func_1e_4461 ; $43c6
+	call FillMemoryC ; $43c6
 	ld a, $04 ; $43c9
 	ld [$d173], a ; $43cb
 	ld a, $03 ; $43ce
 	ld hl, $d167 ; $43d0
 	ld c, $0c ; $43d3
-	call Func_1e_4461 ; $43d5
+	call FillMemoryC ; $43d5
 	ld a, $05 ; $43d8
 	ld [$d160], a ; $43da
 	ld [$d180], a ; $43dd
@@ -401,10 +401,10 @@ Label_1e_4396:
 	xor a, a ; $43f6
 	ld hl, $d160 ; $43f7
 	ld c, $14 ; $43fa
-	call Func_1e_4461 ; $43fc
+	call FillMemoryC ; $43fc
 	ld hl, $d180 ; $43ff
 	ld c, $14 ; $4402
-	call Func_1e_4461 ; $4404
+	call FillMemoryC ; $4404
 	ld a, $08 ; $4407
 	ld [$d166], a ; $4409
 	ret ; $440c
@@ -426,7 +426,7 @@ Func_1e_440d:
 	ld a, $20 ; $4431
 	ld hl, $d1a1 ; $4433
 	ld c, $05 ; $4436
-	call Func_1e_4461 ; $4438
+	call FillMemoryC ; $4438
 	wram_bank $03 ; $443b
 	ld a, $05 ; $4441
 	ld [$d1a0], a ; $4443
@@ -439,10 +439,10 @@ Func_1e_440d:
 	ld a, $08 ; $445b
 	ld [$d1a6], a ; $445d
 	ret ; $4460
-Func_1e_4461:
+FillMemoryC:
 	ld [hl+], a ; $4461
 	dec c ; $4462
-	jr nz, Func_1e_4461 ; $4463
+	jr nz, FillMemoryC ; $4463
 	ret ; $4465
 Label_1e_4466:
 	test_flag $09, 7 ; $4466
@@ -488,14 +488,14 @@ Label_1e_44b1:
 	xor a, a ; $44b9
 	call Func_1e_435a ; $44ba
 	call Func_1e_4606 ; $44bd
-	call Func_1e_46a4 ; $44c0
+	call DrawSetsGamesScore ; $44c0
 	ret ; $44c3
 Label_1e_44c4:
 	call Func_1e_434a ; $44c4
 	ld a, $01 ; $44c7
 	call Func_1e_435a ; $44c9
 	call Func_1e_4634 ; $44cc
-	call Func_1e_46a4 ; $44cf
+	call DrawSetsGamesScore ; $44cf
 	ret ; $44d2
 Label_1e_44d3:
 	test_flag $1f, 7 ; $44d3
@@ -504,14 +504,14 @@ Label_1e_44d3:
 	xor a, a ; $44db
 	call Func_1e_435a ; $44dc
 	call Func_1e_488e ; $44df
-	call Func_1e_46a4 ; $44e2
+	call DrawSetsGamesScore ; $44e2
 	ret ; $44e5
 Label_1e_44e6:
 	call Func_1e_434a ; $44e6
 	xor a, a ; $44e9
 	call Func_1e_435a ; $44ea
 	call Func_1e_488e ; $44ed
-	call Func_1e_46a4 ; $44f0
+	call DrawSetsGamesScore ; $44f0
 	ret ; $44f3
 Label_1e_44f4:
 	test_flag $1f, 7 ; $44f4
@@ -521,7 +521,7 @@ Label_1e_44f4:
 	call Func_1e_435a ; $44fd
 	call Func_1e_4717 ; $4500
 	call Func_1e_4749 ; $4503
-	call Func_1e_46a4 ; $4506
+	call DrawSetsGamesScore ; $4506
 	ret ; $4509
 Label_1e_450a:
 	call Func_1e_434a ; $450a
@@ -529,7 +529,7 @@ Label_1e_450a:
 	call Func_1e_435a ; $450e
 	call Func_1e_4717 ; $4511
 	call Func_1e_4749 ; $4514
-	call Func_1e_46a4 ; $4517
+	call DrawSetsGamesScore ; $4517
 	ret ; $451a
 Label_1e_451b:
 	test_flag $1f, 7 ; $451b
@@ -538,14 +538,14 @@ Label_1e_451b:
 	xor a, a ; $4523
 	call Func_1e_435a ; $4524
 	call Func_1e_47f4 ; $4527
-	call Func_1e_46a4 ; $452a
+	call DrawSetsGamesScore ; $452a
 	ret ; $452d
 Label_1e_452e:
 	call Func_1e_434a ; $452e
 	xor a, a ; $4531
 	call Func_1e_435a ; $4532
 	call Func_1e_47f4 ; $4535
-	call Func_1e_46a4 ; $4538
+	call DrawSetsGamesScore ; $4538
 	ret ; $453b
 Label_1e_453c:
 	test_flag $1f, 7 ; $453c
@@ -555,7 +555,7 @@ Label_1e_453c:
 	call Func_1e_435a ; $4545
 	call Func_1e_4717 ; $4548
 	call Func_1e_4881 ; $454b
-	call Func_1e_46a4 ; $454e
+	call DrawSetsGamesScore ; $454e
 	ret ; $4551
 Label_1e_4552:
 	call Func_1e_434a ; $4552
@@ -563,7 +563,7 @@ Label_1e_4552:
 	call Func_1e_435a ; $4556
 	call Func_1e_4717 ; $4559
 	call Func_1e_4881 ; $455c
-	call Func_1e_46a4 ; $455f
+	call DrawSetsGamesScore ; $455f
 	ret ; $4562
 Func_1e_4563:
 	ldh a, [hWramBank] ; $4563
@@ -621,13 +621,13 @@ Label_1e_45ba:
 	pop af ; $45ba
 	wram_bank ; $45bb
 	ret ; $45bf
-Func_1e_45c0:
+FetchAndDrawDialogueText:
 	push bc ; $45c0
 	xor a, a ; $45c1
 	farcall FarPtr_05_44 ; $45c2
 	farcall FarPtr_FetchDialogueText ; $45c5
 	pop bc ; $45c8
-Func_1e_45c9:
+WriteTextToTilemap:
 	ld hl, wTextBuffer ; $45c9
 Label_1e_45cc:
 	wram_bank $03 ; $45cc
@@ -668,48 +668,48 @@ Label_1e_45f9:
 	jr Label_1e_45cc ; $4604
 Func_1e_4606:
 	ld hl, $ca00 ; $4606
-	call Func_1e_470d ; $4609
+	call CopyStringToTextBuffer ; $4609
 	ld de, $d1c3 ; $460c
 	call Func_1e_4683 ; $460f
 	ld bc, $0020 ; $4612
-	call Func_1e_45c9 ; $4615
+	call WriteTextToTilemap ; $4615
 	ld hl, $04d7 ; $4618
 	ld de, $d1c9 ; $461b
 	ld bc, $0020 ; $461e
-	call Func_1e_45c0 ; $4621
+	call FetchAndDrawDialogueText ; $4621
 	ld hl, $ca80 ; $4624
-	call Func_1e_470d ; $4627
+	call CopyStringToTextBuffer ; $4627
 	ld de, $d1cc ; $462a
 	ld bc, $0020 ; $462d
-	call Func_1e_45c9 ; $4630
+	call WriteTextToTilemap ; $4630
 	ret ; $4633
 Func_1e_4634:
 	ld hl, $ca00 ; $4634
-	call Func_1e_470d ; $4637
+	call CopyStringToTextBuffer ; $4637
 	ld de, $d183 ; $463a
 	call Func_1e_4683 ; $463d
 	ld bc, $0020 ; $4640
-	call Func_1e_45c9 ; $4643
+	call WriteTextToTilemap ; $4643
 	ld hl, $ca40 ; $4646
-	call Func_1e_470d ; $4649
+	call CopyStringToTextBuffer ; $4649
 	ld de, $d1c3 ; $464c
 	call Func_1e_4683 ; $464f
 	ld bc, $0020 ; $4652
-	call Func_1e_45c9 ; $4655
+	call WriteTextToTilemap ; $4655
 	ld hl, $04d7 ; $4658
 	ld de, $d1a9 ; $465b
 	ld bc, $0020 ; $465e
-	call Func_1e_45c0 ; $4661
+	call FetchAndDrawDialogueText ; $4661
 	ld hl, $ca80 ; $4664
-	call Func_1e_470d ; $4667
+	call CopyStringToTextBuffer ; $4667
 	ld de, $d18c ; $466a
 	ld bc, $0020 ; $466d
-	call Func_1e_45c9 ; $4670
+	call WriteTextToTilemap ; $4670
 	ld hl, $cac0 ; $4673
-	call Func_1e_470d ; $4676
+	call CopyStringToTextBuffer ; $4676
 	ld de, $d1cc ; $4679
 	ld bc, $0020 ; $467c
-	call Func_1e_45c9 ; $467f
+	call WriteTextToTilemap ; $467f
 	ret ; $4682
 Func_1e_4683:
 	ld c, $00 ; $4683
@@ -736,36 +736,36 @@ Label_1e_469f:
 	dec c ; $46a0
 	jr nz, Label_1e_469f ; $46a1
 	ret ; $46a3
-Func_1e_46a4:
+DrawSetsGamesScore:
 	ld hl, $04e1 ; $46a4
 	ld de, $d202 ; $46a7
 	ld bc, $0020 ; $46aa
-	call Func_1e_45c0 ; $46ad
+	call FetchAndDrawDialogueText ; $46ad
 	ld a, [wPlayer1SetsWon] ; $46b0
 	ld de, $d206 ; $46b3
-	call Func_1e_46f6 ; $46b6
+	call FormatAndDrawNumber ; $46b6
 	ld hl, $04e3 ; $46b9
 	ld de, $d207 ; $46bc
 	ld bc, $0020 ; $46bf
-	call Func_1e_45c0 ; $46c2
+	call FetchAndDrawDialogueText ; $46c2
 	ld a, [wPlayer2SetsWon] ; $46c5
 	ld de, $d208 ; $46c8
-	call Func_1e_46f6 ; $46cb
+	call FormatAndDrawNumber ; $46cb
 	ld hl, $04e2 ; $46ce
 	ld de, $d20b ; $46d1
 	ld bc, $0020 ; $46d4
-	call Func_1e_45c0 ; $46d7
+	call FetchAndDrawDialogueText ; $46d7
 	ld a, [wPlayer1GamesWon] ; $46da
 	ld de, $d20f ; $46dd
-	call Func_1e_46f6 ; $46e0
+	call FormatAndDrawNumber ; $46e0
 	ld hl, $04e3 ; $46e3
 	ld de, $d210 ; $46e6
-	call Func_1e_45c0 ; $46e9
+	call FetchAndDrawDialogueText ; $46e9
 	ld a, [wPlayer2GamesWon] ; $46ec
 	ld de, $d211 ; $46ef
-	call Func_1e_46f6 ; $46f2
+	call FormatAndDrawNumber ; $46f2
 	ret ; $46f5
-Func_1e_46f6:
+FormatAndDrawNumber:
 	ld h, $00 ; $46f6
 	ld l, a ; $46f8
 	push de ; $46f9
@@ -775,9 +775,9 @@ Func_1e_46f6:
 	pop de ; $4702
 	ld hl, wTextBuffer ; $4703
 	ld bc, $0020 ; $4706
-	call Func_1e_45c9 ; $4709
+	call WriteTextToTilemap ; $4709
 	ret ; $470c
-Func_1e_470d:
+CopyStringToTextBuffer:
 	ld de, wTextBuffer ; $470d
 Label_1e_4710:
 	ld a, [hl+] ; $4710
@@ -1015,22 +1015,22 @@ Func_1e_489b:
 	wram_bank $03 ; $48e4
 	ld a, $20 ; $48ea
 	ld hl, $d0a0 ; $48ec
-	call Func_1e_495a ; $48ef
+	call Fill7Bytes ; $48ef
 	ld hl, $d0c0 ; $48f2
-	call Func_1e_495a ; $48f5
+	call Fill7Bytes ; $48f5
 	ld hl, $d0e0 ; $48f8
-	call Func_1e_495a ; $48fb
+	call Fill7Bytes ; $48fb
 	ld hl, $d100 ; $48fe
-	call Func_1e_495a ; $4901
+	call Fill7Bytes ; $4901
 	ld hl, wStoryModeNameOfMainCharacter ; $4904
-	call Func_1e_470d ; $4907
+	call CopyStringToTextBuffer ; $4907
 	ld de, $d0c0 ; $490a
 	ld bc, $0020 ; $490d
-	call Func_1e_45c9 ; $4910
+	call WriteTextToTilemap ; $4910
 	ld hl, $04e4 ; $4913
 	ld de, $d101 ; $4916
 	ld bc, $0020 ; $4919
-	call Func_1e_45c0 ; $491c
+	call FetchAndDrawDialogueText ; $491c
 	ld a, [$c918] ; $491f
 	ld h, $00 ; $4922
 	ld l, a ; $4924
@@ -1040,19 +1040,19 @@ Func_1e_489b:
 	ld hl, wTextBuffer ; $492d
 	ld de, $d104 ; $4930
 	ld bc, $0020 ; $4933
-	call Func_1e_45c9 ; $4936
+	call WriteTextToTilemap ; $4936
 	wram_bank $02 ; $4939
 	ld a, $04 ; $493f
 	ld hl, $d0a0 ; $4941
-	call Func_1e_495a ; $4944
+	call Fill7Bytes ; $4944
 	ld hl, $d0c0 ; $4947
-	call Func_1e_495a ; $494a
+	call Fill7Bytes ; $494a
 	ld hl, $d0e0 ; $494d
-	call Func_1e_495a ; $4950
+	call Fill7Bytes ; $4950
 	ld hl, $d100 ; $4953
-	call Func_1e_495a ; $4956
+	call Fill7Bytes ; $4956
 	ret ; $4959
-Func_1e_495a:
+Fill7Bytes:
 	ld [hl+], a ; $495a
 	ld [hl+], a ; $495b
 	ld [hl+], a ; $495c
@@ -1085,7 +1085,7 @@ Label_1e_497f:
 	dec c ; $498b
 	jr nz, Func_1e_4962 ; $498c
 	ret ; $498e
-Func_1e_498f:
+InitResultsScreenCharacters:
 	ld a, [$c8b9] ; $498f
 	srl a ; $4992
 	add a, $04 ; $4994
@@ -1410,17 +1410,17 @@ Func_1e_4c15:
 	ld a, $03 ; $4c1b
 	ld hl, $d001 ; $4c1d
 	ld c, $12 ; $4c20
-	call Func_1e_4461 ; $4c22
+	call FillMemoryC ; $4c22
 	ld a, $20 ; $4c25
 	ld hl, $d021 ; $4c27
 	ld c, $12 ; $4c2a
-	call Func_1e_4461 ; $4c2c
+	call FillMemoryC ; $4c2c
 	ld hl, $d041 ; $4c2f
 	ld c, $12 ; $4c32
-	call Func_1e_4461 ; $4c34
+	call FillMemoryC ; $4c34
 	ld hl, $d061 ; $4c37
 	ld c, $12 ; $4c3a
-	call Func_1e_4461 ; $4c3c
+	call FillMemoryC ; $4c3c
 	ret ; $4c3f
 Palettes_1e_4c40:
 	; $4c40, 48 bytes (palettes)
@@ -1471,7 +1471,7 @@ Label_1e_5438:
 	farcall FarPtr_InitActorEngine ; $5469
 	call Func_1e_54bb ; $546c
 	call Func_1e_54f5 ; $546f
-	call Func_1e_498f ; $5472
+	call InitResultsScreenCharacters ; $5472
 	call EnableLCD ; $5475
 	call AdvanceFrame ; $5478
 	ld a, $01 ; $547b
@@ -1504,30 +1504,30 @@ Func_1e_54bb:
 	xor a, a ; $54c1
 	ld hl, $d004 ; $54c2
 	ld d, $05 ; $54c5
-	call Func_1e_54f0 ; $54c7
+	call FillMemoryD ; $54c7
 	ld a, $20 ; $54ca
 	ld d, $04 ; $54cc
-	call Func_1e_54f0 ; $54ce
+	call FillMemoryD ; $54ce
 	ld a, $30 ; $54d1
 	ld [hl+], a ; $54d3
 	xor a, a ; $54d4
 	ld d, $0b ; $54d5
-	call Func_1e_54f0 ; $54d7
+	call FillMemoryD ; $54d7
 	ld a, $20 ; $54da
 	ld d, $04 ; $54dc
-	call Func_1e_54f0 ; $54de
+	call FillMemoryD ; $54de
 	ld a, $30 ; $54e1
 	ld [hl+], a ; $54e3
 	xor a, a ; $54e4
 	ld d, $0a ; $54e5
-	call Func_1e_54f0 ; $54e7
+	call FillMemoryD ; $54e7
 	ld a, $01 ; $54ea
 	ld [$d000], a ; $54ec
 	ret ; $54ef
-Func_1e_54f0:
+FillMemoryD:
 	ld [hl+], a ; $54f0
 	dec d ; $54f1
-	jr nz, Func_1e_54f0 ; $54f2
+	jr nz, FillMemoryD ; $54f2
 	ret ; $54f4
 Func_1e_54f5:
 	call Func_1e_551e ; $54f5
@@ -1631,33 +1631,33 @@ Func_1e_55fd:
 	ld hl, $d0a3 ; $55fd
 	ld b, $02 ; $5600
 	ld c, $01 ; $5602
-	call Func_1e_5900 ; $5604
+	call FillTilemapRun ; $5604
 	ld b, $03 ; $5607
 	ld c, $0c ; $5609
-	call Func_1e_5900 ; $560b
+	call FillTilemapRun ; $560b
 	ld b, $04 ; $560e
 	ld c, $01 ; $5610
-	call Func_1e_5900 ; $5612
+	call FillTilemapRun ; $5612
 	ld hl, $d0c3 ; $5615
 	ld b, $05 ; $5618
 	ld c, $01 ; $561a
-	call Func_1e_5900 ; $561c
+	call FillTilemapRun ; $561c
 	ld b, $20 ; $561f
 	ld c, $0c ; $5621
-	call Func_1e_5900 ; $5623
+	call FillTilemapRun ; $5623
 	ld b, $06 ; $5626
 	ld c, $01 ; $5628
-	call Func_1e_5900 ; $562a
+	call FillTilemapRun ; $562a
 	ld hl, $d0e3 ; $562d
 	ld b, $07 ; $5630
 	ld c, $01 ; $5632
-	call Func_1e_5900 ; $5634
+	call FillTilemapRun ; $5634
 	ld b, $08 ; $5637
 	ld c, $0c ; $5639
-	call Func_1e_5900 ; $563b
+	call FillTilemapRun ; $563b
 	ld b, $09 ; $563e
 	ld c, $01 ; $5640
-	call Func_1e_5900 ; $5642
+	call FillTilemapRun ; $5642
 	ld bc, $ca00 ; $5645
 	ld a, [$c8b9] ; $5648
 	cp a, $02 ; $564b
@@ -1669,14 +1669,14 @@ Label_1e_5658:
 	push bc ; $5658
 	ld hl, $0000 ; $5659
 	add hl, bc ; $565c
-	call Func_1e_470d ; $565d
+	call CopyStringToTextBuffer ; $565d
 	ld de, $d0c4 ; $5660
 	ld bc, $0020 ; $5663
-	call Func_1e_45c9 ; $5666
+	call WriteTextToTilemap ; $5666
 	ld hl, $04e4 ; $5669
 	ld de, $d0cc ; $566c
 	ld bc, $0020 ; $566f
-	call Func_1e_45c0 ; $5672
+	call FetchAndDrawDialogueText ; $5672
 	pop bc ; $5675
 	ld hl, $0018 ; $5676
 	add hl, bc ; $5679
@@ -1689,44 +1689,44 @@ Label_1e_5658:
 	call FormatDecimalNumberUnsigned ; $5686
 	ld hl, wTextBuffer ; $5689
 	ld de, $d0ce ; $568c
-	call Func_1e_45c9 ; $568f
+	call WriteTextToTilemap ; $568f
 	ret ; $5692
 Func_1e_5693:
 	ld hl, $d0a0 ; $5693
 	ld bc, $0201 ; $5696
-	call Func_1e_5900 ; $5699
+	call FillTilemapRun ; $5699
 	ld bc, $0307 ; $569c
-	call Func_1e_5900 ; $569f
+	call FillTilemapRun ; $569f
 	ld bc, $0401 ; $56a2
-	call Func_1e_5900 ; $56a5
+	call FillTilemapRun ; $56a5
 	ld hl, $d0c0 ; $56a8
 	ld bc, $0501 ; $56ab
-	call Func_1e_5900 ; $56ae
+	call FillTilemapRun ; $56ae
 	ld bc, $2007 ; $56b1
-	call Func_1e_5900 ; $56b4
+	call FillTilemapRun ; $56b4
 	ld bc, $0601 ; $56b7
-	call Func_1e_5900 ; $56ba
+	call FillTilemapRun ; $56ba
 	ld hl, $d0e0 ; $56bd
 	ld bc, $0501 ; $56c0
-	call Func_1e_5900 ; $56c3
+	call FillTilemapRun ; $56c3
 	ld bc, $2007 ; $56c6
-	call Func_1e_5900 ; $56c9
+	call FillTilemapRun ; $56c9
 	ld bc, $0601 ; $56cc
-	call Func_1e_5900 ; $56cf
+	call FillTilemapRun ; $56cf
 	ld hl, $d100 ; $56d2
 	ld bc, $0501 ; $56d5
-	call Func_1e_5900 ; $56d8
+	call FillTilemapRun ; $56d8
 	ld bc, $2007 ; $56db
-	call Func_1e_5900 ; $56de
+	call FillTilemapRun ; $56de
 	ld bc, $0601 ; $56e1
-	call Func_1e_5900 ; $56e4
+	call FillTilemapRun ; $56e4
 	ld hl, $d120 ; $56e7
 	ld bc, $0701 ; $56ea
-	call Func_1e_5900 ; $56ed
+	call FillTilemapRun ; $56ed
 	ld bc, $0807 ; $56f0
-	call Func_1e_5900 ; $56f3
+	call FillTilemapRun ; $56f3
 	ld bc, $0901 ; $56f6
-	call Func_1e_5900 ; $56f9
+	call FillTilemapRun ; $56f9
 	ld a, [wGameMode] ; $56fc
 	or a, a ; $56ff
 	jr nz, Label_1e_5707 ; $5700
@@ -1744,14 +1744,14 @@ Label_1e_571a:
 	push bc ; $571a
 	ld hl, $0000 ; $571b
 	add hl, bc ; $571e
-	call Func_1e_470d ; $571f
+	call CopyStringToTextBuffer ; $571f
 	ld de, $d0c1 ; $5722
 	ld bc, $0020 ; $5725
-	call Func_1e_45c9 ; $5728
+	call WriteTextToTilemap ; $5728
 	ld hl, $04e4 ; $572b
 	ld de, $d101 ; $572e
 	ld bc, $0020 ; $5731
-	call Func_1e_45c0 ; $5734
+	call FetchAndDrawDialogueText ; $5734
 	pop bc ; $5737
 	ld hl, $0018 ; $5738
 	add hl, bc ; $573b
@@ -1765,44 +1765,44 @@ Label_1e_571a:
 	ld hl, wTextBuffer ; $574b
 	ld de, $d104 ; $574e
 	ld bc, $0020 ; $5751
-	call Func_1e_45c9 ; $5754
+	call WriteTextToTilemap ; $5754
 	ret ; $5757
 Func_1e_5758:
 	ld hl, $d0ab ; $5758
 	ld bc, $0201 ; $575b
-	call Func_1e_5900 ; $575e
+	call FillTilemapRun ; $575e
 	ld bc, $0307 ; $5761
-	call Func_1e_5900 ; $5764
+	call FillTilemapRun ; $5764
 	ld bc, $0401 ; $5767
-	call Func_1e_5900 ; $576a
+	call FillTilemapRun ; $576a
 	ld hl, $d0cb ; $576d
 	ld bc, $0501 ; $5770
-	call Func_1e_5900 ; $5773
+	call FillTilemapRun ; $5773
 	ld bc, $2007 ; $5776
-	call Func_1e_5900 ; $5779
+	call FillTilemapRun ; $5779
 	ld bc, $0601 ; $577c
-	call Func_1e_5900 ; $577f
+	call FillTilemapRun ; $577f
 	ld hl, $d0eb ; $5782
 	ld bc, $0501 ; $5785
-	call Func_1e_5900 ; $5788
+	call FillTilemapRun ; $5788
 	ld bc, $2007 ; $578b
-	call Func_1e_5900 ; $578e
+	call FillTilemapRun ; $578e
 	ld bc, $0601 ; $5791
-	call Func_1e_5900 ; $5794
+	call FillTilemapRun ; $5794
 	ld hl, $d10b ; $5797
 	ld bc, $0501 ; $579a
-	call Func_1e_5900 ; $579d
+	call FillTilemapRun ; $579d
 	ld bc, $2007 ; $57a0
-	call Func_1e_5900 ; $57a3
+	call FillTilemapRun ; $57a3
 	ld bc, $0601 ; $57a6
-	call Func_1e_5900 ; $57a9
+	call FillTilemapRun ; $57a9
 	ld hl, $d12b ; $57ac
 	ld bc, $0701 ; $57af
-	call Func_1e_5900 ; $57b2
+	call FillTilemapRun ; $57b2
 	ld bc, $0807 ; $57b5
-	call Func_1e_5900 ; $57b8
+	call FillTilemapRun ; $57b8
 	ld bc, $0901 ; $57bb
-	call Func_1e_5900 ; $57be
+	call FillTilemapRun ; $57be
 	ld a, [wGameMode] ; $57c1
 	or a, a ; $57c4
 	jr nz, Label_1e_57cc ; $57c5
@@ -1818,14 +1818,14 @@ Label_1e_57d9:
 	push bc ; $57d9
 	ld hl, $0000 ; $57da
 	add hl, bc ; $57dd
-	call Func_1e_470d ; $57de
+	call CopyStringToTextBuffer ; $57de
 	ld de, $d0cc ; $57e1
 	ld bc, $0020 ; $57e4
-	call Func_1e_45c9 ; $57e7
+	call WriteTextToTilemap ; $57e7
 	ld hl, $04e4 ; $57ea
 	ld de, $d10c ; $57ed
 	ld bc, $0020 ; $57f0
-	call Func_1e_45c0 ; $57f3
+	call FetchAndDrawDialogueText ; $57f3
 	pop bc ; $57f6
 	ld hl, $0018 ; $57f7
 	add hl, bc ; $57fa
@@ -1838,98 +1838,98 @@ Label_1e_57d9:
 	call FormatDecimalNumberUnsigned ; $5807
 	ld hl, wTextBuffer ; $580a
 	ld de, $d10f ; $580d
-	call Func_1e_45c9 ; $5810
+	call WriteTextToTilemap ; $5810
 	ret ; $5813
 Func_1e_5814:
 	ld hl, $d1c2 ; $5814
 	ld bc, $0201 ; $5817
-	call Func_1e_5900 ; $581a
+	call FillTilemapRun ; $581a
 	ld bc, $0308 ; $581d
-	call Func_1e_5900 ; $5820
+	call FillTilemapRun ; $5820
 	ld bc, $0401 ; $5823
-	call Func_1e_5900 ; $5826
+	call FillTilemapRun ; $5826
 	ld bc, $0201 ; $5829
-	call Func_1e_5900 ; $582c
+	call FillTilemapRun ; $582c
 	ld bc, $0304 ; $582f
-	call Func_1e_5900 ; $5832
+	call FillTilemapRun ; $5832
 	ld bc, $0401 ; $5835
-	call Func_1e_5900 ; $5838
+	call FillTilemapRun ; $5838
 	ld hl, $d1e2 ; $583b
 	ld bc, $0501 ; $583e
-	call Func_1e_5900 ; $5841
+	call FillTilemapRun ; $5841
 	ld bc, $2008 ; $5844
-	call Func_1e_5900 ; $5847
+	call FillTilemapRun ; $5847
 	ld bc, $0601 ; $584a
-	call Func_1e_5900 ; $584d
+	call FillTilemapRun ; $584d
 	ld bc, $0501 ; $5850
-	call Func_1e_5900 ; $5853
+	call FillTilemapRun ; $5853
 	ld bc, $2004 ; $5856
-	call Func_1e_5900 ; $5859
+	call FillTilemapRun ; $5859
 	ld bc, $0601 ; $585c
-	call Func_1e_5900 ; $585f
+	call FillTilemapRun ; $585f
 	ld hl, $d202 ; $5862
 	ld bc, $0701 ; $5865
-	call Func_1e_5900 ; $5868
+	call FillTilemapRun ; $5868
 	ld bc, $0808 ; $586b
-	call Func_1e_5900 ; $586e
+	call FillTilemapRun ; $586e
 	ld bc, $0901 ; $5871
-	call Func_1e_5900 ; $5874
+	call FillTilemapRun ; $5874
 	ld bc, $0701 ; $5877
-	call Func_1e_5900 ; $587a
+	call FillTilemapRun ; $587a
 	ld bc, $0804 ; $587d
-	call Func_1e_5900 ; $5880
+	call FillTilemapRun ; $5880
 	ld bc, $0901 ; $5883
-	call Func_1e_5900 ; $5886
+	call FillTilemapRun ; $5886
 	ld hl, $04e7 ; $5889
 	ld de, $d1e3 ; $588c
 	ld bc, $0020 ; $588f
-	call Func_1e_45c0 ; $5892
+	call FetchAndDrawDialogueText ; $5892
 	ret ; $5895
 Func_1e_5896:
 	ld hl, $d000 ; $5896
 	ld bc, $0201 ; $5899
-	call Func_1e_5900 ; $589c
+	call FillTilemapRun ; $589c
 	ld bc, $0312 ; $589f
-	call Func_1e_5900 ; $58a2
+	call FillTilemapRun ; $58a2
 	ld bc, $0401 ; $58a5
-	call Func_1e_5900 ; $58a8
+	call FillTilemapRun ; $58a8
 	ld hl, $d020 ; $58ab
 	ld bc, $0501 ; $58ae
-	call Func_1e_5900 ; $58b1
+	call FillTilemapRun ; $58b1
 	ld bc, $2012 ; $58b4
-	call Func_1e_5900 ; $58b7
+	call FillTilemapRun ; $58b7
 	ld bc, $0601 ; $58ba
-	call Func_1e_5900 ; $58bd
+	call FillTilemapRun ; $58bd
 	ld hl, $d040 ; $58c0
 	ld bc, $0501 ; $58c3
-	call Func_1e_5900 ; $58c6
+	call FillTilemapRun ; $58c6
 	ld bc, $2012 ; $58c9
-	call Func_1e_5900 ; $58cc
+	call FillTilemapRun ; $58cc
 	ld bc, $0601 ; $58cf
-	call Func_1e_5900 ; $58d2
+	call FillTilemapRun ; $58d2
 	ld hl, $d060 ; $58d5
 	ld bc, $0501 ; $58d8
-	call Func_1e_5900 ; $58db
+	call FillTilemapRun ; $58db
 	ld bc, $2012 ; $58de
-	call Func_1e_5900 ; $58e1
+	call FillTilemapRun ; $58e1
 	ld bc, $0601 ; $58e4
-	call Func_1e_5900 ; $58e7
+	call FillTilemapRun ; $58e7
 	ld hl, $d080 ; $58ea
 	ld bc, $0701 ; $58ed
-	call Func_1e_5900 ; $58f0
+	call FillTilemapRun ; $58f0
 	ld bc, $0812 ; $58f3
-	call Func_1e_5900 ; $58f6
+	call FillTilemapRun ; $58f6
 	ld bc, $0901 ; $58f9
-	call Func_1e_5900 ; $58fc
+	call FillTilemapRun ; $58fc
 	ret ; $58ff
-Func_1e_5900:
+FillTilemapRun:
 	wram_bank $03 ; $5900
 	ld [hl], b ; $5906
 	wram_bank $02 ; $5907
 	ld a, $00 ; $590d
 	ld [hl+], a ; $590f
 	dec c ; $5910
-	jr nz, Func_1e_5900 ; $5911
+	jr nz, FillTilemapRun ; $5911
 	ret ; $5913
 	ld b, $04 ; $5914
 	ld a, [$c8b9] ; $5916
@@ -2369,7 +2369,7 @@ Func_1e_6534:
 	call Func_1e_6a13 ; $6579
 	ld h, d ; $657c
 	ld l, e ; $657d
-	call Func_1e_6caa ; $657e
+	call SetRewardGameFlag ; $657e
 	jp Label_1e_6695 ; $6581
 Label_1e_6584:
 	ld a, [$c4c7] ; $6584
@@ -2432,9 +2432,9 @@ Label_1e_65cf:
 Label_1e_65e6:
 	call Func_1e_66d2 ; $65e6
 	add hl, de ; $65e9
-	call Func_1e_6caa ; $65ea
+	call SetRewardGameFlag ; $65ea
 Label_1e_65ed:
-	call Func_1e_6807 ; $65ed
+	call GetScoreBonus ; $65ed
 	add hl, de ; $65f0
 	ld d, h ; $65f1
 	ld e, l ; $65f2
@@ -2442,7 +2442,7 @@ Label_1e_65ed:
 	jp Label_1e_6695 ; $65f6
 Label_1e_65f9:
 	wram_bank $04 ; $65f9
-	call Func_1e_6851 ; $65ff
+	call ComputeMatchStatsReward ; $65ff
 	ld a, [$ca3c] ; $6602
 	ld d, a ; $6605
 	call Func_1e_68dc ; $6606
@@ -2459,7 +2459,7 @@ Label_1e_6616:
 	ld a, [wMatchWinLoseFlag] ; $661c
 	cp a, $01 ; $661f
 	jr nz, Label_1e_6695 ; $6621
-	call Func_1e_6caa ; $6623
+	call SetRewardGameFlag ; $6623
 	push hl ; $6626
 	call Func_1e_6e1c ; $6627
 	pop hl ; $662a
@@ -2467,7 +2467,7 @@ Label_1e_6616:
 	jr Label_1e_6695 ; $662e
 Label_1e_6630:
 	wram_bank $04 ; $6630
-	call Func_1e_6851 ; $6636
+	call ComputeMatchStatsReward ; $6636
 	ld a, [$ca3c] ; $6639
 	ld d, a ; $663c
 	call Func_1e_68dc ; $663d
@@ -2478,7 +2478,7 @@ Label_1e_6644:
 	cp a, $02 ; $6647
 	jr z, Label_1e_6664 ; $6649
 	wram_bank $04 ; $664b
-	call Func_1e_6851 ; $6651
+	call ComputeMatchStatsReward ; $6651
 	ld a, [$ca3c] ; $6654
 	ld d, a ; $6657
 	call Func_1e_68dc ; $6658
@@ -2488,7 +2488,7 @@ Label_1e_6644:
 	jr Label_1e_6684 ; $6662
 Label_1e_6664:
 	wram_bank $05 ; $6664
-	call Func_1e_6851 ; $666a
+	call ComputeMatchStatsReward ; $666a
 	ld a, [$cabc] ; $666d
 	ld d, a ; $6670
 	call Func_1e_68dc ; $6671
@@ -2506,7 +2506,7 @@ Label_1e_6684:
 	call Func_1e_69b4 ; $6684
 	ret ; $6687
 Label_1e_6688:
-	call Func_1e_6f38 ; $6688
+	call UpdateMinigameBestScore ; $6688
 	ld a, [wPointWinLoseFlag] ; $668b
 	cp a, $01 ; $668e
 	ret nz ; $6690
@@ -2544,7 +2544,7 @@ Label_1e_66cb:
 	farcall FarPtr_03_18 ; $66ce
 	ret ; $66d1
 Func_1e_66d2:
-	call Func_1e_6cd1 ; $66d2
+	call TestRewardGameFlag ; $66d2
 	ld de, $0000 ; $66d5
 	ret nz ; $66d8
 	push hl ; $66d9
@@ -2690,7 +2690,7 @@ Label_1e_673a:
 	inc l ; $6797
 	ld bc, $0190 ; $6798
 	INCBIN "data/bank_01e/d_679b.bin" ; $679b, 108 bytes
-Func_1e_6807:
+GetScoreBonus:
 	ld de, $0000 ; $6807
 	ld a, [$c7bc] ; $680a
 	or a, a ; $680d
@@ -2740,7 +2740,7 @@ Label_1e_684c:
 Label_1e_684f:
 	pop hl ; $684f
 	ret ; $6850
-Func_1e_6851:
+ComputeMatchStatsReward:
 	ld a, [$df78] ; $6851
 	cp a, $04 ; $6854
 	ret nc ; $6856
@@ -3427,7 +3427,7 @@ Func_1e_6ca0:
 	call Func_1e_6c86 ; $6ca3
 	call Func_1e_6c93 ; $6ca6
 	ret ; $6ca9
-Func_1e_6caa:
+SetRewardGameFlag:
 	push af ; $6caa
 	push bc ; $6cab
 	push de ; $6cac
@@ -3459,7 +3459,7 @@ Label_1e_6cc6:
 	pop bc ; $6cce
 	pop af ; $6ccf
 	ret ; $6cd0
-Func_1e_6cd1:
+TestRewardGameFlag:
 	push bc ; $6cd1
 	push de ; $6cd2
 	push hl ; $6cd3
@@ -3794,7 +3794,7 @@ Label_1e_6ef7:
 	farcall FarPtr_SetSaveFlag ; $6efe
 	ret ; $6f01
 	INCBIN "data/bank_01e/d_6f02.bin" ; $6f02, 54 bytes
-Func_1e_6f38:
+UpdateMinigameBestScore:
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
 	ld a, [wMinigameLevel] ; $6f3b
