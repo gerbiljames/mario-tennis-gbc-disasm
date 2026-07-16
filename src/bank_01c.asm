@@ -629,7 +629,41 @@ Label_1c_4521:
 	ld a, [hl] ; $4555
 	ld [de], a ; $4556
 	ret ; $4557
-	INCBIN "data/bank_01c/d_4558.bin" ; $4558, 66 bytes
+	; $4558, 66 bytes (records:2)
+; 33 records x 2 bytes
+	dw $64a4 ; record 0
+	dw $64a9 ; record 1
+	dw $64ae ; record 2
+	dw $64b3 ; record 3
+	dw $64b8 ; record 4
+	dw $64bd ; record 5
+	dw $64c2 ; record 6
+	dw $64c7 ; record 7
+	dw $64cc ; record 8
+	dw $64d1 ; record 9
+	dw $64d6 ; record 10
+	dw $64db ; record 11
+	dw $64e0 ; record 12
+	dw $64e5 ; record 13
+	dw $64ea ; record 14
+	dw $64ef ; record 15
+	dw $64f4 ; record 16
+	dw $64f9 ; record 17
+	dw $64fe ; record 18
+	dw $6503 ; record 19
+	dw $6508 ; record 20
+	dw $650d ; record 21
+	dw $6512 ; record 22
+	dw $6517 ; record 23
+	dw $651c ; record 24
+	dw $6521 ; record 25
+	dw $6526 ; record 26
+	dw $652b ; record 27
+	dw $6530 ; record 28
+	dw $6535 ; record 29
+	dw $653a ; record 30
+	dw $653f ; record 31
+	dw $6544 ; record 32
 Func_1c_459a:
 	push af ; $459a
 	ld hl, wStoryModeNameOfMainCharacter ; $459b
@@ -1787,7 +1821,15 @@ Label_1c_4e32:
 	dec c ; $4e32
 	jr nz, Label_1c_4dfb ; $4e33
 	ret ; $4e35
-	INCBIN "data/bank_01c/d_4e36.bin" ; $4e36, 30 bytes
+	; $4e36, 30 bytes (bytes:4)
+	db $60, $d0, $05, $0a ; 0x00
+	db $00, $d1, $07, $0a ; 0x04
+	db $6a, $d0, $05, $0a ; 0x08
+	db $0a, $d1, $09, $0a ; 0x0c
+	db $e0, $d1, $03, $0a ; 0x10
+	db $96, $65, $22, $66 ; 0x14
+	db $ba, $66, $4d, $67 ; 0x18
+	db $a7, $67 ; 0x1c
 	wram_bank $06 ; $4e54
 	ld b, $0e ; $4e5a
 	ld a, [$d00a] ; $4e5c

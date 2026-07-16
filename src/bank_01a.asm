@@ -41,6 +41,7 @@ Func_1a_402c:
 	farcall FarPtr_05_18 ; $403f
 	farcall FarPtr_05_80 ; $4042
 	clear_flag $03, 0 ; $4045
+Label_1a_4048:
 	call Func_1a_40a0 ; $4048
 	ld a, [$cb26] ; $404b
 	farcall FarPtr_05_42 ; $404e
@@ -211,7 +212,103 @@ GetTilemapBufferCellDest:
 	pop bc ; $4169
 	pop af ; $416a
 	ret ; $416b
-	INCBIN "data/bank_01a/d_416c.bin" ; $416c, 336 bytes
+	; $416c, 10 bytes (records:2)
+; 5 records x 2 bytes
+	dw $4176 ; record 0
+	dw $4195 ; record 1
+	dw $41b2 ; record 2
+	dw $41c4 ; record 3
+	dw $41d6 ; record 4
+	ld a, $01 ; $4176
+	farcall FarPtr_1d_00 ; $4178
+	ld hl, wStoryModePlayersXPosition ; $417b
+	ld de, $c296 ; $417e
+	ld bc, $0005 ; $4181
+	call CopyMemoryBC ; $4184
+	ld a, $ff ; $4187
+	ld [$c295], a ; $4189
+	ld [$c294], a ; $418c
+	ld [$c2a1], a ; $418f
+	jp Label_1a_408e ; $4192
+	farcall FarPtr_1e_08 ; $4195
+	ld hl, wStoryModePlayersXPosition ; $4198
+	ld de, $c296 ; $419b
+	ld bc, $0005 ; $419e
+	call CopyMemoryBC ; $41a1
+	ld a, $ff ; $41a4
+	ld [$c295], a ; $41a6
+	ld [$c294], a ; $41a9
+	ld [$c2a1], a ; $41ac
+	jp Label_1a_408e ; $41af
+	call Func_1a_426b ; $41b2
+	ld a, [$d830] ; $41b5
+	ld [$cb27], a ; $41b8
+	ld bc, $416c ; $41bb
+	ld a, [$cb26] ; $41be
+	jp Label_1a_4048 ; $41c1
+	call Func_1a_42a9 ; $41c4
+	ld a, [$d830] ; $41c7
+	ld [$cb27], a ; $41ca
+	ld bc, $416c ; $41cd
+	ld a, [$cb26] ; $41d0
+	jp Label_1a_4048 ; $41d3
+	xor a, a ; $41d6
+	ld [$cb2c], a ; $41d7
+	jp Label_1a_42ce ; $41da
+	INCBIN "data/bank_01a/d_41dd.bin" ; $41dd, 142 bytes
+Func_1a_426b:
+	ld a, [$cb2a] ; $426b
+	and a, $0f ; $426e
+	cp a, $02 ; $4270
+	jr z, Label_1a_4293 ; $4272
+	cp a, $01 ; $4274
+	jr z, Label_1a_427a ; $4276
+	jr Label_1a_42a8 ; $4278
+Label_1a_427a:
+	sound $5e ; $427a
+	ld hl, wMessageSpeed ; $427c
+	ld a, [hl] ; $427f
+	and a, $7f ; $4280
+	inc a ; $4282
+	ld b, a ; $4283
+	sub a, $03 ; $4284
+	jr z, Label_1a_428e ; $4286
+	ld a, b ; $4288
+	or a, $80 ; $4289
+	ld [hl], a ; $428b
+	jr Label_1a_42a8 ; $428c
+Label_1a_428e:
+	ld a, $80 ; $428e
+	ld [hl], a ; $4290
+	jr Label_1a_42a8 ; $4291
+Label_1a_4293:
+	sound $5e ; $4293
+	ld hl, wMessageSpeed ; $4295
+	ld a, [hl] ; $4298
+	and a, $7f ; $4299
+	dec a ; $429b
+	bit 7, a ; $429c
+	jr nz, Label_1a_42a5 ; $429e
+	or a, $80 ; $42a0
+	ld [hl], a ; $42a2
+	jr Label_1a_42a8 ; $42a3
+Label_1a_42a5:
+	ld a, $82 ; $42a5
+	ld [hl], a ; $42a7
+Label_1a_42a8:
+	ret ; $42a8
+Func_1a_42a9:
+	sound $5e ; $42a9
+	ld a, [$c8a3] ; $42ab
+	ld b, a ; $42ae
+	and a, $01 ; $42af
+	xor a, $01 ; $42b1
+	ld c, a ; $42b3
+	ld a, b ; $42b4
+	and a, $fe ; $42b5
+	or a, c ; $42b7
+	ld [$c8a3], a ; $42b8
+	ret ; $42bb
 Func_1a_42bc:
 	ld a, [wMessageSpeed] ; $42bc
 	set 7, a ; $42bf
@@ -222,7 +319,83 @@ Func_1a_42c5:
 	res 7, a ; $42c8
 	ld [wMessageSpeed], a ; $42ca
 	ret ; $42cd
-	INCBIN "data/bank_01a/d_42ce.bin" ; $42ce, 174 bytes
+Label_1a_42ce:
+	clear_flag $06, 1 ; $42ce
+	ld hl, $049c ; $42d1
+	farcall FarPtr_0a_0e ; $42d4
+	ld a, $80 ; $42d7
+	farcall FarPtr_0a_0a ; $42d9
+	farcall FarPtr_0a_12 ; $42dc
+	farcall FarPtr_0a_0c ; $42df
+	push af ; $42e2
+	ld a, $05 ; $42e3
+	farcall FarPtr_0a_04 ; $42e5
+	pop af ; $42e8
+	and a, a ; $42e9
+	jr nz, Label_1a_4317 ; $42ea
+	ld a, $01 ; $42ec
+	ld [$c8a5], a ; $42ee
+	ld a, [wMessageSpeed] ; $42f1
+	res 7, a ; $42f4
+	ld [wMessageSpeed], a ; $42f6
+	ld bc, rIE ; $42f9
+	farcall FarPtr_0a_62 ; $42fc
+	farcall FarPtr_03_18 ; $42ff
+	ld a, $00 ; $4302
+	ld [wStoryModeCurrentLocation], a ; $4304
+	ld a, $01 ; $4307
+	ld [$c295], a ; $4309
+	ld a, $ff ; $430c
+	ld [$c294], a ; $430e
+	ld [$c2a1], a ; $4311
+	jp Label_1a_408e ; $4314
+Label_1a_4317:
+	cp a, $ff ; $4317
+	jr nz, Label_1a_4331 ; $4319
+	call Func_1a_437c ; $431b
+	ld a, $03 ; $431e
+	ld [$cb27], a ; $4320
+	ld a, [$cb2c] ; $4323
+	and a, a ; $4326
+	jr nz, Label_1a_432e ; $4327
+	set_flag $06, 1 ; $4329
+	jr Label_1a_432e ; $432c
+Label_1a_432e:
+	jp Func_1a_402c ; $432e
+Label_1a_4331:
+	ld hl, $049d ; $4331
+	farcall FarPtr_0a_0e ; $4334
+	ld a, $80 ; $4337
+	farcall FarPtr_0a_0a ; $4339
+	ld a, $01 ; $433c
+	ld [$cb27], a ; $433e
+	farcall FarPtr_0a_12 ; $4341
+	farcall FarPtr_0a_0c ; $4344
+	push af ; $4347
+	ld a, $05 ; $4348
+	farcall FarPtr_0a_04 ; $434a
+	pop af ; $434d
+	and a, a ; $434e
+	jr nz, Label_1a_4366 ; $434f
+	ld a, $00 ; $4351
+	ld [wStoryModeCurrentLocation], a ; $4353
+	ld a, $ff ; $4356
+	ld [$c295], a ; $4358
+	ld a, $ff ; $435b
+	ld [$c294], a ; $435d
+	ld [$c2a1], a ; $4360
+	jp Label_1a_408e ; $4363
+Label_1a_4366:
+	call Func_1a_437c ; $4366
+	ld a, $03 ; $4369
+	ld [$cb27], a ; $436b
+	ld a, [$cb2c] ; $436e
+	and a, a ; $4371
+	jr nz, Label_1a_4379 ; $4372
+	set_flag $06, 1 ; $4374
+	jr Label_1a_4379 ; $4377
+Label_1a_4379:
+	jp Func_1a_402c ; $4379
 Func_1a_437c:
 	call Func_1a_4092 ; $437c
 	ld a, $a0 ; $437f
@@ -706,7 +879,76 @@ Label_1a_473e:
 	pop de ; $4776
 	pop bc ; $4777
 	ret ; $4778
-	INCBIN "data/bank_01a/d_4779.bin" ; $4779, 217 bytes
+	ret ; $4779
+	push af ; $477a
+	push bc ; $477b
+	push de ; $477c
+	push hl ; $477d
+	ldh a, [hWramBank] ; $477e
+	push af ; $4780
+	wram_bank $06 ; $4781
+	ld a, [$d151] ; $4787
+	or a, a ; $478a
+	jr nz, Label_1a_4790 ; $478b
+	ld de, $a000 ; $478d
+Label_1a_4790:
+	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
+	rlca ; $4793
+	add a, $09 ; $4794
+	ld l, a ; $4796
+	adc a, $48 ; $4797
+	sub a, l ; $4799
+	ld h, a ; $479a
+	ld a, [hl+] ; $479b
+	ld d, [hl] ; $479c
+	ld e, a ; $479d
+	ld bc, $0e00 ; $479e
+	ld hl, $4840 ; $47a1
+	ld bc, $09c0 ; $47a4
+	ld de, $7058 ; $47a7
+	call QueueSpriteTemplate ; $47aa
+	ld a, [$d151] ; $47ad
+	and a, $80 ; $47b0
+	jr z, Label_1a_47ff ; $47b2
+	wram_bank $02 ; $47b4
+	ld a, $01 ; $47ba
+	ld hl, $d800 ; $47bc
+	ld b, $40 ; $47bf
+Label_1a_47c1:
+	ld [hl+], a ; $47c1
+	dec b ; $47c2
+	jr nz, Label_1a_47c1 ; $47c3
+	ld hl, $d800 ; $47c5
+	ld de, $b9e0 ; $47c8
+	ld c, $04 ; $47cb
+	call Func_00_0480 ; $47cd
+	wram_bank $03 ; $47d0
+	ld a, $20 ; $47d6
+	ld hl, $d800 ; $47d8
+	ld b, $40 ; $47db
+Label_1a_47dd:
+	ld [hl+], a ; $47dd
+	dec b ; $47de
+	jr nz, Label_1a_47dd ; $47df
+	ld a, $03 ; $47e1
+	call Func_1a_4fab ; $47e3
+	ld hl, $d800 ; $47e6
+	ld de, $99e0 ; $47e9
+	ld c, $04 ; $47ec
+	call Func_00_0480 ; $47ee
+	wram_bank $06 ; $47f1
+	ld a, [$d151] ; $47f7
+	and a, $7f ; $47fa
+	ld [$d151], a ; $47fc
+Label_1a_47ff:
+	pop af ; $47ff
+	wram_bank ; $4800
+	pop hl ; $4804
+	pop de ; $4805
+	pop bc ; $4806
+	pop af ; $4807
+	ret ; $4808
+	INCBIN "data/bank_01a/d_4809.bin" ; $4809, 73 bytes
 Func_1a_4852:
 	wram_bank $01 ; $4852
 	push hl ; $4858
@@ -797,7 +1039,108 @@ Label_1a_4933:
 	ld c, $24 ; $494a
 	call CopyMemoryFast ; $494c
 	ret ; $494f
-	INCBIN "data/bank_01a/d_4950.bin" ; $4950, 200 bytes
+	; $4950, 200 bytes (records:2)
+; 100 records x 2 bytes
+	dw $0b00 ; record 0
+	dw $0b01 ; record 1
+	dw $0b01 ; record 2
+	dw $0b01 ; record 3
+	dw $0b01 ; record 4
+	dw $0b01 ; record 5
+	dw $0b01 ; record 6
+	dw $0b01 ; record 7
+	dw $0b01 ; record 8
+	dw $0b01 ; record 9
+	dw $0b01 ; record 10
+	dw $0b01 ; record 11
+	dw $0b01 ; record 12
+	dw $0b01 ; record 13
+	dw $0b01 ; record 14
+	dw $0b01 ; record 15
+	dw $0b01 ; record 16
+	dw $0b01 ; record 17
+	dw $0b01 ; record 18
+	dw $0b02 ; record 19
+	dw $0b10 ; record 20
+	dw $0120 ; record 21
+	dw $0120 ; record 22
+	dw $0120 ; record 23
+	dw $0120 ; record 24
+	dw $0120 ; record 25
+	dw $0120 ; record 26
+	dw $0120 ; record 27
+	dw $0120 ; record 28
+	dw $0120 ; record 29
+	dw $0120 ; record 30
+	dw $0120 ; record 31
+	dw $0120 ; record 32
+	dw $0120 ; record 33
+	dw $0120 ; record 34
+	dw $0120 ; record 35
+	dw $0120 ; record 36
+	dw $0120 ; record 37
+	dw $0120 ; record 38
+	dw $0b12 ; record 39
+	dw $0b10 ; record 40
+	dw $0120 ; record 41
+	dw $0120 ; record 42
+	dw $0120 ; record 43
+	dw $0120 ; record 44
+	dw $0120 ; record 45
+	dw $0120 ; record 46
+	dw $0120 ; record 47
+	dw $0120 ; record 48
+	dw $0120 ; record 49
+	dw $0120 ; record 50
+	dw $0120 ; record 51
+	dw $0120 ; record 52
+	dw $0120 ; record 53
+	dw $0120 ; record 54
+	dw $0120 ; record 55
+	dw $0120 ; record 56
+	dw $0120 ; record 57
+	dw $0120 ; record 58
+	dw $0b12 ; record 59
+	dw $0b10 ; record 60
+	dw $0120 ; record 61
+	dw $0120 ; record 62
+	dw $0120 ; record 63
+	dw $0120 ; record 64
+	dw $0120 ; record 65
+	dw $0120 ; record 66
+	dw $0120 ; record 67
+	dw $0120 ; record 68
+	dw $0120 ; record 69
+	dw $0120 ; record 70
+	dw $0120 ; record 71
+	dw $0120 ; record 72
+	dw $0120 ; record 73
+	dw $0120 ; record 74
+	dw $0120 ; record 75
+	dw $0120 ; record 76
+	dw $0120 ; record 77
+	dw $0120 ; record 78
+	dw $0b12 ; record 79
+	dw $0b20 ; record 80
+	dw $0b21 ; record 81
+	dw $0b21 ; record 82
+	dw $0b21 ; record 83
+	dw $0b21 ; record 84
+	dw $0b21 ; record 85
+	dw $0b21 ; record 86
+	dw $0b21 ; record 87
+	dw $0b21 ; record 88
+	dw $0b21 ; record 89
+	dw $0b21 ; record 90
+	dw $0b21 ; record 91
+	dw $0b21 ; record 92
+	dw $0b21 ; record 93
+	dw $0b21 ; record 94
+	dw $0b21 ; record 95
+	dw $0b21 ; record 96
+	dw $0b21 ; record 97
+	dw $0b21 ; record 98
+	dw $0b22 ; record 99
 Func_1a_4a18:
 	push af ; $4a18
 	push bc ; $4a19
@@ -832,7 +1175,38 @@ Label_1a_4a3c:
 	pop bc ; $4a3e
 	pop af ; $4a3f
 	ret ; $4a40
-	INCBIN "data/bank_01a/d_4a41.bin" ; $4a41, 60 bytes
+	; $4a41, 60 bytes (records:2)
+; 30 records x 2 bytes
+	dw $0b00 ; record 0
+	dw $0b01 ; record 1
+	dw $0b01 ; record 2
+	dw $0b01 ; record 3
+	dw $0b01 ; record 4
+	dw $0b02 ; record 5
+	dw $0b10 ; record 6
+	dw $0120 ; record 7
+	dw $0120 ; record 8
+	dw $0120 ; record 9
+	dw $0120 ; record 10
+	dw $0b12 ; record 11
+	dw $0b10 ; record 12
+	dw $0120 ; record 13
+	dw $0120 ; record 14
+	dw $0120 ; record 15
+	dw $0120 ; record 16
+	dw $0b12 ; record 17
+	dw $0b10 ; record 18
+	dw $0120 ; record 19
+	dw $0120 ; record 20
+	dw $0120 ; record 21
+	dw $0120 ; record 22
+	dw $0b12 ; record 23
+	dw $0b20 ; record 24
+	dw $0b21 ; record 25
+	dw $0b21 ; record 26
+	dw $0b21 ; record 27
+	dw $0b21 ; record 28
+	dw $0b22 ; record 29
 Func_1a_4a7d:
 	push af ; $4a7d
 	push bc ; $4a7e
@@ -872,7 +1246,62 @@ Label_1a_4aa4:
 	pop bc ; $4ab1
 	pop af ; $4ab2
 	ret ; $4ab3
-	INCBIN "data/bank_01a/d_4ab4.bin" ; $4ab4, 107 bytes
+	; $4ab4, 107 bytes (records:2)
+; 53 records x 2 bytes
+	dw $0b38 ; record 0
+	dw $0b39 ; record 1
+	dw $0b3a ; record 2
+	dw $0b3b ; record 3
+	dw $0b3c ; record 4
+	dw $0b3d ; record 5
+	dw $0b3e ; record 6
+	dw $0b3f ; record 7
+	dw $0b48 ; record 8
+	dw $0b49 ; record 9
+	dw $0b4a ; record 10
+	dw $0b4b ; record 11
+	dw $0b4c ; record 12
+	dw $0b4d ; record 13
+	dw $0b4e ; record 14
+	dw $0b4f ; record 15
+	dw $0b58 ; record 16
+	dw $0b59 ; record 17
+	dw $0b5a ; record 18
+	dw $0b5b ; record 19
+	dw $0b5c ; record 20
+	dw $0b5d ; record 21
+	dw $0b5e ; record 22
+	dw $0b5f ; record 23
+	dw $0b68 ; record 24
+	dw $0b69 ; record 25
+	dw $0b6a ; record 26
+	dw $0b6b ; record 27
+	dw $0b6c ; record 28
+	dw $0b6d ; record 29
+	dw $0b6e ; record 30
+	dw $0b6f ; record 31
+	dw $c5f5 ; record 32
+	dw $e5d5 ; record 33
+	dw $0b0e ; record 34
+	dw $003e ; record 35
+	dw $b421 ; record 36
+	dw $794a ; record 37
+	dw $0ffe ; record 38
+	dw $1628 ; record 39
+	dw $0106 ; record 40
+	dw $fe78 ; record 41
+	dw $2809 ; record 42
+	dw $7e0c ; record 43
+	dw $2357 ; record 44
+	dw $5f7e ; record 45
+	dw $38cd ; record 46
+	dw $234c ; record 47
+	dw $1804 ; record 48
+	dw $0cef ; record 49
+	dw $e518 ; record 50
+	dw $d1e1 ; record 51
+	dw $f1c1 ; record 52
+	db $c9
 Func_1a_4b1f:
 	push af ; $4b1f
 	push bc ; $4b20
@@ -981,7 +1410,26 @@ Label_1a_4bb4:
 	ret ; $4bb8
 Func_1a_4bb9:
 	ret ; $4bb9
-	INCBIN "data/bank_01a/d_4bba.bin" ; $4bba, 22 bytes
+	ret ; $4bba
+	push af ; $4bbb
+	push bc ; $4bbc
+	push de ; $4bbd
+	push hl ; $4bbe
+	ld a, [hl] ; $4bbf
+	ld b, a ; $4bc0
+	inc hl ; $4bc1
+	ld a, [hl] ; $4bc2
+	ld c, a ; $4bc3
+	inc hl ; $4bc4
+	ld a, [hl] ; $4bc5
+	ld e, a ; $4bc6
+	inc hl ; $4bc7
+	call DrawStringToTileBuffer ; $4bc8
+	pop hl ; $4bcb
+	pop de ; $4bcc
+	pop bc ; $4bcd
+	pop af ; $4bce
+	ret ; $4bcf
 DrawStringToTileBuffer:
 	push af ; $4bd0
 	push bc ; $4bd1
@@ -1081,7 +1529,256 @@ WriteTileBufferCell:
 	pop bc ; $4c59
 	pop af ; $4c5a
 	ret ; $4c5b
-	INCBIN "data/bank_01a/d_4c5c.bin" ; $4c5c, 724 bytes
+	push af ; $4c5c
+	push bc ; $4c5d
+	push de ; $4c5e
+	push hl ; $4c5f
+	ld d, a ; $4c60
+	push bc ; $4c61
+	push de ; $4c62
+	call Func_1a_4d86 ; $4c63
+	push hl ; $4c66
+	pop bc ; $4c67
+	ld de, $0000 ; $4c68
+	call Func_1a_4cea ; $4c6b
+	cp a, $00 ; $4c6e
+	jr z, Label_1a_4c7e ; $4c70
+	bit 7, h ; $4c72
+	jr nz, Label_1a_4c7a ; $4c74
+	ld a, $2b ; $4c76
+	jr Label_1a_4c80 ; $4c78
+Label_1a_4c7a:
+	ld a, $2d ; $4c7a
+	jr Label_1a_4c80 ; $4c7c
+Label_1a_4c7e:
+	ld a, $60 ; $4c7e
+Label_1a_4c80:
+	pop de ; $4c80
+	pop bc ; $4c81
+	push de ; $4c82
+	ld d, a ; $4c83
+	ld e, $01 ; $4c84
+	call WriteTileBufferCell ; $4c86
+	pop de ; $4c89
+	inc b ; $4c8a
+	ld a, d ; $4c8b
+	cp a, $00 ; $4c8c
+	jr z, Label_1a_4cbb ; $4c8e
+	push bc ; $4c90
+	push de ; $4c91
+	call Func_1a_4d86 ; $4c92
+	bit 7, h ; $4c95
+	jr z, Label_1a_4ca4 ; $4c97
+	push hl ; $4c99
+	pop de ; $4c9a
+	ld hl, $0000 ; $4c9b
+	ld a, l ; $4c9e
+	sub a, e ; $4c9f
+	ld l, a ; $4ca0
+	ld a, h ; $4ca1
+	sbc a, d ; $4ca2
+	ld h, a ; $4ca3
+Label_1a_4ca4:
+	ld de, $0064 ; $4ca4
+	call DivHLByDE ; $4ca7
+	pop de ; $4caa
+	pop bc ; $4cab
+	ld a, l ; $4cac
+	cp a, $00 ; $4cad
+	jr z, Label_1a_4cbb ; $4caf
+	push de ; $4cb1
+	ld d, $31 ; $4cb2
+	ld e, $01 ; $4cb4
+	call WriteTileBufferCell ; $4cb6
+	pop de ; $4cb9
+	inc b ; $4cba
+Label_1a_4cbb:
+	ld a, d ; $4cbb
+	call Func_1a_4d11 ; $4cbc
+	cp a, $00 ; $4cbf
+	jr nz, Label_1a_4ccc ; $4cc1
+	ld a, d ; $4cc3
+	sub a, $64 ; $4cc4
+	bit 7, a ; $4cc6
+	jr nz, Label_1a_4cd7 ; $4cc8
+	ld a, $00 ; $4cca
+Label_1a_4ccc:
+	add a, $30 ; $4ccc
+	push de ; $4cce
+	ld d, a ; $4ccf
+	ld e, $01 ; $4cd0
+	call WriteTileBufferCell ; $4cd2
+	pop de ; $4cd5
+	inc b ; $4cd6
+Label_1a_4cd7:
+	ld a, d ; $4cd7
+	call Func_1a_4d44 ; $4cd8
+	add a, $30 ; $4cdb
+	push de ; $4cdd
+	ld d, a ; $4cde
+	ld e, $01 ; $4cdf
+	call WriteTileBufferCell ; $4ce1
+	pop de ; $4ce4
+	pop hl ; $4ce5
+	pop de ; $4ce6
+	pop bc ; $4ce7
+	pop af ; $4ce8
+	ret ; $4ce9
+Func_1a_4cea:
+	push bc ; $4cea
+	push de ; $4ceb
+	push hl ; $4cec
+	push bc ; $4ced
+	pop hl ; $4cee
+	ld a, l ; $4cef
+	sub a, e ; $4cf0
+	ld l, a ; $4cf1
+	ld a, h ; $4cf2
+	sbc a, d ; $4cf3
+	ld h, a ; $4cf4
+	bit 7, h ; $4cf5
+	jr nz, Label_1a_4d0b ; $4cf7
+	ld a, h ; $4cf9
+	cp a, $00 ; $4cfa
+	jr nz, Label_1a_4d07 ; $4cfc
+	ld a, l ; $4cfe
+	cp a, $00 ; $4cff
+	jr nz, Label_1a_4d07 ; $4d01
+	ld a, $00 ; $4d03
+	jr Label_1a_4d0d ; $4d05
+Label_1a_4d07:
+	ld a, $01 ; $4d07
+	jr Label_1a_4d0d ; $4d09
+Label_1a_4d0b:
+	ld a, $02 ; $4d0b
+Label_1a_4d0d:
+	pop hl ; $4d0d
+	pop de ; $4d0e
+	pop bc ; $4d0f
+	ret ; $4d10
+Func_1a_4d11:
+	push bc ; $4d11
+	push de ; $4d12
+	push hl ; $4d13
+	call Func_1a_4d86 ; $4d14
+	bit 7, h ; $4d17
+	jr z, Label_1a_4d26 ; $4d19
+	push hl ; $4d1b
+	pop de ; $4d1c
+	ld hl, $0000 ; $4d1d
+	ld a, l ; $4d20
+	sub a, e ; $4d21
+	ld l, a ; $4d22
+	ld a, h ; $4d23
+	sbc a, d ; $4d24
+	ld h, a ; $4d25
+Label_1a_4d26:
+	push hl ; $4d26
+	pop bc ; $4d27
+	ld de, $0064 ; $4d28
+	ld a, l ; $4d2b
+	sub a, e ; $4d2c
+	ld l, a ; $4d2d
+	ld a, h ; $4d2e
+	sbc a, d ; $4d2f
+	ld h, a ; $4d30
+	bit 7, h ; $4d31
+	jr nz, Label_1a_4d37 ; $4d33
+	push hl ; $4d35
+	pop bc ; $4d36
+Label_1a_4d37:
+	push bc ; $4d37
+	pop hl ; $4d38
+	ld de, $000a ; $4d39
+	call DivHLByDE ; $4d3c
+	ld a, l ; $4d3f
+	pop hl ; $4d40
+	pop de ; $4d41
+	pop bc ; $4d42
+	ret ; $4d43
+Func_1a_4d44:
+	push bc ; $4d44
+	push de ; $4d45
+	push hl ; $4d46
+	call Func_1a_4d86 ; $4d47
+	bit 7, h ; $4d4a
+	jr z, Label_1a_4d59 ; $4d4c
+	push hl ; $4d4e
+	pop de ; $4d4f
+	ld hl, $0000 ; $4d50
+	ld a, l ; $4d53
+	sub a, e ; $4d54
+	ld l, a ; $4d55
+	ld a, h ; $4d56
+	sbc a, d ; $4d57
+	ld h, a ; $4d58
+Label_1a_4d59:
+	push hl ; $4d59
+	pop bc ; $4d5a
+	ld de, $0064 ; $4d5b
+	ld a, l ; $4d5e
+	sub a, e ; $4d5f
+	ld l, a ; $4d60
+	ld a, h ; $4d61
+	sbc a, d ; $4d62
+	ld h, a ; $4d63
+	bit 7, h ; $4d64
+	jr nz, Label_1a_4d6a ; $4d66
+	push hl ; $4d68
+	pop bc ; $4d69
+Label_1a_4d6a:
+	push bc ; $4d6a
+	pop hl ; $4d6b
+	ld de, $000a ; $4d6c
+	call DivHLByDE ; $4d6f
+	ld a, $0a ; $4d72
+	call MulHLByA ; $4d74
+	push hl ; $4d77
+	pop de ; $4d78
+	push bc ; $4d79
+	pop hl ; $4d7a
+	ld a, l ; $4d7b
+	sub a, e ; $4d7c
+	ld l, a ; $4d7d
+	ld a, h ; $4d7e
+	sbc a, d ; $4d7f
+	ld h, a ; $4d80
+	ld a, l ; $4d81
+	pop hl ; $4d82
+	pop de ; $4d83
+	pop bc ; $4d84
+	ret ; $4d85
+Func_1a_4d86:
+	push af ; $4d86
+	push bc ; $4d87
+	push de ; $4d88
+	ld l, a ; $4d89
+	ld h, $00 ; $4d8a
+	push hl ; $4d8c
+	pop bc ; $4d8d
+	ld d, $00 ; $4d8e
+	ld e, $91 ; $4d90
+	ld a, l ; $4d92
+	sub a, e ; $4d93
+	ld l, a ; $4d94
+	ld a, h ; $4d95
+	sbc a, d ; $4d96
+	ld h, a ; $4d97
+	bit 7, h ; $4d98
+	jr nz, Label_1a_4da2 ; $4d9a
+	push bc ; $4d9c
+	pop hl ; $4d9d
+	ld h, $ff ; $4d9e
+	jr Label_1a_4da4 ; $4da0
+Label_1a_4da2:
+	push bc ; $4da2
+	pop hl ; $4da3
+Label_1a_4da4:
+	pop de ; $4da4
+	pop bc ; $4da5
+	pop af ; $4da6
+	ret ; $4da7
+	INCBIN "data/bank_01a/d_4da8.bin" ; $4da8, 392 bytes
 AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
 	ld a, [$d238] ; $4f36
@@ -1141,7 +1838,38 @@ Label_1a_4f7b:
 	ld [hl+], a ; $4f7f
 	ld [hl+], a ; $4f80
 	ret ; $4f81
-	INCBIN "data/bank_01a/d_4f82.bin" ; $4f82, 41 bytes
+Label_1a_4f82:
+	push af ; $4f82
+	push de ; $4f83
+	push hl ; $4f84
+	push bc ; $4f85
+	ld a, [hl] ; $4f86
+	sub a, $20 ; $4f87
+	jr z, Label_1a_4f9d ; $4f89
+	sub a, $10 ; $4f8b
+	add a, a ; $4f8d
+	ld b, a ; $4f8e
+	ld a, [$d236] ; $4f8f
+	ld c, a ; $4f92
+	ld a, b ; $4f93
+	add a, c ; $4f94
+	ld c, a ; $4f95
+	ld a, [$d237] ; $4f96
+	ld b, a ; $4f99
+	call QueueSprite ; $4f9a
+Label_1a_4f9d:
+	pop bc ; $4f9d
+	pop hl ; $4f9e
+	pop de ; $4f9f
+	dec bc ; $4fa0
+	inc hl ; $4fa1
+	ld a, d ; $4fa2
+	add a, $08 ; $4fa3
+	ld d, a ; $4fa5
+	pop af ; $4fa6
+	dec a ; $4fa7
+	jr nz, Label_1a_4f82 ; $4fa8
+	ret ; $4faa
 Func_1a_4fab:
 	and a, a ; $4fab
 	jr z, Label_1a_4fbf ; $4fac
@@ -1756,7 +2484,11 @@ Label_1a_68e8:
 	bit 1, a ; $6908
 	jp nz, Label_1a_69e0 ; $690a
 	jr Label_1a_68e8 ; $690d
-	INCBIN "data/bank_01a/d_690f.bin" ; $690f, 12 bytes
+	ld c, $10 ; $690f
+	call Func_00_1d20 ; $6911
+	call Func_00_1da4 ; $6914
+	call DisableLCDSafely ; $6917
+	ret ; $691a
 Label_1a_691b:
 	ld a, [$cb63] ; $691b
 	dec a ; $691e
@@ -1960,7 +2692,45 @@ Func_1a_6a9b:
 	ld e, l ; $6aaf
 	pop hl ; $6ab0
 	jr Func_1a_6a9b ; $6ab1
-	INCBIN "data/bank_01a/d_6ab3.bin" ; $6ab3, 124 bytes
+	wram_bank $06 ; $6ab3
+	ldh a, [$ff8c] ; $6ab9
+	and a, $1c ; $6abb
+	jr z, Label_1a_6af4 ; $6abd
+	ld a, [$cb62] ; $6abf
+	dec a ; $6ac2
+	jr z, Label_1a_6aea ; $6ac3
+	dec a ; $6ac5
+	jr z, Label_1a_6aea ; $6ac6
+	ld b, $0a ; $6ac8
+	ld c, $86 ; $6aca
+	ld de, $964a ; $6acc
+	call QueueSprite ; $6acf
+	jr Label_1a_6af4 ; $6ad2
+	INCBIN "data/bank_01a/d_6ad4.bin" ; $6ad4, 22 bytes
+Label_1a_6aea:
+	ld b, $0a ; $6aea
+	ld c, $84 ; $6aec
+	ld de, $0a4a ; $6aee
+	call QueueSprite ; $6af1
+Label_1a_6af4:
+	ldh a, [$ff8c] ; $6af4
+	and a, $2a ; $6af6
+	ret z ; $6af8
+	ld a, [$cb63] ; $6af9
+	rlca ; $6afc
+	add a, $0f ; $6afd
+	ld l, a ; $6aff
+	adc a, $6b ; $6b00
+	sub a, l ; $6b02
+	ld h, a ; $6b03
+	ld a, [hl+] ; $6b04
+	ld d, [hl] ; $6b05
+	ld e, a ; $6b06
+	ld b, $08 ; $6b07
+	ld c, $88 ; $6b09
+	call QueueSprite ; $6b0b
+	ret ; $6b0e
+	INCBIN "data/bank_01a/d_6b0f.bin" ; $6b0f, 32 bytes
 Func_1a_6b2f:
 	call Func_1a_6b55 ; $6b2f
 	wram_bank $03 ; $6b32
@@ -2074,7 +2844,47 @@ Func_1a_6c0b:
 	farcall FarPtr_02_34 ; $6c21
 	ld [$d004], a ; $6c24
 	ret ; $6c27
-	INCBIN "data/bank_01a/d_6c28.bin" ; $6c28, 119 bytes
+	wram_bank $06 ; $6c28
+	ld a, [$d000] ; $6c2e
+	or a, a ; $6c31
+	jr nz, Label_1a_6c44 ; $6c32
+	ld a, [$d001] ; $6c34
+	rlca ; $6c37
+	add a, $69 ; $6c38
+	ld l, a ; $6c3a
+	adc a, $6c ; $6c3b
+	sub a, l ; $6c3d
+	ld h, a ; $6c3e
+	ld a, [hl+] ; $6c3f
+	ld d, [hl] ; $6c40
+	ld e, a ; $6c41
+	jr Label_1a_6c52 ; $6c42
+Label_1a_6c44:
+	ld a, [$d001] ; $6c44
+	rlca ; $6c47
+	add a, $95 ; $6c48
+	ld l, a ; $6c4a
+	adc a, $6c ; $6c4b
+	sub a, l ; $6c4d
+	ld h, a ; $6c4e
+	ld a, [hl+] ; $6c4f
+	ld d, [hl] ; $6c50
+	ld e, a ; $6c51
+Label_1a_6c52:
+	push de ; $6c52
+	ldh a, [$ff8c] ; $6c53
+	ld b, $0d ; $6c55
+	ld c, $80 ; $6c57
+	call QueueSprite ; $6c59
+	pop de ; $6c5c
+	ld a, $08 ; $6c5d
+	add a, d ; $6c5f
+	ld d, a ; $6c60
+	ld b, $0d ; $6c61
+	ld c, $82 ; $6c63
+	call QueueSprite ; $6c65
+	ret ; $6c68
+	INCBIN "data/bank_01a/d_6c69.bin" ; $6c69, 54 bytes
 Func_1a_6c9f:
 	call Func_1a_7012 ; $6c9f
 	wram_bank $06 ; $6ca2
@@ -2444,7 +3254,12 @@ Func_1a_6f3d:
 	ld hl, $df36 ; $6fc9
 	ld [hl], $60 ; $6fcc
 	ret ; $6fce
-	INCBIN "data/bank_01a/d_6fcf.bin" ; $6fcf, 67 bytes
+	; $6fcf, 67 bytes (bytes:14)
+	db $00, $00, $11, $70, $00, $0f, $00, $04, $40, $00, $26, $01, $00, $00 ; 0x00
+	db $00, $00, $11, $70, $80, $11, $00, $04, $80, $00, $26, $01, $00, $00 ; 0x0e
+	db $00, $00, $11, $70, $00, $0f, $80, $06, $c0, $00, $26, $01, $00, $00 ; 0x1c
+	db $00, $00, $11, $70, $80, $11, $80, $06, $00, $00, $26, $01, $00, $00 ; 0x2a
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff, $00 ; 0x38
 Func_1a_7012:
 	ld bc, $0770 ; $7012
 	ld de, $4615 ; $7015
