@@ -2222,6 +2222,7 @@ Label_12_55e8:
 	jr nc, Label_12_55b5 ; $55f1
 	call Func_12_5ef1 ; $55f3
 	ret ; $55f6
+Label_12_55f7:
 	ld a, [$c2b1] ; $55f7
 	cp a, $02 ; $55fa
 	jr c, Label_12_5606 ; $55fc
@@ -2290,7 +2291,47 @@ Label_12_562a:
 	ld a, $00 ; $5693
 	farcall FarPtr_0a_20 ; $5695
 	jp Label_12_5747 ; $5698
-	INCBIN "data/bank_012/d_569b.bin" ; $569b, 105 bytes
+	test_flag $05, 7 ; $569b
+	jp z, Label_12_55f7 ; $569e
+	test_flag $0e, 4 ; $56a1
+	jp nz, Label_12_57f4 ; $56a4
+	ld a, $02 ; $56a7
+	ld bc, $0010 ; $56a9
+	farcall FarPtr_0a_18 ; $56ac
+	ld a, $00 ; $56af
+	ld bc, $0008 ; $56b1
+	farcall FarPtr_0a_18 ; $56b4
+	ld a, $00 ; $56b7
+	ld b, $c0 ; $56b9
+	farcall FarPtr_0a_2e ; $56bb
+	ld a, $00 ; $56be
+	ld b, $01 ; $56c0
+	farcall FarPtr_0a_2c ; $56c2
+	ld a, $02 ; $56c5
+	farcall FarPtr_0a_1c ; $56c7
+	ld a, $00 ; $56ca
+	ld bc, $2900 ; $56cc
+	ld de, $1b00 ; $56cf
+	farcall FarPtr_0a_24 ; $56d2
+	ld a, $02 ; $56d5
+	ld bc, $2b00 ; $56d7
+	ld de, $1b00 ; $56da
+	farcall FarPtr_0a_24 ; $56dd
+	ld a, $02 ; $56e0
+	farcall FarPtr_0a_20 ; $56e2
+	ld a, $02 ; $56e5
+	ld bc, $2b00 ; $56e7
+	ld de, $1900 ; $56ea
+	farcall FarPtr_0a_24 ; $56ed
+	ld a, $02 ; $56f0
+	farcall FarPtr_0a_20 ; $56f2
+	ld a, $03 ; $56f5
+	ld b, a ; $56f7
+	ld a, $02 ; $56f8
+	farcall FarPtr_0a_30 ; $56fa
+	ld a, $00 ; $56fd
+	farcall FarPtr_0a_20 ; $56ff
+	jr Label_12_5747 ; $5702
 Label_12_5704:
 	test_flag $0e, 4 ; $5704
 	jp nz, Label_12_57f4 ; $5707
