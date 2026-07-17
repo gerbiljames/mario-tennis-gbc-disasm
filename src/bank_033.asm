@@ -54,7 +54,7 @@ Label_33_7afb:
 Label_33_7b08:
 	xor a, a ; $7b08
 	ld [de], a ; $7b09
-	ldh a, [$ff9e] ; $7b0a
+	ldh a, [hDebugStepMode] ; $7b0a
 	or a, a ; $7b0c
 	jr z, Label_33_7b11 ; $7b0d
 	sound $2c ; $7b0f

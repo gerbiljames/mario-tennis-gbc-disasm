@@ -480,7 +480,7 @@ LoadObjTemplate_09:
 	inc hl ; $463f
 	and a, a ; $4640
 	jr z, Label_09_4646 ; $4641
-	call Func_00_3024 ; $4643
+	call PlaySoundManaged ; $4643
 Label_09_4646:
 	ld d, [hl] ; $4646
 	call Func_09_45f2 ; $4647
@@ -709,7 +709,7 @@ LoadTilesetGfx:
 	ld l, e ; $4881
 	ld h, d ; $4882
 	ld de, $8200 ; $4883
-	call Func_00_0480 ; $4886
+	call QueueVRAMCopy ; $4886
 	ret ; $4889
 VramTileset_09:
 	; $488a, 118 bytes (records:4)
@@ -750,41 +750,41 @@ Func_09_6100:
 	ld hl, VramGfxPtrTable_09_616d ; $6100
 	call GetGfxSourcePtr ; $6103
 	ld c, $04 ; $6106
-	call Func_00_0480 ; $6108
+	call QueueVRAMCopy ; $6108
 	ret ; $610b
 Func_09_610c:
 	ld hl, VramGfxPtrTable_09_616d ; $610c
 	call GetGfxSourcePtr ; $610f
 	ld de, $8780 ; $6112
 	ld c, $04 ; $6115
-	call Func_00_0480 ; $6117
+	call QueueVRAMCopy ; $6117
 	ret ; $611a
 Func_09_611b:
 	ld hl, VramGfxPtrTable_09_616d ; $611b
 	call GetGfxSourcePtr ; $611e
 	ld de, $87c0 ; $6121
 	ld c, $04 ; $6124
-	call Func_00_0480 ; $6126
+	call QueueVRAMCopy ; $6126
 	ret ; $6129
 Func_09_612a:
 	ld hl, $6171 ; $612a
 	call GetGfxSourcePtr ; $612d
 	ld de, $8300 ; $6130
 	ld c, $04 ; $6133
-	call Func_00_0480 ; $6135
+	call QueueVRAMCopy ; $6135
 	ret ; $6138
 Func_09_6139:
 	ld hl, $6175 ; $6139
 	call GetGfxSourcePtr ; $613c
 	ld de, $8340 ; $613f
 	ld c, $04 ; $6142
-	call Func_00_0480 ; $6144
+	call QueueVRAMCopy ; $6144
 	ret ; $6147
 Func_09_6148:
 	ld hl, $6bc0 ; $6148
 	ld de, $8300 ; $614b
 	ld c, $08 ; $614e
-	call Func_00_0480 ; $6150
+	call QueueVRAMCopy ; $6150
 	ret ; $6153
 GetGfxSourcePtr:
 	push af ; $6154
@@ -839,7 +839,7 @@ LoadServeGfx:
 Label_09_6c65:
 	ld de, $8380 ; $6c65
 	ld c, $04 ; $6c68
-	call Func_00_0480 ; $6c6a
+	call QueueVRAMCopy ; $6c6a
 	ret ; $6c6d
 ServeGfxPtrTable_09:
 	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1173 bytes

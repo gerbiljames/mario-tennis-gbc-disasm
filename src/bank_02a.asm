@@ -159,7 +159,7 @@ Func_2a_4098:
 Label_2a_40b3:
 	add hl, hl ; $40b3
 	ld a, b ; $40b4
-	call Func_00_0bd4 ; $40b5
+	call MulHLByAFrac ; $40b5
 	add hl, hl ; $40b8
 	add hl, hl ; $40b9
 	add hl, bc ; $40ba

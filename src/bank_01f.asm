@@ -54,7 +54,7 @@ Label_1f_7abc:
 Label_1f_7ac9:
 	xor a, a ; $7ac9
 	ld [de], a ; $7aca
-	ldh a, [$ff9e] ; $7acb
+	ldh a, [hDebugStepMode] ; $7acb
 	or a, a ; $7acd
 	jr z, Label_1f_7ad2 ; $7ace
 	sound $2c ; $7ad0

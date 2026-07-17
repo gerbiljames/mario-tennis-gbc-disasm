@@ -168,7 +168,7 @@ FarPtr_0a_a2:
 	push bc ; $40a5
 	push de ; $40a6
 	push hl ; $40a7
-	ldh a, [$ff94] ; $40a8
+	ldh a, [hInputRisingEdge] ; $40a8
 	and a, $08 ; $40aa
 	jr z, Label_0a_40cb ; $40ac
 	test_flag $02, 6 ; $40ae
@@ -206,7 +206,7 @@ Func_0a_40d0:
 	ld [$c369], a ; $40eb
 	ld a, $01 ; $40ee
 	call Func_0a_4364 ; $40f0
-	ldh a, [$ff9e] ; $40f3
+	ldh a, [hDebugStepMode] ; $40f3
 	or a, a ; $40f5
 	jr z, Label_0a_4100 ; $40f6
 	ld a, $01 ; $40f8
@@ -623,7 +623,7 @@ Func_0a_438a:
 	ld a, [hl] ; $4399
 	ld l, e ; $439a
 	ld h, d ; $439b
-	call Func_00_0628 ; $439c
+	call FarReadByte ; $439c
 	pop hl ; $439f
 	cp a, $00 ; $43a0
 	pop de ; $43a2
@@ -804,11 +804,11 @@ Func_0a_4465:
 	sbc a, d ; $4495
 	ld h, a ; $4496
 	pop de ; $4497
-	call Func_00_0a54 ; $4498
+	call AngleFromVectorCoarse ; $4498
 	pop hl ; $449b
 	ld l, h ; $449c
 	ld h, $00 ; $449d
-	call Func_00_0af8 ; $449f
+	call VectorFromLengthAndAngleRaw ; $449f
 	pop bc ; $44a2
 	add hl, bc ; $44a3
 	ld c, l ; $44a4
@@ -976,7 +976,7 @@ Func_0a_4569:
 	inc bc ; $4579
 	inc bc ; $457a
 	pop af ; $457b
-	call Func_00_0ac5 ; $457c
+	call VectorFromLengthAndAngle ; $457c
 	push de ; $457f
 	ld e, l ; $4580
 	ld d, h ; $4581
@@ -1139,7 +1139,7 @@ Func_0a_45f5:
 	ld e, l ; $4659
 	ld h, b ; $465a
 	ld l, c ; $465b
-	call Func_00_0a54 ; $465c
+	call AngleFromVectorCoarse ; $465c
 	push af ; $465f
 	ld hl, $ffea ; $4660
 	ld a, [hl+] ; $4663
@@ -1235,7 +1235,7 @@ Func_0a_466f:
 	ld e, l ; $46d8
 	ld h, b ; $46d9
 	ld l, c ; $46da
-	call Func_00_0a54 ; $46db
+	call AngleFromVectorCoarse ; $46db
 	push af ; $46de
 	ld hl, $ffea ; $46df
 	ld a, [hl+] ; $46e2
@@ -1392,8 +1392,8 @@ Label_0a_47e0:
 	push de ; $47e2
 	push hl ; $47e3
 	ld c, $7f ; $47e4
-	call Func_00_1d20 ; $47e6
-	call Func_00_1da4 ; $47e9
+	call BeginFadeOut ; $47e6
+	call WaitFadeEnd ; $47e9
 	pop hl ; $47ec
 	pop de ; $47ed
 	pop bc ; $47ee
@@ -1408,8 +1408,8 @@ Label_0a_47e0:
 	ld b, $05 ; $47ff
 	call AdvanceFrame ; $4801
 	ld c, $7f ; $4804
-	call Func_00_1d2e ; $4806
-	call Func_00_1da4 ; $4809
+	call BeginFadeIn ; $4806
+	call WaitFadeEnd ; $4809
 Label_0a_480c:
 	add sp, 4 ; $480c
 	pop hl ; $480e
@@ -1475,8 +1475,8 @@ Label_0a_485f:
 	push de ; $4861
 	push hl ; $4862
 	ld c, $7f ; $4863
-	call Func_00_1d20 ; $4865
-	call Func_00_1da4 ; $4868
+	call BeginFadeOut ; $4865
+	call WaitFadeEnd ; $4868
 	pop hl ; $486b
 	pop de ; $486c
 	pop bc ; $486d
@@ -1491,8 +1491,8 @@ Label_0a_485f:
 	ld b, $05 ; $487e
 	call AdvanceFrame ; $4880
 	ld c, $7f ; $4883
-	call Func_00_1d2e ; $4885
-	call Func_00_1da4 ; $4888
+	call BeginFadeIn ; $4885
+	call WaitFadeEnd ; $4888
 Label_0a_488b:
 	add sp, 4 ; $488b
 	pop hl ; $488d
@@ -1628,8 +1628,8 @@ InitStoryMatchSettings:
 	ret ; $4961
 Func_0a_4962:
 	ld c, $10 ; $4962
-	call Func_00_1d20 ; $4964
-	call Func_00_1da4 ; $4967
+	call BeginFadeOut ; $4964
+	call WaitFadeEnd ; $4967
 	call Func_0a_49aa ; $496a
 	farcall FarPtr_RunMatch ; $496d
 	ld a, [$c8a5] ; $4970
@@ -1650,8 +1650,8 @@ Label_0a_498c:
 	ret ; $4990
 Func_0a_4991:
 	ld c, $10 ; $4991
-	call Func_00_1d20 ; $4993
-	call Func_00_1da4 ; $4996
+	call BeginFadeOut ; $4993
+	call WaitFadeEnd ; $4996
 	farcall FarPtr_0a_68 ; $4999
 	call DisableLCDSafely ; $499c
 	farcall FarPtr_01_0a ; $499f
@@ -1778,8 +1778,8 @@ Func_0a_4bac:
 	ld [$df05], a ; $4bdd
 	farcall FarPtr_05_7c ; $4be0
 	ld c, $10 ; $4be3
-	call Func_00_1d2e ; $4be5
-	call Func_00_1da4 ; $4be8
+	call BeginFadeIn ; $4be5
+	call WaitFadeEnd ; $4be8
 	wram_bank $05 ; $4beb
 Label_0a_4bf1:
 	ld a, [$df05] ; $4bf1
@@ -1933,12 +1933,12 @@ ClearBgTilemaps:
 	ld hl, $d000 ; $4d57
 	ld de, $9800 ; $4d5a
 	ld c, $24 ; $4d5d
-	call Func_00_0480 ; $4d5f
+	call QueueVRAMCopy ; $4d5f
 	wram_bank $02 ; $4d62
 	ld hl, $d000 ; $4d68
 	ld de, $b800 ; $4d6b
 	ld c, $24 ; $4d6e
-	call Func_00_0480 ; $4d70
+	call QueueVRAMCopy ; $4d70
 	call EnableLCD ; $4d73
 	ret ; $4d76
 FillMemoryFast:
@@ -2178,7 +2178,7 @@ Func_0a_4f40:
 	push de ; $4f42
 	push hl ; $4f43
 	ld c, $0c ; $4f44
-	call Func_00_1d20 ; $4f46
+	call BeginFadeOut ; $4f46
 	call Func_0a_50e4 ; $4f49
 	call Func_0a_50f1 ; $4f4c
 	call Func_0a_5114 ; $4f4f
@@ -2192,7 +2192,7 @@ Func_0a_4f40:
 	cp a, $ff ; $4f65
 	jr z, Label_0a_4f6f ; $4f67
 	ld a, [$c284] ; $4f69
-	call Func_00_3024 ; $4f6c
+	call PlaySoundManaged ; $4f6c
 Label_0a_4f6f:
 	farcall FarPtr_05_76 ; $4f6f
 	ld hl, $c28a ; $4f72
@@ -2206,7 +2206,7 @@ Label_0a_4f6f:
 	add hl, de ; $4f84
 	ld [hl], $01 ; $4f85
 	set_flag $02, 4 ; $4f87
-	call Func_00_1da4 ; $4f8a
+	call WaitFadeEnd ; $4f8a
 	clear_flag $02, 4 ; $4f8d
 	farcall FarPtr_0a_68 ; $4f90
 	call DisableLCDSafely ; $4f93
@@ -2229,7 +2229,7 @@ Label_0a_4faf:
 	or a, l ; $4fbb
 	jr z, Label_0a_4fc4 ; $4fbc
 	ld a, [$c29b] ; $4fbe
-	call Func_00_015e ; $4fc1
+	call CallHLInBankA ; $4fc1
 Label_0a_4fc4:
 	call Func_0a_5495 ; $4fc4
 	ld hl, $c2a1 ; $4fc7
@@ -2241,8 +2241,8 @@ Label_0a_4fc4:
 	jp Label_0a_50df ; $4fd3
 Label_0a_4fd6:
 	ld c, $08 ; $4fd6
-	call Func_00_1d2e ; $4fd8
-	call Func_00_1da4 ; $4fdb
+	call BeginFadeIn ; $4fd8
+	call WaitFadeEnd ; $4fdb
 	ld a, [$c2d5] ; $4fde
 	and a, a ; $4fe1
 	jr z, Label_0a_4ff1 ; $4fe2
@@ -2253,7 +2253,7 @@ Label_0a_4fd6:
 	call Func_0a_52f5 ; $4fec
 	jr Label_0a_4ff5 ; $4fef
 Label_0a_4ff1:
-	call Func_00_2725 ; $4ff1
+	call WaitFramesCmd ; $4ff1
 	db $04 ; $4ff4 inline arg
 Label_0a_4ff5:
 	wram_bank $04 ; $4ff5
@@ -2351,7 +2351,7 @@ Label_0a_50b4:
 	ld a, [$c2a3] ; $50b4
 	and a, a ; $50b7
 	jr nz, Label_0a_50c7 ; $50b8
-	ldh a, [$ff9e] ; $50ba
+	ldh a, [hDebugStepMode] ; $50ba
 	and a, a ; $50bc
 	jr z, Label_0a_50c7 ; $50bd
 	call Func_0a_4892 ; $50bf
@@ -2360,7 +2360,7 @@ Label_0a_50b4:
 Label_0a_50c7:
 	jp Label_0a_4ff5 ; $50c7
 Label_0a_50ca:
-	call Func_00_1da4 ; $50ca
+	call WaitFadeEnd ; $50ca
 	ld bc, $d000 ; $50cd
 	farcall FarPtr_04_1c ; $50d0
 Label_0a_50d3:
@@ -2490,7 +2490,7 @@ Func_0a_516f:
 	ld l, a ; $5183
 Label_0a_5184:
 	ld a, [$c29b] ; $5184
-	call Func_00_0628 ; $5187
+	call FarReadByte ; $5187
 	cp a, $ff ; $518a
 	jr z, Label_0a_519a ; $518c
 	cp a, d ; $518e
@@ -2511,7 +2511,7 @@ Label_0a_51a0:
 	ld a, [$c29b] ; $51a0
 	ld de, $c2c0 ; $51a3
 	ld bc, $0008 ; $51a6
-	call Func_00_067a ; $51a9
+	call FarCopyBytes ; $51a9
 	ld a, [$c2c1] ; $51ac
 	ld [$c29a], a ; $51af
 	ld hl, $c2c2 ; $51b2
@@ -2541,7 +2541,7 @@ Func_0a_51cf:
 	add a, [hl] ; $51df
 	ld l, e ; $51e0
 	ld h, d ; $51e1
-	call Func_00_0ac5 ; $51e2
+	call VectorFromLengthAndAngle ; $51e2
 	push hl ; $51e5
 	ld hl, $000e ; $51e6
 	add hl, bc ; $51e9
@@ -2807,7 +2807,7 @@ Func_0a_53e4:
 	push de ; $53e6
 Label_0a_53e7:
 	ld a, [$c29b] ; $53e7
-	call Func_00_063d ; $53ea
+	call FarReadWord ; $53ea
 	ld a, c ; $53ed
 	cp a, $ff ; $53ee
 	jr z, Label_0a_5416 ; $53f0
@@ -2819,7 +2819,7 @@ Label_0a_53e7:
 	inc hl ; $53fb
 	inc hl ; $53fc
 	ld a, [$c29b] ; $53fd
-	call Func_00_063d ; $5400
+	call FarReadWord ; $5400
 	dec hl ; $5403
 	dec hl ; $5404
 	push de ; $5405
@@ -2871,7 +2871,7 @@ Label_0a_543c:
 	ld [hl], a ; $5451
 	pop hl ; $5452
 	ld a, [$c29b] ; $5453
-	call Func_00_015e ; $5456
+	call CallHLInBankA ; $5456
 	farcall FarPtr_0a_02 ; $5459
 Label_0a_545c:
 	pop af ; $545c
@@ -2952,7 +2952,7 @@ Func_0a_54b5:
 	ld a, [$c29b] ; $54d0
 	ld de, $c2c0 ; $54d3
 	ld bc, $0008 ; $54d6
-	call Func_00_067a ; $54d9
+	call FarCopyBytes ; $54d9
 	ld hl, $c2c6 ; $54dc
 	ld b, [hl] ; $54df
 	wram_bank $04 ; $54e0
@@ -3066,7 +3066,7 @@ Func_0a_5574:
 	ld a, [$c29b] ; $5589
 	ld de, $c2c0 ; $558c
 	ld bc, $0008 ; $558f
-	call Func_00_067a ; $5592
+	call FarCopyBytes ; $5592
 	ld hl, $c2c4 ; $5595
 	ld a, [hl+] ; $5598
 	ld h, [hl] ; $5599
@@ -3097,7 +3097,7 @@ Func_0a_55a5:
 	ld a, [$c29b] ; $55ba
 	ld de, $c2c0 ; $55bd
 	ld bc, $0008 ; $55c0
-	call Func_00_067a ; $55c3
+	call FarCopyBytes ; $55c3
 	ld a, [$c2c6] ; $55c6
 	cp a, $01 ; $55c9
 	jr z, Label_0a_55d8 ; $55cb
@@ -3130,7 +3130,7 @@ Func_0a_55dd:
 	ld a, [$c29b] ; $55ef
 	ld de, $c2c0 ; $55f2
 	ld bc, $0008 ; $55f5
-	call Func_00_067a ; $55f8
+	call FarCopyBytes ; $55f8
 	ld hl, $c2c4 ; $55fb
 	ld a, [hl+] ; $55fe
 	ld h, [hl] ; $55ff
@@ -3161,7 +3161,7 @@ Func_0a_560b:
 	ld a, [$c29b] ; $5620
 	ld de, $c2c0 ; $5623
 	ld bc, $0008 ; $5626
-	call Func_00_067a ; $5629
+	call FarCopyBytes ; $5629
 	ld hl, $c2c4 ; $562c
 	ld a, [hl+] ; $562f
 	ld h, [hl] ; $5630
@@ -3395,11 +3395,11 @@ LoadStorySceneGraphics:
 	ld hl, $d000 ; $58a1
 	ld de, $b000 ; $58a4
 	ld c, $80 ; $58a7
-	call Func_00_0480 ; $58a9
+	call QueueVRAMCopy ; $58a9
 	ld hl, $d800 ; $58ac
 	ld de, $a800 ; $58af
 	ld c, $80 ; $58b2
-	call Func_00_0480 ; $58b4
+	call QueueVRAMCopy ; $58b4
 	wram_bank $06 ; $58b7
 	pop hl ; $58bd
 	ld de, $d800 ; $58be
@@ -3454,13 +3454,13 @@ InitSceneScroll:
 	ld a, $25 ; $5934
 	ld [$c32d], a ; $5936
 	xor a, a ; $5939
-	ldh [$ff8a], a ; $593a
-	ldh [$ff8b], a ; $593c
-	ldh [$ffb9], a ; $593e
-	ldh [$ffb8], a ; $5940
-	ld [$c320], a ; $5942
+	ldh [hScrollY], a ; $593a
+	ldh [hScrollX], a ; $593c
+	ldh [hBGColumnBlitPending], a ; $593e
+	ldh [hBGRowBlitPending], a ; $5940
+	ld [wCameraX], a ; $5942
 	ld [$c321], a ; $5945
-	ld [$c322], a ; $5948
+	ld [wCameraY], a ; $5948
 	ld [$c323], a ; $594b
 	ld [$c324], a ; $594e
 	ld [$c325], a ; $5951
@@ -3490,11 +3490,11 @@ UpdateSceneScroll:
 	bit 7, a ; $5980
 	jr nz, Label_0a_598c ; $5982
 	ld bc, $fb13 ; $5984
-	call Func_00_222c ; $5987
+	call BlitBGRowFrom64 ; $5987
 	jr Label_0a_5992 ; $598a
 Label_0a_598c:
 	ld bc, $fb00 ; $598c
-	call Func_00_222c ; $598f
+	call BlitBGRowFrom64 ; $598f
 Label_0a_5992:
 	ld a, [$c324] ; $5992
 	ld h, a ; $5995
@@ -3504,13 +3504,13 @@ Label_0a_5992:
 	bit 7, a ; $599c
 	jr nz, Label_0a_59a8 ; $599e
 	ld bc, $15fa ; $59a0
-	call Func_00_2299 ; $59a3
+	call BlitBGColumnFrom64 ; $59a3
 	jr Label_0a_59ae ; $59a6
 Label_0a_59a8:
 	ld bc, $00fa ; $59a8
-	call Func_00_2299 ; $59ab
+	call BlitBGColumnFrom64 ; $59ab
 Label_0a_59ae:
-	ld a, [$c322] ; $59ae
+	ld a, [wCameraY] ; $59ae
 	ld l, a ; $59b1
 	ld a, [$c323] ; $59b2
 	ld h, a ; $59b5
@@ -3521,8 +3521,8 @@ Label_0a_59ae:
 	ld a, h ; $59bc
 	ld hl, $c369 ; $59bd
 	add a, [hl] ; $59c0
-	ldh [$ff8a], a ; $59c1
-	ld a, [$c320] ; $59c3
+	ldh [hScrollY], a ; $59c1
+	ld a, [wCameraX] ; $59c3
 	ld l, a ; $59c6
 	ld a, [$c321] ; $59c7
 	ld h, a ; $59ca
@@ -3533,7 +3533,7 @@ Label_0a_59ae:
 	ld a, h ; $59d1
 	ld hl, $c368 ; $59d2
 	add a, [hl] ; $59d5
-	ldh [$ff8b], a ; $59d6
+	ldh [hScrollX], a ; $59d6
 	ret ; $59d8
 SceneGfxSlotTable:
 	; $59d9, 592 bytes (37 records x 8 slot words)
@@ -3838,11 +3838,11 @@ Func_0a_5d2a:
 	ld hl, $d000 ; $5d76
 	ld de, $9000 ; $5d79
 	ld bc, $0080 ; $5d7c
-	call Func_00_18eb ; $5d7f
+	call StartVRAMDMAFromHL ; $5d7f
 	ld hl, $d800 ; $5d82
 	ld de, $8800 ; $5d85
 	ld bc, $0080 ; $5d88
-	call Func_00_18eb ; $5d8b
+	call StartVRAMDMAFromHL ; $5d8b
 	wram_bank $06 ; $5d8e
 	pop hl ; $5d94
 	ld de, $d800 ; $5d95
@@ -3869,7 +3869,7 @@ Func_0a_5d2a:
 	call CopyDataFromBank ; $5dd1
 	ld hl, $d008 ; $5dd4
 	ld de, $0107 ; $5dd7
-	call Func_00_05e1 ; $5dda
+	call LoadPalettesMasterOnly ; $5dda
 	pop hl ; $5ddd
 	pop de ; $5dde
 	pop bc ; $5ddf
@@ -3905,7 +3905,7 @@ LoadAndDisplayScene:
 	call AdvanceFrame ; $5e1b
 	ret ; $5e1e
 Func_0a_5e1f:
-	ldh a, [$ff94] ; $5e1f
+	ldh a, [hInputRisingEdge] ; $5e1f
 	bit 1, a ; $5e21
 	ret z ; $5e23
 	ld a, [$c32d] ; $5e24
@@ -4223,8 +4223,8 @@ Func_0a_601c:
 	and a, $7f ; $6021
 	ld [$c32e], a ; $6023
 	xor a, a ; $6026
-	ldh [$ff8a], a ; $6027
-	ldh [$ff8b], a ; $6029
+	ldh [hScrollY], a ; $6027
+	ldh [hScrollX], a ; $6029
 	dec a ; $602b
 	ld [$c33d], a ; $602c
 	ld hl, SceneGfxSlotTable ; $602f
@@ -4250,8 +4250,8 @@ Label_0a_6035:
 	call LoadAndDisplayScene ; $6051
 Label_0a_6054:
 	xor a, a ; $6054
-	ldh [$ffb9], a ; $6055
-	ldh [$ffb8], a ; $6057
+	ldh [hBGColumnBlitPending], a ; $6055
+	ldh [hBGRowBlitPending], a ; $6057
 	farcall FarPtr_05_00 ; $6059
 	ld a, $01 ; $605c
 	ld hl, $60c1 ; $605e
@@ -4272,8 +4272,8 @@ Func_0a_6076:
 	push de ; $6078
 	push hl ; $6079
 	xor a, a ; $607a
-	ldh [$ff8a], a ; $607b
-	ldh [$ff8b], a ; $607d
+	ldh [hScrollY], a ; $607b
+	ldh [hScrollX], a ; $607d
 	ld hl, SceneGfxSlotTable ; $607f
 	ld bc, rIE ; $6082
 Label_0a_6085:
@@ -4321,11 +4321,11 @@ Func_0a_60c2:
 	jr z, Label_0a_60e4 ; $60d2
 	jr c, Label_0a_60de ; $60d4
 	ld bc, $fb13 ; $60d6
-	call Func_00_222c ; $60d9
+	call BlitBGRowFrom64 ; $60d9
 	jr Label_0a_60e4 ; $60dc
 Label_0a_60de:
 	ld bc, $fb00 ; $60de
-	call Func_00_222c ; $60e1
+	call BlitBGRowFrom64 ; $60e1
 Label_0a_60e4:
 	pop hl ; $60e4
 	ld a, [$c321] ; $60e5
@@ -4333,13 +4333,13 @@ Label_0a_60e4:
 	jr z, Label_0a_60fb ; $60e9
 	jr c, Label_0a_60f5 ; $60eb
 	ld bc, $15fa ; $60ed
-	call Func_00_2299 ; $60f0
+	call BlitBGColumnFrom64 ; $60f0
 	jr Label_0a_60fb ; $60f3
 Label_0a_60f5:
 	ld bc, $00fa ; $60f5
-	call Func_00_2299 ; $60f8
+	call BlitBGColumnFrom64 ; $60f8
 Label_0a_60fb:
-	ld a, [$c322] ; $60fb
+	ld a, [wCameraY] ; $60fb
 	ld c, a ; $60fe
 	ld a, [$c323] ; $60ff
 	sla c ; $6102
@@ -4348,8 +4348,8 @@ Label_0a_60fb:
 	rla ; $6107
 	sla c ; $6108
 	rla ; $610a
-	ldh [$ff8a], a ; $610b
-	ld a, [$c320] ; $610d
+	ldh [hScrollY], a ; $610b
+	ld a, [wCameraX] ; $610d
 	ld c, a ; $6110
 	ld a, [$c321] ; $6111
 	sla c ; $6114
@@ -4358,7 +4358,7 @@ Label_0a_60fb:
 	rla ; $6119
 	sla c ; $611a
 	rla ; $611c
-	ldh [$ff8b], a ; $611d
+	ldh [hScrollX], a ; $611d
 	ret ; $611f
 	INCBIN "data/bank_00a/d_6120.bin" ; $6120, 64 bytes
 Func_0a_6160:
@@ -4372,7 +4372,7 @@ Func_0a_6160:
 	add hl, de ; $616c
 	ld d, h ; $616d
 	ld e, l ; $616e
-	ld a, [$c320] ; $616f
+	ld a, [wCameraX] ; $616f
 	ld l, a ; $6172
 	ld a, [$c321] ; $6173
 	ld h, a ; $6176
@@ -4384,10 +4384,10 @@ Func_0a_6160:
 	inc de ; $617c
 	add hl, bc ; $617d
 	ld a, l ; $617e
-	ld [$c320], a ; $617f
+	ld [wCameraX], a ; $617f
 	ld a, h ; $6182
 	ld [$c321], a ; $6183
-	ld a, [$c322] ; $6186
+	ld a, [wCameraY] ; $6186
 	ld l, a ; $6189
 	ld a, [$c323] ; $618a
 	ld h, a ; $618d
@@ -4399,7 +4399,7 @@ Func_0a_6160:
 	inc de ; $6193
 	add hl, bc ; $6194
 	ld a, l ; $6195
-	ld [$c322], a ; $6196
+	ld [wCameraY], a ; $6196
 	ld a, h ; $6199
 	ld [$c323], a ; $619a
 	ret ; $619d
@@ -4571,7 +4571,7 @@ Label_0a_627e:
 Label_0a_628d:
 	ld d, h ; $628d
 	ld e, l ; $628e
-	ld hl, $c320 ; $628f
+	ld hl, wCameraX ; $628f
 	ld a, c ; $6292
 	ld [hl+], a ; $6293
 	ld a, b ; $6294
@@ -4634,11 +4634,11 @@ LoadCourtSceneGraphics:
 	ld hl, $d000 ; $6336
 	ld de, $b000 ; $6339
 	ld c, $80 ; $633c
-	call Func_00_0480 ; $633e
+	call QueueVRAMCopy ; $633e
 	ld hl, $d800 ; $6341
 	ld de, $a800 ; $6344
 	ld c, $80 ; $6347
-	call Func_00_0480 ; $6349
+	call QueueVRAMCopy ; $6349
 	wram_bank $04 ; $634c
 	pop hl ; $6352
 	ld de, $dea8 ; $6353
@@ -4953,7 +4953,7 @@ Label_0a_64ef:
 	ld h, $40 ; $652a
 	ld de, $db12 ; $652c
 	ld bc, $0002 ; $652f
-	call Func_00_067a ; $6532
+	call FarCopyBytes ; $6532
 	pop bc ; $6535
 	ld hl, $db10 ; $6536
 	ld a, [hl+] ; $6539
@@ -4967,7 +4967,7 @@ Label_0a_64ef:
 	pop bc ; $6543
 	ld a, b ; $6544
 	pop bc ; $6545
-	call Func_00_067a ; $6546
+	call FarCopyBytes ; $6546
 	ld hl, $db10 ; $6549
 	ld a, [hl+] ; $654c
 	ld h, [hl] ; $654d
@@ -4988,7 +4988,7 @@ Label_0a_64ef:
 	ld h, [hl] ; $6566
 	ld l, a ; $6567
 	push hl ; $6568
-	call Func_00_0480 ; $6569
+	call QueueVRAMCopy ; $6569
 	pop hl ; $656c
 	pop bc ; $656d
 	add hl, bc ; $656e
@@ -5233,7 +5233,7 @@ Func_0a_66ae:
 	rrca ; $66d4
 	rrca ; $66d5
 	and a, $c0 ; $66d6
-	call Func_00_0af8 ; $66d8
+	call VectorFromLengthAndAngleRaw ; $66d8
 	ld a, c ; $66db
 	add a, e ; $66dc
 	ld e, a ; $66dd
@@ -5484,7 +5484,7 @@ Label_0a_684b:
 	inc de ; $6872
 	push de ; $6873
 	ld a, b ; $6874
-	call Func_00_0ac5 ; $6875
+	call VectorFromLengthAndAngle ; $6875
 	ld c, l ; $6878
 	ld b, h ; $6879
 	ld hl, $dcf6 ; $687a
@@ -5738,14 +5738,14 @@ Label_0a_6e3f:
 	INCBIN "data/bank_00a/d_6e40.bin" ; $6e40, 52 bytes
 Func_0a_6e74:
 	ld c, $04 ; $6e74
-	call Func_00_1d20 ; $6e76
-	call Func_00_1da4 ; $6e79
+	call BeginFadeOut ; $6e76
+	call WaitFadeEnd ; $6e79
 	set_flag $0d, 6 ; $6e7c
 	sound $2c ; $6e7f
 	farcall FarPtr_01_0a ; $6e81
 	ld hl, $6e6c ; $6e84
 	ld de, $0001 ; $6e87
-	call Func_00_05e1 ; $6e8a
+	call LoadPalettesMasterOnly ; $6e8a
 	xor a, a ; $6e8d
 	ld [$cb00], a ; $6e8e
 Label_0a_6e91:
@@ -5790,13 +5790,13 @@ Label_0a_6eac:
 Label_0a_6ee3:
 	clear_flag $0d, 5 ; $6ee3
 	ld c, $04 ; $6ee6
-	call Func_00_1d20 ; $6ee8
-	call Func_00_1da4 ; $6eeb
+	call BeginFadeOut ; $6ee8
+	call WaitFadeEnd ; $6eeb
 	ld a, $90 ; $6eee
 	ldh [rWY], a ; $6ef0
 	ld hl, $cb00 ; $6ef2
 	inc [hl] ; $6ef5
-	ldh a, [$ff9e] ; $6ef6
+	ldh a, [hDebugStepMode] ; $6ef6
 	or a, a ; $6ef8
 	jr z, Label_0a_6f01 ; $6ef9
 	ldh a, [hPlayerInputFlags] ; $6efb
@@ -5807,11 +5807,11 @@ Label_0a_6f01:
 Label_0a_6f03:
 	farcall FarPtr_03_3e ; $6f03
 	ld c, $08 ; $6f06
-	call Func_00_1d20 ; $6f08
-	call Func_00_1da4 ; $6f0b
+	call BeginFadeOut ; $6f08
+	call WaitFadeEnd ; $6f0b
 	xor a, a ; $6f0e
-	ldh [$ff8b], a ; $6f0f
-	ldh [$ff8a], a ; $6f11
+	ldh [hScrollX], a ; $6f0f
+	ldh [hScrollY], a ; $6f11
 	farcall FarPtr_01_0a ; $6f13
 	clear_flag $0d, 6 ; $6f16
 	clear_flag $0d, 7 ; $6f19

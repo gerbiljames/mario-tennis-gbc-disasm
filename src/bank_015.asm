@@ -262,8 +262,8 @@ Label_15_444d:
 	farcall FarPtr_0a_3a ; $4468
 	farcall FarPtr_0a_3e ; $446b
 	ld c, $04 ; $446e
-	call Func_00_1d2e ; $4470
-	call Func_00_1da4 ; $4473
+	call BeginFadeIn ; $4470
+	call WaitFadeEnd ; $4473
 	ld a, $03 ; $4476
 	ld bc, $1200 ; $4478
 	ld de, $2900 ; $447b
@@ -504,8 +504,8 @@ Label_15_444d:
 	farcall FarPtr_0a_04 ; $46aa
 	pop af ; $46ad
 	ld c, $08 ; $46ae
-	call Func_00_1d20 ; $46b0
-	call Func_00_1da4 ; $46b3
+	call BeginFadeOut ; $46b0
+	call WaitFadeEnd ; $46b3
 	ret ; $46b6
 Func_15_46b7:
 	call Func_15_475f ; $46b7
@@ -1283,14 +1283,14 @@ Func_15_4d5d:
 	farcall FarPtr_0a_3c ; $4e04
 	ld hl, $5950 ; $4e07
 	ld de, $0206 ; $4e0a
-	call Func_00_05b5 ; $4e0d
+	call LoadPalettesImmediate ; $4e0d
 	push af ; $4e10
 	ld a, $1e ; $4e11
 	farcall FarPtr_0a_04 ; $4e13
 	pop af ; $4e16
 	ld hl, $5990 ; $4e17
 	ld de, $0206 ; $4e1a
-	call Func_00_05b5 ; $4e1d
+	call LoadPalettesImmediate ; $4e1d
 	sound $8a ; $4e20
 	ld a, $10 ; $4e22
 Label_15_4e24:
@@ -1402,8 +1402,8 @@ Label_15_4ef5:
 	farcall FarPtr_0a_04 ; $4f06
 	pop af ; $4f09
 	ld c, $03 ; $4f0a
-	call Func_00_1d20 ; $4f0c
-	call Func_00_1da4 ; $4f0f
+	call BeginFadeOut ; $4f0c
+	call WaitFadeEnd ; $4f0f
 	sound $8e ; $4f12
 	ld a, $15 ; $4f14
 	ld bc, $3300 ; $4f16
@@ -1414,8 +1414,8 @@ Label_15_4ef5:
 	farcall FarPtr_0a_04 ; $4f22
 	pop af ; $4f25
 	ld c, $03 ; $4f26
-	call Func_00_1d2e ; $4f28
-	call Func_00_1da4 ; $4f2b
+	call BeginFadeIn ; $4f28
+	call WaitFadeEnd ; $4f2b
 	push af ; $4f2e
 	ld a, $3c ; $4f2f
 	farcall FarPtr_0a_04 ; $4f31
@@ -1503,14 +1503,14 @@ Label_15_4f9f:
 	farcall FarPtr_0a_22 ; $4fe7
 	ld hl, $5950 ; $4fea
 	ld de, $0206 ; $4fed
-	call Func_00_05b5 ; $4ff0
+	call LoadPalettesImmediate ; $4ff0
 	push af ; $4ff3
 	ld a, $1e ; $4ff4
 	farcall FarPtr_0a_04 ; $4ff6
 	pop af ; $4ff9
 	ld hl, $5910 ; $4ffa
 	ld de, $0206 ; $4ffd
-	call Func_00_05b5 ; $5000
+	call LoadPalettesImmediate ; $5000
 	push af ; $5003
 	ld a, $1e ; $5004
 	farcall FarPtr_0a_04 ; $5006
@@ -1884,8 +1884,8 @@ Label_15_53d2:
 	farcall FarPtr_0a_3a ; $5425
 	farcall FarPtr_0a_3e ; $5428
 	ld c, $08 ; $542b
-	call Func_00_1d2e ; $542d
-	call Func_00_1da4 ; $5430
+	call BeginFadeIn ; $542d
+	call WaitFadeEnd ; $5430
 	call Func_15_6179 ; $5433
 	ret ; $5436
 Label_15_5437:
@@ -1916,8 +1916,8 @@ Label_15_5437:
 	ld b, $80 ; $5474
 	farcall FarPtr_0a_2e ; $5476
 	ld c, $04 ; $5479
-	call Func_00_1d2e ; $547b
-	call Func_00_1da4 ; $547e
+	call BeginFadeIn ; $547b
+	call WaitFadeEnd ; $547e
 	ret ; $5481
 Label_15_5482:
 	xor a, a ; $5482
@@ -1955,8 +1955,8 @@ Label_15_5482:
 	farcall FarPtr_0a_3a ; $54d5
 	farcall FarPtr_0a_3e ; $54d8
 	ld c, $08 ; $54db
-	call Func_00_1d2e ; $54dd
-	call Func_00_1da4 ; $54e0
+	call BeginFadeIn ; $54dd
+	call WaitFadeEnd ; $54e0
 	call Func_15_6179 ; $54e3
 	ret ; $54e6
 Label_15_54e7:
@@ -1987,8 +1987,8 @@ Label_15_54e7:
 	ld b, $00 ; $5524
 	farcall FarPtr_0a_2e ; $5526
 	ld c, $04 ; $5529
-	call Func_00_1d2e ; $552b
-	call Func_00_1da4 ; $552e
+	call BeginFadeIn ; $552b
+	call WaitFadeEnd ; $552e
 	ret ; $5531
 Label_15_5532:
 	xor a, a ; $5532
@@ -2026,8 +2026,8 @@ Label_15_5532:
 	farcall FarPtr_0a_3a ; $5585
 	farcall FarPtr_0a_3e ; $5588
 	ld c, $08 ; $558b
-	call Func_00_1d2e ; $558d
-	call Func_00_1da4 ; $5590
+	call BeginFadeIn ; $558d
+	call WaitFadeEnd ; $5590
 	call Func_15_6179 ; $5593
 	ret ; $5596
 Label_15_5597:
@@ -2058,11 +2058,11 @@ Label_15_5597:
 	ld b, $c0 ; $55d4
 	farcall FarPtr_0a_2e ; $55d6
 	ld c, $04 ; $55d9
-	call Func_00_1d2e ; $55db
-	call Func_00_1da4 ; $55de
+	call BeginFadeIn ; $55db
+	call WaitFadeEnd ; $55de
 	ret ; $55e1
 	INCBIN "data/bank_015/d_55e2.bin" ; $55e2, 14 bytes
-	ldh a, [$ff94] ; $55f0
+	ldh a, [hInputRisingEdge] ; $55f0
 	and a, $03 ; $55f2
 	ld d, a ; $55f4
 	ld hl, $c2b8 ; $55f5
@@ -2260,7 +2260,7 @@ Label_15_572a:
 	jp nz, Label_15_572a ; $5755
 	ld hl, $58d1 ; $5758
 	call UnregisterFrameTask ; $575b
-	call Func_00_2725 ; $575e
+	call WaitFramesCmd ; $575e
 	db $3c ; $5761 inline arg
 	ld hl, $1aa4 ; $5762
 	farcall FarPtr_0a_0e ; $5765
@@ -2293,7 +2293,7 @@ Label_15_578c:
 	ld l, a ; $5792
 	ld a, $00 ; $5793
 	ld e, $3c ; $5795
-	call Func_00_0fbc ; $5797
+	call DivAHLByE ; $5797
 	ld de, $2010 ; $579a
 	farcall FarPtr_39_66 ; $579d
 	ld hl, wWaterSpriteMinigameSwingCount ; $57a0
@@ -2311,7 +2311,7 @@ Func_15_5898:
 	ld hl, $57d0 ; $58a1
 	ld de, $a000 ; $58a4
 	ld c, $0c ; $58a7
-	call Func_00_0480 ; $58a9
+	call QueueVRAMCopy ; $58a9
 	ld hl, $5890 ; $58ac
 	ld de, $0802 ; $58af
 	call LoadPaletteShadow ; $58b2
@@ -2390,8 +2390,8 @@ Func_15_59c0:
 	ld de, $3700 ; $5a1c
 	farcall FarPtr_0a_3a ; $5a1f
 	ld c, $04 ; $5a22
-	call Func_00_1d2e ; $5a24
-	call Func_00_1da4 ; $5a27
+	call BeginFadeIn ; $5a24
+	call WaitFadeEnd ; $5a27
 	ld a, $0d ; $5a2a
 	farcall FarPtr_0a_20 ; $5a2c
 	ld a, $0d ; $5a2f
@@ -2612,7 +2612,7 @@ Func_15_59c0:
 	farcall FarPtr_0a_04 ; $5c33
 	pop af ; $5c36
 	ld c, $08 ; $5c37
-	call Func_00_1d20 ; $5c39
+	call BeginFadeOut ; $5c39
 	push af ; $5c3c
 	ld a, $14 ; $5c3d
 	farcall FarPtr_0a_04 ; $5c3f
@@ -2671,8 +2671,8 @@ Func_15_5cf3:
 	farcall FarPtr_0a_3a ; $5d46
 	farcall FarPtr_0a_3e ; $5d49
 	ld c, $08 ; $5d4c
-	call Func_00_1d2e ; $5d4e
-	call Func_00_1da4 ; $5d51
+	call BeginFadeIn ; $5d4e
+	call WaitFadeEnd ; $5d51
 	ld a, [wPointWinLoseFlag] ; $5d54
 	inc a ; $5d57
 	cp a, $01 ; $5d58
@@ -2728,8 +2728,8 @@ Func_15_5d74:
 	farcall FarPtr_0a_3a ; $5dc7
 	farcall FarPtr_0a_3e ; $5dca
 	ld c, $08 ; $5dcd
-	call Func_00_1d2e ; $5dcf
-	call Func_00_1da4 ; $5dd2
+	call BeginFadeIn ; $5dcf
+	call WaitFadeEnd ; $5dd2
 	ld a, [wPointWinLoseFlag] ; $5dd5
 	inc a ; $5dd8
 	cp a, $01 ; $5dd9
@@ -2784,8 +2784,8 @@ Func_15_5df3:
 	farcall FarPtr_0a_3a ; $5e46
 	farcall FarPtr_0a_3e ; $5e49
 	ld c, $08 ; $5e4c
-	call Func_00_1d2e ; $5e4e
-	call Func_00_1da4 ; $5e51
+	call BeginFadeIn ; $5e4e
+	call WaitFadeEnd ; $5e51
 	ld a, [wPointWinLoseFlag] ; $5e54
 	inc a ; $5e57
 	cp a, $01 ; $5e58
@@ -4093,8 +4093,8 @@ Label_15_6dc2:
 	ld [$c294], a ; $6e39
 	ld [$c2a1], a ; $6e3c
 	ld c, $10 ; $6e3f
-	call Func_00_1d20 ; $6e41
-	call Func_00_1da4 ; $6e44
+	call BeginFadeOut ; $6e41
+	call WaitFadeEnd ; $6e44
 	farcall FarPtr_17_0a ; $6e47
 	ret ; $6e4a
 Func_15_6e4b:
@@ -4149,8 +4149,8 @@ Func_15_6e4b:
 	ld [$c294], a ; $6ebc
 	ld [$c2a1], a ; $6ebf
 	ld c, $10 ; $6ec2
-	call Func_00_1d20 ; $6ec4
-	call Func_00_1da4 ; $6ec7
+	call BeginFadeOut ; $6ec4
+	call WaitFadeEnd ; $6ec7
 	farcall FarPtr_17_0a ; $6eca
 	ret ; $6ecd
 Func_15_6ece:
@@ -4205,8 +4205,8 @@ Func_15_6ece:
 	ld [$c294], a ; $6f3f
 	ld [$c2a1], a ; $6f42
 	ld c, $10 ; $6f45
-	call Func_00_1d20 ; $6f47
-	call Func_00_1da4 ; $6f4a
+	call BeginFadeOut ; $6f47
+	call WaitFadeEnd ; $6f4a
 	farcall FarPtr_17_0a ; $6f4d
 	ret ; $6f50
 Func_15_6f51:
@@ -4306,8 +4306,8 @@ Label_15_6fea:
 	ld [$c294], a ; $7056
 	ld [$c2a1], a ; $7059
 	ld c, $10 ; $705c
-	call Func_00_1d20 ; $705e
-	call Func_00_1da4 ; $7061
+	call BeginFadeOut ; $705e
+	call WaitFadeEnd ; $7061
 	farcall FarPtr_17_0a ; $7064
 	ret ; $7067
 Label_15_7068:
@@ -4386,8 +4386,8 @@ Func_15_706e:
 	ld [$c294], a ; $710b
 	ld [$c2a1], a ; $710e
 	ld c, $10 ; $7111
-	call Func_00_1d20 ; $7113
-	call Func_00_1da4 ; $7116
+	call BeginFadeOut ; $7113
+	call WaitFadeEnd ; $7116
 	farcall FarPtr_17_0a ; $7119
 	ret ; $711c
 Func_15_711d:
@@ -4455,8 +4455,8 @@ Func_15_711d:
 	ld [$c294], a ; $71ac
 	ld [$c2a1], a ; $71af
 	ld c, $10 ; $71b2
-	call Func_00_1d20 ; $71b4
-	call Func_00_1da4 ; $71b7
+	call BeginFadeOut ; $71b4
+	call WaitFadeEnd ; $71b7
 	farcall FarPtr_17_0a ; $71ba
 	ret ; $71bd
 Func_15_71be:
@@ -4482,7 +4482,7 @@ Func_15_71d4:
 	ld a, [hl+] ; $71df
 	ld d, [hl] ; $71e0
 	ld e, a ; $71e1
-	call Func_00_24ef ; $71e2
+	call TestGameFlagByNumber ; $71e2
 	ret ; $71e5
 	ld a, [$c2b0] ; $71e6
 	add a, a ; $71e9
@@ -4494,7 +4494,7 @@ Func_15_71d4:
 	ld a, [hl+] ; $71f1
 	ld d, [hl] ; $71f2
 	ld e, a ; $71f3
-	call Func_00_2509 ; $71f4
+	call SetGameFlagByNumber ; $71f4
 	ret ; $71f7
 	; $71f8, 12 bytes (records:2)
 ; 6 records x 2 bytes
@@ -4527,7 +4527,7 @@ Func_15_721a:
 	ld a, [hl+] ; $7225
 	ld d, [hl] ; $7226
 	ld e, a ; $7227
-	call Func_00_24ef ; $7228
+	call TestGameFlagByNumber ; $7228
 	ret ; $722b
 	ld a, [$c2b0] ; $722c
 	add a, a ; $722f
@@ -4539,7 +4539,7 @@ Func_15_721a:
 	ld a, [hl+] ; $7237
 	ld d, [hl] ; $7238
 	ld e, a ; $7239
-	call Func_00_2509 ; $723a
+	call SetGameFlagByNumber ; $723a
 	ret ; $723d
 	; $723e, 12 bytes (records:2)
 ; 6 records x 2 bytes
@@ -4572,7 +4572,7 @@ Func_15_7260:
 	ld a, [hl+] ; $726b
 	ld d, [hl] ; $726c
 	ld e, a ; $726d
-	call Func_00_24ef ; $726e
+	call TestGameFlagByNumber ; $726e
 	ret ; $7271
 	ld a, [$c2b0] ; $7272
 	add a, a ; $7275
@@ -4584,7 +4584,7 @@ Func_15_7260:
 	ld a, [hl+] ; $727d
 	ld d, [hl] ; $727e
 	ld e, a ; $727f
-	call Func_00_2509 ; $7280
+	call SetGameFlagByNumber ; $7280
 	ret ; $7283
 	; $7284, 12 bytes (records:2)
 ; 6 records x 2 bytes
@@ -4895,8 +4895,8 @@ Func_15_74e1:
 	ld b, $c0 ; $751e
 	farcall FarPtr_0a_2e ; $7520
 	ld c, $04 ; $7523
-	call Func_00_1d2e ; $7525
-	call Func_00_1da4 ; $7528
+	call BeginFadeIn ; $7525
+	call WaitFadeEnd ; $7528
 	ret ; $752b
 Label_15_752c:
 	ld a, $07 ; $752c
@@ -5181,8 +5181,8 @@ Func_15_7752:
 	ld b, $40 ; $778f
 	farcall FarPtr_0a_2e ; $7791
 	ld c, $04 ; $7794
-	call Func_00_1d2e ; $7796
-	call Func_00_1da4 ; $7799
+	call BeginFadeIn ; $7796
+	call WaitFadeEnd ; $7799
 	ret ; $779c
 Label_15_779d:
 	ld a, $12 ; $779d
@@ -5470,8 +5470,8 @@ Func_15_79cb:
 	ld b, $40 ; $7a08
 	farcall FarPtr_0a_2e ; $7a0a
 	ld c, $04 ; $7a0d
-	call Func_00_1d2e ; $7a0f
-	call Func_00_1da4 ; $7a12
+	call BeginFadeIn ; $7a0f
+	call WaitFadeEnd ; $7a12
 	ret ; $7a15
 Label_15_7a16:
 	ld a, $0d ; $7a16

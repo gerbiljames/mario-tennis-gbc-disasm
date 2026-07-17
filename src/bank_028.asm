@@ -66,18 +66,18 @@ Func_28_5eb0:
 	ld hl, $4020 ; $5ec8
 	ld de, $a400 ; $5ecb
 	ld c, $40 ; $5ece
-	call Func_00_0480 ; $5ed0
+	call QueueVRAMCopy ; $5ed0
 	ld hl, MatchGfxTilesA_28 ; $5ed3
 	ld de, $d000 ; $5ed6
 	call DecompressData ; $5ed9
 	ld hl, $d000 ; $5edc
 	ld de, $9000 ; $5edf
 	ld c, $80 ; $5ee2
-	call Func_00_0480 ; $5ee4
+	call QueueVRAMCopy ; $5ee4
 	ld hl, $d800 ; $5ee7
 	ld de, $8800 ; $5eea
 	ld c, $80 ; $5eed
-	call Func_00_0480 ; $5eef
+	call QueueVRAMCopy ; $5eef
 	ld a, [$c8f5] ; $5ef2
 	cp a, $02 ; $5ef5
 	call z, Func_28_5efb ; $5ef7
@@ -111,7 +111,7 @@ Label_28_5f2a:
 	ld hl, MatchGfxMapsA_28 ; $5f2a
 	ld de, $a200 ; $5f2d
 	ld c, $20 ; $5f30
-	call Func_00_0480 ; $5f32
+	call QueueVRAMCopy ; $5f32
 	ret ; $5f35
 Label_28_5f36:
 	call Func_28_6024 ; $5f36
@@ -126,14 +126,14 @@ Label_28_5f3a:
 	ld hl, $4d30 ; $5f4c
 	ld de, $a100 ; $5f4f
 	ld c, $10 ; $5f52
-	call Func_00_0480 ; $5f54
+	call QueueVRAMCopy ; $5f54
 	call Func_28_6024 ; $5f57
 	ret ; $5f5a
 Label_28_5f5b:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
 	ld de, $a200 ; $5f5e
 	ld c, $08 ; $5f61
-	call Func_00_0480 ; $5f63
+	call QueueVRAMCopy ; $5f63
 	call Func_28_6024 ; $5f66
 	ret ; $5f69
 Label_28_5f6a:
@@ -143,7 +143,7 @@ Label_28_5f6a:
 	ld hl, $5470 ; $5f73
 	ld de, $a3c0 ; $5f76
 	ld c, $02 ; $5f79
-	call Func_00_0480 ; $5f7b
+	call QueueVRAMCopy ; $5f7b
 	call Func_28_6024 ; $5f7e
 	ret ; $5f81
 Label_28_5f82:
@@ -153,7 +153,7 @@ Label_28_5f82:
 	ld hl, $5470 ; $5f8b
 	ld de, $a3c0 ; $5f8e
 	ld c, $02 ; $5f91
-	call Func_00_0480 ; $5f93
+	call QueueVRAMCopy ; $5f93
 	call Func_28_6024 ; $5f96
 	ret ; $5f99
 Label_28_5f9a:
@@ -163,18 +163,18 @@ Label_28_5f9a:
 	ld hl, $5490 ; $5fa3
 	ld de, $a200 ; $5fa6
 	ld c, $10 ; $5fa9
-	call Func_00_0480 ; $5fab
+	call QueueVRAMCopy ; $5fab
 	ld hl, $5470 ; $5fae
 	ld de, $a3c0 ; $5fb1
 	ld c, $02 ; $5fb4
-	call Func_00_0480 ; $5fb6
+	call QueueVRAMCopy ; $5fb6
 	call Func_28_6024 ; $5fb9
 	ret ; $5fbc
 Label_28_5fbd:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
 	ld de, $a200 ; $5fc0
 	ld c, $08 ; $5fc3
-	call Func_00_0480 ; $5fc5
+	call QueueVRAMCopy ; $5fc5
 	ld hl, $5e80 ; $5fc8
 	ld de, $0e01 ; $5fcb
 	call LoadPaletteShadow ; $5fce
@@ -184,7 +184,7 @@ Label_28_5fbd:
 	ld hl, $5470 ; $5fda
 	ld de, $a3c0 ; $5fdd
 	ld c, $02 ; $5fe0
-	call Func_00_0480 ; $5fe2
+	call QueueVRAMCopy ; $5fe2
 	call Func_28_6024 ; $5fe5
 	ret ; $5fe8
 Label_28_5fe9:
@@ -194,11 +194,11 @@ Label_28_5fe9:
 	ld hl, $4e30 ; $5ff2
 	ld de, $a100 ; $5ff5
 	ld c, $10 ; $5ff8
-	call Func_00_0480 ; $5ffa
+	call QueueVRAMCopy ; $5ffa
 	ld hl, $5130 ; $5ffd
 	ld de, $a200 ; $6000
 	ld c, $10 ; $6003
-	call Func_00_0480 ; $6005
+	call QueueVRAMCopy ; $6005
 	call Func_28_6024 ; $6008
 	ret ; $600b
 Label_28_600c:
@@ -208,14 +208,14 @@ Label_28_600c:
 	ld hl, $4e30 ; $6015
 	ld de, $a100 ; $6018
 	ld c, $30 ; $601b
-	call Func_00_0480 ; $601d
+	call QueueVRAMCopy ; $601d
 	call Func_28_6024 ; $6020
 	ret ; $6023
 Func_28_6024:
 	ld hl, $5590 ; $6024
 	ld de, $8080 ; $6027
 	ld c, $14 ; $602a
-	call Func_00_0480 ; $602c
+	call QueueVRAMCopy ; $602c
 	ret ; $602f
 Func_28_6030:
 	rrca ; $6030
@@ -228,7 +228,7 @@ Func_28_6030:
 	ld h, a ; $603a
 	ld de, $a740 ; $603b
 	ld c, $04 ; $603e
-	call Func_00_0480 ; $6040
+	call QueueVRAMCopy ; $6040
 	ret ; $6043
 Func_28_6044:
 	rrca ; $6044
@@ -241,7 +241,7 @@ Func_28_6044:
 	ld h, a ; $604e
 	ld de, $a780 ; $604f
 	ld c, $04 ; $6052
-	call Func_00_0480 ; $6054
+	call QueueVRAMCopy ; $6054
 	ret ; $6057
 Func_28_6058:
 	rrca ; $6058
@@ -254,7 +254,7 @@ Func_28_6058:
 	ld h, a ; $6062
 	ld de, $a7c0 ; $6063
 	ld c, $04 ; $6066
-	call Func_00_0480 ; $6068
+	call QueueVRAMCopy ; $6068
 	ret ; $606b
 Func_28_606c:
 	add a, a ; $606c
@@ -268,7 +268,7 @@ Func_28_606c:
 	ld l, a ; $6076
 	ld de, $a300 ; $6077
 	ld c, $0c ; $607a
-	call Func_00_0480 ; $607c
+	call QueueVRAMCopy ; $607c
 	ret ; $607f
 	INCBIN "data/bank_028/d_6080.bin" ; $6080, 6 bytes
 Func_28_6086:
@@ -283,7 +283,7 @@ Func_28_6086:
 	ld l, a ; $6090
 	ld de, $a300 ; $6091
 	ld c, $0c ; $6094
-	call Func_00_0480 ; $6096
+	call QueueVRAMCopy ; $6096
 	ret ; $6099
 	INCBIN "data/bank_028/d_609a.bin" ; $609a, 6 bytes
 Func_28_60a0:
@@ -310,7 +310,7 @@ Func_28_60a0:
 	add hl, de ; $60b7
 	ld de, $a300 ; $60b8
 	ld c, $04 ; $60bb
-	call Func_00_0480 ; $60bd
+	call QueueVRAMCopy ; $60bd
 	ret ; $60c0
 	INCBIN "data/bank_028/d_60c1.bin" ; $60c1, 8 bytes
 Func_28_60c9:
@@ -327,7 +327,7 @@ Func_28_60c9:
 	ld hl, $d000 ; $60ea
 	ld de, $9000 ; $60ed
 	ld c, $20 ; $60f0
-	call Func_00_0480 ; $60f2
+	call QueueVRAMCopy ; $60f2
 	push af ; $60f5
 	ldh a, [rLCDC] ; $60f6
 	bit 7, a ; $60f8
@@ -338,7 +338,7 @@ Label_28_60ff:
 	ld hl, $d200 ; $6100
 	ld de, $9200 ; $6103
 	ld c, $20 ; $6106
-	call Func_00_0480 ; $6108
+	call QueueVRAMCopy ; $6108
 	push af ; $610b
 	ldh a, [rLCDC] ; $610c
 	bit 7, a ; $610e
@@ -349,7 +349,7 @@ Label_28_6115:
 	ld hl, $d400 ; $6116
 	ld de, $9400 ; $6119
 	ld c, $20 ; $611c
-	call Func_00_0480 ; $611e
+	call QueueVRAMCopy ; $611e
 	push af ; $6121
 	ldh a, [rLCDC] ; $6122
 	bit 7, a ; $6124
@@ -360,7 +360,7 @@ Label_28_612b:
 	ld hl, $d600 ; $612c
 	ld de, $9600 ; $612f
 	ld c, $20 ; $6132
-	call Func_00_0480 ; $6134
+	call QueueVRAMCopy ; $6134
 	push af ; $6137
 	ldh a, [rLCDC] ; $6138
 	bit 7, a ; $613a
@@ -380,7 +380,7 @@ Label_28_6141:
 	ld hl, $de00 ; $615a
 	ld de, $8e00 ; $615d
 	ld c, $20 ; $6160
-	call Func_00_0480 ; $6162
+	call QueueVRAMCopy ; $6162
 	push af ; $6165
 	ldh a, [rLCDC] ; $6166
 	bit 7, a ; $6168

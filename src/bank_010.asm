@@ -45,13 +45,13 @@ MatchSelectRecordsTail_10:
 Func_10_40b0:
 	farcall FarPtr_0a_00 ; $40b0
 	ld c, $10 ; $40b3
-	call Func_00_1d20 ; $40b5
-	call Func_00_1da4 ; $40b8
+	call BeginFadeOut ; $40b5
+	call WaitFadeEnd ; $40b8
 	ld b, $00 ; $40bb
 	farcall FarPtr_38_00 ; $40bd
 	ld c, $10 ; $40c0
-	call Func_00_1d20 ; $40c2
-	call Func_00_1da4 ; $40c5
+	call BeginFadeOut ; $40c2
+	call WaitFadeEnd ; $40c5
 	farcall FarPtr_0a_68 ; $40c8
 	call DisableLCDSafely ; $40cb
 	farcall FarPtr_01_0a ; $40ce
@@ -69,30 +69,30 @@ Func_10_40b0:
 Func_10_40ef:
 	farcall FarPtr_0a_00 ; $40ef
 	farcall FarPtr_03_36 ; $40f2
-	call Func_00_2725 ; $40f5
+	call WaitFramesCmd ; $40f5
 	db $3c ; $40f8 inline arg
 	call EnableLCD ; $40f9
 	farcall FarPtr_03_38 ; $40fc
 	ld c, $04 ; $40ff
-	call Func_00_1d2e ; $4101
-	call Func_00_1da4 ; $4104
+	call BeginFadeIn ; $4101
+	call WaitFadeEnd ; $4104
 	sound $14 ; $4107
 	ld a, $01 ; $4109
 	ld hl, $4141 ; $410b
 	call RegisterFrameTask ; $410e
-	call Func_00_2725 ; $4111
+	call WaitFramesCmd ; $4111
 	db $78 ; $4114 inline arg
-	call Func_00_2725 ; $4115
+	call WaitFramesCmd ; $4115
 	db $ff ; $4118 inline arg
-	call Func_00_2725 ; $4119
+	call WaitFramesCmd ; $4119
 	db $ff ; $411c inline arg
-	call Func_00_2725 ; $411d
+	call WaitFramesCmd ; $411d
 	db $ff ; $4120 inline arg
-	call Func_00_2725 ; $4121
+	call WaitFramesCmd ; $4121
 	db $ff ; $4124 inline arg
-	call Func_00_2725 ; $4125
+	call WaitFramesCmd ; $4125
 	db $ff ; $4128 inline arg
-	call Func_00_2725 ; $4129
+	call WaitFramesCmd ; $4129
 	db $ff ; $412c inline arg
 	ld hl, $4141 ; $412d
 	call UnregisterFrameTask ; $4130
@@ -575,8 +575,8 @@ Label_10_4524:
 	ld [$c294], a ; $454a
 	ld [$c2a1], a ; $454d
 	ld c, $10 ; $4550
-	call Func_00_1d20 ; $4552
-	call Func_00_1da4 ; $4555
+	call BeginFadeOut ; $4552
+	call WaitFadeEnd ; $4555
 	farcall FarPtr_17_0a ; $4558
 	ret ; $455b
 Label_10_455c:
@@ -597,8 +597,8 @@ Label_10_455c:
 	ld [$c294], a ; $4582
 	ld [$c2a1], a ; $4585
 	ld c, $10 ; $4588
-	call Func_00_1d20 ; $458a
-	call Func_00_1da4 ; $458d
+	call BeginFadeOut ; $458a
+	call WaitFadeEnd ; $458d
 	farcall FarPtr_17_0a ; $4590
 	ret ; $4593
 Label_10_4594:
@@ -619,8 +619,8 @@ Label_10_4594:
 	ld [$c294], a ; $45ba
 	ld [$c2a1], a ; $45bd
 	ld c, $10 ; $45c0
-	call Func_00_1d20 ; $45c2
-	call Func_00_1da4 ; $45c5
+	call BeginFadeOut ; $45c2
+	call WaitFadeEnd ; $45c5
 	farcall FarPtr_17_0a ; $45c8
 	ret ; $45cb
 Label_10_45cc:
@@ -633,14 +633,14 @@ Label_10_45cc:
 	ld [$c294], a ; $45dd
 	ld [$c2a1], a ; $45e0
 	ld c, $10 ; $45e3
-	call Func_00_1d20 ; $45e5
-	call Func_00_1da4 ; $45e8
+	call BeginFadeOut ; $45e5
+	call WaitFadeEnd ; $45e8
 	call ClearFrameTasks ; $45eb
 	xor a, a ; $45ee
-	ldh [$ffb9], a ; $45ef
-	ldh [$ffb8], a ; $45f1
-	ldh [$ff8a], a ; $45f3
-	ldh [$ff8b], a ; $45f5
+	ldh [hBGColumnBlitPending], a ; $45ef
+	ldh [hBGRowBlitPending], a ; $45f1
+	ldh [hScrollY], a ; $45f3
+	ldh [hScrollX], a ; $45f5
 	ld [$c321], a ; $45f7
 	ld [$c323], a ; $45fa
 	call ClearFrameTasks ; $45fd
@@ -649,10 +649,10 @@ Label_10_45cc:
 	ld d, $00 ; $4604
 	farcall FarPtr_1b_1a ; $4606
 	xor a, a ; $4609
-	ldh [$ffb9], a ; $460a
-	ldh [$ffb8], a ; $460c
-	ldh [$ff8a], a ; $460e
-	ldh [$ff8b], a ; $4610
+	ldh [hBGColumnBlitPending], a ; $460a
+	ldh [hBGRowBlitPending], a ; $460c
+	ldh [hScrollY], a ; $460e
+	ldh [hScrollX], a ; $4610
 	ld [$c321], a ; $4612
 	ld [$c323], a ; $4615
 	call ClearFrameTasks ; $4618
@@ -661,10 +661,10 @@ Label_10_45cc:
 	ld d, $00 ; $461f
 	farcall FarPtr_1b_1a ; $4621
 	xor a, a ; $4624
-	ldh [$ffb9], a ; $4625
-	ldh [$ffb8], a ; $4627
-	ldh [$ff8a], a ; $4629
-	ldh [$ff8b], a ; $462b
+	ldh [hBGColumnBlitPending], a ; $4625
+	ldh [hBGRowBlitPending], a ; $4627
+	ldh [hScrollY], a ; $4629
+	ldh [hScrollX], a ; $462b
 	ld [$c321], a ; $462d
 	ld [$c323], a ; $4630
 	call ClearFrameTasks ; $4633
@@ -1016,14 +1016,14 @@ Data_10_4ccb:
 	dw $ff01, $0000, $7bf9, $0101 ; record 0
 	db $ff
 	ld c, $10 ; $4cff
-	call Func_00_1d20 ; $4d01
-	call Func_00_1da4 ; $4d04
+	call BeginFadeOut ; $4d01
+	call WaitFadeEnd ; $4d04
 	ldh a, [hRomBank] ; $4d07
 	ld hl, $4ce3 ; $4d09
 	farcall FarPtr_0a_06 ; $4d0c
 	ld c, $10 ; $4d0f
-	call Func_00_1d2e ; $4d11
-	call Func_00_1da4 ; $4d14
+	call BeginFadeIn ; $4d11
+	call WaitFadeEnd ; $4d14
 	ret ; $4d17
 	ld a, $03 ; $4d18
 	ld bc, $0100 ; $4d1a
@@ -1059,14 +1059,14 @@ Data_10_4ccb:
 	ld [$c2a1], a ; $4d6c
 	ret ; $4d6f
 	ld c, $10 ; $4d70
-	call Func_00_1d20 ; $4d72
-	call Func_00_1da4 ; $4d75
+	call BeginFadeOut ; $4d72
+	call WaitFadeEnd ; $4d75
 	ldh a, [hRomBank] ; $4d78
 	ld hl, $4cd9 ; $4d7a
 	farcall FarPtr_0a_06 ; $4d7d
 	ld c, $10 ; $4d80
-	call Func_00_1d2e ; $4d82
-	call Func_00_1da4 ; $4d85
+	call BeginFadeIn ; $4d82
+	call WaitFadeEnd ; $4d85
 	ret ; $4d88
 	farcall FarPtr_0a_00 ; $4d89
 	ld hl, $0001 ; $4d8c
@@ -1183,7 +1183,7 @@ MatchSelectHandlersA_10:
 	farcall FarPtr_0a_22 ; $4ec1
 	call Func_10_4f0d ; $4ec4
 	farcall FarPtr_TestStorySlotFlagA ; $4ec7
-	call Func_00_2f86 ; $4eca
+	call SetMusicMuted ; $4eca
 	ret ; $4ecd
 ApplyMatchTypeSettings:
 	ld hl, $4f08 ; $4ece
@@ -1223,13 +1223,13 @@ Label_10_4f07:
 Func_10_4f0d:
 	call ClearFrameTasks ; $4f0d
 	sound $00 ; $4f10
-	call Func_00_2f32 ; $4f12
+	call ResumeBGM ; $4f12
 	ld a, [$c295] ; $4f15
 	cp a, $0a ; $4f18
 	jr nz, Label_10_4f3c ; $4f1a
 	call ClearFrameTasks ; $4f1c
 	sound $00 ; $4f1f
-	call Func_00_2f32 ; $4f21
+	call ResumeBGM ; $4f21
 	xor a, a ; $4f24
 	ld [$cb71], a ; $4f25
 Label_10_4f28:
@@ -1254,8 +1254,8 @@ Label_10_4f3c:
 	ld [$cb10], a ; $4f52
 	call EnableLCD ; $4f55
 	ld c, $7f ; $4f58
-	call Func_00_1d20 ; $4f5a
-	call Func_00_1da4 ; $4f5d
+	call BeginFadeOut ; $4f5a
+	call WaitFadeEnd ; $4f5d
 	call DisableLCDSafely ; $4f60
 	ld a, $01 ; $4f63
 	ld [$cb11], a ; $4f65
@@ -1265,8 +1265,8 @@ Label_10_4f68:
 	farcall FarPtr_39_22 ; $4f6e
 	call EnableLCD ; $4f71
 	ld c, $10 ; $4f74
-	call Func_00_1d2e ; $4f76
-	call Func_00_1da4 ; $4f79
+	call BeginFadeIn ; $4f76
+	call WaitFadeEnd ; $4f79
 Label_10_4f7c:
 	xor a, a ; $4f7c
 	ld [$cb22], a ; $4f7d
@@ -1277,15 +1277,15 @@ Label_10_4f7c:
 	ld [$cb0f], a ; $4f8c
 	ld [$cb10], a ; $4f8f
 	ld [$cb0b], a ; $4f92
-	ldh [$ff8b], a ; $4f95
-	ldh [$ff8a], a ; $4f97
-	ld [$c320], a ; $4f99
+	ldh [hScrollX], a ; $4f95
+	ldh [hScrollY], a ; $4f97
+	ld [wCameraX], a ; $4f99
 	ld [$c321], a ; $4f9c
-	ld [$c322], a ; $4f9f
+	ld [wCameraY], a ; $4f9f
 	ld [$c323], a ; $4fa2
 	ld a, $03 ; $4fa5
 	ld [$cb0c], a ; $4fa7
-	call Func_00_2f32 ; $4faa
+	call ResumeBGM ; $4faa
 	call InitSerialLink ; $4fad
 	farcall FarPtr_3b_0c ; $4fb0
 	cp a, $ff ; $4fb3
@@ -1332,8 +1332,8 @@ MatchSelectHandlersB_10:
 	or a, a ; $4ffb
 	jr nz, Label_10_5006 ; $4ffc
 	ld c, $10 ; $4ffe
-	call Func_00_1d2e ; $5000
-	call Func_00_1da4 ; $5003
+	call BeginFadeIn ; $5000
+	call WaitFadeEnd ; $5003
 Label_10_5006:
 	ld a, [$c8a5] ; $5006
 	or a, a ; $5009
@@ -1366,8 +1366,8 @@ Label_10_5041:
 	ld a, $03 ; $5041
 	ld [$cb0c], a ; $5043
 	ld c, $10 ; $5046
-	call Func_00_1d20 ; $5048
-	call Func_00_1da4 ; $504b
+	call BeginFadeOut ; $5048
+	call WaitFadeEnd ; $504b
 	ld a, e ; $504e
 	ld [$c36c], a ; $504f
 	farcall FarPtr_1b_22 ; $5052
@@ -1380,7 +1380,7 @@ Label_10_5041:
 	farcall FarPtr_39_22 ; $5065
 	call EnableLCD ; $5068
 	ld c, $10 ; $506b
-	call Func_00_1d2e ; $506d
+	call BeginFadeIn ; $506d
 	jp Label_10_4f7c ; $5070
 Label_10_5073:
 	call ResetGameTimer ; $5073
@@ -1402,8 +1402,8 @@ Label_10_5093:
 	farcall FarPtr_39_22 ; $5096
 	call EnableLCD ; $5099
 	ld c, $10 ; $509c
-	call Func_00_1d2e ; $509e
-	call Func_00_1da4 ; $50a1
+	call BeginFadeIn ; $509e
+	call WaitFadeEnd ; $50a1
 Label_10_50a4:
 	xor a, a ; $50a4
 	ld [$c8a5], a ; $50a5
@@ -1466,8 +1466,8 @@ Label_10_5124:
 	call EnableLCD ; $512a
 	push af ; $512d
 	ld c, $10 ; $512e
-	call Func_00_1d2e ; $5130
-	call Func_00_1da4 ; $5133
+	call BeginFadeIn ; $5130
+	call WaitFadeEnd ; $5133
 	pop af ; $5136
 Label_10_5137:
 	xor a, a ; $5137
@@ -1482,8 +1482,8 @@ Label_10_5149:
 	cp a, $ff ; $514c
 	jp z, Label_10_4f7c ; $514e
 	ld c, $10 ; $5151
-	call Func_00_1d20 ; $5153
-	call Func_00_1da4 ; $5156
+	call BeginFadeOut ; $5153
+	call WaitFadeEnd ; $5156
 Label_10_5159:
 	ld a, [$cb0e] ; $5159
 	ld b, a ; $515c
@@ -1504,7 +1504,7 @@ Label_10_5159:
 	jr nz, Label_10_5191 ; $5180
 	call EnableLCD ; $5182
 	ld c, $10 ; $5185
-	call Func_00_1d2e ; $5187
+	call BeginFadeIn ; $5187
 	ld a, $00 ; $518a
 	ld [$cb11], a ; $518c
 	jr Label_10_5149 ; $518f
@@ -1517,7 +1517,7 @@ Label_10_5191:
 	jr z, Label_10_51b6 ; $519d
 	call EnableLCD ; $519f
 	ld c, $10 ; $51a2
-	call Func_00_1d2e ; $51a4
+	call BeginFadeIn ; $51a4
 	farcall FarPtr_3e_1c ; $51a7
 	cp a, $ff ; $51aa
 	jr nz, Label_10_51cd ; $51ac
@@ -1527,7 +1527,7 @@ Label_10_5191:
 Label_10_51b6:
 	call EnableLCD ; $51b6
 	ld c, $10 ; $51b9
-	call Func_00_1d2e ; $51bb
+	call BeginFadeIn ; $51bb
 	farcall FarPtr_3e_18 ; $51be
 	cp a, $ff ; $51c1
 	jr nz, Label_10_51cd ; $51c3
@@ -1563,7 +1563,7 @@ Label_10_51fd:
 	farcall FarPtr_39_22 ; $5208
 	call EnableLCD ; $520b
 	ld c, $10 ; $520e
-	call Func_00_1d2e ; $5210
+	call BeginFadeIn ; $5210
 	jp Label_10_4f7c ; $5213
 Label_10_5216:
 	xor a, a ; $5216
@@ -1602,7 +1602,7 @@ Label_10_5241:
 	farcall FarPtr_39_22 ; $525c
 	call EnableLCD ; $525f
 	ld c, $10 ; $5262
-	call Func_00_1d2e ; $5264
+	call BeginFadeIn ; $5264
 	ld a, $00 ; $5267
 	ld [$cb11], a ; $5269
 	jr Label_10_5229 ; $526c
@@ -1617,8 +1617,8 @@ Label_10_526e:
 	farcall FarPtr_39_22 ; $5282
 	call EnableLCD ; $5285
 	ld c, $10 ; $5288
-	call Func_00_1d2e ; $528a
-	call Func_00_1da4 ; $528d
+	call BeginFadeIn ; $528a
+	call WaitFadeEnd ; $528d
 	ld a, [$c4df] ; $5290
 	or a, a ; $5293
 	jr nz, Label_10_5229 ; $5294
@@ -1643,7 +1643,7 @@ Label_10_526e:
 	farcall FarPtr_39_22 ; $52c3
 	call EnableLCD ; $52c6
 	ld c, $10 ; $52c9
-	call Func_00_1d2e ; $52cb
+	call BeginFadeIn ; $52cb
 	jp Label_10_4f7c ; $52ce
 Label_10_52d1:
 	farcall FarPtr_3b_12 ; $52d1
@@ -1660,8 +1660,8 @@ Label_10_52e4:
 	or a, a ; $52ec
 	jr nz, Label_10_5315 ; $52ed
 	ld c, $10 ; $52ef
-	call Func_00_1d20 ; $52f1
-	call Func_00_1da4 ; $52f4
+	call BeginFadeOut ; $52f1
+	call WaitFadeEnd ; $52f4
 	ld a, $00 ; $52f7
 	farcall FarPtr_1d_00 ; $52f9
 	call DisableLCDSafely ; $52fc
@@ -1669,7 +1669,7 @@ Label_10_52e4:
 	farcall FarPtr_39_22 ; $5302
 	call EnableLCD ; $5305
 	ld c, $10 ; $5308
-	call Func_00_1d2e ; $530a
+	call BeginFadeIn ; $530a
 	ld a, $00 ; $530d
 	ld [$cb11], a ; $530f
 	jp Label_10_52e4 ; $5312
@@ -1677,18 +1677,18 @@ Label_10_5315:
 	cp a, $01 ; $5315
 	jr nz, Label_10_5345 ; $5317
 	ld c, $10 ; $5319
-	call Func_00_1d20 ; $531b
-	call Func_00_1da4 ; $531e
+	call BeginFadeOut ; $531b
+	call WaitFadeEnd ; $531e
 	farcall FarPtr_1e_08 ; $5321
 	ld c, $10 ; $5324
-	call Func_00_1d20 ; $5326
-	call Func_00_1da4 ; $5329
+	call BeginFadeOut ; $5326
+	call WaitFadeEnd ; $5329
 	call DisableLCDSafely ; $532c
 	farcall FarPtr_01_0a ; $532f
 	farcall FarPtr_39_22 ; $5332
 	call EnableLCD ; $5335
 	ld c, $10 ; $5338
-	call Func_00_1d2e ; $533a
+	call BeginFadeIn ; $533a
 	ld a, $00 ; $533d
 	ld [$cb11], a ; $533f
 	jp Label_10_52e4 ; $5342
@@ -1696,15 +1696,15 @@ Label_10_5345:
 	cp a, $02 ; $5345
 	jr nz, Label_10_536d ; $5347
 	ld c, $10 ; $5349
-	call Func_00_1d20 ; $534b
-	call Func_00_1da4 ; $534e
+	call BeginFadeOut ; $534b
+	call WaitFadeEnd ; $534e
 	farcall FarPtr_3b_06 ; $5351
 	call DisableLCDSafely ; $5354
 	farcall FarPtr_01_0a ; $5357
 	farcall FarPtr_39_22 ; $535a
 	call EnableLCD ; $535d
 	ld c, $10 ; $5360
-	call Func_00_1d2e ; $5362
+	call BeginFadeIn ; $5362
 	ld a, $00 ; $5365
 	ld [$cb11], a ; $5367
 	jp Label_10_52e4 ; $536a
@@ -1719,8 +1719,8 @@ Label_10_536d:
 	jp Label_10_52e4 ; $537d
 Label_10_5380:
 	ld c, $10 ; $5380
-	call Func_00_1d20 ; $5382
-	call Func_00_1da4 ; $5385
+	call BeginFadeOut ; $5382
+	call WaitFadeEnd ; $5385
 	farcall FarPtr_3e_0c ; $5388
 	farcall FarPtr_3e_10 ; $538b
 	farcall FarPtr_SaveStorySlot ; $538e
@@ -1729,14 +1729,14 @@ Label_10_5380:
 	farcall FarPtr_39_22 ; $5397
 	call EnableLCD ; $539a
 	ld c, $10 ; $539d
-	call Func_00_1d2e ; $539f
+	call BeginFadeIn ; $539f
 	ld a, $00 ; $53a2
 	ld [$cb11], a ; $53a4
 	jp Label_10_536d ; $53a7
 Label_10_53aa:
 	ld c, $10 ; $53aa
-	call Func_00_1d20 ; $53ac
-	call Func_00_1da4 ; $53af
+	call BeginFadeOut ; $53ac
+	call WaitFadeEnd ; $53af
 	farcall FarPtr_3e_0e ; $53b2
 	farcall FarPtr_3e_10 ; $53b5
 	farcall FarPtr_SaveStorySlot ; $53b8
@@ -1745,7 +1745,7 @@ Label_10_53aa:
 	farcall FarPtr_39_22 ; $53c1
 	call EnableLCD ; $53c4
 	ld c, $10 ; $53c7
-	call Func_00_1d2e ; $53c9
+	call BeginFadeIn ; $53c9
 	ld a, $00 ; $53cc
 	ld [$cb11], a ; $53ce
 	jp Label_10_536d ; $53d1
@@ -1761,35 +1761,35 @@ Label_10_53e2:
 	or a, a ; $53e2
 	jr nz, Label_10_5411 ; $53e3
 	ld c, $10 ; $53e5
-	call Func_00_1d20 ; $53e7
-	call Func_00_1da4 ; $53ea
+	call BeginFadeOut ; $53e7
+	call WaitFadeEnd ; $53ea
 	farcall FarPtr_3b_30 ; $53ed
 	ld c, $10 ; $53f0
-	call Func_00_1d20 ; $53f2
-	call Func_00_1da4 ; $53f5
+	call BeginFadeOut ; $53f2
+	call WaitFadeEnd ; $53f5
 	call DisableLCDSafely ; $53f8
 	farcall FarPtr_01_0a ; $53fb
 	farcall FarPtr_39_22 ; $53fe
 	call EnableLCD ; $5401
 	ld c, $10 ; $5404
-	call Func_00_1d2e ; $5406
+	call BeginFadeIn ; $5406
 	ld a, $00 ; $5409
 	ld [$cb11], a ; $540b
 	jp Label_10_53d8 ; $540e
 Label_10_5411:
 	ld c, $10 ; $5411
-	call Func_00_1d20 ; $5413
-	call Func_00_1da4 ; $5416
+	call BeginFadeOut ; $5413
+	call WaitFadeEnd ; $5416
 	farcall FarPtr_1b_2c ; $5419
 	ld c, $10 ; $541c
-	call Func_00_1d20 ; $541e
-	call Func_00_1da4 ; $5421
+	call BeginFadeOut ; $541e
+	call WaitFadeEnd ; $5421
 	call DisableLCDSafely ; $5424
 	farcall FarPtr_01_0a ; $5427
 	farcall FarPtr_39_22 ; $542a
 	call EnableLCD ; $542d
 	ld c, $10 ; $5430
-	call Func_00_1d2e ; $5432
+	call BeginFadeIn ; $5432
 	ld a, $00 ; $5435
 	ld [$cb11], a ; $5437
 	jp Label_10_53d8 ; $543a
@@ -1800,15 +1800,15 @@ Label_10_543d:
 	or a, a ; $5445
 	jr nz, Label_10_546c ; $5446
 	ld c, $10 ; $5448
-	call Func_00_1d20 ; $544a
-	call Func_00_1da4 ; $544d
+	call BeginFadeOut ; $544a
+	call WaitFadeEnd ; $544d
 	farcall FarPtr_3b_08 ; $5450
 	call DisableLCDSafely ; $5453
 	farcall FarPtr_01_0a ; $5456
 	farcall FarPtr_39_22 ; $5459
 	call EnableLCD ; $545c
 	ld c, $10 ; $545f
-	call Func_00_1d2e ; $5461
+	call BeginFadeIn ; $5461
 	ld a, $00 ; $5464
 	ld [$cb11], a ; $5466
 	jp Label_10_53d4 ; $5469
@@ -1816,15 +1816,15 @@ Label_10_546c:
 	cp a, $01 ; $546c
 	jr nz, Label_10_5494 ; $546e
 	ld c, $10 ; $5470
-	call Func_00_1d20 ; $5472
-	call Func_00_1da4 ; $5475
+	call BeginFadeOut ; $5472
+	call WaitFadeEnd ; $5475
 	farcall FarPtr_Func_3b_44aaAlias1 ; $5478
 	call DisableLCDSafely ; $547b
 	farcall FarPtr_01_0a ; $547e
 	farcall FarPtr_39_22 ; $5481
 	call EnableLCD ; $5484
 	ld c, $10 ; $5487
-	call Func_00_1d2e ; $5489
+	call BeginFadeIn ; $5489
 	ld a, $00 ; $548c
 	ld [$cb11], a ; $548e
 	jp Label_10_53d4 ; $5491
@@ -1835,13 +1835,13 @@ Label_10_5494:
 	farcall FarPtr_39_22 ; $549d
 	call EnableLCD ; $54a0
 	ld c, $10 ; $54a3
-	call Func_00_1d2e ; $54a5
+	call BeginFadeIn ; $54a5
 	ld a, $00 ; $54a8
 	ld [$cb11], a ; $54aa
 	jp Label_10_53d4 ; $54ad
 	ld c, $10 ; $54b0
-	call Func_00_1d20 ; $54b2
-	call Func_00_1da4 ; $54b5
+	call BeginFadeOut ; $54b2
+	call WaitFadeEnd ; $54b5
 	ld a, $06 ; $54b8
 	farcall FarPtr_3f_00 ; $54ba
 	call DisableLCDSafely ; $54bd
@@ -1849,7 +1849,7 @@ Label_10_5494:
 	farcall FarPtr_39_22 ; $54c3
 	call EnableLCD ; $54c6
 	ld c, $10 ; $54c9
-	call Func_00_1d2e ; $54cb
+	call BeginFadeIn ; $54cb
 	ld a, $00 ; $54ce
 	ld [$cb11], a ; $54d0
 	jp Label_10_4f7c ; $54d3
@@ -1881,8 +1881,8 @@ Label_10_54e8:
 	farcall FarPtr_CheckStorySlot ; $54fa
 	push bc ; $54fd
 	ld c, $10 ; $54fe
-	call Func_00_1d20 ; $5500
-	call Func_00_1da4 ; $5503
+	call BeginFadeOut ; $5500
+	call WaitFadeEnd ; $5503
 	farcall FarPtr_1a_0c ; $5506
 	pop bc ; $5509
 	or a, a ; $550a
@@ -1902,13 +1902,13 @@ Label_10_5520:
 	farcall FarPtr_39_22 ; $5526
 	call EnableLCD ; $5529
 	ld c, $10 ; $552c
-	call Func_00_1d2e ; $552e
+	call BeginFadeIn ; $552e
 	ld a, $00 ; $5531
 	ld [$cb11], a ; $5533
 	jp Label_10_54d6 ; $5536
 	ld c, $10 ; $5539
-	call Func_00_1d20 ; $553b
-	call Func_00_1da4 ; $553e
+	call BeginFadeOut ; $553b
+	call WaitFadeEnd ; $553e
 	ld b, $01 ; $5541
 	farcall FarPtr_3e_06 ; $5543
 	or a, a ; $5546
@@ -1920,13 +1920,13 @@ Label_10_554c:
 	farcall FarPtr_39_22 ; $5552
 	call EnableLCD ; $5555
 	ld c, $10 ; $5558
-	call Func_00_1d2e ; $555a
+	call BeginFadeIn ; $555a
 	ld a, $00 ; $555d
 	ld [$cb11], a ; $555f
 	jp Label_10_54d6 ; $5562
 	ld c, $10 ; $5565
-	call Func_00_1d20 ; $5567
-	call Func_00_1da4 ; $556a
+	call BeginFadeOut ; $5567
+	call WaitFadeEnd ; $556a
 	ld b, $00 ; $556d
 	farcall FarPtr_3e_06 ; $556f
 	or a, a ; $5572
@@ -1936,7 +1936,7 @@ Label_10_554c:
 	farcall FarPtr_39_22 ; $557b
 	call EnableLCD ; $557e
 	ld c, $10 ; $5581
-	call Func_00_1d2e ; $5583
+	call BeginFadeIn ; $5583
 	ld a, $00 ; $5586
 	ld [$cb11], a ; $5588
 	xor a, a ; $558b
@@ -1949,7 +1949,7 @@ Label_10_5592:
 	farcall FarPtr_39_22 ; $559b
 	call EnableLCD ; $559e
 	ld c, $10 ; $55a1
-	call Func_00_1d2e ; $55a3
+	call BeginFadeIn ; $55a3
 	ld a, $00 ; $55a6
 	ld [$cb11], a ; $55a8
 	xor a, a ; $55ab
@@ -3294,7 +3294,7 @@ Func_10_612c:
 	ld a, [hl+] ; $6137
 	ld d, [hl] ; $6138
 	ld e, a ; $6139
-	call Func_00_24ef ; $613a
+	call TestGameFlagByNumber ; $613a
 	ret ; $613d
 Func_10_613e:
 	ld a, [$c2b1] ; $613e
@@ -3307,7 +3307,7 @@ Func_10_613e:
 	ld a, [hl+] ; $6149
 	ld d, [hl] ; $614a
 	ld e, a ; $614b
-	call Func_00_2509 ; $614c
+	call SetGameFlagByNumber ; $614c
 	ret ; $614f
 	ld [hl], b ; $6150
 	nop ; $6151
@@ -3606,8 +3606,8 @@ Label_10_6512:
 	ld de, $3b00 ; $6539
 	farcall FarPtr_0a_22 ; $653c
 	ld c, $08 ; $653f
-	call Func_00_1d2e ; $6541
-	call Func_00_1da4 ; $6544
+	call BeginFadeIn ; $6541
+	call WaitFadeEnd ; $6544
 	push af ; $6547
 	ld a, $3c ; $6548
 	farcall FarPtr_0a_04 ; $654a
@@ -4716,8 +4716,8 @@ Label_10_6f0c:
 	ld a, $06 ; $6f1e
 	farcall FarPtr_0a_08 ; $6f20
 	ld c, $04 ; $6f23
-	call Func_00_1d20 ; $6f25
-	call Func_00_1da4 ; $6f28
+	call BeginFadeOut ; $6f25
+	call WaitFadeEnd ; $6f28
 	push af ; $6f2b
 	ld a, $32 ; $6f2c
 	farcall FarPtr_0a_04 ; $6f2e
@@ -4785,8 +4785,8 @@ Label_10_7029:
 	xor a, a ; $7030
 	ld [$c2d5], a ; $7031
 	ld c, $04 ; $7034
-	call Func_00_1d2e ; $7036
-	call Func_00_1da4 ; $7039
+	call BeginFadeIn ; $7036
+	call WaitFadeEnd ; $7039
 	push af ; $703c
 	ld a, $3c ; $703d
 	farcall FarPtr_0a_04 ; $703f
@@ -5112,8 +5112,8 @@ Label_10_7314:
 	farcall FarPtr_0a_04 ; $731a
 	pop af ; $731d
 	ld c, $02 ; $731e
-	call Func_00_1d20 ; $7320
-	call Func_00_1da4 ; $7323
+	call BeginFadeOut ; $7320
+	call WaitFadeEnd ; $7323
 	ld a, $14 ; $7326
 	ld [wStoryModeCurrentLocation], a ; $7328
 	ld a, $0c ; $732b
@@ -5516,7 +5516,7 @@ Func_10_7741:
 	ld de, $2400 ; $775c
 	farcall FarPtr_0a_22 ; $775f
 	ld c, $04 ; $7762
-	call Func_00_1d2e ; $7764
+	call BeginFadeIn ; $7764
 	push af ; $7767
 	ld a, $1e ; $7768
 	farcall FarPtr_0a_04 ; $776a

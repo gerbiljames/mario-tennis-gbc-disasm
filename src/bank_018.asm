@@ -186,7 +186,7 @@ FlushBgMapShadowToVram:
 	ld hl, $d800 ; $435a
 	ld de, $9800 ; $435d
 	ld c, $24 ; $4360
-	call Func_00_0480 ; $4362
+	call QueueVRAMCopy ; $4362
 Label_18_4365:
 	ld a, [$cb61] ; $4365
 	and a, $f0 ; $4368
@@ -194,7 +194,7 @@ Label_18_4365:
 	ld hl, $dc00 ; $436c
 	ld de, $b800 ; $436f
 	ld c, $24 ; $4372
-	call Func_00_0480 ; $4374
+	call QueueVRAMCopy ; $4374
 Label_18_4377:
 	xor a, a ; $4377
 	ld [$cb61], a ; $4378
@@ -206,14 +206,14 @@ Func_18_437c:
 	pop de ; $4383
 	ld hl, $42a0 ; $4384
 	ld c, $04 ; $4387
-	call Func_00_0480 ; $4389
+	call QueueVRAMCopy ; $4389
 	ret ; $438c
 Func_18_438d:
 	ret ; $438d
 	ld hl, $40a0 ; $438e
 	ld de, $9000 ; $4391
 	ld c, $10 ; $4394
-	call Func_00_0480 ; $4396
+	call QueueVRAMCopy ; $4396
 	ret ; $4399
 Func_18_439a:
 	push bc ; $439a
@@ -364,7 +364,7 @@ Label_18_443a:
 Func_18_4444:
 	push af ; $4444
 	push hl ; $4445
-	ldh a, [$ff8c] ; $4446
+	ldh a, [hVBlankCounter] ; $4446
 	and a, $0f ; $4448
 	add a, $68 ; $444a
 	ld l, a ; $444c
@@ -374,7 +374,7 @@ Func_18_4444:
 	ld a, [hl] ; $4451
 	add a, d ; $4452
 	ld d, a ; $4453
-	ldh a, [$ff8c] ; $4454
+	ldh a, [hVBlankCounter] ; $4454
 	add a, $04 ; $4456
 	and a, $0f ; $4458
 	add a, $68 ; $445a
@@ -394,7 +394,7 @@ Func_18_4444:
 Func_18_4478:
 	push af ; $4478
 	push hl ; $4479
-	ldh a, [$ff8c] ; $447a
+	ldh a, [hVBlankCounter] ; $447a
 	and a, $0f ; $447c
 	add a, $8b ; $447e
 	ld l, a ; $4480
@@ -411,7 +411,7 @@ Func_18_4478:
 Func_18_449b:
 	push af ; $449b
 	push hl ; $449c
-	ldh a, [$ff8c] ; $449d
+	ldh a, [hVBlankCounter] ; $449d
 	and a, $3f ; $449f
 	add a, $ae ; $44a1
 	ld l, a ; $44a3
@@ -641,7 +641,7 @@ Func_18_463b:
 	ldh a, [hPlayerInputFlags] ; $463d
 	bit 2, a ; $463f
 	jr z, Label_18_464e ; $4641
-	ldh a, [$ff9e] ; $4643
+	ldh a, [hDebugStepMode] ; $4643
 	or a, a ; $4645
 	jr z, Label_18_464e ; $4646
 	ld a, b ; $4648
@@ -683,7 +683,7 @@ Label_18_4669:
 	INCBIN "data/bank_018/d_467a.bin" ; $467a, 3172 bytes
 Func_18_52de:
 	call ClearFrameTasks ; $52de
-	call Func_00_1e1d ; $52e1
+	call ClearSpriteQueue ; $52e1
 	call ClearTileVramBothBanks ; $52e4
 	call Func_18_5372 ; $52e7
 	xor a, a ; $52ea
@@ -695,11 +695,11 @@ Func_18_52de:
 	ld hl, $d000 ; $52fa
 	ld de, $b000 ; $52fd
 	ld c, $80 ; $5300
-	call Func_00_0480 ; $5302
+	call QueueVRAMCopy ; $5302
 	ld hl, $d800 ; $5305
 	ld de, $a800 ; $5308
 	ld c, $80 ; $530b
-	call Func_00_0480 ; $530d
+	call QueueVRAMCopy ; $530d
 	ld hl, $4f33 ; $5310
 	ld de, $0008 ; $5313
 	call LoadPaletteShadow ; $5316
@@ -717,7 +717,7 @@ Func_18_52de:
 	ld hl, $d000 ; $533a
 	ld de, $8300 ; $533d
 	ld c, $14 ; $5340
-	call Func_00_0480 ; $5342
+	call QueueVRAMCopy ; $5342
 	ld hl, $52c6 ; $5345
 	ld de, $0903 ; $5348
 	call LoadPaletteShadow ; $534b
@@ -826,22 +826,22 @@ ForceFlushBgMapToVram:
 	call FlushBgMapShadowToVram ; $541d
 	ret ; $5420
 Func_18_5421:
-	ldh a, [$ff94] ; $5421
+	ldh a, [hInputRisingEdge] ; $5421
 	and a, $20 ; $5423
 	jr z, Label_18_542b ; $5425
 	ld b, $00 ; $5427
 	sound $5e ; $5429
 Label_18_542b:
-	ldh a, [$ff94] ; $542b
+	ldh a, [hInputRisingEdge] ; $542b
 	and a, $10 ; $542d
 	jr z, Label_18_5435 ; $542f
 	ld b, $01 ; $5431
 	sound $5e ; $5433
 Label_18_5435:
-	ldh a, [$ff94] ; $5435
+	ldh a, [hInputRisingEdge] ; $5435
 	and a, $01 ; $5437
 	jr nz, Label_18_545f ; $5439
-	ldh a, [$ff94] ; $543b
+	ldh a, [hInputRisingEdge] ; $543b
 	and a, $02 ; $543d
 	jr z, Label_18_5445 ; $543f
 	ld b, $ff ; $5441
@@ -870,22 +870,22 @@ Label_18_5466:
 	sound $5f ; $5466
 	ret ; $5468
 Func_18_5469:
-	ldh a, [$ff94] ; $5469
+	ldh a, [hInputRisingEdge] ; $5469
 	and a, $20 ; $546b
 	jr z, Label_18_5473 ; $546d
 	ld b, $00 ; $546f
 	sound $5e ; $5471
 Label_18_5473:
-	ldh a, [$ff94] ; $5473
+	ldh a, [hInputRisingEdge] ; $5473
 	and a, $10 ; $5475
 	jr z, Label_18_547d ; $5477
 	ld b, $01 ; $5479
 	sound $5e ; $547b
 Label_18_547d:
-	ldh a, [$ff94] ; $547d
+	ldh a, [hInputRisingEdge] ; $547d
 	and a, $01 ; $547f
 	jr nz, Label_18_54a7 ; $5481
-	ldh a, [$ff94] ; $5483
+	ldh a, [hInputRisingEdge] ; $5483
 	and a, $02 ; $5485
 	jr z, Label_18_548d ; $5487
 	ld b, $ff ; $5489
@@ -960,7 +960,7 @@ DrawGlyphSprite:
 	and a, a ; $54e9
 	jr z, Label_18_54fd ; $54ea
 	ld a, d ; $54ec
-	ld hl, $ff8c ; $54ed
+	ld hl, hVBlankCounter ; $54ed
 	sub a, [hl] ; $54f0
 	and a, $1f ; $54f1
 	add a, $07 ; $54f3
@@ -1101,27 +1101,27 @@ Func_18_55f8:
 	ld hl, $d000 ; $5601
 	ld de, $a000 ; $5604
 	ld c, $1c ; $5607
-	call Func_00_0480 ; $5609
+	call QueueVRAMCopy ; $5609
 	ld hl, $582d ; $560c
 	ld de, $0c03 ; $560f
-	call Func_00_05b5 ; $5612
+	call LoadPalettesImmediate ; $5612
 	ld hl, $5845 ; $5615
 	ld de, $d000 ; $5618
 	call DecompressData ; $561b
 	ld hl, $d000 ; $561e
 	ld de, $a200 ; $5621
 	ld c, $0c ; $5624
-	call Func_00_0480 ; $5626
+	call QueueVRAMCopy ; $5626
 	ld hl, $58ad ; $5629
 	ld de, $0801 ; $562c
-	call Func_00_05b5 ; $562f
+	call LoadPalettesImmediate ; $562f
 	ret ; $5632
 	INCBIN "data/bank_018/d_5633.bin" ; $5633, 910 bytes
 Func_18_59c1:
 	ld hl, $58e0 ; $59c1
 	ld de, $8400 ; $59c4
 	ld c, $0c ; $59c7
-	call Func_00_0480 ; $59c9
+	call QueueVRAMCopy ; $59c9
 	ld hl, $59b9 ; $59cc
 	ld de, $0a01 ; $59cf
 	call LoadPaletteShadow ; $59d2
@@ -1132,7 +1132,7 @@ Func_18_59d6:
 	jr nz, Label_18_59de ; $59da
 	ld c, $01 ; $59dc
 Label_18_59de:
-	ldh a, [$ff8c] ; $59de
+	ldh a, [hVBlankCounter] ; $59de
 	and a, $1f ; $59e0
 	add a, $fe ; $59e2
 	ld l, a ; $59e4
@@ -1156,7 +1156,7 @@ Label_18_59de:
 	ret ; $59fd
 	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 108 bytes
 Func_18_5a6a:
-	ldh a, [$ff8c] ; $5a6a
+	ldh a, [hVBlankCounter] ; $5a6a
 	and a, $3f ; $5a6c
 	add a, $79 ; $5a6e
 	ld l, a ; $5a70
@@ -1178,7 +1178,7 @@ LoadOnCourtCharTilesA:
 	ld bc, $5af0 ; $5ac4
 	add hl, bc ; $5ac7
 	ld c, $04 ; $5ac8
-	call Func_00_0480 ; $5aca
+	call QueueVRAMCopy ; $5aca
 	ret ; $5acd
 LoadOnCourtCharTilesB:
 	cp a, $ff ; $5ace
@@ -1192,12 +1192,12 @@ LoadOnCourtCharTilesB:
 	ld bc, $62f0 ; $5add
 	add hl, bc ; $5ae0
 	ld c, $04 ; $5ae1
-	call Func_00_0480 ; $5ae3
+	call QueueVRAMCopy ; $5ae3
 	ret ; $5ae6
 Label_18_5ae7:
 	ld hl, $6af0 ; $5ae7
 	ld c, $04 ; $5aea
-	call Func_00_0480 ; $5aec
+	call QueueVRAMCopy ; $5aec
 	ret ; $5aef
 	INCBIN "data/bank_018/d_5af0.bin" ; $5af0, 4160 bytes
 Lz_18_6b30:
@@ -1300,19 +1300,19 @@ Label_18_762e:
 Func_18_7632:
 	call EnableLCD ; $7632
 	ld c, $10 ; $7635
-	call Func_00_1d20 ; $7637
-	call Func_00_1da4 ; $763a
+	call BeginFadeOut ; $7637
+	call WaitFadeEnd ; $763a
 	call DisableLCDSafely ; $763d
 	call ClearFrameTasks ; $7640
 	call Func_18_7647 ; $7643
 	ret ; $7646
 Func_18_7647:
 	xor a, a ; $7647
-	ldh [$ff8b], a ; $7648
-	ldh [$ff8a], a ; $764a
-	ld [$c320], a ; $764c
+	ldh [hScrollX], a ; $7648
+	ldh [hScrollY], a ; $764a
+	ld [wCameraX], a ; $764c
 	ld [$c321], a ; $764f
-	ld [$c322], a ; $7652
+	ld [wCameraY], a ; $7652
 	ld [$c323], a ; $7655
 	ret ; $7658
 	call Func_18_7632 ; $7659
@@ -1329,16 +1329,16 @@ Label_18_7668:
 	ld c, [hl] ; $7668
 	push bc ; $7669
 	ld c, $10 ; $766a
-	call Func_00_1d20 ; $766c
-	call Func_00_1da4 ; $766f
+	call BeginFadeOut ; $766c
+	call WaitFadeEnd ; $766f
 	call DisableLCDSafely ; $7672
 	pop bc ; $7675
 	farcall FarPtr_LoadScreenAssetRecord ; $7676
 	farcall FarPtr_Func_39_4325 ; $7679
 	call EnableLCD ; $767c
 	ld c, $10 ; $767f
-	call Func_00_1d2e ; $7681
-	call Func_00_1da4 ; $7684
+	call BeginFadeIn ; $7681
+	call WaitFadeEnd ; $7684
 Label_18_7687:
 	call AdvanceFrame ; $7687
 	ldh a, [hInputPressed] ; $768a
@@ -1358,8 +1358,8 @@ Func_18_76b4:
 	call Func_18_7740 ; $76b7
 	call EnableLCD ; $76ba
 	ld c, $02 ; $76bd
-	call Func_00_1d2e ; $76bf
-	call Func_00_1da4 ; $76c2
+	call BeginFadeIn ; $76bf
+	call WaitFadeEnd ; $76c2
 	wram_bank $03 ; $76c5
 	xor a, a ; $76cb
 	ld [$da01], a ; $76cc
@@ -1382,14 +1382,14 @@ Label_18_76ec:
 	and a, $03 ; $76f1
 	jr z, Label_18_76ec ; $76f3
 	ld c, $10 ; $76f5
-	call Func_00_1d20 ; $76f7
-	call Func_00_1da4 ; $76fa
+	call BeginFadeOut ; $76f7
+	call WaitFadeEnd ; $76fa
 	call DisableLCDSafely ; $76fd
 	call FillAllBgPalettes ; $7700
 	call EnableLCD ; $7703
 	ld c, $10 ; $7706
-	call Func_00_1d2e ; $7708
-	call Func_00_1da4 ; $770b
+	call BeginFadeIn ; $7708
+	call WaitFadeEnd ; $770b
 	ld a, $01 ; $770e
 	ld hl, $775c ; $7710
 	call RegisterFrameTask ; $7713
@@ -1466,14 +1466,14 @@ Func_18_77bb:
 	sound $2c ; $77d1
 	call EnableLCD ; $77d3
 	ld c, $02 ; $77d6
-	call Func_00_1d2e ; $77d8
-	call Func_00_1da4 ; $77db
+	call BeginFadeIn ; $77d8
+	call WaitFadeEnd ; $77db
 	wram_bank $03 ; $77de
 	xor a, a ; $77e4
 	ld [$da01], a ; $77e5
 Label_18_77e8:
 	call AdvanceFrame ; $77e8
-	ldh a, [$ff8c] ; $77eb
+	ldh a, [hVBlankCounter] ; $77eb
 	and a, $03 ; $77ed
 	jr nz, Label_18_77e8 ; $77ef
 	ld a, [$da01] ; $77f1
@@ -1482,8 +1482,8 @@ Label_18_77e8:
 	cp a, $af ; $77f8
 	jr nz, Label_18_77e8 ; $77fa
 	ld c, $01 ; $77fc
-	call Func_00_1d20 ; $77fe
-	call Func_00_1da4 ; $7801
+	call BeginFadeOut ; $77fe
+	call WaitFadeEnd ; $7801
 	call ClearFrameTasks ; $7804
 	call DisableLCDSafely ; $7807
 	farcall FarPtr_03_36 ; $780a
@@ -1495,8 +1495,8 @@ Label_18_77e8:
 	call RegisterFrameTask ; $781b
 	call EnableLCD ; $781e
 	ld c, $40 ; $7821
-	call Func_00_1d2e ; $7823
-	call Func_00_1da4 ; $7826
+	call BeginFadeIn ; $7823
+	call WaitFadeEnd ; $7826
 	sound $2d ; $7829
 Label_18_782b:
 	call AdvanceFrame ; $782b
@@ -1605,16 +1605,16 @@ Func_18_792c:
 	call RegisterFrameTask ; $794a
 	call EnableLCD ; $794d
 	ld c, $01 ; $7950
-	call Func_00_1d2e ; $7952
-	call Func_00_1da4 ; $7955
+	call BeginFadeIn ; $7952
+	call WaitFadeEnd ; $7955
 Label_18_7958:
 	call AdvanceFrame ; $7958
 	ldh a, [hInputPressed] ; $795b
 	and a, $03 ; $795d
 	jr z, Label_18_7958 ; $795f
 	ld c, $02 ; $7961
-	call Func_00_1d20 ; $7963
-	call Func_00_1da4 ; $7966
+	call BeginFadeOut ; $7963
+	call WaitFadeEnd ; $7966
 	ld de, $05e0 ; $7969
 	call TestGameFlag ; $796c
 	jr z, Label_18_797b ; $796f
@@ -1643,8 +1643,8 @@ Label_18_798a:
 	call Func_18_7a2d ; $79a6
 	call EnableLCD ; $79a9
 	ld c, $02 ; $79ac
-	call Func_00_1d2e ; $79ae
-	call Func_00_1da4 ; $79b1
+	call BeginFadeIn ; $79ae
+	call WaitFadeEnd ; $79b1
 	wram_bank $03 ; $79b4
 	xor a, a ; $79ba
 	ld [$da01], a ; $79bb

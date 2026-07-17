@@ -115,11 +115,11 @@ Func_07_4081:
 	push hl ; $4082
 	call Func_07_49f7 ; $4083
 	call Func_07_467f ; $4086
-	call Func_00_2994 ; $4089
+	call SerialDecodeInput ; $4089
 	ldh a, [$ffd3] ; $408c
 	call Func_00_2855 ; $408e
 	farcall FarPtr_UpdateMatchFrame ; $4091
-	call Func_00_2924 ; $4094
+	call SerialEncodeInput ; $4094
 	pop hl ; $4097
 	pop bc ; $4098
 	ret ; $4099
@@ -128,11 +128,11 @@ Func_07_409a:
 	push hl ; $409b
 	call Func_07_49f7 ; $409c
 	call Func_07_46ef ; $409f
-	call Func_00_2994 ; $40a2
+	call SerialDecodeInput ; $40a2
 	ldh a, [$ffd3] ; $40a5
 	call Func_00_2855 ; $40a7
 	farcall FarPtr_UpdateMatchFrame ; $40aa
-	call Func_00_2924 ; $40ad
+	call SerialEncodeInput ; $40ad
 	pop hl ; $40b0
 	pop bc ; $40b1
 	ret ; $40b2
@@ -143,15 +143,15 @@ Func_07_40b3:
 	push hl ; $40b6
 	call UnpackBytesToNibbles ; $40b7
 	jr nc, Label_07_40bf ; $40ba
-	call Func_00_284b ; $40bc
+	call LinkErrorReset ; $40bc
 Label_07_40bf:
 	ld c, a ; $40bf
 	call ComputeNibbleBufferChecksum ; $40c0
 Label_07_40c3:
-	call Func_00_2821 ; $40c3
-	call Func_00_2821 ; $40c6
-	call Func_00_2821 ; $40c9
-	call Func_00_2821 ; $40cc
+	call ShortDelay ; $40c3
+	call ShortDelay ; $40c6
+	call ShortDelay ; $40c9
+	call ShortDelay ; $40cc
 	ld e, $64 ; $40cf
 Label_07_40d1:
 	di ; $40d1
@@ -164,9 +164,9 @@ Label_07_40d1:
 	ldh [rSC], a ; $40dd
 	pop af ; $40df
 	ei ; $40e0
-	call Func_00_282e ; $40e1
-	call Func_00_2821 ; $40e4
-	call Func_00_2821 ; $40e7
+	call WaitSerialTransfer ; $40e1
+	call ShortDelay ; $40e4
+	call ShortDelay ; $40e7
 	di ; $40ea
 	ldh a, [$ffc0] ; $40eb
 	ei ; $40ed
@@ -174,7 +174,7 @@ Label_07_40d1:
 	jr z, Label_07_40f8 ; $40f0
 	dec e ; $40f2
 	jr nz, Label_07_40d1 ; $40f3
-	call Func_00_284b ; $40f5
+	call LinkErrorReset ; $40f5
 Label_07_40f8:
 	xor a, a ; $40f8
 	ldh [$ffc6], a ; $40f9
@@ -201,16 +201,16 @@ Label_07_410e:
 	ld a, $83 ; $4119
 	ldh [rSC], a ; $411b
 	pop af ; $411d
-	call Func_00_282e ; $411e
-	call Func_00_2821 ; $4121
-	call Func_00_2821 ; $4124
+	call WaitSerialTransfer ; $411e
+	call ShortDelay ; $4121
+	call ShortDelay ; $4124
 	call Func_07_452f ; $4127
 	jr c, Label_07_410e ; $412a
 	ld h, a ; $412c
 	and a, $c0 ; $412d
 	cp a, $80 ; $412f
 	jr z, Label_07_4136 ; $4131
-	call Func_00_284b ; $4133
+	call LinkErrorReset ; $4133
 Label_07_4136:
 	ld a, h ; $4136
 	push af ; $4137
@@ -241,13 +241,13 @@ Label_07_414b:
 	ld b, $c6 ; $415b
 	call Func_07_454b ; $415d
 	jr nc, Label_07_4165 ; $4160
-	call Func_00_284b ; $4162
+	call LinkErrorReset ; $4162
 Label_07_4165:
 	ld a, $cc ; $4165
 	call Func_07_45c1 ; $4167
 	cp a, $cc ; $416a
 	jr z, Label_07_4171 ; $416c
-	call Func_00_284b ; $416e
+	call LinkErrorReset ; $416e
 Label_07_4171:
 	call Func_07_4328 ; $4171
 	ldh a, [$ffe5] ; $4174
@@ -273,7 +273,7 @@ Label_07_4171:
 	jp z, Label_07_40c3 ; $4190
 	cp a, $cb ; $4193
 	jp z, Label_07_40c3 ; $4195
-	call Func_00_284b ; $4198
+	call LinkErrorReset ; $4198
 Label_07_419b:
 	ld a, $cd ; $419b
 	call Func_07_45c1 ; $419d
@@ -281,7 +281,7 @@ Label_07_419b:
 	jr z, Label_07_41ac ; $41a2
 	cp a, $cb ; $41a4
 	jp z, Label_07_40c3 ; $41a6
-	call Func_00_284b ; $41a9
+	call LinkErrorReset ; $41a9
 Label_07_41ac:
 	pop hl ; $41ac
 	pop de ; $41ad
@@ -317,7 +317,7 @@ Label_07_41b6:
 	ld a, $83 ; $41d7
 	ldh [rSC], a ; $41d9
 	pop af ; $41db
-	call Func_00_282e ; $41dc
+	call WaitSerialTransfer ; $41dc
 	pop af ; $41df
 	di ; $41e0
 	ldh [$ffc0], a ; $41e1
@@ -339,7 +339,7 @@ Func_07_41ef:
 	push hl ; $41f2
 	call UnpackBytesToNibbles ; $41f3
 	jr nc, Label_07_41fb ; $41f6
-	call Func_00_284b ; $41f8
+	call LinkErrorReset ; $41f8
 Label_07_41fb:
 	ld c, a ; $41fb
 	call ComputeNibbleBufferChecksum ; $41fc
@@ -363,7 +363,7 @@ Label_07_41ff:
 	ei ; $4219
 	ld e, $64 ; $421a
 Label_07_421c:
-	call Func_00_282e ; $421c
+	call WaitSerialTransfer ; $421c
 	jr c, Label_07_422c ; $421f
 	di ; $4221
 	ldh a, [$ffc0] ; $4222
@@ -373,7 +373,7 @@ Label_07_421c:
 	dec e ; $4229
 	jr nz, Label_07_421c ; $422a
 Label_07_422c:
-	call Func_00_284b ; $422c
+	call LinkErrorReset ; $422c
 Label_07_422f:
 	ld a, $01 ; $422f
 	ldh [$ffc7], a ; $4231
@@ -400,19 +400,19 @@ Label_07_424f:
 	or a, $80 ; $4250
 	ldh [$ffc1], a ; $4252
 	ei ; $4254
-	call Func_00_282e ; $4255
+	call WaitSerialTransfer ; $4255
 	jr nc, Label_07_425d ; $4258
-	call Func_00_284b ; $425a
+	call LinkErrorReset ; $425a
 Label_07_425d:
 	call Func_07_452f ; $425d
 	jr nc, Label_07_4265 ; $4260
-	call Func_00_284b ; $4262
+	call LinkErrorReset ; $4262
 Label_07_4265:
 	ld c, a ; $4265
 	and a, $c0 ; $4266
 	cp a, $40 ; $4268
 	jr z, Label_07_426f ; $426a
-	call Func_00_284b ; $426c
+	call LinkErrorReset ; $426c
 Label_07_426f:
 	ld hl, $cea0 ; $426f
 	ldh a, [$ffc6] ; $4272
@@ -446,7 +446,7 @@ Label_07_4282:
 	ld a, $c6 ; $429a
 	ldh [$ffc1], a ; $429c
 	ei ; $429e
-	call Func_00_282e ; $429f
+	call WaitSerialTransfer ; $429f
 	di ; $42a2
 	ldh a, [$ffc0] ; $42a3
 	ei ; $42a5
@@ -454,7 +454,7 @@ Label_07_4282:
 	and a, $c0 ; $42a7
 	cp a, $40 ; $42a9
 	jr z, Label_07_42b0 ; $42ab
-	call Func_00_284b ; $42ad
+	call LinkErrorReset ; $42ad
 Label_07_42b0:
 	ld hl, $cea0 ; $42b0
 	ldh a, [$ffc6] ; $42b3
@@ -475,7 +475,7 @@ Label_07_42c3:
 	call Func_07_4624 ; $42c5
 	cp a, $c5 ; $42c8
 	jr z, Label_07_42cf ; $42ca
-	call Func_00_284b ; $42cc
+	call LinkErrorReset ; $42cc
 Label_07_42cf:
 	call Func_07_438c ; $42cf
 	ldh a, [$ffe5] ; $42d2
@@ -516,7 +516,7 @@ Label_07_42cf:
 	jp z, Label_07_41ff ; $4307
 	cp a, $cd ; $430a
 	jp z, Label_07_41ff ; $430c
-	call Func_00_284b ; $430f
+	call LinkErrorReset ; $430f
 Label_07_4312:
 	ld a, $cd ; $4312
 	call Func_07_4624 ; $4314
@@ -524,7 +524,7 @@ Label_07_4312:
 	jp z, Label_07_41ff ; $4319
 	cp a, $cd ; $431c
 	jr z, Label_07_4323 ; $431e
-	call Func_00_284b ; $4320
+	call LinkErrorReset ; $4320
 Label_07_4323:
 	pop hl ; $4323
 	pop de ; $4324
@@ -543,7 +543,7 @@ Func_07_4328:
 	and a, $c0 ; $4337
 	cp a, $80 ; $4339
 	jr z, Label_07_4340 ; $433b
-	call Func_00_284b ; $433d
+	call LinkErrorReset ; $433d
 Label_07_4340:
 	call Func_07_43f6 ; $4340
 	ld a, d ; $4343
@@ -554,7 +554,7 @@ Label_07_4340:
 	and a, $c0 ; $434c
 	cp a, $80 ; $434e
 	jr z, Label_07_4355 ; $4350
-	call Func_00_284b ; $4352
+	call LinkErrorReset ; $4352
 Label_07_4355:
 	call Func_07_43f6 ; $4355
 	ld a, e ; $4358
@@ -566,7 +566,7 @@ Label_07_4355:
 	and a, $c0 ; $4363
 	cp a, $80 ; $4365
 	jr z, Label_07_436c ; $4367
-	call Func_00_284b ; $4369
+	call LinkErrorReset ; $4369
 Label_07_436c:
 	call Func_07_43f6 ; $436c
 	ld a, e ; $436f
@@ -577,11 +577,11 @@ Label_07_436c:
 	and a, $c0 ; $4378
 	cp a, $80 ; $437a
 	jr z, Label_07_4381 ; $437c
-	call Func_00_284b ; $437e
+	call LinkErrorReset ; $437e
 Label_07_4381:
 	call Func_07_43f6 ; $4381
-	call Func_00_2821 ; $4384
-	call Func_00_2821 ; $4387
+	call ShortDelay ; $4384
+	call ShortDelay ; $4387
 	pop bc ; $438a
 	ret ; $438b
 Func_07_438c:
@@ -594,7 +594,7 @@ Func_07_438c:
 	call Func_07_4624 ; $4397
 	cp a, $cc ; $439a
 	jr z, Label_07_43a1 ; $439c
-	call Func_00_284b ; $439e
+	call LinkErrorReset ; $439e
 Label_07_43a1:
 	ld a, d ; $43a1
 	and a, $0f ; $43a2
@@ -604,7 +604,7 @@ Label_07_43a1:
 	and a, $c0 ; $43aa
 	cp a, $40 ; $43ac
 	jr z, Label_07_43b3 ; $43ae
-	call Func_00_284b ; $43b0
+	call LinkErrorReset ; $43b0
 Label_07_43b3:
 	call Func_07_43f6 ; $43b3
 	ld a, e ; $43b6
@@ -616,7 +616,7 @@ Label_07_43b3:
 	and a, $c0 ; $43c1
 	cp a, $40 ; $43c3
 	jr z, Label_07_43ca ; $43c5
-	call Func_00_284b ; $43c7
+	call LinkErrorReset ; $43c7
 Label_07_43ca:
 	call Func_07_43f6 ; $43ca
 	ld a, e ; $43cd
@@ -627,7 +627,7 @@ Label_07_43ca:
 	and a, $c0 ; $43d6
 	cp a, $40 ; $43d8
 	jr z, Label_07_43df ; $43da
-	call Func_00_284b ; $43dc
+	call LinkErrorReset ; $43dc
 Label_07_43df:
 	call Func_07_43f6 ; $43df
 	ld a, $cd ; $43e2
@@ -636,7 +636,7 @@ Label_07_43df:
 	and a, $c0 ; $43e8
 	cp a, $40 ; $43ea
 	jr z, Label_07_43f1 ; $43ec
-	call Func_00_284b ; $43ee
+	call LinkErrorReset ; $43ee
 Label_07_43f1:
 	call Func_07_43f6 ; $43f1
 	pop bc ; $43f4
@@ -718,7 +718,7 @@ Label_07_4450:
 	ldh [rSC], a ; $445e
 	pop af ; $4460
 	ei ; $4461
-	call Func_00_282e ; $4462
+	call WaitSerialTransfer ; $4462
 	call Func_07_452f ; $4465
 	jr c, Label_07_4450 ; $4468
 	xor a, a ; $446a
@@ -803,7 +803,7 @@ Label_07_44d9:
 	ld a, $83 ; $44e2
 	ldh [rSC], a ; $44e4
 	pop af ; $44e6
-	call Func_00_2821 ; $44e7
+	call ShortDelay ; $44e7
 	call Func_07_452f ; $44ea
 	jr c, Label_07_44d9 ; $44ed
 	cp a, $c5 ; $44ef
@@ -821,7 +821,7 @@ Label_07_44fb:
 	ld a, b ; $44ff
 	cp a, $40 ; $4500
 	jr c, Label_07_44d9 ; $4502
-	call Func_00_284b ; $4504
+	call LinkErrorReset ; $4504
 Label_07_4507:
 	ld a, $c6 ; $4507
 	call Func_07_45c1 ; $4509
@@ -860,7 +860,7 @@ Func_07_452f:
 	ccf ; $4540
 	jr Label_07_4547 ; $4541
 Label_07_4543:
-	call Func_00_28af ; $4543
+	call IncrementLinkFrameCounter ; $4543
 	scf ; $4546
 Label_07_4547:
 	ei ; $4547
@@ -882,9 +882,9 @@ Label_07_4550:
 	ldh [rSC], a ; $455c
 	pop af ; $455e
 	ei ; $455f
-	call Func_00_282e ; $4560
-	call Func_00_2821 ; $4563
-	call Func_00_2821 ; $4566
+	call WaitSerialTransfer ; $4560
+	call ShortDelay ; $4563
+	call ShortDelay ; $4566
 	di ; $4569
 	ldh a, [$ffc0] ; $456a
 	ei ; $456c
@@ -901,7 +901,7 @@ Label_07_4550:
 	scf ; $457e
 	jr Label_07_4588 ; $457f
 Label_07_4581:
-	call Func_00_28af ; $4581
+	call IncrementLinkFrameCounter ; $4581
 	jr Label_07_4550 ; $4584
 Label_07_4586:
 	scf ; $4586
@@ -924,7 +924,7 @@ Label_07_458f:
 	ldh [rSC], a ; $459b
 	pop af ; $459d
 	ei ; $459e
-	call Func_00_282e ; $459f
+	call WaitSerialTransfer ; $459f
 	ldh a, [$ffc0] ; $45a2
 	cp a, $00 ; $45a4
 	jr z, Label_07_45b8 ; $45a6
@@ -939,7 +939,7 @@ Label_07_458f:
 	scf ; $45b5
 	jr Label_07_45bf ; $45b6
 Label_07_45b8:
-	call Func_00_28af ; $45b8
+	call IncrementLinkFrameCounter ; $45b8
 	jr Label_07_458f ; $45bb
 Label_07_45bd:
 	scf ; $45bd
@@ -964,9 +964,9 @@ Label_07_45c6:
 	ldh [rSC], a ; $45d4
 	pop af ; $45d6
 	ei ; $45d7
-	call Func_00_282e ; $45d8
-	call Func_00_2821 ; $45db
-	call Func_00_2821 ; $45de
+	call WaitSerialTransfer ; $45d8
+	call ShortDelay ; $45db
+	call ShortDelay ; $45de
 	di ; $45e1
 	ldh a, [$ffc0] ; $45e2
 	cp a, $00 ; $45e4
@@ -978,7 +978,7 @@ Label_07_45ee:
 	dec c ; $45ee
 	jr nz, Label_07_45c6 ; $45ef
 	ei ; $45f1
-	call Func_00_284b ; $45f2
+	call LinkErrorReset ; $45f2
 Label_07_45f5:
 	ei ; $45f5
 	pop bc ; $45f6
@@ -1006,7 +1006,7 @@ Label_07_45fb:
 	ld a, b ; $461a
 	jr Label_07_4622 ; $461b
 Label_07_461d:
-	call Func_00_28af ; $461d
+	call IncrementLinkFrameCounter ; $461d
 	jr Label_07_45fb ; $4620
 Label_07_4622:
 	pop bc ; $4622
@@ -1024,7 +1024,7 @@ Func_07_4624:
 	ei ; $4633
 	ld c, $64 ; $4634
 Label_07_4636:
-	call Func_00_282e ; $4636
+	call WaitSerialTransfer ; $4636
 	jr c, Label_07_464e ; $4639
 	di ; $463b
 	ldh a, [$ffc0] ; $463c
@@ -1041,7 +1041,7 @@ Label_07_4636:
 Label_07_464e:
 	dec c ; $464e
 	jr nz, Label_07_4636 ; $464f
-	call Func_00_284b ; $4651
+	call LinkErrorReset ; $4651
 Label_07_4654:
 	pop bc ; $4654
 	ret ; $4655
@@ -1107,7 +1107,7 @@ Func_07_467f:
 	cp a, $40 ; $46ab
 	jr z, Label_07_46c7 ; $46ad
 Label_07_46af:
-	call Func_00_284b ; $46af
+	call LinkErrorReset ; $46af
 	ld hl, $ffc8 ; $46b2
 	inc [hl] ; $46b5
 	ld a, [hl] ; $46b6
@@ -1116,9 +1116,9 @@ Label_07_46af:
 	call WaitVBlank ; $46bb
 	jp Func_07_467f ; $46be
 Label_07_46c1:
-	call Func_00_284b ; $46c1
+	call LinkErrorReset ; $46c1
 Label_07_46c4:
-	call Func_00_284b ; $46c4
+	call LinkErrorReset ; $46c4
 Label_07_46c7:
 	ldh a, [$ffdb] ; $46c7
 	cp a, b ; $46c9
@@ -1134,7 +1134,7 @@ Label_07_46c7:
 	jp Func_07_467f ; $46dd
 Label_07_46e0:
 	call InitSerialLink ; $46e0
-	call Func_00_284b ; $46e3
+	call LinkErrorReset ; $46e3
 Label_07_46e6:
 	ld a, b ; $46e6
 	ldh [$ffdb], a ; $46e7
@@ -1159,9 +1159,9 @@ Func_07_46ef:
 	cp a, $80 ; $4708
 	jr z, Label_07_4712 ; $470a
 Label_07_470c:
-	call Func_00_284b ; $470c
+	call LinkErrorReset ; $470c
 Label_07_470f:
-	call Func_00_284b ; $470f
+	call LinkErrorReset ; $470f
 Label_07_4712:
 	ldh a, [$ffdb] ; $4712
 	cp a, b ; $4714
@@ -1181,8 +1181,8 @@ Func_07_4725:
 	push hl ; $4726
 	call Func_07_49f7 ; $4727
 	call Func_07_467f ; $472a
-	call Func_00_2994 ; $472d
-	call Func_00_2924 ; $4730
+	call SerialDecodeInput ; $472d
+	call SerialEncodeInput ; $4730
 	pop hl ; $4733
 	pop bc ; $4734
 	ret ; $4735
@@ -1191,8 +1191,8 @@ Func_07_4736:
 	push hl ; $4737
 	call Func_07_49f7 ; $4738
 	call Func_07_46ef ; $473b
-	call Func_00_2994 ; $473e
-	call Func_00_2924 ; $4741
+	call SerialDecodeInput ; $473e
+	call SerialEncodeInput ; $4741
 	pop hl ; $4744
 	pop bc ; $4745
 	ret ; $4746
@@ -1245,9 +1245,9 @@ Func_07_477d:
 	jr z, Label_07_4799 ; $4785
 	cp a, $01 ; $4787
 	jr z, Label_07_478e ; $4789
-	call Func_00_284b ; $478b
+	call LinkErrorReset ; $478b
 Label_07_478e:
-	call Func_00_2821 ; $478e
+	call ShortDelay ; $478e
 	dec c ; $4791
 	jr nz, Label_07_478e ; $4792
 	call Func_07_479f ; $4794
@@ -1280,7 +1280,7 @@ Label_07_47aa:
 	ldh [rSC], a ; $47be
 	pop af ; $47c0
 	ei ; $47c1
-	call Func_00_2821 ; $47c2
+	call ShortDelay ; $47c2
 	ldh a, [$ffc0] ; $47c5
 	and a, $3f ; $47c7
 	cp a, $0a ; $47c9
@@ -1289,7 +1289,7 @@ Label_07_47aa:
 	ld a, d ; $47ce
 	or a, e ; $47cf
 	jr nz, Label_07_47aa ; $47d0
-	call Func_00_284b ; $47d2
+	call LinkErrorReset ; $47d2
 Label_07_47d5:
 	pop de ; $47d5
 	pop af ; $47d6
@@ -1311,7 +1311,7 @@ Func_07_47d8:
 	pop af ; $47ef
 	ei ; $47f0
 Label_07_47f1:
-	call Func_00_282e ; $47f1
+	call WaitSerialTransfer ; $47f1
 	ldh a, [$ffc0] ; $47f4
 	and a, $3f ; $47f6
 	cp a, $0b ; $47f8
@@ -1320,7 +1320,7 @@ Label_07_47f1:
 	ld a, d ; $47fd
 	or a, e ; $47fe
 	jr nz, Label_07_47f1 ; $47ff
-	call Func_00_284b ; $4801
+	call LinkErrorReset ; $4801
 Label_07_4804:
 	pop de ; $4804
 	pop af ; $4805
@@ -1330,10 +1330,10 @@ Func_07_4807:
 	push hl ; $4808
 	call Func_07_4a13 ; $4809
 	call Func_07_467f ; $480c
-	call Func_00_2994 ; $480f
+	call SerialDecodeInput ; $480f
 	ldh a, [$ffd3] ; $4812
 	call Func_00_2855 ; $4814
-	call Func_00_2924 ; $4817
+	call SerialEncodeInput ; $4817
 	pop bc ; $481a
 	pop hl ; $481b
 	ret ; $481c
@@ -1342,10 +1342,10 @@ Func_07_481d:
 	push hl ; $481e
 	call Func_07_4a13 ; $481f
 	call Func_07_46ef ; $4822
-	call Func_00_2994 ; $4825
+	call SerialDecodeInput ; $4825
 	ldh a, [$ffd3] ; $4828
 	call Func_00_2855 ; $482a
-	call Func_00_2924 ; $482d
+	call SerialEncodeInput ; $482d
 	pop hl ; $4830
 	pop bc ; $4831
 	ret ; $4832
@@ -1382,26 +1382,26 @@ Func_07_4846:
 	jp z, Label_07_48a7 ; $4867
 	cp a, $01 ; $486a
 	jr z, Label_07_4871 ; $486c
-	call Func_00_284b ; $486e
+	call LinkErrorReset ; $486e
 Label_07_4871:
 	ld a, $40 ; $4871
 	ldh [$ffdc], a ; $4873
-	call Func_00_2821 ; $4875
-	call Func_00_2821 ; $4878
-	call Func_00_2821 ; $487b
-	call Func_00_2821 ; $487e
-	call Func_00_2821 ; $4881
-	call Func_00_2821 ; $4884
-	call Func_00_2821 ; $4887
-	call Func_00_2821 ; $488a
-	call Func_00_2821 ; $488d
-	call Func_00_2821 ; $4890
-	call Func_00_2821 ; $4893
-	call Func_00_2821 ; $4896
-	call Func_00_2821 ; $4899
-	call Func_00_2821 ; $489c
-	call Func_00_2821 ; $489f
-	call Func_00_2821 ; $48a2
+	call ShortDelay ; $4875
+	call ShortDelay ; $4878
+	call ShortDelay ; $487b
+	call ShortDelay ; $487e
+	call ShortDelay ; $4881
+	call ShortDelay ; $4884
+	call ShortDelay ; $4887
+	call ShortDelay ; $488a
+	call ShortDelay ; $488d
+	call ShortDelay ; $4890
+	call ShortDelay ; $4893
+	call ShortDelay ; $4896
+	call ShortDelay ; $4899
+	call ShortDelay ; $489c
+	call ShortDelay ; $489f
+	call ShortDelay ; $48a2
 	jr Label_07_48ae ; $48a5
 Label_07_48a7:
 	xor a, a ; $48a7
@@ -1411,7 +1411,7 @@ Label_07_48a7:
 Label_07_48ae:
 	xor a, a ; $48ae
 	ldh [$ffe2], a ; $48af
-	call Func_00_2924 ; $48b1
+	call SerialEncodeInput ; $48b1
 	farcall FarPtr_07_2c ; $48b4
 	xor a, a ; $48b7
 	ldh [$ffde], a ; $48b8
@@ -1491,7 +1491,7 @@ Func_07_4926:
 	jr z, Label_07_494f ; $4941
 	cp a, $01 ; $4943
 	jr z, Label_07_494a ; $4945
-	call Func_00_284b ; $4947
+	call LinkErrorReset ; $4947
 Label_07_494a:
 	call Func_07_48fe ; $494a
 	jr Label_07_4952 ; $494d
@@ -1534,7 +1534,7 @@ Func_07_496e:
 	jr z, Label_07_49a0 ; $4992
 	cp a, $01 ; $4994
 	jr z, Label_07_499b ; $4996
-	call Func_00_284b ; $4998
+	call LinkErrorReset ; $4998
 Label_07_499b:
 	call Func_07_40b3 ; $499b
 	jr Label_07_49a3 ; $499e
@@ -1553,7 +1553,7 @@ PackNibblesToBytes:
 	add a, a ; $49b1
 	cp a, $5f ; $49b2
 	jr c, Label_07_49b9 ; $49b4
-	call Func_00_284b ; $49b6
+	call LinkErrorReset ; $49b6
 Label_07_49b9:
 	ld c, a ; $49b9
 	ld b, $00 ; $49ba
@@ -1638,7 +1638,7 @@ Label_07_4a2d:
 	nop ; $4a2e
 	nop ; $4a2f
 	di ; $4a30
-	ldh a, [$ff8d] ; $4a31
+	ldh a, [hVBlankOccurred] ; $4a31
 	or a, a ; $4a33
 	jr z, Label_07_4a2d ; $4a34
 	ldh a, [$ffd7] ; $4a36
@@ -1654,7 +1654,7 @@ Label_07_4a43:
 	dec a ; $4a43
 	ldh [$ffd7], a ; $4a44
 	xor a, a ; $4a46
-	ldh [$ff8d], a ; $4a47
+	ldh [hVBlankOccurred], a ; $4a47
 	scf ; $4a49
 	ccf ; $4a4a
 Label_07_4a4b:
@@ -1682,15 +1682,15 @@ Func_07_4a51:
 	jr z, Label_07_4a8c ; $4a6e
 	cp a, $01 ; $4a70
 	jr z, Label_07_4a77 ; $4a72
-	call Func_00_284b ; $4a74
+	call LinkErrorReset ; $4a74
 Label_07_4a77:
 	ld a, $40 ; $4a77
 	ldh [$ffdc], a ; $4a79
-	call Func_00_2821 ; $4a7b
-	call Func_00_2821 ; $4a7e
-	call Func_00_2821 ; $4a81
-	call Func_00_2821 ; $4a84
-	call Func_00_2821 ; $4a87
+	call ShortDelay ; $4a7b
+	call ShortDelay ; $4a7e
+	call ShortDelay ; $4a81
+	call ShortDelay ; $4a84
+	call ShortDelay ; $4a87
 	jr Label_07_4a93 ; $4a8a
 Label_07_4a8c:
 	xor a, a ; $4a8c
@@ -1698,7 +1698,7 @@ Label_07_4a8c:
 	ld a, $80 ; $4a8f
 	ldh [$ffdc], a ; $4a91
 Label_07_4a93:
-	call Func_00_2924 ; $4a93
+	call SerialEncodeInput ; $4a93
 	farcall FarPtr_07_2c ; $4a96
 	xor a, a ; $4a99
 	ldh [$ffde], a ; $4a9a
@@ -1727,15 +1727,15 @@ Func_07_4aa9:
 	jr z, Label_07_4ae1 ; $4ac3
 	cp a, $01 ; $4ac5
 	jr z, Label_07_4acc ; $4ac7
-	call Func_00_284b ; $4ac9
+	call LinkErrorReset ; $4ac9
 Label_07_4acc:
 	ld a, $40 ; $4acc
 	ldh [$ffdc], a ; $4ace
-	call Func_00_2821 ; $4ad0
-	call Func_00_2821 ; $4ad3
-	call Func_00_2821 ; $4ad6
-	call Func_00_2821 ; $4ad9
-	call Func_00_2821 ; $4adc
+	call ShortDelay ; $4ad0
+	call ShortDelay ; $4ad3
+	call ShortDelay ; $4ad6
+	call ShortDelay ; $4ad9
+	call ShortDelay ; $4adc
 	jr Label_07_4ae8 ; $4adf
 Label_07_4ae1:
 	xor a, a ; $4ae1
@@ -1743,7 +1743,7 @@ Label_07_4ae1:
 	ld a, $80 ; $4ae4
 	ldh [$ffdc], a ; $4ae6
 Label_07_4ae8:
-	call Func_00_2924 ; $4ae8
+	call SerialEncodeInput ; $4ae8
 	farcall FarPtr_07_2c ; $4aeb
 	xor a, a ; $4aee
 	ldh [$ffde], a ; $4aef
@@ -1883,22 +1883,22 @@ Label_07_4bbe:
 	pop hl ; $4bc0
 	ret ; $4bc1
 Func_07_4bc2:
-	call Func_00_2821 ; $4bc2
-	call Func_00_2821 ; $4bc5
-	call Func_00_2821 ; $4bc8
-	call Func_00_2821 ; $4bcb
-	call Func_00_2821 ; $4bce
-	call Func_00_2821 ; $4bd1
-	call Func_00_2821 ; $4bd4
-	call Func_00_2821 ; $4bd7
-	call Func_00_2821 ; $4bda
-	call Func_00_2821 ; $4bdd
-	call Func_00_2821 ; $4be0
-	call Func_00_2821 ; $4be3
-	call Func_00_2821 ; $4be6
-	call Func_00_2821 ; $4be9
-	call Func_00_2821 ; $4bec
-	call Func_00_2821 ; $4bef
+	call ShortDelay ; $4bc2
+	call ShortDelay ; $4bc5
+	call ShortDelay ; $4bc8
+	call ShortDelay ; $4bcb
+	call ShortDelay ; $4bce
+	call ShortDelay ; $4bd1
+	call ShortDelay ; $4bd4
+	call ShortDelay ; $4bd7
+	call ShortDelay ; $4bda
+	call ShortDelay ; $4bdd
+	call ShortDelay ; $4be0
+	call ShortDelay ; $4be3
+	call ShortDelay ; $4be6
+	call ShortDelay ; $4be9
+	call ShortDelay ; $4bec
+	call ShortDelay ; $4bef
 	ret ; $4bf2
 Func_07_4bf3:
 	ldh a, [$ffc2] ; $4bf3
@@ -1952,7 +1952,7 @@ Func_07_4c24:
 	ldh [$ffd6], a ; $4c40
 	ld a, $c0 ; $4c42
 	ldh [$ffc1], a ; $4c44
-	call Func_00_284b ; $4c46
+	call LinkErrorReset ; $4c46
 Label_07_4c49:
 	ldh a, [$ffdf] ; $4c49
 	or a, a ; $4c4b
@@ -2394,7 +2394,7 @@ Func_07_5345:
 	jr z, Label_07_5357 ; $5353
 	srl a ; $5355
 Label_07_5357:
-	call Func_00_0b9d ; $5357
+	call MulHLByASignedFull ; $5357
 	jr Label_07_5373 ; $535a
 Func_07_535c:
 	ld a, [$c4a2] ; $535c
@@ -2407,7 +2407,7 @@ Func_07_535c:
 	jr z, Label_07_536e ; $536a
 	srl a ; $536c
 Label_07_536e:
-	call Func_00_0b9d ; $536e
+	call MulHLByASignedFull ; $536e
 	jr Label_07_5373 ; $5371
 Label_07_5373:
 	ld a, l ; $5373
@@ -2575,7 +2575,7 @@ Func_07_546b:
 	ld h, [hl] ; $548d
 	ld l, a ; $548e
 	ld a, b ; $548f
-	call Func_00_0bb6 ; $5490
+	call MulHLByAFracSigned ; $5490
 	ld e, l ; $5493
 	ld d, h ; $5494
 	ld hl, $df42 ; $5495
@@ -2699,7 +2699,7 @@ Label_07_5535:
 	add hl, bc ; $554b
 	bit 7, h ; $554c
 	jr z, Label_07_557d ; $554e
-	call Func_00_1416 ; $5550
+	call AngleFromVector16 ; $5550
 	push bc ; $5553
 	ld hl, wBallDepth ; $5554
 	ld a, [hl+] ; $5557
@@ -2728,7 +2728,7 @@ Label_07_5564:
 	sbc a, a ; $5573
 	sub a, h ; $5574
 	ld h, a ; $5575
-	call Func_00_1416 ; $5576
+	call AngleFromVector16 ; $5576
 	pop hl ; $5579
 	add hl, bc ; $557a
 	bit 7, h ; $557b
@@ -2746,7 +2746,7 @@ Func_07_557e:
 	sub a, l ; $558a
 	ld h, a ; $558b
 	ld a, [hl+] ; $558c
-	call Func_00_3024 ; $558d
+	call PlaySoundManaged ; $558d
 	ld a, [hl+] ; $5590
 	ld [$c4a1], a ; $5591
 	ld a, [hl+] ; $5594
@@ -2914,7 +2914,7 @@ Label_07_56cd:
 	rr l ; $56d7
 	add hl, de ; $56d9
 	ld a, [$df69] ; $56da
-	call Func_00_0bd4 ; $56dd
+	call MulHLByAFrac ; $56dd
 	ld e, l ; $56e0
 	ld d, h ; $56e1
 	ret ; $56e2
@@ -3017,7 +3017,7 @@ Label_07_572b:
 	ld a, [hl+] ; $5761
 	ld h, [hl] ; $5762
 	ld l, a ; $5763
-	call Func_00_1416 ; $5764
+	call AngleFromVector16 ; $5764
 	ld hl, $c43a ; $5767
 	ld a, c ; $576a
 	ld [hl+], a ; $576b
@@ -3171,9 +3171,9 @@ Label_07_5820:
 	ld a, [$c48d] ; $5833
 	ld e, c ; $5836
 	ld d, b ; $5837
-	call Func_00_0e6c ; $5838
+	call DivAHLByDESigned ; $5838
 	pop de ; $583b
-	call Func_00_0c8f ; $583c
+	call MulHLByDE ; $583c
 	ld h, l ; $583f
 	ldh a, [$ffa9] ; $5840
 	ld l, a ; $5842
@@ -3251,7 +3251,7 @@ Func_07_5899:
 	add hl, de ; $58a2
 	bit 7, h ; $58a3
 	jr nz, Label_07_58b1 ; $58a5
-	ld de, $ffa0 ; $58a7
+	ld de, hPeakLY ; $58a7
 	ld hl, wBallHeight ; $58aa
 	ld a, e ; $58ad
 	ld [hl+], a ; $58ae

@@ -310,8 +310,8 @@ Label_14_42d3:
 	ld b, $40 ; $42e0
 	farcall FarPtr_0a_2e ; $42e2
 	ld c, $06 ; $42e5
-	call Func_00_1d2e ; $42e7
-	call Func_00_1da4 ; $42ea
+	call BeginFadeIn ; $42e7
+	call WaitFadeEnd ; $42ea
 	push af ; $42ed
 	ld a, $28 ; $42ee
 	farcall FarPtr_0a_04 ; $42f0
@@ -612,8 +612,8 @@ Label_14_4515:
 	farcall FarPtr_0a_08 ; $4574
 Label_14_4577:
 	ld c, $06 ; $4577
-	call Func_00_1d20 ; $4579
-	call Func_00_1da4 ; $457c
+	call BeginFadeOut ; $4579
+	call WaitFadeEnd ; $457c
 	clear_flag $1c, 0 ; $457f
 	ld a, $12 ; $4582
 	ld [wStoryModeCurrentLocation], a ; $4584
@@ -719,8 +719,8 @@ Label_14_4612:
 	ld a, $00 ; $4668
 	farcall FarPtr_0a_20 ; $466a
 	ld c, $08 ; $466d
-	call Func_00_1d20 ; $466f
-	call Func_00_1da4 ; $4672
+	call BeginFadeOut ; $466f
+	call WaitFadeEnd ; $4672
 	ld a, $12 ; $4675
 	ld [wStoryModeCurrentLocation], a ; $4677
 	ld a, $07 ; $467a
@@ -750,7 +750,7 @@ Func_14_469f:
 	ld a, [hl+] ; $46a7
 	ld d, [hl] ; $46a8
 	ld e, a ; $46a9
-	call Func_00_24ef ; $46aa
+	call TestGameFlagByNumber ; $46aa
 	ret ; $46ad
 	add a, a ; $46ae
 	add a, $bd ; $46af
@@ -761,7 +761,7 @@ Func_14_469f:
 	ld a, [hl+] ; $46b6
 	ld d, [hl] ; $46b7
 	ld e, a ; $46b8
-	call Func_00_2509 ; $46b9
+	call SetGameFlagByNumber ; $46b9
 	ret ; $46bc
 	; $46bd, 8 bytes (records:2)
 ; 4 records x 2 bytes
@@ -797,8 +797,8 @@ Label_14_46ef:
 	ld b, $40 ; $46fc
 	farcall FarPtr_0a_2e ; $46fe
 	ld c, $06 ; $4701
-	call Func_00_1d2e ; $4703
-	call Func_00_1da4 ; $4706
+	call BeginFadeIn ; $4703
+	call WaitFadeEnd ; $4706
 	push af ; $4709
 	ld a, $28 ; $470a
 	farcall FarPtr_0a_04 ; $470c
@@ -1985,8 +1985,8 @@ Label_14_5352:
 	xor a, a ; $5383
 	ld [$c2d5], a ; $5384
 	ld c, $04 ; $5387
-	call Func_00_1d2e ; $5389
-	call Func_00_1da4 ; $538c
+	call BeginFadeIn ; $5389
+	call WaitFadeEnd ; $538c
 	ld a, $3b ; $538f
 	ld [$c2b0], a ; $5391
 	ld a, $a8 ; $5394
@@ -1996,8 +1996,8 @@ Label_14_539c:
 	xor a, a ; $539c
 	ld [$c2d5], a ; $539d
 	ld c, $06 ; $53a0
-	call Func_00_1d2e ; $53a2
-	call Func_00_1da4 ; $53a5
+	call BeginFadeIn ; $53a2
+	call WaitFadeEnd ; $53a5
 	sound $7a ; $53a8
 	push af ; $53aa
 	ld a, $3c ; $53ab
@@ -2148,8 +2148,8 @@ Label_14_54bc:
 	jr z, Label_14_54df ; $54bf
 Label_14_54c1:
 	ld c, $04 ; $54c1
-	call Func_00_1d20 ; $54c3
-	call Func_00_1da4 ; $54c6
+	call BeginFadeOut ; $54c3
+	call WaitFadeEnd ; $54c6
 	call ClearFrameTasks ; $54c9
 	ld a, $15 ; $54cc
 	ld [wStoryModeCurrentLocation], a ; $54ce
@@ -2299,9 +2299,9 @@ Label_14_5603:
 	ld b, $00 ; $5615
 	farcall FarPtr_0a_48 ; $5617
 	ld c, $04 ; $561a
-	call Func_00_1d20 ; $561c
-	call Func_00_1da4 ; $561f
-	call Func_00_1da4 ; $5622
+	call BeginFadeOut ; $561c
+	call WaitFadeEnd ; $561f
+	call WaitFadeEnd ; $5622
 	call ClearFrameTasks ; $5625
 	ld a, $0a ; $5628
 	ld [wStoryModeCurrentLocation], a ; $562a
@@ -2319,7 +2319,7 @@ Func_14_5e79:
 	ld hl, $5650 ; $5e82
 	ld de, $a000 ; $5e85
 	ld c, $60 ; $5e88
-	call Func_00_0480 ; $5e8a
+	call QueueVRAMCopy ; $5e8a
 	ld hl, $5e71 ; $5e8d
 	ld de, $0801 ; $5e90
 	call LoadPaletteShadow ; $5e93
@@ -2359,14 +2359,14 @@ Func_14_60a1:
 	ld hl, $5ed0 ; $60aa
 	ld de, $8200 ; $60ad
 	ld c, $1c ; $60b0
-	call Func_00_0480 ; $60b2
+	call QueueVRAMCopy ; $60b2
 	ld hl, $6099 ; $60b5
 	ld de, $0901 ; $60b8
 	call LoadPaletteShadow ; $60bb
 	pop af ; $60be
 	wram_bank ; $60bf
 	ret ; $60c3
-	ldh a, [$ff8b] ; $60c4
+	ldh a, [hScrollX] ; $60c4
 	ld b, a ; $60c6
 	ld a, [$c2b2] ; $60c7
 	sub a, b ; $60ca
@@ -2376,7 +2376,7 @@ Func_14_60a1:
 	jr nz, Label_14_60d5 ; $60d0
 	call Func_14_616b ; $60d2
 Label_14_60d5:
-	ldh a, [$ff8a] ; $60d5
+	ldh a, [hScrollY] ; $60d5
 	ld b, a ; $60d7
 	ld a, [wWaterSpriteMinigameTimer] ; $60d8
 	add a, $20 ; $60db
@@ -2464,7 +2464,7 @@ Func_14_616b:
 	ld [wWaterSpriteMinigameTimer], a ; $617a
 Label_14_617d:
 	ret ; $617d
-	ldh a, [$ff8b] ; $617e
+	ldh a, [hScrollX] ; $617e
 	ld b, a ; $6180
 	ld a, [$c2b3] ; $6181
 	sub a, b ; $6184
@@ -2474,7 +2474,7 @@ Label_14_617d:
 	jr nz, Label_14_618f ; $618a
 	call Func_14_6225 ; $618c
 Label_14_618f:
-	ldh a, [$ff8a] ; $618f
+	ldh a, [hScrollY] ; $618f
 	ld b, a ; $6191
 	ld a, [$c2b5] ; $6192
 	add a, $20 ; $6195
@@ -2569,7 +2569,7 @@ Func_14_6238:
 	ld hl, $5a50 ; $6241
 	ld de, $a000 ; $6244
 	ld c, $60 ; $6247
-	call Func_00_0480 ; $6249
+	call QueueVRAMCopy ; $6249
 	ld hl, $5e71 ; $624c
 	ld de, $0801 ; $624f
 	call LoadPaletteShadow ; $6252
@@ -2632,8 +2632,8 @@ Label_14_62d2:
 	xor a, a ; $62d2
 	ld [$c2d5], a ; $62d3
 	ld c, $06 ; $62d6
-	call Func_00_1d2e ; $62d8
-	call Func_00_1da4 ; $62db
+	call BeginFadeIn ; $62d8
+	call WaitFadeEnd ; $62db
 	sound $7a ; $62de
 	push af ; $62e0
 	ld a, $3c ; $62e1
@@ -2784,8 +2784,8 @@ Label_14_63e1:
 	farcall FarPtr_0a_04 ; $63fd
 	pop af ; $6400
 	ld c, $04 ; $6401
-	call Func_00_1d20 ; $6403
-	call Func_00_1da4 ; $6406
+	call BeginFadeOut ; $6403
+	call WaitFadeEnd ; $6406
 	call ClearFrameTasks ; $6409
 	ld a, $14 ; $640c
 	ld [wStoryModeCurrentLocation], a ; $640e
@@ -2807,7 +2807,7 @@ Func_14_6427:
 	ld hl, $6680 ; $6430
 	ld de, $8100 ; $6433
 	ld c, $80 ; $6436
-	call Func_00_0480 ; $6438
+	call QueueVRAMCopy ; $6438
 	ld hl, $6ea1 ; $643b
 	ld de, $0904 ; $643e
 	call LoadPaletteShadow ; $6441
@@ -2822,12 +2822,12 @@ Func_14_6427:
 	jr nz, Label_14_645b ; $6456
 	call Func_14_64be ; $6458
 Label_14_645b:
-	ldh a, [$ff8b] ; $645b
+	ldh a, [hScrollX] ; $645b
 	ld b, a ; $645d
 	ld a, [$c2b2] ; $645e
 	sub a, b ; $6461
 	ld d, a ; $6462
-	ldh a, [$ff8a] ; $6463
+	ldh a, [hScrollY] ; $6463
 	ld b, a ; $6465
 	ld a, [wWaterSpriteMinigameTimer] ; $6466
 	sub a, b ; $6469
@@ -2915,8 +2915,8 @@ Label_14_650b:
 	xor a, a ; $6516
 	ld [$c2d5], a ; $6517
 	ld c, $04 ; $651a
-	call Func_00_1d2e ; $651c
-	call Func_00_1da4 ; $651f
+	call BeginFadeIn ; $651c
+	call WaitFadeEnd ; $651f
 	ld bc, $0006 ; $6522
 	farcall FarPtr_0a_38 ; $6525
 	xor a, a ; $6528
@@ -3043,8 +3043,8 @@ Label_14_650b:
 	farcall FarPtr_0a_04 ; $663b
 	pop af ; $663e
 	ld c, $04 ; $663f
-	call Func_00_1d20 ; $6641
-	call Func_00_1da4 ; $6644
+	call BeginFadeOut ; $6641
+	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
 	test_flag $05, 7 ; $664a
 	jr z, Label_14_6662 ; $664d
@@ -3101,8 +3101,8 @@ Label_14_6fcd:
 	xor a, a ; $6fcd
 	ld [$c2d5], a ; $6fce
 	ld c, $06 ; $6fd1
-	call Func_00_1d2e ; $6fd3
-	call Func_00_1da4 ; $6fd6
+	call BeginFadeIn ; $6fd3
+	call WaitFadeEnd ; $6fd6
 	sound $7a ; $6fd9
 	push af ; $6fdb
 	ld a, $3c ; $6fdc
@@ -3272,8 +3272,8 @@ Label_14_7124:
 	farcall FarPtr_0a_62 ; $7128
 	farcall FarPtr_03_18 ; $712b
 	ld c, $01 ; $712e
-	call Func_00_1d20 ; $7130
-	call Func_00_1da4 ; $7133
+	call BeginFadeOut ; $7130
+	call WaitFadeEnd ; $7133
 	ld a, $00 ; $7136
 	ld [wStoryModeCurrentLocation], a ; $7138
 	ld a, $0a ; $713b
@@ -3291,8 +3291,8 @@ Label_14_7150:
 	jr z, Label_14_7170 ; $7153
 Label_14_7155:
 	ld c, $04 ; $7155
-	call Func_00_1d20 ; $7157
-	call Func_00_1da4 ; $715a
+	call BeginFadeOut ; $7157
+	call WaitFadeEnd ; $715a
 	ld a, $1d ; $715d
 	ld [wStoryModeCurrentLocation], a ; $715f
 	ld a, $01 ; $7162
@@ -3303,8 +3303,8 @@ Label_14_7155:
 	ret ; $716f
 Label_14_7170:
 	ld c, $04 ; $7170
-	call Func_00_1d20 ; $7172
-	call Func_00_1da4 ; $7175
+	call BeginFadeOut ; $7172
+	call WaitFadeEnd ; $7175
 	ld a, $1d ; $7178
 	ld [wStoryModeCurrentLocation], a ; $717a
 	ld a, $0f ; $717d
@@ -3321,23 +3321,23 @@ Func_14_73aa:
 	ld hl, $7190 ; $73b3
 	ld de, $8100 ; $73b6
 	ld c, $40 ; $73b9
-	call Func_00_0480 ; $73bb
+	call QueueVRAMCopy ; $73bb
 	ld hl, $7290 ; $73be
 	ld de, $8200 ; $73c1
 	ld c, $30 ; $73c4
-	call Func_00_0480 ; $73c6
+	call QueueVRAMCopy ; $73c6
 	ld hl, $738a ; $73c9
 	ld de, $0903 ; $73cc
 	call LoadPaletteShadow ; $73cf
 	pop af ; $73d2
 	wram_bank ; $73d3
 	ret ; $73d7
-	ldh a, [$ff8b] ; $73d8
+	ldh a, [hScrollX] ; $73d8
 	ld b, a ; $73da
 	ld a, $40 ; $73db
 	sub a, b ; $73dd
 	ld d, a ; $73de
-	ldh a, [$ff8a] ; $73df
+	ldh a, [hScrollY] ; $73df
 	ld b, a ; $73e1
 	ld a, $40 ; $73e2
 	sub a, b ; $73e4
@@ -3362,12 +3362,12 @@ Label_14_7408:
 	inc a ; $7408
 	ld b, a ; $7409
 	call QueueSpriteTemplate ; $740a
-	ldh a, [$ff8b] ; $740d
+	ldh a, [hScrollX] ; $740d
 	ld b, a ; $740f
 	ld a, $68 ; $7410
 	sub a, b ; $7412
 	ld d, a ; $7413
-	ldh a, [$ff8a] ; $7414
+	ldh a, [hScrollY] ; $7414
 	ld b, a ; $7416
 	ld a, $50 ; $7417
 	sub a, b ; $7419
@@ -3389,7 +3389,7 @@ Func_14_7539:
 	ld hl, $7430 ; $7542
 	ld de, $a000 ; $7545
 	ld c, $10 ; $7548
-	call Func_00_0480 ; $754a
+	call QueueVRAMCopy ; $754a
 	ld hl, $5e71 ; $754d
 	ld de, $0801 ; $7550
 	call LoadPaletteShadow ; $7553
@@ -3405,12 +3405,12 @@ Func_14_7539:
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
 Func_14_756d:
-	ldh a, [$ff8b] ; $756d
+	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
 	ld a, [$c2b0] ; $7570
 	sub a, b ; $7573
 	ld d, a ; $7574
-	ldh a, [$ff8a] ; $7575
+	ldh a, [hScrollY] ; $7575
 	ld b, a ; $7577
 	ld a, [$c2b1] ; $7578
 	sub a, b ; $757b
@@ -3424,19 +3424,19 @@ Func_14_7688:
 	ld hl, $7580 ; $7691
 	ld de, $a000 ; $7694
 	ld c, $10 ; $7697
-	call Func_00_0480 ; $7699
+	call QueueVRAMCopy ; $7699
 	ld hl, $7680 ; $769c
 	ld de, $0801 ; $769f
 	call LoadPaletteShadow ; $76a2
 	pop af ; $76a5
 	wram_bank ; $76a6
 	ret ; $76aa
-	ldh a, [$ff8b] ; $76ab
+	ldh a, [hScrollX] ; $76ab
 	ld b, a ; $76ad
 	ld a, $54 ; $76ae
 	sub a, b ; $76b0
 	ld d, a ; $76b1
-	ldh a, [$ff8a] ; $76b2
+	ldh a, [hScrollY] ; $76b2
 	ld b, a ; $76b4
 	ld a, $58 ; $76b5
 	sub a, b ; $76b7
@@ -3474,8 +3474,8 @@ Label_14_7703:
 	xor a, a ; $7703
 	ld [$c2d5], a ; $7704
 	ld c, $06 ; $7707
-	call Func_00_1d2e ; $7709
-	call Func_00_1da4 ; $770c
+	call BeginFadeIn ; $7709
+	call WaitFadeEnd ; $770c
 	push af ; $770f
 	ld a, $3c ; $7710
 	farcall FarPtr_0a_04 ; $7712
@@ -3638,8 +3638,8 @@ Label_14_7838:
 	farcall FarPtr_0a_04 ; $7854
 	pop af ; $7857
 	ld c, $04 ; $7858
-	call Func_00_1d20 ; $785a
-	call Func_00_1da4 ; $785d
+	call BeginFadeOut ; $785a
+	call WaitFadeEnd ; $785d
 	ld a, $14 ; $7860
 	ld [wStoryModeCurrentLocation], a ; $7862
 	ld a, $02 ; $7865

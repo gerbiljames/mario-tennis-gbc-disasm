@@ -878,8 +878,8 @@ Label_0b_4726:
 	farcall FarPtr_08_08 ; $473c
 Label_0b_473f:
 	xor a, a ; $473f
-	ldh [$ff8b], a ; $4740
-	ldh [$ff8a], a ; $4742
+	ldh [hScrollX], a ; $4740
+	ldh [hScrollY], a ; $4742
 	ld a, $ff ; $4744
 	ld [$c7b5], a ; $4746
 	xor a, a ; $4749
@@ -905,8 +905,8 @@ Label_0b_4767:
 	farcall FarPtr_01_0a ; $4775
 	call EnableLCD ; $4778
 	ld c, $08 ; $477b
-	call Func_00_1d2e ; $477d
-	call Func_00_1da4 ; $4780
+	call BeginFadeIn ; $477d
+	call WaitFadeEnd ; $4780
 	ld a, [$c2e3] ; $4783
 	ld l, a ; $4786
 	ld h, $00 ; $4787
@@ -923,8 +923,8 @@ Label_0b_479a:
 	ld a, $80 ; $479a
 	farcall FarPtr_05_34 ; $479c
 	ld c, $10 ; $479f
-	call Func_00_1d20 ; $47a1
-	call Func_00_1da4 ; $47a4
+	call BeginFadeOut ; $47a1
+	call WaitFadeEnd ; $47a4
 Label_0b_47a7:
 	clear_flag $03, 6 ; $47a7
 	farcall FarPtr_1e_04 ; $47aa
@@ -968,12 +968,12 @@ Func_0b_47d8:
 	ld hl, $d000 ; $4803
 	ld de, $9800 ; $4806
 	ld c, $24 ; $4809
-	call Func_00_0480 ; $480b
+	call QueueVRAMCopy ; $480b
 	wram_bank $02 ; $480e
 	ld hl, $d000 ; $4814
 	ld de, $b800 ; $4817
 	ld c, $24 ; $481a
-	call Func_00_0480 ; $481c
+	call QueueVRAMCopy ; $481c
 	call EnableLCD ; $481f
 	ret ; $4822
 Func_0b_4823:

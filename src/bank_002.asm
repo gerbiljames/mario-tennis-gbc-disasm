@@ -2004,15 +2004,15 @@ Func_02_4fa6:
 	sound $05 ; $4fa6
 	wram_bank $01 ; $4fa8
 	ld a, $03 ; $4fae
-	ldh [$ff9e], a ; $4fb0
+	ldh [hDebugStepMode], a ; $4fb0
 	xor a, a ; $4fb2
 	ld [$c36c], a ; $4fb3
 	farcall FarPtr_05_00 ; $4fb6
 	call EnableLCD ; $4fb9
 	ld c, $7f ; $4fbc
-	call Func_00_1d20 ; $4fbe
+	call BeginFadeOut ; $4fbe
 	ld c, $7f ; $4fc1
-	call Func_00_1d2e ; $4fc3
+	call BeginFadeIn ; $4fc3
 	farcall FarPtr_InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9
 Label_02_4fcb:
@@ -2022,13 +2022,13 @@ Label_02_4fcb:
 	push de ; $4fd1
 	ld hl, MenuTilemaps_02 ; $4fd2
 	ld de, $0802 ; $4fd5
-	call Func_00_1906 ; $4fd8
+	call PrintString ; $4fd8
 	pop de ; $4fdb
 	jp Label_02_5016 ; $4fdc
 Label_02_4fdf:
 	ld hl, $5202 ; $4fdf
 	ld de, $0802 ; $4fe2
-	call Func_00_1906 ; $4fe5
+	call PrintString ; $4fe5
 	call Func_02_4044 ; $4fe8
 	or a, a ; $4feb
 	jr z, Label_02_5016 ; $4fec
@@ -2061,10 +2061,10 @@ Label_02_5016:
 	push de ; $5016
 	ld hl, $521a ; $5017
 	ld de, $0210 ; $501a
-	call Func_00_1906 ; $501d
+	call PrintString ; $501d
 	ld hl, $521a ; $5020
 	ld de, $0810 ; $5023
-	call Func_00_1906 ; $5026
+	call PrintString ; $5026
 	pop de ; $5029
 Label_02_502a:
 	push de ; $502a
@@ -2246,10 +2246,10 @@ Label_02_518f:
 	jr z, Label_02_51a2 ; $5191
 	push de ; $5193
 	ld a, $01 ; $5194
-	ldh [$ff9e], a ; $5196
+	ldh [hDebugStepMode], a ; $5196
 	sound $05 ; $5198
 	ld a, $03 ; $519a
-	ldh [$ff9e], a ; $519c
+	ldh [hDebugStepMode], a ; $519c
 	pop de ; $519e
 	jp Label_02_502a ; $519f
 Label_02_51a2:
@@ -2297,7 +2297,7 @@ Label_02_51e0:
 	push de ; $51e6
 	ld hl, $520a ; $51e7
 	ld de, $0802 ; $51ea
-	call Func_00_1906 ; $51ed
+	call PrintString ; $51ed
 	farcall FarPtr_03_18 ; $51f0
 	pop de ; $51f3
 	jp Label_02_502a ; $51f4

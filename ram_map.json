@@ -23,10 +23,40 @@
   "note": "[8-bit] Court Unlock Flags\n\nBit 6 - Star Court\nBit 5 - Castle Court\nBit 4 - Tropics Court\nBit 3 - Jungle Court\nBit 2 - Warehouse Court",
   "size": 1
  },
+ "0xc0a0": {
+  "name": "wVRAMCopyQueue",
+  "note": "[80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries [rom bank, wram bank, size hi, size lo, vbk, dest hi, dest lo, src?]; processed by ProcessVRAMCopyQueues",
+  "size": 80
+ },
+ "0xc0f0": {
+  "name": "wGameTimer",
+  "note": "[4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99)",
+  "size": 4
+ },
+ "0xc100": {
+  "name": "wBGPalettes",
+  "note": "[64 bytes] Live BG palette buffer, uploaded in VBlank when hPaletteDirtyFlags bit 0 set",
+  "size": 64
+ },
+ "0xc140": {
+  "name": "wOBJPalettes",
+  "note": "[64 bytes] Live OBJ palette buffer, uploaded in VBlank when hPaletteDirtyFlags bit 1 set",
+  "size": 64
+ },
+ "0xc180": {
+  "name": "wTileWriteQueue",
+  "note": "[64 bytes] VBlank single-tile write queue: 16 x 4-byte entries [addr hi, addr lo, tile (VBK0), attr (VBK1)]",
+  "size": 64
+ },
  "0xc1c0": {
   "name": "wFrameTasks",
   "note": "[64 bytes] Frame task list: 4-byte records [id, ptr lo, ptr hi, rom bank] of banked callbacks run each frame (RegisterFrameTask / ClearFrameTasks)",
   "size": 1
+ },
+ "0xc200": {
+  "name": "wMasterPalettes",
+  "note": "[128 bytes] Master palette copy (BG+OBJ); fades scale this into wBGPalettes/wOBJPalettes",
+  "size": 128
  },
  "0xc280": {
   "name": "wStoryModeCurrentLocation",
@@ -58,6 +88,26 @@
   "note": "[16-bit] Story Mode - Player's Y Position",
   "size": 2
  },
+ "0xc320": {
+  "name": "wCameraX",
+  "note": "[16-bit] BG scroll-buffer camera X (tiles<<3?)",
+  "size": 2
+ },
+ "0xc322": {
+  "name": "wCameraY",
+  "note": "[16-bit] BG scroll-buffer camera Y",
+  "size": 2
+ },
+ "0xc326": {
+  "name": "wBGRowBlitDest",
+  "note": "[16-bit] Tilemap address for the queued BG row blit",
+  "size": 2
+ },
+ "0xc328": {
+  "name": "wBGColumnBlitX",
+  "note": "[8-bit] Tilemap column for the queued BG column blit",
+  "size": 1
+ },
  "0xc33e": {
   "name": "wCurrentBGM",
   "note": "[8-bit] Current BGM\n\n0x00 - Silence\n0x01 - Intro Cutscene\n0x02 - Title Screen\n0x03 - Main Menu\n0x04 - Status Screen\n0x05 - Dictionary\n0x06 - Exhibition Match\n0x07 - Unused\n0x08 - Mario Minigame Screen\n0x09 - You Win\n0x0a - You Lose\n0x0b - Earning EXP\n0x0c - Distributing EXP\n0x0d - Distributing Stats\n0x0e - Tiebreaker\n0x0f - Set/Match Point\n0x10 - Game Point\n0x11 - Star Court\n0x12 - Castle Court/Peach's Castle\n0x13 - Tropic Court/Fruit Fantasy\n0x14 - Warehouse Court/Treasure Box\n0x15 - Two-on-One\n0x16 - Jungle Court/Banana Bunch\n0x17 - Unused\n0x18 - Unused\n0x19 - Shooting Star/Target Shot/Medallion Match\n0x1a - Academy Main Building\n0x1b - Story Mode Outdoors\n0x1c - Dormitory\n0x1d - Story Mode Indoors\n0x1e - Tennis Machine\n0x1f - Wall Practice\n0x20 - Practice Match\n0x21 - Junior Ranking Match\n0x22 - Senior Ranking Match\n0x23 - Varsity Ranking Match\n0x24 - Training Court Match\n0x25 - Training Court Practice\n0x26 - Island Open Beginning Rounds\n0x27 - Island Open Semifinals\n0x28 - Island Open Finals\n0x29 - Dream Match\n0x2a - Unused\n0x2b - Island Open Congratulations\n0x2c - Credits\n0x2d - The End\n0x2e - Done For The Day\n0x2f - Level Up\n0x30 - High Score\n0x31 - Exhibition Match Start\n0x32 - Story Match Start",
@@ -66,6 +116,16 @@
  "0xc376": {
   "name": "wMinigameLevel",
   "note": "[8-bit] Minigame Level (0x00-0x03)\n\nValue is current minigame level - 1",
+  "size": 1
+ },
+ "0xc3a7": {
+  "name": "wSpriteBufferPage",
+  "note": "[8-bit] High byte of current OAM shadow buffer ($c0/$c5); toggled each frame, OAM DMA source",
+  "size": 1
+ },
+ "0xc3b2": {
+  "name": "wWindowFrameAttr",
+  "note": "[8-bit] BG attribute written for window-frame cells ($80 = BG priority)",
   "size": 1
  },
  "0xc402": {
@@ -810,9 +870,39 @@
   "note": "[8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)",
   "size": 1
  },
+ "0xcc00": {
+  "name": "wDebugTextBuffer",
+  "note": "[576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active",
+  "size": 576
+ },
  "0xd880": {
   "name": "wShortTextBuffer",
   "note": "Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0"
+ },
+ "0xff8a": {
+  "name": "hScrollY",
+  "note": "[8-bit] SCY shadow, applied in VBlank",
+  "size": 1
+ },
+ "0xff8b": {
+  "name": "hScrollX",
+  "note": "[8-bit] SCX shadow, applied in VBlank",
+  "size": 1
+ },
+ "0xff8c": {
+  "name": "hVBlankCounter",
+  "note": "[8-bit] Increments every VBlank",
+  "size": 1
+ },
+ "0xff8d": {
+  "name": "hVBlankOccurred",
+  "note": "[8-bit] Set at end of VBlank handler; AdvanceFrame waits on it",
+  "size": 1
+ },
+ "0xff8e": {
+  "name": "hDebugTextDirty",
+  "note": "[8-bit] Nonzero = wDebugTextBuffer needs re-upload",
+  "size": 1
  },
  "0xff8f": {
   "name": "hFrameTasksReady",
@@ -829,6 +919,21 @@
   "note": "[8-bit] Buttons newly pressed this frame (same bit layout as hPlayerInputFlags)",
   "size": 1
  },
+ "0xff92": {
+  "name": "hInputRepeatButtons",
+  "note": "[8-bit] Buttons held for key-repeat tracking",
+  "size": 1
+ },
+ "0xff93": {
+  "name": "hInputRepeatTimer",
+  "note": "[8-bit] Frames until next key-repeat fire",
+  "size": 1
+ },
+ "0xff94": {
+  "name": "hInputRisingEdge",
+  "note": "[8-bit] Buttons newly pressed this frame (raw, before repeat processing)",
+  "size": 1
+ },
  "0xff95": {
   "name": "hRomBank",
   "note": "[8-bit] Shadow of the current ROM bank (written together with the MBC register at $2000)",
@@ -839,9 +944,114 @@
   "note": "[8-bit] Shadow of the current WRAM bank (last value written to rSVBK); match engine swaps banks 4-7 for per-character data",
   "size": 1
  },
+ "0xff98": {
+  "name": "hShowDebugConsole",
+  "note": "[8-bit] 1 = VBlank switches BG map to the debug console view",
+  "size": 1
+ },
+ "0xff99": {
+  "name": "hVRAMQueueDirty",
+  "note": "[8-bit] Nonzero = VRAM copy / tile-write queues have pending entries",
+  "size": 1
+ },
+ "0xff9b": {
+  "name": "hSpriteQueueIndex",
+  "note": "[8-bit] Write offset into the OAM shadow buffer (max $a0)",
+  "size": 1
+ },
+ "0xff9c": {
+  "name": "hSpriteQueueBase",
+  "note": "[8-bit] OAM shadow offset where per-frame sprites start (entries below persist)",
+  "size": 1
+ },
+ "0xff9d": {
+  "name": "hPaletteDirtyFlags",
+  "note": "[8-bit] Bit 0 = BG palettes dirty, bit 1 = OBJ palettes dirty",
+  "size": 1
+ },
+ "0xff9e": {
+  "name": "hDebugStepMode",
+  "note": "[8-bit] Debug pause/frame-step mode (0 = off, 1-3)",
+  "size": 1
+ },
+ "0xffa0": {
+  "name": "hPeakLY",
+  "note": "[8-bit] Peak LY at end-of-frame (frame time meter shown on debug console)",
+  "size": 1
+ },
+ "0xffa1": {
+  "name": "hPeakLYFrames",
+  "note": "[8-bit] Frames until hPeakLY decays",
+  "size": 1
+ },
+ "0xffa2": {
+  "name": "hFadeState",
+  "note": "[8-bit] Bit 0 = fading out, bit 1 = fading in, bit 7 = fade to white",
+  "size": 1
+ },
+ "0xffa3": {
+  "name": "hFadeSpeed",
+  "note": "[8-bit] Fade step per frame",
+  "size": 1
+ },
+ "0xffa4": {
+  "name": "hFadeCounter",
+  "note": "[8-bit] Fade progress counter (starts at $7c)",
+  "size": 1
+ },
+ "0xffa6": {
+  "name": "hInputRepeatDelay",
+  "note": "[8-bit] Key-repeat interval reload value",
+  "size": 1
+ },
+ "0xffa7": {
+  "name": "hMathSign",
+  "note": "[8-bit] Sign scratch for signed multiply/divide wrappers",
+  "size": 1
+ },
+ "0xffa8": {
+  "name": "hMulResult",
+  "note": "[32-bit] Full 32-bit product from MulHLByDE",
+  "size": 4
+ },
+ "0xffb8": {
+  "name": "hBGRowBlitPending",
+  "note": "[8-bit] Nonzero = row in wBGRowBlitBuffer awaits VBlank blit",
+  "size": 1
+ },
+ "0xffb9": {
+  "name": "hBGColumnBlitPending",
+  "note": "[8-bit] Nonzero = column in wBGColumnBlitBuffer awaits VBlank blit",
+  "size": 1
+ },
+ "0xffba": {
+  "name": "hBGColumnBlitDone",
+  "note": "[8-bit] Set when the slow column blit ran this VBlank (skips VRAM queue)",
+  "size": 1
+ },
+ "0xffbc": {
+  "name": "hFadedOut",
+  "note": "[8-bit] Nonzero = screen currently faded out",
+  "size": 1
+ },
+ "0xffcd": {
+  "name": "hActiveJingle",
+  "note": "[8-bit] Jingle sound id currently overriding BGM (0 = none)",
+  "size": 1
+ },
  "0xffce": {
   "name": "hMusic",
   "note": "[8-bit] Music (0x00 - on, 0x01 - off)",
+  "size": 1
+ },
+ "0xfffc": {
+  "name": "hRandomSeed",
+  "note": "[16-bit] RNG state (x*5 + $3573 per VBlank)",
+  "size": 2
+ },
+ "0xfffe": {
+  "name": "hIsCGB",
+  "note": "[8-bit] 1 = running on Game Boy Color hardware",
   "size": 1
  }
 }

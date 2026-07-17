@@ -201,7 +201,7 @@ Label_08_410c:
 	call Func_08_454b ; $412d
 	ld a, [wGameMode] ; $4130
 	cp a, $09 ; $4133
-	ldh a, [$ff8c] ; $4135
+	ldh a, [hVBlankCounter] ; $4135
 	jr nz, Label_08_413b ; $4137
 	ld a, $00 ; $4139
 Label_08_413b:
@@ -239,22 +239,22 @@ InitMatchScene:
 	ret ; $418f
 RunMatch:
 	ld c, $20 ; $4190
-	call Func_00_1d20 ; $4192
-	call Func_00_1da4 ; $4195
+	call BeginFadeOut ; $4192
+	call WaitFadeEnd ; $4195
 	call AdvanceFrame ; $4198
 	call DisableLCDSafely ; $419b
 	call InitMatchScene ; $419e
 	call EnableLCD ; $41a1
 	farcall FarPtr_07_22 ; $41a4
 	ld a, [$c8f8] ; $41a7
-	call Func_00_3024 ; $41aa
+	call PlaySoundManaged ; $41aa
 	ld hl, $c780 ; $41ad
 	ld c, $08 ; $41b0
 	call ClearMemory16 ; $41b2
 	ld a, $ff ; $41b5
 	ld [$c7b5], a ; $41b7
 	ld c, $20 ; $41ba
-	call Func_00_1d2e ; $41bc
+	call BeginFadeIn ; $41bc
 	wram_bank $04 ; $41bf
 	call PlayCourtIntro ; $41c5
 	xor a, a ; $41c8
@@ -267,8 +267,8 @@ RunMatch:
 	cp a, $08 ; $41da
 	call z, Func_08_6592 ; $41dc
 	ld c, $20 ; $41df
-	call Func_00_1d20 ; $41e1
-	call Func_00_1da4 ; $41e4
+	call BeginFadeOut ; $41e1
+	call WaitFadeEnd ; $41e4
 	call AdvanceFrame ; $41e7
 	farcall FarPtr_RunMatchWinLoseScreen ; $41ea
 	farcall FarPtr_01_0a ; $41ed
@@ -291,7 +291,7 @@ UpdateMatchFrame:
 	ld d, $00 ; $421b
 	call CallModeHook ; $421d
 	ld hl, $0902 ; $4220
-	call Func_00_07c5 ; $4223
+	call FarCallVector ; $4223
 Label_08_4226:
 	ld a, [$c4c1] ; $4226
 	and a, a ; $4229
@@ -557,7 +557,7 @@ ReadMatchInputPressed:
 	ldh a, [$ffd8] ; $4415
 	and a, a ; $4417
 	jr nz, Label_08_4425 ; $4418
-	ldh a, [$ff94] ; $441a
+	ldh a, [hInputRisingEdge] ; $441a
 	ret ; $441c
 ReadMatchInputRepeat:
 	ldh a, [$ffd8] ; $441d
@@ -682,7 +682,7 @@ Func_08_44ef:
 	call ReadMatchInputPressed ; $44f0
 	and a, $04 ; $44f3
 	ret z ; $44f5
-	ldh a, [$ff9e] ; $44f6
+	ldh a, [hDebugStepMode] ; $44f6
 	and a, a ; $44f8
 	ret z ; $44f9
 	ld a, $ff ; $44fa
@@ -719,10 +719,10 @@ Func_08_4539:
 	cp a, $09 ; $453c
 	jr z, Label_08_4547 ; $453e
 	farcall FarPtr_TestStorySlotFlagA ; $4540
-	call Func_00_2f86 ; $4543
+	call SetMusicMuted ; $4543
 	ret ; $4546
 Label_08_4547:
-	call Func_00_2f32 ; $4547
+	call ResumeBGM ; $4547
 	ret ; $454a
 Func_08_454b:
 	ld a, [$c8f5] ; $454b
@@ -836,7 +836,7 @@ Func_08_45e5:
 	ld a, [hl+] ; $45ee
 	ld h, [hl] ; $45ef
 	ld l, a ; $45f0
-	call Func_00_1416 ; $45f1
+	call AngleFromVector16 ; $45f1
 	ld hl, $c40e ; $45f4
 	ld a, c ; $45f7
 	ld [hl+], a ; $45f8
@@ -862,7 +862,7 @@ Func_08_45e5:
 	ld a, [hl+] ; $4616
 	ld h, [hl] ; $4617
 	ld l, a ; $4618
-	call Func_00_1416 ; $4619
+	call AngleFromVector16 ; $4619
 	ld hl, $c40c ; $461c
 	ld a, c ; $461f
 	ld [hl+], a ; $4620
@@ -958,7 +958,7 @@ Func_08_468b:
 	ld l, e ; $4696
 	ld h, d ; $4697
 	ld a, b ; $4698
-	call Func_00_0bb6 ; $4699
+	call MulHLByAFracSigned ; $4699
 	xor a, a ; $469c
 	ld e, l ; $469d
 	ld d, h ; $469e
@@ -968,7 +968,7 @@ Label_08_46a0:
 	ld l, e ; $46a3
 	ld h, d ; $46a4
 	ld a, b ; $46a5
-	call Func_00_0bb6 ; $46a6
+	call MulHLByAFracSigned ; $46a6
 	xor a, a ; $46a9
 	ld e, l ; $46aa
 	ld d, h ; $46ab
@@ -1121,7 +1121,7 @@ Label_08_47c0:
 	jr z, Label_08_47a3 ; $47c4
 Label_08_47c6:
 	ld a, [$c8f8] ; $47c6
-	call Func_00_3024 ; $47c9
+	call PlaySoundManaged ; $47c9
 	ret ; $47cc
 Func_08_47cd:
 	ld a, [wTotalGamesWonInMatch] ; $47cd
@@ -1582,7 +1582,7 @@ SetPointSituationBgm:
 	ld d, a ; $4d86
 Label_08_4d87:
 	ld a, d ; $4d87
-	call Func_00_3024 ; $4d88
+	call PlaySoundManaged ; $4d88
 	ret ; $4d8b
 AnnouncePointSituation:
 	call EvaluatePointSituation ; $4d8c
@@ -2087,7 +2087,7 @@ UpdateBallVisuals:
 	ld a, [wMatchIsDoubles] ; $5165
 	and a, a ; $5168
 	jr nz, Label_08_5170 ; $5169
-	ldh a, [$ff9e] ; $516b
+	ldh a, [hDebugStepMode] ; $516b
 	and a, a ; $516d
 	jr z, Label_08_5170 ; $516e
 Label_08_5170:
@@ -2111,7 +2111,7 @@ SetBallTrailColor:
 	sub a, l ; $5194
 	ld h, a ; $5195
 	ld de, $0801 ; $5196
-	call Func_00_05b5 ; $5199
+	call LoadPalettesImmediate ; $5199
 	ret ; $519c
 BuildBallSlot:
 	ld hl, wBallHeight ; $519d
@@ -2305,7 +2305,7 @@ Label_08_52b1:
 	ld a, d ; $52c2
 	and a, $fe ; $52c3
 	ld d, a ; $52c5
-	ldh a, [$ff8b] ; $52c6
+	ldh a, [hScrollX] ; $52c6
 	and a, $01 ; $52c8
 	or a, d ; $52ca
 	ld d, a ; $52cb
@@ -2786,7 +2786,7 @@ Func_08_5613:
 	sra d ; $563d
 	rr e ; $563f
 	rra ; $5641
-	ld hl, $ffa7 ; $5642
+	ld hl, hMathSign ; $5642
 	bit 7, [hl] ; $5645
 	jr nz, Label_08_564c ; $5647
 	call Func_08_5a63 ; $5649
@@ -2817,7 +2817,7 @@ Label_08_564c:
 	sra d ; $5670
 	rr e ; $5672
 	rra ; $5674
-	ld hl, $ffa7 ; $5675
+	ld hl, hMathSign ; $5675
 	bit 7, [hl] ; $5678
 	jr z, Label_08_567f ; $567a
 	call Func_08_5a63 ; $567c
@@ -2884,7 +2884,7 @@ Label_08_56a9:
 	rra ; $56dc
 	ld d, e ; $56dd
 	ld e, a ; $56de
-	ld hl, $ffa7 ; $56df
+	ld hl, hMathSign ; $56df
 	bit 7, [hl] ; $56e2
 	jr nz, Label_08_56ec ; $56e4
 	xor a, a ; $56e6
@@ -2919,7 +2919,7 @@ Label_08_56ec:
 	sra d ; $570f
 	rr e ; $5711
 	rra ; $5713
-	ld hl, $ffa7 ; $5714
+	ld hl, hMathSign ; $5714
 	bit 7, [hl] ; $5717
 	jr z, Label_08_571e ; $5719
 	call Func_08_5a63 ; $571b
@@ -3221,7 +3221,7 @@ Label_08_58f5:
 	xor a, a ; $58f8
 	ld [hl+], a ; $58f9
 	ld [hl+], a ; $58fa
-	ld de, $ffa0 ; $58fb
+	ld de, hPeakLY ; $58fb
 	ld a, e ; $58fe
 	ld [hl+], a ; $58ff
 	ld [hl], d ; $5900
@@ -3369,19 +3369,19 @@ Func_08_59bb:
 	ld e, h ; $59d2
 	ret ; $59d3
 	bit 7, h ; $59d4
-	jp z, Func_00_0c8f ; $59d6
+	jp z, MulHLByDE ; $59d6
 	xor a, a ; $59d9
 	sub a, l ; $59da
 	ld l, a ; $59db
 	sbc a, a ; $59dc
 	sub a, h ; $59dd
 	ld h, a ; $59de
-	call Func_00_0c8f ; $59df
+	call MulHLByDE ; $59df
 Label_08_59e2:
-	ldh a, [$ffa8] ; $59e2
+	ldh a, [hMulResult] ; $59e2
 	cpl ; $59e4
 	add a, $01 ; $59e5
-	ldh [$ffa8], a ; $59e7
+	ldh [hMulResult], a ; $59e7
 	ldh a, [$ffa9] ; $59e9
 	cpl ; $59eb
 	adc a, $00 ; $59ec
@@ -3398,7 +3398,7 @@ Label_08_59e2:
 Func_08_59fb:
 	ld a, h ; $59fb
 	xor a, d ; $59fc
-	ldh [$ffa7], a ; $59fd
+	ldh [hMathSign], a ; $59fd
 	bit 7, h ; $59ff
 	jr z, Label_08_5a09 ; $5a01
 	xor a, a ; $5a03
@@ -3417,15 +3417,15 @@ Label_08_5a09:
 	sub a, d ; $5a11
 	ld d, a ; $5a12
 Label_08_5a13:
-	call Func_00_0c8f ; $5a13
-	ldh a, [$ffa7] ; $5a16
+	call MulHLByDE ; $5a13
+	ldh a, [hMathSign] ; $5a16
 	bit 7, a ; $5a18
 	jr nz, Label_08_59e2 ; $5a1a
 	ret ; $5a1c
 Func_08_5a1d:
 	ld a, h ; $5a1d
 	xor a, d ; $5a1e
-	ldh [$ffa7], a ; $5a1f
+	ldh [hMathSign], a ; $5a1f
 	bit 7, h ; $5a21
 	jr z, Label_08_5a2b ; $5a23
 	xor a, a ; $5a25
@@ -3444,11 +3444,11 @@ Label_08_5a2b:
 	sub a, d ; $5a33
 	ld d, a ; $5a34
 Label_08_5a35:
-	call Func_00_0c8f ; $5a35
+	call MulHLByDE ; $5a35
 	ret ; $5a38
 Func_08_5a39:
 	bit 7, h ; $5a39
-	jp z, Func_00_0bd4 ; $5a3b
+	jp z, MulHLByAFrac ; $5a3b
 	ld d, a ; $5a3e
 	xor a, a ; $5a3f
 	sub a, l ; $5a40
@@ -3457,7 +3457,7 @@ Func_08_5a39:
 	sub a, h ; $5a43
 	ld h, a ; $5a44
 	ld a, d ; $5a45
-	call Func_00_0bd4 ; $5a46
+	call MulHLByAFrac ; $5a46
 	ld e, l ; $5a49
 	ld d, h ; $5a4a
 	call Func_08_5a63 ; $5a4b
@@ -3468,7 +3468,7 @@ Func_08_5a51:
 	push hl ; $5a51
 	ld l, c ; $5a52
 	ld h, b ; $5a53
-	call Func_00_1767 ; $5a54
+	call GetTangent ; $5a54
 	pop de ; $5a57
 	call Func_08_59fb ; $5a58
 	ldh a, [$ffa9] ; $5a5b
@@ -4037,9 +4037,9 @@ LoadCourtSceneData:
 	ldh a, [hWramBank] ; $5e28
 	push af ; $5e2a
 	xor a, a ; $5e2b
-	ldh [$ff8b], a ; $5e2c
+	ldh [hScrollX], a ; $5e2c
 	xor a, a ; $5e2e
-	ldh [$ff8a], a ; $5e2f
+	ldh [hScrollY], a ; $5e2f
 	ld a, [wCurrentlyUsedCourt] ; $5e31
 	add a, a ; $5e34
 	add a, a ; $5e35
@@ -4074,14 +4074,14 @@ Func_08_5e6f:
 	ld hl, $d000 ; $5e75
 	ld de, $9800 ; $5e78
 	ld c, $40 ; $5e7b
-	call Func_00_0480 ; $5e7d
+	call QueueVRAMCopy ; $5e7d
 	ret ; $5e80
 Func_08_5e81:
 	wram_bank $02 ; $5e81
 	ld hl, $d400 ; $5e87
 	ld de, $b800 ; $5e8a
 	ld c, $40 ; $5e8d
-	call Func_00_0480 ; $5e8f
+	call QueueVRAMCopy ; $5e8f
 	ret ; $5e92
 Func_08_5e93:
 	ld a, [$c4c8] ; $5e93
@@ -4201,11 +4201,11 @@ Func_08_5f43:
 	ld hl, $d180 ; $5f67
 	ld de, $9980 ; $5f6a
 	ld c, $0a ; $5f6d
-	call Func_00_0480 ; $5f6f
+	call QueueVRAMCopy ; $5f6f
 	ld hl, $d580 ; $5f72
 	ld de, $b980 ; $5f75
 	ld c, $0a ; $5f78
-	call Func_00_0480 ; $5f7a
+	call QueueVRAMCopy ; $5f7a
 	pop af ; $5f7d
 	ld [$c4c1], a ; $5f7e
 	pop af ; $5f81
@@ -4434,7 +4434,7 @@ PlayCourtIntro:
 	ld b, $45 ; $611f
 Label_08_6121:
 	ld a, b ; $6121
-	call Func_00_3024 ; $6122
+	call PlaySoundManaged ; $6122
 	ld a, [wGameMode] ; $6125
 	cp a, $02 ; $6128
 	jr z, Label_08_6132 ; $612a
@@ -4445,9 +4445,9 @@ Label_08_6132:
 	ld d, $00 ; $6132
 	ld e, $00 ; $6134
 	ld a, d ; $6136
-	ldh [$ff8b], a ; $6137
+	ldh [hScrollX], a ; $6137
 	ld a, e ; $6139
-	ldh [$ff8a], a ; $613a
+	ldh [hScrollY], a ; $613a
 	ld a, $05 ; $613c
 	call StepMatchFrames ; $613e
 	ld b, $30 ; $6141
@@ -4475,9 +4475,9 @@ Label_08_6171:
 	ret ; $6177
 PanCamera:
 	ld a, d ; $6178
-	ldh [$ff8b], a ; $6179
+	ldh [hScrollX], a ; $6179
 	ld a, e ; $617b
-	ldh [$ff8a], a ; $617c
+	ldh [hScrollY], a ; $617c
 	ld a, d ; $617e
 	add a, h ; $617f
 	ld d, a ; $6180
@@ -4592,9 +4592,9 @@ Label_08_61f4:
 	ld h, a ; $6219
 	push hl ; $621a
 	push de ; $621b
-	call Func_00_0a54 ; $621c
+	call AngleFromVectorCoarse ; $621c
 	ld hl, $0040 ; $621f
-	call Func_00_0af8 ; $6222
+	call VectorFromLengthAndAngleRaw ; $6222
 	ld c, l ; $6225
 	ld b, h ; $6226
 	ld hl, $c440 ; $6227
@@ -4696,7 +4696,7 @@ Label_08_62a5:
 	add hl, hl ; $62ad
 	add hl, hl ; $62ae
 	ld a, h ; $62af
-	ldh [$ff8b], a ; $62b0
+	ldh [hScrollX], a ; $62b0
 	xor a, a ; $62b2
 	sub a, e ; $62b3
 	ld e, a ; $62b4
@@ -4738,7 +4738,7 @@ Label_08_62a5:
 	add hl, hl ; $62e9
 	add hl, hl ; $62ea
 	ld a, h ; $62eb
-	ldh [$ff8a], a ; $62ec
+	ldh [hScrollY], a ; $62ec
 	xor a, a ; $62ee
 	sub a, e ; $62ef
 	ld e, a ; $62f0
@@ -4956,8 +4956,8 @@ DrawCharSprite:
 	ld l, a ; $651c
 	ld a, [$df1d] ; $651d
 	and a, a ; $6520
-	jp z, Func_00_2c2b ; $6521
-	jp Label_00_2ced ; $6524
+	jp z, QueueSprite24x32 ; $6521
+	jp QueueSprite32x32 ; $6524
 DrawStandingShadowSlot:
 	ld a, [hl+] ; $6527
 	cp a, $ff ; $6528
@@ -4991,23 +4991,23 @@ Func_08_6544:
 	ret ; $6556
 Func_08_6557:
 	ld c, $20 ; $6557
-	call Func_00_1d20 ; $6559
-	call Func_00_1da4 ; $655c
+	call BeginFadeOut ; $6559
+	call WaitFadeEnd ; $655c
 	call AdvanceFrame ; $655f
 	call DisableLCDSafely ; $6562
 	call InitMatchScene ; $6565
 	call EnableLCD ; $6568
 	ld a, [$c8f8] ; $656b
-	call Func_00_3024 ; $656e
+	call PlaySoundManaged ; $656e
 	ld c, $20 ; $6571
-	call Func_00_1d2e ; $6573
+	call BeginFadeIn ; $6573
 	xor a, a ; $6576
 	ld [$c4c0], a ; $6577
 	call Func_08_65be ; $657a
 	call Func_08_6592 ; $657d
 	ld c, $20 ; $6580
-	call Func_00_1d20 ; $6582
-	call Func_00_1da4 ; $6585
+	call BeginFadeOut ; $6582
+	call WaitFadeEnd ; $6585
 	call AdvanceFrame ; $6588
 	farcall FarPtr_01_0a ; $658b
 	call AdvanceFrame ; $658e
@@ -5085,7 +5085,7 @@ Label_08_65ff:
 	inc h ; $6625
 Label_08_6626:
 	ld a, [wModeHookBank] ; $6626
-	call Func_00_0628 ; $6629
+	call FarReadByte ; $6629
 	cp a, $ff ; $662c
 	jr nz, Label_08_65e1 ; $662e
 Label_08_6630:
@@ -5138,7 +5138,7 @@ Func_08_6662:
 Label_08_667f:
 	ld a, [wModeHookBank] ; $667f
 	ld bc, $0008 ; $6682
-	call Func_00_067a ; $6685
+	call FarCopyBytes ; $6685
 	pop hl ; $6688
 	ld de, $df0a ; $6689
 	wram_bank $04 ; $668c
@@ -5200,11 +5200,11 @@ CallModeHook:
 	inc h ; $6706
 Label_08_6707:
 	ld a, [wModeHookBank] ; $6707
-	call Func_00_063d ; $670a
+	call FarReadWord ; $670a
 	ld l, c ; $670d
 	ld h, b ; $670e
 	ld a, [wModeHookBank] ; $670f
-	call Func_00_015e ; $6712
+	call CallHLInBankA ; $6712
 	pop hl ; $6715
 	pop de ; $6716
 	pop bc ; $6717
@@ -5613,7 +5613,7 @@ Func_08_69c2:
 	ld a, [$df3a] ; $69ca
 	ld b, a ; $69cd
 	ld hl, $0110 ; $69ce
-	call Func_00_07c5 ; $69d1
+	call FarCallVector ; $69d1
 	ret ; $69d4
 Func_08_69d5:
 	ld a, [$df37] ; $69d5
@@ -5624,7 +5624,7 @@ Func_08_69d5:
 	add a, $08 ; $69e0
 	ld b, a ; $69e2
 	ld hl, $0110 ; $69e3
-	call Func_00_07c5 ; $69e6
+	call FarCallVector ; $69e6
 	ret ; $69e9
 SetCharAnimation:
 	ld hl, $df2e ; $69ea
@@ -5650,7 +5650,7 @@ SetCharAnimation:
 	inc h ; $6a08
 Label_08_6a09:
 	ld a, [$df22] ; $6a09
-	call Func_00_0652 ; $6a0c
+	call FarReadWordDI ; $6a0c
 	ld hl, $df2a ; $6a0f
 	ld a, c ; $6a12
 	ld [hl+], a ; $6a13
@@ -6220,7 +6220,7 @@ Label_08_6e04:
 	ld h, [hl] ; $6e13
 	ld l, a ; $6e14
 	ld a, [$df0d] ; $6e15
-	call Func_00_0af8 ; $6e18
+	call VectorFromLengthAndAngleRaw ; $6e18
 	ld c, l ; $6e1b
 	ld b, h ; $6e1c
 	xor a, a ; $6e1d
@@ -6497,7 +6497,7 @@ Func_08_6fa7:
 	sub a, h ; $6fb5
 	ld h, a ; $6fb6
 Label_08_6fb7:
-	ld de, $ffa0 ; $6fb7
+	ld de, hPeakLY ; $6fb7
 	add hl, de ; $6fba
 	ret c ; $6fbb
 	ld hl, $df72 ; $6fbc
@@ -6688,7 +6688,7 @@ Func_08_70c4:
 	ld a, [$c44a] ; $70d3
 	ld h, a ; $70d6
 	ld a, [$c44b] ; $70d7
-	call Func_00_0ea6 ; $70da
+	call DivAHLByDE ; $70da
 	ld e, l ; $70dd
 	ld d, h ; $70de
 	ret ; $70df
@@ -6699,7 +6699,7 @@ Label_08_70e0:
 	ld h, a ; $70e6
 	ld a, [$c44b] ; $70e7
 	cpl ; $70ea
-	call Func_00_0ea6 ; $70eb
+	call DivAHLByDE ; $70eb
 	ld e, l ; $70ee
 	ld d, h ; $70ef
 	ret ; $70f0
@@ -6862,7 +6862,7 @@ Func_08_71dd:
 	cp a, $ff ; $71f4
 	jr z, Label_08_7228 ; $71f6
 	ld hl, $000a ; $71f8
-	call Func_00_0af8 ; $71fb
+	call VectorFromLengthAndAngleRaw ; $71fb
 	ld c, l ; $71fe
 	ld b, h ; $71ff
 	ld hl, $df01 ; $7200
@@ -6910,7 +6910,7 @@ Label_08_7229:
 	cp a, $ff ; $723a
 	jr z, Label_08_7266 ; $723c
 	ld hl, $000a ; $723e
-	call Func_00_0af8 ; $7241
+	call VectorFromLengthAndAngleRaw ; $7241
 	ld c, l ; $7244
 	ld b, h ; $7245
 	ld hl, $df01 ; $7246
@@ -7193,7 +7193,7 @@ Func_08_7441:
 	ld h, [hl] ; $7445
 	ld l, a ; $7446
 	ld a, [$df0d] ; $7447
-	call Func_00_0b03 ; $744a
+	call MulHLBySin ; $744a
 	add hl, hl ; $744d
 	add hl, hl ; $744e
 	ld e, l ; $744f
@@ -7212,7 +7212,7 @@ Func_08_745b:
 	ld h, [hl] ; $745f
 	ld l, a ; $7460
 	ld a, [$df0d] ; $7461
-	call Func_00_0b01 ; $7464
+	call MulHLByCos ; $7464
 	add hl, hl ; $7467
 	add hl, hl ; $7468
 	ld e, l ; $7469
@@ -7302,7 +7302,7 @@ Func_08_74d7:
 	ld h, [hl] ; $74db
 	ld l, a ; $74dc
 	ld a, [$df0d] ; $74dd
-	call Func_00_0b32 ; $74e0
+	call MulHLBySinSigned ; $74e0
 	ld c, l ; $74e3
 	ld b, h ; $74e4
 	ld e, l ; $74e5
@@ -7345,7 +7345,7 @@ Func_08_750c:
 	ld h, [hl] ; $7510
 	ld l, a ; $7511
 	ld a, [$df0d] ; $7512
-	call Func_00_0b30 ; $7515
+	call MulHLByCosSigned ; $7515
 	ld c, l ; $7518
 	ld b, h ; $7519
 	ld e, l ; $751a
@@ -7414,7 +7414,7 @@ MoveCharTowardTarget:
 	ld a, h ; $7569
 	sbc a, b ; $756a
 	ld h, a ; $756b
-	call Func_00_0a54 ; $756c
+	call AngleFromVectorCoarse ; $756c
 	ld [$df0d], a ; $756f
 	ld a, [$df0d] ; $7572
 	ld b, a ; $7575
@@ -7765,7 +7765,7 @@ Label_08_7797:
 	ld h, [hl] ; $779b
 	ld l, a ; $779c
 	ld a, [$df22] ; $779d
-	call Func_00_0652 ; $77a0
+	call FarReadWordDI ; $77a0
 	ld e, c ; $77a3
 	ld d, b ; $77a4
 	ld a, e ; $77a5
@@ -7880,7 +7880,7 @@ Label_08_7855:
 	ldh a, [hPlayerInputFlags] ; $7855
 	and a, $f0 ; $7857
 	ld c, a ; $7859
-	ldh a, [$ff94] ; $785a
+	ldh a, [hInputRisingEdge] ; $785a
 	and a, $0f ; $785c
 	or a, c ; $785e
 	ld [$df1f], a ; $785f
@@ -8024,7 +8024,7 @@ Func_08_7908:
 	ld a, h ; $7929
 	sbc a, b ; $792a
 	ld h, a ; $792b
-	call Func_00_0a54 ; $792c
+	call AngleFromVectorCoarse ; $792c
 	swap a ; $792f
 	and a, $0f ; $7931
 	add a, $96 ; $7933
@@ -8046,7 +8046,7 @@ Func_08_7944:
 	ld a, [hl+] ; $794d
 	ld h, [hl] ; $794e
 	ld l, a ; $794f
-	call Func_00_0a54 ; $7950
+	call AngleFromVectorCoarse ; $7950
 	swap a ; $7953
 	and a, $0f ; $7955
 	add a, $96 ; $7957
@@ -8497,7 +8497,7 @@ Func_08_7c40:
 	ret ; $7c56
 Func_08_7c57:
 	ld a, [$c43b] ; $7c57
-	call Func_00_0ac5 ; $7c5a
+	call VectorFromLengthAndAngle ; $7c5a
 	ld c, l ; $7c5d
 	ld b, h ; $7c5e
 	ld hl, $c452 ; $7c5f

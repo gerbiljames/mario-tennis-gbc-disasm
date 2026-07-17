@@ -54,7 +54,7 @@ Label_32_7ad8:
 Label_32_7ae5:
 	xor a, a ; $7ae5
 	ld [de], a ; $7ae6
-	ldh a, [$ff9e] ; $7ae7
+	ldh a, [hDebugStepMode] ; $7ae7
 	or a, a ; $7ae9
 	jr z, Label_32_7aee ; $7aea
 	sound $2c ; $7aec

@@ -302,14 +302,14 @@ Func_05_4146:
 	sub a, b ; $4179
 	ld c, a ; $417a
 	ld b, $00 ; $417b
-	call Func_00_0480 ; $417d
+	call QueueVRAMCopy ; $417d
 	pop af ; $4180
 	ld hl, $d000 ; $4181
 	ld de, $9800 ; $4184
 	ld c, a ; $4187
 	ld b, $00 ; $4188
 Label_05_418a:
-	call Func_00_0480 ; $418a
+	call QueueVRAMCopy ; $418a
 	pop bc ; $418d
 	ld hl, $b800 ; $418e
 	add hl, bc ; $4191
@@ -331,14 +331,14 @@ Label_05_418a:
 	sub a, b ; $41ad
 	ld c, a ; $41ae
 	ld b, $00 ; $41af
-	call Func_00_0480 ; $41b1
+	call QueueVRAMCopy ; $41b1
 	pop af ; $41b4
 	ld hl, $d400 ; $41b5
 	ld de, $b800 ; $41b8
 	ld c, a ; $41bb
 	ld b, $00 ; $41bc
 Label_05_41be:
-	call Func_00_0480 ; $41be
+	call QueueVRAMCopy ; $41be
 	pop hl ; $41c1
 	pop de ; $41c2
 	pop bc ; $41c3
@@ -354,7 +354,7 @@ Func_05_41c6:
 	ld hl, $d000 ; $41cf
 	ld de, $9800 ; $41d2
 	ld c, $40 ; $41d5
-	call Func_00_0480 ; $41d7
+	call QueueVRAMCopy ; $41d7
 	pop hl ; $41da
 	pop de ; $41db
 	pop bc ; $41dc
@@ -370,7 +370,7 @@ Func_05_41df:
 	ld hl, $d400 ; $41e8
 	ld de, $b800 ; $41eb
 	ld c, $40 ; $41ee
-	call Func_00_0480 ; $41f0
+	call QueueVRAMCopy ; $41f0
 	pop hl ; $41f3
 	pop de ; $41f4
 	pop bc ; $41f5
@@ -401,7 +401,7 @@ Func_05_41df:
 	add hl, bc ; $4221
 	push bc ; $4222
 	ld c, $02 ; $4223
-	call Func_00_0480 ; $4225
+	call QueueVRAMCopy ; $4225
 	pop bc ; $4228
 	ld hl, $b800 ; $4229
 	add hl, bc ; $422c
@@ -410,7 +410,7 @@ Func_05_41df:
 	ld hl, $d400 ; $422f
 	add hl, bc ; $4232
 	ld c, $02 ; $4233
-	call Func_00_0480 ; $4235
+	call QueueVRAMCopy ; $4235
 	ret ; $4238
 Func_05_4239:
 	ld d, a ; $4239
@@ -446,7 +446,7 @@ Func_05_4239:
 	push af ; $426b
 	push bc ; $426c
 	ld c, a ; $426d
-	call Func_00_0480 ; $426e
+	call QueueVRAMCopy ; $426e
 	pop bc ; $4271
 	pop af ; $4272
 	ld hl, $b800 ; $4273
@@ -457,7 +457,7 @@ Func_05_4239:
 	add hl, bc ; $427c
 	push de ; $427d
 	ld c, a ; $427e
-	call Func_00_0480 ; $427f
+	call QueueVRAMCopy ; $427f
 	pop de ; $4282
 Label_05_4283:
 	ret ; $4283
@@ -857,7 +857,7 @@ Func_05_44a3:
 	pop af ; $44c0
 	ld a, a ; $44c1
 	wram_bank ; $44c2
-	ldh a, [$ff8a] ; $44c6
+	ldh a, [hScrollY] ; $44c6
 	and a, $f8 ; $44c8
 	ld l, a ; $44ca
 	ld h, $00 ; $44cb
@@ -1140,14 +1140,14 @@ Label_05_4647:
 Func_05_464b:
 	push af ; $464b
 	push hl ; $464c
-	ldh a, [$ff8b] ; $464d
+	ldh a, [hScrollX] ; $464d
 	add a, $07 ; $464f
 	rrca ; $4651
 	rrca ; $4652
 	rrca ; $4653
 	and a, $1f ; $4654
 	ld d, a ; $4656
-	ldh a, [$ff8a] ; $4657
+	ldh a, [hScrollY] ; $4657
 	add a, $07 ; $4659
 	rrca ; $465b
 	rrca ; $465c
@@ -1378,7 +1378,7 @@ Func_05_477f:
 	ld b, a ; $47c9
 Label_05_47ca:
 	call AdvanceFrame ; $47ca
-	ldh a, [$ff94] ; $47cd
+	ldh a, [hInputRisingEdge] ; $47cd
 	bit 0, a ; $47cf
 	jr nz, Label_05_4840 ; $47d1
 	ldh a, [hInputPressed] ; $47d3
@@ -1479,7 +1479,7 @@ Label_05_4840:
 	pop af ; $4869
 	jp Label_05_48e6 ; $486a
 Label_05_486d:
-	ldh a, [$ff94] ; $486d
+	ldh a, [hInputRisingEdge] ; $486d
 	and a, $08 ; $486f
 	jp z, Label_05_487b ; $4871
 	sound $62 ; $4874
@@ -1583,7 +1583,7 @@ Label_05_490a:
 	ld l, a ; $4919
 	ld h, $80 ; $491a
 	push de ; $491c
-	call Func_00_0507 ; $491d
+	call QueueBGTileWrite ; $491d
 	pop de ; $4920
 	ld a, [$d841] ; $4921
 	inc a ; $4924
@@ -1597,7 +1597,7 @@ Label_05_490a:
 	ld a, $20 ; $4933
 	ld l, a ; $4935
 	ld h, $80 ; $4936
-	call Func_00_0507 ; $4938
+	call QueueBGTileWrite ; $4938
 	xor a, a ; $493b
 	ld [$d844], a ; $493c
 Label_05_493f:
@@ -1961,7 +1961,7 @@ Label_05_4b72:
 	pop af ; $4ba1
 	jp Label_05_4c6b ; $4ba2
 Label_05_4ba5:
-	ldh a, [$ff94] ; $4ba5
+	ldh a, [hInputRisingEdge] ; $4ba5
 	and a, $08 ; $4ba7
 	jp z, Label_05_4bbb ; $4ba9
 	sound $62 ; $4bac
@@ -2171,7 +2171,7 @@ Label_05_4d09:
 	ld l, a ; $4d18
 	ld h, $80 ; $4d19
 	push de ; $4d1b
-	call Func_00_0507 ; $4d1c
+	call QueueBGTileWrite ; $4d1c
 	pop de ; $4d1f
 	ld a, [$d841] ; $4d20
 	inc a ; $4d23
@@ -2185,7 +2185,7 @@ Label_05_4d09:
 	ld a, $20 ; $4d32
 	ld l, a ; $4d34
 	ld h, $80 ; $4d35
-	call Func_00_0507 ; $4d37
+	call QueueBGTileWrite ; $4d37
 	xor a, a ; $4d3a
 	ld [$d845], a ; $4d3b
 Label_05_4d3e:
@@ -2200,7 +2200,7 @@ Label_05_4d3f:
 	ld a, $20 ; $4d4a
 	ld l, a ; $4d4c
 	ld h, $80 ; $4d4d
-	call Func_00_0507 ; $4d4f
+	call QueueBGTileWrite ; $4d4f
 	xor a, a ; $4d52
 	ld [$d845], a ; $4d53
 Label_05_4d56:
@@ -2596,7 +2596,7 @@ Label_05_4ffc:
 	ld e, l ; $500a
 	ld l, a ; $500b
 	ld h, $80 ; $500c
-	call Func_00_0507 ; $500e
+	call QueueBGTileWrite ; $500e
 	ld a, [$d841] ; $5011
 	inc a ; $5014
 	ld [$d841], a ; $5015
@@ -3107,7 +3107,7 @@ Label_05_533f:
 	bit 7, h ; $5340
 	jr z, Label_05_533f ; $5342
 	add hl, de ; $5344
-	ld bc, $ff9c ; $5345
+	ld bc, hSpriteQueueBase ; $5345
 	ld de, $0064 ; $5348
 	add hl, bc ; $534b
 	ld a, $03 ; $534c
@@ -3909,7 +3909,7 @@ Label_05_57b9:
 	and a, $03 ; $57c9
 	add a, e ; $57cb
 	add a, d ; $57cc
-	call Func_00_3024 ; $57cd
+	call PlaySoundManaged ; $57cd
 	pop bc ; $57d0
 Label_05_57d1:
 	call AdvanceFrame ; $57d1
@@ -4431,7 +4431,7 @@ Func_05_5ba0:
 	dec hl ; $5bd2
 	ld [hl-], a ; $5bd3
 	ld [hl], d ; $5bd4
-	ldh a, [$ff8a] ; $5bd5
+	ldh a, [hScrollY] ; $5bd5
 	ld b, a ; $5bd7
 	srl b ; $5bd8
 	srl b ; $5bda
@@ -5331,7 +5331,7 @@ Func_05_622e:
 	ld hl, $d300 ; $6237
 	ld de, $8800 ; $623a
 	ld c, $1b ; $623d
-	call Func_00_0480 ; $623f
+	call QueueVRAMCopy ; $623f
 	push af ; $6242
 	ldh a, [rLCDC] ; $6243
 	bit 7, a ; $6245
@@ -5342,7 +5342,7 @@ Label_05_624c:
 	ld hl, $d4b0 ; $624d
 	ld de, $89b0 ; $6250
 	ld c, $1b ; $6253
-	call Func_00_0480 ; $6255
+	call QueueVRAMCopy ; $6255
 	push af ; $6258
 	ldh a, [rLCDC] ; $6259
 	bit 7, a ; $625b
@@ -5587,12 +5587,12 @@ Func_05_63d8:
 	add a, l ; $63f1
 	ld e, a ; $63f2
 	ld d, $00 ; $63f3
-	call Func_00_24ef ; $63f5
+	call TestGameFlagByNumber ; $63f5
 	jr z, Label_05_63ff ; $63f8
-	call Func_00_2523 ; $63fa
+	call ClearGameFlagByNumber ; $63fa
 	jr Label_05_6402 ; $63fd
 Label_05_63ff:
-	call Func_00_2509 ; $63ff
+	call SetGameFlagByNumber ; $63ff
 Label_05_6402:
 	pop hl ; $6402
 	pop de ; $6403
@@ -5707,7 +5707,7 @@ Label_05_64c3:
 	push de ; $64c3
 	ld e, l ; $64c4
 	ld d, h ; $64c5
-	call Func_00_24ef ; $64c6
+	call TestGameFlagByNumber ; $64c6
 	pop de ; $64c9
 	push bc ; $64ca
 	ld c, $65 ; $64cb
@@ -5881,10 +5881,10 @@ Label_05_65b8:
 	ld hl, $6581 ; $6614
 	call RegisterFrameTask ; $6617
 Label_05_661a:
-	ldh a, [$ff94] ; $661a
+	ldh a, [hInputRisingEdge] ; $661a
 	bit 1, a ; $661c
 	jr nz, Label_05_6683 ; $661e
-	ldh a, [$ff94] ; $6620
+	ldh a, [hInputRisingEdge] ; $6620
 	bit 0, a ; $6622
 	jr z, Label_05_663b ; $6624
 	call Func_05_63d8 ; $6626
@@ -5895,7 +5895,7 @@ Label_05_661a:
 	ld a, [$c719] ; $6635
 	call Func_05_7205 ; $6638
 Label_05_663b:
-	ldh a, [$ff94] ; $663b
+	ldh a, [hInputRisingEdge] ; $663b
 	bit 3, a ; $663d
 	jr z, Label_05_665c ; $663f
 	ld a, [$c714] ; $6641
@@ -5939,7 +5939,7 @@ Label_05_6683:
 	pop af ; $669e
 	ret ; $669f
 Func_05_66a0:
-	ldh a, [$ff9e] ; $66a0
+	ldh a, [hDebugStepMode] ; $66a0
 	or a, a ; $66a2
 	ret z ; $66a3
 	push af ; $66a4
@@ -5988,8 +5988,8 @@ TextSubcmdHandlers_05:
 	call Func_05_67c4 ; $66e6
 	jr Label_05_66a8 ; $66e9
 	ld c, $10 ; $66eb
-	call Func_00_1d20 ; $66ed
-	call Func_00_1da4 ; $66f0
+	call BeginFadeOut ; $66ed
+	call WaitFadeEnd ; $66f0
 	ld hl, wStoryModePlayersXPosition ; $66f3
 	ld de, $c296 ; $66f6
 	ld bc, $0005 ; $66f9
@@ -6092,10 +6092,10 @@ Func_05_67c4:
 	call Func_05_672d ; $67ed
 	call AdvanceFrame ; $67f0
 Label_05_67f3:
-	ldh a, [$ff94] ; $67f3
+	ldh a, [hInputRisingEdge] ; $67f3
 	and a, $02 ; $67f5
 	jr nz, Label_05_6857 ; $67f7
-	ldh a, [$ff94] ; $67f9
+	ldh a, [hInputRisingEdge] ; $67f9
 	and a, $01 ; $67fb
 	jr z, Label_05_6815 ; $67fd
 	ld a, [$c700] ; $67ff
@@ -6191,7 +6191,7 @@ Func_05_6950:
 	ld hl, $c712 ; $6956
 	add a, [hl] ; $6959
 	add a, a ; $695a
-	ld hl, $c100 ; $695b
+	ld hl, wBGPalettes ; $695b
 	add a, l ; $695e
 	ld l, a ; $695f
 	jr nc, Label_05_6963 ; $6960
@@ -6207,7 +6207,7 @@ Func_05_6964:
 	ld a, [hl+] ; $696b
 	ld b, [hl] ; $696c
 	ld c, a ; $696d
-	call Func_00_1c6a ; $696e
+	call SplitColorComponents ; $696e
 	push de ; $6971
 	ld h, $00 ; $6972
 	ld l, a ; $6974
@@ -6262,7 +6262,7 @@ Func_05_69c5:
 	ld e, $00 ; $69e3
 	call Func_05_6964 ; $69e5
 Label_05_69e8:
-	ldh a, [$ff94] ; $69e8
+	ldh a, [hInputRisingEdge] ; $69e8
 	and a, $03 ; $69ea
 	jr nz, Label_05_6a4d ; $69ec
 	ldh a, [hPlayerInputFlags] ; $69ee
@@ -6309,22 +6309,22 @@ Label_05_6a25:
 	ld a, e ; $6a2c
 	and a, $03 ; $6a2d
 	jr nz, Label_05_6a34 ; $6a2f
-	call Func_00_1cad ; $6a31
+	call AdjustColorRed ; $6a31
 Label_05_6a34:
 	dec a ; $6a34
 	jr nz, Label_05_6a3a ; $6a35
-	call Func_00_1cb9 ; $6a37
+	call AdjustColorGreen ; $6a37
 Label_05_6a3a:
 	dec a ; $6a3a
 	jr nz, Label_05_6a40 ; $6a3b
-	call Func_00_1cc9 ; $6a3d
+	call AdjustColorBlue ; $6a3d
 Label_05_6a40:
 	ld a, c ; $6a40
 	ld [hl+], a ; $6a41
 	ld a, b ; $6a42
 	ld [hl-], a ; $6a43
 	ld a, $03 ; $6a44
-	ldh [$ff9d], a ; $6a46
+	ldh [hPaletteDirtyFlags], a ; $6a46
 	call Func_05_6964 ; $6a48
 	jr Label_05_69e8 ; $6a4b
 Label_05_6a4d:
@@ -6376,7 +6376,7 @@ Label_05_6a86:
 	ld hl, $6b03 ; $6aac
 	call RegisterFrameTask ; $6aaf
 Label_05_6ab2:
-	ldh a, [$ff94] ; $6ab2
+	ldh a, [hInputRisingEdge] ; $6ab2
 	bit 1, a ; $6ab4
 	jr nz, Label_05_6af6 ; $6ab6
 	bit 0, a ; $6ab8
@@ -6422,14 +6422,14 @@ Label_05_6af6:
 	ld hl, $6b03 ; $6afc
 	call UnregisterFrameTask ; $6aff
 	ret ; $6b02
-	ld a, [$c320] ; $6b03
+	ld a, [wCameraX] ; $6b03
 	rlca ; $6b06
 	rlca ; $6b07
 	rlca ; $6b08
 	add a, $04 ; $6b09
 	and a, $07 ; $6b0b
 	ld h, a ; $6b0d
-	ld a, [$c322] ; $6b0e
+	ld a, [wCameraY] ; $6b0e
 	rlca ; $6b11
 	rlca ; $6b12
 	rlca ; $6b13
@@ -6499,7 +6499,7 @@ Func_05_6b6c:
 	ld hl, $6890 ; $6b6c
 	ld de, $8600 ; $6b6f
 	ld c, $0c ; $6b72
-	call Func_00_0480 ; $6b74
+	call QueueVRAMCopy ; $6b74
 	xor a, a ; $6b77
 	ld [$c712], a ; $6b78
 	ld [$c713], a ; $6b7b
@@ -6844,13 +6844,13 @@ Func_05_6d85:
 	push af ; $6d87
 	xor a, a ; $6d88
 	ld a, $02 ; $6d89
-	ldh [$ff8b], a ; $6d8b
-	ldh [$ff8a], a ; $6d8d
+	ldh [hScrollX], a ; $6d8b
+	ldh [hScrollY], a ; $6d8d
 	ld c, $7f ; $6d8f
-	call Func_00_1d2e ; $6d91
-	call Func_00_1da4 ; $6d94
+	call BeginFadeIn ; $6d91
+	call WaitFadeEnd ; $6d94
 	call Func_05_436f ; $6d97
-	call Func_00_2725 ; $6d9a
+	call WaitFramesCmd ; $6d9a
 	db $1e ; $6d9d inline arg
 	call DisableLCDSafely ; $6d9e
 	call Func_05_6e09 ; $6da1
@@ -6883,7 +6883,7 @@ Func_05_6d85:
 	sound $72 ; $6de1
 Label_05_6de3:
 	ldh a, [hPlayerInputFlags] ; $6de3
-	ld hl, $ff8b ; $6de5
+	ld hl, hScrollX ; $6de5
 	bit 4, a ; $6de8
 	jr z, Label_05_6def ; $6dea
 	inc [hl] ; $6dec
@@ -6893,7 +6893,7 @@ Label_05_6def:
 	jr z, Label_05_6df4 ; $6df1
 	dec [hl] ; $6df3
 Label_05_6df4:
-	ld hl, $ff8a ; $6df4
+	ld hl, hScrollY ; $6df4
 	bit 6, a ; $6df7
 	jr z, Label_05_6dfe ; $6df9
 	dec [hl] ; $6dfb
@@ -7562,7 +7562,7 @@ Func_05_7176:
 	push hl ; $71a2
 	push de ; $71a3
 	push bc ; $71a4
-	call Func_00_0480 ; $71a5
+	call QueueVRAMCopy ; $71a5
 	pop bc ; $71a8
 	pop de ; $71a9
 	ld hl, $2000 ; $71aa
@@ -7574,7 +7574,7 @@ Func_05_7176:
 	ld de, $0400 ; $71b2
 	add hl, de ; $71b5
 	pop de ; $71b6
-	call Func_00_0480 ; $71b7
+	call QueueVRAMCopy ; $71b7
 	pop af ; $71ba
 	wram_bank ; $71bb
 	pop hl ; $71bf
@@ -8062,7 +8062,7 @@ Label_05_7454:
 	wram_bank $07 ; $7461
 	ld hl, $d300 ; $7467
 	ld c, $10 ; $746a
-	call Func_00_0480 ; $746c
+	call QueueVRAMCopy ; $746c
 	push af ; $746f
 	ldh a, [rLCDC] ; $7470
 	bit 7, a ; $7472
@@ -8073,7 +8073,7 @@ Label_05_7479:
 	ld hl, $d400 ; $747a
 	pop de ; $747d
 	ld c, $10 ; $747e
-	call Func_00_0480 ; $7480
+	call QueueVRAMCopy ; $7480
 	push af ; $7483
 	ldh a, [rLCDC] ; $7484
 	bit 7, a ; $7486
@@ -8084,7 +8084,7 @@ Label_05_748d:
 	ld hl, $d500 ; $748e
 	pop de ; $7491
 	ld c, $10 ; $7492
-	call Func_00_0480 ; $7494
+	call QueueVRAMCopy ; $7494
 	push af ; $7497
 	ldh a, [rLCDC] ; $7498
 	bit 7, a ; $749a
@@ -8095,7 +8095,7 @@ Label_05_74a1:
 	ld hl, $d600 ; $74a2
 	pop de ; $74a5
 	ld c, $10 ; $74a6
-	call Func_00_0480 ; $74a8
+	call QueueVRAMCopy ; $74a8
 	push af ; $74ab
 	ldh a, [rLCDC] ; $74ac
 	bit 7, a ; $74ae
@@ -8110,7 +8110,7 @@ Label_05_74b5:
 Label_05_74bf:
 	ld hl, $d700 ; $74bf
 	pop de ; $74c2
-	call Func_00_0480 ; $74c3
+	call QueueVRAMCopy ; $74c3
 	push af ; $74c6
 	ldh a, [rLCDC] ; $74c7
 	bit 7, a ; $74c9
@@ -8384,7 +8384,7 @@ Label_05_7660:
 	ld e, l ; $7670
 	pop hl ; $7671
 	ld c, $02 ; $7672
-	call Func_00_0480 ; $7674
+	call QueueVRAMCopy ; $7674
 Label_05_7677:
 	pop af ; $7677
 	wram_bank ; $7678
@@ -8682,7 +8682,7 @@ Label_05_7838:
 	push bc ; $7838
 	push hl ; $7839
 	push de ; $783a
-	call Func_00_0480 ; $783b
+	call QueueVRAMCopy ; $783b
 	ld bc, $0120 ; $783e
 	pop hl ; $7841
 	add hl, bc ; $7842
@@ -8738,7 +8738,7 @@ Label_05_788c:
 	push de ; $788e
 	ld a, $00 ; $788f
 	ldh [rVBK], a ; $7891
-	call Func_00_18eb ; $7893
+	call StartVRAMDMAFromHL ; $7893
 	ld bc, $0200 ; $7896
 	pop hl ; $7899
 	add hl, bc ; $789a
@@ -8792,7 +8792,7 @@ Label_05_78d3:
 	ld a, $20 ; $78e2
 Label_05_78e4:
 	ld c, a ; $78e4
-	call Func_00_0480 ; $78e5
+	call QueueVRAMCopy ; $78e5
 	ld b, a ; $78e8
 	pop af ; $78e9
 	wram_bank ; $78ea

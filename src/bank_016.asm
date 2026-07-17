@@ -66,7 +66,7 @@ FarPtr_16_04:
 	pop de ; $4067
 	ret ; $4068
 Func_16_4069:
-	ldh a, [$ff8c] ; $4069
+	ldh a, [hVBlankCounter] ; $4069
 	and a, $0f ; $406b
 	ld hl, $4083 ; $406d
 	add a, l ; $4070
@@ -90,7 +90,7 @@ Label_16_407f:
 	ret ; $4082
 	INCBIN "data/bank_016/d_4083.bin" ; $4083, 16 bytes
 Func_16_4093:
-	ldh a, [$ff8c] ; $4093
+	ldh a, [hVBlankCounter] ; $4093
 	and a, $0f ; $4095
 	ld hl, $40ad ; $4097
 	add a, l ; $409a
@@ -257,8 +257,8 @@ Label_16_44b9:
 	call RegisterFrameTask ; $44cc
 	call EnableLCD ; $44cf
 	ld c, $10 ; $44d2
-	call Func_00_1d2e ; $44d4
-	call Func_00_1da4 ; $44d7
+	call BeginFadeIn ; $44d4
+	call WaitFadeEnd ; $44d7
 	ld a, $08 ; $44da
 	ldh [rSTAT], a ; $44dc
 	ld hl, rIE ; $44de
@@ -295,8 +295,8 @@ Label_16_451d:
 	sound $5f ; $451d
 	call ClearFrameTasks ; $451f
 	ld c, $40 ; $4522
-	call Func_00_1d20 ; $4524
-	call Func_00_1da4 ; $4527
+	call BeginFadeOut ; $4524
+	call WaitFadeEnd ; $4527
 	ld hl, rIE ; $452a
 	res 1, [hl] ; $452d
 	ld a, $03 ; $452f
@@ -306,8 +306,8 @@ Label_16_451d:
 	ret ; $453a
 Label_16_453b:
 	ld c, $40 ; $453b
-	call Func_00_1d20 ; $453d
-	call Func_00_1da4 ; $4540
+	call BeginFadeOut ; $453d
+	call WaitFadeEnd ; $4540
 	ld hl, rIE ; $4543
 	res 1, [hl] ; $4546
 	call ClearFrameTasks ; $4548
@@ -320,8 +320,8 @@ Label_16_453b:
 	jp nz, RunMatchWinLoseScreen ; $4558
 	call ClearFrameTasks ; $455b
 	ld c, $08 ; $455e
-	call Func_00_1d20 ; $4560
-	call Func_00_1da4 ; $4563
+	call BeginFadeOut ; $4560
+	call WaitFadeEnd ; $4563
 	ld hl, rIE ; $4566
 	res 1, [hl] ; $4569
 	ld a, $03 ; $456b
@@ -330,8 +330,8 @@ Label_16_453b:
 InitMatchWinLoseScreen:
 	call ClearFrameTasks ; $4571
 	xor a, a ; $4574
-	ldh [$ff8b], a ; $4575
-	ldh [$ff8a], a ; $4577
+	ldh [hScrollX], a ; $4575
+	ldh [hScrollY], a ; $4577
 	call Func_16_490c ; $4579
 	wram_bank $03 ; $457c
 	ld de, $d560 ; $4582
@@ -366,14 +366,14 @@ InitMatchWinLoseScreen:
 	ld hl, $d000 ; $45cd
 	ld de, $a000 ; $45d0
 	ld c, $20 ; $45d3
-	call Func_00_0480 ; $45d5
+	call QueueVRAMCopy ; $45d5
 	ld hl, $4784 ; $45d8
 	ld de, $d000 ; $45db
 	call DecompressData ; $45de
 	ld hl, $d000 ; $45e1
 	ld de, $a200 ; $45e4
 	ld c, $20 ; $45e7
-	call Func_00_0480 ; $45e9
+	call QueueVRAMCopy ; $45e9
 	ld hl, $48f4 ; $45ec
 	ld de, $0803 ; $45ef
 	call LoadPaletteShadow ; $45f2
@@ -399,7 +399,7 @@ Label_16_4919:
 	jr Label_16_4920 ; $491e
 Label_16_4920:
 	ld de, $002f ; $4920
-	call Func_00_24ef ; $4923
+	call TestGameFlagByNumber ; $4923
 	jr nz, Label_16_4962 ; $4926
 	wram_bank $03 ; $4928
 	ld hl, $d280 ; $492e
@@ -429,7 +429,7 @@ Func_16_4963:
 	or a, a ; $4966
 	jr nz, Label_16_49bc ; $4967
 	ld de, $002f ; $4969
-	call Func_00_24ef ; $496c
+	call TestGameFlagByNumber ; $496c
 	jr z, Label_16_49a3 ; $496f
 	ld de, $d48b ; $4971
 	ld b, $04 ; $4974
@@ -467,7 +467,7 @@ Label_16_49bb:
 	ret ; $49bb
 Label_16_49bc:
 	ld de, $002f ; $49bc
-	call Func_00_24ef ; $49bf
+	call TestGameFlagByNumber ; $49bf
 	jr z, Label_16_49f6 ; $49c2
 	ld de, $d4ac ; $49c4
 	ld b, $03 ; $49c7
@@ -839,7 +839,7 @@ Label_16_4abc:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
 	cp a, $ff ; $4ca0
 	jr nz, Label_16_4ca9 ; $4ca2
-	ldh a, [$ff8c] ; $4ca4
+	ldh a, [hVBlankCounter] ; $4ca4
 	and a, $01 ; $4ca6
 	ret z ; $4ca8
 Label_16_4ca9:
@@ -877,7 +877,7 @@ Func_16_4cea:
 	ld d, a ; $4cf0
 	ld c, $00 ; $4cf1
 	ld b, $08 ; $4cf3
-	ldh a, [$ff8c] ; $4cf5
+	ldh a, [hVBlankCounter] ; $4cf5
 	and a, $10 ; $4cf7
 	jr z, Label_16_4cfd ; $4cf9
 	ld b, $0a ; $4cfb
@@ -938,7 +938,7 @@ Func_16_4d96:
 	ld d, a ; $4d9c
 	ld c, $40 ; $4d9d
 	ld b, $08 ; $4d9f
-	ldh a, [$ff8c] ; $4da1
+	ldh a, [hVBlankCounter] ; $4da1
 	and a, $10 ; $4da3
 	jr z, Label_16_4da9 ; $4da5
 	ld b, $0a ; $4da7
@@ -969,7 +969,7 @@ Func_16_4dc7:
 	ld d, a ; $4dcd
 	ld c, $42 ; $4dce
 	ld b, $08 ; $4dd0
-	ldh a, [$ff8c] ; $4dd2
+	ldh a, [hVBlankCounter] ; $4dd2
 	and a, $10 ; $4dd4
 	jr z, Label_16_4dda ; $4dd6
 	ld b, $0a ; $4dd8
@@ -977,7 +977,7 @@ Label_16_4dda:
 	call QueueSprite ; $4dda
 	ret ; $4ddd
 Func_16_4dde:
-	ldh a, [$ff8c] ; $4dde
+	ldh a, [hVBlankCounter] ; $4dde
 	srl a ; $4de0
 	and a, $0f ; $4de2
 	ld hl, $4dee ; $4de4
@@ -1001,7 +1001,7 @@ Func_16_4dfe:
 	ld h, $0b ; $4e11
 	farcall FarPtr_39_0c ; $4e13
 	ld de, $002f ; $4e16
-	call Func_00_24ef ; $4e19
+	call TestGameFlagByNumber ; $4e19
 	jr nz, Label_16_4e29 ; $4e1c
 	ld hl, $542e ; $4e1e
 	ld de, $9000 ; $4e21
@@ -1065,7 +1065,7 @@ Label_16_4e63:
 Func_16_4e8a:
 	push af ; $4e8a
 	ld de, $002f ; $4e8b
-	call Func_00_24ef ; $4e8e
+	call TestGameFlagByNumber ; $4e8e
 	jr z, Label_16_4e9b ; $4e91
 	cp a, $11 ; $4e93
 	jr nz, Label_16_4e9b ; $4e95
@@ -2835,8 +2835,8 @@ RunMatchStatsScreen:
 	call RegisterFrameTask ; $5c51
 	call EnableLCD ; $5c54
 	ld c, $10 ; $5c57
-	call Func_00_1d2e ; $5c59
-	call Func_00_1da4 ; $5c5c
+	call BeginFadeIn ; $5c59
+	call WaitFadeEnd ; $5c5c
 Label_16_5c5f:
 	call PrintMatchSetScores ; $5c5f
 	ldh a, [hInputPressed] ; $5c62
@@ -2850,14 +2850,14 @@ Label_16_5c5f:
 	jr Label_16_5c5f ; $5c73
 Label_16_5c75:
 	ld c, $40 ; $5c75
-	call Func_00_1d20 ; $5c77
-	call Func_00_1da4 ; $5c7a
+	call BeginFadeOut ; $5c77
+	call WaitFadeEnd ; $5c7a
 	xor a, a ; $5c7d
 	ret ; $5c7e
 Label_16_5c7f:
 	ld c, $20 ; $5c7f
-	call Func_00_1d20 ; $5c81
-	call Func_00_1da4 ; $5c84
+	call BeginFadeOut ; $5c81
+	call WaitFadeEnd ; $5c84
 	ld a, $ff ; $5c87
 	ret ; $5c89
 InitMatchStatsScreen:
@@ -2895,7 +2895,7 @@ InitMatchStatsScreen:
 	ret ; $5cdb
 Func_16_5cdc:
 	ld de, $002f ; $5cdc
-	call Func_00_24ef ; $5cdf
+	call TestGameFlagByNumber ; $5cdf
 	jr z, Label_16_5d16 ; $5ce2
 	ld de, $d481 ; $5ce4
 	ld b, $03 ; $5ce7
@@ -2934,7 +2934,7 @@ Label_16_5d2e:
 PrintMatchStatistics:
 	call Func_16_5f61 ; $5d2f
 	ld de, $002f ; $5d32
-	call Func_00_24ef ; $5d35
+	call TestGameFlagByNumber ; $5d35
 	jr z, Label_16_5d3f ; $5d38
 	call PrintDoublesMatchStats ; $5d3a
 	jr Label_16_5d42 ; $5d3d
@@ -3186,7 +3186,7 @@ Func_16_5f61:
 	ret ; $5f91
 Func_16_5f92:
 	ld de, $002f ; $5f92
-	call Func_00_24ef ; $5f95
+	call TestGameFlagByNumber ; $5f95
 	ret nz ; $5f98
 	ld hl, $d240 ; $5f99
 	ld de, $d080 ; $5f9c
@@ -3245,7 +3245,7 @@ Label_16_5ff9:
 	ld c, $02 ; $600e
 	call Func_16_6073 ; $6010
 	ld de, $002f ; $6013
-	call Func_00_24ef ; $6016
+	call TestGameFlagByNumber ; $6016
 	jr z, Label_16_6035 ; $6019
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $601b
 	ld d, a ; $601e
@@ -3275,7 +3275,7 @@ Label_16_6036:
 	ld c, $00 ; $604b
 	call Func_16_6073 ; $604d
 	ld de, $002f ; $6050
-	call Func_00_24ef ; $6053
+	call TestGameFlagByNumber ; $6053
 	jr z, Label_16_6072 ; $6056
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $6058
 	ld d, a ; $605b

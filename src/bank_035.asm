@@ -54,7 +54,7 @@ Label_35_7b5a:
 Label_35_7b67:
 	xor a, a ; $7b67
 	ld [de], a ; $7b68
-	ldh a, [$ff9e] ; $7b69
+	ldh a, [hDebugStepMode] ; $7b69
 	or a, a ; $7b6b
 	jr z, Label_35_7b70 ; $7b6c
 	sound $2c ; $7b6e

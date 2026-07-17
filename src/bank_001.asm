@@ -58,7 +58,7 @@ Func_01_4018:
 	ld hl, $c000 ; $407a
 	ld c, $0a ; $407d
 	call ClearMemory16 ; $407f
-	call Func_00_188b ; $4082
+	call ClearDebugTextBuffer ; $4082
 	call Func_01_50e2 ; $4085
 	call Func_01_5188 ; $4088
 	farcall FarPtr_ValidateSaveRam ; $408b
@@ -69,7 +69,7 @@ Func_01_4018:
 	farcall FarPtr_InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d
 	ld c, $7f ; $40a0
-	call Func_00_1d2e ; $40a2
+	call BeginFadeIn ; $40a2
 Label_01_40a5:
 	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], $00 ; $40a8
@@ -79,9 +79,9 @@ Label_01_40a5:
 Label_01_40b2:
 	ld hl, $0153 ; $40b2
 	ld de, $0511 ; $40b5
-	call Func_00_1906 ; $40b8
+	call PrintString ; $40b8
 	ld a, $03 ; $40bb
-	ldh [$ff9e], a ; $40bd
+	ldh [hDebugStepMode], a ; $40bd
 Label_01_40bf:
 	ldh a, [hInputPressed] ; $40bf
 	bit 0, a ; $40c1
@@ -98,7 +98,7 @@ Label_01_40cf:
 	jr Label_01_40bf ; $40d6
 Label_01_40d8:
 	ld a, $00 ; $40d8
-	ldh [$ff9e], a ; $40da
+	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
 	ld [hl], $00 ; $40df
 	ld hl, $c295 ; $40e1
@@ -108,15 +108,15 @@ Label_01_40d8:
 Unused_01_MenuRedraw:
 	ld hl, $0153 ; $40ec
 	ld de, $0511 ; $40ef
-	call Func_00_1906 ; $40f2
+	call PrintString ; $40f2
 	ld a, $03 ; $40f5
-	ldh [$ff9e], a ; $40f7
+	ldh [hDebugStepMode], a ; $40f7
 Label_01_40f9:
 	ldh a, [hInputPressed] ; $40f9
 	bit 3, a ; $40fb
 	jr z, Label_01_4113 ; $40fd
 	ld a, $01 ; $40ff
-	ldh [$ff9e], a ; $4101
+	ldh [hDebugStepMode], a ; $4101
 	ld hl, wStoryModeCurrentLocation ; $4103
 	ld [hl], $00 ; $4106
 	ld hl, $c295 ; $4108
@@ -131,7 +131,7 @@ Label_01_411a:
 	bit 0, a ; $411a
 	jr z, Label_01_4127 ; $411c
 	ld a, $01 ; $411e
-	ldh [$ff9e], a ; $4120
+	ldh [hDebugStepMode], a ; $4120
 Label_01_4122:
 	farcall FarPtr_07_46 ; $4122
 	jr Label_01_4122 ; $4125
@@ -139,7 +139,7 @@ Label_01_4127:
 	bit 1, a ; $4127
 	jr z, Label_01_4138 ; $4129
 	ld a, $01 ; $412b
-	ldh [$ff9e], a ; $412d
+	ldh [hDebugStepMode], a ; $412d
 Label_01_412f:
 	farcall FarPtr_3b_00 ; $412f
 	farcall FarPtr_RunMatch ; $4132
@@ -148,7 +148,7 @@ Label_01_4138:
 	bit 6, a ; $4138
 	jp z, Label_01_41c2 ; $413a
 	ld a, $01 ; $413d
-	ldh [$ff9e], a ; $413f
+	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
 	ld [$c36c], a ; $4143
 	farcall FarPtr_CheckStorySlot ; $4146
@@ -178,7 +178,7 @@ Label_01_4138:
 	ld a, $03 ; $4182
 	ld [$cb0c], a ; $4184
 	ld de, $002f ; $4187
-	call Func_00_2509 ; $418a
+	call SetGameFlagByNumber ; $418a
 	ld a, $00 ; $418d
 	ld [$c8f7], a ; $418f
 Label_01_4192:
@@ -190,7 +190,7 @@ Label_01_4192:
 Unused_01_MatchSetup:
 	farcall FarPtr_3e_10 ; $419e
 	ld de, $002f ; $41a1
-	call Func_00_2523 ; $41a4
+	call ClearGameFlagByNumber ; $41a4
 	ld a, $04 ; $41a7
 	ld [wGameMode], a ; $41a9
 	farcall FarPtr_RunMatchStatsScreen ; $41ac
@@ -199,15 +199,15 @@ Unused_01_MatchSetup:
 	farcall FarPtr_3e_0e ; $41b5
 	farcall FarPtr_3e_0c ; $41b8
 	ld a, $01 ; $41bb
-	ldh [$ff9e], a ; $41bd
+	ldh [hDebugStepMode], a ; $41bd
 	farcall FarPtr_1a_08 ; $41bf
 Label_01_41c2:
 	bit 7, a ; $41c2
 	jr z, Label_01_41db ; $41c4
 	ld a, $01 ; $41c6
-	ldh [$ff9e], a ; $41c8
+	ldh [hDebugStepMode], a ; $41c8
 	ld a, $00 ; $41ca
-	ldh [$ff9e], a ; $41cc
+	ldh [hDebugStepMode], a ; $41cc
 Label_01_41ce:
 	farcall FarPtr_6b_00 ; $41ce
 	farcall FarPtr_6b_02 ; $41d1
@@ -220,7 +220,7 @@ Label_01_41db:
 	bit 4, a ; $41db
 	jr z, Label_01_41f5 ; $41dd
 	ld a, $01 ; $41df
-	ldh [$ff9e], a ; $41e1
+	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
 	ld [hl], $03 ; $41e6
 	ld hl, $c295 ; $41e8
@@ -232,10 +232,10 @@ Label_01_41f5:
 	bit 5, a ; $41f5
 	jr z, Label_01_4209 ; $41f7
 	ld a, $01 ; $41f9
-	ldh [$ff9e], a ; $41fb
+	ldh [hDebugStepMode], a ; $41fb
 	farcall FarPtr_1a_08 ; $41fd
 	ld a, $00 ; $4200
-	ldh [$ff9e], a ; $4202
+	ldh [hDebugStepMode], a ; $4202
 Label_01_4204:
 	call AdvanceFrame ; $4204
 	jr Label_01_4204 ; $4207
@@ -268,7 +268,7 @@ Func_01_5062:
 	ld hl, $4210 ; $5066
 	ld de, $9000 ; $5069
 	ld c, $10 ; $506c
-	call Func_00_0480 ; $506e
+	call QueueVRAMCopy ; $506e
 	pop hl ; $5071
 	pop de ; $5072
 	pop bc ; $5073
@@ -282,11 +282,11 @@ Func_01_5076:
 	ld hl, MenuTilesB_01 ; $507a
 	ld de, $9200 ; $507d
 	ld c, $60 ; $5080
-	call Func_00_0480 ; $5082
+	call QueueVRAMCopy ; $5082
 	ld hl, $4a10 ; $5085
 	ld de, $8800 ; $5088
 	ld c, $60 ; $508b
-	call Func_00_0480 ; $508d
+	call QueueVRAMCopy ; $508d
 	pop hl ; $5090
 	pop de ; $5091
 	pop bc ; $5092
@@ -300,22 +300,22 @@ Func_01_5095:
 	ld hl, MenuTilesB_01 ; $5099
 	ld de, $9200 ; $509c
 	ld c, $20 ; $509f
-	call Func_00_0480 ; $50a1
+	call QueueVRAMCopy ; $50a1
 	call AdvanceFrame ; $50a4
 	ld hl, $4610 ; $50a7
 	ld de, $9400 ; $50aa
 	ld c, $20 ; $50ad
-	call Func_00_0480 ; $50af
+	call QueueVRAMCopy ; $50af
 	call AdvanceFrame ; $50b2
 	ld hl, $4810 ; $50b5
 	ld de, $9600 ; $50b8
 	ld c, $20 ; $50bb
-	call Func_00_0480 ; $50bd
+	call QueueVRAMCopy ; $50bd
 	call AdvanceFrame ; $50c0
 	ld hl, $5010 ; $50c3
 	ld de, $8e00 ; $50c6
 	ld c, $20 ; $50c9
-	call Func_00_0480 ; $50cb
+	call QueueVRAMCopy ; $50cb
 	call AdvanceFrame ; $50ce
 	pop hl ; $50d1
 	pop de ; $50d2
@@ -326,7 +326,7 @@ Func_01_50d6:
 	ld hl, $4610 ; $50d6
 	ld de, $9400 ; $50d9
 	ld c, $20 ; $50dc
-	call Func_00_0480 ; $50de
+	call QueueVRAMCopy ; $50de
 	ret ; $50e1
 Func_01_50e2:
 	call Func_01_5050 ; $50e2
@@ -448,22 +448,22 @@ Func_01_6a5b:
 	ld a, [$ca01] ; $6a63
 	ld e, a ; $6a66
 	ld b, $00 ; $6a67
-	ldh a, [$ff9e] ; $6a69
+	ldh a, [hDebugStepMode] ; $6a69
 	push af ; $6a6b
 	ld a, $03 ; $6a6c
-	ldh [$ff9e], a ; $6a6e
+	ldh [hDebugStepMode], a ; $6a6e
 	push hl ; $6a70
 	push de ; $6a71
 	ld hl, SoundTestStrings_01 ; $6a72
 	ld de, $0d09 ; $6a75
-	call Func_00_1906 ; $6a78
+	call PrintString ; $6a78
 	pop de ; $6a7b
 	pop hl ; $6a7c
 	push hl ; $6a7d
 	push de ; $6a7e
 	ld hl, $6b6a ; $6a7f
 	ld de, $0d0b ; $6a82
-	call Func_00_1906 ; $6a85
+	call PrintString ; $6a85
 	pop de ; $6a88
 	pop hl ; $6a89
 Label_01_6a8a:
@@ -530,14 +530,14 @@ Label_01_6add:
 	push de ; $6ae2
 	ld hl, $6b71 ; $6ae3
 	ld de, $0c09 ; $6ae6
-	call Func_00_1906 ; $6ae9
+	call PrintString ; $6ae9
 	pop de ; $6aec
 	pop hl ; $6aed
 	push hl ; $6aee
 	push de ; $6aef
 	ld hl, $6b73 ; $6af0
 	ld de, $0c0b ; $6af3
-	call Func_00_1906 ; $6af6
+	call PrintString ; $6af6
 	pop de ; $6af9
 	pop hl ; $6afa
 	jr Label_01_6b17 ; $6afb
@@ -546,14 +546,14 @@ Label_01_6afd:
 	push de ; $6afe
 	ld hl, $6b71 ; $6aff
 	ld de, $0c0b ; $6b02
-	call Func_00_1906 ; $6b05
+	call PrintString ; $6b05
 	pop de ; $6b08
 	pop hl ; $6b09
 	push hl ; $6b0a
 	push de ; $6b0b
 	ld hl, $6b73 ; $6b0c
 	ld de, $0c09 ; $6b0f
-	call Func_00_1906 ; $6b12
+	call PrintString ; $6b12
 	pop de ; $6b15
 	pop hl ; $6b16
 Label_01_6b17:
@@ -587,7 +587,7 @@ Label_01_6b17:
 	sub a, l ; $6b41
 	ld h, a ; $6b42
 	ld a, [hl] ; $6b43
-	call Func_00_3024 ; $6b44
+	call PlaySoundManaged ; $6b44
 	pop hl ; $6b47
 	pop de ; $6b48
 	pop bc ; $6b49
@@ -605,7 +605,7 @@ Label_01_6b4d:
 	sub a, l ; $6b57
 	ld h, a ; $6b58
 	ld a, [hl] ; $6b59
-	call Func_00_3024 ; $6b5a
+	call PlaySoundManaged ; $6b5a
 	pop hl ; $6b5d
 	pop de ; $6b5e
 	pop bc ; $6b5f

@@ -24,7 +24,7 @@ Func_06_400e:
 	ld hl, $5280 ; $401d
 	ld de, $8640 ; $4020
 	ld c, $04 ; $4023
-	call Func_00_0480 ; $4025
+	call QueueVRAMCopy ; $4025
 	farcall FarPtr_StepMatchFrame ; $4028
 	wram_bank $02 ; $402b
 	ld b, $00 ; $4031
@@ -72,7 +72,7 @@ Func_06_4074:
 	ld hl, $5280 ; $4093
 	ld de, $8640 ; $4096
 	ld c, $04 ; $4099
-	call Func_00_0480 ; $409b
+	call QueueVRAMCopy ; $409b
 	farcall FarPtr_StepMatchFrame ; $409e
 	wram_bank $02 ; $40a1
 Label_06_40a7:
@@ -454,7 +454,7 @@ Label_06_43b9:
 	farcall FarPtr_ReadMatchInputPressed ; $43c0
 	and a, $40 ; $43c3
 	jr z, Label_06_43e3 ; $43c5
-	ldh a, [$ff9e] ; $43c7
+	ldh a, [hDebugStepMode] ; $43c7
 	and a, a ; $43c9
 	jr z, Label_06_43e3 ; $43ca
 	ldh a, [hWramBank] ; $43cc
@@ -523,7 +523,7 @@ Label_06_443a:
 	ld a, [$c4e0] ; $4449
 	cp a, $ff ; $444c
 	jr z, Label_06_4461 ; $444e
-	call Func_00_2f86 ; $4450
+	call SetMusicMuted ; $4450
 	ld a, [wGameMode] ; $4453
 	cp a, $09 ; $4456
 	jr z, Label_06_4461 ; $4458
@@ -630,7 +630,7 @@ ShowMessageWindow:
 	pop de ; $451d
 	call Func_06_4624 ; $451e
 	pop hl ; $4521
-	call Func_00_2b5c ; $4522
+	call DrawWindowFramePriority ; $4522
 	pop hl ; $4525
 	pop de ; $4526
 	pop bc ; $4527
@@ -674,7 +674,7 @@ Func_06_4564:
 	pop de ; $456b
 	call Func_06_4624 ; $456c
 	pop hl ; $456f
-	call Func_00_2b63 ; $4570
+	call DrawWindowFrameNoPriority ; $4570
 	ret ; $4573
 Func_06_4574:
 	push de ; $4574
@@ -700,7 +700,7 @@ Func_06_4584:
 	call Func_06_4624 ; $458d
 	ld hl, $1303 ; $4590
 	ld a, $01 ; $4593
-	ld [$c3b2], a ; $4595
+	ld [wWindowFrameAttr], a ; $4595
 	call DrawWindowFrame ; $4598
 	pop de ; $459b
 	ld hl, $0101 ; $459c
@@ -773,7 +773,7 @@ FlushTilemapToVram:
 	ld hl, $d000 ; $460a
 	add hl, bc ; $460d
 	ld c, $22 ; $460e
-	call Func_00_0480 ; $4610
+	call QueueVRAMCopy ; $4610
 	pop bc ; $4613
 	ld hl, $b800 ; $4614
 	add hl, bc ; $4617
@@ -782,7 +782,7 @@ FlushTilemapToVram:
 	ld hl, $d400 ; $461a
 	add hl, bc ; $461d
 	ld c, $22 ; $461e
-	call Func_00_0480 ; $4620
+	call QueueVRAMCopy ; $4620
 	ret ; $4623
 Func_06_4624:
 	call Func_06_4638 ; $4624
@@ -800,7 +800,7 @@ Func_06_462e:
 	ret ; $4637
 Func_06_4638:
 	call Func_06_464b ; $4638
-	ldh a, [$ff8b] ; $463b
+	ldh a, [hScrollX] ; $463b
 	add a, $07 ; $463d
 	rrca ; $463f
 	rrca ; $4640
@@ -814,7 +814,7 @@ Func_06_4638:
 Label_06_464a:
 	ret ; $464a
 Func_06_464b:
-	ldh a, [$ff8a] ; $464b
+	ldh a, [hScrollY] ; $464b
 	add a, $07 ; $464d
 	rrca ; $464f
 	rrca ; $4650
@@ -830,13 +830,13 @@ Func_06_464b:
 	add hl, hl ; $465c
 	ret ; $465d
 Func_06_465e:
-	ldh a, [$ff8b] ; $465e
+	ldh a, [hScrollX] ; $465e
 	cpl ; $4660
 	inc a ; $4661
 	and a, $07 ; $4662
 	add a, d ; $4664
 	ld d, a ; $4665
-	ldh a, [$ff8a] ; $4666
+	ldh a, [hScrollY] ; $4666
 	cpl ; $4668
 	inc a ; $4669
 	and a, $07 ; $466a
@@ -892,7 +892,7 @@ Label_06_471c:
 	ld a, [$c4e7] ; $4724
 	ld c, a ; $4727
 	ld a, [$c4e0] ; $4728
-	call Func_00_2c0d ; $472b
+	call MoveCursorHorizontal ; $472b
 	ld [$c4e0], a ; $472e
 	sound $5e ; $4731
 Label_06_4733:
@@ -1758,7 +1758,7 @@ Func_06_5045:
 	ld a, [hl+] ; $5050
 	ld h, [hl] ; $5051
 	ld l, a ; $5052
-	call Func_00_2b46 ; $5053
+	call CopyTextRect ; $5053
 	pop hl ; $5056
 	pop de ; $5057
 	push hl ; $5058
@@ -1773,7 +1773,7 @@ Func_06_5045:
 	ld a, [hl+] ; $5063
 	ld h, [hl] ; $5064
 	ld l, a ; $5065
-	call Func_00_2b46 ; $5066
+	call CopyTextRect ; $5066
 	ret ; $5069
 	ld a, [$c4e4] ; $506a
 	ld h, a ; $506d
@@ -1944,7 +1944,7 @@ LoadMatchMenuItemGfx:
 	ld hl, $d000 ; $5233
 	ld de, $8400 ; $5236
 	ld c, $10 ; $5239
-	call Func_00_0480 ; $523b
+	call QueueVRAMCopy ; $523b
 	pop af ; $523e
 	wram_bank ; $523f
 	ret ; $5243
@@ -3296,7 +3296,7 @@ Label_06_5ca6:
 	ld hl, $d000 ; $5cb8
 	ld de, $8500 ; $5cbb
 	ld c, $14 ; $5cbe
-	call Func_00_0480 ; $5cc0
+	call QueueVRAMCopy ; $5cc0
 	pop af ; $5cc3
 	wram_bank ; $5cc4
 	ret ; $5cc8
@@ -3550,7 +3550,7 @@ DrawMatchMenuItem:
 	call Func_06_4624 ; $6811
 	pop hl ; $6814
 	ld bc, $0302 ; $6815
-	call Func_00_2b46 ; $6818
+	call CopyTextRect ; $6818
 	pop de ; $681b
 	pop af ; $681c
 	add a, a ; $681d
@@ -3567,7 +3567,7 @@ DrawMatchMenuItem:
 	call Func_06_462e ; $682a
 	pop hl ; $682d
 	ld bc, $0302 ; $682e
-	call Func_00_2b46 ; $6831
+	call CopyTextRect ; $6831
 	ret ; $6834
 	; $6835, 386 bytes (records:2)
 ; 193 records x 2 bytes
@@ -3851,7 +3851,7 @@ Func_06_6aba:
 	ld de, $0000 ; $6ac2
 	call Func_06_4624 ; $6ac5
 	ld hl, $0f11 ; $6ac8
-	call Func_00_2b63 ; $6acb
+	call DrawWindowFrameNoPriority ; $6acb
 	ld c, $00 ; $6ace
 	ld de, $0101 ; $6ad0
 Label_06_6ad3:
@@ -3870,7 +3870,7 @@ Label_06_6ad3:
 	ld a, [hl+] ; $6ae3
 	ld h, [hl] ; $6ae4
 	ld l, a ; $6ae5
-	call Func_00_2aa6 ; $6ae6
+	call CopyTextString ; $6ae6
 	pop de ; $6ae9
 	pop bc ; $6aea
 	inc e ; $6aeb
@@ -3938,7 +3938,7 @@ Func_06_6b69:
 	push de ; $6b69
 	ld l, a ; $6b6a
 	ld h, $00 ; $6b6b
-	call Func_00_2ad3 ; $6b6d
+	call DrawHexWord ; $6b6d
 	pop de ; $6b70
 	ld hl, $0020 ; $6b71
 	add hl, de ; $6b74
@@ -3947,7 +3947,7 @@ Func_06_6b69:
 	ret ; $6b77
 Func_06_6b78:
 	push de ; $6b78
-	call Func_00_2ad3 ; $6b79
+	call DrawHexWord ; $6b79
 	pop de ; $6b7c
 	ld hl, $0020 ; $6b7d
 	add hl, de ; $6b80
@@ -4005,7 +4005,7 @@ Func_06_6bf6:
 	ld b, a ; $6bf8
 	ld c, $0b ; $6bf9
 	ld a, [$c4e0] ; $6bfb
-	call Func_00_2c04 ; $6bfe
+	call MoveCursorVertical ; $6bfe
 	ld [$c4e0], a ; $6c01
 	call Func_06_6c32 ; $6c04
 	call Func_06_6c13 ; $6c07
@@ -4088,7 +4088,7 @@ Label_06_6c9d:
 	ld b, a ; $6c9f
 	ld c, $0a ; $6ca0
 	ld a, [hl] ; $6ca2
-	call Func_00_2c0d ; $6ca3
+	call MoveCursorHorizontal ; $6ca3
 	ld [hl], a ; $6ca6
 	ret ; $6ca7
 Label_06_6ca8:
@@ -4177,7 +4177,7 @@ Label_06_6d36:
 	ld a, [$c4e7] ; $6d3e
 	ld c, a ; $6d41
 	ld a, [$c4e0] ; $6d42
-	call Func_00_2c0d ; $6d45
+	call MoveCursorHorizontal ; $6d45
 	ld [$c4e0], a ; $6d48
 	sound $5e ; $6d4b
 Label_06_6d4d:
@@ -4346,7 +4346,7 @@ Label_06_6e52:
 	ld hl, $5280 ; $6e52
 	ld de, $8640 ; $6e55
 	ld c, $04 ; $6e58
-	call Func_00_0480 ; $6e5a
+	call QueueVRAMCopy ; $6e5a
 	ld a, $00 ; $6e5d
 	ld [$c4e6], a ; $6e5f
 	call RunStoryMenu ; $6e62
@@ -4404,7 +4404,7 @@ Label_06_6eb2:
 	ld hl, $5280 ; $6eca
 	ld de, $8640 ; $6ecd
 	ld c, $04 ; $6ed0
-	call Func_00_0480 ; $6ed2
+	call QueueVRAMCopy ; $6ed2
 	jr Label_06_6f07 ; $6ed5
 Label_06_6ed7:
 	farcall FarPtr_ReadMatchInputPressed ; $6ed7
@@ -4427,7 +4427,7 @@ Label_06_6ef2:
 	ld b, a ; $6ef9
 	ld c, $04 ; $6efa
 	ld a, [$c4e0] ; $6efc
-	call Func_00_2c0d ; $6eff
+	call MoveCursorHorizontal ; $6eff
 	ld [$c4e0], a ; $6f02
 	sound $5e ; $6f05
 Label_06_6f07:
@@ -4569,7 +4569,7 @@ Label_06_7013:
 	ld a, [$c4e0] ; $701d
 	cp a, $ff ; $7020
 	jr z, Label_06_702e ; $7022
-	call Func_00_2f86 ; $7024
+	call SetMusicMuted ; $7024
 	ldh a, [hMusic] ; $7027
 	and a, $01 ; $7029
 	farcall FarPtr_SetStorySlotFlagA ; $702b
@@ -4611,7 +4611,7 @@ Label_06_702f:
 	ld a, $01 ; $7082
 	jr Label_06_70a8 ; $7084
 Label_06_7086:
-	call Func_00_2725 ; $7086
+	call WaitFramesCmd ; $7086
 	db $08 ; $7089 inline arg
 	ld a, $01 ; $708a
 	ld [$c4c7], a ; $708c
@@ -4692,7 +4692,7 @@ Label_06_7120:
 	ld b, a ; $7127
 	ld c, $02 ; $7128
 	ld a, [$c4e0] ; $712a
-	call Func_00_2c0d ; $712d
+	call MoveCursorHorizontal ; $712d
 	ld [$c4e0], a ; $7130
 	sound $5e ; $7133
 	ld a, [$c4e1] ; $7135
@@ -4784,7 +4784,7 @@ Label_06_71da:
 	ld b, a ; $71e1
 	ld c, $03 ; $71e2
 	ld a, [$c4e0] ; $71e4
-	call Func_00_2c0d ; $71e7
+	call MoveCursorHorizontal ; $71e7
 	ld [$c4e0], a ; $71ea
 	sound $5e ; $71ed
 	ld a, [$c4e1] ; $71ef
@@ -4884,7 +4884,7 @@ LoadStoryMenuItemGfx:
 	ld hl, $d000 ; $729d
 	ld de, $8700 ; $72a0
 	ld c, $10 ; $72a3
-	call Func_00_0480 ; $72a5
+	call QueueVRAMCopy ; $72a5
 	pop af ; $72a8
 	wram_bank ; $72a9
 	ret ; $72ad

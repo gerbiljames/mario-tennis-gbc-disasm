@@ -210,8 +210,8 @@ TitleScreenTiles:
 	call DisableLCDSafely ; $6a81
 	call ClearFrameTasks ; $6a84
 	xor a, a ; $6a87
-	ldh [$ff8a], a ; $6a88
-	ldh [$ff8b], a ; $6a8a
+	ldh [hScrollY], a ; $6a88
+	ldh [hScrollX], a ; $6a8a
 	ld c, $28 ; $6a8c
 	farcall FarPtr_LoadScreenAssetRecord ; $6a8e
 	farcall FarPtr_6b_16 ; $6a91
@@ -221,16 +221,16 @@ TitleScreenTiles:
 	call RegisterFrameTask ; $6a9c
 	call EnableLCD ; $6a9f
 	ld c, $10 ; $6aa2
-	call Func_00_1d2e ; $6aa4
-	call Func_00_1da4 ; $6aa7
+	call BeginFadeIn ; $6aa4
+	call WaitFadeEnd ; $6aa7
 Label_6d_6aaa:
 	call AdvanceFrame ; $6aaa
 	ldh a, [hInputPressed] ; $6aad
 	and a, $03 ; $6aaf
 	jr z, Label_6d_6aaa ; $6ab1
 	ld c, $01 ; $6ab3
-	call Func_00_1d20 ; $6ab5
-	call Func_00_1da4 ; $6ab8
+	call BeginFadeOut ; $6ab5
+	call WaitFadeEnd ; $6ab8
 	call ClearFrameTasks ; $6abb
 	ret ; $6abe
 	ld de, $4020 ; $6abf

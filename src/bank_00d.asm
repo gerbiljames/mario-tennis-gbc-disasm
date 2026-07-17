@@ -495,7 +495,7 @@ Func_0d_431b:
 	add a, $d8 ; $4341
 	ld d, a ; $4343
 	ld bc, $0202 ; $4344
-	call Func_00_2b46 ; $4347
+	call CopyTextRect ; $4347
 	pop de ; $434a
 	pop hl ; $434b
 	push de ; $434c
@@ -503,7 +503,7 @@ Func_0d_431b:
 	add a, $d0 ; $434e
 	ld d, a ; $4350
 	ld bc, $0202 ; $4351
-	call Func_00_2b46 ; $4354
+	call CopyTextRect ; $4354
 	pop de ; $4357
 	pop hl ; $4358
 	push de ; $4359
@@ -511,7 +511,7 @@ Func_0d_431b:
 	add a, $dc ; $435b
 	ld d, a ; $435d
 	ld bc, $0202 ; $435e
-	call Func_00_2b46 ; $4361
+	call CopyTextRect ; $4361
 	pop de ; $4364
 	pop hl ; $4365
 	push de ; $4366
@@ -519,7 +519,7 @@ Func_0d_431b:
 	add a, $d4 ; $4368
 	ld d, a ; $436a
 	ld bc, $0202 ; $436b
-	call Func_00_2b46 ; $436e
+	call CopyTextRect ; $436e
 	pop de ; $4371
 	ret ; $4372
 	INCBIN "data/bank_00d/d_4373.bin" ; $4373, 48 bytes
@@ -527,11 +527,11 @@ Func_0d_43a3:
 	ld hl, $d120 ; $43a3
 	ld de, $9920 ; $43a6
 	ld c, $0a ; $43a9
-	call Func_00_0480 ; $43ab
+	call QueueVRAMCopy ; $43ab
 	ld hl, $d520 ; $43ae
 	ld de, $b920 ; $43b1
 	ld c, $0a ; $43b4
-	call Func_00_0480 ; $43b6
+	call QueueVRAMCopy ; $43b6
 	ret ; $43b9
 Func_0d_43ba:
 	ld a, [wPointOutcome] ; $43ba
@@ -813,7 +813,7 @@ Func_0d_46f7:
 	xor a, a ; $4703
 	ld h, a ; $4704
 	ld e, $0a ; $4705
-	call Func_00_0fbc ; $4707
+	call DivAHLByE ; $4707
 	ld b, l ; $470a
 Label_0d_470b:
 	ld a, b ; $470b
@@ -1034,7 +1034,7 @@ Label_0d_485c:
 	ld a, [hl] ; $48a4
 	ld [$df4a], a ; $48a5
 	ld hl, $073c ; $48a8
-	call Func_00_07c5 ; $48ab
+	call FarCallVector ; $48ab
 	sound $76 ; $48ae
 	pop af ; $48b0
 	wram_bank ; $48b1
@@ -1092,7 +1092,7 @@ Label_0d_490c:
 	and a, a ; $491e
 	jr nz, Label_0d_4925 ; $491f
 	ld a, b ; $4921
-	call Func_00_3024 ; $4922
+	call PlaySoundManaged ; $4922
 Label_0d_4925:
 	ret ; $4925
 Func_0d_4926:
@@ -1912,19 +1912,19 @@ Func_0d_50fa:
 	pop hl ; $5111
 	ld de, $d92b ; $5112
 	ld bc, $0a05 ; $5115
-	call Func_00_2b46 ; $5118
+	call CopyTextRect ; $5118
 	pop hl ; $511b
 	ld de, $d12b ; $511c
 	ld bc, $0a05 ; $511f
-	call Func_00_2b46 ; $5122
+	call CopyTextRect ; $5122
 	pop hl ; $5125
 	ld de, $dd2b ; $5126
 	ld bc, $0a05 ; $5129
-	call Func_00_2b46 ; $512c
+	call CopyTextRect ; $512c
 	pop hl ; $512f
 	ld de, $d52b ; $5130
 	ld bc, $0a05 ; $5133
-	call Func_00_2b46 ; $5136
+	call CopyTextRect ; $5136
 	ret ; $5139
 	INCBIN "data/bank_00d/d_513a.bin" ; $513a, 14 bytes
 Func_0d_5148:
@@ -2163,7 +2163,7 @@ Label_0d_5310:
 	sub a, e ; $531d
 	ld d, a ; $531e
 	ld a, [de] ; $531f
-	call Func_00_3024 ; $5320
+	call PlaySoundManaged ; $5320
 	ld a, [$c789] ; $5323
 	add a, $57 ; $5326
 	ld e, a ; $5328
@@ -2193,8 +2193,8 @@ Func_0d_535f:
 	ld c, $30 ; $5362
 	ld h, $fc ; $5364
 	ld l, $f1 ; $5366
-	call Func_00_2c2b ; $5368
-	ldh a, [$ff8c] ; $536b
+	call QueueSprite24x32 ; $5368
+	ldh a, [hVBlankCounter] ; $536b
 	and a, $1f ; $536d
 	add a, $7e ; $536f
 	ld l, a ; $5371
@@ -2616,8 +2616,8 @@ Func_0d_57fd:
 	ld c, $30 ; $5800
 	ld h, $fc ; $5802
 	ld l, $f1 ; $5804
-	call Func_00_2c2b ; $5806
-	ldh a, [$ff8c] ; $5809
+	call QueueSprite24x32 ; $5806
+	ldh a, [hVBlankCounter] ; $5809
 	and a, $1f ; $580b
 	add a, $1c ; $580d
 	ld l, a ; $580f

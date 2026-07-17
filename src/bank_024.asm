@@ -169,7 +169,7 @@ Func_24_4090:
 Label_24_40bf:
 	add hl, hl ; $40bf
 	ld a, b ; $40c0
-	call Func_00_0bd4 ; $40c1
+	call MulHLByAFrac ; $40c1
 	add hl, hl ; $40c4
 	add hl, hl ; $40c5
 	add hl, bc ; $40c6
@@ -689,7 +689,7 @@ Label_24_66b0:
 	sra b ; $66c1
 	rr c ; $66c3
 	add hl, bc ; $66c5
-	call Func_00_1416 ; $66c6
+	call AngleFromVector16 ; $66c6
 	ld a, [$df6c] ; $66c9
 	add a, a ; $66cc
 	add a, $f2 ; $66cd

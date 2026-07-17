@@ -332,7 +332,7 @@ Label_04_4247:
 	ld a, [$daf7] ; $4248
 	ld l, e ; $424b
 	ld h, d ; $424c
-	call Func_00_0628 ; $424d
+	call FarReadByte ; $424d
 	ld hl, $4260 ; $4250
 	push hl ; $4253
 	add a, a ; $4254
@@ -450,7 +450,7 @@ Func_04_42ae:
 	pop de ; $42e4
 	push de ; $42e5
 	push hl ; $42e6
-	call Func_00_0a54 ; $42e7
+	call AngleFromVectorCoarse ; $42e7
 	add a, $80 ; $42ea
 	push af ; $42ec
 	ld hl, $0014 ; $42ed
@@ -496,7 +496,7 @@ Label_04_4318:
 	ld h, [hl] ; $4321
 	ld l, a ; $4322
 	ld a, e ; $4323
-	call Func_00_0af8 ; $4324
+	call VectorFromLengthAndAngleRaw ; $4324
 	push hl ; $4327
 	ld hl, $ffea ; $4328
 	ld a, [hl+] ; $432b
@@ -709,7 +709,7 @@ Label_04_442d:
 Label_04_443c:
 	ld a, l ; $443c
 	and a, $e0 ; $443d
-	ld [$c320], a ; $443f
+	ld [wCameraX], a ; $443f
 	ld a, h ; $4442
 	ld [$c321], a ; $4443
 	ld hl, $000e ; $4446
@@ -741,7 +741,7 @@ Label_04_4460:
 Label_04_446f:
 	ld a, l ; $446f
 	and a, $e0 ; $4470
-	ld [$c322], a ; $4472
+	ld [wCameraY], a ; $4472
 	ld a, h ; $4475
 	ld [$c323], a ; $4476
 	pop hl ; $4479
@@ -754,7 +754,7 @@ Label_04_446f:
 	ld l, e ; $44ab
 	ld h, d ; $44ac
 	ld a, [$daf7] ; $44ad
-	call Func_00_063d ; $44b0
+	call FarReadWord ; $44b0
 	push bc ; $44b3
 	ld hl, $ffea ; $44b4
 	ld a, [hl+] ; $44b7
@@ -762,7 +762,7 @@ Label_04_446f:
 	ld c, a ; $44b9
 	pop hl ; $44ba
 	ld a, [$daf7] ; $44bb
-	call Func_00_015e ; $44be
+	call CallHLInBankA ; $44be
 	pop de ; $44c1
 	and a, a ; $44c2
 	jr z, Label_04_44cd ; $44c3
@@ -780,7 +780,7 @@ Label_04_44cd:
 	ld a, [$daf7] ; $44d1
 	ld l, e ; $44d4
 	ld h, d ; $44d5
-	call Func_00_063d ; $44d6
+	call FarReadWord ; $44d6
 	add hl, bc ; $44d9
 	ld e, l ; $44da
 	ld d, h ; $44db
@@ -790,7 +790,7 @@ Label_04_44cd:
 	ld a, [$daf7] ; $44e0
 	ld l, e ; $44e3
 	ld h, d ; $44e4
-	call Func_00_0628 ; $44e5
+	call FarReadByte ; $44e5
 	inc de ; $44e8
 	jr Label_04_4500 ; $44e9
 	INCBIN "data/bank_004/d_44eb.bin" ; $44eb, 21 bytes
@@ -799,7 +799,7 @@ Label_04_4500:
 	ld a, [$daf7] ; $4501
 	ld l, e ; $4504
 	ld h, d ; $4505
-	call Func_00_063d ; $4506
+	call FarReadWord ; $4506
 	pop af ; $4509
 	ld e, l ; $450a
 	ld d, h ; $450b
@@ -808,7 +808,7 @@ Label_04_4500:
 	push de ; $450e
 	ld l, c ; $450f
 	ld h, b ; $4510
-	call Func_00_0ac5 ; $4511
+	call VectorFromLengthAndAngle ; $4511
 	push hl ; $4514
 	ld hl, $ffea ; $4515
 	ld a, [hl+] ; $4518
@@ -871,7 +871,7 @@ Label_04_4500:
 	pop hl ; $4587
 	ld a, [$daf7] ; $4588
 	ld bc, $0004 ; $458b
-	call Func_00_067a ; $458e
+	call FarCopyBytes ; $458e
 	ld e, l ; $4591
 	ld d, h ; $4592
 	ld hl, $ffea ; $4593
@@ -886,7 +886,7 @@ Label_04_4500:
 	ld a, [$daf7] ; $45a1
 	ld l, e ; $45a4
 	ld h, d ; $45a5
-	call Func_00_063d ; $45a6
+	call FarReadWord ; $45a6
 	ld e, l ; $45a9
 	ld d, h ; $45aa
 	inc de ; $45ab
@@ -913,7 +913,7 @@ Label_04_4500:
 	ld a, [$daf7] ; $45c6
 	ld l, e ; $45c9
 	ld h, d ; $45ca
-	call Func_00_063d ; $45cb
+	call FarReadWord ; $45cb
 	ld e, l ; $45ce
 	ld d, h ; $45cf
 	inc de ; $45d0
@@ -964,7 +964,7 @@ Label_04_4608:
 	ld a, [$daf7] ; $460d
 	ld l, e ; $4610
 	ld h, d ; $4611
-	call Func_00_0628 ; $4612
+	call FarReadByte ; $4612
 	dec a ; $4615
 	ld b, a ; $4616
 	ld hl, $ffea ; $4617
@@ -1151,7 +1151,7 @@ Label_04_4710:
 	pop af ; $4718
 	add a, $80 ; $4719
 	ld hl, $0200 ; $471b
-	call Func_00_0ac5 ; $471e
+	call VectorFromLengthAndAngle ; $471e
 	pop bc ; $4721
 	add hl, bc ; $4722
 	ld c, l ; $4723
@@ -1229,13 +1229,13 @@ Label_04_477b:
 	ld l, e ; $4780
 	ld h, d ; $4781
 	ld a, [$daf7] ; $4782
-	call Func_00_0628 ; $4785
+	call FarReadByte ; $4785
 	inc de ; $4788
 	push af ; $4789
 	ld a, [$daf7] ; $478a
 	ld l, e ; $478d
 	ld h, d ; $478e
-	call Func_00_063d ; $478f
+	call FarReadWord ; $478f
 	inc de ; $4792
 	inc de ; $4793
 	pop af ; $4794
@@ -1271,11 +1271,11 @@ Label_04_47b7:
 	ld l, e ; $47bb
 	ld h, d ; $47bc
 	ld a, [$daf7] ; $47bd
-	call Func_00_0628 ; $47c0
+	call FarReadByte ; $47c0
 	inc de ; $47c3
 	push af ; $47c4
 	ld a, [$daf7] ; $47c5
-	call Func_00_063d ; $47c8
+	call FarReadWord ; $47c8
 	inc de ; $47cb
 	inc de ; $47cc
 	pop af ; $47cd
@@ -1322,7 +1322,7 @@ Label_04_47fa:
 	ld a, [$daf7] ; $4825
 	ld l, e ; $4828
 	ld h, d ; $4829
-	call Func_00_0628 ; $482a
+	call FarReadByte ; $482a
 	inc de ; $482d
 	push de ; $482e
 	ld d, a ; $482f
@@ -1338,10 +1338,10 @@ Label_04_47fa:
 	ld a, [$daf7] ; $483e
 	ld l, e ; $4841
 	ld h, d ; $4842
-	call Func_00_0628 ; $4843
+	call FarReadByte ; $4843
 	inc de ; $4846
 	ld b, a ; $4847
-	call Func_00_3024 ; $4848
+	call PlaySoundManaged ; $4848
 	ld a, $01 ; $484b
 	ret ; $484d
 	ld hl, $ffea ; $484e
@@ -1393,7 +1393,7 @@ Label_04_47fa:
 	ld a, [$daf7] ; $4894
 	ld l, e ; $4897
 	ld h, d ; $4898
-	call Func_00_063d ; $4899
+	call FarReadWord ; $4899
 	ld a, c ; $489c
 	ld [$daf5], a ; $489d
 	ld a, b ; $48a0
@@ -1535,16 +1535,16 @@ Label_04_4979:
 	ld a, [$daf7] ; $497d
 	ld l, e ; $4980
 	ld h, d ; $4981
-	call Func_00_063d ; $4982
+	call FarReadWord ; $4982
 	push bc ; $4985
 	inc hl ; $4986
 	inc hl ; $4987
 	ld a, [$daf7] ; $4988
-	call Func_00_063d ; $498b
+	call FarReadWord ; $498b
 	push bc ; $498e
 	inc hl ; $498f
 	inc hl ; $4990
-	call Func_00_0628 ; $4991
+	call FarReadByte ; $4991
 	push af ; $4994
 	push hl ; $4995
 	ld hl, $ffea ; $4996
@@ -1564,11 +1564,11 @@ Label_04_4979:
 	ld h, [hl] ; $49aa
 	ld l, a ; $49ab
 	pop de ; $49ac
-	call Func_00_0a54 ; $49ad
+	call AngleFromVectorCoarse ; $49ad
 	pop hl ; $49b0
 	ld l, h ; $49b1
 	ld h, $00 ; $49b2
-	call Func_00_0af8 ; $49b4
+	call VectorFromLengthAndAngleRaw ; $49b4
 	pop bc ; $49b7
 	add hl, bc ; $49b8
 	ld c, l ; $49b9
@@ -1604,19 +1604,19 @@ Label_04_4979:
 	ld a, [$daf7] ; $49e0
 	ld l, e ; $49e3
 	ld h, d ; $49e4
-	call Func_00_0628 ; $49e5
+	call FarReadByte ; $49e5
 	inc de ; $49e8
 	push af ; $49e9
 	ld l, e ; $49ea
 	ld h, d ; $49eb
 	ld a, [$daf7] ; $49ec
-	call Func_00_0628 ; $49ef
+	call FarReadByte ; $49ef
 	inc de ; $49f2
 	push af ; $49f3
 	ld a, [$daf7] ; $49f4
 	ld l, e ; $49f7
 	ld h, d ; $49f8
-	call Func_00_0628 ; $49f9
+	call FarReadByte ; $49f9
 	inc de ; $49fc
 	add a, $1f ; $49fd
 	ld l, a ; $49ff
@@ -1647,7 +1647,7 @@ Label_04_4a1a:
 	ret ; $4a1e
 	INCBIN "data/bank_004/d_4a1f.bin" ; $4a1f, 8 bytes
 ComputeSpriteScrollOffset:
-	ld hl, $c320 ; $4a27
+	ld hl, wCameraX ; $4a27
 	ld a, [hl+] ; $4a2a
 	ld d, [hl] ; $4a2b
 	ld e, a ; $4a2c
@@ -1676,7 +1676,7 @@ Label_04_4a39:
 	ld a, c ; $4a4a
 	ld [hl+], a ; $4a4b
 	ld [hl], b ; $4a4c
-	ld hl, $c322 ; $4a4d
+	ld hl, wCameraY ; $4a4d
 	ld a, [hl+] ; $4a50
 	ld d, [hl] ; $4a51
 	ld e, a ; $4a52
@@ -1832,10 +1832,10 @@ LoadActorObjectDef:
 	ld a, [de] ; $4b3d
 	ld de, $dad0 ; $4b3e
 	ld bc, $0008 ; $4b41
-	call Func_00_067a ; $4b44
+	call FarCopyBytes ; $4b44
 	ld hl, $dad0 ; $4b47
 	ld de, $0a01 ; $4b4a
-	call Func_00_05e1 ; $4b4d
+	call LoadPalettesMasterOnly ; $4b4d
 	pop bc ; $4b50
 Label_04_4b51:
 	ld hl, $0020 ; $4b51
@@ -1934,7 +1934,7 @@ Label_04_4bec:
 	add hl, bc ; $4bf0
 	ld a, [hl] ; $4bf1
 	pop hl ; $4bf2
-	call Func_00_063d ; $4bf3
+	call FarReadWord ; $4bf3
 	ld e, c ; $4bf6
 	ld d, b ; $4bf7
 	pop bc ; $4bf8
@@ -2136,7 +2136,7 @@ Label_04_4d06:
 	push af ; $4d06
 	ld de, $dac0 ; $4d07
 	ld bc, $000e ; $4d0a
-	call Func_00_067a ; $4d0d
+	call FarCopyBytes ; $4d0d
 	ld a, [$dac9] ; $4d10
 	inc a ; $4d13
 	jr z, Label_04_4d21 ; $4d14
@@ -2360,7 +2360,7 @@ Label_04_50ea:
 	pop de ; $5111
 	ret ; $5112
 Func_04_5113:
-	call Func_00_0ac5 ; $5113
+	call VectorFromLengthAndAngle ; $5113
 	push hl ; $5116
 	ld hl, $000e ; $5117
 	add hl, bc ; $511a
@@ -2387,7 +2387,7 @@ Func_04_512f:
 	push hl ; $5130
 	ld l, c ; $5131
 	ld h, b ; $5132
-	call Func_00_0ac5 ; $5133
+	call VectorFromLengthAndAngle ; $5133
 	pop bc ; $5136
 	add hl, bc ; $5137
 	ld c, l ; $5138
@@ -2434,7 +2434,7 @@ Label_04_5168:
 	ld a, [hl+] ; $5177
 	ld b, [hl] ; $5178
 	ld c, a ; $5179
-	ldh a, [$ff94] ; $517a
+	ldh a, [hInputRisingEdge] ; $517a
 	bit 0, a ; $517c
 	jr z, Label_04_5192 ; $517e
 	ld hl, $c2a4 ; $5180
@@ -2447,7 +2447,7 @@ Label_04_5168:
 	ld h, [hl] ; $518e
 	call Func_04_5141 ; $518f
 Label_04_5192:
-	ldh a, [$ff94] ; $5192
+	ldh a, [hInputRisingEdge] ; $5192
 	bit 3, a ; $5194
 	jr z, Label_04_519d ; $5196
 	ld hl, $c2a5 ; $5198
@@ -3199,7 +3199,7 @@ Label_04_55d1:
 	ld h, [hl] ; $55dd
 	ld l, a ; $55de
 	ld a, d ; $55df
-	call Func_00_063d ; $55e0
+	call FarReadWord ; $55e0
 	ld e, c ; $55e3
 	ld d, b ; $55e4
 	pop bc ; $55e5
@@ -3368,7 +3368,7 @@ Func_04_56c3:
 	inc h ; $56de
 Label_04_56df:
 	ld a, [$daf7] ; $56df
-	call Func_00_063d ; $56e2
+	call FarReadWord ; $56e2
 	ld l, c ; $56e5
 	ld h, b ; $56e6
 	ld a, d ; $56e7
@@ -3389,7 +3389,7 @@ Label_04_56ed:
 	ld a, [$daf7] ; $56f8
 	ld b, a ; $56fb
 	ld c, $04 ; $56fc
-	call Func_00_046d ; $56fe
+	call QueueVRAMCopyFromBank ; $56fe
 	pop bc ; $5701
 	ret ; $5702
 Func_04_5703:

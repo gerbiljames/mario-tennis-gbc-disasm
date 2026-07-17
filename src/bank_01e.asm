@@ -34,8 +34,8 @@ Label_1e_402a:
 	jp Label_1e_5438 ; $402e
 Label_1e_4031:
 	ld c, $10 ; $4031
-	call Func_00_1d20 ; $4033
-	call Func_00_1da4 ; $4036
+	call BeginFadeOut ; $4033
+	call WaitFadeEnd ; $4036
 	sound $03 ; $4039
 	push bc ; $403b
 	farcall FarPtr_05_00 ; $403c
@@ -45,15 +45,15 @@ Label_1e_4031:
 	call ClearFrameTasks ; $4047
 	call DisableLCDSafely ; $404a
 	xor a, a ; $404d
-	ldh [$ff8b], a ; $404e
-	ldh [$ff8a], a ; $4050
-	ld [$c320], a ; $4052
+	ldh [hScrollX], a ; $404e
+	ldh [hScrollY], a ; $4050
+	ld [wCameraX], a ; $4052
 	ld [$c321], a ; $4055
-	ld [$c322], a ; $4058
+	ld [wCameraY], a ; $4058
 	ld [$c323], a ; $405b
 	ld a, $90 ; $405e
 	ldh [rWY], a ; $4060
-	call Func_00_1e1d ; $4062
+	call ClearSpriteQueue ; $4062
 	farcall FarPtr_InitActorEngine ; $4065
 	pop bc ; $4068
 	call Func_1e_40ac ; $4069
@@ -65,12 +65,12 @@ Label_1e_4031:
 	ld hl, $4a76 ; $407a
 	call RegisterFrameTask ; $407d
 	ld c, $10 ; $4080
-	call Func_00_1d2e ; $4082
-	call Func_00_1da4 ; $4085
+	call BeginFadeIn ; $4082
+	call WaitFadeEnd ; $4085
 	call Func_1e_4b2c ; $4088
 	ld c, $10 ; $408b
-	call Func_00_1d20 ; $408d
-	call Func_00_1da4 ; $4090
+	call BeginFadeOut ; $408d
+	call WaitFadeEnd ; $4090
 	ld hl, $4a76 ; $4093
 	call UnregisterFrameTask ; $4096
 	farcall FarPtr_01_0a ; $4099
@@ -105,12 +105,12 @@ Func_1e_40be:
 	ld hl, $d000 ; $40e5
 	ld de, $9800 ; $40e8
 	ld c, $24 ; $40eb
-	call Func_00_0480 ; $40ed
+	call QueueVRAMCopy ; $40ed
 	wram_bank $02 ; $40f0
 	ld hl, $d000 ; $40f6
 	ld de, $b800 ; $40f9
 	ld c, $24 ; $40fc
-	call Func_00_0480 ; $40fe
+	call QueueVRAMCopy ; $40fe
 	farcall FarPtr_05_90 ; $4101
 	ret ; $4104
 LoadResultsScreenGraphics:
@@ -127,11 +127,11 @@ LoadResultsScreenGraphics:
 	ld hl, $d000 ; $4126
 	ld de, $b000 ; $4129
 	ld c, $80 ; $412c
-	call Func_00_0480 ; $412e
+	call QueueVRAMCopy ; $412e
 	ld hl, $d800 ; $4131
 	ld de, $a800 ; $4134
 	ld c, $80 ; $4137
-	call Func_00_0480 ; $4139
+	call QueueVRAMCopy ; $4139
 	wram_bank $01 ; $413c
 	ld hl, Lz_1e_521f ; $4142
 	ld de, $d000 ; $4145
@@ -153,7 +153,7 @@ LoadResultsScreenGraphics:
 	ld hl, $d000 ; $417b
 	ld de, $9000 ; $417e
 	ld c, $10 ; $4181
-	call Func_00_0480 ; $4183
+	call QueueVRAMCopy ; $4183
 	ret ; $4186
 Func_1e_4187:
 	wram_bank $01 ; $4187
@@ -1302,7 +1302,7 @@ Label_1e_4af9:
 Func_1e_4b2c:
 	call Func_1e_4b46 ; $4b2c
 	call AdvanceFrame ; $4b2f
-	ldh a, [$ff94] ; $4b32
+	ldh a, [hInputRisingEdge] ; $4b32
 	bit 6, a ; $4b34
 	jr nz, Label_1e_4b61 ; $4b36
 	bit 7, a ; $4b38
@@ -1388,7 +1388,7 @@ Func_1e_4bca:
 	ld hl, $d000 ; $4bdd
 	ld de, $9800 ; $4be0
 	ld c, $08 ; $4be3
-	call Func_00_0480 ; $4be5
+	call QueueVRAMCopy ; $4be5
 	wram_bank $06 ; $4be8
 	ret ; $4bee
 Label_1e_4bef:
@@ -1402,7 +1402,7 @@ Label_1e_4bef:
 	ld hl, $d000 ; $4c03
 	ld de, $9800 ; $4c06
 	ld c, $08 ; $4c09
-	call Func_00_0480 ; $4c0b
+	call QueueVRAMCopy ; $4c0b
 	wram_bank $06 ; $4c0e
 	ret ; $4c14
 Func_1e_4c15:
@@ -1459,15 +1459,15 @@ Label_1e_5438:
 	call ClearFrameTasks ; $544b
 	call DisableLCDSafely ; $544e
 	xor a, a ; $5451
-	ldh [$ff8b], a ; $5452
-	ldh [$ff8a], a ; $5454
-	ld [$c320], a ; $5456
+	ldh [hScrollX], a ; $5452
+	ldh [hScrollY], a ; $5454
+	ld [wCameraX], a ; $5456
 	ld [$c321], a ; $5459
-	ld [$c322], a ; $545c
+	ld [wCameraY], a ; $545c
 	ld [$c323], a ; $545f
 	ld a, $90 ; $5462
 	ldh [rWY], a ; $5464
-	call Func_00_1e1d ; $5466
+	call ClearSpriteQueue ; $5466
 	farcall FarPtr_InitActorEngine ; $5469
 	call Func_1e_54bb ; $546c
 	call Func_1e_54f5 ; $546f
@@ -1481,14 +1481,14 @@ Label_1e_5438:
 	ld hl, $5a4e ; $5485
 	call RegisterFrameTask ; $5488
 	ld c, $10 ; $548b
-	call Func_00_1d2e ; $548d
-	call Func_00_1da4 ; $5490
-	call Func_00_2725 ; $5493
+	call BeginFadeIn ; $548d
+	call WaitFadeEnd ; $5490
+	call WaitFramesCmd ; $5493
 	db $14 ; $5496 inline arg
 	call Func_1e_5b03 ; $5497
 	ld c, $10 ; $549a
-	call Func_00_1d20 ; $549c
-	call Func_00_1da4 ; $549f
+	call BeginFadeOut ; $549c
+	call WaitFadeEnd ; $549f
 	ld hl, $5914 ; $54a2
 	call UnregisterFrameTask ; $54a5
 	ld hl, $5a4e ; $54a8
@@ -1536,12 +1536,12 @@ Func_1e_54f5:
 	ld hl, $d000 ; $5501
 	ld de, $9800 ; $5504
 	ld c, $24 ; $5507
-	call Func_00_0480 ; $5509
+	call QueueVRAMCopy ; $5509
 	wram_bank $02 ; $550c
 	ld hl, $d000 ; $5512
 	ld de, $b800 ; $5515
 	ld c, $24 ; $5518
-	call Func_00_0480 ; $551a
+	call QueueVRAMCopy ; $551a
 	ret ; $551d
 Func_1e_551e:
 	ld hl, Palettes_1e_5be1 ; $551e
@@ -1554,11 +1554,11 @@ Func_1e_551e:
 	ld hl, $d000 ; $5536
 	ld de, $b000 ; $5539
 	ld c, $80 ; $553c
-	call Func_00_0480 ; $553e
+	call QueueVRAMCopy ; $553e
 	ld hl, $d800 ; $5541
 	ld de, $a800 ; $5544
 	ld c, $80 ; $5547
-	call Func_00_0480 ; $5549
+	call QueueVRAMCopy ; $5549
 	wram_bank $01 ; $554c
 	ld hl, Lz_1e_62ca ; $5552
 	ld de, $d000 ; $5555
@@ -1580,7 +1580,7 @@ Func_1e_551e:
 	ld hl, $d000 ; $558b
 	ld de, $9000 ; $558e
 	ld c, $10 ; $5591
-	call Func_00_0480 ; $5593
+	call QueueVRAMCopy ; $5593
 	ld hl, Palettes_1e_6495 ; $5596
 	ld de, $0801 ; $5599
 	call LoadPaletteShadow ; $559c
@@ -1591,7 +1591,7 @@ Func_1e_551e:
 	ld hl, $d000 ; $55ae
 	ld de, $a6c0 ; $55b1
 	ld c, $14 ; $55b4
-	call Func_00_0480 ; $55b6
+	call QueueVRAMCopy ; $55b6
 	ret ; $55b9
 Func_1e_55ba:
 	wram_bank $01 ; $55ba
@@ -2215,16 +2215,16 @@ Func_1e_5b19:
 	ld hl, $d000 ; $5b41
 	ld de, $9800 ; $5b44
 	ld c, $08 ; $5b47
-	call Func_00_0480 ; $5b49
+	call QueueVRAMCopy ; $5b49
 	wram_bank $02 ; $5b4c
 	ld hl, $d000 ; $5b52
 	ld de, $b800 ; $5b55
 	ld c, $08 ; $5b58
-	call Func_00_0480 ; $5b5a
+	call QueueVRAMCopy ; $5b5a
 	ld a, $01 ; $5b5d
 	ret ; $5b5f
 Label_1e_5b60:
-	call Func_00_2725 ; $5b60
+	call WaitFramesCmd ; $5b60
 	db $0a ; $5b63 inline arg
 	xor a, a ; $5b64
 	ret ; $5b65
@@ -2238,11 +2238,11 @@ Func_1e_5b66:
 	or a, e ; $5b73
 	ret z ; $5b74
 	call AdvanceFrame ; $5b75
-	ldh a, [$ff94] ; $5b78
+	ldh a, [hInputRisingEdge] ; $5b78
 	and a, $03 ; $5b7a
 	jr nz, Label_1e_5b9b ; $5b7c
 	call AdvanceFrame ; $5b7e
-	ldh a, [$ff94] ; $5b81
+	ldh a, [hInputRisingEdge] ; $5b81
 	and a, $03 ; $5b83
 	jr nz, Label_1e_5b9b ; $5b85
 	dec hl ; $5b87
@@ -2279,7 +2279,7 @@ Func_1e_5bad:
 	ld c, $b4 ; $5bad
 Label_1e_5baf:
 	call AdvanceFrame ; $5baf
-	ldh a, [$ff94] ; $5bb2
+	ldh a, [hInputRisingEdge] ; $5bb2
 	and a, $03 ; $5bb4
 	ret nz ; $5bb6
 	dec c ; $5bb7
@@ -2386,13 +2386,13 @@ Label_1e_6584:
 	jr nz, Label_1e_659d ; $6599
 	add a, $0f ; $659b
 Label_1e_659d:
-	call Func_00_0bb6 ; $659d
+	call MulHLByAFracSigned ; $659d
 	ld e, a ; $65a0
 	ld a, h ; $65a1
 	ld h, l ; $65a2
 	ld l, e ; $65a3
 	ld e, $64 ; $65a4
-	call Func_00_0fbc ; $65a6
+	call DivAHLByE ; $65a6
 	pop de ; $65a9
 	add hl, de ; $65aa
 	ld a, [$ca3c] ; $65ab
@@ -2876,7 +2876,7 @@ Func_1e_693e:
 	xor a, a ; $694a
 	ld h, a ; $694b
 	ld e, $0a ; $694c
-	call Func_00_0fbc ; $694e
+	call DivAHLByE ; $694e
 	ld a, l ; $6951
 	add a, $5b ; $6952
 	ld l, a ; $6954
@@ -4302,10 +4302,10 @@ Label_1e_7270:
 Func_1e_727d:
 	sound $04 ; $727d
 	call ClearFrameTasks ; $727f
-	call Func_00_1e1d ; $7282
+	call ClearSpriteQueue ; $7282
 	xor a, a ; $7285
-	ldh [$ff8b], a ; $7286
-	ldh [$ff8a], a ; $7288
+	ldh [hScrollX], a ; $7286
+	ldh [hScrollY], a ; $7288
 	farcall FarPtr_05_76 ; $728a
 	ld de, $d000 ; $728d
 	ld hl, $c3b4 ; $7290
@@ -4330,8 +4330,8 @@ Func_1e_72af:
 	push af ; $72b1
 	wram_bank $05 ; $72b2
 	ld c, $10 ; $72b8
-	call Func_00_1d20 ; $72ba
-	call Func_00_1da4 ; $72bd
+	call BeginFadeOut ; $72ba
+	call WaitFadeEnd ; $72bd
 	call DisableLCDSafely ; $72c0
 	call Func_1e_727d ; $72c3
 	call Func_1e_74fa ; $72c6
@@ -4396,8 +4396,8 @@ Label_1e_730a:
 	ld hl, $7a8d ; $7345
 	call RegisterFrameTask ; $7348
 	ld c, $10 ; $734b
-	call Func_00_1d2e ; $734d
-	call Func_00_1da4 ; $7350
+	call BeginFadeIn ; $734d
+	call WaitFadeEnd ; $7350
 Label_1e_7353:
 	call AdvanceFrame ; $7353
 	wram_bank $05 ; $7356
@@ -4692,14 +4692,14 @@ Func_1e_7504:
 	ld hl, $d000 ; $7516
 	ld de, $b000 ; $7519
 	ld c, $20 ; $751c
-	call Func_00_0480 ; $751e
+	call QueueVRAMCopy ; $751e
 	ld hl, Lz_1e_7692 ; $7521
 	ld de, $d000 ; $7524
 	call DecompressData ; $7527
 	ld hl, $d000 ; $752a
 	ld de, $9800 ; $752d
 	ld c, $06 ; $7530
-	call Func_00_0480 ; $7532
+	call QueueVRAMCopy ; $7532
 	ld hl, Lz_1e_76e2 ; $7535
 	ld de, $d000 ; $7538
 	call DecompressData ; $753b
@@ -4724,7 +4724,7 @@ Label_1e_7545:
 	ld hl, $d000 ; $7558
 	ld de, $b800 ; $755b
 	ld c, $06 ; $755e
-	call Func_00_0480 ; $7560
+	call QueueVRAMCopy ; $7560
 	ld hl, Palettes_1e_7700 ; $7563
 	ld d, $00 ; $7566
 	ld e, $02 ; $7568
@@ -4734,15 +4734,15 @@ Label_1e_7545:
 	ld hl, $7710 ; $7572
 	ld de, $a000 ; $7575
 	ld c, $10 ; $7578
-	call Func_00_0480 ; $757a
+	call QueueVRAMCopy ; $757a
 	ld hl, $7960 ; $757d
 	ld de, $a100 ; $7580
 	ld c, $04 ; $7583
-	call Func_00_0480 ; $7585
+	call QueueVRAMCopy ; $7585
 	ld hl, $7820 ; $7588
 	ld de, $a200 ; $758b
 	ld c, $14 ; $758e
-	call Func_00_0480 ; $7590
+	call QueueVRAMCopy ; $7590
 	ld hl, Palettes_1e_7810 ; $7593
 	ld de, $0a01 ; $7596
 	call LoadPaletteShadow ; $7599
@@ -4913,7 +4913,7 @@ Label_1e_7a24:
 	ld hl, $d060 ; $7a30
 	ld de, $9860 ; $7a33
 	ld c, $1e ; $7a36
-	call Func_00_0480 ; $7a38
+	call QueueVRAMCopy ; $7a38
 	ret ; $7a3b
 Func_1e_7a3c:
 	push af ; $7a3c
@@ -4926,12 +4926,12 @@ Func_1e_7a3c:
 	add a, a ; $7a44
 	add a, a ; $7a45
 	add a, a ; $7a46
-	ld hl, $ff8a ; $7a47
+	ld hl, hScrollY ; $7a47
 	sub a, [hl] ; $7a4a
 	add a, $03 ; $7a4b
 	ld e, a ; $7a4d
 	ld d, $8c ; $7a4e
-	ldh a, [$ff8c] ; $7a50
+	ldh a, [hVBlankCounter] ; $7a50
 	rrca ; $7a52
 	rrca ; $7a53
 	rrca ; $7a54
@@ -4959,7 +4959,7 @@ Func_1e_7a68:
 	add a, a ; $7a70
 	add a, a ; $7a71
 	add a, a ; $7a72
-	ld hl, $ff8a ; $7a73
+	ld hl, hScrollY ; $7a73
 	sub a, [hl] ; $7a76
 	add a, $03 ; $7a77
 	ld e, a ; $7a79

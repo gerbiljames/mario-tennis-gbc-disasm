@@ -54,7 +54,7 @@ Label_36_7eef:
 Label_36_7efc:
 	xor a, a ; $7efc
 	ld [de], a ; $7efd
-	ldh a, [$ff9e] ; $7efe
+	ldh a, [hDebugStepMode] ; $7efe
 	or a, a ; $7f00
 	jr z, Label_36_7f05 ; $7f01
 	sound $2c ; $7f03

@@ -122,7 +122,7 @@ Label_0f_4115:
 	ld hl, $41b7 ; $41b0
 	call RegisterFrameTask ; $41b3
 	ret ; $41b6
-	ldh a, [$ff94] ; $41b7
+	ldh a, [hInputRisingEdge] ; $41b7
 	and a, $f0 ; $41b9
 	jr z, Label_0f_41c4 ; $41bb
 	ld a, $00 ; $41bd
@@ -137,7 +137,7 @@ Func_0f_41c5:
 	ld [hl], $00 ; $41cf
 	ld bc, $d000 ; $41d1
 	farcall FarPtr_04_2c ; $41d4
-	call Func_00_05f4 ; $41d7
+	call RestorePalettesFromMaster ; $41d7
 	ret ; $41da
 	; $41db, 14 bytes (records:2)
 ; 7 records x 2 bytes
@@ -1225,8 +1225,8 @@ Label_0f_4700:
 	ld a, $b4 ; $4e7c
 	call DelayFrames ; $4e7e
 	ld c, $01 ; $4e81
-	call Func_00_1d20 ; $4e83
-	call Func_00_1da4 ; $4e86
+	call BeginFadeOut ; $4e83
+	call WaitFadeEnd ; $4e86
 	ld b, $01 ; $4e89
 	ld a, [$c90d] ; $4e8b
 	add a, $04 ; $4e8e
@@ -1925,8 +1925,8 @@ Label_0f_4ea7:
 	ld a, $b4 ; $554f
 	call DelayFrames ; $5551
 	ld c, $01 ; $5554
-	call Func_00_1d20 ; $5556
-	call Func_00_1da4 ; $5559
+	call BeginFadeOut ; $5556
+	call WaitFadeEnd ; $5559
 	ld b, $01 ; $555c
 	ld a, [$c90d] ; $555e
 	ld d, a ; $5561
@@ -2564,8 +2564,8 @@ Func_0f_5b4d:
 	xor a, a ; $5b60
 	ld [$c2d5], a ; $5b61
 	ld c, $04 ; $5b64
-	call Func_00_1d2e ; $5b66
-	call Func_00_1da4 ; $5b69
+	call BeginFadeIn ; $5b66
+	call WaitFadeEnd ; $5b69
 	ld d, $30 ; $5b6c
 	ld a, $13 ; $5b6e
 	farcall FarPtr_0a_16 ; $5b70
@@ -3102,10 +3102,10 @@ Label_0f_60fc:
 	dw $ff01, $0000, $6174, $0000 ; record 0
 	db $ff
 	xor a, a ; $6174
-	ldh [$ffb9], a ; $6175
-	ldh [$ffb8], a ; $6177
-	ldh [$ff8a], a ; $6179
-	ldh [$ff8b], a ; $617b
+	ldh [hBGColumnBlitPending], a ; $6175
+	ldh [hBGRowBlitPending], a ; $6177
+	ldh [hScrollY], a ; $6179
+	ldh [hScrollX], a ; $617b
 	ld [$c321], a ; $617d
 	ld [$c323], a ; $6180
 	call ClearFrameTasks ; $6183
@@ -3443,8 +3443,8 @@ Func_0f_6426:
 	farcall FarPtr_0a_3a ; $644d
 	farcall FarPtr_0a_3e ; $6450
 	ld c, $04 ; $6453
-	call Func_00_1d2e ; $6455
-	call Func_00_1da4 ; $6458
+	call BeginFadeIn ; $6455
+	call WaitFadeEnd ; $6458
 	ld bc, $0018 ; $645b
 	farcall FarPtr_0a_38 ; $645e
 	xor a, a ; $6461
@@ -4337,8 +4337,8 @@ Label_0f_716c:
 	pop af ; $71be
 Label_0f_71bf:
 	ld c, $10 ; $71bf
-	call Func_00_1d20 ; $71c1
-	call Func_00_1da4 ; $71c4
+	call BeginFadeOut ; $71c1
+	call WaitFadeEnd ; $71c4
 	call Func_0f_7434 ; $71c7
 	ld a, $19 ; $71ca
 	ld [wStoryModeCurrentLocation], a ; $71cc
@@ -4527,8 +4527,8 @@ Label_0f_72e8:
 	pop af ; $735e
 Label_0f_735f:
 	ld c, $10 ; $735f
-	call Func_00_1d20 ; $7361
-	call Func_00_1da4 ; $7364
+	call BeginFadeOut ; $7361
+	call WaitFadeEnd ; $7364
 	call Func_0f_7434 ; $7367
 	ld a, $19 ; $736a
 	ld [wStoryModeCurrentLocation], a ; $736c
@@ -4588,10 +4588,10 @@ Label_0f_7430:
 	ret ; $7433
 Func_0f_7434:
 	xor a, a ; $7434
-	ldh [$ffb9], a ; $7435
-	ldh [$ffb8], a ; $7437
-	ldh [$ff8a], a ; $7439
-	ldh [$ff8b], a ; $743b
+	ldh [hBGColumnBlitPending], a ; $7435
+	ldh [hBGRowBlitPending], a ; $7437
+	ldh [hScrollY], a ; $7439
+	ldh [hScrollX], a ; $743b
 	ld [$c321], a ; $743d
 	ld [$c323], a ; $7440
 	call ClearFrameTasks ; $7443
@@ -4670,8 +4670,8 @@ Label_0f_74b0:
 	xor a, $20 ; $74d6
 	ld [hl], a ; $74d8
 	ld c, $04 ; $74d9
-	call Func_00_1d2e ; $74db
-	call Func_00_1da4 ; $74de
+	call BeginFadeIn ; $74db
+	call WaitFadeEnd ; $74de
 	ld a, [$c2b0] ; $74e1
 	add a, a ; $74e4
 	add a, $99 ; $74e5
@@ -4905,8 +4905,8 @@ Label_0f_76f6:
 	ld b, $c0 ; $771f
 	farcall FarPtr_0a_2e ; $7721
 	ld c, $04 ; $7724
-	call Func_00_1d2e ; $7726
-	call Func_00_1da4 ; $7729
+	call BeginFadeIn ; $7726
+	call WaitFadeEnd ; $7729
 	call Func_0f_660f ; $772c
 	farcall FarPtr_0a_00 ; $772f
 	ld a, $00 ; $7732
@@ -4914,8 +4914,8 @@ Label_0f_76f6:
 	ld a, $02 ; $7735
 	farcall FarPtr_0a_30 ; $7737
 	ld c, $04 ; $773a
-	call Func_00_1d2e ; $773c
-	call Func_00_1da4 ; $773f
+	call BeginFadeIn ; $773c
+	call WaitFadeEnd ; $773f
 	ld a, [$c2b0] ; $7742
 	dec a ; $7745
 	add a, a ; $7746
