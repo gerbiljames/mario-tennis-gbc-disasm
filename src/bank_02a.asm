@@ -497,7 +497,6 @@ Func_2a_5e9d:
 	ret ; $5ebe
 BallPosBlockOffsets_2a:
 	; $5ebf, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0000 ; record 0
 	dw $02d0 ; record 1
 	dw $05a0 ; record 2
@@ -510,7 +509,6 @@ BallPosBlockOffsets_2a:
 	dw $1950 ; record 9
 BallPosSubOffsets_2a:
 	; $5ed3, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0048 ; record 1
 	dw $0090 ; record 2
@@ -523,7 +521,6 @@ BallPosSubOffsets_2a:
 	dw $0288 ; record 9
 BallPosHeightOffsets_2a:
 	; $5ee7, 64 bytes (records:2)
-; 32 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2

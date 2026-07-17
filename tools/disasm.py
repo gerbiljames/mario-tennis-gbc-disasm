@@ -2008,8 +2008,24 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             if seg in labels and lines[-1] != f"{labels[seg]}:":
                                 lines.append(f"{labels[seg]}:")
                             lines.append(f"\t; ${scpu:04x}, {j - seg} bytes ({spec})")
-                            body = render_spec(rom[seg:j], spec).rstrip("\n")
-                            lines.extend(body.split("\n"))
+                            # records:2 tables are usually pointer tables;
+                            # words that hit a labeled offset in the same
+                            # bank render symbolically (same bytes at link).
+                            if spec == "records:2" and bank > 0:
+                                for r in range((j - seg) // 2):
+                                    ro = seg + r * 2
+                                    w = rom[ro] | (rom[ro + 1] << 8)
+                                    tgt = (bank * 0x4000 + w - 0x4000
+                                           if 0x4000 <= w < 0x8000 else None)
+                                    ref = labels.get(tgt) if tgt else None
+                                    lines.append(f"\tdw {ref or f'${w:04x}'}"
+                                                 f" ; record {r}")
+                                tail = (j - seg) % 2
+                                if tail:
+                                    lines.append(f"\tdb ${rom[j - 1]:02x}")
+                            else:
+                                body = render_spec(rom[seg:j], spec).rstrip("\n")
+                                lines.extend(body.split("\n"))
                             seg = j
                             continue
                         # ASCII dominance (plus the $00-$03 text control

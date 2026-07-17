@@ -281,7 +281,6 @@ ShowMinigameRulesPages:
 	call ShowRulesPageSequence ; $425e
 	ret ; $4261
 	; $4262, 180 bytes (records:2)
-; 90 records x 2 bytes
 	dw $2c87 ; record 0
 	dw $2c8d ; record 1
 	dw $2c92 ; record 2
@@ -1076,7 +1075,6 @@ Label_06_4843:
 	jr nz, Label_06_4843 ; $4854
 	ret ; $4856
 	; $4857, 28 bytes (records:2)
-; 14 records x 2 bytes
 	dw $4861 ; record 0
 	dw $4861 ; record 1
 	dw $4861 ; record 2
@@ -1115,7 +1113,6 @@ Label_06_488a:
 	call QueueMatchMenuCursorSprite ; $488d
 	ret ; $4890
 	; $4891, 28 bytes (records:2)
-; 14 records x 2 bytes
 	dw $489b ; record 0
 	dw $489b ; record 1
 	dw $489b ; record 2
@@ -1806,7 +1803,6 @@ CopyTextRectPair:
 	jr z, Label_06_50ac ; $5099
 	ret ; $509b
 	; $509c, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $50e2 ; record 0
 	dw $5123 ; record 1
 	dw $516c ; record 2
@@ -1949,7 +1945,6 @@ LoadMatchMenuItemGfx:
 	wram_bank ; $523f
 	ret ; $5243
 	; $5244, 2630 bytes (records:2)
-; 1315 records x 2 bytes
 	dw $52c0 ; record 0
 	dw $5342 ; record 1
 	dw $5402 ; record 2
@@ -3084,7 +3079,7 @@ LoadMatchMenuItemGfx:
 	dw $8259 ; record 1131
 	dw $41e0 ; record 1132
 	dw $fe6e ; record 1133
-	dw $49e4 ; record 1134
+	dw DrawScoreboardDrillResultRow ; record 1134
 	dw $4dff ; record 1135
 	dw $e080 ; record 1136
 	dw $01fe ; record 1137
@@ -3301,7 +3296,6 @@ Label_06_5ca6:
 	wram_bank ; $5cc4
 	ret ; $5cc8
 	; $5cc9, 56 bytes (records:2)
-; 28 records x 2 bytes
 	dw $5d40 ; record 0
 	dw $5d40 ; record 1
 	dw $5df5 ; record 2
@@ -3570,7 +3564,6 @@ DrawMatchMenuItem:
 	call CopyTextRect ; $6831
 	ret ; $6834
 	; $6835, 386 bytes (records:2)
-; 193 records x 2 bytes
 	dw $6895 ; record 0
 	dw $68f5 ; record 1
 	dw $689b ; record 2
@@ -3744,7 +3737,7 @@ DrawMatchMenuItem:
 	dw $0000 ; record 170
 	dw $0a11 ; record 171
 	dw $cd03 ; record 172
-	dw $4624 ; record 173
+	dw GetShadowTilemapAddr ; record 173
 	dw $5b21 ; record 174
 	dw $0169 ; record 175
 	dw $0c02 ; record 176
@@ -4263,7 +4256,6 @@ Label_06_6dad:
 	jr nz, Label_06_6dad ; $6dbe
 	ret ; $6dc0
 	; $6dc1, 28 bytes (records:2)
-; 14 records x 2 bytes
 	dw $6dcb ; record 0
 	dw $6dcb ; record 1
 	dw $6dcb ; record 2
@@ -4302,7 +4294,6 @@ Label_06_6df4:
 	call QueueStoryMenuCursorSprite ; $6df7
 	ret ; $6dfa
 	; $6dfb, 28 bytes (records:2)
-; 14 records x 2 bytes
 	dw $6e05 ; record 0
 	dw $6e05 ; record 1
 	dw $6e05 ; record 2
@@ -4889,7 +4880,6 @@ LoadStoryMenuItemGfx:
 	wram_bank ; $72a9
 	ret ; $72ad
 	; $72ae, 32 bytes (records:2)
-; 16 records x 2 bytes
 	dw $7310 ; record 0
 	dw $73b0 ; record 1
 	dw $5402 ; record 2
@@ -5245,7 +5235,6 @@ DrawStoryMenuItem:
 	call CopyTileRectToShadowAttrmap ; $77c7
 	ret ; $77ca
 	; $77cb, 32 bytes (records:2)
-; 16 records x 2 bytes
 	dw $77eb ; record 0
 	dw $77f1 ; record 1
 	dw $77f7 ; record 2

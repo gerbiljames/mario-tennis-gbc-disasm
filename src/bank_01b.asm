@@ -47,7 +47,6 @@ FarPtr_1b_2a:
 FarPtr_1b_2c:
 	dw Func_1b_73dd ; $402c
 	; $402e, 159 bytes (records:2)
-; 79 records x 2 bytes
 	dw $78bd ; record 0
 	dw $7970 ; record 1
 	dw $79c0 ; record 2
@@ -62,7 +61,7 @@ FarPtr_1b_2c:
 	dw $a3cd ; record 11
 	dw $0e40 ; record 12
 	dw $cd00 ; record 13
-	dw $40cd ; record 14
+	dw Func_1b_40cd ; record 14
 	dw $000e ; record 15
 	dw $0806 ; record 16
 	dw $51cd ; record 17
@@ -89,7 +88,7 @@ FarPtr_1b_2c:
 	dw $a3cd ; record 38
 	dw $0e40 ; record 39
 	dw $cd01 ; record 40
-	dw $40cd ; record 41
+	dw Func_1b_40cd ; record 41
 	dw $000e ; record 42
 	dw $6806 ; record 43
 	dw $51cd ; record 44
@@ -101,7 +100,7 @@ FarPtr_1b_2c:
 	dw $a3cd ; record 50
 	dw $0e40 ; record 51
 	dw $cd01 ; record 52
-	dw $40cd ; record 53
+	dw Func_1b_40cd ; record 53
 	dw $000e ; record 54
 	dw $4806 ; record 55
 	dw $51cd ; record 56
@@ -1115,7 +1114,6 @@ Label_1b_504a:
 	ld l, a ; $504c
 	jp hl ; $504d
 	; $504e, 1209 bytes (records:2)
-; 604 records x 2 bytes
 	dw $77c9 ; record 0
 	dw $7750 ; record 1
 	dw $6f50 ; record 2
@@ -1145,7 +1143,7 @@ Label_1b_504a:
 	dw $cf8c ; record 26
 	dw $0e78 ; record 27
 	dw $cd00 ; record 28
-	dw $5f51 ; record 29
+	dw Func_1b_5f51 ; record 29
 	dw $a511 ; record 30
 	dw $cd5b ; record 31
 	dw $5aa4 ; record 32
@@ -1156,14 +1154,14 @@ Label_1b_504a:
 	dw $89cd ; record 37
 	dw $065a ; record 38
 	dw $cd01 ; record 39
-	dw $5750 ; record 40
+	dw Func_1b_5750 ; record 40
 	dw $c5cd ; record 41
 	dw $cd58 ; record 42
 	dw $2725 ; record 43
 	dw $cf1e ; record 44
 	dw $0e80 ; record 45
 	dw $cd03 ; record 46
-	dw $5f51 ; record 47
+	dw Func_1b_5f51 ; record 47
 	dw $9411 ; record 48
 	dw $cd5b ; record 49
 	dw $5a6e ; record 50
@@ -1177,7 +1175,7 @@ Label_1b_504a:
 	dw $cf5a ; record 58
 	dw $0e78 ; record 59
 	dw $cd03 ; record 60
-	dw $5f51 ; record 61
+	dw Func_1b_5f51 ; record 61
 	dw $a511 ; record 62
 	dw $cd5b ; record 63
 	dw $5aa4 ; record 64
@@ -1188,14 +1186,14 @@ Label_1b_504a:
 	dw $89cd ; record 69
 	dw $065a ; record 70
 	dw $cd02 ; record 71
-	dw $5750 ; record 72
+	dw Func_1b_5750 ; record 72
 	dw $c5cd ; record 73
 	dw $cd58 ; record 74
 	dw $2725 ; record 75
 	dw $cf1e ; record 76
 	dw $0e80 ; record 77
 	dw $cd06 ; record 78
-	dw $5f51 ; record 79
+	dw Func_1b_5f51 ; record 79
 	dw $9d11 ; record 80
 	dw $cd5b ; record 81
 	dw $5a6e ; record 82
@@ -1209,7 +1207,7 @@ Label_1b_504a:
 	dw $cf5a ; record 90
 	dw $0e78 ; record 91
 	dw $cd06 ; record 92
-	dw $5f51 ; record 93
+	dw Func_1b_5f51 ; record 93
 	dw $a511 ; record 94
 	dw $cd5b ; record 95
 	dw $5aa4 ; record 96
@@ -1220,14 +1218,14 @@ Label_1b_504a:
 	dw $89cd ; record 101
 	dw $065a ; record 102
 	dw $cd03 ; record 103
-	dw $5750 ; record 104
+	dw Func_1b_5750 ; record 104
 	dw $c5cd ; record 105
 	dw $cd58 ; record 106
 	dw $2725 ; record 107
 	dw $cf1e ; record 108
 	dw $0e80 ; record 109
 	dw $cd09 ; record 110
-	dw $5f51 ; record 111
+	dw Func_1b_5f51 ; record 111
 	dw $9d11 ; record 112
 	dw $cd5b ; record 113
 	dw $5a6e ; record 114
@@ -1241,7 +1239,7 @@ Label_1b_504a:
 	dw $cf5a ; record 122
 	dw $0e78 ; record 123
 	dw $cd09 ; record 124
-	dw $5f51 ; record 125
+	dw Func_1b_5f51 ; record 125
 	dw $a511 ; record 126
 	dw $cd5b ; record 127
 	dw $5aa4 ; record 128
@@ -1252,7 +1250,7 @@ Label_1b_504a:
 	dw $89cd ; record 133
 	dw $065a ; record 134
 	dw $cd04 ; record 135
-	dw $5750 ; record 136
+	dw Func_1b_5750 ; record 136
 	dw $c5cd ; record 137
 	dw $cd58 ; record 138
 	dw $2725 ; record 139
@@ -1269,7 +1267,7 @@ Label_1b_504a:
 	dw $cf8c ; record 150
 	dw $0e78 ; record 151
 	dw $cd00 ; record 152
-	dw $5f51 ; record 153
+	dw Func_1b_5f51 ; record 153
 	dw $bb11 ; record 154
 	dw $cd5b ; record 155
 	dw $5aa4 ; record 156
@@ -1280,14 +1278,14 @@ Label_1b_504a:
 	dw $89cd ; record 161
 	dw $065a ; record 162
 	dw $cd05 ; record 163
-	dw $5750 ; record 164
+	dw Func_1b_5750 ; record 164
 	dw $c5cd ; record 165
 	dw $cd58 ; record 166
 	dw $2725 ; record 167
 	dw $cf1e ; record 168
 	dw $0e80 ; record 169
 	dw $cd05 ; record 170
-	dw $5f51 ; record 171
+	dw Func_1b_5f51 ; record 171
 	dw $bb11 ; record 172
 	dw $cd5b ; record 173
 	dw $5a89 ; record 174
@@ -1303,7 +1301,7 @@ Label_1b_504a:
 	dw $cf78 ; record 184
 	dw $0e78 ; record 185
 	dw $cd05 ; record 186
-	dw $5f51 ; record 187
+	dw Func_1b_5f51 ; record 187
 	dw $cc11 ; record 188
 	dw $cd5b ; record 189
 	dw $5abf ; record 190
@@ -1314,14 +1312,14 @@ Label_1b_504a:
 	dw $6ecd ; record 195
 	dw $065a ; record 196
 	dw $cd06 ; record 197
-	dw $5750 ; record 198
+	dw Func_1b_5750 ; record 198
 	dw $c5cd ; record 199
 	dw $cd58 ; record 200
 	dw $2725 ; record 201
 	dw $cf1e ; record 202
 	dw $0e80 ; record 203
 	dw $cd08 ; record 204
-	dw $5f51 ; record 205
+	dw Func_1b_5f51 ; record 205
 	dw $cd11 ; record 206
 	dw $cd5b ; record 207
 	dw $5a89 ; record 208
@@ -1337,7 +1335,7 @@ Label_1b_504a:
 	dw $cf5a ; record 218
 	dw $0e78 ; record 219
 	dw $cd08 ; record 220
-	dw $5f51 ; record 221
+	dw Func_1b_5f51 ; record 221
 	dw $cc11 ; record 222
 	dw $cd5b ; record 223
 	dw $5abf ; record 224
@@ -1348,14 +1346,14 @@ Label_1b_504a:
 	dw $6ecd ; record 229
 	dw $065a ; record 230
 	dw $cd07 ; record 231
-	dw $5750 ; record 232
+	dw Func_1b_5750 ; record 232
 	dw $c5cd ; record 233
 	dw $cd58 ; record 234
 	dw $2725 ; record 235
 	dw $cf1e ; record 236
 	dw $0e80 ; record 237
 	dw $cd0b ; record 238
-	dw $5f51 ; record 239
+	dw Func_1b_5f51 ; record 239
 	dw $cd11 ; record 240
 	dw $cd5b ; record 241
 	dw $5a89 ; record 242
@@ -1371,7 +1369,7 @@ Label_1b_504a:
 	dw $cf5a ; record 252
 	dw $0e78 ; record 253
 	dw $cd0b ; record 254
-	dw $5f51 ; record 255
+	dw Func_1b_5f51 ; record 255
 	dw $bc11 ; record 256
 	dw $cd5b ; record 257
 	dw $5a89 ; record 258
@@ -1382,7 +1380,7 @@ Label_1b_504a:
 	dw $a4cd ; record 263
 	dw $065a ; record 264
 	dw $cd08 ; record 265
-	dw $5750 ; record 266
+	dw Func_1b_5750 ; record 266
 	dw $c5cd ; record 267
 	dw $cd58 ; record 268
 	dw $2725 ; record 269
@@ -1399,7 +1397,7 @@ Label_1b_504a:
 	dw $cf8c ; record 280
 	dw $0e78 ; record 281
 	dw $cd00 ; record 282
-	dw $5f51 ; record 283
+	dw Func_1b_5f51 ; record 283
 	dw $e711 ; record 284
 	dw $cd5b ; record 285
 	dw $5aa4 ; record 286
@@ -1410,14 +1408,14 @@ Label_1b_504a:
 	dw $6ecd ; record 291
 	dw $065a ; record 292
 	dw $cd09 ; record 293
-	dw $5750 ; record 294
+	dw Func_1b_5750 ; record 294
 	dw $c5cd ; record 295
 	dw $cd58 ; record 296
 	dw $2725 ; record 297
 	dw $cf5a ; record 298
 	dw $0e80 ; record 299
 	dw $cd08 ; record 300
-	dw $5f51 ; record 301
+	dw Func_1b_5f51 ; record 301
 	dw $d411 ; record 302
 	dw $cd5b ; record 303
 	dw $5a6e ; record 304
@@ -1431,7 +1429,7 @@ Label_1b_504a:
 	dw $cf5a ; record 312
 	dw $0e78 ; record 313
 	dw $cd08 ; record 314
-	dw $5f51 ; record 315
+	dw Func_1b_5f51 ; record 315
 	dw $9511 ; record 316
 	dw $cd5b ; record 317
 	dw $5a6e ; record 318
@@ -1442,7 +1440,7 @@ Label_1b_504a:
 	dw $bfcd ; record 323
 	dw $065a ; record 324
 	dw $cd0a ; record 325
-	dw $5750 ; record 326
+	dw Func_1b_5750 ; record 326
 	dw $c5cd ; record 327
 	dw $cd58 ; record 328
 	dw $2725 ; record 329
@@ -1465,7 +1463,7 @@ Label_1b_504a:
 	dw $cf14 ; record 346
 	dw $0e80 ; record 347
 	dw $cd00 ; record 348
-	dw $5f51 ; record 349
+	dw Func_1b_5f51 ; record 349
 	dw $9411 ; record 350
 	dw $cd5b ; record 351
 	dw $5a6e ; record 352
@@ -1490,7 +1488,7 @@ Label_1b_504a:
 	dw $2725 ; record 371
 	dw $0e04 ; record 372
 	dw $cd00 ; record 373
-	dw $5f51 ; record 374
+	dw Func_1b_5f51 ; record 374
 	dw $c311 ; record 375
 	dw $cd5b ; record 376
 	dw $5a6e ; record 377
@@ -1502,7 +1500,7 @@ Label_1b_504a:
 	dw $cf14 ; record 383
 	dw $0e80 ; record 384
 	dw $cd00 ; record 385
-	dw $5f51 ; record 386
+	dw Func_1b_5f51 ; record 386
 	dw $9411 ; record 387
 	dw $cd5b ; record 388
 	dw $5a6e ; record 389
@@ -1523,7 +1521,7 @@ Label_1b_504a:
 	dw $6ecd ; record 404
 	dw $0e5a ; record 405
 	dw $cd09 ; record 406
-	dw $5f51 ; record 407
+	dw Func_1b_5f51 ; record 407
 	dw $e211 ; record 408
 	dw $cd5b ; record 409
 	dw $5a89 ; record 410
@@ -1537,7 +1535,7 @@ Label_1b_504a:
 	dw $cf8c ; record 418
 	dw $0e78 ; record 419
 	dw $cd00 ; record 420
-	dw $5f51 ; record 421
+	dw Func_1b_5f51 ; record 421
 	dw $f711 ; record 422
 	dw $cd5b ; record 423
 	dw $5aa4 ; record 424
@@ -1548,14 +1546,14 @@ Label_1b_504a:
 	dw $89cd ; record 429
 	dw $065a ; record 430
 	dw $cd01 ; record 431
-	dw $5846 ; record 432
+	dw Func_1b_5846 ; record 432
 	dw $c5cd ; record 433
 	dw $cd58 ; record 434
 	dw $2725 ; record 435
 	dw $cf5a ; record 436
 	dw $0e80 ; record 437
 	dw $cd03 ; record 438
-	dw $5f51 ; record 439
+	dw Func_1b_5f51 ; record 439
 	dw $d411 ; record 440
 	dw $cd5b ; record 441
 	dw $5a6e ; record 442
@@ -1569,7 +1567,7 @@ Label_1b_504a:
 	dw $cf5a ; record 450
 	dw $0e78 ; record 451
 	dw $cd03 ; record 452
-	dw $5f51 ; record 453
+	dw Func_1b_5f51 ; record 453
 	dw $f711 ; record 454
 	dw $cd5b ; record 455
 	dw $5aa4 ; record 456
@@ -1580,7 +1578,7 @@ Label_1b_504a:
 	dw $89cd ; record 461
 	dw $065a ; record 462
 	dw $cd02 ; record 463
-	dw $5846 ; record 464
+	dw Func_1b_5846 ; record 464
 	dw $c5cd ; record 465
 	dw $cd58 ; record 466
 	dw $2725 ; record 467
@@ -1600,7 +1598,7 @@ Label_1b_504a:
 	dw $a4cd ; record 481
 	dw $0e5a ; record 482
 	dw $cd02 ; record 483
-	dw $5f51 ; record 484
+	dw Func_1b_5f51 ; record 484
 	dw $cc11 ; record 485
 	dw $cd5b ; record 486
 	dw $5a89 ; record 487
@@ -1618,7 +1616,7 @@ Label_1b_504a:
 	dw $6ecd ; record 499
 	dw $0e5a ; record 500
 	dw $cd05 ; record 501
-	dw $5f51 ; record 502
+	dw Func_1b_5f51 ; record 502
 	dw $cc11 ; record 503
 	dw $cd5b ; record 504
 	dw $5a89 ; record 505
@@ -1632,7 +1630,7 @@ Label_1b_504a:
 	dw $a4cd ; record 513
 	dw $0e5a ; record 514
 	dw $cd05 ; record 515
-	dw $5f51 ; record 516
+	dw Func_1b_5f51 ; record 516
 	dw $bb11 ; record 517
 	dw $cd5b ; record 518
 	dw $5a89 ; record 519
@@ -1652,7 +1650,7 @@ Label_1b_504a:
 	dw $cf8c ; record 533
 	dw $0e78 ; record 534
 	dw $cd00 ; record 535
-	dw $5f51 ; record 536
+	dw Func_1b_5f51 ; record 536
 	dw $9811 ; record 537
 	dw $cd5b ; record 538
 	dw $5a6e ; record 539
@@ -1663,7 +1661,7 @@ Label_1b_504a:
 	dw $89cd ; record 544
 	dw $065a ; record 545
 	dw $cd06 ; record 546
-	dw $5846 ; record 547
+	dw Func_1b_5846 ; record 547
 	dw $c5cd ; record 548
 	dw $cd58 ; record 549
 	dw $2725 ; record 550
@@ -1675,7 +1673,7 @@ Label_1b_504a:
 	dw $cf1e ; record 556
 	dw $0e80 ; record 557
 	dw $cd00 ; record 558
-	dw $5f51 ; record 559
+	dw Func_1b_5f51 ; record 559
 	dw $9411 ; record 560
 	dw $cd5b ; record 561
 	dw $5a6e ; record 562
@@ -1698,7 +1696,7 @@ Label_1b_504a:
 	dw $2725 ; record 579
 	dw $0e08 ; record 580
 	dw $cd00 ; record 581
-	dw $5f51 ; record 582
+	dw Func_1b_5f51 ; record 582
 	dw $9411 ; record 583
 	dw $cd5b ; record 584
 	dw $5a6e ; record 585
@@ -1708,7 +1706,7 @@ Label_1b_504a:
 	dw $cf1e ; record 589
 	dw $0e80 ; record 590
 	dw $cd00 ; record 591
-	dw $5f51 ; record 592
+	dw Func_1b_5f51 ; record 592
 	dw $9411 ; record 593
 	dw $cd5b ; record 594
 	dw $5a6e ; record 595
@@ -1779,7 +1777,6 @@ Label_1b_5551:
 	pop af ; $555c
 	ret ; $555d
 	; $555e, 48 bytes (records:2)
-; 24 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0029 ; record 1
 	dw $002b ; record 2
@@ -1905,7 +1902,6 @@ Label_1b_561a:
 	pop af ; $5625
 	ret ; $5626
 	; $5627, 50 bytes (records:2)
-; 25 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0029 ; record 2
@@ -2097,7 +2093,6 @@ Label_1b_575c:
 	jp hl ; $575f
 	ret ; $5760
 	; $5761, 200 bytes (records:2)
-; 100 records x 2 bytes
 	dw $5779 ; record 0
 	dw $5779 ; record 1
 	dw $5789 ; record 2
@@ -2290,7 +2285,6 @@ Label_1b_5c7c:
 	call CopyMemoryBC ; $5c89
 	ret ; $5c8c
 	; $5c8d, 708 bytes (records:2)
-; 354 records x 2 bytes
 	dw $5c97 ; record 0
 	dw $5c97 ; record 1
 	dw $5cc7 ; record 2
@@ -4128,7 +4122,6 @@ Label_1b_6c09:
 	ret ; $6c0d
 	INCBIN "data/bank_01b/d_6c0e.bin" ; $6c0e, 3 bytes
 	; $6c11, 72 bytes (records:2)
-; 36 records x 2 bytes
 	dw $6c23 ; record 0
 	dw $6c29 ; record 1
 	dw $6c2f ; record 2
@@ -4283,7 +4276,6 @@ Label_1b_6cee:
 	wram_bank ; $6d28
 	ret ; $6d2c
 	; $6d2d, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $6d8a ; record 0
 	dw $6d8c ; record 1
 	dw $6d8e ; record 2
@@ -4350,7 +4342,6 @@ Label_1b_6d9e:
 	call LoadPaletteShadow ; $6da4
 	ret ; $6da7
 	; $6da8, 6 bytes (records:2)
-; 3 records x 2 bytes
 	dw $6dae ; record 0
 	dw $6dbe ; record 1
 	dw $6db6 ; record 2
@@ -4973,7 +4964,6 @@ Label_1b_73bf:
 	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
 	; $73c9, 4 bytes (records:2)
-; 2 records x 2 bytes
 	dw $73cd ; record 0
 	dw $73d5 ; record 1
 	; $73cd, 16 bytes (bytes:8)
@@ -5130,7 +5120,6 @@ Label_1b_7504:
 	jr nz, Label_1b_74ed ; $750a
 	ret ; $750c
 	; $750d, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $0280 ; record 0
 	dw $02e0 ; record 1
 	dw $0340 ; record 2
@@ -5173,7 +5162,6 @@ Label_1b_7544:
 	jr nz, Label_1b_752d ; $754a
 	ret ; $754c
 	; $754d, 19 bytes (records:2)
-; 9 records x 2 bytes
 	dw $02a0 ; record 0
 	dw $0300 ; record 1
 	dw $0360 ; record 2
@@ -5505,7 +5493,6 @@ Label_1b_7764:
 	pop af ; $7786
 	ret ; $7787
 	; $7788, 36 bytes (records:2)
-; 18 records x 2 bytes
 	dw $778e ; record 0
 	dw $7798 ; record 1
 	dw $77a2 ; record 2

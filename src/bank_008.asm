@@ -1184,9 +1184,8 @@ Label_08_4808:
 	dw Label_08_4894 ; $483d jumptable
 GamePositionPtrs:
 	; $483f, 8 bytes (records:2)
-; 4 records x 2 bytes
-	dw $4979 ; record 0
-	dw $4979 ; record 1
+	dw GamePositionTables ; record 0
+	dw GamePositionTables ; record 1
 	dw $49b9 ; record 2
 	dw $4999 ; record 3
 Label_08_4847:
@@ -1251,9 +1250,8 @@ Label_08_48c9:
 	jp Label_08_491a ; $48e2
 TiebreakPositionPtrs:
 	; $48e5, 8 bytes (records:2)
-; 4 records x 2 bytes
-	dw $49d9 ; record 0
-	dw $49d9 ; record 1
+	dw TiebreakPositionTables ; record 0
+	dw TiebreakPositionTables ; record 1
 	dw $4b59 ; record 2
 	dw $4a99 ; record 3
 LoadPositionRecord:
@@ -7845,11 +7843,10 @@ ReadCharInput:
 	ld l, a ; $781d
 	jp hl ; $781e
 	; $781f, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $7855 ; record 0
+	dw Label_08_7855 ; record 0
 	dw $7863 ; record 1
-	dw $7855 ; record 2
-	dw $7855 ; record 3
+	dw Label_08_7855 ; record 2
+	dw Label_08_7855 ; record 3
 	dw $782d ; record 4
 	dw $7833 ; record 5
 	dw $783f ; record 6
@@ -8187,7 +8184,6 @@ Label_08_7a35:
 	call SetCharTarget ; $7a37
 	jp Label_08_7968 ; $7a3a
 	; $7a3d, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $0020 ; record 0
 	dw $0020 ; record 1
 	dw $0080 ; record 2
@@ -8245,7 +8241,6 @@ Label_08_7a95:
 Label_08_7a9a:
 	jp Label_08_7968 ; $7a9a
 	; $7a9d, 32 bytes (records:2)
-; 16 records x 2 bytes
 	dw $7abd ; record 0
 	dw $7ac5 ; record 1
 	dw $7acd ; record 2

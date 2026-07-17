@@ -803,7 +803,6 @@ Func_18_53e4:
 	add hl, de ; $53f6
 	ret ; $53f7
 	; $53f8, 32 bytes (records:2)
-; 16 records x 2 bytes
 	dw $0016 ; record 0
 	dw $0056 ; record 1
 	dw $0096 ; record 2

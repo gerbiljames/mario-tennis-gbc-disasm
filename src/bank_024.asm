@@ -618,7 +618,6 @@ Func_24_6644:
 	call Func_24_41a2 ; $6652
 	ret ; $6655
 	; $6656, 64 bytes (records:2)
-; 32 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2
@@ -718,7 +717,6 @@ Label_24_66b0:
 	call Func_24_4201 ; $66ee
 	ret ; $66f1
 	; $66f2, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $fa60 ; record 0
 	dw $faf0 ; record 1
 	dw $fb80 ; record 2

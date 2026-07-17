@@ -595,7 +595,6 @@ Label_16_4aaf:
 Label_16_4abc:
 	ret ; $4abc
 	; $4abd, 480 bytes (records:2)
-; 240 records x 2 bytes
 	dw $4ae5 ; record 0
 	dw $4af9 ; record 1
 	dw $4b12 ; record 2
@@ -1076,7 +1075,6 @@ Label_16_4e9b:
 	pop af ; $4e9b
 	ret ; $4e9c
 	; $4e9d, 3444 bytes (records:2)
-; 1722 records x 2 bytes
 	dw $4ecf ; record 0
 	dw $4ed5 ; record 1
 	dw $4edb ; record 2
@@ -2483,7 +2481,7 @@ Label_16_4e9b:
 	dw $0fa9 ; record 1403
 	dw $e06c ; record 1404
 	dw $e166 ; record 1405
-	dw $5c7f ; record 1406
+	dw Label_16_5c7f ; record 1406
 	dw $1fe0 ; record 1407
 	dw $ea66 ; record 1408
 	dw $0080 ; record 1409
@@ -3340,7 +3338,6 @@ Label_16_60b2:
 	call DecompressResultPortrait ; $60b3
 	ret ; $60b6
 	; $60b7, 9 bytes (records:2)
-; 4 records x 2 bytes
 	dw $8c00 ; record 0
 	dw $8d00 ; record 1
 	dw $8e00 ; record 2
@@ -3385,7 +3382,6 @@ Label_16_60ea:
 	call DecompressData ; $60ed
 	ret ; $60f0
 	; $60f1, 2148 bytes (records:2)
-; 1074 records x 2 bytes
 	dw $6101 ; record 0
 	dw $6214 ; record 1
 	dw $6315 ; record 2
@@ -4476,7 +4472,6 @@ Label_16_6961:
 	call DecompressData ; $6964
 	ret ; $6967
 	; $6968, 4583 bytes (records:2)
-; 2291 records x 2 bytes
 	dw $69a8 ; record 0
 	dw $6a46 ; record 1
 	dw $6ae9 ; record 2

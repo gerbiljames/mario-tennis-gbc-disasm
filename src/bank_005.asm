@@ -3357,39 +3357,38 @@ TextCmdNop0:
 	ret ; $548e
 ControlCodeHandlers_05:
 	; $548f, 64 bytes (records:2)
-; 32 records x 2 bytes
-	dw $548e ; record 0
-	dw $4ed0 ; record 1
-	dw $4f74 ; record 2
-	dw $501d ; record 3
-	dw $5089 ; record 4
-	dw $4f32 ; record 5
-	dw $4f4f ; record 6
-	dw $51e8 ; record 7
-	dw $5297 ; record 8
-	dw $52ce ; record 9
-	dw $4ee8 ; record 10
-	dw $51f3 ; record 11
-	dw $5064 ; record 12
-	dw $4ee9 ; record 13
-	dw $53ca ; record 14
-	dw $4ed0 ; record 15
+	dw TextCmdNop0 ; record 0
+	dw TextCmdNewline ; record 1
+	dw TextCmdWaitButtonPage ; record 2
+	dw WaitTextAdvanceInput ; record 3
+	dw TextCmdPrintArgString ; record 4
+	dw TextCmdDelay30 ; record 5
+	dw TextCmdDelay15Skippable ; record 6
+	dw TextCmdPrintPlayerName ; record 7
+	dw TextCmdNop2 ; record 8
+	dw TextCmdPrintArgNumber ; record 9
+	dw TextCmdNop ; record 10
+	dw TextCmdPrintPartnerName ; record 11
+	dw TextCmdDelay150Skippable ; record 12
+	dw TextCmdNextGlyphStreamRow ; record 13
+	dw TextCmdPrintShortText ; record 14
+	dw TextCmdNewline ; record 15
 	dw $548a ; record 16
 	dw $548b ; record 17
 	dw $548c ; record 18
 	dw $548d ; record 19
-	dw $4ed0 ; record 20
-	dw $4ed0 ; record 21
-	dw $4ed0 ; record 22
-	dw $4ed0 ; record 23
-	dw $4ed0 ; record 24
-	dw $4ed0 ; record 25
-	dw $4ed0 ; record 26
-	dw $4ed0 ; record 27
-	dw $4ed0 ; record 28
-	dw $4ed0 ; record 29
-	dw $51a8 ; record 30
-	dw $51c8 ; record 31
+	dw TextCmdNewline ; record 20
+	dw TextCmdNewline ; record 21
+	dw TextCmdNewline ; record 22
+	dw TextCmdNewline ; record 23
+	dw TextCmdNewline ; record 24
+	dw TextCmdNewline ; record 25
+	dw TextCmdNewline ; record 26
+	dw TextCmdNewline ; record 27
+	dw TextCmdNewline ; record 28
+	dw TextCmdNewline ; record 29
+	dw TextCmdApplyDakuten ; record 30
+	dw TextCmdApplyHandakuten ; record 31
 RenderInlineString:
 	push af ; $54cf
 	ld a, [$d86a] ; $54d0
@@ -4520,7 +4519,6 @@ Label_05_5c37:
 	jp hl ; $5c3a
 DialogueTextFetchers_05:
 	; $5c3b, 32 bytes (records:2)
-; 16 records x 2 bytes
 	dw $5c5b ; record 0
 	dw $5c60 ; record 1
 	dw $5c65 ; record 2
@@ -4602,7 +4600,6 @@ Label_05_5cc3:
 	jp hl ; $5cc6
 ShortTextFetchers_05:
 	; $5cc7, 32 bytes (records:2)
-; 16 records x 2 bytes
 	dw $5ce7 ; record 0
 	dw $5cec ; record 1
 	dw $5cf1 ; record 2
@@ -5997,7 +5994,6 @@ Label_05_66d9:
 	ret ; $66dd
 TextSubcmdHandlers_05:
 	; $66de, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $66e6 ; record 0
 	dw $66eb ; record 1
 	dw $6722 ; record 2

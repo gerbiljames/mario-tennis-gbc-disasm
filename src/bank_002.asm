@@ -1070,8 +1070,7 @@ Label_02_46e4:
 	ret ; $46ea
 CharStatClampPtrs_02:
 	; $46eb, 4 bytes (records:2)
-; 2 records x 2 bytes
-	dw $46ef ; record 0
+	dw CharStatClampData_02 ; record 0
 	dw $475f ; record 1
 CharStatClampData_02:
 	; $46ef, 160 bytes (bytes:16)
@@ -1132,8 +1131,7 @@ EquipData_02:
 	db $2a, $66, $6f, $f1, $85, $6f, $30, $01, $24, $c9 ; 0x10
 EquipRecordPtrs_02:
 	; $47f2, 8 bytes (records:2)
-; 4 records x 2 bytes
-	dw $47fa ; record 0
+	dw EquipRecords_02 ; record 0
 	dw $486b ; record 1
 	dw $48dc ; record 2
 	dw $494d ; record 3
@@ -1643,7 +1641,6 @@ Label_02_4cc8:
 	ret ; $4ccb
 SaveFlagPtrs_02_4ccc:
 	; $4ccc, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $0480 ; record 0
 	dw $04a0 ; record 1
 	dw $04c0 ; record 2
@@ -1688,7 +1685,6 @@ Label_02_4d04:
 	ret ; $4d07
 SaveFlagPtrs_02_4d08:
 	; $4d08, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $0400 ; record 0
 	dw $0420 ; record 1
 	dw $0440 ; record 2
@@ -1977,8 +1973,7 @@ Label_02_4e68:
 	ret ; $4e77
 CharDataPtr_02:
 	; $4e78, 2 bytes (records:2)
-; 1 records x 2 bytes
-	dw $4e7a ; record 0
+	dw CharData_02 ; record 0
 CharData_02:
 	; $4e7a, 300 bytes (bytes:16)
 	db $00, $00, $00, $0f, $00, $00, $2d, $00, $00, $5a, $00, $00, $90, $00, $00, $cc ; 0x00

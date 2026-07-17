@@ -2931,7 +2931,6 @@ Label_3b_543b:
 	wram_bank ; $5449
 	ret ; $544d
 	; $544e, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $d055 ; record 0
 	dw $d095 ; record 1
 	dw $d0d5 ; record 2
@@ -3091,7 +3090,6 @@ Label_3b_555f:
 	pop af ; $5562
 	ret ; $5563
 	; $5564, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $d0c4 ; record 0
 	dw $d104 ; record 1
 	dw $d144 ; record 2
@@ -3122,7 +3120,6 @@ Label_3b_557c:
 	pop af ; $5589
 	ret ; $558a
 	; $558b, 4 bytes (records:2)
-; 2 records x 2 bytes
 	dw $d115 ; record 0
 	dw $d117 ; record 1
 	ld a, [wMenuCursorY] ; $558f
@@ -3552,7 +3549,6 @@ Label_3b_58a5:
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
 	; $58ba, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $58cc ; record 0
 	dw $58ed ; record 1
 	dw $58cc ; record 2
@@ -3724,7 +3720,6 @@ Label_3b_5a37:
 	pop af ; $5a41
 	ret ; $5a42
 	; $5a43, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $d461 ; record 0
 	dw $d467 ; record 1
 	dw $d46d ; record 2
@@ -3750,7 +3745,6 @@ Label_3b_5a60:
 	call LoadPaletteShadow ; $5a66
 	ret ; $5a69
 	; $5a6a, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $5a7c ; record 0
 	dw $5a8c ; record 1
 	dw $5a94 ; record 2
@@ -3958,7 +3952,6 @@ Label_3b_5bfd:
 	wram_bank ; $5bfe
 	ret ; $5c02
 	; $5c03, 36 bytes (records:2)
-; 18 records x 2 bytes
 	dw $d201 ; record 0
 	dw $d201 ; record 1
 	dw $d201 ; record 2
@@ -4570,7 +4563,6 @@ Label_3b_6074:
 	pop af ; $6083
 	ret ; $6084
 	; $6085, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $d463 ; record 0
 	dw $d46c ; record 1
 	dw $d4e3 ; record 2
@@ -4747,7 +4739,6 @@ Label_3b_61e0:
 	ret ; $61e8
 	ret ; $61e9
 	; $61ea, 6 bytes (records:2)
-; 3 records x 2 bytes
 	dw $d201 ; record 0
 	dw $d201 ; record 1
 	dw $d201 ; record 2
@@ -5236,7 +5227,6 @@ Label_3b_65d4:
 	farcall FarPtr_RenderTextToBuffer64 ; $65d6
 	ret ; $65d9
 	; $65da, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $d201 ; record 0
 	dw $d201 ; record 1
 	dw $d201 ; record 2
@@ -5315,7 +5305,6 @@ Label_3b_6654:
 	pop af ; $665e
 	ret ; $665f
 	; $6660, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $d462 ; record 0
 	dw $d468 ; record 1
 	dw $d46e ; record 2
@@ -5365,7 +5354,6 @@ Label_3b_66a4:
 	ld [$cb5d], a ; $66a5
 	ret ; $66a8
 	; $66a9, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $01e0 ; record 0
 	dw $01a0 ; record 1
 	dw $0180 ; record 2
@@ -5949,7 +5937,6 @@ Label_3b_6b38:
 	pop af ; $6b42
 	ret ; $6b43
 	; $6b44, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $d482 ; record 0
 	dw $d488 ; record 1
 	dw $d48e ; record 2
@@ -5970,7 +5957,6 @@ Label_3b_6b57:
 	call LoadPaletteShadow ; $6b5d
 	ret ; $6b60
 	; $6b61, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $6b73 ; record 0
 	dw $6b73 ; record 1
 	dw $6b73 ; record 2
@@ -6652,7 +6638,6 @@ Label_3b_70b5:
 	pop af ; $70bf
 	ret ; $70c0
 	; $70c1, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $d482 ; record 0
 	dw $d488 ; record 1
 	dw $d48e ; record 2
@@ -6673,7 +6658,6 @@ Label_3b_70d4:
 	call LoadPaletteShadow ; $70da
 	ret ; $70dd
 	; $70de, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $70f0 ; record 0
 	dw $70f0 ; record 1
 	dw $70f0 ; record 2
@@ -7134,7 +7118,6 @@ Label_3b_7441:
 	pop af ; $744f
 	ret ; $7450
 	; $7451, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $d4e1 ; record 0
 	dw $d4e7 ; record 1
 	dw $d4ed ; record 2
@@ -7156,7 +7139,6 @@ Label_3b_7466:
 	call LoadPaletteShadow ; $746c
 	ret ; $746f
 	; $7470, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $7482 ; record 0
 	dw $7492 ; record 1
 	dw $748a ; record 2
@@ -7417,7 +7399,6 @@ Label_3b_7689:
 	call LoadPaletteShadow ; $768f
 	ret ; $7692
 	; $7693, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $76a5 ; record 0
 	dw $76bd ; record 1
 	dw $76ad ; record 2
@@ -7644,7 +7625,6 @@ Label_3b_787d:
 	jr nz, Label_3b_787d ; $7886
 	ret ; $7888
 	; $7889, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $7893 ; record 0
 	dw $7893 ; record 1
 	dw $7897 ; record 2
@@ -7709,7 +7689,6 @@ Label_3b_78d6:
 	pop af ; $78e2
 	ret ; $78e3
 	; $78e4, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $d129 ; record 0
 	dw $d169 ; record 1
 	dw $d1a9 ; record 2
@@ -7822,7 +7801,6 @@ Label_3b_79a9:
 	farcall FarPtr_FillTilemapRect ; $79b2
 	ret ; $79b5
 	; $79b6, 32 bytes (records:2)
-; 16 records x 2 bytes
 	dw $0000 ; record 0
 	dw $d509 ; record 1
 	dw $d549 ; record 2
@@ -8239,7 +8217,6 @@ Label_3b_7cfb:
 	jr nz, Label_3b_7ccc ; $7d00
 	ret ; $7d02
 	; $7d03, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $01c0 ; record 0
 	dw $ffff ; record 1
 	dw $01e0 ; record 2

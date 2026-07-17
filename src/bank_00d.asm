@@ -86,7 +86,6 @@ StartMinigameByID:
 	call InitMinigameFromConfig ; $408c
 	ret ; $408f
 	; $4090, 63 bytes (records:2)
-; 31 records x 2 bytes
 	dw $44fa ; record 0
 	dw $4959 ; record 1
 	dw $49b6 ; record 2
@@ -193,7 +192,6 @@ Label_0d_4139:
 	ld e, a ; $4148
 	ret ; $4149
 	; $414a, 92 bytes (records:2)
-; 46 records x 2 bytes
 	dw $000f ; record 0
 	dw $001e ; record 1
 	dw $003c ; record 2
@@ -1756,7 +1754,6 @@ Label_0d_4d26:
 Label_0d_4dac:
 	ret ; $4dac
 	; $4dad, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $4dcb ; record 0
 	dw $4dd2 ; record 1
 	dw $4dea ; record 2
@@ -1951,7 +1948,6 @@ Func_0d_5148:
 Label_0d_51b5:
 	ret ; $51b5
 	; $51b6, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $51d2 ; record 0
 	dw $51dd ; record 1
 	dw $51f5 ; record 2

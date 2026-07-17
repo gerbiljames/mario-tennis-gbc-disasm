@@ -1838,7 +1838,6 @@ Func_17_571b:
 	call Func_17_466c ; $57b7
 	ret ; $57ba
 	; $57bb, 92 bytes (records:2)
-; 46 records x 2 bytes
 	dw $0054 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -2361,7 +2360,6 @@ Label_17_5bb3:
 	call Func_17_466c ; $5be1
 	ret ; $5be4
 	; $5be5, 130 bytes (records:2)
-; 65 records x 2 bytes
 	dw $0052 ; record 0
 	dw $0044 ; record 1
 	dw $003d ; record 2
@@ -2773,7 +2771,6 @@ Func_17_5e74:
 	call Func_17_466c ; $5f02
 	ret ; $5f05
 	; $5f06, 140 bytes (records:2)
-; 70 records x 2 bytes
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -3113,7 +3110,6 @@ Func_17_60ec:
 	ld [$d824], a ; $61b0
 	ret ; $61b3
 	; $61b4, 124 bytes (records:2)
-; 62 records x 2 bytes
 	dw $0052 ; record 0
 	dw $0030 ; record 1
 	dw $003c ; record 2
@@ -3468,7 +3464,6 @@ Label_17_64b0:
 	call ClearFrameTasks ; $64b9
 	ret ; $64bc
 	; $64bd, 124 bytes (records:2)
-; 62 records x 2 bytes
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -3823,7 +3818,6 @@ Label_17_67b9:
 	call ClearFrameTasks ; $67c2
 	ret ; $67c5
 	; $67c6, 124 bytes (records:2)
-; 62 records x 2 bytes
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -4112,7 +4106,6 @@ Func_17_6965:
 	ld [$d819], a ; $6a07
 	ret ; $6a0a
 	; $6a0b, 104 bytes (records:2)
-; 52 records x 2 bytes
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -4419,7 +4412,6 @@ Func_17_6ba6:
 	ld [$d815], a ; $6c6a
 	ret ; $6c6d
 	; $6c6e, 124 bytes (records:2)
-; 62 records x 2 bytes
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -4708,7 +4700,6 @@ Func_17_6e0d:
 	ld [$d824], a ; $6eaf
 	ret ; $6eb2
 	; $6eb3, 104 bytes (records:2)
-; 52 records x 2 bytes
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -5428,7 +5419,6 @@ Label_17_7479:
 	wram_bank ; $747a
 	ret ; $747e
 	; $747f, 92 bytes (records:2)
-; 46 records x 2 bytes
 	dw $0100 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2

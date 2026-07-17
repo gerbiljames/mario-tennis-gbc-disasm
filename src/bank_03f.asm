@@ -547,7 +547,6 @@ Label_3f_4426:
 	call EnableLCD ; $444b
 	ret ; $444e
 	; $444f, 2586 bytes (records:2)
-; 1293 records x 2 bytes
 	dw $d066 ; record 0
 	dw $000a ; record 1
 	dw $d0a6 ; record 2
@@ -1835,7 +1834,7 @@ Label_3f_4426:
 	dw $0000 ; record 1284
 	dw $7fe0 ; record 1285
 	dw $00ff ; record 1286
-	dw $67ff ; record 1287
+	dw VarsityTeamChartTilemap ; record 1287
 	dw $0000 ; record 1288
 	dw $7fe0 ; record 1289
 	dw $165f ; record 1290

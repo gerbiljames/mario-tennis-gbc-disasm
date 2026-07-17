@@ -1,12 +1,10 @@
 SECTION "ROM Bank $0f", ROMX[$4000], BANK[$0f]
 
 	; $4000, 6 bytes (records:2)
-; 3 records x 2 bytes
 	dw $4006 ; record 0
 	dw $41db ; record 1
 	dw $5f94 ; record 2
 	; $4006, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $40c6 ; record 0
 	dw $40cf ; record 1
 	dw $4014 ; record 2
@@ -140,7 +138,6 @@ SetPlayerActorObjectDef:
 	call RestorePalettesFromMaster ; $41d7
 	ret ; $41da
 	; $41db, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $442d ; record 0
 	dw $4446 ; record 1
 	dw $41e9 ; record 2
@@ -3024,7 +3021,6 @@ Label_0f_5f8a:
 Label_0f_5f93:
 	ret ; $5f93
 	; $5f94, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $6070 ; record 0
 	dw $60b1 ; record 1
 	dw $5fa2 ; record 2
@@ -4841,7 +4837,6 @@ Label_0f_7640:
 	ret ; $7690
 	db $47 ; $7691
 	; $7692, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $4b28 ; record 0
 	dw $4f28 ; record 1
 	dw $4f28 ; record 2
@@ -5036,7 +5031,6 @@ Label_0f_7811:
 	farcall FarPtr_04_20 ; $7836
 	ret ; $7839
 	; $783a, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $2852 ; record 0
 	dw $2852 ; record 1
 	dw $2858 ; record 2
@@ -5070,7 +5064,6 @@ Label_0f_7811:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $78e0
 	ret ; $78e3
 	; $78e4, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $2853 ; record 0
 	dw $2853 ; record 1
 	dw $2859 ; record 2

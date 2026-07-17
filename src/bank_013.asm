@@ -2090,7 +2090,6 @@ Func_13_524e:
 	ret ; $5269
 StoryCmdHandlersC_13:
 	; $526a, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $585f ; record 0
 	dw $5877 ; record 1
 	dw $5881 ; record 2

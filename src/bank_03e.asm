@@ -1018,7 +1018,6 @@ Label_3e_4637:
 	wram_bank ; $46d3
 	ret ; $46d7
 	; $46d8, 28 bytes (records:2)
-; 14 records x 2 bytes
 	dw $3c62 ; record 0
 	dw $3c64 ; record 1
 	dw $3c66 ; record 2
@@ -1485,7 +1484,6 @@ Label_3e_4a69:
 	pop af ; $4a75
 	ret ; $4a76
 	; $4a77, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $4a87 ; record 0
 	dw $4a87 ; record 1
 	dw $4a8f ; record 2
@@ -2128,7 +2126,6 @@ Label_3e_5041:
 	call LoadPaletteShadow ; $5047
 	ret ; $504a
 	; $504b, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $505d ; record 0
 	dw $5065 ; record 1
 	dw $505d ; record 2
@@ -2514,7 +2511,6 @@ Label_3e_5329:
 	call LoadPaletteShadow ; $532f
 	ret ; $5332
 	; $5333, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $5345 ; record 0
 	dw $5345 ; record 1
 	dw $5345 ; record 2
@@ -3390,7 +3386,6 @@ Label_3e_5a59:
 	pop af ; $5a5d
 	ret ; $5a5e
 	; $5a5f, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $5a73 ; record 0
 	dw $5a7a ; record 1
 	dw $5a85 ; record 2
@@ -3519,7 +3514,6 @@ Label_3e_5b54:
 Label_3e_5b62:
 	ret ; $5b62
 	; $5b63, 6 bytes (records:2)
-; 3 records x 2 bytes
 	dw $5b69 ; record 0
 	dw $5b79 ; record 1
 	dw $5b89 ; record 2
@@ -3820,7 +3814,6 @@ Label_3e_5d50:
 	wram_bank ; $5dec
 	ret ; $5df0
 	; $5df1, 38 bytes (records:2)
-; 19 records x 2 bytes
 	dw $3f02 ; record 0
 	dw $3f04 ; record 1
 	dw $3f06 ; record 2
@@ -3980,7 +3973,6 @@ Label_3e_5ed8:
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
 	; $5eea, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $5ef2 ; record 0
 	dw $5ef2 ; record 1
 	dw $5ef2 ; record 2
@@ -4091,7 +4083,6 @@ Label_3e_5fe7:
 	call LoadPaletteShadow ; $5fed
 	ret ; $5ff0
 	; $5ff1, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $6003 ; record 0
 	dw $600b ; record 1
 	dw $6013 ; record 2
@@ -4754,7 +4745,6 @@ Label_3e_68cf:
 	call LoadPaletteShadow ; $68d5
 	ret ; $68d8
 	; $68d9, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $68eb ; record 0
 	dw $68f3 ; record 1
 	dw $68fb ; record 2

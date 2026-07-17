@@ -432,7 +432,6 @@ Func_2c_7281:
 	call Func_2c_41cd ; $728f
 	ret ; $7292
 	; $7293, 64 bytes (records:2)
-; 32 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2
@@ -475,7 +474,6 @@ Func_2c_72d3:
 	call Func_2c_4139 ; $72e1
 	ret ; $72e4
 	; $72e5, 64 bytes (records:2)
-; 32 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2
@@ -518,7 +516,6 @@ Func_2c_7325:
 	call Func_2c_4139 ; $7333
 	ret ; $7336
 	; $7337, 64 bytes (records:2)
-; 32 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2

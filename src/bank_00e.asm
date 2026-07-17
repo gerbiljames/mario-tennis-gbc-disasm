@@ -355,7 +355,6 @@ Label_0e_41e1:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $43b9
 	ret ; $43bc
 	; $43bd, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $14a9 ; record 0
 	dw $14a9 ; record 1
 	dw $14b3 ; record 2
@@ -382,7 +381,6 @@ Label_0e_41e1:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $43e6
 	ret ; $43e9
 	; $43ea, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $14aa ; record 0
 	dw $14b4 ; record 1
 	dw $14bf ; record 2
@@ -403,7 +401,6 @@ Label_0e_41e1:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4407
 	ret ; $440a
 	; $440b, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $14ab ; record 0
 	dw $14ab ; record 1
 	dw $14b5 ; record 2
@@ -429,7 +426,6 @@ Label_0e_41e1:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4432
 	ret ; $4435
 	; $4436, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $14ac ; record 0
 	dw $14ac ; record 1
 	dw $14b6 ; record 2
@@ -458,7 +454,6 @@ Label_0e_41e1:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4463
 	ret ; $4466
 	; $4467, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $14ad ; record 0
 	dw $14b7 ; record 1
 	dw $14c3 ; record 2
@@ -498,7 +493,6 @@ Label_0e_448f:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $44aa
 	ret ; $44ad
 	; $44ae, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $14ae ; record 0
 	dw $14b8 ; record 1
 	dw $14c4 ; record 2
@@ -520,7 +514,6 @@ Label_0e_448f:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $44cd
 	ret ; $44d0
 	; $44d1, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $14af ; record 0
 	dw $14b9 ; record 1
 	dw $14c5 ; record 2
@@ -541,7 +534,6 @@ Label_0e_448f:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $44ee
 	ret ; $44f1
 	; $44f2, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $14b0 ; record 0
 	dw $14b0 ; record 1
 	dw $14ba ; record 2
@@ -567,7 +559,6 @@ Label_0e_448f:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4519
 	ret ; $451c
 	; $451d, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $14b1 ; record 0
 	dw $14b1 ; record 1
 	dw $14bb ; record 2
@@ -594,7 +585,6 @@ Label_0e_448f:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4546
 	ret ; $4549
 	; $454a, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $14b2 ; record 0
 	dw $14bc ; record 1
 	dw $14c9 ; record 2
@@ -1529,7 +1519,6 @@ Label_0e_5224:
 	INCBIN "data/bank_00e/d_5225.bin" ; $5225, 35 bytes
 MarioWorldMapScripts_0e:
 	; $5248, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $535c ; record 0
 	dw $5385 ; record 1
 	dw $5256 ; record 2
@@ -4741,7 +4730,6 @@ Label_0e_71e2:
 	INCBIN "data/bank_00e/d_71e9.bin" ; $71e9, 1037 bytes
 SpecialCourtMapScripts_0e:
 	; $75f6, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $76d2 ; record 0
 	dw $76db ; record 1
 	dw $7604 ; record 2

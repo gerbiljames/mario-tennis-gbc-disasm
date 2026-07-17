@@ -10,7 +10,6 @@ DataPtr_JuniorClassCourtSinglesScene_11:
 	dw JuniorClassCourtSinglesScene_11 ; $4006
 Data_11_4008:
 	; $4008, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $4058 ; record 0
 	dw $4071 ; record 1
 	dw $4016 ; record 2
@@ -123,7 +122,6 @@ Label_11_4136:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4138
 	ret ; $413b
 	; $413c, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $2455 ; record 0
 	dw $2457 ; record 1
 	dw $2459 ; record 2
@@ -146,7 +144,6 @@ Label_11_4136:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $415d
 	ret ; $4160
 	; $4161, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $2456 ; record 0
 	dw $2458 ; record 1
 	dw $245a ; record 2
@@ -357,7 +354,6 @@ Label_11_4395:
 	INCBIN "data/bank_011/d_43ed.bin" ; $43ed, 20 bytes
 AcademyArrivalScene_11:
 	; $4401, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $4515 ; record 0
 	dw $457c ; record 1
 	dw $440f ; record 2
@@ -439,7 +435,6 @@ Label_11_45db:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $45dd
 	ret ; $45e0
 	; $45e1, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $1836 ; record 0
 	dw $1839 ; record 1
 	dw $183f ; record 2
@@ -465,7 +460,6 @@ Label_11_45db:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4608
 	ret ; $460b
 	; $460c, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $183c ; record 0
 	dw $183d ; record 1
 	dw $1840 ; record 2
@@ -492,7 +486,6 @@ Label_11_45db:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4635
 	ret ; $4638
 	; $4639, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $183e ; record 0
 	dw $1841 ; record 1
 	dw $1846 ; record 2
@@ -2039,7 +2032,6 @@ Label_11_54bf:
 	ret ; $54bf
 JuniorClassCourtDoublesScene_11:
 	; $54c0, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $558e ; record 0
 	dw $559f ; record 1
 	dw $54ce ; record 2

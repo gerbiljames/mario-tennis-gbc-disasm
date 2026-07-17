@@ -2,8 +2,7 @@ SECTION "ROM Bank $27", ROMX[$4000], BANK[$27]
 
 SceneFramePtrs_27:
 	; $4000, 24 bytes (records:2)
-; 12 records x 2 bytes
-	dw $4018 ; record 0
+	dw SceneFrameData_27 ; record 0
 	dw $460c ; record 1
 	dw $4bbc ; record 2
 	dw $5211 ; record 3

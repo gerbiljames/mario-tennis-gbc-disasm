@@ -6,7 +6,6 @@ DataPtr_StoryCmdHandlersB_15:
 	dw StoryCmdHandlersB_15 ; $4002
 StoryCmdHandlersA_15:
 	; $4004, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $40b6 ; record 0
 	dw $40df ; record 1
 	dw $4012 ; record 2
@@ -77,7 +76,6 @@ Label_15_413f:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4147
 	ret ; $414a
 	; $414b, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $241e ; record 0
 	dw $2427 ; record 1
 	dw $2427 ; record 2
@@ -719,7 +717,6 @@ ClearTrainingCourtNpcFlags:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $498d
 	ret ; $4990
 	; $4991, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a79 ; record 0
 	dw $1a7c ; record 1
 	dw $1a7f ; record 2
@@ -740,7 +737,6 @@ ClearTrainingCourtNpcFlags:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $49ae
 	ret ; $49b1
 	; $49b2, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a7a ; record 0
 	dw $1a7d ; record 1
 	dw $1a80 ; record 2
@@ -761,7 +757,6 @@ ClearTrainingCourtNpcFlags:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $49cf
 	ret ; $49d2
 	; $49d3, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a7b ; record 0
 	dw $1a7e ; record 1
 	dw $1a81 ; record 2
@@ -782,7 +777,6 @@ ClearTrainingCourtNpcFlags:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $49f0
 	ret ; $49f3
 	; $49f4, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a8f ; record 0
 	dw $1a95 ; record 1
 	dw $1a99 ; record 2
@@ -818,7 +812,6 @@ ClearTrainingCourtNpcFlags:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4a32
 	ret ; $4a35
 	; $4a36, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a91 ; record 0
 	dw $1a97 ; record 1
 	dw $1a9b ; record 2
@@ -854,7 +847,6 @@ Label_15_4a70:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4a72
 	ret ; $4a75
 	; $4a76, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a92 ; record 0
 	dw $1a98 ; record 1
 	dw $1a9c ; record 2
@@ -875,7 +867,6 @@ Label_15_4a70:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4a93
 	ret ; $4a96
 	; $4a97, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a82 ; record 0
 	dw $1a87 ; record 1
 	dw $1a8a ; record 2
@@ -911,7 +902,6 @@ Label_15_4ad1:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4ad3
 	ret ; $4ad6
 	; $4ad7, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $1a83 ; record 0
 	dw $1a88 ; record 1
 	dw $1a8b ; record 2
@@ -4497,7 +4487,6 @@ TestServeChallengerGameFlag:
 	call SetGameFlagByNumber ; $71f4
 	ret ; $71f7
 	; $71f8, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $00c0 ; record 0
 	dw $00c1 ; record 1
 	dw $00c2 ; record 2
@@ -4542,7 +4531,6 @@ TestNetChallengerGameFlag:
 	call SetGameFlagByNumber ; $723a
 	ret ; $723d
 	; $723e, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $00c6 ; record 0
 	dw $00c7 ; record 1
 	dw $00c8 ; record 2
@@ -4587,7 +4575,6 @@ TestStrokeChallengerGameFlag:
 	call SetGameFlagByNumber ; $7280
 	ret ; $7283
 	; $7284, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $00cc ; record 0
 	dw $00cd ; record 1
 	dw $00ce ; record 2

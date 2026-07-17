@@ -131,7 +131,6 @@ Label_6b_40af:
 Label_6b_40bc:
 	ret ; $40bc
 	; $40bd, 156 bytes (records:2)
-; 78 records x 2 bytes
 	dw $40e1 ; record 0
 	dw $413b ; record 1
 	dw $40e7 ; record 2
@@ -183,12 +182,12 @@ Label_6b_40bc:
 	dw $4836 ; record 48
 	dw $4876 ; record 49
 	dw $4862 ; record 50
-	dw $4885 ; record 51
-	dw $48e3 ; record 52
-	dw $48ca ; record 53
-	dw $48f2 ; record 54
-	dw $492a ; record 55
-	dw $491f ; record 56
+	dw Unused_6b_State11_Init ; record 51
+	dw Unused_6b_State11_Update ; record 52
+	dw Unused_6b_State11_Exit ; record 53
+	dw Unused_6b_State12_Init ; record 54
+	dw Unused_6b_State12_Update ; record 55
+	dw Unused_6b_State12_Exit ; record 56
 	dw $46e5 ; record 57
 	dw $474b ; record 58
 	dw $4739 ; record 59

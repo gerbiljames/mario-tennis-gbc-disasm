@@ -1,13 +1,11 @@
 SECTION "ROM Bank $14", ROMX[$4000], BANK[$14]
 
 	; $4000, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $4008 ; record 0
 	dw $4a39 ; record 1
 	dw $4fac ; record 2
 	dw $5221 ; record 3
 	; $4008, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $404a ; record 0
 	dw $4086 ; record 1
 	dw $4016 ; record 2
@@ -57,7 +55,6 @@ Label_14_4085:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $40a2
 	ret ; $40a5
 	; $40a6, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $20a7 ; record 0
 	dw $20b0 ; record 1
 	dw $20b9 ; record 2
@@ -97,7 +94,6 @@ Label_14_40e6:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $40e8
 	ret ; $40eb
 	; $40ec, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $20a8 ; record 0
 	dw $20b1 ; record 1
 	dw $20ba ; record 2
@@ -669,7 +665,6 @@ Label_14_45a6:
 	; $45f8, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $c9 ; 0x00
 	; $4600, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $20a9 ; record 0
 	dw $20b4 ; record 1
 	dw $20bb ; record 2
@@ -764,7 +759,6 @@ TestMachineLevelClearedFlag:
 	call SetGameFlagByNumber ; $46b9
 	ret ; $46bc
 	; $46bd, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $00d2 ; record 0
 	dw $00d3 ; record 1
 	dw $00d4 ; record 2
@@ -1184,7 +1178,6 @@ Label_14_4a00:
 Label_14_4a38:
 	ret ; $4a38
 	; $4a39, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $4b3f ; record 0
 	dw $4b50 ; record 1
 	dw $4a47 ; record 2
@@ -1239,7 +1232,6 @@ Label_14_4a38:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4b80
 	ret ; $4b83
 	; $4b84, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $2492 ; record 0
 	dw $2492 ; record 1
 	dw $2492 ; record 2
@@ -1262,7 +1254,6 @@ Label_14_4a38:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4ba5
 	ret ; $4ba8
 	; $4ba9, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $2493 ; record 0
 	dw $2493 ; record 1
 	dw $2495 ; record 2
@@ -1285,7 +1276,6 @@ Label_14_4a38:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4bca
 	ret ; $4bcd
 	; $4bce, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $2494 ; record 0
 	dw $2494 ; record 1
 	dw $2496 ; record 2
@@ -1464,7 +1454,6 @@ Label_14_4bf5:
 	farcall FarPtr_ScriptWaitActorIdle ; $4d5b
 	ret ; $4d5e
 	; $4d5f, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $246b ; record 0
 	dw $246b ; record 1
 	dw $246b ; record 2
@@ -1651,7 +1640,6 @@ Label_14_4f99:
 Label_14_4fab:
 	ret ; $4fab
 	; $4fac, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $5042 ; record 0
 	dw $5053 ; record 1
 	dw $4fba ; record 2
@@ -1703,7 +1691,6 @@ Label_14_4fab:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $508f
 	ret ; $5092
 	; $5093, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $2486 ; record 0
 	dw $2486 ; record 1
 	dw $2489 ; record 2
@@ -1726,7 +1713,6 @@ Label_14_4fab:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $50b4
 	ret ; $50b7
 	; $50b8, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $2487 ; record 0
 	dw $2488 ; record 1
 	dw $248a ; record 2
@@ -1869,7 +1855,6 @@ Label_14_5208:
 	farcall FarPtr_ScriptSetActorAnimation ; $521d
 	ret ; $5220
 	; $5221, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $5271 ; record 0
 	dw $52a2 ; record 1
 	dw $522f ; record 2

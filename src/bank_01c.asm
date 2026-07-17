@@ -630,7 +630,6 @@ Label_1c_4521:
 	ld [de], a ; $4556
 	ret ; $4557
 	; $4558, 66 bytes (records:2)
-; 33 records x 2 bytes
 	dw $64a4 ; record 0
 	dw $64a9 ; record 1
 	dw $64ae ; record 2

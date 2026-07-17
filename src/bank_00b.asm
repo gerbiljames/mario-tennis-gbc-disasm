@@ -115,7 +115,6 @@ Label_0b_40b4:
 	ld [hl], a ; $40ba
 	ret ; $40bb
 	; $40bc, 4 bytes (records:2)
-; 2 records x 2 bytes
 	dw $c2fc ; record 0
 	dw $c2fd ; record 1
 	push bc ; $40c0
@@ -682,7 +681,6 @@ ShowDrillMessageByIndex:
 	farcall FarPtr_ShowMessageWindow ; $45c0
 	ret ; $45c3
 	; $45c4, 321 bytes (records:2)
-; 160 records x 2 bytes
 	dw $28c4 ; record 0
 	dw $28c4 ; record 1
 	dw $28c5 ; record 2
@@ -933,7 +931,6 @@ Label_0b_47ae:
 	call RunDoublesDrillMatch ; $47ae
 	jp Label_0b_473f ; $47b1
 	; $47b4, 36 bytes (records:2)
-; 18 records x 2 bytes
 	dw $482c ; record 0
 	dw $49c7 ; record 1
 	dw $4c13 ; record 2
@@ -1108,7 +1105,6 @@ Label_0b_49bf:
 	ld [$c7bb], a ; $5bec
 	ret ; $5bef
 	; $5bf0, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $5c15 ; record 0
 	dw $5c19 ; record 1
 	dw $5c52 ; record 2
@@ -1227,7 +1223,6 @@ Label_0b_5cbe:
 Label_0b_5cd6:
 	ret ; $5cd6
 	; $5cd7, 34 bytes (records:2)
-; 17 records x 2 bytes
 	dw $0000 ; record 0
 	dw $fb20 ; record 1
 	dw $01b0 ; record 2
@@ -1499,7 +1494,6 @@ Label_0b_5e8d:
 	ld [$c7bb], a ; $6b6f
 	ret ; $6b72
 	; $6b73, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $6b90 ; record 0
 	dw $6b94 ; record 1
 	dw $6be1 ; record 2
@@ -1620,7 +1614,6 @@ Label_0b_6c47:
 	call Func_0b_414b ; $6c5b
 	ret ; $6c5e
 	; $6c5f, 34 bytes (records:2)
-; 17 records x 2 bytes
 	dw $fe50 ; record 0
 	dw $fb20 ; record 1
 	dw $0000 ; record 2
@@ -2040,7 +2033,6 @@ RunDoublesDrillMatch:
 	farcall FarPtr_RunMatch ; $72dc
 	ret ; $72df
 	; $72e0, 27 bytes (records:2)
-; 13 records x 2 bytes
 	dw $72e6 ; record 0
 	dw $72ed ; record 1
 	dw $72f4 ; record 2

@@ -496,7 +496,6 @@ Func_23_7e7d:
 	ret ; $7e97
 BallPosHeightOffsets_23:
 	; $7e98, 64 bytes (records:2)
-; 32 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2
@@ -531,7 +530,6 @@ BallPosHeightOffsets_23:
 	dw $2d00 ; record 31
 BallPosBlockOffsets_23:
 	; $7ed8, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0180 ; record 1
 	dw $0300 ; record 2

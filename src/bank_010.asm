@@ -18,14 +18,13 @@ DataPtr_10_0e:
 	dw Data_10_74a9 ; $400e
 Data_10_4010:
 	; $4010, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $40a6 ; record 0
 	dw $40af ; record 1
 	dw $401e ; record 2
-	dw $4145 ; record 3
+	dw MatchSelectHandlerTable_10 ; record 3
 	dw $418e ; record 4
 	dw $418f ; record 5
-	dw $4190 ; record 6
+	dw Func_10_4190 ; record 6
 	dw $0000 ; record 7
 MatchSelectEntries_10:
 	; $4020, 126 bytes (bytes:14)
@@ -709,7 +708,6 @@ Label_10_4655:
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
 Data_10_468d:
 	; $468d, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $4785 ; record 0
 	dw $478e ; record 1
 	dw $469b ; record 2
@@ -1000,7 +998,6 @@ Data_10_468d:
 	INCBIN "data/bank_010/d_4bd8.bin" ; $4bd8, 243 bytes
 Data_10_4ccb:
 	; $4ccb, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $4ced ; record 0
 	dw $4cf6 ; record 1
 	dw $4cd9 ; record 2
@@ -1306,16 +1303,15 @@ Label_10_4fc2:
 	jp hl ; $4fc5
 MatchSelectHandlersB_10:
 	; $4fc6, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $4fd8 ; record 0
 	dw $4fd8 ; record 1
 	dw $4fd8 ; record 2
 	dw $50fe ; record 3
-	dw $5216 ; record 4
+	dw Label_10_5216 ; record 4
 	dw $52a0 ; record 5
-	dw $52d1 ; record 6
+	dw Label_10_52d1 ; record 6
 	dw $54b0 ; record 7
-	dw $54d6 ; record 8
+	dw Label_10_54d6 ; record 8
 	ld a, e ; $4fd8
 	cp a, $ff ; $4fd9
 	jr z, Label_10_5041 ; $4fdb
@@ -2258,7 +2254,6 @@ Label_10_57f3:
 	ret ; $57f5
 Data_10_57f6:
 	; $57f6, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $5870 ; record 0
 	dw $5879 ; record 1
 	dw $5804 ; record 2
@@ -2296,7 +2291,6 @@ Data_10_57f6:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5895
 	ret ; $5898
 	; $5899, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0c3b ; record 0
 	dw $0c3c ; record 1
 	dw $0c62 ; record 2
@@ -2367,7 +2361,6 @@ Label_10_5915:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $591d
 	ret ; $5920
 	; $5921, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c3d ; record 0
 	dw $0c64 ; record 1
 	dw $0c90 ; record 2
@@ -2403,7 +2396,6 @@ Label_10_595b:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $595d
 	ret ; $5960
 	; $5961, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c3e ; record 0
 	dw $0c65 ; record 1
 	dw $0c91 ; record 2
@@ -2424,7 +2416,6 @@ Label_10_595b:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $597e
 	ret ; $5981
 	; $5982, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0c3f ; record 0
 	dw $0c3f ; record 1
 	dw $0c68 ; record 2
@@ -2450,7 +2441,6 @@ Label_10_595b:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $59a9
 	ret ; $59ac
 	; $59ad, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0c40 ; record 0
 	dw $0c40 ; record 1
 	dw $0c6a ; record 2
@@ -2476,7 +2466,6 @@ Label_10_595b:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $59d4
 	ret ; $59d7
 	; $59d8, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0c41 ; record 0
 	dw $0c41 ; record 1
 	dw $0c6c ; record 2
@@ -2502,7 +2491,6 @@ Label_10_595b:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $59ff
 	ret ; $5a02
 	; $5a03, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0c42 ; record 0
 	dw $0c42 ; record 1
 	dw $0c6d ; record 2
@@ -2543,7 +2531,6 @@ Label_10_595b:
 	ret ; $5a7f
 Data_10_5a80:
 	; $5a80, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $5b86 ; record 0
 	dw $5bdd ; record 1
 	dw $5a8e ; record 2
@@ -2630,7 +2617,6 @@ Label_10_5c0d:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5c0f
 	ret ; $5c12
 	; $5c13, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c21 ; record 0
 	dw $0c44 ; record 1
 	dw $0c6f ; record 2
@@ -2651,7 +2637,6 @@ Label_10_5c0d:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5c30
 	ret ; $5c33
 	; $5c34, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c22 ; record 0
 	dw $0c46 ; record 1
 	dw $0c70 ; record 2
@@ -2704,7 +2689,6 @@ Label_10_5c0d:
 	farcall FarPtr_SetActorFacing ; $5c98
 	ret ; $5c9b
 	; $5c9c, 105 bytes (records:2)
-; 52 records x 2 bytes
 	dw $0c23 ; record 0
 	dw $0c23 ; record 1
 	dw $0c47 ; record 2
@@ -2871,7 +2855,6 @@ Label_10_5dd3:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5dd8
 	ret ; $5ddb
 	; $5ddc, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c28 ; record 0
 	dw $0c4c ; record 1
 	dw $0c7b ; record 2
@@ -2955,7 +2938,6 @@ Label_10_5e71:
 	farcall FarPtr_SetActorFacing ; $5e7d
 	ret ; $5e80
 	; $5e81, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c2b ; record 0
 	dw $0c4f ; record 1
 	dw $0c7e ; record 2
@@ -3005,7 +2987,6 @@ Label_10_5ed2:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5eda
 	ret ; $5edd
 	; $5ede, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0c2d ; record 0
 	dw $0c2d ; record 1
 	dw $0c51 ; record 2
@@ -3050,7 +3031,6 @@ Label_10_5f2a:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5f2c
 	ret ; $5f2f
 	; $5f30, 20 bytes (records:2)
-; 10 records x 2 bytes
 	dw $0c2e ; record 0
 	dw $0c31 ; record 1
 	dw $0c53 ; record 2
@@ -3081,7 +3061,6 @@ Label_10_5f5f:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5f61
 	ret ; $5f64
 	; $5f65, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c34 ; record 0
 	dw $0c59 ; record 1
 	dw $0c85 ; record 2
@@ -3129,7 +3108,6 @@ Label_10_5fb9:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5fbb
 	ret ; $5fbe
 	; $5fbf, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c36 ; record 0
 	dw $0c5a ; record 1
 	dw $0c86 ; record 2
@@ -3170,7 +3148,6 @@ Label_10_6003:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6005
 	ret ; $6008
 	; $6009, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c37 ; record 0
 	dw $0c5d ; record 1
 	dw $0c8a ; record 2
@@ -3191,7 +3168,6 @@ Label_10_6003:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6026
 	ret ; $6029
 	; $602a, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c38 ; record 0
 	dw $0c5f ; record 1
 	dw $0c8b ; record 2
@@ -3212,7 +3188,6 @@ Label_10_6003:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6047
 	ret ; $604a
 	; $604b, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c39 ; record 0
 	dw $0c60 ; record 1
 	dw $0c8c ; record 2
@@ -3233,7 +3208,6 @@ Label_10_6003:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6068
 	ret ; $606b
 	; $606c, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $0c3a ; record 0
 	dw $0c61 ; record 1
 	dw $0c8e ; record 2
@@ -3373,7 +3347,6 @@ Func_10_613e:
 	ret ; $61b0
 Data_10_61b1:
 	; $61b1, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $6201 ; record 0
 	dw $6212 ; record 1
 	dw $61bf ; record 2
@@ -5285,7 +5258,6 @@ Label_10_74a5:
 	ret ; $74a8
 Data_10_74a9:
 	; $74a9, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $74f9 ; record 0
 	dw $75be ; record 1
 	dw $74b7 ; record 2
@@ -5357,7 +5329,6 @@ Label_10_7621:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7623
 	ret ; $7626
 	; $7627, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $01b8 ; record 0
 	dw $01bb ; record 1
 	dw $01be ; record 2
@@ -5379,7 +5350,6 @@ Label_10_7621:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7646
 	ret ; $7649
 	; $764a, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $01b9 ; record 0
 	dw $01bc ; record 1
 	dw $01bf ; record 2
@@ -5421,7 +5391,6 @@ Label_10_7683:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7694
 	ret ; $7697
 	; $7698, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $01d0 ; record 0
 	dw $01d1 ; record 1
 	dw $01d2 ; record 2
@@ -5449,7 +5418,6 @@ Label_10_76a2:
 	farcall FarPtr_InitDialogueTextCursor ; $76c2
 	jr Label_10_7683 ; $76c5
 	; $76c7, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $01d6 ; record 0
 	dw $01d7 ; record 1
 	dw $01d8 ; record 2
@@ -5471,7 +5439,6 @@ Label_10_76a2:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $76e6
 	ret ; $76e9
 	; $76ea, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $01ba ; record 0
 	dw $01bd ; record 1
 	dw $01c0 ; record 2

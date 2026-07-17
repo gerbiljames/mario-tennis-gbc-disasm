@@ -296,7 +296,6 @@ Func_29_5e9d:
 	call Func_29_4098 ; $5ebb
 	ret ; $5ebe
 	; $5ebf, 104 bytes (records:2)
-; 52 records x 2 bytes
 	dw $0000 ; record 0
 	dw $02d0 ; record 1
 	dw $05a0 ; record 2

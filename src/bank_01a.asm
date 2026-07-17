@@ -213,7 +213,6 @@ GetTilemapBufferCellDest:
 	pop af ; $416a
 	ret ; $416b
 	; $416c, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $4176 ; record 0
 	dw $4195 ; record 1
 	dw $41b2 ; record 2
@@ -256,7 +255,6 @@ GetTilemapBufferCellDest:
 	ld [$cb2c], a ; $41d7
 	jp Label_1a_42ce ; $41da
 	; $41dd, 4 bytes (records:2)
-; 2 records x 2 bytes
 	dw $41e1 ; record 0
 	dw $420f ; record 1
 	ld a, [$cb2a] ; $41e1
@@ -1103,7 +1101,6 @@ Label_1a_4933:
 	call CopyMemoryFast ; $494c
 	ret ; $494f
 	; $4950, 200 bytes (records:2)
-; 100 records x 2 bytes
 	dw $0b00 ; record 0
 	dw $0b01 ; record 1
 	dw $0b01 ; record 2
@@ -1239,7 +1236,6 @@ Label_1a_4a3c:
 	pop af ; $4a3f
 	ret ; $4a40
 	; $4a41, 60 bytes (records:2)
-; 30 records x 2 bytes
 	dw $0b00 ; record 0
 	dw $0b01 ; record 1
 	dw $0b01 ; record 2
@@ -1310,7 +1306,6 @@ Label_1a_4aa4:
 	pop af ; $4ab2
 	ret ; $4ab3
 	; $4ab4, 107 bytes (records:2)
-; 53 records x 2 bytes
 	dw $0b38 ; record 0
 	dw $0b39 ; record 1
 	dw $0b3a ; record 2

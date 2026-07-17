@@ -386,7 +386,6 @@ Label_39_43f9:
 	pop af ; $4401
 	ret ; $4402
 	; $4403, 208 bytes (records:2)
-; 104 records x 2 bytes
 	dw $4413 ; record 0
 	dw $4453 ; record 1
 	dw $4493 ; record 2
@@ -669,7 +668,6 @@ Label_39_4698:
 	wram_bank ; $46b2
 	ret ; $46b6
 	; $46b7, 244 bytes (records:2)
-; 122 records x 2 bytes
 	dw $1b2e ; record 0
 	dw $1b30 ; record 1
 	dw $1b32 ; record 2
@@ -931,7 +929,6 @@ Func_39_4b3a:
 	call LoadPaletteShadow ; $4b51
 	ret ; $4b54
 	; $4b55, 24 bytes (records:2)
-; 12 records x 2 bytes
 	dw $0004 ; record 0
 	dw $00af ; record 1
 	dw $015f ; record 2
@@ -1294,7 +1291,6 @@ Label_39_4e59:
 	pop af ; $4e5e
 	ret ; $4e5f
 	; $4e60, 636 bytes (records:2)
-; 318 records x 2 bytes
 	dw $4e90 ; record 0
 	dw $4eb0 ; record 1
 	dw $4ec4 ; record 2
@@ -1607,12 +1603,12 @@ Label_39_4e59:
 	dw $50dc ; record 309
 	dw $50dc ; record 310
 	dw $50dc ; record 311
-	dw $6dc2 ; record 312
-	dw $6dc2 ; record 313
-	dw $6dc2 ; record 314
-	dw $6dc2 ; record 315
-	dw $6dc2 ; record 316
-	dw $6dc2 ; record 317
+	dw Func_39_6dc2 ; record 312
+	dw Func_39_6dc2 ; record 313
+	dw Func_39_6dc2 ; record 314
+	dw Func_39_6dc2 ; record 315
+	dw Func_39_6dc2 ; record 316
+	dw Func_39_6dc2 ; record 317
 	; $50dc, 7398 bytes (bytes:6)
 	db $00, $00, $00, $00, $00, $00 ; 0x00
 	db $80, $db, $00, $d0, $14, $01 ; 0x06
@@ -2884,7 +2880,6 @@ Label_39_6de1:
 	pop af ; $6deb
 	ret ; $6dec
 	; $6ded, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $d482 ; record 0
 	dw $d488 ; record 1
 	dw $d48e ; record 2

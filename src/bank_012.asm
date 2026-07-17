@@ -683,7 +683,6 @@ Label_12_44c5:
 	ret ; $467b
 WallPracticeRoomStoryCmds_12:
 	; $467c, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $46da ; record 0
 	dw $4716 ; record 1
 	dw $468a ; record 2
@@ -767,7 +766,6 @@ Label_12_4761:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $476f
 	ret ; $4772
 	; $4773, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $14e7 ; record 0
 	dw $1500 ; record 1
 	dw $150a ; record 2
@@ -790,7 +788,6 @@ Label_12_4761:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4794
 	ret ; $4797
 	; $4798, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $14ea ; record 0
 	dw $1501 ; record 1
 	dw $150d ; record 2
@@ -832,7 +829,6 @@ Label_12_47c4:
 	farcall FarPtr_SetActorFacing ; $47e1
 	ret ; $47e4
 	; $47e5, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $14eb ; record 0
 	dw $1502 ; record 1
 	dw $150e ; record 2
@@ -855,7 +851,6 @@ Label_12_47c4:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4806
 	ret ; $4809
 	; $480a, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $14ed ; record 0
 	dw $1504 ; record 1
 	dw $1510 ; record 2
@@ -1165,7 +1160,6 @@ Label_12_4a6c:
 Label_12_4aae:
 	ret ; $4aae
 	; $4aaf, 6 bytes (records:2)
-; 3 records x 2 bytes
 	dw $14f7 ; record 0
 	dw $14f8 ; record 1
 	dw $14f9 ; record 2
@@ -1277,7 +1271,6 @@ Label_12_4b94:
 	pop af ; $4b9a
 	ret ; $4b9b
 	; $4b9c, 6 bytes (records:2)
-; 3 records x 2 bytes
 	dw $14f3 ; record 0
 	dw $14f4 ; record 1
 	dw $14f5 ; record 2
@@ -2038,7 +2031,6 @@ Label_12_522c:
 	jp LaunchWallPracticeMinigame ; $526d
 	ret ; $5270
 	; $5271, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $14ee ; record 0
 	dw $1505 ; record 1
 	dw $1803 ; record 2
@@ -2047,7 +2039,6 @@ Label_12_522c:
 	dw $181e ; record 5
 	dw $1823 ; record 6
 	; $527f, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $14f0 ; record 0
 	dw $1507 ; record 1
 	dw $1805 ; record 2
@@ -2104,7 +2095,6 @@ Label_12_52f6:
 	ret ; $52f6
 SeniorCourtStoryCmds_12:
 	; $52f7, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $556f ; record 0
 	dw $5580 ; record 1
 	dw $5305 ; record 2
@@ -2207,7 +2197,6 @@ Label_12_55d3:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $55d8
 	ret ; $55db
 	; $55dc, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $108d ; record 0
 	dw $1097 ; record 1
 	dw $109e ; record 2
@@ -2480,7 +2469,6 @@ Label_12_583f:
 Label_12_5846:
 	ret ; $5846
 	; $5847, 207 bytes (records:2)
-; 103 records x 2 bytes
 	dw $100e ; record 0
 	dw $100e ; record 1
 	dw $101a ; record 2
@@ -2600,7 +2588,6 @@ Label_12_5846:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5929
 	ret ; $592c
 	; $592d, 30 bytes (records:2)
-; 15 records x 2 bytes
 	dw $1011 ; record 0
 	dw $1019 ; record 1
 	dw $1025 ; record 2
@@ -2721,7 +2708,6 @@ Label_12_59be:
 	farcall FarPtr_0a_4e ; $5a27
 	ret ; $5a2a
 	; $5a2b, 30 bytes (records:2)
-; 15 records x 2 bytes
 	dw $1012 ; record 0
 	dw $1012 ; record 1
 	dw $1027 ; record 2
@@ -2759,7 +2745,6 @@ Label_12_5a68:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5a6a
 	ret ; $5a6d
 	; $5a6e, 30 bytes (records:2)
-; 15 records x 2 bytes
 	dw $1013 ; record 0
 	dw $1013 ; record 1
 	dw $102b ; record 2
@@ -2885,7 +2870,6 @@ Label_12_5ae3:
 	farcall FarPtr_0a_4e ; $5b71
 	ret ; $5b74
 	; $5b75, 30 bytes (records:2)
-; 15 records x 2 bytes
 	dw $1014 ; record 0
 	dw $1014 ; record 1
 	dw $102c ; record 2
@@ -2926,7 +2910,6 @@ Label_12_5bb9:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5bbb
 	ret ; $5bbe
 	; $5bbf, 30 bytes (records:2)
-; 15 records x 2 bytes
 	dw $1015 ; record 0
 	dw $1015 ; record 1
 	dw $102d ; record 2
@@ -2975,7 +2958,6 @@ Label_12_5bfa:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5c0d
 	ret ; $5c10
 	; $5c11, 60 bytes (records:2)
-; 30 records x 2 bytes
 	dw $1016 ; record 0
 	dw $1016 ; record 1
 	dw $102e ; record 2
@@ -3969,7 +3951,6 @@ RunSeniorRankingMatchIntro:
 	call JumpToHL ; $64ee
 	ret ; $64f1
 	; $64f2, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $67a1 ; record 0
 	dw $683b ; record 1
 	dw $68f3 ; record 2
@@ -4603,7 +4584,6 @@ ResumeSeniorOpponentScripts:
 	call JumpToHL ; $6a51
 	ret ; $6a54
 	; $6a55, 14 bytes (records:2)
-; 7 records x 2 bytes
 	dw $6ab8 ; record 0
 	dw $6ac4 ; record 1
 	dw $6ad0 ; record 2
@@ -4872,7 +4852,6 @@ SeniorMatchVictorySceneDispatch:
 	call ComputeSeniorCourtStage ; $6e09
 	ret ; $6e0c
 	; $6e0d, 18 bytes (records:2)
-; 9 records x 2 bytes
 	dw $73b2 ; record 0
 	dw $73b2 ; record 1
 	dw $7449 ; record 2

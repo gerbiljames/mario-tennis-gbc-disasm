@@ -2751,7 +2751,6 @@ Label_38_56c5:
 	ret ; $56c8
 SubHandlers_38_56c9:
 	; $56c9, 1 bytes (records:2)
-; 0 records x 2 bytes
 	db $d5
 Label_38_56ca:
 	ld d, [hl] ; $56ca
@@ -3177,7 +3176,6 @@ Label_38_59b4:
 	ret ; $59b9
 SubHandlers_38_59ba:
 	; $59ba, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $59c6 ; record 0
 	dw $59cf ; record 1
 	dw $59e0 ; record 2
@@ -3587,7 +3585,6 @@ Label_38_5c8e:
 	ret ; $5c8e
 SubHandlers_38_5c8f:
 	; $5c8f, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $5c9b ; record 0
 	dw $5c9f ; record 1
 	dw $5ca5 ; record 2
@@ -4115,7 +4112,6 @@ Label_38_5fe5:
 	ret ; $5fea
 SubHandlers_38_5feb:
 	; $5feb, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $5ff5 ; record 0
 	dw $5ffb ; record 1
 	dw $6001 ; record 2
@@ -5522,7 +5518,6 @@ Label_38_69bd:
 	ret ; $69c0
 SubHandlers_38_69c1:
 	; $69c1, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $69cd ; record 0
 	dw $69cd ; record 1
 	dw $69d7 ; record 2

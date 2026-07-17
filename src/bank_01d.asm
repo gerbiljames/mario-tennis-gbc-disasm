@@ -5245,7 +5245,6 @@ RecordDrillResult:
 	jp hl ; $7cd8
 DrillSubHandlers_1d:
 	; $7cd9, 10 bytes (records:2)
-; 5 records x 2 bytes
 	dw $7ce3 ; record 0
 	dw $7cee ; record 1
 	dw $7cf9 ; record 2

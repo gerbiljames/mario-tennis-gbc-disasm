@@ -2573,7 +2573,6 @@ Label_1e_66f2:
 	ret ; $66f6
 RewardSubHandlersA_1e:
 	; $66f7, 16 bytes (records:2)
-; 8 records x 2 bytes
 	dw $6707 ; record 0
 	dw $6739 ; record 1
 	dw $676b ; record 2
@@ -3510,7 +3509,6 @@ Label_1e_6d13:
 	ret ; $6d13
 RewardSubHandlersB_1e:
 	; $6d14, 8 bytes (records:2)
-; 4 records x 2 bytes
 	dw $6d1c ; record 0
 	dw $6d4e ; record 1
 	dw $6d96 ; record 2
@@ -4550,7 +4548,6 @@ Label_1e_7444:
 	ret ; $7444
 RewardSubHandlersC_1e:
 	; $7445, 12 bytes (records:2)
-; 6 records x 2 bytes
 	dw $7451 ; record 0
 	dw $7466 ; record 1
 	dw $746d ; record 2
