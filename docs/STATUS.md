@@ -1,9 +1,9 @@
-# Project status — 2026-07-17
+# Project status — 2026-07-18
 
 ## Where things stand
 
-**~150.1K instructions / 387,593 bytes of proven code+structured source
-(18.5% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~150.1K instructions / 385,793 bytes of proven code+structured source
+(18.4% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `28e5a16`); the whole history rebuilds
+Everything below is **committed** (HEAD `3158e30`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -301,6 +301,12 @@ server restarts, reload `lua/disasm_connector.lua` + `/mcp` reconnect.
   ($0e/$0a/$10/$12 tennis-machine/$0d, first code in $6e).
 - `story7_rankingmatch.json` — human: full junior ranking match, won ($11
   ranking flow, $16 EXP earn/distribute first code, $1e/$08/$2c/$24/$32).
+- `session3_status_menus.json`, `session3_story.json` — autonomous drives:
+  status-screen menus and story overworld.
+- `session4_native.json` — human Trace Logger session (42 segments, 6.4 GB of
+  logs unioned; 32.0K distinct offsets). All 577 offsets not in prior traces
+  were already carved by recursive descent (mostly bank $12 tennis-machine and
+  $1d/$1e drill code), so `src/` is unchanged — pure confirmation coverage.
 - `contaminated/` — pre-fix dumps with phantom seeds; never union these.
 
 Phantom-code cleanups since then: banks 42/43 were zero-filled farcall targets
