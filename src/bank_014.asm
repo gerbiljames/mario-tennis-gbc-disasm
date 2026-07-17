@@ -111,7 +111,7 @@ Label_14_40e6:
 	dw $ff04, $0000, $40b4, $0003 ; record 1
 	dw $ff05, $0000, $442d, $0000 ; record 2
 	db $ff
-Label_14_4113:
+MachineLevel1FailedPrompt:
 	ld hl, $20db ; $4113
 	farcall FarPtr_InitDialogueTextCursor ; $4116
 	ld hl, $000f ; $4119
@@ -121,9 +121,9 @@ Label_14_4113:
 	ld h, [hl] ; $4123
 	ld l, a ; $4124
 	farcall FarPtr_PushTextArgNumber ; $4125
-	jp Label_14_474e ; $4128
-Label_14_412b:
-	call Func_14_4997 ; $412b
+	jp MachineCourtHandleRetryChoice ; $4128
+MachineLevel1ClearedScene:
+	call MachineCourtWalkToAttendantCutscene ; $412b
 	ld hl, $20af ; $412e
 	farcall FarPtr_InitDialogueTextCursor ; $4131
 	ld a, $05 ; $4134
@@ -135,7 +135,7 @@ Label_14_412b:
 	ld de, $d000 ; $4140
 	farcall FarPtr_04_20 ; $4143
 	ret ; $4146
-Label_14_4147:
+MachineLevel2FailedPrompt:
 	ld hl, $20db ; $4147
 	farcall FarPtr_InitDialogueTextCursor ; $414a
 	ld hl, $001e ; $414d
@@ -145,10 +145,10 @@ Label_14_4147:
 	ld h, [hl] ; $4157
 	ld l, a ; $4158
 	farcall FarPtr_PushTextArgNumber ; $4159
-	jp Label_14_474e ; $415c
+	jp MachineCourtHandleRetryChoice ; $415c
 	ret ; $415f
-Label_14_4160:
-	call Func_14_4997 ; $4160
+MachineLevel2ClearedScene:
+	call MachineCourtWalkToAttendantCutscene ; $4160
 	ld hl, $20b7 ; $4163
 	farcall FarPtr_InitDialogueTextCursor ; $4166
 	ld a, $05 ; $4169
@@ -160,7 +160,7 @@ Label_14_4160:
 	ld de, $d000 ; $4175
 	farcall FarPtr_04_20 ; $4178
 	ret ; $417b
-Label_14_417c:
+MachineLevel3FailedPrompt:
 	ld hl, $20db ; $417c
 	farcall FarPtr_InitDialogueTextCursor ; $417f
 	ld hl, $003c ; $4182
@@ -170,10 +170,10 @@ Label_14_417c:
 	ld h, [hl] ; $418c
 	ld l, a ; $418d
 	farcall FarPtr_PushTextArgNumber ; $418e
-	jp Label_14_474e ; $4191
+	jp MachineCourtHandleRetryChoice ; $4191
 	ret ; $4194
-Label_14_4195:
-	call Func_14_4997 ; $4195
+MachineLevel3ClearedScene:
+	call MachineCourtWalkToAttendantCutscene ; $4195
 	ld hl, $20be ; $4198
 	farcall FarPtr_InitDialogueTextCursor ; $419b
 	ld a, $05 ; $419e
@@ -185,7 +185,7 @@ Label_14_4195:
 	ld de, $d000 ; $41aa
 	farcall FarPtr_04_20 ; $41ad
 	ret ; $41b0
-Label_14_41b1:
+MachineLevel4FailedPrompt:
 	ld hl, $20db ; $41b1
 	farcall FarPtr_InitDialogueTextCursor ; $41b4
 	ld hl, $0064 ; $41b7
@@ -195,10 +195,10 @@ Label_14_41b1:
 	ld h, [hl] ; $41c1
 	ld l, a ; $41c2
 	farcall FarPtr_PushTextArgNumber ; $41c3
-	jp Label_14_474e ; $41c6
+	jp MachineCourtHandleRetryChoice ; $41c6
 	ret ; $41c9
-Label_14_41ca:
-	call Func_14_4997 ; $41ca
+MachineLevel4ClearedScene:
+	call MachineCourtWalkToAttendantCutscene ; $41ca
 	ld hl, $20c5 ; $41cd
 	farcall FarPtr_InitDialogueTextCursor ; $41d0
 	ld a, $05 ; $41d3
@@ -220,16 +220,16 @@ Label_14_41ca:
 	dw $ff06, $0000, $4222, $0001 ; record 4
 	db $ff
 	ld a, $00 ; $4210
-	jp Label_14_4612 ; $4212
+	jp MachinePracticeLevelPrompt ; $4212
 	ret ; $4215
 	ld a, $01 ; $4216
-	jp Label_14_4612 ; $4218
+	jp MachinePracticeLevelPrompt ; $4218
 	ret ; $421b
 	ld a, $02 ; $421c
-	jp Label_14_4612 ; $421e
+	jp MachinePracticeLevelPrompt ; $421e
 	ret ; $4221
 	ld a, $03 ; $4222
-	jp Label_14_4612 ; $4224
+	jp MachinePracticeLevelPrompt ; $4224
 	clear_flag $1c, 1 ; $4227
 	clear_flag $0f, 5 ; $422a
 	ld a, $00 ; $422d
@@ -275,17 +275,17 @@ Label_14_41ca:
 	ld a, $00 ; $428f
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4291
 	call EnableLCD ; $4294
-	call Func_14_43a4 ; $4297
+	call ComputeMachineCourtProgress ; $4297
 	farcall FarPtr_WaitPlayerMoveDone ; $429a
 	ld a, [$c295] ; $429d
 	cp a, $05 ; $42a0
-	jp z, Label_14_42b0 ; $42a2
+	jp z, MachineCourtResultScene ; $42a2
 	cp a, $07 ; $42a5
-	jp z, Label_14_46c5 ; $42a7
+	jp z, MachinePracticeResultScene ; $42a7
 	cp a, $ff ; $42aa
 	jp z, Label_14_4a00 ; $42ac
 	ret ; $42af
-Label_14_42b0:
+MachineCourtResultScene:
 	test_flag $05, 7 ; $42b0
 	jr z, Label_14_42d3 ; $42b3
 	ld a, $02 ; $42b5
@@ -326,33 +326,33 @@ Label_14_4301:
 	ld [$c2d5], a ; $4302
 	ld a, [$c4c7] ; $4305
 	and a, a ; $4308
-	jp nz, Label_14_433a ; $4309
+	jp nz, MachineCourtGameOverExitScene ; $4309
 	ld a, [wPointWinLoseFlag] ; $430c
 	cp a, $01 ; $430f
 	jr z, Label_14_4326 ; $4311
 	ld a, [$c2b0] ; $4313
 	ld a, a ; $4316
 	rst Rst00 ; $4317
-	dw Label_14_4113 ; $4318 jumptable
-	dw Label_14_4147 ; $431a jumptable
-	dw Label_14_417c ; $431c jumptable
-	dw Label_14_41b1 ; $431e jumptable
-	dw Label_14_4842 ; $4320 jumptable
-	dw Label_14_4842 ; $4322 jumptable
-	dw Label_14_4842 ; $4324 jumptable
+	dw MachineLevel1FailedPrompt ; $4318 jumptable
+	dw MachineLevel2FailedPrompt ; $431a jumptable
+	dw MachineLevel3FailedPrompt ; $431c jumptable
+	dw MachineLevel4FailedPrompt ; $431e jumptable
+	dw MachineExpertResultScene ; $4320 jumptable
+	dw MachineExpertResultScene ; $4322 jumptable
+	dw MachineExpertResultScene ; $4324 jumptable
 Label_14_4326:
 	ld a, [$c2b0] ; $4326
 	dec a ; $4329
 	ld a, a ; $432a
 	rst Rst00 ; $432b
-	dw Label_14_412b ; $432c jumptable
-	dw Label_14_4160 ; $432e jumptable
-	dw Label_14_4195 ; $4330 jumptable
-	dw Label_14_41ca ; $4332 jumptable
-	dw Label_14_4842 ; $4334 jumptable
-	dw Label_14_4842 ; $4336 jumptable
-	dw Label_14_4842 ; $4338 jumptable
-Label_14_433a:
+	dw MachineLevel1ClearedScene ; $432c jumptable
+	dw MachineLevel2ClearedScene ; $432e jumptable
+	dw MachineLevel3ClearedScene ; $4330 jumptable
+	dw MachineLevel4ClearedScene ; $4332 jumptable
+	dw MachineExpertResultScene ; $4334 jumptable
+	dw MachineExpertResultScene ; $4336 jumptable
+	dw MachineExpertResultScene ; $4338 jumptable
+MachineCourtGameOverExitScene:
 	ld hl, $20dc ; $433a
 	farcall FarPtr_InitDialogueTextCursor ; $433d
 	ld a, $05 ; $4340
@@ -395,7 +395,7 @@ Label_14_433a:
 	ld de, $d000 ; $439d
 	farcall FarPtr_04_20 ; $43a0
 	ret ; $43a3
-Func_14_43a4:
+ComputeMachineCourtProgress:
 	ld a, $00 ; $43a4
 	test_flag $1a, 2 ; $43a6
 	jp z, Label_14_4429 ; $43a9
@@ -460,7 +460,7 @@ Label_14_4429:
 	ld [$c2b0], a ; $4429
 	ret ; $442c
 	test_flag $1c, 0 ; $442d
-	jp nz, Label_14_44e4 ; $4430
+	jp nz, MachineCourtStartLevelScene ; $4430
 	ld a, [$c2b0] ; $4433
 	add a, a ; $4436
 	add a, $00 ; $4437
@@ -517,7 +517,7 @@ Label_14_449b:
 	farcall FarPtr_ScriptSetActorAnimation ; $449f
 	ld a, $05 ; $44a2
 	farcall FarPtr_ScriptWaitActorIdle ; $44a4
-	jr nz, Label_14_44e4 ; $44a7
+	jr nz, MachineCourtStartLevelScene ; $44a7
 Label_14_44a9:
 	test_flag $1a, 2 ; $44a9
 	jr z, Label_14_44ca ; $44ac
@@ -549,7 +549,7 @@ Label_14_44ca:
 	ld a, $05 ; $44de
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $44e0
 	ret ; $44e3
-Label_14_44e4:
+MachineCourtStartLevelScene:
 	ld a, $05 ; $44e4
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $44e6
 	ld a, $05 ; $44e9
@@ -679,10 +679,10 @@ Label_14_45a6:
 	dw $20d8 ; record 6
 	dw $20d1 ; record 7
 	dw $20d8 ; record 8
-Label_14_4612:
+MachinePracticeLevelPrompt:
 	ld [$c2b8], a ; $4612
-	call Func_14_469f ; $4615
-	jr z, Label_14_4693 ; $4618
+	call TestMachineLevelClearedFlag ; $4615
+	jr z, MachineLevelNotClearedMessage ; $4618
 	ld hl, $20e0 ; $461a
 	farcall FarPtr_InitDialogueTextCursor ; $461d
 	ld a, [$c2b8] ; $4620
@@ -734,13 +734,13 @@ Label_14_4612:
 	farcall FarPtr_0a_02 ; $468f
 Label_14_4692:
 	ret ; $4692
-Label_14_4693:
+MachineLevelNotClearedMessage:
 	ld hl, $20e1 ; $4693
 	farcall FarPtr_InitDialogueTextCursor ; $4696
 	ld a, $05 ; $4699
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $469b
 	ret ; $469e
-Func_14_469f:
+TestMachineLevelClearedFlag:
 	add a, a ; $469f
 	add a, $bd ; $46a0
 	ld l, a ; $46a2
@@ -769,7 +769,7 @@ Func_14_469f:
 	dw $00d3 ; record 1
 	dw $00d4 ; record 2
 	dw $00d5 ; record 3
-Label_14_46c5:
+MachinePracticeResultScene:
 	xor a, a ; $46c5
 	ld [$c2d5], a ; $46c6
 	set_flag $1c, 1 ; $46c9
@@ -830,10 +830,10 @@ Label_14_46ef:
 	farcall FarPtr_WaitScriptFrames ; $4745
 	pop af ; $4748
 	and a, a ; $4749
-	jp z, Label_14_47cd ; $474a
+	jp z, MachineCourtRestartLevel ; $474a
 Label_14_474d:
 	ret ; $474d
-Label_14_474e:
+MachineCourtHandleRetryChoice:
 	ld a, $05 ; $474e
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4750
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4753
@@ -843,7 +843,7 @@ Label_14_474e:
 	farcall FarPtr_WaitScriptFrames ; $475c
 	pop af ; $475f
 	and a, a ; $4760
-	jr z, Label_14_47cd ; $4761
+	jr z, MachineCourtRestartLevel ; $4761
 	ld hl, $20dc ; $4763
 	farcall FarPtr_InitDialogueTextCursor ; $4766
 	ld a, $05 ; $4769
@@ -886,12 +886,12 @@ Label_14_474e:
 	ld de, $d000 ; $47c6
 	farcall FarPtr_04_20 ; $47c9
 	ret ; $47cc
-Label_14_47cd:
+MachineCourtRestartLevel:
 	ld a, [$c8f7] ; $47cd
 	cp a, $1a ; $47d0
 	jr z, Label_14_47ef ; $47d2
 	sub a, $12 ; $47d4
-	call Func_14_469f ; $47d6
+	call TestMachineLevelClearedFlag ; $47d6
 	jr z, Label_14_47ef ; $47d9
 	ld a, $12 ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
@@ -934,12 +934,12 @@ Label_14_4801:
 	ld [$c294], a ; $483b
 	ld [$c2a1], a ; $483e
 	ret ; $4841
-Label_14_4842:
+MachineExpertResultScene:
 	test_flag $1b, 4 ; $4842
 	jr z, Label_14_484f ; $4845
 	ld a, [wPointWinLoseFlag] ; $4847
 	cp a, $01 ; $484a
-	jp z, Label_14_48f9 ; $484c
+	jp z, MachineExpertCounterMaxScene ; $484c
 Label_14_484f:
 	ld bc, $0001 ; $484f
 	ldh a, [hWramBank] ; $4852
@@ -959,7 +959,7 @@ Label_14_484f:
 	ld a, h ; $486b
 	sbc a, d ; $486c
 	ld h, a ; $486d
-	jp nc, Label_14_48be ; $486e
+	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
 	ldh a, [hWramBank] ; $4874
 	push af ; $4876
@@ -980,7 +980,7 @@ Label_14_484f:
 	ld a, h ; $4892
 	sbc a, d ; $4893
 	ld h, a ; $4894
-	jp z, Label_14_48be ; $4895
+	jp z, MachineExpertRetryPrompt ; $4895
 	ld hl, wMinigamesCurrentScore ; $4898
 	ld a, [hl+] ; $489b
 	ld b, [hl] ; $489c
@@ -1003,8 +1003,8 @@ Label_14_484f:
 	ld a, h ; $48b8
 	sbc a, d ; $48b9
 	ld h, a ; $48ba
-	jp nc, Label_14_48d1 ; $48bb
-Label_14_48be:
+	jp nc, MachineExpertNewRecordScene ; $48bb
+MachineExpertRetryPrompt:
 	ld hl, $20dd ; $48be
 	farcall FarPtr_InitDialogueTextCursor ; $48c1
 	ld hl, wMinigamesCurrentScore ; $48c4
@@ -1012,10 +1012,10 @@ Label_14_48be:
 	ld h, [hl] ; $48c8
 	ld l, a ; $48c9
 	farcall FarPtr_PushTextArgNumber ; $48ca
-	jp Label_14_474e ; $48cd
+	jp MachineCourtHandleRetryChoice ; $48cd
 	ret ; $48d0
-Label_14_48d1:
-	call Func_14_4974 ; $48d1
+MachineExpertNewRecordScene:
+	call SaveMachineExpertRecord ; $48d1
 	ld hl, $20ce ; $48d4
 	farcall FarPtr_InitDialogueTextCursor ; $48d7
 	ld hl, wMinigamesCurrentScore ; $48da
@@ -1023,7 +1023,7 @@ Label_14_48d1:
 	ld h, [hl] ; $48de
 	ld l, a ; $48df
 	farcall FarPtr_PushTextArgNumber ; $48e0
-	call Func_14_4997 ; $48e3
+	call MachineCourtWalkToAttendantCutscene ; $48e3
 	ld a, $05 ; $48e6
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $48e8
 	ld a, $02 ; $48eb
@@ -1033,7 +1033,7 @@ Label_14_48d1:
 	ld de, $d000 ; $48f2
 	farcall FarPtr_04_20 ; $48f5
 	ret ; $48f8
-Label_14_48f9:
+MachineExpertCounterMaxScene:
 	ldh a, [hWramBank] ; $48f9
 	push af ; $48fb
 	wram_bank $07 ; $48fc
@@ -1052,8 +1052,8 @@ Label_14_48f9:
 	ld a, h ; $4918
 	sbc a, d ; $4919
 	ld h, a ; $491a
-	jp z, Label_14_48be ; $491b
-	call Func_14_4974 ; $491e
+	jp z, MachineExpertRetryPrompt ; $491b
+	call SaveMachineExpertRecord ; $491e
 	ld hl, $20d4 ; $4921
 	farcall FarPtr_InitDialogueTextCursor ; $4924
 	ld hl, wMinigamesCurrentScore ; $4927
@@ -1063,7 +1063,7 @@ Label_14_48f9:
 	farcall FarPtr_PushTextArgNumber ; $492d
 	ld hl, $20d4 ; $4930
 	farcall FarPtr_InitDialogueTextCursor ; $4933
-	call Func_14_4997 ; $4936
+	call MachineCourtWalkToAttendantCutscene ; $4936
 	ld a, $05 ; $4939
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $493b
 	ld a, $05 ; $493e
@@ -1097,7 +1097,7 @@ Label_14_48f9:
 	sbc a, d ; $4971
 	ld h, a ; $4972
 	ret ; $4973
-Func_14_4974:
+SaveMachineExpertRecord:
 	ldh a, [hWramBank] ; $4974
 	push af ; $4976
 	wram_bank $07 ; $4977
@@ -1113,9 +1113,9 @@ Func_14_4974:
 	farcall FarPtr_03_2a ; $498b
 	pop af ; $498e
 	wram_bank ; $498f
-	call Func_14_43a4 ; $4993
+	call ComputeMachineCourtProgress ; $4993
 	ret ; $4996
-Func_14_4997:
+MachineCourtWalkToAttendantCutscene:
 	ld a, $00 ; $4997
 	ld bc, $3300 ; $4999
 	ld de, $3600 ; $499c
@@ -1296,12 +1296,12 @@ Label_14_4a38:
 	test_flag $05, 7 ; $4bdc
 	jr z, Label_14_4bec ; $4bdf
 	test_flag $0f, 1 ; $4be1
-	jp nz, Label_14_4d6d ; $4be4
+	jp nz, Court2SpectatorsRepeatChat ; $4be4
 	set_flag $0f, 1 ; $4be7
 	jr Label_14_4bf5 ; $4bea
 Label_14_4bec:
 	test_flag $0f, 0 ; $4bec
-	jp nz, Label_14_4d6d ; $4bef
+	jp nz, Court2SpectatorsRepeatChat ; $4bef
 	set_flag $0f, 0 ; $4bf2
 Label_14_4bf5:
 	ld a, [$c2b0] ; $4bf5
@@ -1472,7 +1472,7 @@ Label_14_4bf5:
 	dw $2478 ; record 4
 	dw $2478 ; record 5
 	dw $247e ; record 6
-Label_14_4d6d:
+Court2SpectatorsRepeatChat:
 	ld a, $08 ; $4d6d
 	ld d, $02 ; $4d6f
 	farcall FarPtr_ScriptSetActorAnimation ; $4d71
@@ -1556,11 +1556,11 @@ Label_14_4df3:
 	dw $ff01, $0000, $4e55, $0000 ; record 0
 	db $ff
 	ret ; $4e55
-	call Func_14_4e60 ; $4e56
+	call InitCourt2SceneVariant ; $4e56
 	call Func_14_51ea ; $4e59
-	call Func_14_4f66 ; $4e5c
+	call Court2EntryWalkIn ; $4e5c
 	ret ; $4e5f
-Func_14_4e60:
+InitCourt2SceneVariant:
 	ld a, $00 ; $4e60
 	ld [$c2b0], a ; $4e62
 	test_flag $05, 7 ; $4e65
@@ -1619,7 +1619,7 @@ Label_14_4eaf:
 	db $00, $00, $b1, $78, $00, $fd, $00, $01, $40, $00, $53, $01, $00, $00 ; 0x46
 	db $00, $00, $b1, $78, $00, $fd, $00, $01, $40, $00, $4d, $01, $00, $00 ; 0x54
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x62
-Func_14_4f66:
+Court2EntryWalkIn:
 	ld a, [$c295] ; $4f66
 	cp a, $ff ; $4f69
 	jp z, Label_14_4fab ; $4f6b
@@ -1751,11 +1751,11 @@ Label_14_4fab:
 	dw $ff01, $0000, $50fa, $0000 ; record 0
 	db $ff
 	ret ; $50fa
-	call Func_14_5105 ; $50fb
+	call InitCourt1SceneVariant ; $50fb
 	call Func_14_51ea ; $50fe
-	call Func_14_51a4 ; $5101
+	call Court1EntryWalkIn ; $5101
 	ret ; $5104
-Func_14_5105:
+InitCourt1SceneVariant:
 	ld a, $00 ; $5105
 	ld [$c2b0], a ; $5107
 	test_flag $05, 7 ; $510a
@@ -1808,7 +1808,7 @@ Label_14_515c:
 	db $00, $00, $b1, $78, $00, $1b, $00, $23, $40, $00, $39, $01, $03, $00 ; 0x1c
 	db $00, $00, $b1, $78, $00, $1d, $00, $23, $40, $00, $32, $01, $03, $00 ; 0x2a
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x38
-Func_14_51a4:
+Court1EntryWalkIn:
 	ld a, [$c295] ; $51a4
 	cp a, $ff ; $51a7
 	jp z, Label_14_51e9 ; $51a9
@@ -1929,7 +1929,7 @@ Label_14_5208:
 Label_14_5303:
 	set_flag $09, 7 ; $5303
 	call DisableLCDSafely ; $5306
-	call Func_14_5e79 ; $5309
+	call LoadWaterSpriteObjGfx ; $5309
 	call Func_14_60a1 ; $530c
 	call EnableLCD ; $530f
 	ld a, $50 ; $5312
@@ -2013,7 +2013,7 @@ Label_14_53be:
 	ld a, $06 ; $53bf
 	farcall FarPtr_WaitScriptFrames ; $53c1
 	pop af ; $53c4
-	call Func_14_78a7 ; $53c5
+	call PlayWaterSpriteMoveSfx ; $53c5
 	ld a, [$c2b1] ; $53c8
 	inc a ; $53cb
 	ld [$c2b1], a ; $53cc
@@ -2025,7 +2025,7 @@ Label_14_53d4:
 	ld a, $05 ; $53d5
 	farcall FarPtr_WaitScriptFrames ; $53d7
 	pop af ; $53da
-	call Func_14_78a7 ; $53db
+	call PlayWaterSpriteMoveSfx ; $53db
 	ld a, h ; $53de
 	and a, $01 ; $53df
 	jr z, Label_14_53ea ; $53e1
@@ -2044,7 +2044,7 @@ Label_14_53f6:
 	ld a, $04 ; $53f7
 	farcall FarPtr_WaitScriptFrames ; $53f9
 	pop af ; $53fc
-	call Func_14_78a7 ; $53fd
+	call PlayWaterSpriteMoveSfx ; $53fd
 	ld a, [$c2b0] ; $5400
 	dec a ; $5403
 	ld [$c2b0], a ; $5404
@@ -2064,7 +2064,7 @@ Label_14_5420:
 	ld a, $03 ; $5421
 	farcall FarPtr_WaitScriptFrames ; $5423
 	pop af ; $5426
-	call Func_14_78a7 ; $5427
+	call PlayWaterSpriteMoveSfx ; $5427
 	ld a, h ; $542a
 	and a, $01 ; $542b
 	jr z, Label_14_5436 ; $542d
@@ -2085,7 +2085,7 @@ Label_14_5442:
 	farcall FarPtr_WaitScriptFrames ; $5445
 	pop af ; $5448
 	inc h ; $5449
-	call Func_14_78a7 ; $544a
+	call PlayWaterSpriteMoveSfx ; $544a
 	ld a, [$c2b1] ; $544d
 	inc a ; $5450
 	ld [$c2b1], a ; $5451
@@ -2105,7 +2105,7 @@ Label_14_546a:
 	ld a, $04 ; $546b
 	farcall FarPtr_WaitScriptFrames ; $546d
 	pop af ; $5470
-	call Func_14_78a7 ; $5471
+	call PlayWaterSpriteMoveSfx ; $5471
 	ld a, [$c2b1] ; $5474
 	inc a ; $5477
 	ld [$c2b1], a ; $5478
@@ -2312,7 +2312,7 @@ Label_14_5603:
 	ld [$c2a1], a ; $5637
 	ret ; $563a
 	INCBIN "data/bank_014/d_563b.bin" ; $563b, 2110 bytes
-Func_14_5e79:
+LoadWaterSpriteObjGfx:
 	ldh a, [hWramBank] ; $5e79
 	push af ; $5e7b
 	wram_bank $01 ; $5e7c
@@ -2326,7 +2326,7 @@ Func_14_5e79:
 	pop af ; $5e96
 	wram_bank ; $5e97
 	ret ; $5e9b
-	call Func_14_756d ; $5e9c
+	call GetWaterSpriteScreenPos ; $5e9c
 	ld b, $00 ; $5e9f
 	ld a, [$c2b1] ; $5ea1
 	sub a, $88 ; $5ea4
@@ -2562,7 +2562,7 @@ Func_14_6225:
 	ld [$c2b5], a ; $6234
 Label_14_6237:
 	ret ; $6237
-Func_14_6238:
+LoadWaterSpriteObjGfx2:
 	ldh a, [hWramBank] ; $6238
 	push af ; $623a
 	wram_bank $01 ; $623b
@@ -2576,7 +2576,7 @@ Func_14_6238:
 	pop af ; $6255
 	wram_bank ; $6256
 	ret ; $625a
-	call Func_14_756d ; $625b
+	call GetWaterSpriteScreenPos ; $625b
 	ld b, $10 ; $625e
 	ld a, [$c2b2] ; $6260
 	cp a, $14 ; $6263
@@ -2603,7 +2603,7 @@ Label_14_6281:
 Label_14_628b:
 	clear_flag $09, 7 ; $628b
 	call DisableLCDSafely ; $628e
-	call Func_14_6238 ; $6291
+	call LoadWaterSpriteObjGfx2 ; $6291
 	call EnableLCD ; $6294
 	ld a, $20 ; $6297
 	ld [$c2b0], a ; $6299
@@ -2649,7 +2649,7 @@ Label_14_62f4:
 	ld a, $06 ; $62f5
 	farcall FarPtr_WaitScriptFrames ; $62f7
 	pop af ; $62fa
-	call Func_14_78a7 ; $62fb
+	call PlayWaterSpriteMoveSfx ; $62fb
 	ld a, [$c2b1] ; $62fe
 	dec a ; $6301
 	ld [$c2b1], a ; $6302
@@ -2662,7 +2662,7 @@ Label_14_630d:
 	ld a, $05 ; $630e
 	farcall FarPtr_WaitScriptFrames ; $6310
 	pop af ; $6313
-	call Func_14_78a7 ; $6314
+	call PlayWaterSpriteMoveSfx ; $6314
 	ld a, h ; $6317
 	and a, $01 ; $6318
 	jr z, Label_14_6323 ; $631a
@@ -2682,7 +2682,7 @@ Label_14_6332:
 	ld a, $04 ; $6333
 	farcall FarPtr_WaitScriptFrames ; $6335
 	pop af ; $6338
-	call Func_14_78a7 ; $6339
+	call PlayWaterSpriteMoveSfx ; $6339
 	ld a, [$c2b0] ; $633c
 	inc a ; $633f
 	ld [$c2b0], a ; $6340
@@ -2703,7 +2703,7 @@ Label_14_635f:
 	ld a, $03 ; $6360
 	farcall FarPtr_WaitScriptFrames ; $6362
 	pop af ; $6365
-	call Func_14_78a7 ; $6366
+	call PlayWaterSpriteMoveSfx ; $6366
 	ld a, h ; $6369
 	and a, $01 ; $636a
 	jr z, Label_14_6375 ; $636c
@@ -2724,7 +2724,7 @@ Label_14_6384:
 	farcall FarPtr_WaitScriptFrames ; $6387
 	pop af ; $638a
 	inc h ; $638b
-	call Func_14_78a7 ; $638c
+	call PlayWaterSpriteMoveSfx ; $638c
 	ld a, [$c2b1] ; $638f
 	dec a ; $6392
 	ld [$c2b1], a ; $6393
@@ -2745,7 +2745,7 @@ Label_14_63af:
 	ld a, $04 ; $63b0
 	farcall FarPtr_WaitScriptFrames ; $63b2
 	pop af ; $63b5
-	call Func_14_78a7 ; $63b6
+	call PlayWaterSpriteMoveSfx ; $63b6
 	ld a, [$c2b1] ; $63b9
 	dec a ; $63bc
 	ld [$c2b1], a ; $63bd
@@ -2758,7 +2758,7 @@ Label_14_63c8:
 	ld a, $06 ; $63c9
 	farcall FarPtr_WaitScriptFrames ; $63cb
 	pop af ; $63ce
-	call Func_14_78a7 ; $63cf
+	call PlayWaterSpriteMoveSfx ; $63cf
 	ld a, [$c2b1] ; $63d2
 	dec a ; $63d5
 	ld [$c2b1], a ; $63d6
@@ -2771,7 +2771,7 @@ Label_14_63e1:
 	ld a, $08 ; $63e2
 	farcall FarPtr_WaitScriptFrames ; $63e4
 	pop af ; $63e7
-	call Func_14_78a7 ; $63e8
+	call PlayWaterSpriteMoveSfx ; $63e8
 	ld a, [$c2b1] ; $63eb
 	dec a ; $63ee
 	ld [$c2b1], a ; $63ef
@@ -3068,7 +3068,7 @@ Label_14_6662:
 	INCBIN "data/bank_014/d_6675.bin" ; $6675, 2310 bytes
 Label_14_6f7b:
 	call DisableLCDSafely ; $6f7b
-	call Func_14_5e79 ; $6f7e
+	call LoadWaterSpriteObjGfx ; $6f7e
 	call Func_14_73aa ; $6f81
 	call EnableLCD ; $6f84
 	ld a, $50 ; $6f87
@@ -3114,7 +3114,7 @@ Label_14_6fe4:
 	ld a, $06 ; $6fe5
 	farcall FarPtr_WaitScriptFrames ; $6fe7
 	pop af ; $6fea
-	call Func_14_78a7 ; $6feb
+	call PlayWaterSpriteMoveSfx ; $6feb
 	ld a, [$c2b1] ; $6fee
 	inc a ; $6ff1
 	ld [$c2b1], a ; $6ff2
@@ -3126,7 +3126,7 @@ Label_14_6ffa:
 	ld a, $04 ; $6ffb
 	farcall FarPtr_WaitScriptFrames ; $6ffd
 	pop af ; $7000
-	call Func_14_78a7 ; $7001
+	call PlayWaterSpriteMoveSfx ; $7001
 	ld a, [$c2b1] ; $7004
 	inc a ; $7007
 	ld [$c2b1], a ; $7008
@@ -3143,7 +3143,7 @@ Label_14_701a:
 	ld a, $03 ; $701b
 	farcall FarPtr_WaitScriptFrames ; $701d
 	pop af ; $7020
-	call Func_14_78a7 ; $7021
+	call PlayWaterSpriteMoveSfx ; $7021
 	ld a, [$c2b1] ; $7024
 	inc a ; $7027
 	ld [$c2b1], a ; $7028
@@ -3164,7 +3164,7 @@ Label_14_7047:
 	ld a, $02 ; $7048
 	farcall FarPtr_WaitScriptFrames ; $704a
 	pop af ; $704d
-	call Func_14_78a7 ; $704e
+	call PlayWaterSpriteMoveSfx ; $704e
 	ld a, [$c2b0] ; $7051
 	inc a ; $7054
 	ld [$c2b0], a ; $7055
@@ -3181,7 +3181,7 @@ Label_14_7067:
 	ld a, $02 ; $7068
 	farcall FarPtr_WaitScriptFrames ; $706a
 	pop af ; $706d
-	call Func_14_78a7 ; $706e
+	call PlayWaterSpriteMoveSfx ; $706e
 	ld a, [$c2b0] ; $7071
 	inc a ; $7074
 	ld [$c2b0], a ; $7075
@@ -3202,7 +3202,7 @@ Label_14_7090:
 	ld a, $02 ; $7091
 	farcall FarPtr_WaitScriptFrames ; $7093
 	pop af ; $7096
-	call Func_14_78a7 ; $7097
+	call PlayWaterSpriteMoveSfx ; $7097
 	dec h ; $709a
 	jr nz, Label_14_7090 ; $709b
 	xor a, a ; $709d
@@ -3223,7 +3223,7 @@ Label_14_70be:
 	ld a, $02 ; $70bf
 	farcall FarPtr_WaitScriptFrames ; $70c1
 	pop af ; $70c4
-	call Func_14_78a7 ; $70c5
+	call PlayWaterSpriteMoveSfx ; $70c5
 	ld a, [$c2b1] ; $70c8
 	dec a ; $70cb
 	ld [$c2b1], a ; $70cc
@@ -3396,7 +3396,7 @@ Func_14_7539:
 	pop af ; $7556
 	wram_bank ; $7557
 	ret ; $755b
-	call Func_14_756d ; $755c
+	call GetWaterSpriteScreenPos ; $755c
 	ld a, [wWaterSpriteMinigameSwingCount] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
@@ -3404,7 +3404,7 @@ Func_14_7539:
 	ld b, $08 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
-Func_14_756d:
+GetWaterSpriteScreenPos:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
 	ld a, [$c2b0] ; $7570
@@ -3501,7 +3501,7 @@ Label_14_773c:
 	ld a, $02 ; $773d
 	farcall FarPtr_WaitScriptFrames ; $773f
 	pop af ; $7742
-	call Func_14_78a7 ; $7743
+	call PlayWaterSpriteMoveSfx ; $7743
 	ld a, [$c2b1] ; $7746
 	inc a ; $7749
 	ld [$c2b1], a ; $774a
@@ -3530,10 +3530,10 @@ Label_14_7779:
 	ld a, $02 ; $777a
 	farcall FarPtr_WaitScriptFrames ; $777c
 	pop af ; $777f
-	call Func_14_78a7 ; $7780
+	call PlayWaterSpriteMoveSfx ; $7780
 	dec h ; $7783
 	jr nz, Label_14_7779 ; $7784
-	call Func_14_6238 ; $7786
+	call LoadWaterSpriteObjGfx2 ; $7786
 	ld a, $a4 ; $7789
 	ld [$c2b0], a ; $778b
 	ld a, $c6 ; $778e
@@ -3549,7 +3549,7 @@ Label_14_77a2:
 	ld a, $02 ; $77a3
 	farcall FarPtr_WaitScriptFrames ; $77a5
 	pop af ; $77a8
-	call Func_14_78a7 ; $77a9
+	call PlayWaterSpriteMoveSfx ; $77a9
 	ld a, [$c2b0] ; $77ac
 	dec a ; $77af
 	ld [$c2b0], a ; $77b0
@@ -3569,7 +3569,7 @@ Label_14_77c8:
 	ld a, $02 ; $77c9
 	farcall FarPtr_WaitScriptFrames ; $77cb
 	pop af ; $77ce
-	call Func_14_78a7 ; $77cf
+	call PlayWaterSpriteMoveSfx ; $77cf
 	ld a, [$c2b0] ; $77d2
 	dec a ; $77d5
 	ld [$c2b0], a ; $77d6
@@ -3591,7 +3591,7 @@ Label_14_77f5:
 	ld a, $03 ; $77f6
 	farcall FarPtr_WaitScriptFrames ; $77f8
 	pop af ; $77fb
-	call Func_14_78a7 ; $77fc
+	call PlayWaterSpriteMoveSfx ; $77fc
 	ld a, [$c2b1] ; $77ff
 	dec a ; $7802
 	ld [$c2b1], a ; $7803
@@ -3607,7 +3607,7 @@ Label_14_7815:
 	ld a, $04 ; $7816
 	farcall FarPtr_WaitScriptFrames ; $7818
 	pop af ; $781b
-	call Func_14_78a7 ; $781c
+	call PlayWaterSpriteMoveSfx ; $781c
 	ld a, [$c2b1] ; $781f
 	dec a ; $7822
 	ld [$c2b1], a ; $7823
@@ -3625,7 +3625,7 @@ Label_14_7838:
 	ld a, $06 ; $7839
 	farcall FarPtr_WaitScriptFrames ; $783b
 	pop af ; $783e
-	call Func_14_78a7 ; $783f
+	call PlayWaterSpriteMoveSfx ; $783f
 	ld a, [$c2b1] ; $7842
 	dec a ; $7845
 	ld [$c2b1], a ; $7846
@@ -3675,7 +3675,7 @@ Label_14_788e:
 	ld hl, $76ab ; $78a0
 	call UnregisterFrameTask ; $78a3
 	ret ; $78a6
-Func_14_78a7:
+PlayWaterSpriteMoveSfx:
 	ld a, h ; $78a7
 	srl a ; $78a8
 	and a, $01 ; $78aa

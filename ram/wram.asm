@@ -917,7 +917,11 @@ wMenuInputPressed:: db
 
 ; [8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)
 wIntroCutsceneCheck:: db
-	ds 190
+	ds 31
+
+; Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it).
+wBgMapShadowDirty:: db
+	ds 158
 
 ; [576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active
 wDebugTextBuffer:: ds 576

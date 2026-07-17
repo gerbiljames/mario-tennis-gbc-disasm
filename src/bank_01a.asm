@@ -1032,7 +1032,7 @@ Func_1a_4852:
 	wram_bank $01 ; $4881
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $4887
 	ld d, $0e ; $488a
-	farcall FarPtr_18_02 ; $488c
+	farcall FarPtr_LoadIndexedPalette_18 ; $488c
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $488f
 	ld b, $00 ; $4892
 	wram_bank $01 ; $4894

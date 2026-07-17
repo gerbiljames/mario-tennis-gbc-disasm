@@ -870,6 +870,11 @@
   "note": "[8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)",
   "size": 1
  },
+ "0xcb61": {
+  "name": "wBgMapShadowDirty",
+  "note": "Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it).",
+  "size": 1
+ },
  "0xcc00": {
   "name": "wDebugTextBuffer",
   "note": "[576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active",

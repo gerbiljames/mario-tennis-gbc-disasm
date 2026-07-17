@@ -2,8 +2,8 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 
 FarPtr_18_00:
 	dw Func_18_4328 ; $4000
-FarPtr_18_02:
-	dw Func_18_4339 ; $4002
+FarPtr_LoadIndexedPalette_18:
+	dw LoadIndexedPalette_18 ; $4002
 FarPtr_RenderProportionalTextAt32:
 	dw RenderProportionalTextAt32 ; $4004
 FarPtr_18_06:
@@ -158,7 +158,7 @@ Func_18_4328:
 	pop bc ; $4336
 	pop af ; $4337
 	ret ; $4338
-Func_18_4339:
+LoadIndexedPalette_18:
 	push af ; $4339
 	push bc ; $433a
 	push de ; $433b
@@ -180,7 +180,7 @@ Func_18_4339:
 	pop af ; $4351
 	ret ; $4352
 FlushBgMapShadowToVram:
-	ld a, [$cb61] ; $4353
+	ld a, [wBgMapShadowDirty] ; $4353
 	and a, $0f ; $4356
 	jr z, Label_18_4365 ; $4358
 	ld hl, $d800 ; $435a
@@ -188,7 +188,7 @@ FlushBgMapShadowToVram:
 	ld c, $24 ; $4360
 	call QueueVRAMCopy ; $4362
 Label_18_4365:
-	ld a, [$cb61] ; $4365
+	ld a, [wBgMapShadowDirty] ; $4365
 	and a, $f0 ; $4368
 	jr z, Label_18_4377 ; $436a
 	ld hl, $dc00 ; $436c
@@ -197,7 +197,7 @@ Label_18_4365:
 	call QueueVRAMCopy ; $4374
 Label_18_4377:
 	xor a, a ; $4377
-	ld [$cb61], a ; $4378
+	ld [wBgMapShadowDirty], a ; $4378
 	ret ; $437b
 Func_18_437c:
 	push hl ; $437c
@@ -822,7 +822,7 @@ Func_18_53e4:
 	dw $0016 ; record 15
 ForceFlushBgMapToVram:
 	ld a, $ff ; $5418
-	ld [$cb61], a ; $541a
+	ld [wBgMapShadowDirty], a ; $541a
 	call FlushBgMapShadowToVram ; $541d
 	ret ; $5420
 RunTwoOptionSelect:

@@ -341,16 +341,16 @@ InitMatchWinLoseScreen:
 	farcall FarPtr_FillTilemapRect ; $458b
 	ld a, $00 ; $458e
 	ld d, $04 ; $4590
-	farcall FarPtr_18_02 ; $4592
+	farcall FarPtr_LoadIndexedPalette_18 ; $4592
 	ld a, $00 ; $4595
 	ld d, $05 ; $4597
-	farcall FarPtr_18_02 ; $4599
+	farcall FarPtr_LoadIndexedPalette_18 ; $4599
 	ld a, $00 ; $459c
 	ld d, $06 ; $459e
-	farcall FarPtr_18_02 ; $45a0
+	farcall FarPtr_LoadIndexedPalette_18 ; $45a0
 	ld a, $00 ; $45a3
 	ld d, $07 ; $45a5
-	farcall FarPtr_18_02 ; $45a7
+	farcall FarPtr_LoadIndexedPalette_18 ; $45a7
 	call LoadMatchResultPalettes ; $45aa
 	call Func_16_4a56 ; $45ad
 	call Func_16_4dfe ; $45b0
@@ -2869,16 +2869,16 @@ InitMatchStatsScreen:
 	farcall FarPtr_39_64 ; $5c96
 	ld a, $00 ; $5c99
 	ld d, $04 ; $5c9b
-	farcall FarPtr_18_02 ; $5c9d
+	farcall FarPtr_LoadIndexedPalette_18 ; $5c9d
 	ld a, $00 ; $5ca0
 	ld d, $05 ; $5ca2
-	farcall FarPtr_18_02 ; $5ca4
+	farcall FarPtr_LoadIndexedPalette_18 ; $5ca4
 	ld a, $00 ; $5ca7
 	ld d, $06 ; $5ca9
-	farcall FarPtr_18_02 ; $5cab
+	farcall FarPtr_LoadIndexedPalette_18 ; $5cab
 	ld a, $00 ; $5cae
 	ld d, $07 ; $5cb0
-	farcall FarPtr_18_02 ; $5cb2
+	farcall FarPtr_LoadIndexedPalette_18 ; $5cb2
 	wram_bank $03 ; $5cb5
 	call Func_16_5f92 ; $5cbb
 	call Func_16_4dfe ; $5cbe
@@ -3298,7 +3298,7 @@ Func_16_6073:
 	add a, $04 ; $6076
 	ld d, a ; $6078
 	ld a, b ; $6079
-	farcall FarPtr_18_02 ; $607a
+	farcall FarPtr_LoadIndexedPalette_18 ; $607a
 	pop bc ; $607d
 	pop de ; $607e
 	ld b, d ; $607f

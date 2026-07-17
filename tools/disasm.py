@@ -1977,7 +1977,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         if seg in dis.slot_record_tables:
                             nw = dis.slot_record_tables[seg]
                             stride = 2 * nw
-                            if seg in labels:
+                            if seg in labels and lines[-1] != f"{labels[seg]}:":
                                 lines.append(f"{labels[seg]}:")
                             lines.append(f"\t; ${scpu:04x}, {j - seg} bytes "
                                          f"({(j - seg) // stride} records x "
@@ -2005,7 +2005,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         # renderer extract.py applies to blobs.
                         if seg in data_tables:
                             spec = data_tables[seg]
-                            if seg in labels:
+                            if seg in labels and lines[-1] != f"{labels[seg]}:":
                                 lines.append(f"{labels[seg]}:")
                             lines.append(f"\t; ${scpu:04x}, {j - seg} bytes ({spec})")
                             body = render_spec(rom[seg:j], spec).rstrip("\n")

@@ -1,12 +1,12 @@
 SECTION "ROM Bank $12", ROMX[$4000], BANK[$12]
 
-DataPtr_12_00:
-	dw Data_12_4006 ; $4000
-DataPtr_12_02:
-	dw Data_12_467c ; $4002
-DataPtr_12_04:
-	dw Data_12_52f7 ; $4004
-Data_12_4006:
+DataPtr_StoryCmdHandlersA_12:
+	dw StoryCmdHandlersA_12 ; $4000
+DataPtr_WallPracticeRoomStoryCmds_12:
+	dw WallPracticeRoomStoryCmds_12 ; $4002
+DataPtr_SeniorCourtStoryCmds_12:
+	dw SeniorCourtStoryCmds_12 ; $4004
+StoryCmdHandlersA_12:
 	; $4006, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $4056 ; record 0
@@ -681,7 +681,7 @@ Label_12_44c5:
 	ld [$c294], a ; $4675
 	ld [$c2a1], a ; $4678
 	ret ; $467b
-Data_12_467c:
+WallPracticeRoomStoryCmds_12:
 	; $467c, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $46da ; record 0
@@ -871,19 +871,19 @@ Label_12_47c4:
 	dw $ff06, $0000, $47f3, $0003 ; record 3
 	dw $ff07, $0000, $50cc, $0001 ; record 4
 	db $ff
-Label_12_4841:
+WallPracticeMasterResultScript:
 	ld c, $06 ; $4841
 	call BeginFadeIn ; $4843
 	call WaitFadeEnd ; $4846
 	xor a, a ; $4849
 	ld [$c2d5], a ; $484a
 	test_flag $1b, 5 ; $484d
-	jr z, Label_12_485c ; $4850
+	jr z, WallPracticeScoreRetryPrompt ; $4850
 	ld a, [wPointWinLoseFlag] ; $4852
 	cp a, $01 ; $4855
-	jr nz, Label_12_485c ; $4857
-	jp Label_12_4936 ; $4859
-Label_12_485c:
+	jr nz, WallPracticeScoreRetryPrompt ; $4857
+	jp WallPracticeMaxScoreScript ; $4859
+WallPracticeScoreRetryPrompt:
 	ld c, $06 ; $485c
 	call BeginFadeIn ; $485e
 	call WaitFadeEnd ; $4861
@@ -913,7 +913,7 @@ Label_12_485c:
 	ld a, h ; $488d
 	sbc a, d ; $488e
 	ld h, a ; $488f
-	jp nc, Label_12_48eb ; $4890
+	jp nc, WallPracticeNewRecordScript ; $4890
 	ld a, [wPointOutcome] ; $4893
 	cp a, $09 ; $4896
 	jr nz, Label_12_48a2 ; $4898
@@ -948,7 +948,7 @@ Label_12_48b5:
 	farcall FarPtr_WaitScriptFrames ; $48cc
 	pop af ; $48cf
 	and a, a ; $48d0
-	jp nz, Label_12_4b2e ; $48d1
+	jp nz, WallPracticeExitCourtScript ; $48d1
 	ld a, $07 ; $48d4
 	ld b, $c0 ; $48d6
 	farcall FarPtr_SetActorFacing ; $48d8
@@ -957,9 +957,9 @@ Label_12_48b5:
 	farcall FarPtr_ScriptSetActorAnimation ; $48df
 	ld a, $07 ; $48e2
 	farcall FarPtr_ScriptWaitActorIdle ; $48e4
-	jp Label_12_528d ; $48e7
+	jp LaunchWallPracticeMinigame ; $48e7
 	ret ; $48ea
-Label_12_48eb:
+WallPracticeNewRecordScript:
 	ldh a, [hWramBank] ; $48eb
 	push af ; $48ed
 	wram_bank $07 ; $48ee
@@ -975,7 +975,7 @@ Label_12_48eb:
 	farcall FarPtr_03_2a ; $4902
 	pop af ; $4905
 	wram_bank ; $4906
-	call Func_12_505f ; $490a
+	call SetupWallPracticeLevelSigns ; $490a
 	ld hl, $1828 ; $490d
 	farcall FarPtr_InitDialogueTextCursor ; $4910
 	ld hl, wMinigamesCurrentScore ; $4913
@@ -992,10 +992,10 @@ Label_12_48eb:
 	farcall FarPtr_WaitScriptFrames ; $492a
 	pop af ; $492d
 	and a, a ; $492e
-	jp nz, Label_12_4b2e ; $492f
-	jp Label_12_528d ; $4932
+	jp nz, WallPracticeExitCourtScript ; $492f
+	jp LaunchWallPracticeMinigame ; $4932
 	ret ; $4935
-Label_12_4936:
+WallPracticeMaxScoreScript:
 	ld hl, $1829 ; $4936
 	farcall FarPtr_InitDialogueTextCursor ; $4939
 	ld a, $07 ; $493c
@@ -1030,7 +1030,7 @@ Label_12_4936:
 	farcall FarPtr_WaitScriptFrames ; $497a
 	pop af ; $497d
 	and a, a ; $497e
-	jr z, Label_12_49cd ; $497f
+	jr z, RelaunchWallPracticeMasterLevel ; $497f
 	ld a, $00 ; $4981
 	ld bc, $0020 ; $4983
 	farcall FarPtr_0a_18 ; $4986
@@ -1060,7 +1060,7 @@ Label_12_4936:
 	ld b, $40 ; $49c5
 	farcall FarPtr_SetActorFacing ; $49c7
 	jp Label_12_4a6c ; $49ca
-Label_12_49cd:
+RelaunchWallPracticeMasterLevel:
 	ld a, $13 ; $49cd
 	ld [wStoryModeCurrentLocation], a ; $49cf
 	ld a, $0a ; $49d2
@@ -1169,7 +1169,7 @@ Label_12_4aae:
 	dw $14f7 ; record 0
 	dw $14f8 ; record 1
 	dw $14f9 ; record 2
-Label_12_4ab5:
+WallPracticeLevelResultScript:
 	xor a, a ; $4ab5
 	ld [$c2d5], a ; $4ab6
 	ld a, [wPointWinLoseFlag] ; $4ab9
@@ -1186,7 +1186,7 @@ Label_12_4ab5:
 Label_12_4ad0:
 	ld a, [$c2b0] ; $4ad0
 	cp a, $04 ; $4ad3
-	jp z, Label_12_485c ; $4ad5
+	jp z, WallPracticeScoreRetryPrompt ; $4ad5
 	ld c, $06 ; $4ad8
 	call BeginFadeIn ; $4ada
 	call WaitFadeEnd ; $4add
@@ -1219,7 +1219,7 @@ Label_12_4b02:
 	farcall FarPtr_WaitScriptFrames ; $4b10
 	pop af ; $4b13
 	and a, a ; $4b14
-	jp nz, Label_12_4b2e ; $4b15
+	jp nz, WallPracticeExitCourtScript ; $4b15
 	ld a, $07 ; $4b18
 	ld b, $c0 ; $4b1a
 	farcall FarPtr_SetActorFacing ; $4b1c
@@ -1228,8 +1228,8 @@ Label_12_4b02:
 	farcall FarPtr_ScriptSetActorAnimation ; $4b23
 	ld a, $07 ; $4b26
 	farcall FarPtr_ScriptWaitActorIdle ; $4b28
-	jp Label_12_528d ; $4b2b
-Label_12_4b2e:
+	jp LaunchWallPracticeMinigame ; $4b2b
+WallPracticeExitCourtScript:
 	ld hl, $14fb ; $4b2e
 	farcall FarPtr_InitDialogueTextCursor ; $4b31
 	ld a, $07 ; $4b34
@@ -1491,7 +1491,7 @@ Label_12_4d28:
 Label_12_4d97:
 	ret ; $4d97
 	test_flag $1a, 7 ; $4d98
-	jp z, Label_12_4ef7 ; $4d9b
+	jp z, WallPracticeLevelLockedScript ; $4d9b
 	ld hl, $1831 ; $4d9e
 	farcall FarPtr_InitDialogueTextCursor ; $4da1
 	ld a, $07 ; $4da4
@@ -1539,7 +1539,7 @@ Label_12_4d97:
 Label_12_4e0c:
 	ret ; $4e0c
 	test_flag $1b, 0 ; $4e0d
-	jp z, Label_12_4ef7 ; $4e10
+	jp z, WallPracticeLevelLockedScript ; $4e10
 	ld hl, $1832 ; $4e13
 	farcall FarPtr_InitDialogueTextCursor ; $4e16
 	ld a, $07 ; $4e19
@@ -1587,7 +1587,7 @@ Label_12_4e0c:
 Label_12_4e81:
 	ret ; $4e81
 	test_flag $1b, 1 ; $4e82
-	jp z, Label_12_4ef7 ; $4e85
+	jp z, WallPracticeLevelLockedScript ; $4e85
 	ld hl, $1833 ; $4e88
 	farcall FarPtr_InitDialogueTextCursor ; $4e8b
 	ld a, $07 ; $4e8e
@@ -1634,7 +1634,7 @@ Label_12_4e81:
 	farcall FarPtr_0a_02 ; $4ef3
 Label_12_4ef6:
 	ret ; $4ef6
-Label_12_4ef7:
+WallPracticeLevelLockedScript:
 	ld hl, $1834 ; $4ef7
 	farcall FarPtr_InitDialogueTextCursor ; $4efa
 	ld a, $07 ; $4efd
@@ -1653,13 +1653,13 @@ Label_12_4ef7:
 	ld a, $00 ; $4f1d
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4f1f
 	call EnableLCD ; $4f22
-	call Func_12_505f ; $4f25
+	call SetupWallPracticeLevelSigns ; $4f25
 	ld a, [$c295] ; $4f28
 	cp a, $0a ; $4f2b
 	jp z, Label_12_4f39 ; $4f2d
 	cp a, $0b ; $4f30
 	jp z, Label_12_4f8a ; $4f32
-	call Func_12_52c0 ; $4f35
+	call RestoreWallPracticeRoomActors ; $4f35
 	ret ; $4f38
 Label_12_4f39:
 	test_flag $05, 7 ; $4f39
@@ -1689,12 +1689,12 @@ Label_12_4f55:
 	call WaitFadeEnd ; $4f74
 	xor a, a ; $4f77
 	ld [$c2d5], a ; $4f78
-	jp Label_12_4b2e ; $4f7b
+	jp WallPracticeExitCourtScript ; $4f7b
 Label_12_4f7e:
 	ld a, [$c2b0] ; $4f7e
 	cp a, $05 ; $4f81
-	jp nc, Label_12_4841 ; $4f83
-	jp Label_12_4ab5 ; $4f86
+	jp nc, WallPracticeMasterResultScript ; $4f83
+	jp WallPracticeLevelResultScript ; $4f86
 	ret ; $4f89
 Label_12_4f8a:
 	test_flag $05, 7 ; $4f8a
@@ -1795,7 +1795,7 @@ Label_12_502b:
 	farcall FarPtr_0b_00 ; $505b
 Label_12_505e:
 	ret ; $505e
-Func_12_505f:
+SetupWallPracticeLevelSigns:
 	ld a, $00 ; $505f
 	test_flag $1a, 6 ; $5061
 	jp z, Label_12_50c8 ; $5064
@@ -2035,7 +2035,7 @@ Label_12_522c:
 	ld bc, $0c00 ; $5264
 	ld de, $3100 ; $5267
 	farcall FarPtr_ScriptSetActorMoveTarget ; $526a
-	jp Label_12_528d ; $526d
+	jp LaunchWallPracticeMinigame ; $526d
 	ret ; $5270
 	; $5271, 14 bytes (records:2)
 ; 7 records x 2 bytes
@@ -2055,7 +2055,7 @@ Label_12_522c:
 	dw $181b ; record 4
 	dw $1820 ; record 5
 	dw $1825 ; record 6
-Label_12_528d:
+LaunchWallPracticeMinigame:
 	ld c, $04 ; $528d
 	call BeginFadeOut ; $528f
 	call WaitFadeEnd ; $5292
@@ -2078,7 +2078,7 @@ Label_12_528d:
 	ret ; $52b8
 	; $52b9, 7 bytes (bytes:16)
 	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
-Func_12_52c0:
+RestoreWallPracticeRoomActors:
 	test_flag $0f, 5 ; $52c0
 	jr z, Label_12_52f6 ; $52c3
 	set_flag $1c, 0 ; $52c5
@@ -2102,7 +2102,7 @@ Func_12_52c0:
 	farcall FarPtr_SetActorFacing ; $52f3
 Label_12_52f6:
 	ret ; $52f6
-Data_12_52f7:
+SeniorCourtStoryCmds_12:
 	; $52f7, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $556f ; record 0
@@ -2202,7 +2202,7 @@ Label_12_55b5:
 	jr nc, Label_12_55d3 ; $55d0
 	inc h ; $55d2
 Label_12_55d3:
-	call Func_12_7a68 ; $55d3
+	call PushTextArgFetchedString ; $55d3
 	ld a, $03 ; $55d6
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $55d8
 	ret ; $55db
@@ -3060,8 +3060,8 @@ Label_12_5bfa:
 	ld a, $0b ; $5d16
 	farcall FarPtr_FaceActorTowardActor ; $5d18
 	ret ; $5d1b
-	call Func_12_7c75 ; $5d1c
-	call Func_12_7756 ; $5d1f
+	call ComputeSeniorCourtStageB ; $5d1c
+	call ComputeSeniorCourtStage ; $5d1f
 	ld a, [$c2b1] ; $5d22
 	cp a, $02 ; $5d25
 	jr nc, Label_12_5d7b ; $5d27
@@ -3113,11 +3113,11 @@ Label_12_5d8d:
 	call Func_12_5e91 ; $5d90
 	ld a, [$c295] ; $5d93
 	cp a, $0f ; $5d96
-	jp z, Label_12_6da0 ; $5d98
+	jp z, SeniorCourtPostMatchReturn ; $5d98
 	cp a, $0e ; $5d9b
 	jp z, Label_12_6d8a ; $5d9d
 	cp a, $0d ; $5da0
-	jp z, Label_12_6ded ; $5da2
+	jp z, SeniorMatchVictorySceneDispatch ; $5da2
 	call Func_12_5dbe ; $5da5
 	farcall FarPtr_0a_02 ; $5da8
 	call Func_12_5eab ; $5dab
@@ -3277,8 +3277,8 @@ Func_12_5ef1:
 	ld bc, $0010 ; $5ef3
 	farcall FarPtr_0a_18 ; $5ef6
 	test_flag $05, 7 ; $5ef9
-	jp z, Label_12_5f22 ; $5efc
-	call Func_12_5fc7 ; $5eff
+	jp z, SeniorSinglesRankOfferScene ; $5efc
+	call SeniorDoublesRankOfferScene ; $5eff
 	ret ; $5f02
 Func_12_5f03:
 	ld a, $00 ; $5f03
@@ -3291,10 +3291,10 @@ Func_12_5f03:
 	ld b, $01 ; $5f14
 	farcall FarPtr_0a_2c ; $5f16
 	test_flag $05, 7 ; $5f19
-	jr z, Label_12_5f22 ; $5f1c
-	call Func_12_5fc7 ; $5f1e
+	jr z, SeniorSinglesRankOfferScene ; $5f1c
+	call SeniorDoublesRankOfferScene ; $5f1e
 	ret ; $5f21
-Label_12_5f22:
+SeniorSinglesRankOfferScene:
 	ld a, $00 ; $5f22
 	ld bc, $2d00 ; $5f24
 	ld de, $1b00 ; $5f27
@@ -3346,7 +3346,7 @@ Label_12_5f5e:
 Label_12_5f92:
 	ld a, $03 ; $5f92
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5f94
-	call Func_12_64de ; $5f97
+	call RunSeniorRankingMatchIntro ; $5f97
 	ld a, $00 ; $5f9a
 	ld b, $c0 ; $5f9c
 	farcall FarPtr_SetActorFacing ; $5f9e
@@ -3359,7 +3359,7 @@ Label_12_5f92:
 	farcall FarPtr_ScriptSetActorAnimation ; $5fac
 	ld a, $03 ; $5faf
 	farcall FarPtr_ScriptWaitActorIdle ; $5fb1
-	call Func_12_6ae8 ; $5fb4
+	call SeniorSinglesMatchConfirm ; $5fb4
 	ret ; $5fb7
 Label_12_5fb8:
 	ld hl, $103e ; $5fb8
@@ -3368,7 +3368,7 @@ Label_12_5fb8:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5fc0
 	farcall FarPtr_0a_02 ; $5fc3
 	ret ; $5fc6
-Func_12_5fc7:
+SeniorDoublesRankOfferScene:
 	ld a, $02 ; $5fc7
 	farcall FarPtr_0a_1c ; $5fc9
 	push af ; $5fcc
@@ -3437,7 +3437,7 @@ Label_12_602e:
 Label_12_605a:
 	ld a, $03 ; $605a
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $605c
-	call Func_12_64de ; $605f
+	call RunSeniorRankingMatchIntro ; $605f
 	ld a, $00 ; $6062
 	ld b, $c0 ; $6064
 	farcall FarPtr_SetActorFacing ; $6066
@@ -3453,7 +3453,7 @@ Label_12_605a:
 	farcall FarPtr_ScriptSetActorAnimation ; $607b
 	ld a, $03 ; $607e
 	farcall FarPtr_ScriptWaitActorIdle ; $6080
-	call Func_12_6b76 ; $6083
+	call SeniorDoublesMatchConfirm ; $6083
 	ret ; $6086
 Label_12_6087:
 	ld hl, $1070 ; $6087
@@ -3467,7 +3467,7 @@ Label_12_6087:
 	ld de, $d000 ; $6099
 	farcall FarPtr_04_20 ; $609c
 	ret ; $609f
-Func_12_60a0:
+StartSeniorRankingMatch:
 	ld a, $00 ; $60a0
 	ld bc, $0020 ; $60a2
 	farcall FarPtr_0a_18 ; $60a5
@@ -3859,7 +3859,7 @@ Func_12_63d3:
 	ld de, $6cfd ; $63fd
 	farcall FarPtr_0a_1a ; $6400
 	ret ; $6403
-Func_12_6404:
+PlaceSeniorCourtPairA:
 	ld a, $0d ; $6404
 	farcall FarPtr_0a_1c ; $6406
 	ld a, $0e ; $6409
@@ -3879,7 +3879,7 @@ Func_12_6404:
 	ld b, $80 ; $642d
 	farcall FarPtr_SetActorFacing ; $642f
 	ret ; $6432
-Func_12_6433:
+PlaceSeniorCourtPairB:
 	ld a, $0f ; $6433
 	farcall FarPtr_0a_1c ; $6435
 	ld a, $10 ; $6438
@@ -3903,7 +3903,7 @@ Func_12_6433:
 	farcall FarPtr_WaitScriptFrames ; $6464
 	pop af ; $6467
 	ret ; $6468
-Func_12_6469:
+StartSeniorCourtPairARally:
 	ld a, $0d ; $6469
 	ld bc, $2200 ; $646b
 	ld de, $1100 ; $646e
@@ -3927,7 +3927,7 @@ Func_12_6469:
 	ld de, $7b22 ; $6499
 	farcall FarPtr_0a_1a ; $649c
 	ret ; $649f
-Func_12_64a0:
+StartSeniorCourtPairBRally:
 	ld a, $0f ; $64a0
 	ld bc, $3200 ; $64a2
 	ld de, $1100 ; $64a5
@@ -3954,7 +3954,7 @@ Func_12_64a0:
 	ld de, $7bf0 ; $64d7
 	farcall FarPtr_0a_1a ; $64da
 	ret ; $64dd
-Func_12_64de:
+RunSeniorRankingMatchIntro:
 	ld a, [$c2b1] ; $64de
 	sub a, $02 ; $64e1
 	add a, a ; $64e3
@@ -4588,7 +4588,7 @@ Func_12_64de:
 	ld b, $c0 ; $6a3b
 	farcall FarPtr_SetActorFacing ; $6a3d
 	ret ; $6a40
-Func_12_6a41:
+ResumeSeniorOpponentScripts:
 	ld a, [$c2b1] ; $6a41
 	sub a, $02 ; $6a44
 	add a, a ; $6a46
@@ -4675,7 +4675,7 @@ Func_12_6a41:
 	ld de, $6ce5 ; $6ae1
 	farcall FarPtr_0a_1a ; $6ae4
 	ret ; $6ae7
-Func_12_6ae8:
+SeniorSinglesMatchConfirm:
 	ld hl, $1044 ; $6ae8
 	farcall FarPtr_InitDialogueTextCursor ; $6aeb
 	test_flag $0a, 4 ; $6aee
@@ -4707,7 +4707,7 @@ Label_12_6b18:
 	farcall FarPtr_InitDialogueTextCursor ; $6b27
 	ld a, $03 ; $6b2a
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6b2c
-	call Func_12_60a0 ; $6b2f
+	call StartSeniorRankingMatch ; $6b2f
 	farcall FarPtr_0a_02 ; $6b32
 	ret ; $6b35
 Label_12_6b36:
@@ -4719,7 +4719,7 @@ Label_12_6b36:
 Label_12_6b44:
 	ld a, $03 ; $6b44
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6b46
-	call Func_12_6a41 ; $6b49
+	call ResumeSeniorOpponentScripts ; $6b49
 	push af ; $6b4c
 	ld a, $1e ; $6b4d
 	farcall FarPtr_WaitScriptFrames ; $6b4f
@@ -4741,7 +4741,7 @@ Label_12_6b57:
 	jr z, Label_12_6b36 ; $6b70
 	jp Label_12_6b18 ; $6b72
 	ret ; $6b75
-Func_12_6b76:
+SeniorDoublesMatchConfirm:
 	ld hl, $1074 ; $6b76
 	farcall FarPtr_InitDialogueTextCursor ; $6b79
 	test_flag $08, 5 ; $6b7c
@@ -4773,13 +4773,13 @@ Label_12_6b84:
 	ld a, $03 ; $6bb8
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6bba
 Label_12_6bbd:
-	call Func_12_60a0 ; $6bbd
+	call StartSeniorRankingMatch ; $6bbd
 	farcall FarPtr_0a_02 ; $6bc0
 	ret ; $6bc3
 Label_12_6bc4:
 	ld a, $03 ; $6bc4
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6bc6
-	call Func_12_6a41 ; $6bc9
+	call ResumeSeniorOpponentScripts ; $6bc9
 	push af ; $6bcc
 	ld a, $1e ; $6bcd
 	farcall FarPtr_WaitScriptFrames ; $6bcf
@@ -4821,14 +4821,14 @@ Label_12_6d8a:
 	ld [$c2a1], a ; $6d99
 	farcall FarPtr_1e_02 ; $6d9c
 	ret ; $6d9f
-Label_12_6da0:
+SeniorCourtPostMatchReturn:
 	wram_bank $04 ; $6da0
 	ld a, [$c4c7] ; $6da6
 	cp a, $01 ; $6da9
 	jr z, Label_12_6db5 ; $6dab
 	ld a, [wMatchWinLoseFlag] ; $6dad
 	cp a, $01 ; $6db0
-	jp z, Label_12_6ded ; $6db2
+	jp z, SeniorMatchVictorySceneDispatch ; $6db2
 Label_12_6db5:
 	ld bc, $0040 ; $6db5
 	farcall FarPtr_0a_38 ; $6db8
@@ -4852,7 +4852,7 @@ Label_12_6db5:
 	farcall FarPtr_SetActorFacing ; $6de6
 	farcall FarPtr_WaitPlayerMoveDone ; $6de9
 	ret ; $6dec
-Label_12_6ded:
+SeniorMatchVictorySceneDispatch:
 	xor a, a ; $6ded
 	ld [$c2d5], a ; $6dee
 	ld a, $01 ; $6df1
@@ -4869,7 +4869,7 @@ Label_12_6ded:
 	ld h, [hl] ; $6e04
 	ld l, a ; $6e05
 	call JumpToHL ; $6e06
-	call Func_12_7756 ; $6e09
+	call ComputeSeniorCourtStage ; $6e09
 	ret ; $6e0c
 	; $6e0d, 18 bytes (records:2)
 ; 9 records x 2 bytes
@@ -5053,7 +5053,7 @@ Label_12_6ded:
 	ld a, $02 ; $6fb7
 	ld b, $c0 ; $6fb9
 	farcall FarPtr_SetActorFacing ; $6fbb
-	call Func_12_77fd ; $6fbe
+	call FadeInSeniorCourtNearPairB ; $6fbe
 	ld hl, $1081 ; $6fc1
 	farcall FarPtr_InitDialogueTextCursor ; $6fc4
 	push af ; $6fc7
@@ -5111,7 +5111,7 @@ Label_12_6ded:
 	ld a, $06 ; $7040
 	ld de, $7929 ; $7042
 	farcall FarPtr_0a_1a ; $7045
-	call Func_12_64a0 ; $7048
+	call StartSeniorCourtPairBRally ; $7048
 	ld a, $03 ; $704b
 	ld b, $40 ; $704d
 	farcall FarPtr_SetActorFacing ; $704f
@@ -5482,7 +5482,7 @@ Label_12_6ded:
 	ld a, $07 ; $73bd
 	ld b, $40 ; $73bf
 	farcall FarPtr_SetActorFacing ; $73c1
-	call Func_12_77c2 ; $73c4
+	call FadeInSeniorCourtNearPairA ; $73c4
 	ld hl, $104a ; $73c7
 	farcall FarPtr_InitDialogueTextCursor ; $73ca
 	ld a, $07 ; $73cd
@@ -5525,7 +5525,7 @@ Label_12_6ded:
 	ld a, $3c ; $7427
 	farcall FarPtr_WaitScriptFrames ; $7429
 	pop af ; $742c
-	call Func_12_6469 ; $742d
+	call StartSeniorCourtPairARally ; $742d
 	ld a, $03 ; $7430
 	ld b, $40 ; $7432
 	farcall FarPtr_SetActorFacing ; $7434
@@ -5546,7 +5546,7 @@ Label_12_6ded:
 	ld a, $06 ; $7457
 	ld b, $40 ; $7459
 	farcall FarPtr_SetActorFacing ; $745b
-	call Func_12_77fd ; $745e
+	call FadeInSeniorCourtNearPairB ; $745e
 	ld a, $00 ; $7461
 	ld bc, $3400 ; $7463
 	ld de, $1b00 ; $7466
@@ -5578,11 +5578,11 @@ Label_12_6ded:
 	ld a, $00 ; $74aa
 	ld b, $40 ; $74ac
 	farcall FarPtr_SetActorFacing ; $74ae
-	call Func_12_64a0 ; $74b1
+	call StartSeniorCourtPairBRally ; $74b1
 	farcall FarPtr_0a_02 ; $74b4
 	ret ; $74b7
 	set_flag $0a, 6 ; $74b8
-	call Func_12_6433 ; $74bb
+	call PlaceSeniorCourtPairB ; $74bb
 	ld a, $05 ; $74be
 	ld bc, $3300 ; $74c0
 	ld de, $0f00 ; $74c3
@@ -5590,7 +5590,7 @@ Label_12_6ded:
 	ld a, $05 ; $74c9
 	ld b, $40 ; $74cb
 	farcall FarPtr_SetActorFacing ; $74cd
-	call Func_12_77fd ; $74d0
+	call FadeInSeniorCourtNearPairB ; $74d0
 	ld a, $00 ; $74d3
 	ld bc, $3400 ; $74d5
 	ld de, $1b00 ; $74d8
@@ -5622,7 +5622,7 @@ Label_12_6ded:
 	ld a, $00 ; $751c
 	ld b, $40 ; $751e
 	farcall FarPtr_SetActorFacing ; $7520
-	call Func_12_64a0 ; $7523
+	call StartSeniorCourtPairBRally ; $7523
 	farcall FarPtr_0a_02 ; $7526
 	ret ; $7529
 	ld bc, $0040 ; $752a
@@ -5656,7 +5656,7 @@ Label_12_6ded:
 	ld a, $03 ; $7574
 	ld b, $c0 ; $7576
 	farcall FarPtr_SetActorFacing ; $7578
-	call Func_12_6404 ; $757b
+	call PlaceSeniorCourtPairA ; $757b
 	ld c, $08 ; $757e
 	call BeginFadeIn ; $7580
 	call WaitFadeEnd ; $7583
@@ -5851,7 +5851,7 @@ Label_12_6ded:
 	call WaitFadeEnd ; $774f
 	farcall FarPtr_0a_02 ; $7752
 	ret ; $7755
-Func_12_7756:
+ComputeSeniorCourtStage:
 	test_flag $05, 7 ; $7756
 	jp nz, Label_12_7793 ; $7759
 	ld a, $00 ; $775c
@@ -5901,8 +5901,8 @@ Label_12_7793:
 	ld a, $0e ; $77bd
 	jr Label_12_778f ; $77bf
 	ret ; $77c1
-Func_12_77c2:
-	call Func_12_6404 ; $77c2
+FadeInSeniorCourtNearPairA:
+	call PlaceSeniorCourtPairA ; $77c2
 	ld bc, $0040 ; $77c5
 	farcall FarPtr_0a_38 ; $77c8
 	ld a, $00 ; $77cb
@@ -5925,8 +5925,8 @@ Func_12_77c2:
 	call BeginFadeIn ; $77f6
 	call WaitFadeEnd ; $77f9
 	ret ; $77fc
-Func_12_77fd:
-	call Func_12_6433 ; $77fd
+FadeInSeniorCourtNearPairB:
+	call PlaceSeniorCourtPairB ; $77fd
 	ld bc, $0040 ; $7800
 	farcall FarPtr_0a_38 ; $7803
 	xor a, a ; $7806
@@ -5946,7 +5946,7 @@ Func_12_77fd:
 	call WaitFadeEnd ; $7829
 	ret ; $782c
 	INCBIN "data/bank_012/d_782d.bin" ; $782d, 571 bytes
-Func_12_7a68:
+PushTextArgFetchedString:
 	ldh a, [hWramBank] ; $7a68
 	push af ; $7a6a
 	wram_bank $07 ; $7a6b
@@ -5961,7 +5961,7 @@ Func_12_7a68:
 	INCBIN "data/bank_012/d_7a89.bin" ; $7a89, 40 bytes
 	ret ; $7ab1
 	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 451 bytes
-Func_12_7c75:
+ComputeSeniorCourtStageB:
 	test_flag $05, 7 ; $7c75
 	jr nz, Label_12_7c9c ; $7c78
 	ld a, $00 ; $7c7a

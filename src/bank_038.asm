@@ -1327,7 +1327,7 @@ Func_38_4949:
 	ld d, a ; $4968
 	ld a, b ; $4969
 	farcall FarPtr_02_34 ; $496a
-	farcall FarPtr_18_02 ; $496d
+	farcall FarPtr_LoadIndexedPalette_18 ; $496d
 	ret ; $4970
 	INCBIN "data/bank_038/d_4971.bin" ; $4971, 4 bytes
 Func_38_4975:
@@ -6438,7 +6438,7 @@ Func_38_6f6e:
 	add hl, bc ; $700e
 	ld a, [hl] ; $700f
 	ld d, $04 ; $7010
-	farcall FarPtr_18_02 ; $7012
+	farcall FarPtr_LoadIndexedPalette_18 ; $7012
 	pop af ; $7015
 	wram_bank ; $7016
 	farcall FarPtr_39_24 ; $701a

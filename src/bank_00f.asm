@@ -52,14 +52,14 @@ Label_0f_40e4:
 Label_0f_40ec:
 	ld hl, $c2b0 ; $40ec
 	ld [hl], a ; $40ef
-	call Func_0f_41c5 ; $40f0
+	call SetPlayerActorObjectDef ; $40f0
 	ret ; $40f3
 	ld hl, $c2b0 ; $40f4
 	ld a, [hl] ; $40f7
 	inc [hl] ; $40f8
 	and a, $03 ; $40f9
 	add a, $26 ; $40fb
-	call Func_0f_41c5 ; $40fd
+	call SetPlayerActorObjectDef ; $40fd
 	ret ; $4100
 	ld hl, $c2b0 ; $4101
 	ld a, [hl] ; $4104
@@ -83,7 +83,7 @@ Label_0f_4115:
 	jr Label_0f_40ec ; $411d
 	ld hl, $c2b0 ; $411f
 	ld [hl], a ; $4122
-	call Func_0f_41c5 ; $4123
+	call SetPlayerActorObjectDef ; $4123
 	ret ; $4126
 	ld a, $00 ; $4127
 	ld d, $03 ; $4129
@@ -130,7 +130,7 @@ Label_0f_4115:
 	farcall FarPtr_ScriptSetActorAnimation ; $41c1
 Label_0f_41c4:
 	ret ; $41c4
-Func_0f_41c5:
+SetPlayerActorObjectDef:
 	ld d, a ; $41c5
 	wram_bank $04 ; $41c6
 	ld hl, $dae9 ; $41cc
@@ -224,8 +224,8 @@ Func_0f_41c5:
 	ld h, $04 ; $44bb
 	ld l, $02 ; $44bd
 	farcall FarPtr_0a_82 ; $44bf
-	call Func_0f_567f ; $44c2
-	call Func_0f_567f ; $44c5
+	call CutsceneStompScreenShake ; $44c2
+	call CutsceneStompScreenShake ; $44c5
 	ld hl, $287e ; $44c8
 	farcall FarPtr_InitDialogueTextCursor ; $44cb
 	ld a, $08 ; $44ce
@@ -249,7 +249,7 @@ Func_0f_41c5:
 	farcall FarPtr_ScriptSetActorMoveTarget ; $44ff
 	ld a, $00 ; $4502
 	farcall FarPtr_ScriptWaitActorMoveDone ; $4504
-	call Func_0f_5641 ; $4507
+	call ReplacePlayerWithStandInActor ; $4507
 	ld a, $16 ; $450a
 	ld bc, $0b00 ; $450c
 	ld de, $1b00 ; $450f
@@ -329,7 +329,7 @@ Label_0f_45b6:
 	farcall FarPtr_ScriptSetActorMoveTarget ; $45c6
 	ld a, $00 ; $45c9
 	farcall FarPtr_ScriptWaitActorMoveDone ; $45cb
-	call Func_0f_5641 ; $45ce
+	call ReplacePlayerWithStandInActor ; $45ce
 	ld a, $16 ; $45d1
 	ld bc, $0b80 ; $45d3
 	ld de, $1b00 ; $45d6
@@ -387,12 +387,12 @@ Label_0f_45b6:
 	ld de, $3f00 ; $465b
 	farcall FarPtr_ScriptSetActorPosition ; $465e
 Label_0f_4661:
-	call Func_0f_567f ; $4661
-	call Func_0f_567f ; $4664
+	call CutsceneStompScreenShake ; $4661
+	call CutsceneStompScreenShake ; $4664
 	ld a, $08 ; $4667
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4669
-	call Func_0f_567f ; $466c
-	call Func_0f_567f ; $466f
+	call CutsceneStompScreenShake ; $466c
+	call CutsceneStompScreenShake ; $466f
 	ld a, $08 ; $4672
 	ld bc, $0900 ; $4674
 	ld de, $1d00 ; $4677
@@ -493,7 +493,7 @@ Label_0f_4700:
 	farcall FarPtr_SetActorFacing ; $475c
 	ld a, $3c ; $475f
 	call DelayFrames ; $4761
-	call Func_0f_5c52 ; $4764
+	call AnnounceWinnersToPodiums ; $4764
 	ld a, $00 ; $4767
 	ld b, $40 ; $4769
 	farcall FarPtr_SetActorFacing ; $476b
@@ -544,7 +544,7 @@ Label_0f_4700:
 	ld bc, $0a00 ; $47dc
 	ld de, $0dc0 ; $47df
 	farcall FarPtr_ScriptSetActorPosition ; $47e2
-	call Func_0f_5641 ; $47e5
+	call ReplacePlayerWithStandInActor ; $47e5
 	ld a, $16 ; $47e8
 	ld bc, $0c00 ; $47ea
 	ld de, $0d40 ; $47ed
@@ -1264,7 +1264,7 @@ Label_0f_4ea7:
 	farcall FarPtr_SetActorFacing ; $4ed8
 	ld a, $3c ; $4edb
 	call DelayFrames ; $4edd
-	call Func_0f_5c52 ; $4ee0
+	call AnnounceWinnersToPodiums ; $4ee0
 	ld a, $00 ; $4ee3
 	ld b, $40 ; $4ee5
 	farcall FarPtr_SetActorFacing ; $4ee7
@@ -1325,7 +1325,7 @@ Label_0f_4ea7:
 	farcall FarPtr_0a_1a ; $4f68
 	ld a, $b4 ; $4f6b
 	call DelayFrames ; $4f6d
-	call Func_0f_5641 ; $4f70
+	call ReplacePlayerWithStandInActor ; $4f70
 	ld a, $16 ; $4f73
 	ld bc, $0d00 ; $4f75
 	ld de, $0d60 ; $4f78
@@ -1974,7 +1974,7 @@ Label_0f_55a9:
 	ld d, $06 ; $55be
 	farcall FarPtr_ScriptSetActorAnimation ; $55c0
 Label_0f_55c3:
-	call Func_0f_7b20 ; $55c3
+	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [$c295] ; $55c6
 	cp a, $0a ; $55c9
 	jp z, Label_0f_56a8 ; $55cb
@@ -2002,7 +2002,7 @@ Label_0f_55c3:
 Label_0f_5600:
 	test_flag $05, 7 ; $5600
 	jp nz, Label_0f_5627 ; $5603
-	call Func_0f_5f52 ; $5606
+	call SavePlayerActorPosition ; $5606
 	ld hl, $c2b2 ; $5609
 	ld a, [hl+] ; $560c
 	ld b, [hl] ; $560d
@@ -2032,7 +2032,7 @@ Label_0f_563b:
 	ld a, $08 ; $563b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $563d
 	ret ; $5640
-Func_0f_5641:
+ReplacePlayerWithStandInActor:
 	ld a, [$c90d] ; $5641
 	ld d, $56 ; $5644
 	add a, d ; $5646
@@ -2057,7 +2057,7 @@ DelayFrames:
 	farcall FarPtr_WaitScriptFrames ; $567a
 	pop af ; $567d
 	ret ; $567e
-Func_0f_567f:
+CutsceneStompScreenShake:
 	ld a, $08 ; $567f
 	ld de, $ff80 ; $5681
 	farcall FarPtr_0a_42 ; $5684
@@ -2661,7 +2661,7 @@ Func_0f_5b4d:
 	ld de, $3f00 ; $5c4b
 	farcall FarPtr_ScriptSetActorPosition ; $5c4e
 	ret ; $5c51
-Func_0f_5c52:
+AnnounceWinnersToPodiums:
 	ld a, $0c ; $5c52
 	ld b, a ; $5c54
 	ld a, $0b ; $5c55
@@ -2983,7 +2983,7 @@ Func_0f_5e4a:
 	ld b, $c0 ; $5f4c
 	farcall FarPtr_SetActorFacing ; $5f4e
 	ret ; $5f51
-Func_0f_5f52:
+SavePlayerActorPosition:
 	wram_bank $04 ; $5f52
 	ld a, $00 ; $5f58
 	farcall FarPtr_GetActorStateAddr ; $5f5a
@@ -3109,7 +3109,7 @@ Label_0f_60fc:
 	ld [$c321], a ; $617d
 	ld [$c323], a ; $6180
 	call ClearFrameTasks ; $6183
-	call Func_0f_7416 ; $6186
+	call GetIslandOpenRoundParams ; $6186
 	ld d, $03 ; $6189
 	farcall FarPtr_1b_1a ; $618b
 	ld hl, wStoryModePlayersXPosition ; $618e
@@ -3142,7 +3142,7 @@ Label_0f_60fc:
 	farcall FarPtr_0a_1a ; $61d4
 	ld a, $00 ; $61d7
 	farcall FarPtr_WaitActorScriptDone ; $61d9
-	call Func_0f_6fc3 ; $61dc
+	call IslandOpenRoundCallCutscene ; $61dc
 	ret ; $61df
 	INCBIN "data/bank_00f/d_61e0.bin" ; $61e0, 22 bytes
 	ld a, $00 ; $61f6
@@ -3154,7 +3154,7 @@ Label_0f_60fc:
 	farcall FarPtr_0a_1a ; $6203
 	ld a, $00 ; $6206
 	farcall FarPtr_WaitActorScriptDone ; $6208
-	call Func_0f_6fc3 ; $620b
+	call IslandOpenRoundCallCutscene ; $620b
 	ret ; $620e
 	ld a, $01 ; $620f
 	ld hl, $6310 ; $6211
@@ -3166,7 +3166,7 @@ Label_0f_60fc:
 Label_0f_6221:
 	test_flag $17, 1 ; $6221
 	jp z, Label_0f_62eb ; $6224
-	call Func_0f_660f ; $6227
+	call ComputeIslandOpenRound ; $6227
 	ld a, [$c2b0] ; $622a
 	and a, a ; $622d
 	jr nz, Label_0f_628e ; $622e
@@ -3205,7 +3205,7 @@ Label_0f_6221:
 	ld de, $3f00 ; $6284
 	farcall FarPtr_ScriptSetActorPosition ; $6287
 Label_0f_628a:
-	call Func_0f_7b20 ; $628a
+	call SetPlayerAndPartnerObjectDefs ; $628a
 	ret ; $628d
 Label_0f_628e:
 	test_flag $05, 7 ; $628e
@@ -3217,7 +3217,7 @@ Label_0f_628e:
 	ld de, $000c ; $629e
 	farcall FarPtr_0a_60 ; $62a1
 	farcall FarPtr_0a_00 ; $62a4
-	call Func_0f_7b20 ; $62a7
+	call SetPlayerAndPartnerObjectDefs ; $62a7
 	ld a, $03 ; $62aa
 	ld b, $00 ; $62ac
 	farcall FarPtr_SetActorFacing ; $62ae
@@ -3237,7 +3237,7 @@ Label_0f_62c4:
 	ld de, $000c ; $62cf
 	farcall FarPtr_0a_60 ; $62d2
 	farcall FarPtr_0a_00 ; $62d5
-	call Func_0f_7b20 ; $62d8
+	call SetPlayerAndPartnerObjectDefs ; $62d8
 	ld a, $00 ; $62db
 	ld b, a ; $62dd
 	ld a, $04 ; $62de
@@ -3250,12 +3250,12 @@ Label_0f_62eb:
 	ld a, [$c295] ; $62eb
 	cp a, $0f ; $62ee
 	jr nz, Label_0f_62f6 ; $62f0
-	call Func_0f_6426 ; $62f2
+	call IslandOpenArrivalCutscene ; $62f2
 	ret ; $62f5
 Label_0f_62f6:
 	cp a, $0a ; $62f6
 	jr nz, Label_0f_62fe ; $62f8
-	call Func_0f_7487 ; $62fa
+	call IslandOpenSinglesMatchReturn ; $62fa
 	ret ; $62fd
 Label_0f_62fe:
 	cp a, $0b ; $62fe
@@ -3263,8 +3263,8 @@ Label_0f_62fe:
 	call $76a3 ; $6302
 	ret ; $6305
 Label_0f_6306:
-	call Func_0f_6651 ; $6306
-	call Func_0f_7b20 ; $6309
+	call LoadIslandOpenRoundNpcs ; $6306
+	call SetPlayerAndPartnerObjectDefs ; $6309
 	call Func_0f_7aaf ; $630c
 	ret ; $630f
 	ld a, $00 ; $6310
@@ -3425,7 +3425,7 @@ Label_0f_641f:
 	add hl, de ; $6423
 	ld a, [hl] ; $6424
 	ret ; $6425
-Func_0f_6426:
+IslandOpenArrivalCutscene:
 	set_flag $17, 1 ; $6426
 	ldh a, [hRomBank] ; $6429
 	ld hl, $65c2 ; $642b
@@ -3609,7 +3609,7 @@ Label_0f_65a6:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff, $03, $ff, $00, $00 ; 0x2a
 	db $19, $24, $03, $00, $04, $ff, $00, $00, $1a, $24, $03, $00, $05, $ff ; 0x38
 	db $00, $00, $1b, $24, $03, $00, $ff ; 0x46
-Func_0f_660f:
+ComputeIslandOpenRound:
 	test_flag $05, 7 ; $660f
 	jr nz, Label_0f_663b ; $6612
 	test_flag $07, 5 ; $6614
@@ -3645,7 +3645,7 @@ Label_0f_6646:
 	ld a, $02 ; $664b
 	ld [$c2b0], a ; $664d
 	ret ; $6650
-Func_0f_6651:
+LoadIslandOpenRoundNpcs:
 	ld a, $00 ; $6651
 	ld [$c2b0], a ; $6653
 	test_flag $05, 7 ; $6656
@@ -4117,7 +4117,7 @@ Func_0f_6f85:
 	farcall FarPtr_SetActorFacing ; $6fbf
 Label_0f_6fc2:
 	ret ; $6fc2
-Func_0f_6fc3:
+IslandOpenRoundCallCutscene:
 	ld hl, $285e ; $6fc3
 	farcall FarPtr_InitDialogueTextCursor ; $6fc6
 	xor a, a ; $6fc9
@@ -4145,7 +4145,7 @@ Func_0f_6fc3:
 	farcall FarPtr_ScriptSetActorAnimation ; $7001
 	ld a, $05 ; $7004
 	farcall FarPtr_ScriptWaitActorIdle ; $7006
-	call Func_0f_744d ; $7009
+	call QueueUpcomingRoundNameText ; $7009
 	ld a, $05 ; $700c
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $700e
 	call Func_0f_6f85 ; $7011
@@ -4188,7 +4188,7 @@ Func_0f_6fc3:
 	ld a, $05 ; $706f
 	ld b, $c0 ; $7071
 	farcall FarPtr_SetActorFacing ; $7073
-	call Func_0f_744d ; $7076
+	call QueueUpcomingRoundNameText ; $7076
 	ld a, $04 ; $7079
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $707b
 	ld a, $05 ; $707e
@@ -4566,7 +4566,7 @@ Label_0f_73b7:
 	farcall FarPtr_0a_4e ; $73ba
 	ret ; $73bd
 	INCBIN "data/bank_00f/d_73be.bin" ; $73be, 88 bytes
-Func_0f_7416:
+GetIslandOpenRoundParams:
 	test_flag $05, 7 ; $7416
 	jr nz, Label_0f_7425 ; $7419
 	ld b, $00 ; $741b
@@ -4595,10 +4595,10 @@ Func_0f_7434:
 	ld [$c321], a ; $743d
 	ld [$c323], a ; $7440
 	call ClearFrameTasks ; $7443
-	call Func_0f_7416 ; $7446
+	call GetIslandOpenRoundParams ; $7446
 	farcall FarPtr_1b_1a ; $7449
 	ret ; $744c
-Func_0f_744d:
+QueueUpcomingRoundNameText:
 	ld a, [$c2b0] ; $744d
 	ld hl, $2861 ; $7450
 	add a, l ; $7453
@@ -4608,7 +4608,7 @@ Func_0f_744d:
 Label_0f_7458:
 	call QueueShortText ; $7458
 	ret ; $745b
-Func_0f_745c:
+CheckIslandOpenVictoryTransition:
 	test_flag $05, 7 ; $745c
 	jr nz, Label_0f_7468 ; $745f
 	test_flag $07, 4 ; $7461
@@ -4631,7 +4631,7 @@ Label_0f_746f:
 Label_0f_7484:
 	ld a, $00 ; $7484
 	ret ; $7486
-Func_0f_7487:
+IslandOpenSinglesMatchReturn:
 	wram_bank $04 ; $7487
 	ld a, [$c4c7] ; $748d
 	cp a, $01 ; $7490
@@ -4640,13 +4640,13 @@ Func_0f_7487:
 	cp a, $01 ; $7497
 	jp z, Label_0f_74a3 ; $7499
 Label_0f_749c:
-	call Func_0f_6651 ; $749c
-	call Func_0f_7b20 ; $749f
+	call LoadIslandOpenRoundNpcs ; $749c
+	call SetPlayerAndPartnerObjectDefs ; $749f
 	ret ; $74a2
 Label_0f_74a3:
 	clear_flag $0e, 6 ; $74a3
 	clear_flag $0f, 0 ; $74a6
-	call Func_0f_745c ; $74a9
+	call CheckIslandOpenVictoryTransition ; $74a9
 	and a, a ; $74ac
 	jr z, Label_0f_74b0 ; $74ad
 	ret ; $74af
@@ -4657,9 +4657,9 @@ Label_0f_74b0:
 	ld hl, $7615 ; $74b8
 	ld de, $000c ; $74bb
 	farcall FarPtr_0a_60 ; $74be
-	call Func_0f_660f ; $74c1
+	call ComputeIslandOpenRound ; $74c1
 	farcall FarPtr_0a_00 ; $74c4
-	call Func_0f_7b20 ; $74c7
+	call SetPlayerAndPartnerObjectDefs ; $74c7
 	ld a, $08 ; $74ca
 	farcall FarPtr_GetActorStateAddr ; $74cc
 	ld c, l ; $74cf
@@ -4729,7 +4729,7 @@ Label_0f_74b0:
 	farcall FarPtr_FaceActorTowardActor ; $7554
 	ld a, $04 ; $7557
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7559
-	call Func_0f_7911 ; $755c
+	call IslandOpenBreakCutscene ; $755c
 	ld hl, $2849 ; $755f
 	farcall FarPtr_InitDialogueTextCursor ; $7562
 	ld a, [$c2b0] ; $7565
@@ -4860,8 +4860,8 @@ Label_0f_7640:
 	cp a, $01 ; $76b3
 	jp z, $76e9 ; $76b5
 Label_0f_76b8:
-	call Func_0f_6651 ; $76b8
-	call Func_0f_7b20 ; $76bb
+	call LoadIslandOpenRoundNpcs ; $76b8
+	call SetPlayerAndPartnerObjectDefs ; $76bb
 	ld a, $00 ; $76be
 	ld bc, $2500 ; $76c0
 	ld de, $1100 ; $76c3
@@ -4882,7 +4882,7 @@ Label_0f_76b8:
 	db $ef ; $76e9
 	ldh [$ff0e], a ; $76ea
 	clear_flag $0f, 1 ; $76ec
-	call Func_0f_745c ; $76ef
+	call CheckIslandOpenVictoryTransition ; $76ef
 	and a, a ; $76f2
 	jr z, Label_0f_76f6 ; $76f3
 	ret ; $76f5
@@ -4894,7 +4894,7 @@ Label_0f_76f6:
 	ld hl, $78a0 ; $7701
 	ld de, $000c ; $7704
 	farcall FarPtr_0a_60 ; $7707
-	call Func_0f_7b20 ; $770a
+	call SetPlayerAndPartnerObjectDefs ; $770a
 	ld a, $02 ; $770d
 	farcall FarPtr_0a_1c ; $770f
 	ld a, $02 ; $7712
@@ -4907,7 +4907,7 @@ Label_0f_76f6:
 	ld c, $04 ; $7724
 	call BeginFadeIn ; $7726
 	call WaitFadeEnd ; $7729
-	call Func_0f_660f ; $772c
+	call ComputeIslandOpenRound ; $772c
 	farcall FarPtr_0a_00 ; $772f
 	ld a, $00 ; $7732
 	ld b, a ; $7734
@@ -4998,7 +4998,7 @@ Label_0f_7763:
 	farcall FarPtr_FaceActorTowardActor ; $77e5
 	ld a, $04 ; $77e8
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $77ea
-	call Func_0f_7911 ; $77ed
+	call IslandOpenBreakCutscene ; $77ed
 	ld a, $00 ; $77f0
 	ld b, a ; $77f2
 	ld a, $04 ; $77f3
@@ -5075,7 +5075,7 @@ Label_0f_7811:
 	dw $2853 ; record 1
 	dw $2859 ; record 2
 	dw $284f ; record 3
-Func_0f_78ec:
+QueueFinishedRoundNameText:
 	test_flag $05, 7 ; $78ec
 	jr nz, Label_0f_7901 ; $78ef
 	ld a, [$c2b0] ; $78f1
@@ -5099,7 +5099,7 @@ Label_0f_7901:
 Label_0f_790d:
 	call QueueShortText ; $790d
 	ret ; $7910
-Func_0f_7911:
+IslandOpenBreakCutscene:
 	ld a, $06 ; $7911
 	ld bc, $1500 ; $7913
 	ld de, $1700 ; $7916
@@ -5151,7 +5151,7 @@ Func_0f_7911:
 	farcall FarPtr_ScriptSetActorAnimation ; $798a
 	ld a, $06 ; $798d
 	farcall FarPtr_ScriptWaitActorIdle ; $798f
-	call Func_0f_78ec ; $7992
+	call QueueFinishedRoundNameText ; $7992
 	ld a, $06 ; $7995
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7997
 	ld a, $06 ; $799a
@@ -5209,7 +5209,7 @@ Label_0f_79b1:
 	farcall FarPtr_WaitPlayerMoveDone ; $7a13
 	ret ; $7a16
 Func_0f_7a17:
-	call Func_0f_7b20 ; $7a17
+	call SetPlayerAndPartnerObjectDefs ; $7a17
 	test_flag $05, 7 ; $7a1a
 	jr z, Label_0f_7a29 ; $7a1d
 	ld a, [$c94d] ; $7a1f
@@ -5307,7 +5307,7 @@ Label_0f_7af8:
 Label_0f_7b15:
 	ret ; $7b15
 	INCBIN "data/bank_00f/d_7b16.bin" ; $7b16, 10 bytes
-Func_0f_7b20:
+SetPlayerAndPartnerObjectDefs:
 	test_flag $05, 7 ; $7b20
 	jp z, Label_0f_7b3e ; $7b23
 	ld a, [$c94d] ; $7b26

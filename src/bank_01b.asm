@@ -876,7 +876,7 @@ CopyMugshotBufferToVram:
 Func_1b_4e57:
 	ret ; $4e57
 Func_1b_4e58:
-	farcall FarPtr_18_02 ; $4e58
+	farcall FarPtr_LoadIndexedPalette_18 ; $4e58
 	ret ; $4e5b
 DecompressCharMugshot:
 	push af ; $4e5c

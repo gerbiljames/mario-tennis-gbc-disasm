@@ -3639,7 +3639,7 @@ Label_3b_59a2:
 	add hl, bc ; $59a5
 	ld a, [hl] ; $59a6
 	ld d, $04 ; $59a7
-	farcall FarPtr_18_02 ; $59a9
+	farcall FarPtr_LoadIndexedPalette_18 ; $59a9
 	jr Label_3b_59b1 ; $59ac
 Label_3b_59ae:
 	call Func_3b_5a57 ; $59ae
@@ -5330,7 +5330,7 @@ Func_3b_6672:
 	call GetStarCharAtGridSlot ; $6673
 	farcall FarPtr_02_34 ; $6676
 	ld d, $04 ; $6679
-	farcall FarPtr_18_02 ; $667b
+	farcall FarPtr_LoadIndexedPalette_18 ; $667b
 	ret ; $667e
 BuildStarCharUnlockMask:
 	ld c, $00 ; $667f
@@ -5870,7 +5870,7 @@ Label_3b_6ab2:
 	add hl, bc ; $6ab5
 	ld a, [hl] ; $6ab6
 	ld d, $04 ; $6ab7
-	farcall FarPtr_18_02 ; $6ab9
+	farcall FarPtr_LoadIndexedPalette_18 ; $6ab9
 	jr Label_3b_6ac1 ; $6abc
 Label_3b_6abe:
 	call Func_3b_6b4e ; $6abe
@@ -6573,7 +6573,7 @@ Label_3b_702f:
 	add hl, bc ; $7032
 	ld a, [hl] ; $7033
 	ld d, $04 ; $7034
-	farcall FarPtr_18_02 ; $7036
+	farcall FarPtr_LoadIndexedPalette_18 ; $7036
 	jr Label_3b_703e ; $7039
 Label_3b_703b:
 	call Func_3b_70cb ; $703b

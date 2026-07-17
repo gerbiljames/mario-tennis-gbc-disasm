@@ -2,12 +2,12 @@ SECTION "ROM Bank $11", ROMX[$4000], BANK[$11]
 
 DataPtr_11_00:
 	dw Data_11_4008 ; $4000
-DataPtr_11_02:
-	dw Data_11_4401 ; $4002
-DataPtr_11_04:
-	dw Data_11_54c0 ; $4004
-DataPtr_11_06:
-	dw Data_11_6822 ; $4006
+DataPtr_AcademyArrivalScene_11:
+	dw AcademyArrivalScene_11 ; $4002
+DataPtr_JuniorClassCourtDoublesScene_11:
+	dw JuniorClassCourtDoublesScene_11 ; $4004
+DataPtr_JuniorClassCourtSinglesScene_11:
+	dw JuniorClassCourtSinglesScene_11 ; $4006
 Data_11_4008:
 	; $4008, 14 bytes (records:2)
 ; 7 records x 2 bytes
@@ -355,7 +355,7 @@ Label_11_4395:
 	ld [$c2a1], a ; $43e9
 	ret ; $43ec
 	INCBIN "data/bank_011/d_43ed.bin" ; $43ed, 20 bytes
-Data_11_4401:
+AcademyArrivalScene_11:
 	; $4401, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $4515 ; record 0
@@ -546,10 +546,10 @@ Label_11_4670:
 	jp z, Label_11_53db ; $46c4
 	cp a, $0f ; $46c7
 	jr nz, Label_11_46ce ; $46c9
-	call Func_11_46cf ; $46cb
+	call LateStudentCrashCutscene ; $46cb
 Label_11_46ce:
 	ret ; $46ce
-Func_11_46cf:
+LateStudentCrashCutscene:
 	ld a, $00 ; $46cf
 	ld bc, $0010 ; $46d1
 	farcall FarPtr_0a_18 ; $46d4
@@ -794,7 +794,7 @@ Func_11_46cf:
 	ld a, $14 ; $4917
 	farcall FarPtr_WaitScriptFrames ; $4919
 	pop af ; $491c
-	call Func_11_4cf6 ; $491d
+	call LateStudentCrashImpact ; $491d
 	ld a, $11 ; $4920
 	farcall FarPtr_ScriptWaitActorMoveDone ; $4922
 	ld a, $11 ; $4925
@@ -1207,9 +1207,9 @@ Label_11_4b1d:
 	ld a, $5a ; $4cec
 	farcall FarPtr_WaitScriptFrames ; $4cee
 	pop af ; $4cf1
-	call Func_11_4d94 ; $4cf2
+	call AcademyArrivalGreetingScene ; $4cf2
 	ret ; $4cf5
-Func_11_4cf6:
+LateStudentCrashImpact:
 	ld a, $01 ; $4cf6
 	farcall FarPtr_0a_1c ; $4cf8
 	sound $70 ; $4cfb
@@ -1283,7 +1283,7 @@ Func_11_4d68:
 	ld [hl], a ; $4d8b
 	ret ; $4d8c
 	INCBIN "data/bank_011/d_4d8d.bin" ; $4d8d, 7 bytes
-Func_11_4d94:
+AcademyArrivalGreetingScene:
 	ld bc, $0010 ; $4d94
 	farcall FarPtr_0a_38 ; $4d97
 	ld a, $00 ; $4d9a
@@ -1452,7 +1452,7 @@ Label_11_4f0c:
 	farcall FarPtr_InitDialogueTextCursor ; $4f0f
 	ld a, $12 ; $4f12
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4f14
-	call Func_11_4f84 ; $4f17
+	call FollowGuideIntoAcademy ; $4f17
 	ret ; $4f1a
 Func_11_4f1b:
 	ld a, $f1 ; $4f1b
@@ -1498,9 +1498,9 @@ Func_11_4f1b:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4f78
 	ld a, $12 ; $4f7b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4f7d
-	call Func_11_4f84 ; $4f80
+	call FollowGuideIntoAcademy ; $4f80
 	ret ; $4f83
-Func_11_4f84:
+FollowGuideIntoAcademy:
 	ld a, $00 ; $4f84
 	ld bc, $0018 ; $4f86
 	farcall FarPtr_0a_18 ; $4f89
@@ -2037,7 +2037,7 @@ Func_11_54a6:
 	farcall FarPtr_SetActorFacing ; $54bc
 Label_11_54bf:
 	ret ; $54bf
-Data_11_54c0:
+JuniorClassCourtDoublesScene_11:
 	; $54c0, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $558e ; record 0
@@ -2333,7 +2333,7 @@ Label_11_57c6:
 	ld a, $00 ; $580f
 	ld b, $c0 ; $5811
 	farcall FarPtr_SetActorFacing ; $5813
-	call Func_11_629e ; $5816
+	call OfferDoublesRankingMatch ; $5816
 	ret ; $5819
 	; $581a, 81 bytes (records:8)
 ; 10 records x 8 bytes
@@ -3149,7 +3149,7 @@ Label_11_5fbd:
 	farcall FarPtr_WaitScriptFrames ; $6299
 	pop af ; $629c
 	ret ; $629d
-Func_11_629e:
+OfferDoublesRankingMatch:
 	ld hl, $085a ; $629e
 	farcall FarPtr_InitDialogueTextCursor ; $62a1
 	ld a, $03 ; $62a4
@@ -3206,7 +3206,7 @@ Label_11_62fb:
 	farcall FarPtr_SetActorFacing ; $6322
 	ld a, $03 ; $6325
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6327
-	call Func_11_6351 ; $632a
+	call DrawDoublesRankingOpponentInfo ; $632a
 	ld a, $00 ; $632d
 	ld b, $c0 ; $632f
 	farcall FarPtr_SetActorFacing ; $6331
@@ -3225,7 +3225,7 @@ Label_11_634b:
 	ld a, $03 ; $634b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $634d
 	ret ; $6350
-Func_11_6351:
+DrawDoublesRankingOpponentInfo:
 	test_flag $08, 0 ; $6351
 	jp z, Label_11_6364 ; $6354
 	test_flag $08, 1 ; $6357
@@ -3481,7 +3481,7 @@ Label_11_64db:
 	ld b, $c0 ; $6590
 	farcall FarPtr_SetActorFacing ; $6592
 	ret ; $6595
-Label_11_6596:
+StartNextDoublesRankingMatch:
 	ld a, $00 ; $6596
 	ld bc, $0020 ; $6598
 	farcall FarPtr_0a_18 ; $659b
@@ -3711,7 +3711,7 @@ Label_11_6702:
 	farcall FarPtr_0a_4c ; $6799
 	farcall FarPtr_0a_4e ; $679c
 	ret ; $679f
-Label_11_67a0:
+LoadDoublesRankingOpponentGraphics:
 	test_flag $08, 0 ; $67a0
 	jr z, Label_11_67b0 ; $67a3
 	test_flag $08, 1 ; $67a5
@@ -3774,7 +3774,7 @@ Label_11_6803:
 	farcall FarPtr_WaitActorScriptDone ; $681b
 	ret ; $681e
 	INCBIN "data/bank_011/d_681f.bin" ; $681f, 3 bytes
-Data_11_6822:
+JuniorClassCourtSinglesScene_11:
 	; $6822, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $691a ; record 0
@@ -3828,7 +3828,7 @@ Data_11_6822:
 	ld a, $00 ; $6963
 	ld b, $c0 ; $6965
 	farcall FarPtr_SetActorFacing ; $6967
-	call Func_11_7784 ; $696a
+	call OfferSinglesRankingMatch ; $696a
 	ret ; $696d
 	ld hl, $083e ; $696e
 	farcall FarPtr_InitDialogueTextCursor ; $6971
@@ -4729,7 +4729,7 @@ Label_11_72ec:
 	jp Label_11_72b8 ; $7307
 LoadRankingOpponentGraphics:
 	test_flag $05, 7 ; $730a
-	jp nz, Label_11_67a0 ; $730d
+	jp nz, LoadDoublesRankingOpponentGraphics ; $730d
 	test_flag $0a, 0 ; $7310
 	jr z, Label_11_7325 ; $7313
 	test_flag $0a, 1 ; $7315
@@ -5115,7 +5115,7 @@ Label_11_7590:
 	farcall FarPtr_SetActorFacing ; $763f
 	ret ; $7642
 	INCBIN "data/bank_011/d_7643.bin" ; $7643, 321 bytes
-Func_11_7784:
+OfferSinglesRankingMatch:
 	ld hl, $081c ; $7784
 	farcall FarPtr_InitDialogueTextCursor ; $7787
 	ld a, $03 ; $778a
@@ -5189,7 +5189,7 @@ StartNextRankingMatch:
 	ld bc, $0020 ; $781f
 	farcall FarPtr_0a_18 ; $7822
 	test_flag $05, 7 ; $7825
-	jp nz, Label_11_6596 ; $7828
+	jp nz, StartNextDoublesRankingMatch ; $7828
 	test_flag $0a, 0 ; $782b
 	jr z, Label_11_7843 ; $782e
 	test_flag $0a, 1 ; $7830
