@@ -1378,7 +1378,7 @@ DrawMatchRulesCaption:
 	ld c, $01 ; $49a3
 	ld h, $20 ; $49a5
 	farcall FarPtr_FillTilemapRect ; $49a7
-	farcall FarPtr_3b_36 ; $49aa
+	farcall FarPtr_RenderMatchFormatOptionText ; $49aa
 	ld hl, $d1e0 ; $49ad
 	ld de, $99e0 ; $49b0
 	ld c, $04 ; $49b3

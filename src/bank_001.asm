@@ -154,10 +154,10 @@ Label_01_4138:
 	farcall FarPtr_CheckStorySlot ; $4146
 	ld b, $00 ; $4149
 	ld c, $04 ; $414b
-	farcall FarPtr_3b_1c ; $414d
+	farcall FarPtr_ShowTournamentBracket ; $414d
 	ld b, $01 ; $4150
 	ld c, $02 ; $4152
-	farcall FarPtr_3b_1c ; $4154
+	farcall FarPtr_ShowTournamentBracket ; $4154
 	ld a, $01 ; $4157
 	ld [wCurrentMinigameStoryMatch], a ; $4159
 	ld a, $11 ; $415c

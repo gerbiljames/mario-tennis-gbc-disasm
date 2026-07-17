@@ -4009,7 +4009,7 @@ RunDebugTestMatch:
 	ld [$c3b0], a ; $5ec3
 	ld a, $1c ; $5ec6
 	ld [$c3b1], a ; $5ec8
-	farcall FarPtr_Func_3b_44aa ; $5ecb
+	farcall FarPtr_RunN64ExhibData ; $5ecb
 	farcall FarPtr_08_08 ; $5ece
 	ret ; $5ed1
 Func_07_5ed2:

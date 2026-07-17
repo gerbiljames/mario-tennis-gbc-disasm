@@ -6125,7 +6125,7 @@ Label_13_7b10:
 	ld c, $02 ; $7b17
 	jr Label_13_7b1b ; $7b19
 Label_13_7b1b:
-	farcall FarPtr_3b_1c ; $7b1b
+	farcall FarPtr_ShowTournamentBracket ; $7b1b
 	ret ; $7b1e
 Label_13_7b1f:
 	ld b, $01 ; $7b1f

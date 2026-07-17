@@ -4582,7 +4582,7 @@ RunMinigameLevelSelect3:
 	wram_bank $03 ; $6fdc
 	ld a, [$cb11] ; $6fe2
 	ld b, a ; $6fe5
-	farcall FarPtr_3b_1e ; $6fe6
+	farcall FarPtr_N64RecordTypeSlideIn ; $6fe6
 	farcall FarPtr_InitMenuBgScroll ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
@@ -4623,7 +4623,7 @@ Label_1b_703e:
 	set 2, [hl] ; $7046
 	wram_bank $03 ; $7048
 	ld b, $01 ; $704e
-	farcall FarPtr_3b_20 ; $7050
+	farcall FarPtr_N64RecordTypeSlideOut ; $7050
 	ld a, $01 ; $7053
 	ld [$cb11], a ; $7055
 	wram_bank $02 ; $7058
@@ -4638,7 +4638,7 @@ Label_1b_7067:
 	set 2, [hl] ; $706f
 	wram_bank $03 ; $7071
 	ld b, $00 ; $7077
-	farcall FarPtr_3b_20 ; $7079
+	farcall FarPtr_N64RecordTypeSlideOut ; $7079
 	ld a, $00 ; $707c
 	ld [$cb11], a ; $707e
 	wram_bank $02 ; $7081
@@ -5024,7 +5024,7 @@ BuildMinigameDataScreen:
 	wram_bank $03 ; $7455
 	call LoadMinigameDataState ; $745b
 	ld de, $aac0 ; $745e
-	farcall FarPtr_3b_28 ; $7461
+	farcall FarPtr_LoadChartWindowTiles ; $7461
 	ld de, $a000 ; $7464
 	farcall FarPtr_39_18 ; $7467
 	ld b, $08 ; $746a
@@ -5323,7 +5323,7 @@ DrawMinigameDataMugshot:
 	call MapMinigameRowToMugshotSlot ; $7676
 	call GetMinigameRowTilemapDest ; $7679
 	ld b, c ; $767c
-	farcall FarPtr_3b_2a ; $767d
+	farcall FarPtr_DrawChartCharIcon ; $767d
 	pop af ; $7680
 	wram_bank ; $7681
 	pop hl ; $7685

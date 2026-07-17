@@ -3183,7 +3183,7 @@ Func_39_6fe7:
 	ret ; $7002
 Func_39_7003:
 	sound $65 ; $7003
-	farcall FarPtr_3b_34 ; $7005
+	farcall FarPtr_ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
 Lz_39_7009:
 	INCBIN "data/bank_039/lz_7009.bin" ; $7009, 178 bytes

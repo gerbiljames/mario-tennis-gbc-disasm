@@ -992,7 +992,7 @@ Data_10_468d:
 	ld [$c3b0], a ; $4bc9
 	ld a, $04 ; $4bcc
 	ld [$c3b1], a ; $4bce
-	farcall FarPtr_Func_3b_44aa ; $4bd1
+	farcall FarPtr_RunN64ExhibData ; $4bd1
 	farcall FarPtr_08_08 ; $4bd4
 	ret ; $4bd7
 	INCBIN "data/bank_010/d_4bd8.bin" ; $4bd8, 243 bytes
@@ -1286,7 +1286,7 @@ Label_10_4f7c:
 	ld [$cb0c], a ; $4fa7
 	call ResumeBGM ; $4faa
 	call InitSerialLink ; $4fad
-	farcall FarPtr_3b_0c ; $4fb0
+	farcall FarPtr_RunMainMenu ; $4fb0
 	cp a, $ff ; $4fb3
 	jp z, Label_10_4f31 ; $4fb5
 	ld e, a ; $4fb8
@@ -1476,7 +1476,7 @@ Label_10_5137:
 	farcall FarPtr_InitDefaultMatchSettings ; $5143
 	farcall FarPtr_WriteExhibitionSaveBlock ; $5146
 Label_10_5149:
-	farcall FarPtr_3b_0e ; $5149
+	farcall FarPtr_RunMatchFormatSelect ; $5149
 	cp a, $ff ; $514c
 	jp z, Label_10_4f7c ; $514e
 	ld c, $10 ; $5151
@@ -1566,7 +1566,7 @@ Label_10_51fd:
 Label_10_5216:
 	xor a, a ; $5216
 	ld [$c8a7], a ; $5217
-	farcall FarPtr_3b_10 ; $521a
+	farcall FarPtr_RunMinigameSelect ; $521a
 	cp a, $ff ; $521d
 	jr nz, Label_10_5229 ; $521f
 	ld a, $00 ; $5221
@@ -1644,7 +1644,7 @@ Label_10_526e:
 	call BeginFadeIn ; $52cb
 	jp Label_10_4f7c ; $52ce
 Label_10_52d1:
-	farcall FarPtr_3b_12 ; $52d1
+	farcall FarPtr_RunSavedDataSourceSelect ; $52d1
 	cp a, $ff ; $52d4
 	jp z, Label_10_4f7c ; $52d6
 	cp a, $03 ; $52d9
@@ -1652,7 +1652,7 @@ Label_10_52d1:
 	ld [$c36c], a ; $52de
 	farcall FarPtr_CheckStorySlot ; $52e1
 Label_10_52e4:
-	farcall FarPtr_3b_18 ; $52e4
+	farcall FarPtr_RunN64TransferItemSelect ; $52e4
 	cp a, $ff ; $52e7
 	jp z, Label_10_52d1 ; $52e9
 	or a, a ; $52ec
@@ -1696,7 +1696,7 @@ Label_10_5345:
 	ld c, $10 ; $5349
 	call BeginFadeOut ; $534b
 	call WaitFadeEnd ; $534e
-	farcall FarPtr_3b_06 ; $5351
+	farcall FarPtr_RunTrophiesScreen ; $5351
 	call DisableLCDSafely ; $5354
 	farcall FarPtr_01_0a ; $5357
 	farcall FarPtr_ResetScreenAndTextWindows ; $535a
@@ -1761,7 +1761,7 @@ Label_10_53e2:
 	ld c, $10 ; $53e5
 	call BeginFadeOut ; $53e7
 	call WaitFadeEnd ; $53ea
-	farcall FarPtr_3b_30 ; $53ed
+	farcall FarPtr_RunStarCharExhibResults ; $53ed
 	ld c, $10 ; $53f0
 	call BeginFadeOut ; $53f2
 	call WaitFadeEnd ; $53f5
@@ -1792,7 +1792,7 @@ Label_10_5411:
 	ld [$cb11], a ; $5437
 	jp Label_10_53d8 ; $543a
 Label_10_543d:
-	farcall FarPtr_3b_16 ; $543d
+	farcall FarPtr_RunN64RecordTypeSelect ; $543d
 	cp a, $ff ; $5440
 	jp z, Label_10_52d1 ; $5442
 	or a, a ; $5445
@@ -1800,7 +1800,7 @@ Label_10_543d:
 	ld c, $10 ; $5448
 	call BeginFadeOut ; $544a
 	call WaitFadeEnd ; $544d
-	farcall FarPtr_3b_08 ; $5450
+	farcall FarPtr_RunN64TnmtData ; $5450
 	call DisableLCDSafely ; $5453
 	farcall FarPtr_01_0a ; $5456
 	farcall FarPtr_ResetScreenAndTextWindows ; $5459
@@ -1816,7 +1816,7 @@ Label_10_546c:
 	ld c, $10 ; $5470
 	call BeginFadeOut ; $5472
 	call WaitFadeEnd ; $5475
-	farcall FarPtr_Func_3b_44aaAlias1 ; $5478
+	farcall FarPtr_RunN64ExhibDataAlias1 ; $5478
 	call DisableLCDSafely ; $547b
 	farcall FarPtr_01_0a ; $547e
 	farcall FarPtr_ResetScreenAndTextWindows ; $5481
@@ -1827,7 +1827,7 @@ Label_10_546c:
 	ld [$cb11], a ; $548e
 	jp Label_10_53d4 ; $5491
 Label_10_5494:
-	farcall FarPtr_3b_0a ; $5494
+	farcall FarPtr_RunN64RingShotData ; $5494
 	call DisableLCDSafely ; $5497
 	farcall FarPtr_01_0a ; $549a
 	farcall FarPtr_ResetScreenAndTextWindows ; $549d
@@ -1852,7 +1852,7 @@ Label_10_5494:
 	ld [$cb11], a ; $54d0
 	jp Label_10_4f7c ; $54d3
 Label_10_54d6:
-	farcall FarPtr_3b_14 ; $54d6
+	farcall FarPtr_RunEraseSavedDataSelect ; $54d6
 	cp a, $ff ; $54d9
 	jp z, Label_10_4f7c ; $54db
 	ld b, a ; $54de
