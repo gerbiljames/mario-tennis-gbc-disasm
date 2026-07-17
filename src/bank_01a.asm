@@ -1,11 +1,11 @@
 SECTION "ROM Bank $1a", ROMX[$4000], BANK[$1a]
 
-FarPtr_1a_00:
-	dw Func_1a_4014 ; $4000
+FarPtr_RunMinigameModePauseMenu:
+	dw RunMinigameModePauseMenu ; $4000
 FarPtr_1a_02:
 	dw Func_1a_413c ; $4002
-FarPtr_1a_04:
-	dw Func_1a_5082 ; $4004
+FarPtr_ResetCharDataScreenAnim:
+	dw ResetCharDataScreenAnim ; $4004
 FarPtr_1a_06:
 	dw Func_1a_4399 ; $4006
 FarPtr_1a_08:
@@ -20,13 +20,13 @@ FarPtr_CharDataScreen_LoadGfx:
 	dw CharDataScreen_LoadGfx ; $4010
 FarPtr_1a_12:
 	dw Func_1a_7be5 ; $4012
-Func_1a_4014:
+RunMinigameModePauseMenu:
 	ldh a, [hWramBank] ; $4014
 	push af ; $4016
-	call Func_1a_42bc ; $4017
-	call Func_1a_437c ; $401a
+	call ForceInstantMessageSpeed ; $4017
+	call BuildMinigameModePauseMenu ; $401a
 	call Func_1a_402c ; $401d
-	call Func_1a_42c5 ; $4020
+	call RestoreMessageSpeed ; $4020
 	pop af ; $4023
 	wram_bank ; $4024
 	ld a, [$cb2b] ; $4028
@@ -370,12 +370,12 @@ Func_1a_42a9:
 	or a, c ; $42b7
 	ld [$c8a3], a ; $42b8
 	ret ; $42bb
-Func_1a_42bc:
+ForceInstantMessageSpeed:
 	ld a, [wMessageSpeed] ; $42bc
 	set 7, a ; $42bf
 	ld [wMessageSpeed], a ; $42c1
 	ret ; $42c4
-Func_1a_42c5:
+RestoreMessageSpeed:
 	ld a, [wMessageSpeed] ; $42c5
 	res 7, a ; $42c8
 	ld [wMessageSpeed], a ; $42ca
@@ -413,7 +413,7 @@ Label_1a_42ce:
 Label_1a_4317:
 	cp a, $ff ; $4317
 	jr nz, Label_1a_4331 ; $4319
-	call Func_1a_437c ; $431b
+	call BuildMinigameModePauseMenu ; $431b
 	ld a, $03 ; $431e
 	ld [$cb27], a ; $4320
 	ld a, [$cb2c] ; $4323
@@ -447,7 +447,7 @@ Label_1a_4331:
 	ld [$c2a1], a ; $4360
 	jp Label_1a_408e ; $4363
 Label_1a_4366:
-	call Func_1a_437c ; $4366
+	call BuildMinigameModePauseMenu ; $4366
 	ld a, $03 ; $4369
 	ld [$cb27], a ; $436b
 	ld a, [$cb2c] ; $436e
@@ -457,7 +457,7 @@ Label_1a_4366:
 	jr Label_1a_4379 ; $4377
 Label_1a_4379:
 	jp Func_1a_402c ; $4379
-Func_1a_437c:
+BuildMinigameModePauseMenu:
 	call Func_1a_4092 ; $437c
 	ld a, $a0 ; $437f
 	ld [$cb2a], a ; $4381
@@ -565,13 +565,13 @@ Label_1a_4446:
 	ld d, [hl] ; $4457
 	ld e, a ; $4458
 	ld l, $00 ; $4459
-	call Func_1a_5082 ; $445b
+	call ResetCharDataScreenAnim ; $445b
 	ld hl, $c96c ; $445e
 	ld a, [hl+] ; $4461
 	ld d, [hl] ; $4462
 	ld e, a ; $4463
 	ld l, $01 ; $4464
-	call Func_1a_5082 ; $4466
+	call ResetCharDataScreenAnim ; $4466
 	pop af ; $4469
 	wram_bank ; $446a
 	pop hl ; $446e
@@ -2210,7 +2210,7 @@ Label_1a_506d:
 	and a, a ; $507e
 	jr nz, Label_1a_506d ; $507f
 	ret ; $5081
-Func_1a_5082:
+ResetCharDataScreenAnim:
 	push af ; $5082
 	push bc ; $5083
 	push de ; $5084
