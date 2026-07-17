@@ -3494,7 +3494,7 @@ Func_1a_6f3d:
 	ld [$d0f7], a ; $6f98
 	wram_bank $06 ; $6f9b
 	ld a, [$d002] ; $6fa1
-	ld [$c3b0], a ; $6fa4
+	ld [wMatchPlayerChar], a ; $6fa4
 	ld d, a ; $6fa7
 	wram_bank $04 ; $6fa8
 	ld hl, $df00 ; $6fae

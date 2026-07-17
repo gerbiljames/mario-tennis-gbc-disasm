@@ -3968,12 +3968,12 @@ RunDebugTestMatch:
 	ld a, $02 ; $5e63
 	ld [wMatchTypeNumberOfGames], a ; $5e65
 	ld a, $1a ; $5e68
-	ld [$c3b0], a ; $5e6a
+	ld [wMatchPlayerChar], a ; $5e6a
 	ld b, a ; $5e6d
 	ld c, $00 ; $5e6e
 	farcall FarPtr_02_18 ; $5e70
 	ld a, $1d ; $5e73
-	ld [$c3b1], a ; $5e75
+	ld [wMatchOpponentChar], a ; $5e75
 	ld b, a ; $5e78
 	ld c, $02 ; $5e79
 	farcall FarPtr_02_18 ; $5e7b
@@ -4006,9 +4006,9 @@ RunDebugTestMatch:
 	ld a, $01 ; $5ebc
 	ld [wTargetZoneEnabled], a ; $5ebe
 	ld a, $1a ; $5ec1
-	ld [$c3b0], a ; $5ec3
+	ld [wMatchPlayerChar], a ; $5ec3
 	ld a, $1c ; $5ec6
-	ld [$c3b1], a ; $5ec8
+	ld [wMatchOpponentChar], a ; $5ec8
 	farcall FarPtr_RunN64ExhibData ; $5ecb
 	farcall FarPtr_RunMinigameMatch ; $5ece
 	ret ; $5ed1

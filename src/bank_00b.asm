@@ -6,7 +6,7 @@ StartDrillFromDefinition:
 	ld hl, $0000 ; $4002
 	add hl, bc ; $4005
 	ld a, [hl] ; $4006
-	ld [$c3b1], a ; $4007
+	ld [wMatchOpponentChar], a ; $4007
 	ld hl, $0001 ; $400a
 	add hl, bc ; $400d
 	ld a, [hl] ; $400e
@@ -28,7 +28,7 @@ StartDrillFromDefinition:
 	ld hl, $0005 ; $402f
 	add hl, bc ; $4032
 	ld a, [hl] ; $4033
-	ld [$c8f8], a ; $4034
+	ld [wMatchBGM], a ; $4034
 	push bc ; $4037
 	ld hl, $0007 ; $4038
 	add hl, bc ; $403b
@@ -36,8 +36,8 @@ StartDrillFromDefinition:
 	ld c, $00 ; $403d
 	farcall FarPtr_02_18 ; $403f
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4042
-	ld [$c3b0], a ; $4045
-	ld a, [$c3b1] ; $4048
+	ld [wMatchPlayerChar], a ; $4045
+	ld a, [wMatchOpponentChar] ; $4048
 	cp a, $ff ; $404b
 	jr z, Label_0b_4055 ; $404d
 	ld b, a ; $404f
@@ -511,7 +511,7 @@ Label_0b_44af:
 	ld a, [wRallyLength] ; $44af
 	cp a, $01 ; $44b2
 	jr nz, Label_0b_44c4 ; $44b4
-	ld a, [$c4d0] ; $44b6
+	ld a, [wServiceAceFlag] ; $44b6
 	or a, a ; $44b9
 	jr z, Label_0b_44c0 ; $44ba
 	ld a, $01 ; $44bc
@@ -562,7 +562,7 @@ Label_0b_4507:
 	ld a, [wRallyLength] ; $4507
 	cp a, $01 ; $450a
 	jr nz, Label_0b_451c ; $450c
-	ld a, [$c4d0] ; $450e
+	ld a, [wServiceAceFlag] ; $450e
 	or a, a ; $4511
 	jr z, Label_0b_4518 ; $4512
 	ld a, $0d ; $4514
@@ -1974,7 +1974,7 @@ RunDoublesDrillMatch:
 	ld a, $24 ; $7266
 	ld [$c8f7], a ; $7268
 	ld a, $15 ; $726b
-	ld [$c8f8], a ; $726d
+	ld [wMatchBGM], a ; $726d
 	ld a, $01 ; $7270
 	ld [wMatchIsDoubles], a ; $7272
 	ld a, $03 ; $7275
@@ -1983,12 +1983,12 @@ RunDoublesDrillMatch:
 	ld [wCurrentlyUsedCourt], a ; $727c
 	ld b, $1d ; $727f
 	ld a, b ; $7281
-	ld [$c3b0], a ; $7282
+	ld [wMatchPlayerChar], a ; $7282
 	ld c, $00 ; $7285
 	farcall FarPtr_02_18 ; $7287
 	ld b, $1b ; $728a
 	ld a, b ; $728c
-	ld [$c3b1], a ; $728d
+	ld [wMatchOpponentChar], a ; $728d
 	ld c, $02 ; $7290
 	farcall FarPtr_02_18 ; $7292
 	ld b, $1e ; $7295

@@ -4137,7 +4137,7 @@ SetCourtSelectBGM:
 	inc h ; $60e5
 Label_3e_60e6:
 	ld a, [hl] ; $60e6
-	ld [$c8f8], a ; $60e7
+	ld [wMatchBGM], a ; $60e7
 	ret ; $60ea
 	INCBIN "data/bank_03e/d_60eb.bin" ; $60eb, 9 bytes
 SetCourtSelectBGMLink:
@@ -4149,7 +4149,7 @@ SetCourtSelectBGMLink:
 	inc h ; $60fc
 Label_3e_60fd:
 	ld a, [hl] ; $60fd
-	ld [$c8f8], a ; $60fe
+	ld [wMatchBGM], a ; $60fe
 	ret ; $6101
 	INCBIN "data/bank_03e/d_6102.bin" ; $6102, 9 bytes
 LoadCourtSelectHeader:

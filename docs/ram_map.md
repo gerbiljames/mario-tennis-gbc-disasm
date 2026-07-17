@@ -153,6 +153,8 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc2d6` | WRAM | `wStoryModeLocationNameTextId` | [16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set |
 | `0xc32e` | WRAM | `wCurrentScene` | [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations |
 | `0xc36c` | WRAM | `wCurrentStorySlot` | [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on |
+| `0xc3b0` | WRAM | `wMatchPlayerChar` | [8-bit] Character id (see 0xca0b values) assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites |
+| `0xc3b1` | WRAM | `wMatchOpponentChar` | [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set via SetStoryMatchOpponent |
 | `0xc3b3` | WRAM | `wShadowTilemapBank` | [8-bit] WRAM bank of the shadow (off-screen) tilemap buffer; paired with wShadowTilemapPtr |
 | `0xc3b4` | WRAM | `wShadowTilemapPtr` | [16-bit] Base pointer of the shadow tilemap buffer (in bank wShadowTilemapBank); tiles at base, attributes at base+$0400 |
 | `0xc3b6` | WRAM | `wWindowTileAttr` | [8-bit] CGB BG attribute byte applied to window/glyph tiles when drawing (default $80 = BG priority) |
@@ -174,6 +176,7 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc47a` | WRAM | `wCameraOffsetY` | [16-bit] Camera Y offset added before the <<3 screen projection |
 | `0xc480` | WRAM | `wLandingMarkerX` | [16-bit] Projected X of the lob landing marker |
 | `0xc482` | WRAM | `wLandingMarkerY` | [16-bit] Projected Y of the lob landing marker |
+| `0xc492` | WRAM | `wMatchFramesAbort` | [8-bit] Companion abort flag to wMatchAbortFlag ($ff set by every quit-menu action): makes StepMatchFrames return immediately and suppresses result jingles |
 | `0xc4a0` | WRAM | `wCurrentShotType` | [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot) |
 | `0xc4a8` | WRAM | `wBounceEffectTimer` | [8-bit] Frames left of the ball-bounce dust effect (starts at $14) |
 | `0xc4a9` | WRAM | `wHitSparkTimer` | [8-bit] Frames left of the normal swing-hit spark (starts at $10) |
@@ -187,6 +190,11 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc4c7` | WRAM | `wMatchExitRequest` | [8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it |
 | `0xc4ca` | WRAM | `wStandingShadowsEnabled` | [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters |
 | `0xc4cf` | WRAM | `wOnCourtCharCountMinus1` | [8-bit] `wOnCourtCharCount` - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches (e.g. `$4ff5`, `$6063` in bank $08) |
+| `0xc4d0` | WRAM | `wServiceAceFlag` | [8-bit] Set when the point ended as a service ace (point outcome 6 with rally length 1); credited to the winner's ServiceAces stat |
+| `0xc4d1` | WRAM | `wReturnAceFlag` | [8-bit] Set when the point ended as a return ace (point outcome 6 with rally length 2); credited to the winner's ReturnAces stat |
+| `0xc4d5` | WRAM | `wMatchPointFlag` | [8-bit] Match-point indicator: $01/$ff = P1/P2 side wins the match by taking the next point, 0 = none (EvaluatePointSituation simulates the next point) |
+| `0xc4d6` | WRAM | `wSetPointFlag` | [8-bit] Set-point indicator ($01/$ff/0, same scheme as wMatchPointFlag) |
+| `0xc4d7` | WRAM | `wGamePointFlag` | [8-bit] Game-point indicator ($01/$ff/0, same scheme as wMatchPointFlag) |
 | `0xc4d8` | WRAM | `wPointOutcome` | [8-bit] 0 while the rally runs; point-end cause code once the point resolves |
 | `0xc4de` | WRAM | `wMatchRetryRequest` | [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID) |
 | `0xc4df` | WRAM | `wMatchSelectNewLevelRequest` | [8-bit] Set to 1 by MatchQuitMenu_SelectNewLevel; returns to the level-select screen after the match teardown |
@@ -200,8 +208,10 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc7b4` | WRAM | `wModeHookBank` | [8-bit] ROM bank of the mode callback table (0 = no hooks registered) |
 | `0xc800` | WRAM | `wSaveBlockBuffer` | [buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer |
 | `0xc8a7` | WRAM | `wKeepMatchStatsFlag` | [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use |
+| `0xc8ee` | WRAM | `wServeFaultFlag` | [8-bit] 1 after a first-serve fault (the next fault becomes a double fault, point outcome 2); cleared on double fault and at match reset |
 | `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
 | `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
+| `0xc8f8` | WRAM | `wMatchBGM` | [8-bit] BGM id (see wCurrentBGM values) played for the current match/court; tiebreak overrides it with $0e |
 | `0xcb06` | WRAM | `wMenuCursor2X` | [8-bit] Secondary menu cursor column (parallel to wMenuCursorX; second selection region of the shared menu-input handler) |
 | `0xcb07` | WRAM | `wMenuCursor2Y` | [8-bit] Secondary menu cursor row (parallel to wMenuCursorY) |
 | `0xcb08` | WRAM | `wMenuCursorLockFlags` | [8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler |

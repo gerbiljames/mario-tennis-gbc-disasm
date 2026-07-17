@@ -1608,7 +1608,7 @@ Label_0a_4929:
 InitStoryMatchSettings:
 	farcall FarPtr_InitDefaultMatchSettings ; $4931
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4934
-	ld [$c3b0], a ; $4937
+	ld [wMatchPlayerChar], a ; $4937
 	xor a, a ; $493a
 	ld [wMatchIsDoubles], a ; $493b
 	add a, $02 ; $493e
@@ -1616,7 +1616,7 @@ InitStoryMatchSettings:
 	ld a, $00 ; $4943
 	ld [wCurrentMinigameStoryMatch], a ; $4945
 	ld a, $0c ; $4948
-	ld [$c3b1], a ; $494a
+	ld [wMatchOpponentChar], a ; $494a
 	ld a, $02 ; $494d
 	ld [wCurrentlyUsedCourt], a ; $494f
 	ld a, $01 ; $4952
@@ -1663,7 +1663,7 @@ AssignStoryMatchCharacters:
 	ld b, $80 ; $49aa
 	ld c, $00 ; $49ac
 	farcall FarPtr_02_18 ; $49ae
-	ld a, [$c3b1] ; $49b1
+	ld a, [wMatchOpponentChar] ; $49b1
 	ld b, a ; $49b4
 	ld c, $02 ; $49b5
 	farcall FarPtr_02_18 ; $49b7
@@ -1673,7 +1673,7 @@ AssignStoryMatchCharacters:
 	ld b, $81 ; $49c0
 	ld c, $01 ; $49c2
 	farcall FarPtr_02_18 ; $49c4
-	ld a, [$c3b1] ; $49c7
+	ld a, [wMatchOpponentChar] ; $49c7
 	ld hl, $49d9 ; $49ca
 	add a, l ; $49cd
 	ld l, a ; $49ce
@@ -1693,7 +1693,7 @@ SetMatchDoublesMode:
 	ld [wOnCourtCharCount], a ; $4a48
 	ret ; $4a4b
 SetStoryMatchOpponent:
-	ld [$c3b1], a ; $4a4c
+	ld [wMatchOpponentChar], a ; $4a4c
 	ret ; $4a4f
 SetCurrentlyUsedCourt:
 	ld [wCurrentlyUsedCourt], a ; $4a50
@@ -1728,7 +1728,7 @@ Label_0a_4a7c:
 	ld a, [hl+] ; $4a7d
 	ld [wGameMode], a ; $4a7e
 	ld a, [hl+] ; $4a81
-	ld [$c3b1], a ; $4a82
+	ld [wMatchOpponentChar], a ; $4a82
 	ld a, [hl+] ; $4a85
 	ld [wCurrentlyUsedCourt], a ; $4a86
 	test_flag $04, 1 ; $4a89
@@ -1742,7 +1742,7 @@ Label_0a_4a7c:
 	and a, $0f ; $4a98
 	ld [wMatchTypeNumberOfSets], a ; $4a9a
 	ld a, [hl] ; $4a9d
-	ld [$c8f8], a ; $4a9e
+	ld [wMatchBGM], a ; $4a9e
 	ret ; $4aa1
 Label_0a_4aa2:
 	ld a, $02 ; $4aa2
@@ -1751,7 +1751,7 @@ Label_0a_4aa2:
 	ld [wMatchTypeNumberOfSets], a ; $4aa9
 	inc hl ; $4aac
 	ld a, [hl] ; $4aad
-	ld [$c8f8], a ; $4aae
+	ld [wMatchBGM], a ; $4aae
 	ret ; $4ab1
 	INCBIN "data/bank_00a/d_4ab2.bin" ; $4ab2, 250 bytes
 RunClearStatusSetupMenu:

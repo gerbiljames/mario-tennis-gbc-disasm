@@ -581,7 +581,7 @@ MatchQuitMenu_SaveAndQuit:
 	ld [$c8a5], a ; $44b7
 	ld a, $ff ; $44ba
 	ld [wMatchAbortFlag], a ; $44bc
-	ld [$c492], a ; $44bf
+	ld [wMatchFramesAbort], a ; $44bf
 	ret ; $44c2
 MatchQuitMenu_Retry:
 	ld a, $01 ; $44c3
@@ -589,7 +589,7 @@ MatchQuitMenu_Retry:
 	ld [wMatchExitRequest], a ; $44c8
 	ld a, $ff ; $44cb
 	ld [wMatchAbortFlag], a ; $44cd
-	ld [$c492], a ; $44d0
+	ld [wMatchFramesAbort], a ; $44d0
 	ret ; $44d3
 MatchQuitMenu_SelectNewLevel:
 	ld a, $01 ; $44d4
@@ -597,14 +597,14 @@ MatchQuitMenu_SelectNewLevel:
 	ld [wMatchExitRequest], a ; $44d9
 	ld a, $ff ; $44dc
 	ld [wMatchAbortFlag], a ; $44de
-	ld [$c492], a ; $44e1
+	ld [wMatchFramesAbort], a ; $44e1
 	ret ; $44e4
 MatchQuitMenu_Quit:
 	ld a, $01 ; $44e5
 	ld [wMatchExitRequest], a ; $44e7
 	ld a, $ff ; $44ea
 	ld [wMatchAbortFlag], a ; $44ec
-	ld [$c492], a ; $44ef
+	ld [wMatchFramesAbort], a ; $44ef
 	ret ; $44f2
 	INCBIN "data/bank_006/d_44f3.bin" ; $44f3, 11 bytes
 ShowMessageWindow:

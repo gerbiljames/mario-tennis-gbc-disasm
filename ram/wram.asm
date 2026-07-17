@@ -188,7 +188,13 @@ wMinigameLevel:: db
 
 ; [8-bit] High byte of current OAM shadow buffer ($c0/$c5); toggled each frame, OAM DMA source
 wSpriteBufferPage:: db
-	ds 10
+	ds 8
+
+; [8-bit] Character id (see 0xca0b values) assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites
+wMatchPlayerChar:: db
+
+; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set via SetStoryMatchOpponent
+wMatchOpponentChar:: db
 
 ; [8-bit] BG attribute written for window-frame cells ($80 = BG priority)
 wWindowFrameAttr:: db
@@ -271,7 +277,11 @@ wLandingMarkerX:: dw
 
 ; [16-bit] Projected Y of the lob landing marker
 wLandingMarkerY:: dw
-	ds 28
+	ds 14
+
+; [8-bit] Companion abort flag to wMatchAbortFlag ($ff set by every quit-menu action): makes StepMatchFrames return immediately and suppresses result jingles
+wMatchFramesAbort:: db
+	ds 13
 
 ; [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot)
 wCurrentShotType:: db
@@ -321,11 +331,26 @@ wStandingShadowsEnabled:: db
 
 ; [8-bit] wOnCourtCharCount - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches
 wOnCourtCharCountMinus1:: db
-	ds 3
+
+; [8-bit] Set when the point ended as a service ace (point outcome 6 with rally length 1); credited to the winner's ServiceAces stat
+wServiceAceFlag:: db
+
+; [8-bit] Set when the point ended as a return ace (point outcome 6 with rally length 2); credited to the winner's ReturnAces stat
+wReturnAceFlag:: db
+	ds 1
 
 ; [8-bit] Current Serving Player (0x00-0x03)
 wCurrentServingPlayer:: db
-	ds 4
+	ds 1
+
+; [8-bit] Match-point indicator: $01/$ff = P1/P2 side wins the match by taking the next point, 0 = none (EvaluatePointSituation simulates the next point)
+wMatchPointFlag:: db
+
+; [8-bit] Set-point indicator ($01/$ff/0, same scheme as wMatchPointFlag)
+wSetPointFlag:: db
+
+; [8-bit] Game-point indicator ($01/$ff/0, same scheme as wMatchPointFlag)
+wGamePointFlag:: db
 
 ; [8-bit] 0 while the rally runs; point-end cause code once the point resolves
 wPointOutcome:: db
@@ -649,7 +674,10 @@ wTotalGamesWonInMatch:: db
 
 ; [8-bit] Total Points Scored In Current Game
 wTotalPointsScoredInCurrentGame:: db
-	ds 2
+
+; [8-bit] 1 after a first-serve fault (the next fault becomes a double fault, point outcome 2); cleared on double fault and at match reset
+wServeFaultFlag:: db
+	ds 1
 
 ; [8-bit] Match Type - Number Of Sets (0x01, 0x03, 0x05)
 wMatchTypeNumberOfSets:: db
@@ -767,7 +795,10 @@ wCurrentlyUsedCourt:: db
 ; 0x0223 - Medallion Match
 ; 0x0224 - Two-On-One
 wCurrentMinigameStoryMatch:: dw
-	ds 8
+
+; [8-bit] BGM id (see wCurrentBGM values) played for the current match/court; tiebreak overrides it with $0e
+wMatchBGM:: db
+	ds 7
 
 ; [ASCII, 7 Bytes] Story Mode - Name of Main Character
 wStoryModeNameOfMainCharacter:: ds 7

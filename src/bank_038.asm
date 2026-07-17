@@ -6897,8 +6897,8 @@ Label_38_74a4:
 	call BeginFadeOut ; $74ab
 	call WaitFadeEnd ; $74ae
 	ld a, $01 ; $74b1
-	ld [$c3b0], a ; $74b3
-	ld [$c3b1], a ; $74b6
+	ld [wMatchPlayerChar], a ; $74b3
+	ld [wMatchOpponentChar], a ; $74b6
 	ld a, [wMatchIsDoubles] ; $74b9
 	or a, a ; $74bc
 	jr z, Label_38_74c4 ; $74bd

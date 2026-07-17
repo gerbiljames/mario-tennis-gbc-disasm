@@ -10,7 +10,7 @@ InitMinigameFromConfig:
 	ld hl, $0000 ; $4006
 	add hl, bc ; $4009
 	ld a, [hl] ; $400a
-	ld [$c3b1], a ; $400b
+	ld [wMatchOpponentChar], a ; $400b
 	ld hl, $0001 ; $400e
 	add hl, bc ; $4011
 	ld a, [hl] ; $4012
@@ -32,7 +32,7 @@ InitMinigameFromConfig:
 	ld hl, $0005 ; $4033
 	add hl, bc ; $4036
 	ld a, [hl] ; $4037
-	ld [$c8f8], a ; $4038
+	ld [wMatchBGM], a ; $4038
 	push bc ; $403b
 	ld hl, $0007 ; $403c
 	add hl, bc ; $403f
@@ -40,8 +40,8 @@ InitMinigameFromConfig:
 	ld c, $00 ; $4041
 	farcall FarPtr_02_18 ; $4043
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4046
-	ld [$c3b0], a ; $4049
-	ld a, [$c3b1] ; $404c
+	ld [wMatchPlayerChar], a ; $4049
+	ld a, [wMatchOpponentChar] ; $404c
 	cp a, $ff ; $404f
 	jr z, Label_0d_4059 ; $4051
 	ld b, a ; $4053
@@ -1062,7 +1062,7 @@ Label_0d_48e5:
 	ld b, $01 ; $48e6
 	ld de, $8200 ; $48e8
 	farcall FarPtr_09_28 ; $48eb
-	ld a, [$c492] ; $48ee
+	ld a, [wMatchFramesAbort] ; $48ee
 	and a, a ; $48f1
 	jr nz, Label_0d_48f6 ; $48f2
 	sound $74 ; $48f4
@@ -1074,7 +1074,7 @@ Label_0d_48f6:
 	pop af ; $4900
 	dec a ; $4901
 	jr nz, Label_0d_48e5 ; $4902
-	ld a, [$c492] ; $4904
+	ld a, [wMatchFramesAbort] ; $4904
 	and a, a ; $4907
 	jr nz, Label_0d_490c ; $4908
 	sound $75 ; $490a
@@ -1086,7 +1086,7 @@ Label_0d_490c:
 	farcall FarPtr_09_16 ; $4916
 	pop af ; $4919
 	ld b, a ; $491a
-	ld a, [$c492] ; $491b
+	ld a, [wMatchFramesAbort] ; $491b
 	and a, a ; $491e
 	jr nz, Label_0d_4925 ; $491f
 	ld a, b ; $4921

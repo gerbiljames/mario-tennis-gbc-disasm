@@ -989,9 +989,9 @@ Data_10_468d:
 	ld de, $4c13 ; $4bc1
 	farcall FarPtr_SetMinigamePointTable ; $4bc4
 	ld a, $1a ; $4bc7
-	ld [$c3b0], a ; $4bc9
+	ld [wMatchPlayerChar], a ; $4bc9
 	ld a, $04 ; $4bcc
-	ld [$c3b1], a ; $4bce
+	ld [wMatchOpponentChar], a ; $4bce
 	farcall FarPtr_RunN64ExhibData ; $4bd1
 	farcall FarPtr_RunMinigameMatch ; $4bd4
 	ret ; $4bd7

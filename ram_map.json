@@ -165,6 +165,14 @@
   "note": "[8-bit] High byte of current OAM shadow buffer ($c0/$c5); toggled each frame, OAM DMA source",
   "size": 1
  },
+ "0xc3b0": {
+  "name": "wMatchPlayerChar",
+  "note": "[8-bit] Character id (see 0xca0b values) assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites"
+ },
+ "0xc3b1": {
+  "name": "wMatchOpponentChar",
+  "note": "[8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set via SetStoryMatchOpponent"
+ },
  "0xc3b2": {
   "name": "wWindowFrameAttr",
   "note": "[8-bit] BG attribute written for window-frame cells ($80 = BG priority)",
@@ -283,6 +291,10 @@
   "note": "[16-bit] Projected Y of the lob landing marker",
   "size": 2
  },
+ "0xc492": {
+  "name": "wMatchFramesAbort",
+  "note": "[8-bit] Companion abort flag to wMatchAbortFlag ($ff set by every quit-menu action): makes StepMatchFrames return immediately and suppresses result jingles"
+ },
  "0xc4a0": {
   "name": "wCurrentShotType",
   "note": "[8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot)"
@@ -350,10 +362,30 @@
   "note": "[8-bit] wOnCourtCharCount - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches",
   "size": 1
  },
+ "0xc4d0": {
+  "name": "wServiceAceFlag",
+  "note": "[8-bit] Set when the point ended as a service ace (point outcome 6 with rally length 1); credited to the winner's ServiceAces stat"
+ },
+ "0xc4d1": {
+  "name": "wReturnAceFlag",
+  "note": "[8-bit] Set when the point ended as a return ace (point outcome 6 with rally length 2); credited to the winner's ReturnAces stat"
+ },
  "0xc4d3": {
   "name": "wCurrentServingPlayer",
   "note": "[8-bit] Current Serving Player (0x00-0x03)",
   "size": 1
+ },
+ "0xc4d5": {
+  "name": "wMatchPointFlag",
+  "note": "[8-bit] Match-point indicator: $01/$ff = P1/P2 side wins the match by taking the next point, 0 = none (EvaluatePointSituation simulates the next point)"
+ },
+ "0xc4d6": {
+  "name": "wSetPointFlag",
+  "note": "[8-bit] Set-point indicator ($01/$ff/0, same scheme as wMatchPointFlag)"
+ },
+ "0xc4d7": {
+  "name": "wGamePointFlag",
+  "note": "[8-bit] Game-point indicator ($01/$ff/0, same scheme as wMatchPointFlag)"
  },
  "0xc4d8": {
   "name": "wPointOutcome",
@@ -814,6 +846,10 @@
   "note": "[8-bit] Total Points Scored In Current Game",
   "size": 1
  },
+ "0xc8ee": {
+  "name": "wServeFaultFlag",
+  "note": "[8-bit] 1 after a first-serve fault (the next fault becomes a double fault, point outcome 2); cleared on double fault and at match reset"
+ },
  "0xc8f0": {
   "name": "wMatchTypeNumberOfSets",
   "note": "[8-bit] Match Type - Number Of Sets (0x01, 0x03, 0x05)",
@@ -843,6 +879,10 @@
   "name": "wCurrentMinigameStoryMatch",
   "note": "[16-bit BE] Current Minigame/Story Match\n\n0x0000 - Singles Junior Practice Match\n0x0001 - Singles Junior #4\n0x0002 - Singles Junior #3\n0x0003 - Singles Junior #2\n0x0004 - Singles Junior #1\n0x0005 - Singles Senior Practice Match\n0x0006 - Singles Senior #4\n0x0007 - Singles Senior #3\n0x0008 - Singles Senior #2\n0x0009 - Singles Senior #1\n0x000a - Singles Varsity Practice Match\n0x000b - Singles Varsity #4\n0x0010 - Singles Island Open Round 1\n0x0011 - Singles Island Open Round 2\n0x0012 - Singles Island Open Semifinals\n0x0013 - Singles Island Open Finals\n0x0016 - Singles Dream Match (MAX)\n0x0017 - Singles Dream Match (Intense)\n0x0018 - Singles Dream Match (Hard/First time)\n0x0100 - Doubles Junior Practice Match\n0x0102 - Doubles Junior #3\n0x0103 - Doubles Junior #2\n0x0104 - Doubles Junior #1\n0x0105 - Doubles Senior Practice Match\n0x0107 - Doubles Senior #3\n0x0108 - Doubles Senior #2\n0x0109 - Doubles Senior #1\n0x010a - Doubles Varsity Practice Match\n0x010d - Doubles Varsity #2\n0x0111 - Doubles Island Open Round 1\n0x0112 - Doubles Island Open Semifinals\n0x0113 - Doubles Island Open Finals\n0x0116 - Doubles Dream Match (MAX)\n0x0117 - Doubles Dream Match (Intense)\n0x0118 - Doubles Dream Match (Hard/First time)\n0x0200 - Service Match 1\n0x0201 - Service Match 2\n0x0202 - Service Match 3\n0x0203 - Service Practice 1\n0x0204 - Service Practice 2\n0x0205 - Service Practice 3\n0x0206 - Net Play Match 1\n0x0207 - Net Play Match 2\n0x0208 - Net Play Match 3\n0x0209 - Net Play Practice 1\n0x020a - Net Play Practice 2\n0x020b - Net Play Practice 3\n0x020c - Stroke Match 1\n0x020d - Stroke Match 2\n0x020e - Stroke Match 3\n0x020f - Stroke Practice 1\n0x0210 - Stroke Practice 2\n0x0211 - Stroke Practice 3\n0x0212 - Tennis Machine 1\n0x0213 - Tennis Machine 2\n0x0214 - Tennis Machine 3\n0x0215 - Tennis Machine 4\n0x0216 - Wall Practice 1\n0x0217 - Wall Practice 2\n0x0218 - Wall Practice 3\n0x0219 - Wall Practice 4\n0x021a - Tennis Machine High Score\n0x021b - Wall Practice High Score\n0x021c - Boo Blast\n0x021d - Shooting Star\n0x021e - Perfect Shot\n0x021f - Target Shot\n0x0220 - Fruit Fantasy\n0x0221 - Banana Bunch\n0x0222 - Treasure Box\n0x0223 - Medallion Match\n0x0224 - Two-On-One",
   "size": 2
+ },
+ "0xc8f8": {
+  "name": "wMatchBGM",
+  "note": "[8-bit] BGM id (see wCurrentBGM values) played for the current match/court; tiebreak overrides it with $0e"
  },
  "0xc900": {
   "name": "wStoryModeNameOfMainCharacter",

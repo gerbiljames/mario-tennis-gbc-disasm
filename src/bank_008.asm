@@ -135,7 +135,7 @@ InitDefaultMatchSettings:
 	ld a, $02 ; $40a0
 	ld [wOnCourtCharCount], a ; $40a2
 	ld a, $11 ; $40a5
-	ld [$c8f8], a ; $40a7
+	ld [wMatchBGM], a ; $40a7
 	ret ; $40aa
 ResetMatchState:
 	wram_bank $04 ; $40ab
@@ -159,7 +159,7 @@ Label_08_40c7:
 	ld [wPlayer1PointsWon], a ; $40d6
 	ld [wPlayer2PointsWon], a ; $40d9
 	ld [wTotalPointsScoredInCurrentGame], a ; $40dc
-	ld [$c8ee], a ; $40df
+	ld [wServeFaultFlag], a ; $40df
 	ld [wDeuceIndicator], a ; $40e2
 	ld de, $fe50 ; $40e5
 	ld hl, $c484 ; $40e8
@@ -246,7 +246,7 @@ RunMatch:
 	call InitMatchScene ; $419e
 	call EnableLCD ; $41a1
 	farcall FarPtr_UpdateLinkSession ; $41a4
-	ld a, [$c8f8] ; $41a7
+	ld a, [wMatchBGM] ; $41a7
 	call PlaySoundManaged ; $41aa
 	ld hl, $c780 ; $41ad
 	ld c, $08 ; $41b0
@@ -571,7 +571,7 @@ ReadScriptedMatchInput:
 StepMatchFrames:
 	ld b, a ; $4428
 Label_08_4429:
-	ld a, [$c492] ; $4429
+	ld a, [wMatchFramesAbort] ; $4429
 	and a, a ; $442c
 	jr nz, Label_08_4435 ; $442d
 	call StepMatchFrame ; $442f
@@ -582,7 +582,7 @@ Label_08_4435:
 StepMatchFramesSkippable:
 	ld b, a ; $4436
 Label_08_4437:
-	ld a, [$c492] ; $4437
+	ld a, [wMatchFramesAbort] ; $4437
 	and a, a ; $443a
 	jr nz, Label_08_4451 ; $443b
 	call StepMatchFrame ; $443d
@@ -597,7 +597,7 @@ Label_08_4437:
 Label_08_4451:
 	ret ; $4451
 RunMatchFramesUntilInput:
-	ld a, [$c492] ; $4452
+	ld a, [wMatchFramesAbort] ; $4452
 	and a, a ; $4455
 	jr nz, Label_08_4464 ; $4456
 	call StepMatchFrame ; $4458
@@ -1120,7 +1120,7 @@ Label_08_47c0:
 	and a, a ; $47c3
 	jr z, Label_08_47a3 ; $47c4
 Label_08_47c6:
-	ld a, [$c8f8] ; $47c6
+	ld a, [wMatchBGM] ; $47c6
 	call PlaySoundManaged ; $47c9
 	ret ; $47cc
 InitTiebreakPointCounter:
@@ -1492,8 +1492,8 @@ ResetPointState:
 	ld [$c4b7], a ; $4cc3
 	ld [$c4ae], a ; $4cc6
 	ld [$c4bf], a ; $4cc9
-	ld [$c4d0], a ; $4ccc
-	ld [$c4d1], a ; $4ccf
+	ld [wServiceAceFlag], a ; $4ccc
+	ld [wReturnAceFlag], a ; $4ccf
 	ld [$c4da], a ; $4cd2
 	ld [$c491], a ; $4cd5
 	ld [wMatchAbortFlag], a ; $4cd8
@@ -1561,22 +1561,22 @@ Label_08_4d5b:
 	ret ; $4d62
 SetPointSituationBgm:
 	ld d, $0f ; $4d63
-	ld a, [$c4d5] ; $4d65
+	ld a, [wMatchPointFlag] ; $4d65
 	and a, a ; $4d68
 	jr nz, Label_08_4d87 ; $4d69
 	ld d, $0f ; $4d6b
-	ld a, [$c4d6] ; $4d6d
+	ld a, [wSetPointFlag] ; $4d6d
 	and a, a ; $4d70
 	jr nz, Label_08_4d87 ; $4d71
 	ld d, $10 ; $4d73
-	ld a, [$c4d7] ; $4d75
+	ld a, [wGamePointFlag] ; $4d75
 	and a, a ; $4d78
 	jr nz, Label_08_4d87 ; $4d79
 	ld d, $0e ; $4d7b
 	ld a, [wTiebreakerIndicator] ; $4d7d
 	and a, a ; $4d80
 	jr nz, Label_08_4d87 ; $4d81
-	ld a, [$c8f8] ; $4d83
+	ld a, [wMatchBGM] ; $4d83
 	ld d, a ; $4d86
 Label_08_4d87:
 	ld a, d ; $4d87
@@ -1586,17 +1586,17 @@ AnnouncePointSituation:
 	call EvaluatePointSituation ; $4d8c
 	call SetPointSituationBgm ; $4d8f
 	ld d, $0a ; $4d92
-	ld a, [$c4d5] ; $4d94
+	ld a, [wMatchPointFlag] ; $4d94
 	and a, a ; $4d97
 	jr nz, Label_08_4dbb ; $4d98
 	ld d, $09 ; $4d9a
-	ld a, [$c4d6] ; $4d9c
+	ld a, [wSetPointFlag] ; $4d9c
 	and a, a ; $4d9f
 	jr nz, Label_08_4dbb ; $4da0
-	ld a, [$c4d7] ; $4da2
+	ld a, [wGamePointFlag] ; $4da2
 	and a, a ; $4da5
 	jr z, Label_08_4df3 ; $4da6
-	ld a, [$c4d7] ; $4da8
+	ld a, [wGamePointFlag] ; $4da8
 	inc a ; $4dab
 	srl a ; $4dac
 	ld b, a ; $4dae
@@ -1609,7 +1609,7 @@ AnnouncePointSituation:
 Label_08_4dbb:
 	ld a, d ; $4dbb
 	farcall FarPtr_09_12 ; $4dbc
-	ld a, [$c4d7] ; $4dbf
+	ld a, [wGamePointFlag] ; $4dbf
 	inc a ; $4dc2
 	srl a ; $4dc3
 	ld b, a ; $4dc5
@@ -3650,11 +3650,11 @@ Label_08_5b3f:
 	ld [wPointWinLoseFlag], a ; $5b50
 	call ApplyPointToScore ; $5b53
 	ld a, [wGameWinLoseFlag] ; $5b56
-	ld [$c4d7], a ; $5b59
+	ld [wGamePointFlag], a ; $5b59
 	ld a, [wSetWinLoseFlag] ; $5b5c
-	ld [$c4d6], a ; $5b5f
+	ld [wSetPointFlag], a ; $5b5f
 	ld a, [wMatchWinLoseFlag] ; $5b62
-	ld [$c4d5], a ; $5b65
+	ld [wMatchPointFlag], a ; $5b65
 	pop hl ; $5b68
 	ld de, wPlayer1SetsWon ; $5b69
 	ld c, $01 ; $5b6c
@@ -3663,9 +3663,9 @@ Label_08_5b3f:
 	ret ; $5b73
 Label_08_5b74:
 	xor a, a ; $5b74
-	ld [$c4d7], a ; $5b75
-	ld [$c4d6], a ; $5b78
-	ld [$c4d5], a ; $5b7b
+	ld [wGamePointFlag], a ; $5b75
+	ld [wSetPointFlag], a ; $5b78
+	ld [wMatchPointFlag], a ; $5b7b
 	ret ; $5b7e
 HandleServeFault:
 	ld a, [wRallyLength] ; $5b7f
@@ -3674,17 +3674,17 @@ HandleServeFault:
 	ld a, [$c4d9] ; $5b85
 	cp a, $ff ; $5b88
 	ret nz ; $5b8a
-	ld a, [$c8ee] ; $5b8b
+	ld a, [wServeFaultFlag] ; $5b8b
 	and a, a ; $5b8e
 	jr nz, Label_08_5b9c ; $5b8f
 	ld a, $01 ; $5b91
-	ld [$c8ee], a ; $5b93
+	ld [wServeFaultFlag], a ; $5b93
 	ld a, $01 ; $5b96
 	ld [wPointOutcome], a ; $5b98
 	ret ; $5b9b
 Label_08_5b9c:
 	ld a, $00 ; $5b9c
-	ld [$c8ee], a ; $5b9e
+	ld [wServeFaultFlag], a ; $5b9e
 	ld a, $02 ; $5ba1
 	ld [wPointOutcome], a ; $5ba3
 	ret ; $5ba6
@@ -3696,13 +3696,13 @@ FlagServiceReturnAce:
 	cp a, $01 ; $5bb0
 	jr nz, Label_08_5bb9 ; $5bb2
 	ld a, $01 ; $5bb4
-	ld [$c4d0], a ; $5bb6
+	ld [wServiceAceFlag], a ; $5bb6
 Label_08_5bb9:
 	ld a, [wRallyLength] ; $5bb9
 	cp a, $02 ; $5bbc
 	jr nz, Label_08_5bc5 ; $5bbe
 	ld a, $01 ; $5bc0
-	ld [$c4d1], a ; $5bc2
+	ld [wReturnAceFlag], a ; $5bc2
 Label_08_5bc5:
 	ret ; $5bc5
 ResetAdvantageToDeuce:
@@ -3759,7 +3759,7 @@ AwardPoint:
 Label_08_5c21:
 	inc [hl] ; $5c21
 	xor a, a ; $5c22
-	ld [$c8ee], a ; $5c23
+	ld [wServeFaultFlag], a ; $5c23
 	ld hl, wTotalPointsScoredInCurrentGame ; $5c26
 	inc [hl] ; $5c29
 	ret ; $5c2a
@@ -3788,7 +3788,7 @@ RecordDoubleFaultStat:
 	ld hl, wCharacter1DoubleFaults ; $5c59
 	jp Label_08_5cb2 ; $5c5c
 RecordServiceAceStat:
-	ld a, [$c4d0] ; $5c5f
+	ld a, [wServiceAceFlag] ; $5c5f
 	and a, a ; $5c62
 	ret z ; $5c63
 	ld a, $01 ; $5c64
@@ -3796,7 +3796,7 @@ RecordServiceAceStat:
 	ld hl, wCharacter1ServiceAces ; $5c69
 	jp Label_08_5cb2 ; $5c6c
 RecordReturnAceStat:
-	ld a, [$c4d1] ; $5c6f
+	ld a, [wReturnAceFlag] ; $5c6f
 	and a, a ; $5c72
 	ret z ; $5c73
 	ld a, $02 ; $5c74
@@ -4995,7 +4995,7 @@ RunMinigameMatch:
 	call DisableLCDSafely ; $6562
 	call InitMatchScene ; $6565
 	call EnableLCD ; $6568
-	ld a, [$c8f8] ; $656b
+	ld a, [wMatchBGM] ; $656b
 	call PlaySoundManaged ; $656e
 	ld c, $20 ; $6571
 	call BeginFadeIn ; $6573
@@ -8208,7 +8208,7 @@ AiServePressToss:
 	ld a, [$c7a8] ; $7a64
 	and a, a ; $7a67
 	jr nz, Label_08_7a95 ; $7a68
-	ld a, [$c8ee] ; $7a6a
+	ld a, [wServeFaultFlag] ; $7a6a
 	and a, a ; $7a6d
 	jr nz, Label_08_7a95 ; $7a6e
 	ld a, [$df7d] ; $7a70

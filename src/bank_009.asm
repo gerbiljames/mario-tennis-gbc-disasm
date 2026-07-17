@@ -824,7 +824,7 @@ LoadServeGfx:
 	ld a, [hl+] ; $6c4b
 	ld h, [hl] ; $6c4c
 	ld l, a ; $6c4d
-	ld a, [$c8ee] ; $6c4e
+	ld a, [wServeFaultFlag] ; $6c4e
 	and a, $01 ; $6c51
 	ld b, a ; $6c53
 	ld a, [$c4d4] ; $6c54
