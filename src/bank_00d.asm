@@ -2,8 +2,8 @@ SECTION "ROM Bank $0d", ROMX[$4000], BANK[$0d]
 
 FarPtr_StartMinigameByID:
 	dw StartMinigameByID ; $4000
-FarPtr_0d_02:
-	dw Func_0d_41a6 ; $4002
+FarPtr_GetDefaultMinigameRecordValue:
+	dw GetDefaultMinigameRecordValue ; $4002
 FarPtr_ShowMinigamePointResult:
 	dw ShowMinigamePointResult ; $4004
 InitMinigameFromConfig:
@@ -238,7 +238,7 @@ Label_0d_4139:
 	dw $0001 ; record 43
 	dw $270f ; record 44
 	dw $0000 ; record 45
-Func_0d_41a6:
+GetDefaultMinigameRecordValue:
 	add a, a ; $41a6
 	add a, $b5 ; $41a7
 	ld l, a ; $41a9

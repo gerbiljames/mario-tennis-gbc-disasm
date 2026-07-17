@@ -1925,6 +1925,7 @@ Label_05_4b29:
 	call GetTilemapCellAddress ; $4b61
 	ld hl, $d842 ; $4b64
 	ld [hl], e ; $4b67
+LoadOverworldSpriteDef:
 	inc hl ; $4b68
 	ld [hl], d ; $4b69
 	pop hl ; $4b6a
@@ -3124,6 +3125,7 @@ Label_05_533f:
 	add hl, de ; $5344
 	ld bc, hSpriteQueueBase ; $5345
 	ld de, $0064 ; $5348
+IsTileBlockedAt:
 	add hl, bc ; $534b
 	ld a, $03 ; $534c
 	bit 7, h ; $534e
@@ -3811,6 +3813,7 @@ Label_05_570b:
 	srl a ; $5720
 	ld d, a ; $5722
 	ld a, [$d825] ; $5723
+WaitActorsIdleTimeout:
 	add a, d ; $5726
 	ld d, a ; $5727
 	ld a, [$d828] ; $5728

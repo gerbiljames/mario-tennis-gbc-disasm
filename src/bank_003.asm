@@ -2754,13 +2754,13 @@ Func_03_5141:
 	ld hl, $d480 ; $5154
 	call ReadSaveBlock ; $5157
 	xor a, a ; $515a
-	farcall FarPtr_0d_02 ; $515b
+	farcall FarPtr_GetDefaultMinigameRecordValue ; $515b
 	ld hl, $d480 ; $515e
 	ld a, e ; $5161
 	ld [hl+], a ; $5162
 	ld [hl], d ; $5163
 	ld a, $01 ; $5164
-	farcall FarPtr_0d_02 ; $5166
+	farcall FarPtr_GetDefaultMinigameRecordValue ; $5166
 	ld hl, $d482 ; $5169
 	ld a, e ; $516c
 	ld [hl+], a ; $516d
@@ -2814,7 +2814,7 @@ Label_03_51bc:
 	jr z, Label_03_51ce ; $51be
 	push af ; $51c0
 	push hl ; $51c1
-	farcall FarPtr_0d_02 ; $51c2
+	farcall FarPtr_GetDefaultMinigameRecordValue ; $51c2
 	pop hl ; $51c5
 	ld a, e ; $51c6
 	ld [hl+], a ; $51c7
@@ -3624,7 +3624,7 @@ Label_03_5804:
 	jr z, Label_03_5838 ; $581c
 Label_03_581e:
 	ld a, b ; $581e
-	farcall FarPtr_0d_02 ; $581f
+	farcall FarPtr_GetDefaultMinigameRecordValue ; $581f
 	ld a, b ; $5822
 	call ReadMinigameRecord ; $5823
 	ld hl, $de00 ; $5826
