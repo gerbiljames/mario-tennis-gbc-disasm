@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `bd27818`); the whole history rebuilds
+Everything below is **committed** (HEAD `866e6ad`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -320,7 +320,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 1,337 of 15,849 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 1,951 of 16,791 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -841,6 +841,52 @@ match-list and minigame-select menus. Two offset-arithmetic mishaps
 name clash; the fix and the safe recipe are recorded in the auto-memory
 (naming-pass-workflow).
 
+**Cross-bank naming pass round 3 (2026-07-17, +216 names).** Subagent proposals
+(one per bank, evidence-gated, spot-checked) over the story-scene banks, driven
+by text-id decoding. Named symbols: 1,735 -> 1,951. What each bank turned out
+to be:
+- **Bank $0e = training gym + Mario World.** The Repair Counter equipment-change
+  flow (service menu, racket/shoe select via FarPtr_3e_0c/0e, handout/confirm
+  dialogue, the $c295 return-path handlers) and the post-game Mario World
+  exhibition-match story (arrival cutscenes singles/doubles, Peach's exhibition
+  prompt with Hard/Intense/MAX select, decline tantrum, the 6
+  LoadExhibitionMatchSettings stubs and HandleExhibitionMatchResult).
+- **Bank $0f = Island Open tournament site.** Round computation from story
+  flags, per-round NPC loads, round-call/break/arrival cutscenes, podium
+  announcement, and the victory transition to the plane cutscene (location $1b).
+- **Bank $11 = Academy arrival + junior-class ranking courts.** The game-opening
+  greeting/tour scenes and late-student crash cutscene, plus the singles and
+  doubles ranking-match offer/opponent flows (the doubles twins of the
+  already-named StartNextRankingMatch/LoadRankingOpponentGraphics fork on story
+  flag $05.7).
+- **Bank $12 = Wall Practice Room + senior-class court.** Wall practice level
+  signs/launch/result/record scripts (9999-hit counter cap, Master Level), and
+  the senior ranking ladder: stage computation ($c2b1 from the story-flag
+  cascade), offer/confirm scenes, practicing NPC pairs, victory dispatch.
+- **Bank $14 = Tennis Machine Room + Island Open courts + water sprite.** All
+  four machine-level result/practice/retry scripts, the Expert System record
+  flow, Court #1/#2 gallery scenes, and the fountain water-sprite loaders.
+- **Bank $15 = training courts + tournament site trees.** The three coaches
+  (serve $07, net $12: volley/smash/drop shot, return $0d: return/lob/passing
+  shot) with their lesson scenes/retry prompts/walk-to-court starters, the
+  three challenger NPCs (serve/net/stroke match chains), and the pond
+  side-story (swing-practice kid, water-sprite 10-second swing contest,
+  Gold/Silver Racket reward).
+- **Bank $0b = training-drill engine** (direct + agent): RunTrainingDrillByID
+  ($47b4 14-byte drill-definition directory, ids >= $12 route to minigames),
+  the drill result-message system ($45c4 text-id table, queue/show helpers),
+  target-zone record/check helpers, and the per-drill judge/evaluate/point-end
+  trios for drills 9 (serve-and-volley), 15 and 17.
+- **Bank $39/$18 screen helpers** (direct): CopyTilemapRect/FillTilemapRect
+  (the rect blitters behind 38 bank-$16 stats-screen farcall sites),
+  LoadIndexedPalette (+ bank $18 twin), QueueWram3MapToVRAM, and RAM
+  wBgMapShadowDirty ($cb61).
+- Fixes: text-id fetcher mapping corrected (fetchers 8-12 = banks
+  $6e/$1f/$25/$26/$5e, not $38+); disasm.py now dedupes consecutive identical
+  label lines (a curated name on an offset with both a data-mark and a segment
+  label emitted twice and broke assembly).
+- Banks $13 and $16 naming passes remain queued (agents were cut short).
+
 Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
 integrators, the CPU-AI behaviour state machine — need runtime traces), the
 bank $05 text control-code handlers, bank $3b's screen-specific pause-menu
@@ -850,5 +896,5 @@ expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `bd27818`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `866e6ad`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
