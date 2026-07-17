@@ -3048,9 +3048,9 @@ Func_1c_73fb:
 	ld a, [$c223] ; $7425
 	ld [$d17b], a ; $7428
 	ld hl, $c222 ; $742b
-	farcall FarPtr_1d_14 ; $742e
+	farcall FarPtr_GrayscalePaletteColorInPlace ; $742e
 	ld hl, $c222 ; $7431
-	farcall FarPtr_1d_14 ; $7434
+	farcall FarPtr_GrayscalePaletteColorInPlace ; $7434
 	wram_bank $01 ; $7437
 	ld hl, $7581 ; $743d
 	ld de, $d000 ; $7440
@@ -3162,13 +3162,13 @@ Label_1c_750d:
 	ld c, $09 ; $7523
 	call QueueVRAMCopy ; $7525
 	ld hl, $c210 ; $7528
-	farcall FarPtr_1d_14 ; $752b
+	farcall FarPtr_GrayscalePaletteColorInPlace ; $752b
 	ld hl, $c212 ; $752e
-	farcall FarPtr_1d_14 ; $7531
+	farcall FarPtr_GrayscalePaletteColorInPlace ; $7531
 	ld hl, $c214 ; $7534
-	farcall FarPtr_1d_14 ; $7537
+	farcall FarPtr_GrayscalePaletteColorInPlace ; $7537
 	ld hl, $c216 ; $753a
-	farcall FarPtr_1d_14 ; $753d
+	farcall FarPtr_GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 	INCBIN "data/bank_01c/d_7541.bin" ; $7541, 2486 bytes
 	ds 265, $ff ; $7ef7, fill

@@ -1661,7 +1661,7 @@ Label_10_52e4:
 	call BeginFadeOut ; $52f1
 	call WaitFadeEnd ; $52f4
 	ld a, $00 ; $52f7
-	farcall FarPtr_1d_00 ; $52f9
+	farcall FarPtr_ShowCharDataScreen ; $52f9
 	call DisableLCDSafely ; $52fc
 	farcall FarPtr_01_0a ; $52ff
 	farcall FarPtr_39_22 ; $5302

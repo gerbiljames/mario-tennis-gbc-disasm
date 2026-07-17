@@ -3276,7 +3276,7 @@ Label_1b_6408:
 	farcall FarPtr_03_18 ; $6455
 	jr Label_1b_6408 ; $6458
 Label_1b_645a:
-	farcall FarPtr_1d_00 ; $645a
+	farcall FarPtr_ShowCharDataScreen ; $645a
 	jp Label_1b_6408 ; $645d
 Label_1b_6460:
 	call ShowTrophiesPlaceholderScreen ; $6460

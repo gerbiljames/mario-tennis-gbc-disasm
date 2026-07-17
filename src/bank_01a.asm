@@ -219,7 +219,7 @@ GetTilemapBufferCellDest:
 	dw $41c4 ; record 3
 	dw $41d6 ; record 4
 	ld a, $01 ; $4176
-	farcall FarPtr_1d_00 ; $4178
+	farcall FarPtr_ShowCharDataScreen ; $4178
 	ld hl, wStoryModePlayersXPosition ; $417b
 	ld de, $c296 ; $417e
 	ld bc, $0005 ; $4181
@@ -3613,7 +3613,7 @@ Func_1a_70c0:
 	ret ; $70d8
 	INCBIN "data/bank_01a/d_70d9.bin" ; $70d9, 2156 bytes
 Func_1a_7945:
-	farcall FarPtr_1d_0c ; $7945
+	farcall FarPtr_InitCharDataScreenVideo ; $7945
 	farcall FarPtr_1c_10 ; $7948
 	wram_bank $01 ; $794b
 	ld hl, $7e53 ; $7951
@@ -3646,7 +3646,7 @@ Func_1a_7945:
 	call EnableLCD ; $79a9
 	call AdvanceFrame ; $79ac
 	farcall FarPtr_StartCharDataScreenAnimTask ; $79af
-	farcall FarPtr_1d_10 ; $79b2
+	farcall FarPtr_StartCharDataValuesSyncTask ; $79b2
 	ld c, $10 ; $79b5
 	call BeginFadeIn ; $79b7
 	call WaitFadeEnd ; $79ba
@@ -3684,7 +3684,7 @@ Label_1a_7a05:
 	ld c, $10 ; $7a05
 	call BeginFadeOut ; $7a07
 	call WaitFadeEnd ; $7a0a
-	farcall FarPtr_1d_12 ; $7a0d
+	farcall FarPtr_StopCharDataValuesSyncTask ; $7a0d
 	farcall FarPtr_StopCharDataScreenAnimTask ; $7a10
 	wram_bank $06 ; $7a13
 	ld a, [$d025] ; $7a19

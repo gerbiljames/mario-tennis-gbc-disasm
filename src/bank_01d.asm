@@ -1,7 +1,7 @@
 SECTION "ROM Bank $1d", ROMX[$4000], BANK[$1d]
 
-FarPtr_1d_00:
-	dw Func_1d_4016 ; $4000
+FarPtr_ShowCharDataScreen:
+	dw ShowCharDataScreen ; $4000
 FarPtr_PromptCharDataConfirm:
 	dw PromptCharDataConfirm ; $4002
 FarPtr_1d_04:
@@ -12,17 +12,17 @@ FarPtr_ClearDrillResultBuffer:
 	dw ClearDrillResultBuffer ; $4008
 FarPtr_RecordDrillResult:
 	dw RecordDrillResult ; $400a
-FarPtr_1d_0c:
-	dw Func_1d_5be3 ; $400c
+FarPtr_InitCharDataScreenVideo:
+	dw InitCharDataScreenVideo ; $400c
 FarPtr_1d_0e:
 	dw Func_1d_5c0b ; $400e
-FarPtr_1d_10:
-	dw Func_1d_5c15 ; $4010
-FarPtr_1d_12:
-	dw Func_1d_5c1e ; $4012
-FarPtr_1d_14:
-	dw Func_1d_7205 ; $4014
-Func_1d_4016:
+FarPtr_StartCharDataValuesSyncTask:
+	dw StartCharDataValuesSyncTask ; $4010
+FarPtr_StopCharDataValuesSyncTask:
+	dw StopCharDataValuesSyncTask ; $4012
+FarPtr_GrayscalePaletteColorInPlace:
+	dw GrayscalePaletteColorInPlace ; $4014
+ShowCharDataScreen:
 	ld b, a ; $4016
 	wram_bank $06 ; $4017
 	ld a, b ; $401d
@@ -33,7 +33,7 @@ Func_1d_4016:
 	ld c, $7f ; $4029
 	call BeginFadeOut ; $402b
 	call WaitFadeEnd ; $402e
-	call Func_1d_5be3 ; $4031
+	call InitCharDataScreenVideo ; $4031
 	ld hl, $6334 ; $4034
 	ld de, $0d01 ; $4037
 	call LoadPaletteShadow ; $403a
@@ -1067,6 +1067,7 @@ Label_1d_48bf:
 	dec c ; $48c2
 	jp nz, Label_1d_482d ; $48c3
 	ret ; $48c6
+CharDataValuesSyncTask:
 	wram_bank $06 ; $48c7
 	ld a, [$d149] ; $48cd
 	or a, a ; $48d0
@@ -3220,7 +3221,7 @@ Label_1d_5b53:
 	ld c, $24 ; $5bdd
 	call QueueVRAMCopy ; $5bdf
 	ret ; $5be2
-Func_1d_5be3:
+InitCharDataScreenVideo:
 	call ClearFrameTasks ; $5be3
 	call DisableLCDSafely ; $5be6
 	xor a, a ; $5be9
@@ -3242,12 +3243,12 @@ Func_1d_5c0b:
 	ld bc, $d580 ; $5c0e
 	call Func_1d_4bb6 ; $5c11
 	ret ; $5c14
-Func_1d_5c15:
+StartCharDataValuesSyncTask:
 	ld a, $01 ; $5c15
 	ld hl, $48c7 ; $5c17
 	call RegisterFrameTask ; $5c1a
 	ret ; $5c1d
-Func_1d_5c1e:
+StopCharDataValuesSyncTask:
 	ld hl, $48c7 ; $5c1e
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
@@ -4445,13 +4446,13 @@ Func_1d_7189:
 	or a, a ; $71bc
 	jr nz, Label_1d_71e2 ; $71bd
 	ld hl, $c110 ; $71bf
-	call Func_1d_7205 ; $71c2
+	call GrayscalePaletteColorInPlace ; $71c2
 	ld hl, $c112 ; $71c5
-	call Func_1d_7205 ; $71c8
+	call GrayscalePaletteColorInPlace ; $71c8
 	ld hl, $c114 ; $71cb
-	call Func_1d_7205 ; $71ce
+	call GrayscalePaletteColorInPlace ; $71ce
 	ld hl, $c116 ; $71d1
-	call Func_1d_7205 ; $71d4
+	call GrayscalePaletteColorInPlace ; $71d4
 	ld a, $08 ; $71d7
 	ld [$c122], a ; $71d9
 	ld a, $21 ; $71dc
@@ -4459,29 +4460,29 @@ Func_1d_7189:
 	ret ; $71e1
 Label_1d_71e2:
 	ld hl, $c108 ; $71e2
-	call Func_1d_7205 ; $71e5
+	call GrayscalePaletteColorInPlace ; $71e5
 	ld hl, $c10a ; $71e8
-	call Func_1d_7205 ; $71eb
+	call GrayscalePaletteColorInPlace ; $71eb
 	ld hl, $c10c ; $71ee
-	call Func_1d_7205 ; $71f1
+	call GrayscalePaletteColorInPlace ; $71f1
 	ld hl, $c10e ; $71f4
-	call Func_1d_7205 ; $71f7
+	call GrayscalePaletteColorInPlace ; $71f7
 	ld a, $08 ; $71fa
 	ld [$c13a], a ; $71fc
 	ld a, $21 ; $71ff
 	ld [$c13b], a ; $7201
 	ret ; $7204
-Func_1d_7205:
+GrayscalePaletteColorInPlace:
 	ld a, [hl+] ; $7205
 	ld d, [hl] ; $7206
 	ld e, a ; $7207
-	call Func_1d_7210 ; $7208
+	call ConvertColorToGrayscale ; $7208
 	dec hl ; $720b
 	ld a, e ; $720c
 	ld [hl+], a ; $720d
 	ld [hl], d ; $720e
 	ret ; $720f
-Func_1d_7210:
+ConvertColorToGrayscale:
 	push hl ; $7210
 	ldh a, [hWramBank] ; $7211
 	push af ; $7213

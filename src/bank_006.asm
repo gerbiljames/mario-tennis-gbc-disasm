@@ -4479,7 +4479,7 @@ StoryPauseMenu_CharPartnerData:
 	ld [$c294], a ; $6f77
 	ld [$c2a1], a ; $6f7a
 	ld a, $01 ; $6f7d
-	farcall FarPtr_1d_00 ; $6f7f
+	farcall FarPtr_ShowCharDataScreen ; $6f7f
 	xor a, a ; $6f82
 	ret ; $6f83
 StoryPauseMenu_Equipment:
