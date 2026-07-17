@@ -143,7 +143,7 @@ InitMinigameScore:
 	sub a, l ; $40f5
 	ld h, a ; $40f6
 	ld a, [hl] ; $40f7
-	farcall FarPtr_03_2c ; $40f8
+	farcall FarPtr_ReadMinigameRecord ; $40f8
 	ldh a, [hWramBank] ; $40fb
 	push af ; $40fd
 	wram_bank $07 ; $40fe

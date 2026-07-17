@@ -2541,7 +2541,7 @@ Label_1e_66be:
 	pop de ; $66ca
 Label_1e_66cb:
 	call Func_1e_6f8d ; $66cb
-	farcall FarPtr_03_18 ; $66ce
+	farcall FarPtr_SaveStorySlotWithTimer ; $66ce
 	ret ; $66d1
 Func_1e_66d2:
 	call TestRewardGameFlag ; $66d2
@@ -2931,7 +2931,7 @@ Label_1e_699e:
 	ld [$c36c], a ; $69aa
 Label_1e_69ad:
 	farcall FarPtr_RecordExhibitionVictory ; $69ad
-	farcall FarPtr_03_24 ; $69b0
+	farcall FarPtr_ReadExhibitionSaveBlock ; $69b0
 	ret ; $69b3
 Func_1e_69b4:
 	ld d, h ; $69b4
@@ -3806,7 +3806,7 @@ UpdateMinigameBestScore:
 	jr nc, Label_1e_6f87 ; $6f4d
 	inc a ; $6f4f
 	inc a ; $6f50
-	farcall FarPtr_03_2c ; $6f51
+	farcall FarPtr_ReadMinigameRecord ; $6f51
 	wram_bank $07 ; $6f54
 	ld hl, $de00 ; $6f5a
 	ld a, [hl+] ; $6f5d
@@ -3836,7 +3836,7 @@ UpdateMinigameBestScore:
 	sub a, $1c ; $6f7d
 	inc a ; $6f7f
 	inc a ; $6f80
-	farcall FarPtr_03_2a ; $6f81
+	farcall FarPtr_UpdateMinigameRecord ; $6f81
 	call Func_1e_6eb1 ; $6f84
 Label_1e_6f87:
 	pop af ; $6f87

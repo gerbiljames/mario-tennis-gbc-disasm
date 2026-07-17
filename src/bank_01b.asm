@@ -3118,7 +3118,7 @@ RunDebugSaveDataFlow:
 	jp z, RunDebugSaveDataFlow ; $631f
 	ld a, $01 ; $6322
 	farcall FarPtr_EraseStorySlotSaveData ; $6324
-	farcall FarPtr_03_18 ; $6327
+	farcall FarPtr_SaveStorySlotWithTimer ; $6327
 	jp Label_1b_6408 ; $632a
 Label_1b_632d:
 	sound $03 ; $632d
@@ -3233,7 +3233,7 @@ Label_1b_63f4:
 	inc hl ; $63fd
 	inc hl ; $63fe
 	ld [hl+], a ; $63ff
-	farcall FarPtr_03_18 ; $6400
+	farcall FarPtr_SaveStorySlotWithTimer ; $6400
 	jr Label_1b_6408 ; $6403
 Label_1b_6405:
 	farcall FarPtr_ShowNoN64DataFoundScreen ; $6405
@@ -3273,7 +3273,7 @@ Label_1b_6408:
 	ld c, $01 ; $644d
 	farcall FarPtr_1c_00 ; $644f
 	clear_flag $03, 4 ; $6452
-	farcall FarPtr_03_18 ; $6455
+	farcall FarPtr_SaveStorySlotWithTimer ; $6455
 	jr Label_1b_6408 ; $6458
 Label_1b_645a:
 	farcall FarPtr_ShowCharDataScreen ; $645a
@@ -5191,7 +5191,7 @@ Label_1b_757d:
 	ld a, c ; $757d
 	inc a ; $757e
 	inc a ; $757f
-	farcall FarPtr_03_2c ; $7580
+	farcall FarPtr_ReadMinigameRecord ; $7580
 	wram_bank $07 ; $7583
 	ld hl, $de00 ; $7589
 	ld a, [hl+] ; $758c

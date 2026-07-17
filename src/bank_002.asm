@@ -2293,7 +2293,7 @@ Label_02_51e0:
 	ld hl, $520a ; $51e7
 	ld de, $0802 ; $51ea
 	call PrintString ; $51ed
-	farcall FarPtr_03_18 ; $51f0
+	farcall FarPtr_SaveStorySlotWithTimer ; $51f0
 	pop de ; $51f3
 	jp Label_02_502a ; $51f4
 Label_02_51f7:

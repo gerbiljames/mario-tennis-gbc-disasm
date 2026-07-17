@@ -24,8 +24,8 @@ FarPtr_ReinitSaveRamPreservingBlock6:
 	dw ReinitSaveRamPreservingBlock6 ; $4014
 FarPtr_EraseStorySlotSaveData:
 	dw EraseStorySlotSaveData ; $4016
-FarPtr_03_18:
-	dw Func_03_4d10 ; $4018
+FarPtr_SaveStorySlotWithTimer:
+	dw SaveStorySlotWithTimer ; $4018
 FarPtr_CheckStorySlot:
 	dw CheckStorySlot ; $401a
 FarPtr_TestSaveFlag:
@@ -36,20 +36,20 @@ FarPtr_ClearSaveFlag:
 	dw ClearSaveFlag ; $4020
 FarPtr_SaveSlotDebugEditor:
 	dw SaveSlotDebugEditor ; $4022
-FarPtr_03_24:
-	dw Func_03_4fea ; $4024
-FarPtr_03_26:
-	dw Func_03_4fae ; $4026
+FarPtr_ReadExhibitionSaveBlock:
+	dw ReadExhibitionSaveBlock ; $4024
+FarPtr_WriteExhibitionSaveBlock:
+	dw WriteExhibitionSaveBlock ; $4026
 FarPtr_ClearSaveBlock11:
 	dw ClearSaveBlock11 ; $4028
-FarPtr_03_2a:
-	dw Func_03_5072 ; $402a
-FarPtr_03_2c:
-	dw Func_03_5015 ; $402c
+FarPtr_UpdateMinigameRecord:
+	dw UpdateMinigameRecord ; $402a
+FarPtr_ReadMinigameRecord:
+	dw ReadMinigameRecord ; $402c
 FarPtr_03_2e:
 	dw Func_03_56a8 ; $402e
-FarPtr_03_30:
-	dw Func_03_56fb ; $4030
+FarPtr_UpdateUnlockablesSaveBlock:
+	dw UpdateUnlockablesSaveBlock ; $4030
 FarPtr_03_32:
 	dw Func_03_5229 ; $4032
 FarPtr_03_34:
@@ -2042,7 +2042,7 @@ SaveStorySlot:
 	cp a, $03 ; $4d0b
 	ret nc ; $4d0d
 	jr Label_03_4d19 ; $4d0e
-Func_03_4d10:
+SaveStorySlotWithTimer:
 	ld a, [$c36c] ; $4d10
 	cp a, $03 ; $4d13
 	ret nc ; $4d15
@@ -2080,7 +2080,7 @@ Label_03_4d19:
 	call VerifySaveBlock ; $4d52
 	or a, a ; $4d55
 	ret nz ; $4d56
-	call Func_03_56fb ; $4d57
+	call UpdateUnlockablesSaveBlock ; $4d57
 	xor a, a ; $4d5a
 	ret ; $4d5b
 	INCBIN "data/bank_003/d_4d5c.bin" ; $4d5c, 8 bytes
@@ -2479,7 +2479,7 @@ Label_03_4fa1:
 	pop bc ; $4fab
 	pop af ; $4fac
 	ret ; $4fad
-Func_03_4fae:
+WriteExhibitionSaveBlock:
 	ld a, $36 ; $4fae
 	ld b, a ; $4fb0
 	ld hl, $c800 ; $4fb1
@@ -2509,7 +2509,7 @@ Func_03_4fae:
 	xor a, a ; $4fe0
 	ret ; $4fe1
 	INCBIN "data/bank_003/d_4fe2.bin" ; $4fe2, 8 bytes
-Func_03_4fea:
+ReadExhibitionSaveBlock:
 	push bc ; $4fea
 	push de ; $4feb
 	push hl ; $4fec
@@ -2541,7 +2541,7 @@ ClearSaveBlock11:
 	pop de ; $5012
 	pop bc ; $5013
 	ret ; $5014
-Func_03_5015:
+ReadMinigameRecord:
 	push af ; $5015
 	push bc ; $5016
 	push de ; $5017
@@ -2605,7 +2605,7 @@ Label_03_5068:
 	pop bc ; $506f
 	pop af ; $5070
 	ret ; $5071
-Func_03_5072:
+UpdateMinigameRecord:
 	push bc ; $5072
 	push de ; $5073
 	push hl ; $5074
@@ -3464,7 +3464,7 @@ Label_03_56f1:
 	pop bc ; $56f8
 	pop af ; $56f9
 	ret ; $56fa
-Func_03_56fb:
+UpdateUnlockablesSaveBlock:
 	push af ; $56fb
 	push bc ; $56fc
 	push de ; $56fd
@@ -3484,7 +3484,7 @@ Func_03_56fb:
 	or a, a ; $571a
 	jp z, Label_03_577d ; $571b
 	ld a, $02 ; $571e
-	call Func_03_57e2 ; $5720
+	call CheckUnlockCondition ; $5720
 	or a, a ; $5723
 	jr z, Label_03_572c ; $5724
 	ld hl, $d502 ; $5726
@@ -3492,7 +3492,7 @@ Func_03_56fb:
 	ld [hl], a ; $572b
 Label_03_572c:
 	ld a, $04 ; $572c
-	call Func_03_57e2 ; $572e
+	call CheckUnlockCondition ; $572e
 	or a, a ; $5731
 	jr z, Label_03_573a ; $5732
 	ld hl, $d507 ; $5734
@@ -3500,7 +3500,7 @@ Label_03_572c:
 	ld [hl], a ; $5739
 Label_03_573a:
 	ld a, $06 ; $573a
-	call Func_03_57e2 ; $573c
+	call CheckUnlockCondition ; $573c
 	or a, a ; $573f
 	jr z, Label_03_5748 ; $5740
 	ld hl, $d504 ; $5742
@@ -3508,7 +3508,7 @@ Label_03_573a:
 	ld [hl], a ; $5747
 Label_03_5748:
 	ld a, $08 ; $5748
-	call Func_03_57e2 ; $574a
+	call CheckUnlockCondition ; $574a
 	or a, a ; $574d
 	jr z, Label_03_5756 ; $574e
 	ld hl, $d506 ; $5750
@@ -3516,7 +3516,7 @@ Label_03_5748:
 	ld [hl], a ; $5755
 Label_03_5756:
 	ld a, $09 ; $5756
-	call Func_03_57e2 ; $5758
+	call CheckUnlockCondition ; $5758
 	or a, a ; $575b
 	jr z, Label_03_5764 ; $575c
 	ld hl, $d503 ; $575e
@@ -3524,7 +3524,7 @@ Label_03_5756:
 	ld [hl], a ; $5763
 Label_03_5764:
 	ld a, $0a ; $5764
-	call Func_03_57e2 ; $5766
+	call CheckUnlockCondition ; $5766
 	or a, a ; $5769
 	jr z, Label_03_5772 ; $576a
 	ld hl, $d505 ; $576c
@@ -3587,7 +3587,7 @@ Label_03_57cf:
 	pop af ; $57d7
 	ret ; $57d8
 	INCBIN "data/bank_003/d_57d9.bin" ; $57d9, 9 bytes
-Func_03_57e2:
+CheckUnlockCondition:
 	push bc ; $57e2
 	push de ; $57e3
 	push hl ; $57e4
@@ -3626,7 +3626,7 @@ Label_03_581e:
 	ld a, b ; $581e
 	farcall FarPtr_0d_02 ; $581f
 	ld a, b ; $5822
-	call Func_03_5015 ; $5823
+	call ReadMinigameRecord ; $5823
 	ld hl, $de00 ; $5826
 	ld a, [hl+] ; $5829
 	ld h, [hl] ; $582a
@@ -3874,23 +3874,23 @@ Label_03_5947:
 	ld [hl+], a ; $5986
 	ld [hl], d ; $5987
 	xor a, a ; $5988
-	call Func_03_5072 ; $5989
+	call UpdateMinigameRecord ; $5989
 	ld hl, $de00 ; $598c
 	ld de, $03e7 ; $598f
 	ld a, e ; $5992
 	ld [hl+], a ; $5993
 	ld [hl], d ; $5994
 	ld a, $01 ; $5995
-	call Func_03_5072 ; $5997
+	call UpdateMinigameRecord ; $5997
 	ld hl, $de00 ; $599a
 	ld de, $0000 ; $599d
 	ld a, e ; $59a0
 	ld [hl+], a ; $59a1
 	ld [hl], d ; $59a2
 	xor a, a ; $59a3
-	call Func_03_5015 ; $59a4
+	call ReadMinigameRecord ; $59a4
 	ld a, $01 ; $59a7
-	call Func_03_5015 ; $59a9
+	call ReadMinigameRecord ; $59a9
 	pop hl ; $59ac
 	pop de ; $59ad
 	pop bc ; $59ae

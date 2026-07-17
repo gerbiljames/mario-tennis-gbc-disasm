@@ -2117,7 +2117,7 @@ Label_0e_56c0:
 	farcall FarPtr_WaitScriptFrames ; $590f
 	pop af ; $5912
 	set_flag $16, 2 ; $5913
-	farcall FarPtr_03_18 ; $5916
+	farcall FarPtr_SaveStorySlotWithTimer ; $5916
 	ld a, $08 ; $5919
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $591b
 	farcall FarPtr_RunDialogueYesNoPrompt ; $591e
@@ -2902,7 +2902,7 @@ Label_0e_5d49:
 	farcall FarPtr_WaitScriptFrames ; $602a
 	pop af ; $602d
 	set_flag $16, 3 ; $602e
-	farcall FarPtr_03_18 ; $6031
+	farcall FarPtr_SaveStorySlotWithTimer ; $6031
 	ld a, $08 ; $6034
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6036
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6039

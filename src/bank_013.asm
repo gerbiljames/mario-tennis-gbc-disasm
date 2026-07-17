@@ -2577,7 +2577,7 @@ Label_13_564b:
 	ld b, $0a ; $5684
 	ld c, $01 ; $5686
 	farcall FarPtr_0a_62 ; $5688
-	farcall FarPtr_03_18 ; $568b
+	farcall FarPtr_SaveStorySlotWithTimer ; $568b
 	ret ; $568e
 Label_13_568f:
 	ld hl, $c2b2 ; $568f

@@ -4804,7 +4804,7 @@ RunMinigameRulesPages:
 	ld a, [$cb20] ; $6f9a
 	inc a ; $6f9d
 	inc a ; $6f9e
-	farcall FarPtr_03_2c ; $6f9f
+	farcall FarPtr_ReadMinigameRecord ; $6f9f
 	wram_bank $07 ; $6fa2
 	ld hl, $de00 ; $6fa8
 	ld a, [hl+] ; $6fab

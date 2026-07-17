@@ -3596,7 +3596,7 @@ Label_0f_65a6:
 	farcall FarPtr_WaitPlayerMoveDone ; $65b6
 	ld a, $00 ; $65b9
 	ld [$c2b0], a ; $65bb
-	farcall FarPtr_03_18 ; $65be
+	farcall FarPtr_SaveStorySlotWithTimer ; $65be
 	ret ; $65c1
 	; $65c2, 77 bytes (bytes:14)
 	db $00, $00, $57, $7b, $00, $1c, $00, $2c, $c0, $00, $5c, $01, $00, $00 ; 0x00

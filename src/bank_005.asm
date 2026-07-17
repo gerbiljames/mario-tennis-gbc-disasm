@@ -6017,7 +6017,7 @@ TextSubcmdHandlers_05:
 	ld c, $01 ; $6712
 	farcall FarPtr_1c_00 ; $6714
 	clear_flag $03, 4 ; $6717
-	farcall FarPtr_03_18 ; $671a
+	farcall FarPtr_SaveStorySlotWithTimer ; $671a
 	pop hl ; $671d
 	pop de ; $671e
 	pop bc ; $671f

@@ -488,7 +488,7 @@ RunDrillMatchListMenu:
 	farcall FarPtr_RunTrainingDrillByID ; $4481
 	ld a, $00 ; $4484
 	ld [$c36c], a ; $4486
-	farcall FarPtr_03_18 ; $4489
+	farcall FarPtr_SaveStorySlotWithTimer ; $4489
 	ret ; $448c
 	ld hl, $28a4 ; $448d
 	farcall FarPtr_InitDialogueTextCursor ; $4490
@@ -512,7 +512,7 @@ RunDrillMatchListMenu:
 	clear_flag $03, 4 ; $44c0
 	ld a, $00 ; $44c3
 	ld [$c36c], a ; $44c5
-	farcall FarPtr_03_18 ; $44c8
+	farcall FarPtr_SaveStorySlotWithTimer ; $44c8
 	ret ; $44cb
 RunLessonSelectMenu:
 	call ClearFrameTasks ; $44cc
@@ -533,9 +533,9 @@ RunLessonSelectMenu:
 	ld d, [hl] ; $44f1
 	ld e, a ; $44f2
 	ld a, $01 ; $44f3
-	farcall FarPtr_03_2a ; $44f5
+	farcall FarPtr_UpdateMinigameRecord ; $44f5
 	ld a, $00 ; $44f8
-	farcall FarPtr_03_2a ; $44fa
+	farcall FarPtr_UpdateMinigameRecord ; $44fa
 	pop af ; $44fd
 	wram_bank ; $44fe
 	ld l, c ; $4502
@@ -1347,7 +1347,7 @@ Label_10_5006:
 	jp z, Label_10_4f68 ; $501d
 	xor a, a ; $5020
 	ld [$c8a5], a ; $5021
-	farcall FarPtr_03_18 ; $5024
+	farcall FarPtr_SaveStorySlotWithTimer ; $5024
 	ld a, [$c8a7] ; $5027
 	or a, a ; $502a
 	jr z, Label_10_5030 ; $502b
@@ -1357,7 +1357,7 @@ Label_10_5030:
 	ld b, $0a ; $5033
 	ld c, $01 ; $5035
 	farcall FarPtr_0a_62 ; $5037
-	farcall FarPtr_03_18 ; $503a
+	farcall FarPtr_SaveStorySlotWithTimer ; $503a
 	farcall FarPtr_0a_02 ; $503d
 	ret ; $5040
 Label_10_5041:
@@ -1383,7 +1383,7 @@ Label_10_5041:
 Label_10_5073:
 	call ResetGameTimer ; $5073
 	farcall FarPtr_02_16 ; $5076
-	farcall FarPtr_03_18 ; $5079
+	farcall FarPtr_SaveStorySlotWithTimer ; $5079
 	test_flag $02, 5 ; $507c
 	jr nz, Label_10_508a ; $507f
 	ld a, $01 ; $5081
@@ -1407,7 +1407,7 @@ Label_10_50a4:
 	ld [$c8a5], a ; $50a5
 	ld [$c8a7], a ; $50a8
 	call RestoreGameTimer ; $50ab
-	farcall FarPtr_03_18 ; $50ae
+	farcall FarPtr_SaveStorySlotWithTimer ; $50ae
 	call Func_10_5752 ; $50b1
 	ld [$cb74], a ; $50b4
 	cp a, $04 ; $50b7
@@ -1428,7 +1428,7 @@ Label_10_50ca:
 	ld b, $0a ; $50db
 	ld c, $01 ; $50dd
 	farcall FarPtr_0a_62 ; $50df
-	farcall FarPtr_03_18 ; $50e2
+	farcall FarPtr_SaveStorySlotWithTimer ; $50e2
 	test_flag $02, 5 ; $50e5
 	jr nz, Label_10_50f5 ; $50e8
 	ld a, [$cb74] ; $50ea
@@ -1443,7 +1443,7 @@ Label_10_50f5:
 	ret ; $50fd
 	ld a, $03 ; $50fe
 	ld [$c36c], a ; $5100
-	farcall FarPtr_03_24 ; $5103
+	farcall FarPtr_ReadExhibitionSaveBlock ; $5103
 	bit 7, a ; $5106
 	jr nz, Label_10_5137 ; $5108
 	ld a, [$c8a5] ; $510a
@@ -1474,7 +1474,7 @@ Label_10_5137:
 	ld [$c36c], a ; $513d
 	farcall FarPtr_InitStoryModeState ; $5140
 	farcall FarPtr_InitDefaultMatchSettings ; $5143
-	farcall FarPtr_03_26 ; $5146
+	farcall FarPtr_WriteExhibitionSaveBlock ; $5146
 Label_10_5149:
 	farcall FarPtr_3b_0e ; $5149
 	cp a, $ff ; $514c
@@ -1543,7 +1543,7 @@ Label_10_51db:
 	ld [$c36c], a ; $51dd
 	xor a, a ; $51e0
 	ld [$c8a5], a ; $51e1
-	farcall FarPtr_03_26 ; $51e4
+	farcall FarPtr_WriteExhibitionSaveBlock ; $51e4
 	ld a, $04 ; $51e7
 	ld [wGameMode], a ; $51e9
 	farcall FarPtr_RunMatch ; $51ec
@@ -1552,7 +1552,7 @@ Label_10_51db:
 	jr z, Label_10_51fd ; $51f3
 	ld a, $01 ; $51f5
 	ld [$c8a8], a ; $51f7
-	farcall FarPtr_03_26 ; $51fa
+	farcall FarPtr_WriteExhibitionSaveBlock ; $51fa
 Label_10_51fd:
 	ld a, $01 ; $51fd
 	ld [$cb11], a ; $51ff
@@ -1960,7 +1960,7 @@ Label_10_55b6:
 	ld a, [$c8a5] ; $55b9
 	or a, a ; $55bc
 	jr z, Label_10_55d5 ; $55bd
-	farcall FarPtr_03_18 ; $55bf
+	farcall FarPtr_SaveStorySlotWithTimer ; $55bf
 	ld a, $00 ; $55c2
 	ld [wStoryModeCurrentLocation], a ; $55c4
 	ld a, $01 ; $55c7
@@ -1979,7 +1979,7 @@ Label_10_55d5:
 	ld b, $00 ; $55e3
 	ld c, $01 ; $55e5
 	farcall FarPtr_0a_62 ; $55e7
-	farcall FarPtr_03_18 ; $55ea
+	farcall FarPtr_SaveStorySlotWithTimer ; $55ea
 	test_flag $02, 5 ; $55ed
 	jr nz, Label_10_55fb ; $55f0
 	ld a, $02 ; $55f2
@@ -2189,7 +2189,7 @@ Label_10_5789:
 Func_10_578a:
 	push af ; $578a
 	push bc ; $578b
-	farcall FarPtr_03_24 ; $578c
+	farcall FarPtr_ReadExhibitionSaveBlock ; $578c
 	bit 7, a ; $578f
 	jr nz, Label_10_57f3 ; $5791
 	ld a, [$c8a5] ; $5793
@@ -2238,7 +2238,7 @@ Label_10_57d7:
 	xor a, a ; $57df
 	ld [$c8a5], a ; $57e0
 	ld [$c8a7], a ; $57e3
-	farcall FarPtr_03_26 ; $57e6
+	farcall FarPtr_WriteExhibitionSaveBlock ; $57e6
 	pop bc ; $57e9
 	pop af ; $57ea
 	ld a, $00 ; $57eb

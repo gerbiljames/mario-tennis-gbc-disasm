@@ -669,10 +669,10 @@ Label_12_44c5:
 	ld b, $0a ; $4657
 	ld c, $0f ; $4659
 	farcall FarPtr_0a_62 ; $465b
-	farcall FarPtr_03_18 ; $465e
+	farcall FarPtr_SaveStorySlotWithTimer ; $465e
 	ld a, $01 ; $4661
 	farcall FarPtr_EraseStorySlotSaveData ; $4663
-	farcall FarPtr_03_18 ; $4666
+	farcall FarPtr_SaveStorySlotWithTimer ; $4666
 	sound $00 ; $4669
 	ld c, $04 ; $466b
 	call BeginFadeOut ; $466d
@@ -892,7 +892,7 @@ WallPracticeScoreRetryPrompt:
 	push af ; $4870
 	wram_bank $07 ; $4871
 	ld a, $00 ; $4877
-	farcall FarPtr_03_2c ; $4879
+	farcall FarPtr_ReadMinigameRecord ; $4879
 	ld hl, $de00 ; $487c
 	ld a, [hl+] ; $487f
 	ld d, [hl] ; $4880
@@ -967,7 +967,7 @@ WallPracticeNewRecordScript:
 	ld [hl+], a ; $48fe
 	ld [hl], d ; $48ff
 	ld a, $00 ; $4900
-	farcall FarPtr_03_2a ; $4902
+	farcall FarPtr_UpdateMinigameRecord ; $4902
 	pop af ; $4905
 	wram_bank ; $4906
 	call SetupWallPracticeLevelSigns ; $490a
@@ -999,7 +999,7 @@ WallPracticeMaxScoreScript:
 	push af ; $4943
 	wram_bank $07 ; $4944
 	ld a, $00 ; $494a
-	farcall FarPtr_03_2c ; $494c
+	farcall FarPtr_ReadMinigameRecord ; $494c
 	ld hl, $de00 ; $494f
 	ld a, [hl+] ; $4952
 	ld h, [hl] ; $4953
@@ -1079,7 +1079,7 @@ Label_12_49e5:
 	ld [hl+], a ; $49f8
 	ld [hl], d ; $49f9
 	ld a, $00 ; $49fa
-	farcall FarPtr_03_2a ; $49fc
+	farcall FarPtr_UpdateMinigameRecord ; $49fc
 	pop af ; $49ff
 	wram_bank ; $4a00
 	ld a, $00 ; $4a04
@@ -1291,7 +1291,7 @@ Label_12_4bb2:
 	ld [hl+], a ; $4bc2
 	ld [hl], d ; $4bc3
 	ld a, $00 ; $4bc4
-	farcall FarPtr_03_2a ; $4bc6
+	farcall FarPtr_UpdateMinigameRecord ; $4bc6
 	pop af ; $4bc9
 	wram_bank ; $4bca
 	ld hl, $14fe ; $4bce
@@ -1865,7 +1865,7 @@ Label_12_50dd:
 	push af ; $50f7
 	wram_bank $07 ; $50f8
 	ld a, $00 ; $50fe
-	farcall FarPtr_03_2c ; $5100
+	farcall FarPtr_ReadMinigameRecord ; $5100
 	ld hl, $de00 ; $5103
 	ld a, [hl+] ; $5106
 	ld h, [hl] ; $5107

@@ -435,7 +435,7 @@ ComputeMachineCourtProgress:
 	ld a, $04 ; $43fe
 	ld b, a ; $4400
 	ld a, $01 ; $4401
-	farcall FarPtr_03_2c ; $4403
+	farcall FarPtr_ReadMinigameRecord ; $4403
 	ldh a, [hWramBank] ; $4406
 	push af ; $4408
 	wram_bank $07 ; $4409
@@ -475,7 +475,7 @@ Label_14_4429:
 	push af ; $444d
 	wram_bank $07 ; $444e
 	ld a, $01 ; $4454
-	farcall FarPtr_03_2c ; $4456
+	farcall FarPtr_ReadMinigameRecord ; $4456
 	ld hl, $de00 ; $4459
 	ld a, [hl+] ; $445c
 	ld h, [hl] ; $445d
@@ -912,7 +912,7 @@ Label_14_4801:
 	push af ; $4815
 	wram_bank $07 ; $4816
 	ld a, $01 ; $481c
-	farcall FarPtr_03_2c ; $481e
+	farcall FarPtr_ReadMinigameRecord ; $481e
 	ld de, $0050 ; $4821
 	ld hl, $de00 ; $4824
 	ld a, e ; $4827
@@ -959,7 +959,7 @@ Label_14_484f:
 	push af ; $4876
 	wram_bank $07 ; $4877
 	ld a, $01 ; $487d
-	farcall FarPtr_03_2c ; $487f
+	farcall FarPtr_ReadMinigameRecord ; $487f
 	ld hl, $de00 ; $4882
 	ld a, [hl+] ; $4885
 	ld d, [hl] ; $4886
@@ -1032,7 +1032,7 @@ MachineExpertCounterMaxScene:
 	push af ; $48fb
 	wram_bank $07 ; $48fc
 	ld a, $01 ; $4902
-	farcall FarPtr_03_2c ; $4904
+	farcall FarPtr_ReadMinigameRecord ; $4904
 	ld hl, $de00 ; $4907
 	ld a, [hl+] ; $490a
 	ld h, [hl] ; $490b
@@ -1104,7 +1104,7 @@ SaveMachineExpertRecord:
 	ld [hl+], a ; $4987
 	ld [hl], d ; $4988
 	ld a, $01 ; $4989
-	farcall FarPtr_03_2a ; $498b
+	farcall FarPtr_UpdateMinigameRecord ; $498b
 	pop af ; $498e
 	wram_bank ; $498f
 	call ComputeMachineCourtProgress ; $4993
@@ -3255,7 +3255,7 @@ Label_14_7124:
 	ld b, $1d ; $7124
 	ld c, $0f ; $7126
 	farcall FarPtr_0a_62 ; $7128
-	farcall FarPtr_03_18 ; $712b
+	farcall FarPtr_SaveStorySlotWithTimer ; $712b
 	ld c, $01 ; $712e
 	call BeginFadeOut ; $7130
 	call WaitFadeEnd ; $7133

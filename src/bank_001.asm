@@ -64,7 +64,7 @@ Func_01_4018:
 	farcall FarPtr_ValidateSaveRam ; $408b
 	farcall FarPtr_RepairAllSaveSlots ; $408e
 	farcall FarPtr_03_2e ; $4091
-	farcall FarPtr_03_30 ; $4094
+	farcall FarPtr_UpdateUnlockablesSaveBlock ; $4094
 	farcall FarPtr_InitStoryModeState ; $4097
 	farcall FarPtr_InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d

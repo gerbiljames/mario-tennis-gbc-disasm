@@ -1678,7 +1678,7 @@ Label_18_79fd:
 	ld de, $16e0 ; $79fd
 	call SetGameFlag ; $7a00
 Label_18_7a03:
-	farcall FarPtr_03_18 ; $7a03
+	farcall FarPtr_SaveStorySlotWithTimer ; $7a03
 	ret ; $7a06
 Func_18_7a07:
 	ld a, [$cb6d] ; $7a07

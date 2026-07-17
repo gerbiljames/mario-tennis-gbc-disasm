@@ -4591,7 +4591,7 @@ StoryPauseMenu_SaveQuit:
 	ld [wMessageSpeed], a ; $7064
 	ld bc, rIE ; $7067
 	farcall FarPtr_0a_62 ; $706a
-	farcall FarPtr_03_18 ; $706d
+	farcall FarPtr_SaveStorySlotWithTimer ; $706d
 	ld a, $00 ; $7070
 	ld [wStoryModeCurrentLocation], a ; $7072
 	ld a, $01 ; $7075
