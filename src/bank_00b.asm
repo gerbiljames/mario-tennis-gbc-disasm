@@ -1,8 +1,8 @@
 SECTION "ROM Bank $0b", ROMX[$4000], BANK[$0b]
 
-FarPtr_0b_00:
-	dw Func_0b_4705 ; $4000
-Func_0b_4002:
+FarPtr_RunTrainingDrillByID:
+	dw RunTrainingDrillByID ; $4000
+StartDrillFromDefinition:
 	ld hl, $0000 ; $4002
 	add hl, bc ; $4005
 	ld a, [hl] ; $4006
@@ -69,7 +69,7 @@ Label_0b_4055:
 	call JumpToHL ; $4077
 Label_0b_407a:
 	ret ; $407a
-Func_0b_407b:
+RecordDrillPointResultBits:
 	ld a, [wPointWinLoseFlag] ; $407b
 	or a, a ; $407e
 	ret z ; $407f
@@ -228,7 +228,7 @@ Label_0b_416a:
 	ld l, a ; $418c
 	farcall FarPtr_08_4e ; $418d
 	ret ; $4190
-Func_0b_4191:
+SetDrillTargetZoneForPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4191
 	add a, a ; $4194
 	add a, a ; $4195
@@ -287,7 +287,7 @@ Func_0b_41c3:
 	ret z ; $41e2
 	cp a, $03 ; $41e3
 	ret z ; $41e5
-Func_0b_41e6:
+RecordDrillTargetZoneHit:
 	ld a, [$c4b2] ; $41e6
 	cp a, $02 ; $41e9
 	ret nc ; $41eb
@@ -323,7 +323,7 @@ Label_0b_4213:
 	jr nz, Label_0b_4213 ; $4218
 	pop bc ; $421a
 	ret ; $421b
-Func_0b_421c:
+CheckDrillTargetZoneMissed:
 	push bc ; $421c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $421d
 	ld c, a ; $4220
@@ -375,7 +375,7 @@ Label_0b_425f:
 	pop bc ; $4266
 	ret ; $4267
 	INCBIN "data/bank_00b/d_4268.bin" ; $4268, 318 bytes
-Func_0b_43a6:
+PlayDrillPointEndSequence:
 	ld hl, $c442 ; $43a6
 	ld a, [hl+] ; $43a9
 	ld d, [hl] ; $43aa
@@ -421,7 +421,7 @@ Label_0b_43dc:
 	ld a, $08 ; $43fe
 	farcall FarPtr_StepMatchFrames ; $4400
 	ret ; $4403
-Func_0b_4404:
+LoadDrillOpponentChar:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
 	farcall FarPtr_02_18 ; $4407
@@ -440,7 +440,7 @@ Func_0b_4404:
 	inc h ; $4425
 Label_0b_4426:
 	ld a, [hl] ; $4426
-	call Func_0b_4404 ; $4427
+	call LoadDrillOpponentChar ; $4427
 	ret ; $442a
 	ld b, a ; $442b
 	ldh a, [hWramBank] ; $442c
@@ -554,7 +554,7 @@ Label_0b_44ec:
 	jr z, Label_0b_452e ; $44f7
 	cp a, $03 ; $44f9
 	jr z, Label_0b_452e ; $44fb
-	call Func_0b_421c ; $44fd
+	call CheckDrillTargetZoneMissed ; $44fd
 	or a, a ; $4500
 	jr nz, Label_0b_4507 ; $4501
 	ld a, $10 ; $4503
@@ -587,7 +587,7 @@ Label_0b_452e:
 	ld a, $ff ; $452e
 	ld [$c2e6], a ; $4530
 	ret ; $4533
-Func_0b_4534:
+QueueDrillResultMessage:
 	cp a, $ff ; $4534
 	jr z, Label_0b_4541 ; $4536
 	ld c, a ; $4538
@@ -631,16 +631,16 @@ Label_0b_456f:
 Label_0b_4570:
 	ld [$c2e6], a ; $4570
 	ret ; $4573
-Func_0b_4574:
+ShowQueuedDrillMessage:
 	ld a, [$c2e6] ; $4574
 	or a, a ; $4577
 	jr nz, Label_0b_457f ; $4578
 	ld a, $6c ; $457a
 	ld [$c2e6], a ; $457c
 Label_0b_457f:
-	call Func_0b_4583 ; $457f
+	call ShowDrillMessageByIndex ; $457f
 	ret ; $4582
-Func_0b_4583:
+ShowDrillMessageByIndex:
 	cp a, $ff ; $4583
 	ret z ; $4585
 	ld h, $00 ; $4586
@@ -844,7 +844,7 @@ Func_0b_4583:
 	dw $ff01 ; record 158
 	dw $0101 ; record 159
 	db $ff
-Func_0b_4705:
+RunTrainingDrillByID:
 	push af ; $4705
 	farcall FarPtr_08_06 ; $4706
 	pop af ; $4709
@@ -860,7 +860,7 @@ Func_0b_4705:
 	ld a, [hl+] ; $471b
 	ld b, [hl] ; $471c
 	ld c, a ; $471d
-	call Func_0b_4002 ; $471e
+	call StartDrillFromDefinition ; $471e
 	jr Label_0b_4726 ; $4721
 Label_0b_4723:
 	farcall FarPtr_StartMinigameByID ; $4723
@@ -890,7 +890,7 @@ Label_0b_473f:
 	ld a, [$c4de] ; $4752
 	or a, a ; $4755
 	ld a, [$c8f7] ; $4756
-	jp nz, Func_0b_4705 ; $4759
+	jp nz, RunTrainingDrillByID ; $4759
 	ld a, [$c4c7] ; $475c
 	or a, a ; $475f
 	jr z, Label_0b_4767 ; $4760
@@ -901,7 +901,7 @@ Label_0b_4767:
 	jr z, Label_0b_47a7 ; $476a
 	call DisableLCDSafely ; $476c
 	farcall FarPtr_ResetTextWindowState ; $476f
-	call Func_0b_47d8 ; $4772
+	call ClearBGForDrillResult ; $4772
 	farcall FarPtr_01_0a ; $4775
 	call EnableLCD ; $4778
 	ld c, $08 ; $477b
@@ -930,7 +930,7 @@ Label_0b_47a7:
 	farcall FarPtr_1e_04 ; $47aa
 	ret ; $47ad
 Label_0b_47ae:
-	call Func_0b_7258 ; $47ae
+	call RunDoublesDrillMatch ; $47ae
 	jp Label_0b_473f ; $47b1
 	; $47b4, 36 bytes (records:2)
 ; 18 records x 2 bytes
@@ -952,18 +952,18 @@ Label_0b_47ae:
 	dw $6b5d ; record 15
 	dw $6dae ; record 16
 	dw $700e ; record 17
-Func_0b_47d8:
+ClearBGForDrillResult:
 	call DisableLCDSafely ; $47d8
 	wram_bank $02 ; $47db
 	ld a, $00 ; $47e1
 	ld hl, $d000 ; $47e3
 	ld bc, $0500 ; $47e6
-	call Func_0b_4823 ; $47e9
+	call FillMemoryBC_0b ; $47e9
 	wram_bank $03 ; $47ec
 	ld a, $20 ; $47f2
 	ld hl, $d000 ; $47f4
 	ld bc, $0500 ; $47f7
-	call Func_0b_4823 ; $47fa
+	call FillMemoryBC_0b ; $47fa
 	wram_bank $03 ; $47fd
 	ld hl, $d000 ; $4803
 	ld de, $9800 ; $4806
@@ -976,7 +976,7 @@ Func_0b_47d8:
 	call QueueVRAMCopy ; $481c
 	call EnableLCD ; $481f
 	ret ; $4822
-Func_0b_4823:
+FillMemoryBC_0b:
 	ld e, a ; $4823
 Label_0b_4824:
 	ld [hl], e ; $4824
@@ -989,15 +989,15 @@ Label_0b_4824:
 	INCBIN "data/bank_00b/d_482c.bin" ; $482c, 226 bytes
 	ret ; $490e
 	ld a, $02 ; $490f
-	call Func_0b_4922 ; $4911
+	call Drill00JudgePoint ; $4911
 	ld [$c2ff], a ; $4914
 	ret ; $4917
 	ret ; $4918
 	ld a, $03 ; $4919
-	call Func_0b_4922 ; $491b
+	call Drill00JudgePoint ; $491b
 	ld [$c2ff], a ; $491e
 	ret ; $4921
-Func_0b_4922:
+Drill00JudgePoint:
 	ld b, a ; $4922
 	ld a, [$c2ff] ; $4923
 	or a, a ; $4926
@@ -1027,7 +1027,7 @@ Label_0b_4948:
 	ld a, [hl] ; $4948
 	ld a, a ; $4949
 	ld b, $06 ; $494a
-	call Func_0b_4534 ; $494c
+	call QueueDrillResultMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
 	ld hl, $46f1 ; $4952
 	add a, l ; $4955
@@ -1066,7 +1066,7 @@ Label_0b_4982:
 	ld a, [hl] ; $4982
 	ld a, a ; $4983
 	ld b, $06 ; $4984
-	call Func_0b_4534 ; $4986
+	call QueueDrillResultMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
 	ld hl, $46fb ; $498c
 	add a, l ; $498f
@@ -1084,7 +1084,7 @@ Label_0b_49a0:
 	ret z ; $49a7
 	ld a, $04 ; $49a8
 	ld b, $06 ; $49aa
-	call Func_0b_4534 ; $49ac
+	call QueueDrillResultMessage ; $49ac
 	jr Label_0b_49bf ; $49af
 	db $af ; $49b1
 	ret ; $49b2
@@ -1137,9 +1137,9 @@ Label_0b_49bf:
 	ld a, $01 ; $5c26
 	ld [wTargetZoneEnabled], a ; $5c28
 	ld hl, $5cd7 ; $5c2b
-	call Func_0b_4191 ; $5c2e
+	call SetDrillTargetZoneForPoint ; $5c2e
 	ld a, $40 ; $5c31
-	call Func_0b_4404 ; $5c33
+	call LoadDrillOpponentChar ; $5c33
 	xor a, a ; $5c36
 	ld [$c2e6], a ; $5c37
 	xor a, a ; $5c3a
@@ -1166,14 +1166,14 @@ Label_0b_5c62:
 	ld hl, $c2e9 ; $5c62
 	inc [hl] ; $5c65
 Label_0b_5c66:
-	call Func_0b_5cf9 ; $5c66
+	call Drill09HandlePointEnd ; $5c66
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5c69
 	cp a, $04 ; $5c6c
 	ret c ; $5c6e
-	call Func_0b_5c76 ; $5c6f
+	call Drill09EvaluateResult ; $5c6f
 	ld [wPointWinLoseFlag], a ; $5c72
 	ret ; $5c75
-Func_0b_5c76:
+Drill09EvaluateResult:
 	ld a, [$c2eb] ; $5c76
 	cp a, $04 ; $5c79
 	jr nz, Label_0b_5c84 ; $5c7b
@@ -1245,7 +1245,7 @@ Label_0b_5cd6:
 	dw $01b0 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
-Func_0b_5cf9:
+Drill09HandlePointEnd:
 	farcall FarPtr_09_26 ; $5cf9
 	ld a, [$c2ff] ; $5cfc
 	ld [wPointWinLoseFlag], a ; $5cff
@@ -1254,8 +1254,8 @@ Func_0b_5cf9:
 	ld hl, $c2eb ; $5d06
 	inc [hl] ; $5d09
 Label_0b_5d0a:
-	call Func_0b_407b ; $5d0a
-	call Func_0b_4574 ; $5d0d
+	call RecordDrillPointResultBits ; $5d0a
+	call ShowQueuedDrillMessage ; $5d0d
 	farcall FarPtr_UpdatePointStats ; $5d10
 	farcall FarPtr_AwardPoint ; $5d13
 	ld a, [$c2eb] ; $5d16
@@ -1275,27 +1275,27 @@ Label_0b_5d0a:
 	farcall FarPtr_StartPointEndReactions ; $5d3b
 	ld hl, $446e ; $5d3e
 	call UnregisterFrameTask ; $5d41
-	call Func_0b_43a6 ; $5d44
+	call PlayDrillPointEndSequence ; $5d44
 	ret ; $5d47
 Func_0b_5d48:
 	ld a, $00 ; $5d48
-	call Func_0b_5d6d ; $5d4a
+	call Drill09JudgePoint ; $5d4a
 	ld [$c2ff], a ; $5d4d
 	ret ; $5d50
 Func_0b_5d51:
 	ld a, $01 ; $5d51
-	call Func_0b_5d6d ; $5d53
+	call Drill09JudgePoint ; $5d53
 	ld [$c2ff], a ; $5d56
 	ret ; $5d59
 Func_0b_5d5a:
 	ld a, $02 ; $5d5a
-	call Func_0b_5d6d ; $5d5c
+	call Drill09JudgePoint ; $5d5c
 	ld [$c2ff], a ; $5d5f
 	ret ; $5d62
 Func_0b_5d63:
 	ret ; $5d63
 	INCBIN "data/bank_00b/d_5d64.bin" ; $5d64, 9 bytes
-Func_0b_5d6d:
+Drill09JudgePoint:
 	ld b, a ; $5d6d
 	ld a, [$c2ff] ; $5d6e
 	or a, a ; $5d71
@@ -1326,7 +1326,7 @@ Label_0b_5d95:
 	ld a, [hl] ; $5d95
 	ld a, a ; $5d96
 	ld b, $00 ; $5d97
-	call Func_0b_4534 ; $5d99
+	call QueueDrillResultMessage ; $5d99
 	ld a, [wPointOutcome] ; $5d9c
 	ld hl, $46f1 ; $5d9f
 	add a, l ; $5da2
@@ -1365,7 +1365,7 @@ Label_0b_5dcf:
 	ld a, [hl] ; $5dcf
 	ld a, a ; $5dd0
 	ld b, $00 ; $5dd1
-	call Func_0b_4534 ; $5dd3
+	call QueueDrillResultMessage ; $5dd3
 	ld a, [wPointOutcome] ; $5dd6
 	ld hl, $46fb ; $5dd9
 	add a, l ; $5ddc
@@ -1404,7 +1404,7 @@ Label_0b_5e09:
 	ld a, [hl] ; $5e09
 	ld a, a ; $5e0a
 	ld b, $00 ; $5e0b
-	call Func_0b_4534 ; $5e0d
+	call QueueDrillResultMessage ; $5e0d
 	ld a, [wPointOutcome] ; $5e10
 	ld hl, $5e1d ; $5e13
 	add a, l ; $5e16
@@ -1418,14 +1418,14 @@ Label_0b_5e1b:
 Label_0b_5e31:
 	ld a, $35 ; $5e31
 	ld b, $00 ; $5e33
-	call Func_0b_4534 ; $5e35
+	call QueueDrillResultMessage ; $5e35
 	xor a, a ; $5e38
 	call Func_0b_4447 ; $5e39
 	or a, a ; $5e3c
 	jp z, Label_0b_5e8d ; $5e3d
 	ld a, $3a ; $5e40
 	ld b, $00 ; $5e42
-	call Func_0b_4534 ; $5e44
+	call QueueDrillResultMessage ; $5e44
 	ld a, [$c4a1] ; $5e47
 	cp a, $01 ; $5e4a
 	jp nz, Label_0b_5e8d ; $5e4c
@@ -1443,15 +1443,15 @@ Label_0b_5e55:
 	jr z, Label_0b_5e75 ; $5e62
 	ld a, $2e ; $5e64
 	ld b, $00 ; $5e66
-	call Func_0b_4534 ; $5e68
-	call Func_0b_41e6 ; $5e6b
-	call Func_0b_421c ; $5e6e
+	call QueueDrillResultMessage ; $5e68
+	call RecordDrillTargetZoneHit ; $5e6b
+	call CheckDrillTargetZoneMissed ; $5e6e
 	or a, a ; $5e71
 	jp nz, Label_0b_5e85 ; $5e72
 Label_0b_5e75:
 	ld a, $38 ; $5e75
 	ld b, $00 ; $5e77
-	call Func_0b_4534 ; $5e79
+	call QueueDrillResultMessage ; $5e79
 	ld hl, $c2ea ; $5e7c
 	inc [hl] ; $5e7f
 	jp Label_0b_5e8d ; $5e80
@@ -1523,7 +1523,7 @@ Label_0b_5e8d:
 	xor a, a ; $6b9d
 	ld [wTargetZoneEnabled], a ; $6b9e
 	ld hl, $6c5f ; $6ba1
-	call Func_0b_4191 ; $6ba4
+	call SetDrillTargetZoneForPoint ; $6ba4
 	xor a, a ; $6ba7
 	ld [$c2e6], a ; $6ba8
 	xor a, a ; $6bab
@@ -1561,14 +1561,14 @@ Label_0b_6bed:
 	ld hl, $c2e8 ; $6bed
 	inc [hl] ; $6bf0
 Label_0b_6bf1:
-	call Func_0b_6c81 ; $6bf1
+	call Drill15HandlePointEnd ; $6bf1
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bf4
 	cp a, $04 ; $6bf7
 	ret c ; $6bf9
-	call Func_0b_6c01 ; $6bfa
+	call Drill15EvaluateResult ; $6bfa
 	ld [wPointWinLoseFlag], a ; $6bfd
 	ret ; $6c00
-Func_0b_6c01:
+Drill15EvaluateResult:
 	ld a, [$c2e9] ; $6c01
 	cp a, $04 ; $6c04
 	jr nz, Label_0b_6c0f ; $6c06
@@ -1638,7 +1638,7 @@ Label_0b_6c47:
 	dw $0000 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
-Func_0b_6c81:
+Drill15HandlePointEnd:
 	farcall FarPtr_09_26 ; $6c81
 	ld a, [$c2ff] ; $6c84
 	ld [wPointWinLoseFlag], a ; $6c87
@@ -1647,8 +1647,8 @@ Func_0b_6c81:
 	ld hl, $c2e9 ; $6c8e
 	inc [hl] ; $6c91
 Label_0b_6c92:
-	call Func_0b_407b ; $6c92
-	call Func_0b_4574 ; $6c95
+	call RecordDrillPointResultBits ; $6c92
+	call ShowQueuedDrillMessage ; $6c95
 	farcall FarPtr_UpdatePointStats ; $6c98
 	farcall FarPtr_AwardPoint ; $6c9b
 	ld a, [$c2e9] ; $6c9e
@@ -1668,27 +1668,27 @@ Label_0b_6c92:
 	farcall FarPtr_StartPointEndReactions ; $6cc3
 	ld hl, $446e ; $6cc6
 	call UnregisterFrameTask ; $6cc9
-	call Func_0b_43a6 ; $6ccc
+	call PlayDrillPointEndSequence ; $6ccc
 	ret ; $6ccf
 Func_0b_6cd0:
 	ld a, $00 ; $6cd0
-	call Func_0b_6cf5 ; $6cd2
+	call Drill15JudgePoint ; $6cd2
 	ld [$c2ff], a ; $6cd5
 	ret ; $6cd8
 Func_0b_6cd9:
 	ld a, $01 ; $6cd9
-	call Func_0b_6cf5 ; $6cdb
+	call Drill15JudgePoint ; $6cdb
 	ld [$c2ff], a ; $6cde
 	ret ; $6ce1
 Func_0b_6ce2:
 	ld a, $02 ; $6ce2
-	call Func_0b_6cf5 ; $6ce4
+	call Drill15JudgePoint ; $6ce4
 	ld [$c2ff], a ; $6ce7
 	ret ; $6cea
 Func_0b_6ceb:
 	ret ; $6ceb
 	INCBIN "data/bank_00b/d_6cec.bin" ; $6cec, 9 bytes
-Func_0b_6cf5:
+Drill15JudgePoint:
 	ld b, a ; $6cf5
 	ld a, [$c2ff] ; $6cf6
 	or a, a ; $6cf9
@@ -1718,7 +1718,7 @@ Label_0b_6d1b:
 	ld a, [hl] ; $6d1b
 	ld a, a ; $6d1c
 	ld b, $00 ; $6d1d
-	call Func_0b_4534 ; $6d1f
+	call QueueDrillResultMessage ; $6d1f
 	ld a, [wPointOutcome] ; $6d22
 	ld hl, $46fb ; $6d25
 	add a, l ; $6d28
@@ -1757,7 +1757,7 @@ Label_0b_6d55:
 	ld a, [hl] ; $6d55
 	ld a, a ; $6d56
 	ld b, $00 ; $6d57
-	call Func_0b_4534 ; $6d59
+	call QueueDrillResultMessage ; $6d59
 	ld a, [wPointOutcome] ; $6d5c
 	ld hl, $46f1 ; $6d5f
 	add a, l ; $6d62
@@ -1778,14 +1778,14 @@ Label_0b_6d75:
 	ret nz ; $6d7c
 	ld a, $57 ; $6d7d
 	ld b, $00 ; $6d7f
-	call Func_0b_4534 ; $6d81
-	call Func_0b_41e6 ; $6d84
-	call Func_0b_421c ; $6d87
+	call QueueDrillResultMessage ; $6d81
+	call RecordDrillTargetZoneHit ; $6d84
+	call CheckDrillTargetZoneMissed ; $6d87
 	or a, a ; $6d8a
 	jp nz, Label_0b_6d9e ; $6d8b
 	ld a, $5a ; $6d8e
 	ld b, $00 ; $6d90
-	call Func_0b_4534 ; $6d92
+	call QueueDrillResultMessage ; $6d92
 	ld hl, $c2ea ; $6d95
 	inc [hl] ; $6d98
 	jp Label_0b_6da6 ; $6d99
@@ -1842,22 +1842,22 @@ Label_0b_6da6:
 	farcall FarPtr_StartPointEndReactions ; $716d
 	ld hl, $446e ; $7170
 	call UnregisterFrameTask ; $7173
-	call Func_0b_43a6 ; $7176
+	call PlayDrillPointEndSequence ; $7176
 	ret ; $7179
 	ld a, $00 ; $717a
-	call Func_0b_719f ; $717c
+	call Drill17JudgePoint ; $717c
 	ld [$c2ff], a ; $717f
 	ret ; $7182
 	ld a, $01 ; $7183
-	call Func_0b_719f ; $7185
+	call Drill17JudgePoint ; $7185
 	ld [$c2ff], a ; $7188
 	ret ; $718b
 	ld a, $02 ; $718c
-	call Func_0b_719f ; $718e
+	call Drill17JudgePoint ; $718e
 	ld [$c2ff], a ; $7191
 	ret ; $7194
 	INCBIN "data/bank_00b/d_7195.bin" ; $7195, 10 bytes
-Func_0b_719f:
+Drill17JudgePoint:
 	ld b, a ; $719f
 	ld a, [$c2ff] ; $71a0
 	or a, a ; $71a3
@@ -1887,7 +1887,7 @@ Label_0b_71c5:
 	ld a, [hl] ; $71c5
 	ld a, a ; $71c6
 	ld b, $00 ; $71c7
-	call Func_0b_4534 ; $71c9
+	call QueueDrillResultMessage ; $71c9
 	ld a, [wPointOutcome] ; $71cc
 	ld hl, $46fb ; $71cf
 	add a, l ; $71d2
@@ -1926,7 +1926,7 @@ Label_0b_71ff:
 	ld a, [hl] ; $71ff
 	ld a, a ; $7200
 	ld b, $00 ; $7201
-	call Func_0b_4534 ; $7203
+	call QueueDrillResultMessage ; $7203
 	ld a, [wPointOutcome] ; $7206
 	ld hl, $46f1 ; $7209
 	add a, l ; $720c
@@ -1947,14 +1947,14 @@ Label_0b_721f:
 	ret nz ; $7226
 	ld a, $57 ; $7227
 	ld b, $00 ; $7229
-	call Func_0b_4534 ; $722b
-	call Func_0b_41e6 ; $722e
-	call Func_0b_421c ; $7231
+	call QueueDrillResultMessage ; $722b
+	call RecordDrillTargetZoneHit ; $722e
+	call CheckDrillTargetZoneMissed ; $7231
 	or a, a ; $7234
 	jp nz, Label_0b_7248 ; $7235
 	ld a, $5a ; $7238
 	ld b, $00 ; $723a
-	call Func_0b_4534 ; $723c
+	call QueueDrillResultMessage ; $723c
 	ld hl, $c2ea ; $723f
 	inc [hl] ; $7242
 	jp Label_0b_7250 ; $7243
@@ -1971,7 +1971,7 @@ Label_0b_7250:
 	ld [$c4c3], a ; $7252
 	ld a, $ff ; $7255
 	ret ; $7257
-Func_0b_7258:
+RunDoublesDrillMatch:
 	xor a, a ; $7258
 	ld [$c8f5], a ; $7259
 	ld a, $08 ; $725c

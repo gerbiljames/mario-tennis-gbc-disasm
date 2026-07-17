@@ -1069,7 +1069,7 @@ RelaunchWallPracticeMasterLevel:
 	ld [$c294], a ; $49d9
 	ld [$c2a1], a ; $49dc
 	ld a, $1b ; $49df
-	farcall FarPtr_0b_00 ; $49e1
+	farcall FarPtr_RunTrainingDrillByID ; $49e1
 	ret ; $49e4
 Label_12_49e5:
 	ldh a, [hWramBank] ; $49e5
@@ -1486,7 +1486,7 @@ Label_12_4d28:
 	ld [$c294], a ; $4d89
 	ld [$c2a1], a ; $4d8c
 	ld a, $16 ; $4d8f
-	farcall FarPtr_0b_00 ; $4d91
+	farcall FarPtr_RunTrainingDrillByID ; $4d91
 	farcall FarPtr_0a_02 ; $4d94
 Label_12_4d97:
 	ret ; $4d97
@@ -1534,7 +1534,7 @@ Label_12_4d97:
 	ld [$c294], a ; $4dfe
 	ld [$c2a1], a ; $4e01
 	ld a, $17 ; $4e04
-	farcall FarPtr_0b_00 ; $4e06
+	farcall FarPtr_RunTrainingDrillByID ; $4e06
 	farcall FarPtr_0a_02 ; $4e09
 Label_12_4e0c:
 	ret ; $4e0c
@@ -1582,7 +1582,7 @@ Label_12_4e0c:
 	ld [$c294], a ; $4e73
 	ld [$c2a1], a ; $4e76
 	ld a, $18 ; $4e79
-	farcall FarPtr_0b_00 ; $4e7b
+	farcall FarPtr_RunTrainingDrillByID ; $4e7b
 	farcall FarPtr_0a_02 ; $4e7e
 Label_12_4e81:
 	ret ; $4e81
@@ -1630,7 +1630,7 @@ Label_12_4e81:
 	ld [$c294], a ; $4ee8
 	ld [$c2a1], a ; $4eeb
 	ld a, $19 ; $4eee
-	farcall FarPtr_0b_00 ; $4ef0
+	farcall FarPtr_RunTrainingDrillByID ; $4ef0
 	farcall FarPtr_0a_02 ; $4ef3
 Label_12_4ef6:
 	ret ; $4ef6
@@ -1792,7 +1792,7 @@ Label_12_502b:
 	ld [$c294], a ; $5052
 	ld [$c2a1], a ; $5055
 	ld a, [$c8f7] ; $5058
-	farcall FarPtr_0b_00 ; $505b
+	farcall FarPtr_RunTrainingDrillByID ; $505b
 Label_12_505e:
 	ret ; $505e
 SetupWallPracticeLevelSigns:
@@ -2073,7 +2073,7 @@ LaunchWallPracticeMinigame:
 	sub a, l ; $52af
 	ld h, a ; $52b0
 	ld a, [hl] ; $52b1
-	farcall FarPtr_0b_00 ; $52b2
+	farcall FarPtr_RunTrainingDrillByID ; $52b2
 	farcall FarPtr_0a_02 ; $52b5
 	ret ; $52b8
 	; $52b9, 7 bytes (bytes:16)

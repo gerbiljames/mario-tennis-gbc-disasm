@@ -1,12 +1,12 @@
 SECTION "ROM Bank $0e", ROMX[$4000], BANK[$0e]
 
-DataPtr_0e_00:
-	dw Data_0e_4006 ; $4000
-DataPtr_0e_02:
-	dw Data_0e_5248 ; $4002
-DataPtr_0e_04:
-	dw Data_0e_75f6 ; $4004
-Data_0e_4006:
+DataPtr_TrainingGymMapScripts_0e:
+	dw TrainingGymMapScripts_0e ; $4000
+DataPtr_MarioWorldMapScripts_0e:
+	dw MarioWorldMapScripts_0e ; $4002
+DataPtr_SpecialCourtMapScripts_0e:
+	dw SpecialCourtMapScripts_0e ; $4004
+TrainingGymMapScripts_0e:
 	; $4006, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $40c6 ; record 0
@@ -628,7 +628,7 @@ Label_0e_448f:
 	ld de, $1300 ; $45cd
 	farcall FarPtr_MovePlayerToPosition ; $45d0
 	farcall FarPtr_WaitPlayerMoveDone ; $45d3
-	call Func_0e_4d88 ; $45d6
+	call RunRepairCounterDialogue ; $45d6
 	ret ; $45d9
 	ld a, $0c ; $45da
 	ld [$c2b1], a ; $45dc
@@ -639,7 +639,7 @@ Label_0e_448f:
 	ld de, $1300 ; $45e9
 	farcall FarPtr_MovePlayerToPosition ; $45ec
 	farcall FarPtr_WaitPlayerMoveDone ; $45ef
-	call Func_0e_4d88 ; $45f2
+	call RunRepairCounterDialogue ; $45f2
 	ret ; $45f5
 	; $45f6, 17 bytes (records:8)
 ; 2 records x 8 bytes
@@ -654,7 +654,7 @@ Label_0e_448f:
 	ld [$c294], a ; $4612
 	ld [$c2a1], a ; $4615
 	ret ; $4618
-	call Func_0e_7e5a ; $4619
+	call ComputeTrainingGymProgressIndex ; $4619
 	ld a, $07 ; $461c
 	farcall FarPtr_GetActorStateAddr ; $461e
 	ld a, $03 ; $4621
@@ -688,29 +688,29 @@ Label_0e_448f:
 	ld a, $09 ; $4654
 	ld d, $05 ; $4656
 	farcall FarPtr_ScriptSetActorAnimation ; $4658
-	call Func_0e_4681 ; $465b
+	call SetupGymActorsForProgress ; $465b
 	ld a, [$c295] ; $465e
 	cp a, $0b ; $4661
 	jr nz, Label_0e_4669 ; $4663
-	call Func_0e_4fbf ; $4665
+	call RepairCounterReturnA ; $4665
 	ret ; $4668
 Label_0e_4669:
 	cp a, $0c ; $4669
 	jr nz, Label_0e_4671 ; $466b
-	call Func_0e_4fdb ; $466d
+	call RepairCounterReturnB ; $466d
 	ret ; $4670
 Label_0e_4671:
 	cp a, $0d ; $4671
 	jr nz, Label_0e_4679 ; $4673
-	call Func_0e_509f ; $4675
+	call RepairCounterChangedReturnA ; $4675
 	ret ; $4678
 Label_0e_4679:
 	cp a, $0e ; $4679
 	jr nz, Label_0e_4680 ; $467b
-	call Func_0e_50b3 ; $467d
+	call RepairCounterChangedReturnB ; $467d
 Label_0e_4680:
 	ret ; $4680
-Func_0e_4681:
+SetupGymActorsForProgress:
 	ld a, [$c2b0] ; $4681
 	sra a ; $4684
 	cp a, $01 ; $4686
@@ -1003,7 +1003,7 @@ Label_0e_4d83:
 	ld b, $00 ; $4d83
 	ld a, $00 ; $4d85
 	ret ; $4d87
-Func_0e_4d88:
+RunRepairCounterDialogue:
 	ld a, $00 ; $4d88
 	ld b, a ; $4d8a
 	ld a, $0e ; $4d8b
@@ -1086,7 +1086,7 @@ Label_0e_4e26:
 	pop af ; $4e3f
 	and a, a ; $4e40
 	jr z, Label_0e_4e4f ; $4e41
-Label_0e_4e43:
+RepairCounterFarewell:
 	ld hl, $20ea ; $4e43
 	farcall FarPtr_InitDialogueTextCursor ; $4e46
 	ld a, $0e ; $4e49
@@ -1101,20 +1101,20 @@ Label_0e_4e4f:
 	ld a, $05 ; $4e5b
 	farcall FarPtr_WaitScriptFrames ; $4e5d
 	pop af ; $4e60
-Label_0e_4e61:
+RepairCounterServiceMenu:
 	ld hl, $20ec ; $4e61
 	ld de, $0101 ; $4e64
 	farcall FarPtr_RunMenuFromText ; $4e67
 Label_0e_4e6a:
 	ld [$c2bc], a ; $4e6a
 	cp a, $ff ; $4e6d
-	jp z, Label_0e_4e43 ; $4e6f
+	jp z, RepairCounterFarewell ; $4e6f
 	cp a, $02 ; $4e72
-	jp z, Label_0e_4e43 ; $4e74
+	jp z, RepairCounterFarewell ; $4e74
 	cp a, $00 ; $4e77
-	jp z, Label_0e_4ee9 ; $4e79
+	jp z, RepairCounterChangeRackets ; $4e79
 	test_flag $0a, 7 ; $4e7c
-	jp nz, Label_0e_4eff ; $4e7f
+	jp nz, RepairCounterChangeShoes ; $4e7f
 	ld hl, $20e8 ; $4e82
 	farcall FarPtr_InitDialogueTextCursor ; $4e85
 	ld a, $0e ; $4e88
@@ -1130,13 +1130,13 @@ Label_0e_4e6a:
 	farcall FarPtr_WaitScriptFrames ; $4ea1
 	pop af ; $4ea4
 	and a, a ; $4ea5
-	jr z, Label_0e_4e61 ; $4ea6
-	jr Label_0e_4e43 ; $4ea8
+	jr z, RepairCounterServiceMenu ; $4ea6
+	jr RepairCounterFarewell ; $4ea8
 	ld a, $0e ; $4eaa
 	ld b, $00 ; $4eac
 	farcall FarPtr_SetActorFacing ; $4eae
 	ret ; $4eb1
-Func_0e_4eb2:
+PrepareEquipmentSelectScreen:
 	ld a, [wEquippedRacket] ; $4eb2
 	ld [wWaterSpriteMinigameFlag], a ; $4eb5
 	ld a, $11 ; $4eb8
@@ -1159,26 +1159,26 @@ Func_0e_4eb2:
 	ldh [hScrollX], a ; $4ee3
 	ld [$c321], a ; $4ee5
 	ret ; $4ee8
-Label_0e_4ee9:
+RepairCounterChangeRackets:
 	ld hl, $20ed ; $4ee9
 	farcall FarPtr_InitDialogueTextCursor ; $4eec
 	ld a, $0e ; $4eef
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4ef1
-	call Func_0e_4eb2 ; $4ef4
+	call PrepareEquipmentSelectScreen ; $4ef4
 	farcall FarPtr_3e_0c ; $4ef7
 	and a, a ; $4efa
 	jr nz, Label_0e_4f1d ; $4efb
-	jr Func_0e_4f13 ; $4efd
-Label_0e_4eff:
+	jr RestoreScreenAfterEquipSelect ; $4efd
+RepairCounterChangeShoes:
 	ld hl, $20ee ; $4eff
 	farcall FarPtr_InitDialogueTextCursor ; $4f02
 	ld a, $0e ; $4f05
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4f07
-	call Func_0e_4eb2 ; $4f0a
+	call PrepareEquipmentSelectScreen ; $4f0a
 	farcall FarPtr_3e_0e ; $4f0d
 	and a, a ; $4f10
 	jr nz, Label_0e_4f1d ; $4f11
-Func_0e_4f13:
+RestoreScreenAfterEquipSelect:
 	call DisableLCDSafely ; $4f13
 	farcall FarPtr_01_0a ; $4f16
 	call EnableLCD ; $4f19
@@ -1194,9 +1194,9 @@ Label_0e_4f1d:
 	ld a, $ff ; $4f30
 	ld [$c294], a ; $4f32
 	ld [$c2a1], a ; $4f35
-	call Func_0e_4f13 ; $4f38
+	call RestoreScreenAfterEquipSelect ; $4f38
 	ret ; $4f3b
-Func_0e_4f3c:
+FetchAndPushShortTextArg:
 	ldh a, [hWramBank] ; $4f3c
 	push af ; $4f3e
 	wram_bank $07 ; $4f3f
@@ -1222,7 +1222,7 @@ Label_0e_4f6b:
 	and a, $f0 ; $4f6e
 	swap a ; $4f70
 	ret ; $4f72
-Func_0e_4f73:
+PushEquipmentNameTextArg:
 	ld a, [$c2bc] ; $4f73
 	and a, a ; $4f76
 	jr z, Label_0e_4f7b ; $4f77
@@ -1235,7 +1235,7 @@ Label_0e_4f7b:
 	jr nc, Label_0e_4f86 ; $4f83
 	inc h ; $4f85
 Label_0e_4f86:
-	call Func_0e_4f3c ; $4f86
+	call FetchAndPushShortTextArg ; $4f86
 	ret ; $4f89
 Label_0e_4f8a:
 	call GetEquippedRacketNibble ; $4f8a
@@ -1245,9 +1245,9 @@ Label_0e_4f8a:
 	jr nc, Label_0e_4f95 ; $4f92
 	inc h ; $4f94
 Label_0e_4f95:
-	call Func_0e_4f3c ; $4f95
+	call FetchAndPushShortTextArg ; $4f95
 	ret ; $4f98
-Func_0e_4f99:
+InitEquipmentHandoutDialogue:
 	ld a, [$c2bc] ; $4f99
 	and a, a ; $4f9c
 	jr z, Label_0e_4fa1 ; $4f9d
@@ -1272,7 +1272,7 @@ Label_0e_4fb0:
 Label_0e_4fbb:
 	farcall FarPtr_InitDialogueTextCursor ; $4fbb
 	ret ; $4fbe
-Func_0e_4fbf:
+RepairCounterReturnA:
 	ld a, $0b ; $4fbf
 	ld [$c2b1], a ; $4fc1
 	ld a, $00 ; $4fc4
@@ -1283,9 +1283,9 @@ Func_0e_4fbf:
 	ld bc, $0f00 ; $4fce
 	ld de, $0f00 ; $4fd1
 	farcall FarPtr_ScriptSetActorPosition ; $4fd4
-	jp Label_0e_5015 ; $4fd7
+	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda
-Func_0e_4fdb:
+RepairCounterReturnB:
 	ld a, $0c ; $4fdb
 	ld [$c2b1], a ; $4fdd
 	farcall FarPtr_WaitPlayerMoveDone ; $4fe0
@@ -1300,7 +1300,7 @@ Func_0e_4fdb:
 	ld bc, $1300 ; $4ff8
 	ld de, $1300 ; $4ffb
 	farcall FarPtr_ScriptSetActorPosition ; $4ffe
-	jp Label_0e_5015 ; $5001
+	jp RepairCounterCheckEquipChanged ; $5001
 	ret ; $5004
 CompareEquippedRacketToMinigameFlag:
 	ld a, [wWaterSpriteMinigameFlag] ; $5005
@@ -1313,7 +1313,7 @@ CompareEquippedRacketToMinigameFlag:
 Label_0e_5012:
 	ld a, $ff ; $5012
 	ret ; $5014
-Label_0e_5015:
+RepairCounterCheckEquipChanged:
 	xor a, a ; $5015
 	ld [$c2d5], a ; $5016
 	ld c, $08 ; $5019
@@ -1330,7 +1330,7 @@ Label_0e_5015:
 	inc h ; $5033
 Label_0e_5034:
 	farcall FarPtr_InitDialogueTextCursor ; $5034
-	call Func_0e_4f73 ; $5037
+	call PushEquipmentNameTextArg ; $5037
 	ld a, $0e ; $503a
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $503c
 	farcall FarPtr_RunDialogueYesNoPrompt ; $503f
@@ -1346,10 +1346,10 @@ Label_0e_5034:
 Label_0e_5056:
 	ld a, [wEquippedRacket] ; $5056
 	ld [wWaterSpriteMinigameFlag], a ; $5059
-	call Func_0e_4f99 ; $505c
+	call InitEquipmentHandoutDialogue ; $505c
 	ld a, $0e ; $505f
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5061
-	call Func_0e_5153 ; $5064
+	call ShowEquipChangeConfirmation ; $5064
 	set_flag $0f, 7 ; $5067
 	ld a, $00 ; $506a
 	ld b, a ; $506c
@@ -1357,7 +1357,7 @@ Label_0e_5056:
 	farcall FarPtr_FaceActorTowardActor ; $506f
 	ld hl, $20f1 ; $5072
 	farcall FarPtr_InitDialogueTextCursor ; $5075
-	call Func_0e_4f73 ; $5078
+	call PushEquipmentNameTextArg ; $5078
 	ld a, $0e ; $507b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $507d
 Label_0e_5080:
@@ -1372,18 +1372,18 @@ Label_0e_5080:
 	farcall FarPtr_WaitScriptFrames ; $5094
 	pop af ; $5097
 	and a, a ; $5098
-	jp z, Label_0e_4e61 ; $5099
-	jp Label_0e_4e43 ; $509c
-Func_0e_509f:
+	jp z, RepairCounterServiceMenu ; $5099
+	jp RepairCounterFarewell ; $509c
+RepairCounterChangedReturnA:
 	ld a, $0b ; $509f
 	ld [$c2b1], a ; $50a1
 	ld a, $02 ; $50a4
 	ld bc, $0f00 ; $50a6
 	ld de, $0f00 ; $50a9
 	farcall FarPtr_ScriptSetActorPosition ; $50ac
-	jp Label_0e_50dd ; $50af
+	jp RepairCounterReopenServiceMenu ; $50af
 	ret ; $50b2
-Func_0e_50b3:
+RepairCounterChangedReturnB:
 	ld a, $0c ; $50b3
 	ld [$c2b1], a ; $50b5
 	farcall FarPtr_WaitPlayerMoveDone ; $50b8
@@ -1398,15 +1398,15 @@ Func_0e_50b3:
 	ld bc, $1300 ; $50d0
 	ld de, $1300 ; $50d3
 	farcall FarPtr_ScriptSetActorPosition ; $50d6
-	jp Label_0e_50dd ; $50d9
+	jp RepairCounterReopenServiceMenu ; $50d9
 	ret ; $50dc
-Label_0e_50dd:
+RepairCounterReopenServiceMenu:
 	xor a, a ; $50dd
 	ld [$c2d5], a ; $50de
 	ld hl, $20ef ; $50e1
 	farcall FarPtr_InitDialogueTextCursor ; $50e4
 	ld hl, $00e6 ; $50e7
-	call Func_0e_4f3c ; $50ea
+	call FetchAndPushShortTextArg ; $50ea
 	set_flag $0f, 7 ; $50ed
 	ld a, $00 ; $50f0
 	ld b, a ; $50f2
@@ -1420,13 +1420,13 @@ Label_0e_50dd:
 	farcall FarPtr_RunMenuFromText ; $5106
 	ld [$c2bc], a ; $5109
 	cp a, $ff ; $510c
-	jp z, Label_0e_4e43 ; $510e
+	jp z, RepairCounterFarewell ; $510e
 	cp a, $02 ; $5111
-	jp z, Label_0e_4e43 ; $5113
+	jp z, RepairCounterFarewell ; $5113
 	cp a, $00 ; $5116
-	jp z, Label_0e_4ee9 ; $5118
+	jp z, RepairCounterChangeRackets ; $5118
 	test_flag $0a, 7 ; $511b
-	jp nz, Label_0e_4eff ; $511e
+	jp nz, RepairCounterChangeShoes ; $511e
 	ld hl, $20e8 ; $5121
 	farcall FarPtr_InitDialogueTextCursor ; $5124
 	ld a, $0e ; $5127
@@ -1442,13 +1442,13 @@ Label_0e_50dd:
 	farcall FarPtr_WaitScriptFrames ; $5140
 	pop af ; $5143
 	and a, a ; $5144
-	jp z, Label_0e_4e61 ; $5145
-	jp Label_0e_4e43 ; $5148
+	jp z, RepairCounterServiceMenu ; $5145
+	jp RepairCounterFarewell ; $5148
 	ld a, $0e ; $514b
 	ld b, $00 ; $514d
 	farcall FarPtr_SetActorFacing ; $514f
 	ret ; $5152
-Func_0e_5153:
+ShowEquipChangeConfirmation:
 	ld a, [$c2bc] ; $5153
 	ld hl, $20ef ; $5156
 	add a, l ; $5159
@@ -1457,7 +1457,7 @@ Func_0e_5153:
 	inc h ; $515d
 Label_0e_515e:
 	farcall FarPtr_InitDialogueTextCursor ; $515e
-	call Func_0e_4f73 ; $5161
+	call PushEquipmentNameTextArg ; $5161
 	ld a, [$c2bc] ; $5164
 	and a, a ; $5167
 	jr nz, Label_0e_51a3 ; $5168
@@ -1527,7 +1527,7 @@ Func_0e_520f:
 Label_0e_5224:
 	ret ; $5224
 	INCBIN "data/bank_00e/d_5225.bin" ; $5225, 35 bytes
-Data_0e_5248:
+MarioWorldMapScripts_0e:
 	; $5248, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $535c ; record 0
@@ -1678,14 +1678,14 @@ Label_0e_542d:
 	dw $ff14, $0000, $5442, $0003 ; record 14
 	dw $ff12, $0000, $538e, $0003 ; record 15
 	db $ff, $ff, $ff, $c9
-	call Func_0e_555d ; $54d2
+	call ComputeMarioWorldProgressIndex ; $54d2
 	ld a, [$c295] ; $54d5
 	cp a, $0a ; $54d8
-	jp z, Label_0e_5579 ; $54da
+	jp z, MarioWorldArrivalSingles ; $54da
 	cp a, $0e ; $54dd
 	jp z, Label_0e_69ad ; $54df
 	cp a, $0f ; $54e2
-	jp z, Label_0e_5579 ; $54e4
+	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag $05, 7 ; $54e7
 	jr nz, Label_0e_550c ; $54ea
 	test_flag $16, 2 ; $54ec
@@ -1718,7 +1718,7 @@ Label_0e_550c:
 Label_0e_5529:
 	jp Label_0e_69fb ; $5529
 	INCBIN "data/bank_00e/d_552c.bin" ; $552c, 49 bytes
-Func_0e_555d:
+ComputeMarioWorldProgressIndex:
 	test_flag $05, 7 ; $555d
 	jr nz, Label_0e_556e ; $5560
 	ld a, $00 ; $5562
@@ -1735,9 +1735,9 @@ Label_0e_556e:
 	inc a ; $5575
 	jr Label_0e_556a ; $5576
 	ret ; $5578
-Label_0e_5579:
+MarioWorldArrivalSingles:
 	test_flag $05, 7 ; $5579
-	jp nz, Label_0e_5bba ; $557c
+	jp nz, MarioWorldArrivalDoubles ; $557c
 	test_flag $0d, 6 ; $557f
 	jr nz, Label_0e_558a ; $5582
 	test_flag $16, 2 ; $5584
@@ -2138,12 +2138,12 @@ Label_0e_56c0:
 	farcall FarPtr_WaitScriptFrames ; $5927
 	pop af ; $592a
 	and a, a ; $592b
-	jr z, Label_0e_5938 ; $592c
+	jr z, ExhibitionAcceptedSingles ; $592c
 	ld hl, $3060 ; $592e
 	farcall FarPtr_InitDialogueTextCursor ; $5931
-	call Func_0e_7082 ; $5934
+	call ExhibitionDeclinedCutscene ; $5934
 	ret ; $5937
-Label_0e_5938:
+ExhibitionAcceptedSingles:
 	push af ; $5938
 	ld a, $0a ; $5939
 	farcall FarPtr_WaitScriptFrames ; $593b
@@ -2430,7 +2430,7 @@ Label_0e_5938:
 	ld [$c294], a ; $5bb3
 	ld [$c2a1], a ; $5bb6
 	ret ; $5bb9
-Label_0e_5bba:
+MarioWorldArrivalDoubles:
 	test_flag $0d, 6 ; $5bba
 	jr nz, Label_0e_5bc5 ; $5bbd
 	test_flag $16, 3 ; $5bbf
@@ -2923,10 +2923,10 @@ Label_0e_5d49:
 	farcall FarPtr_WaitScriptFrames ; $6042
 	pop af ; $6045
 	and a, a ; $6046
-	jr z, Label_0e_6060 ; $6047
+	jr z, ExhibitionAcceptedDoubles ; $6047
 	ld hl, $307d ; $6049
 	farcall FarPtr_InitDialogueTextCursor ; $604c
-	call Func_0e_7082 ; $604f
+	call ExhibitionDeclinedCutscene ; $604f
 	ld a, $02 ; $6052
 	farcall FarPtr_GetActorStateAddr ; $6054
 	ld c, l ; $6057
@@ -2934,7 +2934,7 @@ Label_0e_5d49:
 	ld de, $d000 ; $6059
 	farcall FarPtr_04_20 ; $605c
 	ret ; $605f
-Label_0e_6060:
+ExhibitionAcceptedDoubles:
 	push af ; $6060
 	ld a, $0a ; $6061
 	farcall FarPtr_WaitScriptFrames ; $6063
@@ -3241,7 +3241,7 @@ Label_0e_6060:
 	ret ; $630a
 	INCBIN "data/bank_00e/d_630b.bin" ; $630b, 316 bytes
 	farcall FarPtr_0a_1a ; $6447
-	call Func_0e_6987 ; $644a
+	call MoveDoublesPartnerToPlayer ; $644a
 	ld a, $08 ; $644d
 	ld b, $40 ; $644f
 	farcall FarPtr_SetActorFacing ; $6451
@@ -3263,7 +3263,7 @@ Label_0e_6060:
 	farcall FarPtr_WaitActorScriptDone ; $6473
 	ld a, $02 ; $6476
 	farcall FarPtr_WaitActorScriptDone ; $6478
-	jp Label_0e_65d4 ; $647b
+	jp PromptExhibitionMatch ; $647b
 	INCBIN "data/bank_00e/d_647e.bin" ; $647e, 238 bytes
 	farcall FarPtr_ScriptSetActorMoveTarget ; $656c
 	ld a, $00 ; $656f
@@ -3280,13 +3280,13 @@ Label_0e_6060:
 	ld a, $08 ; $658b
 	ld b, $40 ; $658d
 	farcall FarPtr_SetActorFacing ; $658f
-	jp Label_0e_65d4 ; $6592
+	jp PromptExhibitionMatch ; $6592
 	ldh a, [hRomBank] ; $6595
 	ld b, a ; $6597
 	ld a, $02 ; $6598
 	ld de, $7c6e ; $659a
 	farcall FarPtr_0a_1a ; $659d
-	call Func_0e_6987 ; $65a0
+	call MoveDoublesPartnerToPlayer ; $65a0
 	ld a, $08 ; $65a3
 	ld b, $40 ; $65a5
 	farcall FarPtr_SetActorFacing ; $65a7
@@ -3308,8 +3308,8 @@ Label_0e_6060:
 	farcall FarPtr_WaitActorScriptDone ; $65c9
 	ld a, $02 ; $65cc
 	farcall FarPtr_WaitActorScriptDone ; $65ce
-	jp Label_0e_65d4 ; $65d1
-Label_0e_65d4:
+	jp PromptExhibitionMatch ; $65d1
+PromptExhibitionMatch:
 	farcall FarPtr_0a_00 ; $65d4
 	ld bc, $0018 ; $65d7
 	farcall FarPtr_0a_38 ; $65da
@@ -3743,7 +3743,7 @@ Label_0e_695e:
 	ld [$c2a1], a ; $6980
 	farcall FarPtr_0a_02 ; $6983
 	ret ; $6986
-Func_0e_6987:
+MoveDoublesPartnerToPlayer:
 	wram_bank $04 ; $6987
 	ld a, $00 ; $698d
 	farcall FarPtr_GetActorStateAddr ; $698f
@@ -4566,7 +4566,7 @@ Func_0e_6f2b:
 	farcall FarPtr_WaitScriptFrames ; $707d
 	pop af ; $7080
 	ret ; $7081
-Func_0e_7082:
+ExhibitionDeclinedCutscene:
 	push af ; $7082
 	ld a, $0a ; $7083
 	farcall FarPtr_WaitScriptFrames ; $7085
@@ -4739,7 +4739,7 @@ Label_0e_71e2:
 	call BeginFadeOut ; $71e4
 	jr Label_0e_71cf ; $71e7
 	INCBIN "data/bank_00e/d_71e9.bin" ; $71e9, 1037 bytes
-Data_0e_75f6:
+SpecialCourtMapScripts_0e:
 	; $75f6, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $76d2 ; record 0
@@ -4778,12 +4778,12 @@ Data_0e_75f6:
 	jr z, Label_0e_76f3 ; $76f0
 	ret ; $76f2
 Label_0e_76f3:
-	call Func_0e_7c0c ; $76f3
+	call HandleExhibitionMatchResult ; $76f3
 	ret ; $76f6
 Label_0e_76f7:
-	call Func_0e_76fb ; $76f7
+	call ExhibitionMatchIntroCutscene ; $76f7
 	ret ; $76fa
-Func_0e_76fb:
+ExhibitionMatchIntroCutscene:
 	xor a, a ; $76fb
 	ld [$c2d5], a ; $76fc
 	ld a, [$c295] ; $76ff
@@ -5243,55 +5243,55 @@ PrepareStoryMatch:
 	farcall FarPtr_0a_4c ; $7ba5
 	farcall FarPtr_0a_4e ; $7ba8
 	ret ; $7bab
-	dw Func_0e_7bb8 ; $7bac
-	dw Func_0e_7bc6 ; $7bae
-	dw Func_0e_7bd4 ; $7bb0
-	dw Func_0e_7be2 ; $7bb2
-	dw Func_0e_7bf0 ; $7bb4
-	dw Func_0e_7bfe ; $7bb6
-Func_0e_7bb8:
+	dw LoadExhibitionMatchSettings0 ; $7bac
+	dw LoadExhibitionMatchSettings1 ; $7bae
+	dw LoadExhibitionMatchSettings2 ; $7bb0
+	dw LoadExhibitionMatchSettings3 ; $7bb2
+	dw LoadExhibitionMatchSettings4 ; $7bb4
+	dw LoadExhibitionMatchSettings5 ; $7bb6
+LoadExhibitionMatchSettings0:
 	ld a, $00 ; $7bb8
 	ld [wCurrentMinigameStoryMatch], a ; $7bba
 	ld a, $18 ; $7bbd
 	ld [$c8f7], a ; $7bbf
 	farcall FarPtr_LoadMatchSettingsFromTable ; $7bc2
 	ret ; $7bc5
-Func_0e_7bc6:
+LoadExhibitionMatchSettings1:
 	ld a, $00 ; $7bc6
 	ld [wCurrentMinigameStoryMatch], a ; $7bc8
 	ld a, $17 ; $7bcb
 	ld [$c8f7], a ; $7bcd
 	farcall FarPtr_LoadMatchSettingsFromTable ; $7bd0
 	ret ; $7bd3
-Func_0e_7bd4:
+LoadExhibitionMatchSettings2:
 	ld a, $00 ; $7bd4
 	ld [wCurrentMinigameStoryMatch], a ; $7bd6
 	ld a, $16 ; $7bd9
 	ld [$c8f7], a ; $7bdb
 	farcall FarPtr_LoadMatchSettingsFromTable ; $7bde
 	ret ; $7be1
-Func_0e_7be2:
+LoadExhibitionMatchSettings3:
 	ld a, $01 ; $7be2
 	ld [wCurrentMinigameStoryMatch], a ; $7be4
 	ld a, $18 ; $7be7
 	ld [$c8f7], a ; $7be9
 	farcall FarPtr_LoadMatchSettingsFromTable ; $7bec
 	ret ; $7bef
-Func_0e_7bf0:
+LoadExhibitionMatchSettings4:
 	ld a, $01 ; $7bf0
 	ld [wCurrentMinigameStoryMatch], a ; $7bf2
 	ld a, $17 ; $7bf5
 	ld [$c8f7], a ; $7bf7
 	farcall FarPtr_LoadMatchSettingsFromTable ; $7bfa
 	ret ; $7bfd
-Func_0e_7bfe:
+LoadExhibitionMatchSettings5:
 	ld a, $01 ; $7bfe
 	ld [wCurrentMinigameStoryMatch], a ; $7c00
 	ld a, $16 ; $7c03
 	ld [$c8f7], a ; $7c05
 	farcall FarPtr_LoadMatchSettingsFromTable ; $7c08
 	ret ; $7c0b
-Func_0e_7c0c:
+HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c
 	cp a, $01 ; $7c0f
 	jr nz, Label_0e_7c24 ; $7c11
@@ -5352,7 +5352,7 @@ Label_0e_7c5b:
 	ld [$c2d5], a ; $7ca0
 	ret ; $7ca3
 	INCBIN "data/bank_00e/d_7ca4.bin" ; $7ca4, 438 bytes
-Func_0e_7e5a:
+ComputeTrainingGymProgressIndex:
 	test_flag $05, 7 ; $7e5a
 	jr nz, Label_0e_7e81 ; $7e5d
 	ld a, $00 ; $7e5f

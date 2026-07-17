@@ -486,7 +486,7 @@ RunDrillMatchListMenu:
 	farcall FarPtr_CheckStorySlot ; $447a
 	pop af ; $447d
 	set_flag $03, 6 ; $447e
-	farcall FarPtr_0b_00 ; $4481
+	farcall FarPtr_RunTrainingDrillByID ; $4481
 	ld a, $00 ; $4484
 	ld [$c36c], a ; $4486
 	farcall FarPtr_03_18 ; $4489
@@ -695,7 +695,7 @@ Label_10_4655:
 	ld [wMinigameLevel], a ; $4662
 	ld a, [de] ; $4665
 	set_flag $03, 6 ; $4666
-	farcall FarPtr_0b_00 ; $4669
+	farcall FarPtr_RunTrainingDrillByID ; $4669
 	ld hl, wStoryModePlayersXPosition ; $466c
 	ld de, $c296 ; $466f
 	ld bc, $0005 ; $4672
@@ -813,7 +813,7 @@ Data_10_468d:
 	ld a, $80 ; $497d
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $497f
 	ld a, $09 ; $4982
-	farcall FarPtr_0b_00 ; $4984
+	farcall FarPtr_RunTrainingDrillByID ; $4984
 	ret ; $4987
 	ld hl, wStoryModePlayersXPosition ; $4988
 	ld de, $c296 ; $498b
@@ -831,7 +831,7 @@ Data_10_468d:
 	ld a, $80 ; $49ae
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $49b0
 	ld a, $0a ; $49b3
-	farcall FarPtr_0b_00 ; $49b5
+	farcall FarPtr_RunTrainingDrillByID ; $49b5
 	ret ; $49b8
 	ld hl, wStoryModePlayersXPosition ; $49b9
 	ld de, $c296 ; $49bc
@@ -849,7 +849,7 @@ Data_10_468d:
 	ld a, $80 ; $49df
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $49e1
 	ld a, $0b ; $49e4
-	farcall FarPtr_0b_00 ; $49e6
+	farcall FarPtr_RunTrainingDrillByID ; $49e6
 	ret ; $49e9
 	ld hl, wStoryModePlayersXPosition ; $49ea
 	ld de, $c296 ; $49ed
@@ -867,7 +867,7 @@ Data_10_468d:
 	ld a, $80 ; $4a10
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4a12
 	ld a, $0c ; $4a15
-	farcall FarPtr_0b_00 ; $4a17
+	farcall FarPtr_RunTrainingDrillByID ; $4a17
 	ret ; $4a1a
 	ld hl, wStoryModePlayersXPosition ; $4a1b
 	ld de, $c296 ; $4a1e
@@ -885,7 +885,7 @@ Data_10_468d:
 	ld a, $80 ; $4a41
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4a43
 	ld a, $0d ; $4a46
-	farcall FarPtr_0b_00 ; $4a48
+	farcall FarPtr_RunTrainingDrillByID ; $4a48
 	ret ; $4a4b
 	ld hl, wStoryModePlayersXPosition ; $4a4c
 	ld de, $c296 ; $4a4f
@@ -903,7 +903,7 @@ Data_10_468d:
 	ld a, $80 ; $4a72
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4a74
 	ld a, $0e ; $4a77
-	farcall FarPtr_0b_00 ; $4a79
+	farcall FarPtr_RunTrainingDrillByID ; $4a79
 	ret ; $4a7c
 	ld hl, wStoryModePlayersXPosition ; $4a7d
 	ld de, $c296 ; $4a80
@@ -921,7 +921,7 @@ Data_10_468d:
 	ld a, $80 ; $4aa3
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4aa5
 	ld a, $0f ; $4aa8
-	farcall FarPtr_0b_00 ; $4aaa
+	farcall FarPtr_RunTrainingDrillByID ; $4aaa
 	ret ; $4aad
 	ld hl, wStoryModePlayersXPosition ; $4aae
 	ld de, $c296 ; $4ab1
@@ -939,7 +939,7 @@ Data_10_468d:
 	ld a, $80 ; $4ad4
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4ad6
 	ld a, $10 ; $4ad9
-	farcall FarPtr_0b_00 ; $4adb
+	farcall FarPtr_RunTrainingDrillByID ; $4adb
 	ret ; $4ade
 	; $4adf, 129 bytes (records:8)
 ; 16 records x 8 bytes
@@ -1611,7 +1611,7 @@ Label_10_5241:
 Label_10_526e:
 	ld a, [$cb20] ; $526e
 	call Func_10_56e9 ; $5271
-	farcall FarPtr_0b_00 ; $5274
+	farcall FarPtr_RunTrainingDrillByID ; $5274
 	ld a, $01 ; $5277
 	ld [$cb11], a ; $5279
 	call DisableLCDSafely ; $527c

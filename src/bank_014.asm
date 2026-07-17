@@ -629,7 +629,7 @@ Label_14_4577:
 	sub a, l ; $459c
 	ld h, a ; $459d
 	ld a, [hl] ; $459e
-	farcall FarPtr_0b_00 ; $459f
+	farcall FarPtr_RunTrainingDrillByID ; $459f
 	farcall FarPtr_0a_02 ; $45a2
 	ret ; $45a5
 Label_14_45a6:
@@ -730,7 +730,7 @@ MachinePracticeLevelPrompt:
 	ld [$c2a1], a ; $4684
 	ld a, [$c2b8] ; $4687
 	add a, $12 ; $468a
-	farcall FarPtr_0b_00 ; $468c
+	farcall FarPtr_RunTrainingDrillByID ; $468c
 	farcall FarPtr_0a_02 ; $468f
 Label_14_4692:
 	ret ; $4692
@@ -911,7 +911,7 @@ Label_14_47ef:
 	ld [$c2a1], a ; $47fe
 Label_14_4801:
 	ld a, [$c8f7] ; $4801
-	farcall FarPtr_0b_00 ; $4804
+	farcall FarPtr_RunTrainingDrillByID ; $4804
 	ret ; $4807
 	INCBIN "data/bank_014/d_4808.bin" ; $4808, 11 bytes
 	ldh a, [hWramBank] ; $4813

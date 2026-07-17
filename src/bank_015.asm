@@ -1,10 +1,10 @@
 SECTION "ROM Bank $15", ROMX[$4000], BANK[$15]
 
-DataPtr_15_00:
-	dw Data_15_4004 ; $4000
-DataPtr_15_02:
-	dw Data_15_4796 ; $4002
-Data_15_4004:
+DataPtr_StoryCmdHandlersA_15:
+	dw StoryCmdHandlersA_15 ; $4000
+DataPtr_StoryCmdHandlersB_15:
+	dw StoryCmdHandlersB_15 ; $4002
+StoryCmdHandlersA_15:
 	; $4004, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $40b6 ; record 0
@@ -106,11 +106,11 @@ Label_15_413f:
 	ld a, [$c295] ; $41a6
 	cp a, $0f ; $41a9
 	jr nz, Label_15_41b0 ; $41ab
-	jp Label_15_444d ; $41ad
+	jp TournamentSiteArrivalScene ; $41ad
 Label_15_41b0:
-	call Func_15_475f ; $41b0
-	call Func_15_4271 ; $41b3
-	call Func_15_46f0 ; $41b6
+	call SetPlayerPartnerActorSprites ; $41b0
+	call InitTournamentSiteSceneVariant ; $41b3
+	call TournamentSiteEntryWalkIn ; $41b6
 	ret ; $41b9
 	INCBIN "data/bank_015/d_41ba.bin" ; $41ba, 18 bytes
 	; $41cc, 112 bytes (bytes:14)
@@ -127,7 +127,7 @@ Label_15_41b0:
 	db $00, $00, $00, $6d, $7d, $00, $0b, $00, $27, $80, $00, $39, $01, $00 ; 0x0e
 	db $00, $00, $00, $6d, $7d, $00, $09, $00, $29, $c0, $00, $3a, $01, $00 ; 0x1c
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x2a
-Func_15_4271:
+InitTournamentSiteSceneVariant:
 	ld a, $00 ; $4271
 	ld [$c2b0], a ; $4273
 	test_flag $05, 7 ; $4276
@@ -248,12 +248,12 @@ Label_15_42e8:
 	dw $ff08, $0000, $244e, $0003 ; record 5
 	dw $ff09, $0000, $244f, $0003 ; record 6
 	db $ff
-Label_15_444d:
+TournamentSiteArrivalScene:
 	ldh a, [hRomBank] ; $444d
 	ld hl, $41cd ; $444f
 	farcall FarPtr_0a_06 ; $4452
 	farcall FarPtr_0a_00 ; $4455
-	call Func_15_46b7 ; $4458
+	call SetupTournamentSitePartnerActor ; $4458
 	ld bc, $00ff ; $445b
 	farcall FarPtr_0a_38 ; $445e
 	xor a, a ; $4461
@@ -507,8 +507,8 @@ Label_15_444d:
 	call BeginFadeOut ; $46b0
 	call WaitFadeEnd ; $46b3
 	ret ; $46b6
-Func_15_46b7:
-	call Func_15_475f ; $46b7
+SetupTournamentSitePartnerActor:
+	call SetPlayerPartnerActorSprites ; $46b7
 	test_flag $05, 7 ; $46ba
 	jr z, Label_15_46c9 ; $46bd
 	ld a, [$c94d] ; $46bf
@@ -537,7 +537,7 @@ Label_15_46ce:
 	ld de, $3f00 ; $46e9
 	farcall FarPtr_ScriptSetActorPosition ; $46ec
 	ret ; $46ef
-Func_15_46f0:
+TournamentSiteEntryWalkIn:
 	ld a, [$c295] ; $46f0
 	cp a, $ff ; $46f3
 	jp z, Label_15_4756 ; $46f5
@@ -593,7 +593,7 @@ Label_15_4739:
 Label_15_4756:
 	ret ; $4756
 	INCBIN "data/bank_015/d_4757.bin" ; $4757, 8 bytes
-Func_15_475f:
+SetPlayerPartnerActorSprites:
 	test_flag $05, 7 ; $475f
 	jp z, Label_15_477d ; $4762
 	ld a, [$c94d] ; $4765
@@ -622,7 +622,7 @@ Label_15_477d:
 	ld d, $01 ; $4790
 	farcall FarPtr_ScriptSetActorAnimation ; $4792
 	ret ; $4795
-Data_15_4796:
+StoryCmdHandlersB_15:
 	; $4796, 14 bytes (records:2)
 ; 7 records x 2 bytes
 	dw $48d4 ; record 0
@@ -663,7 +663,7 @@ Data_15_4796:
 	ld a, [$c295] ; $490d
 	cp a, $ff ; $4910
 	jp z, Label_15_4955 ; $4912
-	call Func_15_4967 ; $4915
+	call ClearTrainingCourtNpcFlags ; $4915
 	test_flag $05, 7 ; $4918
 	jr z, Label_15_4943 ; $491b
 	ld a, $02 ; $491d
@@ -696,7 +696,7 @@ Label_15_4955:
 	dw $ff01, $0000, $4967, $0608 ; record 0
 	dw $ff0f, $0000, $7d95, $0e08 ; record 1
 	db $ff
-Func_15_4967:
+ClearTrainingCourtNpcFlags:
 	clear_flag $17, 2 ; $4967
 	clear_flag $17, 5 ; $496a
 	clear_flag $17, 3 ; $496d
@@ -1189,7 +1189,7 @@ Label_15_4b6e:
 	ld bc, $3f00 ; $4d39
 	ld de, $3f00 ; $4d3c
 	farcall FarPtr_ScriptSetActorPosition ; $4d3f
-	call Func_15_564a ; $4d42
+	call WaterSpriteSwingContestScene ; $4d42
 	test_flag $0c, 4 ; $4d45
 	jp nz, Label_15_4d5c ; $4d48
 	test_flag $0c, 5 ; $4d4b
@@ -1197,10 +1197,10 @@ Label_15_4b6e:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $4d51
 	cp a, $64 ; $4d54
 	jp c, Label_15_4d5c ; $4d56
-	call Func_15_4d5d ; $4d59
+	call WaterSpriteRacketRewardScene ; $4d59
 Label_15_4d5c:
 	ret ; $4d5c
-Func_15_4d5d:
+WaterSpriteRacketRewardScene:
 	push af ; $4d5d
 	ld a, $3c ; $4d5e
 	farcall FarPtr_WaitScriptFrames ; $4d60
@@ -1624,7 +1624,7 @@ Label_15_4f9f:
 	farcall FarPtr_SetActorFacing ; $51e8
 	test_flag $19, 1 ; $51eb
 	jr nz, Label_15_51f4 ; $51ee
-	call Func_15_6fcf ; $51f0
+	call NetCoachVolleyLessonScene ; $51f0
 	ret ; $51f3
 Label_15_51f4:
 	test_flag $19, 2 ; $51f4
@@ -1633,7 +1633,7 @@ Label_15_51f4:
 	jr nz, Label_15_5207 ; $51fc
 	test_flag $0a, 3 ; $51fe
 	jr z, Label_15_5207 ; $5201
-	call Func_15_706e ; $5203
+	call NetCoachSmashLessonScene ; $5203
 	ret ; $5206
 Label_15_5207:
 	ld hl, $1c80 ; $5207
@@ -1653,7 +1653,7 @@ Label_15_521e:
 	jr nz, Label_15_5231 ; $5226
 	test_flag $0a, 7 ; $5228
 	jr z, Label_15_5231 ; $522b
-	call Func_15_711d ; $522d
+	call NetCoachDropShotLessonScene ; $522d
 	ret ; $5230
 Label_15_5231:
 	ld hl, $1c9e ; $5231
@@ -1674,15 +1674,15 @@ Label_15_5248:
 	ret ; $5253
 	test_flag $19, 4 ; $5254
 	jr nz, Label_15_525d ; $5257
-	call Func_15_6b94 ; $5259
+	call StrokeMatchChallengeScene ; $5259
 	ret ; $525c
 Label_15_525d:
 	test_flag $19, 5 ; $525d
 	jr nz, Label_15_5266 ; $5260
-	call Func_15_6c3c ; $5262
+	call LobMatchChallengeScene ; $5262
 	ret ; $5265
 Label_15_5266:
-	call Func_15_6ce4 ; $5266
+	call ReturnMatchChallengeScene ; $5266
 	ret ; $5269
 	ld a, $00 ; $526a
 	ld bc, $0008 ; $526c
@@ -1704,7 +1704,7 @@ Label_15_5266:
 	farcall FarPtr_SetActorFacing ; $5294
 	test_flag $19, 7 ; $5297
 	jr nz, Label_15_52a0 ; $529a
-	call Func_15_6db4 ; $529c
+	call ReturnCoachReturnLessonScene ; $529c
 	ret ; $529f
 Label_15_52a0:
 	test_flag $1a, 0 ; $52a0
@@ -1713,7 +1713,7 @@ Label_15_52a0:
 	jr nz, Label_15_52b3 ; $52a8
 	test_flag $0a, 3 ; $52aa
 	jr z, Label_15_52b3 ; $52ad
-	call Func_15_6e4b ; $52af
+	call ReturnCoachLobLessonScene ; $52af
 	ret ; $52b2
 Label_15_52b3:
 	ld hl, $1ce1 ; $52b3
@@ -1737,7 +1737,7 @@ Label_15_52d5:
 	jr nz, Label_15_52e8 ; $52dd
 	test_flag $0a, 7 ; $52df
 	jr z, Label_15_52e8 ; $52e2
-	call Func_15_6ece ; $52e4
+	call ReturnCoachPassingShotLessonScene ; $52e4
 	ret ; $52e7
 Label_15_52e8:
 	ld hl, $1cf8 ; $52e8
@@ -1774,30 +1774,30 @@ Label_15_5340:
 	ld a, [$c295] ; $5340
 	cp a, $0f ; $5343
 	jr nz, Label_15_534b ; $5345
-	call Func_15_59c0 ; $5347
+	call TrainingCourtIntroTourScene ; $5347
 	ret ; $534a
 Label_15_534b:
-	call Func_15_71be ; $534b
-	call Func_15_724a ; $534e
-	call Func_15_7204 ; $5351
-	call Func_15_7a45 ; $5354
+	call HideServeChallengerActor ; $534b
+	call HideStrokeChallengerActor ; $534e
+	call HideNetChallengerActor ; $5351
+	call PlaceSwingPracticeKidActor ; $5354
 	ld a, [$c295] ; $5357
 	cp a, $0a ; $535a
 	jr nz, Label_15_5362 ; $535c
-	call Func_15_536d ; $535e
+	call TrainingCourtResultDispatch ; $535e
 	ret ; $5361
 Label_15_5362:
 	ld a, [$c295] ; $5362
 	cp a, $09 ; $5365
 	jr nz, Label_15_536c ; $5367
-	call Func_15_7a67 ; $5369
+	call StartPendingLessonScene ; $5369
 Label_15_536c:
 	ret ; $536c
-Func_15_536d:
+TrainingCourtResultDispatch:
 	ld a, [$c4c7] ; $536d
 	cp a, $01 ; $5370
 	jr nz, Label_15_5378 ; $5372
-	call Func_15_53a9 ; $5374
+	call TrainingCourtReentryDispatch ; $5374
 	ret ; $5377
 Label_15_5378:
 	ld a, [$c8f7] ; $5378
@@ -1826,7 +1826,7 @@ Label_15_5380:
 	dw Label_15_77aa ; $53a3 jumptable
 	dw Label_15_77bd ; $53a5 jumptable
 	dw Label_15_77d0 ; $53a7 jumptable
-Func_15_53a9:
+TrainingCourtReentryDispatch:
 	ld a, [$c8f7] ; $53a9
 	ld a, a ; $53ac
 	rst Rst00 ; $53ad
@@ -1886,7 +1886,7 @@ Label_15_53d2:
 	ld c, $08 ; $542b
 	call BeginFadeIn ; $542d
 	call WaitFadeEnd ; $5430
-	call Func_15_6179 ; $5433
+	call WalkChallengerOntoCourt ; $5433
 	ret ; $5436
 Label_15_5437:
 	xor a, a ; $5437
@@ -1957,7 +1957,7 @@ Label_15_5482:
 	ld c, $08 ; $54db
 	call BeginFadeIn ; $54dd
 	call WaitFadeEnd ; $54e0
-	call Func_15_6179 ; $54e3
+	call WalkChallengerOntoCourt ; $54e3
 	ret ; $54e6
 Label_15_54e7:
 	xor a, a ; $54e7
@@ -2028,7 +2028,7 @@ Label_15_5532:
 	ld c, $08 ; $558b
 	call BeginFadeIn ; $558d
 	call WaitFadeEnd ; $5590
-	call Func_15_6179 ; $5593
+	call WalkChallengerOntoCourt ; $5593
 	ret ; $5596
 Label_15_5597:
 	xor a, a ; $5597
@@ -2119,7 +2119,7 @@ Label_15_563f:
 	xor a, a ; $5645
 	ld [$c2b9], a ; $5646
 	ret ; $5649
-Func_15_564a:
+WaterSpriteSwingContestScene:
 	ld de, $a100 ; $564a
 	ld b, $0a ; $564d
 	ld c, $01 ; $564f
@@ -2128,7 +2128,7 @@ Func_15_564a:
 	ld [$cb6c], a ; $5656
 	ld a, $10 ; $5659
 	ld [$cb6b], a ; $565b
-	call Func_15_58e4 ; $565e
+	call InitWaterSpriteMinigameHud ; $565e
 	ld a, $00 ; $5661
 	ld b, $40 ; $5663
 	farcall FarPtr_SetActorFacing ; $5665
@@ -2304,7 +2304,7 @@ Label_15_578c:
 	farcall FarPtr_39_66 ; $57a9
 	ret ; $57ac
 	INCBIN "data/bank_015/d_57ad.bin" ; $57ad, 235 bytes
-Func_15_5898:
+LoadWaterSpriteMinigameHudGfx:
 	ldh a, [hWramBank] ; $5898
 	push af ; $589a
 	wram_bank $01 ; $589b
@@ -2318,13 +2318,13 @@ Func_15_5898:
 	pop af ; $58b5
 	wram_bank ; $58b6
 	ret ; $58ba
-Func_15_58bb:
+QueueWaterSpriteMinigameTimerPanel:
 	ld hl, $57ad ; $58bb
 	ld c, $00 ; $58be
 	ld b, $08 ; $58c0
 	call QueueSpriteTemplate ; $58c2
 	ret ; $58c5
-Func_15_58c6:
+QueueWaterSpriteMinigameCounterPanel:
 	ld hl, $57ba ; $58c6
 	ld c, $06 ; $58c9
 	ld b, $08 ; $58cb
@@ -2333,14 +2333,14 @@ Func_15_58c6:
 	ld a, [wWaterSpriteMinigameFlag] ; $58d1
 	ld d, a ; $58d4
 	ld e, $18 ; $58d5
-	call Func_15_58bb ; $58d7
+	call QueueWaterSpriteMinigameTimerPanel ; $58d7
 	ld a, [$c2bb] ; $58da
 	ld d, a ; $58dd
 	ld e, $18 ; $58de
-	call Func_15_58c6 ; $58e0
+	call QueueWaterSpriteMinigameCounterPanel ; $58e0
 	ret ; $58e3
-Func_15_58e4:
-	call Func_15_5898 ; $58e4
+InitWaterSpriteMinigameHud:
+	call LoadWaterSpriteMinigameHudGfx ; $58e4
 	ld a, $e8 ; $58e7
 	ld [wWaterSpriteMinigameFlag], a ; $58e9
 	ld a, $a0 ; $58ec
@@ -2350,7 +2350,7 @@ Func_15_58e4:
 	call RegisterFrameTask ; $58f6
 	ret ; $58f9
 	INCBIN "data/bank_015/d_58fa.bin" ; $58fa, 198 bytes
-Func_15_59c0:
+TrainingCourtIntroTourScene:
 	xor a, a ; $59c0
 	ld [$c2d5], a ; $59c1
 	ldh a, [hRomBank] ; $59c4
@@ -2635,7 +2635,7 @@ Func_15_59c0:
 	db $00, $00, $6d, $7d, $00, $2d, $00, $29, $00, $00, $6b, $01, $07, $00 ; 0x7e
 	db $00, $00, $6d, $7d, $00, $01, $00, $01, $40, $00, $49, $01, $00, $00 ; 0x8c
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x9a
-Func_15_5cf3:
+ServeChallengerResultScene:
 	xor a, a ; $5cf3
 	ld [$c2d5], a ; $5cf4
 	ld a, $06 ; $5cf7
@@ -2692,7 +2692,7 @@ Label_15_5d69:
 	dw Label_15_5fc2 ; $5d6f jumptable
 	dw Label_15_5e74 ; $5d71 jumptable
 	ret ; $5d73
-Func_15_5d74:
+NetChallengerResultScene:
 	xor a, a ; $5d74
 	ld [$c2d5], a ; $5d75
 	ld a, $11 ; $5d78
@@ -2748,7 +2748,7 @@ Label_15_5dea:
 	dw Label_15_5f07 ; $5dee jumptable
 	dw Label_15_5fc2 ; $5df0 jumptable
 	ret ; $5df2
-Func_15_5df3:
+StrokeChallengerResultScene:
 	xor a, a ; $5df3
 	ld [$c2d5], a ; $5df4
 	ld a, $0c ; $5df7
@@ -2840,7 +2840,7 @@ Label_15_5ea7:
 	ld a, e ; $5eb0
 	ld [hl+], a ; $5eb1
 	ld [hl], d ; $5eb2
-	call Func_15_5cf3 ; $5eb3
+	call ServeChallengerResultScene ; $5eb3
 	ret ; $5eb6
 Label_15_5eb7:
 	ld hl, wWaterSpriteMinigameFlag ; $5eb7
@@ -2863,7 +2863,7 @@ Label_15_5eb7:
 	ld a, e ; $5ed8
 	ld [hl+], a ; $5ed9
 	ld [hl], d ; $5eda
-	call Func_15_5cf3 ; $5edb
+	call ServeChallengerResultScene ; $5edb
 	ret ; $5ede
 Label_15_5edf:
 	ld hl, wWaterSpriteMinigameFlag ; $5edf
@@ -2886,7 +2886,7 @@ Label_15_5edf:
 	ld a, e ; $5f00
 	ld [hl+], a ; $5f01
 	ld [hl], d ; $5f02
-	call Func_15_5cf3 ; $5f03
+	call ServeChallengerResultScene ; $5f03
 	ret ; $5f06
 Label_15_5f07:
 	ld hl, wWaterSpriteMinigameTimer ; $5f07
@@ -2914,14 +2914,14 @@ Label_15_5f07:
 	ld [$c294], a ; $5f38
 	ld [$c2a1], a ; $5f3b
 	ld a, [$c8f7] ; $5f3e
-	farcall FarPtr_0b_00 ; $5f41
+	farcall FarPtr_RunTrainingDrillByID ; $5f41
 	farcall FarPtr_0a_02 ; $5f44
 	ret ; $5f47
 Label_15_5f48:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5f48
 	ld a, [$c2b1] ; $5f4b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5f4e
-	call Func_15_6179 ; $5f51
+	call WalkChallengerOntoCourt ; $5f51
 	farcall FarPtr_0a_02 ; $5f54
 	ret ; $5f57
 Label_15_5f58:
@@ -2955,7 +2955,7 @@ Label_15_5f58:
 	ld [$c294], a ; $5f92
 	ld [$c2a1], a ; $5f95
 	ld a, [$c8f7] ; $5f98
-	farcall FarPtr_0b_00 ; $5f9b
+	farcall FarPtr_RunTrainingDrillByID ; $5f9b
 	farcall FarPtr_0a_02 ; $5f9e
 	ret ; $5fa1
 Label_15_5fa2:
@@ -2967,10 +2967,10 @@ Label_15_5fa2:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5fab
 	ld a, [$c2b1] ; $5fae
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5fb1
-	call Func_15_6179 ; $5fb4
+	call WalkChallengerOntoCourt ; $5fb4
 	farcall FarPtr_0a_02 ; $5fb7
 	ret ; $5fba
-	call Func_15_6179 ; $5fbb
+	call WalkChallengerOntoCourt ; $5fbb
 	farcall FarPtr_0a_02 ; $5fbe
 	ret ; $5fc1
 Label_15_5fc2:
@@ -3015,15 +3015,15 @@ Label_15_5fc2:
 	ld a, [$c2b1] ; $6024
 	ld b, $00 ; $6027
 	farcall FarPtr_0a_2c ; $6029
-	call Func_15_6042 ; $602c
+	call WalkChallengerAwayDefeated ; $602c
 	ld a, [$c2b1] ; $602f
 	ld bc, $3f00 ; $6032
 	ld de, $3f00 ; $6035
 	farcall FarPtr_ScriptSetActorPosition ; $6038
-	call Func_15_6253 ; $603b
+	call MovePlayerToLessonCourtSpot ; $603b
 	farcall FarPtr_0a_02 ; $603e
 	ret ; $6041
-Func_15_6042:
+WalkChallengerAwayDefeated:
 	ld a, [$c8f7] ; $6042
 	sub a, $0a ; $6045
 	jp nc, Label_15_60f6 ; $6047
@@ -3146,7 +3146,7 @@ Label_15_60f6:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $6172
 	set_flag $17, 4 ; $6175
 	ret ; $6178
-Func_15_6179:
+WalkChallengerOntoCourt:
 	ld a, [$c8f7] ; $6179
 	sub a, $0a ; $617c
 	jr nc, Label_15_618b ; $617e
@@ -3238,7 +3238,7 @@ Label_15_6214:
 	ld b, $00 ; $624d
 	farcall FarPtr_SetActorFacing ; $624f
 	ret ; $6252
-Func_15_6253:
+MovePlayerToLessonCourtSpot:
 	ld a, [$c8f7] ; $6253
 	sub a, $0a ; $6256
 	jr nc, Label_15_6265 ; $6258
@@ -3325,7 +3325,7 @@ Label_15_62ea:
 	ld [hl+], a ; $62fa
 	ld [hl], d ; $62fb
 Label_15_62fc:
-	call Func_15_5d74 ; $62fc
+	call NetChallengerResultScene ; $62fc
 	ret ; $62ff
 Label_15_6300:
 	ld hl, wWaterSpriteMinigameFlag ; $6300
@@ -3348,7 +3348,7 @@ Label_15_6300:
 	ld a, e ; $6321
 	ld [hl+], a ; $6322
 	ld [hl], d ; $6323
-	call Func_15_5d74 ; $6324
+	call NetChallengerResultScene ; $6324
 	ret ; $6327
 Label_15_6328:
 	ld hl, wWaterSpriteMinigameFlag ; $6328
@@ -3371,7 +3371,7 @@ Label_15_6328:
 	ld a, e ; $6349
 	ld [hl+], a ; $634a
 	ld [hl], d ; $634b
-	call Func_15_5d74 ; $634c
+	call NetChallengerResultScene ; $634c
 	ret ; $634f
 Label_15_6350:
 	ld hl, wWaterSpriteMinigameFlag ; $6350
@@ -3409,7 +3409,7 @@ Label_15_637b:
 	ld [hl+], a ; $638b
 	ld [hl], d ; $638c
 Label_15_638d:
-	call Func_15_5df3 ; $638d
+	call StrokeChallengerResultScene ; $638d
 	ret ; $6390
 Label_15_6391:
 	ld hl, wWaterSpriteMinigameFlag ; $6391
@@ -3432,7 +3432,7 @@ Label_15_6391:
 	ld a, e ; $63b2
 	ld [hl+], a ; $63b3
 	ld [hl], d ; $63b4
-	call Func_15_5df3 ; $63b5
+	call StrokeChallengerResultScene ; $63b5
 	ret ; $63b8
 Label_15_63b9:
 	ld hl, wWaterSpriteMinigameFlag ; $63b9
@@ -3455,7 +3455,7 @@ Label_15_63b9:
 	ld a, e ; $63da
 	ld [hl+], a ; $63db
 	ld [hl], d ; $63dc
-	call Func_15_5df3 ; $63dd
+	call StrokeChallengerResultScene ; $63dd
 	ret ; $63e0
 	ld a, $06 ; $63e1
 	ld b, a ; $63e3
@@ -3530,7 +3530,7 @@ Label_15_63b9:
 	farcall FarPtr_ScriptWaitActorIdle ; $647f
 	ld a, $06 ; $6482
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6484
-	call Func_15_668f ; $6487
+	call WalkToServeChallengeCourtCutscene ; $6487
 	ld a, $0f ; $648a
 	ld [wStoryModeCurrentLocation], a ; $648c
 	ld a, $0a ; $648f
@@ -3539,7 +3539,7 @@ Label_15_63b9:
 	ld [$c294], a ; $6496
 	ld [$c2a1], a ; $6499
 	ld a, $00 ; $649c
-	farcall FarPtr_0b_00 ; $649e
+	farcall FarPtr_RunTrainingDrillByID ; $649e
 	ret ; $64a1
 Label_15_64a2:
 	ld a, $06 ; $64a2
@@ -3631,7 +3631,7 @@ Label_15_64a2:
 	farcall FarPtr_ScriptWaitActorIdle ; $6563
 	ld a, $06 ; $6566
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6568
-	call Func_15_668f ; $656b
+	call WalkToServeChallengeCourtCutscene ; $656b
 	ld a, $0f ; $656e
 	ld [wStoryModeCurrentLocation], a ; $6570
 	ld a, $0a ; $6573
@@ -3640,7 +3640,7 @@ Label_15_64a2:
 	ld [$c294], a ; $657a
 	ld [$c2a1], a ; $657d
 	ld a, $01 ; $6580
-	farcall FarPtr_0b_00 ; $6582
+	farcall FarPtr_RunTrainingDrillByID ; $6582
 	ret ; $6585
 	ld a, $06 ; $6586
 	ld b, a ; $6588
@@ -3715,7 +3715,7 @@ Label_15_64a2:
 	farcall FarPtr_ScriptWaitActorIdle ; $6624
 	ld a, $06 ; $6627
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6629
-	call Func_15_668f ; $662c
+	call WalkToServeChallengeCourtCutscene ; $662c
 	ld a, $0f ; $662f
 	ld [wStoryModeCurrentLocation], a ; $6631
 	ld a, $0a ; $6634
@@ -3724,9 +3724,9 @@ Label_15_64a2:
 	ld [$c294], a ; $663b
 	ld [$c2a1], a ; $663e
 	ld a, $02 ; $6641
-	farcall FarPtr_0b_00 ; $6643
+	farcall FarPtr_RunTrainingDrillByID ; $6643
 	ret ; $6646
-Func_15_6647:
+PlayerPartnerGestureCutscene:
 	test_flag $05, 7 ; $6647
 	jr z, Label_15_667b ; $664a
 	ld a, $02 ; $664c
@@ -3762,7 +3762,7 @@ Label_15_667b:
 	farcall FarPtr_WaitScriptFrames ; $668a
 	pop af ; $668d
 	ret ; $668e
-Func_15_668f:
+WalkToServeChallengeCourtCutscene:
 	ld a, $02 ; $668f
 	farcall FarPtr_0a_1c ; $6691
 	xor a, a ; $6694
@@ -3786,14 +3786,14 @@ Func_15_668f:
 	farcall FarPtr_0a_1a ; $66bc
 	ld a, $00 ; $66bf
 	farcall FarPtr_WaitActorScriptDone ; $66c1
-	call Func_15_6647 ; $66c4
+	call PlayerPartnerGestureCutscene ; $66c4
 	ret ; $66c7
 	INCBIN "data/bank_015/d_66c8.bin" ; $66c8, 1222 bytes
 Label_15_6b8e:
 	ld a, $0c ; $6b8e
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6b90
 	ret ; $6b93
-Func_15_6b94:
+StrokeMatchChallengeScene:
 	ld a, $0c ; $6b94
 	ld b, a ; $6b96
 	ld a, $02 ; $6b97
@@ -3863,11 +3863,11 @@ Func_15_6b94:
 	farcall FarPtr_ScriptWaitActorIdle ; $6c2b
 	ld a, $0c ; $6c2e
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6c30
-	call Func_15_6f51 ; $6c33
+	call WalkToStrokeChallengeCourtCutscene ; $6c33
 	ld a, $0c ; $6c36
-	farcall FarPtr_0b_00 ; $6c38
+	farcall FarPtr_RunTrainingDrillByID ; $6c38
 	ret ; $6c3b
-Func_15_6c3c:
+LobMatchChallengeScene:
 	ld a, $0c ; $6c3c
 	ld b, a ; $6c3e
 	ld a, $02 ; $6c3f
@@ -3937,11 +3937,11 @@ Func_15_6c3c:
 	farcall FarPtr_ScriptWaitActorIdle ; $6cd3
 	ld a, $0c ; $6cd6
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6cd8
-	call Func_15_6f51 ; $6cdb
+	call WalkToStrokeChallengeCourtCutscene ; $6cdb
 	ld a, $0d ; $6cde
-	farcall FarPtr_0b_00 ; $6ce0
+	farcall FarPtr_RunTrainingDrillByID ; $6ce0
 	ret ; $6ce3
-Func_15_6ce4:
+ReturnMatchChallengeScene:
 	ld a, $0c ; $6ce4
 	ld b, a ; $6ce6
 	ld a, $02 ; $6ce7
@@ -4025,15 +4025,15 @@ Func_15_6ce4:
 	farcall FarPtr_ScriptWaitActorIdle ; $6d9d
 	ld a, $0c ; $6da0
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6da2
-	call Func_15_6f51 ; $6da5
+	call WalkToStrokeChallengeCourtCutscene ; $6da5
 	ld a, $0e ; $6da8
-	farcall FarPtr_0b_00 ; $6daa
+	farcall FarPtr_RunTrainingDrillByID ; $6daa
 	ret ; $6dad
 Label_15_6dae:
 	ld a, $0d ; $6dae
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6db0
 	ret ; $6db3
-Func_15_6db4:
+ReturnCoachReturnLessonScene:
 	ld hl, $1cc4 ; $6db4
 	farcall FarPtr_InitDialogueTextCursor ; $6db7
 	test_flag $0a, 3 ; $6dba
@@ -4070,7 +4070,7 @@ Label_15_6dc2:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6dff
 	ld a, $0d ; $6e02
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6e04
-	call Func_15_7d14 ; $6e07
+	call MovePartyToReturnCoachSpot ; $6e07
 	ld a, $0d ; $6e0a
 	ld b, $00 ; $6e0c
 	farcall FarPtr_SetActorFacing ; $6e0e
@@ -4097,7 +4097,7 @@ Label_15_6dc2:
 	call WaitFadeEnd ; $6e44
 	farcall FarPtr_17_0a ; $6e47
 	ret ; $6e4a
-Func_15_6e4b:
+ReturnCoachLobLessonScene:
 	ld a, $0d ; $6e4b
 	ld b, a ; $6e4d
 	ld a, $02 ; $6e4e
@@ -4128,7 +4128,7 @@ Func_15_6e4b:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6e88
 	ld a, $0d ; $6e8b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6e8d
-	call Func_15_7d14 ; $6e90
+	call MovePartyToReturnCoachSpot ; $6e90
 	ld a, $0d ; $6e93
 	ld b, $00 ; $6e95
 	farcall FarPtr_SetActorFacing ; $6e97
@@ -4153,7 +4153,7 @@ Func_15_6e4b:
 	call WaitFadeEnd ; $6ec7
 	farcall FarPtr_17_0a ; $6eca
 	ret ; $6ecd
-Func_15_6ece:
+ReturnCoachPassingShotLessonScene:
 	ld a, $0d ; $6ece
 	ld b, a ; $6ed0
 	ld a, $02 ; $6ed1
@@ -4184,7 +4184,7 @@ Func_15_6ece:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6f0b
 	ld a, $0d ; $6f0e
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6f10
-	call Func_15_7d14 ; $6f13
+	call MovePartyToReturnCoachSpot ; $6f13
 	ld a, $0d ; $6f16
 	ld b, $00 ; $6f18
 	farcall FarPtr_SetActorFacing ; $6f1a
@@ -4209,7 +4209,7 @@ Func_15_6ece:
 	call WaitFadeEnd ; $6f4a
 	farcall FarPtr_17_0a ; $6f4d
 	ret ; $6f50
-Func_15_6f51:
+WalkToStrokeChallengeCourtCutscene:
 	ld a, $02 ; $6f51
 	farcall FarPtr_0a_1c ; $6f53
 	xor a, a ; $6f56
@@ -4233,7 +4233,7 @@ Func_15_6f51:
 	farcall FarPtr_0a_1a ; $6f7e
 	ld a, $00 ; $6f81
 	farcall FarPtr_WaitActorScriptDone ; $6f83
-	call Func_15_6647 ; $6f86
+	call PlayerPartnerGestureCutscene ; $6f86
 	ld a, $0f ; $6f89
 	ld [wStoryModeCurrentLocation], a ; $6f8b
 	ld a, $0a ; $6f8e
@@ -4243,7 +4243,7 @@ Func_15_6f51:
 	ld [$c2a1], a ; $6f98
 	ret ; $6f9b
 	INCBIN "data/bank_015/d_6f9c.bin" ; $6f9c, 51 bytes
-Func_15_6fcf:
+NetCoachVolleyLessonScene:
 	ld a, $12 ; $6fcf
 	ld b, a ; $6fd1
 	ld a, $02 ; $6fd2
@@ -4281,7 +4281,7 @@ Label_15_6fea:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $7017
 	ld a, $12 ; $701a
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $701c
-	call Func_15_7cbb ; $701f
+	call MovePartyToNetCoachSpot ; $701f
 	ld a, $12 ; $7022
 	ld b, $80 ; $7024
 	farcall FarPtr_SetActorFacing ; $7026
@@ -4314,7 +4314,7 @@ Label_15_7068:
 	ld a, $12 ; $7068
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $706a
 	ret ; $706d
-Func_15_706e:
+NetCoachSmashLessonScene:
 	ld a, $12 ; $706e
 	ld b, a ; $7070
 	ld a, $02 ; $7071
@@ -4356,7 +4356,7 @@ Func_15_706e:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $70c1
 	ld a, $12 ; $70c4
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $70c6
-	call Func_15_7cbb ; $70c9
+	call MovePartyToNetCoachSpot ; $70c9
 	ld a, $12 ; $70cc
 	ld b, $80 ; $70ce
 	farcall FarPtr_SetActorFacing ; $70d0
@@ -4390,7 +4390,7 @@ Func_15_706e:
 	call WaitFadeEnd ; $7116
 	farcall FarPtr_17_0a ; $7119
 	ret ; $711c
-Func_15_711d:
+NetCoachDropShotLessonScene:
 	ld a, $12 ; $711d
 	ld b, a ; $711f
 	ld a, $02 ; $7120
@@ -4432,7 +4432,7 @@ Func_15_711d:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $7173
 	ld a, $12 ; $7176
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7178
-	call Func_15_7cbb ; $717b
+	call MovePartyToNetCoachSpot ; $717b
 	ld a, $12 ; $717e
 	ld b, $80 ; $7180
 	farcall FarPtr_SetActorFacing ; $7182
@@ -4459,10 +4459,10 @@ Func_15_711d:
 	call WaitFadeEnd ; $71b7
 	farcall FarPtr_17_0a ; $71ba
 	ret ; $71bd
-Func_15_71be:
+HideServeChallengerActor:
 	test_flag $17, 2 ; $71be
 	jr nz, Label_15_71c8 ; $71c1
-	call Func_15_71d4 ; $71c3
+	call TestServeChallengerGameFlag ; $71c3
 	jr z, Label_15_71d3 ; $71c6
 Label_15_71c8:
 	ld a, $06 ; $71c8
@@ -4471,7 +4471,7 @@ Label_15_71c8:
 	farcall FarPtr_ScriptSetActorPosition ; $71d0
 Label_15_71d3:
 	ret ; $71d3
-Func_15_71d4:
+TestServeChallengerGameFlag:
 	ld a, [$c2b0] ; $71d4
 	add a, a ; $71d7
 	add a, $f8 ; $71d8
@@ -4504,10 +4504,10 @@ Func_15_71d4:
 	dw $00c2 ; record 3
 	dw $00c2 ; record 4
 	dw $00c2 ; record 5
-Func_15_7204:
+HideNetChallengerActor:
 	test_flag $17, 3 ; $7204
 	jr nz, Label_15_720e ; $7207
-	call Func_15_721a ; $7209
+	call TestNetChallengerGameFlag ; $7209
 	jr z, Label_15_7219 ; $720c
 Label_15_720e:
 	ld a, $11 ; $720e
@@ -4516,7 +4516,7 @@ Label_15_720e:
 	farcall FarPtr_ScriptSetActorPosition ; $7216
 Label_15_7219:
 	ret ; $7219
-Func_15_721a:
+TestNetChallengerGameFlag:
 	ld a, [$c2b0] ; $721a
 	add a, a ; $721d
 	add a, $3e ; $721e
@@ -4549,10 +4549,10 @@ Func_15_721a:
 	dw $00c8 ; record 3
 	dw $00c8 ; record 4
 	dw $00c8 ; record 5
-Func_15_724a:
+HideStrokeChallengerActor:
 	test_flag $17, 4 ; $724a
 	jr nz, Label_15_7254 ; $724d
-	call Func_15_7260 ; $724f
+	call TestStrokeChallengerGameFlag ; $724f
 	jr z, Label_15_725f ; $7252
 Label_15_7254:
 	ld a, $0c ; $7254
@@ -4561,7 +4561,7 @@ Label_15_7254:
 	farcall FarPtr_ScriptSetActorPosition ; $725c
 Label_15_725f:
 	ret ; $725f
-Func_15_7260:
+TestStrokeChallengerGameFlag:
 	ld a, [$c2b0] ; $7260
 	add a, a ; $7263
 	add a, $84 ; $7264
@@ -4627,7 +4627,7 @@ Label_15_72b4:
 	dw Label_15_7458 ; $72c3 jumptable
 	dw Label_15_73f0 ; $72c5 jumptable
 Label_15_72c7:
-	call Func_15_74e1 ; $72c7
+	call InitServeCoachScene ; $72c7
 	ld hl, $1c1c ; $72ca
 	farcall FarPtr_InitDialogueTextCursor ; $72cd
 	ld a, $07 ; $72d0
@@ -4675,7 +4675,7 @@ Label_15_7326:
 	set_flag $17, 5 ; $7332
 	ret ; $7335
 Label_15_7336:
-	call Func_15_74e1 ; $7336
+	call InitServeCoachScene ; $7336
 	ld hl, $1c2a ; $7339
 	farcall FarPtr_InitDialogueTextCursor ; $733c
 	test_flag $0a, 7 ; $733f
@@ -4720,7 +4720,7 @@ Label_15_734a:
 	set_flag $17, 5 ; $7398
 	ret ; $739b
 Label_15_739c:
-	call Func_15_74e1 ; $739c
+	call InitServeCoachScene ; $739c
 	ld hl, $1c39 ; $739f
 	farcall FarPtr_InitDialogueTextCursor ; $73a2
 	ld a, $07 ; $73a5
@@ -4756,60 +4756,60 @@ Label_15_739c:
 	set_flag $17, 5 ; $73ec
 	ret ; $73ef
 Label_15_73f0:
-	call Func_15_74e1 ; $73f0
+	call InitServeCoachScene ; $73f0
 	ld hl, $1c3e ; $73f3
 	farcall FarPtr_InitDialogueTextCursor ; $73f6
-	call Func_15_7465 ; $73f9
+	call ServeCoachChainedRetryPrompt ; $73f9
 	ret ; $73fc
 Label_15_73fd:
-	call Func_15_74e1 ; $73fd
+	call InitServeCoachScene ; $73fd
 	ld hl, $1c43 ; $7400
 	farcall FarPtr_InitDialogueTextCursor ; $7403
-	call Func_15_749a ; $7406
+	call ServeCoachTwoStageRetryPrompt ; $7406
 	ret ; $7409
 Label_15_740a:
-	call Func_15_74e1 ; $740a
+	call InitServeCoachScene ; $740a
 	ld hl, $1c48 ; $740d
 	farcall FarPtr_InitDialogueTextCursor ; $7410
-	call Func_15_747e ; $7413
+	call ServeCoachRetryPrompt ; $7413
 	ret ; $7416
 Label_15_7417:
-	call Func_15_74e1 ; $7417
+	call InitServeCoachScene ; $7417
 	ld hl, $1c4b ; $741a
 	farcall FarPtr_InitDialogueTextCursor ; $741d
-	call Func_15_747e ; $7420
+	call ServeCoachRetryPrompt ; $7420
 	ret ; $7423
 Label_15_7424:
-	call Func_15_74e1 ; $7424
+	call InitServeCoachScene ; $7424
 	ld hl, $1c4e ; $7427
 	farcall FarPtr_InitDialogueTextCursor ; $742a
-	call Func_15_747e ; $742d
+	call ServeCoachRetryPrompt ; $742d
 	ret ; $7430
 Label_15_7431:
-	call Func_15_74e1 ; $7431
+	call InitServeCoachScene ; $7431
 	ld hl, $1c51 ; $7434
 	farcall FarPtr_InitDialogueTextCursor ; $7437
-	call Func_15_747e ; $743a
+	call ServeCoachRetryPrompt ; $743a
 	ret ; $743d
 Label_15_743e:
-	call Func_15_74e1 ; $743e
+	call InitServeCoachScene ; $743e
 	ld hl, $1c54 ; $7441
 	farcall FarPtr_InitDialogueTextCursor ; $7444
-	call Func_15_747e ; $7447
+	call ServeCoachRetryPrompt ; $7447
 	ret ; $744a
 Label_15_744b:
-	call Func_15_74e1 ; $744b
+	call InitServeCoachScene ; $744b
 	ld hl, $1c57 ; $744e
 	farcall FarPtr_InitDialogueTextCursor ; $7451
-	call Func_15_747e ; $7454
+	call ServeCoachRetryPrompt ; $7454
 	ret ; $7457
 Label_15_7458:
-	call Func_15_74e1 ; $7458
+	call InitServeCoachScene ; $7458
 	ld hl, $1c5a ; $745b
 	farcall FarPtr_InitDialogueTextCursor ; $745e
-	call Func_15_747e ; $7461
+	call ServeCoachRetryPrompt ; $7461
 	ret ; $7464
-Func_15_7465:
+ServeCoachChainedRetryPrompt:
 	ld a, $07 ; $7465
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $7467
 	farcall FarPtr_RunDialogueYesNoPrompt ; $746a
@@ -4821,7 +4821,7 @@ Func_15_7465:
 	and a, a ; $7477
 	jp nz, Label_15_752c ; $7478
 	farcall FarPtr_AdvanceDialogueTextCursor ; $747b
-Func_15_747e:
+ServeCoachRetryPrompt:
 	ld a, $07 ; $747e
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $7480
 	farcall FarPtr_RunDialogueYesNoPrompt ; $7483
@@ -4834,7 +4834,7 @@ Func_15_747e:
 	jp z, Label_15_74d2 ; $7491
 	farcall FarPtr_AdvanceDialogueTextCursor ; $7494
 	jp Label_15_752c ; $7497
-Func_15_749a:
+ServeCoachTwoStageRetryPrompt:
 	ld a, $07 ; $749a
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $749c
 	farcall FarPtr_RunDialogueYesNoPrompt ; $749f
@@ -4865,9 +4865,9 @@ Label_15_74d2:
 	farcall FarPtr_InitDialogueTextCursor ; $74d5
 	ld a, $07 ; $74d8
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $74da
-	call Func_15_7a96 ; $74dd
+	call ServeCoachWalkToCourtAndStartLesson ; $74dd
 	ret ; $74e0
-Func_15_74e1:
+InitServeCoachScene:
 	xor a, a ; $74e1
 	ld [$c2d5], a ; $74e2
 	ld bc, $00f0 ; $74e5
@@ -4945,7 +4945,7 @@ Label_15_7563:
 Label_15_757a:
 	ld hl, $1c7e ; $757a
 	farcall FarPtr_InitDialogueTextCursor ; $757d
-	call Func_15_7752 ; $7580
+	call InitNetCoachScene ; $7580
 	ld a, $12 ; $7583
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7585
 	ld a, $00 ; $7588
@@ -4984,7 +4984,7 @@ Label_15_759b:
 	set_flag $17, 6 ; $75d5
 	ret ; $75d8
 Label_15_75d9:
-	call Func_15_7752 ; $75d9
+	call InitNetCoachScene ; $75d9
 	ld hl, $1c97 ; $75dc
 	farcall FarPtr_InitDialogueTextCursor ; $75df
 	ld a, $12 ; $75e2
@@ -5025,7 +5025,7 @@ Label_15_7606:
 	set_flag $17, 6 ; $7634
 	ret ; $7637
 Label_15_7638:
-	call Func_15_7752 ; $7638
+	call InitNetCoachScene ; $7638
 	ld hl, $1cb7 ; $763b
 	farcall FarPtr_InitDialogueTextCursor ; $763e
 	ld a, $12 ; $7641
@@ -5061,81 +5061,81 @@ Label_15_7638:
 	set_flag $17, 6 ; $7688
 	ret ; $768b
 Label_15_768c:
-	call Func_15_7752 ; $768c
+	call InitNetCoachScene ; $768c
 	ld hl, $1c6b ; $768f
 	farcall FarPtr_InitDialogueTextCursor ; $7692
-	call Func_15_7728 ; $7695
+	call NetCoachResultRetryPrompt ; $7695
 	ret ; $7698
 Label_15_7699:
-	call Func_15_7752 ; $7699
+	call InitNetCoachScene ; $7699
 	ld hl, $1c6f ; $769c
 	farcall FarPtr_InitDialogueTextCursor ; $769f
-	call Func_15_7728 ; $76a2
+	call NetCoachResultRetryPrompt ; $76a2
 	ret ; $76a5
 Label_15_76a6:
-	call Func_15_7752 ; $76a6
+	call InitNetCoachScene ; $76a6
 	ld hl, $1c73 ; $76a9
 	farcall FarPtr_InitDialogueTextCursor ; $76ac
-	call Func_15_7728 ; $76af
+	call NetCoachResultRetryPrompt ; $76af
 	ret ; $76b2
 Label_15_76b3:
-	call Func_15_7752 ; $76b3
+	call InitNetCoachScene ; $76b3
 	ld hl, $1c77 ; $76b6
 	farcall FarPtr_InitDialogueTextCursor ; $76b9
-	call Func_15_7728 ; $76bc
+	call NetCoachResultRetryPrompt ; $76bc
 	ret ; $76bf
 Label_15_76c0:
-	call Func_15_7752 ; $76c0
+	call InitNetCoachScene ; $76c0
 	ld hl, $1c7b ; $76c3
 	farcall FarPtr_InitDialogueTextCursor ; $76c6
-	call Func_15_772d ; $76c9
+	call NetCoachRetryPrompt ; $76c9
 	ret ; $76cc
 Label_15_76cd:
-	call Func_15_7752 ; $76cd
+	call InitNetCoachScene ; $76cd
 	ld hl, $1c90 ; $76d0
 	farcall FarPtr_InitDialogueTextCursor ; $76d3
-	call Func_15_7728 ; $76d6
+	call NetCoachResultRetryPrompt ; $76d6
 	ret ; $76d9
 Label_15_76da:
-	call Func_15_7752 ; $76da
+	call InitNetCoachScene ; $76da
 	ld hl, $1c94 ; $76dd
 	farcall FarPtr_InitDialogueTextCursor ; $76e0
-	call Func_15_772d ; $76e3
+	call NetCoachRetryPrompt ; $76e3
 	ret ; $76e6
 Label_15_76e7:
-	call Func_15_7752 ; $76e7
+	call InitNetCoachScene ; $76e7
 	ld hl, $1cac ; $76ea
 	farcall FarPtr_InitDialogueTextCursor ; $76ed
-	call Func_15_7728 ; $76f0
+	call NetCoachResultRetryPrompt ; $76f0
 	ret ; $76f3
 Label_15_76f4:
-	call Func_15_7752 ; $76f4
+	call InitNetCoachScene ; $76f4
 	ld hl, $1cb0 ; $76f7
 	farcall FarPtr_InitDialogueTextCursor ; $76fa
-	call Func_15_7728 ; $76fd
+	call NetCoachResultRetryPrompt ; $76fd
 	ret ; $7700
 Label_15_7701:
-	call Func_15_7752 ; $7701
+	call InitNetCoachScene ; $7701
 	ld hl, $1cb4 ; $7704
 	farcall FarPtr_InitDialogueTextCursor ; $7707
-	call Func_15_772d ; $770a
+	call NetCoachRetryPrompt ; $770a
 	ret ; $770d
 Label_15_770e:
-	call Func_15_7752 ; $770e
+	call InitNetCoachScene ; $770e
 	ld hl, $1cbc ; $7711
 	farcall FarPtr_InitDialogueTextCursor ; $7714
-	call Func_15_7728 ; $7717
+	call NetCoachResultRetryPrompt ; $7717
 	ret ; $771a
 Label_15_771b:
-	call Func_15_7752 ; $771b
+	call InitNetCoachScene ; $771b
 	ld hl, $1cc0 ; $771e
 	farcall FarPtr_InitDialogueTextCursor ; $7721
-	call Func_15_7728 ; $7724
+	call NetCoachResultRetryPrompt ; $7724
 	ret ; $7727
-Func_15_7728:
+NetCoachResultRetryPrompt:
 	ld a, $12 ; $7728
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $772a
-Func_15_772d:
+NetCoachRetryPrompt:
 	ld a, $12 ; $772d
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $772f
 	farcall FarPtr_RunDialogueYesNoPrompt ; $7732
@@ -5151,9 +5151,9 @@ Func_15_772d:
 Label_15_7749:
 	ld a, $12 ; $7749
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $774b
-	call Func_15_7b30 ; $774e
+	call NetCoachWalkToCourtAndStartLesson ; $774e
 	ret ; $7751
-Func_15_7752:
+InitNetCoachScene:
 	xor a, a ; $7752
 	ld [$c2d5], a ; $7753
 	ld bc, $00f0 ; $7756
@@ -5225,7 +5225,7 @@ Label_15_77d0:
 	dw Label_15_7929 ; $77df jumptable
 	dw Label_15_78f5 ; $77e1 jumptable
 Label_15_77e3:
-	call Func_15_79cb ; $77e3
+	call InitReturnCoachScene ; $77e3
 	ld hl, $1cdd ; $77e6
 	farcall FarPtr_InitDialogueTextCursor ; $77e9
 	ld a, $0d ; $77ec
@@ -5271,7 +5271,7 @@ Label_15_783d:
 	set_flag $17, 7 ; $7849
 	ret ; $784c
 Label_15_784d:
-	call Func_15_79cb ; $784d
+	call InitReturnCoachScene ; $784d
 	ld hl, $1cf5 ; $7850
 	farcall FarPtr_InitDialogueTextCursor ; $7853
 	ld a, $0d ; $7856
@@ -5307,7 +5307,7 @@ Label_15_784d:
 	set_flag $17, 7 ; $789d
 	ret ; $78a0
 Label_15_78a1:
-	call Func_15_79cb ; $78a1
+	call InitReturnCoachScene ; $78a1
 	ld hl, $200f ; $78a4
 	farcall FarPtr_InitDialogueTextCursor ; $78a7
 	ld a, $0d ; $78aa
@@ -5343,87 +5343,87 @@ Label_15_78a1:
 	set_flag $17, 7 ; $78f1
 	ret ; $78f4
 Label_15_78f5:
-	call Func_15_79cb ; $78f5
+	call InitReturnCoachScene ; $78f5
 	ld hl, $1ccb ; $78f8
 	farcall FarPtr_InitDialogueTextCursor ; $78fb
-	call Func_15_799e ; $78fe
+	call ReturnCoachResultRetryPrompt ; $78fe
 	ret ; $7901
 Label_15_7902:
-	call Func_15_79cb ; $7902
+	call InitReturnCoachScene ; $7902
 	ld hl, $1ccf ; $7905
 	farcall FarPtr_InitDialogueTextCursor ; $7908
-	call Func_15_799e ; $790b
+	call ReturnCoachResultRetryPrompt ; $790b
 	ret ; $790e
 Label_15_790f:
-	call Func_15_79cb ; $790f
+	call InitReturnCoachScene ; $790f
 	ld hl, $1cd3 ; $7912
 	farcall FarPtr_InitDialogueTextCursor ; $7915
-	call Func_15_799e ; $7918
+	call ReturnCoachResultRetryPrompt ; $7918
 	ret ; $791b
 Label_15_791c:
-	call Func_15_79cb ; $791c
+	call InitReturnCoachScene ; $791c
 	ld hl, $1cd7 ; $791f
 	farcall FarPtr_InitDialogueTextCursor ; $7922
-	call Func_15_79a3 ; $7925
+	call ReturnCoachRetryPrompt ; $7925
 	ret ; $7928
 Label_15_7929:
-	call Func_15_79cb ; $7929
+	call InitReturnCoachScene ; $7929
 	ld hl, $1cda ; $792c
 	farcall FarPtr_InitDialogueTextCursor ; $792f
-	call Func_15_79a3 ; $7932
+	call ReturnCoachRetryPrompt ; $7932
 	ret ; $7935
 Label_15_7936:
-	call Func_15_79cb ; $7936
+	call InitReturnCoachScene ; $7936
 	ld hl, $1ce9 ; $7939
 	farcall FarPtr_InitDialogueTextCursor ; $793c
-	call Func_15_79a3 ; $793f
+	call ReturnCoachRetryPrompt ; $793f
 	ret ; $7942
 Label_15_7943:
-	call Func_15_79cb ; $7943
+	call InitReturnCoachScene ; $7943
 	ld hl, $1cec ; $7946
 	farcall FarPtr_InitDialogueTextCursor ; $7949
-	call Func_15_79a3 ; $794c
+	call ReturnCoachRetryPrompt ; $794c
 	ret ; $794f
 Label_15_7950:
-	call Func_15_79cb ; $7950
+	call InitReturnCoachScene ; $7950
 	ld hl, $1cef ; $7953
 	farcall FarPtr_InitDialogueTextCursor ; $7956
-	call Func_15_79a3 ; $7959
+	call ReturnCoachRetryPrompt ; $7959
 	ret ; $795c
 Label_15_795d:
-	call Func_15_79cb ; $795d
+	call InitReturnCoachScene ; $795d
 	ld hl, $1cf2 ; $7960
 	farcall FarPtr_InitDialogueTextCursor ; $7963
-	call Func_15_79a3 ; $7966
+	call ReturnCoachRetryPrompt ; $7966
 	ret ; $7969
 Label_15_796a:
-	call Func_15_79cb ; $796a
+	call InitReturnCoachScene ; $796a
 	ld hl, $1cff ; $796d
 	farcall FarPtr_InitDialogueTextCursor ; $7970
-	call Func_15_799e ; $7973
+	call ReturnCoachResultRetryPrompt ; $7973
 	ret ; $7976
 Label_15_7977:
-	call Func_15_79cb ; $7977
+	call InitReturnCoachScene ; $7977
 	ld hl, $2003 ; $797a
 	farcall FarPtr_InitDialogueTextCursor ; $797d
-	call Func_15_799e ; $7980
+	call ReturnCoachResultRetryPrompt ; $7980
 	ret ; $7983
 Label_15_7984:
-	call Func_15_79cb ; $7984
+	call InitReturnCoachScene ; $7984
 	ld hl, $2007 ; $7987
 	farcall FarPtr_InitDialogueTextCursor ; $798a
-	call Func_15_799e ; $798d
+	call ReturnCoachResultRetryPrompt ; $798d
 	ret ; $7990
 Label_15_7991:
-	call Func_15_79cb ; $7991
+	call InitReturnCoachScene ; $7991
 	ld hl, $200b ; $7994
 	farcall FarPtr_InitDialogueTextCursor ; $7997
-	call Func_15_799e ; $799a
+	call ReturnCoachResultRetryPrompt ; $799a
 	ret ; $799d
-Func_15_799e:
+ReturnCoachResultRetryPrompt:
 	ld a, $0d ; $799e
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $79a0
-Func_15_79a3:
+ReturnCoachRetryPrompt:
 	ld a, $0d ; $79a3
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $79a5
 	farcall FarPtr_RunDialogueYesNoPrompt ; $79a8
@@ -5439,10 +5439,10 @@ Label_15_79bc:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $79bc
 	ld a, $0d ; $79bf
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $79c1
-	call Func_15_7bc9 ; $79c4
+	call ReturnCoachWalkToCourtAndStartLesson ; $79c4
 	farcall FarPtr_0a_02 ; $79c7
 	ret ; $79ca
-Func_15_79cb:
+InitReturnCoachScene:
 	xor a, a ; $79cb
 	ld [$c2d5], a ; $79cc
 	ld bc, $00f0 ; $79cf
@@ -5481,7 +5481,7 @@ Label_15_7a16:
 	farcall FarPtr_SetActorFacing ; $7a1f
 	ret ; $7a22
 	INCBIN "data/bank_015/d_7a23.bin" ; $7a23, 34 bytes
-Func_15_7a45:
+PlaceSwingPracticeKidActor:
 	test_flag $05, 7 ; $7a45
 	jp nz, Label_15_7a66 ; $7a48
 	ld a, [wEquippedRacket] ; $7a4b
@@ -5496,31 +5496,31 @@ Func_15_7a45:
 	farcall FarPtr_ScriptSetActorPosition ; $7a63
 Label_15_7a66:
 	ret ; $7a66
-Func_15_7a67:
+StartPendingLessonScene:
 	ld a, [$c8f7] ; $7a67
 	cp a, $06 ; $7a6a
 	jr nc, Label_15_7a75 ; $7a6c
-	call Func_15_74e1 ; $7a6e
-	call Func_15_7a96 ; $7a71
+	call InitServeCoachScene ; $7a6e
+	call ServeCoachWalkToCourtAndStartLesson ; $7a71
 	ret ; $7a74
 Label_15_7a75:
 	cp a, $0c ; $7a75
 	jr nc, Label_15_7a8b ; $7a77
-	call Func_15_7752 ; $7a79
+	call InitNetCoachScene ; $7a79
 	ld hl, $1c6a ; $7a7c
 	farcall FarPtr_InitDialogueTextCursor ; $7a7f
 	ld a, $12 ; $7a82
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7a84
-	call Func_15_7b30 ; $7a87
+	call NetCoachWalkToCourtAndStartLesson ; $7a87
 	ret ; $7a8a
 Label_15_7a8b:
 	cp a, $12 ; $7a8b
 	jr nc, Label_15_7a95 ; $7a8d
-	call Func_15_79cb ; $7a8f
-	call Func_15_7bc9 ; $7a92
+	call InitReturnCoachScene ; $7a8f
+	call ReturnCoachWalkToCourtAndStartLesson ; $7a92
 Label_15_7a95:
 	ret ; $7a95
-Func_15_7a96:
+ServeCoachWalkToCourtAndStartLesson:
 	ld a, $02 ; $7a96
 	farcall FarPtr_0a_1c ; $7a98
 	ld bc, $0020 ; $7a9b
@@ -5557,7 +5557,7 @@ Func_15_7a96:
 	ld a, $05 ; $7ae1
 	farcall FarPtr_WaitScriptFrames ; $7ae3
 	pop af ; $7ae6
-	call Func_15_6647 ; $7ae7
+	call PlayerPartnerGestureCutscene ; $7ae7
 	ld a, $0f ; $7aea
 	ld [wStoryModeCurrentLocation], a ; $7aec
 	ld a, $0a ; $7aef
@@ -5566,10 +5566,10 @@ Func_15_7a96:
 	ld [$c294], a ; $7af6
 	ld [$c2a1], a ; $7af9
 	ld a, [$c8f7] ; $7afc
-	farcall FarPtr_0b_00 ; $7aff
+	farcall FarPtr_RunTrainingDrillByID ; $7aff
 	ret ; $7b02
 	INCBIN "data/bank_015/d_7b03.bin" ; $7b03, 45 bytes
-Func_15_7b30:
+NetCoachWalkToCourtAndStartLesson:
 	ld bc, $0020 ; $7b30
 	farcall FarPtr_0a_38 ; $7b33
 	ld a, $02 ; $7b36
@@ -5602,7 +5602,7 @@ Func_15_7b30:
 	ld a, $05 ; $7b74
 	farcall FarPtr_WaitScriptFrames ; $7b76
 	pop af ; $7b79
-	call Func_15_6647 ; $7b7a
+	call PlayerPartnerGestureCutscene ; $7b7a
 	ld a, $0f ; $7b7d
 	ld [wStoryModeCurrentLocation], a ; $7b7f
 	ld a, $0a ; $7b82
@@ -5611,10 +5611,10 @@ Func_15_7b30:
 	ld [$c294], a ; $7b89
 	ld [$c2a1], a ; $7b8c
 	ld a, [$c8f7] ; $7b8f
-	farcall FarPtr_0b_00 ; $7b92
+	farcall FarPtr_RunTrainingDrillByID ; $7b92
 	ret ; $7b95
 	INCBIN "data/bank_015/d_7b96.bin" ; $7b96, 51 bytes
-Func_15_7bc9:
+ReturnCoachWalkToCourtAndStartLesson:
 	ld a, $02 ; $7bc9
 	farcall FarPtr_0a_1c ; $7bcb
 	ld bc, $0020 ; $7bce
@@ -5647,7 +5647,7 @@ Func_15_7bc9:
 	ld a, $05 ; $7c0d
 	farcall FarPtr_WaitScriptFrames ; $7c0f
 	pop af ; $7c12
-	call Func_15_6647 ; $7c13
+	call PlayerPartnerGestureCutscene ; $7c13
 	ld a, $0f ; $7c16
 	ld [wStoryModeCurrentLocation], a ; $7c18
 	ld a, $0a ; $7c1b
@@ -5656,10 +5656,10 @@ Func_15_7bc9:
 	ld [$c294], a ; $7c22
 	ld [$c2a1], a ; $7c25
 	ld a, [$c8f7] ; $7c28
-	farcall FarPtr_0b_00 ; $7c2b
+	farcall FarPtr_RunTrainingDrillByID ; $7c2b
 	ret ; $7c2e
 	INCBIN "data/bank_015/d_7c2f.bin" ; $7c2f, 140 bytes
-Func_15_7cbb:
+MovePartyToNetCoachSpot:
 	ld a, $00 ; $7cbb
 	ld bc, $0010 ; $7cbd
 	farcall FarPtr_0a_18 ; $7cc0
@@ -5696,7 +5696,7 @@ Label_15_7cf0:
 	ld bc, $0020 ; $7d0d
 	farcall FarPtr_0a_18 ; $7d10
 	ret ; $7d13
-Func_15_7d14:
+MovePartyToReturnCoachSpot:
 	ld a, $00 ; $7d14
 	ld bc, $0010 ; $7d16
 	farcall FarPtr_0a_18 ; $7d19
