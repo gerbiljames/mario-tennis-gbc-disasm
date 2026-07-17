@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `79ffb84`); the whole history rebuilds
+Everything below is **committed** (HEAD `28e5a16`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -988,6 +988,24 @@ Named symbols after round 4: 2,294 (labels.json 2,209 + ram_map 225).
 
 Named symbols after round 5: 2,736 (labels.json 2,652 + ram_map 225 - overlap).
 
+- **Bank $08 (agent): the match engine decoded.** Ball physics
+  (SetBallVelocityPolar, ApplyBallAirDrag — drag proportional to speed,
+  ApplyBallSpin — Magnus curve with 3/256-per-frame spin decay,
+  ApplyCourtBounceDamping from per-court factors, BounceBallOffCourtFences,
+  the 24/32-bit fixed-point integrator suite AddVel24ToPos32 etc.), the
+  character state machine (serve toss/swing-window/strike phases, rally
+  ready/windup/contact, changeover walks, point-end reactions), input
+  handling (the two-press topspin/slice buffer $df16/$df17 with 5-frame
+  window, charge flash after 20 held frames), movement (per-stat
+  accelerate/brake/clamp per axis from the $df60+ stat block), and the
+  complete CPU AI: singles and doubles state machines with strategy-driven
+  positioning (baseliner vs net-rusher home spots), ball-intercept
+  prediction (PredictBallXAtDepth = X + tan(heading) x depth-delta), skill-
+  gated serve timing, shot-button personality tables via char groups, aim-
+  away-from-opponent logic, and doubles poaching (AiNetPlayerPoachCheck).
+
+Named symbols after round 5 complete: 2,898.
+
 Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
 integrators, the CPU-AI behaviour state machine — need runtime traces), bank
 $3b's screen-specific pause-menu builders, bank $0a story-overworld engine,
@@ -997,5 +1015,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `79ffb84`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `28e5a16`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
