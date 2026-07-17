@@ -66,6 +66,7 @@ logical block backed up in SRAM bank 1 (written with tag `$c600`).
 | 6-10 | `$b700+` | `$30/$20/$10` | small records (options/high-score style) |
 | 11 | `$b800` | `$200` | 512-byte record |
 | 12-26 | `$ba00+` | `$20/$80` | per-minigame records |
+| 54/55 (`$36`/`$37`) | — | `$300` | exhibition-session block (slot `$c36c`=3) + its backup (tag `$c600`), read/written by `ReadExhibitionSaveBlock`/`WriteExhibitionSaveBlock` around the save-and-quit resume flow |
 
 `SaveStorySlot` writes block `2N` and its backup `2N+27` (slot from
 `$c36c`, 0-2); `InvalidateStorySlot` clears blocks `2N` and `2N+1`.
