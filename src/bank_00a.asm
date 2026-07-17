@@ -1639,10 +1639,10 @@ RunStoryMatch:
 	ld a, $00 ; $4979
 	ld [wStoryModeCurrentLocation], a ; $497b
 	ld a, $01 ; $497e
-	ld [$c295], a ; $4980
+	ld [wStoryModeEntryPoint], a ; $4980
 	ld a, $ff ; $4983
 	ld [$c294], a ; $4985
-	ld [$c2a1], a ; $4988
+	ld [wStoryModeExitLocationRequest], a ; $4988
 	ret ; $498b
 Label_0a_498c:
 	xor a, a ; $498c
@@ -2232,7 +2232,7 @@ Label_0a_4faf:
 	call CallHLInBankA ; $4fc1
 Label_0a_4fc4:
 	call RunLocationInitScript ; $4fc4
-	ld hl, $c2a1 ; $4fc7
+	ld hl, wStoryModeExitLocationRequest ; $4fc7
 	ld a, [hl] ; $4fca
 	and a, a ; $4fcb
 	jr z, Label_0a_4fd6 ; $4fcc
@@ -2243,7 +2243,7 @@ Label_0a_4fd6:
 	ld c, $08 ; $4fd6
 	call BeginFadeIn ; $4fd8
 	call WaitFadeEnd ; $4fdb
-	ld a, [$c2d5] ; $4fde
+	ld a, [wStoryModeShowLocationName] ; $4fde
 	and a, a ; $4fe1
 	jr z, Label_0a_4ff1 ; $4fe2
 	ld a, [$c2d6] ; $4fe4
@@ -2275,7 +2275,7 @@ Label_0a_4ff5:
 	ld [hl], $00 ; $501d
 	call RunQueuedTriggerScript ; $501f
 Label_0a_5022:
-	ld hl, $c2a1 ; $5022
+	ld hl, wStoryModeExitLocationRequest ; $5022
 	ld a, [hl] ; $5025
 	and a, a ; $5026
 	jr z, Label_0a_5031 ; $5027
@@ -2453,9 +2453,9 @@ Label_0a_5120:
 	ld [$c2d6], a ; $514d
 	ld a, h ; $5150
 	ld [$c2d7], a ; $5151
-	ld a, [$c295] ; $5154
+	ld a, [wStoryModeEntryPoint] ; $5154
 	sub a, $ff ; $5157
-	ld [$c2d5], a ; $5159
+	ld [wStoryModeShowLocationName], a ; $5159
 	pop hl ; $515c
 	pop de ; $515d
 	pop bc ; $515e
@@ -2479,10 +2479,10 @@ LoadStoryEntryPointRecord:
 	push bc ; $5170
 	push de ; $5171
 	push hl ; $5172
-	ld a, [$c295] ; $5173
+	ld a, [wStoryModeEntryPoint] ; $5173
 	cp a, $ff ; $5176
 	jr z, Label_0a_51ca ; $5178
-	ld hl, $c295 ; $517a
+	ld hl, wStoryModeEntryPoint ; $517a
 	ld d, [hl] ; $517d
 	ld hl, $c286 ; $517e
 	ld a, [hl+] ; $5181
@@ -2515,7 +2515,7 @@ Label_0a_51a0:
 	ld a, [$c2c1] ; $51ac
 	ld [$c29a], a ; $51af
 	ld hl, $c2c2 ; $51b2
-	ld de, $c296 ; $51b5
+	ld de, wStoryModeSpawnPosition ; $51b5
 	ld bc, $0004 ; $51b8
 	call CopyMemoryBC ; $51bb
 	ld a, [$c2c6] ; $51be
@@ -2673,24 +2673,24 @@ RestoreStoryReturnPoint:
 	ld a, [$c8a9] ; $52b9
 	ld [wStoryModeCurrentLocation], a ; $52bc
 	ld a, [$c8aa] ; $52bf
-	ld [$c295], a ; $52c2
+	ld [wStoryModeEntryPoint], a ; $52c2
 	ld a, $ff ; $52c5
 	ld [$c294], a ; $52c7
-	ld [$c2a1], a ; $52ca
+	ld [wStoryModeExitLocationRequest], a ; $52ca
 	jr Label_0a_52f0 ; $52cd
 Label_0a_52cf:
 	ld hl, $c8ab ; $52cf
-	ld de, $c296 ; $52d2
+	ld de, wStoryModeSpawnPosition ; $52d2
 	ld bc, $0005 ; $52d5
 	call CopyMemoryBC ; $52d8
 	ld a, [$c8a9] ; $52db
 	ld [wStoryModeCurrentLocation], a ; $52de
 	ld a, $ff ; $52e1
-	ld [$c295], a ; $52e3
+	ld [wStoryModeEntryPoint], a ; $52e3
 	ld a, $ff ; $52e6
 	ld [$c294], a ; $52e8
 	ld a, $ff ; $52eb
-	ld [$c2a1], a ; $52ed
+	ld [wStoryModeExitLocationRequest], a ; $52ed
 Label_0a_52f0:
 	pop hl ; $52f0
 	pop de ; $52f1
@@ -2896,7 +2896,7 @@ InitLocationActors:
 	ld a, [hl+] ; $547c
 	ld d, [hl] ; $547d
 	ld e, a ; $547e
-	ld hl, $c296 ; $547f
+	ld hl, wStoryModeSpawnPosition ; $547f
 	ld a, [hl+] ; $5482
 	ld h, [hl] ; $5483
 	ld l, a ; $5484
@@ -3171,11 +3171,11 @@ RunLocationExit:
 	ld a, [$c2c6] ; $5637
 	ld [wStoryModeCurrentLocation], a ; $563a
 	ld a, [$c2c7] ; $563d
-	ld [$c295], a ; $5640
+	ld [wStoryModeEntryPoint], a ; $5640
 Label_0a_5643:
 	xor a, a ; $5643
 	ld a, a ; $5644
-	ldh [$ff97], a ; $5645
+	ldh [hSramBank], a ; $5645
 	ld [$4000], a ; $5647
 	pop hl ; $564a
 	pop de ; $564b
@@ -3342,7 +3342,7 @@ LoadStorySceneGraphics:
 	push bc ; $585e
 	push de ; $585f
 	push hl ; $5860
-	ld [$c32e], a ; $5861
+	ld [wCurrentScene], a ; $5861
 	ld h, $00 ; $5864
 	ld l, a ; $5866
 	add hl, hl ; $5867
@@ -3439,7 +3439,7 @@ LoadStorySceneGraphics:
 	ld [$c32b], a ; $591e
 	ld a, [hl+] ; $5921
 	ld [$c32c], a ; $5922
-	ld a, [$c32e] ; $5925
+	ld a, [wCurrentScene] ; $5925
 	call InitSceneTileAnimations ; $5928
 	pop hl ; $592b
 	pop de ; $592c
@@ -3642,7 +3642,7 @@ Label_0a_5c7b:
 	and a, $3f ; $5c7f
 	jr nz, Label_0a_5c8b ; $5c81
 	push de ; $5c83
-	ld de, $ffc0 ; $5c84
+	ld de, hLinkRxByte ; $5c84
 	add hl, de ; $5c87
 	pop de ; $5c88
 	jr Label_0a_5c90 ; $5c89
@@ -3701,7 +3701,7 @@ Label_0a_5cc9:
 	and a, $3f ; $5ccd
 	jr nz, Label_0a_5cd9 ; $5ccf
 	push de ; $5cd1
-	ld de, $ffc0 ; $5cd2
+	ld de, hLinkRxByte ; $5cd2
 	add hl, de ; $5cd5
 	pop de ; $5cd6
 	jr Label_0a_5cde ; $5cd7
@@ -3752,7 +3752,7 @@ GetSceneSlotPtr:
 	push bc ; $5d0c
 	push de ; $5d0d
 	ld b, a ; $5d0e
-	ld a, [$c32e] ; $5d0f
+	ld a, [wCurrentScene] ; $5d0f
 	ld h, $00 ; $5d12
 	ld l, a ; $5d14
 	add hl, hl ; $5d15
@@ -3914,18 +3914,18 @@ SceneViewerSelectScene:
 	srl a ; $5e2a
 	inc a ; $5e2c
 	push af ; $5e2d
-	ld a, [$c32e] ; $5e2e
+	ld a, [wCurrentScene] ; $5e2e
 	ld [$c33d], a ; $5e31
 	call StopSceneTileAnimations ; $5e34
 	pop af ; $5e37
 	ld hl, $0176 ; $5e38
 	farcall FarPtr_RunPagedTextMenu ; $5e3b
-	ld [$c32e], a ; $5e3e
+	ld [wCurrentScene], a ; $5e3e
 	cp a, $ff ; $5e41
 	jp z, Label_0a_5e51 ; $5e43
 	ld b, $01 ; $5e46
 	call LoadAndDisplayScene ; $5e48
-	ld a, [$c32e] ; $5e4b
+	ld a, [wCurrentScene] ; $5e4b
 	call InitSceneTileAnimations ; $5e4e
 Label_0a_5e51:
 	ret ; $5e51
@@ -3943,13 +3943,13 @@ Label_0a_5e68:
 	and a, $02 ; $5e6d
 	jr nz, Label_0a_5e68 ; $5e6f
 	farcall FarPtr_RunMenuSelection ; $5e71
-	ld [$c32e], a ; $5e74
+	ld [wCurrentScene], a ; $5e74
 	ld a, [$d82f] ; $5e77
 	farcall FarPtr_CloseWindow ; $5e7a
-	ld a, [$c32e] ; $5e7d
+	ld a, [wCurrentScene] ; $5e7d
 	cp a, $ff ; $5e80
 	jp z, Label_0a_5e90 ; $5e82
-	ld a, [$c32e] ; $5e85
+	ld a, [wCurrentScene] ; $5e85
 	ld b, $01 ; $5e88
 	call LoadAndDisplayScene ; $5e8a
 	farcall FarPtr_RestoreShadowTilemap ; $5e8d
@@ -3967,25 +3967,25 @@ RunSceneSelectDebugMenu:
 	srl a ; $5e9d
 	inc a ; $5e9f
 	push af ; $5ea0
-	ld a, [$c32e] ; $5ea1
+	ld a, [wCurrentScene] ; $5ea1
 	ld [$c33d], a ; $5ea4
 	call StopSceneTileAnimations ; $5ea7
 	pop af ; $5eaa
 	ld hl, $0176 ; $5eab
 	farcall FarPtr_RunPagedTextMenu ; $5eae
-	ld [$c32e], a ; $5eb1
+	ld [wCurrentScene], a ; $5eb1
 	cp a, $ff ; $5eb4
 	jp z, Label_0a_5ed8 ; $5eb6
 	ld b, $01 ; $5eb9
 	farcall FarPtr_ResetTextWindowState ; $5ebb
 	call DisableLCDSafely ; $5ebe
 	call InitSceneScroll ; $5ec1
-	ld a, [$c32e] ; $5ec4
+	ld a, [wCurrentScene] ; $5ec4
 	call LoadStorySceneGraphics ; $5ec7
 	ld a, $00 ; $5eca
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5ecc
 	call EnableLCD ; $5ecf
-	ld a, [$c32e] ; $5ed2
+	ld a, [wCurrentScene] ; $5ed2
 	call InitSceneTileAnimations ; $5ed5
 Label_0a_5ed8:
 	pop hl ; $5ed8
@@ -4221,7 +4221,7 @@ InitSceneViewer:
 	push hl ; $601f
 	push af ; $6020
 	and a, $7f ; $6021
-	ld [$c32e], a ; $6023
+	ld [wCurrentScene], a ; $6023
 	xor a, a ; $6026
 	ldh [hScrollY], a ; $6027
 	ldh [hScrollX], a ; $6029
@@ -4256,7 +4256,7 @@ Label_0a_6054:
 	ld a, $01 ; $605c
 	ld hl, $60c1 ; $605e
 	call RegisterFrameTask ; $6061
-	ld a, [$c32e] ; $6064
+	ld a, [wCurrentScene] ; $6064
 	call InitSceneTileAnimations ; $6067
 	pop hl ; $606a
 	pop de ; $606b
@@ -4290,12 +4290,12 @@ Label_0a_6085:
 	ld a, l ; $6094
 	ld [$c32d], a ; $6095
 	ld a, $00 ; $6098
-	ld [$c32e], a ; $609a
+	ld [wCurrentScene], a ; $609a
 	ld b, $00 ; $609d
 	call LoadAndDisplayScene ; $609f
 	farcall FarPtr_InitTextWindows ; $60a2
 	farcall FarPtr_RestoreShadowTilemap ; $60a5
-	ld a, [$c32e] ; $60a8
+	ld a, [wCurrentScene] ; $60a8
 	call InitSceneTileAnimations ; $60ab
 	pop hl ; $60ae
 	pop de ; $60af
@@ -4587,7 +4587,7 @@ LoadCourtSceneGraphics:
 	push bc ; $62f9
 	push de ; $62fa
 	push hl ; $62fb
-	ld [$c32e], a ; $62fc
+	ld [wCurrentScene], a ; $62fc
 	ld h, $00 ; $62ff
 	ld l, a ; $6301
 	add hl, hl ; $6302
@@ -5324,7 +5324,7 @@ DeflectBallOffMinigameTarget:
 	dw Label_0a_67b2 ; $677e jumptable
 Label_0a_6780:
 	ld de, $0600 ; $6780
-	ld hl, $c421 ; $6783
+	ld hl, wBallVelocityX ; $6783
 	ld a, [hl] ; $6786
 	add a, e ; $6787
 	ld [hl+], a ; $6788
@@ -5334,11 +5334,11 @@ Label_0a_6780:
 	ret ; $678c
 Label_0a_678d:
 	ld bc, $0800 ; $678d
-	ld hl, $c427 ; $6790
+	ld hl, wBallVelocityHeight ; $6790
 	ld a, c ; $6793
 	ld [hl+], a ; $6794
 	ld [hl], b ; $6795
-	ld hl, $c424 ; $6796
+	ld hl, wBallVelocityDepth ; $6796
 	ld a, [hl+] ; $6799
 	ld d, [hl] ; $679a
 	ld e, a ; $679b
@@ -5351,7 +5351,7 @@ Label_0a_678d:
 	ret ; $67a4
 Label_0a_67a5:
 	ld de, $fa00 ; $67a5
-	ld hl, $c421 ; $67a8
+	ld hl, wBallVelocityX ; $67a8
 	ld a, [hl] ; $67ab
 	add a, e ; $67ac
 	ld [hl+], a ; $67ad
@@ -5361,11 +5361,11 @@ Label_0a_67a5:
 	ret ; $67b1
 Label_0a_67b2:
 	ld bc, $f400 ; $67b2
-	ld hl, $c427 ; $67b5
+	ld hl, wBallVelocityHeight ; $67b5
 	ld a, c ; $67b8
 	ld [hl+], a ; $67b9
 	ld [hl], b ; $67ba
-	ld hl, $c424 ; $67bb
+	ld hl, wBallVelocityDepth ; $67bb
 	ld a, [hl+] ; $67be
 	ld d, [hl] ; $67bf
 	ld e, a ; $67c0
@@ -5768,7 +5768,7 @@ Label_0a_6e91:
 Label_0a_6eac:
 	ld [wStoryModeCurrentLocation], a ; $6eac
 	ld a, [hl+] ; $6eaf
-	ld [$c295], a ; $6eb0
+	ld [wStoryModeEntryPoint], a ; $6eb0
 	clear_flag $03, 0 ; $6eb3
 	clear_flag $0d, 7 ; $6eb6
 	xor a, a ; $6eb9

@@ -54,7 +54,18 @@ wMasterPalettes:: ds 128
 ; 0x1d - Peach's Castle
 ; 0x1e-0x29 - Final Credits Sequence
 wStoryModeCurrentLocation:: db
-	ds 51
+	ds 20
+
+; [8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it
+wStoryModeEntryPoint:: db
+
+; [5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode
+wStoryModeSpawnPosition:: ds 5
+	ds 6
+
+; [8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests
+wStoryModeExitLocationRequest:: db
+	ds 18
 
 ; [16-bit] Water Sprite Minigame - Timer (Frames)
 wWaterSpriteMinigameTimer:: dw
@@ -72,7 +83,11 @@ wStoryModePlayersXPosition:: dw
 
 ; [16-bit] Story Mode - Player's Y Position
 wStoryModePlayersYPosition:: dw
-	ds 76
+	ds 1
+
+; [8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7)
+wStoryModeShowLocationName:: db
+	ds 74
 
 ; [16-bit] BG scroll-buffer camera X (tiles<<3?)
 wCameraX:: dw
@@ -86,7 +101,11 @@ wBGRowBlitDest:: dw
 
 ; [8-bit] Tilemap column for the queued BG column blit
 wBGColumnBlitX:: db
-	ds 21
+	ds 5
+
+; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations
+wCurrentScene:: db
+	ds 15
 
 ; [8-bit] Current BGM
 ;
@@ -142,7 +161,11 @@ wBGColumnBlitX:: db
 ; 0x31 - Exhibition Match Start
 ; 0x32 - Story Match Start
 wCurrentBGM:: db
-	ds 55
+	ds 45
+
+; [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on
+wCurrentStorySlot:: db
+	ds 9
 
 ; [8-bit] Minigame Level (0x00-0x03)
 ;
@@ -156,7 +179,19 @@ wSpriteBufferPage:: db
 
 ; [8-bit] BG attribute written for window-frame cells ($80 = BG priority)
 wWindowFrameAttr:: db
-	ds 79
+
+; [8-bit] WRAM bank of the shadow (off-screen) tilemap buffer; paired with wShadowTilemapPtr
+wShadowTilemapBank:: db
+
+; [16-bit] Base pointer of the shadow tilemap buffer (in bank wShadowTilemapBank); tiles at base, attributes at base+$0400
+wShadowTilemapPtr:: dw
+
+; [8-bit] CGB BG attribute byte applied to window/glyph tiles when drawing (default $80 = BG priority)
+wWindowTileAttr:: db
+
+; [16-bit] Glyph-stream horizontal pen position (sub-pixel fixed point); advanced per glyph by DrawStreamGlyph
+wGlyphPenX:: dw
+	ds 73
 
 ; [16-bit] Ball X position, integer part (lateral, signed)
 wBallX:: dw
@@ -168,7 +203,30 @@ wBallDepth:: dw
 
 ; [16-bit] Ball height above the court, integer part
 wBallHeight:: dw
-	ds 84
+	ds 21
+
+; [16-bit] Ball X velocity, integer part (24-bit fixed-point triple $c420-$c422, fraction byte at $c420); decayed by ApplyBallAirDrag
+wBallVelocityX:: dw
+	ds 1
+
+; [16-bit] Ball depth velocity, integer part (triple $c423-$c425); curved by ApplyBallSpin
+wBallVelocityDepth:: dw
+	ds 1
+
+; [16-bit] Ball height (vertical) velocity, integer part (triple $c426-$c428)
+wBallVelocityHeight:: dw
+	ds 17
+
+; [16-bit] Aim angle of the shot being launched (high byte = angle, $100 per turn; low byte = fraction, top nibble used by MulSinCos); projected from ball position into wBallTargetX/Depth
+wShotAimAngle:: dw
+	ds 20
+
+; [16-bit] Projected ball target/landing X (same world units as wBallX)
+wBallTargetX:: dw
+
+; [16-bit] Projected ball target/landing depth (companion to wBallTargetX; net at 0)
+wBallTargetDepth:: dw
+	ds 12
 
 ; [16-bit] Projected X of the ball-bounce dust effect (cached at bounce time)
 wBounceEffectX:: dw
@@ -200,7 +258,11 @@ wLandingMarkerX:: dw
 
 ; [16-bit] Projected Y of the lob landing marker
 wLandingMarkerY:: dw
-	ds 36
+	ds 28
+
+; [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot)
+wCurrentShotType:: db
+	ds 7
 
 ; [8-bit] Frames left of the ball-bounce dust effect (starts at $14)
 wBounceEffectTimer:: db
@@ -279,7 +341,11 @@ wModeHookTable:: dw
 
 ; [8-bit] ROM bank of the mode callback table (0 = no hooks registered)
 wModeHookBank:: db
-	ds 99
+	ds 75
+
+; [buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer
+wSaveBlockBuffer:: db
+	ds 23
 
 ; [8-bit] Story Mode - Main Character Level (0x01-0x63)
 wStoryModeMainCharacterLevel:: db
@@ -917,7 +983,19 @@ wMenuCursorY:: db
 
 ; [8-bit] Menu loop's copy of hInputPressed (same bit layout as hPlayerInputFlags)
 wMenuInputPressed:: db
-	ds 51
+
+; [8-bit] Match-format menu: singles (0) / doubles (1) selection; copied to wMatchIsDoubles
+wMatchFormatDoubles:: db
+
+; [8-bit] Match-format menu: games-per-set selection index; table-mapped to wMatchTypeNumberOfGames
+wMatchFormatGames:: db
+
+; [8-bit] Match-format menu: number-of-sets selection index (0-2); table-mapped to wMatchTypeNumberOfSets
+wMatchFormatSets:: db
+
+; [8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions
+wMenuSlideDirection:: db
+	ds 47
 
 ; [8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)
 wIntroCutsceneCheck:: db

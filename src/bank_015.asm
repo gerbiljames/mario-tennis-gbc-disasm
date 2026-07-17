@@ -101,7 +101,7 @@ Label_15_413f:
 ; 1 records x 8 bytes
 	dw $ff01, $0000, $41a5, $0000 ; record 0
 	db $ff, $c9
-	ld a, [$c295] ; $41a6
+	ld a, [wStoryModeEntryPoint] ; $41a6
 	cp a, $0f ; $41a9
 	jr nz, Label_15_41b0 ; $41ab
 	jp TournamentSiteArrivalScene ; $41ad
@@ -477,10 +477,10 @@ TournamentSiteArrivalScene:
 	ld a, $19 ; $466d
 	ld [wStoryModeCurrentLocation], a ; $466f
 	ld a, $0f ; $4672
-	ld [$c295], a ; $4674
+	ld [wStoryModeEntryPoint], a ; $4674
 	ld a, $ff ; $4677
 	ld [$c294], a ; $4679
-	ld [$c2a1], a ; $467c
+	ld [wStoryModeExitLocationRequest], a ; $467c
 	ld a, $04 ; $467f
 	ld b, $c0 ; $4681
 	ld de, $0a00 ; $4683
@@ -536,7 +536,7 @@ Label_15_46ce:
 	farcall FarPtr_ScriptSetActorPosition ; $46ec
 	ret ; $46ef
 TournamentSiteEntryWalkIn:
-	ld a, [$c295] ; $46f0
+	ld a, [wStoryModeEntryPoint] ; $46f0
 	cp a, $ff ; $46f3
 	jp z, Label_15_4756 ; $46f5
 	test_flag $05, 7 ; $46f8
@@ -544,7 +544,7 @@ TournamentSiteEntryWalkIn:
 	ld a, $02 ; $46fd
 	ld bc, $00ff ; $46ff
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $4702
-	ld a, [$c295] ; $4705
+	ld a, [wStoryModeEntryPoint] ; $4705
 	dec a ; $4708
 	add a, $5b ; $4709
 	ld l, a ; $470b
@@ -558,7 +558,7 @@ TournamentSiteEntryWalkIn:
 	farcall FarPtr_MoveActorByAngle ; $4717
 	ld a, $02 ; $471a
 	farcall FarPtr_ScriptWaitActorMoveDone ; $471c
-	ld a, [$c295] ; $471f
+	ld a, [wStoryModeEntryPoint] ; $471f
 	dec a ; $4722
 	add a, $57 ; $4723
 	ld l, a ; $4725
@@ -576,7 +576,7 @@ Label_15_4739:
 	ld a, $00 ; $4739
 	ld bc, $0010 ; $473b
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $473e
-	ld a, [$c295] ; $4741
+	ld a, [wStoryModeEntryPoint] ; $4741
 	dec a ; $4744
 	add a, $57 ; $4745
 	ld l, a ; $4747
@@ -658,7 +658,7 @@ StoryCmdHandlersB_15:
 	db $09, $40, $00, $13, $00, $13, $00, $00, $0a, $c0, $00, $13, $00, $13, $00, $00 ; 0x10
 	db $0b, $40, $00, $13, $00, $13, $00, $00, $0c, $c0, $00, $2d, $00, $2b, $00, $00 ; 0x20
 	db $0d, $80, $00, $15, $00, $29, $00, $00, $ff ; 0x30
-	ld a, [$c295] ; $490d
+	ld a, [wStoryModeEntryPoint] ; $490d
 	cp a, $ff ; $4910
 	jp z, Label_15_4955 ; $4912
 	call ClearTrainingCourtNpcFlags ; $4915
@@ -1761,7 +1761,7 @@ Label_15_52f4:
 	sub a, $06 ; $533b
 	ld [$c2b0], a ; $533d
 Label_15_5340:
-	ld a, [$c295] ; $5340
+	ld a, [wStoryModeEntryPoint] ; $5340
 	cp a, $0f ; $5343
 	jr nz, Label_15_534b ; $5345
 	call TrainingCourtIntroTourScene ; $5347
@@ -1771,13 +1771,13 @@ Label_15_534b:
 	call HideStrokeChallengerActor ; $534e
 	call HideNetChallengerActor ; $5351
 	call PlaceSwingPracticeKidActor ; $5354
-	ld a, [$c295] ; $5357
+	ld a, [wStoryModeEntryPoint] ; $5357
 	cp a, $0a ; $535a
 	jr nz, Label_15_5362 ; $535c
 	call TrainingCourtResultDispatch ; $535e
 	ret ; $5361
 Label_15_5362:
-	ld a, [$c295] ; $5362
+	ld a, [wStoryModeEntryPoint] ; $5362
 	cp a, $09 ; $5365
 	jr nz, Label_15_536c ; $5367
 	call StartPendingLessonScene ; $5369
@@ -1840,7 +1840,7 @@ TrainingCourtReentryDispatch:
 	dw Label_15_5597 ; $53d0 jumptable
 Label_15_53d2:
 	xor a, a ; $53d2
-	ld [$c2d5], a ; $53d3
+	ld [wStoryModeShowLocationName], a ; $53d3
 	ld a, $06 ; $53d6
 	ld [$c2b1], a ; $53d8
 	ld a, $00 ; $53db
@@ -1880,7 +1880,7 @@ Label_15_53d2:
 	ret ; $5436
 Label_15_5437:
 	xor a, a ; $5437
-	ld [$c2d5], a ; $5438
+	ld [wStoryModeShowLocationName], a ; $5438
 	ld bc, $00f0 ; $543b
 	farcall FarPtr_SetPlayerMoveSpeed ; $543e
 	ld a, $00 ; $5441
@@ -1911,7 +1911,7 @@ Label_15_5437:
 	ret ; $5481
 Label_15_5482:
 	xor a, a ; $5482
-	ld [$c2d5], a ; $5483
+	ld [wStoryModeShowLocationName], a ; $5483
 	ld a, $11 ; $5486
 	ld [$c2b1], a ; $5488
 	ld a, $00 ; $548b
@@ -1951,7 +1951,7 @@ Label_15_5482:
 	ret ; $54e6
 Label_15_54e7:
 	xor a, a ; $54e7
-	ld [$c2d5], a ; $54e8
+	ld [wStoryModeShowLocationName], a ; $54e8
 	ld bc, $00f0 ; $54eb
 	farcall FarPtr_SetPlayerMoveSpeed ; $54ee
 	ld a, $00 ; $54f1
@@ -1982,7 +1982,7 @@ Label_15_54e7:
 	ret ; $5531
 Label_15_5532:
 	xor a, a ; $5532
-	ld [$c2d5], a ; $5533
+	ld [wStoryModeShowLocationName], a ; $5533
 	ld a, $0c ; $5536
 	ld [$c2b1], a ; $5538
 	ld a, $00 ; $553b
@@ -2022,7 +2022,7 @@ Label_15_5532:
 	ret ; $5596
 Label_15_5597:
 	xor a, a ; $5597
-	ld [$c2d5], a ; $5598
+	ld [wStoryModeShowLocationName], a ; $5598
 	ld bc, $00f0 ; $559b
 	farcall FarPtr_SetPlayerMoveSpeed ; $559e
 	ld a, $00 ; $55a1
@@ -2342,7 +2342,7 @@ InitWaterSpriteMinigameHud:
 	INCBIN "data/bank_015/d_58fa.bin" ; $58fa, 198 bytes
 TrainingCourtIntroTourScene:
 	xor a, a ; $59c0
-	ld [$c2d5], a ; $59c1
+	ld [wStoryModeShowLocationName], a ; $59c1
 	ldh a, [hRomBank] ; $59c4
 	ld hl, $5c4f ; $59c6
 	farcall FarPtr_ScriptRespawnLocationActors ; $59c9
@@ -2609,7 +2609,7 @@ TrainingCourtIntroTourScene:
 	pop af ; $5c42
 	ld a, $0f ; $5c43
 	ld [$c294], a ; $5c45
-	ld [$c2a1], a ; $5c48
+	ld [wStoryModeExitLocationRequest], a ; $5c48
 	farcall FarPtr_EndCutsceneScriptMode ; $5c4b
 	ret ; $5c4e
 	; $5c4f, 164 bytes (bytes:14)
@@ -2627,7 +2627,7 @@ TrainingCourtIntroTourScene:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x9a
 ServeChallengerResultScene:
 	xor a, a ; $5cf3
-	ld [$c2d5], a ; $5cf4
+	ld [wStoryModeShowLocationName], a ; $5cf4
 	ld a, $06 ; $5cf7
 	ld [$c2b1], a ; $5cf9
 	ld a, $00 ; $5cfc
@@ -2684,7 +2684,7 @@ Label_15_5d69:
 	ret ; $5d73
 NetChallengerResultScene:
 	xor a, a ; $5d74
-	ld [$c2d5], a ; $5d75
+	ld [wStoryModeShowLocationName], a ; $5d75
 	ld a, $11 ; $5d78
 	ld [$c2b1], a ; $5d7a
 	ld a, $00 ; $5d7d
@@ -2740,7 +2740,7 @@ Label_15_5dea:
 	ret ; $5df2
 StrokeChallengerResultScene:
 	xor a, a ; $5df3
-	ld [$c2d5], a ; $5df4
+	ld [wStoryModeShowLocationName], a ; $5df4
 	ld a, $0c ; $5df7
 	ld [$c2b1], a ; $5df9
 	ld a, $00 ; $5dfc
@@ -2899,10 +2899,10 @@ Label_15_5f07:
 	ld a, $0f ; $5f2c
 	ld [wStoryModeCurrentLocation], a ; $5f2e
 	ld a, $0a ; $5f31
-	ld [$c295], a ; $5f33
+	ld [wStoryModeEntryPoint], a ; $5f33
 	ld a, $ff ; $5f36
 	ld [$c294], a ; $5f38
-	ld [$c2a1], a ; $5f3b
+	ld [wStoryModeExitLocationRequest], a ; $5f3b
 	ld a, [$c8f7] ; $5f3e
 	farcall FarPtr_RunTrainingDrillByID ; $5f41
 	farcall FarPtr_EndCutsceneScriptMode ; $5f44
@@ -2940,10 +2940,10 @@ Label_15_5f58:
 	ld a, $0f ; $5f86
 	ld [wStoryModeCurrentLocation], a ; $5f88
 	ld a, $0a ; $5f8b
-	ld [$c295], a ; $5f8d
+	ld [wStoryModeEntryPoint], a ; $5f8d
 	ld a, $ff ; $5f90
 	ld [$c294], a ; $5f92
-	ld [$c2a1], a ; $5f95
+	ld [wStoryModeExitLocationRequest], a ; $5f95
 	ld a, [$c8f7] ; $5f98
 	farcall FarPtr_RunTrainingDrillByID ; $5f9b
 	farcall FarPtr_EndCutsceneScriptMode ; $5f9e
@@ -3524,10 +3524,10 @@ Label_15_63b9:
 	ld a, $0f ; $648a
 	ld [wStoryModeCurrentLocation], a ; $648c
 	ld a, $0a ; $648f
-	ld [$c295], a ; $6491
+	ld [wStoryModeEntryPoint], a ; $6491
 	ld a, $ff ; $6494
 	ld [$c294], a ; $6496
-	ld [$c2a1], a ; $6499
+	ld [wStoryModeExitLocationRequest], a ; $6499
 	ld a, $00 ; $649c
 	farcall FarPtr_RunTrainingDrillByID ; $649e
 	ret ; $64a1
@@ -3625,10 +3625,10 @@ Label_15_64a2:
 	ld a, $0f ; $656e
 	ld [wStoryModeCurrentLocation], a ; $6570
 	ld a, $0a ; $6573
-	ld [$c295], a ; $6575
+	ld [wStoryModeEntryPoint], a ; $6575
 	ld a, $ff ; $6578
 	ld [$c294], a ; $657a
-	ld [$c2a1], a ; $657d
+	ld [wStoryModeExitLocationRequest], a ; $657d
 	ld a, $01 ; $6580
 	farcall FarPtr_RunTrainingDrillByID ; $6582
 	ret ; $6585
@@ -3709,10 +3709,10 @@ Label_15_64a2:
 	ld a, $0f ; $662f
 	ld [wStoryModeCurrentLocation], a ; $6631
 	ld a, $0a ; $6634
-	ld [$c295], a ; $6636
+	ld [wStoryModeEntryPoint], a ; $6636
 	ld a, $ff ; $6639
 	ld [$c294], a ; $663b
-	ld [$c2a1], a ; $663e
+	ld [wStoryModeExitLocationRequest], a ; $663e
 	ld a, $02 ; $6641
 	farcall FarPtr_RunTrainingDrillByID ; $6643
 	ret ; $6646
@@ -4078,10 +4078,10 @@ Label_15_6dc2:
 	ld a, $0f ; $6e2d
 	ld [wStoryModeCurrentLocation], a ; $6e2f
 	ld a, $09 ; $6e32
-	ld [$c295], a ; $6e34
+	ld [wStoryModeEntryPoint], a ; $6e34
 	ld a, $ff ; $6e37
 	ld [$c294], a ; $6e39
-	ld [$c2a1], a ; $6e3c
+	ld [wStoryModeExitLocationRequest], a ; $6e3c
 	ld c, $10 ; $6e3f
 	call BeginFadeOut ; $6e41
 	call WaitFadeEnd ; $6e44
@@ -4134,10 +4134,10 @@ ReturnCoachLobLessonScene:
 	ld a, $0f ; $6eb0
 	ld [wStoryModeCurrentLocation], a ; $6eb2
 	ld a, $09 ; $6eb5
-	ld [$c295], a ; $6eb7
+	ld [wStoryModeEntryPoint], a ; $6eb7
 	ld a, $ff ; $6eba
 	ld [$c294], a ; $6ebc
-	ld [$c2a1], a ; $6ebf
+	ld [wStoryModeExitLocationRequest], a ; $6ebf
 	ld c, $10 ; $6ec2
 	call BeginFadeOut ; $6ec4
 	call WaitFadeEnd ; $6ec7
@@ -4190,10 +4190,10 @@ ReturnCoachPassingShotLessonScene:
 	ld a, $0f ; $6f33
 	ld [wStoryModeCurrentLocation], a ; $6f35
 	ld a, $09 ; $6f38
-	ld [$c295], a ; $6f3a
+	ld [wStoryModeEntryPoint], a ; $6f3a
 	ld a, $ff ; $6f3d
 	ld [$c294], a ; $6f3f
-	ld [$c2a1], a ; $6f42
+	ld [wStoryModeExitLocationRequest], a ; $6f42
 	ld c, $10 ; $6f45
 	call BeginFadeOut ; $6f47
 	call WaitFadeEnd ; $6f4a
@@ -4227,10 +4227,10 @@ WalkToStrokeChallengeCourtCutscene:
 	ld a, $0f ; $6f89
 	ld [wStoryModeCurrentLocation], a ; $6f8b
 	ld a, $0a ; $6f8e
-	ld [$c295], a ; $6f90
+	ld [wStoryModeEntryPoint], a ; $6f90
 	ld a, $ff ; $6f93
 	ld [$c294], a ; $6f95
-	ld [$c2a1], a ; $6f98
+	ld [wStoryModeExitLocationRequest], a ; $6f98
 	ret ; $6f9b
 	INCBIN "data/bank_015/d_6f9c.bin" ; $6f9c, 51 bytes
 NetCoachVolleyLessonScene:
@@ -4291,10 +4291,10 @@ Label_15_6fea:
 	ld a, $0f ; $704a
 	ld [wStoryModeCurrentLocation], a ; $704c
 	ld a, $09 ; $704f
-	ld [$c295], a ; $7051
+	ld [wStoryModeEntryPoint], a ; $7051
 	ld a, $ff ; $7054
 	ld [$c294], a ; $7056
-	ld [$c2a1], a ; $7059
+	ld [wStoryModeExitLocationRequest], a ; $7059
 	ld c, $10 ; $705c
 	call BeginFadeOut ; $705e
 	call WaitFadeEnd ; $7061
@@ -4371,10 +4371,10 @@ NetCoachSmashLessonScene:
 	ld a, $0f ; $70ff
 	ld [wStoryModeCurrentLocation], a ; $7101
 	ld a, $09 ; $7104
-	ld [$c295], a ; $7106
+	ld [wStoryModeEntryPoint], a ; $7106
 	ld a, $ff ; $7109
 	ld [$c294], a ; $710b
-	ld [$c2a1], a ; $710e
+	ld [wStoryModeExitLocationRequest], a ; $710e
 	ld c, $10 ; $7111
 	call BeginFadeOut ; $7113
 	call WaitFadeEnd ; $7116
@@ -4440,10 +4440,10 @@ NetCoachDropShotLessonScene:
 	ld a, $0f ; $71a0
 	ld [wStoryModeCurrentLocation], a ; $71a2
 	ld a, $09 ; $71a5
-	ld [$c295], a ; $71a7
+	ld [wStoryModeEntryPoint], a ; $71a7
 	ld a, $ff ; $71aa
 	ld [$c294], a ; $71ac
-	ld [$c2a1], a ; $71af
+	ld [wStoryModeExitLocationRequest], a ; $71af
 	ld c, $10 ; $71b2
 	call BeginFadeOut ; $71b4
 	call WaitFadeEnd ; $71b7
@@ -4856,7 +4856,7 @@ Label_15_74d2:
 	ret ; $74e0
 InitServeCoachScene:
 	xor a, a ; $74e1
-	ld [$c2d5], a ; $74e2
+	ld [wStoryModeShowLocationName], a ; $74e2
 	ld bc, $00f0 ; $74e5
 	farcall FarPtr_SetPlayerMoveSpeed ; $74e8
 	ld a, $00 ; $74eb
@@ -5142,7 +5142,7 @@ Label_15_7749:
 	ret ; $7751
 InitNetCoachScene:
 	xor a, a ; $7752
-	ld [$c2d5], a ; $7753
+	ld [wStoryModeShowLocationName], a ; $7753
 	ld bc, $00f0 ; $7756
 	farcall FarPtr_SetPlayerMoveSpeed ; $7759
 	ld a, $00 ; $775c
@@ -5431,7 +5431,7 @@ Label_15_79bc:
 	ret ; $79ca
 InitReturnCoachScene:
 	xor a, a ; $79cb
-	ld [$c2d5], a ; $79cc
+	ld [wStoryModeShowLocationName], a ; $79cc
 	ld bc, $00f0 ; $79cf
 	farcall FarPtr_SetPlayerMoveSpeed ; $79d2
 	ld a, $00 ; $79d5
@@ -5548,10 +5548,10 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld a, $0f ; $7aea
 	ld [wStoryModeCurrentLocation], a ; $7aec
 	ld a, $0a ; $7aef
-	ld [$c295], a ; $7af1
+	ld [wStoryModeEntryPoint], a ; $7af1
 	ld a, $ff ; $7af4
 	ld [$c294], a ; $7af6
-	ld [$c2a1], a ; $7af9
+	ld [wStoryModeExitLocationRequest], a ; $7af9
 	ld a, [$c8f7] ; $7afc
 	farcall FarPtr_RunTrainingDrillByID ; $7aff
 	ret ; $7b02
@@ -5593,10 +5593,10 @@ NetCoachWalkToCourtAndStartLesson:
 	ld a, $0f ; $7b7d
 	ld [wStoryModeCurrentLocation], a ; $7b7f
 	ld a, $0a ; $7b82
-	ld [$c295], a ; $7b84
+	ld [wStoryModeEntryPoint], a ; $7b84
 	ld a, $ff ; $7b87
 	ld [$c294], a ; $7b89
-	ld [$c2a1], a ; $7b8c
+	ld [wStoryModeExitLocationRequest], a ; $7b8c
 	ld a, [$c8f7] ; $7b8f
 	farcall FarPtr_RunTrainingDrillByID ; $7b92
 	ret ; $7b95
@@ -5638,10 +5638,10 @@ ReturnCoachWalkToCourtAndStartLesson:
 	ld a, $0f ; $7c16
 	ld [wStoryModeCurrentLocation], a ; $7c18
 	ld a, $0a ; $7c1b
-	ld [$c295], a ; $7c1d
+	ld [wStoryModeEntryPoint], a ; $7c1d
 	ld a, $ff ; $7c20
 	ld [$c294], a ; $7c22
-	ld [$c2a1], a ; $7c25
+	ld [wStoryModeExitLocationRequest], a ; $7c25
 	ld a, [$c8f7] ; $7c28
 	farcall FarPtr_RunTrainingDrillByID ; $7c2b
 	ret ; $7c2e

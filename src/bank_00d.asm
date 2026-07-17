@@ -1878,7 +1878,7 @@ Label_0d_4e99:
 	ld a, c ; $4eb1
 	cp a, $ff ; $4eb2
 	jr z, Label_0d_4ebc ; $4eb4
-	ld a, [$c4a0] ; $4eb6
+	ld a, [wCurrentShotType] ; $4eb6
 	cp a, c ; $4eb9
 	jr nz, Label_0d_4e99 ; $4eba
 Label_0d_4ebc:
@@ -2143,7 +2143,7 @@ AwardHitScore:
 	ld a, $10 ; $52f9
 	ld [$dc73], a ; $52fb
 	ld hl, $0001 ; $52fe
-	ld a, [$c4a0] ; $5301
+	ld a, [wCurrentShotType] ; $5301
 	cp a, $09 ; $5304
 	jr nz, Label_0d_5310 ; $5306
 	ld a, $20 ; $5308

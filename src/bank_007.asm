@@ -74,12 +74,12 @@ FarPtr_RunDebugTestMatch:
 	dw RunDebugTestMatch ; $4046
 TryEstablishLink:
 	di ; $4048
-	ldh a, [$ffc0] ; $4049
+	ldh a, [hLinkRxByte] ; $4049
 	ei ; $404b
 	cp a, $c1 ; $404c
 	jr z, Label_07_4061 ; $404e
 	ld a, $01 ; $4050
-	ldh [$ffc2], a ; $4052
+	ldh [hLinkState], a ; $4052
 	call TryLinkHandshakeMaster ; $4054
 	jr nc, Label_07_4076 ; $4057
 	push af ; $4059
@@ -90,12 +90,12 @@ TryEstablishLink:
 Label_07_4061:
 	di ; $4061
 	xor a, a ; $4062
-	ldh [$ffc0], a ; $4063
+	ldh [hLinkRxByte], a ; $4063
 	xor a, a ; $4065
 	ldh [$ffd7], a ; $4066
 	ei ; $4068
 	ld a, $02 ; $4069
-	ldh [$ffc2], a ; $406b
+	ldh [hLinkState], a ; $406b
 	call TryLinkHandshakeSlave ; $406d
 	jr nc, Label_07_4076 ; $4070
 	call ResetSerialState ; $4072
@@ -168,7 +168,7 @@ Label_07_40d1:
 	call ShortDelay ; $40e4
 	call ShortDelay ; $40e7
 	di ; $40ea
-	ldh a, [$ffc0] ; $40eb
+	ldh a, [hLinkRxByte] ; $40eb
 	ei ; $40ed
 	cp a, $c4 ; $40ee
 	jr z, Label_07_40f8 ; $40f0
@@ -190,9 +190,9 @@ Label_07_4101:
 	inc h ; $410a
 Label_07_410b:
 	ld a, [hl] ; $410b
-	ldh [$ffc1], a ; $410c
+	ldh [hLinkTxByte], a ; $410c
 Label_07_410e:
-	ldh a, [$ffc1] ; $410e
+	ldh a, [hLinkTxByte] ; $410e
 	or a, $40 ; $4110
 	ldh [rSB], a ; $4112
 	push af ; $4114
@@ -230,7 +230,7 @@ Label_07_4142:
 	inc d ; $414a
 Label_07_414b:
 	xor a, a ; $414b
-	ldh [$ffc8], a ; $414c
+	ldh [hLinkCounter], a ; $414c
 	ld hl, $ffc7 ; $414e
 	inc [hl] ; $4151
 	ld hl, $ffc6 ; $4152
@@ -305,7 +305,7 @@ Label_07_41b6:
 	push de ; $41c4
 	push hl ; $41c5
 	di ; $41c6
-	ldh a, [$ffc0] ; $41c7
+	ldh a, [hLinkRxByte] ; $41c7
 	ei ; $41c9
 	push af ; $41ca
 	call UpdateSoundEngine ; $41cb
@@ -320,7 +320,7 @@ Label_07_41b6:
 	call WaitSerialTransfer ; $41dc
 	pop af ; $41df
 	di ; $41e0
-	ldh [$ffc0], a ; $41e1
+	ldh [hLinkRxByte], a ; $41e1
 	ei ; $41e3
 	pop hl ; $41e4
 	pop de ; $41e5
@@ -359,14 +359,14 @@ Label_07_41ff:
 	di ; $4211
 	ld a, [$ce40] ; $4212
 	or a, $80 ; $4215
-	ldh [$ffc1], a ; $4217
+	ldh [hLinkTxByte], a ; $4217
 	ei ; $4219
 	ld e, $64 ; $421a
 Label_07_421c:
 	call WaitSerialTransfer ; $421c
 	jr c, Label_07_422c ; $421f
 	di ; $4221
-	ldh a, [$ffc0] ; $4222
+	ldh a, [hLinkRxByte] ; $4222
 	ei ; $4224
 	cp a, $c3 ; $4225
 	jr z, Label_07_422f ; $4227
@@ -398,7 +398,7 @@ Label_07_423b:
 Label_07_424f:
 	ld a, [hl] ; $424f
 	or a, $80 ; $4250
-	ldh [$ffc1], a ; $4252
+	ldh [hLinkTxByte], a ; $4252
 	ei ; $4254
 	call WaitSerialTransfer ; $4255
 	jr nc, Label_07_425d ; $4258
@@ -430,7 +430,7 @@ Label_07_4279:
 	inc d ; $4281
 Label_07_4282:
 	xor a, a ; $4282
-	ldh [$ffc8], a ; $4283
+	ldh [hLinkCounter], a ; $4283
 	ld hl, $ffc7 ; $4285
 	inc [hl] ; $4288
 	ld hl, $ffc6 ; $4289
@@ -444,11 +444,11 @@ Label_07_4282:
 	xor a, a ; $4297
 	ldh [$ffd7], a ; $4298
 	ld a, $c6 ; $429a
-	ldh [$ffc1], a ; $429c
+	ldh [hLinkTxByte], a ; $429c
 	ei ; $429e
 	call WaitSerialTransfer ; $429f
 	di ; $42a2
-	ldh a, [$ffc0] ; $42a3
+	ldh a, [hLinkRxByte] ; $42a3
 	ei ; $42a5
 	ld b, a ; $42a6
 	and a, $c0 ; $42a7
@@ -701,14 +701,14 @@ Label_07_4438:
 	ld b, c ; $4447
 Label_07_4448:
 	ld a, [hl+] ; $4448
-	ldh [$ffc1], a ; $4449
+	ldh [hLinkTxByte], a ; $4449
 	add a, e ; $444b
 	ld e, a ; $444c
 	jr nc, Label_07_4450 ; $444d
 	inc d ; $444f
 Label_07_4450:
 	di ; $4450
-	ldh a, [$ffc1] ; $4451
+	ldh a, [hLinkTxByte] ; $4451
 	or a, $80 ; $4453
 	ldh [rSB], a ; $4455
 	push af ; $4457
@@ -722,7 +722,7 @@ Label_07_4450:
 	call PollSerialResponse ; $4465
 	jr c, Label_07_4450 ; $4468
 	xor a, a ; $446a
-	ldh [$ffc8], a ; $446b
+	ldh [hLinkCounter], a ; $446b
 	dec b ; $446d
 	jr nz, Label_07_4448 ; $446e
 Label_07_4470:
@@ -816,7 +816,7 @@ Label_07_44d9:
 	inc d ; $44fa
 Label_07_44fb:
 	xor a, a ; $44fb
-	ldh [$ffc8], a ; $44fc
+	ldh [hLinkCounter], a ; $44fc
 	inc b ; $44fe
 	ld a, b ; $44ff
 	cp a, $40 ; $4500
@@ -848,14 +848,14 @@ Label_07_451d:
 PollSerialResponse:
 	push bc ; $452f
 	di ; $4530
-	ldh a, [$ffc0] ; $4531
+	ldh a, [hLinkRxByte] ; $4531
 	ld b, a ; $4533
 	cp a, $00 ; $4534
 	jr z, Label_07_4543 ; $4536
 	cp a, $ff ; $4538
 	jr z, Label_07_4543 ; $453a
 	xor a, a ; $453c
-	ldh [$ffc8], a ; $453d
+	ldh [hLinkCounter], a ; $453d
 	scf ; $453f
 	ccf ; $4540
 	jr Label_07_4547 ; $4541
@@ -869,11 +869,11 @@ Label_07_4547:
 	ret ; $454a
 SendByteAwaitEchoMaster:
 	push bc ; $454b
-	ldh [$ffc1], a ; $454c
+	ldh [hLinkTxByte], a ; $454c
 	ld c, $14 ; $454e
 Label_07_4550:
 	di ; $4550
-	ldh a, [$ffc1] ; $4551
+	ldh a, [hLinkTxByte] ; $4551
 	ldh [rSB], a ; $4553
 	push af ; $4555
 	ld a, $03 ; $4556
@@ -886,7 +886,7 @@ Label_07_4550:
 	call ShortDelay ; $4563
 	call ShortDelay ; $4566
 	di ; $4569
-	ldh a, [$ffc0] ; $456a
+	ldh a, [hLinkRxByte] ; $456a
 	ei ; $456c
 	cp a, $00 ; $456d
 	jr z, Label_07_4581 ; $456f
@@ -895,7 +895,7 @@ Label_07_4550:
 	cp a, b ; $4575
 	jr z, Label_07_4586 ; $4576
 	xor a, a ; $4578
-	ldh [$ffc8], a ; $4579
+	ldh [hLinkCounter], a ; $4579
 	dec c ; $457b
 	jr nz, Label_07_4550 ; $457c
 	scf ; $457e
@@ -911,11 +911,11 @@ Label_07_4588:
 	ret ; $4589
 SendByteAwaitEchoSlave:
 	push bc ; $458a
-	ldh [$ffc1], a ; $458b
+	ldh [hLinkTxByte], a ; $458b
 	ld c, $1e ; $458d
 Label_07_458f:
 	di ; $458f
-	ldh a, [$ffc1] ; $4590
+	ldh a, [hLinkTxByte] ; $4590
 	ldh [rSB], a ; $4592
 	push af ; $4594
 	ld a, $02 ; $4595
@@ -925,7 +925,7 @@ Label_07_458f:
 	pop af ; $459d
 	ei ; $459e
 	call WaitSerialTransfer ; $459f
-	ldh a, [$ffc0] ; $45a2
+	ldh a, [hLinkRxByte] ; $45a2
 	cp a, $00 ; $45a4
 	jr z, Label_07_45b8 ; $45a6
 	cp a, $ff ; $45a8
@@ -933,7 +933,7 @@ Label_07_458f:
 	cp a, b ; $45ac
 	jr z, Label_07_45bd ; $45ad
 	xor a, a ; $45af
-	ldh [$ffc8], a ; $45b0
+	ldh [hLinkCounter], a ; $45b0
 	dec c ; $45b2
 	jr nz, Label_07_458f ; $45b3
 	scf ; $45b5
@@ -949,13 +949,13 @@ Label_07_45bf:
 	ret ; $45c0
 SendByteGetReplyMaster:
 	push bc ; $45c1
-	ldh [$ffc1], a ; $45c2
+	ldh [hLinkTxByte], a ; $45c2
 	ld c, $64 ; $45c4
 Label_07_45c6:
 	ei ; $45c6
 	nop ; $45c7
 	di ; $45c8
-	ldh a, [$ffc1] ; $45c9
+	ldh a, [hLinkTxByte] ; $45c9
 	ldh [rSB], a ; $45cb
 	push af ; $45cd
 	ld a, $03 ; $45ce
@@ -968,7 +968,7 @@ Label_07_45c6:
 	call ShortDelay ; $45db
 	call ShortDelay ; $45de
 	di ; $45e1
-	ldh a, [$ffc0] ; $45e2
+	ldh a, [hLinkRxByte] ; $45e2
 	cp a, $00 ; $45e4
 	jr z, Label_07_45ee ; $45e6
 	cp a, $ff ; $45e8
@@ -984,9 +984,9 @@ Label_07_45f5:
 	pop bc ; $45f6
 	ret ; $45f7
 	push bc ; $45f8
-	ldh [$ffc1], a ; $45f9
+	ldh [hLinkTxByte], a ; $45f9
 Label_07_45fb:
-	ldh a, [$ffc1] ; $45fb
+	ldh a, [hLinkTxByte] ; $45fb
 	ldh [rSB], a ; $45fd
 	push af ; $45ff
 	ld a, $03 ; $4600
@@ -995,14 +995,14 @@ Label_07_45fb:
 	ldh [rSC], a ; $4606
 	pop af ; $4608
 	call AdvanceFrame ; $4609
-	ldh a, [$ffc0] ; $460c
+	ldh a, [hLinkRxByte] ; $460c
 	cp a, $00 ; $460e
 	jr z, Label_07_461d ; $4610
 	cp a, $ff ; $4612
 	jr z, Label_07_461d ; $4614
 	ld b, a ; $4616
 	xor a, a ; $4617
-	ldh [$ffc8], a ; $4618
+	ldh [hLinkCounter], a ; $4618
 	ld a, b ; $461a
 	jr Label_07_4622 ; $461b
 Label_07_461d:
@@ -1015,7 +1015,7 @@ SendByteGetReplySlave:
 	push bc ; $4624
 	di ; $4625
 	ldh [$ffe0], a ; $4626
-	ldh [$ffc1], a ; $4628
+	ldh [hLinkTxByte], a ; $4628
 	ldh a, [rIF] ; $462a
 	and a, $f7 ; $462c
 	ldh [rIF], a ; $462e
@@ -1027,7 +1027,7 @@ Label_07_4636:
 	call WaitSerialTransfer ; $4636
 	jr c, Label_07_464e ; $4639
 	di ; $463b
-	ldh a, [$ffc0] ; $463c
+	ldh a, [hLinkRxByte] ; $463c
 	ei ; $463e
 	cp a, $00 ; $463f
 	jr z, Label_07_464e ; $4641
@@ -1035,7 +1035,7 @@ Label_07_4636:
 	jr z, Label_07_464e ; $4645
 	ld b, a ; $4647
 	xor a, a ; $4648
-	ldh [$ffc8], a ; $4649
+	ldh [hLinkCounter], a ; $4649
 	ld a, b ; $464b
 	jr Label_07_4654 ; $464c
 Label_07_464e:
@@ -1085,7 +1085,7 @@ ExchangeLinkFrameByteMaster:
 	cp a, $8c ; $4683
 	jr nz, ExchangeLinkFrameByteMaster ; $4685
 	di ; $4687
-	ldh a, [$ffc1] ; $4688
+	ldh a, [hLinkTxByte] ; $4688
 	ldh [rSB], a ; $468a
 	push af ; $468c
 	ld a, $03 ; $468d
@@ -1095,7 +1095,7 @@ ExchangeLinkFrameByteMaster:
 	pop af ; $4695
 	ei ; $4696
 	call AdvanceFrame ; $4697
-	ldh a, [$ffc0] ; $469a
+	ldh a, [hLinkRxByte] ; $469a
 	ld b, a ; $469c
 	cp a, $00 ; $469d
 	jr z, Label_07_46af ; $469f
@@ -1108,7 +1108,7 @@ ExchangeLinkFrameByteMaster:
 	jr z, Label_07_46c7 ; $46ad
 Label_07_46af:
 	call LinkErrorReset ; $46af
-	ld hl, $ffc8 ; $46b2
+	ld hl, hLinkCounter ; $46b2
 	inc [hl] ; $46b5
 	ld a, [hl] ; $46b6
 	cp a, $0a ; $46b7
@@ -1124,7 +1124,7 @@ Label_07_46c7:
 	cp a, b ; $46c9
 	jr nz, Label_07_46e6 ; $46ca
 	and a, $3f ; $46cc
-	ld hl, $ffc8 ; $46ce
+	ld hl, hLinkCounter ; $46ce
 	inc [hl] ; $46d1
 	ld a, [hl] ; $46d2
 	cp a, $02 ; $46d3
@@ -1140,7 +1140,7 @@ Label_07_46e6:
 	ldh [$ffdb], a ; $46e7
 	ldh [$ffda], a ; $46e9
 	xor a, a ; $46eb
-	ldh [$ffc8], a ; $46ec
+	ldh [hLinkCounter], a ; $46ec
 	ret ; $46ee
 ExchangeLinkFrameByteSlave:
 	call AwaitSerialByte ; $46ef
@@ -1173,7 +1173,7 @@ Label_07_471b:
 	ldh [$ffdb], a ; $471c
 	ldh [$ffda], a ; $471e
 	xor a, a ; $4720
-	ldh [$ffc8], a ; $4721
+	ldh [hLinkCounter], a ; $4721
 	ei ; $4723
 	ret ; $4724
 SyncLinkFrameMaster:
@@ -1203,7 +1203,7 @@ SyncLinkFrame:
 	push hl ; $474a
 	ld hl, $ffe9 ; $474b
 	inc [hl] ; $474e
-	ldh a, [$ffc2] ; $474f
+	ldh a, [hLinkState] ; $474f
 	cp a, $02 ; $4751
 	jr z, Label_07_475a ; $4753
 	call SyncLinkFrameMaster ; $4755
@@ -1223,7 +1223,7 @@ RunLinkMatchFrame:
 	push hl ; $4765
 	ld hl, $ffe9 ; $4766
 	inc [hl] ; $4769
-	ldh a, [$ffc2] ; $476a
+	ldh a, [hLinkState] ; $476a
 	cp a, $02 ; $476c
 	jr z, Label_07_4775 ; $476e
 	call RunLinkMatchFrameMaster ; $4770
@@ -1240,7 +1240,7 @@ ExchangeLinkReadySignal:
 	push af ; $477d
 	push bc ; $477e
 	ld c, $64 ; $477f
-	ldh a, [$ffc2] ; $4781
+	ldh a, [hLinkState] ; $4781
 	cp a, $02 ; $4783
 	jr z, Label_07_4799 ; $4785
 	cp a, $01 ; $4787
@@ -1281,7 +1281,7 @@ Label_07_47aa:
 	pop af ; $47c0
 	ei ; $47c1
 	call ShortDelay ; $47c2
-	ldh a, [$ffc0] ; $47c5
+	ldh a, [hLinkRxByte] ; $47c5
 	and a, $3f ; $47c7
 	cp a, $0a ; $47c9
 	jr z, Label_07_47d5 ; $47cb
@@ -1301,7 +1301,7 @@ ExchangeReadyTokenSlave:
 	di ; $47dd
 	ld a, $0a ; $47de
 	or a, $80 ; $47e0
-	ldh [$ffc1], a ; $47e2
+	ldh [hLinkTxByte], a ; $47e2
 	ldh [rSB], a ; $47e4
 	push af ; $47e6
 	ld a, $02 ; $47e7
@@ -1312,7 +1312,7 @@ ExchangeReadyTokenSlave:
 	ei ; $47f0
 Label_07_47f1:
 	call WaitSerialTransfer ; $47f1
-	ldh a, [$ffc0] ; $47f4
+	ldh a, [hLinkRxByte] ; $47f4
 	and a, $3f ; $47f6
 	cp a, $0b ; $47f8
 	jr z, Label_07_4804 ; $47fa
@@ -1352,7 +1352,7 @@ RunLinkInputFrameSlave:
 RunLinkInputFrame:
 	ld hl, $ffe9 ; $4833
 	inc [hl] ; $4836
-	ldh a, [$ffc2] ; $4837
+	ldh a, [hLinkState] ; $4837
 	cp a, $02 ; $4839
 	jr z, Label_07_4842 ; $483b
 	call RunLinkInputFrameMaster ; $483d
@@ -1377,7 +1377,7 @@ UpdateLinkSession:
 	ld a, $01 ; $485c
 	ldh [$ffd8], a ; $485e
 	farcall FarPtr_ExchangeLinkReadySignal ; $4860
-	ldh a, [$ffc2] ; $4863
+	ldh a, [hLinkState] ; $4863
 	cp a, $02 ; $4865
 	jp z, Label_07_48a7 ; $4867
 	cp a, $01 ; $486a
@@ -1422,7 +1422,7 @@ Label_07_48ae:
 	ld [hl], $06 ; $48cb
 	wram_bank $04 ; $48cd
 	xor a, a ; $48d3
-	ldh [$ffc0], a ; $48d4
+	ldh [hLinkRxByte], a ; $48d4
 	ldh [$ffd7], a ; $48d6
 	ld a, $01 ; $48d8
 	ldh [$ffdf], a ; $48da
@@ -1486,7 +1486,7 @@ ExchangeLinkBlockToWram5:
 	call LongDelay ; $4934
 	call LongDelay ; $4937
 	call LongDelay ; $493a
-	ldh a, [$ffc2] ; $493d
+	ldh a, [hLinkState] ; $493d
 	cp a, $02 ; $493f
 	jr z, Label_07_494f ; $4941
 	cp a, $01 ; $4943
@@ -1529,7 +1529,7 @@ ExchangeLinkDataBlock:
 	pop bc ; $498b
 	pop de ; $498c
 	pop hl ; $498d
-	ldh a, [$ffc2] ; $498e
+	ldh a, [hLinkState] ; $498e
 	cp a, $02 ; $4990
 	jr z, Label_07_49a0 ; $4992
 	cp a, $01 ; $4994
@@ -1588,7 +1588,7 @@ Label_07_49dd:
 	jr c, Label_07_49bf ; $49df
 	ret ; $49e1
 PrimeSlaveSerialReply:
-	ldh a, [$ffc2] ; $49e2
+	ldh a, [hLinkState] ; $49e2
 	cp a, $02 ; $49e4
 	jr nz, Label_07_49f6 ; $49e6
 	ld a, $40 ; $49e8
@@ -1603,7 +1603,7 @@ Label_07_49f6:
 	ret ; $49f6
 PrepareLinkStatePayload:
 	push af ; $49f7
-	ldh a, [$ffc1] ; $49f8
+	ldh a, [hLinkTxByte] ; $49f8
 	and a, $c0 ; $49fa
 	xor a, $c0 ; $49fc
 	ldh [$ffdc], a ; $49fe
@@ -1619,7 +1619,7 @@ PrepareLinkStatePayload:
 	ret ; $4a12
 PrepareLinkInputPayload:
 	push af ; $4a13
-	ldh a, [$ffc1] ; $4a14
+	ldh a, [hLinkTxByte] ; $4a14
 	and a, $c0 ; $4a16
 	xor a, $c0 ; $4a18
 	ldh [$ffdc], a ; $4a1a
@@ -1658,7 +1658,7 @@ Label_07_4a43:
 	scf ; $4a49
 	ccf ; $4a4a
 Label_07_4a4b:
-	ldh a, [$ffc0] ; $4a4b
+	ldh a, [hLinkRxByte] ; $4a4b
 	ld b, a ; $4a4d
 	ei ; $4a4e
 	pop de ; $4a4f
@@ -1677,7 +1677,7 @@ ResyncLinkSession:
 	ld a, $01 ; $4a63
 	ldh [$ffd8], a ; $4a65
 	farcall FarPtr_ExchangeLinkReadySignal ; $4a67
-	ldh a, [$ffc2] ; $4a6a
+	ldh a, [hLinkState] ; $4a6a
 	cp a, $02 ; $4a6c
 	jr z, Label_07_4a8c ; $4a6e
 	cp a, $01 ; $4a70
@@ -1722,7 +1722,7 @@ ResyncLinkSessionWithTimer:
 	ld a, $01 ; $4ab8
 	ldh [$ffd8], a ; $4aba
 	farcall FarPtr_ExchangeLinkReadySignal ; $4abc
-	ldh a, [$ffc2] ; $4abf
+	ldh a, [hLinkState] ; $4abf
 	cp a, $02 ; $4ac1
 	jr z, Label_07_4ae1 ; $4ac3
 	cp a, $01 ; $4ac5
@@ -1766,13 +1766,13 @@ TryLinkHandshakeSlave:
 	xor a, a ; $4b0b
 	ldh [$ffd7], a ; $4b0c
 	ld a, $c2 ; $4b0e
-	ldh [$ffc1], a ; $4b10
+	ldh [hLinkTxByte], a ; $4b10
 	ldh [$ffe0], a ; $4b12
 	ei ; $4b14
 	call AwaitSerialByte ; $4b15
 	jr c, Label_07_4b2e ; $4b18
 	di ; $4b1a
-	ldh a, [$ffc0] ; $4b1b
+	ldh a, [hLinkRxByte] ; $4b1b
 	cp a, $c2 ; $4b1d
 	jr z, Label_07_4b2e ; $4b1f
 	cp a, $00 ; $4b21
@@ -1805,7 +1805,7 @@ TryLinkHandshakeMaster:
 	ldh [rSC], a ; $4b43
 	ei ; $4b45
 	ld a, $c1 ; $4b46
-	ldh [$ffc1], a ; $4b48
+	ldh [hLinkTxByte], a ; $4b48
 	ld hl, $03e8 ; $4b4a
 	ld de, $03e8 ; $4b4d
 Label_07_4b50:
@@ -1816,7 +1816,7 @@ Label_07_4b50:
 	bit 7, a ; $4b58
 	jr nz, Label_07_4b50 ; $4b5a
 	di ; $4b5c
-	ldh a, [$ffc1] ; $4b5d
+	ldh a, [hLinkTxByte] ; $4b5d
 	ldh [rSB], a ; $4b5f
 	push af ; $4b61
 	ld a, $03 ; $4b62
@@ -1901,7 +1901,7 @@ LongDelay:
 	call ShortDelay ; $4bef
 	ret ; $4bf2
 RunLinkCommandFrame:
-	ldh a, [$ffc2] ; $4bf3
+	ldh a, [hLinkState] ; $4bf3
 	cp a, $02 ; $4bf5
 	jr z, Label_07_4bfe ; $4bf7
 	call RunLinkCommandFrameMaster ; $4bf9
@@ -1941,7 +1941,7 @@ SerialEncodeCommand:
 	pop de ; $4c2e
 	pop hl ; $4c2f
 	ld c, b ; $4c30
-	ldh a, [$ffc2] ; $4c31
+	ldh a, [hLinkState] ; $4c31
 	cp a, $01 ; $4c33
 	jr z, Label_07_4c49 ; $4c35
 	cp a, $02 ; $4c37
@@ -1951,13 +1951,13 @@ SerialEncodeCommand:
 	ldh [$ffd5], a ; $4c3e
 	ldh [$ffd6], a ; $4c40
 	ld a, $c0 ; $4c42
-	ldh [$ffc1], a ; $4c44
+	ldh [hLinkTxByte], a ; $4c44
 	call LinkErrorReset ; $4c46
 Label_07_4c49:
 	ldh a, [$ffdf] ; $4c49
 	or a, a ; $4c4b
 	jr z, Label_07_4c5d ; $4c4c
-	ldh a, [$ffc2] ; $4c4e
+	ldh a, [hLinkState] ; $4c4e
 	cp a, $02 ; $4c50
 	jr nz, Label_07_4c5d ; $4c52
 Label_07_4c54:
@@ -1972,7 +1972,7 @@ Label_07_4c5d:
 	ldh a, [$ffdc] ; $4c5d
 	or a, c ; $4c5f
 	di ; $4c60
-	ldh [$ffc1], a ; $4c61
+	ldh [hLinkTxByte], a ; $4c61
 	ldh [$ffe0], a ; $4c63
 	ei ; $4c65
 	pop hl ; $4c66
@@ -1981,7 +1981,7 @@ Label_07_4c5d:
 SerialDecodeCommand:
 	push af ; $4c69
 	push bc ; $4c6a
-	ldh a, [$ffc0] ; $4c6b
+	ldh a, [hLinkRxByte] ; $4c6b
 	ld b, a ; $4c6d
 	and a, $c0 ; $4c6e
 	cp a, $80 ; $4c70
@@ -1996,7 +1996,7 @@ Label_07_4c7f:
 	ld a, b ; $4c7f
 	and a, $3f ; $4c80
 	ldh [$ffd4], a ; $4c82
-	ldh a, [$ffc2] ; $4c84
+	ldh a, [hLinkState] ; $4c84
 	cp a, $01 ; $4c86
 	jr nz, Label_07_4c96 ; $4c88
 	ldh a, [$ffd5] ; $4c8a
@@ -2111,7 +2111,7 @@ Label_07_4d0c:
 	ret ; $4d20
 	INCBIN "data/bank_007/d_4d21.bin" ; $4d21, 1088 bytes
 ComputeShotPlacement:
-	ld a, [$c4a0] ; $5161
+	ld a, [wCurrentShotType] ; $5161
 	rst Rst00 ; $5164
 	dw Label_07_5183 ; $5165 jumptable
 	dw Label_07_519b ; $5167 jumptable
@@ -2327,7 +2327,7 @@ Label_07_52e8:
 	ld [$c459], a ; $52ed
 	ret ; $52f0
 AddBallSpeedQuarter:
-	ld hl, $c424 ; $52f1
+	ld hl, wBallVelocityDepth ; $52f1
 	ld a, [hl+] ; $52f4
 	ld h, [hl] ; $52f5
 	ld l, a ; $52f6
@@ -2337,7 +2337,7 @@ AddBallSpeedQuarter:
 	rr l ; $52fd
 	jr Label_07_532f ; $52ff
 AddBallSpeed3Sixteenths:
-	ld hl, $c424 ; $5301
+	ld hl, wBallVelocityDepth ; $5301
 	ld a, [hl+] ; $5304
 	ld h, [hl] ; $5305
 	ld l, a ; $5306
@@ -2355,7 +2355,7 @@ AddBallSpeed3Sixteenths:
 	add hl, de ; $531a
 	jr Label_07_532f ; $531b
 AddBallSpeedEighth:
-	ld hl, $c424 ; $531d
+	ld hl, wBallVelocityDepth ; $531d
 	ld a, [hl+] ; $5320
 	ld h, [hl] ; $5321
 	ld l, a ; $5322
@@ -2467,7 +2467,7 @@ ExecuteShot:
 	ld a, [$df4a] ; $53c7
 	ld [$c4a4], a ; $53ca
 	ld a, [$df14] ; $53cd
-	ld [$c4a0], a ; $53d0
+	ld [wCurrentShotType], a ; $53d0
 	ld a, [$df16] ; $53d3
 	swap a ; $53d6
 	ld hl, $df17 ; $53d8
@@ -2510,7 +2510,7 @@ Label_07_541c:
 	ld [$c4a2], a ; $541c
 	ld a, [$df4c] ; $541f
 	ld [$c4a3], a ; $5422
-	ld hl, $c421 ; $5425
+	ld hl, wBallVelocityX ; $5425
 	ld a, [hl+] ; $5428
 	ld d, [hl] ; $5429
 	ld e, a ; $542a
@@ -2518,7 +2518,7 @@ Label_07_541c:
 	ld a, e ; $542e
 	ld [hl+], a ; $542f
 	ld [hl], d ; $5430
-	ld hl, $c424 ; $5431
+	ld hl, wBallVelocityDepth ; $5431
 	ld a, [hl+] ; $5434
 	ld d, [hl] ; $5435
 	ld e, a ; $5436
@@ -2528,7 +2528,7 @@ Label_07_541c:
 	ld [hl], d ; $543c
 	ld hl, $5463 ; $543d
 	push hl ; $5440
-	ld a, [$c4a0] ; $5441
+	ld a, [wCurrentShotType] ; $5441
 	rst Rst00 ; $5444
 	dw Label_07_58be ; $5445 jumptable
 	dw Label_07_58d3 ; $5447 jumptable
@@ -2735,7 +2735,7 @@ Label_07_5564:
 Label_07_557d:
 	ret ; $557d
 ApplyShotTypePresets:
-	ld a, [$c4a0] ; $557e
+	ld a, [wCurrentShotType] ; $557e
 	ld b, a ; $5581
 	add a, a ; $5582
 	add a, a ; $5583
@@ -3018,11 +3018,11 @@ Label_07_572b:
 	ld h, [hl] ; $5762
 	ld l, a ; $5763
 	call AngleFromVector16 ; $5764
-	ld hl, $c43a ; $5767
+	ld hl, wShotAimAngle ; $5767
 	ld a, c ; $576a
 	ld [hl+], a ; $576b
 	ld [hl], b ; $576c
-	ld hl, $c43a ; $576d
+	ld hl, wShotAimAngle ; $576d
 	ld a, [hl+] ; $5770
 	ld b, [hl] ; $5771
 	ld c, a ; $5772
@@ -3061,7 +3061,7 @@ Label_07_5794:
 	ld a, e ; $579f
 	ld [hl+], a ; $57a0
 	ld [hl], d ; $57a1
-	ld hl, $c43a ; $57a2
+	ld hl, wShotAimAngle ; $57a2
 	ld a, [hl+] ; $57a5
 	ld b, [hl] ; $57a6
 	ld c, a ; $57a7
@@ -3100,7 +3100,7 @@ Label_07_57c9:
 	ld a, e ; $57d4
 	ld [hl+], a ; $57d5
 	ld [hl], d ; $57d6
-	ld hl, $c43a ; $57d7
+	ld hl, wShotAimAngle ; $57d7
 	ld a, [hl+] ; $57da
 	ld b, [hl] ; $57db
 	ld c, a ; $57dc
@@ -3203,7 +3203,7 @@ Label_07_5851:
 	ld [hl+], a ; $5861
 	ld [hl], d ; $5862
 	ld hl, $c430 ; $5863
-	ld de, $c450 ; $5866
+	ld de, wBallTargetX ; $5866
 	ld a, [hl+] ; $5869
 	ld [de], a ; $586a
 	inc de ; $586b
@@ -3269,7 +3269,7 @@ Label_07_58b1:
 	ret ; $58bd
 Label_07_58be:
 	ld a, $00 ; $58be
-	ld [$c4a0], a ; $58c0
+	ld [wCurrentShotType], a ; $58c0
 	call NormalizeBallHeightForShot ; $58c3
 	call ApplyShotTypePresets ; $58c6
 	call WeakenShotByCharge ; $58c9
@@ -3289,7 +3289,7 @@ Label_07_58d3:
 	ret ; $58eb
 Label_07_58ec:
 	ld a, $02 ; $58ec
-	ld [$c4a0], a ; $58ee
+	ld [wCurrentShotType], a ; $58ee
 	call NormalizeBallHeightForShot ; $58f1
 	call ApplyShotTypePresets ; $58f4
 	call WeakenShotByCharge ; $58f7
@@ -3351,7 +3351,7 @@ Label_07_5967:
 	ret ; $597b
 Label_07_597c:
 	ld a, $05 ; $597c
-	ld [$c4a0], a ; $597e
+	ld [wCurrentShotType], a ; $597e
 	call NormalizeBallHeightForShot ; $5981
 	call ApplyShotTypePresets ; $5984
 	call WeakenShotByCharge ; $5987
@@ -3360,7 +3360,7 @@ Label_07_597c:
 	ret ; $5990
 Label_07_5991:
 	ld a, $09 ; $5991
-	ld [$c4a0], a ; $5993
+	ld [wCurrentShotType], a ; $5993
 	ld a, $01 ; $5996
 	ld [$c4a6], a ; $5998
 	call NormalizeBallHeightForShot ; $599b
@@ -3929,7 +3929,7 @@ RunDebugTestMatch:
 	ld a, $04 ; $5df9
 	ld [wGameMode], a ; $5dfb
 	ld a, $03 ; $5dfe
-	ld [$c36c], a ; $5e00
+	ld [wCurrentStorySlot], a ; $5e00
 	ld a, $01 ; $5e03
 	ld [$c8a7], a ; $5e05
 	ld a, $01 ; $5e08

@@ -2137,7 +2137,7 @@ Func_1d_509c:
 	farcall FarPtr_1c_16 ; $51e6
 	wram_bank $06 ; $51e9
 	ld hl, $d145 ; $51ef
-	ld de, $ffc0 ; $51f2
+	ld de, hLinkRxByte ; $51f2
 	ld a, e ; $51f5
 	ld [hl+], a ; $51f6
 	ld [hl], d ; $51f7
@@ -2209,7 +2209,7 @@ Func_1d_5268:
 	farcall FarPtr_1c_16 ; $529e
 	wram_bank $06 ; $52a1
 	ld hl, $d145 ; $52a7
-	ld de, $ffc0 ; $52aa
+	ld de, hLinkRxByte ; $52aa
 	ld a, e ; $52ad
 	ld [hl+], a ; $52ae
 	ld [hl], d ; $52af
@@ -2393,7 +2393,7 @@ Func_1d_543d:
 	ld [hl+], a ; $548c
 	ld [hl], d ; $548d
 	ld hl, $d147 ; $548e
-	ld de, $ffc0 ; $5491
+	ld de, hLinkRxByte ; $5491
 	ld a, e ; $5494
 	ld [hl+], a ; $5495
 	ld [hl], d ; $5496
@@ -2652,7 +2652,7 @@ Func_1d_5603:
 	farcall FarPtr_1c_16 ; $573e
 	wram_bank $06 ; $5741
 	ld hl, $d147 ; $5747
-	ld de, $ffc0 ; $574a
+	ld de, hLinkRxByte ; $574a
 	ld a, e ; $574d
 	ld [hl+], a ; $574e
 	ld [hl], d ; $574f

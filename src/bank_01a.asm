@@ -221,23 +221,23 @@ GetTilemapBufferCellDest:
 	ld a, $01 ; $4176
 	farcall FarPtr_ShowCharDataScreen ; $4178
 	ld hl, wStoryModePlayersXPosition ; $417b
-	ld de, $c296 ; $417e
+	ld de, wStoryModeSpawnPosition ; $417e
 	ld bc, $0005 ; $4181
 	call CopyMemoryBC ; $4184
 	ld a, $ff ; $4187
-	ld [$c295], a ; $4189
+	ld [wStoryModeEntryPoint], a ; $4189
 	ld [$c294], a ; $418c
-	ld [$c2a1], a ; $418f
+	ld [wStoryModeExitLocationRequest], a ; $418f
 	jp Label_1a_408e ; $4192
 	farcall FarPtr_ShowGameProgressScreen ; $4195
 	ld hl, wStoryModePlayersXPosition ; $4198
-	ld de, $c296 ; $419b
+	ld de, wStoryModeSpawnPosition ; $419b
 	ld bc, $0005 ; $419e
 	call CopyMemoryBC ; $41a1
 	ld a, $ff ; $41a4
-	ld [$c295], a ; $41a6
+	ld [wStoryModeEntryPoint], a ; $41a6
 	ld [$c294], a ; $41a9
-	ld [$c2a1], a ; $41ac
+	ld [wStoryModeExitLocationRequest], a ; $41ac
 	jp Label_1a_408e ; $41af
 	call Func_1a_426b ; $41b2
 	ld a, [$d830] ; $41b5
@@ -405,10 +405,10 @@ Label_1a_42ce:
 	ld a, $00 ; $4302
 	ld [wStoryModeCurrentLocation], a ; $4304
 	ld a, $01 ; $4307
-	ld [$c295], a ; $4309
+	ld [wStoryModeEntryPoint], a ; $4309
 	ld a, $ff ; $430c
 	ld [$c294], a ; $430e
-	ld [$c2a1], a ; $4311
+	ld [wStoryModeExitLocationRequest], a ; $4311
 	jp Label_1a_408e ; $4314
 Label_1a_4317:
 	cp a, $ff ; $4317
@@ -441,10 +441,10 @@ Label_1a_4331:
 	ld a, $00 ; $4351
 	ld [wStoryModeCurrentLocation], a ; $4353
 	ld a, $ff ; $4356
-	ld [$c295], a ; $4358
+	ld [wStoryModeEntryPoint], a ; $4358
 	ld a, $ff ; $435b
 	ld [$c294], a ; $435d
-	ld [$c2a1], a ; $4360
+	ld [wStoryModeExitLocationRequest], a ; $4360
 	jp Label_1a_408e ; $4363
 Label_1a_4366:
 	call BuildMinigameModePauseMenu ; $4366

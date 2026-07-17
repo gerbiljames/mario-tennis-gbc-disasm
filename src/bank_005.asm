@@ -245,7 +245,7 @@ GetTilemapCellAddress:
 	and a, $1f ; $412a
 	ld e, a ; $412c
 	ld bc, $0020 ; $412d
-	ld hl, $c3b4 ; $4130
+	ld hl, wShadowTilemapPtr ; $4130
 	ld a, [hl+] ; $4133
 	ld h, [hl] ; $4134
 	ld l, a ; $4135
@@ -585,13 +585,13 @@ WriteWindowCellTileAttr:
 	push de ; $431f
 	push hl ; $4320
 	call GetWindowCellOffset ; $4321
-	ld hl, $c3b4 ; $4324
+	ld hl, wShadowTilemapPtr ; $4324
 	ld a, [hl+] ; $4327
 	ld h, [hl] ; $4328
 	ld l, a ; $4329
 	ldh a, [hWramBank] ; $432a
 	push af ; $432c
-	ld a, [$c3b3] ; $432d
+	ld a, [wShadowTilemapBank] ; $432d
 	ld a, a ; $4330
 	wram_bank ; $4331
 	add hl, de ; $4335
@@ -612,13 +612,13 @@ ReadWindowCellTileAttr:
 	push de ; $4348
 	push hl ; $4349
 	call GetWindowCellOffset ; $434a
-	ld hl, $c3b4 ; $434d
+	ld hl, wShadowTilemapPtr ; $434d
 	ld a, [hl+] ; $4350
 	ld h, [hl] ; $4351
 	ld l, a ; $4352
 	ldh a, [hWramBank] ; $4353
 	push af ; $4355
-	ld a, [$c3b3] ; $4356
+	ld a, [wShadowTilemapBank] ; $4356
 	ld a, a ; $4359
 	wram_bank ; $435a
 	add hl, de ; $435e
@@ -844,9 +844,9 @@ Func_05_44a3:
 	ldh a, [hWramBank] ; $44a7
 	push af ; $44a9
 	wram_bank $05 ; $44aa
-	ld a, [$c3b3] ; $44b0
+	ld a, [wShadowTilemapBank] ; $44b0
 	push af ; $44b3
-	ld hl, $c3b4 ; $44b4
+	ld hl, wShadowTilemapPtr ; $44b4
 	ld a, [hl+] ; $44b7
 	ld d, [hl] ; $44b8
 	ld e, a ; $44b9
@@ -1164,11 +1164,11 @@ CreateWindowWithAttr:
 	push af ; $4668
 	wram_bank $05 ; $4669
 	ld a, h ; $466f
-	ld [$c3b6], a ; $4670
+	ld [wWindowTileAttr], a ; $4670
 	call CreateWindow ; $4673
 	ld h, a ; $4676
 	ld a, $80 ; $4677
-	ld [$c3b6], a ; $4679
+	ld [wWindowTileAttr], a ; $4679
 	pop af ; $467c
 	wram_bank ; $467d
 	ld a, h ; $4681
@@ -4870,7 +4870,7 @@ Label_05_5e34:
 	db $e1 ; $5e82
 Label_05_5e83:
 	push af ; $5e83
-	ld a, [$c3b3] ; $5e84
+	ld a, [wShadowTilemapBank] ; $5e84
 	wram_bank ; $5e87
 	pop af ; $5e8b
 	call Func_05_5f0d ; $5e8c
@@ -4933,7 +4933,7 @@ Label_05_5ebc:
 	ld [$d868], a ; $5eea
 	pop af ; $5eed
 	wram_bank ; $5eee
-	ld hl, $c3b7 ; $5ef2
+	ld hl, wGlyphPenX ; $5ef2
 	ld a, [hl+] ; $5ef5
 	ld h, [hl] ; $5ef6
 	ld l, a ; $5ef7
@@ -4964,7 +4964,7 @@ Func_05_5f0d:
 	ld e, a ; $5f1c
 	ld a, [$c3bc] ; $5f1d
 	ld b, a ; $5f20
-	ld hl, $c3b7 ; $5f21
+	ld hl, wGlyphPenX ; $5f21
 	ld a, [hl+] ; $5f24
 	ld h, [hl] ; $5f25
 	ld l, a ; $5f26
@@ -6007,13 +6007,13 @@ TextSubcmdHandlers_05:
 	call BeginFadeOut ; $66ed
 	call WaitFadeEnd ; $66f0
 	ld hl, wStoryModePlayersXPosition ; $66f3
-	ld de, $c296 ; $66f6
+	ld de, wStoryModeSpawnPosition ; $66f6
 	ld bc, $0005 ; $66f9
 	call CopyMemoryBC ; $66fc
 	ld a, $ff ; $66ff
-	ld [$c295], a ; $6701
+	ld [wStoryModeEntryPoint], a ; $6701
 	ld [$c294], a ; $6704
-	ld [$c2a1], a ; $6707
+	ld [wStoryModeExitLocationRequest], a ; $6707
 	set_flag $03, 4 ; $670a
 	ld c, $00 ; $670d
 	farcall FarPtr_1c_00 ; $670f
@@ -6117,10 +6117,10 @@ Label_05_67f3:
 	ld a, [$c700] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [$c704] ; $6805
-	ld [$c295], a ; $6808
+	ld [wStoryModeEntryPoint], a ; $6808
 	ld a, $ff ; $680b
 	ld [$c294], a ; $680d
-	ld [$c2a1], a ; $6810
+	ld [wStoryModeExitLocationRequest], a ; $6810
 	jr Label_05_6857 ; $6813
 Label_05_6815:
 	ldh a, [hInputPressed] ; $6815
@@ -6871,14 +6871,14 @@ RunDebugWindowDemo:
 	call DisableLCDSafely ; $6d9e
 	call ResetTextWindowState ; $6da1
 	ld de, $d000 ; $6da4
-	ld hl, $c3b4 ; $6da7
+	ld hl, wShadowTilemapPtr ; $6da7
 	ld a, e ; $6daa
 	ld [hl+], a ; $6dab
 	ld [hl], d ; $6dac
 	ld a, $05 ; $6dad
-	ld [$c3b3], a ; $6daf
+	ld [wShadowTilemapBank], a ; $6daf
 	ld a, $80 ; $6db2
-	ld [$c3b6], a ; $6db4
+	ld [wWindowTileAttr], a ; $6db4
 	ld d, $00 ; $6db7
 	ld e, $02 ; $6db9
 	ld b, $10 ; $6dbb
@@ -6935,14 +6935,14 @@ ResetTextWindowState:
 	ld c, $80 ; $6e1e
 	call ClearMemory16 ; $6e20
 	ld de, $d000 ; $6e23
-	ld hl, $c3b4 ; $6e26
+	ld hl, wShadowTilemapPtr ; $6e26
 	ld a, e ; $6e29
 	ld [hl+], a ; $6e2a
 	ld [hl], d ; $6e2b
 	ld a, $05 ; $6e2c
-	ld [$c3b3], a ; $6e2e
+	ld [wShadowTilemapBank], a ; $6e2e
 	ld a, $80 ; $6e31
-	ld [$c3b6], a ; $6e33
+	ld [wWindowTileAttr], a ; $6e33
 	ld a, $ff ; $6e36
 	ld [$d824], a ; $6e38
 	ld a, $fe ; $6e3b
@@ -7203,7 +7203,7 @@ DrawTextWindowFrame:
 Label_05_6f98:
 	ld d, h ; $6f98
 	ld e, l ; $6f99
-	ld hl, $c3b4 ; $6f9a
+	ld hl, wShadowTilemapPtr ; $6f9a
 	ld a, [hl+] ; $6f9d
 	ld h, [hl] ; $6f9e
 	ld l, a ; $6f9f
@@ -7218,7 +7218,7 @@ Label_05_6f98:
 Label_05_6fad:
 	ld e, b ; $6fad
 	ld d, c ; $6fae
-	ld a, [$c3b6] ; $6faf
+	ld a, [wWindowTileAttr] ; $6faf
 	push af ; $6fb2
 	push de ; $6fb3
 	push hl ; $6fb4
@@ -7226,7 +7226,7 @@ Label_05_6fad:
 	dec d ; $6fb6
 	dec e ; $6fb7
 	dec e ; $6fb8
-	ld a, [$c3b3] ; $6fb9
+	ld a, [wShadowTilemapBank] ; $6fb9
 	ld a, a ; $6fbc
 	wram_bank ; $6fbd
 	ld a, [$c3bb] ; $6fc1
@@ -7556,7 +7556,7 @@ CopyDirtyRowSpanToVRAM:
 	add hl, hl ; $7181
 	ld d, h ; $7182
 	ld e, l ; $7183
-	ld hl, $c3b4 ; $7184
+	ld hl, wShadowTilemapPtr ; $7184
 	ld a, [hl+] ; $7187
 	ld h, [hl] ; $7188
 	ld l, a ; $7189
@@ -7569,7 +7569,7 @@ CopyDirtyRowSpanToVRAM:
 	pop hl ; $7192
 	ld c, b ; $7193
 	sla c ; $7194
-	ld a, [$c3b3] ; $7196
+	ld a, [wShadowTilemapBank] ; $7196
 	ld b, a ; $7199
 	ldh a, [hWramBank] ; $719a
 	push af ; $719c
@@ -7738,7 +7738,7 @@ Func_05_725e:
 Label_05_7274:
 	ld d, h ; $7274
 	ld e, l ; $7275
-	ld hl, $c3b4 ; $7276
+	ld hl, wShadowTilemapPtr ; $7276
 	ld a, [hl+] ; $7279
 	ld h, [hl] ; $727a
 	ld l, a ; $727b
@@ -7751,7 +7751,7 @@ Label_05_7274:
 	wram_bank $05 ; $7283
 	ld a, [$d82f] ; $7289
 	ld c, a ; $728c
-	ld a, [$c3b3] ; $728d
+	ld a, [wShadowTilemapBank] ; $728d
 	ld a, a ; $7290
 	wram_bank ; $7291
 	push de ; $7295
@@ -7831,7 +7831,7 @@ ResetGlyphStream:
 	push af ; $730d
 	push hl ; $730e
 	xor a, a ; $730f
-	ld hl, $c3b7 ; $7310
+	ld hl, wGlyphPenX ; $7310
 	ld [hl+], a ; $7313
 	ld [hl+], a ; $7314
 	ld [hl+], a ; $7315
@@ -8059,7 +8059,7 @@ Label_05_7440:
 	pop af ; $7440
 	ld hl, $8c00 ; $7441
 	wram_bank $05 ; $7444
-	ld a, [$c3b6] ; $744a
+	ld a, [wWindowTileAttr] ; $744a
 	bit 3, a ; $744d
 	jr z, Label_05_7454 ; $744f
 	ld hl, $ac00 ; $7451
@@ -8207,7 +8207,7 @@ InitGlyphStreamForWindow:
 	sra d ; $7549
 	rr e ; $754b
 Label_05_754d:
-	ld hl, $c3b7 ; $754d
+	ld hl, wGlyphPenX ; $754d
 	ld [hl], e ; $7550
 	inc hl ; $7551
 	ld [hl], d ; $7552
@@ -8251,7 +8251,7 @@ DrawStreamGlyph:
 	ld b, [hl] ; $758e
 	inc hl ; $758f
 	ld c, [hl] ; $7590
-	ld hl, $c3b7 ; $7591
+	ld hl, wGlyphPenX ; $7591
 	ld a, [hl+] ; $7594
 	ld d, [hl] ; $7595
 	ld e, a ; $7596
@@ -8280,7 +8280,7 @@ Label_05_75b8:
 	pop af ; $75bf
 	call DrawGlyph ; $75c0
 Label_05_75c3:
-	ld hl, $c3b7 ; $75c3
+	ld hl, wGlyphPenX ; $75c3
 	ld a, e ; $75c6
 	ld [hl+], a ; $75c7
 	ld [hl], d ; $75c8
@@ -8311,7 +8311,7 @@ StartGlyphStreamRow:
 	ld a, c ; $75ec
 	add a, b ; $75ed
 	ld [$c3ba], a ; $75ee
-	ld hl, $c3b7 ; $75f1
+	ld hl, wGlyphPenX ; $75f1
 	ld a, e ; $75f4
 	ld [hl+], a ; $75f5
 	ld [hl], d ; $75f6
@@ -8371,7 +8371,7 @@ Label_05_7646:
 	ld a, [$c3bb] ; $7646
 	cp a, b ; $7649
 	jr nc, Label_05_7677 ; $764a
-	ld hl, $c3b7 ; $764c
+	ld hl, wGlyphPenX ; $764c
 	ld a, [hl+] ; $764f
 	ld h, [hl] ; $7650
 	ld l, a ; $7651
@@ -8421,7 +8421,7 @@ DrawInlineGlyph:
 	ld b, [hl] ; $768c
 	inc hl ; $768d
 	ld c, [hl] ; $768e
-	ld hl, $c3b7 ; $768f
+	ld hl, wGlyphPenX ; $768f
 	ld a, [hl+] ; $7692
 	ld d, [hl] ; $7693
 	ld e, a ; $7694
@@ -8450,7 +8450,7 @@ Label_05_76b6:
 	pop af ; $76bd
 	call DrawGlyph ; $76be
 Label_05_76c1:
-	ld hl, $c3b7 ; $76c1
+	ld hl, wGlyphPenX ; $76c1
 	ld a, e ; $76c4
 	ld [hl+], a ; $76c5
 	ld [hl], d ; $76c6
@@ -8468,7 +8468,7 @@ Label_05_76c1:
 	ldh a, [hWramBank] ; $76d5
 	push af ; $76d7
 	xor a, a ; $76d8
-	ld hl, $c3b7 ; $76d9
+	ld hl, wGlyphPenX ; $76d9
 	ld [hl+], a ; $76dc
 	ld [hl+], a ; $76dd
 	ld [hl+], a ; $76de
@@ -8491,7 +8491,7 @@ Label_05_76c1:
 	ldh a, [hWramBank] ; $76f9
 	push af ; $76fb
 	xor a, a ; $76fc
-	ld hl, $c3b7 ; $76fd
+	ld hl, wGlyphPenX ; $76fd
 	ld [hl+], a ; $7700
 	ld [hl+], a ; $7701
 	ld [hl+], a ; $7702
@@ -8517,7 +8517,7 @@ InitGlyphStreamAt:
 	push af ; $7721
 	wram_bank $05 ; $7722
 	xor a, a ; $7728
-	ld hl, $c3b7 ; $7729
+	ld hl, wGlyphPenX ; $7729
 	ld [hl+], a ; $772c
 	ld [hl+], a ; $772d
 	ld [hl+], a ; $772e
@@ -8550,7 +8550,7 @@ Label_05_774f:
 	ld [hl], d ; $7757
 	sra d ; $7758
 	rr e ; $775a
-	ld hl, $c3b7 ; $775c
+	ld hl, wGlyphPenX ; $775c
 	ld [hl], e ; $775f
 	inc hl ; $7760
 	ld [hl], d ; $7761
@@ -8678,7 +8678,7 @@ Label_05_780a:
 	ldh a, [hWramBank] ; $7814
 	push af ; $7816
 	wram_bank $05 ; $7817
-	ld a, [$c3b6] ; $781d
+	ld a, [wWindowTileAttr] ; $781d
 	bit 3, a ; $7820
 	jr z, Label_05_7828 ; $7822
 	ld de, $2000 ; $7824

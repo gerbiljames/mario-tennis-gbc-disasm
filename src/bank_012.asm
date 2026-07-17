@@ -25,7 +25,7 @@ StoryCmdHandlersA_12:
 	; $4056, 25 bytes (bytes:16)
 	db $01, $c0, $00, $16, $00, $1b, $b5, $40, $02, $40, $00, $16, $00, $0d, $6f, $40 ; 0x00
 	db $0f, $c0, $00, $16, $00, $1b, $00, $00, $ff ; 0x10
-	ld a, [$c295] ; $406f
+	ld a, [wStoryModeEntryPoint] ; $406f
 	cp a, $ff ; $4072
 	jp z, Label_12_40b4 ; $4074
 	test_flag $05, 7 ; $4077
@@ -55,7 +55,7 @@ Label_12_40a2:
 	farcall FarPtr_MoveActorByAngle ; $40b1
 Label_12_40b4:
 	ret ; $40b4
-	ld a, [$c295] ; $40b5
+	ld a, [wStoryModeEntryPoint] ; $40b5
 	cp a, $ff ; $40b8
 	jp z, Label_12_40fa ; $40ba
 	test_flag $05, 7 ; $40bd
@@ -123,14 +123,14 @@ Label_12_40fa:
 	jr nz, Label_12_4167 ; $415c
 	ld a, $01 ; $415e
 	ld [$c294], a ; $4160
-	ld [$c2a1], a ; $4163
+	ld [wStoryModeExitLocationRequest], a ; $4163
 	ret ; $4166
 Label_12_4167:
 	ld a, $01 ; $4167
 	ld [$c294], a ; $4169
-	ld [$c2a1], a ; $416c
+	ld [wStoryModeExitLocationRequest], a ; $416c
 	ret ; $416f
-	ld a, [$c295] ; $4170
+	ld a, [wStoryModeEntryPoint] ; $4170
 	cp a, $0f ; $4173
 	call z, Func_12_4179 ; $4175
 	ret ; $4178
@@ -679,7 +679,7 @@ Label_12_44c5:
 	call WaitFadeEnd ; $4670
 	ld a, $0f ; $4673
 	ld [$c294], a ; $4675
-	ld [$c2a1], a ; $4678
+	ld [wStoryModeExitLocationRequest], a ; $4678
 	ret ; $467b
 WallPracticeRoomStoryCmds_12:
 	; $467c, 14 bytes (records:2)
@@ -700,7 +700,7 @@ WallPracticeRoomStoryCmds_12:
 	; $46da, 25 bytes (bytes:16)
 	db $01, $c0, $00, $0f, $00, $39, $f3, $46, $0a, $c0, $00, $0c, $00, $31, $00, $00 ; 0x00
 	db $0b, $c0, $00, $0c, $00, $31, $00, $00, $ff ; 0x10
-	ld a, [$c295] ; $46f3
+	ld a, [wStoryModeEntryPoint] ; $46f3
 	cp a, $ff ; $46f6
 	jp z, Label_12_4715 ; $46f8
 	clear_flag $0f, 5 ; $46fb
@@ -871,7 +871,7 @@ WallPracticeMasterResultScript:
 	call BeginFadeIn ; $4843
 	call WaitFadeEnd ; $4846
 	xor a, a ; $4849
-	ld [$c2d5], a ; $484a
+	ld [wStoryModeShowLocationName], a ; $484a
 	test_flag $1b, 5 ; $484d
 	jr z, WallPracticeScoreRetryPrompt ; $4850
 	ld a, [wPointWinLoseFlag] ; $4852
@@ -883,7 +883,7 @@ WallPracticeScoreRetryPrompt:
 	call BeginFadeIn ; $485e
 	call WaitFadeEnd ; $4861
 	xor a, a ; $4864
-	ld [$c2d5], a ; $4865
+	ld [wStoryModeShowLocationName], a ; $4865
 	ld hl, wMinigamesCurrentScore ; $4868
 	ld a, [hl+] ; $486b
 	ld b, [hl] ; $486c
@@ -1059,10 +1059,10 @@ RelaunchWallPracticeMasterLevel:
 	ld a, $13 ; $49cd
 	ld [wStoryModeCurrentLocation], a ; $49cf
 	ld a, $0a ; $49d2
-	ld [$c295], a ; $49d4
+	ld [wStoryModeEntryPoint], a ; $49d4
 	ld a, $ff ; $49d7
 	ld [$c294], a ; $49d9
-	ld [$c2a1], a ; $49dc
+	ld [wStoryModeExitLocationRequest], a ; $49dc
 	ld a, $1b ; $49df
 	farcall FarPtr_RunTrainingDrillByID ; $49e1
 	ret ; $49e4
@@ -1165,7 +1165,7 @@ Label_12_4aae:
 	dw $14f9 ; record 2
 WallPracticeLevelResultScript:
 	xor a, a ; $4ab5
-	ld [$c2d5], a ; $4ab6
+	ld [wStoryModeShowLocationName], a ; $4ab6
 	ld a, [wPointWinLoseFlag] ; $4ab9
 	cp a, $01 ; $4abc
 	jp nz, Label_12_4ad0 ; $4abe
@@ -1474,10 +1474,10 @@ Label_12_4d28:
 	ld a, $13 ; $4d7d
 	ld [wStoryModeCurrentLocation], a ; $4d7f
 	ld a, $0b ; $4d82
-	ld [$c295], a ; $4d84
+	ld [wStoryModeEntryPoint], a ; $4d84
 	ld a, $ff ; $4d87
 	ld [$c294], a ; $4d89
-	ld [$c2a1], a ; $4d8c
+	ld [wStoryModeExitLocationRequest], a ; $4d8c
 	ld a, $16 ; $4d8f
 	farcall FarPtr_RunTrainingDrillByID ; $4d91
 	farcall FarPtr_EndCutsceneScriptMode ; $4d94
@@ -1522,10 +1522,10 @@ Label_12_4d97:
 	ld a, $13 ; $4df2
 	ld [wStoryModeCurrentLocation], a ; $4df4
 	ld a, $0b ; $4df7
-	ld [$c295], a ; $4df9
+	ld [wStoryModeEntryPoint], a ; $4df9
 	ld a, $ff ; $4dfc
 	ld [$c294], a ; $4dfe
-	ld [$c2a1], a ; $4e01
+	ld [wStoryModeExitLocationRequest], a ; $4e01
 	ld a, $17 ; $4e04
 	farcall FarPtr_RunTrainingDrillByID ; $4e06
 	farcall FarPtr_EndCutsceneScriptMode ; $4e09
@@ -1570,10 +1570,10 @@ Label_12_4e0c:
 	ld a, $13 ; $4e67
 	ld [wStoryModeCurrentLocation], a ; $4e69
 	ld a, $0b ; $4e6c
-	ld [$c295], a ; $4e6e
+	ld [wStoryModeEntryPoint], a ; $4e6e
 	ld a, $ff ; $4e71
 	ld [$c294], a ; $4e73
-	ld [$c2a1], a ; $4e76
+	ld [wStoryModeExitLocationRequest], a ; $4e76
 	ld a, $18 ; $4e79
 	farcall FarPtr_RunTrainingDrillByID ; $4e7b
 	farcall FarPtr_EndCutsceneScriptMode ; $4e7e
@@ -1618,10 +1618,10 @@ Label_12_4e81:
 	ld a, $13 ; $4edc
 	ld [wStoryModeCurrentLocation], a ; $4ede
 	ld a, $0b ; $4ee1
-	ld [$c295], a ; $4ee3
+	ld [wStoryModeEntryPoint], a ; $4ee3
 	ld a, $ff ; $4ee6
 	ld [$c294], a ; $4ee8
-	ld [$c2a1], a ; $4eeb
+	ld [wStoryModeExitLocationRequest], a ; $4eeb
 	ld a, $19 ; $4eee
 	farcall FarPtr_RunTrainingDrillByID ; $4ef0
 	farcall FarPtr_EndCutsceneScriptMode ; $4ef3
@@ -1647,7 +1647,7 @@ WallPracticeLevelLockedScript:
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4f1f
 	call EnableLCD ; $4f22
 	call SetupWallPracticeLevelSigns ; $4f25
-	ld a, [$c295] ; $4f28
+	ld a, [wStoryModeEntryPoint] ; $4f28
 	cp a, $0a ; $4f2b
 	jp z, Label_12_4f39 ; $4f2d
 	cp a, $0b ; $4f30
@@ -1681,7 +1681,7 @@ Label_12_4f55:
 	call BeginFadeIn ; $4f71
 	call WaitFadeEnd ; $4f74
 	xor a, a ; $4f77
-	ld [$c2d5], a ; $4f78
+	ld [wStoryModeShowLocationName], a ; $4f78
 	jp WallPracticeExitCourtScript ; $4f7b
 Label_12_4f7e:
 	ld a, [$c2b0] ; $4f7e
@@ -1714,7 +1714,7 @@ Label_12_4fa6:
 	call BeginFadeIn ; $4fbd
 	call WaitFadeEnd ; $4fc0
 	xor a, a ; $4fc3
-	ld [$c2d5], a ; $4fc4
+	ld [wStoryModeShowLocationName], a ; $4fc4
 	ld a, [$c4c7] ; $4fc7
 	cp a, $01 ; $4fca
 	jp z, Label_12_505e ; $4fcc
@@ -1780,10 +1780,10 @@ Label_12_502b:
 	ld a, $13 ; $5046
 	ld [wStoryModeCurrentLocation], a ; $5048
 	ld a, $0b ; $504b
-	ld [$c295], a ; $504d
+	ld [wStoryModeEntryPoint], a ; $504d
 	ld a, $ff ; $5050
 	ld [$c294], a ; $5052
-	ld [$c2a1], a ; $5055
+	ld [wStoryModeExitLocationRequest], a ; $5055
 	ld a, [$c8f7] ; $5058
 	farcall FarPtr_RunTrainingDrillByID ; $505b
 Label_12_505e:
@@ -2053,10 +2053,10 @@ LaunchWallPracticeMinigame:
 	ld a, $13 ; $5295
 	ld [wStoryModeCurrentLocation], a ; $5297
 	ld a, $0a ; $529a
-	ld [$c295], a ; $529c
+	ld [wStoryModeEntryPoint], a ; $529c
 	ld a, $ff ; $529f
 	ld [$c294], a ; $52a1
-	ld [$c2a1], a ; $52a4
+	ld [wStoryModeExitLocationRequest], a ; $52a4
 	ld a, [$c2b0] ; $52a7
 	add a, $b9 ; $52aa
 	ld l, a ; $52ac
@@ -2691,13 +2691,13 @@ Label_12_59be:
 	ld a, $08 ; $59f8
 	farcall FarPtr_WaitActorScriptDone ; $59fa
 	ld hl, wStoryModePlayersXPosition ; $59fd
-	ld de, $c296 ; $5a00
+	ld de, wStoryModeSpawnPosition ; $5a00
 	ld bc, $0005 ; $5a03
 	call CopyMemoryBC ; $5a06
 	ld a, $ff ; $5a09
-	ld [$c295], a ; $5a0b
+	ld [wStoryModeEntryPoint], a ; $5a0b
 	ld [$c294], a ; $5a0e
-	ld [$c2a1], a ; $5a11
+	ld [wStoryModeExitLocationRequest], a ; $5a11
 	farcall FarPtr_InitStoryMatchSettings ; $5a14
 	ld a, $00 ; $5a17
 	ld [wCurrentMinigameStoryMatch], a ; $5a19
@@ -2853,13 +2853,13 @@ Label_12_5ae3:
 	ld a, $00 ; $5b42
 	farcall FarPtr_WaitActorScriptDone ; $5b44
 	ld hl, wStoryModePlayersXPosition ; $5b47
-	ld de, $c296 ; $5b4a
+	ld de, wStoryModeSpawnPosition ; $5b4a
 	ld bc, $0005 ; $5b4d
 	call CopyMemoryBC ; $5b50
 	ld a, $ff ; $5b53
-	ld [$c295], a ; $5b55
+	ld [wStoryModeEntryPoint], a ; $5b55
 	ld [$c294], a ; $5b58
-	ld [$c2a1], a ; $5b5b
+	ld [wStoryModeExitLocationRequest], a ; $5b5b
 	farcall FarPtr_InitStoryMatchSettings ; $5b5e
 	ld a, $01 ; $5b61
 	ld [wCurrentMinigameStoryMatch], a ; $5b63
@@ -3093,7 +3093,7 @@ Label_12_5d7b:
 Label_12_5d8d:
 	call Func_12_5e12 ; $5d8d
 	call Func_12_5e91 ; $5d90
-	ld a, [$c295] ; $5d93
+	ld a, [wStoryModeEntryPoint] ; $5d93
 	cp a, $0f ; $5d96
 	jp z, SeniorCourtPostMatchReturn ; $5d98
 	cp a, $0e ; $5d9b
@@ -3224,7 +3224,7 @@ Func_12_5e91:
 Label_12_5eaa:
 	ret ; $5eaa
 Func_12_5eab:
-	ld a, [$c295] ; $5eab
+	ld a, [wStoryModeEntryPoint] ; $5eab
 	cp a, $01 ; $5eae
 	jp nz, Label_12_5ef0 ; $5eb0
 	test_flag $05, 7 ; $5eb3
@@ -3507,7 +3507,7 @@ Label_12_60c4:
 	pop af ; $6116
 	ld a, $0f ; $6117
 	ld [$c294], a ; $6119
-	ld [$c2a1], a ; $611c
+	ld [wStoryModeExitLocationRequest], a ; $611c
 	farcall FarPtr_InitStoryMatchSettings ; $611f
 	ld a, $01 ; $6122
 	ld [wCurrentMinigameStoryMatch], a ; $6124
@@ -3562,7 +3562,7 @@ Label_12_6136:
 	pop af ; $6192
 	ld a, $0f ; $6193
 	ld [$c294], a ; $6195
-	ld [$c2a1], a ; $6198
+	ld [wStoryModeExitLocationRequest], a ; $6198
 	farcall FarPtr_InitStoryMatchSettings ; $619b
 	ld a, $01 ; $619e
 	ld [wCurrentMinigameStoryMatch], a ; $61a0
@@ -3619,7 +3619,7 @@ Label_12_61b2:
 	pop af ; $6212
 	ld a, $0f ; $6213
 	ld [$c294], a ; $6215
-	ld [$c2a1], a ; $6218
+	ld [wStoryModeExitLocationRequest], a ; $6218
 	farcall FarPtr_InitStoryMatchSettings ; $621b
 	ld a, $01 ; $621e
 	ld [wCurrentMinigameStoryMatch], a ; $6220
@@ -3658,7 +3658,7 @@ Label_12_6232:
 	pop af ; $626a
 	ld a, $0f ; $626b
 	ld [$c294], a ; $626d
-	ld [$c2a1], a ; $6270
+	ld [wStoryModeExitLocationRequest], a ; $6270
 	farcall FarPtr_InitStoryMatchSettings ; $6273
 	ld a, $00 ; $6276
 	ld [wCurrentMinigameStoryMatch], a ; $6278
@@ -3701,7 +3701,7 @@ Label_12_628a:
 	pop af ; $62c9
 	ld a, $0f ; $62ca
 	ld [$c294], a ; $62cc
-	ld [$c2a1], a ; $62cf
+	ld [wStoryModeExitLocationRequest], a ; $62cf
 	farcall FarPtr_InitStoryMatchSettings ; $62d2
 	ld a, $00 ; $62d5
 	ld [wCurrentMinigameStoryMatch], a ; $62d7
@@ -3744,7 +3744,7 @@ Label_12_62e9:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $6326
 	ld a, $0f ; $6329
 	ld [$c294], a ; $632b
-	ld [$c2a1], a ; $632e
+	ld [wStoryModeExitLocationRequest], a ; $632e
 	farcall FarPtr_InitStoryMatchSettings ; $6331
 	ld a, $00 ; $6334
 	ld [wCurrentMinigameStoryMatch], a ; $6336
@@ -3785,7 +3785,7 @@ Label_12_6348:
 	pop af ; $6382
 	ld a, $0f ; $6383
 	ld [$c294], a ; $6385
-	ld [$c2a1], a ; $6388
+	ld [wStoryModeExitLocationRequest], a ; $6388
 	farcall FarPtr_InitStoryMatchSettings ; $638b
 	ld a, $00 ; $638e
 	ld [wCurrentMinigameStoryMatch], a ; $6390
@@ -4795,10 +4795,10 @@ Label_12_6d8a:
 	ld a, $10 ; $6d8a
 	ld [wStoryModeCurrentLocation], a ; $6d8c
 	ld a, $0d ; $6d8f
-	ld [$c295], a ; $6d91
+	ld [wStoryModeEntryPoint], a ; $6d91
 	ld a, $ff ; $6d94
 	ld [$c294], a ; $6d96
-	ld [$c2a1], a ; $6d99
+	ld [wStoryModeExitLocationRequest], a ; $6d99
 	farcall FarPtr_StubNop_1e ; $6d9c
 	ret ; $6d9f
 SeniorCourtPostMatchReturn:
@@ -4834,7 +4834,7 @@ Label_12_6db5:
 	ret ; $6dec
 SeniorMatchVictorySceneDispatch:
 	xor a, a ; $6ded
-	ld [$c2d5], a ; $6dee
+	ld [wStoryModeShowLocationName], a ; $6dee
 	ld a, $01 ; $6df1
 	farcall FarPtr_SetActorNullScript ; $6df3
 	ld a, [$c2b1] ; $6df6
@@ -5436,10 +5436,10 @@ SeniorMatchVictorySceneDispatch:
 	ld a, $10 ; $7381
 	ld [wStoryModeCurrentLocation], a ; $7383
 	ld a, $01 ; $7386
-	ld [$c295], a ; $7388
+	ld [wStoryModeEntryPoint], a ; $7388
 	ld a, $ff ; $738b
 	ld [$c294], a ; $738d
-	ld [$c2a1], a ; $7390
+	ld [wStoryModeExitLocationRequest], a ; $7390
 	ld a, $03 ; $7393
 	ld d, $03 ; $7395
 	farcall FarPtr_ScriptSetActorAnimation ; $7397
@@ -5807,10 +5807,10 @@ SeniorMatchVictorySceneDispatch:
 	ld a, $10 ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b
 	ld a, $01 ; $771e
-	ld [$c295], a ; $7720
+	ld [wStoryModeEntryPoint], a ; $7720
 	ld a, $ff ; $7723
 	ld [$c294], a ; $7725
-	ld [$c2a1], a ; $7728
+	ld [wStoryModeExitLocationRequest], a ; $7728
 	ld a, $03 ; $772b
 	ld d, $03 ; $772d
 	farcall FarPtr_ScriptSetActorAnimation ; $772f

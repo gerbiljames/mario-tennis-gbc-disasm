@@ -39,7 +39,7 @@ Label_1e_4031:
 	sound $03 ; $4039
 	push bc ; $403b
 	farcall FarPtr_InitTextWindows ; $403c
-	ld hl, $c3b3 ; $403f
+	ld hl, wShadowTilemapBank ; $403f
 	ld [hl], $03 ; $4042
 	farcall FarPtr_PrepareGlyphBuffer ; $4044
 	call ClearFrameTasks ; $4047
@@ -1372,7 +1372,7 @@ Label_1e_4baf:
 	ld a, $ff ; $4bbd
 	ld [$d003], a ; $4bbf
 	ld a, $00 ; $4bc2
-	ld [$cb11], a ; $4bc4
+	ld [wMenuSlideDirection], a ; $4bc4
 	ret ; $4bc7
 Label_1e_4bc8:
 	jr Label_1e_4b97 ; $4bc8
@@ -1453,7 +1453,7 @@ Label_1e_5438:
 	ret z ; $543c
 	farcall FarPtr_01_0a ; $543d
 	farcall FarPtr_InitTextWindows ; $5440
-	ld hl, $c3b3 ; $5443
+	ld hl, wShadowTilemapBank ; $5443
 	ld [hl], $03 ; $5446
 	farcall FarPtr_PrepareGlyphBuffer ; $5448
 	call ClearFrameTasks ; $544b
@@ -2899,7 +2899,7 @@ Func_1e_6967:
 	bit 7, a ; $6972
 	jr z, Label_1e_69ad ; $6974
 	call Func_1e_6a6e ; $6976
-	ld a, [$c36c] ; $6979
+	ld a, [wCurrentStorySlot] ; $6979
 	push af ; $697c
 	ld hl, $c8b1 ; $697d
 	ld a, [hl+] ; $6980
@@ -2908,7 +2908,7 @@ Func_1e_6967:
 	ld a, [$c8b5] ; $6983
 	srl a ; $6986
 	and a, $03 ; $6988
-	ld [$c36c], a ; $698a
+	ld [wCurrentStorySlot], a ; $698a
 	farcall FarPtr_CheckStorySlot ; $698d
 	ld d, h ; $6990
 	ld e, l ; $6991
@@ -2928,7 +2928,7 @@ Label_1e_699e:
 	ld [hl], d ; $69a5
 	farcall FarPtr_SaveStorySlot ; $69a6
 	pop af ; $69a9
-	ld [$c36c], a ; $69aa
+	ld [wCurrentStorySlot], a ; $69aa
 Label_1e_69ad:
 	farcall FarPtr_RecordExhibitionVictory ; $69ad
 	farcall FarPtr_ReadExhibitionSaveBlock ; $69b0
@@ -2955,7 +2955,7 @@ Label_1e_69cb:
 	cp a, $ff ; $69d0
 	jr z, Label_1e_6a12 ; $69d2
 	call Func_1e_6aa4 ; $69d4
-	ld a, [$c36c] ; $69d7
+	ld a, [wCurrentStorySlot] ; $69d7
 	push af ; $69da
 	ld hl, $c8b5 ; $69db
 	ld a, [$c8b9] ; $69de
@@ -2970,7 +2970,7 @@ Label_1e_69ec:
 	ld a, [hl] ; $69ec
 	srl a ; $69ed
 	and a, $03 ; $69ef
-	ld [$c36c], a ; $69f1
+	ld [wCurrentStorySlot], a ; $69f1
 	farcall FarPtr_CheckStorySlot ; $69f4
 	ld hl, $c8b3 ; $69f7
 	ld a, [hl+] ; $69fa
@@ -2988,7 +2988,7 @@ Label_1e_6a03:
 	ld [hl], d ; $6a0a
 	farcall FarPtr_SaveStorySlot ; $6a0b
 	pop af ; $6a0e
-	ld [$c36c], a ; $6a0f
+	ld [wCurrentStorySlot], a ; $6a0f
 Label_1e_6a12:
 	ret ; $6a12
 Func_1e_6a13:
@@ -4306,14 +4306,14 @@ InitGameProgressScreen:
 	ldh [hScrollY], a ; $7288
 	farcall FarPtr_ResetTextWindowState ; $728a
 	ld de, $d000 ; $728d
-	ld hl, $c3b4 ; $7290
+	ld hl, wShadowTilemapPtr ; $7290
 	ld a, e ; $7293
 	ld [hl+], a ; $7294
 	ld [hl], d ; $7295
 	ld a, $05 ; $7296
-	ld [$c3b3], a ; $7298
+	ld [wShadowTilemapBank], a ; $7298
 	ld a, $00 ; $729b
-	ld [$c3b6], a ; $729d
+	ld [wWindowTileAttr], a ; $729d
 	ld [$d82f], a ; $72a0
 	ld a, $ff ; $72a3
 	ld c, $30 ; $72a5
@@ -4631,7 +4631,7 @@ Label_1e_74b3:
 	ret ; $74b5
 Func_1e_74b6:
 	farcall FarPtr_PrepareGlyphBuffer ; $74b6
-	ld hl, $c3b4 ; $74b9
+	ld hl, wShadowTilemapPtr ; $74b9
 	ld a, [hl+] ; $74bc
 	ld d, [hl] ; $74bd
 	ld e, a ; $74be
@@ -4856,7 +4856,7 @@ Palettes_1e_79e0:
 ; GBC palettes (BGR555), 4 colors each
 	dw $59a8, $7e85, $7fff, $0000 ; pal 0: #416ab4 #29a4ff #ffffff #000000
 Func_1e_79e8:
-	ld hl, $c3b4 ; $79e8
+	ld hl, wShadowTilemapPtr ; $79e8
 	ld a, [hl+] ; $79eb
 	ld h, [hl] ; $79ec
 	ld l, a ; $79ed
@@ -4888,7 +4888,7 @@ Label_1e_7a06:
 	jr nz, Label_1e_79f0 ; $7a11
 	ret ; $7a13
 Func_1e_7a14:
-	ld hl, $c3b4 ; $7a14
+	ld hl, wShadowTilemapPtr ; $7a14
 	ld a, [hl+] ; $7a17
 	ld h, [hl] ; $7a18
 	ld l, a ; $7a19

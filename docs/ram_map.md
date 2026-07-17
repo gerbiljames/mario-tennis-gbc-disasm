@@ -143,9 +143,25 @@ Addresses named by this project from disassembly evidence; also in
 
 | Address | Region | Name | Note |
 |---|---|---|---|
+| `0xc295` | WRAM | `wStoryModeEntryPoint` | [8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it |
+| `0xc296` | WRAM | `wStoryModeSpawnPosition` | [5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode |
+| `0xc2a1` | WRAM | `wStoryModeExitLocationRequest` | [8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests |
+| `0xc2d5` | WRAM | `wStoryModeShowLocationName` | [8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7) |
+| `0xc32e` | WRAM | `wCurrentScene` | [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations |
+| `0xc36c` | WRAM | `wCurrentStorySlot` | [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on |
+| `0xc3b3` | WRAM | `wShadowTilemapBank` | [8-bit] WRAM bank of the shadow (off-screen) tilemap buffer; paired with wShadowTilemapPtr |
+| `0xc3b4` | WRAM | `wShadowTilemapPtr` | [16-bit] Base pointer of the shadow tilemap buffer (in bank wShadowTilemapBank); tiles at base, attributes at base+$0400 |
+| `0xc3b6` | WRAM | `wWindowTileAttr` | [8-bit] CGB BG attribute byte applied to window/glyph tiles when drawing (default $80 = BG priority) |
+| `0xc3b7` | WRAM | `wGlyphPenX` | [16-bit] Glyph-stream horizontal pen position (sub-pixel fixed point); advanced per glyph by DrawStreamGlyph |
 | `0xc402` | WRAM | `wBallX` | [16-bit] Ball X position, integer part (lateral, signed) |
 | `0xc406` | WRAM | `wBallDepth` | [16-bit] Ball depth position, integer part (signed, net at 0) |
 | `0xc40a` | WRAM | `wBallHeight` | [16-bit] Ball height above the court, integer part |
+| `0xc421` | WRAM | `wBallVelocityX` | [16-bit] Ball X velocity, integer part (24-bit fixed-point triple $c420-$c422, fraction byte at $c420); decayed by ApplyBallAirDrag |
+| `0xc424` | WRAM | `wBallVelocityDepth` | [16-bit] Ball depth velocity, integer part (triple $c423-$c425); curved by ApplyBallSpin |
+| `0xc427` | WRAM | `wBallVelocityHeight` | [16-bit] Ball height (vertical) velocity, integer part (triple $c426-$c428) |
+| `0xc43a` | WRAM | `wShotAimAngle` | [16-bit] Aim angle of the shot being launched (high byte = angle, $100 per turn; low byte = fraction, top nibble used by MulSinCos); projected from ball position into wBallTargetX/Depth |
+| `0xc450` | WRAM | `wBallTargetX` | [16-bit] Projected ball target/landing X (same world units as wBallX) |
+| `0xc452` | WRAM | `wBallTargetDepth` | [16-bit] Projected ball target/landing depth (companion to wBallTargetX; net at 0) |
 | `0xc460` | WRAM | `wBounceEffectX` | [16-bit] Projected X of the ball-bounce dust effect (cached at bounce time) |
 | `0xc462` | WRAM | `wBounceEffectY` | [16-bit] Projected Y of the ball-bounce dust effect |
 | `0xc464` | WRAM | `wHitEffectX` | [16-bit] Projected X of the swing-hit effect (cached at hit time) |
@@ -154,6 +170,7 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc47a` | WRAM | `wCameraOffsetY` | [16-bit] Camera Y offset added before the <<3 screen projection |
 | `0xc480` | WRAM | `wLandingMarkerX` | [16-bit] Projected X of the lob landing marker |
 | `0xc482` | WRAM | `wLandingMarkerY` | [16-bit] Projected Y of the lob landing marker |
+| `0xc4a0` | WRAM | `wCurrentShotType` | [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot) |
 | `0xc4a8` | WRAM | `wBounceEffectTimer` | [8-bit] Frames left of the ball-bounce dust effect (starts at $14) |
 | `0xc4a9` | WRAM | `wHitSparkTimer` | [8-bit] Frames left of the normal swing-hit spark (starts at $10) |
 | `0xc4aa` | WRAM | `wSpecialHitTimer` | [8-bit] Frames left of the special-shot hit flash (starts at $10; drives the bank $28 screen effect) |
@@ -164,8 +181,6 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc4c4` | WRAM | `wOffscreenArrowsEnabled` | [8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally) |
 | `0xc4ca` | WRAM | `wStandingShadowsEnabled` | [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters |
 | `0xc4cf` | WRAM | `wOnCourtCharCountMinus1` | [8-bit] `wOnCourtCharCount` - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches (e.g. `$4ff5`, `$6063` in bank $08) |
-| `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
-| `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
 | `0xc4d8` | WRAM | `wPointOutcome` | [8-bit] 0 while the rally runs; point-end cause code once the point resolves |
 | `0xc78c` | WRAM | `wTargetZoneEnabled` | [8-bit] Nonzero draws the 4-corner court target zone (training drills) |
 | `0xc790` | WRAM | `wTargetZoneX1` | [16-bit] Target zone X bound 1 (world units) |
@@ -174,7 +189,19 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc796` | WRAM | `wTargetZoneDepth2` | [16-bit] Target zone depth bound 2 (world units) |
 | `0xc7b2` | WRAM | `wModeHookTable` | [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook) |
 | `0xc7b4` | WRAM | `wModeHookBank` | [8-bit] ROM bank of the mode callback table (0 = no hooks registered) |
+| `0xc800` | WRAM | `wSaveBlockBuffer` | [buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer |
+| `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
+| `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
+| `0xcb0e` | WRAM | `wMatchFormatDoubles` | [8-bit] Match-format menu: singles (0) / doubles (1) selection; copied to wMatchIsDoubles |
+| `0xcb0f` | WRAM | `wMatchFormatGames` | [8-bit] Match-format menu: games-per-set selection index; table-mapped to wMatchTypeNumberOfGames |
+| `0xcb10` | WRAM | `wMatchFormatSets` | [8-bit] Match-format menu: number-of-sets selection index (0-2); table-mapped to wMatchTypeNumberOfSets |
+| `0xcb11` | WRAM | `wMenuSlideDirection` | [8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions |
 | `0xff96` | HRAM | `hWramBank` | [8-bit] Shadow of the current WRAM bank (last value written to `rSVBK`); always written together with `rSVBK` |
+| `0xff97` | HRAM | `hSramBank` | [8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000) |
+| `0xffc0` | HRAM | `hLinkRxByte` | [8-bit] Last byte received over the serial link (captured from rSB in the serial interrupt) |
+| `0xffc1` | HRAM | `hLinkTxByte` | [8-bit] Next byte to transmit over the serial link (copied to rSB) |
+| `0xffc2` | HRAM | `hLinkState` | [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths |
+| `0xffc8` | HRAM | `hLinkCounter` | [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8 |
 
 ## Match engine per-character structs (WRAM banks 4-7)
 

@@ -63,6 +63,19 @@
   "note": "[8-bit] Story Mode - Current Location\n\n0x00 - Not in Story Mode\n0x05 - Academy Main Building\n0x06 - Academy Wing\n0x07 - Courtyard\n0x08 - Restaurant Plaza\n0x09 - Dorm Entrance\n0x0a - Dormitory\n0x0b, 0x0c - Junior Class Court\n0x0d - Restaurant\n0x0e - Cafeteria\n0x0f - Training Court\n0x10 - Senior Class Court\n0x11 - Training Center\n0x12 - Tennis Machine Room\n0x13 - Wall Practice Room\n0x14 - Academy Entrance\n0x15 - Tournament Courtyard\n0x16 - Court #1\n0x17 - Court #2\n0x18 - Center Court\n0x19 - Tournament\n0x1a - Awards Ceremony\n0x1b - Plane Cutscene\n0x1c - Castle Court\n0x1d - Peach's Castle\n0x1e-0x29 - Final Credits Sequence",
   "size": 1
  },
+ "0xc295": {
+  "name": "wStoryModeEntryPoint",
+  "note": "[8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it"
+ },
+ "0xc296": {
+  "name": "wStoryModeSpawnPosition",
+  "note": "[5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode",
+  "size": 5
+ },
+ "0xc2a1": {
+  "name": "wStoryModeExitLocationRequest",
+  "note": "[8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests"
+ },
  "0xc2b4": {
   "name": "wWaterSpriteMinigameTimer",
   "note": "[16-bit] Water Sprite Minigame - Timer (Frames)",
@@ -88,6 +101,10 @@
   "note": "[16-bit] Story Mode - Player's Y Position",
   "size": 2
  },
+ "0xc2d5": {
+  "name": "wStoryModeShowLocationName",
+  "note": "[8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7)"
+ },
  "0xc320": {
   "name": "wCameraX",
   "note": "[16-bit] BG scroll-buffer camera X (tiles<<3?)",
@@ -108,10 +125,18 @@
   "note": "[8-bit] Tilemap column for the queued BG column blit",
   "size": 1
  },
+ "0xc32e": {
+  "name": "wCurrentScene",
+  "note": "[8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations"
+ },
  "0xc33e": {
   "name": "wCurrentBGM",
   "note": "[8-bit] Current BGM\n\n0x00 - Silence\n0x01 - Intro Cutscene\n0x02 - Title Screen\n0x03 - Main Menu\n0x04 - Status Screen\n0x05 - Dictionary\n0x06 - Exhibition Match\n0x07 - Unused\n0x08 - Mario Minigame Screen\n0x09 - You Win\n0x0a - You Lose\n0x0b - Earning EXP\n0x0c - Distributing EXP\n0x0d - Distributing Stats\n0x0e - Tiebreaker\n0x0f - Set/Match Point\n0x10 - Game Point\n0x11 - Star Court\n0x12 - Castle Court/Peach's Castle\n0x13 - Tropic Court/Fruit Fantasy\n0x14 - Warehouse Court/Treasure Box\n0x15 - Two-on-One\n0x16 - Jungle Court/Banana Bunch\n0x17 - Unused\n0x18 - Unused\n0x19 - Shooting Star/Target Shot/Medallion Match\n0x1a - Academy Main Building\n0x1b - Story Mode Outdoors\n0x1c - Dormitory\n0x1d - Story Mode Indoors\n0x1e - Tennis Machine\n0x1f - Wall Practice\n0x20 - Practice Match\n0x21 - Junior Ranking Match\n0x22 - Senior Ranking Match\n0x23 - Varsity Ranking Match\n0x24 - Training Court Match\n0x25 - Training Court Practice\n0x26 - Island Open Beginning Rounds\n0x27 - Island Open Semifinals\n0x28 - Island Open Finals\n0x29 - Dream Match\n0x2a - Unused\n0x2b - Island Open Congratulations\n0x2c - Credits\n0x2d - The End\n0x2e - Done For The Day\n0x2f - Level Up\n0x30 - High Score\n0x31 - Exhibition Match Start\n0x32 - Story Match Start",
   "size": 1
+ },
+ "0xc36c": {
+  "name": "wCurrentStorySlot",
+  "note": "[8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on"
  },
  "0xc376": {
   "name": "wMinigameLevel",
@@ -128,6 +153,24 @@
   "note": "[8-bit] BG attribute written for window-frame cells ($80 = BG priority)",
   "size": 1
  },
+ "0xc3b3": {
+  "name": "wShadowTilemapBank",
+  "note": "[8-bit] WRAM bank of the shadow (off-screen) tilemap buffer; paired with wShadowTilemapPtr"
+ },
+ "0xc3b4": {
+  "name": "wShadowTilemapPtr",
+  "note": "[16-bit] Base pointer of the shadow tilemap buffer (in bank wShadowTilemapBank); tiles at base, attributes at base+$0400",
+  "size": 2
+ },
+ "0xc3b6": {
+  "name": "wWindowTileAttr",
+  "note": "[8-bit] CGB BG attribute byte applied to window/glyph tiles when drawing (default $80 = BG priority)"
+ },
+ "0xc3b7": {
+  "name": "wGlyphPenX",
+  "note": "[16-bit] Glyph-stream horizontal pen position (sub-pixel fixed point); advanced per glyph by DrawStreamGlyph",
+  "size": 2
+ },
  "0xc402": {
   "name": "wBallX",
   "note": "[16-bit] Ball X position, integer part (lateral, signed)",
@@ -141,6 +184,36 @@
  "0xc40a": {
   "name": "wBallHeight",
   "note": "[16-bit] Ball height above the court, integer part",
+  "size": 2
+ },
+ "0xc421": {
+  "name": "wBallVelocityX",
+  "note": "[16-bit] Ball X velocity, integer part (24-bit fixed-point triple $c420-$c422, fraction byte at $c420); decayed by ApplyBallAirDrag",
+  "size": 2
+ },
+ "0xc424": {
+  "name": "wBallVelocityDepth",
+  "note": "[16-bit] Ball depth velocity, integer part (triple $c423-$c425); curved by ApplyBallSpin",
+  "size": 2
+ },
+ "0xc427": {
+  "name": "wBallVelocityHeight",
+  "note": "[16-bit] Ball height (vertical) velocity, integer part (triple $c426-$c428)",
+  "size": 2
+ },
+ "0xc43a": {
+  "name": "wShotAimAngle",
+  "note": "[16-bit] Aim angle of the shot being launched (high byte = angle, $100 per turn; low byte = fraction, top nibble used by MulSinCos); projected from ball position into wBallTargetX/Depth",
+  "size": 2
+ },
+ "0xc450": {
+  "name": "wBallTargetX",
+  "note": "[16-bit] Projected ball target/landing X (same world units as wBallX)",
+  "size": 2
+ },
+ "0xc452": {
+  "name": "wBallTargetDepth",
+  "note": "[16-bit] Projected ball target/landing depth (companion to wBallTargetX; net at 0)",
   "size": 2
  },
  "0xc460": {
@@ -192,6 +265,10 @@
   "name": "wLandingMarkerY",
   "note": "[16-bit] Projected Y of the lob landing marker",
   "size": 2
+ },
+ "0xc4a0": {
+  "name": "wCurrentShotType",
+  "note": "[8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot)"
  },
  "0xc4a8": {
   "name": "wBounceEffectTimer",
@@ -301,6 +378,10 @@
   "name": "wModeHookBank",
   "note": "[8-bit] ROM bank of the mode callback table (0 = no hooks registered)",
   "size": 1
+ },
+ "0xc800": {
+  "name": "wSaveBlockBuffer",
+  "note": "[buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer"
  },
  "0xc818": {
   "name": "wStoryModeMainCharacterLevel",
@@ -870,6 +951,22 @@
   "note": "[8-bit] Menu loop's copy of hInputPressed (same bit layout as hPlayerInputFlags)",
   "size": 1
  },
+ "0xcb0e": {
+  "name": "wMatchFormatDoubles",
+  "note": "[8-bit] Match-format menu: singles (0) / doubles (1) selection; copied to wMatchIsDoubles"
+ },
+ "0xcb0f": {
+  "name": "wMatchFormatGames",
+  "note": "[8-bit] Match-format menu: games-per-set selection index; table-mapped to wMatchTypeNumberOfGames"
+ },
+ "0xcb10": {
+  "name": "wMatchFormatSets",
+  "note": "[8-bit] Match-format menu: number-of-sets selection index (0-2); table-mapped to wMatchTypeNumberOfSets"
+ },
+ "0xcb11": {
+  "name": "wMenuSlideDirection",
+  "note": "[8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions"
+ },
  "0xcb41": {
   "name": "wIntroCutsceneCheck",
   "note": "[8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)",
@@ -1004,6 +1101,10 @@
   "note": "[8-bit] Shadow of the current WRAM bank (last value written to rSVBK); match engine swaps banks 4-7 for per-character data",
   "size": 1
  },
+ "0xff97": {
+  "name": "hSramBank",
+  "note": "[8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000)"
+ },
  "0xff98": {
   "name": "hShowDebugConsole",
   "note": "[8-bit] 1 = VBlank switches BG map to the debug console view",
@@ -1093,6 +1194,22 @@
   "name": "hFadedOut",
   "note": "[8-bit] Nonzero = screen currently faded out",
   "size": 1
+ },
+ "0xffc0": {
+  "name": "hLinkRxByte",
+  "note": "[8-bit] Last byte received over the serial link (captured from rSB in the serial interrupt)"
+ },
+ "0xffc1": {
+  "name": "hLinkTxByte",
+  "note": "[8-bit] Next byte to transmit over the serial link (copied to rSB)"
+ },
+ "0xffc2": {
+  "name": "hLinkState",
+  "note": "[8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths"
+ },
+ "0xffc8": {
+  "name": "hLinkCounter",
+  "note": "[8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8"
  },
  "0xffcd": {
   "name": "hActiveJingle",

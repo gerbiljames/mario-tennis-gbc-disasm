@@ -56,13 +56,13 @@ Func_10_40b0:
 	farcall FarPtr_01_0a ; $40ce
 	call EnableLCD ; $40d1
 	ld hl, wStoryModePlayersXPosition ; $40d4
-	ld de, $c296 ; $40d7
+	ld de, wStoryModeSpawnPosition ; $40d7
 	ld bc, $0005 ; $40da
 	call CopyMemoryBC ; $40dd
 	ld a, $ff ; $40e0
-	ld [$c295], a ; $40e2
+	ld [wStoryModeEntryPoint], a ; $40e2
 	ld [$c294], a ; $40e5
-	ld [$c2a1], a ; $40e8
+	ld [wStoryModeExitLocationRequest], a ; $40e8
 	farcall FarPtr_EndCutsceneScriptMode ; $40eb
 	ret ; $40ee
 Func_10_40ef:
@@ -119,7 +119,7 @@ MatchSelectHandlerTable_10:
 	db $ff, $ff, $ff
 Func_10_4190:
 	xor a, a ; $4190
-	ld [$c2d5], a ; $4191
+	ld [wStoryModeShowLocationName], a ; $4191
 	ret ; $4194
 RunSinglesMatchListMenu:
 	ld hl, $0484 ; $4195
@@ -130,13 +130,13 @@ RunSinglesMatchListMenu:
 	jp z, Label_10_421f ; $41a2
 	ld [$c2b0], a ; $41a5
 	ld hl, wStoryModePlayersXPosition ; $41a8
-	ld de, $c296 ; $41ab
+	ld de, wStoryModeSpawnPosition ; $41ab
 	ld bc, $0005 ; $41ae
 	call CopyMemoryBC ; $41b1
 	ld a, $ff ; $41b4
-	ld [$c295], a ; $41b6
+	ld [wStoryModeEntryPoint], a ; $41b6
 	ld [$c294], a ; $41b9
-	ld [$c2a1], a ; $41bc
+	ld [wStoryModeExitLocationRequest], a ; $41bc
 	farcall FarPtr_InitStoryMatchSettings ; $41bf
 	ld a, [$c2b0] ; $41c2
 	add a, a ; $41c5
@@ -161,13 +161,13 @@ RunDoublesMatchListMenu:
 	jp z, Label_10_421f ; $41e7
 	ld [$c2b0], a ; $41ea
 	ld hl, wStoryModePlayersXPosition ; $41ed
-	ld de, $c296 ; $41f0
+	ld de, wStoryModeSpawnPosition ; $41f0
 	ld bc, $0005 ; $41f3
 	call CopyMemoryBC ; $41f6
 	ld a, $ff ; $41f9
-	ld [$c295], a ; $41fb
+	ld [wStoryModeEntryPoint], a ; $41fb
 	ld [$c294], a ; $41fe
-	ld [$c2a1], a ; $4201
+	ld [wStoryModeExitLocationRequest], a ; $4201
 	farcall FarPtr_InitStoryMatchSettings ; $4204
 	ld a, [$c2b0] ; $4207
 	add a, a ; $420a
@@ -473,21 +473,21 @@ RunDrillMatchListMenu:
 	jp z, Label_10_421f ; $445a
 	push af ; $445d
 	ld hl, wStoryModePlayersXPosition ; $445e
-	ld de, $c296 ; $4461
+	ld de, wStoryModeSpawnPosition ; $4461
 	ld bc, $0005 ; $4464
 	call CopyMemoryBC ; $4467
 	ld a, $ff ; $446a
-	ld [$c295], a ; $446c
+	ld [wStoryModeEntryPoint], a ; $446c
 	ld [$c294], a ; $446f
-	ld [$c2a1], a ; $4472
+	ld [wStoryModeExitLocationRequest], a ; $4472
 	ld a, $00 ; $4475
-	ld [$c36c], a ; $4477
+	ld [wCurrentStorySlot], a ; $4477
 	farcall FarPtr_CheckStorySlot ; $447a
 	pop af ; $447d
 	set_flag $03, 6 ; $447e
 	farcall FarPtr_RunTrainingDrillByID ; $4481
 	ld a, $00 ; $4484
-	ld [$c36c], a ; $4486
+	ld [wCurrentStorySlot], a ; $4486
 	farcall FarPtr_SaveStorySlotWithTimer ; $4489
 	ret ; $448c
 	ld hl, $28a4 ; $448d
@@ -496,22 +496,22 @@ RunDrillMatchListMenu:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4495
 	ret ; $4498
 	ld hl, wStoryModePlayersXPosition ; $4499
-	ld de, $c296 ; $449c
+	ld de, wStoryModeSpawnPosition ; $449c
 	ld bc, $0005 ; $449f
 	call CopyMemoryBC ; $44a2
 	ld a, $ff ; $44a5
-	ld [$c295], a ; $44a7
+	ld [wStoryModeEntryPoint], a ; $44a7
 	ld [$c294], a ; $44aa
-	ld [$c2a1], a ; $44ad
+	ld [wStoryModeExitLocationRequest], a ; $44ad
 	ld a, $00 ; $44b0
-	ld [$c36c], a ; $44b2
+	ld [wCurrentStorySlot], a ; $44b2
 	farcall FarPtr_CheckStorySlot ; $44b5
 	set_flag $03, 4 ; $44b8
 	ld c, $00 ; $44bb
 	farcall FarPtr_1c_00 ; $44bd
 	clear_flag $03, 4 ; $44c0
 	ld a, $00 ; $44c3
-	ld [$c36c], a ; $44c5
+	ld [wCurrentStorySlot], a ; $44c5
 	farcall FarPtr_SaveStorySlotWithTimer ; $44c8
 	ret ; $44cb
 RunLessonSelectMenu:
@@ -568,13 +568,13 @@ RunServiceLessonMenu:
 	add a, $03 ; $4534
 	ld [$c8f7], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
-	ld de, $c296 ; $453c
+	ld de, wStoryModeSpawnPosition ; $453c
 	ld bc, $0005 ; $453f
 	call CopyMemoryBC ; $4542
 	ld a, $ff ; $4545
-	ld [$c295], a ; $4547
+	ld [wStoryModeEntryPoint], a ; $4547
 	ld [$c294], a ; $454a
-	ld [$c2a1], a ; $454d
+	ld [wStoryModeExitLocationRequest], a ; $454d
 	ld c, $10 ; $4550
 	call BeginFadeOut ; $4552
 	call WaitFadeEnd ; $4555
@@ -590,13 +590,13 @@ RunNetLessonMenu:
 	add a, $09 ; $456c
 	ld [$c8f7], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
-	ld de, $c296 ; $4574
+	ld de, wStoryModeSpawnPosition ; $4574
 	ld bc, $0005 ; $4577
 	call CopyMemoryBC ; $457a
 	ld a, $ff ; $457d
-	ld [$c295], a ; $457f
+	ld [wStoryModeEntryPoint], a ; $457f
 	ld [$c294], a ; $4582
-	ld [$c2a1], a ; $4585
+	ld [wStoryModeExitLocationRequest], a ; $4585
 	ld c, $10 ; $4588
 	call BeginFadeOut ; $458a
 	call WaitFadeEnd ; $458d
@@ -612,13 +612,13 @@ RunStrokeLessonMenu:
 	add a, $0f ; $45a4
 	ld [$c8f7], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
-	ld de, $c296 ; $45ac
+	ld de, wStoryModeSpawnPosition ; $45ac
 	ld bc, $0005 ; $45af
 	call CopyMemoryBC ; $45b2
 	ld a, $ff ; $45b5
-	ld [$c295], a ; $45b7
+	ld [wStoryModeEntryPoint], a ; $45b7
 	ld [$c294], a ; $45ba
-	ld [$c2a1], a ; $45bd
+	ld [wStoryModeExitLocationRequest], a ; $45bd
 	ld c, $10 ; $45c0
 	call BeginFadeOut ; $45c2
 	call WaitFadeEnd ; $45c5
@@ -626,13 +626,13 @@ RunStrokeLessonMenu:
 	ret ; $45cb
 Label_10_45cc:
 	ld hl, wStoryModePlayersXPosition ; $45cc
-	ld de, $c296 ; $45cf
+	ld de, wStoryModeSpawnPosition ; $45cf
 	ld bc, $0005 ; $45d2
 	call CopyMemoryBC ; $45d5
 	ld a, $ff ; $45d8
-	ld [$c295], a ; $45da
+	ld [wStoryModeEntryPoint], a ; $45da
 	ld [$c294], a ; $45dd
-	ld [$c2a1], a ; $45e0
+	ld [wStoryModeExitLocationRequest], a ; $45e0
 	ld c, $10 ; $45e3
 	call BeginFadeOut ; $45e5
 	call WaitFadeEnd ; $45e8
@@ -696,13 +696,13 @@ Label_10_4655:
 	set_flag $03, 6 ; $4666
 	farcall FarPtr_RunTrainingDrillByID ; $4669
 	ld hl, wStoryModePlayersXPosition ; $466c
-	ld de, $c296 ; $466f
+	ld de, wStoryModeSpawnPosition ; $466f
 	ld bc, $0005 ; $4672
 	call CopyMemoryBC ; $4675
 	ld a, $ff ; $4678
-	ld [$c295], a ; $467a
+	ld [wStoryModeEntryPoint], a ; $467a
 	ld [$c294], a ; $467d
-	ld [$c2a1], a ; $4680
+	ld [wStoryModeExitLocationRequest], a ; $4680
 	ret ; $4683
 	; $4684, 9 bytes (bytes:16)
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
@@ -796,13 +796,13 @@ Data_10_468d:
 	dw $08df, $3e0a, $df08, $0b00 ; record 56
 	db $c9
 	ld hl, wStoryModePlayersXPosition ; $4957
-	ld de, $c296 ; $495a
+	ld de, wStoryModeSpawnPosition ; $495a
 	ld bc, $0005 ; $495d
 	call CopyMemoryBC ; $4960
 	ld a, $ff ; $4963
-	ld [$c295], a ; $4965
+	ld [wStoryModeEntryPoint], a ; $4965
 	ld [$c294], a ; $4968
-	ld [$c2a1], a ; $496b
+	ld [wStoryModeExitLocationRequest], a ; $496b
 	set_flag $03, 6 ; $496e
 	ld hl, $0009 ; $4971
 	farcall FarPtr_PushTextArgNumber ; $4974
@@ -814,13 +814,13 @@ Data_10_468d:
 	farcall FarPtr_RunTrainingDrillByID ; $4984
 	ret ; $4987
 	ld hl, wStoryModePlayersXPosition ; $4988
-	ld de, $c296 ; $498b
+	ld de, wStoryModeSpawnPosition ; $498b
 	ld bc, $0005 ; $498e
 	call CopyMemoryBC ; $4991
 	ld a, $ff ; $4994
-	ld [$c295], a ; $4996
+	ld [wStoryModeEntryPoint], a ; $4996
 	ld [$c294], a ; $4999
-	ld [$c2a1], a ; $499c
+	ld [wStoryModeExitLocationRequest], a ; $499c
 	set_flag $03, 6 ; $499f
 	ld hl, $000a ; $49a2
 	farcall FarPtr_PushTextArgNumber ; $49a5
@@ -832,13 +832,13 @@ Data_10_468d:
 	farcall FarPtr_RunTrainingDrillByID ; $49b5
 	ret ; $49b8
 	ld hl, wStoryModePlayersXPosition ; $49b9
-	ld de, $c296 ; $49bc
+	ld de, wStoryModeSpawnPosition ; $49bc
 	ld bc, $0005 ; $49bf
 	call CopyMemoryBC ; $49c2
 	ld a, $ff ; $49c5
-	ld [$c295], a ; $49c7
+	ld [wStoryModeEntryPoint], a ; $49c7
 	ld [$c294], a ; $49ca
-	ld [$c2a1], a ; $49cd
+	ld [wStoryModeExitLocationRequest], a ; $49cd
 	set_flag $03, 6 ; $49d0
 	ld hl, $000b ; $49d3
 	farcall FarPtr_PushTextArgNumber ; $49d6
@@ -850,13 +850,13 @@ Data_10_468d:
 	farcall FarPtr_RunTrainingDrillByID ; $49e6
 	ret ; $49e9
 	ld hl, wStoryModePlayersXPosition ; $49ea
-	ld de, $c296 ; $49ed
+	ld de, wStoryModeSpawnPosition ; $49ed
 	ld bc, $0005 ; $49f0
 	call CopyMemoryBC ; $49f3
 	ld a, $ff ; $49f6
-	ld [$c295], a ; $49f8
+	ld [wStoryModeEntryPoint], a ; $49f8
 	ld [$c294], a ; $49fb
-	ld [$c2a1], a ; $49fe
+	ld [wStoryModeExitLocationRequest], a ; $49fe
 	set_flag $03, 6 ; $4a01
 	ld hl, $000c ; $4a04
 	farcall FarPtr_PushTextArgNumber ; $4a07
@@ -868,13 +868,13 @@ Data_10_468d:
 	farcall FarPtr_RunTrainingDrillByID ; $4a17
 	ret ; $4a1a
 	ld hl, wStoryModePlayersXPosition ; $4a1b
-	ld de, $c296 ; $4a1e
+	ld de, wStoryModeSpawnPosition ; $4a1e
 	ld bc, $0005 ; $4a21
 	call CopyMemoryBC ; $4a24
 	ld a, $ff ; $4a27
-	ld [$c295], a ; $4a29
+	ld [wStoryModeEntryPoint], a ; $4a29
 	ld [$c294], a ; $4a2c
-	ld [$c2a1], a ; $4a2f
+	ld [wStoryModeExitLocationRequest], a ; $4a2f
 	set_flag $03, 6 ; $4a32
 	ld hl, $000d ; $4a35
 	farcall FarPtr_PushTextArgNumber ; $4a38
@@ -886,13 +886,13 @@ Data_10_468d:
 	farcall FarPtr_RunTrainingDrillByID ; $4a48
 	ret ; $4a4b
 	ld hl, wStoryModePlayersXPosition ; $4a4c
-	ld de, $c296 ; $4a4f
+	ld de, wStoryModeSpawnPosition ; $4a4f
 	ld bc, $0005 ; $4a52
 	call CopyMemoryBC ; $4a55
 	ld a, $ff ; $4a58
-	ld [$c295], a ; $4a5a
+	ld [wStoryModeEntryPoint], a ; $4a5a
 	ld [$c294], a ; $4a5d
-	ld [$c2a1], a ; $4a60
+	ld [wStoryModeExitLocationRequest], a ; $4a60
 	set_flag $03, 6 ; $4a63
 	ld hl, $000e ; $4a66
 	farcall FarPtr_PushTextArgNumber ; $4a69
@@ -904,13 +904,13 @@ Data_10_468d:
 	farcall FarPtr_RunTrainingDrillByID ; $4a79
 	ret ; $4a7c
 	ld hl, wStoryModePlayersXPosition ; $4a7d
-	ld de, $c296 ; $4a80
+	ld de, wStoryModeSpawnPosition ; $4a80
 	ld bc, $0005 ; $4a83
 	call CopyMemoryBC ; $4a86
 	ld a, $ff ; $4a89
-	ld [$c295], a ; $4a8b
+	ld [wStoryModeEntryPoint], a ; $4a8b
 	ld [$c294], a ; $4a8e
-	ld [$c2a1], a ; $4a91
+	ld [wStoryModeExitLocationRequest], a ; $4a91
 	set_flag $03, 6 ; $4a94
 	ld hl, $000f ; $4a97
 	farcall FarPtr_PushTextArgNumber ; $4a9a
@@ -922,13 +922,13 @@ Data_10_468d:
 	farcall FarPtr_RunTrainingDrillByID ; $4aaa
 	ret ; $4aad
 	ld hl, wStoryModePlayersXPosition ; $4aae
-	ld de, $c296 ; $4ab1
+	ld de, wStoryModeSpawnPosition ; $4ab1
 	ld bc, $0005 ; $4ab4
 	call CopyMemoryBC ; $4ab7
 	ld a, $ff ; $4aba
-	ld [$c295], a ; $4abc
+	ld [wStoryModeEntryPoint], a ; $4abc
 	ld [$c294], a ; $4abf
-	ld [$c2a1], a ; $4ac2
+	ld [wStoryModeExitLocationRequest], a ; $4ac2
 	set_flag $03, 6 ; $4ac5
 	ld hl, $0010 ; $4ac8
 	farcall FarPtr_PushTextArgNumber ; $4acb
@@ -970,13 +970,13 @@ Data_10_468d:
 	dw $dfff, $0a00, $8021, $df04 ; record 1
 	dw $0a0e, $003e, $08df, $df0a ; record 2
 	db $02, $0a, $c9
-	ld a, [$c295] ; $4b9b
+	ld a, [wStoryModeEntryPoint] ; $4b9b
 	cp a, $0f ; $4b9e
 	ret z ; $4ba0
 	farcall FarPtr_ClearStatusSetupMenuEntry ; $4ba1
 	ld a, a ; $4ba4
 	ld [$c294], a ; $4ba5
-	ld [$c2a1], a ; $4ba8
+	ld [wStoryModeExitLocationRequest], a ; $4ba8
 	ret ; $4bab
 	farcall FarPtr_08_06 ; $4bac
 	ld a, $02 ; $4baf
@@ -1049,13 +1049,13 @@ Data_10_4ccb:
 	ld a, $10 ; $4d53
 	farcall FarPtr_ScriptWaitActorMoveDone ; $4d55
 	ld hl, wStoryModePlayersXPosition ; $4d58
-	ld de, $c296 ; $4d5b
+	ld de, wStoryModeSpawnPosition ; $4d5b
 	ld bc, $0005 ; $4d5e
 	call CopyMemoryBC ; $4d61
 	ld a, $ff ; $4d64
-	ld [$c295], a ; $4d66
+	ld [wStoryModeEntryPoint], a ; $4d66
 	ld [$c294], a ; $4d69
-	ld [$c2a1], a ; $4d6c
+	ld [wStoryModeExitLocationRequest], a ; $4d6c
 	ret ; $4d6f
 	ld c, $10 ; $4d70
 	call BeginFadeOut ; $4d72
@@ -1078,7 +1078,7 @@ Data_10_4ccb:
 	INCBIN "data/bank_010/d_4d9c.bin" ; $4d9c, 10 bytes
 	ld a, $0e ; $4da6
 	ld [$c294], a ; $4da8
-	ld [$c2a1], a ; $4dab
+	ld [wStoryModeExitLocationRequest], a ; $4dab
 	ret ; $4dae
 	; $4daf, 129 bytes (records:8)
 ; 16 records x 8 bytes
@@ -1186,7 +1186,7 @@ MatchSelectHandlersA_10:
 	ret ; $4ecd
 ApplyMatchTypeSettings:
 	ld hl, $4f08 ; $4ece
-	ld a, [$cb10] ; $4ed1
+	ld a, [wMatchFormatSets] ; $4ed1
 	add a, l ; $4ed4
 	ld l, a ; $4ed5
 	jr nc, Label_10_4ed9 ; $4ed6
@@ -1195,7 +1195,7 @@ Label_10_4ed9:
 	ld a, [hl] ; $4ed9
 	ld [wMatchTypeNumberOfSets], a ; $4eda
 	ld hl, $4f0b ; $4edd
-	ld a, [$cb0f] ; $4ee0
+	ld a, [wMatchFormatGames] ; $4ee0
 	add a, l ; $4ee3
 	ld l, a ; $4ee4
 	jr nc, Label_10_4ee8 ; $4ee5
@@ -1203,7 +1203,7 @@ Label_10_4ed9:
 Label_10_4ee8:
 	ld a, [hl] ; $4ee8
 	ld [wMatchTypeNumberOfGames], a ; $4ee9
-	ld a, [$cb0e] ; $4eec
+	ld a, [wMatchFormatDoubles] ; $4eec
 	ld [wMatchIsDoubles], a ; $4eef
 	or a, a ; $4ef2
 	jr z, Label_10_4eff ; $4ef3
@@ -1223,7 +1223,7 @@ Func_10_4f0d:
 	call ClearFrameTasks ; $4f0d
 	sound $00 ; $4f10
 	call ResumeBGM ; $4f12
-	ld a, [$c295] ; $4f15
+	ld a, [wStoryModeEntryPoint] ; $4f15
 	cp a, $0a ; $4f18
 	jr nz, Label_10_4f3c ; $4f1a
 	call ClearFrameTasks ; $4f1c
@@ -1248,16 +1248,16 @@ Label_10_4f3c:
 	ld [$cb1c], a ; $4f43
 	ld [$cb1d], a ; $4f46
 	ld [$cb1e], a ; $4f49
-	ld [$cb0e], a ; $4f4c
-	ld [$cb0f], a ; $4f4f
-	ld [$cb10], a ; $4f52
+	ld [wMatchFormatDoubles], a ; $4f4c
+	ld [wMatchFormatGames], a ; $4f4f
+	ld [wMatchFormatSets], a ; $4f52
 	call EnableLCD ; $4f55
 	ld c, $7f ; $4f58
 	call BeginFadeOut ; $4f5a
 	call WaitFadeEnd ; $4f5d
 	call DisableLCDSafely ; $4f60
 	ld a, $01 ; $4f63
-	ld [$cb11], a ; $4f65
+	ld [wMenuSlideDirection], a ; $4f65
 Label_10_4f68:
 	call DisableLCDSafely ; $4f68
 	farcall FarPtr_01_0a ; $4f6b
@@ -1272,9 +1272,9 @@ Label_10_4f7c:
 	ld [$cb1c], a ; $4f80
 	ld [$cb1d], a ; $4f83
 	ld [$cb1e], a ; $4f86
-	ld [$cb0e], a ; $4f89
-	ld [$cb0f], a ; $4f8c
-	ld [$cb10], a ; $4f8f
+	ld [wMatchFormatDoubles], a ; $4f89
+	ld [wMatchFormatGames], a ; $4f8c
+	ld [wMatchFormatSets], a ; $4f8f
 	ld [$cb0b], a ; $4f92
 	ldh [hScrollX], a ; $4f95
 	ldh [hScrollY], a ; $4f97
@@ -1316,7 +1316,7 @@ MatchSelectHandlersB_10:
 	cp a, $ff ; $4fd9
 	jr z, Label_10_5041 ; $4fdb
 	and a, $7f ; $4fdd
-	ld [$c36c], a ; $4fdf
+	ld [wCurrentStorySlot], a ; $4fdf
 	farcall FarPtr_CheckStorySlot ; $4fe2
 	cp a, $fe ; $4fe5
 	jr z, Label_10_5041 ; $4fe7
@@ -1367,12 +1367,12 @@ Label_10_5041:
 	call BeginFadeOut ; $5048
 	call WaitFadeEnd ; $504b
 	ld a, e ; $504e
-	ld [$c36c], a ; $504f
+	ld [wCurrentStorySlot], a ; $504f
 	farcall FarPtr_RunNewGameSetup ; $5052
 	cp a, $ff ; $5055
 	jp nz, Label_10_5073 ; $5057
 	ld a, $00 ; $505a
-	ld [$cb11], a ; $505c
+	ld [wMenuSlideDirection], a ; $505c
 	call DisableLCDSafely ; $505f
 	farcall FarPtr_01_0a ; $5062
 	farcall FarPtr_ResetScreenAndTextWindows ; $5065
@@ -1388,12 +1388,12 @@ Label_10_5073:
 	jr nz, Label_10_508a ; $507f
 	ld a, $01 ; $5081
 	ld [$c294], a ; $5083
-	ld [$c2a1], a ; $5086
+	ld [wStoryModeExitLocationRequest], a ; $5086
 	ret ; $5089
 Label_10_508a:
 	ld a, $03 ; $508a
 	ld [$c294], a ; $508c
-	ld [$c2a1], a ; $508f
+	ld [wStoryModeExitLocationRequest], a ; $508f
 	ret ; $5092
 Label_10_5093:
 	call DisableLCDSafely ; $5093
@@ -1416,7 +1416,7 @@ Label_10_50a4:
 	cp a, $ff ; $50be
 	jr nz, Label_10_50ca ; $50c0
 	ld a, $00 ; $50c2
-	ld [$cb11], a ; $50c4
+	ld [wMenuSlideDirection], a ; $50c4
 	jp Label_10_4f7c ; $50c7
 Label_10_50ca:
 	call Func_10_5752 ; $50ca
@@ -1434,15 +1434,15 @@ Label_10_50ca:
 	ld a, [$cb74] ; $50ea
 	ld a, a ; $50ed
 	ld [$c294], a ; $50ee
-	ld [$c2a1], a ; $50f1
+	ld [wStoryModeExitLocationRequest], a ; $50f1
 	ret ; $50f4
 Label_10_50f5:
 	ld a, $03 ; $50f5
 	ld [$c294], a ; $50f7
-	ld [$c2a1], a ; $50fa
+	ld [wStoryModeExitLocationRequest], a ; $50fa
 	ret ; $50fd
 	ld a, $03 ; $50fe
-	ld [$c36c], a ; $5100
+	ld [wCurrentStorySlot], a ; $5100
 	farcall FarPtr_ReadExhibitionSaveBlock ; $5103
 	bit 7, a ; $5106
 	jr nz, Label_10_5137 ; $5108
@@ -1471,7 +1471,7 @@ Label_10_5137:
 	xor a, a ; $5137
 	ld [$c8a8], a ; $5138
 	ld a, $03 ; $513b
-	ld [$c36c], a ; $513d
+	ld [wCurrentStorySlot], a ; $513d
 	farcall FarPtr_InitStoryModeState ; $5140
 	farcall FarPtr_InitDefaultMatchSettings ; $5143
 	farcall FarPtr_WriteExhibitionSaveBlock ; $5146
@@ -1483,7 +1483,7 @@ Label_10_5149:
 	call BeginFadeOut ; $5153
 	call WaitFadeEnd ; $5156
 Label_10_5159:
-	ld a, [$cb0e] ; $5159
+	ld a, [wMatchFormatDoubles] ; $5159
 	ld b, a ; $515c
 	farcall FarPtr_38_08 ; $515d
 	call Func_10_56fc ; $5160
@@ -1504,11 +1504,11 @@ Label_10_5159:
 	ld c, $10 ; $5185
 	call BeginFadeIn ; $5187
 	ld a, $00 ; $518a
-	ld [$cb11], a ; $518c
+	ld [wMenuSlideDirection], a ; $518c
 	jr Label_10_5149 ; $518f
 Label_10_5191:
 	ld a, $01 ; $5191
-	ld [$cb11], a ; $5193
+	ld [wMenuSlideDirection], a ; $5193
 	farcall FarPtr_StubNop_3e ; $5196
 	ld a, [$cb54] ; $5199
 	or a, a ; $519c
@@ -1520,7 +1520,7 @@ Label_10_5191:
 	cp a, $ff ; $51aa
 	jr nz, Label_10_51cd ; $51ac
 	ld a, $00 ; $51ae
-	ld [$cb11], a ; $51b0
+	ld [wMenuSlideDirection], a ; $51b0
 	jp z, Label_10_5159 ; $51b3
 Label_10_51b6:
 	call EnableLCD ; $51b6
@@ -1530,7 +1530,7 @@ Label_10_51b6:
 	cp a, $ff ; $51c1
 	jr nz, Label_10_51cd ; $51c3
 	ld a, $00 ; $51c5
-	ld [$cb11], a ; $51c7
+	ld [wMenuSlideDirection], a ; $51c7
 	jp z, Label_10_5159 ; $51ca
 Label_10_51cd:
 	ld d, a ; $51cd
@@ -1540,7 +1540,7 @@ Label_10_51cd:
 	call ApplyMatchTypeSettings ; $51d8
 Label_10_51db:
 	ld a, $03 ; $51db
-	ld [$c36c], a ; $51dd
+	ld [wCurrentStorySlot], a ; $51dd
 	xor a, a ; $51e0
 	ld [$c8a5], a ; $51e1
 	farcall FarPtr_WriteExhibitionSaveBlock ; $51e4
@@ -1555,7 +1555,7 @@ Label_10_51db:
 	farcall FarPtr_WriteExhibitionSaveBlock ; $51fa
 Label_10_51fd:
 	ld a, $01 ; $51fd
-	ld [$cb11], a ; $51ff
+	ld [wMenuSlideDirection], a ; $51ff
 	call DisableLCDSafely ; $5202
 	farcall FarPtr_01_0a ; $5205
 	farcall FarPtr_ResetScreenAndTextWindows ; $5208
@@ -1570,18 +1570,18 @@ Label_10_5216:
 	cp a, $ff ; $521d
 	jr nz, Label_10_5229 ; $521f
 	ld a, $00 ; $5221
-	ld [$cb11], a ; $5223
+	ld [wMenuSlideDirection], a ; $5223
 	jp Label_10_4f7c ; $5226
 Label_10_5229:
 	ld a, $03 ; $5229
-	ld [$c36c], a ; $522b
+	ld [wCurrentStorySlot], a ; $522b
 	ld a, [$cb20] ; $522e
 	ld c, a ; $5231
 	farcall FarPtr_RunMinigameLevelSelect ; $5232
 	cp a, $ff ; $5235
 	jr nz, Label_10_5241 ; $5237
 	ld a, $00 ; $5239
-	ld [$cb11], a ; $523b
+	ld [wMenuSlideDirection], a ; $523b
 	jp Label_10_5216 ; $523e
 Label_10_5241:
 	ld [wMinigameLevel], a ; $5241
@@ -1602,14 +1602,14 @@ Label_10_5241:
 	ld c, $10 ; $5262
 	call BeginFadeIn ; $5264
 	ld a, $00 ; $5267
-	ld [$cb11], a ; $5269
+	ld [wMenuSlideDirection], a ; $5269
 	jr Label_10_5229 ; $526c
 Label_10_526e:
 	ld a, [$cb20] ; $526e
 	call Func_10_56e9 ; $5271
 	farcall FarPtr_RunTrainingDrillByID ; $5274
 	ld a, $01 ; $5277
-	ld [$cb11], a ; $5279
+	ld [wMenuSlideDirection], a ; $5279
 	call DisableLCDSafely ; $527c
 	farcall FarPtr_01_0a ; $527f
 	farcall FarPtr_ResetScreenAndTextWindows ; $5282
@@ -1625,7 +1625,7 @@ Label_10_526e:
 	jr z, Label_10_5229 ; $529b
 	jp Label_10_4f7c ; $529d
 	ld a, $03 ; $52a0
-	ld [$c36c], a ; $52a2
+	ld [wCurrentStorySlot], a ; $52a2
 	farcall FarPtr_InitStoryModeState ; $52a5
 	farcall FarPtr_InitDefaultMatchSettings ; $52a8
 	farcall FarPtr_Func_38_7408Alias1 ; $52ab
@@ -1635,7 +1635,7 @@ Label_10_526e:
 	cp a, $ff ; $52b3
 	jp z, Label_10_4f7c ; $52b5
 	ld a, $01 ; $52b8
-	ld [$cb11], a ; $52ba
+	ld [wMenuSlideDirection], a ; $52ba
 	call DisableLCDSafely ; $52bd
 	farcall FarPtr_01_0a ; $52c0
 	farcall FarPtr_ResetScreenAndTextWindows ; $52c3
@@ -1649,7 +1649,7 @@ Label_10_52d1:
 	jp z, Label_10_4f7c ; $52d6
 	cp a, $03 ; $52d9
 	jp nc, Label_10_53d4 ; $52db
-	ld [$c36c], a ; $52de
+	ld [wCurrentStorySlot], a ; $52de
 	farcall FarPtr_CheckStorySlot ; $52e1
 Label_10_52e4:
 	farcall FarPtr_RunN64TransferItemSelect ; $52e4
@@ -1669,7 +1669,7 @@ Label_10_52e4:
 	ld c, $10 ; $5308
 	call BeginFadeIn ; $530a
 	ld a, $00 ; $530d
-	ld [$cb11], a ; $530f
+	ld [wMenuSlideDirection], a ; $530f
 	jp Label_10_52e4 ; $5312
 Label_10_5315:
 	cp a, $01 ; $5315
@@ -1688,7 +1688,7 @@ Label_10_5315:
 	ld c, $10 ; $5338
 	call BeginFadeIn ; $533a
 	ld a, $00 ; $533d
-	ld [$cb11], a ; $533f
+	ld [wMenuSlideDirection], a ; $533f
 	jp Label_10_52e4 ; $5342
 Label_10_5345:
 	cp a, $02 ; $5345
@@ -1704,7 +1704,7 @@ Label_10_5345:
 	ld c, $10 ; $5360
 	call BeginFadeIn ; $5362
 	ld a, $00 ; $5365
-	ld [$cb11], a ; $5367
+	ld [wMenuSlideDirection], a ; $5367
 	jp Label_10_52e4 ; $536a
 Label_10_536d:
 	farcall FarPtr_RunRacketShoesChoiceMenu ; $536d
@@ -1713,7 +1713,7 @@ Label_10_536d:
 	cp a, $01 ; $5374
 	jr z, Label_10_53aa ; $5376
 	ld a, $00 ; $5378
-	ld [$cb11], a ; $537a
+	ld [wMenuSlideDirection], a ; $537a
 	jp Label_10_52e4 ; $537d
 Label_10_5380:
 	ld c, $10 ; $5380
@@ -1729,7 +1729,7 @@ Label_10_5380:
 	ld c, $10 ; $539d
 	call BeginFadeIn ; $539f
 	ld a, $00 ; $53a2
-	ld [$cb11], a ; $53a4
+	ld [wMenuSlideDirection], a ; $53a4
 	jp Label_10_536d ; $53a7
 Label_10_53aa:
 	ld c, $10 ; $53aa
@@ -1745,7 +1745,7 @@ Label_10_53aa:
 	ld c, $10 ; $53c7
 	call BeginFadeIn ; $53c9
 	ld a, $00 ; $53cc
-	ld [$cb11], a ; $53ce
+	ld [wMenuSlideDirection], a ; $53ce
 	jp Label_10_536d ; $53d1
 Label_10_53d4:
 	cp a, $03 ; $53d4
@@ -1772,7 +1772,7 @@ Label_10_53e2:
 	ld c, $10 ; $5404
 	call BeginFadeIn ; $5406
 	ld a, $00 ; $5409
-	ld [$cb11], a ; $540b
+	ld [wMenuSlideDirection], a ; $540b
 	jp Label_10_53d8 ; $540e
 Label_10_5411:
 	ld c, $10 ; $5411
@@ -1789,7 +1789,7 @@ Label_10_5411:
 	ld c, $10 ; $5430
 	call BeginFadeIn ; $5432
 	ld a, $00 ; $5435
-	ld [$cb11], a ; $5437
+	ld [wMenuSlideDirection], a ; $5437
 	jp Label_10_53d8 ; $543a
 Label_10_543d:
 	farcall FarPtr_RunN64RecordTypeSelect ; $543d
@@ -1808,7 +1808,7 @@ Label_10_543d:
 	ld c, $10 ; $545f
 	call BeginFadeIn ; $5461
 	ld a, $00 ; $5464
-	ld [$cb11], a ; $5466
+	ld [wMenuSlideDirection], a ; $5466
 	jp Label_10_53d4 ; $5469
 Label_10_546c:
 	cp a, $01 ; $546c
@@ -1824,7 +1824,7 @@ Label_10_546c:
 	ld c, $10 ; $5487
 	call BeginFadeIn ; $5489
 	ld a, $00 ; $548c
-	ld [$cb11], a ; $548e
+	ld [wMenuSlideDirection], a ; $548e
 	jp Label_10_53d4 ; $5491
 Label_10_5494:
 	farcall FarPtr_RunN64RingShotData ; $5494
@@ -1835,7 +1835,7 @@ Label_10_5494:
 	ld c, $10 ; $54a3
 	call BeginFadeIn ; $54a5
 	ld a, $00 ; $54a8
-	ld [$cb11], a ; $54aa
+	ld [wMenuSlideDirection], a ; $54aa
 	jp Label_10_53d4 ; $54ad
 	ld c, $10 ; $54b0
 	call BeginFadeOut ; $54b2
@@ -1849,7 +1849,7 @@ Label_10_5494:
 	ld c, $10 ; $54c9
 	call BeginFadeIn ; $54cb
 	ld a, $00 ; $54ce
-	ld [$cb11], a ; $54d0
+	ld [wMenuSlideDirection], a ; $54d0
 	jp Label_10_4f7c ; $54d3
 Label_10_54d6:
 	farcall FarPtr_RunEraseSavedDataSelect ; $54d6
@@ -1875,7 +1875,7 @@ Label_10_54e8:
 	ld h, l ; $54f4
 	ld d, l ; $54f5
 	ld a, b ; $54f6
-	ld [$c36c], a ; $54f7
+	ld [wCurrentStorySlot], a ; $54f7
 	farcall FarPtr_CheckStorySlot ; $54fa
 	push bc ; $54fd
 	ld c, $10 ; $54fe
@@ -1889,7 +1889,7 @@ Label_10_54e8:
 	or a, a ; $5510
 	jr nz, Label_10_5520 ; $5511
 	ld a, b ; $5513
-	ld [$c36c], a ; $5514
+	ld [wCurrentStorySlot], a ; $5514
 	ld a, $00 ; $5517
 	farcall FarPtr_EraseStorySlotSaveData ; $5519
 	xor a, a ; $551c
@@ -1902,7 +1902,7 @@ Label_10_5520:
 	ld c, $10 ; $552c
 	call BeginFadeIn ; $552e
 	ld a, $00 ; $5531
-	ld [$cb11], a ; $5533
+	ld [wMenuSlideDirection], a ; $5533
 	jp Label_10_54d6 ; $5536
 	ld c, $10 ; $5539
 	call BeginFadeOut ; $553b
@@ -1920,7 +1920,7 @@ Label_10_554c:
 	ld c, $10 ; $5558
 	call BeginFadeIn ; $555a
 	ld a, $00 ; $555d
-	ld [$cb11], a ; $555f
+	ld [wMenuSlideDirection], a ; $555f
 	jp Label_10_54d6 ; $5562
 	ld c, $10 ; $5565
 	call BeginFadeOut ; $5567
@@ -1936,7 +1936,7 @@ Label_10_554c:
 	ld c, $10 ; $5581
 	call BeginFadeIn ; $5583
 	ld a, $00 ; $5586
-	ld [$cb11], a ; $5588
+	ld [wMenuSlideDirection], a ; $5588
 	xor a, a ; $558b
 	ld [$cb1b], a ; $558c
 	jp Label_10_54d6 ; $558f
@@ -1949,7 +1949,7 @@ Label_10_5592:
 	ld c, $10 ; $55a1
 	call BeginFadeIn ; $55a3
 	ld a, $00 ; $55a6
-	ld [$cb11], a ; $55a8
+	ld [wMenuSlideDirection], a ; $55a8
 	xor a, a ; $55ab
 	ld [$cb1b], a ; $55ac
 	ld [$cb20], a ; $55af
@@ -1964,10 +1964,10 @@ Label_10_55b6:
 	ld a, $00 ; $55c2
 	ld [wStoryModeCurrentLocation], a ; $55c4
 	ld a, $01 ; $55c7
-	ld [$c295], a ; $55c9
+	ld [wStoryModeEntryPoint], a ; $55c9
 	ld a, $ff ; $55cc
 	ld [$c294], a ; $55ce
-	ld [$c2a1], a ; $55d1
+	ld [wStoryModeExitLocationRequest], a ; $55d1
 	ret ; $55d4
 Label_10_55d5:
 	ld a, [wGameMode] ; $55d5
@@ -1984,12 +1984,12 @@ Label_10_55d5:
 	jr nz, Label_10_55fb ; $55f0
 	ld a, $02 ; $55f2
 	ld [$c294], a ; $55f4
-	ld [$c2a1], a ; $55f7
+	ld [wStoryModeExitLocationRequest], a ; $55f7
 	ret ; $55fa
 Label_10_55fb:
 	ld a, $03 ; $55fb
 	ld [$c294], a ; $55fd
-	ld [$c2a1], a ; $5600
+	ld [wStoryModeExitLocationRequest], a ; $5600
 	ret ; $5603
 Label_10_5604:
 	ld a, [$c8f7] ; $5604
@@ -1998,10 +1998,10 @@ Label_10_5604:
 	ld a, $1c ; $560b
 	ld [wStoryModeCurrentLocation], a ; $560d
 	ld a, $0a ; $5610
-	ld [$c295], a ; $5612
+	ld [wStoryModeEntryPoint], a ; $5612
 	ld a, $ff ; $5615
 	ld [$c294], a ; $5617
-	ld [$c2a1], a ; $561a
+	ld [wStoryModeExitLocationRequest], a ; $561a
 	ret ; $561d
 Label_10_561e:
 	cp a, $0f ; $561e
@@ -2011,19 +2011,19 @@ Label_10_561e:
 	ld a, $19 ; $5627
 	ld [wStoryModeCurrentLocation], a ; $5629
 	ld a, $0a ; $562c
-	ld [$c295], a ; $562e
+	ld [wStoryModeEntryPoint], a ; $562e
 	ld a, $ff ; $5631
 	ld [$c294], a ; $5633
-	ld [$c2a1], a ; $5636
+	ld [wStoryModeExitLocationRequest], a ; $5636
 	ret ; $5639
 Label_10_563a:
 	ld a, $19 ; $563a
 	ld [wStoryModeCurrentLocation], a ; $563c
 	ld a, $0b ; $563f
-	ld [$c295], a ; $5641
+	ld [wStoryModeEntryPoint], a ; $5641
 	ld a, $ff ; $5644
 	ld [$c294], a ; $5646
-	ld [$c2a1], a ; $5649
+	ld [wStoryModeExitLocationRequest], a ; $5649
 	ret ; $564c
 Label_10_564d:
 	cp a, $0a ; $564d
@@ -2031,10 +2031,10 @@ Label_10_564d:
 	ld a, $07 ; $5651
 	ld [wStoryModeCurrentLocation], a ; $5653
 	ld a, $0d ; $5656
-	ld [$c295], a ; $5658
+	ld [wStoryModeEntryPoint], a ; $5658
 	ld a, $ff ; $565b
 	ld [$c294], a ; $565d
-	ld [$c2a1], a ; $5660
+	ld [wStoryModeExitLocationRequest], a ; $5660
 	ret ; $5663
 Label_10_5664:
 	cp a, $05 ; $5664
@@ -2043,19 +2043,19 @@ Label_10_5664:
 	ld a, $10 ; $566a
 	ld [wStoryModeCurrentLocation], a ; $566c
 	ld a, $0f ; $566f
-	ld [$c295], a ; $5671
+	ld [wStoryModeEntryPoint], a ; $5671
 	ld a, $ff ; $5674
 	ld [$c294], a ; $5676
-	ld [$c2a1], a ; $5679
+	ld [wStoryModeExitLocationRequest], a ; $5679
 	ret ; $567c
 Label_10_567d:
 	ld a, $10 ; $567d
 	ld [wStoryModeCurrentLocation], a ; $567f
 	ld a, $09 ; $5682
-	ld [$c295], a ; $5684
+	ld [wStoryModeEntryPoint], a ; $5684
 	ld a, $ff ; $5687
 	ld [$c294], a ; $5689
-	ld [$c2a1], a ; $568c
+	ld [wStoryModeExitLocationRequest], a ; $568c
 	ret ; $568f
 Label_10_5690:
 	test_flag $05, 7 ; $5690
@@ -2065,19 +2065,19 @@ Label_10_5690:
 	ld a, $0b ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
 	ld a, $0f ; $569e
-	ld [$c295], a ; $56a0
+	ld [wStoryModeEntryPoint], a ; $56a0
 	ld a, $ff ; $56a3
 	ld [$c294], a ; $56a5
-	ld [$c2a1], a ; $56a8
+	ld [wStoryModeExitLocationRequest], a ; $56a8
 	ret ; $56ab
 Label_10_56ac:
 	ld a, $0b ; $56ac
 	ld [wStoryModeCurrentLocation], a ; $56ae
 	ld a, $09 ; $56b1
-	ld [$c295], a ; $56b3
+	ld [wStoryModeEntryPoint], a ; $56b3
 	ld a, $ff ; $56b6
 	ld [$c294], a ; $56b8
-	ld [$c2a1], a ; $56bb
+	ld [wStoryModeExitLocationRequest], a ; $56bb
 	ret ; $56be
 Label_10_56bf:
 	cp a, $00 ; $56bf
@@ -2085,19 +2085,19 @@ Label_10_56bf:
 	ld a, $0c ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5
 	ld a, $0f ; $56c8
-	ld [$c295], a ; $56ca
+	ld [wStoryModeEntryPoint], a ; $56ca
 	ld a, $ff ; $56cd
 	ld [$c294], a ; $56cf
-	ld [$c2a1], a ; $56d2
+	ld [wStoryModeExitLocationRequest], a ; $56d2
 	ret ; $56d5
 Label_10_56d6:
 	ld a, $0c ; $56d6
 	ld [wStoryModeCurrentLocation], a ; $56d8
 	ld a, $09 ; $56db
-	ld [$c295], a ; $56dd
+	ld [wStoryModeEntryPoint], a ; $56dd
 	ld a, $ff ; $56e0
 	ld [$c294], a ; $56e2
-	ld [$c2a1], a ; $56e5
+	ld [wStoryModeExitLocationRequest], a ; $56e5
 	ret ; $56e8
 Func_10_56e9:
 	ld hl, $56f3 ; $56e9
@@ -2132,30 +2132,30 @@ Func_10_56fc:
 	wram_bank ; $5718
 	pop af ; $571c
 	ret ; $571d
-	ld a, [$c36c] ; $571e
+	ld a, [wCurrentStorySlot] ; $571e
 	push af ; $5721
 	xor a, a ; $5722
-	ld [$c36c], a ; $5723
+	ld [wCurrentStorySlot], a ; $5723
 	farcall FarPtr_CheckStorySlot ; $5726
 	cp a, $fe ; $5729
 	jr nz, Label_10_574b ; $572b
 	ld a, $01 ; $572d
-	ld [$c36c], a ; $572f
+	ld [wCurrentStorySlot], a ; $572f
 	farcall FarPtr_CheckStorySlot ; $5732
 	cp a, $fe ; $5735
 	jr nz, Label_10_574b ; $5737
 	ld a, $02 ; $5739
-	ld [$c36c], a ; $573b
+	ld [wCurrentStorySlot], a ; $573b
 	farcall FarPtr_CheckStorySlot ; $573e
 	cp a, $fe ; $5741
 	jr nz, Label_10_574b ; $5743
 	pop af ; $5745
 	xor a, a ; $5746
-	ld [$c36c], a ; $5747
+	ld [wCurrentStorySlot], a ; $5747
 	ret ; $574a
 Label_10_574b:
 	pop af ; $574b
-	ld [$c36c], a ; $574c
+	ld [wCurrentStorySlot], a ; $574c
 	ld a, $01 ; $574f
 	ret ; $5751
 Func_10_5752:
@@ -2195,7 +2195,7 @@ Func_10_578a:
 	ld a, [$c8a5] ; $5793
 	or a, a ; $5796
 	jr z, Label_10_57f3 ; $5797
-	ld a, [$c36c] ; $5799
+	ld a, [wCurrentStorySlot] ; $5799
 	ld b, a ; $579c
 	ld a, [$c8b5] ; $579d
 	bit 7, a ; $57a0
@@ -2560,7 +2560,7 @@ Data_10_5a80:
 	; $5b86, 17 bytes (bytes:16)
 	db $01, $c0, $00, $0c, $00, $21, $97, $5b, $02, $40, $00, $05, $00, $17, $5f, $7b ; 0x00
 	db $ff ; 0x10
-	ld a, [$c295] ; $5b97
+	ld a, [wStoryModeEntryPoint] ; $5b97
 	cp a, $ff ; $5b9a
 	jp z, Label_10_5bdc ; $5b9c
 	test_flag $05, 7 ; $5b9f
@@ -3534,7 +3534,7 @@ Label_10_64b0:
 	ld a, $00 ; $64c7
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $64c9
 	call EnableLCD ; $64cc
-	ld a, [$c295] ; $64cf
+	ld a, [wStoryModeEntryPoint] ; $64cf
 	cp a, $0d ; $64d2
 	jp z, Label_10_64e0 ; $64d4
 	cp a, $0f ; $64d7
@@ -3575,7 +3575,7 @@ Label_10_6512:
 	ld de, $3b00 ; $652a
 	farcall FarPtr_ScriptSetActorPosition ; $652d
 	xor a, a ; $6530
-	ld [$c2d5], a ; $6531
+	ld [wStoryModeShowLocationName], a ; $6531
 	ld a, $00 ; $6534
 	ld bc, $2b00 ; $6536
 	ld de, $3b00 ; $6539
@@ -4700,10 +4700,10 @@ Label_10_6f0c:
 	ld a, $0a ; $6f32
 	ld [wStoryModeCurrentLocation], a ; $6f34
 	ld a, $0a ; $6f37
-	ld [$c295], a ; $6f39
+	ld [wStoryModeEntryPoint], a ; $6f39
 	ld a, $ff ; $6f3c
 	ld [$c294], a ; $6f3e
-	ld [$c2a1], a ; $6f41
+	ld [wStoryModeExitLocationRequest], a ; $6f41
 	ret ; $6f44
 	; $6f45, 136 bytes (bytes:14)
 	db $00, $00, $d1, $7b, $00, $fd, $00, $01, $40, $00, $4e, $01, $00, $00 ; 0x00
@@ -4758,7 +4758,7 @@ Label_10_7029:
 	ld b, $c0 ; $702b
 	farcall FarPtr_SetActorFacing ; $702d
 	xor a, a ; $7030
-	ld [$c2d5], a ; $7031
+	ld [wStoryModeShowLocationName], a ; $7031
 	ld c, $04 ; $7034
 	call BeginFadeIn ; $7036
 	call WaitFadeEnd ; $7039
@@ -5092,10 +5092,10 @@ Label_10_7314:
 	ld a, $14 ; $7326
 	ld [wStoryModeCurrentLocation], a ; $7328
 	ld a, $0c ; $732b
-	ld [$c295], a ; $732d
+	ld [wStoryModeEntryPoint], a ; $732d
 	ld a, $ff ; $7330
 	ld [$c294], a ; $7332
-	ld [$c2a1], a ; $7335
+	ld [wStoryModeExitLocationRequest], a ; $7335
 	ret ; $7338
 Func_10_7339:
 	push af ; $7339
@@ -5465,7 +5465,7 @@ Label_10_772e:
 	ld a, $01 ; $772e
 	ld hl, $79d0 ; $7730
 	call RegisterFrameTask ; $7733
-	ld a, [$c295] ; $7736
+	ld a, [wStoryModeEntryPoint] ; $7736
 	cp a, $0f ; $7739
 	jr nz, Label_10_7740 ; $773b
 	call Func_10_7741 ; $773d
@@ -5729,7 +5729,7 @@ Label_10_785b:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $7971
 	ld a, $0f ; $7974
 	ld [$c294], a ; $7976
-	ld [$c2a1], a ; $7979
+	ld [wStoryModeExitLocationRequest], a ; $7979
 	farcall FarPtr_EndCutsceneScriptMode ; $797c
 	ret ; $797f
 	; $7980, 80 bytes (bytes:14)
@@ -5920,7 +5920,7 @@ Label_10_7adf:
 	ld de, $00c0 ; $7b18
 	farcall FarPtr_MoveActorByAngle ; $7b1b
 	ret ; $7b1e
-	ld a, [$c295] ; $7b1f
+	ld a, [wStoryModeEntryPoint] ; $7b1f
 	cp a, $ff ; $7b22
 	jr z, Label_10_7b5e ; $7b24
 	ld a, $02 ; $7b26
@@ -5948,7 +5948,7 @@ Label_10_7adf:
 Label_10_7b5e:
 	ret ; $7b5e
 Func_10_7b5f:
-	ld a, [$c295] ; $7b5f
+	ld a, [wStoryModeEntryPoint] ; $7b5f
 	cp a, $ff ; $7b62
 	jr z, Label_10_7b8a ; $7b64
 	ld a, $00 ; $7b66

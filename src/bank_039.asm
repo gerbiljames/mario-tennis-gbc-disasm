@@ -1019,9 +1019,9 @@ ResetScreenAndTextWindows:
 	farcall FarPtr_LoadCompressedTileBlock ; $4c10
 	wram_bank $05 ; $4c13
 	ld a, $03 ; $4c19
-	ld [$c3b3], a ; $4c1b
+	ld [wShadowTilemapBank], a ; $4c1b
 	ld a, $00 ; $4c1e
-	ld [$c3b6], a ; $4c20
+	ld [wWindowTileAttr], a ; $4c20
 	ld d, $00 ; $4c23
 	ld e, $0f ; $4c25
 	ld b, $14 ; $4c27

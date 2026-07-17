@@ -21,7 +21,7 @@ SECTION "ROM Bank $14", ROMX[$4000], BANK[$14]
 	; $404a, 25 bytes (bytes:16)
 	db $01, $c0, $00, $2b, $00, $39, $63, $40, $05, $c0, $00, $38, $00, $36, $00, $00 ; 0x00
 	db $07, $c0, $00, $38, $00, $36, $00, $00, $ff ; 0x10
-	ld a, [$c295] ; $4063
+	ld a, [wStoryModeEntryPoint] ; $4063
 	cp a, $ff ; $4066
 	jp z, Label_14_4085 ; $4068
 	clear_flag $0f, 5 ; $406b
@@ -273,7 +273,7 @@ MachineLevel4ClearedScene:
 	call EnableLCD ; $4294
 	call ComputeMachineCourtProgress ; $4297
 	farcall FarPtr_WaitPlayerMoveDone ; $429a
-	ld a, [$c295] ; $429d
+	ld a, [wStoryModeEntryPoint] ; $429d
 	cp a, $05 ; $42a0
 	jp z, MachineCourtResultScene ; $42a2
 	cp a, $07 ; $42a5
@@ -319,7 +319,7 @@ Label_14_42d3:
 	jr z, Label_14_4301 ; $42ff
 Label_14_4301:
 	xor a, a ; $4301
-	ld [$c2d5], a ; $4302
+	ld [wStoryModeShowLocationName], a ; $4302
 	ld a, [$c4c7] ; $4305
 	and a, a ; $4308
 	jp nz, MachineCourtGameOverExitScene ; $4309
@@ -614,10 +614,10 @@ Label_14_4577:
 	ld a, $12 ; $4582
 	ld [wStoryModeCurrentLocation], a ; $4584
 	ld a, $05 ; $4587
-	ld [$c295], a ; $4589
+	ld [wStoryModeEntryPoint], a ; $4589
 	ld a, $ff ; $458c
 	ld [$c294], a ; $458e
-	ld [$c2a1], a ; $4591
+	ld [wStoryModeExitLocationRequest], a ; $4591
 	ld a, [$c2b0] ; $4594
 	add a, $f8 ; $4597
 	ld l, a ; $4599
@@ -719,10 +719,10 @@ MachinePracticeLevelPrompt:
 	ld a, $12 ; $4675
 	ld [wStoryModeCurrentLocation], a ; $4677
 	ld a, $07 ; $467a
-	ld [$c295], a ; $467c
+	ld [wStoryModeEntryPoint], a ; $467c
 	ld a, $ff ; $467f
 	ld [$c294], a ; $4681
-	ld [$c2a1], a ; $4684
+	ld [wStoryModeExitLocationRequest], a ; $4684
 	ld a, [$c2b8] ; $4687
 	add a, $12 ; $468a
 	farcall FarPtr_RunTrainingDrillByID ; $468c
@@ -765,7 +765,7 @@ TestMachineLevelClearedFlag:
 	dw $00d5 ; record 3
 MachinePracticeResultScene:
 	xor a, a ; $46c5
-	ld [$c2d5], a ; $46c6
+	ld [wStoryModeShowLocationName], a ; $46c6
 	set_flag $1c, 1 ; $46c9
 	test_flag $05, 7 ; $46cc
 	jr z, Label_14_46ef ; $46cf
@@ -890,19 +890,19 @@ MachineCourtRestartLevel:
 	ld a, $12 ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
 	ld a, $07 ; $47e0
-	ld [$c295], a ; $47e2
+	ld [wStoryModeEntryPoint], a ; $47e2
 	ld a, $ff ; $47e5
 	ld [$c294], a ; $47e7
-	ld [$c2a1], a ; $47ea
+	ld [wStoryModeExitLocationRequest], a ; $47ea
 	jr Label_14_4801 ; $47ed
 Label_14_47ef:
 	ld a, $12 ; $47ef
 	ld [wStoryModeCurrentLocation], a ; $47f1
 	ld a, $05 ; $47f4
-	ld [$c295], a ; $47f6
+	ld [wStoryModeEntryPoint], a ; $47f6
 	ld a, $ff ; $47f9
 	ld [$c294], a ; $47fb
-	ld [$c2a1], a ; $47fe
+	ld [wStoryModeExitLocationRequest], a ; $47fe
 Label_14_4801:
 	ld a, [$c8f7] ; $4801
 	farcall FarPtr_RunTrainingDrillByID ; $4804
@@ -923,10 +923,10 @@ Label_14_4801:
 	ld a, $12 ; $482f
 	ld [wStoryModeCurrentLocation], a ; $4831
 	ld a, $01 ; $4834
-	ld [$c295], a ; $4836
+	ld [wStoryModeEntryPoint], a ; $4836
 	ld a, $ff ; $4839
 	ld [$c294], a ; $483b
-	ld [$c2a1], a ; $483e
+	ld [wStoryModeExitLocationRequest], a ; $483e
 	ret ; $4841
 MachineExpertResultScene:
 	test_flag $1b, 4 ; $4842
@@ -1609,7 +1609,7 @@ Label_14_4eaf:
 	db $00, $00, $b1, $78, $00, $fd, $00, $01, $40, $00, $4d, $01, $00, $00 ; 0x54
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x62
 Court2EntryWalkIn:
-	ld a, [$c295] ; $4f66
+	ld a, [wStoryModeEntryPoint] ; $4f66
 	cp a, $ff ; $4f69
 	jp z, Label_14_4fab ; $4f6b
 	test_flag $05, 7 ; $4f6e
@@ -1795,7 +1795,7 @@ Label_14_515c:
 	db $00, $00, $b1, $78, $00, $1d, $00, $23, $40, $00, $32, $01, $03, $00 ; 0x2a
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x38
 Court1EntryWalkIn:
-	ld a, [$c295] ; $51a4
+	ld a, [wStoryModeEntryPoint] ; $51a4
 	cp a, $ff ; $51a7
 	jp z, Label_14_51e9 ; $51a9
 	test_flag $05, 7 ; $51ac
@@ -1898,7 +1898,7 @@ Label_14_5208:
 	ld bc, $3f00 ; $52da
 	ld de, $3f00 ; $52dd
 	farcall FarPtr_ScriptSetActorPosition ; $52e0
-	ld a, [$c295] ; $52e3
+	ld a, [wStoryModeEntryPoint] ; $52e3
 	cp a, $02 ; $52e6
 	jp z, Label_14_628b ; $52e8
 	cp a, $08 ; $52eb
@@ -1960,7 +1960,7 @@ Label_14_5352:
 	ld a, $00 ; $536a
 	ld b, $00 ; $536c
 	farcall FarPtr_SetActorActive ; $536e
-	ld a, [$c295] ; $5371
+	ld a, [wStoryModeEntryPoint] ; $5371
 	cp a, $0c ; $5374
 	jr nz, Label_14_539c ; $5376
 	ld a, $00 ; $5378
@@ -1968,7 +1968,7 @@ Label_14_5352:
 	ld de, $2700 ; $537d
 	farcall FarPtr_ScriptSetActorPosition ; $5380
 	xor a, a ; $5383
-	ld [$c2d5], a ; $5384
+	ld [wStoryModeShowLocationName], a ; $5384
 	ld c, $04 ; $5387
 	call BeginFadeIn ; $5389
 	call WaitFadeEnd ; $538c
@@ -1979,7 +1979,7 @@ Label_14_5352:
 	jp Label_14_5440 ; $5399
 Label_14_539c:
 	xor a, a ; $539c
-	ld [$c2d5], a ; $539d
+	ld [wStoryModeShowLocationName], a ; $539d
 	ld c, $06 ; $53a0
 	call BeginFadeIn ; $53a2
 	call WaitFadeEnd ; $53a5
@@ -2120,7 +2120,7 @@ Label_14_5497:
 	ld [$c2b1], a ; $54a2
 	dec h ; $54a5
 	jr nz, Label_14_5497 ; $54a6
-	ld a, [$c295] ; $54a8
+	ld a, [wStoryModeEntryPoint] ; $54a8
 	cp a, $0c ; $54ab
 	jr z, Label_14_54df ; $54ad
 	test_flag $05, 7 ; $54af
@@ -2139,10 +2139,10 @@ Label_14_54c1:
 	ld a, $15 ; $54cc
 	ld [wStoryModeCurrentLocation], a ; $54ce
 	ld a, $04 ; $54d1
-	ld [$c295], a ; $54d3
+	ld [wStoryModeEntryPoint], a ; $54d3
 	ld a, $ff ; $54d6
 	ld [$c294], a ; $54d8
-	ld [$c2a1], a ; $54db
+	ld [wStoryModeExitLocationRequest], a ; $54db
 	ret ; $54de
 Label_14_54df:
 	ld a, $40 ; $54df
@@ -2263,7 +2263,7 @@ Label_14_54df:
 	farcall FarPtr_ScriptSetActorAnimation ; $55e3
 	ld a, $00 ; $55e6
 	farcall FarPtr_ScriptWaitActorIdle ; $55e8
-	ld a, [$c295] ; $55eb
+	ld a, [wStoryModeEntryPoint] ; $55eb
 	cp a, $0c ; $55ee
 	jr nz, Label_14_5603 ; $55f0
 	ld a, $01 ; $55f2
@@ -2271,7 +2271,7 @@ Label_14_54df:
 	ld [$c2bf], a ; $55f7
 	ld a, $01 ; $55fa
 	ld [$c294], a ; $55fc
-	ld [$c2a1], a ; $55ff
+	ld [wStoryModeExitLocationRequest], a ; $55ff
 	ret ; $5602
 Label_14_5603:
 	ld a, $00 ; $5603
@@ -2291,10 +2291,10 @@ Label_14_5603:
 	ld a, $0a ; $5628
 	ld [wStoryModeCurrentLocation], a ; $562a
 	ld a, $09 ; $562d
-	ld [$c295], a ; $562f
+	ld [wStoryModeEntryPoint], a ; $562f
 	ld a, $ff ; $5632
 	ld [$c294], a ; $5634
-	ld [$c2a1], a ; $5637
+	ld [wStoryModeExitLocationRequest], a ; $5637
 	ret ; $563a
 	INCBIN "data/bank_014/d_563b.bin" ; $563b, 2110 bytes
 LoadWaterSpriteObjGfx:
@@ -2615,7 +2615,7 @@ Label_14_628b:
 	farcall FarPtr_ScriptSetActorPosition ; $62cf
 Label_14_62d2:
 	xor a, a ; $62d2
-	ld [$c2d5], a ; $62d3
+	ld [wStoryModeShowLocationName], a ; $62d3
 	ld c, $06 ; $62d6
 	call BeginFadeIn ; $62d8
 	call WaitFadeEnd ; $62db
@@ -2775,10 +2775,10 @@ Label_14_63e1:
 	ld a, $14 ; $640c
 	ld [wStoryModeCurrentLocation], a ; $640e
 	ld a, $02 ; $6411
-	ld [$c295], a ; $6413
+	ld [wStoryModeEntryPoint], a ; $6413
 	ld a, $ff ; $6416
 	ld [$c294], a ; $6418
-	ld [$c2a1], a ; $641b
+	ld [wStoryModeExitLocationRequest], a ; $641b
 	ret ; $641e
 Func_14_641f:
 	ld a, [$c2b2] ; $641f
@@ -2898,7 +2898,7 @@ Label_14_650b:
 	ld de, $3f00 ; $6510
 	farcall FarPtr_ScriptSetActorPosition ; $6513
 	xor a, a ; $6516
-	ld [$c2d5], a ; $6517
+	ld [wStoryModeShowLocationName], a ; $6517
 	ld c, $04 ; $651a
 	call BeginFadeIn ; $651c
 	call WaitFadeEnd ; $651f
@@ -3036,19 +3036,19 @@ Label_14_650b:
 	ld a, $1a ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, $0b ; $6654
-	ld [$c295], a ; $6656
+	ld [wStoryModeEntryPoint], a ; $6656
 	ld a, $ff ; $6659
 	ld [$c294], a ; $665b
-	ld [$c2a1], a ; $665e
+	ld [wStoryModeExitLocationRequest], a ; $665e
 	ret ; $6661
 Label_14_6662:
 	ld a, $1a ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, $0a ; $6667
-	ld [$c295], a ; $6669
+	ld [wStoryModeEntryPoint], a ; $6669
 	ld a, $ff ; $666c
 	ld [$c294], a ; $666e
-	ld [$c2a1], a ; $6671
+	ld [wStoryModeExitLocationRequest], a ; $6671
 	ret ; $6674
 	INCBIN "data/bank_014/d_6675.bin" ; $6675, 2310 bytes
 Label_14_6f7b:
@@ -3084,7 +3084,7 @@ Label_14_6f7b:
 	farcall FarPtr_ScriptSetActorPosition ; $6fca
 Label_14_6fcd:
 	xor a, a ; $6fcd
-	ld [$c2d5], a ; $6fce
+	ld [wStoryModeShowLocationName], a ; $6fce
 	ld c, $06 ; $6fd1
 	call BeginFadeIn ; $6fd3
 	call WaitFadeEnd ; $6fd6
@@ -3231,14 +3231,14 @@ Label_14_70e0:
 	ld a, $46 ; $70f0
 	farcall FarPtr_WaitScriptFrames ; $70f2
 	pop af ; $70f5
-	ld a, [$c295] ; $70f6
+	ld a, [wStoryModeEntryPoint] ; $70f6
 	cp a, $0d ; $70f9
 	jp nz, Label_14_710c ; $70fb
 	ld a, $01 ; $70fe
 	ld [$c2be], a ; $7100
 	ld a, $01 ; $7103
 	ld [$c294], a ; $7105
-	ld [$c2a1], a ; $7108
+	ld [wStoryModeExitLocationRequest], a ; $7108
 	ret ; $710b
 Label_14_710c:
 	test_flag $05, 7 ; $710c
@@ -3262,10 +3262,10 @@ Label_14_7124:
 	ld a, $00 ; $7136
 	ld [wStoryModeCurrentLocation], a ; $7138
 	ld a, $0a ; $713b
-	ld [$c295], a ; $713d
+	ld [wStoryModeEntryPoint], a ; $713d
 	ld a, $ff ; $7140
 	ld [$c294], a ; $7142
-	ld [$c2a1], a ; $7145
+	ld [wStoryModeExitLocationRequest], a ; $7145
 	ret ; $7148
 Label_14_7149:
 	test_flag $16, 3 ; $7149
@@ -3281,10 +3281,10 @@ Label_14_7155:
 	ld a, $1d ; $715d
 	ld [wStoryModeCurrentLocation], a ; $715f
 	ld a, $01 ; $7162
-	ld [$c295], a ; $7164
+	ld [wStoryModeEntryPoint], a ; $7164
 	ld a, $ff ; $7167
 	ld [$c294], a ; $7169
-	ld [$c2a1], a ; $716c
+	ld [wStoryModeExitLocationRequest], a ; $716c
 	ret ; $716f
 Label_14_7170:
 	ld c, $04 ; $7170
@@ -3293,10 +3293,10 @@ Label_14_7170:
 	ld a, $1d ; $7178
 	ld [wStoryModeCurrentLocation], a ; $717a
 	ld a, $0f ; $717d
-	ld [$c295], a ; $717f
+	ld [wStoryModeEntryPoint], a ; $717f
 	ld a, $ff ; $7182
 	ld [$c294], a ; $7184
-	ld [$c2a1], a ; $7187
+	ld [wStoryModeExitLocationRequest], a ; $7187
 	ret ; $718a
 	INCBIN "data/bank_014/d_718b.bin" ; $718b, 543 bytes
 Func_14_73aa:
@@ -3457,7 +3457,7 @@ Label_14_76c6:
 	farcall FarPtr_ScriptSetActorPosition ; $7700
 Label_14_7703:
 	xor a, a ; $7703
-	ld [$c2d5], a ; $7704
+	ld [wStoryModeShowLocationName], a ; $7704
 	ld c, $06 ; $7707
 	call BeginFadeIn ; $7709
 	call WaitFadeEnd ; $770c
@@ -3628,10 +3628,10 @@ Label_14_7838:
 	ld a, $14 ; $7860
 	ld [wStoryModeCurrentLocation], a ; $7862
 	ld a, $02 ; $7865
-	ld [$c295], a ; $7867
+	ld [wStoryModeEntryPoint], a ; $7867
 	ld a, $ff ; $786a
 	ld [$c294], a ; $786c
-	ld [$c2a1], a ; $786f
+	ld [wStoryModeExitLocationRequest], a ; $786f
 	ret ; $7872
 Func_14_7873:
 	ld a, [$c2b2] ; $7873
@@ -3675,7 +3675,7 @@ Label_14_78b0:
 	ret ; $78de
 	INCBIN "data/bank_014/d_78df.bin" ; $78df, 3 bytes
 	xor a, a ; $78e2
-	ld [$c2d5], a ; $78e3
+	ld [wStoryModeShowLocationName], a ; $78e3
 	ret ; $78e6
 	INCBIN "data/bank_014/d_78e7.bin" ; $78e7, 558 bytes
 	ds 1259, $ff ; $7b15, fill

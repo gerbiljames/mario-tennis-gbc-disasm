@@ -95,7 +95,7 @@ Label_1c_40b2:
 	call BeginFadeOut ; $40b8
 	call WaitFadeEnd ; $40bb
 	ld hl, wStoryModeNameOfMainCharacter ; $40be
-	ld de, $c800 ; $40c1
+	ld de, wSaveBlockBuffer ; $40c1
 	ld c, $08 ; $40c4
 	call CopyMemoryFast ; $40c6
 	ld hl, $4e54 ; $40c9

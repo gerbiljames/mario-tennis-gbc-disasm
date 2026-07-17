@@ -110,7 +110,7 @@ Func_02_4066:
 	bit 7, a ; $4077
 	jr z, Label_02_40c4 ; $4079
 	ld b, a ; $407b
-	ld a, [$c36c] ; $407c
+	ld a, [wCurrentStorySlot] ; $407c
 	cp a, $0f ; $407f
 	jr z, Label_02_409e ; $4081
 	push hl ; $4083
@@ -298,7 +298,7 @@ GetCa00RecordPtr:
 	ret ; $421b
 InitStoryModeState:
 	call CacheStorySlotSummaries ; $421c
-	ld hl, $c800 ; $421f
+	ld hl, wSaveBlockBuffer ; $421f
 	ld c, $30 ; $4222
 	call ClearMemory16 ; $4224
 	ld a, $00 ; $4227
@@ -309,7 +309,7 @@ InitStoryModeState:
 	call InitPlayerRecordFromTemplate ; $4232
 	ld hl, wStoryModeCurrentLocation ; $4235
 	ld [hl], $00 ; $4238
-	ld hl, $c295 ; $423a
+	ld hl, wStoryModeEntryPoint ; $423a
 	ld [hl], $02 ; $423d
 	ld a, $01 ; $423f
 	ld [wMessageSpeed], a ; $4241
@@ -346,10 +346,10 @@ Label_02_4274:
 	ld [hl+], a ; $4274
 	dec c ; $4275
 	jr nz, Label_02_4274 ; $4276
-	ld a, [$c36c] ; $4278
+	ld a, [wCurrentStorySlot] ; $4278
 	push af ; $427b
 	ld a, $00 ; $427c
-	ld [$c36c], a ; $427e
+	ld [wCurrentStorySlot], a ; $427e
 	farcall FarPtr_CheckStorySlot ; $4281
 	cp a, $fe ; $4284
 	jr z, Label_02_4291 ; $4286
@@ -358,7 +358,7 @@ Label_02_4274:
 	call Copy4Bytes ; $428e
 Label_02_4291:
 	ld a, $01 ; $4291
-	ld [$c36c], a ; $4293
+	ld [wCurrentStorySlot], a ; $4293
 	farcall FarPtr_CheckStorySlot ; $4296
 	cp a, $fe ; $4299
 	jr z, Label_02_42a6 ; $429b
@@ -367,7 +367,7 @@ Label_02_4291:
 	call Copy4Bytes ; $42a3
 Label_02_42a6:
 	ld a, $02 ; $42a6
-	ld [$c36c], a ; $42a8
+	ld [wCurrentStorySlot], a ; $42a8
 	farcall FarPtr_CheckStorySlot ; $42ab
 	cp a, $fe ; $42ae
 	jr z, Label_02_42bb ; $42b0
@@ -376,7 +376,7 @@ Label_02_42a6:
 	call Copy4Bytes ; $42b8
 Label_02_42bb:
 	pop af ; $42bb
-	ld [$c36c], a ; $42bc
+	ld [wCurrentStorySlot], a ; $42bc
 	pop af ; $42bf
 	wram_bank ; $42c0
 	pop hl ; $42c4
@@ -598,7 +598,7 @@ Label_02_4405:
 	pop bc ; $440b
 	call RecomputeCharacterStats ; $440c
 	ld hl, wStoryModeNameOfMainCharacter ; $440f
-	ld de, $c800 ; $4412
+	ld de, wSaveBlockBuffer ; $4412
 	ld c, $08 ; $4415
 	call CopyMemoryFast ; $4417
 	ret ; $441a
@@ -1088,7 +1088,7 @@ RefreshMainCharacterStats:
 	ld bc, wStoryModeNameOfMainCharacter ; $478f
 	call RecomputeCharacterStats ; $4792
 	ld hl, wStoryModeNameOfMainCharacter ; $4795
-	ld de, $c800 ; $4798
+	ld de, wSaveBlockBuffer ; $4798
 	ld c, $08 ; $479b
 	call CopyMemoryFast ; $479d
 	ld a, [$c83c] ; $47a0
@@ -1111,7 +1111,7 @@ Label_02_47ae:
 Label_02_47bb:
 	ld a, b ; $47bb
 	ld [$c83c], a ; $47bc
-	ld bc, $c800 ; $47bf
+	ld bc, wSaveBlockBuffer ; $47bf
 	call RecomputeCharacterStats ; $47c2
 	ret ; $47c5
 RecomputeStatsWithoutRacket:
@@ -1621,7 +1621,7 @@ NameTextRemap_02:
 	db $1a, $1f, $1f, $1f, $1a, $1a, $1a ; 0x40
 SetStorySlotFlagB:
 	push af ; $4cb1
-	ld a, [$c36c] ; $4cb2
+	ld a, [wCurrentStorySlot] ; $4cb2
 	add a, a ; $4cb5
 	add a, $cc ; $4cb6
 	ld l, a ; $4cb8
@@ -1646,7 +1646,7 @@ SaveFlagPtrs_02_4ccc:
 	dw $04c0 ; record 2
 	dw $04e0 ; record 3
 TestStorySlotFlagB:
-	ld a, [$c36c] ; $4cd4
+	ld a, [wCurrentStorySlot] ; $4cd4
 	add a, a ; $4cd7
 	add a, $cc ; $4cd8
 	ld l, a ; $4cda
@@ -1665,7 +1665,7 @@ Label_02_4cea:
 	ret ; $4cec
 SetStorySlotFlagA:
 	push af ; $4ced
-	ld a, [$c36c] ; $4cee
+	ld a, [wCurrentStorySlot] ; $4cee
 	add a, a ; $4cf1
 	add a, $08 ; $4cf2
 	ld l, a ; $4cf4
@@ -1690,7 +1690,7 @@ SaveFlagPtrs_02_4d08:
 	dw $0440 ; record 2
 	dw $0460 ; record 3
 TestStorySlotFlagA:
-	ld a, [$c36c] ; $4d10
+	ld a, [wCurrentStorySlot] ; $4d10
 	add a, a ; $4d13
 	add a, $08 ; $4d14
 	ld l, a ; $4d16
@@ -2001,7 +2001,7 @@ Func_02_4fa6:
 	ld a, $03 ; $4fae
 	ldh [hDebugStepMode], a ; $4fb0
 	xor a, a ; $4fb2
-	ld [$c36c], a ; $4fb3
+	ld [wCurrentStorySlot], a ; $4fb3
 	farcall FarPtr_InitTextWindows ; $4fb6
 	call EnableLCD ; $4fb9
 	ld c, $7f ; $4fbc
@@ -2064,7 +2064,7 @@ Label_02_5016:
 Label_02_502a:
 	push de ; $502a
 	ld bc, wStoryModeNameOfMainCharacter ; $502b
-	ld a, [$c36c] ; $502e
+	ld a, [wCurrentStorySlot] ; $502e
 	ld de, $0202 ; $5031
 	call PrintDecimalByte ; $5034
 	ld hl, $000b ; $5037
@@ -2277,13 +2277,13 @@ Label_02_51cb:
 	bit 2, a ; $51cb
 	jr z, Label_02_51e0 ; $51cd
 	sound $5f ; $51cf
-	ld a, [$c36c] ; $51d1
+	ld a, [wCurrentStorySlot] ; $51d1
 	inc a ; $51d4
 	cp a, $03 ; $51d5
 	jr c, Label_02_51da ; $51d7
 	xor a, a ; $51d9
 Label_02_51da:
-	ld [$c36c], a ; $51da
+	ld [wCurrentStorySlot], a ; $51da
 	jp Label_02_4fcb ; $51dd
 Label_02_51e0:
 	bit 3, a ; $51e0
@@ -2307,11 +2307,11 @@ MenuTilemaps_02:
 	db $49, $4f, $20, $47, $4f, $4c, $46, $20, $47, $42, $20, $43, $48 ; 0x40
 LoadStorySlot:
 	push de ; $5247
-	ld hl, $c800 ; $5248
+	ld hl, wSaveBlockBuffer ; $5248
 	ld b, a ; $524b
 	ld c, a ; $524c
 	push bc ; $524d
-	ld [$c36c], a ; $524e
+	ld [wCurrentStorySlot], a ; $524e
 	farcall FarPtr_CheckStorySlot ; $5251
 	pop bc ; $5254
 	pop de ; $5255
@@ -2326,7 +2326,7 @@ LoadStorySlot:
 	ld a, $03 ; $5265
 	ld [$ca0c], a ; $5267
 	ld a, b ; $526a
-	ld [$c36c], a ; $526b
+	ld [wCurrentStorySlot], a ; $526b
 	ret ; $526e
 Label_02_526f:
 	ld a, $ff ; $526f
@@ -2336,7 +2336,7 @@ Label_02_5275:
 	push bc ; $5275
 	push de ; $5276
 	xor a, a ; $5277
-	ld [$c36c], a ; $5278
+	ld [wCurrentStorySlot], a ; $5278
 	ld bc, $8000 ; $527b
 	call Func_02_4066 ; $527e
 	pop de ; $5281
@@ -2344,11 +2344,11 @@ Label_02_5275:
 	ret ; $5283
 Unused_02_StorySlotVariant:
 	push de ; $5284
-	ld hl, $c800 ; $5285
+	ld hl, wSaveBlockBuffer ; $5285
 	ld b, a ; $5288
 	ld c, a ; $5289
 	push bc ; $528a
-	ld [$c36c], a ; $528b
+	ld [wCurrentStorySlot], a ; $528b
 	farcall FarPtr_CheckStorySlot ; $528e
 	pop bc ; $5291
 	pop de ; $5292

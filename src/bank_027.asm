@@ -311,7 +311,7 @@ Label_27_4f62:
 Label_27_4fe7:
 	ld a, $01 ; $4fe7
 	ld [$c294], a ; $4fe9
-	ld [$c2a1], a ; $4fec
+	ld [wStoryModeExitLocationRequest], a ; $4fec
 	ret ; $4fef
 	ldh a, [hRomBank] ; $4ff0
 	ld hl, $51dd ; $4ff2
@@ -358,7 +358,7 @@ Label_27_5057:
 	ld b, $c0 ; $5059
 	farcall FarPtr_SetActorFacing ; $505b
 	xor a, a ; $505e
-	ld [$c2d5], a ; $505f
+	ld [wStoryModeShowLocationName], a ; $505f
 	ld c, $04 ; $5062
 	call BeginFadeIn ; $5064
 	call WaitFadeEnd ; $5067
@@ -466,7 +466,7 @@ Label_27_514f:
 	call WaitFadeEnd ; $515f
 	ld a, $01 ; $5162
 	ld [$c294], a ; $5164
-	ld [$c2a1], a ; $5167
+	ld [wStoryModeExitLocationRequest], a ; $5167
 	ret ; $516a
 Func_27_516b:
 	push af ; $516b

@@ -382,7 +382,7 @@ Label_1b_422a:
 	ld d, a ; $4230
 	ld a, [wMenuCursorY] ; $4231
 	ld e, a ; $4234
-	ldh a, [$ffc2] ; $4235
+	ldh a, [hLinkState] ; $4235
 	cp a, $02 ; $4237
 	jr z, Label_1b_4246 ; $4239
 	cp a, $01 ; $423b
@@ -885,7 +885,7 @@ DecompressCharMugshot:
 	cp a, $3f ; $4e62
 	jr nz, Label_1b_4e6c ; $4e64
 	ld b, a ; $4e66
-	ld a, [$c36c] ; $4e67
+	ld a, [wCurrentStorySlot] ; $4e67
 	add a, b ; $4e6a
 	inc a ; $4e6b
 Label_1b_4e6c:
@@ -1977,9 +1977,9 @@ InitRankingNameRender:
 	farcall FarPtr_InitTextWindows ; $569c
 	wram_bank $05 ; $569f
 	ld a, $03 ; $56a5
-	ld [$c3b3], a ; $56a7
+	ld [wShadowTilemapBank], a ; $56a7
 	ld a, $00 ; $56aa
-	ld [$c3b6], a ; $56ac
+	ld [wWindowTileAttr], a ; $56ac
 	farcall FarPtr_PrepareGlyphBuffer ; $56af
 	ret ; $56b2
 RenderPlayerNameFitted:
@@ -3087,7 +3087,7 @@ Label_1b_62df:
 	pop af ; $62df
 	ld [$cb00], a ; $62e0
 	ld hl, wStoryModeNameOfMainCharacter ; $62e3
-	ld de, $c800 ; $62e6
+	ld de, wSaveBlockBuffer ; $62e6
 	ld c, $08 ; $62e9
 	call CopyMemoryFast ; $62eb
 	xor a, a ; $62ee
@@ -3106,10 +3106,10 @@ RunDebugSaveDataFlow:
 	bit 7, a ; $6303
 	jr z, RunDebugSaveDataFlow ; $6305
 	and a, $3f ; $6307
-	ld [$c36c], a ; $6309
-	ld hl, $c800 ; $630c
+	ld [wCurrentStorySlot], a ; $6309
+	ld hl, wSaveBlockBuffer ; $630c
 	ld b, a ; $630f
-	ld [$c36c], a ; $6310
+	ld [wCurrentStorySlot], a ; $6310
 	farcall FarPtr_CheckStorySlot ; $6313
 	or a, a ; $6316
 	jp z, Label_1b_6399 ; $6317
@@ -3140,7 +3140,7 @@ Label_1b_634c:
 	and a, $3f ; $634c
 	ld b, a ; $634e
 	ld hl, $ca00 ; $634f
-	ld [$c36c], a ; $6352
+	ld [wCurrentStorySlot], a ; $6352
 	farcall FarPtr_CheckStorySlot ; $6355
 	or a, a ; $6358
 	jr z, Label_1b_635f ; $6359
@@ -3168,7 +3168,7 @@ Label_1b_6375:
 	dec c ; $637d
 	jr nz, Label_1b_6375 ; $637e
 	ld a, b ; $6380
-	ld [$c36c], a ; $6381
+	ld [wCurrentStorySlot], a ; $6381
 	ld a, $00 ; $6384
 	farcall FarPtr_EraseStorySlotSaveData ; $6386
 	ld b, $01 ; $6389
@@ -4402,7 +4402,7 @@ RunMinigameLevelSelect2:
 	ld hl, rIE ; $6e36
 	res 2, [hl] ; $6e39
 	wram_bank $03 ; $6e3b
-	ld a, [$cb11] ; $6e41
+	ld a, [wMenuSlideDirection] ; $6e41
 	ld b, a ; $6e44
 	farcall FarPtr_OpenChoiceTabPanel ; $6e45
 	farcall FarPtr_InitMenuBgScroll ; $6e48
@@ -4458,7 +4458,7 @@ Label_1b_6eb5:
 	ld b, $01 ; $6ec5
 	farcall FarPtr_CloseChoiceTabPanel ; $6ec7
 	ld a, $01 ; $6eca
-	ld [$cb11], a ; $6ecc
+	ld [wMenuSlideDirection], a ; $6ecc
 	wram_bank $02 ; $6ecf
 	ld c, $03 ; $6ed5
 	call GetMenuCursorIndex ; $6ed7
@@ -4473,7 +4473,7 @@ Label_1b_6ede:
 	ld b, $00 ; $6eee
 	farcall FarPtr_CloseChoiceTabPanel ; $6ef0
 	ld a, $00 ; $6ef3
-	ld [$cb11], a ; $6ef5
+	ld [wMenuSlideDirection], a ; $6ef5
 	wram_bank $02 ; $6ef8
 	ld a, $ff ; $6efe
 	ld [$d003], a ; $6f00
@@ -4580,7 +4580,7 @@ RunMinigameLevelSelect3:
 	ld hl, rIE ; $6fd7
 	res 2, [hl] ; $6fda
 	wram_bank $03 ; $6fdc
-	ld a, [$cb11] ; $6fe2
+	ld a, [wMenuSlideDirection] ; $6fe2
 	ld b, a ; $6fe5
 	farcall FarPtr_N64RecordTypeSlideIn ; $6fe6
 	farcall FarPtr_InitMenuBgScroll ; $6fe9
@@ -4625,7 +4625,7 @@ Label_1b_703e:
 	ld b, $01 ; $704e
 	farcall FarPtr_N64RecordTypeSlideOut ; $7050
 	ld a, $01 ; $7053
-	ld [$cb11], a ; $7055
+	ld [wMenuSlideDirection], a ; $7055
 	wram_bank $02 ; $7058
 	ld c, $03 ; $705e
 	call GetMenuCursorIndex ; $7060
@@ -4640,7 +4640,7 @@ Label_1b_7067:
 	ld b, $00 ; $7077
 	farcall FarPtr_N64RecordTypeSlideOut ; $7079
 	ld a, $00 ; $707c
-	ld [$cb11], a ; $707e
+	ld [wMenuSlideDirection], a ; $707e
 	wram_bank $02 ; $7081
 	ld a, $ff ; $7087
 	ld [$d003], a ; $7089
@@ -4709,7 +4709,7 @@ RunSavedDataTypeSelect:
 	res 2, [hl] ; $7162
 	call LoadSavedDataTypeSelectGfx ; $7164
 	wram_bank $03 ; $7167
-	ld a, [$cb11] ; $716d
+	ld a, [wMenuSlideDirection] ; $716d
 	ld b, a ; $7170
 	farcall FarPtr_OpenChoiceTabPanel ; $7171
 	farcall FarPtr_InitMenuBgScroll ; $7174
@@ -4755,7 +4755,7 @@ Label_1b_71c4:
 	ld b, $01 ; $71d4
 	farcall FarPtr_CloseChoiceTabPanel ; $71d6
 	ld a, $01 ; $71d9
-	ld [$cb11], a ; $71db
+	ld [wMenuSlideDirection], a ; $71db
 	ld c, $02 ; $71de
 	call GetMenuCursorIndex ; $71e0
 	ld [$cb25], a ; $71e3
@@ -4769,7 +4769,7 @@ Label_1b_71e7:
 	ld b, $00 ; $71f7
 	farcall FarPtr_CloseChoiceTabPanel ; $71f9
 	ld a, $00 ; $71fc
-	ld [$cb11], a ; $71fe
+	ld [wMenuSlideDirection], a ; $71fe
 	wram_bank $02 ; $7201
 	ld a, $ff ; $7207
 	ret ; $7209

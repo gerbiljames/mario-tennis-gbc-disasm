@@ -896,7 +896,7 @@ Label_06_471c:
 	sound $5e ; $4731
 Label_06_4733:
 	farcall FarPtr_PrepareGlyphBuffer ; $4733
-	ld hl, $c3b7 ; $4736
+	ld hl, wGlyphPenX ; $4736
 	ld de, $2000 ; $4739
 	ld a, e ; $473c
 	ld [hl+], a ; $473d
@@ -4322,7 +4322,7 @@ RunStoryModeMenu:
 	ldh [$ffdd], a ; $6e2b
 	farcall FarPtr_InitTextWindows ; $6e2d
 	ld a, $81 ; $6e30
-	ld [$c3b6], a ; $6e32
+	ld [wWindowTileAttr], a ; $6e32
 	set_flag $02, 4 ; $6e35
 	farcall FarPtr_28_0a ; $6e38
 	call RestoreStoryTilemapNoPriority ; $6e3b
@@ -4471,38 +4471,38 @@ Label_06_6f60:
 	ret ; $6f65
 StoryPauseMenu_CharPartnerData:
 	ld hl, wStoryModePlayersXPosition ; $6f66
-	ld de, $c296 ; $6f69
+	ld de, wStoryModeSpawnPosition ; $6f69
 	ld bc, $0005 ; $6f6c
 	call CopyMemoryBC ; $6f6f
 	ld a, $ff ; $6f72
-	ld [$c295], a ; $6f74
+	ld [wStoryModeEntryPoint], a ; $6f74
 	ld [$c294], a ; $6f77
-	ld [$c2a1], a ; $6f7a
+	ld [wStoryModeExitLocationRequest], a ; $6f7a
 	ld a, $01 ; $6f7d
 	farcall FarPtr_ShowCharDataScreen ; $6f7f
 	xor a, a ; $6f82
 	ret ; $6f83
 StoryPauseMenu_Equipment:
 	ld hl, wStoryModePlayersXPosition ; $6f84
-	ld de, $c296 ; $6f87
+	ld de, wStoryModeSpawnPosition ; $6f87
 	ld bc, $0005 ; $6f8a
 	call CopyMemoryBC ; $6f8d
 	ld a, $ff ; $6f90
-	ld [$c295], a ; $6f92
+	ld [wStoryModeEntryPoint], a ; $6f92
 	ld [$c294], a ; $6f95
-	ld [$c2a1], a ; $6f98
+	ld [wStoryModeExitLocationRequest], a ; $6f98
 	farcall FarPtr_ShowEquipmentStatusScreen ; $6f9b
 	xor a, a ; $6f9e
 	ret ; $6f9f
 StoryPauseMenu_GameProgress:
 	ld hl, wStoryModePlayersXPosition ; $6fa0
-	ld de, $c296 ; $6fa3
+	ld de, wStoryModeSpawnPosition ; $6fa3
 	ld bc, $0005 ; $6fa6
 	call CopyMemoryBC ; $6fa9
 	ld a, $ff ; $6fac
-	ld [$c295], a ; $6fae
+	ld [wStoryModeEntryPoint], a ; $6fae
 	ld [$c294], a ; $6fb1
-	ld [$c2a1], a ; $6fb4
+	ld [wStoryModeExitLocationRequest], a ; $6fb4
 	farcall FarPtr_ShowGameProgressScreen ; $6fb7
 	xor a, a ; $6fba
 	ret ; $6fbb
@@ -4595,10 +4595,10 @@ StoryPauseMenu_SaveQuit:
 	ld a, $00 ; $7070
 	ld [wStoryModeCurrentLocation], a ; $7072
 	ld a, $01 ; $7075
-	ld [$c295], a ; $7077
+	ld [wStoryModeEntryPoint], a ; $7077
 	ld a, $ff ; $707a
 	ld [$c294], a ; $707c
-	ld [$c2a1], a ; $707f
+	ld [wStoryModeExitLocationRequest], a ; $707f
 	ld a, $01 ; $7082
 	jr Label_06_70a8 ; $7084
 StoryPauseMenu_ReturnToMainMenu:
@@ -4611,10 +4611,10 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld a, $00 ; $7094
 	ld [wStoryModeCurrentLocation], a ; $7096
 	ld a, $01 ; $7099
-	ld [$c295], a ; $709b
+	ld [wStoryModeEntryPoint], a ; $709b
 	ld a, $ff ; $709e
 	ld [$c294], a ; $70a0
-	ld [$c2a1], a ; $70a3
+	ld [wStoryModeExitLocationRequest], a ; $70a3
 	ld a, $01 ; $70a6
 Label_06_70a8:
 	ret ; $70a8
@@ -4843,7 +4843,7 @@ DrawStoryMenuCaption:
 	ret ; $7269
 ClearStoryAttrPriorityBits:
 	wram_bank $05 ; $726a
-	ld hl, $c3b4 ; $7270
+	ld hl, wShadowTilemapPtr ; $7270
 	ld a, [hl+] ; $7273
 	ld h, [hl] ; $7274
 	ld l, a ; $7275

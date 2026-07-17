@@ -331,9 +331,17 @@ are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
 handlers. Bank 3: save engine (23 named, docs/save_format.md). RAM:
-docs/ram_map.md (129 RetroAchievements-sourced entries plus 32
-project-identified: the match ball position, renderer effect/marker state,
-mode-hook table, `hWramBank`, `wMatchIsDoubles`, `wOnCourtCharCount`).
+docs/ram_map.md (252 entries in `ram_map.json`: 129 RetroAchievements-sourced
+plus project-identified ones — match ball position/velocity/target, shot
+type/aim, renderer effect/marker state, mode-hook table, story-mode location
+entry/spawn/exit state, save-slot index + `wSaveBlockBuffer` staging buffer,
+shadow-tilemap far pointer + glyph-pen text state, match-format menu
+selections, serial-link HRAM vars, `hSramBank`/`hWramBank`).
+A 2026-07-18 pass swept the hottest unnamed addresses per subsystem;
+deliberately left unnamed: the story-script scratch pool `$c2b0-$c2ff`
+(meaning changes per location script), the shared HRAM scratch pool
+`$ffd0-$ffef` (sound/serial/actor engines reuse the same bytes), and
+single-bank cutscene scratch at `$cb3f-$cb4d`.
 `disasm.py` now also inlines curated RAM symbols into `ld hl/de/bc, imm`
 pointer setups (same curated-only rule as data labels), so 16-bit fields
 read via pointer render symbolically. Data banks:

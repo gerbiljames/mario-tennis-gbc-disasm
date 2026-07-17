@@ -391,7 +391,7 @@ MoveMenuCursorLinkLocal:
 	ld d, a ; $4228
 	ld a, [wMenuCursorY] ; $4229
 	ld e, a ; $422c
-	ldh a, [$ffc2] ; $422d
+	ldh a, [hLinkState] ; $422d
 	cp a, $02 ; $422f
 	jr z, Label_3b_423e ; $4231
 	cp a, $01 ; $4233
@@ -525,7 +525,7 @@ MoveMenuCursorLinkRemote:
 	ld d, a ; $42f3
 	ld a, [$cb07] ; $42f4
 	ld e, a ; $42f7
-	ldh a, [$ffc2] ; $42f8
+	ldh a, [hLinkState] ; $42f8
 	cp a, $02 ; $42fa
 	jr z, Label_3b_4309 ; $42fc
 	cp a, $01 ; $42fe
@@ -1842,13 +1842,13 @@ ApplyUnlockEverythingCheat:
 	farcall FarPtr_SetSaveFlag ; $4bd8
 	ld de, $06a0 ; $4bdb
 	farcall FarPtr_SetSaveFlag ; $4bde
-	ld a, [$c36c] ; $4be1
+	ld a, [wCurrentStorySlot] ; $4be1
 	push af ; $4be4
 	ld c, $00 ; $4be5
 Label_3b_4be7:
 	push bc ; $4be7
 	ld a, c ; $4be8
-	ld [$c36c], a ; $4be9
+	ld [wCurrentStorySlot], a ; $4be9
 	farcall FarPtr_CheckStorySlot ; $4bec
 	cp a, $fe ; $4bef
 	jr z, Label_3b_4c44 ; $4bf1
@@ -1886,7 +1886,7 @@ Label_3b_4c44:
 	cp a, $03 ; $4c47
 	jr nz, Label_3b_4be7 ; $4c49
 	pop af ; $4c4b
-	ld [$c36c], a ; $4c4c
+	ld [wCurrentStorySlot], a ; $4c4c
 	farcall FarPtr_03_46 ; $4c4f
 	ret ; $4c52
 DecodeTrophyCounts:
@@ -3205,7 +3205,7 @@ RunMainMenu:
 	ld a, $01 ; $55fd
 	ld [$cb18], a ; $55ff
 	wram_bank $03 ; $5602
-	ld a, [$cb11] ; $5608
+	ld a, [wMenuSlideDirection] ; $5608
 	ld b, a ; $560b
 	call MainMenuSlideIn ; $560c
 	ld a, $7f ; $560f
@@ -3262,7 +3262,7 @@ Label_3b_5655:
 	jp c, RunMainMenu ; $5682
 Label_3b_5685:
 	ld a, $01 ; $5685
-	ld [$cb11], a ; $5687
+	ld [wMenuSlideDirection], a ; $5687
 	ld c, $03 ; $568a
 	call GetMenuCursorCellIndex ; $568c
 	ld [$cb1b], a ; $568f
@@ -3277,7 +3277,7 @@ Label_3b_5696:
 	ld b, $00 ; $56a3
 	call MainMenuSlideOut ; $56a5
 	ld a, $00 ; $56a8
-	ld [$cb11], a ; $56aa
+	ld [wMenuSlideDirection], a ; $56aa
 	ld a, $ff ; $56ad
 	ret ; $56af
 MapMainMenuCursorToItemId:
@@ -3352,7 +3352,7 @@ Label_3b_56f4:
 	jr nz, Label_3b_56cf ; $5711
 	wram_bank $03 ; $5713
 	ld a, $00 ; $5719
-	ld [$c36c], a ; $571b
+	ld [wCurrentStorySlot], a ; $571b
 	ld a, [$d300] ; $571e
 	farcall FarPtr_LoadCharMugshotToBuffer ; $5721
 	ld de, $b680 ; $5724
@@ -3360,7 +3360,7 @@ Label_3b_56f4:
 	call AdvanceFrame ; $572a
 	wram_bank $03 ; $572d
 	ld a, $01 ; $5733
-	ld [$c36c], a ; $5735
+	ld [wCurrentStorySlot], a ; $5735
 	ld a, [$d310] ; $5738
 	farcall FarPtr_LoadCharMugshotToBuffer ; $573b
 	ld de, $b710 ; $573e
@@ -3368,7 +3368,7 @@ Label_3b_56f4:
 	call AdvanceFrame ; $5744
 	wram_bank $03 ; $5747
 	ld a, $02 ; $574d
-	ld [$c36c], a ; $574f
+	ld [wCurrentStorySlot], a ; $574f
 	ld a, [$d320] ; $5752
 	farcall FarPtr_LoadCharMugshotToBuffer ; $5755
 	ld de, $af00 ; $5758
@@ -4043,7 +4043,7 @@ Label_3b_5c6c:
 	jr Label_3b_5ce0 ; $5c6e
 Label_3b_5c70:
 	di ; $5c70
-	ldh a, [$ffc0] ; $5c71
+	ldh a, [hLinkRxByte] ; $5c71
 	ei ; $5c73
 	cp a, $c1 ; $5c74
 	jr z, Label_3b_5cd7 ; $5c76
@@ -4116,7 +4116,7 @@ RunMatchFormatSelect:
 	sound $03 ; $5cf8
 	call LoadMatchFormatGfx ; $5cfa
 	wram_bank $03 ; $5cfd
-	ld a, [$cb11] ; $5d03
+	ld a, [wMenuSlideDirection] ; $5d03
 	ld b, a ; $5d06
 	call MatchFormatSlideIn ; $5d07
 	farcall FarPtr_InitMenuBgScroll ; $5d0a
@@ -4156,7 +4156,7 @@ Label_3b_5d4f:
 	ld b, $01 ; $5d59
 	call MatchFormatSlideOut ; $5d5b
 	ld a, $01 ; $5d5e
-	ld [$cb11], a ; $5d60
+	ld [wMenuSlideDirection], a ; $5d60
 	ld c, $03 ; $5d63
 	call GetMenuCursorCellIndex ; $5d65
 	ret ; $5d68
@@ -4168,27 +4168,27 @@ Label_3b_5d69:
 	ld b, $00 ; $5d73
 	call MatchFormatSlideOut ; $5d75
 	ld a, $00 ; $5d78
-	ld [$cb11], a ; $5d7a
+	ld [wMenuSlideDirection], a ; $5d7a
 	ld a, $ff ; $5d7d
 	ret ; $5d7f
 InitMatchFormatOptions:
 	ld b, $01 ; $5d80
 	ld c, $00 ; $5d82
 	call SetMenuCursorFromCellIndex ; $5d84
-	ld a, [$cb0e] ; $5d87
+	ld a, [wMatchFormatDoubles] ; $5d87
 	ld b, a ; $5d8a
 	ld c, $01 ; $5d8b
 	call FillMatchFormatOptionCell ; $5d8d
 	ld b, $00 ; $5d90
 	call FlushMatchFormatRowToVram ; $5d92
-	ld a, [$cb0f] ; $5d95
+	ld a, [wMatchFormatGames] ; $5d95
 	add a, $02 ; $5d98
 	ld b, a ; $5d9a
 	ld c, $01 ; $5d9b
 	call FillMatchFormatOptionCell ; $5d9d
 	ld b, $01 ; $5da0
 	call FlushMatchFormatRowToVram ; $5da2
-	ld a, [$cb10] ; $5da5
+	ld a, [wMatchFormatSets] ; $5da5
 	add a, $04 ; $5da8
 	ld b, a ; $5daa
 	ld c, $01 ; $5dab
@@ -4409,9 +4409,9 @@ Label_3b_5f48:
 	call GetMenuCursorCellIndex ; $5f4c
 	or a, a ; $5f4f
 	jr nz, Label_3b_5f66 ; $5f50
-	ld a, [$cb0e] ; $5f52
+	ld a, [wMatchFormatDoubles] ; $5f52
 	xor a, $01 ; $5f55
-	ld [$cb0e], a ; $5f57
+	ld [wMatchFormatDoubles], a ; $5f57
 	ld b, $00 ; $5f5a
 	call FlushMatchFormatRowToVram ; $5f5c
 	call RedrawMatchFormatModeRow ; $5f5f
@@ -4420,16 +4420,16 @@ Label_3b_5f48:
 Label_3b_5f66:
 	cp a, $01 ; $5f66
 	jr nz, Label_3b_5f7e ; $5f68
-	ld a, [$cb0f] ; $5f6a
+	ld a, [wMatchFormatGames] ; $5f6a
 	xor a, $01 ; $5f6d
-	ld [$cb0f], a ; $5f6f
+	ld [wMatchFormatGames], a ; $5f6f
 	ld b, $01 ; $5f72
 	call FlushMatchFormatRowToVram ; $5f74
 	call RedrawMatchFormatGamesRow ; $5f77
 	call DrawMatchFormatCaption ; $5f7a
 	ret ; $5f7d
 Label_3b_5f7e:
-	ld a, [$cb10] ; $5f7e
+	ld a, [wMatchFormatSets] ; $5f7e
 	dec a ; $5f81
 	add a, a ; $5f82
 	jr nc, Label_3b_5f8a ; $5f83
@@ -4442,7 +4442,7 @@ Label_3b_5f8a:
 	jr c, Label_3b_5f90 ; $5f8d
 	xor a, a ; $5f8f
 Label_3b_5f90:
-	ld [$cb10], a ; $5f90
+	ld [wMatchFormatSets], a ; $5f90
 	ld b, $02 ; $5f93
 	call FlushMatchFormatRowToVram ; $5f95
 	call RedrawMatchFormatSetsRow ; $5f98
@@ -4454,9 +4454,9 @@ Label_3b_5f9f:
 	call GetMenuCursorCellIndex ; $5fa3
 	or a, a ; $5fa6
 	jr nz, Label_3b_5fbd ; $5fa7
-	ld a, [$cb0e] ; $5fa9
+	ld a, [wMatchFormatDoubles] ; $5fa9
 	xor a, $01 ; $5fac
-	ld [$cb0e], a ; $5fae
+	ld [wMatchFormatDoubles], a ; $5fae
 	ld b, $00 ; $5fb1
 	call FlushMatchFormatRowToVram ; $5fb3
 	call RedrawMatchFormatModeRow ; $5fb6
@@ -4465,16 +4465,16 @@ Label_3b_5f9f:
 Label_3b_5fbd:
 	cp a, $01 ; $5fbd
 	jr nz, Label_3b_5fd5 ; $5fbf
-	ld a, [$cb0f] ; $5fc1
+	ld a, [wMatchFormatGames] ; $5fc1
 	xor a, $01 ; $5fc4
-	ld [$cb0f], a ; $5fc6
+	ld [wMatchFormatGames], a ; $5fc6
 	ld b, $01 ; $5fc9
 	call FlushMatchFormatRowToVram ; $5fcb
 	call RedrawMatchFormatGamesRow ; $5fce
 	call DrawMatchFormatCaption ; $5fd1
 	ret ; $5fd4
 Label_3b_5fd5:
-	ld a, [$cb10] ; $5fd5
+	ld a, [wMatchFormatSets] ; $5fd5
 	inc a ; $5fd8
 	add a, a ; $5fd9
 	jr nc, Label_3b_5fe1 ; $5fda
@@ -4487,7 +4487,7 @@ Label_3b_5fe1:
 	jr c, Label_3b_5fe7 ; $5fe4
 	xor a, a ; $5fe6
 Label_3b_5fe7:
-	ld [$cb10], a ; $5fe7
+	ld [wMatchFormatSets], a ; $5fe7
 	ld b, $02 ; $5fea
 	call FlushMatchFormatRowToVram ; $5fec
 	call RedrawMatchFormatSetsRow ; $5fef
@@ -4500,7 +4500,7 @@ RedrawMatchFormatModeRow:
 	ld b, $01 ; $5ffd
 	ld c, $00 ; $5fff
 	call FillMatchFormatOptionCell ; $6001
-	ld a, [$cb0e] ; $6004
+	ld a, [wMatchFormatDoubles] ; $6004
 	ld b, a ; $6007
 	ld c, $01 ; $6008
 	call FillMatchFormatOptionCell ; $600a
@@ -4512,7 +4512,7 @@ RedrawMatchFormatGamesRow:
 	ld b, $03 ; $6015
 	ld c, $00 ; $6017
 	call FillMatchFormatOptionCell ; $6019
-	ld a, [$cb0f] ; $601c
+	ld a, [wMatchFormatGames] ; $601c
 	add a, $02 ; $601f
 	ld b, a ; $6021
 	ld c, $01 ; $6022
@@ -4528,7 +4528,7 @@ RedrawMatchFormatSetsRow:
 	ld b, $06 ; $6036
 	ld c, $00 ; $6038
 	call FillMatchFormatOptionCell ; $603a
-	ld a, [$cb10] ; $603d
+	ld a, [wMatchFormatSets] ; $603d
 	add a, $04 ; $6040
 	ld b, a ; $6042
 	ld c, $01 ; $6043
@@ -4625,16 +4625,16 @@ MatchFormatCursorSpriteTask:
 	call GetMenuCursorCellIndex ; $60d5
 	or a, a ; $60d8
 	jr nz, Label_3b_60e0 ; $60d9
-	ld a, [$cb0e] ; $60db
+	ld a, [wMatchFormatDoubles] ; $60db
 	jr Label_3b_60f0 ; $60de
 Label_3b_60e0:
 	cp a, $01 ; $60e0
 	jr nz, Label_3b_60eb ; $60e2
-	ld a, [$cb0f] ; $60e4
+	ld a, [wMatchFormatGames] ; $60e4
 	add a, $02 ; $60e7
 	jr Label_3b_60f0 ; $60e9
 Label_3b_60eb:
-	ld a, [$cb10] ; $60eb
+	ld a, [wMatchFormatSets] ; $60eb
 	add a, $04 ; $60ee
 Label_3b_60f0:
 	push af ; $60f0
@@ -4716,7 +4716,7 @@ RenderMatchFormatOptionText:
 	call GetMenuCursorCellIndex ; $61a3
 	or a, a ; $61a6
 	jr nz, Label_3b_61bd ; $61a7
-	ld a, [$cb0e] ; $61a9
+	ld a, [wMatchFormatDoubles] ; $61a9
 	ld hl, $0087 ; $61ac
 	add a, l ; $61af
 	ld l, a ; $61b0
@@ -4730,7 +4730,7 @@ Label_3b_61b4:
 Label_3b_61bd:
 	cp a, $01 ; $61bd
 	jr nz, Label_3b_61d5 ; $61bf
-	ld a, [$cb0f] ; $61c1
+	ld a, [wMatchFormatGames] ; $61c1
 	ld hl, $0089 ; $61c4
 	add a, l ; $61c7
 	ld l, a ; $61c8
@@ -4742,7 +4742,7 @@ Label_3b_61cc:
 	farcall FarPtr_RenderTextToBuffer64 ; $61d1
 	ret ; $61d4
 Label_3b_61d5:
-	ld a, [$cb10] ; $61d5
+	ld a, [wMatchFormatSets] ; $61d5
 	ld hl, $008b ; $61d8
 	add a, l ; $61db
 	ld l, a ; $61dc
@@ -4770,12 +4770,12 @@ RunMinigameSelect:
 	call CheckMinigameGridExpanded ; $6207
 	or a, a ; $620a
 	jr nz, Label_3b_6216 ; $620b
-	ld a, [$cb11] ; $620d
+	ld a, [wMenuSlideDirection] ; $620d
 	ld b, a ; $6210
 	call MinigameSelectSlideIn6 ; $6211
 	jr Label_3b_621d ; $6214
 Label_3b_6216:
-	ld a, [$cb11] ; $6216
+	ld a, [wMenuSlideDirection] ; $6216
 	ld b, a ; $6219
 	call MinigameSelectSlideIn9 ; $621a
 Label_3b_621d:
@@ -4855,7 +4855,7 @@ Label_3b_62b4:
 	call MinigameSelectSlideOut9 ; $62b6
 Label_3b_62b9:
 	ld a, $01 ; $62b9
-	ld [$cb11], a ; $62bb
+	ld [wMenuSlideDirection], a ; $62bb
 	xor a, a ; $62be
 	ld [$cb70], a ; $62bf
 	ld c, $03 ; $62c2
@@ -4878,7 +4878,7 @@ Label_3b_62e2:
 	call MinigameSelectSlideOut9 ; $62e4
 Label_3b_62e7:
 	ld a, $00 ; $62e7
-	ld [$cb11], a ; $62e9
+	ld [wMenuSlideDirection], a ; $62e9
 	ld a, $ff ; $62ec
 	ret ; $62ee
 LoadMinigameSelectGfx:
@@ -5530,7 +5530,7 @@ RunSavedDataSourceSelect:
 	farcall FarPtr_39_26 ; $67b5
 	call LoadN64RecordsToWram2 ; $67b8
 	wram_bank $03 ; $67bb
-	ld a, [$cb11] ; $67c1
+	ld a, [wMenuSlideDirection] ; $67c1
 	ld b, a ; $67c4
 	farcall FarPtr_SavedDataPickerSlideIn ; $67c5
 	ld a, [$cb1c] ; $67c8
@@ -5600,7 +5600,7 @@ Label_3b_683a:
 	ld b, $01 ; $6844
 	farcall FarPtr_SavedDataPickerSlideOut ; $6846
 	ld a, $01 ; $6849
-	ld [$cb11], a ; $684b
+	ld [wMenuSlideDirection], a ; $684b
 	ld c, $03 ; $684e
 	call GetMenuCursorCellIndex ; $6850
 	ld [$cb1c], a ; $6853
@@ -5613,7 +5613,7 @@ Label_3b_6857:
 	ld b, $00 ; $6861
 	farcall FarPtr_SavedDataPickerSlideOut ; $6863
 	ld a, $00 ; $6866
-	ld [$cb11], a ; $6868
+	ld [wMenuSlideDirection], a ; $6868
 	ld a, $ff ; $686b
 	ret ; $686d
 LoadSavedDataSourceGfx:
@@ -5638,7 +5638,7 @@ LoadSavedDataSourceGfx:
 	call AdvanceFrame ; $68a4
 	wram_bank $03 ; $68a7
 	ld a, $00 ; $68ad
-	ld [$c36c], a ; $68af
+	ld [wCurrentStorySlot], a ; $68af
 	ld a, [$d300] ; $68b2
 	farcall FarPtr_LoadCharMugshotToBuffer ; $68b5
 	ld de, $b680 ; $68b8
@@ -5646,7 +5646,7 @@ LoadSavedDataSourceGfx:
 	call AdvanceFrame ; $68be
 	wram_bank $03 ; $68c1
 	ld a, $01 ; $68c7
-	ld [$c36c], a ; $68c9
+	ld [wCurrentStorySlot], a ; $68c9
 	ld a, [$d310] ; $68cc
 	farcall FarPtr_LoadCharMugshotToBuffer ; $68cf
 	ld de, $b710 ; $68d2
@@ -5654,7 +5654,7 @@ LoadSavedDataSourceGfx:
 	call AdvanceFrame ; $68d8
 	wram_bank $03 ; $68db
 	ld a, $02 ; $68e1
-	ld [$c36c], a ; $68e3
+	ld [wCurrentStorySlot], a ; $68e3
 	ld a, [$d320] ; $68e6
 	farcall FarPtr_LoadCharMugshotToBuffer ; $68e9
 	ld de, $af00 ; $68ec
@@ -6125,7 +6125,7 @@ RunEraseSavedDataSelect:
 	call BuildSaveSlotSummaries ; $6c86
 	call LoadEraseSavedDataGfx ; $6c89
 	wram_bank $03 ; $6c8c
-	ld a, [$cb11] ; $6c92
+	ld a, [wMenuSlideDirection] ; $6c92
 	ld b, a ; $6c95
 	call SavedDataPickerSlideIn ; $6c96
 	farcall FarPtr_InitMenuBgScroll ; $6c99
@@ -6188,7 +6188,7 @@ Label_3b_6d00:
 	ld b, $01 ; $6d0a
 	call SavedDataPickerSlideOut ; $6d0c
 	ld a, $01 ; $6d0f
-	ld [$cb11], a ; $6d11
+	ld [wMenuSlideDirection], a ; $6d11
 	ld c, $03 ; $6d14
 	call GetMenuCursorCellIndex ; $6d16
 	ret ; $6d19
@@ -6200,7 +6200,7 @@ Label_3b_6d1a:
 	ld b, $00 ; $6d24
 	call SavedDataPickerSlideOut ; $6d26
 	ld a, $00 ; $6d29
-	ld [$cb11], a ; $6d2b
+	ld [wMenuSlideDirection], a ; $6d2b
 	ld a, $ff ; $6d2e
 	ret ; $6d30
 LoadEraseSavedDataGfx:
@@ -6209,7 +6209,7 @@ LoadEraseSavedDataGfx:
 	wram_bank $01 ; $6d34
 	wram_bank $03 ; $6d3a
 	ld a, $00 ; $6d40
-	ld [$c36c], a ; $6d42
+	ld [wCurrentStorySlot], a ; $6d42
 	ld a, [$d300] ; $6d45
 	farcall FarPtr_LoadCharMugshotToBuffer ; $6d48
 	ld de, $b680 ; $6d4b
@@ -6217,7 +6217,7 @@ LoadEraseSavedDataGfx:
 	call AdvanceFrame ; $6d51
 	wram_bank $03 ; $6d54
 	ld a, $01 ; $6d5a
-	ld [$c36c], a ; $6d5c
+	ld [wCurrentStorySlot], a ; $6d5c
 	ld a, [$d310] ; $6d5f
 	farcall FarPtr_LoadCharMugshotToBuffer ; $6d62
 	ld de, $b710 ; $6d65
@@ -6225,7 +6225,7 @@ LoadEraseSavedDataGfx:
 	call AdvanceFrame ; $6d6b
 	wram_bank $03 ; $6d6e
 	ld a, $02 ; $6d74
-	ld [$c36c], a ; $6d76
+	ld [wCurrentStorySlot], a ; $6d76
 	ld a, [$d320] ; $6d79
 	farcall FarPtr_LoadCharMugshotToBuffer ; $6d7c
 	ld de, $af00 ; $6d7f
@@ -6797,7 +6797,7 @@ RunN64RecordTypeSelect:
 	ld c, $01 ; $71bf
 	farcall FarPtr_39_26 ; $71c1
 	wram_bank $03 ; $71c4
-	ld a, [$cb11] ; $71ca
+	ld a, [wMenuSlideDirection] ; $71ca
 	ld b, a ; $71cd
 	call N64RecordTypeSlideIn ; $71ce
 	ld a, [$cb1e] ; $71d1
@@ -6835,7 +6835,7 @@ Label_3b_720f:
 	ld b, $01 ; $7219
 	call N64RecordTypeSlideOut ; $721b
 	ld a, $01 ; $721e
-	ld [$cb11], a ; $7220
+	ld [wMenuSlideDirection], a ; $7220
 	ld c, $03 ; $7223
 	call GetMenuCursorCellIndex ; $7225
 	ld [$cb1e], a ; $7228
@@ -6848,7 +6848,7 @@ Label_3b_722c:
 	ld b, $00 ; $7236
 	call N64RecordTypeSlideOut ; $7238
 	ld a, $00 ; $723b
-	ld [$cb11], a ; $723d
+	ld [wMenuSlideDirection], a ; $723d
 	ld a, $ff ; $7240
 	ret ; $7242
 LoadN64RecordTypeGfx:
@@ -7197,7 +7197,7 @@ RunN64TransferItemSelect:
 	res 2, [hl] ; $74c4
 	call LoadN64TransferItemGfx ; $74c6
 	wram_bank $03 ; $74c9
-	ld a, [$cb11] ; $74cf
+	ld a, [wMenuSlideDirection] ; $74cf
 	ld b, a ; $74d2
 	farcall FarPtr_OpenCourtSelect4Panel ; $74d3
 	farcall FarPtr_InitMenuBgScroll ; $74d6
@@ -7239,7 +7239,7 @@ Label_3b_751e:
 	ld b, $01 ; $7528
 	farcall FarPtr_CloseCourtSelect4Panel ; $752a
 	ld a, $01 ; $752d
-	ld [$cb11], a ; $752f
+	ld [wMenuSlideDirection], a ; $752f
 	ld c, $02 ; $7532
 	call GetMenuCursorCellIndex ; $7534
 	ld [$cb1d], a ; $7537
@@ -7252,7 +7252,7 @@ Label_3b_753b:
 	ld b, $00 ; $7545
 	farcall FarPtr_CloseCourtSelect4Panel ; $7547
 	ld a, $00 ; $754a
-	ld [$cb11], a ; $754c
+	ld [wMenuSlideDirection], a ; $754c
 	ld a, $ff ; $754f
 	ret ; $7551
 LoadN64TransferItemGfx:

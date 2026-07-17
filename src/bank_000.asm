@@ -5958,7 +5958,7 @@ Label_00_2261:
 	and a, $3f ; $2264
 	jr nz, Label_00_226e ; $2266
 	ld a, c ; $2268
-	ld bc, $ffc0 ; $2269
+	ld bc, hLinkRxByte ; $2269
 	add hl, bc ; $226c
 	ld c, a ; $226d
 Label_00_226e:
@@ -5979,7 +5979,7 @@ Label_00_2281:
 	and a, $3f ; $2284
 	jr nz, Label_00_228e ; $2286
 	ld a, c ; $2288
-	ld bc, $ffc0 ; $2289
+	ld bc, hLinkRxByte ; $2289
 	add hl, bc ; $228c
 	ld c, a ; $228d
 Label_00_228e:
@@ -6595,7 +6595,7 @@ AdvanceFrame:
 	push bc ; $2632
 	push de ; $2633
 	push hl ; $2634
-	ldh a, [$ffc8] ; $2635
+	ldh a, [hLinkCounter] ; $2635
 	or a, a ; $2637
 	jr z, Label_00_2641 ; $2638
 	ldh a, [$ffc3] ; $263a
@@ -6682,7 +6682,7 @@ Label_00_26c4:
 	ldh a, [$ffd8] ; $26ca
 	or a, a ; $26cc
 	jr z, Label_00_26d7 ; $26cd
-	ldh a, [$ffc2] ; $26cf
+	ldh a, [hLinkState] ; $26cf
 	cp a, $02 ; $26d1
 	jr z, Label_00_26f0 ; $26d3
 	jr Label_00_26e2 ; $26d5
@@ -6713,7 +6713,7 @@ Label_00_26f3:
 	ldh a, [$ffd8] ; $26f3
 	or a, a ; $26f5
 	jr z, Label_00_2700 ; $26f6
-	ldh a, [$ffc2] ; $26f8
+	ldh a, [hLinkState] ; $26f8
 	cp a, $02 ; $26fa
 	jr z, Label_00_2719 ; $26fc
 	jr Label_00_270b ; $26fe
@@ -6864,7 +6864,7 @@ Label_00_27d5:
 	reti ; $27d6
 TimerHandler:
 	push af ; $27d7
-	ldh a, [$ffc2] ; $27d8
+	ldh a, [hLinkState] ; $27d8
 	cp a, $02 ; $27da
 	jr nz, Label_00_27e4 ; $27dc
 	ldh a, [rIF] ; $27de
@@ -6980,9 +6980,9 @@ SerialHandler:
 	jr c, Label_00_286f ; $2868
 	ldh a, [rSB] ; $286a
 	ld b, a ; $286c
-	ldh [$ffc0], a ; $286d
+	ldh [hLinkRxByte], a ; $286d
 Label_00_286f:
-	ldh a, [$ffc2] ; $286f
+	ldh a, [hLinkState] ; $286f
 	cp a, $01 ; $2871
 	jr nz, Label_00_287c ; $2873
 	ldh [$ffd7], a ; $2875
@@ -7016,7 +7016,7 @@ Label_00_289c:
 	pop hl ; $289c
 	pop de ; $289d
 	pop bc ; $289e
-	ldh a, [$ffc1] ; $289f
+	ldh a, [hLinkTxByte] ; $289f
 	ldh [rSB], a ; $28a1
 	push af ; $28a3
 	ld a, $02 ; $28a4
@@ -7027,29 +7027,29 @@ Label_00_289c:
 	pop af ; $28ad
 	reti ; $28ae
 IncrementLinkFrameCounter:
-	ldh a, [$ffc8] ; $28af
+	ldh a, [hLinkCounter] ; $28af
 	inc a ; $28b1
 	cp a, $08 ; $28b2
 	jr z, Label_00_28b8 ; $28b4
-	ldh [$ffc8], a ; $28b6
+	ldh [hLinkCounter], a ; $28b6
 Label_00_28b8:
 	ret ; $28b8
 InitSerialLink:
 	ld a, $c0 ; $28b9
 	ldh [rSB], a ; $28bb
 	xor a, a ; $28bd
-	ldh [$ffc0], a ; $28be
+	ldh [hLinkRxByte], a ; $28be
 	ld a, $c0 ; $28c0
-	ldh [$ffc1], a ; $28c2
+	ldh [hLinkTxByte], a ; $28c2
 	ld a, $02 ; $28c4
 	ldh [rSC], a ; $28c6
 	ld a, $82 ; $28c8
 	ldh [rSC], a ; $28ca
 	xor a, a ; $28cc
-	ldh [$ffc2], a ; $28cd
+	ldh [hLinkState], a ; $28cd
 	ldh [$ffc3], a ; $28cf
 	ldh [$ffc4], a ; $28d1
-	ldh [$ffc8], a ; $28d3
+	ldh [hLinkCounter], a ; $28d3
 	ldh [$ffd3], a ; $28d5
 	ldh [$ffd4], a ; $28d7
 	ldh [$ffd5], a ; $28d9
@@ -7070,11 +7070,11 @@ InitSerialLink:
 	ret ; $28f7
 ResetSerialState:
 	xor a, a ; $28f8
-	ldh [$ffc0], a ; $28f9
-	ldh [$ffc1], a ; $28fb
+	ldh [hLinkRxByte], a ; $28f9
+	ldh [hLinkTxByte], a ; $28fb
 	ldh [$ffc3], a ; $28fd
 	ldh [$ffc4], a ; $28ff
-	ldh [$ffc8], a ; $2901
+	ldh [hLinkCounter], a ; $2901
 	ldh [$ffd3], a ; $2903
 	ldh [$ffd4], a ; $2905
 	ldh [$ffd5], a ; $2907
@@ -7132,7 +7132,7 @@ Label_00_2958:
 	ld c, a ; $2958
 	ld a, b ; $2959
 	ldh [$ffd6], a ; $295a
-	ldh a, [$ffc2] ; $295c
+	ldh a, [hLinkState] ; $295c
 	cp a, $01 ; $295e
 	jr z, Label_00_2974 ; $2960
 	cp a, $02 ; $2962
@@ -7142,13 +7142,13 @@ Label_00_2958:
 	ldh [$ffd5], a ; $2969
 	ldh [$ffd6], a ; $296b
 	ld a, $c0 ; $296d
-	ldh [$ffc1], a ; $296f
+	ldh [hLinkTxByte], a ; $296f
 	call LinkErrorReset ; $2971
 Label_00_2974:
 	ldh a, [$ffdf] ; $2974
 	or a, a ; $2976
 	jr z, Label_00_2988 ; $2977
-	ldh a, [$ffc2] ; $2979
+	ldh a, [hLinkState] ; $2979
 	cp a, $02 ; $297b
 	jr nz, Label_00_2988 ; $297d
 Label_00_297f:
@@ -7163,7 +7163,7 @@ Label_00_2988:
 	ldh a, [$ffdc] ; $2988
 	or a, c ; $298a
 	di ; $298b
-	ldh [$ffc1], a ; $298c
+	ldh [hLinkTxByte], a ; $298c
 	ldh [$ffe0], a ; $298e
 	ei ; $2990
 	pop hl ; $2991
@@ -7172,7 +7172,7 @@ Label_00_2988:
 SerialDecodeInput:
 	push af ; $2994
 	push bc ; $2995
-	ldh a, [$ffc0] ; $2996
+	ldh a, [hLinkRxByte] ; $2996
 	ld b, a ; $2998
 	and a, $c0 ; $2999
 	cp a, $80 ; $299b
@@ -7211,7 +7211,7 @@ Label_00_29c5:
 	or a, b ; $29ce
 Label_00_29cf:
 	ldh [$ffd4], a ; $29cf
-	ldh a, [$ffc2] ; $29d1
+	ldh a, [hLinkState] ; $29d1
 	cp a, $01 ; $29d3
 	jr nz, Label_00_29e0 ; $29d5
 	ldh a, [$ffd5] ; $29d7

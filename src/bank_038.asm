@@ -365,7 +365,7 @@ Label_38_4202:
 	ld d, a ; $4208
 	ld a, [wMenuCursorY] ; $4209
 	ld e, a ; $420c
-	ldh a, [$ffc2] ; $420d
+	ldh a, [hLinkState] ; $420d
 	cp a, $02 ; $420f
 	jr z, Label_38_421e ; $4211
 	cp a, $01 ; $4213
@@ -917,7 +917,7 @@ Label_38_456e:
 	call ClearFrameTasks ; $4587
 	ld a, $ff ; $458a
 	ret ; $458c
-	ld a, [$cb0e] ; $458d
+	ld a, [wMatchFormatDoubles] ; $458d
 	add a, a ; $4590
 	ld hl, $45ff ; $4591
 	add a, l ; $4594
@@ -939,7 +939,7 @@ Label_38_45ac:
 	ld bc, $3010 ; $45ac
 	call DrawSelectedOptionBox ; $45af
 Label_38_45b2:
-	ld a, [$cb0f] ; $45b2
+	ld a, [wMatchFormatGames] ; $45b2
 	add a, a ; $45b5
 	ld hl, $4603 ; $45b6
 	add a, l ; $45b9
@@ -961,7 +961,7 @@ Label_38_45d2:
 	ld bc, $3010 ; $45d2
 	call DrawSelectedOptionBox ; $45d5
 Label_38_45d8:
-	ld a, [$cb10] ; $45d8
+	ld a, [wMatchFormatSets] ; $45d8
 	add a, a ; $45db
 	ld hl, $4607 ; $45dc
 	add a, l ; $45df
@@ -999,9 +999,9 @@ Func_38_460f:
 	farcall FarPtr_LoadCompressedTileBlock ; $4627
 	wram_bank $05 ; $462a
 	ld a, $03 ; $4630
-	ld [$c3b3], a ; $4632
+	ld [wShadowTilemapBank], a ; $4632
 	ld a, $00 ; $4635
-	ld [$c3b6], a ; $4637
+	ld [wWindowTileAttr], a ; $4637
 	ld d, $00 ; $463a
 	ld e, $0f ; $463c
 	ld b, $14 ; $463e
@@ -1079,19 +1079,19 @@ Label_38_475b:
 	call GetMenuCursorLinearIndex ; $475f
 	or a, a ; $4762
 	jr nz, Label_38_476e ; $4763
-	ld a, [$cb0e] ; $4765
+	ld a, [wMatchFormatDoubles] ; $4765
 	xor a, $01 ; $4768
-	ld [$cb0e], a ; $476a
+	ld [wMatchFormatDoubles], a ; $476a
 	ret ; $476d
 Label_38_476e:
 	cp a, $01 ; $476e
 	jr nz, Label_38_477b ; $4770
-	ld a, [$cb0f] ; $4772
+	ld a, [wMatchFormatGames] ; $4772
 	xor a, $01 ; $4775
-	ld [$cb0f], a ; $4777
+	ld [wMatchFormatGames], a ; $4777
 	ret ; $477a
 Label_38_477b:
-	ld a, [$cb10] ; $477b
+	ld a, [wMatchFormatSets] ; $477b
 	dec a ; $477e
 	add a, a ; $477f
 	jr nc, Label_38_4787 ; $4780
@@ -1104,7 +1104,7 @@ Label_38_4787:
 	jr c, Label_38_478d ; $478a
 	xor a, a ; $478c
 Label_38_478d:
-	ld [$cb10], a ; $478d
+	ld [wMatchFormatSets], a ; $478d
 	ret ; $4790
 Label_38_4791:
 	sound $5e ; $4791
@@ -1112,19 +1112,19 @@ Label_38_4791:
 	call GetMenuCursorLinearIndex ; $4795
 	or a, a ; $4798
 	jr nz, Label_38_47a4 ; $4799
-	ld a, [$cb0e] ; $479b
+	ld a, [wMatchFormatDoubles] ; $479b
 	xor a, $01 ; $479e
-	ld [$cb0e], a ; $47a0
+	ld [wMatchFormatDoubles], a ; $47a0
 	ret ; $47a3
 Label_38_47a4:
 	cp a, $01 ; $47a4
 	jr nz, Label_38_47b1 ; $47a6
-	ld a, [$cb0f] ; $47a8
+	ld a, [wMatchFormatGames] ; $47a8
 	xor a, $01 ; $47ab
-	ld [$cb0f], a ; $47ad
+	ld [wMatchFormatGames], a ; $47ad
 	ret ; $47b0
 Label_38_47b1:
-	ld a, [$cb10] ; $47b1
+	ld a, [wMatchFormatSets] ; $47b1
 	inc a ; $47b4
 	add a, a ; $47b5
 	jr nc, Label_38_47bd ; $47b6
@@ -1137,7 +1137,7 @@ Label_38_47bd:
 	jr c, Label_38_47c3 ; $47c0
 	xor a, a ; $47c2
 Label_38_47c3:
-	ld [$cb10], a ; $47c3
+	ld [wMatchFormatSets], a ; $47c3
 	ret ; $47c6
 Func_38_47c7:
 	sound $03 ; $47c7
@@ -1363,9 +1363,9 @@ Func_38_4975:
 	farcall FarPtr_LoadCompressedTileBlock ; $49c1
 	wram_bank $05 ; $49c4
 	ld a, $03 ; $49ca
-	ld [$c3b3], a ; $49cc
+	ld [wShadowTilemapBank], a ; $49cc
 	ld a, $00 ; $49cf
-	ld [$c3b6], a ; $49d1
+	ld [wWindowTileAttr], a ; $49d1
 	ld d, $00 ; $49d4
 	ld e, $0f ; $49d6
 	ld b, $14 ; $49d8
@@ -1973,9 +1973,9 @@ Func_38_4f6f:
 	farcall FarPtr_ResetTextWindowState ; $4fcc
 	wram_bank $05 ; $4fcf
 	ld a, $03 ; $4fd5
-	ld [$c3b3], a ; $4fd7
+	ld [wShadowTilemapBank], a ; $4fd7
 	ld a, $00 ; $4fda
-	ld [$c3b6], a ; $4fdc
+	ld [wWindowTileAttr], a ; $4fdc
 	ld d, $00 ; $4fdf
 	ld e, $02 ; $4fe1
 	ld b, $14 ; $4fe3
@@ -3327,12 +3327,12 @@ Label_38_5abc:
 	ld [hl+], a ; $5ac8
 	ld [hl+], a ; $5ac9
 	ld [hl+], a ; $5aca
-	ld a, [$c36c] ; $5acb
+	ld a, [wCurrentStorySlot] ; $5acb
 	push af ; $5ace
 	ld c, $00 ; $5acf
 Label_38_5ad1:
 	ld a, c ; $5ad1
-	ld [$c36c], a ; $5ad2
+	ld [wCurrentStorySlot], a ; $5ad2
 	farcall FarPtr_CheckStorySlot ; $5ad5
 	push bc ; $5ad8
 	ld hl, $d852 ; $5ad9
@@ -3375,7 +3375,7 @@ Label_38_5afe:
 	cp a, $03 ; $5b09
 	jr nz, Label_38_5ad1 ; $5b0b
 	pop af ; $5b0d
-	ld [$c36c], a ; $5b0e
+	ld [wCurrentStorySlot], a ; $5b0e
 	pop af ; $5b11
 	wram_bank ; $5b12
 	ret ; $5b16
@@ -4191,21 +4191,21 @@ Func_38_605b:
 	push af ; $6061
 	wram_bank $01 ; $6062
 	ld a, $00 ; $6068
-	ld [$c36c], a ; $606a
+	ld [wCurrentStorySlot], a ; $606a
 	farcall FarPtr_CheckStorySlot ; $606d
 	ld hl, wStoryModeNameOfMainCharacter ; $6070
 	ld de, $d000 ; $6073
 	ld bc, $0008 ; $6076
 	call CopyMemoryFast ; $6079
 	ld a, $01 ; $607c
-	ld [$c36c], a ; $607e
+	ld [wCurrentStorySlot], a ; $607e
 	farcall FarPtr_CheckStorySlot ; $6081
 	ld hl, wStoryModeNameOfMainCharacter ; $6084
 	ld de, $d100 ; $6087
 	ld bc, $0008 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
-	ld [$c36c], a ; $6092
+	ld [wCurrentStorySlot], a ; $6092
 	farcall FarPtr_CheckStorySlot ; $6095
 	ld hl, wStoryModeNameOfMainCharacter ; $6098
 	ld de, $d200 ; $609b
@@ -4218,7 +4218,7 @@ Func_38_605b:
 	pop bc ; $60ab
 	pop af ; $60ac
 	ld a, $03 ; $60ad
-	ld [$c36c], a ; $60af
+	ld [wCurrentStorySlot], a ; $60af
 	farcall FarPtr_InitStoryModeState ; $60b2
 	farcall FarPtr_InitDefaultMatchSettings ; $60b5
 	ret ; $60b8
@@ -4710,7 +4710,7 @@ Func_38_63bd:
 	ld a, [wMatchIsDoubles] ; $63dd
 	or a, a ; $63e0
 	jr nz, Label_38_63f1 ; $63e1
-	ldh a, [$ffc2] ; $63e3
+	ldh a, [hLinkState] ; $63e3
 	cp a, $01 ; $63e5
 	jr nz, Label_38_63ed ; $63e7
 	ld a, $02 ; $63e9
@@ -4719,7 +4719,7 @@ Label_38_63ed:
 	ld a, $03 ; $63ed
 	jr Label_38_63fd ; $63ef
 Label_38_63f1:
-	ldh a, [$ffc2] ; $63f1
+	ldh a, [hLinkState] ; $63f1
 	cp a, $01 ; $63f3
 	jr nz, Label_38_63fb ; $63f5
 	ld a, $04 ; $63f7
@@ -4835,7 +4835,7 @@ Label_38_64cb:
 	call Func_38_6a7f ; $64e4
 	call Func_38_601c ; $64e7
 	call Func_38_5f4c ; $64ea
-	ldh a, [$ffc2] ; $64ed
+	ldh a, [hLinkState] ; $64ed
 	cp a, $01 ; $64ef
 	jr nz, Label_38_64f6 ; $64f1
 	call WaitVBlank ; $64f3
@@ -6390,9 +6390,9 @@ Func_38_6f6e:
 	farcall FarPtr_LoadCompressedTileBlock ; $6f97
 	wram_bank $05 ; $6f9a
 	ld a, $03 ; $6fa0
-	ld [$c3b3], a ; $6fa2
+	ld [wShadowTilemapBank], a ; $6fa2
 	ld a, $00 ; $6fa5
-	ld [$c3b6], a ; $6fa7
+	ld [wWindowTileAttr], a ; $6fa7
 	ld d, $00 ; $6faa
 	ld e, $02 ; $6fac
 	ld b, $14 ; $6fae
@@ -6857,7 +6857,7 @@ Label_38_741b:
 	jr nz, Label_38_745f ; $7453
 	farcall FarPtr_RestoreMenuScreenAndFadeIn ; $7455
 	ld a, $00 ; $7458
-	ld [$cb11], a ; $745a
+	ld [wMenuSlideDirection], a ; $745a
 	jr Label_38_740b ; $745d
 Label_38_745f:
 	farcall FarPtr_ComputeUnlockedCourtFlags ; $745f
@@ -6874,7 +6874,7 @@ Label_38_745f:
 	ldh [$ffd8], a ; $747c
 	call ResetSerialState ; $747e
 	ld a, $01 ; $7481
-	ld [$cb11], a ; $7483
+	ld [wMenuSlideDirection], a ; $7483
 	call ApplyMatchTypeSettingsLink ; $7486
 	ld a, [$cb54] ; $7489
 	ld d, a ; $748c
@@ -6924,7 +6924,7 @@ Label_38_74da:
 	ret ; $74e2
 ApplyMatchTypeSettingsLink:
 	ld hl, $751d ; $74e3
-	ld a, [$cb10] ; $74e6
+	ld a, [wMatchFormatSets] ; $74e6
 	add a, l ; $74e9
 	ld l, a ; $74ea
 	jr nc, Label_38_74ee ; $74eb
@@ -6933,7 +6933,7 @@ Label_38_74ee:
 	ld a, [hl] ; $74ee
 	ld [wMatchTypeNumberOfSets], a ; $74ef
 	ld hl, $7520 ; $74f2
-	ld a, [$cb0f] ; $74f5
+	ld a, [wMatchFormatGames] ; $74f5
 	add a, l ; $74f8
 	ld l, a ; $74f9
 	jr nc, Label_38_74fd ; $74fa
@@ -6941,7 +6941,7 @@ Label_38_74ee:
 Label_38_74fd:
 	ld a, [hl] ; $74fd
 	ld [wMatchTypeNumberOfGames], a ; $74fe
-	ld a, [$cb0e] ; $7501
+	ld a, [wMatchFormatDoubles] ; $7501
 	ld [wMatchIsDoubles], a ; $7504
 	or a, a ; $7507
 	jr z, Label_38_7514 ; $7508
@@ -6974,7 +6974,7 @@ Func_38_7522:
 	xor a, a ; $753d
 	ldh [$ffd8], a ; $753e
 	call ResetSerialState ; $7540
-	ldh a, [$ffc2] ; $7543
+	ldh a, [hLinkState] ; $7543
 	cp a, $01 ; $7545
 	jr nz, Label_38_754c ; $7547
 	call WaitVBlank ; $7549
@@ -6988,7 +6988,7 @@ Label_38_754c:
 	jr z, Label_38_7559 ; $7554
 	call LinkErrorReset ; $7556
 Label_38_7559:
-	ldh a, [$ffc2] ; $7559
+	ldh a, [hLinkState] ; $7559
 	cp a, $02 ; $755b
 	jr z, Label_38_756e ; $755d
 	cp a, $01 ; $755f
@@ -7077,7 +7077,7 @@ Label_38_75d4:
 	ld a, b ; $75da
 	cp a, $26 ; $75db
 	jr nz, Label_38_7601 ; $75dd
-	ldh a, [$ffc2] ; $75df
+	ldh a, [hLinkState] ; $75df
 	cp a, $02 ; $75e1
 	jr z, Label_38_75f4 ; $75e3
 	cp a, $01 ; $75e5
@@ -7118,7 +7118,7 @@ Func_38_7603:
 	xor a, a ; $7621
 	ldh [$ffd8], a ; $7622
 	call ResetSerialState ; $7624
-	ldh a, [$ffc2] ; $7627
+	ldh a, [hLinkState] ; $7627
 	cp a, $01 ; $7629
 	jr nz, Label_38_7630 ; $762b
 	call WaitVBlank ; $762d
@@ -7153,7 +7153,7 @@ Func_38_7646:
 	inc de ; $765e
 	ld a, [hl+] ; $765f
 	ld [de], a ; $7660
-	ldh a, [$ffc2] ; $7661
+	ldh a, [hLinkState] ; $7661
 	ld [$c8b9], a ; $7663
 	ld a, [$c8b7] ; $7666
 	bit 7, a ; $7669

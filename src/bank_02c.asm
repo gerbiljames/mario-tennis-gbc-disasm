@@ -111,7 +111,7 @@ Func_2c_4061:
 	sub a, d ; $4078
 	ld d, a ; $4079
 Label_2c_407a:
-	ld hl, $c43a ; $407a
+	ld hl, wShotAimAngle ; $407a
 	ld a, [hl+] ; $407d
 	ld h, [hl] ; $407e
 	ld l, a ; $407f
@@ -131,7 +131,7 @@ Func_2c_4088:
 	ld c, a ; $408e
 	ld a, [hl+] ; $408f
 	ld b, a ; $4090
-	ld hl, $c43a ; $4091
+	ld hl, wShotAimAngle ; $4091
 	ld a, [hl+] ; $4094
 	ld d, [hl] ; $4095
 	ld e, a ; $4096
@@ -188,7 +188,7 @@ Label_2c_40b7:
 	sub a, d ; $40d5
 	ld d, a ; $40d6
 Label_2c_40d7:
-	ld hl, $c43a ; $40d7
+	ld hl, wShotAimAngle ; $40d7
 	ld a, [hl+] ; $40da
 	ld h, [hl] ; $40db
 	ld l, a ; $40dc
@@ -208,14 +208,14 @@ Label_2c_40d7:
 	sub a, d ; $40f2
 	ld d, a ; $40f3
 Label_2c_40f4:
-	ld hl, $c452 ; $40f4
+	ld hl, wBallTargetDepth ; $40f4
 	ld a, e ; $40f7
 	ld [hl+], a ; $40f8
 	ld [hl], d ; $40f9
 	farcall FarPtr_PredictBallXAtDepth ; $40fa
 	ld e, l ; $40fd
 	ld d, h ; $40fe
-	ld hl, $c450 ; $40ff
+	ld hl, wBallTargetX ; $40ff
 	ld a, e ; $4102
 	ld [hl+], a ; $4103
 	ld [hl], d ; $4104
@@ -246,7 +246,7 @@ Func_2c_4139:
 	call Func_2c_41f9 ; $415d
 	ret ; $4160
 	push hl ; $4161
-	ld hl, $c43a ; $4162
+	ld hl, wShotAimAngle ; $4162
 	ld a, [hl+] ; $4165
 	ld b, [hl] ; $4166
 	ld c, a ; $4167
@@ -312,7 +312,7 @@ Func_2c_41cd:
 	farcall FarPtr_24_04 ; $41f5
 	ret ; $41f8
 Func_2c_41f9:
-	ld a, [$c43a] ; $41f9
+	ld a, [wShotAimAngle] ; $41f9
 	ld c, a ; $41fc
 	ld a, [$c43b] ; $41fd
 	ld b, a ; $4200
@@ -326,7 +326,7 @@ Func_2c_41f9:
 	add hl, bc ; $420c
 	ld c, l ; $420d
 	ld b, h ; $420e
-	ld hl, $c450 ; $420f
+	ld hl, wBallTargetX ; $420f
 	ld a, c ; $4212
 	ld [hl+], a ; $4213
 	ld [hl], b ; $4214
@@ -337,14 +337,14 @@ Func_2c_41f9:
 	add hl, de ; $421b
 	ld e, l ; $421c
 	ld d, h ; $421d
-	ld hl, $c452 ; $421e
+	ld hl, wBallTargetDepth ; $421e
 	ld a, e ; $4221
 	ld [hl+], a ; $4222
 	ld [hl], d ; $4223
 	ret ; $4224
 	push hl ; $4225
 	push bc ; $4226
-	ld hl, $c43a ; $4227
+	ld hl, wShotAimAngle ; $4227
 	ld a, [hl+] ; $422a
 	ld b, [hl] ; $422b
 	ld c, a ; $422c

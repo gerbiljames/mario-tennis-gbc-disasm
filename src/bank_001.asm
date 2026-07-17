@@ -73,7 +73,7 @@ Func_01_4018:
 Label_01_40a5:
 	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], $00 ; $40a8
-	ld hl, $c295 ; $40aa
+	ld hl, wStoryModeEntryPoint ; $40aa
 	ld [hl], $0a ; $40ad
 	farcall FarPtr_RunStoryModeOverworld ; $40af
 Label_01_40b2:
@@ -101,7 +101,7 @@ Label_01_40d8:
 	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
 	ld [hl], $00 ; $40df
-	ld hl, $c295 ; $40e1
+	ld hl, wStoryModeEntryPoint ; $40e1
 	ld [hl], $0a ; $40e4
 	farcall FarPtr_RunStoryModeOverworld ; $40e6
 	jp Label_01_40b2 ; $40e9
@@ -119,7 +119,7 @@ Label_01_40f9:
 	ldh [hDebugStepMode], a ; $4101
 	ld hl, wStoryModeCurrentLocation ; $4103
 	ld [hl], $00 ; $4106
-	ld hl, $c295 ; $4108
+	ld hl, wStoryModeEntryPoint ; $4108
 	ld [hl], $0a ; $410b
 	farcall FarPtr_RunStoryModeOverworld ; $410d
 	jp Label_01_40a5 ; $4110
@@ -150,7 +150,7 @@ Label_01_4138:
 	ld a, $01 ; $413d
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
-	ld [$c36c], a ; $4143
+	ld [wCurrentStorySlot], a ; $4143
 	farcall FarPtr_CheckStorySlot ; $4146
 	ld b, $00 ; $4149
 	ld c, $04 ; $414b
@@ -165,7 +165,7 @@ Label_01_4138:
 	ld a, $01 ; $4161
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
-	ld [$c36c], a ; $4168
+	ld [wCurrentStorySlot], a ; $4168
 	farcall FarPtr_CheckStorySlot ; $416b
 	ld a, $17 ; $416e
 	ld [wPlayer1CurrentMainCharacter], a ; $4170
@@ -223,7 +223,7 @@ Label_01_41db:
 	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
 	ld [hl], $03 ; $41e6
-	ld hl, $c295 ; $41e8
+	ld hl, wStoryModeEntryPoint ; $41e8
 	ld [hl], $0a ; $41eb
 	ld a, $00 ; $41ed
 	ld [wStoryModeMainCharacterOverworldSprite], a ; $41ef

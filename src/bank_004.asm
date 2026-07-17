@@ -2423,7 +2423,7 @@ Label_04_5160:
 	ld a, d ; $5160
 	swap a ; $5161
 	and a, $0f ; $5163
-	ld [$c2a1], a ; $5165
+	ld [wStoryModeExitLocationRequest], a ; $5165
 Label_04_5168:
 	pop de ; $5168
 	pop af ; $5169

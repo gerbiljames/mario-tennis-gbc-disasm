@@ -118,7 +118,7 @@ Func_24_4069:
 	sub a, d ; $4080
 	ld d, a ; $4081
 Label_24_4082:
-	ld hl, $c43a ; $4082
+	ld hl, wShotAimAngle ; $4082
 	ld a, [hl+] ; $4085
 	ld h, [hl] ; $4086
 	ld l, a ; $4087
@@ -138,7 +138,7 @@ Func_24_4090:
 	ld c, a ; $4096
 	ld a, [hl+] ; $4097
 	ld b, a ; $4098
-	ld hl, $c43a ; $4099
+	ld hl, wShotAimAngle ; $4099
 	ld a, [hl+] ; $409c
 	ld d, [hl] ; $409d
 	ld e, a ; $409e
@@ -195,7 +195,7 @@ Label_24_40bf:
 	sub a, d ; $40dd
 	ld d, a ; $40de
 Label_24_40df:
-	ld hl, $c43a ; $40df
+	ld hl, wShotAimAngle ; $40df
 	ld a, [hl+] ; $40e2
 	ld h, [hl] ; $40e3
 	ld l, a ; $40e4
@@ -215,14 +215,14 @@ Label_24_40df:
 	sub a, d ; $40fa
 	ld d, a ; $40fb
 Label_24_40fc:
-	ld hl, $c452 ; $40fc
+	ld hl, wBallTargetDepth ; $40fc
 	ld a, e ; $40ff
 	ld [hl+], a ; $4100
 	ld [hl], d ; $4101
 	farcall FarPtr_PredictBallXAtDepth ; $4102
 	ld e, l ; $4105
 	ld d, h ; $4106
-	ld hl, $c450 ; $4107
+	ld hl, wBallTargetX ; $4107
 	ld a, e ; $410a
 	ld [hl+], a ; $410b
 	ld [hl], d ; $410c
@@ -230,7 +230,7 @@ Label_24_40fc:
 	INCBIN "data/bank_024/d_410e.bin" ; $410e, 91 bytes
 Func_24_4169:
 	push hl ; $4169
-	ld hl, $c43a ; $416a
+	ld hl, wShotAimAngle ; $416a
 	ld a, [hl+] ; $416d
 	ld b, [hl] ; $416e
 	ld c, a ; $416f
@@ -328,7 +328,7 @@ Label_24_41fd:
 	farcall FarPtr_24_04 ; $41fd
 	ret ; $4200
 Func_24_4201:
-	ld a, [$c43a] ; $4201
+	ld a, [wShotAimAngle] ; $4201
 	ld c, a ; $4204
 	ld a, [$c43b] ; $4205
 	ld b, a ; $4208
@@ -342,7 +342,7 @@ Func_24_4201:
 	add hl, bc ; $4214
 	ld c, l ; $4215
 	ld b, h ; $4216
-	ld hl, $c450 ; $4217
+	ld hl, wBallTargetX ; $4217
 	ld a, c ; $421a
 	ld [hl+], a ; $421b
 	ld [hl], b ; $421c
@@ -353,7 +353,7 @@ Func_24_4201:
 	add hl, de ; $4223
 	ld e, l ; $4224
 	ld d, h ; $4225
-	ld hl, $c452 ; $4226
+	ld hl, wBallTargetDepth ; $4226
 	ld a, e ; $4229
 	ld [hl+], a ; $422a
 	ld [hl], d ; $422b
@@ -361,7 +361,7 @@ Func_24_4201:
 Func_24_422d:
 	push hl ; $422d
 	push bc ; $422e
-	ld hl, $c43a ; $422f
+	ld hl, wShotAimAngle ; $422f
 	ld a, [hl+] ; $4232
 	ld b, [hl] ; $4233
 	ld c, a ; $4234
@@ -702,7 +702,7 @@ Label_24_66b0:
 	add hl, bc ; $66d7
 	ld c, l ; $66d8
 	ld b, h ; $66d9
-	ld hl, $c43a ; $66da
+	ld hl, wShotAimAngle ; $66da
 	ld a, [hl+] ; $66dd
 	ld d, [hl] ; $66de
 	ld e, a ; $66df

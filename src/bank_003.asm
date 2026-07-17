@@ -80,7 +80,7 @@ InitSaveHeader:
 	push de ; $404c
 	push hl ; $404d
 	ld a, $00 ; $404e
-	ldh [$ff97], a ; $4050
+	ldh [hSramBank], a ; $4050
 	ld [$4000], a ; $4052
 	ld hl, SaveSignature ; $4055
 	ld de, $a020 ; $4058
@@ -1228,7 +1228,7 @@ WipeAllSaveRam:
 	ld e, $00 ; $47f9
 Label_03_47fb:
 	ld a, e ; $47fb
-	ldh [$ff97], a ; $47fc
+	ldh [hSramBank], a ; $47fc
 	ld [$4000], a ; $47fe
 	ld bc, $0200 ; $4801
 	ld hl, $a000 ; $4804
@@ -1261,7 +1261,7 @@ Label_03_4808:
 	ret ; $4824
 ClearSaveFlagsArea:
 	xor a, a ; $4825
-	ldh [$ff97], a ; $4826
+	ldh [hSramBank], a ; $4826
 	ld [$4000], a ; $4828
 	ld c, $02 ; $482b
 	ld hl, $a040 ; $482d
@@ -1290,7 +1290,7 @@ SumSaveHeaderRegion:
 	push de ; $4845
 	push bc ; $4846
 	xor a, a ; $4847
-	ldh [$ff97], a ; $4848
+	ldh [hSramBank], a ; $4848
 	ld [$4000], a ; $484a
 	ld h, a ; $484d
 	ld l, a ; $484e
@@ -1332,7 +1332,7 @@ UpdateSaveHeaderChecksum:
 	push de ; $4881
 	call CopyMemoryFast ; $4882
 	ld a, $01 ; $4885
-	ldh [$ff97], a ; $4887
+	ldh [hSramBank], a ; $4887
 	ld [$4000], a ; $4889
 	ld c, $04 ; $488c
 	pop hl ; $488e
@@ -1340,7 +1340,7 @@ UpdateSaveHeaderChecksum:
 	call CopyMemoryFast ; $4890
 	add sp, 64 ; $4893
 	ld a, $00 ; $4895
-	ldh [$ff97], a ; $4897
+	ldh [hSramBank], a ; $4897
 	ld [$4000], a ; $4899
 	pop hl ; $489c
 	pop de ; $489d
@@ -1362,56 +1362,56 @@ MirrorSaveHeaderToBank1:
 	ld c, $20 ; $48b6
 	call CopyMemoryFast ; $48b8
 	ld a, $01 ; $48bb
-	ldh [$ff97], a ; $48bd
+	ldh [hSramBank], a ; $48bd
 	ld [$4000], a ; $48bf
 	ld hl, wTextBuffer ; $48c2
 	ld de, $a000 ; $48c5
 	ld c, $20 ; $48c8
 	call CopyMemoryFast ; $48ca
 	ld a, $00 ; $48cd
-	ldh [$ff97], a ; $48cf
+	ldh [hSramBank], a ; $48cf
 	ld [$4000], a ; $48d1
 	ld hl, $a200 ; $48d4
 	ld de, wTextBuffer ; $48d7
 	ld c, $20 ; $48da
 	call CopyMemoryFast ; $48dc
 	ld a, $01 ; $48df
-	ldh [$ff97], a ; $48e1
+	ldh [hSramBank], a ; $48e1
 	ld [$4000], a ; $48e3
 	ld hl, wTextBuffer ; $48e6
 	ld de, $a200 ; $48e9
 	ld c, $20 ; $48ec
 	call CopyMemoryFast ; $48ee
 	ld a, $00 ; $48f1
-	ldh [$ff97], a ; $48f3
+	ldh [hSramBank], a ; $48f3
 	ld [$4000], a ; $48f5
 	ld hl, $a400 ; $48f8
 	ld de, wTextBuffer ; $48fb
 	ld c, $20 ; $48fe
 	call CopyMemoryFast ; $4900
 	ld a, $01 ; $4903
-	ldh [$ff97], a ; $4905
+	ldh [hSramBank], a ; $4905
 	ld [$4000], a ; $4907
 	ld hl, wTextBuffer ; $490a
 	ld de, $a400 ; $490d
 	ld c, $20 ; $4910
 	call CopyMemoryFast ; $4912
 	ld a, $00 ; $4915
-	ldh [$ff97], a ; $4917
+	ldh [hSramBank], a ; $4917
 	ld [$4000], a ; $4919
 	ld hl, $a600 ; $491c
 	ld de, wTextBuffer ; $491f
 	ld c, $20 ; $4922
 	call CopyMemoryFast ; $4924
 	ld a, $01 ; $4927
-	ldh [$ff97], a ; $4929
+	ldh [hSramBank], a ; $4929
 	ld [$4000], a ; $492b
 	ld hl, wTextBuffer ; $492e
 	ld de, $a600 ; $4931
 	ld c, $20 ; $4934
 	call CopyMemoryFast ; $4936
 	ld a, $00 ; $4939
-	ldh [$ff97], a ; $493b
+	ldh [hSramBank], a ; $493b
 	ld [$4000], a ; $493d
 	pop hl ; $4940
 	pop de ; $4941
@@ -1446,7 +1446,7 @@ ValidateSaveRam:
 	ld a, $0a ; $4960
 	ld [$0000], a ; $4962
 	ld a, $00 ; $4965
-	ldh [$ff97], a ; $4967
+	ldh [hSramBank], a ; $4967
 	ld [$4000], a ; $4969
 	ld hl, $a020 ; $496c
 	ld de, SaveSignature ; $496f
@@ -1458,56 +1458,56 @@ ValidateSaveRam:
 	jp Label_03_4a32 ; $497d
 Label_03_4980:
 	ld a, $01 ; $4980
-	ldh [$ff97], a ; $4982
+	ldh [hSramBank], a ; $4982
 	ld [$4000], a ; $4984
 	ld hl, $a000 ; $4987
 	ld de, wTextBuffer ; $498a
 	ld c, $20 ; $498d
 	call CopyMemoryFast ; $498f
 	ld a, $00 ; $4992
-	ldh [$ff97], a ; $4994
+	ldh [hSramBank], a ; $4994
 	ld [$4000], a ; $4996
 	ld hl, wTextBuffer ; $4999
 	ld de, $a000 ; $499c
 	ld c, $20 ; $499f
 	call CopyMemoryFast ; $49a1
 	ld a, $01 ; $49a4
-	ldh [$ff97], a ; $49a6
+	ldh [hSramBank], a ; $49a6
 	ld [$4000], a ; $49a8
 	ld hl, $a200 ; $49ab
 	ld de, wTextBuffer ; $49ae
 	ld c, $20 ; $49b1
 	call CopyMemoryFast ; $49b3
 	ld a, $00 ; $49b6
-	ldh [$ff97], a ; $49b8
+	ldh [hSramBank], a ; $49b8
 	ld [$4000], a ; $49ba
 	ld hl, wTextBuffer ; $49bd
 	ld de, $a200 ; $49c0
 	ld c, $20 ; $49c3
 	call CopyMemoryFast ; $49c5
 	ld a, $01 ; $49c8
-	ldh [$ff97], a ; $49ca
+	ldh [hSramBank], a ; $49ca
 	ld [$4000], a ; $49cc
 	ld hl, $a400 ; $49cf
 	ld de, wTextBuffer ; $49d2
 	ld c, $20 ; $49d5
 	call CopyMemoryFast ; $49d7
 	ld a, $00 ; $49da
-	ldh [$ff97], a ; $49dc
+	ldh [hSramBank], a ; $49dc
 	ld [$4000], a ; $49de
 	ld hl, wTextBuffer ; $49e1
 	ld de, $a400 ; $49e4
 	ld c, $20 ; $49e7
 	call CopyMemoryFast ; $49e9
 	ld a, $01 ; $49ec
-	ldh [$ff97], a ; $49ee
+	ldh [hSramBank], a ; $49ee
 	ld [$4000], a ; $49f0
 	ld hl, $a600 ; $49f3
 	ld de, wTextBuffer ; $49f6
 	ld c, $20 ; $49f9
 	call CopyMemoryFast ; $49fb
 	ld a, $00 ; $49fe
-	ldh [$ff97], a ; $4a00
+	ldh [hSramBank], a ; $4a00
 	ld [$4000], a ; $4a02
 	ld hl, wTextBuffer ; $4a05
 	ld de, $a600 ; $4a08
@@ -1540,7 +1540,7 @@ EraseAndInitSaveRam:
 	ld a, $0a ; $4a3c
 	ld [$0000], a ; $4a3e
 	ld a, $00 ; $4a41
-	ldh [$ff97], a ; $4a43
+	ldh [hSramBank], a ; $4a43
 	ld [$4000], a ; $4a45
 	call WipeAllSaveRam ; $4a48
 	call InitSaveHeader ; $4a4b
@@ -1605,7 +1605,7 @@ WriteSaveBlock:
 	ld a, $0a ; $4a8c
 	ld [$0000], a ; $4a8e
 	ld a, $00 ; $4a91
-	ldh [$ff97], a ; $4a93
+	ldh [hSramBank], a ; $4a93
 	ld [$4000], a ; $4a95
 	call InitSaveHeader ; $4a98
 	push de ; $4a9b
@@ -1631,7 +1631,7 @@ WriteSaveBlock:
 	ld e, l ; $4ab5
 	pop hl ; $4ab6
 	ld a, l ; $4ab7
-	ldh [$ff97], a ; $4ab8
+	ldh [hSramBank], a ; $4ab8
 	ld [$4000], a ; $4aba
 	pop hl ; $4abd
 	push hl ; $4abe
@@ -1659,7 +1659,7 @@ Label_03_4acd:
 	or a, c ; $4ad6
 	jr nz, Label_03_4acd ; $4ad7
 	ld a, $00 ; $4ad9
-	ldh [$ff97], a ; $4adb
+	ldh [hSramBank], a ; $4adb
 	ld [$4000], a ; $4add
 	pop bc ; $4ae0
 	ld a, $01 ; $4ae1
@@ -1714,7 +1714,7 @@ InvalidateSaveBlock:
 	ld a, $0a ; $4b1f
 	ld [$0000], a ; $4b21
 	ld a, $00 ; $4b24
-	ldh [$ff97], a ; $4b26
+	ldh [hSramBank], a ; $4b26
 	ld [$4000], a ; $4b28
 	call InitSaveHeader ; $4b2b
 	ld a, b ; $4b2e
@@ -1746,19 +1746,19 @@ Label_03_4b42:
 	ret ; $4b53
 ResetAllSaveBlocks:
 	ld a, $00 ; $4b54
-	ld [$c36c], a ; $4b56
+	ld [wCurrentStorySlot], a ; $4b56
 	ld a, $00 ; $4b59
 	call EraseStorySlotSaveData ; $4b5b
 	ld a, $01 ; $4b5e
-	ld [$c36c], a ; $4b60
+	ld [wCurrentStorySlot], a ; $4b60
 	ld a, $00 ; $4b63
 	call EraseStorySlotSaveData ; $4b65
 	ld a, $02 ; $4b68
-	ld [$c36c], a ; $4b6a
+	ld [wCurrentStorySlot], a ; $4b6a
 	ld a, $00 ; $4b6d
 	call EraseStorySlotSaveData ; $4b6f
 	ld a, $00 ; $4b72
-	ld [$c36c], a ; $4b74
+	ld [wCurrentStorySlot], a ; $4b74
 	ld b, $36 ; $4b77
 	call InvalidateSaveBlock ; $4b79
 	ld b, $37 ; $4b7c
@@ -1766,7 +1766,7 @@ ResetAllSaveBlocks:
 	ld a, $0a ; $4b81
 	ld [$0000], a ; $4b83
 	ld a, $00 ; $4b86
-	ldh [$ff97], a ; $4b88
+	ldh [hSramBank], a ; $4b88
 	ld [$4000], a ; $4b8a
 	call ClearSaveFlagsArea ; $4b8d
 	call InitSaveHeader ; $4b90
@@ -1781,7 +1781,7 @@ ReadSaveBlock:
 	ld a, $0a ; $4b9e
 	ld [$0000], a ; $4ba0
 	ld a, $00 ; $4ba3
-	ldh [$ff97], a ; $4ba5
+	ldh [hSramBank], a ; $4ba5
 	ld [$4000], a ; $4ba7
 	ld a, b ; $4baa
 	call GetSaveBlockDirEntry ; $4bab
@@ -1811,7 +1811,7 @@ Label_03_4bb8:
 	ld e, l ; $4bcd
 	pop hl ; $4bce
 	ld a, l ; $4bcf
-	ldh [$ff97], a ; $4bd0
+	ldh [hSramBank], a ; $4bd0
 	ld [$4000], a ; $4bd2
 	pop hl ; $4bd5
 	push hl ; $4bd6
@@ -1839,7 +1839,7 @@ Label_03_4be5:
 	or a, c ; $4bee
 	jr nz, Label_03_4be5 ; $4bef
 	ld a, $00 ; $4bf1
-	ldh [$ff97], a ; $4bf3
+	ldh [hSramBank], a ; $4bf3
 	ld [$4000], a ; $4bf5
 	pop bc ; $4bf8
 	ld hl, $0006 ; $4bf9
@@ -1871,7 +1871,7 @@ VerifySaveBlock:
 	ld a, $0a ; $4c17
 	ld [$0000], a ; $4c19
 	ld a, $00 ; $4c1c
-	ldh [$ff97], a ; $4c1e
+	ldh [hSramBank], a ; $4c1e
 	ld [$4000], a ; $4c20
 	ld a, b ; $4c23
 	call GetSaveBlockDirEntry ; $4c24
@@ -1901,7 +1901,7 @@ Label_03_4c31:
 	ld e, l ; $4c46
 	pop hl ; $4c47
 	ld a, l ; $4c48
-	ldh [$ff97], a ; $4c49
+	ldh [hSramBank], a ; $4c49
 	ld [$4000], a ; $4c4b
 	pop hl ; $4c4e
 	push de ; $4c4f
@@ -1911,7 +1911,7 @@ Label_03_4c51:
 	cp a, [hl] ; $4c52
 	jr z, Label_03_4c63 ; $4c53
 	ld a, $00 ; $4c55
-	ldh [$ff97], a ; $4c57
+	ldh [hSramBank], a ; $4c57
 	ld [$4000], a ; $4c59
 	add sp, 6 ; $4c5c
 	ld a, $fd ; $4c5e
@@ -1938,7 +1938,7 @@ Label_03_4c6f:
 	or a, c ; $4c78
 	jr nz, Label_03_4c6f ; $4c79
 	ld a, $00 ; $4c7b
-	ldh [$ff97], a ; $4c7d
+	ldh [hSramBank], a ; $4c7d
 	ld [$4000], a ; $4c7f
 	pop bc ; $4c82
 	ld hl, $0006 ; $4c83
@@ -1970,7 +1970,7 @@ ReadSaveBlockTag:
 	ld a, $0a ; $4ca1
 	ld [$0000], a ; $4ca3
 	ld a, $00 ; $4ca6
-	ldh [$ff97], a ; $4ca8
+	ldh [hSramBank], a ; $4ca8
 	ld [$4000], a ; $4caa
 	ld a, b ; $4cad
 	call GetSaveBlockDirEntry ; $4cae
@@ -2007,7 +2007,7 @@ Label_03_4cc9:
 	ld a, $0a ; $4cd6
 	ld [$0000], a ; $4cd8
 	ld a, $00 ; $4cdb
-	ldh [$ff97], a ; $4cdd
+	ldh [hSramBank], a ; $4cdd
 	ld [$4000], a ; $4cdf
 	ld a, b ; $4ce2
 	call GetSaveBlockDirEntry ; $4ce3
@@ -2038,45 +2038,45 @@ Label_03_4cf7:
 	pop hl ; $4d06
 	ret ; $4d07
 SaveStorySlot:
-	ld a, [$c36c] ; $4d08
+	ld a, [wCurrentStorySlot] ; $4d08
 	cp a, $03 ; $4d0b
 	ret nc ; $4d0d
 	jr Label_03_4d19 ; $4d0e
 SaveStorySlotWithTimer:
-	ld a, [$c36c] ; $4d10
+	ld a, [wCurrentStorySlot] ; $4d10
 	cp a, $03 ; $4d13
 	ret nc ; $4d15
 	call SaveGameTimer ; $4d16
 Label_03_4d19:
-	ld a, [$c36c] ; $4d19
+	ld a, [wCurrentStorySlot] ; $4d19
 	add a, a ; $4d1c
 	ld b, a ; $4d1d
-	ld hl, $c800 ; $4d1e
+	ld hl, wSaveBlockBuffer ; $4d1e
 	ld de, $0000 ; $4d21
 	call WriteSaveBlock ; $4d24
 	or a, a ; $4d27
 	ret nz ; $4d28
-	ld a, [$c36c] ; $4d29
+	ld a, [wCurrentStorySlot] ; $4d29
 	add a, a ; $4d2c
 	ld b, a ; $4d2d
-	ld hl, $c800 ; $4d2e
+	ld hl, wSaveBlockBuffer ; $4d2e
 	call VerifySaveBlock ; $4d31
 	or a, a ; $4d34
 	ret nz ; $4d35
-	ld a, [$c36c] ; $4d36
+	ld a, [wCurrentStorySlot] ; $4d36
 	add a, a ; $4d39
 	add a, $1b ; $4d3a
 	ld b, a ; $4d3c
-	ld hl, $c800 ; $4d3d
+	ld hl, wSaveBlockBuffer ; $4d3d
 	ld de, wTextBuffer ; $4d40
 	call WriteSaveBlock ; $4d43
 	or a, a ; $4d46
 	ret nz ; $4d47
-	ld a, [$c36c] ; $4d48
+	ld a, [wCurrentStorySlot] ; $4d48
 	add a, a ; $4d4b
 	add a, $1b ; $4d4c
 	ld b, a ; $4d4e
-	ld hl, $c800 ; $4d4f
+	ld hl, wSaveBlockBuffer ; $4d4f
 	call VerifySaveBlock ; $4d52
 	or a, a ; $4d55
 	ret nz ; $4d56
@@ -2088,12 +2088,12 @@ CheckStorySlot:
 	push bc ; $4d64
 	push de ; $4d65
 	push hl ; $4d66
-	ld a, [$c36c] ; $4d67
+	ld a, [wCurrentStorySlot] ; $4d67
 	cp a, $03 ; $4d6a
 	jr nc, Label_03_4d78 ; $4d6c
 	add a, a ; $4d6e
 	ld b, a ; $4d6f
-	ld hl, $c800 ; $4d70
+	ld hl, wSaveBlockBuffer ; $4d70
 	call ReadSaveBlock ; $4d73
 	jr Label_03_4d7a ; $4d76
 Label_03_4d78:
@@ -2112,7 +2112,7 @@ TestSaveFlag:
 	ld a, $0a ; $4d8a
 	ld [$0000], a ; $4d8c
 	ld a, $00 ; $4d8f
-	ldh [$ff97], a ; $4d91
+	ldh [hSramBank], a ; $4d91
 	ld [$4000], a ; $4d93
 	ld hl, $4d7e ; $4d96
 	ld a, e ; $4d99
@@ -2145,7 +2145,7 @@ SetSaveFlag:
 	ld a, $0a ; $4db8
 	ld [$0000], a ; $4dba
 	ld a, $00 ; $4dbd
-	ldh [$ff97], a ; $4dbf
+	ldh [hSramBank], a ; $4dbf
 	ld [$4000], a ; $4dc1
 	ld hl, $4d7e ; $4dc4
 	ld a, e ; $4dc7
@@ -2176,7 +2176,7 @@ ClearSaveFlag:
 	ld a, $0a ; $4de6
 	ld [$0000], a ; $4de8
 	ld a, $00 ; $4deb
-	ldh [$ff97], a ; $4ded
+	ldh [hSramBank], a ; $4ded
 	ld [$4000], a ; $4def
 	ld hl, $4d7e ; $4df2
 	ld a, e ; $4df5
@@ -2210,7 +2210,7 @@ EraseStorySlotSaveData:
 	ld a, $0a ; $4e17
 	ld [$0000], a ; $4e19
 	call InitSaveHeader ; $4e1c
-	ld a, [$c36c] ; $4e1f
+	ld a, [wCurrentStorySlot] ; $4e1f
 	cp a, $03 ; $4e22
 	jp nc, Label_03_4e8a ; $4e24
 	add a, a ; $4e27
@@ -2231,7 +2231,7 @@ EraseStorySlotSaveData:
 	xor a, a ; $4e42
 	ld [$0000], a ; $4e43
 	call Func_03_5141 ; $4e46
-	ld a, [$c36c] ; $4e49
+	ld a, [wCurrentStorySlot] ; $4e49
 	or a, a ; $4e4c
 	jr z, Label_03_4e65 ; $4e4d
 	cp a, $01 ; $4e4f
@@ -2289,7 +2289,7 @@ ClearSaveBlockData:
 	push de ; $4e9e
 	push bc ; $4e9f
 	ld a, $00 ; $4ea0
-	ldh [$ff97], a ; $4ea2
+	ldh [hSramBank], a ; $4ea2
 	ld [$4000], a ; $4ea4
 	ld a, b ; $4ea7
 	call GetSaveBlockDirEntry ; $4ea8
@@ -2313,7 +2313,7 @@ ClearSaveBlockData:
 	ld e, l ; $4ec0
 	pop hl ; $4ec1
 	ld a, l ; $4ec2
-	ldh [$ff97], a ; $4ec3
+	ldh [hSramBank], a ; $4ec3
 	ld [$4000], a ; $4ec5
 	pop hl ; $4ec8
 	push hl ; $4ec9
@@ -2330,7 +2330,7 @@ Label_03_4ecb:
 	pop hl ; $4ed4
 	ld de, $0000 ; $4ed5
 	ld a, $00 ; $4ed8
-	ldh [$ff97], a ; $4eda
+	ldh [hSramBank], a ; $4eda
 	ld [$4000], a ; $4edc
 	pop bc ; $4edf
 	ld a, $01 ; $4ee0
@@ -2356,7 +2356,7 @@ Label_03_4eed:
 	push de ; $4ef8
 	push bc ; $4ef9
 	ld a, $00 ; $4efa
-	ldh [$ff97], a ; $4efc
+	ldh [hSramBank], a ; $4efc
 	ld [$4000], a ; $4efe
 	ld a, b ; $4f01
 	call GetSaveBlockDirEntry ; $4f02
@@ -2384,7 +2384,7 @@ Label_03_4eed:
 	ld e, l ; $4f20
 	pop hl ; $4f21
 	ld a, l ; $4f22
-	ldh [$ff97], a ; $4f23
+	ldh [hSramBank], a ; $4f23
 	ld [$4000], a ; $4f25
 	pop hl ; $4f28
 	push hl ; $4f29
@@ -2401,7 +2401,7 @@ Label_03_4f2b:
 	pop hl ; $4f34
 	ld de, $0000 ; $4f35
 	ld a, $00 ; $4f38
-	ldh [$ff97], a ; $4f3a
+	ldh [hSramBank], a ; $4f3a
 	ld [$4000], a ; $4f3c
 	pop bc ; $4f3f
 	ld a, $01 ; $4f40
@@ -2428,7 +2428,7 @@ ClearSaveBlockEntry:
 	push de ; $4f58
 	push bc ; $4f59
 	ld a, $00 ; $4f5a
-	ldh [$ff97], a ; $4f5c
+	ldh [hSramBank], a ; $4f5c
 	ld [$4000], a ; $4f5e
 	ld a, b ; $4f61
 	call GetSaveBlockDirEntry ; $4f62
@@ -2482,27 +2482,27 @@ Label_03_4fa1:
 WriteExhibitionSaveBlock:
 	ld a, $36 ; $4fae
 	ld b, a ; $4fb0
-	ld hl, $c800 ; $4fb1
+	ld hl, wSaveBlockBuffer ; $4fb1
 	ld de, $0000 ; $4fb4
 	call WriteSaveBlock ; $4fb7
 	or a, a ; $4fba
 	ret nz ; $4fbb
 	ld a, $36 ; $4fbc
 	ld b, a ; $4fbe
-	ld hl, $c800 ; $4fbf
+	ld hl, wSaveBlockBuffer ; $4fbf
 	call VerifySaveBlock ; $4fc2
 	or a, a ; $4fc5
 	ret nz ; $4fc6
 	ld a, $37 ; $4fc7
 	ld b, a ; $4fc9
-	ld hl, $c800 ; $4fca
+	ld hl, wSaveBlockBuffer ; $4fca
 	ld de, wTextBuffer ; $4fcd
 	call WriteSaveBlock ; $4fd0
 	or a, a ; $4fd3
 	ret nz ; $4fd4
 	ld a, $37 ; $4fd5
 	ld b, a ; $4fd7
-	ld hl, $c800 ; $4fd8
+	ld hl, wSaveBlockBuffer ; $4fd8
 	call VerifySaveBlock ; $4fdb
 	or a, a ; $4fde
 	ret nz ; $4fdf
@@ -2515,7 +2515,7 @@ ReadExhibitionSaveBlock:
 	push hl ; $4fec
 	ld a, $36 ; $4fed
 	ld b, a ; $4fef
-	ld hl, $c800 ; $4ff0
+	ld hl, wSaveBlockBuffer ; $4ff0
 	call ReadSaveBlock ; $4ff3
 	jr Label_03_4ffa ; $4ff6
 	db $3e ; $4ff8
@@ -2553,7 +2553,7 @@ ReadMinigameRecord:
 	ld a, b ; $5023
 	sub a, $02 ; $5024
 	jr nc, Label_03_502f ; $5026
-	ld a, [$c36c] ; $5028
+	ld a, [wCurrentStorySlot] ; $5028
 	cp a, $03 ; $502b
 	jr nc, Label_03_5068 ; $502d
 Label_03_502f:
@@ -2572,7 +2572,7 @@ Label_03_502f:
 	ld a, b ; $5040
 	sub a, $02 ; $5041
 	jr nc, Label_03_504a ; $5043
-	ld a, [$c36c] ; $5045
+	ld a, [wCurrentStorySlot] ; $5045
 	jr Label_03_504b ; $5048
 Label_03_504a:
 	xor a, a ; $504a
@@ -2616,7 +2616,7 @@ UpdateMinigameRecord:
 	ld a, b ; $507f
 	sub a, $02 ; $5080
 	jr nc, Label_03_508e ; $5082
-	ld a, [$c36c] ; $5084
+	ld a, [wCurrentStorySlot] ; $5084
 	cp a, $03 ; $5087
 	jp nc, Label_03_512c ; $5089
 	jr Label_03_5090 ; $508c
@@ -2660,7 +2660,7 @@ Label_03_5090:
 	ld a, b ; $50c0
 	sub a, $02 ; $50c1
 	jr nc, Label_03_50ca ; $50c3
-	ld a, [$c36c] ; $50c5
+	ld a, [wCurrentStorySlot] ; $50c5
 	jr Label_03_50cb ; $50c8
 Label_03_50ca:
 	xor a, a ; $50ca
@@ -2677,7 +2677,7 @@ Label_03_50cb:
 	ld a, b ; $50dc
 	sub a, $02 ; $50dd
 	jr nc, Label_03_50e6 ; $50df
-	ld a, [$c36c] ; $50e1
+	ld a, [wCurrentStorySlot] ; $50e1
 	jr Label_03_50e7 ; $50e4
 Label_03_50e6:
 	xor a, a ; $50e6
@@ -2693,7 +2693,7 @@ Label_03_50e7:
 	ld a, b ; $50f5
 	sub a, $02 ; $50f6
 	jr nc, Label_03_50ff ; $50f8
-	ld a, [$c36c] ; $50fa
+	ld a, [wCurrentStorySlot] ; $50fa
 	jr Label_03_5100 ; $50fd
 Label_03_50ff:
 	xor a, a ; $50ff
@@ -2710,7 +2710,7 @@ Label_03_5100:
 	ld a, b ; $5111
 	sub a, $02 ; $5112
 	jr nc, Label_03_511b ; $5114
-	ld a, [$c36c] ; $5116
+	ld a, [wCurrentStorySlot] ; $5116
 	jr Label_03_511c ; $5119
 Label_03_511b:
 	xor a, a ; $511b
@@ -2748,7 +2748,7 @@ Func_03_5141:
 	ldh a, [hWramBank] ; $5145
 	push af ; $5147
 	wram_bank $07 ; $5148
-	ld a, [$c36c] ; $514e
+	ld a, [wCurrentStorySlot] ; $514e
 	add a, $38 ; $5151
 	ld b, a ; $5153
 	ld hl, $d480 ; $5154
@@ -2765,7 +2765,7 @@ Func_03_5141:
 	ld a, e ; $516c
 	ld [hl+], a ; $516d
 	ld [hl], d ; $516e
-	ld a, [$c36c] ; $516f
+	ld a, [wCurrentStorySlot] ; $516f
 	add a, $38 ; $5172
 	ld b, a ; $5174
 	ld hl, $d480 ; $5175
@@ -2773,7 +2773,7 @@ Func_03_5141:
 	call WriteSaveBlock ; $517b
 	or a, a ; $517e
 	jr nz, Label_03_5190 ; $517f
-	ld a, [$c36c] ; $5181
+	ld a, [wCurrentStorySlot] ; $5181
 	add a, $3b ; $5184
 	ld b, a ; $5186
 	ld hl, $d480 ; $5187
@@ -2955,7 +2955,7 @@ Label_03_5270:
 GetCurrentSlotBlockId:
 	push af ; $529d
 	push hl ; $529e
-	ld a, [$c36c] ; $529f
+	ld a, [wCurrentStorySlot] ; $529f
 	and a, $03 ; $52a2
 	add a, $af ; $52a4
 	ld l, a ; $52a6
@@ -2995,7 +2995,7 @@ SaveSlotDebugEditor:
 	ld a, $03 ; $531d
 	ldh [hDebugStepMode], a ; $531f
 	xor a, a ; $5321
-	ld [$c36c], a ; $5322
+	ld [wCurrentStorySlot], a ; $5322
 	ld hl, $0000 ; $5325
 	ld a, l ; $5328
 	ldh [$ffb0], a ; $5329
@@ -3088,7 +3088,7 @@ Label_03_53b1:
 	ld l, a ; $53b7
 	ld de, $1011 ; $53b8
 	call PrintHexWord ; $53bb
-	ld a, [$c36c] ; $53be
+	ld a, [wCurrentStorySlot] ; $53be
 	ld de, $0011 ; $53c1
 	call PrintDecimalByte ; $53c4
 	pop de ; $53c7
@@ -3154,10 +3154,10 @@ Label_03_542a:
 Label_03_543a:
 	bit 1, a ; $543a
 	jr z, Label_03_546d ; $543c
-	ld a, [$c36c] ; $543e
+	ld a, [wCurrentStorySlot] ; $543e
 	push af ; $5441
 	ld a, $03 ; $5442
-	ld [$c36c], a ; $5444
+	ld [wCurrentStorySlot], a ; $5444
 	call ReadCurrentSlotBlock ; $5447
 	or a, a ; $544a
 	jr nz, Label_03_5466 ; $544b
@@ -3179,16 +3179,16 @@ Label_03_543a:
 	jp Label_03_5344 ; $5463
 Label_03_5466:
 	pop af ; $5466
-	ld [$c36c], a ; $5467
+	ld [wCurrentStorySlot], a ; $5467
 	jp Label_03_5344 ; $546a
 Label_03_546d:
 	bit 2, a ; $546d
 	jr z, Label_03_547f ; $546f
 	sound $5f ; $5471
-	ld a, [$c36c] ; $5473
+	ld a, [wCurrentStorySlot] ; $5473
 	inc a ; $5476
 	and a, $03 ; $5477
-	ld [$c36c], a ; $5479
+	ld [wCurrentStorySlot], a ; $5479
 	jp Label_03_5344 ; $547c
 Label_03_547f:
 	bit 3, a ; $547f

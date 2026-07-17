@@ -359,7 +359,7 @@ Label_3e_4232:
 	ld d, a ; $4238
 	ld a, [wMenuCursorY] ; $4239
 	ld e, a ; $423c
-	ldh a, [$ffc2] ; $423d
+	ldh a, [hLinkState] ; $423d
 	cp a, $02 ; $423f
 	jr z, Label_3e_424e ; $4241
 	cp a, $01 ; $4243
@@ -492,7 +492,7 @@ Label_3e_42fd:
 	ld d, a ; $4303
 	ld a, [$cb07] ; $4304
 	ld e, a ; $4307
-	ldh a, [$ffc2] ; $4308
+	ldh a, [hLinkState] ; $4308
 	cp a, $02 ; $430a
 	jr z, Label_3e_4319 ; $430c
 	cp a, $01 ; $430e
@@ -778,15 +778,15 @@ RunLinkMatchRulesMenu:
 	call EnableTimerInterrupt ; $44cb
 	sound $03 ; $44ce
 	xor a, a ; $44d0
-	ld [$cb0e], a ; $44d1
-	ld [$cb0f], a ; $44d4
-	ld [$cb10], a ; $44d7
+	ld [wMatchFormatDoubles], a ; $44d1
+	ld [wMatchFormatGames], a ; $44d4
+	ld [wMatchFormatSets], a ; $44d7
 	xor a, a ; $44da
 	ldh [$ffd8], a ; $44db
 	call ResetSerialState ; $44dd
 	call LoadMatchRulesMenuGraphics ; $44e0
 	wram_bank $03 ; $44e3
-	ld a, [$cb11] ; $44e9
+	ld a, [wMenuSlideDirection] ; $44e9
 	ld b, a ; $44ec
 	call OpenMatchRulesPanel ; $44ed
 	farcall FarPtr_InitMenuBgScroll ; $44f0
@@ -846,7 +846,7 @@ Label_3e_4551:
 	ld b, $01 ; $4564
 	call CloseMatchRulesPanel ; $4566
 	ld a, $01 ; $4569
-	ld [$cb11], a ; $456b
+	ld [wMenuSlideDirection], a ; $456b
 	ld c, $03 ; $456e
 	call GetMenuCursorIndex_3e ; $4570
 	ld hl, rIE ; $4573
@@ -864,7 +864,7 @@ Label_3e_4579:
 	ld b, $00 ; $4589
 	call CloseMatchRulesPanel ; $458b
 	ld a, $00 ; $458e
-	ld [$cb11], a ; $4590
+	ld [wMenuSlideDirection], a ; $4590
 	ld hl, rIE ; $4593
 	set 2, [hl] ; $4596
 	ld a, $ff ; $4598
@@ -873,20 +873,20 @@ DrawMatchRulesInitialState:
 	ld b, $01 ; $459b
 	ld c, $00 ; $459d
 	call SetMenuCursorFromIndex_3e ; $459f
-	ld a, [$cb0e] ; $45a2
+	ld a, [wMatchFormatDoubles] ; $45a2
 	ld b, a ; $45a5
 	ld c, $01 ; $45a6
 	call SetMatchRuleOptionAttrRect ; $45a8
 	ld b, $00 ; $45ab
 	call FlushMatchRuleRowAttrs ; $45ad
-	ld a, [$cb0f] ; $45b0
+	ld a, [wMatchFormatGames] ; $45b0
 	add a, $02 ; $45b3
 	ld b, a ; $45b5
 	ld c, $01 ; $45b6
 	call SetMatchRuleOptionAttrRect ; $45b8
 	ld b, $01 ; $45bb
 	call FlushMatchRuleRowAttrs ; $45bd
-	ld a, [$cb10] ; $45c0
+	ld a, [wMatchFormatSets] ; $45c0
 	add a, $04 ; $45c3
 	ld b, a ; $45c5
 	ld c, $01 ; $45c6
@@ -1109,9 +1109,9 @@ Label_3e_4769:
 	call GetMenuCursorIndex_3e ; $476d
 	or a, a ; $4770
 	jr nz, Label_3e_4787 ; $4771
-	ld a, [$cb0e] ; $4773
+	ld a, [wMatchFormatDoubles] ; $4773
 	xor a, $01 ; $4776
-	ld [$cb0e], a ; $4778
+	ld [wMatchFormatDoubles], a ; $4778
 	call DrawSinglesDoublesRow ; $477b
 	call DrawMatchRulesCaption ; $477e
 	ld b, $00 ; $4781
@@ -1120,16 +1120,16 @@ Label_3e_4769:
 Label_3e_4787:
 	cp a, $01 ; $4787
 	jr nz, Label_3e_479f ; $4789
-	ld a, [$cb0f] ; $478b
+	ld a, [wMatchFormatGames] ; $478b
 	xor a, $01 ; $478e
-	ld [$cb0f], a ; $4790
+	ld [wMatchFormatGames], a ; $4790
 	call DrawGameCountRow ; $4793
 	call DrawMatchRulesCaption ; $4796
 	ld b, $01 ; $4799
 	call FlushMatchRuleRowAttrs ; $479b
 	ret ; $479e
 Label_3e_479f:
-	ld a, [$cb10] ; $479f
+	ld a, [wMatchFormatSets] ; $479f
 	dec a ; $47a2
 	add a, a ; $47a3
 	jr nc, Label_3e_47ab ; $47a4
@@ -1142,7 +1142,7 @@ Label_3e_47ab:
 	jr c, Label_3e_47b1 ; $47ae
 	xor a, a ; $47b0
 Label_3e_47b1:
-	ld [$cb10], a ; $47b1
+	ld [wMatchFormatSets], a ; $47b1
 	call DrawSetCountRow ; $47b4
 	call DrawMatchRulesCaption ; $47b7
 	ld b, $02 ; $47ba
@@ -1154,9 +1154,9 @@ Label_3e_47c0:
 	call GetMenuCursorIndex_3e ; $47c4
 	or a, a ; $47c7
 	jr nz, Label_3e_47de ; $47c8
-	ld a, [$cb0e] ; $47ca
+	ld a, [wMatchFormatDoubles] ; $47ca
 	xor a, $01 ; $47cd
-	ld [$cb0e], a ; $47cf
+	ld [wMatchFormatDoubles], a ; $47cf
 	call DrawSinglesDoublesRow ; $47d2
 	call DrawMatchRulesCaption ; $47d5
 	ld b, $00 ; $47d8
@@ -1165,16 +1165,16 @@ Label_3e_47c0:
 Label_3e_47de:
 	cp a, $01 ; $47de
 	jr nz, Label_3e_47f6 ; $47e0
-	ld a, [$cb0f] ; $47e2
+	ld a, [wMatchFormatGames] ; $47e2
 	xor a, $01 ; $47e5
-	ld [$cb0f], a ; $47e7
+	ld [wMatchFormatGames], a ; $47e7
 	call DrawGameCountRow ; $47ea
 	call DrawMatchRulesCaption ; $47ed
 	ld b, $01 ; $47f0
 	call FlushMatchRuleRowAttrs ; $47f2
 	ret ; $47f5
 Label_3e_47f6:
-	ld a, [$cb10] ; $47f6
+	ld a, [wMatchFormatSets] ; $47f6
 	inc a ; $47f9
 	add a, a ; $47fa
 	jr nc, Label_3e_4802 ; $47fb
@@ -1187,7 +1187,7 @@ Label_3e_4802:
 	jr c, Label_3e_4808 ; $4805
 	xor a, a ; $4807
 Label_3e_4808:
-	ld [$cb10], a ; $4808
+	ld [wMatchFormatSets], a ; $4808
 	call DrawSetCountRow ; $480b
 	call DrawMatchRulesCaption ; $480e
 	ld b, $02 ; $4811
@@ -1200,7 +1200,7 @@ DrawSinglesDoublesRow:
 	ld b, $01 ; $481e
 	ld c, $00 ; $4820
 	call SetMatchRuleOptionAttrRect ; $4822
-	ld a, [$cb0e] ; $4825
+	ld a, [wMatchFormatDoubles] ; $4825
 	ld b, a ; $4828
 	ld c, $01 ; $4829
 	call SetMatchRuleOptionAttrRect ; $482b
@@ -1212,7 +1212,7 @@ DrawGameCountRow:
 	ld b, $03 ; $4836
 	ld c, $00 ; $4838
 	call SetMatchRuleOptionAttrRect ; $483a
-	ld a, [$cb0f] ; $483d
+	ld a, [wMatchFormatGames] ; $483d
 	add a, $02 ; $4840
 	ld b, a ; $4842
 	ld c, $01 ; $4843
@@ -1228,7 +1228,7 @@ DrawSetCountRow:
 	ld b, $06 ; $4857
 	ld c, $00 ; $4859
 	call SetMatchRuleOptionAttrRect ; $485b
-	ld a, [$cb10] ; $485e
+	ld a, [wMatchFormatSets] ; $485e
 	add a, $04 ; $4861
 	ld b, a ; $4863
 	ld c, $01 ; $4864
@@ -1315,16 +1315,16 @@ MatchRulesCursorSpriteTask:
 	call GetMenuCursorIndex_3e ; $48f3
 	or a, a ; $48f6
 	jr nz, Label_3e_48fe ; $48f7
-	ld a, [$cb0e] ; $48f9
+	ld a, [wMatchFormatDoubles] ; $48f9
 	jr Label_3e_490e ; $48fc
 Label_3e_48fe:
 	cp a, $01 ; $48fe
 	jr nz, Label_3e_4909 ; $4900
-	ld a, [$cb0f] ; $4902
+	ld a, [wMatchFormatGames] ; $4902
 	add a, $02 ; $4905
 	jr Label_3e_490e ; $4907
 Label_3e_4909:
-	ld a, [$cb10] ; $4909
+	ld a, [wMatchFormatSets] ; $4909
 	add a, $04 ; $490c
 Label_3e_490e:
 	push af ; $490e
@@ -1445,9 +1445,9 @@ LoadLinkMessageScreen:
 	farcall FarPtr_LoadCompressedTileBlock ; $4a23
 	wram_bank $05 ; $4a26
 	ld a, $03 ; $4a2c
-	ld [$c3b3], a ; $4a2e
+	ld [wShadowTilemapBank], a ; $4a2e
 	ld a, $00 ; $4a31
-	ld [$c3b6], a ; $4a33
+	ld [wWindowTileAttr], a ; $4a33
 	ld d, $00 ; $4a36
 	ld e, $0b ; $4a38
 	ld b, $14 ; $4a3a
@@ -1534,9 +1534,9 @@ LoadLinkErrorScreen:
 	farcall FarPtr_LoadCompressedTileBlock ; $4aed
 	wram_bank $05 ; $4af0
 	ld a, $03 ; $4af6
-	ld [$c3b3], a ; $4af8
+	ld [wShadowTilemapBank], a ; $4af8
 	ld a, $00 ; $4afb
-	ld [$c3b6], a ; $4afd
+	ld [wWindowTileAttr], a ; $4afd
 	ld d, $00 ; $4b00
 	ld e, $0d ; $4b02
 	ld b, $14 ; $4b04
@@ -1752,9 +1752,9 @@ LoadEraseDataConfirmScreen:
 	farcall FarPtr_LoadCompressedTileBlock ; $4cf6
 	wram_bank $05 ; $4cf9
 	ld a, $03 ; $4cff
-	ld [$c3b3], a ; $4d01
+	ld [wShadowTilemapBank], a ; $4d01
 	ld a, $00 ; $4d04
-	ld [$c3b6], a ; $4d06
+	ld [wWindowTileAttr], a ; $4d06
 	ld d, $00 ; $4d09
 	ld e, $0d ; $4d0b
 	ld b, $0f ; $4d0d
@@ -1929,7 +1929,7 @@ RunRacketShoesChoiceMenu:
 	res 2, [hl] ; $4ea5
 	call LoadRacketShoesChoiceGraphics ; $4ea7
 	wram_bank $03 ; $4eaa
-	ld a, [$cb11] ; $4eb0
+	ld a, [wMenuSlideDirection] ; $4eb0
 	ld b, a ; $4eb3
 	call OpenChoiceTabPanel ; $4eb4
 	farcall FarPtr_InitMenuBgScroll ; $4eb7
@@ -1971,7 +1971,7 @@ Label_3e_4eff:
 	ld b, $01 ; $4f09
 	call CloseChoiceTabPanel ; $4f0b
 	ld a, $01 ; $4f0e
-	ld [$cb11], a ; $4f10
+	ld [wMenuSlideDirection], a ; $4f10
 	ld c, $02 ; $4f13
 	call GetMenuCursorIndex_3e ; $4f15
 	ld [$cb24], a ; $4f18
@@ -1984,7 +1984,7 @@ Label_3e_4f1c:
 	ld b, $00 ; $4f26
 	call CloseChoiceTabPanel ; $4f28
 	ld a, $00 ; $4f2b
-	ld [$cb11], a ; $4f2d
+	ld [wMenuSlideDirection], a ; $4f2d
 	ld a, $ff ; $4f30
 	ret ; $4f32
 LoadRacketShoesChoiceGraphics:
@@ -2315,7 +2315,7 @@ RunPlayAlonePartnerMenu:
 	res 2, [hl] ; $5197
 	call LoadPlayAlonePartnerGraphics ; $5199
 	wram_bank $03 ; $519c
-	ld a, [$cb11] ; $51a2
+	ld a, [wMenuSlideDirection] ; $51a2
 	ld b, a ; $51a5
 	call OpenChoiceTabPanel ; $51a6
 	farcall FarPtr_InitMenuBgScroll ; $51a9
@@ -2357,7 +2357,7 @@ Label_3e_51ef:
 	ld b, $01 ; $51f9
 	call CloseChoiceTabPanel ; $51fb
 	ld a, $01 ; $51fe
-	ld [$cb11], a ; $5200
+	ld [wMenuSlideDirection], a ; $5200
 	ld c, $02 ; $5203
 	call GetMenuCursorIndex_3e ; $5205
 	clear_flag $05, 7 ; $5208
@@ -2374,7 +2374,7 @@ Label_3e_5212:
 	ld b, $00 ; $521c
 	call CloseChoiceTabPanel ; $521e
 	ld a, $00 ; $5221
-	ld [$cb11], a ; $5223
+	ld [wMenuSlideDirection], a ; $5223
 	ld a, $ff ; $5226
 	ret ; $5228
 LoadPlayAlonePartnerGraphics:
@@ -2611,9 +2611,9 @@ LoadEquipmentStatusWindows:
 	farcall FarPtr_LoadCompressedTileBlock ; $5400
 	wram_bank $05 ; $5403
 	ld a, $03 ; $5409
-	ld [$c3b3], a ; $540b
+	ld [wShadowTilemapBank], a ; $540b
 	ld a, $00 ; $540e
-	ld [$c3b6], a ; $5410
+	ld [wWindowTileAttr], a ; $5410
 	ld d, $00 ; $5413
 	ld e, $00 ; $5415
 	ld b, $14 ; $5417
@@ -3133,9 +3133,9 @@ CreateEquipListWindow:
 	ret ; $5837
 CreateEquipCaptionWindow:
 	ld a, $03 ; $5838
-	ld [$c3b3], a ; $583a
+	ld [wShadowTilemapBank], a ; $583a
 	ld a, $00 ; $583d
-	ld [$c3b6], a ; $583f
+	ld [wWindowTileAttr], a ; $583f
 	ld d, $00 ; $5842
 	ld e, $0d ; $5844
 	ld b, $14 ; $5846
@@ -3541,7 +3541,7 @@ RunCourtSelect4Menu:
 	farcall FarPtr_39_26 ; $5baa
 	call LoadCourtSelectHeader ; $5bad
 	wram_bank $03 ; $5bb0
-	ld a, [$cb11] ; $5bb6
+	ld a, [wMenuSlideDirection] ; $5bb6
 	ld b, a ; $5bb9
 	call OpenCourtSelect4Panel ; $5bba
 	ld a, [$cb1e] ; $5bbd
@@ -3579,7 +3579,7 @@ Label_3e_5bfb:
 	ld b, $01 ; $5c05
 	call CloseCourtSelect4Panel ; $5c07
 	ld a, $01 ; $5c0a
-	ld [$cb11], a ; $5c0c
+	ld [wMenuSlideDirection], a ; $5c0c
 	ld c, $02 ; $5c0f
 	call GetMenuCursorIndex_3e ; $5c11
 	push af ; $5c14
@@ -3596,7 +3596,7 @@ Label_3e_5c1e:
 	ld b, $00 ; $5c28
 	call CloseCourtSelect4Panel ; $5c2a
 	ld a, $00 ; $5c2d
-	ld [$cb11], a ; $5c2f
+	ld [wMenuSlideDirection], a ; $5c2f
 	call FadeOutAndResetMenuScreen ; $5c32
 	ld a, $ff ; $5c35
 	ret ; $5c37
@@ -3613,7 +3613,7 @@ RunLinkCourtSelect4Menu:
 	farcall FarPtr_39_26 ; $5c4d
 	call LoadCourtSelectHeader ; $5c50
 	wram_bank $03 ; $5c53
-	ld a, [$cb11] ; $5c59
+	ld a, [wMenuSlideDirection] ; $5c59
 	ld b, a ; $5c5c
 	call OpenCourtSelect4Panel ; $5c5d
 	ld a, [$cb1e] ; $5c60
@@ -3666,7 +3666,7 @@ Label_3e_5cb2:
 	call ResetSerialState ; $5cbf
 	call EnableTimerInterrupt ; $5cc2
 	ld a, $01 ; $5cc5
-	ld [$cb11], a ; $5cc7
+	ld [wMenuSlideDirection], a ; $5cc7
 	ld c, $02 ; $5cca
 	call GetMenuCursorIndex_3e ; $5ccc
 	push af ; $5ccf
@@ -3687,7 +3687,7 @@ Label_3e_5cd9:
 	ld b, $00 ; $5ce9
 	call CloseCourtSelect4Panel ; $5ceb
 	ld a, $00 ; $5cee
-	ld [$cb11], a ; $5cf0
+	ld [wMenuSlideDirection], a ; $5cf0
 	ld c, $10 ; $5cf3
 	call BeginFadeOut ; $5cf5
 	call WaitFadeEnd ; $5cf8
@@ -4328,7 +4328,7 @@ RunCourtSelect9Menu:
 	farcall FarPtr_39_26 ; $6530
 	call LoadCourtSelectHeader ; $6533
 	wram_bank $03 ; $6536
-	ld a, [$cb11] ; $653c
+	ld a, [wMenuSlideDirection] ; $653c
 	ld b, a ; $653f
 	call OpenCourtSelect9Panel ; $6540
 	xor a, a ; $6543
@@ -4375,7 +4375,7 @@ Label_3e_658f:
 	ld b, $01 ; $6599
 	call CloseCourtSelect9Panel ; $659b
 	ld a, $01 ; $659e
-	ld [$cb11], a ; $65a0
+	ld [wMenuSlideDirection], a ; $65a0
 	ld c, $03 ; $65a3
 	call GetMenuCursorIndex_3e ; $65a5
 	push af ; $65a8
@@ -4392,7 +4392,7 @@ Label_3e_65b2:
 	ld b, $00 ; $65bc
 	call CloseCourtSelect9Panel ; $65be
 	ld a, $00 ; $65c1
-	ld [$cb11], a ; $65c3
+	ld [wMenuSlideDirection], a ; $65c3
 	ld a, $ff ; $65c6
 	ret ; $65c8
 RunLinkCourtSelect9Menu:
@@ -4414,7 +4414,7 @@ RunLinkCourtSelect9Menu:
 	farcall FarPtr_39_26 ; $65ea
 	call LoadCourtSelectHeader ; $65ed
 	wram_bank $03 ; $65f0
-	ld a, [$cb11] ; $65f6
+	ld a, [wMenuSlideDirection] ; $65f6
 	ld b, a ; $65f9
 	call OpenCourtSelect9Panel ; $65fa
 	ld a, [$cb1e] ; $65fd
@@ -4476,7 +4476,7 @@ Label_3e_665f:
 	call ResetSerialState ; $666c
 	call EnableTimerInterrupt ; $666f
 	ld a, $01 ; $6672
-	ld [$cb11], a ; $6674
+	ld [wMenuSlideDirection], a ; $6674
 	ld c, $03 ; $6677
 	call GetMenuCursorIndex_3e ; $6679
 	push af ; $667c
@@ -4497,7 +4497,7 @@ Label_3e_6686:
 	ld b, $00 ; $6696
 	call CloseCourtSelect9Panel ; $6698
 	ld a, $00 ; $669b
-	ld [$cb11], a ; $669d
+	ld [wMenuSlideDirection], a ; $669d
 	ld c, $10 ; $66a0
 	call BeginFadeOut ; $66a2
 	call WaitFadeEnd ; $66a5

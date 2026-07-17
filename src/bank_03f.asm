@@ -2379,7 +2379,7 @@ Label_3f_529a:
 	push bc ; $52b8
 	push de ; $52b9
 	push hl ; $52ba
-	ld hl, $c3b7 ; $52bb
+	ld hl, wGlyphPenX ; $52bb
 	ld de, $1b00 ; $52be
 	ld a, e ; $52c1
 	ld [hl+], a ; $52c2
@@ -2433,16 +2433,16 @@ Label_3f_5302:
 	dec b ; $5302
 	jr nz, Label_3f_52fb ; $5303
 	pop bc ; $5305
-	ld a, [$c3b3] ; $5306
+	ld a, [wShadowTilemapBank] ; $5306
 	push af ; $5309
 	ld a, $03 ; $530a
-	ld [$c3b3], a ; $530c
+	ld [wShadowTilemapBank], a ; $530c
 	ld a, c ; $530f
 	ld c, $0c ; $5310
 	farcall FarPtr_RenderProportionalTextAt ; $5312
 	ld c, a ; $5315
 	pop af ; $5316
-	ld [$c3b3], a ; $5317
+	ld [wShadowTilemapBank], a ; $5317
 	pop de ; $531a
 	pop hl ; $531b
 	ld a, b ; $531c
@@ -2813,7 +2813,7 @@ Label_3f_564e:
 	push hl ; $564e
 	farcall FarPtr_ResetTextWindowsAndRestoreMap ; $564f
 	ld a, $05 ; $5652
-	ld [$c3b3], a ; $5654
+	ld [wShadowTilemapBank], a ; $5654
 	pop hl ; $5657
 	ld d, $00 ; $5658
 	ld e, $06 ; $565a

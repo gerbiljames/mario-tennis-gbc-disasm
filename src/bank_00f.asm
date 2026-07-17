@@ -1232,10 +1232,10 @@ Label_0f_4700:
 	ld a, $06 ; $4e94
 	ld [wStoryModeCurrentLocation], a ; $4e96
 	ld a, $0f ; $4e99
-	ld [$c295], a ; $4e9b
+	ld [wStoryModeEntryPoint], a ; $4e9b
 	ld a, $ff ; $4e9e
 	ld [$c294], a ; $4ea0
-	ld [$c2a1], a ; $4ea3
+	ld [wStoryModeExitLocationRequest], a ; $4ea3
 	ret ; $4ea6
 Label_0f_4ea7:
 	ld a, $02 ; $4ea7
@@ -1937,10 +1937,10 @@ Label_0f_4ea7:
 	ld a, $06 ; $556e
 	ld [wStoryModeCurrentLocation], a ; $5570
 	ld a, $0f ; $5573
-	ld [$c295], a ; $5575
+	ld [wStoryModeEntryPoint], a ; $5575
 	ld a, $ff ; $5578
 	ld [$c294], a ; $557a
-	ld [$c2a1], a ; $557d
+	ld [wStoryModeExitLocationRequest], a ; $557d
 	ret ; $5580
 	test_flag $05, 7 ; $5581
 	jr z, Label_0f_55a9 ; $5584
@@ -1972,7 +1972,7 @@ Label_0f_55a9:
 	farcall FarPtr_ScriptSetActorAnimation ; $55c0
 Label_0f_55c3:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
-	ld a, [$c295] ; $55c6
+	ld a, [wStoryModeEntryPoint] ; $55c6
 	cp a, $0a ; $55c9
 	jp z, Label_0f_56a8 ; $55cb
 	cp a, $0b ; $55ce
@@ -2559,7 +2559,7 @@ Func_0f_5b4d:
 	farcall FarPtr_MovePlayerToPosition ; $5b5a
 	farcall FarPtr_WaitPlayerMoveDone ; $5b5d
 	xor a, a ; $5b60
-	ld [$c2d5], a ; $5b61
+	ld [wStoryModeShowLocationName], a ; $5b61
 	ld c, $04 ; $5b64
 	call BeginFadeIn ; $5b66
 	call WaitFadeEnd ; $5b69
@@ -3109,13 +3109,13 @@ Label_0f_60fc:
 	ld d, $03 ; $6189
 	farcall FarPtr_ShowRankingBoard ; $618b
 	ld hl, wStoryModePlayersXPosition ; $618e
-	ld de, $c296 ; $6191
+	ld de, wStoryModeSpawnPosition ; $6191
 	ld bc, $0005 ; $6194
 	call CopyMemoryBC ; $6197
 	ld a, $ff ; $619a
-	ld [$c295], a ; $619c
+	ld [wStoryModeEntryPoint], a ; $619c
 	ld [$c294], a ; $619f
-	ld [$c2a1], a ; $61a2
+	ld [wStoryModeExitLocationRequest], a ; $61a2
 	ret ; $61a5
 	; $61a6, 17 bytes (records:8)
 ; 2 records x 8 bytes
@@ -3155,7 +3155,7 @@ Label_0f_60fc:
 	ld a, $01 ; $620f
 	ld hl, $6310 ; $6211
 	call RegisterFrameTask ; $6214
-	ld a, [$c295] ; $6217
+	ld a, [wStoryModeEntryPoint] ; $6217
 	cp a, $ff ; $621a
 	jr z, Label_0f_6221 ; $621c
 	clear_flag $17, 1 ; $621e
@@ -3243,7 +3243,7 @@ Label_0f_62c4:
 	farcall FarPtr_SetActorFacing ; $62e7
 	ret ; $62ea
 Label_0f_62eb:
-	ld a, [$c295] ; $62eb
+	ld a, [wStoryModeEntryPoint] ; $62eb
 	cp a, $0f ; $62ee
 	jr nz, Label_0f_62f6 ; $62f0
 	call IslandOpenArrivalCutscene ; $62f2
@@ -4339,10 +4339,10 @@ Label_0f_71bf:
 	ld a, $19 ; $71ca
 	ld [wStoryModeCurrentLocation], a ; $71cc
 	ld a, $0a ; $71cf
-	ld [$c295], a ; $71d1
+	ld [wStoryModeEntryPoint], a ; $71d1
 	ld a, $ff ; $71d4
 	ld [$c294], a ; $71d6
-	ld [$c2a1], a ; $71d9
+	ld [wStoryModeExitLocationRequest], a ; $71d9
 	farcall FarPtr_InitStoryMatchSettings ; $71dc
 	test_flag $07, 5 ; $71df
 	jr z, Label_0f_71f3 ; $71e2
@@ -4529,10 +4529,10 @@ Label_0f_735f:
 	ld a, $19 ; $736a
 	ld [wStoryModeCurrentLocation], a ; $736c
 	ld a, $0b ; $736f
-	ld [$c295], a ; $7371
+	ld [wStoryModeEntryPoint], a ; $7371
 	ld a, $ff ; $7374
 	ld [$c294], a ; $7376
-	ld [$c2a1], a ; $7379
+	ld [wStoryModeExitLocationRequest], a ; $7379
 	farcall FarPtr_InitStoryMatchSettings ; $737c
 	test_flag $06, 6 ; $737f
 	jp z, Label_0f_7394 ; $7382
@@ -4618,10 +4618,10 @@ Label_0f_746f:
 	ld a, $1b ; $746f
 	ld [wStoryModeCurrentLocation], a ; $7471
 	ld a, $08 ; $7474
-	ld [$c295], a ; $7476
+	ld [wStoryModeEntryPoint], a ; $7476
 	ld a, $ff ; $7479
 	ld [$c294], a ; $747b
-	ld [$c2a1], a ; $747e
+	ld [wStoryModeExitLocationRequest], a ; $747e
 	ld a, $01 ; $7481
 	ret ; $7483
 Label_0f_7484:
@@ -5245,7 +5245,7 @@ QueueShortText:
 	wram_bank ; $7aaa
 	ret ; $7aae
 Func_0f_7aaf:
-	ld a, [$c295] ; $7aaf
+	ld a, [wStoryModeEntryPoint] ; $7aaf
 	cp a, $ff ; $7ab2
 	jp z, Label_0f_7b15 ; $7ab4
 	test_flag $05, 7 ; $7ab7
@@ -5253,7 +5253,7 @@ Func_0f_7aaf:
 	ld a, $02 ; $7abc
 	ld bc, $00ff ; $7abe
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $7ac1
-	ld a, [$c295] ; $7ac4
+	ld a, [wStoryModeEntryPoint] ; $7ac4
 	dec a ; $7ac7
 	add a, $1b ; $7ac8
 	ld l, a ; $7aca
@@ -5267,7 +5267,7 @@ Func_0f_7aaf:
 	farcall FarPtr_MoveActorByAngle ; $7ad6
 	ld a, $02 ; $7ad9
 	farcall FarPtr_ScriptWaitActorMoveDone ; $7adb
-	ld a, [$c295] ; $7ade
+	ld a, [wStoryModeEntryPoint] ; $7ade
 	dec a ; $7ae1
 	add a, $16 ; $7ae2
 	ld l, a ; $7ae4
@@ -5285,7 +5285,7 @@ Label_0f_7af8:
 	ld a, $00 ; $7af8
 	ld bc, $0010 ; $7afa
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $7afd
-	ld a, [$c295] ; $7b00
+	ld a, [wStoryModeEntryPoint] ; $7b00
 	dec a ; $7b03
 	add a, $16 ; $7b04
 	ld l, a ; $7b06

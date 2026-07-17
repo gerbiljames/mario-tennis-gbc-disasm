@@ -215,9 +215,9 @@ InitMatchScene:
 	call ClearFrameTasks ; $4145
 	farcall FarPtr_ResetTextWindowState ; $4148
 	ld a, $02 ; $414b
-	ld [$c3b3], a ; $414d
+	ld [wShadowTilemapBank], a ; $414d
 	ld a, $00 ; $4150
-	ld [$c3b6], a ; $4152
+	ld [wWindowTileAttr], a ; $4152
 	call ResetMatchState ; $4155
 	call InitViewFlipPreference ; $4158
 	call ApplyMatchBgmPreference ; $415b
@@ -260,7 +260,7 @@ RunMatch:
 	xor a, a ; $41c8
 	ld [$c4c0], a ; $41c9
 	call RunMatchPlayLoop ; $41cc
-	ldh a, [$ffc2] ; $41cf
+	ldh a, [hLinkState] ; $41cf
 	ld [$c493], a ; $41d1
 	farcall FarPtr_EndLinkSession ; $41d4
 	ld a, [wGameMode] ; $41d7
@@ -828,11 +828,11 @@ SetBallSpinComponents:
 	ld [hl], b ; $45e3
 	ret ; $45e4
 UpdateBallAnglesAndSpeed:
-	ld hl, $c421 ; $45e5
+	ld hl, wBallVelocityX ; $45e5
 	ld a, [hl+] ; $45e8
 	ld d, [hl] ; $45e9
 	ld e, a ; $45ea
-	ld hl, $c424 ; $45eb
+	ld hl, wBallVelocityDepth ; $45eb
 	ld a, [hl+] ; $45ee
 	ld h, [hl] ; $45ef
 	ld l, a ; $45f0
@@ -841,11 +841,11 @@ UpdateBallAnglesAndSpeed:
 	ld a, c ; $45f7
 	ld [hl+], a ; $45f8
 	ld [hl], b ; $45f9
-	ld hl, $c424 ; $45fa
+	ld hl, wBallVelocityDepth ; $45fa
 	ld a, [hl+] ; $45fd
 	ld d, [hl] ; $45fe
 	ld e, a ; $45ff
-	ld hl, $c421 ; $4600
+	ld hl, wBallVelocityX ; $4600
 	ld a, [hl+] ; $4603
 	ld h, [hl] ; $4604
 	ld l, a ; $4605
@@ -858,7 +858,7 @@ UpdateBallAnglesAndSpeed:
 	ld a, e ; $4610
 	ld [hl+], a ; $4611
 	ld [hl], d ; $4612
-	ld hl, $c427 ; $4613
+	ld hl, wBallVelocityHeight ; $4613
 	ld a, [hl+] ; $4616
 	ld h, [hl] ; $4617
 	ld l, a ; $4618
@@ -867,7 +867,7 @@ UpdateBallAnglesAndSpeed:
 	ld a, c ; $461f
 	ld [hl+], a ; $4620
 	ld [hl], b ; $4621
-	ld hl, $c427 ; $4622
+	ld hl, wBallVelocityHeight ; $4622
 	ld a, [hl+] ; $4625
 	ld d, [hl] ; $4626
 	ld e, a ; $4627
@@ -2318,7 +2318,7 @@ Label_08_52b1:
 	ld [hl], d ; $52d8
 	ret ; $52d9
 StartLandingMarker:
-	ld a, [$c4a0] ; $52da
+	ld a, [wCurrentShotType] ; $52da
 	cp a, $0a ; $52dd
 	jr z, Label_08_52e8 ; $52df
 	ld a, [$c4c6] ; $52e1
@@ -2620,11 +2620,11 @@ DrawBallTouchCharEffect:
 	call QueueSprite ; $5502
 	ret ; $5505
 	ld bc, $0000 ; $5506
-	ld hl, $c452 ; $5509
+	ld hl, wBallTargetDepth ; $5509
 	ld a, [hl+] ; $550c
 	ld d, [hl] ; $550d
 	ld e, a ; $550e
-	ld hl, $c450 ; $550f
+	ld hl, wBallTargetX ; $550f
 	ld a, [hl+] ; $5512
 	ld h, [hl] ; $5513
 	ld l, a ; $5514
@@ -2712,7 +2712,7 @@ Label_08_55bd:
 	inc a ; $55c1
 	ld b, a ; $55c2
 	push bc ; $55c3
-	ld hl, $c421 ; $55c4
+	ld hl, wBallVelocityX ; $55c4
 	ld a, [hl+] ; $55c7
 	ld h, [hl] ; $55c8
 	ld l, a ; $55c9
@@ -2727,7 +2727,7 @@ Label_08_55bd:
 	call Add24ToMem24 ; $55da
 	pop bc ; $55dd
 	push bc ; $55de
-	ld hl, $c424 ; $55df
+	ld hl, wBallVelocityDepth ; $55df
 	ld a, [hl+] ; $55e2
 	ld h, [hl] ; $55e3
 	ld l, a ; $55e4
@@ -2741,7 +2741,7 @@ Label_08_55bd:
 	ld hl, $c423 ; $55f2
 	call Add24ToMem24 ; $55f5
 	pop bc ; $55f8
-	ld hl, $c427 ; $55f9
+	ld hl, wBallVelocityHeight ; $55f9
 	ld a, [hl+] ; $55fc
 	ld h, [hl] ; $55fd
 	ld l, a ; $55fe
@@ -2760,7 +2760,7 @@ ApplyBallSpin:
 	ld a, [hl+] ; $5616
 	or a, [hl] ; $5617
 	jp z, Label_08_56a9 ; $5618
-	ld hl, $c424 ; $561b
+	ld hl, wBallVelocityDepth ; $561b
 	ld a, [hl+] ; $561e
 	ld d, [hl] ; $561f
 	ld e, a ; $5620
@@ -2791,7 +2791,7 @@ ApplyBallSpin:
 Label_08_564c:
 	push af ; $564c
 	push de ; $564d
-	ld hl, $c421 ; $564e
+	ld hl, wBallVelocityX ; $564e
 	ld a, [hl+] ; $5651
 	ld d, [hl] ; $5652
 	ld e, a ; $5653
@@ -2853,7 +2853,7 @@ Label_08_56a9:
 	ld a, [hl+] ; $56ac
 	or a, [hl] ; $56ad
 	jp z, Label_08_5766 ; $56ae
-	ld hl, $c427 ; $56b1
+	ld hl, wBallVelocityHeight ; $56b1
 	ld a, [hl+] ; $56b4
 	ld d, [hl] ; $56b5
 	ld e, a ; $56b6
@@ -3047,7 +3047,7 @@ Label_08_57c6:
 	ld a, [hl] ; $57f4
 	cpl ; $57f5
 	ld [hl+], a ; $57f6
-	ld hl, $c427 ; $57f7
+	ld hl, wBallVelocityHeight ; $57f7
 	ld a, [hl+] ; $57fa
 	ld h, [hl] ; $57fb
 	ld l, a ; $57fc
@@ -3109,7 +3109,7 @@ HandleBallNetCrossing:
 	ld a, [hl] ; $5857
 	cpl ; $5858
 	ld [hl+], a ; $5859
-	ld hl, $c421 ; $585a
+	ld hl, wBallVelocityX ; $585a
 	ld a, [hl+] ; $585d
 	ld d, [hl] ; $585e
 	ld e, a ; $585f
@@ -3117,7 +3117,7 @@ HandleBallNetCrossing:
 	rr e ; $5862
 	sra d ; $5864
 	rr e ; $5866
-	ld hl, $c421 ; $5868
+	ld hl, wBallVelocityX ; $5868
 	ld a, e ; $586b
 	ld [hl+], a ; $586c
 	ld [hl], d ; $586d
@@ -3133,7 +3133,7 @@ HandleBallNetCrossing:
 	add hl, de ; $587f
 	bit 7, h ; $5880
 	jr nz, Label_08_58a3 ; $5882
-	ld hl, $c424 ; $5884
+	ld hl, wBallVelocityDepth ; $5884
 	ld a, [hl+] ; $5887
 	ld d, [hl] ; $5888
 	ld e, a ; $5889
@@ -3149,14 +3149,14 @@ HandleBallNetCrossing:
 	rr e ; $5896
 	sra d ; $5898
 	rr e ; $589a
-	ld hl, $c424 ; $589c
+	ld hl, wBallVelocityDepth ; $589c
 	ld a, e ; $589f
 	ld [hl+], a ; $58a0
 	ld [hl], d ; $58a1
 Label_08_58a2:
 	ret ; $58a2
 Label_08_58a3:
-	ld hl, $c424 ; $58a3
+	ld hl, wBallVelocityDepth ; $58a3
 	ld a, [hl+] ; $58a6
 	ld d, [hl] ; $58a7
 	ld e, a ; $58a8
@@ -3189,11 +3189,11 @@ Label_08_58bf:
 	sbc a, a ; $58cd
 	sub a, d ; $58ce
 	ld d, a ; $58cf
-	ld hl, $c427 ; $58d0
+	ld hl, wBallVelocityHeight ; $58d0
 	ld a, e ; $58d3
 	ld [hl+], a ; $58d4
 	ld [hl], d ; $58d5
-	ld hl, $c424 ; $58d6
+	ld hl, wBallVelocityDepth ; $58d6
 	ld a, [hl+] ; $58d9
 	ld d, [hl] ; $58da
 	ld e, a ; $58db
@@ -3209,7 +3209,7 @@ Label_08_58bf:
 	rr e ; $58e8
 	sra d ; $58ea
 	rr e ; $58ec
-	ld hl, $c424 ; $58ee
+	ld hl, wBallVelocityDepth ; $58ee
 	ld a, e ; $58f1
 	ld [hl+], a ; $58f2
 	ld [hl], d ; $58f3
@@ -3223,7 +3223,7 @@ Label_08_58f5:
 	ld a, e ; $58fe
 	ld [hl+], a ; $58ff
 	ld [hl], d ; $5900
-	ld hl, $c424 ; $5901
+	ld hl, wBallVelocityDepth ; $5901
 	ld a, [hl+] ; $5904
 	ld d, [hl] ; $5905
 	ld e, a ; $5906
@@ -3256,11 +3256,11 @@ Label_08_591d:
 	sbc a, a ; $592b
 	sub a, d ; $592c
 	ld d, a ; $592d
-	ld hl, $c427 ; $592e
+	ld hl, wBallVelocityHeight ; $592e
 	ld a, e ; $5931
 	ld [hl+], a ; $5932
 	ld [hl], d ; $5933
-	ld hl, $c424 ; $5934
+	ld hl, wBallVelocityDepth ; $5934
 	ld a, [hl+] ; $5937
 	ld d, [hl] ; $5938
 	ld e, a ; $5939
@@ -3268,7 +3268,7 @@ Label_08_591d:
 	rr e ; $593c
 	sra d ; $593e
 	rr e ; $5940
-	ld hl, $c424 ; $5942
+	ld hl, wBallVelocityDepth ; $5942
 	ld a, e ; $5945
 	ld [hl+], a ; $5946
 	ld [hl], d ; $5947
@@ -3804,7 +3804,7 @@ RecordReturnAceStat:
 	ld hl, wCharacter1ReturnAces ; $5c79
 	jp Label_08_5cb2 ; $5c7c
 RecordSmashAceStat:
-	ld a, [$c4a0] ; $5c7f
+	ld a, [wCurrentShotType] ; $5c7f
 	cp a, $09 ; $5c82
 	ret nz ; $5c84
 	ld a, $03 ; $5c85
@@ -3812,7 +3812,7 @@ RecordSmashAceStat:
 	ld hl, wCharacter1SmashAces ; $5c8a
 	jp Label_08_5cb2 ; $5c8d
 RecordLobWinnerStat:
-	ld a, [$c4a0] ; $5c90
+	ld a, [wCurrentShotType] ; $5c90
 	cp a, $0a ; $5c93
 	ret nz ; $5c95
 	ld a, $04 ; $5c96
@@ -3820,7 +3820,7 @@ RecordLobWinnerStat:
 	ld hl, wCharacter1LobShotWinners ; $5c9b
 	jp Label_08_5cb2 ; $5c9e
 RecordDropShotWinnerStat:
-	ld a, [$c4a0] ; $5ca1
+	ld a, [wCurrentShotType] ; $5ca1
 	cp a, $0b ; $5ca4
 	ret nz ; $5ca6
 	ld a, $05 ; $5ca7
@@ -6421,7 +6421,7 @@ Label_08_6f22:
 	res 5, [hl] ; $6f3e
 	ld a, $00 ; $6f40
 	call SetCharState ; $6f42
-	ld hl, $c424 ; $6f45
+	ld hl, wBallVelocityDepth ; $6f45
 	ld a, [hl+] ; $6f48
 	ld d, [hl] ; $6f49
 	ld e, a ; $6f4a
@@ -6444,7 +6444,7 @@ Label_08_6f22:
 	ld hl, $c404 ; $6f61
 	ld de, $c423 ; $6f64
 	call AddVel24ToPos32 ; $6f67
-	ld hl, $c424 ; $6f6a
+	ld hl, wBallVelocityDepth ; $6f6a
 	ld a, [hl+] ; $6f6d
 	ld d, [hl] ; $6f6e
 	ld e, a ; $6f6f
@@ -6456,27 +6456,27 @@ Label_08_6f22:
 	rr e ; $6f7a
 	sra d ; $6f7c
 	rr e ; $6f7e
-	ld hl, $c424 ; $6f80
+	ld hl, wBallVelocityDepth ; $6f80
 	ld a, e ; $6f83
 	ld [hl+], a ; $6f84
 	ld [hl], d ; $6f85
-	ld hl, $c421 ; $6f86
+	ld hl, wBallVelocityX ; $6f86
 	ld a, [hl+] ; $6f89
 	ld d, [hl] ; $6f8a
 	ld e, a ; $6f8b
 	sra d ; $6f8c
 	rr e ; $6f8e
-	ld hl, $c421 ; $6f90
+	ld hl, wBallVelocityX ; $6f90
 	ld a, e ; $6f93
 	ld [hl+], a ; $6f94
 	ld [hl], d ; $6f95
-	ld hl, $c427 ; $6f96
+	ld hl, wBallVelocityHeight ; $6f96
 	ld a, [hl+] ; $6f99
 	ld d, [hl] ; $6f9a
 	ld e, a ; $6f9b
 	sra d ; $6f9c
 	rr e ; $6f9e
-	ld hl, $c427 ; $6fa0
+	ld hl, wBallVelocityHeight ; $6fa0
 	ld a, e ; $6fa3
 	ld [hl+], a ; $6fa4
 	ld [hl], d ; $6fa5
@@ -6675,7 +6675,7 @@ Label_08_70ab:
 	db $00, $0a, $03, $04 ; 0x08
 	db $04, $04, $04, $04 ; 0x0c
 ComputeBallEtaToChar:
-	ld hl, $c424 ; $70c4
+	ld hl, wBallVelocityDepth ; $70c4
 	ld a, [hl+] ; $70c7
 	ld d, [hl] ; $70c8
 	ld e, a ; $70c9
@@ -7853,13 +7853,13 @@ ReadCharInput:
 	ldh a, [$ffd3] ; $782d
 	ld [$df1f], a ; $782f
 	ret ; $7832
-	ldh a, [$ffc2] ; $7833
+	ldh a, [hLinkState] ; $7833
 	cp a, $02 ; $7835
 	jr z, Label_08_784f ; $7837
 	cp a, $01 ; $7839
 	jr z, Label_08_784b ; $783b
 	jr ReadCharPadInput ; $783d
-	ldh a, [$ffc2] ; $783f
+	ldh a, [hLinkState] ; $783f
 	cp a, $02 ; $7841
 	jr z, Label_08_784b ; $7843
 	cp a, $01 ; $7845
@@ -8118,11 +8118,11 @@ Label_08_79d3:
 	call SetCharTargetMirrored ; $79d3
 	jp AiAdvancePhase ; $79d6
 AiIsIncomingDropOrShortShot:
-	ld a, [$c4a0] ; $79d9
+	ld a, [wCurrentShotType] ; $79d9
 	cp a, $0b ; $79dc
 	jr z, Label_08_79ef ; $79de
 AiIsIncomingDropShot:
-	ld a, [$c4a0] ; $79e0
+	ld a, [wCurrentShotType] ; $79e0
 	cp a, $0a ; $79e3
 	jr z, Label_08_79ef ; $79e5
 	ld a, [$c4c6] ; $79e7
@@ -8495,14 +8495,14 @@ OffsetFromBallLanding:
 	call VectorFromLengthAndAngle ; $7c5a
 	ld c, l ; $7c5d
 	ld b, h ; $7c5e
-	ld hl, $c452 ; $7c5f
+	ld hl, wBallTargetDepth ; $7c5f
 	ld a, [hl+] ; $7c62
 	ld h, [hl] ; $7c63
 	ld l, a ; $7c64
 	add hl, de ; $7c65
 	ld e, l ; $7c66
 	ld d, h ; $7c67
-	ld hl, $c450 ; $7c68
+	ld hl, wBallTargetX ; $7c68
 	ld a, [hl+] ; $7c6b
 	ld h, [hl] ; $7c6c
 	ld l, a ; $7c6d
@@ -8524,7 +8524,7 @@ SetCharTargetMirrored:
 	ld [$df55], a ; $7c82
 	ret ; $7c85
 PredictBallXAtDepth:
-	ld hl, $c43a ; $7c86
+	ld hl, wShotAimAngle ; $7c86
 	ld a, [hl+] ; $7c89
 	ld b, [hl] ; $7c8a
 	ld c, a ; $7c8b
@@ -8583,7 +8583,7 @@ Label_08_7ccc:
 	sub a, d ; $7cda
 	ld d, a ; $7cdb
 Label_08_7cdc:
-	ld hl, $c450 ; $7cdc
+	ld hl, wBallTargetX ; $7cdc
 	ld a, [hl+] ; $7cdf
 	ld h, [hl] ; $7ce0
 	ld l, a ; $7ce1
@@ -8742,7 +8742,7 @@ AiRecoverStateBaseliner:
 	dw AiReturnToPositionPhase ; $7e04 jumptable
 	dw Label_08_796c ; $7e06 jumptable
 Label_08_7e08:
-	ld hl, $c450 ; $7e08
+	ld hl, wBallTargetX ; $7e08
 	ld a, [hl+] ; $7e0b
 	ld h, [hl] ; $7e0c
 	ld l, a ; $7e0d

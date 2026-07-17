@@ -359,7 +359,7 @@ Label_17_4200:
 	ld d, a ; $4206
 	ld a, [wMenuCursorY] ; $4207
 	ld e, a ; $420a
-	ldh a, [$ffc2] ; $420b
+	ldh a, [hLinkState] ; $420b
 	cp a, $02 ; $420d
 	jr z, Label_17_421c ; $420f
 	cp a, $01 ; $4211
@@ -492,7 +492,7 @@ Label_17_42cb:
 	ld d, a ; $42d1
 	ld a, [$cb07] ; $42d2
 	ld e, a ; $42d5
-	ldh a, [$ffc2] ; $42d6
+	ldh a, [hLinkState] ; $42d6
 	cp a, $02 ; $42d8
 	jr z, Label_17_42e7 ; $42da
 	cp a, $01 ; $42dc
@@ -1370,9 +1370,9 @@ InitCourtDiagramTextWindow:
 	farcall FarPtr_LoadCompressedTileBlock ; $49a9
 	wram_bank $05 ; $49ac
 	ld a, $03 ; $49b2
-	ld [$c3b3], a ; $49b4
+	ld [wShadowTilemapBank], a ; $49b4
 	ld a, $00 ; $49b7
-	ld [$c3b6], a ; $49b9
+	ld [wWindowTileAttr], a ; $49b9
 	ld d, $00 ; $49bc
 	ld e, $0b ; $49be
 	ld b, $14 ; $49c0
@@ -5107,9 +5107,9 @@ LoadRulesScreen:
 	farcall FarPtr_InitTextWindows ; $7165
 	wram_bank $05 ; $7168
 	ld a, $03 ; $716e
-	ld [$c3b3], a ; $7170
+	ld [wShadowTilemapBank], a ; $7170
 	ld a, $00 ; $7173
-	ld [$c3b6], a ; $7175
+	ld [wWindowTileAttr], a ; $7175
 	pop af ; $7178
 	wram_bank ; $7179
 	farcall FarPtr_PrepareGlyphBuffer ; $717d
@@ -5127,8 +5127,8 @@ LoadRulesScreen:
 	ld de, $9000 ; $719d
 	farcall FarPtr_LoadCompressedTileBlock ; $71a0
 	ld a, $03 ; $71a3
-	ld [$c3b3], a ; $71a5
-	ld hl, $c3b4 ; $71a8
+	ld [wShadowTilemapBank], a ; $71a5
+	ld hl, wShadowTilemapPtr ; $71a8
 	ld de, $d000 ; $71ab
 	ld a, e ; $71ae
 	ld [hl+], a ; $71af

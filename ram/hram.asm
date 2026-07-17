@@ -50,7 +50,9 @@ hRomBank:: db
 
 ; [8-bit] Shadow of the current WRAM bank (last value written to rSVBK); match engine swaps banks 4-7 for per-character data
 hWramBank:: db
-	ds 1
+
+; [8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000)
+hSramBank:: db
 
 ; [8-bit] 1 = VBlank switches BG map to the debug console view
 hShowDebugConsole:: db
@@ -110,7 +112,21 @@ hBGColumnBlitDone:: db
 
 ; [8-bit] Nonzero = screen currently faded out
 hFadedOut:: db
-	ds 16
+	ds 3
+
+; [8-bit] Last byte received over the serial link (captured from rSB in the serial interrupt)
+hLinkRxByte:: db
+
+; [8-bit] Next byte to transmit over the serial link (copied to rSB)
+hLinkTxByte:: db
+
+; [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths
+hLinkState:: db
+	ds 5
+
+; [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8
+hLinkCounter:: db
+	ds 4
 
 ; [8-bit] Jingle sound id currently overriding BGM (0 = none)
 hActiveJingle:: db
