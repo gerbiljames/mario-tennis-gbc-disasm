@@ -3107,7 +3107,7 @@ Label_0f_60fc:
 	call ClearFrameTasks ; $6183
 	call GetIslandOpenRoundParams ; $6186
 	ld d, $03 ; $6189
-	farcall FarPtr_1b_1a ; $618b
+	farcall FarPtr_ShowRankingBoard ; $618b
 	ld hl, wStoryModePlayersXPosition ; $618e
 	ld de, $c296 ; $6191
 	ld bc, $0005 ; $6194
@@ -4592,7 +4592,7 @@ Func_0f_7434:
 	ld [$c323], a ; $7440
 	call ClearFrameTasks ; $7443
 	call GetIslandOpenRoundParams ; $7446
-	farcall FarPtr_1b_1a ; $7449
+	farcall FarPtr_ShowRankingBoard ; $7449
 	ret ; $744c
 QueueUpcomingRoundNameText:
 	ld a, [$c2b0] ; $744d

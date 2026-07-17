@@ -1135,7 +1135,7 @@ Label_1e_49c8:
 	pop af ; $49ea
 	farcall FarPtr_02_34 ; $49eb
 	ld de, $0f01 ; $49ee
-	farcall FarPtr_1b_02 ; $49f1
+	farcall FarPtr_LoadIndexedPaletteThunk ; $49f1
 	wram_bank $06 ; $49f4
 	ld a, [$d000] ; $49fa
 	or a, a ; $49fd
@@ -1193,7 +1193,7 @@ Label_1e_4a43:
 	pop af ; $4a65
 	farcall FarPtr_02_34 ; $4a66
 	ld de, $0e01 ; $4a69
-	farcall FarPtr_1b_02 ; $4a6c
+	farcall FarPtr_LoadIndexedPaletteThunk ; $4a6c
 	wram_bank $04 ; $4a6f
 	ret ; $4a75
 	wram_bank $04 ; $4a76
@@ -3876,7 +3876,7 @@ Func_1e_6fb2:
 	cp a, $02 ; $6fb5
 	ret nz ; $6fb7
 	call Func_1e_6fbf ; $6fb8
-	farcall FarPtr_1b_1a ; $6fbb
+	farcall FarPtr_ShowRankingBoard ; $6fbb
 	ret ; $6fbe
 Func_1e_6fbf:
 	ld a, [wCurrentMinigameStoryMatch] ; $6fbf

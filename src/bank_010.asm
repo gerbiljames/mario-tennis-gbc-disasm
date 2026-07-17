@@ -519,11 +519,11 @@ RunLessonSelectMenu:
 	ld b, $00 ; $44cf
 	ld c, $02 ; $44d1
 	ld d, $03 ; $44d3
-	farcall FarPtr_1b_1a ; $44d5
+	farcall FarPtr_ShowRankingBoard ; $44d5
 	ld b, $01 ; $44d8
 	ld c, $02 ; $44da
 	ld d, $03 ; $44dc
-	farcall FarPtr_1b_1a ; $44de
+	farcall FarPtr_ShowRankingBoard ; $44de
 	ldh a, [hWramBank] ; $44e1
 	push af ; $44e3
 	wram_bank $07 ; $44e4
@@ -648,7 +648,7 @@ Label_10_45cc:
 	ld b, $00 ; $4600
 	ld c, $01 ; $4602
 	ld d, $00 ; $4604
-	farcall FarPtr_1b_1a ; $4606
+	farcall FarPtr_ShowRankingBoard ; $4606
 	xor a, a ; $4609
 	ldh [hBGColumnBlitPending], a ; $460a
 	ldh [hBGRowBlitPending], a ; $460c
@@ -660,7 +660,7 @@ Label_10_45cc:
 	ld b, $00 ; $461b
 	ld c, $02 ; $461d
 	ld d, $00 ; $461f
-	farcall FarPtr_1b_1a ; $4621
+	farcall FarPtr_ShowRankingBoard ; $4621
 	xor a, a ; $4624
 	ldh [hBGColumnBlitPending], a ; $4625
 	ldh [hBGRowBlitPending], a ; $4627
@@ -672,7 +672,7 @@ Label_10_45cc:
 	ld b, $00 ; $4636
 	ld c, $03 ; $4638
 	ld d, $00 ; $463a
-	farcall FarPtr_1b_1a ; $463c
+	farcall FarPtr_ShowRankingBoard ; $463c
 	ret ; $463f
 RunMinigameSelectMenu:
 	ld hl, $0496 ; $4640
@@ -1577,7 +1577,7 @@ Label_10_5229:
 	ld [$c36c], a ; $522b
 	ld a, [$cb20] ; $522e
 	ld c, a ; $5231
-	farcall FarPtr_1b_28 ; $5232
+	farcall FarPtr_RunMinigameLevelSelect ; $5232
 	cp a, $ff ; $5235
 	jr nz, Label_10_5241 ; $5237
 	ld a, $00 ; $5239
@@ -1751,7 +1751,7 @@ Label_10_53d4:
 	cp a, $03 ; $53d4
 	jr nz, Label_10_543d ; $53d6
 Label_10_53d8:
-	farcall FarPtr_1b_2a ; $53d8
+	farcall FarPtr_RunSavedDataTypeSelect ; $53d8
 	cp a, $ff ; $53db
 	jr nz, Label_10_53e2 ; $53dd
 	jp Label_10_52d1 ; $53df
@@ -1778,7 +1778,7 @@ Label_10_5411:
 	ld c, $10 ; $5411
 	call BeginFadeOut ; $5413
 	call WaitFadeEnd ; $5416
-	farcall FarPtr_1b_2c ; $5419
+	farcall FarPtr_ShowMinigameDataScreen ; $5419
 	ld c, $10 ; $541c
 	call BeginFadeOut ; $541e
 	call WaitFadeEnd ; $5421

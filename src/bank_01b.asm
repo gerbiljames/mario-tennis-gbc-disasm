@@ -2,8 +2,8 @@ SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 
 FarPtr_DecompressCharMugshot:
 	dw DecompressCharMugshot ; $4000
-FarPtr_1b_02:
-	dw Func_1b_4e58 ; $4002
+FarPtr_LoadIndexedPaletteThunk:
+	dw LoadIndexedPaletteThunk ; $4002
 FarPtr_1b_04:
 	dw Func_1b_4e7f ; $4004
 FarPtr_Func_1b_4e80:
@@ -26,26 +26,26 @@ FarPtr_1b_16:
 	dw Func_1b_4e45 ; $4016
 FarPtr_CopyMugshotBufferToVram:
 	dw CopyMugshotBufferToVram ; $4018
-FarPtr_1b_1a:
-	dw Func_1b_4e81 ; $401a
+FarPtr_ShowRankingBoard:
+	dw ShowRankingBoard ; $401a
 FarPtr_UpdateCharSelectSelection:
 	dw UpdateCharSelectSelection ; $401c
 FarPtr_1b_1e:
 	dw Func_1b_6982 ; $401e
-FarPtr_1b_20:
-	dw Func_1b_6ade ; $4020
+FarPtr_ShowNoN64DataFoundScreen:
+	dw ShowNoN64DataFoundScreen ; $4020
 FarPtr_RunNewGameSetup:
 	dw RunNewGameSetup ; $4022
-FarPtr_1b_24:
-	dw Func_1b_62f8 ; $4024
-FarPtr_1b_26:
-	dw Func_1b_671c ; $4026
-FarPtr_1b_28:
-	dw Func_1b_6b9c ; $4028
-FarPtr_1b_2a:
-	dw Func_1b_715d ; $402a
-FarPtr_1b_2c:
-	dw Func_1b_73dd ; $402c
+FarPtr_RunDebugSaveDataFlow:
+	dw RunDebugSaveDataFlow ; $4024
+FarPtr_RunMinigameFlagsDebugScreen:
+	dw RunMinigameFlagsDebugScreen ; $4026
+FarPtr_RunMinigameLevelSelect:
+	dw RunMinigameLevelSelect ; $4028
+FarPtr_RunSavedDataTypeSelect:
+	dw RunSavedDataTypeSelect ; $402a
+FarPtr_ShowMinigameDataScreen:
+	dw ShowMinigameDataScreen ; $402c
 	; $402e, 159 bytes (records:2)
 	dw $78bd ; record 0
 	dw $7970 ; record 1
@@ -61,7 +61,7 @@ FarPtr_1b_2c:
 	dw $a3cd ; record 11
 	dw $0e40 ; record 12
 	dw $cd00 ; record 13
-	dw Func_1b_40cd ; record 14
+	dw ApplyArrowBobOffset ; record 14
 	dw $000e ; record 15
 	dw $0806 ; record 16
 	dw $51cd ; record 17
@@ -88,7 +88,7 @@ FarPtr_1b_2c:
 	dw $a3cd ; record 38
 	dw $0e40 ; record 39
 	dw $cd01 ; record 40
-	dw Func_1b_40cd ; record 41
+	dw ApplyArrowBobOffset ; record 41
 	dw $000e ; record 42
 	dw $6806 ; record 43
 	dw $51cd ; record 44
@@ -100,7 +100,7 @@ FarPtr_1b_2c:
 	dw $a3cd ; record 50
 	dw $0e40 ; record 51
 	dw $cd01 ; record 52
-	dw Func_1b_40cd ; record 53
+	dw ApplyArrowBobOffset ; record 53
 	dw $000e ; record 54
 	dw $4806 ; record 55
 	dw $51cd ; record 56
@@ -127,7 +127,7 @@ FarPtr_1b_2c:
 	dw $0000 ; record 77
 	dw $0000 ; record 78
 	db $00
-Func_1b_40cd:
+ApplyArrowBobOffset:
 	ldh a, [hVBlankCounter] ; $40cd
 	and a, $0f ; $40cf
 	ld hl, $40e7 ; $40d1
@@ -711,7 +711,7 @@ Label_1b_4426:
 	wram_bank ; $442b
 	ret ; $442f
 	INCBIN "data/bank_01b/d_4430.bin" ; $4430, 4 bytes
-Func_1b_4434:
+DrawNameWithDiacritics:
 	push af ; $4434
 	push bc ; $4435
 Label_1b_4436:
@@ -780,21 +780,21 @@ Label_1b_446a:
 	ld h, b ; $4482
 	pop de ; $4483
 	pop bc ; $4484
-	call Func_1b_448e ; $4485
+	call DrawAsciiDigitString ; $4485
 	add sp, 10 ; $4488
 	pop hl ; $448a
 	pop bc ; $448b
 	pop af ; $448c
 	ret ; $448d
-Func_1b_448e:
+DrawAsciiDigitString:
 	ld a, [hl+] ; $448e
 	and a, a ; $448f
 	jr z, Label_1b_4497 ; $4490
-	call Func_1b_4498 ; $4492
-	jr Func_1b_448e ; $4495
+	call DrawAsciiDigitChar ; $4492
+	jr DrawAsciiDigitString ; $4495
 Label_1b_4497:
 	ret ; $4497
-Func_1b_4498:
+DrawAsciiDigitChar:
 	push hl ; $4498
 	ld hl, $d240 ; $4499
 	sub a, $30 ; $449c
@@ -874,7 +874,7 @@ CopyMugshotBufferToVram:
 	ret ; $4e56
 Func_1b_4e57:
 	ret ; $4e57
-Func_1b_4e58:
+LoadIndexedPaletteThunk:
 	farcall FarPtr_LoadIndexedPalette_18 ; $4e58
 	ret ; $4e5b
 DecompressCharMugshot:
@@ -907,7 +907,7 @@ Func_1b_4e7f:
 	ret ; $4e7f
 Func_1b_4e80:
 	ret ; $4e80
-Func_1b_4e81:
+ShowRankingBoard:
 	wram_bank $03 ; $4e81
 	xor a, a ; $4e87
 	ld [$d85a], a ; $4e88
@@ -935,13 +935,13 @@ Label_1b_4eaf:
 	sound $2a ; $4eb3
 Label_1b_4eb5:
 	call DisableLCDSafely ; $4eb5
-	call Func_1b_4ef2 ; $4eb8
+	call BuildRankingBoardScreen ; $4eb8
 	call EnableLCD ; $4ebb
 	ld c, $04 ; $4ebe
 	call BeginFadeIn ; $4ec0
 	call WaitFadeEnd ; $4ec3
 	wram_bank $03 ; $4ec6
-	call Func_1b_4ff1 ; $4ecc
+	call DispatchRankingBoardAnim ; $4ecc
 	call WaitFramesCmd ; $4ecf
 	db $1e ; $4ed2 inline arg
 	call WaitForAOrBPress ; $4ed3
@@ -959,7 +959,7 @@ Label_1b_4ee8:
 	call WaitFadeEnd ; $4eeb
 	call ClearFrameTasks ; $4eee
 	ret ; $4ef1
-Func_1b_4ef2:
+BuildRankingBoardScreen:
 	xor a, a ; $4ef2
 	ldh [hScrollX], a ; $4ef3
 	ldh [hScrollY], a ; $4ef5
@@ -976,25 +976,25 @@ Func_1b_4ef2:
 	ld hl, $d803 ; $4f16
 	ld bc, $0053 ; $4f19
 	call ClearBytes ; $4f1c
-	call Func_1b_5c31 ; $4f1f
-	call Func_1b_5c3b ; $4f22
+	call ClearRankingMarkerSlots ; $4f1f
+	call LoadRankingMarkerCoords ; $4f22
 	ld a, [$d800] ; $4f25
 	or a, a ; $4f28
 	jr z, Label_1b_4f3e ; $4f29
 	ld c, $2a ; $4f2b
 	farcall FarPtr_LoadScreenAssetRecord ; $4f2d
 	wram_bank $03 ; $4f30
-	call Func_1b_55d1 ; $4f36
-	call Func_1b_5829 ; $4f39
+	call DrawDoublesRankingNames ; $4f36
+	call HighlightDoublesRankingRows ; $4f39
 	jr Label_1b_4f4f ; $4f3c
 Label_1b_4f3e:
 	ld c, $29 ; $4f3e
 	farcall FarPtr_LoadScreenAssetRecord ; $4f40
 	wram_bank $03 ; $4f43
-	call Func_1b_5511 ; $4f49
-	call Func_1b_5710 ; $4f4c
+	call DrawSinglesRankingNames ; $4f49
+	call HighlightSinglesRankingRows ; $4f4c
 Label_1b_4f4f:
-	call Func_1b_4fa6 ; $4f4f
+	call LoadRankingBoardTiles ; $4f4f
 	ld hl, $4f76 ; $4f52
 	ld de, $0806 ; $4f55
 	call LoadPaletteShadow ; $4f58
@@ -1018,7 +1018,7 @@ Label_1b_4f72:
 	dw $484c, $7c91, $7e38, $7fff ; pal 3: #621094 #8b20ff #c58bff #ffffff
 	dw $0260, $00ff, $27ff, $0000 ; pal 4: #009c00 #ff3900 #ffff4a #000000
 	dw $0260, $68af, $6e1f, $0000 ; pal 5: #009c00 #7b29d5 #ff83de #000000
-Func_1b_4fa6:
+LoadRankingBoardTiles:
 	ldh a, [hWramBank] ; $4fa6
 	push af ; $4fa8
 	wram_bank $01 ; $4fa9
@@ -1046,7 +1046,7 @@ Func_1b_4fa6:
 	pop af ; $4feb
 	wram_bank ; $4fec
 	ret ; $4ff0
-Func_1b_4ff1:
+DispatchRankingBoardAnim:
 	ld a, [$d85a] ; $4ff1
 	or a, a ; $4ff4
 	ret nz ; $4ff5
@@ -1143,7 +1143,7 @@ Label_1b_504a:
 	dw $cf8c ; record 26
 	dw $0e78 ; record 27
 	dw $cd00 ; record 28
-	dw Func_1b_5f51 ; record 29
+	dw GetRankingMarkerSlot ; record 29
 	dw $a511 ; record 30
 	dw $cd5b ; record 31
 	dw $5aa4 ; record 32
@@ -1154,14 +1154,14 @@ Label_1b_504a:
 	dw $89cd ; record 37
 	dw $065a ; record 38
 	dw $cd01 ; record 39
-	dw Func_1b_5750 ; record 40
+	dw HighlightRankingRow ; record 40
 	dw $c5cd ; record 41
 	dw $cd58 ; record 42
 	dw $2725 ; record 43
 	dw $cf1e ; record 44
 	dw $0e80 ; record 45
 	dw $cd03 ; record 46
-	dw Func_1b_5f51 ; record 47
+	dw GetRankingMarkerSlot ; record 47
 	dw $9411 ; record 48
 	dw $cd5b ; record 49
 	dw $5a6e ; record 50
@@ -1175,7 +1175,7 @@ Label_1b_504a:
 	dw $cf5a ; record 58
 	dw $0e78 ; record 59
 	dw $cd03 ; record 60
-	dw Func_1b_5f51 ; record 61
+	dw GetRankingMarkerSlot ; record 61
 	dw $a511 ; record 62
 	dw $cd5b ; record 63
 	dw $5aa4 ; record 64
@@ -1186,14 +1186,14 @@ Label_1b_504a:
 	dw $89cd ; record 69
 	dw $065a ; record 70
 	dw $cd02 ; record 71
-	dw Func_1b_5750 ; record 72
+	dw HighlightRankingRow ; record 72
 	dw $c5cd ; record 73
 	dw $cd58 ; record 74
 	dw $2725 ; record 75
 	dw $cf1e ; record 76
 	dw $0e80 ; record 77
 	dw $cd06 ; record 78
-	dw Func_1b_5f51 ; record 79
+	dw GetRankingMarkerSlot ; record 79
 	dw $9d11 ; record 80
 	dw $cd5b ; record 81
 	dw $5a6e ; record 82
@@ -1207,7 +1207,7 @@ Label_1b_504a:
 	dw $cf5a ; record 90
 	dw $0e78 ; record 91
 	dw $cd06 ; record 92
-	dw Func_1b_5f51 ; record 93
+	dw GetRankingMarkerSlot ; record 93
 	dw $a511 ; record 94
 	dw $cd5b ; record 95
 	dw $5aa4 ; record 96
@@ -1218,14 +1218,14 @@ Label_1b_504a:
 	dw $89cd ; record 101
 	dw $065a ; record 102
 	dw $cd03 ; record 103
-	dw Func_1b_5750 ; record 104
+	dw HighlightRankingRow ; record 104
 	dw $c5cd ; record 105
 	dw $cd58 ; record 106
 	dw $2725 ; record 107
 	dw $cf1e ; record 108
 	dw $0e80 ; record 109
 	dw $cd09 ; record 110
-	dw Func_1b_5f51 ; record 111
+	dw GetRankingMarkerSlot ; record 111
 	dw $9d11 ; record 112
 	dw $cd5b ; record 113
 	dw $5a6e ; record 114
@@ -1239,7 +1239,7 @@ Label_1b_504a:
 	dw $cf5a ; record 122
 	dw $0e78 ; record 123
 	dw $cd09 ; record 124
-	dw Func_1b_5f51 ; record 125
+	dw GetRankingMarkerSlot ; record 125
 	dw $a511 ; record 126
 	dw $cd5b ; record 127
 	dw $5aa4 ; record 128
@@ -1250,7 +1250,7 @@ Label_1b_504a:
 	dw $89cd ; record 133
 	dw $065a ; record 134
 	dw $cd04 ; record 135
-	dw Func_1b_5750 ; record 136
+	dw HighlightRankingRow ; record 136
 	dw $c5cd ; record 137
 	dw $cd58 ; record 138
 	dw $2725 ; record 139
@@ -1267,7 +1267,7 @@ Label_1b_504a:
 	dw $cf8c ; record 150
 	dw $0e78 ; record 151
 	dw $cd00 ; record 152
-	dw Func_1b_5f51 ; record 153
+	dw GetRankingMarkerSlot ; record 153
 	dw $bb11 ; record 154
 	dw $cd5b ; record 155
 	dw $5aa4 ; record 156
@@ -1278,14 +1278,14 @@ Label_1b_504a:
 	dw $89cd ; record 161
 	dw $065a ; record 162
 	dw $cd05 ; record 163
-	dw Func_1b_5750 ; record 164
+	dw HighlightRankingRow ; record 164
 	dw $c5cd ; record 165
 	dw $cd58 ; record 166
 	dw $2725 ; record 167
 	dw $cf1e ; record 168
 	dw $0e80 ; record 169
 	dw $cd05 ; record 170
-	dw Func_1b_5f51 ; record 171
+	dw GetRankingMarkerSlot ; record 171
 	dw $bb11 ; record 172
 	dw $cd5b ; record 173
 	dw $5a89 ; record 174
@@ -1301,7 +1301,7 @@ Label_1b_504a:
 	dw $cf78 ; record 184
 	dw $0e78 ; record 185
 	dw $cd05 ; record 186
-	dw Func_1b_5f51 ; record 187
+	dw GetRankingMarkerSlot ; record 187
 	dw $cc11 ; record 188
 	dw $cd5b ; record 189
 	dw $5abf ; record 190
@@ -1312,14 +1312,14 @@ Label_1b_504a:
 	dw $6ecd ; record 195
 	dw $065a ; record 196
 	dw $cd06 ; record 197
-	dw Func_1b_5750 ; record 198
+	dw HighlightRankingRow ; record 198
 	dw $c5cd ; record 199
 	dw $cd58 ; record 200
 	dw $2725 ; record 201
 	dw $cf1e ; record 202
 	dw $0e80 ; record 203
 	dw $cd08 ; record 204
-	dw Func_1b_5f51 ; record 205
+	dw GetRankingMarkerSlot ; record 205
 	dw $cd11 ; record 206
 	dw $cd5b ; record 207
 	dw $5a89 ; record 208
@@ -1335,7 +1335,7 @@ Label_1b_504a:
 	dw $cf5a ; record 218
 	dw $0e78 ; record 219
 	dw $cd08 ; record 220
-	dw Func_1b_5f51 ; record 221
+	dw GetRankingMarkerSlot ; record 221
 	dw $cc11 ; record 222
 	dw $cd5b ; record 223
 	dw $5abf ; record 224
@@ -1346,14 +1346,14 @@ Label_1b_504a:
 	dw $6ecd ; record 229
 	dw $065a ; record 230
 	dw $cd07 ; record 231
-	dw Func_1b_5750 ; record 232
+	dw HighlightRankingRow ; record 232
 	dw $c5cd ; record 233
 	dw $cd58 ; record 234
 	dw $2725 ; record 235
 	dw $cf1e ; record 236
 	dw $0e80 ; record 237
 	dw $cd0b ; record 238
-	dw Func_1b_5f51 ; record 239
+	dw GetRankingMarkerSlot ; record 239
 	dw $cd11 ; record 240
 	dw $cd5b ; record 241
 	dw $5a89 ; record 242
@@ -1369,7 +1369,7 @@ Label_1b_504a:
 	dw $cf5a ; record 252
 	dw $0e78 ; record 253
 	dw $cd0b ; record 254
-	dw Func_1b_5f51 ; record 255
+	dw GetRankingMarkerSlot ; record 255
 	dw $bc11 ; record 256
 	dw $cd5b ; record 257
 	dw $5a89 ; record 258
@@ -1380,7 +1380,7 @@ Label_1b_504a:
 	dw $a4cd ; record 263
 	dw $065a ; record 264
 	dw $cd08 ; record 265
-	dw Func_1b_5750 ; record 266
+	dw HighlightRankingRow ; record 266
 	dw $c5cd ; record 267
 	dw $cd58 ; record 268
 	dw $2725 ; record 269
@@ -1397,7 +1397,7 @@ Label_1b_504a:
 	dw $cf8c ; record 280
 	dw $0e78 ; record 281
 	dw $cd00 ; record 282
-	dw Func_1b_5f51 ; record 283
+	dw GetRankingMarkerSlot ; record 283
 	dw $e711 ; record 284
 	dw $cd5b ; record 285
 	dw $5aa4 ; record 286
@@ -1408,14 +1408,14 @@ Label_1b_504a:
 	dw $6ecd ; record 291
 	dw $065a ; record 292
 	dw $cd09 ; record 293
-	dw Func_1b_5750 ; record 294
+	dw HighlightRankingRow ; record 294
 	dw $c5cd ; record 295
 	dw $cd58 ; record 296
 	dw $2725 ; record 297
 	dw $cf5a ; record 298
 	dw $0e80 ; record 299
 	dw $cd08 ; record 300
-	dw Func_1b_5f51 ; record 301
+	dw GetRankingMarkerSlot ; record 301
 	dw $d411 ; record 302
 	dw $cd5b ; record 303
 	dw $5a6e ; record 304
@@ -1429,7 +1429,7 @@ Label_1b_504a:
 	dw $cf5a ; record 312
 	dw $0e78 ; record 313
 	dw $cd08 ; record 314
-	dw Func_1b_5f51 ; record 315
+	dw GetRankingMarkerSlot ; record 315
 	dw $9511 ; record 316
 	dw $cd5b ; record 317
 	dw $5a6e ; record 318
@@ -1440,7 +1440,7 @@ Label_1b_504a:
 	dw $bfcd ; record 323
 	dw $065a ; record 324
 	dw $cd0a ; record 325
-	dw Func_1b_5750 ; record 326
+	dw HighlightRankingRow ; record 326
 	dw $c5cd ; record 327
 	dw $cd58 ; record 328
 	dw $2725 ; record 329
@@ -1463,7 +1463,7 @@ Label_1b_504a:
 	dw $cf14 ; record 346
 	dw $0e80 ; record 347
 	dw $cd00 ; record 348
-	dw Func_1b_5f51 ; record 349
+	dw GetRankingMarkerSlot ; record 349
 	dw $9411 ; record 350
 	dw $cd5b ; record 351
 	dw $5a6e ; record 352
@@ -1488,7 +1488,7 @@ Label_1b_504a:
 	dw $2725 ; record 371
 	dw $0e04 ; record 372
 	dw $cd00 ; record 373
-	dw Func_1b_5f51 ; record 374
+	dw GetRankingMarkerSlot ; record 374
 	dw $c311 ; record 375
 	dw $cd5b ; record 376
 	dw $5a6e ; record 377
@@ -1500,7 +1500,7 @@ Label_1b_504a:
 	dw $cf14 ; record 383
 	dw $0e80 ; record 384
 	dw $cd00 ; record 385
-	dw Func_1b_5f51 ; record 386
+	dw GetRankingMarkerSlot ; record 386
 	dw $9411 ; record 387
 	dw $cd5b ; record 388
 	dw $5a6e ; record 389
@@ -1521,7 +1521,7 @@ Label_1b_504a:
 	dw $6ecd ; record 404
 	dw $0e5a ; record 405
 	dw $cd09 ; record 406
-	dw Func_1b_5f51 ; record 407
+	dw GetRankingMarkerSlot ; record 407
 	dw $e211 ; record 408
 	dw $cd5b ; record 409
 	dw $5a89 ; record 410
@@ -1535,7 +1535,7 @@ Label_1b_504a:
 	dw $cf8c ; record 418
 	dw $0e78 ; record 419
 	dw $cd00 ; record 420
-	dw Func_1b_5f51 ; record 421
+	dw GetRankingMarkerSlot ; record 421
 	dw $f711 ; record 422
 	dw $cd5b ; record 423
 	dw $5aa4 ; record 424
@@ -1546,14 +1546,14 @@ Label_1b_504a:
 	dw $89cd ; record 429
 	dw $065a ; record 430
 	dw $cd01 ; record 431
-	dw Func_1b_5846 ; record 432
+	dw HighlightDoublesRankingRow ; record 432
 	dw $c5cd ; record 433
 	dw $cd58 ; record 434
 	dw $2725 ; record 435
 	dw $cf5a ; record 436
 	dw $0e80 ; record 437
 	dw $cd03 ; record 438
-	dw Func_1b_5f51 ; record 439
+	dw GetRankingMarkerSlot ; record 439
 	dw $d411 ; record 440
 	dw $cd5b ; record 441
 	dw $5a6e ; record 442
@@ -1567,7 +1567,7 @@ Label_1b_504a:
 	dw $cf5a ; record 450
 	dw $0e78 ; record 451
 	dw $cd03 ; record 452
-	dw Func_1b_5f51 ; record 453
+	dw GetRankingMarkerSlot ; record 453
 	dw $f711 ; record 454
 	dw $cd5b ; record 455
 	dw $5aa4 ; record 456
@@ -1578,7 +1578,7 @@ Label_1b_504a:
 	dw $89cd ; record 461
 	dw $065a ; record 462
 	dw $cd02 ; record 463
-	dw Func_1b_5846 ; record 464
+	dw HighlightDoublesRankingRow ; record 464
 	dw $c5cd ; record 465
 	dw $cd58 ; record 466
 	dw $2725 ; record 467
@@ -1598,7 +1598,7 @@ Label_1b_504a:
 	dw $a4cd ; record 481
 	dw $0e5a ; record 482
 	dw $cd02 ; record 483
-	dw Func_1b_5f51 ; record 484
+	dw GetRankingMarkerSlot ; record 484
 	dw $cc11 ; record 485
 	dw $cd5b ; record 486
 	dw $5a89 ; record 487
@@ -1616,7 +1616,7 @@ Label_1b_504a:
 	dw $6ecd ; record 499
 	dw $0e5a ; record 500
 	dw $cd05 ; record 501
-	dw Func_1b_5f51 ; record 502
+	dw GetRankingMarkerSlot ; record 502
 	dw $cc11 ; record 503
 	dw $cd5b ; record 504
 	dw $5a89 ; record 505
@@ -1630,7 +1630,7 @@ Label_1b_504a:
 	dw $a4cd ; record 513
 	dw $0e5a ; record 514
 	dw $cd05 ; record 515
-	dw Func_1b_5f51 ; record 516
+	dw GetRankingMarkerSlot ; record 516
 	dw $bb11 ; record 517
 	dw $cd5b ; record 518
 	dw $5a89 ; record 519
@@ -1650,7 +1650,7 @@ Label_1b_504a:
 	dw $cf8c ; record 533
 	dw $0e78 ; record 534
 	dw $cd00 ; record 535
-	dw Func_1b_5f51 ; record 536
+	dw GetRankingMarkerSlot ; record 536
 	dw $9811 ; record 537
 	dw $cd5b ; record 538
 	dw $5a6e ; record 539
@@ -1661,7 +1661,7 @@ Label_1b_504a:
 	dw $89cd ; record 544
 	dw $065a ; record 545
 	dw $cd06 ; record 546
-	dw Func_1b_5846 ; record 547
+	dw HighlightDoublesRankingRow ; record 547
 	dw $c5cd ; record 548
 	dw $cd58 ; record 549
 	dw $2725 ; record 550
@@ -1673,7 +1673,7 @@ Label_1b_504a:
 	dw $cf1e ; record 556
 	dw $0e80 ; record 557
 	dw $cd00 ; record 558
-	dw Func_1b_5f51 ; record 559
+	dw GetRankingMarkerSlot ; record 559
 	dw $9411 ; record 560
 	dw $cd5b ; record 561
 	dw $5a6e ; record 562
@@ -1696,7 +1696,7 @@ Label_1b_504a:
 	dw $2725 ; record 579
 	dw $0e08 ; record 580
 	dw $cd00 ; record 581
-	dw Func_1b_5f51 ; record 582
+	dw GetRankingMarkerSlot ; record 582
 	dw $9411 ; record 583
 	dw $cd5b ; record 584
 	dw $5a6e ; record 585
@@ -1706,7 +1706,7 @@ Label_1b_504a:
 	dw $cf1e ; record 589
 	dw $0e80 ; record 590
 	dw $cd00 ; record 591
-	dw Func_1b_5f51 ; record 592
+	dw GetRankingMarkerSlot ; record 592
 	dw $9411 ; record 593
 	dw $cd5b ; record 594
 	dw $5a6e ; record 595
@@ -1725,16 +1725,16 @@ WaitForAOrBPress:
 	and a, $03 ; $550c
 	jr z, WaitForAOrBPress ; $550e
 	ret ; $5510
-Func_1b_5511:
-	call Func_1b_569c ; $5511
+DrawSinglesRankingNames:
+	call InitRankingNameRender ; $5511
 	wram_bank $03 ; $5514
-	call Func_1b_558e ; $551a
+	call ClearSinglesRankingNameRects ; $551a
 	ld hl, wStoryModeNameOfMainCharacter ; $551d
 	ld de, $d021 ; $5520
-	call Func_1b_56b3 ; $5523
+	call RenderPlayerNameFitted ; $5523
 	ld b, $01 ; $5526
 Label_1b_5528:
-	call Func_1b_5536 ; $5528
+	call DrawSinglesRankingEntry ; $5528
 	ld a, b ; $552b
 	inc a ; $552c
 	ld b, a ; $552d
@@ -1742,7 +1742,7 @@ Label_1b_5528:
 	jr nz, Label_1b_5528 ; $5530
 	farcall FarPtr_UploadGlyphBuffer ; $5532
 	ret ; $5535
-Func_1b_5536:
+DrawSinglesRankingEntry:
 	push af ; $5536
 	push bc ; $5537
 	push de ; $5538
@@ -1801,7 +1801,7 @@ Label_1b_5551:
 	dw $d14e ; record 21
 	dw $d1ae ; record 22
 	dw $d20e ; record 23
-Func_1b_558e:
+ClearSinglesRankingNameRects:
 	push af ; $558e
 	push bc ; $558f
 	push de ; $5590
@@ -1847,19 +1847,19 @@ Label_1b_55b4:
 	pop bc ; $55ce
 	pop af ; $55cf
 	ret ; $55d0
-Func_1b_55d1:
-	call Func_1b_569c ; $55d1
+DrawDoublesRankingNames:
+	call InitRankingNameRender ; $55d1
 	wram_bank $03 ; $55d4
-	call Func_1b_5659 ; $55da
+	call ClearDoublesRankingNameRects ; $55da
 	ld hl, wStoryModeNameOfMainCharacter ; $55dd
 	ld de, $d041 ; $55e0
-	call Func_1b_56b3 ; $55e3
+	call RenderPlayerNameFitted ; $55e3
 	ld hl, wStoryModeNameOfPartnerCharacter ; $55e6
 	ld de, $d081 ; $55e9
-	call Func_1b_56b3 ; $55ec
+	call RenderPlayerNameFitted ; $55ec
 	ld b, $02 ; $55ef
 Label_1b_55f1:
-	call Func_1b_55ff ; $55f1
+	call DrawDoublesRankingEntry ; $55f1
 	ld a, b ; $55f4
 	inc a ; $55f5
 	ld b, a ; $55f6
@@ -1867,7 +1867,7 @@ Label_1b_55f1:
 	jr nz, Label_1b_55f1 ; $55f9
 	farcall FarPtr_UploadGlyphBuffer ; $55fb
 	ret ; $55fe
-Func_1b_55ff:
+DrawDoublesRankingEntry:
 	push af ; $55ff
 	push bc ; $5600
 	push de ; $5601
@@ -1927,7 +1927,7 @@ Label_1b_561a:
 	dw $d12e ; record 22
 	dw $d18e ; record 23
 	dw $d1ce ; record 24
-Func_1b_5659:
+ClearDoublesRankingNameRects:
 	push af ; $5659
 	push bc ; $565a
 	push de ; $565b
@@ -1973,7 +1973,7 @@ Label_1b_567f:
 	pop bc ; $5699
 	pop af ; $569a
 	ret ; $569b
-Func_1b_569c:
+InitRankingNameRender:
 	farcall FarPtr_InitTextWindows ; $569c
 	wram_bank $05 ; $569f
 	ld a, $03 ; $56a5
@@ -1982,14 +1982,14 @@ Func_1b_569c:
 	ld [$c3b6], a ; $56ac
 	farcall FarPtr_PrepareGlyphBuffer ; $56af
 	ret ; $56b2
-Func_1b_56b3:
+RenderPlayerNameFitted:
 	call GetStringLength ; $56b3
 	cp a, $06 ; $56b6
 	jr nc, Label_1b_56be ; $56b8
-	call Func_1b_4434 ; $56ba
+	call DrawNameWithDiacritics ; $56ba
 	ret ; $56bd
 Label_1b_56be:
-	call Func_1b_56cf ; $56be
+	call RenderNameTwoRows ; $56be
 	ret ; $56c1
 GetStringLength:
 	push hl ; $56c2
@@ -2004,7 +2004,7 @@ Label_1b_56c6:
 	pop bc ; $56cc
 	pop hl ; $56cd
 	ret ; $56ce
-Func_1b_56cf:
+RenderNameTwoRows:
 	push hl ; $56cf
 	push de ; $56d0
 	push hl ; $56d1
@@ -2013,12 +2013,12 @@ Func_1b_56cf:
 	ld d, h ; $56d6
 	ld e, l ; $56d7
 	pop hl ; $56d8
-	call Func_1b_56e2 ; $56d9
+	call RenderNameTopRow ; $56d9
 	pop de ; $56dc
 	pop hl ; $56dd
-	call Func_1b_56fa ; $56de
+	call RenderNameBottomRow ; $56de
 	ret ; $56e1
-Func_1b_56e2:
+RenderNameTopRow:
 	push de ; $56e2
 	ld de, $d860 ; $56e3
 	ld bc, $0004 ; $56e6
@@ -2030,9 +2030,9 @@ Func_1b_56e2:
 	ld [de], a ; $56f1
 	pop de ; $56f2
 	ld hl, $d860 ; $56f3
-	call Func_1b_4434 ; $56f6
+	call DrawNameWithDiacritics ; $56f6
 	ret ; $56f9
-Func_1b_56fa:
+RenderNameBottomRow:
 	push de ; $56fa
 	ld bc, $0004 ; $56fb
 	add hl, bc ; $56fe
@@ -2041,9 +2041,9 @@ Func_1b_56fa:
 	call CopyMemoryBC ; $5705
 	pop de ; $5708
 	ld hl, $d860 ; $5709
-	call Func_1b_4434 ; $570c
+	call DrawNameWithDiacritics ; $570c
 	ret ; $570f
-Func_1b_5710:
+HighlightSinglesRankingRows:
 	ld a, [$d801] ; $5710
 	or a, a ; $5713
 	ret z ; $5714
@@ -2052,31 +2052,31 @@ Func_1b_5710:
 	cp a, $02 ; $5718
 	jr nz, Label_1b_5731 ; $571a
 	ld b, $01 ; $571c
-	call Func_1b_5750 ; $571e
+	call HighlightRankingRow ; $571e
 	ld b, $02 ; $5721
-	call Func_1b_5750 ; $5723
+	call HighlightRankingRow ; $5723
 	ld b, $03 ; $5726
-	call Func_1b_5750 ; $5728
+	call HighlightRankingRow ; $5728
 	ld b, $04 ; $572b
-	call Func_1b_5750 ; $572d
+	call HighlightRankingRow ; $572d
 	ret ; $5730
 Label_1b_5731:
 	cp a, $03 ; $5731
 	jr nz, Label_1b_574a ; $5733
 	ld b, $05 ; $5735
-	call Func_1b_5750 ; $5737
+	call HighlightRankingRow ; $5737
 	ld b, $06 ; $573a
-	call Func_1b_5750 ; $573c
+	call HighlightRankingRow ; $573c
 	ld b, $07 ; $573f
-	call Func_1b_5750 ; $5741
+	call HighlightRankingRow ; $5741
 	ld b, $08 ; $5744
-	call Func_1b_5750 ; $5746
+	call HighlightRankingRow ; $5746
 	ret ; $5749
 Label_1b_574a:
 	ld b, $0b ; $574a
-	call Func_1b_5750 ; $574c
+	call HighlightRankingRow ; $574c
 	ret ; $574f
-Func_1b_5750:
+HighlightRankingRow:
 	ld a, b ; $5750
 	or a, a ; $5751
 	ret z ; $5752
@@ -2193,7 +2193,7 @@ Label_1b_575c:
 	dw $0adf ; record 97
 	dw $c339 ; record 98
 	dw $5760 ; record 99
-Func_1b_5829:
+HighlightDoublesRankingRows:
 	ld a, [$d801] ; $5829
 	or a, a ; $582c
 	ret z ; $582d
@@ -2202,15 +2202,15 @@ Func_1b_5829:
 	cp a, $02 ; $5831
 	jr nz, Label_1b_5840 ; $5833
 	ld b, $01 ; $5835
-	call Func_1b_5846 ; $5837
+	call HighlightDoublesRankingRow ; $5837
 	ld b, $02 ; $583a
-	call Func_1b_5846 ; $583c
+	call HighlightDoublesRankingRow ; $583c
 	ret ; $583f
 Label_1b_5840:
 	ld b, $05 ; $5840
-	call Func_1b_5846 ; $5842
+	call HighlightDoublesRankingRow ; $5842
 	ret ; $5845
-Func_1b_5846:
+HighlightDoublesRankingRow:
 	ld a, b ; $5846
 	or a, a ; $5847
 	ret z ; $5848
@@ -2226,12 +2226,12 @@ Label_1b_5852:
 	ld l, a ; $5854
 	jp hl ; $5855
 	INCBIN "data/bank_01b/d_5856.bin" ; $5856, 987 bytes
-Func_1b_5c31:
+ClearRankingMarkerSlots:
 	ld hl, $d803 ; $5c31
 	ld bc, $0030 ; $5c34
 	call ClearBytes ; $5c37
 	ret ; $5c3a
-Func_1b_5c3b:
+LoadRankingMarkerCoords:
 	ld a, [$d800] ; $5c3b
 	or a, a ; $5c3e
 	jr nz, Label_1b_5c67 ; $5c3f
@@ -2252,7 +2252,7 @@ Label_1b_5c56:
 	ld h, [hl] ; $5c57
 	ld l, a ; $5c58
 	push hl ; $5c59
-	call Func_1b_5f51 ; $5c5a
+	call GetRankingMarkerSlot ; $5c5a
 	ld d, h ; $5c5d
 	ld e, l ; $5c5e
 	pop hl ; $5c5f
@@ -2277,7 +2277,7 @@ Label_1b_5c7c:
 	ld h, [hl] ; $5c7d
 	ld l, a ; $5c7e
 	push hl ; $5c7f
-	call Func_1b_5f51 ; $5c80
+	call GetRankingMarkerSlot ; $5c80
 	ld d, h ; $5c83
 	ld e, l ; $5c84
 	pop hl ; $5c85
@@ -2639,7 +2639,7 @@ Label_1b_5c7c:
 	dw $ffff ; record 351
 	dw $ffff ; record 352
 	dw $ffff ; record 353
-Func_1b_5f51:
+GetRankingMarkerSlot:
 	push af ; $5f51
 	ld a, c ; $5f52
 	add a, a ; $5f53
@@ -2684,31 +2684,31 @@ Label_1b_5f5d:
 	INCBIN "data/bank_01b/d_5f7c.bin" ; $5f7c, 70 bytes
 	ld h, h ; $5fc2
 	nop ; $5fc3
-Func_1b_5fc4:
+FindCharSelectRosterEntry:
 	ld hl, $ce40 ; $5fc4
 	farcall FarPtr_18_1c ; $5fc7
 	ret ; $5fca
-Func_1b_5fcb:
+GetCharSelectRosterField:
 	push hl ; $5fcb
-	call Func_1b_5fc4 ; $5fcc
+	call FindCharSelectRosterEntry ; $5fcc
 	ld a, [hl+] ; $5fcf
 	ld d, [hl] ; $5fd0
 	ld e, a ; $5fd1
 	pop hl ; $5fd2
 	ret ; $5fd3
-Func_1b_5fd4:
+LoadCharSelectNavGrid:
 	ld hl, $5f7c ; $5fd4
 	ld de, $c7a0 ; $5fd7
 	ld bc, $0020 ; $5fda
 	call CopyMemoryBC ; $5fdd
 	ret ; $5fe0
-Func_1b_5fe1:
+LoadCharSelectRosterTable:
 	ld hl, $5f9c ; $5fe1
 	ld de, $ce40 ; $5fe4
 	ld bc, $0080 ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
-Func_1b_5fee:
+LoadCharSelectScreenGfx:
 	ld hl, $5f7c ; $5fee
 	ld de, $d000 ; $5ff1
 	call DecompressData ; $5ff4
@@ -2730,7 +2730,7 @@ Func_1b_5fee:
 	ld de, $0008 ; $6022
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
-Func_1b_6029:
+StartCharSelectCursorTask:
 	farcall FarPtr_18_20 ; $6029
 	ld a, $0a ; $602c
 	ld hl, $6035 ; $602e
@@ -2738,7 +2738,7 @@ Func_1b_6029:
 	ret ; $6034
 	ld a, [$c781] ; $6035
 	ld de, $0004 ; $6038
-	call Func_1b_5fcb ; $603b
+	call GetCharSelectRosterField ; $603b
 	ld a, [$c781] ; $603e
 	farcall FarPtr_18_22 ; $6041
 	ret ; $6044
@@ -2772,11 +2772,11 @@ Label_1b_6075:
 	farcall FarPtr_LoadCharMugshotToBuffer ; $6081
 	ld a, [hl] ; $6084
 	ld de, $0002 ; $6085
-	call Func_1b_5fcb ; $6088
+	call GetCharSelectRosterField ; $6088
 	farcall FarPtr_CopyMugshotBufferToVram ; $608b
 	ld a, [hl] ; $608e
 	ld de, $0006 ; $608f
-	call Func_1b_5fcb ; $6092
+	call GetCharSelectRosterField ; $6092
 	ld a, [$d58b] ; $6095
 	add a, a ; $6098
 	add a, $c1 ; $6099
@@ -2806,8 +2806,8 @@ Label_1b_60ab:
 	call ClearFrameTasks ; $60c2
 	call AdvanceFrame ; $60c5
 	push de ; $60c8
-	call Func_1b_5fd4 ; $60c9
-	call Func_1b_5fe1 ; $60cc
+	call LoadCharSelectNavGrid ; $60c9
+	call LoadCharSelectRosterTable ; $60cc
 	pop de ; $60cf
 	ld a, d ; $60d0
 	ld [$c783], a ; $60d1
@@ -2820,7 +2820,7 @@ Label_1b_60ab:
 	call BeginFadeOut ; $60e3
 	call WaitFadeEnd ; $60e6
 	call DisableLCDSafely ; $60e9
-	call Func_1b_5fee ; $60ec
+	call LoadCharSelectScreenGfx ; $60ec
 	call DrawCharSelectMugshots ; $60ef
 	call DrawCharSelectPrompt ; $60f2
 	ld hl, $dc00 ; $60f5
@@ -2835,7 +2835,7 @@ Label_1b_60ab:
 	ld c, $20 ; $610e
 	call BeginFadeIn ; $6110
 	call WaitFadeEnd ; $6113
-	call Func_1b_6029 ; $6116
+	call StartCharSelectCursorTask ; $6116
 Label_1b_6119:
 	wram_bank $01 ; $6119
 	ldh a, [hInputRisingEdge] ; $611f
@@ -3096,15 +3096,15 @@ Label_1b_62ef:
 	call BeginFadeOut ; $62f1
 	call WaitFadeEnd ; $62f4
 	ret ; $62f7
-Func_1b_62f8:
+RunDebugSaveDataFlow:
 	sound $03 ; $62f8
 	ld a, $01 ; $62fa
 	cp a, $ff ; $62fc
-	jr z, Func_1b_62f8 ; $62fe
+	jr z, RunDebugSaveDataFlow ; $62fe
 	or a, a ; $6300
 	jr z, Label_1b_632d ; $6301
 	bit 7, a ; $6303
-	jr z, Func_1b_62f8 ; $6305
+	jr z, RunDebugSaveDataFlow ; $6305
 	and a, $3f ; $6307
 	ld [$c36c], a ; $6309
 	ld hl, $c800 ; $630c
@@ -3115,7 +3115,7 @@ Func_1b_62f8:
 	jp z, Label_1b_6399 ; $6317
 	call RunNewGameSetup ; $631a
 	cp a, $ff ; $631d
-	jp z, Func_1b_62f8 ; $631f
+	jp z, RunDebugSaveDataFlow ; $631f
 	ld a, $01 ; $6322
 	farcall FarPtr_EraseStorySlotSaveData ; $6324
 	farcall FarPtr_03_18 ; $6327
@@ -3124,7 +3124,7 @@ Label_1b_632d:
 	sound $03 ; $632d
 	call RunDebugSaveDataMenu ; $632f
 	cp a, $ff ; $6332
-	jr z, Func_1b_62f8 ; $6334
+	jr z, RunDebugSaveDataFlow ; $6334
 	cp a, $01 ; $6336
 	jp z, Label_1b_638e ; $6338
 	cp a, $ff ; $633b
@@ -3176,7 +3176,7 @@ Label_1b_6375:
 Label_1b_638e:
 	ld a, $00 ; $638e
 	ld [$cb1f], a ; $6390
-	farcall FarPtr_1b_26 ; $6393
+	farcall FarPtr_RunMinigameFlagsDebugScreen ; $6393
 	jp Label_1b_632d ; $6396
 Label_1b_6399:
 	call ClearFrameTasks ; $6399
@@ -3236,11 +3236,11 @@ Label_1b_63f4:
 	farcall FarPtr_03_18 ; $6400
 	jr Label_1b_6408 ; $6403
 Label_1b_6405:
-	farcall FarPtr_1b_20 ; $6405
+	farcall FarPtr_ShowNoN64DataFoundScreen ; $6405
 Label_1b_6408:
 	call RunLevelUpStatusTrophiesMenu ; $6408
 	cp a, $ff ; $640b
-	jp z, Func_1b_62f8 ; $640d
+	jp z, RunDebugSaveDataFlow ; $640d
 	cp a, $01 ; $6410
 	jr z, Label_1b_645a ; $6412
 	cp a, $02 ; $6414
@@ -3279,7 +3279,7 @@ Label_1b_645a:
 	farcall FarPtr_1d_00 ; $645a
 	jp Label_1b_6408 ; $645d
 Label_1b_6460:
-	call Func_1b_6b6f ; $6460
+	call ShowTrophiesPlaceholderScreen ; $6460
 	jp Label_1b_6408 ; $6463
 	ret ; $6466
 RunLevelUpStatusTrophiesMenu:
@@ -3330,7 +3330,7 @@ RunDebugSaveDataMenu:
 	call EnableLCD ; $64c8
 	farcall FarPtr_ResetTextWindowState ; $64cb
 	call ClearScreenMaps ; $64ce
-	call Func_1b_686f ; $64d1
+	call ReadUnlockFlagsSaveBlock ; $64d1
 	wram_bank $06 ; $64d4
 	ld hl, $d400 ; $64da
 	ld a, [hl+] ; $64dd
@@ -3370,12 +3370,12 @@ ClearScreenMaps:
 	ld a, $00 ; $6527
 	ld hl, $d000 ; $6529
 	ld bc, $0500 ; $652c
-	call Func_1b_6569 ; $652f
+	call FillBytesWithValue ; $652f
 	wram_bank $03 ; $6532
 	ld a, $20 ; $6538
 	ld hl, $d000 ; $653a
 	ld bc, $0500 ; $653d
-	call Func_1b_6569 ; $6540
+	call FillBytesWithValue ; $6540
 	wram_bank $03 ; $6543
 	ld hl, $d000 ; $6549
 	ld de, $9800 ; $654c
@@ -3388,7 +3388,7 @@ ClearScreenMaps:
 	call QueueVRAMCopy ; $6562
 	call EnableLCD ; $6565
 	ret ; $6568
-Func_1b_6569:
+FillBytesWithValue:
 	ld e, a ; $6569
 Label_1b_656a:
 	ld [hl], e ; $656a
@@ -3399,19 +3399,19 @@ Label_1b_656a:
 	jr nz, Label_1b_656a ; $656f
 	ret ; $6571
 	INCBIN "data/bank_01b/d_6572.bin" ; $6572, 120 bytes
-Func_1b_65ea:
+FindUnlockDebugRosterEntry:
 	ld hl, $ce40 ; $65ea
 	farcall FarPtr_18_1c ; $65ed
 	ret ; $65f0
-Func_1b_65f1:
+GetUnlockDebugRosterField:
 	push hl ; $65f1
-	call Func_1b_65ea ; $65f2
+	call FindUnlockDebugRosterEntry ; $65f2
 	ld a, [hl+] ; $65f5
 	ld d, [hl] ; $65f6
 	ld e, a ; $65f7
 	pop hl ; $65f8
 	ret ; $65f9
-Func_1b_65fa:
+LoadUnlockDebugNavGrid:
 	ld hl, $6572 ; $65fa
 	ld de, $c7a0 ; $65fd
 	ld bc, $0020 ; $6600
@@ -3419,7 +3419,7 @@ Func_1b_65fa:
 	ret ; $6606
 	db $0b ; $6607
 	db $0c ; $6608
-Func_1b_6609:
+LoadUnlockDebugRosterTable:
 	ld hl, $6592 ; $6609
 	ld de, $ce40 ; $660c
 	ld bc, $0080 ; $660f
@@ -3427,7 +3427,7 @@ Func_1b_6609:
 	ret ; $6615
 	db $08 ; $6616
 	db $09 ; $6617
-Func_1b_6618:
+LoadUnlockDebugScreenGfx:
 	ld hl, $d000 ; $6618
 	ld de, $b000 ; $661b
 	ld c, $80 ; $661e
@@ -3468,7 +3468,7 @@ Func_1b_664a:
 	ld bc, $0050 ; $667a
 	call QueueSpriteTemplate ; $667d
 	ret ; $6680
-Func_1b_6681:
+StartUnlockDebugCursorTask:
 	farcall FarPtr_18_20 ; $6681
 	ld a, $0a ; $6684
 	ld hl, $668d ; $6686
@@ -3476,15 +3476,15 @@ Func_1b_6681:
 	ret ; $668c
 	ld a, [$c781] ; $668d
 	ld de, $0004 ; $6690
-	call Func_1b_65f1 ; $6693
+	call GetUnlockDebugRosterField ; $6693
 	ld a, [$c781] ; $6696
 	farcall FarPtr_18_22 ; $6699
 	ret ; $669c
-Func_1b_669d:
+UpdateUnlockDebugSelectedMugshot:
 	ld a, [$c781] ; $669d
 	push af ; $66a0
 	ld de, $0006 ; $66a1
-	call Func_1b_65f1 ; $66a4
+	call GetUnlockDebugRosterField ; $66a4
 	pop af ; $66a7
 	ld b, a ; $66a8
 	push bc ; $66a9
@@ -3508,10 +3508,10 @@ Label_1b_66bb:
 	jr z, Label_1b_66d6 ; $66cb
 	ld a, [$c781] ; $66cd
 	ld de, $0006 ; $66d0
-	call Func_1b_65f1 ; $66d3
+	call GetUnlockDebugRosterField ; $66d3
 Label_1b_66d6:
 	ret ; $66d6
-Func_1b_66d7:
+DrawUnlockDebugMugshots:
 	farcall FarPtr_1b_0c ; $66d7
 	ld hl, $ce40 ; $66da
 Label_1b_66dd:
@@ -3523,11 +3523,11 @@ Label_1b_66dd:
 	farcall FarPtr_LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
 	ld de, $0002 ; $66ed
-	call Func_1b_65f1 ; $66f0
+	call GetUnlockDebugRosterField ; $66f0
 	farcall FarPtr_CopyMugshotBufferToVram ; $66f3
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
-	call Func_1b_65f1 ; $66fa
+	call GetUnlockDebugRosterField ; $66fa
 	ld a, [$d58c] ; $66fd
 	farcall FarPtr_SetMugshotAttrs ; $6700
 Label_1b_6703:
@@ -3545,25 +3545,25 @@ Label_1b_670a:
 	ld a, [$d58b] ; $6715
 	farcall FarPtr_1b_12 ; $6718
 	ret ; $671b
-Func_1b_671c:
+RunMinigameFlagsDebugScreen:
 	wram_bank $01 ; $671c
 	call ClearFrameTasks ; $6722
-	call Func_1b_65fa ; $6725
-	call Func_1b_6609 ; $6728
+	call LoadUnlockDebugNavGrid ; $6725
+	call LoadUnlockDebugRosterTable ; $6728
 	ld hl, $cb1f ; $672b
-	call Func_1b_67d8 ; $672e
+	call UpdateUnlockDebugSelection ; $672e
 	ld a, [$c781] ; $6731
 	ld [$c782], a ; $6734
-	call Func_1b_686f ; $6737
+	call ReadUnlockFlagsSaveBlock ; $6737
 	ld c, $20 ; $673a
 	call BeginFadeOut ; $673c
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
 	call Func_1b_664a ; $6745
-	call Func_1b_6681 ; $6748
-	call Func_1b_6618 ; $674b
-	call Func_1b_66d7 ; $674e
-	call Func_1b_669d ; $6751
+	call StartUnlockDebugCursorTask ; $6748
+	call LoadUnlockDebugScreenGfx ; $674b
+	call DrawUnlockDebugMugshots ; $674e
+	call UpdateUnlockDebugSelectedMugshot ; $6751
 	ld hl, $dc00 ; $6754
 	ld de, $b800 ; $6757
 	ld c, $24 ; $675a
@@ -3572,7 +3572,7 @@ Func_1b_671c:
 	ld de, $9800 ; $6762
 	ld c, $24 ; $6765
 	call QueueVRAMCopy ; $6767
-	call Func_1b_68d6 ; $676a
+	call LoadUnlockDebugCursorGfx ; $676a
 	call EnableLCD ; $676d
 	ld c, $20 ; $6770
 	call BeginFadeIn ; $6772
@@ -3611,10 +3611,10 @@ Label_1b_67af:
 	ldh a, [hInputRisingEdge] ; $67af
 	and a, $08 ; $67b1
 	jr z, Label_1b_67b8 ; $67b3
-	call Func_1b_68a4 ; $67b5
+	call ToggleSelectedUnlockFlag ; $67b5
 Label_1b_67b8:
-	call Func_1b_67f4 ; $67b8
-	call Func_1b_67d8 ; $67bb
+	call MoveUnlockDebugCursor ; $67b8
+	call UpdateUnlockDebugSelection ; $67bb
 	ld a, [$c781] ; $67be
 	call AdvanceFrame ; $67c1
 	jr Label_1b_6778 ; $67c4
@@ -3622,11 +3622,11 @@ Label_1b_67c6:
 	ld c, $08 ; $67c6
 	call BeginFadeOut ; $67c8
 	call WaitFadeEnd ; $67cb
-	call Func_1b_688a ; $67ce
+	call WriteUnlockFlagsSaveBlock ; $67ce
 	call AdvanceFrame ; $67d1
 	call AdvanceFrame ; $67d4
 	ret ; $67d7
-Func_1b_67d8:
+UpdateUnlockDebugSelection:
 	ld a, [$c781] ; $67d8
 	ld [$c782], a ; $67db
 	ld a, [$c784] ; $67de
@@ -3643,7 +3643,7 @@ Func_1b_67d8:
 	ld a, [hl] ; $67ef
 	ld [$c781], a ; $67f0
 	ret ; $67f3
-Func_1b_67f4:
+MoveUnlockDebugCursor:
 	ldh a, [hInputPressed] ; $67f4
 	ld b, a ; $67f6
 	and a, $f0 ; $67f7
@@ -3654,7 +3654,7 @@ Func_1b_67f4:
 	ld a, [$c784] ; $6801
 	ld e, a ; $6804
 	ld hl, $c7a0 ; $6805
-	call Func_1b_6827 ; $6808
+	call StepUnlockDebugCursor ; $6808
 	ld b, a ; $680b
 	push bc ; $680c
 	farcall FarPtr_CheckUnlockFlag ; $680d
@@ -3673,7 +3673,7 @@ Label_1b_681e:
 	ld [$c784], a ; $6823
 Label_1b_6826:
 	ret ; $6826
-Func_1b_6827:
+StepUnlockDebugCursor:
 	bit 5, b ; $6827
 	jr z, Label_1b_682e ; $6829
 	dec d ; $682b
@@ -3733,7 +3733,7 @@ Label_1b_686c:
 	ld a, [hl] ; $686c
 	pop hl ; $686d
 	ret ; $686e
-Func_1b_686f:
+ReadUnlockFlagsSaveBlock:
 	push bc ; $686f
 	ldh a, [hWramBank] ; $6870
 	push af ; $6872
@@ -3747,7 +3747,7 @@ Func_1b_686f:
 	ld a, b ; $6887
 	pop bc ; $6888
 	ret ; $6889
-Func_1b_688a:
+WriteUnlockFlagsSaveBlock:
 	ldh a, [hWramBank] ; $688a
 	push af ; $688c
 	wram_bank $06 ; $688d
@@ -3758,7 +3758,7 @@ Func_1b_688a:
 	pop af ; $689e
 	wram_bank ; $689f
 	ret ; $68a3
-Func_1b_68a4:
+ToggleSelectedUnlockFlag:
 	ldh a, [hWramBank] ; $68a4
 	push af ; $68a6
 	wram_bank $06 ; $68a7
@@ -3786,7 +3786,7 @@ Label_1b_68ce:
 	pop af ; $68d0
 	wram_bank ; $68d1
 	ret ; $68d5
-Func_1b_68d6:
+LoadUnlockDebugCursorGfx:
 	ldh a, [hWramBank] ; $68d6
 	push af ; $68d8
 	wram_bank $01 ; $68d9
@@ -3865,7 +3865,7 @@ Label_1b_6a03:
 	ld hl, $ca00 ; $6a0f
 	farcall FarPtr_PushTextArgString ; $6a12
 	ld de, $d9c1 ; $6a15
-	call Func_1b_6aae ; $6a18
+	call CopyMainCharNameWithDiacritics ; $6a18
 	ld hl, $046a ; $6a1b
 	farcall FarPtr_RenderProportionalTextAt32 ; $6a1e
 	farcall FarPtr_18_40 ; $6a21
@@ -3928,7 +3928,7 @@ Func_1b_6aa1:
 	ret ; $6aac
 Func_1b_6aad:
 	ret ; $6aad
-Func_1b_6aae:
+CopyMainCharNameWithDiacritics:
 	push de ; $6aae
 	ld hl, wStoryModeNameOfMainCharacter ; $6aaf
 	pop de ; $6ab2
@@ -3965,7 +3965,7 @@ Label_1b_6ad1:
 	jr Label_1b_6ab3 ; $6adb
 Label_1b_6add:
 	ret ; $6add
-Func_1b_6ade:
+ShowNoN64DataFoundScreen:
 	wram_bank $01 ; $6ade
 	ld c, $20 ; $6ae4
 	call BeginFadeOut ; $6ae6
@@ -3973,26 +3973,26 @@ Func_1b_6ade:
 	call DisableLCDSafely ; $6aec
 	ld a, $20 ; $6aef
 	ld hl, $d862 ; $6af1
-	call Func_1b_6b5d ; $6af4
+	call FillTilemapRow17 ; $6af4
 	ld hl, $d882 ; $6af7
-	call Func_1b_6b5d ; $6afa
+	call FillTilemapRow17 ; $6afa
 	ld hl, $d8a2 ; $6afd
-	call Func_1b_6b5d ; $6b00
+	call FillTilemapRow17 ; $6b00
 	ld hl, $d8c2 ; $6b03
-	call Func_1b_6b5d ; $6b06
+	call FillTilemapRow17 ; $6b06
 	ld hl, $d8e2 ; $6b09
-	call Func_1b_6b5d ; $6b0c
+	call FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
 	ld hl, $dc62 ; $6b11
-	call Func_1b_6b5d ; $6b14
+	call FillTilemapRow17 ; $6b14
 	ld hl, $dc82 ; $6b17
-	call Func_1b_6b5d ; $6b1a
+	call FillTilemapRow17 ; $6b1a
 	ld hl, $dca2 ; $6b1d
-	call Func_1b_6b5d ; $6b20
+	call FillTilemapRow17 ; $6b20
 	ld hl, $dcc2 ; $6b23
-	call Func_1b_6b5d ; $6b26
+	call FillTilemapRow17 ; $6b26
 	ld hl, $dce2 ; $6b29
-	call Func_1b_6b5d ; $6b2c
+	call FillTilemapRow17 ; $6b2c
 	ld hl, $047b ; $6b2f
 	ld de, $d883 ; $6b32
 	farcall FarPtr_RenderProportionalTextAt32 ; $6b35
@@ -4013,7 +4013,7 @@ Label_1b_6b4f:
 Label_1b_6b5a:
 	sound $5f ; $6b5a
 	ret ; $6b5c
-Func_1b_6b5d:
+FillTilemapRow17:
 	ld [hl+], a ; $6b5d
 	ld [hl+], a ; $6b5e
 	ld [hl+], a ; $6b5f
@@ -4032,7 +4032,7 @@ Func_1b_6b5d:
 	ld [hl+], a ; $6b6c
 	ld [hl+], a ; $6b6d
 	ret ; $6b6e
-Func_1b_6b6f:
+ShowTrophiesPlaceholderScreen:
 	wram_bank $01 ; $6b6f
 	ld c, $20 ; $6b75
 	call BeginFadeOut ; $6b77
@@ -4052,7 +4052,7 @@ Label_1b_6b8e:
 Label_1b_6b99:
 	sound $5f ; $6b99
 	ret ; $6b9b
-Func_1b_6b9c:
+RunMinigameLevelSelect:
 	ldh a, [hWramBank] ; $6b9c
 	push af ; $6b9e
 	wram_bank $02 ; $6b9f
@@ -4060,15 +4060,15 @@ Func_1b_6b9c:
 	ld [$d000], a ; $6ba6
 	xor a, a ; $6ba9
 	ld [$d001], a ; $6baa
-	call Func_1b_6bd3 ; $6bad
-	call Func_1b_6c59 ; $6bb0
+	call CountClearedMinigameLevels ; $6bad
+	call LoadMinigameLevelSelectGfx ; $6bb0
 	ld a, [$d001] ; $6bb3
 	cp a, $02 ; $6bb6
 	jr z, Label_1b_6bbf ; $6bb8
-	call Func_1b_6e31 ; $6bba
+	call RunMinigameLevelSelect2 ; $6bba
 	jr Label_1b_6bc2 ; $6bbd
 Label_1b_6bbf:
-	call Func_1b_6fd2 ; $6bbf
+	call RunMinigameLevelSelect3 ; $6bbf
 Label_1b_6bc2:
 	wram_bank $02 ; $6bc2
 	ld a, [$d003] ; $6bc8
@@ -4077,7 +4077,7 @@ Label_1b_6bc2:
 	wram_bank ; $6bcd
 	ld a, c ; $6bd1
 	ret ; $6bd2
-Func_1b_6bd3:
+CountClearedMinigameLevels:
 	ld c, $00 ; $6bd3
 	ld a, [$d000] ; $6bd5
 	add a, a ; $6bd8
@@ -4158,7 +4158,7 @@ Label_1b_6c09:
 	dw $0680 ; record 33
 	dw $06a0 ; record 34
 	dw $06c0 ; record 35
-Func_1b_6c59:
+LoadMinigameLevelSelectGfx:
 	ldh a, [hWramBank] ; $6c59
 	push af ; $6c5b
 	wram_bank $01 ; $6c5c
@@ -4284,7 +4284,7 @@ Label_1b_6cee:
 	dw $a900 ; record 5
 	dw $aa00 ; record 6
 	dw $a900 ; record 7
-Func_1b_6d3d:
+DrawMinigameLevelDescription:
 	ldh a, [hWramBank] ; $6d3d
 	push af ; $6d3f
 	wram_bank $02 ; $6d40
@@ -4327,7 +4327,7 @@ Label_1b_6d84:
 	wram_bank ; $6d8a
 	ret ; $6d8e
 	INCBIN "data/bank_01b/d_6d8f.bin" ; $6d8f, 6 bytes
-Func_1b_6d95:
+LoadMinigameLevelSelectPalette:
 	ld hl, $6da8 ; $6d95
 	add a, a ; $6d98
 	add a, l ; $6d99
@@ -4349,7 +4349,7 @@ Label_1b_6d9e:
 	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
 	db $b7, $5e, $ff, $6b, $93, $7c, $00, $00 ; 0x08
 	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x10
-Func_1b_6dc6:
+FlushLevelSelectTextRows:
 	ldh a, [hWramBank] ; $6dc6
 	push af ; $6dc8
 	wram_bank $03 ; $6dc9
@@ -4364,7 +4364,7 @@ Func_1b_6dc6:
 	pop af ; $6de5
 	wram_bank ; $6de6
 	ret ; $6dea
-Func_1b_6deb:
+ClearMinigameLevelDescriptionRow:
 	ldh a, [hWramBank] ; $6deb
 	push af ; $6ded
 	wram_bank $03 ; $6dee
@@ -4385,7 +4385,7 @@ Func_1b_6deb:
 	pop af ; $6e16
 	wram_bank ; $6e17
 	ret ; $6e1b
-Func_1b_6e1c:
+GetMinigameLevelColumnCount:
 	push af ; $6e1c
 	ldh a, [hWramBank] ; $6e1d
 	push af ; $6e1f
@@ -4396,7 +4396,7 @@ Func_1b_6e1c:
 	wram_bank ; $6e2b
 	pop af ; $6e2f
 	ret ; $6e30
-Func_1b_6e31:
+RunMinigameLevelSelect2:
 	call ResumeBGM ; $6e31
 	sound $08 ; $6e34
 	ld hl, rIE ; $6e36
@@ -4418,19 +4418,19 @@ Func_1b_6e31:
 	ld a, $01 ; $6e67
 	ld hl, $6f62 ; $6e69
 	call RegisterFrameTask ; $6e6c
-	call Func_1b_6f04 ; $6e6f
+	call RedrawMinigameLevelSelect2 ; $6e6f
 	wram_bank $03 ; $6e72
 Label_1b_6e78:
 	call AdvanceFrame ; $6e78
 	ldh a, [hInputPressed] ; $6e7b
 	ld [wMenuInputPressed], a ; $6e7d
-	call Func_1b_6e1c ; $6e80
+	call GetMinigameLevelColumnCount ; $6e80
 	ld c, $01 ; $6e83
 	call MoveMenuCursorGrid ; $6e85
 	or a, a ; $6e88
 	jr z, Label_1b_6e90 ; $6e89
 	sound $5e ; $6e8b
-	call Func_1b_6f04 ; $6e8d
+	call RedrawMinigameLevelSelect2 ; $6e8d
 Label_1b_6e90:
 	ld a, [wMenuInputPressed] ; $6e90
 	bit 0, a ; $6e93
@@ -4478,12 +4478,12 @@ Label_1b_6ede:
 	ld a, $ff ; $6efe
 	ld [$d003], a ; $6f00
 	ret ; $6f03
-Func_1b_6f04:
+RedrawMinigameLevelSelect2:
 	wram_bank $03 ; $6f04
 	ld b, $00 ; $6f0a
 	ld c, $00 ; $6f0c
 Label_1b_6f0e:
-	call Func_1b_6f35 ; $6f0e
+	call SetSelectPanelAttrRect ; $6f0e
 	ld a, b ; $6f11
 	inc a ; $6f12
 	ld b, a ; $6f13
@@ -4493,15 +4493,15 @@ Label_1b_6f0e:
 	call GetMenuCursorIndex ; $6f1a
 	ld b, a ; $6f1d
 	ld c, $01 ; $6f1e
-	call Func_1b_6f35 ; $6f20
+	call SetSelectPanelAttrRect ; $6f20
 	ld c, $03 ; $6f23
 	call GetMenuCursorIndex ; $6f25
-	call Func_1b_6d95 ; $6f28
-	call Func_1b_6deb ; $6f2b
-	call Func_1b_6d3d ; $6f2e
-	call Func_1b_6dc6 ; $6f31
+	call LoadMinigameLevelSelectPalette ; $6f28
+	call ClearMinigameLevelDescriptionRow ; $6f2b
+	call DrawMinigameLevelDescription ; $6f2e
+	call FlushLevelSelectTextRows ; $6f31
 	ret ; $6f34
-Func_1b_6f35:
+SetSelectPanelAttrRect:
 	push af ; $6f35
 	push bc ; $6f36
 	push de ; $6f37
@@ -4574,7 +4574,7 @@ Label_1b_6f7e:
 	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
 	INCBIN "data/bank_01b/d_6f9f.bin" ; $6f9f, 51 bytes
-Func_1b_6fd2:
+RunMinigameLevelSelect3:
 	call ResumeBGM ; $6fd2
 	sound $08 ; $6fd5
 	ld hl, rIE ; $6fd7
@@ -4596,19 +4596,19 @@ Func_1b_6fd2:
 	ld a, $01 ; $7008
 	ld hl, $70ed ; $700a
 	call RegisterFrameTask ; $700d
-	call Func_1b_708d ; $7010
+	call RedrawMinigameLevelSelect3 ; $7010
 	wram_bank $03 ; $7013
 Label_1b_7019:
 	call AdvanceFrame ; $7019
 	ldh a, [hInputPressed] ; $701c
 	ld [wMenuInputPressed], a ; $701e
-	call Func_1b_6e1c ; $7021
+	call GetMinigameLevelColumnCount ; $7021
 	ld c, $01 ; $7024
 	call MoveMenuCursorGrid ; $7026
 	or a, a ; $7029
 	jr z, Label_1b_7031 ; $702a
 	sound $5e ; $702c
-	call Func_1b_708d ; $702e
+	call RedrawMinigameLevelSelect3 ; $702e
 Label_1b_7031:
 	ld a, [wMenuInputPressed] ; $7031
 	bit 0, a ; $7034
@@ -4645,12 +4645,12 @@ Label_1b_7067:
 	ld a, $ff ; $7087
 	ld [$d003], a ; $7089
 	ret ; $708c
-Func_1b_708d:
+RedrawMinigameLevelSelect3:
 	wram_bank $03 ; $708d
 	ld b, $00 ; $7093
 	ld c, $00 ; $7095
 Label_1b_7097:
-	call Func_1b_70be ; $7097
+	call SetSelectPanelAttrRect3 ; $7097
 	ld a, b ; $709a
 	inc a ; $709b
 	ld b, a ; $709c
@@ -4660,15 +4660,15 @@ Label_1b_7097:
 	call GetMenuCursorIndex ; $70a3
 	ld b, a ; $70a6
 	ld c, $01 ; $70a7
-	call Func_1b_70be ; $70a9
+	call SetSelectPanelAttrRect3 ; $70a9
 	ld c, $03 ; $70ac
 	call GetMenuCursorIndex ; $70ae
-	call Func_1b_6d95 ; $70b1
-	call Func_1b_6deb ; $70b4
-	call Func_1b_6d3d ; $70b7
-	call Func_1b_6dc6 ; $70ba
+	call LoadMinigameLevelSelectPalette ; $70b1
+	call ClearMinigameLevelDescriptionRow ; $70b4
+	call DrawMinigameLevelDescription ; $70b7
+	call FlushLevelSelectTextRows ; $70ba
 	ret ; $70bd
-Func_1b_70be:
+SetSelectPanelAttrRect3:
 	push af ; $70be
 	push bc ; $70bf
 	push de ; $70c0
@@ -4703,11 +4703,11 @@ Label_1b_70d7:
 	pop af ; $70e5
 	ret ; $70e6
 	INCBIN "data/bank_01b/d_70e7.bin" ; $70e7, 118 bytes
-Func_1b_715d:
+RunSavedDataTypeSelect:
 	sound $03 ; $715d
 	ld hl, rIE ; $715f
 	res 2, [hl] ; $7162
-	call Func_1b_720a ; $7164
+	call LoadSavedDataTypeSelectGfx ; $7164
 	wram_bank $03 ; $7167
 	ld a, [$cb11] ; $716d
 	ld b, a ; $7170
@@ -4726,7 +4726,7 @@ Func_1b_715d:
 	ld a, $01 ; $718f
 	ld hl, $72a8 ; $7191
 	call RegisterFrameTask ; $7194
-	call Func_1b_7352 ; $7197
+	call RedrawSavedDataTypeSelect ; $7197
 	wram_bank $03 ; $719a
 Label_1b_71a0:
 	call AdvanceFrame ; $71a0
@@ -4738,7 +4738,7 @@ Label_1b_71a0:
 	or a, a ; $71af
 	jr z, Label_1b_71b7 ; $71b0
 	sound $5e ; $71b2
-	call Func_1b_7352 ; $71b4
+	call RedrawSavedDataTypeSelect ; $71b4
 Label_1b_71b7:
 	ld a, [wMenuInputPressed] ; $71b7
 	bit 0, a ; $71ba
@@ -4773,7 +4773,7 @@ Label_1b_71e7:
 	wram_bank $02 ; $7201
 	ld a, $ff ; $7207
 	ret ; $7209
-Func_1b_720a:
+LoadSavedDataTypeSelectGfx:
 	ldh a, [hWramBank] ; $720a
 	push af ; $720c
 	wram_bank $01 ; $720d
@@ -4862,12 +4862,12 @@ Label_1b_723a:
 	call GetMenuCursorIndex ; $72aa
 	or a, a ; $72ad
 	jr nz, Label_1b_72b4 ; $72ae
-	call Func_1b_72b8 ; $72b0
+	call DrawSavedDataCursorOption0 ; $72b0
 	ret ; $72b3
 Label_1b_72b4:
-	call Func_1b_72d9 ; $72b4
+	call DrawSavedDataCursorOption1 ; $72b4
 	ret ; $72b7
-Func_1b_72b8:
+DrawSavedDataCursorOption0:
 	ld c, $00 ; $72b8
 	ld b, $08 ; $72ba
 	ld de, $0c50 ; $72bc
@@ -4881,7 +4881,7 @@ Func_1b_72b8:
 	ld hl, $7340 ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
-Func_1b_72d9:
+DrawSavedDataCursorOption1:
 	ld c, $10 ; $72d9
 	ld b, $08 ; $72db
 	ld de, $5050 ; $72dd
@@ -4896,12 +4896,12 @@ Func_1b_72d9:
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
 	INCBIN "data/bank_01b/d_72fa.bin" ; $72fa, 88 bytes
-Func_1b_7352:
+RedrawSavedDataTypeSelect:
 	wram_bank $03 ; $7352
 	ld b, $00 ; $7358
 	ld c, $00 ; $735a
 Label_1b_735c:
-	call Func_1b_6f35 ; $735c
+	call SetSelectPanelAttrRect ; $735c
 	ld a, b ; $735f
 	inc a ; $7360
 	ld b, a ; $7361
@@ -4911,15 +4911,15 @@ Label_1b_735c:
 	call GetMenuCursorIndex ; $7368
 	ld b, a ; $736b
 	ld c, $01 ; $736c
-	call Func_1b_6f35 ; $736e
+	call SetSelectPanelAttrRect ; $736e
 	ld c, $03 ; $7371
 	call GetMenuCursorIndex ; $7373
-	call Func_1b_73b6 ; $7376
-	call Func_1b_6deb ; $7379
-	call Func_1b_7383 ; $737c
-	call Func_1b_6dc6 ; $737f
+	call LoadSavedDataTypePalette ; $7376
+	call ClearMinigameLevelDescriptionRow ; $7379
+	call DrawSavedDataTypeDescription ; $737c
+	call FlushLevelSelectTextRows ; $737f
 	ret ; $7382
-Func_1b_7383:
+DrawSavedDataTypeDescription:
 	ldh a, [hWramBank] ; $7383
 	push af ; $7385
 	wram_bank $03 ; $7386
@@ -4949,7 +4949,7 @@ Label_1b_73a7:
 	wram_bank ; $73ad
 	ret ; $73b1
 	INCBIN "data/bank_01b/d_73b2.bin" ; $73b2, 4 bytes
-Func_1b_73b6:
+LoadSavedDataTypePalette:
 	ld hl, $73c9 ; $73b6
 	add a, a ; $73b9
 	add a, l ; $73ba
@@ -4969,10 +4969,10 @@ Label_1b_73bf:
 	; $73cd, 16 bytes (bytes:8)
 	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
 	db $bf, $02, $ff, $6b, $1b, $18, $00, $00 ; 0x08
-Func_1b_73dd:
+ShowMinigameDataScreen:
 	sound $04 ; $73dd
 	call DisableLCDSafely ; $73df
-	call Func_1b_7449 ; $73e2
+	call BuildMinigameDataScreen ; $73e2
 	ld a, $01 ; $73e5
 	ld [$cb0b], a ; $73e7
 	ld a, $01 ; $73ea
@@ -4992,7 +4992,7 @@ Func_1b_73dd:
 Label_1b_7413:
 	ldh a, [hInputPressed] ; $7413
 	ld [wMenuInputPressed], a ; $7415
-	call Func_1b_749d ; $7418
+	call ScrollMinigameDataList ; $7418
 	call AdvanceFrame ; $741b
 	ld a, [wMenuInputPressed] ; $741e
 	bit 0, a ; $7421
@@ -5015,14 +5015,14 @@ Label_1b_7439:
 	call ClearFrameTasks ; $7443
 	ld a, $ff ; $7446
 	ret ; $7448
-Func_1b_7449:
+BuildMinigameDataScreen:
 	ld c, $2b ; $7449
 	farcall FarPtr_LoadScreenAssetRecord ; $744b
 	xor a, a ; $744e
 	ld [wMenuCursorX], a ; $744f
 	ld [wMenuCursorY], a ; $7452
 	wram_bank $03 ; $7455
-	call Func_1b_74ca ; $745b
+	call LoadMinigameDataState ; $745b
 	ld de, $aac0 ; $745e
 	farcall FarPtr_3b_28 ; $7461
 	ld de, $a000 ; $7464
@@ -5038,20 +5038,20 @@ Func_1b_7449:
 	ld [$cb6c], a ; $747d
 	ld a, $10 ; $7480
 	ld [$cb6b], a ; $7482
-	call Func_1b_787f ; $7485
+	call CheckMinigameDataScrollable ; $7485
 	or a, a ; $7488
 	jr nz, Label_1b_7490 ; $7489
-	call Func_1b_7634 ; $748b
+	call DrawMinigameDataMugshotsStatic ; $748b
 	jr Label_1b_7493 ; $748e
 Label_1b_7490:
-	call Func_1b_7604 ; $7490
+	call DrawMinigameDataMugshotsScrolled ; $7490
 Label_1b_7493:
-	call Func_1b_76ee ; $7493
-	call Func_1b_77fb ; $7496
+	call DrawMinigameDataMarks ; $7493
+	call DrawStarLegendMark ; $7496
 	farcall FarPtr_QueueWram3MapToVRAM ; $7499
 	ret ; $749c
-Func_1b_749d:
-	call Func_1b_787f ; $749d
+ScrollMinigameDataList:
+	call CheckMinigameDataScrollable ; $749d
 	or a, a ; $74a0
 	ret z ; $74a1
 	ld a, [wMenuInputPressed] ; $74a2
@@ -5075,19 +5075,19 @@ Label_1b_74ba:
 	ld [wMenuCursorY], a ; $74c1
 Label_1b_74c4:
 	sound $5e ; $74c4
-	call Func_1b_75ae ; $74c6
+	call RedrawMinigameDataRows ; $74c6
 	ret ; $74c9
-Func_1b_74ca:
+LoadMinigameDataState:
 	farcall FarPtr_BuildStarCharUnlockMask ; $74ca
-	call Func_1b_74df ; $74cd
-	call Func_1b_751f ; $74d0
-	call Func_1b_7560 ; $74d3
-	call Func_1b_787f ; $74d6
+	call LoadMinigameClearFlags ; $74cd
+	call LoadMinigameStarFlags ; $74d0
+	call LoadMinigameHighScores ; $74d3
+	call CheckMinigameDataScrollable ; $74d6
 	jr nz, Label_1b_74de ; $74d9
-	call Func_1b_7896 ; $74db
+	call CompactMinigameDataRows ; $74db
 Label_1b_74de:
 	ret ; $74de
-Func_1b_74df:
+LoadMinigameClearFlags:
 	ld hl, $d809 ; $74df
 	ld bc, $0009 ; $74e2
 	call ClearBytes ; $74e5
@@ -5129,7 +5129,7 @@ Label_1b_7504:
 	dw $05c0 ; record 6
 	dw $0620 ; record 7
 	dw $0680 ; record 8
-Func_1b_751f:
+LoadMinigameStarFlags:
 	ld hl, $d812 ; $751f
 	ld bc, $0009 ; $7522
 	call ClearBytes ; $7525
@@ -5172,7 +5172,7 @@ Label_1b_7544:
 	dw $0640 ; record 7
 	dw $06a0 ; record 8
 	db $c9
-Func_1b_7560:
+LoadMinigameHighScores:
 	ldh a, [hWramBank] ; $7560
 	push af ; $7562
 	ld hl, $d81b ; $7563
@@ -5216,12 +5216,12 @@ Label_1b_759f:
 	pop af ; $75a8
 	wram_bank ; $75a9
 	ret ; $75ad
-Func_1b_75ae:
-	call Func_1b_7604 ; $75ae
-	call Func_1b_76ee ; $75b1
-	call Func_1b_75b8 ; $75b4
+RedrawMinigameDataRows:
+	call DrawMinigameDataMugshotsScrolled ; $75ae
+	call DrawMinigameDataMarks ; $75b1
+	call FlushMinigameDataRowsToVram ; $75b4
 	ret ; $75b7
-Func_1b_75b8:
+FlushMinigameDataRowsToVram:
 	ld hl, $d0c0 ; $75b8
 	ld de, $98c0 ; $75bb
 	ld c, $08 ; $75be
@@ -5250,7 +5250,7 @@ Func_1b_75b8:
 	call QueueVRAMCopy ; $75fd
 	call AdvanceFrame ; $7600
 	ret ; $7603
-Func_1b_7604:
+DrawMinigameDataMugshotsScrolled:
 	ldh a, [hWramBank] ; $7604
 	push af ; $7606
 	wram_bank $03 ; $7607
@@ -5269,7 +5269,7 @@ Label_1b_7613:
 Label_1b_7621:
 	push bc ; $7621
 Label_1b_7622:
-	call Func_1b_7669 ; $7622
+	call DrawMinigameDataMugshot ; $7622
 	pop bc ; $7625
 	inc c ; $7626
 	ld a, b ; $7627
@@ -5280,7 +5280,7 @@ Label_1b_7622:
 	pop af ; $762e
 	wram_bank ; $762f
 	ret ; $7633
-Func_1b_7634:
+DrawMinigameDataMugshotsStatic:
 	ldh a, [hWramBank] ; $7634
 	push af ; $7636
 	wram_bank $03 ; $7637
@@ -5298,7 +5298,7 @@ Label_1b_7641:
 Label_1b_764f:
 	push bc ; $764f
 Label_1b_7650:
-	call Func_1b_7669 ; $7650
+	call DrawMinigameDataMugshot ; $7650
 	pop bc ; $7653
 	inc c ; $7654
 	ld a, b ; $7655
@@ -5308,11 +5308,11 @@ Label_1b_7650:
 	jr nz, Label_1b_7641 ; $765a
 	ld c, $05 ; $765c
 	ld b, $04 ; $765e
-	call Func_1b_7669 ; $7660
+	call DrawMinigameDataMugshot ; $7660
 	pop af ; $7663
 	wram_bank ; $7664
 	ret ; $7668
-Func_1b_7669:
+DrawMinigameDataMugshot:
 	push af ; $7669
 	push bc ; $766a
 	push de ; $766b
@@ -5320,8 +5320,8 @@ Func_1b_7669:
 	ldh a, [hWramBank] ; $766d
 	push af ; $766f
 	wram_bank $03 ; $7670
-	call Func_1b_768a ; $7676
-	call Func_1b_76a1 ; $7679
+	call MapMinigameRowToMugshotSlot ; $7676
+	call GetMinigameRowTilemapDest ; $7679
 	ld b, c ; $767c
 	farcall FarPtr_3b_2a ; $767d
 	pop af ; $7680
@@ -5331,7 +5331,7 @@ Func_1b_7669:
 	pop bc ; $7687
 	pop af ; $7688
 	ret ; $7689
-Func_1b_768a:
+MapMinigameRowToMugshotSlot:
 	push hl ; $768a
 	ld hl, $7697 ; $768b
 	ld a, c ; $768e
@@ -5344,7 +5344,7 @@ Label_1b_7694:
 	pop hl ; $7695
 	ret ; $7696
 	INCBIN "data/bank_01b/d_7697.bin" ; $7697, 10 bytes
-Func_1b_76a1:
+GetMinigameRowTilemapDest:
 	ld hl, $76af ; $76a1
 	ld a, b ; $76a4
 	add a, a ; $76a5
@@ -5358,7 +5358,7 @@ Label_1b_76ab:
 	ld l, a ; $76ad
 	ret ; $76ae
 	INCBIN "data/bank_01b/d_76af.bin" ; $76af, 10 bytes
-	call Func_1b_787f ; $76b9
+	call CheckMinigameDataScrollable ; $76b9
 	or a, a ; $76bc
 	ret z ; $76bd
 	ld a, [wMenuCursorY] ; $76be
@@ -5366,7 +5366,7 @@ Label_1b_76ab:
 	jr z, Label_1b_76d5 ; $76c2
 	ld de, $1128 ; $76c4
 	ld c, $01 ; $76c7
-	call Func_1b_40cd ; $76c9
+	call ApplyArrowBobOffset ; $76c9
 	ld b, $08 ; $76cc
 	ld c, $00 ; $76ce
 	ld h, $02 ; $76d0
@@ -5377,20 +5377,20 @@ Label_1b_76d5:
 	jr z, Label_1b_76ed ; $76da
 	ld de, $1184 ; $76dc
 	ld c, $00 ; $76df
-	call Func_1b_40cd ; $76e1
+	call ApplyArrowBobOffset ; $76e1
 	ld b, $08 ; $76e4
 	ld c, $00 ; $76e6
 	ld h, $03 ; $76e8
 	farcall FarPtr_39_1a ; $76ea
 Label_1b_76ed:
 	ret ; $76ed
-Func_1b_76ee:
-	call Func_1b_77ac ; $76ee
-	call Func_1b_76fb ; $76f1
-	call Func_1b_7719 ; $76f4
-	call Func_1b_7737 ; $76f7
+DrawMinigameDataMarks:
+	call ClearMinigameMarkColumns ; $76ee
+	call DrawMinigameClearMarks ; $76f1
+	call DrawMinigameStarMarks ; $76f4
+	call DrawMinigameSpecialMark ; $76f7
 	ret ; $76fa
-Func_1b_76fb:
+DrawMinigameClearMarks:
 	ld hl, $d809 ; $76fb
 	ld a, [wMenuCursorY] ; $76fe
 	add a, l ; $7701
@@ -5404,7 +5404,7 @@ Label_1b_7708:
 	ld a, [hl+] ; $770a
 	or a, a ; $770b
 	jr z, Label_1b_7711 ; $770c
-	call Func_1b_774c ; $770e
+	call DrawMinigameMarkTile ; $770e
 Label_1b_7711:
 	ld a, c ; $7711
 	inc a ; $7712
@@ -5412,7 +5412,7 @@ Label_1b_7711:
 	cp a, $05 ; $7714
 	jr nz, Label_1b_7708 ; $7716
 	ret ; $7718
-Func_1b_7719:
+DrawMinigameStarMarks:
 	ld hl, $d812 ; $7719
 	ld a, [wMenuCursorY] ; $771c
 	add a, l ; $771f
@@ -5426,7 +5426,7 @@ Label_1b_7726:
 	ld a, [hl+] ; $7728
 	or a, a ; $7729
 	jr z, Label_1b_772f ; $772a
-	call Func_1b_774c ; $772c
+	call DrawMinigameMarkTile ; $772c
 Label_1b_772f:
 	ld a, c ; $772f
 	inc a ; $7730
@@ -5434,7 +5434,7 @@ Label_1b_772f:
 	cp a, $05 ; $7732
 	jr nz, Label_1b_7726 ; $7734
 	ret ; $7736
-Func_1b_7737:
+DrawMinigameSpecialMark:
 	ld a, [wMenuCursorY] ; $7737
 	cp a, $04 ; $773a
 	ret nz ; $773c
@@ -5445,9 +5445,9 @@ Func_1b_7737:
 	ret z ; $7743
 	ld b, $02 ; $7744
 	ld c, $04 ; $7746
-	call Func_1b_774c ; $7748
+	call DrawMinigameMarkTile ; $7748
 	ret ; $774b
-Func_1b_774c:
+DrawMinigameMarkTile:
 	push af ; $774c
 	push bc ; $774d
 	push de ; $774e
@@ -5511,7 +5511,7 @@ Label_1b_7764:
 	dw $d14e ; record 15
 	dw $d18e ; record 16
 	dw $d1ce ; record 17
-Func_1b_77ac:
+ClearMinigameMarkColumns:
 	ld hl, $d095 ; $77ac
 	ld de, $d0c6 ; $77af
 	ld b, $02 ; $77b2
@@ -5543,7 +5543,7 @@ Func_1b_77ac:
 	ld c, $0a ; $77f5
 	farcall FarPtr_CopyTilemapRect ; $77f7
 	ret ; $77fa
-Func_1b_77fb:
+DrawStarLegendMark:
 	ld hl, $d812 ; $77fb
 	ld c, $00 ; $77fe
 Label_1b_7800:
@@ -5575,7 +5575,7 @@ Label_1b_780c:
 	ld c, a ; $7833
 	ld b, $00 ; $7834
 Label_1b_7836:
-	call Func_1b_7847 ; $7836
+	call DrawMinigameHighScoreNumber ; $7836
 	inc c ; $7839
 	ld a, b ; $783a
 	inc b ; $783b
@@ -5585,7 +5585,7 @@ Label_1b_7836:
 	pop af ; $7841
 	wram_bank ; $7842
 	ret ; $7846
-Func_1b_7847:
+DrawMinigameHighScoreNumber:
 	ld a, c ; $7847
 	cp a, $08 ; $7848
 	ret z ; $784a
@@ -5624,7 +5624,7 @@ Label_1b_786e:
 	farcall FarPtr_39_66 ; $7871
 	ret ; $7874
 	INCBIN "data/bank_01b/d_7875.bin" ; $7875, 10 bytes
-Func_1b_787f:
+CheckMinigameDataScrollable:
 	push bc ; $787f
 	push de ; $7880
 	push hl ; $7881
@@ -5643,7 +5643,7 @@ Label_1b_7890:
 	pop bc ; $7892
 	ld a, $01 ; $7893
 	ret ; $7895
-Func_1b_7896:
+CompactMinigameDataRows:
 	ldh a, [hWramBank] ; $7896
 	push af ; $7898
 	wram_bank $03 ; $7899

@@ -3589,7 +3589,7 @@ Func_1a_7012:
 Func_1a_7096:
 	xor a, a ; $7096
 	ld de, $0701 ; $7097
-	farcall FarPtr_1b_02 ; $709a
+	farcall FarPtr_LoadIndexedPaletteThunk ; $709a
 	wram_bank $06 ; $709d
 	ld a, [$d002] ; $70a3
 	ld b, a ; $70a6
@@ -3606,10 +3606,10 @@ Func_1a_70c0:
 	wram_bank $06 ; $70c0
 	ld a, [$d004] ; $70c6
 	ld de, $0701 ; $70c9
-	farcall FarPtr_1b_02 ; $70cc
+	farcall FarPtr_LoadIndexedPaletteThunk ; $70cc
 	ld a, [$d004] ; $70cf
 	ld de, $0f01 ; $70d2
-	farcall FarPtr_1b_02 ; $70d5
+	farcall FarPtr_LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
 	INCBIN "data/bank_01a/d_70d9.bin" ; $70d9, 2156 bytes
 Func_1a_7945:

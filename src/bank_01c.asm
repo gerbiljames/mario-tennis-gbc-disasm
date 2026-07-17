@@ -680,7 +680,7 @@ Label_1c_45a6:
 	pop af ; $45ae
 	ld a, [hl] ; $45af
 	ld de, $0401 ; $45b0
-	farcall FarPtr_1b_02 ; $45b3
+	farcall FarPtr_LoadIndexedPaletteThunk ; $45b3
 	wram_bank $01 ; $45b6
 	push af ; $45bc
 	ld hl, wStoryModeNameOfMainCharacter ; $45bd
@@ -3096,7 +3096,7 @@ Label_1c_749d:
 	pop af ; $74a5
 	ld a, [hl] ; $74a6
 	ld de, $0101 ; $74a7
-	farcall FarPtr_1b_02 ; $74aa
+	farcall FarPtr_LoadIndexedPaletteThunk ; $74aa
 	wram_bank $01 ; $74ad
 	push af ; $74b3
 	ld hl, wStoryModeNameOfMainCharacter ; $74b4
@@ -3137,7 +3137,7 @@ Label_1c_74eb:
 	pop af ; $74f3
 	ld a, [hl] ; $74f4
 	ld de, $0201 ; $74f5
-	farcall FarPtr_1b_02 ; $74f8
+	farcall FarPtr_LoadIndexedPaletteThunk ; $74f8
 	wram_bank $01 ; $74fb
 	push af ; $7501
 	ld hl, wStoryModeNameOfMainCharacter ; $7502

@@ -318,7 +318,7 @@ Label_1d_436b:
 	pop af ; $4373
 	ld a, [hl] ; $4374
 	ld de, $0401 ; $4375
-	farcall FarPtr_1b_02 ; $4378
+	farcall FarPtr_LoadIndexedPaletteThunk ; $4378
 	wram_bank $01 ; $437b
 	push af ; $4381
 	ld hl, wStoryModeNameOfMainCharacter ; $4382
@@ -367,7 +367,7 @@ Label_1d_43cf:
 	pop af ; $43d7
 	ld a, [hl] ; $43d8
 	ld de, $0101 ; $43d9
-	farcall FarPtr_1b_02 ; $43dc
+	farcall FarPtr_LoadIndexedPaletteThunk ; $43dc
 	wram_bank $01 ; $43df
 	push af ; $43e5
 	ld hl, wStoryModeNameOfMainCharacter ; $43e6
@@ -3158,7 +3158,7 @@ Label_1d_5b31:
 	pop af ; $5b39
 	ld a, [hl] ; $5b3a
 	ld de, $0401 ; $5b3b
-	farcall FarPtr_1b_02 ; $5b3e
+	farcall FarPtr_LoadIndexedPaletteThunk ; $5b3e
 	wram_bank $01 ; $5b41
 	push af ; $5b47
 	ld hl, wStoryModeNameOfMainCharacter ; $5b48
@@ -4428,10 +4428,10 @@ Label_1d_717c:
 Func_1d_7189:
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $7189
 	ld de, $0101 ; $718c
-	farcall FarPtr_1b_02 ; $718f
+	farcall FarPtr_LoadIndexedPaletteThunk ; $718f
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7192
 	ld de, $0201 ; $7195
-	farcall FarPtr_1b_02 ; $7198
+	farcall FarPtr_LoadIndexedPaletteThunk ; $7198
 	wram_bank $06 ; $719b
 	ld a, [$d16b] ; $71a1
 	ld [$c13a], a ; $71a4
@@ -4852,10 +4852,10 @@ Label_1d_7453:
 	ld [$c123], a ; $7479
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $747c
 	ld de, $0101 ; $747f
-	farcall FarPtr_1b_02 ; $7482
+	farcall FarPtr_LoadIndexedPaletteThunk ; $7482
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7485
 	ld de, $0201 ; $7488
-	farcall FarPtr_1b_02 ; $748b
+	farcall FarPtr_LoadIndexedPaletteThunk ; $748b
 	ld hl, hPaletteDirtyFlags ; $748e
 	set 0, [hl] ; $7491
 	sound $5f ; $7493
