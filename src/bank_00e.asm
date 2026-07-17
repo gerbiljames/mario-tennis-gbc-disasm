@@ -1155,7 +1155,7 @@ RepairCounterChangeRackets:
 	ld a, $0e ; $4eef
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4ef1
 	call PrepareEquipmentSelectScreen ; $4ef4
-	farcall FarPtr_3e_0c ; $4ef7
+	farcall FarPtr_RunRacketSelectScreen ; $4ef7
 	and a, a ; $4efa
 	jr nz, Label_0e_4f1d ; $4efb
 	jr RestoreScreenAfterEquipSelect ; $4efd
@@ -1165,7 +1165,7 @@ RepairCounterChangeShoes:
 	ld a, $0e ; $4f05
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4f07
 	call PrepareEquipmentSelectScreen ; $4f0a
-	farcall FarPtr_3e_0e ; $4f0d
+	farcall FarPtr_RunShoesSelectScreen ; $4f0d
 	and a, a ; $4f10
 	jr nz, Label_0e_4f1d ; $4f11
 RestoreScreenAfterEquipSelect:

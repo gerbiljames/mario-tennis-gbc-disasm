@@ -6956,7 +6956,7 @@ Label_00_2848:
 	pop bc ; $2849
 	ret ; $284a
 LinkErrorReset:
-	farcall FarPtr_3e_12 ; $284b
+	farcall FarPtr_ShowLinkErrorScreen ; $284b
 	jp SoftReset ; $284e
 ReadJoypadThunk:
 	call ReadJoypad ; $2851

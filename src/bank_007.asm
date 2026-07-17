@@ -1828,7 +1828,7 @@ Label_07_4b50:
 	ldh [$ffd7], a ; $4b6c
 	ei ; $4b6e
 	call AwaitSerialByte ; $4b6f
-	farcall FarPtr_3e_16 ; $4b72
+	farcall FarPtr_AnimateLinkStatusPalette ; $4b72
 	farcall FarPtr_39_04 ; $4b75
 	jr c, Label_07_4ba2 ; $4b78
 	cp a, $c1 ; $4b7a
@@ -1847,7 +1847,7 @@ Label_07_4b50:
 	push de ; $4b91
 	push hl ; $4b92
 	ld c, $02 ; $4b93
-	farcall FarPtr_3e_30 ; $4b95
+	farcall FarPtr_ShowLinkStatusMessage ; $4b95
 	pop hl ; $4b98
 	pop de ; $4b99
 	pop bc ; $4b9a

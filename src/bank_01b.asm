@@ -4404,7 +4404,7 @@ RunMinigameLevelSelect2:
 	wram_bank $03 ; $6e3b
 	ld a, [$cb11] ; $6e41
 	ld b, a ; $6e44
-	farcall FarPtr_3e_26 ; $6e45
+	farcall FarPtr_OpenChoiceTabPanel ; $6e45
 	farcall FarPtr_InitMenuBgScroll ; $6e48
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
@@ -4456,7 +4456,7 @@ Label_1b_6eb5:
 	set 2, [hl] ; $6ebd
 	wram_bank $03 ; $6ebf
 	ld b, $01 ; $6ec5
-	farcall FarPtr_3e_28 ; $6ec7
+	farcall FarPtr_CloseChoiceTabPanel ; $6ec7
 	ld a, $01 ; $6eca
 	ld [$cb11], a ; $6ecc
 	wram_bank $02 ; $6ecf
@@ -4471,7 +4471,7 @@ Label_1b_6ede:
 	set 2, [hl] ; $6ee6
 	wram_bank $03 ; $6ee8
 	ld b, $00 ; $6eee
-	farcall FarPtr_3e_28 ; $6ef0
+	farcall FarPtr_CloseChoiceTabPanel ; $6ef0
 	ld a, $00 ; $6ef3
 	ld [$cb11], a ; $6ef5
 	wram_bank $02 ; $6ef8
@@ -4711,7 +4711,7 @@ RunSavedDataTypeSelect:
 	wram_bank $03 ; $7167
 	ld a, [$cb11] ; $716d
 	ld b, a ; $7170
-	farcall FarPtr_3e_26 ; $7171
+	farcall FarPtr_OpenChoiceTabPanel ; $7171
 	farcall FarPtr_InitMenuBgScroll ; $7174
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
@@ -4753,7 +4753,7 @@ Label_1b_71c4:
 	set 2, [hl] ; $71cc
 	wram_bank $03 ; $71ce
 	ld b, $01 ; $71d4
-	farcall FarPtr_3e_28 ; $71d6
+	farcall FarPtr_CloseChoiceTabPanel ; $71d6
 	ld a, $01 ; $71d9
 	ld [$cb11], a ; $71db
 	ld c, $02 ; $71de
@@ -4767,7 +4767,7 @@ Label_1b_71e7:
 	set 2, [hl] ; $71ef
 	wram_bank $03 ; $71f1
 	ld b, $00 ; $71f7
-	farcall FarPtr_3e_28 ; $71f9
+	farcall FarPtr_CloseChoiceTabPanel ; $71f9
 	ld a, $00 ; $71fc
 	ld [$cb11], a ; $71fe
 	wram_bank $02 ; $7201

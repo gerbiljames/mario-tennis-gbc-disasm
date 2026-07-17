@@ -4034,7 +4034,7 @@ Label_3b_5c70:
 	cp a, $c1 ; $5c74
 	jr z, Label_3b_5cd7 ; $5c76
 Label_3b_5c78:
-	farcall FarPtr_3e_04 ; $5c78
+	farcall FarPtr_ShowLinkMessageScreen ; $5c78
 	farcall FarPtr_TryEstablishLink ; $5c7b
 	push af ; $5c7e
 	jr nc, Label_3b_5cbb ; $5c7f
@@ -4043,7 +4043,7 @@ Label_3b_5c78:
 	ldh a, [hWramBank] ; $5c84
 	push af ; $5c86
 	ld c, $00 ; $5c87
-	farcall FarPtr_3e_30 ; $5c89
+	farcall FarPtr_ShowLinkStatusMessage ; $5c89
 	pop af ; $5c8c
 	wram_bank ; $5c8d
 	jr Label_3b_5ca0 ; $5c91
@@ -4051,13 +4051,13 @@ Label_3b_5c93:
 	ldh a, [hWramBank] ; $5c93
 	push af ; $5c95
 	ld c, $01 ; $5c96
-	farcall FarPtr_3e_30 ; $5c98
+	farcall FarPtr_ShowLinkStatusMessage ; $5c98
 	pop af ; $5c9b
 	wram_bank ; $5c9c
 Label_3b_5ca0:
 	ld de, $01f4 ; $5ca0
 Label_3b_5ca3:
-	farcall FarPtr_3e_16 ; $5ca3
+	farcall FarPtr_AnimateLinkStatusPalette ; $5ca3
 	farcall FarPtr_39_04 ; $5ca6
 	call AdvanceFrame ; $5ca9
 	ldh a, [hInputPressed] ; $5cac
@@ -7179,7 +7179,7 @@ Func_3b_74bf:
 	wram_bank $03 ; $74c9
 	ld a, [$cb11] ; $74cf
 	ld b, a ; $74d2
-	farcall FarPtr_3e_2a ; $74d3
+	farcall FarPtr_OpenCourtSelect4Panel ; $74d3
 	farcall FarPtr_InitMenuBgScroll ; $74d6
 	ld b, $01 ; $74d9
 	ld c, $01 ; $74db
@@ -7217,7 +7217,7 @@ Label_3b_751e:
 	ld hl, rIE ; $7523
 	set 2, [hl] ; $7526
 	ld b, $01 ; $7528
-	farcall FarPtr_3e_2c ; $752a
+	farcall FarPtr_CloseCourtSelect4Panel ; $752a
 	ld a, $01 ; $752d
 	ld [$cb11], a ; $752f
 	ld c, $02 ; $7532
@@ -7230,7 +7230,7 @@ Label_3b_753b:
 	ld hl, rIE ; $7540
 	set 2, [hl] ; $7543
 	ld b, $00 ; $7545
-	farcall FarPtr_3e_2c ; $7547
+	farcall FarPtr_CloseCourtSelect4Panel ; $7547
 	ld a, $00 ; $754a
 	ld [$cb11], a ; $754c
 	ld a, $ff ; $754f
@@ -7341,7 +7341,7 @@ Func_3b_760c:
 	ld b, $00 ; $7612
 	ld c, $00 ; $7614
 Label_3b_7616:
-	farcall FarPtr_3e_2e ; $7616
+	farcall FarPtr_SetCourtSelect4TabAttrRect ; $7616
 	ld a, b ; $7619
 	inc a ; $761a
 	ld b, a ; $761b
@@ -7351,7 +7351,7 @@ Label_3b_7616:
 	call Func_3b_43b9 ; $7622
 	ld b, a ; $7625
 	ld c, $01 ; $7626
-	farcall FarPtr_3e_2e ; $7628
+	farcall FarPtr_SetCourtSelect4TabAttrRect ; $7628
 	ld c, $02 ; $762b
 	call Func_3b_43b9 ; $762d
 	call Func_3b_7680 ; $7630

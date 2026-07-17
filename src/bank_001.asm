@@ -188,16 +188,16 @@ Label_01_4192:
 	ld [$c8f7], a ; $4199
 	jr Label_01_4192 ; $419c
 Unused_01_MatchSetup:
-	farcall FarPtr_3e_10 ; $419e
+	farcall FarPtr_ShowEquipmentStatusScreen ; $419e
 	ld de, $002f ; $41a1
 	call ClearGameFlagByNumber ; $41a4
 	ld a, $04 ; $41a7
 	ld [wGameMode], a ; $41a9
 	farcall FarPtr_RunMatchStatsScreen ; $41ac
-	farcall FarPtr_3e_12 ; $41af
-	farcall FarPtr_3e_04 ; $41b2
-	farcall FarPtr_3e_0e ; $41b5
-	farcall FarPtr_3e_0c ; $41b8
+	farcall FarPtr_ShowLinkErrorScreen ; $41af
+	farcall FarPtr_ShowLinkMessageScreen ; $41b2
+	farcall FarPtr_RunShoesSelectScreen ; $41b5
+	farcall FarPtr_RunRacketSelectScreen ; $41b8
 	ld a, $01 ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
 	farcall FarPtr_1a_08 ; $41bf

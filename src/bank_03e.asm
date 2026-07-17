@@ -1,55 +1,55 @@
 SECTION "ROM Bank $3e", ROMX[$4000], BANK[$3e]
 
-FarPtr_3e_00:
-	dw Func_3e_44cb ; $4000
-FarPtr_3e_02:
-	dw Func_3e_44b9 ; $4002
-FarPtr_3e_04:
-	dw Func_3e_49e6 ; $4004
-FarPtr_3e_06:
-	dw Func_3e_4c12 ; $4006
-FarPtr_3e_08:
-	dw Func_3e_4ea0 ; $4008
-FarPtr_3e_0a:
-	dw Func_3e_5192 ; $400a
-FarPtr_3e_0c:
-	dw Func_3e_54bd ; $400c
-FarPtr_3e_0e:
-	dw Func_3e_5645 ; $400e
-FarPtr_3e_10:
-	dw Func_3e_5388 ; $4010
-FarPtr_3e_12:
-	dw Func_3e_4aa7 ; $4012
+FarPtr_RunLinkMatchRulesMenu:
+	dw RunLinkMatchRulesMenu ; $4000
+FarPtr_RestoreMenuScreenAndFadeIn:
+	dw RestoreMenuScreenAndFadeIn ; $4002
+FarPtr_ShowLinkMessageScreen:
+	dw ShowLinkMessageScreen ; $4004
+FarPtr_RunEraseDataConfirmMenu:
+	dw RunEraseDataConfirmMenu ; $4006
+FarPtr_RunRacketShoesChoiceMenu:
+	dw RunRacketShoesChoiceMenu ; $4008
+FarPtr_RunPlayAlonePartnerMenu:
+	dw RunPlayAlonePartnerMenu ; $400a
+FarPtr_RunRacketSelectScreen:
+	dw RunRacketSelectScreen ; $400c
+FarPtr_RunShoesSelectScreen:
+	dw RunShoesSelectScreen ; $400e
+FarPtr_ShowEquipmentStatusScreen:
+	dw ShowEquipmentStatusScreen ; $4010
+FarPtr_ShowLinkErrorScreen:
+	dw ShowLinkErrorScreen ; $4012
 FarPtr_3e_14:
 	dw Func_3e_4438 ; $4014
-FarPtr_3e_16:
-	dw Func_3e_4a54 ; $4016
-FarPtr_3e_18:
-	dw Func_3e_5b99 ; $4018
-FarPtr_3e_1a:
-	dw Func_3e_5c38 ; $401a
-FarPtr_3e_1c:
-	dw Func_3e_6518 ; $401c
-FarPtr_3e_1e:
-	dw Func_3e_65c9 ; $401e
-FarPtr_3e_20:
-	dw Func_3e_5d11 ; $4020
-FarPtr_3e_22:
-	dw Func_3e_69a0 ; $4022
-FarPtr_3e_24:
-	dw Func_3e_69d4 ; $4024
-FarPtr_3e_26:
-	dw Func_3e_5092 ; $4026
-FarPtr_3e_28:
-	dw Func_3e_50c4 ; $4028
-FarPtr_3e_2a:
-	dw Func_3e_5e2a ; $402a
-FarPtr_3e_2c:
-	dw Func_3e_5e62 ; $402c
-FarPtr_3e_2e:
-	dw Func_3e_5fad ; $402e
-FarPtr_3e_30:
-	dw Func_3e_4ba3 ; $4030
+FarPtr_AnimateLinkStatusPalette:
+	dw AnimateLinkStatusPalette ; $4016
+FarPtr_RunCourtSelect4Menu:
+	dw RunCourtSelect4Menu ; $4018
+FarPtr_RunLinkCourtSelect4Menu:
+	dw RunLinkCourtSelect4Menu ; $401a
+FarPtr_RunCourtSelect9Menu:
+	dw RunCourtSelect9Menu ; $401c
+FarPtr_RunLinkCourtSelect9Menu:
+	dw RunLinkCourtSelect9Menu ; $401e
+FarPtr_LoadCourtSelectGraphics:
+	dw LoadCourtSelectGraphics ; $4020
+FarPtr_ComputeUnlockedCourtFlags:
+	dw ComputeUnlockedCourtFlags ; $4022
+FarPtr_StubNop_3e:
+	dw StubNop_3e ; $4024
+FarPtr_OpenChoiceTabPanel:
+	dw OpenChoiceTabPanel ; $4026
+FarPtr_CloseChoiceTabPanel:
+	dw CloseChoiceTabPanel ; $4028
+FarPtr_OpenCourtSelect4Panel:
+	dw OpenCourtSelect4Panel ; $402a
+FarPtr_CloseCourtSelect4Panel:
+	dw CloseCourtSelect4Panel ; $402c
+FarPtr_SetCourtSelect4TabAttrRect:
+	dw SetCourtSelect4TabAttrRect ; $402e
+FarPtr_ShowLinkStatusMessage:
+	dw ShowLinkStatusMessage ; $4030
 DataPtr_AwardCeremonyTiles:
 	dw AwardCeremonyTiles ; $4032
 DataPtr_AwardCeremonyTilesAlias1:
@@ -72,13 +72,13 @@ DataPtr_3e_44:
 	dw Lz_3e_769b ; $4044
 DataPtr_3e_46:
 	dw Lz_3e_7752 ; $4046
-Func_3e_4048:
+DrawSelectionBoxCorners:
 	push de ; $4048
 	push bc ; $4049
 	ld c, $00 ; $404a
-	call Func_3e_40ab ; $404c
+	call ApplySelectionBoxWobbleX ; $404c
 	ld c, $00 ; $404f
-	call Func_3e_40d5 ; $4051
+	call ApplySelectionBoxWobbleY ; $4051
 	ld c, $00 ; $4054
 	ld b, $08 ; $4056
 	call QueueSprite ; $4058
@@ -91,9 +91,9 @@ Func_3e_4048:
 	ld d, a ; $4061
 	push de ; $4062
 	ld c, $01 ; $4063
-	call Func_3e_40ab ; $4065
+	call ApplySelectionBoxWobbleX ; $4065
 	ld c, $00 ; $4068
-	call Func_3e_40d5 ; $406a
+	call ApplySelectionBoxWobbleY ; $406a
 	ld c, $00 ; $406d
 	ld b, $28 ; $406f
 	call QueueSprite ; $4071
@@ -110,9 +110,9 @@ Func_3e_4048:
 	ld d, a ; $407e
 	push de ; $407f
 	ld c, $01 ; $4080
-	call Func_3e_40ab ; $4082
+	call ApplySelectionBoxWobbleX ; $4082
 	ld c, $01 ; $4085
-	call Func_3e_40d5 ; $4087
+	call ApplySelectionBoxWobbleY ; $4087
 	ld c, $00 ; $408a
 	ld b, $68 ; $408c
 	call QueueSprite ; $408e
@@ -124,15 +124,15 @@ Func_3e_4048:
 	ld e, a ; $4096
 	push de ; $4097
 	ld c, $00 ; $4098
-	call Func_3e_40ab ; $409a
+	call ApplySelectionBoxWobbleX ; $409a
 	ld c, $01 ; $409d
-	call Func_3e_40d5 ; $409f
+	call ApplySelectionBoxWobbleY ; $409f
 	ld c, $00 ; $40a2
 	ld b, $48 ; $40a4
 	call QueueSprite ; $40a6
 	pop de ; $40a9
 	ret ; $40aa
-Func_3e_40ab:
+ApplySelectionBoxWobbleX:
 	ldh a, [hVBlankCounter] ; $40ab
 	and a, $0f ; $40ad
 	ld hl, $40c5 ; $40af
@@ -156,7 +156,7 @@ Label_3e_40c1:
 	ld d, a ; $40c3
 	ret ; $40c4
 	INCBIN "data/bank_03e/d_40c5.bin" ; $40c5, 16 bytes
-Func_3e_40d5:
+ApplySelectionBoxWobbleY:
 	ldh a, [hVBlankCounter] ; $40d5
 	and a, $0f ; $40d7
 	ld hl, $40ef ; $40d9
@@ -180,7 +180,7 @@ Label_3e_40eb:
 	ld e, a ; $40ed
 	ret ; $40ee
 	INCBIN "data/bank_03e/d_40ef.bin" ; $40ef, 75 bytes
-Func_3e_413a:
+MoveMenuCursorGrid_3e:
 	ld a, [wMenuCursorX] ; $413a
 	ld d, a ; $413d
 	ld a, [wMenuCursorY] ; $413e
@@ -620,7 +620,7 @@ Label_3e_43b8:
 Label_3e_43c6:
 	ld a, $01 ; $43c6
 	ret ; $43c8
-Func_3e_43c9:
+GetMenuCursorIndex_3e:
 	ld a, [wMenuCursorY] ; $43c9
 	ld b, a ; $43cc
 	xor a, a ; $43cd
@@ -636,7 +636,7 @@ Label_3e_43d5:
 	add a, b ; $43d9
 	ret ; $43da
 	INCBIN "data/bank_03e/d_43db.bin" ; $43db, 16 bytes
-Func_3e_43eb:
+SetMenuCursorFromIndex_3e:
 	ld d, $00 ; $43eb
 	ld a, c ; $43ed
 Label_3e_43ee:
@@ -766,7 +766,7 @@ Label_3e_44b6:
 	inc de ; $44b6
 	pop hl ; $44b7
 	ret ; $44b8
-Func_3e_44b9:
+RestoreMenuScreenAndFadeIn:
 	call DisableLCDSafely ; $44b9
 	farcall FarPtr_01_0a ; $44bc
 	farcall FarPtr_ResetScreenAndTextWindows ; $44bf
@@ -774,7 +774,7 @@ Func_3e_44b9:
 	ld c, $10 ; $44c5
 	call BeginFadeIn ; $44c7
 	ret ; $44ca
-Func_3e_44cb:
+RunLinkMatchRulesMenu:
 	call EnableTimerInterrupt ; $44cb
 	sound $03 ; $44ce
 	xor a, a ; $44d0
@@ -784,20 +784,20 @@ Func_3e_44cb:
 	xor a, a ; $44da
 	ldh [$ffd8], a ; $44db
 	call ResetSerialState ; $44dd
-	call Func_3e_4607 ; $44e0
+	call LoadMatchRulesMenuGraphics ; $44e0
 	wram_bank $03 ; $44e3
 	ld a, [$cb11] ; $44e9
 	ld b, a ; $44ec
-	call Func_3e_46f4 ; $44ed
+	call OpenMatchRulesPanel ; $44ed
 	farcall FarPtr_InitMenuBgScroll ; $44f0
 	ld b, $01 ; $44f3
 	ld c, $01 ; $44f5
 	farcall FarPtr_39_26 ; $44f7
-	call Func_3e_459b ; $44fa
+	call DrawMatchRulesInitialState ; $44fa
 	ld a, $01 ; $44fd
 	ld hl, $48f1 ; $44ff
 	call RegisterFrameTask ; $4502
-	call Func_3e_4982 ; $4505
+	call DrawMatchRulesCaption ; $4505
 	farcall FarPtr_ResyncLinkSessionWithTimer ; $4508
 	push af ; $450b
 	farcall FarPtr_RunLinkInputFrame ; $450c
@@ -815,14 +815,14 @@ Label_3e_4525:
 	farcall FarPtr_TickMenuBgScroll ; $4525
 	ldh a, [$ffd3] ; $4528
 	ld [wMenuInputPressed], a ; $452a
-	call Func_3e_475d ; $452d
+	call HandleMatchRulesToggleInput ; $452d
 	ld b, $01 ; $4530
 	ld c, $03 ; $4532
-	call Func_3e_413a ; $4534
+	call MoveMenuCursorGrid_3e ; $4534
 	or a, a ; $4537
 	jr z, Label_3e_453f ; $4538
 	sound $5e ; $453a
-	call Func_3e_4982 ; $453c
+	call DrawMatchRulesCaption ; $453c
 Label_3e_453f:
 	push af ; $453f
 	farcall FarPtr_RunLinkInputFrame ; $4540
@@ -844,11 +844,11 @@ Label_3e_4551:
 	call EnableTimerInterrupt ; $455e
 	call ClearFrameTasks ; $4561
 	ld b, $01 ; $4564
-	call Func_3e_472c ; $4566
+	call CloseMatchRulesPanel ; $4566
 	ld a, $01 ; $4569
 	ld [$cb11], a ; $456b
 	ld c, $03 ; $456e
-	call Func_3e_43c9 ; $4570
+	call GetMenuCursorIndex_3e ; $4570
 	ld hl, rIE ; $4573
 	set 2, [hl] ; $4576
 	ret ; $4578
@@ -862,37 +862,37 @@ Label_3e_4579:
 	call ResetSerialState ; $4583
 	call ClearFrameTasks ; $4586
 	ld b, $00 ; $4589
-	call Func_3e_472c ; $458b
+	call CloseMatchRulesPanel ; $458b
 	ld a, $00 ; $458e
 	ld [$cb11], a ; $4590
 	ld hl, rIE ; $4593
 	set 2, [hl] ; $4596
 	ld a, $ff ; $4598
 	ret ; $459a
-Func_3e_459b:
+DrawMatchRulesInitialState:
 	ld b, $01 ; $459b
 	ld c, $00 ; $459d
-	call Func_3e_43eb ; $459f
+	call SetMenuCursorFromIndex_3e ; $459f
 	ld a, [$cb0e] ; $45a2
 	ld b, a ; $45a5
 	ld c, $01 ; $45a6
-	call Func_3e_486a ; $45a8
+	call SetMatchRuleOptionAttrRect ; $45a8
 	ld b, $00 ; $45ab
-	call Func_3e_48bb ; $45ad
+	call FlushMatchRuleRowAttrs ; $45ad
 	ld a, [$cb0f] ; $45b0
 	add a, $02 ; $45b3
 	ld b, a ; $45b5
 	ld c, $01 ; $45b6
-	call Func_3e_486a ; $45b8
+	call SetMatchRuleOptionAttrRect ; $45b8
 	ld b, $01 ; $45bb
-	call Func_3e_48bb ; $45bd
+	call FlushMatchRuleRowAttrs ; $45bd
 	ld a, [$cb10] ; $45c0
 	add a, $04 ; $45c3
 	ld b, a ; $45c5
 	ld c, $01 ; $45c6
-	call Func_3e_486a ; $45c8
+	call SetMatchRuleOptionAttrRect ; $45c8
 	ld b, $02 ; $45cb
-	call Func_3e_48bb ; $45cd
+	call FlushMatchRuleRowAttrs ; $45cd
 	ld hl, $45ef ; $45d0
 	ld d, $04 ; $45d3
 	ld e, $01 ; $45d5
@@ -910,7 +910,7 @@ Func_3e_459b:
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
 	db $df, $02, $ff, $7f, $1f, $01, $00, $00 ; 0x08
 	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x10
-Func_3e_4607:
+LoadMatchRulesMenuGraphics:
 	ldh a, [hWramBank] ; $4607
 	push af ; $4609
 	wram_bank $01 ; $460a
@@ -1032,7 +1032,7 @@ Label_3e_4637:
 	dw $ac00 ; record 11
 	dw $ad00 ; record 12
 	dw $ae00 ; record 13
-Func_3e_46f4:
+OpenMatchRulesPanel:
 	ld a, b ; $46f4
 	or a, a ; $46f5
 	jr z, Label_3e_4712 ; $46f6
@@ -1065,7 +1065,7 @@ Label_3e_4714:
 	jr nz, Label_3e_4714 ; $4726
 	call AdvanceFrame ; $4728
 	ret ; $472b
-Func_3e_472c:
+CloseMatchRulesPanel:
 	ld a, b ; $472c
 	or a, a ; $472d
 	jr z, Label_3e_4747 ; $472e
@@ -1096,7 +1096,7 @@ Label_3e_4749:
 	or a, a ; $4759
 	jr nz, Label_3e_4749 ; $475a
 	ret ; $475c
-Func_3e_475d:
+HandleMatchRulesToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
 	bit 5, a ; $4760
 	jr nz, Label_3e_4769 ; $4762
@@ -1106,16 +1106,16 @@ Func_3e_475d:
 Label_3e_4769:
 	sound $5e ; $4769
 	ld c, $01 ; $476b
-	call Func_3e_43c9 ; $476d
+	call GetMenuCursorIndex_3e ; $476d
 	or a, a ; $4770
 	jr nz, Label_3e_4787 ; $4771
 	ld a, [$cb0e] ; $4773
 	xor a, $01 ; $4776
 	ld [$cb0e], a ; $4778
-	call Func_3e_4817 ; $477b
-	call Func_3e_4982 ; $477e
+	call DrawSinglesDoublesRow ; $477b
+	call DrawMatchRulesCaption ; $477e
 	ld b, $00 ; $4781
-	call Func_3e_48bb ; $4783
+	call FlushMatchRuleRowAttrs ; $4783
 	ret ; $4786
 Label_3e_4787:
 	cp a, $01 ; $4787
@@ -1123,10 +1123,10 @@ Label_3e_4787:
 	ld a, [$cb0f] ; $478b
 	xor a, $01 ; $478e
 	ld [$cb0f], a ; $4790
-	call Func_3e_482f ; $4793
-	call Func_3e_4982 ; $4796
+	call DrawGameCountRow ; $4793
+	call DrawMatchRulesCaption ; $4796
 	ld b, $01 ; $4799
-	call Func_3e_48bb ; $479b
+	call FlushMatchRuleRowAttrs ; $479b
 	ret ; $479e
 Label_3e_479f:
 	ld a, [$cb10] ; $479f
@@ -1143,24 +1143,24 @@ Label_3e_47ab:
 	xor a, a ; $47b0
 Label_3e_47b1:
 	ld [$cb10], a ; $47b1
-	call Func_3e_4849 ; $47b4
-	call Func_3e_4982 ; $47b7
+	call DrawSetCountRow ; $47b4
+	call DrawMatchRulesCaption ; $47b7
 	ld b, $02 ; $47ba
-	call Func_3e_48bb ; $47bc
+	call FlushMatchRuleRowAttrs ; $47bc
 	ret ; $47bf
 Label_3e_47c0:
 	sound $5e ; $47c0
 	ld c, $01 ; $47c2
-	call Func_3e_43c9 ; $47c4
+	call GetMenuCursorIndex_3e ; $47c4
 	or a, a ; $47c7
 	jr nz, Label_3e_47de ; $47c8
 	ld a, [$cb0e] ; $47ca
 	xor a, $01 ; $47cd
 	ld [$cb0e], a ; $47cf
-	call Func_3e_4817 ; $47d2
-	call Func_3e_4982 ; $47d5
+	call DrawSinglesDoublesRow ; $47d2
+	call DrawMatchRulesCaption ; $47d5
 	ld b, $00 ; $47d8
-	call Func_3e_48bb ; $47da
+	call FlushMatchRuleRowAttrs ; $47da
 	ret ; $47dd
 Label_3e_47de:
 	cp a, $01 ; $47de
@@ -1168,10 +1168,10 @@ Label_3e_47de:
 	ld a, [$cb0f] ; $47e2
 	xor a, $01 ; $47e5
 	ld [$cb0f], a ; $47e7
-	call Func_3e_482f ; $47ea
-	call Func_3e_4982 ; $47ed
+	call DrawGameCountRow ; $47ea
+	call DrawMatchRulesCaption ; $47ed
 	ld b, $01 ; $47f0
-	call Func_3e_48bb ; $47f2
+	call FlushMatchRuleRowAttrs ; $47f2
 	ret ; $47f5
 Label_3e_47f6:
 	ld a, [$cb10] ; $47f6
@@ -1188,53 +1188,53 @@ Label_3e_4802:
 	xor a, a ; $4807
 Label_3e_4808:
 	ld [$cb10], a ; $4808
-	call Func_3e_4849 ; $480b
-	call Func_3e_4982 ; $480e
+	call DrawSetCountRow ; $480b
+	call DrawMatchRulesCaption ; $480e
 	ld b, $02 ; $4811
-	call Func_3e_48bb ; $4813
+	call FlushMatchRuleRowAttrs ; $4813
 	ret ; $4816
-Func_3e_4817:
+DrawSinglesDoublesRow:
 	ld b, $00 ; $4817
 	ld c, $00 ; $4819
-	call Func_3e_486a ; $481b
+	call SetMatchRuleOptionAttrRect ; $481b
 	ld b, $01 ; $481e
 	ld c, $00 ; $4820
-	call Func_3e_486a ; $4822
+	call SetMatchRuleOptionAttrRect ; $4822
 	ld a, [$cb0e] ; $4825
 	ld b, a ; $4828
 	ld c, $01 ; $4829
-	call Func_3e_486a ; $482b
+	call SetMatchRuleOptionAttrRect ; $482b
 	ret ; $482e
-Func_3e_482f:
+DrawGameCountRow:
 	ld b, $02 ; $482f
 	ld c, $00 ; $4831
-	call Func_3e_486a ; $4833
+	call SetMatchRuleOptionAttrRect ; $4833
 	ld b, $03 ; $4836
 	ld c, $00 ; $4838
-	call Func_3e_486a ; $483a
+	call SetMatchRuleOptionAttrRect ; $483a
 	ld a, [$cb0f] ; $483d
 	add a, $02 ; $4840
 	ld b, a ; $4842
 	ld c, $01 ; $4843
-	call Func_3e_486a ; $4845
+	call SetMatchRuleOptionAttrRect ; $4845
 	ret ; $4848
-Func_3e_4849:
+DrawSetCountRow:
 	ld b, $04 ; $4849
 	ld c, $00 ; $484b
-	call Func_3e_486a ; $484d
+	call SetMatchRuleOptionAttrRect ; $484d
 	ld b, $05 ; $4850
 	ld c, $00 ; $4852
-	call Func_3e_486a ; $4854
+	call SetMatchRuleOptionAttrRect ; $4854
 	ld b, $06 ; $4857
 	ld c, $00 ; $4859
-	call Func_3e_486a ; $485b
+	call SetMatchRuleOptionAttrRect ; $485b
 	ld a, [$cb10] ; $485e
 	add a, $04 ; $4861
 	ld b, a ; $4863
 	ld c, $01 ; $4864
-	call Func_3e_486a ; $4866
+	call SetMatchRuleOptionAttrRect ; $4866
 	ret ; $4869
-Func_3e_486a:
+SetMatchRuleOptionAttrRect:
 	push af ; $486a
 	push bc ; $486b
 	push de ; $486c
@@ -1278,7 +1278,7 @@ Label_3e_4895:
 	pop af ; $48a4
 	ret ; $48a5
 	INCBIN "data/bank_03e/d_48a6.bin" ; $48a6, 21 bytes
-Func_3e_48bb:
+FlushMatchRuleRowAttrs:
 	push af ; $48bb
 	push bc ; $48bc
 	push de ; $48bd
@@ -1310,8 +1310,9 @@ Label_3e_48ec:
 	pop bc ; $48ee
 	pop af ; $48ef
 	ret ; $48f0
+MatchRulesCursorSpriteTask:
 	ld c, $01 ; $48f1
-	call Func_3e_43c9 ; $48f3
+	call GetMenuCursorIndex_3e ; $48f3
 	or a, a ; $48f6
 	jr nz, Label_3e_48fe ; $48f7
 	ld a, [$cb0e] ; $48f9
@@ -1361,7 +1362,7 @@ Label_3e_4922:
 	call QueueSpriteTemplate ; $493f
 	ret ; $4942
 	INCBIN "data/bank_03e/d_4943.bin" ; $4943, 63 bytes
-Func_3e_4982:
+DrawMatchRulesCaption:
 	wram_bank $03 ; $4982
 	ld de, $d1e0 ; $4988
 	ld b, $14 ; $498b
@@ -1383,9 +1384,10 @@ Func_3e_4982:
 	ld c, $04 ; $49b3
 	call QueueVRAMCopy ; $49b5
 	ret ; $49b8
+DrawMatchRulesCaptionText:
 	wram_bank $03 ; $49b9
 	ld c, $01 ; $49bf
-	call Func_3e_43c9 ; $49c1
+	call GetMenuCursorIndex_3e ; $49c1
 	ld b, a ; $49c4
 	add a, a ; $49c5
 	ld hl, $49e0 ; $49c6
@@ -1408,7 +1410,7 @@ Label_3e_49da:
 	farcall FarPtr_RenderTextToBuffer64 ; $49dc
 	ret ; $49df
 	INCBIN "data/bank_03e/d_49e0.bin" ; $49e0, 6 bytes
-Func_3e_49e6:
+ShowLinkMessageScreen:
 	push af ; $49e6
 	push bc ; $49e7
 	push de ; $49e8
@@ -1417,7 +1419,7 @@ Func_3e_49e6:
 	push af ; $49ec
 	call DisableLCDSafely ; $49ed
 	call ClearFrameTasks ; $49f0
-	call Func_3e_4a14 ; $49f3
+	call LoadLinkMessageScreen ; $49f3
 	xor a, a ; $49f6
 	ld [$cb0b], a ; $49f7
 	ld a, $03 ; $49fa
@@ -1433,7 +1435,7 @@ Func_3e_49e6:
 	pop bc ; $4a11
 	pop af ; $4a12
 	ret ; $4a13
-Func_3e_4a14:
+LoadLinkMessageScreen:
 	ld c, $11 ; $4a14
 	farcall FarPtr_LoadScreenAssetRecord ; $4a16
 	farcall FarPtr_ResetTextWindowState ; $4a19
@@ -1457,7 +1459,7 @@ Func_3e_4a14:
 	farcall FarPtr_PrepareGlyphBuffer ; $4a4d
 	farcall FarPtr_QueueWram3MapToVRAM ; $4a50
 	ret ; $4a53
-Func_3e_4a54:
+AnimateLinkStatusPalette:
 	push af ; $4a54
 	push bc ; $4a55
 	push de ; $4a56
@@ -1497,7 +1499,7 @@ Label_3e_4a69:
 	db $bf, $01, $ff, $7f, $67, $1f, $c8, $6c ; 0x08
 	db $bf, $01, $ff, $0b, $ff, $7f, $c8, $6c ; 0x10
 	db $bf, $01, $ff, $0b, $67, $1f, $ff, $7f ; 0x18
-Func_3e_4aa7:
+ShowLinkErrorScreen:
 	call InitSerialLink ; $4aa7
 	call DisableLCDSafely ; $4aaa
 	call ClearFrameTasks ; $4aad
@@ -1505,7 +1507,7 @@ Func_3e_4aa7:
 	xor a, a ; $4ab3
 	ldh [hScrollX], a ; $4ab4
 	ldh [hScrollY], a ; $4ab6
-	call Func_3e_4ade ; $4ab8
+	call LoadLinkErrorScreen ; $4ab8
 	xor a, a ; $4abb
 	ld [$cb0b], a ; $4abc
 	ld a, $05 ; $4abf
@@ -1516,13 +1518,13 @@ Func_3e_4aa7:
 	call WaitFadeEnd ; $4acc
 Label_3e_4acf:
 	call AdvanceFrame ; $4acf
-	call Func_3e_4b37 ; $4ad2
+	call AnimateLinkErrorPalette ; $4ad2
 	ldh a, [hInputRisingEdge] ; $4ad5
 	or a, a ; $4ad7
 	jr z, Label_3e_4acf ; $4ad8
 	call ClearFrameTasks ; $4ada
 	ret ; $4add
-Func_3e_4ade:
+LoadLinkErrorScreen:
 	ld c, $22 ; $4ade
 	farcall FarPtr_LoadScreenAssetRecord ; $4ae0
 	farcall FarPtr_ResetTextWindowState ; $4ae3
@@ -1555,7 +1557,7 @@ Func_3e_4ade:
 	farcall FarPtr_UploadGlyphBuffer ; $4b30
 	farcall FarPtr_QueueWram3MapToVRAM ; $4b33
 	ret ; $4b36
-Func_3e_4b37:
+AnimateLinkErrorPalette:
 	ldh a, [hWramBank] ; $4b37
 	push af ; $4b39
 	wram_bank $03 ; $4b3a
@@ -1599,10 +1601,10 @@ Label_3e_4b6b:
 	wram_bank ; $4b7e
 	ret ; $4b82
 	INCBIN "data/bank_03e/d_4b83.bin" ; $4b83, 32 bytes
-Func_3e_4ba3:
+ShowLinkStatusMessage:
 	push bc ; $4ba3
 	wram_bank $03 ; $4ba4
-	call Func_3e_4bed ; $4baa
+	call ClearLinkMessageWindow ; $4baa
 	farcall FarPtr_PrepareGlyphBuffer ; $4bad
 	wram_bank $03 ; $4bb0
 	pop bc ; $4bb6
@@ -1631,9 +1633,9 @@ Label_3e_4bdb:
 	farcall FarPtr_RenderProportionalTextAt ; $4be3
 Label_3e_4be6:
 	farcall FarPtr_UploadGlyphBuffer ; $4be6
-	call Func_3e_4c06 ; $4be9
+	call FlushLinkMessageRows ; $4be9
 	ret ; $4bec
-Func_3e_4bed:
+ClearLinkMessageWindow:
 	ld de, $d161 ; $4bed
 	ld b, $12 ; $4bf0
 	ld c, $01 ; $4bf2
@@ -1645,13 +1647,13 @@ Func_3e_4bed:
 	ld h, $20 ; $4c00
 	farcall FarPtr_FillTilemapRect ; $4c02
 	ret ; $4c05
-Func_3e_4c06:
+FlushLinkMessageRows:
 	ld hl, $d160 ; $4c06
 	ld de, $9960 ; $4c09
 	ld c, $0c ; $4c0c
 	call QueueVRAMCopy ; $4c0e
 	ret ; $4c11
-Func_3e_4c12:
+RunEraseDataConfirmMenu:
 	ld hl, rIE ; $4c12
 	res 2, [hl] ; $4c15
 	wram_bank $03 ; $4c17
@@ -1659,7 +1661,7 @@ Func_3e_4c12:
 	ld [$d800], a ; $4c1e
 	call DisableLCDSafely ; $4c21
 	call ClearFrameTasks ; $4c24
-	call Func_3e_4caf ; $4c27
+	call LoadEraseDataConfirmScreen ; $4c27
 	xor a, a ; $4c2a
 	ld [$cb0b], a ; $4c2b
 	ld a, $01 ; $4c2e
@@ -1668,7 +1670,7 @@ Func_3e_4c12:
 	ld a, $01 ; $4c36
 	ld hl, $4e0c ; $4c38
 	call RegisterFrameTask ; $4c3b
-	call Func_3e_4e34 ; $4c3e
+	call AnimateEraseConfirmPalette ; $4c3e
 	call EnableLCD ; $4c41
 	ld c, $08 ; $4c44
 	call BeginFadeIn ; $4c46
@@ -1719,10 +1721,10 @@ Label_3e_4c9b:
 	call WaitFadeEnd ; $4caa
 	xor a, a ; $4cad
 	ret ; $4cae
-Func_3e_4caf:
+LoadEraseDataConfirmScreen:
 	ld c, $01 ; $4caf
 	ld b, $01 ; $4cb1
-	call Func_3e_43eb ; $4cb3
+	call SetMenuCursorFromIndex_3e ; $4cb3
 	ld hl, $a000 ; $4cb6
 	ld de, $0801 ; $4cb9
 	farcall FarPtr_18_06 ; $4cbc
@@ -1854,15 +1856,16 @@ Label_3e_4def:
 	farcall FarPtr_UploadGlyphBuffer ; $4e05
 	farcall FarPtr_QueueWram3MapToVRAM ; $4e08
 	ret ; $4e0b
+EraseConfirmCursorSpriteTask:
 	ld de, $7376 ; $4e0c
 	ld a, [wMenuCursorY] ; $4e0f
 	or a, a ; $4e12
 	jr z, Label_3e_4e18 ; $4e13
 	ld de, $7386 ; $4e15
 Label_3e_4e18:
-	call Func_3e_4e1c ; $4e18
+	call QueueEraseConfirmCursorSprites ; $4e18
 	ret ; $4e1b
-Func_3e_4e1c:
+QueueEraseConfirmCursorSprites:
 	ld c, $00 ; $4e1c
 	ld b, $08 ; $4e1e
 	push de ; $4e20
@@ -1876,7 +1879,7 @@ Func_3e_4e1c:
 	call QueueSprite ; $4e2d
 	farcall FarPtr_TickMenuBgScroll ; $4e30
 	ret ; $4e33
-Func_3e_4e34:
+AnimateEraseConfirmPalette:
 	ldh a, [hWramBank] ; $4e34
 	push af ; $4e36
 	wram_bank $03 ; $4e37
@@ -1920,15 +1923,15 @@ Label_3e_4e68:
 	wram_bank ; $4e7b
 	ret ; $4e7f
 	INCBIN "data/bank_03e/d_4e80.bin" ; $4e80, 32 bytes
-Func_3e_4ea0:
+RunRacketShoesChoiceMenu:
 	sound $03 ; $4ea0
 	ld hl, rIE ; $4ea2
 	res 2, [hl] ; $4ea5
-	call Func_3e_4f33 ; $4ea7
+	call LoadRacketShoesChoiceGraphics ; $4ea7
 	wram_bank $03 ; $4eaa
 	ld a, [$cb11] ; $4eb0
 	ld b, a ; $4eb3
-	call Func_3e_5092 ; $4eb4
+	call OpenChoiceTabPanel ; $4eb4
 	farcall FarPtr_InitMenuBgScroll ; $4eb7
 	ld b, $01 ; $4eba
 	ld c, $01 ; $4ebc
@@ -1936,11 +1939,11 @@ Func_3e_4ea0:
 	ld a, [$cb24] ; $4ec1
 	ld c, a ; $4ec4
 	ld b, $02 ; $4ec5
-	call Func_3e_43eb ; $4ec7
+	call SetMenuCursorFromIndex_3e ; $4ec7
 	ld a, $01 ; $4eca
 	ld hl, $50f5 ; $4ecc
 	call RegisterFrameTask ; $4ecf
-	call Func_3e_4fcf ; $4ed2
+	call RedrawRacketShoesChoiceMenu ; $4ed2
 	wram_bank $03 ; $4ed5
 Label_3e_4edb:
 	call AdvanceFrame ; $4edb
@@ -1948,11 +1951,11 @@ Label_3e_4edb:
 	ld [wMenuInputPressed], a ; $4ee0
 	ld b, $02 ; $4ee3
 	ld c, $01 ; $4ee5
-	call Func_3e_413a ; $4ee7
+	call MoveMenuCursorGrid_3e ; $4ee7
 	or a, a ; $4eea
 	jr z, Label_3e_4ef2 ; $4eeb
 	sound $5e ; $4eed
-	call Func_3e_4fcf ; $4eef
+	call RedrawRacketShoesChoiceMenu ; $4eef
 Label_3e_4ef2:
 	ld a, [wMenuInputPressed] ; $4ef2
 	bit 0, a ; $4ef5
@@ -1966,11 +1969,11 @@ Label_3e_4eff:
 	ld hl, rIE ; $4f04
 	set 2, [hl] ; $4f07
 	ld b, $01 ; $4f09
-	call Func_3e_50c4 ; $4f0b
+	call CloseChoiceTabPanel ; $4f0b
 	ld a, $01 ; $4f0e
 	ld [$cb11], a ; $4f10
 	ld c, $02 ; $4f13
-	call Func_3e_43c9 ; $4f15
+	call GetMenuCursorIndex_3e ; $4f15
 	ld [$cb24], a ; $4f18
 	ret ; $4f1b
 Label_3e_4f1c:
@@ -1979,12 +1982,12 @@ Label_3e_4f1c:
 	ld hl, rIE ; $4f21
 	set 2, [hl] ; $4f24
 	ld b, $00 ; $4f26
-	call Func_3e_50c4 ; $4f28
+	call CloseChoiceTabPanel ; $4f28
 	ld a, $00 ; $4f2b
 	ld [$cb11], a ; $4f2d
 	ld a, $ff ; $4f30
 	ret ; $4f32
-Func_3e_4f33:
+LoadRacketShoesChoiceGraphics:
 	ldh a, [hWramBank] ; $4f33
 	push af ; $4f35
 	wram_bank $01 ; $4f36
@@ -2067,25 +2070,25 @@ Label_3e_4f63:
 	wram_bank ; $4fbe
 	ret ; $4fc2
 	INCBIN "data/bank_03e/d_4fc3.bin" ; $4fc3, 12 bytes
-Func_3e_4fcf:
+RedrawRacketShoesChoiceMenu:
 	wram_bank $03 ; $4fcf
 	ld b, $00 ; $4fd5
 	ld c, $00 ; $4fd7
 Label_3e_4fd9:
-	call Func_3e_5165 ; $4fd9
+	call SetChoiceTabAttrRect ; $4fd9
 	ld a, b ; $4fdc
 	inc a ; $4fdd
 	ld b, a ; $4fde
 	cp a, $03 ; $4fdf
 	jr nz, Label_3e_4fd9 ; $4fe1
 	ld c, $02 ; $4fe3
-	call Func_3e_43c9 ; $4fe5
+	call GetMenuCursorIndex_3e ; $4fe5
 	ld b, a ; $4fe8
 	ld c, $01 ; $4fe9
-	call Func_3e_5165 ; $4feb
+	call SetChoiceTabAttrRect ; $4feb
 	ld c, $02 ; $4fee
-	call Func_3e_43c9 ; $4ff0
-	call Func_3e_5038 ; $4ff3
+	call GetMenuCursorIndex_3e ; $4ff0
+	call SetRacketShoesChoicePalette ; $4ff3
 	wram_bank $03 ; $4ff6
 	ld de, $d1e0 ; $4ffc
 	ld b, $14 ; $4fff
@@ -2101,7 +2104,7 @@ Label_3e_4fd9:
 	ld c, $01 ; $5017
 	ld h, $20 ; $5019
 	farcall FarPtr_FillTilemapRect ; $501b
-	call Func_3e_506d ; $501e
+	call DrawRacketShoesChoiceCaption ; $501e
 	ld hl, $d4e0 ; $5021
 	ld de, $b8e0 ; $5024
 	ld c, $06 ; $5027
@@ -2111,7 +2114,7 @@ Label_3e_4fd9:
 	ld c, $04 ; $5032
 	call QueueVRAMCopy ; $5034
 	ret ; $5037
-Func_3e_5038:
+SetRacketShoesChoicePalette:
 	ld hl, $504b ; $5038
 	add a, a ; $503b
 	add a, l ; $503c
@@ -2138,12 +2141,12 @@ Label_3e_5041:
 	; $505d, 16 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x08
-Func_3e_506d:
+DrawRacketShoesChoiceCaption:
 	ldh a, [hWramBank] ; $506d
 	push af ; $506f
 	wram_bank $03 ; $5070
 	ld c, $02 ; $5076
-	call Func_3e_43c9 ; $5078
+	call GetMenuCursorIndex_3e ; $5078
 	ld b, a ; $507b
 	ld hl, $00e0 ; $507c
 	add a, l ; $507f
@@ -2157,7 +2160,7 @@ Label_3e_5084:
 	pop af ; $508c
 	wram_bank ; $508d
 	ret ; $5091
-Func_3e_5092:
+OpenChoiceTabPanel:
 	ld a, b ; $5092
 	or a, a ; $5093
 	jr z, Label_3e_50ad ; $5094
@@ -2188,7 +2191,7 @@ Label_3e_50af:
 	cp a, $ff ; $50bf
 	jr nz, Label_3e_50af ; $50c1
 	ret ; $50c3
-Func_3e_50c4:
+CloseChoiceTabPanel:
 	ld a, b ; $50c4
 	or a, a ; $50c5
 	jr z, Label_3e_50df ; $50c6
@@ -2219,9 +2222,10 @@ Label_3e_50e1:
 	or a, a ; $50f1
 	jr nz, Label_3e_50e1 ; $50f2
 	ret ; $50f4
+ChoiceTabCursorSpriteTask:
 	farcall FarPtr_TickMenuBgScroll ; $50f5
 	ld c, $02 ; $50f8
-	call Func_3e_43c9 ; $50fa
+	call GetMenuCursorIndex_3e ; $50fa
 	push af ; $50fd
 	ld hl, $5162 ; $50fe
 	add a, l ; $5101
@@ -2270,7 +2274,7 @@ Label_3e_5111:
 	db $00, $80, $50, $0c ; 0x28
 	db $50, $54, $50, $5c ; 0x2c
 	db $00, $10, $20 ; 0x30
-Func_3e_5165:
+SetChoiceTabAttrRect:
 	push af ; $5165
 	push bc ; $5166
 	push de ; $5167
@@ -2305,15 +2309,15 @@ Label_3e_517e:
 	pop af ; $518c
 	ret ; $518d
 	INCBIN "data/bank_03e/d_518e.bin" ; $518e, 4 bytes
-Func_3e_5192:
+RunPlayAlonePartnerMenu:
 	sound $03 ; $5192
 	ld hl, rIE ; $5194
 	res 2, [hl] ; $5197
-	call Func_3e_5229 ; $5199
+	call LoadPlayAlonePartnerGraphics ; $5199
 	wram_bank $03 ; $519c
 	ld a, [$cb11] ; $51a2
 	ld b, a ; $51a5
-	call Func_3e_5092 ; $51a6
+	call OpenChoiceTabPanel ; $51a6
 	farcall FarPtr_InitMenuBgScroll ; $51a9
 	ld b, $01 ; $51ac
 	ld c, $01 ; $51ae
@@ -2321,11 +2325,11 @@ Func_3e_5192:
 	xor a, a ; $51b3
 	ld c, a ; $51b4
 	ld b, $02 ; $51b5
-	call Func_3e_43eb ; $51b7
+	call SetMenuCursorFromIndex_3e ; $51b7
 	ld a, $01 ; $51ba
 	ld hl, $50f5 ; $51bc
 	call RegisterFrameTask ; $51bf
-	call Func_3e_52b7 ; $51c2
+	call RedrawPlayAlonePartnerMenu ; $51c2
 	wram_bank $03 ; $51c5
 Label_3e_51cb:
 	call AdvanceFrame ; $51cb
@@ -2333,11 +2337,11 @@ Label_3e_51cb:
 	ld [wMenuInputPressed], a ; $51d0
 	ld b, $02 ; $51d3
 	ld c, $01 ; $51d5
-	call Func_3e_413a ; $51d7
+	call MoveMenuCursorGrid_3e ; $51d7
 	or a, a ; $51da
 	jr z, Label_3e_51e2 ; $51db
 	sound $5e ; $51dd
-	call Func_3e_52b7 ; $51df
+	call RedrawPlayAlonePartnerMenu ; $51df
 Label_3e_51e2:
 	ld a, [wMenuInputPressed] ; $51e2
 	bit 0, a ; $51e5
@@ -2351,11 +2355,11 @@ Label_3e_51ef:
 	ld hl, rIE ; $51f4
 	set 2, [hl] ; $51f7
 	ld b, $01 ; $51f9
-	call Func_3e_50c4 ; $51fb
+	call CloseChoiceTabPanel ; $51fb
 	ld a, $01 ; $51fe
 	ld [$cb11], a ; $5200
 	ld c, $02 ; $5203
-	call Func_3e_43c9 ; $5205
+	call GetMenuCursorIndex_3e ; $5205
 	clear_flag $05, 7 ; $5208
 	or a, a ; $520b
 	jr z, Label_3e_5211 ; $520c
@@ -2368,12 +2372,12 @@ Label_3e_5212:
 	ld hl, rIE ; $5217
 	set 2, [hl] ; $521a
 	ld b, $00 ; $521c
-	call Func_3e_50c4 ; $521e
+	call CloseChoiceTabPanel ; $521e
 	ld a, $00 ; $5221
 	ld [$cb11], a ; $5223
 	ld a, $ff ; $5226
 	ret ; $5228
-Func_3e_5229:
+LoadPlayAlonePartnerGraphics:
 	ldh a, [hWramBank] ; $5229
 	push af ; $522b
 	wram_bank $01 ; $522c
@@ -2452,25 +2456,25 @@ Label_3e_5259:
 	wram_bank ; $52aa
 	ret ; $52ae
 	INCBIN "data/bank_03e/d_52af.bin" ; $52af, 8 bytes
-Func_3e_52b7:
+RedrawPlayAlonePartnerMenu:
 	wram_bank $03 ; $52b7
 	ld b, $00 ; $52bd
 	ld c, $00 ; $52bf
 Label_3e_52c1:
-	call Func_3e_5165 ; $52c1
+	call SetChoiceTabAttrRect ; $52c1
 	ld a, b ; $52c4
 	inc a ; $52c5
 	ld b, a ; $52c6
 	cp a, $03 ; $52c7
 	jr nz, Label_3e_52c1 ; $52c9
 	ld c, $02 ; $52cb
-	call Func_3e_43c9 ; $52cd
+	call GetMenuCursorIndex_3e ; $52cd
 	ld b, a ; $52d0
 	ld c, $01 ; $52d1
-	call Func_3e_5165 ; $52d3
+	call SetChoiceTabAttrRect ; $52d3
 	ld c, $02 ; $52d6
-	call Func_3e_43c9 ; $52d8
-	call Func_3e_5320 ; $52db
+	call GetMenuCursorIndex_3e ; $52d8
+	call SetPlayAlonePartnerPalette ; $52db
 	wram_bank $03 ; $52de
 	ld de, $d1e0 ; $52e4
 	ld b, $14 ; $52e7
@@ -2486,7 +2490,7 @@ Label_3e_52c1:
 	ld c, $01 ; $52ff
 	ld h, $20 ; $5301
 	farcall FarPtr_FillTilemapRect ; $5303
-	call Func_3e_5355 ; $5306
+	call DrawPlayAlonePartnerCaption ; $5306
 	ld hl, $d4e0 ; $5309
 	ld de, $b8e0 ; $530c
 	ld c, $06 ; $530f
@@ -2496,7 +2500,7 @@ Label_3e_52c1:
 	ld c, $04 ; $531a
 	call QueueVRAMCopy ; $531c
 	ret ; $531f
-Func_3e_5320:
+SetPlayAlonePartnerPalette:
 	ld hl, $5333 ; $5320
 	add a, a ; $5323
 	add a, l ; $5324
@@ -2523,12 +2527,12 @@ Label_3e_5329:
 	; $5345, 16 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x08
-Func_3e_5355:
+DrawPlayAlonePartnerCaption:
 	ldh a, [hWramBank] ; $5355
 	push af ; $5357
 	wram_bank $03 ; $5358
 	ld c, $02 ; $535e
-	call Func_3e_43c9 ; $5360
+	call GetMenuCursorIndex_3e ; $5360
 	ld b, a ; $5363
 	ld hl, $5384 ; $5364
 	add a, a ; $5367
@@ -2553,7 +2557,7 @@ Label_3e_5379:
 	wram_bank ; $537f
 	ret ; $5383
 	INCBIN "data/bank_03e/d_5384.bin" ; $5384, 4 bytes
-Func_3e_5388:
+ShowEquipmentStatusScreen:
 	call ClearFrameTasks ; $5388
 	ld c, $10 ; $538b
 	call BeginFadeOut ; $538d
@@ -2565,7 +2569,7 @@ Func_3e_5388:
 	xor a, a ; $539f
 	ldh [hScrollX], a ; $53a0
 	ldh [hScrollY], a ; $53a2
-	call Func_3e_53cf ; $53a4
+	call DrawEquipmentStatusScreen ; $53a4
 	call EnableLCD ; $53a7
 	ld c, $10 ; $53aa
 	call BeginFadeIn ; $53ac
@@ -2585,19 +2589,19 @@ Label_3e_53c1:
 	call BeginFadeOut ; $53c8
 	call WaitFadeEnd ; $53cb
 	ret ; $53ce
-Func_3e_53cf:
-	call Func_3e_53f1 ; $53cf
+DrawEquipmentStatusScreen:
+	call LoadEquipmentStatusWindows ; $53cf
 	farcall FarPtr_PrepareGlyphBuffer ; $53d2
 	wram_bank $03 ; $53d5
 	ld hl, $d800 ; $53db
 	ld bc, $0003 ; $53de
 	call ClearMemory16 ; $53e1
-	call Func_3e_5458 ; $53e4
-	call Func_3e_5486 ; $53e7
+	call DrawEquippedRacketPanel ; $53e4
+	call DrawEquippedShoesPanel ; $53e7
 	farcall FarPtr_UploadGlyphBuffer ; $53ea
 	farcall FarPtr_QueueWram3MapToVRAM ; $53ed
 	ret ; $53f0
-Func_3e_53f1:
+LoadEquipmentStatusWindows:
 	ld c, $21 ; $53f1
 	farcall FarPtr_LoadScreenAssetRecord ; $53f3
 	farcall FarPtr_ResetTextWindowState ; $53f6
@@ -2624,9 +2628,9 @@ Func_3e_53f1:
 	farcall FarPtr_CreateWindowFromScreenRect ; $542c
 	farcall FarPtr_DrawTextWindowFrame ; $542f
 	farcall FarPtr_RedrawWindowRows ; $5432
-	call Func_3e_5439 ; $5435
+	call SetEquipmentStatusAttrRects ; $5435
 	ret ; $5438
-Func_3e_5439:
+SetEquipmentStatusAttrRects:
 	wram_bank $03 ; $5439
 	ld de, $d581 ; $543f
 	ld b, $12 ; $5442
@@ -2639,50 +2643,50 @@ Func_3e_5439:
 	ld h, $08 ; $5452
 	farcall FarPtr_FillTilemapRect ; $5454
 	ret ; $5457
-Func_3e_5458:
+DrawEquippedRacketPanel:
 	ld a, $00 ; $5458
 	ld [$d813], a ; $545a
-	call Func_3e_575a ; $545d
-	call Func_3e_5725 ; $5460
+	call MarkOwnedRackets ; $545d
+	call BuildOwnedItemList ; $5460
 	ld a, $01 ; $5463
 	ld [$d814], a ; $5465
 	ld a, [$d811] ; $5468
 	ld [wMenuCursorX], a ; $546b
-	call Func_3e_595f ; $546e
+	call GetEquippedItemId ; $546e
 	ld c, a ; $5471
 	ld de, $d025 ; $5472
-	call Func_3e_557a ; $5475
-	call Func_3e_595f ; $5478
+	call DrawItemIcon2x2 ; $5475
+	call GetEquippedItemId ; $5478
 	ld c, a ; $547b
 	ld de, $d028 ; $547c
-	call Func_3e_59be ; $547f
-	call Func_3e_596e ; $5482
+	call RenderRacketNameText ; $547f
+	call DrawEquippedItemStatMods ; $5482
 	ret ; $5485
-Func_3e_5486:
+DrawEquippedShoesPanel:
 	ld hl, $d800 ; $5486
 	ld bc, $0003 ; $5489
 	call ClearMemory16 ; $548c
 	ld a, $01 ; $548f
 	ld [$d813], a ; $5491
-	call Func_3e_57a8 ; $5494
-	call Func_3e_5725 ; $5497
+	call MarkOwnedShoes ; $5494
+	call BuildOwnedItemList ; $5497
 	ld a, $02 ; $549a
 	ld [$d814], a ; $549c
 	ld a, [$d811] ; $549f
 	ld [wMenuCursorX], a ; $54a2
-	call Func_3e_595f ; $54a5
+	call GetEquippedItemId ; $54a5
 	ld c, a ; $54a8
 	ld de, $d145 ; $54a9
-	call Func_3e_557a ; $54ac
-	call Func_3e_595f ; $54af
+	call DrawItemIcon2x2 ; $54ac
+	call GetEquippedItemId ; $54af
 	ld c, a ; $54b2
 	ld de, $d148 ; $54b3
-	call Func_3e_59b8 ; $54b6
-	call Func_3e_596e ; $54b9
+	call RenderShoesNameText ; $54b6
+	call DrawEquippedItemStatMods ; $54b9
 	ret ; $54bc
-Func_3e_54bd:
+RunRacketSelectScreen:
 	call DisableLCDSafely ; $54bd
-	call Func_3e_550d ; $54c0
+	call LoadRacketSelectScreen ; $54c0
 	ld a, $01 ; $54c3
 	ld hl, $59cd ; $54c5
 	call RegisterFrameTask ; $54c8
@@ -2694,7 +2698,7 @@ Func_3e_54bd:
 	call BeginFadeIn ; $54d8
 	call WaitFadeEnd ; $54db
 Label_3e_54de:
-	call Func_3e_55af ; $54de
+	call HandleEquipSelectInput ; $54de
 	ld a, [$d812] ; $54e1
 	or a, a ; $54e4
 	jr z, Label_3e_54ef ; $54e5
@@ -2720,14 +2724,14 @@ Label_3e_5508:
 	farcall FarPtr_RefreshMainCharacterStats ; $5508
 	xor a, a ; $550b
 	ret ; $550c
-Func_3e_550d:
+LoadRacketSelectScreen:
 	ld c, $21 ; $550d
 	farcall FarPtr_LoadScreenAssetRecord ; $550f
 	farcall FarPtr_PrepareGlyphBuffer ; $5512
-	call Func_3e_57f4 ; $5515
+	call LoadEquipSelectCommon ; $5515
 	ld c, $00 ; $5518
 	ld b, $07 ; $551a
-	call Func_3e_43eb ; $551c
+	call SetMenuCursorFromIndex_3e ; $551c
 	wram_bank $03 ; $551f
 	ld hl, $d800 ; $5525
 	ld bc, $0002 ; $5528
@@ -2736,10 +2740,10 @@ Func_3e_550d:
 	ld [$d813], a ; $5530
 	ld a, $00 ; $5533
 	ld [$d814], a ; $5535
-	call Func_3e_575a ; $5538
-	call Func_3e_5725 ; $553b
-	call Func_3e_5563 ; $553e
-	call Func_3e_5624 ; $5541
+	call MarkOwnedRackets ; $5538
+	call BuildOwnedItemList ; $553b
+	call DrawOwnedItemIcons ; $553e
+	call DrawRacketInfoPanel ; $5541
 	ld b, $63 ; $5544
 	ld c, $02 ; $5546
 	ld de, $a200 ; $5548
@@ -2750,7 +2754,7 @@ Func_3e_550d:
 	farcall FarPtr_QueueWram3MapToVRAM ; $5557
 	ret ; $555a
 	INCBIN "data/bank_03e/d_555b.bin" ; $555b, 8 bytes
-Func_3e_5563:
+DrawOwnedItemIcons:
 	ld hl, $d800 ; $5563
 	ld a, [$d810] ; $5566
 	ld b, a ; $5569
@@ -2758,7 +2762,7 @@ Func_3e_5563:
 Label_3e_556d:
 	ld a, [hl+] ; $556d
 	ld c, a ; $556e
-	call Func_3e_557a ; $556f
+	call DrawItemIcon2x2 ; $556f
 	inc de ; $5572
 	inc de ; $5573
 	ld a, b ; $5574
@@ -2766,7 +2770,7 @@ Label_3e_556d:
 	ld b, a ; $5576
 	jr nz, Label_3e_556d ; $5577
 	ret ; $5579
-Func_3e_557a:
+DrawItemIcon2x2:
 	push af ; $557a
 	push bc ; $557b
 	push de ; $557c
@@ -2804,7 +2808,7 @@ Label_3e_5591:
 	pop bc ; $55ac
 	pop af ; $55ad
 	ret ; $55ae
-Func_3e_55af:
+HandleEquipSelectInput:
 	ldh a, [hInputPressed] ; $55af
 	ld [wMenuInputPressed], a ; $55b1
 	bit 0, a ; $55b4
@@ -2821,9 +2825,9 @@ Label_3e_55be:
 	ld [$d812], a ; $55c8
 	ld a, [$d810] ; $55cb
 	ld c, a ; $55ce
-	call Func_3e_43c9 ; $55cf
+	call GetMenuCursorIndex_3e ; $55cf
 	ld [$d811], a ; $55d2
-	call Func_3e_595f ; $55d5
+	call GetEquippedItemId ; $55d5
 	ld b, a ; $55d8
 	ld a, [$d813] ; $55d9
 	cp a, $00 ; $55dc
@@ -2852,41 +2856,41 @@ Label_3e_5601:
 	ld a, [$d810] ; $5601
 	ld b, a ; $5604
 	ld c, $01 ; $5605
-	call Func_3e_413a ; $5607
+	call MoveMenuCursorGrid_3e ; $5607
 	or a, a ; $560a
 	jr z, Label_3e_5623 ; $560b
 	sound $5e ; $560d
-	call Func_3e_5854 ; $560f
+	call ClearEquipSelectTextRows ; $560f
 	ld a, [$d813] ; $5612
 	or a, a ; $5615
 	jr z, Label_3e_561d ; $5616
-	call Func_3e_5704 ; $5618
+	call DrawShoesInfoPanel ; $5618
 	jr Label_3e_5620 ; $561b
 Label_3e_561d:
-	call Func_3e_5624 ; $561d
+	call DrawRacketInfoPanel ; $561d
 Label_3e_5620:
-	call Func_3e_5899 ; $5620
+	call FlushEquipSelectTextRows ; $5620
 Label_3e_5623:
 	ret ; $5623
-Func_3e_5624:
+DrawRacketInfoPanel:
 	farcall FarPtr_PrepareGlyphBuffer ; $5624
-	call Func_3e_5981 ; $5627
-	call Func_3e_594a ; $562a
+	call DrawHoveredItemStatMods ; $5627
+	call GetHoveredItemId ; $562a
 	ld c, a ; $562d
 	ld de, $d0a5 ; $562e
 	push bc ; $5631
-	call Func_3e_557a ; $5632
+	call DrawItemIcon2x2 ; $5632
 	pop bc ; $5635
 	push bc ; $5636
-	call Func_3e_59a4 ; $5637
+	call RenderRacketDescText ; $5637
 	pop bc ; $563a
 	ld de, $d0a8 ; $563b
-	call Func_3e_59be ; $563e
+	call RenderRacketNameText ; $563e
 	farcall FarPtr_UploadGlyphBuffer ; $5641
 	ret ; $5644
-Func_3e_5645:
+RunShoesSelectScreen:
 	call DisableLCDSafely ; $5645
-	call Func_3e_5696 ; $5648
+	call LoadShoesSelectScreen ; $5648
 	ld a, $01 ; $564b
 	ld hl, $59cd ; $564d
 	call RegisterFrameTask ; $5650
@@ -2898,7 +2902,7 @@ Func_3e_5645:
 	call BeginFadeIn ; $5660
 	call WaitFadeEnd ; $5663
 Label_3e_5666:
-	call Func_3e_55af ; $5666
+	call HandleEquipSelectInput ; $5666
 	ld a, [$d812] ; $5669
 	or a, a ; $566c
 	jr z, Label_3e_5677 ; $566d
@@ -2925,11 +2929,11 @@ Label_3e_5690:
 	xor a, a ; $5693
 	ret ; $5694
 	ret ; $5695
-Func_3e_5696:
+LoadShoesSelectScreen:
 	ld c, $21 ; $5696
 	farcall FarPtr_LoadScreenAssetRecord ; $5698
 	farcall FarPtr_PrepareGlyphBuffer ; $569b
-	call Func_3e_57f4 ; $569e
+	call LoadEquipSelectCommon ; $569e
 	wram_bank $03 ; $56a1
 	ld hl, $d340 ; $56a7
 	ld de, $d000 ; $56aa
@@ -2943,7 +2947,7 @@ Func_3e_5696:
 	farcall FarPtr_CopyTilemapRect ; $56be
 	ld c, $00 ; $56c1
 	ld b, $07 ; $56c3
-	call Func_3e_43eb ; $56c5
+	call SetMenuCursorFromIndex_3e ; $56c5
 	wram_bank $03 ; $56c8
 	ld hl, $d800 ; $56ce
 	ld bc, $0002 ; $56d1
@@ -2952,10 +2956,10 @@ Func_3e_5696:
 	ld [$d813], a ; $56d9
 	ld a, $00 ; $56dc
 	ld [$d814], a ; $56de
-	call Func_3e_57a8 ; $56e1
-	call Func_3e_5725 ; $56e4
-	call Func_3e_5563 ; $56e7
-	call Func_3e_5704 ; $56ea
+	call MarkOwnedShoes ; $56e1
+	call BuildOwnedItemList ; $56e4
+	call DrawOwnedItemIcons ; $56e7
+	call DrawShoesInfoPanel ; $56ea
 	ld b, $63 ; $56ed
 	ld c, $02 ; $56ef
 	ld de, $a200 ; $56f1
@@ -2965,23 +2969,23 @@ Func_3e_5696:
 	call LoadPaletteShadow ; $56fd
 	farcall FarPtr_QueueWram3MapToVRAM ; $5700
 	ret ; $5703
-Func_3e_5704:
+DrawShoesInfoPanel:
 	farcall FarPtr_PrepareGlyphBuffer ; $5704
-	call Func_3e_5981 ; $5707
-	call Func_3e_594a ; $570a
+	call DrawHoveredItemStatMods ; $5707
+	call GetHoveredItemId ; $570a
 	ld c, a ; $570d
 	ld de, $d0a5 ; $570e
 	push bc ; $5711
-	call Func_3e_557a ; $5712
+	call DrawItemIcon2x2 ; $5712
 	pop bc ; $5715
 	push bc ; $5716
-	call Func_3e_599e ; $5717
+	call RenderShoesDescText ; $5717
 	pop bc ; $571a
 	ld de, $d0a8 ; $571b
-	call Func_3e_59b8 ; $571e
+	call RenderShoesNameText ; $571e
 	farcall FarPtr_UploadGlyphBuffer ; $5721
 	ret ; $5724
-Func_3e_5725:
+BuildOwnedItemList:
 	xor a, a ; $5725
 	ld [$d811], a ; $5726
 	ld [$d810], a ; $5729
@@ -3013,7 +3017,7 @@ Label_3e_574f:
 	ld a, b ; $5755
 	ld [$d810], a ; $5756
 	ret ; $5759
-Func_3e_575a:
+MarkOwnedRackets:
 	ld hl, $d808 ; $575a
 	ld bc, $0008 ; $575d
 	call ClearBytes ; $5760
@@ -3056,7 +3060,7 @@ Label_3e_5796:
 	ld [hl], a ; $5798
 	ret ; $5799
 	INCBIN "data/bank_03e/d_579a.bin" ; $579a, 14 bytes
-Func_3e_57a8:
+MarkOwnedShoes:
 	ld hl, $d808 ; $57a8
 	ld bc, $0008 ; $57ab
 	call ClearBytes ; $57ae
@@ -3100,19 +3104,19 @@ Label_3e_57e6:
 	ld [hl], a ; $57e8
 	ret ; $57e9
 	INCBIN "data/bank_03e/d_57ea.bin" ; $57ea, 10 bytes
-Func_3e_57f4:
+LoadEquipSelectCommon:
 	farcall FarPtr_ResetTextWindowState ; $57f4
 	ld b, $11 ; $57f7
 	ld c, $10 ; $57f9
 	ld de, $9000 ; $57fb
 	farcall FarPtr_LoadCompressedTileBlock ; $57fe
 	wram_bank $05 ; $5801
-	call Func_3e_5838 ; $5807
-	call Func_3e_5814 ; $580a
+	call CreateEquipCaptionWindow ; $5807
+	call CreateEquipListWindow ; $580a
 	ld de, $a000 ; $580d
 	farcall FarPtr_39_06 ; $5810
 	ret ; $5813
-Func_3e_5814:
+CreateEquipListWindow:
 	ld d, $00 ; $5814
 	ld e, $04 ; $5816
 	ld b, $14 ; $5818
@@ -3127,7 +3131,7 @@ Func_3e_5814:
 	ld h, $08 ; $5832
 	farcall FarPtr_FillTilemapRect ; $5834
 	ret ; $5837
-Func_3e_5838:
+CreateEquipCaptionWindow:
 	ld a, $03 ; $5838
 	ld [$c3b3], a ; $583a
 	ld a, $00 ; $583d
@@ -3140,7 +3144,7 @@ Func_3e_5838:
 	farcall FarPtr_DrawTextWindowFrame ; $584d
 	farcall FarPtr_RedrawWindowRows ; $5850
 	ret ; $5853
-Func_3e_5854:
+ClearEquipSelectTextRows:
 	ld de, $d1a0 ; $5854
 	ld b, $14 ; $5857
 	ld c, $01 ; $5859
@@ -3170,7 +3174,7 @@ Func_3e_5854:
 	ld h, $20 ; $5893
 	farcall FarPtr_FillTilemapRect ; $5895
 	ret ; $5898
-Func_3e_5899:
+FlushEquipSelectTextRows:
 	ld hl, $d080 ; $5899
 	ld de, $9880 ; $589c
 	ld c, $10 ; $589f
@@ -3206,12 +3210,12 @@ Label_3e_58d0:
 	pop af ; $58d4
 	ret ; $58d5
 	INCBIN "data/bank_03e/d_58d6.bin" ; $58d6, 116 bytes
-Func_3e_594a:
+GetHoveredItemId:
 	push bc ; $594a
 	push hl ; $594b
 	ld a, [$d810] ; $594c
 	ld c, a ; $594f
-	call Func_3e_43c9 ; $5950
+	call GetMenuCursorIndex_3e ; $5950
 	ld hl, $d800 ; $5953
 	add a, l ; $5956
 	ld l, a ; $5957
@@ -3222,7 +3226,7 @@ Label_3e_595b:
 	pop hl ; $595c
 	pop bc ; $595d
 	ret ; $595e
-Func_3e_595f:
+GetEquippedItemId:
 	push hl ; $595f
 	ld a, [$d811] ; $5960
 	ld hl, $d800 ; $5963
@@ -3234,7 +3238,7 @@ Label_3e_596b:
 	ld a, [hl] ; $596b
 	pop hl ; $596c
 	ret ; $596d
-Func_3e_596e:
+DrawEquippedItemStatMods:
 	push af ; $596e
 	push bc ; $596f
 	push de ; $5970
@@ -3242,9 +3246,9 @@ Func_3e_596e:
 	ldh a, [hWramBank] ; $5972
 	push af ; $5974
 	wram_bank $03 ; $5975
-	call Func_3e_595f ; $597b
+	call GetEquippedItemId ; $597b
 	jp Label_3e_5991 ; $597e
-Func_3e_5981:
+DrawHoveredItemStatMods:
 	push af ; $5981
 	push bc ; $5982
 	push de ; $5983
@@ -3252,9 +3256,9 @@ Func_3e_5981:
 	ldh a, [hWramBank] ; $5985
 	push af ; $5987
 	wram_bank $03 ; $5988
-	call Func_3e_594a ; $598e
+	call GetHoveredItemId ; $598e
 Label_3e_5991:
-	call Func_3e_5a15 ; $5991
+	call DrawItemStatModList ; $5991
 	pop af ; $5994
 	wram_bank ; $5995
 	pop hl ; $5999
@@ -3262,10 +3266,10 @@ Label_3e_5991:
 	pop bc ; $599b
 	pop af ; $599c
 	ret ; $599d
-Func_3e_599e:
+RenderShoesDescText:
 	ld hl, $00f7 ; $599e
 	jp Label_3e_59a7 ; $59a1
-Func_3e_59a4:
+RenderRacketDescText:
 	ld hl, $00ed ; $59a4
 Label_3e_59a7:
 	ld a, c ; $59a7
@@ -3280,10 +3284,10 @@ Label_3e_59ad:
 	farcall FarPtr_RenderProportionalTextAt ; $59b3
 	pop hl ; $59b6
 	ret ; $59b7
-Func_3e_59b8:
+RenderShoesNameText:
 	ld hl, $00f4 ; $59b8
 	jp Label_3e_59c1 ; $59bb
-Func_3e_59be:
+RenderRacketNameText:
 	ld hl, $00e5 ; $59be
 Label_3e_59c1:
 	ld a, c ; $59c1
@@ -3295,8 +3299,9 @@ Label_3e_59c7:
 	ld c, $12 ; $59c7
 	farcall FarPtr_RenderProportionalTextAt ; $59c9
 	ret ; $59cc
+EquipListCursorSpriteTask:
 	ld c, $07 ; $59cd
-	call Func_3e_43c9 ; $59cf
+	call GetMenuCursorIndex_3e ; $59cf
 	ld hl, $59e5 ; $59d2
 	add a, l ; $59d5
 	ld l, a ; $59d6
@@ -3307,9 +3312,10 @@ Label_3e_59da:
 	ld e, $06 ; $59db
 	ld b, $10 ; $59dd
 	ld c, $0e ; $59df
-	call Func_3e_4048 ; $59e1
+	call DrawSelectionBoxCorners ; $59e1
 	ret ; $59e4
 	INCBIN "data/bank_03e/d_59e5.bin" ; $59e5, 6 bytes
+EquippedItemMarkerSpriteTask:
 	ldh a, [hWramBank] ; $59eb
 	push af ; $59ed
 	wram_bank $03 ; $59ee
@@ -3329,16 +3335,16 @@ Label_3e_59ff:
 	wram_bank ; $5a0a
 	ret ; $5a0e
 	INCBIN "data/bank_03e/d_5a0f.bin" ; $5a0f, 6 bytes
-Func_3e_5a15:
+DrawItemStatModList:
 	ld b, a ; $5a15
-	call Func_3e_5a44 ; $5a16
+	call GetItemStatModListPtr ; $5a16
 	ld b, $00 ; $5a19
 Label_3e_5a1b:
 	ld d, [hl] ; $5a1b
 	inc hl ; $5a1c
 	ld c, [hl] ; $5a1d
 	inc hl ; $5a1e
-	call Func_3e_5a2d ; $5a1f
+	call DrawStatModEntry ; $5a1f
 	cp a, $ff ; $5a22
 	jr z, Label_3e_5a2c ; $5a24
 	inc b ; $5a26
@@ -3347,7 +3353,7 @@ Label_3e_5a1b:
 	jr nz, Label_3e_5a1b ; $5a2a
 Label_3e_5a2c:
 	ret ; $5a2c
-Func_3e_5a2d:
+DrawStatModEntry:
 	push hl ; $5a2d
 	push bc ; $5a2e
 	ld a, d ; $5a2f
@@ -3355,15 +3361,15 @@ Func_3e_5a2d:
 	jr z, Label_3e_5a41 ; $5a32
 	cp a, $fe ; $5a34
 	jr z, Label_3e_5a41 ; $5a36
-	call Func_3e_5aca ; $5a38
+	call DrawStatModLabel ; $5a38
 	ld d, c ; $5a3b
-	call Func_3e_5b16 ; $5a3c
+	call DrawStatModValue ; $5a3c
 	ld a, $fe ; $5a3f
 Label_3e_5a41:
 	pop bc ; $5a41
 	pop hl ; $5a42
 	ret ; $5a43
-Func_3e_5a44:
+GetItemStatModListPtr:
 	push af ; $5a44
 	push bc ; $5a45
 	ld hl, $5a5f ; $5a46
@@ -3408,15 +3414,15 @@ Label_3e_5a59:
 	db $01, $82, $ff, $07, $82, $0c, $82, $08 ; 0x40
 	db $82, $09, $82, $0b, $fe, $ff, $07, $02 ; 0x48
 	db $0c, $02, $08, $82, $09, $82, $ff ; 0x50
-Func_3e_5aca:
+DrawStatModLabel:
 	push af ; $5aca
 	push bc ; $5acb
 	push de ; $5acc
 	push hl ; $5acd
 	ld e, $00 ; $5ace
-	call Func_3e_5b3e ; $5ad0
-	call Func_3e_5ae2 ; $5ad3
-	call Func_3e_5afc ; $5ad6
+	call GetStatModRowAddr ; $5ad0
+	call GetStatModLabelTile ; $5ad3
+	call GetStatModLabelLen ; $5ad6
 	ld c, a ; $5ad9
 	farcall FarPtr_39_7c ; $5ada
 	pop hl ; $5add
@@ -3424,7 +3430,7 @@ Func_3e_5aca:
 	pop bc ; $5adf
 	pop af ; $5ae0
 	ret ; $5ae1
-Func_3e_5ae2:
+GetStatModLabelTile:
 	push hl ; $5ae2
 	ld a, d ; $5ae3
 	ld hl, $5aef ; $5ae4
@@ -3437,7 +3443,7 @@ Label_3e_5aec:
 	pop hl ; $5aed
 	ret ; $5aee
 	INCBIN "data/bank_03e/d_5aef.bin" ; $5aef, 13 bytes
-Func_3e_5afc:
+GetStatModLabelLen:
 	push hl ; $5afc
 	ld a, d ; $5afd
 	ld hl, $5b09 ; $5afe
@@ -3450,7 +3456,7 @@ Label_3e_5b06:
 	pop hl ; $5b07
 	ret ; $5b08
 	INCBIN "data/bank_03e/d_5b09.bin" ; $5b09, 13 bytes
-Func_3e_5b16:
+DrawStatModValue:
 	push af ; $5b16
 	push bc ; $5b17
 	push de ; $5b18
@@ -3459,15 +3465,15 @@ Func_3e_5b16:
 	cp a, $fe ; $5b1b
 	jr z, Label_3e_5b27 ; $5b1d
 	ld e, $01 ; $5b1f
-	call Func_3e_5b3e ; $5b21
-	call Func_3e_5b2c ; $5b24
+	call GetStatModRowAddr ; $5b21
+	call WriteStatModValueTiles ; $5b24
 Label_3e_5b27:
 	pop hl ; $5b27
 	pop de ; $5b28
 	pop bc ; $5b29
 	pop af ; $5b2a
 	ret ; $5b2b
-Func_3e_5b2c:
+WriteStatModValueTiles:
 	ld a, d ; $5b2c
 	cp a, $80 ; $5b2d
 	ld a, $d0 ; $5b2f
@@ -3481,7 +3487,7 @@ Label_3e_5b35:
 	add a, b ; $5b3b
 	ld [hl], a ; $5b3c
 	ret ; $5b3d
-Func_3e_5b3e:
+GetStatModRowAddr:
 	ld a, [$d814] ; $5b3e
 	add a, a ; $5b41
 	ld hl, $5b63 ; $5b42
@@ -3524,7 +3530,7 @@ Label_3e_5b62:
 	db $e1, $d0, $eb, $d0, $00, $00, $00, $00 ; 0x18
 	db $81, $d1, $8b, $d1, $c1, $d1, $cb, $d1 ; 0x20
 	db $01, $d2, $0b, $d2, $00, $00, $00, $00 ; 0x28
-Func_3e_5b99:
+RunCourtSelect4Menu:
 	sound $03 ; $5b99
 	call ClearFrameTasks ; $5b9b
 	ld hl, rIE ; $5b9e
@@ -3533,19 +3539,19 @@ Func_3e_5b99:
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
 	farcall FarPtr_39_26 ; $5baa
-	call Func_3e_610b ; $5bad
+	call LoadCourtSelectHeader ; $5bad
 	wram_bank $03 ; $5bb0
 	ld a, [$cb11] ; $5bb6
 	ld b, a ; $5bb9
-	call Func_3e_5e2a ; $5bba
+	call OpenCourtSelect4Panel ; $5bba
 	ld a, [$cb1e] ; $5bbd
 	ld c, a ; $5bc0
 	ld b, $02 ; $5bc1
-	call Func_3e_43eb ; $5bc3
+	call SetMenuCursorFromIndex_3e ; $5bc3
 	ld a, $01 ; $5bc6
 	ld hl, $5e93 ; $5bc8
 	call RegisterFrameTask ; $5bcb
-	call Func_3e_5f51 ; $5bce
+	call RedrawCourtSelect4Menu ; $5bce
 	wram_bank $03 ; $5bd1
 Label_3e_5bd7:
 	call AdvanceFrame ; $5bd7
@@ -3553,11 +3559,11 @@ Label_3e_5bd7:
 	ld [wMenuInputPressed], a ; $5bdc
 	ld b, $02 ; $5bdf
 	ld c, $02 ; $5be1
-	call Func_3e_413a ; $5be3
+	call MoveMenuCursorGrid_3e ; $5be3
 	or a, a ; $5be6
 	jr z, Label_3e_5bee ; $5be7
 	sound $5e ; $5be9
-	call Func_3e_5f51 ; $5beb
+	call RedrawCourtSelect4Menu ; $5beb
 Label_3e_5bee:
 	ld a, [wMenuInputPressed] ; $5bee
 	bit 0, a ; $5bf1
@@ -3571,16 +3577,16 @@ Label_3e_5bfb:
 	ld hl, rIE ; $5c00
 	set 2, [hl] ; $5c03
 	ld b, $01 ; $5c05
-	call Func_3e_5e62 ; $5c07
+	call CloseCourtSelect4Panel ; $5c07
 	ld a, $01 ; $5c0a
 	ld [$cb11], a ; $5c0c
 	ld c, $02 ; $5c0f
-	call Func_3e_43c9 ; $5c11
+	call GetMenuCursorIndex_3e ; $5c11
 	push af ; $5c14
 	ld c, a ; $5c15
-	call Func_3e_60dd ; $5c16
+	call SetCourtSelectBGM ; $5c16
 	pop af ; $5c19
-	call Func_3e_5cfe ; $5c1a
+	call CourtSelectIndexToCourtId ; $5c1a
 	ret ; $5c1d
 Label_3e_5c1e:
 	sound $62 ; $5c1e
@@ -3588,13 +3594,13 @@ Label_3e_5c1e:
 	ld hl, rIE ; $5c23
 	set 2, [hl] ; $5c26
 	ld b, $00 ; $5c28
-	call Func_3e_5e62 ; $5c2a
+	call CloseCourtSelect4Panel ; $5c2a
 	ld a, $00 ; $5c2d
 	ld [$cb11], a ; $5c2f
-	call Func_3e_64f8 ; $5c32
+	call FadeOutAndResetMenuScreen ; $5c32
 	ld a, $ff ; $5c35
 	ret ; $5c37
-Func_3e_5c38:
+RunLinkCourtSelect4Menu:
 	xor a, a ; $5c38
 	ldh [$ffd8], a ; $5c39
 	call ResetSerialState ; $5c3b
@@ -3605,19 +3611,19 @@ Func_3e_5c38:
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
 	farcall FarPtr_39_26 ; $5c4d
-	call Func_3e_610b ; $5c50
+	call LoadCourtSelectHeader ; $5c50
 	wram_bank $03 ; $5c53
 	ld a, [$cb11] ; $5c59
 	ld b, a ; $5c5c
-	call Func_3e_5e2a ; $5c5d
+	call OpenCourtSelect4Panel ; $5c5d
 	ld a, [$cb1e] ; $5c60
 	ld c, a ; $5c63
 	ld b, $02 ; $5c64
-	call Func_3e_43eb ; $5c66
+	call SetMenuCursorFromIndex_3e ; $5c66
 	ld a, $01 ; $5c69
 	ld hl, $5e93 ; $5c6b
 	call RegisterFrameTask ; $5c6e
-	call Func_3e_5f51 ; $5c71
+	call RedrawCourtSelect4Menu ; $5c71
 	farcall FarPtr_ResyncLinkSessionWithTimer ; $5c74
 	push af ; $5c77
 	farcall FarPtr_RunLinkInputFrame ; $5c78
@@ -3637,11 +3643,11 @@ Label_3e_5c8c:
 	ld [wMenuInputPressed], a ; $5c93
 	ld b, $02 ; $5c96
 	ld c, $02 ; $5c98
-	call Func_3e_413a ; $5c9a
+	call MoveMenuCursorGrid_3e ; $5c9a
 	or a, a ; $5c9d
 	jr z, Label_3e_5ca5 ; $5c9e
 	sound $5e ; $5ca0
-	call Func_3e_5f51 ; $5ca2
+	call RedrawCourtSelect4Menu ; $5ca2
 Label_3e_5ca5:
 	ld a, [wMenuInputPressed] ; $5ca5
 	bit 0, a ; $5ca8
@@ -3662,12 +3668,12 @@ Label_3e_5cb2:
 	ld a, $01 ; $5cc5
 	ld [$cb11], a ; $5cc7
 	ld c, $02 ; $5cca
-	call Func_3e_43c9 ; $5ccc
+	call GetMenuCursorIndex_3e ; $5ccc
 	push af ; $5ccf
 	ld c, a ; $5cd0
-	call Func_3e_60f4 ; $5cd1
+	call SetCourtSelectBGMLink ; $5cd1
 	pop af ; $5cd4
-	call Func_3e_5cfe ; $5cd5
+	call CourtSelectIndexToCourtId ; $5cd5
 	ret ; $5cd8
 Label_3e_5cd9:
 	sound $62 ; $5cd9
@@ -3679,7 +3685,7 @@ Label_3e_5cd9:
 	call ResetSerialState ; $5ce3
 	call ClearFrameTasks ; $5ce6
 	ld b, $00 ; $5ce9
-	call Func_3e_5e62 ; $5ceb
+	call CloseCourtSelect4Panel ; $5ceb
 	ld a, $00 ; $5cee
 	ld [$cb11], a ; $5cf0
 	ld c, $10 ; $5cf3
@@ -3687,7 +3693,7 @@ Label_3e_5cd9:
 	call WaitFadeEnd ; $5cf8
 	ld a, $ff ; $5cfb
 	ret ; $5cfd
-Func_3e_5cfe:
+CourtSelectIndexToCourtId:
 	ld hl, $5d08 ; $5cfe
 	add a, l ; $5d01
 	ld l, a ; $5d02
@@ -3697,7 +3703,7 @@ Label_3e_5d06:
 	ld a, [hl] ; $5d06
 	ret ; $5d07
 	INCBIN "data/bank_03e/d_5d08.bin" ; $5d08, 9 bytes
-Func_3e_5d11:
+LoadCourtSelectGraphics:
 	ldh a, [hWramBank] ; $5d11
 	push af ; $5d13
 	ld a, [$cb54] ; $5d14
@@ -3705,7 +3711,7 @@ Func_3e_5d11:
 	ld a, [$cb53] ; $5d18
 	or a, b ; $5d1b
 	ld b, a ; $5d1c
-	call Func_3e_695a ; $5d1d
+	call StoreCourtUnlockBits ; $5d1d
 	wram_bank $01 ; $5d20
 	ld c, $00 ; $5d26
 Label_3e_5d28:
@@ -3724,7 +3730,7 @@ Label_3e_5d32:
 	push bc ; $5d36
 	push de ; $5d37
 	push hl ; $5d38
-	call Func_3e_5e17 ; $5d39
+	call GetCourtThumbnailPtr ; $5d39
 	ld de, $d000 ; $5d3c
 	call DecompressDataFromBank ; $5d3f
 	pop hl ; $5d42
@@ -3833,13 +3839,13 @@ Label_3e_5d50:
 	dw $ae00 ; record 16
 	dw $af00 ; record 17
 	dw $b700 ; record 18
-Func_3e_5e17:
+GetCourtThumbnailPtr:
 	push af ; $5e17
 	push bc ; $5e18
 	push de ; $5e19
 	ld b, c ; $5e1a
 	push hl ; $5e1b
-	call Func_3e_697b ; $5e1c
+	call IsCourtUnlocked ; $5e1c
 	or a, a ; $5e1f
 	pop hl ; $5e20
 	jr nz, Label_3e_5e26 ; $5e21
@@ -3849,7 +3855,7 @@ Label_3e_5e26:
 	pop bc ; $5e27
 	pop af ; $5e28
 	ret ; $5e29
-Func_3e_5e2a:
+OpenCourtSelect4Panel:
 	ld a, b ; $5e2a
 	or a, a ; $5e2b
 	jr z, Label_3e_5e48 ; $5e2c
@@ -3882,7 +3888,7 @@ Label_3e_5e4a:
 	jr nz, Label_3e_5e4a ; $5e5c
 	call AdvanceFrame ; $5e5e
 	ret ; $5e61
-Func_3e_5e62:
+CloseCourtSelect4Panel:
 	ld a, b ; $5e62
 	or a, a ; $5e63
 	jr z, Label_3e_5e7d ; $5e64
@@ -3913,9 +3919,10 @@ Label_3e_5e7f:
 	or a, a ; $5e8f
 	jr nz, Label_3e_5e7f ; $5e90
 	ret ; $5e92
+CourtSelect4CursorSpriteTask:
 	farcall FarPtr_TickMenuBgScroll ; $5e93
 	ld c, $02 ; $5e96
-	call Func_3e_43c9 ; $5e98
+	call GetMenuCursorIndex_3e ; $5e98
 	push af ; $5e9b
 	ld hl, $5f49 ; $5e9c
 	add a, l ; $5e9f
@@ -3954,7 +3961,7 @@ Label_3e_5ec1:
 	call QueueSpriteTemplate ; $5ec7
 	pop de ; $5eca
 	ld c, $02 ; $5ecb
-	call Func_3e_43c9 ; $5ecd
+	call GetMenuCursorIndex_3e ; $5ecd
 	ld hl, $5f4d ; $5ed0
 	add a, l ; $5ed3
 	ld l, a ; $5ed4
@@ -3990,36 +3997,36 @@ Label_3e_5ed8:
 	db $00, $00, $10, $10, $02, $00, $80, $38 ; 0x48
 	db $14, $38, $4c, $60, $14, $60, $48, $00 ; 0x50
 	db $10, $20, $30, $17, $17, $17, $1b ; 0x58
-Func_3e_5f51:
+RedrawCourtSelect4Menu:
 	wram_bank $03 ; $5f51
 	ld b, $00 ; $5f57
 	ld c, $00 ; $5f59
 Label_3e_5f5b:
-	call Func_3e_5fad ; $5f5b
+	call SetCourtSelect4TabAttrRect ; $5f5b
 	ld a, b ; $5f5e
 	inc a ; $5f5f
 	ld b, a ; $5f60
 	cp a, $04 ; $5f61
 	jr nz, Label_3e_5f5b ; $5f63
 	ld c, $02 ; $5f65
-	call Func_3e_43c9 ; $5f67
+	call GetMenuCursorIndex_3e ; $5f67
 	ld b, a ; $5f6a
 	ld c, $01 ; $5f6b
-	call Func_3e_5fad ; $5f6d
+	call SetCourtSelect4TabAttrRect ; $5f6d
 	ld c, $02 ; $5f70
-	call Func_3e_43c9 ; $5f72
-	call Func_3e_5fde ; $5f75
+	call GetMenuCursorIndex_3e ; $5f72
+	call SetCourtSelect4Palette ; $5f75
 	ld c, $02 ; $5f78
-	call Func_3e_43c9 ; $5f7a
+	call GetMenuCursorIndex_3e ; $5f7a
 	ld d, a ; $5f7d
 	ld b, a ; $5f7e
-	call Func_3e_697b ; $5f7f
+	call IsCourtUnlocked ; $5f7f
 	or a, a ; $5f82
 	ld b, $ff ; $5f83
 	jr z, Label_3e_5f88 ; $5f85
 	ld b, d ; $5f87
 Label_3e_5f88:
-	call Func_3e_648f ; $5f88
+	call DrawCourtNameTiles ; $5f88
 	ld hl, $d480 ; $5f8b
 	ld de, $b880 ; $5f8e
 	ld c, $06 ; $5f91
@@ -4033,7 +4040,7 @@ Label_3e_5f88:
 	ld c, $02 ; $5fa7
 	call QueueVRAMCopy ; $5fa9
 	ret ; $5fac
-Func_3e_5fad:
+SetCourtSelect4TabAttrRect:
 	push af ; $5fad
 	push bc ; $5fae
 	push de ; $5faf
@@ -4068,7 +4075,7 @@ Label_3e_5fc6:
 	pop af ; $5fd4
 	ret ; $5fd5
 	INCBIN "data/bank_03e/d_5fd6.bin" ; $5fd6, 8 bytes
-Func_3e_5fde:
+SetCourtSelect4Palette:
 	ld hl, $5ff1 ; $5fde
 	add a, a ; $5fe1
 	add a, l ; $5fe2
@@ -4121,7 +4128,7 @@ Label_3e_5fe7:
 	db $0a, $0a, $0a, $0a, $0a, $0a, $09, $0a ; 0xc8
 	db $15, $16, $17, $18, $19, $10, $11, $12 ; 0xd0
 	db $13, $14 ; 0xd8
-Func_3e_60dd:
+SetCourtSelectBGM:
 	ld a, c ; $60dd
 	ld hl, $60eb ; $60de
 	add a, l ; $60e1
@@ -4133,7 +4140,7 @@ Label_3e_60e6:
 	ld [$c8f8], a ; $60e7
 	ret ; $60ea
 	INCBIN "data/bank_03e/d_60eb.bin" ; $60eb, 9 bytes
-Func_3e_60f4:
+SetCourtSelectBGMLink:
 	ld a, c ; $60f4
 	ld hl, $6102 ; $60f5
 	add a, l ; $60f8
@@ -4145,13 +4152,13 @@ Label_3e_60fd:
 	ld [$c8f8], a ; $60fe
 	ret ; $6101
 	INCBIN "data/bank_03e/d_6102.bin" ; $6102, 9 bytes
-Func_3e_610b:
-	call Func_3e_617a ; $610b
-	call Func_3e_6118 ; $610e
-	call Func_3e_615f ; $6111
+LoadCourtSelectHeader:
+	call LoadCourtSelectTitleGfx ; $610b
+	call DrawCourtSelectTitleRow ; $610e
+	call FlushCourtSelectTitleRow ; $6111
 	call AdvanceFrame ; $6114
 	ret ; $6117
-Func_3e_6118:
+DrawCourtSelectTitleRow:
 	ldh a, [hWramBank] ; $6118
 	push af ; $611a
 	wram_bank $03 ; $611b
@@ -4163,12 +4170,12 @@ Label_3e_6128:
 	inc hl ; $6129
 	dec a ; $612a
 	jr nz, Label_3e_6128 ; $612b
-	call Func_3e_6139 ; $612d
-	call Func_3e_6154 ; $6130
+	call DrawCourtSelectTitleLeft ; $612d
+	call DrawCourtSelectTitleRight ; $6130
 	pop af ; $6133
 	wram_bank ; $6134
 	ret ; $6138
-Func_3e_6139:
+DrawCourtSelectTitleLeft:
 	ld b, $30 ; $6139
 	ld hl, $d1e0 ; $613b
 	ld c, $04 ; $613e
@@ -4180,13 +4187,13 @@ Func_3e_6139:
 	ld c, $04 ; $614e
 	farcall FarPtr_39_7c ; $6150
 	ret ; $6153
-Func_3e_6154:
+DrawCourtSelectTitleRight:
 	ld b, $40 ; $6154
 	ld hl, $d209 ; $6156
 	ld c, $05 ; $6159
 	farcall FarPtr_39_7c ; $615b
 	ret ; $615e
-Func_3e_615f:
+FlushCourtSelectTitleRow:
 	ldh a, [hWramBank] ; $615f
 	push af ; $6161
 	wram_bank $03 ; $6162
@@ -4197,17 +4204,17 @@ Func_3e_615f:
 	pop af ; $6174
 	wram_bank ; $6175
 	ret ; $6179
-Func_3e_617a:
+LoadCourtSelectTitleGfx:
 	ldh a, [hWramBank] ; $617a
 	push af ; $617c
 	wram_bank $01 ; $617d
-	call Func_3e_6192 ; $6183
-	call Func_3e_61a8 ; $6186
-	call Func_3e_61be ; $6189
+	call LoadCourtSelectTitleTiles ; $6183
+	call LoadCourtSelectTitleTiles2 ; $6186
+	call LoadCourtSelectPanelTiles ; $6189
 	pop af ; $618c
 	wram_bank ; $618d
 	ret ; $6191
-Func_3e_6192:
+LoadCourtSelectTitleTiles:
 	ld hl, $61d4 ; $6192
 	ld de, $d000 ; $6195
 	call DecompressData ; $6198
@@ -4216,7 +4223,7 @@ Func_3e_6192:
 	ld bc, $000c ; $61a1
 	call QueueVRAMCopy ; $61a4
 	ret ; $61a7
-Func_3e_61a8:
+LoadCourtSelectTitleTiles2:
 	ld hl, $6273 ; $61a8
 	ld de, $d100 ; $61ab
 	call DecompressData ; $61ae
@@ -4225,7 +4232,7 @@ Func_3e_61a8:
 	ld bc, $0005 ; $61b7
 	call QueueVRAMCopy ; $61ba
 	ret ; $61bd
-Func_3e_61be:
+LoadCourtSelectPanelTiles:
 	ld hl, $62c6 ; $61be
 	ld de, $d200 ; $61c1
 	call DecompressData ; $61c4
@@ -4235,18 +4242,18 @@ Func_3e_61be:
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
 	INCBIN "data/bank_03e/d_61d4.bin" ; $61d4, 699 bytes
-Func_3e_648f:
+DrawCourtNameTiles:
 	ldh a, [hWramBank] ; $648f
 	push af ; $6491
 	wram_bank $03 ; $6492
 	push bc ; $6498
-	call Func_3e_64a6 ; $6499
+	call DrawCourtNameLeft ; $6499
 	pop bc ; $649c
-	call Func_3e_64cf ; $649d
+	call DrawCourtNameRight ; $649d
 	pop af ; $64a0
 	wram_bank ; $64a1
 	ret ; $64a5
-Func_3e_64a6:
+DrawCourtNameLeft:
 	ld a, b ; $64a6
 	cp a, $ff ; $64a7
 	jr nz, Label_3e_64af ; $64a9
@@ -4270,7 +4277,7 @@ Label_3e_64bd:
 	farcall FarPtr_39_7c ; $64c2
 	ret ; $64c5
 	INCBIN "data/bank_03e/d_64c6.bin" ; $64c6, 9 bytes
-Func_3e_64cf:
+DrawCourtNameRight:
 	ld a, b ; $64cf
 	cp a, $ff ; $64d0
 	jr nz, Label_3e_64d8 ; $64d2
@@ -4294,7 +4301,7 @@ Label_3e_64e6:
 	farcall FarPtr_39_7c ; $64eb
 	ret ; $64ee
 	INCBIN "data/bank_03e/d_64ef.bin" ; $64ef, 9 bytes
-Func_3e_64f8:
+FadeOutAndResetMenuScreen:
 	ldh a, [hWramBank] ; $64f8
 	push af ; $64fa
 	wram_bank $03 ; $64fb
@@ -4307,10 +4314,10 @@ Func_3e_64f8:
 	pop af ; $6512
 	wram_bank ; $6513
 	ret ; $6517
-Func_3e_6518:
+RunCourtSelect9Menu:
 	ld a, [$cb54] ; $6518
 	ld b, a ; $651b
-	call Func_3e_695a ; $651c
+	call StoreCourtUnlockBits ; $651c
 	sound $03 ; $651f
 	call ClearFrameTasks ; $6521
 	ld hl, rIE ; $6524
@@ -4319,19 +4326,19 @@ Func_3e_6518:
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
 	farcall FarPtr_39_26 ; $6530
-	call Func_3e_610b ; $6533
+	call LoadCourtSelectHeader ; $6533
 	wram_bank $03 ; $6536
 	ld a, [$cb11] ; $653c
 	ld b, a ; $653f
-	call Func_3e_66ab ; $6540
+	call OpenCourtSelect9Panel ; $6540
 	xor a, a ; $6543
 	ld c, a ; $6544
 	ld b, $03 ; $6545
-	call Func_3e_43eb ; $6547
+	call SetMenuCursorFromIndex_3e ; $6547
 	ld a, $01 ; $654a
 	ld hl, $6714 ; $654c
 	call RegisterFrameTask ; $654f
-	call Func_3e_6824 ; $6552
+	call RedrawCourtSelect9Menu ; $6552
 	wram_bank $03 ; $6555
 Label_3e_655b:
 	call AdvanceFrame ; $655b
@@ -4339,11 +4346,11 @@ Label_3e_655b:
 	ld [wMenuInputPressed], a ; $6560
 	ld b, $03 ; $6563
 	ld c, $03 ; $6565
-	call Func_3e_413a ; $6567
+	call MoveMenuCursorGrid_3e ; $6567
 	or a, a ; $656a
 	jr z, Label_3e_6572 ; $656b
 	sound $5e ; $656d
-	call Func_3e_6824 ; $656f
+	call RedrawCourtSelect9Menu ; $656f
 Label_3e_6572:
 	ld a, [wMenuInputPressed] ; $6572
 	bit 0, a ; $6575
@@ -4353,9 +4360,9 @@ Label_3e_6572:
 	jr Label_3e_655b ; $657d
 Label_3e_657f:
 	ld c, $03 ; $657f
-	call Func_3e_43c9 ; $6581
+	call GetMenuCursorIndex_3e ; $6581
 	ld b, a ; $6584
-	call Func_3e_697b ; $6585
+	call IsCourtUnlocked ; $6585
 	or a, a ; $6588
 	jr nz, Label_3e_658f ; $6589
 	sound $61 ; $658b
@@ -4366,16 +4373,16 @@ Label_3e_658f:
 	ld hl, rIE ; $6594
 	set 2, [hl] ; $6597
 	ld b, $01 ; $6599
-	call Func_3e_66e3 ; $659b
+	call CloseCourtSelect9Panel ; $659b
 	ld a, $01 ; $659e
 	ld [$cb11], a ; $65a0
 	ld c, $03 ; $65a3
-	call Func_3e_43c9 ; $65a5
+	call GetMenuCursorIndex_3e ; $65a5
 	push af ; $65a8
 	ld c, a ; $65a9
-	call Func_3e_60dd ; $65aa
+	call SetCourtSelectBGM ; $65aa
 	pop af ; $65ad
-	call Func_3e_5cfe ; $65ae
+	call CourtSelectIndexToCourtId ; $65ae
 	ret ; $65b1
 Label_3e_65b2:
 	sound $62 ; $65b2
@@ -4383,12 +4390,12 @@ Label_3e_65b2:
 	ld hl, rIE ; $65b7
 	set 2, [hl] ; $65ba
 	ld b, $00 ; $65bc
-	call Func_3e_66e3 ; $65be
+	call CloseCourtSelect9Panel ; $65be
 	ld a, $00 ; $65c1
 	ld [$cb11], a ; $65c3
 	ld a, $ff ; $65c6
 	ret ; $65c8
-Func_3e_65c9:
+RunLinkCourtSelect9Menu:
 	xor a, a ; $65c9
 	ldh [$ffd8], a ; $65ca
 	call ResetSerialState ; $65cc
@@ -4400,24 +4407,24 @@ Func_3e_65c9:
 	ld a, [$cb53] ; $65db
 	or a, b ; $65de
 	ld b, a ; $65df
-	call Func_3e_695a ; $65e0
+	call StoreCourtUnlockBits ; $65e0
 	farcall FarPtr_InitMenuBgScroll ; $65e3
 	ld b, $01 ; $65e6
 	ld c, $01 ; $65e8
 	farcall FarPtr_39_26 ; $65ea
-	call Func_3e_610b ; $65ed
+	call LoadCourtSelectHeader ; $65ed
 	wram_bank $03 ; $65f0
 	ld a, [$cb11] ; $65f6
 	ld b, a ; $65f9
-	call Func_3e_66ab ; $65fa
+	call OpenCourtSelect9Panel ; $65fa
 	ld a, [$cb1e] ; $65fd
 	ld c, a ; $6600
 	ld b, $03 ; $6601
-	call Func_3e_43eb ; $6603
+	call SetMenuCursorFromIndex_3e ; $6603
 	ld a, $01 ; $6606
 	ld hl, $6714 ; $6608
 	call RegisterFrameTask ; $660b
-	call Func_3e_6824 ; $660e
+	call RedrawCourtSelect9Menu ; $660e
 	farcall FarPtr_ResyncLinkSessionWithTimer ; $6611
 	push af ; $6614
 	farcall FarPtr_RunLinkInputFrame ; $6615
@@ -4437,11 +4444,11 @@ Label_3e_6629:
 	pop af ; $6632
 	ld b, $03 ; $6633
 	ld c, $03 ; $6635
-	call Func_3e_413a ; $6637
+	call MoveMenuCursorGrid_3e ; $6637
 	or a, a ; $663a
 	jr z, Label_3e_6642 ; $663b
 	sound $5e ; $663d
-	call Func_3e_6824 ; $663f
+	call RedrawCourtSelect9Menu ; $663f
 Label_3e_6642:
 	ld a, [wMenuInputPressed] ; $6642
 	bit 0, a ; $6645
@@ -4451,9 +4458,9 @@ Label_3e_6642:
 	jr Label_3e_6629 ; $664d
 Label_3e_664f:
 	ld c, $03 ; $664f
-	call Func_3e_43c9 ; $6651
+	call GetMenuCursorIndex_3e ; $6651
 	ld b, a ; $6654
-	call Func_3e_697b ; $6655
+	call IsCourtUnlocked ; $6655
 	or a, a ; $6658
 	jr nz, Label_3e_665f ; $6659
 	sound $61 ; $665b
@@ -4471,12 +4478,12 @@ Label_3e_665f:
 	ld a, $01 ; $6672
 	ld [$cb11], a ; $6674
 	ld c, $03 ; $6677
-	call Func_3e_43c9 ; $6679
+	call GetMenuCursorIndex_3e ; $6679
 	push af ; $667c
 	ld c, a ; $667d
-	call Func_3e_60f4 ; $667e
+	call SetCourtSelectBGMLink ; $667e
 	pop af ; $6681
-	call Func_3e_5cfe ; $6682
+	call CourtSelectIndexToCourtId ; $6682
 	ret ; $6685
 Label_3e_6686:
 	sound $62 ; $6686
@@ -4488,7 +4495,7 @@ Label_3e_6686:
 	call ResetSerialState ; $6690
 	call ClearFrameTasks ; $6693
 	ld b, $00 ; $6696
-	call Func_3e_66e3 ; $6698
+	call CloseCourtSelect9Panel ; $6698
 	ld a, $00 ; $669b
 	ld [$cb11], a ; $669d
 	ld c, $10 ; $66a0
@@ -4496,7 +4503,7 @@ Label_3e_6686:
 	call WaitFadeEnd ; $66a5
 	ld a, $ff ; $66a8
 	ret ; $66aa
-Func_3e_66ab:
+OpenCourtSelect9Panel:
 	ld a, b ; $66ab
 	or a, a ; $66ac
 	jr z, Label_3e_66c9 ; $66ad
@@ -4529,7 +4536,7 @@ Label_3e_66cb:
 	jr nz, Label_3e_66cb ; $66dd
 	call AdvanceFrame ; $66df
 	ret ; $66e2
-Func_3e_66e3:
+CloseCourtSelect9Panel:
 	ld a, b ; $66e3
 	or a, a ; $66e4
 	jr z, Label_3e_66fe ; $66e5
@@ -4560,9 +4567,10 @@ Label_3e_6700:
 	or a, a ; $6710
 	jr nz, Label_3e_6700 ; $6711
 	ret ; $6713
+CourtSelect9CursorSpriteTask:
 	farcall FarPtr_TickMenuBgScroll ; $6714
 	ld c, $03 ; $6717
-	call Func_3e_43c9 ; $6719
+	call GetMenuCursorIndex_3e ; $6719
 	push af ; $671c
 	ld hl, $67ee ; $671d
 	add a, l ; $6720
@@ -4586,7 +4594,7 @@ Label_3e_6731:
 	farcall FarPtr_ApplySpriteBobOffset ; $6734
 	push bc ; $6737
 	ld c, $03 ; $6738
-	call Func_3e_43c9 ; $673a
+	call GetMenuCursorIndex_3e ; $673a
 	ld hl, $67f8 ; $673d
 	add a, l ; $6740
 	ld l, a ; $6741
@@ -4607,11 +4615,11 @@ Label_3e_6751:
 	ld h, [hl] ; $6752
 	ld l, a ; $6753
 	push de ; $6754
-	call Func_3e_680c ; $6755
+	call AdjustCursorForLockedCourt ; $6755
 	call QueueSpriteTemplate ; $6758
 	pop de ; $675b
 	ld c, $03 ; $675c
-	call Func_3e_43c9 ; $675e
+	call GetMenuCursorIndex_3e ; $675e
 	ld hl, $6802 ; $6761
 	add a, l ; $6764
 	ld l, a ; $6765
@@ -4630,13 +4638,13 @@ Label_3e_6769:
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
 	INCBIN "data/bank_03e/d_677b.bin" ; $677b, 145 bytes
-Func_3e_680c:
+AdjustCursorForLockedCourt:
 	push bc ; $680c
 	push hl ; $680d
 	ld c, $03 ; $680e
-	call Func_3e_43c9 ; $6810
+	call GetMenuCursorIndex_3e ; $6810
 	ld b, a ; $6813
-	call Func_3e_697b ; $6814
+	call IsCourtUnlocked ; $6814
 	or a, a ; $6817
 	jr z, Label_3e_681d ; $6818
 	pop hl ; $681a
@@ -4648,36 +4656,36 @@ Label_3e_681d:
 	pop hl ; $6821
 	pop af ; $6822
 	ret ; $6823
-Func_3e_6824:
+RedrawCourtSelect9Menu:
 	wram_bank $03 ; $6824
 	ld b, $00 ; $682a
 	ld c, $00 ; $682c
 Label_3e_682e:
-	call Func_3e_688b ; $682e
+	call SetCourtSelect9TabAttrRect ; $682e
 	ld a, b ; $6831
 	inc a ; $6832
 	ld b, a ; $6833
 	cp a, $09 ; $6834
 	jr nz, Label_3e_682e ; $6836
 	ld c, $03 ; $6838
-	call Func_3e_43c9 ; $683a
+	call GetMenuCursorIndex_3e ; $683a
 	ld b, a ; $683d
 	ld c, $01 ; $683e
-	call Func_3e_688b ; $6840
+	call SetCourtSelect9TabAttrRect ; $6840
 	ld c, $03 ; $6843
-	call Func_3e_43c9 ; $6845
-	call Func_3e_68c6 ; $6848
+	call GetMenuCursorIndex_3e ; $6845
+	call SetCourtSelect9Palette ; $6848
 	ld c, $03 ; $684b
-	call Func_3e_43c9 ; $684d
+	call GetMenuCursorIndex_3e ; $684d
 	ld d, a ; $6850
 	ld b, a ; $6851
-	call Func_3e_697b ; $6852
+	call IsCourtUnlocked ; $6852
 	or a, a ; $6855
 	ld b, $ff ; $6856
 	jr z, Label_3e_685b ; $6858
 	ld b, d ; $685a
 Label_3e_685b:
-	call Func_3e_648f ; $685b
+	call DrawCourtNameTiles ; $685b
 	ld hl, $d460 ; $685e
 	ld de, $b860 ; $6861
 	ld c, $06 ; $6864
@@ -4695,7 +4703,7 @@ Label_3e_685b:
 	ld c, $02 ; $6885
 	call QueueVRAMCopy ; $6887
 	ret ; $688a
-Func_3e_688b:
+SetCourtSelect9TabAttrRect:
 	push af ; $688b
 	push bc ; $688c
 	push de ; $688d
@@ -4730,7 +4738,7 @@ Label_3e_68a4:
 	pop af ; $68b2
 	ret ; $68b3
 	INCBIN "data/bank_03e/d_68b4.bin" ; $68b4, 18 bytes
-Func_3e_68c6:
+SetCourtSelect9Palette:
 	ld hl, $68d9 ; $68c6
 	add a, a ; $68c9
 	add a, l ; $68ca
@@ -4769,7 +4777,7 @@ Label_3e_68cf:
 	db $7a, $4f, $c5, $cd, $45, $60, $c1, $c5 ; 0x58
 	db $cd, $6f, $60, $c1, $cd, $93, $60, $18 ; 0x60
 	db $00, $f1, $e0, $96, $e0, $70, $c9 ; 0x68
-Func_3e_695a:
+StoreCourtUnlockBits:
 	ldh a, [hWramBank] ; $695a
 	push af ; $695c
 	wram_bank $02 ; $695d
@@ -4788,7 +4796,7 @@ Label_3e_6968:
 	pop af ; $6975
 	wram_bank ; $6976
 	ret ; $697a
-Func_3e_697b:
+IsCourtUnlocked:
 	ld a, b ; $697b
 	cp a, $04 ; $697c
 	jr nc, Label_3e_6983 ; $697e
@@ -4812,7 +4820,7 @@ Label_3e_6997:
 	wram_bank ; $699a
 	ld a, b ; $699e
 	ret ; $699f
-Func_3e_69a0:
+ComputeUnlockedCourtFlags:
 	ld c, $00 ; $69a0
 	ld b, $00 ; $69a2
 Label_3e_69a4:
@@ -4845,7 +4853,7 @@ Label_3e_69c5:
 	ld [$cb54], a ; $69c6
 	ret ; $69c9
 	INCBIN "data/bank_03e/d_69ca.bin" ; $69ca, 10 bytes
-Func_3e_69d4:
+StubNop_3e:
 	ret ; $69d4
 AwardCeremonyTiles:
 	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2641 bytes

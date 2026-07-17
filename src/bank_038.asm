@@ -6826,7 +6826,7 @@ Func_38_7408:
 	push de ; $7409
 	push hl ; $740a
 Label_38_740b:
-	farcall FarPtr_3e_00 ; $740b
+	farcall FarPtr_RunLinkMatchRulesMenu ; $740b
 	cp a, $ff ; $740e
 	jp z, Label_38_74da ; $7410
 	ld c, $10 ; $7413
@@ -6855,18 +6855,18 @@ Label_38_741b:
 	pop af ; $7450
 	cp a, $ff ; $7451
 	jr nz, Label_38_745f ; $7453
-	farcall FarPtr_3e_02 ; $7455
+	farcall FarPtr_RestoreMenuScreenAndFadeIn ; $7455
 	ld a, $00 ; $7458
 	ld [$cb11], a ; $745a
 	jr Label_38_740b ; $745d
 Label_38_745f:
-	farcall FarPtr_3e_22 ; $745f
+	farcall FarPtr_ComputeUnlockedCourtFlags ; $745f
 	ld c, $00 ; $7462
 	call Func_38_7522 ; $7464
 	call DisableLCDSafely ; $7467
 	farcall FarPtr_01_0a ; $746a
 	farcall FarPtr_ResetScreenAndTextWindows ; $746d
-	farcall FarPtr_3e_20 ; $7470
+	farcall FarPtr_LoadCourtSelectGraphics ; $7470
 	call EnableLCD ; $7473
 	ld c, $10 ; $7476
 	call BeginFadeIn ; $7478
@@ -6881,12 +6881,12 @@ Label_38_745f:
 	ld a, [$cb53] ; $748d
 	or a, d ; $7490
 	jr nz, Label_38_749c ; $7491
-	farcall FarPtr_3e_1a ; $7493
+	farcall FarPtr_RunLinkCourtSelect4Menu ; $7493
 	cp a, $ff ; $7496
 	jr z, Label_38_741b ; $7498
 	jr Label_38_74a4 ; $749a
 Label_38_749c:
-	farcall FarPtr_3e_1e ; $749c
+	farcall FarPtr_RunLinkCourtSelect9Menu ; $749c
 	cp a, $ff ; $749f
 	jp z, Label_38_741b ; $74a1
 Label_38_74a4:

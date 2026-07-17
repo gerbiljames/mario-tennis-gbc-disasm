@@ -1412,7 +1412,7 @@ Label_10_50a4:
 	ld [$cb74], a ; $50b4
 	cp a, $04 ; $50b7
 	jr z, Label_10_50ca ; $50b9
-	farcall FarPtr_3e_0a ; $50bb
+	farcall FarPtr_RunPlayAlonePartnerMenu ; $50bb
 	cp a, $ff ; $50be
 	jr nz, Label_10_50ca ; $50c0
 	ld a, $00 ; $50c2
@@ -1495,8 +1495,8 @@ Label_10_5159:
 	xor a, a ; $5170
 	ld [$cb53], a ; $5171
 	ld [$cb54], a ; $5174
-	farcall FarPtr_3e_22 ; $5177
-	farcall FarPtr_3e_20 ; $517a
+	farcall FarPtr_ComputeUnlockedCourtFlags ; $5177
+	farcall FarPtr_LoadCourtSelectGraphics ; $517a
 	pop af ; $517d
 	cp a, $ff ; $517e
 	jr nz, Label_10_5191 ; $5180
@@ -1509,14 +1509,14 @@ Label_10_5159:
 Label_10_5191:
 	ld a, $01 ; $5191
 	ld [$cb11], a ; $5193
-	farcall FarPtr_3e_24 ; $5196
+	farcall FarPtr_StubNop_3e ; $5196
 	ld a, [$cb54] ; $5199
 	or a, a ; $519c
 	jr z, Label_10_51b6 ; $519d
 	call EnableLCD ; $519f
 	ld c, $10 ; $51a2
 	call BeginFadeIn ; $51a4
-	farcall FarPtr_3e_1c ; $51a7
+	farcall FarPtr_RunCourtSelect9Menu ; $51a7
 	cp a, $ff ; $51aa
 	jr nz, Label_10_51cd ; $51ac
 	ld a, $00 ; $51ae
@@ -1526,7 +1526,7 @@ Label_10_51b6:
 	call EnableLCD ; $51b6
 	ld c, $10 ; $51b9
 	call BeginFadeIn ; $51bb
-	farcall FarPtr_3e_18 ; $51be
+	farcall FarPtr_RunCourtSelect4Menu ; $51be
 	cp a, $ff ; $51c1
 	jr nz, Label_10_51cd ; $51c3
 	ld a, $00 ; $51c5
@@ -1707,7 +1707,7 @@ Label_10_5345:
 	ld [$cb11], a ; $5367
 	jp Label_10_52e4 ; $536a
 Label_10_536d:
-	farcall FarPtr_3e_08 ; $536d
+	farcall FarPtr_RunRacketShoesChoiceMenu ; $536d
 	cp a, $00 ; $5370
 	jr z, Label_10_5380 ; $5372
 	cp a, $01 ; $5374
@@ -1719,8 +1719,8 @@ Label_10_5380:
 	ld c, $10 ; $5380
 	call BeginFadeOut ; $5382
 	call WaitFadeEnd ; $5385
-	farcall FarPtr_3e_0c ; $5388
-	farcall FarPtr_3e_10 ; $538b
+	farcall FarPtr_RunRacketSelectScreen ; $5388
+	farcall FarPtr_ShowEquipmentStatusScreen ; $538b
 	farcall FarPtr_SaveStorySlot ; $538e
 	call DisableLCDSafely ; $5391
 	farcall FarPtr_01_0a ; $5394
@@ -1735,8 +1735,8 @@ Label_10_53aa:
 	ld c, $10 ; $53aa
 	call BeginFadeOut ; $53ac
 	call WaitFadeEnd ; $53af
-	farcall FarPtr_3e_0e ; $53b2
-	farcall FarPtr_3e_10 ; $53b5
+	farcall FarPtr_RunShoesSelectScreen ; $53b2
+	farcall FarPtr_ShowEquipmentStatusScreen ; $53b5
 	farcall FarPtr_SaveStorySlot ; $53b8
 	call DisableLCDSafely ; $53bb
 	farcall FarPtr_01_0a ; $53be
@@ -1908,7 +1908,7 @@ Label_10_5520:
 	call BeginFadeOut ; $553b
 	call WaitFadeEnd ; $553e
 	ld b, $01 ; $5541
-	farcall FarPtr_3e_06 ; $5543
+	farcall FarPtr_RunEraseDataConfirmMenu ; $5543
 	or a, a ; $5546
 	jr z, Label_10_554c ; $5547
 	farcall FarPtr_ClearSaveBlock11 ; $5549
@@ -1926,7 +1926,7 @@ Label_10_554c:
 	call BeginFadeOut ; $5567
 	call WaitFadeEnd ; $556a
 	ld b, $00 ; $556d
-	farcall FarPtr_3e_06 ; $556f
+	farcall FarPtr_RunEraseDataConfirmMenu ; $556f
 	or a, a ; $5572
 	jr nz, Label_10_5592 ; $5573
 	call DisableLCDSafely ; $5575
@@ -2232,7 +2232,7 @@ Label_10_57d5:
 	jr Label_10_57f3 ; $57d5
 Label_10_57d7:
 	ld b, $02 ; $57d7
-	farcall FarPtr_3e_06 ; $57d9
+	farcall FarPtr_RunEraseDataConfirmMenu ; $57d9
 	or a, a ; $57dc
 	jr z, Label_10_57ee ; $57dd
 	xor a, a ; $57df

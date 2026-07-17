@@ -4491,7 +4491,7 @@ StoryPauseMenu_Equipment:
 	ld [$c295], a ; $6f92
 	ld [$c294], a ; $6f95
 	ld [$c2a1], a ; $6f98
-	farcall FarPtr_3e_10 ; $6f9b
+	farcall FarPtr_ShowEquipmentStatusScreen ; $6f9b
 	xor a, a ; $6f9e
 	ret ; $6f9f
 StoryPauseMenu_GameProgress:
