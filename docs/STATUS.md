@@ -1,4 +1,4 @@
-# Project status — 2026-07-16
+# Project status — 2026-07-17
 
 ## Where things stand
 
@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `b3c19ef`); the whole history rebuilds
+Everything below is **committed** (HEAD `c5a1622`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -786,6 +786,27 @@ runtime/visual identification) unnamed. Highlights:
 All applied via `labels.json` and verified byte-perfect each wave. Names were
 gated on concrete in-code evidence and spot-checked against the source.
 
+**Bank $00 deep-naming pass (2026-07-17, +116 names + 42 RAM labels).** A full
+read-through of the home bank named every remaining identifiable Func_00_*:
+the far-call/vector plumbing (CallHLInBankA, CallVectorEntryA/E, FarCallVector,
+FarReadByte/Word, FarCopyBytes), the VBlank transfer system (QueueVRAMCopy,
+QueueBGTileWrite, ProcessVRAMCopyQueues, the BG row/column blit queues and
+their 64x64 map-buffer variants), the palette system (live $c100 / master
+$c200 buffers, LoadPalettes*, fade state machine BeginFadeOut/In,
+UpdateFadeIn/Out, ApplyWhiteFade, per-component color adjust), the math
+library (MulHLByDE/32, MulHLByAFrac*, DivAHL*, sin/cos multiply family,
+AngleFromVector16/Coarse, GetTangent), the leftover debug console
+(wDebugTextBuffer at $cc00 -> $9d00, PrintString/PrintHex*, frame-time meter,
+frame-step via hDebugStepMode), sprite queueing (QueueSprite24x32/32x32,
+double-buffered OAM via wSpriteBufferPage), the serial-link input exchange
+(SerialHandler, SerialEncode/DecodeInput, WaitSerialTransfer), music control
+(PlaySoundCmd/PlaySoundManaged, jingle override via hActiveJingle), and the
+sound-engine internals (RunSoundChannelScript command interpreter, vibrato/
+volume-slide/echo ticks, wave-pattern loading). 42 matching HRAM/WRAM names
+landed in ram_map.json (hFadeState, hVRAMQueueDirty, wCameraX/Y, wGameTimer,
+hRandomSeed, hIsCGB, ...). Bank $00 is now 245/901 human-named; what remains
+is mostly interior branch labels.
+
 Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
 integrators, the CPU-AI behaviour state machine — need runtime traces), the
 bank $05 text control-code handlers, bank $3b's screen-specific pause-menu
@@ -795,5 +816,5 @@ expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `22f3813`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `c5a1622`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
