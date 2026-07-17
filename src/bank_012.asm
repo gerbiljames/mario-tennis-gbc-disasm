@@ -200,14 +200,14 @@ Func_12_4179:
 	ld hl, $044a ; $4214
 	farcall FarPtr_0a_0e ; $4217
 	ld a, $03 ; $421a
-	farcall FarPtr_0a_08 ; $421c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $421c
 	ld a, $03 ; $421f
 	ld d, $03 ; $4221
 	farcall FarPtr_ScriptSetActorAnimation ; $4223
 	ld a, $03 ; $4226
 	farcall FarPtr_ScriptWaitActorIdle ; $4228
 	ld a, $03 ; $422b
-	farcall FarPtr_0a_08 ; $422d
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $422d
 	ld a, $00 ; $4230
 	ld d, $02 ; $4232
 	farcall FarPtr_ScriptSetActorAnimation ; $4234
@@ -279,7 +279,7 @@ Func_12_4179:
 	ld de, $0100 ; $42ce
 	farcall FarPtr_ScriptSetActorPosition ; $42d1
 	ld a, $03 ; $42d4
-	farcall FarPtr_0a_08 ; $42d6
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $42d6
 	ld a, $03 ; $42d9
 	ld bc, $1600 ; $42db
 	ld de, $0b00 ; $42de
@@ -343,7 +343,7 @@ Func_12_4179:
 	ld de, $1900 ; $4360
 	farcall FarPtr_ScriptSetActorPosition ; $4363
 	ld a, $03 ; $4366
-	farcall FarPtr_0a_08 ; $4368
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4368
 	ld a, $00 ; $436b
 	ld bc, $1680 ; $436d
 	ld de, $1200 ; $4370
@@ -409,7 +409,7 @@ Label_12_43bb:
 	ld de, $0100 ; $4400
 	farcall FarPtr_ScriptSetActorPosition ; $4403
 	ld a, $03 ; $4406
-	farcall FarPtr_0a_08 ; $4408
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4408
 	ld a, $04 ; $440b
 	ld b, a ; $440d
 	ld a, $03 ; $440e
@@ -423,14 +423,14 @@ Label_12_43bb:
 	ld a, $03 ; $441d
 	farcall FarPtr_FaceActorTowardActor ; $441f
 	ld a, $03 ; $4422
-	farcall FarPtr_0a_08 ; $4424
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4424
 	ld a, $04 ; $4427
 	ld d, $03 ; $4429
 	farcall FarPtr_ScriptSetActorAnimation ; $442b
 	ld a, $04 ; $442e
 	farcall FarPtr_ScriptWaitActorIdle ; $4430
 	ld a, $04 ; $4433
-	farcall FarPtr_0a_08 ; $4435
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4435
 	ld a, $00 ; $4438
 	ld d, $03 ; $443a
 	farcall FarPtr_ScriptSetActorAnimation ; $443c
@@ -446,7 +446,7 @@ Label_12_43bb:
 	ld a, $03 ; $4452
 	farcall FarPtr_ScriptWaitActorIdle ; $4454
 	ld a, $03 ; $4457
-	farcall FarPtr_0a_08 ; $4459
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4459
 	ld a, $03 ; $445c
 	ld b, a ; $445e
 	ld a, $04 ; $445f
@@ -457,13 +457,13 @@ Label_12_43bb:
 	ld a, $04 ; $446b
 	farcall FarPtr_ScriptWaitActorIdle ; $446d
 	ld a, $04 ; $4470
-	farcall FarPtr_0a_08 ; $4472
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4472
 	ld a, $04 ; $4475
 	ld b, a ; $4477
 	ld a, $03 ; $4478
 	farcall FarPtr_FaceActorTowardActor ; $447a
 	ld a, $03 ; $447d
-	farcall FarPtr_0a_08 ; $447f
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $447f
 	ld a, $04 ; $4482
 	ld d, $03 ; $4484
 	farcall FarPtr_ScriptSetActorAnimation ; $4486
@@ -474,13 +474,13 @@ Label_12_43bb:
 	ld a, $04 ; $4491
 	farcall FarPtr_FaceActorTowardActor ; $4493
 	ld a, $04 ; $4496
-	farcall FarPtr_0a_0a ; $4498
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4498
 	ld a, $00 ; $449b
 	ld b, a ; $449d
 	ld a, $03 ; $449e
 	farcall FarPtr_FaceActorTowardActor ; $44a0
 	farcall FarPtr_0a_12 ; $44a3
-	farcall FarPtr_0a_0c ; $44a6
+	farcall FarPtr_ScriptCloseDialogueWindow ; $44a6
 	push af ; $44a9
 	ld a, $05 ; $44aa
 	farcall FarPtr_WaitScriptFrames ; $44ac
@@ -488,13 +488,13 @@ Label_12_43bb:
 	and a, a ; $44b0
 	jr nz, Label_12_44bd ; $44b1
 	ld a, $04 ; $44b3
-	farcall FarPtr_0a_08 ; $44b5
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $44b5
 	farcall FarPtr_0a_10 ; $44b8
 	jr Label_12_44c5 ; $44bb
 Label_12_44bd:
 	farcall FarPtr_0a_10 ; $44bd
 	ld a, $04 ; $44c0
-	farcall FarPtr_0a_08 ; $44c2
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $44c2
 Label_12_44c5:
 	ld a, $03 ; $44c5
 	ld d, $03 ; $44c7
@@ -502,7 +502,7 @@ Label_12_44c5:
 	ld a, $03 ; $44cc
 	farcall FarPtr_ScriptWaitActorIdle ; $44ce
 	ld a, $03 ; $44d1
-	farcall FarPtr_0a_08 ; $44d3
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $44d3
 	ld a, $04 ; $44d6
 	ld d, $03 ; $44d8
 	farcall FarPtr_ScriptSetActorAnimation ; $44da
@@ -514,7 +514,7 @@ Label_12_44c5:
 	ld a, $03 ; $44e9
 	farcall FarPtr_ScriptWaitActorIdle ; $44eb
 	ld a, $03 ; $44ee
-	farcall FarPtr_0a_08 ; $44f0
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $44f0
 	ld a, $06 ; $44f3
 	ld bc, $1800 ; $44f5
 	ld de, $1100 ; $44f8
@@ -534,7 +534,7 @@ Label_12_44c5:
 	ld a, $04 ; $4519
 	farcall FarPtr_ScriptWaitActorIdle ; $451b
 	ld a, $04 ; $451e
-	farcall FarPtr_0a_08 ; $4520
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4520
 	ld a, $04 ; $4523
 	ld b, a ; $4525
 	ld a, $03 ; $4526
@@ -559,7 +559,7 @@ Label_12_44c5:
 	ld hl, $045a ; $454d
 	farcall FarPtr_0a_0e ; $4550
 	ld a, $04 ; $4553
-	farcall FarPtr_0a_08 ; $4555
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4555
 	ld a, $03 ; $4558
 	ld b, a ; $455a
 	ld a, $04 ; $455b
@@ -601,7 +601,7 @@ Label_12_44c5:
 	ld b, $40 ; $45b4
 	farcall FarPtr_SetActorFacing ; $45b6
 	ld a, $04 ; $45b9
-	farcall FarPtr_0a_08 ; $45bb
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $45bb
 	ld a, $00 ; $45be
 	ld d, $03 ; $45c0
 	farcall FarPtr_ScriptSetActorAnimation ; $45c2
@@ -743,9 +743,9 @@ Label_12_4715:
 	dw Label_12_475b ; $4741 jumptable
 Label_12_4743:
 	ld a, $03 ; $4743
-	farcall FarPtr_0a_0a ; $4745
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4745
 	farcall FarPtr_0a_12 ; $4748
-	farcall FarPtr_0a_0c ; $474b
+	farcall FarPtr_ScriptCloseDialogueWindow ; $474b
 	push af ; $474e
 	ld a, $05 ; $474f
 	farcall FarPtr_WaitScriptFrames ; $4751
@@ -755,7 +755,7 @@ Label_12_4743:
 	farcall FarPtr_0a_10 ; $4758
 Label_12_475b:
 	ld a, $03 ; $475b
-	farcall FarPtr_0a_08 ; $475d
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $475d
 	ret ; $4760
 Label_12_4761:
 	ld a, $03 ; $4761
@@ -764,7 +764,7 @@ Label_12_4761:
 	ld a, $03 ; $4768
 	farcall FarPtr_ScriptWaitActorIdle ; $476a
 	ld a, $03 ; $476d
-	farcall FarPtr_0a_08 ; $476f
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $476f
 	ret ; $4772
 	; $4773, 14 bytes (records:2)
 ; 7 records x 2 bytes
@@ -787,7 +787,7 @@ Label_12_4761:
 	ld l, a ; $478e
 	farcall FarPtr_0a_0e ; $478f
 	ld a, $04 ; $4792
-	farcall FarPtr_0a_08 ; $4794
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4794
 	ret ; $4797
 	; $4798, 14 bytes (records:2)
 ; 7 records x 2 bytes
@@ -813,20 +813,20 @@ Label_12_4761:
 	cp a, $04 ; $47ba
 	jr c, Label_12_47c4 ; $47bc
 	ld a, $05 ; $47be
-	farcall FarPtr_0a_08 ; $47c0
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $47c0
 	ret ; $47c3
 Label_12_47c4:
 	ld a, $05 ; $47c4
 	ld b, $c0 ; $47c6
 	farcall FarPtr_SetActorFacing ; $47c8
 	ld a, $05 ; $47cb
-	farcall FarPtr_0a_08 ; $47cd
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $47cd
 	ld a, $00 ; $47d0
 	ld b, a ; $47d2
 	ld a, $05 ; $47d3
 	farcall FarPtr_FaceActorTowardActor ; $47d5
 	ld a, $05 ; $47d8
-	farcall FarPtr_0a_08 ; $47da
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $47da
 	ld a, $05 ; $47dd
 	ld b, $c0 ; $47df
 	farcall FarPtr_SetActorFacing ; $47e1
@@ -852,7 +852,7 @@ Label_12_47c4:
 	ld l, a ; $4800
 	farcall FarPtr_0a_0e ; $4801
 	ld a, $06 ; $4804
-	farcall FarPtr_0a_08 ; $4806
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4806
 	ret ; $4809
 	; $480a, 14 bytes (records:2)
 ; 7 records x 2 bytes
@@ -940,9 +940,9 @@ Label_12_48b5:
 	ld l, a ; $48ba
 	farcall FarPtr_PushTextArgNumber ; $48bb
 	ld a, $07 ; $48be
-	farcall FarPtr_0a_0a ; $48c0
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $48c0
 	farcall FarPtr_0a_12 ; $48c3
-	farcall FarPtr_0a_0c ; $48c6
+	farcall FarPtr_ScriptCloseDialogueWindow ; $48c6
 	push af ; $48c9
 	ld a, $05 ; $48ca
 	farcall FarPtr_WaitScriptFrames ; $48cc
@@ -984,9 +984,9 @@ Label_12_48eb:
 	ld l, a ; $4918
 	farcall FarPtr_PushTextArgNumber ; $4919
 	ld a, $07 ; $491c
-	farcall FarPtr_0a_0a ; $491e
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $491e
 	farcall FarPtr_0a_12 ; $4921
-	farcall FarPtr_0a_0c ; $4924
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4924
 	push af ; $4927
 	ld a, $05 ; $4928
 	farcall FarPtr_WaitScriptFrames ; $492a
@@ -999,7 +999,7 @@ Label_12_4936:
 	ld hl, $1829 ; $4936
 	farcall FarPtr_0a_0e ; $4939
 	ld a, $07 ; $493c
-	farcall FarPtr_0a_08 ; $493e
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $493e
 	ldh a, [hWramBank] ; $4941
 	push af ; $4943
 	wram_bank $07 ; $4944
@@ -1022,9 +1022,9 @@ Label_12_4936:
 	ld hl, $182b ; $4966
 	farcall FarPtr_0a_0e ; $4969
 	ld a, $07 ; $496c
-	farcall FarPtr_0a_0a ; $496e
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $496e
 	farcall FarPtr_0a_12 ; $4971
-	farcall FarPtr_0a_0c ; $4974
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4974
 	push af ; $4977
 	ld a, $05 ; $4978
 	farcall FarPtr_WaitScriptFrames ; $497a
@@ -1128,7 +1128,7 @@ Label_12_49e5:
 	ld a, $07 ; $4a62
 	farcall FarPtr_ScriptWaitActorIdle ; $4a64
 	ld a, $07 ; $4a67
-	farcall FarPtr_0a_08 ; $4a69
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4a69
 Label_12_4a6c:
 	test_flag $05, 7 ; $4a6c
 	jr z, Label_12_4aae ; $4a6f
@@ -1211,9 +1211,9 @@ Label_12_4aef:
 	farcall FarPtr_0a_0e ; $4aff
 Label_12_4b02:
 	ld a, $07 ; $4b02
-	farcall FarPtr_0a_0a ; $4b04
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4b04
 	farcall FarPtr_0a_12 ; $4b07
-	farcall FarPtr_0a_0c ; $4b0a
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4b0a
 	push af ; $4b0d
 	ld a, $05 ; $4b0e
 	farcall FarPtr_WaitScriptFrames ; $4b10
@@ -1233,7 +1233,7 @@ Label_12_4b2e:
 	ld hl, $14fb ; $4b2e
 	farcall FarPtr_0a_0e ; $4b31
 	ld a, $07 ; $4b34
-	farcall FarPtr_0a_08 ; $4b36
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4b36
 	ld a, $00 ; $4b39
 	ld bc, $0020 ; $4b3b
 	farcall FarPtr_0a_18 ; $4b3e
@@ -1327,7 +1327,7 @@ Label_12_4bfc:
 	ld a, $07 ; $4c03
 	farcall FarPtr_ScriptWaitActorIdle ; $4c05
 	ld a, $07 ; $4c08
-	farcall FarPtr_0a_08 ; $4c0a
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4c0a
 	ld a, $00 ; $4c0d
 	ld bc, $0020 ; $4c0f
 	farcall FarPtr_0a_18 ; $4c12
@@ -1404,7 +1404,7 @@ Label_12_4c98:
 	ld hl, $0483 ; $4cb1
 	farcall FarPtr_0a_0e ; $4cb4
 	ld a, $00 ; $4cb7
-	farcall FarPtr_0a_08 ; $4cb9
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4cb9
 	farcall FarPtr_0a_02 ; $4cbc
 	ret ; $4cbf
 	; $4cc0, 8 bytes (records:8)
@@ -1447,9 +1447,9 @@ Label_12_4d28:
 	ld hl, $1830 ; $4d29
 	farcall FarPtr_0a_0e ; $4d2c
 	ld a, $07 ; $4d2f
-	farcall FarPtr_0a_0a ; $4d31
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4d31
 	farcall FarPtr_0a_12 ; $4d34
-	farcall FarPtr_0a_0c ; $4d37
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4d37
 	push af ; $4d3a
 	ld a, $05 ; $4d3b
 	farcall FarPtr_WaitScriptFrames ; $4d3d
@@ -1495,9 +1495,9 @@ Label_12_4d97:
 	ld hl, $1831 ; $4d9e
 	farcall FarPtr_0a_0e ; $4da1
 	ld a, $07 ; $4da4
-	farcall FarPtr_0a_0a ; $4da6
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4da6
 	farcall FarPtr_0a_12 ; $4da9
-	farcall FarPtr_0a_0c ; $4dac
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4dac
 	push af ; $4daf
 	ld a, $05 ; $4db0
 	farcall FarPtr_WaitScriptFrames ; $4db2
@@ -1543,9 +1543,9 @@ Label_12_4e0c:
 	ld hl, $1832 ; $4e13
 	farcall FarPtr_0a_0e ; $4e16
 	ld a, $07 ; $4e19
-	farcall FarPtr_0a_0a ; $4e1b
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4e1b
 	farcall FarPtr_0a_12 ; $4e1e
-	farcall FarPtr_0a_0c ; $4e21
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4e21
 	push af ; $4e24
 	ld a, $05 ; $4e25
 	farcall FarPtr_WaitScriptFrames ; $4e27
@@ -1591,9 +1591,9 @@ Label_12_4e81:
 	ld hl, $1833 ; $4e88
 	farcall FarPtr_0a_0e ; $4e8b
 	ld a, $07 ; $4e8e
-	farcall FarPtr_0a_0a ; $4e90
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4e90
 	farcall FarPtr_0a_12 ; $4e93
-	farcall FarPtr_0a_0c ; $4e96
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4e96
 	push af ; $4e99
 	ld a, $05 ; $4e9a
 	farcall FarPtr_WaitScriptFrames ; $4e9c
@@ -1638,7 +1638,7 @@ Label_12_4ef7:
 	ld hl, $1834 ; $4ef7
 	farcall FarPtr_0a_0e ; $4efa
 	ld a, $07 ; $4efd
-	farcall FarPtr_0a_08 ; $4eff
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4eff
 	ret ; $4f02
 	farcall FarPtr_WaitPlayerMoveDone ; $4f03
 	ld a, $00 ; $4f06
@@ -1731,9 +1731,9 @@ Label_12_4fa6:
 	ld hl, $1835 ; $4fd6
 	farcall FarPtr_0a_0e ; $4fd9
 	ld a, $07 ; $4fdc
-	farcall FarPtr_0a_0a ; $4fde
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4fde
 	farcall FarPtr_0a_12 ; $4fe1
-	farcall FarPtr_0a_0c ; $4fe4
+	farcall FarPtr_ScriptCloseDialogueWindow ; $4fe4
 	push af ; $4fe7
 	ld a, $05 ; $4fe8
 	farcall FarPtr_WaitScriptFrames ; $4fea
@@ -1763,9 +1763,9 @@ Label_12_5002:
 	farcall FarPtr_0a_0e ; $5012
 Label_12_5015:
 	ld a, $07 ; $5015
-	farcall FarPtr_0a_0a ; $5017
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5017
 	farcall FarPtr_0a_12 ; $501a
-	farcall FarPtr_0a_0c ; $501d
+	farcall FarPtr_ScriptCloseDialogueWindow ; $501d
 	push af ; $5020
 	ld a, $05 ; $5021
 	farcall FarPtr_WaitScriptFrames ; $5023
@@ -1851,7 +1851,7 @@ Label_12_50c8:
 	ld hl, $1508 ; $50d1
 	farcall FarPtr_0a_0e ; $50d4
 	ld a, $07 ; $50d7
-	farcall FarPtr_0a_08 ; $50d9
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $50d9
 	ret ; $50dc
 Label_12_50dd:
 	ld a, [$c2b0] ; $50dd
@@ -1882,9 +1882,9 @@ Label_12_50dd:
 	farcall FarPtr_PushTextArgNumber ; $510e
 Label_12_5111:
 	ld a, $07 ; $5111
-	farcall FarPtr_0a_0a ; $5113
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5113
 	farcall FarPtr_0a_12 ; $5116
-	farcall FarPtr_0a_0c ; $5119
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5119
 	push af ; $511c
 	ld a, $05 ; $511d
 	farcall FarPtr_WaitScriptFrames ; $511f
@@ -1903,9 +1903,9 @@ Label_12_5111:
 	ld l, a ; $5134
 	farcall FarPtr_0a_0e ; $5135
 	ld a, $07 ; $5138
-	farcall FarPtr_0a_0a ; $513a
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $513a
 	farcall FarPtr_0a_12 ; $513d
-	farcall FarPtr_0a_0c ; $5140
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5140
 	push af ; $5143
 	ld a, $05 ; $5144
 	farcall FarPtr_WaitScriptFrames ; $5146
@@ -1925,7 +1925,7 @@ Label_12_5111:
 	ld b, $00 ; $5167
 	farcall FarPtr_SetActorFacing ; $5169
 	ld a, $07 ; $516c
-	farcall FarPtr_0a_08 ; $516e
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $516e
 	test_flag $05, 7 ; $5171
 	jr z, Label_12_5192 ; $5174
 	ld a, $02 ; $5176
@@ -1956,7 +1956,7 @@ Label_12_51b1:
 	farcall FarPtr_0a_10 ; $51b1
 Label_12_51b4:
 	ld a, $07 ; $51b4
-	farcall FarPtr_0a_08 ; $51b6
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $51b6
 	ret ; $51b9
 Label_12_51ba:
 	ld a, $07 ; $51ba
@@ -1965,7 +1965,7 @@ Label_12_51ba:
 	ld a, $07 ; $51c1
 	farcall FarPtr_ScriptWaitActorIdle ; $51c3
 	ld a, $07 ; $51c6
-	farcall FarPtr_0a_08 ; $51c8
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $51c8
 	ld a, $07 ; $51cb
 	ld bc, $0300 ; $51cd
 	ld de, $3700 ; $51d0
@@ -2204,7 +2204,7 @@ Label_12_55b5:
 Label_12_55d3:
 	call Func_12_7a68 ; $55d3
 	ld a, $03 ; $55d6
-	farcall FarPtr_0a_08 ; $55d8
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $55d8
 	ret ; $55db
 	; $55dc, 12 bytes (records:2)
 ; 6 records x 2 bytes
@@ -2236,9 +2236,9 @@ Label_12_5606:
 	ld hl, $1004 ; $560c
 	farcall FarPtr_0a_0e ; $560f
 	ld a, $03 ; $5612
-	farcall FarPtr_0a_0a ; $5614
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5614
 	farcall FarPtr_0a_12 ; $5617
-	farcall FarPtr_0a_0c ; $561a
+	farcall FarPtr_ScriptCloseDialogueWindow ; $561a
 	push af ; $561d
 	ld a, $05 ; $561e
 	farcall FarPtr_WaitScriptFrames ; $5620
@@ -2248,7 +2248,7 @@ Label_12_5606:
 	farcall FarPtr_0a_10 ; $5627
 Label_12_562a:
 	ld a, $03 ; $562a
-	farcall FarPtr_0a_08 ; $562c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $562c
 	ret ; $562f
 	test_flag $05, 7 ; $5630
 	jr z, Label_12_55e8 ; $5633
@@ -2402,20 +2402,20 @@ Label_12_5747:
 	farcall FarPtr_0a_0e ; $579e
 Label_12_57a1:
 	ld a, $03 ; $57a1
-	farcall FarPtr_0a_08 ; $57a3
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $57a3
 	ld a, $02 ; $57a6
 	ld b, a ; $57a8
 	ld a, $03 ; $57a9
 	farcall FarPtr_FaceActorTowardActor ; $57ab
 	ld a, $03 ; $57ae
-	farcall FarPtr_0a_08 ; $57b0
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $57b0
 	ld a, $02 ; $57b3
 	ld d, $03 ; $57b5
 	farcall FarPtr_ScriptSetActorAnimation ; $57b7
 	ld a, $02 ; $57ba
 	farcall FarPtr_ScriptWaitActorIdle ; $57bc
 	ld a, $02 ; $57bf
-	farcall FarPtr_0a_08 ; $57c1
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $57c1
 	ld a, $00 ; $57c4
 	ld bc, $0018 ; $57c6
 	farcall FarPtr_0a_18 ; $57c9
@@ -2440,7 +2440,7 @@ Label_12_57f4:
 	ld hl, $100a ; $57f4
 	farcall FarPtr_0a_0e ; $57f7
 	ld a, $03 ; $57fa
-	farcall FarPtr_0a_08 ; $57fc
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $57fc
 	ld a, $00 ; $57ff
 	ld d, $03 ; $5801
 	farcall FarPtr_ScriptSetActorAnimation ; $5803
@@ -2468,7 +2468,7 @@ Label_12_57f4:
 	ld l, a ; $582d
 	farcall FarPtr_0a_0e ; $582e
 	ld a, $04 ; $5831
-	farcall FarPtr_0a_08 ; $5833
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5833
 	ld a, [$c2b1] ; $5836
 	cp a, $02 ; $5839
 	jr nc, Label_12_583f ; $583b
@@ -2597,7 +2597,7 @@ Label_12_5846:
 	ld l, a ; $5923
 	farcall FarPtr_0a_0e ; $5924
 	ld a, $07 ; $5927
-	farcall FarPtr_0a_08 ; $5929
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5929
 	ret ; $592c
 	; $592d, 30 bytes (records:2)
 ; 15 records x 2 bytes
@@ -2639,13 +2639,13 @@ Label_12_5846:
 	farcall FarPtr_ScriptSetActorAnimation ; $5970
 Label_12_5973:
 	ld a, $08 ; $5973
-	farcall FarPtr_0a_08 ; $5975
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5975
 	ret ; $5978
 Label_12_5979:
 	ld a, $08 ; $5979
-	farcall FarPtr_0a_0a ; $597b
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $597b
 	farcall FarPtr_0a_12 ; $597e
-	farcall FarPtr_0a_0c ; $5981
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5981
 	push af ; $5984
 	ld a, $05 ; $5985
 	farcall FarPtr_WaitScriptFrames ; $5987
@@ -2653,7 +2653,7 @@ Label_12_5979:
 	and a, a ; $598b
 	jr z, Label_12_5994 ; $598c
 	ld a, $08 ; $598e
-	farcall FarPtr_0a_08 ; $5990
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5990
 	ret ; $5993
 Label_12_5994:
 	farcall FarPtr_0a_10 ; $5994
@@ -2663,9 +2663,9 @@ Label_12_5994:
 	ld a, $08 ; $599e
 	farcall FarPtr_ScriptWaitActorIdle ; $59a0
 	ld a, $08 ; $59a3
-	farcall FarPtr_0a_0a ; $59a5
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $59a5
 	farcall FarPtr_0a_12 ; $59a8
-	farcall FarPtr_0a_0c ; $59ab
+	farcall FarPtr_ScriptCloseDialogueWindow ; $59ab
 	push af ; $59ae
 	ld a, $05 ; $59af
 	farcall FarPtr_WaitScriptFrames ; $59b1
@@ -2673,7 +2673,7 @@ Label_12_5994:
 	and a, a ; $59b5
 	jr z, Label_12_59be ; $59b6
 	ld a, $08 ; $59b8
-	farcall FarPtr_0a_08 ; $59ba
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $59ba
 	ret ; $59bd
 Label_12_59be:
 	push af ; $59be
@@ -2756,7 +2756,7 @@ Label_12_59be:
 	farcall FarPtr_SetActorFacing ; $5a65
 Label_12_5a68:
 	ld a, $09 ; $5a68
-	farcall FarPtr_0a_08 ; $5a6a
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5a6a
 	ret ; $5a6d
 	; $5a6e, 30 bytes (records:2)
 ; 15 records x 2 bytes
@@ -2790,13 +2790,13 @@ Label_12_5a68:
 	cp a, $06 ; $5aa0
 	jr z, Label_12_5aaa ; $5aa2
 	ld a, $0a ; $5aa4
-	farcall FarPtr_0a_08 ; $5aa6
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5aa6
 	ret ; $5aa9
 Label_12_5aaa:
 	ld a, $0a ; $5aaa
-	farcall FarPtr_0a_0a ; $5aac
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5aac
 	farcall FarPtr_0a_12 ; $5aaf
-	farcall FarPtr_0a_0c ; $5ab2
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5ab2
 	push af ; $5ab5
 	ld a, $05 ; $5ab6
 	farcall FarPtr_WaitScriptFrames ; $5ab8
@@ -2804,14 +2804,14 @@ Label_12_5aaa:
 	and a, a ; $5abc
 	jr z, Label_12_5ac5 ; $5abd
 	ld a, $0a ; $5abf
-	farcall FarPtr_0a_08 ; $5ac1
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5ac1
 	ret ; $5ac4
 Label_12_5ac5:
 	farcall FarPtr_0a_10 ; $5ac5
 	ld a, $0a ; $5ac8
-	farcall FarPtr_0a_0a ; $5aca
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5aca
 	farcall FarPtr_0a_12 ; $5acd
-	farcall FarPtr_0a_0c ; $5ad0
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5ad0
 	push af ; $5ad3
 	ld a, $05 ; $5ad4
 	farcall FarPtr_WaitScriptFrames ; $5ad6
@@ -2819,7 +2819,7 @@ Label_12_5ac5:
 	and a, a ; $5ada
 	jr z, Label_12_5ae3 ; $5adb
 	ld a, $0a ; $5add
-	farcall FarPtr_0a_08 ; $5adf
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5adf
 	ret ; $5ae2
 Label_12_5ae3:
 	ld a, $0a ; $5ae3
@@ -2923,7 +2923,7 @@ Label_12_5ae3:
 	farcall FarPtr_0a_10 ; $5bb6
 Label_12_5bb9:
 	ld a, $0b ; $5bb9
-	farcall FarPtr_0a_08 ; $5bbb
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5bbb
 	ret ; $5bbe
 	; $5bbf, 30 bytes (records:2)
 ; 15 records x 2 bytes
@@ -2957,7 +2957,7 @@ Label_12_5bb9:
 	ld l, a ; $5bf0
 	farcall FarPtr_0a_0e ; $5bf1
 	ld a, $0c ; $5bf4
-	farcall FarPtr_0a_08 ; $5bf6
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5bf6
 	ret ; $5bf9
 Label_12_5bfa:
 	ld a, [$c2b1] ; $5bfa
@@ -2972,7 +2972,7 @@ Label_12_5bfa:
 	ld l, a ; $5c07
 	farcall FarPtr_0a_0e ; $5c08
 	ld a, $0c ; $5c0b
-	farcall FarPtr_0a_08 ; $5c0d
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5c0d
 	ret ; $5c10
 	; $5c11, 60 bytes (records:2)
 ; 30 records x 2 bytes
@@ -3323,9 +3323,9 @@ Label_12_5f22:
 	farcall FarPtr_0a_10 ; $5f5b
 Label_12_5f5e:
 	ld a, $03 ; $5f5e
-	farcall FarPtr_0a_0a ; $5f60
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5f60
 	farcall FarPtr_0a_12 ; $5f63
-	farcall FarPtr_0a_0c ; $5f66
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5f66
 	push af ; $5f69
 	ld a, $05 ; $5f6a
 	farcall FarPtr_WaitScriptFrames ; $5f6c
@@ -3345,7 +3345,7 @@ Label_12_5f5e:
 	farcall FarPtr_0a_10 ; $5f8f
 Label_12_5f92:
 	ld a, $03 ; $5f92
-	farcall FarPtr_0a_08 ; $5f94
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5f94
 	call Func_12_64de ; $5f97
 	ld a, $00 ; $5f9a
 	ld b, $c0 ; $5f9c
@@ -3365,7 +3365,7 @@ Label_12_5fb8:
 	ld hl, $103e ; $5fb8
 	farcall FarPtr_0a_0e ; $5fbb
 	ld a, $03 ; $5fbe
-	farcall FarPtr_0a_08 ; $5fc0
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5fc0
 	farcall FarPtr_0a_02 ; $5fc3
 	ret ; $5fc6
 Func_12_5fc7:
@@ -3417,9 +3417,9 @@ Func_12_5fc7:
 	farcall FarPtr_0a_10 ; $602b
 Label_12_602e:
 	ld a, $03 ; $602e
-	farcall FarPtr_0a_0a ; $6030
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6030
 	farcall FarPtr_0a_12 ; $6033
-	farcall FarPtr_0a_0c ; $6036
+	farcall FarPtr_ScriptCloseDialogueWindow ; $6036
 	push af ; $6039
 	ld a, $05 ; $603a
 	farcall FarPtr_WaitScriptFrames ; $603c
@@ -3436,7 +3436,7 @@ Label_12_602e:
 	farcall FarPtr_0a_10 ; $6057
 Label_12_605a:
 	ld a, $03 ; $605a
-	farcall FarPtr_0a_08 ; $605c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $605c
 	call Func_12_64de ; $605f
 	ld a, $00 ; $6062
 	ld b, $c0 ; $6064
@@ -3459,7 +3459,7 @@ Label_12_6087:
 	ld hl, $1070 ; $6087
 	farcall FarPtr_0a_0e ; $608a
 	ld a, $03 ; $608d
-	farcall FarPtr_0a_08 ; $608f
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $608f
 	ld a, $02 ; $6092
 	farcall FarPtr_GetActorStateAddr ; $6094
 	ld c, l ; $6097
@@ -4064,14 +4064,14 @@ Func_12_64de:
 	ld a, $08 ; $65b8
 	farcall FarPtr_ScriptWaitActorIdle ; $65ba
 	ld a, $08 ; $65bd
-	farcall FarPtr_0a_08 ; $65bf
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $65bf
 	ld a, $09 ; $65c2
 	ld d, $03 ; $65c4
 	farcall FarPtr_ScriptSetActorAnimation ; $65c6
 	ld a, $09 ; $65c9
 	farcall FarPtr_ScriptWaitActorIdle ; $65cb
 	ld a, $09 ; $65ce
-	farcall FarPtr_0a_08 ; $65d0
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $65d0
 	ld a, $09 ; $65d3
 	ld b, $c0 ; $65d5
 	farcall FarPtr_SetActorFacing ; $65d7
@@ -4156,14 +4156,14 @@ Func_12_64de:
 	ld a, $06 ; $6685
 	farcall FarPtr_ScriptWaitActorIdle ; $6687
 	ld a, $06 ; $668a
-	farcall FarPtr_0a_08 ; $668c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $668c
 	ld a, $07 ; $668f
 	ld d, $03 ; $6691
 	farcall FarPtr_ScriptSetActorAnimation ; $6693
 	ld a, $07 ; $6696
 	farcall FarPtr_ScriptWaitActorIdle ; $6698
 	ld a, $07 ; $669b
-	farcall FarPtr_0a_08 ; $669d
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $669d
 	ld a, $07 ; $66a0
 	ld b, $c0 ; $66a2
 	farcall FarPtr_SetActorFacing ; $66a4
@@ -4265,14 +4265,14 @@ Func_12_64de:
 	ld a, $04 ; $6777
 	farcall FarPtr_ScriptWaitActorIdle ; $6779
 	ld a, $04 ; $677c
-	farcall FarPtr_0a_08 ; $677e
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $677e
 	ld a, $05 ; $6781
 	ld d, $03 ; $6783
 	farcall FarPtr_ScriptSetActorAnimation ; $6785
 	ld a, $05 ; $6788
 	farcall FarPtr_ScriptWaitActorIdle ; $678a
 	ld a, $05 ; $678d
-	farcall FarPtr_0a_08 ; $678f
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $678f
 	ld a, $05 ; $6792
 	ld b, $c0 ; $6794
 	farcall FarPtr_SetActorFacing ; $6796
@@ -4419,14 +4419,14 @@ Func_12_64de:
 	ld hl, $103a ; $68c8
 	farcall FarPtr_0a_0e ; $68cb
 	ld a, $06 ; $68ce
-	farcall FarPtr_0a_08 ; $68d0
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $68d0
 	ld a, $06 ; $68d3
 	ld d, $03 ; $68d5
 	farcall FarPtr_ScriptSetActorAnimation ; $68d7
 	ld a, $06 ; $68da
 	farcall FarPtr_ScriptWaitActorIdle ; $68dc
 	ld a, $06 ; $68df
-	farcall FarPtr_0a_08 ; $68e1
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $68e1
 	push af ; $68e4
 	ld a, $0f ; $68e5
 	farcall FarPtr_WaitScriptFrames ; $68e7
@@ -4502,14 +4502,14 @@ Func_12_64de:
 	ld hl, $1038 ; $697e
 	farcall FarPtr_0a_0e ; $6981
 	ld a, $05 ; $6984
-	farcall FarPtr_0a_08 ; $6986
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6986
 	ld a, $05 ; $6989
 	ld d, $03 ; $698b
 	farcall FarPtr_ScriptSetActorAnimation ; $698d
 	ld a, $05 ; $6990
 	farcall FarPtr_ScriptWaitActorIdle ; $6992
 	ld a, $05 ; $6995
-	farcall FarPtr_0a_08 ; $6997
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6997
 	push af ; $699a
 	ld a, $0f ; $699b
 	farcall FarPtr_WaitScriptFrames ; $699d
@@ -4572,14 +4572,14 @@ Func_12_64de:
 	ld hl, $1036 ; $6a16
 	farcall FarPtr_0a_0e ; $6a19
 	ld a, $04 ; $6a1c
-	farcall FarPtr_0a_08 ; $6a1e
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6a1e
 	ld a, $04 ; $6a21
 	ld d, $03 ; $6a23
 	farcall FarPtr_ScriptSetActorAnimation ; $6a25
 	ld a, $04 ; $6a28
 	farcall FarPtr_ScriptWaitActorIdle ; $6a2a
 	ld a, $04 ; $6a2d
-	farcall FarPtr_0a_08 ; $6a2f
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6a2f
 	push af ; $6a32
 	ld a, $0f ; $6a33
 	farcall FarPtr_WaitScriptFrames ; $6a35
@@ -4683,9 +4683,9 @@ Func_12_6ae8:
 	farcall FarPtr_0a_10 ; $6af3
 Label_12_6af6:
 	ld a, $03 ; $6af6
-	farcall FarPtr_0a_0a ; $6af8
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6af8
 	farcall FarPtr_0a_12 ; $6afb
-	farcall FarPtr_0a_0c ; $6afe
+	farcall FarPtr_ScriptCloseDialogueWindow ; $6afe
 	push af ; $6b01
 	ld a, $05 ; $6b02
 	farcall FarPtr_WaitScriptFrames ; $6b04
@@ -4706,7 +4706,7 @@ Label_12_6b18:
 	ld hl, $1046 ; $6b24
 	farcall FarPtr_0a_0e ; $6b27
 	ld a, $03 ; $6b2a
-	farcall FarPtr_0a_08 ; $6b2c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6b2c
 	call Func_12_60a0 ; $6b2f
 	farcall FarPtr_0a_02 ; $6b32
 	ret ; $6b35
@@ -4718,7 +4718,7 @@ Label_12_6b36:
 	farcall FarPtr_0a_10 ; $6b41
 Label_12_6b44:
 	ld a, $03 ; $6b44
-	farcall FarPtr_0a_08 ; $6b46
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6b46
 	call Func_12_6a41 ; $6b49
 	push af ; $6b4c
 	ld a, $1e ; $6b4d
@@ -4730,9 +4730,9 @@ Label_12_6b57:
 	ld hl, $1047 ; $6b57
 	farcall FarPtr_0a_0e ; $6b5a
 	ld a, $03 ; $6b5d
-	farcall FarPtr_0a_0a ; $6b5f
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6b5f
 	farcall FarPtr_0a_12 ; $6b62
-	farcall FarPtr_0a_0c ; $6b65
+	farcall FarPtr_ScriptCloseDialogueWindow ; $6b65
 	push af ; $6b68
 	ld a, $05 ; $6b69
 	farcall FarPtr_WaitScriptFrames ; $6b6b
@@ -4749,9 +4749,9 @@ Func_12_6b76:
 	farcall FarPtr_0a_10 ; $6b81
 Label_12_6b84:
 	ld a, $03 ; $6b84
-	farcall FarPtr_0a_0a ; $6b86
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6b86
 	farcall FarPtr_0a_12 ; $6b89
-	farcall FarPtr_0a_0c ; $6b8c
+	farcall FarPtr_ScriptCloseDialogueWindow ; $6b8c
 	push af ; $6b8f
 	ld a, $05 ; $6b90
 	farcall FarPtr_WaitScriptFrames ; $6b92
@@ -4771,14 +4771,14 @@ Label_12_6b84:
 	ld hl, $1076 ; $6bb2
 	farcall FarPtr_0a_0e ; $6bb5
 	ld a, $03 ; $6bb8
-	farcall FarPtr_0a_08 ; $6bba
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6bba
 Label_12_6bbd:
 	call Func_12_60a0 ; $6bbd
 	farcall FarPtr_0a_02 ; $6bc0
 	ret ; $6bc3
 Label_12_6bc4:
 	ld a, $03 ; $6bc4
-	farcall FarPtr_0a_08 ; $6bc6
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6bc6
 	call Func_12_6a41 ; $6bc9
 	push af ; $6bcc
 	ld a, $1e ; $6bcd
@@ -4796,9 +4796,9 @@ Label_12_6be4:
 	ld hl, $1077 ; $6be4
 	farcall FarPtr_0a_0e ; $6be7
 	ld a, $03 ; $6bea
-	farcall FarPtr_0a_0a ; $6bec
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6bec
 	farcall FarPtr_0a_12 ; $6bef
-	farcall FarPtr_0a_0c ; $6bf2
+	farcall FarPtr_ScriptCloseDialogueWindow ; $6bf2
 	push af ; $6bf5
 	ld a, $05 ; $6bf6
 	farcall FarPtr_WaitScriptFrames ; $6bf8
@@ -4808,7 +4808,7 @@ Label_12_6be4:
 	ld hl, $1079 ; $6bff
 	farcall FarPtr_0a_0e ; $6c02
 	ld a, $03 ; $6c05
-	farcall FarPtr_0a_08 ; $6c07
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6c07
 	jp Label_12_6bbd ; $6c0a
 	INCBIN "data/bank_012/d_6c0d.bin" ; $6c0d, 381 bytes
 Label_12_6d8a:
@@ -4971,7 +4971,7 @@ Label_12_6ded:
 	ld a, $03 ; $6ef2
 	farcall FarPtr_0a_44 ; $6ef4
 	ld a, $03 ; $6ef7
-	farcall FarPtr_0a_08 ; $6ef9
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6ef9
 	ldh a, [hRomBank] ; $6efc
 	ld b, a ; $6efe
 	ld a, $08 ; $6eff
@@ -5080,7 +5080,7 @@ Label_12_6ded:
 	ld a, $03 ; $6ff6
 	farcall FarPtr_0a_44 ; $6ff8
 	ld a, $03 ; $6ffb
-	farcall FarPtr_0a_08 ; $6ffd
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $6ffd
 	push af ; $7000
 	ld a, $3c ; $7001
 	farcall FarPtr_WaitScriptFrames ; $7003
@@ -5222,7 +5222,7 @@ Label_12_6ded:
 	ld d, $02 ; $7156
 	farcall FarPtr_ScriptSetActorAnimation ; $7158
 	ld a, $04 ; $715b
-	farcall FarPtr_0a_08 ; $715d
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $715d
 	ld a, $05 ; $7160
 	ld b, $40 ; $7162
 	farcall FarPtr_SetActorFacing ; $7164
@@ -5232,12 +5232,12 @@ Label_12_6ded:
 	ld a, $05 ; $716e
 	farcall FarPtr_ScriptWaitActorIdle ; $7170
 	ld a, $05 ; $7173
-	farcall FarPtr_0a_08 ; $7175
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7175
 	ld a, $03 ; $7178
 	ld d, $03 ; $717a
 	farcall FarPtr_ScriptSetActorAnimation ; $717c
 	ld a, $03 ; $717f
-	farcall FarPtr_0a_08 ; $7181
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7181
 	ld a, $04 ; $7184
 	ld d, $02 ; $7186
 	farcall FarPtr_ScriptSetActorAnimation ; $7188
@@ -5294,7 +5294,7 @@ Label_12_6ded:
 	ld a, $03 ; $7208
 	farcall FarPtr_ScriptWaitActorIdle ; $720a
 	ld a, $03 ; $720d
-	farcall FarPtr_0a_08 ; $720f
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $720f
 	ld a, $02 ; $7212
 	ld b, a ; $7214
 	ld a, $00 ; $7215
@@ -5325,7 +5325,7 @@ Label_12_6ded:
 	ld hl, $1087 ; $724e
 	farcall FarPtr_0a_0e ; $7251
 	ld a, $03 ; $7254
-	farcall FarPtr_0a_08 ; $7256
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7256
 	ld a, $03 ; $7259
 	ld bc, $2500 ; $725b
 	ld de, $1d00 ; $725e
@@ -5350,21 +5350,21 @@ Label_12_6ded:
 	ld a, $00 ; $728a
 	farcall FarPtr_ScriptWaitActorIdle ; $728c
 	ld a, $00 ; $728f
-	farcall FarPtr_0a_08 ; $7291
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7291
 	ld a, $03 ; $7294
 	ld d, $02 ; $7296
 	farcall FarPtr_ScriptSetActorAnimation ; $7298
 	ld a, $03 ; $729b
 	farcall FarPtr_ScriptWaitActorIdle ; $729d
 	ld a, $03 ; $72a0
-	farcall FarPtr_0a_08 ; $72a2
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $72a2
 	ld a, $03 ; $72a5
 	ld d, $03 ; $72a7
 	farcall FarPtr_ScriptSetActorAnimation ; $72a9
 	ld a, $03 ; $72ac
 	farcall FarPtr_ScriptWaitActorIdle ; $72ae
 	ld a, $03 ; $72b1
-	farcall FarPtr_0a_08 ; $72b3
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $72b3
 	ld a, $00 ; $72b6
 	ld d, $03 ; $72b8
 	farcall FarPtr_ScriptSetActorAnimation ; $72ba
@@ -5403,7 +5403,7 @@ Label_12_6ded:
 	farcall FarPtr_WaitScriptFrames ; $7306
 	pop af ; $7309
 	ld a, $05 ; $730a
-	farcall FarPtr_0a_08 ; $730c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $730c
 	ld a, $04 ; $730f
 	ld bc, $2500 ; $7311
 	ld de, $1500 ; $7314
@@ -5411,7 +5411,7 @@ Label_12_6ded:
 	ld a, $04 ; $731a
 	farcall FarPtr_ScriptWaitActorMoveDone ; $731c
 	ld a, $04 ; $731f
-	farcall FarPtr_0a_08 ; $7321
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7321
 	ld a, $02 ; $7324
 	ld b, a ; $7326
 	ld a, $00 ; $7327
@@ -5486,14 +5486,14 @@ Label_12_6ded:
 	ld hl, $104a ; $73c7
 	farcall FarPtr_0a_0e ; $73ca
 	ld a, $07 ; $73cd
-	farcall FarPtr_0a_08 ; $73cf
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $73cf
 	ld a, $03 ; $73d2
 	ld de, $ff80 ; $73d4
 	farcall FarPtr_0a_42 ; $73d7
 	ld a, $03 ; $73da
 	farcall FarPtr_0a_44 ; $73dc
 	ld a, $03 ; $73df
-	farcall FarPtr_0a_08 ; $73e1
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $73e1
 	ldh a, [hRomBank] ; $73e4
 	ld b, a ; $73e6
 	ld a, $07 ; $73e7
@@ -5554,7 +5554,7 @@ Label_12_6ded:
 	ld hl, $1023 ; $746c
 	farcall FarPtr_0a_0e ; $746f
 	ld a, $06 ; $7472
-	farcall FarPtr_0a_08 ; $7474
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7474
 	ld a, $03 ; $7477
 	ld de, $ff80 ; $7479
 	farcall FarPtr_0a_42 ; $747c
@@ -5563,7 +5563,7 @@ Label_12_6ded:
 	ld hl, $104c ; $7484
 	farcall FarPtr_0a_0e ; $7487
 	ld a, $03 ; $748a
-	farcall FarPtr_0a_08 ; $748c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $748c
 	ldh a, [hRomBank] ; $748f
 	ld b, a ; $7491
 	ld a, $06 ; $7492
@@ -5598,7 +5598,7 @@ Label_12_6ded:
 	ld hl, $1020 ; $74de
 	farcall FarPtr_0a_0e ; $74e1
 	ld a, $05 ; $74e4
-	farcall FarPtr_0a_08 ; $74e6
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $74e6
 	ld a, $03 ; $74e9
 	ld de, $ff80 ; $74eb
 	farcall FarPtr_0a_42 ; $74ee
@@ -5607,7 +5607,7 @@ Label_12_6ded:
 	ld hl, $104d ; $74f6
 	farcall FarPtr_0a_0e ; $74f9
 	ld a, $03 ; $74fc
-	farcall FarPtr_0a_08 ; $74fe
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $74fe
 	ldh a, [hRomBank] ; $7501
 	ld b, a ; $7503
 	ld a, $05 ; $7504
@@ -5676,12 +5676,12 @@ Label_12_6ded:
 	ld d, $02 ; $75a5
 	farcall FarPtr_ScriptSetActorAnimation ; $75a7
 	ld a, $04 ; $75aa
-	farcall FarPtr_0a_08 ; $75ac
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $75ac
 	ld a, $03 ; $75af
 	ld d, $03 ; $75b1
 	farcall FarPtr_ScriptSetActorAnimation ; $75b3
 	ld a, $03 ; $75b6
-	farcall FarPtr_0a_08 ; $75b8
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $75b8
 	ld a, $04 ; $75bb
 	ld d, $02 ; $75bd
 	farcall FarPtr_ScriptSetActorAnimation ; $75bf
@@ -5729,7 +5729,7 @@ Label_12_6ded:
 	ld a, $03 ; $762c
 	farcall FarPtr_ScriptWaitActorIdle ; $762e
 	ld a, $03 ; $7631
-	farcall FarPtr_0a_08 ; $7633
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7633
 	ld a, $00 ; $7636
 	ld d, $03 ; $7638
 	farcall FarPtr_ScriptSetActorAnimation ; $763a
@@ -5741,7 +5741,7 @@ Label_12_6ded:
 	ld a, $03 ; $7649
 	farcall FarPtr_ScriptWaitActorIdle ; $764b
 	ld a, $03 ; $764e
-	farcall FarPtr_0a_08 ; $7650
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7650
 	ld a, $03 ; $7653
 	ld bc, $2400 ; $7655
 	ld de, $1d00 ; $7658
@@ -5766,14 +5766,14 @@ Label_12_6ded:
 	ld a, $00 ; $7684
 	farcall FarPtr_ScriptWaitActorIdle ; $7686
 	ld a, $00 ; $7689
-	farcall FarPtr_0a_08 ; $768b
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $768b
 	ld a, $03 ; $768e
 	ld d, $02 ; $7690
 	farcall FarPtr_ScriptSetActorAnimation ; $7692
 	ld a, $03 ; $7695
 	farcall FarPtr_ScriptWaitActorIdle ; $7697
 	ld a, $03 ; $769a
-	farcall FarPtr_0a_08 ; $769c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $769c
 	ld a, $00 ; $769f
 	ld d, $03 ; $76a1
 	farcall FarPtr_ScriptSetActorAnimation ; $76a3
@@ -5824,7 +5824,7 @@ Label_12_6ded:
 	ld de, $3f00 ; $770e
 	farcall FarPtr_ScriptSetActorPosition ; $7711
 	ld a, $04 ; $7714
-	farcall FarPtr_0a_08 ; $7716
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $7716
 	ld a, $10 ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b
 	ld a, $01 ; $771e

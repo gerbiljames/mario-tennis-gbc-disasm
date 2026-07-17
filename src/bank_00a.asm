@@ -8,12 +8,12 @@ FarPtr_WaitScriptFrames:
 	dw WaitScriptFrames ; $4004
 FarPtr_0a_06:
 	dw Func_0a_4152 ; $4006
-FarPtr_0a_08:
-	dw Func_0a_4192 ; $4008
-FarPtr_0a_0a:
-	dw Func_0a_41c1 ; $400a
-FarPtr_0a_0c:
-	dw Func_0a_41f2 ; $400c
+FarPtr_ScriptShowSpeakerDialogue:
+	dw ScriptShowSpeakerDialogue ; $4008
+FarPtr_ScriptShowSpeakerDialogueRestoreBG:
+	dw ScriptShowSpeakerDialogueRestoreBG ; $400a
+FarPtr_ScriptCloseDialogueWindow:
+	dw ScriptCloseDialogueWindow ; $400c
 FarPtr_0a_0e:
 	dw Func_0a_4156 ; $400e
 FarPtr_0a_10:
@@ -299,7 +299,7 @@ Func_0a_4172:
 	pop hl ; $418f
 	pop af ; $4190
 	ret ; $4191
-Func_0a_4192:
+ScriptShowSpeakerDialogue:
 	push af ; $4192
 	push hl ; $4193
 	ld b, a ; $4194
@@ -326,7 +326,7 @@ Label_0a_41b0:
 	pop hl ; $41be
 	pop af ; $41bf
 	ret ; $41c0
-Func_0a_41c1:
+ScriptShowSpeakerDialogueRestoreBG:
 	push af ; $41c1
 	push hl ; $41c2
 	ld b, a ; $41c3
@@ -353,7 +353,7 @@ Label_0a_41e1:
 	pop hl ; $41ef
 	pop af ; $41f0
 	ret ; $41f1
-Func_0a_41f2:
+ScriptCloseDialogueWindow:
 	farcall FarPtr_CloseActiveDialogueWindow ; $41f2
 	ret ; $41f5
 Func_0a_41f6:
