@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `866e6ad`); the whole history rebuilds
+Everything below is **committed** (HEAD `6895cb2`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -320,7 +320,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 1,951 of 16,791 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 1,983 of 16,791 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -885,7 +885,22 @@ to be:
   $6e/$1f/$25/$26/$5e, not $38+); disasm.py now dedupes consecutive identical
   label lines (a curated name on an offset with both a data-mark and a segment
   label emitted twice and broke assembly).
-- Banks $13 and $16 naming passes remain queued (agents were cut short).
+- **Bank $16 = win/lose + match-stats screens** (+17): the result-portrait
+  pipeline (DecompressCharacterPortrait 32-entry table, win/lose face
+  variants, palette-to-BG-slot-4-7 attr fills), per-match graphics loads
+  indexed by wCurrentMinigameStoryMatch, banner sprite wobble helpers, and
+  MaybeInvertMatchWinLoseFlag (link-mode side swap). The story EXP screens
+  turned out to live elsewhere; $16's remainder is compressed graphics.
+- **Bank $13 cutscene layer** (+15): academy courts tour (with the bobbing
+  pointer-sprite frame task), Service Ace restaurant coach intro, door
+  open/close animation pair, the daily "play doubles today?" prompt (sets
+  wMatchIsDoubles + story flag $05,7), the academy questions menu, narrator
+  scenes, the singles/doubles traveling-team victory cutscenes, and
+  ComputeStoryRankTier_13. Noted: wWaterSpriteMinigameFlag is reused as
+  generic scratch by $13's actor position save/restore — the RA-sourced name
+  is mis-scoped.
+
+Named symbols after the $13/$16 follow-up: 1,983.
 
 Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
 integrators, the CPU-AI behaviour state machine — need runtime traces), the
@@ -896,5 +911,5 @@ expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `866e6ad`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `6895cb2`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
