@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `fd14f6b`); the whole history rebuilds
+Everything below is **committed** (HEAD `79ffb84`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -953,6 +953,41 @@ Named symbols after the $13/$16 follow-up: 1,983.
 
 Named symbols after round 4: 2,294 (labels.json 2,209 + ram_map 225).
 
+### Naming pass round 5 (2026-07-17, agent fleet restart)
+
+- **Bank $0a fully mapped (agent): the story-overworld engine.**
+  RunStoryModeOverworld/RunStoryLocation (6-byte location records at $564f,
+  $0e-byte pointer headers at $c286, event-request polling $c2a0-$c2a5),
+  FindStoryScriptEntry (8-byte trigger/exit/NPC records with facing masks +
+  flag conditions), Begin/EndCutsceneScriptMode, the WRAM6 collision ($d000)
+  and behavior ($d400) map accessors, scene tile animations + debug scene
+  viewer, the 15-slot minigame moving-target pool with its own movement
+  bytecode interpreter (RunMinigameTargetScript), story-match glue
+  (AssignStoryMatchCharacters), and RunEndingCreditsSequence (End1-End17
+  location tour with FreezeAllActors).
+- **Bank $3b (agent): main menu + records front-end.** RunMainMenu (3x3 grid
+  with save-slot mugshot cells), RunMatchFormatSelect, RunMinigameSelect
+  (6/9-slot portrait grids), the saved-data source/erase pickers, the N64
+  Transfer Pak record screens (Tnmt/Exhib/Ring Shot charts decoded from save
+  block $0b), ShowTournamentBracket, RunStarCharExhibResults, and
+  **a hidden cheat**: on the Trophies screen the game counts Right presses
+  ($d900) and Left presses ($d901); exactly 12 Rights + 34 Lefts then
+  A+Select runs ApplyUnlockEverythingCheat (sets all star-char/court/misc
+  save flags for all three slots) and saves.
+- **Bank $3e (agent): secondary menus.** Link match-rules/status/error
+  screens, erase-data confirmations, the story equipment suite (racket/shoes
+  choice + select + status screens with stat-mod readouts, owned lists from
+  game flags, wEquippedRacket nibble equip), and the 4-court/9-court select
+  grids (local + link variants, unlock gating via save flags into $cb54,
+  per-court BGM through $c8f8).
+- **Direct**: bank $04 actor helpers (IsTileBlockedAt, WaitActorsIdleTimeout,
+  LoadOverworldSpriteDef), bank $0d GetDefaultMinigameRecordValue (+ save
+  blocks $38+slot), bank $39 shared screen hub (LoadCompressedTileBlock —
+  the 152-site tile-block loader — menu bg scroll, staged map flush, digit
+  sprites), bank $18 char-select cursor/roster helpers.
+
+Named symbols after round 5: 2,736 (labels.json 2,652 + ram_map 225 - overlap).
+
 Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
 integrators, the CPU-AI behaviour state machine — need runtime traces), bank
 $3b's screen-specific pause-menu builders, bank $0a story-overworld engine,
@@ -962,5 +997,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `fd14f6b`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `79ffb84`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
