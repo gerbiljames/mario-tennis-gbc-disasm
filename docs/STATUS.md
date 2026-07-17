@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `3158e30`); the whole history rebuilds
+Everything below is **committed** (HEAD `e3e2c79`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -326,7 +326,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 1,983 of 16,791 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 2,898 of 16,870 labels** (`tools/progress.py`; the rest
 are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
