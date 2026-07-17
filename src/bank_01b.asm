@@ -4864,7 +4864,8 @@ Label_1b_723a:
 	pop af ; $7294
 	wram_bank ; $7295
 	ret ; $7299
-	INCBIN "data/bank_01b/d_729a.bin" ; $729a, 13 bytes
+	INCBIN "data/bank_01b/d_729a.bin" ; $729a, 10 bytes
+	farcall FarPtr_39_28 ; $72a4
 	ret ; $72a7
 	ld c, $02 ; $72a8
 	call GetMenuCursorIndex ; $72aa

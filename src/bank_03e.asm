@@ -3313,7 +3313,26 @@ Label_3e_59da:
 	ld c, $0e ; $59df
 	call Func_3e_4048 ; $59e1
 	ret ; $59e4
-	INCBIN "data/bank_03e/d_59e5.bin" ; $59e5, 48 bytes
+	INCBIN "data/bank_03e/d_59e5.bin" ; $59e5, 6 bytes
+	ldh a, [hWramBank] ; $59eb
+	push af ; $59ed
+	wram_bank $03 ; $59ee
+	ld a, [$d811] ; $59f4
+	ld hl, $5a0f ; $59f7
+	add a, l ; $59fa
+	ld l, a ; $59fb
+	jr nc, Label_3e_59ff ; $59fc
+	inc h ; $59fe
+Label_3e_59ff:
+	ld d, [hl] ; $59ff
+	ld e, $18 ; $5a00
+	ld b, $09 ; $5a02
+	ld c, $20 ; $5a04
+	call QueueSprite ; $5a06
+	pop af ; $5a09
+	wram_bank ; $5a0a
+	ret ; $5a0e
+	INCBIN "data/bank_03e/d_5a0f.bin" ; $5a0f, 6 bytes
 Func_3e_5a15:
 	ld b, a ; $5a15
 	call Func_3e_5a44 ; $5a16
