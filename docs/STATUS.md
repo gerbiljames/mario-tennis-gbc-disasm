@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `6895cb2`); the whole history rebuilds
+Everything below is **committed** (HEAD `fd14f6b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -902,14 +902,65 @@ to be:
 
 Named symbols after the $13/$16 follow-up: 1,983.
 
+### Naming pass round 4 (2026-07-17, later)
+
+- **Bank $05 text engine fully decoded**: TextInterpreterLoop + all 20
+  control-code handlers named (TextCmd*: newline, wait-button page break,
+  arg-string/arg-number/short-text printers via the PushTextArg* queues,
+  player/partner name inserts, dakuten/handakuten combining marks, three
+  delay variants, nops) plus the continue-arrow blink task. Eleven WRAM5
+  text-engine variables named in ram_map.json (wTextArgStringQueue,
+  wTextStreamPtr, wGlyphVramDest, wTextPageBreakRequest, ...). Caution
+  learned: $d82a/$d82b are the text cursor only under WRAM bank 5 — bank
+  $17 uses the same addresses in WRAM bank 3 as target-box dims, so they
+  stay unnamed.
+- **Generator**: `records:2` data tables now emit `dw <label>` when a word
+  resolves to a labeled same-bank offset — dispatch tables (e.g.
+  ControlCodeHandlers_05) self-document as handlers get named.
+- **Bank $06** (agent): match pause menu tree (rules pages per game mode,
+  controls review, camera/music options, per-mode quit menus), scoreboard
+  system (pips, captions, per-mode gfx), story pause tree (message speed,
+  save/quit), shadow-tilemap addressing helpers, and RunDebugStatsEditor
+  (FarPtr_06_02): a leftover hex editor for the $df00 player struct with
+  ASCII field labels SPEED/ADD/BRAKE/TURN/ANGLE/PLACE/STROKE/SERVE/VOLLEY.
+- **Bank $1b** (agent): academy ranking-board screens (singles/doubles
+  12-name ladders, highlight + marker-coord tables, rank-change jingles),
+  char-select roster/nav-grid/mugshot machinery, minigame level picker
+  (2/3-panel variants gated on save flags), saved-data viewer (Exhibition
+  vs Mini-Game Data, scrolling clear/star/high-score list), and another
+  debug tree: char-unlock-flag toggle grid (writes save block $0b),
+  'No N64 data was found.' screen, Trophies placeholder.
+- **Bank $17** (agent): the nine training-drill briefing screens
+  (DrillBriefing_*: serve-to-targets, spin serve, poles, serve+volley,
+  two serve+smash, three return drills) — each an animated court-diagram
+  with per-phase sprite-position record tables and 36:688+/37:3+ captions;
+  the diagram sprite task suite (figures, ball, swing anim, poles, spot
+  marker, target brackets, palette cycler); minigame rules pages; rules
+  border animation. Twin cursor-grid helpers suffixed _17 (twins of the
+  bank $1b set).
+- **ROM0**: MulNegHLByA/MulPosHLByA (signed-multiply core), soft-reset
+  combo checks, DrawHalvedWordDecimal, QueueTileCopyAdvance, sound-engine
+  channel-update request trio + ApplyChannelVolumeEnvelope.
+- **Bank $02**: GetCharPaletteIndex (+CharPaletteIndexTable feeding
+  LoadIndexedPalette), RemapExtendedCharId, ValidateN64TransferRecord
+  (checksummed $c9b0 transfer-pak record), stubbed EXP-gate helpers.
+- **Banks $1c/$1d/$1e** (direct): ShowCharDataScreen + values-sync task +
+  Backup/RestoreCharData pairs; ShowMatchResultsScreen, ProcessMatchRewards
+  (per-mode reward/unlock recording), ShowGameProgressScreen tree;
+  GrayscalePaletteColorInPlace/ConvertColorToGrayscale — note the original
+  game bug: the blue component is stored to ROM $0002 (no-op), so the
+  grayscale ignores fresh blue.
+
+Named symbols after round 4: 2,294 (labels.json 2,209 + ram_map 225).
+
 Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
-integrators, the CPU-AI behaviour state machine — need runtime traces), the
-bank $05 text control-code handlers, bank $3b's screen-specific pause-menu
-builders and bank $13/$15's scene-scripting beats (need visual/script
-identification), sound-command enum for the 451 `sound $xx` sites, WRAM map
-expansion from ram_map gaps.
+integrators, the CPU-AI behaviour state machine — need runtime traces), bank
+$3b's screen-specific pause-menu builders, bank $0a story-overworld engine,
+bank $03's remaining save farcall slots (FarPtr_03_18/24/26/2a/2c/...), bank
+$1a EXP-screen internals, bank $13/$15's scene-scripting beats, sound-command
+enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `6895cb2`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `fd14f6b`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
