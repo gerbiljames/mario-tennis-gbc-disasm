@@ -2598,7 +2598,7 @@ Label_11_5d85:
 	ld a, $ff ; $5d8f
 	ld [$c294], a ; $5d91
 	ld [$c2a1], a ; $5d94
-	farcall FarPtr_1e_02 ; $5d97
+	farcall FarPtr_StubNop_1e ; $5d97
 	ret ; $5d9a
 Label_11_5d9b:
 	xor a, a ; $5d9b
@@ -4247,7 +4247,7 @@ Label_11_6e88:
 	ld a, $ff ; $6e92
 	ld [$c294], a ; $6e94
 	ld [$c2a1], a ; $6e97
-	farcall FarPtr_1e_02 ; $6e9a
+	farcall FarPtr_StubNop_1e ; $6e9a
 	ret ; $6e9d
 Label_11_6e9e:
 	xor a, a ; $6e9e

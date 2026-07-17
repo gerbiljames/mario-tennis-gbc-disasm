@@ -229,7 +229,7 @@ GetTilemapBufferCellDest:
 	ld [$c294], a ; $418c
 	ld [$c2a1], a ; $418f
 	jp Label_1a_408e ; $4192
-	farcall FarPtr_1e_08 ; $4195
+	farcall FarPtr_ShowGameProgressScreen ; $4195
 	ld hl, wStoryModePlayersXPosition ; $4198
 	ld de, $c296 ; $419b
 	ld bc, $0005 ; $419e
@@ -3645,7 +3645,7 @@ Func_1a_7945:
 	call QueueVRAMCopy ; $79a6
 	call EnableLCD ; $79a9
 	call AdvanceFrame ; $79ac
-	farcall FarPtr_1c_12 ; $79af
+	farcall FarPtr_StartCharDataScreenAnimTask ; $79af
 	farcall FarPtr_1d_10 ; $79b2
 	ld c, $10 ; $79b5
 	call BeginFadeIn ; $79b7
@@ -3685,7 +3685,7 @@ Label_1a_7a05:
 	call BeginFadeOut ; $7a07
 	call WaitFadeEnd ; $7a0a
 	farcall FarPtr_1d_12 ; $7a0d
-	farcall FarPtr_1c_14 ; $7a10
+	farcall FarPtr_StopCharDataScreenAnimTask ; $7a10
 	wram_bank $06 ; $7a13
 	ld a, [$d025] ; $7a19
 	ret ; $7a1c

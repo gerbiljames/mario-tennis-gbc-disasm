@@ -4503,7 +4503,7 @@ StoryPauseMenu_GameProgress:
 	ld [$c295], a ; $6fae
 	ld [$c294], a ; $6fb1
 	ld [$c2a1], a ; $6fb4
-	farcall FarPtr_1e_08 ; $6fb7
+	farcall FarPtr_ShowGameProgressScreen ; $6fb7
 	xor a, a ; $6fba
 	ret ; $6fbb
 StoryPauseMenu_Options:

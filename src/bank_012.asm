@@ -4799,7 +4799,7 @@ Label_12_6d8a:
 	ld a, $ff ; $6d94
 	ld [$c294], a ; $6d96
 	ld [$c2a1], a ; $6d99
-	farcall FarPtr_1e_02 ; $6d9c
+	farcall FarPtr_StubNop_1e ; $6d9c
 	ret ; $6d9f
 SeniorCourtPostMatchReturn:
 	wram_bank $04 ; $6da0

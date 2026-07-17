@@ -3259,7 +3259,7 @@ Label_1b_6408:
 	ld de, $0077 ; $642d
 	farcall FarPtr_RecordDrillResult ; $6430
 	ld c, $01 ; $6433
-	farcall FarPtr_1e_00 ; $6435
+	farcall FarPtr_ShowMatchResultsScreen ; $6435
 	farcall FarPtr_1d_06 ; $6438
 	pop hl ; $643b
 	pop de ; $643c

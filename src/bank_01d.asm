@@ -70,7 +70,7 @@ Func_1d_4016:
 	ld a, $01 ; $4090
 	ld hl, $48c7 ; $4092
 	call RegisterFrameTask ; $4095
-	farcall FarPtr_1c_12 ; $4098
+	farcall FarPtr_StartCharDataScreenAnimTask ; $4098
 	ld c, $10 ; $409b
 	call BeginFadeIn ; $409d
 	call WaitFadeEnd ; $40a0
@@ -86,7 +86,7 @@ Func_1d_4016:
 	call UnregisterFrameTask ; $40bc
 	ld hl, $40cc ; $40bf
 	call UnregisterFrameTask ; $40c2
-	farcall FarPtr_1c_14 ; $40c5
+	farcall FarPtr_StopCharDataScreenAnimTask ; $40c5
 	call ClearFrameTasks ; $40c8
 	ret ; $40cb
 	farcall FarPtr_39_28 ; $40cc
@@ -1619,7 +1619,7 @@ Label_1d_4db3:
 	ld a, $01 ; $4deb
 	ld hl, $48c7 ; $4ded
 	call RegisterFrameTask ; $4df0
-	farcall FarPtr_1c_12 ; $4df3
+	farcall FarPtr_StartCharDataScreenAnimTask ; $4df3
 	jp Label_1d_4cbf ; $4df6
 Label_1d_4df9:
 	sound $62 ; $4df9
@@ -1661,7 +1661,7 @@ Label_1d_4e12:
 	ld a, $01 ; $4e4a
 	ld hl, $48c7 ; $4e4c
 	call RegisterFrameTask ; $4e4f
-	farcall FarPtr_1c_12 ; $4e52
+	farcall FarPtr_StartCharDataScreenAnimTask ; $4e52
 	jp Label_1d_4cbf ; $4e55
 Label_1d_4e58:
 	sound $62 ; $4e58
@@ -3079,7 +3079,7 @@ PromptCharDataConfirm:
 	call Func_1d_5b1a ; $5a86
 	call EnableLCD ; $5a89
 	call AdvanceFrame ; $5a8c
-	farcall FarPtr_1c_12 ; $5a8f
+	farcall FarPtr_StartCharDataScreenAnimTask ; $5a8f
 	ld c, $10 ; $5a92
 	call BeginFadeIn ; $5a94
 	call WaitFadeEnd ; $5a97
@@ -3117,7 +3117,7 @@ Label_1d_5ae2:
 	ld c, $10 ; $5ae2
 	call BeginFadeOut ; $5ae4
 	call WaitFadeEnd ; $5ae7
-	farcall FarPtr_1c_14 ; $5aea
+	farcall FarPtr_StopCharDataScreenAnimTask ; $5aea
 	call ClearFrameTasks ; $5aed
 	wram_bank $06 ; $5af0
 	ld a, [$d025] ; $5af6
@@ -3316,7 +3316,7 @@ Label_1d_6873:
 	ld [$d0b6], a ; $6897
 	jr Label_1d_6836 ; $689a
 Label_1d_689c:
-	farcall FarPtr_1c_0e ; $689c
+	farcall FarPtr_RestoreCharData ; $689c
 	jr Label_1d_6854 ; $689f
 Label_1d_68a1:
 	jr Label_1d_6873 ; $68a1
@@ -4859,7 +4859,7 @@ Label_1d_7453:
 	ld hl, hPaletteDirtyFlags ; $748e
 	set 0, [hl] ; $7491
 	sound $5f ; $7493
-	farcall FarPtr_1c_08 ; $7495
+	farcall FarPtr_BackupCharDataScreenRow ; $7495
 	ld hl, $781d ; $7498
 	ld bc, $d240 ; $749b
 	call Func_1d_7610 ; $749e
@@ -4965,42 +4965,42 @@ Label_1d_758b:
 	ret ; $7593
 Label_1d_7594:
 	sound $62 ; $7594
-	farcall FarPtr_1c_0a ; $7596
+	farcall FarPtr_RestoreCharDataScreenRow ; $7596
 	ld hl, $77e1 ; $7599
 	ld bc, $d240 ; $759c
 	call Func_1d_7610 ; $759f
 	call Func_1d_7545 ; $75a2
 	call WaitFramesCmd ; $75a5
 	db $02 ; $75a8 inline arg
-	farcall FarPtr_1c_0a ; $75a9
+	farcall FarPtr_RestoreCharDataScreenRow ; $75a9
 	ld hl, $77f6 ; $75ac
 	ld bc, $d240 ; $75af
 	call Func_1d_7610 ; $75b2
 	call Func_1d_7545 ; $75b5
 	call WaitFramesCmd ; $75b8
 	db $02 ; $75bb inline arg
-	farcall FarPtr_1c_0a ; $75bc
+	farcall FarPtr_RestoreCharDataScreenRow ; $75bc
 	ld hl, $7807 ; $75bf
 	ld bc, $d240 ; $75c2
 	call Func_1d_7610 ; $75c5
 	call Func_1d_7545 ; $75c8
 	call WaitFramesCmd ; $75cb
 	db $02 ; $75ce inline arg
-	farcall FarPtr_1c_0a ; $75cf
+	farcall FarPtr_RestoreCharDataScreenRow ; $75cf
 	ld hl, $7814 ; $75d2
 	ld bc, $d240 ; $75d5
 	call Func_1d_7610 ; $75d8
 	call Func_1d_7545 ; $75db
 	call WaitFramesCmd ; $75de
 	db $02 ; $75e1 inline arg
-	farcall FarPtr_1c_0a ; $75e2
+	farcall FarPtr_RestoreCharDataScreenRow ; $75e2
 	ld hl, $781d ; $75e5
 	ld bc, $d240 ; $75e8
 	call Func_1d_7610 ; $75eb
 	call Func_1d_7545 ; $75ee
 	call WaitFramesCmd ; $75f1
 	db $02 ; $75f4 inline arg
-	farcall FarPtr_1c_0a ; $75f5
+	farcall FarPtr_RestoreCharDataScreenRow ; $75f5
 	call Func_1d_7545 ; $75f8
 	call WaitFramesCmd ; $75fb
 	db $02 ; $75fe inline arg

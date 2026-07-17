@@ -1337,7 +1337,7 @@ Label_10_5006:
 	or a, a ; $5009
 	jp z, Label_10_50a4 ; $500a
 	ld c, $00 ; $500d
-	farcall FarPtr_1e_00 ; $500f
+	farcall FarPtr_ShowMatchResultsScreen ; $500f
 	push af ; $5012
 	call RestoreGameTimer ; $5013
 	pop af ; $5016
@@ -1450,7 +1450,7 @@ Label_10_50f5:
 	or a, a ; $510d
 	jr z, Label_10_5137 ; $510e
 	ld c, $00 ; $5110
-	farcall FarPtr_1e_00 ; $5112
+	farcall FarPtr_ShowMatchResultsScreen ; $5112
 	or a, a ; $5115
 	jr z, Label_10_5124 ; $5116
 	cp a, $ff ; $5118
@@ -1677,7 +1677,7 @@ Label_10_5315:
 	ld c, $10 ; $5319
 	call BeginFadeOut ; $531b
 	call WaitFadeEnd ; $531e
-	farcall FarPtr_1e_08 ; $5321
+	farcall FarPtr_ShowGameProgressScreen ; $5321
 	ld c, $10 ; $5324
 	call BeginFadeOut ; $5326
 	call WaitFadeEnd ; $5329

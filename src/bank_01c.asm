@@ -8,20 +8,20 @@ FarPtr_1c_04:
 	dw Func_1c_44cc ; $4004
 FarPtr_CharDataScreen_DrawStats:
 	dw CharDataScreen_DrawStats ; $4006
-FarPtr_1c_08:
-	dw Func_1c_48c9 ; $4008
-FarPtr_1c_0a:
-	dw Func_1c_48ec ; $400a
+FarPtr_BackupCharDataScreenRow:
+	dw BackupCharDataScreenRow ; $4008
+FarPtr_RestoreCharDataScreenRow:
+	dw RestoreCharDataScreenRow ; $400a
 FarPtr_BackupCharData:
 	dw BackupCharData ; $400c
-FarPtr_1c_0e:
-	dw Func_1c_731f ; $400e
+FarPtr_RestoreCharData:
+	dw RestoreCharData ; $400e
 FarPtr_1c_10:
 	dw Func_1c_728b ; $4010
-FarPtr_1c_12:
-	dw Func_1c_72ec ; $4012
-FarPtr_1c_14:
-	dw Func_1c_72f5 ; $4014
+FarPtr_StartCharDataScreenAnimTask:
+	dw StartCharDataScreenAnimTask ; $4012
+FarPtr_StopCharDataScreenAnimTask:
+	dw StopCharDataScreenAnimTask ; $4014
 FarPtr_1c_16:
 	dw Func_1c_72fc ; $4016
 FarPtr_1c_18:
@@ -712,6 +712,7 @@ Label_1c_45c8:
 	ld c, $03 ; $45f4
 	call QueueVRAMCopy ; $45f6
 	ret ; $45f9
+CharDataScreenAnimTask:
 	push af ; $45fa
 	push bc ; $45fb
 	push de ; $45fc
@@ -792,14 +793,14 @@ Label_1c_4675:
 	ret ; $4681
 Func_1c_4682:
 	sound $0d ; $4682
-	call Func_1c_48c9 ; $4684
+	call BackupCharDataScreenRow ; $4684
 	wram_bank $06 ; $4687
 Label_1c_468d:
 	call AdvanceFrame ; $468d
 	ld a, [$d002] ; $4690
 	or a, a ; $4693
 	jr nz, Label_1c_468d ; $4694
-	call Func_1c_48ec ; $4696
+	call RestoreCharDataScreenRow ; $4696
 	ld hl, $57b6 ; $4699
 	ld bc, $d240 ; $469c
 	call Func_1c_490f ; $469f
@@ -810,7 +811,7 @@ Label_1c_468d:
 	ld a, $09 ; $46b1
 	ld [$d026], a ; $46b3
 	call Func_1c_495d ; $46b6
-	call Func_1c_48ec ; $46b9
+	call RestoreCharDataScreenRow ; $46b9
 	ld hl, $571b ; $46bc
 	ld bc, $d240 ; $46bf
 	call Func_1c_490f ; $46c2
@@ -827,7 +828,7 @@ Label_1c_468d:
 	ld a, $07 ; $46e6
 	ld [$d026], a ; $46e8
 	call Func_1c_495d ; $46eb
-	call Func_1c_48ec ; $46ee
+	call RestoreCharDataScreenRow ; $46ee
 	ld hl, $570e ; $46f1
 	ld bc, $d240 ; $46f4
 	call Func_1c_490f ; $46f7
@@ -844,7 +845,7 @@ Label_1c_468d:
 	ld a, $05 ; $471b
 	ld [$d026], a ; $471d
 	call Func_1c_495d ; $4720
-	call Func_1c_48ec ; $4723
+	call RestoreCharDataScreenRow ; $4723
 	ld hl, $56f9 ; $4726
 	ld bc, $d240 ; $4729
 	call Func_1c_490f ; $472c
@@ -861,7 +862,7 @@ Label_1c_468d:
 	ld a, $03 ; $4750
 	ld [$d026], a ; $4752
 	call Func_1c_495d ; $4755
-	call Func_1c_48ec ; $4758
+	call RestoreCharDataScreenRow ; $4758
 	ld hl, $56e4 ; $475b
 	ld bc, $d240 ; $475e
 	call Func_1c_490f ; $4761
@@ -878,7 +879,7 @@ Label_1c_468d:
 	ld a, $02 ; $4785
 	ld [$d026], a ; $4787
 	call Func_1c_495d ; $478a
-	call Func_1c_48ec ; $478d
+	call RestoreCharDataScreenRow ; $478d
 	ld hl, $56cf ; $4790
 	ld bc, $d240 ; $4793
 	call Func_1c_490f ; $4796
@@ -895,7 +896,7 @@ Label_1c_468d:
 	ld a, $01 ; $47ba
 	ld [$d026], a ; $47bc
 	call Func_1c_495d ; $47bf
-	call Func_1c_48ec ; $47c2
+	call RestoreCharDataScreenRow ; $47c2
 	ld hl, $56b9 ; $47c5
 	ld bc, $d240 ; $47c8
 	call Func_1c_490f ; $47cb
@@ -986,7 +987,7 @@ Func_1c_489b:
 	ld bc, $d370 ; $48c2
 	call Func_1c_490f ; $48c5
 	ret ; $48c8
-Func_1c_48c9:
+BackupCharDataScreenRow:
 	wram_bank $03 ; $48c9
 	ld hl, $d000 ; $48cf
 	ld de, $d430 ; $48d2
@@ -998,7 +999,7 @@ Func_1c_48c9:
 	ld c, $24 ; $48e6
 	call CopyMemoryFast ; $48e8
 	ret ; $48eb
-Func_1c_48ec:
+RestoreCharDataScreenRow:
 	wram_bank $03 ; $48ec
 	ld hl, $d430 ; $48f2
 	ld de, $d000 ; $48f5
@@ -2153,7 +2154,7 @@ Label_1c_50f9:
 Label_1c_5110:
 	ld a, $04 ; $5110
 	ld [$d024], a ; $5112
-	call Func_1c_48ec ; $5115
+	call RestoreCharDataScreenRow ; $5115
 	call Func_1c_4c43 ; $5118
 	call CharDataScreen_DrawStats ; $511b
 	call Func_1c_4882 ; $511e
@@ -2210,7 +2211,7 @@ Label_1c_5180:
 	cp a, $63 ; $518a
 	jr z, Label_1c_51a3 ; $518c
 Label_1c_518e:
-	call Func_1c_48ec ; $518e
+	call RestoreCharDataScreenRow ; $518e
 	call Func_1c_4c43 ; $5191
 	call CharDataScreen_DrawStats ; $5194
 	call Func_1c_4882 ; $5197
@@ -2226,7 +2227,7 @@ Label_1c_51a3:
 	call UnregisterFrameTask ; $51b3
 	call Func_1c_4c43 ; $51b6
 	call CharDataScreen_DrawStats ; $51b9
-	call Func_1c_48ec ; $51bc
+	call RestoreCharDataScreenRow ; $51bc
 	call Func_1c_489b ; $51bf
 	ld hl, $5904 ; $51c2
 	ld bc, $d3a0 ; $51c5
@@ -2240,7 +2241,7 @@ Label_1c_51a3:
 	ld [$d025], a ; $51df
 	ld [$d028], a ; $51e2
 	call Func_1c_495d ; $51e5
-	call Func_1c_48ec ; $51e8
+	call RestoreCharDataScreenRow ; $51e8
 	call Func_1c_489b ; $51eb
 	ld hl, $590d ; $51ee
 	ld bc, $d3a0 ; $51f1
@@ -2257,16 +2258,16 @@ Label_1c_51a3:
 	ld [$d027], a ; $5216
 	ld hl, $5049 ; $5219
 	call UnregisterFrameTask ; $521c
-	call Func_1c_48ec ; $521f
+	call RestoreCharDataScreenRow ; $521f
 	call Func_1c_489b ; $5222
 	call Func_1c_495d ; $5225
-	call Func_1c_48ec ; $5228
+	call RestoreCharDataScreenRow ; $5228
 	call Func_1c_489b ; $522b
 	ld hl, $597b ; $522e
 	ld bc, $d410 ; $5231
 	call Func_1c_490f ; $5234
 	call Func_1c_495d ; $5237
-	call Func_1c_48ec ; $523a
+	call RestoreCharDataScreenRow ; $523a
 	call Func_1c_489b ; $523d
 	ld hl, $5943 ; $5240
 	ld bc, $d3e0 ; $5243
@@ -2275,7 +2276,7 @@ Label_1c_51a3:
 	ld bc, $d410 ; $524c
 	call Func_1c_490f ; $524f
 	call Func_1c_495d ; $5252
-	call Func_1c_48ec ; $5255
+	call RestoreCharDataScreenRow ; $5255
 	call Func_1c_489b ; $5258
 	ld hl, $593a ; $525b
 	ld bc, $d3e0 ; $525e
@@ -2284,7 +2285,7 @@ Label_1c_51a3:
 	ld bc, $d410 ; $5267
 	call Func_1c_490f ; $526a
 	call Func_1c_495d ; $526d
-	call Func_1c_48ec ; $5270
+	call RestoreCharDataScreenRow ; $5270
 	call Func_1c_489b ; $5273
 	ld hl, $592d ; $5276
 	ld bc, $d3e0 ; $5279
@@ -2323,7 +2324,7 @@ Label_1c_52b1:
 Label_1c_52c1:
 	sound $62 ; $52c1
 	call Func_1c_54e3 ; $52c3
-	call Func_1c_48ec ; $52c6
+	call RestoreCharDataScreenRow ; $52c6
 	call Func_1c_4c43 ; $52c9
 	call CharDataScreen_DrawStats ; $52cc
 	call Func_1c_489b ; $52cf
@@ -2334,7 +2335,7 @@ Label_1c_52c1:
 	ld bc, $d410 ; $52de
 	call Func_1c_490f ; $52e1
 	call Func_1c_495d ; $52e4
-	call Func_1c_48ec ; $52e7
+	call RestoreCharDataScreenRow ; $52e7
 	call Func_1c_489b ; $52ea
 	ld hl, $5943 ; $52ed
 	ld bc, $d3e0 ; $52f0
@@ -2343,13 +2344,13 @@ Label_1c_52c1:
 	ld bc, $d410 ; $52f9
 	call Func_1c_490f ; $52fc
 	call Func_1c_495d ; $52ff
-	call Func_1c_48ec ; $5302
+	call RestoreCharDataScreenRow ; $5302
 	call Func_1c_489b ; $5305
 	ld hl, $597b ; $5308
 	ld bc, $d410 ; $530b
 	call Func_1c_490f ; $530e
 	call Func_1c_495d ; $5311
-	call Func_1c_48ec ; $5314
+	call RestoreCharDataScreenRow ; $5314
 	call Func_1c_489b ; $5317
 	call Func_1c_495d ; $531a
 	wram_bank $06 ; $531d
@@ -2359,7 +2360,7 @@ Label_1c_52c1:
 	ld a, $01 ; $532b
 	ld hl, $5049 ; $532d
 	call RegisterFrameTask ; $5330
-	call Func_1c_48ec ; $5333
+	call RestoreCharDataScreenRow ; $5333
 	call Func_1c_489b ; $5336
 	ld hl, $590d ; $5339
 	ld bc, $d3a0 ; $533c
@@ -2371,7 +2372,7 @@ Label_1c_52c1:
 	ld a, $02 ; $5351
 	ld [$d027], a ; $5353
 	call Func_1c_495d ; $5356
-	call Func_1c_48ec ; $5359
+	call RestoreCharDataScreenRow ; $5359
 	call Func_1c_489b ; $535c
 	ld hl, $5904 ; $535f
 	ld bc, $d3a0 ; $5362
@@ -2387,7 +2388,7 @@ Label_1c_52c1:
 	xor a, a ; $5385
 	ld [$d028], a ; $5386
 	ld [$d027], a ; $5389
-	call Func_1c_48ec ; $538c
+	call RestoreCharDataScreenRow ; $538c
 	call Func_1c_4882 ; $538f
 	call Func_1c_4dd6 ; $5392
 	call Func_1c_495d ; $5395
@@ -2424,7 +2425,7 @@ Label_1c_53d1:
 	sound $5e ; $53d8
 	cp a, $04 ; $53da
 	jr z, Label_1c_53f1 ; $53dc
-	call Func_1c_48ec ; $53de
+	call RestoreCharDataScreenRow ; $53de
 	call Func_1c_4a94 ; $53e1
 	call CharDataScreen_DrawStats ; $53e4
 	call Func_1c_4882 ; $53e7
@@ -2432,7 +2433,7 @@ Label_1c_53d1:
 	call Func_1c_495d ; $53ed
 	ret ; $53f0
 Label_1c_53f1:
-	call Func_1c_48ec ; $53f1
+	call RestoreCharDataScreenRow ; $53f1
 	call Func_1c_4c43 ; $53f4
 	call CharDataScreen_DrawStats ; $53f7
 	call Func_1c_4882 ; $53fa
@@ -2559,7 +2560,7 @@ Label_1c_54c2:
 	ld [$d029], a ; $54c6
 	ld a, $04 ; $54c9
 	ld [$d024], a ; $54cb
-	call Func_1c_48ec ; $54ce
+	call RestoreCharDataScreenRow ; $54ce
 	call Func_1c_4c43 ; $54d1
 	call CharDataScreen_DrawStats ; $54d4
 	call Func_1c_4882 ; $54d7
@@ -2624,7 +2625,7 @@ Label_1c_556a:
 	ret ; $5571
 Func_1c_5572:
 	sound $0d ; $5572
-	call Func_1c_48c9 ; $5574
+	call BackupCharDataScreenRow ; $5574
 	ld hl, $56b9 ; $5577
 	ld bc, $d240 ; $557a
 	call Func_1c_490f ; $557d
@@ -2670,13 +2671,13 @@ Func_1c_5572:
 	ld a, $01 ; $55f9
 	ld hl, $45fa ; $55fb
 	call RegisterFrameTask ; $55fe
-	call Func_1c_48ec ; $5601
+	call RestoreCharDataScreenRow ; $5601
 	call Func_1c_489b ; $5604
 	ld hl, $597b ; $5607
 	ld bc, $d410 ; $560a
 	call Func_1c_490f ; $560d
 	call Func_1c_495d ; $5610
-	call Func_1c_48ec ; $5613
+	call RestoreCharDataScreenRow ; $5613
 	call Func_1c_489b ; $5616
 	ld hl, $5943 ; $5619
 	ld bc, $d3e0 ; $561c
@@ -2685,7 +2686,7 @@ Func_1c_5572:
 	ld bc, $d410 ; $5625
 	call Func_1c_490f ; $5628
 	call Func_1c_495d ; $562b
-	call Func_1c_48ec ; $562e
+	call RestoreCharDataScreenRow ; $562e
 	call Func_1c_489b ; $5631
 	ld hl, $593a ; $5634
 	ld bc, $d3e0 ; $5637
@@ -2694,7 +2695,7 @@ Func_1c_5572:
 	ld bc, $d410 ; $5640
 	call Func_1c_490f ; $5643
 	call Func_1c_495d ; $5646
-	call Func_1c_48ec ; $5649
+	call RestoreCharDataScreenRow ; $5649
 	call Func_1c_489b ; $564c
 	ld hl, $592d ; $564f
 	ld bc, $d3e0 ; $5652
@@ -2885,12 +2886,12 @@ Func_1c_728b:
 	ld bc, $0018 ; $72e5
 	call CopyWram1ToWram2 ; $72e8
 	ret ; $72eb
-Func_1c_72ec:
+StartCharDataScreenAnimTask:
 	ld a, $01 ; $72ec
 	ld hl, $45fa ; $72ee
 	call RegisterFrameTask ; $72f1
 	ret ; $72f4
-Func_1c_72f5:
+StopCharDataScreenAnimTask:
 	ld hl, $45fa ; $72f5
 	call UnregisterFrameTask ; $72f8
 	ret ; $72fb
@@ -2908,7 +2909,7 @@ BackupCharData:
 	ld bc, $0065 ; $7318
 	call CopyMemoryBC ; $731b
 	ret ; $731e
-Func_1c_731f:
+RestoreCharData:
 	wram_bank $06 ; $731f
 	ld hl, $d0b7 ; $7325
 	ld de, $d003 ; $7328

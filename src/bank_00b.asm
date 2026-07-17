@@ -925,7 +925,7 @@ Label_0b_479a:
 	call WaitFadeEnd ; $47a4
 Label_0b_47a7:
 	clear_flag $03, 6 ; $47a7
-	farcall FarPtr_1e_04 ; $47aa
+	farcall FarPtr_ProcessMatchRewards ; $47aa
 	ret ; $47ad
 Label_0b_47ae:
 	call RunDoublesDrillMatch ; $47ae

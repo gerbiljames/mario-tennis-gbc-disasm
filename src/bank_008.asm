@@ -273,7 +273,7 @@ RunMatch:
 	farcall FarPtr_RunMatchWinLoseScreen ; $41ea
 	farcall FarPtr_01_0a ; $41ed
 	call AdvanceFrame ; $41f0
-	farcall FarPtr_1e_04 ; $41f3
+	farcall FarPtr_ProcessMatchRewards ; $41f3
 	ret ; $41f6
 UpdateMatchFrame:
 	wram_bank $04 ; $41f7

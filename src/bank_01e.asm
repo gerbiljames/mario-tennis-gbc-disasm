@@ -1,20 +1,20 @@
 SECTION "ROM Bank $1e", ROMX[$4000], BANK[$1e]
 
-FarPtr_1e_00:
-	dw Func_1e_400e ; $4000
-FarPtr_1e_02:
-	dw Func_1e_6533 ; $4002
-FarPtr_1e_04:
-	dw Func_1e_6534 ; $4004
+FarPtr_ShowMatchResultsScreen:
+	dw ShowMatchResultsScreen ; $4000
+FarPtr_StubNop_1e:
+	dw StubNop_1e ; $4002
+FarPtr_ProcessMatchRewards:
+	dw ProcessMatchRewards ; $4004
 FarPtr_1e_06:
 	dw Func_1e_6afd ; $4006
-FarPtr_1e_08:
-	dw Func_1e_7263 ; $4008
+FarPtr_ShowGameProgressScreen:
+	dw ShowGameProgressScreen ; $4008
 FarPtr_FetchAndDrawDialogueText:
 	dw FetchAndDrawDialogueText ; $400a
 FarPtr_WriteTextToTilemap:
 	dw WriteTextToTilemap ; $400c
-Func_1e_400e:
+ShowMatchResultsScreen:
 	clear_flag $1f, 7 ; $400e
 	ld a, [wGameMode] ; $4011
 	cp a, $05 ; $4014
@@ -2335,9 +2335,9 @@ Palettes_1e_6495:
 	dw $7c1f, $0000, $0000, $7fff ; pal 0: #ff00ff #000000 #000000 #ffffff
 Lz_1e_649d:
 	INCBIN "data/bank_01e/d_649d.bin" ; $649d, 150 bytes
-Func_1e_6533:
+StubNop_1e:
 	ret ; $6533
-Func_1e_6534:
+ProcessMatchRewards:
 	ld a, [$c4c7] ; $6534
 	or a, a ; $6537
 	ret nz ; $6538
@@ -3006,7 +3006,7 @@ Func_1e_6a13:
 	ld c, $01 ; $6a22
 	farcall FarPtr_RecordDrillResult ; $6a24
 	ld c, $01 ; $6a27
-	call Func_1e_400e ; $6a29
+	call ShowMatchResultsScreen ; $6a29
 	pop af ; $6a2c
 	wram_bank ; $6a2d
 	pop hl ; $6a31
@@ -3042,7 +3042,7 @@ Label_1e_6a56:
 Label_1e_6a5c:
 	farcall FarPtr_RecordDrillResult ; $6a5c
 	ld c, $01 ; $6a5f
-	call Func_1e_400e ; $6a61
+	call ShowMatchResultsScreen ; $6a61
 	pop af ; $6a64
 	wram_bank ; $6a65
 	pop hl ; $6a69
@@ -3072,7 +3072,7 @@ Label_1e_6a8a:
 	push af ; $6a8a
 	clear_flag $05, 7 ; $6a8b
 	ld c, $01 ; $6a8e
-	call Func_1e_400e ; $6a90
+	call ShowMatchResultsScreen ; $6a90
 	pop af ; $6a93
 	or a, a ; $6a94
 	jr z, Label_1e_6a9a ; $6a95
@@ -3107,7 +3107,7 @@ Label_1e_6ac0:
 	push af ; $6ac0
 	clear_flag $05, 7 ; $6ac1
 	ld c, $01 ; $6ac4
-	call Func_1e_400e ; $6ac6
+	call ShowMatchResultsScreen ; $6ac6
 	pop af ; $6ac9
 	or a, a ; $6aca
 	jr z, Label_1e_6ad0 ; $6acb
@@ -3134,7 +3134,7 @@ Label_1e_6ad0:
 	ld c, $00 ; $6ae9
 	farcall FarPtr_RecordDrillResult ; $6aeb
 	ld c, $01 ; $6aee
-	call Func_1e_400e ; $6af0
+	call ShowMatchResultsScreen ; $6af0
 	pop af ; $6af3
 	wram_bank ; $6af4
 	pop hl ; $6af8
@@ -3260,7 +3260,7 @@ Label_1e_6bb1:
 	push af ; $6bb1
 	set_flag $05, 7 ; $6bb2
 	ld c, $01 ; $6bb5
-	call Func_1e_400e ; $6bb7
+	call ShowMatchResultsScreen ; $6bb7
 	pop af ; $6bba
 	or a, a ; $6bbb
 	jr z, Label_1e_6bc1 ; $6bbc
@@ -4284,7 +4284,7 @@ Label_1e_7218:
 	pop af ; $7225
 	ret ; $7226
 	INCBIN "data/bank_01e/d_7227.bin" ; $7227, 60 bytes
-Func_1e_7263:
+ShowGameProgressScreen:
 	push de ; $7263
 	ld de, $0720 ; $7264
 	farcall FarPtr_TestSaveFlag ; $7267
@@ -4293,11 +4293,11 @@ Func_1e_7263:
 	set_flag $1f, 6 ; $726d
 Label_1e_7270:
 	set_flag $1f, 5 ; $7270
-	call Func_1e_72af ; $7273
+	call BuildGameProgressScreen ; $7273
 	clear_flag $1f, 5 ; $7276
 	call ClearFrameTasks ; $7279
 	ret ; $727c
-Func_1e_727d:
+InitGameProgressScreen:
 	sound $04 ; $727d
 	call ClearFrameTasks ; $727f
 	call ClearSpriteQueue ; $7282
@@ -4323,7 +4323,7 @@ Label_1e_72aa:
 	dec c ; $72ab
 	jr nz, Label_1e_72aa ; $72ac
 	ret ; $72ae
-Func_1e_72af:
+BuildGameProgressScreen:
 	ldh a, [hWramBank] ; $72af
 	push af ; $72b1
 	wram_bank $05 ; $72b2
@@ -4331,44 +4331,44 @@ Func_1e_72af:
 	call BeginFadeOut ; $72ba
 	call WaitFadeEnd ; $72bd
 	call DisableLCDSafely ; $72c0
-	call Func_1e_727d ; $72c3
-	call Func_1e_74fa ; $72c6
+	call InitGameProgressScreen ; $72c3
+	call LoadGameProgressScreenAssets ; $72c6
 	test_flag $1f, 6 ; $72c9
 	jr nz, Label_1e_72d0 ; $72cc
 	jr Label_1e_72d5 ; $72ce
 Label_1e_72d0:
 	ld a, $05 ; $72d0
-	call Func_1e_7408 ; $72d2
+	call RunRewardCategoryList ; $72d2
 Label_1e_72d5:
 	ld a, $00 ; $72d5
-	call Func_1e_7408 ; $72d7
+	call RunRewardCategoryList ; $72d7
 	test_flag $0a, 3 ; $72da
 	jr nz, Label_1e_72e1 ; $72dd
 	jr Label_1e_72e6 ; $72df
 Label_1e_72e1:
 	ld a, $01 ; $72e1
-	call Func_1e_7408 ; $72e3
+	call RunRewardCategoryList ; $72e3
 Label_1e_72e6:
 	test_flag $0a, 7 ; $72e6
 	jr nz, Label_1e_72ed ; $72e9
 	jr Label_1e_72f2 ; $72eb
 Label_1e_72ed:
 	ld a, $02 ; $72ed
-	call Func_1e_7408 ; $72ef
+	call RunRewardCategoryList ; $72ef
 Label_1e_72f2:
 	test_flag $0b, 0 ; $72f2
 	jr nz, Label_1e_72f9 ; $72f5
 	jr Label_1e_72fe ; $72f7
 Label_1e_72f9:
 	ld a, $03 ; $72f9
-	call Func_1e_7408 ; $72fb
+	call RunRewardCategoryList ; $72fb
 Label_1e_72fe:
 	test_flag $07, 4 ; $72fe
 	jr nz, Label_1e_7305 ; $7301
 	jr Label_1e_730a ; $7303
 Label_1e_7305:
 	ld a, $04 ; $7305
-	call Func_1e_7408 ; $7307
+	call RunRewardCategoryList ; $7307
 Label_1e_730a:
 	call Func_1e_7499 ; $730a
 	call Func_1e_747c ; $730d
@@ -4496,7 +4496,7 @@ Label_1e_7405:
 	pop de ; $7405
 	pop hl ; $7406
 	ret ; $7407
-Func_1e_7408:
+RunRewardCategoryList:
 	ld hl, RewardSubHandlersC_1e ; $7408
 	add a, a ; $740b
 	add a, l ; $740c
@@ -4674,7 +4674,7 @@ Label_1e_74f1:
 	ld [$c3bb], a ; $74f3
 	farcall FarPtr_UploadGlyphBuffer ; $74f6
 	ret ; $74f9
-Func_1e_74fa:
+LoadGameProgressScreenAssets:
 	farcall FarPtr_39_2a ; $74fa
 	call Func_1e_79e8 ; $74fd
 	call Func_1e_7a14 ; $7500
