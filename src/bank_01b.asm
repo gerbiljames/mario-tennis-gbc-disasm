@@ -1,7 +1,7 @@
 SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 
-FarPtr_1b_00:
-	dw Func_1b_4e5c ; $4000
+FarPtr_DecompressCharMugshot:
+	dw DecompressCharMugshot ; $4000
 FarPtr_1b_02:
 	dw Func_1b_4e58 ; $4002
 FarPtr_1b_04:
@@ -14,22 +14,22 @@ FarPtr_1b_0a:
 	dw Func_1b_4e57 ; $400a
 FarPtr_1b_0c:
 	dw Func_1b_4e0d ; $400c
-FarPtr_1b_0e:
-	dw Func_1b_4e18 ; $400e
-FarPtr_1b_10:
-	dw Func_1b_4e37 ; $4010
+FarPtr_SetMugshotAttrs:
+	dw SetMugshotAttrs ; $400e
+FarPtr_LoadCharMugshotToBuffer:
+	dw LoadCharMugshotToBuffer ; $4010
 FarPtr_1b_12:
 	dw Func_1b_4e43 ; $4012
 FarPtr_1b_14:
 	dw Func_1b_4e44 ; $4014
 FarPtr_1b_16:
 	dw Func_1b_4e45 ; $4016
-FarPtr_1b_18:
-	dw Func_1b_4e46 ; $4018
+FarPtr_CopyMugshotBufferToVram:
+	dw CopyMugshotBufferToVram ; $4018
 FarPtr_1b_1a:
 	dw Func_1b_4e81 ; $401a
-FarPtr_1b_1c:
-	dw Func_1b_6172 ; $401c
+FarPtr_UpdateCharSelectSelection:
+	dw UpdateCharSelectSelection ; $401c
 FarPtr_1b_1e:
 	dw Func_1b_6982 ; $401e
 FarPtr_1b_20:
@@ -821,7 +821,7 @@ Func_1b_4e0d:
 	ld d, $03 ; $4e12
 	farcall FarPtr_18_00 ; $4e14
 	ret ; $4e17
-Func_1b_4e18:
+SetMugshotAttrs:
 	push af ; $4e18
 	push de ; $4e19
 	push hl ; $4e1a
@@ -846,12 +846,12 @@ Func_1b_4e18:
 	pop de ; $4e34
 	pop af ; $4e35
 	ret ; $4e36
-Func_1b_4e37:
+LoadCharMugshotToBuffer:
 	cp a, $40 ; $4e37
 	ret nc ; $4e39
 	push de ; $4e3a
 	ld de, $d600 ; $4e3b
-	call Func_1b_4e5c ; $4e3e
+	call DecompressCharMugshot ; $4e3e
 	pop de ; $4e41
 	ret ; $4e42
 Func_1b_4e43:
@@ -860,7 +860,7 @@ Func_1b_4e44:
 	ret ; $4e44
 Func_1b_4e45:
 	ret ; $4e45
-Func_1b_4e46:
+CopyMugshotBufferToVram:
 	push af ; $4e46
 	push bc ; $4e47
 	push de ; $4e48
@@ -878,7 +878,7 @@ Func_1b_4e57:
 Func_1b_4e58:
 	farcall FarPtr_18_02 ; $4e58
 	ret ; $4e5b
-Func_1b_4e5c:
+DecompressCharMugshot:
 	push af ; $4e5c
 	push de ; $4e5d
 	push hl ; $4e5e
@@ -2775,11 +2775,11 @@ Label_1b_6075:
 	farcall FarPtr_18_26 ; $6079
 	jr z, Label_1b_60a4 ; $607c
 	ld a, [$d58b] ; $607e
-	farcall FarPtr_1b_10 ; $6081
+	farcall FarPtr_LoadCharMugshotToBuffer ; $6081
 	ld a, [hl] ; $6084
 	ld de, $0002 ; $6085
 	call Func_1b_5fcb ; $6088
-	farcall FarPtr_1b_18 ; $608b
+	farcall FarPtr_CopyMugshotBufferToVram ; $608b
 	ld a, [hl] ; $608e
 	ld de, $0006 ; $608f
 	call Func_1b_5fcb ; $6092
@@ -2791,7 +2791,7 @@ Label_1b_6075:
 	sub a, c ; $609e
 	ld b, a ; $609f
 	ld a, [bc] ; $60a0
-	farcall FarPtr_1b_0e ; $60a1
+	farcall FarPtr_SetMugshotAttrs ; $60a1
 Label_1b_60a4:
 	ld a, $08 ; $60a4
 	add a, l ; $60a6
@@ -2819,7 +2819,7 @@ Label_1b_60ab:
 	ld [$c783], a ; $60d1
 	ld a, e ; $60d4
 	ld [$c784], a ; $60d5
-	farcall FarPtr_1b_1c ; $60d8
+	farcall FarPtr_UpdateCharSelectSelection ; $60d8
 	ld a, [$c781] ; $60db
 	ld [$c782], a ; $60de
 	ld c, $20 ; $60e1
@@ -2873,8 +2873,8 @@ Label_1b_614c:
 	ld a, $ff ; $6154
 	jr Label_1b_6169 ; $6156
 Label_1b_6158:
-	call Func_1b_6192 ; $6158
-	call Func_1b_6172 ; $615b
+	call MoveCharSelectCursor ; $6158
+	call UpdateCharSelectSelection ; $615b
 	ld a, [$c781] ; $615e
 	farcall FarPtr_18_24 ; $6161
 	call AdvanceFrame ; $6164
@@ -2885,7 +2885,7 @@ Label_1b_6169:
 	ld hl, $c784 ; $616d
 	ld e, [hl] ; $6170
 	ret ; $6171
-Func_1b_6172:
+UpdateCharSelectSelection:
 	ld a, [$c781] ; $6172
 	ld [$c782], a ; $6175
 	ld a, [$c784] ; $6178
@@ -2905,7 +2905,7 @@ Label_1b_618c:
 	jr z, Label_1b_618c ; $618c
 	ld [$c781], a ; $618e
 	ret ; $6191
-Func_1b_6192:
+MoveCharSelectCursor:
 	ldh a, [hInputPressed] ; $6192
 	ld b, a ; $6194
 	and a, $f0 ; $6195
@@ -3526,16 +3526,16 @@ Label_1b_66dd:
 	farcall FarPtr_CheckUnlockFlag ; $66e1
 	jr z, Label_1b_6703 ; $66e4
 	ld a, [$d58b] ; $66e6
-	farcall FarPtr_1b_10 ; $66e9
+	farcall FarPtr_LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
 	ld de, $0002 ; $66ed
 	call Func_1b_65f1 ; $66f0
-	farcall FarPtr_1b_18 ; $66f3
+	farcall FarPtr_CopyMugshotBufferToVram ; $66f3
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call Func_1b_65f1 ; $66fa
 	ld a, [$d58c] ; $66fd
-	farcall FarPtr_1b_0e ; $6700
+	farcall FarPtr_SetMugshotAttrs ; $6700
 Label_1b_6703:
 	ld a, $08 ; $6703
 	add a, l ; $6705

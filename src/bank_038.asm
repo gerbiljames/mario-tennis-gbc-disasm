@@ -1388,25 +1388,25 @@ Func_38_4975:
 	call Func_38_4acf ; $4a05
 	farcall FarPtr_UploadGlyphBuffer ; $4a08
 	ld a, $00 ; $4a0b
-	farcall FarPtr_1b_10 ; $4a0d
+	farcall FarPtr_LoadCharMugshotToBuffer ; $4a0d
 	ld de, $b200 ; $4a10
-	farcall FarPtr_1b_18 ; $4a13
+	farcall FarPtr_CopyMugshotBufferToVram ; $4a13
 	ld a, $01 ; $4a16
-	farcall FarPtr_1b_10 ; $4a18
+	farcall FarPtr_LoadCharMugshotToBuffer ; $4a18
 	ld de, $b300 ; $4a1b
-	farcall FarPtr_1b_18 ; $4a1e
+	farcall FarPtr_CopyMugshotBufferToVram ; $4a1e
 	wram_bank $02 ; $4a21
 	ld a, [$cb52] ; $4a27
 	or a, a ; $4a2a
 	jr z, Label_38_4a61 ; $4a2b
 	ld a, $02 ; $4a2d
-	farcall FarPtr_1b_10 ; $4a2f
+	farcall FarPtr_LoadCharMugshotToBuffer ; $4a2f
 	ld de, $b200 ; $4a32
-	farcall FarPtr_1b_18 ; $4a35
+	farcall FarPtr_CopyMugshotBufferToVram ; $4a35
 	ld a, $03 ; $4a38
-	farcall FarPtr_1b_10 ; $4a3a
+	farcall FarPtr_LoadCharMugshotToBuffer ; $4a3a
 	ld de, $b300 ; $4a3d
-	farcall FarPtr_1b_18 ; $4a40
+	farcall FarPtr_CopyMugshotBufferToVram ; $4a40
 	wram_bank $03 ; $4a43
 	ld b, $03 ; $4a49
 	ld c, $03 ; $4a4b
@@ -6429,9 +6429,9 @@ Func_38_6f6e:
 	push af ; $6fef
 	wram_bank $02 ; $6ff0
 	ld a, [$d001] ; $6ff6
-	farcall FarPtr_1b_10 ; $6ff9
+	farcall FarPtr_LoadCharMugshotToBuffer ; $6ff9
 	ld de, $b200 ; $6ffc
-	farcall FarPtr_1b_18 ; $6fff
+	farcall FarPtr_CopyMugshotBufferToVram ; $6fff
 	wram_bank $02 ; $7002
 	call GetActiveStoryNameBuffer ; $7008
 	ld hl, $000c ; $700b

@@ -3601,7 +3601,7 @@ Func_1a_7096:
 	wram_bank $01 ; $70a7
 	ld a, b ; $70ad
 	ld de, $d000 ; $70ae
-	farcall FarPtr_1b_00 ; $70b1
+	farcall FarPtr_DecompressCharMugshot ; $70b1
 	ld hl, $d000 ; $70b4
 	ld de, $b100 ; $70b7
 	ld c, $09 ; $70ba

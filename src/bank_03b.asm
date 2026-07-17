@@ -3344,25 +3344,25 @@ Label_3b_56f4:
 	ld a, $00 ; $5719
 	ld [$c36c], a ; $571b
 	ld a, [$d300] ; $571e
-	farcall FarPtr_1b_10 ; $5721
+	farcall FarPtr_LoadCharMugshotToBuffer ; $5721
 	ld de, $b680 ; $5724
-	farcall FarPtr_1b_18 ; $5727
+	farcall FarPtr_CopyMugshotBufferToVram ; $5727
 	call AdvanceFrame ; $572a
 	wram_bank $03 ; $572d
 	ld a, $01 ; $5733
 	ld [$c36c], a ; $5735
 	ld a, [$d310] ; $5738
-	farcall FarPtr_1b_10 ; $573b
+	farcall FarPtr_LoadCharMugshotToBuffer ; $573b
 	ld de, $b710 ; $573e
-	farcall FarPtr_1b_18 ; $5741
+	farcall FarPtr_CopyMugshotBufferToVram ; $5741
 	call AdvanceFrame ; $5744
 	wram_bank $03 ; $5747
 	ld a, $02 ; $574d
 	ld [$c36c], a ; $574f
 	ld a, [$d320] ; $5752
-	farcall FarPtr_1b_10 ; $5755
+	farcall FarPtr_LoadCharMugshotToBuffer ; $5755
 	ld de, $af00 ; $5758
-	farcall FarPtr_1b_18 ; $575b
+	farcall FarPtr_CopyMugshotBufferToVram ; $575b
 	call AdvanceFrame ; $575e
 	ld b, $1c ; $5761
 	ld c, $10 ; $5763
@@ -5635,25 +5635,25 @@ Func_3b_686e:
 	ld a, $00 ; $68ad
 	ld [$c36c], a ; $68af
 	ld a, [$d300] ; $68b2
-	farcall FarPtr_1b_10 ; $68b5
+	farcall FarPtr_LoadCharMugshotToBuffer ; $68b5
 	ld de, $b680 ; $68b8
-	farcall FarPtr_1b_18 ; $68bb
+	farcall FarPtr_CopyMugshotBufferToVram ; $68bb
 	call AdvanceFrame ; $68be
 	wram_bank $03 ; $68c1
 	ld a, $01 ; $68c7
 	ld [$c36c], a ; $68c9
 	ld a, [$d310] ; $68cc
-	farcall FarPtr_1b_10 ; $68cf
+	farcall FarPtr_LoadCharMugshotToBuffer ; $68cf
 	ld de, $b710 ; $68d2
-	farcall FarPtr_1b_18 ; $68d5
+	farcall FarPtr_CopyMugshotBufferToVram ; $68d5
 	call AdvanceFrame ; $68d8
 	wram_bank $03 ; $68db
 	ld a, $02 ; $68e1
 	ld [$c36c], a ; $68e3
 	ld a, [$d320] ; $68e6
-	farcall FarPtr_1b_10 ; $68e9
+	farcall FarPtr_LoadCharMugshotToBuffer ; $68e9
 	ld de, $af00 ; $68ec
-	farcall FarPtr_1b_18 ; $68ef
+	farcall FarPtr_CopyMugshotBufferToVram ; $68ef
 	call AdvanceFrame ; $68f2
 	ld b, $2a ; $68f5
 	ld c, $10 ; $68f7
@@ -6207,25 +6207,25 @@ Func_3b_6d31:
 	ld a, $00 ; $6d40
 	ld [$c36c], a ; $6d42
 	ld a, [$d300] ; $6d45
-	farcall FarPtr_1b_10 ; $6d48
+	farcall FarPtr_LoadCharMugshotToBuffer ; $6d48
 	ld de, $b680 ; $6d4b
-	farcall FarPtr_1b_18 ; $6d4e
+	farcall FarPtr_CopyMugshotBufferToVram ; $6d4e
 	call AdvanceFrame ; $6d51
 	wram_bank $03 ; $6d54
 	ld a, $01 ; $6d5a
 	ld [$c36c], a ; $6d5c
 	ld a, [$d310] ; $6d5f
-	farcall FarPtr_1b_10 ; $6d62
+	farcall FarPtr_LoadCharMugshotToBuffer ; $6d62
 	ld de, $b710 ; $6d65
-	farcall FarPtr_1b_18 ; $6d68
+	farcall FarPtr_CopyMugshotBufferToVram ; $6d68
 	call AdvanceFrame ; $6d6b
 	wram_bank $03 ; $6d6e
 	ld a, $02 ; $6d74
 	ld [$c36c], a ; $6d76
 	ld a, [$d320] ; $6d79
-	farcall FarPtr_1b_10 ; $6d7c
+	farcall FarPtr_LoadCharMugshotToBuffer ; $6d7c
 	ld de, $af00 ; $6d7f
-	farcall FarPtr_1b_18 ; $6d82
+	farcall FarPtr_CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank $01 ; $6d88
 	ld hl, $3d0e ; $6d8e -> DataPtr_3d_0e

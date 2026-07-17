@@ -699,7 +699,7 @@ Label_1c_45c8:
 	pop af ; $45d0
 	ld a, [hl] ; $45d1
 	ld de, $d000 ; $45d2
-	farcall FarPtr_1b_00 ; $45d5
+	farcall FarPtr_DecompressCharMugshot ; $45d5
 	ld hl, $d000 ; $45d8
 	ld de, $b200 ; $45db
 	ld c, $03 ; $45de
@@ -3115,7 +3115,7 @@ Label_1c_74bf:
 	pop af ; $74c7
 	ld a, [hl] ; $74c8
 	ld de, $d000 ; $74c9
-	farcall FarPtr_1b_00 ; $74cc
+	farcall FarPtr_DecompressCharMugshot ; $74cc
 	ld hl, $d000 ; $74cf
 	ld de, $ab00 ; $74d2
 	ld c, $09 ; $74d5
@@ -3156,7 +3156,7 @@ Label_1c_750d:
 	pop af ; $7515
 	ld a, [hl] ; $7516
 	ld de, $d000 ; $7517
-	farcall FarPtr_1b_00 ; $751a
+	farcall FarPtr_DecompressCharMugshot ; $751a
 	ld hl, $d000 ; $751d
 	ld de, $ac00 ; $7520
 	ld c, $09 ; $7523
