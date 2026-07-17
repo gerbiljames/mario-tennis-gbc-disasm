@@ -5441,7 +5441,7 @@ InitChar:
 	ld a, d ; $684d
 	ld [$df78], a ; $684e
 	ld a, [$df78] ; $6851
-	farcall FarPtr_02_36 ; $6854
+	farcall FarPtr_RemapExtendedCharId ; $6854
 	ld [$df7e], a ; $6857
 	ld a, [$df7e] ; $685a
 	farcall FarPtr_LookupCharSpriteSet ; $685d

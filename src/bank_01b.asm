@@ -2925,7 +2925,7 @@ RunNewGameSetup:
 	sound $03 ; $61ba
 	farcall FarPtr_InitStoryModeState ; $61bc
 	ld a, $00 ; $61bf
-	farcall FarPtr_02_14 ; $61c1
+	farcall FarPtr_RollStoryRandomByte ; $61c1
 	wram_bank $01 ; $61c4
 	ld a, $01 ; $61ca
 	ld [$c7be], a ; $61cc
@@ -2971,13 +2971,13 @@ Label_1b_6214:
 	jr Label_1b_61f2 ; $6218
 Label_1b_621a:
 	ld a, $01 ; $621a
-	farcall FarPtr_02_14 ; $621c
+	farcall FarPtr_RollStoryRandomByte ; $621c
 	ld a, $00 ; $621f
 	farcall FarPtr_PromptCharDataConfirm ; $6221
 	and a, a ; $6224
 	jr nz, Label_1b_61f2 ; $6225
 	ld a, $02 ; $6227
-	farcall FarPtr_02_14 ; $6229
+	farcall FarPtr_RollStoryRandomByte ; $6229
 Label_1b_622c:
 	xor a, a ; $622c
 	ld [$cb00], a ; $622d
@@ -3180,7 +3180,7 @@ Label_1b_638e:
 	jp Label_1b_632d ; $6396
 Label_1b_6399:
 	call ClearFrameTasks ; $6399
-	farcall FarPtr_02_04 ; $639c
+	farcall FarPtr_ValidateN64TransferRecord ; $639c
 	or a, a ; $639f
 	jr z, Label_1b_6405 ; $63a0
 	ld hl, $c9b0 ; $63a2

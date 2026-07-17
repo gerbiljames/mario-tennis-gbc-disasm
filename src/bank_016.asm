@@ -3353,7 +3353,7 @@ Label_16_60c8:
 	cp a, $20 ; $60c8
 	jr c, Label_16_60d1 ; $60ca
 	ld a, b ; $60cc
-	farcall FarPtr_02_36 ; $60cd
+	farcall FarPtr_RemapExtendedCharId ; $60cd
 	ld b, a ; $60d0
 Label_16_60d1:
 	call DecompressCharacterPortrait ; $60d1

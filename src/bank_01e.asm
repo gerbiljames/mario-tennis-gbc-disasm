@@ -1133,7 +1133,7 @@ Label_1e_49c8:
 	ld d, $03 ; $49e5
 	farcall FarPtr_SetCharAnimation ; $49e7
 	pop af ; $49ea
-	farcall FarPtr_02_34 ; $49eb
+	farcall FarPtr_GetCharPaletteIndex ; $49eb
 	ld de, $0f01 ; $49ee
 	farcall FarPtr_LoadIndexedPaletteThunk ; $49f1
 	wram_bank $06 ; $49f4
@@ -1191,7 +1191,7 @@ Label_1e_4a43:
 	ld d, $03 ; $4a60
 	farcall FarPtr_SetCharAnimation ; $4a62
 	pop af ; $4a65
-	farcall FarPtr_02_34 ; $4a66
+	farcall FarPtr_GetCharPaletteIndex ; $4a66
 	ld de, $0e01 ; $4a69
 	farcall FarPtr_LoadIndexedPaletteThunk ; $4a6c
 	wram_bank $04 ; $4a6f

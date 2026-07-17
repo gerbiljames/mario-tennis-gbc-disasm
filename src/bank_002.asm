@@ -4,8 +4,8 @@ FarPtr_02_00:
 	dw Func_02_4fa6 ; $4000
 FarPtr_InitStoryModeState:
 	dw InitStoryModeState ; $4002
-FarPtr_02_04:
-	dw Func_02_4044 ; $4004
+FarPtr_ValidateN64TransferRecord:
+	dw ValidateN64TransferRecord ; $4004
 FarPtr_InitPlayerRecordFromTemplate:
 	dw InitPlayerRecordFromTemplate ; $4006
 FarPtr_LoadMainCharacterFromRoster:
@@ -20,8 +20,8 @@ FarPtr_RefreshMainCharacterStats:
 	dw RefreshMainCharacterStats ; $4010
 FarPtr_RecomputeStatsWithoutRacket:
 	dw RecomputeStatsWithoutRacket ; $4012
-FarPtr_02_14:
-	dw Func_02_434e ; $4014
+FarPtr_RollStoryRandomByte:
+	dw RollStoryRandomByte ; $4014
 FarPtr_02_16:
 	dw Func_02_4364 ; $4016
 FarPtr_02_18:
@@ -34,8 +34,8 @@ FarPtr_Compare24Bit:
 	dw Compare24Bit ; $401e
 FarPtr_ClearCa00RecordExp:
 	dw ClearCa00RecordExp ; $4020
-FarPtr_02_22:
-	dw Func_02_4d6d ; $4022
+FarPtr_AddExpToCa00RecordChecked:
+	dw AddExpToCa00RecordChecked ; $4022
 FarPtr_02_24:
 	dw Func_02_4d71 ; $4024
 FarPtr_AddExpToCa00Record:
@@ -52,10 +52,10 @@ FarPtr_GetExpRequiredForLevel:
 	dw GetExpRequiredForLevel ; $4030
 FarPtr_02_32:
 	dw Func_02_4128 ; $4032
-FarPtr_02_34:
-	dw Func_02_4173 ; $4034
-FarPtr_02_36:
-	dw Func_02_4c58 ; $4036
+FarPtr_GetCharPaletteIndex:
+	dw GetCharPaletteIndex ; $4034
+FarPtr_RemapExtendedCharId:
+	dw RemapExtendedCharId ; $4036
 FarPtr_GetCharGroupEntry:
 	dw GetCharGroupEntry ; $4038
 FarPtr_DoesCharGroupRowContain:
@@ -68,7 +68,7 @@ FarPtr_SetStorySlotFlagA:
 	dw SetStorySlotFlagA ; $4040
 FarPtr_TestStorySlotFlagA:
 	dw TestStorySlotFlagA ; $4042
-Func_02_4044:
+ValidateN64TransferRecord:
 	ld a, [$c9b4] ; $4044
 	cp a, $64 ; $4047
 	jr nz, Label_02_4064 ; $4049
@@ -184,12 +184,12 @@ Label_02_40dd:
 	jr nz, Label_02_40dd ; $40e1
 	pop de ; $40e3
 	ld a, b ; $40e4
-	call Func_02_4c58 ; $40e5
+	call RemapExtendedCharId ; $40e5
 	ld hl, $000b ; $40e8
 	add hl, de ; $40eb
 	ld [hl], a ; $40ec
 	ld a, b ; $40ed
-	call Func_02_4173 ; $40ee
+	call GetCharPaletteIndex ; $40ee
 	ld hl, $000c ; $40f1
 	add hl, de ; $40f4
 	ld [hl], a ; $40f5
@@ -238,7 +238,7 @@ Table_02_4133:
 	db $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c, $1d, $1e, $1f ; 0x10
 	db $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17 ; 0x20
 	db $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17 ; 0x30
-Func_02_4173:
+GetCharPaletteIndex:
 	push hl ; $4173
 	add a, $7e ; $4174
 	ld l, a ; $4176
@@ -248,7 +248,7 @@ Func_02_4173:
 	ld a, [hl] ; $417b
 	pop hl ; $417c
 	ret ; $417d
-Table_02_417e:
+CharPaletteIndexTable:
 	; $417e, 112 bytes (bytes:16)
 	db $03, $02, $02, $01, $00, $00, $00, $04, $02, $01, $02, $04, $01, $00, $00, $02 ; 0x00
 	db $02, $02, $04, $04, $00, $05, $02, $00, $01, $03, $03, $04, $00, $02, $02, $02 ; 0x10
@@ -459,7 +459,7 @@ CompareNextByte:
 	inc hl ; $434a
 	ld a, $ff ; $434b
 	ret ; $434d
-Func_02_434e:
+RollStoryRandomByte:
 	push af ; $434e
 	push bc ; $434f
 	push de ; $4350
@@ -535,12 +535,12 @@ InitPlayerRecordFromTemplate:
 	call ClearMemory16 ; $43b3
 	pop bc ; $43b6
 	ld a, d ; $43b7
-	call Func_02_4c58 ; $43b8
+	call RemapExtendedCharId ; $43b8
 	ld hl, $000b ; $43bb
 	add hl, bc ; $43be
 	ld [hl], a ; $43bf
 	ld a, d ; $43c0
-	call Func_02_4173 ; $43c1
+	call GetCharPaletteIndex ; $43c1
 	ld hl, $000c ; $43c4
 	add hl, bc ; $43c7
 	ld [hl], a ; $43c8
@@ -623,7 +623,7 @@ LoadMainCharacterFromRoster:
 	add hl, de ; $4456
 	ld [hl], b ; $4457
 	ld a, b ; $4458
-	call Func_02_4173 ; $4459
+	call GetCharPaletteIndex ; $4459
 	ld hl, $000c ; $445c
 	add hl, de ; $445f
 	ld [hl], a ; $4460
@@ -1598,7 +1598,7 @@ Unused_02_4b99_Table:
 	db $07, $03, $05, $03, $0a, $08, $06, $05, $12, $09, $0d, $06, $10, $06, $08, $04 ; 0x10
 	db $00, $00, $00, $00, $08, $02, $04, $01, $0f, $03, $06, $02, $10, $0b, $0a, $08 ; 0x20
 	db $06, $00, $01, $01, $07, $02, $03, $02, $13, $15, $11, $0a, $18, $0c, $0f, $07 ; 0x30
-Func_02_4c58:
+RemapExtendedCharId:
 	cp a, $20 ; $4c58
 	ret c ; $4c5a
 	push hl ; $4c5b
@@ -1707,7 +1707,7 @@ TestStorySlotFlagA:
 Label_02_4d26:
 	ld a, $00 ; $4d26
 	ret ; $4d28
-Func_02_4d29:
+StubAlwaysNotZero:
 	push bc ; $4d29
 	ld c, a ; $4d2a
 	xor a, a ; $4d2b
@@ -1768,17 +1768,17 @@ ClearCa00RecordExp:
 	ld [hl+], a ; $4d6a
 	ld [hl+], a ; $4d6b
 	ret ; $4d6c
-Func_02_4d6d:
-	call Func_02_4d29 ; $4d6d
+AddExpToCa00RecordChecked:
+	call StubAlwaysNotZero ; $4d6d
 	ret z ; $4d70
 Func_02_4d71:
-	call Func_02_4d7e ; $4d71
+	call StubNop ; $4d71
 AddExpToCa00Record:
 	call GetCa00RecordPtr ; $4d74
 	ld hl, $002c ; $4d77
 	add hl, bc ; $4d7a
 	jp AddExpCapped ; $4d7b
-Func_02_4d7e:
+StubNop:
 	ret ; $4d7e
 Table_02_4d7f:
 	; $4d7f, 16 bytes (bytes:16)
@@ -2024,7 +2024,7 @@ Label_02_4fdf:
 	ld hl, $5202 ; $4fdf
 	ld de, $0802 ; $4fe2
 	call PrintString ; $4fe5
-	call Func_02_4044 ; $4fe8
+	call ValidateN64TransferRecord ; $4fe8
 	or a, a ; $4feb
 	jr z, Label_02_5016 ; $4fec
 	push de ; $4fee

@@ -3099,7 +3099,7 @@ Func_1a_6c0b:
 	ld [$d003], a ; $6c18
 	ld [$d005], a ; $6c1b
 	ld a, [$d002] ; $6c1e
-	farcall FarPtr_02_34 ; $6c21
+	farcall FarPtr_GetCharPaletteIndex ; $6c21
 	ld [$d004], a ; $6c24
 	ret ; $6c27
 	wram_bank $06 ; $6c28

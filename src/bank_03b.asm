@@ -5317,7 +5317,7 @@ Label_3b_6654:
 Func_3b_6672:
 	ld c, a ; $6672
 	call GetStarCharAtGridSlot ; $6673
-	farcall FarPtr_02_34 ; $6676
+	farcall FarPtr_GetCharPaletteIndex ; $6676
 	ld d, $04 ; $6679
 	farcall FarPtr_LoadIndexedPalette_18 ; $667b
 	ret ; $667e

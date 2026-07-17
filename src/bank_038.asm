@@ -1326,7 +1326,7 @@ Func_38_4949:
 	add a, d ; $4967
 	ld d, a ; $4968
 	ld a, b ; $4969
-	farcall FarPtr_02_34 ; $496a
+	farcall FarPtr_GetCharPaletteIndex ; $496a
 	farcall FarPtr_LoadIndexedPalette_18 ; $496d
 	ret ; $4970
 	INCBIN "data/bank_038/d_4971.bin" ; $4971, 4 bytes
@@ -1516,28 +1516,28 @@ Func_38_4b21:
 	ld c, $10 ; $4b54
 	call ClearMemory16 ; $4b56
 	ld a, $00 ; $4b59
-	farcall FarPtr_02_34 ; $4b5b
+	farcall FarPtr_GetCharPaletteIndex ; $4b5b
 	ld e, a ; $4b5e
 	ld d, $00 ; $4b5f
 	wram_bank $04 ; $4b61
 	ld a, $00 ; $4b67
 	farcall FarPtr_InitChar ; $4b69
 	ld a, $01 ; $4b6c
-	farcall FarPtr_02_34 ; $4b6e
+	farcall FarPtr_GetCharPaletteIndex ; $4b6e
 	ld e, a ; $4b71
 	ld d, $01 ; $4b72
 	wram_bank $05 ; $4b74
 	ld a, $01 ; $4b7a
 	farcall FarPtr_InitChar ; $4b7c
 	ld a, $02 ; $4b7f
-	farcall FarPtr_02_34 ; $4b81
+	farcall FarPtr_GetCharPaletteIndex ; $4b81
 	ld e, a ; $4b84
 	ld d, $02 ; $4b85
 	wram_bank $06 ; $4b87
 	ld a, $02 ; $4b8d
 	farcall FarPtr_InitChar ; $4b8f
 	ld a, $03 ; $4b92
-	farcall FarPtr_02_34 ; $4b94
+	farcall FarPtr_GetCharPaletteIndex ; $4b94
 	ld e, a ; $4b97
 	ld d, $03 ; $4b98
 	wram_bank $07 ; $4b9a
@@ -3424,7 +3424,7 @@ Label_38_5bbe:
 	ld a, [hl] ; $5bbe
 	push bc ; $5bbf
 	push hl ; $5bc0
-	farcall FarPtr_02_34 ; $5bc1
+	farcall FarPtr_GetCharPaletteIndex ; $5bc1
 	pop hl ; $5bc4
 	pop bc ; $5bc5
 	inc hl ; $5bc6
@@ -5347,7 +5347,7 @@ Func_38_688d:
 	wram_bank $03 ; $6890
 	ld a, c ; $6896
 	push bc ; $6897
-	farcall FarPtr_02_34 ; $6898
+	farcall FarPtr_GetCharPaletteIndex ; $6898
 	pop bc ; $689b
 	ld d, a ; $689c
 	ld e, c ; $689d
