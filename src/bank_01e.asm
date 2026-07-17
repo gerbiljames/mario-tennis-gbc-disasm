@@ -1219,7 +1219,7 @@ Func_1e_4aa8:
 	farcall FarPtr_StepCharAnimation ; $4aae
 	ld d, $00 ; $4ab1
 	push de ; $4ab3
-	farcall FarPtr_08_14 ; $4ab4
+	farcall FarPtr_ReloadCharFacingTiles ; $4ab4
 	pop de ; $4ab7
 	ld a, d ; $4ab8
 	add a, $24 ; $4ab9
@@ -1969,7 +1969,7 @@ Func_1e_5954:
 	ld d, $00 ; $595d
 	ld a, d ; $595f
 	ld [$df32], a ; $5960
-	farcall FarPtr_08_14 ; $5963
+	farcall FarPtr_ReloadCharFacingTiles ; $5963
 	ld a, [$df32] ; $5966
 	add a, $b3 ; $5969
 	ld l, a ; $596b

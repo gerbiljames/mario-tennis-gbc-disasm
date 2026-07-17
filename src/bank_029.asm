@@ -78,7 +78,7 @@ Label_29_4076:
 	ld e, l ; $407d
 	ld d, h ; $407e
 	pop hl ; $407f
-	farcall FarPtr_08_26 ; $4080
+	farcall FarPtr_SetBallVelocityPolar ; $4080
 	ret ; $4083
 	INCBIN "data/bank_029/d_4084.bin" ; $4084, 20 bytes
 Func_29_4098:
@@ -140,7 +140,7 @@ Label_29_40d3:
 	ld e, l ; $40da
 	ld d, h ; $40db
 	pop hl ; $40dc
-	farcall FarPtr_08_26 ; $40dd
+	farcall FarPtr_SetBallVelocityPolar ; $40dd
 	ld de, $fd40 ; $40e0
 	ld a, [$df0a] ; $40e3
 	and a, $02 ; $40e6
@@ -156,7 +156,7 @@ Label_29_40f0:
 	ld a, e ; $40f3
 	ld [hl+], a ; $40f4
 	ld [hl], d ; $40f5
-	farcall FarPtr_08_30 ; $40f6
+	farcall FarPtr_PredictBallXAtDepth ; $40f6
 	ld e, l ; $40f9
 	ld d, h ; $40fa
 	ld hl, $c450 ; $40fb

@@ -1665,7 +1665,7 @@ Func_38_4ce2:
 	ld a, d ; $4cfe
 	ld [$df32], a ; $4cff
 	push de ; $4d02
-	farcall FarPtr_08_14 ; $4d03
+	farcall FarPtr_ReloadCharFacingTiles ; $4d03
 	pop de ; $4d06
 	farcall FarPtr_BuildCharSpriteSlots ; $4d07
 	pop de ; $4d0a
@@ -1719,7 +1719,7 @@ Func_38_4d66:
 	call Func_38_4dfa ; $4d89
 	ld a, b ; $4d8c
 	wram_bank ; $4d8d
-	farcall FarPtr_08_1e ; $4d91
+	farcall FarPtr_ReloadCharFrameGfx ; $4d91
 	wram_bank $04 ; $4d94
 	ret ; $4d9a
 Func_38_4d9b:

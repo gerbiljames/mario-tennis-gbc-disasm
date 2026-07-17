@@ -3483,7 +3483,7 @@ SetupCharacterSprite:
 	ld a, e ; $5aa0
 	ld [hl+], a ; $5aa1
 	ld [hl], d ; $5aa2
-	farcall FarPtr_08_1e ; $5aa3
+	farcall FarPtr_ReloadCharFrameGfx ; $5aa3
 	ret ; $5aa6
 	INCBIN "data/bank_007/d_5aa7.bin" ; $5aa7, 12 bytes
 LoadCharacterAttributes:
@@ -4002,7 +4002,7 @@ RunDebugTestMatch:
 	ld de, ModeHookTable_07 ; $5eb0
 	farcall FarPtr_SetModeHookTable ; $5eb3
 	ld de, $5ff6 ; $5eb6
-	farcall FarPtr_08_4a ; $5eb9
+	farcall FarPtr_SetMinigamePointTable ; $5eb9
 	ld a, $01 ; $5ebc
 	ld [wTargetZoneEnabled], a ; $5ebe
 	ld a, $1a ; $5ec1
@@ -4010,7 +4010,7 @@ RunDebugTestMatch:
 	ld a, $1c ; $5ec6
 	ld [$c3b1], a ; $5ec8
 	farcall FarPtr_RunN64ExhibData ; $5ecb
-	farcall FarPtr_08_08 ; $5ece
+	farcall FarPtr_RunMinigameMatch ; $5ece
 	ret ; $5ed1
 Func_07_5ed2:
 	ret ; $5ed2
@@ -4057,30 +4057,30 @@ ModeHookTable_07:
 	ld h, a ; $5f36
 	ld e, l ; $5f37
 	ld d, h ; $5f38
-	farcall FarPtr_08_52 ; $5f39
+	farcall FarPtr_SetTargetZoneCorner1 ; $5f39
 	farcall FarPtr_AdvanceMatchRng ; $5f3c
 	ld h, $00 ; $5f3f
 	ld l, a ; $5f41
 	add hl, hl ; $5f42
 	ld e, l ; $5f43
 	ld d, h ; $5f44
-	farcall FarPtr_08_54 ; $5f45
+	farcall FarPtr_SetTargetZoneCorner2 ; $5f45
 Label_07_5f48:
 	ret ; $5f48
 	set_flag $0c, 4 ; $5f49
 	ret ; $5f4c
 	ld hl, $fdc0 ; $5f4d
 	ld de, $fd80 ; $5f50
-	farcall FarPtr_08_4c ; $5f53
+	farcall FarPtr_SetBallGatePoint1 ; $5f53
 	ld hl, $0240 ; $5f56
 	ld de, $fd80 ; $5f59
-	farcall FarPtr_08_4e ; $5f5c
+	farcall FarPtr_SetBallGatePoint2 ; $5f5c
 	ld hl, $ff60 ; $5f5f
 	ld de, $fd60 ; $5f62
-	farcall FarPtr_08_52 ; $5f65
+	farcall FarPtr_SetTargetZoneCorner1 ; $5f65
 	ld hl, $0000 ; $5f68
 	ld de, rJOYP ; $5f6b
-	farcall FarPtr_08_54 ; $5f6e
+	farcall FarPtr_SetTargetZoneCorner2 ; $5f6e
 	call Func_07_5ed2 ; $5f71
 	ret ; $5f74
 	ld hl, $013f ; $5f75

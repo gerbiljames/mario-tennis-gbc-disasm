@@ -57,7 +57,7 @@ Label_0b_4055:
 	ld a, [hl+] ; $4066
 	ld d, [hl] ; $4067
 	ld e, a ; $4068
-	farcall FarPtr_08_4a ; $4069
+	farcall FarPtr_SetMinigamePointTable ; $4069
 	ld hl, $000c ; $406c
 	add hl, bc ; $406f
 	ld a, [hl+] ; $4070
@@ -213,7 +213,7 @@ Label_0b_416a:
 	ld h, [hl] ; $4178
 	ld l, a ; $4179
 	push bc ; $417a
-	farcall FarPtr_08_4c ; $417b
+	farcall FarPtr_SetBallGatePoint1 ; $417b
 	pop bc ; $417e
 	ld hl, $0006 ; $417f
 	add hl, bc ; $4182
@@ -225,7 +225,7 @@ Label_0b_416a:
 	ld a, [hl+] ; $418a
 	ld h, [hl] ; $418b
 	ld l, a ; $418c
-	farcall FarPtr_08_4e ; $418d
+	farcall FarPtr_SetBallGatePoint2 ; $418d
 	ret ; $4190
 SetDrillTargetZoneForPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4191
@@ -250,7 +250,7 @@ Label_0b_419c:
 	ld h, [hl] ; $41aa
 	ld l, a ; $41ab
 	push bc ; $41ac
-	farcall FarPtr_08_52 ; $41ad
+	farcall FarPtr_SetTargetZoneCorner1 ; $41ad
 	pop bc ; $41b0
 	ld hl, $0006 ; $41b1
 	add hl, bc ; $41b4
@@ -262,7 +262,7 @@ Label_0b_419c:
 	ld a, [hl+] ; $41bc
 	ld h, [hl] ; $41bd
 	ld l, a ; $41be
-	farcall FarPtr_08_54 ; $41bf
+	farcall FarPtr_SetTargetZoneCorner2 ; $41bf
 	ret ; $41c2
 Func_0b_41c3:
 	ld a, [$c2e1] ; $41c3
@@ -344,7 +344,7 @@ Label_0b_4226:
 	ld a, [$c78b] ; $4239
 	or a, a ; $423c
 	ret z ; $423d
-	farcall FarPtr_08_50 ; $423e
+	farcall FarPtr_DidBallCrossGate ; $423e
 	ret z ; $4241
 	xor a, a ; $4242
 	ld [$c78b], a ; $4243
@@ -383,7 +383,7 @@ PlayDrillPointEndSequence:
 	ld a, [hl+] ; $43af
 	ld h, [hl] ; $43b0
 	ld l, a ; $43b1
-	farcall FarPtr_08_2e ; $43b2
+	farcall FarPtr_SetCameraTarget ; $43b2
 	ld a, [wPointOutcome] ; $43b5
 	cp a, $06 ; $43b8
 	jr z, Label_0b_43dc ; $43ba
@@ -408,15 +408,15 @@ Label_0b_43dc:
 	ld a, $0a ; $43df
 	farcall FarPtr_StepMatchFrames ; $43e1
 	ld a, $0a ; $43e4
-	farcall FarPtr_08_42 ; $43e6
+	farcall FarPtr_StepMatchFramesSkippable ; $43e6
 	farcall FarPtr_09_26 ; $43e9
 	ld a, $0a ; $43ec
 	farcall FarPtr_StepMatchFrames ; $43ee
 	ld a, $1e ; $43f1
-	farcall FarPtr_08_42 ; $43f3
+	farcall FarPtr_StepMatchFramesSkippable ; $43f3
 	farcall FarPtr_09_0c ; $43f6
 	ld a, $46 ; $43f9
-	farcall FarPtr_08_42 ; $43fb
+	farcall FarPtr_StepMatchFramesSkippable ; $43fb
 	ld a, $08 ; $43fe
 	farcall FarPtr_StepMatchFrames ; $4400
 	ret ; $4403
@@ -873,7 +873,7 @@ Label_0b_4726:
 	ld [hl+], a ; $4737
 	ld [hl], a ; $4738
 	ld [$c7a8], a ; $4739
-	farcall FarPtr_08_08 ; $473c
+	farcall FarPtr_RunMinigameMatch ; $473c
 Label_0b_473f:
 	xor a, a ; $473f
 	ldh [hScrollX], a ; $4740

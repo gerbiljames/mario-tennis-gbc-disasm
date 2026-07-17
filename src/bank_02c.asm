@@ -119,7 +119,7 @@ Label_2c_407a:
 	ld e, l ; $4081
 	ld d, h ; $4082
 	pop hl ; $4083
-	farcall FarPtr_08_26 ; $4084
+	farcall FarPtr_SetBallVelocityPolar ; $4084
 	ret ; $4087
 Func_2c_4088:
 	ld a, [hl+] ; $4088
@@ -136,7 +136,7 @@ Func_2c_4088:
 	ld d, [hl] ; $4095
 	ld e, a ; $4096
 	pop hl ; $4097
-	farcall FarPtr_08_26 ; $4098
+	farcall FarPtr_SetBallVelocityPolar ; $4098
 	ret ; $409b
 	ld a, [hl+] ; $409c
 	ld c, a ; $409d
@@ -196,7 +196,7 @@ Label_2c_40d7:
 	ld e, l ; $40de
 	ld d, h ; $40df
 	pop hl ; $40e0
-	farcall FarPtr_08_26 ; $40e1
+	farcall FarPtr_SetBallVelocityPolar ; $40e1
 	ld de, $fd40 ; $40e4
 	ld a, [$df0a] ; $40e7
 	and a, $02 ; $40ea
@@ -212,7 +212,7 @@ Label_2c_40f4:
 	ld a, e ; $40f7
 	ld [hl+], a ; $40f8
 	ld [hl], d ; $40f9
-	farcall FarPtr_08_30 ; $40fa
+	farcall FarPtr_PredictBallXAtDepth ; $40fa
 	ld e, l ; $40fd
 	ld d, h ; $40fe
 	ld hl, $c450 ; $40ff

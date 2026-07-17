@@ -1193,16 +1193,16 @@ Label_06_4937:
 	dw Label_06_4943 ; $4941 jumptable
 Label_06_4943:
 	wram_bank $06 ; $4943
-	farcall FarPtr_08_1e ; $4949
+	farcall FarPtr_ReloadCharFrameGfx ; $4949
 Label_06_494c:
 	wram_bank $07 ; $494c
-	farcall FarPtr_08_1e ; $4952
+	farcall FarPtr_ReloadCharFrameGfx ; $4952
 Label_06_4955:
 	wram_bank $05 ; $4955
-	farcall FarPtr_08_1e ; $495b
+	farcall FarPtr_ReloadCharFrameGfx ; $495b
 Label_06_495e:
 	wram_bank $04 ; $495e
-	farcall FarPtr_08_1e ; $4964
+	farcall FarPtr_ReloadCharFrameGfx ; $4964
 	farcall FarPtr_StepMatchFrame ; $4967
 	ld a, [$c8f5] ; $496a
 	cp a, $02 ; $496d

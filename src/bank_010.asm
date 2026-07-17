@@ -987,13 +987,13 @@ Data_10_468d:
 	ld de, $4bd8 ; $4bbb
 	farcall FarPtr_SetModeHookTable ; $4bbe
 	ld de, $4c13 ; $4bc1
-	farcall FarPtr_08_4a ; $4bc4
+	farcall FarPtr_SetMinigamePointTable ; $4bc4
 	ld a, $1a ; $4bc7
 	ld [$c3b0], a ; $4bc9
 	ld a, $04 ; $4bcc
 	ld [$c3b1], a ; $4bce
 	farcall FarPtr_RunN64ExhibData ; $4bd1
-	farcall FarPtr_08_08 ; $4bd4
+	farcall FarPtr_RunMinigameMatch ; $4bd4
 	ret ; $4bd7
 	INCBIN "data/bank_010/d_4bd8.bin" ; $4bd8, 243 bytes
 Data_10_4ccb:

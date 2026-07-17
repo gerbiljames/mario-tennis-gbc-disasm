@@ -3535,7 +3535,7 @@ Func_1a_7012:
 	ld d, a ; $703b
 	wram_bank $04 ; $703c
 	push de ; $7042
-	farcall FarPtr_08_14 ; $7043
+	farcall FarPtr_ReloadCharFacingTiles ; $7043
 	pop de ; $7046
 	ld a, d ; $7047
 	add a, $8e ; $7048
