@@ -215,7 +215,7 @@ TitleScreenTiles:
 	ld c, $28 ; $6a8c
 	farcall FarPtr_LoadScreenAssetRecord ; $6a8e
 	farcall FarPtr_6b_16 ; $6a91
-	farcall FarPtr_Func_39_4325 ; $6a94
+	farcall FarPtr_QueueWram3MapToVRAM ; $6a94
 	ld a, $01 ; $6a97
 	ld hl, $6abf ; $6a99
 	call RegisterFrameTask ; $6a9c

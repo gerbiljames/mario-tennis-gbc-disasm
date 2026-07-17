@@ -338,7 +338,7 @@ InitMatchWinLoseScreen:
 	ld b, $14 ; $4585
 	ld c, $05 ; $4587
 	ld h, $0a ; $4589
-	farcall FarPtr_39_0c ; $458b
+	farcall FarPtr_FillTilemapRect ; $458b
 	ld a, $00 ; $458e
 	ld d, $04 ; $4590
 	farcall FarPtr_18_02 ; $4592
@@ -383,7 +383,7 @@ InitMatchWinLoseScreen:
 	farcall FarPtr_39_10 ; $45fc
 	pop af ; $45ff
 	wram_bank ; $4600
-	farcall FarPtr_Func_39_4325 ; $4604
+	farcall FarPtr_QueueWram3MapToVRAM ; $4604
 	ret ; $4607
 	INCBIN "data/bank_016/d_4608.bin" ; $4608, 772 bytes
 Func_16_490c:
@@ -406,22 +406,22 @@ Label_16_4920:
 	ld de, $d08b ; $4931
 	ld b, $09 ; $4934
 	ld c, $05 ; $4936
-	farcall FarPtr_39_0a ; $4938
+	farcall FarPtr_CopyTilemapRect ; $4938
 	ld hl, $d680 ; $493b
 	ld de, $d48b ; $493e
 	ld b, $09 ; $4941
 	ld c, $05 ; $4943
-	farcall FarPtr_39_0a ; $4945
+	farcall FarPtr_CopyTilemapRect ; $4945
 	ld hl, $d289 ; $4948
 	ld de, $d161 ; $494b
 	ld b, $08 ; $494e
 	ld c, $05 ; $4950
-	farcall FarPtr_39_0a ; $4952
+	farcall FarPtr_CopyTilemapRect ; $4952
 	ld hl, $d689 ; $4955
 	ld de, $d561 ; $4958
 	ld b, $08 ; $495b
 	ld c, $05 ; $495d
-	farcall FarPtr_39_0a ; $495f
+	farcall FarPtr_CopyTilemapRect ; $495f
 Label_16_4962:
 	ret ; $4962
 Func_16_4963:
@@ -435,34 +435,34 @@ Func_16_4963:
 	ld b, $04 ; $4974
 	ld c, $04 ; $4976
 	ld h, $0c ; $4978
-	farcall FarPtr_39_0c ; $497a
+	farcall FarPtr_FillTilemapRect ; $497a
 	ld de, $d48f ; $497d
 	ld b, $04 ; $4980
 	ld c, $04 ; $4982
 	ld h, $0d ; $4984
-	farcall FarPtr_39_0c ; $4986
+	farcall FarPtr_FillTilemapRect ; $4986
 	ld de, $d582 ; $4989
 	ld b, $03 ; $498c
 	ld c, $03 ; $498e
 	ld h, $0e ; $4990
-	farcall FarPtr_39_0c ; $4992
+	farcall FarPtr_FillTilemapRect ; $4992
 	ld de, $d585 ; $4995
 	ld b, $03 ; $4998
 	ld c, $03 ; $499a
 	ld h, $0f ; $499c
-	farcall FarPtr_39_0c ; $499e
+	farcall FarPtr_FillTilemapRect ; $499e
 	jr Label_16_49bb ; $49a1
 Label_16_49a3:
 	ld de, $d48d ; $49a3
 	ld b, $04 ; $49a6
 	ld c, $04 ; $49a8
 	ld h, $0c ; $49aa
-	farcall FarPtr_39_0c ; $49ac
+	farcall FarPtr_FillTilemapRect ; $49ac
 	ld de, $d583 ; $49af
 	ld b, $03 ; $49b2
 	ld c, $03 ; $49b4
 	ld h, $0e ; $49b6
-	farcall FarPtr_39_0c ; $49b8
+	farcall FarPtr_FillTilemapRect ; $49b8
 Label_16_49bb:
 	ret ; $49bb
 Label_16_49bc:
@@ -473,34 +473,34 @@ Label_16_49bc:
 	ld b, $03 ; $49c7
 	ld c, $03 ; $49c9
 	ld h, $0c ; $49cb
-	farcall FarPtr_39_0c ; $49cd
+	farcall FarPtr_FillTilemapRect ; $49cd
 	ld de, $d4af ; $49d0
 	ld b, $03 ; $49d3
 	ld c, $03 ; $49d5
 	ld h, $0d ; $49d7
-	farcall FarPtr_39_0c ; $49d9
+	farcall FarPtr_FillTilemapRect ; $49d9
 	ld de, $d582 ; $49dc
 	ld b, $03 ; $49df
 	ld c, $03 ; $49e1
 	ld h, $0e ; $49e3
-	farcall FarPtr_39_0c ; $49e5
+	farcall FarPtr_FillTilemapRect ; $49e5
 	ld de, $d585 ; $49e8
 	ld b, $03 ; $49eb
 	ld c, $03 ; $49ed
 	ld h, $0f ; $49ef
-	farcall FarPtr_39_0c ; $49f1
+	farcall FarPtr_FillTilemapRect ; $49f1
 	jr Label_16_4a0e ; $49f4
 Label_16_49f6:
 	ld de, $d4ad ; $49f6
 	ld b, $03 ; $49f9
 	ld c, $03 ; $49fb
 	ld h, $0c ; $49fd
-	farcall FarPtr_39_0c ; $49ff
+	farcall FarPtr_FillTilemapRect ; $49ff
 	ld de, $d583 ; $4a02
 	ld b, $03 ; $4a05
 	ld c, $03 ; $4a07
 	ld h, $0e ; $4a09
-	farcall FarPtr_39_0c ; $4a0b
+	farcall FarPtr_FillTilemapRect ; $4a0b
 Label_16_4a0e:
 	ret ; $4a0e
 LoadMatchResultPalettes:
@@ -538,7 +538,7 @@ Func_16_4a56:
 	ld de, $d120 ; $4a60
 	ld b, $20 ; $4a63
 	ld c, $02 ; $4a65
-	farcall FarPtr_39_0a ; $4a67
+	farcall FarPtr_CopyTilemapRect ; $4a67
 	ld a, $06 ; $4a6a
 	ld [$cb0c], a ; $4a6c
 Label_16_4a6f:
@@ -573,7 +573,7 @@ Label_16_4a80:
 	ld l, c ; $4a8f
 	ld b, a ; $4a90
 	ld c, $02 ; $4a91
-	farcall FarPtr_39_0a ; $4a93
+	farcall FarPtr_CopyTilemapRect ; $4a93
 	pop hl ; $4a96
 	jr Label_16_4a80 ; $4a97
 Label_16_4a99:
@@ -584,14 +584,14 @@ Label_16_4a99:
 	ld de, $d200 ; $4aa3
 	ld b, $06 ; $4aa6
 	ld c, $02 ; $4aa8
-	farcall FarPtr_39_0a ; $4aaa
+	farcall FarPtr_CopyTilemapRect ; $4aaa
 	jr Label_16_4abc ; $4aad
 Label_16_4aaf:
 	ld hl, $d3c0 ; $4aaf
 	ld de, $d200 ; $4ab2
 	ld b, $07 ; $4ab5
 	ld c, $02 ; $4ab7
-	farcall FarPtr_39_0a ; $4ab9
+	farcall FarPtr_CopyTilemapRect ; $4ab9
 Label_16_4abc:
 	ret ; $4abc
 	; $4abd, 480 bytes (records:2)
@@ -994,12 +994,12 @@ Func_16_4dfe:
 	ld b, $14 ; $4e01
 	ld c, $02 ; $4e03
 	ld h, $0b ; $4e05
-	farcall FarPtr_39_0c ; $4e07
+	farcall FarPtr_FillTilemapRect ; $4e07
 	ld de, $d600 ; $4e0a
 	ld b, $14 ; $4e0d
 	ld c, $02 ; $4e0f
 	ld h, $0b ; $4e11
-	farcall FarPtr_39_0c ; $4e13
+	farcall FarPtr_FillTilemapRect ; $4e13
 	ld de, $002f ; $4e16
 	call TestGameFlagByNumber ; $4e19
 	jr nz, Label_16_4e29 ; $4e1c
@@ -2886,12 +2886,12 @@ InitMatchStatsScreen:
 	ld b, $14 ; $5cc4
 	ld c, $02 ; $5cc6
 	ld h, $08 ; $5cc8
-	farcall FarPtr_39_0c ; $5cca
+	farcall FarPtr_FillTilemapRect ; $5cca
 	call Func_16_5cdc ; $5ccd
 	ld c, $01 ; $5cd0
 	call Func_16_5fe7 ; $5cd2
 	call PrintMatchStatistics ; $5cd5
-	farcall FarPtr_Func_39_4325 ; $5cd8
+	farcall FarPtr_QueueWram3MapToVRAM ; $5cd8
 	ret ; $5cdb
 Func_16_5cdc:
 	ld de, $002f ; $5cdc
@@ -2901,34 +2901,34 @@ Func_16_5cdc:
 	ld b, $03 ; $5ce7
 	ld c, $03 ; $5ce9
 	ld h, $0c ; $5ceb
-	farcall FarPtr_39_0c ; $5ced
+	farcall FarPtr_FillTilemapRect ; $5ced
 	ld de, $d484 ; $5cf0
 	ld b, $03 ; $5cf3
 	ld c, $03 ; $5cf5
 	ld h, $0d ; $5cf7
-	farcall FarPtr_39_0c ; $5cf9
+	farcall FarPtr_FillTilemapRect ; $5cf9
 	ld de, $d48d ; $5cfc
 	ld b, $03 ; $5cff
 	ld c, $03 ; $5d01
 	ld h, $0e ; $5d03
-	farcall FarPtr_39_0c ; $5d05
+	farcall FarPtr_FillTilemapRect ; $5d05
 	ld de, $d490 ; $5d08
 	ld b, $03 ; $5d0b
 	ld c, $03 ; $5d0d
 	ld h, $0f ; $5d0f
-	farcall FarPtr_39_0c ; $5d11
+	farcall FarPtr_FillTilemapRect ; $5d11
 	jr Label_16_5d2e ; $5d14
 Label_16_5d16:
 	ld de, $d482 ; $5d16
 	ld b, $03 ; $5d19
 	ld c, $03 ; $5d1b
 	ld h, $0c ; $5d1d
-	farcall FarPtr_39_0c ; $5d1f
+	farcall FarPtr_FillTilemapRect ; $5d1f
 	ld de, $d48e ; $5d22
 	ld b, $03 ; $5d25
 	ld c, $03 ; $5d27
 	ld h, $0e ; $5d29
-	farcall FarPtr_39_0c ; $5d2b
+	farcall FarPtr_FillTilemapRect ; $5d2b
 Label_16_5d2e:
 	ret ; $5d2e
 PrintMatchStatistics:
@@ -3167,22 +3167,22 @@ Func_16_5f61:
 	ld b, $05 ; $5f64
 	ld c, $06 ; $5f66
 	ld h, $00 ; $5f68
-	farcall FarPtr_39_0c ; $5f6a
+	farcall FarPtr_FillTilemapRect ; $5f6a
 	ld de, $d56e ; $5f6d
 	ld b, $05 ; $5f70
 	ld c, $06 ; $5f72
 	ld h, $00 ; $5f74
-	farcall FarPtr_39_0c ; $5f76
+	farcall FarPtr_FillTilemapRect ; $5f76
 	ld de, $d161 ; $5f79
 	ld b, $05 ; $5f7c
 	ld c, $06 ; $5f7e
 	ld h, $20 ; $5f80
-	farcall FarPtr_39_0c ; $5f82
+	farcall FarPtr_FillTilemapRect ; $5f82
 	ld de, $d16e ; $5f85
 	ld b, $05 ; $5f88
 	ld c, $06 ; $5f8a
 	ld h, $20 ; $5f8c
-	farcall FarPtr_39_0c ; $5f8e
+	farcall FarPtr_FillTilemapRect ; $5f8e
 	ret ; $5f91
 Func_16_5f92:
 	ld de, $002f ; $5f92
@@ -3192,22 +3192,22 @@ Func_16_5f92:
 	ld de, $d080 ; $5f9c
 	ld b, $08 ; $5f9f
 	ld c, $04 ; $5fa1
-	farcall FarPtr_39_0a ; $5fa3
+	farcall FarPtr_CopyTilemapRect ; $5fa3
 	ld hl, $d24c ; $5fa6
 	ld de, $d08c ; $5fa9
 	ld b, $08 ; $5fac
 	ld c, $04 ; $5fae
-	farcall FarPtr_39_0a ; $5fb0
+	farcall FarPtr_CopyTilemapRect ; $5fb0
 	ld hl, $d640 ; $5fb3
 	ld de, $d480 ; $5fb6
 	ld b, $08 ; $5fb9
 	ld c, $04 ; $5fbb
-	farcall FarPtr_39_0a ; $5fbd
+	farcall FarPtr_CopyTilemapRect ; $5fbd
 	ld hl, $d64c ; $5fc0
 	ld de, $d48c ; $5fc3
 	ld b, $08 ; $5fc6
 	ld c, $04 ; $5fc8
-	farcall FarPtr_39_0a ; $5fca
+	farcall FarPtr_CopyTilemapRect ; $5fca
 	ret ; $5fcd
 PrintMatchSetScores:
 	ld a, [wPlayer1SetsWon] ; $5fce

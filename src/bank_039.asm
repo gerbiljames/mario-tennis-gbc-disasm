@@ -2,20 +2,20 @@ SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 
 FarPtr_LoadScreenAssetRecord:
 	dw LoadScreenAssetRecord ; $4000
-FarPtr_Func_39_4325:
-	dw Func_39_4325 ; $4002
+FarPtr_QueueWram3MapToVRAM:
+	dw QueueWram3MapToVRAM ; $4002
 FarPtr_39_04:
 	dw Func_39_4342 ; $4004
 FarPtr_39_06:
 	dw Func_39_44d3 ; $4006
 FarPtr_39_08:
 	dw Func_39_451e ; $4008
-FarPtr_39_0a:
-	dw Func_39_4530 ; $400a
-FarPtr_39_0c:
-	dw Func_39_4558 ; $400c
-FarPtr_39_0e:
-	dw Func_39_457f ; $400e
+FarPtr_CopyTilemapRect:
+	dw CopyTilemapRect ; $400a
+FarPtr_FillTilemapRect:
+	dw FillTilemapRect ; $400c
+FarPtr_LoadIndexedPalette:
+	dw LoadIndexedPalette ; $400e
 FarPtr_39_10:
 	dw Func_39_468b ; $4010
 FarPtr_39_12:
@@ -44,14 +44,14 @@ FarPtr_39_28:
 	dw Func_39_4b6d ; $4028
 FarPtr_39_2a:
 	dw Func_39_4be8 ; $402a
-FarPtr_Func_39_4325Alias1:
-	dw Func_39_4325 ; $402c
-FarPtr_Func_39_4325Alias2:
-	dw Func_39_4325 ; $402e
-FarPtr_Func_39_4325Alias3:
-	dw Func_39_4325 ; $4030
-FarPtr_Func_39_4325Alias4:
-	dw Func_39_4325 ; $4032
+FarPtr_QueueWram3MapToVRAMAlias1:
+	dw QueueWram3MapToVRAM ; $402c
+FarPtr_QueueWram3MapToVRAMAlias2:
+	dw QueueWram3MapToVRAM ; $402e
+FarPtr_QueueWram3MapToVRAMAlias3:
+	dw QueueWram3MapToVRAM ; $4030
+FarPtr_QueueWram3MapToVRAMAlias4:
+	dw QueueWram3MapToVRAM ; $4032
 DataPtr_Lz_39_47ab:
 	dw Lz_39_47ab ; $4034
 DataPtr_Lz_39_47abAlias1:
@@ -195,7 +195,7 @@ ScreenAssetRecordTable:
 	dslot DataPtr_3c_70, DataPtr_Lz_3a_53fbAlias8, DataPtr_3a_16, DataPtr_3c_76 ; record 6
 	dslot DataPtr_3c_70, DataPtr_3a_18, DataPtr_3a_1a, DataPtr_3c_76 ; record 7
 	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias1, DataPtr_Lz_3a_53fbAlias2, DataPtr_Lz_3a_53fbAlias3 ; record 8
-	dslot FarPtr_Func_39_4325Alias1, FarPtr_Func_39_4325Alias2, FarPtr_Func_39_4325Alias3, FarPtr_Func_39_4325Alias4 ; record 9
+	dslot FarPtr_QueueWram3MapToVRAMAlias1, FarPtr_QueueWram3MapToVRAMAlias2, FarPtr_QueueWram3MapToVRAMAlias3, FarPtr_QueueWram3MapToVRAMAlias4 ; record 9
 	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias4, DataPtr_Lz_3a_53fbAlias5, DataPtr_Lz_3a_53fbAlias3 ; record 10
 	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias6, DataPtr_Lz_3a_53fbAlias7, DataPtr_Lz_3a_53fbAlias3 ; record 11
 	dslot DataPtr_ExhibitionMenuTiles, DataPtr_ExhibitionMenuTilemap, DataPtr_ExhibitionMenuAttrmap, DataPtr_ExhibitionMenuPalettes ; record 12
@@ -256,7 +256,7 @@ ScreenAssetRecordTable:
 	dslot DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap6, DataPtr_ChampionMedalAttrmap6, DataPtr_ChampionMedalPalettes ; record 67
 	dslot DataPtr_RulesScreenTiles, DataPtr_RulesScreenTilemap, DataPtr_RulesScreenAttrmap, DataPtr_RulesScreenPalettes ; record 68
 	dslot DataPtr_AwardCeremonyTiles, DataPtr_AwardCeremonyTilesAlias1, DataPtr_AwardCeremonyTilesAlias2, DataPtr_AwardCeremonyTilesAlias3 ; record 69
-Func_39_4325:
+QueueWram3MapToVRAM:
 	wram_bank $03 ; $4325
 	ld hl, $d000 ; $432b
 	ld de, $9800 ; $432e
@@ -512,7 +512,7 @@ Func_39_451e:
 	call LoadPaletteShadow ; $4524
 	ret ; $4527
 	INCBIN "data/bank_039/d_4528.bin" ; $4528, 8 bytes
-Func_39_4530:
+CopyTilemapRect:
 	push af ; $4530
 	push bc ; $4531
 	push de ; $4532
@@ -551,7 +551,7 @@ Label_39_4537:
 	pop bc ; $4555
 	pop af ; $4556
 	ret ; $4557
-Func_39_4558:
+FillTilemapRect:
 	push af ; $4558
 	push bc ; $4559
 	push de ; $455a
@@ -589,7 +589,7 @@ Label_39_455f:
 	pop bc ; $457c
 	pop af ; $457d
 	ret ; $457e
-Func_39_457f:
+LoadIndexedPalette:
 	ld e, c ; $457f
 	ld d, $00 ; $4580
 	sla e ; $4582
@@ -1031,7 +1031,7 @@ Func_39_4bf3:
 	farcall FarPtr_CreateWindowFromScreenRect ; $4c2b
 	farcall FarPtr_DrawTextWindowFrame ; $4c2e
 	farcall FarPtr_RedrawWindowRows ; $4c31
-	farcall FarPtr_Func_39_4325 ; $4c34
+	farcall FarPtr_QueueWram3MapToVRAM ; $4c34
 	ret ; $4c37
 Func_39_4c38:
 	ldh a, [hWramBank] ; $4c38
@@ -1215,12 +1215,12 @@ Func_39_4deb:
 	ld de, $d000 ; $4df6
 	ld b, $14 ; $4df9
 	ld c, $10 ; $4dfb
-	call Func_39_4530 ; $4dfd
+	call CopyTilemapRect ; $4dfd
 	ld hl, $dc00 ; $4e00
 	ld de, $d400 ; $4e03
 	ld b, $14 ; $4e06
 	ld c, $10 ; $4e08
-	call Func_39_4530 ; $4e0a
+	call CopyTilemapRect ; $4e0a
 	pop hl ; $4e0d
 	pop de ; $4e0e
 	pop bc ; $4e0f
@@ -1266,7 +1266,7 @@ Label_39_4e28:
 	push bc ; $4e39
 	push hl ; $4e3a
 	push de ; $4e3b
-	call Func_39_4530 ; $4e3c
+	call CopyTilemapRect ; $4e3c
 	pop de ; $4e3f
 	ld hl, $0400 ; $4e40
 	add hl, de ; $4e43
@@ -1276,7 +1276,7 @@ Label_39_4e28:
 	ld bc, $0400 ; $4e47
 	add hl, bc ; $4e4a
 	pop bc ; $4e4b
-	call Func_39_4530 ; $4e4c
+	call CopyTilemapRect ; $4e4c
 	pop hl ; $4e4f
 	ld a, $06 ; $4e50
 	add a, l ; $4e52
@@ -2877,7 +2877,7 @@ Label_39_6de1:
 	ld d, [hl] ; $6de2
 	ld e, a ; $6de3
 	pop hl ; $6de4
-	farcall FarPtr_39_0c ; $6de5
+	farcall FarPtr_FillTilemapRect ; $6de5
 	pop hl ; $6de8
 	pop de ; $6de9
 	pop bc ; $6dea
@@ -3048,7 +3048,7 @@ Label_39_6ef9:
 	farcall FarPtr_39_10 ; $6efe
 	pop bc ; $6f01
 	ld c, $0c ; $6f02
-	farcall FarPtr_39_0e ; $6f04
+	farcall FarPtr_LoadIndexedPalette ; $6f04
 	ret ; $6f07
 	INCBIN "data/bank_039/d_6f08.bin" ; $6f08, 8 bytes
 Func_39_6f10:

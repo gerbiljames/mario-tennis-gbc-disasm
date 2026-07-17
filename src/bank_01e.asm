@@ -5094,6 +5094,6 @@ Func_1e_7b4c:
 	farcall FarPtr_39_18 ; $7b4f
 	ld b, $08 ; $7b52
 	ld c, $0f ; $7b54
-	farcall FarPtr_39_0e ; $7b56
+	farcall FarPtr_LoadIndexedPalette ; $7b56
 	ret ; $7b59
 	ds 1190, $ff ; $7b5a, fill

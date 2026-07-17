@@ -1009,7 +1009,7 @@ Label_1b_4f4f:
 	ld hl, $5a04 ; $4f6c
 	call RegisterFrameTask ; $4f6f
 Label_1b_4f72:
-	farcall FarPtr_Func_39_4325 ; $4f72
+	farcall FarPtr_QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
 	; $4f76, 48 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -1816,7 +1816,7 @@ Label_1b_5597:
 	ld h, $00 ; $5598
 	ld b, $05 ; $559a
 	ld c, $02 ; $559c
-	farcall FarPtr_39_0c ; $559e
+	farcall FarPtr_FillTilemapRect ; $559e
 	ld hl, $0060 ; $55a1
 	add hl, de ; $55a4
 	ld d, h ; $55a5
@@ -1834,7 +1834,7 @@ Label_1b_55b4:
 	ld h, $01 ; $55b5
 	ld b, $05 ; $55b7
 	ld c, $02 ; $55b9
-	farcall FarPtr_39_0c ; $55bb
+	farcall FarPtr_FillTilemapRect ; $55bb
 	ld hl, $0060 ; $55be
 	add hl, de ; $55c1
 	ld d, h ; $55c2
@@ -1943,7 +1943,7 @@ Label_1b_5662:
 	ld h, $00 ; $5663
 	ld b, $05 ; $5665
 	ld c, $04 ; $5667
-	farcall FarPtr_39_0c ; $5669
+	farcall FarPtr_FillTilemapRect ; $5669
 	ld hl, $00a0 ; $566c
 	add hl, de ; $566f
 	ld d, h ; $5670
@@ -1961,7 +1961,7 @@ Label_1b_567f:
 	ld h, $01 ; $5680
 	ld b, $05 ; $5682
 	ld c, $04 ; $5684
-	farcall FarPtr_39_0c ; $5686
+	farcall FarPtr_FillTilemapRect ; $5686
 	ld hl, $00a0 ; $5689
 	add hl, de ; $568c
 	ld d, h ; $568d
@@ -4278,7 +4278,7 @@ Label_1b_6cee:
 	call AdvanceFrame ; $6d1d
 	ld b, $08 ; $6d20
 	ld c, $10 ; $6d22
-	farcall FarPtr_39_0e ; $6d24
+	farcall FarPtr_LoadIndexedPalette ; $6d24
 	pop af ; $6d27
 	wram_bank ; $6d28
 	ret ; $6d2c
@@ -4381,7 +4381,7 @@ Func_1b_6deb:
 	ld b, $14 ; $6df7
 	ld c, $01 ; $6df9
 	ld h, $03 ; $6dfb
-	farcall FarPtr_39_0c ; $6dfd
+	farcall FarPtr_FillTilemapRect ; $6dfd
 	ld a, $02 ; $6e00
 	ld [$d1e0], a ; $6e02
 	ld a, $04 ; $6e05
@@ -4390,7 +4390,7 @@ Func_1b_6deb:
 	ld b, $12 ; $6e0d
 	ld c, $01 ; $6e0f
 	ld h, $20 ; $6e11
-	farcall FarPtr_39_0c ; $6e13
+	farcall FarPtr_FillTilemapRect ; $6e13
 	pop af ; $6e16
 	wram_bank ; $6e17
 	ret ; $6e1b
@@ -4538,7 +4538,7 @@ Label_1b_6f4e:
 	pop hl ; $6f51
 	ld b, $05 ; $6f52
 	ld c, $03 ; $6f54
-	farcall FarPtr_39_0c ; $6f56
+	farcall FarPtr_FillTilemapRect ; $6f56
 	pop hl ; $6f59
 	pop de ; $6f5a
 	pop bc ; $6f5b
@@ -4705,7 +4705,7 @@ Label_1b_70d7:
 	pop hl ; $70da
 	ld b, $05 ; $70db
 	ld c, $03 ; $70dd
-	farcall FarPtr_39_0c ; $70df
+	farcall FarPtr_FillTilemapRect ; $70df
 	pop hl ; $70e2
 	pop de ; $70e3
 	pop bc ; $70e4
@@ -4860,7 +4860,7 @@ Label_1b_723a:
 	call AdvanceFrame ; $728a
 	ld b, $08 ; $728d
 	ld c, $10 ; $728f
-	farcall FarPtr_39_0e ; $7291
+	farcall FarPtr_LoadIndexedPalette ; $7291
 	pop af ; $7294
 	wram_bank ; $7295
 	ret ; $7299
@@ -5039,7 +5039,7 @@ Func_1b_7449:
 	farcall FarPtr_39_18 ; $7467
 	ld b, $08 ; $746a
 	ld c, $0f ; $746c
-	farcall FarPtr_39_0e ; $746e
+	farcall FarPtr_LoadIndexedPalette ; $746e
 	ld de, $a100 ; $7471
 	ld b, $09 ; $7474
 	ld c, $00 ; $7476
@@ -5058,7 +5058,7 @@ Label_1b_7490:
 Label_1b_7493:
 	call Func_1b_76ee ; $7493
 	call Func_1b_77fb ; $7496
-	farcall FarPtr_Func_39_4325 ; $7499
+	farcall FarPtr_QueueWram3MapToVRAM ; $7499
 	ret ; $749c
 Func_1b_749d:
 	call Func_1b_787f ; $749d
@@ -5489,7 +5489,7 @@ Label_1b_7764:
 	ld hl, $d055 ; $7768
 	ld b, $02 ; $776b
 	ld c, $02 ; $776d
-	farcall FarPtr_39_0a ; $776f
+	farcall FarPtr_CopyTilemapRect ; $776f
 	pop de ; $7772
 	ld hl, $0400 ; $7773
 	add hl, de ; $7776
@@ -5498,7 +5498,7 @@ Label_1b_7764:
 	ld hl, $d455 ; $7779
 	ld b, $02 ; $777c
 	ld c, $02 ; $777e
-	farcall FarPtr_39_0a ; $7780
+	farcall FarPtr_CopyTilemapRect ; $7780
 	pop hl ; $7783
 	pop de ; $7784
 	pop bc ; $7785
@@ -5529,32 +5529,32 @@ Func_1b_77ac:
 	ld de, $d0c6 ; $77af
 	ld b, $02 ; $77b2
 	ld c, $0a ; $77b4
-	farcall FarPtr_39_0a ; $77b6
+	farcall FarPtr_CopyTilemapRect ; $77b6
 	ld hl, $d495 ; $77b9
 	ld de, $d4c6 ; $77bc
 	ld b, $02 ; $77bf
 	ld c, $0a ; $77c1
-	farcall FarPtr_39_0a ; $77c3
+	farcall FarPtr_CopyTilemapRect ; $77c3
 	ld hl, $d095 ; $77c6
 	ld de, $d0ca ; $77c9
 	ld b, $02 ; $77cc
 	ld c, $0a ; $77ce
-	farcall FarPtr_39_0a ; $77d0
+	farcall FarPtr_CopyTilemapRect ; $77d0
 	ld hl, $d495 ; $77d3
 	ld de, $d4ca ; $77d6
 	ld b, $02 ; $77d9
 	ld c, $0a ; $77db
-	farcall FarPtr_39_0a ; $77dd
+	farcall FarPtr_CopyTilemapRect ; $77dd
 	ld hl, $d095 ; $77e0
 	ld de, $d0ce ; $77e3
 	ld b, $02 ; $77e6
 	ld c, $0a ; $77e8
-	farcall FarPtr_39_0a ; $77ea
+	farcall FarPtr_CopyTilemapRect ; $77ea
 	ld hl, $d495 ; $77ed
 	ld de, $d4ce ; $77f0
 	ld b, $02 ; $77f3
 	ld c, $0a ; $77f5
-	farcall FarPtr_39_0a ; $77f7
+	farcall FarPtr_CopyTilemapRect ; $77f7
 	ret ; $77fa
 Func_1b_77fb:
 	ld hl, $d812 ; $77fb
@@ -5574,12 +5574,12 @@ Label_1b_780c:
 	ld de, $d08e ; $780f
 	ld b, $02 ; $7812
 	ld c, $02 ; $7814
-	farcall FarPtr_39_0a ; $7816
+	farcall FarPtr_CopyTilemapRect ; $7816
 	ld hl, $d416 ; $7819
 	ld de, $d48e ; $781c
 	ld b, $02 ; $781f
 	ld c, $02 ; $7821
-	farcall FarPtr_39_0a ; $7823
+	farcall FarPtr_CopyTilemapRect ; $7823
 	ret ; $7826
 	ldh a, [hWramBank] ; $7827
 	push af ; $7829
