@@ -1,7 +1,7 @@
 SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 
-FarPtr_17_00:
-	dw Func_17_44eb ; $4000
+FarPtr_ShowCourtDiagramTestScreen:
+	dw ShowCourtDiagramTestScreen ; $4000
 DataPtr_CourtDiagramTiles:
 	dw CourtDiagramTiles ; $4002
 DataPtr_CourtDiagramTilemap:
@@ -10,8 +10,8 @@ DataPtr_CourtDiagramAttrmap:
 	dw CourtDiagramAttrmap ; $4006
 DataPtr_CourtDiagramPalettes:
 	dw CourtDiagramPalettes ; $4008
-FarPtr_17_0a:
-	dw Func_17_4487 ; $400a
+FarPtr_ShowDrillBriefingScreen:
+	dw ShowDrillBriefingScreen ; $400a
 FarPtr_ShowRulesScreen:
 	dw ShowRulesScreen ; $400c
 DataPtr_RulesScreenTiles:
@@ -25,9 +25,9 @@ DataPtr_RulesScreenPalettes:
 	push de ; $4016
 	push bc ; $4017
 	ld c, $00 ; $4018
-	call Func_17_4079 ; $401a
+	call ApplySpriteWobbleX_17 ; $401a
 	ld c, $00 ; $401d
-	call Func_17_40a3 ; $401f
+	call ApplySpriteWobbleY_17 ; $401f
 	ld c, $00 ; $4022
 	ld b, $08 ; $4024
 	call QueueSprite ; $4026
@@ -40,9 +40,9 @@ DataPtr_RulesScreenPalettes:
 	ld d, a ; $402f
 	push de ; $4030
 	ld c, $01 ; $4031
-	call Func_17_4079 ; $4033
+	call ApplySpriteWobbleX_17 ; $4033
 	ld c, $00 ; $4036
-	call Func_17_40a3 ; $4038
+	call ApplySpriteWobbleY_17 ; $4038
 	ld c, $00 ; $403b
 	ld b, $28 ; $403d
 	call QueueSprite ; $403f
@@ -59,9 +59,9 @@ DataPtr_RulesScreenPalettes:
 	ld d, a ; $404c
 	push de ; $404d
 	ld c, $01 ; $404e
-	call Func_17_4079 ; $4050
+	call ApplySpriteWobbleX_17 ; $4050
 	ld c, $01 ; $4053
-	call Func_17_40a3 ; $4055
+	call ApplySpriteWobbleY_17 ; $4055
 	ld c, $00 ; $4058
 	ld b, $68 ; $405a
 	call QueueSprite ; $405c
@@ -73,15 +73,15 @@ DataPtr_RulesScreenPalettes:
 	ld e, a ; $4064
 	push de ; $4065
 	ld c, $00 ; $4066
-	call Func_17_4079 ; $4068
+	call ApplySpriteWobbleX_17 ; $4068
 	ld c, $01 ; $406b
-	call Func_17_40a3 ; $406d
+	call ApplySpriteWobbleY_17 ; $406d
 	ld c, $00 ; $4070
 	ld b, $48 ; $4072
 	call QueueSprite ; $4074
 	pop de ; $4077
 	ret ; $4078
-Func_17_4079:
+ApplySpriteWobbleX_17:
 	ldh a, [hVBlankCounter] ; $4079
 	and a, $0f ; $407b
 	ld hl, $4093 ; $407d
@@ -105,7 +105,7 @@ Label_17_408f:
 	ld d, a ; $4091
 	ret ; $4092
 	INCBIN "data/bank_017/d_4093.bin" ; $4093, 16 bytes
-Func_17_40a3:
+ApplySpriteWobbleY_17:
 	ldh a, [hVBlankCounter] ; $40a3
 	and a, $0f ; $40a5
 	ld hl, $40bd ; $40a7
@@ -768,21 +768,21 @@ Label_17_4440:
 	ld h, b ; $4458
 	pop de ; $4459
 	pop bc ; $445a
-	call Func_17_4464 ; $445b
+	call DrawAsciiDigitString_17 ; $445b
 	add sp, 10 ; $445e
 	pop hl ; $4460
 	pop bc ; $4461
 	pop af ; $4462
 	ret ; $4463
-Func_17_4464:
+DrawAsciiDigitString_17:
 	ld a, [hl+] ; $4464
 	and a, a ; $4465
 	jr z, Label_17_446d ; $4466
-	call Func_17_446e ; $4468
-	jr Func_17_4464 ; $446b
+	call DrawAsciiDigitChar_17 ; $4468
+	jr DrawAsciiDigitString_17 ; $446b
 Label_17_446d:
 	ret ; $446d
-Func_17_446e:
+DrawAsciiDigitChar_17:
 	push hl ; $446e
 	ld hl, $d240 ; $446f
 	sub a, $30 ; $4472
@@ -799,7 +799,7 @@ Label_17_4484:
 	inc de ; $4484
 	pop hl ; $4485
 	ret ; $4486
-Func_17_4487:
+ShowDrillBriefingScreen:
 	xor a, a ; $4487
 	ldh [hBGColumnBlitPending], a ; $4488
 	ldh [hBGRowBlitPending], a ; $448a
@@ -809,7 +809,7 @@ Func_17_4487:
 	ld [$c323], a ; $4493
 	call ClearFrameTasks ; $4496
 	call DisableLCDSafely ; $4499
-	call Func_17_4960 ; $449c
+	call LoadCourtDiagramScreen ; $449c
 	farcall FarPtr_PrepareGlyphBuffer ; $449f
 	call EnableLCD ; $44a2
 	xor a, a ; $44a5
@@ -835,21 +835,21 @@ Func_17_4487:
 Label_17_44d3:
 	ld a, a ; $44d3
 	rst Rst00 ; $44d4
-	dw Label_17_557f ; $44d5 jumptable
-	dw Label_17_5817 ; $44d7 jumptable
-	dw Label_17_5c67 ; $44d9 jumptable
-	dw Label_17_5f92 ; $44db jumptable
-	dw Label_17_6230 ; $44dd jumptable
-	dw Label_17_6539 ; $44df jumptable
-	dw Label_17_6842 ; $44e1 jumptable
-	dw Label_17_6a73 ; $44e3 jumptable
-	dw Label_17_6cea ; $44e5 jumptable
+	dw DrillBriefing_ServeToTargets ; $44d5 jumptable
+	dw DrillBriefing_SpinServe ; $44d7 jumptable
+	dw DrillBriefing_ServeThroughPoles ; $44d9 jumptable
+	dw DrillBriefing_ServeAndVolley ; $44db jumptable
+	dw DrillBriefing_ServeAndSmash ; $44dd jumptable
+	dw DrillBriefing_ServeAndSmash2 ; $44df jumptable
+	dw DrillBriefing_ReturnToTarget ; $44e1 jumptable
+	dw DrillBriefing_ReturnLob ; $44e3 jumptable
+	dw DrillBriefing_ReturnDownLine ; $44e5 jumptable
 Label_17_44e7:
 	call ClearFrameTasks ; $44e7
 	ret ; $44ea
-Func_17_44eb:
+ShowCourtDiagramTestScreen:
 	call DisableLCDSafely ; $44eb
-	call Func_17_4960 ; $44ee
+	call LoadCourtDiagramScreen ; $44ee
 	call EnableLCD ; $44f1
 	xor a, a ; $44f4
 	ld [$cb0b], a ; $44f5
@@ -892,7 +892,7 @@ Func_17_44eb:
 	ld hl, $4754 ; $4554
 	call RegisterFrameTask ; $4557
 	ld hl, $00e4 ; $455a
-	call Func_17_4654 ; $455d
+	call DrawBriefingCaption ; $455d
 	call WaitForInputBlinking ; $4560
 	call ClearFrameTasks ; $4563
 	ld a, $01 ; $4566
@@ -957,9 +957,9 @@ Func_17_44eb:
 	ld hl, $48c1 ; $45fc
 	call RegisterFrameTask ; $45ff
 	ld hl, $0135 ; $4602
-	call Func_17_4654 ; $4605
+	call DrawBriefingCaption ; $4605
 	ld b, $02 ; $4608
-	call Func_17_466c ; $460a
+	call DrawDiagramTargetOverlay ; $460a
 	ld a, $01 ; $460d
 	ld hl, $4676 ; $460f
 	call RegisterFrameTask ; $4612
@@ -969,9 +969,9 @@ Func_17_44eb:
 	ld hl, $4406 ; $461d
 	call RegisterFrameTask ; $4620
 	ld b, $00 ; $4623
-	call Func_17_466c ; $4625
+	call DrawDiagramTargetOverlay ; $4625
 	ld hl, $00e4 ; $4628
-	call Func_17_4654 ; $462b
+	call DrawBriefingCaption ; $462b
 	ld a, $70 ; $462e
 	ld [$d81c], a ; $4630
 	ld a, $20 ; $4633
@@ -980,27 +980,27 @@ Func_17_44eb:
 	ld hl, $4754 ; $463a
 	call RegisterFrameTask ; $463d
 	ld b, $05 ; $4640
-	call Func_17_466c ; $4642
+	call DrawDiagramTargetOverlay ; $4642
 	ld a, $01 ; $4645
 	ld hl, $4676 ; $4647
 	call RegisterFrameTask ; $464a
 	call WaitForInputBlinking ; $464d
 	call ClearFrameTasks ; $4650
 	ret ; $4653
-Func_17_4654:
-	call Func_17_49ce ; $4654
+DrawBriefingCaption:
+	call ClearBriefingCaptionTilemap ; $4654
 	farcall FarPtr_PrepareGlyphBuffer ; $4657
 	ld de, $d181 ; $465a
 	ld c, $12 ; $465d
 	farcall FarPtr_RenderProportionalTextAt ; $465f
 	farcall FarPtr_UploadGlyphBuffer ; $4662
-	call Func_17_49f9 ; $4665
+	call QueueCaptionRowToVRAM ; $4665
 	call AdvanceFrame ; $4668
 	ret ; $466b
-Func_17_466c:
-	call Func_17_4a32 ; $466c
-	call Func_17_4a54 ; $466f
-	call Func_17_4a48 ; $4672
+DrawDiagramTargetOverlay:
+	call RestoreDiagramServiceBoxes ; $466c
+	call DrawDiagramTargetPatch ; $466f
+	call QueueDiagramServiceBoxesToVRAM ; $4672
 	ret ; $4675
 	ldh a, [hWramBank] ; $4676
 	push af ; $4678
@@ -1331,13 +1331,13 @@ Label_17_4953:
 	pop af ; $495a
 	wram_bank ; $495b
 	ret ; $495f
-Func_17_4960:
+LoadCourtDiagramScreen:
 	ld c, $24 ; $4960
 	farcall FarPtr_LoadScreenAssetRecord ; $4962
-	call Func_17_499f ; $4965
+	call InitCourtDiagramTextWindow ; $4965
 	wram_bank $03 ; $4968
 	call DecompressGraphicsList ; $496e
-	call Func_17_4b0d ; $4971
+	call LoadCourtDiagramObjPalettes ; $4971
 	farcall FarPtr_QueueWram3MapToVRAM ; $4974
 	wram_bank $03 ; $4977
 	ret ; $497d
@@ -1362,7 +1362,7 @@ Label_17_499c:
 	ld a, $00 ; $499c
 Label_17_499e:
 	ret ; $499e
-Func_17_499f:
+InitCourtDiagramTextWindow:
 	farcall FarPtr_ResetTextWindowState ; $499f
 	ld b, $11 ; $49a2
 	ld c, $10 ; $49a4
@@ -1381,7 +1381,7 @@ Func_17_499f:
 	farcall FarPtr_DrawTextWindowFrame ; $49c7
 	farcall FarPtr_RedrawWindowRows ; $49ca
 	ret ; $49cd
-Func_17_49ce:
+ClearBriefingCaptionTilemap:
 	push af ; $49ce
 	push bc ; $49cf
 	push de ; $49d0
@@ -1405,7 +1405,7 @@ Func_17_49ce:
 	pop bc ; $49f6
 	pop af ; $49f7
 	ret ; $49f8
-Func_17_49f9:
+QueueCaptionRowToVRAM:
 	ld hl, $d160 ; $49f9
 	ld de, $9960 ; $49fc
 	ld c, $0c ; $49ff
@@ -1421,7 +1421,7 @@ Func_17_49f9:
 	call QueueVRAMCopy ; $4a17
 	ret ; $4a1a
 	INCBIN "data/bank_017/d_4a1b.bin" ; $4a1b, 23 bytes
-Func_17_4a32:
+RestoreDiagramServiceBoxes:
 	push af ; $4a32
 	push bc ; $4a33
 	push de ; $4a34
@@ -1436,13 +1436,13 @@ Func_17_4a32:
 	pop bc ; $4a45
 	pop af ; $4a46
 	ret ; $4a47
-Func_17_4a48:
+QueueDiagramServiceBoxesToVRAM:
 	ld hl, $d060 ; $4a48
 	ld de, $9860 ; $4a4b
 	ld c, $0c ; $4a4e
 	call QueueVRAMCopy ; $4a50
 	ret ; $4a53
-Func_17_4a54:
+DrawDiagramTargetPatch:
 	ld a, b ; $4a54
 	or a, a ; $4a55
 	ret z ; $4a56
@@ -1545,7 +1545,7 @@ Label_17_4aba:
 	db $36, $55, $00, $87 ; 0x48
 	db $4e, $55, $20, $87 ; 0x4c
 	db $00, $00 ; 0x50
-Func_17_4b0d:
+LoadCourtDiagramObjPalettes:
 	ld hl, $5567 ; $4b0d
 	ld de, $0803 ; $4b10
 	call LoadPaletteShadow ; $4b13
@@ -1568,10 +1568,10 @@ CourtDiagramPalettes:
 	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
 	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 1661 bytes
-Label_17_557f:
+DrillBriefing_ServeToTargets:
 	ld a, $03 ; $557f
 	ld [$d82e], a ; $5581
-	call Func_17_571b ; $5584
+	call ServeToTargetsBriefing_AdvanceAnim ; $5584
 	ld a, $01 ; $5587
 	ld hl, $46e2 ; $5589
 	call RegisterFrameTask ; $558c
@@ -1588,12 +1588,12 @@ Label_17_557f:
 	ld hl, $4676 ; $55a9
 	call RegisterFrameTask ; $55ac
 	ld hl, $1ab0 ; $55af
-	call Func_17_4654 ; $55b2
+	call DrawBriefingCaption ; $55b2
 	xor a, a ; $55b5
 	ld [$d82c], a ; $55b6
 	ld [$d82e], a ; $55b9
 Label_17_55bc:
-	call Func_17_570f ; $55bc
+	call ServeToTargetsBriefing_TickAnim ; $55bc
 	ld c, $00 ; $55bf
 	call AdvanceFrameCheckInput ; $55c1
 	and a, a ; $55c4
@@ -1604,7 +1604,7 @@ Label_17_55bc:
 	call RegisterFrameTask ; $55d0
 	ld a, $03 ; $55d3
 	ld [$d82e], a ; $55d5
-	call Func_17_571b ; $55d8
+	call ServeToTargetsBriefing_AdvanceAnim ; $55d8
 	ld a, $01 ; $55db
 	ld hl, $46e2 ; $55dd
 	call RegisterFrameTask ; $55e0
@@ -1622,12 +1622,12 @@ Label_17_55bc:
 	ld hl, $48c1 ; $55ff
 	call RegisterFrameTask ; $5602
 	ld hl, $1ab1 ; $5605
-	call Func_17_4654 ; $5608
+	call DrawBriefingCaption ; $5608
 	xor a, a ; $560b
 	ld [$d82c], a ; $560c
 	ld [$d82e], a ; $560f
 Label_17_5612:
-	call Func_17_570f ; $5612
+	call ServeToTargetsBriefing_TickAnim ; $5612
 	ld c, $00 ; $5615
 	call AdvanceFrameCheckInput ; $5617
 	and a, a ; $561a
@@ -1669,7 +1669,7 @@ Label_17_5612:
 	ld hl, $4876 ; $5675
 	call RegisterFrameTask ; $5678
 	ld b, $04 ; $567b
-	call Func_17_466c ; $567d
+	call DrawDiagramTargetOverlay ; $567d
 	ld a, $01 ; $5680
 	ld hl, $4676 ; $5682
 	call RegisterFrameTask ; $5685
@@ -1685,7 +1685,7 @@ Label_17_5612:
 	ld hl, $48c1 ; $569e
 	call RegisterFrameTask ; $56a1
 	ld hl, $1ab2 ; $56a4
-	call Func_17_4654 ; $56a7
+	call DrawBriefingCaption ; $56a7
 	call WaitForInputBlinking ; $56aa
 	call ClearFrameTasks ; $56ad
 	ld a, $01 ; $56b0
@@ -1693,7 +1693,7 @@ Label_17_5612:
 	call RegisterFrameTask ; $56b5
 	ld a, $03 ; $56b8
 	ld [$d82e], a ; $56ba
-	call Func_17_571b ; $56bd
+	call ServeToTargetsBriefing_AdvanceAnim ; $56bd
 	ld a, $01 ; $56c0
 	ld hl, $46e2 ; $56c2
 	call RegisterFrameTask ; $56c5
@@ -1714,26 +1714,26 @@ Label_17_5612:
 	ld hl, $48c1 ; $56ec
 	call RegisterFrameTask ; $56ef
 	ld hl, $1ab3 ; $56f2
-	call Func_17_4654 ; $56f5
+	call DrawBriefingCaption ; $56f5
 	xor a, a ; $56f8
 	ld [$d82c], a ; $56f9
 	ld [$d82e], a ; $56fc
 Label_17_56ff:
-	call Func_17_570f ; $56ff
+	call ServeToTargetsBriefing_TickAnim ; $56ff
 	ld c, $01 ; $5702
 	call AdvanceFrameCheckInput ; $5704
 	and a, a ; $5707
 	jp z, Label_17_56ff ; $5708
 	call ClearFrameTasks ; $570b
 	ret ; $570e
-Func_17_570f:
+ServeToTargetsBriefing_TickAnim:
 	ld a, [$d82c] ; $570f
 	inc a ; $5712
 	ld [$d82c], a ; $5713
 	cp a, $78 ; $5716
-	jr nc, Func_17_571b ; $5718
+	jr nc, ServeToTargetsBriefing_AdvanceAnim ; $5718
 	ret ; $571a
-Func_17_571b:
+ServeToTargetsBriefing_AdvanceAnim:
 	xor a, a ; $571b
 	ld [$d82c], a ; $571c
 	ld a, [$d82e] ; $571f
@@ -1835,7 +1835,7 @@ Func_17_571b:
 	sub a, l ; $57b4
 	ld h, a ; $57b5
 	ld b, [hl] ; $57b6
-	call Func_17_466c ; $57b7
+	call DrawDiagramTargetOverlay ; $57b7
 	ret ; $57ba
 	; $57bb, 92 bytes (records:2)
 	dw $0054 ; record 0
@@ -1884,10 +1884,10 @@ Func_17_571b:
 	dw $0039 ; record 43
 	dw $0040 ; record 44
 	dw $0039 ; record 45
-Label_17_5817:
+DrillBriefing_SpinServe:
 	ld a, $03 ; $5817
 	ld [$d82e], a ; $5819
-	call Func_17_5a81 ; $581c
+	call SpinServeBriefing_AdvanceAnim ; $581c
 	ld a, $01 ; $581f
 	ld hl, $46e2 ; $5821
 	call RegisterFrameTask ; $5824
@@ -1904,12 +1904,12 @@ Label_17_5817:
 	ld hl, $4676 ; $5841
 	call RegisterFrameTask ; $5844
 	ld hl, $1ab4 ; $5847
-	call Func_17_4654 ; $584a
+	call DrawBriefingCaption ; $584a
 	xor a, a ; $584d
 	ld [$d82c], a ; $584e
 	ld [$d82e], a ; $5851
 Label_17_5854:
-	call Func_17_5a75 ; $5854
+	call SpinServeBriefing_TickAnim ; $5854
 	ld c, $00 ; $5857
 	call AdvanceFrameCheckInput ; $5859
 	and a, a ; $585c
@@ -1920,7 +1920,7 @@ Label_17_5854:
 	call RegisterFrameTask ; $5868
 	ld a, $03 ; $586b
 	ld [$d82e], a ; $586d
-	call Func_17_5a81 ; $5870
+	call SpinServeBriefing_AdvanceAnim ; $5870
 	ld a, $01 ; $5873
 	ld hl, $46e2 ; $5875
 	call RegisterFrameTask ; $5878
@@ -1938,12 +1938,12 @@ Label_17_5854:
 	ld hl, $48c1 ; $5897
 	call RegisterFrameTask ; $589a
 	ld hl, $1ab5 ; $589d
-	call Func_17_4654 ; $58a0
+	call DrawBriefingCaption ; $58a0
 	xor a, a ; $58a3
 	ld [$d82c], a ; $58a4
 	ld [$d82e], a ; $58a7
 Label_17_58aa:
-	call Func_17_5a75 ; $58aa
+	call SpinServeBriefing_TickAnim ; $58aa
 	ld c, $00 ; $58ad
 	call AdvanceFrameCheckInput ; $58af
 	and a, a ; $58b2
@@ -1985,7 +1985,7 @@ Label_17_58aa:
 	ld hl, $4876 ; $590d
 	call RegisterFrameTask ; $5910
 	ld b, $04 ; $5913
-	call Func_17_466c ; $5915
+	call DrawDiagramTargetOverlay ; $5915
 	ld a, $01 ; $5918
 	ld hl, $4676 ; $591a
 	call RegisterFrameTask ; $591d
@@ -2001,7 +2001,7 @@ Label_17_58aa:
 	ld hl, $48c1 ; $5936
 	call RegisterFrameTask ; $5939
 	ld hl, $1ab6 ; $593c
-	call Func_17_4654 ; $593f
+	call DrawBriefingCaption ; $593f
 	call WaitForInputBlinking ; $5942
 	call ClearFrameTasks ; $5945
 	ld a, $01 ; $5948
@@ -2040,12 +2040,12 @@ Label_17_58aa:
 	ld hl, $4843 ; $599c
 	call RegisterFrameTask ; $599f
 	ld b, $04 ; $59a2
-	call Func_17_466c ; $59a4
+	call DrawDiagramTargetOverlay ; $59a4
 	ld a, $01 ; $59a7
 	ld hl, $4676 ; $59a9
 	call RegisterFrameTask ; $59ac
 	ld hl, $1ab7 ; $59af
-	call Func_17_4654 ; $59b2
+	call DrawBriefingCaption ; $59b2
 	call WaitForInputBlinking ; $59b5
 	call ClearFrameTasks ; $59b8
 	ld a, $01 ; $59bb
@@ -2053,7 +2053,7 @@ Label_17_58aa:
 	call RegisterFrameTask ; $59c0
 	ld a, $00 ; $59c3
 	ld [$d82e], a ; $59c5
-	call Func_17_5b2d ; $59c8
+	call SpinServeBriefing_AdvanceAnim2 ; $59c8
 	ld a, $01 ; $59cb
 	ld hl, $46e2 ; $59cd
 	call RegisterFrameTask ; $59d0
@@ -2078,12 +2078,12 @@ Label_17_58aa:
 	jr z, Label_17_5a07 ; $5a02
 	ld hl, $1ab9 ; $5a04
 Label_17_5a07:
-	call Func_17_4654 ; $5a07
+	call DrawBriefingCaption ; $5a07
 	xor a, a ; $5a0a
 	ld [$d82c], a ; $5a0b
 	ld [$d82e], a ; $5a0e
 Label_17_5a11:
-	call Func_17_5b21 ; $5a11
+	call SpinServeBriefing_TickAnim2 ; $5a11
 	ld c, $00 ; $5a14
 	call AdvanceFrameCheckInput ; $5a16
 	and a, a ; $5a19
@@ -2094,7 +2094,7 @@ Label_17_5a11:
 	call RegisterFrameTask ; $5a25
 	ld a, $03 ; $5a28
 	ld [$d82e], a ; $5a2a
-	call Func_17_5a81 ; $5a2d
+	call SpinServeBriefing_AdvanceAnim ; $5a2d
 	ld a, $01 ; $5a30
 	ld hl, $46e2 ; $5a32
 	call RegisterFrameTask ; $5a35
@@ -2111,26 +2111,26 @@ Label_17_5a11:
 	ld hl, $48c1 ; $5a52
 	call RegisterFrameTask ; $5a55
 	ld hl, $1aba ; $5a58
-	call Func_17_4654 ; $5a5b
+	call DrawBriefingCaption ; $5a5b
 	xor a, a ; $5a5e
 	ld [$d82c], a ; $5a5f
 	ld [$d82e], a ; $5a62
 Label_17_5a65:
-	call Func_17_5a75 ; $5a65
+	call SpinServeBriefing_TickAnim ; $5a65
 	ld c, $01 ; $5a68
 	call AdvanceFrameCheckInput ; $5a6a
 	and a, a ; $5a6d
 	jp z, Label_17_5a65 ; $5a6e
 	call ClearFrameTasks ; $5a71
 	ret ; $5a74
-Func_17_5a75:
+SpinServeBriefing_TickAnim:
 	ld a, [$d82c] ; $5a75
 	inc a ; $5a78
 	ld [$d82c], a ; $5a79
 	cp a, $78 ; $5a7c
-	jr nc, Func_17_5a81 ; $5a7e
+	jr nc, SpinServeBriefing_AdvanceAnim ; $5a7e
 	ret ; $5a80
-Func_17_5a81:
+SpinServeBriefing_AdvanceAnim:
 	xor a, a ; $5a81
 	ld [$d82c], a ; $5a82
 	ld a, [$d82e] ; $5a85
@@ -2232,16 +2232,16 @@ Func_17_5a81:
 	sub a, l ; $5b1a
 	ld h, a ; $5b1b
 	ld b, [hl] ; $5b1c
-	call Func_17_466c ; $5b1d
+	call DrawDiagramTargetOverlay ; $5b1d
 	ret ; $5b20
-Func_17_5b21:
+SpinServeBriefing_TickAnim2:
 	ld a, [$d82c] ; $5b21
 	inc a ; $5b24
 	ld [$d82c], a ; $5b25
 	cp a, $78 ; $5b28
-	jr nc, Func_17_5b2d ; $5b2a
+	jr nc, SpinServeBriefing_AdvanceAnim2 ; $5b2a
 	ret ; $5b2c
-Func_17_5b2d:
+SpinServeBriefing_AdvanceAnim2:
 	xor a, a ; $5b2d
 	ld [$d82c], a ; $5b2e
 	ld a, [$d82e] ; $5b31
@@ -2357,7 +2357,7 @@ Label_17_5bb3:
 	sub a, l ; $5bde
 	ld h, a ; $5bdf
 	ld b, [hl] ; $5be0
-	call Func_17_466c ; $5be1
+	call DrawDiagramTargetOverlay ; $5be1
 	ret ; $5be4
 	; $5be5, 130 bytes (records:2)
 	dw $0052 ; record 0
@@ -2425,10 +2425,10 @@ Label_17_5bb3:
 	dw $0044 ; record 62
 	dw $0026 ; record 63
 	dw $0044 ; record 64
-Label_17_5c67:
+DrillBriefing_ServeThroughPoles:
 	ld a, $03 ; $5c67
 	ld [$d82e], a ; $5c69
-	call Func_17_5ddc ; $5c6c
+	call PoleServeBriefing_AdvanceAnim ; $5c6c
 	ld a, $01 ; $5c6f
 	ld hl, $46e2 ; $5c71
 	call RegisterFrameTask ; $5c74
@@ -2445,12 +2445,12 @@ Label_17_5c67:
 	ld hl, $4676 ; $5c91
 	call RegisterFrameTask ; $5c94
 	ld hl, $1abb ; $5c97
-	call Func_17_4654 ; $5c9a
+	call DrawBriefingCaption ; $5c9a
 	xor a, a ; $5c9d
 	ld [$d82c], a ; $5c9e
 	ld [$d82e], a ; $5ca1
 Label_17_5ca4:
-	call Func_17_5dd0 ; $5ca4
+	call PoleServeBriefing_TickAnim ; $5ca4
 	ld c, $00 ; $5ca7
 	call AdvanceFrameCheckInput ; $5ca9
 	and a, a ; $5cac
@@ -2461,7 +2461,7 @@ Label_17_5ca4:
 	call RegisterFrameTask ; $5cb8
 	ld a, $03 ; $5cbb
 	ld [$d82e], a ; $5cbd
-	call Func_17_5e74 ; $5cc0
+	call PoleServeBriefing_AdvanceAnim2 ; $5cc0
 	ld a, $01 ; $5cc3
 	ld hl, $46e2 ; $5cc5
 	call RegisterFrameTask ; $5cc8
@@ -2479,12 +2479,12 @@ Label_17_5ca4:
 	ld hl, $48c1 ; $5ce7
 	call RegisterFrameTask ; $5cea
 	ld hl, $1abc ; $5ced
-	call Func_17_4654 ; $5cf0
+	call DrawBriefingCaption ; $5cf0
 	xor a, a ; $5cf3
 	ld [$d82c], a ; $5cf4
 	ld [$d82e], a ; $5cf7
 Label_17_5cfa:
-	call Func_17_5e68 ; $5cfa
+	call PoleServeBriefing_TickAnim2 ; $5cfa
 	ld a, [$d82e] ; $5cfd
 	sla a ; $5d00
 	sla a ; $5d02
@@ -2511,7 +2511,7 @@ Label_17_5cfa:
 	call RegisterFrameTask ; $5d28
 	ld a, $03 ; $5d2b
 	ld [$d82e], a ; $5d2d
-	call Func_17_5e74 ; $5d30
+	call PoleServeBriefing_AdvanceAnim2 ; $5d30
 	ld a, $01 ; $5d33
 	ld hl, $46e2 ; $5d35
 	call RegisterFrameTask ; $5d38
@@ -2538,7 +2538,7 @@ Label_17_5cfa:
 	ld hl, $48c1 ; $5d6e
 	call RegisterFrameTask ; $5d71
 	ld hl, $1abd ; $5d74
-	call Func_17_4654 ; $5d77
+	call DrawBriefingCaption ; $5d77
 	call WaitForInputBlinking ; $5d7a
 	call ClearFrameTasks ; $5d7d
 	ld a, $01 ; $5d80
@@ -2546,7 +2546,7 @@ Label_17_5cfa:
 	call RegisterFrameTask ; $5d85
 	ld a, $03 ; $5d88
 	ld [$d82e], a ; $5d8a
-	call Func_17_5e74 ; $5d8d
+	call PoleServeBriefing_AdvanceAnim2 ; $5d8d
 	ld a, $01 ; $5d90
 	ld hl, $46e2 ; $5d92
 	call RegisterFrameTask ; $5d95
@@ -2564,23 +2564,23 @@ Label_17_5cfa:
 	ld hl, $48c1 ; $5db4
 	call RegisterFrameTask ; $5db7
 	ld hl, $1abe ; $5dba
-	call Func_17_4654 ; $5dbd
+	call DrawBriefingCaption ; $5dbd
 Label_17_5dc0:
-	call Func_17_5e68 ; $5dc0
+	call PoleServeBriefing_TickAnim2 ; $5dc0
 	ld c, $01 ; $5dc3
 	call AdvanceFrameCheckInput ; $5dc5
 	and a, a ; $5dc8
 	jp z, Label_17_5dc0 ; $5dc9
 	call ClearFrameTasks ; $5dcc
 	ret ; $5dcf
-Func_17_5dd0:
+PoleServeBriefing_TickAnim:
 	ld a, [$d82c] ; $5dd0
 	inc a ; $5dd3
 	ld [$d82c], a ; $5dd4
 	cp a, $78 ; $5dd7
-	jr nc, Func_17_5ddc ; $5dd9
+	jr nc, PoleServeBriefing_AdvanceAnim ; $5dd9
 	ret ; $5ddb
-Func_17_5ddc:
+PoleServeBriefing_AdvanceAnim:
 	xor a, a ; $5ddc
 	ld [$d82c], a ; $5ddd
 	ld a, [$d82e] ; $5de0
@@ -2668,16 +2668,16 @@ Func_17_5ddc:
 	sub a, l ; $5e61
 	ld h, a ; $5e62
 	ld b, [hl] ; $5e63
-	call Func_17_466c ; $5e64
+	call DrawDiagramTargetOverlay ; $5e64
 	ret ; $5e67
-Func_17_5e68:
+PoleServeBriefing_TickAnim2:
 	ld a, [$d82c] ; $5e68
 	inc a ; $5e6b
 	ld [$d82c], a ; $5e6c
 	cp a, $78 ; $5e6f
-	jr nc, Func_17_5e74 ; $5e71
+	jr nc, PoleServeBriefing_AdvanceAnim2 ; $5e71
 	ret ; $5e73
-Func_17_5e74:
+PoleServeBriefing_AdvanceAnim2:
 	xor a, a ; $5e74
 	ld [$d82c], a ; $5e75
 	ld a, [$d82e] ; $5e78
@@ -2768,7 +2768,7 @@ Func_17_5e74:
 	sub a, l ; $5eff
 	ld h, a ; $5f00
 	ld b, [hl] ; $5f01
-	call Func_17_466c ; $5f02
+	call DrawDiagramTargetOverlay ; $5f02
 	ret ; $5f05
 	; $5f06, 140 bytes (records:2)
 	dw $0055 ; record 0
@@ -2841,7 +2841,7 @@ Func_17_5e74:
 	dw $0021 ; record 67
 	dw $0050 ; record 68
 	dw $0021 ; record 69
-Label_17_5f92:
+DrillBriefing_ServeAndVolley:
 	ld a, $52 ; $5f92
 	ld [$d810], a ; $5f94
 	ld a, $44 ; $5f97
@@ -2882,21 +2882,21 @@ Label_17_5f92:
 	ld hl, $4876 ; $5ff0
 	call RegisterFrameTask ; $5ff3
 	ld b, $06 ; $5ff6
-	call Func_17_466c ; $5ff8
+	call DrawDiagramTargetOverlay ; $5ff8
 	ld a, $01 ; $5ffb
 	ld hl, $4676 ; $5ffd
 	call RegisterFrameTask ; $6000
 	ld hl, $1abf ; $6003
-	call Func_17_4654 ; $6006
+	call DrawBriefingCaption ; $6006
 	call WaitForInputBlinking ; $6009
 	call ClearFrameTasks ; $600c
 	ld a, $01 ; $600f
 	ld hl, $4406 ; $6011
 	call RegisterFrameTask ; $6014
-	call Func_17_466c ; $6017
+	call DrawDiagramTargetOverlay ; $6017
 	ld a, $03 ; $601a
 	ld [$d82e], a ; $601c
-	call Func_17_60ec ; $601f
+	call ServeAndVolleyBriefing_AdvanceAnim ; $601f
 	ld a, $01 ; $6022
 	ld hl, $46e2 ; $6024
 	call RegisterFrameTask ; $6027
@@ -2923,7 +2923,7 @@ Label_17_5f92:
 	ld hl, $48c1 ; $605e
 	call RegisterFrameTask ; $6061
 	ld hl, $1ac0 ; $6064
-	call Func_17_4654 ; $6067
+	call DrawBriefingCaption ; $6067
 	call WaitForInputBlinking ; $606a
 	call ClearFrameTasks ; $606d
 	ld a, $01 ; $6070
@@ -2931,7 +2931,7 @@ Label_17_5f92:
 	call RegisterFrameTask ; $6075
 	ld a, $03 ; $6078
 	ld [$d82e], a ; $607a
-	call Func_17_60ec ; $607d
+	call ServeAndVolleyBriefing_AdvanceAnim ; $607d
 	ld a, $01 ; $6080
 	ld hl, $46e2 ; $6082
 	call RegisterFrameTask ; $6085
@@ -2958,26 +2958,26 @@ Label_17_5f92:
 	ld hl, $48c1 ; $60bc
 	call RegisterFrameTask ; $60bf
 	ld hl, $1ac1 ; $60c2
-	call Func_17_4654 ; $60c5
+	call DrawBriefingCaption ; $60c5
 	xor a, a ; $60c8
 	ld [$d82c], a ; $60c9
 	ld [$d82e], a ; $60cc
 Label_17_60cf:
-	call Func_17_60df ; $60cf
+	call ServeAndVolleyBriefing_TickAnim ; $60cf
 	ld c, $01 ; $60d2
 	call AdvanceFrameCheckInput ; $60d4
 	and a, a ; $60d7
 	jp z, Label_17_60cf ; $60d8
 	call ClearFrameTasks ; $60db
 	ret ; $60de
-Func_17_60df:
+ServeAndVolleyBriefing_TickAnim:
 	ld a, [$d82c] ; $60df
 	inc a ; $60e2
 	ld [$d82c], a ; $60e3
 	cp a, $78 ; $60e6
-	jp nc, Func_17_60ec ; $60e8
+	jp nc, ServeAndVolleyBriefing_AdvanceAnim ; $60e8
 	ret ; $60eb
-Func_17_60ec:
+ServeAndVolleyBriefing_AdvanceAnim:
 	xor a, a ; $60ec
 	ld [$d82c], a ; $60ed
 	ld a, [$d82e] ; $60f0
@@ -3172,7 +3172,7 @@ Func_17_60ec:
 	dw $003c ; record 59
 	dw $0052 ; record 60
 	dw $003c ; record 61
-Label_17_6230:
+DrillBriefing_ServeAndSmash:
 	ld a, $55 ; $6230
 	ld [$d810], a ; $6232
 	ld a, $44 ; $6235
@@ -3224,7 +3224,7 @@ Label_17_6230:
 	ld hl, $48c1 ; $62aa
 	call RegisterFrameTask ; $62ad
 	ld hl, $1ac2 ; $62b0
-	call Func_17_4654 ; $62b3
+	call DrawBriefingCaption ; $62b3
 	call WaitForInputBlinking ; $62b6
 	call ClearFrameTasks ; $62b9
 	ld a, $01 ; $62bc
@@ -3254,18 +3254,18 @@ Label_17_6230:
 	ld hl, $4754 ; $62f9
 	call RegisterFrameTask ; $62fc
 	ld b, $06 ; $62ff
-	call Func_17_466c ; $6301
+	call DrawDiagramTargetOverlay ; $6301
 	ld a, $01 ; $6304
 	ld hl, $4676 ; $6306
 	call RegisterFrameTask ; $6309
 	ld hl, $1ac3 ; $630c
-	call Func_17_4654 ; $630f
+	call DrawBriefingCaption ; $630f
 	call WaitForInputBlinking ; $6312
 	call ClearFrameTasks ; $6315
 	ld a, $01 ; $6318
 	ld hl, $4406 ; $631a
 	call RegisterFrameTask ; $631d
-	call Func_17_466c ; $6320
+	call DrawDiagramTargetOverlay ; $6320
 	ld a, $52 ; $6323
 	ld [$d810], a ; $6325
 	ld a, $30 ; $6328
@@ -3315,7 +3315,7 @@ Label_17_6230:
 	ld hl, $478e ; $6398
 	call RegisterFrameTask ; $639b
 	ld hl, $1ac4 ; $639e
-	call Func_17_4654 ; $63a1
+	call DrawBriefingCaption ; $63a1
 	call WaitForInputBlinking ; $63a4
 	call ClearFrameTasks ; $63a7
 	ld a, $01 ; $63aa
@@ -3363,7 +3363,7 @@ Label_17_6230:
 	ld hl, $48c1 ; $6415
 	call RegisterFrameTask ; $6418
 	ld hl, $1ac5 ; $641b
-	call Func_17_4654 ; $641e
+	call DrawBriefingCaption ; $641e
 Label_17_6421:
 	ld a, [$d82c] ; $6421
 	inc a ; $6424
@@ -3526,7 +3526,7 @@ Label_17_64b0:
 	dw $003c ; record 59
 	dw $003e ; record 60
 	dw $003c ; record 61
-Label_17_6539:
+DrillBriefing_ServeAndSmash2:
 	ld a, $55 ; $6539
 	ld [$d810], a ; $653b
 	ld a, $44 ; $653e
@@ -3578,7 +3578,7 @@ Label_17_6539:
 	ld hl, $48c1 ; $65b3
 	call RegisterFrameTask ; $65b6
 	ld hl, $1ac6 ; $65b9
-	call Func_17_4654 ; $65bc
+	call DrawBriefingCaption ; $65bc
 	call WaitForInputBlinking ; $65bf
 	call ClearFrameTasks ; $65c2
 	ld a, $01 ; $65c5
@@ -3608,18 +3608,18 @@ Label_17_6539:
 	ld hl, $4754 ; $6602
 	call RegisterFrameTask ; $6605
 	ld b, $06 ; $6608
-	call Func_17_466c ; $660a
+	call DrawDiagramTargetOverlay ; $660a
 	ld a, $01 ; $660d
 	ld hl, $4676 ; $660f
 	call RegisterFrameTask ; $6612
 	ld hl, $1ac7 ; $6615
-	call Func_17_4654 ; $6618
+	call DrawBriefingCaption ; $6618
 	call WaitForInputBlinking ; $661b
 	call ClearFrameTasks ; $661e
 	ld a, $01 ; $6621
 	ld hl, $4406 ; $6623
 	call RegisterFrameTask ; $6626
-	call Func_17_466c ; $6629
+	call DrawDiagramTargetOverlay ; $6629
 	ld a, $52 ; $662c
 	ld [$d810], a ; $662e
 	ld a, $30 ; $6631
@@ -3669,7 +3669,7 @@ Label_17_6539:
 	ld hl, $478e ; $66a1
 	call RegisterFrameTask ; $66a4
 	ld hl, $1ac8 ; $66a7
-	call Func_17_4654 ; $66aa
+	call DrawBriefingCaption ; $66aa
 	call WaitForInputBlinking ; $66ad
 	call ClearFrameTasks ; $66b0
 	ld a, $01 ; $66b3
@@ -3717,7 +3717,7 @@ Label_17_6539:
 	ld hl, $48c1 ; $671e
 	call RegisterFrameTask ; $6721
 	ld hl, $1ac9 ; $6724
-	call Func_17_4654 ; $6727
+	call DrawBriefingCaption ; $6727
 Label_17_672a:
 	ld a, [$d82c] ; $672a
 	inc a ; $672d
@@ -3880,7 +3880,7 @@ Label_17_67b9:
 	dw $003c ; record 59
 	dw $003e ; record 60
 	dw $003c ; record 61
-Label_17_6842:
+DrillBriefing_ReturnToTarget:
 	ld a, $55 ; $6842
 	ld [$d810], a ; $6844
 	ld a, $44 ; $6847
@@ -3912,7 +3912,7 @@ Label_17_6842:
 	ld hl, $4876 ; $6889
 	call RegisterFrameTask ; $688c
 	ld hl, $1c03 ; $688f
-	call Func_17_4654 ; $6892
+	call DrawBriefingCaption ; $6892
 	call WaitForInputBlinking ; $6895
 	call ClearFrameTasks ; $6898
 	ld a, $01 ; $689b
@@ -3920,7 +3920,7 @@ Label_17_6842:
 	call RegisterFrameTask ; $68a0
 	ld a, $03 ; $68a3
 	ld [$d82e], a ; $68a5
-	call Func_17_6965 ; $68a8
+	call ReturnToTargetBriefing_AdvanceAnim ; $68a8
 	ld a, $01 ; $68ab
 	ld hl, $46e2 ; $68ad
 	call RegisterFrameTask ; $68b0
@@ -3944,7 +3944,7 @@ Label_17_6842:
 	ld hl, $48c1 ; $68df
 	call RegisterFrameTask ; $68e2
 	ld hl, $1c04 ; $68e5
-	call Func_17_4654 ; $68e8
+	call DrawBriefingCaption ; $68e8
 	call WaitForInputBlinking ; $68eb
 	call ClearFrameTasks ; $68ee
 	ld a, $01 ; $68f1
@@ -3952,7 +3952,7 @@ Label_17_6842:
 	call RegisterFrameTask ; $68f6
 	ld a, $03 ; $68f9
 	ld [$d82e], a ; $68fb
-	call Func_17_6965 ; $68fe
+	call ReturnToTargetBriefing_AdvanceAnim ; $68fe
 	ld a, $01 ; $6901
 	ld hl, $46e2 ; $6903
 	call RegisterFrameTask ; $6906
@@ -3976,26 +3976,26 @@ Label_17_6842:
 	ld hl, $48c1 ; $6935
 	call RegisterFrameTask ; $6938
 	ld hl, $1c05 ; $693b
-	call Func_17_4654 ; $693e
+	call DrawBriefingCaption ; $693e
 	xor a, a ; $6941
 	ld [$d82c], a ; $6942
 	ld [$d82e], a ; $6945
 Label_17_6948:
-	call Func_17_6958 ; $6948
+	call ReturnToTargetBriefing_TickAnim ; $6948
 	ld c, $01 ; $694b
 	call AdvanceFrameCheckInput ; $694d
 	and a, a ; $6950
 	jp z, Label_17_6948 ; $6951
 	call ClearFrameTasks ; $6954
 	ret ; $6957
-Func_17_6958:
+ReturnToTargetBriefing_TickAnim:
 	ld a, [$d82c] ; $6958
 	inc a ; $695b
 	ld [$d82c], a ; $695c
 	cp a, $78 ; $695f
-	jp nc, Func_17_6965 ; $6961
+	jp nc, ReturnToTargetBriefing_AdvanceAnim ; $6961
 	ret ; $6964
-Func_17_6965:
+ReturnToTargetBriefing_AdvanceAnim:
 	xor a, a ; $6965
 	ld [$d82c], a ; $6966
 	ld a, [$d82e] ; $6969
@@ -4158,7 +4158,7 @@ Func_17_6965:
 	dw $0042 ; record 49
 	dw $003e ; record 50
 	dw $0042 ; record 51
-Label_17_6a73:
+DrillBriefing_ReturnLob:
 	ld a, $55 ; $6a73
 	ld [$d810], a ; $6a75
 	ld a, $44 ; $6a78
@@ -4190,7 +4190,7 @@ Label_17_6a73:
 	ld hl, $4876 ; $6aba
 	call RegisterFrameTask ; $6abd
 	ld hl, $1c06 ; $6ac0
-	call Func_17_4654 ; $6ac3
+	call DrawBriefingCaption ; $6ac3
 	call WaitForInputBlinking ; $6ac6
 	call ClearFrameTasks ; $6ac9
 	ld a, $01 ; $6acc
@@ -4198,7 +4198,7 @@ Label_17_6a73:
 	call RegisterFrameTask ; $6ad1
 	ld a, $03 ; $6ad4
 	ld [$d82e], a ; $6ad6
-	call Func_17_6ba6 ; $6ad9
+	call ReturnLobBriefing_AdvanceAnim ; $6ad9
 	ld a, $01 ; $6adc
 	ld hl, $46e2 ; $6ade
 	call RegisterFrameTask ; $6ae1
@@ -4225,7 +4225,7 @@ Label_17_6a73:
 	ld hl, $48c1 ; $6b18
 	call RegisterFrameTask ; $6b1b
 	ld hl, $1c07 ; $6b1e
-	call Func_17_4654 ; $6b21
+	call DrawBriefingCaption ; $6b21
 	call WaitForInputBlinking ; $6b24
 	call ClearFrameTasks ; $6b27
 	ld a, $01 ; $6b2a
@@ -4233,7 +4233,7 @@ Label_17_6a73:
 	call RegisterFrameTask ; $6b2f
 	ld a, $03 ; $6b32
 	ld [$d82e], a ; $6b34
-	call Func_17_6ba6 ; $6b37
+	call ReturnLobBriefing_AdvanceAnim ; $6b37
 	ld a, $01 ; $6b3a
 	ld hl, $46e2 ; $6b3c
 	call RegisterFrameTask ; $6b3f
@@ -4260,26 +4260,26 @@ Label_17_6a73:
 	ld hl, $48c1 ; $6b76
 	call RegisterFrameTask ; $6b79
 	ld hl, $1c08 ; $6b7c
-	call Func_17_4654 ; $6b7f
+	call DrawBriefingCaption ; $6b7f
 	xor a, a ; $6b82
 	ld [$d82c], a ; $6b83
 	ld [$d82e], a ; $6b86
 Label_17_6b89:
-	call Func_17_6b99 ; $6b89
+	call ReturnLobBriefing_TickAnim ; $6b89
 	ld c, $01 ; $6b8c
 	call AdvanceFrameCheckInput ; $6b8e
 	and a, a ; $6b91
 	jp z, Label_17_6b89 ; $6b92
 	call ClearFrameTasks ; $6b95
 	ret ; $6b98
-Func_17_6b99:
+ReturnLobBriefing_TickAnim:
 	ld a, [$d82c] ; $6b99
 	inc a ; $6b9c
 	ld [$d82c], a ; $6b9d
 	cp a, $78 ; $6ba0
-	jp nc, Func_17_6ba6 ; $6ba2
+	jp nc, ReturnLobBriefing_AdvanceAnim ; $6ba2
 	ret ; $6ba5
-Func_17_6ba6:
+ReturnLobBriefing_AdvanceAnim:
 	xor a, a ; $6ba6
 	ld [$d82c], a ; $6ba7
 	ld a, [$d82e] ; $6baa
@@ -4474,7 +4474,7 @@ Func_17_6ba6:
 	dw $0003 ; record 59
 	dw $002f ; record 60
 	dw $0003 ; record 61
-Label_17_6cea:
+DrillBriefing_ReturnDownLine:
 	ld a, $55 ; $6cea
 	ld [$d810], a ; $6cec
 	ld a, $44 ; $6cef
@@ -4506,7 +4506,7 @@ Label_17_6cea:
 	ld hl, $4876 ; $6d31
 	call RegisterFrameTask ; $6d34
 	ld hl, $1c09 ; $6d37
-	call Func_17_4654 ; $6d3a
+	call DrawBriefingCaption ; $6d3a
 	call WaitForInputBlinking ; $6d3d
 	call ClearFrameTasks ; $6d40
 	ld a, $01 ; $6d43
@@ -4514,7 +4514,7 @@ Label_17_6cea:
 	call RegisterFrameTask ; $6d48
 	ld a, $03 ; $6d4b
 	ld [$d82e], a ; $6d4d
-	call Func_17_6e0d ; $6d50
+	call ReturnDownLineBriefing_AdvanceAnim ; $6d50
 	ld a, $01 ; $6d53
 	ld hl, $46e2 ; $6d55
 	call RegisterFrameTask ; $6d58
@@ -4538,7 +4538,7 @@ Label_17_6cea:
 	ld hl, $48c1 ; $6d87
 	call RegisterFrameTask ; $6d8a
 	ld hl, $1c0a ; $6d8d
-	call Func_17_4654 ; $6d90
+	call DrawBriefingCaption ; $6d90
 	call WaitForInputBlinking ; $6d93
 	call ClearFrameTasks ; $6d96
 	ld a, $01 ; $6d99
@@ -4546,7 +4546,7 @@ Label_17_6cea:
 	call RegisterFrameTask ; $6d9e
 	ld a, $03 ; $6da1
 	ld [$d82e], a ; $6da3
-	call Func_17_6e0d ; $6da6
+	call ReturnDownLineBriefing_AdvanceAnim ; $6da6
 	ld a, $01 ; $6da9
 	ld hl, $46e2 ; $6dab
 	call RegisterFrameTask ; $6dae
@@ -4570,26 +4570,26 @@ Label_17_6cea:
 	ld hl, $48c1 ; $6ddd
 	call RegisterFrameTask ; $6de0
 	ld hl, $1c0b ; $6de3
-	call Func_17_4654 ; $6de6
+	call DrawBriefingCaption ; $6de6
 	xor a, a ; $6de9
 	ld [$d82c], a ; $6dea
 	ld [$d82e], a ; $6ded
 Label_17_6df0:
-	call Func_17_6e00 ; $6df0
+	call ReturnDownLineBriefing_TickAnim ; $6df0
 	ld c, $01 ; $6df3
 	call AdvanceFrameCheckInput ; $6df5
 	and a, a ; $6df8
 	jp z, Label_17_6df0 ; $6df9
 	call ClearFrameTasks ; $6dfc
 	ret ; $6dff
-Func_17_6e00:
+ReturnDownLineBriefing_TickAnim:
 	ld a, [$d82c] ; $6e00
 	inc a ; $6e03
 	ld [$d82c], a ; $6e04
 	cp a, $78 ; $6e07
-	jp nc, Func_17_6e0d ; $6e09
+	jp nc, ReturnDownLineBriefing_AdvanceAnim ; $6e09
 	ret ; $6e0c
-Func_17_6e0d:
+ReturnDownLineBriefing_AdvanceAnim:
 	xor a, a ; $6e0d
 	ld [$d82c], a ; $6e0e
 	ld a, [$d82e] ; $6e11
@@ -4789,7 +4789,7 @@ ShowRulesScreen:
 	ld [$dc03], a ; $6f77
 	xor a, a ; $6f7a
 	ld [$dc04], a ; $6f7b
-	call Func_17_6f91 ; $6f7e
+	call RunMinigameRulesPages ; $6f7e
 	ld c, $20 ; $6f81
 	call BeginFadeOut ; $6f83
 	call WaitFadeEnd ; $6f86
@@ -4797,7 +4797,7 @@ ShowRulesScreen:
 	ld a, [$dc02] ; $6f8c
 	ret ; $6f8f
 	ret ; $6f90
-Func_17_6f91:
+RunMinigameRulesPages:
 	ldh a, [hWramBank] ; $6f91
 	push af ; $6f93
 	wram_bank $03 ; $6f94
@@ -4829,7 +4829,7 @@ Label_17_6fc3:
 	ld [hl], d ; $6fcb
 	ld hl, $6fed ; $6fcc
 	ld a, [$dc01] ; $6fcf
-	call Func_17_709b ; $6fd2
+	call MinigameRulesPageLoop ; $6fd2
 	pop af ; $6fd5
 	wram_bank ; $6fd6
 	ret ; $6fda
@@ -4990,7 +4990,7 @@ Label_17_7012:
 	rst Rst38 ; $7098
 	rst Rst38 ; $7099
 	rst Rst38 ; $709a
-Func_17_709b:
+MinigameRulesPageLoop:
 	add a, a ; $709b
 	ld b, a ; $709c
 	add a, a ; $709d
@@ -5038,7 +5038,7 @@ Label_17_70d3:
 	ld hl, $755e ; $70df
 	call RegisterFrameTask ; $70e2
 Label_17_70e5:
-	call Func_17_7202 ; $70e5
+	call PrepareRulesPageTilemap ; $70e5
 	ld hl, $cb6e ; $70e8
 	ld a, [hl+] ; $70eb
 	ld h, [hl] ; $70ec
@@ -5055,7 +5055,7 @@ Label_17_70f4:
 	ld c, $10 ; $70fc
 	farcall FarPtr_RenderProportionalTextAt ; $70fe
 	farcall FarPtr_UploadGlyphBuffer ; $7101
-	call Func_17_724d ; $7104
+	call QueueRulesPageToVRAM ; $7104
 Label_17_7107:
 	call AdvanceFrame ; $7107
 	ldh a, [hInputRisingEdge] ; $710a
@@ -5098,7 +5098,7 @@ Label_17_7153:
 	sound $60 ; $7154
 	ret ; $7156
 LoadRulesScreen:
-	call Func_17_7293 ; $7157
+	call LoadRulesBorderAnimTiles ; $7157
 	farcall FarPtr_01_0a ; $715a
 	ld c, $44 ; $715d
 	farcall FarPtr_LoadScreenAssetRecord ; $715f
@@ -5113,7 +5113,7 @@ LoadRulesScreen:
 	pop af ; $7178
 	wram_bank ; $7179
 	farcall FarPtr_PrepareGlyphBuffer ; $717d
-	call Func_17_71bd ; $7180
+	call ClearRulesScreenTextArea ; $7180
 	ld hl, $7b39 ; $7183
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
@@ -5138,7 +5138,7 @@ LoadRulesScreen:
 	call RegisterFrameTask ; $71b6
 	farcall FarPtr_QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
-Func_17_71bd:
+ClearRulesScreenTextArea:
 	ldh a, [hWramBank] ; $71bd
 	push af ; $71bf
 	wram_bank $03 ; $71c0
@@ -5147,11 +5147,11 @@ Func_17_71bd:
 	ld c, $0e ; $71cb
 	ld h, $00 ; $71cd
 	farcall FarPtr_FillTilemapRect ; $71cf
-	call Func_17_71db ; $71d2
+	call ClearRulesPageRows ; $71d2
 	pop af ; $71d5
 	wram_bank ; $71d6
 	ret ; $71da
-Func_17_71db:
+ClearRulesPageRows:
 	ldh a, [hWramBank] ; $71db
 	push af ; $71dd
 	wram_bank $03 ; $71de
@@ -5168,7 +5168,7 @@ Func_17_71db:
 	pop af ; $71fc
 	wram_bank ; $71fd
 	ret ; $7201
-Func_17_7202:
+PrepareRulesPageTilemap:
 	ldh a, [hWramBank] ; $7202
 	push af ; $7204
 	wram_bank $03 ; $7205
@@ -5203,7 +5203,7 @@ Label_17_7247:
 	pop af ; $7247
 	wram_bank ; $7248
 	ret ; $724c
-Func_17_724d:
+QueueRulesPageToVRAM:
 	ld a, [$dc05] ; $724d
 	or a, a ; $7250
 	jr nz, Label_17_7260 ; $7251
@@ -5233,7 +5233,7 @@ Label_17_726b:
 	ld c, $08 ; $728d
 	call QueueVRAMCopy ; $728f
 	ret ; $7292
-Func_17_7293:
+LoadRulesBorderAnimTiles:
 	wram_bank $01 ; $7293
 	ld hl, $793c ; $7299
 	ld de, $d000 ; $729c
@@ -5524,7 +5524,7 @@ Label_17_7517:
 	db $0a, $0a, $0a ; 0x34
 	ld de, $7888 ; $755e
 	ld c, $00 ; $7561
-	call Func_17_40a3 ; $7563
+	call ApplySpriteWobbleY_17 ; $7563
 	ld b, $08 ; $7566
 	ld c, $00 ; $7568
 	ld h, $03 ; $756a

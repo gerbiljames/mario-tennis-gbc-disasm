@@ -4085,7 +4085,7 @@ Label_15_6dc2:
 	ld c, $10 ; $6e3f
 	call BeginFadeOut ; $6e41
 	call WaitFadeEnd ; $6e44
-	farcall FarPtr_17_0a ; $6e47
+	farcall FarPtr_ShowDrillBriefingScreen ; $6e47
 	ret ; $6e4a
 ReturnCoachLobLessonScene:
 	ld a, $0d ; $6e4b
@@ -4141,7 +4141,7 @@ ReturnCoachLobLessonScene:
 	ld c, $10 ; $6ec2
 	call BeginFadeOut ; $6ec4
 	call WaitFadeEnd ; $6ec7
-	farcall FarPtr_17_0a ; $6eca
+	farcall FarPtr_ShowDrillBriefingScreen ; $6eca
 	ret ; $6ecd
 ReturnCoachPassingShotLessonScene:
 	ld a, $0d ; $6ece
@@ -4197,7 +4197,7 @@ ReturnCoachPassingShotLessonScene:
 	ld c, $10 ; $6f45
 	call BeginFadeOut ; $6f47
 	call WaitFadeEnd ; $6f4a
-	farcall FarPtr_17_0a ; $6f4d
+	farcall FarPtr_ShowDrillBriefingScreen ; $6f4d
 	ret ; $6f50
 WalkToStrokeChallengeCourtCutscene:
 	ld a, $02 ; $6f51
@@ -4298,7 +4298,7 @@ Label_15_6fea:
 	ld c, $10 ; $705c
 	call BeginFadeOut ; $705e
 	call WaitFadeEnd ; $7061
-	farcall FarPtr_17_0a ; $7064
+	farcall FarPtr_ShowDrillBriefingScreen ; $7064
 	ret ; $7067
 Label_15_7068:
 	ld a, $12 ; $7068
@@ -4378,7 +4378,7 @@ NetCoachSmashLessonScene:
 	ld c, $10 ; $7111
 	call BeginFadeOut ; $7113
 	call WaitFadeEnd ; $7116
-	farcall FarPtr_17_0a ; $7119
+	farcall FarPtr_ShowDrillBriefingScreen ; $7119
 	ret ; $711c
 NetCoachDropShotLessonScene:
 	ld a, $12 ; $711d
@@ -4447,7 +4447,7 @@ NetCoachDropShotLessonScene:
 	ld c, $10 ; $71b2
 	call BeginFadeOut ; $71b4
 	call WaitFadeEnd ; $71b7
-	farcall FarPtr_17_0a ; $71ba
+	farcall FarPtr_ShowDrillBriefingScreen ; $71ba
 	ret ; $71bd
 HideServeChallengerActor:
 	test_flag $17, 2 ; $71be

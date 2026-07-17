@@ -578,7 +578,7 @@ RunServiceLessonMenu:
 	ld c, $10 ; $4550
 	call BeginFadeOut ; $4552
 	call WaitFadeEnd ; $4555
-	farcall FarPtr_17_0a ; $4558
+	farcall FarPtr_ShowDrillBriefingScreen ; $4558
 	ret ; $455b
 RunNetLessonMenu:
 	ld hl, $1c0e ; $455c
@@ -600,7 +600,7 @@ RunNetLessonMenu:
 	ld c, $10 ; $4588
 	call BeginFadeOut ; $458a
 	call WaitFadeEnd ; $458d
-	farcall FarPtr_17_0a ; $4590
+	farcall FarPtr_ShowDrillBriefingScreen ; $4590
 	ret ; $4593
 RunStrokeLessonMenu:
 	ld hl, $1c0f ; $4594
@@ -622,7 +622,7 @@ RunStrokeLessonMenu:
 	ld c, $10 ; $45c0
 	call BeginFadeOut ; $45c2
 	call WaitFadeEnd ; $45c5
-	farcall FarPtr_17_0a ; $45c8
+	farcall FarPtr_ShowDrillBriefingScreen ; $45c8
 	ret ; $45cb
 Label_10_45cc:
 	ld hl, wStoryModePlayersXPosition ; $45cc
