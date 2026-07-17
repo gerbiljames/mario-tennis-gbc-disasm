@@ -515,6 +515,7 @@ RunDrillMatchListMenu:
 	ld [$c36c], a ; $44c5
 	farcall FarPtr_03_18 ; $44c8
 	ret ; $44cb
+RunLessonSelectMenu:
 	call ClearFrameTasks ; $44cc
 	ld b, $00 ; $44cf
 	ld c, $02 ; $44d1
@@ -554,11 +555,11 @@ RunDrillMatchListMenu:
 	jp z, Label_10_421f ; $4517
 	ld a, a ; $451a
 	rst Rst00 ; $451b
-	dw Label_10_4524 ; $451c jumptable
-	dw Label_10_455c ; $451e jumptable
-	dw Label_10_4594 ; $4520 jumptable
+	dw RunServiceLessonMenu ; $451c jumptable
+	dw RunNetLessonMenu ; $451e jumptable
+	dw RunStrokeLessonMenu ; $4520 jumptable
 	dw Label_10_45cc ; $4522 jumptable
-Label_10_4524:
+RunServiceLessonMenu:
 	ld hl, $1c0d ; $4524
 	ld de, $0101 ; $4527
 	ld a, $01 ; $452a
@@ -580,7 +581,7 @@ Label_10_4524:
 	call WaitFadeEnd ; $4555
 	farcall FarPtr_17_0a ; $4558
 	ret ; $455b
-Label_10_455c:
+RunNetLessonMenu:
 	ld hl, $1c0e ; $455c
 	ld de, $0101 ; $455f
 	ld a, $01 ; $4562
@@ -602,7 +603,7 @@ Label_10_455c:
 	call WaitFadeEnd ; $458d
 	farcall FarPtr_17_0a ; $4590
 	ret ; $4593
-Label_10_4594:
+RunStrokeLessonMenu:
 	ld hl, $1c0f ; $4594
 	ld de, $0101 ; $4597
 	ld a, $01 ; $459a
