@@ -3805,16 +3805,29 @@ Data_11_6822:
 	; $691a, 18 bytes (bytes:16)
 	db $01, $c0, $00, $13, $00, $1d, $fd, $42, $09, $c0, $00, $2d, $00, $19, $00, $00 ; 0x00
 	db $ff, $c9 ; 0x10
-	; $692c, 62 bytes (records:8)
-; 7 records x 8 bytes
+	; $692c, 17 bytes (records:8)
+; 2 records x 8 bytes
 	dw $ff01, $0000, $7bd1, $0508 ; record 0
 	dw $ff0f, $0000, $7bd1, $0f0b ; record 1
-	dw $3eff, $0100, $0008, $18df ; record 2
-	dw $3e0a, $0600, $df01, $0a2c ; record 3
-	dw $003e, $0001, $1113, $1500 ; record 4
-	dw $24df, $3e0a, $df00, $0a20 ; record 5
-	dw $003e, $0006, $2cdf, $3e0a ; record 6
-	db $00, $06, $c0, $df, $2e, $0a
+	db $ff
+	ld a, $00 ; $693d
+	ld bc, $0008 ; $693f
+	farcall FarPtr_0a_18 ; $6942
+	ld a, $00 ; $6945
+	ld b, $01 ; $6947
+	farcall FarPtr_0a_2c ; $6949
+	ld a, $00 ; $694c
+	ld bc, $1300 ; $694e
+	ld de, $1500 ; $6951
+	farcall FarPtr_0a_24 ; $6954
+	ld a, $00 ; $6957
+	farcall FarPtr_0a_20 ; $6959
+	ld a, $00 ; $695c
+	ld b, $00 ; $695e
+	farcall FarPtr_0a_2c ; $6960
+	ld a, $00 ; $6963
+	ld b, $c0 ; $6965
+	farcall FarPtr_0a_2e ; $6967
 	call Func_11_7784 ; $696a
 	ret ; $696d
 	ld hl, $083e ; $696e
