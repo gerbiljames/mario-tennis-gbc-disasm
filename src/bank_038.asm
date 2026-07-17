@@ -4790,7 +4790,7 @@ Label_38_646e:
 	ld a, [wMenuInputPressed] ; $6478
 	xor a, $0f ; $647b
 	jr nz, Label_38_6482 ; $647d
-	call Func_00_285d ; $647f
+	call JumpSoftReset ; $647f
 Label_38_6482:
 	call Func_38_6e04 ; $6482
 	or a, a ; $6485
@@ -4872,7 +4872,7 @@ Func_38_6528:
 	ldh a, [$ffd4] ; $6528
 	cp a, $20 ; $652a
 	jr nz, Label_38_6534 ; $652c
-	call Func_00_285d ; $652e
+	call JumpSoftReset ; $652e
 	jp Label_38_6608 ; $6531
 Label_38_6534:
 	cp a, $21 ; $6534
@@ -5790,7 +5790,7 @@ Label_38_6b42:
 	ld a, [wMenuInputPressed] ; $6b4c
 	xor a, $0f ; $6b4f
 	jr nz, Label_38_6b56 ; $6b51
-	call Func_00_285d ; $6b53
+	call JumpSoftReset ; $6b53
 Label_38_6b56:
 	push de ; $6b56
 	push af ; $6b57

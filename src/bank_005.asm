@@ -538,10 +538,10 @@ Label_05_42cf:
 	pop bc ; $42e6
 	pop af ; $42e7
 	ret ; $42e8
-Func_05_42e9:
+RedrawWindowRowsPaddedThunk:
 	call RedrawWindowRowsPadded ; $42e9
 	ret ; $42ec
-Func_05_42ed:
+RedrawWindowRowsThunk:
 	call RedrawWindowRows ; $42ed
 	ret ; $42f0
 RedrawActiveTextWindow:
@@ -550,7 +550,7 @@ RedrawActiveTextWindow:
 	push af ; $42f5
 	push bc ; $42f6
 	ld a, [$d824] ; $42f7
-	call Func_05_42e9 ; $42fa
+	call RedrawWindowRowsPaddedThunk ; $42fa
 	pop bc ; $42fd
 	pop af ; $42fe
 	ret ; $42ff
@@ -2327,7 +2327,7 @@ Label_05_4e48:
 	and a, $1f ; $4e55
 	ld [$d82b], a ; $4e57
 	call GetTilemapCellAddress ; $4e5a
-Label_05_4e5d:
+TextInterpreterLoop:
 	ld a, [$d850] ; $4e5d
 	or a, a ; $4e60
 	jr z, Label_05_4e6d ; $4e61
@@ -2377,7 +2377,7 @@ Label_05_4e9f:
 Label_05_4ea5:
 	call DispatchControlCode ; $4ea5
 	call RedrawActiveTextWindow ; $4ea8
-	jr Label_05_4e5d ; $4eab
+	jr TextInterpreterLoop ; $4eab
 Label_05_4ead:
 	ld a, b ; $4ead
 	call WrapTextCellPointer ; $4eae
@@ -2387,7 +2387,7 @@ Label_05_4ead:
 	inc de ; $4eba
 	ld a, e ; $4ebb
 	and a, $1f ; $4ebc
-	jp nz, Label_05_4e5d ; $4ebe
+	jp nz, TextInterpreterLoop ; $4ebe
 	push hl ; $4ec1
 	push de ; $4ec2
 	ld h, d ; $4ec3
@@ -2398,7 +2398,8 @@ Label_05_4ead:
 	ld e, l ; $4eca
 	pop de ; $4ecb
 	pop hl ; $4ecc
-	jp Label_05_4e5d ; $4ecd
+	jp TextInterpreterLoop ; $4ecd
+TextCmdNewline:
 	call DrawStreamGlyph ; $4ed0
 	push af ; $4ed3
 	ld a, [$d82b] ; $4ed4
@@ -2412,7 +2413,9 @@ Label_05_4ead:
 	call GetTilemapCellAddress ; $4ee3
 	pop af ; $4ee6
 	ret ; $4ee7
+TextCmdNop:
 	ret ; $4ee8
+TextCmdNextGlyphStreamRow:
 	push af ; $4ee9
 	push bc ; $4eea
 	push hl ; $4eeb
@@ -2461,6 +2464,7 @@ Label_05_4f1f:
 	pop bc ; $4f2f
 	pop af ; $4f30
 	ret ; $4f31
+TextCmdDelay30:
 	push af ; $4f32
 	ld a, [$d829] ; $4f33
 	or a, a ; $4f36
@@ -2478,6 +2482,7 @@ Label_05_4f47:
 	jr nz, Label_05_4f47 ; $4f4b
 	pop af ; $4f4d
 	ret ; $4f4e
+TextCmdDelay15Skippable:
 	push af ; $4f4f
 	push bc ; $4f50
 	ld a, [$d829] ; $4f51
@@ -2501,6 +2506,7 @@ Label_05_4f71:
 	pop bc ; $4f71
 	pop af ; $4f72
 	ret ; $4f73
+TextCmdWaitButtonPage:
 	push af ; $4f74
 	push de ; $4f75
 	ld a, $01 ; $4f76
@@ -2568,6 +2574,7 @@ Label_05_4fc9:
 	pop bc ; $4fe0
 	pop af ; $4fe1
 	ret ; $4fe2
+TextContinueArrowBlinkTask:
 	push af ; $4fe3
 	push bc ; $4fe4
 	push de ; $4fe5
@@ -2644,6 +2651,7 @@ Label_05_5061:
 	pop bc ; $5061
 	pop af ; $5062
 	ret ; $5063
+TextCmdDelay150Skippable:
 	push af ; $5064
 	push bc ; $5065
 	ld a, [$d829] ; $5066
@@ -2667,6 +2675,7 @@ Label_05_5086:
 	pop bc ; $5086
 	pop af ; $5087
 	ret ; $5088
+TextCmdPrintArgString:
 	push af ; $5089
 	push bc ; $508a
 	ldh a, [hWramBank] ; $508b
@@ -2843,6 +2852,7 @@ Label_05_519e:
 	pop bc ; $51a5
 	pop af ; $51a6
 	ret ; $51a7
+TextCmdApplyDakuten:
 	push de ; $51a8
 	dec de ; $51a9
 	ld h, $ff ; $51aa
@@ -2864,6 +2874,7 @@ Label_05_51bf:
 	call RedrawActiveTextWindow ; $51c1
 	call DelayTextCharacter ; $51c4
 	ret ; $51c7
+TextCmdApplyHandakuten:
 	push de ; $51c8
 	dec de ; $51c9
 	ld h, $ff ; $51ca
@@ -2885,6 +2896,7 @@ Label_05_51df:
 	call RedrawActiveTextWindow ; $51e1
 	call DelayTextCharacter ; $51e4
 	ret ; $51e7
+TextCmdPrintPlayerName:
 	push af ; $51e8
 	push bc ; $51e9
 	ld hl, wStoryModeNameOfMainCharacter ; $51ea
@@ -2892,6 +2904,7 @@ Label_05_51df:
 	pop bc ; $51f0
 	pop af ; $51f1
 	ret ; $51f2
+TextCmdPrintPartnerName:
 	push af ; $51f3
 	push bc ; $51f4
 	ld hl, wStoryModeNameOfPartnerCharacter ; $51f5
@@ -2999,6 +3012,7 @@ Label_05_5293:
 	pop hl ; $5294
 	pop bc ; $5295
 	ret ; $5296
+TextCmdNop2:
 	ret ; $5297
 GetNextArgShortTextLength:
 	push bc ; $5298
@@ -3035,6 +3049,7 @@ Label_05_52ca:
 	pop hl ; $52cb
 	pop bc ; $52cc
 	ret ; $52cd
+TextCmdPrintArgNumber:
 	push bc ; $52ce
 	ldh a, [hWramBank] ; $52cf
 	push af ; $52d1
@@ -3197,6 +3212,7 @@ Func_05_53ae:
 	pop bc ; $53c7
 	pop af ; $53c8
 	ret ; $53c9
+TextCmdPrintShortText:
 	push af ; $53ca
 	push bc ; $53cb
 	ld a, [$c361] ; $53cc
@@ -3337,6 +3353,7 @@ DispatchControlCode:
 	ret ; $548b
 	ret ; $548c
 	ret ; $548d
+TextCmdNop0:
 	ret ; $548e
 ControlCodeHandlers_05:
 	; $548f, 64 bytes (records:2)
@@ -5417,7 +5434,7 @@ RedrawWindowRowsSafe:
 	push af ; $62c3
 	wram_bank $05 ; $62c4
 	ld a, b ; $62ca
-	call Func_05_42ed ; $62cb
+	call RedrawWindowRowsThunk ; $62cb
 	pop af ; $62ce
 	wram_bank ; $62cf
 	pop hl ; $62d3
@@ -5428,7 +5445,7 @@ RedrawWindowRowsSafe:
 CloseWindowAlt:
 	push af ; $62d8
 	call RestoreTilemapUnderWindow ; $62d9
-	call Func_05_42ed ; $62dc
+	call RedrawWindowRowsThunk ; $62dc
 	call ResetWindowState ; $62df
 	call FreeWindow ; $62e2
 	pop af ; $62e5
@@ -5457,7 +5474,7 @@ Label_05_6316:
 	call SetActiveWindowTextId ; $6316
 	ld a, [$d824] ; $6319
 	call RedrawWindowText ; $631c
-	call Func_05_42ed ; $631f
+	call RedrawWindowRowsThunk ; $631f
 	ld a, [$d850] ; $6322
 	or a, a ; $6325
 	jr nz, Label_05_6316 ; $6326

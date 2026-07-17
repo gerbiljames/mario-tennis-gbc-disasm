@@ -2508,8 +2508,8 @@ Label_00_0df1:
 	ret ; $0df9
 MulHLByASigned:
 	bit 7, h ; $0dfa
-	jr z, Label_00_0e13 ; $0dfc
-	call Func_00_0e08 ; $0dfe
+	jr z, MulPosHLByA ; $0dfc
+	call MulNegHLByA ; $0dfe
 	xor a, a ; $0e01
 	sub a, l ; $0e02
 	ld l, a ; $0e03
@@ -2517,7 +2517,7 @@ MulHLByASigned:
 	sub a, h ; $0e05
 	ld h, a ; $0e06
 	ret ; $0e07
-Func_00_0e08:
+MulNegHLByA:
 	push de ; $0e08
 	ld e, a ; $0e09
 	xor a, a ; $0e0a
@@ -2528,7 +2528,7 @@ Func_00_0e08:
 	ld h, a ; $0e0f
 	ld a, e ; $0e10
 	jr Label_00_0e14 ; $0e11
-Label_00_0e13:
+MulPosHLByA:
 	push de ; $0e13
 Label_00_0e14:
 	add a, a ; $0e14
@@ -6958,16 +6958,16 @@ Label_00_2848:
 LinkErrorReset:
 	farcall FarPtr_3e_12 ; $284b
 	jp SoftReset ; $284e
-Func_00_2851:
+ReadJoypadThunk:
 	call ReadJoypad ; $2851
 	ret ; $2854
-Func_00_2855:
+SoftResetIfABStartSelect:
 	xor a, $0f ; $2855
 	jr nz, Label_00_285c ; $2857
 	jp SoftReset ; $2859
 Label_00_285c:
 	ret ; $285c
-Func_00_285d:
+JumpSoftReset:
 	jp SoftReset ; $285d
 	ret ; $2860
 SerialHandler:
@@ -7442,13 +7442,13 @@ DrawDecimalWord:
 	jr DrawDecimalWord ; $2b24
 	push af ; $2b26
 	push hl ; $2b27
-	call Func_00_2b34 ; $2b28
-	call Func_00_2b34 ; $2b2b
-	call Func_00_2b34 ; $2b2e
+	call DrawHalvedWordDecimal ; $2b28
+	call DrawHalvedWordDecimal ; $2b2b
+	call DrawHalvedWordDecimal ; $2b2e
 	pop hl ; $2b31
 	pop af ; $2b32
 	ret ; $2b33
-Func_00_2b34:
+DrawHalvedWordDecimal:
 	push hl ; $2b34
 	ld a, [hl+] ; $2b35
 	ld h, [hl] ; $2b36
@@ -8140,28 +8140,28 @@ Label_00_2ead:
 	jr nc, Label_00_2ec5 ; $2ec2
 	inc d ; $2ec4
 Label_00_2ec5:
-	call Func_00_2f0c ; $2ec5
+	call QueueTileCopyAdvance ; $2ec5
 	ld a, $40 ; $2ec8
 	add a, e ; $2eca
 	ld e, a ; $2ecb
 	jr nc, Label_00_2ecf ; $2ecc
 	inc d ; $2ece
 Label_00_2ecf:
-	call Func_00_2f0c ; $2ecf
+	call QueueTileCopyAdvance ; $2ecf
 	ld a, $40 ; $2ed2
 	add a, e ; $2ed4
 	ld e, a ; $2ed5
 	jr nc, Label_00_2ed9 ; $2ed6
 	inc d ; $2ed8
 Label_00_2ed9:
-	call Func_00_2f0c ; $2ed9
+	call QueueTileCopyAdvance ; $2ed9
 	ld a, $40 ; $2edc
 	add a, e ; $2ede
 	ld e, a ; $2edf
 	jr nc, Label_00_2ee3 ; $2ee0
 	inc d ; $2ee2
 Label_00_2ee3:
-	call Func_00_2f0c ; $2ee3
+	call QueueTileCopyAdvance ; $2ee3
 	jr Label_00_2ea6 ; $2ee6
 Label_00_2ee8:
 	ld bc, $00c0 ; $2ee8
@@ -8172,23 +8172,23 @@ Label_00_2ee8:
 	jr nc, Label_00_2ef3 ; $2ef0
 	inc d ; $2ef2
 Label_00_2ef3:
-	call Func_00_2f0c ; $2ef3
+	call QueueTileCopyAdvance ; $2ef3
 	ld a, $40 ; $2ef6
 	add a, e ; $2ef8
 	ld e, a ; $2ef9
 	jr nc, Label_00_2efd ; $2efa
 	inc d ; $2efc
 Label_00_2efd:
-	call Func_00_2f0c ; $2efd
+	call QueueTileCopyAdvance ; $2efd
 	ld a, $40 ; $2f00
 	add a, e ; $2f02
 	ld e, a ; $2f03
 	jr nc, Label_00_2f07 ; $2f04
 	inc d ; $2f06
 Label_00_2f07:
-	call Func_00_2f0c ; $2f07
+	call QueueTileCopyAdvance ; $2f07
 	jr Label_00_2ea6 ; $2f0a
-Func_00_2f0c:
+QueueTileCopyAdvance:
 	ld c, $01 ; $2f0c
 	push de ; $2f0e
 	push hl ; $2f0f
@@ -8435,7 +8435,7 @@ ResumeBGMAfterJingle:
 InitAudioEngine:
 	wram_bank $07 ; $3078
 	ld bc, $0000 ; $307e
-	call Func_00_30b4 ; $3081
+	call SetChannelUpdateRequest ; $3081
 	ld a, $80 ; $3084
 	ldh [rAUDENA], a ; $3086
 	xor a, a ; $3088
@@ -8464,7 +8464,7 @@ Label_00_30a8:
 	ld [$d215], a ; $30ad
 	ld [$d219], a ; $30b0
 	ret ; $30b3
-Func_00_30b4:
+SetChannelUpdateRequest:
 	ld a, b ; $30b4
 	ld [$d212], a ; $30b5
 	ld a, c ; $30b8
@@ -8472,7 +8472,7 @@ Func_00_30b4:
 	xor a, a ; $30bc
 	ld [$d214], a ; $30bd
 	ret ; $30c0
-Func_00_30c1:
+MarkCurrentChannelUpdated:
 	ld a, [$d20f] ; $30c1
 	inc a ; $30c4
 	ld b, a ; $30c5
@@ -8488,7 +8488,7 @@ Label_00_30ce:
 	or a, b ; $30d2
 	ld [$d214], a ; $30d3
 	ret ; $30d6
-Label_00_30d7:
+ApplyChannelUpdateRequest:
 	ld a, [$d214] ; $30d7
 	ld hl, $d212 ; $30da
 	and a, [hl] ; $30dd
@@ -8990,7 +8990,7 @@ Label_00_3412:
 	or a, c ; $342c
 	ldh [$ffd8], a ; $342d
 Label_00_342f:
-	call Func_00_30c1 ; $342f
+	call MarkCurrentChannelUpdated ; $342f
 Label_00_3432:
 	ldh a, [$ffe7] ; $3432
 	ldh [$ffe8], a ; $3434
@@ -9083,7 +9083,7 @@ Label_00_34b7:
 	pop af ; $34d4
 	ldh [hRomBank], a ; $34d5
 	ld [$2000], a ; $34d7
-	jp Label_00_30d7 ; $34da
+	jp ApplyChannelUpdateRequest ; $34da
 Label_00_34dd:
 	ldh a, [$ffd3] ; $34dd
 Label_00_34df:
@@ -9737,7 +9737,7 @@ Label_00_38e5:
 	ldh [rAUD3ENA], a ; $38f7
 Label_00_38f9:
 	push hl ; $38f9
-	call Func_00_39d0 ; $38fa
+	call ApplyChannelVolumeEnvelope ; $38fa
 	pop hl ; $38fd
 	ld a, [$d20a] ; $38fe
 	and a, a ; $3901
@@ -9863,7 +9863,7 @@ TickVibrato:
 	add a, [hl] ; $39cb
 	ld c, $13 ; $39cc
 	jr WriteChannelReg ; $39ce
-Func_00_39d0:
+ApplyChannelVolumeEnvelope:
 	ld a, [$d20a] ; $39d0
 	cp a, $02 ; $39d3
 	jr z, Label_00_3a1d ; $39d5

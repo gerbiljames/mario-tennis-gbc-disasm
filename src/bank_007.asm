@@ -117,7 +117,7 @@ RunLinkMatchFrameMaster:
 	call ExchangeLinkFrameByteMaster ; $4086
 	call SerialDecodeInput ; $4089
 	ldh a, [$ffd3] ; $408c
-	call Func_00_2855 ; $408e
+	call SoftResetIfABStartSelect ; $408e
 	farcall FarPtr_UpdateMatchFrame ; $4091
 	call SerialEncodeInput ; $4094
 	pop hl ; $4097
@@ -130,7 +130,7 @@ RunLinkMatchFrameSlave:
 	call ExchangeLinkFrameByteSlave ; $409f
 	call SerialDecodeInput ; $40a2
 	ldh a, [$ffd3] ; $40a5
-	call Func_00_2855 ; $40a7
+	call SoftResetIfABStartSelect ; $40a7
 	farcall FarPtr_UpdateMatchFrame ; $40aa
 	call SerialEncodeInput ; $40ad
 	pop hl ; $40b0
@@ -1332,7 +1332,7 @@ RunLinkInputFrameMaster:
 	call ExchangeLinkFrameByteMaster ; $480c
 	call SerialDecodeInput ; $480f
 	ldh a, [$ffd3] ; $4812
-	call Func_00_2855 ; $4814
+	call SoftResetIfABStartSelect ; $4814
 	call SerialEncodeInput ; $4817
 	pop bc ; $481a
 	pop hl ; $481b
@@ -1344,7 +1344,7 @@ RunLinkInputFrameSlave:
 	call ExchangeLinkFrameByteSlave ; $4822
 	call SerialDecodeInput ; $4825
 	ldh a, [$ffd3] ; $4828
-	call Func_00_2855 ; $482a
+	call SoftResetIfABStartSelect ; $482a
 	call SerialEncodeInput ; $482d
 	pop hl ; $4830
 	pop bc ; $4831
@@ -1609,7 +1609,7 @@ PrepareLinkStatePayload:
 	ldh [$ffdc], a ; $49fe
 	ldh a, [$ffd6] ; $4a00
 	ldh [$ffd5], a ; $4a02
-	call Func_00_2851 ; $4a04
+	call ReadJoypadThunk ; $4a04
 	ldh a, [hPlayerInputFlags] ; $4a07
 	and a, $f0 ; $4a09
 	ld c, a ; $4a0b
@@ -1625,7 +1625,7 @@ PrepareLinkInputPayload:
 	ldh [$ffdc], a ; $4a1a
 	ldh a, [$ffd6] ; $4a1c
 	ldh [$ffd5], a ; $4a1e
-	call Func_00_2851 ; $4a20
+	call ReadJoypadThunk ; $4a20
 	ldh a, [hInputPressed] ; $4a23
 	ldh [$ffd6], a ; $4a25
 	pop af ; $4a27
