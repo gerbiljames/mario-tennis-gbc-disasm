@@ -2686,7 +2686,7 @@ Label_1b_5f5d:
 	nop ; $5fc3
 FindCharSelectRosterEntry:
 	ld hl, $ce40 ; $5fc4
-	farcall FarPtr_18_1c ; $5fc7
+	farcall FarPtr_FindRosterEntry ; $5fc7
 	ret ; $5fca
 GetCharSelectRosterField:
 	push hl ; $5fcb
@@ -2731,7 +2731,7 @@ LoadCharSelectScreenGfx:
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
 StartCharSelectCursorTask:
-	farcall FarPtr_18_20 ; $6029
+	farcall FarPtr_LoadCharSelectCursorGfx ; $6029
 	ld a, $0a ; $602c
 	ld hl, $6035 ; $602e
 	call RegisterFrameTask ; $6031
@@ -2740,7 +2740,7 @@ StartCharSelectCursorTask:
 	ld de, $0004 ; $6038
 	call GetCharSelectRosterField ; $603b
 	ld a, [$c781] ; $603e
-	farcall FarPtr_18_22 ; $6041
+	farcall FarPtr_DrawCharSelectCursor ; $6041
 	ret ; $6044
 DrawCharSelectPrompt:
 	ld hl, $d000 ; $6045
@@ -3401,7 +3401,7 @@ Label_1b_656a:
 	INCBIN "data/bank_01b/d_6572.bin" ; $6572, 120 bytes
 FindUnlockDebugRosterEntry:
 	ld hl, $ce40 ; $65ea
-	farcall FarPtr_18_1c ; $65ed
+	farcall FarPtr_FindRosterEntry ; $65ed
 	ret ; $65f0
 GetUnlockDebugRosterField:
 	push hl ; $65f1
@@ -3463,13 +3463,13 @@ Func_1b_664a:
 	call RegisterFrameTask ; $666d
 	ret ; $6670
 	ld de, $2cfa ; $6671
-	farcall FarPtr_18_1e ; $6674
+	farcall FarPtr_ApplySpriteBobOffset_18 ; $6674
 	ld hl, $6572 ; $6677
 	ld bc, $0050 ; $667a
 	call QueueSpriteTemplate ; $667d
 	ret ; $6680
 StartUnlockDebugCursorTask:
-	farcall FarPtr_18_20 ; $6681
+	farcall FarPtr_LoadCharSelectCursorGfx ; $6681
 	ld a, $0a ; $6684
 	ld hl, $668d ; $6686
 	call RegisterFrameTask ; $6689
@@ -3478,7 +3478,7 @@ StartUnlockDebugCursorTask:
 	ld de, $0004 ; $6690
 	call GetUnlockDebugRosterField ; $6693
 	ld a, [$c781] ; $6696
-	farcall FarPtr_18_22 ; $6699
+	farcall FarPtr_DrawCharSelectCursor ; $6699
 	ret ; $669c
 UpdateUnlockDebugSelectedMugshot:
 	ld a, [$c781] ; $669d
@@ -3914,10 +3914,10 @@ Label_1b_6a03:
 	farcall FarPtr_DrawDecimalNumberToTilemap ; $6a8a
 	ld a, $3a ; $6a8d
 	ld de, $da07 ; $6a8f
-	farcall FarPtr_18_0e ; $6a92
+	farcall FarPtr_WriteTilemapByteAdvance ; $6a92
 	ld a, $3a ; $6a95
 	ld de, $da0a ; $6a97
-	farcall FarPtr_18_0e ; $6a9a
+	farcall FarPtr_WriteTilemapByteAdvance ; $6a9a
 	call Func_1b_6aa1 ; $6a9d
 	ret ; $6aa0
 Func_1b_6aa1:

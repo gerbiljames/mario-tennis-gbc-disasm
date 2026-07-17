@@ -8,14 +8,14 @@ FarPtr_RenderProportionalTextAt32:
 	dw RenderProportionalTextAt32 ; $4004
 FarPtr_18_06:
 	dw Func_18_437c ; $4006
-FarPtr_18_08:
-	dw Func_18_438d ; $4008
+FarPtr_StubLoadFontTiles:
+	dw StubLoadFontTiles ; $4008
 FarPtr_DrawBox:
 	dw DrawBox ; $400a
 FarPtr_FlushBgMapShadowToVram:
 	dw FlushBgMapShadowToVram ; $400c
-FarPtr_18_0e:
-	dw Func_18_43a6 ; $400e
+FarPtr_WriteTilemapByteAdvance:
+	dw WriteTilemapByteAdvance ; $400e
 FarPtr_DrawStringToTilemap:
 	dw DrawStringToTilemap ; $4010
 FarPtr_AddBobbingOffsetXY:
@@ -24,18 +24,18 @@ FarPtr_AddBobbingOffsetY:
 	dw AddBobbingOffsetY ; $4014
 FarPtr_AddBobbingOffsetYLarge:
 	dw AddBobbingOffsetYLarge ; $4016
-FarPtr_18_18:
-	dw Func_18_44ee ; $4018
+FarPtr_StubNop_18:
+	dw StubNop_18 ; $4018
 FarPtr_DrawDecimalNumberToTilemap:
 	dw DrawDecimalNumberToTilemap ; $401a
-FarPtr_18_1c:
-	dw Func_18_44ef ; $401c
-FarPtr_18_1e:
-	dw Func_18_5a6a ; $401e
-FarPtr_18_20:
-	dw Func_18_59c1 ; $4020
-FarPtr_18_22:
-	dw Func_18_59d6 ; $4022
+FarPtr_FindRosterEntry:
+	dw FindRosterEntry ; $401c
+FarPtr_ApplySpriteBobOffset_18:
+	dw ApplySpriteBobOffset_18 ; $401e
+FarPtr_LoadCharSelectCursorGfx:
+	dw LoadCharSelectCursorGfx ; $4020
+FarPtr_DrawCharSelectCursor:
+	dw DrawCharSelectCursor ; $4022
 FarPtr_18_24:
 	dw Func_18_4507 ; $4024
 FarPtr_18_26:
@@ -208,7 +208,7 @@ Func_18_437c:
 	ld c, $04 ; $4387
 	call QueueVRAMCopy ; $4389
 	ret ; $438c
-Func_18_438d:
+StubLoadFontTiles:
 	ret ; $438d
 	ld hl, $40a0 ; $438e
 	ld de, $9000 ; $4391
@@ -224,7 +224,7 @@ RenderProportionalTextAt32:
 DrawStringToTilemap:
 	farcall FarPtr_WriteStringToTilemap ; $43a2
 	ret ; $43a5
-Func_18_43a6:
+WriteTilemapByteAdvance:
 	ld [de], a ; $43a6
 	inc de ; $43a7
 	ret ; $43a8
@@ -425,9 +425,9 @@ AddBobbingOffsetYLarge:
 	pop hl ; $44ac
 	ret ; $44ad
 	INCBIN "data/bank_018/d_44ae.bin" ; $44ae, 64 bytes
-Func_18_44ee:
+StubNop_18:
 	ret ; $44ee
-Func_18_44ef:
+FindRosterEntry:
 	push af ; $44ef
 	push bc ; $44f0
 	ld b, a ; $44f1
@@ -709,7 +709,7 @@ Func_18_52de:
 	ld hl, $4f73 ; $5322
 	ld de, $d800 ; $5325
 	call DecompressData ; $5328
-	call Func_18_438d ; $532b
+	call StubLoadFontTiles ; $532b
 	call Func_18_5365 ; $532e
 	ld hl, $51f8 ; $5331
 	ld de, $d000 ; $5334
@@ -1116,7 +1116,7 @@ Func_18_55f8:
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
 	INCBIN "data/bank_018/d_5633.bin" ; $5633, 910 bytes
-Func_18_59c1:
+LoadCharSelectCursorGfx:
 	ld hl, $58e0 ; $59c1
 	ld de, $8400 ; $59c4
 	ld c, $0c ; $59c7
@@ -1125,7 +1125,7 @@ Func_18_59c1:
 	ld de, $0a01 ; $59cf
 	call LoadPaletteShadow ; $59d2
 	ret ; $59d5
-Func_18_59d6:
+DrawCharSelectCursor:
 	ld c, $00 ; $59d6
 	cp a, $84 ; $59d8
 	jr nz, Label_18_59de ; $59da
@@ -1154,7 +1154,7 @@ Label_18_59de:
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
 	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 108 bytes
-Func_18_5a6a:
+ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a
 	and a, $3f ; $5a6c
 	add a, $79 ; $5a6e
