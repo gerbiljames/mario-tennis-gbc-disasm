@@ -1028,25 +1028,25 @@ Data_10_4ccb:
 	ld a, $03 ; $4d18
 	ld bc, $0100 ; $4d1a
 	ld de, $0100 ; $4d1d
-	farcall FarPtr_0a_24 ; $4d20
+	farcall FarPtr_ScriptSetActorMoveTarget ; $4d20
 	ld a, $03 ; $4d23
 	farcall FarPtr_0a_20 ; $4d25
 	ld a, $07 ; $4d28
 	ld bc, $0100 ; $4d2a
 	ld de, $0100 ; $4d2d
-	farcall FarPtr_0a_24 ; $4d30
+	farcall FarPtr_ScriptSetActorMoveTarget ; $4d30
 	ld a, $07 ; $4d33
 	farcall FarPtr_0a_20 ; $4d35
 	ld a, $0b ; $4d38
 	ld bc, $0100 ; $4d3a
 	ld de, $0100 ; $4d3d
-	farcall FarPtr_0a_24 ; $4d40
+	farcall FarPtr_ScriptSetActorMoveTarget ; $4d40
 	ld a, $0b ; $4d43
 	farcall FarPtr_0a_20 ; $4d45
 	ld a, $10 ; $4d48
 	ld bc, $0100 ; $4d4a
 	ld de, $0100 ; $4d4d
-	farcall FarPtr_0a_24 ; $4d50
+	farcall FarPtr_ScriptSetActorMoveTarget ; $4d50
 	ld a, $10 ; $4d53
 	farcall FarPtr_0a_20 ; $4d55
 	ld hl, wStoryModePlayersXPosition ; $4d58
@@ -1180,7 +1180,7 @@ MatchSelectHandlersA_10:
 	ld a, $00 ; $4eb9
 	ld bc, $3f00 ; $4ebb
 	ld de, $3f00 ; $4ebe
-	farcall FarPtr_0a_22 ; $4ec1
+	farcall FarPtr_ScriptSetActorPosition ; $4ec1
 	call Func_10_4f0d ; $4ec4
 	farcall FarPtr_TestStorySlotFlagA ; $4ec7
 	call SetMusicMuted ; $4eca
@@ -2328,7 +2328,7 @@ Data_10_57f6:
 	farcall FarPtr_0a_0c ; $58d4
 	push af ; $58d7
 	ld a, $05 ; $58d8
-	farcall FarPtr_0a_04 ; $58da
+	farcall FarPtr_WaitScriptFrames ; $58da
 	pop af ; $58dd
 	and a, a ; $58de
 	jr z, Label_10_58e4 ; $58df
@@ -2349,7 +2349,7 @@ Label_10_58f4:
 	farcall FarPtr_0a_0c ; $58fc
 	push af ; $58ff
 	ld a, $05 ; $5900
-	farcall FarPtr_0a_04 ; $5902
+	farcall FarPtr_WaitScriptFrames ; $5902
 	pop af ; $5905
 	and a, a ; $5906
 	jr z, Label_10_5915 ; $5907
@@ -2391,7 +2391,7 @@ Label_10_5915:
 	farcall FarPtr_0a_0c ; $594b
 	push af ; $594e
 	ld a, $05 ; $594f
-	farcall FarPtr_0a_04 ; $5951
+	farcall FarPtr_WaitScriptFrames ; $5951
 	pop af ; $5954
 	and a, a ; $5955
 	jr z, Label_10_595b ; $5956
@@ -2582,12 +2582,12 @@ Data_10_5a80:
 	ld a, $02 ; $5bac
 	ld b, $40 ; $5bae
 	ld de, $0200 ; $5bb0
-	farcall FarPtr_0a_2a ; $5bb3
+	farcall FarPtr_MoveActorByAngle ; $5bb3
 	ld a, $02 ; $5bb6
 	farcall FarPtr_0a_20 ; $5bb8
 	ld a, $02 ; $5bbb
 	ld b, $c0 ; $5bbd
-	farcall FarPtr_0a_2e ; $5bbf
+	farcall FarPtr_SetActorFacing ; $5bbf
 	ld a, $02 ; $5bc2
 	ld bc, $0010 ; $5bc4
 	farcall FarPtr_0a_18 ; $5bc7
@@ -2598,7 +2598,7 @@ Label_10_5bca:
 	ld a, $00 ; $5bd2
 	ld b, $c0 ; $5bd4
 	ld de, $0200 ; $5bd6
-	farcall FarPtr_0a_2a ; $5bd9
+	farcall FarPtr_MoveActorByAngle ; $5bd9
 Label_10_5bdc:
 	ret ; $5bdc
 	; $5bdd, 17 bytes (records:8)
@@ -2658,7 +2658,7 @@ Label_10_5c0d:
 	ld a, $00 ; $5c3e
 	ld b, a ; $5c40
 	ld a, $05 ; $5c41
-	farcall FarPtr_0a_30 ; $5c43
+	farcall FarPtr_FaceActorTowardActor ; $5c43
 	ld a, [$c2b0] ; $5c46
 	add a, a ; $5c49
 	add a, $9c ; $5c4a
@@ -2674,7 +2674,7 @@ Label_10_5c0d:
 	farcall FarPtr_0a_08 ; $5c59
 	ld a, $05 ; $5c5c
 	ld b, $40 ; $5c5e
-	farcall FarPtr_0a_2e ; $5c60
+	farcall FarPtr_SetActorFacing ; $5c60
 	ld a, $05 ; $5c63
 	ld d, $02 ; $5c65
 	farcall FarPtr_0a_34 ; $5c67
@@ -2685,7 +2685,7 @@ Label_10_5c0d:
 	ld a, $00 ; $5c74
 	ld b, a ; $5c76
 	ld a, $05 ; $5c77
-	farcall FarPtr_0a_30 ; $5c79
+	farcall FarPtr_FaceActorTowardActor ; $5c79
 	ld a, $05 ; $5c7c
 	ld d, $04 ; $5c7e
 	farcall FarPtr_0a_34 ; $5c80
@@ -2695,11 +2695,11 @@ Label_10_5c0d:
 	farcall FarPtr_0a_08 ; $5c8a
 	push af ; $5c8d
 	ld a, $14 ; $5c8e
-	farcall FarPtr_0a_04 ; $5c90
+	farcall FarPtr_WaitScriptFrames ; $5c90
 	pop af ; $5c93
 	ld a, $05 ; $5c94
 	ld b, $40 ; $5c96
-	farcall FarPtr_0a_2e ; $5c98
+	farcall FarPtr_SetActorFacing ; $5c98
 	ret ; $5c9b
 	; $5c9c, 105 bytes (records:2)
 ; 52 records x 2 bytes
@@ -2779,31 +2779,31 @@ Label_10_5c0d:
 	ld a, $00 ; $5d2d
 	ld b, a ; $5d2f
 	ld a, $12 ; $5d30
-	farcall FarPtr_0a_30 ; $5d32
+	farcall FarPtr_FaceActorTowardActor ; $5d32
 	ld a, $07 ; $5d35
 	ld bc, $1c00 ; $5d37
 	ld de, $1100 ; $5d3a
-	farcall FarPtr_0a_22 ; $5d3d
+	farcall FarPtr_ScriptSetActorPosition ; $5d3d
 	sound $97 ; $5d40
 	ld a, $12 ; $5d42
 	ld d, $02 ; $5d44
 	farcall FarPtr_0a_34 ; $5d46
 	push af ; $5d49
 	ld a, $28 ; $5d4a
-	farcall FarPtr_0a_04 ; $5d4c
+	farcall FarPtr_WaitScriptFrames ; $5d4c
 	pop af ; $5d4f
 	ld a, $07 ; $5d50
 	ld bc, $3f00 ; $5d52
 	ld de, $3f00 ; $5d55
-	farcall FarPtr_0a_22 ; $5d58
+	farcall FarPtr_ScriptSetActorPosition ; $5d58
 	ld a, $12 ; $5d5b
 	farcall FarPtr_0a_08 ; $5d5d
 	ld a, $12 ; $5d60
 	ld b, $40 ; $5d62
-	farcall FarPtr_0a_2e ; $5d64
+	farcall FarPtr_SetActorFacing ; $5d64
 	push af ; $5d67
 	ld a, $14 ; $5d68
-	farcall FarPtr_0a_04 ; $5d6a
+	farcall FarPtr_WaitScriptFrames ; $5d6a
 	pop af ; $5d6d
 	ld a, $12 ; $5d6e
 	ld b, $01 ; $5d70
@@ -2811,12 +2811,12 @@ Label_10_5c0d:
 	ld a, $12 ; $5d75
 	ld b, $c0 ; $5d77
 	ld de, $0100 ; $5d79
-	farcall FarPtr_0a_2a ; $5d7c
+	farcall FarPtr_MoveActorByAngle ; $5d7c
 	call Func_10_613e ; $5d7f
 	ld a, $00 ; $5d82
 	ld b, a ; $5d84
 	ld a, $12 ; $5d85
-	farcall FarPtr_0a_30 ; $5d87
+	farcall FarPtr_FaceActorTowardActor ; $5d87
 	ld a, [$c2b1] ; $5d8a
 	add a, a ; $5d8d
 	add a, $dc ; $5d8e
@@ -2841,13 +2841,13 @@ Label_10_5d9f:
 	farcall FarPtr_0a_2c ; $5dab
 	ld a, $12 ; $5dae
 	ld b, $40 ; $5db0
-	farcall FarPtr_0a_2e ; $5db2
+	farcall FarPtr_SetActorFacing ; $5db2
 	ret ; $5db5
 Label_10_5db6:
 	ld a, $00 ; $5db6
 	ld b, a ; $5db8
 	ld a, $12 ; $5db9
-	farcall FarPtr_0a_30 ; $5dbb
+	farcall FarPtr_FaceActorTowardActor ; $5dbb
 	ld a, [$c2b1] ; $5dbe
 	add a, a ; $5dc1
 	add a, $dc ; $5dc2
@@ -2902,29 +2902,29 @@ Label_10_5dd3:
 	ld a, $00 ; $5e19
 	ld bc, $1f00 ; $5e1b
 	ld de, $0f00 ; $5e1e
-	farcall FarPtr_0a_24 ; $5e21
+	farcall FarPtr_ScriptSetActorMoveTarget ; $5e21
 	ld a, $00 ; $5e24
 	farcall FarPtr_0a_20 ; $5e26
 	ld a, $00 ; $5e29
 	ld b, $00 ; $5e2b
-	farcall FarPtr_0a_2e ; $5e2d
+	farcall FarPtr_SetActorFacing ; $5e2d
 Label_10_5e30:
 	ld a, $08 ; $5e30
 	ld bc, $2140 ; $5e32
 	ld de, $0f00 ; $5e35
-	farcall FarPtr_0a_24 ; $5e38
+	farcall FarPtr_ScriptSetActorMoveTarget ; $5e38
 	ld a, $08 ; $5e3b
 	farcall FarPtr_0a_20 ; $5e3d
 	push af ; $5e40
 	ld a, $0a ; $5e41
-	farcall FarPtr_0a_04 ; $5e43
+	farcall FarPtr_WaitScriptFrames ; $5e43
 	pop af ; $5e46
 	ld a, $08 ; $5e47
 	ld d, $02 ; $5e49
 	farcall FarPtr_0a_34 ; $5e4b
 	ld a, $08 ; $5e4e
 	ld b, $00 ; $5e50
-	farcall FarPtr_0a_2e ; $5e52
+	farcall FarPtr_SetActorFacing ; $5e52
 	set_flag $0f, 3 ; $5e55
 	clear_flag $1c, 1 ; $5e58
 	ret ; $5e5b
@@ -2950,7 +2950,7 @@ Label_10_5e71:
 	farcall FarPtr_0a_08 ; $5e76
 	ld a, $08 ; $5e79
 	ld b, $00 ; $5e7b
-	farcall FarPtr_0a_2e ; $5e7d
+	farcall FarPtr_SetActorFacing ; $5e7d
 	ret ; $5e80
 	; $5e81, 10 bytes (records:2)
 ; 5 records x 2 bytes
@@ -2983,7 +2983,7 @@ Label_10_5ea9:
 	farcall FarPtr_0a_0c ; $5eb1
 	push af ; $5eb4
 	ld a, $05 ; $5eb5
-	farcall FarPtr_0a_04 ; $5eb7
+	farcall FarPtr_WaitScriptFrames ; $5eb7
 	pop af ; $5eba
 	and a, a ; $5ebb
 	jr nz, Label_10_5ed2 ; $5ebc
@@ -3017,7 +3017,7 @@ Label_10_5ed2:
 	ld a, $00 ; $5ef2
 	ld b, a ; $5ef4
 	ld a, $0a ; $5ef5
-	farcall FarPtr_0a_30 ; $5ef7
+	farcall FarPtr_FaceActorTowardActor ; $5ef7
 	ld a, [$c2b0] ; $5efa
 	add a, a ; $5efd
 	add a, $30 ; $5efe
@@ -3038,7 +3038,7 @@ Label_10_5ed2:
 	farcall FarPtr_0a_0c ; $5f1a
 	push af ; $5f1d
 	ld a, $05 ; $5f1e
-	farcall FarPtr_0a_04 ; $5f20
+	farcall FarPtr_WaitScriptFrames ; $5f20
 	pop af ; $5f23
 	and a, a ; $5f24
 	jr z, Label_10_5f2a ; $5f25
@@ -3107,7 +3107,7 @@ Label_10_5f5f:
 	farcall FarPtr_0a_0c ; $5f93
 	push af ; $5f96
 	ld a, $05 ; $5f97
-	farcall FarPtr_0a_04 ; $5f99
+	farcall FarPtr_WaitScriptFrames ; $5f99
 	pop af ; $5f9c
 	and a, a ; $5f9d
 	jr z, Label_10_5fb9 ; $5f9e
@@ -3153,7 +3153,7 @@ Label_10_5fb9:
 	farcall FarPtr_0a_0c ; $5fe9
 	push af ; $5fec
 	ld a, $05 ; $5fed
-	farcall FarPtr_0a_04 ; $5fef
+	farcall FarPtr_WaitScriptFrames ; $5fef
 	pop af ; $5ff2
 	and a, a ; $5ff3
 	jr z, Label_10_5ff9 ; $5ff4
@@ -3268,10 +3268,10 @@ Func_10_6103:
 	ld a, $08 ; $6108
 	ld bc, $2140 ; $610a
 	ld de, $0f00 ; $610d
-	farcall FarPtr_0a_22 ; $6110
+	farcall FarPtr_ScriptSetActorPosition ; $6110
 	ld a, $08 ; $6113
 	ld b, $00 ; $6115
-	farcall FarPtr_0a_2e ; $6117
+	farcall FarPtr_SetActorFacing ; $6117
 Label_10_611a:
 	ret ; $611a
 Func_10_611b:
@@ -3280,7 +3280,7 @@ Func_10_611b:
 	ld a, $12 ; $6120
 	ld bc, $1b00 ; $6122
 	ld de, $1100 ; $6125
-	farcall FarPtr_0a_22 ; $6128
+	farcall FarPtr_ScriptSetActorPosition ; $6128
 Label_10_612b:
 	ret ; $612b
 Func_10_612c:
@@ -3321,7 +3321,7 @@ Func_10_613e:
 	nop ; $6159
 	wram_bank $04 ; $615a
 	ld a, $00 ; $6160
-	farcall FarPtr_0a_16 ; $6162
+	farcall FarPtr_GetActorStateAddr ; $6162
 	ld c, l ; $6165
 	ld b, h ; $6166
 	ld hl, $000c ; $6167
@@ -3359,15 +3359,15 @@ Func_10_613e:
 	ld d, [hl] ; $6197
 	ld e, a ; $6198
 	ld a, $11 ; $6199
-	farcall FarPtr_0a_22 ; $619b
+	farcall FarPtr_ScriptSetActorPosition ; $619b
 	push af ; $619e
 	ld a, $46 ; $619f
-	farcall FarPtr_0a_04 ; $61a1
+	farcall FarPtr_WaitScriptFrames ; $61a1
 	pop af ; $61a4
 	ld a, $11 ; $61a5
 	ld bc, $3f00 ; $61a7
 	ld de, $3f00 ; $61aa
-	farcall FarPtr_0a_22 ; $61ad
+	farcall FarPtr_ScriptSetActorPosition ; $61ad
 	ret ; $61b0
 Data_10_61b1:
 	; $61b1, 14 bytes (records:2)
@@ -3429,21 +3429,21 @@ Data_10_61b1:
 	xor a, a ; $62e0
 	ld bc, $2100 ; $62e1
 	ld de, $3300 ; $62e4
-	farcall FarPtr_0a_3a ; $62e7
+	farcall FarPtr_MovePlayerToPosition ; $62e7
 	ld hl, $01c1 ; $62ea
 	farcall FarPtr_0a_0e ; $62ed
 	ld a, $03 ; $62f0
 	ld b, $40 ; $62f2
-	farcall FarPtr_0a_2e ; $62f4
+	farcall FarPtr_SetActorFacing ; $62f4
 	push af ; $62f7
 	ld a, $0a ; $62f8
-	farcall FarPtr_0a_04 ; $62fa
+	farcall FarPtr_WaitScriptFrames ; $62fa
 	pop af ; $62fd
 	ld a, $04 ; $62fe
 	farcall FarPtr_0a_08 ; $6300
 	push af ; $6303
 	ld a, $0a ; $6304
-	farcall FarPtr_0a_04 ; $6306
+	farcall FarPtr_WaitScriptFrames ; $6306
 	pop af ; $6309
 	ld a, $02 ; $630a
 	ld d, $02 ; $630c
@@ -3464,11 +3464,11 @@ Data_10_61b1:
 	farcall FarPtr_0a_08 ; $6331
 	ld a, $03 ; $6334
 	ld b, $00 ; $6336
-	farcall FarPtr_0a_2e ; $6338
+	farcall FarPtr_SetActorFacing ; $6338
 	xor a, a ; $633b
 	ld bc, $2100 ; $633c
 	ld de, $3b00 ; $633f
-	farcall FarPtr_0a_3a ; $6342
+	farcall FarPtr_MovePlayerToPosition ; $6342
 	ld a, $00 ; $6345
 	ld d, $02 ; $6347
 	farcall FarPtr_0a_34 ; $6349
@@ -3505,14 +3505,14 @@ Label_10_6355:
 	ld a, $05 ; $6447
 	ld bc, $0100 ; $6449
 	ld de, $0100 ; $644c
-	farcall FarPtr_0a_22 ; $644f
+	farcall FarPtr_ScriptSetActorPosition ; $644f
 Label_10_6452:
 	test_flag $06, 5 ; $6452
 	jr nz, Label_10_6462 ; $6455
 	ld a, $06 ; $6457
 	ld bc, $0100 ; $6459
 	ld de, $0100 ; $645c
-	farcall FarPtr_0a_22 ; $645f
+	farcall FarPtr_ScriptSetActorPosition ; $645f
 Label_10_6462:
 	call Func_10_7472 ; $6462
 	ld a, [$c2b0] ; $6465
@@ -3534,10 +3534,10 @@ Label_10_6462:
 	ld a, $03 ; $648c
 	ld bc, $1d00 ; $648e
 	ld de, $3000 ; $6491
-	farcall FarPtr_0a_22 ; $6494
+	farcall FarPtr_ScriptSetActorPosition ; $6494
 	ld a, $03 ; $6497
 	ld b, $c0 ; $6499
-	farcall FarPtr_0a_2e ; $649b
+	farcall FarPtr_SetActorFacing ; $649b
 Label_10_649e:
 	ld a, [$c2b0] ; $649e
 	cp a, $01 ; $64a1
@@ -3545,7 +3545,7 @@ Label_10_649e:
 	ld a, $03 ; $64a5
 	ld bc, $19a0 ; $64a7
 	ld de, $32c0 ; $64aa
-	farcall FarPtr_0a_22 ; $64ad
+	farcall FarPtr_ScriptSetActorPosition ; $64ad
 Label_10_64b0:
 	ld a, $16 ; $64b0
 	ld [$c329], a ; $64b2
@@ -3579,38 +3579,38 @@ Label_10_64e0:
 	ld a, $0a ; $64f7
 	ld bc, $0100 ; $64f9
 	ld de, $0100 ; $64fc
-	farcall FarPtr_0a_22 ; $64ff
+	farcall FarPtr_ScriptSetActorPosition ; $64ff
 Label_10_6502:
 	test_flag $06, 5 ; $6502
 	jr nz, Label_10_6512 ; $6505
 	ld a, $0b ; $6507
 	ld bc, $0100 ; $6509
 	ld de, $0100 ; $650c
-	farcall FarPtr_0a_22 ; $650f
+	farcall FarPtr_ScriptSetActorPosition ; $650f
 Label_10_6512:
 	ld bc, $00f0 ; $6512
 	farcall FarPtr_0a_38 ; $6515
 	xor a, a ; $6518
 	ld bc, $1f00 ; $6519
 	ld de, $3b00 ; $651c
-	farcall FarPtr_0a_3a ; $651f
-	farcall FarPtr_0a_3e ; $6522
+	farcall FarPtr_MovePlayerToPosition ; $651f
+	farcall FarPtr_WaitPlayerMoveDone ; $6522
 	ld a, $00 ; $6525
 	ld bc, $3500 ; $6527
 	ld de, $3b00 ; $652a
-	farcall FarPtr_0a_22 ; $652d
+	farcall FarPtr_ScriptSetActorPosition ; $652d
 	xor a, a ; $6530
 	ld [$c2d5], a ; $6531
 	ld a, $00 ; $6534
 	ld bc, $2b00 ; $6536
 	ld de, $3b00 ; $6539
-	farcall FarPtr_0a_22 ; $653c
+	farcall FarPtr_ScriptSetActorPosition ; $653c
 	ld c, $08 ; $653f
 	call BeginFadeIn ; $6541
 	call WaitFadeEnd ; $6544
 	push af ; $6547
 	ld a, $3c ; $6548
-	farcall FarPtr_0a_04 ; $654a
+	farcall FarPtr_WaitScriptFrames ; $654a
 	pop af ; $654d
 	ld a, $06 ; $654e
 	ld d, $02 ; $6550
@@ -3635,32 +3635,32 @@ Label_10_6512:
 	ld a, $07 ; $657f
 	ld b, a ; $6581
 	ld a, $08 ; $6582
-	farcall FarPtr_0a_32 ; $6584
+	farcall FarPtr_FaceActorsTowardEachOther ; $6584
 	push af ; $6587
 	ld a, $28 ; $6588
-	farcall FarPtr_0a_04 ; $658a
+	farcall FarPtr_WaitScriptFrames ; $658a
 	pop af ; $658d
 	ld a, $07 ; $658e
 	ld b, $c0 ; $6590
-	farcall FarPtr_0a_2e ; $6592
+	farcall FarPtr_SetActorFacing ; $6592
 	ld a, $08 ; $6595
 	ld b, $c0 ; $6597
-	farcall FarPtr_0a_2e ; $6599
+	farcall FarPtr_SetActorFacing ; $6599
 	push af ; $659c
 	ld a, $28 ; $659d
-	farcall FarPtr_0a_04 ; $659f
+	farcall FarPtr_WaitScriptFrames ; $659f
 	pop af ; $65a2
 	ld a, $05 ; $65a3
 	ld bc, $2380 ; $65a5
 	ld de, $3100 ; $65a8
-	farcall FarPtr_0a_22 ; $65ab
+	farcall FarPtr_ScriptSetActorPosition ; $65ab
 	sound $97 ; $65ae
 	ld a, $07 ; $65b0
 	farcall FarPtr_0a_08 ; $65b2
 	ld a, $05 ; $65b5
 	ld bc, $3f00 ; $65b7
 	ld de, $3f00 ; $65ba
-	farcall FarPtr_0a_22 ; $65bd
+	farcall FarPtr_ScriptSetActorPosition ; $65bd
 	ld a, $06 ; $65c0
 	ld d, $03 ; $65c2
 	farcall FarPtr_0a_34 ; $65c4
@@ -3673,11 +3673,11 @@ Label_10_6512:
 	ld a, $03 ; $65d7
 	ld bc, $2180 ; $65d9
 	ld de, $3100 ; $65dc
-	farcall FarPtr_0a_22 ; $65df
+	farcall FarPtr_ScriptSetActorPosition ; $65df
 	sound $99 ; $65e2
 	push af ; $65e4
 	ld a, $0a ; $65e5
-	farcall FarPtr_0a_04 ; $65e7
+	farcall FarPtr_WaitScriptFrames ; $65e7
 	pop af ; $65ea
 	farcall FarPtr_0a_10 ; $65eb
 	ld a, $08 ; $65ee
@@ -3685,14 +3685,14 @@ Label_10_6512:
 	ld a, $03 ; $65f3
 	ld bc, $3f00 ; $65f5
 	ld de, $3f00 ; $65f8
-	farcall FarPtr_0a_22 ; $65fb
+	farcall FarPtr_ScriptSetActorPosition ; $65fb
 	ld a, $08 ; $65fe
 	ld b, a ; $6600
 	ld a, $07 ; $6601
-	farcall FarPtr_0a_30 ; $6603
+	farcall FarPtr_FaceActorTowardActor ; $6603
 	push af ; $6606
 	ld a, $01 ; $6607
-	farcall FarPtr_0a_04 ; $6609
+	farcall FarPtr_WaitScriptFrames ; $6609
 	pop af ; $660c
 	ld a, $07 ; $660d
 	ld b, $01 ; $660f
@@ -3700,7 +3700,7 @@ Label_10_6512:
 	ld a, $07 ; $6614
 	ld bc, $2100 ; $6616
 	ld de, $3300 ; $6619
-	farcall FarPtr_0a_24 ; $661c
+	farcall FarPtr_ScriptSetActorMoveTarget ; $661c
 	ld a, $07 ; $661f
 	farcall FarPtr_0a_20 ; $6621
 	ld a, $08 ; $6624
@@ -3709,7 +3709,7 @@ Label_10_6512:
 	ld a, $07 ; $662b
 	ld bc, $2200 ; $662d
 	ld de, $3300 ; $6630
-	farcall FarPtr_0a_24 ; $6633
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6633
 	ld a, $07 ; $6636
 	farcall FarPtr_0a_20 ; $6638
 	ld a, $07 ; $663b
@@ -3718,16 +3718,16 @@ Label_10_6512:
 	ld a, $08 ; $6642
 	ld b, a ; $6644
 	ld a, $07 ; $6645
-	farcall FarPtr_0a_32 ; $6647
+	farcall FarPtr_FaceActorsTowardEachOther ; $6647
 	ld a, $07 ; $664a
 	farcall FarPtr_0a_08 ; $664c
 	ld a, $08 ; $664f
 	ld b, a ; $6651
 	ld a, $09 ; $6652
-	farcall FarPtr_0a_30 ; $6654
+	farcall FarPtr_FaceActorTowardActor ; $6654
 	push af ; $6657
 	ld a, $01 ; $6658
-	farcall FarPtr_0a_04 ; $665a
+	farcall FarPtr_WaitScriptFrames ; $665a
 	pop af ; $665d
 	ld a, $09 ; $665e
 	ld b, $01 ; $6660
@@ -3735,7 +3735,7 @@ Label_10_6512:
 	ld a, $09 ; $6665
 	ld bc, $1f00 ; $6667
 	ld de, $3300 ; $666a
-	farcall FarPtr_0a_24 ; $666d
+	farcall FarPtr_ScriptSetActorMoveTarget ; $666d
 	ld a, $09 ; $6670
 	farcall FarPtr_0a_20 ; $6672
 	ld a, $08 ; $6675
@@ -3744,7 +3744,7 @@ Label_10_6512:
 	ld a, $09 ; $667c
 	ld bc, $1e00 ; $667e
 	ld de, $3300 ; $6681
-	farcall FarPtr_0a_24 ; $6684
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6684
 	ld a, $09 ; $6687
 	farcall FarPtr_0a_20 ; $6689
 	ld a, $09 ; $668c
@@ -3753,7 +3753,7 @@ Label_10_6512:
 	ld a, $08 ; $6693
 	ld b, a ; $6695
 	ld a, $09 ; $6696
-	farcall FarPtr_0a_32 ; $6698
+	farcall FarPtr_FaceActorsTowardEachOther ; $6698
 	ld a, $09 ; $669b
 	farcall FarPtr_0a_08 ; $669d
 	jr Label_10_66c6 ; $66a0
@@ -3761,26 +3761,26 @@ Label_10_66a2:
 	ld a, $05 ; $66a2
 	ld bc, $2180 ; $66a4
 	ld de, $3100 ; $66a7
-	farcall FarPtr_0a_22 ; $66aa
+	farcall FarPtr_ScriptSetActorPosition ; $66aa
 	sound $97 ; $66ad
 	push af ; $66af
 	ld a, $1e ; $66b0
-	farcall FarPtr_0a_04 ; $66b2
+	farcall FarPtr_WaitScriptFrames ; $66b2
 	pop af ; $66b5
 	ld a, $08 ; $66b6
 	farcall FarPtr_0a_08 ; $66b8
 	ld a, $05 ; $66bb
 	ld bc, $3f00 ; $66bd
 	ld de, $3f00 ; $66c0
-	farcall FarPtr_0a_22 ; $66c3
+	farcall FarPtr_ScriptSetActorPosition ; $66c3
 Label_10_66c6:
 	ld a, $08 ; $66c6
 	ld b, a ; $66c8
 	ld a, $07 ; $66c9
-	farcall FarPtr_0a_30 ; $66cb
+	farcall FarPtr_FaceActorTowardActor ; $66cb
 	push af ; $66ce
 	ld a, $01 ; $66cf
-	farcall FarPtr_0a_04 ; $66d1
+	farcall FarPtr_WaitScriptFrames ; $66d1
 	pop af ; $66d4
 	ld a, $07 ; $66d5
 	ld b, $01 ; $66d7
@@ -3788,13 +3788,13 @@ Label_10_66c6:
 	ld a, $07 ; $66dc
 	ld bc, $2100 ; $66de
 	ld de, $3300 ; $66e1
-	farcall FarPtr_0a_24 ; $66e4
+	farcall FarPtr_ScriptSetActorMoveTarget ; $66e4
 	ld a, $07 ; $66e7
 	farcall FarPtr_0a_20 ; $66e9
 	ld a, $07 ; $66ec
 	ld bc, $2200 ; $66ee
 	ld de, $3300 ; $66f1
-	farcall FarPtr_0a_24 ; $66f4
+	farcall FarPtr_ScriptSetActorMoveTarget ; $66f4
 	ld a, $07 ; $66f7
 	farcall FarPtr_0a_20 ; $66f9
 	ld a, $07 ; $66fc
@@ -3803,7 +3803,7 @@ Label_10_66c6:
 	ld a, $08 ; $6703
 	ld b, a ; $6705
 	ld a, $07 ; $6706
-	farcall FarPtr_0a_32 ; $6708
+	farcall FarPtr_FaceActorsTowardEachOther ; $6708
 	ld a, $08 ; $670b
 	ld d, $02 ; $670d
 	farcall FarPtr_0a_34 ; $670f
@@ -3812,10 +3812,10 @@ Label_10_66c6:
 	ld a, $08 ; $6717
 	ld b, a ; $6719
 	ld a, $09 ; $671a
-	farcall FarPtr_0a_30 ; $671c
+	farcall FarPtr_FaceActorTowardActor ; $671c
 	push af ; $671f
 	ld a, $01 ; $6720
-	farcall FarPtr_0a_04 ; $6722
+	farcall FarPtr_WaitScriptFrames ; $6722
 	pop af ; $6725
 	ld a, $09 ; $6726
 	ld b, $01 ; $6728
@@ -3823,13 +3823,13 @@ Label_10_66c6:
 	ld a, $09 ; $672d
 	ld bc, $1f00 ; $672f
 	ld de, $3300 ; $6732
-	farcall FarPtr_0a_24 ; $6735
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6735
 	ld a, $09 ; $6738
 	farcall FarPtr_0a_20 ; $673a
 	ld a, $09 ; $673d
 	ld bc, $1e00 ; $673f
 	ld de, $3300 ; $6742
-	farcall FarPtr_0a_24 ; $6745
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6745
 	ld a, $09 ; $6748
 	farcall FarPtr_0a_20 ; $674a
 	ld a, $09 ; $674d
@@ -3838,7 +3838,7 @@ Label_10_66c6:
 	ld a, $08 ; $6754
 	ld b, a ; $6756
 	ld a, $09 ; $6757
-	farcall FarPtr_0a_32 ; $6759
+	farcall FarPtr_FaceActorsTowardEachOther ; $6759
 	ld a, $08 ; $675c
 	ld d, $02 ; $675e
 	farcall FarPtr_0a_34 ; $6760
@@ -3855,41 +3855,41 @@ Label_10_66c6:
 	ld a, $06 ; $677b
 	ld bc, $1e00 ; $677d
 	ld de, $2f00 ; $6780
-	farcall FarPtr_0a_24 ; $6783
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6783
 	ld a, $06 ; $6786
 	farcall FarPtr_0a_20 ; $6788
 	ld a, $06 ; $678b
 	ld b, $40 ; $678d
-	farcall FarPtr_0a_2e ; $678f
+	farcall FarPtr_SetActorFacing ; $678f
 	push af ; $6792
 	ld a, $1e ; $6793
-	farcall FarPtr_0a_04 ; $6795
+	farcall FarPtr_WaitScriptFrames ; $6795
 	pop af ; $6798
 	ld a, $06 ; $6799
 	ld bc, $2200 ; $679b
 	ld de, $2f00 ; $679e
-	farcall FarPtr_0a_24 ; $67a1
+	farcall FarPtr_ScriptSetActorMoveTarget ; $67a1
 	ld a, $06 ; $67a4
 	farcall FarPtr_0a_20 ; $67a6
 	ld a, $06 ; $67a9
 	ld b, $40 ; $67ab
-	farcall FarPtr_0a_2e ; $67ad
+	farcall FarPtr_SetActorFacing ; $67ad
 	push af ; $67b0
 	ld a, $1e ; $67b1
-	farcall FarPtr_0a_04 ; $67b3
+	farcall FarPtr_WaitScriptFrames ; $67b3
 	pop af ; $67b6
 	ld a, $06 ; $67b7
 	ld bc, $2000 ; $67b9
 	ld de, $2f00 ; $67bc
-	farcall FarPtr_0a_24 ; $67bf
+	farcall FarPtr_ScriptSetActorMoveTarget ; $67bf
 	ld a, $06 ; $67c2
 	farcall FarPtr_0a_20 ; $67c4
 	ld a, $06 ; $67c7
 	ld b, $40 ; $67c9
-	farcall FarPtr_0a_2e ; $67cb
+	farcall FarPtr_SetActorFacing ; $67cb
 	push af ; $67ce
 	ld a, $0a ; $67cf
-	farcall FarPtr_0a_04 ; $67d1
+	farcall FarPtr_WaitScriptFrames ; $67d1
 	pop af ; $67d4
 	ld a, $06 ; $67d5
 	ld d, $02 ; $67d7
@@ -3898,20 +3898,20 @@ Label_10_66c6:
 	farcall FarPtr_0a_36 ; $67de
 	ld a, $07 ; $67e1
 	ld b, $c0 ; $67e3
-	farcall FarPtr_0a_2e ; $67e5
+	farcall FarPtr_SetActorFacing ; $67e5
 	ld a, $08 ; $67e8
 	ld b, $c0 ; $67ea
-	farcall FarPtr_0a_2e ; $67ec
+	farcall FarPtr_SetActorFacing ; $67ec
 	ld a, $09 ; $67ef
 	ld b, $c0 ; $67f1
-	farcall FarPtr_0a_2e ; $67f3
+	farcall FarPtr_SetActorFacing ; $67f3
 	ld hl, $01e2 ; $67f6
 	farcall FarPtr_0a_0e ; $67f9
 	ld a, $06 ; $67fc
 	farcall FarPtr_0a_08 ; $67fe
 	ld d, $53 ; $6801
 	ld a, $03 ; $6803
-	farcall FarPtr_0a_16 ; $6805
+	farcall FarPtr_GetActorStateAddr ; $6805
 	ld c, l ; $6808
 	ld b, h ; $6809
 	farcall FarPtr_04_2c ; $680a
@@ -3920,7 +3920,7 @@ Label_10_66c6:
 	farcall FarPtr_0a_34 ; $6811
 	ld d, $53 ; $6814
 	ld a, $05 ; $6816
-	farcall FarPtr_0a_16 ; $6818
+	farcall FarPtr_GetActorStateAddr ; $6818
 	ld c, l ; $681b
 	ld b, h ; $681c
 	farcall FarPtr_04_2c ; $681d
@@ -3930,79 +3930,79 @@ Label_10_66c6:
 	ld a, $03 ; $6827
 	ld bc, $1f80 ; $6829
 	ld de, $3100 ; $682c
-	farcall FarPtr_0a_22 ; $682f
+	farcall FarPtr_ScriptSetActorPosition ; $682f
 	sound $96 ; $6832
 	push af ; $6834
 	ld a, $28 ; $6835
-	farcall FarPtr_0a_04 ; $6837
+	farcall FarPtr_WaitScriptFrames ; $6837
 	pop af ; $683a
 	ld a, $04 ; $683b
 	ld bc, $2180 ; $683d
 	ld de, $3100 ; $6840
-	farcall FarPtr_0a_22 ; $6843
+	farcall FarPtr_ScriptSetActorPosition ; $6843
 	sound $96 ; $6846
 	push af ; $6848
 	ld a, $28 ; $6849
-	farcall FarPtr_0a_04 ; $684b
+	farcall FarPtr_WaitScriptFrames ; $684b
 	pop af ; $684e
 	ld a, $03 ; $684f
 	ld bc, $3f00 ; $6851
 	ld de, $3f00 ; $6854
-	farcall FarPtr_0a_22 ; $6857
+	farcall FarPtr_ScriptSetActorPosition ; $6857
 	ld a, $05 ; $685a
 	ld bc, $2380 ; $685c
 	ld de, $3100 ; $685f
-	farcall FarPtr_0a_22 ; $6862
+	farcall FarPtr_ScriptSetActorPosition ; $6862
 	sound $96 ; $6865
 	push af ; $6867
 	ld a, $28 ; $6868
-	farcall FarPtr_0a_04 ; $686a
+	farcall FarPtr_WaitScriptFrames ; $686a
 	pop af ; $686d
 	ld a, $04 ; $686e
 	ld bc, $3f00 ; $6870
 	ld de, $3f00 ; $6873
-	farcall FarPtr_0a_22 ; $6876
+	farcall FarPtr_ScriptSetActorPosition ; $6876
 	push af ; $6879
 	ld a, $28 ; $687a
-	farcall FarPtr_0a_04 ; $687c
+	farcall FarPtr_WaitScriptFrames ; $687c
 	pop af ; $687f
 	ld a, $05 ; $6880
 	ld bc, $3f00 ; $6882
 	ld de, $3f00 ; $6885
-	farcall FarPtr_0a_22 ; $6888
+	farcall FarPtr_ScriptSetActorPosition ; $6888
 	ld a, $07 ; $688b
 	ld b, $40 ; $688d
-	farcall FarPtr_0a_2e ; $688f
+	farcall FarPtr_SetActorFacing ; $688f
 	ld a, $08 ; $6892
 	ld b, $40 ; $6894
-	farcall FarPtr_0a_2e ; $6896
+	farcall FarPtr_SetActorFacing ; $6896
 	ld a, $09 ; $6899
 	ld b, $40 ; $689b
-	farcall FarPtr_0a_2e ; $689d
+	farcall FarPtr_SetActorFacing ; $689d
 	push af ; $68a0
 	ld a, $78 ; $68a1
-	farcall FarPtr_0a_04 ; $68a3
+	farcall FarPtr_WaitScriptFrames ; $68a3
 	pop af ; $68a6
 	ld a, $07 ; $68a7
 	ld b, $c0 ; $68a9
-	farcall FarPtr_0a_2e ; $68ab
+	farcall FarPtr_SetActorFacing ; $68ab
 	ld a, $08 ; $68ae
 	ld b, $c0 ; $68b0
-	farcall FarPtr_0a_2e ; $68b2
+	farcall FarPtr_SetActorFacing ; $68b2
 	ld a, $09 ; $68b5
 	ld b, $c0 ; $68b7
-	farcall FarPtr_0a_2e ; $68b9
+	farcall FarPtr_SetActorFacing ; $68b9
 	push af ; $68bc
 	ld a, $28 ; $68bd
-	farcall FarPtr_0a_04 ; $68bf
+	farcall FarPtr_WaitScriptFrames ; $68bf
 	pop af ; $68c2
 	ld a, $07 ; $68c3
 	ld b, a ; $68c5
 	ld a, $08 ; $68c6
-	farcall FarPtr_0a_30 ; $68c8
+	farcall FarPtr_FaceActorTowardActor ; $68c8
 	push af ; $68cb
 	ld a, $01 ; $68cc
-	farcall FarPtr_0a_04 ; $68ce
+	farcall FarPtr_WaitScriptFrames ; $68ce
 	pop af ; $68d1
 	ld a, $08 ; $68d2
 	ld d, $02 ; $68d4
@@ -4012,19 +4012,19 @@ Label_10_66c6:
 	ld a, $05 ; $68de
 	ld bc, $2380 ; $68e0
 	ld de, $3100 ; $68e3
-	farcall FarPtr_0a_22 ; $68e6
+	farcall FarPtr_ScriptSetActorPosition ; $68e6
 	sound $96 ; $68e9
 	push af ; $68eb
 	ld a, $3c ; $68ec
-	farcall FarPtr_0a_04 ; $68ee
+	farcall FarPtr_WaitScriptFrames ; $68ee
 	pop af ; $68f1
 	ld a, $09 ; $68f2
 	ld b, a ; $68f4
 	ld a, $08 ; $68f5
-	farcall FarPtr_0a_30 ; $68f7
+	farcall FarPtr_FaceActorTowardActor ; $68f7
 	push af ; $68fa
 	ld a, $01 ; $68fb
-	farcall FarPtr_0a_04 ; $68fd
+	farcall FarPtr_WaitScriptFrames ; $68fd
 	pop af ; $6900
 	ld a, $08 ; $6901
 	ld d, $02 ; $6903
@@ -4034,11 +4034,11 @@ Label_10_66c6:
 	ld a, $03 ; $690d
 	ld bc, $1f80 ; $690f
 	ld de, $3100 ; $6912
-	farcall FarPtr_0a_22 ; $6915
+	farcall FarPtr_ScriptSetActorPosition ; $6915
 	sound $96 ; $6918
 	push af ; $691a
 	ld a, $3c ; $691b
-	farcall FarPtr_0a_04 ; $691d
+	farcall FarPtr_WaitScriptFrames ; $691d
 	pop af ; $6920
 	test_flag $05, 7 ; $6921
 	jp z, Label_10_69c0 ; $6924
@@ -4047,118 +4047,118 @@ Label_10_66c6:
 	ld a, $02 ; $692c
 	ld bc, $2d00 ; $692e
 	ld de, $3b00 ; $6931
-	farcall FarPtr_0a_22 ; $6934
+	farcall FarPtr_ScriptSetActorPosition ; $6934
 	ld a, $00 ; $6937
 	ld bc, $2100 ; $6939
 	ld de, $3b00 ; $693c
-	farcall FarPtr_0a_24 ; $693f
+	farcall FarPtr_ScriptSetActorMoveTarget ; $693f
 	ld a, $02 ; $6942
 	ld bc, $2300 ; $6944
 	ld de, $3b00 ; $6947
-	farcall FarPtr_0a_24 ; $694a
+	farcall FarPtr_ScriptSetActorMoveTarget ; $694a
 	ld a, $02 ; $694d
 	farcall FarPtr_0a_20 ; $694f
 	push af ; $6952
 	ld a, $05 ; $6953
-	farcall FarPtr_0a_04 ; $6955
+	farcall FarPtr_WaitScriptFrames ; $6955
 	pop af ; $6958
 	ld a, $00 ; $6959
 	ld b, $c0 ; $695b
-	farcall FarPtr_0a_2e ; $695d
+	farcall FarPtr_SetActorFacing ; $695d
 	call Func_10_7339 ; $6960
 	ld a, $00 ; $6963
 	ld bc, $2100 ; $6965
 	ld de, $3500 ; $6968
-	farcall FarPtr_0a_24 ; $696b
+	farcall FarPtr_ScriptSetActorMoveTarget ; $696b
 	ld a, $02 ; $696e
 	ld bc, $2100 ; $6970
 	ld de, $3b00 ; $6973
-	farcall FarPtr_0a_24 ; $6976
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6976
 	ld a, $02 ; $6979
 	farcall FarPtr_0a_20 ; $697b
 	ld a, $00 ; $697e
 	ld bc, $1f00 ; $6980
 	ld de, $3500 ; $6983
-	farcall FarPtr_0a_24 ; $6986
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6986
 	ld a, $02 ; $6989
 	ld bc, $2100 ; $698b
 	ld de, $3500 ; $698e
-	farcall FarPtr_0a_24 ; $6991
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6991
 	ld a, $02 ; $6994
 	farcall FarPtr_0a_20 ; $6996
 	ld a, $02 ; $6999
 	ld bc, $2100 ; $699b
 	ld de, $3500 ; $699e
-	farcall FarPtr_0a_24 ; $69a1
+	farcall FarPtr_ScriptSetActorMoveTarget ; $69a1
 	ld a, $02 ; $69a4
 	farcall FarPtr_0a_20 ; $69a6
 	ld a, $00 ; $69a9
 	ld b, $c0 ; $69ab
-	farcall FarPtr_0a_2e ; $69ad
+	farcall FarPtr_SetActorFacing ; $69ad
 	ld a, $02 ; $69b0
 	ld b, $c0 ; $69b2
-	farcall FarPtr_0a_2e ; $69b4
+	farcall FarPtr_SetActorFacing ; $69b4
 	push af ; $69b7
 	ld a, $01 ; $69b8
-	farcall FarPtr_0a_04 ; $69ba
+	farcall FarPtr_WaitScriptFrames ; $69ba
 	pop af ; $69bd
 	jr Label_10_6a08 ; $69be
 Label_10_69c0:
 	ld a, $00 ; $69c0
 	ld bc, $2100 ; $69c2
 	ld de, $3b00 ; $69c5
-	farcall FarPtr_0a_24 ; $69c8
+	farcall FarPtr_ScriptSetActorMoveTarget ; $69c8
 	ld a, $00 ; $69cb
 	farcall FarPtr_0a_20 ; $69cd
 	ld a, $00 ; $69d0
 	ld b, $c0 ; $69d2
-	farcall FarPtr_0a_2e ; $69d4
+	farcall FarPtr_SetActorFacing ; $69d4
 	call Func_10_7339 ; $69d7
 	ld a, $00 ; $69da
 	ld bc, $2100 ; $69dc
 	ld de, $3500 ; $69df
-	farcall FarPtr_0a_24 ; $69e2
+	farcall FarPtr_ScriptSetActorMoveTarget ; $69e2
 	ld a, $00 ; $69e5
 	farcall FarPtr_0a_20 ; $69e7
 	ld a, $00 ; $69ea
 	ld bc, $2000 ; $69ec
 	ld de, $3500 ; $69ef
-	farcall FarPtr_0a_24 ; $69f2
+	farcall FarPtr_ScriptSetActorMoveTarget ; $69f2
 	ld a, $00 ; $69f5
 	farcall FarPtr_0a_20 ; $69f7
 	ld a, $00 ; $69fa
 	ld b, $c0 ; $69fc
-	farcall FarPtr_0a_2e ; $69fe
+	farcall FarPtr_SetActorFacing ; $69fe
 	push af ; $6a01
 	ld a, $01 ; $6a02
-	farcall FarPtr_0a_04 ; $6a04
+	farcall FarPtr_WaitScriptFrames ; $6a04
 	pop af ; $6a07
 Label_10_6a08:
 	call Func_10_736f ; $6a08
 	ld a, $03 ; $6a0b
 	ld bc, $3f00 ; $6a0d
 	ld de, $3f00 ; $6a10
-	farcall FarPtr_0a_22 ; $6a13
+	farcall FarPtr_ScriptSetActorPosition ; $6a13
 	ld a, $05 ; $6a16
 	ld bc, $3f00 ; $6a18
 	ld de, $3f00 ; $6a1b
-	farcall FarPtr_0a_22 ; $6a1e
+	farcall FarPtr_ScriptSetActorPosition ; $6a1e
 	push af ; $6a21
 	ld a, $0a ; $6a22
-	farcall FarPtr_0a_04 ; $6a24
+	farcall FarPtr_WaitScriptFrames ; $6a24
 	pop af ; $6a27
 	ld a, $07 ; $6a28
 	ld b, $40 ; $6a2a
-	farcall FarPtr_0a_2e ; $6a2c
+	farcall FarPtr_SetActorFacing ; $6a2c
 	ld a, $08 ; $6a2f
 	ld b, $40 ; $6a31
-	farcall FarPtr_0a_2e ; $6a33
+	farcall FarPtr_SetActorFacing ; $6a33
 	ld a, $09 ; $6a36
 	ld b, $40 ; $6a38
-	farcall FarPtr_0a_2e ; $6a3a
+	farcall FarPtr_SetActorFacing ; $6a3a
 	push af ; $6a3d
 	ld a, $01 ; $6a3e
-	farcall FarPtr_0a_04 ; $6a40
+	farcall FarPtr_WaitScriptFrames ; $6a40
 	pop af ; $6a43
 	ld a, $06 ; $6a44
 	ld d, $02 ; $6a46
@@ -4176,55 +4176,55 @@ Label_10_6a08:
 	farcall FarPtr_0a_36 ; $6a62
 	push af ; $6a65
 	ld a, $1e ; $6a66
-	farcall FarPtr_0a_04 ; $6a68
+	farcall FarPtr_WaitScriptFrames ; $6a68
 	pop af ; $6a6b
 	ld a, $08 ; $6a6c
 	ld bc, $2300 ; $6a6e
 	ld de, $3300 ; $6a71
-	farcall FarPtr_0a_24 ; $6a74
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6a74
 	ld a, $07 ; $6a77
 	ld bc, $2500 ; $6a79
 	ld de, $3300 ; $6a7c
-	farcall FarPtr_0a_24 ; $6a7f
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6a7f
 	ld a, $09 ; $6a82
 	ld bc, $1d00 ; $6a84
 	ld de, $3500 ; $6a87
-	farcall FarPtr_0a_24 ; $6a8a
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6a8a
 	ld a, $09 ; $6a8d
 	farcall FarPtr_0a_20 ; $6a8f
 	ld a, $09 ; $6a92
 	ld b, $00 ; $6a94
-	farcall FarPtr_0a_2e ; $6a96
+	farcall FarPtr_SetActorFacing ; $6a96
 	ld a, $08 ; $6a99
 	ld bc, $2300 ; $6a9b
 	ld de, $3500 ; $6a9e
-	farcall FarPtr_0a_24 ; $6aa1
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6aa1
 	ld a, $07 ; $6aa4
 	ld bc, $2500 ; $6aa6
 	ld de, $3500 ; $6aa9
-	farcall FarPtr_0a_24 ; $6aac
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6aac
 	ld a, $07 ; $6aaf
 	farcall FarPtr_0a_20 ; $6ab1
 	ld a, $08 ; $6ab4
 	ld b, $80 ; $6ab6
-	farcall FarPtr_0a_2e ; $6ab8
+	farcall FarPtr_SetActorFacing ; $6ab8
 	ld a, $07 ; $6abb
 	ld b, $80 ; $6abd
-	farcall FarPtr_0a_2e ; $6abf
+	farcall FarPtr_SetActorFacing ; $6abf
 	push af ; $6ac2
 	ld a, $0a ; $6ac3
-	farcall FarPtr_0a_04 ; $6ac5
+	farcall FarPtr_WaitScriptFrames ; $6ac5
 	pop af ; $6ac8
 	test_flag $05, 7 ; $6ac9
 	jp z, Label_10_6b73 ; $6acc
 	push af ; $6acf
 	ld a, $3c ; $6ad0
-	farcall FarPtr_0a_04 ; $6ad2
+	farcall FarPtr_WaitScriptFrames ; $6ad2
 	pop af ; $6ad5
 	ld a, $02 ; $6ad6
 	ld b, a ; $6ad8
 	ld a, $00 ; $6ad9
-	farcall FarPtr_0a_30 ; $6adb
+	farcall FarPtr_FaceActorTowardActor ; $6adb
 	ld a, $00 ; $6ade
 	ld d, $02 ; $6ae0
 	farcall FarPtr_0a_34 ; $6ae2
@@ -4232,15 +4232,15 @@ Label_10_6a08:
 	farcall FarPtr_0a_36 ; $6ae7
 	push af ; $6aea
 	ld a, $14 ; $6aeb
-	farcall FarPtr_0a_04 ; $6aed
+	farcall FarPtr_WaitScriptFrames ; $6aed
 	pop af ; $6af0
 	ld a, $00 ; $6af1
 	ld b, a ; $6af3
 	ld a, $02 ; $6af4
-	farcall FarPtr_0a_30 ; $6af6
+	farcall FarPtr_FaceActorTowardActor ; $6af6
 	push af ; $6af9
 	ld a, $01 ; $6afa
-	farcall FarPtr_0a_04 ; $6afc
+	farcall FarPtr_WaitScriptFrames ; $6afc
 	pop af ; $6aff
 	ld a, $02 ; $6b00
 	ld d, $03 ; $6b02
@@ -4249,14 +4249,14 @@ Label_10_6a08:
 	farcall FarPtr_0a_36 ; $6b09
 	push af ; $6b0c
 	ld a, $14 ; $6b0d
-	farcall FarPtr_0a_04 ; $6b0f
+	farcall FarPtr_WaitScriptFrames ; $6b0f
 	pop af ; $6b12
 	ld a, $00 ; $6b13
 	ld b, $c0 ; $6b15
-	farcall FarPtr_0a_2e ; $6b17
+	farcall FarPtr_SetActorFacing ; $6b17
 	ld a, $02 ; $6b1a
 	ld b, $c0 ; $6b1c
-	farcall FarPtr_0a_2e ; $6b1e
+	farcall FarPtr_SetActorFacing ; $6b1e
 	ld a, $07 ; $6b21
 	ld d, $03 ; $6b23
 	farcall FarPtr_0a_34 ; $6b25
@@ -4270,7 +4270,7 @@ Label_10_6a08:
 	farcall FarPtr_0a_36 ; $6b38
 	push af ; $6b3b
 	ld a, $28 ; $6b3c
-	farcall FarPtr_0a_04 ; $6b3e
+	farcall FarPtr_WaitScriptFrames ; $6b3e
 	pop af ; $6b41
 	ld a, $00 ; $6b42
 	ld d, $03 ; $6b44
@@ -4283,11 +4283,11 @@ Label_10_6a08:
 	ld a, $00 ; $6b55
 	ld bc, $1f00 ; $6b57
 	ld de, $3200 ; $6b5a
-	farcall FarPtr_0a_24 ; $6b5d
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6b5d
 	ld a, $02 ; $6b60
 	ld bc, $2100 ; $6b62
 	ld de, $3200 ; $6b65
-	farcall FarPtr_0a_24 ; $6b68
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6b68
 	ld a, $02 ; $6b6b
 	farcall FarPtr_0a_20 ; $6b6d
 	jp Label_10_6c02 ; $6b70
@@ -4295,31 +4295,31 @@ Label_10_6b73:
 	ld a, $04 ; $6b73
 	ld bc, $2180 ; $6b75
 	ld de, $3300 ; $6b78
-	farcall FarPtr_0a_22 ; $6b7b
+	farcall FarPtr_ScriptSetActorPosition ; $6b7b
 	sound $96 ; $6b7e
 	push af ; $6b80
 	ld a, $50 ; $6b81
-	farcall FarPtr_0a_04 ; $6b83
+	farcall FarPtr_WaitScriptFrames ; $6b83
 	pop af ; $6b86
 	ld a, $04 ; $6b87
 	ld bc, $3f00 ; $6b89
 	ld de, $3f00 ; $6b8c
-	farcall FarPtr_0a_22 ; $6b8f
+	farcall FarPtr_ScriptSetActorPosition ; $6b8f
 	ld a, $09 ; $6b92
 	ld b, a ; $6b94
 	ld a, $00 ; $6b95
-	farcall FarPtr_0a_30 ; $6b97
+	farcall FarPtr_FaceActorTowardActor ; $6b97
 	push af ; $6b9a
 	ld a, $28 ; $6b9b
-	farcall FarPtr_0a_04 ; $6b9d
+	farcall FarPtr_WaitScriptFrames ; $6b9d
 	pop af ; $6ba0
 	ld a, $00 ; $6ba1
 	ld b, a ; $6ba3
 	ld a, $09 ; $6ba4
-	farcall FarPtr_0a_30 ; $6ba6
+	farcall FarPtr_FaceActorTowardActor ; $6ba6
 	push af ; $6ba9
 	ld a, $01 ; $6baa
-	farcall FarPtr_0a_04 ; $6bac
+	farcall FarPtr_WaitScriptFrames ; $6bac
 	pop af ; $6baf
 	ld a, $09 ; $6bb0
 	ld d, $03 ; $6bb2
@@ -4328,11 +4328,11 @@ Label_10_6b73:
 	farcall FarPtr_0a_36 ; $6bb9
 	push af ; $6bbc
 	ld a, $14 ; $6bbd
-	farcall FarPtr_0a_04 ; $6bbf
+	farcall FarPtr_WaitScriptFrames ; $6bbf
 	pop af ; $6bc2
 	ld a, $00 ; $6bc3
 	ld b, $c0 ; $6bc5
-	farcall FarPtr_0a_2e ; $6bc7
+	farcall FarPtr_SetActorFacing ; $6bc7
 	ld a, $07 ; $6bca
 	ld d, $03 ; $6bcc
 	farcall FarPtr_0a_34 ; $6bce
@@ -4346,7 +4346,7 @@ Label_10_6b73:
 	farcall FarPtr_0a_36 ; $6be1
 	push af ; $6be4
 	ld a, $28 ; $6be5
-	farcall FarPtr_0a_04 ; $6be7
+	farcall FarPtr_WaitScriptFrames ; $6be7
 	pop af ; $6bea
 	ld a, $00 ; $6beb
 	ld d, $03 ; $6bed
@@ -4354,37 +4354,37 @@ Label_10_6b73:
 	ld a, $00 ; $6bf2
 	ld bc, $2000 ; $6bf4
 	ld de, $3200 ; $6bf7
-	farcall FarPtr_0a_24 ; $6bfa
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6bfa
 	ld a, $00 ; $6bfd
 	farcall FarPtr_0a_20 ; $6bff
 Label_10_6c02:
 	push af ; $6c02
 	ld a, $01 ; $6c03
-	farcall FarPtr_0a_04 ; $6c05
+	farcall FarPtr_WaitScriptFrames ; $6c05
 	pop af ; $6c08
 	ld a, $09 ; $6c09
 	ld bc, $1e00 ; $6c0b
 	ld de, $3500 ; $6c0e
-	farcall FarPtr_0a_24 ; $6c11
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6c11
 	ld a, $08 ; $6c14
 	ld bc, $2000 ; $6c16
 	ld de, $3500 ; $6c19
-	farcall FarPtr_0a_24 ; $6c1c
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6c1c
 	ld a, $07 ; $6c1f
 	ld bc, $2200 ; $6c21
 	ld de, $3500 ; $6c24
-	farcall FarPtr_0a_24 ; $6c27
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6c27
 	ld a, $07 ; $6c2a
 	farcall FarPtr_0a_20 ; $6c2c
 	ld a, $09 ; $6c2f
 	ld b, $c0 ; $6c31
-	farcall FarPtr_0a_2e ; $6c33
+	farcall FarPtr_SetActorFacing ; $6c33
 	ld a, $08 ; $6c36
 	ld b, $c0 ; $6c38
-	farcall FarPtr_0a_2e ; $6c3a
+	farcall FarPtr_SetActorFacing ; $6c3a
 	ld a, $07 ; $6c3d
 	ld b, $c0 ; $6c3f
-	farcall FarPtr_0a_2e ; $6c41
+	farcall FarPtr_SetActorFacing ; $6c41
 	ld a, $06 ; $6c44
 	ld d, $03 ; $6c46
 	farcall FarPtr_0a_34 ; $6c48
@@ -4417,7 +4417,7 @@ Label_10_6c60:
 	farcall FarPtr_0a_36 ; $6c82
 	ld d, $51 ; $6c85
 	ld a, $05 ; $6c87
-	farcall FarPtr_0a_16 ; $6c89
+	farcall FarPtr_GetActorStateAddr ; $6c89
 	ld c, l ; $6c8c
 	ld b, h ; $6c8d
 	farcall FarPtr_04_2c ; $6c8e
@@ -4427,18 +4427,18 @@ Label_10_6c60:
 	ld a, $05 ; $6c98
 	ld bc, $2380 ; $6c9a
 	ld de, $3300 ; $6c9d
-	farcall FarPtr_0a_22 ; $6ca0
+	farcall FarPtr_ScriptSetActorPosition ; $6ca0
 	sound $97 ; $6ca3
 	push af ; $6ca5
 	ld a, $14 ; $6ca6
-	farcall FarPtr_0a_04 ; $6ca8
+	farcall FarPtr_WaitScriptFrames ; $6ca8
 	pop af ; $6cab
 	ld a, $07 ; $6cac
 	farcall FarPtr_0a_08 ; $6cae
 	ld a, $05 ; $6cb1
 	ld bc, $3f00 ; $6cb3
 	ld de, $3f00 ; $6cb6
-	farcall FarPtr_0a_22 ; $6cb9
+	farcall FarPtr_ScriptSetActorPosition ; $6cb9
 	ld a, $06 ; $6cbc
 	ld d, $03 ; $6cbe
 	farcall FarPtr_0a_34 ; $6cc0
@@ -4449,7 +4449,7 @@ Label_10_6c60:
 	ld a, $08 ; $6ccd
 	ld b, a ; $6ccf
 	ld a, $07 ; $6cd0
-	farcall FarPtr_0a_32 ; $6cd2
+	farcall FarPtr_FaceActorsTowardEachOther ; $6cd2
 	ld a, $07 ; $6cd5
 	ld d, $03 ; $6cd7
 	farcall FarPtr_0a_34 ; $6cd9
@@ -4460,12 +4460,12 @@ Label_10_6c60:
 	farcall FarPtr_0a_36 ; $6ce5
 	push af ; $6ce8
 	ld a, $28 ; $6ce9
-	farcall FarPtr_0a_04 ; $6ceb
+	farcall FarPtr_WaitScriptFrames ; $6ceb
 	pop af ; $6cee
 	ld a, $08 ; $6cef
 	ld b, a ; $6cf1
 	ld a, $09 ; $6cf2
-	farcall FarPtr_0a_32 ; $6cf4
+	farcall FarPtr_FaceActorsTowardEachOther ; $6cf4
 	ld a, $09 ; $6cf7
 	ld d, $03 ; $6cf9
 	farcall FarPtr_0a_34 ; $6cfb
@@ -4476,20 +4476,20 @@ Label_10_6c60:
 	farcall FarPtr_0a_36 ; $6d07
 	push af ; $6d0a
 	ld a, $28 ; $6d0b
-	farcall FarPtr_0a_04 ; $6d0d
+	farcall FarPtr_WaitScriptFrames ; $6d0d
 	pop af ; $6d10
 	ld a, $07 ; $6d11
 	ld b, $c0 ; $6d13
-	farcall FarPtr_0a_2e ; $6d15
+	farcall FarPtr_SetActorFacing ; $6d15
 	ld a, $08 ; $6d18
 	ld b, $c0 ; $6d1a
-	farcall FarPtr_0a_2e ; $6d1c
+	farcall FarPtr_SetActorFacing ; $6d1c
 	ld a, $09 ; $6d1f
 	ld b, $c0 ; $6d21
-	farcall FarPtr_0a_2e ; $6d23
+	farcall FarPtr_SetActorFacing ; $6d23
 	push af ; $6d26
 	ld a, $28 ; $6d27
-	farcall FarPtr_0a_04 ; $6d29
+	farcall FarPtr_WaitScriptFrames ; $6d29
 	pop af ; $6d2c
 	ld a, $09 ; $6d2d
 	ld d, $03 ; $6d2f
@@ -4504,11 +4504,11 @@ Label_10_6c60:
 	farcall FarPtr_0a_36 ; $6d44
 	push af ; $6d47
 	ld a, $3c ; $6d48
-	farcall FarPtr_0a_04 ; $6d4a
+	farcall FarPtr_WaitScriptFrames ; $6d4a
 	pop af ; $6d4d
 	ld d, $4d ; $6d4e
 	ld a, $05 ; $6d50
-	farcall FarPtr_0a_16 ; $6d52
+	farcall FarPtr_GetActorStateAddr ; $6d52
 	ld c, l ; $6d55
 	ld b, h ; $6d56
 	farcall FarPtr_04_2c ; $6d57
@@ -4518,23 +4518,23 @@ Label_10_6c60:
 	ld a, $05 ; $6d61
 	ld bc, $2180 ; $6d63
 	ld de, $2d80 ; $6d66
-	farcall FarPtr_0a_22 ; $6d69
+	farcall FarPtr_ScriptSetActorPosition ; $6d69
 	sound $98 ; $6d6c
 	push af ; $6d6e
 	ld a, $50 ; $6d6f
-	farcall FarPtr_0a_04 ; $6d71
+	farcall FarPtr_WaitScriptFrames ; $6d71
 	pop af ; $6d74
 	ld a, $05 ; $6d75
 	ld bc, $3f00 ; $6d77
 	ld de, $3f00 ; $6d7a
-	farcall FarPtr_0a_22 ; $6d7d
+	farcall FarPtr_ScriptSetActorPosition ; $6d7d
 	ld a, $06 ; $6d80
 	farcall FarPtr_0a_0a ; $6d82
 	farcall FarPtr_0a_12 ; $6d85
 	farcall FarPtr_0a_0c ; $6d88
 	push af ; $6d8b
 	ld a, $05 ; $6d8c
-	farcall FarPtr_0a_04 ; $6d8e
+	farcall FarPtr_WaitScriptFrames ; $6d8e
 	pop af ; $6d91
 	and a, a ; $6d92
 	jp z, Label_10_6eae ; $6d93
@@ -4550,101 +4550,101 @@ Label_10_6c60:
 	ld a, $08 ; $6dad
 	ld bc, $2000 ; $6daf
 	ld de, $3400 ; $6db2
-	farcall FarPtr_0a_24 ; $6db5
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6db5
 	ld a, $08 ; $6db8
 	farcall FarPtr_0a_20 ; $6dba
 	ld a, $08 ; $6dbd
 	ld b, a ; $6dbf
 	ld a, $00 ; $6dc0
-	farcall FarPtr_0a_30 ; $6dc2
+	farcall FarPtr_FaceActorTowardActor ; $6dc2
 	ld a, $08 ; $6dc5
 	ld b, a ; $6dc7
 	ld a, $02 ; $6dc8
-	farcall FarPtr_0a_30 ; $6dca
+	farcall FarPtr_FaceActorTowardActor ; $6dca
 	ld a, $08 ; $6dcd
 	farcall FarPtr_0a_08 ; $6dcf
 	push af ; $6dd2
 	ld a, $1e ; $6dd3
-	farcall FarPtr_0a_04 ; $6dd5
+	farcall FarPtr_WaitScriptFrames ; $6dd5
 	pop af ; $6dd8
 	ld a, $07 ; $6dd9
 	ld bc, $2200 ; $6ddb
 	ld de, $3400 ; $6dde
-	farcall FarPtr_0a_24 ; $6de1
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6de1
 	ld a, $07 ; $6de4
 	farcall FarPtr_0a_20 ; $6de6
 	ld a, $07 ; $6de9
 	ld b, a ; $6deb
 	ld a, $00 ; $6dec
-	farcall FarPtr_0a_30 ; $6dee
+	farcall FarPtr_FaceActorTowardActor ; $6dee
 	ld a, $07 ; $6df1
 	ld b, a ; $6df3
 	ld a, $02 ; $6df4
-	farcall FarPtr_0a_30 ; $6df6
+	farcall FarPtr_FaceActorTowardActor ; $6df6
 	ld a, $07 ; $6df9
 	farcall FarPtr_0a_08 ; $6dfb
 	push af ; $6dfe
 	ld a, $1e ; $6dff
-	farcall FarPtr_0a_04 ; $6e01
+	farcall FarPtr_WaitScriptFrames ; $6e01
 	pop af ; $6e04
 	ld a, $09 ; $6e05
 	ld bc, $1d00 ; $6e07
 	ld de, $3200 ; $6e0a
-	farcall FarPtr_0a_24 ; $6e0d
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6e0d
 	ld a, $09 ; $6e10
 	farcall FarPtr_0a_20 ; $6e12
 	ld a, $09 ; $6e15
 	ld b, a ; $6e17
 	ld a, $00 ; $6e18
-	farcall FarPtr_0a_32 ; $6e1a
+	farcall FarPtr_FaceActorsTowardEachOther ; $6e1a
 	ld a, $09 ; $6e1d
 	ld b, a ; $6e1f
 	ld a, $02 ; $6e20
-	farcall FarPtr_0a_30 ; $6e22
+	farcall FarPtr_FaceActorTowardActor ; $6e22
 	jr Label_10_6e87 ; $6e25
 Label_10_6e27:
 	ld a, $08 ; $6e27
 	ld bc, $2000 ; $6e29
 	ld de, $3400 ; $6e2c
-	farcall FarPtr_0a_24 ; $6e2f
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6e2f
 	ld a, $08 ; $6e32
 	farcall FarPtr_0a_20 ; $6e34
 	ld a, $08 ; $6e37
 	ld b, a ; $6e39
 	ld a, $00 ; $6e3a
-	farcall FarPtr_0a_30 ; $6e3c
+	farcall FarPtr_FaceActorTowardActor ; $6e3c
 	ld a, $08 ; $6e3f
 	farcall FarPtr_0a_08 ; $6e41
 	push af ; $6e44
 	ld a, $1e ; $6e45
-	farcall FarPtr_0a_04 ; $6e47
+	farcall FarPtr_WaitScriptFrames ; $6e47
 	pop af ; $6e4a
 	ld a, $07 ; $6e4b
 	ld bc, $2200 ; $6e4d
 	ld de, $3400 ; $6e50
-	farcall FarPtr_0a_24 ; $6e53
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6e53
 	ld a, $07 ; $6e56
 	farcall FarPtr_0a_20 ; $6e58
 	ld a, $07 ; $6e5b
 	ld b, a ; $6e5d
 	ld a, $00 ; $6e5e
-	farcall FarPtr_0a_30 ; $6e60
+	farcall FarPtr_FaceActorTowardActor ; $6e60
 	ld a, $07 ; $6e63
 	farcall FarPtr_0a_08 ; $6e65
 	push af ; $6e68
 	ld a, $1e ; $6e69
-	farcall FarPtr_0a_04 ; $6e6b
+	farcall FarPtr_WaitScriptFrames ; $6e6b
 	pop af ; $6e6e
 	ld a, $09 ; $6e6f
 	ld bc, $1e00 ; $6e71
 	ld de, $3200 ; $6e74
-	farcall FarPtr_0a_24 ; $6e77
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6e77
 	ld a, $09 ; $6e7a
 	farcall FarPtr_0a_20 ; $6e7c
 	ld a, $09 ; $6e7f
 	ld b, a ; $6e81
 	ld a, $00 ; $6e82
-	farcall FarPtr_0a_32 ; $6e84
+	farcall FarPtr_FaceActorsTowardEachOther ; $6e84
 Label_10_6e87:
 	ld a, $09 ; $6e87
 	ld d, $04 ; $6e89
@@ -4659,7 +4659,7 @@ Label_10_6e87:
 	farcall FarPtr_0a_0c ; $6ea1
 	push af ; $6ea4
 	ld a, $05 ; $6ea5
-	farcall FarPtr_0a_04 ; $6ea7
+	farcall FarPtr_WaitScriptFrames ; $6ea7
 	pop af ; $6eaa
 	and a, a ; $6eab
 	jr nz, Label_10_6e87 ; $6eac
@@ -4671,25 +4671,25 @@ Label_10_6eae:
 	farcall FarPtr_0a_36 ; $6eb7
 	ld a, $07 ; $6eba
 	ld b, $c0 ; $6ebc
-	farcall FarPtr_0a_2e ; $6ebe
+	farcall FarPtr_SetActorFacing ; $6ebe
 	ld a, $08 ; $6ec1
 	ld b, $c0 ; $6ec3
-	farcall FarPtr_0a_2e ; $6ec5
+	farcall FarPtr_SetActorFacing ; $6ec5
 	ld a, $09 ; $6ec8
 	ld b, $c0 ; $6eca
-	farcall FarPtr_0a_2e ; $6ecc
+	farcall FarPtr_SetActorFacing ; $6ecc
 	ld a, $00 ; $6ecf
 	ld b, $c0 ; $6ed1
-	farcall FarPtr_0a_2e ; $6ed3
+	farcall FarPtr_SetActorFacing ; $6ed3
 	test_flag $05, 7 ; $6ed6
 	jp z, Label_10_6ee3 ; $6ed9
 	ld a, $02 ; $6edc
 	ld b, $c0 ; $6ede
-	farcall FarPtr_0a_2e ; $6ee0
+	farcall FarPtr_SetActorFacing ; $6ee0
 Label_10_6ee3:
 	push af ; $6ee3
 	ld a, $14 ; $6ee4
-	farcall FarPtr_0a_04 ; $6ee6
+	farcall FarPtr_WaitScriptFrames ; $6ee6
 	pop af ; $6ee9
 	ld a, $07 ; $6eea
 	ld d, $03 ; $6eec
@@ -4720,7 +4720,7 @@ Label_10_6f0c:
 	call WaitFadeEnd ; $6f28
 	push af ; $6f2b
 	ld a, $32 ; $6f2c
-	farcall FarPtr_0a_04 ; $6f2e
+	farcall FarPtr_WaitScriptFrames ; $6f2e
 	pop af ; $6f31
 	ld a, $0a ; $6f32
 	ld [wStoryModeCurrentLocation], a ; $6f34
@@ -4756,20 +4756,20 @@ Label_10_6fcd:
 	ld a, $00 ; $6fea
 	ld bc, $1f00 ; $6fec
 	ld de, $3400 ; $6fef
-	farcall FarPtr_0a_22 ; $6ff2
+	farcall FarPtr_ScriptSetActorPosition ; $6ff2
 	ld a, $02 ; $6ff5
 	ld bc, $2100 ; $6ff7
 	ld de, $3400 ; $6ffa
-	farcall FarPtr_0a_22 ; $6ffd
+	farcall FarPtr_ScriptSetActorPosition ; $6ffd
 	ld a, $02 ; $7000
 	ld b, $c0 ; $7002
-	farcall FarPtr_0a_2e ; $7004
+	farcall FarPtr_SetActorFacing ; $7004
 	test_flag $07, 4 ; $7007
 	jr nz, Label_10_7029 ; $700a
 	ld a, $04 ; $700c
 	ld bc, $3f00 ; $700e
 	ld de, $3f00 ; $7011
-	farcall FarPtr_0a_22 ; $7014
+	farcall FarPtr_ScriptSetActorPosition ; $7014
 	jr Label_10_7029 ; $7017
 Label_10_7019:
 	test_flag $06, 5 ; $7019
@@ -4777,11 +4777,11 @@ Label_10_7019:
 	ld a, $05 ; $701e
 	ld bc, $3f00 ; $7020
 	ld de, $3f00 ; $7023
-	farcall FarPtr_0a_22 ; $7026
+	farcall FarPtr_ScriptSetActorPosition ; $7026
 Label_10_7029:
 	ld a, $00 ; $7029
 	ld b, $c0 ; $702b
-	farcall FarPtr_0a_2e ; $702d
+	farcall FarPtr_SetActorFacing ; $702d
 	xor a, a ; $7030
 	ld [$c2d5], a ; $7031
 	ld c, $04 ; $7034
@@ -4789,7 +4789,7 @@ Label_10_7029:
 	call WaitFadeEnd ; $7039
 	push af ; $703c
 	ld a, $3c ; $703d
-	farcall FarPtr_0a_04 ; $703f
+	farcall FarPtr_WaitScriptFrames ; $703f
 	pop af ; $7042
 	ld hl, $01f2 ; $7043
 	farcall FarPtr_0a_0e ; $7046
@@ -4810,7 +4810,7 @@ Label_10_7059:
 	farcall FarPtr_0a_0c ; $706b
 	push af ; $706e
 	ld a, $05 ; $706f
-	farcall FarPtr_0a_04 ; $7071
+	farcall FarPtr_WaitScriptFrames ; $7071
 	pop af ; $7074
 	and a, a ; $7075
 	jr nz, Label_10_7089 ; $7076
@@ -4830,7 +4830,7 @@ Label_10_7089:
 Label_10_7095:
 	push af ; $7095
 	ld a, $0a ; $7096
-	farcall FarPtr_0a_04 ; $7098
+	farcall FarPtr_WaitScriptFrames ; $7098
 	pop af ; $709b
 	ld a, $03 ; $709c
 	ld d, $03 ; $709e
@@ -4841,10 +4841,10 @@ Label_10_7095:
 	farcall FarPtr_0a_08 ; $70aa
 	ld a, $03 ; $70ad
 	ld b, $c0 ; $70af
-	farcall FarPtr_0a_2e ; $70b1
+	farcall FarPtr_SetActorFacing ; $70b1
 	push af ; $70b4
 	ld a, $50 ; $70b5
-	farcall FarPtr_0a_04 ; $70b7
+	farcall FarPtr_WaitScriptFrames ; $70b7
 	pop af ; $70ba
 	ld hl, $01f8 ; $70bb
 	farcall FarPtr_0a_0e ; $70be
@@ -4854,51 +4854,51 @@ Label_10_7095:
 	ld a, $06 ; $70ca
 	ld bc, $2080 ; $70cc
 	ld de, $3200 ; $70cf
-	farcall FarPtr_0a_22 ; $70d2
+	farcall FarPtr_ScriptSetActorPosition ; $70d2
 	ld a, $07 ; $70d5
 	ld bc, $2280 ; $70d7
 	ld de, $3200 ; $70da
-	farcall FarPtr_0a_22 ; $70dd
+	farcall FarPtr_ScriptSetActorPosition ; $70dd
 	sound $97 ; $70e0
 	push af ; $70e2
 	ld a, $50 ; $70e3
-	farcall FarPtr_0a_04 ; $70e5
+	farcall FarPtr_WaitScriptFrames ; $70e5
 	pop af ; $70e8
 	ld a, $06 ; $70e9
 	ld bc, $3f00 ; $70eb
 	ld de, $3f00 ; $70ee
-	farcall FarPtr_0a_22 ; $70f1
+	farcall FarPtr_ScriptSetActorPosition ; $70f1
 	ld a, $07 ; $70f4
 	ld bc, $3f00 ; $70f6
 	ld de, $3f00 ; $70f9
-	farcall FarPtr_0a_22 ; $70fc
+	farcall FarPtr_ScriptSetActorPosition ; $70fc
 	jr Label_10_7120 ; $70ff
 Label_10_7101:
 	ld a, $06 ; $7101
 	ld bc, $2180 ; $7103
 	ld de, $3200 ; $7106
-	farcall FarPtr_0a_22 ; $7109
+	farcall FarPtr_ScriptSetActorPosition ; $7109
 	sound $97 ; $710c
 	push af ; $710e
 	ld a, $50 ; $710f
-	farcall FarPtr_0a_04 ; $7111
+	farcall FarPtr_WaitScriptFrames ; $7111
 	pop af ; $7114
 	ld a, $06 ; $7115
 	ld bc, $3f00 ; $7117
 	ld de, $3f00 ; $711a
-	farcall FarPtr_0a_22 ; $711d
+	farcall FarPtr_ScriptSetActorPosition ; $711d
 Label_10_7120:
 	ld a, $03 ; $7120
 	ld b, $40 ; $7122
-	farcall FarPtr_0a_2e ; $7124
+	farcall FarPtr_SetActorFacing ; $7124
 	push af ; $7127
 	ld a, $01 ; $7128
-	farcall FarPtr_0a_04 ; $712a
+	farcall FarPtr_WaitScriptFrames ; $712a
 	pop af ; $712d
 	call Func_10_73ee ; $712e
 	push af ; $7131
 	ld a, $1e ; $7132
-	farcall FarPtr_0a_04 ; $7134
+	farcall FarPtr_WaitScriptFrames ; $7134
 	pop af ; $7137
 	ld a, $03 ; $7138
 	ld d, $03 ; $713a
@@ -4913,12 +4913,12 @@ Label_10_7120:
 	ld a, $03 ; $7151
 	ld bc, $2200 ; $7153
 	ld de, $3000 ; $7156
-	farcall FarPtr_0a_24 ; $7159
+	farcall FarPtr_ScriptSetActorMoveTarget ; $7159
 	ld a, $03 ; $715c
 	farcall FarPtr_0a_20 ; $715e
 	push af ; $7161
 	ld a, $28 ; $7162
-	farcall FarPtr_0a_04 ; $7164
+	farcall FarPtr_WaitScriptFrames ; $7164
 	pop af ; $7167
 	ld a, $03 ; $7168
 	ld d, $03 ; $716a
@@ -4933,15 +4933,15 @@ Label_10_7120:
 	ld a, $03 ; $7180
 	ld bc, $2000 ; $7182
 	ld de, $3000 ; $7185
-	farcall FarPtr_0a_24 ; $7188
+	farcall FarPtr_ScriptSetActorMoveTarget ; $7188
 	ld a, $03 ; $718b
 	farcall FarPtr_0a_20 ; $718d
 	ld a, $03 ; $7190
 	ld b, $40 ; $7192
-	farcall FarPtr_0a_2e ; $7194
+	farcall FarPtr_SetActorFacing ; $7194
 	push af ; $7197
 	ld a, $0a ; $7198
-	farcall FarPtr_0a_04 ; $719a
+	farcall FarPtr_WaitScriptFrames ; $719a
 	pop af ; $719d
 	ld a, $03 ; $719e
 	farcall FarPtr_0a_08 ; $71a0
@@ -4962,7 +4962,7 @@ Label_10_71bb:
 	farcall FarPtr_0a_0c ; $71c3
 	push af ; $71c6
 	ld a, $05 ; $71c7
-	farcall FarPtr_0a_04 ; $71c9
+	farcall FarPtr_WaitScriptFrames ; $71c9
 	pop af ; $71cc
 	and a, a ; $71cd
 	jr z, Label_10_71f0 ; $71ce
@@ -5006,15 +5006,15 @@ Label_10_71f0:
 	farcall FarPtr_0a_36 ; $7229
 	push af ; $722c
 	ld a, $0a ; $722d
-	farcall FarPtr_0a_04 ; $722f
+	farcall FarPtr_WaitScriptFrames ; $722f
 	pop af ; $7232
 	ld a, $02 ; $7233
 	ld b, a ; $7235
 	ld a, $00 ; $7236
-	farcall FarPtr_0a_32 ; $7238
+	farcall FarPtr_FaceActorsTowardEachOther ; $7238
 	push af ; $723b
 	ld a, $1e ; $723c
-	farcall FarPtr_0a_04 ; $723e
+	farcall FarPtr_WaitScriptFrames ; $723e
 	pop af ; $7241
 	ld a, $00 ; $7242
 	ld d, $03 ; $7244
@@ -5026,21 +5026,21 @@ Label_10_71f0:
 	farcall FarPtr_0a_36 ; $7252
 	ld a, $02 ; $7255
 	ld b, $40 ; $7257
-	farcall FarPtr_0a_2e ; $7259
+	farcall FarPtr_SetActorFacing ; $7259
 	ld a, $00 ; $725c
 	ld bc, $2100 ; $725e
 	ld de, $3600 ; $7261
-	farcall FarPtr_0a_24 ; $7264
+	farcall FarPtr_ScriptSetActorMoveTarget ; $7264
 	ld a, $00 ; $7267
 	farcall FarPtr_0a_20 ; $7269
 	ld a, $00 ; $726c
 	ld bc, $2100 ; $726e
 	ld de, $3700 ; $7271
-	farcall FarPtr_0a_24 ; $7274
+	farcall FarPtr_ScriptSetActorMoveTarget ; $7274
 	ld a, $02 ; $7277
 	ld bc, $2100 ; $7279
 	ld de, $3500 ; $727c
-	farcall FarPtr_0a_24 ; $727f
+	farcall FarPtr_ScriptSetActorMoveTarget ; $727f
 	ld a, $02 ; $7282
 	farcall FarPtr_0a_20 ; $7284
 	call Func_10_7339 ; $7287
@@ -5056,7 +5056,7 @@ Label_10_71f0:
 	farcall FarPtr_0a_1a ; $729d
 	push af ; $72a0
 	ld a, $28 ; $72a1
-	farcall FarPtr_0a_04 ; $72a3
+	farcall FarPtr_WaitScriptFrames ; $72a3
 	pop af ; $72a6
 	jr Label_10_7314 ; $72a7
 Label_10_72a9:
@@ -5081,18 +5081,18 @@ Label_10_72a9:
 	farcall FarPtr_0a_36 ; $72d5
 	push af ; $72d8
 	ld a, $1e ; $72d9
-	farcall FarPtr_0a_04 ; $72db
+	farcall FarPtr_WaitScriptFrames ; $72db
 	pop af ; $72de
 	ld a, $00 ; $72df
 	ld bc, $2100 ; $72e1
 	ld de, $3400 ; $72e4
-	farcall FarPtr_0a_24 ; $72e7
+	farcall FarPtr_ScriptSetActorMoveTarget ; $72e7
 	ld a, $00 ; $72ea
 	farcall FarPtr_0a_20 ; $72ec
 	ld a, $00 ; $72ef
 	ld bc, $2100 ; $72f1
 	ld de, $3700 ; $72f4
-	farcall FarPtr_0a_24 ; $72f7
+	farcall FarPtr_ScriptSetActorMoveTarget ; $72f7
 	ld a, $00 ; $72fa
 	farcall FarPtr_0a_20 ; $72fc
 	call Func_10_7339 ; $72ff
@@ -5103,13 +5103,13 @@ Label_10_72a9:
 	farcall FarPtr_0a_1a ; $730a
 	push af ; $730d
 	ld a, $14 ; $730e
-	farcall FarPtr_0a_04 ; $7310
+	farcall FarPtr_WaitScriptFrames ; $7310
 	pop af ; $7313
 Label_10_7314:
 	call Func_10_736f ; $7314
 	push af ; $7317
 	ld a, $3c ; $7318
-	farcall FarPtr_0a_04 ; $731a
+	farcall FarPtr_WaitScriptFrames ; $731a
 	pop af ; $731d
 	ld c, $02 ; $731e
 	call BeginFadeOut ; $7320
@@ -5125,7 +5125,7 @@ Label_10_7314:
 Func_10_7339:
 	push af ; $7339
 	ld a, $0a ; $733a
-	farcall FarPtr_0a_04 ; $733c
+	farcall FarPtr_WaitScriptFrames ; $733c
 	pop af ; $733f
 	sound $79 ; $7340
 	ld b, $07 ; $7342
@@ -5137,7 +5137,7 @@ Func_10_7339:
 	farcall FarPtr_0a_7e ; $734e
 	push af ; $7351
 	ld a, $02 ; $7352
-	farcall FarPtr_0a_04 ; $7354
+	farcall FarPtr_WaitScriptFrames ; $7354
 	pop af ; $7357
 	ld b, $0b ; $7358
 	ld c, $38 ; $735a
@@ -5148,7 +5148,7 @@ Func_10_7339:
 	farcall FarPtr_0a_7e ; $7364
 	push af ; $7367
 	ld a, $04 ; $7368
-	farcall FarPtr_0a_04 ; $736a
+	farcall FarPtr_WaitScriptFrames ; $736a
 	pop af ; $736d
 	ret ; $736e
 Func_10_736f:
@@ -5162,7 +5162,7 @@ Func_10_736f:
 	farcall FarPtr_0a_7e ; $737d
 	push af ; $7380
 	ld a, $02 ; $7381
-	farcall FarPtr_0a_04 ; $7383
+	farcall FarPtr_WaitScriptFrames ; $7383
 	pop af ; $7386
 	ld b, $03 ; $7387
 	ld c, $38 ; $7389
@@ -5173,7 +5173,7 @@ Func_10_736f:
 	farcall FarPtr_0a_7e ; $7393
 	push af ; $7396
 	ld a, $04 ; $7397
-	farcall FarPtr_0a_04 ; $7399
+	farcall FarPtr_WaitScriptFrames ; $7399
 	pop af ; $739c
 	ret ; $739d
 	; $739e, 80 bytes (bytes:14)
@@ -5243,7 +5243,7 @@ Func_10_7443:
 	ld a, $04 ; $7454
 	ld bc, $0100 ; $7456
 	ld de, $0100 ; $7459
-	farcall FarPtr_0a_22 ; $745c
+	farcall FarPtr_ScriptSetActorPosition ; $745c
 	jr Label_10_7471 ; $745f
 Label_10_7461:
 	test_flag $06, 5 ; $7461
@@ -5251,7 +5251,7 @@ Label_10_7461:
 	ld a, $05 ; $7466
 	ld bc, $0100 ; $7468
 	ld de, $0100 ; $746b
-	farcall FarPtr_0a_22 ; $746e
+	farcall FarPtr_ScriptSetActorPosition ; $746e
 Label_10_7471:
 	ret ; $7471
 Func_10_7472:
@@ -5345,7 +5345,7 @@ Label_10_7609:
 	farcall FarPtr_0a_0c ; $7611
 	push af ; $7614
 	ld a, $05 ; $7615
-	farcall FarPtr_0a_04 ; $7617
+	farcall FarPtr_WaitScriptFrames ; $7617
 	pop af ; $761a
 	and a, a ; $761b
 	jr z, Label_10_7621 ; $761c
@@ -5389,7 +5389,7 @@ Label_10_7621:
 	farcall FarPtr_0a_08 ; $765c
 	ld a, $05 ; $765f
 	ld b, $40 ; $7661
-	farcall FarPtr_0a_2e ; $7663
+	farcall FarPtr_SetActorFacing ; $7663
 	test_flag $05, 7 ; $7666
 	jr nz, Label_10_76a2 ; $7669
 	ld a, $05 ; $766b
@@ -5409,12 +5409,12 @@ Label_10_7621:
 Label_10_7683:
 	push af ; $7683
 	ld a, $14 ; $7684
-	farcall FarPtr_0a_04 ; $7686
+	farcall FarPtr_WaitScriptFrames ; $7686
 	pop af ; $7689
 	ld a, $00 ; $768a
 	ld b, a ; $768c
 	ld a, $05 ; $768d
-	farcall FarPtr_0a_30 ; $768f
+	farcall FarPtr_FaceActorTowardActor ; $768f
 	ld a, $05 ; $7692
 	farcall FarPtr_0a_08 ; $7694
 	ret ; $7697
@@ -5430,7 +5430,7 @@ Label_10_76a2:
 	farcall FarPtr_0a_0e ; $76a5
 	push af ; $76a8
 	ld a, $14 ; $76a9
-	farcall FarPtr_0a_04 ; $76ab
+	farcall FarPtr_WaitScriptFrames ; $76ab
 	pop af ; $76ae
 	ld a, $05 ; $76af
 	farcall FarPtr_0a_08 ; $76b1
@@ -5510,51 +5510,51 @@ Func_10_7741:
 	ld a, $00 ; $774c
 	ld bc, $2200 ; $774e
 	ld de, $2580 ; $7751
-	farcall FarPtr_0a_22 ; $7754
+	farcall FarPtr_ScriptSetActorPosition ; $7754
 	ld a, $03 ; $7757
 	ld bc, $2200 ; $7759
 	ld de, $2400 ; $775c
-	farcall FarPtr_0a_22 ; $775f
+	farcall FarPtr_ScriptSetActorPosition ; $775f
 	ld c, $04 ; $7762
 	call BeginFadeIn ; $7764
 	push af ; $7767
 	ld a, $1e ; $7768
-	farcall FarPtr_0a_04 ; $776a
+	farcall FarPtr_WaitScriptFrames ; $776a
 	pop af ; $776d
 	ld a, $03 ; $776e
 	ld b, $c0 ; $7770
-	farcall FarPtr_0a_2e ; $7772
+	farcall FarPtr_SetActorFacing ; $7772
 	push af ; $7775
 	ld a, $0a ; $7776
-	farcall FarPtr_0a_04 ; $7778
+	farcall FarPtr_WaitScriptFrames ; $7778
 	pop af ; $777b
 	ld a, $04 ; $777c
 	ld d, $02 ; $777e
 	farcall FarPtr_0a_34 ; $7780
 	push af ; $7783
 	ld a, $1e ; $7784
-	farcall FarPtr_0a_04 ; $7786
+	farcall FarPtr_WaitScriptFrames ; $7786
 	pop af ; $7789
 	ld a, $03 ; $778a
 	ld bc, $2200 ; $778c
 	ld de, $1700 ; $778f
-	farcall FarPtr_0a_24 ; $7792
+	farcall FarPtr_ScriptSetActorMoveTarget ; $7792
 	xor a, a ; $7795
 	ld bc, $2200 ; $7796
 	ld de, $1700 ; $7799
-	farcall FarPtr_0a_3a ; $779c
+	farcall FarPtr_MovePlayerToPosition ; $779c
 	push af ; $779f
 	ld a, $0a ; $77a0
-	farcall FarPtr_0a_04 ; $77a2
+	farcall FarPtr_WaitScriptFrames ; $77a2
 	pop af ; $77a5
 	ld a, $00 ; $77a6
 	ld bc, $2200 ; $77a8
 	ld de, $1900 ; $77ab
-	farcall FarPtr_0a_24 ; $77ae
+	farcall FarPtr_ScriptSetActorMoveTarget ; $77ae
 	ld a, $04 ; $77b1
 	ld b, $00 ; $77b3
-	farcall FarPtr_0a_2e ; $77b5
-	farcall FarPtr_0a_3e ; $77b8
+	farcall FarPtr_SetActorFacing ; $77b5
+	farcall FarPtr_WaitPlayerMoveDone ; $77b8
 	ld hl, $01ae ; $77bb
 	farcall FarPtr_0a_0e ; $77be
 	ld a, $04 ; $77c1
@@ -5563,29 +5563,29 @@ Func_10_7741:
 	farcall FarPtr_0a_20 ; $77c8
 	push af ; $77cb
 	ld a, $0a ; $77cc
-	farcall FarPtr_0a_04 ; $77ce
+	farcall FarPtr_WaitScriptFrames ; $77ce
 	pop af ; $77d1
 	xor a, a ; $77d2
 	ld bc, $1d00 ; $77d3
 	ld de, $1900 ; $77d6
-	farcall FarPtr_0a_3a ; $77d9
+	farcall FarPtr_MovePlayerToPosition ; $77d9
 	ld a, $04 ; $77dc
 	ld b, a ; $77de
 	ld a, $03 ; $77df
-	farcall FarPtr_0a_30 ; $77e1
+	farcall FarPtr_FaceActorTowardActor ; $77e1
 	push af ; $77e4
 	ld a, $1e ; $77e5
-	farcall FarPtr_0a_04 ; $77e7
+	farcall FarPtr_WaitScriptFrames ; $77e7
 	pop af ; $77ea
 	ld a, $04 ; $77eb
 	ld b, a ; $77ed
 	ld a, $00 ; $77ee
-	farcall FarPtr_0a_30 ; $77f0
+	farcall FarPtr_FaceActorTowardActor ; $77f0
 	push af ; $77f3
 	ld a, $1e ; $77f4
-	farcall FarPtr_0a_04 ; $77f6
+	farcall FarPtr_WaitScriptFrames ; $77f6
 	pop af ; $77f9
-	farcall FarPtr_0a_3e ; $77fa
+	farcall FarPtr_WaitPlayerMoveDone ; $77fa
 	ld a, $04 ; $77fd
 	ld d, $03 ; $77ff
 	farcall FarPtr_0a_34 ; $7801
@@ -5595,7 +5595,7 @@ Func_10_7741:
 	farcall FarPtr_0a_08 ; $780b
 	push af ; $780e
 	ld a, $0a ; $780f
-	farcall FarPtr_0a_04 ; $7811
+	farcall FarPtr_WaitScriptFrames ; $7811
 	pop af ; $7814
 	ld a, $03 ; $7815
 	ld d, $03 ; $7817
@@ -5607,18 +5607,18 @@ Func_10_7741:
 	ld a, $00 ; $7826
 	ld b, a ; $7828
 	ld a, $03 ; $7829
-	farcall FarPtr_0a_30 ; $782b
+	farcall FarPtr_FaceActorTowardActor ; $782b
 	push af ; $782e
 	ld a, $32 ; $782f
-	farcall FarPtr_0a_04 ; $7831
+	farcall FarPtr_WaitScriptFrames ; $7831
 	pop af ; $7834
 	ld a, $04 ; $7835
 	ld b, a ; $7837
 	ld a, $03 ; $7838
-	farcall FarPtr_0a_30 ; $783a
+	farcall FarPtr_FaceActorTowardActor ; $783a
 	push af ; $783d
 	ld a, $1e ; $783e
-	farcall FarPtr_0a_04 ; $7840
+	farcall FarPtr_WaitScriptFrames ; $7840
 	pop af ; $7843
 	ld a, [$c90d] ; $7844
 	or a, a ; $7847
@@ -5634,7 +5634,7 @@ Label_10_784d:
 Label_10_785b:
 	push af ; $785b
 	ld a, $0f ; $785c
-	farcall FarPtr_0a_04 ; $785e
+	farcall FarPtr_WaitScriptFrames ; $785e
 	pop af ; $7861
 	ld a, $04 ; $7862
 	ld d, $03 ; $7864
@@ -5645,7 +5645,7 @@ Label_10_785b:
 	farcall FarPtr_0a_08 ; $7870
 	push af ; $7873
 	ld a, $0f ; $7874
-	farcall FarPtr_0a_04 ; $7876
+	farcall FarPtr_WaitScriptFrames ; $7876
 	pop af ; $7879
 	ld a, $00 ; $787a
 	ld d, $03 ; $787c
@@ -5654,7 +5654,7 @@ Label_10_785b:
 	farcall FarPtr_0a_36 ; $7883
 	push af ; $7886
 	ld a, $0f ; $7887
-	farcall FarPtr_0a_04 ; $7889
+	farcall FarPtr_WaitScriptFrames ; $7889
 	pop af ; $788c
 	ld a, $04 ; $788d
 	ld d, $03 ; $788f
@@ -5665,7 +5665,7 @@ Label_10_785b:
 	farcall FarPtr_0a_08 ; $789b
 	push af ; $789e
 	ld a, $0f ; $789f
-	farcall FarPtr_0a_04 ; $78a1
+	farcall FarPtr_WaitScriptFrames ; $78a1
 	pop af ; $78a4
 	ld a, $03 ; $78a5
 	ld d, $02 ; $78a7
@@ -5677,20 +5677,20 @@ Label_10_785b:
 	ld a, $03 ; $78b6
 	ld b, a ; $78b8
 	ld a, $00 ; $78b9
-	farcall FarPtr_0a_30 ; $78bb
+	farcall FarPtr_FaceActorTowardActor ; $78bb
 	ld a, $06 ; $78be
 	ld bc, $2300 ; $78c0
 	ld de, $1700 ; $78c3
-	farcall FarPtr_0a_22 ; $78c6
+	farcall FarPtr_ScriptSetActorPosition ; $78c6
 	sound $98 ; $78c9
 	push af ; $78cb
 	ld a, $3c ; $78cc
-	farcall FarPtr_0a_04 ; $78ce
+	farcall FarPtr_WaitScriptFrames ; $78ce
 	pop af ; $78d1
 	ld a, $06 ; $78d2
 	ld bc, $3f00 ; $78d4
 	ld de, $3f00 ; $78d7
-	farcall FarPtr_0a_22 ; $78da
+	farcall FarPtr_ScriptSetActorPosition ; $78da
 	ld a, $04 ; $78dd
 	ld d, $03 ; $78df
 	farcall FarPtr_0a_34 ; $78e1
@@ -5705,12 +5705,12 @@ Label_10_785b:
 	farcall FarPtr_0a_36 ; $78f7
 	push af ; $78fa
 	ld a, $0a ; $78fb
-	farcall FarPtr_0a_04 ; $78fd
+	farcall FarPtr_WaitScriptFrames ; $78fd
 	pop af ; $7900
 	ld a, $04 ; $7901
 	ld b, a ; $7903
 	ld a, $00 ; $7904
-	farcall FarPtr_0a_30 ; $7906
+	farcall FarPtr_FaceActorTowardActor ; $7906
 	ld a, $00 ; $7909
 	ld d, $03 ; $790b
 	farcall FarPtr_0a_34 ; $790d
@@ -5718,12 +5718,12 @@ Label_10_785b:
 	farcall FarPtr_0a_36 ; $7912
 	push af ; $7915
 	ld a, $0f ; $7916
-	farcall FarPtr_0a_04 ; $7918
+	farcall FarPtr_WaitScriptFrames ; $7918
 	pop af ; $791b
 	ld a, $04 ; $791c
 	ld b, a ; $791e
 	ld a, $03 ; $791f
-	farcall FarPtr_0a_32 ; $7921
+	farcall FarPtr_FaceActorsTowardEachOther ; $7921
 	ld a, $03 ; $7924
 	ld d, $03 ; $7926
 	farcall FarPtr_0a_34 ; $7928
@@ -5735,27 +5735,27 @@ Label_10_785b:
 	xor a, a ; $7937
 	ld bc, $2200 ; $7938
 	ld de, $1700 ; $793b
-	farcall FarPtr_0a_3a ; $793e
+	farcall FarPtr_MovePlayerToPosition ; $793e
 	push af ; $7941
 	ld a, $28 ; $7942
-	farcall FarPtr_0a_04 ; $7944
+	farcall FarPtr_WaitScriptFrames ; $7944
 	pop af ; $7947
 	ld a, $03 ; $7948
 	ld bc, $2200 ; $794a
 	ld de, $0300 ; $794d
-	farcall FarPtr_0a_24 ; $7950
+	farcall FarPtr_ScriptSetActorMoveTarget ; $7950
 	push af ; $7953
 	ld a, $0a ; $7954
-	farcall FarPtr_0a_04 ; $7956
+	farcall FarPtr_WaitScriptFrames ; $7956
 	pop af ; $7959
 	xor a, a ; $795a
 	ld bc, $2200 ; $795b
 	ld de, $0300 ; $795e
-	farcall FarPtr_0a_3a ; $7961
+	farcall FarPtr_MovePlayerToPosition ; $7961
 	ld a, $00 ; $7964
 	ld bc, $2200 ; $7966
 	ld de, $0300 ; $7969
-	farcall FarPtr_0a_24 ; $796c
+	farcall FarPtr_ScriptSetActorMoveTarget ; $796c
 	ld a, $00 ; $796f
 	farcall FarPtr_0a_20 ; $7971
 	ld a, $0f ; $7974
@@ -5937,19 +5937,19 @@ Label_10_7adf:
 	ld a, $00 ; $7af6
 	ld b, $c0 ; $7af8
 	ld de, $0100 ; $7afa
-	farcall FarPtr_0a_2a ; $7afd
+	farcall FarPtr_MoveActorByAngle ; $7afd
 	ld a, $00 ; $7b00
 	farcall FarPtr_0a_20 ; $7b02
 	ld a, $00 ; $7b05
 	ld b, $e0 ; $7b07
 	ld de, $0080 ; $7b09
-	farcall FarPtr_0a_2a ; $7b0c
+	farcall FarPtr_MoveActorByAngle ; $7b0c
 	ld a, $00 ; $7b0f
 	farcall FarPtr_0a_20 ; $7b11
 	ld a, $00 ; $7b14
 	ld b, $00 ; $7b16
 	ld de, $00c0 ; $7b18
-	farcall FarPtr_0a_2a ; $7b1b
+	farcall FarPtr_MoveActorByAngle ; $7b1b
 	ret ; $7b1e
 	ld a, [$c295] ; $7b1f
 	cp a, $ff ; $7b22
@@ -5963,19 +5963,19 @@ Label_10_7adf:
 	ld a, $00 ; $7b36
 	ld b, $c0 ; $7b38
 	ld de, $00c0 ; $7b3a
-	farcall FarPtr_0a_2a ; $7b3d
+	farcall FarPtr_MoveActorByAngle ; $7b3d
 	ld a, $00 ; $7b40
 	farcall FarPtr_0a_20 ; $7b42
 	ld a, $00 ; $7b45
 	ld b, $a0 ; $7b47
 	ld de, $0080 ; $7b49
-	farcall FarPtr_0a_2a ; $7b4c
+	farcall FarPtr_MoveActorByAngle ; $7b4c
 	ld a, $00 ; $7b4f
 	farcall FarPtr_0a_20 ; $7b51
 	ld a, $00 ; $7b54
 	ld b, $80 ; $7b56
 	ld de, $0080 ; $7b58
-	farcall FarPtr_0a_2a ; $7b5b
+	farcall FarPtr_MoveActorByAngle ; $7b5b
 Label_10_7b5e:
 	ret ; $7b5e
 Func_10_7b5f:
@@ -5991,11 +5991,11 @@ Func_10_7b5f:
 	ld a, $00 ; $7b76
 	ld b, $40 ; $7b78
 	ld de, $0280 ; $7b7a
-	farcall FarPtr_0a_2a ; $7b7d
+	farcall FarPtr_MoveActorByAngle ; $7b7d
 	ld a, $02 ; $7b80
 	ld b, $40 ; $7b82
 	ld de, $0200 ; $7b84
-	farcall FarPtr_0a_2a ; $7b87
+	farcall FarPtr_MoveActorByAngle ; $7b87
 Label_10_7b8a:
 	ret ; $7b8a
 	INCBIN "data/bank_010/d_7b8b.bin" ; $7b8b, 43 bytes

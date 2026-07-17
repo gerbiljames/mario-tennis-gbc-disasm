@@ -392,7 +392,7 @@ Label_1a_42ce:
 	farcall FarPtr_0a_0c ; $42df
 	push af ; $42e2
 	ld a, $05 ; $42e3
-	farcall FarPtr_0a_04 ; $42e5
+	farcall FarPtr_WaitScriptFrames ; $42e5
 	pop af ; $42e8
 	and a, a ; $42e9
 	jr nz, Label_1a_4317 ; $42ea
@@ -436,7 +436,7 @@ Label_1a_4331:
 	farcall FarPtr_0a_0c ; $4344
 	push af ; $4347
 	ld a, $05 ; $4348
-	farcall FarPtr_0a_04 ; $434a
+	farcall FarPtr_WaitScriptFrames ; $434a
 	pop af ; $434d
 	and a, a ; $434e
 	jr nz, Label_1a_4366 ; $434f

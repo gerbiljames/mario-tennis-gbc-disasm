@@ -339,27 +339,11 @@ Func_09_437b:
 	ld bc, $ddb0 ; $437e
 	call Func_09_4658 ; $4381
 	ret ; $4384
-	INCBIN "data/bank_009/d_4385.bin" ; $4385, 5 bytes
-CheckActorScriptEnd:
-	INCBIN "data/bank_009/d_438a.bin" ; $438a, 40 bytes
-ScriptSetActorPosition:
-	INCBIN "data/bank_009/d_43b2.bin" ; $43b2, 38 bytes
+	INCBIN "data/bank_009/d_4385.bin" ; $4385, 83 bytes
 SetActorPositionRaw:
-	INCBIN "data/bank_009/d_43d8.bin" ; $43d8, 33 bytes
-ScriptSetActorMoveTarget:
-	INCBIN "data/bank_009/d_43f9.bin" ; $43f9, 38 bytes
+	INCBIN "data/bank_009/d_43d8.bin" ; $43d8, 71 bytes
 SetActorMoveTargetRaw:
-	INCBIN "data/bank_009/d_441f.bin" ; $441f, 33 bytes
-MoveActorTowardPoint:
-	INCBIN "data/bank_009/d_4440.bin" ; $4440, 37 bytes
-MoveActorTowardPointRaw:
-	INCBIN "data/bank_009/d_4465.bin" ; $4465, 102 bytes
-MoveActorByDelta:
-	INCBIN "data/bank_009/d_44cb.bin" ; $44cb, 38 bytes
-MoveActorByDeltaRaw:
-	INCBIN "data/bank_009/d_44f1.bin" ; $44f1, 84 bytes
-MoveActorByAngle:
-	INCBIN "data/bank_009/d_4545.bin" ; $4545, 16 bytes
+	INCBIN "data/bank_009/d_441f.bin" ; $441f, 310 bytes
 InitAllObjSlots:
 	wram_bank $04 ; $4555
 	ld bc, $dd80 ; $455b
@@ -439,7 +423,6 @@ Func_09_45d8:
 	ld [hl+], a ; $45dd
 	ld [hl], d ; $45de
 	ld hl, $000c ; $45df
-SetActorFacing:
 	add hl, bc ; $45e2
 	ld [hl], $00 ; $45e3
 	ld hl, $000d ; $45e5
@@ -453,7 +436,6 @@ Func_09_45ec:
 	ret ; $45f1
 Func_09_45f2:
 	ld hl, $000f ; $45f2
-FaceActorTowardActor:
 	add hl, bc ; $45f5
 	ld [hl], d ; $45f6
 	ret ; $45f7
@@ -638,7 +620,6 @@ Label_09_4718:
 	ld d, a ; $4729
 	ld a, [$df54] ; $472a
 	ld e, a ; $472d
-SetActorActive:
 	wram_bank $04 ; $472e
 	ld a, [$ddfa] ; $4734
 	ld hl, $ddf6 ; $4737
@@ -668,9 +649,9 @@ SetActorActive:
 	ret ; $4763
 	ld a, [$ddfc] ; $4764
 	rst Rst00 ; $4767
-	dw IsActorBusy ; $4768 jumptable
+	dw Label_09_476c ; $4768 jumptable
 	dw Label_09_4781 ; $476a jumptable
-IsActorBusy:
+Label_09_476c:
 	ld hl, $ddf1 ; $476c
 	set 0, [hl] ; $476f
 	call GetNextMoveCurveValue ; $4771
@@ -690,7 +671,6 @@ GetNextMoveCurveValue:
 	adc a, $47 ; $4789
 	sub a, l ; $478b
 	ld h, a ; $478c
-WaitActorIdle:
 	ld a, [hl+] ; $478d
 	ld h, [hl] ; $478e
 	ld l, a ; $478f
@@ -716,11 +696,7 @@ Label_09_47ac:
 	xor a, a ; $47ac
 	ret ; $47ad
 MoveCurveTable_09:
-	INCBIN "data/bank_009/d_47ae.bin" ; $47ae, 6 bytes
-MovePlayerToPosition:
-	INCBIN "data/bank_009/d_47b4.bin" ; $47b4, 95 bytes
-MovePlayerToActor:
-	INCBIN "data/bank_009/d_4813.bin" ; $4813, 96 bytes
+	INCBIN "data/bank_009/d_47ae.bin" ; $47ae, 197 bytes
 LoadTilesetGfx:
 	add a, a ; $4873
 	add a, a ; $4874
@@ -740,14 +716,38 @@ LoadTilesetGfx:
 	call QueueVRAMCopy ; $4886
 	ret ; $4889
 VramTileset_09:
-	; $488a, 8 bytes (records:4)
-; 2 records x 4 bytes
+	; $488a, 118 bytes (records:4)
+; 29 records x 4 bytes
 	dw $4900, $0020 ; record 0
 	dw $4b00, $0008 ; record 1
-WaitPlayerMoveDone:
-	INCBIN "data/bank_009/d_4892.bin" ; $4892, 46 bytes
-SetScreenShake:
-	INCBIN "data/bank_009/d_48c0.bin" ; $48c0, 64 bytes
+	dw $4b80, $0010 ; record 2
+	dw $4c80, $0008 ; record 3
+	dw $4ce0, $0008 ; record 4
+	dw $4d40, $0008 ; record 5
+	dw $4da0, $000a ; record 6
+	dw $4e40, $0010 ; record 7
+	dw $4f40, $0010 ; record 8
+	dw $5040, $0010 ; record 9
+	dw $5140, $0010 ; record 10
+	dw $5240, $0010 ; record 11
+	dw $52c0, $0010 ; record 12
+	dw $5340, $0010 ; record 13
+	dw $53c0, $0008 ; record 14
+	dw $5420, $0020 ; record 15
+	dw $5620, $0010 ; record 16
+	dw $4900, $0001 ; record 17
+	dw $5780, $000e ; record 18
+	dw $5860, $000e ; record 19
+	dw $5940, $000e ; record 20
+	dw $5a20, $000e ; record 21
+	dw $5b00, $000e ; record 22
+	dw $5be0, $000e ; record 23
+	dw $5cc0, $0010 ; record 24
+	dw $5dc0, $0010 ; record 25
+	dw $5ec0, $0010 ; record 26
+	dw $5fc0, $0004 ; record 27
+	dw $6000, $0010 ; record 28
+	db $00, $00
 TilesetTiles_09:
 	INCBIN "data/bank_009/d_4900.bin" ; $4900, 6144 bytes
 Func_09_6100:

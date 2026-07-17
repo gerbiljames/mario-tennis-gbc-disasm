@@ -4,8 +4,8 @@ FarPtr_0a_00:
 	dw Func_0a_40d0 ; $4000
 FarPtr_0a_02:
 	dw Func_0a_4105 ; $4002
-FarPtr_0a_04:
-	dw Func_0a_413f ; $4004
+FarPtr_WaitScriptFrames:
+	dw WaitScriptFrames ; $4004
 FarPtr_0a_06:
 	dw Func_0a_4152 ; $4006
 FarPtr_0a_08:
@@ -22,58 +22,58 @@ FarPtr_0a_12:
 	dw Func_0a_41f6 ; $4012
 FarPtr_0a_14:
 	dw Func_0a_42e9 ; $4014
-FarPtr_0a_16:
-	dw Func_0a_4312 ; $4016
+FarPtr_GetActorStateAddr:
+	dw GetActorStateAddr ; $4016
 FarPtr_0a_18:
 	dw Func_0a_433b ; $4018
 FarPtr_0a_1a:
 	dw Func_0a_4350 ; $401a
 FarPtr_0a_1c:
 	dw Func_0a_4364 ; $401c
-FarPtr_0a_1e:
-	dw Func_0a_4372 ; $401e
+FarPtr_WaitActorScriptDone:
+	dw WaitActorScriptDone ; $401e
 FarPtr_0a_20:
 	dw Func_0a_43a4 ; $4020
-FarPtr_0a_22:
-	dw Func_0a_43b2 ; $4022
-FarPtr_0a_24:
-	dw Func_0a_43f9 ; $4024
-FarPtr_0a_26:
-	dw Func_0a_4440 ; $4026
-FarPtr_0a_28:
-	dw Func_0a_44cb ; $4028
-FarPtr_0a_2a:
-	dw Func_0a_4545 ; $402a
+FarPtr_ScriptSetActorPosition:
+	dw ScriptSetActorPosition ; $4022
+FarPtr_ScriptSetActorMoveTarget:
+	dw ScriptSetActorMoveTarget ; $4024
+FarPtr_MoveActorTowardPoint:
+	dw MoveActorTowardPoint ; $4026
+FarPtr_MoveActorByDelta:
+	dw MoveActorByDelta ; $4028
+FarPtr_MoveActorByAngle:
+	dw MoveActorByAngle ; $402a
 FarPtr_0a_2c:
 	dw Func_0a_45c0 ; $402c
-FarPtr_0a_2e:
-	dw Func_0a_45e2 ; $402e
-FarPtr_0a_30:
-	dw Func_0a_45f5 ; $4030
-FarPtr_0a_32:
-	dw Func_0a_466f ; $4032
+FarPtr_SetActorFacing:
+	dw SetActorFacing ; $402e
+FarPtr_FaceActorTowardActor:
+	dw FaceActorTowardActor ; $4030
+FarPtr_FaceActorsTowardEachOther:
+	dw FaceActorsTowardEachOther ; $4032
 FarPtr_0a_34:
 	dw Func_0a_4702 ; $4034
 FarPtr_0a_36:
 	dw Func_0a_470b ; $4036
 FarPtr_0a_38:
 	dw Func_0a_47a3 ; $4038
-FarPtr_0a_3a:
-	dw Func_0a_47b4 ; $403a
-FarPtr_0a_3c:
-	dw Func_0a_4813 ; $403c
-FarPtr_0a_3e:
-	dw Func_0a_4892 ; $403e
-FarPtr_0a_40:
-	dw Func_0a_48c0 ; $4040
+FarPtr_MovePlayerToPosition:
+	dw MovePlayerToPosition ; $403a
+FarPtr_MovePlayerToActor:
+	dw MovePlayerToActor ; $403c
+FarPtr_WaitPlayerMoveDone:
+	dw WaitPlayerMoveDone ; $403e
+FarPtr_SetScreenShake:
+	dw SetScreenShake ; $4040
 FarPtr_0a_42:
 	dw Func_0a_4719 ; $4042
 FarPtr_0a_44:
 	dw Func_0a_43ab ; $4044
 FarPtr_0a_46:
 	dw Func_0a_42cf ; $4046
-FarPtr_0a_48:
-	dw Func_0a_472e ; $4048
+FarPtr_SetActorActive:
+	dw SetActorActive ; $4048
 FarPtr_InitStoryMatchSettings:
 	dw InitStoryMatchSettings ; $404a
 FarPtr_0a_4c:
@@ -245,7 +245,7 @@ Func_0a_4105:
 	pop af ; $4139
 	ret ; $413a
 	INCBIN "data/bank_00a/d_413b.bin" ; $413b, 4 bytes
-Func_0a_413f:
+WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140
 	test_flag $02, 6 ; $4141
@@ -305,7 +305,7 @@ Func_0a_4192:
 	ld b, a ; $4194
 	ldh a, [hWramBank] ; $4195
 	push af ; $4197
-	call Func_0a_4892 ; $4198
+	call WaitPlayerMoveDone ; $4198
 	wram_bank $05 ; $419b
 	ld hl, $d852 ; $41a1
 	ld a, [hl+] ; $41a4
@@ -332,7 +332,7 @@ Func_0a_41c1:
 	ld b, a ; $41c3
 	ldh a, [hWramBank] ; $41c4
 	push af ; $41c6
-	call Func_0a_4892 ; $41c7
+	call WaitPlayerMoveDone ; $41c7
 	wram_bank $05 ; $41ca
 	ld a, [$d852] ; $41d0
 	ld l, a ; $41d3
@@ -409,7 +409,7 @@ Label_0a_4251:
 	ld e, $0a ; $4251
 	jr Label_0a_427f ; $4253
 Label_0a_4255:
-	call Func_0a_4312 ; $4255
+	call GetActorStateAddr ; $4255
 	ld a, [$c323] ; $4258
 	ld b, a ; $425b
 	ld a, l ; $425c
@@ -529,7 +529,7 @@ Label_0a_4301:
 	pop hl ; $430f
 	pop af ; $4310
 	ret ; $4311
-Func_0a_4312:
+GetActorStateAddr:
 	ld hl, $d000 ; $4312
 	cp a, $18 ; $4315
 	jr nc, Label_0a_4326 ; $4317
@@ -559,7 +559,7 @@ Label_0a_4334:
 	dec h ; $4339
 	ret ; $433a
 Func_0a_433b:
-	call Func_0a_4312 ; $433b
+	call GetActorStateAddr ; $433b
 	ret z ; $433e
 	wram_bank $04 ; $433f
 	ld a, $06 ; $4345
@@ -573,7 +573,7 @@ Label_0a_434c:
 	ld [hl], b ; $434e
 	ret ; $434f
 Func_0a_4350:
-	call Func_0a_4312 ; $4350
+	call GetActorStateAddr ; $4350
 	ld a, b ; $4353
 	push af ; $4354
 	wram_bank $04 ; $4355
@@ -585,20 +585,20 @@ Func_0a_4350:
 	farcall FarPtr_SetActorScript ; $4360
 	ret ; $4363
 Func_0a_4364:
-	call Func_0a_4312 ; $4364
+	call GetActorStateAddr ; $4364
 	ld c, l ; $4367
 	ld b, h ; $4368
 	ld hl, $4766 ; $4369
 	ldh a, [hRomBank] ; $436c
 	farcall FarPtr_SetActorScript ; $436e
 	ret ; $4371
-Func_0a_4372:
-	call Func_0a_4312 ; $4372
+WaitActorScriptDone:
+	call GetActorStateAddr ; $4372
 	push af ; $4375
 	push bc ; $4376
 	ld bc, $0258 ; $4377
 Label_0a_437a:
-	call Func_0a_438a ; $437a
+	call CheckActorScriptEnd ; $437a
 	jr z, Label_0a_4387 ; $437d
 	call AdvanceFrame ; $437f
 	dec bc ; $4382
@@ -609,7 +609,7 @@ Label_0a_4387:
 	pop bc ; $4387
 	pop af ; $4388
 	ret ; $4389
-Func_0a_438a:
+CheckActorScriptEnd:
 	inc h ; $438a
 	dec h ; $438b
 	ret z ; $438c
@@ -629,14 +629,14 @@ Func_0a_438a:
 	pop de ; $43a2
 	ret ; $43a3
 Func_0a_43a4:
-	call Func_0a_4312 ; $43a4
+	call GetActorStateAddr ; $43a4
 	farcall FarPtr_04_28 ; $43a7
 	ret ; $43aa
 Func_0a_43ab:
-	call Func_0a_4312 ; $43ab
+	call GetActorStateAddr ; $43ab
 	farcall FarPtr_04_2a ; $43ae
 	ret ; $43b1
-Func_0a_43b2:
+ScriptSetActorPosition:
 	add sp, -4 ; $43b2
 	ld hl, sp + 0 ; $43b4
 	ld [hl], c ; $43b6
@@ -649,7 +649,7 @@ Func_0a_43b2:
 	ld hl, sp + 0 ; $43bd
 	ld c, l ; $43bf
 	ld b, h ; $43c0
-	call Func_0a_4312 ; $43c1
+	call GetActorStateAddr ; $43c1
 	jr z, Label_0a_43d5 ; $43c4
 	ld a, l ; $43c6
 	ldh [$ffea], a ; $43c7
@@ -683,7 +683,7 @@ Func_0a_43d8:
 	ld l, a ; $43f5
 	res 7, [hl] ; $43f6
 	ret ; $43f8
-Func_0a_43f9:
+ScriptSetActorMoveTarget:
 	add sp, -4 ; $43f9
 	ld hl, sp + 0 ; $43fb
 	ld [hl], c ; $43fd
@@ -696,7 +696,7 @@ Func_0a_43f9:
 	ld hl, sp + 0 ; $4404
 	ld c, l ; $4406
 	ld b, h ; $4407
-	call Func_0a_4312 ; $4408
+	call GetActorStateAddr ; $4408
 	jr z, Label_0a_441c ; $440b
 	ld a, l ; $440d
 	ldh [$ffea], a ; $440e
@@ -730,7 +730,7 @@ Func_0a_441f:
 	ld l, a ; $443c
 	set 7, [hl] ; $443d
 	ret ; $443f
-Func_0a_4440:
+MoveActorTowardPoint:
 	add sp, -5 ; $4440
 	push af ; $4442
 	ld a, l ; $4443
@@ -748,17 +748,17 @@ Func_0a_4440:
 	ld hl, sp + 0 ; $4450
 	ld c, l ; $4452
 	ld b, h ; $4453
-	call Func_0a_4312 ; $4454
+	call GetActorStateAddr ; $4454
 	jr z, Label_0a_4462 ; $4457
 	ld a, l ; $4459
 	ldh [$ffea], a ; $445a
 	ld a, h ; $445c
 	ldh [$ffeb], a ; $445d
-	call Func_0a_4465 ; $445f
+	call MoveActorTowardPointRaw ; $445f
 Label_0a_4462:
 	add sp, 5 ; $4462
 	ret ; $4464
-Func_0a_4465:
+MoveActorTowardPointRaw:
 	push bc ; $4465
 	ld l, c ; $4466
 	ld h, b ; $4467
@@ -841,7 +841,7 @@ Func_0a_4465:
 	ld l, a ; $44c7
 	set 7, [hl] ; $44c8
 	ret ; $44ca
-Func_0a_44cb:
+MoveActorByDelta:
 	add sp, -4 ; $44cb
 	ld hl, sp + 0 ; $44cd
 	ld [hl], c ; $44cf
@@ -854,18 +854,18 @@ Func_0a_44cb:
 	ld hl, sp + 0 ; $44d6
 	ld c, l ; $44d8
 	ld b, h ; $44d9
-	call Func_0a_4312 ; $44da
+	call GetActorStateAddr ; $44da
 	jr z, Label_0a_44ee ; $44dd
 	ld a, l ; $44df
 	ldh [$ffea], a ; $44e0
 	ld a, h ; $44e2
 	ldh [$ffeb], a ; $44e3
 	wram_bank $04 ; $44e5
-	call Func_0a_44f1 ; $44eb
+	call MoveActorByDeltaRaw ; $44eb
 Label_0a_44ee:
 	add sp, 4 ; $44ee
 	ret ; $44f0
-Func_0a_44f1:
+MoveActorByDeltaRaw:
 	push de ; $44f1
 	ld l, c ; $44f2
 	ld h, b ; $44f3
@@ -934,7 +934,7 @@ Func_0a_44f1:
 	ld l, a ; $4541
 	set 7, [hl] ; $4542
 	ret ; $4544
-Func_0a_4545:
+MoveActorByAngle:
 	add sp, -3 ; $4545
 	ld hl, sp + 0 ; $4547
 	ld [hl], b ; $4549
@@ -945,18 +945,18 @@ Func_0a_4545:
 	ld hl, sp + 0 ; $454e
 	ld c, l ; $4550
 	ld b, h ; $4551
-	call Func_0a_4312 ; $4552
+	call GetActorStateAddr ; $4552
 	jr z, Label_0a_4566 ; $4555
 	ld a, l ; $4557
 	ldh [$ffea], a ; $4558
 	ld a, h ; $455a
 	ldh [$ffeb], a ; $455b
 	wram_bank $04 ; $455d
-	call Func_0a_4569 ; $4563
+	call MoveActorByAngleRaw ; $4563
 Label_0a_4566:
 	add sp, 3 ; $4566
 	ret ; $4568
-Func_0a_4569:
+MoveActorByAngleRaw:
 	ld a, d ; $4569
 	ld l, c ; $456a
 	ld h, b ; $456b
@@ -1027,7 +1027,7 @@ Func_0a_4569:
 	set 7, [hl] ; $45bd
 	ret ; $45bf
 Func_0a_45c0:
-	call Func_0a_4312 ; $45c0
+	call GetActorStateAddr ; $45c0
 	ret z ; $45c3
 	ld a, b ; $45c4
 	and a, a ; $45c5
@@ -1049,8 +1049,8 @@ Label_0a_45db:
 	add hl, bc ; $45de
 	set 0, [hl] ; $45df
 	ret ; $45e1
-Func_0a_45e2:
-	call Func_0a_4312 ; $45e2
+SetActorFacing:
+	call GetActorStateAddr ; $45e2
 	ret z ; $45e5
 	wram_bank $04 ; $45e6
 	ld a, $14 ; $45ec
@@ -1061,16 +1061,16 @@ Func_0a_45e2:
 Label_0a_45f3:
 	ld [hl], b ; $45f3
 	ret ; $45f4
-Func_0a_45f5:
+FaceActorTowardActor:
 	push af ; $45f5
 	push bc ; $45f6
 	push de ; $45f7
 	push hl ; $45f8
 	ld d, a ; $45f9
-	call Func_0a_4312 ; $45fa
+	call GetActorStateAddr ; $45fa
 	jr z, Label_0a_466a ; $45fd
 	ld a, b ; $45ff
-	call Func_0a_4312 ; $4600
+	call GetActorStateAddr ; $4600
 	inc h ; $4603
 	dec h ; $4604
 	jr z, Label_0a_466a ; $4605
@@ -1094,7 +1094,7 @@ Func_0a_45f5:
 	ld b, [hl] ; $4622
 	push bc ; $4623
 	ld a, d ; $4624
-	call Func_0a_4312 ; $4625
+	call GetActorStateAddr ; $4625
 	ld a, l ; $4628
 	ldh [$ffea], a ; $4629
 	ld a, h ; $462b
@@ -1154,18 +1154,18 @@ Label_0a_466a:
 	pop bc ; $466c
 	pop af ; $466d
 	ret ; $466e
-Func_0a_466f:
+FaceActorsTowardEachOther:
 	push af ; $466f
 	push bc ; $4670
 	push de ; $4671
 	push hl ; $4672
 	ld d, a ; $4673
-	call Func_0a_4312 ; $4674
+	call GetActorStateAddr ; $4674
 	inc h ; $4677
 	dec h ; $4678
 	jp z, Label_0a_46fd ; $4679
 	ld a, b ; $467c
-	call Func_0a_4312 ; $467d
+	call GetActorStateAddr ; $467d
 	inc h ; $4680
 	dec h ; $4681
 	jp z, Label_0a_46fd ; $4682
@@ -1190,7 +1190,7 @@ Func_0a_466f:
 	ld b, [hl] ; $46a1
 	push bc ; $46a2
 	ld a, d ; $46a3
-	call Func_0a_4312 ; $46a4
+	call GetActorStateAddr ; $46a4
 	ld a, l ; $46a7
 	ldh [$ffea], a ; $46a8
 	ld a, h ; $46aa
@@ -1265,7 +1265,7 @@ Label_0a_46fd:
 	pop af ; $4700
 	ret ; $4701
 Func_0a_4702:
-	call Func_0a_4312 ; $4702
+	call GetActorStateAddr ; $4702
 	ld c, l ; $4705
 	ld b, h ; $4706
 	farcall FarPtr_04_16 ; $4707
@@ -1273,14 +1273,14 @@ Func_0a_4702:
 Func_0a_470b:
 	test_flag $02, 6 ; $470b
 	jr nz, Label_0a_4718 ; $470e
-	call Func_0a_4312 ; $4710
+	call GetActorStateAddr ; $4710
 	ld c, l ; $4713
 	ld b, h ; $4714
-	call Func_0a_478d ; $4715
+	call WaitActorIdle ; $4715
 Label_0a_4718:
 	ret ; $4718
 Func_0a_4719:
-	call Func_0a_4312 ; $4719
+	call GetActorStateAddr ; $4719
 	ret z ; $471c
 	wram_bank $04 ; $471d
 	ld a, $12 ; $4723
@@ -1293,8 +1293,8 @@ Label_0a_472a:
 	ld [hl+], a ; $472b
 	ld [hl], d ; $472c
 	ret ; $472d
-Func_0a_472e:
-	call Func_0a_4312 ; $472e
+SetActorActive:
+	call GetActorStateAddr ; $472e
 	ret z ; $4731
 	wram_bank $04 ; $4732
 	ld a, $20 ; $4738
@@ -1306,7 +1306,7 @@ Label_0a_473f:
 	ld [hl], b ; $473f
 	ret ; $4740
 	INCBIN "data/bank_00a/d_4741.bin" ; $4741, 43 bytes
-Func_0a_476c:
+IsActorBusy:
 	xor a, a ; $476c
 	inc h ; $476d
 	dec h ; $476e
@@ -1329,12 +1329,12 @@ Label_0a_478a:
 	pop hl ; $478a
 	pop de ; $478b
 	ret ; $478c
-Func_0a_478d:
+WaitActorIdle:
 	push af ; $478d
 	push bc ; $478e
 	ld bc, $00f0 ; $478f
 Label_0a_4792:
-	call Func_0a_476c ; $4792
+	call IsActorBusy ; $4792
 	and a, a ; $4795
 	jr z, Label_0a_47a0 ; $4796
 	call AdvanceFrame ; $4798
@@ -1357,7 +1357,7 @@ Func_0a_47a3:
 	pop hl ; $47b1
 	pop af ; $47b2
 	ret ; $47b3
-Func_0a_47b4:
+MovePlayerToPosition:
 	push af ; $47b4
 	push bc ; $47b5
 	push de ; $47b6
@@ -1417,7 +1417,7 @@ Label_0a_480c:
 	pop bc ; $4810
 	pop af ; $4811
 	ret ; $4812
-Func_0a_4813:
+MovePlayerToActor:
 	cp a, $ff ; $4813
 	ret z ; $4815
 	push af ; $4816
@@ -1429,7 +1429,7 @@ Func_0a_4813:
 	pop af ; $4821
 	add sp, -4 ; $4822
 	ld hl, sp + 0 ; $4824
-	call Func_0a_4312 ; $4826
+	call GetActorStateAddr ; $4826
 	ld a, l ; $4829
 	ldh [$ffea], a ; $482a
 	ld a, h ; $482c
@@ -1500,7 +1500,7 @@ Label_0a_488b:
 	pop bc ; $488f
 	pop af ; $4890
 	ret ; $4891
-Func_0a_4892:
+WaitPlayerMoveDone:
 	push af ; $4892
 	push bc ; $4893
 	push hl ; $4894
@@ -1518,7 +1518,7 @@ Func_0a_4892:
 	inc h ; $48ad
 Label_0a_48ae:
 	ld a, $01 ; $48ae
-	call Func_0a_413f ; $48b0
+	call WaitScriptFrames ; $48b0
 	bit 7, [hl] ; $48b3
 	jr z, Label_0a_48bc ; $48b5
 	dec bc ; $48b7
@@ -1530,7 +1530,7 @@ Label_0a_48bc:
 	pop bc ; $48bd
 	pop af ; $48be
 	ret ; $48bf
-Func_0a_48c0:
+SetScreenShake:
 	push af ; $48c0
 	push bc ; $48c1
 	push de ; $48c2
@@ -2288,7 +2288,7 @@ Label_0a_5031:
 	and a, a ; $5035
 	jr z, Label_0a_5048 ; $5036
 	ld [hl], $00 ; $5038
-	call Func_0a_4892 ; $503a
+	call WaitPlayerMoveDone ; $503a
 	test_flag $05, 6 ; $503d
 	jr nz, Label_0a_5048 ; $5040
 	farcall FarPtr_RunStoryModeMenu ; $5042
@@ -2354,7 +2354,7 @@ Label_0a_50b4:
 	ldh a, [hDebugStepMode] ; $50ba
 	and a, a ; $50bc
 	jr z, Label_0a_50c7 ; $50bd
-	call Func_0a_4892 ; $50bf
+	call WaitPlayerMoveDone ; $50bf
 	farcall FarPtr_05_52 ; $50c2
 	jr Label_0a_50c7 ; $50c5
 Label_0a_50c7:
@@ -2704,7 +2704,7 @@ Func_0a_52f5:
 	push hl ; $52f8
 	ldh a, [hWramBank] ; $52f9
 	push af ; $52fb
-	call Func_0a_4892 ; $52fc
+	call WaitPlayerMoveDone ; $52fc
 	wram_bank $05 ; $52ff
 	ld a, [wMessageSpeed] ; $5305
 	set 7, a ; $5308
@@ -2856,7 +2856,7 @@ Func_0a_541d:
 	ld a, h ; $542e
 	and a, $c0 ; $542f
 	jr nz, Label_0a_543c ; $5431
-	call Func_0a_4892 ; $5433
+	call WaitPlayerMoveDone ; $5433
 	ld a, b ; $5436
 	farcall FarPtr_05_34 ; $5437
 	jr Label_0a_545c ; $543a
@@ -2958,7 +2958,7 @@ Func_0a_54b5:
 	wram_bank $04 ; $54e0
 	ld hl, $c2c0 ; $54e6
 	ld a, [hl] ; $54e9
-	call Func_0a_4312 ; $54ea
+	call GetActorStateAddr ; $54ea
 	ld e, l ; $54ed
 	ld d, h ; $54ee
 	ld hl, $0019 ; $54ef
