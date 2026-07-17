@@ -2748,7 +2748,7 @@ Func_1b_6029:
 	ld a, [$c781] ; $603e
 	farcall FarPtr_18_22 ; $6041
 	ret ; $6044
-Func_1b_6045:
+DrawCharSelectPrompt:
 	ld hl, $d000 ; $6045
 	ld de, $9000 ; $6048
 	ld c, $10 ; $604b
@@ -2766,7 +2766,7 @@ Label_1b_6068:
 	ld de, $da01 ; $6068
 	farcall FarPtr_RenderProportionalTextAt32 ; $606b
 	ret ; $606e
-Func_1b_606f:
+DrawCharSelectMugshots:
 	farcall FarPtr_1b_0c ; $606f
 	ld hl, $ce40 ; $6072
 Label_1b_6075:
@@ -2827,8 +2827,8 @@ Label_1b_60ab:
 	call WaitFadeEnd ; $60e6
 	call DisableLCDSafely ; $60e9
 	call Func_1b_5fee ; $60ec
-	call Func_1b_606f ; $60ef
-	call Func_1b_6045 ; $60f2
+	call DrawCharSelectMugshots ; $60ef
+	call DrawCharSelectPrompt ; $60f2
 	ld hl, $dc00 ; $60f5
 	ld de, $b800 ; $60f8
 	ld c, $24 ; $60fb
@@ -3244,7 +3244,7 @@ Label_1b_63f4:
 Label_1b_6405:
 	farcall FarPtr_1b_20 ; $6405
 Label_1b_6408:
-	call Func_1b_6467 ; $6408
+	call RunLevelUpStatusTrophiesMenu ; $6408
 	cp a, $ff ; $640b
 	jp z, Func_1b_62f8 ; $640d
 	cp a, $01 ; $6410
@@ -3288,7 +3288,7 @@ Label_1b_6460:
 	call Func_1b_6b6f ; $6460
 	jp Label_1b_6408 ; $6463
 	ret ; $6466
-Func_1b_6467:
+RunLevelUpStatusTrophiesMenu:
 	push bc ; $6467
 	push de ; $6468
 	push hl ; $6469
