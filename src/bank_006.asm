@@ -1824,7 +1824,7 @@ Label_06_50ac:
 	ld l, a ; $50bb
 	ld b, $01 ; $50bc
 	ld a, $04 ; $50be
-	farcall FarPtr_0a_9c ; $50c0
+	farcall FarPtr_DrawNumberWithSprites ; $50c0
 	pop de ; $50c3
 	ld a, e ; $50c4
 	add a, $18 ; $50c5
@@ -1841,7 +1841,7 @@ Label_06_50d7:
 	ld l, a ; $50d9
 	ld b, $02 ; $50da
 	ld a, $04 ; $50dc
-	farcall FarPtr_0a_9c ; $50de
+	farcall FarPtr_DrawNumberWithSprites ; $50de
 	ret ; $50e1
 	; $50e2, 311 bytes (bytes:4)
 	db $20, $18, $00, $04 ; 0x00
@@ -4311,7 +4311,7 @@ Label_06_6df4:
 RunStoryModeMenu:
 	ldh a, [hWramBank] ; $6e17
 	push af ; $6e19
-	farcall FarPtr_0a_7c ; $6e1a
+	farcall FarPtr_StopSceneTileAnimations ; $6e1a
 	ldh a, [$ffdd] ; $6e1d
 	push af ; $6e1f
 	call AdvanceFrame ; $6e20
@@ -4376,7 +4376,7 @@ Label_06_6e94:
 	pop af ; $6ea3
 	ldh [$ffdd], a ; $6ea4
 	farcall FarPtr_InitTextWindows ; $6ea6
-	farcall FarPtr_0a_7a ; $6ea9
+	farcall FarPtr_InitSceneTileAnimations ; $6ea9
 	pop af ; $6eac
 	wram_bank ; $6ead
 	ret ; $6eb1
@@ -4387,7 +4387,7 @@ Label_06_6eb2:
 	pop af ; $6eb8
 	ldh [$ffdd], a ; $6eb9
 	clear_flag $02, 4 ; $6ebb
-	farcall FarPtr_0a_7a ; $6ebe
+	farcall FarPtr_InitSceneTileAnimations ; $6ebe
 	pop af ; $6ec1
 	wram_bank ; $6ec2
 	ret ; $6ec6
@@ -4590,7 +4590,7 @@ StoryPauseMenu_SaveQuit:
 	res 7, a ; $7062
 	ld [wMessageSpeed], a ; $7064
 	ld bc, rIE ; $7067
-	farcall FarPtr_0a_62 ; $706a
+	farcall FarPtr_SaveStoryReturnPoint ; $706a
 	farcall FarPtr_SaveStorySlotWithTimer ; $706d
 	ld a, $00 ; $7070
 	ld [wStoryModeCurrentLocation], a ; $7072

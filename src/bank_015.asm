@@ -133,12 +133,12 @@ InitTournamentSiteSceneVariant:
 	ld a, $f1 ; $427b
 	ld d, $0e ; $427d
 	ld e, $14 ; $427f
-	farcall FarPtr_0a_8a ; $4281
+	farcall FarPtr_WriteBehaviorMapCell ; $4281
 	test_flag $07, 5 ; $4284
 	jr z, Label_15_4298 ; $4287
 	ld hl, $4369 ; $4289
 	ld de, $000c ; $428c
-	farcall FarPtr_0a_60 ; $428f
+	farcall FarPtr_WriteStoryStateWord ; $428f
 	ld a, $03 ; $4292
 	ld [$c2b0], a ; $4294
 	ret ; $4297
@@ -147,7 +147,7 @@ Label_15_4298:
 	jr z, Label_15_42ac ; $429b
 	ld hl, $4330 ; $429d
 	ld de, $000c ; $42a0
-	farcall FarPtr_0a_60 ; $42a3
+	farcall FarPtr_WriteStoryStateWord ; $42a3
 	ld a, $02 ; $42a6
 	ld [$c2b0], a ; $42a8
 	ret ; $42ab
@@ -156,7 +156,7 @@ Label_15_42ac:
 	jr z, Label_15_42bf ; $42af
 	ld hl, $42f7 ; $42b1
 	ld de, $000c ; $42b4
-	farcall FarPtr_0a_60 ; $42b7
+	farcall FarPtr_WriteStoryStateWord ; $42b7
 	ld a, $01 ; $42ba
 	ld [$c2b0], a ; $42bc
 Label_15_42bf:
@@ -166,7 +166,7 @@ Label_15_42c0:
 	jr z, Label_15_42d4 ; $42c3
 	ld hl, $4414 ; $42c5
 	ld de, $000c ; $42c8
-	farcall FarPtr_0a_60 ; $42cb
+	farcall FarPtr_WriteStoryStateWord ; $42cb
 	ld a, $06 ; $42ce
 	ld [$c2b0], a ; $42d0
 	ret ; $42d3
@@ -175,14 +175,14 @@ Label_15_42d4:
 	jr z, Label_15_42e8 ; $42d7
 	ld hl, $43db ; $42d9
 	ld de, $000c ; $42dc
-	farcall FarPtr_0a_60 ; $42df
+	farcall FarPtr_WriteStoryStateWord ; $42df
 	ld a, $05 ; $42e2
 	ld [$c2b0], a ; $42e4
 	ret ; $42e7
 Label_15_42e8:
 	ld hl, $43a2 ; $42e8
 	ld de, $000c ; $42eb
-	farcall FarPtr_0a_60 ; $42ee
+	farcall FarPtr_WriteStoryStateWord ; $42ee
 	ld a, $04 ; $42f1
 	ld [$c2b0], a ; $42f3
 	ret ; $42f6
@@ -249,11 +249,11 @@ Label_15_42e8:
 TournamentSiteArrivalScene:
 	ldh a, [hRomBank] ; $444d
 	ld hl, $41cd ; $444f
-	farcall FarPtr_0a_06 ; $4452
-	farcall FarPtr_0a_00 ; $4455
+	farcall FarPtr_ScriptRespawnLocationActors ; $4452
+	farcall FarPtr_BeginCutsceneScriptMode ; $4455
 	call SetupTournamentSitePartnerActor ; $4458
 	ld bc, $00ff ; $445b
-	farcall FarPtr_0a_38 ; $445e
+	farcall FarPtr_SetPlayerMoveSpeed ; $445e
 	xor a, a ; $4461
 	ld bc, $1200 ; $4462
 	ld de, $2900 ; $4465
@@ -285,7 +285,7 @@ TournamentSiteArrivalScene:
 	ld a, $00 ; $44ad
 	farcall FarPtr_ScriptWaitActorMoveDone ; $44af
 	ld bc, $0020 ; $44b2
-	farcall FarPtr_0a_38 ; $44b5
+	farcall FarPtr_SetPlayerMoveSpeed ; $44b5
 	xor a, a ; $44b8
 	ld bc, $1200 ; $44b9
 	ld de, $1000 ; $44bc
@@ -529,7 +529,7 @@ Label_15_46ce:
 	ld d, $01 ; $46da
 	farcall FarPtr_ScriptSetActorAnimation ; $46dc
 	ld a, $02 ; $46df
-	farcall FarPtr_0a_1c ; $46e1
+	farcall FarPtr_SetActorNullScript ; $46e1
 	ld a, $02 ; $46e4
 	ld bc, $3f00 ; $46e6
 	ld de, $3f00 ; $46e9
@@ -543,7 +543,7 @@ TournamentSiteEntryWalkIn:
 	jr z, Label_15_4739 ; $46fb
 	ld a, $02 ; $46fd
 	ld bc, $00ff ; $46ff
-	farcall FarPtr_0a_18 ; $4702
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4702
 	ld a, [$c295] ; $4705
 	dec a ; $4708
 	add a, $5b ; $4709
@@ -571,11 +571,11 @@ TournamentSiteEntryWalkIn:
 	farcall FarPtr_SetActorFacing ; $472e
 	ld a, $02 ; $4731
 	ld bc, $0010 ; $4733
-	farcall FarPtr_0a_18 ; $4736
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4736
 Label_15_4739:
 	ld a, $00 ; $4739
 	ld bc, $0010 ; $473b
-	farcall FarPtr_0a_18 ; $473e
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $473e
 	ld a, [$c295] ; $4741
 	dec a ; $4744
 	add a, $57 ; $4745
@@ -666,7 +666,7 @@ StoryCmdHandlersB_15:
 	jr z, Label_15_4943 ; $491b
 	ld a, $02 ; $491d
 	ld bc, $00ff ; $491f
-	farcall FarPtr_0a_18 ; $4922
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4922
 	ld a, $02 ; $4925
 	ld b, $80 ; $4927
 	ld de, $0200 ; $4929
@@ -678,11 +678,11 @@ StoryCmdHandlersB_15:
 	farcall FarPtr_SetActorFacing ; $4938
 	ld a, $02 ; $493b
 	ld bc, $0010 ; $493d
-	farcall FarPtr_0a_18 ; $4940
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4940
 Label_15_4943:
 	ld a, $00 ; $4943
 	ld bc, $0010 ; $4945
-	farcall FarPtr_0a_18 ; $4948
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4948
 	ld a, $00 ; $494b
 	ld b, $00 ; $494d
 	ld de, $0200 ; $494f
@@ -1019,7 +1019,7 @@ Label_15_4b6e:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4bca
 	ld a, $00 ; $4bcd
 	ld bc, $0012 ; $4bcf
-	farcall FarPtr_0a_18 ; $4bd2
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4bd2
 	ld a, $00 ; $4bd5
 	ld d, $03 ; $4bd7
 	farcall FarPtr_ScriptSetActorAnimation ; $4bd9
@@ -1088,7 +1088,7 @@ Label_15_4b6e:
 	pop af ; $4c65
 	ld a, $00 ; $4c66
 	ld bc, $0020 ; $4c68
-	farcall FarPtr_0a_18 ; $4c6b
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4c6b
 	ld a, $00 ; $4c6e
 	ld b, $40 ; $4c70
 	farcall FarPtr_SetActorFacing ; $4c72
@@ -1098,7 +1098,7 @@ Label_15_4b6e:
 	pop af ; $4c7b
 	ld a, $00 ; $4c7c
 	ld b, $01 ; $4c7e
-	farcall FarPtr_0a_2c ; $4c80
+	farcall FarPtr_ScriptSetActorFacingLock ; $4c80
 	ld a, $00 ; $4c83
 	ld d, $02 ; $4c85
 	farcall FarPtr_ScriptSetActorAnimation ; $4c87
@@ -1130,7 +1130,7 @@ Label_15_4b6e:
 	farcall FarPtr_ScriptSetActorPosition ; $4ccd
 	ld a, $00 ; $4cd0
 	ld b, $00 ; $4cd2
-	farcall FarPtr_0a_2c ; $4cd4
+	farcall FarPtr_ScriptSetActorFacingLock ; $4cd4
 	ld a, $00 ; $4cd7
 	ld b, $40 ; $4cd9
 	farcall FarPtr_SetActorFacing ; $4cdb
@@ -1267,7 +1267,7 @@ WaterSpriteRacketRewardScene:
 	ld b, $00 ; $4df5
 	farcall FarPtr_SetActorActive ; $4df7
 	ld bc, $0010 ; $4dfa
-	farcall FarPtr_0a_38 ; $4dfd
+	farcall FarPtr_SetPlayerMoveSpeed ; $4dfd
 	ld a, $14 ; $4e00
 	ld b, $00 ; $4e02
 	farcall FarPtr_MovePlayerToActor ; $4e04
@@ -1331,12 +1331,12 @@ Label_15_4e24:
 	pop af ; $4e80
 	ld a, $13 ; $4e81
 	ld de, rLCDC ; $4e83
-	farcall FarPtr_0a_42 ; $4e86
+	farcall FarPtr_ScriptSetActorJumpVelocity ; $4e86
 	ld a, $00 ; $4e89
 	ld de, rLCDC ; $4e8b
-	farcall FarPtr_0a_42 ; $4e8e
+	farcall FarPtr_ScriptSetActorJumpVelocity ; $4e8e
 	ld a, $00 ; $4e91
-	farcall FarPtr_0a_44 ; $4e93
+	farcall FarPtr_ScriptWaitActorJumpDone ; $4e93
 	ld a, $13 ; $4e96
 	ld bc, $3f00 ; $4e98
 	ld de, $3f00 ; $4e9b
@@ -1413,7 +1413,7 @@ Label_15_4ef5:
 	sound $8f ; $4f35
 	ld a, $15 ; $4f37
 	ld bc, $0005 ; $4f39
-	farcall FarPtr_0a_18 ; $4f3c
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $4f3c
 	ld a, $15 ; $4f3f
 	ld bc, $3300 ; $4f41
 	ld de, $0d00 ; $4f44
@@ -1596,10 +1596,10 @@ Label_15_4f9f:
 	db $2d, $6a, $c9
 	ld a, $00 ; $51be
 	ld bc, $0008 ; $51c0
-	farcall FarPtr_0a_18 ; $51c3
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $51c3
 	ld a, $00 ; $51c6
 	ld b, $01 ; $51c8
-	farcall FarPtr_0a_2c ; $51ca
+	farcall FarPtr_ScriptSetActorFacingLock ; $51ca
 	ld a, $00 ; $51cd
 	ld bc, $2d00 ; $51cf
 	ld de, $2b00 ; $51d2
@@ -1608,7 +1608,7 @@ Label_15_4f9f:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $51da
 	ld a, $00 ; $51dd
 	ld b, $00 ; $51df
-	farcall FarPtr_0a_2c ; $51e1
+	farcall FarPtr_ScriptSetActorFacingLock ; $51e1
 	ld a, $00 ; $51e4
 	ld b, $c0 ; $51e6
 	farcall FarPtr_SetActorFacing ; $51e8
@@ -1676,10 +1676,10 @@ Label_15_5266:
 	ret ; $5269
 	ld a, $00 ; $526a
 	ld bc, $0008 ; $526c
-	farcall FarPtr_0a_18 ; $526f
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $526f
 	ld a, $00 ; $5272
 	ld b, $01 ; $5274
-	farcall FarPtr_0a_2c ; $5276
+	farcall FarPtr_ScriptSetActorFacingLock ; $5276
 	ld a, $00 ; $5279
 	ld bc, $1300 ; $527b
 	ld de, $2b00 ; $527e
@@ -1688,7 +1688,7 @@ Label_15_5266:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $5286
 	ld a, $00 ; $5289
 	ld b, $00 ; $528b
-	farcall FarPtr_0a_2c ; $528d
+	farcall FarPtr_ScriptSetActorFacingLock ; $528d
 	ld a, $00 ; $5290
 	ld b, $c0 ; $5292
 	farcall FarPtr_SetActorFacing ; $5294
@@ -1858,7 +1858,7 @@ Label_15_53d2:
 	ld b, $40 ; $53fc
 	farcall FarPtr_SetActorFacing ; $53fe
 	ld a, $02 ; $5401
-	farcall FarPtr_0a_1c ; $5403
+	farcall FarPtr_SetActorNullScript ; $5403
 	ld a, $02 ; $5406
 	ld bc, $1300 ; $5408
 	ld de, $1100 ; $540b
@@ -1867,7 +1867,7 @@ Label_15_53d2:
 	ld b, $00 ; $5413
 	farcall FarPtr_SetActorFacing ; $5415
 	ld bc, $00f0 ; $5418
-	farcall FarPtr_0a_38 ; $541b
+	farcall FarPtr_SetPlayerMoveSpeed ; $541b
 	xor a, a ; $541e
 	ld bc, $1800 ; $541f
 	ld de, $0f00 ; $5422
@@ -1882,7 +1882,7 @@ Label_15_5437:
 	xor a, a ; $5437
 	ld [$c2d5], a ; $5438
 	ld bc, $00f0 ; $543b
-	farcall FarPtr_0a_38 ; $543e
+	farcall FarPtr_SetPlayerMoveSpeed ; $543e
 	ld a, $00 ; $5441
 	ld bc, $1300 ; $5443
 	ld de, $1300 ; $5446
@@ -1929,7 +1929,7 @@ Label_15_5482:
 	ld b, $40 ; $54ac
 	farcall FarPtr_SetActorFacing ; $54ae
 	ld a, $02 ; $54b1
-	farcall FarPtr_0a_1c ; $54b3
+	farcall FarPtr_SetActorNullScript ; $54b3
 	ld a, $02 ; $54b6
 	ld bc, $2d00 ; $54b8
 	ld de, $2d00 ; $54bb
@@ -1938,7 +1938,7 @@ Label_15_5482:
 	ld b, $80 ; $54c3
 	farcall FarPtr_SetActorFacing ; $54c5
 	ld bc, $00f0 ; $54c8
-	farcall FarPtr_0a_38 ; $54cb
+	farcall FarPtr_SetPlayerMoveSpeed ; $54cb
 	xor a, a ; $54ce
 	ld bc, $2800 ; $54cf
 	ld de, $2900 ; $54d2
@@ -1953,7 +1953,7 @@ Label_15_54e7:
 	xor a, a ; $54e7
 	ld [$c2d5], a ; $54e8
 	ld bc, $00f0 ; $54eb
-	farcall FarPtr_0a_38 ; $54ee
+	farcall FarPtr_SetPlayerMoveSpeed ; $54ee
 	ld a, $00 ; $54f1
 	ld bc, $2d00 ; $54f3
 	ld de, $2b00 ; $54f6
@@ -2000,7 +2000,7 @@ Label_15_5532:
 	ld b, $40 ; $555c
 	farcall FarPtr_SetActorFacing ; $555e
 	ld a, $02 ; $5561
-	farcall FarPtr_0a_1c ; $5563
+	farcall FarPtr_SetActorNullScript ; $5563
 	ld a, $02 ; $5566
 	ld bc, $1300 ; $5568
 	ld de, $2d00 ; $556b
@@ -2009,7 +2009,7 @@ Label_15_5532:
 	ld b, $00 ; $5573
 	farcall FarPtr_SetActorFacing ; $5575
 	ld bc, $00f0 ; $5578
-	farcall FarPtr_0a_38 ; $557b
+	farcall FarPtr_SetPlayerMoveSpeed ; $557b
 	xor a, a ; $557e
 	ld bc, $1800 ; $557f
 	ld de, $2800 ; $5582
@@ -2024,7 +2024,7 @@ Label_15_5597:
 	xor a, a ; $5597
 	ld [$c2d5], a ; $5598
 	ld bc, $00f0 ; $559b
-	farcall FarPtr_0a_38 ; $559e
+	farcall FarPtr_SetPlayerMoveSpeed ; $559e
 	ld a, $00 ; $55a1
 	ld bc, $1300 ; $55a3
 	ld de, $2b00 ; $55a6
@@ -2345,8 +2345,8 @@ TrainingCourtIntroTourScene:
 	ld [$c2d5], a ; $59c1
 	ldh a, [hRomBank] ; $59c4
 	ld hl, $5c4f ; $59c6
-	farcall FarPtr_0a_06 ; $59c9
-	farcall FarPtr_0a_00 ; $59cc
+	farcall FarPtr_ScriptRespawnLocationActors ; $59c9
+	farcall FarPtr_BeginCutsceneScriptMode ; $59cc
 	ld a, $00 ; $59cf
 	ld bc, $3f00 ; $59d1
 	ld de, $3f00 ; $59d4
@@ -2429,7 +2429,7 @@ TrainingCourtIntroTourScene:
 	ld b, $00 ; $5a8d
 	farcall FarPtr_SetActorFacing ; $5a8f
 	ld bc, $0040 ; $5a92
-	farcall FarPtr_0a_38 ; $5a95
+	farcall FarPtr_SetPlayerMoveSpeed ; $5a95
 	ld hl, $1a73 ; $5a98
 	farcall FarPtr_InitDialogueTextCursor ; $5a9b
 	ld a, $0d ; $5a9e
@@ -2531,7 +2531,7 @@ TrainingCourtIntroTourScene:
 	ld a, $00 ; $5b7b
 	farcall FarPtr_ScriptWaitActorIdle ; $5b7d
 	ld bc, $0020 ; $5b80
-	farcall FarPtr_0a_38 ; $5b83
+	farcall FarPtr_SetPlayerMoveSpeed ; $5b83
 	ld a, $00 ; $5b86
 	ld b, $80 ; $5b88
 	farcall FarPtr_SetActorFacing ; $5b8a
@@ -2543,7 +2543,7 @@ TrainingCourtIntroTourScene:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $5b9a
 	ld a, $00 ; $5b9d
 	ld b, $01 ; $5b9f
-	farcall FarPtr_0a_2c ; $5ba1
+	farcall FarPtr_ScriptSetActorFacingLock ; $5ba1
 	ld a, $00 ; $5ba4
 	ld bc, $2000 ; $5ba6
 	ld de, $2d00 ; $5ba9
@@ -2562,7 +2562,7 @@ TrainingCourtIntroTourScene:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $5bcc
 	ld a, $00 ; $5bcf
 	ld b, $00 ; $5bd1
-	farcall FarPtr_0a_2c ; $5bd3
+	farcall FarPtr_ScriptSetActorFacingLock ; $5bd3
 	ld a, $0d ; $5bd6
 	ld bc, $1f00 ; $5bd8
 	ld de, $2f00 ; $5bdb
@@ -2610,7 +2610,7 @@ TrainingCourtIntroTourScene:
 	ld a, $0f ; $5c43
 	ld [$c294], a ; $5c45
 	ld [$c2a1], a ; $5c48
-	farcall FarPtr_0a_02 ; $5c4b
+	farcall FarPtr_EndCutsceneScriptMode ; $5c4b
 	ret ; $5c4e
 	; $5c4f, 164 bytes (bytes:14)
 	db $00, $00, $e6, $55, $00, $33, $00, $2a, $c0, $00, $39, $01, $06, $00 ; 0x00
@@ -2645,7 +2645,7 @@ ServeChallengerResultScene:
 	ld b, $40 ; $5d1d
 	farcall FarPtr_SetActorFacing ; $5d1f
 	ld a, $02 ; $5d22
-	farcall FarPtr_0a_1c ; $5d24
+	farcall FarPtr_SetActorNullScript ; $5d24
 	ld a, $02 ; $5d27
 	ld bc, $1300 ; $5d29
 	ld de, $1100 ; $5d2c
@@ -2654,7 +2654,7 @@ ServeChallengerResultScene:
 	ld b, $00 ; $5d34
 	farcall FarPtr_SetActorFacing ; $5d36
 	ld bc, $00f0 ; $5d39
-	farcall FarPtr_0a_38 ; $5d3c
+	farcall FarPtr_SetPlayerMoveSpeed ; $5d3c
 	xor a, a ; $5d3f
 	ld bc, $1800 ; $5d40
 	ld de, $0f00 ; $5d43
@@ -2702,7 +2702,7 @@ NetChallengerResultScene:
 	ld b, $40 ; $5d9e
 	farcall FarPtr_SetActorFacing ; $5da0
 	ld a, $02 ; $5da3
-	farcall FarPtr_0a_1c ; $5da5
+	farcall FarPtr_SetActorNullScript ; $5da5
 	ld a, $02 ; $5da8
 	ld bc, $2d00 ; $5daa
 	ld de, $2d00 ; $5dad
@@ -2711,7 +2711,7 @@ NetChallengerResultScene:
 	ld b, $80 ; $5db5
 	farcall FarPtr_SetActorFacing ; $5db7
 	ld bc, $00f0 ; $5dba
-	farcall FarPtr_0a_38 ; $5dbd
+	farcall FarPtr_SetPlayerMoveSpeed ; $5dbd
 	xor a, a ; $5dc0
 	ld bc, $2800 ; $5dc1
 	ld de, $2900 ; $5dc4
@@ -2758,7 +2758,7 @@ StrokeChallengerResultScene:
 	ld b, $40 ; $5e1d
 	farcall FarPtr_SetActorFacing ; $5e1f
 	ld a, $02 ; $5e22
-	farcall FarPtr_0a_1c ; $5e24
+	farcall FarPtr_SetActorNullScript ; $5e24
 	ld a, $02 ; $5e27
 	ld bc, $1300 ; $5e29
 	ld de, $2d00 ; $5e2c
@@ -2767,7 +2767,7 @@ StrokeChallengerResultScene:
 	ld b, $00 ; $5e34
 	farcall FarPtr_SetActorFacing ; $5e36
 	ld bc, $00f0 ; $5e39
-	farcall FarPtr_0a_38 ; $5e3c
+	farcall FarPtr_SetPlayerMoveSpeed ; $5e3c
 	xor a, a ; $5e3f
 	ld bc, $1800 ; $5e40
 	ld de, $2800 ; $5e43
@@ -2798,9 +2798,9 @@ Label_15_5e69:
 Label_15_5e74:
 	ld a, $00 ; $5e74
 	ld de, rLCDC ; $5e76
-	farcall FarPtr_0a_42 ; $5e79
+	farcall FarPtr_ScriptSetActorJumpVelocity ; $5e79
 	ld a, $00 ; $5e7c
-	farcall FarPtr_0a_44 ; $5e7e
+	farcall FarPtr_ScriptWaitActorJumpDone ; $5e7e
 	jp Label_15_5f58 ; $5e81
 	ret ; $5e84
 Label_15_5e85:
@@ -2905,14 +2905,14 @@ Label_15_5f07:
 	ld [$c2a1], a ; $5f3b
 	ld a, [$c8f7] ; $5f3e
 	farcall FarPtr_RunTrainingDrillByID ; $5f41
-	farcall FarPtr_0a_02 ; $5f44
+	farcall FarPtr_EndCutsceneScriptMode ; $5f44
 	ret ; $5f47
 Label_15_5f48:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5f48
 	ld a, [$c2b1] ; $5f4b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5f4e
 	call WalkChallengerOntoCourt ; $5f51
-	farcall FarPtr_0a_02 ; $5f54
+	farcall FarPtr_EndCutsceneScriptMode ; $5f54
 	ret ; $5f57
 Label_15_5f58:
 	ld hl, wWaterSpriteMinigameSwingCount ; $5f58
@@ -2946,7 +2946,7 @@ Label_15_5f58:
 	ld [$c2a1], a ; $5f95
 	ld a, [$c8f7] ; $5f98
 	farcall FarPtr_RunTrainingDrillByID ; $5f9b
-	farcall FarPtr_0a_02 ; $5f9e
+	farcall FarPtr_EndCutsceneScriptMode ; $5f9e
 	ret ; $5fa1
 Label_15_5fa2:
 	ld hl, wWaterSpriteMinigameFlag ; $5fa2
@@ -2958,10 +2958,10 @@ Label_15_5fa2:
 	ld a, [$c2b1] ; $5fae
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5fb1
 	call WalkChallengerOntoCourt ; $5fb4
-	farcall FarPtr_0a_02 ; $5fb7
+	farcall FarPtr_EndCutsceneScriptMode ; $5fb7
 	ret ; $5fba
 	call WalkChallengerOntoCourt ; $5fbb
-	farcall FarPtr_0a_02 ; $5fbe
+	farcall FarPtr_EndCutsceneScriptMode ; $5fbe
 	ret ; $5fc1
 Label_15_5fc2:
 	ld a, [$c2b1] ; $5fc2
@@ -2978,7 +2978,7 @@ Label_15_5fc2:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5fdc
 	ld a, [$c2b1] ; $5fdf
 	ld b, $01 ; $5fe2
-	farcall FarPtr_0a_2c ; $5fe4
+	farcall FarPtr_ScriptSetActorFacingLock ; $5fe4
 	ld a, [$c2b1] ; $5fe7
 	ld b, $c0 ; $5fea
 	ld de, $0100 ; $5fec
@@ -3004,14 +3004,14 @@ Label_15_5fc2:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6021
 	ld a, [$c2b1] ; $6024
 	ld b, $00 ; $6027
-	farcall FarPtr_0a_2c ; $6029
+	farcall FarPtr_ScriptSetActorFacingLock ; $6029
 	call WalkChallengerAwayDefeated ; $602c
 	ld a, [$c2b1] ; $602f
 	ld bc, $3f00 ; $6032
 	ld de, $3f00 ; $6035
 	farcall FarPtr_ScriptSetActorPosition ; $6038
 	call MovePlayerToLessonCourtSpot ; $603b
-	farcall FarPtr_0a_02 ; $603e
+	farcall FarPtr_EndCutsceneScriptMode ; $603e
 	ret ; $6041
 WalkChallengerAwayDefeated:
 	ld a, [$c8f7] ; $6042
@@ -3025,7 +3025,7 @@ WalkChallengerAwayDefeated:
 Label_15_6056:
 	ld a, [$c2b1] ; $6056
 	ld bc, $0030 ; $6059
-	farcall FarPtr_0a_18 ; $605c
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $605c
 	ld a, [$c2b1] ; $605f
 	farcall FarPtr_GetActorStateAddr ; $6062
 	ld a, $04 ; $6065
@@ -3060,7 +3060,7 @@ Label_15_6056:
 Label_15_60af:
 	ld a, [$c2b1] ; $60af
 	ld bc, $0030 ; $60b2
-	farcall FarPtr_0a_18 ; $60b5
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $60b5
 	ld a, [$c2b1] ; $60b8
 	farcall FarPtr_GetActorStateAddr ; $60bb
 	ld a, $04 ; $60be
@@ -3104,7 +3104,7 @@ Label_15_60f6:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $611d
 	ld a, [$c2b1] ; $6120
 	ld bc, $0030 ; $6123
-	farcall FarPtr_0a_18 ; $6126
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $6126
 	ld a, [$c2b1] ; $6129
 	farcall FarPtr_GetActorStateAddr ; $612c
 	ld a, $04 ; $612f
@@ -3754,7 +3754,7 @@ Label_15_667b:
 	ret ; $668e
 WalkToServeChallengeCourtCutscene:
 	ld a, $02 ; $668f
-	farcall FarPtr_0a_1c ; $6691
+	farcall FarPtr_SetActorNullScript ; $6691
 	xor a, a ; $6694
 	ld bc, $1800 ; $6695
 	ld de, $0f00 ; $6698
@@ -3763,17 +3763,17 @@ WalkToServeChallengeCourtCutscene:
 	ld b, a ; $66a0
 	ld a, $00 ; $66a1
 	ld de, $66d3 ; $66a3
-	farcall FarPtr_0a_1a ; $66a6
+	farcall FarPtr_ScriptSetActorScript ; $66a6
 	ldh a, [hRomBank] ; $66a9
 	ld b, a ; $66ab
 	ld a, $06 ; $66ac
 	ld de, $66c8 ; $66ae
-	farcall FarPtr_0a_1a ; $66b1
+	farcall FarPtr_ScriptSetActorScript ; $66b1
 	ldh a, [hRomBank] ; $66b4
 	ld b, a ; $66b6
 	ld a, $02 ; $66b7
 	ld de, $66e4 ; $66b9
-	farcall FarPtr_0a_1a ; $66bc
+	farcall FarPtr_ScriptSetActorScript ; $66bc
 	ld a, $00 ; $66bf
 	farcall FarPtr_WaitActorScriptDone ; $66c1
 	call PlayerPartnerGestureCutscene ; $66c4
@@ -4201,7 +4201,7 @@ ReturnCoachPassingShotLessonScene:
 	ret ; $6f50
 WalkToStrokeChallengeCourtCutscene:
 	ld a, $02 ; $6f51
-	farcall FarPtr_0a_1c ; $6f53
+	farcall FarPtr_SetActorNullScript ; $6f53
 	xor a, a ; $6f56
 	ld bc, $1800 ; $6f57
 	ld de, $2700 ; $6f5a
@@ -4210,17 +4210,17 @@ WalkToStrokeChallengeCourtCutscene:
 	ld b, a ; $6f62
 	ld a, $0c ; $6f63
 	ld de, $6f9c ; $6f65
-	farcall FarPtr_0a_1a ; $6f68
+	farcall FarPtr_ScriptSetActorScript ; $6f68
 	ldh a, [hRomBank] ; $6f6b
 	ld b, a ; $6f6d
 	ld a, $00 ; $6f6e
 	ld de, $6fa7 ; $6f70
-	farcall FarPtr_0a_1a ; $6f73
+	farcall FarPtr_ScriptSetActorScript ; $6f73
 	ldh a, [hRomBank] ; $6f76
 	ld b, a ; $6f78
 	ld a, $02 ; $6f79
 	ld de, $6fbe ; $6f7b
-	farcall FarPtr_0a_1a ; $6f7e
+	farcall FarPtr_ScriptSetActorScript ; $6f7e
 	ld a, $00 ; $6f81
 	farcall FarPtr_WaitActorScriptDone ; $6f83
 	call PlayerPartnerGestureCutscene ; $6f86
@@ -4858,7 +4858,7 @@ InitServeCoachScene:
 	xor a, a ; $74e1
 	ld [$c2d5], a ; $74e2
 	ld bc, $00f0 ; $74e5
-	farcall FarPtr_0a_38 ; $74e8
+	farcall FarPtr_SetPlayerMoveSpeed ; $74e8
 	ld a, $00 ; $74eb
 	ld bc, $1300 ; $74ed
 	ld de, $1300 ; $74f0
@@ -5144,7 +5144,7 @@ InitNetCoachScene:
 	xor a, a ; $7752
 	ld [$c2d5], a ; $7753
 	ld bc, $00f0 ; $7756
-	farcall FarPtr_0a_38 ; $7759
+	farcall FarPtr_SetPlayerMoveSpeed ; $7759
 	ld a, $00 ; $775c
 	ld bc, $2d00 ; $775e
 	ld de, $2b00 ; $7761
@@ -5427,13 +5427,13 @@ Label_15_79bc:
 	ld a, $0d ; $79bf
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $79c1
 	call ReturnCoachWalkToCourtAndStartLesson ; $79c4
-	farcall FarPtr_0a_02 ; $79c7
+	farcall FarPtr_EndCutsceneScriptMode ; $79c7
 	ret ; $79ca
 InitReturnCoachScene:
 	xor a, a ; $79cb
 	ld [$c2d5], a ; $79cc
 	ld bc, $00f0 ; $79cf
-	farcall FarPtr_0a_38 ; $79d2
+	farcall FarPtr_SetPlayerMoveSpeed ; $79d2
 	ld a, $00 ; $79d5
 	ld bc, $1300 ; $79d7
 	ld de, $2b00 ; $79da
@@ -5509,9 +5509,9 @@ Label_15_7a95:
 	ret ; $7a95
 ServeCoachWalkToCourtAndStartLesson:
 	ld a, $02 ; $7a96
-	farcall FarPtr_0a_1c ; $7a98
+	farcall FarPtr_SetActorNullScript ; $7a98
 	ld bc, $0020 ; $7a9b
-	farcall FarPtr_0a_38 ; $7a9e
+	farcall FarPtr_SetPlayerMoveSpeed ; $7a9e
 	push af ; $7aa1
 	ld a, $14 ; $7aa2
 	farcall FarPtr_WaitScriptFrames ; $7aa4
@@ -5520,17 +5520,17 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld b, a ; $7aaa
 	ld a, $07 ; $7aab
 	ld de, $7b03 ; $7aad
-	farcall FarPtr_0a_1a ; $7ab0
+	farcall FarPtr_ScriptSetActorScript ; $7ab0
 	ldh a, [hRomBank] ; $7ab3
 	ld b, a ; $7ab5
 	ld a, $00 ; $7ab6
 	ld de, $7b1a ; $7ab8
-	farcall FarPtr_0a_1a ; $7abb
+	farcall FarPtr_ScriptSetActorScript ; $7abb
 	ldh a, [hRomBank] ; $7abe
 	ld b, a ; $7ac0
 	ld a, $02 ; $7ac1
 	ld de, $7b25 ; $7ac3
-	farcall FarPtr_0a_1a ; $7ac6
+	farcall FarPtr_ScriptSetActorScript ; $7ac6
 	xor a, a ; $7ac9
 	ld bc, $1800 ; $7aca
 	ld de, $0f00 ; $7acd
@@ -5558,24 +5558,24 @@ ServeCoachWalkToCourtAndStartLesson:
 	INCBIN "data/bank_015/d_7b03.bin" ; $7b03, 45 bytes
 NetCoachWalkToCourtAndStartLesson:
 	ld bc, $0020 ; $7b30
-	farcall FarPtr_0a_38 ; $7b33
+	farcall FarPtr_SetPlayerMoveSpeed ; $7b33
 	ld a, $02 ; $7b36
-	farcall FarPtr_0a_1c ; $7b38
+	farcall FarPtr_SetActorNullScript ; $7b38
 	ldh a, [hRomBank] ; $7b3b
 	ld b, a ; $7b3d
 	ld a, $12 ; $7b3e
 	ld de, $7b96 ; $7b40
-	farcall FarPtr_0a_1a ; $7b43
+	farcall FarPtr_ScriptSetActorScript ; $7b43
 	ldh a, [hRomBank] ; $7b46
 	ld b, a ; $7b48
 	ld a, $00 ; $7b49
 	ld de, $7bb3 ; $7b4b
-	farcall FarPtr_0a_1a ; $7b4e
+	farcall FarPtr_ScriptSetActorScript ; $7b4e
 	ldh a, [hRomBank] ; $7b51
 	ld b, a ; $7b53
 	ld a, $02 ; $7b54
 	ld de, $7bbe ; $7b56
-	farcall FarPtr_0a_1a ; $7b59
+	farcall FarPtr_ScriptSetActorScript ; $7b59
 	xor a, a ; $7b5c
 	ld bc, $2800 ; $7b5d
 	ld de, $2600 ; $7b60
@@ -5603,24 +5603,24 @@ NetCoachWalkToCourtAndStartLesson:
 	INCBIN "data/bank_015/d_7b96.bin" ; $7b96, 51 bytes
 ReturnCoachWalkToCourtAndStartLesson:
 	ld a, $02 ; $7bc9
-	farcall FarPtr_0a_1c ; $7bcb
+	farcall FarPtr_SetActorNullScript ; $7bcb
 	ld bc, $0020 ; $7bce
-	farcall FarPtr_0a_38 ; $7bd1
+	farcall FarPtr_SetPlayerMoveSpeed ; $7bd1
 	ldh a, [hRomBank] ; $7bd4
 	ld b, a ; $7bd6
 	ld a, $0d ; $7bd7
 	ld de, $7c2f ; $7bd9
-	farcall FarPtr_0a_1a ; $7bdc
+	farcall FarPtr_ScriptSetActorScript ; $7bdc
 	ldh a, [hRomBank] ; $7bdf
 	ld b, a ; $7be1
 	ld a, $00 ; $7be2
 	ld de, $7c4c ; $7be4
-	farcall FarPtr_0a_1a ; $7be7
+	farcall FarPtr_ScriptSetActorScript ; $7be7
 	ldh a, [hRomBank] ; $7bea
 	ld b, a ; $7bec
 	ld a, $02 ; $7bed
 	ld de, $7c57 ; $7bef
-	farcall FarPtr_0a_1a ; $7bf2
+	farcall FarPtr_ScriptSetActorScript ; $7bf2
 	xor a, a ; $7bf5
 	ld bc, $1800 ; $7bf6
 	ld de, $2700 ; $7bf9
@@ -5649,10 +5649,10 @@ ReturnCoachWalkToCourtAndStartLesson:
 MovePartyToNetCoachSpot:
 	ld a, $00 ; $7cbb
 	ld bc, $0010 ; $7cbd
-	farcall FarPtr_0a_18 ; $7cc0
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7cc0
 	ld a, $02 ; $7cc3
 	ld bc, $0010 ; $7cc5
-	farcall FarPtr_0a_18 ; $7cc8
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7cc8
 	ld a, $00 ; $7ccb
 	ld bc, $2d00 ; $7ccd
 	ld de, $2b00 ; $7cd0
@@ -5660,7 +5660,7 @@ MovePartyToNetCoachSpot:
 	test_flag $05, 7 ; $7cd6
 	jr z, Label_15_7cf0 ; $7cd9
 	ld a, $02 ; $7cdb
-	farcall FarPtr_0a_1c ; $7cdd
+	farcall FarPtr_SetActorNullScript ; $7cdd
 	ld a, $02 ; $7ce0
 	ld bc, $2f00 ; $7ce2
 	ld de, $2b00 ; $7ce5
@@ -5678,18 +5678,18 @@ Label_15_7cf0:
 	farcall FarPtr_SetActorFacing ; $7d00
 	ld a, $00 ; $7d03
 	ld bc, $0020 ; $7d05
-	farcall FarPtr_0a_18 ; $7d08
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7d08
 	ld a, $02 ; $7d0b
 	ld bc, $0020 ; $7d0d
-	farcall FarPtr_0a_18 ; $7d10
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7d10
 	ret ; $7d13
 MovePartyToReturnCoachSpot:
 	ld a, $00 ; $7d14
 	ld bc, $0010 ; $7d16
-	farcall FarPtr_0a_18 ; $7d19
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7d19
 	ld a, $02 ; $7d1c
 	ld bc, $0010 ; $7d1e
-	farcall FarPtr_0a_18 ; $7d21
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7d21
 	ld a, $00 ; $7d24
 	ld bc, $1300 ; $7d26
 	ld de, $2b00 ; $7d29
@@ -5697,7 +5697,7 @@ MovePartyToReturnCoachSpot:
 	test_flag $05, 7 ; $7d2f
 	jr z, Label_15_7d49 ; $7d32
 	ld a, $02 ; $7d34
-	farcall FarPtr_0a_1c ; $7d36
+	farcall FarPtr_SetActorNullScript ; $7d36
 	ld a, $02 ; $7d39
 	ld bc, $1100 ; $7d3b
 	ld de, $2b00 ; $7d3e
@@ -5715,10 +5715,10 @@ Label_15_7d49:
 	farcall FarPtr_SetActorFacing ; $7d59
 	ld a, $00 ; $7d5c
 	ld bc, $0020 ; $7d5e
-	farcall FarPtr_0a_18 ; $7d61
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7d61
 	ld a, $02 ; $7d64
 	ld bc, $0020 ; $7d66
-	farcall FarPtr_0a_18 ; $7d69
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $7d69
 	ret ; $7d6c
 	INCBIN "data/bank_015/d_7d6d.bin" ; $7d6d, 40 bytes
 	ret ; $7d95

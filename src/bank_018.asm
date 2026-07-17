@@ -1628,7 +1628,7 @@ Label_18_797b:
 	jr Label_18_798a ; $7983
 Label_18_7985:
 	sound $2c ; $7985
-	farcall FarPtr_0a_a2 ; $7987
+	farcall FarPtr_RunEndingCreditsSequence ; $7987
 Label_18_798a:
 	wram_bank $03 ; $798a
 	xor a, a ; $7990

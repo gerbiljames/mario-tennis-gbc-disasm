@@ -57,7 +57,7 @@ SceneFrameData_27:
 	test_flag $05, 7 ; $4d76
 	jp z, Label_27_4e13 ; $4d79
 	ld a, $02 ; $4d7c
-	farcall FarPtr_0a_1c ; $4d7e
+	farcall FarPtr_SetActorNullScript ; $4d7e
 	ld a, $02 ; $4d81
 	ld bc, $2d00 ; $4d83
 	ld de, $3b00 ; $4d86
@@ -315,15 +315,15 @@ Label_27_4fe7:
 	ret ; $4fef
 	ldh a, [hRomBank] ; $4ff0
 	ld hl, $51dd ; $4ff2
-	farcall FarPtr_0a_06 ; $4ff5
-	farcall FarPtr_0a_00 ; $4ff8
+	farcall FarPtr_ScriptRespawnLocationActors ; $4ff5
+	farcall FarPtr_BeginCutsceneScriptMode ; $4ff8
 	ld a, $04 ; $4ffb
 	ld d, $06 ; $4ffd
 	farcall FarPtr_ScriptSetActorAnimation ; $4fff
 	test_flag $05, 7 ; $5002
 	jp z, Label_27_503c ; $5005
 	ld a, $02 ; $5008
-	farcall FarPtr_0a_1c ; $500a
+	farcall FarPtr_SetActorNullScript ; $500a
 	ld a, $00 ; $500d
 	ld bc, $1f00 ; $500f
 	ld de, $3400 ; $5012
@@ -414,12 +414,12 @@ Label_27_5057:
 	ld b, a ; $50e4
 	ld a, $00 ; $50e5
 	ld de, SceneFrameDataHi_27 ; $50e7
-	farcall FarPtr_0a_1a ; $50ea
+	farcall FarPtr_ScriptSetActorScript ; $50ea
 	ldh a, [hRomBank] ; $50ed
 	ld b, a ; $50ef
 	ld a, $02 ; $50f0
 	ld de, SceneFrameDataHi_27 ; $50f2
-	farcall FarPtr_0a_1a ; $50f5
+	farcall FarPtr_ScriptSetActorScript ; $50f5
 	ld a, $14 ; $50f8
 	call Func_27_7856 ; $50fa
 	jr Label_27_514f ; $50fd
@@ -453,7 +453,7 @@ Label_27_50ff:
 	ld b, a ; $5141
 	ld a, $00 ; $5142
 	ld de, SceneFrameDataHi_27 ; $5144
-	farcall FarPtr_0a_1a ; $5147
+	farcall FarPtr_ScriptSetActorScript ; $5147
 	ld a, $14 ; $514a
 	call Func_27_7856 ; $514c
 Label_27_514f:
@@ -480,7 +480,7 @@ Func_27_516b:
 	ld e, $38 ; $517a
 	ld h, $02 ; $517c
 	ld l, $02 ; $517e
-	farcall FarPtr_0a_7e ; $5180
+	farcall FarPtr_CopySceneTilemapRect ; $5180
 	push af ; $5183
 	ld a, $02 ; $5184
 	farcall FarPtr_WaitScriptFrames ; $5186
@@ -491,7 +491,7 @@ Func_27_516b:
 	ld e, $38 ; $5190
 	ld h, $02 ; $5192
 	ld l, $02 ; $5194
-	farcall FarPtr_0a_7e ; $5196
+	farcall FarPtr_CopySceneTilemapRect ; $5196
 	push af ; $5199
 	ld a, $04 ; $519a
 	farcall FarPtr_WaitScriptFrames ; $519c
@@ -505,7 +505,7 @@ Func_27_51a1:
 	ld e, $38 ; $51a9
 	ld h, $02 ; $51ab
 	ld l, $02 ; $51ad
-	farcall FarPtr_0a_7e ; $51af
+	farcall FarPtr_CopySceneTilemapRect ; $51af
 	push af ; $51b2
 	ld a, $02 ; $51b3
 	farcall FarPtr_WaitScriptFrames ; $51b5
@@ -516,7 +516,7 @@ Func_27_51a1:
 	ld e, $38 ; $51bf
 	ld h, $02 ; $51c1
 	ld l, $02 ; $51c3
-	farcall FarPtr_0a_7e ; $51c5
+	farcall FarPtr_CopySceneTilemapRect ; $51c5
 	push af ; $51c8
 	ld a, $04 ; $51c9
 	farcall FarPtr_WaitScriptFrames ; $51cb

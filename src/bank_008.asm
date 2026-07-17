@@ -301,7 +301,7 @@ Label_08_422f:
 	ld a, [$c4c0] ; $422f
 	and a, a ; $4232
 	jr nz, Label_08_4238 ; $4233
-	farcall FarPtr_0a_98 ; $4235
+	farcall FarPtr_UpdateMinigameTargets ; $4235
 Label_08_4238:
 	ld a, [$c4c1] ; $4238
 	and a, a ; $423b

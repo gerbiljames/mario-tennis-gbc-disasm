@@ -1,13 +1,13 @@
 SECTION "ROM Bank $0a", ROMX[$4000], BANK[$0a]
 
-FarPtr_0a_00:
-	dw Func_0a_40d0 ; $4000
-FarPtr_0a_02:
-	dw Func_0a_4105 ; $4002
+FarPtr_BeginCutsceneScriptMode:
+	dw BeginCutsceneScriptMode ; $4000
+FarPtr_EndCutsceneScriptMode:
+	dw EndCutsceneScriptMode ; $4002
 FarPtr_WaitScriptFrames:
 	dw WaitScriptFrames ; $4004
-FarPtr_0a_06:
-	dw Func_0a_4152 ; $4006
+FarPtr_ScriptRespawnLocationActors:
+	dw ScriptRespawnLocationActors ; $4006
 FarPtr_ScriptShowSpeakerDialogue:
 	dw ScriptShowSpeakerDialogue ; $4008
 FarPtr_ScriptShowSpeakerDialogueRestoreBG:
@@ -20,16 +20,16 @@ FarPtr_AdvanceDialogueTextCursor:
 	dw AdvanceDialogueTextCursor ; $4010
 FarPtr_RunDialogueYesNoPrompt:
 	dw RunDialogueYesNoPrompt ; $4012
-FarPtr_0a_14:
-	dw Func_0a_42e9 ; $4014
+FarPtr_ScriptSkipSpeakerDialogue:
+	dw ScriptSkipSpeakerDialogue ; $4014
 FarPtr_GetActorStateAddr:
 	dw GetActorStateAddr ; $4016
-FarPtr_0a_18:
-	dw Func_0a_433b ; $4018
-FarPtr_0a_1a:
-	dw Func_0a_4350 ; $401a
-FarPtr_0a_1c:
-	dw Func_0a_4364 ; $401c
+FarPtr_ScriptSetActorMoveSpeed:
+	dw ScriptSetActorMoveSpeed ; $4018
+FarPtr_ScriptSetActorScript:
+	dw ScriptSetActorScript ; $401a
+FarPtr_SetActorNullScript:
+	dw SetActorNullScript ; $401c
 FarPtr_WaitActorScriptDone:
 	dw WaitActorScriptDone ; $401e
 FarPtr_ScriptWaitActorMoveDone:
@@ -44,8 +44,8 @@ FarPtr_MoveActorByDelta:
 	dw MoveActorByDelta ; $4028
 FarPtr_MoveActorByAngle:
 	dw MoveActorByAngle ; $402a
-FarPtr_0a_2c:
-	dw Func_0a_45c0 ; $402c
+FarPtr_ScriptSetActorFacingLock:
+	dw ScriptSetActorFacingLock ; $402c
 FarPtr_SetActorFacing:
 	dw SetActorFacing ; $402e
 FarPtr_FaceActorTowardActor:
@@ -56,8 +56,8 @@ FarPtr_ScriptSetActorAnimation:
 	dw ScriptSetActorAnimation ; $4034
 FarPtr_ScriptWaitActorIdle:
 	dw ScriptWaitActorIdle ; $4036
-FarPtr_0a_38:
-	dw Func_0a_47a3 ; $4038
+FarPtr_SetPlayerMoveSpeed:
+	dw SetPlayerMoveSpeed ; $4038
 FarPtr_MovePlayerToPosition:
 	dw MovePlayerToPosition ; $403a
 FarPtr_MovePlayerToActor:
@@ -66,24 +66,24 @@ FarPtr_WaitPlayerMoveDone:
 	dw WaitPlayerMoveDone ; $403e
 FarPtr_SetScreenShake:
 	dw SetScreenShake ; $4040
-FarPtr_0a_42:
-	dw Func_0a_4719 ; $4042
-FarPtr_0a_44:
-	dw Func_0a_43ab ; $4044
+FarPtr_ScriptSetActorJumpVelocity:
+	dw ScriptSetActorJumpVelocity ; $4042
+FarPtr_ScriptWaitActorJumpDone:
+	dw ScriptWaitActorJumpDone ; $4044
 FarPtr_RunMenuFromText:
 	dw RunMenuFromText ; $4046
 FarPtr_SetActorActive:
 	dw SetActorActive ; $4048
 FarPtr_InitStoryMatchSettings:
 	dw InitStoryMatchSettings ; $404a
-FarPtr_0a_4c:
-	dw Func_0a_4962 ; $404c
-FarPtr_0a_4e:
-	dw Func_0a_4991 ; $404e
+FarPtr_RunStoryMatch:
+	dw RunStoryMatch ; $404c
+FarPtr_RestoreOverworldAfterMatch:
+	dw RestoreOverworldAfterMatch ; $404e
 FarPtr_SetMatchDoublesMode:
 	dw SetMatchDoublesMode ; $4050
-FarPtr_0a_52:
-	dw Func_0a_4a4c ; $4052
+FarPtr_SetStoryMatchOpponent:
+	dw SetStoryMatchOpponent ; $4052
 FarPtr_SetCurrentlyUsedCourt:
 	dw SetCurrentlyUsedCourt ; $4054
 FarPtr_SetMatchNumberOfSets:
@@ -92,20 +92,20 @@ FarPtr_SetMatchNumberOfGames:
 	dw SetMatchNumberOfGames ; $4058
 FarPtr_LoadMatchSettingsFromTable:
 	dw LoadMatchSettingsFromTable ; $405a
-FarPtr_0a_5c:
-	dw Func_0a_4f2c ; $405c
-FarPtr_0a_5e:
-	dw Func_0a_5466 ; $405e
-FarPtr_0a_60:
-	dw Func_0a_5161 ; $4060
-FarPtr_0a_62:
-	dw Func_0a_527f ; $4062
-FarPtr_0a_64:
-	dw Func_0a_52ae ; $4064
-FarPtr_0a_66:
-	dw Func_0a_574b ; $4066
-FarPtr_0a_68:
-	dw Func_0a_5337 ; $4068
+FarPtr_RunStoryModeOverworld:
+	dw RunStoryModeOverworld ; $405c
+FarPtr_InitLocationActors:
+	dw InitLocationActors ; $405e
+FarPtr_WriteStoryStateWord:
+	dw WriteStoryStateWord ; $4060
+FarPtr_SaveStoryReturnPoint:
+	dw SaveStoryReturnPoint ; $4062
+FarPtr_RestoreStoryReturnPoint:
+	dw RestoreStoryReturnPoint ; $4064
+FarPtr_GetStoryLocationCount:
+	dw GetStoryLocationCount ; $4066
+FarPtr_LoadStoryObjPalettes:
+	dw LoadStoryObjPalettes ; $4068
 FarPtr_InitSceneScroll:
 	dw InitSceneScroll ; $406a
 FarPtr_LoadStorySceneGraphics:
@@ -114,56 +114,56 @@ FarPtr_CopySceneTilemapToVram:
 	dw CopySceneTilemapToVram ; $406e
 FarPtr_UpdateSceneScroll:
 	dw UpdateSceneScroll ; $4070
-FarPtr_0a_72:
-	dw Func_0a_601c ; $4072
-FarPtr_0a_74:
-	dw Func_0a_5e91 ; $4074
+FarPtr_InitSceneViewer:
+	dw InitSceneViewer ; $4072
+FarPtr_RunSceneSelectDebugMenu:
+	dw RunSceneSelectDebugMenu ; $4074
 FarPtr_CopyScrolledSceneTilemapToVram:
 	dw CopyScrolledSceneTilemapToVram ; $4076
 FarPtr_LoadAndDisplayScene:
 	dw LoadAndDisplayScene ; $4078
-FarPtr_0a_7a:
-	dw Func_0a_639b ; $407a
-FarPtr_0a_7c:
-	dw Func_0a_6456 ; $407c
-FarPtr_0a_7e:
-	dw Func_0a_619e ; $407e
-FarPtr_0a_80:
-	dw Func_0a_5f90 ; $4080
-FarPtr_0a_82:
-	dw Func_0a_5fd6 ; $4082
-FarPtr_0a_84:
-	dw Func_0a_5efb ; $4084
-FarPtr_0a_86:
-	dw Func_0a_5f4f ; $4086
-FarPtr_0a_88:
-	dw Func_0a_5f15 ; $4088
-FarPtr_0a_8a:
-	dw Func_0a_5f74 ; $408a
+FarPtr_InitSceneTileAnimations:
+	dw InitSceneTileAnimations ; $407a
+FarPtr_StopSceneTileAnimations:
+	dw StopSceneTileAnimations ; $407c
+FarPtr_CopySceneTilemapRect:
+	dw CopySceneTilemapRect ; $407e
+FarPtr_CopyCollisionMapRect:
+	dw CopyCollisionMapRect ; $4080
+FarPtr_CopyBehaviorMapRect:
+	dw CopyBehaviorMapRect ; $4082
+FarPtr_ReadCollisionMapCell:
+	dw ReadCollisionMapCell ; $4084
+FarPtr_ReadBehaviorMapCell:
+	dw ReadBehaviorMapCell ; $4086
+FarPtr_WriteCollisionMapCell:
+	dw WriteCollisionMapCell ; $4088
+FarPtr_WriteBehaviorMapCell:
+	dw WriteBehaviorMapCell ; $408a
 FarPtr_LoadCourtSceneGraphics:
 	dw LoadCourtSceneGraphics ; $408c
-FarPtr_0a_8e:
-	dw Func_0a_60c2 ; $408e
-FarPtr_0a_90:
-	dw Func_0a_52f5 ; $4090
+FarPtr_UpdateSceneViewerScroll:
+	dw UpdateSceneViewerScroll ; $408e
+FarPtr_ShowLocationNamePopup:
+	dw ShowLocationNamePopup ; $4090
 FarPtr_CopySceneTilemapChunk:
 	dw CopySceneTilemapChunk ; $4092
-FarPtr_0a_94:
-	dw Func_0a_4ef8 ; $4094
-FarPtr_0a_96:
-	dw Func_0a_6596 ; $4096
-FarPtr_0a_98:
-	dw Func_0a_65c3 ; $4098
-FarPtr_0a_9a:
-	dw Func_0a_6c7b ; $409a
-FarPtr_0a_9c:
-	dw Func_0a_67ca ; $409c
-FarPtr_0a_9e:
-	dw Func_0a_6774 ; $409e
+FarPtr_ClearStatusSetupMenuEntry:
+	dw ClearStatusSetupMenuEntry ; $4094
+FarPtr_InitMinigameTargets:
+	dw InitMinigameTargets ; $4096
+FarPtr_UpdateMinigameTargets:
+	dw UpdateMinigameTargets ; $4098
+FarPtr_SpawnMinigameTargetFormation:
+	dw SpawnMinigameTargetFormation ; $409a
+FarPtr_DrawNumberWithSprites:
+	dw DrawNumberWithSprites ; $409c
+FarPtr_DeflectBallOffMinigameTarget:
+	dw DeflectBallOffMinigameTarget ; $409e
 FarPtr_StopSceneScrollTask:
 	dw StopSceneScrollTask ; $40a0
-FarPtr_0a_a2:
-	dw Func_0a_6e74 ; $40a2
+FarPtr_RunEndingCreditsSequence:
+	dw RunEndingCreditsSequence ; $40a2
 	push af ; $40a4
 	push bc ; $40a5
 	push de ; $40a6
@@ -189,7 +189,7 @@ Label_0a_40cb:
 	pop bc ; $40cd
 	pop af ; $40ce
 	ret ; $40cf
-Func_0a_40d0:
+BeginCutsceneScriptMode:
 	push af ; $40d0
 	push bc ; $40d1
 	push de ; $40d2
@@ -205,7 +205,7 @@ Func_0a_40d0:
 	ld [$c368], a ; $40e8
 	ld [$c369], a ; $40eb
 	ld a, $01 ; $40ee
-	call Func_0a_4364 ; $40f0
+	call SetActorNullScript ; $40f0
 	ldh a, [hDebugStepMode] ; $40f3
 	or a, a ; $40f5
 	jr z, Label_0a_4100 ; $40f6
@@ -218,7 +218,7 @@ Label_0a_4100:
 	pop bc ; $4102
 	pop af ; $4103
 	ret ; $4104
-Func_0a_4105:
+EndCutsceneScriptMode:
 	push af ; $4105
 	push bc ; $4106
 	push de ; $4107
@@ -260,8 +260,8 @@ Label_0a_4148:
 	pop af ; $4150
 Label_0a_4151:
 	ret ; $4151
-Func_0a_4152:
-	farcall FarPtr_0a_5e ; $4152
+ScriptRespawnLocationActors:
+	farcall FarPtr_InitLocationActors ; $4152
 	ret ; $4155
 InitDialogueTextCursor:
 	push af ; $4156
@@ -506,7 +506,7 @@ RunMenuFromText:
 	pop de ; $42e6
 	pop bc ; $42e7
 	ret ; $42e8
-Func_0a_42e9:
+ScriptSkipSpeakerDialogue:
 	push af ; $42e9
 	push hl ; $42ea
 	ldh a, [hWramBank] ; $42eb
@@ -558,7 +558,7 @@ Label_0a_4334:
 	inc h ; $4338
 	dec h ; $4339
 	ret ; $433a
-Func_0a_433b:
+ScriptSetActorMoveSpeed:
 	call GetActorStateAddr ; $433b
 	ret z ; $433e
 	wram_bank $04 ; $433f
@@ -572,7 +572,7 @@ Label_0a_434c:
 	ld [hl+], a ; $434d
 	ld [hl], b ; $434e
 	ret ; $434f
-Func_0a_4350:
+ScriptSetActorScript:
 	call GetActorStateAddr ; $4350
 	ld a, b ; $4353
 	push af ; $4354
@@ -584,7 +584,7 @@ Func_0a_4350:
 	ld h, d ; $435f
 	farcall FarPtr_SetActorScript ; $4360
 	ret ; $4363
-Func_0a_4364:
+SetActorNullScript:
 	call GetActorStateAddr ; $4364
 	ld c, l ; $4367
 	ld b, h ; $4368
@@ -632,7 +632,7 @@ ScriptWaitActorMoveDone:
 	call GetActorStateAddr ; $43a4
 	farcall FarPtr_WaitActorMoveDone ; $43a7
 	ret ; $43aa
-Func_0a_43ab:
+ScriptWaitActorJumpDone:
 	call GetActorStateAddr ; $43ab
 	farcall FarPtr_04_2a ; $43ae
 	ret ; $43b1
@@ -1026,7 +1026,7 @@ MoveActorByAngleRaw:
 	ld l, a ; $45bc
 	set 7, [hl] ; $45bd
 	ret ; $45bf
-Func_0a_45c0:
+ScriptSetActorFacingLock:
 	call GetActorStateAddr ; $45c0
 	ret z ; $45c3
 	ld a, b ; $45c4
@@ -1279,7 +1279,7 @@ ScriptWaitActorIdle:
 	call WaitActorIdle ; $4715
 Label_0a_4718:
 	ret ; $4718
-Func_0a_4719:
+ScriptSetActorJumpVelocity:
 	call GetActorStateAddr ; $4719
 	ret z ; $471c
 	wram_bank $04 ; $471d
@@ -1346,7 +1346,7 @@ Label_0a_47a0:
 	pop bc ; $47a0
 	pop af ; $47a1
 	ret ; $47a2
-Func_0a_47a3:
+SetPlayerMoveSpeed:
 	push af ; $47a3
 	push hl ; $47a4
 	wram_bank $04 ; $47a5
@@ -1626,11 +1626,11 @@ InitStoryMatchSettings:
 	ld a, $01 ; $495c
 	ld [$c8f5], a ; $495e
 	ret ; $4961
-Func_0a_4962:
+RunStoryMatch:
 	ld c, $10 ; $4962
 	call BeginFadeOut ; $4964
 	call WaitFadeEnd ; $4967
-	call Func_0a_49aa ; $496a
+	call AssignStoryMatchCharacters ; $496a
 	farcall FarPtr_RunMatch ; $496d
 	ld a, [$c8a5] ; $4970
 	or a, a ; $4973
@@ -1648,18 +1648,18 @@ Label_0a_498c:
 	xor a, a ; $498c
 	ld [$c8a7], a ; $498d
 	ret ; $4990
-Func_0a_4991:
+RestoreOverworldAfterMatch:
 	ld c, $10 ; $4991
 	call BeginFadeOut ; $4993
 	call WaitFadeEnd ; $4996
-	farcall FarPtr_0a_68 ; $4999
+	farcall FarPtr_LoadStoryObjPalettes ; $4999
 	call DisableLCDSafely ; $499c
 	farcall FarPtr_01_0a ; $499f
 	call EnableLCD ; $49a2
 	xor a, a ; $49a5
 	ld [$c8f5], a ; $49a6
 	ret ; $49a9
-Func_0a_49aa:
+AssignStoryMatchCharacters:
 	ld b, $80 ; $49aa
 	ld c, $00 ; $49ac
 	farcall FarPtr_02_18 ; $49ae
@@ -1692,7 +1692,7 @@ SetMatchDoublesMode:
 	add a, $02 ; $4a46
 	ld [wOnCourtCharCount], a ; $4a48
 	ret ; $4a4b
-Func_0a_4a4c:
+SetStoryMatchOpponent:
 	ld [$c3b1], a ; $4a4c
 	ret ; $4a4f
 SetCurrentlyUsedCourt:
@@ -1754,7 +1754,7 @@ Label_0a_4aa2:
 	ld [$c8f8], a ; $4aae
 	ret ; $4ab1
 	INCBIN "data/bank_00a/d_4ab2.bin" ; $4ab2, 250 bytes
-Func_0a_4bac:
+RunClearStatusSetupMenu:
 	push bc ; $4bac
 	push de ; $4bad
 	push hl ; $4bae
@@ -1905,8 +1905,8 @@ Label_0a_4cf7:
 	ld a, [$df04] ; $4d10
 	cp a, $ff ; $4d13
 	jp z, Label_0a_4c83 ; $4d15
-	call Func_0a_4d80 ; $4d18
-	call Func_0a_4eca ; $4d1b
+	call ApplyClearStatusFlags ; $4d18
+	call GetClearStatusResultCode ; $4d1b
 Label_0a_4d1e:
 	ld hl, $df06 ; $4d1e
 	ld b, [hl] ; $4d21
@@ -1951,7 +1951,7 @@ Label_0a_4d78:
 	or a, b ; $4d7c
 	jr nz, Label_0a_4d78 ; $4d7d
 	ret ; $4d7f
-Func_0a_4d80:
+ApplyClearStatusFlags:
 	ld a, [$df00] ; $4d80
 	or a, a ; $4d83
 	ret nz ; $4d84
@@ -1961,21 +1961,21 @@ Func_0a_4d80:
 	jr z, Label_0a_4d91 ; $4d8c
 	set_flag $05, 7 ; $4d8e
 Label_0a_4d91:
-	call Func_0a_4da9 ; $4d91
+	call SetRankingMatchClearFlags ; $4d91
 	ld a, [$df01] ; $4d94
 	or a, a ; $4d97
 	jr nz, Label_0a_4d9f ; $4d98
 Label_0a_4d9a:
-	call Func_0a_4e0e ; $4d9a
+	call SetMinigameClearFlags ; $4d9a
 	jr Label_0a_4da8 ; $4d9d
 Label_0a_4d9f:
 	ld a, [$df02] ; $4d9f
 	or a, a ; $4da2
 	jr z, Label_0a_4d9a ; $4da3
-	call Func_0a_4e75 ; $4da5
+	call SetMinigameClearFlagsAlt ; $4da5
 Label_0a_4da8:
 	ret ; $4da8
-Func_0a_4da9:
+SetRankingMatchClearFlags:
 	ld c, $1c ; $4da9
 	ld de, $1800 ; $4dab
 Label_0a_4dae:
@@ -2022,7 +2022,7 @@ Label_0a_4ddc:
 Label_0a_4deb:
 	ret ; $4deb
 	INCBIN "data/bank_00a/d_4dec.bin" ; $4dec, 34 bytes
-Func_0a_4e0e:
+SetMinigameClearFlags:
 	ld c, $09 ; $4e0e
 	ld de, $0a00 ; $4e10
 Label_0a_4e13:
@@ -2067,7 +2067,7 @@ Label_0a_4e3a:
 Label_0a_4e4a:
 	ret ; $4e4a
 	INCBIN "data/bank_00a/d_4e4b.bin" ; $4e4b, 42 bytes
-Func_0a_4e75:
+SetMinigameClearFlagsAlt:
 	ld c, $09 ; $4e75
 	ld de, $0a00 ; $4e77
 Label_0a_4e7a:
@@ -2104,7 +2104,7 @@ Label_0a_4e97:
 Label_0a_4ea7:
 	ret ; $4ea7
 	INCBIN "data/bank_00a/d_4ea8.bin" ; $4ea8, 34 bytes
-Func_0a_4eca:
+GetClearStatusResultCode:
 	ld hl, $4eee ; $4eca
 	ld a, [$df02] ; $4ecd
 	ld b, a ; $4ed0
@@ -2130,8 +2130,8 @@ Label_0a_4ee9:
 	ld [$df06], a ; $4eea
 	ret ; $4eed
 	INCBIN "data/bank_00a/d_4eee.bin" ; $4eee, 10 bytes
-Func_0a_4ef8:
-	call Func_0a_4bac ; $4ef8
+ClearStatusSetupMenuEntry:
+	call RunClearStatusSetupMenu ; $4ef8
 	ret ; $4efb
 	test_flag $04, 0 ; $4efc
 	jr z, Label_0a_4f2b ; $4eff
@@ -2162,7 +2162,7 @@ Func_0a_4ef8:
 	pop hl ; $4f2a
 Label_0a_4f2b:
 	ret ; $4f2b
-Func_0a_4f2c:
+RunStoryModeOverworld:
 	xor a, a ; $4f2c
 	ld [$cb5f], a ; $4f2d
 Label_0a_4f30:
@@ -2170,9 +2170,9 @@ Label_0a_4f30:
 	ld a, $01 ; $4f33
 	ld hl, $4efc ; $4f35
 	call RegisterFrameTask ; $4f38
-	call Func_0a_4f40 ; $4f3b
+	call RunStoryLocation ; $4f3b
 	jr Label_0a_4f30 ; $4f3e
-Func_0a_4f40:
+RunStoryLocation:
 	push af ; $4f40
 	push bc ; $4f41
 	push de ; $4f42
@@ -2180,9 +2180,9 @@ Func_0a_4f40:
 	ld c, $0c ; $4f44
 	call BeginFadeOut ; $4f46
 	call Func_0a_50e4 ; $4f49
-	call Func_0a_50f1 ; $4f4c
-	call Func_0a_5114 ; $4f4f
-	call Func_0a_516f ; $4f52
+	call ClearStoryEventRequests ; $4f4c
+	call LoadStoryLocationHeader ; $4f4f
+	call LoadStoryEntryPointRecord ; $4f52
 	ld a, $00 ; $4f55
 	ld [wGameMode], a ; $4f57
 	call AdvanceFrame ; $4f5a
@@ -2200,7 +2200,7 @@ Label_0a_4f6f:
 	ld h, [hl] ; $4f76
 	ld l, a ; $4f77
 	ld a, [$c29b] ; $4f78
-	call Func_0a_5466 ; $4f7b
+	call InitLocationActors ; $4f7b
 	ld hl, $d000 ; $4f7e
 	ld de, $0018 ; $4f81
 	add hl, de ; $4f84
@@ -2208,7 +2208,7 @@ Label_0a_4f6f:
 	set_flag $02, 4 ; $4f87
 	call WaitFadeEnd ; $4f8a
 	clear_flag $02, 4 ; $4f8d
-	farcall FarPtr_0a_68 ; $4f90
+	farcall FarPtr_LoadStoryObjPalettes ; $4f90
 	call DisableLCDSafely ; $4f93
 	farcall FarPtr_ResetTextWindowState ; $4f96
 	farcall FarPtr_InitSceneScroll ; $4f99
@@ -2231,13 +2231,13 @@ Label_0a_4faf:
 	ld a, [$c29b] ; $4fbe
 	call CallHLInBankA ; $4fc1
 Label_0a_4fc4:
-	call Func_0a_5495 ; $4fc4
+	call RunLocationInitScript ; $4fc4
 	ld hl, $c2a1 ; $4fc7
 	ld a, [hl] ; $4fca
 	and a, a ; $4fcb
 	jr z, Label_0a_4fd6 ; $4fcc
 	ld [hl], $00 ; $4fce
-	call Func_0a_560b ; $4fd0
+	call RunLocationExit ; $4fd0
 	jp Label_0a_50df ; $4fd3
 Label_0a_4fd6:
 	ld c, $08 ; $4fd6
@@ -2250,14 +2250,14 @@ Label_0a_4fd6:
 	ld l, a ; $4fe7
 	ld a, [$c2d7] ; $4fe8
 	ld h, a ; $4feb
-	call Func_0a_52f5 ; $4fec
+	call ShowLocationNamePopup ; $4fec
 	jr Label_0a_4ff5 ; $4fef
 Label_0a_4ff1:
 	call WaitFramesCmd ; $4ff1
 	db $04 ; $4ff4 inline arg
 Label_0a_4ff5:
 	wram_bank $04 ; $4ff5
-	call Func_0a_5104 ; $4ffb
+	call CheckStoryEventRequests ; $4ffb
 	and a, a ; $4ffe
 	jp z, Label_0a_50ca ; $4fff
 	ld bc, $d000 ; $5002
@@ -2273,14 +2273,14 @@ Label_0a_4ff5:
 	and a, a ; $501a
 	jr z, Label_0a_5022 ; $501b
 	ld [hl], $00 ; $501d
-	call Func_0a_55a5 ; $501f
+	call RunQueuedTriggerScript ; $501f
 Label_0a_5022:
 	ld hl, $c2a1 ; $5022
 	ld a, [hl] ; $5025
 	and a, a ; $5026
 	jr z, Label_0a_5031 ; $5027
 	ld [hl], $00 ; $5029
-	call Func_0a_560b ; $502b
+	call RunLocationExit ; $502b
 	jp Label_0a_50df ; $502e
 Label_0a_5031:
 	ld hl, $c2a5 ; $5031
@@ -2326,26 +2326,26 @@ Label_0a_507e:
 	and a, a ; $5086
 	jr z, Label_0a_50c7 ; $5087
 	ld [hl], $00 ; $5089
-	call Func_0a_5227 ; $508b
+	call FindActorFacingPlayer ; $508b
 	and a, a ; $508e
 	jr z, Label_0a_509a ; $508f
-	call Func_0a_54b5 ; $5091
+	call RunNpcInteraction ; $5091
 	ld a, [$c2da] ; $5094
 	and a, a ; $5097
 	jr nz, Label_0a_50c7 ; $5098
 Label_0a_509a:
-	call Func_0a_5200 ; $509a
+	call GetFacingTileInteractionId ; $509a
 	and a, a ; $509d
 	jr z, Label_0a_50a9 ; $509e
-	call Func_0a_5574 ; $50a0
+	call RunFacingTileScript ; $50a0
 	ld a, [$c2da] ; $50a3
 	and a, a ; $50a6
 	jr nz, Label_0a_50c7 ; $50a7
 Label_0a_50a9:
-	call Func_0a_5369 ; $50a9
+	call GetTileTriggerAtPlayer ; $50a9
 	and a, a ; $50ac
 	jr z, Label_0a_50b4 ; $50ad
-	call Func_0a_55dd ; $50af
+	call RunTileTriggerScript ; $50af
 	jr Label_0a_50c7 ; $50b2
 Label_0a_50b4:
 	ld a, [$c2a3] ; $50b4
@@ -2365,7 +2365,7 @@ Label_0a_50ca:
 	farcall FarPtr_04_1c ; $50d0
 Label_0a_50d3:
 	call AdvanceFrame ; $50d3
-	call Func_0a_5104 ; $50d6
+	call CheckStoryEventRequests ; $50d6
 	and a, a ; $50d9
 	jr z, Label_0a_50d3 ; $50da
 	jp Label_0a_4ff5 ; $50dc
@@ -2387,7 +2387,7 @@ Func_0a_50e4:
 	pop hl ; $50ee
 	pop af ; $50ef
 	ret ; $50f0
-Func_0a_50f1:
+ClearStoryEventRequests:
 	push af ; $50f1
 	push bc ; $50f2
 	push de ; $50f3
@@ -2404,7 +2404,7 @@ Label_0a_50fb:
 	pop bc ; $5101
 	pop af ; $5102
 	ret ; $5103
-Func_0a_5104:
+CheckStoryEventRequests:
 	push bc ; $5104
 	push hl ; $5105
 	ld hl, $c2a0 ; $5106
@@ -2418,13 +2418,13 @@ Label_0a_510c:
 	pop hl ; $5111
 	pop bc ; $5112
 	ret ; $5113
-Func_0a_5114:
+LoadStoryLocationHeader:
 	push af ; $5114
 	push bc ; $5115
 	push de ; $5116
 	push hl ; $5117
 	ld a, [wStoryModeCurrentLocation] ; $5118
-	call Func_0a_574e ; $511b
+	call GetStoryLocationRecordPtr ; $511b
 	jr Label_0a_5120 ; $511e
 Label_0a_5120:
 	ld de, wStoryModeCurrentLocation ; $5120
@@ -2461,7 +2461,7 @@ Label_0a_5120:
 	pop bc ; $515e
 	pop af ; $515f
 	ret ; $5160
-Func_0a_5161:
+WriteStoryStateWord:
 	push de ; $5161
 	push hl ; $5162
 	push hl ; $5163
@@ -2474,7 +2474,7 @@ Func_0a_5161:
 	pop hl ; $516c
 	pop de ; $516d
 	ret ; $516e
-Func_0a_516f:
+LoadStoryEntryPointRecord:
 	push af ; $516f
 	push bc ; $5170
 	push de ; $5171
@@ -2528,7 +2528,7 @@ Label_0a_51ca:
 	pop bc ; $51cc
 	pop af ; $51cd
 	ret ; $51ce
-Func_0a_51cf:
+GetPointAheadOfActor:
 	push af ; $51cf
 	push bc ; $51d0
 	ld b, a ; $51d1
@@ -2565,17 +2565,17 @@ Func_0a_51cf:
 	pop bc ; $51fd
 	pop af ; $51fe
 	ret ; $51ff
-Func_0a_5200:
+GetFacingTileInteractionId:
 	push bc ; $5200
 	push de ; $5201
 	push hl ; $5202
 	ld hl, $d000 ; $5203
 	ld de, $01c0 ; $5206
 	ld a, $00 ; $5209
-	call Func_0a_51cf ; $520b
+	call GetPointAheadOfActor ; $520b
 	ld e, d ; $520e
 	ld d, h ; $520f
-	farcall FarPtr_0a_86 ; $5210
+	farcall FarPtr_ReadBehaviorMapCell ; $5210
 	ld d, a ; $5213
 	ld e, $00 ; $5214
 	and a, $0f ; $5216
@@ -2591,7 +2591,7 @@ Label_0a_5222:
 	pop de ; $5224
 	pop bc ; $5225
 	ret ; $5226
-Func_0a_5227:
+FindActorFacingPlayer:
 	push bc ; $5227
 	push de ; $5228
 	push hl ; $5229
@@ -2600,11 +2600,11 @@ Func_0a_5227:
 	ld hl, $d000 ; $5233
 	ld de, $01c0 ; $5236
 	ld a, $00 ; $5239
-	call Func_0a_51cf ; $523b
+	call GetPointAheadOfActor ; $523b
 	push de ; $523e
 	ld e, d ; $523f
 	ld d, h ; $5240
-	farcall FarPtr_0a_86 ; $5241
+	farcall FarPtr_ReadBehaviorMapCell ; $5241
 	and a, $0f ; $5244
 	pop de ; $5246
 	cp a, $0c ; $5247
@@ -2612,7 +2612,7 @@ Func_0a_5227:
 	ld hl, $d000 ; $524b
 	ld de, $03c0 ; $524e
 	ld a, $00 ; $5251
-	call Func_0a_51cf ; $5253
+	call GetPointAheadOfActor ; $5253
 Label_0a_5256:
 	farcall FarPtr_04_24 ; $5256
 	and a, a ; $5259
@@ -2620,21 +2620,21 @@ Label_0a_5256:
 	ld hl, $d000 ; $525c
 	ld de, $0180 ; $525f
 	ld a, $f0 ; $5262
-	call Func_0a_51cf ; $5264
+	call GetPointAheadOfActor ; $5264
 	farcall FarPtr_04_24 ; $5267
 	and a, a ; $526a
 	jr nz, Label_0a_527b ; $526b
 	ld hl, $d000 ; $526d
 	ld de, $0180 ; $5270
 	ld a, $10 ; $5273
-	call Func_0a_51cf ; $5275
+	call GetPointAheadOfActor ; $5275
 	farcall FarPtr_04_24 ; $5278
 Label_0a_527b:
 	pop hl ; $527b
 	pop de ; $527c
 	pop bc ; $527d
 	ret ; $527e
-Func_0a_527f:
+SaveStoryReturnPoint:
 	push af ; $527f
 	push bc ; $5280
 	push de ; $5281
@@ -2662,7 +2662,7 @@ Label_0a_52a9:
 	pop bc ; $52ab
 	pop af ; $52ac
 	ret ; $52ad
-Func_0a_52ae:
+RestoreStoryReturnPoint:
 	push af ; $52ae
 	push bc ; $52af
 	push de ; $52b0
@@ -2697,7 +2697,7 @@ Label_0a_52f0:
 	pop bc ; $52f2
 	pop af ; $52f3
 	ret ; $52f4
-Func_0a_52f5:
+ShowLocationNamePopup:
 	push af ; $52f5
 	push bc ; $52f6
 	push de ; $52f7
@@ -2731,13 +2731,13 @@ Label_0a_531f:
 	pop bc ; $5334
 	pop af ; $5335
 	ret ; $5336
-Func_0a_5337:
+LoadStoryObjPalettes:
 	ld hl, $5341 ; $5337
 	ld de, $0b05 ; $533a
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
 	INCBIN "data/bank_00a/d_5341.bin" ; $5341, 40 bytes
-Func_0a_5369:
+GetTileTriggerAtPlayer:
 	push bc ; $5369
 	push de ; $536a
 	push hl ; $536b
@@ -2748,7 +2748,7 @@ Func_0a_5369:
 	ld hl, $000f ; $5374
 	add hl, bc ; $5377
 	ld e, [hl] ; $5378
-	farcall FarPtr_0a_86 ; $5379
+	farcall FarPtr_ReadBehaviorMapCell ; $5379
 	ld e, a ; $537c
 	ld d, $00 ; $537d
 	and a, $0f ; $537f
@@ -2763,7 +2763,7 @@ Func_0a_5369:
 	ld h, [hl] ; $538f
 	ld l, a ; $5390
 	ld a, [$c29b] ; $5391
-	call Func_0a_53e4 ; $5394
+	call FindStoryScriptEntry ; $5394
 	ld a, h ; $5397
 	or a, l ; $5398
 	jr nz, Label_0a_539d ; $5399
@@ -2775,7 +2775,7 @@ Label_0a_539d:
 	pop bc ; $53a0
 	ret ; $53a1
 	INCBIN "data/bank_00a/d_53a2.bin" ; $53a2, 27 bytes
-Func_0a_53bd:
+CheckTriggerFacingMask:
 	push bc ; $53bd
 	push hl ; $53be
 	wram_bank $04 ; $53bf
@@ -2801,7 +2801,7 @@ Label_0a_53e0:
 	pop hl ; $53e1
 	pop bc ; $53e2
 	ret ; $53e3
-Func_0a_53e4:
+FindStoryScriptEntry:
 	push af ; $53e4
 	push bc ; $53e5
 	push de ; $53e6
@@ -2813,7 +2813,7 @@ Label_0a_53e7:
 	jr z, Label_0a_5416 ; $53f0
 	cp a, d ; $53f2
 	jr nz, Label_0a_5410 ; $53f3
-	call Func_0a_53bd ; $53f5
+	call CheckTriggerFacingMask ; $53f5
 	and a, a ; $53f8
 	jr z, Label_0a_5410 ; $53f9
 	inc hl ; $53fb
@@ -2840,7 +2840,7 @@ Label_0a_5419:
 	pop bc ; $541a
 	pop af ; $541b
 	ret ; $541c
-Func_0a_541d:
+RunStoryScriptOrDialogue:
 	push af ; $541d
 	push bc ; $541e
 	ld b, a ; $541f
@@ -2861,7 +2861,7 @@ Func_0a_541d:
 	farcall FarPtr_ShowSpeakerDialogue ; $5437
 	jr Label_0a_545c ; $543a
 Label_0a_543c:
-	farcall FarPtr_0a_00 ; $543c
+	farcall FarPtr_BeginCutsceneScriptMode ; $543c
 	push hl ; $543f
 	wram_bank $04 ; $5440
 	ld hl, $d030 ; $5446
@@ -2872,7 +2872,7 @@ Label_0a_543c:
 	pop hl ; $5452
 	ld a, [$c29b] ; $5453
 	call CallHLInBankA ; $5456
-	farcall FarPtr_0a_02 ; $5459
+	farcall FarPtr_EndCutsceneScriptMode ; $5459
 Label_0a_545c:
 	pop af ; $545c
 	wram_bank ; $545d
@@ -2881,7 +2881,7 @@ Label_0a_545c:
 	pop bc ; $5463
 	pop af ; $5464
 	ret ; $5465
-Func_0a_5466:
+InitLocationActors:
 	push af ; $5466
 	push bc ; $5467
 	push de ; $5468
@@ -2910,7 +2910,7 @@ Func_0a_5466:
 	pop bc ; $5492
 	pop af ; $5493
 	ret ; $5494
-Func_0a_5495:
+RunLocationInitScript:
 	push af ; $5495
 	push bc ; $5496
 	push de ; $5497
@@ -2924,7 +2924,7 @@ Func_0a_5495:
 	ld h, [hl] ; $54a4
 	ld l, a ; $54a5
 	ld a, $00 ; $54a6
-	call Func_0a_541d ; $54a8
+	call RunStoryScriptOrDialogue ; $54a8
 	pop af ; $54ab
 	wram_bank ; $54ac
 	pop hl ; $54b0
@@ -2932,7 +2932,7 @@ Func_0a_5495:
 	pop bc ; $54b2
 	pop af ; $54b3
 	ret ; $54b4
-Func_0a_54b5:
+RunNpcInteraction:
 	ld [$c2db], a ; $54b5
 	cp a, $02 ; $54b8
 	jp z, Label_0a_5573 ; $54ba
@@ -2945,7 +2945,7 @@ Func_0a_54b5:
 	ld a, [hl+] ; $54c5
 	ld h, [hl] ; $54c6
 	ld l, a ; $54c7
-	call Func_0a_53e4 ; $54c8
+	call FindStoryScriptEntry ; $54c8
 	ld a, h ; $54cb
 	or a, l ; $54cc
 	jp z, Label_0a_556e ; $54cd
@@ -3007,7 +3007,7 @@ Label_0a_5530:
 	ld h, [hl] ; $5535
 	ld l, a ; $5536
 	ld a, [$c2c0] ; $5537
-	call Func_0a_541d ; $553a
+	call RunStoryScriptOrDialogue ; $553a
 	pop de ; $553d
 	bit 1, b ; $553e
 	jr z, Label_0a_5547 ; $5540
@@ -3048,7 +3048,7 @@ Label_0a_556e:
 	ret ; $5572
 Label_0a_5573:
 	ret ; $5573
-Func_0a_5574:
+RunFacingTileScript:
 	push af ; $5574
 	push bc ; $5575
 	push de ; $5576
@@ -3059,7 +3059,7 @@ Func_0a_5574:
 	ld a, [hl+] ; $557f
 	ld h, [hl] ; $5580
 	ld l, a ; $5581
-	call Func_0a_53e4 ; $5582
+	call FindStoryScriptEntry ; $5582
 	ld a, h ; $5585
 	or a, l ; $5586
 	jr z, Label_0a_55a0 ; $5587
@@ -3072,14 +3072,14 @@ Func_0a_5574:
 	ld h, [hl] ; $5599
 	ld l, a ; $559a
 	ld a, $00 ; $559b
-	call Func_0a_541d ; $559d
+	call RunStoryScriptOrDialogue ; $559d
 Label_0a_55a0:
 	pop hl ; $55a0
 	pop de ; $55a1
 	pop bc ; $55a2
 	pop af ; $55a3
 	ret ; $55a4
-Func_0a_55a5:
+RunQueuedTriggerScript:
 	push af ; $55a5
 	push bc ; $55a6
 	push de ; $55a7
@@ -3090,7 +3090,7 @@ Func_0a_55a5:
 	ld a, [hl+] ; $55b0
 	ld h, [hl] ; $55b1
 	ld l, a ; $55b2
-	call Func_0a_53e4 ; $55b3
+	call FindStoryScriptEntry ; $55b3
 	ld a, h ; $55b6
 	or a, l ; $55b7
 	jr z, Label_0a_55d8 ; $55b8
@@ -3106,14 +3106,14 @@ Func_0a_55a5:
 	ld h, [hl] ; $55d1
 	ld l, a ; $55d2
 	ld a, $00 ; $55d3
-	call Func_0a_541d ; $55d5
+	call RunStoryScriptOrDialogue ; $55d5
 Label_0a_55d8:
 	pop hl ; $55d8
 	pop de ; $55d9
 	pop bc ; $55da
 	pop af ; $55db
 	ret ; $55dc
-Func_0a_55dd:
+RunTileTriggerScript:
 	push af ; $55dd
 	push bc ; $55de
 	push de ; $55df
@@ -3123,7 +3123,7 @@ Func_0a_55dd:
 	ld a, [hl+] ; $55e5
 	ld h, [hl] ; $55e6
 	ld l, a ; $55e7
-	call Func_0a_53e4 ; $55e8
+	call FindStoryScriptEntry ; $55e8
 	ld a, h ; $55eb
 	or a, l ; $55ec
 	jr z, Label_0a_5606 ; $55ed
@@ -3136,14 +3136,14 @@ Func_0a_55dd:
 	ld h, [hl] ; $55ff
 	ld l, a ; $5600
 	ld a, $00 ; $5601
-	call Func_0a_541d ; $5603
+	call RunStoryScriptOrDialogue ; $5603
 Label_0a_5606:
 	pop hl ; $5606
 	pop de ; $5607
 	pop bc ; $5608
 	pop af ; $5609
 	ret ; $560a
-Func_0a_560b:
+RunLocationExit:
 	push af ; $560b
 	push bc ; $560c
 	push de ; $560d
@@ -3154,7 +3154,7 @@ Func_0a_560b:
 	ld a, [hl+] ; $5616
 	ld h, [hl] ; $5617
 	ld l, a ; $5618
-	call Func_0a_53e4 ; $5619
+	call FindStoryScriptEntry ; $5619
 	ld a, h ; $561c
 	or a, l ; $561d
 	jr z, Label_0a_5643 ; $561e
@@ -3167,7 +3167,7 @@ Func_0a_560b:
 	ld h, [hl] ; $5630
 	ld l, a ; $5631
 	ld a, $00 ; $5632
-	call Func_0a_541d ; $5634
+	call RunStoryScriptOrDialogue ; $5634
 	ld a, [$c2c6] ; $5637
 	ld [wStoryModeCurrentLocation], a ; $563a
 	ld a, [$c2c7] ; $563d
@@ -3183,10 +3183,10 @@ Label_0a_5643:
 	pop af ; $564d
 	ret ; $564e
 	INCBIN "data/bank_00a/d_564f.bin" ; $564f, 252 bytes
-Func_0a_574b:
+GetStoryLocationCount:
 	ld a, $2a ; $574b
 	ret ; $574d
-Func_0a_574e:
+GetStoryLocationRecordPtr:
 	ld h, a ; $574e
 	add a, a ; $574f
 	add a, h ; $5750
@@ -3440,7 +3440,7 @@ LoadStorySceneGraphics:
 	ld a, [hl+] ; $5921
 	ld [$c32c], a ; $5922
 	ld a, [$c32e] ; $5925
-	call Func_0a_639b ; $5928
+	call InitSceneTileAnimations ; $5928
 	pop hl ; $592b
 	pop de ; $592c
 	pop bc ; $592d
@@ -3587,7 +3587,7 @@ CopyScrolledSceneTilemapToVram:
 	ld l, a ; $5c37
 	jp Label_0a_5c40 ; $5c38
 Label_0a_5c3b:
-	call Func_0a_6235 ; $5c3b
+	call UpdateCameraFromPlayer ; $5c3b
 	ld h, b ; $5c3e
 	ld l, d ; $5c3f
 Label_0a_5c40:
@@ -3772,7 +3772,7 @@ GetSceneSlotPtr:
 	pop bc ; $5d27
 	pop af ; $5d28
 	ret ; $5d29
-Func_0a_5d2a:
+LoadSceneGraphicsDirect:
 	push af ; $5d2a
 	push bc ; $5d2b
 	push de ; $5d2c
@@ -3880,7 +3880,7 @@ LoadAndDisplayScene:
 	push af ; $5de3
 	call DisableLCDSafely ; $5de4
 	pop af ; $5de7
-	call Func_0a_5d2a ; $5de8
+	call LoadSceneGraphicsDirect ; $5de8
 	ld a, $00 ; $5deb
 	call GetSceneSlotPtr ; $5ded
 	ld de, wTextBuffer ; $5df0
@@ -3904,7 +3904,7 @@ LoadAndDisplayScene:
 	call AdvanceFrame ; $5e18
 	call AdvanceFrame ; $5e1b
 	ret ; $5e1e
-Func_0a_5e1f:
+SceneViewerSelectScene:
 	ldh a, [hInputRisingEdge] ; $5e1f
 	bit 1, a ; $5e21
 	ret z ; $5e23
@@ -3916,7 +3916,7 @@ Func_0a_5e1f:
 	push af ; $5e2d
 	ld a, [$c32e] ; $5e2e
 	ld [$c33d], a ; $5e31
-	call Func_0a_6456 ; $5e34
+	call StopSceneTileAnimations ; $5e34
 	pop af ; $5e37
 	ld hl, $0176 ; $5e38
 	farcall FarPtr_RunPagedTextMenu ; $5e3b
@@ -3926,7 +3926,7 @@ Func_0a_5e1f:
 	ld b, $01 ; $5e46
 	call LoadAndDisplayScene ; $5e48
 	ld a, [$c32e] ; $5e4b
-	call Func_0a_639b ; $5e4e
+	call InitSceneTileAnimations ; $5e4e
 Label_0a_5e51:
 	ret ; $5e51
 	ld hl, $0176 ; $5e52
@@ -3955,7 +3955,7 @@ Label_0a_5e68:
 	farcall FarPtr_RestoreShadowTilemap ; $5e8d
 Label_0a_5e90:
 	ret ; $5e90
-Func_0a_5e91:
+RunSceneSelectDebugMenu:
 	push af ; $5e91
 	push bc ; $5e92
 	push de ; $5e93
@@ -3969,7 +3969,7 @@ Func_0a_5e91:
 	push af ; $5ea0
 	ld a, [$c32e] ; $5ea1
 	ld [$c33d], a ; $5ea4
-	call Func_0a_6456 ; $5ea7
+	call StopSceneTileAnimations ; $5ea7
 	pop af ; $5eaa
 	ld hl, $0176 ; $5eab
 	farcall FarPtr_RunPagedTextMenu ; $5eae
@@ -3986,14 +3986,14 @@ Func_0a_5e91:
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5ecc
 	call EnableLCD ; $5ecf
 	ld a, [$c32e] ; $5ed2
-	call Func_0a_639b ; $5ed5
+	call InitSceneTileAnimations ; $5ed5
 Label_0a_5ed8:
 	pop hl ; $5ed8
 	pop de ; $5ed9
 	pop bc ; $5eda
 	pop af ; $5edb
 	ret ; $5edc
-Func_0a_5edd:
+GetCollisionMapCellAddr:
 	push bc ; $5edd
 	push de ; $5ede
 	sra d ; $5edf
@@ -4015,11 +4015,11 @@ Func_0a_5edd:
 	pop de ; $5ef8
 	pop bc ; $5ef9
 	ret ; $5efa
-Func_0a_5efb:
+ReadCollisionMapCell:
 	push bc ; $5efb
 	push de ; $5efc
 	push hl ; $5efd
-	call Func_0a_5edd ; $5efe
+	call GetCollisionMapCellAddr ; $5efe
 	ldh a, [hWramBank] ; $5f01
 	push af ; $5f03
 	wram_bank $06 ; $5f04
@@ -4031,12 +4031,12 @@ Func_0a_5efb:
 	pop de ; $5f12
 	pop bc ; $5f13
 	ret ; $5f14
-Func_0a_5f15:
+WriteCollisionMapCell:
 	push af ; $5f15
 	push bc ; $5f16
 	push de ; $5f17
 	push hl ; $5f18
-	call Func_0a_5edd ; $5f19
+	call GetCollisionMapCellAddr ; $5f19
 	ld b, a ; $5f1c
 	ldh a, [hWramBank] ; $5f1d
 	push af ; $5f1f
@@ -4049,7 +4049,7 @@ Func_0a_5f15:
 	pop bc ; $5f2e
 	pop af ; $5f2f
 	ret ; $5f30
-Func_0a_5f31:
+GetBehaviorMapCellAddr:
 	push bc ; $5f31
 	push de ; $5f32
 	sra d ; $5f33
@@ -4071,11 +4071,11 @@ Func_0a_5f31:
 	pop de ; $5f4c
 	pop bc ; $5f4d
 	ret ; $5f4e
-Func_0a_5f4f:
+ReadBehaviorMapCell:
 	push bc ; $5f4f
 	push de ; $5f50
 	push hl ; $5f51
-	call Func_0a_5f31 ; $5f52
+	call GetBehaviorMapCellAddr ; $5f52
 	ldh a, [hWramBank] ; $5f55
 	push af ; $5f57
 	wram_bank $06 ; $5f58
@@ -4094,12 +4094,12 @@ Func_0a_5f4f:
 	pop de ; $5f71
 	pop bc ; $5f72
 	ret ; $5f73
-Func_0a_5f74:
+WriteBehaviorMapCell:
 	push af ; $5f74
 	push bc ; $5f75
 	push de ; $5f76
 	push hl ; $5f77
-	call Func_0a_5f31 ; $5f78
+	call GetBehaviorMapCellAddr ; $5f78
 	ld b, a ; $5f7b
 	ldh a, [hWramBank] ; $5f7c
 	push af ; $5f7e
@@ -4112,7 +4112,7 @@ Func_0a_5f74:
 	pop bc ; $5f8d
 	pop af ; $5f8e
 	ret ; $5f8f
-Func_0a_5f90:
+CopyCollisionMapRect:
 	push af ; $5f90
 	push bc ; $5f91
 	push de ; $5f92
@@ -4122,11 +4122,11 @@ Func_0a_5f90:
 	sra h ; $5f97
 	sra l ; $5f99
 	push hl ; $5f9b
-	call Func_0a_5edd ; $5f9c
+	call GetCollisionMapCellAddr ; $5f9c
 	push hl ; $5f9f
 	ld d, b ; $5fa0
 	ld e, c ; $5fa1
-	call Func_0a_5edd ; $5fa2
+	call GetCollisionMapCellAddr ; $5fa2
 	pop de ; $5fa5
 	pop bc ; $5fa6
 	wram_bank $06 ; $5fa7
@@ -4163,7 +4163,7 @@ Label_0a_5fb1:
 	pop bc ; $5fd3
 	pop af ; $5fd4
 	ret ; $5fd5
-Func_0a_5fd6:
+CopyBehaviorMapRect:
 	push af ; $5fd6
 	push bc ; $5fd7
 	push de ; $5fd8
@@ -4173,11 +4173,11 @@ Func_0a_5fd6:
 	sra h ; $5fdd
 	sra l ; $5fdf
 	push hl ; $5fe1
-	call Func_0a_5f31 ; $5fe2
+	call GetBehaviorMapCellAddr ; $5fe2
 	push hl ; $5fe5
 	ld d, b ; $5fe6
 	ld e, c ; $5fe7
-	call Func_0a_5f31 ; $5fe8
+	call GetBehaviorMapCellAddr ; $5fe8
 	pop de ; $5feb
 	pop bc ; $5fec
 	wram_bank $06 ; $5fed
@@ -4214,7 +4214,7 @@ Label_0a_5ff7:
 	pop bc ; $6019
 	pop af ; $601a
 	ret ; $601b
-Func_0a_601c:
+InitSceneViewer:
 	push af ; $601c
 	push bc ; $601d
 	push de ; $601e
@@ -4257,7 +4257,7 @@ Label_0a_6054:
 	ld hl, $60c1 ; $605e
 	call RegisterFrameTask ; $6061
 	ld a, [$c32e] ; $6064
-	call Func_0a_639b ; $6067
+	call InitSceneTileAnimations ; $6067
 	pop hl ; $606a
 	pop de ; $606b
 	pop bc ; $606c
@@ -4266,7 +4266,7 @@ Label_0a_6054:
 	ld hl, $60c1 ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
-Func_0a_6076:
+InitSceneViewerDefault:
 	push af ; $6076
 	push bc ; $6077
 	push de ; $6078
@@ -4296,25 +4296,25 @@ Label_0a_6085:
 	farcall FarPtr_InitTextWindows ; $60a2
 	farcall FarPtr_RestoreShadowTilemap ; $60a5
 	ld a, [$c32e] ; $60a8
-	call Func_0a_639b ; $60ab
+	call InitSceneTileAnimations ; $60ab
 	pop hl ; $60ae
 	pop de ; $60af
 	pop bc ; $60b0
 	pop af ; $60b1
 	ret ; $60b2
-	call Func_0a_6076 ; $60b3
+	call InitSceneViewerDefault ; $60b3
 Label_0a_60b6:
-	call Func_0a_60c2 ; $60b6
-	call Func_0a_5e1f ; $60b9
+	call UpdateSceneViewerScroll ; $60b6
+	call SceneViewerSelectScene ; $60b9
 	call AdvanceFrame ; $60bc
 	jr Label_0a_60b6 ; $60bf
 	ret ; $60c1
-Func_0a_60c2:
+UpdateSceneViewerScroll:
 	ld a, [$c321] ; $60c2
 	push af ; $60c5
 	ld a, [$c323] ; $60c6
 	push af ; $60c9
-	call Func_0a_6160 ; $60ca
+	call MoveSceneViewerCamera ; $60ca
 	pop hl ; $60cd
 	ld a, [$c323] ; $60ce
 	cp a, h ; $60d1
@@ -4361,7 +4361,7 @@ Label_0a_60fb:
 	ldh [hScrollX], a ; $611d
 	ret ; $611f
 	INCBIN "data/bank_00a/d_6120.bin" ; $6120, 64 bytes
-Func_0a_6160:
+MoveSceneViewerCamera:
 	ldh a, [hPlayerInputFlags] ; $6160
 	rra ; $6162
 	rra ; $6163
@@ -4403,7 +4403,7 @@ Func_0a_6160:
 	ld a, h ; $6199
 	ld [$c323], a ; $619a
 	ret ; $619d
-Func_0a_619e:
+CopySceneTilemapRect:
 	push af ; $619e
 	push bc ; $619f
 	push de ; $61a0
@@ -4415,12 +4415,12 @@ Func_0a_619e:
 	push hl ; $61a7
 	ld h, d ; $61a8
 	ld l, e ; $61a9
-	call Func_0a_621f ; $61aa
+	call GetSceneTilemapAddr ; $61aa
 	ld d, h ; $61ad
 	ld e, l ; $61ae
 	ld h, b ; $61af
 	ld l, c ; $61b0
-	call Func_0a_621f ; $61b1
+	call GetSceneTilemapAddr ; $61b1
 	pop bc ; $61b4
 	push hl ; $61b5
 	push de ; $61b6
@@ -4496,7 +4496,7 @@ Label_0a_61ea:
 	pop bc ; $621c
 	pop af ; $621d
 	ret ; $621e
-Func_0a_621f:
+GetSceneTilemapAddr:
 	push bc ; $621f
 	ld c, $00 ; $6220
 	ld b, l ; $6222
@@ -4511,7 +4511,7 @@ Func_0a_621f:
 	add hl, bc ; $6232
 	pop bc ; $6233
 	ret ; $6234
-Func_0a_6235:
+UpdateCameraFromPlayer:
 	wram_bank $04 ; $6235
 	ld hl, $d00c ; $623b
 	ld a, [hl+] ; $623e
@@ -4670,7 +4670,7 @@ LoadCourtSceneGraphics:
 	pop bc ; $6398
 	pop af ; $6399
 	ret ; $639a
-Func_0a_639b:
+InitSceneTileAnimations:
 	push af ; $639b
 	push bc ; $639c
 	push de ; $639d
@@ -4805,7 +4805,7 @@ Label_0a_644c:
 	pop bc ; $6453
 	pop af ; $6454
 	ret ; $6455
-Func_0a_6456:
+StopSceneTileAnimations:
 	push af ; $6456
 	push bc ; $6457
 	push de ; $6458
@@ -4861,7 +4861,7 @@ Label_0a_6488:
 	or a, a ; $64a5
 	jr nz, Label_0a_6488 ; $64a6
 	ld a, b ; $64a8
-	call Func_0a_64bb ; $64a9
+	call AdvanceSceneTileAnimation ; $64a9
 	ld a, c ; $64ac
 	cp a, $04 ; $64ad
 	jr nz, Label_0a_6488 ; $64af
@@ -4873,7 +4873,7 @@ Label_0a_64b1:
 	pop bc ; $64b8
 	pop af ; $64b9
 	ret ; $64ba
-Func_0a_64bb:
+AdvanceSceneTileAnimation:
 	push af ; $64bb
 	push bc ; $64bc
 	push de ; $64bd
@@ -5018,7 +5018,7 @@ Label_0a_64ef:
 	pop bc ; $6593
 	pop af ; $6594
 	ret ; $6595
-Func_0a_6596:
+InitMinigameTargets:
 	wram_bank $04 ; $6596
 	ld hl, $dc00 ; $659c
 	ld c, $10 ; $659f
@@ -5028,7 +5028,7 @@ Func_0a_6596:
 	ld a, $ff ; $65a9
 	ld [$c78d], a ; $65ab
 	ret ; $65ae
-Func_0a_65af:
+ActivateMinigameTarget:
 	ld hl, $0004 ; $65af
 	add hl, bc ; $65b2
 	ld a, e ; $65b3
@@ -5041,20 +5041,20 @@ Func_0a_65af:
 	add hl, bc ; $65bf
 	set 0, [hl] ; $65c0
 	ret ; $65c2
-Func_0a_65c3:
+UpdateMinigameTargets:
 	ld a, [$c7be] ; $65c3
 	and a, a ; $65c6
 	ret z ; $65c7
 	ld hl, $dc00 ; $65c8
 	ld c, $0f ; $65cb
 Label_0a_65cd:
-	call Func_0a_65d8 ; $65cd
+	call UpdateMinigameTarget ; $65cd
 	ld de, $000e ; $65d0
 	add hl, de ; $65d3
 	dec c ; $65d4
 	jr nz, Label_0a_65cd ; $65d5
 	ret ; $65d7
-Func_0a_65d8:
+UpdateMinigameTarget:
 	bit 0, [hl] ; $65d8
 	ret z ; $65da
 	push af ; $65db
@@ -5071,19 +5071,19 @@ Func_0a_65d8:
 	jr z, Label_0a_65f0 ; $65ed
 	dec [hl] ; $65ef
 Label_0a_65f0:
-	call Func_0a_68b7 ; $65f0
-	call Func_0a_661e ; $65f3
+	call RunMinigameTargetScript ; $65f0
+	call MoveMinigameTargetTowardGoal ; $65f3
 	ld a, [$c7a4] ; $65f6
 	and a, a ; $65f9
 	jr nz, Label_0a_6607 ; $65fa
-	call Func_0a_66ae ; $65fc
-	call Func_0a_672d ; $65ff
-	call Func_0a_6717 ; $6602
+	call DrawMinigameTarget ; $65fc
+	call CheckBallHitsMinigameTarget ; $65ff
+	call HandleMinigameTargetHit ; $6602
 	jr Label_0a_6610 ; $6605
 Label_0a_6607:
-	call Func_0a_6d6e ; $6607
-	call Func_0a_6df4 ; $660a
-	call Func_0a_6dde ; $660d
+	call DrawMinigameTargetAlt ; $6607
+	call CheckBallHitsMinigameTargetAlt ; $660a
+	call HandleMinigameTargetHitAlt ; $660d
 Label_0a_6610:
 	pop de ; $6610
 	ld hl, $dcf0 ; $6611
@@ -5094,7 +5094,7 @@ Label_0a_6610:
 	pop bc ; $661b
 	pop af ; $661c
 	ret ; $661d
-Func_0a_661e:
+MoveMinigameTargetTowardGoal:
 	ld hl, $dcf0 ; $661e
 	bit 1, [hl] ; $6621
 	ret z ; $6623
@@ -5206,7 +5206,7 @@ Label_0a_667c:
 	res 1, [hl] ; $66ab
 Label_0a_66ad:
 	ret ; $66ad
-Func_0a_66ae:
+DrawMinigameTarget:
 	ld hl, $dcf8 ; $66ae
 	ld a, [hl+] ; $66b1
 	ld b, [hl] ; $66b2
@@ -5255,7 +5255,7 @@ Label_0a_66e1:
 	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
 	INCBIN "data/bank_00a/d_66f6.bin" ; $66f6, 33 bytes
-Func_0a_6717:
+HandleMinigameTargetHit:
 	ld hl, $dcf0 ; $6717
 	bit 2, [hl] ; $671a
 	ret z ; $671c
@@ -5264,9 +5264,9 @@ Func_0a_6717:
 	ld a, $20 ; $6721
 	ld [$dcf2], a ; $6723
 	ld a, [$dcf1] ; $6726
-	call Func_0a_6774 ; $6729
+	call DeflectBallOffMinigameTarget ; $6729
 	ret ; $672c
-Func_0a_672d:
+CheckBallHitsMinigameTarget:
 	ld a, [$c4b4] ; $672d
 	and a, a ; $6730
 	ret z ; $6731
@@ -5314,7 +5314,7 @@ Func_0a_672d:
 	set 2, [hl] ; $6771
 Label_0a_6773:
 	ret ; $6773
-Func_0a_6774:
+DeflectBallOffMinigameTarget:
 	and a, $03 ; $6774
 	ld a, a ; $6776
 	rst Rst00 ; $6777
@@ -5376,7 +5376,7 @@ Label_0a_67b2:
 	ld [hl+], a ; $67c7
 	ld [hl], d ; $67c8
 	ret ; $67c9
-Func_0a_67ca:
+DrawNumberWithSprites:
 	push af ; $67ca
 	push bc ; $67cb
 	push hl ; $67cc
@@ -5397,21 +5397,21 @@ Func_0a_67ca:
 	ld h, b ; $67df
 	pop de ; $67e0
 	pop bc ; $67e1
-	call Func_0a_67eb ; $67e2
+	call DrawDigitSpritesString ; $67e2
 	add sp, 10 ; $67e5
 	pop hl ; $67e7
 	pop bc ; $67e8
 	pop af ; $67e9
 	ret ; $67ea
-Func_0a_67eb:
+DrawDigitSpritesString:
 	ld a, [hl+] ; $67eb
 	and a, a ; $67ec
 	jr z, Label_0a_67f4 ; $67ed
-	call Func_0a_67f5 ; $67ef
-	jr Func_0a_67eb ; $67f2
+	call DrawDigitSprite_0a ; $67ef
+	jr DrawDigitSpritesString ; $67f2
 Label_0a_67f4:
 	ret ; $67f4
-Func_0a_67f5:
+DrawDigitSprite_0a:
 	sub a, $30 ; $67f5
 	jr c, Label_0a_6804 ; $67f7
 	push de ; $67f9
@@ -5521,7 +5521,7 @@ Label_0a_684b:
 	ld a, $01 ; $68a7
 	ret ; $68a9
 	INCBIN "data/bank_00a/d_68aa.bin" ; $68aa, 13 bytes
-Func_0a_68b7:
+RunMinigameTargetScript:
 	ld hl, $dcf3 ; $68b7
 	ld a, [hl] ; $68ba
 	and a, a ; $68bb
@@ -5555,64 +5555,64 @@ Label_0a_68c6:
 	jr nz, Label_0a_68c6 ; $68de
 	ret ; $68e0
 	INCBIN "data/bank_00a/d_68e1.bin" ; $68e1, 922 bytes
-Func_0a_6c7b:
+SpawnMinigameTargetFormation:
 	ld a, a ; $6c7b
 	rst Rst00 ; $6c7c
-	dw Label_0a_6c8f ; $6c7d jumptable
-	dw Label_0a_6ca0 ; $6c7f jumptable
-	dw Label_0a_6cb9 ; $6c81 jumptable
-	dw Label_0a_6cd2 ; $6c83 jumptable
-	dw Label_0a_6cf3 ; $6c85 jumptable
-	dw Label_0a_6d14 ; $6c87 jumptable
-	dw Label_0a_6d21 ; $6c89 jumptable
-	dw Label_0a_6d30 ; $6c8b jumptable
-	dw Label_0a_6d41 ; $6c8d jumptable
-Label_0a_6c8f:
+	dw SpawnMinigameTargetFormation0 ; $6c7d jumptable
+	dw SpawnMinigameTargetFormation1 ; $6c7f jumptable
+	dw SpawnMinigameTargetFormation2 ; $6c81 jumptable
+	dw SpawnMinigameTargetFormation3 ; $6c83 jumptable
+	dw SpawnMinigameTargetFormation4 ; $6c85 jumptable
+	dw SpawnMinigameTargetFormation5 ; $6c87 jumptable
+	dw SpawnMinigameTargetFormation6 ; $6c89 jumptable
+	dw SpawnMinigameTargetFormation7 ; $6c8b jumptable
+	dw SpawnMinigameTargetFormation8 ; $6c8d jumptable
+SpawnMinigameTargetFormation0:
 	ld hl, $6c96 ; $6c8f
-	call Func_0a_6d52 ; $6c92
+	call SpawnMinigameTargetsFromList ; $6c92
 	ret ; $6c95
 	INCBIN "data/bank_00a/d_6c96.bin" ; $6c96, 10 bytes
-Label_0a_6ca0:
+SpawnMinigameTargetFormation1:
 	ld hl, $6ca7 ; $6ca0
-	call Func_0a_6d52 ; $6ca3
+	call SpawnMinigameTargetsFromList ; $6ca3
 	ret ; $6ca6
 	INCBIN "data/bank_00a/d_6ca7.bin" ; $6ca7, 18 bytes
-Label_0a_6cb9:
+SpawnMinigameTargetFormation2:
 	ld hl, $6cc0 ; $6cb9
-	call Func_0a_6d52 ; $6cbc
+	call SpawnMinigameTargetsFromList ; $6cbc
 	ret ; $6cbf
 	INCBIN "data/bank_00a/d_6cc0.bin" ; $6cc0, 18 bytes
-Label_0a_6cd2:
+SpawnMinigameTargetFormation3:
 	ld hl, $6cd9 ; $6cd2
-	call Func_0a_6d52 ; $6cd5
+	call SpawnMinigameTargetsFromList ; $6cd5
 	ret ; $6cd8
 	INCBIN "data/bank_00a/d_6cd9.bin" ; $6cd9, 26 bytes
-Label_0a_6cf3:
+SpawnMinigameTargetFormation4:
 	ld hl, $6cfa ; $6cf3
-	call Func_0a_6d52 ; $6cf6
+	call SpawnMinigameTargetsFromList ; $6cf6
 	ret ; $6cf9
 	INCBIN "data/bank_00a/d_6cfa.bin" ; $6cfa, 26 bytes
-Label_0a_6d14:
+SpawnMinigameTargetFormation5:
 	ld hl, $6d1b ; $6d14
-	call Func_0a_6d52 ; $6d17
+	call SpawnMinigameTargetsFromList ; $6d17
 	ret ; $6d1a
 	INCBIN "data/bank_00a/d_6d1b.bin" ; $6d1b, 6 bytes
-Label_0a_6d21:
+SpawnMinigameTargetFormation6:
 	ld hl, $6d28 ; $6d21
-	call Func_0a_6d52 ; $6d24
+	call SpawnMinigameTargetsFromList ; $6d24
 	ret ; $6d27
 	INCBIN "data/bank_00a/d_6d28.bin" ; $6d28, 8 bytes
-Label_0a_6d30:
+SpawnMinigameTargetFormation7:
 	ld hl, $6d37 ; $6d30
-	call Func_0a_6d52 ; $6d33
+	call SpawnMinigameTargetsFromList ; $6d33
 	ret ; $6d36
 	INCBIN "data/bank_00a/d_6d37.bin" ; $6d37, 10 bytes
-Label_0a_6d41:
+SpawnMinigameTargetFormation8:
 	ld hl, $6d48 ; $6d41
-	call Func_0a_6d52 ; $6d44
+	call SpawnMinigameTargetsFromList ; $6d44
 	ret ; $6d47
 	INCBIN "data/bank_00a/d_6d48.bin" ; $6d48, 10 bytes
-Func_0a_6d52:
+SpawnMinigameTargetsFromList:
 	ld bc, $dc00 ; $6d52
 Label_0a_6d55:
 	ld a, [hl+] ; $6d55
@@ -5624,7 +5624,7 @@ Label_0a_6d55:
 	jr z, Label_0a_6d6d ; $6d5b
 	push bc ; $6d5d
 	push hl ; $6d5e
-	call Func_0a_65af ; $6d5f
+	call ActivateMinigameTarget ; $6d5f
 	pop hl ; $6d62
 	pop bc ; $6d63
 	ld a, $0e ; $6d64
@@ -5636,7 +5636,7 @@ Label_0a_6d6b:
 	jr Label_0a_6d55 ; $6d6b
 Label_0a_6d6d:
 	ret ; $6d6d
-Func_0a_6d6e:
+DrawMinigameTargetAlt:
 	ld hl, $dcf8 ; $6d6e
 	ld a, [hl+] ; $6d71
 	ld b, [hl] ; $6d72
@@ -5674,7 +5674,7 @@ Label_0a_6d90:
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
 	INCBIN "data/bank_00a/d_6da5.bin" ; $6da5, 57 bytes
-Func_0a_6dde:
+HandleMinigameTargetHitAlt:
 	ld hl, $dcf0 ; $6dde
 	bit 2, [hl] ; $6de1
 	ret z ; $6de3
@@ -5685,7 +5685,7 @@ Func_0a_6dde:
 	ld a, [$dcf1] ; $6ded
 	ld [$c78d], a ; $6df0
 	ret ; $6df3
-Func_0a_6df4:
+CheckBallHitsMinigameTargetAlt:
 	ld a, [$c4b4] ; $6df4
 	and a, a ; $6df7
 	ret z ; $6df8
@@ -5736,7 +5736,7 @@ Func_0a_6df4:
 Label_0a_6e3f:
 	ret ; $6e3f
 	INCBIN "data/bank_00a/d_6e40.bin" ; $6e40, 52 bytes
-Func_0a_6e74:
+RunEndingCreditsSequence:
 	ld c, $04 ; $6e74
 	call BeginFadeOut ; $6e76
 	call WaitFadeEnd ; $6e79
@@ -5774,11 +5774,11 @@ Label_0a_6eac:
 	xor a, a ; $6eb9
 	ld [$cb02], a ; $6eba
 	ld [$cb03], a ; $6ebd
-	call Func_0a_4f40 ; $6ec0
+	call RunStoryLocation ; $6ec0
 	test_flag $0d, 5 ; $6ec3
 	jr nz, Label_0a_6ee3 ; $6ec6
 	set_flag $03, 0 ; $6ec8
-	call Func_0a_6f1d ; $6ecb
+	call FreezeAllActors ; $6ecb
 	farcall FarPtr_03_40 ; $6ece
 	ld b, $3f ; $6ed1
 	ld c, $ff ; $6ed3
@@ -5816,7 +5816,7 @@ Label_0a_6f03:
 	clear_flag $0d, 6 ; $6f16
 	clear_flag $0d, 7 ; $6f19
 	ret ; $6f1c
-Func_0a_6f1d:
+FreezeAllActors:
 	wram_bank $04 ; $6f1d
 	ld de, $d000 ; $6f23
 	ld c, $18 ; $6f26

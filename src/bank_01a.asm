@@ -400,7 +400,7 @@ Label_1a_42ce:
 	res 7, a ; $42f4
 	ld [wMessageSpeed], a ; $42f6
 	ld bc, rIE ; $42f9
-	farcall FarPtr_0a_62 ; $42fc
+	farcall FarPtr_SaveStoryReturnPoint ; $42fc
 	farcall FarPtr_SaveStorySlotWithTimer ; $42ff
 	ld a, $00 ; $4302
 	ld [wStoryModeCurrentLocation], a ; $4304

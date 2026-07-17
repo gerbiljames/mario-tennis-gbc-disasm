@@ -75,7 +75,7 @@ Label_01_40a5:
 	ld [hl], $00 ; $40a8
 	ld hl, $c295 ; $40aa
 	ld [hl], $0a ; $40ad
-	farcall FarPtr_0a_5c ; $40af
+	farcall FarPtr_RunStoryModeOverworld ; $40af
 Label_01_40b2:
 	ld hl, $0153 ; $40b2
 	ld de, $0511 ; $40b5
@@ -103,7 +103,7 @@ Label_01_40d8:
 	ld [hl], $00 ; $40df
 	ld hl, $c295 ; $40e1
 	ld [hl], $0a ; $40e4
-	farcall FarPtr_0a_5c ; $40e6
+	farcall FarPtr_RunStoryModeOverworld ; $40e6
 	jp Label_01_40b2 ; $40e9
 Unused_01_MenuRedraw:
 	ld hl, $0153 ; $40ec
@@ -121,7 +121,7 @@ Label_01_40f9:
 	ld [hl], $00 ; $4106
 	ld hl, $c295 ; $4108
 	ld [hl], $0a ; $410b
-	farcall FarPtr_0a_5c ; $410d
+	farcall FarPtr_RunStoryModeOverworld ; $410d
 	jp Label_01_40a5 ; $4110
 Label_01_4113:
 	bit 2, a ; $4113
@@ -227,7 +227,7 @@ Label_01_41db:
 	ld [hl], $0a ; $41eb
 	ld a, $00 ; $41ed
 	ld [wStoryModeMainCharacterOverworldSprite], a ; $41ef
-	farcall FarPtr_0a_5c ; $41f2
+	farcall FarPtr_RunStoryModeOverworld ; $41f2
 Label_01_41f5:
 	bit 5, a ; $41f5
 	jr z, Label_01_4209 ; $41f7

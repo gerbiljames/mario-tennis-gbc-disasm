@@ -357,7 +357,7 @@ UpdateScorePopup:
 	ld l, a ; $425d
 	ld b, $01 ; $425e
 	ld a, $01 ; $4260
-	farcall FarPtr_0a_9c ; $4262
+	farcall FarPtr_DrawNumberWithSprites ; $4262
 	ret ; $4265
 AddToMinigameScore:
 	ld hl, wMinigamesCurrentScore ; $4266
@@ -1317,9 +1317,9 @@ Label_0d_4a5b:
 	ld [$c7b9], a ; $4a82
 	ld a, $00 ; $4a85
 	ld [wMinigameLevel], a ; $4a87
-	farcall FarPtr_0a_96 ; $4a8a
+	farcall FarPtr_InitMinigameTargets ; $4a8a
 	ld a, $00 ; $4a8d
-	farcall FarPtr_0a_9a ; $4a8f
+	farcall FarPtr_SpawnMinigameTargetFormation ; $4a8f
 	ret ; $4a92
 	INCBIN "data/bank_00d/d_4a93.bin" ; $4a93, 16 bytes
 	call Func_0d_4abb ; $4aa3
@@ -1499,16 +1499,16 @@ DrawMinigameScore:
 	ld l, a ; $4bef
 	ld b, $01 ; $4bf0
 	ld a, $04 ; $4bf2
-	farcall FarPtr_0a_9c ; $4bf4
+	farcall FarPtr_DrawNumberWithSprites ; $4bf4
 	ret ; $4bf7
 	INCBIN "data/bank_00d/d_4bf8.bin" ; $4bf8, 16 bytes
 	ld a, $01 ; $4c08
 	ld [$c7b9], a ; $4c0a
 	ld a, $01 ; $4c0d
 	ld [wMinigameLevel], a ; $4c0f
-	farcall FarPtr_0a_96 ; $4c12
+	farcall FarPtr_InitMinigameTargets ; $4c12
 	ld a, $01 ; $4c15
-	farcall FarPtr_0a_9a ; $4c17
+	farcall FarPtr_SpawnMinigameTargetFormation ; $4c17
 	ret ; $4c1a
 	dec hl ; $4c1b
 	ld c, h ; $4c1c
@@ -1556,9 +1556,9 @@ DrawMinigameScore:
 	ld [$c7b9], a ; $4c55
 	ld a, $02 ; $4c58
 	ld [wMinigameLevel], a ; $4c5a
-	farcall FarPtr_0a_96 ; $4c5d
+	farcall FarPtr_InitMinigameTargets ; $4c5d
 	ld a, $02 ; $4c60
-	farcall FarPtr_0a_9a ; $4c62
+	farcall FarPtr_SpawnMinigameTargetFormation ; $4c62
 	ret ; $4c65
 	halt ; $4c66
 	ld c, h ; $4c67
@@ -1606,9 +1606,9 @@ DrawMinigameScore:
 	ld [$c7b9], a ; $4ca0
 	ld a, $03 ; $4ca3
 	ld [wMinigameLevel], a ; $4ca5
-	farcall FarPtr_0a_96 ; $4ca8
+	farcall FarPtr_InitMinigameTargets ; $4ca8
 	ld a, $03 ; $4cab
-	farcall FarPtr_0a_9a ; $4cad
+	farcall FarPtr_SpawnMinigameTargetFormation ; $4cad
 	ret ; $4cb0
 	pop bc ; $4cb1
 	ld c, h ; $4cb2
@@ -1698,9 +1698,9 @@ Label_0d_4d26:
 	ld [$c7b9], a ; $4d52
 	ld a, $04 ; $4d55
 	ld [wMinigameLevel], a ; $4d57
-	farcall FarPtr_0a_96 ; $4d5a
+	farcall FarPtr_InitMinigameTargets ; $4d5a
 	ld a, $04 ; $4d5d
-	farcall FarPtr_0a_9a ; $4d5f
+	farcall FarPtr_SpawnMinigameTargetFormation ; $4d5f
 	ret ; $4d62
 	ld [hl], e ; $4d63
 	ld c, l ; $4d64
@@ -2349,7 +2349,7 @@ Label_0d_55fd:
 	and a, a ; $560b
 	ret z ; $560c
 	sub a, $04 ; $560d
-	farcall FarPtr_0a_9e ; $560f
+	farcall FarPtr_DeflectBallOffMinigameTarget ; $560f
 	sound $77 ; $5612
 	ret ; $5614
 	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 67 bytes
@@ -2708,7 +2708,7 @@ Func_0d_5848:
 	ld a, $01 ; $588a
 	ld [$c7bc], a ; $588c
 Label_0d_588f:
-	farcall FarPtr_0a_96 ; $588f
+	farcall FarPtr_InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
 	add a, $a3 ; $5895
 	ld l, a ; $5897
@@ -2718,7 +2718,7 @@ Label_0d_588f:
 	ld a, [hl] ; $589c
 	and a, a ; $589d
 	ret z ; $589e
-	farcall FarPtr_0a_9a ; $589f
+	farcall FarPtr_SpawnMinigameTargetFormation ; $589f
 	ret ; $58a2
 	nop ; $58a3
 	rlca ; $58a4
