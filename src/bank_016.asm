@@ -238,7 +238,7 @@ Label_16_4474:
 	pop hl ; $4475
 	ret ; $4476
 RunMatchWinLoseScreen:
-	ld a, [$c4c3] ; $4477
+	ld a, [wMatchAbortFlag] ; $4477
 	bit 7, a ; $447a
 	ret nz ; $447c
 	call DisableLCDSafely ; $447d

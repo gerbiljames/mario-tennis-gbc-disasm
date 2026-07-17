@@ -2417,7 +2417,7 @@ Label_04_5156:
 	ld a, d ; $5156
 	swap a ; $5157
 	and a, $0f ; $5159
-	ld [$c2a0], a ; $515b
+	ld [wStoryModeTriggerScript], a ; $515b
 	jr Label_04_5168 ; $515e
 Label_04_5160:
 	ld a, d ; $5160
@@ -2437,7 +2437,7 @@ Label_04_5168:
 	ldh a, [hInputRisingEdge] ; $517a
 	bit 0, a ; $517c
 	jr z, Label_04_5192 ; $517e
-	ld hl, $c2a4 ; $5180
+	ld hl, wStoryModeInteractRequest ; $5180
 	ld [hl], $01 ; $5183
 	ld hl, $000f ; $5185
 	add hl, bc ; $5188
@@ -2450,7 +2450,7 @@ Label_04_5192:
 	ldh a, [hInputRisingEdge] ; $5192
 	bit 3, a ; $5194
 	jr z, Label_04_519d ; $5196
-	ld hl, $c2a5 ; $5198
+	ld hl, wStoryModeMenuRequest ; $5198
 	ld [hl], $01 ; $519b
 Label_04_519d:
 	ldh a, [hPlayerInputFlags] ; $519d

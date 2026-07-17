@@ -1674,7 +1674,7 @@ Label_12_4f55:
 	ld a, $07 ; $4f60
 	ld b, $00 ; $4f62
 	farcall FarPtr_SetActorFacing ; $4f64
-	ld a, [$c4c7] ; $4f67
+	ld a, [wMatchExitRequest] ; $4f67
 	cp a, $01 ; $4f6a
 	jp nz, Label_12_4f7e ; $4f6c
 	ld c, $06 ; $4f6f
@@ -1715,7 +1715,7 @@ Label_12_4fa6:
 	call WaitFadeEnd ; $4fc0
 	xor a, a ; $4fc3
 	ld [wStoryModeShowLocationName], a ; $4fc4
-	ld a, [$c4c7] ; $4fc7
+	ld a, [wMatchExitRequest] ; $4fc7
 	cp a, $01 ; $4fca
 	jp z, Label_12_505e ; $4fcc
 	ld a, [wPointWinLoseFlag] ; $4fcf
@@ -4803,7 +4803,7 @@ Label_12_6d8a:
 	ret ; $6d9f
 SeniorCourtPostMatchReturn:
 	wram_bank $04 ; $6da0
-	ld a, [$c4c7] ; $6da6
+	ld a, [wMatchExitRequest] ; $6da6
 	cp a, $01 ; $6da9
 	jr z, Label_12_6db5 ; $6dab
 	ld a, [wMatchWinLoseFlag] ; $6dad

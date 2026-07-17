@@ -277,7 +277,7 @@ Func_0b_41c3:
 	or a, a ; $41d2
 	ret nz ; $41d3
 	ld a, $01 ; $41d4
-	ld [$c4c3], a ; $41d6
+	ld [wMatchAbortFlag], a ; $41d6
 	ret ; $41d9
 	ld a, [wPointOutcome] ; $41da
 	cp a, $04 ; $41dd
@@ -885,11 +885,11 @@ Label_0b_473f:
 	ld [hl+], a ; $474d
 	ld [hl], a ; $474e
 	ld [$c7a8], a ; $474f
-	ld a, [$c4de] ; $4752
+	ld a, [wMatchRetryRequest] ; $4752
 	or a, a ; $4755
 	ld a, [$c8f7] ; $4756
 	jp nz, RunTrainingDrillByID ; $4759
-	ld a, [$c4c7] ; $475c
+	ld a, [wMatchExitRequest] ; $475c
 	or a, a ; $475f
 	jr z, Label_0b_4767 ; $4760
 	ld a, $ff ; $4762
@@ -1092,12 +1092,12 @@ Label_0b_49b5:
 	xor a, a ; $49b5
 	ret ; $49b6
 	ld a, $01 ; $49b7
-	ld [$c4c3], a ; $49b9
+	ld [wMatchAbortFlag], a ; $49b9
 	ld a, $01 ; $49bc
 	ret ; $49be
 Label_0b_49bf:
 	ld a, $01 ; $49bf
-	ld [$c4c3], a ; $49c1
+	ld [wMatchAbortFlag], a ; $49c1
 	ld a, $ff ; $49c4
 	ret ; $49c6
 	INCBIN "data/bank_00b/d_49c7.bin" ; $49c7, 4643 bytes
@@ -1455,12 +1455,12 @@ Label_0b_5e83:
 	ret ; $5e84
 Label_0b_5e85:
 	ld a, $01 ; $5e85
-	ld [$c4c3], a ; $5e87
+	ld [wMatchAbortFlag], a ; $5e87
 	ld a, $01 ; $5e8a
 	ret ; $5e8c
 Label_0b_5e8d:
 	ld a, $01 ; $5e8d
-	ld [$c4c3], a ; $5e8f
+	ld [wMatchAbortFlag], a ; $5e8f
 	ld a, $ff ; $5e92
 	ret ; $5e94
 	INCBIN "data/bank_00b/d_5e95.bin" ; $5e95, 16 bytes
@@ -1787,12 +1787,12 @@ Label_0b_6d9c:
 	ret ; $6d9d
 Label_0b_6d9e:
 	ld a, $01 ; $6d9e
-	ld [$c4c3], a ; $6da0
+	ld [wMatchAbortFlag], a ; $6da0
 	ld a, $01 ; $6da3
 	ret ; $6da5
 Label_0b_6da6:
 	ld a, $01 ; $6da6
-	ld [$c4c3], a ; $6da8
+	ld [wMatchAbortFlag], a ; $6da8
 	ld a, $ff ; $6dab
 	ret ; $6dad
 	INCBIN "data/bank_00b/d_6dae.bin" ; $6dae, 16 bytes
@@ -1956,12 +1956,12 @@ Label_0b_7246:
 	ret ; $7247
 Label_0b_7248:
 	ld a, $01 ; $7248
-	ld [$c4c3], a ; $724a
+	ld [wMatchAbortFlag], a ; $724a
 	ld a, $01 ; $724d
 	ret ; $724f
 Label_0b_7250:
 	ld a, $01 ; $7250
-	ld [$c4c3], a ; $7252
+	ld [wMatchAbortFlag], a ; $7252
 	ld a, $ff ; $7255
 	ret ; $7257
 RunDoublesDrillMatch:

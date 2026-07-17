@@ -2561,7 +2561,7 @@ Label_11_5aed:
 	INCBIN "data/bank_011/d_5b14.bin" ; $5b14, 548 bytes
 Label_11_5d38:
 	wram_bank $04 ; $5d38
-	ld a, [$c4c7] ; $5d3e
+	ld a, [wMatchExitRequest] ; $5d3e
 	cp a, $01 ; $5d41
 	jr z, Label_11_5d4d ; $5d43
 	ld a, [wMatchWinLoseFlag] ; $5d45
@@ -4217,7 +4217,7 @@ Label_11_6d91:
 	INCBIN "data/bank_011/d_6dbc.bin" ; $6dbc, 145 bytes
 Label_11_6e4d:
 	wram_bank $04 ; $6e4d
-	ld a, [$c4c7] ; $6e53
+	ld a, [wMatchExitRequest] ; $6e53
 	cp a, $01 ; $6e56
 	jr z, Label_11_6e62 ; $6e58
 	ld a, [wMatchWinLoseFlag] ; $6e5a

@@ -320,7 +320,7 @@ Label_14_42d3:
 Label_14_4301:
 	xor a, a ; $4301
 	ld [wStoryModeShowLocationName], a ; $4302
-	ld a, [$c4c7] ; $4305
+	ld a, [wMatchExitRequest] ; $4305
 	and a, a ; $4308
 	jp nz, MachineCourtGameOverExitScene ; $4309
 	ld a, [wPointWinLoseFlag] ; $430c
@@ -797,7 +797,7 @@ Label_14_46ef:
 	ld a, $28 ; $470a
 	farcall FarPtr_WaitScriptFrames ; $470c
 	pop af ; $470f
-	ld a, [$c4c7] ; $4710
+	ld a, [wMatchExitRequest] ; $4710
 	and a, a ; $4713
 	jp nz, Label_14_474d ; $4714
 	ld hl, $20db ; $4717

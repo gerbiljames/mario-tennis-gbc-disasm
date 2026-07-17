@@ -2338,10 +2338,10 @@ Lz_1e_649d:
 StubNop_1e:
 	ret ; $6533
 ProcessMatchRewards:
-	ld a, [$c4c7] ; $6534
+	ld a, [wMatchExitRequest] ; $6534
 	or a, a ; $6537
 	ret nz ; $6538
-	ld a, [$c8a7] ; $6539
+	ld a, [wKeepMatchStatsFlag] ; $6539
 	or a, a ; $653c
 	ret nz ; $653d
 	call DisableLCDSafely ; $653e
@@ -2372,7 +2372,7 @@ ProcessMatchRewards:
 	call SetRewardGameFlag ; $657e
 	jp Label_1e_6695 ; $6581
 Label_1e_6584:
-	ld a, [$c4c7] ; $6584
+	ld a, [wMatchExitRequest] ; $6584
 	and a, a ; $6587
 	jp nz, Label_1e_6695 ; $6588
 	push hl ; $658b

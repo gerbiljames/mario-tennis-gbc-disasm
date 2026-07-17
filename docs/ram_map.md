@@ -145,8 +145,12 @@ Addresses named by this project from disassembly evidence; also in
 |---|---|---|---|
 | `0xc295` | WRAM | `wStoryModeEntryPoint` | [8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it |
 | `0xc296` | WRAM | `wStoryModeSpawnPosition` | [5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode |
+| `0xc2a0` | WRAM | `wStoryModeTriggerScript` | [8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript |
 | `0xc2a1` | WRAM | `wStoryModeExitLocationRequest` | [8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests |
+| `0xc2a4` | WRAM | `wStoryModeInteractRequest` | [8-bit] Story Mode - set to 1 on an A-press in the overworld; the event loop then tries NPC interaction (FindActorFacingPlayer), facing-tile script, and tile trigger |
+| `0xc2a5` | WRAM | `wStoryModeMenuRequest` | [8-bit] Story Mode - set to 1 on a Start-press in the overworld; opens the story-mode menu (RunStoryModeMenu) |
 | `0xc2d5` | WRAM | `wStoryModeShowLocationName` | [8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7) |
+| `0xc2d6` | WRAM | `wStoryModeLocationNameTextId` | [16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set |
 | `0xc32e` | WRAM | `wCurrentScene` | [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations |
 | `0xc36c` | WRAM | `wCurrentStorySlot` | [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on |
 | `0xc3b3` | WRAM | `wShadowTilemapBank` | [8-bit] WRAM bank of the shadow (off-screen) tilemap buffer; paired with wShadowTilemapPtr |
@@ -178,10 +182,15 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc4bb` | WRAM | `wBallShadowEnabled` | [8-bit] Nonzero draws the ball ground-shadow slot |
 | `0xc4bc` | WRAM | `wBallTrailEnabled` | [8-bit] Nonzero draws the ball trail afterimages from the position history ring |
 | `0xc4bd` | WRAM | `wBallTrailColor` | [8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts |
+| `0xc4c3` | WRAM | `wMatchAbortFlag` | [8-bit] $ff = abort the match (bit 7 breaks the point/game/set/match loops); set by every pause/quit-menu action, cleared per point by ResetPointState |
 | `0xc4c4` | WRAM | `wOffscreenArrowsEnabled` | [8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally) |
+| `0xc4c7` | WRAM | `wMatchExitRequest` | [8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it |
 | `0xc4ca` | WRAM | `wStandingShadowsEnabled` | [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters |
 | `0xc4cf` | WRAM | `wOnCourtCharCountMinus1` | [8-bit] `wOnCourtCharCount` - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches (e.g. `$4ff5`, `$6063` in bank $08) |
 | `0xc4d8` | WRAM | `wPointOutcome` | [8-bit] 0 while the rally runs; point-end cause code once the point resolves |
+| `0xc4de` | WRAM | `wMatchRetryRequest` | [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID) |
+| `0xc4df` | WRAM | `wMatchSelectNewLevelRequest` | [8-bit] Set to 1 by MatchQuitMenu_SelectNewLevel; returns to the level-select screen after the match teardown |
+| `0xc4e0` | WRAM | `wMatchMenuSelection` | [8-bit] Pause/quit menu selection (rst00 jumptable index: check rules / review controls / change options / save-quit); $ff = cancelled |
 | `0xc78c` | WRAM | `wTargetZoneEnabled` | [8-bit] Nonzero draws the 4-corner court target zone (training drills) |
 | `0xc790` | WRAM | `wTargetZoneX1` | [16-bit] Target zone X bound 1 (world units) |
 | `0xc792` | WRAM | `wTargetZoneDepth1` | [16-bit] Target zone depth bound 1 (world units) |
@@ -190,8 +199,12 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc7b2` | WRAM | `wModeHookTable` | [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook) |
 | `0xc7b4` | WRAM | `wModeHookBank` | [8-bit] ROM bank of the mode callback table (0 = no hooks registered) |
 | `0xc800` | WRAM | `wSaveBlockBuffer` | [buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer |
+| `0xc8a7` | WRAM | `wKeepMatchStatsFlag` | [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use |
 | `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
 | `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
+| `0xcb06` | WRAM | `wMenuCursor2X` | [8-bit] Secondary menu cursor column (parallel to wMenuCursorX; second selection region of the shared menu-input handler) |
+| `0xcb07` | WRAM | `wMenuCursor2Y` | [8-bit] Secondary menu cursor row (parallel to wMenuCursorY) |
+| `0xcb08` | WRAM | `wMenuCursorLockFlags` | [8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler |
 | `0xcb0e` | WRAM | `wMatchFormatDoubles` | [8-bit] Match-format menu: singles (0) / doubles (1) selection; copied to wMatchIsDoubles |
 | `0xcb0f` | WRAM | `wMatchFormatGames` | [8-bit] Match-format menu: games-per-set selection index; table-mapped to wMatchTypeNumberOfGames |
 | `0xcb10` | WRAM | `wMatchFormatSets` | [8-bit] Match-format menu: number-of-sets selection index (0-2); table-mapped to wMatchTypeNumberOfSets |

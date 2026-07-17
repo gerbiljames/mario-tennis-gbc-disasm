@@ -37,11 +37,11 @@ RunMinigameEndMenu:
 	call RegisterFrameTask ; $4043
 Label_06_4046:
 	xor a, a ; $4046
-	ld [$c4e0], a ; $4047
+	ld [wMatchMenuSelection], a ; $4047
 	ld a, $0e ; $404a
 	ld [$c4e6], a ; $404c
 	call RunMatchQuitMenu ; $404f
-	ld a, [$c4e0] ; $4052
+	ld a, [wMatchMenuSelection] ; $4052
 	cp a, $ff ; $4055
 	jr z, Label_06_4046 ; $4057
 	ld hl, $506a ; $4059
@@ -63,7 +63,7 @@ RunMatchPauseMenu:
 	farcall FarPtr_StepMatchFrame ; $407d
 	sound $63 ; $4080
 	xor a, a ; $4082
-	ld [$c4e0], a ; $4083
+	ld [wMatchMenuSelection], a ; $4083
 	ld a, $02 ; $4086
 	ldh [$ffdd], a ; $4088
 	call PrepareScoreboardGfx ; $408a
@@ -93,21 +93,21 @@ Label_06_40c6:
 	ld a, b ; $40c6
 	ld [$c4e6], a ; $40c7
 	call RunMatchMenu ; $40ca
-	ld a, [$c4e0] ; $40cd
+	ld a, [wMatchMenuSelection] ; $40cd
 	cp a, $ff ; $40d0
 	jr z, Label_06_40ef ; $40d2
 	push af ; $40d4
 	ld hl, $40e5 ; $40d5
 	push hl ; $40d8
-	ld a, [$c4e0] ; $40d9
+	ld a, [wMatchMenuSelection] ; $40d9
 	rst Rst00 ; $40dc
 	dw MatchPauseMenu_CheckRules ; $40dd jumptable
 	dw MatchPauseMenu_ReviewControls ; $40df jumptable
 	dw MatchPauseMenu_ChangeOptions ; $40e1 jumptable
 	dw MatchPauseMenu_SaveQuit ; $40e3 jumptable
 	pop af ; $40e5
-	ld [$c4e0], a ; $40e6
-	ld a, [$c4c3] ; $40e9
+	ld [wMatchMenuSelection], a ; $40e6
+	ld a, [wMatchAbortFlag] ; $40e9
 	and a, a ; $40ec
 	jr z, Label_06_40a7 ; $40ed
 Label_06_40ef:
@@ -479,33 +479,33 @@ MatchPauseMenu_ChangeOptions:
 	and a, a ; $43f4
 	jr nz, MatchPauseMenu_MusicToggle ; $43f5
 	xor a, a ; $43f7
-	ld [$c4e0], a ; $43f8
+	ld [wMatchMenuSelection], a ; $43f8
 Label_06_43fb:
 	ld a, $02 ; $43fb
 	ld [$c4e6], a ; $43fd
 	call RunMatchMenu ; $4400
-	ld a, [$c4e0] ; $4403
+	ld a, [wMatchMenuSelection] ; $4403
 	cp a, $ff ; $4406
 	jr z, Label_06_441d ; $4408
 	push af ; $440a
 	ld hl, $4417 ; $440b
 	push hl ; $440e
-	ld a, [$c4e0] ; $440f
+	ld a, [wMatchMenuSelection] ; $440f
 	rst Rst00 ; $4412
 	dw MatchPauseMenu_CameraSelect ; $4413 jumptable
 	dw MatchPauseMenu_MusicToggle ; $4415 jumptable
 	pop af ; $4417
-	ld [$c4e0], a ; $4418
+	ld [wMatchMenuSelection], a ; $4418
 	jr Label_06_43fb ; $441b
 Label_06_441d:
 	ret ; $441d
 MatchPauseMenu_CameraSelect:
 	ld a, [$c4dd] ; $441e
-	ld [$c4e0], a ; $4421
+	ld [wMatchMenuSelection], a ; $4421
 	ld a, $03 ; $4424
 	ld [$c4e6], a ; $4426
 	call RunMatchMenu ; $4429
-	ld a, [$c4e0] ; $442c
+	ld a, [wMatchMenuSelection] ; $442c
 	cp a, $ff ; $442f
 	jr z, Label_06_4439 ; $4431
 	ld [$c4dd], a ; $4433
@@ -515,11 +515,11 @@ Label_06_4439:
 MatchPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $443a
 	and a, $01 ; $443c
-	ld [$c4e0], a ; $443e
+	ld [wMatchMenuSelection], a ; $443e
 	ld a, $04 ; $4441
 	ld [$c4e6], a ; $4443
 	call RunMatchMenu ; $4446
-	ld a, [$c4e0] ; $4449
+	ld a, [wMatchMenuSelection] ; $4449
 	cp a, $ff ; $444c
 	jr z, Label_06_4461 ; $444e
 	call SetMusicMuted ; $4450
@@ -549,10 +549,10 @@ MatchPauseMenu_SaveQuit:
 Label_06_447e:
 	call GetMatchMenuItemCount ; $447e
 	dec a ; $4481
-	ld [$c4e0], a ; $4482
+	ld [wMatchMenuSelection], a ; $4482
 RunMatchQuitMenu:
 	call RunMatchMenu ; $4485
-	ld a, [$c4e0] ; $4488
+	ld a, [wMatchMenuSelection] ; $4488
 	cp a, $ff ; $448b
 	ret z ; $448d
 	call GetMatchMenuItemId ; $448e
@@ -577,33 +577,33 @@ MatchQuitMenu_ReturnToGame:
 	ret ; $44b1
 MatchQuitMenu_SaveAndQuit:
 	ld a, $01 ; $44b2
-	ld [$c8a7], a ; $44b4
+	ld [wKeepMatchStatsFlag], a ; $44b4
 	ld [$c8a5], a ; $44b7
 	ld a, $ff ; $44ba
-	ld [$c4c3], a ; $44bc
+	ld [wMatchAbortFlag], a ; $44bc
 	ld [$c492], a ; $44bf
 	ret ; $44c2
 MatchQuitMenu_Retry:
 	ld a, $01 ; $44c3
-	ld [$c4de], a ; $44c5
-	ld [$c4c7], a ; $44c8
+	ld [wMatchRetryRequest], a ; $44c5
+	ld [wMatchExitRequest], a ; $44c8
 	ld a, $ff ; $44cb
-	ld [$c4c3], a ; $44cd
+	ld [wMatchAbortFlag], a ; $44cd
 	ld [$c492], a ; $44d0
 	ret ; $44d3
 MatchQuitMenu_SelectNewLevel:
 	ld a, $01 ; $44d4
-	ld [$c4df], a ; $44d6
-	ld [$c4c7], a ; $44d9
+	ld [wMatchSelectNewLevelRequest], a ; $44d6
+	ld [wMatchExitRequest], a ; $44d9
 	ld a, $ff ; $44dc
-	ld [$c4c3], a ; $44de
+	ld [wMatchAbortFlag], a ; $44de
 	ld [$c492], a ; $44e1
 	ret ; $44e4
 MatchQuitMenu_Quit:
 	ld a, $01 ; $44e5
-	ld [$c4c7], a ; $44e7
+	ld [wMatchExitRequest], a ; $44e7
 	ld a, $ff ; $44ea
-	ld [$c4c3], a ; $44ec
+	ld [wMatchAbortFlag], a ; $44ec
 	ld [$c492], a ; $44ef
 	ret ; $44f2
 	INCBIN "data/bank_006/d_44f3.bin" ; $44f3, 11 bytes
@@ -875,7 +875,7 @@ Label_06_4701:
 	jr z, Label_06_4711 ; $4706
 	sound $62 ; $4708
 	ld a, $ff ; $470a
-	ld [$c4e0], a ; $470c
+	ld [wMatchMenuSelection], a ; $470c
 	jr Label_06_4776 ; $470f
 Label_06_4711:
 	farcall FarPtr_ReadMatchInputPressed ; $4711
@@ -890,9 +890,9 @@ Label_06_471c:
 	ld b, a ; $4723
 	ld a, [$c4e7] ; $4724
 	ld c, a ; $4727
-	ld a, [$c4e0] ; $4728
+	ld a, [wMatchMenuSelection] ; $4728
 	call MoveCursorHorizontal ; $472b
-	ld [$c4e0], a ; $472e
+	ld [wMatchMenuSelection], a ; $472e
 	sound $5e ; $4731
 Label_06_4733:
 	farcall FarPtr_PrepareGlyphBuffer ; $4733
@@ -906,7 +906,7 @@ Label_06_4733:
 	ld [hl+], a ; $4744
 	ld [hl+], a ; $4745
 	ld [hl+], a ; $4746
-	ld a, [$c4e0] ; $4747
+	ld a, [wMatchMenuSelection] ; $4747
 	call GetMatchMenuItemId ; $474a
 	push af ; $474d
 	call LoadMatchMenuItemGfx ; $474e
@@ -1100,7 +1100,7 @@ DrawMatchMenuCursor:
 	ld a, [hl+] ; $487e
 	ld h, [hl] ; $487f
 	ld l, a ; $4880
-	ld a, [$c4e0] ; $4881
+	ld a, [wMatchMenuSelection] ; $4881
 	add a, a ; $4884
 	add a, l ; $4885
 	ld l, a ; $4886
@@ -3960,7 +3960,7 @@ RunDebugStatsEditor:
 	wram_bank $02 ; $6b9e
 	farcall FarPtr_StepMatchFrame ; $6ba4
 	xor a, a ; $6ba7
-	ld [$c4e0], a ; $6ba8
+	ld [wMatchMenuSelection], a ; $6ba8
 	call DrawDebugStatsLabels ; $6bab
 	call DrawDebugStatsValues ; $6bae
 	call FlushTilemapToVram ; $6bb1
@@ -3997,9 +3997,9 @@ HandleDebugStatsInput:
 	ldh a, [hInputPressed] ; $6bf6
 	ld b, a ; $6bf8
 	ld c, $0b ; $6bf9
-	ld a, [$c4e0] ; $6bfb
+	ld a, [wMatchMenuSelection] ; $6bfb
 	call MoveCursorVertical ; $6bfe
-	ld [$c4e0], a ; $6c01
+	ld [wMatchMenuSelection], a ; $6c01
 	call AdjustSelectedDebugStat ; $6c04
 	call QueueDebugStatsCursorSprites ; $6c07
 	call DrawDebugStatsValues ; $6c0a
@@ -4009,7 +4009,7 @@ HandleDebugStatsInput:
 QueueDebugStatsCursorSprites:
 	ld de, $0c0c ; $6c13
 	call AdjustSpriteCoordsForScroll ; $6c16
-	ld a, [$c4e0] ; $6c19
+	ld a, [wMatchMenuSelection] ; $6c19
 	add a, a ; $6c1c
 	add a, a ; $6c1d
 	add a, a ; $6c1e
@@ -4024,7 +4024,7 @@ QueueDebugStatsCursorSprites:
 	call QueueSprite ; $6c2e
 	ret ; $6c31
 AdjustSelectedDebugStat:
-	ld a, [$c4e0] ; $6c32
+	ld a, [wMatchMenuSelection] ; $6c32
 	rst Rst00 ; $6c35
 	dw Label_06_6c4c ; $6c36 jumptable
 	dw Label_06_6c55 ; $6c38 jumptable
@@ -4154,7 +4154,7 @@ Label_06_6d1b:
 	jr z, Label_06_6d2b ; $6d20
 	sound $62 ; $6d22
 	ld a, $ff ; $6d24
-	ld [$c4e0], a ; $6d26
+	ld [wMatchMenuSelection], a ; $6d26
 	jr Label_06_6d70 ; $6d29
 Label_06_6d2b:
 	farcall FarPtr_ReadMatchInputPressed ; $6d2b
@@ -4169,12 +4169,12 @@ Label_06_6d36:
 	ld b, a ; $6d3d
 	ld a, [$c4e7] ; $6d3e
 	ld c, a ; $6d41
-	ld a, [$c4e0] ; $6d42
+	ld a, [wMatchMenuSelection] ; $6d42
 	call MoveCursorHorizontal ; $6d45
-	ld [$c4e0], a ; $6d48
+	ld [wMatchMenuSelection], a ; $6d48
 	sound $5e ; $6d4b
 Label_06_6d4d:
-	ld a, [$c4e0] ; $6d4d
+	ld a, [wMatchMenuSelection] ; $6d4d
 	call GetStoryMenuItemId ; $6d50
 	push af ; $6d53
 	call LoadStoryMenuItemGfx ; $6d54
@@ -4281,7 +4281,7 @@ DrawStoryMenuCursor:
 	ld a, [hl+] ; $6de8
 	ld h, [hl] ; $6de9
 	ld l, a ; $6dea
-	ld a, [$c4e0] ; $6deb
+	ld a, [wMatchMenuSelection] ; $6deb
 	add a, a ; $6dee
 	add a, l ; $6def
 	ld l, a ; $6df0
@@ -4317,7 +4317,7 @@ RunStoryModeMenu:
 	call AdvanceFrame ; $6e20
 	sound $63 ; $6e23
 	xor a, a ; $6e25
-	ld [$c4e0], a ; $6e26
+	ld [wMatchMenuSelection], a ; $6e26
 	ld a, $02 ; $6e29
 	ldh [$ffdd], a ; $6e2b
 	farcall FarPtr_InitTextWindows ; $6e2d
@@ -4341,13 +4341,13 @@ Label_06_6e52:
 	ld a, $00 ; $6e5d
 	ld [$c4e6], a ; $6e5f
 	call RunStoryMenu ; $6e62
-	ld a, [$c4e0] ; $6e65
+	ld a, [wMatchMenuSelection] ; $6e65
 	cp a, $ff ; $6e68
 	jr z, Label_06_6e94 ; $6e6a
 	push af ; $6e6c
 	ld hl, $6e7d ; $6e6d
 	push hl ; $6e70
-	ld a, [$c4e0] ; $6e71
+	ld a, [wMatchMenuSelection] ; $6e71
 	rst Rst00 ; $6e74
 	dw StoryPauseMenu_PlayerData ; $6e75 jumptable
 	dw StoryPauseMenu_GameProgress ; $6e77 jumptable
@@ -4355,7 +4355,7 @@ Label_06_6e52:
 	dw StoryPauseMenu_SaveQuit ; $6e7b jumptable
 	ld b, a ; $6e7d
 	pop af ; $6e7e
-	ld [$c4e0], a ; $6e7f
+	ld [wMatchMenuSelection], a ; $6e7f
 	cp a, $02 ; $6e82
 	jr c, Label_06_6eb2 ; $6e84
 	cp a, $03 ; $6e86
@@ -4364,7 +4364,7 @@ Label_06_6e52:
 	or a, a ; $6e8b
 	jr nz, Label_06_6eb2 ; $6e8c
 Label_06_6e8e:
-	ld a, [$c4c3] ; $6e8e
+	ld a, [wMatchAbortFlag] ; $6e8e
 	and a, a ; $6e91
 	jr z, Label_06_6e52 ; $6e92
 Label_06_6e94:
@@ -4403,7 +4403,7 @@ Label_06_6ed7:
 	jr z, Label_06_6ee7 ; $6edc
 	sound $62 ; $6ede
 	ld a, $ff ; $6ee0
-	ld [$c4e0], a ; $6ee2
+	ld [wMatchMenuSelection], a ; $6ee2
 	jr Label_06_6f36 ; $6ee5
 Label_06_6ee7:
 	farcall FarPtr_ReadMatchInputPressed ; $6ee7
@@ -4417,14 +4417,14 @@ Label_06_6ef2:
 	jr z, Label_06_6f20 ; $6ef7
 	ld b, a ; $6ef9
 	ld c, $04 ; $6efa
-	ld a, [$c4e0] ; $6efc
+	ld a, [wMatchMenuSelection] ; $6efc
 	call MoveCursorHorizontal ; $6eff
-	ld [$c4e0], a ; $6f02
+	ld [wMatchMenuSelection], a ; $6f02
 	sound $5e ; $6f05
 Label_06_6f07:
-	ld a, [$c4e0] ; $6f07
+	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
-	ld a, [$c4e0] ; $6f0d
+	ld a, [wMatchMenuSelection] ; $6f0d
 	add a, $62 ; $6f10
 	ld l, a ; $6f12
 	adc a, $01 ; $6f13
@@ -4434,7 +4434,7 @@ Label_06_6f07:
 	call DrawStoryMenuCaption ; $6f1a
 	call RedrawStoryTilemapRows ; $6f1d
 Label_06_6f20:
-	ld a, [$c4e0] ; $6f20
+	ld a, [wMatchMenuSelection] ; $6f20
 	add a, a ; $6f23
 	add a, $3a ; $6f24
 	ld l, a ; $6f26
@@ -4454,14 +4454,14 @@ Label_06_6f36:
 StoryPauseMenu_PlayerData:
 	call RestoreStoryTilemapNoPriority ; $6f42
 	xor a, a ; $6f45
-	ld [$c4e0], a ; $6f46
+	ld [wMatchMenuSelection], a ; $6f46
 	ld a, $01 ; $6f49
 	ld [$c4e6], a ; $6f4b
 	call RunStoryMenu ; $6f4e
-	ld a, [$c4e0] ; $6f51
+	ld a, [wMatchMenuSelection] ; $6f51
 	cp a, $ff ; $6f54
 	jr z, Label_06_6f60 ; $6f56
-	ld a, [$c4e0] ; $6f58
+	ld a, [wMatchMenuSelection] ; $6f58
 	rst Rst00 ; $6f5b
 	dw StoryPauseMenu_CharPartnerData ; $6f5c jumptable
 	dw StoryPauseMenu_Equipment ; $6f5e jumptable
@@ -4511,23 +4511,23 @@ StoryPauseMenu_Options:
 	ld a, [$c4c8] ; $6fbf
 	and a, a ; $6fc2
 	xor a, a ; $6fc3
-	ld [$c4e0], a ; $6fc4
+	ld [wMatchMenuSelection], a ; $6fc4
 Label_06_6fc7:
 	ld a, $02 ; $6fc7
 	ld [$c4e6], a ; $6fc9
 	call RunStoryMenu ; $6fcc
-	ld a, [$c4e0] ; $6fcf
+	ld a, [wMatchMenuSelection] ; $6fcf
 	cp a, $ff ; $6fd2
 	jr z, Label_06_6fe9 ; $6fd4
 	push af ; $6fd6
 	ld hl, $6fe3 ; $6fd7
 	push hl ; $6fda
-	ld a, [$c4e0] ; $6fdb
+	ld a, [wMatchMenuSelection] ; $6fdb
 	rst Rst00 ; $6fde
 	dw StoryPauseMenu_MessageSpeed ; $6fdf jumptable
 	dw StoryPauseMenu_MusicToggle ; $6fe1 jumptable
 	pop af ; $6fe3
-	ld [$c4e0], a ; $6fe4
+	ld [wMatchMenuSelection], a ; $6fe4
 	jr Label_06_6fc7 ; $6fe7
 Label_06_6fe9:
 	ret ; $6fe9
@@ -4541,9 +4541,9 @@ StoryPauseMenu_MessageSpeed:
 	ld b, a ; $6ffa
 	ld a, $02 ; $6ffb
 	sub a, b ; $6ffd
-	ld [$c4e0], a ; $6ffe
+	ld [wMatchMenuSelection], a ; $6ffe
 	call RunMessageSpeedMenu ; $7001
-	ld a, [$c4e0] ; $7004
+	ld a, [wMatchMenuSelection] ; $7004
 	cp a, $ff ; $7007
 	jr z, Label_06_7012 ; $7009
 	ld b, a ; $700b
@@ -4555,9 +4555,9 @@ Label_06_7012:
 StoryPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $7013
 	and a, $01 ; $7015
-	ld [$c4e0], a ; $7017
+	ld [wMatchMenuSelection], a ; $7017
 	call RunMusicOnOffMenu ; $701a
-	ld a, [$c4e0] ; $701d
+	ld a, [wMatchMenuSelection] ; $701d
 	cp a, $ff ; $7020
 	jr z, Label_06_702e ; $7022
 	call SetMusicMuted ; $7024
@@ -4572,16 +4572,16 @@ StoryPauseMenu_SaveQuit:
 	ld de, $000e ; $7035
 	call DrawStoryMenuCaption ; $7038
 	ld a, $02 ; $703b
-	ld [$c4e0], a ; $703d
+	ld [wMatchMenuSelection], a ; $703d
 	ld a, $05 ; $7040
 	ld [$c4e6], a ; $7042
 	call RunStoryMenu ; $7045
-	ld a, [$c4e0] ; $7048
+	ld a, [wMatchMenuSelection] ; $7048
 	cp a, $ff ; $704b
 	jr z, Label_06_70a9 ; $704d
 	cp a, $02 ; $704f
 	jr z, Label_06_70a9 ; $7051
-	ld a, [$c4e0] ; $7053
+	ld a, [wMatchMenuSelection] ; $7053
 	cp a, $01 ; $7056
 	jr z, StoryPauseMenu_ReturnToMainMenu ; $7058
 	ld a, $01 ; $705a
@@ -4605,9 +4605,9 @@ StoryPauseMenu_ReturnToMainMenu:
 	call WaitFramesCmd ; $7086
 	db $08 ; $7089 inline arg
 	ld a, $01 ; $708a
-	ld [$c4c7], a ; $708c
+	ld [wMatchExitRequest], a ; $708c
 	ld a, $ff ; $708f
-	ld [$c4c3], a ; $7091
+	ld [wMatchAbortFlag], a ; $7091
 	ld a, $00 ; $7094
 	ld [wStoryModeCurrentLocation], a ; $7096
 	ld a, $01 ; $7099
@@ -4646,7 +4646,7 @@ RunStoryTwoOptionMenu:
 	ld a, [$c4e1] ; $70df
 	cp a, $0b ; $70e2
 	jr z, Label_06_70f8 ; $70e4
-	ld hl, $c4e0 ; $70e6
+	ld hl, wMatchMenuSelection ; $70e6
 	add a, [hl] ; $70e9
 	ld hl, $0162 ; $70ea
 	add a, l ; $70ed
@@ -4658,7 +4658,7 @@ Label_06_70f2:
 	call DrawStoryMenuCaption ; $70f5
 Label_06_70f8:
 	call RedrawStoryTilemapRows ; $70f8
-	ld a, [$c4e0] ; $70fb
+	ld a, [wMatchMenuSelection] ; $70fb
 	ld hl, $c4e1 ; $70fe
 	add a, [hl] ; $7101
 	call LoadStoryMenuItemGfx ; $7102
@@ -4668,7 +4668,7 @@ Label_06_7105:
 	jr z, Label_06_7115 ; $710a
 	sound $62 ; $710c
 	ld a, $ff ; $710e
-	ld [$c4e0], a ; $7110
+	ld [wMatchMenuSelection], a ; $7110
 	jr Label_06_7172 ; $7113
 Label_06_7115:
 	farcall FarPtr_ReadMatchInputPressed ; $7115
@@ -4682,14 +4682,14 @@ Label_06_7120:
 	jr z, Label_06_715b ; $7125
 	ld b, a ; $7127
 	ld c, $02 ; $7128
-	ld a, [$c4e0] ; $712a
+	ld a, [wMatchMenuSelection] ; $712a
 	call MoveCursorHorizontal ; $712d
-	ld [$c4e0], a ; $7130
+	ld [wMatchMenuSelection], a ; $7130
 	sound $5e ; $7133
 	ld a, [$c4e1] ; $7135
 	cp a, $0b ; $7138
 	jr z, Label_06_7151 ; $713a
-	ld hl, $c4e0 ; $713c
+	ld hl, wMatchMenuSelection ; $713c
 	add a, [hl] ; $713f
 	ld hl, $0162 ; $7140
 	add a, l ; $7143
@@ -4701,12 +4701,12 @@ Label_06_7148:
 	call DrawStoryMenuCaption ; $714b
 	call RedrawStoryTilemapRows ; $714e
 Label_06_7151:
-	ld a, [$c4e0] ; $7151
+	ld a, [wMatchMenuSelection] ; $7151
 	ld hl, $c4e1 ; $7154
 	add a, [hl] ; $7157
 	call LoadStoryMenuItemGfx ; $7158
 Label_06_715b:
-	ld a, [$c4e0] ; $715b
+	ld a, [wMatchMenuSelection] ; $715b
 	add a, a ; $715e
 	add a, $76 ; $715f
 	ld l, a ; $7161
@@ -4739,7 +4739,7 @@ RunStoryThreeOptionMenu:
 	call DrawStoryMenuItem ; $7198
 	ld a, [$c4e1] ; $719b
 	cp a, $06 ; $719e
-	ld hl, $c4e0 ; $71a0
+	ld hl, wMatchMenuSelection ; $71a0
 	add a, [hl] ; $71a3
 	ld hl, $0162 ; $71a4
 	add a, l ; $71a7
@@ -4750,7 +4750,7 @@ Label_06_71ac:
 	ld de, $000e ; $71ac
 	call DrawStoryMenuCaption ; $71af
 	call RedrawStoryTilemapRows ; $71b2
-	ld a, [$c4e0] ; $71b5
+	ld a, [wMatchMenuSelection] ; $71b5
 	ld hl, $c4e1 ; $71b8
 	add a, [hl] ; $71bb
 	call LoadStoryMenuItemGfx ; $71bc
@@ -4760,7 +4760,7 @@ Label_06_71bf:
 	jr z, Label_06_71cf ; $71c4
 	sound $62 ; $71c6
 	ld a, $ff ; $71c8
-	ld [$c4e0], a ; $71ca
+	ld [wMatchMenuSelection], a ; $71ca
 	jr Label_06_722a ; $71cd
 Label_06_71cf:
 	farcall FarPtr_ReadMatchInputPressed ; $71cf
@@ -4774,13 +4774,13 @@ Label_06_71da:
 	jr z, Label_06_7213 ; $71df
 	ld b, a ; $71e1
 	ld c, $03 ; $71e2
-	ld a, [$c4e0] ; $71e4
+	ld a, [wMatchMenuSelection] ; $71e4
 	call MoveCursorHorizontal ; $71e7
-	ld [$c4e0], a ; $71ea
+	ld [wMatchMenuSelection], a ; $71ea
 	sound $5e ; $71ed
 	ld a, [$c4e1] ; $71ef
 	cp a, $06 ; $71f2
-	ld hl, $c4e0 ; $71f4
+	ld hl, wMatchMenuSelection ; $71f4
 	add a, [hl] ; $71f7
 	ld hl, $0162 ; $71f8
 	add a, l ; $71fb
@@ -4791,12 +4791,12 @@ Label_06_7200:
 	ld de, $000e ; $7200
 	call DrawStoryMenuCaption ; $7203
 	call RedrawStoryTilemapRows ; $7206
-	ld a, [$c4e0] ; $7209
+	ld a, [wMatchMenuSelection] ; $7209
 	ld hl, $c4e1 ; $720c
 	add a, [hl] ; $720f
 	call LoadStoryMenuItemGfx ; $7210
 Label_06_7213:
-	ld a, [$c4e0] ; $7213
+	ld a, [wMatchMenuSelection] ; $7213
 	add a, a ; $7216
 	add a, $31 ; $7217
 	ld l, a ; $7219

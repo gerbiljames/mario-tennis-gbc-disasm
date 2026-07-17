@@ -600,7 +600,7 @@ Label_0d_441e:
 	ld a, $0f ; $4435
 	farcall FarPtr_StepMatchFrames ; $4437
 	ld a, $80 ; $443a
-	ld [$c4c3], a ; $443c
+	ld [wMatchAbortFlag], a ; $443c
 	ret ; $443f
 ClearMinigameActors:
 	wram_bank $04 ; $4440

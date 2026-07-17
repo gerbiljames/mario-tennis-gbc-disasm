@@ -61,11 +61,21 @@ wStoryModeEntryPoint:: db
 
 ; [5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode
 wStoryModeSpawnPosition:: ds 5
-	ds 6
+	ds 5
+
+; [8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript
+wStoryModeTriggerScript:: db
 
 ; [8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests
 wStoryModeExitLocationRequest:: db
-	ds 18
+	ds 2
+
+; [8-bit] Story Mode - set to 1 on an A-press in the overworld; the event loop then tries NPC interaction (FindActorFacingPlayer), facing-tile script, and tile trigger
+wStoryModeInteractRequest:: db
+
+; [8-bit] Story Mode - set to 1 on a Start-press in the overworld; opens the story-mode menu (RunStoryModeMenu)
+wStoryModeMenuRequest:: db
+	ds 14
 
 ; [16-bit] Water Sprite Minigame - Timer (Frames)
 wWaterSpriteMinigameTimer:: dw
@@ -87,7 +97,10 @@ wStoryModePlayersYPosition:: dw
 
 ; [8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7)
 wStoryModeShowLocationName:: db
-	ds 74
+
+; [16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set
+wStoryModeLocationNameTextId:: dw
+	ds 72
 
 ; [16-bit] BG scroll-buffer camera X (tiles<<3?)
 wCameraX:: dw
@@ -289,11 +302,18 @@ wBallTrailEnabled:: db
 
 ; [8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts
 wBallTrailColor:: db
-	ds 6
+	ds 5
+
+; [8-bit] $ff = abort the match (bit 7 breaks the point/game/set/match loops); set by every pause/quit-menu action, cleared per point by ResetPointState
+wMatchAbortFlag:: db
 
 ; [8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally)
 wOffscreenArrowsEnabled:: db
-	ds 5
+	ds 2
+
+; [8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it
+wMatchExitRequest:: db
+	ds 2
 
 ; [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters
 wStandingShadowsEnabled:: db
@@ -309,7 +329,17 @@ wCurrentServingPlayer:: db
 
 ; [8-bit] 0 while the rally runs; point-end cause code once the point resolves
 wPointOutcome:: db
-	ds 295
+	ds 5
+
+; [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID)
+wMatchRetryRequest:: db
+
+; [8-bit] Set to 1 by MatchQuitMenu_SelectNewLevel; returns to the level-select screen after the match teardown
+wMatchSelectNewLevelRequest:: db
+
+; [8-bit] Pause/quit menu selection (rst00 jumptable index: check rules / review controls / change options / save-quit); $ff = cancelled
+wMatchMenuSelection:: db
+	ds 287
 
 ; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0
 wTextBuffer:: db
@@ -478,7 +508,10 @@ wMessageSpeed:: db
 ; 0x08 - Mario Minigames
 ; 0x0a - Story Mode - Dream Match
 wGameMode:: db
-	ds 25
+
+; [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use
+wKeepMatchStatsFlag:: db
+	ds 24
 
 ; [8-bit] Character 1 Service Aces
 wCharacter1ServiceAces:: db
@@ -979,7 +1012,16 @@ wMenuCursorX:: db
 
 ; [8-bit] Menu cursor row; MoveMenuCursor wraps it at the row count in c
 wMenuCursorY:: db
-	ds 7
+
+; [8-bit] Secondary menu cursor column (parallel to wMenuCursorX; second selection region of the shared menu-input handler)
+wMenuCursor2X:: db
+
+; [8-bit] Secondary menu cursor row (parallel to wMenuCursorY)
+wMenuCursor2Y:: db
+
+; [8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler
+wMenuCursorLockFlags:: db
+	ds 4
 
 ; [8-bit] Menu loop's copy of hInputPressed (same bit layout as hPlayerInputFlags)
 wMenuInputPressed:: db

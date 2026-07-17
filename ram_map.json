@@ -72,9 +72,21 @@
   "note": "[5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode",
   "size": 5
  },
+ "0xc2a0": {
+  "name": "wStoryModeTriggerScript",
+  "note": "[8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript"
+ },
  "0xc2a1": {
   "name": "wStoryModeExitLocationRequest",
   "note": "[8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests"
+ },
+ "0xc2a4": {
+  "name": "wStoryModeInteractRequest",
+  "note": "[8-bit] Story Mode - set to 1 on an A-press in the overworld; the event loop then tries NPC interaction (FindActorFacingPlayer), facing-tile script, and tile trigger"
+ },
+ "0xc2a5": {
+  "name": "wStoryModeMenuRequest",
+  "note": "[8-bit] Story Mode - set to 1 on a Start-press in the overworld; opens the story-mode menu (RunStoryModeMenu)"
  },
  "0xc2b4": {
   "name": "wWaterSpriteMinigameTimer",
@@ -104,6 +116,11 @@
  "0xc2d5": {
   "name": "wStoryModeShowLocationName",
   "note": "[8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7)"
+ },
+ "0xc2d6": {
+  "name": "wStoryModeLocationNameTextId",
+  "note": "[16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set",
+  "size": 2
  },
  "0xc320": {
   "name": "wCameraX",
@@ -310,10 +327,18 @@
   "note": "[8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts",
   "size": 1
  },
+ "0xc4c3": {
+  "name": "wMatchAbortFlag",
+  "note": "[8-bit] $ff = abort the match (bit 7 breaks the point/game/set/match loops); set by every pause/quit-menu action, cleared per point by ResetPointState"
+ },
  "0xc4c4": {
   "name": "wOffscreenArrowsEnabled",
   "note": "[8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally)",
   "size": 1
+ },
+ "0xc4c7": {
+  "name": "wMatchExitRequest",
+  "note": "[8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it"
  },
  "0xc4ca": {
   "name": "wStandingShadowsEnabled",
@@ -334,6 +359,18 @@
   "name": "wPointOutcome",
   "note": "[8-bit] 0 while the rally runs; point-end cause code once the point resolves",
   "size": 1
+ },
+ "0xc4de": {
+  "name": "wMatchRetryRequest",
+  "note": "[8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID)"
+ },
+ "0xc4df": {
+  "name": "wMatchSelectNewLevelRequest",
+  "note": "[8-bit] Set to 1 by MatchQuitMenu_SelectNewLevel; returns to the level-select screen after the match teardown"
+ },
+ "0xc4e0": {
+  "name": "wMatchMenuSelection",
+  "note": "[8-bit] Pause/quit menu selection (rst00 jumptable index: check rules / review controls / change options / save-quit); $ff = cancelled"
  },
  "0xc600": {
   "name": "wTextBuffer",
@@ -562,6 +599,10 @@
   "name": "wGameMode",
   "note": "[8-bit] Game Mode\n\n0x00 - Not playing tennis\n0x01 - Story Mode - Ranking Match\n0x02 - Story Mode - Island Open Match\n0x03 - Story Mode - Practice Match\n0x04 - Exhibition Mode\n0x05 - Story Mode - Training Court Minigames\n0x06 - Story Mode - Tennis Machine\n0x07 - Story Mode - Wall Practice\n0x08 - Mario Minigames\n0x0a - Story Mode - Dream Match",
   "size": 1
+ },
+ "0xc8a7": {
+  "name": "wKeepMatchStatsFlag",
+  "note": "[8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use"
  },
  "0xc8c0": {
   "name": "wCharacter1ServiceAces",
@@ -945,6 +986,18 @@
   "name": "wMenuCursorY",
   "note": "[8-bit] Menu cursor row; MoveMenuCursor wraps it at the row count in c",
   "size": 1
+ },
+ "0xcb06": {
+  "name": "wMenuCursor2X",
+  "note": "[8-bit] Secondary menu cursor column (parallel to wMenuCursorX; second selection region of the shared menu-input handler)"
+ },
+ "0xcb07": {
+  "name": "wMenuCursor2Y",
+  "note": "[8-bit] Secondary menu cursor row (parallel to wMenuCursorY)"
+ },
+ "0xcb08": {
+  "name": "wMenuCursorLockFlags",
+  "note": "[8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler"
  },
  "0xcb0d": {
   "name": "wMenuInputPressed",

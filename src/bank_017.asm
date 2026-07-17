@@ -372,7 +372,7 @@ Label_17_421c:
 	ldh a, [$ffd4] ; $421c
 Label_17_421e:
 	ld h, a ; $421e
-	ld a, [$cb08] ; $421f
+	ld a, [wMenuCursorLockFlags] ; $421f
 	and a, $01 ; $4222
 	ld a, h ; $4224
 	jr nz, Label_17_428b ; $4225
@@ -451,20 +451,20 @@ Label_17_428b:
 	bit 0, a ; $428b
 	jr z, Label_17_42a3 ; $428d
 	sound $5f ; $428f
-	ld a, [$cb08] ; $4291
+	ld a, [wMenuCursorLockFlags] ; $4291
 	ld b, a ; $4294
 	and a, $01 ; $4295
 	jr nz, Label_17_42bd ; $4297
 	sound $5f ; $4299
 	ld a, b ; $429b
 	or a, $01 ; $429c
-	ld [$cb08], a ; $429e
+	ld [wMenuCursorLockFlags], a ; $429e
 	jr Label_17_42bd ; $42a1
 Label_17_42a3:
 	bit 1, a ; $42a3
 	jr z, Label_17_42bd ; $42a5
 	sound $62 ; $42a7
-	ld a, [$cb08] ; $42a9
+	ld a, [wMenuCursorLockFlags] ; $42a9
 	ld b, a ; $42ac
 	and a, $03 ; $42ad
 	ld a, b ; $42af
@@ -475,7 +475,7 @@ Label_17_42a3:
 Label_17_42b8:
 	and a, $fe ; $42b8
 Label_17_42ba:
-	ld [$cb08], a ; $42ba
+	ld [wMenuCursorLockFlags], a ; $42ba
 Label_17_42bd:
 	ld a, [wMenuCursorX] ; $42bd
 	cp a, d ; $42c0
@@ -488,9 +488,9 @@ Label_17_42bd:
 Label_17_42cb:
 	ld a, $01 ; $42cb
 	ret ; $42cd
-	ld a, [$cb06] ; $42ce
+	ld a, [wMenuCursor2X] ; $42ce
 	ld d, a ; $42d1
-	ld a, [$cb07] ; $42d2
+	ld a, [wMenuCursor2Y] ; $42d2
 	ld e, a ; $42d5
 	ldh a, [hLinkState] ; $42d6
 	cp a, $02 ; $42d8
@@ -505,13 +505,13 @@ Label_17_42e7:
 	ldh a, [$ffd5] ; $42e7
 Label_17_42e9:
 	ld h, a ; $42e9
-	ld a, [$cb08] ; $42ea
+	ld a, [wMenuCursorLockFlags] ; $42ea
 	and a, $02 ; $42ed
 	ld a, h ; $42ef
 	jr nz, Label_17_4356 ; $42f0
 	bit 4, a ; $42f2
 	jr z, Label_17_430b ; $42f4
-	ld a, [$cb06] ; $42f6
+	ld a, [wMenuCursor2X] ; $42f6
 	inc a ; $42f9
 	add a, a ; $42fa
 	jr nc, Label_17_4301 ; $42fb
@@ -524,12 +524,12 @@ Label_17_4301:
 	jr c, Label_17_4306 ; $4303
 	xor a, a ; $4305
 Label_17_4306:
-	ld [$cb06], a ; $4306
+	ld [wMenuCursor2X], a ; $4306
 	jr Label_17_4386 ; $4309
 Label_17_430b:
 	bit 5, a ; $430b
 	jr z, Label_17_4324 ; $430d
-	ld a, [$cb06] ; $430f
+	ld a, [wMenuCursor2X] ; $430f
 	dec a ; $4312
 	add a, a ; $4313
 	jr nc, Label_17_431a ; $4314
@@ -542,12 +542,12 @@ Label_17_431a:
 	jr c, Label_17_431f ; $431c
 	xor a, a ; $431e
 Label_17_431f:
-	ld [$cb06], a ; $431f
+	ld [wMenuCursor2X], a ; $431f
 	jr Label_17_4386 ; $4322
 Label_17_4324:
 	bit 6, a ; $4324
 	jr z, Label_17_433d ; $4326
-	ld a, [$cb07] ; $4328
+	ld a, [wMenuCursor2Y] ; $4328
 	dec a ; $432b
 	add a, a ; $432c
 	jr nc, Label_17_4333 ; $432d
@@ -560,12 +560,12 @@ Label_17_4333:
 	jr c, Label_17_4338 ; $4335
 	xor a, a ; $4337
 Label_17_4338:
-	ld [$cb07], a ; $4338
+	ld [wMenuCursor2Y], a ; $4338
 	jr Label_17_4386 ; $433b
 Label_17_433d:
 	bit 7, a ; $433d
 	jr z, Label_17_4356 ; $433f
-	ld a, [$cb07] ; $4341
+	ld a, [wMenuCursor2Y] ; $4341
 	inc a ; $4344
 	add a, a ; $4345
 	jr nc, Label_17_434c ; $4346
@@ -578,25 +578,25 @@ Label_17_434c:
 	jr c, Label_17_4351 ; $434e
 	xor a, a ; $4350
 Label_17_4351:
-	ld [$cb07], a ; $4351
+	ld [wMenuCursor2Y], a ; $4351
 	jr Label_17_4386 ; $4354
 Label_17_4356:
 	bit 0, a ; $4356
 	jr z, Label_17_436c ; $4358
-	ld a, [$cb08] ; $435a
+	ld a, [wMenuCursorLockFlags] ; $435a
 	ld b, a ; $435d
 	and a, $02 ; $435e
 	jr nz, Label_17_4386 ; $4360
 	sound $5f ; $4362
 	ld a, b ; $4364
 	or a, $02 ; $4365
-	ld [$cb08], a ; $4367
+	ld [wMenuCursorLockFlags], a ; $4367
 	jr Label_17_4386 ; $436a
 Label_17_436c:
 	bit 1, a ; $436c
 	jr z, Label_17_4386 ; $436e
 	sound $62 ; $4370
-	ld a, [$cb08] ; $4372
+	ld a, [wMenuCursorLockFlags] ; $4372
 	ld b, a ; $4375
 	and a, $03 ; $4376
 	ld a, b ; $4378
@@ -607,12 +607,12 @@ Label_17_436c:
 Label_17_4381:
 	and a, $fd ; $4381
 Label_17_4383:
-	ld [$cb08], a ; $4383
+	ld [wMenuCursorLockFlags], a ; $4383
 Label_17_4386:
-	ld a, [$cb06] ; $4386
+	ld a, [wMenuCursor2X] ; $4386
 	cp a, d ; $4389
 	jr nz, Label_17_4394 ; $438a
-	ld a, [$cb07] ; $438c
+	ld a, [wMenuCursor2Y] ; $438c
 	cp a, e ; $438f
 	jr nz, Label_17_4394 ; $4390
 	xor a, a ; $4392

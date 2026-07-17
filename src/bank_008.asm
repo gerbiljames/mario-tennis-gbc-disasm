@@ -114,8 +114,8 @@ FarPtr_MulMem24ByFrac:
 	dw MulMem24ByFrac ; $406e
 InitDefaultMatchSettings:
 	xor a, a ; $4070
-	ld [$c8a7], a ; $4071
-	ld hl, $c4e0 ; $4074
+	ld [wKeepMatchStatsFlag], a ; $4071
+	ld hl, wMatchMenuSelection ; $4074
 	ld c, $02 ; $4077
 	call ClearMemory16 ; $4079
 	ld hl, wMatchTypeNumberOfSets ; $407c
@@ -142,7 +142,7 @@ ResetMatchState:
 	ld hl, $c400 ; $40b1
 	ld c, $0e ; $40b4
 	call ClearMemory16 ; $40b6
-	ld a, [$c8a7] ; $40b9
+	ld a, [wKeepMatchStatsFlag] ; $40b9
 	and a, a ; $40bc
 	jr nz, Label_08_40c7 ; $40bd
 	ld hl, wCharacter1ServiceAces ; $40bf
@@ -150,7 +150,7 @@ ResetMatchState:
 	call ClearMemory16 ; $40c4
 Label_08_40c7:
 	xor a, a ; $40c7
-	ld [$c8a7], a ; $40c8
+	ld [wKeepMatchStatsFlag], a ; $40c8
 	ld a, $ff ; $40cb
 	ld [$c4c0], a ; $40cd
 	ld a, $01 ; $40d0
@@ -1042,7 +1042,7 @@ Label_08_4721:
 	ld [hl], $01 ; $4724
 Label_08_4726:
 	call PlaySet ; $4726
-	ld a, [$c4c3] ; $4729
+	ld a, [wMatchAbortFlag] ; $4729
 	and a, $80 ; $472c
 	jr nz, Label_08_4736 ; $472e
 	ld a, [wMatchWinLoseFlag] ; $4730
@@ -1057,7 +1057,7 @@ PlaySet:
 	and a, a ; $473e
 	jp z, Label_08_4758 ; $473f
 	jp Label_08_4782 ; $4742
-	ld a, [$c4c3] ; $4745
+	ld a, [wMatchAbortFlag] ; $4745
 	and a, $80 ; $4748
 	jr nz, Label_08_4757 ; $474a
 	ld a, [wSetWinLoseFlag] ; $474c
@@ -1076,7 +1076,7 @@ Label_08_4758:
 Label_08_4765:
 	call AssignCourtPositions ; $4765
 	call PlayPoint ; $4768
-	ld a, [$c4c3] ; $476b
+	ld a, [wMatchAbortFlag] ; $476b
 	and a, $80 ; $476e
 	jr nz, Label_08_4781 ; $4770
 	ld a, [wGameWinLoseFlag] ; $4772
@@ -1107,7 +1107,7 @@ Label_08_47a3:
 	call RefreshCourtAfterEndChange ; $47a6
 	call RunChangeoverSequence ; $47a9
 	call PlayPoint ; $47ac
-	ld a, [$c4c3] ; $47af
+	ld a, [wMatchAbortFlag] ; $47af
 	and a, $80 ; $47b2
 	jr nz, Label_08_47c6 ; $47b4
 	ld hl, wTotalPointsScoredInCurrentGame ; $47b6
@@ -1496,7 +1496,7 @@ ResetPointState:
 	ld [$c4d1], a ; $4ccf
 	ld [$c4da], a ; $4cd2
 	ld [$c491], a ; $4cd5
-	ld [$c4c3], a ; $4cd8
+	ld [wMatchAbortFlag], a ; $4cd8
 	ld [$c4d9], a ; $4cdb
 	ld [wPointOutcome], a ; $4cde
 	ldh [$ffdd], a ; $4ce1
@@ -1532,7 +1532,7 @@ PlayPoint:
 	call ForEachCharBank ; $4d23
 Label_08_4d26:
 	call StepMatchFrame ; $4d26
-	ld a, [$c4c3] ; $4d29
+	ld a, [wMatchAbortFlag] ; $4d29
 	and a, $01 ; $4d2c
 	jr nz, Label_08_4d5b ; $4d2e
 	ld a, [wPointOutcome] ; $4d30
@@ -1554,7 +1554,7 @@ Label_08_4d42:
 	call ResolvePointOutcome ; $4d57
 	ret ; $4d5a
 Label_08_4d5b:
-	ld hl, $c4c3 ; $4d5b
+	ld hl, wMatchAbortFlag ; $4d5b
 	ld a, [hl] ; $4d5e
 	and a, $fe ; $4d5f
 	ld [hl], a ; $4d61
@@ -1845,7 +1845,7 @@ EndPointBallEffects:
 	call SetBallTrailColor ; $4fa9
 	xor a, a ; $4fac
 	ld [$c4da], a ; $4fad
-	ld hl, $c4c3 ; $4fb0
+	ld hl, wMatchAbortFlag ; $4fb0
 	ld a, [hl] ; $4fb3
 	and a, $fe ; $4fb4
 	ld [hl], a ; $4fb6
@@ -5011,7 +5011,7 @@ RunMinigameMatch:
 	call AdvanceFrame ; $658e
 	ret ; $6591
 ShowMatchResultScreens:
-	ld a, [$c4c7] ; $6592
+	ld a, [wMatchExitRequest] ; $6592
 	and a, a ; $6595
 	ret nz ; $6596
 	ld a, $ff ; $6597
@@ -5043,7 +5043,7 @@ RunMinigamePointLoop:
 	ld [$df7c], a ; $65d2
 	ld d, $03 ; $65d5
 	call CallModeHook ; $65d7
-	ld a, [$c4c3] ; $65da
+	ld a, [wMatchAbortFlag] ; $65da
 	and a, $80 ; $65dd
 	jr nz, Label_08_6630 ; $65df
 Label_08_65e1:
@@ -5051,7 +5051,7 @@ Label_08_65e1:
 	call ResetPointState ; $65e4
 	ld d, $01 ; $65e7
 	call CallModeHook ; $65e9
-	ld a, [$c4c3] ; $65ec
+	ld a, [wMatchAbortFlag] ; $65ec
 	and a, $80 ; $65ef
 	jr nz, Label_08_6630 ; $65f1
 	ld a, [$c7b8] ; $65f3
@@ -5061,12 +5061,12 @@ Label_08_65e1:
 	call ForEachCharBank ; $65fc
 Label_08_65ff:
 	call PlayMinigamePoint ; $65ff
-	ld a, [$c4c3] ; $6602
+	ld a, [wMatchAbortFlag] ; $6602
 	and a, $80 ; $6605
 	jr nz, Label_08_6630 ; $6607
 	ld d, $02 ; $6609
 	call CallModeHook ; $660b
-	ld a, [$c4c3] ; $660e
+	ld a, [wMatchAbortFlag] ; $660e
 	and a, $80 ; $6611
 	jr nz, Label_08_6630 ; $6613
 	ld hl, $c7b0 ; $6615
@@ -5095,7 +5095,7 @@ PlayMinigamePoint:
 	ld [$c4c5], a ; $6639
 Label_08_663c:
 	call StepMatchFrame ; $663c
-	ld a, [$c4c3] ; $663f
+	ld a, [wMatchAbortFlag] ; $663f
 	and a, $01 ; $6642
 	jr nz, Label_08_664c ; $6644
 	ld a, [wPointOutcome] ; $6646

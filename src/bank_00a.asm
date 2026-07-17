@@ -1646,7 +1646,7 @@ RunStoryMatch:
 	ret ; $498b
 Label_0a_498c:
 	xor a, a ; $498c
-	ld [$c8a7], a ; $498d
+	ld [wKeepMatchStatsFlag], a ; $498d
 	ret ; $4990
 RestoreOverworldAfterMatch:
 	ld c, $10 ; $4991
@@ -2246,7 +2246,7 @@ Label_0a_4fd6:
 	ld a, [wStoryModeShowLocationName] ; $4fde
 	and a, a ; $4fe1
 	jr z, Label_0a_4ff1 ; $4fe2
-	ld a, [$c2d6] ; $4fe4
+	ld a, [wStoryModeLocationNameTextId] ; $4fe4
 	ld l, a ; $4fe7
 	ld a, [$c2d7] ; $4fe8
 	ld h, a ; $4feb
@@ -2268,7 +2268,7 @@ Label_0a_4ff5:
 	ld de, $0018 ; $5010
 	add hl, de ; $5013
 	ld [hl], $01 ; $5014
-	ld hl, $c2a0 ; $5016
+	ld hl, wStoryModeTriggerScript ; $5016
 	ld a, [hl] ; $5019
 	and a, a ; $501a
 	jr z, Label_0a_5022 ; $501b
@@ -2283,7 +2283,7 @@ Label_0a_5022:
 	call RunLocationExit ; $502b
 	jp Label_0a_50df ; $502e
 Label_0a_5031:
-	ld hl, $c2a5 ; $5031
+	ld hl, wStoryModeMenuRequest ; $5031
 	ld a, [hl] ; $5034
 	and a, a ; $5035
 	jr z, Label_0a_5048 ; $5036
@@ -2316,12 +2316,12 @@ Label_0a_5048:
 	ld [hl], $00 ; $5072
 	ld hl, $c2a3 ; $5074
 	ld [hl], $ff ; $5077
-	ld hl, $c2a4 ; $5079
+	ld hl, wStoryModeInteractRequest ; $5079
 	ld [hl], $01 ; $507c
 Label_0a_507e:
 	xor a, a ; $507e
 	ld [$c2da], a ; $507f
-	ld hl, $c2a4 ; $5082
+	ld hl, wStoryModeInteractRequest ; $5082
 	ld a, [hl] ; $5085
 	and a, a ; $5086
 	jr z, Label_0a_50c7 ; $5087
@@ -2392,7 +2392,7 @@ ClearStoryEventRequests:
 	push bc ; $50f2
 	push de ; $50f3
 	push hl ; $50f4
-	ld hl, $c2a0 ; $50f5
+	ld hl, wStoryModeTriggerScript ; $50f5
 	ld b, $06 ; $50f8
 	xor a, a ; $50fa
 Label_0a_50fb:
@@ -2407,7 +2407,7 @@ Label_0a_50fb:
 CheckStoryEventRequests:
 	push bc ; $5104
 	push hl ; $5105
-	ld hl, $c2a0 ; $5106
+	ld hl, wStoryModeTriggerScript ; $5106
 	ld b, $06 ; $5109
 	xor a, a ; $510b
 Label_0a_510c:
@@ -2450,7 +2450,7 @@ Label_0a_5120:
 	sub a, l ; $514a
 	ld h, a ; $514b
 	ld a, l ; $514c
-	ld [$c2d6], a ; $514d
+	ld [wStoryModeLocationNameTextId], a ; $514d
 	ld a, h ; $5150
 	ld [$c2d7], a ; $5151
 	ld a, [wStoryModeEntryPoint] ; $5154

@@ -8360,7 +8360,7 @@ Label_05_7631:
 	ldh a, [hWramBank] ; $7631
 	push af ; $7633
 	wram_bank $07 ; $7634
-	ld a, [$c8a7] ; $763a
+	ld a, [wKeepMatchStatsFlag] ; $763a
 	or a, a ; $763d
 	jr z, Label_05_7644 ; $763e
 	ld b, $5f ; $7640
@@ -8648,7 +8648,7 @@ UploadGlyphBufferQueued:
 	push af ; $77e3
 	set_flag $03, 0 ; $77e4
 	wram_bank $07 ; $77e7
-	ld a, [$c8a7] ; $77ed
+	ld a, [wKeepMatchStatsFlag] ; $77ed
 	or a, a ; $77f0
 	jr z, Label_05_77f7 ; $77f1
 	ld b, $60 ; $77f3

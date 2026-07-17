@@ -1348,7 +1348,7 @@ Label_10_5006:
 	xor a, a ; $5020
 	ld [$c8a5], a ; $5021
 	farcall FarPtr_SaveStorySlotWithTimer ; $5024
-	ld a, [$c8a7] ; $5027
+	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a, a ; $502a
 	jr z, Label_10_5030 ; $502b
 	jp Label_10_55b6 ; $502d
@@ -1405,7 +1405,7 @@ Label_10_5093:
 Label_10_50a4:
 	xor a, a ; $50a4
 	ld [$c8a5], a ; $50a5
-	ld [$c8a7], a ; $50a8
+	ld [wKeepMatchStatsFlag], a ; $50a8
 	call RestoreGameTimer ; $50ab
 	farcall FarPtr_SaveStorySlotWithTimer ; $50ae
 	call Func_10_5752 ; $50b1
@@ -1455,7 +1455,7 @@ Label_10_50f5:
 	jr z, Label_10_5124 ; $5116
 	cp a, $ff ; $5118
 	jp z, Label_10_4f68 ; $511a
-	ld a, [$c8a7] ; $511d
+	ld a, [wKeepMatchStatsFlag] ; $511d
 	or a, a ; $5120
 	jp nz, Label_10_51db ; $5121
 Label_10_5124:
@@ -1565,7 +1565,7 @@ Label_10_51fd:
 	jp Label_10_4f7c ; $5213
 Label_10_5216:
 	xor a, a ; $5216
-	ld [$c8a7], a ; $5217
+	ld [wKeepMatchStatsFlag], a ; $5217
 	farcall FarPtr_RunMinigameSelect ; $521a
 	cp a, $ff ; $521d
 	jr nz, Label_10_5229 ; $521f
@@ -1617,7 +1617,7 @@ Label_10_526e:
 	ld c, $10 ; $5288
 	call BeginFadeIn ; $528a
 	call WaitFadeEnd ; $528d
-	ld a, [$c4df] ; $5290
+	ld a, [wMatchSelectNewLevelRequest] ; $5290
 	or a, a ; $5293
 	jr nz, Label_10_5229 ; $5294
 	ld a, [wPointWinLoseFlag] ; $5296
@@ -1975,7 +1975,7 @@ Label_10_55d5:
 	jr nz, Label_10_5604 ; $55da
 	clear_flag $09, 7 ; $55dc
 	xor a, a ; $55df
-	ld [$c8a7], a ; $55e0
+	ld [wKeepMatchStatsFlag], a ; $55e0
 	ld b, $00 ; $55e3
 	ld c, $01 ; $55e5
 	farcall FarPtr_SaveStoryReturnPoint ; $55e7
@@ -2237,7 +2237,7 @@ Label_10_57d7:
 	jr z, Label_10_57ee ; $57dd
 	xor a, a ; $57df
 	ld [$c8a5], a ; $57e0
-	ld [$c8a7], a ; $57e3
+	ld [wKeepMatchStatsFlag], a ; $57e3
 	farcall FarPtr_WriteExhibitionSaveBlock ; $57e6
 	pop bc ; $57e9
 	pop af ; $57ea

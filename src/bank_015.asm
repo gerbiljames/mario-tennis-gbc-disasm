@@ -1784,7 +1784,7 @@ Label_15_5362:
 Label_15_536c:
 	ret ; $536c
 TrainingCourtResultDispatch:
-	ld a, [$c4c7] ; $536d
+	ld a, [wMatchExitRequest] ; $536d
 	cp a, $01 ; $5370
 	jr nz, Label_15_5378 ; $5372
 	call TrainingCourtReentryDispatch ; $5374

@@ -4629,7 +4629,7 @@ Label_0f_7484:
 	ret ; $7486
 IslandOpenSinglesMatchReturn:
 	wram_bank $04 ; $7487
-	ld a, [$c4c7] ; $748d
+	ld a, [wMatchExitRequest] ; $748d
 	cp a, $01 ; $7490
 	jr z, Label_0f_749c ; $7492
 	ld a, [wMatchWinLoseFlag] ; $7494
@@ -4848,7 +4848,7 @@ Label_0f_7640:
 	dw $3e28 ; record 8
 	inc b ; $76a4
 	wram_bank ; $76a5
-	ld a, [$c4c7] ; $76a9
+	ld a, [wMatchExitRequest] ; $76a9
 	cp a, $01 ; $76ac
 	jr z, Label_0f_76b8 ; $76ae
 	ld a, [wMatchWinLoseFlag] ; $76b0

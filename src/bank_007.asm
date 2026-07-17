@@ -3931,7 +3931,7 @@ RunDebugTestMatch:
 	ld a, $03 ; $5dfe
 	ld [wCurrentStorySlot], a ; $5e00
 	ld a, $01 ; $5e03
-	ld [$c8a7], a ; $5e05
+	ld [wKeepMatchStatsFlag], a ; $5e05
 	ld a, $01 ; $5e08
 	ld [wPlayer1SetsWon], a ; $5e0a
 	ld [wPlayer1GamesWon], a ; $5e0d
@@ -4095,7 +4095,7 @@ Label_07_5f48:
 	ret ; $5f8d
 Label_07_5f8e:
 	ld a, $ff ; $5f8e
-	ld [$c4c3], a ; $5f90
+	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
 	INCBIN "data/bank_007/d_5f94.bin" ; $5f94, 162 bytes
 	ds 8138, $ff ; $6036, fill
