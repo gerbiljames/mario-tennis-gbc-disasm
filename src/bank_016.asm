@@ -4,14 +4,14 @@ FarPtr_RunMatchWinLoseScreen:
 	dw RunMatchWinLoseScreen ; $4000
 FarPtr_RunMatchStatsScreen:
 	dw RunMatchStatsScreen ; $4002
-FarPtr_16_04:
-	dw Func_16_6955 ; $4004
+FarPtr_DecompressCharacterPortrait:
+	dw DecompressCharacterPortrait ; $4004
 	push de ; $4006
 	push bc ; $4007
 	ld c, $00 ; $4008
-	call Func_16_4069 ; $400a
+	call ApplySpriteWobbleX_16 ; $400a
 	ld c, $00 ; $400d
-	call Func_16_4093 ; $400f
+	call ApplySpriteWobbleY_16 ; $400f
 	ld c, $00 ; $4012
 	ld b, $08 ; $4014
 	call QueueSprite ; $4016
@@ -24,9 +24,9 @@ FarPtr_16_04:
 	ld d, a ; $401f
 	push de ; $4020
 	ld c, $01 ; $4021
-	call Func_16_4069 ; $4023
+	call ApplySpriteWobbleX_16 ; $4023
 	ld c, $00 ; $4026
-	call Func_16_4093 ; $4028
+	call ApplySpriteWobbleY_16 ; $4028
 	ld c, $00 ; $402b
 	ld b, $28 ; $402d
 	call QueueSprite ; $402f
@@ -43,9 +43,9 @@ FarPtr_16_04:
 	ld d, a ; $403c
 	push de ; $403d
 	ld c, $01 ; $403e
-	call Func_16_4069 ; $4040
+	call ApplySpriteWobbleX_16 ; $4040
 	ld c, $01 ; $4043
-	call Func_16_4093 ; $4045
+	call ApplySpriteWobbleY_16 ; $4045
 	ld c, $00 ; $4048
 	ld b, $68 ; $404a
 	call QueueSprite ; $404c
@@ -57,15 +57,15 @@ FarPtr_16_04:
 	ld e, a ; $4054
 	push de ; $4055
 	ld c, $00 ; $4056
-	call Func_16_4069 ; $4058
+	call ApplySpriteWobbleX_16 ; $4058
 	ld c, $01 ; $405b
-	call Func_16_4093 ; $405d
+	call ApplySpriteWobbleY_16 ; $405d
 	ld c, $00 ; $4060
 	ld b, $48 ; $4062
 	call QueueSprite ; $4064
 	pop de ; $4067
 	ret ; $4068
-Func_16_4069:
+ApplySpriteWobbleX_16:
 	ldh a, [hVBlankCounter] ; $4069
 	and a, $0f ; $406b
 	ld hl, $4083 ; $406d
@@ -89,7 +89,7 @@ Label_16_407f:
 	ld d, a ; $4081
 	ret ; $4082
 	INCBIN "data/bank_016/d_4083.bin" ; $4083, 16 bytes
-Func_16_4093:
+ApplySpriteWobbleY_16:
 	ldh a, [hVBlankCounter] ; $4093
 	and a, $0f ; $4095
 	ld hl, $40ad ; $4097
@@ -183,21 +183,21 @@ Label_16_4430:
 	ld h, b ; $4448
 	pop de ; $4449
 	pop bc ; $444a
-	call Func_16_4454 ; $444b
+	call PrintNumberString_16 ; $444b
 	add sp, 10 ; $444e
 	pop hl ; $4450
 	pop bc ; $4451
 	pop af ; $4452
 	ret ; $4453
-Func_16_4454:
+PrintNumberString_16:
 	ld a, [hl+] ; $4454
 	and a, a ; $4455
 	jr z, Label_16_445d ; $4456
-	call Func_16_445e ; $4458
-	jr Func_16_4454 ; $445b
+	call PrintNumberStringChar_16 ; $4458
+	jr PrintNumberString_16 ; $445b
 Label_16_445d:
 	ret ; $445d
-Func_16_445e:
+PrintNumberStringChar_16:
 	push hl ; $445e
 	ld hl, $d240 ; $445f
 	sub a, $30 ; $4462
@@ -237,7 +237,7 @@ Label_16_449b:
 	ld [$d801], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
 	ld [$cb73], a ; $44a4
-	call Func_16_5c11 ; $44a7
+	call MaybeInvertMatchWinLoseFlag ; $44a7
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
 	cp a, $ff ; $44af
@@ -332,7 +332,7 @@ InitMatchWinLoseScreen:
 	xor a, a ; $4574
 	ldh [hScrollX], a ; $4575
 	ldh [hScrollY], a ; $4577
-	call Func_16_490c ; $4579
+	call LoadWinLoseScreenAssets ; $4579
 	wram_bank $03 ; $457c
 	ld de, $d560 ; $4582
 	ld b, $14 ; $4585
@@ -353,10 +353,10 @@ InitMatchWinLoseScreen:
 	farcall FarPtr_LoadIndexedPalette_18 ; $45a7
 	call LoadMatchResultPalettes ; $45aa
 	call Func_16_4a56 ; $45ad
-	call Func_16_4dfe ; $45b0
-	call Func_16_4963 ; $45b3
+	call LoadResultScreenTileGraphics ; $45b0
+	call SetWinLosePortraitPaletteAttrs ; $45b3
 	ld c, $00 ; $45b6
-	call Func_16_5fe7 ; $45b8
+	call LoadResultScreenPortraits ; $45b8
 	ldh a, [hWramBank] ; $45bb
 	push af ; $45bd
 	wram_bank $01 ; $45be
@@ -386,7 +386,7 @@ InitMatchWinLoseScreen:
 	farcall FarPtr_QueueWram3MapToVRAM ; $4604
 	ret ; $4607
 	INCBIN "data/bank_016/d_4608.bin" ; $4608, 772 bytes
-Func_16_490c:
+LoadWinLoseScreenAssets:
 	ld a, [$d800] ; $490c
 	or a, a ; $490f
 	jr z, Label_16_4919 ; $4910
@@ -424,7 +424,7 @@ Label_16_4920:
 	farcall FarPtr_CopyTilemapRect ; $495f
 Label_16_4962:
 	ret ; $4962
-Func_16_4963:
+SetWinLosePortraitPaletteAttrs:
 	ld a, [$d801] ; $4963
 	or a, a ; $4966
 	jr nz, Label_16_49bc ; $4967
@@ -870,7 +870,7 @@ Label_16_4cd1:
 	call Func_16_4dba ; $4ce6
 	ret ; $4ce9
 Func_16_4cea:
-	call Func_16_4dde ; $4cea
+	call GetResultSpriteWobbleOffset ; $4cea
 	ld b, a ; $4ced
 	ld a, d ; $4cee
 	sub a, b ; $4cef
@@ -904,7 +904,7 @@ Label_16_4cfd:
 	db $20, $40, $1e, $00 ; 0x3c
 	db $80 ; 0x40
 Func_16_4d45:
-	call Func_16_4dde ; $4d45
+	call GetResultSpriteWobbleOffset ; $4d45
 	add a, d ; $4d48
 	ld d, a ; $4d49
 	ld c, $20 ; $4d4a
@@ -931,7 +931,7 @@ Func_16_4d45:
 	db $20, $40, $1e, $00 ; 0x3c
 	db $80 ; 0x40
 Func_16_4d96:
-	call Func_16_4dde ; $4d96
+	call GetResultSpriteWobbleOffset ; $4d96
 	ld b, a ; $4d99
 	ld a, d ; $4d9a
 	sub a, b ; $4d9b
@@ -946,7 +946,7 @@ Label_16_4da9:
 	call QueueSprite ; $4da9
 	ret ; $4dac
 Func_16_4dad:
-	call Func_16_4dde ; $4dad
+	call GetResultSpriteWobbleOffset ; $4dad
 	add a, d ; $4db0
 	ld d, a ; $4db1
 	ld c, $42 ; $4db2
@@ -954,7 +954,7 @@ Func_16_4dad:
 	call QueueSprite ; $4db6
 	ret ; $4db9
 Func_16_4dba:
-	call Func_16_4dde ; $4dba
+	call GetResultSpriteWobbleOffset ; $4dba
 	add a, d ; $4dbd
 	ld d, a ; $4dbe
 	ld c, $40 ; $4dbf
@@ -962,7 +962,7 @@ Func_16_4dba:
 	call QueueSprite ; $4dc3
 	ret ; $4dc6
 Func_16_4dc7:
-	call Func_16_4dde ; $4dc7
+	call GetResultSpriteWobbleOffset ; $4dc7
 	ld b, a ; $4dca
 	ld a, d ; $4dcb
 	sub a, b ; $4dcc
@@ -976,7 +976,7 @@ Func_16_4dc7:
 Label_16_4dda:
 	call QueueSprite ; $4dda
 	ret ; $4ddd
-Func_16_4dde:
+GetResultSpriteWobbleOffset:
 	ldh a, [hVBlankCounter] ; $4dde
 	srl a ; $4de0
 	and a, $0f ; $4de2
@@ -989,7 +989,7 @@ Label_16_4dec:
 	ld a, [hl] ; $4dec
 	ret ; $4ded
 	INCBIN "data/bank_016/d_4dee.bin" ; $4dee, 16 bytes
-Func_16_4dfe:
+LoadResultScreenTileGraphics:
 	ld de, $d400 ; $4dfe
 	ld b, $14 ; $4e01
 	ld c, $02 ; $4e03
@@ -1027,7 +1027,7 @@ Label_16_4e32:
 	ret ; $4e53
 Label_16_4e54:
 	ld a, [$c8f7] ; $4e54
-	call Func_16_4e8a ; $4e57
+	call RemapDoublesMatchGfxIndex ; $4e57
 	add a, a ; $4e5a
 	ld hl, $4e9d ; $4e5b
 	add a, l ; $4e5e
@@ -1062,7 +1062,7 @@ Label_16_4e63:
 	ld de, $9140 ; $4e83
 	call DecompressData ; $4e86
 	ret ; $4e89
-Func_16_4e8a:
+RemapDoublesMatchGfxIndex:
 	push af ; $4e8a
 	ld de, $002f ; $4e8b
 	call TestGameFlagByNumber ; $4e8e
@@ -2799,7 +2799,7 @@ Label_16_4e9b:
 	dw $ffff ; record 1719
 	dw $00fd ; record 1720
 	dw $0000 ; record 1721
-Func_16_5c11:
+MaybeInvertMatchWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
 	cp a, $09 ; $5c14
 	ret nz ; $5c16
@@ -2881,19 +2881,19 @@ InitMatchStatsScreen:
 	farcall FarPtr_LoadIndexedPalette_18 ; $5cb2
 	wram_bank $03 ; $5cb5
 	call Func_16_5f92 ; $5cbb
-	call Func_16_4dfe ; $5cbe
+	call LoadResultScreenTileGraphics ; $5cbe
 	ld de, $d600 ; $5cc1
 	ld b, $14 ; $5cc4
 	ld c, $02 ; $5cc6
 	ld h, $08 ; $5cc8
 	farcall FarPtr_FillTilemapRect ; $5cca
-	call Func_16_5cdc ; $5ccd
+	call SetMatchStatsPortraitPaletteAttrs ; $5ccd
 	ld c, $01 ; $5cd0
-	call Func_16_5fe7 ; $5cd2
+	call LoadResultScreenPortraits ; $5cd2
 	call PrintMatchStatistics ; $5cd5
 	farcall FarPtr_QueueWram3MapToVRAM ; $5cd8
 	ret ; $5cdb
-Func_16_5cdc:
+SetMatchStatsPortraitPaletteAttrs:
 	ld de, $002f ; $5cdc
 	call TestGameFlagByNumber ; $5cdf
 	jr z, Label_16_5d16 ; $5ce2
@@ -2932,7 +2932,7 @@ Label_16_5d16:
 Label_16_5d2e:
 	ret ; $5d2e
 PrintMatchStatistics:
-	call Func_16_5f61 ; $5d2f
+	call ClearMatchStatsNumberArea ; $5d2f
 	ld de, $002f ; $5d32
 	call TestGameFlagByNumber ; $5d35
 	jr z, Label_16_5d3f ; $5d38
@@ -3162,7 +3162,7 @@ PrintDoublesMatchStats:
 	ld de, $d212 ; $5f5a
 	farcall FarPtr_PrintNumberRightAligned ; $5f5d
 	ret ; $5f60
-Func_16_5f61:
+ClearMatchStatsNumberArea:
 	ld de, $d561 ; $5f61
 	ld b, $05 ; $5f64
 	ld c, $06 ; $5f66
@@ -3221,7 +3221,7 @@ PrintMatchSetScores:
 	ld de, $8448 ; $5fe0
 	farcall FarPtr_39_66 ; $5fe3
 	ret ; $5fe6
-Func_16_5fe7:
+LoadResultScreenPortraits:
 	ld a, c ; $5fe7
 	or a, a ; $5fe8
 	jr nz, Label_16_5ff9 ; $5fe9
@@ -3237,13 +3237,13 @@ Label_16_5ff9:
 	ld a, [$ca0c] ; $5ffd
 	ld b, a ; $6000
 	ld c, $00 ; $6001
-	call Func_16_6073 ; $6003
+	call LoadResultPortraitSlot ; $6003
 	ld a, [wPlayer2CurrentMainCharacter] ; $6006
 	ld d, a ; $6009
 	ld a, [$ca8c] ; $600a
 	ld b, a ; $600d
 	ld c, $02 ; $600e
-	call Func_16_6073 ; $6010
+	call LoadResultPortraitSlot ; $6010
 	ld de, $002f ; $6013
 	call TestGameFlagByNumber ; $6016
 	jr z, Label_16_6035 ; $6019
@@ -3252,13 +3252,13 @@ Label_16_5ff9:
 	ld a, [$ca4c] ; $601f
 	ld b, a ; $6022
 	ld c, $01 ; $6023
-	call Func_16_6073 ; $6025
+	call LoadResultPortraitSlot ; $6025
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $6028
 	ld d, a ; $602b
 	ld a, [$cacc] ; $602c
 	ld b, a ; $602f
 	ld c, $03 ; $6030
-	call Func_16_6073 ; $6032
+	call LoadResultPortraitSlot ; $6032
 Label_16_6035:
 	ret ; $6035
 Label_16_6036:
@@ -3267,13 +3267,13 @@ Label_16_6036:
 	ld a, [$ca0c] ; $603a
 	ld b, a ; $603d
 	ld c, $02 ; $603e
-	call Func_16_6073 ; $6040
+	call LoadResultPortraitSlot ; $6040
 	ld a, [wPlayer2CurrentMainCharacter] ; $6043
 	ld d, a ; $6046
 	ld a, [$ca8c] ; $6047
 	ld b, a ; $604a
 	ld c, $00 ; $604b
-	call Func_16_6073 ; $604d
+	call LoadResultPortraitSlot ; $604d
 	ld de, $002f ; $6050
 	call TestGameFlagByNumber ; $6053
 	jr z, Label_16_6072 ; $6056
@@ -3282,16 +3282,16 @@ Label_16_6036:
 	ld a, [$ca4c] ; $605c
 	ld b, a ; $605f
 	ld c, $03 ; $6060
-	call Func_16_6073 ; $6062
+	call LoadResultPortraitSlot ; $6062
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $6065
 	ld d, a ; $6068
 	ld a, [$cacc] ; $6069
 	ld b, a ; $606c
 	ld c, $01 ; $606d
-	call Func_16_6073 ; $606f
+	call LoadResultPortraitSlot ; $606f
 Label_16_6072:
 	ret ; $6072
-Func_16_6073:
+LoadResultPortraitSlot:
 	push de ; $6073
 	push bc ; $6074
 	ld a, c ; $6075
@@ -3337,7 +3337,7 @@ Label_16_60a7:
 	ld c, $02 ; $60b0
 Label_16_60b2:
 	pop de ; $60b2
-	call Func_16_60c0 ; $60b3
+	call DecompressResultPortrait ; $60b3
 	ret ; $60b6
 	; $60b7, 9 bytes (records:2)
 ; 4 records x 2 bytes
@@ -3346,11 +3346,11 @@ Label_16_60b2:
 	dw $8e00 ; record 2
 	dw $8f00 ; record 3
 	db $c9
-Func_16_60c0:
+DecompressResultPortrait:
 	ld a, c ; $60c0
 	or a, a ; $60c1
 	jr z, Label_16_60c8 ; $60c2
-	call Func_16_60d5 ; $60c4
+	call DecompressWinLosePortraitVariant ; $60c4
 	ret ; $60c7
 Label_16_60c8:
 	cp a, $20 ; $60c8
@@ -3359,9 +3359,9 @@ Label_16_60c8:
 	farcall FarPtr_02_36 ; $60cd
 	ld b, a ; $60d0
 Label_16_60d1:
-	call Func_16_6955 ; $60d1
+	call DecompressCharacterPortrait ; $60d1
 	ret ; $60d4
-Func_16_60d5:
+DecompressWinLosePortraitVariant:
 	ld a, b ; $60d5
 	add a, a ; $60d6
 	and a, $07 ; $60d7
@@ -4460,7 +4460,7 @@ Label_16_60ea:
 	dw $ff03 ; record 1071
 	dw $0000 ; record 1072
 	dw $0000 ; record 1073
-Func_16_6955:
+DecompressCharacterPortrait:
 	ld a, b ; $6955
 	and a, $1f ; $6956
 	add a, a ; $6958

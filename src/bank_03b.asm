@@ -4884,7 +4884,7 @@ Label_3b_62fa:
 	call GetUnlockedStarCharAtGridSlot ; $62fb
 	ld b, a ; $62fe
 	ld de, $d000 ; $62ff
-	farcall FarPtr_16_04 ; $6302
+	farcall FarPtr_DecompressCharacterPortrait ; $6302
 	pop bc ; $6305
 	push bc ; $6306
 	ld a, c ; $6307
