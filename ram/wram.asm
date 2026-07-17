@@ -251,7 +251,11 @@ wPointOutcome:: db
 
 ; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0
 wTextBuffer:: db
-	ds 395
+	ds 191
+
+; 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString
+wInlineTextBuffer:: ds 32
+	ds 172
 
 ; [8-bit] Nonzero draws the 4-corner court target zone (training drills)
 wTargetZoneEnabled:: db
@@ -921,13 +925,51 @@ wIntroCutsceneCheck:: db
 
 ; Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it).
 wBgMapShadowDirty:: db
-	ds 158
+	ds 20
+
+; VRAM tile-data write pointer for the proportional-glyph renderer (bank $05 text engine)
+wGlyphTileWritePtr:: dw
+	ds 136
 
 ; [576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active
 wDebugTextBuffer:: ds 576
 
 
-SECTION "WRAMX $d880", WRAMX[$d880]
+SECTION "WRAMX $d841", WRAMX[$d841]
+
+; WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile)
+wTextArrowBlinkCounter:: db
+	ds 5
+
+; WRAM5: write index into wTextArgStringQueue (max 16)
+wTextArgStringWriteIndex:: db
+	ds 1
+
+; WRAM5: write index for the short-text-id arg queue
+wTextArgShortTextWriteIndex:: db
+
+; WRAM5: count of queued arg strings (mirrors wTextArgStringWriteIndex)
+wTextArgStringCount:: db
+	ds 5
+
+; WRAM5: set by TextCmdWaitButtonPage; TextInterpreterLoop saves resume offset to $d84e/f and returns
+wTextPageBreakRequest:: db
+	ds 19
+
+; WRAM5: current VRAM destination address for glyph tiles (lo/hi)
+wGlyphVramDest:: dw
+	ds 3
+
+; WRAM5: current read pointer into the text byte stream
+wTextStreamPtr:: dw
+	ds 21
 
 ; Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0
 wShortTextBuffer:: db
+	ds 47
+
+; WRAM5: 16 x 2-byte string pointers queued by PushTextArgString (hi nibble = WRAM bank tag)
+wTextArgStringQueue:: ds 32
+
+; WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
+wTextArgNumberQueue:: ds 32

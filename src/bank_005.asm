@@ -1362,7 +1362,7 @@ RunMenuSelection:
 	ld e, a ; $47ae
 	call GetTilemapCellAddress ; $47af
 	xor a, a ; $47b2
-	ld hl, $d841 ; $47b3
+	ld hl, wTextArrowBlinkCounter ; $47b3
 	ld [hl+], a ; $47b6
 	ld [hl], e ; $47b7
 	inc hl ; $47b8
@@ -1406,7 +1406,7 @@ Label_05_47f7:
 	sound $5e ; $47f7
 	push de ; $47f9
 	xor a, a ; $47fa
-	ld [$d841], a ; $47fb
+	ld [wTextArrowBlinkCounter], a ; $47fb
 	ld a, b ; $47fe
 	sla a ; $47ff
 	add a, e ; $4801
@@ -1559,7 +1559,7 @@ Label_05_48e6:
 	push de ; $48f3
 	push hl ; $48f4
 	wram_bank $05 ; $48f5
-	ld hl, $d841 ; $48fb
+	ld hl, wTextArrowBlinkCounter ; $48fb
 	ld a, [hl+] ; $48fe
 	and a, $10 ; $48ff
 	or a, a ; $4901
@@ -1585,9 +1585,9 @@ Label_05_490a:
 	push de ; $491c
 	call QueueBGTileWrite ; $491d
 	pop de ; $4920
-	ld a, [$d841] ; $4921
+	ld a, [wTextArrowBlinkCounter] ; $4921
 	inc a ; $4924
-	ld [$d841], a ; $4925
+	ld [wTextArrowBlinkCounter], a ; $4925
 	ld a, [$d844] ; $4928
 	or a, a ; $492b
 	jr z, Label_05_493f ; $492c
@@ -1842,7 +1842,7 @@ RunMenuSelectionShared:
 	ld e, a ; $4ae1
 	call GetTilemapCellAddress ; $4ae2
 	xor a, a ; $4ae5
-	ld hl, $d841 ; $4ae6
+	ld hl, wTextArrowBlinkCounter ; $4ae6
 	ld [hl+], a ; $4ae9
 	ld [hl], e ; $4aea
 	inc hl ; $4aeb
@@ -1885,7 +1885,7 @@ Label_05_4b29:
 	sound $5e ; $4b29
 	push de ; $4b2b
 	xor a, a ; $4b2c
-	ld [$d841], a ; $4b2d
+	ld [wTextArrowBlinkCounter], a ; $4b2d
 	ld a, b ; $4b30
 	sla a ; $4b31
 	add a, e ; $4b33
@@ -2147,7 +2147,7 @@ Label_05_4ce8:
 	farcall FarPtr_1a_02 ; $4cf5
 	jr Label_05_4cfa ; $4cf8
 Label_05_4cfa:
-	ld hl, $d841 ; $4cfa
+	ld hl, wTextArrowBlinkCounter ; $4cfa
 	ld a, [hl+] ; $4cfd
 	and a, $10 ; $4cfe
 	or a, a ; $4d00
@@ -2173,9 +2173,9 @@ Label_05_4d09:
 	push de ; $4d1b
 	call QueueBGTileWrite ; $4d1c
 	pop de ; $4d1f
-	ld a, [$d841] ; $4d20
+	ld a, [wTextArrowBlinkCounter] ; $4d20
 	inc a ; $4d23
-	ld [$d841], a ; $4d24
+	ld [wTextArrowBlinkCounter], a ; $4d24
 	ld a, [$d845] ; $4d27
 	or a, a ; $4d2a
 	jr z, Label_05_4d3e ; $4d2b
@@ -2205,7 +2205,7 @@ Label_05_4d3f:
 	ld [$d845], a ; $4d53
 Label_05_4d56:
 	wram_bank $05 ; $4d56
-	ld hl, $d841 ; $4d5c
+	ld hl, wTextArrowBlinkCounter ; $4d5c
 	inc [hl] ; $4d5f
 	test_flag $06, 0 ; $4d60
 	jr nz, Label_05_4d6d ; $4d63
@@ -2285,7 +2285,7 @@ Label_05_4e0f:
 	ret ; $4e0f
 GetMenuCursorBlinkPhase:
 	wram_bank $05 ; $4e10
-	ld a, [$d841] ; $4e16
+	ld a, [wTextArrowBlinkCounter] ; $4e16
 	and a, $10 ; $4e19
 	or a, a ; $4e1b
 	jr z, Label_05_4e20 ; $4e1c
@@ -2328,7 +2328,7 @@ Label_05_4e48:
 	ld [$d82b], a ; $4e57
 	call GetTilemapCellAddress ; $4e5a
 TextInterpreterLoop:
-	ld a, [$d850] ; $4e5d
+	ld a, [wTextPageBreakRequest] ; $4e5d
 	or a, a ; $4e60
 	jr z, Label_05_4e6d ; $4e61
 	ld a, l ; $4e63
@@ -2339,7 +2339,7 @@ TextInterpreterLoop:
 	ret ; $4e6c
 Label_05_4e6d:
 	ld a, l ; $4e6d
-	ld [$d869], a ; $4e6e
+	ld [wTextStreamPtr], a ; $4e6e
 	ld a, h ; $4e71
 	ld [$d86a], a ; $4e72
 	ld a, [hl] ; $4e75
@@ -2419,7 +2419,7 @@ TextCmdNextGlyphStreamRow:
 	push af ; $4ee9
 	push bc ; $4eea
 	push hl ; $4eeb
-	ld hl, $cb76 ; $4eec
+	ld hl, wGlyphTileWritePtr ; $4eec
 	ld a, [hl+] ; $4eef
 	ld h, [hl] ; $4ef0
 	ld l, a ; $4ef1
@@ -2431,7 +2431,7 @@ TextCmdNextGlyphStreamRow:
 Label_05_4ef9:
 	ld b, h ; $4ef9
 	ld c, l ; $4efa
-	ld hl, $cb76 ; $4efb
+	ld hl, wGlyphTileWritePtr ; $4efb
 	ld a, c ; $4efe
 	ld [hl+], a ; $4eff
 	ld [hl], b ; $4f00
@@ -2439,7 +2439,7 @@ Label_05_4ef9:
 	ldh a, [hWramBank] ; $4f04
 	push af ; $4f06
 	wram_bank $05 ; $4f07
-	ld hl, $d864 ; $4f0d
+	ld hl, wGlyphVramDest ; $4f0d
 	ld a, [hl+] ; $4f10
 	ld h, [hl] ; $4f11
 	ld l, a ; $4f12
@@ -2453,7 +2453,7 @@ Label_05_4ef9:
 	inc h ; $4f1e
 Label_05_4f1f:
 	ld a, l ; $4f1f
-	ld [$d864], a ; $4f20
+	ld [wGlyphVramDest], a ; $4f20
 	ld a, h ; $4f23
 	ld [$d865], a ; $4f24
 	ld d, h ; $4f27
@@ -2516,7 +2516,7 @@ TextCmdWaitButtonPage:
 	ld [de], a ; $4f81
 	call RedrawActiveTextWindow ; $4f82
 	xor a, a ; $4f85
-	ld hl, $d841 ; $4f86
+	ld hl, wTextArrowBlinkCounter ; $4f86
 	ld [hl+], a ; $4f89
 	ld [hl], e ; $4f8a
 	inc hl ; $4f8b
@@ -2530,7 +2530,7 @@ TextCmdWaitButtonPage:
 	call RegisterFrameTask ; $4f96
 	call WaitTextAdvanceInput ; $4f99
 	ld a, $10 ; $4f9c
-	ld [$d841], a ; $4f9e
+	ld [wTextArrowBlinkCounter], a ; $4f9e
 	call AdvanceFrame ; $4fa1
 	ld hl, $4fe3 ; $4fa4
 	call UnregisterFrameTask ; $4fa7
@@ -2542,7 +2542,7 @@ TextCmdWaitButtonPage:
 	pop bc ; $4fb5
 	pop af ; $4fb6
 	ld a, $01 ; $4fb7
-	ld [$d850], a ; $4fb9
+	ld [wTextPageBreakRequest], a ; $4fb9
 	pop de ; $4fbc
 	pop af ; $4fbd
 	ret ; $4fbe
@@ -2580,7 +2580,7 @@ TextContinueArrowBlinkTask:
 	push de ; $4fe5
 	push hl ; $4fe6
 	wram_bank $05 ; $4fe7
-	ld hl, $d841 ; $4fed
+	ld hl, wTextArrowBlinkCounter ; $4fed
 	ld a, [hl+] ; $4ff0
 	and a, $10 ; $4ff1
 	or a, a ; $4ff3
@@ -2604,9 +2604,9 @@ Label_05_4ffc:
 	ld l, a ; $500b
 	ld h, $80 ; $500c
 	call QueueBGTileWrite ; $500e
-	ld a, [$d841] ; $5011
+	ld a, [wTextArrowBlinkCounter] ; $5011
 	inc a ; $5014
-	ld [$d841], a ; $5015
+	ld [wTextArrowBlinkCounter], a ; $5015
 	pop hl ; $5018
 	pop de ; $5019
 	pop bc ; $501a
@@ -2681,16 +2681,16 @@ TextCmdPrintArgString:
 	ldh a, [hWramBank] ; $508b
 	push af ; $508d
 	wram_bank $05 ; $508e
-	ld hl, $d8b0 ; $5094
-	ld a, [$d84a] ; $5097
+	ld hl, wTextArgStringQueue ; $5094
+	ld a, [wTextArgStringCount] ; $5097
 	ld b, a ; $509a
-	ld a, [$d847] ; $509b
+	ld a, [wTextArgStringWriteIndex] ; $509b
 	cp a, b ; $509e
 	jr z, Label_05_50ef ; $509f
 	ld c, a ; $50a1
 	sla c ; $50a2
 	inc a ; $50a4
-	ld [$d847], a ; $50a5
+	ld [wTextArgStringWriteIndex], a ; $50a5
 	ld b, $00 ; $50a8
 	add hl, bc ; $50aa
 	ld b, h ; $50ab
@@ -2727,12 +2727,12 @@ Label_05_50d1:
 	ld h, a ; $50d7
 Label_05_50d8:
 	push de ; $50d8
-	ld de, $c6c0 ; $50d9
+	ld de, wInlineTextBuffer ; $50d9
 	ld bc, $0020 ; $50dc
 	call CopyMemoryBC ; $50df
 	pop de ; $50e2
 	wram_bank $05 ; $50e3
-	ld hl, $c6c0 ; $50e9
+	ld hl, wInlineTextBuffer ; $50e9
 	call RenderInlineString ; $50ec
 Label_05_50ef:
 	pop af ; $50ef
@@ -2770,16 +2770,16 @@ Label_05_5118:
 	wram_bank $05 ; $511b
 	ld d, h ; $5121
 	ld e, l ; $5122
-	ld a, [$d847] ; $5123
+	ld a, [wTextArgStringWriteIndex] ; $5123
 	cp a, $10 ; $5126
 	jr z, Label_05_513d ; $5128
 	ld b, $00 ; $512a
 	ld c, a ; $512c
 	sla c ; $512d
 	inc a ; $512f
-	ld [$d847], a ; $5130
-	ld [$d84a], a ; $5133
-	ld hl, $d8b0 ; $5136
+	ld [wTextArgStringWriteIndex], a ; $5130
+	ld [wTextArgStringCount], a ; $5133
+	ld hl, wTextArgStringQueue ; $5136
 	add hl, bc ; $5139
 	ld [hl], e ; $513a
 	inc hl ; $513b
@@ -2811,7 +2811,7 @@ PushTextArgNumber:
 	inc a ; $5162
 	ld [$d848], a ; $5163
 	ld [$d84b], a ; $5166
-	ld hl, $d8d0 ; $5169
+	ld hl, wTextArgNumberQueue ; $5169
 	add hl, bc ; $516c
 	ld [hl], e ; $516d
 	inc hl ; $516e
@@ -2833,13 +2833,13 @@ PushTextArgShortTextId:
 	ldh a, [hWramBank] ; $517f
 	push af ; $5181
 	wram_bank $05 ; $5182
-	ld a, [$d849] ; $5188
+	ld a, [wTextArgShortTextWriteIndex] ; $5188
 	cp a, $10 ; $518b
 	jr z, Label_05_519e ; $518d
 	ld b, $00 ; $518f
 	ld c, a ; $5191
 	inc a ; $5192
-	ld [$d849], a ; $5193
+	ld [wTextArgShortTextWriteIndex], a ; $5193
 	ld [$d84c], a ; $5196
 	ld hl, $d8f0 ; $5199
 	add hl, bc ; $519c
@@ -2922,7 +2922,7 @@ MeasureNextArgStringWidth:
 	inc a ; $520c
 	ld [$d866], a ; $520d
 	sla c ; $5210
-	ld hl, $d8b0 ; $5212
+	ld hl, wTextArgStringQueue ; $5212
 	add hl, bc ; $5215
 	ld a, [hl+] ; $5216
 	ld h, [hl] ; $5217
@@ -2953,12 +2953,12 @@ Label_05_5235:
 	wram_bank ; $523d
 Label_05_5241:
 	push de ; $5241
-	ld de, $c6c0 ; $5242
+	ld de, wInlineTextBuffer ; $5242
 	ld bc, $0020 ; $5245
 	call CopyMemoryBC ; $5248
 	pop de ; $524b
 	wram_bank $05 ; $524c
-	ld hl, $c6c0 ; $5252
+	ld hl, wInlineTextBuffer ; $5252
 	ld b, $00 ; $5255
 Label_05_5257:
 	ld a, [hl+] ; $5257
@@ -3064,7 +3064,7 @@ TextCmdPrintArgNumber:
 	sla c ; $52e5
 	inc a ; $52e7
 	ld [$d848], a ; $52e8
-	ld hl, $d8d0 ; $52eb
+	ld hl, wTextArgNumberQueue ; $52eb
 	add hl, bc ; $52ee
 	ld c, [hl] ; $52ef
 	inc hl ; $52f0
@@ -3091,7 +3091,7 @@ MeasureNextArgNumberWidth:
 	sla c ; $530e
 	inc a ; $5310
 	ld [$d867], a ; $5311
-	ld hl, $d8d0 ; $5314
+	ld hl, wTextArgNumberQueue ; $5314
 	add hl, bc ; $5317
 	ld e, [hl] ; $5318
 	inc hl ; $5319
@@ -3223,10 +3223,10 @@ TextCmdPrintShortText:
 	jr nc, Label_05_53d8 ; $53d5
 	inc h ; $53d7
 Label_05_53d8:
-	ld de, $c6c0 ; $53d8
+	ld de, wInlineTextBuffer ; $53d8
 	call FetchShortTextToBuffer ; $53db
 	pop de ; $53de
-	ld hl, $c6c0 ; $53df
+	ld hl, wInlineTextBuffer ; $53df
 	call RenderInlineString ; $53e2
 	pop bc ; $53e5
 	pop af ; $53e6
@@ -3242,9 +3242,9 @@ MeasureIndexedShortTextWidth:
 	jr nc, Label_05_53f6 ; $53f3
 	inc h ; $53f5
 Label_05_53f6:
-	ld de, $c6c0 ; $53f6
+	ld de, wInlineTextBuffer ; $53f6
 	farcall FarPtr_FetchShortTextToBuffer ; $53f9
-	ld hl, $c6c0 ; $53fc
+	ld hl, wInlineTextBuffer ; $53fc
 	ld b, $00 ; $53ff
 Label_05_5401:
 	ld a, [hl+] ; $5401
@@ -3395,7 +3395,7 @@ RenderInlineString:
 	ld a, [$d86a] ; $54d0
 	cp a, $c6 ; $54d3
 	jr nz, Label_05_54dd ; $54d5
-	ld a, [$d869] ; $54d7
+	ld a, [wTextStreamPtr] ; $54d7
 	or a, a ; $54da
 	jr z, Label_05_54f3 ; $54db
 Label_05_54dd:
@@ -3627,11 +3627,11 @@ Label_05_5608:
 	ld a, b ; $560c
 	and a, $3f ; $560d
 	ld b, a ; $560f
-	ld a, [$d850] ; $5610
+	ld a, [wTextPageBreakRequest] ; $5610
 	or a, a ; $5613
 	jr z, Label_05_561a ; $5614
 	xor a, a ; $5616
-	ld [$d850], a ; $5617
+	ld [wTextPageBreakRequest], a ; $5617
 Label_05_561a:
 	ld a, b ; $561a
 	cp a, $03 ; $561b
@@ -3983,11 +3983,11 @@ ShowSpeakerDialogue:
 	push af ; $5825
 	wram_bank $05 ; $5826
 	xor a, a ; $582c
-	ld [$d847], a ; $582d
+	ld [wTextArgStringWriteIndex], a ; $582d
 	ld [$d866], a ; $5830
 	ld [$d848], a ; $5833
 	ld [$d867], a ; $5836
-	ld [$d849], a ; $5839
+	ld [wTextArgShortTextWriteIndex], a ; $5839
 	ld [$d868], a ; $583c
 	call AddTextIdOffset ; $583f
 	ld a, b ; $5842
@@ -4039,7 +4039,7 @@ Label_05_5888:
 	clear_flag $04, 3 ; $58af
 	call RedrawWindowRowsPadded ; $58b2
 	call RenderActiveWindowText ; $58b5
-	ld a, [$d850] ; $58b8
+	ld a, [wTextPageBreakRequest] ; $58b8
 	or a, a ; $58bb
 	jr z, Label_05_58c9 ; $58bc
 	ld a, [$d824] ; $58be
@@ -4052,11 +4052,11 @@ Label_05_58c9:
 	ld a, $ff ; $58cf
 	ld [$d824], a ; $58d1
 	xor a, a ; $58d4
-	ld [$d847], a ; $58d5
+	ld [wTextArgStringWriteIndex], a ; $58d5
 	ld [$d866], a ; $58d8
 	ld [$d848], a ; $58db
 	ld [$d867], a ; $58de
-	ld [$d849], a ; $58e1
+	ld [wTextArgShortTextWriteIndex], a ; $58e1
 	ld [$d868], a ; $58e4
 	pop af ; $58e7
 	wram_bank ; $58e8
@@ -4073,11 +4073,11 @@ ShowSpeakerDialogueRestoreBG:
 	push af ; $58f6
 	wram_bank $05 ; $58f7
 	xor a, a ; $58fd
-	ld [$d847], a ; $58fe
+	ld [wTextArgStringWriteIndex], a ; $58fe
 	ld [$d866], a ; $5901
 	ld [$d848], a ; $5904
 	ld [$d867], a ; $5907
-	ld [$d849], a ; $590a
+	ld [wTextArgShortTextWriteIndex], a ; $590a
 	ld [$d868], a ; $590d
 	call AddTextIdOffset ; $5910
 	ld a, b ; $5913
@@ -4129,18 +4129,18 @@ Label_05_5956:
 	clear_flag $04, 3 ; $5980
 	call RedrawWindowRowsPadded ; $5983
 	call RenderActiveWindowText ; $5986
-	ld a, [$d850] ; $5989
+	ld a, [wTextPageBreakRequest] ; $5989
 	or a, a ; $598c
 	jr z, Label_05_5994 ; $598d
 	call FitWindowToText ; $598f
 	jr Label_05_5956 ; $5992
 Label_05_5994:
 	xor a, a ; $5994
-	ld [$d847], a ; $5995
+	ld [wTextArgStringWriteIndex], a ; $5995
 	ld [$d866], a ; $5998
 	ld [$d848], a ; $599b
 	ld [$d867], a ; $599e
-	ld [$d849], a ; $59a1
+	ld [wTextArgShortTextWriteIndex], a ; $59a1
 	ld [$d868], a ; $59a4
 	pop af ; $59a7
 	wram_bank ; $59a8
@@ -4157,11 +4157,11 @@ ShowDialogueAtPosition:
 	push af ; $59b6
 	wram_bank $05 ; $59b7
 	xor a, a ; $59bd
-	ld [$d847], a ; $59be
+	ld [wTextArgStringWriteIndex], a ; $59be
 	ld [$d866], a ; $59c1
 	ld [$d848], a ; $59c4
 	ld [$d867], a ; $59c7
-	ld [$d849], a ; $59ca
+	ld [wTextArgShortTextWriteIndex], a ; $59ca
 	ld [$d868], a ; $59cd
 	call AddTextIdOffset ; $59d0
 	ld a, b ; $59d3
@@ -4197,7 +4197,7 @@ Label_05_59f2:
 	clear_flag $04, 3 ; $5a19
 	call RedrawWindowRowsPadded ; $5a1c
 	call RenderActiveWindowText ; $5a1f
-	ld a, [$d850] ; $5a22
+	ld a, [wTextPageBreakRequest] ; $5a22
 	or a, a ; $5a25
 	jr nz, Label_05_59f2 ; $5a26
 	ld a, [$d824] ; $5a28
@@ -4205,11 +4205,11 @@ Label_05_59f2:
 	ld a, $ff ; $5a2e
 	ld [$d824], a ; $5a30
 	xor a, a ; $5a33
-	ld [$d847], a ; $5a34
+	ld [wTextArgStringWriteIndex], a ; $5a34
 	ld [$d866], a ; $5a37
 	ld [$d848], a ; $5a3a
 	ld [$d867], a ; $5a3d
-	ld [$d849], a ; $5a40
+	ld [wTextArgShortTextWriteIndex], a ; $5a40
 	ld [$d868], a ; $5a43
 	pop af ; $5a46
 	wram_bank ; $5a47
@@ -4246,7 +4246,7 @@ Label_05_5a7b:
 	call SetActiveWindowTextId ; $5a7b
 	call RestoreShadowTilemap ; $5a7e
 	call Func_05_4626 ; $5a81
-	ld a, [$d850] ; $5a84
+	ld a, [wTextPageBreakRequest] ; $5a84
 	or a, a ; $5a87
 	jr nz, Label_05_5a7b ; $5a88
 	pop af ; $5a8a
@@ -4749,7 +4749,7 @@ RenderProportionalTextAt:
 	push bc ; $5dba
 	push de ; $5dbb
 	push hl ; $5dbc
-	ld hl, $cb76 ; $5dbd
+	ld hl, wGlyphTileWritePtr ; $5dbd
 	ld a, e ; $5dc0
 	ld [hl+], a ; $5dc1
 	ld [hl], d ; $5dc2
@@ -4761,11 +4761,11 @@ RenderProportionalTextAt:
 	xor a, a ; $5dd0
 	call AddTextIdOffset ; $5dd1
 	xor a, a ; $5dd4
-	ld [$d847], a ; $5dd5
+	ld [wTextArgStringWriteIndex], a ; $5dd5
 	ld [$d866], a ; $5dd8
 	ld [$d848], a ; $5ddb
 	ld [$d867], a ; $5dde
-	ld [$d849], a ; $5de1
+	ld [wTextArgShortTextWriteIndex], a ; $5de1
 	ld [$d868], a ; $5de4
 	ld a, [$c3b5] ; $5de7
 	add a, $03 ; $5dea
@@ -4776,7 +4776,7 @@ RenderProportionalTextAt:
 	ld d, a ; $5df2
 Label_05_5df3:
 	ld a, e ; $5df3
-	ld [$d864], a ; $5df4
+	ld [wGlyphVramDest], a ; $5df4
 	ld a, d ; $5df7
 	ld [$d865], a ; $5df8
 	ld c, $20 ; $5dfb
@@ -4925,11 +4925,11 @@ Label_05_5ebc:
 	wram_bank $05 ; $5ed1
 	xor a, a ; $5ed7
 	ld [$c362], a ; $5ed8
-	ld [$d847], a ; $5edb
+	ld [wTextArgStringWriteIndex], a ; $5edb
 	ld [$d866], a ; $5ede
 	ld [$d848], a ; $5ee1
 	ld [$d867], a ; $5ee4
-	ld [$d849], a ; $5ee7
+	ld [wTextArgShortTextWriteIndex], a ; $5ee7
 	ld [$d868], a ; $5eea
 	pop af ; $5eed
 	wram_bank ; $5eee
@@ -4958,7 +4958,7 @@ Func_05_5f0d:
 	ld a, [$cb78] ; $5f11
 	or a, a ; $5f14
 	jr z, Label_05_5f4d ; $5f15
-	ld hl, $cb76 ; $5f17
+	ld hl, wGlyphTileWritePtr ; $5f17
 	ld a, [hl+] ; $5f1a
 	ld d, [hl] ; $5f1b
 	ld e, a ; $5f1c
@@ -5014,7 +5014,7 @@ RenderTextToBuffer64:
 	xor a, a ; $5f5f
 	call AddTextIdOffset ; $5f60
 	ld a, e ; $5f63
-	ld [$d864], a ; $5f64
+	ld [wGlyphVramDest], a ; $5f64
 	ld a, d ; $5f67
 	ld [$d865], a ; $5f68
 	ld b, $ff ; $5f6b
@@ -5301,7 +5301,7 @@ Label_05_61b9:
 	call RenderActiveWindowText ; $61e9
 	ld a, [$d824] ; $61ec
 	call RestoreTilemapUnderWindow ; $61ef
-	ld a, [$d850] ; $61f2
+	ld a, [wTextPageBreakRequest] ; $61f2
 	or a, a ; $61f5
 	jr nz, Label_05_61b9 ; $61f6
 	jr Label_05_6224 ; $61f8
@@ -5387,7 +5387,7 @@ Label_05_6280:
 	ld a, [$d824] ; $6280
 	call DrawTextWindowFrame ; $6283
 	call RenderActiveWindowText ; $6286
-	ld a, [$d850] ; $6289
+	ld a, [wTextPageBreakRequest] ; $6289
 	or a, a ; $628c
 	jr nz, Label_05_6280 ; $628d
 	jr Label_05_62b2 ; $628f
@@ -5458,11 +5458,11 @@ ShowDialogueCentered:
 	push af ; $62ec
 	wram_bank $05 ; $62ed
 	xor a, a ; $62f3
-	ld [$d847], a ; $62f4
+	ld [wTextArgStringWriteIndex], a ; $62f4
 	ld [$d866], a ; $62f7
 	ld [$d848], a ; $62fa
 	ld [$d867], a ; $62fd
-	ld [$d849], a ; $6300
+	ld [wTextArgShortTextWriteIndex], a ; $6300
 	ld [$d868], a ; $6303
 	call AddTextIdOffset ; $6306
 	call ApplyMessageSpeed ; $6309
@@ -5475,7 +5475,7 @@ Label_05_6316:
 	ld a, [$d824] ; $6319
 	call RedrawWindowText ; $631c
 	call RedrawWindowRowsThunk ; $631f
-	ld a, [$d850] ; $6322
+	ld a, [wTextPageBreakRequest] ; $6322
 	or a, a ; $6325
 	jr nz, Label_05_6316 ; $6326
 	ld a, [$d824] ; $6328
@@ -5483,11 +5483,11 @@ Label_05_6316:
 	ld a, $ff ; $632e
 	ld [$d824], a ; $6330
 	xor a, a ; $6333
-	ld [$d847], a ; $6334
+	ld [wTextArgStringWriteIndex], a ; $6334
 	ld [$d866], a ; $6337
 	ld [$d848], a ; $633a
 	ld [$d867], a ; $633d
-	ld [$d849], a ; $6340
+	ld [wTextArgShortTextWriteIndex], a ; $6340
 	ld [$d868], a ; $6343
 	pop af ; $6346
 	wram_bank ; $6347
@@ -6722,14 +6722,14 @@ Label_05_6c77:
 	xor a, a ; $6c86
 	call AddTextIdOffset ; $6c87
 	xor a, a ; $6c8a
-	ld [$d847], a ; $6c8b
+	ld [wTextArgStringWriteIndex], a ; $6c8b
 	ld [$d866], a ; $6c8e
 	ld [$d848], a ; $6c91
 	ld [$d867], a ; $6c94
-	ld [$d849], a ; $6c97
+	ld [wTextArgShortTextWriteIndex], a ; $6c97
 	ld [$d868], a ; $6c9a
 	ld a, e ; $6c9d
-	ld [$d864], a ; $6c9e
+	ld [wGlyphVramDest], a ; $6c9e
 	ld a, d ; $6ca1
 	ld [$d865], a ; $6ca2
 	ld b, $ff ; $6ca5
@@ -6804,11 +6804,11 @@ Label_05_6d02:
 	wram_bank $05 ; $6d05
 	xor a, a ; $6d0b
 	ld [$c362], a ; $6d0c
-	ld [$d847], a ; $6d0f
+	ld [wTextArgStringWriteIndex], a ; $6d0f
 	ld [$d866], a ; $6d12
 	ld [$d848], a ; $6d15
 	ld [$d867], a ; $6d18
-	ld [$d849], a ; $6d1b
+	ld [wTextArgShortTextWriteIndex], a ; $6d1b
 	ld [$d868], a ; $6d1e
 	pop af ; $6d21
 	wram_bank ; $6d22
@@ -8256,7 +8256,7 @@ DrawStreamGlyph:
 	ld a, [hl+] ; $7594
 	ld d, [hl] ; $7595
 	ld e, a ; $7596
-	ld hl, $d869 ; $7597
+	ld hl, wTextStreamPtr ; $7597
 	ld a, [hl+] ; $759a
 	ld h, [hl] ; $759b
 	ld l, a ; $759c

@@ -262,6 +262,11 @@
   "name": "wTextBuffer",
   "note": "Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0"
  },
+ "0xc6c0": {
+  "name": "wInlineTextBuffer",
+  "note": "32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString",
+  "size": 32
+ },
  "0xc78c": {
   "name": "wTargetZoneEnabled",
   "note": "[8-bit] Nonzero draws the 4-corner court target zone (training drills)",
@@ -875,14 +880,64 @@
   "note": "Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it).",
   "size": 1
  },
+ "0xcb76": {
+  "name": "wGlyphTileWritePtr",
+  "note": "VRAM tile-data write pointer for the proportional-glyph renderer (bank $05 text engine)",
+  "size": 2
+ },
  "0xcc00": {
   "name": "wDebugTextBuffer",
   "note": "[576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active",
   "size": 576
  },
+ "0xd841": {
+  "name": "wTextArrowBlinkCounter",
+  "note": "WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile)",
+  "size": 1
+ },
+ "0xd847": {
+  "name": "wTextArgStringWriteIndex",
+  "note": "WRAM5: write index into wTextArgStringQueue (max 16)",
+  "size": 1
+ },
+ "0xd849": {
+  "name": "wTextArgShortTextWriteIndex",
+  "note": "WRAM5: write index for the short-text-id arg queue",
+  "size": 1
+ },
+ "0xd84a": {
+  "name": "wTextArgStringCount",
+  "note": "WRAM5: count of queued arg strings (mirrors wTextArgStringWriteIndex)",
+  "size": 1
+ },
+ "0xd850": {
+  "name": "wTextPageBreakRequest",
+  "note": "WRAM5: set by TextCmdWaitButtonPage; TextInterpreterLoop saves resume offset to $d84e/f and returns",
+  "size": 1
+ },
+ "0xd864": {
+  "name": "wGlyphVramDest",
+  "note": "WRAM5: current VRAM destination address for glyph tiles (lo/hi)",
+  "size": 2
+ },
+ "0xd869": {
+  "name": "wTextStreamPtr",
+  "note": "WRAM5: current read pointer into the text byte stream",
+  "size": 2
+ },
  "0xd880": {
   "name": "wShortTextBuffer",
   "note": "Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0"
+ },
+ "0xd8b0": {
+  "name": "wTextArgStringQueue",
+  "note": "WRAM5: 16 x 2-byte string pointers queued by PushTextArgString (hi nibble = WRAM bank tag)",
+  "size": 32
+ },
+ "0xd8d0": {
+  "name": "wTextArgNumberQueue",
+  "note": "WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber",
+  "size": 32
  },
  "0xff8a": {
   "name": "hScrollY",
