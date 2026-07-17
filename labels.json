@@ -974,6 +974,8 @@
  "0x6d6c2": "GetStringLength",
  "0x6e172": "UpdateCharSelectSelection",
  "0x6e192": "MoveCharSelectCursor",
+ "0x6e1ba": "RunNewGameSetup",
+ "0x6e4b9": "RunDebugSaveDataMenu",
  "0x6e51e": "ClearScreenMaps",
  "0x702cc": "CopyWram1ToWram3",
  "0x702e1": "CopyWram1ToWram2",

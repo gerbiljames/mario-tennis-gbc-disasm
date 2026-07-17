@@ -34,8 +34,8 @@ FarPtr_1b_1e:
 	dw Func_1b_6982 ; $401e
 FarPtr_1b_20:
 	dw Func_1b_6ade ; $4020
-FarPtr_1b_22:
-	dw Func_1b_61ba ; $4022
+FarPtr_RunNewGameSetup:
+	dw RunNewGameSetup ; $4022
 FarPtr_1b_24:
 	dw Func_1b_62f8 ; $4024
 FarPtr_1b_26:
@@ -2927,7 +2927,7 @@ Label_1b_61a3:
 	ld [$c784], a ; $61b6
 Label_1b_61b9:
 	ret ; $61b9
-Func_1b_61ba:
+RunNewGameSetup:
 	sound $03 ; $61ba
 	farcall FarPtr_InitStoryModeState ; $61bc
 	ld a, $00 ; $61bf
@@ -3060,7 +3060,7 @@ Label_1b_6293:
 	jr nz, Label_1b_62b3 ; $62aa
 	pop af ; $62ac
 	ld [$cb00], a ; $62ad
-	jp Func_1b_61ba ; $62b0
+	jp RunNewGameSetup ; $62b0
 Label_1b_62b3:
 	cp a, $fe ; $62b3
 	jr nz, Label_1b_62b9 ; $62b5
@@ -3119,7 +3119,7 @@ Func_1b_62f8:
 	farcall FarPtr_CheckStorySlot ; $6313
 	or a, a ; $6316
 	jp z, Label_1b_6399 ; $6317
-	call Func_1b_61ba ; $631a
+	call RunNewGameSetup ; $631a
 	cp a, $ff ; $631d
 	jp z, Func_1b_62f8 ; $631f
 	ld a, $01 ; $6322
@@ -3128,7 +3128,7 @@ Func_1b_62f8:
 	jp Label_1b_6408 ; $632a
 Label_1b_632d:
 	sound $03 ; $632d
-	call Func_1b_64b9 ; $632f
+	call RunDebugSaveDataMenu ; $632f
 	cp a, $ff ; $6332
 	jr z, Func_1b_62f8 ; $6334
 	cp a, $01 ; $6336
@@ -3324,7 +3324,7 @@ Func_1b_6467:
 	pop de ; $64b6
 	pop bc ; $64b7
 	ret ; $64b8
-Func_1b_64b9:
+RunDebugSaveDataMenu:
 	push bc ; $64b9
 	push de ; $64ba
 	push hl ; $64bb

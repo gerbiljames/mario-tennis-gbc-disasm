@@ -1370,7 +1370,7 @@ Label_10_5041:
 	call WaitFadeEnd ; $504b
 	ld a, e ; $504e
 	ld [$c36c], a ; $504f
-	farcall FarPtr_1b_22 ; $5052
+	farcall FarPtr_RunNewGameSetup ; $5052
 	cp a, $ff ; $5055
 	jp nz, Label_10_5073 ; $5057
 	ld a, $00 ; $505a
