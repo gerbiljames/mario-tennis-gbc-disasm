@@ -2764,7 +2764,7 @@ Func_1b_6045:
 	ld hl, $047b ; $6065
 Label_1b_6068:
 	ld de, $da01 ; $6068
-	farcall FarPtr_18_04 ; $606b
+	farcall FarPtr_RenderProportionalTextAt32 ; $606b
 	ret ; $606e
 Func_1b_606f:
 	farcall FarPtr_1b_0c ; $606f
@@ -2917,7 +2917,7 @@ Func_1b_6192:
 	ld e, a ; $61a2
 Label_1b_61a3:
 	ld hl, $c7a0 ; $61a3
-	farcall FarPtr_18_2a ; $61a6
+	farcall FarPtr_MoveGridCursor ; $61a6
 	farcall FarPtr_18_24 ; $61a9
 	farcall FarPtr_18_26 ; $61ac
 	jr z, Label_1b_61a3 ; $61af
@@ -3494,7 +3494,7 @@ Func_1b_669d:
 	pop af ; $66a7
 	ld b, a ; $66a8
 	push bc ; $66a9
-	farcall FarPtr_18_28 ; $66aa
+	farcall FarPtr_CheckUnlockFlag ; $66aa
 	pop bc ; $66ad
 	ld a, b ; $66ae
 	jr z, Label_1b_66b6 ; $66af
@@ -3523,7 +3523,7 @@ Func_1b_66d7:
 Label_1b_66dd:
 	ld a, [hl] ; $66dd
 	farcall FarPtr_18_24 ; $66de
-	farcall FarPtr_18_28 ; $66e1
+	farcall FarPtr_CheckUnlockFlag ; $66e1
 	jr z, Label_1b_6703 ; $66e4
 	ld a, [$d58b] ; $66e6
 	farcall FarPtr_1b_10 ; $66e9
@@ -3591,7 +3591,7 @@ Label_1b_6778:
 	ld a, [$c781] ; $6784
 	ld b, a ; $6787
 	push bc ; $6788
-	farcall FarPtr_18_28 ; $6789
+	farcall FarPtr_CheckUnlockFlag ; $6789
 	pop bc ; $678c
 	ld a, b ; $678d
 	jr z, Label_1b_6792 ; $678e
@@ -3663,7 +3663,7 @@ Func_1b_67f4:
 	call Func_1b_6827 ; $6808
 	ld b, a ; $680b
 	push bc ; $680c
-	farcall FarPtr_18_28 ; $680d
+	farcall FarPtr_CheckUnlockFlag ; $680d
 	pop bc ; $6810
 	ld a, b ; $6811
 	jr z, Label_1b_6819 ; $6812
@@ -3873,30 +3873,30 @@ Label_1b_6a03:
 	ld de, $d9c1 ; $6a15
 	call Func_1b_6aae ; $6a18
 	ld hl, $046a ; $6a1b
-	farcall FarPtr_18_04 ; $6a1e
+	farcall FarPtr_RenderProportionalTextAt32 ; $6a1e
 	farcall FarPtr_18_40 ; $6a21
 	ret ; $6a24
 	ld hl, $046d ; $6a25
 	ld de, $d9c1 ; $6a28
-	farcall FarPtr_18_04 ; $6a2b
+	farcall FarPtr_RenderProportionalTextAt32 ; $6a2b
 	farcall FarPtr_18_40 ; $6a2e
 	ret ; $6a31
 	ld hl, $046b ; $6a32
 	ld de, $d9c1 ; $6a35
-	farcall FarPtr_18_04 ; $6a38
+	farcall FarPtr_RenderProportionalTextAt32 ; $6a38
 	farcall FarPtr_18_40 ; $6a3b
 	ret ; $6a3e
 	ld hl, $0471 ; $6a3f
 	ld de, $d9c1 ; $6a42
-	farcall FarPtr_18_04 ; $6a45
+	farcall FarPtr_RenderProportionalTextAt32 ; $6a45
 	farcall FarPtr_18_40 ; $6a48
 	ret ; $6a4b
 	ld hl, $0162 ; $6a4c
 	ld de, $d9c1 ; $6a4f
-	farcall FarPtr_18_04 ; $6a52
+	farcall FarPtr_RenderProportionalTextAt32 ; $6a52
 	ld hl, $0162 ; $6a55
 	ld de, $da01 ; $6a58
-	farcall FarPtr_18_04 ; $6a5b
+	farcall FarPtr_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
 	ld a, [$c0f3] ; $6a5f
 	ld h, $00 ; $6a62
@@ -4001,10 +4001,10 @@ Func_1b_6ade:
 	call Func_1b_6b5d ; $6b2c
 	ld hl, $047b ; $6b2f
 	ld de, $d883 ; $6b32
-	farcall FarPtr_18_04 ; $6b35
+	farcall FarPtr_RenderProportionalTextAt32 ; $6b35
 	ld hl, $047c ; $6b38
 	ld de, $d8c3 ; $6b3b
-	farcall FarPtr_18_04 ; $6b3e
+	farcall FarPtr_RenderProportionalTextAt32 ; $6b3e
 	farcall FarPtr_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
 	ld c, $20 ; $6b47

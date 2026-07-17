@@ -423,7 +423,7 @@ Label_06_435d:
 Label_06_4372:
 	ret ; $4372
 	ld de, $9080 ; $4373
-	farcall FarPtr_18_14 ; $4376
+	farcall FarPtr_AddBobbingOffsetY ; $4376
 	ld bc, $0a70 ; $4379
 	call QueueSprite16 ; $437c
 	ret ; $437f
@@ -3783,7 +3783,7 @@ QueueMatchMenuCursorSprite:
 	add hl, de ; $69d4
 	ld e, l ; $69d5
 	ld d, h ; $69d6
-	farcall FarPtr_18_16 ; $69d7
+	farcall FarPtr_AddBobbingOffsetYLarge ; $69d7
 	call Func_06_465e ; $69da
 	ld hl, $6a10 ; $69dd
 	ld bc, $0000 ; $69e0

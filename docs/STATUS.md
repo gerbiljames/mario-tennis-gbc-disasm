@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `c5a1622`); the whole history rebuilds
+Everything below is **committed** (HEAD `see git log`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -807,6 +807,34 @@ landed in ram_map.json (hFadeState, hVRAMQueueDirty, wCameraX/Y, wGameTimer,
 hRandomSeed, hIsCGB, ...). Bank $00 is now 245/901 human-named; what remains
 is mostly interior branch labels.
 
+**Cross-bank naming pass round 2 (2026-07-17, +256 names).** Continued with a
+mix of direct reading and per-bank subagent proposals (each verified against
+the source before applying):
+- **Bank $05 is now fully mapped as the text/window engine** (+141): the
+  window-struct allocator ($dc00, 7 x 8-byte slots, mask $dc70), shadow
+  tilemap under-window save/restore, the dirty-row flush pipeline
+  (MarkWindowRowsDirty -> BuildDirtyRowRuns -> CopyDirtyRowSpanToVRAM), menu
+  selection loops (RunMenuSelection, paged variants), the text-argument
+  substitution lists (PushTextArgString/Number/ShortTextId + measurement),
+  speaker dialogue/speech-bubble display, the dynamic glyph-tile streaming
+  system (WRAM7 $d300 buffer -> $8800), SRAM text fetch, and a large leftover
+  debug suite (flag editor, palette editor, warp menu, window demo).
+- **Bank $07 identified and named** (+76): the link-play protocol engine
+  (master/slave handshakes, per-frame input exchange with duplicate
+  detection, nibble-block bulk transfer with checksums, command encode/
+  decode) and the shot-execution engine (ExecuteShot, per-shot-type speed
+  composition, ComputeShotTrajectory, recoil, smash-range check, aim
+  jitter), plus RunDebugTestMatch.
+- **Bank $0a story-script layer** (+27): script commands over the WRAM4
+  actor records (position/move-target/polar movement, facing, screen shake,
+  player teleport with fade, dialogue-sequence wrappers).
+- **Bank $18 helpers** (+7): grid-cursor movement, unlock-flag test,
+  bobbing cursor offsets, two-option prompt.
+Named symbol count grew from 1,338 to ~1,627. Two offset-arithmetic mishaps
+(labels landing in the wrong bank) were caught by blob-count changes and a
+name clash; the fix and the safe recipe are recorded in the auto-memory
+(naming-pass-workflow).
+
 Next annotation targets: bank $08's remaining ~120 physics/AI routines (velocity
 integrators, the CPU-AI behaviour state machine — need runtime traces), the
 bank $05 text control-code handlers, bank $3b's screen-specific pause-menu
@@ -816,5 +844,5 @@ expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `c5a1622`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `see git log`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.

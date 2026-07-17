@@ -4,8 +4,8 @@ FarPtr_18_00:
 	dw Func_18_4328 ; $4000
 FarPtr_18_02:
 	dw Func_18_4339 ; $4002
-FarPtr_18_04:
-	dw Func_18_439a ; $4004
+FarPtr_RenderProportionalTextAt32:
+	dw RenderProportionalTextAt32 ; $4004
 FarPtr_18_06:
 	dw Func_18_437c ; $4006
 FarPtr_18_08:
@@ -18,12 +18,12 @@ FarPtr_18_0e:
 	dw Func_18_43a6 ; $400e
 FarPtr_DrawStringToTilemap:
 	dw DrawStringToTilemap ; $4010
-FarPtr_18_12:
-	dw Func_18_4444 ; $4012
-FarPtr_18_14:
-	dw Func_18_4478 ; $4014
-FarPtr_18_16:
-	dw Func_18_449b ; $4016
+FarPtr_AddBobbingOffsetXY:
+	dw AddBobbingOffsetXY ; $4012
+FarPtr_AddBobbingOffsetY:
+	dw AddBobbingOffsetY ; $4014
+FarPtr_AddBobbingOffsetYLarge:
+	dw AddBobbingOffsetYLarge ; $4016
 FarPtr_18_18:
 	dw Func_18_44ee ; $4018
 FarPtr_DrawDecimalNumberToTilemap:
@@ -40,18 +40,18 @@ FarPtr_18_24:
 	dw Func_18_4507 ; $4024
 FarPtr_18_26:
 	dw Func_18_452a ; $4026
-FarPtr_18_28:
-	dw Func_18_4557 ; $4028
-FarPtr_18_2a:
-	dw Func_18_45ca ; $402a
+FarPtr_CheckUnlockFlag:
+	dw CheckUnlockFlag ; $4028
+FarPtr_MoveGridCursor:
+	dw MoveGridCursor ; $402a
 FarPtr_18_2c:
 	dw Func_18_463b ; $402c
 FarPtr_ForceFlushBgMapToVram:
 	dw ForceFlushBgMapToVram ; $402e
 FarPtr_18_30:
 	dw Func_18_5365 ; $4030
-FarPtr_18_32:
-	dw Func_18_5421 ; $4032
+FarPtr_RunTwoOptionSelect:
+	dw RunTwoOptionSelect ; $4032
 FarPtr_18_34:
 	dw Func_18_5469 ; $4034
 FarPtr_18_36:
@@ -215,7 +215,7 @@ Func_18_438d:
 	ld c, $10 ; $4394
 	call QueueVRAMCopy ; $4396
 	ret ; $4399
-Func_18_439a:
+RenderProportionalTextAt32:
 	push bc ; $439a
 	ld c, $20 ; $439b
 	farcall FarPtr_RenderProportionalTextAt ; $439d
@@ -361,7 +361,7 @@ Label_18_443a:
 	ld a, $09 ; $4440
 	ld [hl+], a ; $4442
 	ret ; $4443
-Func_18_4444:
+AddBobbingOffsetXY:
 	push af ; $4444
 	push hl ; $4445
 	ldh a, [hVBlankCounter] ; $4446
@@ -391,7 +391,7 @@ Func_18_4444:
 	ret ; $4467
 	; $4468, 16 bytes (bytes:16)
 	db $00, $01, $01, $01, $02, $02, $03, $04, $03, $02, $02, $01, $01, $01, $00, $00 ; 0x00
-Func_18_4478:
+AddBobbingOffsetY:
 	push af ; $4478
 	push hl ; $4479
 	ldh a, [hVBlankCounter] ; $447a
@@ -408,7 +408,7 @@ Func_18_4478:
 	pop hl ; $4489
 	ret ; $448a
 	INCBIN "data/bank_018/d_448b.bin" ; $448b, 16 bytes
-Func_18_449b:
+AddBobbingOffsetYLarge:
 	push af ; $449b
 	push hl ; $449c
 	ldh a, [hVBlankCounter] ; $449d
@@ -507,7 +507,7 @@ Label_18_453b:
 Label_18_4555:
 	xor a, a ; $4555
 	ret ; $4556
-Func_18_4557:
+CheckUnlockFlag:
 	bit 7, a ; $4557
 	jr z, Label_18_4564 ; $4559
 	cp a, $84 ; $455b
@@ -547,7 +547,7 @@ Label_18_4587:
 	pop hl ; $4588
 	ret ; $4589
 	INCBIN "data/bank_018/d_458a.bin" ; $458a, 64 bytes
-Func_18_45ca:
+MoveGridCursor:
 	bit 5, b ; $45ca
 	jr z, Label_18_45d1 ; $45cc
 	dec d ; $45ce
@@ -607,23 +607,23 @@ Label_18_460f:
 	ld a, [hl] ; $460f
 	pop hl ; $4610
 	cp a, $ff ; $4611
-	jr z, Func_18_45ca ; $4613
+	jr z, MoveGridCursor ; $4613
 	cp a, $fe ; $4615
 	jr nz, Label_18_461d ; $4617
 	inc d ; $4619
 	inc e ; $461a
-	jr Func_18_45ca ; $461b
+	jr MoveGridCursor ; $461b
 Label_18_461d:
 	cp a, $fd ; $461d
 	jr nz, Label_18_4625 ; $461f
 	dec d ; $4621
 	dec e ; $4622
-	jr Func_18_45ca ; $4623
+	jr MoveGridCursor ; $4623
 Label_18_4625:
 	cp a, $fc ; $4625
 	jr nz, Label_18_462c ; $4627
 	dec d ; $4629
-	jr Func_18_45ca ; $462a
+	jr MoveGridCursor ; $462a
 Label_18_462c:
 	cp a, $fb ; $462c
 	jr nz, Label_18_463a ; $462e
@@ -632,7 +632,7 @@ Label_18_462c:
 	bit 5, a ; $4633
 	jr nz, Label_18_463a ; $4635
 	inc d ; $4637
-	jr Func_18_45ca ; $4638
+	jr MoveGridCursor ; $4638
 Label_18_463a:
 	ret ; $463a
 Func_18_463b:
@@ -825,7 +825,7 @@ ForceFlushBgMapToVram:
 	ld [$cb61], a ; $541a
 	call FlushBgMapShadowToVram ; $541d
 	ret ; $5420
-Func_18_5421:
+RunTwoOptionSelect:
 	ldh a, [hInputRisingEdge] ; $5421
 	and a, $20 ; $5423
 	jr z, Label_18_542b ; $5425
@@ -853,13 +853,13 @@ Label_18_5445:
 	jr z, Label_18_544f ; $544a
 	ld de, $3a8e ; $544c
 Label_18_544f:
-	call Func_18_4444 ; $544f
+	call AddBobbingOffsetXY ; $544f
 	push bc ; $5452
 	ld bc, $0650 ; $5453
 	call QueueSprite16 ; $5456
 	pop bc ; $5459
 	call AdvanceFrame ; $545a
-	jr Func_18_5421 ; $545d
+	jr RunTwoOptionSelect ; $545d
 Label_18_545f:
 	ld a, b ; $545f
 	and a, a ; $5460
@@ -897,7 +897,7 @@ Label_18_548d:
 	jr z, Label_18_5497 ; $5492
 	ld de, $5892 ; $5494
 Label_18_5497:
-	call Func_18_4444 ; $5497
+	call AddBobbingOffsetXY ; $5497
 	push bc ; $549a
 	ld bc, $0650 ; $549b
 	call QueueSprite16 ; $549e
