@@ -1460,7 +1460,7 @@ Label_3b_48c3:
 Func_3b_48f2:
 	ld b, $16 ; $48f2
 	ld c, $44 ; $48f4
-	farcall FarPtr_39_10 ; $48f6
+	farcall FarPtr_LoadCompressedTileBlock ; $48f6
 	ret ; $48f9
 Func_3b_48fa:
 	push af ; $48fa
@@ -3152,7 +3152,7 @@ Label_3b_55b4:
 	ld a, [hl+] ; $55b5
 	ld h, [hl] ; $55b6
 	ld l, a ; $55b7
-	farcall FarPtr_39_66 ; $55b8
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $55b8
 	ld hl, $0010 ; $55bb
 	add hl, de ; $55be
 	ld d, h ; $55bf
@@ -3179,7 +3179,7 @@ Func_3b_55d1:
 	xor a, a ; $55de
 	ld [$cb1a], a ; $55df
 	call Func_3b_56c4 ; $55e2
-	farcall FarPtr_39_24 ; $55e5
+	farcall FarPtr_InitMenuBgScroll ; $55e5
 	ld b, $01 ; $55e8
 	ld c, $01 ; $55ea
 	farcall FarPtr_39_26 ; $55ec
@@ -3364,42 +3364,42 @@ Label_3b_56f4:
 	ld b, $1c ; $5761
 	ld c, $10 ; $5763
 	ld de, $a000 ; $5765
-	farcall FarPtr_39_10 ; $5768
+	farcall FarPtr_LoadCompressedTileBlock ; $5768
 	call AdvanceFrame ; $576b
 	ld b, $1d ; $576e
 	ld c, $10 ; $5770
 	ld de, $a100 ; $5772
-	farcall FarPtr_39_10 ; $5775
+	farcall FarPtr_LoadCompressedTileBlock ; $5775
 	call AdvanceFrame ; $5778
 	ld b, $1e ; $577b
 	ld c, $12 ; $577d
 	ld de, $a200 ; $577f
-	farcall FarPtr_39_10 ; $5782
+	farcall FarPtr_LoadCompressedTileBlock ; $5782
 	call AdvanceFrame ; $5785
 	ld b, $1f ; $5788
 	ld c, $10 ; $578a
 	ld de, $a320 ; $578c
-	farcall FarPtr_39_10 ; $578f
+	farcall FarPtr_LoadCompressedTileBlock ; $578f
 	call AdvanceFrame ; $5792
 	ld b, $20 ; $5795
 	ld c, $10 ; $5797
 	ld de, $a420 ; $5799
-	farcall FarPtr_39_10 ; $579c
+	farcall FarPtr_LoadCompressedTileBlock ; $579c
 	call AdvanceFrame ; $579f
 	ld b, $21 ; $57a2
 	ld c, $10 ; $57a4
 	ld de, $a520 ; $57a6
-	farcall FarPtr_39_10 ; $57a9
+	farcall FarPtr_LoadCompressedTileBlock ; $57a9
 	call AdvanceFrame ; $57ac
 	ld b, $22 ; $57af
 	ld c, $10 ; $57b1
 	ld de, $a620 ; $57b3
-	farcall FarPtr_39_10 ; $57b6
+	farcall FarPtr_LoadCompressedTileBlock ; $57b6
 	call AdvanceFrame ; $57b9
 	ld b, $1b ; $57bc
 	ld c, $04 ; $57be
 	ld de, $a720 ; $57c0
-	farcall FarPtr_39_10 ; $57c3
+	farcall FarPtr_LoadCompressedTileBlock ; $57c3
 	ld b, $08 ; $57c6
 	ld c, $10 ; $57c8
 	farcall FarPtr_LoadIndexedPalette ; $57ca
@@ -3407,7 +3407,7 @@ Label_3b_56f4:
 	ld b, $3e ; $57d0
 	ld c, $14 ; $57d2
 	ld de, $8000 ; $57d4
-	farcall FarPtr_39_10 ; $57d7
+	farcall FarPtr_LoadCompressedTileBlock ; $57d7
 	pop af ; $57da
 	wram_bank ; $57db
 	ret ; $57df
@@ -3436,9 +3436,9 @@ Func_3b_5800:
 Label_3b_5806:
 	call AdvanceFrame ; $5806
 	ld b, $00 ; $5809
-	farcall FarPtr_39_20 ; $580b
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $580b
 	ld b, $00 ; $580e
-	farcall FarPtr_39_1e ; $5810
+	farcall FarPtr_FlushWram3MapRows ; $5810
 	ld a, c ; $5813
 	inc a ; $5814
 	ld c, a ; $5815
@@ -3450,9 +3450,9 @@ Label_3b_581b:
 Label_3b_581d:
 	call AdvanceFrame ; $581d
 	ld b, $01 ; $5820
-	farcall FarPtr_39_20 ; $5822
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5822
 	ld b, $00 ; $5825
-	farcall FarPtr_39_1e ; $5827
+	farcall FarPtr_FlushWram3MapRows ; $5827
 	ld a, c ; $582a
 	dec a ; $582b
 	ld c, a ; $582c
@@ -3467,9 +3467,9 @@ Func_3b_5832:
 Label_3b_5838:
 	call AdvanceFrame ; $5838
 	ld b, $01 ; $583b
-	farcall FarPtr_39_20 ; $583d
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $583d
 	ld b, $00 ; $5840
-	farcall FarPtr_39_1e ; $5842
+	farcall FarPtr_FlushWram3MapRows ; $5842
 	ld a, c ; $5845
 	inc a ; $5846
 	ld c, a ; $5847
@@ -3481,16 +3481,16 @@ Label_3b_584d:
 Label_3b_584f:
 	call AdvanceFrame ; $584f
 	ld b, $00 ; $5852
-	farcall FarPtr_39_20 ; $5854
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5854
 	ld b, $00 ; $5857
-	farcall FarPtr_39_1e ; $5859
+	farcall FarPtr_FlushWram3MapRows ; $5859
 	ld a, c ; $585c
 	dec a ; $585d
 	ld c, a ; $585e
 	or a, a ; $585f
 	jr nz, Label_3b_584f ; $5860
 	ret ; $5862
-	farcall FarPtr_39_28 ; $5863
+	farcall FarPtr_TickMenuBgScroll ; $5863
 	ld c, $03 ; $5866
 	call Func_3b_43b9 ; $5868
 	push af ; $586b
@@ -3513,7 +3513,7 @@ Label_3b_5880:
 	ld a, [hl+] ; $5880
 	ld d, [hl] ; $5881
 	ld e, a ; $5882
-	farcall FarPtr_39_16 ; $5883
+	farcall FarPtr_ApplySpriteBobOffset ; $5883
 	pop af ; $5886
 	ld hl, $58ba ; $5887
 	add a, l ; $588a
@@ -4074,7 +4074,7 @@ Label_3b_5cbb:
 	call BeginFadeOut ; $5cbd
 	call WaitFadeEnd ; $5cc0
 	call DisableLCDSafely ; $5cc3
-	farcall FarPtr_39_22 ; $5cc6
+	farcall FarPtr_ResetScreenAndTextWindows ; $5cc6
 	call EnableLCD ; $5cc9
 	ld c, $40 ; $5ccc
 	call BeginFadeIn ; $5cce
@@ -4090,7 +4090,7 @@ Label_3b_5ce0:
 	ret ; $5ce0
 	call DisableLCDSafely ; $5ce1
 	farcall FarPtr_01_0a ; $5ce4
-	farcall FarPtr_39_22 ; $5ce7
+	farcall FarPtr_ResetScreenAndTextWindows ; $5ce7
 	call EnableLCD ; $5cea
 	ld c, $10 ; $5ced
 	call BeginFadeIn ; $5cef
@@ -4104,7 +4104,7 @@ Func_3b_5cf3:
 	ld a, [$cb11] ; $5d03
 	ld b, a ; $5d06
 	call Func_3b_5ed9 ; $5d07
-	farcall FarPtr_39_24 ; $5d0a
+	farcall FarPtr_InitMenuBgScroll ; $5d0a
 	ld b, $01 ; $5d0d
 	ld c, $01 ; $5d0f
 	farcall FarPtr_39_26 ; $5d11
@@ -4256,47 +4256,47 @@ Label_3b_5e1c:
 	ld b, $23 ; $5e3b
 	ld c, $10 ; $5e3d
 	ld de, $a000 ; $5e3f
-	farcall FarPtr_39_10 ; $5e42
+	farcall FarPtr_LoadCompressedTileBlock ; $5e42
 	call AdvanceFrame ; $5e45
 	ld b, $24 ; $5e48
 	ld c, $10 ; $5e4a
 	ld de, $a100 ; $5e4c
-	farcall FarPtr_39_10 ; $5e4f
+	farcall FarPtr_LoadCompressedTileBlock ; $5e4f
 	call AdvanceFrame ; $5e52
 	ld b, $25 ; $5e55
 	ld c, $10 ; $5e57
 	ld de, $a200 ; $5e59
-	farcall FarPtr_39_10 ; $5e5c
+	farcall FarPtr_LoadCompressedTileBlock ; $5e5c
 	call AdvanceFrame ; $5e5f
 	ld b, $26 ; $5e62
 	ld c, $10 ; $5e64
 	ld de, $a300 ; $5e66
-	farcall FarPtr_39_10 ; $5e69
+	farcall FarPtr_LoadCompressedTileBlock ; $5e69
 	call AdvanceFrame ; $5e6c
 	ld b, $27 ; $5e6f
 	ld c, $10 ; $5e71
 	ld de, $a400 ; $5e73
-	farcall FarPtr_39_10 ; $5e76
+	farcall FarPtr_LoadCompressedTileBlock ; $5e76
 	call AdvanceFrame ; $5e79
 	ld b, $28 ; $5e7c
 	ld c, $10 ; $5e7e
 	ld de, $a500 ; $5e80
-	farcall FarPtr_39_10 ; $5e83
+	farcall FarPtr_LoadCompressedTileBlock ; $5e83
 	call AdvanceFrame ; $5e86
 	ld b, $29 ; $5e89
 	ld c, $10 ; $5e8b
 	ld de, $a600 ; $5e8d
-	farcall FarPtr_39_10 ; $5e90
+	farcall FarPtr_LoadCompressedTileBlock ; $5e90
 	call AdvanceFrame ; $5e93
 	ld b, $1b ; $5e96
 	ld c, $04 ; $5e98
 	ld de, $a700 ; $5e9a
-	farcall FarPtr_39_10 ; $5e9d
+	farcall FarPtr_LoadCompressedTileBlock ; $5e9d
 	call AdvanceFrame ; $5ea0
 	ld b, $3f ; $5ea3
 	ld c, $14 ; $5ea5
 	ld de, $8000 ; $5ea7
-	farcall FarPtr_39_10 ; $5eaa
+	farcall FarPtr_LoadCompressedTileBlock ; $5eaa
 	call AdvanceFrame ; $5ead
 	ld b, $08 ; $5eb0
 	ld c, $10 ; $5eb2
@@ -4327,9 +4327,9 @@ Func_3b_5ed9:
 Label_3b_5edf:
 	call AdvanceFrame ; $5edf
 	ld b, $02 ; $5ee2
-	farcall FarPtr_39_20 ; $5ee4
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5ee4
 	ld b, $00 ; $5ee7
-	farcall FarPtr_39_1e ; $5ee9
+	farcall FarPtr_FlushWram3MapRows ; $5ee9
 	ld a, c ; $5eec
 	inc a ; $5eed
 	ld c, a ; $5eee
@@ -4341,9 +4341,9 @@ Label_3b_5ef4:
 Label_3b_5ef6:
 	call AdvanceFrame ; $5ef6
 	ld b, $03 ; $5ef9
-	farcall FarPtr_39_20 ; $5efb
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5efb
 	ld b, $00 ; $5efe
-	farcall FarPtr_39_1e ; $5f00
+	farcall FarPtr_FlushWram3MapRows ; $5f00
 	ld a, c ; $5f03
 	dec a ; $5f04
 	ld c, a ; $5f05
@@ -4358,9 +4358,9 @@ Func_3b_5f0b:
 Label_3b_5f11:
 	call AdvanceFrame ; $5f11
 	ld b, $03 ; $5f14
-	farcall FarPtr_39_20 ; $5f16
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5f16
 	ld b, $00 ; $5f19
-	farcall FarPtr_39_1e ; $5f1b
+	farcall FarPtr_FlushWram3MapRows ; $5f1b
 	ld a, c ; $5f1e
 	inc a ; $5f1f
 	ld c, a ; $5f20
@@ -4372,9 +4372,9 @@ Label_3b_5f26:
 Label_3b_5f28:
 	call AdvanceFrame ; $5f28
 	ld b, $02 ; $5f2b
-	farcall FarPtr_39_20 ; $5f2d
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5f2d
 	ld b, $00 ; $5f30
-	farcall FarPtr_39_1e ; $5f32
+	farcall FarPtr_FlushWram3MapRows ; $5f32
 	ld a, c ; $5f35
 	dec a ; $5f36
 	ld c, a ; $5f37
@@ -4604,7 +4604,7 @@ Label_3b_60cb:
 	pop bc ; $60cd
 	pop af ; $60ce
 	ret ; $60cf
-	farcall FarPtr_39_28 ; $60d0
+	farcall FarPtr_TickMenuBgScroll ; $60d0
 	ld c, $01 ; $60d3
 	call Func_3b_43b9 ; $60d5
 	or a, a ; $60d8
@@ -4640,7 +4640,7 @@ Label_3b_6104:
 	ld a, [hl+] ; $6104
 	ld d, [hl] ; $6105
 	ld e, a ; $6106
-	farcall FarPtr_39_16 ; $6107
+	farcall FarPtr_ApplySpriteBobOffset ; $6107
 	ld b, $08 ; $610a
 	ld hl, $6125 ; $610c
 	push de ; $610f
@@ -4763,7 +4763,7 @@ Label_3b_6216:
 	ld b, a ; $6219
 	call Func_3b_640a ; $621a
 Label_3b_621d:
-	farcall FarPtr_39_24 ; $621d
+	farcall FarPtr_InitMenuBgScroll ; $621d
 	ld b, $01 ; $6220
 	ld c, $01 ; $6222
 	farcall FarPtr_39_26 ; $6224
@@ -4902,32 +4902,32 @@ Label_3b_6311:
 	ld b, $33 ; $6327
 	ld c, $10 ; $6329
 	ld de, $a000 ; $632b
-	farcall FarPtr_39_10 ; $632e
+	farcall FarPtr_LoadCompressedTileBlock ; $632e
 	call AdvanceFrame ; $6331
 	ld b, $34 ; $6334
 	ld c, $10 ; $6336
 	ld de, $a100 ; $6338
-	farcall FarPtr_39_10 ; $633b
+	farcall FarPtr_LoadCompressedTileBlock ; $633b
 	call AdvanceFrame ; $633e
 	ld b, $35 ; $6341
 	ld c, $10 ; $6343
 	ld de, $a200 ; $6345
-	farcall FarPtr_39_10 ; $6348
+	farcall FarPtr_LoadCompressedTileBlock ; $6348
 	call AdvanceFrame ; $634b
 	ld b, $36 ; $634e
 	ld c, $10 ; $6350
 	ld de, $a300 ; $6352
-	farcall FarPtr_39_10 ; $6355
+	farcall FarPtr_LoadCompressedTileBlock ; $6355
 	call AdvanceFrame ; $6358
 	ld b, $37 ; $635b
 	ld c, $10 ; $635d
 	ld de, $a400 ; $635f
-	farcall FarPtr_39_10 ; $6362
+	farcall FarPtr_LoadCompressedTileBlock ; $6362
 	call AdvanceFrame ; $6365
 	ld b, $38 ; $6368
 	ld c, $10 ; $636a
 	ld de, $a500 ; $636c
-	farcall FarPtr_39_10 ; $636f
+	farcall FarPtr_LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
 	ld hl, $6d7e ; $6375 -> DataPtr_6d_7e
 	ld de, $d000 ; $6378
@@ -4955,17 +4955,17 @@ Label_3b_6311:
 	ld b, $6f ; $63b7
 	ld c, $12 ; $63b9
 	ld de, $8500 ; $63bb
-	farcall FarPtr_39_10 ; $63be
+	farcall FarPtr_LoadCompressedTileBlock ; $63be
 	call AdvanceFrame ; $63c1
 	ld b, $47 ; $63c4
 	ld c, $14 ; $63c6
 	ld de, $8000 ; $63c8
-	farcall FarPtr_39_10 ; $63cb
+	farcall FarPtr_LoadCompressedTileBlock ; $63cb
 	call AdvanceFrame ; $63ce
 	ld b, $1b ; $63d1
 	ld c, $04 ; $63d3
 	ld de, $a700 ; $63d5
-	farcall FarPtr_39_10 ; $63d8
+	farcall FarPtr_LoadCompressedTileBlock ; $63d8
 	ld b, $08 ; $63db
 	ld c, $10 ; $63dd
 	farcall FarPtr_LoadIndexedPalette ; $63df
@@ -4998,9 +4998,9 @@ Func_3b_640a:
 Label_3b_6410:
 	call AdvanceFrame ; $6410
 	ld b, $04 ; $6413
-	farcall FarPtr_39_20 ; $6415
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6415
 	ld b, $00 ; $6418
-	farcall FarPtr_39_1e ; $641a
+	farcall FarPtr_FlushWram3MapRows ; $641a
 	ld a, c ; $641d
 	inc a ; $641e
 	ld c, a ; $641f
@@ -5012,9 +5012,9 @@ Label_3b_6425:
 Label_3b_6427:
 	call AdvanceFrame ; $6427
 	ld b, $05 ; $642a
-	farcall FarPtr_39_20 ; $642c
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $642c
 	ld b, $00 ; $642f
-	farcall FarPtr_39_1e ; $6431
+	farcall FarPtr_FlushWram3MapRows ; $6431
 	ld a, c ; $6434
 	dec a ; $6435
 	ld c, a ; $6436
@@ -5029,9 +5029,9 @@ Func_3b_643c:
 Label_3b_6442:
 	call AdvanceFrame ; $6442
 	ld b, $05 ; $6445
-	farcall FarPtr_39_20 ; $6447
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6447
 	ld b, $00 ; $644a
-	farcall FarPtr_39_1e ; $644c
+	farcall FarPtr_FlushWram3MapRows ; $644c
 	ld a, c ; $644f
 	inc a ; $6450
 	ld c, a ; $6451
@@ -5043,16 +5043,16 @@ Label_3b_6457:
 Label_3b_6459:
 	call AdvanceFrame ; $6459
 	ld b, $04 ; $645c
-	farcall FarPtr_39_20 ; $645e
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $645e
 	ld b, $00 ; $6461
-	farcall FarPtr_39_1e ; $6463
+	farcall FarPtr_FlushWram3MapRows ; $6463
 	ld a, c ; $6466
 	dec a ; $6467
 	ld c, a ; $6468
 	or a, a ; $6469
 	jr nz, Label_3b_6459 ; $646a
 	ret ; $646c
-	farcall FarPtr_39_28 ; $646d
+	farcall FarPtr_TickMenuBgScroll ; $646d
 	ld c, $03 ; $6470
 	call Func_3b_43b9 ; $6472
 	push af ; $6475
@@ -5075,7 +5075,7 @@ Label_3b_648a:
 	ld a, [hl+] ; $648a
 	ld d, [hl] ; $648b
 	ld e, a ; $648c
-	farcall FarPtr_39_16 ; $648d
+	farcall FarPtr_ApplySpriteBobOffset ; $648d
 	pop af ; $6490
 	ld hl, $64f4 ; $6491
 	add a, l ; $6494
@@ -5419,9 +5419,9 @@ Func_3b_6700:
 Label_3b_6706:
 	call AdvanceFrame ; $6706
 	ld b, $16 ; $6709
-	farcall FarPtr_39_20 ; $670b
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $670b
 	ld b, $02 ; $670e
-	farcall FarPtr_39_1e ; $6710
+	farcall FarPtr_FlushWram3MapRows ; $6710
 	ld a, c ; $6713
 	inc a ; $6714
 	ld c, a ; $6715
@@ -5433,9 +5433,9 @@ Label_3b_671b:
 Label_3b_671d:
 	call AdvanceFrame ; $671d
 	ld b, $17 ; $6720
-	farcall FarPtr_39_20 ; $6722
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6722
 	ld b, $02 ; $6725
-	farcall FarPtr_39_1e ; $6727
+	farcall FarPtr_FlushWram3MapRows ; $6727
 	ld a, c ; $672a
 	dec a ; $672b
 	ld c, a ; $672c
@@ -5450,9 +5450,9 @@ Func_3b_6732:
 Label_3b_6738:
 	call AdvanceFrame ; $6738
 	ld b, $17 ; $673b
-	farcall FarPtr_39_20 ; $673d
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $673d
 	ld b, $02 ; $6740
-	farcall FarPtr_39_1e ; $6742
+	farcall FarPtr_FlushWram3MapRows ; $6742
 	ld a, c ; $6745
 	inc a ; $6746
 	ld c, a ; $6747
@@ -5464,9 +5464,9 @@ Label_3b_674d:
 Label_3b_674f:
 	call AdvanceFrame ; $674f
 	ld b, $16 ; $6752
-	farcall FarPtr_39_20 ; $6754
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6754
 	ld b, $02 ; $6757
-	farcall FarPtr_39_1e ; $6759
+	farcall FarPtr_FlushWram3MapRows ; $6759
 	ld a, c ; $675c
 	dec a ; $675d
 	ld c, a ; $675e
@@ -5507,7 +5507,7 @@ Func_3b_67a1:
 	res 2, [hl] ; $67a6
 	call Func_3b_5aac ; $67a8
 	call Func_3b_686e ; $67ab
-	farcall FarPtr_39_24 ; $67ae
+	farcall FarPtr_InitMenuBgScroll ; $67ae
 	ld b, $01 ; $67b1
 	ld c, $01 ; $67b3
 	farcall FarPtr_39_26 ; $67b5
@@ -5646,37 +5646,37 @@ Func_3b_686e:
 	ld b, $2a ; $68f5
 	ld c, $10 ; $68f7
 	ld de, $a000 ; $68f9
-	farcall FarPtr_39_10 ; $68fc
+	farcall FarPtr_LoadCompressedTileBlock ; $68fc
 	call AdvanceFrame ; $68ff
 	ld b, $2b ; $6902
 	ld c, $10 ; $6904
 	ld de, $a100 ; $6906
-	farcall FarPtr_39_10 ; $6909
+	farcall FarPtr_LoadCompressedTileBlock ; $6909
 	call AdvanceFrame ; $690c
 	ld b, $2c ; $690f
 	ld c, $10 ; $6911
 	ld de, $a200 ; $6913
-	farcall FarPtr_39_10 ; $6916
+	farcall FarPtr_LoadCompressedTileBlock ; $6916
 	call AdvanceFrame ; $6919
 	ld b, $2d ; $691c
 	ld c, $10 ; $691e
 	ld de, $a300 ; $6920
-	farcall FarPtr_39_10 ; $6923
+	farcall FarPtr_LoadCompressedTileBlock ; $6923
 	call AdvanceFrame ; $6926
 	ld b, $76 ; $6929
 	ld c, $10 ; $692b
 	ld de, $a400 ; $692d
-	farcall FarPtr_39_10 ; $6930
+	farcall FarPtr_LoadCompressedTileBlock ; $6930
 	call AdvanceFrame ; $6933
 	ld b, $1b ; $6936
 	ld c, $04 ; $6938
 	ld de, $a700 ; $693a
-	farcall FarPtr_39_10 ; $693d
+	farcall FarPtr_LoadCompressedTileBlock ; $693d
 	call AdvanceFrame ; $6940
 	ld b, $42 ; $6943
 	ld c, $14 ; $6945
 	ld de, $8000 ; $6947
-	farcall FarPtr_39_10 ; $694a
+	farcall FarPtr_LoadCompressedTileBlock ; $694a
 	call AdvanceFrame ; $694d
 	ld b, $08 ; $6950
 	ld c, $10 ; $6952
@@ -5707,9 +5707,9 @@ Func_3b_686e:
 Label_3b_697f:
 	call AdvanceFrame ; $697f
 	ld b, $06 ; $6982
-	farcall FarPtr_39_20 ; $6984
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6984
 	ld b, $02 ; $6987
-	farcall FarPtr_39_1e ; $6989
+	farcall FarPtr_FlushWram3MapRows ; $6989
 	ld a, c ; $698c
 	inc a ; $698d
 	ld c, a ; $698e
@@ -5721,9 +5721,9 @@ Label_3b_6994:
 Label_3b_6996:
 	call AdvanceFrame ; $6996
 	ld b, $07 ; $6999
-	farcall FarPtr_39_20 ; $699b
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $699b
 	ld b, $02 ; $699e
-	farcall FarPtr_39_1e ; $69a0
+	farcall FarPtr_FlushWram3MapRows ; $69a0
 	ld a, c ; $69a3
 	dec a ; $69a4
 	ld c, a ; $69a5
@@ -5737,9 +5737,9 @@ Label_3b_6996:
 Label_3b_69b1:
 	call AdvanceFrame ; $69b1
 	ld b, $07 ; $69b4
-	farcall FarPtr_39_20 ; $69b6
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $69b6
 	ld b, $02 ; $69b9
-	farcall FarPtr_39_1e ; $69bb
+	farcall FarPtr_FlushWram3MapRows ; $69bb
 	ld a, c ; $69be
 	inc a ; $69bf
 	ld c, a ; $69c0
@@ -5751,16 +5751,16 @@ Label_3b_69c6:
 Label_3b_69c8:
 	call AdvanceFrame ; $69c8
 	ld b, $06 ; $69cb
-	farcall FarPtr_39_20 ; $69cd
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $69cd
 	ld b, $02 ; $69d0
-	farcall FarPtr_39_1e ; $69d2
+	farcall FarPtr_FlushWram3MapRows ; $69d2
 	ld a, c ; $69d5
 	dec a ; $69d6
 	ld c, a ; $69d7
 	or a, a ; $69d8
 	jr nz, Label_3b_69c8 ; $69d9
 	ret ; $69db
-	farcall FarPtr_39_28 ; $69dc
+	farcall FarPtr_TickMenuBgScroll ; $69dc
 	ld c, $03 ; $69df
 	call Func_3b_43b9 ; $69e1
 	push af ; $69e4
@@ -5782,7 +5782,7 @@ Label_3b_69f8:
 	ld a, [hl+] ; $69f8
 	ld d, [hl] ; $69f9
 	ld e, a ; $69fa
-	farcall FarPtr_39_16 ; $69fb
+	farcall FarPtr_ApplySpriteBobOffset ; $69fb
 	ld b, $08 ; $69fe
 	ld hl, $6a19 ; $6a00
 	push de ; $6a03
@@ -6110,7 +6110,7 @@ Func_3b_6c7f:
 	ld a, [$cb11] ; $6c92
 	ld b, a ; $6c95
 	call Func_3b_6e24 ; $6c96
-	farcall FarPtr_39_24 ; $6c99
+	farcall FarPtr_InitMenuBgScroll ; $6c99
 	ld b, $01 ; $6c9c
 	ld c, $01 ; $6c9e
 	farcall FarPtr_39_26 ; $6ca0
@@ -6233,37 +6233,37 @@ Func_3b_6d31:
 	ld b, $2e ; $6dbc
 	ld c, $10 ; $6dbe
 	ld de, $a000 ; $6dc0
-	farcall FarPtr_39_10 ; $6dc3
+	farcall FarPtr_LoadCompressedTileBlock ; $6dc3
 	call AdvanceFrame ; $6dc6
 	ld b, $2f ; $6dc9
 	ld c, $10 ; $6dcb
 	ld de, $a100 ; $6dcd
-	farcall FarPtr_39_10 ; $6dd0
+	farcall FarPtr_LoadCompressedTileBlock ; $6dd0
 	call AdvanceFrame ; $6dd3
 	ld b, $30 ; $6dd6
 	ld c, $10 ; $6dd8
 	ld de, $a200 ; $6dda
-	farcall FarPtr_39_10 ; $6ddd
+	farcall FarPtr_LoadCompressedTileBlock ; $6ddd
 	call AdvanceFrame ; $6de0
 	ld b, $31 ; $6de3
 	ld c, $10 ; $6de5
 	ld de, $a300 ; $6de7
-	farcall FarPtr_39_10 ; $6dea
+	farcall FarPtr_LoadCompressedTileBlock ; $6dea
 	call AdvanceFrame ; $6ded
 	ld b, $32 ; $6df0
 	ld c, $10 ; $6df2
 	ld de, $a400 ; $6df4
-	farcall FarPtr_39_10 ; $6df7
+	farcall FarPtr_LoadCompressedTileBlock ; $6df7
 	call AdvanceFrame ; $6dfa
 	ld b, $1b ; $6dfd
 	ld c, $04 ; $6dff
 	ld de, $a700 ; $6e01
-	farcall FarPtr_39_10 ; $6e04
+	farcall FarPtr_LoadCompressedTileBlock ; $6e04
 	call AdvanceFrame ; $6e07
 	ld b, $41 ; $6e0a
 	ld c, $14 ; $6e0c
 	ld de, $8000 ; $6e0e
-	farcall FarPtr_39_10 ; $6e11
+	farcall FarPtr_LoadCompressedTileBlock ; $6e11
 	call AdvanceFrame ; $6e14
 	ld b, $08 ; $6e17
 	ld c, $10 ; $6e19
@@ -6279,9 +6279,9 @@ Func_3b_6e24:
 Label_3b_6e2a:
 	call AdvanceFrame ; $6e2a
 	ld b, $08 ; $6e2d
-	farcall FarPtr_39_20 ; $6e2f
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6e2f
 	ld b, $02 ; $6e32
-	farcall FarPtr_39_1e ; $6e34
+	farcall FarPtr_FlushWram3MapRows ; $6e34
 	ld a, c ; $6e37
 	inc a ; $6e38
 	ld c, a ; $6e39
@@ -6293,9 +6293,9 @@ Label_3b_6e3f:
 Label_3b_6e41:
 	call AdvanceFrame ; $6e41
 	ld b, $09 ; $6e44
-	farcall FarPtr_39_20 ; $6e46
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6e46
 	ld b, $02 ; $6e49
-	farcall FarPtr_39_1e ; $6e4b
+	farcall FarPtr_FlushWram3MapRows ; $6e4b
 	ld a, c ; $6e4e
 	dec a ; $6e4f
 	ld c, a ; $6e50
@@ -6310,9 +6310,9 @@ Func_3b_6e56:
 Label_3b_6e5c:
 	call AdvanceFrame ; $6e5c
 	ld b, $09 ; $6e5f
-	farcall FarPtr_39_20 ; $6e61
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6e61
 	ld b, $02 ; $6e64
-	farcall FarPtr_39_1e ; $6e66
+	farcall FarPtr_FlushWram3MapRows ; $6e66
 	ld a, c ; $6e69
 	inc a ; $6e6a
 	ld c, a ; $6e6b
@@ -6324,9 +6324,9 @@ Label_3b_6e71:
 Label_3b_6e73:
 	call AdvanceFrame ; $6e73
 	ld b, $08 ; $6e76
-	farcall FarPtr_39_20 ; $6e78
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6e78
 	ld b, $02 ; $6e7b
-	farcall FarPtr_39_1e ; $6e7d
+	farcall FarPtr_FlushWram3MapRows ; $6e7d
 	ld a, c ; $6e80
 	dec a ; $6e81
 	ld c, a ; $6e82
@@ -6462,7 +6462,7 @@ Label_3b_6f55:
 	ret ; $6f55
 	; $6f56, 5 bytes (bytes:8)
 	db $00, $01, $01, $00, $02 ; 0x00
-	farcall FarPtr_39_28 ; $6f5b
+	farcall FarPtr_TickMenuBgScroll ; $6f5b
 	ld c, $03 ; $6f5e
 	call Func_3b_43b9 ; $6f60
 	push af ; $6f63
@@ -6484,7 +6484,7 @@ Label_3b_6f77:
 	ld a, [hl+] ; $6f77
 	ld d, [hl] ; $6f78
 	ld e, a ; $6f79
-	farcall FarPtr_39_16 ; $6f7a
+	farcall FarPtr_ApplySpriteBobOffset ; $6f7a
 	ld b, $08 ; $6f7d
 	ld hl, $6f98 ; $6f7f
 	push de ; $6f82
@@ -6773,7 +6773,7 @@ Func_3b_71b0:
 	ld hl, rIE ; $71b2
 	res 2, [hl] ; $71b5
 	call Func_3b_7243 ; $71b7
-	farcall FarPtr_39_24 ; $71ba
+	farcall FarPtr_InitMenuBgScroll ; $71ba
 	ld b, $01 ; $71bd
 	ld c, $01 ; $71bf
 	farcall FarPtr_39_26 ; $71c1
@@ -6891,27 +6891,27 @@ Label_3b_7273:
 	ld b, $39 ; $7292
 	ld c, $10 ; $7294
 	ld de, $a000 ; $7296
-	farcall FarPtr_39_10 ; $7299
+	farcall FarPtr_LoadCompressedTileBlock ; $7299
 	call AdvanceFrame ; $729c
 	ld b, $1d ; $729f
 	ld c, $10 ; $72a1
 	ld de, $a100 ; $72a3
-	farcall FarPtr_39_10 ; $72a6
+	farcall FarPtr_LoadCompressedTileBlock ; $72a6
 	call AdvanceFrame ; $72a9
 	ld b, $3a ; $72ac
 	ld c, $10 ; $72ae
 	ld de, $a200 ; $72b0
-	farcall FarPtr_39_10 ; $72b3
+	farcall FarPtr_LoadCompressedTileBlock ; $72b3
 	call AdvanceFrame ; $72b6
 	ld b, $1b ; $72b9
 	ld c, $04 ; $72bb
 	ld de, $a700 ; $72bd
-	farcall FarPtr_39_10 ; $72c0
+	farcall FarPtr_LoadCompressedTileBlock ; $72c0
 	call AdvanceFrame ; $72c3
 	ld b, $43 ; $72c6
 	ld c, $14 ; $72c8
 	ld de, $8000 ; $72ca
-	farcall FarPtr_39_10 ; $72cd
+	farcall FarPtr_LoadCompressedTileBlock ; $72cd
 	call AdvanceFrame ; $72d0
 	ld b, $08 ; $72d3
 	ld c, $10 ; $72d5
@@ -6934,9 +6934,9 @@ Func_3b_72ec:
 Label_3b_72f2:
 	call AdvanceFrame ; $72f2
 	ld b, $0a ; $72f5
-	farcall FarPtr_39_20 ; $72f7
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $72f7
 	ld b, $03 ; $72fa
-	farcall FarPtr_39_1e ; $72fc
+	farcall FarPtr_FlushWram3MapRows ; $72fc
 	ld a, c ; $72ff
 	inc a ; $7300
 	ld c, a ; $7301
@@ -6948,9 +6948,9 @@ Label_3b_7307:
 Label_3b_7309:
 	call AdvanceFrame ; $7309
 	ld b, $0b ; $730c
-	farcall FarPtr_39_20 ; $730e
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $730e
 	ld b, $03 ; $7311
-	farcall FarPtr_39_1e ; $7313
+	farcall FarPtr_FlushWram3MapRows ; $7313
 	ld a, c ; $7316
 	dec a ; $7317
 	ld c, a ; $7318
@@ -6965,9 +6965,9 @@ Func_3b_731e:
 Label_3b_7324:
 	call AdvanceFrame ; $7324
 	ld b, $0b ; $7327
-	farcall FarPtr_39_20 ; $7329
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $7329
 	ld b, $03 ; $732c
-	farcall FarPtr_39_1e ; $732e
+	farcall FarPtr_FlushWram3MapRows ; $732e
 	ld a, c ; $7331
 	inc a ; $7332
 	ld c, a ; $7333
@@ -6979,16 +6979,16 @@ Label_3b_7339:
 Label_3b_733b:
 	call AdvanceFrame ; $733b
 	ld b, $0a ; $733e
-	farcall FarPtr_39_20 ; $7340
+	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $7340
 	ld b, $03 ; $7343
-	farcall FarPtr_39_1e ; $7345
+	farcall FarPtr_FlushWram3MapRows ; $7345
 	ld a, c ; $7348
 	dec a ; $7349
 	ld c, a ; $734a
 	or a, a ; $734b
 	jr nz, Label_3b_733b ; $734c
 	ret ; $734e
-	farcall FarPtr_39_28 ; $734f
+	farcall FarPtr_TickMenuBgScroll ; $734f
 	ld c, $03 ; $7352
 	call Func_3b_43b9 ; $7354
 	push af ; $7357
@@ -7010,7 +7010,7 @@ Label_3b_736b:
 	ld a, [hl+] ; $736b
 	ld d, [hl] ; $736c
 	ld e, a ; $736d
-	farcall FarPtr_39_16 ; $736e
+	farcall FarPtr_ApplySpriteBobOffset ; $736e
 	ld b, $08 ; $7371
 	ld hl, $738c ; $7373
 	push de ; $7376
@@ -7180,7 +7180,7 @@ Func_3b_74bf:
 	ld a, [$cb11] ; $74cf
 	ld b, a ; $74d2
 	farcall FarPtr_3e_2a ; $74d3
-	farcall FarPtr_39_24 ; $74d6
+	farcall FarPtr_InitMenuBgScroll ; $74d6
 	ld b, $01 ; $74d9
 	ld c, $01 ; $74db
 	farcall FarPtr_39_26 ; $74dd
@@ -7294,32 +7294,32 @@ Label_3b_7582:
 	ld b, $3b ; $75a1
 	ld c, $10 ; $75a3
 	ld de, $a000 ; $75a5
-	farcall FarPtr_39_10 ; $75a8
+	farcall FarPtr_LoadCompressedTileBlock ; $75a8
 	call AdvanceFrame ; $75ab
 	ld b, $73 ; $75ae
 	ld c, $10 ; $75b0
 	ld de, $a100 ; $75b2
-	farcall FarPtr_39_10 ; $75b5
+	farcall FarPtr_LoadCompressedTileBlock ; $75b5
 	call AdvanceFrame ; $75b8
 	ld b, $3c ; $75bb
 	ld c, $10 ; $75bd
 	ld de, $a200 ; $75bf
-	farcall FarPtr_39_10 ; $75c2
+	farcall FarPtr_LoadCompressedTileBlock ; $75c2
 	call AdvanceFrame ; $75c5
 	ld b, $3d ; $75c8
 	ld c, $10 ; $75ca
 	ld de, $a300 ; $75cc
-	farcall FarPtr_39_10 ; $75cf
+	farcall FarPtr_LoadCompressedTileBlock ; $75cf
 	call AdvanceFrame ; $75d2
 	ld b, $1b ; $75d5
 	ld c, $04 ; $75d7
 	ld de, $a700 ; $75d9
-	farcall FarPtr_39_10 ; $75dc
+	farcall FarPtr_LoadCompressedTileBlock ; $75dc
 	call AdvanceFrame ; $75df
 	ld b, $44 ; $75e2
 	ld c, $14 ; $75e4
 	ld de, $8000 ; $75e6
-	farcall FarPtr_39_10 ; $75e9
+	farcall FarPtr_LoadCompressedTileBlock ; $75e9
 	call AdvanceFrame ; $75ec
 	ld b, $08 ; $75ef
 	ld c, $10 ; $75f1
@@ -7432,7 +7432,7 @@ Label_3b_76dc:
 	pop af ; $76e4
 	wram_bank ; $76e5
 	ret ; $76e9
-	farcall FarPtr_39_28 ; $76ea
+	farcall FarPtr_TickMenuBgScroll ; $76ea
 	ld c, $02 ; $76ed
 	call Func_3b_43b9 ; $76ef
 	push af ; $76f2
@@ -7454,7 +7454,7 @@ Label_3b_7706:
 	ld a, [hl+] ; $7706
 	ld d, [hl] ; $7707
 	ld e, a ; $7708
-	farcall FarPtr_39_16 ; $7709
+	farcall FarPtr_ApplySpriteBobOffset ; $7709
 	ld b, $08 ; $770c
 	ld hl, $7727 ; $770e
 	push de ; $7711
@@ -7526,7 +7526,7 @@ Func_3b_77a7:
 	ld b, $69 ; $77b2
 	ld c, $10 ; $77b4
 	ld de, $9000 ; $77b6
-	farcall FarPtr_39_10 ; $77b9
+	farcall FarPtr_LoadCompressedTileBlock ; $77b9
 	wram_bank $03 ; $77bc
 	call Func_3b_77f7 ; $77c2
 	call Func_3b_7804 ; $77c5
@@ -7540,7 +7540,7 @@ Label_3b_77d2:
 	ld b, $69 ; $77d7
 	ld c, $10 ; $77d9
 	ld de, $9000 ; $77db
-	farcall FarPtr_39_10 ; $77de
+	farcall FarPtr_LoadCompressedTileBlock ; $77de
 	wram_bank $03 ; $77e1
 	call Func_3b_77f7 ; $77e7
 	call Func_3b_7804 ; $77ea

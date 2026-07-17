@@ -403,7 +403,7 @@ InitMatchWinLoseScreen:
 	ld b, $09 ; $45f5
 	ld c, $04 ; $45f7
 	ld de, $a400 ; $45f9
-	farcall FarPtr_39_10 ; $45fc
+	farcall FarPtr_LoadCompressedTileBlock ; $45fc
 	pop af ; $45ff
 	wram_bank ; $4600
 	farcall FarPtr_QueueWram3MapToVRAM ; $4604
@@ -3253,12 +3253,12 @@ PrintMatchSetScores:
 	ld h, $00 ; $5fd1
 	ld l, a ; $5fd3
 	ld de, $1c48 ; $5fd4
-	farcall FarPtr_39_66 ; $5fd7
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $5fd7
 	ld a, [wPlayer2SetsWon] ; $5fda
 	ld h, $00 ; $5fdd
 	ld l, a ; $5fdf
 	ld de, $8448 ; $5fe0
-	farcall FarPtr_39_66 ; $5fe3
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $5fe3
 	ret ; $5fe6
 LoadResultScreenPortraits:
 	ld a, c ; $5fe7

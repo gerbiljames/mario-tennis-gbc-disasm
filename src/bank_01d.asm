@@ -45,7 +45,7 @@ ShowCharDataScreen:
 	ld de, $a600 ; $404f
 	ld c, $14 ; $4052
 	call QueueVRAMCopy ; $4054
-	farcall FarPtr_39_24 ; $4057
+	farcall FarPtr_InitMenuBgScroll ; $4057
 	ld b, $05 ; $405a
 	ld c, $05 ; $405c
 	farcall FarPtr_39_26 ; $405e
@@ -89,7 +89,7 @@ ShowCharDataScreen:
 	farcall FarPtr_StopCharDataScreenAnimTask ; $40c5
 	call ClearFrameTasks ; $40c8
 	ret ; $40cb
-	farcall FarPtr_39_28 ; $40cc
+	farcall FarPtr_TickMenuBgScroll ; $40cc
 	ret ; $40cf
 InitDrillWorkRam:
 	wram_bank $06 ; $40d0

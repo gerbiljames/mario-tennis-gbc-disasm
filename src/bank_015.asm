@@ -2129,7 +2129,7 @@ Label_15_566c:
 	sub a, b ; $566e
 	ld d, a ; $566f
 	ld hl, $000a ; $5670
-	farcall FarPtr_39_66 ; $5673
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $5673
 	ld a, $18 ; $5676
 	sub a, b ; $5678
 	ld [wWaterSpriteMinigameFlag], a ; $5679
@@ -2137,7 +2137,7 @@ Label_15_566c:
 	add a, b ; $567e
 	ld d, a ; $567f
 	ld hl, $0000 ; $5680
-	farcall FarPtr_39_66 ; $5683
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $5683
 	ld a, $74 ; $5686
 	add a, b ; $5688
 	ld [$c2bb], a ; $5689
@@ -2174,7 +2174,7 @@ Label_15_56c3:
 	sound $8c ; $56c3
 	ld b, $3c ; $56c5
 Label_15_56c7:
-	farcall FarPtr_39_66 ; $56c7
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $56c7
 	push af ; $56ca
 	ld a, $01 ; $56cb
 	farcall FarPtr_WaitScriptFrames ; $56cd
@@ -2227,7 +2227,7 @@ Label_15_572a:
 	sub a, $10 ; $572b
 	ld d, a ; $572d
 	ld hl, $0000 ; $572e
-	farcall FarPtr_39_66 ; $5731
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $5731
 	ld a, $e8 ; $5734
 	add a, b ; $5736
 	ld [wWaterSpriteMinigameFlag], a ; $5737
@@ -2238,7 +2238,7 @@ Label_15_572a:
 	ld a, [hl+] ; $5741
 	ld h, [hl] ; $5742
 	ld l, a ; $5743
-	farcall FarPtr_39_66 ; $5744
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $5744
 	ld a, $a4 ; $5747
 	sub a, b ; $5749
 	ld [$c2bb], a ; $574a
@@ -2285,13 +2285,13 @@ Label_15_578c:
 	ld e, $3c ; $5795
 	call DivAHLByE ; $5797
 	ld de, $2010 ; $579a
-	farcall FarPtr_39_66 ; $579d
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $579d
 	ld hl, wWaterSpriteMinigameSwingCount ; $57a0
 	ld a, [hl+] ; $57a3
 	ld h, [hl] ; $57a4
 	ld l, a ; $57a5
 	ld de, $8010 ; $57a6
-	farcall FarPtr_39_66 ; $57a9
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $57a9
 	ret ; $57ac
 	INCBIN "data/bank_015/d_57ad.bin" ; $57ad, 235 bytes
 LoadWaterSpriteMinigameHudGfx:

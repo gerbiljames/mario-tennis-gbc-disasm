@@ -1367,7 +1367,7 @@ InitCourtDiagramTextWindow:
 	ld b, $11 ; $49a2
 	ld c, $10 ; $49a4
 	ld de, $9000 ; $49a6
-	farcall FarPtr_39_10 ; $49a9
+	farcall FarPtr_LoadCompressedTileBlock ; $49a9
 	wram_bank $05 ; $49ac
 	ld a, $03 ; $49b2
 	ld [$c3b3], a ; $49b4
@@ -5125,7 +5125,7 @@ LoadRulesScreen:
 	ld b, $11 ; $7199
 	ld c, $10 ; $719b
 	ld de, $9000 ; $719d
-	farcall FarPtr_39_10 ; $71a0
+	farcall FarPtr_LoadCompressedTileBlock ; $71a0
 	ld a, $03 ; $71a3
 	ld [$c3b3], a ; $71a5
 	ld hl, $c3b4 ; $71a8

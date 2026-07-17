@@ -996,7 +996,7 @@ Func_38_460f:
 	ld b, $11 ; $4620
 	ld c, $10 ; $4622
 	ld de, $9000 ; $4624
-	farcall FarPtr_39_10 ; $4627
+	farcall FarPtr_LoadCompressedTileBlock ; $4627
 	wram_bank $05 ; $462a
 	ld a, $03 ; $4630
 	ld [$c3b3], a ; $4632
@@ -1360,7 +1360,7 @@ Func_38_4975:
 	ld b, $11 ; $49ba
 	ld c, $10 ; $49bc
 	ld de, $9000 ; $49be
-	farcall FarPtr_39_10 ; $49c1
+	farcall FarPtr_LoadCompressedTileBlock ; $49c1
 	wram_bank $05 ; $49c4
 	ld a, $03 ; $49ca
 	ld [$c3b3], a ; $49cc
@@ -1422,7 +1422,7 @@ Label_38_4a61:
 	ld b, $13 ; $4a61
 	ld c, $04 ; $4a63
 	ld de, $8000 ; $4a65
-	farcall FarPtr_39_10 ; $4a68
+	farcall FarPtr_LoadCompressedTileBlock ; $4a68
 	ld b, $08 ; $4a6b
 	ld c, $0c ; $4a6d
 	farcall FarPtr_LoadIndexedPalette ; $4a6f
@@ -1432,7 +1432,7 @@ Label_38_4a61:
 	ld [$cb4f], a ; $4a7c
 	ld [$cb51], a ; $4a7f
 	ld [$cb50], a ; $4a82
-	farcall FarPtr_39_24 ; $4a85
+	farcall FarPtr_InitMenuBgScroll ; $4a85
 	ld b, $01 ; $4a88
 	ld c, $01 ; $4a8a
 	farcall FarPtr_39_26 ; $4a8c
@@ -1442,7 +1442,7 @@ Label_38_4a61:
 	ld b, $48 ; $4a97
 	ld c, $14 ; $4a99
 	ld de, $8100 ; $4a9b
-	farcall FarPtr_39_10 ; $4a9e
+	farcall FarPtr_LoadCompressedTileBlock ; $4a9e
 	call Func_38_492c ; $4aa1
 	call Func_38_4949 ; $4aa4
 	call Func_38_4d14 ; $4aa7
@@ -1812,7 +1812,7 @@ Label_38_4e44:
 	call QueueSprite ; $4e46
 	ret ; $4e49
 	INCBIN "data/bank_038/d_4e4a.bin" ; $4e4a, 8 bytes
-	farcall FarPtr_39_28 ; $4e52
+	farcall FarPtr_TickMenuBgScroll ; $4e52
 	ret ; $4e55
 	ldh a, [hWramBank] ; $4e56
 	push af ; $4e58
@@ -1993,19 +1993,19 @@ Func_38_4f6f:
 	ld b, $11 ; $5001
 	ld c, $10 ; $5003
 	ld de, $9000 ; $5005
-	farcall FarPtr_39_10 ; $5008
+	farcall FarPtr_LoadCompressedTileBlock ; $5008
 	ld b, $15 ; $500b
 	ld c, $10 ; $500d
 	ld de, $9100 ; $500f
-	farcall FarPtr_39_10 ; $5012
+	farcall FarPtr_LoadCompressedTileBlock ; $5012
 	ld b, $75 ; $5015
 	ld c, $14 ; $5017
 	ld de, $a500 ; $5019
-	farcall FarPtr_39_10 ; $501c
+	farcall FarPtr_LoadCompressedTileBlock ; $501c
 	ld b, $79 ; $501f
 	ld c, $14 ; $5021
 	ld de, $a640 ; $5023
-	farcall FarPtr_39_10 ; $5026
+	farcall FarPtr_LoadCompressedTileBlock ; $5026
 	ld de, $8000 ; $5029
 	call Func_38_5746 ; $502c
 	ld de, $a800 ; $502f
@@ -2022,7 +2022,7 @@ Func_38_4f6f:
 	ld c, $0b ; $5050
 	ld b, $0a ; $5052
 	farcall FarPtr_LoadIndexedPalette ; $5054
-	farcall FarPtr_39_24 ; $5057
+	farcall FarPtr_InitMenuBgScroll ; $5057
 	ld b, $01 ; $505a
 	ld c, $01 ; $505c
 	farcall FarPtr_39_26 ; $505e
@@ -2035,7 +2035,7 @@ Func_38_4f6f:
 	ld b, $64 ; $5071
 	ld c, $14 ; $5073
 	ld de, $a300 ; $5075
-	farcall FarPtr_39_10 ; $5078
+	farcall FarPtr_LoadCompressedTileBlock ; $5078
 	farcall FarPtr_InitDefaultMatchSettings ; $507b
 	ret ; $507e
 	INCBIN "data/bank_038/d_507f.bin" ; $507f, 278 bytes
@@ -6374,7 +6374,7 @@ Func_38_6f6e:
 	ld b, $12 ; $6f6e
 	ld c, $02 ; $6f70
 	ld de, $a100 ; $6f72
-	farcall FarPtr_39_10 ; $6f75
+	farcall FarPtr_LoadCompressedTileBlock ; $6f75
 	ld hl, $a000 ; $6f78
 	ld de, $0801 ; $6f7b
 	farcall FarPtr_18_06 ; $6f7e
@@ -6387,7 +6387,7 @@ Func_38_6f6e:
 	ld b, $11 ; $6f90
 	ld c, $10 ; $6f92
 	ld de, $9000 ; $6f94
-	farcall FarPtr_39_10 ; $6f97
+	farcall FarPtr_LoadCompressedTileBlock ; $6f97
 	wram_bank $05 ; $6f9a
 	ld a, $03 ; $6fa0
 	ld [$c3b3], a ; $6fa2
@@ -6436,7 +6436,7 @@ Func_38_6f6e:
 	farcall FarPtr_LoadIndexedPalette_18 ; $7012
 	pop af ; $7015
 	wram_bank ; $7016
-	farcall FarPtr_39_24 ; $701a
+	farcall FarPtr_InitMenuBgScroll ; $701a
 	ld b, $01 ; $701d
 	ld c, $01 ; $701f
 	farcall FarPtr_39_26 ; $7021
@@ -6446,7 +6446,7 @@ Func_38_6f6e:
 	ld b, $48 ; $702c
 	ld c, $14 ; $702e
 	ld de, $8100 ; $7030
-	farcall FarPtr_39_10 ; $7033
+	farcall FarPtr_LoadCompressedTileBlock ; $7033
 	ldh a, [hWramBank] ; $7036
 	push af ; $7038
 	wram_bank $02 ; $7039
@@ -6865,7 +6865,7 @@ Label_38_745f:
 	call Func_38_7522 ; $7464
 	call DisableLCDSafely ; $7467
 	farcall FarPtr_01_0a ; $746a
-	farcall FarPtr_39_22 ; $746d
+	farcall FarPtr_ResetScreenAndTextWindows ; $746d
 	farcall FarPtr_3e_20 ; $7470
 	call EnableLCD ; $7473
 	ld c, $10 ; $7476

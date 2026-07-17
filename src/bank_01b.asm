@@ -4233,7 +4233,7 @@ Label_1b_6cc5:
 	ld b, $70 ; $6cc5
 	ld c, $10 ; $6cc7
 	ld de, $a000 ; $6cc9
-	farcall FarPtr_39_10 ; $6ccc
+	farcall FarPtr_LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
 	ldh a, [hWramBank] ; $6cd2
 	push af ; $6cd4
@@ -4252,22 +4252,22 @@ Label_1b_6cec:
 Label_1b_6cee:
 	ld c, $10 ; $6cee
 	ld de, $a100 ; $6cf0
-	farcall FarPtr_39_10 ; $6cf3
+	farcall FarPtr_LoadCompressedTileBlock ; $6cf3
 	call AdvanceFrame ; $6cf6
 	ld b, $72 ; $6cf9
 	ld c, $10 ; $6cfb
 	ld de, $a200 ; $6cfd
-	farcall FarPtr_39_10 ; $6d00
+	farcall FarPtr_LoadCompressedTileBlock ; $6d00
 	call AdvanceFrame ; $6d03
 	ld b, $1b ; $6d06
 	ld c, $04 ; $6d08
 	ld de, $a700 ; $6d0a
-	farcall FarPtr_39_10 ; $6d0d
+	farcall FarPtr_LoadCompressedTileBlock ; $6d0d
 	call AdvanceFrame ; $6d10
 	ld b, $77 ; $6d13
 	ld c, $14 ; $6d15
 	ld de, $8000 ; $6d17
-	farcall FarPtr_39_10 ; $6d1a
+	farcall FarPtr_LoadCompressedTileBlock ; $6d1a
 	call AdvanceFrame ; $6d1d
 	ld b, $08 ; $6d20
 	ld c, $10 ; $6d22
@@ -4405,7 +4405,7 @@ RunMinigameLevelSelect2:
 	ld a, [$cb11] ; $6e41
 	ld b, a ; $6e44
 	farcall FarPtr_3e_26 ; $6e45
-	farcall FarPtr_39_24 ; $6e48
+	farcall FarPtr_InitMenuBgScroll ; $6e48
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
 	farcall FarPtr_39_26 ; $6e4f
@@ -4536,7 +4536,7 @@ Label_1b_6f4e:
 	pop af ; $6f5c
 	ret ; $6f5d
 	INCBIN "data/bank_01b/d_6f5e.bin" ; $6f5e, 4 bytes
-	farcall FarPtr_39_28 ; $6f62
+	farcall FarPtr_TickMenuBgScroll ; $6f62
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex ; $6f67
 	push af ; $6f6a
@@ -4558,7 +4558,7 @@ Label_1b_6f7e:
 	ld a, [hl+] ; $6f7e
 	ld d, [hl] ; $6f7f
 	ld e, a ; $6f80
-	farcall FarPtr_39_16 ; $6f81
+	farcall FarPtr_ApplySpriteBobOffset ; $6f81
 	ld b, $08 ; $6f84
 	ld hl, $6f9f ; $6f86
 	push de ; $6f89
@@ -4583,7 +4583,7 @@ RunMinigameLevelSelect3:
 	ld a, [$cb11] ; $6fe2
 	ld b, a ; $6fe5
 	farcall FarPtr_3b_1e ; $6fe6
-	farcall FarPtr_39_24 ; $6fe9
+	farcall FarPtr_InitMenuBgScroll ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
 	farcall FarPtr_39_26 ; $6ff0
@@ -4712,7 +4712,7 @@ RunSavedDataTypeSelect:
 	ld a, [$cb11] ; $716d
 	ld b, a ; $7170
 	farcall FarPtr_3e_26 ; $7171
-	farcall FarPtr_39_24 ; $7174
+	farcall FarPtr_InitMenuBgScroll ; $7174
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
 	farcall FarPtr_39_26 ; $717b
@@ -4832,22 +4832,22 @@ Label_1b_723a:
 	ld b, $1d ; $7259
 	ld c, $10 ; $725b
 	ld de, $a000 ; $725d
-	farcall FarPtr_39_10 ; $7260
+	farcall FarPtr_LoadCompressedTileBlock ; $7260
 	call AdvanceFrame ; $7263
 	ld b, $1e ; $7266
 	ld c, $12 ; $7268
 	ld de, $a100 ; $726a
-	farcall FarPtr_39_10 ; $726d
+	farcall FarPtr_LoadCompressedTileBlock ; $726d
 	call AdvanceFrame ; $7270
 	ld b, $1b ; $7273
 	ld c, $04 ; $7275
 	ld de, $a700 ; $7277
-	farcall FarPtr_39_10 ; $727a
+	farcall FarPtr_LoadCompressedTileBlock ; $727a
 	call AdvanceFrame ; $727d
 	ld b, $78 ; $7280
 	ld c, $14 ; $7282
 	ld de, $8000 ; $7284
-	farcall FarPtr_39_10 ; $7287
+	farcall FarPtr_LoadCompressedTileBlock ; $7287
 	call AdvanceFrame ; $728a
 	ld b, $08 ; $728d
 	ld c, $10 ; $728f
@@ -4856,7 +4856,7 @@ Label_1b_723a:
 	wram_bank ; $7295
 	ret ; $7299
 	INCBIN "data/bank_01b/d_729a.bin" ; $729a, 10 bytes
-	farcall FarPtr_39_28 ; $72a4
+	farcall FarPtr_TickMenuBgScroll ; $72a4
 	ret ; $72a7
 	ld c, $02 ; $72a8
 	call GetMenuCursorIndex ; $72aa
@@ -4871,13 +4871,13 @@ DrawSavedDataCursorOption0:
 	ld c, $00 ; $72b8
 	ld b, $08 ; $72ba
 	ld de, $0c50 ; $72bc
-	farcall FarPtr_39_16 ; $72bf
+	farcall FarPtr_ApplySpriteBobOffset ; $72bf
 	ld hl, $72fa ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld de, $2448 ; $72cc
-	farcall FarPtr_39_16 ; $72cf
+	farcall FarPtr_ApplySpriteBobOffset ; $72cf
 	ld hl, $7340 ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
@@ -4885,13 +4885,13 @@ DrawSavedDataCursorOption1:
 	ld c, $10 ; $72d9
 	ld b, $08 ; $72db
 	ld de, $5050 ; $72dd
-	farcall FarPtr_39_16 ; $72e0
+	farcall FarPtr_ApplySpriteBobOffset ; $72e0
 	ld hl, $731b ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld de, $6c48 ; $72ed
-	farcall FarPtr_39_16 ; $72f0
+	farcall FarPtr_ApplySpriteBobOffset ; $72f0
 	ld hl, $7340 ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
@@ -5621,7 +5621,7 @@ Label_1b_786e:
 	ld a, [hl+] ; $786e
 	ld h, [hl] ; $786f
 	ld l, a ; $7870
-	farcall FarPtr_39_66 ; $7871
+	farcall FarPtr_DrawDecimalNumberSprites_39 ; $7871
 	ret ; $7874
 	INCBIN "data/bank_01b/d_7875.bin" ; $7875, 10 bytes
 CheckMinigameDataScrollable:

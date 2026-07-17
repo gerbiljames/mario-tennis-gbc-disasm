@@ -16,32 +16,32 @@ FarPtr_FillTilemapRect:
 	dw FillTilemapRect ; $400c
 FarPtr_LoadIndexedPalette:
 	dw LoadIndexedPalette ; $400e
-FarPtr_39_10:
-	dw Func_39_468b ; $4010
+FarPtr_LoadCompressedTileBlock:
+	dw LoadCompressedTileBlock ; $4010
 FarPtr_39_12:
 	dw Func_39_4661 ; $4012
 FarPtr_39_14:
 	dw Func_39_4a75 ; $4014
-FarPtr_39_16:
-	dw Func_39_4ac4 ; $4016
+FarPtr_ApplySpriteBobOffset:
+	dw ApplySpriteBobOffset ; $4016
 FarPtr_39_18:
 	dw Func_39_4a16 ; $4018
 FarPtr_39_1a:
 	dw Func_39_4a53 ; $401a
 FarPtr_39_1c:
 	dw Func_39_4c38 ; $401c
-FarPtr_39_1e:
-	dw Func_39_4cab ; $401e
-FarPtr_39_20:
-	dw Func_39_4deb ; $4020
-FarPtr_39_22:
-	dw Func_39_4bf3 ; $4022
-FarPtr_39_24:
-	dw Func_39_4b13 ; $4024
+FarPtr_FlushWram3MapRows:
+	dw FlushWram3MapRows ; $401e
+FarPtr_RestoreMenuBgAndDrawPanel:
+	dw RestoreMenuBgAndDrawPanel ; $4020
+FarPtr_ResetScreenAndTextWindows:
+	dw ResetScreenAndTextWindows ; $4022
+FarPtr_InitMenuBgScroll:
+	dw InitMenuBgScroll ; $4024
 FarPtr_39_26:
 	dw Func_39_4b3a ; $4026
-FarPtr_39_28:
-	dw Func_39_4b6d ; $4028
+FarPtr_TickMenuBgScroll:
+	dw TickMenuBgScroll ; $4028
 FarPtr_39_2a:
 	dw Func_39_4be8 ; $402a
 FarPtr_QueueWram3MapToVRAMAlias1:
@@ -102,8 +102,8 @@ FarPtr_39_62:
 	dw Func_39_6df9 ; $4062
 FarPtr_39_64:
 	dw Func_39_6ec0 ; $4064
-FarPtr_39_66:
-	dw Func_39_6f10 ; $4066
+FarPtr_DrawDecimalNumberSprites_39:
+	dw DrawDecimalNumberSprites_39 ; $4066
 FarPtr_39_68:
 	dw Func_39_6fe7 ; $4068
 FarPtr_39_6a:
@@ -641,12 +641,12 @@ Func_39_4661:
 	dw $0100, $7fff, $011f, $7d40 ; pal 1: #004100 #ffffff #ff4100 #0052ff
 	dw $0100, $7fff, $011f, $0200 ; pal 2: #004100 #ffffff #ff4100 #008300
 	dw $0100, $7fff, $011f, $4010 ; pal 3: #004100 #ffffff #ff4100 #830083
-Func_39_468b:
+LoadCompressedTileBlock:
 	ldh a, [hWramBank] ; $468b
 	push af ; $468d
 	ld a, b ; $468e
 	add a, a ; $468f
-	ld hl, $46b7 ; $4690
+	ld hl, TileBlockPtrs_39 ; $4690
 	add a, l ; $4693
 	ld l, a ; $4694
 	jr nc, Label_39_4698 ; $4695
@@ -667,6 +667,7 @@ Label_39_4698:
 	pop af ; $46b1
 	wram_bank ; $46b2
 	ret ; $46b6
+TileBlockPtrs_39:
 	; $46b7, 244 bytes (records:2)
 	dw $1b2e ; record 0
 	dw $1b30 ; record 1
@@ -804,7 +805,7 @@ Func_39_4a16:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18
 	push de ; $4a1a
-	call Func_39_468b ; $4a1b
+	call LoadCompressedTileBlock ; $4a1b
 	pop hl ; $4a1e
 	ld de, $0040 ; $4a1f
 	add hl, de ; $4a22
@@ -813,7 +814,7 @@ Func_39_4a16:
 	ld c, $04 ; $4a25
 	ld b, $18 ; $4a27
 	push de ; $4a29
-	call Func_39_468b ; $4a2a
+	call LoadCompressedTileBlock ; $4a2a
 	pop hl ; $4a2d
 	ld de, $0040 ; $4a2e
 	add hl, de ; $4a31
@@ -822,7 +823,7 @@ Func_39_4a16:
 	ld c, $04 ; $4a34
 	ld b, $19 ; $4a36
 	push de ; $4a38
-	call Func_39_468b ; $4a39
+	call LoadCompressedTileBlock ; $4a39
 	pop hl ; $4a3c
 	ld de, $0040 ; $4a3d
 	add hl, de ; $4a40
@@ -831,7 +832,7 @@ Func_39_4a16:
 	ld c, $04 ; $4a43
 	ld b, $1a ; $4a45
 	push de ; $4a47
-	call Func_39_468b ; $4a48
+	call LoadCompressedTileBlock ; $4a48
 	pop hl ; $4a4b
 	ld de, $0040 ; $4a4c
 	add hl, de ; $4a4f
@@ -881,7 +882,7 @@ Func_39_4a75:
 	ld e, a ; $4a82
 	ret ; $4a83
 	INCBIN "data/bank_039/d_4a84.bin" ; $4a84, 64 bytes
-Func_39_4ac4:
+ApplySpriteBobOffset:
 	ldh a, [hVBlankCounter] ; $4ac4
 	and a, $3f ; $4ac6
 	add a, $d3 ; $4ac8
@@ -894,7 +895,7 @@ Func_39_4ac4:
 	ld e, a ; $4ad1
 	ret ; $4ad2
 	INCBIN "data/bank_039/d_4ad3.bin" ; $4ad3, 64 bytes
-Func_39_4b13:
+InitMenuBgScroll:
 	ld a, $01 ; $4b13
 	ld [$cb17], a ; $4b15
 	ld a, $01 ; $4b18
@@ -941,7 +942,7 @@ Func_39_4b3a:
 	dw $018f ; record 9
 	dw $031f ; record 10
 	dw $031f ; record 11
-Func_39_4b6d:
+TickMenuBgScroll:
 	ld a, [$cb12] ; $4b6d
 	dec a ; $4b70
 	cp a, $b0 ; $4b71
@@ -1001,9 +1002,9 @@ Func_39_4be8:
 	ld b, $11 ; $4be8
 	ld c, $10 ; $4bea
 	ld de, $9000 ; $4bec
-	farcall FarPtr_39_10 ; $4bef
+	farcall FarPtr_LoadCompressedTileBlock ; $4bef
 	ret ; $4bf2
-Func_39_4bf3:
+ResetScreenAndTextWindows:
 	ldh [hScrollX], a ; $4bf3
 	ldh [hScrollY], a ; $4bf5
 	ld [wCameraX], a ; $4bf7
@@ -1015,7 +1016,7 @@ Func_39_4bf3:
 	ld b, $11 ; $4c09
 	ld c, $10 ; $4c0b
 	ld de, $9000 ; $4c0d
-	farcall FarPtr_39_10 ; $4c10
+	farcall FarPtr_LoadCompressedTileBlock ; $4c10
 	wram_bank $05 ; $4c13
 	ld a, $03 ; $4c19
 	ld [$c3b3], a ; $4c1b
@@ -1069,7 +1070,7 @@ Func_39_4c38:
 	pop af ; $4ca5
 	wram_bank ; $4ca6
 	ret ; $4caa
-Func_39_4cab:
+FlushWram3MapRows:
 	push af ; $4cab
 	push bc ; $4cac
 	push de ; $4cad
@@ -1199,7 +1200,7 @@ Label_39_4de1:
 	pop bc ; $4de8
 	pop af ; $4de9
 	ret ; $4dea
-Func_39_4deb:
+RestoreMenuBgAndDrawPanel:
 	push af ; $4deb
 	push bc ; $4dec
 	push de ; $4ded
@@ -3029,7 +3030,7 @@ Func_39_6ec0:
 	push bc ; $6ee6
 	ld b, $49 ; $6ee7
 	ld c, $14 ; $6ee9
-	farcall FarPtr_39_10 ; $6eeb
+	farcall FarPtr_LoadCompressedTileBlock ; $6eeb
 	pop bc ; $6eee
 	ld hl, $6f08 ; $6eef
 	ld d, b ; $6ef2
@@ -3040,13 +3041,13 @@ Label_39_6ef9:
 	push bc ; $6ef9
 	ld b, $14 ; $6efa
 	ld c, $18 ; $6efc
-	farcall FarPtr_39_10 ; $6efe
+	farcall FarPtr_LoadCompressedTileBlock ; $6efe
 	pop bc ; $6f01
 	ld c, $0c ; $6f02
 	farcall FarPtr_LoadIndexedPalette ; $6f04
 	ret ; $6f07
 	INCBIN "data/bank_039/d_6f08.bin" ; $6f08, 8 bytes
-Func_39_6f10:
+DrawDecimalNumberSprites_39:
 	push af ; $6f10
 	push bc ; $6f11
 	push de ; $6f12
@@ -3074,7 +3075,7 @@ Label_39_6f35:
 	ld a, [hl-] ; $6f35
 	sub a, $30 ; $6f36
 	ld c, a ; $6f38
-	call Func_39_6f4f ; $6f39
+	call DrawDigitSprite_39 ; $6f39
 	ld a, d ; $6f3c
 	sub a, $08 ; $6f3d
 	ld d, a ; $6f3f
@@ -3089,7 +3090,7 @@ Label_39_6f45:
 	pop bc ; $6f4c
 	pop af ; $6f4d
 	ret ; $6f4e
-Func_39_6f4f:
+DrawDigitSprite_39:
 	push af ; $6f4f
 	push bc ; $6f50
 	push de ; $6f51

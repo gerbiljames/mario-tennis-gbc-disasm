@@ -1261,7 +1261,7 @@ Label_10_4f3c:
 Label_10_4f68:
 	call DisableLCDSafely ; $4f68
 	farcall FarPtr_01_0a ; $4f6b
-	farcall FarPtr_39_22 ; $4f6e
+	farcall FarPtr_ResetScreenAndTextWindows ; $4f6e
 	call EnableLCD ; $4f71
 	ld c, $10 ; $4f74
 	call BeginFadeIn ; $4f76
@@ -1324,7 +1324,7 @@ MatchSelectHandlersB_10:
 	or a, a ; $4fec
 	jr z, Label_10_5006 ; $4fed
 	call DisableLCDSafely ; $4fef
-	farcall FarPtr_39_22 ; $4ff2
+	farcall FarPtr_ResetScreenAndTextWindows ; $4ff2
 	call EnableLCD ; $4ff5
 	ld a, [$c8a5] ; $4ff8
 	or a, a ; $4ffb
@@ -1375,7 +1375,7 @@ Label_10_5041:
 	ld [$cb11], a ; $505c
 	call DisableLCDSafely ; $505f
 	farcall FarPtr_01_0a ; $5062
-	farcall FarPtr_39_22 ; $5065
+	farcall FarPtr_ResetScreenAndTextWindows ; $5065
 	call EnableLCD ; $5068
 	ld c, $10 ; $506b
 	call BeginFadeIn ; $506d
@@ -1397,7 +1397,7 @@ Label_10_508a:
 	ret ; $5092
 Label_10_5093:
 	call DisableLCDSafely ; $5093
-	farcall FarPtr_39_22 ; $5096
+	farcall FarPtr_ResetScreenAndTextWindows ; $5096
 	call EnableLCD ; $5099
 	ld c, $10 ; $509c
 	call BeginFadeIn ; $509e
@@ -1460,7 +1460,7 @@ Label_10_50f5:
 	jp nz, Label_10_51db ; $5121
 Label_10_5124:
 	call DisableLCDSafely ; $5124
-	farcall FarPtr_39_22 ; $5127
+	farcall FarPtr_ResetScreenAndTextWindows ; $5127
 	call EnableLCD ; $512a
 	push af ; $512d
 	ld c, $10 ; $512e
@@ -1491,7 +1491,7 @@ Label_10_5159:
 	call ClearFrameTasks ; $5164
 	call DisableLCDSafely ; $5167
 	farcall FarPtr_01_0a ; $516a
-	farcall FarPtr_39_22 ; $516d
+	farcall FarPtr_ResetScreenAndTextWindows ; $516d
 	xor a, a ; $5170
 	ld [$cb53], a ; $5171
 	ld [$cb54], a ; $5174
@@ -1558,7 +1558,7 @@ Label_10_51fd:
 	ld [$cb11], a ; $51ff
 	call DisableLCDSafely ; $5202
 	farcall FarPtr_01_0a ; $5205
-	farcall FarPtr_39_22 ; $5208
+	farcall FarPtr_ResetScreenAndTextWindows ; $5208
 	call EnableLCD ; $520b
 	ld c, $10 ; $520e
 	call BeginFadeIn ; $5210
@@ -1597,7 +1597,7 @@ Label_10_5241:
 	jr nz, Label_10_526e ; $5254
 	call DisableLCDSafely ; $5256
 	farcall FarPtr_01_0a ; $5259
-	farcall FarPtr_39_22 ; $525c
+	farcall FarPtr_ResetScreenAndTextWindows ; $525c
 	call EnableLCD ; $525f
 	ld c, $10 ; $5262
 	call BeginFadeIn ; $5264
@@ -1612,7 +1612,7 @@ Label_10_526e:
 	ld [$cb11], a ; $5279
 	call DisableLCDSafely ; $527c
 	farcall FarPtr_01_0a ; $527f
-	farcall FarPtr_39_22 ; $5282
+	farcall FarPtr_ResetScreenAndTextWindows ; $5282
 	call EnableLCD ; $5285
 	ld c, $10 ; $5288
 	call BeginFadeIn ; $528a
@@ -1638,7 +1638,7 @@ Label_10_526e:
 	ld [$cb11], a ; $52ba
 	call DisableLCDSafely ; $52bd
 	farcall FarPtr_01_0a ; $52c0
-	farcall FarPtr_39_22 ; $52c3
+	farcall FarPtr_ResetScreenAndTextWindows ; $52c3
 	call EnableLCD ; $52c6
 	ld c, $10 ; $52c9
 	call BeginFadeIn ; $52cb
@@ -1664,7 +1664,7 @@ Label_10_52e4:
 	farcall FarPtr_ShowCharDataScreen ; $52f9
 	call DisableLCDSafely ; $52fc
 	farcall FarPtr_01_0a ; $52ff
-	farcall FarPtr_39_22 ; $5302
+	farcall FarPtr_ResetScreenAndTextWindows ; $5302
 	call EnableLCD ; $5305
 	ld c, $10 ; $5308
 	call BeginFadeIn ; $530a
@@ -1683,7 +1683,7 @@ Label_10_5315:
 	call WaitFadeEnd ; $5329
 	call DisableLCDSafely ; $532c
 	farcall FarPtr_01_0a ; $532f
-	farcall FarPtr_39_22 ; $5332
+	farcall FarPtr_ResetScreenAndTextWindows ; $5332
 	call EnableLCD ; $5335
 	ld c, $10 ; $5338
 	call BeginFadeIn ; $533a
@@ -1699,7 +1699,7 @@ Label_10_5345:
 	farcall FarPtr_3b_06 ; $5351
 	call DisableLCDSafely ; $5354
 	farcall FarPtr_01_0a ; $5357
-	farcall FarPtr_39_22 ; $535a
+	farcall FarPtr_ResetScreenAndTextWindows ; $535a
 	call EnableLCD ; $535d
 	ld c, $10 ; $5360
 	call BeginFadeIn ; $5362
@@ -1724,7 +1724,7 @@ Label_10_5380:
 	farcall FarPtr_SaveStorySlot ; $538e
 	call DisableLCDSafely ; $5391
 	farcall FarPtr_01_0a ; $5394
-	farcall FarPtr_39_22 ; $5397
+	farcall FarPtr_ResetScreenAndTextWindows ; $5397
 	call EnableLCD ; $539a
 	ld c, $10 ; $539d
 	call BeginFadeIn ; $539f
@@ -1740,7 +1740,7 @@ Label_10_53aa:
 	farcall FarPtr_SaveStorySlot ; $53b8
 	call DisableLCDSafely ; $53bb
 	farcall FarPtr_01_0a ; $53be
-	farcall FarPtr_39_22 ; $53c1
+	farcall FarPtr_ResetScreenAndTextWindows ; $53c1
 	call EnableLCD ; $53c4
 	ld c, $10 ; $53c7
 	call BeginFadeIn ; $53c9
@@ -1767,7 +1767,7 @@ Label_10_53e2:
 	call WaitFadeEnd ; $53f5
 	call DisableLCDSafely ; $53f8
 	farcall FarPtr_01_0a ; $53fb
-	farcall FarPtr_39_22 ; $53fe
+	farcall FarPtr_ResetScreenAndTextWindows ; $53fe
 	call EnableLCD ; $5401
 	ld c, $10 ; $5404
 	call BeginFadeIn ; $5406
@@ -1784,7 +1784,7 @@ Label_10_5411:
 	call WaitFadeEnd ; $5421
 	call DisableLCDSafely ; $5424
 	farcall FarPtr_01_0a ; $5427
-	farcall FarPtr_39_22 ; $542a
+	farcall FarPtr_ResetScreenAndTextWindows ; $542a
 	call EnableLCD ; $542d
 	ld c, $10 ; $5430
 	call BeginFadeIn ; $5432
@@ -1803,7 +1803,7 @@ Label_10_543d:
 	farcall FarPtr_3b_08 ; $5450
 	call DisableLCDSafely ; $5453
 	farcall FarPtr_01_0a ; $5456
-	farcall FarPtr_39_22 ; $5459
+	farcall FarPtr_ResetScreenAndTextWindows ; $5459
 	call EnableLCD ; $545c
 	ld c, $10 ; $545f
 	call BeginFadeIn ; $5461
@@ -1819,7 +1819,7 @@ Label_10_546c:
 	farcall FarPtr_Func_3b_44aaAlias1 ; $5478
 	call DisableLCDSafely ; $547b
 	farcall FarPtr_01_0a ; $547e
-	farcall FarPtr_39_22 ; $5481
+	farcall FarPtr_ResetScreenAndTextWindows ; $5481
 	call EnableLCD ; $5484
 	ld c, $10 ; $5487
 	call BeginFadeIn ; $5489
@@ -1830,7 +1830,7 @@ Label_10_5494:
 	farcall FarPtr_3b_0a ; $5494
 	call DisableLCDSafely ; $5497
 	farcall FarPtr_01_0a ; $549a
-	farcall FarPtr_39_22 ; $549d
+	farcall FarPtr_ResetScreenAndTextWindows ; $549d
 	call EnableLCD ; $54a0
 	ld c, $10 ; $54a3
 	call BeginFadeIn ; $54a5
@@ -1844,7 +1844,7 @@ Label_10_5494:
 	farcall FarPtr_3f_00 ; $54ba
 	call DisableLCDSafely ; $54bd
 	farcall FarPtr_01_0a ; $54c0
-	farcall FarPtr_39_22 ; $54c3
+	farcall FarPtr_ResetScreenAndTextWindows ; $54c3
 	call EnableLCD ; $54c6
 	ld c, $10 ; $54c9
 	call BeginFadeIn ; $54cb
@@ -1897,7 +1897,7 @@ Label_10_54e8:
 Label_10_5520:
 	call DisableLCDSafely ; $5520
 	farcall FarPtr_01_0a ; $5523
-	farcall FarPtr_39_22 ; $5526
+	farcall FarPtr_ResetScreenAndTextWindows ; $5526
 	call EnableLCD ; $5529
 	ld c, $10 ; $552c
 	call BeginFadeIn ; $552e
@@ -1915,7 +1915,7 @@ Label_10_5520:
 Label_10_554c:
 	call DisableLCDSafely ; $554c
 	farcall FarPtr_01_0a ; $554f
-	farcall FarPtr_39_22 ; $5552
+	farcall FarPtr_ResetScreenAndTextWindows ; $5552
 	call EnableLCD ; $5555
 	ld c, $10 ; $5558
 	call BeginFadeIn ; $555a
@@ -1931,7 +1931,7 @@ Label_10_554c:
 	jr nz, Label_10_5592 ; $5573
 	call DisableLCDSafely ; $5575
 	farcall FarPtr_01_0a ; $5578
-	farcall FarPtr_39_22 ; $557b
+	farcall FarPtr_ResetScreenAndTextWindows ; $557b
 	call EnableLCD ; $557e
 	ld c, $10 ; $5581
 	call BeginFadeIn ; $5583
@@ -1944,7 +1944,7 @@ Label_10_5592:
 	farcall FarPtr_ReinitSaveRamPreservingBlock6 ; $5592
 	call DisableLCDSafely ; $5595
 	farcall FarPtr_01_0a ; $5598
-	farcall FarPtr_39_22 ; $559b
+	farcall FarPtr_ResetScreenAndTextWindows ; $559b
 	call EnableLCD ; $559e
 	ld c, $10 ; $55a1
 	call BeginFadeIn ; $55a3
