@@ -298,7 +298,7 @@ GetCa00RecordPtr:
 	ret ; $421b
 InitStoryModeState:
 	call CacheStorySlotSummaries ; $421c
-	ld hl, wSaveBlockBuffer ; $421f
+	ld hl, wStorySlotData ; $421f
 	ld c, $30 ; $4222
 	call ClearMemory16 ; $4224
 	ld a, $00 ; $4227
@@ -598,7 +598,7 @@ Label_02_4405:
 	pop bc ; $440b
 	call RecomputeCharacterStats ; $440c
 	ld hl, wStoryModeNameOfMainCharacter ; $440f
-	ld de, wSaveBlockBuffer ; $4412
+	ld de, wStorySlotData ; $4412
 	ld c, $08 ; $4415
 	call CopyMemoryFast ; $4417
 	ret ; $441a
@@ -1088,7 +1088,7 @@ RefreshMainCharacterStats:
 	ld bc, wStoryModeNameOfMainCharacter ; $478f
 	call RecomputeCharacterStats ; $4792
 	ld hl, wStoryModeNameOfMainCharacter ; $4795
-	ld de, wSaveBlockBuffer ; $4798
+	ld de, wStorySlotData ; $4798
 	ld c, $08 ; $479b
 	call CopyMemoryFast ; $479d
 	ld a, [$c83c] ; $47a0
@@ -1111,7 +1111,7 @@ Label_02_47ae:
 Label_02_47bb:
 	ld a, b ; $47bb
 	ld [$c83c], a ; $47bc
-	ld bc, wSaveBlockBuffer ; $47bf
+	ld bc, wStorySlotData ; $47bf
 	call RecomputeCharacterStats ; $47c2
 	ret ; $47c5
 RecomputeStatsWithoutRacket:
@@ -2307,7 +2307,7 @@ MenuTilemaps_02:
 	db $49, $4f, $20, $47, $4f, $4c, $46, $20, $47, $42, $20, $43, $48 ; 0x40
 LoadStorySlot:
 	push de ; $5247
-	ld hl, wSaveBlockBuffer ; $5248
+	ld hl, wStorySlotData ; $5248
 	ld b, a ; $524b
 	ld c, a ; $524c
 	push bc ; $524d
@@ -2344,7 +2344,7 @@ Label_02_5275:
 	ret ; $5283
 Unused_02_StorySlotVariant:
 	push de ; $5284
-	ld hl, wSaveBlockBuffer ; $5285
+	ld hl, wStorySlotData ; $5285
 	ld b, a ; $5288
 	ld c, a ; $5289
 	push bc ; $528a

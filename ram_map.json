@@ -453,8 +453,8 @@
   "size": 1
  },
  "0xc800": {
-  "name": "wSaveBlockBuffer",
-  "note": "[buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer"
+  "name": "wStorySlotData",
+  "note": "[buffer] Base of the story-slot state image (WRAM $c800-$caff): the live region holding the wStoryModeMainCharacter*/wGameMode/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) and reloaded from it on slot load"
  },
  "0xc818": {
   "name": "wStoryModeMainCharacterLevel",

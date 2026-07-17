@@ -207,7 +207,7 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc796` | WRAM | `wTargetZoneDepth2` | [16-bit] Target zone depth bound 2 (world units) |
 | `0xc7b2` | WRAM | `wModeHookTable` | [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook) |
 | `0xc7b4` | WRAM | `wModeHookBank` | [8-bit] ROM bank of the mode callback table (0 = no hooks registered) |
-| `0xc800` | WRAM | `wSaveBlockBuffer` | [buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer |
+| `0xc800` | WRAM | `wStorySlotData` | [buffer] Base of the story-slot state image (WRAM `$c800-$caff`): the live region holding the `wStoryModeMainCharacter*`/`wGameMode`/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) |
 | `0xc8a7` | WRAM | `wKeepMatchStatsFlag` | [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use |
 | `0xc8df` | WRAM | `wMatchRngState` | [8-bit] Match RNG state: seeded from hVBlankCounter at match start, stirred by AdvanceMatchRng (+$73 plus ball position bytes) |
 | `0xc8ee` | WRAM | `wServeFaultFlag` | [8-bit] 1 after a first-serve fault (the next fault becomes a double fault, point outcome 2); cleared on double fault and at match reset |

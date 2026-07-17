@@ -401,8 +401,8 @@ wModeHookTable:: dw
 wModeHookBank:: db
 	ds 75
 
-; [buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer
-wSaveBlockBuffer:: db
+; [buffer] Base of the story-slot state image (WRAM $c800-$caff): the live region holding the wStoryModeMainCharacter*/wGameMode/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) and reloaded from it on slot load
+wStorySlotData:: db
 	ds 23
 
 ; [8-bit] Story Mode - Main Character Level (0x01-0x63)

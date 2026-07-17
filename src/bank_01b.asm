@@ -3087,7 +3087,7 @@ Label_1b_62df:
 	pop af ; $62df
 	ld [$cb00], a ; $62e0
 	ld hl, wStoryModeNameOfMainCharacter ; $62e3
-	ld de, wSaveBlockBuffer ; $62e6
+	ld de, wStorySlotData ; $62e6
 	ld c, $08 ; $62e9
 	call CopyMemoryFast ; $62eb
 	xor a, a ; $62ee
@@ -3107,7 +3107,7 @@ RunDebugSaveDataFlow:
 	jr z, RunDebugSaveDataFlow ; $6305
 	and a, $3f ; $6307
 	ld [wCurrentStorySlot], a ; $6309
-	ld hl, wSaveBlockBuffer ; $630c
+	ld hl, wStorySlotData ; $630c
 	ld b, a ; $630f
 	ld [wCurrentStorySlot], a ; $6310
 	farcall FarPtr_CheckStorySlot ; $6313

@@ -2051,7 +2051,7 @@ Label_03_4d19:
 	ld a, [wCurrentStorySlot] ; $4d19
 	add a, a ; $4d1c
 	ld b, a ; $4d1d
-	ld hl, wSaveBlockBuffer ; $4d1e
+	ld hl, wStorySlotData ; $4d1e
 	ld de, $0000 ; $4d21
 	call WriteSaveBlock ; $4d24
 	or a, a ; $4d27
@@ -2059,7 +2059,7 @@ Label_03_4d19:
 	ld a, [wCurrentStorySlot] ; $4d29
 	add a, a ; $4d2c
 	ld b, a ; $4d2d
-	ld hl, wSaveBlockBuffer ; $4d2e
+	ld hl, wStorySlotData ; $4d2e
 	call VerifySaveBlock ; $4d31
 	or a, a ; $4d34
 	ret nz ; $4d35
@@ -2067,7 +2067,7 @@ Label_03_4d19:
 	add a, a ; $4d39
 	add a, $1b ; $4d3a
 	ld b, a ; $4d3c
-	ld hl, wSaveBlockBuffer ; $4d3d
+	ld hl, wStorySlotData ; $4d3d
 	ld de, wTextBuffer ; $4d40
 	call WriteSaveBlock ; $4d43
 	or a, a ; $4d46
@@ -2076,7 +2076,7 @@ Label_03_4d19:
 	add a, a ; $4d4b
 	add a, $1b ; $4d4c
 	ld b, a ; $4d4e
-	ld hl, wSaveBlockBuffer ; $4d4f
+	ld hl, wStorySlotData ; $4d4f
 	call VerifySaveBlock ; $4d52
 	or a, a ; $4d55
 	ret nz ; $4d56
@@ -2093,7 +2093,7 @@ CheckStorySlot:
 	jr nc, Label_03_4d78 ; $4d6c
 	add a, a ; $4d6e
 	ld b, a ; $4d6f
-	ld hl, wSaveBlockBuffer ; $4d70
+	ld hl, wStorySlotData ; $4d70
 	call ReadSaveBlock ; $4d73
 	jr Label_03_4d7a ; $4d76
 Label_03_4d78:
@@ -2482,27 +2482,27 @@ Label_03_4fa1:
 WriteExhibitionSaveBlock:
 	ld a, $36 ; $4fae
 	ld b, a ; $4fb0
-	ld hl, wSaveBlockBuffer ; $4fb1
+	ld hl, wStorySlotData ; $4fb1
 	ld de, $0000 ; $4fb4
 	call WriteSaveBlock ; $4fb7
 	or a, a ; $4fba
 	ret nz ; $4fbb
 	ld a, $36 ; $4fbc
 	ld b, a ; $4fbe
-	ld hl, wSaveBlockBuffer ; $4fbf
+	ld hl, wStorySlotData ; $4fbf
 	call VerifySaveBlock ; $4fc2
 	or a, a ; $4fc5
 	ret nz ; $4fc6
 	ld a, $37 ; $4fc7
 	ld b, a ; $4fc9
-	ld hl, wSaveBlockBuffer ; $4fca
+	ld hl, wStorySlotData ; $4fca
 	ld de, wTextBuffer ; $4fcd
 	call WriteSaveBlock ; $4fd0
 	or a, a ; $4fd3
 	ret nz ; $4fd4
 	ld a, $37 ; $4fd5
 	ld b, a ; $4fd7
-	ld hl, wSaveBlockBuffer ; $4fd8
+	ld hl, wStorySlotData ; $4fd8
 	call VerifySaveBlock ; $4fdb
 	or a, a ; $4fde
 	ret nz ; $4fdf
@@ -2515,7 +2515,7 @@ ReadExhibitionSaveBlock:
 	push hl ; $4fec
 	ld a, $36 ; $4fed
 	ld b, a ; $4fef
-	ld hl, wSaveBlockBuffer ; $4ff0
+	ld hl, wStorySlotData ; $4ff0
 	call ReadSaveBlock ; $4ff3
 	jr Label_03_4ffa ; $4ff6
 	db $3e ; $4ff8
