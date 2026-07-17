@@ -1,26 +1,26 @@
 SECTION "ROM Bank $06", ROMX[$4000], BANK[$06]
 
-FarPtr_06_00:
-	dw Func_06_4074 ; $4000
-FarPtr_06_02:
-	dw Func_06_6b84 ; $4002
+FarPtr_RunMatchPauseMenu:
+	dw RunMatchPauseMenu ; $4000
+FarPtr_RunDebugStatsEditor:
+	dw RunDebugStatsEditor ; $4002
 FarPtr_ShowMessageWindow:
 	dw ShowMessageWindow ; $4004
-FarPtr_06_06:
-	dw Func_06_48ad ; $4006
+FarPtr_ShowMatchScoreboardScreen:
+	dw ShowMatchScoreboardScreen ; $4006
 FarPtr_RunStoryModeMenu:
 	dw RunStoryModeMenu ; $4008
 FarPtr_FlushTilemapToVram:
 	dw FlushTilemapToVram ; $400a
-FarPtr_06_0c:
-	dw Func_06_400e ; $400c
-Func_06_400e:
+FarPtr_RunMinigameEndMenu:
+	dw RunMinigameEndMenu ; $400c
+RunMinigameEndMenu:
 	ldh a, [hWramBank] ; $400e
 	push af ; $4010
 	farcall FarPtr_StepMatchFrame ; $4011
-	call Func_06_4915 ; $4014
+	call PrepareScoreboardGfx ; $4014
 	farcall FarPtr_StepMatchFrame ; $4017
-	call Func_06_5c8a ; $401a
+	call LoadScoreboardModeGfx ; $401a
 	ld hl, $5280 ; $401d
 	ld de, $8640 ; $4020
 	ld c, $04 ; $4023
@@ -28,7 +28,7 @@ Func_06_400e:
 	farcall FarPtr_StepMatchFrame ; $4028
 	wram_bank $02 ; $402b
 	ld b, $00 ; $4031
-	call Func_06_49a7 ; $4033
+	call DrawScoreboard ; $4033
 	ld a, $0a ; $4036
 	ld hl, $506a ; $4038
 	call RegisterFrameTask ; $403b
@@ -40,7 +40,7 @@ Label_06_4046:
 	ld [$c4e0], a ; $4047
 	ld a, $0e ; $404a
 	ld [$c4e6], a ; $404c
-	call Func_06_4485 ; $404f
+	call RunMatchQuitMenu ; $404f
 	ld a, [$c4e0] ; $4052
 	cp a, $ff ; $4055
 	jr z, Label_06_4046 ; $4057
@@ -54,7 +54,7 @@ Label_06_4046:
 	pop af ; $406e
 	wram_bank ; $406f
 	ret ; $4073
-Func_06_4074:
+RunMatchPauseMenu:
 	ldh a, [hWramBank] ; $4074
 	push af ; $4076
 	ldh a, [$ffdd] ; $4077
@@ -66,9 +66,9 @@ Func_06_4074:
 	ld [$c4e0], a ; $4083
 	ld a, $02 ; $4086
 	ldh [$ffdd], a ; $4088
-	call Func_06_4915 ; $408a
+	call PrepareScoreboardGfx ; $408a
 	farcall FarPtr_StepMatchFrame ; $408d
-	call Func_06_5c8a ; $4090
+	call LoadScoreboardModeGfx ; $4090
 	ld hl, $5280 ; $4093
 	ld de, $8640 ; $4096
 	ld c, $04 ; $4099
@@ -77,7 +77,7 @@ Func_06_4074:
 	wram_bank $02 ; $40a1
 Label_06_40a7:
 	ld b, $00 ; $40a7
-	call Func_06_49a7 ; $40a9
+	call DrawScoreboard ; $40a9
 	ld a, $0a ; $40ac
 	ld hl, $506a ; $40ae
 	call RegisterFrameTask ; $40b1
@@ -101,10 +101,10 @@ Label_06_40c6:
 	push hl ; $40d8
 	ld a, [$c4e0] ; $40d9
 	rst Rst00 ; $40dc
-	dw Label_06_4110 ; $40dd jumptable
-	dw Label_06_4380 ; $40df jumptable
-	dw Label_06_43ee ; $40e1 jumptable
-	dw Label_06_4462 ; $40e3 jumptable
+	dw MatchPauseMenu_CheckRules ; $40dd jumptable
+	dw MatchPauseMenu_ReviewControls ; $40df jumptable
+	dw MatchPauseMenu_ChangeOptions ; $40e1 jumptable
+	dw MatchPauseMenu_SaveQuit ; $40e3 jumptable
 	pop af ; $40e5
 	ld [$c4e0], a ; $40e6
 	ld a, [$c4c3] ; $40e9
@@ -124,7 +124,7 @@ Label_06_40ef:
 	pop af ; $410a
 	wram_bank ; $410b
 	ret ; $410f
-Label_06_4110:
+MatchPauseMenu_CheckRules:
 	ld hl, $506a ; $4110
 	call UnregisterFrameTask ; $4113
 	call RestoreBgTilemap ; $4116
@@ -132,14 +132,14 @@ Label_06_4110:
 	push hl ; $411c
 	ld a, [wGameMode] ; $411d
 	cp a, $08 ; $4120
-	jp z, Label_06_421d ; $4122
+	jp z, ShowMinigameRulesPages ; $4122
 	ld a, [$c8f5] ; $4125
 	cp a, $02 ; $4128
-	jp z, Label_06_417d ; $412a
-	jr Label_06_4133 ; $412d
+	jp z, ShowTrainingRulesPages ; $412a
+	jr ShowMatchRulesPages ; $412d
 	call RestoreBgTilemap ; $412f
 	ret ; $4132
-Label_06_4133:
+ShowMatchRulesPages:
 	ld a, [$c4dc] ; $4133
 	ld b, a ; $4136
 	ld a, [$c4db] ; $4137
@@ -168,7 +168,7 @@ Label_06_4133:
 	adc a, $41 ; $415d
 	sub a, l ; $415f
 	ld h, a ; $4160
-	call Func_06_4316 ; $4161
+	call ShowRulesPageSequence ; $4161
 	ret ; $4164
 	; $4165, 24 bytes (bytes:4)
 	db $00, $06, $ff, $ff ; 0x00
@@ -177,7 +177,7 @@ Label_06_4133:
 	db $03, $07, $ff, $ff ; 0x0c
 	db $04, $06, $ff, $ff ; 0x10
 	db $05, $07, $ff, $ff ; 0x14
-Label_06_417d:
+ShowTrainingRulesPages:
 	ld a, [$c8f7] ; $417d
 	ld [$c4e5], a ; $4180
 	add a, $2b ; $4183
@@ -202,7 +202,7 @@ Label_06_417d:
 	adc a, $41 ; $41a1
 	sub a, l ; $41a3
 	ld h, a ; $41a4
-	call Func_06_4316 ; $41a5
+	call ShowRulesPageSequence ; $41a5
 	ret ; $41a8
 	; $41a9, 116 bytes (bytes:4)
 	db $00, $ff, $ff, $ff ; 0x00
@@ -234,7 +234,7 @@ Label_06_417d:
 	db $1a, $ff, $ff, $ff ; 0x68
 	db $1b, $ff, $ff, $ff ; 0x6c
 	db $1c, $ff, $ff, $ff ; 0x70
-Label_06_421d:
+ShowMinigameRulesPages:
 	ld a, [$c8f7] ; $421d
 	sub a, $1c ; $4220
 	ld b, a ; $4222
@@ -278,7 +278,7 @@ Label_06_421d:
 	adc a, $42 ; $425a
 	sub a, l ; $425c
 	ld h, a ; $425d
-	call Func_06_4316 ; $425e
+	call ShowRulesPageSequence ; $425e
 	ret ; $4261
 	; $4262, 180 bytes (records:2)
 ; 90 records x 2 bytes
@@ -372,7 +372,7 @@ Label_06_421d:
 	dw $0706 ; record 87
 	dw $ff08 ; record 88
 	dw $ffff ; record 89
-Func_06_4316:
+ShowRulesPageSequence:
 	ld a, [hl+] ; $4316
 	cp a, $ff ; $4317
 	jr z, Label_06_4372 ; $4319
@@ -391,10 +391,10 @@ Label_06_432a:
 	ld h, [hl] ; $4331
 	ld l, a ; $4332
 	ld de, $0002 ; $4333
-	call Func_06_4584 ; $4336
+	call DrawMenuCaptionWindow ; $4336
 	ld de, $0005 ; $4339
 	ld bc, $130b ; $433c
-	call Func_06_4564 ; $433f
+	call DrawWindowFrameAt ; $433f
 	ld hl, $c4e8 ; $4342
 	ld a, [hl+] ; $4345
 	ld h, [hl] ; $4346
@@ -406,7 +406,7 @@ Label_06_432a:
 	inc h ; $434d
 Label_06_434e:
 	ld de, $0106 ; $434e
-	call Func_06_4574 ; $4351
+	call DrawMenuTextLine ; $4351
 	farcall FarPtr_StepMatchFrame ; $4354
 	farcall FarPtr_UploadGlyphBuffer ; $4357
 	call FlushTilemapToVram ; $435a
@@ -419,7 +419,7 @@ Label_06_435d:
 	ld hl, $4373 ; $4369
 	call UnregisterFrameTask ; $436c
 	pop hl ; $436f
-	jr Func_06_4316 ; $4370
+	jr ShowRulesPageSequence ; $4370
 Label_06_4372:
 	ret ; $4372
 	ld de, $9080 ; $4373
@@ -427,23 +427,23 @@ Label_06_4372:
 	ld bc, $0a70 ; $4379
 	call QueueSprite16 ; $437c
 	ret ; $437f
-Label_06_4380:
+MatchPauseMenu_ReviewControls:
 	ld hl, $506a ; $4380
 	call UnregisterFrameTask ; $4383
 	call RestoreBgTilemap ; $4386
 	ld de, $0002 ; $4389
 	ld bc, $130e ; $438c
-	call Func_06_4564 ; $438f
+	call DrawWindowFrameAt ; $438f
 	farcall FarPtr_PrepareGlyphBuffer ; $4392
 	ld de, $0103 ; $4395
 	ld hl, $0157 ; $4398
-	call Func_06_4574 ; $439b
+	call DrawMenuTextLine ; $439b
 	ld de, $060a ; $439e
 	ld hl, $0158 ; $43a1
-	call Func_06_4574 ; $43a4
+	call DrawMenuTextLine ; $43a4
 	ld de, $010c ; $43a7
 	ld hl, $0159 ; $43aa
-	call Func_06_4574 ; $43ad
+	call DrawMenuTextLine ; $43ad
 	farcall FarPtr_UploadGlyphBuffer ; $43b0
 	call FlushTilemapToVram ; $43b3
 	farcall FarPtr_StepMatchFrame ; $43b6
@@ -474,11 +474,11 @@ Label_06_43e8:
 	call RestoreBgTilemap ; $43e8
 	sound $62 ; $43eb
 	ret ; $43ed
-Label_06_43ee:
+MatchPauseMenu_ChangeOptions:
 	call RestoreBgTilemapRegion ; $43ee
 	ld a, [$c4c8] ; $43f1
 	and a, a ; $43f4
-	jr nz, Label_06_443a ; $43f5
+	jr nz, MatchPauseMenu_MusicToggle ; $43f5
 	xor a, a ; $43f7
 	ld [$c4e0], a ; $43f8
 Label_06_43fb:
@@ -493,14 +493,14 @@ Label_06_43fb:
 	push hl ; $440e
 	ld a, [$c4e0] ; $440f
 	rst Rst00 ; $4412
-	dw Label_06_441e ; $4413 jumptable
-	dw Label_06_443a ; $4415 jumptable
+	dw MatchPauseMenu_CameraSelect ; $4413 jumptable
+	dw MatchPauseMenu_MusicToggle ; $4415 jumptable
 	pop af ; $4417
 	ld [$c4e0], a ; $4418
 	jr Label_06_43fb ; $441b
 Label_06_441d:
 	ret ; $441d
-Label_06_441e:
+MatchPauseMenu_CameraSelect:
 	ld a, [$c4dd] ; $441e
 	ld [$c4e0], a ; $4421
 	ld a, $03 ; $4424
@@ -513,7 +513,7 @@ Label_06_441e:
 	farcall FarPtr_SetStorySlotFlagB ; $4436
 Label_06_4439:
 	ret ; $4439
-Label_06_443a:
+MatchPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $443a
 	and a, $01 ; $443c
 	ld [$c4e0], a ; $443e
@@ -532,7 +532,7 @@ Label_06_443a:
 	farcall FarPtr_SetStorySlotFlagA ; $445e
 Label_06_4461:
 	ret ; $4461
-Label_06_4462:
+MatchPauseMenu_SaveQuit:
 	call RestoreBgTilemapRegion ; $4462
 	ld a, [wGameMode] ; $4465
 	add a, $f3 ; $4468
@@ -551,7 +551,7 @@ Label_06_447e:
 	call GetMatchMenuItemCount ; $447e
 	dec a ; $4481
 	ld [$c4e0], a ; $4482
-Func_06_4485:
+RunMatchQuitMenu:
 	call RunMatchMenu ; $4485
 	ld a, [$c4e0] ; $4488
 	cp a, $ff ; $448b
@@ -560,23 +560,23 @@ Func_06_4485:
 	sub a, $0a ; $4491
 	ld a, a ; $4493
 	rst Rst00 ; $4494
-	dw Label_06_44b1 ; $4495 jumptable
-	dw Label_06_44b2 ; $4497 jumptable
-	dw Label_06_44e5 ; $4499 jumptable
-	dw Label_06_44d4 ; $449b jumptable
-	dw Label_06_44c3 ; $449d jumptable
-	dw Label_06_44c3 ; $449f jumptable
-	dw Label_06_44c3 ; $44a1 jumptable
-	dw Label_06_44c3 ; $44a3 jumptable
-	dw Label_06_44c3 ; $44a5 jumptable
-	dw Label_06_44e5 ; $44a7 jumptable
-	dw Label_06_44e5 ; $44a9 jumptable
-	dw Label_06_44e5 ; $44ab jumptable
-	dw Label_06_44e5 ; $44ad jumptable
-	dw Label_06_44e5 ; $44af jumptable
-Label_06_44b1:
+	dw MatchQuitMenu_ReturnToGame ; $4495 jumptable
+	dw MatchQuitMenu_SaveAndQuit ; $4497 jumptable
+	dw MatchQuitMenu_Quit ; $4499 jumptable
+	dw MatchQuitMenu_SelectNewLevel ; $449b jumptable
+	dw MatchQuitMenu_Retry ; $449d jumptable
+	dw MatchQuitMenu_Retry ; $449f jumptable
+	dw MatchQuitMenu_Retry ; $44a1 jumptable
+	dw MatchQuitMenu_Retry ; $44a3 jumptable
+	dw MatchQuitMenu_Retry ; $44a5 jumptable
+	dw MatchQuitMenu_Quit ; $44a7 jumptable
+	dw MatchQuitMenu_Quit ; $44a9 jumptable
+	dw MatchQuitMenu_Quit ; $44ab jumptable
+	dw MatchQuitMenu_Quit ; $44ad jumptable
+	dw MatchQuitMenu_Quit ; $44af jumptable
+MatchQuitMenu_ReturnToGame:
 	ret ; $44b1
-Label_06_44b2:
+MatchQuitMenu_SaveAndQuit:
 	ld a, $01 ; $44b2
 	ld [$c8a7], a ; $44b4
 	ld [$c8a5], a ; $44b7
@@ -584,7 +584,7 @@ Label_06_44b2:
 	ld [$c4c3], a ; $44bc
 	ld [$c492], a ; $44bf
 	ret ; $44c2
-Label_06_44c3:
+MatchQuitMenu_Retry:
 	ld a, $01 ; $44c3
 	ld [$c4de], a ; $44c5
 	ld [$c4c7], a ; $44c8
@@ -592,7 +592,7 @@ Label_06_44c3:
 	ld [$c4c3], a ; $44cd
 	ld [$c492], a ; $44d0
 	ret ; $44d3
-Label_06_44d4:
+MatchQuitMenu_SelectNewLevel:
 	ld a, $01 ; $44d4
 	ld [$c4df], a ; $44d6
 	ld [$c4c7], a ; $44d9
@@ -600,7 +600,7 @@ Label_06_44d4:
 	ld [$c4c3], a ; $44de
 	ld [$c492], a ; $44e1
 	ret ; $44e4
-Label_06_44e5:
+MatchQuitMenu_Quit:
 	ld a, $01 ; $44e5
 	ld [$c4c7], a ; $44e7
 	ld a, $ff ; $44ea
@@ -624,11 +624,11 @@ ShowMessageWindow:
 	push hl ; $4515
 	push bc ; $4516
 	push de ; $4517
-	call Func_06_462e ; $4518
+	call GetShadowAttrmapAddr ; $4518
 	ld c, e ; $451b
 	ld b, d ; $451c
 	pop de ; $451d
-	call Func_06_4624 ; $451e
+	call GetShadowTilemapAddr ; $451e
 	pop hl ; $4521
 	call DrawWindowFramePriority ; $4522
 	pop hl ; $4525
@@ -638,7 +638,7 @@ ShowMessageWindow:
 	push hl ; $452b
 	inc d ; $452c
 	inc e ; $452d
-	call Func_06_4624 ; $452e
+	call GetShadowTilemapAddr ; $452e
 	ld c, b ; $4531
 	dec c ; $4532
 	dec c ; $4533
@@ -665,22 +665,22 @@ Label_06_4543:
 	pop bc ; $4561
 	pop af ; $4562
 	ret ; $4563
-Func_06_4564:
+DrawWindowFrameAt:
 	push bc ; $4564
 	push de ; $4565
-	call Func_06_462e ; $4566
+	call GetShadowAttrmapAddr ; $4566
 	ld c, e ; $4569
 	ld b, d ; $456a
 	pop de ; $456b
-	call Func_06_4624 ; $456c
+	call GetShadowTilemapAddr ; $456c
 	pop hl ; $456f
 	call DrawWindowFrameNoPriority ; $4570
 	ret ; $4573
-Func_06_4574:
+DrawMenuTextLine:
 	push de ; $4574
 	push hl ; $4575
 	push hl ; $4576
-	call Func_06_4624 ; $4577
+	call GetShadowTilemapAddr ; $4577
 	pop hl ; $457a
 	call Func_00_2a9e ; $457b
 	pop hl ; $457e
@@ -689,15 +689,15 @@ Func_06_4574:
 	inc e ; $4581
 	inc e ; $4582
 	ret ; $4583
-Func_06_4584:
+DrawMenuCaptionWindow:
 	push hl ; $4584
 	push de ; $4585
-	call Func_06_462e ; $4586
+	call GetShadowAttrmapAddr ; $4586
 	ld c, e ; $4589
 	ld b, d ; $458a
 	pop de ; $458b
 	push de ; $458c
-	call Func_06_4624 ; $458d
+	call GetShadowTilemapAddr ; $458d
 	ld hl, $1303 ; $4590
 	ld a, $01 ; $4593
 	ld [wWindowFrameAttr], a ; $4595
@@ -707,7 +707,7 @@ Func_06_4584:
 	add hl, de ; $459f
 	ld e, l ; $45a0
 	ld d, h ; $45a1
-	call Func_06_4624 ; $45a2
+	call GetShadowTilemapAddr ; $45a2
 	pop hl ; $45a5
 	call Func_00_2a9e ; $45a6
 	ret ; $45a9
@@ -723,7 +723,7 @@ RestoreBgTilemap:
 	ret ; $45c0
 RestoreBgTilemapRegion:
 	ld e, $0a ; $45c1
-	call Func_06_464b ; $45c3
+	call GetScrolledTilemapRowOffset ; $45c3
 	ld c, l ; $45c6
 	ld b, h ; $45c7
 	push bc ; $45c8
@@ -745,14 +745,14 @@ RestoreBgTilemapRegion:
 	ld c, $0e ; $45e3
 	call CopyMemoryFast ; $45e5
 	ret ; $45e8
-Func_06_45e9:
+ClearAttrPriorityRegion:
 	ld a, [hl] ; $45e9
 	and a, $7f ; $45ea
 	ld [hl+], a ; $45ec
 	dec bc ; $45ed
 	ld a, b ; $45ee
 	or a, c ; $45ef
-	jr nz, Func_06_45e9 ; $45f0
+	jr nz, ClearAttrPriorityRegion ; $45f0
 	ret ; $45f2
 FlushTilemapToVramIfDirty:
 	ld a, [$c4e2] ; $45f3
@@ -762,7 +762,7 @@ FlushTilemapToVram:
 	xor a, a ; $45f8
 	ld [$c4e2], a ; $45f9
 	ld e, $00 ; $45fc
-	call Func_06_464b ; $45fe
+	call GetScrolledTilemapRowOffset ; $45fe
 	ld c, l ; $4601
 	ld b, h ; $4602
 	push bc ; $4603
@@ -784,22 +784,22 @@ FlushTilemapToVram:
 	ld c, $22 ; $461e
 	call QueueVRAMCopy ; $4620
 	ret ; $4623
-Func_06_4624:
-	call Func_06_4638 ; $4624
+GetShadowTilemapAddr:
+	call GetScrolledTilemapOffset ; $4624
 	ld de, $d000 ; $4627
 	add hl, de ; $462a
 	ld e, l ; $462b
 	ld d, h ; $462c
 	ret ; $462d
-Func_06_462e:
-	call Func_06_4638 ; $462e
+GetShadowAttrmapAddr:
+	call GetScrolledTilemapOffset ; $462e
 	ld de, $d400 ; $4631
 	add hl, de ; $4634
 	ld e, l ; $4635
 	ld d, h ; $4636
 	ret ; $4637
-Func_06_4638:
-	call Func_06_464b ; $4638
+GetScrolledTilemapOffset:
+	call GetScrolledTilemapRowOffset ; $4638
 	ldh a, [hScrollX] ; $463b
 	add a, $07 ; $463d
 	rrca ; $463f
@@ -813,7 +813,7 @@ Func_06_4638:
 	inc h ; $4649
 Label_06_464a:
 	ret ; $464a
-Func_06_464b:
+GetScrolledTilemapRowOffset:
 	ldh a, [hScrollY] ; $464b
 	add a, $07 ; $464d
 	rrca ; $464f
@@ -829,7 +829,7 @@ Func_06_464b:
 	add hl, hl ; $465b
 	add hl, hl ; $465c
 	ret ; $465d
-Func_06_465e:
+AdjustSpriteCoordsForScroll:
 	ldh a, [hScrollX] ; $465e
 	cpl ; $4660
 	inc a ; $4661
@@ -864,11 +864,11 @@ RunMatchMenu:
 	ld [$c4e7], a ; $46ea
 	call DrawMatchMenuItems ; $46ed
 	ld e, $0c ; $46f0
-	call Func_06_464b ; $46f2
+	call GetScrolledTilemapRowOffset ; $46f2
 	ld de, $d400 ; $46f5
 	add hl, de ; $46f8
 	ld bc, $0040 ; $46f9
-	call Func_06_45e9 ; $46fc
+	call ClearAttrPriorityRegion ; $46fc
 	jr Label_06_4733 ; $46ff
 Label_06_4701:
 	farcall FarPtr_ReadMatchInputPressed ; $4701
@@ -918,8 +918,8 @@ Label_06_4733:
 	sub a, l ; $4757
 	ld h, a ; $4758
 	ld de, $000e ; $4759
-	call Func_06_4584 ; $475c
-	call Func_06_477a ; $475f
+	call DrawMenuCaptionWindow ; $475c
+	call DrawScoreboardCaption ; $475f
 	farcall FarPtr_UploadGlyphBuffer ; $4762
 	farcall FarPtr_StepMatchFrame ; $4765
 	call FlushTilemapToVram ; $4768
@@ -931,18 +931,18 @@ Label_06_476e:
 Label_06_4776:
 	farcall FarPtr_StepMatchFrame ; $4776
 	ret ; $4779
-Func_06_477a:
+DrawScoreboardCaption:
 	ld a, [$c494] ; $477a
 	rst Rst00 ; $477d
-	dw Label_06_478e ; $477e jumptable
-	dw Label_06_478e ; $4780 jumptable
-	dw Label_06_478e ; $4782 jumptable
-	dw Label_06_47a1 ; $4784 jumptable
-	dw Label_06_47a1 ; $4786 jumptable
-	dw Label_06_47a1 ; $4788 jumptable
-	dw Label_06_47b4 ; $478a jumptable
-	dw Label_06_47df ; $478c jumptable
-Label_06_478e:
+	dw ScoreboardCaption_SetGamePoint ; $477e jumptable
+	dw ScoreboardCaption_SetGamePoint ; $4780 jumptable
+	dw ScoreboardCaption_SetGamePoint ; $4782 jumptable
+	dw ScoreboardCaption_Total ; $4784 jumptable
+	dw ScoreboardCaption_Total ; $4786 jumptable
+	dw ScoreboardCaption_Total ; $4788 jumptable
+	dw ScoreboardCaption_ScoreTarget ; $478a jumptable
+	dw ScoreboardCaption_ScoreHigh ; $478c jumptable
+ScoreboardCaption_SetGamePoint:
 	ld hl, $c4e3 ; $478e
 	ld a, [hl+] ; $4791
 	ld b, [hl] ; $4792
@@ -952,9 +952,9 @@ Label_06_478e:
 	ld e, l ; $4798
 	ld d, h ; $4799
 	ld hl, $015a ; $479a
-	call Func_06_4574 ; $479d
+	call DrawMenuTextLine ; $479d
 	ret ; $47a0
-Label_06_47a1:
+ScoreboardCaption_Total:
 	ld hl, $c4e3 ; $47a1
 	ld a, [hl+] ; $47a4
 	ld b, [hl] ; $47a5
@@ -964,9 +964,9 @@ Label_06_47a1:
 	ld e, l ; $47ab
 	ld d, h ; $47ac
 	ld hl, $015b ; $47ad
-	call Func_06_4574 ; $47b0
+	call DrawMenuTextLine ; $47b0
 	ret ; $47b3
-Label_06_47b4:
+ScoreboardCaption_ScoreTarget:
 	ld hl, $c4e3 ; $47b4
 	ld a, [hl+] ; $47b7
 	ld b, [hl] ; $47b8
@@ -976,21 +976,21 @@ Label_06_47b4:
 	ld e, l ; $47be
 	ld d, h ; $47bf
 	ld hl, $015c ; $47c0
-	call Func_06_4574 ; $47c3
+	call DrawMenuTextLine ; $47c3
 	ld hl, $0304 ; $47c6
 	add hl, bc ; $47c9
 	ld e, l ; $47ca
 	ld d, h ; $47cb
 	ld hl, $015d ; $47cc
-	call Func_06_4574 ; $47cf
+	call DrawMenuTextLine ; $47cf
 	ld hl, $0505 ; $47d2
 	add hl, bc ; $47d5
 	ld e, l ; $47d6
 	ld d, h ; $47d7
 	ld hl, $015c ; $47d8
-	call Func_06_4574 ; $47db
+	call DrawMenuTextLine ; $47db
 	ret ; $47de
-Label_06_47df:
+ScoreboardCaption_ScoreHigh:
 	ld hl, $c4e3 ; $47df
 	ld a, [hl+] ; $47e2
 	ld b, [hl] ; $47e3
@@ -1000,19 +1000,19 @@ Label_06_47df:
 	ld e, l ; $47e9
 	ld d, h ; $47ea
 	ld hl, $015c ; $47eb
-	call Func_06_4574 ; $47ee
+	call DrawMenuTextLine ; $47ee
 	ld hl, $0404 ; $47f1
 	add hl, bc ; $47f4
 	ld e, l ; $47f5
 	ld d, h ; $47f6
 	ld hl, $015e ; $47f7
-	call Func_06_4574 ; $47fa
+	call DrawMenuTextLine ; $47fa
 	ld hl, $0505 ; $47fd
 	add hl, bc ; $4800
 	ld e, l ; $4801
 	ld d, h ; $4802
 	ld hl, $015c ; $4803
-	call Func_06_4574 ; $4806
+	call DrawMenuTextLine ; $4806
 	ret ; $4809
 GetMatchMenuItemId:
 	ld b, a ; $480a
@@ -1130,19 +1130,19 @@ Label_06_488a:
 	dw $2060 ; record 11
 	dw $3860 ; record 12
 	dw $5060 ; record 13
-Func_06_48ad:
+ShowMatchScoreboardScreen:
 	ldh a, [hWramBank] ; $48ad
 	push af ; $48af
 	farcall FarPtr_StepMatchFrame ; $48b0
-	call Func_06_4915 ; $48b3
+	call PrepareScoreboardGfx ; $48b3
 	farcall FarPtr_StepMatchFrame ; $48b6
 	ld a, $05 ; $48b9
 	ld [$c4e3], a ; $48bb
-	call Func_06_5c8a ; $48be
+	call LoadScoreboardModeGfx ; $48be
 	ld b, $01 ; $48c1
-	call Func_06_49a7 ; $48c3
+	call DrawScoreboard ; $48c3
 	farcall FarPtr_PrepareGlyphBuffer ; $48c6
-	call Func_06_477a ; $48c9
+	call DrawScoreboardCaption ; $48c9
 	farcall FarPtr_UploadGlyphBuffer ; $48cc
 	ld a, $0a ; $48cf
 	ld hl, $506a ; $48d1
@@ -1171,7 +1171,7 @@ Label_06_48fa:
 	pop af ; $490f
 	wram_bank ; $4910
 	ret ; $4914
-Func_06_4915:
+PrepareScoreboardGfx:
 	ld a, $00 ; $4915
 	ld [$c4e4], a ; $4917
 	ld a, $02 ; $491a
@@ -1230,7 +1230,7 @@ Label_06_495e:
 Label_06_49a0:
 	wram_bank $02 ; $49a0
 	ret ; $49a6
-Func_06_49a7:
+DrawScoreboard:
 	push bc ; $49a7
 	ld hl, $c4e3 ; $49a8
 	ld a, [hl+] ; $49ab
@@ -1246,49 +1246,49 @@ Func_06_49a7:
 	ld a, [hl+] ; $49b9
 	ld h, [hl] ; $49ba
 	ld l, a ; $49bb
-	call Func_06_5045 ; $49bc
+	call CopyTextRectPair ; $49bc
 	pop bc ; $49bf
 	ld a, [$c494] ; $49c0
 	rst Rst00 ; $49c3
 	dw Label_00_03ae ; $49c4 jumptable
 	dw Label_00_03ae ; $49c6 jumptable
 	dw Label_00_03ae ; $49c8 jumptable
-	dw Label_06_49e4 ; $49ca jumptable
-	dw Label_06_49d5 ; $49cc jumptable
-	dw Label_06_49f4 ; $49ce jumptable
+	dw DrawScoreboardDrillResultRow ; $49ca jumptable
+	dw DrawScoreboardDrillResultRows ; $49cc jumptable
+	dw DrawScoreboardPointPips ; $49ce jumptable
 	dw Label_00_03ae ; $49d0 jumptable
 	dw Label_00_03ae ; $49d2 jumptable
 	ret ; $49d4
-Label_06_49d5:
+DrawScoreboardDrillResultRows:
 	ld de, $0504 ; $49d5
 	ld c, $04 ; $49d8
-	call Func_06_4a53 ; $49da
+	call DrawScoreboardEmptyPips ; $49da
 	ld a, [$c2fd] ; $49dd
 	ld c, a ; $49e0
-	call Func_06_4a13 ; $49e1
-Label_06_49e4:
+	call DrawScoreboardPackedPips ; $49e1
+DrawScoreboardDrillResultRow:
 	ld de, $0502 ; $49e4
 	ld c, $04 ; $49e7
-	call Func_06_4a53 ; $49e9
+	call DrawScoreboardEmptyPips ; $49e9
 	ld a, [$c2fc] ; $49ec
 	ld c, a ; $49ef
-	call Func_06_4a13 ; $49f0
+	call DrawScoreboardPackedPips ; $49f0
 	ret ; $49f3
-Label_06_49f4:
+DrawScoreboardPointPips:
 	ld de, $0302 ; $49f4
 	ld c, $05 ; $49f7
-	call Func_06_4a53 ; $49f9
+	call DrawScoreboardEmptyPips ; $49f9
 	ld a, [wPlayer1PointsWon] ; $49fc
 	ld c, a ; $49ff
-	call Func_06_4a3a ; $4a00
+	call DrawScoreboardFilledPips ; $4a00
 	ld de, $0304 ; $4a03
 	ld c, $05 ; $4a06
-	call Func_06_4a53 ; $4a08
+	call DrawScoreboardEmptyPips ; $4a08
 	ld a, [wPlayer2PointsWon] ; $4a0b
 	ld c, a ; $4a0e
-	call Func_06_4a3a ; $4a0f
+	call DrawScoreboardFilledPips ; $4a0f
 	ret ; $4a12
-Func_06_4a13:
+DrawScoreboardPackedPips:
 	ld hl, $c4e3 ; $4a13
 	ld a, [hl+] ; $4a16
 	ld h, [hl] ; $4a17
@@ -1306,9 +1306,9 @@ Label_06_4a1c:
 	ld a, a ; $4a25
 	rst Rst00 ; $4a26
 	dw Label_00_03ae ; $4a27 jumptable
-	dw Func_06_4a6e ; $4a29 jumptable
-	dw Label_06_4a75 ; $4a2b jumptable
-	dw Label_06_4a75 ; $4a2d jumptable
+	dw DrawScoreboardPipFilled ; $4a29 jumptable
+	dw DrawScoreboardPipAlt ; $4a2b jumptable
+	dw DrawScoreboardPipAlt ; $4a2d jumptable
 	pop de ; $4a2f
 	pop bc ; $4a30
 	inc d ; $4a31
@@ -1317,7 +1317,7 @@ Label_06_4a1c:
 	srl c ; $4a35
 	jr nz, Label_06_4a1c ; $4a37
 	ret ; $4a39
-Func_06_4a3a:
+DrawScoreboardFilledPips:
 	inc c ; $4a3a
 	dec c ; $4a3b
 	ret z ; $4a3c
@@ -1331,7 +1331,7 @@ Func_06_4a3a:
 Label_06_4a46:
 	push bc ; $4a46
 	push de ; $4a47
-	call Func_06_4a6e ; $4a48
+	call DrawScoreboardPipFilled ; $4a48
 	pop de ; $4a4b
 	pop bc ; $4a4c
 	inc d ; $4a4d
@@ -1339,7 +1339,7 @@ Label_06_4a46:
 	dec c ; $4a4f
 	jr nz, Label_06_4a46 ; $4a50
 	ret ; $4a52
-Func_06_4a53:
+DrawScoreboardEmptyPips:
 	inc b ; $4a53
 	dec b ; $4a54
 	ret z ; $4a55
@@ -1354,7 +1354,7 @@ Func_06_4a53:
 Label_06_4a60:
 	push bc ; $4a60
 	push de ; $4a61
-	call Func_06_4a7c ; $4a62
+	call DrawScoreboardPipEmpty ; $4a62
 	pop de ; $4a65
 	pop bc ; $4a66
 	inc d ; $4a67
@@ -1363,17 +1363,17 @@ Label_06_4a60:
 	jr nz, Label_06_4a60 ; $4a6a
 	pop de ; $4a6c
 	ret ; $4a6d
-Func_06_4a6e:
+DrawScoreboardPipFilled:
 	ld hl, $4a9b ; $4a6e
-	call Func_06_5045 ; $4a71
+	call CopyTextRectPair ; $4a71
 	ret ; $4a74
-Label_06_4a75:
+DrawScoreboardPipAlt:
 	ld hl, $4aa1 ; $4a75
-	call Func_06_5045 ; $4a78
+	call CopyTextRectPair ; $4a78
 	ret ; $4a7b
-Func_06_4a7c:
+DrawScoreboardPipEmpty:
 	ld hl, $4aa7 ; $4a7c
-	call Func_06_5045 ; $4a7f
+	call CopyTextRectPair ; $4a7f
 	ret ; $4a82
 	; $4a83, 1474 bytes (bytes:4)
 	db $0a, $0b, $1a, $1b ; 0x00
@@ -1745,11 +1745,11 @@ Func_06_4a7c:
 	db $17, $50, $1d, $50 ; 0x5b8
 	db $23, $50, $29, $50 ; 0x5bc
 	db $2f, $50 ; 0x5c0
-Func_06_5045:
+CopyTextRectPair:
 	push de ; $5045
 	push hl ; $5046
 	push hl ; $5047
-	call Func_06_4624 ; $5048
+	call GetShadowTilemapAddr ; $5048
 	pop hl ; $504b
 	ld a, [hl+] ; $504c
 	ld c, a ; $504d
@@ -1762,7 +1762,7 @@ Func_06_5045:
 	pop hl ; $5056
 	pop de ; $5057
 	push hl ; $5058
-	call Func_06_462e ; $5059
+	call GetShadowAttrmapAddr ; $5059
 	pop hl ; $505c
 	ld a, [hl+] ; $505d
 	ld c, a ; $505e
@@ -1785,7 +1785,7 @@ Func_06_5045:
 	ld e, l ; $5075
 	ld d, h ; $5076
 	push de ; $5077
-	call Func_06_465e ; $5078
+	call AdjustSpriteCoordsForScroll ; $5078
 	ld a, [$c494] ; $507b
 	add a, a ; $507e
 	add a, $9c ; $507f
@@ -1821,7 +1821,7 @@ Label_06_50ac:
 	ld e, l ; $50b0
 	ld d, h ; $50b1
 	push de ; $50b2
-	call Func_06_465e ; $50b3
+	call AdjustSpriteCoordsForScroll ; $50b3
 	ld hl, wMinigamesCurrentScore ; $50b6
 	ld a, [hl+] ; $50b9
 	ld h, [hl] ; $50ba
@@ -1833,7 +1833,7 @@ Label_06_50ac:
 	ld a, e ; $50c4
 	add a, $18 ; $50c5
 	ld e, a ; $50c7
-	call Func_06_465e ; $50c8
+	call AdjustSpriteCoordsForScroll ; $50c8
 	ld a, [$c7bc] ; $50cb
 	and a, a ; $50ce
 	ld hl, $c4ec ; $50cf
@@ -3265,7 +3265,7 @@ LoadMatchMenuItemGfx:
 	dw $0003 ; record 1312
 	dw $0000 ; record 1313
 	dw $0000 ; record 1314
-Func_06_5c8a:
+LoadScoreboardModeGfx:
 	ld a, [wGameMode] ; $5c8a
 	cp a, $05 ; $5c8d
 	jr z, Label_06_5c9b ; $5c8f
@@ -3547,7 +3547,7 @@ DrawMatchMenuItem:
 	ld h, [hl] ; $680e
 	ld l, a ; $680f
 	push hl ; $6810
-	call Func_06_4624 ; $6811
+	call GetShadowTilemapAddr ; $6811
 	pop hl ; $6814
 	ld bc, $0302 ; $6815
 	call CopyTextRect ; $6818
@@ -3564,7 +3564,7 @@ DrawMatchMenuItem:
 	ld h, [hl] ; $6827
 	ld l, a ; $6828
 	push hl ; $6829
-	call Func_06_462e ; $682a
+	call GetShadowAttrmapAddr ; $682a
 	pop hl ; $682d
 	ld bc, $0302 ; $682e
 	call CopyTextRect ; $6831
@@ -3768,7 +3768,7 @@ QueueMatchMenuCursorSprite:
 	ld a, d ; $69b7
 	add a, $fc ; $69b8
 	ld d, a ; $69ba
-	call Func_06_465e ; $69bb
+	call AdjustSpriteCoordsForScroll ; $69bb
 	ld hl, $69e7 ; $69be
 	ld bc, $0000 ; $69c1
 	call QueueSpriteTemplate ; $69c4
@@ -3784,7 +3784,7 @@ QueueMatchMenuCursorSprite:
 	ld e, l ; $69d5
 	ld d, h ; $69d6
 	farcall FarPtr_AddBobbingOffsetYLarge ; $69d7
-	call Func_06_465e ; $69da
+	call AdjustSpriteCoordsForScroll ; $69da
 	ld hl, $6a10 ; $69dd
 	ld bc, $0000 ; $69e0
 	call QueueSpriteTemplate ; $69e3
@@ -3843,13 +3843,13 @@ QueueMatchMenuCursorSprite:
 	db $4a, $55, $4d, $50 ; 0xc8
 	db $00, $40, $44, $49 ; 0xcc
 	db $56, $45, $00 ; 0xd0
-Func_06_6aba:
+DrawDebugStatsLabels:
 	ld de, $0000 ; $6aba
-	call Func_06_462e ; $6abd
+	call GetShadowAttrmapAddr ; $6abd
 	ld c, e ; $6ac0
 	ld b, d ; $6ac1
 	ld de, $0000 ; $6ac2
-	call Func_06_4624 ; $6ac5
+	call GetShadowTilemapAddr ; $6ac5
 	ld hl, $0f11 ; $6ac8
 	call DrawWindowFrameNoPriority ; $6acb
 	ld c, $00 ; $6ace
@@ -3858,7 +3858,7 @@ Label_06_6ad3:
 	push bc ; $6ad3
 	push de ; $6ad4
 	push bc ; $6ad5
-	call Func_06_4624 ; $6ad6
+	call GetShadowTilemapAddr ; $6ad6
 	pop bc ; $6ad9
 	ld a, c ; $6ada
 	add a, a ; $6adb
@@ -3879,62 +3879,62 @@ Label_06_6ad3:
 	cp a, $0f ; $6aee
 	jr nz, Label_06_6ad3 ; $6af0
 	ret ; $6af2
-Func_06_6af3:
+DrawDebugStatsValues:
 	ld de, $0a01 ; $6af3
-	call Func_06_4624 ; $6af6
+	call GetShadowTilemapAddr ; $6af6
 	ld hl, $c760 ; $6af9
 	ld a, [hl+] ; $6afc
 	ld h, [hl] ; $6afd
 	ld l, a ; $6afe
-	call Func_06_6b78 ; $6aff
+	call DrawDebugStatWord ; $6aff
 	ld hl, $c764 ; $6b02
 	ld a, [hl+] ; $6b05
 	ld h, [hl] ; $6b06
 	ld l, a ; $6b07
-	call Func_06_6b78 ; $6b08
+	call DrawDebugStatWord ; $6b08
 	ld hl, $c766 ; $6b0b
 	ld a, [hl+] ; $6b0e
 	ld h, [hl] ; $6b0f
 	ld l, a ; $6b10
-	call Func_06_6b78 ; $6b11
+	call DrawDebugStatWord ; $6b11
 	ld a, [$c768] ; $6b14
-	call Func_06_6b69 ; $6b17
+	call DrawDebugStatByte ; $6b17
 	ld a, [$c769] ; $6b1a
-	call Func_06_6b69 ; $6b1d
+	call DrawDebugStatByte ; $6b1d
 	ld a, [$c76a] ; $6b20
-	call Func_06_6b69 ; $6b23
+	call DrawDebugStatByte ; $6b23
 	ld a, [$c76b] ; $6b26
-	call Func_06_6b69 ; $6b29
+	call DrawDebugStatByte ; $6b29
 	ld a, [$c76c] ; $6b2c
-	call Func_06_6b69 ; $6b2f
+	call DrawDebugStatByte ; $6b2f
 	ld a, [$c76d] ; $6b32
-	call Func_06_6b69 ; $6b35
+	call DrawDebugStatByte ; $6b35
 	ld a, [$c76e] ; $6b38
-	call Func_06_6b69 ; $6b3b
+	call DrawDebugStatByte ; $6b3b
 	ld a, [$c76f] ; $6b3e
-	call Func_06_6b69 ; $6b41
+	call DrawDebugStatByte ; $6b41
 	ld hl, $c770 ; $6b44
 	ld a, [hl+] ; $6b47
 	ld h, [hl] ; $6b48
 	ld l, a ; $6b49
-	call Func_06_6b78 ; $6b4a
+	call DrawDebugStatWord ; $6b4a
 	ld hl, $c772 ; $6b4d
 	ld a, [hl+] ; $6b50
 	ld h, [hl] ; $6b51
 	ld l, a ; $6b52
-	call Func_06_6b78 ; $6b53
+	call DrawDebugStatWord ; $6b53
 	ld hl, $c774 ; $6b56
 	ld a, [hl+] ; $6b59
 	ld h, [hl] ; $6b5a
 	ld l, a ; $6b5b
-	call Func_06_6b78 ; $6b5c
+	call DrawDebugStatWord ; $6b5c
 	ld hl, $c776 ; $6b5f
 	ld a, [hl+] ; $6b62
 	ld h, [hl] ; $6b63
 	ld l, a ; $6b64
-	call Func_06_6b78 ; $6b65
+	call DrawDebugStatWord ; $6b65
 	ret ; $6b68
-Func_06_6b69:
+DrawDebugStatByte:
 	push de ; $6b69
 	ld l, a ; $6b6a
 	ld h, $00 ; $6b6b
@@ -3945,7 +3945,7 @@ Func_06_6b69:
 	ld e, l ; $6b75
 	ld d, h ; $6b76
 	ret ; $6b77
-Func_06_6b78:
+DrawDebugStatWord:
 	push de ; $6b78
 	call DrawHexWord ; $6b79
 	pop de ; $6b7c
@@ -3954,7 +3954,7 @@ Func_06_6b78:
 	ld e, l ; $6b81
 	ld d, h ; $6b82
 	ret ; $6b83
-Func_06_6b84:
+RunDebugStatsEditor:
 	ldh a, [hWramBank] ; $6b84
 	push af ; $6b86
 	farcall FarPtr_StepMatchFrame ; $6b87
@@ -3968,15 +3968,15 @@ Func_06_6b84:
 	farcall FarPtr_StepMatchFrame ; $6ba4
 	xor a, a ; $6ba7
 	ld [$c4e0], a ; $6ba8
-	call Func_06_6aba ; $6bab
-	call Func_06_6af3 ; $6bae
+	call DrawDebugStatsLabels ; $6bab
+	call DrawDebugStatsValues ; $6bae
 	call FlushTilemapToVram ; $6bb1
 	farcall FarPtr_StepMatchFrame ; $6bb4
 Label_06_6bb7:
 	farcall FarPtr_ReadMatchInputPressed ; $6bb7
 	and a, $0d ; $6bba
 	jr nz, Label_06_6bc9 ; $6bbc
-	call Func_06_6bf6 ; $6bbe
+	call HandleDebugStatsInput ; $6bbe
 	call FlushTilemapToVramIfDirty ; $6bc1
 	farcall FarPtr_StepMatchFrame ; $6bc4
 	jr Label_06_6bb7 ; $6bc7
@@ -4000,22 +4000,22 @@ Label_06_6bd6:
 	pop af ; $6bf0
 	wram_bank ; $6bf1
 	ret ; $6bf5
-Func_06_6bf6:
+HandleDebugStatsInput:
 	ldh a, [hInputPressed] ; $6bf6
 	ld b, a ; $6bf8
 	ld c, $0b ; $6bf9
 	ld a, [$c4e0] ; $6bfb
 	call MoveCursorVertical ; $6bfe
 	ld [$c4e0], a ; $6c01
-	call Func_06_6c32 ; $6c04
-	call Func_06_6c13 ; $6c07
-	call Func_06_6af3 ; $6c0a
+	call AdjustSelectedDebugStat ; $6c04
+	call QueueDebugStatsCursorSprites ; $6c07
+	call DrawDebugStatsValues ; $6c0a
 	ld a, $01 ; $6c0d
 	ld [$c4e2], a ; $6c0f
 	ret ; $6c12
-Func_06_6c13:
+QueueDebugStatsCursorSprites:
 	ld de, $0c0c ; $6c13
-	call Func_06_465e ; $6c16
+	call AdjustSpriteCoordsForScroll ; $6c16
 	ld a, [$c4e0] ; $6c19
 	add a, a ; $6c1c
 	add a, a ; $6c1d
@@ -4030,7 +4030,7 @@ Func_06_6c13:
 	ld bc, $0942 ; $6c2b
 	call QueueSprite ; $6c2e
 	ret ; $6c31
-Func_06_6c32:
+AdjustSelectedDebugStat:
 	ld a, [$c4e0] ; $6c32
 	rst Rst00 ; $6c35
 	dw Label_06_6c4c ; $6c36 jumptable
@@ -4047,43 +4047,43 @@ Func_06_6c32:
 Label_06_6c4c:
 	ld hl, $c760 ; $6c4c
 	ld bc, $0010 ; $6c4f
-	jp Label_06_6cbb ; $6c52
+	jp AdjustDebugStatWord ; $6c52
 Label_06_6c55:
 	ld hl, $c764 ; $6c55
 	ld bc, $0010 ; $6c58
-	jp Label_06_6cbb ; $6c5b
+	jp AdjustDebugStatWord ; $6c5b
 Label_06_6c5e:
 	ld hl, $c766 ; $6c5e
 	ld bc, $0010 ; $6c61
-	jp Label_06_6cbb ; $6c64
+	jp AdjustDebugStatWord ; $6c64
 Label_06_6c67:
 	ld hl, $c768 ; $6c67
 	ld b, $02 ; $6c6a
-	jp Label_06_6ca8 ; $6c6c
+	jp AdjustDebugStatByte ; $6c6c
 Label_06_6c6f:
 	ld hl, $c769 ; $6c6f
 	ld b, $08 ; $6c72
-	jp Label_06_6ca8 ; $6c74
+	jp AdjustDebugStatByte ; $6c74
 Label_06_6c77:
 	ld hl, $c76a ; $6c77
 	ld b, $02 ; $6c7a
-	jp Label_06_6ca8 ; $6c7c
+	jp AdjustDebugStatByte ; $6c7c
 Label_06_6c7f:
 	ld hl, $c76b ; $6c7f
-	jp Label_06_6c9d ; $6c82
+	jp AdjustDebugStatDigit ; $6c82
 Label_06_6c85:
 	ld hl, $c76c ; $6c85
-	jp Label_06_6c9d ; $6c88
+	jp AdjustDebugStatDigit ; $6c88
 Label_06_6c8b:
 	ld hl, $c76d ; $6c8b
-	jp Label_06_6c9d ; $6c8e
+	jp AdjustDebugStatDigit ; $6c8e
 Label_06_6c91:
 	ld hl, $c76e ; $6c91
-	jp Label_06_6c9d ; $6c94
+	jp AdjustDebugStatDigit ; $6c94
 Label_06_6c97:
 	ld hl, $c76f ; $6c97
-	jp Label_06_6c9d ; $6c9a
-Label_06_6c9d:
+	jp AdjustDebugStatDigit ; $6c9a
+AdjustDebugStatDigit:
 	ldh a, [hInputPressed] ; $6c9d
 	ld b, a ; $6c9f
 	ld c, $0a ; $6ca0
@@ -4091,7 +4091,7 @@ Label_06_6c9d:
 	call MoveCursorHorizontal ; $6ca3
 	ld [hl], a ; $6ca6
 	ret ; $6ca7
-Label_06_6ca8:
+AdjustDebugStatByte:
 	ldh a, [hInputPressed] ; $6ca8
 	bit 5, a ; $6caa
 	jr nz, Label_06_6cb3 ; $6cac
@@ -4108,7 +4108,7 @@ Label_06_6cb7:
 	add a, b ; $6cb8
 	ld [hl], a ; $6cb9
 	ret ; $6cba
-Label_06_6cbb:
+AdjustDebugStatWord:
 	ldh a, [hInputPressed] ; $6cbb
 	bit 5, a ; $6cbd
 	jr nz, Label_06_6cc6 ; $6cbf
@@ -4192,8 +4192,8 @@ Label_06_6d4d:
 	sub a, l ; $6d5d
 	ld h, a ; $6d5e
 	ld de, $000e ; $6d5f
-	call Func_06_724f ; $6d62
-	call Func_06_7237 ; $6d65
+	call DrawStoryMenuCaption ; $6d62
+	call RedrawStoryTilemapRows ; $6d65
 Label_06_6d68:
 	call DrawStoryMenuCursor ; $6d68
 	call AdvanceFrame ; $6d6b
@@ -4334,7 +4334,7 @@ RunStoryModeMenu:
 	ld [$c3b6], a ; $6e32
 	set_flag $02, 4 ; $6e35
 	farcall FarPtr_28_0a ; $6e38
-	call Func_06_7245 ; $6e3b
+	call RestoreStoryTilemapNoPriority ; $6e3b
 	ld d, $00 ; $6e3e
 	ld e, $0e ; $6e40
 	ld b, $13 ; $6e42
@@ -4358,10 +4358,10 @@ Label_06_6e52:
 	push hl ; $6e70
 	ld a, [$c4e0] ; $6e71
 	rst Rst00 ; $6e74
-	dw Label_06_6f42 ; $6e75 jumptable
-	dw Label_06_6fa0 ; $6e77 jumptable
-	dw Label_06_6fbc ; $6e79 jumptable
-	dw Label_06_702f ; $6e7b jumptable
+	dw StoryPauseMenu_PlayerData ; $6e75 jumptable
+	dw StoryPauseMenu_GameProgress ; $6e77 jumptable
+	dw StoryPauseMenu_Options ; $6e79 jumptable
+	dw StoryPauseMenu_SaveQuit ; $6e7b jumptable
 	ld b, a ; $6e7d
 	pop af ; $6e7e
 	ld [$c4e0], a ; $6e7f
@@ -4377,8 +4377,8 @@ Label_06_6e8e:
 	and a, a ; $6e91
 	jr z, Label_06_6e52 ; $6e92
 Label_06_6e94:
-	call Func_06_7241 ; $6e94
-	call Func_06_7237 ; $6e97
+	call RestoreStoryShadowTilemap ; $6e94
+	call RedrawStoryTilemapRows ; $6e97
 	call AdvanceFrame ; $6e9a
 	clear_flag $02, 4 ; $6e9d
 	farcall FarPtr_01_14 ; $6ea0
@@ -4440,8 +4440,8 @@ Label_06_6f07:
 	sub a, l ; $6f15
 	ld h, a ; $6f16
 	ld de, $000e ; $6f17
-	call Func_06_724f ; $6f1a
-	call Func_06_7237 ; $6f1d
+	call DrawStoryMenuCaption ; $6f1a
+	call RedrawStoryTilemapRows ; $6f1d
 Label_06_6f20:
 	ld a, [$c4e0] ; $6f20
 	add a, a ; $6f23
@@ -4460,8 +4460,8 @@ Label_06_6f36:
 	call AdvanceFrame ; $6f36
 	ret ; $6f39
 	INCBIN "data/bank_006/d_6f3a.bin" ; $6f3a, 8 bytes
-Label_06_6f42:
-	call Func_06_7245 ; $6f42
+StoryPauseMenu_PlayerData:
+	call RestoreStoryTilemapNoPriority ; $6f42
 	xor a, a ; $6f45
 	ld [$c4e0], a ; $6f46
 	ld a, $01 ; $6f49
@@ -4472,13 +4472,13 @@ Label_06_6f42:
 	jr z, Label_06_6f60 ; $6f56
 	ld a, [$c4e0] ; $6f58
 	rst Rst00 ; $6f5b
-	dw Label_06_6f66 ; $6f5c jumptable
-	dw Label_06_6f84 ; $6f5e jumptable
+	dw StoryPauseMenu_CharPartnerData ; $6f5c jumptable
+	dw StoryPauseMenu_Equipment ; $6f5e jumptable
 Label_06_6f60:
-	call Func_06_7245 ; $6f60
+	call RestoreStoryTilemapNoPriority ; $6f60
 	ld a, $ff ; $6f63
 	ret ; $6f65
-Label_06_6f66:
+StoryPauseMenu_CharPartnerData:
 	ld hl, wStoryModePlayersXPosition ; $6f66
 	ld de, $c296 ; $6f69
 	ld bc, $0005 ; $6f6c
@@ -4491,7 +4491,7 @@ Label_06_6f66:
 	farcall FarPtr_1d_00 ; $6f7f
 	xor a, a ; $6f82
 	ret ; $6f83
-Label_06_6f84:
+StoryPauseMenu_Equipment:
 	ld hl, wStoryModePlayersXPosition ; $6f84
 	ld de, $c296 ; $6f87
 	ld bc, $0005 ; $6f8a
@@ -4503,7 +4503,7 @@ Label_06_6f84:
 	farcall FarPtr_3e_10 ; $6f9b
 	xor a, a ; $6f9e
 	ret ; $6f9f
-Label_06_6fa0:
+StoryPauseMenu_GameProgress:
 	ld hl, wStoryModePlayersXPosition ; $6fa0
 	ld de, $c296 ; $6fa3
 	ld bc, $0005 ; $6fa6
@@ -4515,8 +4515,8 @@ Label_06_6fa0:
 	farcall FarPtr_1e_08 ; $6fb7
 	xor a, a ; $6fba
 	ret ; $6fbb
-Label_06_6fbc:
-	call Func_06_7245 ; $6fbc
+StoryPauseMenu_Options:
+	call RestoreStoryTilemapNoPriority ; $6fbc
 	ld a, [$c4c8] ; $6fbf
 	and a, a ; $6fc2
 	xor a, a ; $6fc3
@@ -4533,8 +4533,8 @@ Label_06_6fc7:
 	push hl ; $6fda
 	ld a, [$c4e0] ; $6fdb
 	rst Rst00 ; $6fde
-	dw Label_06_6ff7 ; $6fdf jumptable
-	dw Label_06_7013 ; $6fe1 jumptable
+	dw StoryPauseMenu_MessageSpeed ; $6fdf jumptable
+	dw StoryPauseMenu_MusicToggle ; $6fe1 jumptable
 	pop af ; $6fe3
 	ld [$c4e0], a ; $6fe4
 	jr Label_06_6fc7 ; $6fe7
@@ -4545,13 +4545,13 @@ Label_06_6fe9:
 	ld a, $01 ; $6fef
 	ld [$c4e6], a ; $6ff1
 	jp RunStoryMenu ; $6ff4
-Label_06_6ff7:
+StoryPauseMenu_MessageSpeed:
 	ld a, [wMessageSpeed] ; $6ff7
 	ld b, a ; $6ffa
 	ld a, $02 ; $6ffb
 	sub a, b ; $6ffd
 	ld [$c4e0], a ; $6ffe
-	call Func_06_70b4 ; $7001
+	call RunMessageSpeedMenu ; $7001
 	ld a, [$c4e0] ; $7004
 	cp a, $ff ; $7007
 	jr z, Label_06_7012 ; $7009
@@ -4561,11 +4561,11 @@ Label_06_6ff7:
 	ld [wMessageSpeed], a ; $700f
 Label_06_7012:
 	ret ; $7012
-Label_06_7013:
+StoryPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $7013
 	and a, $01 ; $7015
 	ld [$c4e0], a ; $7017
-	call Func_06_70bc ; $701a
+	call RunMusicOnOffMenu ; $701a
 	ld a, [$c4e0] ; $701d
 	cp a, $ff ; $7020
 	jr z, Label_06_702e ; $7022
@@ -4575,11 +4575,11 @@ Label_06_7013:
 	farcall FarPtr_SetStorySlotFlagA ; $702b
 Label_06_702e:
 	ret ; $702e
-Label_06_702f:
-	call Func_06_7245 ; $702f
+StoryPauseMenu_SaveQuit:
+	call RestoreStoryTilemapNoPriority ; $702f
 	ld hl, $0172 ; $7032
 	ld de, $000e ; $7035
-	call Func_06_724f ; $7038
+	call DrawStoryMenuCaption ; $7038
 	ld a, $02 ; $703b
 	ld [$c4e0], a ; $703d
 	ld a, $05 ; $7040
@@ -4592,7 +4592,7 @@ Label_06_702f:
 	jr z, Label_06_70a9 ; $7051
 	ld a, [$c4e0] ; $7053
 	cp a, $01 ; $7056
-	jr z, Label_06_7086 ; $7058
+	jr z, StoryPauseMenu_ReturnToMainMenu ; $7058
 	ld a, $01 ; $705a
 	ld [$c8a5], a ; $705c
 	ld a, [wMessageSpeed] ; $705f
@@ -4610,7 +4610,7 @@ Label_06_702f:
 	ld [$c2a1], a ; $707f
 	ld a, $01 ; $7082
 	jr Label_06_70a8 ; $7084
-Label_06_7086:
+StoryPauseMenu_ReturnToMainMenu:
 	call WaitFramesCmd ; $7086
 	db $08 ; $7089 inline arg
 	ld a, $01 ; $708a
@@ -4632,19 +4632,19 @@ Label_06_70a9:
 	ret ; $70ab
 	ld a, $04 ; $70ac
 	ld [$c4e1], a ; $70ae
-	jp Label_06_70cc ; $70b1
-Func_06_70b4:
+	jp RunStoryTwoOptionMenu ; $70b1
+RunMessageSpeedMenu:
 	ld a, $06 ; $70b4
 	ld [$c4e1], a ; $70b6
-	jp Label_06_717a ; $70b9
-Func_06_70bc:
+	jp RunStoryThreeOptionMenu ; $70b9
+RunMusicOnOffMenu:
 	ld a, $09 ; $70bc
 	ld [$c4e1], a ; $70be
-	jp Label_06_70cc ; $70c1
+	jp RunStoryTwoOptionMenu ; $70c1
 	ld a, $0b ; $70c4
 	ld [$c4e1], a ; $70c6
-	jp Label_06_70cc ; $70c9
-Label_06_70cc:
+	jp RunStoryTwoOptionMenu ; $70c9
+RunStoryTwoOptionMenu:
 	ld a, [$c4e1] ; $70cc
 	ld de, $050a ; $70cf
 	call DrawStoryMenuItem ; $70d2
@@ -4664,9 +4664,9 @@ Label_06_70cc:
 	inc h ; $70f1
 Label_06_70f2:
 	ld de, $000e ; $70f2
-	call Func_06_724f ; $70f5
+	call DrawStoryMenuCaption ; $70f5
 Label_06_70f8:
-	call Func_06_7237 ; $70f8
+	call RedrawStoryTilemapRows ; $70f8
 	ld a, [$c4e0] ; $70fb
 	ld hl, $c4e1 ; $70fe
 	add a, [hl] ; $7101
@@ -4707,8 +4707,8 @@ Label_06_7120:
 	inc h ; $7147
 Label_06_7148:
 	ld de, $000e ; $7148
-	call Func_06_724f ; $714b
-	call Func_06_7237 ; $714e
+	call DrawStoryMenuCaption ; $714b
+	call RedrawStoryTilemapRows ; $714e
 Label_06_7151:
 	ld a, [$c4e0] ; $7151
 	ld hl, $c4e1 ; $7154
@@ -4732,8 +4732,8 @@ Label_06_7172:
 	call AdvanceFrame ; $7172
 	ret ; $7175
 	INCBIN "data/bank_006/d_7176.bin" ; $7176, 4 bytes
-Label_06_717a:
-	call Func_06_7245 ; $717a
+RunStoryThreeOptionMenu:
+	call RestoreStoryTilemapNoPriority ; $717a
 	ld a, [$c4e1] ; $717d
 	ld de, $030a ; $7180
 	call DrawStoryMenuItem ; $7183
@@ -4757,8 +4757,8 @@ Label_06_717a:
 	inc h ; $71ab
 Label_06_71ac:
 	ld de, $000e ; $71ac
-	call Func_06_724f ; $71af
-	call Func_06_7237 ; $71b2
+	call DrawStoryMenuCaption ; $71af
+	call RedrawStoryTilemapRows ; $71b2
 	ld a, [$c4e0] ; $71b5
 	ld hl, $c4e1 ; $71b8
 	add a, [hl] ; $71bb
@@ -4798,8 +4798,8 @@ Label_06_71da:
 	inc h ; $71ff
 Label_06_7200:
 	ld de, $000e ; $7200
-	call Func_06_724f ; $7203
-	call Func_06_7237 ; $7206
+	call DrawStoryMenuCaption ; $7203
+	call RedrawStoryTilemapRows ; $7206
 	ld a, [$c4e0] ; $7209
 	ld hl, $c4e1 ; $720c
 	add a, [hl] ; $720f
@@ -4819,23 +4819,23 @@ Label_06_7213:
 	call AdvanceFrame ; $7224
 	jp Label_06_71bf ; $7227
 Label_06_722a:
-	call Func_06_7245 ; $722a
+	call RestoreStoryTilemapNoPriority ; $722a
 	call AdvanceFrame ; $722d
 	ret ; $7230
 	INCBIN "data/bank_006/d_7231.bin" ; $7231, 6 bytes
-Func_06_7237:
+RedrawStoryTilemapRows:
 	wram_bank $05 ; $7237
 	farcall FarPtr_RedrawAllTilemapRows ; $723d
 	ret ; $7240
-Func_06_7241:
+RestoreStoryShadowTilemap:
 	farcall FarPtr_RestoreShadowTilemap ; $7241
 	ret ; $7244
-Func_06_7245:
+RestoreStoryTilemapNoPriority:
 	farcall FarPtr_RestoreShadowTilemap ; $7245
-	call Func_06_726a ; $7248
+	call ClearStoryAttrPriorityBits ; $7248
 	farcall FarPtr_RedrawAllTilemapRows ; $724b
 	ret ; $724e
-Func_06_724f:
+DrawStoryMenuCaption:
 	push hl ; $724f
 	farcall FarPtr_PrepareGlyphBuffer ; $7250
 	xor a, a ; $7253
@@ -4844,13 +4844,13 @@ Func_06_724f:
 	add hl, de ; $725a
 	ld e, l ; $725b
 	ld d, h ; $725c
-	call Func_06_4624 ; $725d
+	call GetShadowTilemapAddr ; $725d
 	pop hl ; $7260
 	ld c, $11 ; $7261
 	farcall FarPtr_RenderProportionalTextAt ; $7263
 	farcall FarPtr_UploadGlyphBuffer ; $7266
 	ret ; $7269
-Func_06_726a:
+ClearStoryAttrPriorityBits:
 	wram_bank $05 ; $726a
 	ld hl, $c3b4 ; $7270
 	ld a, [hl+] ; $7273
@@ -4910,7 +4910,7 @@ QueueStoryMenuCursorSprite:
 	ld a, d ; $72ce
 	add a, $fc ; $72cf
 	ld d, a ; $72d1
-	call Func_06_465e ; $72d2
+	call AdjustSpriteCoordsForScroll ; $72d2
 	ld hl, $72df ; $72d5
 	ld bc, $0000 ; $72d8
 	call QueueSpriteTemplate ; $72db
@@ -5234,15 +5234,15 @@ DrawStoryMenuItem:
 	ld h, [hl] ; $77b0
 	ld l, a ; $77b1
 	push hl ; $77b2
-	call Func_06_4624 ; $77b3
+	call GetShadowTilemapAddr ; $77b3
 	pop hl ; $77b6
 	ld bc, $0302 ; $77b7
-	call Func_06_7882 ; $77ba
+	call CopyTileRectToShadowTilemap ; $77ba
 	pop de ; $77bd
-	call Func_06_462e ; $77be
+	call GetShadowAttrmapAddr ; $77be
 	ld hl, $6955 ; $77c1
 	ld bc, $0302 ; $77c4
-	call Func_06_78ab ; $77c7
+	call CopyTileRectToShadowAttrmap ; $77c7
 	ret ; $77ca
 	; $77cb, 32 bytes (records:2)
 ; 16 records x 2 bytes
@@ -5285,17 +5285,17 @@ DrawStoryMenuItem:
 	db $27, $28, $29, $2a, $2b, $2c ; 0x72
 Func_06_7863:
 	ld de, $030a ; $7863
-	call Func_06_4624 ; $7866
+	call GetShadowTilemapAddr ; $7866
 	ld hl, $784b ; $7869
 	ld bc, $0c02 ; $786c
-	call Func_06_7882 ; $786f
+	call CopyTileRectToShadowTilemap ; $786f
 	ld de, $030a ; $7872
-	call Func_06_462e ; $7875
+	call GetShadowAttrmapAddr ; $7875
 	ld hl, $6973 ; $7878
 	ld bc, $0c02 ; $787b
-	call Func_06_78ab ; $787e
+	call CopyTileRectToShadowAttrmap ; $787e
 	ret ; $7881
-Func_06_7882:
+CopyTileRectToShadowTilemap:
 	push bc ; $7882
 	push de ; $7883
 Label_06_7884:
@@ -5329,9 +5329,9 @@ Label_06_78a3:
 	and a, $f3 ; $78a4
 	ld d, a ; $78a6
 	dec c ; $78a7
-	jr nz, Func_06_7882 ; $78a8
+	jr nz, CopyTileRectToShadowTilemap ; $78a8
 	ret ; $78aa
-Func_06_78ab:
+CopyTileRectToShadowAttrmap:
 	push bc ; $78ab
 	push de ; $78ac
 Label_06_78ad:
@@ -5367,6 +5367,6 @@ Label_06_78cc:
 	ld d, $d4 ; $78d1
 Label_06_78d3:
 	dec c ; $78d3
-	jr nz, Func_06_78ab ; $78d4
+	jr nz, CopyTileRectToShadowAttrmap ; $78d4
 	ret ; $78d6
 	ds 1833, $ff ; $78d7, fill

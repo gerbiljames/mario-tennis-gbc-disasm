@@ -651,7 +651,7 @@ HandlePauseMenu:
 	ld a, $ff ; $44a6
 	ld [$c4c0], a ; $44a8
 	ld [$c4c1], a ; $44ab
-	farcall FarPtr_06_00 ; $44ae
+	farcall FarPtr_RunMatchPauseMenu ; $44ae
 	call Func_08_44bd ; $44b1
 	ld a, $00 ; $44b4
 	ld [$c4c1], a ; $44b6
@@ -688,7 +688,7 @@ Func_08_44ef:
 	ld a, $ff ; $44fa
 	ld [$c4c0], a ; $44fc
 	ld [$c4c1], a ; $44ff
-	farcall FarPtr_06_02 ; $4502
+	farcall FarPtr_RunDebugStatsEditor ; $4502
 	ld a, $00 ; $4505
 	ld [$c4c0], a ; $4507
 	ld [$c4c1], a ; $450a
@@ -5025,10 +5025,10 @@ Func_08_6592:
 	ld a, [wPointWinLoseFlag] ; $65a6
 	cp a, $01 ; $65a9
 	jr z, Label_08_65b2 ; $65ab
-	farcall FarPtr_06_0c ; $65ad
+	farcall FarPtr_RunMinigameEndMenu ; $65ad
 	jr Label_08_65b5 ; $65b0
 Label_08_65b2:
-	farcall FarPtr_06_06 ; $65b2
+	farcall FarPtr_ShowMatchScoreboardScreen ; $65b2
 Label_08_65b5:
 	ld a, $00 ; $65b5
 	ld [$c4c1], a ; $65b7
