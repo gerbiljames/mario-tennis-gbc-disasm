@@ -385,10 +385,10 @@ Func_1a_42c5:
 Label_1a_42ce:
 	clear_flag $06, 1 ; $42ce
 	ld hl, $049c ; $42d1
-	farcall FarPtr_0a_0e ; $42d4
+	farcall FarPtr_InitDialogueTextCursor ; $42d4
 	ld a, $80 ; $42d7
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $42d9
-	farcall FarPtr_0a_12 ; $42dc
+	farcall FarPtr_RunDialogueYesNoPrompt ; $42dc
 	farcall FarPtr_ScriptCloseDialogueWindow ; $42df
 	push af ; $42e2
 	ld a, $05 ; $42e3
@@ -427,12 +427,12 @@ Label_1a_432e:
 	jp Func_1a_402c ; $432e
 Label_1a_4331:
 	ld hl, $049d ; $4331
-	farcall FarPtr_0a_0e ; $4334
+	farcall FarPtr_InitDialogueTextCursor ; $4334
 	ld a, $80 ; $4337
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4339
 	ld a, $01 ; $433c
 	ld [$cb27], a ; $433e
-	farcall FarPtr_0a_12 ; $4341
+	farcall FarPtr_RunDialogueYesNoPrompt ; $4341
 	farcall FarPtr_ScriptCloseDialogueWindow ; $4344
 	push af ; $4347
 	ld a, $05 ; $4348

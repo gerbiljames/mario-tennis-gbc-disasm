@@ -14,12 +14,12 @@ FarPtr_ScriptShowSpeakerDialogueRestoreBG:
 	dw ScriptShowSpeakerDialogueRestoreBG ; $400a
 FarPtr_ScriptCloseDialogueWindow:
 	dw ScriptCloseDialogueWindow ; $400c
-FarPtr_0a_0e:
-	dw Func_0a_4156 ; $400e
-FarPtr_0a_10:
-	dw Func_0a_4172 ; $4010
-FarPtr_0a_12:
-	dw Func_0a_41f6 ; $4012
+FarPtr_InitDialogueTextCursor:
+	dw InitDialogueTextCursor ; $400e
+FarPtr_AdvanceDialogueTextCursor:
+	dw AdvanceDialogueTextCursor ; $4010
+FarPtr_RunDialogueYesNoPrompt:
+	dw RunDialogueYesNoPrompt ; $4012
 FarPtr_0a_14:
 	dw Func_0a_42e9 ; $4014
 FarPtr_GetActorStateAddr:
@@ -70,8 +70,8 @@ FarPtr_0a_42:
 	dw Func_0a_4719 ; $4042
 FarPtr_0a_44:
 	dw Func_0a_43ab ; $4044
-FarPtr_0a_46:
-	dw Func_0a_42cf ; $4046
+FarPtr_RunMenuFromText:
+	dw RunMenuFromText ; $4046
 FarPtr_SetActorActive:
 	dw SetActorActive ; $4048
 FarPtr_InitStoryMatchSettings:
@@ -263,7 +263,7 @@ Label_0a_4151:
 Func_0a_4152:
 	farcall FarPtr_0a_5e ; $4152
 	ret ; $4155
-Func_0a_4156:
+InitDialogueTextCursor:
 	push af ; $4156
 	ldh a, [hWramBank] ; $4157
 	push af ; $4159
@@ -277,7 +277,7 @@ Func_0a_4156:
 	wram_bank ; $416c
 	pop af ; $4170
 	ret ; $4171
-Func_0a_4172:
+AdvanceDialogueTextCursor:
 	push af ; $4172
 	push hl ; $4173
 	push de ; $4174
@@ -356,23 +356,23 @@ Label_0a_41e1:
 ScriptCloseDialogueWindow:
 	farcall FarPtr_CloseActiveDialogueWindow ; $41f2
 	ret ; $41f5
-Func_0a_41f6:
+RunDialogueYesNoPrompt:
 	push bc ; $41f6
 	push de ; $41f7
 	push hl ; $41f8
 	ldh a, [hWramBank] ; $41f9
 	push af ; $41fb
 	wram_bank $05 ; $41fc
-	call Func_0a_4291 ; $4202
+	call FindDialogueChoiceMarker ; $4202
 	ld a, [$d829] ; $4205
 	push af ; $4208
 	xor a, a ; $4209
 	ld [$d829], a ; $420a
-	call Func_0a_4237 ; $420d
+	call ShowYesNoPromptWindow ; $420d
 	farcall FarPtr_RenderMenuWindowText ; $4210
 	farcall FarPtr_RunMenuSelection ; $4213
 	ld b, a ; $4216
-	call Func_0a_4291 ; $4217
+	call FindDialogueChoiceMarker ; $4217
 	ld a, [$d82f] ; $421a
 	farcall FarPtr_CloseWindow ; $421d
 	xor a, a ; $4220
@@ -388,7 +388,7 @@ Func_0a_41f6:
 	pop de ; $4234
 	pop bc ; $4235
 	ret ; $4236
-Func_0a_4237:
+ShowYesNoPromptWindow:
 	push af ; $4237
 	push bc ; $4238
 	push de ; $4239
@@ -444,7 +444,7 @@ Label_0a_427f:
 	pop bc ; $428e
 	pop af ; $428f
 	ret ; $4290
-Func_0a_4291:
+FindDialogueChoiceMarker:
 	push af ; $4291
 	push bc ; $4292
 	push de ; $4293
@@ -489,7 +489,7 @@ Label_0a_42ca:
 	pop bc ; $42cc
 	pop af ; $42cd
 	ret ; $42ce
-Func_0a_42cf:
+RunMenuFromText:
 	push bc ; $42cf
 	push de ; $42d0
 	push hl ; $42d1
