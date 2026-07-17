@@ -22,8 +22,8 @@ FarPtr_04_12:
 	dw Func_04_4b68 ; $4012
 FarPtr_EvalFlagCondition:
 	dw EvalFlagCondition ; $4014
-FarPtr_04_16:
-	dw Func_04_4bbb ; $4016
+FarPtr_SetActorAnimationChecked:
+	dw SetActorAnimationChecked ; $4016
 FarPtr_SpawnMainCharacterActor:
 	dw SpawnMainCharacterActor ; $4018
 FarPtr_04_1a:
@@ -40,8 +40,8 @@ FarPtr_04_24:
 	dw Func_04_53d7 ; $4024
 FarPtr_04_26:
 	dw Func_04_54d7 ; $4026
-FarPtr_04_28:
-	dw Func_04_5755 ; $4028
+FarPtr_WaitActorMoveDone:
+	dw WaitActorMoveDone ; $4028
 FarPtr_04_2a:
 	dw Func_04_5726 ; $402a
 FarPtr_04_2c:
@@ -1330,7 +1330,7 @@ Label_04_47fa:
 	ld a, [hl+] ; $4833
 	ld b, [hl] ; $4834
 	ld c, a ; $4835
-	call Func_04_4bbb ; $4836
+	call SetActorAnimationChecked ; $4836
 	pop de ; $4839
 	ld a, $01 ; $483a
 	ret ; $483c
@@ -1894,7 +1894,7 @@ Func_04_4b68:
 	ld d, $01 ; $4bb5
 	farcall FarPtr_SetCharAnimation ; $4bb7
 	ret ; $4bba
-Func_04_4bbb:
+SetActorAnimationChecked:
 	inc b ; $4bbb
 	dec b ; $4bbc
 	ret z ; $4bbd
@@ -3433,7 +3433,7 @@ Label_04_5735:
 	pop bc ; $5735
 	pop af ; $5736
 	ret ; $5737
-Func_04_5738:
+IsActorMoving:
 	inc h ; $5738
 	dec h ; $5739
 	ret z ; $573a
@@ -3454,12 +3454,12 @@ Label_04_5751:
 Label_04_5753:
 	pop hl ; $5753
 	ret ; $5754
-Func_04_5755:
+WaitActorMoveDone:
 	push af ; $5755
 	push bc ; $5756
 	ld bc, $0258 ; $5757
 Label_04_575a:
-	call Func_04_5738 ; $575a
+	call IsActorMoving ; $575a
 	jr z, Label_04_5767 ; $575d
 	call AdvanceFrame ; $575f
 	dec bc ; $5762

@@ -969,7 +969,7 @@ Func_1b_4ef2:
 	ld [wCameraY], a ; $4efd
 	ld [$c323], a ; $4f00
 	farcall FarPtr_01_0a ; $4f03
-	farcall FarPtr_05_8c ; $4f06
+	farcall FarPtr_PrepareGlyphBuffer ; $4f06
 	wram_bank $03 ; $4f09
 	xor a, a ; $4f0f
 	ld [$d855], a ; $4f10
@@ -1742,7 +1742,7 @@ Label_1b_5528:
 	ld b, a ; $552d
 	cp a, $0c ; $552e
 	jr nz, Label_1b_5528 ; $5530
-	farcall FarPtr_05_90 ; $5532
+	farcall FarPtr_UploadGlyphBuffer ; $5532
 	ret ; $5535
 Func_1b_5536:
 	push af ; $5536
@@ -1772,7 +1772,7 @@ Label_1b_5551:
 	ld h, [hl] ; $5552
 	ld l, a ; $5553
 	ld c, $05 ; $5554
-	farcall FarPtr_05_1c ; $5556
+	farcall FarPtr_RenderProportionalTextAt ; $5556
 	pop hl ; $5559
 	pop de ; $555a
 	pop bc ; $555b
@@ -1868,7 +1868,7 @@ Label_1b_55f1:
 	ld b, a ; $55f6
 	cp a, $0c ; $55f7
 	jr nz, Label_1b_55f1 ; $55f9
-	farcall FarPtr_05_90 ; $55fb
+	farcall FarPtr_UploadGlyphBuffer ; $55fb
 	ret ; $55fe
 Func_1b_55ff:
 	push af ; $55ff
@@ -1898,7 +1898,7 @@ Label_1b_561a:
 	ld h, [hl] ; $561b
 	ld l, a ; $561c
 	ld c, $05 ; $561d
-	farcall FarPtr_05_1c ; $561f
+	farcall FarPtr_RenderProportionalTextAt ; $561f
 	pop hl ; $5622
 	pop de ; $5623
 	pop bc ; $5624
@@ -1978,13 +1978,13 @@ Label_1b_567f:
 	pop af ; $569a
 	ret ; $569b
 Func_1b_569c:
-	farcall FarPtr_05_00 ; $569c
+	farcall FarPtr_InitTextWindows ; $569c
 	wram_bank $05 ; $569f
 	ld a, $03 ; $56a5
 	ld [$c3b3], a ; $56a7
 	ld a, $00 ; $56aa
 	ld [$c3b6], a ; $56ac
-	farcall FarPtr_05_8c ; $56af
+	farcall FarPtr_PrepareGlyphBuffer ; $56af
 	ret ; $56b2
 Func_1b_56b3:
 	call GetStringLength ; $56b3
@@ -3298,25 +3298,25 @@ Func_1b_6467:
 	call DisableLCDSafely ; $6470
 	farcall FarPtr_01_0a ; $6473
 	call DisableLCDSafely ; $6476
-	farcall FarPtr_05_76 ; $6479
+	farcall FarPtr_ResetTextWindowState ; $6479
 	call ClearScreenMaps ; $647c
 	wram_bank $05 ; $647f
 	ld d, $02 ; $6485
 	ld e, $02 ; $6487
 	ld hl, $047c ; $6489
-	farcall FarPtr_05_08 ; $648c
-	farcall FarPtr_05_18 ; $648f
-	farcall FarPtr_05_80 ; $6492
+	farcall FarPtr_CreateMenuWindowFromText ; $648c
+	farcall FarPtr_RestoreShadowTilemap ; $648f
+	farcall FarPtr_RenderMenuWindowText ; $6492
 	ld c, $20 ; $6495
 	call BeginFadeIn ; $6497
 	call WaitFadeEnd ; $649a
-	farcall FarPtr_05_3c ; $649d
+	farcall FarPtr_RunMenuSelection ; $649d
 	ld b, a ; $64a0
 	ld c, $20 ; $64a1
 	call BeginFadeOut ; $64a3
 	call WaitFadeEnd ; $64a6
 	ld a, [$d82f] ; $64a9
-	farcall FarPtr_05_7a ; $64ac
+	farcall FarPtr_CloseWindow ; $64ac
 	pop af ; $64af
 	wram_bank ; $64b0
 	ld a, b ; $64b4
@@ -3334,7 +3334,7 @@ Func_1b_64b9:
 	call DisableLCDSafely ; $64c2
 	farcall FarPtr_01_0a ; $64c5
 	call EnableLCD ; $64c8
-	farcall FarPtr_05_76 ; $64cb
+	farcall FarPtr_ResetTextWindowState ; $64cb
 	call ClearScreenMaps ; $64ce
 	call Func_1b_686f ; $64d1
 	wram_bank $06 ; $64d4
@@ -3350,19 +3350,19 @@ Label_1b_64e7:
 	wram_bank $05 ; $64e7
 	ld d, $02 ; $64ed
 	ld e, $02 ; $64ef
-	farcall FarPtr_05_08 ; $64f1
-	farcall FarPtr_05_18 ; $64f4
-	farcall FarPtr_05_80 ; $64f7
+	farcall FarPtr_CreateMenuWindowFromText ; $64f1
+	farcall FarPtr_RestoreShadowTilemap ; $64f4
+	farcall FarPtr_RenderMenuWindowText ; $64f7
 	ld c, $20 ; $64fa
 	call BeginFadeIn ; $64fc
 	call WaitFadeEnd ; $64ff
-	farcall FarPtr_05_3c ; $6502
+	farcall FarPtr_RunMenuSelection ; $6502
 	ld b, a ; $6505
 	ld c, $20 ; $6506
 	call BeginFadeOut ; $6508
 	call WaitFadeEnd ; $650b
 	ld a, [$d82f] ; $650e
-	farcall FarPtr_05_7a ; $6511
+	farcall FarPtr_CloseWindow ; $6511
 	pop af ; $6514
 	wram_bank ; $6515
 	ld a, b ; $6519
@@ -3869,7 +3869,7 @@ Label_1b_6a03:
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
 	ld hl, $ca00 ; $6a0f
-	farcall FarPtr_05_46 ; $6a12
+	farcall FarPtr_PushTextArgString ; $6a12
 	ld de, $d9c1 ; $6a15
 	call Func_1b_6aae ; $6a18
 	ld hl, $046a ; $6a1b
@@ -4330,7 +4330,7 @@ Label_1b_6d78:
 	inc h ; $6d83
 Label_1b_6d84:
 	ld c, $20 ; $6d84
-	farcall FarPtr_05_72 ; $6d86
+	farcall FarPtr_RenderTextToBuffer64 ; $6d86
 	pop af ; $6d89
 	wram_bank ; $6d8a
 	ret ; $6d8e
@@ -4953,7 +4953,7 @@ Label_1b_739b:
 	inc h ; $73a6
 Label_1b_73a7:
 	ld c, $20 ; $73a7
-	farcall FarPtr_05_72 ; $73a9
+	farcall FarPtr_RenderTextToBuffer64 ; $73a9
 	pop af ; $73ac
 	wram_bank ; $73ad
 	ret ; $73b1

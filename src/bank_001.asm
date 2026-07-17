@@ -133,7 +133,7 @@ Label_01_411a:
 	ld a, $01 ; $411e
 	ldh [hDebugStepMode], a ; $4120
 Label_01_4122:
-	farcall FarPtr_07_46 ; $4122
+	farcall FarPtr_RunDebugTestMatch ; $4122
 	jr Label_01_4122 ; $4125
 Label_01_4127:
 	bit 1, a ; $4127

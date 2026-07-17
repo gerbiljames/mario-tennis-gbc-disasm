@@ -2007,7 +2007,7 @@ Func_02_4fa6:
 	ldh [hDebugStepMode], a ; $4fb0
 	xor a, a ; $4fb2
 	ld [$c36c], a ; $4fb3
-	farcall FarPtr_05_00 ; $4fb6
+	farcall FarPtr_InitTextWindows ; $4fb6
 	call EnableLCD ; $4fb9
 	ld c, $7f ; $4fbc
 	call BeginFadeOut ; $4fbe

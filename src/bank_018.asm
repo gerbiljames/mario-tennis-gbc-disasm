@@ -218,11 +218,11 @@ Func_18_438d:
 Func_18_439a:
 	push bc ; $439a
 	ld c, $20 ; $439b
-	farcall FarPtr_05_1c ; $439d
+	farcall FarPtr_RenderProportionalTextAt ; $439d
 	pop bc ; $43a0
 	ret ; $43a1
 DrawStringToTilemap:
-	farcall FarPtr_05_6c ; $43a2
+	farcall FarPtr_WriteStringToTilemap ; $43a2
 	ret ; $43a5
 Func_18_43a6:
 	ld [de], a ; $43a6

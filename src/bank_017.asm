@@ -810,7 +810,7 @@ Func_17_4487:
 	call ClearFrameTasks ; $4496
 	call DisableLCDSafely ; $4499
 	call Func_17_4960 ; $449c
-	farcall FarPtr_05_8c ; $449f
+	farcall FarPtr_PrepareGlyphBuffer ; $449f
 	call EnableLCD ; $44a2
 	xor a, a ; $44a5
 	ld [$cb0b], a ; $44a6
@@ -989,11 +989,11 @@ Func_17_44eb:
 	ret ; $4653
 Func_17_4654:
 	call Func_17_49ce ; $4654
-	farcall FarPtr_05_8c ; $4657
+	farcall FarPtr_PrepareGlyphBuffer ; $4657
 	ld de, $d181 ; $465a
 	ld c, $12 ; $465d
-	farcall FarPtr_05_1c ; $465f
-	farcall FarPtr_05_90 ; $4662
+	farcall FarPtr_RenderProportionalTextAt ; $465f
+	farcall FarPtr_UploadGlyphBuffer ; $4662
 	call Func_17_49f9 ; $4665
 	call AdvanceFrame ; $4668
 	ret ; $466b
@@ -1363,7 +1363,7 @@ Label_17_499c:
 Label_17_499e:
 	ret ; $499e
 Func_17_499f:
-	farcall FarPtr_05_76 ; $499f
+	farcall FarPtr_ResetTextWindowState ; $499f
 	ld b, $11 ; $49a2
 	ld c, $10 ; $49a4
 	ld de, $9000 ; $49a6
@@ -1377,9 +1377,9 @@ Func_17_499f:
 	ld e, $0b ; $49be
 	ld b, $14 ; $49c0
 	ld c, $07 ; $49c2
-	farcall FarPtr_05_78 ; $49c4
-	farcall FarPtr_05_7c ; $49c7
-	farcall FarPtr_05_7e ; $49ca
+	farcall FarPtr_CreateWindowFromScreenRect ; $49c4
+	farcall FarPtr_DrawTextWindowFrame ; $49c7
+	farcall FarPtr_RedrawWindowRows ; $49ca
 	ret ; $49cd
 Func_17_49ce:
 	push af ; $49ce
@@ -1414,7 +1414,7 @@ Func_17_49f9:
 	ret ; $4a05
 	ld hl, $0135 ; $4a06
 	ld de, $d1c1 ; $4a09
-	farcall FarPtr_05_1c ; $4a0c
+	farcall FarPtr_RenderProportionalTextAt ; $4a0c
 	ld hl, $d1a0 ; $4a0f
 	ld de, $99a0 ; $4a12
 	ld c, $0c ; $4a15
@@ -4820,7 +4820,7 @@ Func_17_6f91:
 	ld h, [hl] ; $6fac
 	ld l, a ; $6fad
 	wram_bank $03 ; $6fae
-	farcall FarPtr_05_48 ; $6fb4
+	farcall FarPtr_PushTextArgNumber ; $6fb4
 	ld a, [$cb20] ; $6fb7
 	ld hl, $6fdb ; $6fba
 	add a, a ; $6fbd
@@ -5060,10 +5060,10 @@ Label_17_70e5:
 Label_17_70f4:
 	ld de, $d082 ; $70f4
 	ld c, $20 ; $70f7
-	farcall FarPtr_05_8c ; $70f9
+	farcall FarPtr_PrepareGlyphBuffer ; $70f9
 	ld c, $10 ; $70fc
-	farcall FarPtr_05_1c ; $70fe
-	farcall FarPtr_05_90 ; $7101
+	farcall FarPtr_RenderProportionalTextAt ; $70fe
+	farcall FarPtr_UploadGlyphBuffer ; $7101
 	call Func_17_724d ; $7104
 Label_17_7107:
 	call AdvanceFrame ; $7107
@@ -5113,7 +5113,7 @@ LoadRulesScreen:
 	farcall FarPtr_LoadScreenAssetRecord ; $715f
 	ldh a, [hWramBank] ; $7162
 	push af ; $7164
-	farcall FarPtr_05_00 ; $7165
+	farcall FarPtr_InitTextWindows ; $7165
 	wram_bank $05 ; $7168
 	ld a, $03 ; $716e
 	ld [$c3b3], a ; $7170
@@ -5121,7 +5121,7 @@ LoadRulesScreen:
 	ld [$c3b6], a ; $7175
 	pop af ; $7178
 	wram_bank ; $7179
-	farcall FarPtr_05_8c ; $717d
+	farcall FarPtr_PrepareGlyphBuffer ; $717d
 	call Func_17_71bd ; $7180
 	ld hl, $7b39 ; $7183
 	ld de, $0902 ; $7186

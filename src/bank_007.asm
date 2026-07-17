@@ -1,78 +1,78 @@
 SECTION "ROM Bank $07", ROMX[$4000], BANK[$07]
 
-FarPtr_07_00:
-	dw Func_07_4048 ; $4000
+FarPtr_TryEstablishLink:
+	dw TryEstablishLink ; $4000
 FarPtr_EnableSerialAndVBlankInterrupts:
 	dw EnableSerialAndVBlankInterrupts ; $4002
-FarPtr_07_04:
-	dw Func_07_4081 ; $4004
-FarPtr_07_06:
-	dw Func_07_409a ; $4006
-FarPtr_07_08:
-	dw Func_07_40b3 ; $4008
-FarPtr_07_0a:
-	dw Func_07_41ef ; $400a
-FarPtr_07_0c:
-	dw Func_07_442a ; $400c
-FarPtr_07_0e:
-	dw Func_07_44c1 ; $400e
+FarPtr_RunLinkMatchFrameMaster:
+	dw RunLinkMatchFrameMaster ; $4004
+FarPtr_RunLinkMatchFrameSlave:
+	dw RunLinkMatchFrameSlave ; $4006
+FarPtr_ExchangeNibbleBlockMaster:
+	dw ExchangeNibbleBlockMaster ; $4008
+FarPtr_ExchangeNibbleBlockSlave:
+	dw ExchangeNibbleBlockSlave ; $400a
+FarPtr_SendNibbleBlockSlave:
+	dw SendNibbleBlockSlave ; $400c
+FarPtr_ReceiveNibbleBlockMaster:
+	dw ReceiveNibbleBlockMaster ; $400e
 FarPtr_UnpackBytesToNibbles:
 	dw UnpackBytesToNibbles ; $4010
-FarPtr_07_12:
-	dw Func_07_467f ; $4012
-FarPtr_07_14:
-	dw Func_07_46ef ; $4014
-FarPtr_07_16:
-	dw Func_07_4725 ; $4016
-FarPtr_07_18:
-	dw Func_07_4736 ; $4018
-FarPtr_07_1a:
-	dw Func_07_4747 ; $401a
-FarPtr_07_1c:
-	dw Func_07_4762 ; $401c
-FarPtr_07_1e:
-	dw Func_07_477d ; $401e
-FarPtr_07_20:
-	dw Func_07_4833 ; $4020
-FarPtr_07_22:
-	dw Func_07_4846 ; $4022
-FarPtr_07_24:
-	dw Func_07_48f6 ; $4024
-FarPtr_07_26:
-	dw Func_07_48fe ; $4026
-FarPtr_07_28:
-	dw Func_07_4912 ; $4028
-FarPtr_07_2a:
-	dw Func_07_4926 ; $402a
-FarPtr_07_2c:
-	dw Func_07_49e2 ; $402c
-FarPtr_07_2e:
-	dw Func_07_49f7 ; $402e
-FarPtr_07_30:
-	dw Func_07_4a13 ; $4030
-FarPtr_07_32:
-	dw Func_07_4a51 ; $4032
-FarPtr_07_34:
-	dw Func_07_4aa9 ; $4034
-FarPtr_07_36:
-	dw Func_07_4bf3 ; $4036
-FarPtr_07_38:
-	dw Func_07_496e ; $4038
+FarPtr_ExchangeLinkFrameByteMaster:
+	dw ExchangeLinkFrameByteMaster ; $4012
+FarPtr_ExchangeLinkFrameByteSlave:
+	dw ExchangeLinkFrameByteSlave ; $4014
+FarPtr_SyncLinkFrameMaster:
+	dw SyncLinkFrameMaster ; $4016
+FarPtr_SyncLinkFrameSlave:
+	dw SyncLinkFrameSlave ; $4018
+FarPtr_SyncLinkFrame:
+	dw SyncLinkFrame ; $401a
+FarPtr_RunLinkMatchFrame:
+	dw RunLinkMatchFrame ; $401c
+FarPtr_ExchangeLinkReadySignal:
+	dw ExchangeLinkReadySignal ; $401e
+FarPtr_RunLinkInputFrame:
+	dw RunLinkInputFrame ; $4020
+FarPtr_UpdateLinkSession:
+	dw UpdateLinkSession ; $4022
+FarPtr_EndLinkSession:
+	dw EndLinkSession ; $4024
+FarPtr_ExchangeHandshakeBlockMaster:
+	dw ExchangeHandshakeBlockMaster ; $4026
+FarPtr_ExchangeHandshakeBlockSlave:
+	dw ExchangeHandshakeBlockSlave ; $4028
+FarPtr_ExchangeLinkBlockToWram5:
+	dw ExchangeLinkBlockToWram5 ; $402a
+FarPtr_PrimeSlaveSerialReply:
+	dw PrimeSlaveSerialReply ; $402c
+FarPtr_PrepareLinkStatePayload:
+	dw PrepareLinkStatePayload ; $402e
+FarPtr_PrepareLinkInputPayload:
+	dw PrepareLinkInputPayload ; $4030
+FarPtr_ResyncLinkSession:
+	dw ResyncLinkSession ; $4032
+FarPtr_ResyncLinkSessionWithTimer:
+	dw ResyncLinkSessionWithTimer ; $4034
+FarPtr_RunLinkCommandFrame:
+	dw RunLinkCommandFrame ; $4036
+FarPtr_ExchangeLinkDataBlock:
+	dw ExchangeLinkDataBlock ; $4038
 FarPtr_ComputeShotPlacement:
 	dw ComputeShotPlacement ; $403a
-FarPtr_07_3c:
-	dw Func_07_53b0 ; $403c
-FarPtr_07_3e:
-	dw Func_07_571e ; $403e
+FarPtr_ExecuteShot:
+	dw ExecuteShot ; $403c
+FarPtr_ComputeShotTrajectory:
+	dw ComputeShotTrajectory ; $403e
 FarPtr_LookupCharSpriteSet:
 	dw LookupCharSpriteSet ; $4040
-FarPtr_07_42:
-	dw Func_07_5a70 ; $4042
+FarPtr_SetupCharacterSprite:
+	dw SetupCharacterSprite ; $4042
 FarPtr_LoadCharacterAttributes:
 	dw LoadCharacterAttributes ; $4044
-FarPtr_07_46:
-	dw Func_07_5df9 ; $4046
-Func_07_4048:
+FarPtr_RunDebugTestMatch:
+	dw RunDebugTestMatch ; $4046
+TryEstablishLink:
 	di ; $4048
 	ldh a, [$ffc0] ; $4049
 	ei ; $404b
@@ -80,7 +80,7 @@ Func_07_4048:
 	jr z, Label_07_4061 ; $404e
 	ld a, $01 ; $4050
 	ldh [$ffc2], a ; $4052
-	call Func_07_4b38 ; $4054
+	call TryLinkHandshakeMaster ; $4054
 	jr nc, Label_07_4076 ; $4057
 	push af ; $4059
 	call ResetSerialState ; $405a
@@ -96,7 +96,7 @@ Label_07_4061:
 	ei ; $4068
 	ld a, $02 ; $4069
 	ldh [$ffc2], a ; $406b
-	call Func_07_4afe ; $406d
+	call TryLinkHandshakeSlave ; $406d
 	jr nc, Label_07_4076 ; $4070
 	call ResetSerialState ; $4072
 	scf ; $4075
@@ -110,11 +110,11 @@ EnableSerialAndVBlankInterrupts:
 	ldh [rIE], a ; $407d
 	ei ; $407f
 	ret ; $4080
-Func_07_4081:
+RunLinkMatchFrameMaster:
 	push bc ; $4081
 	push hl ; $4082
-	call Func_07_49f7 ; $4083
-	call Func_07_467f ; $4086
+	call PrepareLinkStatePayload ; $4083
+	call ExchangeLinkFrameByteMaster ; $4086
 	call SerialDecodeInput ; $4089
 	ldh a, [$ffd3] ; $408c
 	call Func_00_2855 ; $408e
@@ -123,11 +123,11 @@ Func_07_4081:
 	pop hl ; $4097
 	pop bc ; $4098
 	ret ; $4099
-Func_07_409a:
+RunLinkMatchFrameSlave:
 	push bc ; $409a
 	push hl ; $409b
-	call Func_07_49f7 ; $409c
-	call Func_07_46ef ; $409f
+	call PrepareLinkStatePayload ; $409c
+	call ExchangeLinkFrameByteSlave ; $409f
 	call SerialDecodeInput ; $40a2
 	ldh a, [$ffd3] ; $40a5
 	call Func_00_2855 ; $40a7
@@ -136,7 +136,7 @@ Func_07_409a:
 	pop hl ; $40b0
 	pop bc ; $40b1
 	ret ; $40b2
-Func_07_40b3:
+ExchangeNibbleBlockMaster:
 	push af ; $40b3
 	push bc ; $40b4
 	push de ; $40b5
@@ -204,7 +204,7 @@ Label_07_410e:
 	call WaitSerialTransfer ; $411e
 	call ShortDelay ; $4121
 	call ShortDelay ; $4124
-	call Func_07_452f ; $4127
+	call PollSerialResponse ; $4127
 	jr c, Label_07_410e ; $412a
 	ld h, a ; $412c
 	and a, $c0 ; $412d
@@ -239,17 +239,17 @@ Label_07_414b:
 	jr nz, Label_07_4101 ; $4157
 	ld a, $c5 ; $4159
 	ld b, $c6 ; $415b
-	call Func_07_454b ; $415d
+	call SendByteAwaitEchoMaster ; $415d
 	jr nc, Label_07_4165 ; $4160
 	call LinkErrorReset ; $4162
 Label_07_4165:
 	ld a, $cc ; $4165
-	call Func_07_45c1 ; $4167
+	call SendByteGetReplyMaster ; $4167
 	cp a, $cc ; $416a
 	jr z, Label_07_4171 ; $416c
 	call LinkErrorReset ; $416e
 Label_07_4171:
-	call Func_07_4328 ; $4171
+	call ExchangeChecksumMaster ; $4171
 	ldh a, [$ffe5] ; $4174
 	ld e, a ; $4176
 	ldh a, [$ffe6] ; $4177
@@ -268,7 +268,7 @@ Label_07_4171:
 	pop hl ; $4185
 	jp z, Label_07_419b ; $4186
 	ld a, $cb ; $4189
-	call Func_07_45c1 ; $418b
+	call SendByteGetReplyMaster ; $418b
 	cp a, $cd ; $418e
 	jp z, Label_07_40c3 ; $4190
 	cp a, $cb ; $4193
@@ -276,7 +276,7 @@ Label_07_4171:
 	call LinkErrorReset ; $4198
 Label_07_419b:
 	ld a, $cd ; $419b
-	call Func_07_45c1 ; $419d
+	call SendByteGetReplyMaster ; $419d
 	cp a, $cd ; $41a0
 	jr z, Label_07_41ac ; $41a2
 	cp a, $cb ; $41a4
@@ -332,7 +332,7 @@ Label_07_41ea:
 	pop bc ; $41ec
 	pop af ; $41ed
 	ret ; $41ee
-Func_07_41ef:
+ExchangeNibbleBlockSlave:
 	push af ; $41ef
 	push bc ; $41f0
 	push de ; $41f1
@@ -404,7 +404,7 @@ Label_07_424f:
 	jr nc, Label_07_425d ; $4258
 	call LinkErrorReset ; $425a
 Label_07_425d:
-	call Func_07_452f ; $425d
+	call PollSerialResponse ; $425d
 	jr nc, Label_07_4265 ; $4260
 	call LinkErrorReset ; $4262
 Label_07_4265:
@@ -472,12 +472,12 @@ Label_07_42ba:
 	inc d ; $42c2
 Label_07_42c3:
 	ld a, $cc ; $42c3
-	call Func_07_4624 ; $42c5
+	call SendByteGetReplySlave ; $42c5
 	cp a, $c5 ; $42c8
 	jr z, Label_07_42cf ; $42ca
 	call LinkErrorReset ; $42cc
 Label_07_42cf:
-	call Func_07_438c ; $42cf
+	call ExchangeChecksumSlave ; $42cf
 	ldh a, [$ffe5] ; $42d2
 	ld e, a ; $42d4
 	ldh a, [$ffe6] ; $42d5
@@ -511,7 +511,7 @@ Label_07_42cf:
 	pop af ; $42fe
 	ei ; $42ff
 	ld a, $cb ; $4300
-	call Func_07_4624 ; $4302
+	call SendByteGetReplySlave ; $4302
 	cp a, $cb ; $4305
 	jp z, Label_07_41ff ; $4307
 	cp a, $cd ; $430a
@@ -519,7 +519,7 @@ Label_07_42cf:
 	call LinkErrorReset ; $430f
 Label_07_4312:
 	ld a, $cd ; $4312
-	call Func_07_4624 ; $4314
+	call SendByteGetReplySlave ; $4314
 	cp a, $cb ; $4317
 	jp z, Label_07_41ff ; $4319
 	cp a, $cd ; $431c
@@ -531,67 +531,67 @@ Label_07_4323:
 	pop bc ; $4325
 	pop af ; $4326
 	ret ; $4327
-Func_07_4328:
+ExchangeChecksumMaster:
 	push bc ; $4328
 	ld hl, $0000 ; $4329
 	ld a, d ; $432c
 	swap a ; $432d
 	and a, $0f ; $432f
 	or a, $40 ; $4331
-	call Func_07_45c1 ; $4333
+	call SendByteGetReplyMaster ; $4333
 	ld b, a ; $4336
 	and a, $c0 ; $4337
 	cp a, $80 ; $4339
 	jr z, Label_07_4340 ; $433b
 	call LinkErrorReset ; $433d
 Label_07_4340:
-	call Func_07_43f6 ; $4340
+	call ShiftNibbleIntoChecksum ; $4340
 	ld a, d ; $4343
 	and a, $0f ; $4344
 	or a, $40 ; $4346
-	call Func_07_45c1 ; $4348
+	call SendByteGetReplyMaster ; $4348
 	ld b, a ; $434b
 	and a, $c0 ; $434c
 	cp a, $80 ; $434e
 	jr z, Label_07_4355 ; $4350
 	call LinkErrorReset ; $4352
 Label_07_4355:
-	call Func_07_43f6 ; $4355
+	call ShiftNibbleIntoChecksum ; $4355
 	ld a, e ; $4358
 	swap a ; $4359
 	and a, $0f ; $435b
 	or a, $40 ; $435d
-	call Func_07_45c1 ; $435f
+	call SendByteGetReplyMaster ; $435f
 	ld b, a ; $4362
 	and a, $c0 ; $4363
 	cp a, $80 ; $4365
 	jr z, Label_07_436c ; $4367
 	call LinkErrorReset ; $4369
 Label_07_436c:
-	call Func_07_43f6 ; $436c
+	call ShiftNibbleIntoChecksum ; $436c
 	ld a, e ; $436f
 	and a, $0f ; $4370
 	or a, $40 ; $4372
-	call Func_07_45c1 ; $4374
+	call SendByteGetReplyMaster ; $4374
 	ld b, a ; $4377
 	and a, $c0 ; $4378
 	cp a, $80 ; $437a
 	jr z, Label_07_4381 ; $437c
 	call LinkErrorReset ; $437e
 Label_07_4381:
-	call Func_07_43f6 ; $4381
+	call ShiftNibbleIntoChecksum ; $4381
 	call ShortDelay ; $4384
 	call ShortDelay ; $4387
 	pop bc ; $438a
 	ret ; $438b
-Func_07_438c:
+ExchangeChecksumSlave:
 	push bc ; $438c
 	ld hl, $0000 ; $438d
 	ld a, d ; $4390
 	swap a ; $4391
 	and a, $0f ; $4393
 	or a, $80 ; $4395
-	call Func_07_4624 ; $4397
+	call SendByteGetReplySlave ; $4397
 	cp a, $cc ; $439a
 	jr z, Label_07_43a1 ; $439c
 	call LinkErrorReset ; $439e
@@ -599,49 +599,49 @@ Label_07_43a1:
 	ld a, d ; $43a1
 	and a, $0f ; $43a2
 	or a, $80 ; $43a4
-	call Func_07_4624 ; $43a6
+	call SendByteGetReplySlave ; $43a6
 	ld b, a ; $43a9
 	and a, $c0 ; $43aa
 	cp a, $40 ; $43ac
 	jr z, Label_07_43b3 ; $43ae
 	call LinkErrorReset ; $43b0
 Label_07_43b3:
-	call Func_07_43f6 ; $43b3
+	call ShiftNibbleIntoChecksum ; $43b3
 	ld a, e ; $43b6
 	swap a ; $43b7
 	and a, $0f ; $43b9
 	or a, $80 ; $43bb
-	call Func_07_4624 ; $43bd
+	call SendByteGetReplySlave ; $43bd
 	ld b, a ; $43c0
 	and a, $c0 ; $43c1
 	cp a, $40 ; $43c3
 	jr z, Label_07_43ca ; $43c5
 	call LinkErrorReset ; $43c7
 Label_07_43ca:
-	call Func_07_43f6 ; $43ca
+	call ShiftNibbleIntoChecksum ; $43ca
 	ld a, e ; $43cd
 	and a, $0f ; $43ce
 	or a, $80 ; $43d0
-	call Func_07_4624 ; $43d2
+	call SendByteGetReplySlave ; $43d2
 	ld b, a ; $43d5
 	and a, $c0 ; $43d6
 	cp a, $40 ; $43d8
 	jr z, Label_07_43df ; $43da
 	call LinkErrorReset ; $43dc
 Label_07_43df:
-	call Func_07_43f6 ; $43df
+	call ShiftNibbleIntoChecksum ; $43df
 	ld a, $cd ; $43e2
-	call Func_07_4624 ; $43e4
+	call SendByteGetReplySlave ; $43e4
 	ld b, a ; $43e7
 	and a, $c0 ; $43e8
 	cp a, $40 ; $43ea
 	jr z, Label_07_43f1 ; $43ec
 	call LinkErrorReset ; $43ee
 Label_07_43f1:
-	call Func_07_43f6 ; $43f1
+	call ShiftNibbleIntoChecksum ; $43f1
 	pop bc ; $43f4
 	ret ; $43f5
-Func_07_43f6:
+ShiftNibbleIntoChecksum:
 	sla l ; $43f6
 	rl h ; $43f8
 	sla l ; $43fa
@@ -680,7 +680,7 @@ Label_07_441c:
 	pop bc ; $4427
 	pop af ; $4428
 	ret ; $4429
-Func_07_442a:
+SendNibbleBlockSlave:
 	push af ; $442a
 	push bc ; $442b
 	push de ; $442c
@@ -694,7 +694,7 @@ Label_07_4437:
 Label_07_4438:
 	ld a, $c3 ; $4438
 	ld b, $c4 ; $443a
-	call Func_07_458a ; $443c
+	call SendByteAwaitEchoSlave ; $443c
 	jr c, Label_07_4438 ; $443f
 	ld hl, $ce40 ; $4441
 	ld de, $0000 ; $4444
@@ -719,7 +719,7 @@ Label_07_4450:
 	pop af ; $4460
 	ei ; $4461
 	call WaitSerialTransfer ; $4462
-	call Func_07_452f ; $4465
+	call PollSerialResponse ; $4465
 	jr c, Label_07_4450 ; $4468
 	xor a, a ; $446a
 	ldh [$ffc8], a ; $446b
@@ -728,12 +728,12 @@ Label_07_4450:
 Label_07_4470:
 	ld a, $c5 ; $4470
 	ld b, $c6 ; $4472
-	call Func_07_458a ; $4474
+	call SendByteAwaitEchoSlave ; $4474
 	jr c, Label_07_4470 ; $4477
 	ld hl, $0000 ; $4479
 Label_07_447c:
 	ld a, $cc ; $447c
-	call Func_07_4624 ; $447e
+	call SendByteGetReplySlave ; $447e
 	cp a, $cd ; $4481
 	jr z, Label_07_44a3 ; $4483
 	ld b, a ; $4485
@@ -769,7 +769,7 @@ Label_07_44a3:
 	jr nz, Label_07_4438 ; $44af
 Label_07_44b1:
 	ld a, $80 ; $44b1
-	call Func_07_4624 ; $44b3
+	call SendByteGetReplySlave ; $44b3
 	cp a, $40 ; $44b6
 	jr nz, Label_07_44b1 ; $44b8
 	scf ; $44ba
@@ -780,7 +780,7 @@ Label_07_44bc:
 	pop bc ; $44be
 	pop af ; $44bf
 	ret ; $44c0
-Func_07_44c1:
+ReceiveNibbleBlockMaster:
 	push af ; $44c1
 	push bc ; $44c2
 	push de ; $44c3
@@ -789,7 +789,7 @@ Func_07_44c1:
 Label_07_44c8:
 	ld a, $c4 ; $44c8
 	ld b, $c3 ; $44ca
-	call Func_07_454b ; $44cc
+	call SendByteAwaitEchoMaster ; $44cc
 	jr c, Label_07_44c8 ; $44cf
 	ld hl, $cea0 ; $44d1
 	ld de, $0000 ; $44d4
@@ -804,7 +804,7 @@ Label_07_44d9:
 	ldh [rSC], a ; $44e4
 	pop af ; $44e6
 	call ShortDelay ; $44e7
-	call Func_07_452f ; $44ea
+	call PollSerialResponse ; $44ea
 	jr c, Label_07_44d9 ; $44ed
 	cp a, $c5 ; $44ef
 	jr z, Label_07_4507 ; $44f1
@@ -824,18 +824,18 @@ Label_07_44fb:
 	call LinkErrorReset ; $4504
 Label_07_4507:
 	ld a, $c6 ; $4507
-	call Func_07_45c1 ; $4509
+	call SendByteGetReplyMaster ; $4509
 	ld a, d ; $450c
 	or a, $40 ; $450d
-	call Func_07_45c1 ; $450f
+	call SendByteGetReplyMaster ; $450f
 	ld a, e ; $4512
 	or a, $40 ; $4513
-	call Func_07_45c1 ; $4515
+	call SendByteGetReplyMaster ; $4515
 	ld a, $cd ; $4518
-	call Func_07_45c1 ; $451a
+	call SendByteGetReplyMaster ; $451a
 Label_07_451d:
 	ld a, $40 ; $451d
-	call Func_07_45c1 ; $451f
+	call SendByteGetReplyMaster ; $451f
 	cp a, $c3 ; $4522
 	jr z, Label_07_44c8 ; $4524
 	cp a, $80 ; $4526
@@ -845,7 +845,7 @@ Label_07_451d:
 	pop bc ; $452c
 	pop af ; $452d
 	ret ; $452e
-Func_07_452f:
+PollSerialResponse:
 	push bc ; $452f
 	di ; $4530
 	ldh a, [$ffc0] ; $4531
@@ -867,7 +867,7 @@ Label_07_4547:
 	ld a, b ; $4548
 	pop bc ; $4549
 	ret ; $454a
-Func_07_454b:
+SendByteAwaitEchoMaster:
 	push bc ; $454b
 	ldh [$ffc1], a ; $454c
 	ld c, $14 ; $454e
@@ -909,7 +909,7 @@ Label_07_4586:
 Label_07_4588:
 	pop bc ; $4588
 	ret ; $4589
-Func_07_458a:
+SendByteAwaitEchoSlave:
 	push bc ; $458a
 	ldh [$ffc1], a ; $458b
 	ld c, $1e ; $458d
@@ -947,7 +947,7 @@ Label_07_45bd:
 Label_07_45bf:
 	pop bc ; $45bf
 	ret ; $45c0
-Func_07_45c1:
+SendByteGetReplyMaster:
 	push bc ; $45c1
 	ldh [$ffc1], a ; $45c2
 	ld c, $64 ; $45c4
@@ -1011,7 +1011,7 @@ Label_07_461d:
 Label_07_4622:
 	pop bc ; $4622
 	ret ; $4623
-Func_07_4624:
+SendByteGetReplySlave:
 	push bc ; $4624
 	di ; $4625
 	ldh [$ffe0], a ; $4626
@@ -1078,12 +1078,12 @@ Label_07_4675:
 	ccf ; $467d
 Label_07_467e:
 	ret ; $467e
-Func_07_467f:
+ExchangeLinkFrameByteMaster:
 	di ; $467f
 	ldh a, [rLY] ; $4680
 	ei ; $4682
 	cp a, $8c ; $4683
-	jr nz, Func_07_467f ; $4685
+	jr nz, ExchangeLinkFrameByteMaster ; $4685
 	di ; $4687
 	ldh a, [$ffc1] ; $4688
 	ldh [rSB], a ; $468a
@@ -1114,7 +1114,7 @@ Label_07_46af:
 	cp a, $0a ; $46b7
 	jr nc, Label_07_46c1 ; $46b9
 	call WaitVBlank ; $46bb
-	jp Func_07_467f ; $46be
+	jp ExchangeLinkFrameByteMaster ; $46be
 Label_07_46c1:
 	call LinkErrorReset ; $46c1
 Label_07_46c4:
@@ -1131,7 +1131,7 @@ Label_07_46c7:
 	jr nc, Label_07_46e0 ; $46d5
 	call WaitVBlank ; $46d7
 	call WaitVBlank ; $46da
-	jp Func_07_467f ; $46dd
+	jp ExchangeLinkFrameByteMaster ; $46dd
 Label_07_46e0:
 	call InitSerialLink ; $46e0
 	call LinkErrorReset ; $46e3
@@ -1142,8 +1142,8 @@ Label_07_46e6:
 	xor a, a ; $46eb
 	ldh [$ffc8], a ; $46ec
 	ret ; $46ee
-Func_07_46ef:
-	call Func_07_4a29 ; $46ef
+ExchangeLinkFrameByteSlave:
+	call AwaitSerialByte ; $46ef
 	jr c, Label_07_470c ; $46f2
 	push bc ; $46f4
 	call AdvanceFrame ; $46f5
@@ -1176,27 +1176,27 @@ Label_07_471b:
 	ldh [$ffc8], a ; $4721
 	ei ; $4723
 	ret ; $4724
-Func_07_4725:
+SyncLinkFrameMaster:
 	push bc ; $4725
 	push hl ; $4726
-	call Func_07_49f7 ; $4727
-	call Func_07_467f ; $472a
+	call PrepareLinkStatePayload ; $4727
+	call ExchangeLinkFrameByteMaster ; $472a
 	call SerialDecodeInput ; $472d
 	call SerialEncodeInput ; $4730
 	pop hl ; $4733
 	pop bc ; $4734
 	ret ; $4735
-Func_07_4736:
+SyncLinkFrameSlave:
 	push bc ; $4736
 	push hl ; $4737
-	call Func_07_49f7 ; $4738
-	call Func_07_46ef ; $473b
+	call PrepareLinkStatePayload ; $4738
+	call ExchangeLinkFrameByteSlave ; $473b
 	call SerialDecodeInput ; $473e
 	call SerialEncodeInput ; $4741
 	pop hl ; $4744
 	pop bc ; $4745
 	ret ; $4746
-Func_07_4747:
+SyncLinkFrame:
 	push af ; $4747
 	push bc ; $4748
 	push de ; $4749
@@ -1206,17 +1206,17 @@ Func_07_4747:
 	ldh a, [$ffc2] ; $474f
 	cp a, $02 ; $4751
 	jr z, Label_07_475a ; $4753
-	call Func_07_4725 ; $4755
+	call SyncLinkFrameMaster ; $4755
 	jr Label_07_475d ; $4758
 Label_07_475a:
-	call Func_07_4736 ; $475a
+	call SyncLinkFrameSlave ; $475a
 Label_07_475d:
 	pop hl ; $475d
 	pop de ; $475e
 	pop bc ; $475f
 	pop af ; $4760
 	ret ; $4761
-Func_07_4762:
+RunLinkMatchFrame:
 	push af ; $4762
 	push bc ; $4763
 	push de ; $4764
@@ -1226,17 +1226,17 @@ Func_07_4762:
 	ldh a, [$ffc2] ; $476a
 	cp a, $02 ; $476c
 	jr z, Label_07_4775 ; $476e
-	call Func_07_4081 ; $4770
+	call RunLinkMatchFrameMaster ; $4770
 	jr Label_07_4778 ; $4773
 Label_07_4775:
-	call Func_07_409a ; $4775
+	call RunLinkMatchFrameSlave ; $4775
 Label_07_4778:
 	pop hl ; $4778
 	pop de ; $4779
 	pop bc ; $477a
 	pop af ; $477b
 	ret ; $477c
-Func_07_477d:
+ExchangeLinkReadySignal:
 	push af ; $477d
 	push bc ; $477e
 	ld c, $64 ; $477f
@@ -1250,15 +1250,15 @@ Label_07_478e:
 	call ShortDelay ; $478e
 	dec c ; $4791
 	jr nz, Label_07_478e ; $4792
-	call Func_07_479f ; $4794
+	call ExchangeReadyTokenMaster ; $4794
 	jr Label_07_479c ; $4797
 Label_07_4799:
-	call Func_07_47d8 ; $4799
+	call ExchangeReadyTokenSlave ; $4799
 Label_07_479c:
 	pop bc ; $479c
 	pop af ; $479d
 	ret ; $479e
-Func_07_479f:
+ExchangeReadyTokenMaster:
 	push af ; $479f
 	push de ; $47a0
 	ldh a, [rSC] ; $47a1
@@ -1294,7 +1294,7 @@ Label_07_47d5:
 	pop de ; $47d5
 	pop af ; $47d6
 	ret ; $47d7
-Func_07_47d8:
+ExchangeReadyTokenSlave:
 	push af ; $47d8
 	push de ; $47d9
 	ld de, $0003 ; $47da
@@ -1325,11 +1325,11 @@ Label_07_4804:
 	pop de ; $4804
 	pop af ; $4805
 	ret ; $4806
-Func_07_4807:
+RunLinkInputFrameMaster:
 	push bc ; $4807
 	push hl ; $4808
-	call Func_07_4a13 ; $4809
-	call Func_07_467f ; $480c
+	call PrepareLinkInputPayload ; $4809
+	call ExchangeLinkFrameByteMaster ; $480c
 	call SerialDecodeInput ; $480f
 	ldh a, [$ffd3] ; $4812
 	call Func_00_2855 ; $4814
@@ -1337,11 +1337,11 @@ Func_07_4807:
 	pop bc ; $481a
 	pop hl ; $481b
 	ret ; $481c
-Func_07_481d:
+RunLinkInputFrameSlave:
 	push bc ; $481d
 	push hl ; $481e
-	call Func_07_4a13 ; $481f
-	call Func_07_46ef ; $4822
+	call PrepareLinkInputPayload ; $481f
+	call ExchangeLinkFrameByteSlave ; $4822
 	call SerialDecodeInput ; $4825
 	ldh a, [$ffd3] ; $4828
 	call Func_00_2855 ; $482a
@@ -1349,19 +1349,19 @@ Func_07_481d:
 	pop hl ; $4830
 	pop bc ; $4831
 	ret ; $4832
-Func_07_4833:
+RunLinkInputFrame:
 	ld hl, $ffe9 ; $4833
 	inc [hl] ; $4836
 	ldh a, [$ffc2] ; $4837
 	cp a, $02 ; $4839
 	jr z, Label_07_4842 ; $483b
-	call Func_07_4807 ; $483d
+	call RunLinkInputFrameMaster ; $483d
 	jr Label_07_4845 ; $4840
 Label_07_4842:
-	call Func_07_481d ; $4842
+	call RunLinkInputFrameSlave ; $4842
 Label_07_4845:
 	ret ; $4845
-Func_07_4846:
+UpdateLinkSession:
 	push af ; $4846
 	push bc ; $4847
 	push de ; $4848
@@ -1376,7 +1376,7 @@ Func_07_4846:
 	call DisableLCDSafely ; $4859
 	ld a, $01 ; $485c
 	ldh [$ffd8], a ; $485e
-	farcall FarPtr_07_1e ; $4860
+	farcall FarPtr_ExchangeLinkReadySignal ; $4860
 	ldh a, [$ffc2] ; $4863
 	cp a, $02 ; $4865
 	jp z, Label_07_48a7 ; $4867
@@ -1412,7 +1412,7 @@ Label_07_48ae:
 	xor a, a ; $48ae
 	ldh [$ffe2], a ; $48af
 	call SerialEncodeInput ; $48b1
-	farcall FarPtr_07_2c ; $48b4
+	farcall FarPtr_PrimeSlaveSerialReply ; $48b4
 	xor a, a ; $48b7
 	ldh [$ffde], a ; $48b8
 	ld hl, $df1e ; $48ba
@@ -1431,13 +1431,13 @@ Label_07_48df:
 	xor a, a ; $48df
 	ldh [$ffe9], a ; $48e0
 	push af ; $48e2
-	farcall FarPtr_07_1a ; $48e3
+	farcall FarPtr_SyncLinkFrame ; $48e3
 	pop af ; $48e6
 	push af ; $48e7
-	farcall FarPtr_07_1a ; $48e8
+	farcall FarPtr_SyncLinkFrame ; $48e8
 	pop af ; $48eb
 	push af ; $48ec
-	farcall FarPtr_07_1a ; $48ed
+	farcall FarPtr_SyncLinkFrame ; $48ed
 	pop af ; $48f0
 Label_07_48f1:
 	pop hl ; $48f1
@@ -1445,12 +1445,12 @@ Label_07_48f1:
 	pop bc ; $48f3
 	pop af ; $48f4
 	ret ; $48f5
-Func_07_48f6:
+EndLinkSession:
 	xor a, a ; $48f6
 	ld [$c33f], a ; $48f7
 	call InitSerialLink ; $48fa
 	ret ; $48fd
-Func_07_48fe:
+ExchangeHandshakeBlockMaster:
 	ld hl, wTextBuffer ; $48fe
 	ld c, $28 ; $4901
 	ld a, $02 ; $4903
@@ -1460,9 +1460,9 @@ Label_07_4905:
 	jr nz, Label_07_4905 ; $4907
 	ld de, wTextBuffer ; $4909
 	ld c, $28 ; $490c
-	call Func_07_40b3 ; $490e
+	call ExchangeNibbleBlockMaster ; $490e
 	ret ; $4911
-Func_07_4912:
+ExchangeHandshakeBlockSlave:
 	ld hl, wTextBuffer ; $4912
 	ld c, $28 ; $4915
 	ld a, $08 ; $4917
@@ -1472,9 +1472,9 @@ Label_07_4919:
 	jr nz, Label_07_4919 ; $491b
 	ld de, wTextBuffer ; $491d
 	ld c, $28 ; $4920
-	call Func_07_41ef ; $4922
+	call ExchangeNibbleBlockSlave ; $4922
 	ret ; $4925
-Func_07_4926:
+ExchangeLinkBlockToWram5:
 	call DisableLCDSafely ; $4926
 	di ; $4929
 	ldh a, [rIF] ; $492a
@@ -1483,9 +1483,9 @@ Func_07_4926:
 	ei ; $4930
 	xor a, a ; $4931
 	ldh [$ffd8], a ; $4932
-	call Func_07_4bc2 ; $4934
-	call Func_07_4bc2 ; $4937
-	call Func_07_4bc2 ; $493a
+	call LongDelay ; $4934
+	call LongDelay ; $4937
+	call LongDelay ; $493a
 	ldh a, [$ffc2] ; $493d
 	cp a, $02 ; $493f
 	jr z, Label_07_494f ; $4941
@@ -1493,10 +1493,10 @@ Func_07_4926:
 	jr z, Label_07_494a ; $4945
 	call LinkErrorReset ; $4947
 Label_07_494a:
-	call Func_07_48fe ; $494a
+	call ExchangeHandshakeBlockMaster ; $494a
 	jr Label_07_4952 ; $494d
 Label_07_494f:
-	call Func_07_4912 ; $494f
+	call ExchangeHandshakeBlockSlave ; $494f
 Label_07_4952:
 	wram_bank $05 ; $4952
 	ld hl, $c650 ; $4958
@@ -1510,7 +1510,7 @@ Label_07_4952:
 	ei ; $4969
 	call EnableLCD ; $496a
 	ret ; $496d
-Func_07_496e:
+ExchangeLinkDataBlock:
 	push hl ; $496e
 	push de ; $496f
 	push bc ; $4970
@@ -1523,9 +1523,9 @@ Func_07_496e:
 	ei ; $497e
 	xor a, a ; $497f
 	ldh [$ffd8], a ; $4980
-	call Func_07_4bc2 ; $4982
-	call Func_07_4bc2 ; $4985
-	call Func_07_4bc2 ; $4988
+	call LongDelay ; $4982
+	call LongDelay ; $4985
+	call LongDelay ; $4988
 	pop bc ; $498b
 	pop de ; $498c
 	pop hl ; $498d
@@ -1536,10 +1536,10 @@ Func_07_496e:
 	jr z, Label_07_499b ; $4996
 	call LinkErrorReset ; $4998
 Label_07_499b:
-	call Func_07_40b3 ; $499b
+	call ExchangeNibbleBlockMaster ; $499b
 	jr Label_07_49a3 ; $499e
 Label_07_49a0:
-	call Func_07_41ef ; $49a0
+	call ExchangeNibbleBlockSlave ; $49a0
 Label_07_49a3:
 	call PackNibblesToBytes ; $49a3
 	di ; $49a6
@@ -1587,7 +1587,7 @@ Label_07_49dd:
 	cp a, c ; $49de
 	jr c, Label_07_49bf ; $49df
 	ret ; $49e1
-Func_07_49e2:
+PrimeSlaveSerialReply:
 	ldh a, [$ffc2] ; $49e2
 	cp a, $02 ; $49e4
 	jr nz, Label_07_49f6 ; $49e6
@@ -1601,7 +1601,7 @@ Func_07_49e2:
 	pop af ; $49f5
 Label_07_49f6:
 	ret ; $49f6
-Func_07_49f7:
+PrepareLinkStatePayload:
 	push af ; $49f7
 	ldh a, [$ffc1] ; $49f8
 	and a, $c0 ; $49fa
@@ -1613,11 +1613,11 @@ Func_07_49f7:
 	ldh a, [hPlayerInputFlags] ; $4a07
 	and a, $f0 ; $4a09
 	ld c, a ; $4a0b
-	call Func_07_4cfe ; $4a0c
+	call ComposeLinkStateByte ; $4a0c
 	ldh [$ffd6], a ; $4a0f
 	pop af ; $4a11
 	ret ; $4a12
-Func_07_4a13:
+PrepareLinkInputPayload:
 	push af ; $4a13
 	ldh a, [$ffc1] ; $4a14
 	and a, $c0 ; $4a16
@@ -1630,7 +1630,7 @@ Func_07_4a13:
 	ldh [$ffd6], a ; $4a25
 	pop af ; $4a27
 	ret ; $4a28
-Func_07_4a29:
+AwaitSerialByte:
 	push de ; $4a29
 	ld de, $4e20 ; $4a2a
 Label_07_4a2d:
@@ -1663,7 +1663,7 @@ Label_07_4a4b:
 	ei ; $4a4e
 	pop de ; $4a4f
 	ret ; $4a50
-Func_07_4a51:
+ResyncLinkSession:
 	di ; $4a51
 	xor a, a ; $4a52
 	ldh [rIF], a ; $4a53
@@ -1676,7 +1676,7 @@ Func_07_4a51:
 	ldh [$ffe7], a ; $4a61
 	ld a, $01 ; $4a63
 	ldh [$ffd8], a ; $4a65
-	farcall FarPtr_07_1e ; $4a67
+	farcall FarPtr_ExchangeLinkReadySignal ; $4a67
 	ldh a, [$ffc2] ; $4a6a
 	cp a, $02 ; $4a6c
 	jr z, Label_07_4a8c ; $4a6e
@@ -1699,7 +1699,7 @@ Label_07_4a8c:
 	ldh [$ffdc], a ; $4a91
 Label_07_4a93:
 	call SerialEncodeInput ; $4a93
-	farcall FarPtr_07_2c ; $4a96
+	farcall FarPtr_PrimeSlaveSerialReply ; $4a96
 	xor a, a ; $4a99
 	ldh [$ffde], a ; $4a9a
 	ld a, $01 ; $4a9c
@@ -1709,7 +1709,7 @@ Label_07_4a93:
 	ldh [$ffe7], a ; $4aa4
 	ldh [$ffe9], a ; $4aa6
 	ret ; $4aa8
-Func_07_4aa9:
+ResyncLinkSessionWithTimer:
 	di ; $4aa9
 	xor a, a ; $4aaa
 	ldh [rIF], a ; $4aab
@@ -1721,7 +1721,7 @@ Func_07_4aa9:
 	ldh [$ffe7], a ; $4ab6
 	ld a, $01 ; $4ab8
 	ldh [$ffd8], a ; $4aba
-	farcall FarPtr_07_1e ; $4abc
+	farcall FarPtr_ExchangeLinkReadySignal ; $4abc
 	ldh a, [$ffc2] ; $4abf
 	cp a, $02 ; $4ac1
 	jr z, Label_07_4ae1 ; $4ac3
@@ -1744,7 +1744,7 @@ Label_07_4ae1:
 	ldh [$ffdc], a ; $4ae6
 Label_07_4ae8:
 	call SerialEncodeInput ; $4ae8
-	farcall FarPtr_07_2c ; $4aeb
+	farcall FarPtr_PrimeSlaveSerialReply ; $4aeb
 	xor a, a ; $4aee
 	ldh [$ffde], a ; $4aef
 	ld a, $01 ; $4af1
@@ -1754,7 +1754,7 @@ Label_07_4ae8:
 	ldh [$ffe7], a ; $4af9
 	ldh [$ffe9], a ; $4afb
 	ret ; $4afd
-Func_07_4afe:
+TryLinkHandshakeSlave:
 	push hl ; $4afe
 	push de ; $4aff
 	push bc ; $4b00
@@ -1769,7 +1769,7 @@ Func_07_4afe:
 	ldh [$ffc1], a ; $4b10
 	ldh [$ffe0], a ; $4b12
 	ei ; $4b14
-	call Func_07_4a29 ; $4b15
+	call AwaitSerialByte ; $4b15
 	jr c, Label_07_4b2e ; $4b18
 	di ; $4b1a
 	ldh a, [$ffc0] ; $4b1b
@@ -1794,7 +1794,7 @@ Label_07_4b33:
 	pop de ; $4b35
 	pop hl ; $4b36
 	ret ; $4b37
-Func_07_4b38:
+TryLinkHandshakeMaster:
 	push hl ; $4b38
 	push de ; $4b39
 	push bc ; $4b3a
@@ -1827,7 +1827,7 @@ Label_07_4b50:
 	xor a, a ; $4b6b
 	ldh [$ffd7], a ; $4b6c
 	ei ; $4b6e
-	call Func_07_4a29 ; $4b6f
+	call AwaitSerialByte ; $4b6f
 	farcall FarPtr_3e_16 ; $4b72
 	farcall FarPtr_39_04 ; $4b75
 	jr c, Label_07_4ba2 ; $4b78
@@ -1870,7 +1870,7 @@ Label_07_4ba2:
 	xor a, a ; $4bb1
 	ldh [$ffd7], a ; $4bb2
 	ei ; $4bb4
-	call Func_07_4a29 ; $4bb5
+	call AwaitSerialByte ; $4bb5
 	ld a, e ; $4bb8
 	scf ; $4bb9
 	jr Label_07_4bbe ; $4bba
@@ -1882,7 +1882,7 @@ Label_07_4bbe:
 	pop de ; $4bbf
 	pop hl ; $4bc0
 	ret ; $4bc1
-Func_07_4bc2:
+LongDelay:
 	call ShortDelay ; $4bc2
 	call ShortDelay ; $4bc5
 	call ShortDelay ; $4bc8
@@ -1900,37 +1900,37 @@ Func_07_4bc2:
 	call ShortDelay ; $4bec
 	call ShortDelay ; $4bef
 	ret ; $4bf2
-Func_07_4bf3:
+RunLinkCommandFrame:
 	ldh a, [$ffc2] ; $4bf3
 	cp a, $02 ; $4bf5
 	jr z, Label_07_4bfe ; $4bf7
-	call Func_07_4c02 ; $4bf9
+	call RunLinkCommandFrameMaster ; $4bf9
 	jr Label_07_4c01 ; $4bfc
 Label_07_4bfe:
-	call Func_07_4c13 ; $4bfe
+	call RunLinkCommandFrameSlave ; $4bfe
 Label_07_4c01:
 	ret ; $4c01
-Func_07_4c02:
+RunLinkCommandFrameMaster:
 	push bc ; $4c02
 	push hl ; $4c03
-	call Func_07_4a13 ; $4c04
-	call Func_07_467f ; $4c07
-	call Func_07_4c69 ; $4c0a
-	call Func_07_4c24 ; $4c0d
+	call PrepareLinkInputPayload ; $4c04
+	call ExchangeLinkFrameByteMaster ; $4c07
+	call SerialDecodeCommand ; $4c0a
+	call SerialEncodeCommand ; $4c0d
 	pop bc ; $4c10
 	pop hl ; $4c11
 	ret ; $4c12
-Func_07_4c13:
+RunLinkCommandFrameSlave:
 	push bc ; $4c13
 	push hl ; $4c14
-	call Func_07_4a13 ; $4c15
-	call Func_07_46ef ; $4c18
-	call Func_07_4c69 ; $4c1b
-	call Func_07_4c24 ; $4c1e
+	call PrepareLinkInputPayload ; $4c15
+	call ExchangeLinkFrameByteSlave ; $4c18
+	call SerialDecodeCommand ; $4c1b
+	call SerialEncodeCommand ; $4c1e
 	pop hl ; $4c21
 	pop bc ; $4c22
 	ret ; $4c23
-Func_07_4c24:
+SerialEncodeCommand:
 	push bc ; $4c24
 	push hl ; $4c25
 	ldh a, [$ffd6] ; $4c26
@@ -1978,7 +1978,7 @@ Label_07_4c5d:
 	pop hl ; $4c66
 	pop bc ; $4c67
 	ret ; $4c68
-Func_07_4c69:
+SerialDecodeCommand:
 	push af ; $4c69
 	push bc ; $4c6a
 	ldh a, [$ffc0] ; $4c6b
@@ -2003,7 +2003,7 @@ Label_07_4c7f:
 	or a, a ; $4c8c
 	jr nz, Label_07_4cac ; $4c8d
 	ldh a, [$ffd4] ; $4c8f
-	call Func_07_4ce4 ; $4c91
+	call DecodeLinkCommandCode ; $4c91
 	jr Label_07_4cac ; $4c94
 Label_07_4c96:
 	ldh a, [$ffd5] ; $4c96
@@ -2015,7 +2015,7 @@ Label_07_4c96:
 	ldh a, [$ffd4] ; $4ca0
 	or a, a ; $4ca2
 	jr z, Label_07_4caa ; $4ca3
-	call Func_07_4ce4 ; $4ca5
+	call DecodeLinkCommandCode ; $4ca5
 	jr Label_07_4cac ; $4ca8
 Label_07_4caa:
 	ldh a, [$ffd5] ; $4caa
@@ -2059,7 +2059,7 @@ Label_07_4cd7:
 	ldh [$ffe2], a ; $4ce1
 Label_07_4ce3:
 	ret ; $4ce3
-Func_07_4ce4:
+DecodeLinkCommandCode:
 	cp a, $14 ; $4ce4
 	jr nz, Label_07_4cec ; $4ce6
 	ld a, $0f ; $4ce8
@@ -2078,7 +2078,7 @@ Label_07_4cfc:
 	xor a, a ; $4cfc
 Label_07_4cfd:
 	ret ; $4cfd
-Func_07_4cfe:
+ComposeLinkStateByte:
 	push bc ; $4cfe
 	push hl ; $4cff
 	ldh a, [$ffdd] ; $4d00
@@ -2134,10 +2134,10 @@ Label_07_5183:
 	ld d, a ; $5189
 	ld a, [$df6b] ; $518a
 	ld e, a ; $518d
-	call Func_07_52a0 ; $518e
-	call Func_07_52f1 ; $5191
-	call Func_07_5345 ; $5194
-	call Func_07_52d7 ; $5197
+	call LoadShotPlacementEntry ; $518e
+	call AddBallSpeedQuarter ; $5191
+	call AddChargeSpeedBonus ; $5194
+	call FinalizeShotSpeed ; $5197
 	ret ; $519a
 Label_07_519b:
 	ld hl, $4d81 ; $519b
@@ -2145,10 +2145,10 @@ Label_07_519b:
 	ld d, a ; $51a1
 	ld a, [$df6b] ; $51a2
 	ld e, a ; $51a5
-	call Func_07_52a0 ; $51a6
-	call Func_07_52f1 ; $51a9
-	call Func_07_5345 ; $51ac
-	call Func_07_52d7 ; $51af
+	call LoadShotPlacementEntry ; $51a6
+	call AddBallSpeedQuarter ; $51a9
+	call AddChargeSpeedBonus ; $51ac
+	call FinalizeShotSpeed ; $51af
 	ret ; $51b2
 Label_07_51b3:
 	ld hl, $4dd1 ; $51b3
@@ -2156,10 +2156,10 @@ Label_07_51b3:
 	ld d, a ; $51b9
 	ld a, [$df6b] ; $51ba
 	ld e, a ; $51bd
-	call Func_07_52a0 ; $51be
-	call Func_07_531d ; $51c1
-	call Func_07_535c ; $51c4
-	call Func_07_52d7 ; $51c7
+	call LoadShotPlacementEntry ; $51be
+	call AddBallSpeedEighth ; $51c1
+	call AddChargeSpeedBonusHalf ; $51c4
+	call FinalizeShotSpeed ; $51c7
 	ret ; $51ca
 Label_07_51cb:
 	ld hl, $4e21 ; $51cb
@@ -2167,80 +2167,80 @@ Label_07_51cb:
 	ld d, a ; $51d1
 	ld a, [$df6b] ; $51d2
 	ld e, a ; $51d5
-	call Func_07_52a0 ; $51d6
-	call Func_07_531d ; $51d9
-	call Func_07_535c ; $51dc
-	call Func_07_52d7 ; $51df
+	call LoadShotPlacementEntry ; $51d6
+	call AddBallSpeedEighth ; $51d9
+	call AddChargeSpeedBonusHalf ; $51dc
+	call FinalizeShotSpeed ; $51df
 	ret ; $51e2
 Label_07_51e3:
 	ld hl, $4e71 ; $51e3
 	ld d, $00 ; $51e6
 	ld a, [$df6b] ; $51e8
 	ld e, a ; $51eb
-	call Func_07_52a0 ; $51ec
-	call Func_07_52f1 ; $51ef
-	call Func_07_5345 ; $51f2
-	call Func_07_52d7 ; $51f5
+	call LoadShotPlacementEntry ; $51ec
+	call AddBallSpeedQuarter ; $51ef
+	call AddChargeSpeedBonus ; $51f2
+	call FinalizeShotSpeed ; $51f5
 	ret ; $51f8
 Label_07_51f9:
 	ld hl, $4ec1 ; $51f9
 	ld d, $00 ; $51fc
 	ld a, [$df6c] ; $51fe
 	ld e, a ; $5201
-	call Func_07_52a0 ; $5202
-	call Func_07_5301 ; $5205
-	call Func_07_5345 ; $5208
-	call Func_07_52d7 ; $520b
+	call LoadShotPlacementEntry ; $5202
+	call AddBallSpeed3Sixteenths ; $5205
+	call AddChargeSpeedBonus ; $5208
+	call FinalizeShotSpeed ; $520b
 	ret ; $520e
 Label_07_520f:
 	ld hl, $4f11 ; $520f
 	ld d, $00 ; $5212
 	ld a, [$df6d] ; $5214
 	ld e, a ; $5217
-	call Func_07_52a0 ; $5218
-	call Func_07_5301 ; $521b
-	call Func_07_52d7 ; $521e
+	call LoadShotPlacementEntry ; $5218
+	call AddBallSpeed3Sixteenths ; $521b
+	call FinalizeShotSpeed ; $521e
 	ret ; $5221
 Label_07_5222:
 	ld hl, $4f61 ; $5222
 	ld d, $00 ; $5225
 	ld a, [$df6d] ; $5227
 	ld e, a ; $522a
-	call Func_07_52a0 ; $522b
-	call Func_07_52f1 ; $522e
-	call Func_07_52d7 ; $5231
+	call LoadShotPlacementEntry ; $522b
+	call AddBallSpeedQuarter ; $522e
+	call FinalizeShotSpeed ; $5231
 	ret ; $5234
 Label_07_5235:
 	ld hl, $4fb1 ; $5235
 	ld d, $00 ; $5238
 	ld a, [$df6d] ; $523a
 	ld e, a ; $523d
-	call Func_07_52a0 ; $523e
-	call Func_07_531d ; $5241
-	call Func_07_52d7 ; $5244
+	call LoadShotPlacementEntry ; $523e
+	call AddBallSpeedEighth ; $5241
+	call FinalizeShotSpeed ; $5244
 	ret ; $5247
 Label_07_5248:
 	ld hl, $5001 ; $5248
 	ld d, $00 ; $524b
 	ld a, [$df6d] ; $524d
 	ld e, a ; $5250
-	call Func_07_52a0 ; $5251
-	call Func_07_5301 ; $5254
-	call Func_07_52d7 ; $5257
+	call LoadShotPlacementEntry ; $5251
+	call AddBallSpeed3Sixteenths ; $5254
+	call FinalizeShotSpeed ; $5257
 	ret ; $525a
 Label_07_525b:
 	ld hl, $5051 ; $525b
 	ld a, [$df92] ; $525e
 	ld d, a ; $5261
 	ld e, $00 ; $5262
-	call Func_07_52a0 ; $5264
+	call LoadShotPlacementEntry ; $5264
 	ret ; $5267
 Label_07_5268:
 	ld hl, $5061 ; $5268
 	ld a, [$df93] ; $526b
 	ld d, a ; $526e
 	ld e, $00 ; $526f
-	call Func_07_52a0 ; $5271
+	call LoadShotPlacementEntry ; $5271
 	ret ; $5274
 Label_07_5275:
 	ld hl, $5071 ; $5275
@@ -2248,7 +2248,7 @@ Label_07_5275:
 	ld d, a ; $527b
 	ld a, [$df6c] ; $527c
 	ld e, a ; $527f
-	call Func_07_52a0 ; $5280
+	call LoadShotPlacementEntry ; $5280
 	ret ; $5283
 Label_07_5284:
 	ld hl, $50c1 ; $5284
@@ -2256,16 +2256,16 @@ Label_07_5284:
 	ld d, a ; $528a
 	ld a, [$df6c] ; $528b
 	ld e, a ; $528e
-	call Func_07_52a0 ; $528f
+	call LoadShotPlacementEntry ; $528f
 	ret ; $5292
 Label_07_5293:
 	ld hl, $5111 ; $5293
 	ld d, $00 ; $5296
 	ld a, [$df6c] ; $5298
 	ld e, a ; $529b
-	call Func_07_52a0 ; $529c
+	call LoadShotPlacementEntry ; $529c
 	ret ; $529f
-Func_07_52a0:
+LoadShotPlacementEntry:
 	push hl ; $52a0
 	ld a, d ; $52a1
 	add a, a ; $52a2
@@ -2312,8 +2312,8 @@ Label_07_52d3:
 	ld b, [hl] ; $52d4
 	ld c, a ; $52d5
 	ret ; $52d6
-Func_07_52d7:
-	call Func_07_537f ; $52d7
+FinalizeShotSpeed:
+	call AddPlayerMomentumToShot ; $52d7
 	call Func_07_53a2 ; $52da
 	ld hl, rJOYP ; $52dd
 	add hl, bc ; $52e0
@@ -2326,7 +2326,7 @@ Label_07_52e8:
 	ld a, b ; $52ec
 	ld [$c459], a ; $52ed
 	ret ; $52f0
-Func_07_52f1:
+AddBallSpeedQuarter:
 	ld hl, $c424 ; $52f1
 	ld a, [hl+] ; $52f4
 	ld h, [hl] ; $52f5
@@ -2336,7 +2336,7 @@ Func_07_52f1:
 	sra h ; $52fb
 	rr l ; $52fd
 	jr Label_07_532f ; $52ff
-Func_07_5301:
+AddBallSpeed3Sixteenths:
 	ld hl, $c424 ; $5301
 	ld a, [hl+] ; $5304
 	ld h, [hl] ; $5305
@@ -2354,7 +2354,7 @@ Func_07_5301:
 	add hl, de ; $5319
 	add hl, de ; $531a
 	jr Label_07_532f ; $531b
-Func_07_531d:
+AddBallSpeedEighth:
 	ld hl, $c424 ; $531d
 	ld a, [hl+] ; $5320
 	ld h, [hl] ; $5321
@@ -2383,7 +2383,7 @@ Label_07_5339:
 	ld c, l ; $5342
 	ld b, h ; $5343
 	ret ; $5344
-Func_07_5345:
+AddChargeSpeedBonus:
 	ld a, [$c4a2] ; $5345
 	ld l, a ; $5348
 	ld h, $00 ; $5349
@@ -2396,7 +2396,7 @@ Func_07_5345:
 Label_07_5357:
 	call MulHLByASignedFull ; $5357
 	jr Label_07_5373 ; $535a
-Func_07_535c:
+AddChargeSpeedBonusHalf:
 	ld a, [$c4a2] ; $535c
 	ld l, a ; $535f
 	ld h, $00 ; $5360
@@ -2418,7 +2418,7 @@ Label_07_5373:
 	ld c, l ; $537c
 	ld b, h ; $537d
 	ret ; $537e
-Func_07_537f:
+AddPlayerMomentumToShot:
 	ld hl, $df42 ; $537f
 	ld a, [hl+] ; $5382
 	ld h, [hl] ; $5383
@@ -2453,7 +2453,7 @@ Func_07_53a2:
 	ld b, h ; $53ae
 Label_07_53af:
 	ret ; $53af
-Func_07_53b0:
+ExecuteShot:
 	ld hl, $c4b7 ; $53b0
 	ld a, [hl] ; $53b3
 	and a, a ; $53b4
@@ -2545,11 +2545,11 @@ Label_07_541c:
 	dw Label_07_59c5 ; $545d jumptable
 	dw Label_07_59d2 ; $545f jumptable
 	dw Label_07_59df ; $5461 jumptable
-	call Func_07_546b ; $5463
+	call ApplyShotRecoil ; $5463
 	xor a, a ; $5466
 	ld [$df4b], a ; $5467
 	ret ; $546a
-Func_07_546b:
+ApplyShotRecoil:
 	ld hl, $df0f ; $546b
 	set 0, [hl] ; $546e
 	res 5, [hl] ; $5470
@@ -2613,7 +2613,7 @@ Func_07_546b:
 Label_07_54c9:
 	ret ; $54c9
 	INCBIN "data/bank_007/d_54ca.bin" ; $54ca, 20 bytes
-Func_07_54de:
+WeakenShotByCharge:
 	ld a, [$c4a2] ; $54de
 	ld l, a ; $54e1
 	ld h, $00 ; $54e2
@@ -2626,7 +2626,7 @@ Func_07_54de:
 	sbc a, h ; $54ea
 	ld b, a ; $54eb
 	ret ; $54ec
-Func_07_54ed:
+BoostShotByCharge:
 	ld a, [$c4a2] ; $54ed
 	ld l, a ; $54f0
 	ld h, $00 ; $54f1
@@ -2641,7 +2641,7 @@ Func_07_54ed:
 	ld c, l ; $54fb
 	ld b, h ; $54fc
 	ret ; $54fd
-Func_07_54fe:
+NudgeShotByPlayerMomentum:
 	ld hl, $df42 ; $54fe
 	ld a, [hl+] ; $5501
 	ld h, [hl] ; $5502
@@ -2668,7 +2668,7 @@ Label_07_5521:
 	ld c, l ; $5522
 	ld b, h ; $5523
 	ret ; $5524
-Func_07_5525:
+CheckBallInSmashRange:
 	ld hl, wBallDepth ; $5525
 	ld a, [hl+] ; $5528
 	ld h, [hl] ; $5529
@@ -2734,7 +2734,7 @@ Label_07_5564:
 	bit 7, h ; $557b
 Label_07_557d:
 	ret ; $557d
-Func_07_557e:
+ApplyShotTypePresets:
 	ld a, [$c4a0] ; $557e
 	ld b, a ; $5581
 	add a, a ; $5582
@@ -2808,11 +2808,11 @@ Label_07_560b:
 	ld d, h ; $562c
 	ret ; $562d
 	INCBIN "data/bank_007/d_562e.bin" ; $562e, 24 bytes
-Func_07_5646:
+ComputeShotTargetX:
 	ld a, [wRallyLength] ; $5646
 	and a, a ; $5649
 	jr z, Label_07_55e9 ; $564a
-	call Func_07_56b7 ; $564c
+	call ComputeAimBaseOffset ; $564c
 	ld a, [$df4a] ; $564f
 	add a, $02 ; $5652
 	and a, $07 ; $5654
@@ -2843,7 +2843,7 @@ Label_07_566c:
 	add hl, de ; $5678
 	ld e, l ; $5679
 	ld d, h ; $567a
-	call Func_07_56e3 ; $567b
+	call ClampShotTargetX ; $567b
 	xor a, a ; $567e
 	sub a, e ; $567f
 	ld e, a ; $5680
@@ -2862,7 +2862,7 @@ Label_07_5689:
 	add hl, de ; $568f
 	ld e, l ; $5690
 	ld d, h ; $5691
-	call Func_07_56e3 ; $5692
+	call ClampShotTargetX ; $5692
 	ret ; $5695
 Label_07_5696:
 	ld hl, wBallX ; $5696
@@ -2873,14 +2873,14 @@ Label_07_5696:
 	rr e ; $569e
 	sra d ; $56a0
 	rr e ; $56a2
-	call Func_07_570d ; $56a4
+	call GetRandomAimJitter ; $56a4
 	ld a, e ; $56a7
 	sub a, h ; $56a8
 	ld e, a ; $56a9
 	jr nc, Label_07_56ad ; $56aa
 	dec d ; $56ac
 Label_07_56ad:
-	call Func_07_570d ; $56ad
+	call GetRandomAimJitter ; $56ad
 	ld a, h ; $56b0
 	add a, e ; $56b1
 	ld e, a ; $56b2
@@ -2888,7 +2888,7 @@ Label_07_56ad:
 	inc d ; $56b5
 Label_07_56b6:
 	ret ; $56b6
-Func_07_56b7:
+ComputeAimBaseOffset:
 	ld hl, $c43e ; $56b7
 	ld a, [hl+] ; $56ba
 	ld d, [hl] ; $56bb
@@ -2918,7 +2918,7 @@ Label_07_56cd:
 	ld e, l ; $56e0
 	ld d, h ; $56e1
 	ret ; $56e2
-Func_07_56e3:
+ClampShotTargetX:
 	ld hl, $c484 ; $56e3
 	ld a, [hl+] ; $56e6
 	ld h, [hl] ; $56e7
@@ -2946,7 +2946,7 @@ Func_07_56e3:
 	ld e, c ; $5701
 	ld d, b ; $5702
 Label_07_5703:
-	call Func_07_570d ; $5703
+	call GetRandomAimJitter ; $5703
 	ld a, e ; $5706
 	sub a, h ; $5707
 	ld e, a ; $5708
@@ -2954,7 +2954,7 @@ Label_07_5703:
 	dec d ; $570b
 Label_07_570c:
 	ret ; $570c
-Func_07_570d:
+GetRandomAimJitter:
 	farcall FarPtr_AdvanceMatchRng ; $570d
 	ld l, a ; $5710
 	ld h, $00 ; $5711
@@ -2965,7 +2965,7 @@ Func_07_570d:
 	add hl, hl ; $571b
 	add hl, hl ; $571c
 	ret ; $571d
-Func_07_571e:
+ComputeShotTrajectory:
 	ld a, [$df0a] ; $571e
 	and a, $02 ; $5721
 	jr nz, Label_07_572b ; $5723
@@ -2994,7 +2994,7 @@ Label_07_572b:
 	ld a, c ; $5740
 	ld [hl+], a ; $5741
 	ld [hl], b ; $5742
-	call Func_07_5646 ; $5743
+	call ComputeShotTargetX ; $5743
 	ld hl, $c430 ; $5746
 	ld a, e ; $5749
 	ld [hl+], a ; $574a
@@ -3217,7 +3217,7 @@ Label_07_5851:
 	ld [de], a ; $5873
 	inc de ; $5874
 	ret ; $5875
-Func_07_5876:
+NormalizeBallHeightForShot:
 	ld hl, wBallHeight ; $5876
 	ld a, [hl+] ; $5879
 	ld d, [hl] ; $587a
@@ -3242,7 +3242,7 @@ Func_07_5876:
 	ld [hl], d ; $5897
 Label_07_5898:
 	ret ; $5898
-Func_07_5899:
+RaiseBallHeightForLob:
 	ld hl, wBallHeight ; $5899
 	ld a, [hl+] ; $589c
 	ld d, [hl] ; $589d
@@ -3270,10 +3270,10 @@ Label_07_58b1:
 Label_07_58be:
 	ld a, $00 ; $58be
 	ld [$c4a0], a ; $58c0
-	call Func_07_5876 ; $58c3
-	call Func_07_557e ; $58c6
-	call Func_07_54de ; $58c9
-	call Func_07_571e ; $58cc
+	call NormalizeBallHeightForShot ; $58c3
+	call ApplyShotTypePresets ; $58c6
+	call WeakenShotByCharge ; $58c9
+	call ComputeShotTrajectory ; $58cc
 	farcall FarPtr_22_00 ; $58cf
 	ret ; $58d2
 Label_07_58d3:
@@ -3282,18 +3282,18 @@ Label_07_58d3:
 	jr nz, Label_07_58be ; $58d8
 	ld a, $01 ; $58da
 	ld [$c4a6], a ; $58dc
-	call Func_07_5876 ; $58df
-	call Func_07_557e ; $58e2
-	call Func_07_571e ; $58e5
+	call NormalizeBallHeightForShot ; $58df
+	call ApplyShotTypePresets ; $58e2
+	call ComputeShotTrajectory ; $58e5
 	farcall FarPtr_23_00 ; $58e8
 	ret ; $58eb
 Label_07_58ec:
 	ld a, $02 ; $58ec
 	ld [$c4a0], a ; $58ee
-	call Func_07_5876 ; $58f1
-	call Func_07_557e ; $58f4
-	call Func_07_54de ; $58f7
-	call Func_07_571e ; $58fa
+	call NormalizeBallHeightForShot ; $58f1
+	call ApplyShotTypePresets ; $58f4
+	call WeakenShotByCharge ; $58f7
+	call ComputeShotTrajectory ; $58fa
 	farcall FarPtr_20_00 ; $58fd
 	ret ; $5900
 Label_07_5901:
@@ -3302,60 +3302,60 @@ Label_07_5901:
 	jr nz, Label_07_58ec ; $5906
 	ld a, $01 ; $5908
 	ld [$c4a6], a ; $590a
-	call Func_07_5876 ; $590d
-	call Func_07_557e ; $5910
-	call Func_07_571e ; $5913
+	call NormalizeBallHeightForShot ; $590d
+	call ApplyShotTypePresets ; $5910
+	call ComputeShotTrajectory ; $5913
 	farcall FarPtr_21_00 ; $5916
 	ret ; $5919
 Label_07_591a:
-	call Func_07_5899 ; $591a
-	call Func_07_557e ; $591d
-	call Func_07_54ed ; $5920
-	call Func_07_54fe ; $5923
-	farcall FarPtr_07_3e ; $5926
+	call RaiseBallHeightForLob ; $591a
+	call ApplyShotTypePresets ; $591d
+	call BoostShotByCharge ; $5920
+	call NudgeShotByPlayerMomentum ; $5923
+	farcall FarPtr_ComputeShotTrajectory ; $5926
 	farcall FarPtr_24_00 ; $5929
 	ret ; $592c
 Label_07_592d:
-	call Func_07_5899 ; $592d
-	call Func_07_557e ; $5930
-	call Func_07_54de ; $5933
-	call Func_07_571e ; $5936
+	call RaiseBallHeightForLob ; $592d
+	call ApplyShotTypePresets ; $5930
+	call WeakenShotByCharge ; $5933
+	call ComputeShotTrajectory ; $5936
 	farcall FarPtr_24_02 ; $5939
 	ret ; $593c
 Label_07_593d:
-	call Func_07_5525 ; $593d
+	call CheckBallInSmashRange ; $593d
 	jr z, Label_07_597c ; $5940
-	call Func_07_5876 ; $5942
-	call Func_07_557e ; $5945
-	call Func_07_54de ; $5948
-	call Func_07_571e ; $594b
+	call NormalizeBallHeightForShot ; $5942
+	call ApplyShotTypePresets ; $5945
+	call WeakenShotByCharge ; $5948
+	call ComputeShotTrajectory ; $594b
 	farcall FarPtr_2c_00 ; $594e
 	ret ; $5951
 Label_07_5952:
-	call Func_07_5525 ; $5952
+	call CheckBallInSmashRange ; $5952
 	jr z, Label_07_597c ; $5955
-	call Func_07_5876 ; $5957
-	call Func_07_557e ; $595a
-	call Func_07_54de ; $595d
-	call Func_07_571e ; $5960
+	call NormalizeBallHeightForShot ; $5957
+	call ApplyShotTypePresets ; $595a
+	call WeakenShotByCharge ; $595d
+	call ComputeShotTrajectory ; $5960
 	farcall FarPtr_2c_02 ; $5963
 	ret ; $5966
 Label_07_5967:
-	call Func_07_5525 ; $5967
+	call CheckBallInSmashRange ; $5967
 	jr z, Label_07_597c ; $596a
-	call Func_07_5876 ; $596c
-	call Func_07_557e ; $596f
-	call Func_07_54de ; $5972
-	call Func_07_571e ; $5975
+	call NormalizeBallHeightForShot ; $596c
+	call ApplyShotTypePresets ; $596f
+	call WeakenShotByCharge ; $5972
+	call ComputeShotTrajectory ; $5975
 	farcall FarPtr_2c_04 ; $5978
 	ret ; $597b
 Label_07_597c:
 	ld a, $05 ; $597c
 	ld [$c4a0], a ; $597e
-	call Func_07_5876 ; $5981
-	call Func_07_557e ; $5984
-	call Func_07_54de ; $5987
-	call Func_07_571e ; $598a
+	call NormalizeBallHeightForShot ; $5981
+	call ApplyShotTypePresets ; $5984
+	call WeakenShotByCharge ; $5987
+	call ComputeShotTrajectory ; $598a
 	farcall FarPtr_24_0c ; $598d
 	ret ; $5990
 Label_07_5991:
@@ -3363,13 +3363,13 @@ Label_07_5991:
 	ld [$c4a0], a ; $5993
 	ld a, $01 ; $5996
 	ld [$c4a6], a ; $5998
-	call Func_07_5876 ; $599b
-	call Func_07_557e ; $599e
-	call Func_07_571e ; $59a1
+	call NormalizeBallHeightForShot ; $599b
+	call ApplyShotTypePresets ; $599e
+	call ComputeShotTrajectory ; $59a1
 	farcall FarPtr_24_08 ; $59a4
 	ret ; $59a7
 Label_07_59a8:
-	call Func_07_5525 ; $59a8
+	call CheckBallInSmashRange ; $59a8
 	jr z, Label_07_59b8 ; $59ab
 	ld a, [$df15] ; $59ad
 	cp a, $07 ; $59b0
@@ -3377,26 +3377,26 @@ Label_07_59a8:
 	cp a, $08 ; $59b4
 	jr z, Label_07_5991 ; $59b6
 Label_07_59b8:
-	call Func_07_5876 ; $59b8
-	call Func_07_557e ; $59bb
-	call Func_07_571e ; $59be
+	call NormalizeBallHeightForShot ; $59b8
+	call ApplyShotTypePresets ; $59bb
+	call ComputeShotTrajectory ; $59be
 	farcall FarPtr_24_06 ; $59c1
 	ret ; $59c4
 Label_07_59c5:
-	call Func_07_557e ; $59c5
-	call Func_07_571e ; $59c8
+	call ApplyShotTypePresets ; $59c5
+	call ComputeShotTrajectory ; $59c8
 	farcall FarPtr_29_00 ; $59cb
 	call Func_07_5a01 ; $59ce
 	ret ; $59d1
 Label_07_59d2:
-	call Func_07_557e ; $59d2
-	call Func_07_571e ; $59d5
+	call ApplyShotTypePresets ; $59d2
+	call ComputeShotTrajectory ; $59d5
 	farcall FarPtr_2a_00 ; $59d8
 	call Func_07_5a01 ; $59db
 	ret ; $59de
 Label_07_59df:
-	call Func_07_557e ; $59df
-	call Func_07_571e ; $59e2
+	call ApplyShotTypePresets ; $59df
+	call ComputeShotTrajectory ; $59e2
 	farcall FarPtr_2b_00 ; $59e5
 	call Func_07_5a01 ; $59e8
 	ret ; $59eb
@@ -3452,7 +3452,7 @@ LookupCharSpriteSet:
 	ret ; $5a4f
 CharSpriteSetTable:
 	INCBIN "data/bank_007/d_5a50.bin" ; $5a50, 32 bytes
-Func_07_5a70:
+SetupCharacterSprite:
 	push de ; $5a70
 	farcall FarPtr_04_12 ; $5a71
 	pop de ; $5a74
@@ -3734,10 +3734,10 @@ Label_07_5c32:
 	bit 1, a ; $5c38
 	ret z ; $5c3a
 	ld a, [$df0b] ; $5c3b
-	call Func_07_5cf4 ; $5c3e
+	call OverrideCharStatsForDebug ; $5c3e
 	ret ; $5c41
 	INCBIN "data/bank_007/d_5c42.bin" ; $5c42, 178 bytes
-Func_07_5cf4:
+OverrideCharStatsForDebug:
 	push af ; $5cf4
 	ld a, $04 ; $5cf5
 	ld [$df79], a ; $5cf7
@@ -3925,7 +3925,7 @@ Func_07_5cf4:
 	ld [hl+], a ; $5df6
 	ld [hl], d ; $5df7
 	ret ; $5df8
-Func_07_5df9:
+RunDebugTestMatch:
 	ld a, $04 ; $5df9
 	ld [wGameMode], a ; $5dfb
 	ld a, $03 ; $5dfe
@@ -4014,7 +4014,7 @@ Func_07_5df9:
 	ret ; $5ed1
 Func_07_5ed2:
 	ret ; $5ed2
-Func_07_5ed3:
+ResolveTargetModePoint:
 	farcall FarPtr_09_26 ; $5ed3
 	farcall FarPtr_ResolvePointWinner ; $5ed6
 	ld [wPointWinLoseFlag], a ; $5ed9
@@ -4087,7 +4087,7 @@ Label_07_5f48:
 	ld de, $000b ; $5f78
 	ld bc, $1305 ; $5f7b
 	farcall FarPtr_ShowMessageWindow ; $5f7e
-	call Func_07_5ed3 ; $5f81
+	call ResolveTargetModePoint ; $5f81
 	ld a, [wCharacter1ServiceAces] ; $5f84
 	ld hl, wCharacter2ServiceAces ; $5f87
 	cp a, [hl] ; $5f8a

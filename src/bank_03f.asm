@@ -2323,7 +2323,7 @@ Label_3f_5259:
 	ld [$cb2d], a ; $525d
 	ret ; $5260
 Func_3f_5261:
-	farcall FarPtr_05_8c ; $5261
+	farcall FarPtr_PrepareGlyphBuffer ; $5261
 	wram_bank $03 ; $5264
 	ld c, $0e ; $526a
 	ld hl, $4487 ; $526c
@@ -2440,7 +2440,7 @@ Label_3f_5302:
 	ld [$c3b3], a ; $530c
 	ld a, c ; $530f
 	ld c, $0c ; $5310
-	farcall FarPtr_05_1c ; $5312
+	farcall FarPtr_RenderProportionalTextAt ; $5312
 	ld c, a ; $5315
 	pop af ; $5316
 	ld [$c3b3], a ; $5317
@@ -2449,7 +2449,7 @@ Label_3f_5302:
 	ld a, b ; $531c
 	cp a, $06 ; $531d
 	jr nz, Label_3f_52d5 ; $531f
-	farcall FarPtr_05_18 ; $5321
+	farcall FarPtr_RestoreShadowTilemap ; $5321
 	call Func_3f_5334 ; $5324
 	call Func_3f_5749 ; $5327
 	call Func_3f_578f ; $532a
@@ -2490,7 +2490,7 @@ Label_3f_5366:
 	push de ; $5366
 	ld c, $40 ; $5367
 	ld de, $d050 ; $5369
-	farcall FarPtr_05_72 ; $536c
+	farcall FarPtr_RenderTextToBuffer64 ; $536c
 	pop de ; $536f
 	ld a, d ; $5370
 	inc a ; $5371
@@ -2505,7 +2505,7 @@ Label_3f_5377:
 	inc h ; $537e
 Label_3f_537f:
 	ld de, $d05e ; $537f
-	farcall FarPtr_05_72 ; $5382
+	farcall FarPtr_RenderTextToBuffer64 ; $5382
 	ld a, $06 ; $5385
 	ld [$d040], a ; $5387
 Label_3f_538a:
@@ -2812,7 +2812,7 @@ Label_3f_5640:
 	inc h ; $564d
 Label_3f_564e:
 	push hl ; $564e
-	farcall FarPtr_05_5c ; $564f
+	farcall FarPtr_ResetTextWindowsAndRestoreMap ; $564f
 	ld a, $05 ; $5652
 	ld [$c3b3], a ; $5654
 	pop hl ; $5657
@@ -2820,12 +2820,12 @@ Label_3f_564e:
 	ld e, $06 ; $565a
 	ld b, $14 ; $565c
 	ld c, $05 ; $565e
-	farcall FarPtr_05_06 ; $5660
+	farcall FarPtr_CreateDialogueWindow ; $5660
 	push hl ; $5663
 	xor a, a ; $5664
-	farcall FarPtr_05_44 ; $5665
+	farcall FarPtr_AddTextIdOffset ; $5665
 	ld b, $00 ; $5668
-	farcall FarPtr_05_0e ; $566a
+	farcall FarPtr_SetWindowTextId ; $566a
 	pop hl ; $566d
 	ld a, [wMessageSpeed] ; $566e
 	push af ; $5671
@@ -2834,14 +2834,14 @@ Label_3f_564e:
 	ld [wMessageSpeed], a ; $5675
 	xor a, a ; $5678
 	set_flag $04, 3 ; $5679
-	farcall FarPtr_05_60 ; $567c
+	farcall FarPtr_RedrawWindowText ; $567c
 	clear_flag $04, 3 ; $567f
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a, a ; $5686
-	farcall FarPtr_05_6a ; $5687
-	farcall FarPtr_05_64 ; $568a
-	farcall FarPtr_05_66 ; $568d
+	farcall FarPtr_RestoreTilemapUnderWindow ; $5687
+	farcall FarPtr_RedrawWindowRowsSafe ; $568a
+	farcall FarPtr_CloseWindowAlt ; $568d
 	wram_bank $06 ; $5690
 	ld a, [$cb37] ; $5696
 	res 0, a ; $5699

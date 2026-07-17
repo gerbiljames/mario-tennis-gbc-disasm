@@ -1,157 +1,157 @@
 SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 
-FarPtr_05_00:
-	dw Func_05_4096 ; $4000
-FarPtr_05_02:
-	dw Func_05_4664 ; $4002
-FarPtr_05_04:
-	dw Func_05_4684 ; $4004
-FarPtr_05_06:
-	dw Func_05_4688 ; $4006
-FarPtr_05_08:
-	dw Func_05_46b0 ; $4008
-FarPtr_05_0a:
-	dw Func_05_5a93 ; $400a
+FarPtr_InitTextWindows:
+	dw InitTextWindows ; $4000
+FarPtr_CreateWindowWithAttr:
+	dw CreateWindowWithAttr ; $4002
+FarPtr_CreateWindow:
+	dw CreateWindow ; $4004
+FarPtr_CreateDialogueWindow:
+	dw CreateDialogueWindow ; $4006
+FarPtr_CreateMenuWindowFromText:
+	dw CreateMenuWindowFromText ; $4008
+FarPtr_CloseActiveDialogueWindow:
+	dw CloseActiveDialogueWindow ; $400a
 FarPtr_05_0c:
 	dw Func_05_4766 ; $400c
-FarPtr_05_0e:
-	dw Func_05_55d5 ; $400e
+FarPtr_SetWindowTextId:
+	dw SetWindowTextId ; $400e
 FarPtr_05_10:
 	dw Func_05_4626 ; $4010
-FarPtr_05_12:
-	dw Func_05_41c6 ; $4012
-FarPtr_05_14:
-	dw Func_05_41df ; $4014
-FarPtr_05_16:
-	dw Func_05_4146 ; $4016
-FarPtr_05_18:
-	dw Func_05_436f ; $4018
-FarPtr_05_1a:
-	dw Func_05_431d ; $401a
-FarPtr_05_1c:
-	dw Func_05_5db3 ; $401c
+FarPtr_QueueFullTilemapCopy:
+	dw QueueFullTilemapCopy ; $4012
+FarPtr_QueueFullAttrmapCopy:
+	dw QueueFullAttrmapCopy ; $4014
+FarPtr_CopyVisibleTilemapToVRAM:
+	dw CopyVisibleTilemapToVRAM ; $4016
+FarPtr_RestoreShadowTilemap:
+	dw RestoreShadowTilemap ; $4018
+FarPtr_WriteWindowCellTileAttr:
+	dw WriteWindowCellTileAttr ; $401a
+FarPtr_RenderProportionalTextAt:
+	dw RenderProportionalTextAt ; $401c
 FarPtr_FetchDialogueText:
 	dw FetchDialogueText ; $401e
-FarPtr_05_20:
-	dw Func_05_4552 ; $4020
-FarPtr_05_22:
-	dw Func_05_4284 ; $4022
-FarPtr_05_24:
-	dw Func_05_57e7 ; $4024
-FarPtr_05_26:
-	dw Func_05_5bfc ; $4026
-FarPtr_05_28:
-	dw Func_05_4757 ; $4028
+FarPtr_DrawTileAttrRect:
+	dw DrawTileAttrRect ; $4020
+FarPtr_CopyTilemapRowsAnimated:
+	dw CopyTilemapRowsAnimated ; $4022
+FarPtr_ApplyMessageSpeed:
+	dw ApplyMessageSpeed ; $4024
+FarPtr_MeasureDialogueWidthTiles:
+	dw MeasureDialogueWidthTiles ; $4026
+FarPtr_ResetWindowState:
+	dw ResetWindowState ; $4028
 FarPtr_05_2a:
 	dw Func_05_44f9 ; $402a
 FarPtr_05_2c:
 	dw Func_05_4510 ; $402c
 FarPtr_RenderTextString:
 	dw RenderTextString ; $402e
-FarPtr_05_30:
-	dw Func_05_5648 ; $4030
-FarPtr_05_32:
-	dw Func_05_55e6 ; $4032
-FarPtr_05_34:
-	dw Func_05_581f ; $4034
-FarPtr_05_36:
-	dw Func_05_58f0 ; $4036
-FarPtr_05_38:
-	dw Func_05_59b0 ; $4038
-FarPtr_05_3a:
-	dw Func_05_5a4f ; $403a
-FarPtr_05_3c:
-	dw Func_05_477f ; $403c
-FarPtr_05_3e:
-	dw Func_05_4944 ; $403e
-FarPtr_05_40:
-	dw Func_05_49f6 ; $4040
-FarPtr_05_42:
-	dw Func_05_4aa8 ; $4042
-FarPtr_05_44:
-	dw Func_05_5d2b ; $4044
-FarPtr_05_46:
-	dw Func_05_50f7 ; $4046
-FarPtr_05_48:
-	dw Func_05_5147 ; $4048
-FarPtr_05_4a:
-	dw Func_05_517a ; $404a
+FarPtr_RenderActiveWindowText:
+	dw RenderActiveWindowText ; $4030
+FarPtr_SetActiveWindowTextId:
+	dw SetActiveWindowTextId ; $4032
+FarPtr_ShowSpeakerDialogue:
+	dw ShowSpeakerDialogue ; $4034
+FarPtr_ShowSpeakerDialogueRestoreBG:
+	dw ShowSpeakerDialogueRestoreBG ; $4036
+FarPtr_ShowDialogueAtPosition:
+	dw ShowDialogueAtPosition ; $4038
+FarPtr_DrawDialogueAtPosition:
+	dw DrawDialogueAtPosition ; $403a
+FarPtr_RunMenuSelection:
+	dw RunMenuSelection ; $403c
+FarPtr_RunPagedTextMenu:
+	dw RunPagedTextMenu ; $403e
+FarPtr_RunPagedTextMenuAutoSize:
+	dw RunPagedTextMenuAutoSize ; $4040
+FarPtr_RunMenuSelectionShared:
+	dw RunMenuSelectionShared ; $4042
+FarPtr_AddTextIdOffset:
+	dw AddTextIdOffset ; $4044
+FarPtr_PushTextArgString:
+	dw PushTextArgString ; $4046
+FarPtr_PushTextArgNumber:
+	dw PushTextArgNumber ; $4048
+FarPtr_PushTextArgShortTextId:
+	dw PushTextArgShortTextId ; $404a
 FarPtr_05_4c:
 	dw Func_05_53ae ; $404c
 FarPtr_FetchShortTextToBuffer:
 	dw FetchShortTextToBuffer ; $404e
-FarPtr_05_50:
-	dw Func_05_65a2 ; $4050
-FarPtr_05_52:
-	dw Func_05_66a0 ; $4052
-FarPtr_05_54:
-	dw Func_05_67c4 ; $4054
-FarPtr_05_56:
-	dw Func_05_600e ; $4056
+FarPtr_RunDebugFlagEditor:
+	dw RunDebugFlagEditor ; $4050
+FarPtr_RunDebugMenu:
+	dw RunDebugMenu ; $4052
+FarPtr_RunDebugWarpMenu:
+	dw RunDebugWarpMenu ; $4054
+FarPtr_WriteStringToWindow:
+	dw WriteStringToWindow ; $4056
 FarPtr_GetTilemapCellAddress:
 	dw GetTilemapCellAddress ; $4058
-FarPtr_05_5a:
-	dw Func_05_6055 ; $405a
-FarPtr_05_5c:
-	dw Func_05_617a ; $405c
-FarPtr_05_5e:
-	dw Func_05_6181 ; $405e
-FarPtr_05_60:
-	dw Func_05_61a2 ; $4060
+FarPtr_WriteDialogueToWindow:
+	dw WriteDialogueToWindow ; $405a
+FarPtr_ResetTextWindowsAndRestoreMap:
+	dw ResetTextWindowsAndRestoreMap ; $405c
+FarPtr_CreateWindowWithTextId:
+	dw CreateWindowWithTextId ; $405e
+FarPtr_RedrawWindowText:
+	dw RedrawWindowText ; $4060
 FarPtr_05_62:
 	dw Func_05_6269 ; $4062
-FarPtr_05_64:
-	dw Func_05_62bc ; $4064
-FarPtr_05_66:
-	dw Func_05_62d8 ; $4066
-FarPtr_05_68:
-	dw Func_05_62e7 ; $4068
-FarPtr_05_6a:
-	dw Func_05_43a8 ; $406a
-FarPtr_05_6c:
-	dw Func_05_6b82 ; $406c
-FarPtr_05_6e:
-	dw Func_05_6bb9 ; $406e
-FarPtr_05_70:
-	dw Func_05_6bf0 ; $4070
-FarPtr_05_72:
-	dw Func_05_5f52 ; $4072
-FarPtr_05_74:
-	dw Func_05_6d85 ; $4074
-FarPtr_05_76:
-	dw Func_05_6e09 ; $4076
-FarPtr_05_78:
-	dw Func_05_6e45 ; $4078
-FarPtr_05_7a:
-	dw Func_05_72bd ; $407a
-FarPtr_05_7c:
-	dw Func_05_6f70 ; $407c
-FarPtr_05_7e:
-	dw Func_05_7205 ; $407e
-FarPtr_05_80:
-	dw Func_05_7232 ; $4080
-FarPtr_05_82:
-	dw Func_05_7223 ; $4082
-FarPtr_05_84:
-	dw Func_05_72d2 ; $4084
-FarPtr_05_86:
-	dw Func_05_6eea ; $4086
-FarPtr_05_88:
-	dw Func_05_6eba ; $4088
-FarPtr_05_8a:
-	dw Func_05_5654 ; $408a
-FarPtr_05_8c:
-	dw Func_05_72dc ; $408c
-FarPtr_05_8e:
-	dw Func_05_730d ; $408e
-FarPtr_05_90:
-	dw Func_05_7792 ; $4090
-FarPtr_05_92:
-	dw Func_05_78ad ; $4092
-FarPtr_05_94:
-	dw Func_05_742c ; $4094
-Func_05_4096:
-	call Func_05_6e09 ; $4096
+FarPtr_RedrawWindowRowsSafe:
+	dw RedrawWindowRowsSafe ; $4064
+FarPtr_CloseWindowAlt:
+	dw CloseWindowAlt ; $4066
+FarPtr_ShowDialogueCentered:
+	dw ShowDialogueCentered ; $4068
+FarPtr_RestoreTilemapUnderWindow:
+	dw RestoreTilemapUnderWindow ; $406a
+FarPtr_WriteStringToTilemap:
+	dw WriteStringToTilemap ; $406c
+FarPtr_WriteStringToTilemapAlt:
+	dw WriteStringToTilemapAlt ; $406e
+FarPtr_WriteStringToTilemapStreamed:
+	dw WriteStringToTilemapStreamed ; $4070
+FarPtr_RenderTextToBuffer64:
+	dw RenderTextToBuffer64 ; $4072
+FarPtr_RunDebugWindowDemo:
+	dw RunDebugWindowDemo ; $4074
+FarPtr_ResetTextWindowState:
+	dw ResetTextWindowState ; $4076
+FarPtr_CreateWindowFromScreenRect:
+	dw CreateWindowFromScreenRect ; $4078
+FarPtr_CloseWindow:
+	dw CloseWindow ; $407a
+FarPtr_DrawTextWindowFrame:
+	dw DrawTextWindowFrame ; $407c
+FarPtr_RedrawWindowRows:
+	dw RedrawWindowRows ; $407e
+FarPtr_RenderMenuWindowText:
+	dw RenderMenuWindowText ; $4080
+FarPtr_RedrawTilemapRowRange:
+	dw RedrawTilemapRowRange ; $4082
+FarPtr_RedrawAllTilemapRows:
+	dw RedrawAllTilemapRows ; $4084
+FarPtr_GetWindowStructPtr:
+	dw GetWindowStructPtr ; $4086
+FarPtr_FreeWindow:
+	dw FreeWindow ; $4088
+FarPtr_FitWindowToText:
+	dw FitWindowToText ; $408a
+FarPtr_PrepareGlyphBuffer:
+	dw PrepareGlyphBuffer ; $408c
+FarPtr_ResetGlyphStream:
+	dw ResetGlyphStream ; $408e
+FarPtr_UploadGlyphBuffer:
+	dw UploadGlyphBuffer ; $4090
+FarPtr_UploadGlyphTileRange:
+	dw UploadGlyphTileRange ; $4092
+FarPtr_UploadGlyphBufferFull:
+	dw UploadGlyphBufferFull ; $4094
+InitTextWindows:
+	call ResetTextWindowState ; $4096
 	ret ; $4099
 FetchShortTextToBuffer:
 	push af ; $409a
@@ -208,7 +208,7 @@ Label_05_40dd:
 	ld [hl], a ; $40f9
 Label_05_40fa:
 	ret ; $40fa
-Func_05_40fb:
+WriteTileToShadowMapCell:
 	push af ; $40fb
 	push de ; $40fc
 	push bc ; $40fd
@@ -265,7 +265,7 @@ Label_05_413e:
 	pop bc ; $4143
 	pop af ; $4144
 	ret ; $4145
-Func_05_4146:
+CopyVisibleTilemapToVRAM:
 	push af ; $4146
 	push bc ; $4147
 	push de ; $4148
@@ -344,7 +344,7 @@ Label_05_41be:
 	pop bc ; $41c3
 	pop af ; $41c4
 	ret ; $41c5
-Func_05_41c6:
+QueueFullTilemapCopy:
 	push af ; $41c6
 	push bc ; $41c7
 	push de ; $41c8
@@ -360,7 +360,7 @@ Func_05_41c6:
 	pop bc ; $41dc
 	pop af ; $41dd
 	ret ; $41de
-Func_05_41df:
+QueueFullAttrmapCopy:
 	push af ; $41df
 	push bc ; $41e0
 	push de ; $41e1
@@ -412,7 +412,7 @@ Func_05_41df:
 	ld c, $02 ; $4233
 	call QueueVRAMCopy ; $4235
 	ret ; $4238
-Func_05_4239:
+CopyTilemapRowsToVRAM:
 	ld d, a ; $4239
 	ld a, c ; $423a
 	or a, a ; $423b
@@ -461,7 +461,7 @@ Func_05_4239:
 	pop de ; $4282
 Label_05_4283:
 	ret ; $4283
-Func_05_4284:
+CopyTilemapRowsAnimated:
 	push af ; $4284
 	push bc ; $4285
 	push de ; $4286
@@ -512,7 +512,7 @@ Label_05_42b4:
 	ld c, a ; $42c3
 	xor a, a ; $42c4
 	ld b, $05 ; $42c5
-	call Func_05_4239 ; $42c7
+	call CopyTilemapRowsToVRAM ; $42c7
 	pop bc ; $42ca
 	ld a, c ; $42cb
 	sub a, b ; $42cc
@@ -522,7 +522,7 @@ Label_05_42ce:
 Label_05_42cf:
 	and a, $1f ; $42cf
 	ld b, $05 ; $42d1
-	call Func_05_4239 ; $42d3
+	call CopyTilemapRowsToVRAM ; $42d3
 	pop hl ; $42d6
 	pop de ; $42d7
 	pop bc ; $42d8
@@ -539,12 +539,12 @@ Label_05_42cf:
 	pop af ; $42e7
 	ret ; $42e8
 Func_05_42e9:
-	call Func_05_7214 ; $42e9
+	call RedrawWindowRowsPadded ; $42e9
 	ret ; $42ec
 Func_05_42ed:
-	call Func_05_7205 ; $42ed
+	call RedrawWindowRows ; $42ed
 	ret ; $42f0
-Func_05_42f1:
+RedrawActiveTextWindow:
 	test_flag $03, 3 ; $42f1
 	ret nz ; $42f4
 	push af ; $42f5
@@ -554,8 +554,8 @@ Func_05_42f1:
 	pop bc ; $42fd
 	pop af ; $42fe
 	ret ; $42ff
-Func_05_4300:
-	call Func_05_6eea ; $4300
+GetWindowCellOffset:
+	call GetWindowStructPtr ; $4300
 	ld a, [hl+] ; $4303
 	add a, d ; $4304
 	and a, $1f ; $4305
@@ -579,12 +579,12 @@ Label_05_431a:
 	ld d, h ; $431a
 	ld e, l ; $431b
 	ret ; $431c
-Func_05_431d:
+WriteWindowCellTileAttr:
 	push af ; $431d
 	push bc ; $431e
 	push de ; $431f
 	push hl ; $4320
-	call Func_05_4300 ; $4321
+	call GetWindowCellOffset ; $4321
 	ld hl, $c3b4 ; $4324
 	ld a, [hl+] ; $4327
 	ld h, [hl] ; $4328
@@ -606,12 +606,12 @@ Func_05_431d:
 	pop bc ; $4343
 	pop af ; $4344
 	ret ; $4345
-Func_05_4346:
+ReadWindowCellTileAttr:
 	push af ; $4346
 	push bc ; $4347
 	push de ; $4348
 	push hl ; $4349
-	call Func_05_4300 ; $434a
+	call GetWindowCellOffset ; $434a
 	ld hl, $c3b4 ; $434d
 	ld a, [hl+] ; $4350
 	ld h, [hl] ; $4351
@@ -633,14 +633,14 @@ Func_05_4346:
 	pop bc ; $436c
 	pop af ; $436d
 	ret ; $436e
-Func_05_436f:
+RestoreShadowTilemap:
 	push af ; $436f
 	push bc ; $4370
 	push de ; $4371
 	push hl ; $4372
 	ldh a, [hWramBank] ; $4373
 	push af ; $4375
-	call Func_05_4383 ; $4376
+	call RestoreAllShadowTilemapRows ; $4376
 	pop af ; $4379
 	wram_bank ; $437a
 	pop hl ; $437e
@@ -648,7 +648,7 @@ Func_05_436f:
 	pop bc ; $4380
 	pop af ; $4381
 	ret ; $4382
-Func_05_4383:
+RestoreAllShadowTilemapRows:
 	ld a, [$c323] ; $4383
 	and a, $3f ; $4386
 	ld c, $04 ; $4388
@@ -657,7 +657,7 @@ Label_05_438a:
 Label_05_438c:
 	push af ; $438c
 	push bc ; $438d
-	call Func_05_43d2 ; $438e
+	call RestoreShadowTilemapRow ; $438e
 	pop bc ; $4391
 	pop af ; $4392
 	inc a ; $4393
@@ -674,12 +674,12 @@ Label_05_43a3:
 	dec c ; $43a4
 	jr nz, Label_05_438a ; $43a5
 	ret ; $43a7
-Func_05_43a8:
+RestoreTilemapUnderWindow:
 	push af ; $43a8
 	push bc ; $43a9
 	push de ; $43aa
 	push hl ; $43ab
-	call Func_05_6eea ; $43ac
+	call GetWindowStructPtr ; $43ac
 	inc hl ; $43af
 	ld b, [hl] ; $43b0
 	inc hl ; $43b1
@@ -698,7 +698,7 @@ Label_05_43c1:
 	push af ; $43c1
 	push bc ; $43c2
 	ld a, b ; $43c3
-	call Func_05_43d2 ; $43c4
+	call RestoreShadowTilemapRow ; $43c4
 	pop bc ; $43c7
 	pop af ; $43c8
 	inc b ; $43c9
@@ -709,7 +709,7 @@ Label_05_43c1:
 	pop bc ; $43cf
 	pop af ; $43d0
 	ret ; $43d1
-Func_05_43d2:
+RestoreShadowTilemapRow:
 	and a, $3f ; $43d2
 	ld e, a ; $43d4
 	ld hl, $d000 ; $43d5
@@ -899,7 +899,7 @@ Func_05_44f9:
 	ldh a, [hWramBank] ; $44fc
 	push af ; $44fe
 	ld b, a ; $44ff
-	call Func_05_55d5 ; $4500
+	call SetWindowTextId ; $4500
 	pop af ; $4503
 	wram_bank ; $4504
 	ld a, b ; $4508
@@ -913,21 +913,21 @@ Func_05_4510:
 	ldh a, [hWramBank] ; $4511
 	push af ; $4513
 	ld hl, $001a ; $4514
-	call Func_05_46b0 ; $4517
-	call Func_05_436f ; $451a
+	call CreateMenuWindowFromText ; $4517
+	call RestoreShadowTilemap ; $451a
 	call Func_05_4626 ; $451d
-	call Func_05_477f ; $4520
+	call RunMenuSelection ; $4520
 	ld h, a ; $4523
 	ld a, [$d82f] ; $4524
-	call Func_05_72bd ; $4527
+	call CloseWindow ; $4527
 	ld a, [$d863] ; $452a
-	call Func_05_72bd ; $452d
+	call CloseWindow ; $452d
 	pop af ; $4530
 	wram_bank ; $4531
 	ld a, h ; $4535
 	pop hl ; $4536
 	ret ; $4537
-Func_05_4538:
+SetWindowRect:
 	push hl ; $4538
 	ld a, d ; $4539
 	and a, $1f ; $453a
@@ -940,18 +940,18 @@ Func_05_4538:
 	ld [hl], c ; $4543
 	pop hl ; $4544
 	ret ; $4545
-Func_05_4546:
+DrawTextWindowFrameSaveRegs:
 	push af ; $4546
 	push bc ; $4547
 	push de ; $4548
 	push hl ; $4549
-	call Func_05_6f70 ; $454a
+	call DrawTextWindowFrame ; $454a
 	pop hl ; $454d
 	pop de ; $454e
 	pop bc ; $454f
 	pop af ; $4550
 	ret ; $4551
-Func_05_4552:
+DrawTileAttrRect:
 	push af ; $4552
 	push bc ; $4553
 	push de ; $4554
@@ -1050,11 +1050,11 @@ Label_05_45ac:
 	push de ; $45bc
 	push af ; $45bd
 	ld b, a ; $45be
-	call Func_05_6eba ; $45bf
+	call FreeWindow ; $45bf
 	cp a, $ff ; $45c2
 	jr z, Label_05_4621 ; $45c4
 	ld a, b ; $45c6
-	call Func_05_6eba ; $45c7
+	call FreeWindow ; $45c7
 	ld a, $04 ; $45ca
 	add a, l ; $45cc
 	ld l, a ; $45cd
@@ -1137,7 +1137,7 @@ Label_05_4647:
 	pop bc ; $4648
 	pop hl ; $4649
 	ret ; $464a
-Func_05_464b:
+GetScreenTopLeftCell:
 	push af ; $464b
 	push hl ; $464c
 	ldh a, [hScrollX] ; $464d
@@ -1157,7 +1157,7 @@ Func_05_464b:
 	pop hl ; $4661
 	pop af ; $4662
 	ret ; $4663
-Func_05_4664:
+CreateWindowWithAttr:
 	push hl ; $4664
 	ld h, a ; $4665
 	ldh a, [hWramBank] ; $4666
@@ -1165,7 +1165,7 @@ Func_05_4664:
 	wram_bank $05 ; $4669
 	ld a, h ; $466f
 	ld [$c3b6], a ; $4670
-	call Func_05_4684 ; $4673
+	call CreateWindow ; $4673
 	ld h, a ; $4676
 	ld a, $80 ; $4677
 	ld [$c3b6], a ; $4679
@@ -1174,23 +1174,23 @@ Func_05_4664:
 	ld a, h ; $4681
 	pop hl ; $4682
 	ret ; $4683
-Func_05_4684:
-	call Func_05_6e45 ; $4684
+CreateWindow:
+	call CreateWindowFromScreenRect ; $4684
 	ret ; $4687
-Func_05_4688:
+CreateDialogueWindow:
 	push hl ; $4688
 	ld a, b ; $4689
 	ld [$d827], a ; $468a
 	ld a, c ; $468d
 	ld [$d828], a ; $468e
 	push de ; $4691
-	call Func_05_6e45 ; $4692
+	call CreateWindowFromScreenRect ; $4692
 	ld [$d824], a ; $4695
 	pop de ; $4698
 	push af ; $4699
 	ld h, d ; $469a
 	ld l, e ; $469b
-	call Func_05_464b ; $469c
+	call GetScreenTopLeftCell ; $469c
 	ld a, h ; $469f
 	add a, d ; $46a0
 	and a, $1f ; $46a1
@@ -1202,7 +1202,7 @@ Func_05_4688:
 	pop af ; $46ad
 	pop hl ; $46ae
 	ret ; $46af
-Func_05_46b0:
+CreateMenuWindowFromText:
 	push bc ; $46b0
 	push de ; $46b1
 	push hl ; $46b2
@@ -1211,7 +1211,7 @@ Func_05_46b0:
 	push hl ; $46bc
 	ld h, d ; $46bd
 	ld l, e ; $46be
-	call Func_05_464b ; $46bf
+	call GetScreenTopLeftCell ; $46bf
 	ld a, h ; $46c2
 	add a, d ; $46c3
 	and a, $1f ; $46c4
@@ -1237,16 +1237,16 @@ Label_05_46e3:
 	inc b ; $46e3
 	inc b ; $46e4
 	inc b ; $46e5
-	call Func_05_6e6d ; $46e6
+	call AllocWindowStruct ; $46e6
 	ld a, [$d820] ; $46e9
 	cp a, $ff ; $46ec
 	jp z, Label_05_4743 ; $46ee
 	ld a, [$d820] ; $46f1
 	ld b, a ; $46f4
-	call Func_05_55d5 ; $46f5
+	call SetWindowTextId ; $46f5
 	ld a, [$d820] ; $46f8
 	ld b, $02 ; $46fb
-	call Func_05_4767 ; $46fd
+	call SetWindowState ; $46fd
 	ld a, [$d83e] ; $4700
 	cp a, $ff ; $4703
 	jr z, Label_05_4719 ; $4705
@@ -1287,19 +1287,19 @@ Label_05_4743:
 	pop de ; $4744
 	pop bc ; $4745
 	ret ; $4746
-Func_05_4747:
-	call Func_05_46b0 ; $4747
+CreateMenuWindowPaged:
+	call CreateMenuWindowFromText ; $4747
 	push af ; $474a
 	push bc ; $474b
 	ld a, [$d820] ; $474c
 	ld b, $03 ; $474f
-	call Func_05_4767 ; $4751
+	call SetWindowState ; $4751
 	pop bc ; $4754
 	pop af ; $4755
 	ret ; $4756
-Func_05_4757:
+ResetWindowState:
 	push af ; $4757
-	call Func_05_6eea ; $4758
+	call GetWindowStructPtr ; $4758
 	ld a, $04 ; $475b
 	add a, l ; $475d
 	ld l, a ; $475e
@@ -1311,8 +1311,8 @@ Label_05_4762:
 	ret ; $4765
 Func_05_4766:
 	ret ; $4766
-Func_05_4767:
-	call Func_05_6eea ; $4767
+SetWindowState:
+	call GetWindowStructPtr ; $4767
 	ld a, $04 ; $476a
 	add a, l ; $476c
 	ld l, a ; $476d
@@ -1321,8 +1321,8 @@ Func_05_4767:
 Label_05_4771:
 	ld [hl], b ; $4771
 	ret ; $4772
-Func_05_4773:
-	call Func_05_6eea ; $4773
+GetWindowState:
+	call GetWindowStructPtr ; $4773
 	ld a, $04 ; $4776
 	add a, l ; $4778
 	ld l, a ; $4779
@@ -1331,7 +1331,7 @@ Func_05_4773:
 Label_05_477d:
 	ld a, [hl] ; $477d
 	ret ; $477e
-Func_05_477f:
+RunMenuSelection:
 	push bc ; $477f
 	push de ; $4780
 	push hl ; $4781
@@ -1346,7 +1346,7 @@ Func_05_477f:
 	ld [hl+], a ; $4797
 	ld [hl], a ; $4798
 	ld a, [$d82f] ; $4799
-	call Func_05_6eea ; $479c
+	call GetWindowStructPtr ; $479c
 	ld d, [hl] ; $479f
 	inc hl ; $47a0
 	ld e, [hl] ; $47a1
@@ -1412,7 +1412,7 @@ Label_05_47f7:
 	add a, e ; $4801
 	ld e, a ; $4802
 	ld a, $20 ; $4803
-	call Func_05_40fb ; $4805
+	call WriteTileToShadowMapCell ; $4805
 	push af ; $4808
 	push bc ; $4809
 	push de ; $480a
@@ -1472,7 +1472,7 @@ Label_05_4840:
 	ld a, [$d82f] ; $485c
 	ld c, $0d ; $485f
 	ld b, $80 ; $4861
-	call Func_05_431d ; $4863
+	call WriteWindowCellTileAttr ; $4863
 	pop hl ; $4866
 	pop de ; $4867
 	pop bc ; $4868
@@ -1493,7 +1493,7 @@ Label_05_487b:
 	ld a, $ff ; $4884
 	jr Label_05_48af ; $4886
 Label_05_4888:
-	call Func_05_4773 ; $4888
+	call GetWindowState ; $4888
 	cp a, $03 ; $488b
 	jp nz, Label_05_47ca ; $488d
 	ld a, [$c32d] ; $4890
@@ -1539,7 +1539,7 @@ Label_05_48af:
 	and a, $0f ; $48d9
 	ld c, $20 ; $48db
 	ld b, $80 ; $48dd
-	call Func_05_431d ; $48df
+	call WriteWindowCellTileAttr ; $48df
 Label_05_48e2:
 	pop hl ; $48e2
 	pop de ; $48e3
@@ -1606,7 +1606,7 @@ Label_05_493f:
 	pop bc ; $4941
 	pop af ; $4942
 	ret ; $4943
-Func_05_4944:
+RunPagedTextMenu:
 	push bc ; $4944
 	push de ; $4945
 	push hl ; $4946
@@ -1638,13 +1638,13 @@ Label_05_4969:
 	add hl, bc ; $4975
 	ld d, $01 ; $4976
 	ld e, $01 ; $4978
-	call Func_05_4747 ; $497a
-	farcall FarPtr_05_18 ; $497d
-	call Func_05_7232 ; $4980
-	call Func_05_477f ; $4983
+	call CreateMenuWindowPaged ; $497a
+	farcall FarPtr_RestoreShadowTilemap ; $497d
+	call RenderMenuWindowText ; $4980
+	call RunMenuSelection ; $4983
 	push af ; $4986
 	ld a, [$d82f] ; $4987
-	call Func_05_72bd ; $498a
+	call CloseWindow ; $498a
 	ld a, $ff ; $498d
 	ld [$d82f], a ; $498f
 	pop af ; $4992
@@ -1708,7 +1708,7 @@ Label_05_49cc:
 	pop bc ; $49f3
 	pop af ; $49f4
 	ret ; $49f5
-Func_05_49f6:
+RunPagedTextMenuAutoSize:
 	push bc ; $49f6
 	push de ; $49f7
 	push hl ; $49f8
@@ -1748,13 +1748,13 @@ Label_05_4a23:
 	ld l, a ; $4a3a
 	add hl, bc ; $4a3b
 	ld e, $05 ; $4a3c
-	call Func_05_4747 ; $4a3e
-	call Func_05_436f ; $4a41
+	call CreateMenuWindowPaged ; $4a3e
+	call RestoreShadowTilemap ; $4a41
 	call Func_05_4626 ; $4a44
-	call Func_05_477f ; $4a47
+	call RunMenuSelection ; $4a47
 	push af ; $4a4a
 	ld a, [$d82f] ; $4a4b
-	call Func_05_72bd ; $4a4e
+	call CloseWindow ; $4a4e
 	ld a, $ff ; $4a51
 	ld [$d82f], a ; $4a53
 	pop af ; $4a56
@@ -1807,7 +1807,7 @@ Label_05_4a90:
 	pop de ; $4aa5
 	pop bc ; $4aa6
 	ret ; $4aa7
-Func_05_4aa8:
+RunMenuSelectionShared:
 	push bc ; $4aa8
 	push de ; $4aa9
 	push hl ; $4aaa
@@ -1822,7 +1822,7 @@ Func_05_4aa8:
 	ld [hl+], a ; $4ac0
 	ld [hl], a ; $4ac1
 	ld a, [$d82f] ; $4ac2
-	call Func_05_6eea ; $4ac5
+	call GetWindowStructPtr ; $4ac5
 	ld d, [hl] ; $4ac8
 	inc hl ; $4ac9
 	ld e, [hl] ; $4aca
@@ -1891,7 +1891,7 @@ Label_05_4b29:
 	add a, e ; $4b33
 	ld e, a ; $4b34
 	ld a, $20 ; $4b35
-	call Func_05_40fb ; $4b37
+	call WriteTileToShadowMapCell ; $4b37
 	push af ; $4b3a
 	push bc ; $4b3b
 	push de ; $4b3c
@@ -1954,7 +1954,7 @@ Label_05_4b72:
 	ld a, [$d82f] ; $4b94
 	ld c, $0d ; $4b97
 	ld b, $80 ; $4b99
-	call Func_05_431d ; $4b9b
+	call WriteWindowCellTileAttr ; $4b9b
 	pop hl ; $4b9e
 	pop de ; $4b9f
 	pop bc ; $4ba0
@@ -2010,7 +2010,7 @@ Label_05_4c00:
 	pop de ; $4c01
 	pop bc ; $4c02
 	pop af ; $4c03
-	call Func_05_4773 ; $4c04
+	call GetWindowState ; $4c04
 	cp a, $03 ; $4c07
 	jp nz, Label_05_4afd ; $4c09
 	ld a, [$c32d] ; $4c0c
@@ -2064,7 +2064,7 @@ Label_05_4c37:
 	and a, $0f ; $4c5e
 	ld c, $20 ; $4c60
 	ld b, $80 ; $4c62
-	call Func_05_431d ; $4c64
+	call WriteWindowCellTileAttr ; $4c64
 Label_05_4c67:
 	pop hl ; $4c67
 	pop de ; $4c68
@@ -2222,7 +2222,7 @@ Label_05_4d6d:
 	ld a, [$d830] ; $4d7d
 	and a, a ; $4d80
 	jr nz, Label_05_4da0 ; $4d81
-	call Func_05_4e10 ; $4d83
+	call GetMenuCursorBlinkPhase ; $4d83
 	and a, a ; $4d86
 	ld de, $0101 ; $4d87
 	jp z, Label_05_4e0a ; $4d8a
@@ -2234,7 +2234,7 @@ Label_05_4d6d:
 	farcall FarPtr_1a_02 ; $4d9a
 	jp Label_05_4e0f ; $4d9d
 Label_05_4da0:
-	call Func_05_4e10 ; $4da0
+	call GetMenuCursorBlinkPhase ; $4da0
 	and a, a ; $4da3
 	ld de, $0103 ; $4da4
 	jp z, Label_05_4e0a ; $4da7
@@ -2255,7 +2255,7 @@ Label_05_4dbd:
 	ld a, [$d830] ; $4dcd
 	cp a, $03 ; $4dd0
 	jr z, Label_05_4def ; $4dd2
-	call Func_05_4e10 ; $4dd4
+	call GetMenuCursorBlinkPhase ; $4dd4
 	or a, a ; $4dd7
 	ld de, $0105 ; $4dd8
 	jr z, Label_05_4e0a ; $4ddb
@@ -2267,7 +2267,7 @@ Label_05_4dbd:
 	farcall FarPtr_1a_02 ; $4dea
 	jr Label_05_4e0f ; $4ded
 Label_05_4def:
-	call Func_05_4e10 ; $4def
+	call GetMenuCursorBlinkPhase ; $4def
 	or a, a ; $4df2
 	ld de, $0107 ; $4df3
 	jr z, Label_05_4e0a ; $4df6
@@ -2283,7 +2283,7 @@ Label_05_4e0a:
 	farcall FarPtr_1a_02 ; $4e0c
 Label_05_4e0f:
 	ret ; $4e0f
-Func_05_4e10:
+GetMenuCursorBlinkPhase:
 	wram_bank $05 ; $4e10
 	ld a, [$d841] ; $4e16
 	and a, $10 ; $4e19
@@ -2318,8 +2318,8 @@ Label_05_4e3b:
 	ld [$c3bb], a ; $4e42
 	ld [$c3bc], a ; $4e45
 Label_05_4e48:
-	call Func_05_752d ; $4e48
-	call Func_05_42f1 ; $4e4b
+	call InitGlyphStreamForWindow ; $4e48
+	call RedrawActiveTextWindow ; $4e4b
 	ld a, d ; $4e4e
 	and a, $1f ; $4e4f
 	ld [$d82a], a ; $4e51
@@ -2349,7 +2349,7 @@ Label_05_4e6d:
 	jr nz, Label_05_4e85 ; $4e79
 	test_flag $04, 3 ; $4e7b
 	jr nz, Label_05_4e83 ; $4e7e
-	call Func_05_77a3 ; $4e80
+	call FlushGlyphRow ; $4e80
 Label_05_4e83:
 	pop bc ; $4e83
 	ret ; $4e84
@@ -2376,14 +2376,14 @@ Label_05_4e9f:
 	pop af ; $4ea4
 Label_05_4ea5:
 	call DispatchControlCode ; $4ea5
-	call Func_05_42f1 ; $4ea8
+	call RedrawActiveTextWindow ; $4ea8
 	jr Label_05_4e5d ; $4eab
 Label_05_4ead:
 	ld a, b ; $4ead
-	call Func_05_5413 ; $4eae
-	call Func_05_757e ; $4eb1
-	call Func_05_7607 ; $4eb4
-	call Func_05_579b ; $4eb7
+	call WrapTextCellPointer ; $4eae
+	call DrawStreamGlyph ; $4eb1
+	call UploadLastGlyphTiles ; $4eb4
+	call DelayTextCharacter ; $4eb7
 	inc de ; $4eba
 	ld a, e ; $4ebb
 	and a, $1f ; $4ebc
@@ -2399,7 +2399,7 @@ Label_05_4ead:
 	pop de ; $4ecb
 	pop hl ; $4ecc
 	jp Label_05_4e5d ; $4ecd
-	call Func_05_757e ; $4ed0
+	call DrawStreamGlyph ; $4ed0
 	push af ; $4ed3
 	ld a, [$d82b] ; $4ed4
 	inc a ; $4ed7
@@ -2432,7 +2432,7 @@ Label_05_4ef9:
 	ld a, c ; $4efe
 	ld [hl+], a ; $4eff
 	ld [hl], b ; $4f00
-	call Func_05_75db ; $4f01
+	call StartGlyphStreamRow ; $4f01
 	ldh a, [hWramBank] ; $4f04
 	push af ; $4f06
 	wram_bank $05 ; $4f07
@@ -2467,7 +2467,7 @@ Label_05_4f1f:
 	jr nz, Label_05_4f45 ; $4f37
 	ld a, $01 ; $4f39
 	ld [$d829], a ; $4f3b
-	call Func_05_42f1 ; $4f3e
+	call RedrawActiveTextWindow ; $4f3e
 	xor a, a ; $4f41
 	ld [$d829], a ; $4f42
 Label_05_4f45:
@@ -2485,7 +2485,7 @@ Label_05_4f47:
 	jr nz, Label_05_4f63 ; $4f55
 	ld a, $01 ; $4f57
 	ld [$d829], a ; $4f59
-	call Func_05_42f1 ; $4f5c
+	call RedrawActiveTextWindow ; $4f5c
 	xor a, a ; $4f5f
 	ld [$d829], a ; $4f60
 Label_05_4f63:
@@ -2504,11 +2504,11 @@ Label_05_4f71:
 	push af ; $4f74
 	push de ; $4f75
 	ld a, $01 ; $4f76
-	call Func_05_5413 ; $4f78
-	call Func_05_4fbf ; $4f7b
+	call WrapTextCellPointer ; $4f78
+	call GetTextContinueArrowCell ; $4f7b
 	call GetTilemapCellAddress ; $4f7e
 	ld [de], a ; $4f81
-	call Func_05_42f1 ; $4f82
+	call RedrawActiveTextWindow ; $4f82
 	xor a, a ; $4f85
 	ld hl, $d841 ; $4f86
 	ld [hl+], a ; $4f89
@@ -2522,7 +2522,7 @@ Label_05_4f71:
 	ld a, $01 ; $4f91
 	ld hl, $4fe3 ; $4f93
 	call RegisterFrameTask ; $4f96
-	call Func_05_501d ; $4f99
+	call WaitTextAdvanceInput ; $4f99
 	ld a, $10 ; $4f9c
 	ld [$d841], a ; $4f9e
 	call AdvanceFrame ; $4fa1
@@ -2540,7 +2540,7 @@ Label_05_4f71:
 	pop de ; $4fbc
 	pop af ; $4fbd
 	ret ; $4fbe
-Func_05_4fbf:
+GetTextContinueArrowCell:
 	test_flag $03, 3 ; $4fbf
 	jr z, Label_05_4fc9 ; $4fc2
 	ld d, $0a ; $4fc4
@@ -2551,7 +2551,7 @@ Label_05_4fc9:
 	push bc ; $4fca
 	push hl ; $4fcb
 	ld a, [$d824] ; $4fcc
-	call Func_05_6eea ; $4fcf
+	call GetWindowStructPtr ; $4fcf
 	ld d, [hl] ; $4fd2
 	inc hl ; $4fd3
 	ld e, [hl] ; $4fd4
@@ -2605,7 +2605,7 @@ Label_05_4ffc:
 	pop bc ; $501a
 	pop af ; $501b
 	ret ; $501c
-Func_05_501d:
+WaitTextAdvanceInput:
 	push af ; $501d
 	push bc ; $501e
 	ld a, [$d829] ; $501f
@@ -2613,14 +2613,14 @@ Func_05_501d:
 	jr nz, Label_05_5031 ; $5023
 	ld a, $01 ; $5025
 	ld [$d829], a ; $5027
-	call Func_05_42f1 ; $502a
+	call RedrawActiveTextWindow ; $502a
 	xor a, a ; $502d
 	ld [$d829], a ; $502e
 Label_05_5031:
-	call Func_05_42f1 ; $5031
+	call RedrawActiveTextWindow ; $5031
 	test_flag $02, 6 ; $5034
 	jr nz, Label_05_5061 ; $5037
-	call Func_05_77a3 ; $5039
+	call FlushGlyphRow ; $5039
 	ldh a, [hPlayerInputFlags] ; $503c
 	and a, $f3 ; $503e
 	jr z, Label_05_5050 ; $5040
@@ -2651,7 +2651,7 @@ Label_05_5061:
 	jr nz, Label_05_5078 ; $506a
 	ld a, $01 ; $506c
 	ld [$d829], a ; $506e
-	call Func_05_42f1 ; $5071
+	call RedrawActiveTextWindow ; $5071
 	xor a, a ; $5074
 	ld [$d829], a ; $5075
 Label_05_5078:
@@ -2724,14 +2724,14 @@ Label_05_50d8:
 	pop de ; $50e2
 	wram_bank $05 ; $50e3
 	ld hl, $c6c0 ; $50e9
-	call Func_05_54cf ; $50ec
+	call RenderInlineString ; $50ec
 Label_05_50ef:
 	pop af ; $50ef
 	wram_bank ; $50f0
 	pop bc ; $50f4
 	pop af ; $50f5
 	ret ; $50f6
-Func_05_50f7:
+PushTextArgString:
 	push af ; $50f7
 	push bc ; $50f8
 	push de ; $50f9
@@ -2783,7 +2783,7 @@ Label_05_513d:
 	pop bc ; $5144
 	pop af ; $5145
 	ret ; $5146
-Func_05_5147:
+PushTextArgNumber:
 	push af ; $5147
 	push bc ; $5148
 	push de ; $5149
@@ -2815,7 +2815,7 @@ Label_05_5170:
 	pop bc ; $5177
 	pop af ; $5178
 	ret ; $5179
-Func_05_517a:
+PushTextArgShortTextId:
 	push af ; $517a
 	push bc ; $517b
 	push de ; $517c
@@ -2850,7 +2850,7 @@ Label_05_519e:
 	add hl, de ; $51ae
 	ld d, h ; $51af
 	ld e, l ; $51b0
-	call Func_05_543d ; $51b1
+	call WrapTextCellPointerPrevRow ; $51b1
 	ld a, [de] ; $51b4
 	cp a, $03 ; $51b5
 	jr nz, Label_05_51bd ; $51b7
@@ -2861,8 +2861,8 @@ Label_05_51bd:
 Label_05_51bf:
 	ld [de], a ; $51bf
 	pop de ; $51c0
-	call Func_05_42f1 ; $51c1
-	call Func_05_579b ; $51c4
+	call RedrawActiveTextWindow ; $51c1
+	call DelayTextCharacter ; $51c4
 	ret ; $51c7
 	push de ; $51c8
 	dec de ; $51c9
@@ -2871,7 +2871,7 @@ Label_05_51bf:
 	add hl, de ; $51ce
 	ld d, h ; $51cf
 	ld e, l ; $51d0
-	call Func_05_543d ; $51d1
+	call WrapTextCellPointerPrevRow ; $51d1
 	ld a, [de] ; $51d4
 	cp a, $03 ; $51d5
 	jr nz, Label_05_51dd ; $51d7
@@ -2882,24 +2882,24 @@ Label_05_51dd:
 Label_05_51df:
 	ld [de], a ; $51df
 	pop de ; $51e0
-	call Func_05_42f1 ; $51e1
-	call Func_05_579b ; $51e4
+	call RedrawActiveTextWindow ; $51e1
+	call DelayTextCharacter ; $51e4
 	ret ; $51e7
 	push af ; $51e8
 	push bc ; $51e9
 	ld hl, wStoryModeNameOfMainCharacter ; $51ea
-	call Func_05_54cf ; $51ed
+	call RenderInlineString ; $51ed
 	pop bc ; $51f0
 	pop af ; $51f1
 	ret ; $51f2
 	push af ; $51f3
 	push bc ; $51f4
 	ld hl, wStoryModeNameOfPartnerCharacter ; $51f5
-	call Func_05_54cf ; $51f8
+	call RenderInlineString ; $51f8
 	pop bc ; $51fb
 	pop af ; $51fc
 	ret ; $51fd
-Func_05_51fe:
+MeasureNextArgStringWidth:
 	push bc ; $51fe
 	push hl ; $51ff
 	wram_bank $05 ; $5200
@@ -3000,7 +3000,7 @@ Label_05_5293:
 	pop bc ; $5295
 	ret ; $5296
 	ret ; $5297
-Func_05_5298:
+GetNextArgShortTextLength:
 	push bc ; $5298
 	push hl ; $5299
 	ld a, [$d868] ; $529a
@@ -3058,7 +3058,7 @@ Label_05_52ca:
 	wram_bank ; $52f3
 	ld h, b ; $52f7
 	ld l, c ; $52f8
-	call Func_05_5597 ; $52f9
+	call RenderInlineNumber ; $52f9
 	jr Label_05_5303 ; $52fc
 Label_05_52fe:
 	pop af ; $52fe
@@ -3066,7 +3066,7 @@ Label_05_52fe:
 Label_05_5303:
 	pop bc ; $5303
 	ret ; $5304
-Func_05_5305:
+MeasureNextArgNumberWidth:
 	push hl ; $5305
 	push bc ; $5306
 	push de ; $5307
@@ -3211,11 +3211,11 @@ Label_05_53d8:
 	call FetchShortTextToBuffer ; $53db
 	pop de ; $53de
 	ld hl, $c6c0 ; $53df
-	call Func_05_54cf ; $53e2
+	call RenderInlineString ; $53e2
 	pop bc ; $53e5
 	pop af ; $53e6
 	ret ; $53e7
-Func_05_53e8:
+MeasureIndexedShortTextWidth:
 	push bc ; $53e8
 	push de ; $53e9
 	push hl ; $53ea
@@ -3245,7 +3245,7 @@ Label_05_540e:
 	pop de ; $5410
 	pop bc ; $5411
 	ret ; $5412
-Func_05_5413:
+WrapTextCellPointer:
 	push af ; $5413
 	push hl ; $5414
 	ld h, d ; $5415
@@ -3275,7 +3275,7 @@ Label_05_5433:
 	pop hl ; $543a
 	pop af ; $543b
 	ret ; $543c
-Func_05_543d:
+WrapTextCellPointerPrevRow:
 	push af ; $543d
 	push hl ; $543e
 	ld h, d ; $543f
@@ -3373,7 +3373,7 @@ ControlCodeHandlers_05:
 	dw $4ed0 ; record 29
 	dw $51a8 ; record 30
 	dw $51c8 ; record 31
-Func_05_54cf:
+RenderInlineString:
 	push af ; $54cf
 	ld a, [$d86a] ; $54d0
 	cp a, $c6 ; $54d3
@@ -3404,14 +3404,14 @@ Label_05_54f3:
 	jr z, Label_05_5553 ; $54f6
 	test_flag $04, 4 ; $54f8
 	jr nz, Label_05_5505 ; $54fb
-	call Func_05_7681 ; $54fd
-	call Func_05_7607 ; $5500
+	call DrawInlineGlyph ; $54fd
+	call UploadLastGlyphTiles ; $5500
 	jr Label_05_5511 ; $5503
 Label_05_5505:
 	call Func_05_5f0d ; $5505
-	call Func_05_7681 ; $5508
+	call DrawInlineGlyph ; $5508
 	call Func_05_5f0d ; $550b
-	call Func_05_7607 ; $550e
+	call UploadLastGlyphTiles ; $550e
 Label_05_5511:
 	inc hl ; $5511
 	ld a, [hl] ; $5512
@@ -3448,7 +3448,7 @@ Label_05_553a:
 	pop hl ; $553c
 	inc hl ; $553d
 Label_05_553e:
-	call Func_05_579b ; $553e
+	call DelayTextCharacter ; $553e
 	inc de ; $5541
 	ld a, e ; $5542
 	and a, $1f ; $5543
@@ -3510,7 +3510,7 @@ Label_05_5553:
 	ld a, $04 ; $558f
 	call FormatDecimalNumber ; $5591
 	jp Label_05_55c9 ; $5594
-Func_05_5597:
+RenderInlineNumber:
 	push af ; $5597
 	push bc ; $5598
 	push hl ; $5599
@@ -3555,17 +3555,17 @@ Label_05_55c9:
 	ld l, c ; $55ca
 	pop de ; $55cb
 Label_05_55cc:
-	call Func_05_54cf ; $55cc
+	call RenderInlineString ; $55cc
 	add sp, 10 ; $55cf
 	pop hl ; $55d1
 	pop bc ; $55d2
 	pop af ; $55d3
 	ret ; $55d4
-Func_05_55d5:
+SetWindowTextId:
 	ld d, h ; $55d5
 	ld e, l ; $55d6
 	ld a, b ; $55d7
-	call Func_05_6eea ; $55d8
+	call GetWindowStructPtr ; $55d8
 	ld a, $06 ; $55db
 	add a, l ; $55dd
 	ld l, a ; $55de
@@ -3576,26 +3576,26 @@ Label_05_55e2:
 	ld [hl+], a ; $55e3
 	ld [hl], d ; $55e4
 	ret ; $55e5
-Func_05_55e6:
+SetActiveWindowTextId:
 	push af ; $55e6
 	push bc ; $55e7
 	xor a, a ; $55e8
-	call Func_05_5d2b ; $55e9
+	call AddTextIdOffset ; $55e9
 	push hl ; $55ec
 	ld a, [$d824] ; $55ed
 	ld b, a ; $55f0
-	call Func_05_55d5 ; $55f1
+	call SetWindowTextId ; $55f1
 	pop hl ; $55f4
 	pop bc ; $55f5
 	pop af ; $55f6
 	ret ; $55f7
-Func_05_55f8:
+RenderWindowText:
 	push af ; $55f8
 	push bc ; $55f9
 	push de ; $55fa
 	push hl ; $55fb
 	ld a, b ; $55fc
-	call Func_05_6eea ; $55fd
+	call GetWindowStructPtr ; $55fd
 	push hl ; $5600
 	ld a, $06 ; $5601
 	add a, l ; $5603
@@ -3648,16 +3648,16 @@ Label_05_5643:
 	pop bc ; $5645
 	pop af ; $5646
 	ret ; $5647
-Func_05_5648:
+RenderActiveWindowText:
 	push af ; $5648
 	push bc ; $5649
 	ld a, [$d824] ; $564a
 	ld b, a ; $564d
-	call Func_05_55f8 ; $564e
+	call RenderWindowText ; $564e
 	pop bc ; $5651
 	pop af ; $5652
 	ret ; $5653
-Func_05_5654:
+FitWindowToText:
 	push af ; $5654
 	push bc ; $5655
 	push de ; $5656
@@ -3696,14 +3696,14 @@ Label_05_567c:
 Label_05_5687:
 	cp a, $08 ; $5687
 	jr nz, Label_05_5692 ; $5689
-	call Func_05_5298 ; $568b
+	call GetNextArgShortTextLength ; $568b
 	add a, b ; $568e
 	ld b, a ; $568f
 	jr Label_05_566b ; $5690
 Label_05_5692:
 	cp a, $09 ; $5692
 	jr nz, Label_05_569d ; $5694
-	call Func_05_5305 ; $5696
+	call MeasureNextArgNumberWidth ; $5696
 	add a, b ; $5699
 	ld b, a ; $569a
 	jr Label_05_566b ; $569b
@@ -3717,7 +3717,7 @@ Label_05_569d:
 Label_05_56a8:
 	cp a, $04 ; $56a8
 	jr nz, Label_05_56b3 ; $56aa
-	call Func_05_51fe ; $56ac
+	call MeasureNextArgStringWidth ; $56ac
 	add a, b ; $56af
 	ld b, a ; $56b0
 	jr Label_05_566b ; $56b1
@@ -3733,7 +3733,7 @@ Label_05_56be:
 	jr nz, Label_05_56cd ; $56c0
 	ld a, [hl+] ; $56c2
 	ld [$c361], a ; $56c3
-	call Func_05_53e8 ; $56c6
+	call MeasureIndexedShortTextWidth ; $56c6
 	add a, b ; $56c9
 	ld b, a ; $56ca
 	jr Label_05_566b ; $56cb
@@ -3805,8 +3805,8 @@ Label_05_570b:
 	add a, e ; $5732
 	ld e, a ; $5733
 	ld a, [$d824] ; $5734
-	call Func_05_6eea ; $5737
-	call Func_05_4538 ; $573a
+	call GetWindowStructPtr ; $5737
+	call SetWindowRect ; $573a
 	ld [$d867], a ; $573d
 	pop hl ; $5740
 	pop de ; $5741
@@ -3839,14 +3839,14 @@ Label_05_574f:
 Label_05_5763:
 	cp a, $08 ; $5763
 	jr nz, Label_05_576e ; $5765
-	call Func_05_5298 ; $5767
+	call GetNextArgShortTextLength ; $5767
 	add a, b ; $576a
 	ld b, a ; $576b
 	jr Label_05_574f ; $576c
 Label_05_576e:
 	cp a, $09 ; $576e
 	jr nz, Label_05_5779 ; $5770
-	call Func_05_5305 ; $5772
+	call MeasureNextArgNumberWidth ; $5772
 	add a, b ; $5775
 	ld b, a ; $5776
 	jr Label_05_574f ; $5777
@@ -3878,7 +3878,7 @@ Label_05_578f:
 	pop de ; $5798
 	pop af ; $5799
 	ret ; $579a
-Func_05_579b:
+DelayTextCharacter:
 	push af ; $579b
 	push bc ; $579c
 	push de ; $579d
@@ -3926,7 +3926,7 @@ Label_05_57dd:
 	pop bc ; $57e4
 	pop af ; $57e5
 	ret ; $57e6
-Func_05_57e7:
+ApplyMessageSpeed:
 	push af ; $57e7
 	ldh a, [hWramBank] ; $57e8
 	push af ; $57ea
@@ -3957,7 +3957,7 @@ Label_05_5818:
 	wram_bank ; $5819
 	pop af ; $581d
 	ret ; $581e
-Func_05_581f:
+ShowSpeakerDialogue:
 	push af ; $581f
 	push bc ; $5820
 	push de ; $5821
@@ -3972,18 +3972,18 @@ Func_05_581f:
 	ld [$d867], a ; $5836
 	ld [$d849], a ; $5839
 	ld [$d868], a ; $583c
-	call Func_05_5d2b ; $583f
+	call AddTextIdOffset ; $583f
 	ld a, b ; $5842
 	cp a, $ff ; $5843
 	jr nz, Label_05_5849 ; $5845
 	ld a, $00 ; $5847
 Label_05_5849:
 	ld [$d851], a ; $5849
-	call Func_05_57e7 ; $584c
+	call ApplyMessageSpeed ; $584c
 	bit 7, a ; $584f
 	ld b, $08 ; $5851
 	jr nz, Label_05_5859 ; $5853
-	call Func_05_608a ; $5855
+	call GetSpeakerVoice ; $5855
 	ld b, a ; $5858
 Label_05_5859:
 	ld a, b ; $5859
@@ -3997,13 +3997,13 @@ Label_05_5859:
 	ldh a, [hWramBank] ; $586b
 	push af ; $586d
 	wram_bank $07 ; $586e
-	call Func_05_73cb ; $5874
-	call Func_05_742c ; $5877
+	call ClearGlyphBuffer ; $5874
+	call UploadGlyphBufferFull ; $5877
 	pop af ; $587a
 	wram_bank ; $587b
 	ld a, [$d851] ; $587f
-	call Func_05_5aaf ; $5882
-	call Func_05_436f ; $5885
+	call OpenSpeechBubble ; $5882
+	call RestoreShadowTilemap ; $5885
 Label_05_5888:
 	xor a, a ; $5888
 	ld [$c3bb], a ; $5889
@@ -4011,27 +4011,27 @@ Label_05_5888:
 	ldh a, [hWramBank] ; $588f
 	push af ; $5891
 	wram_bank $07 ; $5892
-	call Func_05_73cb ; $5898
-	call Func_05_742c ; $589b
+	call ClearGlyphBuffer ; $5898
+	call UploadGlyphBufferFull ; $589b
 	pop af ; $589e
 	wram_bank ; $589f
-	call Func_05_55e6 ; $58a3
+	call SetActiveWindowTextId ; $58a3
 	ld a, [$d824] ; $58a6
 	set_flag $04, 3 ; $58a9
-	call Func_05_6f70 ; $58ac
+	call DrawTextWindowFrame ; $58ac
 	clear_flag $04, 3 ; $58af
-	call Func_05_7214 ; $58b2
-	call Func_05_5648 ; $58b5
+	call RedrawWindowRowsPadded ; $58b2
+	call RenderActiveWindowText ; $58b5
 	ld a, [$d850] ; $58b8
 	or a, a ; $58bb
 	jr z, Label_05_58c9 ; $58bc
 	ld a, [$d824] ; $58be
-	call Func_05_43a8 ; $58c1
-	call Func_05_5654 ; $58c4
+	call RestoreTilemapUnderWindow ; $58c1
+	call FitWindowToText ; $58c4
 	jr Label_05_5888 ; $58c7
 Label_05_58c9:
 	ld a, [$d824] ; $58c9
-	call Func_05_72bd ; $58cc
+	call CloseWindow ; $58cc
 	ld a, $ff ; $58cf
 	ld [$d824], a ; $58d1
 	xor a, a ; $58d4
@@ -4047,7 +4047,7 @@ Label_05_58c9:
 	pop bc ; $58ed
 	pop af ; $58ee
 	ret ; $58ef
-Func_05_58f0:
+ShowSpeakerDialogueRestoreBG:
 	push af ; $58f0
 	push bc ; $58f1
 	push de ; $58f2
@@ -4062,18 +4062,18 @@ Func_05_58f0:
 	ld [$d867], a ; $5907
 	ld [$d849], a ; $590a
 	ld [$d868], a ; $590d
-	call Func_05_5d2b ; $5910
+	call AddTextIdOffset ; $5910
 	ld a, b ; $5913
 	cp a, $ff ; $5914
 	jr nz, Label_05_591a ; $5916
 	ld a, $00 ; $5918
 Label_05_591a:
 	ld [$d851], a ; $591a
-	call Func_05_57e7 ; $591d
+	call ApplyMessageSpeed ; $591d
 	bit 7, a ; $5920
 	ld b, $08 ; $5922
 	jr nz, Label_05_592a ; $5924
-	call Func_05_608a ; $5926
+	call GetSpeakerVoice ; $5926
 	ld b, a ; $5929
 Label_05_592a:
 	ld a, b ; $592a
@@ -4087,12 +4087,12 @@ Label_05_592a:
 	ldh a, [hWramBank] ; $593c
 	push af ; $593e
 	wram_bank $07 ; $593f
-	call Func_05_73cb ; $5945
-	call Func_05_742c ; $5948
+	call ClearGlyphBuffer ; $5945
+	call UploadGlyphBufferFull ; $5948
 	pop af ; $594b
 	wram_bank ; $594c
 	ld a, [$d851] ; $5950
-	call Func_05_5aaf ; $5953
+	call OpenSpeechBubble ; $5953
 Label_05_5956:
 	xor a, a ; $5956
 	ld [$c3bb], a ; $5957
@@ -4100,22 +4100,22 @@ Label_05_5956:
 	ldh a, [hWramBank] ; $595d
 	push af ; $595f
 	wram_bank $07 ; $5960
-	call Func_05_73cb ; $5966
-	call Func_05_742c ; $5969
+	call ClearGlyphBuffer ; $5966
+	call UploadGlyphBufferFull ; $5969
 	pop af ; $596c
 	wram_bank ; $596d
-	call Func_05_55e6 ; $5971
-	call Func_05_436f ; $5974
+	call SetActiveWindowTextId ; $5971
+	call RestoreShadowTilemap ; $5974
 	ld a, [$d824] ; $5977
 	set_flag $04, 3 ; $597a
-	call Func_05_6f70 ; $597d
+	call DrawTextWindowFrame ; $597d
 	clear_flag $04, 3 ; $5980
-	call Func_05_7214 ; $5983
-	call Func_05_5648 ; $5986
+	call RedrawWindowRowsPadded ; $5983
+	call RenderActiveWindowText ; $5986
 	ld a, [$d850] ; $5989
 	or a, a ; $598c
 	jr z, Label_05_5994 ; $598d
-	call Func_05_5654 ; $598f
+	call FitWindowToText ; $598f
 	jr Label_05_5956 ; $5992
 Label_05_5994:
 	xor a, a ; $5994
@@ -4131,7 +4131,7 @@ Label_05_5994:
 	pop bc ; $59ad
 	pop af ; $59ae
 	ret ; $59af
-Func_05_59b0:
+ShowDialogueAtPosition:
 	push af ; $59b0
 	push bc ; $59b1
 	push de ; $59b2
@@ -4146,21 +4146,21 @@ Func_05_59b0:
 	ld [$d867], a ; $59c7
 	ld [$d849], a ; $59ca
 	ld [$d868], a ; $59cd
-	call Func_05_5d2b ; $59d0
+	call AddTextIdOffset ; $59d0
 	ld a, b ; $59d3
 	bit 7, a ; $59d4
 	ld b, $08 ; $59d6
 	jr nz, Label_05_59de ; $59d8
-	call Func_05_608a ; $59da
+	call GetSpeakerVoice ; $59da
 	ld b, a ; $59dd
 Label_05_59de:
 	ld a, b ; $59de
 	ld [$d862], a ; $59df
-	call Func_05_57e7 ; $59e2
+	call ApplyMessageSpeed ; $59e2
 	ld a, [$d824] ; $59e5
 	cp a, $ff ; $59e8
 	jr nz, Label_05_59f2 ; $59ea
-	call Func_05_5ba0 ; $59ec
+	call OpenDialogueWindowCentered ; $59ec
 	call Func_05_44a3 ; $59ef
 Label_05_59f2:
 	xor a, a ; $59f2
@@ -4169,22 +4169,22 @@ Label_05_59f2:
 	ldh a, [hWramBank] ; $59f9
 	push af ; $59fb
 	wram_bank $07 ; $59fc
-	call Func_05_73cb ; $5a02
-	call Func_05_742c ; $5a05
+	call ClearGlyphBuffer ; $5a02
+	call UploadGlyphBufferFull ; $5a05
 	pop af ; $5a08
 	wram_bank ; $5a09
-	call Func_05_55e6 ; $5a0d
+	call SetActiveWindowTextId ; $5a0d
 	ld a, [$d824] ; $5a10
 	set_flag $04, 3 ; $5a13
-	call Func_05_6f70 ; $5a16
+	call DrawTextWindowFrame ; $5a16
 	clear_flag $04, 3 ; $5a19
-	call Func_05_7214 ; $5a1c
-	call Func_05_5648 ; $5a1f
+	call RedrawWindowRowsPadded ; $5a1c
+	call RenderActiveWindowText ; $5a1f
 	ld a, [$d850] ; $5a22
 	or a, a ; $5a25
 	jr nz, Label_05_59f2 ; $5a26
 	ld a, [$d824] ; $5a28
-	call Func_05_72bd ; $5a2b
+	call CloseWindow ; $5a2b
 	ld a, $ff ; $5a2e
 	ld [$d824], a ; $5a30
 	xor a, a ; $5a33
@@ -4200,7 +4200,7 @@ Label_05_59f2:
 	pop bc ; $5a4c
 	pop af ; $5a4d
 	ret ; $5a4e
-Func_05_5a4f:
+DrawDialogueAtPosition:
 	push af ; $5a4f
 	push bc ; $5a50
 	push de ; $5a51
@@ -4218,16 +4218,16 @@ Func_05_5a4f:
 	bit 7, a ; $5a65
 	ld a, $08 ; $5a67
 	jr nz, Label_05_5a6e ; $5a69
-	call Func_05_608a ; $5a6b
+	call GetSpeakerVoice ; $5a6b
 Label_05_5a6e:
 	ld [$d862], a ; $5a6e
 	ld a, [$d824] ; $5a71
 	cp a, $ff ; $5a74
 	jr nz, Label_05_5a7b ; $5a76
-	call Func_05_5ba0 ; $5a78
+	call OpenDialogueWindowCentered ; $5a78
 Label_05_5a7b:
-	call Func_05_55e6 ; $5a7b
-	call Func_05_436f ; $5a7e
+	call SetActiveWindowTextId ; $5a7b
+	call RestoreShadowTilemap ; $5a7e
 	call Func_05_4626 ; $5a81
 	ld a, [$d850] ; $5a84
 	or a, a ; $5a87
@@ -4238,20 +4238,20 @@ Label_05_5a7b:
 	pop bc ; $5a90
 	pop af ; $5a91
 	ret ; $5a92
-Func_05_5a93:
+CloseActiveDialogueWindow:
 	push af ; $5a93
 	ldh a, [hWramBank] ; $5a94
 	push af ; $5a96
 	wram_bank $05 ; $5a97
 	ld a, [$d824] ; $5a9d
-	call Func_05_72bd ; $5aa0
+	call CloseWindow ; $5aa0
 	ld a, $ff ; $5aa3
 	ld [$d824], a ; $5aa5
 	pop af ; $5aa8
 	wram_bank ; $5aa9
 	pop af ; $5aad
 	ret ; $5aae
-Func_05_5aaf:
+OpenSpeechBubble:
 	push af ; $5aaf
 	push bc ; $5ab0
 	push de ; $5ab1
@@ -4267,7 +4267,7 @@ Func_05_5aaf:
 	jr nc, Label_05_5ac2 ; $5abe
 	jr Label_05_5aee ; $5ac0
 Label_05_5ac2:
-	call Func_05_5ff2 ; $5ac2
+	call GetObjectSlotPointer ; $5ac2
 	ld a, [$c323] ; $5ac5
 	ld b, a ; $5ac8
 	ld a, l ; $5ac9
@@ -4300,15 +4300,15 @@ Label_05_5aee:
 	ld b, $14 ; $5afd
 	ld c, $07 ; $5aff
 	ld d, $00 ; $5b01
-	call Func_05_4688 ; $5b03
+	call CreateDialogueWindow ; $5b03
 	pop hl ; $5b06
 	call FetchDialogueText ; $5b07
-	call Func_05_5654 ; $5b0a
+	call FitWindowToText ; $5b0a
 	xor a, a ; $5b0d
 	ld [$d866], a ; $5b0e
 	ld [$d868], a ; $5b11
 	ld a, [$d824] ; $5b14
-	call Func_05_6eea ; $5b17
+	call GetWindowStructPtr ; $5b17
 	wram_bank $05 ; $5b1a
 	ld a, [$d825] ; $5b20
 	add a, $08 ; $5b23
@@ -4330,21 +4330,21 @@ Label_05_5aee:
 Label_05_5b3e:
 	dec hl ; $5b3e
 	dec hl ; $5b3f
-	call Func_05_436f ; $5b40
+	call RestoreShadowTilemap ; $5b40
 	push af ; $5b43
 	ld a, [$d820] ; $5b44
-	call Func_05_6efa ; $5b47
+	call SaveWindowStruct ; $5b47
 	pop af ; $5b4a
 Label_05_5b4b:
 	push af ; $5b4b
 	ld a, [$d820] ; $5b4c
-	call Func_05_6eea ; $5b4f
-	call Func_05_4538 ; $5b52
+	call GetWindowStructPtr ; $5b4f
+	call SetWindowRect ; $5b52
 	ld a, [$d820] ; $5b55
-	call Func_05_6f70 ; $5b58
+	call DrawTextWindowFrame ; $5b58
 	ld hl, $dc78 ; $5b5b
 	ld a, [$d820] ; $5b5e
-	call Func_05_7214 ; $5b61
+	call RedrawWindowRowsPadded ; $5b61
 	ld a, d ; $5b64
 	cp a, [hl] ; $5b65
 	jr z, Label_05_5b6c ; $5b66
@@ -4389,13 +4389,13 @@ Label_05_5b8e:
 	dec a ; $5b92
 	jr nz, Label_05_5b4b ; $5b93
 	ld a, [$d824] ; $5b95
-	call Func_05_6f11 ; $5b98
+	call RestoreWindowStruct ; $5b98
 	pop hl ; $5b9b
 	pop de ; $5b9c
 	pop bc ; $5b9d
 	pop af ; $5b9e
 	ret ; $5b9f
-Func_05_5ba0:
+OpenDialogueWindowCentered:
 	push af ; $5ba0
 	push bc ; $5ba1
 	push de ; $5ba2
@@ -4405,13 +4405,13 @@ Func_05_5ba0:
 	ld de, $0000 ; $5ba6
 	ld b, $14 ; $5ba9
 	ld c, $07 ; $5bab
-	call Func_05_4688 ; $5bad
+	call CreateDialogueWindow ; $5bad
 	pop hl ; $5bb0
 	call FetchDialogueText ; $5bb1
-	call Func_05_5654 ; $5bb4
+	call FitWindowToText ; $5bb4
 	pop de ; $5bb7
 	ld a, [$d824] ; $5bb8
-	call Func_05_6eea ; $5bbb
+	call GetWindowStructPtr ; $5bbb
 	inc hl ; $5bbe
 	inc hl ; $5bbf
 	ld a, d ; $5bc0
@@ -4453,19 +4453,19 @@ Func_05_5ba0:
 	ld c, [hl] ; $5bef
 	pop hl ; $5bf0
 	ld a, [$d820] ; $5bf1
-	call Func_05_6f70 ; $5bf4
+	call DrawTextWindowFrame ; $5bf4
 	pop hl ; $5bf7
 	pop de ; $5bf8
 	pop bc ; $5bf9
 	pop af ; $5bfa
 	ret ; $5bfb
-Func_05_5bfc:
+MeasureDialogueWidthTiles:
 	push bc ; $5bfc
 	ldh a, [hWramBank] ; $5bfd
 	push af ; $5bff
 	wram_bank $05 ; $5c00
 	call FetchDialogueText ; $5c06
-	call Func_05_5654 ; $5c09
+	call FitWindowToText ; $5c09
 	ld a, [$d854] ; $5c0c
 	ld b, a ; $5c0f
 	pop af ; $5c10
@@ -4550,7 +4550,7 @@ Label_05_5c9c:
 	ld a, h ; $5c9c
 	and a, $03 ; $5c9d
 	ld h, a ; $5c9f
-	call Func_05_6d2b ; $5ca0
+	call FetchSRAMDialogueText ; $5ca0
 Label_05_5ca3:
 	pop hl ; $5ca3
 	pop de ; $5ca4
@@ -4633,7 +4633,7 @@ Label_05_5d26:
 	pop bc ; $5d28
 	pop af ; $5d29
 	ret ; $5d2a
-Func_05_5d2b:
+AddTextIdOffset:
 	bit 7, h ; $5d2b
 	ret nz ; $5d2d
 	push af ; $5d2e
@@ -4723,7 +4723,7 @@ Label_05_5d91:
 	pop af ; $5d97
 	ret ; $5d98
 	INCBIN "data/bank_005/d_5d99.bin" ; $5d99, 26 bytes
-Func_05_5db3:
+RenderProportionalTextAt:
 	push af ; $5db3
 	push bc ; $5db4
 	push de ; $5db5
@@ -4737,12 +4737,12 @@ Func_05_5db3:
 	ld [hl+], a ; $5dc1
 	ld [hl], d ; $5dc2
 	pop hl ; $5dc3
-	call Func_05_771b ; $5dc4
+	call InitGlyphStreamAt ; $5dc4
 	ldh a, [hWramBank] ; $5dc7
 	push af ; $5dc9
 	wram_bank $05 ; $5dca
 	xor a, a ; $5dd0
-	call Func_05_5d2b ; $5dd1
+	call AddTextIdOffset ; $5dd1
 	xor a, a ; $5dd4
 	ld [$d847], a ; $5dd5
 	ld [$d866], a ; $5dd8
@@ -4857,7 +4857,7 @@ Label_05_5e83:
 	wram_bank ; $5e87
 	pop af ; $5e8b
 	call Func_05_5f0d ; $5e8c
-	call Func_05_7681 ; $5e8f
+	call DrawInlineGlyph ; $5e8f
 	call Func_05_5f0d ; $5e92
 	inc hl ; $5e95
 	ld a, [hl] ; $5e96
@@ -4986,7 +4986,7 @@ Label_05_5f4d:
 	pop bc ; $5f4f
 	pop af ; $5f50
 	ret ; $5f51
-Func_05_5f52:
+RenderTextToBuffer64:
 	push af ; $5f52
 	push bc ; $5f53
 	push de ; $5f54
@@ -4995,7 +4995,7 @@ Func_05_5f52:
 	push af ; $5f58
 	wram_bank $05 ; $5f59
 	xor a, a ; $5f5f
-	call Func_05_5d2b ; $5f60
+	call AddTextIdOffset ; $5f60
 	ld a, e ; $5f63
 	ld [$d864], a ; $5f64
 	ld a, d ; $5f67
@@ -5072,7 +5072,7 @@ Label_05_5fdb:
 	pop bc ; $5fef
 	pop af ; $5ff0
 	ret ; $5ff1
-Func_05_5ff2:
+GetObjectSlotPointer:
 	ld hl, $0000 ; $5ff2
 	cp a, $ff ; $5ff5
 	ret z ; $5ff7
@@ -5090,7 +5090,7 @@ Func_05_5ff2:
 	pop bc ; $600c
 Label_05_600d:
 	ret ; $600d
-Func_05_600e:
+WriteStringToWindow:
 	push af ; $600e
 	push bc ; $600f
 	push de ; $6010
@@ -5110,7 +5110,7 @@ Label_05_6021:
 	ld a, b ; $6022
 	dec d ; $6023
 	dec e ; $6024
-	call Func_05_4346 ; $6025
+	call ReadWindowCellTileAttr ; $6025
 	inc d ; $6028
 	inc e ; $6029
 	ld b, a ; $602a
@@ -5127,7 +5127,7 @@ Label_05_6033:
 	ld b, $80 ; $6037
 	dec d ; $6039
 	dec e ; $603a
-	call Func_05_431d ; $603b
+	call WriteWindowCellTileAttr ; $603b
 	inc d ; $603e
 	inc e ; $603f
 	inc hl ; $6040
@@ -5139,7 +5139,7 @@ Label_05_6045:
 	ld c, a ; $6046
 	ld a, b ; $6047
 	ld b, $80 ; $6048
-	call Func_05_431d ; $604a
+	call WriteWindowCellTileAttr ; $604a
 	inc d ; $604d
 	jr Label_05_6012 ; $604e
 Label_05_6050:
@@ -5148,14 +5148,14 @@ Label_05_6050:
 	pop bc ; $6052
 	pop af ; $6053
 	ret ; $6054
-Func_05_6055:
+WriteDialogueToWindow:
 	push af ; $6055
 	push bc ; $6056
 	push de ; $6057
 	push hl ; $6058
 	call FetchDialogueText ; $6059
 	ld hl, wTextBuffer ; $605c
-	call Func_05_600e ; $605f
+	call WriteStringToWindow ; $605f
 	pop hl ; $6062
 	pop de ; $6063
 	pop bc ; $6064
@@ -5165,7 +5165,7 @@ Func_05_6055:
 	push bc ; $6068
 	push de ; $6069
 	push hl ; $606a
-	call Func_05_5147 ; $606b
+	call PushTextArgNumber ; $606b
 	ld b, a ; $606e
 	ld a, $01 ; $606f
 	ld [$c360], a ; $6071
@@ -5173,7 +5173,7 @@ Func_05_6055:
 	ld hl, $0136 ; $6075
 	call FetchDialogueText ; $6078
 	ld hl, wTextBuffer ; $607b
-	call Func_05_600e ; $607e
+	call WriteStringToWindow ; $607e
 	xor a, a ; $6081
 	ld [$c360], a ; $6082
 	pop hl ; $6085
@@ -5181,11 +5181,11 @@ Func_05_6055:
 	pop bc ; $6087
 	pop af ; $6088
 	ret ; $6089
-Func_05_608a:
+GetSpeakerVoice:
 	push bc ; $608a
 	push de ; $608b
 	push hl ; $608c
-	call Func_05_5ff2 ; $608d
+	call GetObjectSlotPointer ; $608d
 	ld a, h ; $6090
 	ld b, $08 ; $6091
 	or a, l ; $6093
@@ -5224,20 +5224,20 @@ Label_05_60c6:
 	pop bc ; $60c9
 	ret ; $60ca
 	INCBIN "data/bank_005/d_60cb.bin" ; $60cb, 175 bytes
-Func_05_617a:
-	call Func_05_4096 ; $617a
-	call Func_05_436f ; $617d
+ResetTextWindowsAndRestoreMap:
+	call InitTextWindows ; $617a
+	call RestoreShadowTilemap ; $617d
 	ret ; $6180
-Func_05_6181:
+CreateWindowWithTextId:
 	push bc ; $6181
 	ldh a, [hWramBank] ; $6182
 	push af ; $6184
 	wram_bank $05 ; $6185
-	call Func_05_4684 ; $618b
+	call CreateWindow ; $618b
 	bit 7, h ; $618e
 	jr nz, Label_05_6196 ; $6190
 	ld b, a ; $6192
-	call Func_05_55d5 ; $6193
+	call SetWindowTextId ; $6193
 Label_05_6196:
 	ld a, [$d820] ; $6196
 	ld b, a ; $6199
@@ -5246,7 +5246,7 @@ Label_05_6196:
 	ld a, b ; $619f
 	pop bc ; $61a0
 	ret ; $61a1
-Func_05_61a2:
+RedrawWindowText:
 	push af ; $61a2
 	push bc ; $61a3
 	push de ; $61a4
@@ -5266,31 +5266,31 @@ Label_05_61b9:
 	ldh a, [hWramBank] ; $61c0
 	push af ; $61c2
 	wram_bank $07 ; $61c3
-	call Func_05_73cb ; $61c9
-	call Func_05_622e ; $61cc
+	call ClearGlyphBuffer ; $61c9
+	call UploadGlyphTilesPartial ; $61cc
 	pop af ; $61cf
 	wram_bank ; $61d0
 	ld a, [$d824] ; $61d4
 	push af ; $61d7
-	call Func_05_6eea ; $61d8
+	call GetWindowStructPtr ; $61d8
 	ld bc, $0006 ; $61db
 	add hl, bc ; $61de
 	ld a, [hl+] ; $61df
 	ld h, [hl] ; $61e0
 	ld l, a ; $61e1
-	call Func_05_5bfc ; $61e2
+	call MeasureDialogueWidthTiles ; $61e2
 	pop af ; $61e5
-	call Func_05_6f70 ; $61e6
-	call Func_05_5648 ; $61e9
+	call DrawTextWindowFrame ; $61e6
+	call RenderActiveWindowText ; $61e9
 	ld a, [$d824] ; $61ec
-	call Func_05_43a8 ; $61ef
+	call RestoreTilemapUnderWindow ; $61ef
 	ld a, [$d850] ; $61f2
 	or a, a ; $61f5
 	jr nz, Label_05_61b9 ; $61f6
 	jr Label_05_6224 ; $61f8
 Label_05_61fa:
 	ld a, b ; $61fa
-	call Func_05_6eea ; $61fb
+	call GetWindowStructPtr ; $61fb
 	ld b, h ; $61fe
 	ld c, l ; $61ff
 	ld d, [hl] ; $6200
@@ -5324,7 +5324,7 @@ Label_05_6224:
 	pop bc ; $622b
 	pop af ; $622c
 	ret ; $622d
-Func_05_622e:
+UploadGlyphTilesPartial:
 	ldh a, [hWramBank] ; $622e
 	push af ; $6230
 	wram_bank $07 ; $6231
@@ -5368,15 +5368,15 @@ Func_05_6269:
 	ld [$d821], a ; $627d
 Label_05_6280:
 	ld a, [$d824] ; $6280
-	call Func_05_6f70 ; $6283
-	call Func_05_5648 ; $6286
+	call DrawTextWindowFrame ; $6283
+	call RenderActiveWindowText ; $6286
 	ld a, [$d850] ; $6289
 	or a, a ; $628c
 	jr nz, Label_05_6280 ; $628d
 	jr Label_05_62b2 ; $628f
 Label_05_6291:
 	ld a, b ; $6291
-	call Func_05_6eea ; $6292
+	call GetWindowStructPtr ; $6292
 	ld b, h ; $6295
 	ld c, l ; $6296
 	ld d, [hl] ; $6297
@@ -5407,7 +5407,7 @@ Label_05_62b2:
 	pop bc ; $62b9
 	pop af ; $62ba
 	ret ; $62bb
-Func_05_62bc:
+RedrawWindowRowsSafe:
 	push af ; $62bc
 	push bc ; $62bd
 	push de ; $62be
@@ -5425,15 +5425,15 @@ Func_05_62bc:
 	pop bc ; $62d5
 	pop af ; $62d6
 	ret ; $62d7
-Func_05_62d8:
+CloseWindowAlt:
 	push af ; $62d8
-	call Func_05_43a8 ; $62d9
+	call RestoreTilemapUnderWindow ; $62d9
 	call Func_05_42ed ; $62dc
-	call Func_05_4757 ; $62df
-	call Func_05_6eba ; $62e2
+	call ResetWindowState ; $62df
+	call FreeWindow ; $62e2
 	pop af ; $62e5
 	ret ; $62e6
-Func_05_62e7:
+ShowDialogueCentered:
 	push af ; $62e7
 	push bc ; $62e8
 	push de ; $62e9
@@ -5447,22 +5447,22 @@ Func_05_62e7:
 	ld [$d867], a ; $62fd
 	ld [$d849], a ; $6300
 	ld [$d868], a ; $6303
-	call Func_05_5d2b ; $6306
-	call Func_05_57e7 ; $6309
+	call AddTextIdOffset ; $6306
+	call ApplyMessageSpeed ; $6309
 	ld a, [$d824] ; $630c
 	cp a, $ff ; $630f
 	jr nz, Label_05_6316 ; $6311
-	call Func_05_634f ; $6313
+	call OpenCenteredDialogueWindow ; $6313
 Label_05_6316:
-	call Func_05_55e6 ; $6316
+	call SetActiveWindowTextId ; $6316
 	ld a, [$d824] ; $6319
-	call Func_05_61a2 ; $631c
+	call RedrawWindowText ; $631c
 	call Func_05_42ed ; $631f
 	ld a, [$d850] ; $6322
 	or a, a ; $6325
 	jr nz, Label_05_6316 ; $6326
 	ld a, [$d824] ; $6328
-	call Func_05_62d8 ; $632b
+	call CloseWindowAlt ; $632b
 	ld a, $ff ; $632e
 	ld [$d824], a ; $6330
 	xor a, a ; $6333
@@ -5478,7 +5478,7 @@ Label_05_6316:
 	pop bc ; $634c
 	pop af ; $634d
 	ret ; $634e
-Func_05_634f:
+OpenCenteredDialogueWindow:
 	push af ; $634f
 	push bc ; $6350
 	push de ; $6351
@@ -5488,12 +5488,12 @@ Func_05_634f:
 	ld de, $0000 ; $6355
 	ld b, $14 ; $6358
 	ld c, $07 ; $635a
-	call Func_05_4688 ; $635c
+	call CreateDialogueWindow ; $635c
 	pop hl ; $635f
 	call FetchDialogueText ; $6360
 	pop de ; $6363
 	ld a, [$d824] ; $6364
-	call Func_05_6eea ; $6367
+	call GetWindowStructPtr ; $6367
 	inc hl ; $636a
 	inc hl ; $636b
 	ld a, d ; $636c
@@ -5512,7 +5512,7 @@ Func_05_634f:
 	ld [hl-], a ; $637b
 	ld [hl], d ; $637c
 	ld a, [$d824] ; $637d
-	call Func_05_6f70 ; $6380
+	call DrawTextWindowFrame ; $6380
 	pop hl ; $6383
 	pop de ; $6384
 	pop bc ; $6385
@@ -5529,7 +5529,7 @@ Func_05_634f:
 	ld e, a ; $6392
 	rl b ; $6393
 	jr c, Label_05_63c3 ; $6395
-	call Func_05_5ff2 ; $6397
+	call GetObjectSlotPointer ; $6397
 	ld a, [$c323] ; $639a
 	ld b, a ; $639d
 	ld a, l ; $639e
@@ -5564,7 +5564,7 @@ Label_05_63c3:
 	pop bc ; $63d5
 	pop af ; $63d6
 	ret ; $63d7
-Func_05_63d8:
+DebugToggleSelectedFlag:
 	push af ; $63d8
 	push bc ; $63d9
 	push de ; $63da
@@ -5599,7 +5599,7 @@ Label_05_6402:
 	pop bc ; $6404
 	pop af ; $6405
 	ret ; $6406
-Func_05_6407:
+DebugDrawFlagsWindow1:
 	push af ; $6407
 	push bc ; $6408
 	push de ; $6409
@@ -5614,26 +5614,26 @@ Func_05_6407:
 	add a, a ; $6416
 	add a, a ; $6417
 	ld de, $0101 ; $6418
-	call Func_05_6498 ; $641b
+	call DebugDrawHexRowLabel ; $641b
 	ld de, $0401 ; $641e
-	call Func_05_64ba ; $6421
+	call DebugDrawFlagBitRow ; $6421
 	add a, $08 ; $6424
 	ld de, $0402 ; $6426
-	call Func_05_64ba ; $6429
+	call DebugDrawFlagBitRow ; $6429
 	add a, $08 ; $642c
 	ld de, $0104 ; $642e
-	call Func_05_6498 ; $6431
+	call DebugDrawHexRowLabel ; $6431
 	ld de, $0404 ; $6434
-	call Func_05_64ba ; $6437
+	call DebugDrawFlagBitRow ; $6437
 	add a, $08 ; $643a
 	ld de, $0405 ; $643c
-	call Func_05_64ba ; $643f
+	call DebugDrawFlagBitRow ; $643f
 	pop hl ; $6442
 	pop de ; $6443
 	pop bc ; $6444
 	pop af ; $6445
 	ret ; $6446
-Func_05_6447:
+DebugDrawFlagsWindow2:
 	push af ; $6447
 	push bc ; $6448
 	push de ; $6449
@@ -5649,20 +5649,20 @@ Func_05_6447:
 	add a, a ; $6457
 	add a, a ; $6458
 	ld de, $0101 ; $6459
-	call Func_05_6498 ; $645c
+	call DebugDrawHexRowLabel ; $645c
 	ld de, $0401 ; $645f
-	call Func_05_64ba ; $6462
+	call DebugDrawFlagBitRow ; $6462
 	add a, $08 ; $6465
 	ld de, $0402 ; $6467
-	call Func_05_64ba ; $646a
+	call DebugDrawFlagBitRow ; $646a
 	add a, $08 ; $646d
 	ld de, $0104 ; $646f
-	call Func_05_6498 ; $6472
+	call DebugDrawHexRowLabel ; $6472
 	ld de, $0404 ; $6475
-	call Func_05_64ba ; $6478
+	call DebugDrawFlagBitRow ; $6478
 	add a, $08 ; $647b
 	ld de, $0405 ; $647d
-	call Func_05_64ba ; $6480
+	call DebugDrawFlagBitRow ; $6480
 	pop hl ; $6483
 	pop de ; $6484
 	pop bc ; $6485
@@ -5670,7 +5670,7 @@ Func_05_6447:
 	ret ; $6487
 HexDigitChars_05:
 	INCBIN "data/bank_005/d_6488.bin" ; $6488, 16 bytes
-Func_05_6498:
+DebugDrawHexRowLabel:
 	push af ; $6498
 	push bc ; $6499
 	push de ; $649a
@@ -5686,16 +5686,16 @@ Label_05_64a8:
 	ld c, [hl] ; $64a8
 	ld a, b ; $64a9
 	ld b, $80 ; $64aa
-	call Func_05_431d ; $64ac
+	call WriteWindowCellTileAttr ; $64ac
 	inc d ; $64af
 	ld c, $3f ; $64b0
-	call Func_05_431d ; $64b2
+	call WriteWindowCellTileAttr ; $64b2
 	pop hl ; $64b5
 	pop de ; $64b6
 	pop bc ; $64b7
 	pop af ; $64b8
 	ret ; $64b9
-Func_05_64ba:
+DebugDrawFlagBitRow:
 	push af ; $64ba
 	push bc ; $64bb
 	push de ; $64bc
@@ -5716,7 +5716,7 @@ Label_05_64c3:
 Label_05_64d1:
 	ld a, b ; $64d1
 	ld b, $80 ; $64d2
-	call Func_05_431d ; $64d4
+	call WriteWindowCellTileAttr ; $64d4
 	inc hl ; $64d7
 	inc d ; $64d8
 	inc d ; $64d9
@@ -5728,7 +5728,7 @@ Label_05_64d1:
 	pop bc ; $64e0
 	pop af ; $64e1
 	ret ; $64e2
-Func_05_64e3:
+DebugDrawFlagCursor:
 	push af ; $64e3
 	push bc ; $64e4
 	push de ; $64e5
@@ -5753,13 +5753,13 @@ Label_05_64fa:
 Label_05_6508:
 	ld a, [hl] ; $6508
 	ld bc, $800d ; $6509
-	call Func_05_431d ; $650c
+	call WriteWindowCellTileAttr ; $650c
 	pop hl ; $650f
 	pop de ; $6510
 	pop bc ; $6511
 	pop af ; $6512
 	ret ; $6513
-Func_05_6514:
+DebugEraseFlagCursor:
 	push af ; $6514
 	push bc ; $6515
 	push de ; $6516
@@ -5785,13 +5785,13 @@ Label_05_6539:
 	ld a, [hl] ; $6539
 	ld b, $80 ; $653a
 	ld c, $20 ; $653c
-	call Func_05_431d ; $653e
+	call WriteWindowCellTileAttr ; $653e
 	pop hl ; $6541
 	pop de ; $6542
 	pop bc ; $6543
 	pop af ; $6544
 	ret ; $6545
-Func_05_6546:
+DebugMoveFlagCursor:
 	push af ; $6546
 	push bc ; $6547
 	push de ; $6548
@@ -5834,7 +5834,7 @@ Label_05_6570:
 	pop af ; $657f
 	ret ; $6580
 	INCBIN "data/bank_005/d_6581.bin" ; $6581, 33 bytes
-Func_05_65a2:
+RunDebugFlagEditor:
 	push af ; $65a2
 	push bc ; $65a3
 	push de ; $65a4
@@ -5849,34 +5849,34 @@ Func_05_65a2:
 Label_05_65b8:
 	ld de, $0000 ; $65b8
 	ld bc, $1404 ; $65bb
-	call Func_05_4684 ; $65be
+	call CreateWindow ; $65be
 	ld [$c717], a ; $65c1
-	call Func_05_6f70 ; $65c4
+	call DrawTextWindowFrame ; $65c4
 	ld hl, $6582 ; $65c7
 	ld de, $0401 ; $65ca
-	call Func_05_600e ; $65cd
+	call WriteStringToWindow ; $65cd
 	ld hl, $6592 ; $65d0
 	ld de, $0402 ; $65d3
-	call Func_05_600e ; $65d6
+	call WriteStringToWindow ; $65d6
 	ld de, $0004 ; $65d9
 	ld bc, $1407 ; $65dc
-	call Func_05_4684 ; $65df
+	call CreateWindow ; $65df
 	ld [$c718], a ; $65e2
-	call Func_05_6f70 ; $65e5
+	call DrawTextWindowFrame ; $65e5
 	ld de, $000b ; $65e8
 	ld bc, $1407 ; $65eb
-	call Func_05_4684 ; $65ee
+	call CreateWindow ; $65ee
 	ld [$c719], a ; $65f1
-	call Func_05_6f70 ; $65f4
-	call Func_05_6407 ; $65f7
-	call Func_05_6447 ; $65fa
-	call Func_05_64e3 ; $65fd
+	call DrawTextWindowFrame ; $65f4
+	call DebugDrawFlagsWindow1 ; $65f7
+	call DebugDrawFlagsWindow2 ; $65fa
+	call DebugDrawFlagCursor ; $65fd
 	ld a, [$c717] ; $6600
-	call Func_05_7205 ; $6603
+	call RedrawWindowRows ; $6603
 	ld a, [$c718] ; $6606
-	call Func_05_7205 ; $6609
+	call RedrawWindowRows ; $6609
 	ld a, [$c719] ; $660c
-	call Func_05_7205 ; $660f
+	call RedrawWindowRows ; $660f
 	ld a, $0f ; $6612
 	ld hl, $6581 ; $6614
 	call RegisterFrameTask ; $6617
@@ -5887,13 +5887,13 @@ Label_05_661a:
 	ldh a, [hInputRisingEdge] ; $6620
 	bit 0, a ; $6622
 	jr z, Label_05_663b ; $6624
-	call Func_05_63d8 ; $6626
-	call Func_05_6407 ; $6629
-	call Func_05_6447 ; $662c
+	call DebugToggleSelectedFlag ; $6626
+	call DebugDrawFlagsWindow1 ; $6629
+	call DebugDrawFlagsWindow2 ; $662c
 	ld a, [$c718] ; $662f
-	call Func_05_7205 ; $6632
+	call RedrawWindowRows ; $6632
 	ld a, [$c719] ; $6635
-	call Func_05_7205 ; $6638
+	call RedrawWindowRows ; $6638
 Label_05_663b:
 	ldh a, [hInputRisingEdge] ; $663b
 	bit 3, a ; $663d
@@ -5902,35 +5902,35 @@ Label_05_663b:
 	inc a ; $6644
 	and a, $03 ; $6645
 	ld [$c714], a ; $6647
-	call Func_05_6407 ; $664a
-	call Func_05_6447 ; $664d
+	call DebugDrawFlagsWindow1 ; $664a
+	call DebugDrawFlagsWindow2 ; $664d
 	ld a, [$c718] ; $6650
-	call Func_05_7205 ; $6653
+	call RedrawWindowRows ; $6653
 	ld a, [$c719] ; $6656
-	call Func_05_7205 ; $6659
+	call RedrawWindowRows ; $6659
 Label_05_665c:
 	ldh a, [hPlayerInputFlags] ; $665c
 	and a, $f0 ; $665e
 	jr z, Label_05_667d ; $6660
-	call Func_05_6514 ; $6662
-	call Func_05_6546 ; $6665
-	call Func_05_64e3 ; $6668
+	call DebugEraseFlagCursor ; $6662
+	call DebugMoveFlagCursor ; $6665
+	call DebugDrawFlagCursor ; $6668
 	ld a, [$c717] ; $666b
-	call Func_05_7205 ; $666e
+	call RedrawWindowRows ; $666e
 	ld a, [$c718] ; $6671
-	call Func_05_7205 ; $6674
+	call RedrawWindowRows ; $6674
 	ld a, [$c719] ; $6677
-	call Func_05_7205 ; $667a
+	call RedrawWindowRows ; $667a
 Label_05_667d:
 	call AdvanceFrame ; $667d
 	jp Label_05_661a ; $6680
 Label_05_6683:
 	ld a, [$c717] ; $6683
-	call Func_05_72bd ; $6686
+	call CloseWindow ; $6686
 	ld a, [$c718] ; $6689
-	call Func_05_72bd ; $668c
+	call CloseWindow ; $668c
 	ld a, [$c719] ; $668f
-	call Func_05_72bd ; $6692
+	call CloseWindow ; $6692
 	ld hl, $6581 ; $6695
 	call UnregisterFrameTask ; $6698
 	pop hl ; $669b
@@ -5938,7 +5938,7 @@ Label_05_6683:
 	pop bc ; $669d
 	pop af ; $669e
 	ret ; $669f
-Func_05_66a0:
+RunDebugMenu:
 	ldh a, [hDebugStepMode] ; $66a0
 	or a, a ; $66a2
 	ret z ; $66a3
@@ -5949,15 +5949,15 @@ Func_05_66a0:
 Label_05_66a8:
 	ld hl, $0137 ; $66a8
 	ld de, $0a01 ; $66ab
-	call Func_05_46b0 ; $66ae
+	call CreateMenuWindowFromText ; $66ae
 	ld [$c700], a ; $66b1
-	farcall FarPtr_05_18 ; $66b4
-	call Func_05_7232 ; $66b7
+	farcall FarPtr_RestoreShadowTilemap ; $66b4
+	call RenderMenuWindowText ; $66b7
 	ld a, [$c700] ; $66ba
-	call Func_05_477f ; $66bd
+	call RunMenuSelection ; $66bd
 	push af ; $66c0
 	ld a, [$c700] ; $66c1
-	call Func_05_72bd ; $66c4
+	call CloseWindow ; $66c4
 	pop af ; $66c7
 	cp a, $ff ; $66c8
 	jr z, Label_05_66d9 ; $66ca
@@ -5985,7 +5985,7 @@ TextSubcmdHandlers_05:
 	dw $66eb ; record 1
 	dw $6722 ; record 2
 	dw $6727 ; record 3
-	call Func_05_67c4 ; $66e6
+	call RunDebugWarpMenu ; $66e6
 	jr Label_05_66a8 ; $66e9
 	ld c, $10 ; $66eb
 	call BeginFadeOut ; $66ed
@@ -6010,13 +6010,13 @@ TextSubcmdHandlers_05:
 	pop bc ; $671f
 	pop af ; $6720
 	ret ; $6721
-	call Func_05_6b6c ; $6722
+	call StartDebugPaletteEditor ; $6722
 	jr Label_05_66a8 ; $6725
-	call Func_05_65a2 ; $6727
+	call RunDebugFlagEditor ; $6727
 	jp Label_05_66a8 ; $672a
-Func_05_672d:
+DebugDrawWarpMenu:
 	ld a, [$c701] ; $672d
-	call Func_05_4546 ; $6730
+	call DrawTextWindowFrameSaveRegs ; $6730
 	ld a, [$c700] ; $6733
 	ld h, $00 ; $6736
 	ld l, a ; $6738
@@ -6031,7 +6031,7 @@ Func_05_672d:
 Label_05_674a:
 	ld de, $0102 ; $674a
 	ld a, [$c701] ; $674d
-	call Func_05_6055 ; $6750
+	call WriteDialogueToWindow ; $6750
 	ld hl, $67b7 ; $6753
 	ld de, $c720 ; $6756
 	ld c, $01 ; $6759
@@ -6039,7 +6039,7 @@ Label_05_674a:
 	ld hl, $c720 ; $675e
 	ld de, $0104 ; $6761
 	ld a, [$c701] ; $6764
-	call Func_05_600e ; $6767
+	call WriteStringToWindow ; $6767
 	ld de, $c720 ; $676a
 	ld a, [$c700] ; $676d
 	ld h, $00 ; $6770
@@ -6049,7 +6049,7 @@ Label_05_674a:
 	ld hl, $c720 ; $6778
 	ld de, $1102 ; $677b
 	ld a, [$c701] ; $677e
-	call Func_05_600e ; $6781
+	call WriteStringToWindow ; $6781
 	ld de, $c720 ; $6784
 	ld a, [$c704] ; $6787
 	ld h, $00 ; $678a
@@ -6059,7 +6059,7 @@ Label_05_674a:
 	ld hl, $c720 ; $6792
 	ld de, $1104 ; $6795
 	ld a, [$c701] ; $6798
-	call Func_05_600e ; $679b
+	call WriteStringToWindow ; $679b
 	ld d, $10 ; $679e
 	ld a, [$c703] ; $67a0
 	add a, a ; $67a3
@@ -6067,12 +6067,12 @@ Label_05_674a:
 	ld e, a ; $67a6
 	ld bc, $800d ; $67a7
 	ld a, [$c701] ; $67aa
-	call Func_05_431d ; $67ad
+	call WriteWindowCellTileAttr ; $67ad
 	ld a, [$c701] ; $67b0
-	call Func_05_7205 ; $67b3
+	call RedrawWindowRows ; $67b3
 	ret ; $67b6
 	INCBIN "data/bank_005/d_67b7.bin" ; $67b7, 13 bytes
-Func_05_67c4:
+RunDebugWarpMenu:
 	push af ; $67c4
 	push bc ; $67c5
 	push de ; $67c6
@@ -6087,9 +6087,9 @@ Func_05_67c4:
 	ld [$c702], a ; $67de
 	ld de, $0000 ; $67e1
 	ld bc, $1406 ; $67e4
-	call Func_05_4684 ; $67e7
+	call CreateWindow ; $67e7
 	ld [$c701], a ; $67ea
-	call Func_05_672d ; $67ed
+	call DebugDrawWarpMenu ; $67ed
 	call AdvanceFrame ; $67f0
 Label_05_67f3:
 	ldh a, [hInputRisingEdge] ; $67f3
@@ -6114,7 +6114,7 @@ Label_05_6815:
 	ld a, [hl] ; $681e
 	xor a, $01 ; $681f
 	ld [hl], a ; $6821
-	call Func_05_672d ; $6822
+	call DebugDrawWarpMenu ; $6822
 Label_05_6825:
 	ld a, [$c703] ; $6825
 	cp a, $01 ; $6828
@@ -6123,34 +6123,34 @@ Label_05_6825:
 	ld d, a ; $682f
 	ld hl, $c700 ; $6830
 	ld a, [hl] ; $6833
-	call Func_05_6862 ; $6834
+	call DebugStepValueWithDpad ; $6834
 	cp a, [hl] ; $6837
 	jr z, Label_05_6852 ; $6838
 	ld [hl], a ; $683a
-	call Func_05_672d ; $683b
+	call DebugDrawWarpMenu ; $683b
 	jr Label_05_6852 ; $683e
 Label_05_6840:
 	ld d, $10 ; $6840
 	ld hl, $c704 ; $6842
 	ld a, [hl] ; $6845
-	call Func_05_6862 ; $6846
+	call DebugStepValueWithDpad ; $6846
 	cp a, [hl] ; $6849
 	jr z, Label_05_6852 ; $684a
 	ld [hl], a ; $684c
-	call Func_05_672d ; $684d
+	call DebugDrawWarpMenu ; $684d
 	jr Label_05_6852 ; $6850
 Label_05_6852:
 	call AdvanceFrame ; $6852
 	jr Label_05_67f3 ; $6855
 Label_05_6857:
 	ld a, [$c701] ; $6857
-	call Func_05_72bd ; $685a
+	call CloseWindow ; $685a
 	pop hl ; $685d
 	pop de ; $685e
 	pop bc ; $685f
 	pop af ; $6860
 	ret ; $6861
-Func_05_6862:
+DebugStepValueWithDpad:
 	push bc ; $6862
 	ld b, a ; $6863
 	ldh a, [hInputPressed] ; $6864
@@ -6183,7 +6183,7 @@ Label_05_6884:
 	pop bc ; $6884
 	ret ; $6885
 	INCBIN "data/bank_005/d_6886.bin" ; $6886, 202 bytes
-Func_05_6950:
+GetSelectedBGPaletteColorPtr:
 	ld hl, $c713 ; $6950
 	ld a, [hl] ; $6953
 	add a, a ; $6954
@@ -6198,12 +6198,12 @@ Func_05_6950:
 	inc h ; $6962
 Label_05_6963:
 	ret ; $6963
-Func_05_6964:
+DebugDrawColorComponents:
 	push af ; $6964
 	push bc ; $6965
 	push de ; $6966
 	push hl ; $6967
-	call Func_05_6950 ; $6968
+	call GetSelectedBGPaletteColorPtr ; $6968
 	ld a, [hl+] ; $696b
 	ld b, [hl] ; $696c
 	ld c, a ; $696d
@@ -6239,28 +6239,28 @@ Func_05_6964:
 	ld hl, $c700 ; $69a4
 	ld de, $0102 ; $69a7
 	ld a, [$c711] ; $69aa
-	call Func_05_600e ; $69ad
+	call WriteStringToWindow ; $69ad
 	ld a, [$c711] ; $69b0
-	call Func_05_7205 ; $69b3
+	call RedrawWindowRows ; $69b3
 	pop hl ; $69b6
 	pop de ; $69b7
 	pop bc ; $69b8
 	pop af ; $69b9
 	ret ; $69ba
 	INCBIN "data/bank_005/d_69bb.bin" ; $69bb, 10 bytes
-Func_05_69c5:
+RunDebugColorEditor:
 	ld de, $0700 ; $69c5
 	ld bc, $0b04 ; $69c8
-	farcall FarPtr_05_04 ; $69cb
+	farcall FarPtr_CreateWindow ; $69cb
 	ld [$c711], a ; $69ce
-	call Func_05_6f70 ; $69d1
-	call Func_05_7205 ; $69d4
+	call DrawTextWindowFrame ; $69d1
+	call RedrawWindowRows ; $69d4
 	ld hl, $69bb ; $69d7
 	ld de, $0101 ; $69da
 	ld a, [$c711] ; $69dd
-	call Func_05_600e ; $69e0
+	call WriteStringToWindow ; $69e0
 	ld e, $00 ; $69e3
-	call Func_05_6964 ; $69e5
+	call DebugDrawColorComponents ; $69e5
 Label_05_69e8:
 	ldh a, [hInputRisingEdge] ; $69e8
 	and a, $03 ; $69ea
@@ -6298,10 +6298,10 @@ Label_05_6a1a:
 	jr nz, Label_05_6a20 ; $6a1c
 	ld e, $00 ; $6a1e
 Label_05_6a20:
-	call Func_05_6964 ; $6a20
+	call DebugDrawColorComponents ; $6a20
 	jr Label_05_69e8 ; $6a23
 Label_05_6a25:
-	call Func_05_6950 ; $6a25
+	call GetSelectedBGPaletteColorPtr ; $6a25
 	ld a, [hl+] ; $6a28
 	ld c, a ; $6a29
 	ld a, [hl-] ; $6a2a
@@ -6325,26 +6325,26 @@ Label_05_6a40:
 	ld [hl-], a ; $6a43
 	ld a, $03 ; $6a44
 	ldh [hPaletteDirtyFlags], a ; $6a46
-	call Func_05_6964 ; $6a48
+	call DebugDrawColorComponents ; $6a48
 	jr Label_05_69e8 ; $6a4b
 Label_05_6a4d:
 	ld a, [$c711] ; $6a4d
-	call Func_05_72bd ; $6a50
+	call CloseWindow ; $6a50
 	ret ; $6a53
-Func_05_6a54:
+RunDebugPaletteViewer:
 	wram_bank $05 ; $6a54
 	ld de, $0000 ; $6a5a
 	ld bc, $0712 ; $6a5d
 	ld a, $00 ; $6a60
-	farcall FarPtr_05_02 ; $6a62
+	farcall FarPtr_CreateWindowWithAttr ; $6a62
 	ld [$c710], a ; $6a65
 	ld a, [$c710] ; $6a68
-	call Func_05_6f70 ; $6a6b
+	call DrawTextWindowFrame ; $6a6b
 	ld h, $10 ; $6a6e
 	ld de, $0101 ; $6a70
 	ld bc, $0030 ; $6a73
 Label_05_6a76:
-	call Func_05_431d ; $6a76
+	call WriteWindowCellTileAttr ; $6a76
 	inc e ; $6a79
 	inc c ; $6a7a
 	res 3, c ; $6a7b
@@ -6356,22 +6356,22 @@ Label_05_6a76:
 Label_05_6a86:
 	ld d, $02 ; $6a86
 	ld c, $a0 ; $6a88
-	call Func_05_431d ; $6a8a
+	call WriteWindowCellTileAttr ; $6a8a
 	inc d ; $6a8d
 	ld c, $a1 ; $6a8e
-	call Func_05_431d ; $6a90
+	call WriteWindowCellTileAttr ; $6a90
 	inc d ; $6a93
 	ld c, $a2 ; $6a94
-	call Func_05_431d ; $6a96
+	call WriteWindowCellTileAttr ; $6a96
 	inc d ; $6a99
 	ld c, $a3 ; $6a9a
-	call Func_05_431d ; $6a9c
+	call WriteWindowCellTileAttr ; $6a9c
 	inc e ; $6a9f
 	inc b ; $6aa0
 	dec h ; $6aa1
 	jr nz, Label_05_6a86 ; $6aa2
 	ld a, [$c710] ; $6aa4
-	call Func_05_7205 ; $6aa7
+	call RedrawWindowRows ; $6aa7
 	ld a, $0f ; $6aaa
 	ld hl, $6b03 ; $6aac
 	call RegisterFrameTask ; $6aaf
@@ -6381,7 +6381,7 @@ Label_05_6ab2:
 	jr nz, Label_05_6af6 ; $6ab6
 	bit 0, a ; $6ab8
 	jr z, Label_05_6abf ; $6aba
-	call Func_05_69c5 ; $6abc
+	call RunDebugColorEditor ; $6abc
 Label_05_6abf:
 	ld a, [$c712] ; $6abf
 	ld d, a ; $6ac2
@@ -6418,7 +6418,7 @@ Label_05_6ae5:
 	jr Label_05_6ab2 ; $6af4
 Label_05_6af6:
 	ld a, [$c710] ; $6af6
-	call Func_05_72bd ; $6af9
+	call CloseWindow ; $6af9
 	ld hl, $6b03 ; $6afc
 	call UnregisterFrameTask ; $6aff
 	ret ; $6b02
@@ -6495,7 +6495,7 @@ Label_05_6b3e:
 	dec a ; $6b68
 	jr nz, Label_05_6b3e ; $6b69
 	ret ; $6b6b
-Func_05_6b6c:
+StartDebugPaletteEditor:
 	ld hl, $6890 ; $6b6c
 	ld de, $8600 ; $6b6f
 	ld c, $0c ; $6b72
@@ -6503,9 +6503,9 @@ Func_05_6b6c:
 	xor a, a ; $6b77
 	ld [$c712], a ; $6b78
 	ld [$c713], a ; $6b7b
-	call Func_05_6a54 ; $6b7e
+	call RunDebugPaletteViewer ; $6b7e
 	ret ; $6b81
-Func_05_6b82:
+WriteStringToTilemap:
 	push af ; $6b82
 Label_05_6b83:
 	ld a, [hl] ; $6b83
@@ -6552,7 +6552,7 @@ Label_05_6ba8:
 Label_05_6bb7:
 	pop af ; $6bb7
 	ret ; $6bb8
-Func_05_6bb9:
+WriteStringToTilemapAlt:
 	push af ; $6bb9
 Label_05_6bba:
 	ld a, [hl] ; $6bba
@@ -6599,7 +6599,7 @@ Label_05_6bdf:
 Label_05_6bee:
 	pop af ; $6bee
 	ret ; $6bef
-Func_05_6bf0:
+WriteStringToTilemapStreamed:
 	push af ; $6bf0
 	ld a, d ; $6bf1
 	ld [$dc05], a ; $6bf2
@@ -6703,7 +6703,7 @@ Label_05_6c77:
 	push af ; $6c7f
 	wram_bank $05 ; $6c80
 	xor a, a ; $6c86
-	call Func_05_5d2b ; $6c87
+	call AddTextIdOffset ; $6c87
 	xor a, a ; $6c8a
 	ld [$d847], a ; $6c8b
 	ld [$d866], a ; $6c8e
@@ -6800,18 +6800,18 @@ Label_05_6d02:
 	pop bc ; $6d28
 	pop af ; $6d29
 	ret ; $6d2a
-Func_05_6d2b:
+FetchSRAMDialogueText:
 	push af ; $6d2b
 	ld a, $00 ; $6d2c
-	call Func_05_6d3b ; $6d2e
+	call FetchSRAMText ; $6d2e
 	pop af ; $6d31
 	ret ; $6d32
 	push af ; $6d33
 	ld a, $01 ; $6d34
-	call Func_05_6d3b ; $6d36
+	call FetchSRAMText ; $6d36
 	pop af ; $6d39
 	ret ; $6d3a
-Func_05_6d3b:
+FetchSRAMText:
 	push bc ; $6d3b
 	push de ; $6d3c
 	push hl ; $6d3d
@@ -6839,7 +6839,7 @@ Label_05_6d5e:
 	pop bc ; $6d63
 	ret ; $6d64
 	INCBIN "data/bank_005/d_6d65.bin" ; $6d65, 32 bytes
-Func_05_6d85:
+RunDebugWindowDemo:
 	ldh a, [hWramBank] ; $6d85
 	push af ; $6d87
 	xor a, a ; $6d88
@@ -6849,11 +6849,11 @@ Func_05_6d85:
 	ld c, $7f ; $6d8f
 	call BeginFadeIn ; $6d91
 	call WaitFadeEnd ; $6d94
-	call Func_05_436f ; $6d97
+	call RestoreShadowTilemap ; $6d97
 	call WaitFramesCmd ; $6d9a
 	db $1e ; $6d9d inline arg
 	call DisableLCDSafely ; $6d9e
-	call Func_05_6e09 ; $6da1
+	call ResetTextWindowState ; $6da1
 	ld de, $d000 ; $6da4
 	ld hl, $c3b4 ; $6da7
 	ld a, e ; $6daa
@@ -6867,16 +6867,16 @@ Func_05_6d85:
 	ld e, $02 ; $6db9
 	ld b, $10 ; $6dbb
 	ld c, $07 ; $6dbd
-	call Func_05_6e45 ; $6dbf
-	call Func_05_6f70 ; $6dc2
-	call Func_05_7205 ; $6dc5
+	call CreateWindowFromScreenRect ; $6dbf
+	call DrawTextWindowFrame ; $6dc2
+	call RedrawWindowRows ; $6dc5
 	ld d, $02 ; $6dc8
 	ld e, $04 ; $6dca
 	ld b, $08 ; $6dcc
 	ld c, $0c ; $6dce
-	call Func_05_6e45 ; $6dd0
-	call Func_05_6f70 ; $6dd3
-	call Func_05_7205 ; $6dd6
+	call CreateWindowFromScreenRect ; $6dd0
+	call DrawTextWindowFrame ; $6dd3
+	call RedrawWindowRows ; $6dd6
 	call EnableLCD ; $6dd9
 	pop af ; $6ddc
 	wram_bank ; $6ddd
@@ -6906,7 +6906,7 @@ Label_05_6e03:
 	call AdvanceFrame ; $6e03
 	jr Label_05_6de3 ; $6e06
 	ret ; $6e08
-Func_05_6e09:
+ResetTextWindowState:
 	push af ; $6e09
 	push bc ; $6e0a
 	push de ; $6e0b
@@ -6936,22 +6936,22 @@ Func_05_6e09:
 	pop bc ; $6e42
 	pop af ; $6e43
 	ret ; $6e44
-Func_05_6e45:
+CreateWindowFromScreenRect:
 	push bc ; $6e45
 	push de ; $6e46
 	push hl ; $6e47
-	call Func_05_72dc ; $6e48
+	call PrepareGlyphBuffer ; $6e48
 	wram_bank $05 ; $6e4b
 	ld h, d ; $6e51
 	ld l, e ; $6e52
-	call Func_05_464b ; $6e53
+	call GetScreenTopLeftCell ; $6e53
 	ld a, h ; $6e56
 	add a, d ; $6e57
 	ld d, a ; $6e58
 	ld a, l ; $6e59
 	add a, e ; $6e5a
 	ld e, a ; $6e5b
-	call Func_05_6e6d ; $6e5c
+	call AllocWindowStruct ; $6e5c
 	ld a, [$d820] ; $6e5f
 	cp a, $ff ; $6e62
 	jr z, Label_05_6e69 ; $6e64
@@ -6961,12 +6961,12 @@ Label_05_6e69:
 	pop de ; $6e6a
 	pop bc ; $6e6b
 	ret ; $6e6c
-Func_05_6e6d:
+AllocWindowStruct:
 	push de ; $6e6d
 	push bc ; $6e6e
 	push hl ; $6e6f
 	wram_bank $05 ; $6e70
-	call Func_05_6e96 ; $6e76
+	call AllocWindowId ; $6e76
 	cp a, $ff ; $6e79
 	jr z, Label_05_6e92 ; $6e7b
 	ld [$d820], a ; $6e7d
@@ -6991,7 +6991,7 @@ Label_05_6e92:
 	pop bc ; $6e93
 	pop de ; $6e94
 	ret ; $6e95
-Func_05_6e96:
+AllocWindowId:
 	push hl ; $6e96
 	push bc ; $6e97
 	push de ; $6e98
@@ -7017,11 +7017,11 @@ Label_05_6eb6:
 	pop bc ; $6eb7
 	pop hl ; $6eb8
 	ret ; $6eb9
-Func_05_6eba:
+FreeWindow:
 	push bc ; $6eba
 	push de ; $6ebb
 	ld d, a ; $6ebc
-	call Func_05_6eea ; $6ebd
+	call GetWindowStructPtr ; $6ebd
 	xor a, a ; $6ec0
 	ld c, $08 ; $6ec1
 Label_05_6ec3:
@@ -7053,7 +7053,7 @@ Label_05_6ee7:
 	pop de ; $6ee7
 	pop bc ; $6ee8
 	ret ; $6ee9
-Func_05_6eea:
+GetWindowStructPtr:
 	push af ; $6eea
 	and a, $07 ; $6eeb
 	add a, a ; $6eed
@@ -7067,12 +7067,12 @@ Func_05_6eea:
 Label_05_6ef8:
 	pop af ; $6ef8
 	ret ; $6ef9
-Func_05_6efa:
+SaveWindowStruct:
 	push af ; $6efa
 	push bc ; $6efb
 	push de ; $6efc
 	push hl ; $6efd
-	call Func_05_6eea ; $6efe
+	call GetWindowStructPtr ; $6efe
 	ld de, $dc78 ; $6f01
 	ld c, $08 ; $6f04
 Label_05_6f06:
@@ -7086,12 +7086,12 @@ Label_05_6f06:
 	pop bc ; $6f0e
 	pop af ; $6f0f
 	ret ; $6f10
-Func_05_6f11:
+RestoreWindowStruct:
 	push af ; $6f11
 	push bc ; $6f12
 	push de ; $6f13
 	push hl ; $6f14
-	call Func_05_6eea ; $6f15
+	call GetWindowStructPtr ; $6f15
 	ld d, h ; $6f18
 	ld e, l ; $6f19
 	ld hl, $dc78 ; $6f1a
@@ -7107,7 +7107,7 @@ Label_05_6f1f:
 	pop bc ; $6f27
 	pop af ; $6f28
 	ret ; $6f29
-Func_05_6f2a:
+WrapCellPtrToRowStart:
 	push af ; $6f2a
 	ld a, l ; $6f2b
 	and a, $1f ; $6f2c
@@ -7119,7 +7119,7 @@ Func_05_6f2a:
 Label_05_6f36:
 	pop af ; $6f36
 	ret ; $6f37
-Func_05_6f38:
+ClampCellPtrToShadowMap:
 	push af ; $6f38
 	ldh a, [hWramBank] ; $6f39
 	push af ; $6f3b
@@ -7135,7 +7135,7 @@ Label_05_6f4d:
 	wram_bank ; $6f4e
 	pop af ; $6f52
 	ret ; $6f53
-Func_05_6f54:
+ClampCellPtrToAttrMap:
 	push af ; $6f54
 	ldh a, [hWramBank] ; $6f55
 	push af ; $6f57
@@ -7151,7 +7151,7 @@ Label_05_6f69:
 	wram_bank ; $6f6a
 	pop af ; $6f6e
 	ret ; $6f6f
-Func_05_6f70:
+DrawTextWindowFrame:
 	push af ; $6f70
 	push bc ; $6f71
 	push de ; $6f72
@@ -7160,7 +7160,7 @@ Func_05_6f70:
 	ldh a, [hWramBank] ; $6f75
 	push af ; $6f77
 	ld a, b ; $6f78
-	call Func_05_6eea ; $6f79
+	call GetWindowStructPtr ; $6f79
 	ld d, [hl] ; $6f7c
 	inc hl ; $6f7d
 	ld e, [hl] ; $6f7e
@@ -7219,17 +7219,17 @@ Label_05_6fad:
 	push hl ; $6fc9
 	ld [hl], $02 ; $6fca
 	inc hl ; $6fcc
-	call Func_05_6f2a ; $6fcd
+	call WrapCellPtrToRowStart ; $6fcd
 	ld b, e ; $6fd0
 	ld a, $03 ; $6fd1
 Label_05_6fd3:
 	ld [hl+], a ; $6fd3
-	call Func_05_6f2a ; $6fd4
+	call WrapCellPtrToRowStart ; $6fd4
 	dec b ; $6fd7
 	jr nz, Label_05_6fd3 ; $6fd8
 	ld [hl], $04 ; $6fda
 	inc hl ; $6fdc
-	call Func_05_6f2a ; $6fdd
+	call WrapCellPtrToRowStart ; $6fdd
 	pop hl ; $6fe0
 	ld a, $20 ; $6fe1
 	add a, l ; $6fe3
@@ -7237,12 +7237,12 @@ Label_05_6fd3:
 	jr nc, Label_05_6fe8 ; $6fe5
 	inc h ; $6fe7
 Label_05_6fe8:
-	call Func_05_6f38 ; $6fe8
+	call ClampCellPtrToShadowMap ; $6fe8
 Label_05_6feb:
 	push hl ; $6feb
 	ld [hl], $05 ; $6fec
 	inc hl ; $6fee
-	call Func_05_6f2a ; $6fef
+	call WrapCellPtrToRowStart ; $6fef
 	ld b, e ; $6ff2
 	bit 0, d ; $6ff3
 	jr z, Label_05_7011 ; $6ff5
@@ -7256,7 +7256,7 @@ Label_05_7002:
 	ld [hl], $20 ; $7002
 	inc hl ; $7004
 Label_05_7005:
-	call Func_05_6f2a ; $7005
+	call WrapCellPtrToRowStart ; $7005
 	inc a ; $7008
 	dec b ; $7009
 	jr nz, Label_05_6ffa ; $700a
@@ -7266,13 +7266,13 @@ Label_05_7011:
 	ld a, $20 ; $7011
 Label_05_7013:
 	ld [hl+], a ; $7013
-	call Func_05_6f2a ; $7014
+	call WrapCellPtrToRowStart ; $7014
 	dec b ; $7017
 	jr nz, Label_05_7013 ; $7018
 Label_05_701a:
 	ld [hl], $06 ; $701a
 	inc hl ; $701c
-	call Func_05_6f2a ; $701d
+	call WrapCellPtrToRowStart ; $701d
 	pop hl ; $7020
 	ld a, $20 ; $7021
 	add a, l ; $7023
@@ -7280,23 +7280,23 @@ Label_05_701a:
 	jr nc, Label_05_7028 ; $7025
 	inc h ; $7027
 Label_05_7028:
-	call Func_05_6f38 ; $7028
+	call ClampCellPtrToShadowMap ; $7028
 	dec d ; $702b
 	jr nz, Label_05_6feb ; $702c
 	push hl ; $702e
 	ld [hl], $07 ; $702f
 	inc hl ; $7031
-	call Func_05_6f2a ; $7032
+	call WrapCellPtrToRowStart ; $7032
 	ld b, e ; $7035
 	ld a, $08 ; $7036
 Label_05_7038:
 	ld [hl+], a ; $7038
-	call Func_05_6f2a ; $7039
+	call WrapCellPtrToRowStart ; $7039
 	dec b ; $703c
 	jr nz, Label_05_7038 ; $703d
 	ld [hl], $09 ; $703f
 	inc hl ; $7041
-	call Func_05_6f2a ; $7042
+	call WrapCellPtrToRowStart ; $7042
 	pop hl ; $7045
 	ld a, $20 ; $7046
 	add a, l ; $7048
@@ -7304,7 +7304,7 @@ Label_05_7038:
 	jr nc, Label_05_704d ; $704a
 	inc h ; $704c
 Label_05_704d:
-	call Func_05_6f38 ; $704d
+	call ClampCellPtrToShadowMap ; $704d
 	pop hl ; $7050
 	ld bc, $0400 ; $7051
 	add hl, bc ; $7054
@@ -7317,17 +7317,17 @@ Label_05_705a:
 	push hl ; $705a
 	ld [hl], c ; $705b
 	inc hl ; $705c
-	call Func_05_6f2a ; $705d
+	call WrapCellPtrToRowStart ; $705d
 	ld b, e ; $7060
 Label_05_7061:
 	ld [hl], c ; $7061
 	inc hl ; $7062
-	call Func_05_6f2a ; $7063
+	call WrapCellPtrToRowStart ; $7063
 	dec b ; $7066
 	jr nz, Label_05_7061 ; $7067
 	ld [hl], c ; $7069
 	inc hl ; $706a
-	call Func_05_6f2a ; $706b
+	call WrapCellPtrToRowStart ; $706b
 	pop hl ; $706e
 	ld a, $20 ; $706f
 	add a, l ; $7071
@@ -7335,7 +7335,7 @@ Label_05_7061:
 	jr nc, Label_05_7076 ; $7073
 	inc h ; $7075
 Label_05_7076:
-	call Func_05_6f54 ; $7076
+	call ClampCellPtrToAttrMap ; $7076
 	dec d ; $7079
 	jr nz, Label_05_705a ; $707a
 Label_05_707c:
@@ -7346,7 +7346,7 @@ Label_05_707c:
 	pop bc ; $7083
 	pop af ; $7084
 	ret ; $7085
-Func_05_7086:
+MarkTilemapRowsDirty:
 	push af ; $7086
 	push bc ; $7087
 	push de ; $7088
@@ -7354,30 +7354,30 @@ Func_05_7086:
 	ld a, d ; $708a
 	and a, $1f ; $708b
 	ld d, a ; $708d
-	call Func_05_70aa ; $708e
+	call SetRowDirtyFlags ; $708e
 	pop hl ; $7091
 	pop de ; $7092
 	pop bc ; $7093
 	pop af ; $7094
 	ret ; $7095
-Func_05_7096:
+MarkWindowRowsDirty:
 	push af ; $7096
 	push bc ; $7097
 	push de ; $7098
 	push hl ; $7099
-	call Func_05_6eea ; $709a
+	call GetWindowStructPtr ; $709a
 	inc hl ; $709d
 	ld d, [hl] ; $709e
 	inc hl ; $709f
 	inc hl ; $70a0
 	ld e, [hl] ; $70a1
-	call Func_05_70aa ; $70a2
+	call SetRowDirtyFlags ; $70a2
 	pop hl ; $70a5
 	pop de ; $70a6
 	pop bc ; $70a7
 	pop af ; $70a8
 	ret ; $70a9
-Func_05_70aa:
+SetRowDirtyFlags:
 	ld hl, $dc40 ; $70aa
 	ld c, $20 ; $70ad
 	xor a, a ; $70af
@@ -7406,12 +7406,12 @@ Label_05_70cd:
 	dec e ; $70cd
 	jr nz, Label_05_70c2 ; $70ce
 	ret ; $70d0
-Func_05_70d1:
+MarkWindowRowsDirtyMin7:
 	push af ; $70d1
 	push bc ; $70d2
 	push de ; $70d3
 	push hl ; $70d4
-	call Func_05_6eea ; $70d5
+	call GetWindowStructPtr ; $70d5
 	inc hl ; $70d8
 	ld d, [hl] ; $70d9
 	inc hl ; $70da
@@ -7462,12 +7462,12 @@ Label_05_7112:
 	pop bc ; $7117
 	pop af ; $7118
 	ret ; $7119
-Func_05_711a:
+FlushDirtyRowsPerFrame:
 	push af ; $711a
 	push bc ; $711b
 	push de ; $711c
 	push hl ; $711d
-	call Func_05_71c4 ; $711e
+	call BuildDirtyRowRuns ; $711e
 	set_flag $03, 0 ; $7121
 	ld hl, $dc60 ; $7124
 Label_05_7127:
@@ -7478,7 +7478,7 @@ Label_05_7127:
 	inc hl ; $712d
 	ld b, [hl] ; $712e
 	inc hl ; $712f
-	call Func_05_7176 ; $7130
+	call CopyDirtyRowSpanToVRAM ; $7130
 	push af ; $7133
 	ldh a, [rLCDC] ; $7134
 	bit 7, a ; $7136
@@ -7494,12 +7494,12 @@ Label_05_7140:
 	pop bc ; $7145
 	pop af ; $7146
 	ret ; $7147
-Func_05_7148:
+FlushDirtyRowsNow:
 	push af ; $7148
 	push bc ; $7149
 	push de ; $714a
 	push hl ; $714b
-	call Func_05_71c4 ; $714c
+	call BuildDirtyRowRuns ; $714c
 	set_flag $03, 0 ; $714f
 	ld hl, $dc60 ; $7152
 Label_05_7155:
@@ -7510,7 +7510,7 @@ Label_05_7155:
 	inc hl ; $715b
 	ld b, [hl] ; $715c
 	inc hl ; $715d
-	call Func_05_7176 ; $715e
+	call CopyDirtyRowSpanToVRAM ; $715e
 	jr Label_05_7155 ; $7161
 Label_05_7163:
 	clear_flag $03, 0 ; $7163
@@ -7526,7 +7526,7 @@ Label_05_7170:
 	pop bc ; $7173
 	pop af ; $7174
 	ret ; $7175
-Func_05_7176:
+CopyDirtyRowSpanToVRAM:
 	push af ; $7176
 	push bc ; $7177
 	push de ; $7178
@@ -7582,7 +7582,7 @@ Func_05_7176:
 	pop bc ; $71c1
 	pop af ; $71c2
 	ret ; $71c3
-Func_05_71c4:
+BuildDirtyRowRuns:
 	ld c, $00 ; $71c4
 	ld hl, $dc40 ; $71c6
 	ld de, $dc60 ; $71c9
@@ -7635,43 +7635,43 @@ Label_05_7200:
 	ld l, e ; $7201
 	ld [hl], $ff ; $7202
 	ret ; $7204
-Func_05_7205:
+RedrawWindowRows:
 	push af ; $7205
 	push bc ; $7206
 	push de ; $7207
 	push hl ; $7208
-	call Func_05_7096 ; $7209
-	call Func_05_711a ; $720c
+	call MarkWindowRowsDirty ; $7209
+	call FlushDirtyRowsPerFrame ; $720c
 	pop hl ; $720f
 	pop de ; $7210
 	pop bc ; $7211
 	pop af ; $7212
 	ret ; $7213
-Func_05_7214:
+RedrawWindowRowsPadded:
 	push af ; $7214
 	push bc ; $7215
 	push de ; $7216
 	push hl ; $7217
-	call Func_05_70d1 ; $7218
-	call Func_05_7148 ; $721b
+	call MarkWindowRowsDirtyMin7 ; $7218
+	call FlushDirtyRowsNow ; $721b
 	pop hl ; $721e
 	pop de ; $721f
 	pop bc ; $7220
 	pop af ; $7221
 	ret ; $7222
-Func_05_7223:
+RedrawTilemapRowRange:
 	push af ; $7223
 	push bc ; $7224
 	push de ; $7225
 	push hl ; $7226
-	call Func_05_7086 ; $7227
-	call Func_05_711a ; $722a
+	call MarkTilemapRowsDirty ; $7227
+	call FlushDirtyRowsPerFrame ; $722a
 	pop hl ; $722d
 	pop de ; $722e
 	pop bc ; $722f
 	pop af ; $7230
 	ret ; $7231
-Func_05_7232:
+RenderMenuWindowText:
 	push af ; $7232
 	push bc ; $7233
 	push de ; $7234
@@ -7679,13 +7679,13 @@ Func_05_7232:
 	ld a, [$d82f] ; $7236
 	or a, a ; $7239
 	jr nz, Label_05_723f ; $723a
-	call Func_05_72dc ; $723c
+	call PrepareGlyphBuffer ; $723c
 Label_05_723f:
 	set_flag $04, 3 ; $723f
 	ld a, [$d82f] ; $7242
-	call Func_05_6f70 ; $7245
+	call DrawTextWindowFrame ; $7245
 	clear_flag $04, 3 ; $7248
-	farcall FarPtr_05_86 ; $724b
+	farcall FarPtr_GetWindowStructPtr ; $724b
 	ld b, h ; $724e
 	ld c, l ; $724f
 	ld d, [hl] ; $7250
@@ -7741,7 +7741,7 @@ Label_05_7274:
 	push de ; $7295
 	push hl ; $7296
 	ld a, c ; $7297
-	call Func_05_6eea ; $7298
+	call GetWindowStructPtr ; $7298
 	ld a, $02 ; $729b
 	add a, l ; $729d
 	ld l, a ; $729e
@@ -7753,39 +7753,39 @@ Label_05_72a2:
 	dec c ; $72a4
 	pop hl ; $72a5
 	pop de ; $72a6
-	call Func_05_5db3 ; $72a7
-	call Func_05_7792 ; $72aa
+	call RenderProportionalTextAt ; $72a7
+	call UploadGlyphBuffer ; $72aa
 	pop af ; $72ad
 	wram_bank ; $72ae
 	ld a, [$d82f] ; $72b2
-	call Func_05_7205 ; $72b5
+	call RedrawWindowRows ; $72b5
 	pop hl ; $72b8
 	pop de ; $72b9
 	pop bc ; $72ba
 	pop af ; $72bb
 	ret ; $72bc
-Func_05_72bd:
+CloseWindow:
 	push af ; $72bd
 	push bc ; $72be
 	push de ; $72bf
 	push hl ; $72c0
-	call Func_05_43a8 ; $72c1
-	call Func_05_7205 ; $72c4
-	call Func_05_4757 ; $72c7
-	call Func_05_6eba ; $72ca
+	call RestoreTilemapUnderWindow ; $72c1
+	call RedrawWindowRows ; $72c4
+	call ResetWindowState ; $72c7
+	call FreeWindow ; $72ca
 	pop hl ; $72cd
 	pop de ; $72ce
 	pop bc ; $72cf
 	pop af ; $72d0
 	ret ; $72d1
-Func_05_72d2:
+RedrawAllTilemapRows:
 	push de ; $72d2
 	ld d, $00 ; $72d3
 	ld e, $20 ; $72d5
-	call Func_05_7223 ; $72d7
+	call RedrawTilemapRowRange ; $72d7
 	pop de ; $72da
 	ret ; $72db
-Func_05_72dc:
+PrepareGlyphBuffer:
 	push af ; $72dc
 	push bc ; $72dd
 	push de ; $72de
@@ -7797,8 +7797,8 @@ Func_05_72dc:
 	or a, a ; $72ec
 	jr nz, Label_05_72fd ; $72ed
 	wram_bank $07 ; $72ef
-	call Func_05_73cb ; $72f5
-	call Func_05_730d ; $72f8
+	call ClearGlyphBuffer ; $72f5
+	call ResetGlyphStream ; $72f8
 	jr Label_05_7303 ; $72fb
 Label_05_72fd:
 	ld a, [$c3bb] ; $72fd
@@ -7811,7 +7811,7 @@ Label_05_7303:
 	pop bc ; $730a
 	pop af ; $730b
 	ret ; $730c
-Func_05_730d:
+ResetGlyphStream:
 	push af ; $730d
 	push hl ; $730e
 	xor a, a ; $730f
@@ -7963,7 +7963,7 @@ Label_05_73a3:
 	pop de ; $73c8
 	pop bc ; $73c9
 	ret ; $73ca
-Func_05_73cb:
+ClearGlyphBuffer:
 	push af ; $73cb
 	push bc ; $73cc
 	push de ; $73cd
@@ -7981,14 +7981,14 @@ Label_05_73d4:
 	pop bc ; $73e1
 	pop af ; $73e2
 	ret ; $73e3
-Func_05_73e4:
+ClearWindowGlyphTiles:
 	push af ; $73e4
 	push bc ; $73e5
 	push de ; $73e6
 	push hl ; $73e7
 	wram_bank $05 ; $73e8
 	ld a, [$d821] ; $73ee
-	farcall FarPtr_05_86 ; $73f1
+	farcall FarPtr_GetWindowStructPtr ; $73f1
 	inc hl ; $73f4
 	inc hl ; $73f5
 	ld a, [hl+] ; $73f6
@@ -8026,7 +8026,7 @@ Label_05_741c:
 	pop bc ; $7429
 	pop af ; $742a
 	ret ; $742b
-Func_05_742c:
+UploadGlyphBufferFull:
 	push af ; $742c
 	push bc ; $742d
 	push de ; $742e
@@ -8135,7 +8135,7 @@ Label_05_74d0:
 	push hl ; $74e5
 	wram_bank $05 ; $74e6
 	ld a, [$d821] ; $74ec
-	farcall FarPtr_05_86 ; $74ef
+	farcall FarPtr_GetWindowStructPtr ; $74ef
 	inc hl ; $74f2
 	inc hl ; $74f3
 	ld b, [hl] ; $74f4
@@ -8144,7 +8144,7 @@ Label_05_74d0:
 	ld c, b ; $74f7
 	pop hl ; $74f8
 	wram_bank $07 ; $74f9
-	call Func_05_73cb ; $74ff
+	call ClearGlyphBuffer ; $74ff
 	ld de, $0000 ; $7502
 Label_05_7505:
 	ld a, [hl+] ; $7505
@@ -8173,7 +8173,7 @@ Label_05_7523:
 	pop bc ; $752a
 	pop af ; $752b
 	ret ; $752c
-Func_05_752d:
+InitGlyphStreamForWindow:
 	push af ; $752d
 	push bc ; $752e
 	push de ; $752f
@@ -8196,7 +8196,7 @@ Label_05_754d:
 	inc hl ; $7551
 	ld [hl], d ; $7552
 	ld a, [$d821] ; $7553
-	farcall FarPtr_05_86 ; $7556
+	farcall FarPtr_GetWindowStructPtr ; $7556
 	inc hl ; $7559
 	inc hl ; $755a
 	ld a, [hl] ; $755b
@@ -8215,7 +8215,7 @@ Label_05_756b:
 	ld [hl], d ; $756e
 	inc hl ; $756f
 	ld [hl], e ; $7570
-	call Func_05_73e4 ; $7571
+	call ClearWindowGlyphTiles ; $7571
 	pop af ; $7574
 	wram_bank ; $7575
 	pop hl ; $7579
@@ -8223,7 +8223,7 @@ Label_05_756b:
 	pop bc ; $757b
 	pop af ; $757c
 	ret ; $757d
-Func_05_757e:
+DrawStreamGlyph:
 	push af ; $757e
 	push bc ; $757f
 	push de ; $7580
@@ -8279,7 +8279,7 @@ Label_05_75c3:
 	pop bc ; $75d8
 	pop af ; $75d9
 	ret ; $75da
-Func_05_75db:
+StartGlyphStreamRow:
 	push af ; $75db
 	push bc ; $75dc
 	push de ; $75dd
@@ -8309,7 +8309,7 @@ Func_05_75db:
 	pop bc ; $7604
 	pop af ; $7605
 	ret ; $7606
-Func_05_7607:
+UploadLastGlyphTiles:
 	push af ; $7607
 	push bc ; $7608
 	push de ; $7609
@@ -8393,7 +8393,7 @@ Label_05_7677:
 	pop bc ; $767e
 	pop af ; $767f
 	ret ; $7680
-Func_05_7681:
+DrawInlineGlyph:
 	push af ; $7681
 	push bc ; $7682
 	push de ; $7683
@@ -8460,7 +8460,7 @@ Label_05_76c1:
 	ld [hl+], a ; $76e0
 	ld [hl], a ; $76e1
 	wram_bank $07 ; $76e2
-	call Func_05_73cb ; $76e8
+	call ClearGlyphBuffer ; $76e8
 	pop af ; $76eb
 	wram_bank ; $76ec
 	pop hl ; $76f0
@@ -8484,7 +8484,7 @@ Label_05_76c1:
 	ld [hl+], a ; $7706
 	ld [hl+], a ; $7707
 	wram_bank $07 ; $7708
-	call Func_05_73cb ; $770e
+	call ClearGlyphBuffer ; $770e
 	pop af ; $7711
 	wram_bank ; $7712
 	pop hl ; $7716
@@ -8492,7 +8492,7 @@ Label_05_76c1:
 	pop bc ; $7718
 	pop af ; $7719
 	ret ; $771a
-Func_05_771b:
+InitGlyphStreamAt:
 	push af ; $771b
 	push bc ; $771c
 	push de ; $771d
@@ -8576,19 +8576,19 @@ Label_05_778e:
 	pop bc ; $778f
 	pop af ; $7790
 	ret ; $7791
-Func_05_7792:
+UploadGlyphBuffer:
 	push af ; $7792
 	ldh a, [rLCDC] ; $7793
 	bit 7, a ; $7795
 	jr z, Label_05_779e ; $7797
-	call Func_05_77dd ; $7799
+	call UploadGlyphBufferQueued ; $7799
 	jr Label_05_77a1 ; $779c
 Label_05_779e:
-	call Func_05_7866 ; $779e
+	call UploadGlyphBufferDMA ; $779e
 Label_05_77a1:
 	pop af ; $77a1
 	ret ; $77a2
-Func_05_77a3:
+FlushGlyphRow:
 	push af ; $77a3
 	push bc ; $77a4
 	ld a, [$d821] ; $77a5
@@ -8605,10 +8605,10 @@ Label_05_77ba:
 	ldh a, [rLCDC] ; $77ba
 	bit 7, a ; $77bc
 	jr z, Label_05_77c5 ; $77be
-	call Func_05_77dd ; $77c0
+	call UploadGlyphBufferQueued ; $77c0
 	jr Label_05_77c8 ; $77c3
 Label_05_77c5:
-	call Func_05_7866 ; $77c5
+	call UploadGlyphBufferDMA ; $77c5
 Label_05_77c8:
 	ld hl, $c3b9 ; $77c8
 	ld b, [hl] ; $77cb
@@ -8623,7 +8623,7 @@ Label_05_77c8:
 	pop bc ; $77da
 	pop af ; $77db
 	ret ; $77dc
-Func_05_77dd:
+UploadGlyphBufferQueued:
 	push af ; $77dd
 	push bc ; $77de
 	push de ; $77df
@@ -8709,7 +8709,7 @@ Label_05_7856:
 	pop bc ; $7863
 	pop af ; $7864
 	ret ; $7865
-Func_05_7866:
+UploadGlyphBufferDMA:
 	push af ; $7866
 	push bc ; $7867
 	push de ; $7868
@@ -8756,7 +8756,7 @@ Label_05_788c:
 	pop bc ; $78aa
 	pop af ; $78ab
 	ret ; $78ac
-Func_05_78ad:
+UploadGlyphTileRange:
 	push bc ; $78ad
 	push de ; $78ae
 	push hl ; $78af

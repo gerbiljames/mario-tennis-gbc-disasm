@@ -213,7 +213,7 @@ Label_08_413b:
 	ret ; $4144
 InitMatchScene:
 	call ClearFrameTasks ; $4145
-	farcall FarPtr_05_76 ; $4148
+	farcall FarPtr_ResetTextWindowState ; $4148
 	ld a, $02 ; $414b
 	ld [$c3b3], a ; $414d
 	ld a, $00 ; $4150
@@ -245,7 +245,7 @@ RunMatch:
 	call DisableLCDSafely ; $419b
 	call InitMatchScene ; $419e
 	call EnableLCD ; $41a1
-	farcall FarPtr_07_22 ; $41a4
+	farcall FarPtr_UpdateLinkSession ; $41a4
 	ld a, [$c8f8] ; $41a7
 	call PlaySoundManaged ; $41aa
 	ld hl, $c780 ; $41ad
@@ -262,7 +262,7 @@ RunMatch:
 	call RunMatchPlayLoop ; $41cc
 	ldh a, [$ffc2] ; $41cf
 	ld [$c493], a ; $41d1
-	farcall FarPtr_07_24 ; $41d4
+	farcall FarPtr_EndLinkSession ; $41d4
 	ld a, [wGameMode] ; $41d7
 	cp a, $08 ; $41da
 	call z, Func_08_6592 ; $41dc
@@ -617,7 +617,7 @@ StepMatchFrame:
 	ldh a, [$ffd8] ; $446c
 	and a, a ; $446e
 	jr z, Label_08_4476 ; $446f
-	farcall FarPtr_07_1c ; $4471
+	farcall FarPtr_RunLinkMatchFrame ; $4471
 	jr Label_08_4480 ; $4474
 Label_08_4476:
 	call AdvanceFrame ; $4476
@@ -5451,7 +5451,7 @@ InitChar:
 	ld a, e ; $6861
 	add a, $03 ; $6862
 	ld e, a ; $6864
-	farcall FarPtr_07_42 ; $6865
+	farcall FarPtr_SetupCharacterSprite ; $6865
 	farcall FarPtr_LoadCharacterAttributes ; $6868
 	ld a, $00 ; $686b
 	call SetCharState ; $686d
@@ -5886,7 +5886,7 @@ Label_08_6bc2:
 	jr nz, Label_08_6bd8 ; $6bc9
 	call Func_08_7151 ; $6bcb
 	call Func_08_706b ; $6bce
-	farcall FarPtr_07_3c ; $6bd1
+	farcall FarPtr_ExecuteShot ; $6bd1
 	ld hl, $df19 ; $6bd4
 	inc [hl] ; $6bd7
 Label_08_6bd8:
@@ -5982,7 +5982,7 @@ Label_08_6c7a:
 	bit 1, [hl] ; $6c8a
 	jr z, Label_08_6c98 ; $6c8c
 	call Func_08_707e ; $6c8e
-	farcall FarPtr_07_3c ; $6c91
+	farcall FarPtr_ExecuteShot ; $6c91
 	ld hl, $df19 ; $6c94
 	inc [hl] ; $6c97
 Label_08_6c98:

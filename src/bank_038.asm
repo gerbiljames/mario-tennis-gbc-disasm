@@ -852,17 +852,17 @@ RunMatchTypeMenuLink:
 	ld hl, $4408 ; $4507
 	call RegisterFrameTask ; $450a
 	call EnableLCD ; $450d
-	farcall FarPtr_07_32 ; $4510
+	farcall FarPtr_ResyncLinkSession ; $4510
 	ld c, $10 ; $4513
 	call BeginFadeIn ; $4515
 	push af ; $4518
-	farcall FarPtr_07_20 ; $4519
+	farcall FarPtr_RunLinkInputFrame ; $4519
 	pop af ; $451c
 	push af ; $451d
-	farcall FarPtr_07_20 ; $451e
+	farcall FarPtr_RunLinkInputFrame ; $451e
 	pop af ; $4521
 	push af ; $4522
-	farcall FarPtr_07_20 ; $4523
+	farcall FarPtr_RunLinkInputFrame ; $4523
 	pop af ; $4526
 	sound $14 ; $4527
 Label_38_4529:
@@ -877,7 +877,7 @@ Label_38_4529:
 	call Func_38_4666 ; $453b
 Label_38_453e:
 	push af ; $453e
-	farcall FarPtr_07_20 ; $453f
+	farcall FarPtr_RunLinkInputFrame ; $453f
 	pop af ; $4542
 	ld a, [wMenuInputPressed] ; $4543
 	bit 0, a ; $4546
@@ -888,7 +888,7 @@ Label_38_453e:
 Label_38_4550:
 	sound $5f ; $4550
 	push af ; $4552
-	farcall FarPtr_07_1a ; $4553
+	farcall FarPtr_SyncLinkFrame ; $4553
 	pop af ; $4556
 	xor a, a ; $4557
 	ldh [$ffd8], a ; $4558
@@ -904,7 +904,7 @@ Label_38_4550:
 Label_38_456e:
 	sound $62 ; $456e
 	push af ; $4570
-	farcall FarPtr_07_1a ; $4571
+	farcall FarPtr_SyncLinkFrame ; $4571
 	pop af ; $4574
 	xor a, a ; $4575
 	ldh [$ffd8], a ; $4576
@@ -992,7 +992,7 @@ Func_38_460f:
 	call SetMenuCursorFromLinearIndex ; $4615
 	ld c, $00 ; $4618
 	farcall FarPtr_LoadScreenAssetRecord ; $461a
-	farcall FarPtr_05_76 ; $461d
+	farcall FarPtr_ResetTextWindowState ; $461d
 	ld b, $11 ; $4620
 	ld c, $10 ; $4622
 	ld de, $9000 ; $4624
@@ -1006,9 +1006,9 @@ Func_38_460f:
 	ld e, $0f ; $463c
 	ld b, $14 ; $463e
 	ld c, $03 ; $4640
-	farcall FarPtr_05_78 ; $4642
-	farcall FarPtr_05_7c ; $4645
-	farcall FarPtr_05_7e ; $4648
+	farcall FarPtr_CreateWindowFromScreenRect ; $4642
+	farcall FarPtr_DrawTextWindowFrame ; $4645
+	farcall FarPtr_RedrawWindowRows ; $4648
 	call Func_38_4722 ; $464b
 	farcall FarPtr_Func_39_4325 ; $464e
 	ld de, $a000 ; $4651
@@ -1063,7 +1063,7 @@ Label_38_4737:
 	inc h ; $4742
 Label_38_4743:
 	ld c, $20 ; $4743
-	farcall FarPtr_05_72 ; $4745
+	farcall FarPtr_RenderTextToBuffer64 ; $4745
 	ret ; $4748
 	INCBIN "data/bank_038/d_4749.bin" ; $4749, 6 bytes
 AdjustMatchTypeSetting:
@@ -1356,7 +1356,7 @@ Func_38_4975:
 	ld c, $05 ; $49af
 	farcall FarPtr_LoadScreenAssetRecord ; $49b1
 	call Func_38_492c ; $49b4
-	farcall FarPtr_05_76 ; $49b7
+	farcall FarPtr_ResetTextWindowState ; $49b7
 	ld b, $11 ; $49ba
 	ld c, $10 ; $49bc
 	ld de, $9000 ; $49be
@@ -1370,23 +1370,23 @@ Func_38_4975:
 	ld e, $0f ; $49d6
 	ld b, $14 ; $49d8
 	ld c, $03 ; $49da
-	farcall FarPtr_05_78 ; $49dc
-	farcall FarPtr_05_7c ; $49df
-	farcall FarPtr_05_7e ; $49e2
+	farcall FarPtr_CreateWindowFromScreenRect ; $49dc
+	farcall FarPtr_DrawTextWindowFrame ; $49df
+	farcall FarPtr_RedrawWindowRows ; $49e2
 	ld d, $00 ; $49e5
 	ld e, $02 ; $49e7
 	ld b, $14 ; $49e9
 	ld c, $03 ; $49eb
-	farcall FarPtr_05_78 ; $49ed
-	farcall FarPtr_05_7c ; $49f0
-	farcall FarPtr_05_7e ; $49f3
-	farcall FarPtr_05_8c ; $49f6
+	farcall FarPtr_CreateWindowFromScreenRect ; $49ed
+	farcall FarPtr_DrawTextWindowFrame ; $49f0
+	farcall FarPtr_RedrawWindowRows ; $49f3
+	farcall FarPtr_PrepareGlyphBuffer ; $49f6
 	call Func_38_4b21 ; $49f9
 	call Func_38_4d66 ; $49fc
 	call Func_38_4949 ; $49ff
 	call Func_38_4d14 ; $4a02
 	call Func_38_4acf ; $4a05
-	farcall FarPtr_05_90 ; $4a08
+	farcall FarPtr_UploadGlyphBuffer ; $4a08
 	ld a, $00 ; $4a0b
 	farcall FarPtr_1b_10 ; $4a0d
 	ld de, $b200 ; $4a10
@@ -1477,20 +1477,20 @@ Func_38_4acf:
 	ld hl, $0075 ; $4ae8
 	ld de, $d061 ; $4aeb
 	ld c, $12 ; $4aee
-	farcall FarPtr_05_1c ; $4af0
+	farcall FarPtr_RenderProportionalTextAt ; $4af0
 	jr Label_38_4b06 ; $4af3
 Label_38_4af5:
 	wram_bank $03 ; $4af5
 	ld hl, $0077 ; $4afb
 	ld de, $d062 ; $4afe
 	ld c, $12 ; $4b01
-	farcall FarPtr_05_1c ; $4b03
+	farcall FarPtr_RenderProportionalTextAt ; $4b03
 Label_38_4b06:
 	wram_bank $03 ; $4b06
 	ld hl, $0076 ; $4b0c
 	ld de, $d201 ; $4b0f
 	ld c, $12 ; $4b12
-	farcall FarPtr_05_1c ; $4b14
+	farcall FarPtr_RenderProportionalTextAt ; $4b14
 	pop af ; $4b17
 	wram_bank ; $4b18
 	pop hl ; $4b1c
@@ -1970,7 +1970,7 @@ Func_38_4f6f:
 	call QueueVRAMCopy ; $4fc4
 	ld c, $01 ; $4fc7
 	farcall FarPtr_LoadScreenAssetRecord ; $4fc9
-	farcall FarPtr_05_76 ; $4fcc
+	farcall FarPtr_ResetTextWindowState ; $4fcc
 	wram_bank $05 ; $4fcf
 	ld a, $03 ; $4fd5
 	ld [$c3b3], a ; $4fd7
@@ -1980,16 +1980,16 @@ Func_38_4f6f:
 	ld e, $02 ; $4fe1
 	ld b, $14 ; $4fe3
 	ld c, $03 ; $4fe5
-	farcall FarPtr_05_78 ; $4fe7
-	farcall FarPtr_05_7c ; $4fea
-	farcall FarPtr_05_7e ; $4fed
+	farcall FarPtr_CreateWindowFromScreenRect ; $4fe7
+	farcall FarPtr_DrawTextWindowFrame ; $4fea
+	farcall FarPtr_RedrawWindowRows ; $4fed
 	ld d, $00 ; $4ff0
 	ld e, $0c ; $4ff2
 	ld b, $14 ; $4ff4
 	ld c, $06 ; $4ff6
-	farcall FarPtr_05_78 ; $4ff8
-	farcall FarPtr_05_7c ; $4ffb
-	farcall FarPtr_05_7e ; $4ffe
+	farcall FarPtr_CreateWindowFromScreenRect ; $4ff8
+	farcall FarPtr_DrawTextWindowFrame ; $4ffb
+	farcall FarPtr_RedrawWindowRows ; $4ffe
 	ld b, $11 ; $5001
 	ld c, $10 ; $5003
 	ld de, $9000 ; $5005
@@ -2429,7 +2429,7 @@ Func_38_5424:
 	ld hl, $0095 ; $5454
 	ld de, $d061 ; $5457
 	ld c, $20 ; $545a
-	farcall FarPtr_05_72 ; $545c
+	farcall FarPtr_RenderTextToBuffer64 ; $545c
 	ret ; $545f
 Label_38_5460:
 	ld hl, $5490 ; $5460
@@ -2452,7 +2452,7 @@ Label_38_547a:
 	ld l, a ; $547c
 	ld de, $d061 ; $547d
 	ld c, $20 ; $5480
-	farcall FarPtr_05_72 ; $5482
+	farcall FarPtr_RenderTextToBuffer64 ; $5482
 	ret ; $5485
 	INCBIN "data/bank_038/d_5486.bin" ; $5486, 20 bytes
 Func_38_549a:
@@ -3071,7 +3071,7 @@ Func_38_58cd:
 Label_38_58d7:
 	ld de, $d1a6 ; $58d7
 	ld c, $20 ; $58da
-	farcall FarPtr_05_72 ; $58dc
+	farcall FarPtr_RenderTextToBuffer64 ; $58dc
 	pop bc ; $58df
 	ld a, c ; $58e0
 	ld hl, $58fb ; $58e1
@@ -3089,7 +3089,7 @@ Label_38_58e9:
 Label_38_58f2:
 	ld de, $d1e3 ; $58f2
 	ld c, $20 ; $58f5
-	farcall FarPtr_05_72 ; $58f7
+	farcall FarPtr_RenderTextToBuffer64 ; $58f7
 	ret ; $58fa
 	INCBIN "data/bank_038/d_58fb.bin" ; $58fb, 32 bytes
 Func_38_591b:
@@ -4754,14 +4754,14 @@ Label_38_63fd:
 	ld a, c ; $6428
 	ld [wMatchTypeNumberOfSets], a ; $6429
 	call EnableLCD ; $642c
-	farcall FarPtr_07_32 ; $642f
+	farcall FarPtr_ResyncLinkSession ; $642f
 	ld c, $10 ; $6432
 	call BeginFadeIn ; $6434
 	push af ; $6437
-	farcall FarPtr_07_36 ; $6438
+	farcall FarPtr_RunLinkCommandFrame ; $6438
 	pop af ; $643b
 	push af ; $643c
-	farcall FarPtr_07_36 ; $643d
+	farcall FarPtr_RunLinkCommandFrame ; $643d
 	pop af ; $6440
 	xor a, a ; $6441
 	ldh [$ffe2], a ; $6442
@@ -4783,7 +4783,7 @@ Label_38_63fd:
 	call Func_38_575e ; $646b
 Label_38_646e:
 	push af ; $646e
-	farcall FarPtr_07_36 ; $646f
+	farcall FarPtr_RunLinkCommandFrame ; $646f
 	pop af ; $6472
 	ldh a, [$ffd5] ; $6473
 	ld [wMenuInputPressed], a ; $6475
@@ -4829,7 +4829,7 @@ Label_38_64cb:
 	call Func_38_6528 ; $64ce
 	sound $5f ; $64d1
 	push af ; $64d3
-	farcall FarPtr_07_1a ; $64d4
+	farcall FarPtr_SyncLinkFrame ; $64d4
 	pop af ; $64d7
 	xor a, a ; $64d8
 	ldh [$ffd8], a ; $64d9
@@ -4855,7 +4855,7 @@ Label_38_6505:
 	call ClearFrameTasks ; $6505
 	sound $62 ; $6508
 	push af ; $650a
-	farcall FarPtr_07_1a ; $650b
+	farcall FarPtr_SyncLinkFrame ; $650b
 	pop af ; $650e
 	xor a, a ; $650f
 	ldh [$ffd8], a ; $6510
@@ -5783,7 +5783,7 @@ Label_38_6b2c:
 	ld [$d826], a ; $6b3f
 Label_38_6b42:
 	push af ; $6b42
-	farcall FarPtr_07_20 ; $6b43
+	farcall FarPtr_RunLinkInputFrame ; $6b43
 	pop af ; $6b46
 	ldh a, [$ffd5] ; $6b47
 	ld [wMenuInputPressed], a ; $6b49
@@ -6388,7 +6388,7 @@ Func_38_6f6e:
 	call SetMenuCursorFromLinearIndex ; $6f85
 	ld c, $06 ; $6f88
 	farcall FarPtr_LoadScreenAssetRecord ; $6f8a
-	farcall FarPtr_05_76 ; $6f8d
+	farcall FarPtr_ResetTextWindowState ; $6f8d
 	ld b, $11 ; $6f90
 	ld c, $10 ; $6f92
 	ld de, $9000 ; $6f94
@@ -6402,23 +6402,23 @@ Func_38_6f6e:
 	ld e, $02 ; $6fac
 	ld b, $14 ; $6fae
 	ld c, $03 ; $6fb0
-	farcall FarPtr_05_78 ; $6fb2
-	farcall FarPtr_05_7c ; $6fb5
-	farcall FarPtr_05_7e ; $6fb8
+	farcall FarPtr_CreateWindowFromScreenRect ; $6fb2
+	farcall FarPtr_DrawTextWindowFrame ; $6fb5
+	farcall FarPtr_RedrawWindowRows ; $6fb8
 	ld d, $00 ; $6fbb
 	ld e, $08 ; $6fbd
 	ld b, $14 ; $6fbf
 	ld c, $09 ; $6fc1
-	farcall FarPtr_05_78 ; $6fc3
-	farcall FarPtr_05_7c ; $6fc6
-	farcall FarPtr_05_7e ; $6fc9
+	farcall FarPtr_CreateWindowFromScreenRect ; $6fc3
+	farcall FarPtr_DrawTextWindowFrame ; $6fc6
+	farcall FarPtr_RedrawWindowRows ; $6fc9
 	ld d, $06 ; $6fcc
 	ld e, $05 ; $6fce
 	ld b, $09 ; $6fd0
 	ld c, $03 ; $6fd2
-	farcall FarPtr_05_78 ; $6fd4
-	farcall FarPtr_05_7c ; $6fd7
-	farcall FarPtr_05_7e ; $6fda
+	farcall FarPtr_CreateWindowFromScreenRect ; $6fd4
+	farcall FarPtr_DrawTextWindowFrame ; $6fd7
+	farcall FarPtr_RedrawWindowRows ; $6fda
 	ld hl, $71b6 ; $6fdd
 	call Func_38_717c ; $6fe0
 	call DrawEnterNameLabel ; $6fe3
@@ -6969,12 +6969,12 @@ Func_38_7522:
 	call ResetSerialState ; $7529
 	sound $50 ; $752c
 	sound $00 ; $752e
-	farcall FarPtr_07_32 ; $7530
+	farcall FarPtr_ResyncLinkSession ; $7530
 	push af ; $7533
-	farcall FarPtr_07_20 ; $7534
+	farcall FarPtr_RunLinkInputFrame ; $7534
 	pop af ; $7537
 	push af ; $7538
-	farcall FarPtr_07_20 ; $7539
+	farcall FarPtr_RunLinkInputFrame ; $7539
 	pop af ; $753c
 	xor a, a ; $753d
 	ldh [$ffd8], a ; $753e
@@ -7077,7 +7077,7 @@ Label_38_75ce:
 Label_38_75d4:
 	push bc ; $75d4
 	ld c, b ; $75d5
-	farcall FarPtr_07_38 ; $75d6
+	farcall FarPtr_ExchangeLinkDataBlock ; $75d6
 	pop bc ; $75d9
 	ld a, b ; $75da
 	cp a, $26 ; $75db
@@ -7113,12 +7113,12 @@ Func_38_7603:
 	call ResetSerialState ; $760d
 	sound $50 ; $7610
 	sound $00 ; $7612
-	farcall FarPtr_07_32 ; $7614
+	farcall FarPtr_ResyncLinkSession ; $7614
 	push af ; $7617
-	farcall FarPtr_07_20 ; $7618
+	farcall FarPtr_RunLinkInputFrame ; $7618
 	pop af ; $761b
 	push af ; $761c
-	farcall FarPtr_07_20 ; $761d
+	farcall FarPtr_RunLinkInputFrame ; $761d
 	pop af ; $7620
 	xor a, a ; $7621
 	ldh [$ffd8], a ; $7622
@@ -7131,7 +7131,7 @@ Label_38_7630:
 	ld hl, $cb55 ; $7630
 	ld de, $cb59 ; $7633
 	ld c, $04 ; $7636
-	farcall FarPtr_07_38 ; $7638
+	farcall FarPtr_ExchangeLinkDataBlock ; $7638
 	xor a, a ; $763b
 	ldh [$ffd8], a ; $763c
 	call ResetSerialState ; $763e

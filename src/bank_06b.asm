@@ -1801,7 +1801,7 @@ Label_6b_53c6:
 Func_6b_53fc:
 	call DisableLCDSafely ; $53fc
 	farcall FarPtr_InitSceneScroll ; $53ff
-	farcall FarPtr_05_00 ; $5402
+	farcall FarPtr_InitTextWindows ; $5402
 	wram_bank $01 ; $5405
 	ld hl, $551d ; $540b
 	ld de, $d000 ; $540e
@@ -1835,7 +1835,7 @@ Func_6b_53fc:
 Func_6b_545e:
 	call DisableLCDSafely ; $545e
 	farcall FarPtr_InitSceneScroll ; $5461
-	farcall FarPtr_05_00 ; $5464
+	farcall FarPtr_InitTextWindows ; $5464
 	wram_bank $01 ; $5467
 	ld hl, $551d ; $546d
 	ld de, $d000 ; $5470
@@ -1866,7 +1866,7 @@ Func_6b_545e:
 Func_6b_54b9:
 	call DisableLCDSafely ; $54b9
 	farcall FarPtr_InitSceneScroll ; $54bc
-	farcall FarPtr_05_00 ; $54bf
+	farcall FarPtr_InitTextWindows ; $54bf
 	wram_bank $01 ; $54c2
 	ld hl, $551d ; $54c8
 	ld de, $d000 ; $54cb
@@ -2022,7 +2022,7 @@ Label_6b_612f:
 Func_6b_617c:
 	call DisableLCDSafely ; $617c
 	farcall FarPtr_InitSceneScroll ; $617f
-	farcall FarPtr_05_00 ; $6182
+	farcall FarPtr_InitTextWindows ; $6182
 	wram_bank $01 ; $6185
 	ld hl, $61e6 ; $618b
 	ld de, $d000 ; $618e

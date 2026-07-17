@@ -1014,7 +1014,7 @@ Func_39_4bf3:
 	ld [wCameraY], a ; $4bfd
 	ld [$c323], a ; $4c00
 	farcall FarPtr_39_1c ; $4c03
-	farcall FarPtr_05_76 ; $4c06
+	farcall FarPtr_ResetTextWindowState ; $4c06
 	ld b, $11 ; $4c09
 	ld c, $10 ; $4c0b
 	ld de, $9000 ; $4c0d
@@ -1028,9 +1028,9 @@ Func_39_4bf3:
 	ld e, $0f ; $4c25
 	ld b, $14 ; $4c27
 	ld c, $03 ; $4c29
-	farcall FarPtr_05_78 ; $4c2b
-	farcall FarPtr_05_7c ; $4c2e
-	farcall FarPtr_05_7e ; $4c31
+	farcall FarPtr_CreateWindowFromScreenRect ; $4c2b
+	farcall FarPtr_DrawTextWindowFrame ; $4c2e
+	farcall FarPtr_RedrawWindowRows ; $4c31
 	farcall FarPtr_Func_39_4325 ; $4c34
 	ret ; $4c37
 Func_39_4c38:

@@ -35,16 +35,16 @@ Func_1a_402c:
 	xor a, a ; $402c
 	ld [$cb2b], a ; $402d
 	wram_bank $05 ; $4030
-	farcall FarPtr_05_08 ; $4036
+	farcall FarPtr_CreateMenuWindowFromText ; $4036
 	set_flag $03, 0 ; $4039
 	ld [$cb26], a ; $403c
-	farcall FarPtr_05_18 ; $403f
-	farcall FarPtr_05_80 ; $4042
+	farcall FarPtr_RestoreShadowTilemap ; $403f
+	farcall FarPtr_RenderMenuWindowText ; $4042
 	clear_flag $03, 0 ; $4045
 Label_1a_4048:
 	call Func_1a_40a0 ; $4048
 	ld a, [$cb26] ; $404b
-	farcall FarPtr_05_42 ; $404e
+	farcall FarPtr_RunMenuSelectionShared ; $404e
 	push af ; $4051
 	push bc ; $4052
 	cp a, $ff ; $4053
@@ -66,7 +66,7 @@ Label_1a_4065:
 Label_1a_4070:
 	ld a, [$cb26] ; $4070
 	set_flag $03, 0 ; $4073
-	farcall FarPtr_05_7a ; $4076
+	farcall FarPtr_CloseWindow ; $4076
 	clear_flag $03, 0 ; $4079
 Label_1a_407c:
 	pop bc ; $407c
@@ -188,7 +188,7 @@ GetTilemapBufferCellDest:
 	push hl ; $4147
 	push de ; $4148
 	ld a, [$cb26] ; $4149
-	farcall FarPtr_05_86 ; $414c
+	farcall FarPtr_GetWindowStructPtr ; $414c
 	ld d, [hl] ; $414f
 	inc hl ; $4150
 	ld e, [hl] ; $4151
@@ -493,9 +493,9 @@ Func_1a_43aa:
 	wram_bank $05 ; $43b1
 	ld de, $0000 ; $43b7
 	ld bc, $1404 ; $43ba
-	farcall FarPtr_05_04 ; $43bd
+	farcall FarPtr_CreateWindow ; $43bd
 	ld [$cb26], a ; $43c0
-	farcall FarPtr_05_18 ; $43c3
+	farcall FarPtr_RestoreShadowTilemap ; $43c3
 	farcall FarPtr_05_10 ; $43c6
 	ld c, $00 ; $43c9
 Label_1a_43cb:
@@ -509,7 +509,7 @@ Label_1a_43cb:
 	ld hl, $d000 ; $43d9
 	ld de, $0801 ; $43dc
 	ld a, [$cb26] ; $43df
-	farcall FarPtr_05_56 ; $43e2
+	farcall FarPtr_WriteStringToWindow ; $43e2
 	ld hl, $c96c ; $43e5
 	ld a, [hl+] ; $43e8
 	ld h, [hl] ; $43e9
@@ -520,8 +520,8 @@ Label_1a_43cb:
 	ld hl, $d000 ; $43f3
 	ld de, $0802 ; $43f6
 	ld a, [$cb26] ; $43f9
-	farcall FarPtr_05_56 ; $43fc
-	farcall FarPtr_05_18 ; $43ff
+	farcall FarPtr_WriteStringToWindow ; $43fc
+	farcall FarPtr_RestoreShadowTilemap ; $43ff
 	farcall FarPtr_05_10 ; $4402
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
@@ -561,7 +561,7 @@ Label_1a_4446:
 	and a, $02 ; $4448
 	jp z, Label_1a_43cb ; $444a
 	ld a, [$cb26] ; $444d
-	farcall FarPtr_05_7a ; $4450
+	farcall FarPtr_CloseWindow ; $4450
 	ld hl, $c92c ; $4453
 	ld a, [hl+] ; $4456
 	ld d, [hl] ; $4457
@@ -611,7 +611,7 @@ ShowExpGainScreen:
 	call BeginFadeOut ; $44e8
 	call WaitFadeEnd ; $44eb
 	call ClearFrameTasks ; $44ee
-	farcall FarPtr_05_00 ; $44f1
+	farcall FarPtr_InitTextWindows ; $44f1
 	farcall FarPtr_01_0a ; $44f4
 	call DisableLCDSafely ; $44f7
 	call ClearSpriteQueue ; $44fa
@@ -1303,7 +1303,7 @@ Label_1a_4aa4:
 	ld de, $d4c2 ; $4aa4
 	ld hl, $04eb ; $4aa7
 	ld c, $20 ; $4aaa
-	farcall FarPtr_05_1c ; $4aac
+	farcall FarPtr_RenderProportionalTextAt ; $4aac
 	pop hl ; $4aaf
 	pop de ; $4ab0
 	pop bc ; $4ab1
@@ -1405,11 +1405,11 @@ Label_1a_4b53:
 	ld a, [hl] ; $4b5c
 	ld l, a ; $4b5d
 	ld h, $00 ; $4b5e
-	farcall FarPtr_05_48 ; $4b60
+	farcall FarPtr_PushTextArgNumber ; $4b60
 	ld de, $d507 ; $4b63
 	ld hl, $04ed ; $4b66
 	ld c, $20 ; $4b69
-	farcall FarPtr_05_1c ; $4b6b
+	farcall FarPtr_RenderProportionalTextAt ; $4b6b
 	pop hl ; $4b6e
 	pop de ; $4b6f
 	pop bc ; $4b70
@@ -2177,7 +2177,7 @@ Label_1a_5018:
 	ld hl, $04f2 ; $501e
 	ld de, $d82b ; $5021
 	ld c, $20 ; $5024
-	farcall FarPtr_05_1c ; $5026
+	farcall FarPtr_RenderProportionalTextAt ; $5026
 	sound $73 ; $5029
 	ret ; $502b
 Label_1a_502c:
@@ -2642,7 +2642,7 @@ Label_1a_67db:
 	ldh [rWY], a ; $67f7
 	call ClearSpriteQueue ; $67f9
 	farcall FarPtr_InitActorEngine ; $67fc
-	farcall FarPtr_05_76 ; $67ff
+	farcall FarPtr_ResetTextWindowState ; $67ff
 	call Func_1a_686c ; $6802
 	cp a, $ff ; $6805
 	jr z, Label_1a_6854 ; $6807
@@ -2933,7 +2933,7 @@ Func_1a_6a9b:
 	push de ; $6a9c
 	push hl ; $6a9d
 	ld c, $20 ; $6a9e
-	farcall FarPtr_05_72 ; $6aa0
+	farcall FarPtr_RenderTextToBuffer64 ; $6aa0
 	pop hl ; $6aa3
 	pop de ; $6aa4
 	pop bc ; $6aa5
@@ -3450,14 +3450,14 @@ Label_1a_6e8c:
 	ld de, $d201 ; $6f0a
 	ld c, $20 ; $6f0d
 	wram_bank $03 ; $6f0f
-	farcall FarPtr_05_72 ; $6f15
+	farcall FarPtr_RenderTextToBuffer64 ; $6f15
 	jr Label_1a_6f2b ; $6f18
 Label_1a_6f1a:
 	wram_bank $03 ; $6f1a
 	ld hl, $10c0 ; $6f20
 	ld de, $d201 ; $6f23
 	ld c, $20 ; $6f26
-	farcall FarPtr_05_72 ; $6f28
+	farcall FarPtr_RenderTextToBuffer64 ; $6f28
 Label_1a_6f2b:
 	wram_bank $03 ; $6f2b
 	ld hl, $d1e0 ; $6f31
@@ -3485,13 +3485,13 @@ Func_1a_6f3d:
 	farcall FarPtr_04_2c ; $6f70
 	ld d, $01 ; $6f73
 	ld bc, $d000 ; $6f75
-	farcall FarPtr_04_16 ; $6f78
+	farcall FarPtr_SetActorAnimationChecked ; $6f78
 	ld bc, $d040 ; $6f7b
-	farcall FarPtr_04_16 ; $6f7e
+	farcall FarPtr_SetActorAnimationChecked ; $6f7e
 	ld bc, $d080 ; $6f81
-	farcall FarPtr_04_16 ; $6f84
+	farcall FarPtr_SetActorAnimationChecked ; $6f84
 	ld bc, $d0c0 ; $6f87
-	farcall FarPtr_04_16 ; $6f8a
+	farcall FarPtr_SetActorAnimationChecked ; $6f8a
 	ld a, $07 ; $6f8d
 	ld [$d037], a ; $6f8f
 	ld [$d077], a ; $6f92

@@ -654,10 +654,10 @@ Func_0b_4583:
 	ld h, b ; $4591
 	ld l, c ; $4592
 	xor a, a ; $4593
-	farcall FarPtr_05_44 ; $4594
+	farcall FarPtr_AddTextIdOffset ; $4594
 	ld b, h ; $4597
 	ld c, l ; $4598
-	farcall FarPtr_05_26 ; $4599
+	farcall FarPtr_MeasureDialogueWidthTiles ; $4599
 	ld h, b ; $459c
 	ld l, c ; $459d
 	add a, $02 ; $459e
@@ -900,7 +900,7 @@ Label_0b_4767:
 	test_flag $03, 6 ; $4767
 	jr z, Label_0b_47a7 ; $476a
 	call DisableLCDSafely ; $476c
-	farcall FarPtr_05_76 ; $476f
+	farcall FarPtr_ResetTextWindowState ; $476f
 	call Func_0b_47d8 ; $4772
 	farcall FarPtr_01_0a ; $4775
 	call EnableLCD ; $4778
@@ -910,7 +910,7 @@ Label_0b_4767:
 	ld a, [$c2e3] ; $4783
 	ld l, a ; $4786
 	ld h, $00 ; $4787
-	farcall FarPtr_05_48 ; $4789
+	farcall FarPtr_PushTextArgNumber ; $4789
 	ld a, [wPointWinLoseFlag] ; $478c
 	inc a ; $478f
 	srl a ; $4790
@@ -921,7 +921,7 @@ Label_0b_4767:
 	inc h ; $4799
 Label_0b_479a:
 	ld a, $80 ; $479a
-	farcall FarPtr_05_34 ; $479c
+	farcall FarPtr_ShowSpeakerDialogue ; $479c
 	ld c, $10 ; $479f
 	call BeginFadeOut ; $47a1
 	call WaitFadeEnd ; $47a4

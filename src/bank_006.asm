@@ -385,7 +385,7 @@ Func_06_4316:
 	ld hl, $4373 ; $4324
 	call RegisterFrameTask ; $4327
 Label_06_432a:
-	farcall FarPtr_05_8c ; $432a
+	farcall FarPtr_PrepareGlyphBuffer ; $432a
 	ld hl, $c4ea ; $432d
 	ld a, [hl+] ; $4330
 	ld h, [hl] ; $4331
@@ -408,7 +408,7 @@ Label_06_434e:
 	ld de, $0106 ; $434e
 	call Func_06_4574 ; $4351
 	farcall FarPtr_StepMatchFrame ; $4354
-	farcall FarPtr_05_90 ; $4357
+	farcall FarPtr_UploadGlyphBuffer ; $4357
 	call FlushTilemapToVram ; $435a
 Label_06_435d:
 	farcall FarPtr_StepMatchFrame ; $435d
@@ -434,7 +434,7 @@ Label_06_4380:
 	ld de, $0002 ; $4389
 	ld bc, $130e ; $438c
 	call Func_06_4564 ; $438f
-	farcall FarPtr_05_8c ; $4392
+	farcall FarPtr_PrepareGlyphBuffer ; $4392
 	ld de, $0103 ; $4395
 	ld hl, $0157 ; $4398
 	call Func_06_4574 ; $439b
@@ -444,7 +444,7 @@ Label_06_4380:
 	ld de, $010c ; $43a7
 	ld hl, $0159 ; $43aa
 	call Func_06_4574 ; $43ad
-	farcall FarPtr_05_90 ; $43b0
+	farcall FarPtr_UploadGlyphBuffer ; $43b0
 	call FlushTilemapToVram ; $43b3
 	farcall FarPtr_StepMatchFrame ; $43b6
 Label_06_43b9:
@@ -634,7 +634,7 @@ ShowMessageWindow:
 	pop hl ; $4525
 	pop de ; $4526
 	pop bc ; $4527
-	farcall FarPtr_05_8c ; $4528
+	farcall FarPtr_PrepareGlyphBuffer ; $4528
 	push hl ; $452b
 	inc d ; $452c
 	inc e ; $452d
@@ -643,8 +643,8 @@ ShowMessageWindow:
 	dec c ; $4532
 	dec c ; $4533
 	pop hl ; $4534
-	farcall FarPtr_05_1c ; $4535
-	farcall FarPtr_05_90 ; $4538
+	farcall FarPtr_RenderProportionalTextAt ; $4535
+	farcall FarPtr_UploadGlyphBuffer ; $4538
 	call FlushTilemapToVram ; $453b
 	ld a, $1e ; $453e
 	farcall FarPtr_StepMatchFrames ; $4540
@@ -896,7 +896,7 @@ Label_06_471c:
 	ld [$c4e0], a ; $472e
 	sound $5e ; $4731
 Label_06_4733:
-	farcall FarPtr_05_8c ; $4733
+	farcall FarPtr_PrepareGlyphBuffer ; $4733
 	ld hl, $c3b7 ; $4736
 	ld de, $2000 ; $4739
 	ld a, e ; $473c
@@ -920,7 +920,7 @@ Label_06_4733:
 	ld de, $000e ; $4759
 	call Func_06_4584 ; $475c
 	call Func_06_477a ; $475f
-	farcall FarPtr_05_90 ; $4762
+	farcall FarPtr_UploadGlyphBuffer ; $4762
 	farcall FarPtr_StepMatchFrame ; $4765
 	call FlushTilemapToVram ; $4768
 	farcall FarPtr_StepMatchFrame ; $476b
@@ -1141,9 +1141,9 @@ Func_06_48ad:
 	call Func_06_5c8a ; $48be
 	ld b, $01 ; $48c1
 	call Func_06_49a7 ; $48c3
-	farcall FarPtr_05_8c ; $48c6
+	farcall FarPtr_PrepareGlyphBuffer ; $48c6
 	call Func_06_477a ; $48c9
-	farcall FarPtr_05_90 ; $48cc
+	farcall FarPtr_UploadGlyphBuffer ; $48cc
 	ld a, $0a ; $48cf
 	ld hl, $506a ; $48d1
 	call RegisterFrameTask ; $48d4
@@ -4329,7 +4329,7 @@ RunStoryModeMenu:
 	ld [$c4e0], a ; $6e26
 	ld a, $02 ; $6e29
 	ldh [$ffdd], a ; $6e2b
-	farcall FarPtr_05_00 ; $6e2d
+	farcall FarPtr_InitTextWindows ; $6e2d
 	ld a, $81 ; $6e30
 	ld [$c3b6], a ; $6e32
 	set_flag $02, 4 ; $6e35
@@ -4339,7 +4339,7 @@ RunStoryModeMenu:
 	ld e, $0e ; $6e40
 	ld b, $13 ; $6e42
 	ld c, $03 ; $6e44
-	farcall FarPtr_05_78 ; $6e46
+	farcall FarPtr_CreateWindowFromScreenRect ; $6e46
 	call AdvanceFrame ; $6e49
 	wram_bank $05 ; $6e4c
 Label_06_6e52:
@@ -4384,7 +4384,7 @@ Label_06_6e94:
 	farcall FarPtr_01_14 ; $6ea0
 	pop af ; $6ea3
 	ldh [$ffdd], a ; $6ea4
-	farcall FarPtr_05_00 ; $6ea6
+	farcall FarPtr_InitTextWindows ; $6ea6
 	farcall FarPtr_0a_7a ; $6ea9
 	pop af ; $6eac
 	wram_bank ; $6ead
@@ -4825,21 +4825,21 @@ Label_06_722a:
 	INCBIN "data/bank_006/d_7231.bin" ; $7231, 6 bytes
 Func_06_7237:
 	wram_bank $05 ; $7237
-	farcall FarPtr_05_84 ; $723d
+	farcall FarPtr_RedrawAllTilemapRows ; $723d
 	ret ; $7240
 Func_06_7241:
-	farcall FarPtr_05_18 ; $7241
+	farcall FarPtr_RestoreShadowTilemap ; $7241
 	ret ; $7244
 Func_06_7245:
-	farcall FarPtr_05_18 ; $7245
+	farcall FarPtr_RestoreShadowTilemap ; $7245
 	call Func_06_726a ; $7248
-	farcall FarPtr_05_84 ; $724b
+	farcall FarPtr_RedrawAllTilemapRows ; $724b
 	ret ; $724e
 Func_06_724f:
 	push hl ; $724f
-	farcall FarPtr_05_8c ; $7250
+	farcall FarPtr_PrepareGlyphBuffer ; $7250
 	xor a, a ; $7253
-	farcall FarPtr_05_7c ; $7254
+	farcall FarPtr_DrawTextWindowFrame ; $7254
 	ld hl, $0101 ; $7257
 	add hl, de ; $725a
 	ld e, l ; $725b
@@ -4847,8 +4847,8 @@ Func_06_724f:
 	call Func_06_4624 ; $725d
 	pop hl ; $7260
 	ld c, $11 ; $7261
-	farcall FarPtr_05_1c ; $7263
-	farcall FarPtr_05_90 ; $7266
+	farcall FarPtr_RenderProportionalTextAt ; $7263
+	farcall FarPtr_UploadGlyphBuffer ; $7266
 	ret ; $7269
 Func_06_726a:
 	wram_bank $05 ; $726a

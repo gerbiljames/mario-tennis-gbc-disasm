@@ -3925,7 +3925,7 @@ Label_3b_5bd0:
 	ld hl, $007c ; $5bd0
 	ld de, $d201 ; $5bd3
 	ld c, $20 ; $5bd6
-	farcall FarPtr_05_72 ; $5bd8
+	farcall FarPtr_RenderTextToBuffer64 ; $5bd8
 	jr Label_3b_5bfd ; $5bdb
 Label_3b_5bdd:
 	ld b, a ; $5bdd
@@ -3952,7 +3952,7 @@ Label_3b_5bf5:
 	ld h, [hl] ; $5bf6
 	ld l, a ; $5bf7
 	ld c, $20 ; $5bf8
-	farcall FarPtr_05_72 ; $5bfa
+	farcall FarPtr_RenderTextToBuffer64 ; $5bfa
 Label_3b_5bfd:
 	pop af ; $5bfd
 	wram_bank ; $5bfe
@@ -4042,7 +4042,7 @@ Label_3b_5c70:
 	jr z, Label_3b_5cd7 ; $5c76
 Label_3b_5c78:
 	farcall FarPtr_3e_04 ; $5c78
-	farcall FarPtr_07_00 ; $5c7b
+	farcall FarPtr_TryEstablishLink ; $5c7b
 	push af ; $5c7e
 	jr nc, Label_3b_5cbb ; $5c7f
 	or a, a ; $5c81
@@ -4091,7 +4091,7 @@ Label_3b_5cbb:
 Label_3b_5cd7:
 	call WaitFramesCmd ; $5cd7
 	db $06 ; $5cda inline arg
-	farcall FarPtr_07_00 ; $5cdb
+	farcall FarPtr_TryEstablishLink ; $5cdb
 	jr c, Label_3b_5c78 ; $5cde
 Label_3b_5ce0:
 	ret ; $5ce0
@@ -4717,7 +4717,7 @@ Func_3b_619b:
 Label_3b_61b4:
 	ld de, $d201 ; $61b4
 	ld c, $20 ; $61b7
-	farcall FarPtr_05_72 ; $61b9
+	farcall FarPtr_RenderTextToBuffer64 ; $61b9
 	ret ; $61bc
 Label_3b_61bd:
 	cp a, $01 ; $61bd
@@ -4731,7 +4731,7 @@ Label_3b_61bd:
 Label_3b_61cc:
 	ld de, $d201 ; $61cc
 	ld c, $20 ; $61cf
-	farcall FarPtr_05_72 ; $61d1
+	farcall FarPtr_RenderTextToBuffer64 ; $61d1
 	ret ; $61d4
 Label_3b_61d5:
 	ld a, [$cb10] ; $61d5
@@ -4743,7 +4743,7 @@ Label_3b_61d5:
 Label_3b_61e0:
 	ld de, $d201 ; $61e0
 	ld c, $20 ; $61e3
-	farcall FarPtr_05_72 ; $61e5
+	farcall FarPtr_RenderTextToBuffer64 ; $61e5
 	ret ; $61e8
 	ret ; $61e9
 	; $61ea, 6 bytes (records:2)
@@ -5233,7 +5233,7 @@ Label_3b_65c8:
 	inc h ; $65d3
 Label_3b_65d4:
 	ld c, $20 ; $65d4
-	farcall FarPtr_05_72 ; $65d6
+	farcall FarPtr_RenderTextToBuffer64 ; $65d6
 	ret ; $65d9
 	; $65da, 18 bytes (records:2)
 ; 9 records x 2 bytes
@@ -6064,7 +6064,7 @@ Label_3b_6c0e:
 	ld hl, $00c8 ; $6c0e
 	ld de, $d201 ; $6c11
 	ld c, $20 ; $6c14
-	farcall FarPtr_05_72 ; $6c16
+	farcall FarPtr_RenderTextToBuffer64 ; $6c16
 	jr Label_3b_6c37 ; $6c19
 Label_3b_6c1b:
 	cp a, $04 ; $6c1b
@@ -6072,13 +6072,13 @@ Label_3b_6c1b:
 	ld hl, $00c7 ; $6c1f
 	ld de, $d201 ; $6c22
 	ld c, $20 ; $6c25
-	farcall FarPtr_05_72 ; $6c27
+	farcall FarPtr_RenderTextToBuffer64 ; $6c27
 	jr Label_3b_6c37 ; $6c2a
 Label_3b_6c2c:
 	ld hl, $00c9 ; $6c2c
 	ld de, $d201 ; $6c2f
 	ld c, $20 ; $6c32
-	farcall FarPtr_05_72 ; $6c34
+	farcall FarPtr_RenderTextToBuffer64 ; $6c34
 Label_3b_6c37:
 	pop af ; $6c37
 	wram_bank ; $6c38
@@ -6767,7 +6767,7 @@ Label_3b_718b:
 	ld hl, $00ce ; $718b
 	ld de, $d201 ; $718e
 	ld c, $20 ; $7191
-	farcall FarPtr_05_72 ; $7193
+	farcall FarPtr_RenderTextToBuffer64 ; $7193
 	jr Label_3b_71aa ; $7196
 Label_3b_7198:
 	ld hl, $00cc ; $7198
@@ -6779,7 +6779,7 @@ Label_3b_7198:
 Label_3b_71a2:
 	ld de, $d201 ; $71a2
 	ld c, $20 ; $71a5
-	farcall FarPtr_05_72 ; $71a7
+	farcall FarPtr_RenderTextToBuffer64 ; $71a7
 Label_3b_71aa:
 	pop af ; $71aa
 	wram_bank ; $71ab
@@ -7185,7 +7185,7 @@ Func_3b_749a:
 Label_3b_74b1:
 	ld de, $d201 ; $74b1
 	ld c, $20 ; $74b4
-	farcall FarPtr_05_72 ; $74b6
+	farcall FarPtr_RenderTextToBuffer64 ; $74b6
 	pop af ; $74b9
 	wram_bank ; $74ba
 	ret ; $74be
@@ -7447,7 +7447,7 @@ Func_3b_76c5:
 Label_3b_76dc:
 	ld de, $d201 ; $76dc
 	ld c, $20 ; $76df
-	farcall FarPtr_05_72 ; $76e1
+	farcall FarPtr_RenderTextToBuffer64 ; $76e1
 	pop af ; $76e4
 	wram_bank ; $76e5
 	ret ; $76e9
@@ -7683,7 +7683,7 @@ Label_3b_78be:
 	ld e, a ; $78c0
 	pop hl ; $78c1
 	ld c, $20 ; $78c2
-	farcall FarPtr_05_72 ; $78c4
+	farcall FarPtr_RenderTextToBuffer64 ; $78c4
 	pop hl ; $78c7
 	pop de ; $78c8
 	pop bc ; $78c9
@@ -7727,11 +7727,11 @@ Func_3b_78ec:
 	ld hl, $004b ; $7905
 	ld de, $d1a9 ; $7908
 	ld c, $20 ; $790b
-	farcall FarPtr_05_72 ; $790d
+	farcall FarPtr_RenderTextToBuffer64 ; $790d
 	ld hl, $004c ; $7910
 	ld de, $d1e9 ; $7913
 	ld c, $20 ; $7916
-	farcall FarPtr_05_72 ; $7918
+	farcall FarPtr_RenderTextToBuffer64 ; $7918
 	ret ; $791b
 Label_3b_791c:
 	ld hl, wStoryModeNameOfMainCharacter ; $791c
@@ -7743,11 +7743,11 @@ Label_3b_791c:
 	ld hl, $004b ; $792e
 	ld de, $d129 ; $7931
 	ld c, $20 ; $7934
-	farcall FarPtr_05_72 ; $7936
+	farcall FarPtr_RenderTextToBuffer64 ; $7936
 	ld hl, $004c ; $7939
 	ld de, $d169 ; $793c
 	ld c, $20 ; $793f
-	farcall FarPtr_05_72 ; $7941
+	farcall FarPtr_RenderTextToBuffer64 ; $7941
 	ret ; $7944
 Func_3b_7945:
 	ld a, [$d800] ; $7945

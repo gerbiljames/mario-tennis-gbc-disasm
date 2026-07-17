@@ -5173,7 +5173,7 @@ Label_00_1da5:
 	or a, a ; $1dac
 	jr z, Label_00_1db6 ; $1dad
 	push af ; $1daf
-	farcall FarPtr_07_1a ; $1db0
+	farcall FarPtr_SyncLinkFrame ; $1db0
 	pop af ; $1db3
 	jr Label_00_1db9 ; $1db4
 Label_00_1db6:
@@ -5189,7 +5189,7 @@ Label_00_1dbe:
 	and a, a ; $1dc0
 	jr z, Label_00_1dca ; $1dc1
 	push af ; $1dc3
-	farcall FarPtr_07_1a ; $1dc4
+	farcall FarPtr_SyncLinkFrame ; $1dc4
 	pop af ; $1dc7
 	jr Label_00_1dbe ; $1dc8
 Label_00_1dca:
@@ -7338,7 +7338,7 @@ Label_00_2a90:
 Func_00_2a9e:
 	push bc ; $2a9e
 	ld c, $11 ; $2a9f
-	farcall FarPtr_05_1c ; $2aa1
+	farcall FarPtr_RenderProportionalTextAt ; $2aa1
 	pop bc ; $2aa4
 	ret ; $2aa5
 CopyTextString:

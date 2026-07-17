@@ -38,10 +38,10 @@ Label_1e_4031:
 	call WaitFadeEnd ; $4036
 	sound $03 ; $4039
 	push bc ; $403b
-	farcall FarPtr_05_00 ; $403c
+	farcall FarPtr_InitTextWindows ; $403c
 	ld hl, $c3b3 ; $403f
 	ld [hl], $03 ; $4042
-	farcall FarPtr_05_8c ; $4044
+	farcall FarPtr_PrepareGlyphBuffer ; $4044
 	call ClearFrameTasks ; $4047
 	call DisableLCDSafely ; $404a
 	xor a, a ; $404d
@@ -111,7 +111,7 @@ Func_1e_40be:
 	ld de, $b800 ; $40f9
 	ld c, $24 ; $40fc
 	call QueueVRAMCopy ; $40fe
-	farcall FarPtr_05_90 ; $4101
+	farcall FarPtr_UploadGlyphBuffer ; $4101
 	ret ; $4104
 LoadResultsScreenGraphics:
 	ld hl, Palettes_1e_4c40 ; $4105
@@ -569,7 +569,7 @@ Func_1e_4563:
 	ldh a, [hWramBank] ; $4563
 	push af ; $4565
 	ld bc, $0012 ; $4566
-	farcall FarPtr_05_1c ; $4569
+	farcall FarPtr_RenderProportionalTextAt ; $4569
 	pop af ; $456c
 	wram_bank ; $456d
 	ret ; $4571
@@ -624,7 +624,7 @@ Label_1e_45ba:
 FetchAndDrawDialogueText:
 	push bc ; $45c0
 	xor a, a ; $45c1
-	farcall FarPtr_05_44 ; $45c2
+	farcall FarPtr_AddTextIdOffset ; $45c2
 	farcall FarPtr_FetchDialogueText ; $45c5
 	pop bc ; $45c8
 WriteTextToTilemap:
@@ -879,7 +879,7 @@ Label_1e_47c1:
 	ld l, a ; $47c4
 	xor a, a ; $47c5
 	ld h, a ; $47c6
-	farcall FarPtr_05_48 ; $47c7
+	farcall FarPtr_PushTextArgNumber ; $47c7
 	ld hl, $04dd ; $47ca
 	ld de, $d1ca ; $47cd
 	ld bc, $0020 ; $47d0
@@ -937,7 +937,7 @@ Label_1e_4831:
 	ld l, a ; $4834
 	xor a, a ; $4835
 	ld h, a ; $4836
-	farcall FarPtr_05_48 ; $4837
+	farcall FarPtr_PushTextArgNumber ; $4837
 	ld hl, $04df ; $483a
 	ld de, $d1ca ; $483d
 	ld bc, $0020 ; $4840
@@ -1452,10 +1452,10 @@ Label_1e_5438:
 	or a, a ; $543b
 	ret z ; $543c
 	farcall FarPtr_01_0a ; $543d
-	farcall FarPtr_05_00 ; $5440
+	farcall FarPtr_InitTextWindows ; $5440
 	ld hl, $c3b3 ; $5443
 	ld [hl], $03 ; $5446
-	farcall FarPtr_05_8c ; $5448
+	farcall FarPtr_PrepareGlyphBuffer ; $5448
 	call ClearFrameTasks ; $544b
 	call DisableLCDSafely ; $544e
 	xor a, a ; $5451
@@ -2089,7 +2089,7 @@ Label_1e_5a24:
 	ld de, $d062 ; $5a28
 	call Func_1e_4563 ; $5a2b
 	pop bc ; $5a2e
-	farcall FarPtr_05_90 ; $5a2f
+	farcall FarPtr_UploadGlyphBuffer ; $5a2f
 	ld a, $01 ; $5a32
 	ret ; $5a34
 Label_1e_5a35:
@@ -2098,7 +2098,7 @@ Label_1e_5a35:
 	ld [$d024], a ; $5a39
 	jp Func_1e_59bb ; $5a3c
 Label_1e_5a3f:
-	farcall FarPtr_05_90 ; $5a3f
+	farcall FarPtr_UploadGlyphBuffer ; $5a3f
 	xor a, a ; $5a42
 	ret ; $5a43
 	INCBIN "data/bank_01e/d_5a44.bin" ; $5a44, 10 bytes
@@ -4306,7 +4306,7 @@ Func_1e_727d:
 	xor a, a ; $7285
 	ldh [hScrollX], a ; $7286
 	ldh [hScrollY], a ; $7288
-	farcall FarPtr_05_76 ; $728a
+	farcall FarPtr_ResetTextWindowState ; $728a
 	ld de, $d000 ; $728d
 	ld hl, $c3b4 ; $7290
 	ld a, e ; $7293
@@ -4378,10 +4378,10 @@ Label_1e_730a:
 	ld [$df01], a ; $7313
 	ld a, [$df01] ; $7316
 	set_flag $04, 3 ; $7319
-	farcall FarPtr_05_7c ; $731c
+	farcall FarPtr_DrawTextWindowFrame ; $731c
 	clear_flag $04, 3 ; $731f
 	call Func_1e_74b6 ; $7322
-	farcall FarPtr_05_7e ; $7325
+	farcall FarPtr_RedrawWindowRows ; $7325
 	call Func_1e_7504 ; $7328
 	call Func_1e_7b4c ; $732b
 	call EnableLCD ; $732e
@@ -4424,7 +4424,7 @@ Label_1e_7378:
 	ret ; $7381
 Func_1e_7382:
 	push af ; $7382
-	farcall FarPtr_05_8e ; $7383
+	farcall FarPtr_ResetGlyphStream ; $7383
 	wram_bank $05 ; $7386
 	ld a, [$df03] ; $738c
 	sub a, $06 ; $738f
@@ -4439,7 +4439,7 @@ Func_1e_7382:
 	sound $5e ; $739d
 	ld a, [$df01] ; $739f
 	set_flag $04, 3 ; $73a2
-	farcall FarPtr_05_7c ; $73a5
+	farcall FarPtr_DrawTextWindowFrame ; $73a5
 	clear_flag $04, 3 ; $73a8
 	call Func_1e_74b6 ; $73ab
 Label_1e_73ae:
@@ -4447,7 +4447,7 @@ Label_1e_73ae:
 	ret ; $73af
 Func_1e_73b0:
 	push af ; $73b0
-	farcall FarPtr_05_8e ; $73b1
+	farcall FarPtr_ResetGlyphStream ; $73b1
 	wram_bank $05 ; $73b4
 	ld hl, $df05 ; $73ba
 	ld a, [hl] ; $73bd
@@ -4458,7 +4458,7 @@ Func_1e_73b0:
 	sound $5e ; $73c4
 	ld a, [$df01] ; $73c6
 	set_flag $04, 3 ; $73c9
-	farcall FarPtr_05_7c ; $73cc
+	farcall FarPtr_DrawTextWindowFrame ; $73cc
 	clear_flag $04, 3 ; $73cf
 	call Func_1e_74b6 ; $73d2
 Label_1e_73d5:
@@ -4468,14 +4468,14 @@ Label_1e_73d5:
 	ld e, $00 ; $73d9
 	ld b, $10 ; $73db
 	ld c, $03 ; $73dd
-	farcall FarPtr_05_78 ; $73df
+	farcall FarPtr_CreateWindowFromScreenRect ; $73df
 	ret ; $73e2
 Func_1e_73e3:
 	ld d, $01 ; $73e3
 	ld e, $03 ; $73e5
 	ld b, $12 ; $73e7
 	ld c, $0f ; $73e9
-	farcall FarPtr_05_78 ; $73eb
+	farcall FarPtr_CreateWindowFromScreenRect ; $73eb
 	ret ; $73ee
 Func_1e_73ef:
 	push hl ; $73ef
@@ -4633,7 +4633,7 @@ Label_1e_74b3:
 	pop hl ; $74b4
 	ret ; $74b5
 Func_1e_74b6:
-	farcall FarPtr_05_8c ; $74b6
+	farcall FarPtr_PrepareGlyphBuffer ; $74b6
 	ld hl, $c3b4 ; $74b9
 	ld a, [hl+] ; $74bc
 	ld d, [hl] ; $74bd
@@ -4663,7 +4663,7 @@ Label_1e_74d2:
 Label_1e_74e0:
 	push bc ; $74e0
 	ld c, $10 ; $74e1
-	farcall FarPtr_05_1c ; $74e3
+	farcall FarPtr_RenderProportionalTextAt ; $74e3
 	pop bc ; $74e6
 	ld hl, $0040 ; $74e7
 	add hl, de ; $74ea
@@ -4675,7 +4675,7 @@ Label_1e_74e0:
 Label_1e_74f1:
 	ld a, $70 ; $74f1
 	ld [$c3bb], a ; $74f3
-	farcall FarPtr_05_90 ; $74f6
+	farcall FarPtr_UploadGlyphBuffer ; $74f6
 	ret ; $74f9
 Func_1e_74fa:
 	farcall FarPtr_39_2a ; $74fa

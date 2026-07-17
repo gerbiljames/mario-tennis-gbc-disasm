@@ -592,7 +592,7 @@ Func_24_57fd:
 	ld bc, $00e0 ; $5821
 Label_24_5824:
 	push af ; $5824
-	farcall FarPtr_07_3e ; $5825
+	farcall FarPtr_ComputeShotTrajectory ; $5825
 	pop af ; $5828
 	add a, a ; $5829
 	add a, $3c ; $582a

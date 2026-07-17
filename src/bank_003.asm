@@ -3001,7 +3001,7 @@ SaveSlotDebugEditor:
 	ldh [$ffb0], a ; $5329
 	ld a, h ; $532b
 	ldh [$ffb1], a ; $532c
-	farcall FarPtr_05_00 ; $532e
+	farcall FarPtr_InitTextWindows ; $532e
 	call EnableLCD ; $5331
 	ld c, $7f ; $5334
 	call BeginFadeOut ; $5336
