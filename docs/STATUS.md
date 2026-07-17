@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `81e0135`); the whole history rebuilds
+Everything below is **committed** (HEAD `bd27818`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -830,7 +830,13 @@ the source before applying):
   player teleport with fade, dialogue-sequence wrappers).
 - **Bank $18 helpers** (+7): grid-cursor movement, unlock-flag test,
   bobbing cursor offsets, two-option prompt.
-Named symbol count grew from 1,338 to ~1,627. Two offset-arithmetic mishaps
+Named symbol count grew from 1,338 to 1,725. A follow-up mini-pass used the
+text-id decode trick (see auto-memory text-id-decoding: text id hl -> bank
+(h>>2)&$f + $30, index (h&3)*256+l, read with tools/strings.py --index) to
+identify menus by their strings: bank $1b's character-select/mugshot cluster,
+RunNewGameSetup, the Level Up/Status/Trophies menu, a leftover debug
+"Saved Data/Mini-Game Flags" menu, and bank $10's singles/doubles/drill
+match-list and minigame-select menus. Two offset-arithmetic mishaps
 (labels landing in the wrong bank) were caught by blob-count changes and a
 name clash; the fix and the safe recipe are recorded in the auto-memory
 (naming-pass-workflow).
@@ -844,5 +850,5 @@ expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `81e0135`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `bd27818`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
