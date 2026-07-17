@@ -241,7 +241,7 @@ Label_13_40ea:
 	farcall FarPtr_WaitScriptFrames ; $41c7
 	pop af ; $41ca
 Label_13_41cb:
-	call Func_13_4dcc ; $41cb
+	call AnimateDoorClose_13 ; $41cb
 	ret ; $41ce
 	ld a, [$c295] ; $41cf
 	cp a, $ff ; $41d2
@@ -397,7 +397,7 @@ Label_13_4235:
 	farcall FarPtr_MoveActorByAngle ; $42f8
 	ld a, $00 ; $42fb
 	farcall FarPtr_ScriptWaitActorMoveDone ; $42fd
-	call Func_13_4425 ; $4300
+	call StoryActorsWalkOffAndFadeOut_13 ; $4300
 	ld a, $01 ; $4303
 	ld [$c294], a ; $4305
 	ld [$c2a1], a ; $4308
@@ -415,7 +415,7 @@ Label_13_4235:
 	farcall FarPtr_MoveActorByAngle ; $4326
 	ld a, $00 ; $4329
 	farcall FarPtr_ScriptWaitActorMoveDone ; $432b
-	call Func_13_4d78 ; $432e
+	call AnimateDoorOpen_13 ; $432e
 	ld a, $00 ; $4331
 	ld b, $c2 ; $4333
 	ld de, $0200 ; $4335
@@ -453,7 +453,7 @@ Label_13_4235:
 	farcall FarPtr_MoveActorByAngle ; $4381
 	ld a, $00 ; $4384
 	farcall FarPtr_ScriptWaitActorMoveDone ; $4386
-	call Func_13_4425 ; $4389
+	call StoryActorsWalkOffAndFadeOut_13 ; $4389
 	ld c, $10 ; $438c
 	call BeginFadeOut ; $438e
 	push af ; $4391
@@ -478,7 +478,7 @@ Label_13_4235:
 	ld b, $c0 ; $43be
 	ld de, $0080 ; $43c0
 	farcall FarPtr_MoveActorByAngle ; $43c3
-	call Func_13_4425 ; $43c6
+	call StoryActorsWalkOffAndFadeOut_13 ; $43c6
 	test_flag $05, 7 ; $43c9
 	ld a, $05 ; $43cc
 	ld [$c294], a ; $43ce
@@ -519,7 +519,7 @@ Label_13_43de:
 	ld [$c294], a ; $441e
 	ld [$c2a1], a ; $4421
 	ret ; $4424
-Func_13_4425:
+StoryActorsWalkOffAndFadeOut_13:
 	test_flag $05, 7 ; $4425
 	jr nz, Label_13_446a ; $4428
 	ld a, $00 ; $442a
@@ -605,14 +605,14 @@ Label_13_446a:
 	ld a, [$c295] ; $44df
 	cp a, $0f ; $44e2
 	jr nz, Label_13_44e9 ; $44e4
-	call Func_13_44f1 ; $44e6
+	call AcademyCourtsTourCutscene ; $44e6
 Label_13_44e9:
 	cp a, $0e ; $44e9
 	jr nz, Label_13_44f0 ; $44eb
-	call Func_13_476e ; $44ed
+	call ServiceAceCoachIntroCutscene ; $44ed
 Label_13_44f0:
 	ret ; $44f0
-Func_13_44f1:
+AcademyCourtsTourCutscene:
 	ldh a, [hRomBank] ; $44f1
 	ld hl, $472c ; $44f3
 	farcall FarPtr_0a_06 ; $44f6
@@ -625,7 +625,7 @@ Func_13_44f1:
 	ld bc, $3f00 ; $4509
 	ld de, $3f00 ; $450c
 	farcall FarPtr_ScriptSetActorPosition ; $450f
-	call Func_13_4cdc ; $4512
+	call LoadTourPointerSpriteGfx_13 ; $4512
 	ld c, $04 ; $4515
 	call BeginFadeIn ; $4517
 	call WaitFadeEnd ; $451a
@@ -864,7 +864,7 @@ Func_13_44f1:
 	farcall FarPtr_0a_02 ; $4728
 	ret ; $472b
 	INCBIN "data/bank_013/d_472c.bin" ; $472c, 66 bytes
-Func_13_476e:
+ServiceAceCoachIntroCutscene:
 	ldh a, [hRomBank] ; $476e
 	ld hl, $4c7e ; $4770
 	farcall FarPtr_0a_06 ; $4773
@@ -952,7 +952,7 @@ Func_13_476e:
 	ld a, $1e ; $483c
 	farcall FarPtr_WaitScriptFrames ; $483e
 	pop af ; $4841
-	call Func_13_4d78 ; $4842
+	call AnimateDoorOpen_13 ; $4842
 	ld a, $07 ; $4845
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4847
 	push af ; $484a
@@ -1027,7 +1027,7 @@ Func_13_476e:
 	farcall FarPtr_ScriptSetActorMoveTarget ; $48e9
 	ld a, $08 ; $48ec
 	farcall FarPtr_ScriptWaitActorMoveDone ; $48ee
-	call Func_13_4dcc ; $48f1
+	call AnimateDoorClose_13 ; $48f1
 	ld a, $08 ; $48f4
 	ld b, $00 ; $48f6
 	farcall FarPtr_SetActorFacing ; $48f8
@@ -1224,7 +1224,7 @@ Label_13_49c1:
 	ld bc, $1500 ; $4a9e
 	ld de, $0980 ; $4aa1
 	farcall FarPtr_ScriptSetActorMoveTarget ; $4aa4
-	call Func_13_4d78 ; $4aa7
+	call AnimateDoorOpen_13 ; $4aa7
 	ld a, $08 ; $4aaa
 	ld bc, $14c0 ; $4aac
 	ld de, $0900 ; $4aaf
@@ -1267,7 +1267,7 @@ Label_13_49c1:
 	ld bc, $3f00 ; $4b08
 	ld de, $3f00 ; $4b0b
 	farcall FarPtr_ScriptSetActorPosition ; $4b0e
-	call Func_13_4dcc ; $4b11
+	call AnimateDoorClose_13 ; $4b11
 	xor a, a ; $4b14
 	ld bc, $1b00 ; $4b15
 	ld de, $0d00 ; $4b18
@@ -1427,7 +1427,7 @@ Label_13_49c1:
 	farcall FarPtr_0a_02 ; $4c7a
 	ret ; $4c7d
 	INCBIN "data/bank_013/d_4c7e.bin" ; $4c7e, 94 bytes
-Func_13_4cdc:
+LoadTourPointerSpriteGfx_13:
 	ldh a, [hWramBank] ; $4cdc
 	push af ; $4cde
 	wram_bank $01 ; $4cdf
@@ -1441,7 +1441,7 @@ Func_13_4cdc:
 	pop af ; $4cf9
 	wram_bank ; $4cfa
 	ret ; $4cfe
-Func_13_4cff:
+QueueTourPointerSprite_13:
 	ld hl, $4d20 ; $4cff
 	ld c, $00 ; $4d02
 	ld b, $08 ; $4d04
@@ -1457,10 +1457,10 @@ Func_13_4cff:
 	add a, $08 ; $4d18
 	sub a, e ; $4d1a
 	ld e, a ; $4d1b
-	call Func_13_4cff ; $4d1c
+	call QueueTourPointerSprite_13 ; $4d1c
 	ret ; $4d1f
 	INCBIN "data/bank_013/d_4d20.bin" ; $4d20, 88 bytes
-Func_13_4d78:
+AnimateDoorOpen_13:
 	sound $71 ; $4d78
 	ld b, $14 ; $4d7a
 	ld c, $08 ; $4d7c
@@ -1503,7 +1503,7 @@ Func_13_4d78:
 	farcall FarPtr_WaitScriptFrames ; $4dc7
 	pop af ; $4dca
 	ret ; $4dcb
-Func_13_4dcc:
+AnimateDoorClose_13:
 	sound $71 ; $4dcc
 	ld b, $04 ; $4dce
 	ld c, $15 ; $4dd0
@@ -1826,7 +1826,7 @@ Label_13_4fd0:
 	jp z, Label_13_5a92 ; $5038
 	cp a, $08 ; $503b
 	jp z, Label_13_5aae ; $503d
-	call Func_13_7d58 ; $5040
+	call ComputeStoryRankTier_13 ; $5040
 	call Func_13_5130 ; $5043
 	call Func_13_51b0 ; $5046
 	call Func_13_5067 ; $5049
@@ -2144,9 +2144,9 @@ Label_13_52cb:
 	pop af ; $52dc
 	and a, a ; $52dd
 	jr nz, Label_13_52e3 ; $52de
-	call Func_13_58be ; $52e0
+	call RunAcademyQuestionsMenu ; $52e0
 Label_13_52e3:
-	call Func_13_56bb ; $52e3
+	call RunPlayDoublesTodayPrompt ; $52e3
 	ret ; $52e6
 Label_13_52e7:
 	call Func_13_5aca ; $52e7
@@ -2386,7 +2386,7 @@ Label_13_54b2:
 	pop af ; $5501
 	and a, a ; $5502
 	jr nz, Label_13_5508 ; $5503
-	call Func_13_58be ; $5505
+	call RunAcademyQuestionsMenu ; $5505
 Label_13_5508:
 	test_flag $1c, 0 ; $5508
 	jr nz, Label_13_5550 ; $550b
@@ -2602,11 +2602,11 @@ Label_13_569c:
 	pop af ; $56b0
 	and a, a ; $56b1
 	jr nz, Label_13_56b7 ; $56b2
-	call Func_13_58be ; $56b4
+	call RunAcademyQuestionsMenu ; $56b4
 Label_13_56b7:
-	call Func_13_56bb ; $56b7
+	call RunPlayDoublesTodayPrompt ; $56b7
 	ret ; $56ba
-Func_13_56bb:
+RunPlayDoublesTodayPrompt:
 	test_flag $05, 7 ; $56bb
 	jp nz, Label_13_5782 ; $56be
 	test_flag $1c, 0 ; $56c1
@@ -2873,7 +2873,7 @@ Label_13_5807:
 	ld bc, $0c12 ; $58b9
 	reti ; $58bc
 	ds 1, $ff ; $58bd, fill
-Func_13_58be:
+RunAcademyQuestionsMenu:
 	test_flag $1c, 0 ; $58be
 	jr z, Label_13_58cb ; $58c1
 	ld hl, $c2b2 ; $58c3
@@ -3093,7 +3093,7 @@ Label_13_5a16:
 	add hl, de ; $5a23
 	farcall FarPtr_InitDialogueTextCursor ; $5a24
 	ret ; $5a27
-Func_13_5a28:
+ShowStoryNarration_13:
 	sound $00 ; $5a28
 	ld a, $03 ; $5a2a
 	ld bc, $3f00 ; $5a2c
@@ -3132,7 +3132,7 @@ Func_13_5a28:
 Label_13_5a76:
 	ld hl, $01f0 ; $5a76
 	farcall FarPtr_InitDialogueTextCursor ; $5a79
-	call Func_13_5a28 ; $5a7c
+	call ShowStoryNarration_13 ; $5a7c
 	ld a, $14 ; $5a7f
 	ld [wStoryModeCurrentLocation], a ; $5a81
 	ld a, $0a ; $5a84
@@ -3144,7 +3144,7 @@ Label_13_5a76:
 Label_13_5a92:
 	ld hl, $01f1 ; $5a92
 	farcall FarPtr_InitDialogueTextCursor ; $5a95
-	call Func_13_5a28 ; $5a98
+	call ShowStoryNarration_13 ; $5a98
 	ld a, $15 ; $5a9b
 	ld [wStoryModeCurrentLocation], a ; $5a9d
 	ld a, $0f ; $5aa0
@@ -3156,7 +3156,7 @@ Label_13_5a92:
 Label_13_5aae:
 	ld hl, $01f0 ; $5aae
 	farcall FarPtr_InitDialogueTextCursor ; $5ab1
-	call Func_13_5a28 ; $5ab4
+	call ShowStoryNarration_13 ; $5ab4
 	ld a, $14 ; $5ab7
 	ld [wStoryModeCurrentLocation], a ; $5ab9
 	ld a, $0a ; $5abc
@@ -3736,11 +3736,11 @@ Label_13_60c6:
 	ld [$c2a1], a ; $6184
 	ret ; $6187
 	rst Rst38 ; $6188
-	call Func_13_61a9 ; $6189
+	call SetupVarsityCourtSceneVariant ; $6189
 	ld a, [$c295] ; $618c
 	cp a, $0f ; $618f
 	jr nz, Label_13_6196 ; $6191
-	jp Label_13_636c ; $6193
+	jp VarsityCourtTourCutscene ; $6193
 Label_13_6196:
 	cp a, $0d ; $6196
 	jr nz, Label_13_619e ; $6198
@@ -3753,7 +3753,7 @@ Label_13_619e:
 Label_13_61a5:
 	call Func_13_62ff ; $61a5
 	ret ; $61a8
-Func_13_61a9:
+SetupVarsityCourtSceneVariant:
 	test_flag $05, 7 ; $61a9
 	jr nz, Label_13_6222 ; $61ac
 	test_flag $16, 0 ; $61ae
@@ -3946,7 +3946,7 @@ Label_13_6348:
 Label_13_6365:
 	ret ; $6365
 	INCBIN "data/bank_013/d_6366.bin" ; $6366, 6 bytes
-Label_13_636c:
+VarsityCourtTourCutscene:
 	ldh a, [hRomBank] ; $636c
 	ld hl, $6638 ; $636e
 	farcall FarPtr_0a_06 ; $6371
@@ -4925,9 +4925,9 @@ Func_13_70d5:
 	wram_bank $04 ; $70ec
 	ld a, [wMatchWinLoseFlag] ; $70f2
 	cp a, $01 ; $70f5
-	jp z, Func_13_70fb ; $70f7
+	jp z, SinglesTravelingTeamVictoryCutscene ; $70f7
 	ret ; $70fa
-Func_13_70fb:
+SinglesTravelingTeamVictoryCutscene:
 	wram_bank $06 ; $70fb
 	ldh a, [hRomBank] ; $7101
 	ld hl, $739c ; $7103
@@ -5364,9 +5364,9 @@ Label_13_7340:
 	wram_bank $04 ; $7440
 	ld a, [wMatchWinLoseFlag] ; $7446
 	cp a, $01 ; $7449
-	jp z, Func_13_744f ; $744b
+	jp z, DoublesTravelingTeamVictoryCutscene ; $744b
 	ret ; $744e
-Func_13_744f:
+DoublesTravelingTeamVictoryCutscene:
 	ld hl, $0416 ; $744f
 	farcall FarPtr_InitDialogueTextCursor ; $7452
 	ldh a, [hRomBank] ; $7455
@@ -6022,10 +6022,10 @@ Func_13_78c4:
 Label_13_7988:
 	test_flag $05, 7 ; $7988
 	jr z, Label_13_7991 ; $798b
-	call Func_13_744f ; $798d
+	call DoublesTravelingTeamVictoryCutscene ; $798d
 	ret ; $7990
 Label_13_7991:
-	call Func_13_70fb ; $7991
+	call SinglesTravelingTeamVictoryCutscene ; $7991
 	ret ; $7994
 Func_13_7995:
 	wram_bank $04 ; $7995
@@ -6140,7 +6140,7 @@ Label_13_7b1f:
 	sound $a2 ; $7b53
 	ret ; $7b55
 	INCBIN "data/bank_013/d_7b56.bin" ; $7b56, 514 bytes
-Func_13_7d58:
+ComputeStoryRankTier_13:
 	ld a, $00 ; $7d58
 	test_flag $0a, 3 ; $7d5a
 	jr z, Label_13_7d77 ; $7d5d
