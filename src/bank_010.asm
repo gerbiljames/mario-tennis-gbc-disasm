@@ -122,7 +122,7 @@ Func_10_4190:
 	xor a, a ; $4190
 	ld [$c2d5], a ; $4191
 	ret ; $4194
-Func_10_4195:
+RunSinglesMatchListMenu:
 	ld hl, $0484 ; $4195
 	ld de, $0101 ; $4198
 	ld a, $05 ; $419b
@@ -153,7 +153,7 @@ Func_10_4195:
 	farcall FarPtr_0a_4c ; $41d3
 	farcall FarPtr_0a_4e ; $41d6
 	ret ; $41d9
-Func_10_41da:
+RunDoublesMatchListMenu:
 	ld hl, $0489 ; $41da
 	ld de, $0101 ; $41dd
 	ld a, $04 ; $41e0
@@ -466,6 +466,7 @@ Func_10_4442:
 	ld [$c8f7], a ; $4449
 	farcall FarPtr_LoadMatchSettingsFromTable ; $444c
 	ret ; $444f
+RunDrillMatchListMenu:
 	ld hl, $048d ; $4450
 	ld a, $09 ; $4453
 	farcall FarPtr_RunPagedTextMenu ; $4455
@@ -673,7 +674,7 @@ Label_10_45cc:
 	ld d, $00 ; $463a
 	farcall FarPtr_1b_1a ; $463c
 	ret ; $463f
-Label_10_4640:
+RunMinigameSelectMenu:
 	ld hl, $0496 ; $4640
 	ld a, $03 ; $4643
 	farcall FarPtr_RunPagedTextMenu ; $4645
@@ -689,7 +690,7 @@ Label_10_4655:
 	ld a, $01 ; $4658
 	farcall FarPtr_RunPagedTextMenu ; $465a
 	cp a, $ff ; $465d
-	jp z, Label_10_4640 ; $465f
+	jp z, RunMinigameSelectMenu ; $465f
 	ld [wMinigameLevel], a ; $4662
 	ld a, [de] ; $4665
 	set_flag $03, 6 ; $4666
