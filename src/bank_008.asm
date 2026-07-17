@@ -205,7 +205,7 @@ Label_08_410c:
 	jr nz, Label_08_413b ; $4137
 	ld a, $00 ; $4139
 Label_08_413b:
-	ld [$c8df], a ; $413b
+	ld [wMatchRngState], a ; $413b
 	xor a, a ; $413e
 	ldh [$ffe9], a ; $413f
 	xor a, a ; $4141
@@ -443,7 +443,7 @@ Label_08_4349:
 	ld a, b ; $4349
 	ld [wPointOutcome], a ; $434a
 	ld a, c ; $434d
-	ld [$c4d9], a ; $434e
+	ld [wPointOutcomeSide], a ; $434e
 	ret ; $4351
 HandleBallBounceEvent:
 	ld a, [$c4b3] ; $4352
@@ -512,7 +512,7 @@ Label_08_43ca:
 	ld a, b ; $43ca
 	ld [wPointOutcome], a ; $43cb
 	ld a, c ; $43ce
-	ld [$c4d9], a ; $43cf
+	ld [wPointOutcomeSide], a ; $43cf
 	ret ; $43d2
 HandleBallTouchCharEvent:
 	ld a, [$c4ae] ; $43d3
@@ -531,12 +531,12 @@ ApplyBallTouchOutcome:
 	ld a, $09 ; $43eb
 	ld [wPointOutcome], a ; $43ed
 	ld a, $01 ; $43f0
-	ld [$c4d9], a ; $43f2
+	ld [wPointOutcomeSide], a ; $43f2
 Label_08_43f5:
 	ret ; $43f5
 AdvanceMatchRng:
 	push hl ; $43f6
-	ld a, [$c8df] ; $43f7
+	ld a, [wMatchRngState] ; $43f7
 	add a, $73 ; $43fa
 	ld hl, $c409 ; $43fc
 	add a, [hl] ; $43ff
@@ -544,7 +544,7 @@ AdvanceMatchRng:
 	add a, [hl] ; $4403
 	ld hl, $c405 ; $4404
 	add a, [hl] ; $4407
-	ld [$c8df], a ; $4408
+	ld [wMatchRngState], a ; $4408
 	pop hl ; $440b
 	ret ; $440c
 ReadMatchInputHeld:
@@ -1497,7 +1497,7 @@ ResetPointState:
 	ld [$c4da], a ; $4cd2
 	ld [$c491], a ; $4cd5
 	ld [wMatchAbortFlag], a ; $4cd8
-	ld [$c4d9], a ; $4cdb
+	ld [wPointOutcomeSide], a ; $4cdb
 	ld [wPointOutcome], a ; $4cde
 	ldh [$ffdd], a ; $4ce1
 	ld [$c4c2], a ; $4ce3
@@ -3671,7 +3671,7 @@ HandleServeFault:
 	ld a, [wRallyLength] ; $5b7f
 	cp a, $01 ; $5b82
 	ret nz ; $5b84
-	ld a, [$c4d9] ; $5b85
+	ld a, [wPointOutcomeSide] ; $5b85
 	cp a, $ff ; $5b88
 	ret nz ; $5b8a
 	ld a, [wServeFaultFlag] ; $5b8b
@@ -3989,12 +3989,12 @@ ResolvePointWinner:
 	ld a, [$c4b8] ; $5da9
 	and a, $01 ; $5dac
 	jr z, Label_08_5db6 ; $5dae
-	ld a, [$c4d9] ; $5db0
+	ld a, [wPointOutcomeSide] ; $5db0
 	cpl ; $5db3
 	inc a ; $5db4
 	ret ; $5db5
 Label_08_5db6:
-	ld a, [$c4d9] ; $5db6
+	ld a, [wPointOutcomeSide] ; $5db6
 	ret ; $5db9
 Label_08_5dba:
 	xor a, a ; $5dba

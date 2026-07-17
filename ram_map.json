@@ -392,6 +392,10 @@
   "note": "[8-bit] 0 while the rally runs; point-end cause code once the point resolves",
   "size": 1
  },
+ "0xc4d9": {
+  "name": "wPointOutcomeSide",
+  "note": "[8-bit] Side/sign code stored alongside wPointOutcome when a point-ending event fires ($01/$ff); negated through the court-side parity bits to decide which side won the point"
+ },
  "0xc4de": {
   "name": "wMatchRetryRequest",
   "note": "[8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID)"
@@ -776,6 +780,10 @@
   "note": "[8-bit] Character 4 Double Faults",
   "size": 1
  },
+ "0xc8df": {
+  "name": "wMatchRngState",
+  "note": "[8-bit] Match RNG state: seeded from hVBlankCounter at match start, stirred by AdvanceMatchRng (+$73 plus ball position bytes)"
+ },
  "0xc8e0": {
   "name": "wPlayer1SetsWon",
   "note": "[8-bit] Player 1 Sets Won (0x00-0x03)",
@@ -1060,10 +1068,22 @@
   "name": "wMenuSlideDirection",
   "note": "[8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions"
  },
+ "0xcb3f": {
+  "name": "wCutsceneStep",
+  "note": "[8-bit] Bank $6b cutscene driver (intro/title/award ceremony): current step index, dispatched through the per-scene jumptable"
+ },
+ "0xcb40": {
+  "name": "wCutsceneStepTimer",
+  "note": "[8-bit] Bank $6b cutscene driver: frame counter for the current step; incremented per frame and compared against per-step thresholds to advance wCutsceneStep"
+ },
  "0xcb41": {
   "name": "wIntroCutsceneCheck",
   "note": "[8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)",
   "size": 1
+ },
+ "0xcb42": {
+  "name": "wCutsceneScrollX",
+  "note": "[8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame"
  },
  "0xcb61": {
   "name": "wBgMapShadowDirty",

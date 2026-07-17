@@ -44,10 +44,10 @@ DataPtr_AwardCeremonyAttrmap4:
 	dw AwardCeremonyAttrmap4 ; $4028
 Func_6b_402a:
 	xor a, a ; $402a
-	ld [$cb3f], a ; $402b
-	ld [$cb40], a ; $402e
+	ld [wCutsceneStep], a ; $402b
+	ld [wCutsceneStepTimer], a ; $402e
 	ld [wIntroCutsceneCheck], a ; $4031
-	ld [$cb42], a ; $4034
+	ld [wCutsceneScrollX], a ; $4034
 	ld [$cb43], a ; $4037
 	ldh [hShowDebugConsole], a ; $403a
 	ld hl, rLCDC ; $403c
@@ -70,7 +70,7 @@ Func_6b_402a:
 	call ClearDebugTextBuffer ; $4066
 	ret ; $4069
 Func_6b_406a:
-	ld a, [$cb3f] ; $406a
+	ld a, [wCutsceneStep] ; $406a
 	ld l, a ; $406d
 	ld h, $00 ; $406e
 	add hl, hl ; $4070
@@ -88,7 +88,7 @@ Label_6b_407c:
 	or a, a ; $407f
 	jr nz, Label_6b_40bc ; $4080
 	call AdvanceFrame ; $4082
-	ld a, [$cb3f] ; $4085
+	ld a, [wCutsceneStep] ; $4085
 	ld l, a ; $4088
 	ld h, $00 ; $4089
 	add hl, hl ; $408b
@@ -104,7 +104,7 @@ Label_6b_407c:
 	ld l, a ; $4097
 	jp hl ; $4098
 Label_6b_4099:
-	ld a, [$cb3f] ; $4099
+	ld a, [wCutsceneStep] ; $4099
 	ld l, a ; $409c
 	ld h, $00 ; $409d
 	add hl, hl ; $409f
@@ -122,9 +122,9 @@ Label_6b_4099:
 	ld l, a ; $40ad
 	jp hl ; $40ae
 Label_6b_40af:
-	ld a, [$cb3f] ; $40af
+	ld a, [wCutsceneStep] ; $40af
 	inc a ; $40b2
-	ld [$cb3f], a ; $40b3
+	ld [wCutsceneStep], a ; $40b3
 	ld a, [wIntroCutsceneCheck] ; $40b6
 	or a, a ; $40b9
 	jr z, Func_6b_406a ; $40ba
@@ -214,21 +214,21 @@ Unused_6b_UpdateHandler_4159:
 	jp Label_6b_40af ; $415c
 Unused_6b_ExitHandler_415f:
 	xor a, a ; $415f
-	ld [$cb40], a ; $4160
+	ld [wCutsceneStepTimer], a ; $4160
 	jp Label_6b_40af ; $4163
 	ld a, $01 ; $4166
 	ld [wIntroCutsceneCheck], a ; $4168
 	jp Label_6b_407c ; $416b
 	jp Label_6b_407c ; $416e
 	xor a, a ; $4171
-	ld [$cb40], a ; $4172
+	ld [wCutsceneStepTimer], a ; $4172
 	jp Label_6b_407c ; $4175
 	xor a, a ; $4178
-	ld [$cb40], a ; $4179
+	ld [wCutsceneStepTimer], a ; $4179
 	jp Label_6b_40af ; $417c
-	ld a, [$cb40] ; $417f
+	ld a, [wCutsceneStepTimer] ; $417f
 	inc a ; $4182
-	ld [$cb40], a ; $4183
+	ld [wCutsceneStepTimer], a ; $4183
 	cp a, $0a ; $4186
 	jp z, Label_6b_4099 ; $4188
 	jp Label_6b_407c ; $418b
@@ -239,7 +239,7 @@ Unused_6b_ExitHandler_415f:
 	ld a, $24 ; $4198
 	ld [$c323], a ; $419a
 	xor a, a ; $419d
-	ld [$cb40], a ; $419e
+	ld [wCutsceneStepTimer], a ; $419e
 	ld [$cb4c], a ; $41a1
 	ld [$cb44], a ; $41a4
 	ld [$cb4d], a ; $41a7
@@ -277,9 +277,9 @@ Unused_6b_ExitHandler_415f:
 	ld [wCameraY], a ; $41f1
 	ld [$c323], a ; $41f4
 	jp Label_6b_40af ; $41f7
-	ld a, [$cb40] ; $41fa
+	ld a, [wCutsceneStepTimer] ; $41fa
 	inc a ; $41fd
-	ld [$cb40], a ; $41fe
+	ld [wCutsceneStepTimer], a ; $41fe
 	cp a, $80 ; $4201
 	jp z, Label_6b_4099 ; $4203
 	cp a, $64 ; $4206
@@ -294,8 +294,8 @@ Label_6b_420d:
 	jp Label_6b_407c ; $421c
 	call DisableLCDSafely ; $421f
 	xor a, a ; $4222
-	ld [$cb42], a ; $4223
-	ld [$cb40], a ; $4226
+	ld [wCutsceneScrollX], a ; $4223
+	ld [wCutsceneStepTimer], a ; $4226
 	ld a, $d0 ; $4229
 	ld [$cb44], a ; $422b
 	ld a, $28 ; $422e
@@ -358,17 +358,17 @@ Palettes_6b_42b2:
 	ld hl, $526a ; $42f2
 	call UnregisterFrameTask ; $42f5
 	xor a, a ; $42f8
-	ld [$cb40], a ; $42f9
-	ld [$cb42], a ; $42fc
+	ld [wCutsceneStepTimer], a ; $42f9
+	ld [wCutsceneScrollX], a ; $42fc
 	ldh [hScrollX], a ; $42ff
 	jp Label_6b_40af ; $4301
-	ld a, [$cb42] ; $4304
+	ld a, [wCutsceneScrollX] ; $4304
 	add a, $03 ; $4307
-	ld [$cb42], a ; $4309
+	ld [wCutsceneScrollX], a ; $4309
 	ldh [hScrollX], a ; $430c
-	ld a, [$cb40] ; $430e
+	ld a, [wCutsceneStepTimer] ; $430e
 	inc a ; $4311
-	ld [$cb40], a ; $4312
+	ld [wCutsceneStepTimer], a ; $4312
 	cp a, $69 ; $4315
 	jr z, Label_6b_4323 ; $4317
 	ld a, [$cb44] ; $4319
@@ -408,11 +408,11 @@ Label_6b_4323:
 	call BeginFadeOut ; $43b1
 	call WaitFadeEnd ; $43b4
 	xor a, a ; $43b7
-	ld [$cb40], a ; $43b8
+	ld [wCutsceneStepTimer], a ; $43b8
 	jp Label_6b_40af ; $43bb
-	ld a, [$cb40] ; $43be
+	ld a, [wCutsceneStepTimer] ; $43be
 	inc a ; $43c1
-	ld [$cb40], a ; $43c2
+	ld [wCutsceneStepTimer], a ; $43c2
 	cp a, $1e ; $43c5
 	jr z, Label_6b_43cc ; $43c7
 	jp Label_6b_407c ; $43c9
@@ -468,13 +468,13 @@ Label_6b_43cc:
 	ld hl, $52f9 ; $4455
 	call UnregisterFrameTask ; $4458
 	xor a, a ; $445b
-	ld [$cb40], a ; $445c
+	ld [wCutsceneStepTimer], a ; $445c
 	ld [$cb43], a ; $445f
 	ldh [hScrollX], a ; $4462
 	jp Label_6b_40af ; $4464
-	ld a, [$cb40] ; $4467
+	ld a, [wCutsceneStepTimer] ; $4467
 	inc a ; $446a
-	ld [$cb40], a ; $446b
+	ld [wCutsceneStepTimer], a ; $446b
 	cp a, $7d ; $446e
 	jp z, Label_6b_4099 ; $4470
 	ld a, [$cb43] ; $4473
@@ -525,11 +525,11 @@ Label_6b_43cc:
 	call BeginFadeOut ; $4512
 	call WaitFadeEnd ; $4515
 	xor a, a ; $4518
-	ld [$cb40], a ; $4519
+	ld [wCutsceneStepTimer], a ; $4519
 	jp Label_6b_40af ; $451c
-	ld a, [$cb40] ; $451f
+	ld a, [wCutsceneStepTimer] ; $451f
 	inc a ; $4522
-	ld [$cb40], a ; $4523
+	ld [wCutsceneStepTimer], a ; $4523
 	cp a, $1e ; $4526
 	jp z, Label_6b_4099 ; $4528
 	jp Label_6b_407c ; $452b
@@ -625,9 +625,9 @@ Label_6b_43cc:
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
 	jp Label_6b_40af ; $461d
-	ld a, [$cb40] ; $4620
+	ld a, [wCutsceneStepTimer] ; $4620
 	inc a ; $4623
-	ld [$cb40], a ; $4624
+	ld [wCutsceneStepTimer], a ; $4624
 	cp a, $60 ; $4627
 	jp z, Label_6b_4099 ; $4629
 	ld a, [$cb44] ; $462c
@@ -638,22 +638,22 @@ Label_6b_43cc:
 	ld [$cb46], a ; $4637
 	jp Label_6b_407c ; $463a
 	xor a, a ; $463d
-	ld [$cb40], a ; $463e
+	ld [wCutsceneStepTimer], a ; $463e
 	jp Label_6b_407c ; $4641
 	ld c, $10 ; $4644
 	call BeginFadeOut ; $4646
 	call WaitFadeEnd ; $4649
 	jp Label_6b_40af ; $464c
-	ld a, [$cb40] ; $464f
+	ld a, [wCutsceneStepTimer] ; $464f
 	inc a ; $4652
-	ld [$cb40], a ; $4653
+	ld [wCutsceneStepTimer], a ; $4653
 	cp a, $64 ; $4656
 	jp z, Label_6b_4099 ; $4658
 	jp Label_6b_407c ; $465b
 	call Func_6b_617c ; $465e
 	call Func_6b_73f2 ; $4661
 	xor a, a ; $4664
-	ld [$cb40], a ; $4665
+	ld [wCutsceneStepTimer], a ; $4665
 	ld [$cb44], a ; $4668
 	ld [$cb45], a ; $466b
 	ld [$cb46], a ; $466e
@@ -681,18 +681,18 @@ Label_6b_43cc:
 	ld a, [$c321] ; $46a9
 	cp a, $40 ; $46ac
 	jp nz, Label_6b_46c0 ; $46ae
-	ld a, [$cb40] ; $46b1
+	ld a, [wCutsceneStepTimer] ; $46b1
 	inc a ; $46b4
-	ld [$cb40], a ; $46b5
+	ld [wCutsceneStepTimer], a ; $46b5
 	cp a, $29 ; $46b8
 	jp z, Label_6b_4099 ; $46ba
 	jp Label_6b_407c ; $46bd
 Label_6b_46c0:
-	ld a, [$cb40] ; $46c0
+	ld a, [wCutsceneStepTimer] ; $46c0
 	cp a, $01 ; $46c3
 	jr z, Label_6b_46ce ; $46c5
 	inc a ; $46c7
-	ld [$cb40], a ; $46c8
+	ld [wCutsceneStepTimer], a ; $46c8
 	jp Label_6b_407c ; $46cb
 Label_6b_46ce:
 	ld a, [$c321] ; $46ce
@@ -709,7 +709,7 @@ Label_6b_46ce:
 	xor a, a ; $46e5
 	ldh [hScrollY], a ; $46e6
 	ldh [hScrollX], a ; $46e8
-	ld [$cb40], a ; $46ea
+	ld [wCutsceneStepTimer], a ; $46ea
 	ldh a, [hWramBank] ; $46ed
 	push af ; $46ef
 	wram_bank $05 ; $46f0
@@ -742,11 +742,11 @@ Label_6b_46ce:
 	call WaitFadeEnd ; $473e
 	call DisableLCDSafely ; $4741
 	xor a, a ; $4744
-	ld [$cb40], a ; $4745
+	ld [wCutsceneStepTimer], a ; $4745
 	jp Label_6b_40af ; $4748
-	ld a, [$cb40] ; $474b
+	ld a, [wCutsceneStepTimer] ; $474b
 	inc a ; $474e
-	ld [$cb40], a ; $474f
+	ld [wCutsceneStepTimer], a ; $474f
 	cp a, $64 ; $4752
 	jp z, Label_6b_4099 ; $4754
 	jp Label_6b_407c ; $4757
@@ -766,9 +766,9 @@ Palettes_6b_475a:
 	farcall FarPtr_LoadScreenAssetRecord ; $479f
 	farcall FarPtr_QueueWram3MapToVRAM ; $47a2
 	xor a, a ; $47a5
-	ld [$cb40], a ; $47a6
+	ld [wCutsceneStepTimer], a ; $47a6
 	ld a, $b0 ; $47a9
-	ld [$cb42], a ; $47ab
+	ld [wCutsceneScrollX], a ; $47ab
 	ld a, $01 ; $47ae
 	ld hl, $7366 ; $47b0
 	call RegisterFrameTask ; $47b3
@@ -785,9 +785,9 @@ Palettes_6b_475a:
 	xor a, a ; $47d2
 	ldh [hScrollX], a ; $47d3
 	jp Label_6b_40af ; $47d5
-	ld a, [$cb40] ; $47d8
+	ld a, [wCutsceneStepTimer] ; $47d8
 	inc a ; $47db
-	ld [$cb40], a ; $47dc
+	ld [wCutsceneStepTimer], a ; $47dc
 	cp a, $2c ; $47df
 	jp z, Label_6b_4099 ; $47e1
 	jp Label_6b_407c ; $47e4
@@ -796,10 +796,10 @@ Palettes_6b_475a:
 	farcall FarPtr_LoadScreenAssetRecord ; $47ec
 	farcall FarPtr_QueueWram3MapToVRAM ; $47ef
 	ld a, $94 ; $47f2
-	ld [$cb42], a ; $47f4
+	ld [wCutsceneScrollX], a ; $47f4
 	ldh [hScrollX], a ; $47f7
 	xor a, a ; $47f9
-	ld [$cb40], a ; $47fa
+	ld [wCutsceneStepTimer], a ; $47fa
 	ld a, $01 ; $47fd
 	ld hl, $7395 ; $47ff
 	call RegisterFrameTask ; $4802
@@ -816,9 +816,9 @@ Palettes_6b_475a:
 	xor a, a ; $4821
 	ldh [hScrollX], a ; $4822
 	jp Label_6b_40af ; $4824
-	ld a, [$cb40] ; $4827
+	ld a, [wCutsceneStepTimer] ; $4827
 	inc a ; $482a
-	ld [$cb40], a ; $482b
+	ld [wCutsceneStepTimer], a ; $482b
 	cp a, $2b ; $482e
 	jp z, Label_6b_4099 ; $4830
 	jp Label_6b_407c ; $4833
@@ -827,10 +827,10 @@ Palettes_6b_475a:
 	farcall FarPtr_LoadScreenAssetRecord ; $483b
 	farcall FarPtr_QueueWram3MapToVRAM ; $483e
 	ld a, $a8 ; $4841
-	ld [$cb42], a ; $4843
+	ld [wCutsceneScrollX], a ; $4843
 	ldh [hScrollX], a ; $4846
 	xor a, a ; $4848
-	ld [$cb40], a ; $4849
+	ld [wCutsceneStepTimer], a ; $4849
 	ld a, $01 ; $484c
 	ld hl, $73c4 ; $484e
 	call RegisterFrameTask ; $4851
@@ -847,9 +847,9 @@ Palettes_6b_475a:
 	xor a, a ; $4870
 	ldh [hScrollX], a ; $4871
 	jp Label_6b_40af ; $4873
-	ld a, [$cb40] ; $4876
+	ld a, [wCutsceneStepTimer] ; $4876
 	inc a ; $4879
-	ld [$cb40], a ; $487a
+	ld [wCutsceneStepTimer], a ; $487a
 	cp a, $2b ; $487d
 	jp z, Label_6b_4099 ; $487f
 	jp Label_6b_407c ; $4882
@@ -877,7 +877,7 @@ Unused_6b_State11_Init:
 	call BeginFadeIn ; $48bd
 	call WaitFadeEnd ; $48c0
 	xor a, a ; $48c3
-	ld [$cb40], a ; $48c4
+	ld [wCutsceneStepTimer], a ; $48c4
 	jp Label_6b_407c ; $48c7
 Unused_6b_State11_Exit:
 	ld a, $00 ; $48ca
@@ -888,18 +888,18 @@ Unused_6b_State11_Exit:
 	ld de, $0008 ; $48d6
 	call LoadPaletteShadow ; $48d9
 	xor a, a ; $48dc
-	ld [$cb40], a ; $48dd
+	ld [wCutsceneStepTimer], a ; $48dd
 	jp Label_6b_40af ; $48e0
 Unused_6b_State11_Update:
-	ld a, [$cb40] ; $48e3
+	ld a, [wCutsceneStepTimer] ; $48e3
 	inc a ; $48e6
-	ld [$cb40], a ; $48e7
+	ld [wCutsceneStepTimer], a ; $48e7
 	cp a, $70 ; $48ea
 	jp z, Label_6b_4099 ; $48ec
 	jp Label_6b_407c ; $48ef
 Unused_6b_State12_Init:
 	xor a, a ; $48f2
-	ld [$cb40], a ; $48f3
+	ld [wCutsceneStepTimer], a ; $48f3
 	ld [$cb45], a ; $48f6
 	xor a, a ; $48f9
 	ld [wCameraY], a ; $48fa
@@ -933,9 +933,9 @@ Unused_6b_State12_Update:
 	call Func_6b_60f8 ; $4935
 	jp Label_6b_407c ; $4938
 Label_6b_493b:
-	ld a, [$cb40] ; $493b
+	ld a, [wCutsceneStepTimer] ; $493b
 	inc a ; $493e
-	ld [$cb40], a ; $493f
+	ld [wCutsceneStepTimer], a ; $493f
 	cp a, $80 ; $4942
 	jp z, Label_6b_4099 ; $4944
 	cp a, $64 ; $4947
@@ -1017,20 +1017,20 @@ Label_6b_494e:
 	xor a, a ; $4a2c
 	ldh [hScrollX], a ; $4a2d
 	ldh [hScrollY], a ; $4a2f
-	ld [$cb40], a ; $4a31
+	ld [wCutsceneStepTimer], a ; $4a31
 	call EnableLCD ; $4a34
 	ld c, $08 ; $4a37
 	call BeginFadeIn ; $4a39
 	call WaitFadeEnd ; $4a3c
 	jp Label_6b_407c ; $4a3f
-	ld a, [$cb40] ; $4a42
+	ld a, [wCutsceneStepTimer] ; $4a42
 	inc a ; $4a45
-	ld [$cb40], a ; $4a46
+	ld [wCutsceneStepTimer], a ; $4a46
 	cp a, $70 ; $4a49
 	jp z, Label_6b_4099 ; $4a4b
 	jp Label_6b_407c ; $4a4e
 	xor a, a ; $4a51
-	ld [$cb40], a ; $4a52
+	ld [wCutsceneStepTimer], a ; $4a52
 	jp Label_6b_40af ; $4a55
 Palettes_6b_4a58:
 	; $4a58, 64 bytes (palettes)
@@ -1066,11 +1066,11 @@ Palettes_6b_4a58:
 	ld de, $0107 ; $4ad3
 	call LoadPaletteShadow ; $4ad6
 	xor a, a ; $4ad9
-	ld [$cb40], a ; $4ada
+	ld [wCutsceneStepTimer], a ; $4ada
 	jp Label_6b_407c ; $4add
-	ld a, [$cb40] ; $4ae0
+	ld a, [wCutsceneStepTimer] ; $4ae0
 	inc a ; $4ae3
-	ld [$cb40], a ; $4ae4
+	ld [wCutsceneStepTimer], a ; $4ae4
 	cp a, $70 ; $4ae7
 	jp z, Label_6b_4099 ; $4ae9
 	jp Label_6b_407c ; $4aec
@@ -1151,20 +1151,20 @@ Palettes_6b_4a58:
 	call QueueVRAMCopy ; $4bc3
 	call AdvanceFrame ; $4bc6
 	xor a, a ; $4bc9
-	ld [$cb40], a ; $4bca
+	ld [wCutsceneStepTimer], a ; $4bca
 	jp Label_6b_407c ; $4bcd
 	ld a, [$cb44] ; $4bd0
 	sub a, $04 ; $4bd3
 	ld [$cb44], a ; $4bd5
 	ldh [hScrollY], a ; $4bd8
 	jp z, Label_6b_4099 ; $4bda
-	ld a, [$cb40] ; $4bdd
+	ld a, [wCutsceneStepTimer] ; $4bdd
 	or a, a ; $4be0
 	jr nz, Label_6b_4be3 ; $4be1
 Label_6b_4be3:
-	ld a, [$cb40] ; $4be3
+	ld a, [wCutsceneStepTimer] ; $4be3
 	inc a ; $4be6
-	ld [$cb40], a ; $4be7
+	ld [wCutsceneStepTimer], a ; $4be7
 	jp Label_6b_407c ; $4bea
 	ld hl, $7569 ; $4bed
 	call UnregisterFrameTask ; $4bf0
@@ -1186,7 +1186,7 @@ Palettes_6b_4c00:
 	ld de, $0008 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
 	xor a, a ; $4c41
-	ld [$cb40], a ; $4c42
+	ld [wCutsceneStepTimer], a ; $4c42
 	ld [$cb45], a ; $4c45
 	xor a, a ; $4c48
 	ld [wCameraY], a ; $4c49
@@ -1210,9 +1210,9 @@ Palettes_6b_4c00:
 	call BeginFadeOut ; $4c70
 	call WaitFadeEnd ; $4c73
 	jp Label_6b_40af ; $4c76
-	ld a, [$cb40] ; $4c79
+	ld a, [wCutsceneStepTimer] ; $4c79
 	inc a ; $4c7c
-	ld [$cb40], a ; $4c7d
+	ld [wCutsceneStepTimer], a ; $4c7d
 	cp a, $80 ; $4c80
 	jp z, Label_6b_4099 ; $4c82
 	cp a, $64 ; $4c85
@@ -1226,7 +1226,7 @@ Label_6b_4c8c:
 	call Func_6b_4e2d ; $4c98
 	jp Label_6b_407c ; $4c9b
 Func_6b_4c9e:
-	ld a, [$cb40] ; $4c9e
+	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, $4cc1 ; $4ca1
 	add a, l ; $4ca4
 	ld l, a ; $4ca5
@@ -1252,7 +1252,7 @@ Label_6b_4ca9:
 	ret ; $4cc0
 	INCBIN "data/bank_06b/d_4cc1.bin" ; $4cc1, 160 bytes
 Func_6b_4d61:
-	ld a, [$cb40] ; $4d61
+	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, $4d84 ; $4d64
 	add a, l ; $4d67
 	ld l, a ; $4d68
@@ -1278,10 +1278,10 @@ Label_6b_4d6c:
 	ret ; $4d83
 	INCBIN "data/bank_06b/d_4d84.bin" ; $4d84, 169 bytes
 Func_6b_4e2d:
-	ld a, [$cb40] ; $4e2d
+	ld a, [wCutsceneStepTimer] ; $4e2d
 	cp a, $20 ; $4e30
 	ret c ; $4e32
-	ld a, [$cb40] ; $4e33
+	ld a, [wCutsceneStepTimer] ; $4e33
 	sub a, $20 ; $4e36
 	add a, a ; $4e38
 	ld hl, $506d ; $4e39
@@ -1298,7 +1298,7 @@ Label_6b_4e41:
 	ld b, $09 ; $4e49
 	ld hl, $4e8e ; $4e4b
 	call QueueSpriteTemplate ; $4e4e
-	ld a, [$cb40] ; $4e51
+	ld a, [wCutsceneStepTimer] ; $4e51
 	sub a, $20 ; $4e54
 	add a, a ; $4e56
 	ld hl, $4f95 ; $4e57
@@ -1315,7 +1315,7 @@ Label_6b_4e5f:
 	ld b, $09 ; $4e67
 	ld hl, $4e97 ; $4e69
 	call QueueSpriteTemplate ; $4e6c
-	ld a, [$cb40] ; $4e6f
+	ld a, [wCutsceneStepTimer] ; $4e6f
 	sub a, $20 ; $4e72
 	add a, a ; $4e74
 	ld hl, $4ea5 ; $4e75
@@ -1563,7 +1563,7 @@ Func_6b_51ae:
 	xor a, a ; $51b9
 	ldh [hScrollX], a ; $51ba
 	ldh [hScrollY], a ; $51bc
-	ld [$cb40], a ; $51be
+	ld [wCutsceneStepTimer], a ; $51be
 	ld a, $d8 ; $51c1
 	ldh [hScrollY], a ; $51c3
 	sound $65 ; $51c5
@@ -1573,24 +1573,24 @@ Func_6b_51ae:
 	call WaitFadeEnd ; $51cf
 Label_6b_51d2:
 	call AdvanceFrame ; $51d2
-	ld a, [$cb40] ; $51d5
+	ld a, [wCutsceneStepTimer] ; $51d5
 	inc a ; $51d8
-	ld [$cb40], a ; $51d9
+	ld [wCutsceneStepTimer], a ; $51d9
 	cp a, $3c ; $51dc
 	jr z, Label_6b_51e2 ; $51de
 	jr Label_6b_51d2 ; $51e0
 Label_6b_51e2:
 	xor a, a ; $51e2
-	ld [$cb40], a ; $51e3
+	ld [wCutsceneStepTimer], a ; $51e3
 	ret ; $51e6
 Func_6b_51e7:
 	ld a, $40 ; $51e7
 	ldh [hScrollY], a ; $51e9
 Label_6b_51eb:
 	call AdvanceFrame ; $51eb
-	ld a, [$cb40] ; $51ee
+	ld a, [wCutsceneStepTimer] ; $51ee
 	inc a ; $51f1
-	ld [$cb40], a ; $51f2
+	ld [wCutsceneStepTimer], a ; $51f2
 	cp a, $3e ; $51f5
 	jr z, Label_6b_51fb ; $51f7
 	jr Label_6b_51eb ; $51f9
@@ -1768,7 +1768,7 @@ Palettes_6b_525a:
 	db $08, $00, $00, $80 ; 0x54
 Func_6b_53b8:
 	push hl ; $53b8
-	ld a, [$cb40] ; $53b9
+	ld a, [wCutsceneStepTimer] ; $53b9
 	and a, $0f ; $53bc
 	ld hl, $53cb ; $53be
 	add a, l ; $53c1
@@ -1782,9 +1782,9 @@ Label_6b_53c6:
 	pop hl ; $53c9
 	ret ; $53ca
 	INCBIN "data/bank_06b/d_53cb.bin" ; $53cb, 16 bytes
-	ld a, [$cb42] ; $53db
+	ld a, [wCutsceneScrollX] ; $53db
 	add a, $03 ; $53de
-	ld [$cb42], a ; $53e0
+	ld [wCutsceneScrollX], a ; $53e0
 	ldh [hScrollX], a ; $53e3
 	ld a, [$cb43] ; $53e5
 	sub a, $03 ; $53e8
@@ -2246,7 +2246,7 @@ Label_6b_735f:
 	ld hl, $731b ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365
-	ld a, [$cb40] ; $7366
+	ld a, [wCutsceneStepTimer] ; $7366
 	cp a, $10 ; $7369
 	jr nc, Label_6b_7380 ; $736b
 	ld hl, $7381 ; $736d
@@ -2257,14 +2257,14 @@ Label_6b_735f:
 Label_6b_7375:
 	ld a, [hl] ; $7375
 	ld b, a ; $7376
-	ld a, [$cb42] ; $7377
+	ld a, [wCutsceneScrollX] ; $7377
 	add a, b ; $737a
-	ld [$cb42], a ; $737b
+	ld [wCutsceneScrollX], a ; $737b
 	ldh [hScrollX], a ; $737e
 Label_6b_7380:
 	ret ; $7380
 	INCBIN "data/bank_06b/d_7381.bin" ; $7381, 20 bytes
-	ld a, [$cb40] ; $7395
+	ld a, [wCutsceneStepTimer] ; $7395
 	cp a, $10 ; $7398
 	jr nc, Label_6b_73af ; $739a
 	ld hl, $73b0 ; $739c
@@ -2275,14 +2275,14 @@ Label_6b_7380:
 Label_6b_73a4:
 	ld a, [hl] ; $73a4
 	ld b, a ; $73a5
-	ld a, [$cb42] ; $73a6
+	ld a, [wCutsceneScrollX] ; $73a6
 	sub a, b ; $73a9
-	ld [$cb42], a ; $73aa
+	ld [wCutsceneScrollX], a ; $73aa
 	ldh [hScrollX], a ; $73ad
 Label_6b_73af:
 	ret ; $73af
 	INCBIN "data/bank_06b/d_73b0.bin" ; $73b0, 20 bytes
-	ld a, [$cb40] ; $73c4
+	ld a, [wCutsceneStepTimer] ; $73c4
 	cp a, $10 ; $73c7
 	jr nc, Label_6b_73de ; $73c9
 	ld hl, $73df ; $73cb
@@ -2293,9 +2293,9 @@ Label_6b_73af:
 Label_6b_73d3:
 	ld a, [hl] ; $73d3
 	ld b, a ; $73d4
-	ld a, [$cb42] ; $73d5
+	ld a, [wCutsceneScrollX] ; $73d5
 	sub a, b ; $73d8
-	ld [$cb42], a ; $73d9
+	ld [wCutsceneScrollX], a ; $73d9
 	ldh [hScrollX], a ; $73dc
 Label_6b_73de:
 	ret ; $73de

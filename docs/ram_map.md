@@ -196,6 +196,7 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc4d6` | WRAM | `wSetPointFlag` | [8-bit] Set-point indicator ($01/$ff/0, same scheme as wMatchPointFlag) |
 | `0xc4d7` | WRAM | `wGamePointFlag` | [8-bit] Game-point indicator ($01/$ff/0, same scheme as wMatchPointFlag) |
 | `0xc4d8` | WRAM | `wPointOutcome` | [8-bit] 0 while the rally runs; point-end cause code once the point resolves |
+| `0xc4d9` | WRAM | `wPointOutcomeSide` | [8-bit] Side/sign code stored alongside wPointOutcome when a point-ending event fires ($01/$ff); negated through the court-side parity bits to decide which side won the point |
 | `0xc4de` | WRAM | `wMatchRetryRequest` | [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID) |
 | `0xc4df` | WRAM | `wMatchSelectNewLevelRequest` | [8-bit] Set to 1 by MatchQuitMenu_SelectNewLevel; returns to the level-select screen after the match teardown |
 | `0xc4e0` | WRAM | `wMatchMenuSelection` | [8-bit] Pause/quit menu selection (rst00 jumptable index: check rules / review controls / change options / save-quit); $ff = cancelled |
@@ -208,6 +209,7 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc7b4` | WRAM | `wModeHookBank` | [8-bit] ROM bank of the mode callback table (0 = no hooks registered) |
 | `0xc800` | WRAM | `wSaveBlockBuffer` | [buffer] WRAM staging buffer for SRAM save-block I/O (WriteSaveBlock / VerifySaveBlock / ReadSaveBlock); also reused as a general bulk copy/decompress buffer |
 | `0xc8a7` | WRAM | `wKeepMatchStatsFlag` | [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use |
+| `0xc8df` | WRAM | `wMatchRngState` | [8-bit] Match RNG state: seeded from hVBlankCounter at match start, stirred by AdvanceMatchRng (+$73 plus ball position bytes) |
 | `0xc8ee` | WRAM | `wServeFaultFlag` | [8-bit] 1 after a first-serve fault (the next fault becomes a double fault, point outcome 2); cleared on double fault and at match reset |
 | `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
 | `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
@@ -219,6 +221,9 @@ Addresses named by this project from disassembly evidence; also in
 | `0xcb0f` | WRAM | `wMatchFormatGames` | [8-bit] Match-format menu: games-per-set selection index; table-mapped to wMatchTypeNumberOfGames |
 | `0xcb10` | WRAM | `wMatchFormatSets` | [8-bit] Match-format menu: number-of-sets selection index (0-2); table-mapped to wMatchTypeNumberOfSets |
 | `0xcb11` | WRAM | `wMenuSlideDirection` | [8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions |
+| `0xcb3f` | WRAM | `wCutsceneStep` | [8-bit] Bank $6b cutscene driver (intro/title/award ceremony): current step index, dispatched through the per-scene jumptable |
+| `0xcb40` | WRAM | `wCutsceneStepTimer` | [8-bit] Bank $6b cutscene driver: frame counter for the current step; incremented per frame and compared against per-step thresholds to advance wCutsceneStep |
+| `0xcb42` | WRAM | `wCutsceneScrollX` | [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame |
 | `0xff96` | HRAM | `hWramBank` | [8-bit] Shadow of the current WRAM bank (last value written to `rSVBK`); always written together with `rSVBK` |
 | `0xff97` | HRAM | `hSramBank` | [8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000) |
 | `0xffc0` | HRAM | `hLinkRxByte` | [8-bit] Last byte received over the serial link (captured from rSB in the serial interrupt) |

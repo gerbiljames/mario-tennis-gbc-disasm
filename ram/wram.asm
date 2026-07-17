@@ -354,7 +354,10 @@ wGamePointFlag:: db
 
 ; [8-bit] 0 while the rally runs; point-end cause code once the point resolves
 wPointOutcome:: db
-	ds 5
+
+; [8-bit] Side/sign code stored alongside wPointOutcome when a point-ending event fires ($01/$ff); negated through the court-side parity bits to decide which side won the point
+wPointOutcomeSide:: db
+	ds 4
 
 ; [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID)
 wMatchRetryRequest:: db
@@ -624,7 +627,9 @@ wCharacter4Faults:: db
 
 ; [8-bit] Character 4 Double Faults
 wCharacter4DoubleFaults:: db
-	ds 1
+
+; [8-bit] Match RNG state: seeded from hVBlankCounter at match start, stirred by AdvanceMatchRng (+$73 plus ball position bytes)
+wMatchRngState:: db
 
 ; [8-bit] Player 1 Sets Won (0x00-0x03)
 wPlayer1SetsWon:: db
@@ -1068,11 +1073,20 @@ wMatchFormatSets:: db
 
 ; [8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions
 wMenuSlideDirection:: db
-	ds 47
+	ds 45
+
+; [8-bit] Bank $6b cutscene driver (intro/title/award ceremony): current step index, dispatched through the per-scene jumptable
+wCutsceneStep:: db
+
+; [8-bit] Bank $6b cutscene driver: frame counter for the current step; incremented per frame and compared against per-step thresholds to advance wCutsceneStep
+wCutsceneStepTimer:: db
 
 ; [8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)
 wIntroCutsceneCheck:: db
-	ds 31
+
+; [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame
+wCutsceneScrollX:: db
+	ds 30
 
 ; Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it).
 wBgMapShadowDirty:: db

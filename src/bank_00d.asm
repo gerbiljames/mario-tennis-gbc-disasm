@@ -918,7 +918,7 @@ Func_0d_47c3:
 	ld a, $06 ; $47d7
 	ld [wPointOutcome], a ; $47d9
 	ld a, $01 ; $47dc
-	ld [$c4d9], a ; $47de
+	ld [wPointOutcomeSide], a ; $47de
 Label_0d_47e1:
 	ret ; $47e1
 Func_0d_47e2:
@@ -1854,7 +1854,7 @@ Func_0d_4e80:
 	ld a, $05 ; $4e8b
 	ld [wPointOutcome], a ; $4e8d
 	ld a, $ff ; $4e90
-	ld [$c4d9], a ; $4e92
+	ld [wPointOutcomeSide], a ; $4e92
 	ret ; $4e95
 Func_0d_4e96:
 	ld hl, $4ec1 ; $4e96
@@ -2181,7 +2181,7 @@ Label_0d_5310:
 	ld a, $06 ; $5344
 	ld [wPointOutcome], a ; $5346
 	ld a, $01 ; $5349
-	ld [$c4d9], a ; $534b
+	ld [wPointOutcomeSide], a ; $534b
 	ret ; $534e
 	INCBIN "data/bank_00d/d_534f.bin" ; $534f, 16 bytes
 Func_0d_535f:

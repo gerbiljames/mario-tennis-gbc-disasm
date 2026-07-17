@@ -331,12 +331,15 @@ are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
 handlers. Bank 3: save engine (23 named, docs/save_format.md). RAM:
-docs/ram_map.md (252 entries in `ram_map.json`: 129 RetroAchievements-sourced
+docs/ram_map.md (280 entries in `ram_map.json`: 129 RetroAchievements-sourced
 plus project-identified ones — match ball position/velocity/target, shot
 type/aim, renderer effect/marker state, mode-hook table, story-mode location
 entry/spawn/exit state, save-slot index + `wSaveBlockBuffer` staging buffer,
 shadow-tilemap far pointer + glyph-pen text state, match-format menu
-selections, serial-link HRAM vars, `hSramBank`/`hWramBank`).
+selections, serial-link HRAM vars, `hSramBank`/`hWramBank`, point-situation
+flags (`wMatchPointFlag`/`wSetPointFlag`/`wGamePointFlag` via
+`EvaluatePointSituation`'s simulate-next-point trick), ace/fault flags,
+`wMatchRngState`, bank $6b cutscene driver step/timer/scroll).
 A 2026-07-18 pass swept the hottest unnamed addresses per subsystem;
 deliberately left unnamed: the story-script scratch pool `$c2b0-$c2ff`
 (meaning changes per location script), the shared HRAM scratch pool
