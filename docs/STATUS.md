@@ -95,11 +95,14 @@ are left resolving to those. The Test 2 exit table `$478e` had been over-sized
 to 457 bytes; it is really 8 records, and the ~392 trailing bytes were 16
 back-to-back exit/warp script routines (`$47cf`-`$4ade`, tiling exactly to the
 Npc table) seeded as code. Its exit handler `$7bf9` is another `MapScriptNop`
-(now `MapScriptNop_10` + `MapScriptClearActiveFlag_10`). Bank $27
-(locations 30-41) is the self-contained ending-presentation bank: its `$4000`
-is already curated as `SceneFramePtrs_27` (12 scene-frame records, a different
-structure the story engine also reads as trees), so those records stay raw
-`db` with a `-> $27:$40ss` comment rather than collide with that curation.
+(now `MapScriptNop_10` + `MapScriptClearActiveFlag_10`). Bank $27's `$4000`
+(what had been curated as `SceneFramePtrs_27`) is really a 12-tree map-script
+directory for the End1-End17 ending tour (locs 30-41): all 12 trees are carved
+(`End<n><name>MapScripts_27`), the 12 staging scripts and shared exit no-op
+`MapScriptNop_27` (`$7885`) were seeded from the old `SceneFrameData_27` blob
+(+3780 instructions of real cutscene code; every data blob still ends on a
+`ret`, so no misframing), and three lumped respawn actor lists split out. The
+story location table is now fully resolved to named trees for all 42 locations.
 
 All six trees (Training Gym / Mario World / Special Court in $0e; Small Char.
 Test / Awards Ceremony / Tournament in $0f) have their sub-tables labeled

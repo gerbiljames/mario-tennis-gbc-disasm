@@ -1,6 +1,9 @@
 {
  "_comment": "Static code-entry seeds for bank $27 stranded cutscene helper at $4ff0-$516a (reached via computed dispatch after the preceding function returns). Flat = 0x27*0x4000 + (cpu-0x4000).",
  "rom": [
+  639391,
+  640765,
+  642145,
   643056,
   643064,
   643067,
@@ -44,7 +47,17 @@
   643383,
   643388,
   643402,
-  643418
+  643418,
+  643696,
+  644637,
+  646872,
+  647682,
+  648734,
+  649208,
+  650373,
+  651084,
+  652028,
+  653445
  ],
  "other": []
 }

@@ -3214,18 +3214,18 @@ StoryLocationTable_0a:
 	story_location $1b, $15, DataPtr_IslandSkyMapScripts_14, $1b ; loc 27 Island Sky
 	story_location $1c, $16, DataPtr_SpecialCourtMapScripts_0e, $08 ; loc 28 Special Court
 	story_location $1d, $21, DataPtr_MarioWorldMapScripts_0e, $12 ; loc 29 Peach's Castle
-	db $1e, $1a, $16, $27, $2c, $00 ; loc 30 $27:$4016 End1 Main Bldg
-	db $1f, $13, $14, $27, $ff, $00 ; loc 31 $27:$4014 End Restaurant Ent.
-	db $20, $1b, $12, $27, $ff, $00 ; loc 32 $27:$4012 End3 Dorm Ent.
-	db $21, $18, $10, $27, $ff, $00 ; loc 33 $27:$4010 End4 Jr. Court
-	db $22, $19, $0e, $27, $ff, $00 ; loc 34 $27:$400e End5 Service Ace
-	db $23, $22, $0c, $27, $ff, $00 ; loc 35 $27:$400c End7 Training Ctr.
-	db $24, $17, $0a, $27, $ff, $00 ; loc 36 $27:$400a End8 Sr. Court
-	db $25, $14, $08, $27, $ff, $00 ; loc 37 $27:$4008 End10 Varsity Court
-	db $26, $1e, $06, $27, $ff, $00 ; loc 38 $27:$4006 End11 Training Court
-	db $27, $11, $04, $27, $ff, $00 ; loc 39 $27:$4004 End12 Principal's Office
-	db $28, $23, $02, $27, $ff, $00 ; loc 40 $27:$4002 End16 Before Finals
-	db $29, $24, $00, $27, $ff, $00 ; loc 41 $27:$4000 End17 Award Ceremony
+	story_location $1e, $1a, DataPtr_End1MainBldgMapScripts_27, $2c ; loc 30 End1 Main Bldg
+	story_location $1f, $13, DataPtr_EndRestaurantEntMapScripts_27, $ff ; loc 31 End Restaurant Ent.
+	story_location $20, $1b, DataPtr_End3DormEntMapScripts_27, $ff ; loc 32 End3 Dorm Ent.
+	story_location $21, $18, DataPtr_End4JrCourtMapScripts_27, $ff ; loc 33 End4 Jr. Court
+	story_location $22, $19, DataPtr_End5ServiceAceMapScripts_27, $ff ; loc 34 End5 Service Ace
+	story_location $23, $22, DataPtr_End7TrainingCtrMapScripts_27, $ff ; loc 35 End7 Training Ctr.
+	story_location $24, $17, DataPtr_End8SrCourtMapScripts_27, $ff ; loc 36 End8 Sr. Court
+	story_location $25, $14, DataPtr_End10VarsityCourtMapScripts_27, $ff ; loc 37 End10 Varsity Court
+	story_location $26, $1e, DataPtr_End11TrainingCourtMapScripts_27, $ff ; loc 38 End11 Training Court
+	story_location $27, $11, DataPtr_End12PrincipalsOfficeMapScripts_27, $ff ; loc 39 End12 Principal's Office
+	story_location $28, $23, DataPtr_End16BeforeFinalsMapScripts_27, $ff ; loc 40 End16 Before Finals
+	story_location $29, $24, DataPtr_End17AwardCeremonyMapScripts_27, $ff ; loc 41 End17 Award Ceremony
 GetStoryLocationCount:
 	ld a, $2a ; $574b
 	ret ; $574d
