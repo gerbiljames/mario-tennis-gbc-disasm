@@ -1061,7 +1061,7 @@ DispatchRankingBoardAnim:
 	jr nz, Label_1b_5018 ; $5006
 	ld a, [$d801] ; $5008
 	add a, a ; $500b
-	ld hl, StateHandlerTable2_1b ; $500c
+	ld hl, RankingBoardAnimHandlers2_1b ; $500c
 	add a, l ; $500f
 	ld l, a ; $5010
 	jr nc, Label_1b_5014 ; $5011
@@ -1074,7 +1074,7 @@ Label_1b_5014:
 Label_1b_5018:
 	ld a, [$d801] ; $5018
 	add a, a ; $501b
-	ld hl, StateHandlerTable1_1b ; $501c
+	ld hl, RankingBoardAnimHandlers1_1b ; $501c
 	add a, l ; $501f
 	ld l, a ; $5020
 	jr nc, Label_1b_5024 ; $5021
@@ -1090,7 +1090,7 @@ Label_1b_5028:
 	jr nz, Label_1b_503e ; $502c
 	ld a, [$d801] ; $502e
 	add a, a ; $5031
-	ld hl, StateHandlerTable4_1b ; $5032
+	ld hl, RankingBoardAnimHandlers4_1b ; $5032
 	add a, l ; $5035
 	ld l, a ; $5036
 	jr nc, Label_1b_503a ; $5037
@@ -1103,7 +1103,7 @@ Label_1b_503a:
 Label_1b_503e:
 	ld a, [$d801] ; $503e
 	add a, a ; $5041
-	ld hl, StateHandlerTable3_1b ; $5042
+	ld hl, RankingBoardAnimHandlers3_1b ; $5042
 	add a, l ; $5045
 	ld l, a ; $5046
 	jr nc, Label_1b_504a ; $5047
@@ -1113,39 +1113,39 @@ Label_1b_504a:
 	ld h, [hl] ; $504b
 	ld l, a ; $504c
 	jp hl ; $504d
-ScreenStateNop_1b:
+RankingBoardAnimNop_1b:
 	ret ; $504e
-StateHandlerTable1_1b:
+RankingBoardAnimHandlers1_1b:
 	; $504f, 10 bytes (records:2)
-	dw Func_1b_5077 ; record 0
-	dw Func_1b_5077 ; record 1
-	dw Func_1b_516f ; record 2
-	dw Func_1b_5273 ; record 3
-	dw Func_1b_52eb ; record 4
-StateHandlerTable2_1b:
+	dw RankingBoardAnimState_5077_1b ; record 0
+	dw RankingBoardAnimState_5077_1b ; record 1
+	dw RankingBoardAnimState_516f_1b ; record 2
+	dw RankingBoardAnimState_5273_1b ; record 3
+	dw RankingBoardAnimState_52eb_1b ; record 4
+RankingBoardAnimHandlers2_1b:
 	; $5059, 10 bytes (records:2)
-	dw Func_1b_52ff ; record 0
-	dw Func_1b_52ff ; record 1
-	dw Func_1b_5322 ; record 2
-	dw Func_1b_5349 ; record 3
-	dw Func_1b_5368 ; record 4
-StateHandlerTable3_1b:
+	dw RankingBoardAnimState_52ff_1b ; record 0
+	dw RankingBoardAnimState_52ff_1b ; record 1
+	dw RankingBoardAnimState_5322_1b ; record 2
+	dw RankingBoardAnimState_5349_1b ; record 3
+	dw RankingBoardAnimState_5368_1b ; record 4
+RankingBoardAnimHandlers3_1b:
 	; $5063, 10 bytes (records:2)
-	dw Func_1b_5387 ; record 0
-	dw Func_1b_5387 ; record 1
-	dw Func_1b_53fa ; record 2
-	dw Func_1b_546d ; record 3
-	dw Func_1b_54a0 ; record 4
-StateHandlerTable4_1b:
+	dw RankingBoardAnimState_5387_1b ; record 0
+	dw RankingBoardAnimState_5387_1b ; record 1
+	dw RankingBoardAnimState_53fa_1b ; record 2
+	dw RankingBoardAnimState_546d_1b ; record 3
+	dw RankingBoardAnimState_54a0_1b ; record 4
+RankingBoardAnimHandlers4_1b:
 	; $506d, 10 bytes (records:2)
-	dw Func_1b_54a3 ; record 0
-	dw Func_1b_54a3 ; record 1
-	dw Func_1b_54c2 ; record 2
-	dw Func_1b_54e5 ; record 3
-	dw Func_1b_5504 ; record 4
-Func_1b_5077:
+	dw RankingBoardAnimState_54a3_1b ; record 0
+	dw RankingBoardAnimState_54a3_1b ; record 1
+	dw RankingBoardAnimState_54c2_1b ; record 2
+	dw RankingBoardAnimState_54e5_1b ; record 3
+	dw RankingBoardAnimState_5504_1b ; record 4
+RankingBoardAnimState_5077_1b:
 	ld a, $01 ; $5077
-	ld hl, $5912 ; $5079
+	ld hl, RankingBoardAnimTask_1b ; $5079
 	call RegisterFrameTask ; $507c
 	call WaitFramesCmd ; $507f
 	db $8c ; $5082 inline arg
@@ -1240,10 +1240,10 @@ Func_1b_5077:
 	db $1e ; $5166 inline arg
 	ld a, $01 ; $5167
 	ld [$d858], a ; $5169
-	jp ScreenStateNop_1b ; $516c
-Func_1b_516f:
+	jp RankingBoardAnimNop_1b ; $516c
+RankingBoardAnimState_516f_1b:
 	ld a, $01 ; $516f
-	ld hl, $5912 ; $5171
+	ld hl, RankingBoardAnimTask_1b ; $5171
 	call RegisterFrameTask ; $5174
 	call WaitFramesCmd ; $5177
 	db $8c ; $517a inline arg
@@ -1344,10 +1344,10 @@ Func_1b_516f:
 	db $1e ; $526a inline arg
 	ld a, $01 ; $526b
 	ld [$d858], a ; $526d
-	jp ScreenStateNop_1b ; $5270
-Func_1b_5273:
+	jp RankingBoardAnimNop_1b ; $5270
+RankingBoardAnimState_5273_1b:
 	ld a, $01 ; $5273
-	ld hl, $5912 ; $5275
+	ld hl, RankingBoardAnimTask_1b ; $5275
 	call RegisterFrameTask ; $5278
 	call WaitFramesCmd ; $527b
 	db $8c ; $527e inline arg
@@ -1392,17 +1392,17 @@ Func_1b_5273:
 	db $1e ; $52e2 inline arg
 	ld a, $01 ; $52e3
 	ld [$d858], a ; $52e5
-	jp ScreenStateNop_1b ; $52e8
-Func_1b_52eb:
+	jp RankingBoardAnimNop_1b ; $52e8
+RankingBoardAnimState_52eb_1b:
 	ld a, $01 ; $52eb
-	ld hl, $5912 ; $52ed
+	ld hl, RankingBoardAnimTask_1b ; $52ed
 	call RegisterFrameTask ; $52f0
 	call WaitFramesCmd ; $52f3
 	db $8c ; $52f6 inline arg
 	ld a, $01 ; $52f7
 	ld [$d858], a ; $52f9
-	jp ScreenStateNop_1b ; $52fc
-Func_1b_52ff:
+	jp RankingBoardAnimNop_1b ; $52fc
+RankingBoardAnimState_52ff_1b:
 	call WaitFramesCmd ; $52ff
 	db $14 ; $5302 inline arg
 	sound $80 ; $5303
@@ -1416,8 +1416,8 @@ Func_1b_52ff:
 	call Func_1b_5a89 ; $5318
 	call WaitFramesCmd ; $531b
 	db $14 ; $531e inline arg
-	jp ScreenStateNop_1b ; $531f
-Func_1b_5322:
+	jp RankingBoardAnimNop_1b ; $531f
+RankingBoardAnimState_5322_1b:
 	call WaitFramesCmd ; $5322
 	db $0a ; $5325 inline arg
 	sound $80 ; $5326
@@ -1433,8 +1433,8 @@ Func_1b_5322:
 	call Func_1b_5a6e ; $533f
 	call WaitFramesCmd ; $5342
 	db $14 ; $5345 inline arg
-	jp ScreenStateNop_1b ; $5346
-Func_1b_5349:
+	jp RankingBoardAnimNop_1b ; $5346
+RankingBoardAnimState_5349_1b:
 	call WaitFramesCmd ; $5349
 	db $14 ; $534c inline arg
 	sound $80 ; $534d
@@ -1446,8 +1446,8 @@ Func_1b_5349:
 	call GetRankingMarkerSlot ; $535c
 	ld de, $5b94 ; $535f
 	call Func_1b_5a89 ; $5362
-	jp ScreenStateNop_1b ; $5365
-Func_1b_5368:
+	jp RankingBoardAnimNop_1b ; $5365
+RankingBoardAnimState_5368_1b:
 	call WaitFramesCmd ; $5368
 	db $1e ; $536b inline arg
 	sound $80 ; $536c
@@ -1459,10 +1459,10 @@ Func_1b_5368:
 	call GetRankingMarkerSlot ; $537b
 	ld de, $5be2 ; $537e
 	call Func_1b_5a89 ; $5381
-	jp ScreenStateNop_1b ; $5384
-Func_1b_5387:
+	jp RankingBoardAnimNop_1b ; $5384
+RankingBoardAnimState_5387_1b:
 	ld a, $01 ; $5387
-	ld hl, $5912 ; $5389
+	ld hl, RankingBoardAnimTask_1b ; $5389
 	call RegisterFrameTask ; $538c
 	call WaitFramesCmd ; $538f
 	db $8c ; $5392 inline arg
@@ -1505,10 +1505,10 @@ Func_1b_5387:
 	call Func_1b_58c5 ; $53f0
 	call WaitFramesCmd ; $53f3
 	db $5a ; $53f6 inline arg
-	jp ScreenStateNop_1b ; $53f7
-Func_1b_53fa:
+	jp RankingBoardAnimNop_1b ; $53f7
+RankingBoardAnimState_53fa_1b:
 	ld a, $01 ; $53fa
-	ld hl, $5912 ; $53fc
+	ld hl, RankingBoardAnimTask_1b ; $53fc
 	call RegisterFrameTask ; $53ff
 	call WaitFramesCmd ; $5402
 	db $8c ; $5405 inline arg
@@ -1551,10 +1551,10 @@ Func_1b_53fa:
 	call Func_1b_58c5 ; $5463
 	call WaitFramesCmd ; $5466
 	db $1e ; $5469 inline arg
-	jp ScreenStateNop_1b ; $546a
-Func_1b_546d:
+	jp RankingBoardAnimNop_1b ; $546a
+RankingBoardAnimState_546d_1b:
 	ld a, $01 ; $546d
-	ld hl, $5912 ; $546f
+	ld hl, RankingBoardAnimTask_1b ; $546f
 	call RegisterFrameTask ; $5472
 	call WaitFramesCmd ; $5475
 	db $8c ; $5478 inline arg
@@ -1572,10 +1572,10 @@ Func_1b_546d:
 	call Func_1b_58c5 ; $5496
 	call WaitFramesCmd ; $5499
 	db $1e ; $549c inline arg
-	jp ScreenStateNop_1b ; $549d
-Func_1b_54a0:
-	jp ScreenStateNop_1b ; $54a0
-Func_1b_54a3:
+	jp RankingBoardAnimNop_1b ; $549d
+RankingBoardAnimState_54a0_1b:
+	jp RankingBoardAnimNop_1b ; $54a0
+RankingBoardAnimState_54a3_1b:
 	call WaitFramesCmd ; $54a3
 	db $1e ; $54a6 inline arg
 	sound $80 ; $54a7
@@ -1587,8 +1587,8 @@ Func_1b_54a3:
 	call GetRankingMarkerSlot ; $54b6
 	ld de, $5b94 ; $54b9
 	call Func_1b_5a89 ; $54bc
-	jp ScreenStateNop_1b ; $54bf
-Func_1b_54c2:
+	jp RankingBoardAnimNop_1b ; $54bf
+RankingBoardAnimState_54c2_1b:
 	call WaitFramesCmd ; $54c2
 	db $1e ; $54c5 inline arg
 	sound $80 ; $54c6
@@ -1602,8 +1602,8 @@ Func_1b_54c2:
 	call GetRankingMarkerSlot ; $54d9
 	ld de, $5b94 ; $54dc
 	call Func_1b_5a6e ; $54df
-	jp ScreenStateNop_1b ; $54e2
-Func_1b_54e5:
+	jp RankingBoardAnimNop_1b ; $54e2
+RankingBoardAnimState_54e5_1b:
 	call WaitFramesCmd ; $54e5
 	db $1e ; $54e8 inline arg
 	sound $80 ; $54e9
@@ -1615,9 +1615,9 @@ Func_1b_54e5:
 	call GetRankingMarkerSlot ; $54f8
 	ld de, $5b9d ; $54fb
 	call Func_1b_5a89 ; $54fe
-	jp ScreenStateNop_1b ; $5501
-Func_1b_5504:
-	jp ScreenStateNop_1b ; $5504
+	jp RankingBoardAnimNop_1b ; $5501
+RankingBoardAnimState_5504_1b:
+	jp RankingBoardAnimNop_1b ; $5504
 WaitForAOrBPress:
 	call AdvanceFrame ; $5507
 	ldh a, [hInputPressed] ; $550a
@@ -2154,7 +2154,9 @@ Func_1b_58c5:
 	call QueueVRAMCopy ; $590a
 	call AdvanceFrame ; $590d
 	ret ; $5910
-	INCBIN "data/bank_01b/d_5911.bin" ; $5911, 349 bytes
+	ret ; $5911
+RankingBoardAnimTask_1b:
+	INCBIN "data/bank_01b/d_5912.bin" ; $5912, 348 bytes
 Func_1b_5a6e:
 	ld b, h ; $5a6e
 	ld c, l ; $5a6f
