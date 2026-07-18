@@ -440,7 +440,15 @@ bank_01b/d_73b2.bin 06f3b2 4
 bank_01b/d_7697.bin 06f697 a
 bank_01b/d_76af.bin 06f6af a
 bank_01b/d_7875.bin 06f875 a
-bank_01b/d_78bd.bin 06f8bd 6f5
+bank_01b/lz_78bd.bin 06f8bd b3
+bank_01b/lz_7970.bin 06f970 50
+bank_01b/lz_79c0.bin 06f9c0 b8
+bank_01b/lz_7a78.bin 06fa78 3d
+bank_01b/lz_7ab5.bin 06fab5 41
+bank_01b/lz_7af6.bin 06faf6 41
+bank_01b/lz_7b37.bin 06fb37 1f7
+bank_01b/lz_7d2e.bin 06fd2e 141
+bank_01b/lz_7e6f.bin 06fe6f 143
 bank_01c/d_4fe9.bin 070fe9 60
 bank_01c/d_5665.bin 071665 b1d
 bank_01c/d_6189.bin 072189 d61

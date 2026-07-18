@@ -1,6 +1,7 @@
 {
  "_comment": "Static code-entry seeds for bank $1b (dispatch bank) stranded handlers. Function starts + internal call/jump targets only (avoids interleaved data tables in $5f5f/$664b). Flat = 0x1b*0x4000 + (cpu-0x4000).",
  "rom": [
+  442432,
   442599,
   442800,
   442825,

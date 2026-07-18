@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~150.1K instructions / 385,793 bytes of proven code+structured source
-(18.4% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~155.0K instructions / 398,057 bytes of proven code+structured source
+(19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -20,6 +20,32 @@ Everything below is **committed** (HEAD `37db15e`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Bank $1b $402e "table" split into farcall data slots + stranded cursor code (2026-07-18)
+
+The 159-byte `records:2` blob at **`$1b:$402e`** was two things run together. The
+first 18 bytes are the **data-pointer tail of the bank's `$4000` farcall table**:
+the table is 32 slots (`$4000`–`$403f`), slots 0–22 code far-pointers, slots
+23–31 (`$402e`–`$403e`) data pointers into the `$78bd` region — reached only by
+slot index through `FarCall` (`$01b6`), which is why no literal `ld hl,$402e`
+reader exists. Registered in `add_static_data_slots` (bank `$1b`, slots
+`$2e`–`$3e`, `lz` kind), they now render as `DataPtr_1b_2e`…`DataPtr_1b_3e` over
+nine **LZ-compressed 2bpp graphics streams** (`Lz_1b_78bd`…`Lz_1b_7e6f`, the
+`$78bd` blob split 1→9). Each decompresses to a whole tile count — six ×16
+tiles, two ×40, one ×20 — confirming they're tile assets; the three near-identical
+16-tile streams (`$7a78`/`$7ab5`/`$7af6`) are colour/shape variants of one small
+icon. The runtime consumer computes the slot address dynamically (no static
+`ld hl,$402e` site), so which screen loads them isn't pinned down yet.
+
+Everything after `$4040` was stranded code the far-call dispatcher reached but
+recursive descent never seeded: `DrawMenuCursorCorners` (`$4040`) queues the four
+bobbing corner sprites of the menu selection cursor via `QueueSprite` (`$1f51`),
+applying a per-axis 1px bob from `ApplyCursorBobOffsetX` (`$40a3`, X/`d`) and the
+existing `ApplyArrowBobOffset` (`$40cd`, Y/`e`), each indexing a 16-byte
+`(hVBlankCounter & $0f)` ramp (`CursorBobOffsetTableX` at `$40bd`). A code seed
+for `$4040` (`coverage/bank01b_static_code.json`) plus a `bytes:16` override for
+the bob table carve it cleanly; the `$40f7` sibling that draws the alternate
+cursor style is now `DrawMenuCursorCornersAlt`. Still byte-perfect.
 
 ### Map-script tables made readable (2026-07-18)
 

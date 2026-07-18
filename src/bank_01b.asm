@@ -46,87 +46,110 @@ FarPtr_RunSavedDataTypeSelect:
 	dw RunSavedDataTypeSelect ; $402a
 FarPtr_ShowMinigameDataScreen:
 	dw ShowMinigameDataScreen ; $402c
-	; $402e, 159 bytes (records:2)
-	dw $78bd ; record 0
-	dw $7970 ; record 1
-	dw $79c0 ; record 2
-	dw $7a78 ; record 3
-	dw $7ab5 ; record 4
-	dw $7af6 ; record 5
-	dw $7b37 ; record 6
-	dw $7d2e ; record 7
-	dw $7e6f ; record 8
-	dw $c5d5 ; record 9
-	dw $000e ; record 10
-	dw $a3cd ; record 11
-	dw $0e40 ; record 12
-	dw $cd00 ; record 13
-	dw ApplyArrowBobOffset ; record 14
-	dw $000e ; record 15
-	dw $0806 ; record 16
-	dw $51cd ; record 17
-	dw $c11f ; record 18
-	dw $d5d1 ; record 19
-	dw $78c5 ; record 20
-	dw $5782 ; record 21
-	dw $0ed5 ; record 22
-	dw $cd01 ; record 23
-	dw $40a3 ; record 24
-	dw $000e ; record 25
-	dw $cdcd ; record 26
-	dw $0e40 ; record 27
-	dw $0600 ; record 28
-	dw $cd28 ; record 29
-	dw $1f51 ; record 30
-	dw $c1d1 ; record 31
-	dw $d5d1 ; record 32
-	dw $79c5 ; record 33
-	dw $5f83 ; record 34
-	dw $8278 ; record 35
-	dw $d557 ; record 36
-	dw $010e ; record 37
-	dw $a3cd ; record 38
-	dw $0e40 ; record 39
-	dw $cd01 ; record 40
-	dw ApplyArrowBobOffset ; record 41
-	dw $000e ; record 42
-	dw $6806 ; record 43
-	dw $51cd ; record 44
-	dw $d11f ; record 45
-	dw $d1c1 ; record 46
-	dw $817b ; record 47
-	dw $d55f ; record 48
-	dw $000e ; record 49
-	dw $a3cd ; record 50
-	dw $0e40 ; record 51
-	dw $cd01 ; record 52
-	dw ApplyArrowBobOffset ; record 53
-	dw $000e ; record 54
-	dw $4806 ; record 55
-	dw $51cd ; record 56
-	dw $d11f ; record 57
-	dw $f0c9 ; record 58
-	dw $e68c ; record 59
-	dw $210f ; record 60
-	dw $40bd ; record 61
-	dw $6f85 ; record 62
-	dw $0130 ; record 63
-	dw $7e24 ; record 64
-	dw $7947 ; record 65
-	dw $28b7 ; record 66
-	dw $7804 ; record 67
-	dw $5782 ; record 68
-	dw $7ac9 ; record 69
-	dw $5790 ; record 70
-	dw $00c9 ; record 71
-	dw $0000 ; record 72
-	dw $0101 ; record 73
-	dw $0101 ; record 74
-	dw $0101 ; record 75
-	dw $0101 ; record 76
-	dw $0000 ; record 77
-	dw $0000 ; record 78
-	db $00
+DataPtr_1b_2e:
+	dw Lz_1b_78bd ; $402e
+DataPtr_1b_30:
+	dw Lz_1b_7970 ; $4030
+DataPtr_1b_32:
+	dw Lz_1b_79c0 ; $4032
+DataPtr_1b_34:
+	dw Lz_1b_7a78 ; $4034
+DataPtr_1b_36:
+	dw Lz_1b_7ab5 ; $4036
+DataPtr_1b_38:
+	dw Lz_1b_7af6 ; $4038
+DataPtr_1b_3a:
+	dw Lz_1b_7b37 ; $403a
+DataPtr_1b_3c:
+	dw Lz_1b_7d2e ; $403c
+DataPtr_1b_3e:
+	dw Lz_1b_7e6f ; $403e
+DrawMenuCursorCorners:
+	push de ; $4040
+	push bc ; $4041
+	ld c, $00 ; $4042
+	call ApplyCursorBobOffsetX ; $4044
+	ld c, $00 ; $4047
+	call ApplyArrowBobOffset ; $4049
+	ld c, $00 ; $404c
+	ld b, $08 ; $404e
+	call QueueSprite ; $4050
+	pop bc ; $4053
+	pop de ; $4054
+	push de ; $4055
+	push bc ; $4056
+	ld a, b ; $4057
+	add a, d ; $4058
+	ld d, a ; $4059
+	push de ; $405a
+	ld c, $01 ; $405b
+	call ApplyCursorBobOffsetX ; $405d
+	ld c, $00 ; $4060
+	call ApplyArrowBobOffset ; $4062
+	ld c, $00 ; $4065
+	ld b, $28 ; $4067
+	call QueueSprite ; $4069
+	pop de ; $406c
+	pop bc ; $406d
+	pop de ; $406e
+	push de ; $406f
+	push bc ; $4070
+	ld a, c ; $4071
+	add a, e ; $4072
+	ld e, a ; $4073
+	ld a, b ; $4074
+	add a, d ; $4075
+	ld d, a ; $4076
+	push de ; $4077
+	ld c, $01 ; $4078
+	call ApplyCursorBobOffsetX ; $407a
+	ld c, $01 ; $407d
+	call ApplyArrowBobOffset ; $407f
+	ld c, $00 ; $4082
+	ld b, $68 ; $4084
+	call QueueSprite ; $4086
+	pop de ; $4089
+	pop bc ; $408a
+	pop de ; $408b
+	ld a, e ; $408c
+	add a, c ; $408d
+	ld e, a ; $408e
+	push de ; $408f
+	ld c, $00 ; $4090
+	call ApplyCursorBobOffsetX ; $4092
+	ld c, $01 ; $4095
+	call ApplyArrowBobOffset ; $4097
+	ld c, $00 ; $409a
+	ld b, $48 ; $409c
+	call QueueSprite ; $409e
+	pop de ; $40a1
+	ret ; $40a2
+ApplyCursorBobOffsetX:
+	ldh a, [hVBlankCounter] ; $40a3
+	and a, $0f ; $40a5
+	ld hl, CursorBobOffsetTableX ; $40a7
+	add a, l ; $40aa
+	ld l, a ; $40ab
+	jr nc, Label_1b_40af ; $40ac
+	inc h ; $40ae
+Label_1b_40af:
+	ld a, [hl] ; $40af
+	ld b, a ; $40b0
+	ld a, c ; $40b1
+	or a, a ; $40b2
+	jr z, Label_1b_40b9 ; $40b3
+	ld a, b ; $40b5
+	add a, d ; $40b6
+	ld d, a ; $40b7
+	ret ; $40b8
+Label_1b_40b9:
+	ld a, d ; $40b9
+	sub a, b ; $40ba
+	ld d, a ; $40bb
+	ret ; $40bc
+CursorBobOffsetTableX:
+	; $40bd, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplyArrowBobOffset:
 	ldh a, [hVBlankCounter] ; $40cd
 	and a, $0f ; $40cf
@@ -160,6 +183,7 @@ Label_1b_40e3:
 	nop ; $40f4
 	nop ; $40f5
 	nop ; $40f6
+DrawMenuCursorCornersAlt:
 	push de ; $40f7
 	push bc ; $40f8
 	ld c, $00 ; $40f9
@@ -5699,5 +5723,22 @@ CompactMinigameDataRows:
 	pop af ; $78b7
 	wram_bank ; $78b8
 	ret ; $78bc
-	INCBIN "data/bank_01b/d_78bd.bin" ; $78bd, 1781 bytes
+Lz_1b_78bd:
+	INCBIN "data/bank_01b/lz_78bd.bin" ; $78bd, 179 bytes
+Lz_1b_7970:
+	INCBIN "data/bank_01b/lz_7970.bin" ; $7970, 80 bytes
+Lz_1b_79c0:
+	INCBIN "data/bank_01b/lz_79c0.bin" ; $79c0, 184 bytes
+Lz_1b_7a78:
+	INCBIN "data/bank_01b/lz_7a78.bin" ; $7a78, 61 bytes
+Lz_1b_7ab5:
+	INCBIN "data/bank_01b/lz_7ab5.bin" ; $7ab5, 65 bytes
+Lz_1b_7af6:
+	INCBIN "data/bank_01b/lz_7af6.bin" ; $7af6, 65 bytes
+Lz_1b_7b37:
+	INCBIN "data/bank_01b/lz_7b37.bin" ; $7b37, 503 bytes
+Lz_1b_7d2e:
+	INCBIN "data/bank_01b/lz_7d2e.bin" ; $7d2e, 321 bytes
+Lz_1b_7e6f:
+	INCBIN "data/bank_01b/lz_7e6f.bin" ; $7e6f, 323 bytes
 	ds 78, $ff ; $7fb2, fill

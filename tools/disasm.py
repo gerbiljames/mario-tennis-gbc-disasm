@@ -830,10 +830,17 @@ class Disassembly:
                  0x0f: (0x00, 0x02, 0x04),
                  0x14: (0x00, 0x02, 0x04, 0x06),
                  0x27: tuple(range(0x00, 0x18, 2))}
+        # Bank $1b slots $2e-$3e are LZ-compressed 2bpp graphics streams
+        # (each decompresses to a whole number of tiles).
+        lz_slots = {0x1b: tuple(range(0x2e, 0x40, 2))}
         added = 0
         for bank, sl in slots.items():
             for slot in sl:
                 if self._add_data_slot(bank, slot, "copy") is not None:
+                    added += 1
+        for bank, sl in lz_slots.items():
+            for slot in sl:
+                if self._add_data_slot(bank, slot, "lz") is not None:
                     added += 1
         if added:
             print(f"static data slots: {added} carved")
