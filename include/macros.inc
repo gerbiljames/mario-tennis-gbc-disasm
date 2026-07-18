@@ -232,8 +232,12 @@ MACRO script_wait_move
 	ld a, \1
 	farcall FarPtr_ScriptWaitActorMoveDone
 ENDM
+; Waits `frames` frames, preserving a (callers hold an actor id there while the
+; wait clobbers it with the frame count).
 ; Usage: script_wait_frames frames
 MACRO script_wait_frames
+	push af
 	ld a, \1
 	farcall FarPtr_WaitScriptFrames
+	pop af
 ENDM

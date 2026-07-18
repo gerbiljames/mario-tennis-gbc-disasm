@@ -387,9 +387,7 @@ Label_1a_42ce:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $42d9
 	farcall FarPtr_RunDialogueYesNoPrompt ; $42dc
 	farcall FarPtr_ScriptCloseDialogueWindow ; $42df
-	push af ; $42e2
-	script_wait_frames $05 ; $42e3
-	pop af ; $42e8
+	script_wait_frames $05 ; $42e2
 	and a, a ; $42e9
 	jr nz, Label_1a_4317 ; $42ea
 	ld a, $01 ; $42ec
@@ -429,9 +427,7 @@ Label_1a_4331:
 	ld [$cb27], a ; $433e
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4341
 	farcall FarPtr_ScriptCloseDialogueWindow ; $4344
-	push af ; $4347
-	script_wait_frames $05 ; $4348
-	pop af ; $434d
+	script_wait_frames $05 ; $4347
 	and a, a ; $434e
 	jr nz, Label_1a_4366 ; $434f
 	ld a, $00 ; $4351

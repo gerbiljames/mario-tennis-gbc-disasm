@@ -1796,8 +1796,11 @@ SCRIPT_COMMANDS = (
         ((0x3E, 2, 'b'),)),
     ("script_wait_move", "FarPtr_ScriptWaitActorMoveDone",
         ((0x3E, 2, 'b'),)),
+    # script_wait_frames is always bracketed by push af / pop af (it clobbers
+    # a with the frame count while the caller holds an actor id there); fold
+    # the pair into the macro via the optional (prefix, suffix) opcodes.
     ("script_wait_frames", "FarPtr_WaitScriptFrames",
-        ((0x3E, 2, 'b'),)),
+        ((0x3E, 2, 'b'),), (0xF5, 0xF1)),
 )
 
 
@@ -1811,10 +1814,15 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
                 and o not in dis.data_site_notes)
     if off in dis.data_site_notes:
         return None
-    for macro, far_label, setups in SCRIPT_COMMANDS:
+    for macro, far_label, setups, *rest in SCRIPT_COMMANDS:
+        wrap = rest[0] if rest else None  # (prefix opcode, suffix opcode)
         p, args, ok = off, [], True
-        for i, (opc, size, kind) in enumerate(setups):
-            if p + size > len(rom) or rom[p] != opc or (i and not plain(p)):
+        if wrap:
+            if rom[p] != wrap[0]:
+                continue
+            p += 1  # prefix (push af)
+        for opc, size, kind in setups:
+            if p + size > len(rom) or rom[p] != opc or (p != off and not plain(p)):
                 ok = False
                 break
             if kind == 'b':
@@ -1827,7 +1835,12 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
         fbank, slot, _entry, _tgt = dis.farcalls[p]
         if far_slot_names.get((fbank, slot)) != far_label:
             continue
-        return f"{macro} " + ", ".join(args), (p - off) + 3
+        p += 3  # rst18 + slot + bank
+        if wrap:
+            if p >= len(rom) or rom[p] != wrap[1] or not plain(p):
+                continue
+            p += 1  # suffix (pop af)
+        return f"{macro} " + ", ".join(args), p - off
     return None
 
 
@@ -2117,10 +2130,14 @@ MACRO script_wait_move
 	ld a, \\1
 	farcall FarPtr_ScriptWaitActorMoveDone
 ENDM
+; Waits `frames` frames, preserving a (callers hold an actor id there while the
+; wait clobbers it with the frame count).
 ; Usage: script_wait_frames frames
 MACRO script_wait_frames
+	push af
 	ld a, \\1
 	farcall FarPtr_WaitScriptFrames
+	pop af
 ENDM
 """
 

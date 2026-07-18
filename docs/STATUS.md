@@ -31,7 +31,9 @@ readable `script_*` macros (defined in the generated `include/macros.inc`):
 `script_set_anim`, `script_face`, `script_speak`, `script_set_text`,
 `script_wait_idle/wait_move/wait_frames`. The command is keyed by the farcall's
 resolved slot name, and a sequence only collapses when no label or data note
-lands inside it (past the first instruction), so nothing is hidden. **7,139
+lands inside it (past the first instruction), so nothing is hidden.
+`script_wait_frames` also folds in the `push af`/`pop af` that brackets all
+1216 of its sites (it clobbers `a` while callers hold an actor id there). **7,139
 instances** across the story banks ($0e-$15, $27), turning ~18.6k lines of
 `ld`/`farcall` boilerplate into ~7.3k lines of script. Each macro re-emits the
 identical instructions; still byte-perfect. Example (`TournamentSiteArrivalScene`,

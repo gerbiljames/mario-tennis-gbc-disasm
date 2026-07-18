@@ -71,21 +71,13 @@ Func_13_40eb:
 	script_set_anim $02, $08 ; $410a
 	ld c, $08 ; $4111
 	call BeginFadeIn ; $4113
-	push af ; $4116
-	script_wait_frames $14 ; $4117
-	pop af ; $411c
+	script_wait_frames $14 ; $4116
 	script_move_target $00, $0700, $0c80 ; $411d
-	push af ; $4128
-	script_wait_frames $14 ; $4129
-	pop af ; $412e
+	script_wait_frames $14 ; $4128
 	script_move_target $02, $0700, $0b00 ; $412f
-	push af ; $413a
-	script_wait_frames $14 ; $413b
-	pop af ; $4140
+	script_wait_frames $14 ; $413a
 	script_set_anim $00, $01 ; $4141
-	push af ; $4148
-	script_wait_frames $0a ; $4149
-	pop af ; $414e
+	script_wait_frames $0a ; $4148
 	script_set_anim $02, $01 ; $414f
 	script_wait_move $00 ; $4156
 	script_face $00, $00 ; $415b
@@ -112,20 +104,14 @@ Func_13_4163:
 	ld c, $08 ; $4191
 	call BeginFadeIn ; $4193
 	call WaitFadeEnd ; $4196
-	push af ; $4199
-	script_wait_frames $05 ; $419a
-	pop af ; $419f
+	script_wait_frames $05 ; $4199
 	sound $50 ; $41a0
-	push af ; $41a2
-	script_wait_frames $05 ; $41a3
-	pop af ; $41a8
+	script_wait_frames $05 ; $41a2
 	script_move_target $00, $1500, $0d00 ; $41a9
 	script_move_target $02, $1500, $0b00 ; $41b4
 	test_flag $05, 7 ; $41bf
 	jr z, Label_13_41cb ; $41c2
-	push af ; $41c4
-	script_wait_frames $0c ; $41c5
-	pop af ; $41ca
+	script_wait_frames $0c ; $41c4
 Label_13_41cb:
 	call AnimateDoorClose_13 ; $41cb
 	ret ; $41ce
@@ -139,18 +125,12 @@ Func_13_41cf:
 	script_set_anim $02, $08 ; $41ed
 	ld c, $08 ; $41f4
 	call BeginFadeIn ; $41f6
-	push af ; $41f9
-	script_wait_frames $0a ; $41fa
-	pop af ; $41ff
+	script_wait_frames $0a ; $41f9
 	script_move_angle $00, $40, $0500 ; $4200
-	push af ; $420a
-	script_wait_frames $28 ; $420b
-	pop af ; $4210
+	script_wait_frames $28 ; $420a
 	script_move_angle $02, $40, $0400 ; $4211
 	script_set_anim $00, $01 ; $421b
-	push af ; $4222
-	script_wait_frames $10 ; $4223
-	pop af ; $4228
+	script_wait_frames $10 ; $4222
 	script_set_anim $02, $01 ; $4229
 	script_wait_move $00 ; $4230
 Label_13_4235:
@@ -206,14 +186,10 @@ Func_13_430c:
 	script_wait_move $00 ; $4329
 	call AnimateDoorOpen_13 ; $432e
 	script_move_angle $00, $c2, $0200 ; $4331
-	push af ; $433b
-	script_wait_frames $02 ; $433c
-	pop af ; $4341
+	script_wait_frames $02 ; $433b
 	ld c, $10 ; $4342
 	call BeginFadeOut ; $4344
-	push af ; $4347
-	script_wait_frames $1e ; $4348
-	pop af ; $434d
+	script_wait_frames $1e ; $4347
 	ld a, $02 ; $434e
 	ld [$c294], a ; $4350
 	ld [wStoryModeExitLocationRequest], a ; $4353
@@ -228,9 +204,7 @@ Func_13_4357:
 	call StoryActorsWalkOffAndFadeOut_13 ; $4389
 	ld c, $10 ; $438c
 	call BeginFadeOut ; $438e
-	push af ; $4391
-	script_wait_frames $1e ; $4392
-	pop af ; $4397
+	script_wait_frames $1e ; $4391
 	ld a, $03 ; $4398
 	ld [$c294], a ; $439a
 	ld [wStoryModeExitLocationRequest], a ; $439d
@@ -255,14 +229,10 @@ Func_13_43df:
 	script_set_speed $00, $0020 ; $43df
 	script_move_target $02, $3b00, $0d00 ; $43e7
 	script_move_angle $00, $00, $0600 ; $43f2
-	push af ; $43fc
-	script_wait_frames $3c ; $43fd
-	pop af ; $4402
+	script_wait_frames $3c ; $43fc
 	ld c, $10 ; $4403
 	call BeginFadeOut ; $4405
-	push af ; $4408
-	script_wait_frames $1e ; $4409
-	pop af ; $440e
+	script_wait_frames $1e ; $4408
 	test_flag $05, 7 ; $440f
 	ld a, $06 ; $4412
 	ld [$c294], a ; $4414
@@ -278,9 +248,7 @@ StoryActorsWalkOffAndFadeOut_13:
 	script_face $00, $c0 ; $442a
 	script_move_angle $00, $c8, $0400 ; $4431
 	script_set_speed $00, $0010 ; $443b
-	push af ; $4443
-	script_wait_frames $28 ; $4444
-	pop af ; $4449
+	script_wait_frames $28 ; $4443
 	script_set_anim $00, $08 ; $444a
 	ld c, $08 ; $4451
 	call BeginFadeOut ; $4453
@@ -288,18 +256,14 @@ StoryActorsWalkOffAndFadeOut_13:
 	ld a, $00 ; $445b
 	ld b, $00 ; $445d
 	farcall FarPtr_SetActorActive ; $445f
-	push af ; $4462
-	script_wait_frames $0a ; $4463
-	pop af ; $4468
+	script_wait_frames $0a ; $4462
 	ret ; $4469
 Label_13_446a:
 	script_wait_move $02 ; $446a
 	script_move_angle $00, $c8, $0280 ; $446f
 	script_set_speed $00, $0010 ; $4479
 	script_set_speed $02, $0010 ; $4481
-	push af ; $4489
-	script_wait_frames $0a ; $448a
-	pop af ; $448f
+	script_wait_frames $0a ; $4489
 	script_move_angle $02, $ca, $0500 ; $4490
 	script_wait_move $00 ; $449a
 	script_set_anim $00, $08 ; $449f
@@ -313,9 +277,7 @@ Label_13_446a:
 	farcall FarPtr_SetActorActive ; $44cf
 	ld c, $10 ; $44d2
 	call BeginFadeOut ; $44d4
-	push af ; $44d7
-	script_wait_frames $0a ; $44d8
-	pop af ; $44dd
+	script_wait_frames $0a ; $44d7
 	ret ; $44de
 RestaurantPlazaInitScript_13:
 	ld a, [wStoryModeEntryPoint] ; $44df
@@ -350,33 +312,23 @@ AcademyCourtsTourCutscene:
 	ld de, $1300 ; $4522
 	farcall FarPtr_ScriptSetActorPosition ; $4525
 	script_move_target $06, $3200, $0d00 ; $4528
-	push af ; $4533
-	script_wait_frames $0f ; $4534
-	pop af ; $4539
+	script_wait_frames $0f ; $4533
 	ld a, $00 ; $453a
 	ld bc, $3200 ; $453c
 	ld de, $1300 ; $453f
 	farcall FarPtr_ScriptSetActorPosition ; $4542
 	script_move_target $00, $3200, $0f00 ; $4545
 	script_wait_move $00 ; $4550
-	push af ; $4555
-	script_wait_frames $1e ; $4556
-	pop af ; $455b
+	script_wait_frames $1e ; $4555
 	ld a, $00 ; $455c
 	ld b, a ; $455e
 	ld a, $06 ; $455f
 	farcall FarPtr_FaceActorTowardActor ; $4561
-	push af ; $4564
-	script_wait_frames $3c ; $4565
-	pop af ; $456a
+	script_wait_frames $3c ; $4564
 	script_face $06, $00 ; $456b
-	push af ; $4572
-	script_wait_frames $0f ; $4573
-	pop af ; $4578
+	script_wait_frames $0f ; $4572
 	script_face $00, $00 ; $4579
-	push af ; $4580
-	script_wait_frames $0f ; $4581
-	pop af ; $4586
+	script_wait_frames $0f ; $4580
 	script_move_player $3600, $0d00 ; $4587
 	farcall FarPtr_WaitPlayerMoveDone ; $4591
 	ld a, $50 ; $4594
@@ -392,30 +344,20 @@ AcademyCourtsTourCutscene:
 	call UnregisterFrameTask ; $45b4
 	script_move_player $3200, $1300 ; $45b7
 	farcall FarPtr_WaitPlayerMoveDone ; $45c1
-	push af ; $45c4
-	script_wait_frames $1e ; $45c5
-	pop af ; $45ca
+	script_wait_frames $1e ; $45c4
 	ld a, $00 ; $45cb
 	ld b, a ; $45cd
 	ld a, $06 ; $45ce
 	farcall FarPtr_FaceActorsTowardEachOther ; $45d0
 	script_speak $06 ; $45d3
-	push af ; $45d8
-	script_wait_frames $0f ; $45d9
-	pop af ; $45de
+	script_wait_frames $0f ; $45d8
 	script_set_anim $00, $03 ; $45df
 	script_wait_idle $00 ; $45e6
-	push af ; $45eb
-	script_wait_frames $1e ; $45ec
-	pop af ; $45f1
+	script_wait_frames $1e ; $45eb
 	script_face $06, $80 ; $45f2
-	push af ; $45f9
-	script_wait_frames $0f ; $45fa
-	pop af ; $45ff
+	script_wait_frames $0f ; $45f9
 	script_face $00, $80 ; $4600
-	push af ; $4607
-	script_wait_frames $0f ; $4608
-	pop af ; $460d
+	script_wait_frames $0f ; $4607
 	script_move_player $2a00, $0d00 ; $460e
 	farcall FarPtr_WaitPlayerMoveDone ; $4618
 	ld a, $20 ; $461b
@@ -439,44 +381,26 @@ AcademyCourtsTourCutscene:
 	script_wait_idle $00 ; $4659
 	script_set_anim $06, $03 ; $465e
 	script_wait_idle $06 ; $4665
-	push af ; $466a
-	script_wait_frames $32 ; $466b
-	pop af ; $4670
+	script_wait_frames $32 ; $466a
 	script_face $06, $80 ; $4671
-	push af ; $4678
-	script_wait_frames $28 ; $4679
-	pop af ; $467e
+	script_wait_frames $28 ; $4678
 	script_face $06, $40 ; $467f
-	push af ; $4686
-	script_wait_frames $0a ; $4687
-	pop af ; $468c
+	script_wait_frames $0a ; $4686
 	script_face $06, $00 ; $468d
-	push af ; $4694
-	script_wait_frames $28 ; $4695
-	pop af ; $469a
+	script_wait_frames $28 ; $4694
 	script_face $06, $40 ; $469b
-	push af ; $46a2
-	script_wait_frames $0a ; $46a3
-	pop af ; $46a8
+	script_wait_frames $0a ; $46a2
 	script_face $06, $80 ; $46a9
-	push af ; $46b0
-	script_wait_frames $28 ; $46b1
-	pop af ; $46b6
+	script_wait_frames $28 ; $46b0
 	script_face $06, $40 ; $46b7
-	push af ; $46be
-	script_wait_frames $0a ; $46bf
-	pop af ; $46c4
+	script_wait_frames $0a ; $46be
 	script_face $06, $00 ; $46c5
-	push af ; $46cc
-	script_wait_frames $32 ; $46cd
-	pop af ; $46d2
+	script_wait_frames $32 ; $46cc
 	script_set_anim $06, $03 ; $46d3
 	script_wait_idle $06 ; $46da
 	script_speak $06 ; $46df
 	script_move_target $06, $4100, $0d00 ; $46e4
-	push af ; $46ef
-	script_wait_frames $05 ; $46f0
-	pop af ; $46f5
+	script_wait_frames $05 ; $46ef
 	script_move_player $3600, $0d00 ; $46f6
 	script_move_target $00, $3200, $0d20 ; $4700
 	script_wait_move $00 ; $470b
@@ -522,14 +446,10 @@ ServiceAceCoachIntroCutscene:
 	ld de, $0d00 ; $47c8
 	farcall FarPtr_ScriptSetActorPosition ; $47cb
 	script_move_target $00, $1d00, $0d00 ; $47ce
-	push af ; $47d9
-	script_wait_frames $0f ; $47da
-	pop af ; $47df
+	script_wait_frames $0f ; $47d9
 	script_move_player $1b00, $0d00 ; $47e0
 	script_wait_move $00 ; $47ea
-	push af ; $47ef
-	script_wait_frames $1e ; $47f0
-	pop af ; $47f5
+	script_wait_frames $1e ; $47ef
 	ld a, $00 ; $47f6
 	ld b, a ; $47f8
 	ld a, $06 ; $47f9
@@ -539,49 +459,35 @@ ServiceAceCoachIntroCutscene:
 	script_set_anim $00, $03 ; $4809
 	script_wait_idle $00 ; $4810
 	script_face $06, $c0 ; $4815
-	push af ; $481c
-	script_wait_frames $0f ; $481d
-	pop af ; $4822
+	script_wait_frames $0f ; $481c
 	script_face $00, $c0 ; $4823
 	script_speak $06 ; $482a
 	script_set_anim $00, $03 ; $482f
 	script_wait_idle $00 ; $4836
-	push af ; $483b
-	script_wait_frames $1e ; $483c
-	pop af ; $4841
+	script_wait_frames $1e ; $483b
 	call AnimateDoorOpen_13 ; $4842
 	script_speak $07 ; $4845
-	push af ; $484a
-	script_wait_frames $0f ; $484b
-	pop af ; $4850
+	script_wait_frames $0f ; $484a
 	ld a, $03 ; $4851
 	ld bc, $1c00 ; $4853
 	ld de, $0b00 ; $4856
 	farcall FarPtr_ScriptSetActorPosition ; $4859
 	sound $97 ; $485c
-	push af ; $485e
-	script_wait_frames $1e ; $485f
-	pop af ; $4864
+	script_wait_frames $1e ; $485e
 	ld a, $03 ; $4865
 	ld bc, $3f00 ; $4867
 	ld de, $3f00 ; $486a
 	farcall FarPtr_ScriptSetActorPosition ; $486d
 	script_face $06, $80 ; $4870
-	push af ; $4877
-	script_wait_frames $0f ; $4878
-	pop af ; $487d
+	script_wait_frames $0f ; $4877
 	script_face $00, $80 ; $487e
 	script_move_player $1800, $0d00 ; $4885
-	push af ; $488f
-	script_wait_frames $0f ; $4890
-	pop af ; $4895
+	script_wait_frames $0f ; $488f
 	ld a, $07 ; $4896
 	ld bc, $1500 ; $4898
 	ld de, $0980 ; $489b
 	farcall FarPtr_ScriptSetActorPosition ; $489e
-	push af ; $48a1
-	script_wait_frames $0f ; $48a2
-	pop af ; $48a7
+	script_wait_frames $0f ; $48a1
 	script_set_speed $07, $0010 ; $48a8
 	script_move_target $07, $1500, $0d00 ; $48b0
 	script_wait_move $07 ; $48bb
@@ -590,26 +496,20 @@ ServiceAceCoachIntroCutscene:
 	ld bc, $1500 ; $48c9
 	ld de, $0900 ; $48cc
 	farcall FarPtr_ScriptSetActorPosition ; $48cf
-	push af ; $48d2
-	script_wait_frames $0f ; $48d3
-	pop af ; $48d8
+	script_wait_frames $0f ; $48d2
 	script_set_speed $08, $0010 ; $48d9
 	script_move_target $08, $1500, $0b00 ; $48e1
 	script_wait_move $08 ; $48ec
 	call AnimateDoorClose_13 ; $48f1
 	script_face $08, $00 ; $48f4
-	push af ; $48fb
-	script_wait_frames $0f ; $48fc
-	pop af ; $4901
+	script_wait_frames $0f ; $48fb
 	script_set_anim $06, $02 ; $4902
 	script_wait_idle $06 ; $4909
 	script_speak $06 ; $490e
 	script_face $07, $40 ; $4913
 	script_set_anim $07, $04 ; $491a
 	script_wait_idle $07 ; $4921
-	push af ; $4926
-	script_wait_frames $1e ; $4927
-	pop af ; $492c
+	script_wait_frames $1e ; $4926
 	ld a, $06 ; $492d
 	ld b, a ; $492f
 	ld a, $07 ; $4930
@@ -621,9 +521,7 @@ ServiceAceCoachIntroCutscene:
 	script_set_anim $08, $03 ; $494b
 	script_wait_idle $08 ; $4952
 	script_speak $08 ; $4957
-	push af ; $495c
-	script_wait_frames $0f ; $495d
-	pop af ; $4962
+	script_wait_frames $0f ; $495c
 	script_set_anim $08, $02 ; $4963
 	script_wait_idle $08 ; $496a
 	ld a, $04 ; $496f
@@ -631,25 +529,19 @@ ServiceAceCoachIntroCutscene:
 	ld de, $0940 ; $4974
 	farcall FarPtr_ScriptSetActorPosition ; $4977
 	sound $98 ; $497a
-	push af ; $497c
-	script_wait_frames $1e ; $497d
-	pop af ; $4982
+	script_wait_frames $1e ; $497c
 	ld a, $04 ; $4983
 	ld bc, $3f00 ; $4985
 	ld de, $3f00 ; $4988
 	farcall FarPtr_ScriptSetActorPosition ; $498b
-	push af ; $498e
-	script_wait_frames $1e ; $498f
-	pop af ; $4994
+	script_wait_frames $1e ; $498e
 	script_set_anim $06, $02 ; $4995
 	script_wait_idle $06 ; $499c
 	ld a, $00 ; $49a1
 	ld b, a ; $49a3
 	ld a, $06 ; $49a4
 	farcall FarPtr_FaceActorTowardActor ; $49a6
-	push af ; $49a9
-	script_wait_frames $32 ; $49aa
-	pop af ; $49af
+	script_wait_frames $32 ; $49a9
 	ld a, $07 ; $49b0
 	ld b, a ; $49b2
 	ld a, $06 ; $49b3
@@ -661,9 +553,7 @@ ServiceAceCoachIntroCutscene:
 Label_13_49c1:
 	script_speak $06 ; $49c1
 	script_set_text $043e ; $49c6
-	push af ; $49cc
-	script_wait_frames $0f ; $49cd
-	pop af ; $49d2
+	script_wait_frames $0f ; $49cc
 	script_set_speed $00, $0018 ; $49d3
 	script_move_target $00, $1d00, $0c00 ; $49db
 	script_wait_move $00 ; $49e6
@@ -671,21 +561,15 @@ Label_13_49c1:
 	script_wait_move $00 ; $49f6
 	script_face $00, $80 ; $49fb
 	script_set_speed $00, $0020 ; $4a02
-	push af ; $4a0a
-	script_wait_frames $0f ; $4a0b
-	pop af ; $4a10
+	script_wait_frames $0f ; $4a0a
 	script_set_anim $00, $03 ; $4a11
 	script_wait_idle $00 ; $4a18
-	push af ; $4a1d
-	script_wait_frames $0f ; $4a1e
-	pop af ; $4a23
+	script_wait_frames $0f ; $4a1d
 	ld a, $08 ; $4a24
 	ld b, a ; $4a26
 	ld a, $07 ; $4a27
 	farcall FarPtr_FaceActorsTowardEachOther ; $4a29
-	push af ; $4a2c
-	script_wait_frames $46 ; $4a2d
-	pop af ; $4a32
+	script_wait_frames $46 ; $4a2c
 	ld a, $00 ; $4a33
 	ld b, a ; $4a35
 	ld a, $07 ; $4a36
@@ -694,27 +578,21 @@ Label_13_49c1:
 	ld b, a ; $4a3d
 	ld a, $08 ; $4a3e
 	farcall FarPtr_FaceActorTowardActor ; $4a40
-	push af ; $4a43
-	script_wait_frames $0f ; $4a44
-	pop af ; $4a49
+	script_wait_frames $0f ; $4a43
 	script_speak $07 ; $4a4a
 	script_set_anim $07, $03 ; $4a4f
 	script_wait_idle $07 ; $4a56
 	script_speak $07 ; $4a5b
 	script_set_anim $00, $03 ; $4a60
 	script_wait_idle $00 ; $4a67
-	push af ; $4a6c
-	script_wait_frames $1e ; $4a6d
-	pop af ; $4a72
+	script_wait_frames $1e ; $4a6c
 	script_set_anim $08, $02 ; $4a73
 	script_wait_idle $08 ; $4a7a
 	script_speak $08 ; $4a7f
 	script_set_anim $08, $03 ; $4a84
 	script_wait_idle $08 ; $4a8b
 	script_speak $08 ; $4a90
-	push af ; $4a95
-	script_wait_frames $5a ; $4a96
-	pop af ; $4a9b
+	script_wait_frames $5a ; $4a95
 	script_move_target $08, $1500, $0980 ; $4a9c
 	call AnimateDoorOpen_13 ; $4aa7
 	script_move_target $08, $14c0, $0900 ; $4aaa
@@ -724,9 +602,7 @@ Label_13_49c1:
 	ld de, $3f00 ; $4ac5
 	farcall FarPtr_ScriptSetActorPosition ; $4ac8
 	script_wait_move $07 ; $4acb
-	push af ; $4ad0
-	script_wait_frames $0f ; $4ad1
-	pop af ; $4ad6
+	script_wait_frames $0f ; $4ad0
 	ld a, $06 ; $4ad7
 	ld b, a ; $4ad9
 	ld a, $07 ; $4ada
@@ -735,84 +611,60 @@ Label_13_49c1:
 	script_move_target $07, $1500, $0980 ; $4ae4
 	script_wait_move $07 ; $4aef
 	script_move_target $07, $14c0, $0900 ; $4af4
-	push af ; $4aff
-	script_wait_frames $0f ; $4b00
-	pop af ; $4b05
+	script_wait_frames $0f ; $4aff
 	ld a, $07 ; $4b06
 	ld bc, $3f00 ; $4b08
 	ld de, $3f00 ; $4b0b
 	farcall FarPtr_ScriptSetActorPosition ; $4b0e
 	call AnimateDoorClose_13 ; $4b11
 	script_move_player $1b00, $0d00 ; $4b14
-	push af ; $4b1e
-	script_wait_frames $3c ; $4b1f
-	pop af ; $4b24
+	script_wait_frames $3c ; $4b1e
 	ld a, $06 ; $4b25
 	ld b, a ; $4b27
 	ld a, $00 ; $4b28
 	farcall FarPtr_FaceActorTowardActor ; $4b2a
-	push af ; $4b2d
-	script_wait_frames $0f ; $4b2e
-	pop af ; $4b33
+	script_wait_frames $0f ; $4b2d
 	ld a, $05 ; $4b34
 	ld bc, $1c00 ; $4b36
 	ld de, $0900 ; $4b39
 	farcall FarPtr_ScriptSetActorPosition ; $4b3c
-	push af ; $4b3f
-	script_wait_frames $5a ; $4b40
-	pop af ; $4b45
+	script_wait_frames $5a ; $4b3f
 	ld a, $05 ; $4b46
 	ld bc, $3f00 ; $4b48
 	ld de, $3f00 ; $4b4b
 	farcall FarPtr_ScriptSetActorPosition ; $4b4e
-	push af ; $4b51
-	script_wait_frames $0f ; $4b52
-	pop af ; $4b57
+	script_wait_frames $0f ; $4b51
 	script_speak $06 ; $4b58
 	ld a, $00 ; $4b5d
 	ld b, a ; $4b5f
 	ld a, $06 ; $4b60
 	farcall FarPtr_FaceActorTowardActor ; $4b62
-	push af ; $4b65
-	script_wait_frames $1e ; $4b66
-	pop af ; $4b6b
+	script_wait_frames $1e ; $4b65
 	script_speak $06 ; $4b6c
 	script_set_anim $00, $02 ; $4b71
 	script_wait_idle $00 ; $4b78
-	push af ; $4b7d
-	script_wait_frames $3c ; $4b7e
-	pop af ; $4b83
+	script_wait_frames $3c ; $4b7d
 	script_move_target $06, $1500, $0d00 ; $4b84
 	script_wait_move $06 ; $4b8f
 	ld a, $00 ; $4b94
 	ld b, a ; $4b96
 	ld a, $06 ; $4b97
 	farcall FarPtr_FaceActorTowardActor ; $4b99
-	push af ; $4b9c
-	script_wait_frames $1e ; $4b9d
-	pop af ; $4ba2
+	script_wait_frames $1e ; $4b9c
 	script_speak $06 ; $4ba3
-	push af ; $4ba8
-	script_wait_frames $0f ; $4ba9
-	pop af ; $4bae
+	script_wait_frames $0f ; $4ba8
 	script_move_target $00, $1700, $0d00 ; $4baf
 	script_wait_move $00 ; $4bba
-	push af ; $4bbf
-	script_wait_frames $0a ; $4bc0
-	pop af ; $4bc5
+	script_wait_frames $0a ; $4bbf
 	script_move_target $06, $0700, $0d00 ; $4bc6
-	push af ; $4bd1
-	script_wait_frames $0a ; $4bd2
-	pop af ; $4bd7
+	script_wait_frames $0a ; $4bd1
 	script_move_player $0900, $0d00 ; $4bd8
 	script_move_target $00, $0700, $0d00 ; $4be2
 	script_wait_move $06 ; $4bed
 	script_face $06, $c0 ; $4bf2
 	script_move_angle $06, $c0, $0500 ; $4bf9
 	script_set_speed $06, $000b ; $4c03
-	push af ; $4c0b
-	script_wait_frames $0a ; $4c0c
-	pop af ; $4c11
+	script_wait_frames $0a ; $4c0b
 	script_wait_move $00 ; $4c12
 	script_face $00, $c0 ; $4c17
 	script_move_angle $00, $c0, $0500 ; $4c1e
@@ -886,9 +738,7 @@ AnimateDoorOpen_13:
 	ld h, $02 ; $4d91
 	ld l, $02 ; $4d93
 	farcall FarPtr_CopySceneTilemapRect ; $4d95
-	push af ; $4d98
-	script_wait_frames $02 ; $4d99
-	pop af ; $4d9e
+	script_wait_frames $02 ; $4d98
 	ld b, $02 ; $4d9f
 	ld c, $15 ; $4da1
 	ld d, $14 ; $4da3
@@ -896,9 +746,7 @@ AnimateDoorOpen_13:
 	ld h, $02 ; $4da7
 	ld l, $02 ; $4da9
 	farcall FarPtr_CopySceneTilemapRect ; $4dab
-	push af ; $4dae
-	script_wait_frames $02 ; $4daf
-	pop af ; $4db4
+	script_wait_frames $02 ; $4dae
 	ld b, $04 ; $4db5
 	ld c, $15 ; $4db7
 	ld d, $14 ; $4db9
@@ -906,9 +754,7 @@ AnimateDoorOpen_13:
 	ld h, $02 ; $4dbd
 	ld l, $02 ; $4dbf
 	farcall FarPtr_CopySceneTilemapRect ; $4dc1
-	push af ; $4dc4
-	script_wait_frames $02 ; $4dc5
-	pop af ; $4dca
+	script_wait_frames $02 ; $4dc4
 	ret ; $4dcb
 AnimateDoorClose_13:
 	sound $71 ; $4dcc
@@ -919,9 +765,7 @@ AnimateDoorClose_13:
 	ld h, $02 ; $4dd6
 	ld l, $02 ; $4dd8
 	farcall FarPtr_CopySceneTilemapRect ; $4dda
-	push af ; $4ddd
-	script_wait_frames $01 ; $4dde
-	pop af ; $4de3
+	script_wait_frames $01 ; $4ddd
 	ld b, $02 ; $4de4
 	ld c, $15 ; $4de6
 	ld d, $14 ; $4de8
@@ -929,9 +773,7 @@ AnimateDoorClose_13:
 	ld h, $02 ; $4dec
 	ld l, $02 ; $4dee
 	farcall FarPtr_CopySceneTilemapRect ; $4df0
-	push af ; $4df3
-	script_wait_frames $01 ; $4df4
-	pop af ; $4df9
+	script_wait_frames $01 ; $4df3
 	ld b, $00 ; $4dfa
 	ld c, $15 ; $4dfc
 	ld d, $14 ; $4dfe
@@ -939,9 +781,7 @@ AnimateDoorClose_13:
 	ld h, $02 ; $4e02
 	ld l, $02 ; $4e04
 	farcall FarPtr_CopySceneTilemapRect ; $4e06
-	push af ; $4e09
-	script_wait_frames $01 ; $4e0a
-	pop af ; $4e0f
+	script_wait_frames $01 ; $4e09
 	ld b, $06 ; $4e10
 	ld c, $15 ; $4e12
 	ld d, $14 ; $4e14
@@ -1028,9 +868,7 @@ Label_13_4f0c:
 	call Func_13_5bfb ; $4f16
 	call Func_13_5c27 ; $4f19
 	sound $97 ; $4f1c
-	push af ; $4f1e
-	script_wait_frames $46 ; $4f1f
-	pop af ; $4f24
+	script_wait_frames $46 ; $4f1e
 	ld a, $05 ; $4f25
 	ld bc, $3f00 ; $4f27
 	ld de, $3f00 ; $4f2a
@@ -1067,9 +905,7 @@ Label_13_4f0c:
 	script_wait_idle $00 ; $4f8a
 	script_set_speed $00, $0030 ; $4f8f
 	script_move_target $00, $0b00, $1400 ; $4f97
-	push af ; $4fa2
-	script_wait_frames $0a ; $4fa3
-	pop af ; $4fa8
+	script_wait_frames $0a ; $4fa2
 	ld a, $00 ; $4fa9
 	ld b, a ; $4fab
 	ld a, $03 ; $4fac
@@ -1083,9 +919,7 @@ Label_13_4f0c:
 	ld [wStoryModeExitLocationRequest], a ; $4fc0
 	ld c, $04 ; $4fc3
 	call BeginFadeOut ; $4fc5
-	push af ; $4fc8
-	script_wait_frames $14 ; $4fc9
-	pop af ; $4fce
+	script_wait_frames $14 ; $4fc8
 	ret ; $4fcf
 Label_13_4fd0:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $4fd0
@@ -1100,9 +934,7 @@ Label_13_4fd0:
 	farcall FarPtr_04_20 ; $4fee
 	script_set_speed $00, $0030 ; $4ff1
 	script_move_target $00, $0b00, $1400 ; $4ff9
-	push af ; $5004
-	script_wait_frames $0a ; $5005
-	pop af ; $500a
+	script_wait_frames $0a ; $5004
 	ld a, $06 ; $500b
 	ld [wStoryModeCurrentLocation], a ; $500d
 	ld a, $0d ; $5010
@@ -1112,9 +944,7 @@ Label_13_4fd0:
 	ld [wStoryModeExitLocationRequest], a ; $501a
 	ld c, $04 ; $501d
 	call BeginFadeOut ; $501f
-	push af ; $5022
-	script_wait_frames $14 ; $5023
-	pop af ; $5028
+	script_wait_frames $14 ; $5022
 	ret ; $5029
 DormRoomInitScript_13:
 	xor a, a ; $502a
@@ -1425,9 +1255,7 @@ Label_13_52cb:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $52cd
 	farcall FarPtr_RunDialogueYesNoPrompt ; $52d0
 	farcall FarPtr_ScriptCloseDialogueWindow ; $52d3
-	push af ; $52d6
-	script_wait_frames $05 ; $52d7
-	pop af ; $52dc
+	script_wait_frames $05 ; $52d6
 	and a, a ; $52dd
 	jr nz, Label_13_52e3 ; $52de
 	call RunAcademyQuestionsMenu ; $52e0
@@ -1490,9 +1318,7 @@ Label_13_5355:
 	ld hl, $0005 ; $5381
 	add hl, bc ; $5384
 	set 4, [hl] ; $5385
-	push af ; $5387
-	script_wait_frames $05 ; $5388
-	pop af ; $538d
+	script_wait_frames $05 ; $5387
 	ret ; $538e
 Label_13_538f:
 	script_speak $03 ; $538f
@@ -1520,26 +1346,18 @@ Label_13_53c4:
 	farcall FarPtr_ScriptSetActorPosition ; $53d7
 	script_move_player $0b00, $0a00 ; $53da
 	farcall FarPtr_WaitPlayerMoveDone ; $53e4
-	push af ; $53e7
-	script_wait_frames $78 ; $53e8
-	pop af ; $53ed
-	push af ; $53ee
-	script_wait_frames $b4 ; $53ef
-	pop af ; $53f4
+	script_wait_frames $78 ; $53e7
+	script_wait_frames $b4 ; $53ee
 	ld c, $04 ; $53f5
 	call BeginFadeIn ; $53f7
 	call WaitJingleEnd ; $53fa
 	sound $1c ; $53fd
-	push af ; $53ff
-	script_wait_frames $0a ; $5400
-	pop af ; $5405
+	script_wait_frames $0a ; $53ff
 	ld a, $03 ; $5406
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5408
 	farcall FarPtr_RunDialogueYesNoPrompt ; $540b
 	farcall FarPtr_ScriptCloseDialogueWindow ; $540e
-	push af ; $5411
-	script_wait_frames $05 ; $5412
-	pop af ; $5417
+	script_wait_frames $05 ; $5411
 	and a, a ; $5418
 	jr nz, Label_13_5425 ; $5419
 	script_speak $03 ; $541b
@@ -1570,9 +1388,7 @@ Label_13_5430:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $548d
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5490
 	farcall FarPtr_ScriptCloseDialogueWindow ; $5493
-	push af ; $5496
-	script_wait_frames $05 ; $5497
-	pop af ; $549c
+	script_wait_frames $05 ; $5496
 	and a, a ; $549d
 	jr nz, Label_13_54aa ; $549e
 	script_speak $03 ; $54a0
@@ -1596,9 +1412,7 @@ Label_13_54b2:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $54f2
 	farcall FarPtr_RunDialogueYesNoPrompt ; $54f5
 	farcall FarPtr_ScriptCloseDialogueWindow ; $54f8
-	push af ; $54fb
-	script_wait_frames $05 ; $54fc
-	pop af ; $5501
+	script_wait_frames $05 ; $54fb
 	and a, a ; $5502
 	jr nz, Label_13_5508 ; $5503
 	call RunAcademyQuestionsMenu ; $5505
@@ -1607,18 +1421,14 @@ Label_13_5508:
 	jr nz, Label_13_5550 ; $550b
 	test_flag $1c, 1 ; $550d
 	jr nz, Label_13_5531 ; $5510
-	push af ; $5512
-	script_wait_frames $14 ; $5513
-	pop af ; $5518
+	script_wait_frames $14 ; $5512
 	script_set_anim $03, $03 ; $5519
 	script_wait_idle $03 ; $5520
 	script_set_text $0500 ; $5525
 	script_speak $03 ; $552b
 	ret ; $5530
 Label_13_5531:
-	push af ; $5531
-	script_wait_frames $14 ; $5532
-	pop af ; $5537
+	script_wait_frames $14 ; $5531
 	script_set_anim $03, $03 ; $5538
 	script_wait_idle $03 ; $553f
 	script_set_text $0501 ; $5544
@@ -1627,18 +1437,14 @@ Label_13_5531:
 Label_13_5550:
 	test_flag $1c, 1 ; $5550
 	jr nz, Label_13_5574 ; $5553
-	push af ; $5555
-	script_wait_frames $14 ; $5556
-	pop af ; $555b
+	script_wait_frames $14 ; $5555
 	script_set_anim $03, $03 ; $555c
 	script_wait_idle $03 ; $5563
 	script_set_text $0523 ; $5568
 	script_speak $03 ; $556e
 	ret ; $5573
 Label_13_5574:
-	push af ; $5574
-	script_wait_frames $14 ; $5575
-	pop af ; $557a
+	script_wait_frames $14 ; $5574
 	script_set_anim $03, $03 ; $557b
 	script_wait_idle $03 ; $5582
 	script_set_text $0522 ; $5587
@@ -1669,9 +1475,7 @@ Label_13_55ac:
 	jr z, Label_13_55bd ; $55b8
 	farcall FarPtr_AdvanceDialogueTextCursor ; $55ba
 Label_13_55bd:
-	push af ; $55bd
-	script_wait_frames $1e ; $55be
-	pop af ; $55c3
+	script_wait_frames $1e ; $55bd
 	script_move_target $00, $0b00, $0e00 ; $55c4
 	ld c, $04 ; $55cf
 	call BeginFadeIn ; $55d1
@@ -1710,9 +1514,7 @@ Label_13_561a:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $562b
 	farcall FarPtr_RunDialogueYesNoPrompt ; $562e
 	farcall FarPtr_ScriptCloseDialogueWindow ; $5631
-	push af ; $5634
-	script_wait_frames $05 ; $5635
-	pop af ; $563a
+	script_wait_frames $05 ; $5634
 	and a, a ; $563b
 	jr nz, Label_13_568f ; $563c
 	ld hl, $c2b2 ; $563e
@@ -1728,9 +1530,7 @@ Label_13_564b:
 	farcall FarPtr_InitDialogueTextCursor ; $564b
 	script_speak $03 ; $564e
 	sound $00 ; $5653
-	push af ; $5655
-	script_wait_frames $02 ; $5656
-	pop af ; $565b
+	script_wait_frames $02 ; $5655
 	sound $41 ; $565c
 	script_set_anim $00, $03 ; $565e
 	script_set_anim $03, $03 ; $5665
@@ -1763,9 +1563,7 @@ Label_13_569c:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $56a1
 	farcall FarPtr_RunDialogueYesNoPrompt ; $56a4
 	farcall FarPtr_ScriptCloseDialogueWindow ; $56a7
-	push af ; $56aa
-	script_wait_frames $05 ; $56ab
-	pop af ; $56b0
+	script_wait_frames $05 ; $56aa
 	and a, a ; $56b1
 	jr nz, Label_13_56b7 ; $56b2
 	call RunAcademyQuestionsMenu ; $56b4
@@ -1786,9 +1584,7 @@ Label_13_56d4:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $56d6
 	farcall FarPtr_RunDialogueYesNoPrompt ; $56d9
 	farcall FarPtr_ScriptCloseDialogueWindow ; $56dc
-	push af ; $56df
-	script_wait_frames $05 ; $56e0
-	pop af ; $56e5
+	script_wait_frames $05 ; $56df
 	and a, a ; $56e6
 	jr nz, Label_13_574c ; $56e7
 	set_flag $05, 7 ; $56e9
@@ -1796,17 +1592,13 @@ Label_13_56d4:
 	script_speak $03 ; $56ef
 	script_set_anim $00, $03 ; $56f4
 	script_wait_idle $00 ; $56fb
-	push af ; $5700
-	script_wait_frames $05 ; $5701
-	pop af ; $5706
+	script_wait_frames $05 ; $5700
 	script_face $00, $40 ; $5707
 	wram_bank $04 ; $570e
 	ld a, $01 ; $5714
 	ld [wMatchIsDoubles], a ; $5716
 	call Func_13_5067 ; $5719
-	push af ; $571c
-	script_wait_frames $05 ; $571d
-	pop af ; $5722
+	script_wait_frames $05 ; $571c
 	ld a, $03 ; $5723
 	farcall FarPtr_GetActorStateAddr ; $5725
 	ld c, l ; $5728
@@ -1820,9 +1612,7 @@ Label_13_56d4:
 	ld hl, $0005 ; $5737
 	add hl, bc ; $573a
 	set 4, [hl] ; $573b
-	push af ; $573d
-	script_wait_frames $05 ; $573e
-	pop af ; $5743
+	script_wait_frames $05 ; $573d
 	script_face $00, $40 ; $5744
 	ret ; $574b
 Label_13_574c:
@@ -1857,9 +1647,7 @@ Label_13_5795:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5797
 	farcall FarPtr_RunDialogueYesNoPrompt ; $579a
 	farcall FarPtr_ScriptCloseDialogueWindow ; $579d
-	push af ; $57a0
-	script_wait_frames $05 ; $57a1
-	pop af ; $57a6
+	script_wait_frames $05 ; $57a0
 	and a, a ; $57a7
 	jr nz, Label_13_5807 ; $57a8
 	call Func_13_5bc3 ; $57aa
@@ -1872,13 +1660,9 @@ Label_13_5795:
 	ld [wMatchIsDoubles], a ; $57c2
 	script_move_target $03, $0b00, $0900 ; $57c5
 	script_wait_move $03 ; $57d0
-	push af ; $57d5
-	script_wait_frames $05 ; $57d6
-	pop af ; $57db
+	script_wait_frames $05 ; $57d5
 	script_face $03, $40 ; $57dc
-	push af ; $57e3
-	script_wait_frames $05 ; $57e4
-	pop af ; $57e9
+	script_wait_frames $05 ; $57e3
 	ld a, $03 ; $57ea
 	farcall FarPtr_GetActorStateAddr ; $57ec
 	ld c, l ; $57ef
@@ -1898,9 +1682,7 @@ Label_13_5807:
 	script_set_anim $00, $03 ; $5812
 	script_wait_idle $00 ; $5819
 	script_face $00, $40 ; $581e
-	push af ; $5825
-	script_wait_frames $05 ; $5826
-	pop af ; $582b
+	script_wait_frames $05 ; $5825
 	wram_bank $04 ; $582c
 	ld a, $01 ; $5832
 	ld [wMatchIsDoubles], a ; $5834
@@ -2045,9 +1827,7 @@ Label_13_58e7:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5912
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5915
 	farcall FarPtr_ScriptCloseDialogueWindow ; $5918
-	push af ; $591b
-	script_wait_frames $05 ; $591c
-	pop af ; $5921
+	script_wait_frames $05 ; $591b
 	and a, a ; $5922
 	jr nz, Label_13_5927 ; $5923
 	jr Label_13_58d1 ; $5925
@@ -2242,13 +2022,9 @@ ShowStoryNarration_13:
 	farcall FarPtr_CopySceneTilemapRect ; $5a5a
 	ld c, $08 ; $5a5d
 	call BeginFadeIn ; $5a5f
-	push af ; $5a62
-	script_wait_frames $04 ; $5a63
-	pop af ; $5a68
+	script_wait_frames $04 ; $5a62
 	script_speak $85 ; $5a69
-	push af ; $5a6e
-	script_wait_frames $04 ; $5a6f
-	pop af ; $5a74
+	script_wait_frames $04 ; $5a6e
 	ret ; $5a75
 Label_13_5a76:
 	script_set_text $01f0 ; $5a76
@@ -2336,9 +2112,7 @@ Label_13_5b01:
 	script_set_anim $00, $03 ; $5b44
 	script_wait_idle $00 ; $5b4b
 	script_face $00, $40 ; $5b50
-	push af ; $5b57
-	script_wait_frames $05 ; $5b58
-	pop af ; $5b5d
+	script_wait_frames $05 ; $5b57
 	ld a, $03 ; $5b5e
 	farcall FarPtr_GetActorStateAddr ; $5b60
 	ld c, l ; $5b63
@@ -2564,9 +2338,7 @@ Label_13_5ebb:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5ebd
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5ec0
 	farcall FarPtr_ScriptCloseDialogueWindow ; $5ec3
-	push af ; $5ec6
-	script_wait_frames $05 ; $5ec7
-	pop af ; $5ecc
+	script_wait_frames $05 ; $5ec6
 	and a, a ; $5ecd
 	jr nz, Label_13_5ed6 ; $5ece
 	script_set_text $0213 ; $5ed0
@@ -2591,9 +2363,7 @@ CourtyardNpcScripts_13:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5f29
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5f2c
 	farcall FarPtr_ScriptCloseDialogueWindow ; $5f2f
-	push af ; $5f32
-	script_wait_frames $05 ; $5f33
-	pop af ; $5f38
+	script_wait_frames $05 ; $5f32
 	and a, a ; $5f39
 	jr z, Label_13_5f4d ; $5f3a
 	script_speak $05 ; $5f3c
@@ -2884,9 +2654,7 @@ VarsityCourtTourCutscene:
 	ld de, $3300 ; $639a
 	farcall FarPtr_ScriptSetActorPosition ; $639d
 	script_move_target $06, $2200, $1d00 ; $63a0
-	push af ; $63ab
-	script_wait_frames $0f ; $63ac
-	pop af ; $63b1
+	script_wait_frames $0f ; $63ab
 	script_move_player $2200, $1d00 ; $63b2
 	ld a, $00 ; $63bc
 	ld bc, $2200 ; $63be
@@ -2894,32 +2662,20 @@ VarsityCourtTourCutscene:
 	farcall FarPtr_ScriptSetActorPosition ; $63c4
 	script_move_target $00, $2200, $2100 ; $63c7
 	script_wait_move $00 ; $63d2
-	push af ; $63d7
-	script_wait_frames $0f ; $63d8
-	pop af ; $63dd
+	script_wait_frames $0f ; $63d7
 	script_move_target $00, $2000, $1f00 ; $63de
 	script_wait_move $00 ; $63e9
-	push af ; $63ee
-	script_wait_frames $1e ; $63ef
-	pop af ; $63f4
+	script_wait_frames $1e ; $63ee
 	script_face $06, $80 ; $63f5
-	push af ; $63fc
-	script_wait_frames $1e ; $63fd
-	pop af ; $6402
+	script_wait_frames $1e ; $63fc
 	script_face $00, $80 ; $6403
-	push af ; $640a
-	script_wait_frames $1e ; $640b
-	pop af ; $6410
+	script_wait_frames $1e ; $640a
 	script_move_player $0c00, $1b00 ; $6411
 	farcall FarPtr_WaitPlayerMoveDone ; $641b
-	push af ; $641e
-	script_wait_frames $1e ; $641f
-	pop af ; $6424
+	script_wait_frames $1e ; $641e
 	script_set_text $0206 ; $6425
 	script_speak $06 ; $642b
-	push af ; $6430
-	script_wait_frames $0f ; $6431
-	pop af ; $6436
+	script_wait_frames $0f ; $6430
 	script_player_speed $0040 ; $6437
 	script_move_player $2200, $1d00 ; $643d
 	farcall FarPtr_WaitPlayerMoveDone ; $6447
@@ -2929,9 +2685,7 @@ VarsityCourtTourCutscene:
 	ld de, $1d00 ; $6455
 	farcall FarPtr_ScriptSetActorPosition ; $6458
 	sound $98 ; $645b
-	push af ; $645d
-	script_wait_frames $32 ; $645e
-	pop af ; $6463
+	script_wait_frames $32 ; $645d
 	ld a, $04 ; $6464
 	ld bc, $3f00 ; $6466
 	ld de, $3f00 ; $6469
@@ -2939,103 +2693,69 @@ VarsityCourtTourCutscene:
 	script_set_anim $06, $02 ; $646f
 	script_wait_idle $06 ; $6476
 	script_speak $06 ; $647b
-	push af ; $6480
-	script_wait_frames $1e ; $6481
-	pop af ; $6486
+	script_wait_frames $1e ; $6480
 	script_face $06, $40 ; $6487
-	push af ; $648e
-	script_wait_frames $0f ; $648f
-	pop af ; $6494
+	script_wait_frames $0f ; $648e
 	script_speak $06 ; $6495
 	script_face $06, $80 ; $649a
-	push af ; $64a1
-	script_wait_frames $0f ; $64a2
-	pop af ; $64a7
+	script_wait_frames $0f ; $64a1
 	script_player_speed $0040 ; $64a8
 	script_move_player $0c00, $1600 ; $64ae
 	farcall FarPtr_WaitPlayerMoveDone ; $64b8
 	script_player_speed $0020 ; $64bb
-	push af ; $64c1
-	script_wait_frames $3c ; $64c2
-	pop af ; $64c7
+	script_wait_frames $3c ; $64c1
 	script_move_player $0c00, $2200 ; $64c8
 	farcall FarPtr_WaitPlayerMoveDone ; $64d2
-	push af ; $64d5
-	script_wait_frames $3c ; $64d6
-	pop af ; $64db
+	script_wait_frames $3c ; $64d5
 	script_move_player $0c00, $1b00 ; $64dc
 	farcall FarPtr_WaitPlayerMoveDone ; $64e6
 	script_speak $06 ; $64e9
-	push af ; $64ee
-	script_wait_frames $0f ; $64ef
-	pop af ; $64f4
+	script_wait_frames $0f ; $64ee
 	script_player_speed $0040 ; $64f5
 	script_move_player $2200, $1d00 ; $64fb
 	farcall FarPtr_WaitPlayerMoveDone ; $6505
 	script_player_speed $0020 ; $6508
-	push af ; $650e
-	script_wait_frames $1e ; $650f
-	pop af ; $6514
+	script_wait_frames $1e ; $650e
 	script_face $06, $00 ; $6515
-	push af ; $651c
-	script_wait_frames $0f ; $651d
-	pop af ; $6522
+	script_wait_frames $0f ; $651c
 	script_face $00, $00 ; $6523
 	script_move_player $3000, $2600 ; $652a
 	farcall FarPtr_WaitPlayerMoveDone ; $6534
 	script_speak $06 ; $6537
-	push af ; $653c
-	script_wait_frames $0f ; $653d
-	pop af ; $6542
+	script_wait_frames $0f ; $653c
 	script_move_player $3600, $1000 ; $6543
 	farcall FarPtr_WaitPlayerMoveDone ; $654d
 	script_speak $06 ; $6550
-	push af ; $6555
-	script_wait_frames $0f ; $6556
-	pop af ; $655b
+	script_wait_frames $0f ; $6555
 	script_player_speed $0040 ; $655c
 	script_move_player $2200, $1d00 ; $6562
 	farcall FarPtr_WaitPlayerMoveDone ; $656c
 	script_player_speed $0020 ; $656f
-	push af ; $6575
-	script_wait_frames $0f ; $6576
-	pop af ; $657b
+	script_wait_frames $0f ; $6575
 	script_face $06, $40 ; $657c
 	script_speak $06 ; $6583
-	push af ; $6588
-	script_wait_frames $1e ; $6589
-	pop af ; $658e
+	script_wait_frames $1e ; $6588
 	script_face $00, $c0 ; $658f
 	script_set_anim $00, $03 ; $6596
 	script_wait_idle $00 ; $659d
-	push af ; $65a2
-	script_wait_frames $0f ; $65a3
-	pop af ; $65a8
+	script_wait_frames $0f ; $65a2
 	script_set_anim $06, $02 ; $65a9
 	script_wait_idle $06 ; $65b0
 	script_speak $06 ; $65b5
 	script_set_anim $00, $02 ; $65ba
 	script_wait_idle $00 ; $65c1
-	push af ; $65c6
-	script_wait_frames $1e ; $65c7
-	pop af ; $65cc
+	script_wait_frames $1e ; $65c6
 	script_set_anim $06, $03 ; $65cd
 	script_wait_idle $06 ; $65d4
 	script_speak $06 ; $65d9
 	script_move_target $00, $2200, $1f00 ; $65de
 	script_wait_move $00 ; $65e9
 	script_face $00, $c0 ; $65ee
-	push af ; $65f5
-	script_wait_frames $0f ; $65f6
-	pop af ; $65fb
+	script_wait_frames $0f ; $65f5
 	script_move_target $06, $2200, $0700 ; $65fc
-	push af ; $6607
-	script_wait_frames $05 ; $6608
-	pop af ; $660d
+	script_wait_frames $05 ; $6607
 	script_move_target $00, $2200, $0700 ; $660e
-	push af ; $6619
-	script_wait_frames $0a ; $661a
-	pop af ; $661f
+	script_wait_frames $0a ; $6619
 	script_move_player $2200, $0d00 ; $6620
 	script_wait_move $00 ; $662a
 	ld a, $0f ; $662f
@@ -3147,9 +2867,7 @@ SetupStoryMinigameMatch0:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6c48
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6c4b
 	farcall FarPtr_ScriptCloseDialogueWindow ; $6c4e
-	push af ; $6c51
-	script_wait_frames $05 ; $6c52
-	pop af ; $6c57
+	script_wait_frames $05 ; $6c51
 	and a, a ; $6c58
 	jp nz, Label_13_6df5 ; $6c59
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6c5c
@@ -3160,32 +2878,24 @@ SetupStoryMinigameMatch0:
 	ld b, a ; $6c79
 	ld a, $00 ; $6c7a
 	farcall FarPtr_FaceActorTowardActor ; $6c7c
-	push af ; $6c7f
-	script_wait_frames $1e ; $6c80
-	pop af ; $6c85
+	script_wait_frames $1e ; $6c7f
 	ld a, $00 ; $6c86
 	ld b, a ; $6c88
 	ld a, $03 ; $6c89
 	farcall FarPtr_FaceActorTowardActor ; $6c8b
 	script_speak $03 ; $6c8e
 	script_set_speed $00, $0020 ; $6c93
-	push af ; $6c9b
-	script_wait_frames $0f ; $6c9c
-	pop af ; $6ca1
+	script_wait_frames $0f ; $6c9b
 	ld a, $04 ; $6ca2
 	ld b, a ; $6ca4
 	ld a, $03 ; $6ca5
 	farcall FarPtr_FaceActorTowardActor ; $6ca7
-	push af ; $6caa
-	script_wait_frames $1e ; $6cab
-	pop af ; $6cb0
+	script_wait_frames $1e ; $6caa
 	ld a, $04 ; $6cb1
 	ld b, a ; $6cb3
 	ld a, $00 ; $6cb4
 	farcall FarPtr_FaceActorTowardActor ; $6cb6
-	push af ; $6cb9
-	script_wait_frames $1e ; $6cba
-	pop af ; $6cbf
+	script_wait_frames $1e ; $6cb9
 	script_player_speed $0020 ; $6cc0
 	ld a, $04 ; $6cc6
 	ld b, $00 ; $6cc8
@@ -3199,23 +2909,17 @@ SetupStoryMinigameMatch0:
 	farcall FarPtr_MovePlayerToActor ; $6ceb
 	script_wait_move $04 ; $6cee
 	script_face $03, $40 ; $6cf3
-	push af ; $6cfa
-	script_wait_frames $0f ; $6cfb
-	pop af ; $6d00
+	script_wait_frames $0f ; $6cfa
 	script_face $04, $c0 ; $6d01
 	script_face $00, $c0 ; $6d08
-	push af ; $6d0f
-	script_wait_frames $0f ; $6d10
-	pop af ; $6d15
+	script_wait_frames $0f ; $6d0f
 	script_set_anim $03, $02 ; $6d16
 	script_wait_idle $03 ; $6d1d
 	ld a, $03 ; $6d22
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6d24
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6d27
 	farcall FarPtr_ScriptCloseDialogueWindow ; $6d2a
-	push af ; $6d2d
-	script_wait_frames $05 ; $6d2e
-	pop af ; $6d33
+	script_wait_frames $05 ; $6d2d
 	and a, a ; $6d34
 	jp nz, Label_13_6dfb ; $6d35
 	script_set_anim $03, $03 ; $6d38
@@ -3285,9 +2989,7 @@ Label_13_6dfb:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6e00
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6e03
 	farcall FarPtr_ScriptCloseDialogueWindow ; $6e06
-	push af ; $6e09
-	script_wait_frames $05 ; $6e0a
-	pop af ; $6e0f
+	script_wait_frames $05 ; $6e09
 	and a, a ; $6e10
 	jr z, Label_13_6e17 ; $6e11
 	jp Label_13_6d44 ; $6e13
@@ -3313,9 +3015,7 @@ Label_13_6e17:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6e5a
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6e5d
 	farcall FarPtr_ScriptCloseDialogueWindow ; $6e60
-	push af ; $6e63
-	script_wait_frames $05 ; $6e64
-	pop af ; $6e69
+	script_wait_frames $05 ; $6e63
 	and a, a ; $6e6a
 	jp nz, Label_13_707d ; $6e6b
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6e6e
@@ -3333,9 +3033,7 @@ Label_13_6e17:
 	ld b, a ; $6eab
 	ld a, $02 ; $6eac
 	farcall FarPtr_FaceActorTowardActor ; $6eae
-	push af ; $6eb1
-	script_wait_frames $1e ; $6eb2
-	pop af ; $6eb7
+	script_wait_frames $1e ; $6eb1
 	script_set_speed $00, $0020 ; $6eb8
 	script_set_speed $02, $0020 ; $6ec0
 	ld a, $00 ; $6ec8
@@ -3343,16 +3041,12 @@ Label_13_6e17:
 	ld a, $03 ; $6ecb
 	farcall FarPtr_FaceActorTowardActor ; $6ecd
 	script_speak $03 ; $6ed0
-	push af ; $6ed5
-	script_wait_frames $0f ; $6ed6
-	pop af ; $6edb
+	script_wait_frames $0f ; $6ed5
 	ld a, $04 ; $6edc
 	ld b, a ; $6ede
 	ld a, $03 ; $6edf
 	farcall FarPtr_FaceActorTowardActor ; $6ee1
-	push af ; $6ee4
-	script_wait_frames $1e ; $6ee5
-	pop af ; $6eea
+	script_wait_frames $1e ; $6ee4
 	ld a, $09 ; $6eeb
 	ld b, a ; $6eed
 	ld a, $00 ; $6eee
@@ -3361,9 +3055,7 @@ Label_13_6e17:
 	ld b, a ; $6ef5
 	ld a, $02 ; $6ef6
 	farcall FarPtr_FaceActorTowardActor ; $6ef8
-	push af ; $6efb
-	script_wait_frames $1e ; $6efc
-	pop af ; $6f01
+	script_wait_frames $1e ; $6efb
 	script_player_speed $0020 ; $6f02
 	ld a, $04 ; $6f08
 	ld b, $00 ; $6f0a
@@ -3384,30 +3076,22 @@ Label_13_6e17:
 	ld a, $00 ; $6f44
 	ld b, $00 ; $6f46
 	farcall FarPtr_MovePlayerToActor ; $6f48
-	push af ; $6f4b
-	script_wait_frames $0f ; $6f4c
-	pop af ; $6f51
+	script_wait_frames $0f ; $6f4b
 	script_face $03, $40 ; $6f52
-	push af ; $6f59
-	script_wait_frames $0f ; $6f5a
-	pop af ; $6f5f
+	script_wait_frames $0f ; $6f59
 	script_wait_move $04 ; $6f60
 	script_face $04, $c0 ; $6f65
 	script_face $09, $c0 ; $6f6c
 	script_face $00, $c0 ; $6f73
 	script_face $02, $c0 ; $6f7a
-	push af ; $6f81
-	script_wait_frames $0f ; $6f82
-	pop af ; $6f87
+	script_wait_frames $0f ; $6f81
 	script_set_anim $03, $02 ; $6f88
 	script_wait_idle $03 ; $6f8f
 	ld a, $03 ; $6f94
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6f96
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6f99
 	farcall FarPtr_ScriptCloseDialogueWindow ; $6f9c
-	push af ; $6f9f
-	script_wait_frames $05 ; $6fa0
-	pop af ; $6fa5
+	script_wait_frames $05 ; $6f9f
 	and a, a ; $6fa6
 	jp nz, Label_13_7090 ; $6fa7
 	script_set_anim $03, $03 ; $6faa
@@ -3493,9 +3177,7 @@ Label_13_7090:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $7095
 	farcall FarPtr_RunDialogueYesNoPrompt ; $7098
 	farcall FarPtr_ScriptCloseDialogueWindow ; $709b
-	push af ; $709e
-	script_wait_frames $05 ; $709f
-	pop af ; $70a4
+	script_wait_frames $05 ; $709e
 	and a, a ; $70a5
 	jr z, Label_13_70ac ; $70a6
 	jp Label_13_6fb6 ; $70a8
@@ -3503,9 +3185,7 @@ Label_13_7090:
 Label_13_70ac:
 	script_speak $03 ; $70ac
 	call Func_13_70d5 ; $70b1
-	push af ; $70b4
-	script_wait_frames $3c ; $70b5
-	pop af ; $70ba
+	script_wait_frames $3c ; $70b4
 	ld a, $02 ; $70bb
 	farcall FarPtr_GetActorStateAddr ; $70bd
 	ld c, l ; $70c0
@@ -3561,9 +3241,7 @@ SinglesTravelingTeamVictoryCutscene:
 	ld c, $04 ; $7148
 	call BeginFadeIn ; $714a
 	call WaitFadeEnd ; $714d
-	push af ; $7150
-	script_wait_frames $3c ; $7151
-	pop af ; $7156
+	script_wait_frames $3c ; $7150
 	script_set_text $022a ; $7157
 	script_player_speed $0020 ; $715d
 	script_move_player $0b00, $1700 ; $7163
@@ -3579,9 +3257,7 @@ SinglesTravelingTeamVictoryCutscene:
 	ld de, $1bc0 ; $719b
 	farcall FarPtr_ScriptSetActorPosition ; $719e
 	sound $98 ; $71a1
-	push af ; $71a3
-	script_wait_frames $28 ; $71a4
-	pop af ; $71a9
+	script_wait_frames $28 ; $71a3
 	ld a, $0c ; $71aa
 	ld bc, $3f00 ; $71ac
 	ld de, $3f00 ; $71af
@@ -3591,9 +3267,7 @@ SinglesTravelingTeamVictoryCutscene:
 	ld b, $00 ; $71be
 	farcall FarPtr_MovePlayerToActor ; $71c0
 	farcall FarPtr_WaitPlayerMoveDone ; $71c3
-	push af ; $71c6
-	script_wait_frames $28 ; $71c7
-	pop af ; $71cc
+	script_wait_frames $28 ; $71c6
 	ld a, $00 ; $71cd
 	ld b, $00 ; $71cf
 	farcall FarPtr_MovePlayerToActor ; $71d1
@@ -3612,9 +3286,7 @@ SinglesTravelingTeamVictoryCutscene:
 	ld a, $0d ; $71ed
 	ld de, $7aa0 ; $71ef
 	farcall FarPtr_ScriptSetActorScript ; $71f2
-	push af ; $71f5
-	script_wait_frames $0a ; $71f6
-	pop af ; $71fb
+	script_wait_frames $0a ; $71f5
 	ldh a, [hRomBank] ; $71fc
 	ld b, a ; $71fe
 	ld a, $03 ; $71ff
@@ -3665,14 +3337,10 @@ Label_13_727c:
 	script_speak $09 ; $729e
 	script_set_anim $00, $02 ; $72a3
 	script_wait_idle $00 ; $72aa
-	push af ; $72af
-	script_wait_frames $14 ; $72b0
-	pop af ; $72b5
+	script_wait_frames $14 ; $72af
 	script_move_target $08, $0a00, $1f00 ; $72b6
 	script_wait_move $08 ; $72c1
-	push af ; $72c6
-	script_wait_frames $14 ; $72c7
-	pop af ; $72cc
+	script_wait_frames $14 ; $72c6
 	ld a, $08 ; $72cd
 	ld b, a ; $72cf
 	ld a, $00 ; $72d0
@@ -3681,20 +3349,14 @@ Label_13_727c:
 	ld b, a ; $72d7
 	ld a, $0d ; $72d8
 	farcall FarPtr_FaceActorTowardActor ; $72da
-	push af ; $72dd
-	script_wait_frames $14 ; $72de
-	pop af ; $72e3
+	script_wait_frames $14 ; $72dd
 	script_set_anim $08, $03 ; $72e4
 	script_wait_idle $08 ; $72eb
 	script_speak $08 ; $72f0
-	push af ; $72f5
-	script_wait_frames $14 ; $72f6
-	pop af ; $72fb
+	script_wait_frames $14 ; $72f5
 	script_move_target $03, $0c00, $1f00 ; $72fc
 	script_wait_move $03 ; $7307
-	push af ; $730c
-	script_wait_frames $14 ; $730d
-	pop af ; $7312
+	script_wait_frames $14 ; $730c
 	script_set_anim $03, $02 ; $7313
 	script_wait_idle $03 ; $731a
 	script_speak $03 ; $731f
@@ -3715,16 +3377,12 @@ Label_13_7340:
 	farcall FarPtr_FaceActorTowardActor ; $734a
 	script_set_anim $00, $03 ; $734d
 	script_wait_idle $00 ; $7354
-	push af ; $7359
-	script_wait_frames $0a ; $735a
-	pop af ; $735f
+	script_wait_frames $0a ; $7359
 	ld a, $08 ; $7360
 	ld b, a ; $7362
 	ld a, $00 ; $7363
 	farcall FarPtr_FaceActorTowardActor ; $7365
-	push af ; $7368
-	script_wait_frames $0a ; $7369
-	pop af ; $736e
+	script_wait_frames $0a ; $7368
 	script_set_anim $00, $03 ; $736f
 	ld c, $02 ; $7376
 	call BeginFadeOut ; $7378
@@ -3914,9 +3572,7 @@ DoublesTravelingTeamVictoryCutscene:
 	ld c, $04 ; $74a4
 	call BeginFadeIn ; $74a6
 	call WaitFadeEnd ; $74a9
-	push af ; $74ac
-	script_wait_frames $3c ; $74ad
-	pop af ; $74b2
+	script_wait_frames $3c ; $74ac
 	script_player_speed $0020 ; $74b3
 	script_move_player $0b00, $1700 ; $74b9
 	farcall FarPtr_WaitPlayerMoveDone ; $74c3
@@ -3936,9 +3592,7 @@ DoublesTravelingTeamVictoryCutscene:
 	ld b, a ; $7518
 	ld a, $02 ; $7519
 	farcall FarPtr_FaceActorTowardActor ; $751b
-	push af ; $751e
-	script_wait_frames $1e ; $751f
-	pop af ; $7524
+	script_wait_frames $1e ; $751e
 	script_set_anim $02, $03 ; $7525
 	script_wait_idle $02 ; $752c
 	test_flag $1c, 0 ; $7531
@@ -3959,9 +3613,7 @@ DoublesTravelingTeamVictoryCutscene:
 	ld de, $1b80 ; $756e
 	farcall FarPtr_ScriptSetActorPosition ; $7571
 	sound $96 ; $7574
-	push af ; $7576
-	script_wait_frames $28 ; $7577
-	pop af ; $757c
+	script_wait_frames $28 ; $7576
 	ld a, $0a ; $757d
 	ld bc, $3f00 ; $757f
 	ld de, $3f00 ; $7582
@@ -3970,15 +3622,11 @@ DoublesTravelingTeamVictoryCutscene:
 	ld b, a ; $758a
 	ld a, $00 ; $758b
 	farcall FarPtr_FaceActorTowardActor ; $758d
-	push af ; $7590
-	script_wait_frames $0a ; $7591
-	pop af ; $7596
+	script_wait_frames $0a ; $7590
 	ld a, $00 ; $7597
 	ld b, $01 ; $7599
 	farcall FarPtr_ScriptSetActorFacingLock ; $759b
-	push af ; $759e
-	script_wait_frames $0a ; $759f
-	pop af ; $75a4
+	script_wait_frames $0a ; $759e
 	script_move_angle $00, $00, $0100 ; $75a5
 	script_wait_move $00 ; $75af
 	script_set_anim $00, $02 ; $75b4
@@ -4011,14 +3659,10 @@ DoublesTravelingTeamVictoryCutscene:
 	add hl, de ; $763f
 	ld [hl], $01 ; $7640
 	script_face $02, $80 ; $7642
-	push af ; $7649
-	script_wait_frames $14 ; $764a
-	pop af ; $764f
+	script_wait_frames $14 ; $7649
 	script_set_anim $02, $03 ; $7650
 	script_wait_idle $02 ; $7657
-	push af ; $765c
-	script_wait_frames $14 ; $765d
-	pop af ; $7662
+	script_wait_frames $14 ; $765c
 	script_set_anim $00, $03 ; $7663
 	script_wait_idle $00 ; $766a
 	jp Label_13_7769 ; $766f
@@ -4037,22 +3681,16 @@ Label_13_7672:
 	ld de, $1b80 ; $769b
 	farcall FarPtr_ScriptSetActorPosition ; $769e
 	sound $96 ; $76a1
-	push af ; $76a3
-	script_wait_frames $28 ; $76a4
-	pop af ; $76a9
+	script_wait_frames $28 ; $76a3
 	ld a, $0a ; $76aa
 	ld bc, $3f00 ; $76ac
 	ld de, $3f00 ; $76af
 	farcall FarPtr_ScriptSetActorPosition ; $76b2
-	push af ; $76b5
-	script_wait_frames $0a ; $76b6
-	pop af ; $76bb
+	script_wait_frames $0a ; $76b5
 	ld a, $00 ; $76bc
 	ld b, $01 ; $76be
 	farcall FarPtr_ScriptSetActorFacingLock ; $76c0
-	push af ; $76c3
-	script_wait_frames $0a ; $76c4
-	pop af ; $76c9
+	script_wait_frames $0a ; $76c3
 	script_move_angle $00, $00, $0100 ; $76ca
 	script_wait_move $00 ; $76d4
 	script_set_anim $00, $02 ; $76d9
@@ -4069,9 +3707,7 @@ Label_13_7672:
 	script_face $02, $40 ; $770b
 	script_set_anim $02, $02 ; $7712
 	script_wait_idle $02 ; $7719
-	push af ; $771e
-	script_wait_frames $28 ; $771f
-	pop af ; $7724
+	script_wait_frames $28 ; $771e
 	script_set_anim $02, $02 ; $7725
 	script_wait_idle $02 ; $772c
 	ld a, $02 ; $7731
@@ -4080,21 +3716,15 @@ Label_13_7672:
 	add hl, de ; $7739
 	ld [hl], $01 ; $773a
 	script_face $02, $80 ; $773c
-	push af ; $7743
-	script_wait_frames $14 ; $7744
-	pop af ; $7749
+	script_wait_frames $14 ; $7743
 	script_set_anim $02, $03 ; $774a
 	script_wait_idle $02 ; $7751
-	push af ; $7756
-	script_wait_frames $14 ; $7757
-	pop af ; $775c
+	script_wait_frames $14 ; $7756
 	script_set_anim $00, $03 ; $775d
 	script_wait_idle $00 ; $7764
 Label_13_7769:
 	script_set_text $041c ; $7769
-	push af ; $776f
-	script_wait_frames $14 ; $7770
-	pop af ; $7775
+	script_wait_frames $14 ; $776f
 	script_speak $08 ; $7776
 	ld a, $00 ; $777b
 	ld b, $00 ; $777d
@@ -4111,9 +3741,7 @@ Label_13_7769:
 	ld a, $03 ; $779e
 	ld de, $7a60 ; $77a0
 	farcall FarPtr_ScriptSetActorScript ; $77a3
-	push af ; $77a6
-	script_wait_frames $14 ; $77a7
-	pop af ; $77ac
+	script_wait_frames $14 ; $77a6
 	ldh a, [hRomBank] ; $77ad
 	ld b, a ; $77af
 	ld a, $09 ; $77b0
@@ -4173,9 +3801,7 @@ Label_13_7861:
 	farcall FarPtr_FaceActorTowardActor ; $786b
 	script_set_anim $00, $03 ; $786e
 	script_wait_idle $00 ; $7875
-	push af ; $787a
-	script_wait_frames $0a ; $787b
-	pop af ; $7880
+	script_wait_frames $0a ; $787a
 	ld a, $08 ; $7881
 	ld b, a ; $7883
 	ld a, $00 ; $7884
@@ -4184,9 +3810,7 @@ Label_13_7861:
 	ld b, a ; $788b
 	ld a, $02 ; $788c
 	farcall FarPtr_FaceActorTowardActor ; $788e
-	push af ; $7891
-	script_wait_frames $0a ; $7892
-	pop af ; $7897
+	script_wait_frames $0a ; $7891
 	script_set_anim $00, $03 ; $7898
 	script_set_anim $02, $03 ; $789f
 	ld c, $02 ; $78a6

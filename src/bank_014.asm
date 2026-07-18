@@ -90,9 +90,7 @@ Label_14_40ce:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $40d0
 	farcall FarPtr_RunDialogueYesNoPrompt ; $40d3
 	farcall FarPtr_ScriptCloseDialogueWindow ; $40d6
-	push af ; $40d9
-	script_wait_frames $05 ; $40da
-	pop af ; $40df
+	script_wait_frames $05 ; $40d9
 	and a, a ; $40e0
 	jr z, Label_14_40e6 ; $40e1
 	farcall FarPtr_AdvanceDialogueTextCursor ; $40e3
@@ -232,9 +230,7 @@ Func_14_4227:
 	script_wait_move $00 ; $4238
 	script_move_target $05, $2d00, $2b00 ; $423d
 	script_wait_move $05 ; $4248
-	push af ; $424d
-	script_wait_frames $05 ; $424e
-	pop af ; $4253
+	script_wait_frames $05 ; $424d
 	script_face $05, $80 ; $4254
 	script_face $00, $00 ; $425b
 	ld a, $02 ; $4262
@@ -274,9 +270,7 @@ MachineCourtResultScene:
 	jr z, Label_14_42d3 ; $42b3
 	ld a, $02 ; $42b5
 	farcall FarPtr_SetActorNullScript ; $42b7
-	push af ; $42ba
-	script_wait_frames $0a ; $42bb
-	pop af ; $42c0
+	script_wait_frames $0a ; $42ba
 	ld a, $02 ; $42c1
 	ld bc, $2900 ; $42c3
 	ld de, $2b00 ; $42c6
@@ -291,9 +285,7 @@ Label_14_42d3:
 	ld c, $06 ; $42e5
 	call BeginFadeIn ; $42e7
 	call WaitFadeEnd ; $42ea
-	push af ; $42ed
-	script_wait_frames $28 ; $42ee
-	pop af ; $42f3
+	script_wait_frames $28 ; $42ed
 	script_set_speed $00, $0020 ; $42f4
 	test_flag $05, 7 ; $42fc
 	jr z, Label_14_4301 ; $42ff
@@ -448,9 +440,7 @@ Label_14_4467:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4477
 	farcall FarPtr_RunDialogueYesNoPrompt ; $447a
 	farcall FarPtr_ScriptCloseDialogueWindow ; $447d
-	push af ; $4480
-	script_wait_frames $05 ; $4481
-	pop af ; $4486
+	script_wait_frames $05 ; $4480
 	and a, a ; $4487
 	jr nz, Label_14_44a9 ; $4488
 	set_flag $1c, 0 ; $448a
@@ -471,9 +461,7 @@ Label_14_44a9:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $44b6
 	farcall FarPtr_RunDialogueYesNoPrompt ; $44b9
 	farcall FarPtr_ScriptCloseDialogueWindow ; $44bc
-	push af ; $44bf
-	script_wait_frames $05 ; $44c0
-	pop af ; $44c5
+	script_wait_frames $05 ; $44bf
 	and a, a ; $44c6
 	jp z, Label_14_45a6 ; $44c7
 Label_14_44ca:
@@ -515,9 +503,7 @@ Label_14_4515:
 	script_move_target $00, $3800, $3500 ; $4547
 	script_wait_move $00 ; $4552
 	script_face $00, $c0 ; $4557
-	push af ; $455e
-	script_wait_frames $0a ; $455f
-	pop af ; $4564
+	script_wait_frames $0a ; $455e
 	ld a, [$c2b0] ; $4565
 	cp a, $04 ; $4568
 	jr c, Label_14_4577 ; $456a
@@ -590,9 +576,7 @@ MachinePracticeLevelPrompt:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $462c
 	farcall FarPtr_RunDialogueYesNoPrompt ; $462f
 	farcall FarPtr_ScriptCloseDialogueWindow ; $4632
-	push af ; $4635
-	script_wait_frames $05 ; $4636
-	pop af ; $463b
+	script_wait_frames $05 ; $4635
 	and a, a ; $463c
 	jr nz, Label_14_4692 ; $463d
 	script_face $05, $c0 ; $463f
@@ -662,9 +646,7 @@ MachinePracticeResultScene:
 	ld de, $2b00 ; $46db
 	farcall FarPtr_ScriptSetActorPosition ; $46de
 	script_face $02, $00 ; $46e1
-	push af ; $46e8
-	script_wait_frames $0a ; $46e9
-	pop af ; $46ee
+	script_wait_frames $0a ; $46e8
 Label_14_46ef:
 	ld a, $05 ; $46ef
 	ld bc, $2d00 ; $46f1
@@ -674,9 +656,7 @@ Label_14_46ef:
 	ld c, $06 ; $4701
 	call BeginFadeIn ; $4703
 	call WaitFadeEnd ; $4706
-	push af ; $4709
-	script_wait_frames $28 ; $470a
-	pop af ; $470f
+	script_wait_frames $28 ; $4709
 	ld a, [wMatchExitRequest] ; $4710
 	and a, a ; $4713
 	jp nz, Label_14_474d ; $4714
@@ -696,9 +676,7 @@ Label_14_46ef:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4739
 	farcall FarPtr_RunDialogueYesNoPrompt ; $473c
 	farcall FarPtr_ScriptCloseDialogueWindow ; $473f
-	push af ; $4742
-	script_wait_frames $05 ; $4743
-	pop af ; $4748
+	script_wait_frames $05 ; $4742
 	and a, a ; $4749
 	jp z, MachineCourtRestartLevel ; $474a
 Label_14_474d:
@@ -708,9 +686,7 @@ MachineCourtHandleRetryChoice:
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4750
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4753
 	farcall FarPtr_ScriptCloseDialogueWindow ; $4756
-	push af ; $4759
-	script_wait_frames $05 ; $475a
-	pop af ; $475f
+	script_wait_frames $05 ; $4759
 	and a, a ; $4760
 	jr z, MachineCourtRestartLevel ; $4761
 	script_set_text $20dc ; $4763
@@ -980,9 +956,7 @@ Label_14_4a00:
 	script_face $05, $40 ; $4a13
 	ld a, $02 ; $4a1a
 	farcall FarPtr_SetActorNullScript ; $4a1c
-	push af ; $4a1f
-	script_wait_frames $01 ; $4a20
-	pop af ; $4a25
+	script_wait_frames $01 ; $4a1f
 	ld a, $02 ; $4a26
 	ld bc, $2900 ; $4a28
 	ld de, $2b00 ; $4a2b
@@ -1130,9 +1104,7 @@ Label_14_4bf5:
 	ld de, $2180 ; $4c1c
 	farcall FarPtr_ScriptSetActorPosition ; $4c1f
 	sound $97 ; $4c22
-	push af ; $4c24
-	script_wait_frames $14 ; $4c25
-	pop af ; $4c2a
+	script_wait_frames $14 ; $4c24
 	script_speak $09 ; $4c2b
 	ld a, $0c ; $4c30
 	ld bc, $3f00 ; $4c32
@@ -1148,9 +1120,7 @@ Label_14_4bf5:
 	ld b, a ; $4c5f
 	ld a, $08 ; $4c60
 	farcall FarPtr_FaceActorTowardActor ; $4c62
-	push af ; $4c65
-	script_wait_frames $14 ; $4c66
-	pop af ; $4c6b
+	script_wait_frames $14 ; $4c65
 	ld a, $0c ; $4c6c
 	ld bc, $0a80 ; $4c6e
 	ld de, $2180 ; $4c71
@@ -1162,17 +1132,13 @@ Label_14_4bf5:
 	ld bc, $3f00 ; $4c87
 	ld de, $3f00 ; $4c8a
 	farcall FarPtr_ScriptSetActorPosition ; $4c8d
-	push af ; $4c90
-	script_wait_frames $0a ; $4c91
-	pop af ; $4c96
+	script_wait_frames $0a ; $4c90
 	ld a, $0d ; $4c97
 	ld bc, $0a80 ; $4c99
 	ld de, $2180 ; $4c9c
 	farcall FarPtr_ScriptSetActorPosition ; $4c9f
 	sound $96 ; $4ca2
-	push af ; $4ca4
-	script_wait_frames $14 ; $4ca5
-	pop af ; $4caa
+	script_wait_frames $14 ; $4ca4
 	script_speak $08 ; $4cab
 	ld a, $0d ; $4cb0
 	ld bc, $3f00 ; $4cb2
@@ -1183,9 +1149,7 @@ Label_14_4bf5:
 	ld de, $2180 ; $4cc0
 	farcall FarPtr_ScriptSetActorPosition ; $4cc3
 	sound $98 ; $4cc6
-	push af ; $4cc8
-	script_wait_frames $3c ; $4cc9
-	pop af ; $4cce
+	script_wait_frames $3c ; $4cc8
 	ld a, $0e ; $4ccf
 	ld bc, $3f00 ; $4cd1
 	ld de, $3f00 ; $4cd4
@@ -1194,9 +1158,7 @@ Label_14_4bf5:
 	ld b, a ; $4cdc
 	ld a, $09 ; $4cdd
 	farcall FarPtr_FaceActorTowardActor ; $4cdf
-	push af ; $4ce2
-	script_wait_frames $14 ; $4ce3
-	pop af ; $4ce8
+	script_wait_frames $14 ; $4ce2
 	ld a, $0c ; $4ce9
 	ld bc, $0c80 ; $4ceb
 	ld de, $2180 ; $4cee
@@ -1208,17 +1170,13 @@ Label_14_4bf5:
 	ld bc, $3f00 ; $4d04
 	ld de, $3f00 ; $4d07
 	farcall FarPtr_ScriptSetActorPosition ; $4d0a
-	push af ; $4d0d
-	script_wait_frames $0a ; $4d0e
-	pop af ; $4d13
+	script_wait_frames $0a ; $4d0d
 	ld a, $0d ; $4d14
 	ld bc, $0c80 ; $4d16
 	ld de, $2180 ; $4d19
 	farcall FarPtr_ScriptSetActorPosition ; $4d1c
 	sound $96 ; $4d1f
-	push af ; $4d21
-	script_wait_frames $14 ; $4d22
-	pop af ; $4d27
+	script_wait_frames $14 ; $4d21
 	script_speak $09 ; $4d28
 	ld a, $0d ; $4d2d
 	ld bc, $3f00 ; $4d2f
@@ -1722,18 +1680,14 @@ Label_14_539c:
 	call BeginFadeIn ; $53a2
 	call WaitFadeEnd ; $53a5
 	sound $7a ; $53a8
-	push af ; $53aa
-	script_wait_frames $3c ; $53ab
-	pop af ; $53b0
+	script_wait_frames $3c ; $53aa
 	ld a, $00 ; $53b1
 	ld bc, $0600 ; $53b3
 	ld de, $2700 ; $53b6
 	farcall FarPtr_ScriptSetActorPosition ; $53b9
 	ld h, $08 ; $53bc
 Label_14_53be:
-	push af ; $53be
-	script_wait_frames $06 ; $53bf
-	pop af ; $53c4
+	script_wait_frames $06 ; $53be
 	call PlayWaterSpriteMoveSfx ; $53c5
 	ld a, [$c2b1] ; $53c8
 	inc a ; $53cb
@@ -1742,9 +1696,7 @@ Label_14_53be:
 	jr nz, Label_14_53be ; $53d0
 	ld h, $08 ; $53d2
 Label_14_53d4:
-	push af ; $53d4
-	script_wait_frames $05 ; $53d5
-	pop af ; $53da
+	script_wait_frames $05 ; $53d4
 	call PlayWaterSpriteMoveSfx ; $53db
 	ld a, h ; $53de
 	and a, $01 ; $53df
@@ -1760,9 +1712,7 @@ Label_14_53ea:
 	jr nz, Label_14_53d4 ; $53f2
 	ld h, $08 ; $53f4
 Label_14_53f6:
-	push af ; $53f6
-	script_wait_frames $04 ; $53f7
-	pop af ; $53fc
+	script_wait_frames $04 ; $53f6
 	call PlayWaterSpriteMoveSfx ; $53fd
 	ld a, [$c2b0] ; $5400
 	dec a ; $5403
@@ -1778,9 +1728,7 @@ Label_14_53f6:
 	farcall FarPtr_MovePlayerToActor ; $541b
 	ld h, $1c ; $541e
 Label_14_5420:
-	push af ; $5420
-	script_wait_frames $03 ; $5421
-	pop af ; $5426
+	script_wait_frames $03 ; $5420
 	call PlayWaterSpriteMoveSfx ; $5427
 	ld a, h ; $542a
 	and a, $01 ; $542b
@@ -1797,9 +1745,7 @@ Label_14_5436:
 Label_14_5440:
 	ld h, $00 ; $5440
 Label_14_5442:
-	push af ; $5442
-	script_wait_frames $03 ; $5443
-	pop af ; $5448
+	script_wait_frames $03 ; $5442
 	inc h ; $5449
 	call PlayWaterSpriteMoveSfx ; $544a
 	ld a, [$c2b1] ; $544d
@@ -1817,9 +1763,7 @@ Label_14_5461:
 	jr nz, Label_14_5442 ; $5466
 	ld h, $08 ; $5468
 Label_14_546a:
-	push af ; $546a
-	script_wait_frames $04 ; $546b
-	pop af ; $5470
+	script_wait_frames $04 ; $546a
 	call PlayWaterSpriteMoveSfx ; $5471
 	ld a, [$c2b1] ; $5474
 	inc a ; $5477
@@ -1829,9 +1773,7 @@ Label_14_546a:
 	sound $7b ; $547e
 	ld h, $08 ; $5480
 Label_14_5482:
-	push af ; $5482
-	script_wait_frames $06 ; $5483
-	pop af ; $5488
+	script_wait_frames $06 ; $5482
 	ld a, [$c2b1] ; $5489
 	inc a ; $548c
 	ld [$c2b1], a ; $548d
@@ -1840,9 +1782,7 @@ Label_14_5482:
 	sound $7d ; $5493
 	ld h, $04 ; $5495
 Label_14_5497:
-	push af ; $5497
-	script_wait_frames $08 ; $5498
-	pop af ; $549d
+	script_wait_frames $08 ; $5497
 	ld a, [$c2b1] ; $549e
 	inc a ; $54a1
 	ld [$c2b1], a ; $54a2
@@ -1886,9 +1826,7 @@ Label_14_54df:
 	ld a, $01 ; $54f7
 	ld hl, $60c4 ; $54f9
 	call RegisterFrameTask ; $54fc
-	push af ; $54ff
-	script_wait_frames $0a ; $5500
-	pop af ; $5505
+	script_wait_frames $0a ; $54ff
 	ld a, $50 ; $5506
 	ld [$c2b3], a ; $5508
 	ld a, $02 ; $550b
@@ -1902,9 +1840,7 @@ Label_14_54df:
 	ld a, $01 ; $551e
 	ld hl, $617e ; $5520
 	call RegisterFrameTask ; $5523
-	push af ; $5526
-	script_wait_frames $50 ; $5527
-	pop af ; $552c
+	script_wait_frames $50 ; $5526
 	ld a, $03 ; $552d
 	ld bc, $0600 ; $552f
 	ld de, $2900 ; $5532
@@ -1926,33 +1862,25 @@ Label_14_54df:
 	ld a, $03 ; $555c
 	ld de, $563b ; $555e
 	farcall FarPtr_ScriptSetActorScript ; $5561
-	push af ; $5564
-	script_wait_frames $1e ; $5565
-	pop af ; $556a
+	script_wait_frames $1e ; $5564
 	ldh a, [hRomBank] ; $556b
 	ld b, a ; $556d
 	ld a, $04 ; $556e
 	ld de, $563b ; $5570
 	farcall FarPtr_ScriptSetActorScript ; $5573
-	push af ; $5576
-	script_wait_frames $1e ; $5577
-	pop af ; $557c
+	script_wait_frames $1e ; $5576
 	ldh a, [hRomBank] ; $557d
 	ld b, a ; $557f
 	ld a, $05 ; $5580
 	ld de, $563b ; $5582
 	farcall FarPtr_ScriptSetActorScript ; $5585
-	push af ; $5588
-	script_wait_frames $1e ; $5589
-	pop af ; $558e
+	script_wait_frames $1e ; $5588
 	ldh a, [hRomBank] ; $558f
 	ld b, a ; $5591
 	ld a, $06 ; $5592
 	ld de, $563b ; $5594
 	farcall FarPtr_ScriptSetActorScript ; $5597
-	push af ; $559a
-	script_wait_frames $50 ; $559b
-	pop af ; $55a0
+	script_wait_frames $50 ; $559a
 	ld a, $00 ; $55a1
 	ld bc, $0600 ; $55a3
 	ld de, $2900 ; $55a6
@@ -1961,15 +1889,11 @@ Label_14_54df:
 	ld b, $02 ; $55ae
 	farcall FarPtr_SetActorActive ; $55b0
 	script_face $00, $40 ; $55b3
-	push af ; $55ba
-	script_wait_frames $1e ; $55bb
-	pop af ; $55c0
+	script_wait_frames $1e ; $55ba
 	script_move_target $00, $0b00, $2900 ; $55c1
 	script_wait_move $00 ; $55cc
 	script_face $00, $c0 ; $55d1
-	push af ; $55d8
-	script_wait_frames $1e ; $55d9
-	pop af ; $55de
+	script_wait_frames $1e ; $55d8
 	script_set_anim $00, $02 ; $55df
 	script_wait_idle $00 ; $55e6
 	ld a, [wStoryModeEntryPoint] ; $55eb
@@ -2325,18 +2249,14 @@ Label_14_62d2:
 	call BeginFadeIn ; $62d8
 	call WaitFadeEnd ; $62db
 	sound $7a ; $62de
-	push af ; $62e0
-	script_wait_frames $3c ; $62e1
-	pop af ; $62e6
+	script_wait_frames $3c ; $62e0
 	ld a, $00 ; $62e7
 	ld bc, $0c00 ; $62e9
 	ld de, $1300 ; $62ec
 	farcall FarPtr_ScriptSetActorPosition ; $62ef
 	ld h, $08 ; $62f2
 Label_14_62f4:
-	push af ; $62f4
-	script_wait_frames $06 ; $62f5
-	pop af ; $62fa
+	script_wait_frames $06 ; $62f4
 	call PlayWaterSpriteMoveSfx ; $62fb
 	ld a, [$c2b1] ; $62fe
 	dec a ; $6301
@@ -2346,9 +2266,7 @@ Label_14_62f4:
 	jr nz, Label_14_62f4 ; $6309
 	ld h, $08 ; $630b
 Label_14_630d:
-	push af ; $630d
-	script_wait_frames $05 ; $630e
-	pop af ; $6313
+	script_wait_frames $05 ; $630d
 	call PlayWaterSpriteMoveSfx ; $6314
 	ld a, h ; $6317
 	and a, $01 ; $6318
@@ -2365,9 +2283,7 @@ Label_14_6323:
 	jr nz, Label_14_630d ; $632e
 	ld h, $08 ; $6330
 Label_14_6332:
-	push af ; $6332
-	script_wait_frames $04 ; $6333
-	pop af ; $6338
+	script_wait_frames $04 ; $6332
 	call PlayWaterSpriteMoveSfx ; $6339
 	ld a, [$c2b0] ; $633c
 	inc a ; $633f
@@ -2384,9 +2300,7 @@ Label_14_6332:
 	farcall FarPtr_MovePlayerToActor ; $635a
 	ld h, $1c ; $635d
 Label_14_635f:
-	push af ; $635f
-	script_wait_frames $03 ; $6360
-	pop af ; $6365
+	script_wait_frames $03 ; $635f
 	call PlayWaterSpriteMoveSfx ; $6366
 	ld a, h ; $6369
 	and a, $01 ; $636a
@@ -2403,9 +2317,7 @@ Label_14_6375:
 	jr nz, Label_14_635f ; $6380
 	ld h, $00 ; $6382
 Label_14_6384:
-	push af ; $6384
-	script_wait_frames $03 ; $6385
-	pop af ; $638a
+	script_wait_frames $03 ; $6384
 	inc h ; $638b
 	call PlayWaterSpriteMoveSfx ; $638c
 	ld a, [$c2b1] ; $638f
@@ -2424,9 +2336,7 @@ Label_14_63a3:
 	jr nz, Label_14_6384 ; $63ab
 	ld h, $08 ; $63ad
 Label_14_63af:
-	push af ; $63af
-	script_wait_frames $04 ; $63b0
-	pop af ; $63b5
+	script_wait_frames $04 ; $63af
 	call PlayWaterSpriteMoveSfx ; $63b6
 	ld a, [$c2b1] ; $63b9
 	dec a ; $63bc
@@ -2436,9 +2346,7 @@ Label_14_63af:
 	jr nz, Label_14_63af ; $63c4
 	ld h, $08 ; $63c6
 Label_14_63c8:
-	push af ; $63c8
-	script_wait_frames $06 ; $63c9
-	pop af ; $63ce
+	script_wait_frames $06 ; $63c8
 	call PlayWaterSpriteMoveSfx ; $63cf
 	ld a, [$c2b1] ; $63d2
 	dec a ; $63d5
@@ -2448,9 +2356,7 @@ Label_14_63c8:
 	jr nz, Label_14_63c8 ; $63dd
 	ld h, $08 ; $63df
 Label_14_63e1:
-	push af ; $63e1
-	script_wait_frames $08 ; $63e2
-	pop af ; $63e7
+	script_wait_frames $08 ; $63e1
 	call PlayWaterSpriteMoveSfx ; $63e8
 	ld a, [$c2b1] ; $63eb
 	dec a ; $63ee
@@ -2459,9 +2365,7 @@ Label_14_63e1:
 	dec h ; $63f5
 	jr nz, Label_14_63e1 ; $63f6
 	sound $7d ; $63f8
-	push af ; $63fa
-	script_wait_frames $32 ; $63fb
-	pop af ; $6400
+	script_wait_frames $32 ; $63fa
 	ld c, $04 ; $6401
 	call BeginFadeOut ; $6403
 	call WaitFadeEnd ; $6406
@@ -2599,9 +2503,7 @@ Label_14_650b:
 	script_player_speed $0006 ; $6522
 	script_move_player $0500, $2300 ; $6528
 	farcall FarPtr_WaitPlayerMoveDone ; $6532
-	push af ; $6535
-	script_wait_frames $32 ; $6536
-	pop af ; $653b
+	script_wait_frames $32 ; $6535
 	ld a, $50 ; $653c
 	ld [$c2b3], a ; $653e
 	ld a, $28 ; $6541
@@ -2613,9 +2515,7 @@ Label_14_650b:
 	ld a, $01 ; $6550
 	ld hl, $6ef0 ; $6552
 	call RegisterFrameTask ; $6555
-	push af ; $6558
-	script_wait_frames $50 ; $6559
-	pop af ; $655e
+	script_wait_frames $50 ; $6558
 	ld a, $40 ; $655f
 	ld [$c2b2], a ; $6561
 	ld a, $20 ; $6564
@@ -2627,9 +2527,7 @@ Label_14_650b:
 	ld a, $01 ; $6573
 	ld hl, $644a ; $6575
 	call RegisterFrameTask ; $6578
-	push af ; $657b
-	script_wait_frames $50 ; $657c
-	pop af ; $6581
+	script_wait_frames $50 ; $657b
 	ld a, $48 ; $6582
 	ld [$c2b3], a ; $6584
 	ld a, $28 ; $6587
@@ -2638,9 +2536,7 @@ Label_14_650b:
 	ld [$c2b7], a ; $658e
 	ld a, $1e ; $6591
 	ld [$c2b9], a ; $6593
-	push af ; $6596
-	script_wait_frames $28 ; $6597
-	pop af ; $659c
+	script_wait_frames $28 ; $6596
 	ld a, $38 ; $659d
 	ld [$c2b2], a ; $659f
 	ld a, $20 ; $65a2
@@ -2649,9 +2545,7 @@ Label_14_650b:
 	ld [wWaterSpriteMinigameSwingCount], a ; $65a9
 	ld a, $1e ; $65ac
 	ld [$c2b8], a ; $65ae
-	push af ; $65b1
-	script_wait_frames $28 ; $65b2
-	pop af ; $65b7
+	script_wait_frames $28 ; $65b1
 	ld a, $50 ; $65b8
 	ld [$c2b3], a ; $65ba
 	ld a, $28 ; $65bd
@@ -2660,9 +2554,7 @@ Label_14_650b:
 	ld [$c2b7], a ; $65c4
 	ld a, $19 ; $65c7
 	ld [$c2b9], a ; $65c9
-	push af ; $65cc
-	script_wait_frames $28 ; $65cd
-	pop af ; $65d2
+	script_wait_frames $28 ; $65cc
 	ld a, $38 ; $65d3
 	ld [$c2b2], a ; $65d5
 	ld a, $20 ; $65d8
@@ -2671,9 +2563,7 @@ Label_14_650b:
 	ld [wWaterSpriteMinigameSwingCount], a ; $65df
 	ld a, $1a ; $65e2
 	ld [$c2b8], a ; $65e4
-	push af ; $65e7
-	script_wait_frames $28 ; $65e8
-	pop af ; $65ed
+	script_wait_frames $28 ; $65e7
 	ld a, $58 ; $65ee
 	ld [$c2b3], a ; $65f0
 	ld a, $28 ; $65f3
@@ -2682,9 +2572,7 @@ Label_14_650b:
 	ld [$c2b7], a ; $65fa
 	ld a, $1c ; $65fd
 	ld [$c2b9], a ; $65ff
-	push af ; $6602
-	script_wait_frames $28 ; $6603
-	pop af ; $6608
+	script_wait_frames $28 ; $6602
 	ld a, $40 ; $6609
 	ld [$c2b2], a ; $660b
 	ld a, $20 ; $660e
@@ -2693,9 +2581,7 @@ Label_14_650b:
 	ld [wWaterSpriteMinigameSwingCount], a ; $6615
 	ld a, $16 ; $6618
 	ld [$c2b8], a ; $661a
-	push af ; $661d
-	script_wait_frames $32 ; $661e
-	pop af ; $6623
+	script_wait_frames $32 ; $661d
 	ld a, $48 ; $6624
 	ld [$c2b3], a ; $6626
 	ld a, $28 ; $6629
@@ -2704,9 +2590,7 @@ Label_14_650b:
 	ld [$c2b7], a ; $6630
 	ld a, $1c ; $6633
 	ld [$c2b9], a ; $6635
-	push af ; $6638
-	script_wait_frames $48 ; $6639
-	pop af ; $663e
+	script_wait_frames $48 ; $6638
 	ld c, $04 ; $663f
 	call BeginFadeOut ; $6641
 	call WaitFadeEnd ; $6644
@@ -2769,14 +2653,10 @@ Label_14_6fcd:
 	call BeginFadeIn ; $6fd3
 	call WaitFadeEnd ; $6fd6
 	sound $7a ; $6fd9
-	push af ; $6fdb
-	script_wait_frames $3c ; $6fdc
-	pop af ; $6fe1
+	script_wait_frames $3c ; $6fdb
 	ld h, $08 ; $6fe2
 Label_14_6fe4:
-	push af ; $6fe4
-	script_wait_frames $06 ; $6fe5
-	pop af ; $6fea
+	script_wait_frames $06 ; $6fe4
 	call PlayWaterSpriteMoveSfx ; $6feb
 	ld a, [$c2b1] ; $6fee
 	inc a ; $6ff1
@@ -2785,9 +2665,7 @@ Label_14_6fe4:
 	jr nz, Label_14_6fe4 ; $6ff6
 	ld h, $08 ; $6ff8
 Label_14_6ffa:
-	push af ; $6ffa
-	script_wait_frames $04 ; $6ffb
-	pop af ; $7000
+	script_wait_frames $04 ; $6ffa
 	call PlayWaterSpriteMoveSfx ; $7001
 	ld a, [$c2b1] ; $7004
 	inc a ; $7007
@@ -2801,9 +2679,7 @@ Label_14_6ffa:
 	jr nz, Label_14_6ffa ; $7016
 	ld h, $18 ; $7018
 Label_14_701a:
-	push af ; $701a
-	script_wait_frames $03 ; $701b
-	pop af ; $7020
+	script_wait_frames $03 ; $701a
 	call PlayWaterSpriteMoveSfx ; $7021
 	ld a, [$c2b1] ; $7024
 	inc a ; $7027
@@ -2817,9 +2693,7 @@ Label_14_701a:
 	script_move_player $0b00, $1800 ; $703b
 	ld h, $18 ; $7045
 Label_14_7047:
-	push af ; $7047
-	script_wait_frames $02 ; $7048
-	pop af ; $704d
+	script_wait_frames $02 ; $7047
 	call PlayWaterSpriteMoveSfx ; $704e
 	ld a, [$c2b0] ; $7051
 	inc a ; $7054
@@ -2833,9 +2707,7 @@ Label_14_7047:
 	jr nz, Label_14_7047 ; $7063
 	ld h, $20 ; $7065
 Label_14_7067:
-	push af ; $7067
-	script_wait_frames $02 ; $7068
-	pop af ; $706d
+	script_wait_frames $02 ; $7067
 	call PlayWaterSpriteMoveSfx ; $706e
 	ld a, [$c2b0] ; $7071
 	inc a ; $7074
@@ -2853,9 +2725,7 @@ Label_14_7085:
 	call UnregisterFrameTask ; $708b
 	ld h, $1e ; $708e
 Label_14_7090:
-	push af ; $7090
-	script_wait_frames $02 ; $7091
-	pop af ; $7096
+	script_wait_frames $02 ; $7090
 	call PlayWaterSpriteMoveSfx ; $7097
 	dec h ; $709a
 	jr nz, Label_14_7090 ; $709b
@@ -2870,9 +2740,7 @@ Label_14_7090:
 	call RegisterFrameTask ; $70b9
 	ld h, $50 ; $70bc
 Label_14_70be:
-	push af ; $70be
-	script_wait_frames $02 ; $70bf
-	pop af ; $70c4
+	script_wait_frames $02 ; $70be
 	call PlayWaterSpriteMoveSfx ; $70c5
 	ld a, [$c2b1] ; $70c8
 	dec a ; $70cb
@@ -2892,9 +2760,7 @@ Label_14_70e0:
 	call UnregisterFrameTask ; $70e6
 	call Func_14_7688 ; $70e9
 	call Func_14_787b ; $70ec
-	push af ; $70ef
-	script_wait_frames $46 ; $70f0
-	pop af ; $70f5
+	script_wait_frames $46 ; $70ef
 	ld a, [wStoryModeEntryPoint] ; $70f6
 	cp a, $0d ; $70f9
 	jp nz, Label_14_710c ; $70fb
@@ -3125,13 +2991,9 @@ Label_14_7703:
 	ld c, $06 ; $7707
 	call BeginFadeIn ; $7709
 	call WaitFadeEnd ; $770c
-	push af ; $770f
-	script_wait_frames $3c ; $7710
-	pop af ; $7715
+	script_wait_frames $3c ; $770f
 	call Func_14_787b ; $7716
-	push af ; $7719
-	script_wait_frames $1e ; $771a
-	pop af ; $771f
+	script_wait_frames $1e ; $7719
 	call Func_14_7539 ; $7720
 	ld a, $08 ; $7723
 	ld [wWaterSpriteMinigameSwingCount], a ; $7725
@@ -3144,9 +3006,7 @@ Label_14_7703:
 	call RegisterFrameTask ; $7737
 	ld h, $4b ; $773a
 Label_14_773c:
-	push af ; $773c
-	script_wait_frames $02 ; $773d
-	pop af ; $7742
+	script_wait_frames $02 ; $773c
 	call PlayWaterSpriteMoveSfx ; $7743
 	ld a, [$c2b1] ; $7746
 	inc a ; $7749
@@ -3168,9 +3028,7 @@ Label_14_775e:
 	script_move_player $0b00, $1800 ; $776d
 	ld h, $3c ; $7777
 Label_14_7779:
-	push af ; $7779
-	script_wait_frames $02 ; $777a
-	pop af ; $777f
+	script_wait_frames $02 ; $7779
 	call PlayWaterSpriteMoveSfx ; $7780
 	dec h ; $7783
 	jr nz, Label_14_7779 ; $7784
@@ -3186,9 +3044,7 @@ Label_14_7779:
 	call RegisterFrameTask ; $779d
 	ld h, $20 ; $77a0
 Label_14_77a2:
-	push af ; $77a2
-	script_wait_frames $02 ; $77a3
-	pop af ; $77a8
+	script_wait_frames $02 ; $77a2
 	call PlayWaterSpriteMoveSfx ; $77a9
 	ld a, [$c2b0] ; $77ac
 	dec a ; $77af
@@ -3205,9 +3061,7 @@ Label_14_77c0:
 	jr nz, Label_14_77a2 ; $77c4
 	ld h, $18 ; $77c6
 Label_14_77c8:
-	push af ; $77c8
-	script_wait_frames $02 ; $77c9
-	pop af ; $77ce
+	script_wait_frames $02 ; $77c8
 	call PlayWaterSpriteMoveSfx ; $77cf
 	ld a, [$c2b0] ; $77d2
 	dec a ; $77d5
@@ -3223,9 +3077,7 @@ Label_14_77c8:
 	script_move_player $0b00, $1200 ; $77e9
 	ld h, $18 ; $77f3
 Label_14_77f5:
-	push af ; $77f5
-	script_wait_frames $03 ; $77f6
-	pop af ; $77fb
+	script_wait_frames $03 ; $77f5
 	call PlayWaterSpriteMoveSfx ; $77fc
 	ld a, [$c2b1] ; $77ff
 	dec a ; $7802
@@ -3238,9 +3090,7 @@ Label_14_77f5:
 	jr nz, Label_14_77f5 ; $7811
 	ld h, $08 ; $7813
 Label_14_7815:
-	push af ; $7815
-	script_wait_frames $04 ; $7816
-	pop af ; $781b
+	script_wait_frames $04 ; $7815
 	call PlayWaterSpriteMoveSfx ; $781c
 	ld a, [$c2b1] ; $781f
 	dec a ; $7822
@@ -3255,9 +3105,7 @@ Label_14_7815:
 	jr nz, Label_14_7815 ; $7834
 	ld h, $0c ; $7836
 Label_14_7838:
-	push af ; $7838
-	script_wait_frames $06 ; $7839
-	pop af ; $783e
+	script_wait_frames $06 ; $7838
 	call PlayWaterSpriteMoveSfx ; $783f
 	ld a, [$c2b1] ; $7842
 	dec a ; $7845
@@ -3266,9 +3114,7 @@ Label_14_7838:
 	dec h ; $784c
 	jr nz, Label_14_7838 ; $784d
 	sound $7d ; $784f
-	push af ; $7851
-	script_wait_frames $46 ; $7852
-	pop af ; $7857
+	script_wait_frames $46 ; $7851
 	ld c, $04 ; $7858
 	call BeginFadeOut ; $785a
 	call WaitFadeEnd ; $785d
@@ -3295,9 +3141,7 @@ Func_14_787b:
 	sound $84 ; $788a
 	ld h, $04 ; $788c
 Label_14_788e:
-	push af ; $788e
-	script_wait_frames $04 ; $788f
-	pop af ; $7894
+	script_wait_frames $04 ; $788e
 	ld a, [wWaterSpriteMinigameSwingCount] ; $7895
 	add a, $04 ; $7898
 	ld [wWaterSpriteMinigameSwingCount], a ; $789a
