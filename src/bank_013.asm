@@ -1,86 +1,35 @@
 SECTION "ROM Bank $13", ROMX[$4000], BANK[$13]
 
-DataPtr_StoryCmdHandlersA_13:
-	dw StoryCmdHandlersA_13 ; $4000
-DataPtr_StoryCmdHandlersB_13:
-	dw StoryCmdHandlersB_13 ; $4002
-DataPtr_StoryCmdHandlersD_13:
-	dw StoryCmdHandlersD_13 ; $4004
-StoryCmdHandlersA_13:
-	; $4006, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $401e ; record 0
-	dw $4236 ; record 1
-	dw $4014 ; record 2
-	dw $428b ; record 3
-	dw $4294 ; record 4
-	dw $42b5 ; record 5
-	dw $44df ; record 6
-	nop ; $4014
-	nop ; $4015
-	nop ; $4016
-	nop ; $4017
-	nop ; $4018
-	nop ; $4019
-	nop ; $401a
-	nop ; $401b
-	nop ; $401c
-	rst Rst38 ; $401d
-	ld bc, $0040 ; $401e
-	rlca ; $4021
-	ld b, b ; $4022
-	ld [$40eb], sp ; $4023
-	ld [bc], a ; $4026
-	ld b, b ; $4027
-	nop ; $4028
-	dec d ; $4029
-	ld b, b ; $402a
-	add hl, bc ; $402b
-	ld h, e ; $402c
-	ld b, c ; $402d
-	inc bc ; $402e
-	ld b, b ; $402f
-	nop ; $4030
-	dec h ; $4031
-	ld b, b ; $4032
-	ld [$41cf], sp ; $4033
-	inc b ; $4036
-	ret nz ; $4037
-	nop ; $4038
-	ld [hl-], a ; $4039
-	nop ; $403a
-	rrca ; $403b
-	ld e, a ; $403c
-	ld b, b ; $403d
-	dec b ; $403e
-	ld b, b ; $403f
-	nop ; $4040
-	scf ; $4041
-	ld b, b ; $4042
-	ld [$41cf], sp ; $4043
-	ld b, $80 ; $4046
-	nop ; $4048
-	inc a ; $4049
-	nop ; $404a
-	dec c ; $404b
-	and a, l ; $404c
-	ld b, b ; $404d
-	ld c, $80 ; $404e
-	nop ; $4050
-	dec sp ; $4051
-	nop ; $4052
-	rrca ; $4053
-	nop ; $4054
-	nop ; $4055
-	rrca ; $4056
-	add a, b ; $4057
-	nop ; $4058
-	ld [hl-], a ; $4059
-	nop ; $405a
-	rrca ; $405b
-	nop ; $405c
-	nop ; $405d
-	rst Rst38 ; $405e
+DataPtr_RestaurantPlazaMapScripts_13:
+	dw RestaurantPlazaMapScripts_13 ; $4000
+DataPtr_DormRoomMapScripts_13:
+	dw DormRoomMapScripts_13 ; $4002
+DataPtr_CourtyardMapScripts_13:
+	dw CourtyardMapScripts_13 ; $4004
+RestaurantPlazaMapScripts_13:
+	; $4006, 14 bytes (map_tree)
+	dw RestaurantPlazaEntryPoints_13 ; slot 0 EntryPoints
+	dw RestaurantPlazaExitTriggers_13 ; slot 1 ExitTriggers
+	dw RestaurantPlazaActors_13 ; slot 2 Actors
+	dw RestaurantPlazaNpcScripts_13 ; slot 3 NpcScripts
+	dw RestaurantPlazaFacingScripts_13 ; slot 4 FacingScripts
+	dw RestaurantPlazaTileTriggers_13 ; slot 5 TileTriggers
+	dw RestaurantPlazaInitScript_13 ; slot 6 InitScript
+RestaurantPlazaActors_13:
+	; $4014, 10 bytes (map_actors)
+	map_actor_end
+RestaurantPlazaEntryPoints_13:
+	; $401e, 65 bytes (map_entries)
+	map_entry $01, $40, $0700, $0840, Func_13_40eb
+	map_entry $02, $40, $1500, $0940, Func_13_4163
+	map_entry $03, $40, $2500, $0840, Func_13_41cf
+	map_entry $04, $c0, $3200, $0f00, Func_13_405f
+	map_entry $05, $40, $3700, $0840, Func_13_41cf
+	map_entry $06, $80, $3c00, $0d00, Func_13_40a5
+	map_entry $0e, $80, $3b00, $0f00, $0000
+	map_entry $0f, $80, $3200, $0f00, $0000
+	db $ff
+Func_13_405f:
 	ld a, [wStoryModeEntryPoint] ; $405f
 	cp a, $ff ; $4062
 	jp z, Label_13_40a4 ; $4064
@@ -111,6 +60,7 @@ Label_13_4092:
 	farcall FarPtr_MoveActorByAngle ; $40a1
 Label_13_40a4:
 	ret ; $40a4
+Func_13_40a5:
 	ld a, [wStoryModeEntryPoint] ; $40a5
 	cp a, $ff ; $40a8
 	jp z, Label_13_40ea ; $40aa
@@ -141,6 +91,7 @@ Label_13_40d8:
 	farcall FarPtr_MoveActorByAngle ; $40e7
 Label_13_40ea:
 	ret ; $40ea
+Func_13_40eb:
 	ld a, [wStoryModeEntryPoint] ; $40eb
 	cp a, $ff ; $40ee
 	jp z, Label_13_4235 ; $40f0
@@ -194,6 +145,7 @@ Label_13_40ea:
 	ld b, $00 ; $415d
 	farcall FarPtr_SetActorFacing ; $415f
 	ret ; $4162
+Func_13_4163:
 	ld a, [wStoryModeEntryPoint] ; $4163
 	cp a, $ff ; $4166
 	jp z, Label_13_4235 ; $4168
@@ -243,6 +195,7 @@ Label_13_40ea:
 Label_13_41cb:
 	call AnimateDoorClose_13 ; $41cb
 	ret ; $41ce
+Func_13_41cf:
 	ld a, [wStoryModeEntryPoint] ; $41cf
 	cp a, $ff ; $41d2
 	jr z, Label_13_4235 ; $41d4
@@ -290,100 +243,43 @@ Label_13_41cb:
 	farcall FarPtr_ScriptWaitActorMoveDone ; $4232
 Label_13_4235:
 	ret ; $4235
-	ld bc, $00ff ; $4236
-	nop ; $4239
-	ld c, l ; $423a
-	ld a, e ; $423b
-	add hl, bc ; $423c
-	ld bc, rSC ; $423d
-	nop ; $4240
-	nop ; $4241
-	ld c, l ; $4242
-	ld a, e ; $4243
-	dec c ; $4244
-	ld bc, $ff03 ; $4245
-	nop ; $4248
-	nop ; $4249
-	ld c, l ; $424a
-	ld a, e ; $424b
-	INCBIN "data/bank_013/d_424c.bin" ; $424c, 63 bytes
-	inc bc ; $428b
-	rst Rst38 ; $428c
-	nop ; $428d
-	nop ; $428e
-	scf ; $428f
-	inc d ; $4290
-	nop ; $4291
-	nop ; $4292
-	rst Rst38 ; $4293
-	ld bc, $00ff ; $4294
-	nop ; $4297
-	ld b, [hl] ; $4298
-	inc b ; $4299
-	nop ; $429a
-	nop ; $429b
-	ld [bc], a ; $429c
-	rst Rst38 ; $429d
-	nop ; $429e
-	nop ; $429f
-	ld b, a ; $42a0
-	inc b ; $42a1
-	nop ; $42a2
-	nop ; $42a3
-	inc bc ; $42a4
-	rst Rst38 ; $42a5
-	nop ; $42a6
-	nop ; $42a7
-	ld c, b ; $42a8
-	inc b ; $42a9
-	nop ; $42aa
-	nop ; $42ab
-	inc b ; $42ac
-	rst Rst38 ; $42ad
-	nop ; $42ae
-	nop ; $42af
-	ld c, c ; $42b0
-	inc b ; $42b1
-	nop ; $42b2
-	nop ; $42b3
-	rst Rst38 ; $42b4
-	ld bc, $00ff ; $42b5
-	nop ; $42b8
-	sbc a, $42 ; $42b9
-	nop ; $42bb
-	nop ; $42bc
-	ld [bc], a ; $42bd
-	rst Rst38 ; $42be
-	nop ; $42bf
-	nop ; $42c0
-	inc c ; $42c1
-	ld b, e ; $42c2
-	nop ; $42c3
-	nop ; $42c4
-	inc bc ; $42c5
-	rst Rst38 ; $42c6
-	nop ; $42c7
-	nop ; $42c8
-	ld d, a ; $42c9
-	ld b, e ; $42ca
-	nop ; $42cb
-	nop ; $42cc
-	dec b ; $42cd
-	rst Rst38 ; $42ce
-	nop ; $42cf
-	nop ; $42d0
-	and a, c ; $42d1
-	ld b, e ; $42d2
-	nop ; $42d3
-	nop ; $42d4
-	ld b, $ff ; $42d5
-	nop ; $42d7
-	nop ; $42d8
-	rst Rst18 ; $42d9
-	ld b, e ; $42da
-	nop ; $42db
-	nop ; $42dc
-	rst Rst38 ; $42dd
+RestaurantPlazaExitTriggers_13:
+	; $4236, 73 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_13_7b4d, $09, $01
+	map_script $02, $ff, $0000, Func_13_7b4d, $0d, $01
+	map_script $03, $ff, $0000, Func_13_7b4d, $10, $01
+	map_script $04, $ff, $0000, Func_13_7b4d, $07, $02
+	map_script $05, $ff, $0000, Func_13_7b4d, $0b, $01
+	map_script $06, $ff, $0000, Func_13_7b4d, $0f, $01
+	map_script $0d, $ff, $0000, Func_13_7b4d, $0c, $01
+	map_script $0e, $ff, $0000, Func_13_7b4d, $09, $0f
+	map_script $0f, $ff, $0000, Func_13_7b4d, $0f, $0f
+	db $ff
+	ld hl, $1430 ; $427f
+	farcall FarPtr_InitDialogueTextCursor ; $4282
+	ld a, $00 ; $4285
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4287
+	ret ; $428a
+RestaurantPlazaNpcScripts_13:
+	; $428b, 9 bytes (map_scripts)
+	map_script $03, $ff, $0000, $1437, $00, $00
+	db $ff
+RestaurantPlazaFacingScripts_13:
+	; $4294, 33 bytes (map_scripts)
+	map_script $01, $ff, $0000, $0446, $00, $00
+	map_script $02, $ff, $0000, $0447, $00, $00
+	map_script $03, $ff, $0000, $0448, $00, $00
+	map_script $04, $ff, $0000, $0449, $00, $00
+	db $ff
+RestaurantPlazaTileTriggers_13:
+	; $42b5, 41 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_13_42de, $00, $00
+	map_script $02, $ff, $0000, Func_13_430c, $00, $00
+	map_script $03, $ff, $0000, Func_13_4357, $00, $00
+	map_script $05, $ff, $0000, Func_13_43a1, $00, $00
+	map_script $06, $ff, $0000, Func_13_43df, $00, $00
+	db $ff
+Func_13_42de:
 	ld a, $02 ; $42de
 	ld bc, $0700 ; $42e0
 	ld de, $0d00 ; $42e3
@@ -402,6 +298,7 @@ Label_13_4235:
 	ld [$c294], a ; $4305
 	ld [wStoryModeExitLocationRequest], a ; $4308
 	ret ; $430b
+Func_13_430c:
 	ld a, $00 ; $430c
 	ld bc, $0010 ; $430e
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $4311
@@ -434,6 +331,7 @@ Label_13_4235:
 	ld [$c294], a ; $4350
 	ld [wStoryModeExitLocationRequest], a ; $4353
 	ret ; $4356
+Func_13_4357:
 	ld a, $02 ; $4357
 	ld bc, $0040 ; $4359
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $435c
@@ -464,6 +362,7 @@ Label_13_4235:
 	ld [$c294], a ; $439a
 	ld [wStoryModeExitLocationRequest], a ; $439d
 	ret ; $43a0
+Func_13_43a1:
 	ld a, $02 ; $43a1
 	ld bc, $3700 ; $43a3
 	ld de, $0d00 ; $43a6
@@ -489,6 +388,7 @@ Label_13_4235:
 	ld [wStoryModeExitLocationRequest], a ; $43db
 Label_13_43de:
 	ret ; $43de
+Func_13_43df:
 	ld a, $00 ; $43df
 	ld bc, $0020 ; $43e1
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $43e4
@@ -602,6 +502,7 @@ Label_13_446a:
 	farcall FarPtr_WaitScriptFrames ; $44da
 	pop af ; $44dd
 	ret ; $44de
+RestaurantPlazaInitScript_13:
 	ld a, [wStoryModeEntryPoint] ; $44df
 	cp a, $0f ; $44e2
 	jr nz, Label_13_44e9 ; $44e4
@@ -1546,97 +1447,37 @@ AnimateDoorClose_13:
 	ld l, $02 ; $4e1a
 	farcall FarPtr_CopySceneTilemapRect ; $4e1c
 	ret ; $4e1f
-StoryCmdHandlersB_13:
-	; $4e20, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $4e62 ; record 0
-	dw $4e93 ; record 1
-	dw $4e2e ; record 2
-	dw $4eba ; record 3
-	dw $4ecb ; record 4
-	dw $4eeb ; record 5
-	dw $502a ; record 6
-	nop ; $4e2e
-	nop ; $4e2f
-	dec h ; $4e30
-	ld a, e ; $4e31
-	nop ; $4e32
-	dec bc ; $4e33
-	nop ; $4e34
-	add hl, bc ; $4e35
-	ld b, b ; $4e36
-	nop ; $4e37
-	add hl, hl ; $4e38
-	ld bc, $0000 ; $4e39
-	nop ; $4e3c
-	nop ; $4e3d
-	ld e, a ; $4e3e
-	ld e, b ; $4e3f
-	nop ; $4e40
-	ld b, $80 ; $4e41
-	INCBIN "data/bank_013/d_4e43.bin" ; $4e43, 31 bytes
-	ld bc, $00c0 ; $4e62
-	dec bc ; $4e65
-	nop ; $4e66
-	dec c ; $4e67
-	nop ; $4e68
-	nop ; $4e69
-	ld [bc], a ; $4e6a
-	ret nz ; $4e6b
-	nop ; $4e6c
-	dec bc ; $4e6d
-	nop ; $4e6e
-	inc de ; $4e6f
-	nop ; $4e70
-	nop ; $4e71
-	inc bc ; $4e72
-	ret nz ; $4e73
-	nop ; $4e74
-	dec bc ; $4e75
-	nop ; $4e76
-	dec c ; $4e77
-	nop ; $4e78
-	nop ; $4e79
-	inc b ; $4e7a
-	ret nz ; $4e7b
-	nop ; $4e7c
-	dec bc ; $4e7d
-	nop ; $4e7e
-	dec c ; $4e7f
-	nop ; $4e80
-	nop ; $4e81
-	ld c, $c0 ; $4e82
-	nop ; $4e84
-	dec bc ; $4e85
-	nop ; $4e86
-	dec c ; $4e87
-	nop ; $4e88
-	nop ; $4e89
-	rrca ; $4e8a
-	ret nz ; $4e8b
-	nop ; $4e8c
-	dec bc ; $4e8d
-	nop ; $4e8e
-	dec c ; $4e8f
-	nop ; $4e90
-	nop ; $4e91
-	rst Rst38 ; $4e92
-	ld bc, $00ff ; $4e93
-	nop ; $4e96
-	ld c, l ; $4e97
-	ld a, e ; $4e98
-	add hl, bc ; $4e99
-	ld [bc], a ; $4e9a
-	ld [bc], a ; $4e9b
-	rst Rst38 ; $4e9c
-	nop ; $4e9d
-	nop ; $4e9e
-	ld c, l ; $4e9f
-	ld a, e ; $4ea0
-	nop ; $4ea1
-	ld bc, $cdff ; $4ea2
-	ld a, [hl-] ; $4ea5
-	ld a, [bc] ; $4ea6
+DormRoomMapScripts_13:
+	; $4e20, 14 bytes (map_tree)
+	dw DormRoomEntryPoints_13 ; slot 0 EntryPoints
+	dw DormRoomExitTriggers_13 ; slot 1 ExitTriggers
+	dw DormRoomActors_13 ; slot 2 Actors
+	dw DormRoomNpcScripts_13 ; slot 3 NpcScripts
+	dw DormRoomFacingScripts_13 ; slot 4 FacingScripts
+	dw DormRoomTileTriggers_13 ; slot 5 TileTriggers
+	dw DormRoomInitScript_13 ; slot 6 InitScript
+DormRoomActors_13:
+	; $4e2e, 52 bytes (map_actors)
+	map_actor $0000, $7b25, $0b00, $0900, $40, $29, $01, $00
+	map_actor $0000, $585f, $0600, $1080, $40, $55, $01, $00
+	map_actor $0000, $7b25, $2900, $2900, $40, $4c, $01, $00
+	map_actor_end
+DormRoomEntryPoints_13:
+	; $4e62, 49 bytes (map_entries)
+	map_entry $01, $c0, $0b00, $0d00, $0000
+	map_entry $02, $c0, $0b00, $1300, $0000
+	map_entry $03, $c0, $0b00, $0d00, $0000
+	map_entry $04, $c0, $0b00, $0d00, $0000
+	map_entry $0e, $c0, $0b00, $0d00, $0000
+	map_entry $0f, $c0, $0b00, $0d00, $0000
+	db $ff
+DormRoomExitTriggers_13:
+	; $4e93, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_13_7b4d, $09, $02
+	map_script $02, $ff, $0000, Func_13_7b4d, $00, $01
+	db $ff
+Func_13_4ea4:
+	call AdvanceRandomSeed ; $4ea4
 	ld a, l ; $4ea7
 	and a, $07 ; $4ea8
 	add a, $3c ; $4eaa
@@ -1648,28 +1489,16 @@ StoryCmdHandlersB_13:
 	ld a, $04 ; $4eb4
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4eb6
 	ret ; $4eb9
-	inc bc ; $4eba
-	rst Rst38 ; $4ebb
-	nop ; $4ebc
-	nop ; $4ebd
-	or a, b ; $4ebe
-	ld d, d ; $4ebf
-	nop ; $4ec0
-	nop ; $4ec1
-	inc b ; $4ec2
-	rst Rst38 ; $4ec3
-	nop ; $4ec4
-	nop ; $4ec5
-	and a, h ; $4ec6
-	ld c, [hl] ; $4ec7
-	inc de ; $4ec8
-	nop ; $4ec9
-	rst Rst38 ; $4eca
-	ld bc, $00ff ; $4ecb
-	nop ; $4ece
-	call nc, Func_00_004e ; $4ecf
-	nop ; $4ed2
-	rst Rst38 ; $4ed3
+DormRoomNpcScripts_13:
+	; $4eba, 17 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_13_52b0, $00, $00
+	map_script $04, $ff, $0000, Func_13_4ea4, $13, $00
+	db $ff
+DormRoomFacingScripts_13:
+	; $4ecb, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_13_4ed4, $00, $00
+	db $ff
+Func_13_4ed4:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ed4
 	ld c, $10 ; $4ed7
 	call BeginFadeIn ; $4ed9
@@ -1679,11 +1508,11 @@ StoryCmdHandlersB_13:
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4ee4
 	farcall FarPtr_EndCutsceneScriptMode ; $4ee7
 	ret ; $4eea
-	rrca ; $4eeb
-	add a, b ; $4eec
-	nop ; $4eed
-	nop ; $4eee
-	INCBIN "data/bank_013/d_4eef.bin" ; $4eef, 5 bytes
+DormRoomTileTriggers_13:
+	; $4eeb, 9 bytes (map_scripts)
+	map_script $0f, $80, $0000, Func_13_4ef4, $00, $00
+	db $ff
+Func_13_4ef4:
 	ld a, $03 ; $4ef4
 	farcall FarPtr_SetActorNullScript ; $4ef6
 	ld a, $03 ; $4ef9
@@ -1817,6 +1646,7 @@ Label_13_4fd0:
 	farcall FarPtr_WaitScriptFrames ; $5025
 	pop af ; $5028
 	ret ; $5029
+DormRoomInitScript_13:
 	xor a, a ; $502a
 	ld [wStoryModeShowLocationName], a ; $502b
 	ld a, [wStoryModeEntryPoint] ; $502e
@@ -2120,6 +1950,7 @@ Label_13_527a:
 	ld de, $0a00 ; $52a9
 	farcall FarPtr_ScriptSetActorMoveTarget ; $52ac
 	ret ; $52af
+Func_13_52b0:
 	ld a, $00 ; $52b0
 	ld b, a ; $52b2
 	ld a, $03 ; $52b3
@@ -3398,168 +3229,88 @@ Func_13_5c39:
 	ld a, $03 ; $5c72
 	farcall FarPtr_ScriptSetActorPosition ; $5c74
 	ret ; $5c77
-StoryCmdHandlersD_13:
-	; $5c78, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $5e40 ; record 0
-	dw $5e79 ; record 1
-	dw $5c86 ; record 2
-	dw $5edc ; record 3
-	dw $6164 ; record 4
-	dw $6188 ; record 5
-	dw $6189 ; record 6
-	nop ; $5c86
-	nop ; $5c87
-	dec h ; $5c88
-	ld a, e ; $5c89
-	nop ; $5c8a
-	dec c ; $5c8b
-	nop ; $5c8c
-	dec e ; $5c8d
-	ld b, b ; $5c8e
-	nop ; $5c8f
-	ld c, e ; $5c90
-	ld bc, $0000 ; $5c91
-	nop ; $5c94
-	nop ; $5c95
-	dec h ; $5c96
-	ld a, e ; $5c97
-	nop ; $5c98
-	dec b ; $5c99
-	nop ; $5c9a
-	dec e ; $5c9b
-	nop ; $5c9c
-	nop ; $5c9d
-	ld l, b ; $5c9e
-	ld bc, $0007 ; $5c9f
-	nop ; $5ca2
-	nop ; $5ca3
-	ld b, b ; $5ca4
-	ld a, d ; $5ca5
-	nop ; $5ca6
-	dec c ; $5ca7
-	nop ; $5ca8
-	inc hl ; $5ca9
-	ret nz ; $5caa
-	nop ; $5cab
-	ld h, l ; $5cac
-	ld b, $03 ; $5cad
-	nop ; $5caf
-	nop ; $5cb0
-	nop ; $5cb1
-	dec h ; $5cb2
-	ld a, e ; $5cb3
-	nop ; $5cb4
-	ld [$1300], sp ; $5cb5
-	ret nz ; $5cb8
-	nop ; $5cb9
-	ld h, a ; $5cba
-	ld bc, $0006 ; $5cbb
-	nop ; $5cbe
-	nop ; $5cbf
-	cpl ; $5cc0
-	ld a, e ; $5cc1
-	nop ; $5cc2
-	rrca ; $5cc3
-	nop ; $5cc4
-	rla ; $5cc5
-	ld b, b ; $5cc6
-	nop ; $5cc7
-	ld l, e ; $5cc8
-	ld bc, $0006 ; $5cc9
-	nop ; $5ccc
-	nop ; $5ccd
-	dec h ; $5cce
-	ld a, e ; $5ccf
-	ret nz ; $5cd0
-	INCBIN "data/bank_013/d_5cd1.bin" ; $5cd1, 367 bytes
-	ld bc, $0040 ; $5e40
-	ld [hl], $00 ; $5e43
-	ld d, $00 ; $5e45
-	nop ; $5e47
-	ld [bc], a ; $5e48
-	ld b, b ; $5e49
-	nop ; $5e4a
-	ld [hl+], a ; $5e4b
-	nop ; $5e4c
-	dec bc ; $5e4d
-	nop ; $5e4e
-	nop ; $5e4f
-	inc bc ; $5e50
-	ret nz ; $5e51
-	nop ; $5e52
-	ld [hl+], a ; $5e53
-	nop ; $5e54
-	ld sp, $0000 ; $5e55
-	ld a, [bc] ; $5e58
-	ret nz ; $5e59
-	nop ; $5e5a
-	ld de, $1d00 ; $5e5b
-	nop ; $5e5e
-	nop ; $5e5f
-	dec c ; $5e60
-	ret nz ; $5e61
-	nop ; $5e62
-	dec c ; $5e63
-	nop ; $5e64
-	rra ; $5e65
-	nop ; $5e66
-	nop ; $5e67
-	ld c, $c0 ; $5e68
-	nop ; $5e6a
-	rrca ; $5e6b
-	nop ; $5e6c
-	rra ; $5e6d
-	nop ; $5e6e
-	nop ; $5e6f
-	rrca ; $5e70
-	ret nz ; $5e71
-	nop ; $5e72
-	ld [hl+], a ; $5e73
-	nop ; $5e74
-	cpl ; $5e75
-	nop ; $5e76
-	nop ; $5e77
-	rst Rst38 ; $5e78
-	ld bc, $00ff ; $5e79
-	nop ; $5e7c
-	nop ; $5e7d
-	nop ; $5e7e
-	ld de, $0201 ; $5e7f
-	rst Rst38 ; $5e82
-	nop ; $5e83
-	nop ; $5e84
-	nop ; $5e85
-	nop ; $5e86
-	ld [$0304], sp ; $5e87
-	rst Rst38 ; $5e8a
-	nop ; $5e8b
-	nop ; $5e8c
-	nop ; $5e8d
-	nop ; $5e8e
-	dec b ; $5e8f
-	ld [bc], a ; $5e90
-	ld a, [bc] ; $5e91
-	rst Rst38 ; $5e92
-	nop ; $5e93
-	nop ; $5e94
-	ld c, l ; $5e95
-	ld a, e ; $5e96
-	nop ; $5e97
-	ld a, [bc] ; $5e98
-	ld c, $ff ; $5e99
-	nop ; $5e9b
-	nop ; $5e9c
-	nop ; $5e9d
-	nop ; $5e9e
-	rlca ; $5e9f
-	ld c, $0f ; $5ea0
-	rst Rst38 ; $5ea2
-	nop ; $5ea3
-	nop ; $5ea4
-	nop ; $5ea5
-	nop ; $5ea6
-	ld [rIF], sp ; $5ea7
+CourtyardMapScripts_13:
+	; $5c78, 14 bytes (map_tree)
+	dw CourtyardEntryPoints_13 ; slot 0 EntryPoints
+	dw CourtyardExitTriggers_13 ; slot 1 ExitTriggers
+	dw CourtyardActors_13 ; slot 2 Actors
+	dw CourtyardNpcScripts_13 ; slot 3 NpcScripts
+	dw CourtyardFacingScripts_13 ; slot 4 FacingScripts
+	dw CourtyardTileTriggers_13 ; slot 5 TileTriggers
+	dw CourtyardInitScript_13 ; slot 6 InitScript
+CourtyardActors_13:
+	; $5c86, 442 bytes (map_actors)
+	map_actor $0000, $7b25, $0d00, $1d00, $40, $4b, $01, $00
+	map_actor $0000, $7b25, $0500, $1d00, $00, $68, $01, $07
+	map_actor $0000, $7a40, $0d00, $2300, $c0, $65, $06, $03
+	map_actor $0000, $7b25, $0800, $1300, $c0, $67, $01, $06
+	map_actor $0000, $7b2f, $0f00, $1700, $40, $6b, $01, $06
+	map_actor $0000, $7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor_end
+	db $00, $00, $25, $7b, $00, $0d, $00, $1d
+	db $40, $00, $4b, $01, $00, $00, $00, $00
+	db $25, $7b, $00, $05, $00, $1d, $00, $00
+	db $68, $01, $07, $00, $00, $00, $40, $7a
+	db $00, $0d, $00, $23, $c0, $00, $65, $01
+	db $03, $00, $00, $00, $25, $7b, $00, $08
+	db $00, $13, $c0, $00, $67, $01, $04, $00
+	db $00, $00, $2f, $7b, $00, $0f, $00, $17
+	db $40, $00, $6b, $01, $06, $00, $00, $00
+	db $25, $7b, $00, $2d, $00, $3d, $40, $00
+	db $49, $01, $00, $00, $00, $00, $25, $7b
+	db $c0, $10, $60, $1a, $80, $00, $36, $01
+	db $00, $00, $00, $00, $00, $00, $00, $00
+	db $00, $00, $00, $ff, $00, $00, $25, $7b
+	db $00, $0d, $00, $1d, $40, $00, $4b, $01
+	db $00, $00, $00, $00, $25, $7b, $00, $05
+	db $00, $23, $c0, $00, $68, $01, $07, $00
+	db $00, $00, $40, $7a, $00, $0d, $00, $25
+	db $c0, $00, $65, $01, $03, $00, $00, $00
+	db $25, $7b, $00, $10, $00, $25, $80, $00
+	db $67, $01, $04, $00, $00, $00, $25, $7b
+	db $00, $08, $00, $13, $c0, $00, $6b, $01
+	db $06, $00, $00, $00, $25, $7b, $00, $2d
+	db $00, $3d, $40, $00, $49, $01, $00, $00
+	db $00, $00, $25, $7b, $00, $05, $00, $21
+	db $40, $00, $4a, $01, $00, $00, $00, $00
+	db $25, $7b, $c0, $10, $60, $1a, $80, $00
+	db $36, $01, $00, $00, $00, $00, $00, $00
+	db $00, $00, $00, $00, $00, $ff, $00, $00
+	db $40, $7a, $00, $10, $00, $15, $40, $00
+	db $68, $01, $07, $00, $00, $00, $40, $7a
+	db $00, $0d, $00, $25, $c0, $00, $65, $01
+	db $03, $00, $00, $00, $25, $7b, $c0, $10
+	db $60, $1a, $80, $00, $36, $01, $00, $00
+	db $00, $00, $00, $00, $00, $00, $00, $00
+	db $00, $ff, $00, $00, $40, $7a, $00, $0d
+	db $00, $1d, $40, $00, $68, $01, $07, $00
+	db $00, $00, $40, $7a, $00, $0d, $00, $23
+	db $c0, $00, $65, $01, $03, $00, $00, $00
+	db $2f, $7b, $00, $09, $00, $15, $40, $00
+	db $4a, $01, $00, $00, $00, $00, $25, $7b
+	db $c0, $10, $60, $1a, $80, $00, $36, $01
+	db $00, $00, $00, $00, $00, $00, $00, $00
+	db $00, $00, $00, $ff
+CourtyardEntryPoints_13:
+	; $5e40, 57 bytes (map_entries)
+	map_entry $01, $40, $3600, $1600, $0000
+	map_entry $02, $40, $2200, $0b00, $0000
+	map_entry $03, $c0, $2200, $3100, $0000
+	map_entry $0a, $c0, $1100, $1d00, $0000
+	map_entry $0d, $c0, $0d00, $1f00, $0000
+	map_entry $0e, $c0, $0f00, $1f00, $0000
+	map_entry $0f, $c0, $2200, $2f00, $0000
+	db $ff
+CourtyardExitTriggers_13:
+	; $5e79, 49 bytes (map_scripts)
+	map_script $01, $ff, $0000, $0000, $11, $01
+	map_script $02, $ff, $0000, $0000, $08, $04
+	map_script $03, $ff, $0000, $0000, $05, $02
+	map_script $0a, $ff, $0000, Func_13_7b4d, $00, $0a
+	map_script $0e, $ff, $0000, $0000, $07, $0e
+	map_script $0f, $ff, $0000, $0000, $08, $0f
+	db $ff
+Func_13_5eaa:
 	ld hl, $020f ; $5eaa
 	farcall FarPtr_InitDialogueTextCursor ; $5ead
 	test_flag $05, 7 ; $5eb0
@@ -3583,59 +3334,16 @@ Label_13_5ed6:
 	ld a, $03 ; $5ed6
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5ed8
 	ret ; $5edb
-	inc bc ; $5edc
-	rst Rst38 ; $5edd
-	nop ; $5ede
-	nop ; $5edf
-	xor a, d ; $5ee0
-	ld e, [hl] ; $5ee1
-	inc bc ; $5ee2
-	nop ; $5ee3
-	inc b ; $5ee4
-	rst Rst38 ; $5ee5
-	ldh [rTIMA], a ; $5ee6
-	inc d ; $5ee8
-	ld [bc], a ; $5ee9
-	inc bc ; $5eea
-	nop ; $5eeb
-	dec b ; $5eec
-	rst Rst38 ; $5eed
-	ldh [rTIMA], a ; $5eee
-	dec d ; $5ef0
-	ld [bc], a ; $5ef1
-	dec de ; $5ef2
-	nop ; $5ef3
-	inc b ; $5ef4
-	rst Rst38 ; $5ef5
-	nop ; $5ef6
-	nop ; $5ef7
-	jr Label_13_5efc ; $5ef8
-	db $03 ; $5efa
-	db $00 ; $5efb
-Label_13_5efc:
-	dec b ; $5efc
-	rst Rst38 ; $5efd
-	nop ; $5efe
-	nop ; $5eff
-	add hl, de ; $5f00
-	ld [bc], a ; $5f01
-	dec de ; $5f02
-	nop ; $5f03
-	ld b, $ff ; $5f04
-	nop ; $5f06
-	nop ; $5f07
-	ld d, $02 ; $5f08
-	inc bc ; $5f0a
-	nop ; $5f0b
-	rlca ; $5f0c
-	rst Rst38 ; $5f0d
-	nop ; $5f0e
-	nop ; $5f0f
-	rla ; $5f10
-	ld [bc], a ; $5f11
-	inc de ; $5f12
-	nop ; $5f13
-	rst Rst38 ; $5f14
+CourtyardNpcScripts_13:
+	; $5edc, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_13_5eaa, $03, $00
+	map_script $04, $ff, $05e0, $0214, $03, $00
+	map_script $05, $ff, $05e0, $0215, $1b, $00
+	map_script $04, $ff, $0000, $0218, $03, $00
+	map_script $05, $ff, $0000, $0219, $1b, $00
+	map_script $06, $ff, $0000, $0216, $03, $00
+	map_script $07, $ff, $0000, $0217, $13, $00
+	db $ff
 	ld a, $05 ; $5f15
 	farcall FarPtr_SetActorNullScript ; $5f17
 	ld a, $05 ; $5f1a
@@ -3717,13 +3425,11 @@ Label_13_60c6:
 	farcall FarPtr_ScriptSetActorScript ; $6137
 	ret ; $613a
 	INCBIN "data/bank_013/d_613b.bin" ; $613b, 41 bytes
-	ld bc, $00ff ; $6164
-	nop ; $6167
-	ld l, l ; $6168
-	ld h, c ; $6169
-	nop ; $616a
-	nop ; $616b
-	rst Rst38 ; $616c
+CourtyardFacingScripts_13:
+	; $6164, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_13_616d, $00, $00
+	db $ff
+Func_13_616d:
 	call Func_13_7ae0 ; $616d
 	ld hl, wStoryModePlayersXPosition ; $6170
 	ld de, wStoryModeSpawnPosition ; $6173
@@ -3734,7 +3440,9 @@ Label_13_60c6:
 	ld [$c294], a ; $6181
 	ld [wStoryModeExitLocationRequest], a ; $6184
 	ret ; $6187
-	rst Rst38 ; $6188
+CourtyardTileTriggers_13:
+	ds 1, $ff ; $6188, fill
+CourtyardInitScript_13:
 	call SetupVarsityCourtSceneVariant ; $6189
 	ld a, [wStoryModeEntryPoint] ; $618c
 	cp a, $0f ; $618f
@@ -6116,6 +5824,7 @@ Label_13_7b1f:
 	ld c, $01 ; $7b21
 	jr Label_13_7b1b ; $7b23
 	INCBIN "data/bank_013/d_7b25.bin" ; $7b25, 40 bytes
+Func_13_7b4d:
 	ret ; $7b4d
 	xor a, a ; $7b4e
 	ld [$c2da], a ; $7b4f

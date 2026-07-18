@@ -1,30 +1,34 @@
 SECTION "ROM Bank $12", ROMX[$4000], BANK[$12]
 
-DataPtr_StoryCmdHandlersA_12:
-	dw StoryCmdHandlersA_12 ; $4000
+DataPtr_DormEntranceMapScripts_12:
+	dw DormEntranceMapScripts_12 ; $4000
 DataPtr_WallPracticeRoomStoryCmds_12:
 	dw WallPracticeRoomStoryCmds_12 ; $4002
 DataPtr_SeniorCourtStoryCmds_12:
 	dw SeniorCourtStoryCmds_12 ; $4004
-StoryCmdHandlersA_12:
-	; $4006, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $4056 ; record 0
-	dw $40fb ; record 1
-	dw $4014 ; record 2
-	dw $4114 ; record 3
-	dw $4115 ; record 4
-	dw $4116 ; record 5
-	dw $4170 ; record 6
-	; $4014, 66 bytes (bytes:14)
-	db $00, $00, $89, $7a, $00, $01, $00, $01, $40, $00, $49, $01, $00, $00 ; 0x00
-	db $00, $00, $89, $7a, $00, $01, $00, $01, $40, $00, $29, $01, $00, $00 ; 0x0e
-	db $00, $00, $89, $7a, $00, $01, $00, $01, $40, $00, $4c, $01, $00, $00 ; 0x1c
-	db $00, $00, $89, $7a, $00, $01, $00, $01, $40, $00, $4d, $01, $00, $00 ; 0x2a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x38
-	; $4056, 25 bytes (bytes:16)
-	db $01, $c0, $00, $16, $00, $1b, $b5, $40, $02, $40, $00, $16, $00, $0d, $6f, $40 ; 0x00
-	db $0f, $c0, $00, $16, $00, $1b, $00, $00, $ff ; 0x10
+DormEntranceMapScripts_12:
+	; $4006, 14 bytes (map_tree)
+	dw DormEntranceEntryPoints_12 ; slot 0 EntryPoints
+	dw DormEntranceExitTriggers_12 ; slot 1 ExitTriggers
+	dw DormEntranceActors_12 ; slot 2 Actors
+	dw DormEntranceNpcScripts_12 ; slot 3 NpcScripts
+	dw DormEntranceFacingScripts_12 ; slot 4 FacingScripts
+	dw DormEntranceTileTriggers_12 ; slot 5 TileTriggers
+	dw DormEntranceInitScript_12 ; slot 6 InitScript
+DormEntranceActors_12:
+	; $4014, 66 bytes (map_actors)
+	map_actor $0000, $7a89, $0100, $0100, $40, $49, $01, $00
+	map_actor $0000, $7a89, $0100, $0100, $40, $29, $01, $00
+	map_actor $0000, $7a89, $0100, $0100, $40, $4c, $01, $00
+	map_actor $0000, $7a89, $0100, $0100, $40, $4d, $01, $00
+	map_actor_end
+DormEntranceEntryPoints_12:
+	; $4056, 25 bytes (map_entries)
+	map_entry $01, $c0, $1600, $1b00, Func_12_40b5
+	map_entry $02, $40, $1600, $0d00, Func_12_406f
+	map_entry $0f, $c0, $1600, $1b00, $0000
+	db $ff
+Func_12_406f:
 	ld a, [wStoryModeEntryPoint] ; $406f
 	cp a, $ff ; $4072
 	jp z, Label_12_40b4 ; $4074
@@ -55,6 +59,7 @@ Label_12_40a2:
 	farcall FarPtr_MoveActorByAngle ; $40b1
 Label_12_40b4:
 	ret ; $40b4
+Func_12_40b5:
 	ld a, [wStoryModeEntryPoint] ; $40b5
 	cp a, $ff ; $40b8
 	jp z, Label_12_40fa ; $40ba
@@ -85,16 +90,21 @@ Label_12_40e8:
 	farcall FarPtr_MoveActorByAngle ; $40f7
 Label_12_40fa:
 	ret ; $40fa
-	; $40fb, 27 bytes (records:8)
-; 3 records x 8 bytes
-	dw $ff01, $0000, $7ab1, $020a ; record 0
-	dw $ff03, $0000, $7ab1, $0108 ; record 1
-	dw $ff0f, $0000, $7ab1, $0f0a ; record 2
-	db $ff, $ff, $ff
-	; $4116, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $411f, $0000 ; record 0
+DormEntranceExitTriggers_12:
+	; $40fb, 25 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_12_7ab1, $0a, $02
+	map_script $03, $ff, $0000, Func_12_7ab1, $08, $01
+	map_script $0f, $ff, $0000, Func_12_7ab1, $0a, $0f
 	db $ff
+DormEntranceNpcScripts_12:
+	ds 1, $ff ; $4114, fill
+DormEntranceFacingScripts_12:
+	ds 1, $ff ; $4115, fill
+DormEntranceTileTriggers_12:
+	; $4116, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_12_411f, $00, $00
+	db $ff
+Func_12_411f:
 	ld a, $00 ; $411f
 	ld b, $00 ; $4121
 	farcall FarPtr_SetActorActive ; $4123
@@ -130,6 +140,7 @@ Label_12_4167:
 	ld [$c294], a ; $4169
 	ld [wStoryModeExitLocationRequest], a ; $416c
 	ret ; $416f
+DormEntranceInitScript_12:
 	ld a, [wStoryModeEntryPoint] ; $4170
 	cp a, $0f ; $4173
 	call z, Func_12_4179 ; $4175
@@ -5902,6 +5913,7 @@ PushTextArgFetchedString:
 	wram_bank ; $7a84
 	ret ; $7a88
 	INCBIN "data/bank_012/d_7a89.bin" ; $7a89, 40 bytes
+Func_12_7ab1:
 	ret ; $7ab1
 	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 451 bytes
 ComputeSeniorCourtStageB:

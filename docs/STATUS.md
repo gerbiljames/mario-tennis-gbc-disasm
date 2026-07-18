@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~155.0K instructions / 398,057 bytes of proven code+structured source
-(19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~155.2K instructions / 399,700 bytes of proven code+structured source
+(19.1% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -20,6 +20,26 @@ Everything below is **committed** (HEAD `37db15e`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Story-location map_trees carved in banks $12/$13/$15 (2026-07-18)
+
+Six "StoryCmdHandlers*" tables were misidentified: they are the 7-slot
+**`map_tree` location directories** that the bank $0a `story_location` records
+point at (`DormEntrance` $12:$4006, `RestaurantPlaza` $13:$4006, `DormRoom`
+$13:$4e20, `Courtyard` $13:$5c78, `TournamentCourtyard` $15:$4004,
+`TrainingCourt` $15:$4796) — the same structure the bank $0e/$0f/$27 pass
+already handled, just never extended to these banks. Each was typed `records:2`
+and its sublists (EntryPoints/ExitTriggers/Actors/NpcScripts/FacingScripts/
+TileTriggers) rendered as garbage disassembly. Retyped the directories `map_tree`
+and each sublist `map_entries`/`map_scripts`/`map_actors`, renamed to
+`<Loc><Role>_<bank>`. The story-script handlers referenced by the records — and
+the InitScript slot-6 code — were only ever reached by linear decode from the old
+blanket data-start seeds; those were replaced with precise per-handler code seeds
+(the record pointer fields + the code following each list's `$ff` terminator), so
+handlers now carve cleanly and the record lists get exact extents. Net +135
+instructions, still byte-perfect. `StoryCmdHandlersC_13` ($13:$526a) was **left
+alone**: it has no `$4000` DataPtr slot and no `story_location` reference, its
+slots overlap, and its "InitScript" isn't code — it is not a real directory.
 
 ### Bank $1b $402e "table" split into farcall data slots + stranded cursor code (2026-07-18)
 

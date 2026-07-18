@@ -3191,21 +3191,21 @@ StoryLocationTable_0a:
 	story_location $04, $10, DataPtr_Test2MapScripts_10, $0b ; loc 4 Test 2
 	story_location $05, $11, DataPtr_AcademyMainBldgMapScripts_10, $1a ; loc 5 Academy Main Bldg.
 	story_location $06, $11, DataPtr_AcademyWingMapScripts_10, $1a ; loc 6 Academy Wing
-	story_location $07, $14, DataPtr_StoryCmdHandlersD_13, $1b ; loc 7 Courtyard
-	story_location $08, $13, DataPtr_StoryCmdHandlersA_13, $1b ; loc 8 Restaurant Plaza
-	story_location $09, $1b, DataPtr_StoryCmdHandlersA_12, $1b ; loc 9 Dorm Entrance
-	story_location $0a, $12, DataPtr_StoryCmdHandlersB_13, $00 ; loc 10 Dorm Room
+	story_location $07, $14, DataPtr_CourtyardMapScripts_13, $1b ; loc 7 Courtyard
+	story_location $08, $13, DataPtr_RestaurantPlazaMapScripts_13, $1b ; loc 8 Restaurant Plaza
+	story_location $09, $1b, DataPtr_DormEntranceMapScripts_12, $1b ; loc 9 Dorm Entrance
+	story_location $0a, $12, DataPtr_DormRoomMapScripts_13, $00 ; loc 10 Dorm Room
 	story_location $0b, $18, DataPtr_JuniorClassCourtSinglesScene_11, $1b ; loc 11 Junior Class Court
 	story_location $0c, $18, DataPtr_JuniorClassCourtDoublesScene_11, $1b ; loc 12 Junior Class Court
 	story_location $0d, $19, DataPtr_RestaurantMapScripts_10, $1d ; loc 13 Restaurant
 	story_location $0e, $19, DataPtr_CafeteriaMapScripts_10, $1d ; loc 14 Cafeteria
-	story_location $0f, $1e, DataPtr_StoryCmdHandlersB_15, $1b ; loc 15 Training Court
+	story_location $0f, $1e, DataPtr_TrainingCourtMapScripts_15, $1b ; loc 15 Training Court
 	story_location $10, $17, DataPtr_SeniorCourtStoryCmds_12, $1b ; loc 16 Senior Class Court
 	story_location $11, $22, DataPtr_TrainingGymMapScripts_0e, $1d ; loc 17 Training Center
 	story_location $12, $22, DataPtr_TennisMachineRoomMapScripts_14, $1d ; loc 18 Tennis Machine Room
 	story_location $13, $22, DataPtr_WallPracticeRoomStoryCmds_12, $1d ; loc 19 Wall Practice Room
 	story_location $14, $1a, DataPtr_AcademyArrivalScene_11, $1b ; loc 20 Academy Entrance
-	story_location $15, $1c, DataPtr_StoryCmdHandlersA_15, $1b ; loc 21 Tournament Courtyard
+	story_location $15, $1c, DataPtr_TournamentCourtyardMapScripts_15, $1b ; loc 21 Tournament Courtyard
 	story_location $16, $1d, DataPtr_Court1MapScripts_14, $1b ; loc 22 Court #1
 	story_location $17, $1f, DataPtr_Court2MapScripts_14, $1b ; loc 23 Court #2
 	story_location $18, $20, DataPtr_CenterCourtMapScripts_11, $1d ; loc 24 Center Court

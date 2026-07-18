@@ -1,6 +1,10 @@
 {
  "_comment": "Static code-entry seeds for bank $12 (menu-screen bank; trees at $4006/$467c/$52f7 in the bank $0f/$10 record/handler-table shape). Entries are verified handler-table targets and fall-through code heads. Flat = 0x12*0x4000 + (cpu-0x4000). Second pass: jump-table targets ($64f2/$6e0d dw tables), computed-dispatch handlers and code heads.",
  "rom": [
+  295023,
+  295093,
+  295199,
+  295280,
   296735,
   296833,
   296870,
@@ -60,6 +64,7 @@
   308522,
   309185,
   309186,
+  309937,
   310460
  ],
  "other": []
