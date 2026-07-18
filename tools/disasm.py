@@ -851,8 +851,10 @@ class Disassembly:
           $4e9d (LoadMatchResultGfxSet, $4e54): a self-delimiting dw pointer
             table indexes 6-byte descriptor records, each three dw pointers into
             a contiguous stream pool decompressed to VRAM $8900/$8a40/$9140.
-          $60f1 (DecompressWinLosePortraitVariant, $60d5): a self-delimiting dw
-            pointer table straight into a stream pool (portrait variants).
+          $60f1 (DecompressWinLosePortraitVariant, $60d5) and $6968
+            (DecompressCharacterPortrait, $6955): self-delimiting dw pointer
+            tables straight into a stream pool (portrait variants / character
+            portraits).
         Carve each pool into labeled lz blobs (so the records/pointers reference
         them by name) and shrink each table region to a data table."""
         bank = 0x16
@@ -889,10 +891,11 @@ class Disassembly:
             p += 6
         total += tile_pool(pool)
         self.data_blobs[flat(0x4e9d)] = (flat(pool) - flat(0x4e9d), "copy")
-        # $60f1: pointer table straight into the pool (lowest entry = pool start).
-        pool = min(word(0x60f1), word(0x60f3))
-        total += tile_pool(pool)
-        self.data_blobs[flat(0x60f1)] = (flat(pool) - flat(0x60f1), "copy")
+        # Direct tables: lowest entry is the pool start.
+        for tbl in (0x60f1, 0x6968):
+            pool = min(word(tbl), word(tbl + 2))
+            total += tile_pool(pool)
+            self.data_blobs[flat(tbl)] = (flat(pool) - flat(tbl), "copy")
         print(f"gfx pointer sets: {total} lz streams carved")
 
     def load_hook_dumps(self, paths):
@@ -2457,9 +2460,9 @@ def render_gfx_ptr_table(rom, start, end, bank, data_labels):
 
 
 def render_lz_ptr_table(rom, start, end, bank, data_labels):
-    """Render a direct LZ pointer table ($16:$60f1): a dw table of pointers
-    straight to LZ tile streams, indexed by the win/lose portrait variant.
-    Each entry resolves to its Lz_* blob label."""
+    """Render a direct LZ pointer table (e.g. $16:$60f1, $16:$6968): a dw table
+    of pointers straight to LZ tile streams, indexed by the portrait variant /
+    character id. Each entry resolves to its Lz_* blob label."""
     fbase = bank * BANK_SIZE
     out = []
     for i, o in enumerate(range(start, end, 2)):
