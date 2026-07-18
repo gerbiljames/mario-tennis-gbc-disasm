@@ -645,7 +645,7 @@ ShowDrillMessageByIndex:
 	ld h, $00 ; $4586
 	ld l, a ; $4588
 	add hl, hl ; $4589
-	ld de, $45c4 ; $458a
+	ld de, DrillMessageTextIds_0b ; $458a
 	add hl, de ; $458d
 	ld a, [hl+] ; $458e
 	ld b, [hl] ; $458f
@@ -680,7 +680,8 @@ ShowDrillMessageByIndex:
 	ld e, $06 ; $45be
 	farcall FarPtr_ShowMessageWindow ; $45c0
 	ret ; $45c3
-	; $45c4, 321 bytes (records:2)
+DrillMessageTextIds_0b:
+	; $45c4, 274 bytes (records:2)
 	dw $28c4 ; record 0
 	dw $28c4 ; record 1
 	dw $28c5 ; record 2
@@ -818,30 +819,17 @@ ShowDrillMessageByIndex:
 	dw $5f56 ; record 134
 	dw $9c21 ; record 135
 	dw $2ac7 ; record 136
-	dw $6f66 ; record 137
-	dw $44df ; record 138
-	dw $df08 ; record 139
-	dw $0846 ; record 140
-	dw $e821 ; record 141
-	dw $0146 ; record 142
-	dw $0930 ; record 143
-	dw $9dcd ; record 144
-	dw $c91e ; record 145
-	dw $04f1 ; record 146
-	dw $0000 ; record 147
-	dw $0401 ; record 148
-	dw $0002 ; record 149
-	dw $0080 ; record 150
-	dw $ff00 ; record 151
-	dw $ff00 ; record 152
-	dw $01ff ; record 153
-	dw $ffff ; record 154
-	dw $0001 ; record 155
-	dw $0100 ; record 156
-	dw $0100 ; record 157
-	dw $ff01 ; record 158
-	dw $0101 ; record 159
-	db $ff
+QueueDrillSprite_0b:
+	ld h, [hl] ; $46d6
+	ld l, a ; $46d7
+	farcall FarPtr_08_44 ; $46d8
+	farcall FarPtr_ApplyCameraProjection ; $46db
+	ld hl, DrillSpriteTemplate_0b ; $46de
+	ld bc, $0930 ; $46e1
+	call QueueSpriteTemplate ; $46e4
+	ret ; $46e7
+DrillSpriteTemplate_0b:
+	INCBIN "data/bank_00b/d_46e8.bin" ; $46e8, 29 bytes
 RunTrainingDrillByID:
 	push af ; $4705
 	farcall FarPtr_08_06 ; $4706
