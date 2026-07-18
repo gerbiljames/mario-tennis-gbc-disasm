@@ -1061,7 +1061,7 @@ DispatchRankingBoardAnim:
 	jr nz, Label_1b_5018 ; $5006
 	ld a, [$d801] ; $5008
 	add a, a ; $500b
-	ld hl, $5059 ; $500c
+	ld hl, StateHandlerTable2_1b ; $500c
 	add a, l ; $500f
 	ld l, a ; $5010
 	jr nc, Label_1b_5014 ; $5011
@@ -1074,7 +1074,7 @@ Label_1b_5014:
 Label_1b_5018:
 	ld a, [$d801] ; $5018
 	add a, a ; $501b
-	ld hl, $504f ; $501c
+	ld hl, StateHandlerTable1_1b ; $501c
 	add a, l ; $501f
 	ld l, a ; $5020
 	jr nc, Label_1b_5024 ; $5021
@@ -1090,7 +1090,7 @@ Label_1b_5028:
 	jr nz, Label_1b_503e ; $502c
 	ld a, [$d801] ; $502e
 	add a, a ; $5031
-	ld hl, $506d ; $5032
+	ld hl, StateHandlerTable4_1b ; $5032
 	add a, l ; $5035
 	ld l, a ; $5036
 	jr nc, Label_1b_503a ; $5037
@@ -1103,7 +1103,7 @@ Label_1b_503a:
 Label_1b_503e:
 	ld a, [$d801] ; $503e
 	add a, a ; $5041
-	ld hl, $5063 ; $5042
+	ld hl, StateHandlerTable3_1b ; $5042
 	add a, l ; $5045
 	ld l, a ; $5046
 	jr nc, Label_1b_504a ; $5047
@@ -1113,612 +1113,511 @@ Label_1b_504a:
 	ld h, [hl] ; $504b
 	ld l, a ; $504c
 	jp hl ; $504d
-	; $504e, 1209 bytes (records:2)
-	dw $77c9 ; record 0
-	dw $7750 ; record 1
-	dw $6f50 ; record 2
-	dw $7351 ; record 3
-	dw $eb52 ; record 4
-	dw $ff52 ; record 5
-	dw $ff52 ; record 6
-	dw $2252 ; record 7
-	dw $4953 ; record 8
-	dw $6853 ; record 9
-	dw $8753 ; record 10
-	dw $8753 ; record 11
-	dw $fa53 ; record 12
-	dw $6d53 ; record 13
-	dw $a054 ; record 14
-	dw $a354 ; record 15
-	dw $a354 ; record 16
-	dw $c254 ; record 17
-	dw $e554 ; record 18
-	dw $0454 ; record 19
-	dw $3e55 ; record 20
-	dw $2101 ; record 21
-	dw $5912 ; record 22
-	dw $6acd ; record 23
-	dw $cd1b ; record 24
-	dw $2725 ; record 25
-	dw $cf8c ; record 26
-	dw $0e78 ; record 27
-	dw $cd00 ; record 28
-	dw GetRankingMarkerSlot ; record 29
-	dw $a511 ; record 30
-	dw $cd5b ; record 31
-	dw $5aa4 ; record 32
-	dw $010e ; record 33
-	dw $51cd ; record 34
-	dw $115f ; record 35
-	dw $5bb2 ; record 36
-	dw $89cd ; record 37
-	dw $065a ; record 38
-	dw $cd01 ; record 39
-	dw HighlightRankingRow ; record 40
-	dw $c5cd ; record 41
-	dw $cd58 ; record 42
-	dw $2725 ; record 43
-	dw $cf1e ; record 44
-	dw $0e80 ; record 45
-	dw $cd03 ; record 46
-	dw GetRankingMarkerSlot ; record 47
-	dw $9411 ; record 48
-	dw $cd5b ; record 49
-	dw $5a6e ; record 50
-	dw $040e ; record 51
-	dw $51cd ; record 52
-	dw $115f ; record 53
-	dw $5b94 ; record 54
-	dw $89cd ; record 55
-	dw $cd5a ; record 56
-	dw $2725 ; record 57
-	dw $cf5a ; record 58
-	dw $0e78 ; record 59
-	dw $cd03 ; record 60
-	dw GetRankingMarkerSlot ; record 61
-	dw $a511 ; record 62
-	dw $cd5b ; record 63
-	dw $5aa4 ; record 64
-	dw $040e ; record 65
-	dw $51cd ; record 66
-	dw $115f ; record 67
-	dw $5bb2 ; record 68
-	dw $89cd ; record 69
-	dw $065a ; record 70
-	dw $cd02 ; record 71
-	dw HighlightRankingRow ; record 72
-	dw $c5cd ; record 73
-	dw $cd58 ; record 74
-	dw $2725 ; record 75
-	dw $cf1e ; record 76
-	dw $0e80 ; record 77
-	dw $cd06 ; record 78
-	dw GetRankingMarkerSlot ; record 79
-	dw $9d11 ; record 80
-	dw $cd5b ; record 81
-	dw $5a6e ; record 82
-	dw $070e ; record 83
-	dw $51cd ; record 84
-	dw $115f ; record 85
-	dw $5b9d ; record 86
-	dw $89cd ; record 87
-	dw $cd5a ; record 88
-	dw $2725 ; record 89
-	dw $cf5a ; record 90
-	dw $0e78 ; record 91
-	dw $cd06 ; record 92
-	dw GetRankingMarkerSlot ; record 93
-	dw $a511 ; record 94
-	dw $cd5b ; record 95
-	dw $5aa4 ; record 96
-	dw $070e ; record 97
-	dw $51cd ; record 98
-	dw $115f ; record 99
-	dw $5b95 ; record 100
-	dw $89cd ; record 101
-	dw $065a ; record 102
-	dw $cd03 ; record 103
-	dw HighlightRankingRow ; record 104
-	dw $c5cd ; record 105
-	dw $cd58 ; record 106
-	dw $2725 ; record 107
-	dw $cf1e ; record 108
-	dw $0e80 ; record 109
-	dw $cd09 ; record 110
-	dw GetRankingMarkerSlot ; record 111
-	dw $9d11 ; record 112
-	dw $cd5b ; record 113
-	dw $5a6e ; record 114
-	dw $0a0e ; record 115
-	dw $51cd ; record 116
-	dw $115f ; record 117
-	dw $5b9d ; record 118
-	dw $89cd ; record 119
-	dw $cd5a ; record 120
-	dw $2725 ; record 121
-	dw $cf5a ; record 122
-	dw $0e78 ; record 123
-	dw $cd09 ; record 124
-	dw GetRankingMarkerSlot ; record 125
-	dw $a511 ; record 126
-	dw $cd5b ; record 127
-	dw $5aa4 ; record 128
-	dw $0a0e ; record 129
-	dw $51cd ; record 130
-	dw $115f ; record 131
-	dw $5b95 ; record 132
-	dw $89cd ; record 133
-	dw $065a ; record 134
-	dw $cd04 ; record 135
-	dw HighlightRankingRow ; record 136
-	dw $c5cd ; record 137
-	dw $cd58 ; record 138
-	dw $2725 ; record 139
-	dw $3e1e ; record 140
-	dw $ea01 ; record 141
-	dw $d858 ; record 142
-	dw $4ec3 ; record 143
-	dw $3e50 ; record 144
-	dw $2101 ; record 145
-	dw $5912 ; record 146
-	dw $6acd ; record 147
-	dw $cd1b ; record 148
-	dw $2725 ; record 149
-	dw $cf8c ; record 150
-	dw $0e78 ; record 151
-	dw $cd00 ; record 152
-	dw GetRankingMarkerSlot ; record 153
-	dw $bb11 ; record 154
-	dw $cd5b ; record 155
-	dw $5aa4 ; record 156
-	dw $020e ; record 157
-	dw $51cd ; record 158
-	dw $115f ; record 159
-	dw $5bcc ; record 160
-	dw $89cd ; record 161
-	dw $065a ; record 162
-	dw $cd05 ; record 163
-	dw HighlightRankingRow ; record 164
-	dw $c5cd ; record 165
-	dw $cd58 ; record 166
-	dw $2725 ; record 167
-	dw $cf1e ; record 168
-	dw $0e80 ; record 169
-	dw $cd05 ; record 170
-	dw GetRankingMarkerSlot ; record 171
-	dw $bb11 ; record 172
-	dw $cd5b ; record 173
-	dw $5a89 ; record 174
-	dw $25cd ; record 175
-	dw $0427 ; record 176
-	dw $030e ; record 177
-	dw $51cd ; record 178
-	dw $115f ; record 179
-	dw $5bc3 ; record 180
-	dw $6ecd ; record 181
-	dw $cd5a ; record 182
-	dw $2725 ; record 183
-	dw $cf78 ; record 184
-	dw $0e78 ; record 185
-	dw $cd05 ; record 186
-	dw GetRankingMarkerSlot ; record 187
-	dw $cc11 ; record 188
-	dw $cd5b ; record 189
-	dw $5abf ; record 190
-	dw $030e ; record 191
-	dw $51cd ; record 192
-	dw $115f ; record 193
-	dw $5bd4 ; record 194
-	dw $6ecd ; record 195
-	dw $065a ; record 196
-	dw $cd06 ; record 197
-	dw HighlightRankingRow ; record 198
-	dw $c5cd ; record 199
-	dw $cd58 ; record 200
-	dw $2725 ; record 201
-	dw $cf1e ; record 202
-	dw $0e80 ; record 203
-	dw $cd08 ; record 204
-	dw GetRankingMarkerSlot ; record 205
-	dw $cd11 ; record 206
-	dw $cd5b ; record 207
-	dw $5a89 ; record 208
-	dw $25cd ; record 209
-	dw $0427 ; record 210
-	dw $060e ; record 211
-	dw $51cd ; record 212
-	dw $115f ; record 213
-	dw $5bd4 ; record 214
-	dw $6ecd ; record 215
-	dw $cd5a ; record 216
-	dw $2725 ; record 217
-	dw $cf5a ; record 218
-	dw $0e78 ; record 219
-	dw $cd08 ; record 220
-	dw GetRankingMarkerSlot ; record 221
-	dw $cc11 ; record 222
-	dw $cd5b ; record 223
-	dw $5abf ; record 224
-	dw $060e ; record 225
-	dw $51cd ; record 226
-	dw $115f ; record 227
-	dw $5bc3 ; record 228
-	dw $6ecd ; record 229
-	dw $065a ; record 230
-	dw $cd07 ; record 231
-	dw HighlightRankingRow ; record 232
-	dw $c5cd ; record 233
-	dw $cd58 ; record 234
-	dw $2725 ; record 235
-	dw $cf1e ; record 236
-	dw $0e80 ; record 237
-	dw $cd0b ; record 238
-	dw GetRankingMarkerSlot ; record 239
-	dw $cd11 ; record 240
-	dw $cd5b ; record 241
-	dw $5a89 ; record 242
-	dw $25cd ; record 243
-	dw $0427 ; record 244
-	dw $090e ; record 245
-	dw $51cd ; record 246
-	dw $115f ; record 247
-	dw $5bd4 ; record 248
-	dw $6ecd ; record 249
-	dw $cd5a ; record 250
-	dw $2725 ; record 251
-	dw $cf5a ; record 252
-	dw $0e78 ; record 253
-	dw $cd0b ; record 254
-	dw GetRankingMarkerSlot ; record 255
-	dw $bc11 ; record 256
-	dw $cd5b ; record 257
-	dw $5a89 ; record 258
-	dw $090e ; record 259
-	dw $51cd ; record 260
-	dw $115f ; record 261
-	dw $5bbb ; record 262
-	dw $a4cd ; record 263
-	dw $065a ; record 264
-	dw $cd08 ; record 265
-	dw HighlightRankingRow ; record 266
-	dw $c5cd ; record 267
-	dw $cd58 ; record 268
-	dw $2725 ; record 269
-	dw $3e1e ; record 270
-	dw $ea01 ; record 271
-	dw $d858 ; record 272
-	dw $4ec3 ; record 273
-	dw $3e50 ; record 274
-	dw $2101 ; record 275
-	dw $5912 ; record 276
-	dw $6acd ; record 277
-	dw $cd1b ; record 278
-	dw $2725 ; record 279
-	dw $cf8c ; record 280
-	dw $0e78 ; record 281
-	dw $cd00 ; record 282
-	dw GetRankingMarkerSlot ; record 283
-	dw $e711 ; record 284
-	dw $cd5b ; record 285
-	dw $5aa4 ; record 286
-	dw $050e ; record 287
-	dw $51cd ; record 288
-	dw $115f ; record 289
-	dw $5bd4 ; record 290
-	dw $6ecd ; record 291
-	dw $065a ; record 292
-	dw $cd09 ; record 293
-	dw HighlightRankingRow ; record 294
-	dw $c5cd ; record 295
-	dw $cd58 ; record 296
-	dw $2725 ; record 297
-	dw $cf5a ; record 298
-	dw $0e80 ; record 299
-	dw $cd08 ; record 300
-	dw GetRankingMarkerSlot ; record 301
-	dw $d411 ; record 302
-	dw $cd5b ; record 303
-	dw $5a6e ; record 304
-	dw $090e ; record 305
-	dw $51cd ; record 306
-	dw $115f ; record 307
-	dw $5bd4 ; record 308
-	dw $89cd ; record 309
-	dw $cd5a ; record 310
-	dw $2725 ; record 311
-	dw $cf5a ; record 312
-	dw $0e78 ; record 313
-	dw $cd08 ; record 314
-	dw GetRankingMarkerSlot ; record 315
-	dw $9511 ; record 316
-	dw $cd5b ; record 317
-	dw $5a6e ; record 318
-	dw $090e ; record 319
-	dw $51cd ; record 320
-	dw $115f ; record 321
-	dw $5c0c ; record 322
-	dw $bfcd ; record 323
-	dw $065a ; record 324
-	dw $cd0a ; record 325
-	dw HighlightRankingRow ; record 326
-	dw $c5cd ; record 327
-	dw $cd58 ; record 328
-	dw $2725 ; record 329
-	dw $3e1e ; record 330
-	dw $ea01 ; record 331
-	dw $d858 ; record 332
-	dw $4ec3 ; record 333
-	dw $3e50 ; record 334
-	dw $2101 ; record 335
-	dw $5912 ; record 336
-	dw $6acd ; record 337
-	dw $cd1b ; record 338
-	dw $2725 ; record 339
-	dw $3e8c ; record 340
-	dw $ea01 ; record 341
-	dw $d858 ; record 342
-	dw $4ec3 ; record 343
-	dw $cd50 ; record 344
-	dw $2725 ; record 345
-	dw $cf14 ; record 346
-	dw $0e80 ; record 347
-	dw $cd00 ; record 348
-	dw GetRankingMarkerSlot ; record 349
-	dw $9411 ; record 350
-	dw $cd5b ; record 351
-	dw $5a6e ; record 352
-	dw $010e ; record 353
-	dw $51cd ; record 354
-	dw $115f ; record 355
-	dw $5b94 ; record 356
-	dw $89cd ; record 357
-	dw $cd5a ; record 358
-	dw $2725 ; record 359
-	dw $c314 ; record 360
-	dw $504e ; record 361
-	dw $25cd ; record 362
-	dw $0a27 ; record 363
-	dw $80cf ; record 364
-	dw $020e ; record 365
-	dw $51cd ; record 366
-	dw $115f ; record 367
-	dw $5bbb ; record 368
-	dw $89cd ; record 369
-	dw $cd5a ; record 370
-	dw $2725 ; record 371
-	dw $0e04 ; record 372
-	dw $cd00 ; record 373
-	dw GetRankingMarkerSlot ; record 374
-	dw $c311 ; record 375
-	dw $cd5b ; record 376
-	dw $5a6e ; record 377
-	dw $25cd ; record 378
-	dw $1427 ; record 379
-	dw $4ec3 ; record 380
-	dw $cd50 ; record 381
-	dw $2725 ; record 382
-	dw $cf14 ; record 383
-	dw $0e80 ; record 384
-	dw $cd00 ; record 385
-	dw GetRankingMarkerSlot ; record 386
-	dw $9411 ; record 387
-	dw $cd5b ; record 388
-	dw $5a6e ; record 389
-	dw $050e ; record 390
-	dw $51cd ; record 391
-	dw $115f ; record 392
-	dw $5b94 ; record 393
-	dw $89cd ; record 394
-	dw $c35a ; record 395
-	dw $504e ; record 396
-	dw $25cd ; record 397
-	dw $1e27 ; record 398
-	dw $80cf ; record 399
-	dw $000e ; record 400
-	dw $51cd ; record 401
-	dw $115f ; record 402
-	dw $5bdd ; record 403
-	dw $6ecd ; record 404
-	dw $0e5a ; record 405
-	dw $cd09 ; record 406
-	dw GetRankingMarkerSlot ; record 407
-	dw $e211 ; record 408
-	dw $cd5b ; record 409
-	dw $5a89 ; record 410
-	dw $4ec3 ; record 411
-	dw $3e50 ; record 412
-	dw $2101 ; record 413
-	dw $5912 ; record 414
-	dw $6acd ; record 415
-	dw $cd1b ; record 416
-	dw $2725 ; record 417
-	dw $cf8c ; record 418
-	dw $0e78 ; record 419
-	dw $cd00 ; record 420
-	dw GetRankingMarkerSlot ; record 421
-	dw $f711 ; record 422
-	dw $cd5b ; record 423
-	dw $5aa4 ; record 424
-	dw $010e ; record 425
-	dw $51cd ; record 426
-	dw $115f ; record 427
-	dw $5bd4 ; record 428
-	dw $89cd ; record 429
-	dw $065a ; record 430
-	dw $cd01 ; record 431
-	dw HighlightDoublesRankingRow ; record 432
-	dw $c5cd ; record 433
-	dw $cd58 ; record 434
-	dw $2725 ; record 435
-	dw $cf5a ; record 436
-	dw $0e80 ; record 437
-	dw $cd03 ; record 438
-	dw GetRankingMarkerSlot ; record 439
-	dw $d411 ; record 440
-	dw $cd5b ; record 441
-	dw $5a6e ; record 442
-	dw $040e ; record 443
-	dw $51cd ; record 444
-	dw $115f ; record 445
-	dw $5b9d ; record 446
-	dw $89cd ; record 447
-	dw $cd5a ; record 448
-	dw $2725 ; record 449
-	dw $cf5a ; record 450
-	dw $0e78 ; record 451
-	dw $cd03 ; record 452
-	dw GetRankingMarkerSlot ; record 453
-	dw $f711 ; record 454
-	dw $cd5b ; record 455
-	dw $5aa4 ; record 456
-	dw $040e ; record 457
-	dw $51cd ; record 458
-	dw $115f ; record 459
-	dw $5bc5 ; record 460
-	dw $89cd ; record 461
-	dw $065a ; record 462
-	dw $cd02 ; record 463
-	dw HighlightDoublesRankingRow ; record 464
-	dw $c5cd ; record 465
-	dw $cd58 ; record 466
-	dw $2725 ; record 467
-	dw $c35a ; record 468
-	dw $504e ; record 469
-	dw $013e ; record 470
-	dw $1221 ; record 471
-	dw $cd59 ; record 472
-	dw $1b6a ; record 473
-	dw $25cd ; record 474
-	dw $8c27 ; record 475
-	dw $78cf ; record 476
-	dw $000e ; record 477
-	dw $51cd ; record 478
-	dw $115f ; record 479
-	dw $5bef ; record 480
-	dw $a4cd ; record 481
-	dw $0e5a ; record 482
-	dw $cd02 ; record 483
-	dw GetRankingMarkerSlot ; record 484
-	dw $cc11 ; record 485
-	dw $cd5b ; record 486
-	dw $5a89 ; record 487
-	dw $0306 ; record 488
-	dw $46cd ; record 489
-	dw $cd58 ; record 490
-	dw $58c5 ; record 491
-	dw $25cd ; record 492
-	dw $5a27 ; record 493
-	dw $80cf ; record 494
-	dw $030e ; record 495
-	dw $51cd ; record 496
-	dw $115f ; record 497
-	dw $5bd4 ; record 498
-	dw $6ecd ; record 499
-	dw $0e5a ; record 500
-	dw $cd05 ; record 501
-	dw GetRankingMarkerSlot ; record 502
-	dw $cc11 ; record 503
-	dw $cd5b ; record 504
-	dw $5a89 ; record 505
-	dw $25cd ; record 506
-	dw $8c27 ; record 507
-	dw $78cf ; record 508
-	dw $030e ; record 509
-	dw $51cd ; record 510
-	dw $115f ; record 511
-	dw $5bef ; record 512
-	dw $a4cd ; record 513
-	dw $0e5a ; record 514
-	dw $cd05 ; record 515
-	dw GetRankingMarkerSlot ; record 516
-	dw $bb11 ; record 517
-	dw $cd5b ; record 518
-	dw $5a89 ; record 519
-	dw $0406 ; record 520
-	dw $46cd ; record 521
-	dw $cd58 ; record 522
-	dw $58c5 ; record 523
-	dw $25cd ; record 524
-	dw $1e27 ; record 525
-	dw $4ec3 ; record 526
-	dw $3e50 ; record 527
-	dw $2101 ; record 528
-	dw $5912 ; record 529
-	dw $6acd ; record 530
-	dw $cd1b ; record 531
-	dw $2725 ; record 532
-	dw $cf8c ; record 533
-	dw $0e78 ; record 534
-	dw $cd00 ; record 535
-	dw GetRankingMarkerSlot ; record 536
-	dw $9811 ; record 537
-	dw $cd5b ; record 538
-	dw $5a6e ; record 539
-	dw $030e ; record 540
-	dw $51cd ; record 541
-	dw $115f ; record 542
-	dw $5b94 ; record 543
-	dw $89cd ; record 544
-	dw $065a ; record 545
-	dw $cd06 ; record 546
-	dw HighlightDoublesRankingRow ; record 547
-	dw $c5cd ; record 548
-	dw $cd58 ; record 549
-	dw $2725 ; record 550
-	dw $c31e ; record 551
-	dw $504e ; record 552
-	dw $4ec3 ; record 553
-	dw $cd50 ; record 554
-	dw $2725 ; record 555
-	dw $cf1e ; record 556
-	dw $0e80 ; record 557
-	dw $cd00 ; record 558
-	dw GetRankingMarkerSlot ; record 559
-	dw $9411 ; record 560
-	dw $cd5b ; record 561
-	dw $5a6e ; record 562
-	dw $010e ; record 563
-	dw $51cd ; record 564
-	dw $115f ; record 565
-	dw $5b94 ; record 566
-	dw $89cd ; record 567
-	dw $c35a ; record 568
-	dw $504e ; record 569
-	dw $25cd ; record 570
-	dw $1e27 ; record 571
-	dw $80cf ; record 572
-	dw $020e ; record 573
-	dw $51cd ; record 574
-	dw $115f ; record 575
-	dw $5bbb ; record 576
-	dw $89cd ; record 577
-	dw $cd5a ; record 578
-	dw $2725 ; record 579
-	dw $0e08 ; record 580
-	dw $cd00 ; record 581
-	dw GetRankingMarkerSlot ; record 582
-	dw $9411 ; record 583
-	dw $cd5b ; record 584
-	dw $5a6e ; record 585
-	dw $4ec3 ; record 586
-	dw $cd50 ; record 587
-	dw $2725 ; record 588
-	dw $cf1e ; record 589
-	dw $0e80 ; record 590
-	dw $cd00 ; record 591
-	dw GetRankingMarkerSlot ; record 592
-	dw $9411 ; record 593
-	dw $cd5b ; record 594
-	dw $5a6e ; record 595
-	dw $030e ; record 596
-	dw $51cd ; record 597
-	dw $115f ; record 598
-	dw $5b9d ; record 599
-	dw $89cd ; record 600
-	dw $c35a ; record 601
-	dw $504e ; record 602
-	dw $4ec3 ; record 603
-	db $50
+ScreenStateNop_1b:
+	ret ; $504e
+StateHandlerTable1_1b:
+	; $504f, 10 bytes (records:2)
+	dw Func_1b_5077 ; record 0
+	dw Func_1b_5077 ; record 1
+	dw Func_1b_516f ; record 2
+	dw Func_1b_5273 ; record 3
+	dw Func_1b_52eb ; record 4
+StateHandlerTable2_1b:
+	; $5059, 10 bytes (records:2)
+	dw Func_1b_52ff ; record 0
+	dw Func_1b_52ff ; record 1
+	dw Func_1b_5322 ; record 2
+	dw Func_1b_5349 ; record 3
+	dw Func_1b_5368 ; record 4
+StateHandlerTable3_1b:
+	; $5063, 10 bytes (records:2)
+	dw Func_1b_5387 ; record 0
+	dw Func_1b_5387 ; record 1
+	dw Func_1b_53fa ; record 2
+	dw Func_1b_546d ; record 3
+	dw Func_1b_54a0 ; record 4
+StateHandlerTable4_1b:
+	; $506d, 10 bytes (records:2)
+	dw Func_1b_54a3 ; record 0
+	dw Func_1b_54a3 ; record 1
+	dw Func_1b_54c2 ; record 2
+	dw Func_1b_54e5 ; record 3
+	dw Func_1b_5504 ; record 4
+Func_1b_5077:
+	ld a, $01 ; $5077
+	ld hl, $5912 ; $5079
+	call RegisterFrameTask ; $507c
+	call WaitFramesCmd ; $507f
+	db $8c ; $5082 inline arg
+	sound $78 ; $5083
+	ld c, $00 ; $5085
+	call GetRankingMarkerSlot ; $5087
+	ld de, $5ba5 ; $508a
+	call Func_1b_5aa4 ; $508d
+	ld c, $01 ; $5090
+	call GetRankingMarkerSlot ; $5092
+	ld de, $5bb2 ; $5095
+	call Func_1b_5a89 ; $5098
+	ld b, $01 ; $509b
+	call HighlightRankingRow ; $509d
+	call Func_1b_58c5 ; $50a0
+	call WaitFramesCmd ; $50a3
+	db $1e ; $50a6 inline arg
+	sound $80 ; $50a7
+	ld c, $03 ; $50a9
+	call GetRankingMarkerSlot ; $50ab
+	ld de, $5b94 ; $50ae
+	call Func_1b_5a6e ; $50b1
+	ld c, $04 ; $50b4
+	call GetRankingMarkerSlot ; $50b6
+	ld de, $5b94 ; $50b9
+	call Func_1b_5a89 ; $50bc
+	call WaitFramesCmd ; $50bf
+	db $5a ; $50c2 inline arg
+	sound $78 ; $50c3
+	ld c, $03 ; $50c5
+	call GetRankingMarkerSlot ; $50c7
+	ld de, $5ba5 ; $50ca
+	call Func_1b_5aa4 ; $50cd
+	ld c, $04 ; $50d0
+	call GetRankingMarkerSlot ; $50d2
+	ld de, $5bb2 ; $50d5
+	call Func_1b_5a89 ; $50d8
+	ld b, $02 ; $50db
+	call HighlightRankingRow ; $50dd
+	call Func_1b_58c5 ; $50e0
+	call WaitFramesCmd ; $50e3
+	db $1e ; $50e6 inline arg
+	sound $80 ; $50e7
+	ld c, $06 ; $50e9
+	call GetRankingMarkerSlot ; $50eb
+	ld de, $5b9d ; $50ee
+	call Func_1b_5a6e ; $50f1
+	ld c, $07 ; $50f4
+	call GetRankingMarkerSlot ; $50f6
+	ld de, $5b9d ; $50f9
+	call Func_1b_5a89 ; $50fc
+	call WaitFramesCmd ; $50ff
+	db $5a ; $5102 inline arg
+	sound $78 ; $5103
+	ld c, $06 ; $5105
+	call GetRankingMarkerSlot ; $5107
+	ld de, $5ba5 ; $510a
+	call Func_1b_5aa4 ; $510d
+	ld c, $07 ; $5110
+	call GetRankingMarkerSlot ; $5112
+	ld de, $5b95 ; $5115
+	call Func_1b_5a89 ; $5118
+	ld b, $03 ; $511b
+	call HighlightRankingRow ; $511d
+	call Func_1b_58c5 ; $5120
+	call WaitFramesCmd ; $5123
+	db $1e ; $5126 inline arg
+	sound $80 ; $5127
+	ld c, $09 ; $5129
+	call GetRankingMarkerSlot ; $512b
+	ld de, $5b9d ; $512e
+	call Func_1b_5a6e ; $5131
+	ld c, $0a ; $5134
+	call GetRankingMarkerSlot ; $5136
+	ld de, $5b9d ; $5139
+	call Func_1b_5a89 ; $513c
+	call WaitFramesCmd ; $513f
+	db $5a ; $5142 inline arg
+	sound $78 ; $5143
+	ld c, $09 ; $5145
+	call GetRankingMarkerSlot ; $5147
+	ld de, $5ba5 ; $514a
+	call Func_1b_5aa4 ; $514d
+	ld c, $0a ; $5150
+	call GetRankingMarkerSlot ; $5152
+	ld de, $5b95 ; $5155
+	call Func_1b_5a89 ; $5158
+	ld b, $04 ; $515b
+	call HighlightRankingRow ; $515d
+	call Func_1b_58c5 ; $5160
+	call WaitFramesCmd ; $5163
+	db $1e ; $5166 inline arg
+	ld a, $01 ; $5167
+	ld [$d858], a ; $5169
+	jp ScreenStateNop_1b ; $516c
+Func_1b_516f:
+	ld a, $01 ; $516f
+	ld hl, $5912 ; $5171
+	call RegisterFrameTask ; $5174
+	call WaitFramesCmd ; $5177
+	db $8c ; $517a inline arg
+	sound $78 ; $517b
+	ld c, $00 ; $517d
+	call GetRankingMarkerSlot ; $517f
+	ld de, $5bbb ; $5182
+	call Func_1b_5aa4 ; $5185
+	ld c, $02 ; $5188
+	call GetRankingMarkerSlot ; $518a
+	ld de, $5bcc ; $518d
+	call Func_1b_5a89 ; $5190
+	ld b, $05 ; $5193
+	call HighlightRankingRow ; $5195
+	call Func_1b_58c5 ; $5198
+	call WaitFramesCmd ; $519b
+	db $1e ; $519e inline arg
+	sound $80 ; $519f
+	ld c, $05 ; $51a1
+	call GetRankingMarkerSlot ; $51a3
+	ld de, $5bbb ; $51a6
+	call Func_1b_5a89 ; $51a9
+	call WaitFramesCmd ; $51ac
+	db $04 ; $51af inline arg
+	ld c, $03 ; $51b0
+	call GetRankingMarkerSlot ; $51b2
+	ld de, $5bc3 ; $51b5
+	call Func_1b_5a6e ; $51b8
+	call WaitFramesCmd ; $51bb
+	db $78 ; $51be inline arg
+	sound $78 ; $51bf
+	ld c, $05 ; $51c1
+	call GetRankingMarkerSlot ; $51c3
+	ld de, $5bcc ; $51c6
+	call Func_1b_5abf ; $51c9
+	ld c, $03 ; $51cc
+	call GetRankingMarkerSlot ; $51ce
+	ld de, $5bd4 ; $51d1
+	call Func_1b_5a6e ; $51d4
+	ld b, $06 ; $51d7
+	call HighlightRankingRow ; $51d9
+	call Func_1b_58c5 ; $51dc
+	call WaitFramesCmd ; $51df
+	db $1e ; $51e2 inline arg
+	sound $80 ; $51e3
+	ld c, $08 ; $51e5
+	call GetRankingMarkerSlot ; $51e7
+	ld de, $5bcd ; $51ea
+	call Func_1b_5a89 ; $51ed
+	call WaitFramesCmd ; $51f0
+	db $04 ; $51f3 inline arg
+	ld c, $06 ; $51f4
+	call GetRankingMarkerSlot ; $51f6
+	ld de, $5bd4 ; $51f9
+	call Func_1b_5a6e ; $51fc
+	call WaitFramesCmd ; $51ff
+	db $5a ; $5202 inline arg
+	sound $78 ; $5203
+	ld c, $08 ; $5205
+	call GetRankingMarkerSlot ; $5207
+	ld de, $5bcc ; $520a
+	call Func_1b_5abf ; $520d
+	ld c, $06 ; $5210
+	call GetRankingMarkerSlot ; $5212
+	ld de, $5bc3 ; $5215
+	call Func_1b_5a6e ; $5218
+	ld b, $07 ; $521b
+	call HighlightRankingRow ; $521d
+	call Func_1b_58c5 ; $5220
+	call WaitFramesCmd ; $5223
+	db $1e ; $5226 inline arg
+	sound $80 ; $5227
+	ld c, $0b ; $5229
+	call GetRankingMarkerSlot ; $522b
+	ld de, $5bcd ; $522e
+	call Func_1b_5a89 ; $5231
+	call WaitFramesCmd ; $5234
+	db $04 ; $5237 inline arg
+	ld c, $09 ; $5238
+	call GetRankingMarkerSlot ; $523a
+	ld de, $5bd4 ; $523d
+	call Func_1b_5a6e ; $5240
+	call WaitFramesCmd ; $5243
+	db $5a ; $5246 inline arg
+	sound $78 ; $5247
+	ld c, $0b ; $5249
+	call GetRankingMarkerSlot ; $524b
+	ld de, $5bbc ; $524e
+	call Func_1b_5a89 ; $5251
+	ld c, $09 ; $5254
+	call GetRankingMarkerSlot ; $5256
+	ld de, $5bbb ; $5259
+	call Func_1b_5aa4 ; $525c
+	ld b, $08 ; $525f
+	call HighlightRankingRow ; $5261
+	call Func_1b_58c5 ; $5264
+	call WaitFramesCmd ; $5267
+	db $1e ; $526a inline arg
+	ld a, $01 ; $526b
+	ld [$d858], a ; $526d
+	jp ScreenStateNop_1b ; $5270
+Func_1b_5273:
+	ld a, $01 ; $5273
+	ld hl, $5912 ; $5275
+	call RegisterFrameTask ; $5278
+	call WaitFramesCmd ; $527b
+	db $8c ; $527e inline arg
+	sound $78 ; $527f
+	ld c, $00 ; $5281
+	call GetRankingMarkerSlot ; $5283
+	ld de, $5be7 ; $5286
+	call Func_1b_5aa4 ; $5289
+	ld c, $05 ; $528c
+	call GetRankingMarkerSlot ; $528e
+	ld de, $5bd4 ; $5291
+	call Func_1b_5a6e ; $5294
+	ld b, $09 ; $5297
+	call HighlightRankingRow ; $5299
+	call Func_1b_58c5 ; $529c
+	call WaitFramesCmd ; $529f
+	db $5a ; $52a2 inline arg
+	sound $80 ; $52a3
+	ld c, $08 ; $52a5
+	call GetRankingMarkerSlot ; $52a7
+	ld de, $5bd4 ; $52aa
+	call Func_1b_5a6e ; $52ad
+	ld c, $09 ; $52b0
+	call GetRankingMarkerSlot ; $52b2
+	ld de, $5bd4 ; $52b5
+	call Func_1b_5a89 ; $52b8
+	call WaitFramesCmd ; $52bb
+	db $5a ; $52be inline arg
+	sound $78 ; $52bf
+	ld c, $08 ; $52c1
+	call GetRankingMarkerSlot ; $52c3
+	ld de, $5b95 ; $52c6
+	call Func_1b_5a6e ; $52c9
+	ld c, $09 ; $52cc
+	call GetRankingMarkerSlot ; $52ce
+	ld de, $5c0c ; $52d1
+	call Func_1b_5abf ; $52d4
+	ld b, $0a ; $52d7
+	call HighlightRankingRow ; $52d9
+	call Func_1b_58c5 ; $52dc
+	call WaitFramesCmd ; $52df
+	db $1e ; $52e2 inline arg
+	ld a, $01 ; $52e3
+	ld [$d858], a ; $52e5
+	jp ScreenStateNop_1b ; $52e8
+Func_1b_52eb:
+	ld a, $01 ; $52eb
+	ld hl, $5912 ; $52ed
+	call RegisterFrameTask ; $52f0
+	call WaitFramesCmd ; $52f3
+	db $8c ; $52f6 inline arg
+	ld a, $01 ; $52f7
+	ld [$d858], a ; $52f9
+	jp ScreenStateNop_1b ; $52fc
+Func_1b_52ff:
+	call WaitFramesCmd ; $52ff
+	db $14 ; $5302 inline arg
+	sound $80 ; $5303
+	ld c, $00 ; $5305
+	call GetRankingMarkerSlot ; $5307
+	ld de, $5b94 ; $530a
+	call Func_1b_5a6e ; $530d
+	ld c, $01 ; $5310
+	call GetRankingMarkerSlot ; $5312
+	ld de, $5b94 ; $5315
+	call Func_1b_5a89 ; $5318
+	call WaitFramesCmd ; $531b
+	db $14 ; $531e inline arg
+	jp ScreenStateNop_1b ; $531f
+Func_1b_5322:
+	call WaitFramesCmd ; $5322
+	db $0a ; $5325 inline arg
+	sound $80 ; $5326
+	ld c, $02 ; $5328
+	call GetRankingMarkerSlot ; $532a
+	ld de, $5bbb ; $532d
+	call Func_1b_5a89 ; $5330
+	call WaitFramesCmd ; $5333
+	db $04 ; $5336 inline arg
+	ld c, $00 ; $5337
+	call GetRankingMarkerSlot ; $5339
+	ld de, $5bc3 ; $533c
+	call Func_1b_5a6e ; $533f
+	call WaitFramesCmd ; $5342
+	db $14 ; $5345 inline arg
+	jp ScreenStateNop_1b ; $5346
+Func_1b_5349:
+	call WaitFramesCmd ; $5349
+	db $14 ; $534c inline arg
+	sound $80 ; $534d
+	ld c, $00 ; $534f
+	call GetRankingMarkerSlot ; $5351
+	ld de, $5b94 ; $5354
+	call Func_1b_5a6e ; $5357
+	ld c, $05 ; $535a
+	call GetRankingMarkerSlot ; $535c
+	ld de, $5b94 ; $535f
+	call Func_1b_5a89 ; $5362
+	jp ScreenStateNop_1b ; $5365
+Func_1b_5368:
+	call WaitFramesCmd ; $5368
+	db $1e ; $536b inline arg
+	sound $80 ; $536c
+	ld c, $00 ; $536e
+	call GetRankingMarkerSlot ; $5370
+	ld de, $5bdd ; $5373
+	call Func_1b_5a6e ; $5376
+	ld c, $09 ; $5379
+	call GetRankingMarkerSlot ; $537b
+	ld de, $5be2 ; $537e
+	call Func_1b_5a89 ; $5381
+	jp ScreenStateNop_1b ; $5384
+Func_1b_5387:
+	ld a, $01 ; $5387
+	ld hl, $5912 ; $5389
+	call RegisterFrameTask ; $538c
+	call WaitFramesCmd ; $538f
+	db $8c ; $5392 inline arg
+	sound $78 ; $5393
+	ld c, $00 ; $5395
+	call GetRankingMarkerSlot ; $5397
+	ld de, $5bf7 ; $539a
+	call Func_1b_5aa4 ; $539d
+	ld c, $01 ; $53a0
+	call GetRankingMarkerSlot ; $53a2
+	ld de, $5bd4 ; $53a5
+	call Func_1b_5a89 ; $53a8
+	ld b, $01 ; $53ab
+	call HighlightDoublesRankingRow ; $53ad
+	call Func_1b_58c5 ; $53b0
+	call WaitFramesCmd ; $53b3
+	db $5a ; $53b6 inline arg
+	sound $80 ; $53b7
+	ld c, $03 ; $53b9
+	call GetRankingMarkerSlot ; $53bb
+	ld de, $5bd4 ; $53be
+	call Func_1b_5a6e ; $53c1
+	ld c, $04 ; $53c4
+	call GetRankingMarkerSlot ; $53c6
+	ld de, $5b9d ; $53c9
+	call Func_1b_5a89 ; $53cc
+	call WaitFramesCmd ; $53cf
+	db $5a ; $53d2 inline arg
+	sound $78 ; $53d3
+	ld c, $03 ; $53d5
+	call GetRankingMarkerSlot ; $53d7
+	ld de, $5bf7 ; $53da
+	call Func_1b_5aa4 ; $53dd
+	ld c, $04 ; $53e0
+	call GetRankingMarkerSlot ; $53e2
+	ld de, $5bc5 ; $53e5
+	call Func_1b_5a89 ; $53e8
+	ld b, $02 ; $53eb
+	call HighlightDoublesRankingRow ; $53ed
+	call Func_1b_58c5 ; $53f0
+	call WaitFramesCmd ; $53f3
+	db $5a ; $53f6 inline arg
+	jp ScreenStateNop_1b ; $53f7
+Func_1b_53fa:
+	ld a, $01 ; $53fa
+	ld hl, $5912 ; $53fc
+	call RegisterFrameTask ; $53ff
+	call WaitFramesCmd ; $5402
+	db $8c ; $5405 inline arg
+	sound $78 ; $5406
+	ld c, $00 ; $5408
+	call GetRankingMarkerSlot ; $540a
+	ld de, $5bef ; $540d
+	call Func_1b_5aa4 ; $5410
+	ld c, $02 ; $5413
+	call GetRankingMarkerSlot ; $5415
+	ld de, $5bcc ; $5418
+	call Func_1b_5a89 ; $541b
+	ld b, $03 ; $541e
+	call HighlightDoublesRankingRow ; $5420
+	call Func_1b_58c5 ; $5423
+	call WaitFramesCmd ; $5426
+	db $5a ; $5429 inline arg
+	sound $80 ; $542a
+	ld c, $03 ; $542c
+	call GetRankingMarkerSlot ; $542e
+	ld de, $5bd4 ; $5431
+	call Func_1b_5a6e ; $5434
+	ld c, $05 ; $5437
+	call GetRankingMarkerSlot ; $5439
+	ld de, $5bcc ; $543c
+	call Func_1b_5a89 ; $543f
+	call WaitFramesCmd ; $5442
+	db $8c ; $5445 inline arg
+	sound $78 ; $5446
+	ld c, $03 ; $5448
+	call GetRankingMarkerSlot ; $544a
+	ld de, $5bef ; $544d
+	call Func_1b_5aa4 ; $5450
+	ld c, $05 ; $5453
+	call GetRankingMarkerSlot ; $5455
+	ld de, $5bbb ; $5458
+	call Func_1b_5a89 ; $545b
+	ld b, $04 ; $545e
+	call HighlightDoublesRankingRow ; $5460
+	call Func_1b_58c5 ; $5463
+	call WaitFramesCmd ; $5466
+	db $1e ; $5469 inline arg
+	jp ScreenStateNop_1b ; $546a
+Func_1b_546d:
+	ld a, $01 ; $546d
+	ld hl, $5912 ; $546f
+	call RegisterFrameTask ; $5472
+	call WaitFramesCmd ; $5475
+	db $8c ; $5478 inline arg
+	sound $78 ; $5479
+	ld c, $00 ; $547b
+	call GetRankingMarkerSlot ; $547d
+	ld de, $5b98 ; $5480
+	call Func_1b_5a6e ; $5483
+	ld c, $03 ; $5486
+	call GetRankingMarkerSlot ; $5488
+	ld de, $5b94 ; $548b
+	call Func_1b_5a89 ; $548e
+	ld b, $06 ; $5491
+	call HighlightDoublesRankingRow ; $5493
+	call Func_1b_58c5 ; $5496
+	call WaitFramesCmd ; $5499
+	db $1e ; $549c inline arg
+	jp ScreenStateNop_1b ; $549d
+Func_1b_54a0:
+	jp ScreenStateNop_1b ; $54a0
+Func_1b_54a3:
+	call WaitFramesCmd ; $54a3
+	db $1e ; $54a6 inline arg
+	sound $80 ; $54a7
+	ld c, $00 ; $54a9
+	call GetRankingMarkerSlot ; $54ab
+	ld de, $5b94 ; $54ae
+	call Func_1b_5a6e ; $54b1
+	ld c, $01 ; $54b4
+	call GetRankingMarkerSlot ; $54b6
+	ld de, $5b94 ; $54b9
+	call Func_1b_5a89 ; $54bc
+	jp ScreenStateNop_1b ; $54bf
+Func_1b_54c2:
+	call WaitFramesCmd ; $54c2
+	db $1e ; $54c5 inline arg
+	sound $80 ; $54c6
+	ld c, $02 ; $54c8
+	call GetRankingMarkerSlot ; $54ca
+	ld de, $5bbb ; $54cd
+	call Func_1b_5a89 ; $54d0
+	call WaitFramesCmd ; $54d3
+	db $08 ; $54d6 inline arg
+	ld c, $00 ; $54d7
+	call GetRankingMarkerSlot ; $54d9
+	ld de, $5b94 ; $54dc
+	call Func_1b_5a6e ; $54df
+	jp ScreenStateNop_1b ; $54e2
+Func_1b_54e5:
+	call WaitFramesCmd ; $54e5
+	db $1e ; $54e8 inline arg
+	sound $80 ; $54e9
+	ld c, $00 ; $54eb
+	call GetRankingMarkerSlot ; $54ed
+	ld de, $5b94 ; $54f0
+	call Func_1b_5a6e ; $54f3
+	ld c, $03 ; $54f6
+	call GetRankingMarkerSlot ; $54f8
+	ld de, $5b9d ; $54fb
+	call Func_1b_5a89 ; $54fe
+	jp ScreenStateNop_1b ; $5501
+Func_1b_5504:
+	jp ScreenStateNop_1b ; $5504
 WaitForAOrBPress:
 	call AdvanceFrame ; $5507
 	ldh a, [hInputPressed] ; $550a
@@ -2225,7 +2124,106 @@ Label_1b_5852:
 	ld h, [hl] ; $5853
 	ld l, a ; $5854
 	jp hl ; $5855
-	INCBIN "data/bank_01b/d_5856.bin" ; $5856, 987 bytes
+	INCBIN "data/bank_01b/d_5856.bin" ; $5856, 111 bytes
+Func_1b_58c5:
+	ld hl, $d000 ; $58c5
+	ld de, $9800 ; $58c8
+	ld c, $10 ; $58cb
+	call QueueVRAMCopy ; $58cd
+	ld hl, $d400 ; $58d0
+	ld de, $b800 ; $58d3
+	ld c, $10 ; $58d6
+	call QueueVRAMCopy ; $58d8
+	call AdvanceFrame ; $58db
+	ld hl, $d100 ; $58de
+	ld de, $9900 ; $58e1
+	ld c, $10 ; $58e4
+	call QueueVRAMCopy ; $58e6
+	ld hl, $d500 ; $58e9
+	ld de, $b900 ; $58ec
+	ld c, $10 ; $58ef
+	call QueueVRAMCopy ; $58f1
+	call AdvanceFrame ; $58f4
+	ld hl, $d200 ; $58f7
+	ld de, $9a00 ; $58fa
+	ld c, $08 ; $58fd
+	call QueueVRAMCopy ; $58ff
+	ld hl, $d600 ; $5902
+	ld de, $ba00 ; $5905
+	ld c, $08 ; $5908
+	call QueueVRAMCopy ; $590a
+	call AdvanceFrame ; $590d
+	ret ; $5910
+	INCBIN "data/bank_01b/d_5911.bin" ; $5911, 349 bytes
+Func_1b_5a6e:
+	ld b, h ; $5a6e
+	ld c, l ; $5a6f
+	ld hl, $d840 ; $5a70
+	ld a, c ; $5a73
+	ld [hl+], a ; $5a74
+	ld [hl], b ; $5a75
+	ld hl, $d848 ; $5a76
+	ld a, e ; $5a79
+	ld [hl+], a ; $5a7a
+	ld [hl], d ; $5a7b
+	xor a, a ; $5a7c
+	ld [wTextPageBreakRequest], a ; $5a7d
+	ld a, $01 ; $5a80
+	ld hl, $5ada ; $5a82
+	call RegisterFrameTask ; $5a85
+	ret ; $5a88
+Func_1b_5a89:
+	ld b, h ; $5a89
+	ld c, l ; $5a8a
+	ld hl, $d842 ; $5a8b
+	ld a, c ; $5a8e
+	ld [hl+], a ; $5a8f
+	ld [hl], b ; $5a90
+	ld hl, wTextArgStringCount ; $5a91
+	ld a, e ; $5a94
+	ld [hl+], a ; $5a95
+	ld [hl], d ; $5a96
+	xor a, a ; $5a97
+	ld [$d851], a ; $5a98
+	ld a, $01 ; $5a9b
+	ld hl, $5b08 ; $5a9d
+	call RegisterFrameTask ; $5aa0
+	ret ; $5aa3
+Func_1b_5aa4:
+	ld b, h ; $5aa4
+	ld c, l ; $5aa5
+	ld hl, $d844 ; $5aa6
+	ld a, c ; $5aa9
+	ld [hl+], a ; $5aaa
+	ld [hl], b ; $5aab
+	ld hl, $d84c ; $5aac
+	ld a, e ; $5aaf
+	ld [hl+], a ; $5ab0
+	ld [hl], d ; $5ab1
+	xor a, a ; $5ab2
+	ld [$d852], a ; $5ab3
+	ld a, $01 ; $5ab6
+	ld hl, $5b36 ; $5ab8
+	call RegisterFrameTask ; $5abb
+	ret ; $5abe
+Func_1b_5abf:
+	ld b, h ; $5abf
+	ld c, l ; $5ac0
+	ld hl, $d846 ; $5ac1
+	ld a, c ; $5ac4
+	ld [hl+], a ; $5ac5
+	ld [hl], b ; $5ac6
+	ld hl, $d84e ; $5ac7
+	ld a, e ; $5aca
+	ld [hl+], a ; $5acb
+	ld [hl], d ; $5acc
+	xor a, a ; $5acd
+	ld [$d853], a ; $5ace
+	ld a, $01 ; $5ad1
+	ld hl, $5b65 ; $5ad3
+	call RegisterFrameTask ; $5ad6
+	ret ; $5ad9
+	INCBIN "data/bank_01b/d_5ada.bin" ; $5ada, 343 bytes
 ClearRankingMarkerSlots:
 	ld hl, $d803 ; $5c31
 	ld bc, $0030 ; $5c34
