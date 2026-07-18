@@ -3175,5 +3175,11 @@
 "0x5505b": "TrainingCourtNpcScripts_15",
 "0x55300": "TrainingCourtFacingScripts_15",
 "0x5530a": "TrainingCourtTileTriggers_15",
-"0x5532e": "TrainingCourtInitScript_15"
+"0x5532e": "TrainingCourtInitScript_15",
+"0x542f7": "TournamentSiteScripts1_15",
+"0x54330": "TournamentSiteScripts2_15",
+"0x54369": "TournamentSiteScripts3_15",
+"0x543a2": "TournamentSiteScripts4_15",
+"0x543db": "TournamentSiteScripts5_15",
+"0x54414": "TournamentSiteScripts6_15"
 }

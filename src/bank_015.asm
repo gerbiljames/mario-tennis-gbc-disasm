@@ -147,7 +147,7 @@ InitTournamentSiteSceneVariant:
 	farcall FarPtr_WriteBehaviorMapCell ; $4281
 	test_flag $07, 5 ; $4284
 	jr z, Label_15_4298 ; $4287
-	ld hl, $4369 ; $4289
+	ld hl, TournamentSiteScripts3_15 ; $4289
 	ld de, $000c ; $428c
 	farcall FarPtr_WriteStoryStateWord ; $428f
 	ld a, $03 ; $4292
@@ -156,7 +156,7 @@ InitTournamentSiteSceneVariant:
 Label_15_4298:
 	test_flag $07, 6 ; $4298
 	jr z, Label_15_42ac ; $429b
-	ld hl, $4330 ; $429d
+	ld hl, TournamentSiteScripts2_15 ; $429d
 	ld de, $000c ; $42a0
 	farcall FarPtr_WriteStoryStateWord ; $42a3
 	ld a, $02 ; $42a6
@@ -165,7 +165,7 @@ Label_15_4298:
 Label_15_42ac:
 	test_flag $07, 7 ; $42ac
 	jr z, Label_15_42bf ; $42af
-	ld hl, $42f7 ; $42b1
+	ld hl, TournamentSiteScripts1_15 ; $42b1
 	ld de, $000c ; $42b4
 	farcall FarPtr_WriteStoryStateWord ; $42b7
 	ld a, $01 ; $42ba
@@ -175,7 +175,7 @@ Label_15_42bf:
 Label_15_42c0:
 	test_flag $06, 6 ; $42c0
 	jr z, Label_15_42d4 ; $42c3
-	ld hl, $4414 ; $42c5
+	ld hl, TournamentSiteScripts6_15 ; $42c5
 	ld de, $000c ; $42c8
 	farcall FarPtr_WriteStoryStateWord ; $42cb
 	ld a, $06 ; $42ce
@@ -184,78 +184,78 @@ Label_15_42c0:
 Label_15_42d4:
 	test_flag $06, 7 ; $42d4
 	jr z, Label_15_42e8 ; $42d7
-	ld hl, $43db ; $42d9
+	ld hl, TournamentSiteScripts5_15 ; $42d9
 	ld de, $000c ; $42dc
 	farcall FarPtr_WriteStoryStateWord ; $42df
 	ld a, $05 ; $42e2
 	ld [$c2b0], a ; $42e4
 	ret ; $42e7
 Label_15_42e8:
-	ld hl, $43a2 ; $42e8
+	ld hl, TournamentSiteScripts4_15 ; $42e8
 	ld de, $000c ; $42eb
 	farcall FarPtr_WriteStoryStateWord ; $42ee
 	ld a, $04 ; $42f1
 	ld [$c2b0], a ; $42f3
 	ret ; $42f6
-	; $42f7, 57 bytes (records:8)
-; 7 records x 8 bytes
-	dw $ff03, $0000, $2425, $0013 ; record 0
-	dw $ff04, $0000, $2426, $0003 ; record 1
-	dw $ff05, $0000, $4100, $0013 ; record 2
-	dw $ff06, $0000, $2429, $0013 ; record 3
-	dw $ff07, $0000, $242a, $0003 ; record 4
-	dw $ff08, $0000, $242b, $0003 ; record 5
-	dw $ff09, $0000, $242c, $0003 ; record 6
+TournamentSiteScripts1_15:
+	; $42f7, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, $2425, $13, $00
+	map_script $04, $ff, $0000, $2426, $03, $00
+	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $06, $ff, $0000, $2429, $13, $00
+	map_script $07, $ff, $0000, $242a, $03, $00
+	map_script $08, $ff, $0000, $242b, $03, $00
+	map_script $09, $ff, $0000, $242c, $03, $00
 	db $ff
-	; $4330, 57 bytes (records:8)
-; 7 records x 8 bytes
-	dw $ff03, $0000, $242d, $0013 ; record 0
-	dw $ff04, $0000, $242e, $0003 ; record 1
-	dw $ff05, $0000, $4100, $0013 ; record 2
-	dw $ff06, $0000, $242f, $0013 ; record 3
-	dw $ff07, $0000, $2430, $0003 ; record 4
-	dw $ff08, $0000, $2431, $0003 ; record 5
-	dw $ff09, $0000, $2432, $0003 ; record 6
+TournamentSiteScripts2_15:
+	; $4330, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, $242d, $13, $00
+	map_script $04, $ff, $0000, $242e, $03, $00
+	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $06, $ff, $0000, $242f, $13, $00
+	map_script $07, $ff, $0000, $2430, $03, $00
+	map_script $08, $ff, $0000, $2431, $03, $00
+	map_script $09, $ff, $0000, $2432, $03, $00
 	db $ff
-	; $4369, 57 bytes (records:8)
-; 7 records x 8 bytes
-	dw $ff03, $0000, $2433, $0013 ; record 0
-	dw $ff04, $0000, $2434, $0003 ; record 1
-	dw $ff05, $0000, $4100, $0013 ; record 2
-	dw $ff06, $0000, $2435, $0013 ; record 3
-	dw $ff07, $0000, $2436, $0003 ; record 4
-	dw $ff08, $0000, $2437, $0003 ; record 5
-	dw $ff09, $0000, $2438, $0003 ; record 6
+TournamentSiteScripts3_15:
+	; $4369, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, $2433, $13, $00
+	map_script $04, $ff, $0000, $2434, $03, $00
+	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $06, $ff, $0000, $2435, $13, $00
+	map_script $07, $ff, $0000, $2436, $03, $00
+	map_script $08, $ff, $0000, $2437, $03, $00
+	map_script $09, $ff, $0000, $2438, $03, $00
 	db $ff
-	; $43a2, 57 bytes (records:8)
-; 7 records x 8 bytes
-	dw $ff03, $0000, $241c, $0013 ; record 0
-	dw $ff04, $0000, $2439, $0003 ; record 1
-	dw $ff05, $0000, $4100, $0013 ; record 2
-	dw $ff06, $0000, $243c, $0013 ; record 3
-	dw $ff07, $0000, $243d, $0003 ; record 4
-	dw $ff08, $0000, $243e, $0003 ; record 5
-	dw $ff09, $0000, $243f, $0003 ; record 6
+TournamentSiteScripts4_15:
+	; $43a2, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, $241c, $13, $00
+	map_script $04, $ff, $0000, $2439, $03, $00
+	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $06, $ff, $0000, $243c, $13, $00
+	map_script $07, $ff, $0000, $243d, $03, $00
+	map_script $08, $ff, $0000, $243e, $03, $00
+	map_script $09, $ff, $0000, $243f, $03, $00
 	db $ff
-	; $43db, 57 bytes (records:8)
-; 7 records x 8 bytes
-	dw $ff03, $0000, $2440, $0013 ; record 0
-	dw $ff04, $0000, $2441, $0003 ; record 1
-	dw $ff05, $0000, $4100, $0013 ; record 2
-	dw $ff06, $0000, $2444, $0013 ; record 3
-	dw $ff07, $0000, $2445, $0003 ; record 4
-	dw $ff08, $0000, $2446, $0003 ; record 5
-	dw $ff09, $0000, $2447, $0003 ; record 6
+TournamentSiteScripts5_15:
+	; $43db, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, $2440, $13, $00
+	map_script $04, $ff, $0000, $2441, $03, $00
+	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $06, $ff, $0000, $2444, $13, $00
+	map_script $07, $ff, $0000, $2445, $03, $00
+	map_script $08, $ff, $0000, $2446, $03, $00
+	map_script $09, $ff, $0000, $2447, $03, $00
 	db $ff
-	; $4414, 57 bytes (records:8)
-; 7 records x 8 bytes
-	dw $ff03, $0000, $2448, $0013 ; record 0
-	dw $ff04, $0000, $2449, $0003 ; record 1
-	dw $ff05, $0000, $4100, $0013 ; record 2
-	dw $ff06, $0000, $244c, $0013 ; record 3
-	dw $ff07, $0000, $244d, $0003 ; record 4
-	dw $ff08, $0000, $244e, $0003 ; record 5
-	dw $ff09, $0000, $244f, $0003 ; record 6
+TournamentSiteScripts6_15:
+	; $4414, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, $2448, $13, $00
+	map_script $04, $ff, $0000, $2449, $03, $00
+	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $06, $ff, $0000, $244c, $13, $00
+	map_script $07, $ff, $0000, $244d, $03, $00
+	map_script $08, $ff, $0000, $244e, $03, $00
+	map_script $09, $ff, $0000, $244f, $03, $00
 	db $ff
 TournamentSiteArrivalScene:
 	ldh a, [hRomBank] ; $444d
