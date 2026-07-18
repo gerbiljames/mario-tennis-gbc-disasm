@@ -969,12 +969,7 @@ Func_13_5130:
 	ld h, $16 ; $515f
 	ld l, $18 ; $5161
 	farcall FarPtr_CopySceneTilemapRect ; $5163
-	ld d, $28 ; $5166
-	ld a, $03 ; $5168
-	farcall FarPtr_GetActorStateAddr ; $516a
-	ld c, l ; $516d
-	ld b, h ; $516e
-	farcall FarPtr_LoadActorObjectDefIfValid ; $516f
+	script_set_objdef $28, $03 ; $5166
 	script_set_anim $03, $01 ; $5172
 	script_set_position $04, $1f00, $1500 ; $5179
 	ld a, $04 ; $5184
@@ -2384,12 +2379,7 @@ Func_13_62be:
 	ld a, [$c94d] ; $62be
 	or a, a ; $62c1
 	jr nz, Label_13_62da ; $62c2
-	ld d, $28 ; $62c4
-	ld a, $0d ; $62c6
-	farcall FarPtr_GetActorStateAddr ; $62c8
-	ld c, l ; $62cb
-	ld b, h ; $62cc
-	farcall FarPtr_LoadActorObjectDefIfValid ; $62cd
+	script_set_objdef $28, $0d ; $62c4
 	script_set_anim $0d, $01 ; $62d0
 	set_flag $1c, 0 ; $62d7
 Label_13_62da:

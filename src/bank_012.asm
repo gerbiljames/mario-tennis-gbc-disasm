@@ -192,12 +192,7 @@ Func_12_4179:
 	or a, a ; $439f
 	jr nz, Label_12_43bb ; $43a0
 	script_set_text $045c ; $43a2
-	ld d, $28 ; $43a8
-	ld a, $04 ; $43aa
-	farcall FarPtr_GetActorStateAddr ; $43ac
-	ld c, l ; $43af
-	ld b, h ; $43b0
-	farcall FarPtr_LoadActorObjectDefIfValid ; $43b1
+	script_set_objdef $28, $04 ; $43a8
 	script_set_anim $04, $01 ; $43b4
 Label_12_43bb:
 	script_move_target $03, $1500, $0f00 ; $43bb

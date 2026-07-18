@@ -601,12 +601,7 @@ SetupGymActorsForProgress:
 	jr z, Label_0e_46e9 ; $4690
 	ret ; $4692
 Label_0e_4693:
-	ld d, $34 ; $4693
-	ld a, $04 ; $4695
-	farcall FarPtr_GetActorStateAddr ; $4697
-	ld c, l ; $469a
-	ld b, h ; $469b
-	farcall FarPtr_LoadActorObjectDefIfValid ; $469c
+	script_set_objdef $34, $04 ; $4693
 	script_set_anim $03, $01 ; $469f
 	script_set_position $04, $2700, $0f00 ; $46a6
 	script_face $04, $00 ; $46b1

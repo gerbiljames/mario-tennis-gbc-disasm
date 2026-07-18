@@ -219,6 +219,17 @@ MACRO script_set_anim
 	ld d, \2
 	farcall FarPtr_ScriptSetActorAnimation
 ENDM
+; Installs object definition `objdef` into `actor`: fetch the actor's state
+; pointer into bc, then LoadActorObjectDefIfValid(bc, d = objdef).
+; Usage: script_set_objdef objdef, actor
+MACRO script_set_objdef
+	ld d, \1
+	ld a, \2
+	farcall FarPtr_GetActorStateAddr
+	ld c, l
+	ld b, h
+	farcall FarPtr_LoadActorObjectDefIfValid
+ENDM
 ; Usage: script_face actor, facing
 MACRO script_face
 	ld a, \1

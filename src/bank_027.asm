@@ -1093,12 +1093,7 @@ Func_27_5626:
 	ld a, [$c94d] ; $5626
 	or a, a ; $5629
 	jr nz, Label_27_5642 ; $562a
-	ld d, $28 ; $562c
-	ld a, $0d ; $562e
-	farcall FarPtr_GetActorStateAddr ; $5630
-	ld c, l ; $5633
-	ld b, h ; $5634
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5635
+	script_set_objdef $28, $0d ; $562c
 	script_set_anim $0d, $01 ; $5638
 	set_flag $1c, 0 ; $563f
 Label_27_5642:
@@ -2163,12 +2158,7 @@ Label_27_6caf:
 	ld a, [$c94d] ; $6e4f
 	or a, a ; $6e52
 	jr nz, Label_27_6e68 ; $6e53
-	ld d, $28 ; $6e55
-	ld a, $04 ; $6e57
-	farcall FarPtr_GetActorStateAddr ; $6e59
-	ld c, l ; $6e5c
-	ld b, h ; $6e5d
-	farcall FarPtr_LoadActorObjectDefIfValid ; $6e5e
+	script_set_objdef $28, $04 ; $6e55
 	script_set_anim $04, $01 ; $6e61
 Label_27_6e68:
 	script_move_target $03, $1500, $0f00 ; $6e68

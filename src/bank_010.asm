@@ -3448,19 +3448,9 @@ Label_10_66c6:
 	script_face $09, $c0 ; $67ef
 	script_set_text $01e2 ; $67f6
 	script_speak $06 ; $67fc
-	ld d, $53 ; $6801
-	ld a, $03 ; $6803
-	farcall FarPtr_GetActorStateAddr ; $6805
-	ld c, l ; $6808
-	ld b, h ; $6809
-	farcall FarPtr_LoadActorObjectDefIfValid ; $680a
+	script_set_objdef $53, $03 ; $6801
 	script_set_anim $03, $01 ; $680d
-	ld d, $53 ; $6814
-	ld a, $05 ; $6816
-	farcall FarPtr_GetActorStateAddr ; $6818
-	ld c, l ; $681b
-	ld b, h ; $681c
-	farcall FarPtr_LoadActorObjectDefIfValid ; $681d
+	script_set_objdef $53, $05 ; $6814
 	script_set_anim $05, $01 ; $6820
 	script_set_position $03, $1f80, $3100 ; $6827
 	sound $96 ; $6832
@@ -3632,12 +3622,7 @@ Label_10_6c60:
 	script_speak $06 ; $6c74
 	script_set_anim $00, $03 ; $6c79
 	script_wait_idle $00 ; $6c80
-	ld d, $51 ; $6c85
-	ld a, $05 ; $6c87
-	farcall FarPtr_GetActorStateAddr ; $6c89
-	ld c, l ; $6c8c
-	ld b, h ; $6c8d
-	farcall FarPtr_LoadActorObjectDefIfValid ; $6c8e
+	script_set_objdef $51, $05 ; $6c85
 	script_set_anim $05, $01 ; $6c91
 	script_set_position $05, $2380, $3300 ; $6c98
 	sound $97 ; $6ca3
@@ -3666,12 +3651,7 @@ Label_10_6c60:
 	script_set_anim $08, $03 ; $6d3b
 	script_wait_idle $08 ; $6d42
 	script_wait_frames $3c ; $6d47
-	ld d, $4d ; $6d4e
-	ld a, $05 ; $6d50
-	farcall FarPtr_GetActorStateAddr ; $6d52
-	ld c, l ; $6d55
-	ld b, h ; $6d56
-	farcall FarPtr_LoadActorObjectDefIfValid ; $6d57
+	script_set_objdef $4d, $05 ; $6d4e
 	script_set_anim $05, $01 ; $6d5a
 	script_set_position $05, $2180, $2d80 ; $6d61
 	sound $98 ; $6d6c

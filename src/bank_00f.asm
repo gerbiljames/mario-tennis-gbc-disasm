@@ -333,12 +333,7 @@ Label_0f_4661:
 	test_flag $05, 7 ; $4699
 	jp z, Label_0f_4700 ; $469c
 	script_set_position $15, $3f00, $3f00 ; $469f
-	ld d, $4d ; $46aa
-	ld a, $15 ; $46ac
-	farcall FarPtr_GetActorStateAddr ; $46ae
-	ld c, l ; $46b1
-	ld b, h ; $46b2
-	farcall FarPtr_LoadActorObjectDefIfValid ; $46b3
+	script_set_objdef $4d, $15 ; $46aa
 	script_set_anim $15, $01 ; $46b6
 	script_face $00, $40 ; $46bd
 	script_set_position $00, $0b00, $1b00 ; $46c4
@@ -435,12 +430,7 @@ Func_0f_4725:
 	ld a, $14 ; $486c
 	call DelayFrames ; $486e
 	call Func_0f_5e4a ; $4871
-	ld d, $5c ; $4874
-	ld a, $11 ; $4876
-	farcall FarPtr_GetActorStateAddr ; $4878
-	ld c, l ; $487b
-	ld b, h ; $487c
-	farcall FarPtr_LoadActorObjectDefIfValid ; $487d
+	script_set_objdef $5c, $11 ; $4874
 	script_set_anim $11, $01 ; $4880
 	script_set_position $03, $3f00, $3f00 ; $4887
 	script_set_position $11, $0e00, $0e40 ; $4892
@@ -519,19 +509,9 @@ Func_0f_4725:
 	script_set_position $0e, $1080, $1600 ; $4a08
 	ld a, $14 ; $4a13
 	call DelayFrames ; $4a15
-	ld d, $74 ; $4a18
-	ld a, $10 ; $4a1a
-	farcall FarPtr_GetActorStateAddr ; $4a1c
-	ld c, l ; $4a1f
-	ld b, h ; $4a20
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4a21
+	script_set_objdef $74, $10 ; $4a18
 	script_set_anim $10, $01 ; $4a24
-	ld d, $25 ; $4a2b
-	ld a, $0e ; $4a2d
-	farcall FarPtr_GetActorStateAddr ; $4a2f
-	ld c, l ; $4a32
-	ld b, h ; $4a33
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4a34
+	script_set_objdef $25, $0e ; $4a2b
 	script_set_anim $0e, $01 ; $4a37
 	script_set_position $0e, $1000, $1600 ; $4a3e
 	script_set_position $10, $1000, $1500 ; $4a49
@@ -540,19 +520,9 @@ Func_0f_4725:
 	script_move_target $10, $1000, $1200 ; $4a62
 	script_move_target $0e, $1000, $1300 ; $4a6d
 	script_wait_move $0e ; $4a78
-	ld d, $25 ; $4a7d
-	ld a, $10 ; $4a7f
-	farcall FarPtr_GetActorStateAddr ; $4a81
-	ld c, l ; $4a84
-	ld b, h ; $4a85
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4a86
+	script_set_objdef $25, $10 ; $4a7d
 	script_set_anim $10, $01 ; $4a89
-	ld d, $74 ; $4a90
-	ld a, $0e ; $4a92
-	farcall FarPtr_GetActorStateAddr ; $4a94
-	ld c, l ; $4a97
-	ld b, h ; $4a98
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4a99
+	script_set_objdef $74, $0e ; $4a90
 	script_set_anim $0e, $01 ; $4a9c
 	script_set_position $10, $1000, $1300 ; $4aa3
 	script_set_position $0e, $0f00, $1300 ; $4aae
@@ -569,12 +539,7 @@ Func_0f_4725:
 	script_move_target $10, $1000, $1600 ; $4b08
 	script_wait_move $10 ; $4b13
 	script_face $10, $c0 ; $4b18
-	ld d, $61 ; $4b1f
-	ld a, $12 ; $4b21
-	farcall FarPtr_GetActorStateAddr ; $4b23
-	ld c, l ; $4b26
-	ld b, h ; $4b27
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4b28
+	script_set_objdef $61, $12 ; $4b1f
 	script_set_anim $12, $01 ; $4b2b
 	script_set_position $04, $3f00, $3f00 ; $4b32
 	script_set_position $12, $0a00, $0dc0 ; $4b3d
@@ -636,19 +601,9 @@ Func_0f_4725:
 	script_set_position $0d, $0f80, $1600 ; $4c9e
 	ld a, $14 ; $4ca9
 	call DelayFrames ; $4cab
-	ld d, $74 ; $4cae
-	ld a, $10 ; $4cb0
-	farcall FarPtr_GetActorStateAddr ; $4cb2
-	ld c, l ; $4cb5
-	ld b, h ; $4cb6
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4cb7
+	script_set_objdef $74, $10 ; $4cae
 	script_set_anim $10, $01 ; $4cba
-	ld d, $25 ; $4cc1
-	ld a, $0d ; $4cc3
-	farcall FarPtr_GetActorStateAddr ; $4cc5
-	ld c, l ; $4cc8
-	ld b, h ; $4cc9
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4cca
+	script_set_objdef $25, $0d ; $4cc1
 	script_set_anim $0d, $01 ; $4ccd
 	script_set_position $0d, $0f00, $1600 ; $4cd4
 	script_set_position $10, $0f00, $1500 ; $4cdf
@@ -657,19 +612,9 @@ Func_0f_4725:
 	script_move_target $10, $0f00, $1200 ; $4cf8
 	script_move_target $0d, $0f00, $1300 ; $4d03
 	script_wait_move $0d ; $4d0e
-	ld d, $25 ; $4d13
-	ld a, $10 ; $4d15
-	farcall FarPtr_GetActorStateAddr ; $4d17
-	ld c, l ; $4d1a
-	ld b, h ; $4d1b
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4d1c
+	script_set_objdef $25, $10 ; $4d13
 	script_set_anim $10, $01 ; $4d1f
-	ld d, $74 ; $4d26
-	ld a, $0d ; $4d28
-	farcall FarPtr_GetActorStateAddr ; $4d2a
-	ld c, l ; $4d2d
-	ld b, h ; $4d2e
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4d2f
+	script_set_objdef $74, $0d ; $4d26
 	script_set_anim $0d, $01 ; $4d32
 	script_set_position $10, $0f00, $1300 ; $4d39
 	script_set_position $0d, $0e00, $1300 ; $4d44
@@ -811,37 +756,17 @@ Label_0f_4ea7:
 	script_set_anim $11, $01 ; $4f8f
 	script_set_position $02, $3f00, $3f00 ; $4f96
 	script_set_position $11, $0f00, $0d60 ; $4fa1
-	ld d, $61 ; $4fac
-	ld a, $13 ; $4fae
-	farcall FarPtr_GetActorStateAddr ; $4fb0
-	ld c, l ; $4fb3
-	ld b, h ; $4fb4
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4fb5
+	script_set_objdef $61, $13 ; $4fac
 	script_set_anim $13, $01 ; $4fb8
-	ld d, $62 ; $4fbf
-	ld a, $15 ; $4fc1
-	farcall FarPtr_GetActorStateAddr ; $4fc3
-	ld c, l ; $4fc6
-	ld b, h ; $4fc7
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4fc8
+	script_set_objdef $62, $15 ; $4fbf
 	script_set_anim $15, $01 ; $4fcb
 	script_set_position $04, $3f00, $3f00 ; $4fd2
 	script_set_position $05, $3f00, $3f00 ; $4fdd
 	script_set_position $13, $0b00, $0e00 ; $4fe8
 	script_set_position $15, $0900, $0e00 ; $4ff3
-	ld d, $4e ; $4ffe
-	ld a, $04 ; $5000
-	farcall FarPtr_GetActorStateAddr ; $5002
-	ld c, l ; $5005
-	ld b, h ; $5006
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5007
+	script_set_objdef $4e, $04 ; $4ffe
 	script_set_anim $04, $01 ; $500a
-	ld d, $4d ; $5011
-	ld a, $05 ; $5013
-	farcall FarPtr_GetActorStateAddr ; $5015
-	ld c, l ; $5018
-	ld b, h ; $5019
-	farcall FarPtr_LoadActorObjectDefIfValid ; $501a
+	script_set_objdef $4d, $05 ; $5011
 	script_set_anim $05, $01 ; $501d
 	script_face $16, $40 ; $5024
 	script_face $11, $40 ; $502b
@@ -866,12 +791,7 @@ Label_0f_4ea7:
 	script_set_position $0f, $1100, $1600 ; $50ac
 	ld a, $14 ; $50b7
 	call DelayFrames ; $50b9
-	ld d, $25 ; $50bc
-	ld a, $09 ; $50be
-	farcall FarPtr_GetActorStateAddr ; $50c0
-	ld c, l ; $50c3
-	ld b, h ; $50c4
-	farcall FarPtr_LoadActorObjectDefIfValid ; $50c5
+	script_set_objdef $25, $09 ; $50bc
 	script_set_anim $09, $01 ; $50c8
 	script_set_position $10, $3f00, $3f00 ; $50cf
 	script_set_position $09, $1100, $1600 ; $50da
@@ -1438,19 +1358,9 @@ Func_0f_5b4d:
 	ld c, $04 ; $5b64
 	call BeginFadeIn ; $5b66
 	call WaitFadeEnd ; $5b69
-	ld d, $30 ; $5b6c
-	ld a, $13 ; $5b6e
-	farcall FarPtr_GetActorStateAddr ; $5b70
-	ld c, l ; $5b73
-	ld b, h ; $5b74
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5b75
+	script_set_objdef $30, $13 ; $5b6c
 	script_set_anim $13, $01 ; $5b78
-	ld d, $3a ; $5b7f
-	ld a, $14 ; $5b81
-	farcall FarPtr_GetActorStateAddr ; $5b83
-	ld c, l ; $5b86
-	ld b, h ; $5b87
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5b88
+	script_set_objdef $3a, $14 ; $5b7f
 	script_set_anim $14, $01 ; $5b8b
 	script_set_position $13, $0700, $0100 ; $5b92
 	script_set_position $14, $0f00, $0100 ; $5b9d
@@ -1476,19 +1386,9 @@ Func_0f_5b4d:
 	farcall FarPtr_WaitPlayerMoveDone ; $5c0d
 	ld a, $1e ; $5c10
 	call DelayFrames ; $5c12
-	ld d, $4e ; $5c15
-	ld a, $13 ; $5c17
-	farcall FarPtr_GetActorStateAddr ; $5c19
-	ld c, l ; $5c1c
-	ld b, h ; $5c1d
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5c1e
+	script_set_objdef $4e, $13 ; $5c15
 	script_set_anim $13, $01 ; $5c21
-	ld d, $53 ; $5c28
-	ld a, $14 ; $5c2a
-	farcall FarPtr_GetActorStateAddr ; $5c2c
-	ld c, l ; $5c2f
-	ld b, h ; $5c30
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5c31
+	script_set_objdef $53, $14 ; $5c28
 	script_set_anim $14, $01 ; $5c34
 	script_set_position $13, $3f00, $3f00 ; $5c3b
 	script_set_position $14, $3f00, $3f00 ; $5c46
@@ -1565,19 +1465,9 @@ Func_0f_5ccf:
 	ld a, $1e ; $5dc6
 	call DelayFrames ; $5dc8
 	script_speak $0b ; $5dcb
-	ld d, $30 ; $5dd0
-	ld a, $07 ; $5dd2
-	farcall FarPtr_GetActorStateAddr ; $5dd4
-	ld c, l ; $5dd7
-	ld b, h ; $5dd8
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5dd9
+	script_set_objdef $30, $07 ; $5dd0
 	script_set_anim $07, $01 ; $5ddc
-	ld d, $3a ; $5de3
-	ld a, $14 ; $5de5
-	farcall FarPtr_GetActorStateAddr ; $5de7
-	ld c, l ; $5dea
-	ld b, h ; $5deb
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5dec
+	script_set_objdef $3a, $14 ; $5de3
 	script_set_anim $14, $01 ; $5def
 	script_set_position $07, $0700, $0500 ; $5df6
 	script_set_position $14, $0f00, $0780 ; $5e01
@@ -1592,19 +1482,9 @@ Func_0f_5ccf:
 	script_wait_move $0c ; $5e44
 	ret ; $5e49
 Func_0f_5e4a:
-	ld d, $74 ; $5e4a
-	ld a, $10 ; $5e4c
-	farcall FarPtr_GetActorStateAddr ; $5e4e
-	ld c, l ; $5e51
-	ld b, h ; $5e52
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5e53
+	script_set_objdef $74, $10 ; $5e4a
 	script_set_anim $10, $01 ; $5e56
-	ld d, $25 ; $5e5d
-	ld a, $0f ; $5e5f
-	farcall FarPtr_GetActorStateAddr ; $5e61
-	ld c, l ; $5e64
-	ld b, h ; $5e65
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5e66
+	script_set_objdef $25, $0f ; $5e5d
 	script_set_anim $0f, $01 ; $5e69
 	script_set_position $0f, $1100, $1600 ; $5e70
 	script_set_position $10, $1100, $1500 ; $5e7b
@@ -1613,19 +1493,9 @@ Func_0f_5e4a:
 	script_move_target $10, $1100, $1200 ; $5e94
 	script_move_target $0f, $1100, $1300 ; $5e9f
 	script_wait_move $0f ; $5eaa
-	ld d, $25 ; $5eaf
-	ld a, $10 ; $5eb1
-	farcall FarPtr_GetActorStateAddr ; $5eb3
-	ld c, l ; $5eb6
-	ld b, h ; $5eb7
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5eb8
+	script_set_objdef $25, $10 ; $5eaf
 	script_set_anim $10, $01 ; $5ebb
-	ld d, $74 ; $5ec2
-	ld a, $0f ; $5ec4
-	farcall FarPtr_GetActorStateAddr ; $5ec6
-	ld c, l ; $5ec9
-	ld b, h ; $5eca
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5ecb
+	script_set_objdef $74, $0f ; $5ec2
 	script_set_anim $0f, $01 ; $5ece
 	script_set_position $10, $1100, $1300 ; $5ed5
 	script_set_position $0f, $1000, $1300 ; $5ee0

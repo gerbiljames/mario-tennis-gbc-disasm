@@ -891,18 +891,8 @@ WaterSpriteRacketRewardScene:
 	script_wait_frames $1e ; $4da7
 	script_face $00, $40 ; $4dae
 	script_wait_frames $1e ; $4db5
-	ld d, $4d ; $4dbc
-	ld a, $16 ; $4dbe
-	farcall FarPtr_GetActorStateAddr ; $4dc0
-	ld c, l ; $4dc3
-	ld b, h ; $4dc4
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4dc5
-	ld d, $4c ; $4dc8
-	ld a, $13 ; $4dca
-	farcall FarPtr_GetActorStateAddr ; $4dcc
-	ld c, l ; $4dcf
-	ld b, h ; $4dd0
-	farcall FarPtr_LoadActorObjectDefIfValid ; $4dd1
+	script_set_objdef $4d, $16 ; $4dbc
+	script_set_objdef $4c, $13 ; $4dc8
 	script_set_position $16, $3480, $0b80 ; $4dd4
 	sound $98 ; $4ddf
 	script_wait_frames $3c ; $4de1

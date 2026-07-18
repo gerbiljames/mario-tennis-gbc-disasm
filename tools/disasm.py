@@ -1770,92 +1770,107 @@ def match_launcher_seq(dis, rom, off, labels):
     return None
 
 
-# Cutscene script commands: a fixed register setup then a farcall into the
-# story script engine, keyed by the farcall's FarPtr slot label. Setup steps
-# are (opcode, size, kind): 'b' = 1-byte immediate arg, 'w' = 2-byte immediate
-# arg, 'x' = no-operand op (no arg), 'z' = 1-byte immediate fixed at $00 (no
-# arg; the command only matches when that operand is $00).
+# Cutscene script commands. Each is (macro, steps) where the source is a fixed
+# instruction sequence — register setups plus one or more farcalls into the
+# story script engine. A step is either a plain instruction (opcode, size, kind)
+# or a farcall ('F', FarPtr slot label). kinds: 'b' = 1-byte immediate arg,
+# 'w' = 2-byte immediate arg, 'x' = no-operand op (no arg), 'z' = 1-byte
+# immediate fixed at $00 (no arg; only matches that value). Immediate args are
+# emitted to the macro in source order.
 SCRIPT_COMMANDS = (
-    ("script_move_target", "FarPtr_ScriptSetActorMoveTarget",
-        ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
-    ("script_set_position", "FarPtr_ScriptSetActorPosition",
-        ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
-    ("script_move_angle", "FarPtr_MoveActorByAngle",
-        ((0x3E, 2, 'b'), (0x06, 2, 'b'), (0x11, 3, 'w'))),
-    ("script_set_speed", "FarPtr_ScriptSetActorMoveSpeed",
-        ((0x3E, 2, 'b'), (0x01, 3, 'w'))),
-    ("script_set_anim", "FarPtr_ScriptSetActorAnimation",
-        ((0x3E, 2, 'b'), (0x16, 2, 'b'))),
-    ("script_face", "FarPtr_SetActorFacing",
-        ((0x3E, 2, 'b'), (0x06, 2, 'b'))),
-    ("script_face_pair", "FarPtr_FaceActorsTowardEachOther",
-        ((0x3E, 2, 'b'), (0x47, 1, 'x'), (0x3E, 2, 'b'))),
-    ("script_face_toward", "FarPtr_FaceActorTowardActor",
-        ((0x3E, 2, 'b'), (0x47, 1, 'x'), (0x3E, 2, 'b'))),
-    ("script_facing_lock", "FarPtr_ScriptSetActorFacingLock",
-        ((0x3E, 2, 'b'), (0x06, 2, 'b'))),
-    ("script_move_player_to_actor", "FarPtr_MovePlayerToActor",
-        ((0x3E, 2, 'b'), (0x06, 2, 'z'))),
-    ("script_move_player", "FarPtr_MovePlayerToPosition",
-        ((0xAF, 1, 'x'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
-    ("script_player_speed", "FarPtr_SetPlayerMoveSpeed",
-        ((0x01, 3, 'w'),)),
-    ("script_set_text", "FarPtr_InitDialogueTextCursor",
-        ((0x21, 3, 'w'),)),
-    ("script_speak", "FarPtr_ScriptShowSpeakerDialogue",
-        ((0x3E, 2, 'b'),)),
-    ("script_wait_idle", "FarPtr_ScriptWaitActorIdle",
-        ((0x3E, 2, 'b'),)),
-    ("script_wait_move", "FarPtr_ScriptWaitActorMoveDone",
-        ((0x3E, 2, 'b'),)),
-    # script_wait_frames is always bracketed by push af / pop af (it clobbers
-    # a with the frame count while the caller holds an actor id there); fold
-    # the pair into the macro via the optional (prefix, suffix) opcodes.
-    ("script_wait_frames", "FarPtr_WaitScriptFrames",
-        ((0x3E, 2, 'b'),), (0xF5, 0xF1)),
+    ("script_move_target",
+        ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'),
+         ('F', "FarPtr_ScriptSetActorMoveTarget"))),
+    ("script_set_position",
+        ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'),
+         ('F', "FarPtr_ScriptSetActorPosition"))),
+    ("script_move_angle",
+        ((0x3E, 2, 'b'), (0x06, 2, 'b'), (0x11, 3, 'w'),
+         ('F', "FarPtr_MoveActorByAngle"))),
+    ("script_set_speed",
+        ((0x3E, 2, 'b'), (0x01, 3, 'w'), ('F', "FarPtr_ScriptSetActorMoveSpeed"))),
+    ("script_set_anim",
+        ((0x3E, 2, 'b'), (0x16, 2, 'b'), ('F', "FarPtr_ScriptSetActorAnimation"))),
+    ("script_face",
+        ((0x3E, 2, 'b'), (0x06, 2, 'b'), ('F', "FarPtr_SetActorFacing"))),
+    ("script_face_pair",
+        ((0x3E, 2, 'b'), (0x47, 1, 'x'), (0x3E, 2, 'b'),
+         ('F', "FarPtr_FaceActorsTowardEachOther"))),
+    ("script_face_toward",
+        ((0x3E, 2, 'b'), (0x47, 1, 'x'), (0x3E, 2, 'b'),
+         ('F', "FarPtr_FaceActorTowardActor"))),
+    ("script_facing_lock",
+        ((0x3E, 2, 'b'), (0x06, 2, 'b'), ('F', "FarPtr_ScriptSetActorFacingLock"))),
+    # Set an actor's object definition: fetch its state pointer into bc, then
+    # LoadActorObjectDefIfValid(bc, d = objdef). Args: objdef (d), then actor (a).
+    ("script_set_objdef",
+        ((0x16, 2, 'b'), (0x3E, 2, 'b'), ('F', "FarPtr_GetActorStateAddr"),
+         (0x4D, 1, 'x'), (0x44, 1, 'x'),
+         ('F', "FarPtr_LoadActorObjectDefIfValid"))),
+    ("script_move_player_to_actor",
+        ((0x3E, 2, 'b'), (0x06, 2, 'z'), ('F', "FarPtr_MovePlayerToActor"))),
+    ("script_move_player",
+        ((0xAF, 1, 'x'), (0x01, 3, 'w'), (0x11, 3, 'w'),
+         ('F', "FarPtr_MovePlayerToPosition"))),
+    ("script_player_speed",
+        ((0x01, 3, 'w'), ('F', "FarPtr_SetPlayerMoveSpeed"))),
+    ("script_set_text",
+        ((0x21, 3, 'w'), ('F', "FarPtr_InitDialogueTextCursor"))),
+    ("script_speak",
+        ((0x3E, 2, 'b'), ('F', "FarPtr_ScriptShowSpeakerDialogue"))),
+    ("script_wait_idle",
+        ((0x3E, 2, 'b'), ('F', "FarPtr_ScriptWaitActorIdle"))),
+    ("script_wait_move",
+        ((0x3E, 2, 'b'), ('F', "FarPtr_ScriptWaitActorMoveDone"))),
+    # Always bracketed by push af / pop af (it clobbers a with the frame count
+    # while the caller holds an actor id there); the pair are ordinary steps.
+    ("script_wait_frames",
+        ((0xF5, 1, 'x'), (0x3E, 2, 'b'), ('F', "FarPtr_WaitScriptFrames"),
+         (0xF1, 1, 'x'))),
 )
 
 
 def script_cmd_seq(dis, rom, off, labels, far_slot_names):
-    """Collapse a cutscene script command (register setup + farcall into the
-    FarPtr_Script* engine) into a script_* macro. The farcall's resolved slot
-    name selects the command. Only fires when no label or data note lands
-    inside the sequence past its first instruction (so nothing is hidden)."""
+    """Collapse a cutscene script command (a fixed run of register setups and
+    farcalls into the FarPtr_Script* engine) into a script_* macro. Steps are
+    matched in order; farcall steps must resolve to the named FarPtr slot. Only
+    fires when no label or data note lands inside the sequence past its first
+    instruction (so nothing is hidden)."""
     def plain(o):
         return (o in dis.instrs and o not in labels
                 and o not in dis.data_site_notes)
     if off in dis.data_site_notes:
         return None
-    for macro, far_label, setups, *rest in SCRIPT_COMMANDS:
-        wrap = rest[0] if rest else None  # (prefix opcode, suffix opcode)
+    for macro, steps in SCRIPT_COMMANDS:
         p, args, ok = off, [], True
-        if wrap:
-            if rom[p] != wrap[0]:
-                continue
-            p += 1  # prefix (push af)
-        for opc, size, kind in setups:
-            if p + size > len(rom) or rom[p] != opc or (p != off and not plain(p)):
+        for step in steps:
+            if p != off and not plain(p):
                 ok = False
                 break
-            if kind == 'z' and rom[p + 1] != 0x00:
-                ok = False
-                break
-            if kind == 'b':
-                args.append(f"${rom[p + 1]:02x}")
-            elif kind == 'w':
-                args.append(f"${rom[p + 1] | (rom[p + 2] << 8):04x}")
-            p += size
-        if not ok or p not in dis.farcalls or not plain(p):
-            continue
-        fbank, slot, _entry, _tgt = dis.farcalls[p]
-        if far_slot_names.get((fbank, slot)) != far_label:
-            continue
-        p += 3  # rst18 + slot + bank
-        if wrap:
-            if p >= len(rom) or rom[p] != wrap[1] or not plain(p):
-                continue
-            p += 1  # suffix (pop af)
-        return f"{macro} " + ", ".join(args), p - off
+            if step[0] == 'F':
+                if p not in dis.farcalls:
+                    ok = False
+                    break
+                fbank, slot, _entry, _tgt = dis.farcalls[p]
+                if far_slot_names.get((fbank, slot)) != step[1]:
+                    ok = False
+                    break
+                p += 3  # rst18 + slot + bank
+            else:
+                opc, size, kind = step
+                if p + size > len(rom) or rom[p] != opc:
+                    ok = False
+                    break
+                if kind == 'z' and rom[p + 1] != 0x00:
+                    ok = False
+                    break
+                if kind == 'b':
+                    args.append(f"${rom[p + 1]:02x}")
+                elif kind == 'w':
+                    args.append(f"${rom[p + 1] | (rom[p + 2] << 8):04x}")
+                p += size
+        if ok:
+            return (f"{macro} " + ", ".join(args)).rstrip(), p - off
     return None
 
 
@@ -2131,6 +2146,17 @@ MACRO script_set_anim
 	ld a, \\1
 	ld d, \\2
 	farcall FarPtr_ScriptSetActorAnimation
+ENDM
+; Installs object definition `objdef` into `actor`: fetch the actor's state
+; pointer into bc, then LoadActorObjectDefIfValid(bc, d = objdef).
+; Usage: script_set_objdef objdef, actor
+MACRO script_set_objdef
+	ld d, \\1
+	ld a, \\2
+	farcall FarPtr_GetActorStateAddr
+	ld c, l
+	ld b, h
+	farcall FarPtr_LoadActorObjectDefIfValid
 ENDM
 ; Usage: script_face actor, facing
 MACRO script_face
