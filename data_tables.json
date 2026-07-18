@@ -437,7 +437,7 @@
  "0x58d55": "bytes:4",
  "0x58e9d": "gfx_ptr_table",
  "0x5a0b7": "records:2",
- "0x5a0f1": "records:2",
+ "0x5a0f1": "lz_ptr_table",
  "0x5a968": "records:2",
  "0x5cabb": "bytes:4",
  "0x5cec2": "palettes",

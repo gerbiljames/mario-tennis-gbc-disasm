@@ -31,8 +31,11 @@ LZ tile streams (each decompresses to 20 tiles at VRAM $8900/$8a40/$9140).
 `carve_gfx_pointer_sets` in `disasm.py` walks the table, registers the pool as
 labeled `Lz_16_*` blobs (extracted, gitignored), and shrinks the table region
 to a `gfx_ptr_table` data table: `render_gfx_ptr_table` emits the pointers as
-`.recN` locals and each record as a `gfx_set` of three stream labels. Still
-byte-perfect.
+`.recN` locals and each record as a `gfx_set` of three stream labels. The same
+method also carves `$16:$60f1` (`WinLosePortraitVariantTable_16`, loader
+`DecompressWinLosePortraitVariant` at `$60d5`) — a one-level `dw` table straight
+into an 8-stream pool of win/lose portrait variants, rendered by
+`render_lz_ptr_table` as `dw Lz_16_*` entries. Still byte-perfect.
 
 ### Match-result tilemap scripts (2026-07-19)
 

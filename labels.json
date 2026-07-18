@@ -1732,6 +1732,7 @@
 "0x5a073": "LoadResultPortraitSlot",
 "0x5a0c0": "DecompressResultPortrait",
 "0x5a0d5": "DecompressWinLosePortraitVariant",
+"0x5a0f1": "WinLosePortraitVariantTable_16",
 "0x5a955": "DecompressCharacterPortrait",
 "0x5b420": "RulesBorderAnimTask",
 "0x5b4db": "RulesSpinningBallSpriteTask",

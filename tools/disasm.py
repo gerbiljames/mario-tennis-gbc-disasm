@@ -846,17 +846,17 @@ class Disassembly:
             print(f"static data slots: {added} carved")
 
     def carve_gfx_pointer_sets(self):
-        """Bank $16's match-result graphics loader ($16:$4e54) selects a set of
-        three LZ tile streams by the remapped match gfx index, decompressing
-        them to VRAM $8900/$8a40/$9140. The selection is a two-level table at
-        $4e9d that the auto-carver leaves as one records:2 blob: a self-
-        delimiting dw pointer table indexes 6-byte descriptor records, each
-        three dw pointers into a contiguous pool of LZ streams. Carve the pool
-        into labeled lz blobs (so the records reference them by name) and shrink
-        the pointer-table/records region to a gfx_ptr_table data table."""
+        """Bank $16's match-result graphics tables select LZ tile streams the
+        auto-carver leaves as records:2 blobs. Two shapes:
+          $4e9d (LoadMatchResultGfxSet, $4e54): a self-delimiting dw pointer
+            table indexes 6-byte descriptor records, each three dw pointers into
+            a contiguous stream pool decompressed to VRAM $8900/$8a40/$9140.
+          $60f1 (DecompressWinLosePortraitVariant, $60d5): a self-delimiting dw
+            pointer table straight into a stream pool (portrait variants).
+        Carve each pool into labeled lz blobs (so the records/pointers reference
+        them by name) and shrink each table region to a data table."""
         bank = 0x16
         base = bank * BANK_SIZE
-        tbl = 0x4e9d
 
         def flat(cpu):
             return base + cpu - BANK_SIZE
@@ -865,29 +865,35 @@ class Disassembly:
             o = flat(cpu)
             return self.rom[o] | (self.rom[o + 1] << 8)
 
-        # Pointer table self-delimits at its lowest target (the first record).
-        rec_start = min(word(tbl), word(tbl + 2))
-        # Descriptor records (6 bytes) run until the lowest stream they point at.
+        def tile_pool(pool):
+            # Decompress each stream to find its compressed length and register
+            # it as an lz blob, stopping where the streams give way to code.
+            o, n = flat(pool), 0
+            while o < base + BANK_SIZE and o not in self.instrs:
+                try:
+                    _, clen = lz.decompress(self.rom, o, base + BANK_SIZE)
+                except ValueError:
+                    break
+                self.data_blobs.setdefault(o, (clen, "lz"))
+                o += clen
+                n += 1
+            return n
+
+        total = 0
+        # $4e9d: pointer table -> 6-byte records -> pool. Records run until the
+        # lowest stream they point at; that is where the pool begins.
+        rec_start = min(word(0x4e9d), word(0x4e9f))
         p, pool = rec_start, 0xFFFF
         while p < pool:
             pool = min(pool, word(p), word(p + 2), word(p + 4))
             p += 6
-        # Tile the stream pool: decompress each stream to find its compressed
-        # length and register it as an lz blob, stopping where the streams give
-        # way to the loader code that follows.
-        o, n = flat(pool), 0
-        while o < base + BANK_SIZE and o not in self.instrs:
-            try:
-                _, clen = lz.decompress(self.rom, o, base + BANK_SIZE)
-            except ValueError:
-                break
-            self.data_blobs.setdefault(o, (clen, "lz"))
-            o += clen
-            n += 1
-        # Constrain the table region so the pool blobs are not swallowed by it.
-        self.data_blobs[flat(tbl)] = (flat(pool) - flat(tbl), "copy")
-        print(f"gfx pointer sets: {n} lz streams carved "
-              f"($16:${pool:04x}..${offset_to_cpu(o):04x})")
+        total += tile_pool(pool)
+        self.data_blobs[flat(0x4e9d)] = (flat(pool) - flat(0x4e9d), "copy")
+        # $60f1: pointer table straight into the pool (lowest entry = pool start).
+        pool = min(word(0x60f1), word(0x60f3))
+        total += tile_pool(pool)
+        self.data_blobs[flat(0x60f1)] = (flat(pool) - flat(0x60f1), "copy")
+        print(f"gfx pointer sets: {total} lz streams carved")
 
     def load_hook_dumps(self, paths):
         """Ingest tools/hook_client.py captures: runtime-observed register
@@ -2450,6 +2456,19 @@ def render_gfx_ptr_table(rom, start, end, bank, data_labels):
     return out
 
 
+def render_lz_ptr_table(rom, start, end, bank, data_labels):
+    """Render a direct LZ pointer table ($16:$60f1): a dw table of pointers
+    straight to LZ tile streams, indexed by the win/lose portrait variant.
+    Each entry resolves to its Lz_* blob label."""
+    fbase = bank * BANK_SIZE
+    out = []
+    for i, o in enumerate(range(start, end, 2)):
+        v = rom[o] | (rom[o + 1] << 8)
+        out.append(f"\tdw {data_labels.get(fbase + v - BANK_SIZE, f'${v:04x}')}"
+                   f" ; {i}")
+    return out
+
+
 def render_object_header(rom, off, data_labels, ptr_labels):
     """Render a 16-byte sprite/object header as committed db/dw source: a
     count byte, three flag bytes, then six pointers into the record's body.
@@ -2715,6 +2734,11 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 rom, run_start, run_start + length,
                                 bank, data_labels))
                             continue
+                        if spec == "lz_ptr_table":
+                            lines.extend(render_lz_ptr_table(
+                                rom, run_start, run_start + length,
+                                bank, data_labels))
+                            continue
                         body = render_spec(rom[run_start:run_start + length],
                                            spec).rstrip("\n")
                         lines.extend(body.split("\n"))
@@ -2876,6 +2900,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                     rom, seg, j))
                             elif spec == "gfx_ptr_table":
                                 lines.extend(render_gfx_ptr_table(
+                                    rom, seg, j, bank, data_labels))
+                            elif spec == "lz_ptr_table":
+                                lines.extend(render_lz_ptr_table(
                                     rom, seg, j, bank, data_labels))
                             else:
                                 body = render_spec(rom[seg:j], spec).rstrip("\n")
