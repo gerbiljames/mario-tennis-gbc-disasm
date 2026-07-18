@@ -84,7 +84,10 @@ each `StoryLocationTable_0a` record (`STORY_LOCATION_NAMES` in disasm.py) —
 locs 30-41 are the End1-End17 ending tour. The Restaurant/Cafeteria trees
 (bank $10, locs 13/14) and Center Court tree (bank $11, loc 24) are also carved
 like $0e/$0f/$14 (three handlers seeded: `Func_10_5cb0` + the `Func_11_4199`/
-`_41a3` no-op rets). Bank $27
+`_41a3` no-op rets). The Academy Main Bldg. / Academy Wing trees (bank $10,
+locs 5/6) are carved too — three more handlers seeded (`Func_10_623b`/`_6372`/
+`_63e0`) and the Wing's Tile table `$6361` fixed from a `bytes:16`
+mis-classification to `map_scripts`. Bank $27
 (locations 30-41) is the self-contained ending-presentation bank: its `$4000`
 is already curated as `SceneFramePtrs_27` (12 scene-frame records, a different
 structure the story engine also reads as trees), so those records stay raw

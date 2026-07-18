@@ -12,10 +12,10 @@ DataPtr_CafeteriaMapScripts_10:
 	dw CafeteriaMapScripts_10 ; $4008
 DataPtr_RestaurantMapScripts_10:
 	dw RestaurantMapScripts_10 ; $400a
-DataPtr_10_0c:
-	dw Data_10_61b1 ; $400c
-DataPtr_10_0e:
-	dw Data_10_74a9 ; $400e
+DataPtr_AcademyWingMapScripts_10:
+	dw AcademyWingMapScripts_10 ; $400c
+DataPtr_AcademyMainBldgMapScripts_10:
+	dw AcademyMainBldgMapScripts_10 ; $400e
 Data_10_4010:
 	; $4010, 16 bytes (records:2)
 	dw $40a6 ; record 0
@@ -3381,56 +3381,103 @@ Func_10_615a:
 	ld de, $3f00 ; $61aa
 	farcall FarPtr_ScriptSetActorPosition ; $61ad
 	ret ; $61b0
-Data_10_61b1:
-	; $61b1, 14 bytes (records:2)
-	dw $6201 ; record 0
-	dw $6212 ; record 1
-	dw $61bf ; record 2
-	dw $62b6 ; record 3
-	dw $62bf ; record 4
-	dw $6361 ; record 5
-	dw $643b ; record 6
-	; $61bf, 66 bytes (bytes:14)
-	db $00, $00, $d1, $7b, $00, $3f, $00, $19, $00, $00, $63, $01, $00, $00 ; 0x00
-	db $00, $00, $d1, $7b, $00, $19, $00, $3f, $00, $00, $36, $01, $00, $00 ; 0x0e
-	db $00, $00, $d1, $7b, $00, $27, $40, $32, $40, $00, $74, $01, $00, $00 ; 0x1c
-	db $00, $00, $d1, $7b, $00, $27, $c0, $30, $40, $00, $74, $01, $00, $00 ; 0x2a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x38
-	; $6201, 17 bytes (bytes:16)
-	db $01, $40, $00, $3b, $00, $39, $5f, $7b, $0f, $c0, $00, $20, $00, $34, $f9, $7b ; 0x00
-	db $ff ; 0x10
-	; $6212, 164 bytes (records:8)
-; 20 records x 8 bytes
-	dw $ff01, $0000, $7bf9, $0114 ; record 0
-	dw $ff02, $0000, $7bf9, $0307 ; record 1
-	dw $ff03, $0000, $7ae6, $0405 ; record 2
-	dw $ff04, $0000, $7b1f, $0305 ; record 3
-	dw $ff0f, $0000, $7bf9, $0f07 ; record 4
-	dw $3eff, $4700, $033e, $30df ; record 5
-	dw $f70a, $1c00, $0828, $0521 ; record 6
-	dw $df02, $0a0e, $6018, $063e ; record 7
-	dw $16df, $4d0a, $2144, $0037 ; record 8
-	dw $7e09, $20f6, $3e77, $0106 ; record 9
-	dw $1b80, $0011, $df2e, $0a22 ; record 10
-	dw $97cf, $3ef5, $df3c, $0a04 ; record 11
-	dw $3ef1, $0106, $0100, $0011 ; record 12
-	dw $df01, $0a22, $0121, $df02 ; record 13
-	dw $0a0e, $e0f7, $2805, $df03 ; record 14
-	dw $0a10, $033e, $0adf, $210a ; record 15
-	dw $0203, $0edf, $df0a, $0a12 ; record 16
-	dw $0cdf, $f50a, $053e, $04df ; record 17
-	dw $f10a, $20a7, $2109, $0204 ; record 18
-	dw $0edf, $e70a, $1c00, $033e ; record 19
-	db $df, $08, $0a, $c9
-	; $62b6, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff03, $0000, $623b, $0001 ; record 0
+AcademyWingMapScripts_10:
+	; $61b1, 14 bytes (map_tree)
+	dw AcademyWingEntryPoints_10 ; slot 0 EntryPoints
+	dw AcademyWingExitTriggers_10 ; slot 1 ExitTriggers
+	dw AcademyWingActors_10 ; slot 2 Actors
+	dw AcademyWingNpcScripts_10 ; slot 3 NpcScripts
+	dw AcademyWingFacingScripts_10 ; slot 4 FacingScripts
+	dw AcademyWingTileTriggers_10 ; slot 5 TileTriggers
+	dw AcademyWingInitScript_10 ; slot 6 InitScript
+AcademyWingActors_10:
+	; $61bf, 66 bytes (map_actors)
+	map_actor $0000, $7bd1, $3f00, $1900, $00, $63, $01, $00
+	map_actor $0000, $7bd1, $1900, $3f00, $00, $36, $01, $00
+	map_actor $0000, $7bd1, $2700, $3240, $40, $74, $01, $00
+	map_actor $0000, $7bd1, $2700, $30c0, $40, $74, $01, $00
+	map_actor_end
+AcademyWingEntryPoints_10:
+	; $6201, 17 bytes (map_entries)
+	map_entry $01, $40, $3b00, $3900, Func_10_7b5f
+	map_entry $0f, $c0, $2000, $3400, Func_10_7bf9
 	db $ff
-	; $62bf, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $6355, $0000 ; record 0
-	dw $ff02, $0000, $62d0, $0000 ; record 1
+AcademyWingExitTriggers_10:
+	; $6212, 41 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_7bf9, $14, $01
+	map_script $02, $ff, $0000, Func_10_7bf9, $07, $03
+	map_script $03, $ff, $0000, Func_10_7ae6, $05, $04
+	map_script $04, $ff, $0000, Func_10_7b1f, $05, $03
+	map_script $0f, $ff, $0000, Func_10_7bf9, $07, $0f
 	db $ff
+Func_10_623b:
+	ld a, $00 ; $623b
+	ld b, a ; $623d
+	ld a, $03 ; $623e
+	farcall FarPtr_FaceActorTowardActor ; $6240
+	test_flag $1c, 0 ; $6243
+	jr z, Label_10_6250 ; $6246
+	ld hl, $0205 ; $6248
+	farcall FarPtr_InitDialogueTextCursor ; $624b
+	jr Label_10_62b0 ; $624e
+Label_10_6250:
+	ld a, $06 ; $6250
+	farcall FarPtr_GetActorStateAddr ; $6252
+	ld c, l ; $6255
+	ld b, h ; $6256
+	ld hl, $0037 ; $6257
+	add hl, bc ; $625a
+	ld a, [hl] ; $625b
+	or a, $20 ; $625c
+	ld [hl], a ; $625e
+	ld a, $06 ; $625f
+	ld bc, $1b80 ; $6261
+	ld de, $2e00 ; $6264
+	farcall FarPtr_ScriptSetActorPosition ; $6267
+	sound $97 ; $626a
+	push af ; $626c
+	ld a, $3c ; $626d
+	farcall FarPtr_WaitScriptFrames ; $626f
+	pop af ; $6272
+	ld a, $06 ; $6273
+	ld bc, $0100 ; $6275
+	ld de, $0100 ; $6278
+	farcall FarPtr_ScriptSetActorPosition ; $627b
+	ld hl, $0201 ; $627e
+	farcall FarPtr_InitDialogueTextCursor ; $6281
+	test_flag $05, 7 ; $6284
+	jr z, Label_10_628c ; $6287
+	farcall FarPtr_AdvanceDialogueTextCursor ; $6289
+Label_10_628c:
+	ld a, $03 ; $628c
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $628e
+	ld hl, $0203 ; $6291
+	farcall FarPtr_InitDialogueTextCursor ; $6294
+	farcall FarPtr_RunDialogueYesNoPrompt ; $6297
+	farcall FarPtr_ScriptCloseDialogueWindow ; $629a
+	push af ; $629d
+	ld a, $05 ; $629e
+	farcall FarPtr_WaitScriptFrames ; $62a0
+	pop af ; $62a3
+	and a, a ; $62a4
+	jr nz, Label_10_62b0 ; $62a5
+	ld hl, $0204 ; $62a7
+	farcall FarPtr_InitDialogueTextCursor ; $62aa
+	set_flag $1c, 0 ; $62ad
+Label_10_62b0:
+	ld a, $03 ; $62b0
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $62b2
+	ret ; $62b5
+AcademyWingNpcScripts_10:
+	; $62b6, 9 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_10_623b, $01, $00
+	db $ff
+AcademyWingFacingScripts_10:
+	; $62bf, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Label_10_6355, $00, $00
+	map_script $02, $ff, $0000, Func_10_62d0, $00, $00
+	db $ff
+Func_10_62d0:
 	ld a, [$c2b0] ; $62d0
 	cp a, $01 ; $62d3
 	jr nz, Label_10_6355 ; $62d5
@@ -3493,21 +3540,99 @@ Label_10_6355:
 	ld a, $00 ; $635b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $635d
 	ret ; $6360
-	; $6361, 218 bytes (bytes:16)
-	db $01, $40, $00, $00, $72, $63, $00, $00, $02, $80, $00, $00, $e0, $63, $00, $00 ; 0x00
-	db $ff, $3e, $00, $01, $14, $00, $df, $18, $0a, $3e, $00, $06, $c0, $df, $2e, $0a ; 0x10
-	db $cd, $39, $73, $f7, $e0, $05, $28, $10, $3e, $02, $01, $00, $21, $11, $00, $3d ; 0x20
-	db $df, $24, $0a, $3e, $02, $df, $20, $0a, $3e, $00, $01, $00, $21, $11, $00, $39 ; 0x30
-	db $df, $24, $0a, $3e, $00, $df, $20, $0a, $f5, $3e, $02, $df, $04, $0a, $f1, $3e ; 0x40
-	db $00, $06, $c0, $11, $00, $02, $df, $2a, $0a, $3e, $00, $df, $20, $0a, $3e, $00 ; 0x50
-	db $06, $80, $11, $00, $02, $df, $2a, $0a, $3e, $00, $df, $20, $0a, $f5, $3e, $0a ; 0x60
-	db $df, $04, $0a, $f1, $3e, $00, $06, $c0, $df, $2e, $0a, $cd, $6f, $73, $c9, $3e ; 0x70
-	db $00, $06, $40, $df, $2e, $0a, $3e, $00, $01, $10, $00, $df, $18, $0a, $cd, $39 ; 0x80
-	db $73, $3e, $02, $01, $00, $21, $11, $00, $35, $df, $24, $0a, $f7, $e0, $05, $28 ; 0x90
-	db $00, $3e, $00, $01, $00, $21, $11, $00, $39, $df, $24, $0a, $3e, $00, $df, $20 ; 0xa0
-	db $0a, $3e, $00, $06, $40, $11, $00, $02, $df, $2a, $0a, $3e, $00, $df, $20, $0a ; 0xb0
-	db $3e, $00, $06, $00, $11, $00, $02, $df, $2a, $0a, $3e, $00, $df, $20, $0a, $f5 ; 0xc0
-	db $3e, $05, $df, $04, $0a, $f1, $cd, $6f, $73, $c9 ; 0xd0
+AcademyWingTileTriggers_10:
+	; $6361, 17 bytes (map_scripts)
+	map_script $01, $40, $0000, Func_10_6372, $00, $00
+	map_script $02, $80, $0000, Func_10_63e0, $00, $00
+	db $ff
+Func_10_6372:
+	ld a, $00 ; $6372
+	ld bc, $0014 ; $6374
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $6377
+	ld a, $00 ; $637a
+	ld b, $c0 ; $637c
+	farcall FarPtr_SetActorFacing ; $637e
+	call Func_10_7339 ; $6381
+	test_flag $05, 7 ; $6384
+	jr z, Label_10_6399 ; $6387
+	ld a, $02 ; $6389
+	ld bc, $2100 ; $638b
+	ld de, $3d00 ; $638e
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6391
+	ld a, $02 ; $6394
+	farcall FarPtr_ScriptWaitActorMoveDone ; $6396
+Label_10_6399:
+	ld a, $00 ; $6399
+	ld bc, $2100 ; $639b
+	ld de, $3900 ; $639e
+	farcall FarPtr_ScriptSetActorMoveTarget ; $63a1
+	ld a, $00 ; $63a4
+	farcall FarPtr_ScriptWaitActorMoveDone ; $63a6
+	push af ; $63a9
+	ld a, $02 ; $63aa
+	farcall FarPtr_WaitScriptFrames ; $63ac
+	pop af ; $63af
+	ld a, $00 ; $63b0
+	ld b, $c0 ; $63b2
+	ld de, $0200 ; $63b4
+	farcall FarPtr_MoveActorByAngle ; $63b7
+	ld a, $00 ; $63ba
+	farcall FarPtr_ScriptWaitActorMoveDone ; $63bc
+	ld a, $00 ; $63bf
+	ld b, $80 ; $63c1
+	ld de, $0200 ; $63c3
+	farcall FarPtr_MoveActorByAngle ; $63c6
+	ld a, $00 ; $63c9
+	farcall FarPtr_ScriptWaitActorMoveDone ; $63cb
+	push af ; $63ce
+	ld a, $0a ; $63cf
+	farcall FarPtr_WaitScriptFrames ; $63d1
+	pop af ; $63d4
+	ld a, $00 ; $63d5
+	ld b, $c0 ; $63d7
+	farcall FarPtr_SetActorFacing ; $63d9
+	call Func_10_736f ; $63dc
+	ret ; $63df
+Func_10_63e0:
+	ld a, $00 ; $63e0
+	ld b, $40 ; $63e2
+	farcall FarPtr_SetActorFacing ; $63e4
+	ld a, $00 ; $63e7
+	ld bc, $0010 ; $63e9
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $63ec
+	call Func_10_7339 ; $63ef
+	ld a, $02 ; $63f2
+	ld bc, $2100 ; $63f4
+	ld de, $3500 ; $63f7
+	farcall FarPtr_ScriptSetActorMoveTarget ; $63fa
+	test_flag $05, 7 ; $63fd
+	jr z, Label_10_6402 ; $6400
+Label_10_6402:
+	ld a, $00 ; $6402
+	ld bc, $2100 ; $6404
+	ld de, $3900 ; $6407
+	farcall FarPtr_ScriptSetActorMoveTarget ; $640a
+	ld a, $00 ; $640d
+	farcall FarPtr_ScriptWaitActorMoveDone ; $640f
+	ld a, $00 ; $6412
+	ld b, $40 ; $6414
+	ld de, $0200 ; $6416
+	farcall FarPtr_MoveActorByAngle ; $6419
+	ld a, $00 ; $641c
+	farcall FarPtr_ScriptWaitActorMoveDone ; $641e
+	ld a, $00 ; $6421
+	ld b, $00 ; $6423
+	ld de, $0200 ; $6425
+	farcall FarPtr_MoveActorByAngle ; $6428
+	ld a, $00 ; $642b
+	farcall FarPtr_ScriptWaitActorMoveDone ; $642d
+	push af ; $6430
+	ld a, $05 ; $6431
+	farcall FarPtr_WaitScriptFrames ; $6433
+	pop af ; $6436
+	call Func_10_736f ; $6437
+	ret ; $643a
+AcademyWingInitScript_10:
 	ld a, $05 ; $643b
 	ld d, $06 ; $643d
 	farcall FarPtr_ScriptSetActorAnimation ; $643f
@@ -5292,43 +5417,58 @@ Label_10_7490:
 Label_10_74a5:
 	ld [$c2b0], a ; $74a5
 	ret ; $74a8
-Data_10_74a9:
-	; $74a9, 14 bytes (records:2)
-	dw $74f9 ; record 0
-	dw $75be ; record 1
-	dw $74b7 ; record 2
-	dw $76f4 ; record 3
-	dw $7715 ; record 4
-	dw $7716 ; record 5
-	dw $7717 ; record 6
-	; $74b7, 66 bytes (bytes:14)
-	db $00, $00, $d1, $7b, $00, $1d, $80, $17, $40, $00, $3f, $01, $04, $00 ; 0x00
-	db $00, $00, $d1, $7b, $80, $0e, $00, $0f, $80, $00, $40, $01, $00, $00 ; 0x0e
-	db $00, $00, $d1, $7b, $00, $05, $80, $0f, $40, $00, $3f, $01, $07, $00 ; 0x1c
-	db $00, $00, $db, $7b, $00, $28, $00, $1e, $40, $00, $41, $01, $03, $00 ; 0x2a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x38
-	; $74f9, 197 bytes (bytes:16)
-	db $01, $c0, $00, $22, $00, $21, $78, $75, $02, $40, $00, $22, $00, $07, $32, $75 ; 0x00
-	db $03, $40, $00, $35, $00, $19, $5f, $7b, $04, $40, $00, $3b, $00, $39, $5f, $7b ; 0x10
-	db $0d, $c0, $00, $21, $00, $3b, $00, $00, $0e, $c0, $00, $22, $00, $13, $00, $00 ; 0x20
-	db $0f, $c0, $00, $22, $00, $1d, $00, $00, $ff, $fa, $95, $c2, $fe, $ff, $ca, $77 ; 0x30
-	db $75, $f7, $e0, $05, $28, $26, $3e, $02, $01, $ff, $00, $df, $18, $0a, $3e, $02 ; 0x40
-	db $06, $c0, $11, $00, $02, $df, $2a, $0a, $3e, $02, $df, $20, $0a, $3e, $02, $06 ; 0x50
-	db $40, $df, $2e, $0a, $3e, $02, $01, $10, $00, $df, $18, $0a, $3e, $00, $01, $10 ; 0x60
-	db $00, $df, $18, $0a, $3e, $00, $06, $40, $11, $00, $02, $df, $2a, $0a, $c9, $fa ; 0x70
-	db $95, $c2, $fe, $ff, $ca, $bd, $75, $f7, $e0, $05, $28, $26, $3e, $02, $01, $ff ; 0x80
-	db $00, $df, $18, $0a, $3e, $02, $06, $40, $11, $00, $02, $df, $2a, $0a, $3e, $02 ; 0x90
-	db $df, $20, $0a, $3e, $02, $06, $c0, $df, $2e, $0a, $3e, $02, $01, $10, $00, $df ; 0xa0
-	db $18, $0a, $3e, $00, $01, $10, $00, $df, $18, $0a, $3e, $00, $06, $c0, $11, $00 ; 0xb0
-	db $02, $df, $2a, $0a, $c9 ; 0xc0
-	; $75be, 41 bytes (records:8)
-; 5 records x 8 bytes
-	dw $ff01, $0000, $7bf9, $0114 ; record 0
-	dw $ff02, $0000, $7bf9, $0307 ; record 1
-	dw $ff03, $0000, $7ae6, $0106 ; record 2
-	dw $ff04, $0000, $7b1f, $0305 ; record 3
-	dw $ff0f, $0000, $7bf9, $0f07 ; record 4
+AcademyMainBldgMapScripts_10:
+	; $74a9, 14 bytes (map_tree)
+	dw AcademyMainBldgEntryPoints_10 ; slot 0 EntryPoints
+	dw AcademyMainBldgExitTriggers_10 ; slot 1 ExitTriggers
+	dw AcademyMainBldgActors_10 ; slot 2 Actors
+	dw AcademyMainBldgNpcScripts_10 ; slot 3 NpcScripts
+	dw AcademyMainBldgFacingScripts_10 ; slot 4 FacingScripts
+	dw AcademyMainBldgTileTriggers_10 ; slot 5 TileTriggers
+	dw AcademyMainBldgInitScript_10 ; slot 6 InitScript
+AcademyMainBldgActors_10:
+	; $74b7, 66 bytes (map_actors)
+	map_actor $0000, $7bd1, $1d00, $1780, $40, $3f, $01, $04
+	map_actor $0000, $7bd1, $0e80, $0f00, $80, $40, $01, $00
+	map_actor $0000, $7bd1, $0500, $0f80, $40, $3f, $01, $07
+	map_actor $0000, $7bdb, $2800, $1e00, $40, $41, $01, $03
+	map_actor_end
+AcademyMainBldgEntryPoints_10:
+	; $74f9, 197 bytes (map_entries)
+	map_entry $01, $c0, $2200, $2100, $7578
+	map_entry $02, $40, $2200, $0700, $7532
+	map_entry $03, $40, $3500, $1900, Func_10_7b5f
+	map_entry $04, $40, $3b00, $3900, Func_10_7b5f
+	map_entry $0d, $c0, $2100, $3b00, $0000
+	map_entry $0e, $c0, $2200, $1300, $0000
+	map_entry $0f, $c0, $2200, $1d00, $0000
+	db $ff, $fa, $95, $c2, $fe, $ff, $ca, $77
+	db $75, $f7, $e0, $05, $28, $26, $3e, $02
+	db $01, $ff, $00, $df, $18, $0a, $3e, $02
+	db $06, $c0, $11, $00, $02, $df, $2a, $0a
+	db $3e, $02, $df, $20, $0a, $3e, $02, $06
+	db $40, $df, $2e, $0a, $3e, $02, $01, $10
+	db $00, $df, $18, $0a, $3e, $00, $01, $10
+	db $00, $df, $18, $0a, $3e, $00, $06, $40
+	db $11, $00, $02, $df, $2a, $0a, $c9, $fa
+	db $95, $c2, $fe, $ff, $ca, $bd, $75, $f7
+	db $e0, $05, $28, $26, $3e, $02, $01, $ff
+	db $00, $df, $18, $0a, $3e, $02, $06, $40
+	db $11, $00, $02, $df, $2a, $0a, $3e, $02
+	db $df, $20, $0a, $3e, $02, $06, $c0, $df
+	db $2e, $0a, $3e, $02, $01, $10, $00, $df
+	db $18, $0a, $3e, $00, $01, $10, $00, $df
+	db $18, $0a, $3e, $00, $06, $c0, $11, $00
+	db $02, $df, $2a, $0a, $c9
+AcademyMainBldgExitTriggers_10:
+	; $75be, 41 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_7bf9, $14, $01
+	map_script $02, $ff, $0000, Func_10_7bf9, $07, $03
+	map_script $03, $ff, $0000, Func_10_7ae6, $06, $01
+	map_script $04, $ff, $0000, Func_10_7b1f, $05, $03
+	map_script $0f, $ff, $0000, Func_10_7bf9, $07, $0f
 	db $ff
+Func_10_75e7:
 	ld a, [$c2b0] ; $75e7
 	sra a ; $75ea
 	add a, a ; $75ec
@@ -5370,6 +5510,7 @@ Label_10_7621:
 	dw $01be ; record 2
 	dw $01c4 ; record 3
 	dw $01c9 ; record 4
+Func_10_7631:
 	ld a, [$c2b0] ; $7631
 	sra a ; $7634
 	add a, a ; $7636
@@ -5391,6 +5532,7 @@ Label_10_7621:
 	dw $01bf ; record 2
 	dw $01c7 ; record 3
 	dw $01ca ; record 4
+Func_10_7654:
 	ld hl, $01ce ; $7654
 	farcall FarPtr_InitDialogueTextCursor ; $7657
 	ld a, $05 ; $765a
@@ -5459,6 +5601,7 @@ Label_10_76a2:
 	dw $01d8 ; record 2
 	dw $01d9 ; record 3
 	dw $01da ; record 4
+Func_10_76d1:
 	ld a, [$c2b0] ; $76d1
 	sra a ; $76d4
 	add a, a ; $76d6
@@ -5480,13 +5623,18 @@ Label_10_76a2:
 	dw $01c0 ; record 2
 	dw $01c8 ; record 3
 	dw $01cb ; record 4
-	; $76f4, 35 bytes (records:8)
-; 4 records x 8 bytes
-	dw $ff03, $0000, $75e7, $0013 ; record 0
-	dw $ff04, $0000, $7631, $0003 ; record 1
-	dw $ff05, $0000, $7654, $0003 ; record 2
-	dw $ff06, $0000, $76d1, $0013 ; record 3
-	db $ff, $ff, $ff
+AcademyMainBldgNpcScripts_10:
+	; $76f4, 33 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_10_75e7, $13, $00
+	map_script $04, $ff, $0000, Func_10_7631, $03, $00
+	map_script $05, $ff, $0000, Func_10_7654, $03, $00
+	map_script $06, $ff, $0000, Func_10_76d1, $13, $00
+	db $ff
+AcademyMainBldgFacingScripts_10:
+	ds 1, $ff ; $7715, fill
+AcademyMainBldgTileTriggers_10:
+	ds 1, $ff ; $7716, fill
+AcademyMainBldgInitScript_10:
 	call Func_10_7dbd ; $7717
 	ld a, [$c2b0] ; $771a
 	sra a ; $771d
@@ -6023,6 +6171,7 @@ Func_10_7bb6:
 Label_10_7bd0:
 	ret ; $7bd0
 	INCBIN "data/bank_010/d_7bd1.bin" ; $7bd1, 40 bytes
+Func_10_7bf9:
 	ret ; $7bf9
 	xor a, a ; $7bfa
 	ld [$c2da], a ; $7bfb
