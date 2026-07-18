@@ -1,9 +1,11 @@
 SECTION "ROM Bank $0f", ROMX[$4000], BANK[$0f]
 
-	; $4000, 6 bytes (records:2)
-	dw SmallCharTestMapScripts_0f ; record 0
-	dw AwardsCeremonyMapScripts_0f ; record 1
-	dw TournamentMapScripts_0f ; record 2
+DataPtr_SmallCharTestMapScripts_0f:
+	dw SmallCharTestMapScripts_0f ; $4000
+DataPtr_AwardsCeremonyMapScripts_0f:
+	dw AwardsCeremonyMapScripts_0f ; $4002
+DataPtr_TournamentMapScripts_0f:
+	dw TournamentMapScripts_0f ; $4004
 SmallCharTestMapScripts_0f:
 	; $4006, 14 bytes (records:2)
 	dw $40c6 ; record 0

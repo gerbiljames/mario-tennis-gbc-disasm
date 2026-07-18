@@ -781,8 +781,13 @@ class Disassembly:
         over labeled sub-tables. Slot $00 -> $4010 is a 7-entry pointer table
         + records; the $40b0 setup routine that physically follows it is
         seeded directly in coverage/bank010_static_code.json (a coarse seed
-        at $4010 previously swept the table in as mis-decoded code)."""
-        slots = {0x10: (0x00, 0x08, 0x0a, 0x0c, 0x0e)}
+        at $4010 previously swept the table in as mis-decoded code).
+        Bank $0f's header is the 3-slot map-script directory (same shape as
+        bank $0e's), reached only through the bank $0a story-location
+        records (word +2 = bank:slot into CopyDataFromBank), so no static
+        call site or hook resolves it."""
+        slots = {0x10: (0x00, 0x08, 0x0a, 0x0c, 0x0e),
+                 0x0f: (0x00, 0x02, 0x04)}
         added = 0
         for bank, sl in slots.items():
             for slot in sl:
