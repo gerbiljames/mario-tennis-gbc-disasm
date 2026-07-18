@@ -40,6 +40,10 @@ handlers now carve cleanly and the record lists get exact extents. Net +135
 instructions, still byte-perfect. `StoryCmdHandlersC_13` ($13:$526a) was **left
 alone**: it has no `$4000` DataPtr slot and no `story_location` reference, its
 slots overlap, and its "InitScript" isn't code — it is not a real directory.
+The `map_actors` renderer was also taught that one Actors slot can hold several
+back-to-back sentinel-terminated lists (runtime-selected variants — Courtyard
+holds five, 28 actors total); it now emits every list instead of the first plus
+a raw `db` tail.
 
 ### Bank $1b $402e "table" split into farcall data slots + stranded cursor code (2026-07-18)
 

@@ -995,8 +995,7 @@ DevelopmentMapScripts_10:
 DevelopmentActors_10:
 	; $4cd9, 20 bytes (map_actors)
 	map_actor_end
-	db $00, $00, $00, $00, $00, $00, $00, $00
-	db $00, $ff
+	map_actor_end
 DevelopmentEntryPoints_10:
 	; $4ced, 9 bytes (map_entries)
 	map_entry $01, $40, $0900, $0900, $0000

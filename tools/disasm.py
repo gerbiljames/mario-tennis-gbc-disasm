@@ -2036,15 +2036,22 @@ def render_map_table(spec, rom, seg, end, bank, labels):
             out.append(f"\tdw {ref or f'${v:04x}'} ; slot {r} {role}")
         return out
     if spec == "map_actors":
-        while p + 14 <= end and rom[p + 9] != 0xFF:
-            out.append(f"\tmap_actor {sym(p)}, {sym(p + 2)}, ${word(p + 4):04x}, "
-                       f"${word(p + 6):04x}, ${rom[p + 8]:02x}, ${rom[p + 10]:02x}, "
-                       f"${rom[p + 11]:02x}, ${rom[p + 12]:02x}")
-            p += 14
-        # the standard 10-byte list terminator collapses to one macro
-        if rom[p:p + 10] == b"\x00" * 9 + b"\xff":
+        # A slot may hold several back-to-back actor lists (runtime-selected
+        # variants), each ended by the 9x$00 + $ff sentinel the engine stops on
+        # (SpawnActorsFromList $04:$4d10 halts when a record's byte +9 is $ff).
+        # Emit every list until a run that isn't a clean sentinel is reached.
+        def emit_actors():
+            nonlocal p
+            while p + 14 <= end and rom[p + 9] != 0xFF:
+                out.append(f"\tmap_actor {sym(p)}, {sym(p + 2)}, ${word(p + 4):04x}, "
+                           f"${word(p + 6):04x}, ${rom[p + 8]:02x}, ${rom[p + 10]:02x}, "
+                           f"${rom[p + 11]:02x}, ${rom[p + 12]:02x}")
+                p += 14
+        emit_actors()
+        while p + 10 <= end and rom[p:p + 10] == b"\x00" * 9 + b"\xff":
             out.append("\tmap_actor_end")
             p += 10
+            emit_actors()
     elif spec == "map_entries":
         while p + 8 <= end and rom[p] != 0xFF:
             out.append(f"\tmap_entry ${rom[p]:02x}, ${rom[p + 1]:02x}, "
