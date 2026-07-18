@@ -1943,6 +1943,13 @@ def render_map_table(spec, rom, seg, end, bank, labels):
         return f"${v:04x}"
 
     out, p = [], seg
+    if spec == "map_tree":
+        for r, role in enumerate(MAP_TREE_SLOTS):
+            v = word(seg + r * 2)
+            tgt = base + v - 0x4000 if 0x4000 <= v < 0x8000 else None
+            ref = labels.get(tgt) if tgt else None
+            out.append(f"\tdw {ref or f'${v:04x}'} ; slot {r} {role}")
+        return out
     if spec == "map_actors":
         while p + 14 <= end and rom[p + 9] != 0xFF:
             out.append(f"\tmap_actor {sym(p)}, {sym(p + 2)}, ${word(p + 4):04x}, "

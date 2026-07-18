@@ -3184,7 +3184,7 @@ Label_0a_5643:
 	ret ; $564e
 StoryLocationTable_0a:
 	; $564f, 252 bytes (story_locations)
-	story_location $00, $10, DataPtr_MatchSelectHandlersA_10, $ff ; loc 0 Main Menu
+	story_location $00, $10, DataPtr_MainMenuMapScripts_10, $ff ; loc 0 Main Menu
 	story_location $01, $10, DataPtr_DevelopmentMapScripts_10, $ff ; loc 1 Development
 	story_location $02, $10, DataPtr_SmallCharTestMapScripts_0f, $ff ; loc 2 Small Char. Test
 	story_location $03, $10, DataPtr_MatchSelectMapScripts_10, $ff ; loc 3 Test

@@ -8,8 +8,13 @@ DataPtr_SpecialCourtMapScripts_0e:
 	dw SpecialCourtMapScripts_0e ; $4004
 TrainingGymMapScripts_0e:
 	; $4006, 14 bytes (map_tree)
-	db $c6, $40, $77, $42, $14, $40, $54, $45
-	db $ad, $45, $f6, $45, $19, $46
+	dw TrainingGymEntryPoints_0e ; slot 0 EntryPoints
+	dw TrainingGymExitTriggers_0e ; slot 1 ExitTriggers
+	dw TrainingGymActors_0e ; slot 2 Actors
+	dw TrainingGymNpcScripts_0e ; slot 3 NpcScripts
+	dw TrainingGymFacingScripts_0e ; slot 4 FacingScripts
+	dw TrainingGymTileTriggers_0e ; slot 5 TileTriggers
+	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
 	map_actor $0000, $7c6e, $2500, $0d00, $40, $42, $01, $00

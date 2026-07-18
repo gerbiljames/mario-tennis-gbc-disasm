@@ -6,8 +6,8 @@ DataPtr_Test2MapScripts_10:
 	dw Test2MapScripts_10 ; $4002
 DataPtr_DevelopmentMapScripts_10:
 	dw DevelopmentMapScripts_10 ; $4004
-DataPtr_MatchSelectHandlersA_10:
-	dw MatchSelectHandlersA_10 ; $4006
+DataPtr_MainMenuMapScripts_10:
+	dw MainMenuMapScripts_10 ; $4006
 DataPtr_CafeteriaMapScripts_10:
 	dw CafeteriaMapScripts_10 ; $4008
 DataPtr_RestaurantMapScripts_10:
@@ -17,30 +17,32 @@ DataPtr_AcademyWingMapScripts_10:
 DataPtr_AcademyMainBldgMapScripts_10:
 	dw AcademyMainBldgMapScripts_10 ; $400e
 MatchSelectMapScripts_10:
-	; $4010, 16 bytes (records:2)
-	dw $40a6 ; record 0
-	dw $40af ; record 1
-	dw $401e ; record 2
-	dw MatchSelectHandlerTable_10 ; record 3
-	dw $418e ; record 4
-	dw $418f ; record 5
-	dw Func_10_4190 ; record 6
-	dw $0000 ; record 7
-MatchSelectEntries_10:
-	; $4020, 126 bytes (bytes:14)
-	db $d1, $7b, $00, $07, $00, $11, $40, $00, $49, $01, $00, $00, $00, $00 ; 0x00
-	db $d1, $7b, $00, $07, $00, $07, $80, $00, $46, $01, $03, $00, $00, $00 ; 0x0e
-	db $d1, $7b, $00, $0d, $00, $07, $80, $00, $47, $01, $03, $00, $00, $00 ; 0x1c
-	db $d1, $7b, $00, $07, $00, $0b, $40, $00, $54, $01, $03, $00, $00, $00 ; 0x2a
-	db $d1, $7b, $00, $0d, $00, $0b, $40, $00, $55, $01, $03, $00, $00, $00 ; 0x38
-	db $d1, $7b, $00, $0d, $00, $11, $40, $00, $6c, $01, $05, $00, $00, $00 ; 0x46
-	db $d1, $7b, $00, $05, $00, $0e, $40, $00, $43, $01, $03, $00, $00, $00 ; 0x54
-	db $d1, $7b, $00, $11, $00, $0e, $40, $00, $43, $01, $03, $00, $00, $00 ; 0x62
-	db $d1, $7b, $00, $11, $00, $0c, $40, $00, $43, $01, $03, $00, $00, $00 ; 0x70
-MatchSelectRecordsTail_10:
-	; $409e, 18 bytes (bytes:16)
-	db $00, $00, $00, $00, $00, $00, $00, $ff, $01, $c0, $00, $0a, $00, $09, $00, $00 ; 0x00
-	db $ff, $ff ; 0x10
+	; $4010, 14 bytes (map_tree)
+	dw MatchSelectEntryPoints_10 ; slot 0 EntryPoints
+	dw MatchSelectExitTriggers_10 ; slot 1 ExitTriggers
+	dw MatchSelectActors_10 ; slot 2 Actors
+	dw MatchSelectHandlerTable_10 ; slot 3 NpcScripts
+	dw MatchSelectFacingScripts_10 ; slot 4 FacingScripts
+	dw MatchSelectTileTriggers_10 ; slot 5 TileTriggers
+	dw Func_10_4190 ; slot 6 InitScript
+MatchSelectActors_10:
+	; $401e, 136 bytes (map_actors)
+	map_actor $0000, $7bd1, $0700, $1100, $40, $49, $01, $00
+	map_actor $0000, $7bd1, $0700, $0700, $80, $46, $01, $03
+	map_actor $0000, $7bd1, $0d00, $0700, $80, $47, $01, $03
+	map_actor $0000, $7bd1, $0700, $0b00, $40, $54, $01, $03
+	map_actor $0000, $7bd1, $0d00, $0b00, $40, $55, $01, $03
+	map_actor $0000, $7bd1, $0d00, $1100, $40, $6c, $01, $05
+	map_actor $0000, $7bd1, $0500, $0e00, $40, $43, $01, $03
+	map_actor $0000, $7bd1, $1100, $0e00, $40, $43, $01, $03
+	map_actor $0000, $7bd1, $1100, $0c00, $40, $43, $01, $03
+	map_actor_end
+MatchSelectEntryPoints_10:
+	; $40a6, 9 bytes (map_entries)
+	map_entry $01, $c0, $0a00, $0900, $0000
+	db $ff
+MatchSelectExitTriggers_10:
+	ds 1, $ff ; $40af, fill
 Func_10_40b0:
 	farcall FarPtr_BeginCutsceneScriptMode ; $40b0
 	ld c, $10 ; $40b3
@@ -105,18 +107,21 @@ Func_10_4137:
 	farcall FarPtr_03_3a ; $4141
 	ret ; $4144
 MatchSelectHandlerTable_10:
-	; $4145, 75 bytes (records:8)
-; 9 records x 8 bytes
-	dw $ff03, $0000, $40b0, $0000 ; record 0
-	dw $ff04, $0000, $4195, $0000 ; record 1
-	dw $ff05, $0000, $41da, $0000 ; record 2
-	dw $ff06, $0000, $4450, $0000 ; record 3
-	dw $ff07, $0000, $448d, $0000 ; record 4
-	dw $ff08, $0000, $44cc, $0000 ; record 5
-	dw $ff09, $0000, $4640, $0000 ; record 6
-	dw $ff0a, $0000, $40ef, $0000 ; record 7
-	dw $ff0b, $0000, $4137, $0000 ; record 8
-	db $ff, $ff, $ff
+	; $4145, 73 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_10_40b0, $00, $00
+	map_script $04, $ff, $0000, RunSinglesMatchListMenu, $00, $00
+	map_script $05, $ff, $0000, RunDoublesMatchListMenu, $00, $00
+	map_script $06, $ff, $0000, RunDrillMatchListMenu, $00, $00
+	map_script $07, $ff, $0000, Func_10_448d, $00, $00
+	map_script $08, $ff, $0000, RunLessonSelectMenu, $00, $00
+	map_script $09, $ff, $0000, RunMinigameSelectMenu, $00, $00
+	map_script $0a, $ff, $0000, Func_10_40ef, $00, $00
+	map_script $0b, $ff, $0000, Func_10_4137, $00, $00
+	db $ff
+MatchSelectFacingScripts_10:
+	ds 1, $ff ; $418e, fill
+MatchSelectTileTriggers_10:
+	ds 1, $ff ; $418f, fill
 Func_10_4190:
 	xor a, a ; $4190
 	ld [wStoryModeShowLocationName], a ; $4191
@@ -490,6 +495,7 @@ RunDrillMatchListMenu:
 	ld [wCurrentStorySlot], a ; $4486
 	farcall FarPtr_SaveStorySlotWithTimer ; $4489
 	ret ; $448c
+Func_10_448d:
 	ld hl, $28a4 ; $448d
 	farcall FarPtr_InitDialogueTextCursor ; $4490
 	ld a, $80 ; $4493
@@ -1254,70 +1260,37 @@ Func_10_4e59:
 	ret ; $4e6a
 DevelopmentInitScript_10:
 	ret ; $4e6b
-MatchSelectHandlersA_10:
-	; $4e6c, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $4e84 ; record 0
-	dw $4e8d ; record 1
-	dw $4e7a ; record 2
-	dw $4eb6 ; record 3
-	dw $4eb7 ; record 4
-	dw $4eb8 ; record 5
-	dw $4eb9 ; record 6
-	nop ; $4e7a
-	nop ; $4e7b
-	nop ; $4e7c
-	nop ; $4e7d
-	nop ; $4e7e
-	nop ; $4e7f
-	nop ; $4e80
-	nop ; $4e81
-	nop ; $4e82
-	rst Rst38 ; $4e83
-	ld bc, $0040 ; $4e84
-	rst Rst38 ; $4e87
-	nop ; $4e88
-	rst Rst38 ; $4e89
-	nop ; $4e8a
-	nop ; $4e8b
-	rst Rst38 ; $4e8c
-	ld bc, $00ff ; $4e8d
-	nop ; $4e90
-	ld sp, hl ; $4e91
-	ld a, e ; $4e92
-	inc d ; $4e93
-	rrca ; $4e94
-	ld [bc], a ; $4e95
-	rst Rst38 ; $4e96
-	nop ; $4e97
-	nop ; $4e98
-	ld sp, hl ; $4e99
-	ld a, e ; $4e9a
-	ld a, [bc] ; $4e9b
-	ld bc, $ff03 ; $4e9c
-	nop ; $4e9f
-	nop ; $4ea0
-	ld sp, hl ; $4ea1
-	ld a, e ; $4ea2
-	inc b ; $4ea3
-	ld bc, rDIV ; $4ea4
-	nop ; $4ea7
-	nop ; $4ea8
-	ld sp, hl ; $4ea9
-	ld a, e ; $4eaa
-	ld b, $0f ; $4eab
-	dec b ; $4ead
-	rst Rst38 ; $4eae
-	nop ; $4eaf
-	nop ; $4eb0
-	ld sp, hl ; $4eb1
-	ld a, e ; $4eb2
-	dec e ; $4eb3
-	rrca ; $4eb4
-	rst Rst38 ; $4eb5
-	rst Rst38 ; $4eb6
-	rst Rst38 ; $4eb7
-	rst Rst38 ; $4eb8
+MainMenuMapScripts_10:
+	; $4e6c, 14 bytes (map_tree)
+	dw MainMenuEntryPoints_10 ; slot 0 EntryPoints
+	dw MainMenuExitTriggers_10 ; slot 1 ExitTriggers
+	dw MainMenuActors_10 ; slot 2 Actors
+	dw MainMenuNpcScripts_10 ; slot 3 NpcScripts
+	dw MainMenuFacingScripts_10 ; slot 4 FacingScripts
+	dw MainMenuTileTriggers_10 ; slot 5 TileTriggers
+	dw MainMenuInitScript_10 ; slot 6 InitScript
+MainMenuActors_10:
+	; $4e7a, 10 bytes (map_actors)
+	map_actor_end
+MainMenuEntryPoints_10:
+	; $4e84, 9 bytes (map_entries)
+	map_entry $01, $40, $ff00, $ff00, $0000
+	db $ff
+MainMenuExitTriggers_10:
+	; $4e8d, 41 bytes (map_scripts)
+	map_script $01, $ff, $0000, MapScriptNop_10, $14, $0f
+	map_script $02, $ff, $0000, MapScriptNop_10, $0a, $01
+	map_script $03, $ff, $0000, MapScriptNop_10, $04, $01
+	map_script $04, $ff, $0000, MapScriptNop_10, $06, $0f
+	map_script $05, $ff, $0000, MapScriptNop_10, $1d, $0f
+	db $ff
+MainMenuNpcScripts_10:
+	ds 1, $ff ; $4eb6, fill
+MainMenuFacingScripts_10:
+	ds 1, $ff ; $4eb7, fill
+MainMenuTileTriggers_10:
+	ds 1, $ff ; $4eb8, fill
+MainMenuInitScript_10:
 	ld a, $00 ; $4eb9
 	ld bc, $3f00 ; $4ebb
 	ld de, $3f00 ; $4ebe

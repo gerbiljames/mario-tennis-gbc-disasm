@@ -103,6 +103,13 @@ directory for the End1-End17 ending tour (locs 30-41): all 12 trees are carved
 (+3780 instructions of real cutscene code; every data blob still ends on a
 `ret`, so no misframing), and three lumped respawn actor lists split out. The
 story location table is now fully resolved to named trees for all 42 locations.
+The last two (loc 0 Main Menu `$4e6c`, loc 3 Test/character-select `$4010`) were
+mislabeled `MatchSelect*` by an earlier pass — `$4e6c` had even been seeded as a
+jump table, mis-decoding its data slots as code. They are now carved as
+`MainMenuMapScripts_10` / `MatchSelectMapScripts_10` (false jump-table seeds
+dropped, the off-by-2 `MatchSelectEntries_10` framing replaced by the real
+`MatchSelectActors_10` = the 9 selectable characters). `render_map_table` also
+learned `map_tree` so directories reached as data-slot marks render symbolically.
 
 All six trees (Training Gym / Mario World / Special Court in $0e; Small Char.
 Test / Awards Ceremony / Tournament in $0f) have their sub-tables labeled
