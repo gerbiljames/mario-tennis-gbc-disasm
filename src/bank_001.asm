@@ -63,7 +63,7 @@ Func_01_4018:
 	call Func_01_5188 ; $4088
 	farcall FarPtr_ValidateSaveRam ; $408b
 	farcall FarPtr_RepairAllSaveSlots ; $408e
-	farcall FarPtr_03_2e ; $4091
+	farcall FarPtr_ApplyN64RecordsUnlockFlags ; $4091
 	farcall FarPtr_UpdateUnlockablesSaveBlock ; $4094
 	farcall FarPtr_InitStoryModeState ; $4097
 	farcall FarPtr_InitDefaultMatchSettings ; $409a

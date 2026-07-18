@@ -46,14 +46,14 @@ FarPtr_UpdateMinigameRecord:
 	dw UpdateMinigameRecord ; $402a
 FarPtr_ReadMinigameRecord:
 	dw ReadMinigameRecord ; $402c
-FarPtr_03_2e:
-	dw Func_03_56a8 ; $402e
+FarPtr_ApplyN64RecordsUnlockFlags:
+	dw ApplyN64RecordsUnlockFlags ; $402e
 FarPtr_UpdateUnlockablesSaveBlock:
 	dw UpdateUnlockablesSaveBlock ; $4030
-FarPtr_03_32:
-	dw Func_03_5229 ; $4032
-FarPtr_03_34:
-	dw Func_03_5240 ; $4034
+FarPtr_ReadStarVictoryGrid:
+	dw ReadStarVictoryGrid ; $4032
+FarPtr_WriteStarVictoryGrid:
+	dw WriteStarVictoryGrid ; $4034
 FarPtr_03_36:
 	dw Func_03_59c5 ; $4036
 FarPtr_03_38:
@@ -70,8 +70,8 @@ FarPtr_03_42:
 	dw Func_03_7687 ; $4042
 FarPtr_03_44:
 	dw Func_03_7719 ; $4044
-FarPtr_03_46:
-	dw Func_03_5787 ; $4046
+FarPtr_SetAllUnlockablesInSaveBlock:
+	dw SetAllUnlockablesInSaveBlock ; $4046
 FarPtr_SaveStorySlot:
 	dw SaveStorySlot ; $4048
 InitSaveHeader:
@@ -83,7 +83,7 @@ InitSaveHeader:
 	ldh [hSramBank], a ; $4050
 	ld [$4000], a ; $4052
 	ld hl, SaveSignature ; $4055
-	ld de, $a020 ; $4058
+	ld de, sSaveSignature ; $4058
 	call CopySaveSignature ; $405b
 	ld hl, $a061 ; $405e
 	ld [hl], $00 ; $4061
@@ -1215,7 +1215,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $47da
 	inc hl ; $47dc
 	ld [hl], $1e ; $47dd
-	ld hl, $a038 ; $47df
+	ld hl, sSaveFormatVersion ; $47df
 	ld [hl], $71 ; $47e2
 	pop hl ; $47e4
 	pop de ; $47e5
@@ -1294,7 +1294,7 @@ SumSaveHeaderRegion:
 	ld [$4000], a ; $484a
 	ld h, a ; $484d
 	ld l, a ; $484e
-	ld de, $a038 ; $484f
+	ld de, sSaveFormatVersion ; $484f
 	ld bc, $0838 ; $4852
 Label_03_4855:
 	ld a, [de] ; $4855
@@ -1319,7 +1319,7 @@ UpdateSaveHeaderChecksum:
 	push hl ; $4869
 	call SumSaveHeaderRegion ; $486a
 	ld a, l ; $486d
-	ld [$a030], a ; $486e
+	ld [sSaveMasterChecksum], a ; $486e
 	ld a, h ; $4871
 	ld [$a031], a ; $4872
 	add sp, -64 ; $4875
@@ -1354,7 +1354,7 @@ MirrorSaveHeaderToBank1:
 	push hl ; $48a4
 	call SumSaveHeaderRegion ; $48a5
 	ld a, l ; $48a8
-	ld [$a030], a ; $48a9
+	ld [sSaveMasterChecksum], a ; $48a9
 	ld a, h ; $48ac
 	ld [$a031], a ; $48ad
 	ld hl, $a000 ; $48b0
@@ -1423,7 +1423,7 @@ VerifySaveHeaderChecksum:
 	push de ; $4946
 	call SumSaveHeaderRegion ; $4947
 	push hl ; $494a
-	ld hl, $a030 ; $494b
+	ld hl, sSaveMasterChecksum ; $494b
 	ld a, [hl+] ; $494e
 	ld h, [hl] ; $494f
 	ld l, a ; $4950
@@ -1448,7 +1448,7 @@ ValidateSaveRam:
 	ld a, $00 ; $4965
 	ldh [hSramBank], a ; $4967
 	ld [$4000], a ; $4969
-	ld hl, $a020 ; $496c
+	ld hl, sSaveSignature ; $496c
 	ld de, SaveSignature ; $496f
 	call CompareSaveSignature ; $4972
 	jr nz, Label_03_4980 ; $4975
@@ -1525,7 +1525,7 @@ Label_03_4a24:
 	call WipeAllSaveRam ; $4a24
 	call InitSaveHeader ; $4a27
 	call MirrorSaveHeaderToBank1 ; $4a2a
-	call Func_03_519a ; $4a2d
+	call InitAllMinigameRecordBlocks ; $4a2d
 	ld a, $ff ; $4a30
 Label_03_4a32:
 	push af ; $4a32
@@ -1592,7 +1592,7 @@ GetSaveBlockDirEntry:
 	add hl, hl ; $4a7e
 	add hl, hl ; $4a7f
 	add hl, hl ; $4a80
-	ld bc, $a060 ; $4a81
+	ld bc, sSaveBlockDirectory ; $4a81
 	add hl, bc ; $4a84
 	ld b, h ; $4a85
 	ld c, l ; $4a86
@@ -2230,7 +2230,7 @@ EraseStorySlotSaveData:
 	call MirrorSaveHeaderToBank1 ; $4e3f
 	xor a, a ; $4e42
 	ld [$0000], a ; $4e43
-	call Func_03_5141 ; $4e46
+	call InitCurrentSlotMinigameRecords ; $4e46
 	ld a, [wCurrentStorySlot] ; $4e49
 	or a, a ; $4e4c
 	jr z, Label_03_4e65 ; $4e4d
@@ -2471,7 +2471,7 @@ ReinitSaveRamPreservingBlock6:
 	ld hl, $d000 ; $4f9b
 	call WriteBlock6WithBackup ; $4f9e
 Label_03_4fa1:
-	call Func_03_519a ; $4fa1
+	call InitAllMinigameRecordBlocks ; $4fa1
 	pop af ; $4fa4
 	wram_bank ; $4fa5
 	pop hl ; $4fa9
@@ -2740,7 +2740,7 @@ Label_03_5137:
 	pop de ; $513e
 	pop bc ; $513f
 	ret ; $5140
-Func_03_5141:
+InitCurrentSlotMinigameRecords:
 	push af ; $5141
 	push bc ; $5142
 	push de ; $5143
@@ -2787,7 +2787,7 @@ Label_03_5190:
 	pop bc ; $5197
 	pop af ; $5198
 	ret ; $5199
-Func_03_519a:
+InitAllMinigameRecordBlocks:
 	push af ; $519a
 	push bc ; $519b
 	push de ; $519c
@@ -2868,7 +2868,7 @@ Label_03_521f:
 	pop bc ; $5226
 	pop af ; $5227
 	ret ; $5228
-Func_03_5229:
+ReadStarVictoryGrid:
 	push af ; $5229
 	push bc ; $522a
 	push de ; $522b
@@ -2886,7 +2886,7 @@ Label_03_523b:
 	pop bc ; $523d
 	pop af ; $523e
 	ret ; $523f
-Func_03_5240:
+WriteStarVictoryGrid:
 	push bc ; $5240
 	push de ; $5241
 	push hl ; $5242
@@ -3417,7 +3417,7 @@ Label_03_56a3:
 	pop bc ; $56a3
 	call InvalidateSaveBlock ; $56a4
 	ret ; $56a7
-Func_03_56a8:
+ApplyN64RecordsUnlockFlags:
 	push af ; $56a8
 	push bc ; $56a9
 	push de ; $56aa
@@ -3543,7 +3543,7 @@ Label_03_577d:
 	pop bc ; $5784
 	pop af ; $5785
 	ret ; $5786
-Func_03_5787:
+SetAllUnlockablesInSaveBlock:
 	push af ; $5787
 	push bc ; $5788
 	push de ; $5789
@@ -3689,6 +3689,7 @@ ReadBlock6:
 	pop de ; $5878
 	pop bc ; $5879
 	ret ; $587a
+WriteBlock7WithBackup:
 	push bc ; $587b
 	push de ; $587c
 	push hl ; $587d
@@ -3716,6 +3717,7 @@ Label_03_58a2:
 	pop de ; $58a3
 	pop bc ; $58a4
 	ret ; $58a5
+ReadBlock7:
 	push bc ; $58a6
 	push de ; $58a7
 	push hl ; $58a8
@@ -3725,6 +3727,7 @@ Label_03_58a2:
 	pop de ; $58af
 	pop bc ; $58b0
 	ret ; $58b1
+WriteBlock8WithBackup:
 	push bc ; $58b2
 	push de ; $58b3
 	push hl ; $58b4
@@ -3752,6 +3755,7 @@ Label_03_58d9:
 	pop de ; $58da
 	pop bc ; $58db
 	ret ; $58dc
+ReadBlock8:
 	push bc ; $58dd
 	push de ; $58de
 	push hl ; $58df
@@ -3761,6 +3765,7 @@ Label_03_58d9:
 	pop de ; $58e6
 	pop bc ; $58e7
 	ret ; $58e8
+WriteBlock9WithBackup:
 	push bc ; $58e9
 	push de ; $58ea
 	push hl ; $58eb
@@ -3788,6 +3793,7 @@ Label_03_5910:
 	pop de ; $5911
 	pop bc ; $5912
 	ret ; $5913
+ReadBlock9:
 	push bc ; $5914
 	push de ; $5915
 	push hl ; $5916
@@ -3797,6 +3803,7 @@ Label_03_5910:
 	pop de ; $591d
 	pop bc ; $591e
 	ret ; $591f
+WriteBlock10WithBackup:
 	push bc ; $5920
 	push de ; $5921
 	push hl ; $5922
@@ -3824,6 +3831,7 @@ Label_03_5947:
 	pop de ; $5948
 	pop bc ; $5949
 	ret ; $594a
+ReadBlock10:
 	push bc ; $594b
 	push de ; $594c
 	push hl ; $594d
@@ -3863,6 +3871,7 @@ Label_03_5947:
 	ld d, h ; $5972
 	ld c, c ; $5973
 	ld b, h ; $5974
+DebugTestMinigameRecords:
 	push af ; $5975
 	push bc ; $5976
 	push de ; $5977

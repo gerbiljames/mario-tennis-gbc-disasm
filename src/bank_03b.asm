@@ -1887,7 +1887,7 @@ Label_3b_4c44:
 	jr nz, Label_3b_4be7 ; $4c49
 	pop af ; $4c4b
 	ld [wCurrentStorySlot], a ; $4c4c
-	farcall FarPtr_03_46 ; $4c4f
+	farcall FarPtr_SetAllUnlockablesInSaveBlock ; $4c4f
 	ret ; $4c52
 DecodeTrophyCounts:
 	wram_bank $03 ; $4c53
@@ -8258,7 +8258,7 @@ LoadStarCharExhibGrid:
 	push af ; $7d20
 	wram_bank $03 ; $7d21
 	ld hl, $d900 ; $7d27
-	farcall FarPtr_03_32 ; $7d2a
+	farcall FarPtr_ReadStarVictoryGrid ; $7d2a
 	ld hl, $d900 ; $7d2d
 	ld de, $db00 ; $7d30
 	ld c, $00 ; $7d33
@@ -8311,7 +8311,7 @@ RecordExhibitionVictory:
 	call GetStarCharIndex ; $7d8d
 	ld e, a ; $7d90
 	ld hl, $d900 ; $7d91
-	farcall FarPtr_03_32 ; $7d94
+	farcall FarPtr_ReadStarVictoryGrid ; $7d94
 	ld a, d ; $7d97
 	add a, a ; $7d98
 	add a, a ; $7d99
@@ -8334,7 +8334,7 @@ Label_3b_7da5:
 	ld [hl], a ; $7db1
 	call UpdateStarUnlocks ; $7db2
 	ld hl, $d900 ; $7db5
-	farcall FarPtr_03_34 ; $7db8
+	farcall FarPtr_WriteStarVictoryGrid ; $7db8
 Label_3b_7dbb:
 	jr nz, Label_3b_7dbb ; $7dbb
 Label_3b_7dbd:

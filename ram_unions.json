@@ -57,6 +57,36 @@
      }
     }
    ]
+  },
+  {
+   "start": "0xa020",
+   "end": "0xa03f",
+   "comment": "Battery-save header fields (SRAM bank 0), owned by the bank $03 save\nengine; scoped so unrelated $a0xx literals in other banks stay numeric",
+   "variants": [
+    {
+     "context": "save engine (bank $03)",
+     "scopes": [{"bank": "0x03"}],
+     "symbols": {
+      "0xa020": {"name": "sSaveSignature", "note": "[16 bytes] \"CAMELOTGBTENNIS\\0\" signature (ROM copy at SaveSignature, 03:47e9)", "size": 16},
+      "0xa030": {"name": "sSaveMasterChecksum", "note": "[16-bit LE] byte-sum of $a038-$a76f (version byte + block directory)", "size": 2},
+      "0xa038": {"name": "sSaveFormatVersion", "note": "[8-bit] save layout version byte, always $71; first byte covered by the master checksum"}
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xa060",
+   "end": "0xa76f",
+   "comment": "Save block directory: 113 16-byte entries (see docs/save_format.md);\nentry = valid, SRAM bank, offset, length, checksum, tag",
+   "variants": [
+    {
+     "context": "save engine (bank $03)",
+     "scopes": [{"bank": "0x03"}],
+     "symbols": {
+      "0xa060": {"name": "sSaveBlockDirectory", "note": "[113 x 16 bytes] block directory; +0 valid, +1 SRAM bank, +2 offset word, +4 length word, +6 checksum word, +8 tag (hi,lo)", "size": 1808}
+     }
+    }
+   ]
   }
  ]
 }

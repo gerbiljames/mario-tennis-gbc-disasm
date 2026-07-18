@@ -248,6 +248,18 @@ array to unlock every character and mini-game (verified in-emulator). Noted a
 real game bug: `ValidateSaveRam`'s mirror re-check compares the wrong signature
 offset, so a corrupt header always falls through to a full wipe.
 
+2026-07-18 pass: the full 113-entry block directory extracted from
+`InitSaveHeader` (most of it never written — including blocks addressing
+SRAM banks 4-14 that don't exist on the 32 KiB cart); minigame-record
+blocks `$38-$3d`, the 9×9 star-exhibition victory grid (block `$3e`,
+`Read/WriteStarVictoryGrid`), and the N64 Transfer Pak records block
+(`$0b`: presence word + per-char unlock flags) reversed; header fields
+named as bank-3-scoped SRAM symbols (`sSaveSignature`,
+`sSaveMasterChecksum`, `sSaveFormatVersion`, `sSaveBlockDirectory` via
+`ram_unions.json`); all WRAM staging buffers mapped (WRAM7
+`$d480/$d500/$de00`, WRAM6 `$d400`, WRAM3 `$d900`, WRAM1/2 `$d000`) —
+see the expanded `docs/save_format.md`.
+
 ## Pipeline (all working, all documented in README.md)
 
 1. Coverage collection — two paths:
