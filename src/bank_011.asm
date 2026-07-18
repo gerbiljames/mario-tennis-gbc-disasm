@@ -1,36 +1,41 @@
 SECTION "ROM Bank $11", ROMX[$4000], BANK[$11]
 
-DataPtr_11_00:
-	dw Data_11_4008 ; $4000
+DataPtr_CenterCourtMapScripts_11:
+	dw CenterCourtMapScripts_11 ; $4000
 DataPtr_AcademyArrivalScene_11:
 	dw AcademyArrivalScene_11 ; $4002
 DataPtr_JuniorClassCourtDoublesScene_11:
 	dw JuniorClassCourtDoublesScene_11 ; $4004
 DataPtr_JuniorClassCourtSinglesScene_11:
 	dw JuniorClassCourtSinglesScene_11 ; $4006
-Data_11_4008:
-	; $4008, 14 bytes (records:2)
-	dw $4058 ; record 0
-	dw $4071 ; record 1
-	dw $4016 ; record 2
-	dw $416f ; record 3
-	dw $4190 ; record 4
-	dw $419a ; record 5
-	dw $41a4 ; record 6
-	; $4016, 66 bytes (bytes:14)
-	db $00, $00, $a9, $7b, $00, $0f, $00, $2e, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $a9, $7b, $00, $0d, $00, $13, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $a9, $7b, $00, $1f, $00, $2e, $00, $00, $39, $01, $07, $00 ; 0x1c
-	db $00, $00, $a9, $7b, $00, $21, $00, $2e, $80, $00, $32, $01, $07, $00 ; 0x2a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x38
-	; $4058, 25 bytes (bytes:16)
-	db $01, $c0, $00, $0c, $00, $31, $00, $00, $02, $c0, $00, $24, $00, $31, $00, $00 ; 0x00
-	db $0f, $c0, $00, $0c, $00, $31, $00, $00, $ff ; 0x10
-	; $4071, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $7bd1, $0119 ; record 0
-	dw $ff02, $0000, $7bd1, $0219 ; record 1
+CenterCourtMapScripts_11:
+	; $4008, 14 bytes (map_tree)
+	dw CenterCourtEntryPoints_11 ; slot 0 EntryPoints
+	dw CenterCourtExitTriggers_11 ; slot 1 ExitTriggers
+	dw CenterCourtActors_11 ; slot 2 Actors
+	dw CenterCourtNpcScripts_11 ; slot 3 NpcScripts
+	dw CenterCourtFacingScripts_11 ; slot 4 FacingScripts
+	dw CenterCourtTileTriggers_11 ; slot 5 TileTriggers
+	dw CenterCourtInitScript_11 ; slot 6 InitScript
+CenterCourtActors_11:
+	; $4016, 66 bytes (map_actors)
+	map_actor $0000, $7ba9, $0f00, $2e00, $80, $25, $01, $00
+	map_actor $0000, $7ba9, $0d00, $1300, $40, $25, $01, $00
+	map_actor $0000, $7ba9, $1f00, $2e00, $00, $39, $01, $07
+	map_actor $0000, $7ba9, $2100, $2e00, $80, $32, $01, $07
+	map_actor_end
+CenterCourtEntryPoints_11:
+	; $4058, 25 bytes (map_entries)
+	map_entry $01, $c0, $0c00, $3100, $0000
+	map_entry $02, $c0, $2400, $3100, $0000
+	map_entry $0f, $c0, $0c00, $3100, $0000
 	db $ff
+CenterCourtExitTriggers_11:
+	; $4071, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_11_7bd1, $19, $01
+	map_script $02, $ff, $0000, Func_11_7bd1, $19, $02
+	db $ff
+Func_11_4082:
 	ld hl, $2450 ; $4082
 	farcall FarPtr_InitDialogueTextCursor ; $4085
 	test_flag $05, 7 ; $4088
@@ -51,6 +56,7 @@ Label_11_40a9:
 	ld a, $03 ; $40a9
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $40ab
 	ret ; $40ae
+Func_11_40af:
 	test_flag $05, 7 ; $40af
 	jr z, Label_11_40c9 ; $40b2
 	ld hl, $2460 ; $40b4
@@ -88,6 +94,7 @@ Label_11_40fa:
 	ld a, $04 ; $40fa
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $40fc
 	ret ; $40ff
+Func_11_4100:
 	ld a, [$c2b0] ; $4100
 	add a, a ; $4103
 	add a, $3c ; $4104
@@ -129,6 +136,7 @@ Label_11_4136:
 	dw $2461 ; record 4
 	dw $2463 ; record 5
 	dw $2466 ; record 6
+Func_11_414a:
 	ld a, [$c2b0] ; $414a
 	add a, a ; $414d
 	add a, $61 ; $414e
@@ -151,21 +159,26 @@ Label_11_4136:
 	dw $2462 ; record 4
 	dw $2464 ; record 5
 	dw $2467 ; record 6
-	; $416f, 33 bytes (records:8)
-; 4 records x 8 bytes
-	dw $ff03, $0000, $4082, $0003 ; record 0
-	dw $ff04, $0000, $40af, $0003 ; record 1
-	dw $ff05, $0000, $4100, $0003 ; record 2
-	dw $ff06, $0000, $414a, $0003 ; record 3
+CenterCourtNpcScripts_11:
+	; $416f, 33 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_11_4082, $03, $00
+	map_script $04, $ff, $0000, Func_11_40af, $03, $00
+	map_script $05, $ff, $0000, Func_11_4100, $03, $00
+	map_script $06, $ff, $0000, Func_11_414a, $03, $00
 	db $ff
-	; $4190, 10 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $4199, $0000 ; record 0
-	db $ff, $c9
-	; $419a, 10 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $41a3, $0000 ; record 0
-	db $ff, $c9
+CenterCourtFacingScripts_11:
+	; $4190, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_11_4199, $00, $00
+	db $ff
+Func_11_4199:
+	ret ; $4199
+CenterCourtTileTriggers_11:
+	; $419a, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_11_41a3, $00, $00
+	db $ff
+Func_11_41a3:
+	ret ; $41a3
+CenterCourtInitScript_11:
 	call Func_11_41b6 ; $41a4
 	call Func_11_4343 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
@@ -5583,6 +5596,7 @@ Func_11_7b6b:
 	farcall FarPtr_ScriptSetActorScript ; $7ba5
 	ret ; $7ba8
 	INCBIN "data/bank_011/d_7ba9.bin" ; $7ba9, 40 bytes
+Func_11_7bd1:
 	ret ; $7bd1
 	INCBIN "data/bank_011/d_7bd2.bin" ; $7bd2, 451 bytes
 ComputeRankingProgressIndex:

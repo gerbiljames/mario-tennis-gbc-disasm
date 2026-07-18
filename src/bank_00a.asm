@@ -3197,8 +3197,8 @@ StoryLocationTable_0a:
 	story_location $0a, $12, DataPtr_StoryCmdHandlersB_13, $00 ; loc 10 Dorm Room
 	story_location $0b, $18, DataPtr_JuniorClassCourtSinglesScene_11, $1b ; loc 11 Junior Class Court
 	story_location $0c, $18, DataPtr_JuniorClassCourtDoublesScene_11, $1b ; loc 12 Junior Class Court
-	story_location $0d, $19, DataPtr_10_0a, $1d ; loc 13 Restaurant
-	story_location $0e, $19, DataPtr_10_08, $1d ; loc 14 Cafeteria
+	story_location $0d, $19, DataPtr_RestaurantMapScripts_10, $1d ; loc 13 Restaurant
+	story_location $0e, $19, DataPtr_CafeteriaMapScripts_10, $1d ; loc 14 Cafeteria
 	story_location $0f, $1e, DataPtr_StoryCmdHandlersB_15, $1b ; loc 15 Training Court
 	story_location $10, $17, DataPtr_SeniorCourtStoryCmds_12, $1b ; loc 16 Senior Class Court
 	story_location $11, $22, DataPtr_TrainingGymMapScripts_0e, $1d ; loc 17 Training Center
@@ -3208,7 +3208,7 @@ StoryLocationTable_0a:
 	story_location $15, $1c, DataPtr_StoryCmdHandlersA_15, $1b ; loc 21 Tournament Courtyard
 	story_location $16, $1d, DataPtr_Court1MapScripts_14, $1b ; loc 22 Court #1
 	story_location $17, $1f, DataPtr_Court2MapScripts_14, $1b ; loc 23 Court #2
-	story_location $18, $20, DataPtr_11_00, $1d ; loc 24 Center Court
+	story_location $18, $20, DataPtr_CenterCourtMapScripts_11, $1d ; loc 24 Center Court
 	story_location $19, $23, DataPtr_TournamentMapScripts_0f, $1d ; loc 25 Tournament
 	story_location $1a, $24, DataPtr_AwardsCeremonyMapScripts_0f, $1b ; loc 26 Awards Ceremony
 	story_location $1b, $15, DataPtr_IslandSkyMapScripts_14, $1b ; loc 27 Island Sky

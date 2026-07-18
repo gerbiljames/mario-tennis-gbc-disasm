@@ -81,7 +81,10 @@ The four bank-$14 trees are named from the in-game location-name popup
 `TennisMachineRoom`/`Court1`/`Court2`/`IslandSky` (locs 18/22/23/27). Decoding
 that name block identified all 42 story locations, now emitted as a comment on
 each `StoryLocationTable_0a` record (`STORY_LOCATION_NAMES` in disasm.py) —
-locs 30-41 are the End1-End17 ending tour. Bank $27
+locs 30-41 are the End1-End17 ending tour. The Restaurant/Cafeteria trees
+(bank $10, locs 13/14) and Center Court tree (bank $11, loc 24) are also carved
+like $0e/$0f/$14 (three handlers seeded: `Func_10_5cb0` + the `Func_11_4199`/
+`_41a3` no-op rets). Bank $27
 (locations 30-41) is the self-contained ending-presentation bank: its `$4000`
 is already curated as `SceneFramePtrs_27` (12 scene-frame records, a different
 structure the story engine also reads as trees), so those records stay raw

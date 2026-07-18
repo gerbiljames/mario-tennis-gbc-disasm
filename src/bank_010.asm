@@ -8,10 +8,10 @@ DataPtr_10_04:
 	dw Data_10_4ccb ; $4004
 DataPtr_MatchSelectHandlersA_10:
 	dw MatchSelectHandlersA_10 ; $4006
-DataPtr_10_08:
-	dw Data_10_57f6 ; $4008
-DataPtr_10_0a:
-	dw Data_10_5a80 ; $400a
+DataPtr_CafeteriaMapScripts_10:
+	dw CafeteriaMapScripts_10 ; $4008
+DataPtr_RestaurantMapScripts_10:
+	dw RestaurantMapScripts_10 ; $400a
 DataPtr_10_0c:
 	dw Data_10_61b1 ; $400c
 DataPtr_10_0e:
@@ -2252,30 +2252,34 @@ Label_10_57f3:
 	pop bc ; $57f3
 	pop af ; $57f4
 	ret ; $57f5
-Data_10_57f6:
-	; $57f6, 14 bytes (records:2)
-	dw $5870 ; record 0
-	dw $5879 ; record 1
-	dw $5804 ; record 2
-	dw $5a17 ; record 3
-	dw $5a50 ; record 4
-	dw $5a51 ; record 5
-	dw $5a52 ; record 6
-	; $5804, 108 bytes (bytes:14)
-	db $00, $00, $d1, $7b, $00, $3b, $00, $37, $40, $00, $30, $01, $00, $00 ; 0x00
-	db $00, $00, $d1, $7b, $00, $3d, $00, $39, $80, $00, $30, $01, $05, $00 ; 0x0e
-	db $00, $00, $d1, $7b, $00, $3d, $00, $3b, $80, $00, $3a, $01, $00, $00 ; 0x1c
-	db $00, $00, $d1, $7b, $00, $2f, $00, $31, $00, $00, $3a, $01, $07, $00 ; 0x2a
-	db $00, $00, $d1, $7b, $00, $33, $00, $31, $80, $00, $3b, $01, $00, $00 ; 0x38
-	db $00, $00, $d1, $7b, $00, $37, $00, $2f, $00, $00, $3c, $01, $00, $00 ; 0x46
-	db $00, $00, $d1, $7b, $00, $3b, $00, $2f, $80, $00, $3b, $01, $04, $00 ; 0x54
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x62
-	; $5870, 9 bytes (bytes:16)
-	db $01, $40, $00, $27, $00, $37, $00, $00, $ff ; 0x00
-	; $5879, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff03, $0000, $7b1f, $020d ; record 0
+CafeteriaMapScripts_10:
+	; $57f6, 14 bytes (map_tree)
+	dw CafeteriaEntryPoints_10 ; slot 0 EntryPoints
+	dw CafeteriaExitTriggers_10 ; slot 1 ExitTriggers
+	dw CafeteriaActors_10 ; slot 2 Actors
+	dw CafeteriaNpcScripts_10 ; slot 3 NpcScripts
+	dw CafeteriaFacingScripts_10 ; slot 4 FacingScripts
+	dw CafeteriaTileTriggers_10 ; slot 5 TileTriggers
+	dw CafeteriaInitScript_10 ; slot 6 InitScript
+CafeteriaActors_10:
+	; $5804, 108 bytes (map_actors)
+	map_actor $0000, $7bd1, $3b00, $3700, $40, $30, $01, $00
+	map_actor $0000, $7bd1, $3d00, $3900, $80, $30, $01, $05
+	map_actor $0000, $7bd1, $3d00, $3b00, $80, $3a, $01, $00
+	map_actor $0000, $7bd1, $2f00, $3100, $00, $3a, $01, $07
+	map_actor $0000, $7bd1, $3300, $3100, $80, $3b, $01, $00
+	map_actor $0000, $7bd1, $3700, $2f00, $00, $3c, $01, $00
+	map_actor $0000, $7bd1, $3b00, $2f00, $80, $3b, $01, $04
+	map_actor_end
+CafeteriaEntryPoints_10:
+	; $5870, 9 bytes (map_entries)
+	map_entry $01, $40, $2700, $3700, $0000
 	db $ff
+CafeteriaExitTriggers_10:
+	; $5879, 9 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_10_7b1f, $0d, $02
+	db $ff
+Func_10_5882:
 	ld a, [$c2b0] ; $5882
 	add a, a ; $5885
 	add a, $99 ; $5886
@@ -2301,6 +2305,7 @@ Data_10_57f6:
 	dw $0cb7 ; record 7
 	dw $0cda ; record 8
 	dw $0cda ; record 9
+Func_10_58ad:
 	ld a, [$c2b1] ; $58ad
 	add a, a ; $58b0
 	add a, $21 ; $58b1
@@ -2366,6 +2371,7 @@ Label_10_5915:
 	dw $0c90 ; record 2
 	dw $0cb8 ; record 3
 	dw $0cdb ; record 4
+Func_10_592b:
 	ld a, [$c2b1] ; $592b
 	add a, a ; $592e
 	add a, $61 ; $592f
@@ -2401,6 +2407,7 @@ Label_10_595b:
 	dw $0c91 ; record 2
 	dw $0cbb ; record 3
 	dw $0cdf ; record 4
+Func_10_596b:
 	ld a, [$c2b0] ; $596b
 	add a, a ; $596e
 	add a, $82 ; $596f
@@ -2426,6 +2433,7 @@ Label_10_595b:
 	dw $0cbd ; record 7
 	dw $0cbc ; record 8
 	dw $0cbd ; record 9
+Func_10_5996:
 	ld a, [$c2b0] ; $5996
 	add a, a ; $5999
 	add a, $ad ; $599a
@@ -2451,6 +2459,7 @@ Label_10_595b:
 	dw $0cbf ; record 7
 	dw $0cbe ; record 8
 	dw $0cbf ; record 9
+Func_10_59c1:
 	ld a, [$c2b0] ; $59c1
 	add a, a ; $59c4
 	add a, $d8 ; $59c5
@@ -2476,6 +2485,7 @@ Label_10_595b:
 	dw $0cc1 ; record 7
 	dw $0ce0 ; record 8
 	dw $0cc1 ; record 9
+Func_10_59ec:
 	ld a, [$c2b0] ; $59ec
 	add a, a ; $59ef
 	add a, $03 ; $59f0
@@ -2501,16 +2511,21 @@ Label_10_595b:
 	dw $0cc3 ; record 7
 	dw $0cc2 ; record 8
 	dw $0cc3 ; record 9
-	; $5a17, 59 bytes (records:8)
-; 7 records x 8 bytes
-	dw $ff03, $0000, $5882, $0003 ; record 0
-	dw $ff04, $0000, $58ad, $0003 ; record 1
-	dw $ff05, $0000, $592b, $0003 ; record 2
-	dw $ff06, $0000, $596b, $0003 ; record 3
-	dw $ff07, $0000, $5996, $0003 ; record 4
-	dw $ff08, $0000, $59c1, $0003 ; record 5
-	dw $ff09, $0000, $59ec, $0003 ; record 6
-	db $ff, $ff, $ff
+CafeteriaNpcScripts_10:
+	; $5a17, 57 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_10_5882, $03, $00
+	map_script $04, $ff, $0000, Func_10_58ad, $03, $00
+	map_script $05, $ff, $0000, Func_10_592b, $03, $00
+	map_script $06, $ff, $0000, Func_10_596b, $03, $00
+	map_script $07, $ff, $0000, Func_10_5996, $03, $00
+	map_script $08, $ff, $0000, Func_10_59c1, $03, $00
+	map_script $09, $ff, $0000, Func_10_59ec, $03, $00
+	db $ff
+CafeteriaFacingScripts_10:
+	ds 1, $ff ; $5a50, fill
+CafeteriaTileTriggers_10:
+	ds 1, $ff ; $5a51, fill
+CafeteriaInitScript_10:
 	call Func_10_7dbd ; $5a52
 	ld a, [$c2b0] ; $5a55
 	sra a ; $5a58
@@ -2529,37 +2544,41 @@ Label_10_595b:
 	call EnableLCD ; $5a79
 	call Func_10_7b5f ; $5a7c
 	ret ; $5a7f
-Data_10_5a80:
-	; $5a80, 14 bytes (records:2)
-	dw $5b86 ; record 0
-	dw $5bdd ; record 1
-	dw $5a8e ; record 2
-	dw $6076 ; record 3
-	dw $60ef ; record 4
-	dw $60f0 ; record 5
-	dw $60f1 ; record 6
-	; $5a8e, 248 bytes (bytes:14)
-	db $00, $00, $d1, $7b, $00, $11, $00, $19, $80, $00, $2f, $01, $00, $00 ; 0x00
-	db $00, $00, $d1, $7b, $00, $21, $00, $15, $c0, $00, $2f, $01, $07, $00 ; 0x0e
-	db $00, $00, $d1, $7b, $00, $16, $00, $13, $40, $00, $30, $01, $00, $00 ; 0x1c
-	db $00, $00, $d1, $7b, $00, $1d, $00, $17, $c0, $00, $31, $01, $00, $00 ; 0x2a
-	db $00, $00, $d1, $7b, $00, $29, $00, $29, $00, $00, $4c, $01, $00, $00 ; 0x38
-	db $00, $00, $d1, $7b, $00, $21, $00, $11, $00, $00, $33, $01, $00, $00 ; 0x46
-	db $00, $00, $d1, $7b, $00, $09, $00, $0f, $00, $00, $34, $01, $00, $00 ; 0x54
-	db $00, $00, $db, $7b, $00, $0b, $00, $19, $80, $00, $30, $01, $06, $00 ; 0x62
-	db $00, $00, $d1, $7b, $00, $0d, $00, $0f, $80, $00, $3a, $01, $00, $00 ; 0x70
-	db $00, $00, $d1, $7b, $00, $15, $00, $0b, $80, $00, $33, $01, $00, $00 ; 0x7e
-	db $00, $00, $d1, $7b, $00, $1d, $00, $0b, $80, $00, $3c, $01, $04, $00 ; 0x8c
-	db $00, $00, $d1, $7b, $00, $1b, $00, $09, $40, $00, $3b, $01, $00, $00 ; 0x9a
-	db $00, $00, $d1, $7b, $00, $1d, $00, $0f, $80, $00, $3c, $01, $00, $00 ; 0xa8
-	db $00, $00, $d1, $7b, $00, $19, $00, $0f, $00, $00, $3b, $01, $06, $00 ; 0xb6
-	db $00, $00, $d1, $7b, $00, $29, $00, $29, $00, $00, $4f, $01, $00, $00 ; 0xc4
-	db $00, $00, $d1, $7b, $00, $1b, $00, $12, $40, $00, $3a, $01, $00, $00 ; 0xd2
-	db $00, $00, $d1, $7b, $00, $19, $00, $09, $40, $00, $35, $01, $00, $00 ; 0xe0
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xee
-	; $5b86, 17 bytes (bytes:16)
-	db $01, $c0, $00, $0c, $00, $21, $97, $5b, $02, $40, $00, $05, $00, $17, $5f, $7b ; 0x00
-	db $ff ; 0x10
+RestaurantMapScripts_10:
+	; $5a80, 14 bytes (map_tree)
+	dw RestaurantEntryPoints_10 ; slot 0 EntryPoints
+	dw RestaurantExitTriggers_10 ; slot 1 ExitTriggers
+	dw RestaurantActors_10 ; slot 2 Actors
+	dw RestaurantNpcScripts_10 ; slot 3 NpcScripts
+	dw RestaurantFacingScripts_10 ; slot 4 FacingScripts
+	dw RestaurantTileTriggers_10 ; slot 5 TileTriggers
+	dw RestaurantInitScript_10 ; slot 6 InitScript
+RestaurantActors_10:
+	; $5a8e, 248 bytes (map_actors)
+	map_actor $0000, $7bd1, $1100, $1900, $80, $2f, $01, $00
+	map_actor $0000, $7bd1, $2100, $1500, $c0, $2f, $01, $07
+	map_actor $0000, $7bd1, $1600, $1300, $40, $30, $01, $00
+	map_actor $0000, $7bd1, $1d00, $1700, $c0, $31, $01, $00
+	map_actor $0000, $7bd1, $2900, $2900, $00, $4c, $01, $00
+	map_actor $0000, $7bd1, $2100, $1100, $00, $33, $01, $00
+	map_actor $0000, $7bd1, $0900, $0f00, $00, $34, $01, $00
+	map_actor $0000, $7bdb, $0b00, $1900, $80, $30, $01, $06
+	map_actor $0000, $7bd1, $0d00, $0f00, $80, $3a, $01, $00
+	map_actor $0000, $7bd1, $1500, $0b00, $80, $33, $01, $00
+	map_actor $0000, $7bd1, $1d00, $0b00, $80, $3c, $01, $04
+	map_actor $0000, $7bd1, $1b00, $0900, $40, $3b, $01, $00
+	map_actor $0000, $7bd1, $1d00, $0f00, $80, $3c, $01, $00
+	map_actor $0000, $7bd1, $1900, $0f00, $00, $3b, $01, $06
+	map_actor $0000, $7bd1, $2900, $2900, $00, $4f, $01, $00
+	map_actor $0000, $7bd1, $1b00, $1200, $40, $3a, $01, $00
+	map_actor $0000, $7bd1, $1900, $0900, $40, $35, $01, $00
+	map_actor_end
+RestaurantEntryPoints_10:
+	; $5b86, 17 bytes (map_entries)
+	map_entry $01, $c0, $0c00, $2100, Func_10_5b97
+	map_entry $02, $40, $0500, $1700, Func_10_7b5f
+	db $ff
+Func_10_5b97:
 	ld a, [wStoryModeEntryPoint] ; $5b97
 	cp a, $ff ; $5b9a
 	jp z, Label_10_5bdc ; $5b9c
@@ -2590,13 +2609,15 @@ Label_10_5bca:
 	farcall FarPtr_MoveActorByAngle ; $5bd9
 Label_10_5bdc:
 	ret ; $5bdc
-	; $5bdd, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $5bee, $0208 ; record 0
-	dw $ff02, $0000, $7ae6, $010e ; record 1
+RestaurantExitTriggers_10:
+	; $5bdd, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_5bee, $08, $02
+	map_script $02, $ff, $0000, Func_10_7ae6, $0e, $01
 	db $ff
+Func_10_5bee:
 	clear_flag $0f, 3 ; $5bee
 	ret ; $5bf1
+Func_10_5bf2:
 	ld a, [$c2b1] ; $5bf2
 	add a, a ; $5bf5
 	add a, $13 ; $5bf6
@@ -2622,6 +2643,7 @@ Label_10_5c0d:
 	dw $0c6f ; record 2
 	dw $0c99 ; record 3
 	dw $0cc4 ; record 4
+Func_10_5c1d:
 	ld a, [$c2b1] ; $5c1d
 	add a, a ; $5c20
 	add a, $34 ; $5c21
@@ -2642,6 +2664,7 @@ Label_10_5c0d:
 	dw $0c70 ; record 2
 	dw $0c9a ; record 3
 	dw $0cc5 ; record 4
+Func_10_5c3e:
 	ld a, $00 ; $5c3e
 	ld b, a ; $5c40
 	ld a, $05 ; $5c41
@@ -2688,7 +2711,7 @@ Label_10_5c0d:
 	ld b, $40 ; $5c96
 	farcall FarPtr_SetActorFacing ; $5c98
 	ret ; $5c9b
-	; $5c9c, 105 bytes (records:2)
+	; $5c9c, 20 bytes (records:2)
 	dw $0c23 ; record 0
 	dw $0c23 ; record 1
 	dw $0c47 ; record 2
@@ -2699,49 +2722,46 @@ Label_10_5c0d:
 	dw $0c9e ; record 7
 	dw $0cc6 ; record 8
 	dw $0cc6 ; record 9
-	dw $063e ; record 10
-	dw $0416 ; record 11
-	dw $34df ; record 12
-	dw $3e0a ; record 13
-	dw $df06 ; record 14
-	dw $0a36 ; record 15
-	dw $b1fa ; record 16
-	dw $87c2 ; record 17
-	dw $fbc6 ; record 18
-	dw $ce6f ; record 19
-	dw $955c ; record 20
-	dw $2a67 ; record 21
-	dw $6f66 ; record 22
-	dw $0edf ; record 23
-	dw $fa0a ; record 24
-	dw $c2b0 ; record 25
-	dw $05fe ; record 26
-	dw $0620 ; record 27
-	dw $10df ; record 28
-	dw $df0a ; record 29
-	dw $0a10 ; record 30
-	dw $063e ; record 31
-	dw $08df ; record 32
-	dw $fa0a ; record 33
-	dw $c2b1 ; record 34
-	dw $00fe ; record 35
-	dw $0320 ; record 36
-	dw $5acd ; record 37
-	dw $3e61 ; record 38
-	dw $1606 ; record 39
-	dw $df03 ; record 40
-	dw $0a34 ; record 41
-	dw $063e ; record 42
-	dw $36df ; record 43
-	dw $3e0a ; record 44
-	dw $df06 ; record 45
-	dw $0a08 ; record 46
-	dw $26c9 ; record 47
-	dw $4a0c ; record 48
-	dw $770c ; record 49
-	dw $a10c ; record 50
-	dw $c90c ; record 51
-	db $0c
+Func_10_5cb0:
+	ld a, $06 ; $5cb0
+	ld d, $04 ; $5cb2
+	farcall FarPtr_ScriptSetActorAnimation ; $5cb4
+	ld a, $06 ; $5cb7
+	farcall FarPtr_ScriptWaitActorIdle ; $5cb9
+	ld a, [$c2b1] ; $5cbc
+	add a, a ; $5cbf
+	add a, $fb ; $5cc0
+	ld l, a ; $5cc2
+	adc a, $5c ; $5cc3
+	sub a, l ; $5cc5
+	ld h, a ; $5cc6
+	ld a, [hl+] ; $5cc7
+	ld h, [hl] ; $5cc8
+	ld l, a ; $5cc9
+	farcall FarPtr_InitDialogueTextCursor ; $5cca
+	ld a, [$c2b0] ; $5ccd
+	cp a, $05 ; $5cd0
+	jr nz, Label_10_5cda ; $5cd2
+	farcall FarPtr_AdvanceDialogueTextCursor ; $5cd4
+	farcall FarPtr_AdvanceDialogueTextCursor ; $5cd7
+Label_10_5cda:
+	ld a, $06 ; $5cda
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5cdc
+	ld a, [$c2b1] ; $5cdf
+	cp a, $00 ; $5ce2
+	jr nz, Label_10_5ce9 ; $5ce4
+	call Func_10_615a ; $5ce6
+Label_10_5ce9:
+	ld a, $06 ; $5ce9
+	ld d, $03 ; $5ceb
+	farcall FarPtr_ScriptSetActorAnimation ; $5ced
+	ld a, $06 ; $5cf0
+	farcall FarPtr_ScriptWaitActorIdle ; $5cf2
+	ld a, $06 ; $5cf5
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $5cf7
+	ret ; $5cfa
+	INCBIN "data/bank_010/d_5cfb.bin" ; $5cfb, 10 bytes
+Func_10_5d05:
 	call Func_10_612c ; $5d05
 	jp nz, Label_10_5db6 ; $5d08
 	ld a, $12 ; $5d0b
@@ -2860,7 +2880,9 @@ Label_10_5dd3:
 	dw $0c7b ; record 2
 	dw $0ca3 ; record 3
 	dw $0ccb ; record 4
+Func_10_5de6:
 	set_flag $1c, 1 ; $5de6
+Func_10_5de9:
 	test_flag $0f, 3 ; $5de9
 	jr nz, Label_10_5e5c ; $5dec
 	ld a, [$c2b1] ; $5dee
@@ -2943,6 +2965,7 @@ Label_10_5e71:
 	dw $0c7e ; record 2
 	dw $0ca6 ; record 3
 	dw $0cce ; record 4
+Func_10_5e8b:
 	ld a, [$c2b0] ; $5e8b
 	add a, a ; $5e8e
 	add a, $de ; $5e8f
@@ -2997,6 +3020,7 @@ Label_10_5ed2:
 	dw $0ca8 ; record 7
 	dw $0cd0 ; record 8
 	dw $0cd0 ; record 9
+Func_10_5ef2:
 	ld a, $00 ; $5ef2
 	ld b, a ; $5ef4
 	ld a, $0a ; $5ef5
@@ -3041,6 +3065,7 @@ Label_10_5f2a:
 	dw $0cac ; record 7
 	dw $0cd1 ; record 8
 	dw $0cd1 ; record 9
+Func_10_5f44:
 	ld a, [$c2b1] ; $5f44
 	add a, a ; $5f47
 	add a, $65 ; $5f48
@@ -3066,6 +3091,7 @@ Label_10_5f5f:
 	dw $0c85 ; record 2
 	dw $0cad ; record 3
 	dw $0cd2 ; record 4
+Func_10_5f6f:
 	ld a, [$c2b1] ; $5f6f
 	add a, a ; $5f72
 	add a, $bf ; $5f73
@@ -3113,6 +3139,7 @@ Label_10_5fb9:
 	dw $0c86 ; record 2
 	dw $0cae ; record 3
 	dw $0cd3 ; record 4
+Func_10_5fc9:
 	ld a, [$c2b1] ; $5fc9
 	add a, a ; $5fcc
 	add a, $09 ; $5fcd
@@ -3153,6 +3180,7 @@ Label_10_6003:
 	dw $0c8a ; record 2
 	dw $0cb0 ; record 3
 	dw $0cd5 ; record 4
+Func_10_6013:
 	ld a, [$c2b1] ; $6013
 	add a, a ; $6016
 	add a, $2a ; $6017
@@ -3173,6 +3201,7 @@ Label_10_6003:
 	dw $0c8b ; record 2
 	dw $0cb3 ; record 3
 	dw $0cd6 ; record 4
+Func_10_6034:
 	ld a, [$c2b1] ; $6034
 	add a, a ; $6037
 	add a, $4b ; $6038
@@ -3193,6 +3222,7 @@ Label_10_6003:
 	dw $0c8c ; record 2
 	dw $0cb4 ; record 3
 	dw $0cd7 ; record 4
+Func_10_6055:
 	ld a, [$c2b1] ; $6055
 	add a, a ; $6058
 	add a, $6c ; $6059
@@ -3213,24 +3243,29 @@ Label_10_6003:
 	dw $0c8e ; record 2
 	dw $0cb6 ; record 3
 	dw $0cd9 ; record 4
-	; $6076, 123 bytes (records:8)
-; 15 records x 8 bytes
-	dw $ff03, $0000, $5bf2, $0003 ; record 0
-	dw $ff04, $0000, $5c1d, $0003 ; record 1
-	dw $ff05, $0000, $5c3e, $0003 ; record 2
-	dw $ff06, $0000, $5cb0, $0003 ; record 3
-	dw $ff12, $0000, $5d05, $0000 ; record 4
-	dw $8008, $0000, $5de6, $0003 ; record 5
-	dw $ff08, $0000, $5de9, $0003 ; record 6
-	dw $ff09, $0000, $5e8b, $0003 ; record 7
-	dw $ff0a, $0000, $5ef2, $0013 ; record 8
-	dw $ff0b, $0000, $5f44, $0003 ; record 9
-	dw $ff0c, $0000, $5f6f, $0003 ; record 10
-	dw $ff0d, $0000, $5fc9, $0003 ; record 11
-	dw $ff0e, $0000, $6013, $0013 ; record 12
-	dw $ff0f, $0000, $6034, $0003 ; record 13
-	dw $ff10, $0000, $6055, $0003 ; record 14
-	db $ff, $ff, $ff
+RestaurantNpcScripts_10:
+	; $6076, 121 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_10_5bf2, $03, $00
+	map_script $04, $ff, $0000, Func_10_5c1d, $03, $00
+	map_script $05, $ff, $0000, Func_10_5c3e, $03, $00
+	map_script $06, $ff, $0000, Func_10_5cb0, $03, $00
+	map_script $12, $ff, $0000, Func_10_5d05, $00, $00
+	map_script $08, $80, $0000, Func_10_5de6, $03, $00
+	map_script $08, $ff, $0000, Func_10_5de9, $03, $00
+	map_script $09, $ff, $0000, Func_10_5e8b, $03, $00
+	map_script $0a, $ff, $0000, Func_10_5ef2, $13, $00
+	map_script $0b, $ff, $0000, Func_10_5f44, $03, $00
+	map_script $0c, $ff, $0000, Func_10_5f6f, $03, $00
+	map_script $0d, $ff, $0000, Func_10_5fc9, $03, $00
+	map_script $0e, $ff, $0000, Func_10_6013, $13, $00
+	map_script $0f, $ff, $0000, Func_10_6034, $03, $00
+	map_script $10, $ff, $0000, Func_10_6055, $03, $00
+	db $ff
+RestaurantFacingScripts_10:
+	ds 1, $ff ; $60ef, fill
+RestaurantTileTriggers_10:
+	ds 1, $ff ; $60f0, fill
+RestaurantInitScript_10:
 	call Func_10_7dbd ; $60f1
 	ld a, [$c2b0] ; $60f4
 	sra a ; $60f7
@@ -3295,6 +3330,7 @@ Func_10_613e:
 	nop ; $6157
 	ld a, d ; $6158
 	nop ; $6159
+Func_10_615a:
 	wram_bank $04 ; $615a
 	ld a, $00 ; $6160
 	farcall FarPtr_GetActorStateAddr ; $6162
@@ -5897,6 +5933,7 @@ Label_10_7adf:
 	add hl, de ; $7ae3
 	ld a, [hl] ; $7ae4
 	ret ; $7ae5
+Func_10_7ae6:
 	ld a, $00 ; $7ae6
 	ld bc, $0010 ; $7ae8
 	farcall FarPtr_ScriptSetActorMoveSpeed ; $7aeb
@@ -5920,6 +5957,7 @@ Label_10_7adf:
 	ld de, $00c0 ; $7b18
 	farcall FarPtr_MoveActorByAngle ; $7b1b
 	ret ; $7b1e
+Func_10_7b1f:
 	ld a, [wStoryModeEntryPoint] ; $7b1f
 	cp a, $ff ; $7b22
 	jr z, Label_10_7b5e ; $7b24
