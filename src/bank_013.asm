@@ -4300,7 +4300,7 @@ SetupStoryMinigameMatch0:
 	ld a, $05 ; $6a6d
 	farcall FarPtr_WaitActorScriptDone ; $6a6f
 	farcall FarPtr_InitStoryMatchSettings ; $6a72
-	load_match_settings $00, $0a ; $6a75
+	load_match_settings $000a ; $6a75
 	farcall FarPtr_RunStoryMatch ; $6a82
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6a85
 	ret ; $6a88
@@ -4357,7 +4357,7 @@ SetupStoryMinigameMatch0:
 	ld a, $05 ; $6afd
 	farcall FarPtr_WaitActorScriptDone ; $6aff
 	farcall FarPtr_InitStoryMatchSettings ; $6b02
-	load_match_settings $01, $0a ; $6b05
+	load_match_settings $010a ; $6b05
 	farcall FarPtr_RunStoryMatch ; $6b12
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6b15
 	ret ; $6b18
@@ -4562,7 +4562,7 @@ Label_13_6d44:
 	ld a, $04 ; $6dd9
 	farcall FarPtr_WaitActorScriptDone ; $6ddb
 	farcall FarPtr_InitStoryMatchSettings ; $6dde
-	load_match_settings $00, $0b ; $6de1
+	load_match_settings $000b ; $6de1
 	farcall FarPtr_RunStoryMatch ; $6dee
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6df1
 	ret ; $6df4
@@ -4843,7 +4843,7 @@ Label_13_6fb6:
 	ld a, $04 ; $7061
 	farcall FarPtr_WaitActorScriptDone ; $7063
 	farcall FarPtr_InitStoryMatchSettings ; $7066
-	load_match_settings $01, $0d ; $7069
+	load_match_settings $010d ; $7069
 	farcall FarPtr_RunStoryMatch ; $7076
 	farcall FarPtr_RestoreOverworldAfterMatch ; $7079
 	ret ; $707c

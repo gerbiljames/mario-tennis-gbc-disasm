@@ -2260,7 +2260,7 @@ Label_11_566e:
 	ld a, $00 ; $5755
 	farcall FarPtr_ScriptWaitActorIdle ; $5757
 	farcall FarPtr_InitStoryMatchSettings ; $575a
-	load_match_settings $01, $00 ; $575d
+	load_match_settings $0100 ; $575d
 	farcall FarPtr_RunStoryMatch ; $576a
 	farcall FarPtr_RestoreOverworldAfterMatch ; $576d
 	ret ; $5770
@@ -3548,7 +3548,7 @@ Label_11_65b9:
 	ld [$c294], a ; $6625
 	ld [wStoryModeExitLocationRequest], a ; $6628
 	farcall FarPtr_InitStoryMatchSettings ; $662b
-	load_match_settings $01, $02 ; $662e
+	load_match_settings $0102 ; $662e
 	farcall FarPtr_RunStoryMatch ; $663b
 	farcall FarPtr_RestoreOverworldAfterMatch ; $663e
 	ret ; $6641
@@ -3630,7 +3630,7 @@ Label_11_6642:
 	ld [$c294], a ; $66e5
 	ld [wStoryModeExitLocationRequest], a ; $66e8
 	farcall FarPtr_InitStoryMatchSettings ; $66eb
-	load_match_settings $01, $03 ; $66ee
+	load_match_settings $0103 ; $66ee
 	farcall FarPtr_RunStoryMatch ; $66fb
 	farcall FarPtr_RestoreOverworldAfterMatch ; $66fe
 	ret ; $6701
@@ -3696,7 +3696,7 @@ Label_11_6702:
 	ld [$c294], a ; $6783
 	ld [wStoryModeExitLocationRequest], a ; $6786
 	farcall FarPtr_InitStoryMatchSettings ; $6789
-	load_match_settings $01, $04 ; $678c
+	load_match_settings $0104 ; $678c
 	farcall FarPtr_RunStoryMatch ; $6799
 	farcall FarPtr_RestoreOverworldAfterMatch ; $679c
 	ret ; $679f
@@ -3978,7 +3978,7 @@ Label_11_6a41:
 	ld [$c294], a ; $6acc
 	ld [wStoryModeExitLocationRequest], a ; $6acf
 	farcall FarPtr_InitStoryMatchSettings ; $6ad2
-	load_match_settings $00, $00 ; $6ad5
+	load_match_settings $0000 ; $6ad5
 	farcall FarPtr_RunStoryMatch ; $6ae2
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6ae5
 	ret ; $6ae8
@@ -5239,7 +5239,7 @@ Label_11_7843:
 	ld [$c294], a ; $78b2
 	ld [wStoryModeExitLocationRequest], a ; $78b5
 	farcall FarPtr_InitStoryMatchSettings ; $78b8
-	load_match_settings $00, $01 ; $78bb
+	load_match_settings $0001 ; $78bb
 	farcall FarPtr_RunStoryMatch ; $78c8
 	farcall FarPtr_RestoreOverworldAfterMatch ; $78cb
 	ret ; $78ce
@@ -5300,7 +5300,7 @@ Label_11_78cf:
 	ld [$c294], a ; $7940
 	ld [wStoryModeExitLocationRequest], a ; $7943
 	farcall FarPtr_InitStoryMatchSettings ; $7946
-	load_match_settings $00, $02 ; $7949
+	load_match_settings $0002 ; $7949
 	farcall FarPtr_RunStoryMatch ; $7956
 	farcall FarPtr_RestoreOverworldAfterMatch ; $7959
 	ret ; $795c
@@ -5360,7 +5360,7 @@ Label_11_795d:
 	ld [$c294], a ; $79cb
 	ld [wStoryModeExitLocationRequest], a ; $79ce
 	farcall FarPtr_InitStoryMatchSettings ; $79d1
-	load_match_settings $00, $03 ; $79d4
+	load_match_settings $0003 ; $79d4
 	farcall FarPtr_RunStoryMatch ; $79e1
 	farcall FarPtr_RestoreOverworldAfterMatch ; $79e4
 	ret ; $79e7
@@ -5421,7 +5421,7 @@ Label_11_79e8:
 	ld [$c294], a ; $7a59
 	ld [wStoryModeExitLocationRequest], a ; $7a5c
 	farcall FarPtr_InitStoryMatchSettings ; $7a5f
-	load_match_settings $00, $04 ; $7a62
+	load_match_settings $0004 ; $7a62
 	farcall FarPtr_RunStoryMatch ; $7a6f
 	farcall FarPtr_RestoreOverworldAfterMatch ; $7a72
 	ret ; $7a75

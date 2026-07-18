@@ -1701,10 +1701,10 @@ def wram_bank_seq(dis, rom, off, labels):
 
 
 def match_launcher_seq(dis, rom, off, labels):
-    """Collapse the story match-launcher idiom into load_match_settings:
-    ld a,imm / ld [wCurrentMinigameStoryMatch ($c8f6)],a / ld a,imm /
-    ld [$c8f7],a / farcall FarPtr_LoadMatchSettingsFromTable (slot $5a bank
-    $0a). 41 standalone launcher stubs (each then ret) plus inline callers
+    """Collapse the story match-launcher idiom into load_match_settings: the
+    two immediates are the high/low bytes of the 16-bit wCurrentMinigameStoryMatch
+    id ($c8f6/$c8f7), then farcall FarPtr_LoadMatchSettingsFromTable (slot $5a
+    bank $0a). 41 standalone launcher stubs (each then ret) plus inline callers
     share it. Only fires when no label/data note lands mid-sequence."""
     def plain(o):
         return (o in dis.instrs and o not in labels
@@ -1718,8 +1718,8 @@ def match_launcher_seq(dis, rom, off, labels):
             and rom[off + 11] == 0x5A and rom[off + 12] == 0x0A
             and plain(off + 2) and plain(off + 5) and plain(off + 7)
             and plain(off + 10)):
-        return (f"load_match_settings ${rom[off + 1]:02x}, "
-                f"${rom[off + 6]:02x}"), 13
+        return (f"load_match_settings "
+                f"${(rom[off + 1] << 8) | rom[off + 6]:04x}"), 13
     return None
 
 
@@ -1914,16 +1914,18 @@ MACRO map_script
 	db \\5, \\6
 ENDM
 
-; Story match launcher: select match `match` and court `court`
-; (wCurrentMinigameStoryMatch / $c8f7), then load that match's settings via
-; FarPtr_LoadMatchSettingsFromTable. The standalone launcher stubs follow it
-; with a ret; some callers continue with more setup.
-; Usage: load_match_settings match, court
+; Story match launcher: store the 16-bit big-endian match id into
+; wCurrentMinigameStoryMatch ($c8f6/$c8f7), then load that match's settings via
+; FarPtr_LoadMatchSettingsFromTable. The high byte is the category
+; (0 singles, 1 doubles, 2 minigame/practice) and the low byte the match; see
+; the wCurrentMinigameStoryMatch id table in docs/ram_map.md. The standalone
+; launcher stubs follow it with a ret; some callers continue with more setup.
+; Usage: load_match_settings match_id
 MACRO load_match_settings
-	ld a, \\1
+	ld a, HIGH(\\1)
 	ld [wCurrentMinigameStoryMatch], a
-	ld a, \\2
-	ld [$c8f7], a
+	ld a, LOW(\\1)
+	ld [wCurrentMinigameStoryMatch + 1], a
 	farcall FarPtr_LoadMatchSettingsFromTable
 ENDM
 

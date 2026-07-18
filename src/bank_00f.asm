@@ -4410,20 +4410,20 @@ Label_0f_71bf:
 	farcall FarPtr_InitStoryMatchSettings ; $71dc
 	test_flag $07, 5 ; $71df
 	jr z, Label_0f_71f3 ; $71e2
-	load_match_settings $00, $13 ; $71e4
+	load_match_settings $0013 ; $71e4
 	jr Label_0f_7228 ; $71f1
 Label_0f_71f3:
 	test_flag $07, 6 ; $71f3
 	jr z, Label_0f_7207 ; $71f6
-	load_match_settings $00, $12 ; $71f8
+	load_match_settings $0012 ; $71f8
 	jr Label_0f_7228 ; $7205
 Label_0f_7207:
 	test_flag $07, 7 ; $7207
 	jr z, Label_0f_721b ; $720a
-	load_match_settings $00, $11 ; $720c
+	load_match_settings $0011 ; $720c
 	jr Label_0f_7228 ; $7219
 Label_0f_721b:
-	load_match_settings $00, $10 ; $721b
+	load_match_settings $0010 ; $721b
 Label_0f_7228:
 	farcall FarPtr_RunStoryMatch ; $7228
 	farcall FarPtr_RestoreOverworldAfterMatch ; $722b
@@ -4584,15 +4584,15 @@ Label_0f_735f:
 	farcall FarPtr_InitStoryMatchSettings ; $737c
 	test_flag $06, 6 ; $737f
 	jp z, Label_0f_7394 ; $7382
-	load_match_settings $01, $13 ; $7385
+	load_match_settings $0113 ; $7385
 	jr Label_0f_73b7 ; $7392
 Label_0f_7394:
 	test_flag $06, 7 ; $7394
 	jp z, Label_0f_73aa ; $7397
-	load_match_settings $01, $12 ; $739a
+	load_match_settings $0112 ; $739a
 	jp Label_0f_73b7 ; $73a7
 Label_0f_73aa:
-	load_match_settings $01, $11 ; $73aa
+	load_match_settings $0111 ; $73aa
 Label_0f_73b7:
 	farcall FarPtr_RunStoryMatch ; $73b7
 	farcall FarPtr_RestoreOverworldAfterMatch ; $73ba

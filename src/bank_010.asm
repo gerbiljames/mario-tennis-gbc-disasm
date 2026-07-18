@@ -226,109 +226,109 @@ Label_10_421f:
 	dw Func_10_429e ; $4262
 	dw Func_10_42ac ; $4264
 Func_10_4266:
-	load_match_settings $00, $18 ; $4266
+	load_match_settings $0018 ; $4266
 	ret ; $4273
 Func_10_4274:
-	load_match_settings $00, $17 ; $4274
+	load_match_settings $0017 ; $4274
 	ret ; $4281
 Func_10_4282:
-	load_match_settings $00, $16 ; $4282
+	load_match_settings $0016 ; $4282
 	ret ; $428f
 Func_10_4290:
-	load_match_settings $01, $18 ; $4290
+	load_match_settings $0118 ; $4290
 	ret ; $429d
 Func_10_429e:
-	load_match_settings $01, $17 ; $429e
+	load_match_settings $0117 ; $429e
 	ret ; $42ab
 Func_10_42ac:
-	load_match_settings $01, $16 ; $42ac
+	load_match_settings $0116 ; $42ac
 	ret ; $42b9
 Func_10_42ba:
-	load_match_settings $00, $10 ; $42ba
+	load_match_settings $0010 ; $42ba
 	ret ; $42c7
 Func_10_42c8:
-	load_match_settings $00, $11 ; $42c8
+	load_match_settings $0011 ; $42c8
 	ret ; $42d5
 Func_10_42d6:
-	load_match_settings $00, $12 ; $42d6
+	load_match_settings $0012 ; $42d6
 	ret ; $42e3
 Func_10_42e4:
-	load_match_settings $00, $13 ; $42e4
+	load_match_settings $0013 ; $42e4
 	ret ; $42f1
 Func_10_42f2:
-	load_match_settings $01, $11 ; $42f2
+	load_match_settings $0111 ; $42f2
 	ret ; $42ff
 Func_10_4300:
-	load_match_settings $01, $12 ; $4300
+	load_match_settings $0112 ; $4300
 	ret ; $430d
 Func_10_430e:
-	load_match_settings $01, $13 ; $430e
+	load_match_settings $0113 ; $430e
 	ret ; $431b
 Func_10_431c:
-	load_match_settings $00, $00 ; $431c
+	load_match_settings $0000 ; $431c
 	ret ; $4329
 Func_10_432a:
-	load_match_settings $00, $04 ; $432a
+	load_match_settings $0004 ; $432a
 	ret ; $4337
 Func_10_4338:
-	load_match_settings $00, $03 ; $4338
+	load_match_settings $0003 ; $4338
 	ret ; $4345
 Func_10_4346:
-	load_match_settings $00, $02 ; $4346
+	load_match_settings $0002 ; $4346
 	ret ; $4353
 Func_10_4354:
-	load_match_settings $00, $01 ; $4354
+	load_match_settings $0001 ; $4354
 	ret ; $4361
 Func_10_4362:
-	load_match_settings $00, $09 ; $4362
+	load_match_settings $0009 ; $4362
 	ret ; $436f
 Func_10_4370:
-	load_match_settings $00, $08 ; $4370
+	load_match_settings $0008 ; $4370
 	ret ; $437d
 Func_10_437e:
-	load_match_settings $00, $07 ; $437e
+	load_match_settings $0007 ; $437e
 	ret ; $438b
 Func_10_438c:
-	load_match_settings $00, $06 ; $438c
+	load_match_settings $0006 ; $438c
 	ret ; $4399
 Func_10_439a:
-	load_match_settings $00, $05 ; $439a
+	load_match_settings $0005 ; $439a
 	ret ; $43a7
 Func_10_43a8:
-	load_match_settings $00, $02 ; $43a8
+	load_match_settings $0002 ; $43a8
 	ret ; $43b5
 Func_10_43b6:
-	load_match_settings $00, $0a ; $43b6
+	load_match_settings $000a ; $43b6
 	ret ; $43c3
 Func_10_43c4:
-	load_match_settings $01, $00 ; $43c4
+	load_match_settings $0100 ; $43c4
 	ret ; $43d1
 Func_10_43d2:
-	load_match_settings $01, $02 ; $43d2
+	load_match_settings $0102 ; $43d2
 	ret ; $43df
 Func_10_43e0:
-	load_match_settings $01, $03 ; $43e0
+	load_match_settings $0103 ; $43e0
 	ret ; $43ed
 Func_10_43ee:
-	load_match_settings $01, $04 ; $43ee
+	load_match_settings $0104 ; $43ee
 	ret ; $43fb
 Func_10_43fc:
-	load_match_settings $01, $05 ; $43fc
+	load_match_settings $0105 ; $43fc
 	ret ; $4409
 Func_10_440a:
-	load_match_settings $01, $07 ; $440a
+	load_match_settings $0107 ; $440a
 	ret ; $4417
 Func_10_4418:
-	load_match_settings $01, $08 ; $4418
+	load_match_settings $0108 ; $4418
 	ret ; $4425
 Func_10_4426:
-	load_match_settings $01, $09 ; $4426
+	load_match_settings $0109 ; $4426
 	ret ; $4433
 Func_10_4434:
-	load_match_settings $01, $0d ; $4434
+	load_match_settings $010d ; $4434
 	ret ; $4441
 Func_10_4442:
-	load_match_settings $01, $0a ; $4442
+	load_match_settings $010a ; $4442
 	ret ; $444f
 RunDrillMatchListMenu:
 	ld hl, $048d ; $4450
