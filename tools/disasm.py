@@ -1776,6 +1776,8 @@ def match_launcher_seq(dis, rom, off, labels):
 SCRIPT_COMMANDS = (
     ("script_move_target", "FarPtr_ScriptSetActorMoveTarget",
         ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
+    ("script_set_position", "FarPtr_ScriptSetActorPosition",
+        ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
     ("script_move_angle", "FarPtr_MoveActorByAngle",
         ((0x3E, 2, 'b'), (0x06, 2, 'b'), (0x11, 3, 'w'))),
     ("script_set_speed", "FarPtr_ScriptSetActorMoveSpeed",
@@ -2076,6 +2078,14 @@ MACRO script_move_target
 	ld bc, \\2
 	ld de, \\3
 	farcall FarPtr_ScriptSetActorMoveTarget
+ENDM
+; Instantly places an actor (no walking).
+; Usage: script_set_position actor, x, y
+MACRO script_set_position
+	ld a, \\1
+	ld bc, \\2
+	ld de, \\3
+	farcall FarPtr_ScriptSetActorPosition
 ENDM
 ; Usage: script_move_angle actor, angle, distance
 MACRO script_move_angle

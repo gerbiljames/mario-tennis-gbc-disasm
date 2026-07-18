@@ -175,6 +175,14 @@ MACRO script_move_target
 	ld de, \3
 	farcall FarPtr_ScriptSetActorMoveTarget
 ENDM
+; Instantly places an actor (no walking).
+; Usage: script_set_position actor, x, y
+MACRO script_set_position
+	ld a, \1
+	ld bc, \2
+	ld de, \3
+	farcall FarPtr_ScriptSetActorPosition
+ENDM
 ; Usage: script_move_angle actor, angle, distance
 MACRO script_move_angle
 	ld a, \1

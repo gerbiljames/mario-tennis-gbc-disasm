@@ -109,14 +109,8 @@ Func_12_4179:
 	script_set_speed $04, $0010 ; $4181
 	script_set_speed $00, $0010 ; $4189
 	script_player_speed $0010 ; $4191
-	ld a, $00 ; $4197
-	ld bc, $1600 ; $4199
-	ld de, $1f00 ; $419c
-	farcall FarPtr_ScriptSetActorPosition ; $419f
-	ld a, $03 ; $41a2
-	ld bc, $1600 ; $41a4
-	ld de, $1d00 ; $41a7
-	farcall FarPtr_ScriptSetActorPosition ; $41aa
+	script_set_position $00, $1600, $1f00 ; $4197
+	script_set_position $03, $1600, $1d00 ; $41a2
 	script_face $03, $c0 ; $41ad
 	ld c, $20 ; $41b4
 	call BeginFadeIn ; $41b6
@@ -158,24 +152,15 @@ Func_12_4179:
 	script_wait_idle $00 ; $429e
 	script_wait_frames $14 ; $42a3
 	script_player_speed $0010 ; $42aa
-	ld a, $05 ; $42b0
-	ld bc, $1780 ; $42b2
-	ld de, $0f00 ; $42b5
-	farcall FarPtr_ScriptSetActorPosition ; $42b8
+	script_set_position $05, $1780, $0f00 ; $42b0
 	sound $97 ; $42bb
 	script_set_anim $03, $02 ; $42bd
 	script_wait_idle $03 ; $42c4
-	ld a, $05 ; $42c9
-	ld bc, $0100 ; $42cb
-	ld de, $0100 ; $42ce
-	farcall FarPtr_ScriptSetActorPosition ; $42d1
+	script_set_position $05, $0100, $0100 ; $42c9
 	script_speak $03 ; $42d4
 	script_move_target $03, $1600, $0b00 ; $42d9
 	script_wait_move $03 ; $42e4
-	ld a, $04 ; $42e9
-	ld bc, $1700 ; $42eb
-	ld de, $0b00 ; $42ee
-	farcall FarPtr_ScriptSetActorPosition ; $42f1
+	script_set_position $04, $1700, $0b00 ; $42e9
 	script_wait_frames $a0 ; $42f4
 	script_move_target $00, $1600, $1500 ; $42fb
 	script_wait_move $00 ; $4306
@@ -193,10 +178,7 @@ Func_12_4179:
 	ld a, $03 ; $4354
 	ld b, $00 ; $4356
 	farcall FarPtr_SetActorActive ; $4358
-	ld a, $03 ; $435b
-	ld bc, $1700 ; $435d
-	ld de, $1900 ; $4360
-	farcall FarPtr_ScriptSetActorPosition ; $4363
+	script_set_position $03, $1700, $1900 ; $435b
 	script_speak $03 ; $4366
 	script_move_target $00, $1680, $1200 ; $436b
 	ld a, $00 ; $4376
@@ -208,10 +190,7 @@ Func_12_4179:
 	ld a, $03 ; $438a
 	ld b, $02 ; $438c
 	farcall FarPtr_SetActorActive ; $438e
-	ld a, $03 ; $4391
-	ld bc, $1500 ; $4393
-	ld de, $0b00 ; $4396
-	farcall FarPtr_ScriptSetActorPosition ; $4399
+	script_set_position $03, $1500, $0b00 ; $4391
 	ld a, [$c94d] ; $439c
 	or a, a ; $439f
 	jr nz, Label_12_43bb ; $43a0
@@ -228,18 +207,12 @@ Label_12_43bb:
 	script_wait_move $03 ; $43c6
 	script_move_target $04, $1700, $0f00 ; $43cb
 	script_wait_move $04 ; $43d6
-	ld a, $06 ; $43db
-	ld bc, $1800 ; $43dd
-	ld de, $1100 ; $43e0
-	farcall FarPtr_ScriptSetActorPosition ; $43e3
+	script_set_position $06, $1800, $1100 ; $43db
 	sound $98 ; $43e6
 	script_wait_frames $3c ; $43e8
 	script_set_anim $03, $04 ; $43ef
 	script_wait_idle $03 ; $43f6
-	ld a, $06 ; $43fb
-	ld bc, $0100 ; $43fd
-	ld de, $0100 ; $4400
-	farcall FarPtr_ScriptSetActorPosition ; $4403
+	script_set_position $06, $0100, $0100 ; $43fb
 	script_speak $03 ; $4406
 	ld a, $04 ; $440b
 	ld b, a ; $440d
@@ -304,16 +277,10 @@ Label_12_44c5:
 	script_set_anim $03, $02 ; $44e2
 	script_wait_idle $03 ; $44e9
 	script_speak $03 ; $44ee
-	ld a, $06 ; $44f3
-	ld bc, $1800 ; $44f5
-	ld de, $1100 ; $44f8
-	farcall FarPtr_ScriptSetActorPosition ; $44fb
+	script_set_position $06, $1800, $1100 ; $44f3
 	sound $98 ; $44fe
 	script_wait_frames $3c ; $4500
-	ld a, $06 ; $4507
-	ld bc, $0100 ; $4509
-	ld de, $0100 ; $450c
-	farcall FarPtr_ScriptSetActorPosition ; $450f
+	script_set_position $06, $0100, $0100 ; $4507
 	script_set_anim $04, $03 ; $4512
 	script_wait_idle $04 ; $4519
 	script_speak $04 ; $451e
@@ -408,10 +375,7 @@ WallPracticeRoomStoryCmds_12:
 	clear_flag $0f, 5 ; $46fb
 	test_flag $05, 7 ; $46fe
 	jr z, Label_12_4715 ; $4701
-	ld a, $02 ; $4703
-	ld bc, $0f00 ; $4705
-	ld de, $3b00 ; $4708
-	farcall FarPtr_ScriptSetActorPosition ; $470b
+	script_set_position $02, $0f00, $3b00 ; $4703
 	script_face $02, $c0 ; $470e
 Label_12_4715:
 	ret ; $4715
@@ -1100,16 +1064,10 @@ Label_12_4f39:
 	jr z, Label_12_4f55 ; $4f3c
 	ld a, $02 ; $4f3e
 	farcall FarPtr_SetActorNullScript ; $4f40
-	ld a, $02 ; $4f43
-	ld bc, $0700 ; $4f45
-	ld de, $3900 ; $4f48
-	farcall FarPtr_ScriptSetActorPosition ; $4f4b
+	script_set_position $02, $0700, $3900 ; $4f43
 	script_face $02, $c0 ; $4f4e
 Label_12_4f55:
-	ld a, $07 ; $4f55
-	ld bc, $0300 ; $4f57
-	ld de, $3700 ; $4f5a
-	farcall FarPtr_ScriptSetActorPosition ; $4f5d
+	script_set_position $07, $0300, $3700 ; $4f55
 	script_face $07, $00 ; $4f60
 	ld a, [wMatchExitRequest] ; $4f67
 	cp a, $01 ; $4f6a
@@ -1131,17 +1089,11 @@ Label_12_4f8a:
 	jr z, Label_12_4fa6 ; $4f8d
 	ld a, $02 ; $4f8f
 	farcall FarPtr_SetActorNullScript ; $4f91
-	ld a, $02 ; $4f94
-	ld bc, $0700 ; $4f96
-	ld de, $3900 ; $4f99
-	farcall FarPtr_ScriptSetActorPosition ; $4f9c
+	script_set_position $02, $0700, $3900 ; $4f94
 	script_face $02, $c0 ; $4f9f
 Label_12_4fa6:
 	set_flag $1c, 0 ; $4fa6
-	ld a, $07 ; $4fa9
-	ld bc, $0300 ; $4fab
-	ld de, $3700 ; $4fae
-	farcall FarPtr_ScriptSetActorPosition ; $4fb1
+	script_set_position $07, $0300, $3700 ; $4fa9
 	script_face $07, $00 ; $4fb4
 	ld c, $06 ; $4fbb
 	call BeginFadeIn ; $4fbd
@@ -1417,19 +1369,13 @@ RestoreWallPracticeRoomActors:
 	test_flag $0f, 5 ; $52c0
 	jr z, Label_12_52f6 ; $52c3
 	set_flag $1c, 0 ; $52c5
-	ld a, $07 ; $52c8
-	ld bc, $0300 ; $52ca
-	ld de, $3700 ; $52cd
-	farcall FarPtr_ScriptSetActorPosition ; $52d0
+	script_set_position $07, $0300, $3700 ; $52c8
 	script_face $07, $00 ; $52d3
 	test_flag $05, 7 ; $52da
 	jr z, Label_12_52f6 ; $52dd
 	ld a, $02 ; $52df
 	farcall FarPtr_SetActorNullScript ; $52e1
-	ld a, $02 ; $52e4
-	ld bc, $0700 ; $52e6
-	ld de, $3900 ; $52e9
-	farcall FarPtr_ScriptSetActorPosition ; $52ec
+	script_set_position $02, $0700, $3900 ; $52e4
 	script_face $02, $c0 ; $52ef
 Label_12_52f6:
 	ret ; $52f6
@@ -2226,14 +2172,8 @@ Label_12_5bfa:
 	farcall FarPtr_SetActorNullScript ; $5d44
 	script_set_anim $0a, $01 ; $5d47
 	script_set_anim $0b, $01 ; $5d4e
-	ld a, $0a ; $5d55
-	ld bc, $1400 ; $5d57
-	ld de, $1300 ; $5d5a
-	farcall FarPtr_ScriptSetActorPosition ; $5d5d
-	ld a, $0b ; $5d60
-	ld bc, $1400 ; $5d62
-	ld de, $0f00 ; $5d65
-	farcall FarPtr_ScriptSetActorPosition ; $5d68
+	script_set_position $0a, $1400, $1300 ; $5d55
+	script_set_position $0b, $1400, $0f00 ; $5d60
 	ld a, $00 ; $5d6b
 	ld b, a ; $5d6d
 	ld a, $0a ; $5d6e
@@ -2290,24 +2230,15 @@ Label_12_5ddc:
 	ld a, [$c2b1] ; $5de1
 	cp a, $09 ; $5de4
 	jr c, Label_12_5df3 ; $5de6
-	ld a, $04 ; $5de8
-	ld bc, $3f00 ; $5dea
-	ld de, $3f00 ; $5ded
-	farcall FarPtr_ScriptSetActorPosition ; $5df0
+	script_set_position $04, $3f00, $3f00 ; $5de8
 Label_12_5df3:
 	ret ; $5df3
 Label_12_5df4:
 	ld a, [$c2b1] ; $5df4
 	cp a, $0a ; $5df7
 	jr c, Label_12_5df3 ; $5df9
-	ld a, $04 ; $5dfb
-	ld bc, $3f00 ; $5dfd
-	ld de, $3f00 ; $5e00
-	farcall FarPtr_ScriptSetActorPosition ; $5e03
-	ld a, $05 ; $5e06
-	ld bc, $3f00 ; $5e08
-	ld de, $3f00 ; $5e0b
-	farcall FarPtr_ScriptSetActorPosition ; $5e0e
+	script_set_position $04, $3f00, $3f00 ; $5dfb
+	script_set_position $05, $3f00, $3f00 ; $5e06
 	ret ; $5e11
 Func_12_5e12:
 	test_flag $05, 7 ; $5e12
@@ -2315,10 +2246,7 @@ Func_12_5e12:
 	ld a, [$c2b1] ; $5e17
 	cp a, $03 ; $5e1a
 	jr c, Label_12_5e30 ; $5e1c
-	ld a, $07 ; $5e1e
-	ld bc, $1b00 ; $5e20
-	ld de, $0d00 ; $5e23
-	farcall FarPtr_ScriptSetActorPosition ; $5e26
+	script_set_position $07, $1b00, $0d00 ; $5e1e
 	script_face $07, $80 ; $5e29
 Label_12_5e30:
 	ld a, [$c2b1] ; $5e30
@@ -2332,14 +2260,8 @@ Label_12_5e38:
 	jr c, Label_12_5e73 ; $5e3d
 	cp a, $09 ; $5e3f
 	jr nc, Label_12_5e73 ; $5e41
-	ld a, $09 ; $5e43
-	ld bc, $1b00 ; $5e45
-	ld de, $0b00 ; $5e48
-	farcall FarPtr_ScriptSetActorPosition ; $5e4b
-	ld a, $08 ; $5e4e
-	ld bc, $1b00 ; $5e50
-	ld de, $0d00 ; $5e53
-	farcall FarPtr_ScriptSetActorPosition ; $5e56
+	script_set_position $09, $1b00, $0b00 ; $5e43
+	script_set_position $08, $1b00, $0d00 ; $5e4e
 	script_face $09, $80 ; $5e59
 	script_face $08, $80 ; $5e60
 	ld a, $08 ; $5e67
@@ -2349,14 +2271,8 @@ Label_12_5e73:
 	ld a, [$c2b1] ; $5e73
 	cp a, $0a ; $5e76
 	jr c, Label_12_5e30 ; $5e78
-	ld a, $04 ; $5e7a
-	ld bc, $3f00 ; $5e7c
-	ld de, $3f00 ; $5e7f
-	farcall FarPtr_ScriptSetActorPosition ; $5e82
-	ld a, $05 ; $5e85
-	ld bc, $3f00 ; $5e87
-	ld de, $3f00 ; $5e8a
-	farcall FarPtr_ScriptSetActorPosition ; $5e8d
+	script_set_position $04, $3f00, $3f00 ; $5e7a
+	script_set_position $05, $3f00, $3f00 ; $5e85
 	ret ; $5e90
 Func_12_5e91:
 	ld a, [$c94d] ; $5e91
@@ -2771,14 +2687,8 @@ PlaceSeniorCourtPairA:
 	farcall FarPtr_SetActorNullScript ; $6406
 	ld a, $0e ; $6409
 	farcall FarPtr_SetActorNullScript ; $640b
-	ld a, $0d ; $640e
-	ld bc, $2900 ; $6410
-	ld de, $1300 ; $6413
-	farcall FarPtr_ScriptSetActorPosition ; $6416
-	ld a, $0e ; $6419
-	ld bc, $2900 ; $641b
-	ld de, $1900 ; $641e
-	farcall FarPtr_ScriptSetActorPosition ; $6421
+	script_set_position $0d, $2900, $1300 ; $640e
+	script_set_position $0e, $2900, $1900 ; $6419
 	script_face $0d, $80 ; $6424
 	script_face $0e, $80 ; $642b
 	ret ; $6432
@@ -2787,14 +2697,8 @@ PlaceSeniorCourtPairB:
 	farcall FarPtr_SetActorNullScript ; $6435
 	ld a, $10 ; $6438
 	farcall FarPtr_SetActorNullScript ; $643a
-	ld a, $0f ; $643d
-	ld bc, $3900 ; $643f
-	ld de, $1300 ; $6442
-	farcall FarPtr_ScriptSetActorPosition ; $6445
-	ld a, $10 ; $6448
-	ld bc, $3900 ; $644a
-	ld de, $1900 ; $644d
-	farcall FarPtr_ScriptSetActorPosition ; $6450
+	script_set_position $0f, $3900, $1300 ; $643d
+	script_set_position $10, $3900, $1900 ; $6448
 	script_face $0f, $80 ; $6453
 	script_face $10, $80 ; $645a
 	script_wait_frames $14 ; $6461
@@ -3455,15 +3359,9 @@ SeniorCourtPostMatchReturn:
 Label_12_6db5:
 	script_player_speed $0040 ; $6db5
 	script_move_player $2d00, $1b00 ; $6dbb
-	ld a, $00 ; $6dc5
-	ld bc, $2d00 ; $6dc7
-	ld de, $1b00 ; $6dca
-	farcall FarPtr_ScriptSetActorPosition ; $6dcd
+	script_set_position $00, $2d00, $1b00 ; $6dc5
 	script_face $00, $c0 ; $6dd0
-	ld a, $02 ; $6dd7
-	ld bc, $2d00 ; $6dd9
-	ld de, $1d00 ; $6ddc
-	farcall FarPtr_ScriptSetActorPosition ; $6ddf
+	script_set_position $02, $2d00, $1d00 ; $6dd7
 	script_face $02, $c0 ; $6de2
 	farcall FarPtr_WaitPlayerMoveDone ; $6de9
 	ret ; $6dec
@@ -3501,25 +3399,13 @@ SeniorMatchVictorySceneDispatch:
 	ld a, $08 ; $6e24
 	farcall FarPtr_SetActorNullScript ; $6e26
 	script_face $03, $80 ; $6e29
-	ld a, $08 ; $6e30
-	ld bc, $2500 ; $6e32
-	ld de, $1300 ; $6e35
-	farcall FarPtr_ScriptSetActorPosition ; $6e38
+	script_set_position $08, $2500, $1300 ; $6e30
 	script_face $08, $40 ; $6e3b
-	ld a, $09 ; $6e42
-	ld bc, $2300 ; $6e44
-	ld de, $0f00 ; $6e47
-	farcall FarPtr_ScriptSetActorPosition ; $6e4a
+	script_set_position $09, $2300, $0f00 ; $6e42
 	script_face $09, $40 ; $6e4d
 	script_set_text $1080 ; $6e54
-	ld a, $00 ; $6e5a
-	ld bc, $2500 ; $6e5c
-	ld de, $1b00 ; $6e5f
-	farcall FarPtr_ScriptSetActorPosition ; $6e62
-	ld a, $02 ; $6e65
-	ld bc, $2300 ; $6e67
-	ld de, $1b00 ; $6e6a
-	farcall FarPtr_ScriptSetActorPosition ; $6e6d
+	script_set_position $00, $2500, $1b00 ; $6e5a
+	script_set_position $02, $2300, $1b00 ; $6e65
 	script_face $00, $c0 ; $6e70
 	script_face $02, $c0 ; $6e77
 	script_player_speed $0040 ; $6e7e
@@ -3533,18 +3419,12 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_move $09 ; $6eab
 	script_face_pair $09, $08 ; $6eb0
 	script_wait_frames $14 ; $6eb8
-	ld a, $11 ; $6ebf
-	ld bc, $2400 ; $6ec1
-	ld de, $1180 ; $6ec4
-	farcall FarPtr_ScriptSetActorPosition ; $6ec7
+	script_set_position $11, $2400, $1180 ; $6ebf
 	sound $96 ; $6eca
 	script_wait_frames $1e ; $6ecc
 	script_set_anim $08, $04 ; $6ed3
 	script_wait_idle $08 ; $6eda
-	ld a, $11 ; $6edf
-	ld bc, $3f00 ; $6ee1
-	ld de, $3f00 ; $6ee4
-	farcall FarPtr_ScriptSetActorPosition ; $6ee7
+	script_set_position $11, $3f00, $3f00 ; $6edf
 	ld a, $03 ; $6eea
 	ld de, $ff80 ; $6eec
 	farcall FarPtr_ScriptSetActorJumpVelocity ; $6eef
@@ -3580,24 +3460,12 @@ SeniorMatchVictorySceneDispatch:
 	ld a, $02 ; $6f6a
 	farcall FarPtr_SetActorNullScript ; $6f6c
 	script_face $03, $00 ; $6f6f
-	ld a, $07 ; $6f76
-	ld bc, $3300 ; $6f78
-	ld de, $1100 ; $6f7b
-	farcall FarPtr_ScriptSetActorPosition ; $6f7e
+	script_set_position $07, $3300, $1100 ; $6f76
 	script_face $07, $40 ; $6f81
-	ld a, $06 ; $6f88
-	ld bc, $3500 ; $6f8a
-	ld de, $1300 ; $6f8d
-	farcall FarPtr_ScriptSetActorPosition ; $6f90
+	script_set_position $06, $3500, $1300 ; $6f88
 	script_face $06, $40 ; $6f93
-	ld a, $00 ; $6f9a
-	ld bc, $3300 ; $6f9c
-	ld de, $1b00 ; $6f9f
-	farcall FarPtr_ScriptSetActorPosition ; $6fa2
-	ld a, $02 ; $6fa5
-	ld bc, $3500 ; $6fa7
-	ld de, $1b00 ; $6faa
-	farcall FarPtr_ScriptSetActorPosition ; $6fad
+	script_set_position $00, $3300, $1b00 ; $6f9a
+	script_set_position $02, $3500, $1b00 ; $6fa5
 	script_face $00, $c0 ; $6fb0
 	script_face $02, $c0 ; $6fb7
 	call FadeInSeniorCourtNearPairB ; $6fbe
@@ -3644,14 +3512,8 @@ SeniorMatchVictorySceneDispatch:
 	farcall FarPtr_04_20 ; $706a
 	farcall FarPtr_EndCutsceneScriptMode ; $706d
 	ret ; $7070
-	ld a, $09 ; $7071
-	ld bc, $1b00 ; $7073
-	ld de, $0b00 ; $7076
-	farcall FarPtr_ScriptSetActorPosition ; $7079
-	ld a, $08 ; $707c
-	ld bc, $1b00 ; $707e
-	ld de, $0d00 ; $7081
-	farcall FarPtr_ScriptSetActorPosition ; $7084
+	script_set_position $09, $1b00, $0b00 ; $7071
+	script_set_position $08, $1b00, $0d00 ; $707c
 	script_face $09, $80 ; $7087
 	script_face $08, $80 ; $708e
 	ld a, $08 ; $7095
@@ -3659,35 +3521,20 @@ SeniorMatchVictorySceneDispatch:
 	script_set_anim $08, $01 ; $709a
 	ld a, $02 ; $70a1
 	farcall FarPtr_SetActorNullScript ; $70a3
-	ld a, $03 ; $70a6
-	ld bc, $2b00 ; $70a8
-	ld de, $2700 ; $70ab
-	farcall FarPtr_ScriptSetActorPosition ; $70ae
-	ld a, $04 ; $70b1
-	ld bc, $2500 ; $70b3
-	ld de, $0f00 ; $70b6
-	farcall FarPtr_ScriptSetActorPosition ; $70b9
+	script_set_position $03, $2b00, $2700 ; $70a6
+	script_set_position $04, $2500, $0f00 ; $70b1
 	script_face $04, $40 ; $70bc
 	ld a, $04 ; $70c3
 	farcall FarPtr_SetActorNullScript ; $70c5
 	script_set_anim $04, $01 ; $70c8
-	ld a, $05 ; $70cf
-	ld bc, $2300 ; $70d1
-	ld de, $1300 ; $70d4
-	farcall FarPtr_ScriptSetActorPosition ; $70d7
+	script_set_position $05, $2300, $1300 ; $70cf
 	script_face $05, $40 ; $70da
 	ld a, $05 ; $70e1
 	farcall FarPtr_SetActorNullScript ; $70e3
 	script_set_anim $05, $01 ; $70e6
-	ld a, $00 ; $70ed
-	ld bc, $2500 ; $70ef
-	ld de, $1b00 ; $70f2
-	farcall FarPtr_ScriptSetActorPosition ; $70f5
+	script_set_position $00, $2500, $1b00 ; $70ed
 	script_face $00, $c0 ; $70f8
-	ld a, $02 ; $70ff
-	ld bc, $2300 ; $7101
-	ld de, $1b00 ; $7104
-	farcall FarPtr_ScriptSetActorPosition ; $7107
+	script_set_position $02, $2300, $1b00 ; $70ff
 	script_face $02, $c0 ; $710a
 	script_player_speed $0040 ; $7111
 	script_move_player $2400, $1500 ; $7117
@@ -3801,10 +3648,7 @@ SeniorMatchVictorySceneDispatch:
 	call WaitFadeEnd ; $73ab
 	farcall FarPtr_EndCutsceneScriptMode ; $73ae
 	ret ; $73b1
-	ld a, $07 ; $73b2
-	ld bc, $2300 ; $73b4
-	ld de, $0f00 ; $73b7
-	farcall FarPtr_ScriptSetActorPosition ; $73ba
+	script_set_position $07, $2300, $0f00 ; $73b2
 	script_face $07, $40 ; $73bd
 	call FadeInSeniorCourtNearPairA ; $73c4
 	script_set_text $104a ; $73c7
@@ -3834,16 +3678,10 @@ SeniorMatchVictorySceneDispatch:
 	farcall FarPtr_EndCutsceneScriptMode ; $7445
 	ret ; $7448
 	set_flag $0a, 5 ; $7449
-	ld a, $06 ; $744c
-	ld bc, $3300 ; $744e
-	ld de, $0f00 ; $7451
-	farcall FarPtr_ScriptSetActorPosition ; $7454
+	script_set_position $06, $3300, $0f00 ; $744c
 	script_face $06, $40 ; $7457
 	call FadeInSeniorCourtNearPairB ; $745e
-	ld a, $00 ; $7461
-	ld bc, $3400 ; $7463
-	ld de, $1b00 ; $7466
-	farcall FarPtr_ScriptSetActorPosition ; $7469
+	script_set_position $00, $3400, $1b00 ; $7461
 	script_set_text $1023 ; $746c
 	script_speak $06 ; $7472
 	ld a, $03 ; $7477
@@ -3866,16 +3704,10 @@ SeniorMatchVictorySceneDispatch:
 	ret ; $74b7
 	set_flag $0a, 6 ; $74b8
 	call PlaceSeniorCourtPairB ; $74bb
-	ld a, $05 ; $74be
-	ld bc, $3300 ; $74c0
-	ld de, $0f00 ; $74c3
-	farcall FarPtr_ScriptSetActorPosition ; $74c6
+	script_set_position $05, $3300, $0f00 ; $74be
 	script_face $05, $40 ; $74c9
 	call FadeInSeniorCourtNearPairB ; $74d0
-	ld a, $00 ; $74d3
-	ld bc, $3400 ; $74d5
-	ld de, $1b00 ; $74d8
-	farcall FarPtr_ScriptSetActorPosition ; $74db
+	script_set_position $00, $3400, $1b00 ; $74d3
 	script_set_text $1020 ; $74de
 	script_speak $05 ; $74e4
 	ld a, $03 ; $74e9
@@ -3898,18 +3730,9 @@ SeniorMatchVictorySceneDispatch:
 	ret ; $7529
 	script_player_speed $0040 ; $752a
 	script_set_speed $04, $0018 ; $7530
-	ld a, $03 ; $7538
-	ld bc, $2b00 ; $753a
-	ld de, $2700 ; $753d
-	farcall FarPtr_ScriptSetActorPosition ; $7540
-	ld a, $04 ; $7543
-	ld bc, $2200 ; $7545
-	ld de, $0f00 ; $7548
-	farcall FarPtr_ScriptSetActorPosition ; $754b
-	ld a, $00 ; $754e
-	ld bc, $2400 ; $7550
-	ld de, $1b00 ; $7553
-	farcall FarPtr_ScriptSetActorPosition ; $7556
+	script_set_position $03, $2b00, $2700 ; $7538
+	script_set_position $04, $2200, $0f00 ; $7543
+	script_set_position $00, $2400, $1b00 ; $754e
 	script_move_player $2400, $1500 ; $7559
 	farcall FarPtr_WaitPlayerMoveDone ; $7563
 	script_face $00, $c0 ; $7566
@@ -3968,10 +3791,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_anim $00, $02 ; $76b7
 	script_wait_idle $00 ; $76be
 	script_face $00, $c0 ; $76c3
-	ld a, $11 ; $76ca
-	ld bc, $2580 ; $76cc
-	ld de, $1980 ; $76cf
-	farcall FarPtr_ScriptSetActorPosition ; $76d2
+	script_set_position $11, $2580, $1980 ; $76ca
 	sound $96 ; $76d5
 	script_wait_frames $28 ; $76d7
 	script_move_player $2400, $1700 ; $76de
@@ -3980,10 +3800,7 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_frames $28 ; $76f2
 	script_move_target $04, $2400, $1500 ; $76f9
 	script_wait_move $04 ; $7704
-	ld a, $11 ; $7709
-	ld bc, $3f00 ; $770b
-	ld de, $3f00 ; $770e
-	farcall FarPtr_ScriptSetActorPosition ; $7711
+	script_set_position $11, $3f00, $3f00 ; $7709
 	script_speak $04 ; $7714
 	ld a, $10 ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b
@@ -4055,10 +3872,7 @@ Label_12_7793:
 FadeInSeniorCourtNearPairA:
 	call PlaceSeniorCourtPairA ; $77c2
 	script_player_speed $0040 ; $77c5
-	ld a, $00 ; $77cb
-	ld bc, $2400 ; $77cd
-	ld de, $1b00 ; $77d0
-	farcall FarPtr_ScriptSetActorPosition ; $77d3
+	script_set_position $00, $2400, $1b00 ; $77cb
 	script_move_player $2400, $1500 ; $77d6
 	farcall FarPtr_WaitPlayerMoveDone ; $77e0
 	script_face $00, $c0 ; $77e3
