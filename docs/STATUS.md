@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `098b5e3`); the whole history rebuilds
+Everything below is **committed** (HEAD `9125a3f`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -887,7 +887,9 @@ to be:
   exhibition-match story (arrival cutscenes singles/doubles, Peach's exhibition
   prompt with Hard/Intense/MAX select, decline tantrum, the 6
   LoadExhibitionMatchSettings stubs and HandleExhibitionMatchResult).
-- **Bank $0f = Island Open tournament site.** Round computation from story
+- **Bank $0f = Island Open tournament site.** Three map-script trees:
+  Tournament (loc $19), Awards Ceremony (loc $1a), and the leftover dev map
+  "Small Char. Test" (loc $02). Round computation from story
   flags, per-round NPC loads, round-call/break/arrival cutscenes, podium
   announcement, and the victory transition to the plane cutscene (location $1b).
 - **Bank $11 = Academy arrival + junior-class ranking courts.** The game-opening
@@ -1051,5 +1053,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `098b5e3`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `9125a3f`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
