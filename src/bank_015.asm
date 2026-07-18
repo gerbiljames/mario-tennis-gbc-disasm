@@ -1745,7 +1745,7 @@ TrainingCourtIntroTourScene:
 	xor a, a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1
 	ldh a, [hRomBank] ; $59c4
-	ld hl, $5c4f ; $59c6
+	ld hl, TrainingCourtTourActors_15 ; $59c6
 	farcall FarPtr_ScriptRespawnLocationActors ; $59c9
 	farcall FarPtr_BeginCutsceneScriptMode ; $59cc
 	script_set_position $00, $3f00, $3f00 ; $59cf
@@ -1843,19 +1843,20 @@ TrainingCourtIntroTourScene:
 	ld [wStoryModeExitLocationRequest], a ; $5c48
 	farcall FarPtr_EndCutsceneScriptMode ; $5c4b
 	ret ; $5c4e
-	; $5c4f, 164 bytes (bytes:14)
-	db $00, $00, $e6, $55, $00, $33, $00, $2a, $c0, $00, $39, $01, $06, $00 ; 0x00
-	db $00, $00, $e6, $55, $00, $35, $00, $23, $40, $00, $32, $01, $03, $00 ; 0x0e
-	db $00, $00, $e6, $55, $00, $35, $00, $2a, $c0, $00, $34, $01, $07, $00 ; 0x1c
-	db $00, $00, $6d, $7d, $00, $2d, $00, $21, $00, $00, $66, $01, $07, $00 ; 0x2a
-	db $00, $00, $e6, $55, $00, $0b, $00, $23, $40, $00, $34, $01, $03, $00 ; 0x38
-	db $00, $00, $e6, $55, $00, $0d, $00, $23, $40, $00, $39, $01, $05, $00 ; 0x46
-	db $00, $00, $e6, $55, $00, $0c, $00, $29, $c0, $00, $33, $01, $04, $00 ; 0x54
-	db $00, $00, $6d, $7d, $00, $13, $00, $27, $40, $00, $64, $01, $06, $00 ; 0x62
-	db $00, $00, $6d, $7d, $00, $13, $00, $29, $c0, $00, $68, $01, $04, $00 ; 0x70
-	db $00, $00, $6d, $7d, $00, $2d, $00, $29, $00, $00, $6b, $01, $07, $00 ; 0x7e
-	db $00, $00, $6d, $7d, $00, $01, $00, $01, $40, $00, $49, $01, $00, $00 ; 0x8c
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x9a
+TrainingCourtTourActors_15:
+	; $5c4f, 164 bytes (map_actors)
+	map_actor $0000, $55e6, $3300, $2a00, $c0, $39, $01, $06
+	map_actor $0000, $55e6, $3500, $2300, $40, $32, $01, $03
+	map_actor $0000, $55e6, $3500, $2a00, $c0, $34, $01, $07
+	map_actor $0000, $7d6d, $2d00, $2100, $00, $66, $01, $07
+	map_actor $0000, $55e6, $0b00, $2300, $40, $34, $01, $03
+	map_actor $0000, $55e6, $0d00, $2300, $40, $39, $01, $05
+	map_actor $0000, $55e6, $0c00, $2900, $c0, $33, $01, $04
+	map_actor $0000, $7d6d, $1300, $2700, $40, $64, $01, $06
+	map_actor $0000, $7d6d, $1300, $2900, $c0, $68, $01, $04
+	map_actor $0000, $7d6d, $2d00, $2900, $00, $6b, $01, $07
+	map_actor $0000, $7d6d, $0100, $0100, $40, $49, $01, $00
+	map_actor_end
 ServeChallengerResultScene:
 	xor a, a ; $5cf3
 	ld [wStoryModeShowLocationName], a ; $5cf4

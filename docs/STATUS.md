@@ -21,6 +21,14 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Bank $15 tour-scene actor list (2026-07-19)
+
+`$15:$5c4f` was a 164-byte `bytes:14` blob — actually the `map_actor` spawn
+list `TrainingCourtIntroTourScene` passes to `ScriptRespawnLocationActors`
+(`ld hl,$5c4f`): 11 `{cond, objdef, x, y, facing, obj_id, anim, palette}`
+records + a `map_actor_end` sentinel. Retyped to `map_actors`
+(`TrainingCourtTourActors_15`); renders as `map_actor` macros.
+
 ### Bank $18 frame-task callbacks (2026-07-19)
 
 `$18:$7a57` was a 375-byte `bytes:4` blob that had swallowed three

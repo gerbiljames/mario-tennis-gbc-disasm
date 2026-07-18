@@ -1639,6 +1639,7 @@
 "0x558c6": "QueueWaterSpriteMinigameCounterPanel",
 "0x558e4": "InitWaterSpriteMinigameHud",
 "0x559c0": "TrainingCourtIntroTourScene",
+"0x55c4f": "TrainingCourtTourActors_15",
 "0x55cf3": "ServeChallengerResultScene",
 "0x55d74": "NetChallengerResultScene",
 "0x55df3": "StrokeChallengerResultScene",
