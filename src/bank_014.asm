@@ -1089,10 +1089,7 @@ Label_14_4bf5:
 	script_set_anim $09, $02 ; $4c4c
 	script_wait_idle $09 ; $4c53
 	script_speak $09 ; $4c58
-	ld a, $00 ; $4c5d
-	ld b, a ; $4c5f
-	ld a, $08 ; $4c60
-	farcall FarPtr_FaceActorTowardActor ; $4c62
+	script_face_toward $00, $08 ; $4c5d
 	script_wait_frames $14 ; $4c65
 	script_set_position $0c, $0a80, $2180 ; $4c6c
 	sound $97 ; $4c77
@@ -1109,10 +1106,7 @@ Label_14_4bf5:
 	sound $98 ; $4cc6
 	script_wait_frames $3c ; $4cc8
 	script_set_position $0e, $3f00, $3f00 ; $4ccf
-	ld a, $00 ; $4cda
-	ld b, a ; $4cdc
-	ld a, $09 ; $4cdd
-	farcall FarPtr_FaceActorTowardActor ; $4cdf
+	script_face_toward $00, $09 ; $4cda
 	script_wait_frames $14 ; $4ce2
 	script_set_position $0c, $0c80, $2180 ; $4ce9
 	sound $97 ; $4cf4
@@ -1143,18 +1137,12 @@ Label_14_4bf5:
 Court2SpectatorsRepeatChat:
 	script_set_anim $08, $02 ; $4d6d
 	script_wait_idle $08 ; $4d74
-	ld a, $00 ; $4d79
-	ld b, a ; $4d7b
-	ld a, $08 ; $4d7c
-	farcall FarPtr_FaceActorTowardActor ; $4d7e
+	script_face_toward $00, $08 ; $4d79
 	script_set_text $246f ; $4d81
 	script_speak $08 ; $4d87
 	script_set_anim $09, $02 ; $4d8c
 	script_wait_idle $09 ; $4d93
-	ld a, $00 ; $4d98
-	ld b, a ; $4d9a
-	ld a, $09 ; $4d9b
-	farcall FarPtr_FaceActorTowardActor ; $4d9d
+	script_face_toward $00, $09 ; $4d98
 	script_speak $09 ; $4da0
 	script_set_anim $08, $03 ; $4da5
 	script_set_anim $09, $03 ; $4dac

@@ -857,10 +857,7 @@ Label_0e_4d83:
 	ld a, $00 ; $4d85
 	ret ; $4d87
 RunRepairCounterDialogue:
-	ld a, $00 ; $4d88
-	ld b, a ; $4d8a
-	ld a, $0e ; $4d8b
-	farcall FarPtr_FaceActorTowardActor ; $4d8d
+	script_face_toward $00, $0e ; $4d88
 	test_flag $0a, 3 ; $4d90
 	jp z, Label_0e_4da5 ; $4d93
 	test_flag $0a, 7 ; $4d96
@@ -914,10 +911,7 @@ Label_0e_4e1d:
 	script_set_text $20e7 ; $4e1d
 	set_flag $0f, 7 ; $4e23
 Label_0e_4e26:
-	ld a, $00 ; $4e26
-	ld b, a ; $4e28
-	ld a, $0e ; $4e29
-	farcall FarPtr_FaceActorTowardActor ; $4e2b
+	script_face_toward $00, $0e ; $4e26
 	ld a, $0e ; $4e2e
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4e30
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4e33
@@ -1095,10 +1089,7 @@ Label_0e_4fbb:
 RepairCounterReturnA:
 	ld a, $0b ; $4fbf
 	ld [$c2b1], a ; $4fc1
-	ld a, $00 ; $4fc4
-	ld b, a ; $4fc6
-	ld a, $0e ; $4fc7
-	farcall FarPtr_FaceActorTowardActor ; $4fc9
+	script_face_toward $00, $0e ; $4fc4
 	script_set_position $02, $0f00, $0f00 ; $4fcc
 	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda
@@ -1157,10 +1148,7 @@ Label_0e_5056:
 	script_speak $0e ; $505f
 	call ShowEquipChangeConfirmation ; $5064
 	set_flag $0f, 7 ; $5067
-	ld a, $00 ; $506a
-	ld b, a ; $506c
-	ld a, $0e ; $506d
-	farcall FarPtr_FaceActorTowardActor ; $506f
+	script_face_toward $00, $0e ; $506a
 	script_set_text $20f1 ; $5072
 	call PushEquipmentNameTextArg ; $5078
 	script_speak $0e ; $507b
@@ -1197,10 +1185,7 @@ RepairCounterReopenServiceMenu:
 	ld hl, $00e6 ; $50e7
 	call FetchAndPushShortTextArg ; $50ea
 	set_flag $0f, 7 ; $50ed
-	ld a, $00 ; $50f0
-	ld b, a ; $50f2
-	ld a, $0e ; $50f3
-	farcall FarPtr_FaceActorTowardActor ; $50f5
+	script_face_toward $00, $0e ; $50f0
 	ld c, $08 ; $50f8
 	call BeginFadeIn ; $50fa
 	call WaitFadeEnd ; $50fd
@@ -1254,10 +1239,7 @@ Label_0e_515e:
 	ld a, $00 ; $518b
 	farcall FarPtr_SetActorNullScript ; $518d
 	script_set_anim $00, $01 ; $5190
-	ld a, $0e ; $5197
-	ld b, a ; $5199
-	ld a, $00 ; $519a
-	farcall FarPtr_FaceActorTowardActor ; $519c
+	script_face_toward $0e, $00 ; $5197
 	call Func_0e_520f ; $519f
 	ret ; $51a2
 Label_0e_51a3:
@@ -1272,10 +1254,7 @@ Label_0e_51a3:
 	farcall FarPtr_SetActorNullScript ; $51bc
 	script_set_anim $00, $01 ; $51bf
 	script_set_speed $00, $0020 ; $51c6
-	ld a, $0e ; $51ce
-	ld b, a ; $51d0
-	ld a, $00 ; $51d1
-	farcall FarPtr_FaceActorTowardActor ; $51d3
+	script_face_toward $0e, $00 ; $51ce
 	ret ; $51d6
 	INCBIN "data/bank_00e/d_51d7.bin" ; $51d7, 56 bytes
 Func_0e_520f:

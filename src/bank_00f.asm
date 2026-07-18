@@ -378,10 +378,7 @@ Func_0f_4725:
 	script_wait_move $03 ; $4746
 	ld a, $0a ; $474b
 	call DelayFrames ; $474d
-	ld a, $0b ; $4750
-	ld b, a ; $4752
-	ld a, $00 ; $4753
-	farcall FarPtr_FaceActorTowardActor ; $4755
+	script_face_toward $0b, $00 ; $4750
 	script_face $03, $c0 ; $4758
 	ld a, $3c ; $475f
 	call DelayFrames ; $4761
@@ -751,10 +748,7 @@ Label_0f_4ea7:
 	script_wait_move $02 ; $4ec2
 	ld a, $0a ; $4ec7
 	call DelayFrames ; $4ec9
-	ld a, $0b ; $4ecc
-	ld b, a ; $4ece
-	ld a, $00 ; $4ecf
-	farcall FarPtr_FaceActorTowardActor ; $4ed1
+	script_face_toward $0b, $00 ; $4ecc
 	script_face $02, $c0 ; $4ed4
 	ld a, $3c ; $4edb
 	call DelayFrames ; $4edd
@@ -1199,10 +1193,7 @@ Label_0f_56a8:
 	call Func_0f_5b4d ; $56a8
 	script_set_anim $03, $02 ; $56ab
 	script_wait_idle $03 ; $56b2
-	ld a, $00 ; $56b7
-	ld b, a ; $56b9
-	ld a, $03 ; $56ba
-	farcall FarPtr_FaceActorTowardActor ; $56bc
+	script_face_toward $00, $03 ; $56b7
 	ld a, $0a ; $56bf
 	call DelayFrames ; $56c1
 	script_set_text $286b ; $56c4
@@ -1212,10 +1203,7 @@ Label_0f_56a8:
 	script_speak $03 ; $56db
 	script_set_anim $00, $03 ; $56e0
 	script_wait_idle $00 ; $56e7
-	ld a, $03 ; $56ec
-	ld b, a ; $56ee
-	ld a, $04 ; $56ef
-	farcall FarPtr_FaceActorTowardActor ; $56f1
+	script_face_toward $03, $04 ; $56ec
 	script_set_anim $04, $02 ; $56f4
 	script_wait_idle $04 ; $56fb
 	script_speak $04 ; $5700
@@ -1226,10 +1214,7 @@ Label_0f_56a8:
 	script_set_position $13, $3f00, $3f00 ; $5717
 	script_set_anim $03, $02 ; $5722
 	script_wait_idle $03 ; $5729
-	ld a, $04 ; $572e
-	ld b, a ; $5730
-	ld a, $03 ; $5731
-	farcall FarPtr_FaceActorTowardActor ; $5733
+	script_face_toward $04, $03 ; $572e
 	script_speak $03 ; $5736
 	script_set_anim $04, $02 ; $573b
 	script_wait_idle $04 ; $5742
@@ -1239,10 +1224,7 @@ Label_0f_56a8:
 	script_face_pair $00, $03 ; $5751
 	ld a, $50 ; $5759
 	call DelayFrames ; $575b
-	ld a, $04 ; $575e
-	ld b, a ; $5760
-	ld a, $03 ; $5761
-	farcall FarPtr_FaceActorTowardActor ; $5763
+	script_face_toward $04, $03 ; $575e
 	script_face_pair $04, $00 ; $5766
 	ld a, $1e ; $576e
 	call DelayFrames ; $5770
@@ -1321,19 +1303,13 @@ Label_0f_5889:
 	call Func_0f_5aec ; $58d7
 	script_set_anim $00, $03 ; $58da
 	script_wait_idle $00 ; $58e1
-	ld a, $02 ; $58e6
-	ld b, a ; $58e8
-	ld a, $04 ; $58e9
-	farcall FarPtr_FaceActorTowardActor ; $58eb
+	script_face_toward $02, $04 ; $58e6
 	ld a, $0a ; $58ee
 	call DelayFrames ; $58f0
 	script_set_anim $04, $02 ; $58f3
 	script_wait_idle $04 ; $58fa
 	script_speak $04 ; $58ff
-	ld a, $00 ; $5904
-	ld b, a ; $5906
-	ld a, $05 ; $5907
-	farcall FarPtr_FaceActorTowardActor ; $5909
+	script_face_toward $00, $05 ; $5904
 	script_speak $05 ; $590c
 	script_set_position $15, $0c80, $2580 ; $5911
 	sound $98 ; $591c
@@ -1904,10 +1880,7 @@ Label_0f_62c4:
 	farcall FarPtr_WriteStoryStateWord ; $62d2
 	farcall FarPtr_BeginCutsceneScriptMode ; $62d5
 	call SetPlayerAndPartnerObjectDefs ; $62d8
-	ld a, $00 ; $62db
-	ld b, a ; $62dd
-	ld a, $04 ; $62de
-	farcall FarPtr_FaceActorTowardActor ; $62e0
+	script_face_toward $00, $04 ; $62db
 	script_face $03, $00 ; $62e3
 	ret ; $62ea
 Label_0f_62eb:
@@ -3014,25 +2987,16 @@ Label_0f_74b0:
 	script_wait_frames $2d ; $74ff
 	script_set_anim $03, $02 ; $7506
 	script_wait_idle $03 ; $750d
-	ld a, $03 ; $7512
-	ld b, a ; $7514
-	ld a, $00 ; $7515
-	farcall FarPtr_FaceActorTowardActor ; $7517
+	script_face_toward $03, $00 ; $7512
 	script_set_position $08, $3f00, $3f00 ; $751a
 	script_speak $03 ; $7525
 	script_set_anim $05, $02 ; $752a
 	script_wait_idle $05 ; $7531
-	ld a, $05 ; $7536
-	ld b, a ; $7538
-	ld a, $00 ; $7539
-	farcall FarPtr_FaceActorTowardActor ; $753b
+	script_face_toward $05, $00 ; $7536
 	script_speak $05 ; $753e
 	script_set_anim $04, $03 ; $7543
 	script_wait_idle $04 ; $754a
-	ld a, $04 ; $754f
-	ld b, a ; $7551
-	ld a, $00 ; $7552
-	farcall FarPtr_FaceActorTowardActor ; $7554
+	script_face_toward $04, $00 ; $754f
 	script_speak $04 ; $7557
 	call IslandOpenBreakCutscene ; $755c
 	script_set_text $2849 ; $755f
@@ -3047,10 +3011,7 @@ Label_0f_7571:
 	call QueueShortText ; $7571
 	script_face $04, $c0 ; $7574
 	script_face $03, $00 ; $757b
-	ld a, $04 ; $7582
-	ld b, a ; $7584
-	ld a, $00 ; $7585
-	farcall FarPtr_FaceActorTowardActor ; $7587
+	script_face_toward $04, $00 ; $7582
 	script_speak $04 ; $758a
 	script_move_angle $04, $00, $0200 ; $758f
 	script_wait_move $04 ; $7599
@@ -3176,10 +3137,7 @@ Label_0f_76f6:
 	call WaitFadeEnd ; $7729
 	call ComputeIslandOpenRound ; $772c
 	farcall FarPtr_BeginCutsceneScriptMode ; $772f
-	ld a, $00 ; $7732
-	ld b, a ; $7734
-	ld a, $02 ; $7735
-	farcall FarPtr_FaceActorTowardActor ; $7737
+	script_face_toward $00, $02 ; $7732
 	ld c, $04 ; $773a
 	call BeginFadeIn ; $773c
 	call WaitFadeEnd ; $773f
@@ -3211,19 +3169,13 @@ Label_0f_7763:
 	ld a, [hl] ; $776e
 	xor a, $20 ; $776f
 	ld [hl], a ; $7771
-	ld a, $00 ; $7772
-	ld b, a ; $7774
-	ld a, $02 ; $7775
-	farcall FarPtr_FaceActorTowardActor ; $7777
+	script_face_toward $00, $02 ; $7772
 	ld a, $02 ; $777a
 	ld de, $ff80 ; $777c
 	farcall FarPtr_ScriptSetActorJumpVelocity ; $777f
 	ld a, $02 ; $7782
 	farcall FarPtr_ScriptWaitActorJumpDone ; $7784
-	ld a, $02 ; $7787
-	ld b, a ; $7789
-	ld a, $00 ; $778a
-	farcall FarPtr_FaceActorTowardActor ; $778c
+	script_face_toward $02, $00 ; $7787
 	script_speak $02 ; $778f
 	script_set_position $08, $2000, $0f80 ; $7794
 	sound $97 ; $779f
@@ -3231,27 +3183,15 @@ Label_0f_7763:
 	script_set_anim $03, $02 ; $77a8
 	script_wait_idle $03 ; $77af
 	script_set_position $08, $3f00, $3f00 ; $77b4
-	ld a, $03 ; $77bf
-	ld b, a ; $77c1
-	ld a, $00 ; $77c2
-	farcall FarPtr_FaceActorTowardActor ; $77c4
+	script_face_toward $03, $00 ; $77bf
 	script_speak $03 ; $77c7
 	script_set_anim $04, $03 ; $77cc
 	script_wait_idle $04 ; $77d3
-	ld a, $04 ; $77d8
-	ld b, a ; $77da
-	ld a, $00 ; $77db
-	farcall FarPtr_FaceActorTowardActor ; $77dd
-	ld a, $04 ; $77e0
-	ld b, a ; $77e2
-	ld a, $02 ; $77e3
-	farcall FarPtr_FaceActorTowardActor ; $77e5
+	script_face_toward $04, $00 ; $77d8
+	script_face_toward $04, $02 ; $77e0
 	script_speak $04 ; $77e8
 	call IslandOpenBreakCutscene ; $77ed
-	ld a, $00 ; $77f0
-	ld b, a ; $77f2
-	ld a, $04 ; $77f3
-	farcall FarPtr_FaceActorTowardActor ; $77f5
+	script_face_toward $00, $04 ; $77f0
 	script_face $03, $00 ; $77f8
 	script_set_text $2849 ; $77ff
 	ld a, [$c2b0] ; $7805
@@ -3263,14 +3203,8 @@ Label_0f_7763:
 	inc h ; $7810
 Label_0f_7811:
 	call QueueShortText ; $7811
-	ld a, $04 ; $7814
-	ld b, a ; $7816
-	ld a, $00 ; $7817
-	farcall FarPtr_FaceActorTowardActor ; $7819
-	ld a, $04 ; $781c
-	ld b, a ; $781e
-	ld a, $02 ; $781f
-	farcall FarPtr_FaceActorTowardActor ; $7821
+	script_face_toward $04, $00 ; $7814
+	script_face_toward $04, $02 ; $781c
 	script_speak $03 ; $7824
 	set_flag $17, 1 ; $7829
 	ld a, $02 ; $782c
