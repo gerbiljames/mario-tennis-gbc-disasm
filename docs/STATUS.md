@@ -21,6 +21,18 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Match-result tilemap scripts (2026-07-19)
+
+`$16:$4abd` (480 bytes) was a `records:2` blob — really a 20-entry `dw` pointer
+table (`MatchResultTilemapScripts_16`) plus the copy lists it indexes. The
+routine at `$16:$4a71` (`BuildMatchResultTilemap`) selects a list by
+`wCurrentMinigameStoryMatch`'s low byte (`$c8f7`) and walks it, farcalling
+`CopyTilemapRect` (width fixed at 2 tiles) per record. A `tilemap_scripts`
+render spec (`render_tilemap_scripts` in `disasm.py`) now emits the pointers as
+`.scriptN` locals and each list as `tilemap_copy dest, src, rows` macro records
+ended by a `tilemap_copy_end` sentinel (an all-zero 5-byte record — the routine
+stops on a `$0000` dest word). Still byte-perfect.
+
 ### Cutscene script macros (2026-07-18)
 
 Story cutscenes are hand-written native code — long runs of a fixed register

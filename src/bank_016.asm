@@ -585,9 +585,10 @@ Func_16_4a56:
 Label_16_4a6f:
 	ret ; $4a6f
 	ret ; $4a70
+BuildMatchResultTilemap:
 	ld a, [$c8f7] ; $4a71
 	add a, a ; $4a74
-	ld hl, $4abd ; $4a75
+	ld hl, MatchResultTilemapScripts_16 ; $4a75
 	add a, l ; $4a78
 	ld l, a ; $4a79
 	jr nc, Label_16_4a7d ; $4a7a
@@ -635,247 +636,136 @@ Label_16_4aaf:
 	farcall FarPtr_CopyTilemapRect ; $4ab9
 Label_16_4abc:
 	ret ; $4abc
-	; $4abd, 480 bytes (records:2)
-	dw $4ae5 ; record 0
-	dw $4af9 ; record 1
-	dw $4b12 ; record 2
-	dw $4b2b ; record 3
-	dw $4b44 ; record 4
-	dw $4b5d ; record 5
-	dw $4b71 ; record 6
-	dw $4b8a ; record 7
-	dw $4ba3 ; record 8
-	dw $4bbc ; record 9
-	dw $4bd5 ; record 10
-	dw $4be9 ; record 11
-	dw $4c02 ; record 12
-	dw $4c1b ; record 13
-	dw $4c34 ; record 14
-	dw $4c4d ; record 15
-	dw $4c5c ; record 16
-	dw $4c6b ; record 17
-	dw $4c7f ; record 18
-	dw $4c8e ; record 19
-	dw $d000 ; record 20
-	dw $d2c0 ; record 21
-	dw $0b0a ; record 22
-	dw $cad0 ; record 23
-	dw $09d2 ; record 24
-	dw $d20a ; record 25
-	dw $d3cd ; record 26
-	dw $0009 ; record 27
-	dw $0000 ; record 28
-	dw $0000 ; record 29
-	dw $d000 ; record 30
-	dw $d2c0 ; record 31
-	dw $0b0a ; record 32
-	dw $cad0 ; record 33
-	dw $09d2 ; record 34
-	dw $d209 ; record 35
-	dw $d380 ; record 36
-	dw $1007 ; record 37
-	dw $93d2 ; record 38
-	dw $04d3 ; record 39
-	dw $0000 ; record 40
-	dw $0000 ; record 41
-	dw $0000 ; record 42
-	dw $c0d0 ; record 43
-	dw $0ad2 ; record 44
-	dw $d00b ; record 45
-	dw $d2ca ; record 46
-	dw $0909 ; record 47
-	dw $80d2 ; record 48
-	dw $07d3 ; record 49
-	dw $d210 ; record 50
-	dw $d38f ; record 51
-	dw $0004 ; record 52
-	dw $0000 ; record 53
-	dw $0000 ; record 54
-	dw $d000 ; record 55
-	dw $d2c0 ; record 56
-	dw $0b0a ; record 57
-	dw $cad0 ; record 58
-	dw $09d2 ; record 59
-	dw $d209 ; record 60
-	dw $d380 ; record 61
-	dw $1007 ; record 62
-	dw $8bd2 ; record 63
-	dw $04d3 ; record 64
-	dw $0000 ; record 65
-	dw $0000 ; record 66
-	dw $0000 ; record 67
-	dw $c0d0 ; record 68
-	dw $0ad2 ; record 69
-	dw $d00b ; record 70
-	dw $d2ca ; record 71
-	dw $0909 ; record 72
-	dw $80d2 ; record 73
-	dw $07d3 ; record 74
-	dw $d210 ; record 75
-	dw $d388 ; record 76
-	dw $0003 ; record 77
-	dw $0000 ; record 78
-	dw $0000 ; record 79
-	dw $d000 ; record 80
-	dw $d2c0 ; record 81
-	dw $0b0a ; record 82
-	dw $d3d0 ; record 83
-	dw $08d2 ; record 84
-	dw $d20a ; record 85
-	dw $d3cd ; record 86
-	dw $0009 ; record 87
-	dw $0000 ; record 88
-	dw $0000 ; record 89
-	dw $d000 ; record 90
-	dw $d2c0 ; record 91
-	dw $0b0a ; record 92
-	dw $d3d0 ; record 93
-	dw $08d2 ; record 94
-	dw $d209 ; record 95
-	dw $d380 ; record 96
-	dw $1007 ; record 97
-	dw $93d2 ; record 98
-	dw $04d3 ; record 99
-	dw $0000 ; record 100
-	dw $0000 ; record 101
-	dw $0000 ; record 102
-	dw $c0d0 ; record 103
-	dw $0ad2 ; record 104
-	dw $d00b ; record 105
-	dw $d2d3 ; record 106
-	dw $0908 ; record 107
-	dw $80d2 ; record 108
-	dw $07d3 ; record 109
-	dw $d210 ; record 110
-	dw $d38f ; record 111
-	dw $0004 ; record 112
-	dw $0000 ; record 113
-	dw $0000 ; record 114
-	dw $d000 ; record 115
-	dw $d2c0 ; record 116
-	dw $0b0a ; record 117
-	dw $d3d0 ; record 118
-	dw $08d2 ; record 119
-	dw $d209 ; record 120
-	dw $d380 ; record 121
-	dw $1007 ; record 122
-	dw $8bd2 ; record 123
-	dw $04d3 ; record 124
-	dw $0000 ; record 125
-	dw $0000 ; record 126
-	dw $0000 ; record 127
-	dw $c0d0 ; record 128
-	dw $0ad2 ; record 129
-	dw $d00b ; record 130
-	dw $d2d3 ; record 131
-	dw $0908 ; record 132
-	dw $80d2 ; record 133
-	dw $07d3 ; record 134
-	dw $d210 ; record 135
-	dw $d388 ; record 136
-	dw $0003 ; record 137
-	dw $0000 ; record 138
-	dw $0000 ; record 139
-	dw $d000 ; record 140
-	dw $d2c0 ; record 141
-	dw $0a0a ; record 142
-	dw $00d0 ; record 143
-	dw $0ad3 ; record 144
-	dw $d20a ; record 145
-	dw $d3cd ; record 146
-	dw $0009 ; record 147
-	dw $0000 ; record 148
-	dw $0000 ; record 149
-	dw $d000 ; record 150
-	dw $d2c0 ; record 151
-	dw $0a0a ; record 152
-	dw $00d0 ; record 153
-	dw $0ad3 ; record 154
-	dw $d209 ; record 155
-	dw $d380 ; record 156
-	dw $1007 ; record 157
-	dw $93d2 ; record 158
-	dw $04d3 ; record 159
-	dw $0000 ; record 160
-	dw $0000 ; record 161
-	dw $0000 ; record 162
-	dw $c0d0 ; record 163
-	dw $0ad2 ; record 164
-	dw $d00a ; record 165
-	dw $d300 ; record 166
-	dw $090a ; record 167
-	dw $80d2 ; record 168
-	dw $07d3 ; record 169
-	dw $d210 ; record 170
-	dw $d38f ; record 171
-	dw $0004 ; record 172
-	dw $0000 ; record 173
-	dw $0000 ; record 174
-	dw $d000 ; record 175
-	dw $d2c0 ; record 176
-	dw $0a0a ; record 177
-	dw $00d0 ; record 178
-	dw $0ad3 ; record 179
-	dw $d209 ; record 180
-	dw $d380 ; record 181
-	dw $1007 ; record 182
-	dw $8bd2 ; record 183
-	dw $04d3 ; record 184
-	dw $0000 ; record 185
-	dw $0000 ; record 186
-	dw $0000 ; record 187
-	dw $c0d0 ; record 188
-	dw $0ad2 ; record 189
-	dw $d00a ; record 190
-	dw $d300 ; record 191
-	dw $090a ; record 192
-	dw $80d2 ; record 193
-	dw $07d3 ; record 194
-	dw $d210 ; record 195
-	dw $d388 ; record 196
-	dw $0003 ; record 197
-	dw $0000 ; record 198
-	dw $0000 ; record 199
-	dw $d000 ; record 200
-	dw $d280 ; record 201
-	dw $0a14 ; record 202
-	dw $cdd2 ; record 203
-	dw $09d3 ; record 204
-	dw $0000 ; record 205
-	dw $0000 ; record 206
-	dw $0000 ; record 207
-	dw $80d0 ; record 208
-	dw $14d2 ; record 209
-	dw $d20a ; record 210
-	dw $d340 ; record 211
-	dw $0007 ; record 212
-	dw $0000 ; record 213
-	dw $0000 ; record 214
-	dw $d000 ; record 215
-	dw $d280 ; record 216
-	dw $0914 ; record 217
-	dw $80d2 ; record 218
-	dw $07d3 ; record 219
-	dw $d20a ; record 220
-	dw $d347 ; record 221
-	dw $0008 ; record 222
-	dw $0000 ; record 223
-	dw $0000 ; record 224
-	dw $d000 ; record 225
-	dw $d280 ; record 226
-	dw $0914 ; record 227
-	dw $4fd2 ; record 228
-	dw $0ad3 ; record 229
-	dw $0000 ; record 230
-	dw $0000 ; record 231
-	dw $0000 ; record 232
-	dw $80d0 ; record 233
-	dw $14d2 ; record 234
-	dw $d20c ; record 235
-	dw $d359 ; record 236
-	dw $0007 ; record 237
-	dw $0000 ; record 238
-	dw $0000 ; record 239
+MatchResultTilemapScripts_16:
+	; $4abd, 480 bytes (tilemap_scripts)
+	dw .script0 ; 0
+	dw .script1 ; 1
+	dw .script2 ; 2
+	dw .script3 ; 3
+	dw .script4 ; 4
+	dw .script5 ; 5
+	dw .script6 ; 6
+	dw .script7 ; 7
+	dw .script8 ; 8
+	dw .script9 ; 9
+	dw .script10 ; 10
+	dw .script11 ; 11
+	dw .script12 ; 12
+	dw .script13 ; 13
+	dw .script14 ; 14
+	dw .script15 ; 15
+	dw .script16 ; 16
+	dw .script17 ; 17
+	dw .script18 ; 18
+	dw .script19 ; 19
+.script0:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2ca, 9
+	tilemap_copy $d20a, $d3cd, 9
+	tilemap_copy_end
+.script1:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2ca, 9
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d393, 4
+	tilemap_copy_end
+.script2:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2ca, 9
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d38f, 4
+	tilemap_copy_end
+.script3:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2ca, 9
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d38b, 4
+	tilemap_copy_end
+.script4:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2ca, 9
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d388, 3
+	tilemap_copy_end
+.script5:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2d3, 8
+	tilemap_copy $d20a, $d3cd, 9
+	tilemap_copy_end
+.script6:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2d3, 8
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d393, 4
+	tilemap_copy_end
+.script7:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2d3, 8
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d38f, 4
+	tilemap_copy_end
+.script8:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2d3, 8
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d38b, 4
+	tilemap_copy_end
+.script9:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00b, $d2d3, 8
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d388, 3
+	tilemap_copy_end
+.script10:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00a, $d300, 10
+	tilemap_copy $d20a, $d3cd, 9
+	tilemap_copy_end
+.script11:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00a, $d300, 10
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d393, 4
+	tilemap_copy_end
+.script12:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00a, $d300, 10
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d38f, 4
+	tilemap_copy_end
+.script13:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00a, $d300, 10
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d38b, 4
+	tilemap_copy_end
+.script14:
+	tilemap_copy $d000, $d2c0, 10
+	tilemap_copy $d00a, $d300, 10
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d210, $d388, 3
+	tilemap_copy_end
+.script15:
+	tilemap_copy $d000, $d280, 20
+	tilemap_copy $d20a, $d3cd, 9
+	tilemap_copy_end
+.script16:
+	tilemap_copy $d000, $d280, 20
+	tilemap_copy $d20a, $d340, 7
+	tilemap_copy_end
+.script17:
+	tilemap_copy $d000, $d280, 20
+	tilemap_copy $d209, $d380, 7
+	tilemap_copy $d20a, $d347, 8
+	tilemap_copy_end
+.script18:
+	tilemap_copy $d000, $d280, 20
+	tilemap_copy $d209, $d34f, 10
+	tilemap_copy_end
+.script19:
+	tilemap_copy $d000, $d280, 20
+	tilemap_copy $d20c, $d359, 7
+	tilemap_copy_end
 	ld a, [wMatchWinLoseFlag] ; $4c9d
 	cp a, $ff ; $4ca0
 	jr nz, Label_16_4ca9 ; $4ca2

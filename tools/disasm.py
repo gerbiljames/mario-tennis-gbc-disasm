@@ -2236,6 +2236,22 @@ MACRO script_wait_frames
 	farcall FarPtr_WaitScriptFrames
 	pop af
 ENDM
+
+; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
+; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
+; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result
+; layout, and end with a tilemap_copy_end sentinel.
+; Usage: tilemap_copy dest, src, rows
+MACRO tilemap_copy
+	dw \\1, \\2
+	db \\3
+ENDM
+
+; Terminates a tilemap_copy list: an all-zero record (the routine stops when a
+; record's dest word is $0000; the remaining record bytes are unread).
+MACRO tilemap_copy_end
+	ds 5, $00
+ENDM
 """
 
 
@@ -2316,6 +2332,39 @@ def render_map_table(spec, rom, seg, end, bank, labels):
         n = min(end - p, 8)
         out.append("\tdb " + ", ".join(f"${rom[p + k]:02x}" for k in range(n)))
         p += n
+    return out
+
+
+def render_tilemap_scripts(rom, start, end):
+    """Render the match-result tilemap-copy scripts (routine at $16:$4a71). A
+    self-delimiting dw pointer table (one entry per result layout, selected by
+    wCurrentMinigameStoryMatch's low byte at $c8f7) precedes a run of
+    variable-length copy lists. Each list is a run of 5-byte `tilemap_copy
+    dest, src, rows` records ended by an all-zero record (`tilemap_copy_end`):
+    the routine stops when a record's dest word is $0000, and walks farcalling
+    CopyTilemapRect (width fixed at 2 tiles) per record. Pointers become
+    `.scriptN` local labels so they track their list bodies."""
+    base = offset_to_cpu(start)
+    first = rom[start] | (rom[start + 1] << 8)
+    nptr = (first - base) // 2
+    labels_at = {}
+    out = []
+    for i in range(nptr):
+        v = rom[start + i * 2] | (rom[start + i * 2 + 1] << 8)
+        labels_at.setdefault(v, []).append(i)
+        out.append(f"\tdw .script{i} ; {i}")
+
+    o = start + nptr * 2
+    while o < end:
+        for i in labels_at.get(offset_to_cpu(o), []):
+            out.append(f".script{i}:")
+        dest = rom[o] | (rom[o + 1] << 8)
+        if dest == 0:
+            out.append("\ttilemap_copy_end")
+        else:
+            src = rom[o + 2] | (rom[o + 3] << 8)
+            out.append(f"\ttilemap_copy ${dest:04x}, ${src:04x}, {rom[o + 4]}")
+        o += 5
     return out
 
 
@@ -2575,6 +2624,10 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 spec, rom, run_start, run_start + length,
                                 bank, labels))
                             continue
+                        if spec == "tilemap_scripts":
+                            lines.extend(render_tilemap_scripts(
+                                rom, run_start, run_start + length))
+                            continue
                         body = render_spec(rom[run_start:run_start + length],
                                            spec).rstrip("\n")
                         lines.extend(body.split("\n"))
@@ -2731,6 +2784,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             elif spec.startswith("map_"):
                                 lines.extend(render_map_table(
                                     spec, rom, seg, j, bank, labels))
+                            elif spec == "tilemap_scripts":
+                                lines.extend(render_tilemap_scripts(
+                                    rom, seg, j))
                             else:
                                 body = render_spec(rom[seg:j], spec).rstrip("\n")
                                 lines.extend(body.split("\n"))

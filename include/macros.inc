@@ -304,3 +304,19 @@ MACRO script_wait_frames
 	farcall FarPtr_WaitScriptFrames
 	pop af
 ENDM
+
+; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
+; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
+; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result
+; layout, and end with a tilemap_copy_end sentinel.
+; Usage: tilemap_copy dest, src, rows
+MACRO tilemap_copy
+	dw \1, \2
+	db \3
+ENDM
+
+; Terminates a tilemap_copy list: an all-zero record (the routine stops when a
+; record's dest word is $0000; the remaining record bytes are unread).
+MACRO tilemap_copy_end
+	ds 5, $00
+ENDM
