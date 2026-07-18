@@ -3182,5 +3182,6 @@
 "0x543a2": "TournamentSiteScripts4_15",
 "0x543db": "TournamentSiteScripts5_15",
 "0x54414": "TournamentSiteScripts6_15",
-"0x541cd": "TournamentSiteRespawnActors_15"
+"0x541cd": "TournamentSiteRespawnActors_15",
+"0x10ac3": "LoadActorObjectDefIfValid"
 }

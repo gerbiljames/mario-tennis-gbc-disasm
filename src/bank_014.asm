@@ -1460,7 +1460,7 @@ Func_14_51ea:
 	farcall FarPtr_GetActorStateAddr ; $51f9
 	ld c, l ; $51fc
 	ld b, h ; $51fd
-	farcall FarPtr_04_2c ; $51fe
+	farcall FarPtr_LoadActorObjectDefIfValid ; $51fe
 	script_set_anim $02, $01 ; $5201
 Label_14_5208:
 	ld a, [$c90d] ; $5208
@@ -1471,7 +1471,7 @@ Label_14_5208:
 	farcall FarPtr_GetActorStateAddr ; $5211
 	ld c, l ; $5214
 	ld b, h ; $5215
-	farcall FarPtr_04_2c ; $5216
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5216
 	script_set_anim $00, $01 ; $5219
 	ret ; $5220
 IslandSkyMapScripts_14:
@@ -1556,7 +1556,7 @@ Label_14_5303:
 	farcall FarPtr_GetActorStateAddr ; $5343
 	ld c, l ; $5346
 	ld b, h ; $5347
-	farcall FarPtr_04_2c ; $5348
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5348
 	script_set_anim $05, $01 ; $534b
 Label_14_5352:
 	ld a, [$c90d] ; $5352
@@ -1567,7 +1567,7 @@ Label_14_5352:
 	farcall FarPtr_GetActorStateAddr ; $535b
 	ld c, l ; $535e
 	ld b, h ; $535f
-	farcall FarPtr_04_2c ; $5360
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5360
 	script_set_anim $00, $01 ; $5363
 	ld a, $00 ; $536a
 	ld b, $00 ; $536c

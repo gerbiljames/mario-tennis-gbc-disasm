@@ -3453,14 +3453,14 @@ Label_10_66c6:
 	farcall FarPtr_GetActorStateAddr ; $6805
 	ld c, l ; $6808
 	ld b, h ; $6809
-	farcall FarPtr_04_2c ; $680a
+	farcall FarPtr_LoadActorObjectDefIfValid ; $680a
 	script_set_anim $03, $01 ; $680d
 	ld d, $53 ; $6814
 	ld a, $05 ; $6816
 	farcall FarPtr_GetActorStateAddr ; $6818
 	ld c, l ; $681b
 	ld b, h ; $681c
-	farcall FarPtr_04_2c ; $681d
+	farcall FarPtr_LoadActorObjectDefIfValid ; $681d
 	script_set_anim $05, $01 ; $6820
 	script_set_position $03, $1f80, $3100 ; $6827
 	sound $96 ; $6832
@@ -3637,7 +3637,7 @@ Label_10_6c60:
 	farcall FarPtr_GetActorStateAddr ; $6c89
 	ld c, l ; $6c8c
 	ld b, h ; $6c8d
-	farcall FarPtr_04_2c ; $6c8e
+	farcall FarPtr_LoadActorObjectDefIfValid ; $6c8e
 	script_set_anim $05, $01 ; $6c91
 	script_set_position $05, $2380, $3300 ; $6c98
 	sound $97 ; $6ca3
@@ -3671,7 +3671,7 @@ Label_10_6c60:
 	farcall FarPtr_GetActorStateAddr ; $6d52
 	ld c, l ; $6d55
 	ld b, h ; $6d56
-	farcall FarPtr_04_2c ; $6d57
+	farcall FarPtr_LoadActorObjectDefIfValid ; $6d57
 	script_set_anim $05, $01 ; $6d5a
 	script_set_position $05, $2180, $2d80 ; $6d61
 	sound $98 ; $6d6c

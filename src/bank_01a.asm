@@ -3463,13 +3463,13 @@ Func_1a_6f3d:
 	ld hl, $6fcf ; $6f55
 	farcall FarPtr_SpawnActorsFromList ; $6f58
 	ld bc, $d000 ; $6f5b
-	farcall FarPtr_04_2c ; $6f5e
+	farcall FarPtr_LoadActorObjectDefIfValid ; $6f5e
 	ld bc, $d040 ; $6f61
-	farcall FarPtr_04_2c ; $6f64
+	farcall FarPtr_LoadActorObjectDefIfValid ; $6f64
 	ld bc, $d080 ; $6f67
-	farcall FarPtr_04_2c ; $6f6a
+	farcall FarPtr_LoadActorObjectDefIfValid ; $6f6a
 	ld bc, $d0c0 ; $6f6d
-	farcall FarPtr_04_2c ; $6f70
+	farcall FarPtr_LoadActorObjectDefIfValid ; $6f70
 	ld d, $01 ; $6f73
 	ld bc, $d000 ; $6f75
 	farcall FarPtr_SetActorAnimationChecked ; $6f78

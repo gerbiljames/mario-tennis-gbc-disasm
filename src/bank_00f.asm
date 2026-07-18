@@ -145,7 +145,7 @@ SetPlayerActorObjectDef:
 	ld hl, $dae9 ; $41cc
 	ld [hl], $00 ; $41cf
 	ld bc, $d000 ; $41d1
-	farcall FarPtr_04_2c ; $41d4
+	farcall FarPtr_LoadActorObjectDefIfValid ; $41d4
 	call RestorePalettesFromMaster ; $41d7
 	ret ; $41da
 AwardsCeremonyMapScripts_0f:
@@ -267,7 +267,7 @@ Func_0f_44b3:
 	farcall FarPtr_GetActorStateAddr ; $451e
 	ld c, l ; $4521
 	ld b, h ; $4522
-	farcall FarPtr_04_2c ; $4523
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4523
 	script_set_anim $15, $01 ; $4526
 	script_set_position $02, $3f00, $3f00 ; $452d
 	script_set_position $15, $0d00, $1b00 ; $4538
@@ -338,7 +338,7 @@ Label_0f_4661:
 	farcall FarPtr_GetActorStateAddr ; $46ae
 	ld c, l ; $46b1
 	ld b, h ; $46b2
-	farcall FarPtr_04_2c ; $46b3
+	farcall FarPtr_LoadActorObjectDefIfValid ; $46b3
 	script_set_anim $15, $01 ; $46b6
 	script_face $00, $40 ; $46bd
 	script_set_position $00, $0b00, $1b00 ; $46c4
@@ -440,7 +440,7 @@ Func_0f_4725:
 	farcall FarPtr_GetActorStateAddr ; $4878
 	ld c, l ; $487b
 	ld b, h ; $487c
-	farcall FarPtr_04_2c ; $487d
+	farcall FarPtr_LoadActorObjectDefIfValid ; $487d
 	script_set_anim $11, $01 ; $4880
 	script_set_position $03, $3f00, $3f00 ; $4887
 	script_set_position $11, $0e00, $0e40 ; $4892
@@ -524,14 +524,14 @@ Func_0f_4725:
 	farcall FarPtr_GetActorStateAddr ; $4a1c
 	ld c, l ; $4a1f
 	ld b, h ; $4a20
-	farcall FarPtr_04_2c ; $4a21
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4a21
 	script_set_anim $10, $01 ; $4a24
 	ld d, $25 ; $4a2b
 	ld a, $0e ; $4a2d
 	farcall FarPtr_GetActorStateAddr ; $4a2f
 	ld c, l ; $4a32
 	ld b, h ; $4a33
-	farcall FarPtr_04_2c ; $4a34
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4a34
 	script_set_anim $0e, $01 ; $4a37
 	script_set_position $0e, $1000, $1600 ; $4a3e
 	script_set_position $10, $1000, $1500 ; $4a49
@@ -545,14 +545,14 @@ Func_0f_4725:
 	farcall FarPtr_GetActorStateAddr ; $4a81
 	ld c, l ; $4a84
 	ld b, h ; $4a85
-	farcall FarPtr_04_2c ; $4a86
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4a86
 	script_set_anim $10, $01 ; $4a89
 	ld d, $74 ; $4a90
 	ld a, $0e ; $4a92
 	farcall FarPtr_GetActorStateAddr ; $4a94
 	ld c, l ; $4a97
 	ld b, h ; $4a98
-	farcall FarPtr_04_2c ; $4a99
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4a99
 	script_set_anim $0e, $01 ; $4a9c
 	script_set_position $10, $1000, $1300 ; $4aa3
 	script_set_position $0e, $0f00, $1300 ; $4aae
@@ -574,7 +574,7 @@ Func_0f_4725:
 	farcall FarPtr_GetActorStateAddr ; $4b23
 	ld c, l ; $4b26
 	ld b, h ; $4b27
-	farcall FarPtr_04_2c ; $4b28
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4b28
 	script_set_anim $12, $01 ; $4b2b
 	script_set_position $04, $3f00, $3f00 ; $4b32
 	script_set_position $12, $0a00, $0dc0 ; $4b3d
@@ -641,14 +641,14 @@ Func_0f_4725:
 	farcall FarPtr_GetActorStateAddr ; $4cb2
 	ld c, l ; $4cb5
 	ld b, h ; $4cb6
-	farcall FarPtr_04_2c ; $4cb7
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4cb7
 	script_set_anim $10, $01 ; $4cba
 	ld d, $25 ; $4cc1
 	ld a, $0d ; $4cc3
 	farcall FarPtr_GetActorStateAddr ; $4cc5
 	ld c, l ; $4cc8
 	ld b, h ; $4cc9
-	farcall FarPtr_04_2c ; $4cca
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4cca
 	script_set_anim $0d, $01 ; $4ccd
 	script_set_position $0d, $0f00, $1600 ; $4cd4
 	script_set_position $10, $0f00, $1500 ; $4cdf
@@ -662,14 +662,14 @@ Func_0f_4725:
 	farcall FarPtr_GetActorStateAddr ; $4d17
 	ld c, l ; $4d1a
 	ld b, h ; $4d1b
-	farcall FarPtr_04_2c ; $4d1c
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4d1c
 	script_set_anim $10, $01 ; $4d1f
 	ld d, $74 ; $4d26
 	ld a, $0d ; $4d28
 	farcall FarPtr_GetActorStateAddr ; $4d2a
 	ld c, l ; $4d2d
 	ld b, h ; $4d2e
-	farcall FarPtr_04_2c ; $4d2f
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4d2f
 	script_set_anim $0d, $01 ; $4d32
 	script_set_position $10, $0f00, $1300 ; $4d39
 	script_set_position $0d, $0e00, $1300 ; $4d44
@@ -715,7 +715,7 @@ Func_0f_4725:
 	farcall FarPtr_GetActorStateAddr ; $4e47
 	ld c, l ; $4e4a
 	ld b, h ; $4e4b
-	farcall FarPtr_04_2c ; $4e4c
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4e4c
 	script_set_anim $16, $01 ; $4e4f
 	script_face $16, $00 ; $4e56
 	script_set_anim $16, $08 ; $4e5d
@@ -807,7 +807,7 @@ Label_0f_4ea7:
 	farcall FarPtr_GetActorStateAddr ; $4f87
 	ld c, l ; $4f8a
 	ld b, h ; $4f8b
-	farcall FarPtr_04_2c ; $4f8c
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4f8c
 	script_set_anim $11, $01 ; $4f8f
 	script_set_position $02, $3f00, $3f00 ; $4f96
 	script_set_position $11, $0f00, $0d60 ; $4fa1
@@ -816,14 +816,14 @@ Label_0f_4ea7:
 	farcall FarPtr_GetActorStateAddr ; $4fb0
 	ld c, l ; $4fb3
 	ld b, h ; $4fb4
-	farcall FarPtr_04_2c ; $4fb5
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4fb5
 	script_set_anim $13, $01 ; $4fb8
 	ld d, $62 ; $4fbf
 	ld a, $15 ; $4fc1
 	farcall FarPtr_GetActorStateAddr ; $4fc3
 	ld c, l ; $4fc6
 	ld b, h ; $4fc7
-	farcall FarPtr_04_2c ; $4fc8
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4fc8
 	script_set_anim $15, $01 ; $4fcb
 	script_set_position $04, $3f00, $3f00 ; $4fd2
 	script_set_position $05, $3f00, $3f00 ; $4fdd
@@ -834,14 +834,14 @@ Label_0f_4ea7:
 	farcall FarPtr_GetActorStateAddr ; $5002
 	ld c, l ; $5005
 	ld b, h ; $5006
-	farcall FarPtr_04_2c ; $5007
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5007
 	script_set_anim $04, $01 ; $500a
 	ld d, $4d ; $5011
 	ld a, $05 ; $5013
 	farcall FarPtr_GetActorStateAddr ; $5015
 	ld c, l ; $5018
 	ld b, h ; $5019
-	farcall FarPtr_04_2c ; $501a
+	farcall FarPtr_LoadActorObjectDefIfValid ; $501a
 	script_set_anim $05, $01 ; $501d
 	script_face $16, $40 ; $5024
 	script_face $11, $40 ; $502b
@@ -871,7 +871,7 @@ Label_0f_4ea7:
 	farcall FarPtr_GetActorStateAddr ; $50c0
 	ld c, l ; $50c3
 	ld b, h ; $50c4
-	farcall FarPtr_04_2c ; $50c5
+	farcall FarPtr_LoadActorObjectDefIfValid ; $50c5
 	script_set_anim $09, $01 ; $50c8
 	script_set_position $10, $3f00, $3f00 ; $50cf
 	script_set_position $09, $1100, $1600 ; $50da
@@ -1047,7 +1047,7 @@ Label_0f_4ea7:
 	farcall FarPtr_GetActorStateAddr ; $551a
 	ld c, l ; $551d
 	ld b, h ; $551e
-	farcall FarPtr_04_2c ; $551f
+	farcall FarPtr_LoadActorObjectDefIfValid ; $551f
 	script_set_anim $16, $01 ; $5522
 	script_face $16, $00 ; $5529
 	script_set_anim $16, $08 ; $5530
@@ -1160,7 +1160,7 @@ ReplacePlayerWithStandInActor:
 	farcall FarPtr_GetActorStateAddr ; $564a
 	ld c, l ; $564d
 	ld b, h ; $564e
-	farcall FarPtr_04_2c ; $564f
+	farcall FarPtr_LoadActorObjectDefIfValid ; $564f
 	script_set_anim $16, $01 ; $5652
 	script_set_position $00, $3f00, $3f00 ; $5659
 	ret ; $5664
@@ -1443,14 +1443,14 @@ Func_0f_5b4d:
 	farcall FarPtr_GetActorStateAddr ; $5b70
 	ld c, l ; $5b73
 	ld b, h ; $5b74
-	farcall FarPtr_04_2c ; $5b75
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5b75
 	script_set_anim $13, $01 ; $5b78
 	ld d, $3a ; $5b7f
 	ld a, $14 ; $5b81
 	farcall FarPtr_GetActorStateAddr ; $5b83
 	ld c, l ; $5b86
 	ld b, h ; $5b87
-	farcall FarPtr_04_2c ; $5b88
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5b88
 	script_set_anim $14, $01 ; $5b8b
 	script_set_position $13, $0700, $0100 ; $5b92
 	script_set_position $14, $0f00, $0100 ; $5b9d
@@ -1481,14 +1481,14 @@ Func_0f_5b4d:
 	farcall FarPtr_GetActorStateAddr ; $5c19
 	ld c, l ; $5c1c
 	ld b, h ; $5c1d
-	farcall FarPtr_04_2c ; $5c1e
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5c1e
 	script_set_anim $13, $01 ; $5c21
 	ld d, $53 ; $5c28
 	ld a, $14 ; $5c2a
 	farcall FarPtr_GetActorStateAddr ; $5c2c
 	ld c, l ; $5c2f
 	ld b, h ; $5c30
-	farcall FarPtr_04_2c ; $5c31
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5c31
 	script_set_anim $14, $01 ; $5c34
 	script_set_position $13, $3f00, $3f00 ; $5c3b
 	script_set_position $14, $3f00, $3f00 ; $5c46
@@ -1570,14 +1570,14 @@ Func_0f_5ccf:
 	farcall FarPtr_GetActorStateAddr ; $5dd4
 	ld c, l ; $5dd7
 	ld b, h ; $5dd8
-	farcall FarPtr_04_2c ; $5dd9
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5dd9
 	script_set_anim $07, $01 ; $5ddc
 	ld d, $3a ; $5de3
 	ld a, $14 ; $5de5
 	farcall FarPtr_GetActorStateAddr ; $5de7
 	ld c, l ; $5dea
 	ld b, h ; $5deb
-	farcall FarPtr_04_2c ; $5dec
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5dec
 	script_set_anim $14, $01 ; $5def
 	script_set_position $07, $0700, $0500 ; $5df6
 	script_set_position $14, $0f00, $0780 ; $5e01
@@ -1597,14 +1597,14 @@ Func_0f_5e4a:
 	farcall FarPtr_GetActorStateAddr ; $5e4e
 	ld c, l ; $5e51
 	ld b, h ; $5e52
-	farcall FarPtr_04_2c ; $5e53
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5e53
 	script_set_anim $10, $01 ; $5e56
 	ld d, $25 ; $5e5d
 	ld a, $0f ; $5e5f
 	farcall FarPtr_GetActorStateAddr ; $5e61
 	ld c, l ; $5e64
 	ld b, h ; $5e65
-	farcall FarPtr_04_2c ; $5e66
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5e66
 	script_set_anim $0f, $01 ; $5e69
 	script_set_position $0f, $1100, $1600 ; $5e70
 	script_set_position $10, $1100, $1500 ; $5e7b
@@ -1618,14 +1618,14 @@ Func_0f_5e4a:
 	farcall FarPtr_GetActorStateAddr ; $5eb3
 	ld c, l ; $5eb6
 	ld b, h ; $5eb7
-	farcall FarPtr_04_2c ; $5eb8
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5eb8
 	script_set_anim $10, $01 ; $5ebb
 	ld d, $74 ; $5ec2
 	ld a, $0f ; $5ec4
 	farcall FarPtr_GetActorStateAddr ; $5ec6
 	ld c, l ; $5ec9
 	ld b, h ; $5eca
-	farcall FarPtr_04_2c ; $5ecb
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5ecb
 	script_set_anim $0f, $01 ; $5ece
 	script_set_position $10, $1100, $1300 ; $5ed5
 	script_set_position $0f, $1000, $1300 ; $5ee0
@@ -3353,7 +3353,7 @@ Label_0f_7a2e:
 	farcall FarPtr_GetActorStateAddr ; $7a30
 	ld c, l ; $7a33
 	ld b, h ; $7a34
-	farcall FarPtr_04_2c ; $7a35
+	farcall FarPtr_LoadActorObjectDefIfValid ; $7a35
 	script_set_anim $05, $01 ; $7a38
 	ld a, $02 ; $7a3f
 	farcall FarPtr_SetActorNullScript ; $7a41
@@ -3432,7 +3432,7 @@ SetPlayerAndPartnerObjectDefs:
 	farcall FarPtr_GetActorStateAddr ; $7b2f
 	ld c, l ; $7b32
 	ld b, h ; $7b33
-	farcall FarPtr_04_2c ; $7b34
+	farcall FarPtr_LoadActorObjectDefIfValid ; $7b34
 	script_set_anim $02, $01 ; $7b37
 Label_0f_7b3e:
 	ld a, [$c90d] ; $7b3e
@@ -3443,7 +3443,7 @@ Label_0f_7b3e:
 	farcall FarPtr_GetActorStateAddr ; $7b47
 	ld c, l ; $7b4a
 	ld b, h ; $7b4b
-	farcall FarPtr_04_2c ; $7b4c
+	farcall FarPtr_LoadActorObjectDefIfValid ; $7b4c
 	script_set_anim $00, $01 ; $7b4f
 	ret ; $7b56
 	INCBIN "data/bank_00f/d_7b57.bin" ; $7b57, 612 bytes

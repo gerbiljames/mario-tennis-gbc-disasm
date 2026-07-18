@@ -368,7 +368,7 @@ Label_15_46ce:
 	farcall FarPtr_GetActorStateAddr ; $46d0
 	ld c, l ; $46d3
 	ld b, h ; $46d4
-	farcall FarPtr_04_2c ; $46d5
+	farcall FarPtr_LoadActorObjectDefIfValid ; $46d5
 	script_set_anim $05, $01 ; $46d8
 	ld a, $02 ; $46df
 	farcall FarPtr_SetActorNullScript ; $46e1
@@ -434,7 +434,7 @@ SetPlayerPartnerActorSprites:
 	farcall FarPtr_GetActorStateAddr ; $476e
 	ld c, l ; $4771
 	ld b, h ; $4772
-	farcall FarPtr_04_2c ; $4773
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4773
 	script_set_anim $02, $01 ; $4776
 Label_15_477d:
 	ld a, [$c90d] ; $477d
@@ -445,7 +445,7 @@ Label_15_477d:
 	farcall FarPtr_GetActorStateAddr ; $4786
 	ld c, l ; $4789
 	ld b, h ; $478a
-	farcall FarPtr_04_2c ; $478b
+	farcall FarPtr_LoadActorObjectDefIfValid ; $478b
 	script_set_anim $00, $01 ; $478e
 	ret ; $4795
 TrainingCourtMapScripts_15:
@@ -896,13 +896,13 @@ WaterSpriteRacketRewardScene:
 	farcall FarPtr_GetActorStateAddr ; $4dc0
 	ld c, l ; $4dc3
 	ld b, h ; $4dc4
-	farcall FarPtr_04_2c ; $4dc5
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4dc5
 	ld d, $4c ; $4dc8
 	ld a, $13 ; $4dca
 	farcall FarPtr_GetActorStateAddr ; $4dcc
 	ld c, l ; $4dcf
 	ld b, h ; $4dd0
-	farcall FarPtr_04_2c ; $4dd1
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4dd1
 	script_set_position $16, $3480, $0b80 ; $4dd4
 	sound $98 ; $4ddf
 	script_wait_frames $3c ; $4de1

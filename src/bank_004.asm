@@ -44,8 +44,8 @@ FarPtr_WaitActorMoveDone:
 	dw WaitActorMoveDone ; $4028
 FarPtr_04_2a:
 	dw Func_04_5726 ; $402a
-FarPtr_04_2c:
-	dw Func_04_4ac3 ; $402c
+FarPtr_LoadActorObjectDefIfValid:
+	dw LoadActorObjectDefIfValid ; $402c
 FarPtr_GetObjectDefCount:
 	dw GetObjectDefCount ; $402e
 FarPtr_LookupTileId_04:
@@ -1755,7 +1755,7 @@ Label_04_4ab9:
 	dec e ; $4abf
 	jr nz, Label_04_4a94 ; $4ac0
 	ret ; $4ac2
-Func_04_4ac3:
+LoadActorObjectDefIfValid:
 	inc b ; $4ac3
 	dec b ; $4ac4
 	ret z ; $4ac5

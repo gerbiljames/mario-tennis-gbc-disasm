@@ -197,7 +197,7 @@ Func_12_4179:
 	farcall FarPtr_GetActorStateAddr ; $43ac
 	ld c, l ; $43af
 	ld b, h ; $43b0
-	farcall FarPtr_04_2c ; $43b1
+	farcall FarPtr_LoadActorObjectDefIfValid ; $43b1
 	script_set_anim $04, $01 ; $43b4
 Label_12_43bb:
 	script_move_target $03, $1500, $0f00 ; $43bb
@@ -2150,7 +2150,7 @@ Func_12_5dbe:
 	ld c, l ; $5dce
 	ld b, h ; $5dcf
 	ld d, $3b ; $5dd0
-	farcall FarPtr_04_2c ; $5dd2
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5dd2
 	script_set_anim $03, $01 ; $5dd5
 Label_12_5ddc:
 	test_flag $05, 7 ; $5ddc
@@ -2211,7 +2211,7 @@ Func_12_5e91:
 	ld c, l ; $5e9c
 	ld b, h ; $5e9d
 	ld d, $28 ; $5e9e
-	farcall FarPtr_04_2c ; $5ea0
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5ea0
 	script_set_anim $0c, $01 ; $5ea3
 Label_12_5eaa:
 	ret ; $5eaa

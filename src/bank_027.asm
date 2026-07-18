@@ -170,7 +170,7 @@ Label_27_437b:
 	farcall FarPtr_GetActorStateAddr ; $4384
 	ld c, l ; $4387
 	ld b, h ; $4388
-	farcall FarPtr_04_2c ; $4389
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4389
 	script_set_anim $09, $01 ; $438c
 	script_face $09, $00 ; $4393
 	script_set_anim $09, $08 ; $439a
@@ -273,7 +273,7 @@ Func_27_45be:
 	farcall FarPtr_GetActorStateAddr ; $45cd
 	ld c, l ; $45d0
 	ld b, h ; $45d1
-	farcall FarPtr_04_2c ; $45d2
+	farcall FarPtr_LoadActorObjectDefIfValid ; $45d2
 	script_set_anim $02, $01 ; $45d5
 	ld a, $02 ; $45dc
 	farcall FarPtr_SetActorNullScript ; $45de
@@ -288,7 +288,7 @@ Label_27_45f3:
 	farcall FarPtr_GetActorStateAddr ; $45fc
 	ld c, l ; $45ff
 	ld b, h ; $4600
-	farcall FarPtr_04_2c ; $4601
+	farcall FarPtr_LoadActorObjectDefIfValid ; $4601
 	script_set_anim $09, $01 ; $4604
 	ret ; $460b
 End16BeforeFinalsMapScripts_27:
@@ -1098,7 +1098,7 @@ Func_27_5626:
 	farcall FarPtr_GetActorStateAddr ; $5630
 	ld c, l ; $5633
 	ld b, h ; $5634
-	farcall FarPtr_04_2c ; $5635
+	farcall FarPtr_LoadActorObjectDefIfValid ; $5635
 	script_set_anim $0d, $01 ; $5638
 	set_flag $1c, 0 ; $563f
 Label_27_5642:
@@ -2168,7 +2168,7 @@ Label_27_6caf:
 	farcall FarPtr_GetActorStateAddr ; $6e59
 	ld c, l ; $6e5c
 	ld b, h ; $6e5d
-	farcall FarPtr_04_2c ; $6e5e
+	farcall FarPtr_LoadActorObjectDefIfValid ; $6e5e
 	script_set_anim $04, $01 ; $6e61
 Label_27_6e68:
 	script_move_target $03, $1500, $0f00 ; $6e68
@@ -2576,7 +2576,7 @@ Label_27_760e:
 	farcall FarPtr_GetActorStateAddr ; $7638
 	ld c, l ; $763b
 	ld b, h ; $763c
-	farcall FarPtr_04_2c ; $763d
+	farcall FarPtr_LoadActorObjectDefIfValid ; $763d
 	script_set_anim $0a, $01 ; $7640
 	script_set_position $0c, $1a00, $1100 ; $7647
 	script_face $0c, $40 ; $7652
@@ -2589,7 +2589,7 @@ Label_27_7659:
 	farcall FarPtr_GetActorStateAddr ; $7662
 	ld c, l ; $7665
 	ld b, h ; $7666
-	farcall FarPtr_04_2c ; $7667
+	farcall FarPtr_LoadActorObjectDefIfValid ; $7667
 	script_set_anim $00, $01 ; $766a
 	script_set_position $00, $1700, $1700 ; $7671
 	script_face $00, $c0 ; $767c
