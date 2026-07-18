@@ -3841,36 +3841,7 @@ ReadBlock10:
 	pop de ; $5954
 	pop bc ; $5955
 	ret ; $5956
-	ld d, h ; $5957
-	ld b, l ; $5958
-	ld d, e ; $5959
-	ld d, h ; $595a
-	ld b, e ; $595b
-	ld b, c ; $595c
-	ld d, d ; $595d
-	ld d, h ; $595e
-	ld c, c ; $595f
-	ld b, h ; $5960
-	ld d, h ; $5961
-	ld b, l ; $5962
-	ld d, e ; $5963
-	ld d, h ; $5964
-	ld b, e ; $5965
-	ld b, c ; $5966
-	ld d, d ; $5967
-	ld d, h ; $5968
-	ld c, c ; $5969
-	ld b, h ; $596a
-	ld d, h ; $596b
-	ld b, l ; $596c
-	ld d, e ; $596d
-	ld d, h ; $596e
-	ld b, e ; $596f
-	ld b, c ; $5970
-	ld d, d ; $5971
-	ld d, h ; $5972
-	ld c, c ; $5973
-	ld b, h ; $5974
+	INCBIN "data/bank_003/d_5957.bin" ; $5957, 30 bytes
 DebugTestMinigameRecords:
 	push af ; $5975
 	push bc ; $5976
