@@ -929,12 +929,8 @@ Label_15_4e24:
 	script_set_position $13, $3480, $0b80 ; $4e6d
 	sound $97 ; $4e78
 	script_wait_frames $14 ; $4e7a
-	ld a, $13 ; $4e81
-	ld de, rLCDC ; $4e83
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4e86
-	ld a, $00 ; $4e89
-	ld de, rLCDC ; $4e8b
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4e8e
+	script_jump_velocity $13, $ff40 ; $4e81
+	script_jump_velocity $00, $ff40 ; $4e89
 	ld a, $00 ; $4e91
 	farcall FarPtr_ScriptWaitActorJumpDone ; $4e93
 	script_set_position $13, $3f00, $3f00 ; $4e96
@@ -1989,9 +1985,7 @@ Label_15_5e69:
 	dw Label_15_5e74 ; $5e71 jumptable
 	ret ; $5e73
 Label_15_5e74:
-	ld a, $00 ; $5e74
-	ld de, rLCDC ; $5e76
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5e79
+	script_jump_velocity $00, $ff40 ; $5e74
 	ld a, $00 ; $5e7c
 	farcall FarPtr_ScriptWaitActorJumpDone ; $5e7e
 	jp Label_15_5f58 ; $5e81

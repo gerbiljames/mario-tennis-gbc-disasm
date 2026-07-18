@@ -174,9 +174,7 @@ Func_12_4179:
 	script_set_position $03, $1700, $1900 ; $435b
 	script_speak $03 ; $4366
 	script_move_target $00, $1680, $1200 ; $436b
-	ld a, $00 ; $4376
-	ld de, $ff80 ; $4378
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $437b
+	script_jump_velocity $00, $ff80 ; $4376
 	ld a, $00 ; $437e
 	farcall FarPtr_ScriptWaitActorJumpDone ; $4380
 	script_face $00, $c0 ; $4383
@@ -3208,9 +3206,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_anim $08, $04 ; $6ed3
 	script_wait_idle $08 ; $6eda
 	script_set_position $11, $3f00, $3f00 ; $6edf
-	ld a, $03 ; $6eea
-	ld de, $ff80 ; $6eec
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6eef
+	script_jump_velocity $03, $ff80 ; $6eea
 	ld a, $03 ; $6ef2
 	farcall FarPtr_ScriptWaitActorJumpDone ; $6ef4
 	script_speak $03 ; $6ef7
@@ -3257,14 +3253,10 @@ SeniorMatchVictorySceneDispatch:
 	script_set_anim $07, $02 ; $6fce
 	script_wait_idle $07 ; $6fd5
 	script_wait_frames $14 ; $6fda
-	ld a, $03 ; $6fe1
-	ld de, $ff80 ; $6fe3
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6fe6
+	script_jump_velocity $03, $ff80 ; $6fe1
 	ld a, $03 ; $6fe9
 	farcall FarPtr_ScriptWaitActorJumpDone ; $6feb
-	ld a, $03 ; $6fee
-	ld de, $ff80 ; $6ff0
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6ff3
+	script_jump_velocity $03, $ff80 ; $6fee
 	ld a, $03 ; $6ff6
 	farcall FarPtr_ScriptWaitActorJumpDone ; $6ff8
 	script_speak $03 ; $6ffb
@@ -3436,9 +3428,7 @@ SeniorMatchVictorySceneDispatch:
 	call FadeInSeniorCourtNearPairA ; $73c4
 	script_set_text $104a ; $73c7
 	script_speak $07 ; $73cd
-	ld a, $03 ; $73d2
-	ld de, $ff80 ; $73d4
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $73d7
+	script_jump_velocity $03, $ff80 ; $73d2
 	ld a, $03 ; $73da
 	farcall FarPtr_ScriptWaitActorJumpDone ; $73dc
 	script_speak $03 ; $73df
@@ -3467,9 +3457,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_position $00, $3400, $1b00 ; $7461
 	script_set_text $1023 ; $746c
 	script_speak $06 ; $7472
-	ld a, $03 ; $7477
-	ld de, $ff80 ; $7479
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $747c
+	script_jump_velocity $03, $ff80 ; $7477
 	ld a, $03 ; $747f
 	farcall FarPtr_ScriptWaitActorJumpDone ; $7481
 	script_set_text $104c ; $7484
@@ -3493,9 +3481,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_position $00, $3400, $1b00 ; $74d3
 	script_set_text $1020 ; $74de
 	script_speak $05 ; $74e4
-	ld a, $03 ; $74e9
-	ld de, $ff80 ; $74eb
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $74ee
+	script_jump_velocity $03, $ff80 ; $74e9
 	ld a, $03 ; $74f1
 	farcall FarPtr_ScriptWaitActorJumpDone ; $74f3
 	script_set_text $104d ; $74f6

@@ -1789,6 +1789,8 @@ SCRIPT_COMMANDS = (
          ('F', "FarPtr_MoveActorByAngle"))),
     ("script_set_speed",
         ((0x3E, 2, 'b'), (0x01, 3, 'w'), ('F', "FarPtr_ScriptSetActorMoveSpeed"))),
+    ("script_jump_velocity",
+        ((0x3E, 2, 'b'), (0x11, 3, 'w'), ('F', "FarPtr_ScriptSetActorJumpVelocity"))),
     ("script_set_anim",
         ((0x3E, 2, 'b'), (0x16, 2, 'b'), ('F', "FarPtr_ScriptSetActorAnimation"))),
     ("script_face",
@@ -2125,6 +2127,13 @@ MACRO script_set_speed
 	ld a, \\1
 	ld bc, \\2
 	farcall FarPtr_ScriptSetActorMoveSpeed
+ENDM
+; Sets an actor's jump velocity (de, signed 16-bit).
+; Usage: script_jump_velocity actor, velocity
+MACRO script_jump_velocity
+	ld a, \\1
+	ld de, \\2
+	farcall FarPtr_ScriptSetActorJumpVelocity
 ENDM
 ; Usage: script_move_player x, y (moves actor $00, the player)
 MACRO script_move_player

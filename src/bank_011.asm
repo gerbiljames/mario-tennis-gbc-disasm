@@ -536,9 +536,7 @@ LateStudentCrashCutscene:
 	script_set_speed $11, $0020 ; $481c
 	script_speak $11 ; $4824
 	script_face $11, $40 ; $4829
-	ld a, $11 ; $4830
-	ld de, $ff80 ; $4832
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4835
+	script_jump_velocity $11, $ff80 ; $4830
 	ld a, $11 ; $4838
 	farcall FarPtr_ScriptWaitActorJumpDone ; $483a
 	script_move_target $11, $1800, $1700 ; $483d
@@ -562,9 +560,7 @@ LateStudentCrashCutscene:
 	script_speak $11 ; $48c7
 	script_set_position $0f, $3f00, $3f00 ; $48cc
 	script_set_speed $11, $0020 ; $48d7
-	ld a, $11 ; $48df
-	ld de, $ff80 ; $48e1
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $48e4
+	script_jump_velocity $11, $ff80 ; $48df
 	ld a, $11 ; $48e7
 	farcall FarPtr_ScriptWaitActorJumpDone ; $48e9
 	script_move_target $11, $1800, $2000 ; $48ec
@@ -624,9 +620,7 @@ LateStudentCrashCutscene:
 	script_facing_lock $11, $01 ; $4a56
 	script_set_anim $11, $05 ; $4a5d
 	script_wait_frames $14 ; $4a64
-	ld a, $11 ; $4a6b
-	ld de, $ff80 ; $4a6d
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4a70
+	script_jump_velocity $11, $ff80 ; $4a6b
 	script_move_target $11, $1b00, $2400 ; $4a73
 	script_wait_frames $14 ; $4a7e
 	script_face_toward $11, $00 ; $4a85
@@ -679,9 +673,7 @@ Label_11_4b1d:
 	script_wait_frames $3c ; $4b97
 	script_set_position $0f, $1a80, $21c0 ; $4b9e
 	sound $97 ; $4ba9
-	ld a, $11 ; $4bab
-	ld de, $ff80 ; $4bad
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4bb0
+	script_jump_velocity $11, $ff80 ; $4bab
 	ld a, $11 ; $4bb3
 	farcall FarPtr_ScriptWaitActorJumpDone ; $4bb5
 	script_wait_frames $0a ; $4bb8
@@ -724,9 +716,7 @@ Label_11_4b1d:
 	script_wait_idle $11 ; $4cb4
 	script_set_anim $00, $03 ; $4cb9
 	script_wait_idle $00 ; $4cc0
-	ld a, $11 ; $4cc5
-	ld de, $ff80 ; $4cc7
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4cca
+	script_jump_velocity $11, $ff80 ; $4cc5
 	ld a, $11 ; $4ccd
 	farcall FarPtr_ScriptWaitActorJumpDone ; $4ccf
 	script_move_target $11, $1800, $3300 ; $4cd2
@@ -747,9 +737,7 @@ LateStudentCrashImpact:
 	script_set_speed $00, $0040 ; $4d0e
 	script_move_player $1800, $2400 ; $4d16
 	script_move_target $00, $1700, $2400 ; $4d20
-	ld a, $00 ; $4d2b
-	ld de, rJOYP ; $4d2d
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4d30
+	script_jump_velocity $00, $ff00 ; $4d2b
 	ld a, $00 ; $4d33
 	farcall FarPtr_GetActorStateAddr ; $4d35
 	ld c, l ; $4d38
@@ -773,9 +761,7 @@ Func_11_4d68:
 	ld a, $00 ; $4d68
 	farcall FarPtr_SetActorNullScript ; $4d6a
 	script_set_speed $00, $0010 ; $4d6d
-	ld a, $00 ; $4d75
-	ld de, $ff80 ; $4d77
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4d7a
+	script_jump_velocity $00, $ff80 ; $4d75
 	ld a, $00 ; $4d7d
 	farcall FarPtr_GetActorStateAddr ; $4d7f
 	ld c, l ; $4d82
@@ -1592,9 +1578,7 @@ Label_11_5db7:
 	script_speak $08 ; $5e49
 	script_set_anim $09, $04 ; $5e4e
 	script_speak $09 ; $5e55
-	ld a, $03 ; $5e5a
-	ld de, $ff80 ; $5e5c
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5e5f
+	script_jump_velocity $03, $ff80 ; $5e5a
 	ld a, $03 ; $5e62
 	farcall FarPtr_ScriptWaitActorJumpDone ; $5e64
 	script_speak $03 ; $5e67
@@ -1645,9 +1629,7 @@ Label_11_5ec0:
 	script_set_anim $05, $04 ; $5f42
 	script_speak $05 ; $5f49
 	script_set_text $0868 ; $5f4e
-	ld a, $03 ; $5f54
-	ld de, $ff80 ; $5f56
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5f59
+	script_jump_velocity $03, $ff80 ; $5f54
 	ld a, $03 ; $5f5c
 	farcall FarPtr_ScriptWaitActorJumpDone ; $5f5e
 	script_speak $03 ; $5f61
@@ -2525,9 +2507,7 @@ Label_11_6eb1:
 	call WaitFadeEnd ; $6ef7
 	script_set_text $0833 ; $6efa
 	script_speak $07 ; $6f00
-	ld a, $03 ; $6f05
-	ld de, $ff80 ; $6f07
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6f0a
+	script_jump_velocity $03, $ff80 ; $6f05
 	ld a, $03 ; $6f0d
 	farcall FarPtr_ScriptWaitActorJumpDone ; $6f0f
 	script_speak $03 ; $6f12
@@ -2557,9 +2537,7 @@ Label_11_6f44:
 	call WaitFadeEnd ; $6f8a
 	script_set_text $0846 ; $6f8d
 	script_speak $06 ; $6f93
-	ld a, $03 ; $6f98
-	ld de, $ff80 ; $6f9a
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6f9d
+	script_jump_velocity $03, $ff80 ; $6f98
 	ld a, $03 ; $6fa0
 	farcall FarPtr_ScriptWaitActorJumpDone ; $6fa2
 	script_set_text $0835 ; $6fa5
@@ -2590,9 +2568,7 @@ Label_11_6fdd:
 	call WaitFadeEnd ; $7023
 	script_set_text $0841 ; $7026
 	script_speak $05 ; $702c
-	ld a, $03 ; $7031
-	ld de, $ff80 ; $7033
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $7036
+	script_jump_velocity $03, $ff80 ; $7031
 	ld a, $03 ; $7039
 	farcall FarPtr_ScriptWaitActorJumpDone ; $703b
 	script_set_text $0836 ; $703e

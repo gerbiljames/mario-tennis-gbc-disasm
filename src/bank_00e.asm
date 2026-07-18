@@ -1845,13 +1845,9 @@ Label_0e_5d49:
 	script_wait_frames $28 ; $5d5e
 	script_speak $0f ; $5d65
 	script_wait_frames $14 ; $5d6a
-	ld a, $0d ; $5d71
-	ld de, $ff80 ; $5d73
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5d76
+	script_jump_velocity $0d, $ff80 ; $5d71
 	script_wait_frames $14 ; $5d79
-	ld a, $0d ; $5d80
-	ld de, $ff80 ; $5d82
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5d85
+	script_jump_velocity $0d, $ff80 ; $5d80
 	script_wait_frames $28 ; $5d88
 	sound $86 ; $5d8f
 	script_speak $0d ; $5d91
@@ -2584,12 +2580,8 @@ Func_0e_6a51:
 	sound $97 ; $6a7e
 	script_set_position $03, $1000, $1d00 ; $6a80
 	script_wait_frames $0a ; $6a8b
-	ld a, $13 ; $6a92
-	ld de, $ff80 ; $6a94
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6a97
-	ld a, $03 ; $6a9a
-	ld de, $ff80 ; $6a9c
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6a9f
+	script_jump_velocity $13, $ff80 ; $6a92
+	script_jump_velocity $03, $ff80 ; $6a9a
 	script_wait_frames $1e ; $6aa2
 	script_set_position $03, $3f00, $3f00 ; $6aa9
 	script_set_speed $13, $0040 ; $6ab4
@@ -2656,18 +2648,14 @@ Func_0e_6ad4:
 	script_wait_frames $1e ; $6c32
 	script_speak $08 ; $6c39
 	script_wait_frames $14 ; $6c3e
-	ld a, $10 ; $6c45
-	ld de, $ff80 ; $6c47
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6c4a
+	script_jump_velocity $10, $ff80 ; $6c45
 	script_wait_frames $14 ; $6c4d
 	script_face $10, $c0 ; $6c54
 	script_set_anim $10, $02 ; $6c5b
 	script_wait_idle $10 ; $6c62
 	script_speak $10 ; $6c67
 	script_wait_frames $0a ; $6c6c
-	ld a, $0e ; $6c73
-	ld de, rLCDC ; $6c75
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6c78
+	script_jump_velocity $0e, $ff40 ; $6c73
 	script_wait_frames $28 ; $6c7b
 	script_face $0e, $c0 ; $6c82
 	script_set_anim $0e, $02 ; $6c89
@@ -2715,9 +2703,7 @@ Func_0e_6ad4:
 	script_speak $0f ; $6db1
 	ret ; $6db6
 Func_0e_6db7:
-	ld a, $0b ; $6db7
-	ld de, $ff80 ; $6db9
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6dbc
+	script_jump_velocity $0b, $ff80 ; $6db7
 	script_wait_frames $14 ; $6dbf
 	script_speak $0b ; $6dc6
 	script_set_position $04, $3f00, $3f00 ; $6dcb
@@ -2785,9 +2771,7 @@ Func_0e_6f2b:
 	script_wait_frames $04 ; $6f82
 	script_face $0e, $c0 ; $6f89
 	script_wait_frames $0a ; $6f90
-	ld a, $0e ; $6f97
-	ld de, rLCDC ; $6f99
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $6f9c
+	script_jump_velocity $0e, $ff40 ; $6f97
 	script_wait_frames $28 ; $6f9f
 	script_speak $0e ; $6fa6
 	script_wait_frames $0a ; $6fab
@@ -2816,9 +2800,7 @@ Func_0e_6f2b:
 	script_set_anim $0e, $03 ; $7053
 	script_wait_idle $0e ; $705a
 	script_wait_frames $14 ; $705f
-	ld a, $10 ; $7066
-	ld de, $ff80 ; $7068
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $706b
+	script_jump_velocity $10, $ff80 ; $7066
 	script_wait_frames $28 ; $706e
 	script_speak $10 ; $7075
 	script_wait_frames $0a ; $707a
@@ -2839,9 +2821,7 @@ ExhibitionDeclinedCutscene:
 	script_wait_idle $08 ; $70d3
 	script_wait_frames $0a ; $70d8
 	script_speak $08 ; $70df
-	ld a, $0f ; $70e4
-	ld de, $ff80 ; $70e6
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $70e9
+	script_jump_velocity $0f, $ff80 ; $70e4
 	script_wait_frames $14 ; $70ec
 	sound $70 ; $70f3
 	ld a, $04 ; $70f5

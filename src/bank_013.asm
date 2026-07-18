@@ -749,9 +749,7 @@ Func_13_4ef4:
 	jr z, Label_13_4f0c ; $4f04
 	script_set_text $0548 ; $4f06
 Label_13_4f0c:
-	ld a, $03 ; $4f0c
-	ld de, $ff80 ; $4f0e
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4f11
+	script_jump_velocity $03, $ff80 ; $4f0c
 	ld a, $03 ; $4f14
 	call Func_13_5bfb ; $4f16
 	call Func_13_5c27 ; $4f19
@@ -766,9 +764,7 @@ Label_13_4f0c:
 	script_wait_idle $03 ; $4f57
 	script_set_position $06, $3f00, $3f00 ; $4f5c
 	script_speak $03 ; $4f67
-	ld a, $00 ; $4f6c
-	ld de, $ff80 ; $4f6e
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $4f71
+	script_jump_velocity $00, $ff80 ; $4f6c
 	ld a, $00 ; $4f74
 	farcall FarPtr_ScriptWaitActorJumpDone ; $4f76
 	test_flag $05, 7 ; $4f79

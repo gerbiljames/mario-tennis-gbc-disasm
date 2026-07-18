@@ -984,12 +984,8 @@ Label_27_537f:
 	script_set_position $05, $3480, $0b80 ; $53c6
 	ld a, $14 ; $53d1
 	call Func_27_7856 ; $53d3
-	ld a, $05 ; $53d6
-	ld de, rLCDC ; $53d8
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $53db
-	ld a, $00 ; $53de
-	ld de, rLCDC ; $53e0
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $53e3
+	script_jump_velocity $05, $ff40 ; $53d6
+	script_jump_velocity $00, $ff40 ; $53de
 	ld a, $00 ; $53e6
 	farcall FarPtr_ScriptWaitActorJumpDone ; $53e8
 	ld a, $1e ; $53eb
@@ -2439,9 +2435,7 @@ Label_27_737e:
 	script_wait_idle $06 ; $73ef
 	script_set_speed $06, $0020 ; $73f4
 	script_face $06, $40 ; $73fc
-	ld a, $06 ; $7403
-	ld de, $ff80 ; $7405
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $7408
+	script_jump_velocity $06, $ff80 ; $7403
 	ld a, $06 ; $740b
 	farcall FarPtr_ScriptWaitActorJumpDone ; $740d
 	script_move_target $06, $1800, $1700 ; $7410
@@ -2463,9 +2457,7 @@ Label_27_737e:
 	script_wait_frames $14 ; $748e
 	script_set_position $04, $3f00, $3f00 ; $7495
 	script_set_speed $06, $0020 ; $74a0
-	ld a, $06 ; $74a8
-	ld de, $ff80 ; $74aa
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $74ad
+	script_jump_velocity $06, $ff80 ; $74a8
 	ld a, $06 ; $74b0
 	farcall FarPtr_ScriptWaitActorJumpDone ; $74b2
 	script_move_target $06, $1800, $2000 ; $74b5
@@ -2518,9 +2510,7 @@ Func_27_7595:
 	script_set_speed $00, $0040 ; $75ad
 	script_move_player $1800, $2400 ; $75b5
 	script_move_target $00, $1700, $2400 ; $75bf
-	ld a, $00 ; $75ca
-	ld de, rJOYP ; $75cc
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $75cf
+	script_jump_velocity $00, $ff00 ; $75ca
 	ld a, $00 ; $75d2
 	farcall FarPtr_GetActorStateAddr ; $75d4
 	ld c, l ; $75d7

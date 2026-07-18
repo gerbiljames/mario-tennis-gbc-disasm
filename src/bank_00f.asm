@@ -1092,9 +1092,7 @@ DelayFrames:
 	pop af ; $567d
 	ret ; $567e
 CutsceneStompScreenShake:
-	ld a, $08 ; $567f
-	ld de, $ff80 ; $5681
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5684
+	script_jump_velocity $08, $ff80 ; $567f
 	ld a, $08 ; $5687
 	farcall FarPtr_ScriptWaitActorJumpDone ; $5689
 	sound $83 ; $568c
@@ -1369,17 +1367,13 @@ Func_0f_5b4d:
 	script_wait_move $13 ; $5bbb
 	script_set_anim $13, $04 ; $5bc0
 	script_wait_idle $13 ; $5bc7
-	ld a, $13 ; $5bcc
-	ld de, $ff80 ; $5bce
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5bd1
+	script_jump_velocity $13, $ff80 ; $5bcc
 	ld a, $13 ; $5bd4
 	farcall FarPtr_ScriptWaitActorJumpDone ; $5bd6
 	script_set_speed $14, $0020 ; $5bd9
 	script_move_target $14, $0f00, $0780 ; $5be1
 	script_wait_move $14 ; $5bec
-	ld a, $13 ; $5bf1
-	ld de, $ff80 ; $5bf3
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5bf6
+	script_jump_velocity $13, $ff80 ; $5bf1
 	script_set_anim $14, $02 ; $5bf9
 	script_player_speed $0010 ; $5c00
 	script_move_player_to_actor $00 ; $5c06
@@ -2947,9 +2941,7 @@ Func_0f_766c:
 	ld h, [hl] ; $7679
 	ld l, a ; $767a
 	farcall FarPtr_InitDialogueTextCursor ; $767b
-	ld a, $05 ; $767e
-	ld de, $ff80 ; $7680
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $7683
+	script_jump_velocity $05, $ff80 ; $767e
 	ld a, $05 ; $7686
 	farcall FarPtr_ScriptWaitActorJumpDone ; $7688
 	script_speak $05 ; $768b
@@ -3040,9 +3032,7 @@ Label_0f_7763:
 	xor a, $20 ; $776f
 	ld [hl], a ; $7771
 	script_face_toward $00, $02 ; $7772
-	ld a, $02 ; $777a
-	ld de, $ff80 ; $777c
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $777f
+	script_jump_velocity $02, $ff80 ; $777a
 	ld a, $02 ; $7782
 	farcall FarPtr_ScriptWaitActorJumpDone ; $7784
 	script_face_toward $02, $00 ; $7787

@@ -196,6 +196,13 @@ MACRO script_set_speed
 	ld bc, \2
 	farcall FarPtr_ScriptSetActorMoveSpeed
 ENDM
+; Sets an actor's jump velocity (de, signed 16-bit).
+; Usage: script_jump_velocity actor, velocity
+MACRO script_jump_velocity
+	ld a, \1
+	ld de, \2
+	farcall FarPtr_ScriptSetActorJumpVelocity
+ENDM
 ; Usage: script_move_player x, y (moves actor $00, the player)
 MACRO script_move_player
 	xor a, a

@@ -2703,9 +2703,7 @@ Func_10_5de9:
 	script_set_speed $08, $0010 ; $5e04
 	test_flag $1c, 1 ; $5e0c
 	jr z, Label_10_5e30 ; $5e0f
-	ld a, $00 ; $5e11
-	ld de, $ff80 ; $5e13
-	farcall FarPtr_ScriptSetActorJumpVelocity ; $5e16
+	script_jump_velocity $00, $ff80 ; $5e11
 	script_move_target $00, $1f00, $0f00 ; $5e19
 	script_wait_move $00 ; $5e24
 	script_face $00, $00 ; $5e29
