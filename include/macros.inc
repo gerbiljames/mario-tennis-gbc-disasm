@@ -88,3 +88,63 @@ MACRO wram_bank
 	ldh [hWramBank], a
 	ldh [rWBK], a
 ENDM
+
+; --- Story-mode map-script tables (banks $0e-$15) ---
+; Each story location owns a 7-word directory (a map_tree) copied to $c286.
+; The words point at the location's sub-tables, one per slot, consumed by the
+; bank $0a overworld engine:
+;   0 EntryPoints (map_entry)    - spawn record per entry point / warp id
+;   1 ExitTriggers (map_script)  - RunLocationExit
+;   2 Actors (map_actor)         - the location's NPC/prop actor list
+;   3 NpcScripts (map_script)    - RunNpcInteraction (talk)
+;   4 FacingScripts (map_script) - RunFacingTileScript (action button vs tile)
+;   5 TileTriggers (map_script)  - RunTileTriggerScript (step-on)
+;   6 InitScript                 - RunLocationInitScript (code)
+; Slots with no table point at a shared $ff (an empty list) or at slot 6's
+; init code.
+
+; Actor spawn template (14 bytes, list terminated by a $ff sentinel byte).
+; SpawnActorFromTemplate ($04:$4c60) spawns `objdef` unless `cond` is met,
+; then seeds the actor's position, facing, object id, animation, and (if
+; nonzero) a palette override.
+; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette
+MACRO map_actor
+	dw \1, \2, \3, \4
+	db \5, $00, \6, \7, \8, $00
+ENDM
+
+; Terminates a map_actor list: nine $00 bytes then the $ff sentinel that
+; SpawnActorsFromList ($04:$4cf7) stops on (it reads template byte 9).
+MACRO map_actor_end
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff
+ENDM
+
+; Entry-point spawn record (8 bytes, table terminated by $ff). Selected by
+; wStoryModeEntryPoint; places the main character and runs `arrival_script`.
+; Usage: map_entry id, sprite, x, y, arrival_script
+MACRO map_entry
+	db \1, \2
+	dw \3, \4, \5
+ENDM
+
+; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
+; ($0a:$53e4) matches `id` (and `facing_mask` against the actor's facing),
+; checks `flag_cond`, then runs `handler` with the two arg bytes.
+; Usage: map_script id, facing_mask, flag_cond, handler, arg0, arg1
+MACRO map_script
+	db \1, \2
+	dw \3, \4
+	db \5, \6
+ENDM
+
+; Story location record (6 bytes) in bank $0a's StoryLocationTable, indexed by
+; wStoryModeCurrentLocation (GetStoryLocationRecordPtr). `map_scripts` is a
+; slot in the target bank's $4000 directory (a DataPtr_*MapScripts label); the
+; engine copies its 7-word map_tree to $c286 (LoadStoryLocationHeader), loads
+; `scene` graphics (LoadStorySceneGraphics), and plays `bgm` ($ff = none).
+; Usage: story_location id, scene, map_scripts, bgm
+MACRO story_location
+	db \1, \2
+	dslot \3
+	db \4, $00
+ENDM

@@ -7,34 +7,35 @@ DataPtr_MarioWorldMapScripts_0e:
 DataPtr_SpecialCourtMapScripts_0e:
 	dw SpecialCourtMapScripts_0e ; $4004
 TrainingGymMapScripts_0e:
-	; $4006, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $40c6 ; record 0
-	dw $4277 ; record 1
-	dw $4014 ; record 2
-	dw $4554 ; record 3
-	dw $45ad ; record 4
-	dw $45f6 ; record 5
-	dw $4619 ; record 6
-	; $4014, 178 bytes (bytes:14)
-	db $00, $00, $6e, $7c, $00, $25, $00, $0d, $40, $00, $42, $01, $00, $00 ; 0x00
-	db $00, $00, $6e, $7c, $00, $29, $00, $0f, $40, $00, $45, $01, $05, $00 ; 0x0e
-	db $00, $00, $6e, $7c, $00, $25, $00, $15, $40, $00, $43, $01, $07, $00 ; 0x1c
-	db $00, $00, $6e, $7c, $00, $29, $00, $13, $40, $00, $44, $01, $05, $00 ; 0x2a
-	db $00, $00, $6e, $7c, $00, $25, $00, $05, $40, $00, $47, $01, $07, $00 ; 0x38
-	db $00, $00, $6e, $7c, $00, $27, $00, $07, $40, $00, $46, $01, $00, $00 ; 0x46
-	db $00, $00, $6e, $7c, $00, $29, $00, $05, $40, $00, $47, $01, $00, $00 ; 0x54
-	db $00, $00, $12, $47, $00, $21, $00, $0c, $40, $00, $3b, $01, $00, $00 ; 0x62
-	db $00, $00, $c9, $48, $00, $2c, $00, $0b, $80, $00, $3c, $01, $00, $00 ; 0x70
-	db $00, $00, $80, $4a, $60, $2d, $00, $17, $00, $00, $3b, $01, $06, $00 ; 0x7e
-	db $00, $00, $25, $52, $00, $19, $00, $11, $c0, $00, $39, $01, $06, $00 ; 0x8c
-	db $00, $00, $6e, $7c, $00, $0d, $00, $13, $00, $00, $39, $01, $07, $00 ; 0x9a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xa8
-	; $40c6, 57 bytes (bytes:16)
-	db $01, $c0, $00, $16, $00, $18, $ff, $40, $02, $40, $00, $0b, $00, $0c, $45, $41 ; 0x00
-	db $03, $40, $00, $15, $00, $0c, $e2, $41, $0b, $40, $00, $0d, $00, $0f, $00, $00 ; 0x10
-	db $0c, $80, $00, $11, $00, $13, $00, $00, $0d, $40, $00, $0d, $00, $0f, $00, $00 ; 0x20
-	db $0e, $80, $00, $11, $00, $13, $00, $00, $ff ; 0x30
+	; $4006, 14 bytes (map_tree)
+	db $c6, $40, $77, $42, $14, $40, $54, $45
+	db $ad, $45, $f6, $45, $19, $46
+TrainingGymActors_0e:
+	; $4014, 178 bytes (map_actors)
+	map_actor $0000, $7c6e, $2500, $0d00, $40, $42, $01, $00
+	map_actor $0000, $7c6e, $2900, $0f00, $40, $45, $01, $05
+	map_actor $0000, $7c6e, $2500, $1500, $40, $43, $01, $07
+	map_actor $0000, $7c6e, $2900, $1300, $40, $44, $01, $05
+	map_actor $0000, $7c6e, $2500, $0500, $40, $47, $01, $07
+	map_actor $0000, $7c6e, $2700, $0700, $40, $46, $01, $00
+	map_actor $0000, $7c6e, $2900, $0500, $40, $47, $01, $00
+	map_actor $0000, $4712, $2100, $0c00, $40, $3b, $01, $00
+	map_actor $0000, $48c9, $2c00, $0b00, $80, $3c, $01, $00
+	map_actor $0000, $4a80, $2d60, $1700, $00, $3b, $01, $06
+	map_actor $0000, $5225, $1900, $1100, $c0, $39, $01, $06
+	map_actor $0000, $7c6e, $0d00, $1300, $00, $39, $01, $07
+	map_actor_end
+TrainingGymEntryPoints_0e:
+	; $40c6, 57 bytes (map_entries)
+	map_entry $01, $c0, $1600, $1800, Func_0e_40ff
+	map_entry $02, $40, $0b00, $0c00, Func_0e_4145
+	map_entry $03, $40, $1500, $0c00, Func_0e_41e2
+	map_entry $0b, $40, $0d00, $0f00, $0000
+	map_entry $0c, $80, $1100, $1300, $0000
+	map_entry $0d, $40, $0d00, $0f00, $0000
+	map_entry $0e, $80, $1100, $1300, $0000
+	db $ff
+Func_0e_40ff:
 	ld a, [wStoryModeEntryPoint] ; $40ff
 	cp a, $ff ; $4102
 	jp z, Label_0e_4144 ; $4104
@@ -65,6 +66,7 @@ Label_0e_4132:
 	farcall FarPtr_MoveActorByAngle ; $4141
 Label_0e_4144:
 	ret ; $4144
+Func_0e_4145:
 	ld a, [wStoryModeEntryPoint] ; $4145
 	cp a, $ff ; $4148
 	jp z, Label_0e_41e1 ; $414a
@@ -138,6 +140,7 @@ Label_0e_4144:
 	farcall FarPtr_CopySceneTilemapRect ; $41de
 Label_0e_41e1:
 	ret ; $41e1
+Func_0e_41e2:
 	ld a, [wStoryModeEntryPoint] ; $41e2
 	cp a, $ff ; $41e5
 	jr z, Label_0e_41e1 ; $41e7
@@ -206,12 +209,13 @@ Label_0e_41e1:
 	ld l, $02 ; $4271
 	farcall FarPtr_CopySceneTilemapRect ; $4273
 	ret ; $4276
-	; $4277, 25 bytes (records:8)
-; 3 records x 8 bytes
-	dw $ff01, $0000, $7c96, $0107 ; record 0
-	dw $ff03, $0000, $431b, $0112 ; record 1
-	dw $ff02, $0000, $4290, $0113 ; record 2
+TrainingGymExitTriggers_0e:
+	; $4277, 25 bytes (map_scripts)
+	map_script $01, $ff, $0000, MapScriptNop_0e, $07, $01
+	map_script $03, $ff, $0000, Func_0e_431b, $12, $01
+	map_script $02, $ff, $0000, Func_0e_4290, $13, $01
 	db $ff
+Func_0e_4290:
 	ld a, $00 ; $4290
 	ld b, $c0 ; $4292
 	farcall FarPtr_SetActorFacing ; $4294
@@ -276,6 +280,7 @@ Label_0e_41e1:
 	farcall FarPtr_WaitScriptFrames ; $4316
 	pop af ; $4319
 	ret ; $431a
+Func_0e_431b:
 	ld a, $00 ; $431b
 	ld b, $c0 ; $431d
 	farcall FarPtr_SetActorFacing ; $431f
@@ -340,6 +345,7 @@ Label_0e_41e1:
 	farcall FarPtr_WaitScriptFrames ; $43a1
 	pop af ; $43a4
 	ret ; $43a5
+Func_0e_43a6:
 	ld a, [$c2b0] ; $43a6
 	add a, a ; $43a9
 	add a, $bd ; $43aa
@@ -365,6 +371,7 @@ Label_0e_41e1:
 	dw $14cc ; record 7
 	dw $14db ; record 8
 	dw $14db ; record 9
+Func_0e_43d1:
 	ld a, [$c2b0] ; $43d1
 	sra a ; $43d4
 	add a, a ; $43d6
@@ -386,6 +393,7 @@ Label_0e_41e1:
 	dw $14bf ; record 2
 	dw $14cd ; record 3
 	dw $14dc ; record 4
+Func_0e_43f4:
 	ld a, [$c2b0] ; $43f4
 	add a, a ; $43f7
 	add a, $0b ; $43f8
@@ -411,6 +419,7 @@ Label_0e_41e1:
 	dw $14cf ; record 7
 	dw $14dd ; record 8
 	dw $14dd ; record 9
+Func_0e_441f:
 	ld a, [$c2b0] ; $441f
 	add a, a ; $4422
 	add a, $36 ; $4423
@@ -436,6 +445,7 @@ Label_0e_41e1:
 	dw $14d1 ; record 7
 	dw $14de ; record 8
 	dw $14de ; record 9
+Func_0e_444a:
 	ld a, [$c2b0] ; $444a
 	sra a ; $444d
 	cp a, $03 ; $444f
@@ -477,6 +487,7 @@ Label_0e_448f:
 	ld a, $07 ; $448f
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4491
 	ret ; $4494
+Func_0e_4495:
 	ld a, [$c2b0] ; $4495
 	sra a ; $4498
 	add a, a ; $449a
@@ -498,6 +509,7 @@ Label_0e_448f:
 	dw $14c4 ; record 2
 	dw $14d5 ; record 3
 	dw $14e0 ; record 4
+Func_0e_44b8:
 	ld a, [$c2b0] ; $44b8
 	sra a ; $44bb
 	add a, a ; $44bd
@@ -519,6 +531,7 @@ Label_0e_448f:
 	dw $14c5 ; record 2
 	dw $14d6 ; record 3
 	dw $14e1 ; record 4
+Func_0e_44db:
 	ld a, [$c2b0] ; $44db
 	add a, a ; $44de
 	add a, $f2 ; $44df
@@ -544,6 +557,7 @@ Label_0e_448f:
 	dw $14d7 ; record 7
 	dw $14e2 ; record 8
 	dw $14e3 ; record 9
+Func_0e_4506:
 	ld a, [$c2b0] ; $4506
 	add a, a ; $4509
 	add a, $1d ; $450a
@@ -569,6 +583,7 @@ Label_0e_448f:
 	dw $14d9 ; record 7
 	dw $14e4 ; record 8
 	dw $14e5 ; record 9
+Func_0e_4531:
 	ld a, [$c2b0] ; $4531
 	sra a ; $4534
 	add a, a ; $4536
@@ -590,25 +605,26 @@ Label_0e_448f:
 	dw $14c9 ; record 2
 	dw $14da ; record 3
 	dw $14e6 ; record 4
-	; $4554, 89 bytes (records:8)
-; 11 records x 8 bytes
-	dw $ff03, $0000, $43a6, $0003 ; record 0
-	dw $ff04, $0000, $43d1, $0003 ; record 1
-	dw $ff05, $0000, $43f4, $0003 ; record 2
-	dw $ff06, $0000, $441f, $0003 ; record 3
-	dw $ff07, $0000, $444a, $0000 ; record 4
-	dw $ff08, $0000, $4495, $0000 ; record 5
-	dw $ff09, $0000, $44b8, $0000 ; record 6
-	dw $ff0a, $0000, $44db, $0013 ; record 7
-	dw $ff0b, $0000, $4506, $0010 ; record 8
-	dw $ff0c, $0000, $4531, $0013 ; record 9
-	dw $ff0d, $0000, $20e2, $0013 ; record 10
+TrainingGymNpcScripts_0e:
+	; $4554, 89 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_0e_43a6, $03, $00
+	map_script $04, $ff, $0000, Func_0e_43d1, $03, $00
+	map_script $05, $ff, $0000, Func_0e_43f4, $03, $00
+	map_script $06, $ff, $0000, Func_0e_441f, $03, $00
+	map_script $07, $ff, $0000, Func_0e_444a, $00, $00
+	map_script $08, $ff, $0000, Func_0e_4495, $00, $00
+	map_script $09, $ff, $0000, Func_0e_44b8, $00, $00
+	map_script $0a, $ff, $0000, Func_0e_44db, $13, $00
+	map_script $0b, $ff, $0000, Func_0e_4506, $10, $00
+	map_script $0c, $ff, $0000, Func_0e_4531, $13, $00
+	map_script $0d, $ff, $0000, $20e2, $13, $00
 	db $ff
-	; $45ad, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $45be, $0000 ; record 0
-	dw $ff02, $0000, $45da, $0000 ; record 1
+TrainingGymFacingScripts_0e:
+	; $45ad, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_0e_45be, $00, $00
+	map_script $02, $ff, $0000, Func_0e_45da, $00, $00
 	db $ff
+Func_0e_45be:
 	ld a, $0b ; $45be
 	ld [$c2b1], a ; $45c0
 	ld bc, $0040 ; $45c3
@@ -620,6 +636,7 @@ Label_0e_448f:
 	farcall FarPtr_WaitPlayerMoveDone ; $45d3
 	call RunRepairCounterDialogue ; $45d6
 	ret ; $45d9
+Func_0e_45da:
 	ld a, $0c ; $45da
 	ld [$c2b1], a ; $45dc
 	ld bc, $0040 ; $45df
@@ -631,19 +648,22 @@ Label_0e_448f:
 	farcall FarPtr_WaitPlayerMoveDone ; $45ef
 	call RunRepairCounterDialogue ; $45f2
 	ret ; $45f5
-	; $45f6, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $4002, $0000, $4607, $0000 ; record 0
-	dw $4003, $0000, $4610, $0000 ; record 1
+TrainingGymTileTriggers_0e:
+	; $45f6, 17 bytes (map_scripts)
+	map_script $02, $40, $0000, Func_0e_4607, $00, $00
+	map_script $03, $40, $0000, Func_0e_4610, $00, $00
 	db $ff
+Func_0e_4607:
 	ld a, $02 ; $4607
 	ld [$c294], a ; $4609
 	ld [wStoryModeExitLocationRequest], a ; $460c
 	ret ; $460f
+Func_0e_4610:
 	ld a, $03 ; $4610
 	ld [$c294], a ; $4612
 	ld [wStoryModeExitLocationRequest], a ; $4615
 	ret ; $4618
+TrainingGymInitScript_0e:
 	call ComputeTrainingGymProgressIndex ; $4619
 	ld a, $07 ; $461c
 	farcall FarPtr_GetActorStateAddr ; $461e
@@ -1518,47 +1538,54 @@ Label_0e_5224:
 	ret ; $5224
 	INCBIN "data/bank_00e/d_5225.bin" ; $5225, 35 bytes
 MarioWorldMapScripts_0e:
-	; $5248, 14 bytes (records:2)
-	dw $535c ; record 0
-	dw $5385 ; record 1
-	dw $5256 ; record 2
-	dw $544e ; record 3
-	dw $54cf ; record 4
-	dw $54d0 ; record 5
-	dw $54d2 ; record 6
-	; $5256, 262 bytes (bytes:14)
-	db $00, $00, $6e, $7c, $00, $15, $00, $3d, $00, $00, $4c, $01, $00, $00 ; 0x00
-	db $00, $00, $6e, $7c, $00, $15, $00, $3d, $00, $00, $53, $01, $00, $00 ; 0x0e
-	db $00, $00, $6e, $7c, $00, $15, $00, $3d, $00, $00, $53, $01, $00, $00 ; 0x1c
-	db $00, $00, $6e, $7c, $00, $15, $00, $3d, $00, $00, $53, $01, $00, $00 ; 0x2a
-	db $00, $00, $6e, $7c, $00, $15, $00, $3d, $00, $00, $4e, $01, $00, $00 ; 0x38
-	db $00, $00, $6e, $7c, $00, $12, $00, $13, $40, $00, $2e, $01, $00, $00 ; 0x46
-	db $00, $00, $6e, $7c, $00, $18, $00, $12, $40, $00, $2c, $01, $00, $00 ; 0x54
-	db $00, $00, $6e, $7c, $00, $18, $40, $0f, $40, $00, $6f, $01, $00, $00 ; 0x62
-	db $00, $00, $6e, $7c, $00, $18, $00, $0d, $40, $00, $6d, $01, $00, $00 ; 0x70
-	db $00, $00, $6e, $7c, $00, $17, $00, $14, $40, $00, $6e, $01, $00, $00 ; 0x7e
-	db $00, $00, $6e, $7c, $00, $0a, $00, $0f, $40, $00, $73, $01, $00, $00 ; 0x8c
-	db $00, $00, $6e, $7c, $00, $0c, $00, $11, $40, $00, $2b, $01, $00, $00 ; 0x9a
-	db $00, $00, $6e, $7c, $00, $0c, $00, $0f, $40, $00, $2d, $01, $00, $00 ; 0xa8
-	db $00, $00, $6e, $7c, $00, $0c, $00, $0d, $40, $00, $48, $01, $00, $00 ; 0xb6
-	db $00, $00, $6e, $7c, $00, $0e, $00, $0b, $40, $00, $72, $01, $00, $00 ; 0xc4
-	db $00, $00, $6e, $7c, $00, $16, $00, $0b, $40, $00, $2a, $01, $00, $00 ; 0xd2
-	db $00, $00, $6e, $7c, $00, $0f, $00, $1f, $40, $00, $70, $01, $00, $00 ; 0xe0
-	db $00, $00, $6e, $7c, $00, $15, $00, $1f, $40, $00, $71, $01, $00, $00 ; 0xee
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xfc
-	; $535c, 41 bytes (bytes:16)
-	db $01, $c0, $00, $12, $00, $21, $00, $00, $02, $40, $00, $1b, $00, $0b, $00, $00 ; 0x00
-	db $0a, $c0, $00, $12, $00, $08, $00, $00, $0e, $c0, $00, $12, $00, $0f, $00, $00 ; 0x10
-	db $0f, $c0, $00, $12, $00, $08, $00, $00, $ff ; 0x20
-	; $5385, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $7c96, $0e1b ; record 0
+	; $5248, 14 bytes (map_tree)
+	dw MarioWorldEntryPoints_0e ; slot 0 EntryPoints
+	dw MarioWorldExitTriggers_0e ; slot 1 ExitTriggers
+	dw MarioWorldActors_0e ; slot 2 Actors
+	dw MarioWorldNpcScripts_0e ; slot 3 NpcScripts
+	dw MarioWorldFacingScripts_0e ; slot 4 FacingScripts
+	dw MarioWorldTileTriggers_0e ; slot 5 TileTriggers
+	dw MarioWorldInitScript_0e ; slot 6 InitScript
+MarioWorldActors_0e:
+	; $5256, 262 bytes (map_actors)
+	map_actor $0000, $7c6e, $1500, $3d00, $00, $4c, $01, $00
+	map_actor $0000, $7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, $7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, $7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, $7c6e, $1500, $3d00, $00, $4e, $01, $00
+	map_actor $0000, $7c6e, $1200, $1300, $40, $2e, $01, $00
+	map_actor $0000, $7c6e, $1800, $1200, $40, $2c, $01, $00
+	map_actor $0000, $7c6e, $1800, $0f40, $40, $6f, $01, $00
+	map_actor $0000, $7c6e, $1800, $0d00, $40, $6d, $01, $00
+	map_actor $0000, $7c6e, $1700, $1400, $40, $6e, $01, $00
+	map_actor $0000, $7c6e, $0a00, $0f00, $40, $73, $01, $00
+	map_actor $0000, $7c6e, $0c00, $1100, $40, $2b, $01, $00
+	map_actor $0000, $7c6e, $0c00, $0f00, $40, $2d, $01, $00
+	map_actor $0000, $7c6e, $0c00, $0d00, $40, $48, $01, $00
+	map_actor $0000, $7c6e, $0e00, $0b00, $40, $72, $01, $00
+	map_actor $0000, $7c6e, $1600, $0b00, $40, $2a, $01, $00
+	map_actor $0000, $7c6e, $0f00, $1f00, $40, $70, $01, $00
+	map_actor $0000, $7c6e, $1500, $1f00, $40, $71, $01, $00
+	map_actor_end
+MarioWorldEntryPoints_0e:
+	; $535c, 41 bytes (map_entries)
+	map_entry $01, $c0, $1200, $2100, $0000
+	map_entry $02, $40, $1b00, $0b00, $0000
+	map_entry $0a, $c0, $1200, $0800, $0000
+	map_entry $0e, $c0, $1200, $0f00, $0000
+	map_entry $0f, $c0, $1200, $0800, $0000
 	db $ff
+MarioWorldExitTriggers_0e:
+	; $5385, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, MapScriptNop_0e, $1b, $0e
+	db $ff
+Func_0e_538e:
 	ld hl, $308e ; $538e
 	farcall FarPtr_InitDialogueTextCursor ; $5391
 	ld a, $12 ; $5394
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5396
 	ret ; $5399
+Func_0e_539a:
 	ld hl, $308f ; $539a
 	ld a, [$c2b0] ; $539d
 	add a, l ; $53a0
@@ -1570,6 +1597,7 @@ Label_0e_53a5:
 	ld a, $11 ; $53a8
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $53aa
 	ret ; $53ad
+Func_0e_53ae:
 	ld hl, $3093 ; $53ae
 	ld a, [$c2b0] ; $53b1
 	add a, l ; $53b4
@@ -1581,30 +1609,35 @@ Label_0e_53b9:
 	ld a, $0b ; $53bc
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $53be
 	ret ; $53c1
+Func_0e_53c2:
 	ld hl, $3097 ; $53c2
 	farcall FarPtr_InitDialogueTextCursor ; $53c5
 	sound $87 ; $53c8
 	ld a, $09 ; $53ca
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $53cc
 	ret ; $53cf
+Func_0e_53d0:
 	ld hl, $3098 ; $53d0
 	farcall FarPtr_InitDialogueTextCursor ; $53d3
 	sound $89 ; $53d6
 	ld a, $0a ; $53d8
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $53da
 	ret ; $53dd
+Func_0e_53de:
 	ld hl, $3099 ; $53de
 	farcall FarPtr_InitDialogueTextCursor ; $53e1
 	sound $88 ; $53e4
 	ld a, $0c ; $53e6
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $53e8
 	ret ; $53eb
+Func_0e_53ec:
 	ld hl, $309a ; $53ec
 	farcall FarPtr_InitDialogueTextCursor ; $53ef
 	sound $86 ; $53f2
 	ld a, $0d ; $53f4
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $53f6
 	ret ; $53f9
+Func_0e_53fa:
 	ld hl, $309b ; $53fa
 	ld a, [$c2b0] ; $53fd
 	add a, l ; $5400
@@ -1616,6 +1649,7 @@ Label_0e_5405:
 	ld a, $0f ; $5408
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $540a
 	ret ; $540d
+Func_0e_540e:
 	ld hl, $309f ; $540e
 	ld a, [$c2b0] ; $5411
 	add a, l ; $5414
@@ -1627,6 +1661,7 @@ Label_0e_5419:
 	ld a, $10 ; $541c
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $541e
 	ret ; $5421
+Func_0e_5422:
 	ld hl, $30a3 ; $5422
 	ld a, [$c2b0] ; $5425
 	add a, l ; $5428
@@ -1638,35 +1673,43 @@ Label_0e_542d:
 	ld a, $0e ; $5430
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5432
 	ret ; $5435
+Func_0e_5436:
 	ld hl, $30a7 ; $5436
 	farcall FarPtr_InitDialogueTextCursor ; $5439
 	ld a, $13 ; $543c
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $543e
 	ret ; $5441
+Func_0e_5442:
 	ld hl, $30a8 ; $5442
 	farcall FarPtr_InitDialogueTextCursor ; $5445
 	ld a, $14 ; $5448
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $544a
 	ret ; $544d
-	; $544e, 132 bytes (records:8)
-; 16 records x 8 bytes
-	dw $1008, $0000, $64a4, $0000 ; record 0
-	dw $2008, $0000, $654f, $0000 ; record 1
-	dw $4008, $0000, $63f4, $0000 ; record 2
-	dw $8008, $0000, $633d, $0003 ; record 3
-	dw $ff11, $0000, $539a, $0003 ; record 4
-	dw $ff0b, $0000, $53ae, $0003 ; record 5
-	dw $ff09, $0000, $53c2, $0003 ; record 6
-	dw $ff0a, $0000, $53d0, $0003 ; record 7
-	dw $ff0c, $0000, $53de, $0003 ; record 8
-	dw $ff0d, $0000, $53ec, $0003 ; record 9
-	dw $ff0f, $0000, $53fa, $0003 ; record 10
-	dw $ff10, $0000, $540e, $0003 ; record 11
-	dw $ff0e, $0000, $5422, $0003 ; record 12
-	dw $ff13, $0000, $5436, $0003 ; record 13
-	dw $ff14, $0000, $5442, $0003 ; record 14
-	dw $ff12, $0000, $538e, $0003 ; record 15
-	db $ff, $ff, $ff, $c9
+MarioWorldNpcScripts_0e:
+	; $544e, 129 bytes (map_scripts)
+	map_script $08, $10, $0000, Func_0e_64a4, $00, $00
+	map_script $08, $20, $0000, Func_0e_654f, $00, $00
+	map_script $08, $40, $0000, Func_0e_63f4, $00, $00
+	map_script $08, $80, $0000, Func_0e_633d, $03, $00
+	map_script $11, $ff, $0000, Func_0e_539a, $03, $00
+	map_script $0b, $ff, $0000, Func_0e_53ae, $03, $00
+	map_script $09, $ff, $0000, Func_0e_53c2, $03, $00
+	map_script $0a, $ff, $0000, Func_0e_53d0, $03, $00
+	map_script $0c, $ff, $0000, Func_0e_53de, $03, $00
+	map_script $0d, $ff, $0000, Func_0e_53ec, $03, $00
+	map_script $0f, $ff, $0000, Func_0e_53fa, $03, $00
+	map_script $10, $ff, $0000, Func_0e_540e, $03, $00
+	map_script $0e, $ff, $0000, Func_0e_5422, $03, $00
+	map_script $13, $ff, $0000, Func_0e_5436, $03, $00
+	map_script $14, $ff, $0000, Func_0e_5442, $03, $00
+	map_script $12, $ff, $0000, Func_0e_538e, $03, $00
+	db $ff
+MarioWorldFacingScripts_0e:
+	ds 1, $ff ; $54cf, fill
+MarioWorldTileTriggers_0e:
+	db $ff ; $54d0
+	ret ; $54d1
+MarioWorldInitScript_0e:
 	call ComputeMarioWorldProgressIndex ; $54d2
 	ld a, [wStoryModeEntryPoint] ; $54d5
 	cp a, $0a ; $54d8
@@ -3228,7 +3271,110 @@ ExhibitionAcceptedDoubles:
 	ld [$c294], a ; $6304
 	ld [wStoryModeExitLocationRequest], a ; $6307
 	ret ; $630a
-	INCBIN "data/bank_00e/d_630b.bin" ; $630b, 316 bytes
+	INCBIN "data/bank_00e/d_630b.bin" ; $630b, 50 bytes
+Func_0e_633d:
+	ld a, $00 ; $633d
+	ld bc, $0018 ; $633f
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $6342
+	ld a, $02 ; $6345
+	ld bc, $0018 ; $6347
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $634a
+	test_flag $05, 7 ; $634d
+	jr nz, Label_0e_639b ; $6350
+	ld a, $00 ; $6352
+	ld bc, $1000 ; $6354
+	ld de, $0900 ; $6357
+	farcall FarPtr_ScriptSetActorMoveTarget ; $635a
+	ld a, $00 ; $635d
+	farcall FarPtr_ScriptWaitActorMoveDone ; $635f
+	ld a, $00 ; $6362
+	ld bc, $1000 ; $6364
+	ld de, $0d00 ; $6367
+	farcall FarPtr_ScriptSetActorMoveTarget ; $636a
+	ld a, $00 ; $636d
+	farcall FarPtr_ScriptWaitActorMoveDone ; $636f
+	ld a, $00 ; $6372
+	ld bc, $1200 ; $6374
+	ld de, $0d00 ; $6377
+	farcall FarPtr_ScriptSetActorMoveTarget ; $637a
+	ld a, $00 ; $637d
+	farcall FarPtr_ScriptWaitActorMoveDone ; $637f
+	ld a, $00 ; $6382
+	ld b, $c0 ; $6384
+	farcall FarPtr_SetActorFacing ; $6386
+	ld a, $08 ; $6389
+	ld b, $40 ; $638b
+	farcall FarPtr_SetActorFacing ; $638d
+	ld a, $00 ; $6390
+	ld bc, $0010 ; $6392
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $6395
+	jp PromptExhibitionMatch ; $6398
+Label_0e_639b:
+	ldh a, [hRomBank] ; $639b
+	ld b, a ; $639d
+	ld a, $02 ; $639e
+	ld de, $7c6e ; $63a0
+	farcall FarPtr_ScriptSetActorScript ; $63a3
+	call MoveDoublesPartnerToPlayer ; $63a6
+	ld a, $08 ; $63a9
+	ld b, $40 ; $63ab
+	farcall FarPtr_SetActorFacing ; $63ad
+	ldh a, [hRomBank] ; $63b0
+	ld b, a ; $63b2
+	ld a, $00 ; $63b3
+	ld de, $630b ; $63b5
+	farcall FarPtr_ScriptSetActorScript ; $63b8
+	push af ; $63bb
+	ld a, $14 ; $63bc
+	farcall FarPtr_WaitScriptFrames ; $63be
+	pop af ; $63c1
+	ldh a, [hRomBank] ; $63c2
+	ld b, a ; $63c4
+	ld a, $02 ; $63c5
+	ld de, $6324 ; $63c7
+	farcall FarPtr_ScriptSetActorScript ; $63ca
+	ld a, $00 ; $63cd
+	farcall FarPtr_WaitActorScriptDone ; $63cf
+	ld a, $02 ; $63d2
+	farcall FarPtr_WaitActorScriptDone ; $63d4
+	jp PromptExhibitionMatch ; $63d7
+	INCBIN "data/bank_00e/d_63da.bin" ; $63da, 26 bytes
+Func_0e_63f4:
+	ld a, $00 ; $63f4
+	ld bc, $0018 ; $63f6
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $63f9
+	ld a, $02 ; $63fc
+	ld bc, $0018 ; $63fe
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $6401
+	test_flag $05, 7 ; $6404
+	jr nz, Label_0e_643f ; $6407
+	ld a, $00 ; $6409
+	ld b, $01 ; $640b
+	farcall FarPtr_ScriptSetActorFacingLock ; $640d
+	ld a, $00 ; $6410
+	ld bc, $1200 ; $6412
+	ld de, $0d00 ; $6415
+	farcall FarPtr_ScriptSetActorMoveTarget ; $6418
+	ld a, $00 ; $641b
+	farcall FarPtr_ScriptWaitActorMoveDone ; $641d
+	ld a, $00 ; $6420
+	ld b, $00 ; $6422
+	farcall FarPtr_ScriptSetActorFacingLock ; $6424
+	ld a, $00 ; $6427
+	ld b, $c0 ; $6429
+	farcall FarPtr_SetActorFacing ; $642b
+	ld a, $00 ; $642e
+	ld b, $c0 ; $6430
+	farcall FarPtr_SetActorFacing ; $6432
+	ld a, $08 ; $6435
+	ld b, $40 ; $6437
+	farcall FarPtr_SetActorFacing ; $6439
+	jp PromptExhibitionMatch ; $643c
+Label_0e_643f:
+	ldh a, [hRomBank] ; $643f
+	ld b, a ; $6441
+	ld a, $02 ; $6442
+	ld de, $7c6e ; $6444
 	farcall FarPtr_ScriptSetActorScript ; $6447
 	call MoveDoublesPartnerToPlayer ; $644a
 	ld a, $08 ; $644d
@@ -3253,7 +3399,77 @@ ExhibitionAcceptedDoubles:
 	ld a, $02 ; $6476
 	farcall FarPtr_WaitActorScriptDone ; $6478
 	jp PromptExhibitionMatch ; $647b
-	INCBIN "data/bank_00e/d_647e.bin" ; $647e, 238 bytes
+	INCBIN "data/bank_00e/d_647e.bin" ; $647e, 38 bytes
+Func_0e_64a4:
+	ld a, $00 ; $64a4
+	ld bc, $0018 ; $64a6
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $64a9
+	ld a, $02 ; $64ac
+	ld bc, $0018 ; $64ae
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $64b1
+	test_flag $05, 7 ; $64b4
+	jr nz, Label_0e_64ea ; $64b7
+	ld a, $00 ; $64b9
+	ld bc, $1000 ; $64bb
+	ld de, $0d00 ; $64be
+	farcall FarPtr_ScriptSetActorMoveTarget ; $64c1
+	ld a, $00 ; $64c4
+	farcall FarPtr_ScriptWaitActorMoveDone ; $64c6
+	ld a, $00 ; $64c9
+	ld bc, $1200 ; $64cb
+	ld de, $0d00 ; $64ce
+	farcall FarPtr_ScriptSetActorMoveTarget ; $64d1
+	ld a, $00 ; $64d4
+	farcall FarPtr_ScriptWaitActorMoveDone ; $64d6
+	ld a, $00 ; $64d9
+	ld b, $c0 ; $64db
+	farcall FarPtr_SetActorFacing ; $64dd
+	ld a, $08 ; $64e0
+	ld b, $40 ; $64e2
+	farcall FarPtr_SetActorFacing ; $64e4
+	jp PromptExhibitionMatch ; $64e7
+Label_0e_64ea:
+	ldh a, [hRomBank] ; $64ea
+	ld b, a ; $64ec
+	ld a, $02 ; $64ed
+	ld de, $7c6e ; $64ef
+	farcall FarPtr_ScriptSetActorScript ; $64f2
+	call MoveDoublesPartnerToPlayer ; $64f5
+	ld a, $08 ; $64f8
+	ld b, $40 ; $64fa
+	farcall FarPtr_SetActorFacing ; $64fc
+	ldh a, [hRomBank] ; $64ff
+	ld b, a ; $6501
+	ld a, $00 ; $6502
+	ld de, $647e ; $6504
+	farcall FarPtr_ScriptSetActorScript ; $6507
+	push af ; $650a
+	ld a, $14 ; $650b
+	farcall FarPtr_WaitScriptFrames ; $650d
+	pop af ; $6510
+	ldh a, [hRomBank] ; $6511
+	ld b, a ; $6513
+	ld a, $02 ; $6514
+	ld de, $6491 ; $6516
+	farcall FarPtr_ScriptSetActorScript ; $6519
+	ld a, $00 ; $651c
+	farcall FarPtr_WaitActorScriptDone ; $651e
+	ld a, $02 ; $6521
+	farcall FarPtr_WaitActorScriptDone ; $6523
+	jp PromptExhibitionMatch ; $6526
+	INCBIN "data/bank_00e/d_6529.bin" ; $6529, 38 bytes
+Func_0e_654f:
+	ld a, $00 ; $654f
+	ld bc, $0018 ; $6551
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $6554
+	ld a, $02 ; $6557
+	ld bc, $0018 ; $6559
+	farcall FarPtr_ScriptSetActorMoveSpeed ; $655c
+	test_flag $05, 7 ; $655f
+	jr nz, Label_0e_6595 ; $6562
+	ld a, $00 ; $6564
+	ld bc, $1400 ; $6566
+	ld de, $0d00 ; $6569
 	farcall FarPtr_ScriptSetActorMoveTarget ; $656c
 	ld a, $00 ; $656f
 	farcall FarPtr_ScriptWaitActorMoveDone ; $6571
@@ -3270,6 +3486,7 @@ ExhibitionAcceptedDoubles:
 	ld b, $40 ; $658d
 	farcall FarPtr_SetActorFacing ; $658f
 	jp PromptExhibitionMatch ; $6592
+Label_0e_6595:
 	ldh a, [hRomBank] ; $6595
 	ld b, a ; $6597
 	ld a, $02 ; $6598
@@ -4729,36 +4946,46 @@ Label_0e_71e2:
 	jr Label_0e_71cf ; $71e7
 	INCBIN "data/bank_00e/d_71e9.bin" ; $71e9, 1037 bytes
 SpecialCourtMapScripts_0e:
-	; $75f6, 14 bytes (records:2)
-	dw $76d2 ; record 0
-	dw $76db ; record 1
-	dw $7604 ; record 2
-	dw $76e4 ; record 3
-	dw $76e5 ; record 4
-	dw $76e6 ; record 5
-	dw $76e7 ; record 6
-	; $7604, 206 bytes (bytes:14)
-	db $00, $00, $6e, $7c, $00, $0f, $00, $05, $40, $00, $2e, $01, $00, $00 ; 0x00
-	db $00, $00, $6e, $7c, $00, $17, $00, $0d, $80, $00, $6d, $01, $00, $00 ; 0x0e
-	db $00, $00, $6e, $7c, $00, $17, $00, $0f, $80, $00, $6f, $01, $00, $00 ; 0x1c
-	db $00, $00, $6e, $7c, $00, $17, $00, $11, $80, $00, $2c, $01, $00, $00 ; 0x2a
-	db $00, $00, $6e, $7c, $00, $17, $00, $19, $80, $00, $6e, $01, $00, $00 ; 0x38
-	db $00, $00, $6e, $7c, $80, $04, $00, $0f, $00, $00, $73, $01, $00, $00 ; 0x46
-	db $00, $00, $6e, $7c, $00, $05, $00, $11, $00, $00, $2d, $01, $00, $00 ; 0x54
-	db $00, $00, $6e, $7c, $00, $05, $00, $19, $00, $00, $48, $01, $00, $00 ; 0x62
-	db $00, $00, $6e, $7c, $00, $05, $00, $1b, $00, $00, $2b, $01, $00, $00 ; 0x70
-	db $00, $00, $6e, $7c, $00, $0d, $00, $05, $40, $00, $72, $01, $00, $00 ; 0x7e
-	db $00, $00, $6e, $7c, $00, $0d, $00, $17, $40, $00, $2a, $01, $00, $00 ; 0x8c
-	db $00, $00, $6e, $7c, $00, $05, $00, $1f, $c0, $00, $70, $01, $00, $00 ; 0x9a
-	db $00, $00, $6e, $7c, $00, $05, $00, $0d, $00, $00, $71, $01, $00, $00 ; 0xa8
-	db $00, $00, $6e, $7c, $00, $17, $00, $1b, $80, $00, $71, $01, $00, $00 ; 0xb6
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xc4
-	; $76d2, 9 bytes (bytes:16)
-	db $01, $c0, $00, $05, $00, $21, $00, $00, $ff ; 0x00
-	; $76db, 12 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $7c96, $0608 ; record 0
-	db $ff, $ff, $ff, $ff
+	; $75f6, 14 bytes (map_tree)
+	dw SpecialCourtEntryPoints_0e ; slot 0 EntryPoints
+	dw SpecialCourtExitTriggers_0e ; slot 1 ExitTriggers
+	dw SpecialCourtActors_0e ; slot 2 Actors
+	dw SpecialCourtNpcScripts_0e ; slot 3 NpcScripts
+	dw SpecialCourtFacingScripts_0e ; slot 4 FacingScripts
+	dw SpecialCourtTileTriggers_0e ; slot 5 TileTriggers
+	dw SpecialCourtInitScript_0e ; slot 6 InitScript
+SpecialCourtActors_0e:
+	; $7604, 206 bytes (map_actors)
+	map_actor $0000, $7c6e, $0f00, $0500, $40, $2e, $01, $00
+	map_actor $0000, $7c6e, $1700, $0d00, $80, $6d, $01, $00
+	map_actor $0000, $7c6e, $1700, $0f00, $80, $6f, $01, $00
+	map_actor $0000, $7c6e, $1700, $1100, $80, $2c, $01, $00
+	map_actor $0000, $7c6e, $1700, $1900, $80, $6e, $01, $00
+	map_actor $0000, $7c6e, $0480, $0f00, $00, $73, $01, $00
+	map_actor $0000, $7c6e, $0500, $1100, $00, $2d, $01, $00
+	map_actor $0000, $7c6e, $0500, $1900, $00, $48, $01, $00
+	map_actor $0000, $7c6e, $0500, $1b00, $00, $2b, $01, $00
+	map_actor $0000, $7c6e, $0d00, $0500, $40, $72, $01, $00
+	map_actor $0000, $7c6e, $0d00, $1700, $40, $2a, $01, $00
+	map_actor $0000, $7c6e, $0500, $1f00, $c0, $70, $01, $00
+	map_actor $0000, $7c6e, $0500, $0d00, $00, $71, $01, $00
+	map_actor $0000, $7c6e, $1700, $1b00, $80, $71, $01, $00
+	map_actor_end
+SpecialCourtEntryPoints_0e:
+	; $76d2, 9 bytes (map_entries)
+	map_entry $01, $c0, $0500, $2100, $0000
+	db $ff
+SpecialCourtExitTriggers_0e:
+	; $76db, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, MapScriptNop_0e, $08, $06
+	db $ff
+SpecialCourtNpcScripts_0e:
+	ds 1, $ff ; $76e4, fill
+SpecialCourtFacingScripts_0e:
+	ds 1, $ff ; $76e5, fill
+SpecialCourtTileTriggers_0e:
+	ds 1, $ff ; $76e6, fill
+SpecialCourtInitScript_0e:
 	ld a, [wStoryModeEntryPoint] ; $76e7
 	cp a, $07 ; $76ea
 	jr c, Label_0e_76f7 ; $76ec
@@ -5330,12 +5557,16 @@ Label_0e_7c5b:
 	ld [wStoryModeExitLocationRequest], a ; $7c6a
 	ret ; $7c6d
 	INCBIN "data/bank_00e/d_7c6e.bin" ; $7c6e, 40 bytes
+MapScriptNop_0e:
 	ret ; $7c96
+MapScriptClearActiveFlag_0e:
 	xor a, a ; $7c97
 	ld [$c2da], a ; $7c98
 	ret ; $7c9b
+MapScriptPlaySoundA2_0e:
 	sound $a2 ; $7c9c
 	ret ; $7c9e
+MapScriptHideLocationName_0e:
 	xor a, a ; $7c9f
 	ld [wStoryModeShowLocationName], a ; $7ca0
 	ret ; $7ca3

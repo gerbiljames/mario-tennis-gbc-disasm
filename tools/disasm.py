@@ -787,7 +787,8 @@ class Disassembly:
         records (word +2 = bank:slot into CopyDataFromBank), so no static
         call site or hook resolves it."""
         slots = {0x10: (0x00, 0x08, 0x0a, 0x0c, 0x0e),
-                 0x0f: (0x00, 0x02, 0x04)}
+                 0x0f: (0x00, 0x02, 0x04),
+                 0x14: (0x00, 0x02, 0x04, 0x06)}
         added = 0
         for bank, sl in slots.items():
             for slot in sl:
@@ -1609,7 +1610,7 @@ def load_ram_map(path, unions_by_region=None):
     return names
 
 
-def build_labels(dis, overrides=None):
+def build_labels(dis, overrides=None, data_tables=None):
     labels = {}
     for off, name in VECTOR_LABELS.items():
         if off in dis.instrs:
@@ -1652,7 +1653,31 @@ def build_labels(dis, overrides=None):
     for target, _note in dis.ptr_words.values():
         if target is not None and target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    for target in map_script_code_targets(dis.rom, data_tables or {}):
+        if target in dis.instrs and target not in labels:
+            labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     return labels
+
+
+def map_script_code_targets(rom, data_tables):
+    """Yield the in-bank code pointers embedded in map_scripts/map_entries
+    tables (script-record handlers and entry arrival scripts). These handlers
+    are only ever reached through an indirect dispatch (CallHLInBankA), so
+    recursive descent never gives them a label; seeding them lets the record
+    macros reference the handler by name instead of a bare address."""
+    for start, spec in data_tables.items():
+        if spec not in ("map_scripts", "map_entries"):
+            continue
+        bank = start // BANK_SIZE
+        base = bank * BANK_SIZE
+        pfield = 4 if spec == "map_scripts" else 6  # handler / arrival script
+        p = start
+        # tables are $ff-terminated; cap the walk at the bank end for safety
+        while p + 8 <= base + BANK_SIZE and rom[p] != 0xFF:
+            w = rom[p + pfield] | (rom[p + pfield + 1] << 8)
+            if 0x4000 <= w < 0x8000:
+                yield base + w - 0x4000
+            p += 8
 
 
 def wram_bank_seq(dis, rom, off, labels):
@@ -1816,7 +1841,117 @@ MACRO wram_bank
 	ldh [hWramBank], a
 	ldh [rWBK], a
 ENDM
+
+; --- Story-mode map-script tables (banks $0e-$15) ---
+; Each story location owns a 7-word directory (a map_tree) copied to $c286.
+; The words point at the location's sub-tables, one per slot, consumed by the
+; bank $0a overworld engine:
+;   0 EntryPoints (map_entry)    - spawn record per entry point / warp id
+;   1 ExitTriggers (map_script)  - RunLocationExit
+;   2 Actors (map_actor)         - the location's NPC/prop actor list
+;   3 NpcScripts (map_script)    - RunNpcInteraction (talk)
+;   4 FacingScripts (map_script) - RunFacingTileScript (action button vs tile)
+;   5 TileTriggers (map_script)  - RunTileTriggerScript (step-on)
+;   6 InitScript                 - RunLocationInitScript (code)
+; Slots with no table point at a shared $ff (an empty list) or at slot 6's
+; init code.
+
+; Actor spawn template (14 bytes, list terminated by a $ff sentinel byte).
+; SpawnActorFromTemplate ($04:$4c60) spawns `objdef` unless `cond` is met,
+; then seeds the actor's position, facing, object id, animation, and (if
+; nonzero) a palette override.
+; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette
+MACRO map_actor
+	dw \\1, \\2, \\3, \\4
+	db \\5, $00, \\6, \\7, \\8, $00
+ENDM
+
+; Terminates a map_actor list: nine $00 bytes then the $ff sentinel that
+; SpawnActorsFromList ($04:$4cf7) stops on (it reads template byte 9).
+MACRO map_actor_end
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff
+ENDM
+
+; Entry-point spawn record (8 bytes, table terminated by $ff). Selected by
+; wStoryModeEntryPoint; places the main character and runs `arrival_script`.
+; Usage: map_entry id, sprite, x, y, arrival_script
+MACRO map_entry
+	db \\1, \\2
+	dw \\3, \\4, \\5
+ENDM
+
+; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
+; ($0a:$53e4) matches `id` (and `facing_mask` against the actor's facing),
+; checks `flag_cond`, then runs `handler` with the two arg bytes.
+; Usage: map_script id, facing_mask, flag_cond, handler, arg0, arg1
+MACRO map_script
+	db \\1, \\2
+	dw \\3, \\4
+	db \\5, \\6
+ENDM
+
+; Story location record (6 bytes) in bank $0a's StoryLocationTable, indexed by
+; wStoryModeCurrentLocation (GetStoryLocationRecordPtr). `map_scripts` is a
+; slot in the target bank's $4000 directory (a DataPtr_*MapScripts label); the
+; engine copies its 7-word map_tree to $c286 (LoadStoryLocationHeader), loads
+; `scene` graphics (LoadStorySceneGraphics), and plays `bgm` ($ff = none).
+; Usage: story_location id, scene, map_scripts, bgm
+MACRO story_location
+	db \\1, \\2
+	dslot \\3
+	db \\4, $00
+ENDM
 """
+
+
+MAP_TREE_SLOTS = ("EntryPoints", "ExitTriggers", "Actors", "NpcScripts",
+                  "FacingScripts", "TileTriggers", "InitScript")
+
+
+def render_map_table(spec, rom, seg, end, bank, labels):
+    """Render a story-mode map-script sub-table (map_actor/map_entry/
+    map_script) as macro calls. Pointer fields (actor object defs, entry
+    arrival scripts, script handlers/conditions) resolve to same-bank labels;
+    positions and ids stay literal. Records run until the table's terminator
+    ($ff), which plus any padding is emitted as raw db."""
+    base = bank * BANK_SIZE
+
+    def word(o):
+        return rom[o] | (rom[o + 1] << 8)
+
+    def sym(o):
+        v = word(o)
+        if 0x4000 <= v < 0x8000 and base + v - 0x4000 in labels:
+            return labels[base + v - 0x4000]
+        return f"${v:04x}"
+
+    out, p = [], seg
+    if spec == "map_actors":
+        while p + 14 <= end and rom[p + 9] != 0xFF:
+            out.append(f"\tmap_actor {sym(p)}, {sym(p + 2)}, ${word(p + 4):04x}, "
+                       f"${word(p + 6):04x}, ${rom[p + 8]:02x}, ${rom[p + 10]:02x}, "
+                       f"${rom[p + 11]:02x}, ${rom[p + 12]:02x}")
+            p += 14
+        # the standard 10-byte list terminator collapses to one macro
+        if rom[p:p + 10] == b"\x00" * 9 + b"\xff":
+            out.append("\tmap_actor_end")
+            p += 10
+    elif spec == "map_entries":
+        while p + 8 <= end and rom[p] != 0xFF:
+            out.append(f"\tmap_entry ${rom[p]:02x}, ${rom[p + 1]:02x}, "
+                       f"${word(p + 2):04x}, ${word(p + 4):04x}, {sym(p + 6)}")
+            p += 8
+    elif spec == "map_scripts":
+        while p + 8 <= end and rom[p] != 0xFF:
+            out.append(f"\tmap_script ${rom[p]:02x}, ${rom[p + 1]:02x}, "
+                       f"{sym(p + 2)}, {sym(p + 4)}, ${rom[p + 6]:02x}, "
+                       f"${rom[p + 7]:02x}")
+            p += 8
+    while p < end:
+        n = min(end - p, 8)
+        out.append("\tdb " + ", ".join(f"${rom[p + k]:02x}" for k in range(n)))
+        p += n
+    return out
 
 
 def render_object_header(rom, off, data_labels, ptr_labels):
@@ -2056,6 +2191,11 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                     if run_start in data_tables:
                         spec = data_tables[run_start]
                         lines.append(f"\t; ${cpu:04x}, {length} bytes ({spec})")
+                        if spec.startswith("map_"):
+                            lines.extend(render_map_table(
+                                spec, rom, run_start, run_start + length,
+                                bank, labels))
+                            continue
                         body = render_spec(rom[run_start:run_start + length],
                                            spec).rstrip("\n")
                         lines.extend(body.split("\n"))
@@ -2081,6 +2221,13 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                     j = seg
                     while j < off and rom[j] == b:
                         j += 1
+                    # A curated label inside a constant-byte run starts its own
+                    # segment: never let fill collapse (or the run scan) swallow
+                    # it, or the label is dropped and any dw referencing it goes
+                    # undefined (e.g. empty $ff map-script lists in $0e/$0f).
+                    clab = min((t for t in labels if seg < t < j), default=0)
+                    if clab:
+                        j = clab
                     if not ((b == 0xFF and (j - seg >= 64 or j == end
                                             or (seg == run_start and j == off)))
                             or (b == 0x00 and j - seg >= 256)):
@@ -2163,6 +2310,46 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 tail = (j - seg) % 2
                                 if tail:
                                     lines.append(f"\tdb ${rom[j - 1]:02x}")
+                            elif spec == "map_tree":
+                                # A location's 7-word slot directory (copied to
+                                # $c286 by bank $0a). Each word points at the
+                                # slot's sub-table; render symbolically with the
+                                # slot role named.
+                                for r, role in enumerate(MAP_TREE_SLOTS):
+                                    ro = seg + r * 2
+                                    w = rom[ro] | (rom[ro + 1] << 8)
+                                    tgt = (bank * 0x4000 + w - 0x4000
+                                           if 0x4000 <= w < 0x8000 else None)
+                                    ref = labels.get(tgt) if tgt else None
+                                    lines.append(f"\tdw {ref or f'${w:04x}'}"
+                                                 f" ; slot {r} {role}")
+                            elif spec == "story_locations":
+                                # 6-byte records: {id, scene, slot, bank, bgm,
+                                # $00}. The (slot, bank) pair references the
+                                # target bank's $4000 map-script directory, so
+                                # render it as a dslot (DataPtr_* label) when
+                                # that slot is a known data-pointer entry.
+                                for r in range((j - seg) // 6):
+                                    ro = seg + r * 6
+                                    b = rom[ro:ro + 6]
+                                    sr = slot_ref(b[2] | (b[3] << 8))
+                                    if sr and b[5] == 0:
+                                        lines.append(
+                                            f"\tstory_location ${b[0]:02x}, "
+                                            f"${b[1]:02x}, {sr}, ${b[4]:02x}"
+                                            f" ; loc {r}")
+                                    else:
+                                        lines.append(
+                                            "\tdb " + ", ".join(f"${x:02x}" for x in b)
+                                            + f" ; loc {r} -> ${b[3]:02x}:$"
+                                            f"{0x4000 + b[2]:04x}")
+                                tail = (j - seg) % 6
+                                if tail:
+                                    lines.append("\tdb " + ", ".join(
+                                        f"${rom[j - tail + k]:02x}" for k in range(tail)))
+                            elif spec.startswith("map_"):
+                                lines.extend(render_map_table(
+                                    spec, rom, seg, j, bank, labels))
                             else:
                                 body = render_spec(rom[seg:j], spec).rstrip("\n")
                                 lines.extend(body.split("\n"))
@@ -2218,6 +2405,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
                             manifest.append((blob, seg, n, None))
                     else:
+                        if seg in labels and lines[-1] != f"{labels[seg]}:":
+                            lines.append(f"{labels[seg]}:")
                         lines.append(f"\tds {j - seg}, ${b:02x} "
                                      f"; ${offset_to_cpu(seg):04x}, fill")
                     seg = j
@@ -2301,7 +2490,7 @@ def main():
     dis.follow_frame_arrays()
     if helpers or args.hooks:
         dis.scan_data_slots()
-    labels = build_labels(dis, overrides)
+    labels = build_labels(dis, overrides, data_tables)
     hwregs = load_hwregs(args.hardware_inc)
     unions_by_region, ramscoped = load_ram_unions(args.ram_unions)
     ramnames = load_ram_map(args.ram_map, unions_by_region)

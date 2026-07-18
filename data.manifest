@@ -92,7 +92,6 @@ bank_00a/d_4ea8.bin 028ea8 22
 bank_00a/d_4eee.bin 028eee a
 bank_00a/d_5341.bin 029341 28
 bank_00a/d_53a2.bin 0293a2 1b
-bank_00a/d_564f.bin 02964f fc
 bank_00a/d_6120.bin 02a120 40
 bank_00a/d_629b.bin 02a29b 5d
 bank_00a/d_66f6.bin 02a6f6 21
@@ -196,8 +195,10 @@ bank_00e/d_4712.bin 038712 525
 bank_00e/d_51d7.bin 0391d7 38
 bank_00e/d_5225.bin 039225 23
 bank_00e/d_552c.bin 03952c 31
-bank_00e/d_630b.bin 03a30b 13c
-bank_00e/d_647e.bin 03a47e ee
+bank_00e/d_630b.bin 03a30b 32
+bank_00e/d_63da.bin 03a3da 1a
+bank_00e/d_647e.bin 03a47e 26
+bank_00e/d_6529.bin 03a529 26
 bank_00e/d_71e9.bin 03b1e9 40d
 bank_00e/d_7b11.bin 03bb11 6e
 bank_00e/d_7c6e.bin 03bc6e 28
@@ -253,7 +254,6 @@ bank_014/d_718b.bin 05318b 21f
 bank_014/d_742d.bin 05342d 10c
 bank_014/d_757e.bin 05357e 10a
 bank_014/d_78b1.bin 0538b1 28
-bank_014/d_78df.bin 0538df 3
 bank_014/d_78e7.bin 0538e7 22e
 bank_015/d_41ba.bin 0541ba 12
 bank_015/d_4757.bin 054757 8

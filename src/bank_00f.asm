@@ -7,30 +7,35 @@ DataPtr_AwardsCeremonyMapScripts_0f:
 DataPtr_TournamentMapScripts_0f:
 	dw TournamentMapScripts_0f ; $4004
 SmallCharTestMapScripts_0f:
-	; $4006, 14 bytes (records:2)
-	dw $40c6 ; record 0
-	dw $40cf ; record 1
-	dw $4014 ; record 2
-	dw $4138 ; record 3
-	dw $4199 ; record 4
-	dw $419b ; record 5
-	dw $41a4 ; record 6
-	; $4014, 178 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $07, $00, $03, $40, $00, $26, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $0d, $00, $03, $40, $00, $2b, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $07, $00, $07, $40, $00, $2c, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $0d, $00, $07, $40, $00, $2d, $01, $00, $00 ; 0x2a
-	db $00, $00, $57, $7b, $00, $05, $00, $0d, $40, $00, $70, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $09, $00, $0d, $40, $00, $71, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $0d, $00, $0d, $40, $00, $72, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $11, $00, $0d, $40, $00, $73, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $05, $00, $11, $40, $00, $6d, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $09, $00, $11, $40, $00, $6e, $01, $00, $00 ; 0x7e
-	db $00, $00, $57, $7b, $00, $0d, $00, $11, $40, $00, $48, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $11, $00, $11, $40, $00, $2b, $01, $00, $00 ; 0x9a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xa8
-	; $40c6, 10 bytes (bytes:16)
-	db $01, $40, $00, $0b, $00, $0b, $00, $00, $ff, $ff ; 0x00
+	; $4006, 14 bytes (map_tree)
+	dw SmallCharTestEntryPoints_0f ; slot 0 EntryPoints
+	dw SmallCharTestExitTriggers_0f ; slot 1 ExitTriggers
+	dw SmallCharTestActors_0f ; slot 2 Actors
+	dw SmallCharTestNpcScripts_0f ; slot 3 NpcScripts
+	dw SmallCharTestFacingScripts_0f ; slot 4 FacingScripts
+	dw SmallCharTestTileTriggers_0f ; slot 5 TileTriggers
+	dw SmallCharTestInitScript_0f ; slot 6 InitScript
+SmallCharTestActors_0f:
+	; $4014, 178 bytes (map_actors)
+	map_actor $0000, $7b57, $0700, $0300, $40, $26, $01, $00
+	map_actor $0000, $7b57, $0d00, $0300, $40, $2b, $01, $00
+	map_actor $0000, $7b57, $0700, $0700, $40, $2c, $01, $00
+	map_actor $0000, $7b57, $0d00, $0700, $40, $2d, $01, $00
+	map_actor $0000, $7b57, $0500, $0d00, $40, $70, $01, $00
+	map_actor $0000, $7b57, $0900, $0d00, $40, $71, $01, $00
+	map_actor $0000, $7b57, $0d00, $0d00, $40, $72, $01, $00
+	map_actor $0000, $7b57, $1100, $0d00, $40, $73, $01, $00
+	map_actor $0000, $7b57, $0500, $1100, $40, $6d, $01, $00
+	map_actor $0000, $7b57, $0900, $1100, $40, $6e, $01, $00
+	map_actor $0000, $7b57, $0d00, $1100, $40, $48, $01, $00
+	map_actor $0000, $7b57, $1100, $1100, $40, $2b, $01, $00
+	map_actor_end
+SmallCharTestEntryPoints_0f:
+	; $40c6, 9 bytes (map_entries)
+	map_entry $01, $40, $0b00, $0b00, $0000
+	db $ff
+SmallCharTestExitTriggers_0f:
+	ds 1, $ff ; $40cf, fill
 	ld hl, $c2b0 ; $40d0
 	ld a, [hl] ; $40d3
 	dec a ; $40d4
@@ -55,6 +60,7 @@ Label_0f_40ec:
 	ld [hl], a ; $40ef
 	call SetPlayerActorObjectDef ; $40f0
 	ret ; $40f3
+Func_0f_40f4:
 	ld hl, $c2b0 ; $40f4
 	ld a, [hl] ; $40f7
 	inc [hl] ; $40f8
@@ -62,6 +68,7 @@ Label_0f_40ec:
 	add a, $26 ; $40fb
 	call SetPlayerActorObjectDef ; $40fd
 	ret ; $4100
+Func_0f_4101:
 	ld hl, $c2b0 ; $4101
 	ld a, [hl] ; $4104
 	inc a ; $4105
@@ -86,35 +93,42 @@ Label_0f_4115:
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
 	ret ; $4126
+Func_0f_4127:
 	ld a, $00 ; $4127
 	ld d, $03 ; $4129
 	farcall FarPtr_ScriptSetActorAnimation ; $412b
 	ret ; $412e
+Func_0f_412f:
 	ld a, $00 ; $412f
 	ld d, $04 ; $4131
 	farcall FarPtr_ScriptSetActorAnimation ; $4133
 	ret ; $4136
+Func_0f_4137:
 	ret ; $4137
-	; $4138, 98 bytes (records:8)
-; 12 records x 8 bytes
-	dw $ff03, $0000, $40f4, $0000 ; record 0
-	dw $ff04, $0000, $4101, $0000 ; record 1
-	dw $ff05, $0000, $4127, $0000 ; record 2
-	dw $ff06, $0000, $412f, $0000 ; record 3
-	dw $ff07, $0000, $4137, $0001 ; record 4
-	dw $ff08, $0000, $4137, $0001 ; record 5
-	dw $ff09, $0000, $4137, $0001 ; record 6
-	dw $ff0a, $0000, $4137, $0001 ; record 7
-	dw $ff0b, $0000, $4137, $0001 ; record 8
-	dw $ff0c, $0000, $4137, $0001 ; record 9
-	dw $ff0d, $0000, $4137, $0001 ; record 10
-	dw $ff0e, $0000, $4137, $0001 ; record 11
-	db $ff, $ff
-	ret ; $419a
-	; $419b, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $419a, $0000 ; record 0
+SmallCharTestNpcScripts_0f:
+	; $4138, 97 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_0f_40f4, $00, $00
+	map_script $04, $ff, $0000, Func_0f_4101, $00, $00
+	map_script $05, $ff, $0000, Func_0f_4127, $00, $00
+	map_script $06, $ff, $0000, Func_0f_412f, $00, $00
+	map_script $07, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $08, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $09, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $0a, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $0b, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $0c, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $0d, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $0e, $ff, $0000, Func_0f_4137, $01, $00
 	db $ff
+SmallCharTestFacingScripts_0f:
+	ds 1, $ff ; $4199, fill
+Func_0f_419a:
+	ret ; $419a
+SmallCharTestTileTriggers_0f:
+	; $419b, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_0f_419a, $00, $00
+	db $ff
+SmallCharTestInitScript_0f:
 	xor a, a ; $41a4
 	ld [$c2b0], a ; $41a5
 	farcall FarPtr_GetObjectDefCount ; $41a8
@@ -141,83 +155,93 @@ SetPlayerActorObjectDef:
 	call RestorePalettesFromMaster ; $41d7
 	ret ; $41da
 AwardsCeremonyMapScripts_0f:
-	; $41db, 14 bytes (records:2)
-	dw $442d ; record 0
-	dw $4446 ; record 1
-	dw $41e9 ; record 2
-	dw $4447 ; record 3
-	dw $4498 ; record 4
-	dw $44a2 ; record 5
-	dw $5581 ; record 6
-	; $41e9, 580 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $0b, $00, $27, $c0, $00, $5c, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $0d, $00, $27, $c0, $00, $61, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $80, $0e, $00, $1b, $80, $00, $62, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $08, $00, $1f, $00, $00, $5d, $01, $00, $00 ; 0x2a
-	db $00, $00, $57, $7b, $00, $07, $00, $21, $00, $00, $5e, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $08, $00, $1d, $00, $00, $5f, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $0f, $00, $1d, $80, $00, $24, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $80, $09, $00, $1b, $00, $00, $23, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $08, $40, $19, $00, $00, $25, $01, $05, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $08, $00, $17, $00, $00, $63, $01, $00, $00 ; 0x7e
-	db $00, $00, $57, $7b, $c0, $0e, $80, $17, $40, $00, $74, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $40, $10, $c0, $17, $40, $00, $74, $01, $00, $00 ; 0x9a
-	db $00, $00, $57, $7b, $80, $11, $c0, $17, $40, $00, $74, $01, $00, $00 ; 0xa8
-	db $00, $00, $57, $7b, $00, $0f, $00, $16, $80, $00, $25, $01, $00, $00 ; 0xb6
-	db $00, $00, $57, $7b, $00, $11, $00, $21, $80, $00, $5b, $01, $00, $00 ; 0xc4
-	db $00, $00, $57, $7b, $00, $10, $00, $1f, $80, $00, $5a, $01, $00, $00 ; 0xd2
-	db $00, $00, $57, $7b, $00, $fd, $00, $01, $40, $00, $4e, $01, $00, $00 ; 0xe0
-	db $00, $00, $57, $7b, $00, $fd, $00, $01, $40, $00, $53, $01, $00, $00 ; 0xee
-	db $00, $00, $57, $7b, $00, $fd, $00, $01, $40, $00, $4d, $01, $00, $00 ; 0xfc
-	db $00, $00, $57, $7b, $00, $fd, $00, $01, $40, $00, $26, $01, $00, $00 ; 0x10a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff, $00, $00, $57, $7b ; 0x118
-	db $00, $0f, $00, $1b, $80, $00, $5c, $01, $00, $00, $00, $00, $57, $7b ; 0x126
-	db $00, $0d, $00, $27, $c0, $00, $61, $01, $00, $00, $00, $00, $57, $7b ; 0x134
-	db $00, $0d, $00, $29, $c0, $00, $62, $01, $00, $00, $00, $00, $57, $7b ; 0x142
-	db $00, $08, $00, $1f, $00, $00, $5d, $01, $00, $00, $00, $00, $57, $7b ; 0x150
-	db $00, $07, $00, $21, $00, $00, $5e, $01, $00, $00, $00, $00, $57, $7b ; 0x15e
-	db $00, $08, $00, $1d, $00, $00, $5f, $01, $00, $00, $00, $00, $57, $7b ; 0x16c
-	db $00, $0f, $00, $1d, $80, $00, $24, $01, $00, $00, $00, $00, $57, $7b ; 0x17a
-	db $00, $09, $00, $1b, $00, $00, $23, $01, $00, $00, $00, $00, $57, $7b ; 0x188
-	db $00, $08, $40, $19, $00, $00, $25, $01, $05, $00, $00, $00, $57, $7b ; 0x196
-	db $00, $08, $00, $17, $00, $00, $63, $01, $00, $00, $00, $00, $57, $7b ; 0x1a4
-	db $00, $0f, $80, $17, $40, $00, $74, $01, $00, $00, $00, $00, $57, $7b ; 0x1b2
-	db $00, $11, $c0, $17, $40, $00, $74, $01, $00, $00, $00, $00, $57, $7b ; 0x1c0
-	db $00, $29, $00, $29, $40, $00, $74, $01, $00, $00, $00, $00, $57, $7b ; 0x1ce
-	db $00, $0f, $00, $16, $80, $00, $25, $01, $00, $00, $00, $00, $57, $7b ; 0x1dc
-	db $00, $2f, $00, $21, $80, $00, $5b, $01, $00, $00, $00, $00, $57, $7b ; 0x1ea
-	db $00, $10, $00, $20, $80, $00, $5a, $01, $00, $00, $00, $00, $57, $7b ; 0x1f8
-	db $00, $fd, $00, $01, $40, $00, $4e, $01, $00, $00, $00, $00, $57, $7b ; 0x206
-	db $00, $fd, $00, $01, $40, $00, $53, $01, $00, $00, $00, $00, $57, $7b ; 0x214
-	db $00, $fd, $00, $01, $40, $00, $4d, $01, $00, $00, $00, $00, $57, $7b ; 0x222
-	db $00, $fd, $00, $01, $40, $00, $26, $01, $00, $00, $00, $00, $00, $00 ; 0x230
-	db $00, $00, $00, $00, $00, $ff ; 0x23e
-	; $442d, 26 bytes (bytes:16)
-	db $01, $c0, $00, $0c, $00, $29, $00, $00, $0a, $c0, $00, $0c, $00, $29, $00, $00 ; 0x00
-	db $0b, $c0, $00, $0b, $00, $29, $00, $00, $ff, $ff ; 0x10
-	; $4447, 81 bytes (records:8)
-; 10 records x 8 bytes
-	dw $ff03, $0000, $0000, $0003 ; record 0
-	dw $ff04, $0000, $2873, $0003 ; record 1
-	dw $ff05, $0000, $2884, $0003 ; record 2
-	dw $ff06, $0000, $287a, $0003 ; record 3
-	dw $ff07, $0000, $287c, $0003 ; record 4
-	dw $ff08, $0000, $5628, $0003 ; record 5
-	dw $ff09, $0000, $2882, $0003 ; record 6
-	dw $ff0a, $0000, $2883, $0003 ; record 7
-	dw $ff11, $0000, $2879, $0003 ; record 8
-	dw $ff12, $0000, $287b, $0003 ; record 9
+	; $41db, 14 bytes (map_tree)
+	dw AwardsCeremonyEntryPoints_0f ; slot 0 EntryPoints
+	dw AwardsCeremonyExitTriggers_0f ; slot 1 ExitTriggers
+	dw AwardsCeremonyActors_0f ; slot 2 Actors
+	dw AwardsCeremonyNpcScripts_0f ; slot 3 NpcScripts
+	dw AwardsCeremonyFacingScripts_0f ; slot 4 FacingScripts
+	dw AwardsCeremonyTileTriggers_0f ; slot 5 TileTriggers
+	dw AwardsCeremonyInitScript_0f ; slot 6 InitScript
+AwardsCeremonyActors_0f:
+	; $41e9, 290 bytes (map_actors)
+	map_actor $0000, $7b57, $0b00, $2700, $c0, $5c, $01, $00
+	map_actor $0000, $7b57, $0d00, $2700, $c0, $61, $01, $00
+	map_actor $0000, $7b57, $0e80, $1b00, $80, $62, $01, $00
+	map_actor $0000, $7b57, $0800, $1f00, $00, $5d, $01, $00
+	map_actor $0000, $7b57, $0700, $2100, $00, $5e, $01, $00
+	map_actor $0000, $7b57, $0800, $1d00, $00, $5f, $01, $00
+	map_actor $0000, $7b57, $0f00, $1d00, $80, $24, $01, $00
+	map_actor $0000, $7b57, $0980, $1b00, $00, $23, $01, $00
+	map_actor $0000, $7b57, $0800, $1940, $00, $25, $01, $05
+	map_actor $0000, $7b57, $0800, $1700, $00, $63, $01, $00
+	map_actor $0000, $7b57, $0ec0, $1780, $40, $74, $01, $00
+	map_actor $0000, $7b57, $1040, $17c0, $40, $74, $01, $00
+	map_actor $0000, $7b57, $1180, $17c0, $40, $74, $01, $00
+	map_actor $0000, $7b57, $0f00, $1600, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1100, $2100, $80, $5b, $01, $00
+	map_actor $0000, $7b57, $1000, $1f00, $80, $5a, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $4e, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $26, $01, $00
+	map_actor_end
+AwardsCeremonyActorsDoubles_0f:
+	; $430b, 290 bytes (map_actors)
+	map_actor $0000, $7b57, $0f00, $1b00, $80, $5c, $01, $00
+	map_actor $0000, $7b57, $0d00, $2700, $c0, $61, $01, $00
+	map_actor $0000, $7b57, $0d00, $2900, $c0, $62, $01, $00
+	map_actor $0000, $7b57, $0800, $1f00, $00, $5d, $01, $00
+	map_actor $0000, $7b57, $0700, $2100, $00, $5e, $01, $00
+	map_actor $0000, $7b57, $0800, $1d00, $00, $5f, $01, $00
+	map_actor $0000, $7b57, $0f00, $1d00, $80, $24, $01, $00
+	map_actor $0000, $7b57, $0900, $1b00, $00, $23, $01, $00
+	map_actor $0000, $7b57, $0800, $1940, $00, $25, $01, $05
+	map_actor $0000, $7b57, $0800, $1700, $00, $63, $01, $00
+	map_actor $0000, $7b57, $0f00, $1780, $40, $74, $01, $00
+	map_actor $0000, $7b57, $1100, $17c0, $40, $74, $01, $00
+	map_actor $0000, $7b57, $2900, $2900, $40, $74, $01, $00
+	map_actor $0000, $7b57, $0f00, $1600, $80, $25, $01, $00
+	map_actor $0000, $7b57, $2f00, $2100, $80, $5b, $01, $00
+	map_actor $0000, $7b57, $1000, $2000, $80, $5a, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $4e, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, $7b57, $fd00, $0100, $40, $26, $01, $00
+	map_actor_end
+AwardsCeremonyEntryPoints_0f:
+	; $442d, 25 bytes (map_entries)
+	map_entry $01, $c0, $0c00, $2900, $0000
+	map_entry $0a, $c0, $0c00, $2900, $0000
+	map_entry $0b, $c0, $0b00, $2900, $0000
 	db $ff
-	; $4498, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $44a1, $0000 ; record 0
+AwardsCeremonyExitTriggers_0f:
+	ds 1, $ff ; $4446, fill
+AwardsCeremonyNpcScripts_0f:
+	; $4447, 81 bytes (map_scripts)
+	map_script $03, $ff, $0000, $0000, $03, $00
+	map_script $04, $ff, $0000, $2873, $03, $00
+	map_script $05, $ff, $0000, $2884, $03, $00
+	map_script $06, $ff, $0000, $287a, $03, $00
+	map_script $07, $ff, $0000, $287c, $03, $00
+	map_script $08, $ff, $0000, Func_0f_5628, $03, $00
+	map_script $09, $ff, $0000, $2882, $03, $00
+	map_script $0a, $ff, $0000, $2883, $03, $00
+	map_script $11, $ff, $0000, $2879, $03, $00
+	map_script $12, $ff, $0000, $287b, $03, $00
 	db $ff
+AwardsCeremonyFacingScripts_0f:
+	; $4498, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_0f_44a1, $00, $00
+	db $ff
+Func_0f_44a1:
 	ret ; $44a1
-	; $44a2, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $44b3, $0000 ; record 0
-	dw $ff02, $0000, $4725, $0000 ; record 1
+AwardsCeremonyTileTriggers_0f:
+	; $44a2, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_0f_44b3, $00, $00
+	map_script $02, $ff, $0000, Func_0f_4725, $00, $00
 	db $ff
+Func_0f_44b3:
 	ld b, $0a ; $44b3
 	ld c, $1c ; $44b5
 	ld d, $0a ; $44b7
@@ -469,6 +493,7 @@ Label_0f_4700:
 	ld de, $d000 ; $471e
 	farcall FarPtr_04_20 ; $4721
 	ret ; $4724
+Func_0f_4725:
 	test_flag $05, 7 ; $4725
 	jp nz, Label_0f_4ea7 ; $4728
 	ld a, $03 ; $472b
@@ -1946,12 +1971,13 @@ Label_0f_4ea7:
 	ld [$c294], a ; $557a
 	ld [wStoryModeExitLocationRequest], a ; $557d
 	ret ; $5580
+AwardsCeremonyInitScript_0f:
 	test_flag $05, 7 ; $5581
 	jr z, Label_0f_55a9 ; $5584
 	ldh a, [hRomBank] ; $5586
-	ld hl, $430b ; $5588
+	ld hl, AwardsCeremonyActorsDoubles_0f ; $5588
 	farcall FarPtr_ScriptRespawnLocationActors ; $558b
-	ld hl, $5b04 ; $558e
+	ld hl, AwardsCeremonyScriptsDoubles_0f ; $558e
 	ld de, $000c ; $5591
 	farcall FarPtr_WriteStoryStateWord ; $5594
 	ld b, $1a ; $5597
@@ -2022,6 +2048,7 @@ Label_0f_5600:
 	farcall FarPtr_04_20 ; $5624
 Label_0f_5627:
 	ret ; $5627
+Func_0f_5628:
 	ld hl, $287d ; $5628
 	farcall FarPtr_InitDialogueTextCursor ; $562b
 	call Func_0f_5f7a ; $562e
@@ -2542,17 +2569,17 @@ Label_0f_5afb:
 	ld a, $02 ; $5afe
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $5b00
 	ret ; $5b03
-	; $5b04, 73 bytes (records:8)
-; 9 records x 8 bytes
-	dw $ff03, $0000, $28b7, $0003 ; record 0
-	dw $ff04, $0000, $28a5, $0003 ; record 1
-	dw $ff05, $0000, $28a6, $0003 ; record 2
-	dw $ff06, $0000, $28af, $0003 ; record 3
-	dw $ff07, $0000, $28b1, $0003 ; record 4
-	dw $ff08, $0000, $5628, $0003 ; record 5
-	dw $ff09, $0000, $2882, $0003 ; record 6
-	dw $ff0a, $0000, $2883, $0003 ; record 7
-	dw $ff12, $0000, $28b0, $0003 ; record 8
+AwardsCeremonyScriptsDoubles_0f:
+	; $5b04, 73 bytes (map_scripts)
+	map_script $03, $ff, $0000, $28b7, $03, $00
+	map_script $04, $ff, $0000, $28a5, $03, $00
+	map_script $05, $ff, $0000, $28a6, $03, $00
+	map_script $06, $ff, $0000, $28af, $03, $00
+	map_script $07, $ff, $0000, $28b1, $03, $00
+	map_script $08, $ff, $0000, Func_0f_5628, $03, $00
+	map_script $09, $ff, $0000, $2882, $03, $00
+	map_script $0a, $ff, $0000, $2883, $03, $00
+	map_script $12, $ff, $0000, $28b0, $03, $00
 	db $ff
 Func_0f_5b4d:
 	ld bc, $00ff ; $5b4d
@@ -3025,46 +3052,54 @@ Label_0f_5f8a:
 Label_0f_5f93:
 	ret ; $5f93
 TournamentMapScripts_0f:
-	; $5f94, 14 bytes (records:2)
-	dw $6070 ; record 0
-	dw $60b1 ; record 1
-	dw $5fa2 ; record 2
-	dw $6102 ; record 3
-	dw $616b ; record 4
-	dw $61a6 ; record 5
-	dw $620f ; record 6
-	; $5fa2, 206 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $13, $00, $0f, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $01, $00, $0c, $00, $00, $25, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $23, $00, $11, $c0, $00, $5c, $01, $00, $00 ; 0x2a
-	db $00, $00, $75, $7b, $00, $23, $00, $17, $c0, $00, $5b, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $21, $00, $11, $00, $00, $5a, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $29, $00, $17, $80, $00, $5f, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $11, $00, $15, $40, $00, $5d, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $19, $00, $13, $40, $00, $60, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $17, $00, $13, $40, $00, $61, $01, $00, $00 ; 0x7e
-	db $00, $00, $57, $7b, $00, $0f, $00, $13, $40, $00, $62, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $19, $00, $15, $40, $00, $5e, $01, $00, $00 ; 0x9a
-	db $00, $00, $57, $7b, $00, $17, $00, $15, $40, $00, $1e, $01, $00, $00 ; 0xa8
-	db $00, $00, $57, $7b, $00, $11, $00, $13, $40, $00, $1f, $01, $00, $00 ; 0xb6
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xc4
-	; $6070, 65 bytes (bytes:16)
-	db $01, $40, $00, $0e, $00, $09, $00, $00, $02, $40, $00, $2a, $00, $09, $00, $00 ; 0x00
-	db $03, $00, $00, $05, $00, $0b, $00, $00, $04, $80, $00, $33, $00, $0b, $00, $00 ; 0x10
-	db $05, $c0, $00, $1c, $00, $23, $00, $00, $0a, $40, $00, $25, $00, $11, $00, $00 ; 0x20
-	db $0b, $40, $00, $23, $00, $11, $00, $00, $0f, $c0, $00, $1b, $00, $31, $00, $00 ; 0x30
-	db $ff ; 0x40
-	; $60b1, 41 bytes (records:8)
-; 5 records x 8 bytes
-	dw $ff01, $0000, $60da, $0118 ; record 0
-	dw $ff02, $0000, $60da, $0218 ; record 1
-	dw $ff03, $0000, $60da, $0117 ; record 2
-	dw $ff04, $0000, $60da, $0116 ; record 3
-	dw $ff05, $0000, $60da, $0315 ; record 4
+	; $5f94, 14 bytes (map_tree)
+	dw TournamentEntryPoints_0f ; slot 0 EntryPoints
+	dw TournamentExitTriggers_0f ; slot 1 ExitTriggers
+	dw TournamentActors_0f ; slot 2 Actors
+	dw TournamentNpcScripts_0f ; slot 3 NpcScripts
+	dw TournamentFacingScripts_0f ; slot 4 FacingScripts
+	dw TournamentTileTriggers_0f ; slot 5 TileTriggers
+	dw TournamentInitScript_0f ; slot 6 InitScript
+TournamentActors_0f:
+	; $5fa2, 206 bytes (map_actors)
+	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $0c00, $00, $25, $01, $00
+	map_actor $0000, $7b57, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, $7b75, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, $7b57, $2100, $1100, $00, $5a, $01, $00
+	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, $7b57, $1100, $1500, $40, $5d, $01, $00
+	map_actor $0000, $7b57, $1900, $1300, $40, $60, $01, $00
+	map_actor $0000, $7b57, $1700, $1300, $40, $61, $01, $00
+	map_actor $0000, $7b57, $0f00, $1300, $40, $62, $01, $00
+	map_actor $0000, $7b57, $1900, $1500, $40, $5e, $01, $00
+	map_actor $0000, $7b57, $1700, $1500, $40, $1e, $01, $00
+	map_actor $0000, $7b57, $1100, $1300, $40, $1f, $01, $00
+	map_actor_end
+TournamentEntryPoints_0f:
+	; $6070, 65 bytes (map_entries)
+	map_entry $01, $40, $0e00, $0900, $0000
+	map_entry $02, $40, $2a00, $0900, $0000
+	map_entry $03, $00, $0500, $0b00, $0000
+	map_entry $04, $80, $3300, $0b00, $0000
+	map_entry $05, $c0, $1c00, $2300, $0000
+	map_entry $0a, $40, $2500, $1100, $0000
+	map_entry $0b, $40, $2300, $1100, $0000
+	map_entry $0f, $c0, $1b00, $3100, $0000
 	db $ff
+TournamentExitTriggers_0f:
+	; $60b1, 41 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_0f_60da, $18, $01
+	map_script $02, $ff, $0000, Func_0f_60da, $18, $02
+	map_script $03, $ff, $0000, Func_0f_60da, $17, $01
+	map_script $04, $ff, $0000, Func_0f_60da, $16, $01
+	map_script $05, $ff, $0000, Func_0f_60da, $15, $03
+	db $ff
+Func_0f_60da:
 	clear_flag $17, 1 ; $60da
 	ret ; $60dd
+Func_0f_60de:
 	ld hl, $24a3 ; $60de
 	farcall FarPtr_InitDialogueTextCursor ; $60e1
 	ld a, $0b ; $60e4
@@ -3082,26 +3117,27 @@ Label_0f_60fc:
 	ld a, $0b ; $60fc
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $60fe
 	ret ; $6101
-	; $6102, 105 bytes (records:8)
-; 13 records x 8 bytes
-	dw $ff06, $0000, $249f, $0003 ; record 0
-	dw $ff07, $0000, $24a0, $0013 ; record 1
-	dw $ff08, $0000, $24a1, $0003 ; record 2
-	dw $ff09, $0000, $24a2, $0003 ; record 3
-	dw $ff0a, $0000, $60de, $0003 ; record 4
-	dw $ff0b, $0000, $24a6, $0003 ; record 5
-	dw $ff0c, $0000, $24a7, $0003 ; record 6
-	dw $ff0d, $0000, $24a8, $0003 ; record 7
-	dw $ff0e, $0000, $24a9, $0003 ; record 8
-	dw $ff0f, $0000, $24aa, $0003 ; record 9
-	dw $ff10, $0000, $24ab, $0003 ; record 10
-	dw $ff03, $0000, $6f3c, $0003 ; record 11
-	dw $ff04, $0000, $6f71, $0003 ; record 12
+TournamentNpcScripts_0f:
+	; $6102, 105 bytes (map_scripts)
+	map_script $06, $ff, $0000, $249f, $03, $00
+	map_script $07, $ff, $0000, $24a0, $13, $00
+	map_script $08, $ff, $0000, $24a1, $03, $00
+	map_script $09, $ff, $0000, $24a2, $03, $00
+	map_script $0a, $ff, $0000, Func_0f_60de, $03, $00
+	map_script $0b, $ff, $0000, $24a6, $03, $00
+	map_script $0c, $ff, $0000, $24a7, $03, $00
+	map_script $0d, $ff, $0000, $24a8, $03, $00
+	map_script $0e, $ff, $0000, $24a9, $03, $00
+	map_script $0f, $ff, $0000, $24aa, $03, $00
+	map_script $10, $ff, $0000, $24ab, $03, $00
+	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
+	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
 	db $ff
-	; $616b, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $6174, $0000 ; record 0
+TournamentFacingScripts_0f:
+	; $616b, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_0f_6174, $00, $00
 	db $ff
+Func_0f_6174:
 	xor a, a ; $6174
 	ldh [hBGColumnBlitPending], a ; $6175
 	ldh [hBGRowBlitPending], a ; $6177
@@ -3122,11 +3158,12 @@ Label_0f_60fc:
 	ld [$c294], a ; $619f
 	ld [wStoryModeExitLocationRequest], a ; $61a2
 	ret ; $61a5
-	; $61a6, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff0e, $0000, $61b7, $0000 ; record 0
-	dw $ff0f, $0000, $61f6, $0000 ; record 1
+TournamentTileTriggers_0f:
+	; $61a6, 17 bytes (map_scripts)
+	map_script $0e, $ff, $0000, Func_0f_61b7, $00, $00
+	map_script $0f, $ff, $0000, Func_0f_61f6, $00, $00
 	db $ff
+Func_0f_61b7:
 	ld a, $01 ; $61b7
 	ld [$c2b1], a ; $61b9
 	ld a, $02 ; $61bc
@@ -3146,6 +3183,7 @@ Label_0f_60fc:
 	call IslandOpenRoundCallCutscene ; $61dc
 	ret ; $61df
 	INCBIN "data/bank_00f/d_61e0.bin" ; $61e0, 22 bytes
+Func_0f_61f6:
 	ld a, $00 ; $61f6
 	ld [$c2b1], a ; $61f8
 	ldh a, [hRomBank] ; $61fb
@@ -3157,6 +3195,7 @@ Label_0f_60fc:
 	farcall FarPtr_WaitActorScriptDone ; $6208
 	call IslandOpenRoundCallCutscene ; $620b
 	ret ; $620e
+TournamentInitScript_0f:
 	ld a, $01 ; $620f
 	ld hl, $6310 ; $6211
 	call RegisterFrameTask ; $6214
@@ -3172,9 +3211,9 @@ Label_0f_6221:
 	and a, a ; $622d
 	jr nz, Label_0f_628e ; $622e
 	ldh a, [hRomBank] ; $6230
-	ld hl, $65c2 ; $6232
+	ld hl, IslandOpenRoundActors_0f ; $6232
 	farcall FarPtr_ScriptRespawnLocationActors ; $6235
-	ld hl, $65f6 ; $6238
+	ld hl, IslandOpenRoundScripts_0f ; $6238
 	ld de, $000c ; $623b
 	farcall FarPtr_WriteStoryStateWord ; $623e
 	farcall FarPtr_BeginCutsceneScriptMode ; $6241
@@ -3212,9 +3251,9 @@ Label_0f_628e:
 	test_flag $05, 7 ; $628e
 	jr nz, Label_0f_62c4 ; $6291
 	ldh a, [hRomBank] ; $6293
-	ld hl, $75b7 ; $6295
+	ld hl, IslandOpenRoundActorsSingles_0f ; $6295
 	farcall FarPtr_ScriptRespawnLocationActors ; $6298
-	ld hl, $7615 ; $629b
+	ld hl, IslandOpenRoundScriptsSingles_0f ; $629b
 	ld de, $000c ; $629e
 	farcall FarPtr_WriteStoryStateWord ; $62a1
 	farcall FarPtr_BeginCutsceneScriptMode ; $62a4
@@ -3232,9 +3271,9 @@ Label_0f_628e:
 	ret ; $62c3
 Label_0f_62c4:
 	ldh a, [hRomBank] ; $62c4
-	ld hl, $7842 ; $62c6
+	ld hl, IslandOpenRoundActorsDoubles_0f ; $62c6
 	farcall FarPtr_ScriptRespawnLocationActors ; $62c9
-	ld hl, $78a0 ; $62cc
+	ld hl, IslandOpenRoundScriptsDoubles_0f ; $62cc
 	ld de, $000c ; $62cf
 	farcall FarPtr_WriteStoryStateWord ; $62d2
 	farcall FarPtr_BeginCutsceneScriptMode ; $62d5
@@ -3429,9 +3468,9 @@ Label_0f_641f:
 IslandOpenArrivalCutscene:
 	set_flag $17, 1 ; $6426
 	ldh a, [hRomBank] ; $6429
-	ld hl, $65c2 ; $642b
+	ld hl, IslandOpenRoundActors_0f ; $642b
 	farcall FarPtr_ScriptRespawnLocationActors ; $642e
-	ld hl, $65f6 ; $6431
+	ld hl, IslandOpenRoundScripts_0f ; $6431
 	ld de, $000c ; $6434
 	farcall FarPtr_WriteStoryStateWord ; $6437
 	farcall FarPtr_BeginCutsceneScriptMode ; $643a
@@ -3603,13 +3642,18 @@ Label_0f_65a6:
 	ld [$c2b0], a ; $65bb
 	farcall FarPtr_SaveStorySlotWithTimer ; $65be
 	ret ; $65c1
-	; $65c2, 77 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $1c, $00, $2c, $c0, $00, $5c, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $1c, $00, $2f, $c0, $00, $5a, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $1d, $00, $31, $c0, $00, $5b, $01, $00, $00 ; 0x1c
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff, $03, $ff, $00, $00 ; 0x2a
-	db $19, $24, $03, $00, $04, $ff, $00, $00, $1a, $24, $03, $00, $05, $ff ; 0x38
-	db $00, $00, $1b, $24, $03, $00, $ff ; 0x46
+IslandOpenRoundActors_0f:
+	; $65c2, 52 bytes (map_actors)
+	map_actor $0000, $7b57, $1c00, $2c00, $c0, $5c, $01, $00
+	map_actor $0000, $7b57, $1c00, $2f00, $c0, $5a, $01, $00
+	map_actor $0000, $7b57, $1d00, $3100, $c0, $5b, $01, $00
+	map_actor_end
+IslandOpenRoundScripts_0f:
+	; $65f6, 25 bytes (map_scripts)
+	map_script $03, $ff, $0000, $2419, $03, $00
+	map_script $04, $ff, $0000, $241a, $03, $00
+	map_script $05, $ff, $0000, $241b, $03, $00
+	db $ff
 ComputeIslandOpenRound:
 	test_flag $05, 7 ; $660f
 	jr nz, Label_0f_663b ; $6612
@@ -3658,9 +3702,9 @@ LoadIslandOpenRoundNpcs:
 	test_flag $07, 5 ; $6664
 	jr z, Label_0f_6680 ; $6667
 	ldh a, [hRomBank] ; $6669
-	ld hl, $6982 ; $666b
+	ld hl, IslandOpenRound3Actors_0f ; $666b
 	farcall FarPtr_ScriptRespawnLocationActors ; $666e
-	ld hl, $6a50 ; $6671
+	ld hl, IslandOpenRound3Scripts_0f ; $6671
 	ld de, $000c ; $6674
 	farcall FarPtr_WriteStoryStateWord ; $6677
 	ld a, $03 ; $667a
@@ -3670,9 +3714,9 @@ Label_0f_6680:
 	test_flag $07, 6 ; $6680
 	jr z, Label_0f_669c ; $6683
 	ldh a, [hRomBank] ; $6685
-	ld hl, $684b ; $6687
+	ld hl, IslandOpenRound2Actors_0f ; $6687
 	farcall FarPtr_ScriptRespawnLocationActors ; $668a
-	ld hl, $6919 ; $668d
+	ld hl, IslandOpenRound2Scripts_0f ; $668d
 	ld de, $000c ; $6690
 	farcall FarPtr_WriteStoryStateWord ; $6693
 	ld a, $02 ; $6696
@@ -3682,9 +3726,9 @@ Label_0f_669c:
 	test_flag $07, 7 ; $669c
 	jr z, Label_0f_66b7 ; $669f
 	ldh a, [hRomBank] ; $66a1
-	ld hl, $6714 ; $66a3
+	ld hl, IslandOpenRound1Actors_0f ; $66a3
 	farcall FarPtr_ScriptRespawnLocationActors ; $66a6
-	ld hl, $67e2 ; $66a9
+	ld hl, IslandOpenRound1Scripts_0f ; $66a9
 	ld de, $000c ; $66ac
 	farcall FarPtr_WriteStoryStateWord ; $66af
 	ld a, $01 ; $66b2
@@ -3703,9 +3747,9 @@ Label_0f_66b8:
 	test_flag $06, 6 ; $66ca
 	jr z, Label_0f_66e6 ; $66cd
 	ldh a, [hRomBank] ; $66cf
-	ld hl, $6daf ; $66d1
+	ld hl, IslandOpenRound3ActorsDoubles_0f ; $66d1
 	farcall FarPtr_ScriptRespawnLocationActors ; $66d4
-	ld hl, $6e6f ; $66d7
+	ld hl, IslandOpenRound3ScriptsDoubles_0f ; $66d7
 	ld de, $000c ; $66da
 	farcall FarPtr_WriteStoryStateWord ; $66dd
 	ld a, $03 ; $66e0
@@ -3715,9 +3759,9 @@ Label_0f_66e6:
 	test_flag $06, 7 ; $66e6
 	jr z, Label_0f_6702 ; $66e9
 	ldh a, [hRomBank] ; $66eb
-	ld hl, $6c46 ; $66ed
+	ld hl, IslandOpenRound2ActorsDoubles_0f ; $66ed
 	farcall FarPtr_ScriptRespawnLocationActors ; $66f0
-	ld hl, $6d06 ; $66f3
+	ld hl, IslandOpenRound2ScriptsDoubles_0f ; $66f3
 	ld de, $000c ; $66f6
 	farcall FarPtr_WriteStoryStateWord ; $66f9
 	ld a, $02 ; $66fc
@@ -3725,138 +3769,143 @@ Label_0f_66e6:
 	ret ; $6701
 Label_0f_6702:
 	ldh a, [hRomBank] ; $6702
-	ld hl, $6ab9 ; $6704
+	ld hl, IslandOpenRound1ActorsDoubles_0f ; $6704
 	farcall FarPtr_ScriptRespawnLocationActors ; $6707
-	ld hl, $6b79 ; $670a
+	ld hl, IslandOpenRound1ScriptsDoubles_0f ; $670a
 	ld de, $000c ; $670d
 	farcall FarPtr_WriteStoryStateWord ; $6710
 	ret ; $6713
-	; $6714, 206 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $13, $00, $0f, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $01, $00, $0b, $00, $00, $25, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $19, $00, $15, $40, $00, $5c, $01, $00, $00 ; 0x2a
-	db $00, $00, $57, $7b, $00, $19, $00, $13, $40, $00, $5b, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $11, $00, $13, $40, $00, $5a, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $1d, $00, $11, $00, $00, $5d, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $11, $00, $15, $40, $00, $5f, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $29, $00, $19, $80, $00, $60, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $17, $00, $13, $40, $00, $61, $01, $00, $00 ; 0x7e
-	db $00, $00, $57, $7b, $00, $0f, $00, $13, $40, $00, $62, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $1d, $00, $15, $40, $00, $5e, $01, $00, $00 ; 0x9a
-	db $00, $00, $57, $7b, $00, $17, $00, $15, $40, $00, $1e, $01, $00, $00 ; 0xa8
-	db $00, $00, $73, $7a, $00, $29, $00, $13, $40, $00, $1f, $01, $00, $00 ; 0xb6
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xc4
-	; $67e2, 105 bytes (records:8)
-; 13 records x 8 bytes
-	dw $ff06, $0000, $24b6, $0003 ; record 0
-	dw $ff07, $0000, $24b7, $0003 ; record 1
-	dw $ff08, $0000, $24b8, $0003 ; record 2
-	dw $ff09, $0000, $24b9, $0003 ; record 3
-	dw $ff0a, $0000, $24ba, $0003 ; record 4
-	dw $ff0b, $0000, $24bb, $0003 ; record 5
-	dw $ff0c, $0000, $24bc, $0003 ; record 6
-	dw $ff0d, $0000, $24bd, $0003 ; record 7
-	dw $ff0e, $0000, $24be, $0003 ; record 8
-	dw $ff0f, $0000, $24bf, $0003 ; record 9
-	dw $ff10, $0000, $24c0, $0013 ; record 10
-	dw $ff03, $0000, $6f3c, $0003 ; record 11
-	dw $ff04, $0000, $6f71, $0003 ; record 12
+IslandOpenRound1Actors_0f:
+	; $6714, 206 bytes (map_actors)
+	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, $7b57, $1900, $1500, $40, $5c, $01, $00
+	map_actor $0000, $7b57, $1900, $1300, $40, $5b, $01, $00
+	map_actor $0000, $7b57, $1100, $1300, $40, $5a, $01, $00
+	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, $7b57, $1100, $1500, $40, $5f, $01, $00
+	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, $7b57, $1700, $1300, $40, $61, $01, $00
+	map_actor $0000, $7b57, $0f00, $1300, $40, $62, $01, $00
+	map_actor $0000, $7b57, $1d00, $1500, $40, $5e, $01, $00
+	map_actor $0000, $7b57, $1700, $1500, $40, $1e, $01, $00
+	map_actor $0000, $7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor_end
+IslandOpenRound1Scripts_0f:
+	; $67e2, 105 bytes (map_scripts)
+	map_script $06, $ff, $0000, $24b6, $03, $00
+	map_script $07, $ff, $0000, $24b7, $03, $00
+	map_script $08, $ff, $0000, $24b8, $03, $00
+	map_script $09, $ff, $0000, $24b9, $03, $00
+	map_script $0a, $ff, $0000, $24ba, $03, $00
+	map_script $0b, $ff, $0000, $24bb, $03, $00
+	map_script $0c, $ff, $0000, $24bc, $03, $00
+	map_script $0d, $ff, $0000, $24bd, $03, $00
+	map_script $0e, $ff, $0000, $24be, $03, $00
+	map_script $0f, $ff, $0000, $24bf, $03, $00
+	map_script $10, $ff, $0000, $24c0, $13, $00
+	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
+	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
 	db $ff
-	; $684b, 206 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $13, $00, $0f, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $01, $00, $0b, $00, $00, $25, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $17, $00, $15, $40, $00, $5c, $01, $00, $00 ; 0x2a
-	db $00, $00, $75, $7b, $00, $23, $00, $17, $c0, $00, $5b, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $1d, $00, $11, $00, $00, $5d, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $29, $00, $17, $80, $00, $5f, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $11, $00, $15, $40, $00, $5a, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $29, $00, $19, $80, $00, $60, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $19, $00, $15, $40, $00, $61, $01, $00, $00 ; 0x7e
-	db $00, $00, $61, $7b, $00, $07, $00, $1f, $40, $00, $62, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $1d, $00, $13, $00, $00, $5e, $01, $00, $00 ; 0x9a
-	db $00, $00, $57, $7b, $00, $05, $00, $21, $40, $00, $1e, $01, $00, $00 ; 0xa8
-	db $00, $00, $73, $7a, $00, $29, $00, $13, $40, $00, $1f, $01, $00, $00 ; 0xb6
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xc4
-	; $6919, 105 bytes (records:8)
-; 13 records x 8 bytes
-	dw $ff06, $0000, $2804, $0003 ; record 0
-	dw $ff07, $0000, $2805, $0013 ; record 1
-	dw $ff08, $0000, $2806, $0003 ; record 2
-	dw $ff09, $0000, $2807, $0003 ; record 3
-	dw $ff0a, $0000, $2808, $0003 ; record 4
-	dw $ff0b, $0000, $2809, $0003 ; record 5
-	dw $ff0c, $0000, $280a, $0003 ; record 6
-	dw $ff0d, $0000, $280b, $0013 ; record 7
-	dw $ff0e, $0000, $280c, $0003 ; record 8
-	dw $ff0f, $0000, $280d, $0003 ; record 9
-	dw $ff10, $0000, $280e, $0013 ; record 10
-	dw $ff03, $0000, $6f3c, $0003 ; record 11
-	dw $ff04, $0000, $6f71, $0003 ; record 12
+IslandOpenRound2Actors_0f:
+	; $684b, 206 bytes (map_actors)
+	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, $7b57, $1700, $1500, $40, $5c, $01, $00
+	map_actor $0000, $7b75, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, $7b57, $1100, $1500, $40, $5a, $01, $00
+	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, $7b57, $1900, $1500, $40, $61, $01, $00
+	map_actor $0000, $7b61, $0700, $1f00, $40, $62, $01, $00
+	map_actor $0000, $7b57, $1d00, $1300, $00, $5e, $01, $00
+	map_actor $0000, $7b57, $0500, $2100, $40, $1e, $01, $00
+	map_actor $0000, $7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor_end
+IslandOpenRound2Scripts_0f:
+	; $6919, 105 bytes (map_scripts)
+	map_script $06, $ff, $0000, $2804, $03, $00
+	map_script $07, $ff, $0000, $2805, $13, $00
+	map_script $08, $ff, $0000, $2806, $03, $00
+	map_script $09, $ff, $0000, $2807, $03, $00
+	map_script $0a, $ff, $0000, $2808, $03, $00
+	map_script $0b, $ff, $0000, $2809, $03, $00
+	map_script $0c, $ff, $0000, $280a, $03, $00
+	map_script $0d, $ff, $0000, $280b, $13, $00
+	map_script $0e, $ff, $0000, $280c, $03, $00
+	map_script $0f, $ff, $0000, $280d, $03, $00
+	map_script $10, $ff, $0000, $280e, $13, $00
+	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
+	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
 	db $ff
-	; $6982, 206 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $13, $00, $0f, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $0e, $00, $04, $00, $00, $25, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $23, $00, $11, $c0, $00, $5c, $01, $00, $00 ; 0x2a
-	db $00, $00, $75, $7b, $00, $23, $00, $17, $c0, $00, $5b, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $1d, $00, $11, $00, $00, $5d, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $29, $00, $17, $80, $00, $5f, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $11, $00, $15, $40, $00, $61, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $21, $00, $11, $00, $00, $5a, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $29, $00, $19, $80, $00, $60, $01, $00, $00 ; 0x7e
-	db $00, $00, $61, $7b, $00, $07, $00, $1f, $40, $00, $62, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $1d, $00, $13, $00, $00, $5e, $01, $00, $00 ; 0x9a
-	db $00, $00, $57, $7b, $00, $05, $00, $21, $40, $00, $1e, $01, $00, $00 ; 0xa8
-	db $00, $00, $73, $7a, $00, $29, $00, $13, $40, $00, $1f, $01, $00, $00 ; 0xb6
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xc4
-	; $6a50, 105 bytes (records:8)
-; 13 records x 8 bytes
-	dw $ff06, $0000, $280f, $0003 ; record 0
-	dw $ff07, $0000, $2810, $0013 ; record 1
-	dw $ff08, $0000, $2811, $0003 ; record 2
-	dw $ff09, $0000, $2812, $0003 ; record 3
-	dw $ff0a, $0000, $2813, $0003 ; record 4
-	dw $ff0b, $0000, $2814, $0003 ; record 5
-	dw $ff0c, $0000, $2815, $0003 ; record 6
-	dw $ff0d, $0000, $2816, $0013 ; record 7
-	dw $ff0e, $0000, $2817, $0003 ; record 8
-	dw $ff0f, $0000, $2818, $0003 ; record 9
-	dw $ff10, $0000, $2819, $0013 ; record 10
-	dw $ff03, $0000, $6f3c, $0003 ; record 11
-	dw $ff04, $0000, $6f71, $0003 ; record 12
+IslandOpenRound3Actors_0f:
+	; $6982, 206 bytes (map_actors)
+	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, $7b57, $0e00, $0400, $00, $25, $01, $00
+	map_actor $0000, $7b57, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, $7b75, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, $7b57, $1100, $1500, $40, $61, $01, $00
+	map_actor $0000, $7b57, $2100, $1100, $00, $5a, $01, $00
+	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, $7b61, $0700, $1f00, $40, $62, $01, $00
+	map_actor $0000, $7b57, $1d00, $1300, $00, $5e, $01, $00
+	map_actor $0000, $7b57, $0500, $2100, $40, $1e, $01, $00
+	map_actor $0000, $7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor_end
+IslandOpenRound3Scripts_0f:
+	; $6a50, 105 bytes (map_scripts)
+	map_script $06, $ff, $0000, $280f, $03, $00
+	map_script $07, $ff, $0000, $2810, $13, $00
+	map_script $08, $ff, $0000, $2811, $03, $00
+	map_script $09, $ff, $0000, $2812, $03, $00
+	map_script $0a, $ff, $0000, $2813, $03, $00
+	map_script $0b, $ff, $0000, $2814, $03, $00
+	map_script $0c, $ff, $0000, $2815, $03, $00
+	map_script $0d, $ff, $0000, $2816, $13, $00
+	map_script $0e, $ff, $0000, $2817, $03, $00
+	map_script $0f, $ff, $0000, $2818, $03, $00
+	map_script $10, $ff, $0000, $2819, $13, $00
+	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
+	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
 	db $ff
-	; $6ab9, 192 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $13, $00, $0f, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $01, $00, $0b, $00, $00, $25, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $23, $00, $11, $c0, $00, $5c, $01, $00, $00 ; 0x2a
-	db $00, $00, $75, $7b, $00, $23, $00, $17, $00, $00, $5a, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $29, $00, $17, $80, $00, $5f, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $29, $00, $19, $80, $00, $60, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $0f, $00, $13, $40, $00, $5d, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $11, $00, $13, $40, $00, $5e, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $17, $00, $13, $c0, $00, $61, $01, $00, $00 ; 0x7e
-	db $00, $00, $50, $7a, $00, $19, $c0, $10, $80, $00, $62, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $17, $00, $15, $40, $00, $1f, $01, $00, $00 ; 0x9a
-	db $00, $00, $57, $7b, $00, $19, $00, $15, $40, $00, $1e, $01, $05, $00 ; 0xa8
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xb6
-	; $6b79, 97 bytes (records:8)
-; 12 records x 8 bytes
-	dw $ff06, $0000, $281a, $0003 ; record 0
-	dw $ff07, $0000, $281b, $0013 ; record 1
-	dw $ff08, $0000, $281c, $0003 ; record 2
-	dw $ff09, $0000, $281d, $0003 ; record 3
-	dw $ff0a, $0000, $6bda, $0003 ; record 4
-	dw $ff0b, $0000, $6bfe, $0003 ; record 5
-	dw $ff0c, $0000, $2824, $0003 ; record 6
-	dw $ff0d, $0000, $6c22, $0013 ; record 7
-	dw $ff0e, $0000, $2828, $0003 ; record 8
-	dw $ff0f, $0000, $2829, $0003 ; record 9
-	dw $ff03, $0000, $6f3c, $0003 ; record 10
-	dw $ff04, $0000, $6f71, $0003 ; record 11
+IslandOpenRound1ActorsDoubles_0f:
+	; $6ab9, 192 bytes (map_actors)
+	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, $7b57, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, $7b75, $2300, $1700, $00, $5a, $01, $00
+	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, $7b57, $0f00, $1300, $40, $5d, $01, $00
+	map_actor $0000, $7b57, $1100, $1300, $40, $5e, $01, $00
+	map_actor $0000, $7b57, $1700, $1300, $c0, $61, $01, $00
+	map_actor $0000, $7a50, $1900, $10c0, $80, $62, $01, $00
+	map_actor $0000, $7b57, $1700, $1500, $40, $1f, $01, $00
+	map_actor $0000, $7b57, $1900, $1500, $40, $1e, $01, $05
+	map_actor_end
+IslandOpenRound1ScriptsDoubles_0f:
+	; $6b79, 97 bytes (map_scripts)
+	map_script $06, $ff, $0000, $281a, $03, $00
+	map_script $07, $ff, $0000, $281b, $13, $00
+	map_script $08, $ff, $0000, $281c, $03, $00
+	map_script $09, $ff, $0000, $281d, $03, $00
+	map_script $0a, $ff, $0000, Func_0f_6bda, $03, $00
+	map_script $0b, $ff, $0000, Func_0f_6bfe, $03, $00
+	map_script $0c, $ff, $0000, $2824, $03, $00
+	map_script $0d, $ff, $0000, Func_0f_6c22, $13, $00
+	map_script $0e, $ff, $0000, $2828, $03, $00
+	map_script $0f, $ff, $0000, $2829, $03, $00
+	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
+	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
 	db $ff
+Func_0f_6bda:
 	ld hl, $281e ; $6bda
 	farcall FarPtr_InitDialogueTextCursor ; $6bdd
 	ld a, $0a ; $6be0
@@ -3874,6 +3923,7 @@ Label_0f_6bf8:
 	ld a, $0a ; $6bf8
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6bfa
 	ret ; $6bfd
+Func_0f_6bfe:
 	ld hl, $2821 ; $6bfe
 	farcall FarPtr_InitDialogueTextCursor ; $6c01
 	ld a, $0b ; $6c04
@@ -3891,6 +3941,7 @@ Label_0f_6c1c:
 	ld a, $0b ; $6c1c
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6c1e
 	ret ; $6c21
+Func_0f_6c22:
 	ld hl, $2825 ; $6c22
 	farcall FarPtr_InitDialogueTextCursor ; $6c25
 	ld a, $0d ; $6c28
@@ -3908,36 +3959,38 @@ Label_0f_6c40:
 	ld a, $0d ; $6c40
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6c42
 	ret ; $6c45
-	; $6c46, 192 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $13, $00, $0f, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $01, $00, $0b, $00, $00, $25, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $17, $00, $15, $40, $00, $5c, $01, $00, $00 ; 0x2a
-	db $00, $00, $57, $7b, $00, $19, $00, $15, $40, $00, $5a, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $1d, $00, $11, $00, $00, $5d, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $1d, $00, $15, $40, $00, $5e, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $0f, $00, $13, $40, $00, $5f, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $11, $00, $13, $40, $00, $60, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $17, $00, $13, $c0, $00, $61, $01, $00, $00 ; 0x7e
-	db $00, $00, $50, $7a, $00, $19, $c0, $10, $80, $00, $62, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $29, $00, $13, $c0, $00, $1f, $01, $00, $00 ; 0x9a
-	db $00, $00, $75, $7b, $00, $25, $00, $19, $40, $00, $1e, $01, $05, $00 ; 0xa8
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xb6
-	; $6d06, 97 bytes (records:8)
-; 12 records x 8 bytes
-	dw $ff06, $0000, $282a, $0003 ; record 0
-	dw $ff07, $0000, $282b, $0003 ; record 1
-	dw $ff08, $0000, $6d67, $0003 ; record 2
-	dw $ff09, $0000, $282f, $0003 ; record 3
-	dw $ff0a, $0000, $2830, $0003 ; record 4
-	dw $ff0b, $0000, $2831, $0003 ; record 5
-	dw $ff0c, $0000, $2832, $0003 ; record 6
-	dw $ff0d, $0000, $6d8b, $0013 ; record 7
-	dw $ff0e, $0000, $2836, $0013 ; record 8
-	dw $ff0f, $0000, $2837, $0013 ; record 9
-	dw $ff03, $0000, $6f3c, $0003 ; record 10
-	dw $ff04, $0000, $6f71, $0003 ; record 11
+IslandOpenRound2ActorsDoubles_0f:
+	; $6c46, 192 bytes (map_actors)
+	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, $7b57, $1700, $1500, $40, $5c, $01, $00
+	map_actor $0000, $7b57, $1900, $1500, $40, $5a, $01, $00
+	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, $7b57, $1d00, $1500, $40, $5e, $01, $00
+	map_actor $0000, $7b57, $0f00, $1300, $40, $5f, $01, $00
+	map_actor $0000, $7b57, $1100, $1300, $40, $60, $01, $00
+	map_actor $0000, $7b57, $1700, $1300, $c0, $61, $01, $00
+	map_actor $0000, $7a50, $1900, $10c0, $80, $62, $01, $00
+	map_actor $0000, $7b57, $2900, $1300, $c0, $1f, $01, $00
+	map_actor $0000, $7b75, $2500, $1900, $40, $1e, $01, $05
+	map_actor_end
+IslandOpenRound2ScriptsDoubles_0f:
+	; $6d06, 97 bytes (map_scripts)
+	map_script $06, $ff, $0000, $282a, $03, $00
+	map_script $07, $ff, $0000, $282b, $03, $00
+	map_script $08, $ff, $0000, Func_0f_6d67, $03, $00
+	map_script $09, $ff, $0000, $282f, $03, $00
+	map_script $0a, $ff, $0000, $2830, $03, $00
+	map_script $0b, $ff, $0000, $2831, $03, $00
+	map_script $0c, $ff, $0000, $2832, $03, $00
+	map_script $0d, $ff, $0000, Func_0f_6d8b, $13, $00
+	map_script $0e, $ff, $0000, $2836, $13, $00
+	map_script $0f, $ff, $0000, $2837, $13, $00
+	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
+	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
 	db $ff
+Func_0f_6d67:
 	ld hl, $282c ; $6d67
 	farcall FarPtr_InitDialogueTextCursor ; $6d6a
 	ld a, $08 ; $6d6d
@@ -3955,6 +4008,7 @@ Label_0f_6d85:
 	ld a, $08 ; $6d85
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6d87
 	ret ; $6d8a
+Func_0f_6d8b:
 	ld hl, $2833 ; $6d8b
 	farcall FarPtr_InitDialogueTextCursor ; $6d8e
 	ld a, $0d ; $6d91
@@ -3972,36 +4026,38 @@ Label_0f_6da9:
 	ld a, $0d ; $6da9
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6dab
 	ret ; $6dae
-	; $6daf, 192 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $25, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $13, $00, $0f, $40, $00, $25, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $0e, $00, $04, $00, $00, $25, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $23, $00, $11, $40, $00, $5c, $01, $00, $00 ; 0x2a
-	db $00, $00, $57, $7b, $00, $23, $00, $13, $c0, $00, $5a, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $29, $00, $17, $80, $00, $5f, $01, $00, $00 ; 0x46
-	db $00, $00, $57, $7b, $00, $29, $00, $19, $80, $00, $60, $01, $00, $00 ; 0x54
-	db $00, $00, $57, $7b, $00, $0f, $00, $13, $40, $00, $61, $01, $00, $00 ; 0x62
-	db $00, $00, $57, $7b, $00, $11, $00, $13, $40, $00, $62, $01, $00, $00 ; 0x70
-	db $00, $00, $57, $7b, $00, $1d, $00, $11, $00, $00, $5d, $01, $00, $00 ; 0x7e
-	db $00, $00, $57, $7b, $00, $1d, $00, $15, $40, $00, $5e, $01, $00, $00 ; 0x8c
-	db $00, $00, $57, $7b, $00, $29, $00, $15, $40, $00, $1f, $01, $00, $00 ; 0x9a
-	db $00, $00, $75, $7b, $00, $24, $00, $18, $40, $00, $1e, $01, $05, $00 ; 0xa8
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xb6
-	; $6e6f, 97 bytes (records:8)
-; 12 records x 8 bytes
-	dw $ff06, $0000, $2838, $0003 ; record 0
-	dw $ff07, $0000, $2839, $0003 ; record 1
-	dw $ff08, $0000, $283a, $0003 ; record 2
-	dw $ff09, $0000, $283b, $0003 ; record 3
-	dw $ff0a, $0000, $283c, $0003 ; record 4
-	dw $ff0b, $0000, $6ef4, $0003 ; record 5
-	dw $ff0c, $0000, $6ed0, $0003 ; record 6
-	dw $ff0d, $0000, $2843, $0003 ; record 7
-	dw $ff0e, $0000, $2844, $0013 ; record 8
-	dw $ff0f, $0000, $2845, $0013 ; record 9
-	dw $ff03, $0000, $6f3c, $0003 ; record 10
-	dw $ff04, $0000, $6f71, $0003 ; record 11
+IslandOpenRound3ActorsDoubles_0f:
+	; $6daf, 192 bytes (map_actors)
+	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, $7b57, $0e00, $0400, $00, $25, $01, $00
+	map_actor $0000, $7b57, $2300, $1100, $40, $5c, $01, $00
+	map_actor $0000, $7b57, $2300, $1300, $c0, $5a, $01, $00
+	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, $7b57, $0f00, $1300, $40, $61, $01, $00
+	map_actor $0000, $7b57, $1100, $1300, $40, $62, $01, $00
+	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, $7b57, $1d00, $1500, $40, $5e, $01, $00
+	map_actor $0000, $7b57, $2900, $1500, $40, $1f, $01, $00
+	map_actor $0000, $7b75, $2400, $1800, $40, $1e, $01, $05
+	map_actor_end
+IslandOpenRound3ScriptsDoubles_0f:
+	; $6e6f, 97 bytes (map_scripts)
+	map_script $06, $ff, $0000, $2838, $03, $00
+	map_script $07, $ff, $0000, $2839, $03, $00
+	map_script $08, $ff, $0000, $283a, $03, $00
+	map_script $09, $ff, $0000, $283b, $03, $00
+	map_script $0a, $ff, $0000, $283c, $03, $00
+	map_script $0b, $ff, $0000, Func_0f_6ef4, $03, $00
+	map_script $0c, $ff, $0000, Func_0f_6ed0, $03, $00
+	map_script $0d, $ff, $0000, $2843, $03, $00
+	map_script $0e, $ff, $0000, $2844, $13, $00
+	map_script $0f, $ff, $0000, $2845, $13, $00
+	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
+	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
 	db $ff
+Func_0f_6ed0:
 	ld hl, $2840 ; $6ed0
 	farcall FarPtr_InitDialogueTextCursor ; $6ed3
 	ld a, $0c ; $6ed6
@@ -4019,6 +4075,7 @@ Label_0f_6eee:
 	ld a, $0c ; $6eee
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6ef0
 	ret ; $6ef3
+Func_0f_6ef4:
 	ld hl, $283d ; $6ef4
 	farcall FarPtr_InitDialogueTextCursor ; $6ef7
 	ld a, $0b ; $6efa
@@ -4053,6 +4110,7 @@ Label_0f_6f36:
 	ld a, $0b ; $6f36
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6f38
 	ret ; $6f3b
+Func_0f_6f3c:
 	ld hl, $24ac ; $6f3c
 	farcall FarPtr_InitDialogueTextCursor ; $6f3f
 	ld a, $03 ; $6f42
@@ -4080,6 +4138,7 @@ Label_0f_6f68:
 	ld a, $03 ; $6f6b
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $6f6d
 	ret ; $6f70
+Func_0f_6f71:
 	ld hl, $24b2 ; $6f71
 	ld a, [$c2b0] ; $6f74
 	add a, l ; $6f77
@@ -4653,9 +4712,9 @@ Label_0f_74a3:
 	ret ; $74af
 Label_0f_74b0:
 	ldh a, [hRomBank] ; $74b0
-	ld hl, $75b7 ; $74b2
+	ld hl, IslandOpenRoundActorsSingles_0f ; $74b2
 	farcall FarPtr_ScriptRespawnLocationActors ; $74b5
-	ld hl, $7615 ; $74b8
+	ld hl, IslandOpenRoundScriptsSingles_0f ; $74b8
 	ld de, $000c ; $74bb
 	farcall FarPtr_WriteStoryStateWord ; $74be
 	call ComputeIslandOpenRound ; $74c1
@@ -4773,20 +4832,22 @@ Label_0f_7571:
 	farcall FarPtr_SetActorFacing ; $75b0
 	set_flag $17, 1 ; $75b3
 	ret ; $75b6
-	; $75b7, 94 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $23, $00, $11, $00, $00, $5c, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $25, $00, $13, $c0, $00, $5a, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $5b, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $01, $00, $31, $c0, $00, $25, $01, $00, $00 ; 0x2a
-	db $00, $00, $57, $7b, $00, $01, $00, $31, $c0, $00, $25, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $01, $00, $31, $c0, $00, $4c, $01, $00, $00 ; 0x46
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x54
-	; $7615, 25 bytes (records:8)
-; 3 records x 8 bytes
-	dw $ff03, $0000, $7649, $0003 ; record 0
-	dw $ff04, $0000, $762e, $0003 ; record 1
-	dw $ff05, $0000, $766c, $0003 ; record 2
+IslandOpenRoundActorsSingles_0f:
+	; $75b7, 94 bytes (map_actors)
+	map_actor $0000, $7b57, $2300, $1100, $00, $5c, $01, $00
+	map_actor $0000, $7b57, $2500, $1300, $c0, $5a, $01, $00
+	map_actor $0000, $7b57, $2700, $1100, $80, $5b, $01, $00
+	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $3100, $c0, $4c, $01, $00
+	map_actor_end
+IslandOpenRoundScriptsSingles_0f:
+	; $7615, 25 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_0f_7649, $03, $00
+	map_script $04, $ff, $0000, Func_0f_762e, $03, $00
+	map_script $05, $ff, $0000, Func_0f_766c, $03, $00
 	db $ff
+Func_0f_762e:
 	ld hl, $2849 ; $762e
 	farcall FarPtr_InitDialogueTextCursor ; $7631
 	ld a, [$c2b0] ; $7634
@@ -4801,6 +4862,7 @@ Label_0f_7640:
 	ld a, $04 ; $7643
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7645
 	ret ; $7648
+Func_0f_7649:
 	ld a, [$c2b0] ; $7649
 	add a, a ; $764c
 	add a, $99 ; $764d
@@ -4820,6 +4882,7 @@ Label_0f_7640:
 	ld a, $03 ; $7666
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $7668
 	ret ; $766b
+Func_0f_766c:
 	ld a, [$c2b0] ; $766c
 	dec a ; $766f
 	add a, a ; $7670
@@ -4888,10 +4951,10 @@ Label_0f_76b8:
 	ret ; $76f5
 Label_0f_76f6:
 	ldh a, [hRomBank] ; $76f6
-	ld hl, $7842 ; $76f8
+	ld hl, IslandOpenRoundActorsDoubles_0f ; $76f8
 	farcall FarPtr_ScriptRespawnLocationActors ; $76fb
 	farcall FarPtr_BeginCutsceneScriptMode ; $76fe
-	ld hl, $78a0 ; $7701
+	ld hl, IslandOpenRoundScriptsDoubles_0f ; $7701
 	ld de, $000c ; $7704
 	farcall FarPtr_WriteStoryStateWord ; $7707
 	call SetPlayerAndPartnerObjectDefs ; $770a
@@ -5040,19 +5103,36 @@ Label_0f_7811:
 	dw $2852 ; record 1
 	dw $2858 ; record 2
 	dw $284e ; record 3
-	; $7842, 134 bytes (bytes:14)
-	db $00, $00, $57, $7b, $00, $21, $00, $11, $00, $00, $5c, $01, $00, $00 ; 0x00
-	db $00, $00, $57, $7b, $00, $27, $00, $11, $80, $00, $5a, $01, $00, $00 ; 0x0e
-	db $00, $00, $57, $7b, $00, $3d, $00, $3d, $c0, $00, $5b, $01, $00, $00 ; 0x1c
-	db $00, $00, $57, $7b, $00, $01, $00, $31, $c0, $00, $25, $01, $00, $00 ; 0x2a
-	db $00, $00, $57, $7b, $00, $01, $00, $31, $c0, $00, $25, $01, $00, $00 ; 0x38
-	db $00, $00, $57, $7b, $00, $01, $00, $31, $c0, $00, $4c, $01, $00, $00 ; 0x46
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff, $03, $ff, $00, $00 ; 0x54
-	db $cc, $78, $03, $00, $04, $ff, $00, $00, $b1, $78, $03, $00, $ff, $21 ; 0x62
-	db $49, $28, $df, $0e, $0a, $fa, $b0, $c2, $3d, $21, $62, $28, $85, $6f ; 0x70
-	db $30, $01, $24, $cd, $8e, $7a, $3e, $04 ; 0x7e
+IslandOpenRoundActorsDoubles_0f:
+	; $7842, 94 bytes (map_actors)
+	map_actor $0000, $7b57, $2100, $1100, $00, $5c, $01, $00
+	map_actor $0000, $7b57, $2700, $1100, $80, $5a, $01, $00
+	map_actor $0000, $7b57, $3d00, $3d00, $c0, $5b, $01, $00
+	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, $7b57, $0100, $3100, $c0, $4c, $01, $00
+	map_actor_end
+IslandOpenRoundScriptsDoubles_0f:
+	; $78a0, 17 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_0f_78cc, $03, $00
+	map_script $04, $ff, $0000, Func_0f_78b1, $03, $00
+	db $ff
+Func_0f_78b1:
+	ld hl, $2849 ; $78b1
+	farcall FarPtr_InitDialogueTextCursor ; $78b4
+	ld a, [$c2b0] ; $78b7
+	dec a ; $78ba
+	ld hl, $2862 ; $78bb
+	add a, l ; $78be
+	ld l, a ; $78bf
+	jr nc, Label_0f_78c3 ; $78c0
+	inc h ; $78c2
+Label_0f_78c3:
+	call QueueShortText ; $78c3
+	ld a, $04 ; $78c6
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $78c8
 	ret ; $78cb
+Func_0f_78cc:
 	ld a, [$c2b0] ; $78cc
 	dec a ; $78cf
 	add a, a ; $78d0

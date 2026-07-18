@@ -21,6 +21,79 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Map-script tables made readable (2026-07-18)
+
+The story-location tables in banks **$0e/$0f** now render through dedicated
+macros instead of raw `db`/`dw` hex. Each location owns a 7-word **`map_tree`**
+directory (copied to `$c286` by the bank $0a overworld engine) whose slots are
+named by role: `EntryPoints`, `ExitTriggers`, `Actors`, `NpcScripts`,
+`FacingScripts`, `TileTriggers`, `InitScript`. Every slot is a labeled pointer,
+including slots that point at an empty (immediately `$ff`-terminated) list — the
+`ds`-fill emitter path is now label-aware so a curated label on a fill byte is
+emitted instead of dropped. The three record formats got macros in
+`include/macros.inc`:
+- **`map_actor`** cond, objdef, x, y, facing, obj_id, anim, palette — the
+  14-byte actor spawn template `SpawnActorFromTemplate` ($04:$4c60) expands;
+  each list ends with **`map_actor_end`** (the shared 9×`$00` + `$ff` sentinel
+  `SpawnActorsFromList` stops on).
+- **`map_entry`** id, sprite, x, y, arrival_script — 8-byte entry-point spawn
+  record selected by `wStoryModeEntryPoint`.
+- **`map_script`** id, facing_mask, flag_cond, handler, arg0, arg1 — 8-byte
+  story-script record matched by `FindStoryScriptEntry` ($0a:$53e4).
+
+Three bank $0f regions had been carved as a single actor table in an earlier
+pass but actually hold two back-to-back structures; they were split into
+separate labeled tables (with the second, code-referenced table now symbolic):
+`$41e9` = `AwardsCeremonyActors_0f` + `AwardsCeremonyActorsDoubles_0f` (`$430b`,
+the doubles arrangement); `$65c2`/`$7842` = `IslandOpenRoundActors_0f`/
+`…Doubles` + their paired `…Scripts` tables (`$65f6`/`$78a0`). `$7842`'s script
+handlers were stranded cutscene code — `$78cc` was already seeded, `$78b1` was
+added to `coverage/bank00f_static_code.json` (+one 11-instruction routine).
+`MarioWorldNpcScripts_0e` referenced four handlers (`$633d`/`$63f4`/`$64a4`/
+`$654f`, the NPC-$08 approach-from-4-directions scripts, each ending
+`jp PromptExhibitionMatch`) that were stranded as code inside blobs interleaved
+with `04 00` actor-script data; seeded into `coverage/bank00e_static_code.json`
+(+402 bytes code), carved cleanly between the surviving data records.
+The per-round Island Open rosters reached by `ld hl` in `LoadIslandOpenRoundNpcs`
+(keyed on `$c2b0` = round 1/2/3, singles vs doubles by flag `$05.7`) are named
+`IslandOpenRound{1,2,3}[Doubles]{Actors,Scripts}_0f`, plus the singles round-call
+pair `IslandOpenRound{Actors,Scripts}Singles_0f` (`$75b7`/`$7615`) and
+`AwardsCeremonyScriptsDoubles_0f` (`$5b04`) — every `map_actors`/`map_scripts`
+table in $0e/$0f is now labeled.
+
+The trees are reached from **`StoryLocationTable_0a`** (`$0a:$564f`, 42×6-byte
+records indexed by `GetStoryLocationRecordPtr`): each record is
+`story_location id, scene, map_scripts, bgm`, where `map_scripts` is a
+`dslot` into the target bank's `$4000` directory — rendered as the
+`DataPtr_*MapScripts` label when that slot is a known data-pointer (all the
+$0e-$13/$15 trees resolve, e.g. loc 17 → `TrainingGymMapScripts_0e`, loc 26 →
+`AwardsCeremonyMapScripts_0f`). Bank $14's four map-script trees (`$4008`/`$4a39`/`$4fac`/`$5221`, = the
+Tennis Machine Room / Court #1/#2 / fountain locations 18/22/23/27) are
+registered as `$4000` data slots in `add_static_data_slots` and **fully carved
+like $0e/$0f**: all 7 slots per tree retagged to `map_tree`/`map_entries`/
+`map_actors`/`map_scripts`, sub-tables + init scripts labeled `Loc{18,22,23,27}
+<Role>_14` (handlers/init were already code in `bank014_static_code.json`), plus
+the two per-scene respawn actor lists `Loc23ActorsAlt_14`/`Loc22ActorsAlt_14`
+(a false internal data-table boundary at `$4efa` inside the `$4eb4` list was
+removed). The location table now reads `DataPtr_Loc18MapScripts_14` etc.
+Trees carry location-id names since the four scenes aren't yet distinguished
+semantically (needs location-name text ids). Bank $27
+(locations 30-41) is the self-contained ending-presentation bank: its `$4000`
+is already curated as `SceneFramePtrs_27` (12 scene-frame records, a different
+structure the story engine also reads as trees), so those records stay raw
+`db` with a `-> $27:$40ss` comment rather than collide with that curation.
+
+All six trees (Training Gym / Mario World / Special Court in $0e; Small Char.
+Test / Awards Ceremony / Tournament in $0f) have their sub-tables labeled
+(`<Tree><Role>_0X` in `labels.json`, +34), so the directory reads symbolically.
+The record handlers/arrival scripts are indirect-dispatch code heads (reached
+via `CallHLInBankA`), so recursive descent never labeled them; `disasm.py` now
+seeds a `Func_` label for each (`map_script_code_targets`) and the macros
+reference them by name. Implementation: `data_tables.json` retags $0e/$0f
+tables to `map_tree`/`map_actors`/`map_entries`/`map_scripts`; `disasm.py`
+renders them via `render_map_table` (pointer fields resolve to same-bank
+labels). Rebuild stays byte-perfect (`make compare` → OK); only $0e/$0f change.
+
 ### Blob classification pass (2026-07-16)
 
 A systematic sweep classified every remaining anonymous blob (code vs table vs
