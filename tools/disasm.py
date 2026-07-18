@@ -467,6 +467,46 @@ class Disassembly:
                 continue  # a target inside the accepted table: inconsistent
             for p, t in entries:
                 new_entries[p] = t
+        # Computed jp hl dispatchers: ld hl,TABLE / add a,l / ld l,a /
+        # jr nc,+ / inc h / ld a,[hl+] / ld h,[hl] / ld l,a / jp hl. The table
+        # base is the ld hl operand and its length is unencoded, so delimit it
+        # exactly like the rst $00 tables (self-lowest-forward-target).
+        JPHL = b"\x85\x6f\x30\x01\x24\x2a\x66\x6f\xe9"
+        for off in [o for o in self.instrs if self.rom[o] == 0x21
+                    and self.rom[o + 3:o + 3 + len(JPHL)] == JPHL]:
+            cpu0 = self.rom[off + 1] | (self.rom[off + 2] << 8)
+            if not (BANK_SIZE <= cpu0 < 0x8000):
+                continue
+            tbl = (off // BANK_SIZE) * BANK_SIZE + cpu0 - BANK_SIZE
+            if tbl in self.jt_entries:
+                continue
+            pos = tbl
+            min_fwd = None
+            entries = []
+            while pos + 1 < len(self.rom) and len(entries) < 128:
+                if pos in self.code_bytes or pos in self.jt_entries:
+                    break
+                if pos in self.data_boundaries:
+                    break
+                if min_fwd is not None and pos >= min_fwd:
+                    break
+                cpu = self.rom[pos] | (self.rom[pos + 1] << 8)
+                t = target_to_offset(cpu, off)
+                if t is None or t + 1 >= len(self.rom):
+                    break
+                if not sm83.decode(self.rom, t, offset_to_cpu(t)).valid:
+                    break
+                entries.append((pos, t))
+                if t > tbl and (min_fwd is None or t < min_fwd):
+                    min_fwd = t
+                pos += 2
+            if min_fwd is not None:
+                entries = [(p, t) for p, t in entries if p + 1 < min_fwd]
+            table_end = tbl + 2 * len(entries)
+            if any(tbl < t < table_end for _p, t in entries):
+                continue
+            for p, t in entries:
+                new_entries[p] = t
         self.jt_entries.update(new_entries)
         seeded = 0
         for t in sorted({t for t in new_entries.values()}):
@@ -2185,6 +2225,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                 lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x}")
                 off += 2
             elif off in jt_entries:
+                if off in labels and lines[-1] != f"{labels[off]}:":
+                    lines.append(f"{labels[off]}:")
                 target = jt_entries[off]
                 tl = labels.get(target, f"${offset_to_cpu(target):04x}")
                 lines.append(f"\tdw {tl} ; ${offset_to_cpu(off):04x} jumptable")

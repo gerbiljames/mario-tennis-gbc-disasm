@@ -1980,7 +1980,7 @@ HighlightRankingRow:
 	or a, a ; $5751
 	ret z ; $5752
 	add a, a ; $5753
-	ld hl, $5761 ; $5754
+	ld hl, RankingRowDrawHandlers_1b ; $5754
 	add a, l ; $5757
 	ld l, a ; $5758
 	jr nc, Label_1b_575c ; $5759
@@ -1990,108 +1990,98 @@ Label_1b_575c:
 	ld h, [hl] ; $575d
 	ld l, a ; $575e
 	jp hl ; $575f
+Label_1b_5760:
 	ret ; $5760
-	; $5761, 200 bytes (records:2)
-	dw $5779 ; record 0
-	dw $5779 ; record 1
-	dw $5789 ; record 2
-	dw $5799 ; record 3
-	dw $57a9 ; record 4
-	dw $57b9 ; record 5
-	dw $57c9 ; record 6
-	dw $57d9 ; record 7
-	dw $57e9 ; record 8
-	dw $57f9 ; record 9
-	dw $5809 ; record 10
-	dw $5819 ; record 11
-	dw $4021 ; record 12
-	dw $11d2 ; record 13
-	dw $d026 ; record 14
-	dw $0506 ; record 15
-	dw $020e ; record 16
-	dw $0adf ; record 17
-	dw $c339 ; record 18
-	dw $5760 ; record 19
-	dw $8021 ; record 20
-	dw $11d2 ; record 21
-	dw $d146 ; record 22
-	dw $0406 ; record 23
-	dw $020e ; record 24
-	dw $0adf ; record 25
-	dw $c339 ; record 26
-	dw $5760 ; record 27
-	dw $4421 ; record 28
-	dw $11d2 ; record 29
-	dw $d02a ; record 30
-	dw $0406 ; record 31
-	dw $020e ; record 32
-	dw $0adf ; record 33
-	dw $c339 ; record 34
-	dw $5760 ; record 35
-	dw $8421 ; record 36
-	dw $11d2 ; record 37
-	dw $d14a ; record 38
-	dw $0406 ; record 39
-	dw $020e ; record 40
-	dw $0adf ; record 41
-	dw $c339 ; record 42
-	dw $5760 ; record 43
-	dw $c021 ; record 44
-	dw $11d2 ; record 45
-	dw $d026 ; record 46
-	dw $0406 ; record 47
-	dw $070e ; record 48
-	dw $0adf ; record 49
-	dw $c339 ; record 50
-	dw $5760 ; record 51
-	dw $c821 ; record 52
-	dw $11d2 ; record 53
-	dw $d146 ; record 54
-	dw $0406 ; record 55
-	dw $070e ; record 56
-	dw $0adf ; record 57
-	dw $c339 ; record 58
-	dw $5760 ; record 59
-	dw $c421 ; record 60
-	dw $11d2 ; record 61
-	dw $d02a ; record 62
-	dw $0406 ; record 63
-	dw $070e ; record 64
-	dw $0adf ; record 65
-	dw $c339 ; record 66
-	dw $5760 ; record 67
-	dw $cc21 ; record 68
-	dw $11d2 ; record 69
-	dw $d14a ; record 70
-	dw $0406 ; record 71
-	dw $070e ; record 72
-	dw $0adf ; record 73
-	dw $c339 ; record 74
-	dw $5760 ; record 75
-	dw $1421 ; record 76
-	dw $11d0 ; record 77
-	dw $d026 ; record 78
-	dw $0406 ; record 79
-	dw $100e ; record 80
-	dw $0adf ; record 81
-	dw $c339 ; record 82
-	dw $5760 ; record 83
-	dw $1821 ; record 84
-	dw $11d0 ; record 85
-	dw $d02a ; record 86
-	dw $0406 ; record 87
-	dw $100e ; record 88
-	dw $0adf ; record 89
-	dw $c339 ; record 90
-	dw $5760 ; record 91
-	dw $1421 ; record 92
-	dw $11d0 ; record 93
-	dw $d026 ; record 94
-	dw $0806 ; record 95
-	dw $100e ; record 96
-	dw $0adf ; record 97
-	dw $c339 ; record 98
-	dw $5760 ; record 99
+RankingRowDrawHandlers_1b:
+	dw Label_1b_5779 ; $5761 jumptable
+	dw Label_1b_5779 ; $5763 jumptable
+	dw Label_1b_5789 ; $5765 jumptable
+	dw Label_1b_5799 ; $5767 jumptable
+	dw Label_1b_57a9 ; $5769 jumptable
+	dw Label_1b_57b9 ; $576b jumptable
+	dw Label_1b_57c9 ; $576d jumptable
+	dw Label_1b_57d9 ; $576f jumptable
+	dw Label_1b_57e9 ; $5771 jumptable
+	dw Label_1b_57f9 ; $5773 jumptable
+	dw Label_1b_5809 ; $5775 jumptable
+	dw Label_1b_5819 ; $5777 jumptable
+Label_1b_5779:
+	ld hl, $d240 ; $5779
+	ld de, $d026 ; $577c
+	ld b, $05 ; $577f
+	ld c, $02 ; $5781
+	farcall FarPtr_CopyTilemapRect ; $5783
+	jp Label_1b_5760 ; $5786
+Label_1b_5789:
+	ld hl, $d280 ; $5789
+	ld de, $d146 ; $578c
+	ld b, $04 ; $578f
+	ld c, $02 ; $5791
+	farcall FarPtr_CopyTilemapRect ; $5793
+	jp Label_1b_5760 ; $5796
+Label_1b_5799:
+	ld hl, $d244 ; $5799
+	ld de, $d02a ; $579c
+	ld b, $04 ; $579f
+	ld c, $02 ; $57a1
+	farcall FarPtr_CopyTilemapRect ; $57a3
+	jp Label_1b_5760 ; $57a6
+Label_1b_57a9:
+	ld hl, $d284 ; $57a9
+	ld de, $d14a ; $57ac
+	ld b, $04 ; $57af
+	ld c, $02 ; $57b1
+	farcall FarPtr_CopyTilemapRect ; $57b3
+	jp Label_1b_5760 ; $57b6
+Label_1b_57b9:
+	ld hl, $d2c0 ; $57b9
+	ld de, $d026 ; $57bc
+	ld b, $04 ; $57bf
+	ld c, $07 ; $57c1
+	farcall FarPtr_CopyTilemapRect ; $57c3
+	jp Label_1b_5760 ; $57c6
+Label_1b_57c9:
+	ld hl, $d2c8 ; $57c9
+	ld de, $d146 ; $57cc
+	ld b, $04 ; $57cf
+	ld c, $07 ; $57d1
+	farcall FarPtr_CopyTilemapRect ; $57d3
+	jp Label_1b_5760 ; $57d6
+Label_1b_57d9:
+	ld hl, $d2c4 ; $57d9
+	ld de, $d02a ; $57dc
+	ld b, $04 ; $57df
+	ld c, $07 ; $57e1
+	farcall FarPtr_CopyTilemapRect ; $57e3
+	jp Label_1b_5760 ; $57e6
+Label_1b_57e9:
+	ld hl, $d2cc ; $57e9
+	ld de, $d14a ; $57ec
+	ld b, $04 ; $57ef
+	ld c, $07 ; $57f1
+	farcall FarPtr_CopyTilemapRect ; $57f3
+	jp Label_1b_5760 ; $57f6
+Label_1b_57f9:
+	ld hl, $d014 ; $57f9
+	ld de, $d026 ; $57fc
+	ld b, $04 ; $57ff
+	ld c, $10 ; $5801
+	farcall FarPtr_CopyTilemapRect ; $5803
+	jp Label_1b_5760 ; $5806
+Label_1b_5809:
+	ld hl, $d018 ; $5809
+	ld de, $d02a ; $580c
+	ld b, $04 ; $580f
+	ld c, $10 ; $5811
+	farcall FarPtr_CopyTilemapRect ; $5813
+	jp Label_1b_5760 ; $5816
+Label_1b_5819:
+	ld hl, $d014 ; $5819
+	ld de, $d026 ; $581c
+	ld b, $08 ; $581f
+	ld c, $10 ; $5821
+	farcall FarPtr_CopyTilemapRect ; $5823
+	jp Label_1b_5760 ; $5826
 HighlightDoublesRankingRows:
 	ld a, [$d801] ; $5829
 	or a, a ; $582c
@@ -2114,7 +2104,7 @@ HighlightDoublesRankingRow:
 	or a, a ; $5847
 	ret z ; $5848
 	add a, a ; $5849
-	ld hl, $5857 ; $584a
+	ld hl, RankingMarkerHandlers_1b ; $584a
 	add a, l ; $584d
 	ld l, a ; $584e
 	jr nc, Label_1b_5852 ; $584f
@@ -2124,7 +2114,58 @@ Label_1b_5852:
 	ld h, [hl] ; $5853
 	ld l, a ; $5854
 	jp hl ; $5855
-	INCBIN "data/bank_01b/d_5856.bin" ; $5856, 111 bytes
+Label_1b_5856:
+	ret ; $5856
+RankingMarkerHandlers_1b:
+	dw Label_1b_5865 ; $5857 jumptable
+	dw Label_1b_5865 ; $5859 jumptable
+	dw Label_1b_5875 ; $585b jumptable
+	dw Label_1b_5885 ; $585d jumptable
+	dw Label_1b_5895 ; $585f jumptable
+	dw Label_1b_58a5 ; $5861 jumptable
+	dw Label_1b_58b5 ; $5863 jumptable
+Label_1b_5865:
+	ld hl, $d240 ; $5865
+	ld de, $d066 ; $5868
+	ld b, $04 ; $586b
+	ld c, $04 ; $586d
+	farcall FarPtr_CopyTilemapRect ; $586f
+	jp Label_1b_5856 ; $5872
+Label_1b_5875:
+	ld hl, $d244 ; $5875
+	ld de, $d06a ; $5878
+	ld b, $04 ; $587b
+	ld c, $04 ; $587d
+	farcall FarPtr_CopyTilemapRect ; $587f
+	jp Label_1b_5856 ; $5882
+Label_1b_5885:
+	ld hl, $d248 ; $5885
+	ld de, $d066 ; $5888
+	ld b, $04 ; $588b
+	ld c, $07 ; $588d
+	farcall FarPtr_CopyTilemapRect ; $588f
+	jp Label_1b_5856 ; $5892
+Label_1b_5895:
+	ld hl, $d24c ; $5895
+	ld de, $d06a ; $5898
+	ld b, $04 ; $589b
+	ld c, $07 ; $589d
+	farcall FarPtr_CopyTilemapRect ; $589f
+	jp Label_1b_5856 ; $58a2
+Label_1b_58a5:
+	ld hl, $d248 ; $58a5
+	ld de, $d066 ; $58a8
+	ld b, $08 ; $58ab
+	ld c, $07 ; $58ad
+	farcall FarPtr_CopyTilemapRect ; $58af
+	jp Label_1b_5856 ; $58b2
+Label_1b_58b5:
+	ld hl, $d250 ; $58b5
+	ld de, $d066 ; $58b8
+	ld b, $08 ; $58bb
+	ld c, $07 ; $58bd
+	farcall FarPtr_CopyTilemapRect ; $58bf
+	jp Label_1b_5856 ; $58c2
 Func_1b_58c5:
 	ld hl, $d000 ; $58c5
 	ld de, $9800 ; $58c8
