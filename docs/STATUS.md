@@ -76,8 +76,12 @@ like $0e/$0f**: all 7 slots per tree retagged to `map_tree`/`map_entries`/
 the two per-scene respawn actor lists `Loc23ActorsAlt_14`/`Loc22ActorsAlt_14`
 (a false internal data-table boundary at `$4efa` inside the `$4eb4` list was
 removed). The location table now reads `DataPtr_Loc18MapScripts_14` etc.
-Trees carry location-id names since the four scenes aren't yet distinguished
-semantically (needs location-name text ids). Bank $27
+The four bank-$14 trees are named from the in-game location-name popup
+(`ShowLocationNamePopup` text id `$0179+loc` = string bank $30 index `377+loc`):
+`TennisMachineRoom`/`Court1`/`Court2`/`IslandSky` (locs 18/22/23/27). Decoding
+that name block identified all 42 story locations, now emitted as a comment on
+each `StoryLocationTable_0a` record (`STORY_LOCATION_NAMES` in disasm.py) —
+locs 30-41 are the End1-End17 ending tour. Bank $27
 (locations 30-41) is the self-contained ending-presentation bank: its `$4000`
 is already curated as `SceneFramePtrs_27` (12 scene-frame records, a different
 structure the story engine also reads as trees), so those records stay raw

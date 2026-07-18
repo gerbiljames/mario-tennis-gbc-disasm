@@ -3184,48 +3184,48 @@ Label_0a_5643:
 	ret ; $564e
 StoryLocationTable_0a:
 	; $564f, 252 bytes (story_locations)
-	story_location $00, $10, DataPtr_MatchSelectHandlersA_10, $ff ; loc 0
-	story_location $01, $10, DataPtr_10_04, $ff ; loc 1
-	story_location $02, $10, DataPtr_SmallCharTestMapScripts_0f, $ff ; loc 2
-	story_location $03, $10, DataPtr_10_00, $ff ; loc 3
-	story_location $04, $10, DataPtr_10_02, $0b ; loc 4
-	story_location $05, $11, DataPtr_10_0e, $1a ; loc 5
-	story_location $06, $11, DataPtr_10_0c, $1a ; loc 6
-	story_location $07, $14, DataPtr_StoryCmdHandlersD_13, $1b ; loc 7
-	story_location $08, $13, DataPtr_StoryCmdHandlersA_13, $1b ; loc 8
-	story_location $09, $1b, DataPtr_StoryCmdHandlersA_12, $1b ; loc 9
-	story_location $0a, $12, DataPtr_StoryCmdHandlersB_13, $00 ; loc 10
-	story_location $0b, $18, DataPtr_JuniorClassCourtSinglesScene_11, $1b ; loc 11
-	story_location $0c, $18, DataPtr_JuniorClassCourtDoublesScene_11, $1b ; loc 12
-	story_location $0d, $19, DataPtr_10_0a, $1d ; loc 13
-	story_location $0e, $19, DataPtr_10_08, $1d ; loc 14
-	story_location $0f, $1e, DataPtr_StoryCmdHandlersB_15, $1b ; loc 15
-	story_location $10, $17, DataPtr_SeniorCourtStoryCmds_12, $1b ; loc 16
-	story_location $11, $22, DataPtr_TrainingGymMapScripts_0e, $1d ; loc 17
-	story_location $12, $22, DataPtr_Loc18MapScripts_14, $1d ; loc 18
-	story_location $13, $22, DataPtr_WallPracticeRoomStoryCmds_12, $1d ; loc 19
-	story_location $14, $1a, DataPtr_AcademyArrivalScene_11, $1b ; loc 20
-	story_location $15, $1c, DataPtr_StoryCmdHandlersA_15, $1b ; loc 21
-	story_location $16, $1d, DataPtr_Loc22MapScripts_14, $1b ; loc 22
-	story_location $17, $1f, DataPtr_Loc23MapScripts_14, $1b ; loc 23
-	story_location $18, $20, DataPtr_11_00, $1d ; loc 24
-	story_location $19, $23, DataPtr_TournamentMapScripts_0f, $1d ; loc 25
-	story_location $1a, $24, DataPtr_AwardsCeremonyMapScripts_0f, $1b ; loc 26
-	story_location $1b, $15, DataPtr_Loc27MapScripts_14, $1b ; loc 27
-	story_location $1c, $16, DataPtr_SpecialCourtMapScripts_0e, $08 ; loc 28
-	story_location $1d, $21, DataPtr_MarioWorldMapScripts_0e, $12 ; loc 29
-	db $1e, $1a, $16, $27, $2c, $00 ; loc 30 -> $27:$4016
-	db $1f, $13, $14, $27, $ff, $00 ; loc 31 -> $27:$4014
-	db $20, $1b, $12, $27, $ff, $00 ; loc 32 -> $27:$4012
-	db $21, $18, $10, $27, $ff, $00 ; loc 33 -> $27:$4010
-	db $22, $19, $0e, $27, $ff, $00 ; loc 34 -> $27:$400e
-	db $23, $22, $0c, $27, $ff, $00 ; loc 35 -> $27:$400c
-	db $24, $17, $0a, $27, $ff, $00 ; loc 36 -> $27:$400a
-	db $25, $14, $08, $27, $ff, $00 ; loc 37 -> $27:$4008
-	db $26, $1e, $06, $27, $ff, $00 ; loc 38 -> $27:$4006
-	db $27, $11, $04, $27, $ff, $00 ; loc 39 -> $27:$4004
-	db $28, $23, $02, $27, $ff, $00 ; loc 40 -> $27:$4002
-	db $29, $24, $00, $27, $ff, $00 ; loc 41 -> $27:$4000
+	story_location $00, $10, DataPtr_MatchSelectHandlersA_10, $ff ; loc 0 Main Menu
+	story_location $01, $10, DataPtr_10_04, $ff ; loc 1 Development
+	story_location $02, $10, DataPtr_SmallCharTestMapScripts_0f, $ff ; loc 2 Small Char. Test
+	story_location $03, $10, DataPtr_10_00, $ff ; loc 3 Test
+	story_location $04, $10, DataPtr_10_02, $0b ; loc 4 Test 2
+	story_location $05, $11, DataPtr_10_0e, $1a ; loc 5 Academy Main Bldg.
+	story_location $06, $11, DataPtr_10_0c, $1a ; loc 6 Academy Wing
+	story_location $07, $14, DataPtr_StoryCmdHandlersD_13, $1b ; loc 7 Courtyard
+	story_location $08, $13, DataPtr_StoryCmdHandlersA_13, $1b ; loc 8 Restaurant Plaza
+	story_location $09, $1b, DataPtr_StoryCmdHandlersA_12, $1b ; loc 9 Dorm Entrance
+	story_location $0a, $12, DataPtr_StoryCmdHandlersB_13, $00 ; loc 10 Dorm Room
+	story_location $0b, $18, DataPtr_JuniorClassCourtSinglesScene_11, $1b ; loc 11 Junior Class Court
+	story_location $0c, $18, DataPtr_JuniorClassCourtDoublesScene_11, $1b ; loc 12 Junior Class Court
+	story_location $0d, $19, DataPtr_10_0a, $1d ; loc 13 Restaurant
+	story_location $0e, $19, DataPtr_10_08, $1d ; loc 14 Cafeteria
+	story_location $0f, $1e, DataPtr_StoryCmdHandlersB_15, $1b ; loc 15 Training Court
+	story_location $10, $17, DataPtr_SeniorCourtStoryCmds_12, $1b ; loc 16 Senior Class Court
+	story_location $11, $22, DataPtr_TrainingGymMapScripts_0e, $1d ; loc 17 Training Center
+	story_location $12, $22, DataPtr_TennisMachineRoomMapScripts_14, $1d ; loc 18 Tennis Machine Room
+	story_location $13, $22, DataPtr_WallPracticeRoomStoryCmds_12, $1d ; loc 19 Wall Practice Room
+	story_location $14, $1a, DataPtr_AcademyArrivalScene_11, $1b ; loc 20 Academy Entrance
+	story_location $15, $1c, DataPtr_StoryCmdHandlersA_15, $1b ; loc 21 Tournament Courtyard
+	story_location $16, $1d, DataPtr_Court1MapScripts_14, $1b ; loc 22 Court #1
+	story_location $17, $1f, DataPtr_Court2MapScripts_14, $1b ; loc 23 Court #2
+	story_location $18, $20, DataPtr_11_00, $1d ; loc 24 Center Court
+	story_location $19, $23, DataPtr_TournamentMapScripts_0f, $1d ; loc 25 Tournament
+	story_location $1a, $24, DataPtr_AwardsCeremonyMapScripts_0f, $1b ; loc 26 Awards Ceremony
+	story_location $1b, $15, DataPtr_IslandSkyMapScripts_14, $1b ; loc 27 Island Sky
+	story_location $1c, $16, DataPtr_SpecialCourtMapScripts_0e, $08 ; loc 28 Special Court
+	story_location $1d, $21, DataPtr_MarioWorldMapScripts_0e, $12 ; loc 29 Peach's Castle
+	db $1e, $1a, $16, $27, $2c, $00 ; loc 30 $27:$4016 End1 Main Bldg
+	db $1f, $13, $14, $27, $ff, $00 ; loc 31 $27:$4014 End Restaurant Ent.
+	db $20, $1b, $12, $27, $ff, $00 ; loc 32 $27:$4012 End3 Dorm Ent.
+	db $21, $18, $10, $27, $ff, $00 ; loc 33 $27:$4010 End4 Jr. Court
+	db $22, $19, $0e, $27, $ff, $00 ; loc 34 $27:$400e End5 Service Ace
+	db $23, $22, $0c, $27, $ff, $00 ; loc 35 $27:$400c End7 Training Ctr.
+	db $24, $17, $0a, $27, $ff, $00 ; loc 36 $27:$400a End8 Sr. Court
+	db $25, $14, $08, $27, $ff, $00 ; loc 37 $27:$4008 End10 Varsity Court
+	db $26, $1e, $06, $27, $ff, $00 ; loc 38 $27:$4006 End11 Training Court
+	db $27, $11, $04, $27, $ff, $00 ; loc 39 $27:$4004 End12 Principal's Office
+	db $28, $23, $02, $27, $ff, $00 ; loc 40 $27:$4002 End16 Before Finals
+	db $29, $24, $00, $27, $ff, $00 ; loc 41 $27:$4000 End17 Award Ceremony
 GetStoryLocationCount:
 	ld a, $2a ; $574b
 	ret ; $574d

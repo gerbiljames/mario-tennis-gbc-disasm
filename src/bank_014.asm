@@ -1,29 +1,29 @@
 SECTION "ROM Bank $14", ROMX[$4000], BANK[$14]
 
-DataPtr_Loc18MapScripts_14:
-	dw Loc18MapScripts_14 ; $4000
-DataPtr_Loc23MapScripts_14:
-	dw Loc23MapScripts_14 ; $4002
-DataPtr_Loc22MapScripts_14:
-	dw Loc22MapScripts_14 ; $4004
-DataPtr_Loc27MapScripts_14:
-	dw Loc27MapScripts_14 ; $4006
-Loc18MapScripts_14:
+DataPtr_TennisMachineRoomMapScripts_14:
+	dw TennisMachineRoomMapScripts_14 ; $4000
+DataPtr_Court2MapScripts_14:
+	dw Court2MapScripts_14 ; $4002
+DataPtr_Court1MapScripts_14:
+	dw Court1MapScripts_14 ; $4004
+DataPtr_IslandSkyMapScripts_14:
+	dw IslandSkyMapScripts_14 ; $4006
+TennisMachineRoomMapScripts_14:
 	; $4008, 14 bytes (map_tree)
-	dw Loc18EntryPoints_14 ; slot 0 EntryPoints
-	dw Loc18ExitTriggers_14 ; slot 1 ExitTriggers
-	dw Loc18Actors_14 ; slot 2 Actors
-	dw Loc18NpcScripts_14 ; slot 3 NpcScripts
-	dw Loc18FacingScripts_14 ; slot 4 FacingScripts
-	dw Loc18TileTriggers_14 ; slot 5 TileTriggers
-	dw Loc18InitScript_14 ; slot 6 InitScript
-Loc18Actors_14:
+	dw TennisMachineRoomEntryPoints_14 ; slot 0 EntryPoints
+	dw TennisMachineRoomExitTriggers_14 ; slot 1 ExitTriggers
+	dw TennisMachineRoomActors_14 ; slot 2 Actors
+	dw TennisMachineRoomNpcScripts_14 ; slot 3 NpcScripts
+	dw TennisMachineRoomFacingScripts_14 ; slot 4 FacingScripts
+	dw TennisMachineRoomTileTriggers_14 ; slot 5 TileTriggers
+	dw TennisMachineRoomInitScript_14 ; slot 6 InitScript
+TennisMachineRoomActors_14:
 	; $4016, 52 bytes (map_actors)
 	map_actor $0000, $78b1, $2b00, $3300, $00, $3d, $01, $00
 	map_actor $0000, $78b1, $2b00, $3100, $00, $3d, $01, $00
 	map_actor $0000, $78b1, $2d00, $2b00, $80, $3e, $01, $00
 	map_actor_end
-Loc18EntryPoints_14:
+TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
 	map_entry $01, $c0, $2b00, $3900, Func_14_4063
 	map_entry $05, $c0, $3800, $3600, $0000
@@ -45,7 +45,7 @@ Func_14_4063:
 	farcall FarPtr_SetActorFacing ; $4082
 Label_14_4085:
 	ret ; $4085
-Loc18ExitTriggers_14:
+TennisMachineRoomExitTriggers_14:
 	; $4086, 9 bytes (map_scripts)
 	map_script $04, $ff, $0000, MapScriptNop_14, $11, $03
 	db $ff
@@ -112,7 +112,7 @@ Label_14_40e6:
 	dw $20c8 ; record 4
 	dw $20d0 ; record 5
 	dw $20d7 ; record 6
-Loc18NpcScripts_14:
+TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
 	map_script $03, $ff, $0000, Func_14_408f, $03, $00
 	map_script $04, $ff, $0000, Func_14_40b4, $03, $00
@@ -217,9 +217,9 @@ MachineLevel4ClearedScene:
 	ld de, $d000 ; $41df
 	farcall FarPtr_04_20 ; $41e2
 	ret ; $41e5
-Loc18FacingScripts_14:
+TennisMachineRoomFacingScripts_14:
 	ds 1, $ff ; $41e6, fill
-Loc18TileTriggers_14:
+TennisMachineRoomTileTriggers_14:
 	; $41e7, 41 bytes (map_scripts)
 	map_script $01, $ff, $9c20, Func_14_4227, $00, $00
 	map_script $03, $ff, $0000, Func_14_4210, $01, $00
@@ -276,7 +276,7 @@ Func_14_4227:
 	ret ; $426f
 	; $4270, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $1a ; 0x00
-Loc18InitScript_14:
+TennisMachineRoomInitScript_14:
 	ld a, $26 ; $4278
 	ld [$c329], a ; $427a
 	ld a, $23 ; $427d
@@ -1196,16 +1196,16 @@ Label_14_4a00:
 	farcall FarPtr_SetActorFacing ; $4a35
 Label_14_4a38:
 	ret ; $4a38
-Loc23MapScripts_14:
+Court2MapScripts_14:
 	; $4a39, 14 bytes (map_tree)
-	dw Loc23EntryPoints_14 ; slot 0 EntryPoints
-	dw Loc23ExitTriggers_14 ; slot 1 ExitTriggers
-	dw Loc23Actors_14 ; slot 2 Actors
-	dw Loc23NpcScripts_14 ; slot 3 NpcScripts
-	dw Loc23FacingScripts_14 ; slot 4 FacingScripts
-	dw Loc23TileTriggers_14 ; slot 5 TileTriggers
-	dw Loc23InitScript_14 ; slot 6 InitScript
-Loc23Actors_14:
+	dw Court2EntryPoints_14 ; slot 0 EntryPoints
+	dw Court2ExitTriggers_14 ; slot 1 ExitTriggers
+	dw Court2Actors_14 ; slot 2 Actors
+	dw Court2NpcScripts_14 ; slot 3 NpcScripts
+	dw Court2FacingScripts_14 ; slot 4 FacingScripts
+	dw Court2TileTriggers_14 ; slot 5 TileTriggers
+	dw Court2InitScript_14 ; slot 6 InitScript
+Court2Actors_14:
 	; $4a47, 248 bytes (map_actors)
 	map_actor $0000, $78b1, $1d00, $1500, $00, $25, $01, $00
 	map_actor $0000, $78b1, $1900, $1800, $40, $25, $01, $00
@@ -1225,12 +1225,12 @@ Loc23Actors_14:
 	map_actor $0000, $78b1, $0500, $1b00, $00, $33, $01, $00
 	map_actor $0000, $78b1, $0500, $1d00, $00, $3a, $01, $04
 	map_actor_end
-Loc23EntryPoints_14:
+Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
 	map_entry $01, $80, $2500, $1500, $0000
 	map_entry $02, $80, $2500, $2500, $0000
 	db $ff
-Loc23ExitTriggers_14:
+Court2ExitTriggers_14:
 	; $4b50, 17 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_14, $19, $03
 	map_script $02, $ff, $0000, MapScriptNop_14, $15, $02
@@ -1552,7 +1552,7 @@ Label_14_4df3:
 	ld a, $0a ; $4df3
 	farcall FarPtr_ScriptShowSpeakerDialogue ; $4df5
 	ret ; $4df8
-Loc23NpcScripts_14:
+Court2NpcScripts_14:
 	; $4df9, 73 bytes (map_scripts)
 	map_script $03, $ff, $0000, Func_14_4b61, $03, $00
 	map_script $04, $ff, $0000, Func_14_4b6d, $03, $00
@@ -1564,19 +1564,19 @@ Loc23NpcScripts_14:
 	map_script $0a, $ff, $0000, Func_14_4dcc, $03, $00
 	map_script $0b, $ff, $0000, $2469, $03, $00
 	db $ff
-Loc23FacingScripts_14:
+Court2FacingScripts_14:
 	; $4e42, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, Func_14_4e4b, $00, $00
 	db $ff
 Func_14_4e4b:
 	ret ; $4e4b
-Loc23TileTriggers_14:
+Court2TileTriggers_14:
 	; $4e4c, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, Func_14_4e55, $00, $00
 	db $ff
 Func_14_4e55:
 	ret ; $4e55
-Loc23InitScript_14:
+Court2InitScript_14:
 	call InitCourt2SceneVariant ; $4e56
 	call Func_14_51ea ; $4e59
 	call Court2EntryWalkIn ; $4e5c
@@ -1589,7 +1589,7 @@ InitCourt2SceneVariant:
 	test_flag $07, 5 ; $4e6a
 	jr z, Label_14_4e7e ; $4e6d
 	ldh a, [hRomBank] ; $4e6f
-	ld hl, Loc23ActorsAlt_14 ; $4e71
+	ld hl, Court2ActorsAlt_14 ; $4e71
 	farcall FarPtr_ScriptRespawnLocationActors ; $4e74
 	farcall FarPtr_BeginCutsceneScriptMode ; $4e77
 	ld a, $03 ; $4e7a
@@ -1611,7 +1611,7 @@ Label_14_4e92:
 	test_flag $06, 6 ; $4e92
 	jr z, Label_14_4ea6 ; $4e95
 	ldh a, [hRomBank] ; $4e97
-	ld hl, Loc23ActorsAlt_14 ; $4e99
+	ld hl, Court2ActorsAlt_14 ; $4e99
 	farcall FarPtr_ScriptRespawnLocationActors ; $4e9c
 	farcall FarPtr_BeginCutsceneScriptMode ; $4e9f
 	ld a, $06 ; $4ea2
@@ -1625,7 +1625,7 @@ Label_14_4eaf:
 	ld a, $04 ; $4eaf
 	jr Label_14_4e8e ; $4eb1
 	ret ; $4eb3
-Loc23ActorsAlt_14:
+Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)
 	map_actor $0000, $78b1, $1d00, $1500, $00, $25, $01, $00
 	map_actor $0000, $78b1, $1b00, $2300, $40, $25, $01, $00
@@ -1671,16 +1671,16 @@ Label_14_4f99:
 	farcall FarPtr_MoveActorByAngle ; $4fa8
 Label_14_4fab:
 	ret ; $4fab
-Loc22MapScripts_14:
+Court1MapScripts_14:
 	; $4fac, 14 bytes (map_tree)
-	dw Loc22EntryPoints_14 ; slot 0 EntryPoints
-	dw Loc22ExitTriggers_14 ; slot 1 ExitTriggers
-	dw Loc22Actors_14 ; slot 2 Actors
-	dw Loc22NpcScripts_14 ; slot 3 NpcScripts
-	dw Loc22FacingScripts_14 ; slot 4 FacingScripts
-	dw Loc22TileTriggers_14 ; slot 5 TileTriggers
-	dw Loc22InitScript_14 ; slot 6 InitScript
-Loc22Actors_14:
+	dw Court1EntryPoints_14 ; slot 0 EntryPoints
+	dw Court1ExitTriggers_14 ; slot 1 ExitTriggers
+	dw Court1Actors_14 ; slot 2 Actors
+	dw Court1NpcScripts_14 ; slot 3 NpcScripts
+	dw Court1FacingScripts_14 ; slot 4 FacingScripts
+	dw Court1TileTriggers_14 ; slot 5 TileTriggers
+	dw Court1InitScript_14 ; slot 6 InitScript
+Court1Actors_14:
 	; $4fba, 136 bytes (map_actors)
 	map_actor $0000, $78b1, $0b00, $1500, $80, $25, $01, $00
 	map_actor $0000, $78b1, $1100, $2300, $40, $25, $01, $00
@@ -1692,12 +1692,12 @@ Loc22Actors_14:
 	map_actor $0000, $78b1, $2300, $0f00, $80, $33, $01, $00
 	map_actor $0000, $78b1, $2100, $1100, $80, $3a, $01, $04
 	map_actor_end
-Loc22EntryPoints_14:
+Court1EntryPoints_14:
 	; $5042, 17 bytes (map_entries)
 	map_entry $01, $00, $0300, $1500, $0000
 	map_entry $02, $00, $0300, $2500, $0000
 	db $ff
-Loc22ExitTriggers_14:
+Court1ExitTriggers_14:
 	; $5053, 17 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_14, $19, $04
 	map_script $02, $ff, $0000, MapScriptNop_14, $15, $01
@@ -1760,26 +1760,26 @@ Func_14_50a1:
 	dw $2487 ; record 4
 	dw $248e ; record 5
 	dw $2490 ; record 6
-Loc22NpcScripts_14:
+Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
 	map_script $03, $ff, $0000, Func_14_5064, $03, $00
 	map_script $04, $ff, $0000, Func_14_5070, $03, $00
 	map_script $05, $ff, $0000, Func_14_507c, $03, $00
 	map_script $06, $ff, $0000, Func_14_50a1, $03, $00
 	db $ff
-Loc22FacingScripts_14:
+Court1FacingScripts_14:
 	; $50e7, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, Func_14_50f0, $00, $00
 	db $ff
 Func_14_50f0:
 	ret ; $50f0
-Loc22TileTriggers_14:
+Court1TileTriggers_14:
 	; $50f1, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, Func_14_50fa, $00, $00
 	db $ff
 Func_14_50fa:
 	ret ; $50fa
-Loc22InitScript_14:
+Court1InitScript_14:
 	call InitCourt1SceneVariant ; $50fb
 	call Func_14_51ea ; $50fe
 	call Court1EntryWalkIn ; $5101
@@ -1794,7 +1794,7 @@ InitCourt1SceneVariant:
 	ld a, $03 ; $5114
 	ld [$c2b0], a ; $5116
 	ldh a, [hRomBank] ; $5119
-	ld hl, Loc22ActorsAlt_14 ; $511b
+	ld hl, Court1ActorsAlt_14 ; $511b
 	farcall FarPtr_ScriptRespawnLocationActors ; $511e
 	farcall FarPtr_BeginCutsceneScriptMode ; $5121
 	ret ; $5124
@@ -1817,7 +1817,7 @@ Label_14_513b:
 	ld a, $06 ; $5140
 	ld [$c2b0], a ; $5142
 	ldh a, [hRomBank] ; $5145
-	ld hl, Loc22ActorsAlt_14 ; $5147
+	ld hl, Court1ActorsAlt_14 ; $5147
 	farcall FarPtr_ScriptRespawnLocationActors ; $514a
 	farcall FarPtr_BeginCutsceneScriptMode ; $514d
 	ret ; $5150
@@ -1831,7 +1831,7 @@ Label_14_515c:
 	ld a, $04 ; $515c
 	ld [$c2b0], a ; $515e
 	ret ; $5161
-Loc22ActorsAlt_14:
+Court1ActorsAlt_14:
 	; $5162, 66 bytes (map_actors)
 	map_actor $0000, $78b1, $0b00, $1500, $80, $25, $01, $00
 	map_actor $0000, $78b1, $1100, $2300, $40, $25, $01, $00
@@ -1898,23 +1898,23 @@ Label_14_5208:
 	ld d, $01 ; $521b
 	farcall FarPtr_ScriptSetActorAnimation ; $521d
 	ret ; $5220
-Loc27MapScripts_14:
+IslandSkyMapScripts_14:
 	; $5221, 14 bytes (map_tree)
-	dw Loc27EntryPoints_14 ; slot 0 EntryPoints
-	dw Loc27ExitTriggers_14 ; slot 1 ExitTriggers
-	dw Loc27Actors_14 ; slot 2 Actors
-	dw Loc27NpcScripts_14 ; slot 3 NpcScripts
-	dw Loc27FacingScripts_14 ; slot 4 FacingScripts
-	dw Loc27TileTriggers_14 ; slot 5 TileTriggers
-	dw Loc27InitScript_14 ; slot 6 InitScript
-Loc27Actors_14:
+	dw IslandSkyEntryPoints_14 ; slot 0 EntryPoints
+	dw IslandSkyExitTriggers_14 ; slot 1 ExitTriggers
+	dw IslandSkyActors_14 ; slot 2 Actors
+	dw IslandSkyNpcScripts_14 ; slot 3 NpcScripts
+	dw IslandSkyFacingScripts_14 ; slot 4 FacingScripts
+	dw IslandSkyTileTriggers_14 ; slot 5 TileTriggers
+	dw IslandSkyInitScript_14 ; slot 6 InitScript
+IslandSkyActors_14:
 	; $522f, 66 bytes (map_actors)
 	map_actor $0000, $78b1, $0600, $2700, $40, $63, $01, $00
 	map_actor $0000, $78b1, $0600, $2700, $40, $5c, $01, $00
 	map_actor $0000, $78b1, $0600, $2700, $40, $5b, $01, $00
 	map_actor $0000, $78b1, $0600, $2700, $40, $5a, $01, $00
 	map_actor_end
-Loc27EntryPoints_14:
+IslandSkyEntryPoints_14:
 	; $5271, 49 bytes (map_entries)
 	map_entry $01, $40, $0c00, $1200, $0000
 	map_entry $02, $c0, $0600, $2700, $0000
@@ -1923,20 +1923,20 @@ Loc27EntryPoints_14:
 	map_entry $0e, $40, $0c00, $0b00, $0000
 	map_entry $0f, $40, $0c00, $1200, $0000
 	db $ff
-Loc27ExitTriggers_14:
+IslandSkyExitTriggers_14:
 	; $52a2, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_14, $08, $06
 	db $ff
 	ret ; $52ab
-Loc27NpcScripts_14:
+IslandSkyNpcScripts_14:
 	; $52ac, 9 bytes (map_scripts)
 	map_script $03, $ff, $0000, $1430, $00, $00
 	db $ff
-Loc27FacingScripts_14:
+IslandSkyFacingScripts_14:
 	ds 1, $ff ; $52b5, fill
-Loc27TileTriggers_14:
+IslandSkyTileTriggers_14:
 	ds 1, $ff ; $52b6, fill
-Loc27InitScript_14:
+IslandSkyInitScript_14:
 	ld a, $03 ; $52b7
 	ld bc, $3f00 ; $52b9
 	ld de, $3f00 ; $52bc

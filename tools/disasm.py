@@ -1907,6 +1907,22 @@ ENDM
 MAP_TREE_SLOTS = ("EntryPoints", "ExitTriggers", "Actors", "NpcScripts",
                   "FacingScripts", "TileTriggers", "InitScript")
 
+# Story-location names, indexed by location id, from the in-game name popup
+# (text id $0179 + loc = string bank $30 index 377 + loc). Annotates the
+# StoryLocationTable so each record documents which location it selects.
+STORY_LOCATION_NAMES = (
+    "Main Menu", "Development", "Small Char. Test", "Test", "Test 2",
+    "Academy Main Bldg.", "Academy Wing", "Courtyard", "Restaurant Plaza",
+    "Dorm Entrance", "Dorm Room", "Junior Class Court", "Junior Class Court",
+    "Restaurant", "Cafeteria", "Training Court", "Senior Class Court",
+    "Training Center", "Tennis Machine Room", "Wall Practice Room",
+    "Academy Entrance", "Tournament Courtyard", "Court #1", "Court #2",
+    "Center Court", "Tournament", "Awards Ceremony", "Island Sky",
+    "Special Court", "Peach's Castle", "End1 Main Bldg", "End Restaurant Ent.",
+    "End3 Dorm Ent.", "End4 Jr. Court", "End5 Service Ace", "End7 Training Ctr.",
+    "End8 Sr. Court", "End10 Varsity Court", "End11 Training Court",
+    "End12 Principal's Office", "End16 Before Finals", "End17 Award Ceremony")
+
 
 def render_map_table(spec, rom, seg, end, bank, labels):
     """Render a story-mode map-script sub-table (map_actor/map_entry/
@@ -2332,17 +2348,19 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 for r in range((j - seg) // 6):
                                     ro = seg + r * 6
                                     b = rom[ro:ro + 6]
+                                    nm = (f" {STORY_LOCATION_NAMES[r]}"
+                                          if r < len(STORY_LOCATION_NAMES) else "")
                                     sr = slot_ref(b[2] | (b[3] << 8))
                                     if sr and b[5] == 0:
                                         lines.append(
                                             f"\tstory_location ${b[0]:02x}, "
                                             f"${b[1]:02x}, {sr}, ${b[4]:02x}"
-                                            f" ; loc {r}")
+                                            f" ; loc {r}{nm}")
                                     else:
                                         lines.append(
                                             "\tdb " + ", ".join(f"${x:02x}" for x in b)
-                                            + f" ; loc {r} -> ${b[3]:02x}:$"
-                                            f"{0x4000 + b[2]:04x}")
+                                            + f" ; loc {r} ${b[3]:02x}:$"
+                                            f"{0x4000 + b[2]:04x}{nm}")
                                 tail = (j - seg) % 6
                                 if tail:
                                     lines.append("\tdb " + ", ".join(
