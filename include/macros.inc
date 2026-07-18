@@ -163,3 +163,77 @@ MACRO story_location
 	dslot \3
 	db \4, $00
 ENDM
+
+; Cutscene script commands. Story cutscenes are hand-written native code: fixed
+; register setups feeding farcalls into the script engine (FarPtr_Script*, bank
+; $0a). Each macro collapses one setup+farcall; the disassembler emits them via
+; script_cmd_seq. `actor` is the target actor slot ($00 = the player).
+; Usage: script_move_target actor, x, y
+MACRO script_move_target
+	ld a, \1
+	ld bc, \2
+	ld de, \3
+	farcall FarPtr_ScriptSetActorMoveTarget
+ENDM
+; Usage: script_move_angle actor, angle, distance
+MACRO script_move_angle
+	ld a, \1
+	ld b, \2
+	ld de, \3
+	farcall FarPtr_MoveActorByAngle
+ENDM
+; Usage: script_set_speed actor, speed
+MACRO script_set_speed
+	ld a, \1
+	ld bc, \2
+	farcall FarPtr_ScriptSetActorMoveSpeed
+ENDM
+; Usage: script_move_player x, y (moves actor $00, the player)
+MACRO script_move_player
+	xor a, a
+	ld bc, \1
+	ld de, \2
+	farcall FarPtr_MovePlayerToPosition
+ENDM
+; Usage: script_player_speed speed
+MACRO script_player_speed
+	ld bc, \1
+	farcall FarPtr_SetPlayerMoveSpeed
+ENDM
+; Usage: script_set_text text_id (sets the next dialogue's text)
+MACRO script_set_text
+	ld hl, \1
+	farcall FarPtr_InitDialogueTextCursor
+ENDM
+; Usage: script_set_anim actor, anim
+MACRO script_set_anim
+	ld a, \1
+	ld d, \2
+	farcall FarPtr_ScriptSetActorAnimation
+ENDM
+; Usage: script_face actor, facing
+MACRO script_face
+	ld a, \1
+	ld b, \2
+	farcall FarPtr_SetActorFacing
+ENDM
+; Usage: script_speak actor
+MACRO script_speak
+	ld a, \1
+	farcall FarPtr_ScriptShowSpeakerDialogue
+ENDM
+; Usage: script_wait_idle actor
+MACRO script_wait_idle
+	ld a, \1
+	farcall FarPtr_ScriptWaitActorIdle
+ENDM
+; Usage: script_wait_move actor
+MACRO script_wait_move
+	ld a, \1
+	farcall FarPtr_ScriptWaitActorMoveDone
+ENDM
+; Usage: script_wait_frames frames
+MACRO script_wait_frames
+	ld a, \1
+	farcall FarPtr_WaitScriptFrames
+ENDM

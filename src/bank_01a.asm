@@ -382,15 +382,13 @@ RestoreMessageSpeed:
 	ret ; $42cd
 Label_1a_42ce:
 	clear_flag $06, 1 ; $42ce
-	ld hl, $049c ; $42d1
-	farcall FarPtr_InitDialogueTextCursor ; $42d4
+	script_set_text $049c ; $42d1
 	ld a, $80 ; $42d7
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $42d9
 	farcall FarPtr_RunDialogueYesNoPrompt ; $42dc
 	farcall FarPtr_ScriptCloseDialogueWindow ; $42df
 	push af ; $42e2
-	ld a, $05 ; $42e3
-	farcall FarPtr_WaitScriptFrames ; $42e5
+	script_wait_frames $05 ; $42e3
 	pop af ; $42e8
 	and a, a ; $42e9
 	jr nz, Label_1a_4317 ; $42ea
@@ -424,8 +422,7 @@ Label_1a_4317:
 Label_1a_432e:
 	jp Func_1a_402c ; $432e
 Label_1a_4331:
-	ld hl, $049d ; $4331
-	farcall FarPtr_InitDialogueTextCursor ; $4334
+	script_set_text $049d ; $4331
 	ld a, $80 ; $4337
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4339
 	ld a, $01 ; $433c
@@ -433,8 +430,7 @@ Label_1a_4331:
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4341
 	farcall FarPtr_ScriptCloseDialogueWindow ; $4344
 	push af ; $4347
-	ld a, $05 ; $4348
-	farcall FarPtr_WaitScriptFrames ; $434a
+	script_wait_frames $05 ; $4348
 	pop af ; $434d
 	and a, a ; $434e
 	jr nz, Label_1a_4366 ; $434f

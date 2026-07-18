@@ -1770,6 +1770,67 @@ def match_launcher_seq(dis, rom, off, labels):
     return None
 
 
+# Cutscene script commands: a fixed register setup then a farcall into the
+# story script engine, keyed by the farcall's FarPtr slot label. Setup steps
+# are (opcode, size, kind): 'b' = 1-byte immediate, 'w' = 2-byte immediate.
+SCRIPT_COMMANDS = (
+    ("script_move_target", "FarPtr_ScriptSetActorMoveTarget",
+        ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
+    ("script_move_angle", "FarPtr_MoveActorByAngle",
+        ((0x3E, 2, 'b'), (0x06, 2, 'b'), (0x11, 3, 'w'))),
+    ("script_set_speed", "FarPtr_ScriptSetActorMoveSpeed",
+        ((0x3E, 2, 'b'), (0x01, 3, 'w'))),
+    ("script_set_anim", "FarPtr_ScriptSetActorAnimation",
+        ((0x3E, 2, 'b'), (0x16, 2, 'b'))),
+    ("script_face", "FarPtr_SetActorFacing",
+        ((0x3E, 2, 'b'), (0x06, 2, 'b'))),
+    ("script_move_player", "FarPtr_MovePlayerToPosition",
+        ((0xAF, 1, 'x'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
+    ("script_player_speed", "FarPtr_SetPlayerMoveSpeed",
+        ((0x01, 3, 'w'),)),
+    ("script_set_text", "FarPtr_InitDialogueTextCursor",
+        ((0x21, 3, 'w'),)),
+    ("script_speak", "FarPtr_ScriptShowSpeakerDialogue",
+        ((0x3E, 2, 'b'),)),
+    ("script_wait_idle", "FarPtr_ScriptWaitActorIdle",
+        ((0x3E, 2, 'b'),)),
+    ("script_wait_move", "FarPtr_ScriptWaitActorMoveDone",
+        ((0x3E, 2, 'b'),)),
+    ("script_wait_frames", "FarPtr_WaitScriptFrames",
+        ((0x3E, 2, 'b'),)),
+)
+
+
+def script_cmd_seq(dis, rom, off, labels, far_slot_names):
+    """Collapse a cutscene script command (register setup + farcall into the
+    FarPtr_Script* engine) into a script_* macro. The farcall's resolved slot
+    name selects the command. Only fires when no label or data note lands
+    inside the sequence past its first instruction (so nothing is hidden)."""
+    def plain(o):
+        return (o in dis.instrs and o not in labels
+                and o not in dis.data_site_notes)
+    if off in dis.data_site_notes:
+        return None
+    for macro, far_label, setups in SCRIPT_COMMANDS:
+        p, args, ok = off, [], True
+        for i, (opc, size, kind) in enumerate(setups):
+            if p + size > len(rom) or rom[p] != opc or (i and not plain(p)):
+                ok = False
+                break
+            if kind == 'b':
+                args.append(f"${rom[p + 1]:02x}")
+            elif kind == 'w':
+                args.append(f"${rom[p + 1] | (rom[p + 2] << 8):04x}")
+            p += size
+        if not ok or p not in dis.farcalls or not plain(p):
+            continue
+        fbank, slot, _entry, _tgt = dis.farcalls[p]
+        if far_slot_names.get((fbank, slot)) != far_label:
+            continue
+        return f"{macro} " + ", ".join(args), (p - off) + 3
+    return None
+
+
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                    ramscoped=None):
     text = ins.text
@@ -1986,6 +2047,80 @@ MACRO story_location
 	db \\1, \\2
 	dslot \\3
 	db \\4, $00
+ENDM
+
+; Cutscene script commands. Story cutscenes are hand-written native code: fixed
+; register setups feeding farcalls into the script engine (FarPtr_Script*, bank
+; $0a). Each macro collapses one setup+farcall; the disassembler emits them via
+; script_cmd_seq. `actor` is the target actor slot ($00 = the player).
+; Usage: script_move_target actor, x, y
+MACRO script_move_target
+	ld a, \\1
+	ld bc, \\2
+	ld de, \\3
+	farcall FarPtr_ScriptSetActorMoveTarget
+ENDM
+; Usage: script_move_angle actor, angle, distance
+MACRO script_move_angle
+	ld a, \\1
+	ld b, \\2
+	ld de, \\3
+	farcall FarPtr_MoveActorByAngle
+ENDM
+; Usage: script_set_speed actor, speed
+MACRO script_set_speed
+	ld a, \\1
+	ld bc, \\2
+	farcall FarPtr_ScriptSetActorMoveSpeed
+ENDM
+; Usage: script_move_player x, y (moves actor $00, the player)
+MACRO script_move_player
+	xor a, a
+	ld bc, \\1
+	ld de, \\2
+	farcall FarPtr_MovePlayerToPosition
+ENDM
+; Usage: script_player_speed speed
+MACRO script_player_speed
+	ld bc, \\1
+	farcall FarPtr_SetPlayerMoveSpeed
+ENDM
+; Usage: script_set_text text_id (sets the next dialogue's text)
+MACRO script_set_text
+	ld hl, \\1
+	farcall FarPtr_InitDialogueTextCursor
+ENDM
+; Usage: script_set_anim actor, anim
+MACRO script_set_anim
+	ld a, \\1
+	ld d, \\2
+	farcall FarPtr_ScriptSetActorAnimation
+ENDM
+; Usage: script_face actor, facing
+MACRO script_face
+	ld a, \\1
+	ld b, \\2
+	farcall FarPtr_SetActorFacing
+ENDM
+; Usage: script_speak actor
+MACRO script_speak
+	ld a, \\1
+	farcall FarPtr_ScriptShowSpeakerDialogue
+ENDM
+; Usage: script_wait_idle actor
+MACRO script_wait_idle
+	ld a, \\1
+	farcall FarPtr_ScriptWaitActorIdle
+ENDM
+; Usage: script_wait_move actor
+MACRO script_wait_move
+	ld a, \\1
+	farcall FarPtr_ScriptWaitActorMoveDone
+ENDM
+; Usage: script_wait_frames frames
+MACRO script_wait_frames
+	ld a, \\1
+	farcall FarPtr_WaitScriptFrames
 ENDM
 """
 
@@ -2260,6 +2395,12 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                 ml = match_launcher_seq(dis, rom, off, labels)
                 if ml:
                     text, size = ml
+                    lines.append(f"\t{text} ; ${cpu:04x}")
+                    off += size
+                    continue
+                sc = script_cmd_seq(dis, rom, off, labels, far_slot_names)
+                if sc:
+                    text, size = sc
                     lines.append(f"\t{text} ; ${cpu:04x}")
                     off += size
                     continue

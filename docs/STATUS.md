@@ -21,6 +21,23 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Cutscene script macros (2026-07-18)
+
+Story cutscenes are hand-written native code — long runs of a fixed register
+setup then a `farcall` into the script engine (`FarPtr_Script*`, bank $0a).
+`script_cmd_seq` in `disasm.py` recognizes twelve of these idioms and emits
+readable `script_*` macros (defined in the generated `include/macros.inc`):
+`script_move_target/move_angle/move_player`, `script_set_speed/player_speed`,
+`script_set_anim`, `script_face`, `script_speak`, `script_set_text`,
+`script_wait_idle/wait_move/wait_frames`. The command is keyed by the farcall's
+resolved slot name, and a sequence only collapses when no label or data note
+lands inside it (past the first instruction), so nothing is hidden. **7,139
+instances** across the story banks ($0e-$15, $27), turning ~18.6k lines of
+`ld`/`farcall` boilerplate into ~7.3k lines of script. Each macro re-emits the
+identical instructions; still byte-perfect. Example (`TournamentSiteArrivalScene`,
+$15): `script_move_target $03, $1200, $2900` / `script_speak $03` /
+`script_set_anim $04, $03` / `script_wait_idle $00`.
+
 ### Story-location map_trees carved in banks $12/$13/$15 (2026-07-18)
 
 Six "StoryCmdHandlers*" tables were misidentified: they are the 7-slot
