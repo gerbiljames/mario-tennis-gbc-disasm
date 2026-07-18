@@ -121,21 +121,21 @@ Label_15_41b0:
 	call InitTournamentSiteSceneVariant ; $41b3
 	call TournamentSiteEntryWalkIn ; $41b6
 	ret ; $41b9
-	INCBIN "data/bank_015/d_41ba.bin" ; $41ba, 18 bytes
-	; $41cc, 112 bytes (bytes:14)
-	db $ff, $00, $00, $6d, $7d, $00, $12, $00, $34, $40, $00, $63, $01, $00 ; 0x00
-	db $00, $00, $00, $6d, $7d, $00, $11, $00, $37, $40, $00, $5a, $01, $00 ; 0x0e
-	db $00, $00, $00, $6d, $7d, $00, $13, $00, $39, $40, $00, $5b, $01, $00 ; 0x1c
-	db $00, $00, $00, $6d, $7d, $00, $13, $00, $37, $40, $00, $5c, $01, $00 ; 0x2a
-	db $00, $00, $00, $ba, $41, $00, $09, $80, $1d, $40, $00, $21, $01, $00 ; 0x38
-	db $00, $00, $00, $6d, $7d, $00, $07, $80, $1d, $40, $00, $22, $01, $00 ; 0x46
-	db $00, $00, $00, $77, $7d, $00, $0d, $00, $1b, $80, $00, $33, $01, $03 ; 0x54
-	db $00, $00, $00, $77, $7d, $00, $1d, $00, $23, $c0, $00, $34, $01, $07 ; 0x62
-	; $423c, 53 bytes (bytes:14)
-	db $00, $00, $00, $6d, $7d, $00, $1f, $00, $1d, $80, $00, $30, $01, $05 ; 0x00
-	db $00, $00, $00, $6d, $7d, $00, $0b, $00, $27, $80, $00, $39, $01, $00 ; 0x0e
-	db $00, $00, $00, $6d, $7d, $00, $09, $00, $29, $c0, $00, $3a, $01, $00 ; 0x1c
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x2a
+	INCBIN "data/bank_015/d_41ba.bin" ; $41ba, 19 bytes
+TournamentSiteRespawnActors_15:
+	; $41cd, 164 bytes (map_actors)
+	map_actor $0000, $7d6d, $1200, $3400, $40, $63, $01, $00
+	map_actor $0000, $7d6d, $1100, $3700, $40, $5a, $01, $00
+	map_actor $0000, $7d6d, $1300, $3900, $40, $5b, $01, $00
+	map_actor $0000, $7d6d, $1300, $3700, $40, $5c, $01, $00
+	map_actor $0000, $41ba, $0900, $1d80, $40, $21, $01, $00
+	map_actor $0000, $7d6d, $0700, $1d80, $40, $22, $01, $00
+	map_actor $0000, $7d77, $0d00, $1b00, $80, $33, $01, $03
+	map_actor $0000, $7d77, $1d00, $2300, $c0, $34, $01, $07
+	map_actor $0000, $7d6d, $1f00, $1d00, $80, $30, $01, $05
+	map_actor $0000, $7d6d, $0b00, $2700, $80, $39, $01, $00
+	map_actor $0000, $7d6d, $0900, $2900, $c0, $3a, $01, $00
+	map_actor_end
 InitTournamentSiteSceneVariant:
 	ld a, $00 ; $4271
 	ld [$c2b0], a ; $4273
@@ -259,7 +259,7 @@ TournamentSiteScripts6_15:
 	db $ff
 TournamentSiteArrivalScene:
 	ldh a, [hRomBank] ; $444d
-	ld hl, $41cd ; $444f
+	ld hl, TournamentSiteRespawnActors_15 ; $444f
 	farcall FarPtr_ScriptRespawnLocationActors ; $4452
 	farcall FarPtr_BeginCutsceneScriptMode ; $4455
 	call SetupTournamentSitePartnerActor ; $4458
