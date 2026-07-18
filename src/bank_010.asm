@@ -2,10 +2,10 @@ SECTION "ROM Bank $10", ROMX[$4000], BANK[$10]
 
 DataPtr_10_00:
 	dw Data_10_4010 ; $4000
-DataPtr_10_02:
-	dw Data_10_468d ; $4002
-DataPtr_10_04:
-	dw Data_10_4ccb ; $4004
+DataPtr_Test2MapScripts_10:
+	dw Test2MapScripts_10 ; $4002
+DataPtr_DevelopmentMapScripts_10:
+	dw DevelopmentMapScripts_10 ; $4004
 DataPtr_MatchSelectHandlersA_10:
 	dw MatchSelectHandlersA_10 ; $4006
 DataPtr_CafeteriaMapScripts_10:
@@ -706,95 +706,99 @@ Label_10_4655:
 	ret ; $4683
 	; $4684, 9 bytes (bytes:16)
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
-Data_10_468d:
-	; $468d, 14 bytes (records:2)
-	dw $4785 ; record 0
-	dw $478e ; record 1
-	dw $469b ; record 2
-	dw $4adf ; record 3
-	dw $4b60 ; record 4
-	dw $4b80 ; record 5
-	dw $4b9b ; record 6
-	; $469b, 234 bytes (bytes:14)
-	db $00, $00, $d1, $7b, $00, $05, $00, $0f, $40, $00, $55, $01, $00, $00 ; 0x00
-	db $00, $00, $d1, $7b, $00, $05, $00, $05, $40, $00, $27, $01, $07, $00 ; 0x0e
-	db $00, $00, $d1, $7b, $00, $05, $00, $03, $40, $00, $26, $01, $00, $00 ; 0x1c
-	db $00, $00, $d1, $7b, $00, $05, $00, $09, $40, $00, $29, $01, $05, $00 ; 0x2a
-	db $00, $00, $d1, $7b, $00, $05, $00, $07, $40, $00, $28, $01, $00, $00 ; 0x38
-	db $00, $00, $d1, $7b, $00, $05, $00, $0d, $40, $00, $2a, $01, $07, $00 ; 0x46
-	db $00, $00, $d1, $7b, $00, $05, $00, $0b, $40, $00, $2d, $01, $00, $00 ; 0x54
-	db $00, $00, $d1, $7b, $00, $05, $00, $11, $40, $00, $2b, $01, $00, $00 ; 0x62
-	db $00, $00, $d1, $7b, $00, $0d, $00, $03, $40, $00, $2f, $01, $00, $00 ; 0x70
-	db $00, $00, $d1, $7b, $00, $0d, $00, $05, $40, $00, $2f, $01, $07, $00 ; 0x7e
-	db $00, $00, $d1, $7b, $00, $0d, $00, $07, $40, $00, $30, $01, $00, $00 ; 0x8c
-	db $00, $00, $d1, $7b, $00, $0d, $00, $09, $40, $00, $30, $01, $05, $00 ; 0x9a
-	db $00, $00, $d1, $7b, $00, $0d, $00, $0b, $40, $00, $2f, $01, $00, $00 ; 0xa8
-	db $00, $00, $d1, $7b, $00, $0d, $00, $0d, $40, $00, $2f, $01, $07, $00 ; 0xb6
-	db $00, $00, $d1, $7b, $00, $0d, $00, $0f, $40, $00, $30, $01, $00, $00 ; 0xc4
-	db $00, $00, $d1, $7b, $00, $0d, $00, $11, $40, $00, $30, $01, $00, $00 ; 0xd2
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0xe0
-	; $4785, 9 bytes (bytes:16)
-	db $01, $40, $00, $09, $00, $0d, $00, $00, $ff ; 0x00
-	; $478e, 457 bytes (records:8)
-; 57 records x 8 bytes
-	dw $ff01, $0000, $7bf9, $0b0f ; record 0
-	dw $ff02, $0000, $7bf9, $0c0f ; record 1
-	dw $ff03, $0000, $7bf9, $0d0f ; record 2
-	dw $ff04, $0000, $7bf9, $0f0b ; record 3
-	dw $ff05, $0000, $7bf9, $0f0c ; record 4
-	dw $ff06, $0000, $7bf9, $0110 ; record 5
-	dw $ff07, $0000, $7bf9, $0107 ; record 6
-	dw $ff08, $0000, $7bf9, $0100 ; record 7
-	dw $21ff, $c2d0, $9611, $01c2 ; record 8
-	dw $0005, $dbcd, $3e03, $eaff ; record 9
-	dw $c295, $94ea, $eac2, $c2a1 ; record 10
-	dw $c0e7, $2103, $0001, $48df ; record 11
-	dw $2105, $0161, $0edf, $3e0a ; record 12
-	dw $df80, $0a08, $013e, $00df ; record 13
-	dw $c90b, $d021, $11c2, $c296 ; record 14
-	dw $0501, $cd00, $03db, $ff3e ; record 15
-	dw $95ea, $eac2, $c294, $a1ea ; record 16
-	dw $e7c2, $03c0, $0221, $df00 ; record 17
-	dw $0548, $6121, $df01, $0a0e ; record 18
-	dw $803e, $08df, $3e0a, $df02 ; record 19
-	dw $0b00, $21c9, $c2d0, $9611 ; record 20
-	dw $01c2, $0005, $dbcd, $3e03 ; record 21
-	dw $eaff, $c295, $94ea, $eac2 ; record 22
-	dw $c2a1, $c0e7, $2103, $0003 ; record 23
-	dw $48df, $2105, $0161, $0edf ; record 24
-	dw $3e0a, $df80, $0a08, $033e ; record 25
-	dw $00df, $c90b, $d021, $11c2 ; record 26
-	dw $c296, $0501, $cd00, $03db ; record 27
-	dw $ff3e, $95ea, $eac2, $c294 ; record 28
-	dw $a1ea, $e7c2, $03c0, $0421 ; record 29
-	dw $df00, $0548, $6121, $df01 ; record 30
-	dw $0a0e, $803e, $08df, $3e0a ; record 31
-	dw $df04, $0b00, $21c9, $c2d0 ; record 32
-	dw $9611, $01c2, $0005, $dbcd ; record 33
-	dw $3e03, $eaff, $c295, $94ea ; record 34
-	dw $eac2, $c2a1, $c0e7, $2103 ; record 35
-	dw $0005, $48df, $2105, $0161 ; record 36
-	dw $0edf, $3e0a, $df80, $0a08 ; record 37
-	dw $053e, $00df, $c90b, $d021 ; record 38
-	dw $11c2, $c296, $0501, $cd00 ; record 39
-	dw $03db, $ff3e, $95ea, $eac2 ; record 40
-	dw $c294, $a1ea, $e7c2, $03c0 ; record 41
-	dw $0621, $df00, $0548, $6121 ; record 42
-	dw $df01, $0a0e, $803e, $08df ; record 43
-	dw $3e0a, $df06, $0b00, $21c9 ; record 44
-	dw $c2d0, $9611, $01c2, $0005 ; record 45
-	dw $dbcd, $3e03, $eaff, $c295 ; record 46
-	dw $94ea, $eac2, $c2a1, $c0e7 ; record 47
-	dw $2103, $0007, $48df, $2105 ; record 48
-	dw $0161, $0edf, $3e0a, $df80 ; record 49
-	dw $0a08, $073e, $00df, $c90b ; record 50
-	dw $d021, $11c2, $c296, $0501 ; record 51
-	dw $cd00, $03db, $ff3e, $95ea ; record 52
-	dw $eac2, $c294, $a1ea, $e7c2 ; record 53
-	dw $03c0, $0821, $df00, $0548 ; record 54
-	dw $6121, $df01, $0a0e, $803e ; record 55
-	dw $08df, $3e0a, $df08, $0b00 ; record 56
+Test2MapScripts_10:
+	; $468d, 14 bytes (map_tree)
+	dw Test2EntryPoints_10 ; slot 0 EntryPoints
+	dw Test2ExitTriggers_10 ; slot 1 ExitTriggers
+	dw Test2Actors_10 ; slot 2 Actors
+	dw Test2NpcScripts_10 ; slot 3 NpcScripts
+	dw Test2FacingScripts_10 ; slot 4 FacingScripts
+	dw Test2TileTriggers_10 ; slot 5 TileTriggers
+	dw Test2InitScript_10 ; slot 6 InitScript
+Test2Actors_10:
+	; $469b, 234 bytes (map_actors)
+	map_actor $0000, $7bd1, $0500, $0f00, $40, $55, $01, $00
+	map_actor $0000, $7bd1, $0500, $0500, $40, $27, $01, $07
+	map_actor $0000, $7bd1, $0500, $0300, $40, $26, $01, $00
+	map_actor $0000, $7bd1, $0500, $0900, $40, $29, $01, $05
+	map_actor $0000, $7bd1, $0500, $0700, $40, $28, $01, $00
+	map_actor $0000, $7bd1, $0500, $0d00, $40, $2a, $01, $07
+	map_actor $0000, $7bd1, $0500, $0b00, $40, $2d, $01, $00
+	map_actor $0000, $7bd1, $0500, $1100, $40, $2b, $01, $00
+	map_actor $0000, $7bd1, $0d00, $0300, $40, $2f, $01, $00
+	map_actor $0000, $7bd1, $0d00, $0500, $40, $2f, $01, $07
+	map_actor $0000, $7bd1, $0d00, $0700, $40, $30, $01, $00
+	map_actor $0000, $7bd1, $0d00, $0900, $40, $30, $01, $05
+	map_actor $0000, $7bd1, $0d00, $0b00, $40, $2f, $01, $00
+	map_actor $0000, $7bd1, $0d00, $0d00, $40, $2f, $01, $07
+	map_actor $0000, $7bd1, $0d00, $0f00, $40, $30, $01, $00
+	map_actor $0000, $7bd1, $0d00, $1100, $40, $30, $01, $00
+	map_actor_end
+Test2EntryPoints_10:
+	; $4785, 9 bytes (map_entries)
+	map_entry $01, $40, $0900, $0d00, $0000
+	db $ff
+Test2ExitTriggers_10:
+	; $478e, 457 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_7bf9, $0f, $0b
+	map_script $02, $ff, $0000, Func_10_7bf9, $0f, $0c
+	map_script $03, $ff, $0000, Func_10_7bf9, $0f, $0d
+	map_script $04, $ff, $0000, Func_10_7bf9, $0b, $0f
+	map_script $05, $ff, $0000, Func_10_7bf9, $0c, $0f
+	map_script $06, $ff, $0000, Func_10_7bf9, $10, $01
+	map_script $07, $ff, $0000, Func_10_7bf9, $07, $01
+	map_script $08, $ff, $0000, Func_10_7bf9, $00, $01
+	db $ff, $21, $d0, $c2, $11, $96, $c2, $01
+	db $05, $00, $cd, $db, $03, $3e, $ff, $ea
+	db $95, $c2, $ea, $94, $c2, $ea, $a1, $c2
+	db $e7, $c0, $03, $21, $01, $00, $df, $48
+	db $05, $21, $61, $01, $df, $0e, $0a, $3e
+	db $80, $df, $08, $0a, $3e, $01, $df, $00
+	db $0b, $c9, $21, $d0, $c2, $11, $96, $c2
+	db $01, $05, $00, $cd, $db, $03, $3e, $ff
+	db $ea, $95, $c2, $ea, $94, $c2, $ea, $a1
+	db $c2, $e7, $c0, $03, $21, $02, $00, $df
+	db $48, $05, $21, $61, $01, $df, $0e, $0a
+	db $3e, $80, $df, $08, $0a, $3e, $02, $df
+	db $00, $0b, $c9, $21, $d0, $c2, $11, $96
+	db $c2, $01, $05, $00, $cd, $db, $03, $3e
+	db $ff, $ea, $95, $c2, $ea, $94, $c2, $ea
+	db $a1, $c2, $e7, $c0, $03, $21, $03, $00
+	db $df, $48, $05, $21, $61, $01, $df, $0e
+	db $0a, $3e, $80, $df, $08, $0a, $3e, $03
+	db $df, $00, $0b, $c9, $21, $d0, $c2, $11
+	db $96, $c2, $01, $05, $00, $cd, $db, $03
+	db $3e, $ff, $ea, $95, $c2, $ea, $94, $c2
+	db $ea, $a1, $c2, $e7, $c0, $03, $21, $04
+	db $00, $df, $48, $05, $21, $61, $01, $df
+	db $0e, $0a, $3e, $80, $df, $08, $0a, $3e
+	db $04, $df, $00, $0b, $c9, $21, $d0, $c2
+	db $11, $96, $c2, $01, $05, $00, $cd, $db
+	db $03, $3e, $ff, $ea, $95, $c2, $ea, $94
+	db $c2, $ea, $a1, $c2, $e7, $c0, $03, $21
+	db $05, $00, $df, $48, $05, $21, $61, $01
+	db $df, $0e, $0a, $3e, $80, $df, $08, $0a
+	db $3e, $05, $df, $00, $0b, $c9, $21, $d0
+	db $c2, $11, $96, $c2, $01, $05, $00, $cd
+	db $db, $03, $3e, $ff, $ea, $95, $c2, $ea
+	db $94, $c2, $ea, $a1, $c2, $e7, $c0, $03
+	db $21, $06, $00, $df, $48, $05, $21, $61
+	db $01, $df, $0e, $0a, $3e, $80, $df, $08
+	db $0a, $3e, $06, $df, $00, $0b, $c9, $21
+	db $d0, $c2, $11, $96, $c2, $01, $05, $00
+	db $cd, $db, $03, $3e, $ff, $ea, $95, $c2
+	db $ea, $94, $c2, $ea, $a1, $c2, $e7, $c0
+	db $03, $21, $07, $00, $df, $48, $05, $21
+	db $61, $01, $df, $0e, $0a, $3e, $80, $df
+	db $08, $0a, $3e, $07, $df, $00, $0b, $c9
+	db $21, $d0, $c2, $11, $96, $c2, $01, $05
+	db $00, $cd, $db, $03, $3e, $ff, $ea, $95
+	db $c2, $ea, $94, $c2, $ea, $a1, $c2, $e7
+	db $c0, $03, $21, $08, $00, $df, $48, $05
+	db $21, $61, $01, $df, $0e, $0a, $3e, $80
+	db $df, $08, $0a, $3e, $08, $df, $00, $0b
 	db $c9
+Func_10_4957:
 	ld hl, wStoryModePlayersXPosition ; $4957
 	ld de, wStoryModeSpawnPosition ; $495a
 	ld bc, $0005 ; $495d
@@ -813,6 +817,7 @@ Data_10_468d:
 	ld a, $09 ; $4982
 	farcall FarPtr_RunTrainingDrillByID ; $4984
 	ret ; $4987
+Func_10_4988:
 	ld hl, wStoryModePlayersXPosition ; $4988
 	ld de, wStoryModeSpawnPosition ; $498b
 	ld bc, $0005 ; $498e
@@ -831,6 +836,7 @@ Data_10_468d:
 	ld a, $0a ; $49b3
 	farcall FarPtr_RunTrainingDrillByID ; $49b5
 	ret ; $49b8
+Func_10_49b9:
 	ld hl, wStoryModePlayersXPosition ; $49b9
 	ld de, wStoryModeSpawnPosition ; $49bc
 	ld bc, $0005 ; $49bf
@@ -849,6 +855,7 @@ Data_10_468d:
 	ld a, $0b ; $49e4
 	farcall FarPtr_RunTrainingDrillByID ; $49e6
 	ret ; $49e9
+Func_10_49ea:
 	ld hl, wStoryModePlayersXPosition ; $49ea
 	ld de, wStoryModeSpawnPosition ; $49ed
 	ld bc, $0005 ; $49f0
@@ -867,6 +874,7 @@ Data_10_468d:
 	ld a, $0c ; $4a15
 	farcall FarPtr_RunTrainingDrillByID ; $4a17
 	ret ; $4a1a
+Func_10_4a1b:
 	ld hl, wStoryModePlayersXPosition ; $4a1b
 	ld de, wStoryModeSpawnPosition ; $4a1e
 	ld bc, $0005 ; $4a21
@@ -885,6 +893,7 @@ Data_10_468d:
 	ld a, $0d ; $4a46
 	farcall FarPtr_RunTrainingDrillByID ; $4a48
 	ret ; $4a4b
+Func_10_4a4c:
 	ld hl, wStoryModePlayersXPosition ; $4a4c
 	ld de, wStoryModeSpawnPosition ; $4a4f
 	ld bc, $0005 ; $4a52
@@ -903,6 +912,7 @@ Data_10_468d:
 	ld a, $0e ; $4a77
 	farcall FarPtr_RunTrainingDrillByID ; $4a79
 	ret ; $4a7c
+Func_10_4a7d:
 	ld hl, wStoryModePlayersXPosition ; $4a7d
 	ld de, wStoryModeSpawnPosition ; $4a80
 	ld bc, $0005 ; $4a83
@@ -921,6 +931,7 @@ Data_10_468d:
 	ld a, $0f ; $4aa8
 	farcall FarPtr_RunTrainingDrillByID ; $4aaa
 	ret ; $4aad
+Func_10_4aae:
 	ld hl, wStoryModePlayersXPosition ; $4aae
 	ld de, wStoryModeSpawnPosition ; $4ab1
 	ld bc, $0005 ; $4ab4
@@ -939,37 +950,52 @@ Data_10_468d:
 	ld a, $10 ; $4ad9
 	farcall FarPtr_RunTrainingDrillByID ; $4adb
 	ret ; $4ade
-	; $4adf, 129 bytes (records:8)
-; 16 records x 8 bytes
-	dw $ff03, $0000, $0c21, $0000 ; record 0
-	dw $ff04, $0000, $0c22, $0000 ; record 1
-	dw $ff05, $0000, $0c23, $0000 ; record 2
-	dw $ff06, $0000, $0c24, $0000 ; record 3
-	dw $ff07, $0000, $0c25, $0000 ; record 4
-	dw $ff08, $0000, $0c26, $0000 ; record 5
-	dw $ff09, $0000, $0c27, $0000 ; record 6
-	dw $ff0a, $0000, $0c28, $0000 ; record 7
-	dw $ff0b, $0000, $4957, $0000 ; record 8
-	dw $ff0c, $0000, $4988, $0000 ; record 9
-	dw $ff0d, $0000, $49b9, $0000 ; record 10
-	dw $ff0e, $0000, $49ea, $0000 ; record 11
-	dw $ff0f, $0000, $4a1b, $0000 ; record 12
-	dw $ff10, $0000, $4a4c, $0000 ; record 13
-	dw $ff11, $0000, $4a7d, $0000 ; record 14
-	dw $ff12, $0000, $4aae, $0000 ; record 15
+Test2NpcScripts_10:
+	; $4adf, 129 bytes (map_scripts)
+	map_script $03, $ff, $0000, $0c21, $00, $00
+	map_script $04, $ff, $0000, $0c22, $00, $00
+	map_script $05, $ff, $0000, $0c23, $00, $00
+	map_script $06, $ff, $0000, $0c24, $00, $00
+	map_script $07, $ff, $0000, $0c25, $00, $00
+	map_script $08, $ff, $0000, $0c26, $00, $00
+	map_script $09, $ff, $0000, $0c27, $00, $00
+	map_script $0a, $ff, $0000, $0c28, $00, $00
+	map_script $0b, $ff, $0000, Func_10_4957, $00, $00
+	map_script $0c, $ff, $0000, Func_10_4988, $00, $00
+	map_script $0d, $ff, $0000, Func_10_49b9, $00, $00
+	map_script $0e, $ff, $0000, Func_10_49ea, $00, $00
+	map_script $0f, $ff, $0000, Func_10_4a1b, $00, $00
+	map_script $10, $ff, $0000, Func_10_4a4c, $00, $00
+	map_script $11, $ff, $0000, Func_10_4a7d, $00, $00
+	map_script $12, $ff, $0000, Func_10_4aae, $00, $00
 	db $ff
-	; $4b60, 32 bytes (records:8)
-; 4 records x 8 bytes
-	dw $ff01, $0000, $4b69, $0000 ; record 0
-	dw $dfff, $0a00, $100e, $2ecd ; record 1
-	dw $211d, $0483, $0edf, $3e0a ; record 2
-	dw $df00, $0a08, $02df, $c90a ; record 3
-	; $4b80, 27 bytes (records:8)
-; 3 records x 8 bytes
-	dw $ff01, $0000, $4b89, $0000 ; record 0
-	dw $dfff, $0a00, $8021, $df04 ; record 1
-	dw $0a0e, $003e, $08df, $df0a ; record 2
-	db $02, $0a, $c9
+Test2FacingScripts_10:
+	; $4b60, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_4b69, $00, $00
+	db $ff
+Func_10_4b69:
+	farcall FarPtr_BeginCutsceneScriptMode ; $4b69
+	ld c, $10 ; $4b6c
+	call BeginFadeIn ; $4b6e
+	ld hl, $0483 ; $4b71
+	farcall FarPtr_InitDialogueTextCursor ; $4b74
+	ld a, $00 ; $4b77
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4b79
+	farcall FarPtr_EndCutsceneScriptMode ; $4b7c
+	ret ; $4b7f
+Test2TileTriggers_10:
+	; $4b80, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_4b89, $00, $00
+	db $ff
+Func_10_4b89:
+	farcall FarPtr_BeginCutsceneScriptMode ; $4b89
+	ld hl, $0480 ; $4b8c
+	farcall FarPtr_InitDialogueTextCursor ; $4b8f
+	ld a, $00 ; $4b92
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4b94
+	farcall FarPtr_EndCutsceneScriptMode ; $4b97
+	ret ; $4b9a
+Test2InitScript_10:
 	ld a, [wStoryModeEntryPoint] ; $4b9b
 	cp a, $0f ; $4b9e
 	ret z ; $4ba0
@@ -996,24 +1022,29 @@ Data_10_468d:
 	farcall FarPtr_RunMinigameMatch ; $4bd4
 	ret ; $4bd7
 	INCBIN "data/bank_010/d_4bd8.bin" ; $4bd8, 243 bytes
-Data_10_4ccb:
-	; $4ccb, 14 bytes (records:2)
-	dw $4ced ; record 0
-	dw $4cf6 ; record 1
-	dw $4cd9 ; record 2
-	dw $4daf ; record 3
-	dw $4e30 ; record 4
-	dw $4e50 ; record 5
-	dw $4e6b ; record 6
-	; $4cd9, 20 bytes (bytes:14)
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff, $00, $00, $00, $00 ; 0x00
-	db $00, $00, $00, $00, $00, $ff ; 0x0e
-	; $4ced, 9 bytes (bytes:16)
-	db $01, $40, $00, $09, $00, $09, $00, $00, $ff ; 0x00
-	; $4cf6, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $7bf9, $0101 ; record 0
+DevelopmentMapScripts_10:
+	; $4ccb, 14 bytes (map_tree)
+	dw DevelopmentEntryPoints_10 ; slot 0 EntryPoints
+	dw DevelopmentExitTriggers_10 ; slot 1 ExitTriggers
+	dw DevelopmentActors_10 ; slot 2 Actors
+	dw DevelopmentNpcScripts_10 ; slot 3 NpcScripts
+	dw DevelopmentFacingScripts_10 ; slot 4 FacingScripts
+	dw DevelopmentTileTriggers_10 ; slot 5 TileTriggers
+	dw DevelopmentInitScript_10 ; slot 6 InitScript
+DevelopmentActors_10:
+	; $4cd9, 20 bytes (map_actors)
+	map_actor_end
+	db $00, $00, $00, $00, $00, $00, $00, $00
+	db $00, $ff
+DevelopmentEntryPoints_10:
+	; $4ced, 9 bytes (map_entries)
+	map_entry $01, $40, $0900, $0900, $0000
 	db $ff
+DevelopmentExitTriggers_10:
+	; $4cf6, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_7bf9, $01, $01
+	db $ff
+Func_10_4cff:
 	ld c, $10 ; $4cff
 	call BeginFadeOut ; $4d01
 	call WaitFadeEnd ; $4d04
@@ -1057,11 +1088,12 @@ Data_10_4ccb:
 	ld [$c294], a ; $4d69
 	ld [wStoryModeExitLocationRequest], a ; $4d6c
 	ret ; $4d6f
+Func_10_4d70:
 	ld c, $10 ; $4d70
 	call BeginFadeOut ; $4d72
 	call WaitFadeEnd ; $4d75
 	ldh a, [hRomBank] ; $4d78
-	ld hl, $4cd9 ; $4d7a
+	ld hl, DevelopmentActors_10 ; $4d7a
 	farcall FarPtr_ScriptRespawnLocationActors ; $4d7d
 	ld c, $10 ; $4d80
 	call BeginFadeIn ; $4d82
@@ -1080,37 +1112,52 @@ Data_10_4ccb:
 	ld [$c294], a ; $4da8
 	ld [wStoryModeExitLocationRequest], a ; $4dab
 	ret ; $4dae
-	; $4daf, 129 bytes (records:8)
-; 16 records x 8 bytes
-	dw $ff03, $0000, $4cff, $0000 ; record 0
-	dw $ff04, $0000, $4cff, $0000 ; record 1
-	dw $ff05, $0000, $4cff, $0000 ; record 2
-	dw $ff06, $0000, $4cff, $0000 ; record 3
-	dw $ff07, $0000, $4cff, $0000 ; record 4
-	dw $ff08, $0000, $4cff, $0000 ; record 5
-	dw $ff09, $0000, $4cff, $0000 ; record 6
-	dw $ff0a, $0000, $4cff, $0000 ; record 7
-	dw $ff0b, $0000, $4d70, $0000 ; record 8
-	dw $ff0c, $0000, $4d70, $0000 ; record 9
-	dw $ff0d, $0000, $4d70, $0003 ; record 10
-	dw $ff0e, $0000, $4d70, $0000 ; record 11
-	dw $ff0f, $0000, $4d70, $0000 ; record 12
-	dw $ff10, $0000, $4d70, $0000 ; record 13
-	dw $ff11, $0000, $4d70, $0000 ; record 14
-	dw $ff12, $0000, $4d70, $0000 ; record 15
+DevelopmentNpcScripts_10:
+	; $4daf, 129 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $04, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $05, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $06, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $07, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $08, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $09, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $0a, $ff, $0000, Func_10_4cff, $00, $00
+	map_script $0b, $ff, $0000, Func_10_4d70, $00, $00
+	map_script $0c, $ff, $0000, Func_10_4d70, $00, $00
+	map_script $0d, $ff, $0000, Func_10_4d70, $03, $00
+	map_script $0e, $ff, $0000, Func_10_4d70, $00, $00
+	map_script $0f, $ff, $0000, Func_10_4d70, $00, $00
+	map_script $10, $ff, $0000, Func_10_4d70, $00, $00
+	map_script $11, $ff, $0000, Func_10_4d70, $00, $00
+	map_script $12, $ff, $0000, Func_10_4d70, $00, $00
 	db $ff
-	; $4e30, 32 bytes (records:8)
-; 4 records x 8 bytes
-	dw $ff01, $0000, $4e39, $0000 ; record 0
-	dw $dfff, $0a00, $100e, $2ecd ; record 1
-	dw $211d, $0483, $0edf, $3e0a ; record 2
-	dw $df00, $0a08, $02df, $c90a ; record 3
-	; $4e50, 27 bytes (records:8)
-; 3 records x 8 bytes
-	dw $ff01, $0000, $4e59, $0000 ; record 0
-	dw $dfff, $0a00, $8021, $df04 ; record 1
-	dw $0a0e, $003e, $08df, $df0a ; record 2
-	db $02, $0a, $c9
+DevelopmentFacingScripts_10:
+	; $4e30, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_4e39, $00, $00
+	db $ff
+Func_10_4e39:
+	farcall FarPtr_BeginCutsceneScriptMode ; $4e39
+	ld c, $10 ; $4e3c
+	call BeginFadeIn ; $4e3e
+	ld hl, $0483 ; $4e41
+	farcall FarPtr_InitDialogueTextCursor ; $4e44
+	ld a, $00 ; $4e47
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4e49
+	farcall FarPtr_EndCutsceneScriptMode ; $4e4c
+	ret ; $4e4f
+DevelopmentTileTriggers_10:
+	; $4e50, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_10_4e59, $00, $00
+	db $ff
+Func_10_4e59:
+	farcall FarPtr_BeginCutsceneScriptMode ; $4e59
+	ld hl, $0480 ; $4e5c
+	farcall FarPtr_InitDialogueTextCursor ; $4e5f
+	ld a, $00 ; $4e62
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4e64
+	farcall FarPtr_EndCutsceneScriptMode ; $4e67
+	ret ; $4e6a
+DevelopmentInitScript_10:
 	ret ; $4e6b
 MatchSelectHandlersA_10:
 	; $4e6c, 14 bytes (records:2)

@@ -3185,10 +3185,10 @@ Label_0a_5643:
 StoryLocationTable_0a:
 	; $564f, 252 bytes (story_locations)
 	story_location $00, $10, DataPtr_MatchSelectHandlersA_10, $ff ; loc 0 Main Menu
-	story_location $01, $10, DataPtr_10_04, $ff ; loc 1 Development
+	story_location $01, $10, DataPtr_DevelopmentMapScripts_10, $ff ; loc 1 Development
 	story_location $02, $10, DataPtr_SmallCharTestMapScripts_0f, $ff ; loc 2 Small Char. Test
 	story_location $03, $10, DataPtr_10_00, $ff ; loc 3 Test
-	story_location $04, $10, DataPtr_10_02, $0b ; loc 4 Test 2
+	story_location $04, $10, DataPtr_Test2MapScripts_10, $0b ; loc 4 Test 2
 	story_location $05, $11, DataPtr_AcademyMainBldgMapScripts_10, $1a ; loc 5 Academy Main Bldg.
 	story_location $06, $11, DataPtr_AcademyWingMapScripts_10, $1a ; loc 6 Academy Wing
 	story_location $07, $14, DataPtr_StoryCmdHandlersD_13, $1b ; loc 7 Courtyard

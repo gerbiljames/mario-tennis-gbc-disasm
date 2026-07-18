@@ -87,7 +87,11 @@ like $0e/$0f/$14 (three handlers seeded: `Func_10_5cb0` + the `Func_11_4199`/
 `_41a3` no-op rets). The Academy Main Bldg. / Academy Wing trees (bank $10,
 locs 5/6) are carved too — three more handlers seeded (`Func_10_623b`/`_6372`/
 `_63e0`) and the Wing's Tile table `$6361` fixed from a `bytes:16`
-mis-classification to `map_scripts`. Bank $27
+mis-classification to `map_scripts`. The Test 2 / Development dev maps (bank
+$10, locs 4/1) are carved as well (four `farcall`-headed handlers seeded); the
+Main Menu (loc 0) and Test (loc 3) entries reuse the match-select structures
+(`$4e6c` = `MatchSelectHandlersA_10`, `$4010` = the match-select main tree) and
+are left resolving to those. Bank $27
 (locations 30-41) is the self-contained ending-presentation bank: its `$4000`
 is already curated as `SceneFramePtrs_27` (12 scene-frame records, a different
 structure the story engine also reads as trees), so those records stay raw
