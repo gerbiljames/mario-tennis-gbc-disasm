@@ -1398,6 +1398,7 @@
 "0x3f911": "IslandOpenBreakCutscene",
 "0x3fa8e": "QueueShortText",
 "0x3fb20": "SetPlayerAndPartnerObjectDefs",
+"0x40010": "MatchSelectMapScripts_10",
 "0x40020": "MatchSelectEntries_10",
 "0x4009e": "MatchSelectRecordsTail_10",
 "0x400b0": "Func_10_40b0",

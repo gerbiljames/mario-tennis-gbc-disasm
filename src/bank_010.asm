@@ -1,7 +1,7 @@
 SECTION "ROM Bank $10", ROMX[$4000], BANK[$10]
 
-DataPtr_10_00:
-	dw Data_10_4010 ; $4000
+DataPtr_MatchSelectMapScripts_10:
+	dw MatchSelectMapScripts_10 ; $4000
 DataPtr_Test2MapScripts_10:
 	dw Test2MapScripts_10 ; $4002
 DataPtr_DevelopmentMapScripts_10:
@@ -16,7 +16,7 @@ DataPtr_AcademyWingMapScripts_10:
 	dw AcademyWingMapScripts_10 ; $400c
 DataPtr_AcademyMainBldgMapScripts_10:
 	dw AcademyMainBldgMapScripts_10 ; $400e
-Data_10_4010:
+MatchSelectMapScripts_10:
 	; $4010, 16 bytes (records:2)
 	dw $40a6 ; record 0
 	dw $40af ; record 1
