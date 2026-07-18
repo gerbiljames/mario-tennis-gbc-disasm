@@ -711,15 +711,11 @@ Label_11_4b1d:
 	script_set_anim $11, $02 ; $4c56
 	script_move_player $1800, $0b00 ; $4c5d
 	farcall FarPtr_WaitPlayerMoveDone ; $4c67
-	ld a, $11 ; $4c6a
-	ld b, $00 ; $4c6c
-	farcall FarPtr_SetActorActive ; $4c6e
+	script_set_active $11, $00 ; $4c6a
 	script_set_position $11, $1900, $0600 ; $4c71
 	script_speak $11 ; $4c7c
 	script_set_position $11, $1900, $2400 ; $4c81
-	ld a, $11 ; $4c8c
-	ld b, $02 ; $4c8e
-	farcall FarPtr_SetActorActive ; $4c90
+	script_set_active $11, $02 ; $4c8c
 	script_move_player $1800, $2400 ; $4c93
 	farcall FarPtr_WaitPlayerMoveDone ; $4c9d
 	script_face_toward $00, $11 ; $4ca0

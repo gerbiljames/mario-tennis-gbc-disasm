@@ -259,6 +259,13 @@ MACRO script_facing_lock
 	ld b, \2
 	farcall FarPtr_ScriptSetActorFacingLock
 ENDM
+; Writes `state` to the actor's activity byte (state struct +$20).
+; Usage: script_set_active actor, state
+MACRO script_set_active
+	ld a, \1
+	ld b, \2
+	farcall FarPtr_SetActorActive
+ENDM
 ; Walks the player to `actor` (b is a position offset, always $00 here).
 ; Usage: script_move_player_to_actor actor
 MACRO script_move_player_to_actor

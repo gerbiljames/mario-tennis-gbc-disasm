@@ -253,9 +253,7 @@ StoryActorsWalkOffAndFadeOut_13:
 	ld c, $08 ; $4451
 	call BeginFadeOut ; $4453
 	script_wait_move $00 ; $4456
-	ld a, $00 ; $445b
-	ld b, $00 ; $445d
-	farcall FarPtr_SetActorActive ; $445f
+	script_set_active $00, $00 ; $445b
 	script_wait_frames $0a ; $4462
 	ret ; $4469
 Label_13_446a:
@@ -272,9 +270,7 @@ Label_13_446a:
 	script_set_anim $02, $08 ; $44b5
 	script_move_angle $02, $ca, $0200 ; $44bc
 	script_wait_move $00 ; $44c6
-	ld a, $00 ; $44cb
-	ld b, $00 ; $44cd
-	farcall FarPtr_SetActorActive ; $44cf
+	script_set_active $00, $00 ; $44cb
 	ld c, $10 ; $44d2
 	call BeginFadeOut ; $44d4
 	script_wait_frames $0a ; $44d7
@@ -1828,12 +1824,8 @@ ShowStoryNarration_13:
 	sound $00 ; $5a28
 	script_set_position $03, $3f00, $3f00 ; $5a2a
 	script_set_position $04, $3f00, $3f00 ; $5a35
-	ld a, $00 ; $5a40
-	ld b, $00 ; $5a42
-	farcall FarPtr_SetActorActive ; $5a44
-	ld a, $02 ; $5a47
-	ld b, $00 ; $5a49
-	farcall FarPtr_SetActorActive ; $5a4b
+	script_set_active $00, $00 ; $5a40
+	script_set_active $02, $00 ; $5a47
 	ld b, $00 ; $5a4e
 	ld c, $20 ; $5a50
 	ld d, $00 ; $5a52

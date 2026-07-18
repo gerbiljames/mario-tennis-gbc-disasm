@@ -897,9 +897,7 @@ WaterSpriteRacketRewardScene:
 	sound $98 ; $4ddf
 	script_wait_frames $3c ; $4de1
 	script_set_position $14, $3300, $0700 ; $4de8
-	ld a, $14 ; $4df3
-	ld b, $00 ; $4df5
-	farcall FarPtr_SetActorActive ; $4df7
+	script_set_active $14, $00 ; $4df3
 	script_player_speed $0010 ; $4dfa
 	script_move_player_to_actor $14 ; $4e00
 	ld hl, $5950 ; $4e07
@@ -913,13 +911,9 @@ WaterSpriteRacketRewardScene:
 	ld a, $10 ; $4e22
 Label_15_4e24:
 	ld d, a ; $4e24
-	ld a, $14 ; $4e25
-	ld b, $02 ; $4e27
-	farcall FarPtr_SetActorActive ; $4e29
+	script_set_active $14, $02 ; $4e25
 	script_wait_frames $04 ; $4e2c
-	ld a, $14 ; $4e33
-	ld b, $00 ; $4e35
-	farcall FarPtr_SetActorActive ; $4e37
+	script_set_active $14, $00 ; $4e33
 	push af ; $4e3a
 	ld a, d ; $4e3b
 	farcall FarPtr_WaitScriptFrames ; $4e3c
@@ -927,9 +921,7 @@ Label_15_4e24:
 	ld a, d ; $4e40
 	sub a, $02 ; $4e41
 	jp nz, Label_15_4e24 ; $4e43
-	ld a, $14 ; $4e46
-	ld b, $02 ; $4e48
-	farcall FarPtr_SetActorActive ; $4e4a
+	script_set_active $14, $02 ; $4e46
 	script_wait_frames $3c ; $4e4d
 	script_set_position $16, $3f00, $3f00 ; $4e54
 	script_face $00, $c0 ; $4e5f
@@ -1011,13 +1003,9 @@ Label_15_4ef5:
 	sound $90 ; $4f9b
 	ld d, $10 ; $4f9d
 Label_15_4f9f:
-	ld a, $14 ; $4f9f
-	ld b, $00 ; $4fa1
-	farcall FarPtr_SetActorActive ; $4fa3
+	script_set_active $14, $00 ; $4f9f
 	script_wait_frames $04 ; $4fa6
-	ld a, $14 ; $4fad
-	ld b, $02 ; $4faf
-	farcall FarPtr_SetActorActive ; $4fb1
+	script_set_active $14, $02 ; $4fad
 	push af ; $4fb4
 	ld a, d ; $4fb5
 	farcall FarPtr_WaitScriptFrames ; $4fb6
@@ -1026,9 +1014,7 @@ Label_15_4f9f:
 	sub a, $02 ; $4fbb
 	ld d, a ; $4fbd
 	jp nz, Label_15_4f9f ; $4fbe
-	ld a, $14 ; $4fc1
-	ld b, $00 ; $4fc3
-	farcall FarPtr_SetActorActive ; $4fc5
+	script_set_active $14, $00 ; $4fc1
 	script_wait_frames $1e ; $4fc8
 	script_set_position $14, $3300, $0b00 ; $4fcf
 	script_speak $14 ; $4fda

@@ -1801,6 +1801,8 @@ SCRIPT_COMMANDS = (
          ('F', "FarPtr_FaceActorTowardActor"))),
     ("script_facing_lock",
         ((0x3E, 2, 'b'), (0x06, 2, 'b'), ('F', "FarPtr_ScriptSetActorFacingLock"))),
+    ("script_set_active",
+        ((0x3E, 2, 'b'), (0x06, 2, 'b'), ('F', "FarPtr_SetActorActive"))),
     # Set an actor's object definition: fetch its state pointer into bc, then
     # LoadActorObjectDefIfValid(bc, d = objdef). Args: objdef (d), then actor (a).
     ("script_set_objdef",
@@ -2186,6 +2188,13 @@ MACRO script_facing_lock
 	ld a, \\1
 	ld b, \\2
 	farcall FarPtr_ScriptSetActorFacingLock
+ENDM
+; Writes `state` to the actor's activity byte (state struct +$20).
+; Usage: script_set_active actor, state
+MACRO script_set_active
+	ld a, \\1
+	ld b, \\2
+	farcall FarPtr_SetActorActive
 ENDM
 ; Walks the player to `actor` (b is a position offset, always $00 here).
 ; Usage: script_move_player_to_actor actor

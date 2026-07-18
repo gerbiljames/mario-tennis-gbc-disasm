@@ -1569,9 +1569,7 @@ Label_14_5352:
 	ld b, h ; $535f
 	farcall FarPtr_LoadActorObjectDefIfValid ; $5360
 	script_set_anim $00, $01 ; $5363
-	ld a, $00 ; $536a
-	ld b, $00 ; $536c
-	farcall FarPtr_SetActorActive ; $536e
+	script_set_active $00, $00 ; $536a
 	ld a, [wStoryModeEntryPoint] ; $5371
 	cp a, $0c ; $5374
 	jr nz, Label_14_539c ; $5376
@@ -1778,9 +1776,7 @@ Label_14_54df:
 	farcall FarPtr_ScriptSetActorScript ; $5597
 	script_wait_frames $50 ; $559a
 	script_set_position $00, $0600, $2900 ; $55a1
-	ld a, $00 ; $55ac
-	ld b, $02 ; $55ae
-	farcall FarPtr_SetActorActive ; $55b0
+	script_set_active $00, $02 ; $55ac
 	script_face $00, $40 ; $55b3
 	script_wait_frames $1e ; $55ba
 	script_move_target $00, $0b00, $2900 ; $55c1
@@ -1802,9 +1798,7 @@ Label_14_54df:
 Label_14_5603:
 	script_move_target $00, $0b00, $2700 ; $5603
 	script_wait_move $00 ; $560e
-	ld a, $00 ; $5613
-	ld b, $00 ; $5615
-	farcall FarPtr_SetActorActive ; $5617
+	script_set_active $00, $00 ; $5613
 	ld c, $04 ; $561a
 	call BeginFadeOut ; $561c
 	call WaitFadeEnd ; $561f
@@ -2121,12 +2115,8 @@ Label_14_628b:
 	ld a, $01 ; $62a6
 	ld hl, $625b ; $62a8
 	call RegisterFrameTask ; $62ab
-	ld a, $00 ; $62ae
-	ld b, $00 ; $62b0
-	farcall FarPtr_SetActorActive ; $62b2
-	ld a, $03 ; $62b5
-	ld b, $00 ; $62b7
-	farcall FarPtr_SetActorActive ; $62b9
+	script_set_active $00, $00 ; $62ae
+	script_set_active $03, $00 ; $62b5
 	test_flag $05, 7 ; $62bc
 	jp z, Label_14_62d2 ; $62bf
 	ld a, $02 ; $62c2

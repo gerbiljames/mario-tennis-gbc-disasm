@@ -949,9 +949,7 @@ Label_27_52ae:
 	ld a, $3c ; $5342
 	call Func_27_7856 ; $5344
 	script_set_position $03, $3300, $0700 ; $5347
-	ld a, $03 ; $5352
-	ld b, $00 ; $5354
-	farcall FarPtr_SetActorActive ; $5356
+	script_set_active $03, $00 ; $5352
 	script_player_speed $0010 ; $5359
 	script_move_player_to_actor $03 ; $535f
 	ld hl, $5580 ; $5366
@@ -965,13 +963,9 @@ Label_27_52ae:
 	ld a, $10 ; $537d
 Label_27_537f:
 	ld d, a ; $537f
-	ld a, $03 ; $5380
-	ld b, $02 ; $5382
-	farcall FarPtr_SetActorActive ; $5384
+	script_set_active $03, $02 ; $5380
 	script_wait_frames $04 ; $5387
-	ld a, $03 ; $538e
-	ld b, $00 ; $5390
-	farcall FarPtr_SetActorActive ; $5392
+	script_set_active $03, $00 ; $538e
 	push af ; $5395
 	ld a, d ; $5396
 	farcall FarPtr_WaitScriptFrames ; $5397
@@ -979,9 +973,7 @@ Label_27_537f:
 	ld a, d ; $539b
 	sub a, $02 ; $539c
 	jp nz, Label_27_537f ; $539e
-	ld a, $03 ; $53a1
-	ld b, $02 ; $53a3
-	farcall FarPtr_SetActorActive ; $53a5
+	script_set_active $03, $02 ; $53a1
 	ld a, $3c ; $53a8
 	call Func_27_7856 ; $53aa
 	script_set_position $04, $3f00, $3f00 ; $53ad
@@ -2151,9 +2143,7 @@ Label_27_6caf:
 	script_wait_idle $00 ; $6e2a
 	script_wait_frames $14 ; $6e2f
 	script_face $00, $c0 ; $6e36
-	ld a, $03 ; $6e3d
-	ld b, $02 ; $6e3f
-	farcall FarPtr_SetActorActive ; $6e41
+	script_set_active $03, $02 ; $6e3d
 	script_set_position $03, $1500, $0b00 ; $6e44
 	ld a, [$c94d] ; $6e4f
 	or a, a ; $6e52

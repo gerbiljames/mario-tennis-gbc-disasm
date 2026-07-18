@@ -75,9 +75,7 @@ DormEntranceTileTriggers_12:
 	map_script $01, $ff, $0000, Func_12_411f, $00, $00
 	db $ff
 Func_12_411f:
-	ld a, $00 ; $411f
-	ld b, $00 ; $4121
-	farcall FarPtr_SetActorActive ; $4123
+	script_set_active $00, $00 ; $411f
 	script_move_target $00, $1600, $0900 ; $4126
 	script_wait_move $00 ; $4131
 	script_player_speed $0010 ; $4136
@@ -172,9 +170,7 @@ Func_12_4179:
 	script_set_anim $00, $04 ; $4341
 	script_wait_idle $00 ; $4348
 	script_wait_frames $14 ; $434d
-	ld a, $03 ; $4354
-	ld b, $00 ; $4356
-	farcall FarPtr_SetActorActive ; $4358
+	script_set_active $03, $00 ; $4354
 	script_set_position $03, $1700, $1900 ; $435b
 	script_speak $03 ; $4366
 	script_move_target $00, $1680, $1200 ; $436b
@@ -184,9 +180,7 @@ Func_12_4179:
 	ld a, $00 ; $437e
 	farcall FarPtr_ScriptWaitActorJumpDone ; $4380
 	script_face $00, $c0 ; $4383
-	ld a, $03 ; $438a
-	ld b, $02 ; $438c
-	farcall FarPtr_SetActorActive ; $438e
+	script_set_active $03, $02 ; $438a
 	script_set_position $03, $1500, $0b00 ; $4391
 	ld a, [$c94d] ; $439c
 	or a, a ; $439f
