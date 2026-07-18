@@ -91,7 +91,11 @@ mis-classification to `map_scripts`. The Test 2 / Development dev maps (bank
 $10, locs 4/1) are carved as well (four `farcall`-headed handlers seeded); the
 Main Menu (loc 0) and Test (loc 3) entries reuse the match-select structures
 (`$4e6c` = `MatchSelectHandlersA_10`, `$4010` = the match-select main tree) and
-are left resolving to those. Bank $27
+are left resolving to those. The Test 2 exit table `$478e` had been over-sized
+to 457 bytes; it is really 8 records, and the ~392 trailing bytes were 16
+back-to-back exit/warp script routines (`$47cf`-`$4ade`, tiling exactly to the
+Npc table) seeded as code. Its exit handler `$7bf9` is another `MapScriptNop`
+(now `MapScriptNop_10` + `MapScriptClearActiveFlag_10`). Bank $27
 (locations 30-41) is the self-contained ending-presentation bank: its `$4000`
 is already curated as `SceneFramePtrs_27` (12 scene-frame records, a different
 structure the story engine also reads as trees), so those records stay raw

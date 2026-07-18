@@ -1464,6 +1464,8 @@
 "0x43715": "AcademyMainBldgFacingScripts_10",
 "0x43716": "AcademyMainBldgTileTriggers_10",
 "0x43717": "AcademyMainBldgInitScript_10",
+"0x43bf9": "MapScriptNop_10",
+"0x43bfa": "MapScriptClearActiveFlag_10",
 "0x44008": "CenterCourtMapScripts_11",
 "0x44016": "CenterCourtActors_11",
 "0x44058": "CenterCourtEntryPoints_11",

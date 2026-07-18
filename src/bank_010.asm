@@ -739,65 +739,160 @@ Test2EntryPoints_10:
 	map_entry $01, $40, $0900, $0d00, $0000
 	db $ff
 Test2ExitTriggers_10:
-	; $478e, 457 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_7bf9, $0f, $0b
-	map_script $02, $ff, $0000, Func_10_7bf9, $0f, $0c
-	map_script $03, $ff, $0000, Func_10_7bf9, $0f, $0d
-	map_script $04, $ff, $0000, Func_10_7bf9, $0b, $0f
-	map_script $05, $ff, $0000, Func_10_7bf9, $0c, $0f
-	map_script $06, $ff, $0000, Func_10_7bf9, $10, $01
-	map_script $07, $ff, $0000, Func_10_7bf9, $07, $01
-	map_script $08, $ff, $0000, Func_10_7bf9, $00, $01
-	db $ff, $21, $d0, $c2, $11, $96, $c2, $01
-	db $05, $00, $cd, $db, $03, $3e, $ff, $ea
-	db $95, $c2, $ea, $94, $c2, $ea, $a1, $c2
-	db $e7, $c0, $03, $21, $01, $00, $df, $48
-	db $05, $21, $61, $01, $df, $0e, $0a, $3e
-	db $80, $df, $08, $0a, $3e, $01, $df, $00
-	db $0b, $c9, $21, $d0, $c2, $11, $96, $c2
-	db $01, $05, $00, $cd, $db, $03, $3e, $ff
-	db $ea, $95, $c2, $ea, $94, $c2, $ea, $a1
-	db $c2, $e7, $c0, $03, $21, $02, $00, $df
-	db $48, $05, $21, $61, $01, $df, $0e, $0a
-	db $3e, $80, $df, $08, $0a, $3e, $02, $df
-	db $00, $0b, $c9, $21, $d0, $c2, $11, $96
-	db $c2, $01, $05, $00, $cd, $db, $03, $3e
-	db $ff, $ea, $95, $c2, $ea, $94, $c2, $ea
-	db $a1, $c2, $e7, $c0, $03, $21, $03, $00
-	db $df, $48, $05, $21, $61, $01, $df, $0e
-	db $0a, $3e, $80, $df, $08, $0a, $3e, $03
-	db $df, $00, $0b, $c9, $21, $d0, $c2, $11
-	db $96, $c2, $01, $05, $00, $cd, $db, $03
-	db $3e, $ff, $ea, $95, $c2, $ea, $94, $c2
-	db $ea, $a1, $c2, $e7, $c0, $03, $21, $04
-	db $00, $df, $48, $05, $21, $61, $01, $df
-	db $0e, $0a, $3e, $80, $df, $08, $0a, $3e
-	db $04, $df, $00, $0b, $c9, $21, $d0, $c2
-	db $11, $96, $c2, $01, $05, $00, $cd, $db
-	db $03, $3e, $ff, $ea, $95, $c2, $ea, $94
-	db $c2, $ea, $a1, $c2, $e7, $c0, $03, $21
-	db $05, $00, $df, $48, $05, $21, $61, $01
-	db $df, $0e, $0a, $3e, $80, $df, $08, $0a
-	db $3e, $05, $df, $00, $0b, $c9, $21, $d0
-	db $c2, $11, $96, $c2, $01, $05, $00, $cd
-	db $db, $03, $3e, $ff, $ea, $95, $c2, $ea
-	db $94, $c2, $ea, $a1, $c2, $e7, $c0, $03
-	db $21, $06, $00, $df, $48, $05, $21, $61
-	db $01, $df, $0e, $0a, $3e, $80, $df, $08
-	db $0a, $3e, $06, $df, $00, $0b, $c9, $21
-	db $d0, $c2, $11, $96, $c2, $01, $05, $00
-	db $cd, $db, $03, $3e, $ff, $ea, $95, $c2
-	db $ea, $94, $c2, $ea, $a1, $c2, $e7, $c0
-	db $03, $21, $07, $00, $df, $48, $05, $21
-	db $61, $01, $df, $0e, $0a, $3e, $80, $df
-	db $08, $0a, $3e, $07, $df, $00, $0b, $c9
-	db $21, $d0, $c2, $11, $96, $c2, $01, $05
-	db $00, $cd, $db, $03, $3e, $ff, $ea, $95
-	db $c2, $ea, $94, $c2, $ea, $a1, $c2, $e7
-	db $c0, $03, $21, $08, $00, $df, $48, $05
-	db $21, $61, $01, $df, $0e, $0a, $3e, $80
-	db $df, $08, $0a, $3e, $08, $df, $00, $0b
-	db $c9
+	; $478e, 65 bytes (map_scripts)
+	map_script $01, $ff, $0000, MapScriptNop_10, $0f, $0b
+	map_script $02, $ff, $0000, MapScriptNop_10, $0f, $0c
+	map_script $03, $ff, $0000, MapScriptNop_10, $0f, $0d
+	map_script $04, $ff, $0000, MapScriptNop_10, $0b, $0f
+	map_script $05, $ff, $0000, MapScriptNop_10, $0c, $0f
+	map_script $06, $ff, $0000, MapScriptNop_10, $10, $01
+	map_script $07, $ff, $0000, MapScriptNop_10, $07, $01
+	map_script $08, $ff, $0000, MapScriptNop_10, $00, $01
+	db $ff
+	ld hl, wStoryModePlayersXPosition ; $47cf
+	ld de, wStoryModeSpawnPosition ; $47d2
+	ld bc, $0005 ; $47d5
+	call CopyMemoryBC ; $47d8
+	ld a, $ff ; $47db
+	ld [wStoryModeEntryPoint], a ; $47dd
+	ld [$c294], a ; $47e0
+	ld [wStoryModeExitLocationRequest], a ; $47e3
+	set_flag $03, 6 ; $47e6
+	ld hl, $0001 ; $47e9
+	farcall FarPtr_PushTextArgNumber ; $47ec
+	ld hl, $0161 ; $47ef
+	farcall FarPtr_InitDialogueTextCursor ; $47f2
+	ld a, $80 ; $47f5
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $47f7
+	ld a, $01 ; $47fa
+	farcall FarPtr_RunTrainingDrillByID ; $47fc
+	ret ; $47ff
+	ld hl, wStoryModePlayersXPosition ; $4800
+	ld de, wStoryModeSpawnPosition ; $4803
+	ld bc, $0005 ; $4806
+	call CopyMemoryBC ; $4809
+	ld a, $ff ; $480c
+	ld [wStoryModeEntryPoint], a ; $480e
+	ld [$c294], a ; $4811
+	ld [wStoryModeExitLocationRequest], a ; $4814
+	set_flag $03, 6 ; $4817
+	ld hl, $0002 ; $481a
+	farcall FarPtr_PushTextArgNumber ; $481d
+	ld hl, $0161 ; $4820
+	farcall FarPtr_InitDialogueTextCursor ; $4823
+	ld a, $80 ; $4826
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4828
+	ld a, $02 ; $482b
+	farcall FarPtr_RunTrainingDrillByID ; $482d
+	ret ; $4830
+	ld hl, wStoryModePlayersXPosition ; $4831
+	ld de, wStoryModeSpawnPosition ; $4834
+	ld bc, $0005 ; $4837
+	call CopyMemoryBC ; $483a
+	ld a, $ff ; $483d
+	ld [wStoryModeEntryPoint], a ; $483f
+	ld [$c294], a ; $4842
+	ld [wStoryModeExitLocationRequest], a ; $4845
+	set_flag $03, 6 ; $4848
+	ld hl, $0003 ; $484b
+	farcall FarPtr_PushTextArgNumber ; $484e
+	ld hl, $0161 ; $4851
+	farcall FarPtr_InitDialogueTextCursor ; $4854
+	ld a, $80 ; $4857
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $4859
+	ld a, $03 ; $485c
+	farcall FarPtr_RunTrainingDrillByID ; $485e
+	ret ; $4861
+	ld hl, wStoryModePlayersXPosition ; $4862
+	ld de, wStoryModeSpawnPosition ; $4865
+	ld bc, $0005 ; $4868
+	call CopyMemoryBC ; $486b
+	ld a, $ff ; $486e
+	ld [wStoryModeEntryPoint], a ; $4870
+	ld [$c294], a ; $4873
+	ld [wStoryModeExitLocationRequest], a ; $4876
+	set_flag $03, 6 ; $4879
+	ld hl, $0004 ; $487c
+	farcall FarPtr_PushTextArgNumber ; $487f
+	ld hl, $0161 ; $4882
+	farcall FarPtr_InitDialogueTextCursor ; $4885
+	ld a, $80 ; $4888
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $488a
+	ld a, $04 ; $488d
+	farcall FarPtr_RunTrainingDrillByID ; $488f
+	ret ; $4892
+	ld hl, wStoryModePlayersXPosition ; $4893
+	ld de, wStoryModeSpawnPosition ; $4896
+	ld bc, $0005 ; $4899
+	call CopyMemoryBC ; $489c
+	ld a, $ff ; $489f
+	ld [wStoryModeEntryPoint], a ; $48a1
+	ld [$c294], a ; $48a4
+	ld [wStoryModeExitLocationRequest], a ; $48a7
+	set_flag $03, 6 ; $48aa
+	ld hl, $0005 ; $48ad
+	farcall FarPtr_PushTextArgNumber ; $48b0
+	ld hl, $0161 ; $48b3
+	farcall FarPtr_InitDialogueTextCursor ; $48b6
+	ld a, $80 ; $48b9
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $48bb
+	ld a, $05 ; $48be
+	farcall FarPtr_RunTrainingDrillByID ; $48c0
+	ret ; $48c3
+	ld hl, wStoryModePlayersXPosition ; $48c4
+	ld de, wStoryModeSpawnPosition ; $48c7
+	ld bc, $0005 ; $48ca
+	call CopyMemoryBC ; $48cd
+	ld a, $ff ; $48d0
+	ld [wStoryModeEntryPoint], a ; $48d2
+	ld [$c294], a ; $48d5
+	ld [wStoryModeExitLocationRequest], a ; $48d8
+	set_flag $03, 6 ; $48db
+	ld hl, $0006 ; $48de
+	farcall FarPtr_PushTextArgNumber ; $48e1
+	ld hl, $0161 ; $48e4
+	farcall FarPtr_InitDialogueTextCursor ; $48e7
+	ld a, $80 ; $48ea
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $48ec
+	ld a, $06 ; $48ef
+	farcall FarPtr_RunTrainingDrillByID ; $48f1
+	ret ; $48f4
+	ld hl, wStoryModePlayersXPosition ; $48f5
+	ld de, wStoryModeSpawnPosition ; $48f8
+	ld bc, $0005 ; $48fb
+	call CopyMemoryBC ; $48fe
+	ld a, $ff ; $4901
+	ld [wStoryModeEntryPoint], a ; $4903
+	ld [$c294], a ; $4906
+	ld [wStoryModeExitLocationRequest], a ; $4909
+	set_flag $03, 6 ; $490c
+	ld hl, $0007 ; $490f
+	farcall FarPtr_PushTextArgNumber ; $4912
+	ld hl, $0161 ; $4915
+	farcall FarPtr_InitDialogueTextCursor ; $4918
+	ld a, $80 ; $491b
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $491d
+	ld a, $07 ; $4920
+	farcall FarPtr_RunTrainingDrillByID ; $4922
+	ret ; $4925
+	ld hl, wStoryModePlayersXPosition ; $4926
+	ld de, wStoryModeSpawnPosition ; $4929
+	ld bc, $0005 ; $492c
+	call CopyMemoryBC ; $492f
+	ld a, $ff ; $4932
+	ld [wStoryModeEntryPoint], a ; $4934
+	ld [$c294], a ; $4937
+	ld [wStoryModeExitLocationRequest], a ; $493a
+	set_flag $03, 6 ; $493d
+	ld hl, $0008 ; $4940
+	farcall FarPtr_PushTextArgNumber ; $4943
+	ld hl, $0161 ; $4946
+	farcall FarPtr_InitDialogueTextCursor ; $4949
+	ld a, $80 ; $494c
+	farcall FarPtr_ScriptShowSpeakerDialogue ; $494e
+	ld a, $08 ; $4951
+	farcall FarPtr_RunTrainingDrillByID ; $4953
+	ret ; $4956
 Func_10_4957:
 	ld hl, wStoryModePlayersXPosition ; $4957
 	ld de, wStoryModeSpawnPosition ; $495a
@@ -1042,7 +1137,7 @@ DevelopmentEntryPoints_10:
 	db $ff
 DevelopmentExitTriggers_10:
 	; $4cf6, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_7bf9, $01, $01
+	map_script $01, $ff, $0000, MapScriptNop_10, $01, $01
 	db $ff
 Func_10_4cff:
 	ld c, $10 ; $4cff
@@ -3447,15 +3542,15 @@ AcademyWingActors_10:
 AcademyWingEntryPoints_10:
 	; $6201, 17 bytes (map_entries)
 	map_entry $01, $40, $3b00, $3900, Func_10_7b5f
-	map_entry $0f, $c0, $2000, $3400, Func_10_7bf9
+	map_entry $0f, $c0, $2000, $3400, MapScriptNop_10
 	db $ff
 AcademyWingExitTriggers_10:
 	; $6212, 41 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_7bf9, $14, $01
-	map_script $02, $ff, $0000, Func_10_7bf9, $07, $03
+	map_script $01, $ff, $0000, MapScriptNop_10, $14, $01
+	map_script $02, $ff, $0000, MapScriptNop_10, $07, $03
 	map_script $03, $ff, $0000, Func_10_7ae6, $05, $04
 	map_script $04, $ff, $0000, Func_10_7b1f, $05, $03
-	map_script $0f, $ff, $0000, Func_10_7bf9, $07, $0f
+	map_script $0f, $ff, $0000, MapScriptNop_10, $07, $0f
 	db $ff
 Func_10_623b:
 	ld a, $00 ; $623b
@@ -5509,11 +5604,11 @@ AcademyMainBldgEntryPoints_10:
 	db $02, $df, $2a, $0a, $c9
 AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_7bf9, $14, $01
-	map_script $02, $ff, $0000, Func_10_7bf9, $07, $03
+	map_script $01, $ff, $0000, MapScriptNop_10, $14, $01
+	map_script $02, $ff, $0000, MapScriptNop_10, $07, $03
 	map_script $03, $ff, $0000, Func_10_7ae6, $06, $01
 	map_script $04, $ff, $0000, Func_10_7b1f, $05, $03
-	map_script $0f, $ff, $0000, Func_10_7bf9, $07, $0f
+	map_script $0f, $ff, $0000, MapScriptNop_10, $07, $0f
 	db $ff
 Func_10_75e7:
 	ld a, [$c2b0] ; $75e7
@@ -6218,8 +6313,9 @@ Func_10_7bb6:
 Label_10_7bd0:
 	ret ; $7bd0
 	INCBIN "data/bank_010/d_7bd1.bin" ; $7bd1, 40 bytes
-Func_10_7bf9:
+MapScriptNop_10:
 	ret ; $7bf9
+MapScriptClearActiveFlag_10:
 	xor a, a ; $7bfa
 	ld [$c2da], a ; $7bfb
 	ret ; $7bfe
