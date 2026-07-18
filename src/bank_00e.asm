@@ -170,9 +170,7 @@ TrainingGymExitTriggers_0e:
 	db $ff
 Func_0e_4290:
 	script_face $00, $c0 ; $4290
-	ld a, $00 ; $4297
-	ld b, $01 ; $4299
-	farcall FarPtr_ScriptSetActorFacingLock ; $429b
+	script_facing_lock $00, $01 ; $4297
 	script_set_speed $00, $0018 ; $429e
 	script_move_target $00, $0b00, $0d00 ; $42a6
 	script_wait_move $00 ; $42b1
@@ -205,16 +203,12 @@ Func_0e_4290:
 	script_move_angle $00, $c0, $0100 ; $42fd
 	ld c, $08 ; $4307
 	call BeginFadeOut ; $4309
-	ld a, $00 ; $430c
-	ld b, $00 ; $430e
-	farcall FarPtr_ScriptSetActorFacingLock ; $4310
+	script_facing_lock $00, $00 ; $430c
 	script_wait_frames $0a ; $4313
 	ret ; $431a
 Func_0e_431b:
 	script_face $00, $c0 ; $431b
-	ld a, $00 ; $4322
-	ld b, $01 ; $4324
-	farcall FarPtr_ScriptSetActorFacingLock ; $4326
+	script_facing_lock $00, $01 ; $4322
 	script_set_speed $00, $0018 ; $4329
 	script_move_target $00, $1500, $0d00 ; $4331
 	script_wait_move $00 ; $433c
@@ -247,9 +241,7 @@ Func_0e_431b:
 	script_move_angle $00, $c0, $0100 ; $4388
 	ld c, $08 ; $4392
 	call BeginFadeOut ; $4394
-	ld a, $00 ; $4397
-	ld b, $00 ; $4399
-	farcall FarPtr_ScriptSetActorFacingLock ; $439b
+	script_facing_lock $00, $00 ; $4397
 	script_wait_frames $0a ; $439e
 	ret ; $43a5
 Func_0e_43a6:
@@ -2295,14 +2287,10 @@ Func_0e_63f4:
 	script_set_speed $02, $0018 ; $63fc
 	test_flag $05, 7 ; $6404
 	jr nz, Label_0e_643f ; $6407
-	ld a, $00 ; $6409
-	ld b, $01 ; $640b
-	farcall FarPtr_ScriptSetActorFacingLock ; $640d
+	script_facing_lock $00, $01 ; $6409
 	script_move_target $00, $1200, $0d00 ; $6410
 	script_wait_move $00 ; $641b
-	ld a, $00 ; $6420
-	ld b, $00 ; $6422
-	farcall FarPtr_ScriptSetActorFacingLock ; $6424
+	script_facing_lock $00, $00 ; $6420
 	script_face $00, $c0 ; $6427
 	script_face $00, $c0 ; $642e
 	script_face $08, $40 ; $6435
@@ -2956,15 +2944,11 @@ Func_0e_6db7:
 	script_move_target $0e, $1300, $0f00 ; $6eee
 	script_wait_move $0e ; $6ef9
 	script_wait_frames $0a ; $6efe
-	ld a, $0b ; $6f05
-	ld b, $01 ; $6f07
-	farcall FarPtr_ScriptSetActorFacingLock ; $6f09
+	script_facing_lock $0b, $01 ; $6f05
 	script_move_target $0b, $1800, $0d00 ; $6f0c
 	script_wait_move $0b ; $6f17
 	script_face $0b, $80 ; $6f1c
-	ld a, $0b ; $6f23
-	ld b, $00 ; $6f25
-	farcall FarPtr_ScriptSetActorFacingLock ; $6f27
+	script_facing_lock $0b, $00 ; $6f23
 	ret ; $6f2a
 Func_0e_6f2b:
 	script_face $10, $c0 ; $6f2b

@@ -225,6 +225,13 @@ MACRO script_face_pair
 	ld a, \2
 	farcall FarPtr_FaceActorsTowardEachOther
 ENDM
+; Sets an actor's facing and locks it (won't auto-turn while walking).
+; Usage: script_facing_lock actor, facing
+MACRO script_facing_lock
+	ld a, \1
+	ld b, \2
+	farcall FarPtr_ScriptSetActorFacingLock
+ENDM
 ; Usage: script_speak actor
 MACRO script_speak
 	ld a, \1

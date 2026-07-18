@@ -836,9 +836,7 @@ Label_15_4b6e:
 	script_set_speed $00, $0020 ; $4c66
 	script_face $00, $40 ; $4c6e
 	script_wait_frames $01 ; $4c75
-	ld a, $00 ; $4c7c
-	ld b, $01 ; $4c7e
-	farcall FarPtr_ScriptSetActorFacingLock ; $4c80
+	script_facing_lock $00, $01 ; $4c7c
 	script_set_anim $00, $02 ; $4c83
 	script_move_target $00, $3300, $0d00 ; $4c8a
 	script_move_target $13, $3300, $0f00 ; $4c95
@@ -851,9 +849,7 @@ Label_15_4b6e:
 	ld bc, $3f00 ; $4cc7
 	ld de, $3f00 ; $4cca
 	farcall FarPtr_ScriptSetActorPosition ; $4ccd
-	ld a, $00 ; $4cd0
-	ld b, $00 ; $4cd2
-	farcall FarPtr_ScriptSetActorFacingLock ; $4cd4
+	script_facing_lock $00, $00 ; $4cd0
 	script_face $00, $40 ; $4cd7
 	ld a, $00 ; $4cde
 	farcall FarPtr_GetActorStateAddr ; $4ce0
@@ -1164,14 +1160,10 @@ Label_15_510e:
 	ret ; $5111
 Func_15_5112:
 	script_set_speed $00, $0008 ; $5112
-	ld a, $00 ; $511a
-	ld b, $01 ; $511c
-	farcall FarPtr_ScriptSetActorFacingLock ; $511e
+	script_facing_lock $00, $01 ; $511a
 	script_move_target $00, $1300, $1300 ; $5121
 	script_wait_move $00 ; $512c
-	ld a, $00 ; $5131
-	ld b, $00 ; $5133
-	farcall FarPtr_ScriptSetActorFacingLock ; $5135
+	script_facing_lock $00, $00 ; $5131
 	script_face $00, $40 ; $5138
 Func_15_513f:
 	test_flag $18, 3 ; $513f
@@ -1231,14 +1223,10 @@ Label_15_51ba:
 	ret ; $51bd
 Func_15_51be:
 	script_set_speed $00, $0008 ; $51be
-	ld a, $00 ; $51c6
-	ld b, $01 ; $51c8
-	farcall FarPtr_ScriptSetActorFacingLock ; $51ca
+	script_facing_lock $00, $01 ; $51c6
 	script_move_target $00, $2d00, $2b00 ; $51cd
 	script_wait_move $00 ; $51d8
-	ld a, $00 ; $51dd
-	ld b, $00 ; $51df
-	farcall FarPtr_ScriptSetActorFacingLock ; $51e1
+	script_facing_lock $00, $00 ; $51dd
 	script_face $00, $c0 ; $51e4
 Func_15_51eb:
 	test_flag $19, 1 ; $51eb
@@ -1298,14 +1286,10 @@ Label_15_5266:
 	ret ; $5269
 Func_15_526a:
 	script_set_speed $00, $0008 ; $526a
-	ld a, $00 ; $5272
-	ld b, $01 ; $5274
-	farcall FarPtr_ScriptSetActorFacingLock ; $5276
+	script_facing_lock $00, $01 ; $5272
 	script_move_target $00, $1300, $2b00 ; $5279
 	script_wait_move $00 ; $5284
-	ld a, $00 ; $5289
-	ld b, $00 ; $528b
-	farcall FarPtr_ScriptSetActorFacingLock ; $528d
+	script_facing_lock $00, $00 ; $5289
 	script_face $00, $c0 ; $5290
 Func_15_5297:
 	test_flag $19, 7 ; $5297
@@ -1978,17 +1962,13 @@ TrainingCourtIntroTourScene:
 	script_face $00, $80 ; $5b86
 	script_move_target $0d, $1e00, $2b00 ; $5b8d
 	script_wait_move $0d ; $5b98
-	ld a, $00 ; $5b9d
-	ld b, $01 ; $5b9f
-	farcall FarPtr_ScriptSetActorFacingLock ; $5ba1
+	script_facing_lock $00, $01 ; $5b9d
 	script_move_target $00, $2000, $2d00 ; $5ba4
 	script_move_target $0d, $1e00, $2f00 ; $5baf
 	script_wait_move $0d ; $5bba
 	script_move_target $00, $1f00, $2d00 ; $5bbf
 	script_wait_move $00 ; $5bca
-	ld a, $00 ; $5bcf
-	ld b, $00 ; $5bd1
-	farcall FarPtr_ScriptSetActorFacingLock ; $5bd3
+	script_facing_lock $00, $00 ; $5bcf
 	script_move_target $0d, $1f00, $2f00 ; $5bd6
 	script_wait_move $0d ; $5be1
 	script_move_target $00, $1f00, $3700 ; $5be6

@@ -1592,9 +1592,7 @@ Label_12_562a:
 	script_set_speed $02, $0010 ; $56a7
 	script_set_speed $00, $0008 ; $56af
 	script_face $00, $c0 ; $56b7
-	ld a, $00 ; $56be
-	ld b, $01 ; $56c0
-	farcall FarPtr_ScriptSetActorFacingLock ; $56c2
+	script_facing_lock $00, $01 ; $56be
 	ld a, $02 ; $56c5
 	farcall FarPtr_SetActorNullScript ; $56c7
 	script_move_target $00, $2900, $1b00 ; $56ca
@@ -1641,9 +1639,7 @@ Label_12_5747:
 	farcall FarPtr_FaceActorTowardActor ; $576f
 	script_set_anim $03, $03 ; $5772
 	script_wait_idle $03 ; $5779
-	ld a, $00 ; $577e
-	ld b, $00 ; $5780
-	farcall FarPtr_ScriptSetActorFacingLock ; $5782
+	script_facing_lock $00, $00 ; $577e
 	script_face $00, $c0 ; $5785
 	script_set_text $1007 ; $578c
 	set_flag $0e, 4 ; $5792
@@ -2400,9 +2396,7 @@ Func_12_5ef1:
 Func_12_5f03:
 	script_set_speed $00, $0008 ; $5f03
 	script_face $00, $c0 ; $5f0b
-	ld a, $00 ; $5f12
-	ld b, $01 ; $5f14
-	farcall FarPtr_ScriptSetActorFacingLock ; $5f16
+	script_facing_lock $00, $01 ; $5f12
 	test_flag $05, 7 ; $5f19
 	jr z, SeniorSinglesRankOfferScene ; $5f1c
 	call SeniorDoublesRankOfferScene ; $5f1e
@@ -2411,9 +2405,7 @@ SeniorSinglesRankOfferScene:
 	script_move_target $00, $2d00, $1b00 ; $5f22
 	script_wait_move $00 ; $5f2d
 	script_wait_frames $0a ; $5f32
-	ld a, $00 ; $5f39
-	ld b, $00 ; $5f3b
-	farcall FarPtr_ScriptSetActorFacingLock ; $5f3d
+	script_facing_lock $00, $00 ; $5f39
 	ld a, $03 ; $5f40
 	ld b, a ; $5f42
 	ld a, $00 ; $5f43
@@ -2466,9 +2458,7 @@ SeniorDoublesRankOfferScene:
 	script_move_target $00, $2d00, $1b00 ; $5fde
 	script_wait_frames $0a ; $5fe9
 	script_wait_move $00 ; $5ff0
-	ld a, $00 ; $5ff5
-	ld b, $00 ; $5ff7
-	farcall FarPtr_ScriptSetActorFacingLock ; $5ff9
+	script_facing_lock $00, $00 ; $5ff5
 	ld a, $03 ; $5ffc
 	ld b, a ; $5ffe
 	ld a, $00 ; $5fff

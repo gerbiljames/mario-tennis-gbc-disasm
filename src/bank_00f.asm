@@ -535,14 +535,10 @@ Func_0f_4725:
 	script_wait_move $0f ; $48f4
 	ld a, $05 ; $48f9
 	call DelayFrames ; $48fb
-	ld a, $0c ; $48fe
-	ld b, $01 ; $4900
-	farcall FarPtr_ScriptSetActorFacingLock ; $4902
+	script_facing_lock $0c, $01 ; $48fe
 	script_move_target $0c, $0e00, $1100 ; $4905
 	script_wait_move $0c ; $4910
-	ld a, $0c ; $4915
-	ld b, $00 ; $4917
-	farcall FarPtr_ScriptSetActorFacingLock ; $4919
+	script_facing_lock $0c, $00 ; $4915
 	script_face $0c, $c0 ; $491c
 	ld a, $14 ; $4923
 	call DelayFrames ; $4925
@@ -664,14 +660,10 @@ Func_0f_4725:
 	script_move_target $10, $0c00, $1300 ; $4ac7
 	script_move_target $0e, $0b00, $1300 ; $4ad2
 	script_wait_move $0e ; $4add
-	ld a, $10 ; $4ae2
-	ld b, $01 ; $4ae4
-	farcall FarPtr_ScriptSetActorFacingLock ; $4ae6
+	script_facing_lock $10, $01 ; $4ae2
 	script_move_target $10, $0e00, $1300 ; $4ae9
 	script_wait_move $10 ; $4af4
-	ld a, $10 ; $4af9
-	ld b, $00 ; $4afb
-	farcall FarPtr_ScriptSetActorFacingLock ; $4afd
+	script_facing_lock $10, $00 ; $4af9
 	script_set_speed $10, $0020 ; $4b00
 	script_move_target $10, $1000, $1600 ; $4b08
 	script_wait_move $10 ; $4b13
@@ -709,14 +701,10 @@ Func_0f_4725:
 	call DelayFrames ; $4ba6
 	script_set_anim $12, $02 ; $4ba9
 	script_wait_idle $12 ; $4bb0
-	ld a, $0c ; $4bb5
-	ld b, $01 ; $4bb7
-	farcall FarPtr_ScriptSetActorFacingLock ; $4bb9
+	script_facing_lock $0c, $01 ; $4bb5
 	script_move_target $0c, $0a00, $1100 ; $4bbc
 	script_wait_move $0c ; $4bc7
-	ld a, $0c ; $4bcc
-	ld b, $00 ; $4bce
-	farcall FarPtr_ScriptSetActorFacingLock ; $4bd0
+	script_facing_lock $0c, $00 ; $4bcc
 	script_face $0c, $c0 ; $4bd3
 	ld a, $14 ; $4bda
 	call DelayFrames ; $4bdc
@@ -825,14 +813,10 @@ Func_0f_4725:
 	script_move_target $10, $0e00, $1300 ; $4d5d
 	script_move_target $0d, $0d00, $1300 ; $4d68
 	script_wait_move $0d ; $4d73
-	ld a, $10 ; $4d78
-	ld b, $01 ; $4d7a
-	farcall FarPtr_ScriptSetActorFacingLock ; $4d7c
+	script_facing_lock $10, $01 ; $4d78
 	script_move_target $10, $0f00, $1300 ; $4d7f
 	script_wait_move $10 ; $4d8a
-	ld a, $10 ; $4d8f
-	ld b, $00 ; $4d91
-	farcall FarPtr_ScriptSetActorFacingLock ; $4d93
+	script_facing_lock $10, $00 ; $4d8f
 	script_set_speed $10, $0020 ; $4d96
 	script_move_target $10, $0f00, $1600 ; $4d9e
 	script_wait_move $10 ; $4da9
@@ -846,14 +830,10 @@ Func_0f_4725:
 	script_move_target $0c, $0c00, $0f80 ; $4dda
 	script_move_target $0d, $0c00, $0e40 ; $4de5
 	script_wait_move $0d ; $4df0
-	ld a, $0c ; $4df5
-	ld b, $01 ; $4df7
-	farcall FarPtr_ScriptSetActorFacingLock ; $4df9
+	script_facing_lock $0c, $01 ; $4df5
 	script_move_target $0c, $0c00, $1100 ; $4dfc
 	script_wait_move $0c ; $4e07
-	ld a, $0c ; $4e0c
-	ld b, $00 ; $4e0e
-	farcall FarPtr_ScriptSetActorFacingLock ; $4e10
+	script_facing_lock $0c, $00 ; $4e0c
 	script_face $0c, $c0 ; $4e13
 	script_set_anim $0b, $02 ; $4e1a
 	script_wait_idle $0b ; $4e21
@@ -1094,14 +1074,10 @@ Label_0f_4ea7:
 	script_move_target $10, $0c00, $1300 ; $5141
 	script_move_target $0f, $0b00, $1300 ; $514c
 	script_wait_move $0f ; $5157
-	ld a, $10 ; $515c
-	ld b, $01 ; $515e
-	farcall FarPtr_ScriptSetActorFacingLock ; $5160
+	script_facing_lock $10, $01 ; $515c
 	script_move_target $10, $0f00, $1300 ; $5163
 	script_wait_move $10 ; $516e
-	ld a, $10 ; $5173
-	ld b, $00 ; $5175
-	farcall FarPtr_ScriptSetActorFacingLock ; $5177
+	script_facing_lock $10, $00 ; $5173
 	script_move_target $10, $1100, $1600 ; $517a
 	script_wait_move $10 ; $5185
 	script_face $10, $c0 ; $518a
@@ -1122,14 +1098,10 @@ Label_0f_4ea7:
 	call DelayFrames ; $51e6
 	script_set_anim $13, $02 ; $51e9
 	script_wait_idle $13 ; $51f0
-	ld a, $0c ; $51f5
-	ld b, $01 ; $51f7
-	farcall FarPtr_ScriptSetActorFacingLock ; $51f9
+	script_facing_lock $0c, $01 ; $51f5
 	script_move_target $0c, $0a00, $1100 ; $51fc
 	script_wait_move $0c ; $5207
-	ld a, $0c ; $520c
-	ld b, $00 ; $520e
-	farcall FarPtr_ScriptSetActorFacingLock ; $5210
+	script_facing_lock $0c, $00 ; $520c
 	script_face $0c, $c0 ; $5213
 	ld a, $32 ; $521a
 	call DelayFrames ; $521c
@@ -1228,14 +1200,10 @@ Label_0f_4ea7:
 	ld de, $1400 ; $53a0
 	farcall FarPtr_ScriptSetActorPosition ; $53a3
 	script_face $10, $c0 ; $53a6
-	ld a, $10 ; $53ad
-	ld b, $01 ; $53af
-	farcall FarPtr_ScriptSetActorFacingLock ; $53b1
+	script_facing_lock $10, $01 ; $53ad
 	script_move_target $10, $0f00, $1600 ; $53b4
 	script_wait_move $10 ; $53bf
-	ld a, $10 ; $53c4
-	ld b, $00 ; $53c6
-	farcall FarPtr_ScriptSetActorFacingLock ; $53c8
+	script_facing_lock $10, $00 ; $53c4
 	script_face $10, $c0 ; $53cb
 	ld a, $0d ; $53d2
 	ld bc, $0ec0 ; $53d4
@@ -1279,14 +1247,10 @@ Label_0f_4ea7:
 	script_wait_move $0d ; $549f
 	ld a, $05 ; $54a4
 	call DelayFrames ; $54a6
-	ld a, $0c ; $54a9
-	ld b, $01 ; $54ab
-	farcall FarPtr_ScriptSetActorFacingLock ; $54ad
+	script_facing_lock $0c, $01 ; $54a9
 	script_move_target $0c, $0d00, $1100 ; $54b0
 	script_wait_move $0c ; $54bb
-	ld a, $0c ; $54c0
-	ld b, $00 ; $54c2
-	farcall FarPtr_ScriptSetActorFacingLock ; $54c4
+	script_facing_lock $0c, $00 ; $54c0
 	script_face $0c, $c0 ; $54c7
 	script_set_anim $0b, $02 ; $54ce
 	script_wait_idle $0b ; $54d5
@@ -1856,14 +1820,10 @@ Func_0f_5ccf:
 	script_face $0b, $c0 ; $5ce5
 	ld a, $1e ; $5cec
 	call DelayFrames ; $5cee
-	ld a, $0b ; $5cf1
-	ld b, $01 ; $5cf3
-	farcall FarPtr_ScriptSetActorFacingLock ; $5cf5
+	script_facing_lock $0b, $01 ; $5cf1
 	script_move_target $0b, $0700, $1b00 ; $5cf8
 	script_wait_move $0b ; $5d03
-	ld a, $0b ; $5d08
-	ld b, $00 ; $5d0a
-	farcall FarPtr_ScriptSetActorFacingLock ; $5d0c
+	script_facing_lock $0b, $00 ; $5d08
 	script_face $0b, $00 ; $5d0f
 	script_move_target $0c, $0800, $1900 ; $5d16
 	script_wait_move $0c ; $5d21
@@ -1985,14 +1945,10 @@ Func_0f_5e4a:
 	script_move_target $10, $1000, $1300 ; $5ef9
 	script_move_target $0f, $0f00, $1300 ; $5f04
 	script_wait_move $0f ; $5f0f
-	ld a, $10 ; $5f14
-	ld b, $01 ; $5f16
-	farcall FarPtr_ScriptSetActorFacingLock ; $5f18
+	script_facing_lock $10, $01 ; $5f14
 	script_move_target $10, $1100, $1300 ; $5f1b
 	script_wait_move $10 ; $5f26
-	ld a, $10 ; $5f2b
-	ld b, $00 ; $5f2d
-	farcall FarPtr_ScriptSetActorFacingLock ; $5f2f
+	script_facing_lock $10, $00 ; $5f2b
 	script_set_speed $10, $0020 ; $5f32
 	script_move_target $10, $1100, $1600 ; $5f3a
 	script_wait_move $10 ; $5f45

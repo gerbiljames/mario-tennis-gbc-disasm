@@ -2649,9 +2649,7 @@ Func_10_5d05:
 	script_speak $12 ; $5d5b
 	script_face $12, $40 ; $5d60
 	script_wait_frames $14 ; $5d67
-	ld a, $12 ; $5d6e
-	ld b, $01 ; $5d70
-	farcall FarPtr_ScriptSetActorFacingLock ; $5d72
+	script_facing_lock $12, $01 ; $5d6e
 	script_move_angle $12, $c0, $0100 ; $5d75
 	call Func_10_613e ; $5d7f
 	ld a, $00 ; $5d82
@@ -2676,9 +2674,7 @@ Func_10_5d05:
 Label_10_5d9f:
 	farcall FarPtr_InitDialogueTextCursor ; $5d9f
 	script_speak $12 ; $5da2
-	ld a, $12 ; $5da7
-	ld b, $00 ; $5da9
-	farcall FarPtr_ScriptSetActorFacingLock ; $5dab
+	script_facing_lock $12, $00 ; $5da7
 	script_face $12, $40 ; $5dae
 	ret ; $5db5
 Label_10_5db6:
@@ -3464,17 +3460,13 @@ Label_10_6512:
 	ld a, $07 ; $6601
 	farcall FarPtr_FaceActorTowardActor ; $6603
 	script_wait_frames $01 ; $6606
-	ld a, $07 ; $660d
-	ld b, $01 ; $660f
-	farcall FarPtr_ScriptSetActorFacingLock ; $6611
+	script_facing_lock $07, $01 ; $660d
 	script_move_target $07, $2100, $3300 ; $6614
 	script_wait_move $07 ; $661f
 	script_set_anim $08, $02 ; $6624
 	script_move_target $07, $2200, $3300 ; $662b
 	script_wait_move $07 ; $6636
-	ld a, $07 ; $663b
-	ld b, $00 ; $663d
-	farcall FarPtr_ScriptSetActorFacingLock ; $663f
+	script_facing_lock $07, $00 ; $663b
 	script_face_pair $08, $07 ; $6642
 	script_speak $07 ; $664a
 	ld a, $08 ; $664f
@@ -3482,17 +3474,13 @@ Label_10_6512:
 	ld a, $09 ; $6652
 	farcall FarPtr_FaceActorTowardActor ; $6654
 	script_wait_frames $01 ; $6657
-	ld a, $09 ; $665e
-	ld b, $01 ; $6660
-	farcall FarPtr_ScriptSetActorFacingLock ; $6662
+	script_facing_lock $09, $01 ; $665e
 	script_move_target $09, $1f00, $3300 ; $6665
 	script_wait_move $09 ; $6670
 	script_set_anim $08, $02 ; $6675
 	script_move_target $09, $1e00, $3300 ; $667c
 	script_wait_move $09 ; $6687
-	ld a, $09 ; $668c
-	ld b, $00 ; $668e
-	farcall FarPtr_ScriptSetActorFacingLock ; $6690
+	script_facing_lock $09, $00 ; $668c
 	script_face_pair $08, $09 ; $6693
 	script_speak $09 ; $669b
 	jr Label_10_66c6 ; $66a0
@@ -3514,16 +3502,12 @@ Label_10_66c6:
 	ld a, $07 ; $66c9
 	farcall FarPtr_FaceActorTowardActor ; $66cb
 	script_wait_frames $01 ; $66ce
-	ld a, $07 ; $66d5
-	ld b, $01 ; $66d7
-	farcall FarPtr_ScriptSetActorFacingLock ; $66d9
+	script_facing_lock $07, $01 ; $66d5
 	script_move_target $07, $2100, $3300 ; $66dc
 	script_wait_move $07 ; $66e7
 	script_move_target $07, $2200, $3300 ; $66ec
 	script_wait_move $07 ; $66f7
-	ld a, $07 ; $66fc
-	ld b, $00 ; $66fe
-	farcall FarPtr_ScriptSetActorFacingLock ; $6700
+	script_facing_lock $07, $00 ; $66fc
 	script_face_pair $08, $07 ; $6703
 	script_set_anim $08, $02 ; $670b
 	script_wait_idle $08 ; $6712
@@ -3532,16 +3516,12 @@ Label_10_66c6:
 	ld a, $09 ; $671a
 	farcall FarPtr_FaceActorTowardActor ; $671c
 	script_wait_frames $01 ; $671f
-	ld a, $09 ; $6726
-	ld b, $01 ; $6728
-	farcall FarPtr_ScriptSetActorFacingLock ; $672a
+	script_facing_lock $09, $01 ; $6726
 	script_move_target $09, $1f00, $3300 ; $672d
 	script_wait_move $09 ; $6738
 	script_move_target $09, $1e00, $3300 ; $673d
 	script_wait_move $09 ; $6748
-	ld a, $09 ; $674d
-	ld b, $00 ; $674f
-	farcall FarPtr_ScriptSetActorFacingLock ; $6751
+	script_facing_lock $09, $00 ; $674d
 	script_face_pair $08, $09 ; $6754
 	script_set_anim $08, $02 ; $675c
 	script_wait_idle $08 ; $6763

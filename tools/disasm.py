@@ -1786,6 +1786,8 @@ SCRIPT_COMMANDS = (
         ((0x3E, 2, 'b'), (0x06, 2, 'b'))),
     ("script_face_pair", "FarPtr_FaceActorsTowardEachOther",
         ((0x3E, 2, 'b'), (0x47, 1, 'x'), (0x3E, 2, 'b'))),
+    ("script_facing_lock", "FarPtr_ScriptSetActorFacingLock",
+        ((0x3E, 2, 'b'), (0x06, 2, 'b'))),
     ("script_move_player", "FarPtr_MovePlayerToPosition",
         ((0xAF, 1, 'x'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
     ("script_player_speed", "FarPtr_SetPlayerMoveSpeed",
@@ -2124,6 +2126,13 @@ MACRO script_face_pair
 	ld b, a
 	ld a, \\2
 	farcall FarPtr_FaceActorsTowardEachOther
+ENDM
+; Sets an actor's facing and locks it (won't auto-turn while walking).
+; Usage: script_facing_lock actor, facing
+MACRO script_facing_lock
+	ld a, \\1
+	ld b, \\2
+	farcall FarPtr_ScriptSetActorFacingLock
 ENDM
 ; Usage: script_speak actor
 MACRO script_speak

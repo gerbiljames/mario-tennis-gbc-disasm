@@ -2844,14 +2844,10 @@ SetupStoryMinigameMatch0:
 	ret ; $6b18
 	INCBIN "data/bank_013/d_6b19.bin" ; $6b19, 250 bytes
 	script_set_speed $00, $0008 ; $6c13
-	ld a, $00 ; $6c1b
-	ld b, $01 ; $6c1d
-	farcall FarPtr_ScriptSetActorFacingLock ; $6c1f
+	script_facing_lock $00, $01 ; $6c1b
 	script_move_target $00, $0d00, $1f00 ; $6c22
 	script_wait_move $00 ; $6c2d
-	ld a, $00 ; $6c32
-	ld b, $00 ; $6c34
-	farcall FarPtr_ScriptSetActorFacingLock ; $6c36
+	script_facing_lock $00, $00 ; $6c32
 	script_face $00, $c0 ; $6c39
 	script_set_text $0220 ; $6c40
 	ld a, $03 ; $6c46
@@ -2990,14 +2986,10 @@ Label_13_6e17:
 	call Func_13_70c9 ; $6e1c
 	ret ; $6e1f
 	script_set_speed $00, $0008 ; $6e20
-	ld a, $00 ; $6e28
-	ld b, $01 ; $6e2a
-	farcall FarPtr_ScriptSetActorFacingLock ; $6e2c
+	script_facing_lock $00, $01 ; $6e28
 	script_move_target $00, $0d00, $1f00 ; $6e2f
 	script_wait_move $00 ; $6e3a
-	ld a, $00 ; $6e3f
-	ld b, $00 ; $6e41
-	farcall FarPtr_ScriptSetActorFacingLock ; $6e43
+	script_facing_lock $00, $00 ; $6e3f
 	script_face $00, $c0 ; $6e46
 	ld a, $02 ; $6e4d
 	farcall FarPtr_SetActorNullScript ; $6e4f
@@ -3614,9 +3606,7 @@ DoublesTravelingTeamVictoryCutscene:
 	ld a, $00 ; $758b
 	farcall FarPtr_FaceActorTowardActor ; $758d
 	script_wait_frames $0a ; $7590
-	ld a, $00 ; $7597
-	ld b, $01 ; $7599
-	farcall FarPtr_ScriptSetActorFacingLock ; $759b
+	script_facing_lock $00, $01 ; $7597
 	script_wait_frames $0a ; $759e
 	script_move_angle $00, $00, $0100 ; $75a5
 	script_wait_move $00 ; $75af
@@ -3678,9 +3668,7 @@ Label_13_7672:
 	ld de, $3f00 ; $76af
 	farcall FarPtr_ScriptSetActorPosition ; $76b2
 	script_wait_frames $0a ; $76b5
-	ld a, $00 ; $76bc
-	ld b, $01 ; $76be
-	farcall FarPtr_ScriptSetActorFacingLock ; $76c0
+	script_facing_lock $00, $01 ; $76bc
 	script_wait_frames $0a ; $76c3
 	script_move_angle $00, $00, $0100 ; $76ca
 	script_wait_move $00 ; $76d4
@@ -3717,9 +3705,7 @@ Label_13_7769:
 	script_set_text $041c ; $7769
 	script_wait_frames $14 ; $776f
 	script_speak $08 ; $7776
-	ld a, $00 ; $777b
-	ld b, $00 ; $777d
-	farcall FarPtr_ScriptSetActorFacingLock ; $777f
+	script_facing_lock $00, $00 ; $777b
 	script_face $00, $00 ; $7782
 	script_face $02, $00 ; $7789
 	ldh a, [hRomBank] ; $7790

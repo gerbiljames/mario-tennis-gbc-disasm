@@ -681,9 +681,7 @@ LateStudentCrashCutscene:
 	script_wait_idle $11 ; $4a49
 	script_speak $11 ; $4a4e
 	call Func_11_4d68 ; $4a53
-	ld a, $11 ; $4a56
-	ld b, $01 ; $4a58
-	farcall FarPtr_ScriptSetActorFacingLock ; $4a5a
+	script_facing_lock $11, $01 ; $4a56
 	script_set_anim $11, $05 ; $4a5d
 	script_wait_frames $14 ; $4a64
 	ld a, $11 ; $4a6b
@@ -706,9 +704,7 @@ LateStudentCrashCutscene:
 	farcall FarPtr_FaceActorTowardActor ; $4ab1
 	script_move_target $11, $1a00, $2400 ; $4ab4
 	script_wait_move $11 ; $4abf
-	ld a, $11 ; $4ac4
-	ld b, $00 ; $4ac6
-	farcall FarPtr_ScriptSetActorFacingLock ; $4ac8
+	script_facing_lock $11, $00 ; $4ac4
 	script_set_anim $00, $02 ; $4acb
 	script_wait_idle $00 ; $4ad2
 	script_set_anim $11, $02 ; $4ad7
@@ -1161,18 +1157,10 @@ Label_11_51d9:
 	script_face_pair $06, $00 ; $520d
 	script_face_pair $04, $05 ; $5215
 	script_wait_frames $0a ; $521d
-	ld a, $00 ; $5224
-	ld b, $01 ; $5226
-	farcall FarPtr_ScriptSetActorFacingLock ; $5228
-	ld a, $06 ; $522b
-	ld b, $01 ; $522d
-	farcall FarPtr_ScriptSetActorFacingLock ; $522f
-	ld a, $05 ; $5232
-	ld b, $01 ; $5234
-	farcall FarPtr_ScriptSetActorFacingLock ; $5236
-	ld a, $04 ; $5239
-	ld b, $01 ; $523b
-	farcall FarPtr_ScriptSetActorFacingLock ; $523d
+	script_facing_lock $00, $01 ; $5224
+	script_facing_lock $06, $01 ; $522b
+	script_facing_lock $05, $01 ; $5232
+	script_facing_lock $04, $01 ; $5239
 	script_move_target $00, $1600, $1700 ; $5240
 	script_move_target $06, $1a00, $1700 ; $524b
 	script_move_target $05, $1500, $1500 ; $5256
@@ -1181,18 +1169,10 @@ Label_11_51d9:
 	script_move_player $1800, $2f00 ; $5271
 	script_move_target $03, $1800, $1900 ; $527b
 	script_wait_move $03 ; $5286
-	ld a, $00 ; $528b
-	ld b, $00 ; $528d
-	farcall FarPtr_ScriptSetActorFacingLock ; $528f
-	ld a, $06 ; $5292
-	ld b, $00 ; $5294
-	farcall FarPtr_ScriptSetActorFacingLock ; $5296
-	ld a, $05 ; $5299
-	ld b, $00 ; $529b
-	farcall FarPtr_ScriptSetActorFacingLock ; $529d
-	ld a, $04 ; $52a0
-	ld b, $00 ; $52a2
-	farcall FarPtr_ScriptSetActorFacingLock ; $52a4
+	script_facing_lock $00, $00 ; $528b
+	script_facing_lock $06, $00 ; $5292
+	script_facing_lock $05, $00 ; $5299
+	script_facing_lock $04, $00 ; $52a0
 	script_move_target $00, $1600, $2b00 ; $52a7
 	script_move_target $06, $1a00, $2b00 ; $52b2
 	script_move_target $05, $1500, $2900 ; $52bd
@@ -1504,14 +1484,10 @@ Label_11_57c6:
 	script_speak $0a ; $57e3
 	ret ; $57e8
 	script_set_speed $00, $0008 ; $57e9
-	ld a, $00 ; $57f1
-	ld b, $01 ; $57f3
-	farcall FarPtr_ScriptSetActorFacingLock ; $57f5
+	script_facing_lock $00, $01 ; $57f1
 	script_move_target $00, $1300, $1500 ; $57f8
 	script_wait_move $00 ; $5803
-	ld a, $00 ; $5808
-	ld b, $00 ; $580a
-	farcall FarPtr_ScriptSetActorFacingLock ; $580c
+	script_facing_lock $00, $00 ; $5808
 	script_face $00, $c0 ; $580f
 	call OfferDoublesRankingMatch ; $5816
 	ret ; $5819
@@ -2444,14 +2420,10 @@ JuniorClassCourtSinglesScene_11:
 	dw $ff0f, $0000, $7bd1, $0f0b ; record 1
 	db $ff
 	script_set_speed $00, $0008 ; $693d
-	ld a, $00 ; $6945
-	ld b, $01 ; $6947
-	farcall FarPtr_ScriptSetActorFacingLock ; $6949
+	script_facing_lock $00, $01 ; $6945
 	script_move_target $00, $1300, $1500 ; $694c
 	script_wait_move $00 ; $6957
-	ld a, $00 ; $695c
-	ld b, $00 ; $695e
-	farcall FarPtr_ScriptSetActorFacingLock ; $6960
+	script_facing_lock $00, $00 ; $695c
 	script_face $00, $c0 ; $6963
 	call OfferSinglesRankingMatch ; $696a
 	ret ; $696d
@@ -3331,9 +3303,7 @@ OfferSinglesRankingMatch:
 	script_wait_frames $05 ; $7795
 	and a, a ; $779c
 	jp nz, Label_11_7817 ; $779d
-	ld a, $00 ; $77a0
-	ld b, $00 ; $77a2
-	farcall FarPtr_ScriptSetActorFacingLock ; $77a4
+	script_facing_lock $00, $00 ; $77a0
 	script_set_speed $00, $0018 ; $77a7
 	script_move_target $00, $1300, $1500 ; $77af
 	script_wait_move $00 ; $77ba
