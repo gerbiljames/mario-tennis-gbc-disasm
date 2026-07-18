@@ -1645,9 +1645,7 @@ Label_14_53f6:
 	dec h ; $540e
 	jr nz, Label_14_53f6 ; $540f
 	script_player_speed $0012 ; $5411
-	ld a, $00 ; $5417
-	ld b, $00 ; $5419
-	farcall FarPtr_MovePlayerToActor ; $541b
+	script_move_player_to_actor $00 ; $5417
 	ld h, $1c ; $541e
 Label_14_5420:
 	script_wait_frames $03 ; $5420
@@ -2196,9 +2194,7 @@ Label_14_6332:
 	dec h ; $634d
 	jr nz, Label_14_6332 ; $634e
 	script_player_speed $0012 ; $6350
-	ld a, $00 ; $6356
-	ld b, $00 ; $6358
-	farcall FarPtr_MovePlayerToActor ; $635a
+	script_move_player_to_actor $00 ; $6356
 	ld h, $1c ; $635d
 Label_14_635f:
 	script_wait_frames $03 ; $635f

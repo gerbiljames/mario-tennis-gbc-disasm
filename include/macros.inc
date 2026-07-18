@@ -240,6 +240,13 @@ MACRO script_facing_lock
 	ld b, \2
 	farcall FarPtr_ScriptSetActorFacingLock
 ENDM
+; Walks the player to `actor` (b is a position offset, always $00 here).
+; Usage: script_move_player_to_actor actor
+MACRO script_move_player_to_actor
+	ld a, \1
+	ld b, $00
+	farcall FarPtr_MovePlayerToActor
+ENDM
 ; Usage: script_speak actor
 MACRO script_speak
 	ld a, \1

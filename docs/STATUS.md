@@ -25,9 +25,9 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 
 Story cutscenes are hand-written native code — long runs of a fixed register
 setup then a `farcall` into the script engine (`FarPtr_Script*`, bank $0a).
-`script_cmd_seq` in `disasm.py` recognizes fifteen of these idioms and emits
+`script_cmd_seq` in `disasm.py` recognizes sixteen of these idioms and emits
 readable `script_*` macros (defined in the generated `include/macros.inc`):
-`script_move_target/set_position/move_angle/move_player`, `script_set_speed/player_speed`,
+`script_move_target/set_position/move_angle/move_player/move_player_to_actor`, `script_set_speed/player_speed`,
 `script_set_anim`, `script_face`, `script_face_pair`, `script_facing_lock`, `script_speak`, `script_set_text`,
 `script_wait_idle/wait_move/wait_frames`. The command is keyed by the farcall's
 resolved slot name, and a sequence only collapses when no label or data note

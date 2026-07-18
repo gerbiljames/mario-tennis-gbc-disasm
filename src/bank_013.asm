@@ -2734,16 +2734,12 @@ SetupStoryMinigameMatch0:
 	farcall FarPtr_FaceActorTowardActor ; $6cb6
 	script_wait_frames $1e ; $6cb9
 	script_player_speed $0020 ; $6cc0
-	ld a, $04 ; $6cc6
-	ld b, $00 ; $6cc8
-	farcall FarPtr_MovePlayerToActor ; $6cca
+	script_move_player_to_actor $04 ; $6cc6
 	farcall FarPtr_WaitPlayerMoveDone ; $6ccd
 	script_set_anim $04, $03 ; $6cd0
 	script_wait_idle $04 ; $6cd7
 	script_move_target $04, $0b00, $1f00 ; $6cdc
-	ld a, $00 ; $6ce7
-	ld b, $00 ; $6ce9
-	farcall FarPtr_MovePlayerToActor ; $6ceb
+	script_move_player_to_actor $00 ; $6ce7
 	script_wait_move $04 ; $6cee
 	script_face $03, $40 ; $6cf3
 	script_wait_frames $0f ; $6cfa
@@ -2890,9 +2886,7 @@ Label_13_6e17:
 	farcall FarPtr_FaceActorTowardActor ; $6ef8
 	script_wait_frames $1e ; $6efb
 	script_player_speed $0020 ; $6f02
-	ld a, $04 ; $6f08
-	ld b, $00 ; $6f0a
-	farcall FarPtr_MovePlayerToActor ; $6f0c
+	script_move_player_to_actor $04 ; $6f08
 	farcall FarPtr_WaitPlayerMoveDone ; $6f0f
 	ld a, $00 ; $6f12
 	ld b, a ; $6f14
@@ -2906,9 +2900,7 @@ Label_13_6e17:
 	script_wait_idle $04 ; $6f29
 	script_move_target $04, $0b00, $2100 ; $6f2e
 	script_move_target $09, $0b00, $1f00 ; $6f39
-	ld a, $00 ; $6f44
-	ld b, $00 ; $6f46
-	farcall FarPtr_MovePlayerToActor ; $6f48
+	script_move_player_to_actor $00 ; $6f44
 	script_wait_frames $0f ; $6f4b
 	script_face $03, $40 ; $6f52
 	script_wait_frames $0f ; $6f59
@@ -3084,14 +3076,10 @@ SinglesTravelingTeamVictoryCutscene:
 	script_wait_frames $28 ; $71a3
 	script_set_position $0c, $3f00, $3f00 ; $71aa
 	script_face $00, $00 ; $71b5
-	ld a, $0d ; $71bc
-	ld b, $00 ; $71be
-	farcall FarPtr_MovePlayerToActor ; $71c0
+	script_move_player_to_actor $0d ; $71bc
 	farcall FarPtr_WaitPlayerMoveDone ; $71c3
 	script_wait_frames $28 ; $71c6
-	ld a, $00 ; $71cd
-	ld b, $00 ; $71cf
-	farcall FarPtr_MovePlayerToActor ; $71d1
+	script_move_player_to_actor $00 ; $71cd
 	ldh a, [hRomBank] ; $71d4
 	ld b, a ; $71d6
 	ld a, $08 ; $71d7

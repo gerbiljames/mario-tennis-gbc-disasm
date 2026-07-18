@@ -2774,9 +2774,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_FaceActorTowardActor ; $6523
 	script_wait_frames $1e ; $6526
 	script_player_speed $0020 ; $652d
-	ld a, $09 ; $6533
-	ld b, $00 ; $6535
-	farcall FarPtr_MovePlayerToActor ; $6537
+	script_move_player_to_actor $09 ; $6533
 	farcall FarPtr_WaitPlayerMoveDone ; $653a
 	ld bc, $d040 ; $653d
 	ld a, $09 ; $6540
@@ -2812,9 +2810,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_WaitActorScriptDone ; $6591
 	ld a, $01 ; $6594
 	farcall FarPtr_SetActorNullScript ; $6596
-	ld a, $00 ; $6599
-	ld b, $00 ; $659b
-	farcall FarPtr_MovePlayerToActor ; $659d
+	script_move_player_to_actor $00 ; $6599
 	farcall FarPtr_WaitPlayerMoveDone ; $65a0
 	ld a, $09 ; $65a3
 	ld b, a ; $65a5
@@ -2847,9 +2843,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_FaceActorTowardActor ; $660c
 	script_wait_frames $1e ; $660f
 	script_player_speed $0020 ; $6616
-	ld a, $07 ; $661c
-	ld b, $00 ; $661e
-	farcall FarPtr_MovePlayerToActor ; $6620
+	script_move_player_to_actor $07 ; $661c
 	farcall FarPtr_WaitPlayerMoveDone ; $6623
 	ld bc, $d040 ; $6626
 	ld a, $07 ; $6629
@@ -2878,9 +2872,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_WaitActorScriptDone ; $6666
 	ld a, $01 ; $6669
 	farcall FarPtr_SetActorNullScript ; $666b
-	ld a, $00 ; $666e
-	ld b, $00 ; $6670
-	farcall FarPtr_MovePlayerToActor ; $6672
+	script_move_player_to_actor $00 ; $666e
 	farcall FarPtr_WaitPlayerMoveDone ; $6675
 	script_set_text $107c ; $6678
 	script_set_anim $06, $03 ; $667e
@@ -2915,9 +2907,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_SetActorNullScript ; $66f0
 	script_face $04, $40 ; $66f3
 	script_move_target $05, $2b00, $1100 ; $66fa
-	ld a, $05 ; $6705
-	ld b, $00 ; $6707
-	farcall FarPtr_MovePlayerToActor ; $6709
+	script_move_player_to_actor $05 ; $6705
 	farcall FarPtr_WaitPlayerMoveDone ; $670c
 	script_face $05, $40 ; $670f
 	ld a, $03 ; $6716
@@ -2932,9 +2922,7 @@ RunSeniorRankingMatchIntro:
 	ld de, $7953 ; $672f
 	farcall FarPtr_ScriptSetActorScript ; $6732
 	script_wait_frames $0f ; $6735
-	ld a, $00 ; $673c
-	ld b, $00 ; $673e
-	farcall FarPtr_MovePlayerToActor ; $6740
+	script_move_player_to_actor $00 ; $673c
 	ldh a, [hRomBank] ; $6743
 	ld b, a ; $6745
 	ld a, $04 ; $6746
@@ -2973,9 +2961,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_FaceActorTowardActor ; $67bc
 	script_wait_frames $1e ; $67bf
 	script_player_speed $0020 ; $67c6
-	ld a, $07 ; $67cc
-	ld b, $00 ; $67ce
-	farcall FarPtr_MovePlayerToActor ; $67d0
+	script_move_player_to_actor $07 ; $67cc
 	farcall FarPtr_WaitPlayerMoveDone ; $67d3
 	ld bc, $d040 ; $67d6
 	ld a, $07 ; $67d9
@@ -3021,9 +3007,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_FaceActorTowardActor ; $6856
 	script_wait_frames $1e ; $6859
 	script_player_speed $0020 ; $6860
-	ld a, $06 ; $6866
-	ld b, $00 ; $6868
-	farcall FarPtr_MovePlayerToActor ; $686a
+	script_move_player_to_actor $06 ; $6866
 	farcall FarPtr_WaitPlayerMoveDone ; $686d
 	ld bc, $d040 ; $6870
 	ld a, $06 ; $6873
@@ -3043,9 +3027,7 @@ RunSeniorRankingMatchIntro:
 	ld de, $6c51 ; $6896
 	farcall FarPtr_ScriptSetActorScript ; $6899
 	script_face $03, $40 ; $689c
-	ld a, $00 ; $68a3
-	ld b, $00 ; $68a5
-	farcall FarPtr_MovePlayerToActor ; $68a7
+	script_move_player_to_actor $00 ; $68a3
 	ld a, $06 ; $68aa
 	farcall FarPtr_WaitActorScriptDone ; $68ac
 	ld a, $01 ; $68af
@@ -3073,9 +3055,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_FaceActorTowardActor ; $690e
 	script_wait_frames $1e ; $6911
 	script_player_speed $0020 ; $6918
-	ld a, $05 ; $691e
-	ld b, $00 ; $6920
-	farcall FarPtr_MovePlayerToActor ; $6922
+	script_move_player_to_actor $05 ; $691e
 	farcall FarPtr_WaitPlayerMoveDone ; $6925
 	ld bc, $d040 ; $6928
 	ld a, $05 ; $692b
@@ -3097,9 +3077,7 @@ RunSeniorRankingMatchIntro:
 	script_face $03, $40 ; $6954
 	ld a, $01 ; $695b
 	farcall FarPtr_SetActorNullScript ; $695d
-	ld a, $00 ; $6960
-	ld b, $00 ; $6962
-	farcall FarPtr_MovePlayerToActor ; $6964
+	script_move_player_to_actor $00 ; $6960
 	farcall FarPtr_WaitPlayerMoveDone ; $6967
 	ld a, $00 ; $696a
 	ld b, a ; $696c
@@ -3127,9 +3105,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_FaceActorTowardActor ; $69c4
 	script_wait_frames $1e ; $69c7
 	script_player_speed $0020 ; $69ce
-	ld a, $04 ; $69d4
-	ld b, $00 ; $69d6
-	farcall FarPtr_MovePlayerToActor ; $69d8
+	script_move_player_to_actor $04 ; $69d4
 	farcall FarPtr_WaitPlayerMoveDone ; $69db
 	ld a, $03 ; $69de
 	ld b, a ; $69e0
@@ -3143,9 +3119,7 @@ RunSeniorRankingMatchIntro:
 	ld de, $6cda ; $69f7
 	farcall FarPtr_ScriptSetActorScript ; $69fa
 	script_face $03, $40 ; $69fd
-	ld a, $00 ; $6a04
-	ld b, $00 ; $6a06
-	farcall FarPtr_MovePlayerToActor ; $6a08
+	script_move_player_to_actor $00 ; $6a04
 	farcall FarPtr_WaitPlayerMoveDone ; $6a0b
 	ld a, $00 ; $6a0e
 	ld b, a ; $6a10

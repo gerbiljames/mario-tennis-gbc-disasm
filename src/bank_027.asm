@@ -965,9 +965,7 @@ Label_27_52ae:
 	ld b, $00 ; $5354
 	farcall FarPtr_SetActorActive ; $5356
 	script_player_speed $0010 ; $5359
-	ld a, $03 ; $535f
-	ld b, $00 ; $5361
-	farcall FarPtr_MovePlayerToActor ; $5363
+	script_move_player_to_actor $03 ; $535f
 	ld hl, $5580 ; $5366
 	ld de, $0206 ; $5369
 	call LoadPalettesImmediate ; $536c
@@ -1148,9 +1146,7 @@ Label_27_564b:
 	script_wait_frames $28 ; $56cd
 	script_set_position $0c, $3f00, $3f00 ; $56d4
 	script_face $00, $00 ; $56df
-	ld a, $0d ; $56e6
-	ld b, $00 ; $56e8
-	farcall FarPtr_MovePlayerToActor ; $56ea
+	script_move_player_to_actor $0d ; $56e6
 	ldh a, [hRomBank] ; $56ed
 	ld b, a ; $56ef
 	ld a, $08 ; $56f0
@@ -1173,9 +1169,7 @@ Label_27_564b:
 	ld de, $5c6a ; $571a
 	farcall FarPtr_ScriptSetActorScript ; $571d
 	script_wait_frames $1e ; $5720
-	ld a, $00 ; $5727
-	ld b, $00 ; $5729
-	farcall FarPtr_MovePlayerToActor ; $572b
+	script_move_player_to_actor $00 ; $5727
 	farcall FarPtr_WaitPlayerMoveDone ; $572e
 	ld a, $03 ; $5731
 	farcall FarPtr_WaitActorScriptDone ; $5733
@@ -1994,9 +1988,7 @@ Func_27_6866:
 	farcall FarPtr_FaceActorTowardActor ; $6881
 	script_wait_frames $1e ; $6884
 	script_player_speed $0020 ; $688b
-	ld a, $07 ; $6891
-	ld b, $00 ; $6893
-	farcall FarPtr_MovePlayerToActor ; $6895
+	script_move_player_to_actor $07 ; $6891
 	farcall FarPtr_WaitPlayerMoveDone ; $6898
 	ld a, $03 ; $689b
 	ld b, a ; $689d
@@ -2012,13 +2004,9 @@ Func_27_6866:
 	ld de, $6918 ; $68c2
 	farcall FarPtr_ScriptSetActorScript ; $68c5
 	script_wait_frames $14 ; $68c8
-	ld a, $00 ; $68cf
-	ld b, $00 ; $68d1
-	farcall FarPtr_MovePlayerToActor ; $68d3
+	script_move_player_to_actor $00 ; $68cf
 	script_face $03, $40 ; $68d6
-	ld a, $00 ; $68dd
-	ld b, $00 ; $68df
-	farcall FarPtr_MovePlayerToActor ; $68e1
+	script_move_player_to_actor $00 ; $68dd
 	ld a, $07 ; $68e4
 	farcall FarPtr_WaitActorScriptDone ; $68e6
 	ld a, $00 ; $68e9
@@ -2116,9 +2104,7 @@ Label_27_6a54:
 Func_27_6a7d:
 	script_player_speed $0020 ; $6a7d
 	script_face $03, $00 ; $6a83
-	ld a, $08 ; $6a8a
-	ld b, $00 ; $6a8c
-	farcall FarPtr_MovePlayerToActor ; $6a8e
+	script_move_player_to_actor $08 ; $6a8a
 	farcall FarPtr_WaitPlayerMoveDone ; $6a91
 	script_face $00, $00 ; $6a94
 	script_face $02, $00 ; $6a9b
@@ -2127,9 +2113,7 @@ Func_27_6a7d:
 	script_face $08, $80 ; $6aa7
 	script_set_anim $08, $02 ; $6aae
 	script_wait_idle $08 ; $6ab5
-	ld a, $00 ; $6aba
-	ld b, $00 ; $6abc
-	farcall FarPtr_MovePlayerToActor ; $6abe
+	script_move_player_to_actor $00 ; $6aba
 	script_move_target $08, $1500, $1500 ; $6ac1
 	script_move_target $09, $1500, $1700 ; $6acc
 	script_wait_move $09 ; $6ad7

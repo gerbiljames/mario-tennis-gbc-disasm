@@ -748,9 +748,7 @@ Label_15_4b11:
 	ret ; $4b16
 	INCBIN "data/bank_015/d_4b17.bin" ; $4b17, 10 bytes
 Func_15_4b21:
-	ld a, $13 ; $4b21
-	ld b, $00 ; $4b23
-	farcall FarPtr_MovePlayerToActor ; $4b25
+	script_move_player_to_actor $13 ; $4b21
 	farcall FarPtr_WaitPlayerMoveDone ; $4b28
 	ld a, $00 ; $4b2b
 	farcall FarPtr_GetActorStateAddr ; $4b2d
@@ -860,9 +858,7 @@ Func_15_4d07:
 	ld hl, $0018 ; $4d10
 	add hl, de ; $4d13
 	ld [hl], a ; $4d14
-	ld a, $00 ; $4d15
-	ld b, $00 ; $4d17
-	farcall FarPtr_MovePlayerToActor ; $4d19
+	script_move_player_to_actor $00 ; $4d15
 	farcall FarPtr_WaitPlayerMoveDone ; $4d1c
 	script_move_player $3300, $0c00 ; $4d1f
 	farcall FarPtr_WaitPlayerMoveDone ; $4d29
@@ -915,9 +911,7 @@ WaterSpriteRacketRewardScene:
 	ld b, $00 ; $4df5
 	farcall FarPtr_SetActorActive ; $4df7
 	script_player_speed $0010 ; $4dfa
-	ld a, $14 ; $4e00
-	ld b, $00 ; $4e02
-	farcall FarPtr_MovePlayerToActor ; $4e04
+	script_move_player_to_actor $14 ; $4e00
 	ld hl, $5950 ; $4e07
 	ld de, $0206 ; $4e0a
 	call LoadPalettesImmediate ; $4e0d
@@ -1066,9 +1060,7 @@ Label_15_4f9f:
 	script_face $00, $00 ; $5034
 	script_wait_frames $14 ; $503b
 	script_face $00, $c0 ; $5042
-	ld a, $00 ; $5049
-	ld b, $00 ; $504b
-	farcall FarPtr_MovePlayerToActor ; $504d
+	script_move_player_to_actor $00 ; $5049
 	farcall FarPtr_WaitPlayerMoveDone ; $5050
 	script_wait_frames $1e ; $5053
 	ret ; $505a
@@ -1832,18 +1824,14 @@ TrainingCourtIntroTourScene:
 	script_wait_frames $28 ; $5af7
 	script_face $00, $80 ; $5afe
 	script_speak $0d ; $5b05
-	ld a, $0b ; $5b0a
-	ld b, $00 ; $5b0c
-	farcall FarPtr_MovePlayerToActor ; $5b0e
+	script_move_player_to_actor $0b ; $5b0a
 	farcall FarPtr_WaitPlayerMoveDone ; $5b11
 	script_wait_frames $3c ; $5b14
 	ld a, $00 ; $5b1b
 	ld b, a ; $5b1d
 	ld a, $0d ; $5b1e
 	farcall FarPtr_FaceActorTowardActor ; $5b20
-	ld a, $0d ; $5b23
-	ld b, $00 ; $5b25
-	farcall FarPtr_MovePlayerToActor ; $5b27
+	script_move_player_to_actor $0d ; $5b23
 	farcall FarPtr_WaitPlayerMoveDone ; $5b2a
 	script_set_anim $00, $03 ; $5b2d
 	script_wait_idle $00 ; $5b34

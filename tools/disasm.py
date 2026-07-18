@@ -1772,7 +1772,9 @@ def match_launcher_seq(dis, rom, off, labels):
 
 # Cutscene script commands: a fixed register setup then a farcall into the
 # story script engine, keyed by the farcall's FarPtr slot label. Setup steps
-# are (opcode, size, kind): 'b' = 1-byte immediate, 'w' = 2-byte immediate.
+# are (opcode, size, kind): 'b' = 1-byte immediate arg, 'w' = 2-byte immediate
+# arg, 'x' = no-operand op (no arg), 'z' = 1-byte immediate fixed at $00 (no
+# arg; the command only matches when that operand is $00).
 SCRIPT_COMMANDS = (
     ("script_move_target", "FarPtr_ScriptSetActorMoveTarget",
         ((0x3E, 2, 'b'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
@@ -1790,6 +1792,8 @@ SCRIPT_COMMANDS = (
         ((0x3E, 2, 'b'), (0x47, 1, 'x'), (0x3E, 2, 'b'))),
     ("script_facing_lock", "FarPtr_ScriptSetActorFacingLock",
         ((0x3E, 2, 'b'), (0x06, 2, 'b'))),
+    ("script_move_player_to_actor", "FarPtr_MovePlayerToActor",
+        ((0x3E, 2, 'b'), (0x06, 2, 'z'))),
     ("script_move_player", "FarPtr_MovePlayerToPosition",
         ((0xAF, 1, 'x'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
     ("script_player_speed", "FarPtr_SetPlayerMoveSpeed",
@@ -1829,6 +1833,9 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
             p += 1  # prefix (push af)
         for opc, size, kind in setups:
             if p + size > len(rom) or rom[p] != opc or (p != off and not plain(p)):
+                ok = False
+                break
+            if kind == 'z' and rom[p + 1] != 0x00:
                 ok = False
                 break
             if kind == 'b':
@@ -2143,6 +2150,13 @@ MACRO script_facing_lock
 	ld a, \\1
 	ld b, \\2
 	farcall FarPtr_ScriptSetActorFacingLock
+ENDM
+; Walks the player to `actor` (b is a position offset, always $00 here).
+; Usage: script_move_player_to_actor actor
+MACRO script_move_player_to_actor
+	ld a, \\1
+	ld b, $00
+	farcall FarPtr_MovePlayerToActor
 ENDM
 ; Usage: script_speak actor
 MACRO script_speak

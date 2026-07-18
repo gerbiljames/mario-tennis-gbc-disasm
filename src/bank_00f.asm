@@ -1496,9 +1496,7 @@ Func_0f_5b4d:
 	farcall FarPtr_ScriptSetActorJumpVelocity ; $5bf6
 	script_set_anim $14, $02 ; $5bf9
 	script_player_speed $0010 ; $5c00
-	ld a, $00 ; $5c06
-	ld b, $00 ; $5c08
-	farcall FarPtr_MovePlayerToActor ; $5c0a
+	script_move_player_to_actor $00 ; $5c06
 	farcall FarPtr_WaitPlayerMoveDone ; $5c0d
 	ld a, $1e ; $5c10
 	call DelayFrames ; $5c12
@@ -3397,9 +3395,7 @@ Label_0f_79b1:
 	script_move_target $06, $1500, $1700 ; $79db
 	script_move_target $07, $1700, $1700 ; $79e6
 	script_wait_move $07 ; $79f1
-	ld a, $00 ; $79f6
-	ld b, $00 ; $79f8
-	farcall FarPtr_MovePlayerToActor ; $79fa
+	script_move_player_to_actor $00 ; $79f6
 	script_set_position $06, $3f00, $3f00 ; $79fd
 	script_set_position $07, $3f00, $3f00 ; $7a08
 	farcall FarPtr_WaitPlayerMoveDone ; $7a13
