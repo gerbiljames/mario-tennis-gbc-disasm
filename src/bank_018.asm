@@ -1718,7 +1718,7 @@ Func_18_7a2d:
 	ld b, $00 ; $7a51
 	call QueueSpriteTemplate ; $7a53
 	ret ; $7a56
-	; $7a57, 375 bytes (bytes:4)
+	; $7a57, 42 bytes (bytes:4)
 	db $10, $08, $00, $00 ; 0x00
 	db $10, $10, $02, $00 ; 0x04
 	db $10, $18, $04, $00 ; 0x08
@@ -1729,90 +1729,162 @@ Func_18_7a2d:
 	db $10, $40, $0e, $00 ; 0x1c
 	db $10, $48, $10, $00 ; 0x20
 	db $10, $50, $12, $00 ; 0x24
-	db $80, $c9, $f0, $96 ; 0x28
-	db $f5, $3e, $03, $e0 ; 0x2c
-	db $96, $e0, $70, $fa ; 0x30
-	db $00, $da, $fe, $10 ; 0x34
-	db $28, $1e, $87, $87 ; 0x38
-	db $87, $21, $b5, $7a ; 0x3c
-	db $85, $6f, $30, $01 ; 0x40
-	db $24, $11, $01, $08 ; 0x44
-	db $cd, $b5, $05, $f0 ; 0x48
-	db $8c, $e6, $03, $20 ; 0x4c
-	db $07, $fa, $00, $da ; 0x50
-	db $3c, $ea, $00, $da ; 0x54
-	db $f1, $e0, $96, $e0 ; 0x58
-	db $70, $c9, $80, $02 ; 0x5c
-	db $dd, $3a, $3e, $53 ; 0x60
-	db $bf, $6f, $80, $02 ; 0x64
-	db $dd, $3e, $fe, $4e ; 0x68
-	db $3f, $63, $80, $02 ; 0x6c
-	db $fd, $46, $de, $4e ; 0x70
-	db $df, $5a, $80, $02 ; 0x74
-	db $1d, $4f, $be, $4e ; 0x78
-	db $7f, $52, $80, $02 ; 0x7c
-	db $3d, $53, $9e, $4e ; 0x80
-	db $1f, $4a, $80, $02 ; 0x84
-	db $5d, $5b, $7e, $4a ; 0x88
-	db $9f, $41, $80, $02 ; 0x8c
-	db $7d, $63, $5e, $4a ; 0x90
-	db $3f, $39, $80, $02 ; 0x94
-	db $9d, $67, $3e, $4a ; 0x98
-	db $df, $30, $80, $02 ; 0x9c
-	db $bd, $6f, $1e, $4a ; 0xa0
-	db $7f, $28, $80, $02 ; 0xa4
-	db $de, $77, $fe, $49 ; 0xa8
-	db $1f, $20, $80, $02 ; 0xac
-	db $de, $77, $fb, $49 ; 0xb0
-	db $19, $20, $80, $02 ; 0xb4
-	db $de, $77, $f9, $49 ; 0xb8
-	db $14, $20, $80, $02 ; 0xbc
-	db $de, $7b, $f6, $4d ; 0xc0
-	db $0f, $24, $80, $02 ; 0xc4
-	db $de, $7b, $f4, $4d ; 0xc8
-	db $0a, $24, $80, $02 ; 0xcc
-	db $de, $7b, $f1, $4d ; 0xd0
-	db $05, $24, $80, $02 ; 0xd4
-	db $ff, $7f, $ef, $51 ; 0xd8
-	db $00, $28, $c9, $0e ; 0xdc
-	db $00, $c5, $21, $00 ; 0xe0
-	db $d8, $79, $87, $87 ; 0xe4
-	db $87, $87, $85, $6f ; 0xe8
-	db $30, $01, $24, $2a ; 0xec
-	db $47, $23, $2a, $57 ; 0xf0
-	db $23, $2a, $5f, $23 ; 0xf4
-	db $23, $7e, $4f, $f5 ; 0xf8
-	db $c5, $d5, $e5, $cd ; 0xfc
-	db $51, $1f, $e1, $d1 ; 0x100
-	db $c1, $f1, $3e, $08 ; 0x104
-	db $82, $57, $0c, $0c ; 0x108
-	db $cd, $51, $1f, $c1 ; 0x10c
-	db $0c, $79, $fe, $10 ; 0x110
-	db $20, $cb, $c9, $0e ; 0x114
-	db $00, $c5, $21, $00 ; 0x118
-	db $d8, $79, $87, $87 ; 0x11c
-	db $87, $87, $85, $6f ; 0x120
-	db $30, $01, $24, $44 ; 0x124
-	db $4d, $21, $05, $00 ; 0x128
-	db $09, $7e, $5f, $21 ; 0x12c
-	db $01, $00, $09, $2a ; 0x130
-	db $66, $6f, $16, $00 ; 0x134
-	db $19, $54, $5d, $21 ; 0x138
-	db $01, $00, $09, $73 ; 0x13c
-	db $23, $72, $21, $06 ; 0x140
-	db $00, $09, $7e, $5f ; 0x144
-	db $21, $03, $00, $09 ; 0x148
-	db $2a, $66, $6f, $16 ; 0x14c
-	db $00, $19, $54, $5d ; 0x150
-	db $21, $03, $00, $09 ; 0x154
-	db $73, $23, $72, $21 ; 0x158
-	db $09, $00, $09, $2a ; 0x15c
-	db $66, $6f, $e9, $21 ; 0x160
-	db $04, $00, $09, $7e ; 0x164
-	db $fe, $c0, $38, $03 ; 0x168
-	db $3e, $10, $77, $c1 ; 0x16c
-	db $0c, $79, $fe, $10 ; 0x170
-	db $20, $a3, $c9 ; 0x174
+	db $80, $c9 ; 0x28
+TaskFadeInPalette_18:
+	ldh a, [hWramBank] ; $7a81
+	push af ; $7a83
+	wram_bank $03 ; $7a84
+	ld a, [$da00] ; $7a8a
+	cp a, $10 ; $7a8d
+	jr z, Label_18_7aaf ; $7a8f
+	add a, a ; $7a91
+	add a, a ; $7a92
+	add a, a ; $7a93
+	ld hl, PaletteFadeTable_18 ; $7a94
+	add a, l ; $7a97
+	ld l, a ; $7a98
+	jr nc, Label_18_7a9c ; $7a99
+	inc h ; $7a9b
+Label_18_7a9c:
+	ld de, $0801 ; $7a9c
+	call LoadPalettesImmediate ; $7a9f
+	ldh a, [hVBlankCounter] ; $7aa2
+	and a, $03 ; $7aa4
+	jr nz, Label_18_7aaf ; $7aa6
+	ld a, [$da00] ; $7aa8
+	inc a ; $7aab
+	ld [$da00], a ; $7aac
+Label_18_7aaf:
+	pop af ; $7aaf
+	wram_bank ; $7ab0
+	ret ; $7ab4
+PaletteFadeTable_18:
+	; $7ab5, 129 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0280, $3add, $533e, $6fbf ; pal 0: #00a400 #eeb473 #f6cda4 #ffeede
+	dw $0280, $3edd, $4efe, $633f ; pal 1: #00a400 #eeb47b #f6bd9c #ffcdc5
+	dw $0280, $46fd, $4ede, $5adf ; pal 2: #00a400 #eebd8b #f6b49c #ffb4b4
+	dw $0280, $4f1d, $4ebe, $527f ; pal 3: #00a400 #eec59c #f6ac9c #ff9ca4
+	dw $0280, $533d, $4e9e, $4a1f ; pal 4: #00a400 #eecda4 #f6a49c #ff8394
+	dw $0280, $5b5d, $4a7e, $419f ; pal 5: #00a400 #eed5b4 #f69c94 #ff6283
+	dw $0280, $637d, $4a5e, $393f ; pal 6: #00a400 #eedec5 #f69494 #ff4a73
+	dw $0280, $679d, $4a3e, $30df ; pal 7: #00a400 #eee6cd #f68b94 #ff3162
+	dw $0280, $6fbd, $4a1e, $287f ; pal 8: #00a400 #eeeede #f68394 #ff1852
+	dw $0280, $77de, $49fe, $201f ; pal 9: #00a400 #f6f6ee #f67b94 #ff0041
+	dw $0280, $77de, $49fb, $2019 ; pal 10: #00a400 #f6f6ee #de7b94 #cd0041
+	dw $0280, $77de, $49f9, $2014 ; pal 11: #00a400 #f6f6ee #cd7b94 #a40041
+	dw $0280, $7bde, $4df6, $240f ; pal 12: #00a400 #f6f6f6 #b47b9c #7b004a
+	dw $0280, $7bde, $4df4, $240a ; pal 13: #00a400 #f6f6f6 #a47b9c #52004a
+	dw $0280, $7bde, $4df1, $2405 ; pal 14: #00a400 #f6f6f6 #8b7b9c #29004a
+	dw $0280, $7fff, $51ef, $2800 ; pal 15: #00a400 #ffffff #7b7ba4 #000052
+	db $c9
+TaskDrawObjectSprites_18:
+	ld c, $00 ; $7b36
+Label_18_7b38:
+	push bc ; $7b38
+	ld hl, $d800 ; $7b39
+	ld a, c ; $7b3c
+	add a, a ; $7b3d
+	add a, a ; $7b3e
+	add a, a ; $7b3f
+	add a, a ; $7b40
+	add a, l ; $7b41
+	ld l, a ; $7b42
+	jr nc, Label_18_7b46 ; $7b43
+	inc h ; $7b45
+Label_18_7b46:
+	ld a, [hl+] ; $7b46
+	ld b, a ; $7b47
+	inc hl ; $7b48
+	ld a, [hl+] ; $7b49
+	ld d, a ; $7b4a
+	inc hl ; $7b4b
+	ld a, [hl+] ; $7b4c
+	ld e, a ; $7b4d
+	inc hl ; $7b4e
+	inc hl ; $7b4f
+	ld a, [hl] ; $7b50
+	ld c, a ; $7b51
+	push af ; $7b52
+	push bc ; $7b53
+	push de ; $7b54
+	push hl ; $7b55
+	call QueueSprite ; $7b56
+	pop hl ; $7b59
+	pop de ; $7b5a
+	pop bc ; $7b5b
+	pop af ; $7b5c
+	ld a, $08 ; $7b5d
+	add a, d ; $7b5f
+	ld d, a ; $7b60
+	inc c ; $7b61
+	inc c ; $7b62
+	call QueueSprite ; $7b63
+	pop bc ; $7b66
+	inc c ; $7b67
+	ld a, c ; $7b68
+	cp a, $10 ; $7b69
+	jr nz, Label_18_7b38 ; $7b6b
+	ret ; $7b6d
+TaskUpdateObjects_18:
+	ld c, $00 ; $7b6e
+	push bc ; $7b70
+	ld hl, $d800 ; $7b71
+	ld a, c ; $7b74
+	add a, a ; $7b75
+	add a, a ; $7b76
+	add a, a ; $7b77
+	add a, a ; $7b78
+	add a, l ; $7b79
+	ld l, a ; $7b7a
+	jr nc, Label_18_7b7e ; $7b7b
+	inc h ; $7b7d
+Label_18_7b7e:
+	ld b, h ; $7b7e
+	ld c, l ; $7b7f
+	ld hl, $0005 ; $7b80
+	add hl, bc ; $7b83
+	ld a, [hl] ; $7b84
+	ld e, a ; $7b85
+	ld hl, $0001 ; $7b86
+	add hl, bc ; $7b89
+	ld a, [hl+] ; $7b8a
+	ld h, [hl] ; $7b8b
+	ld l, a ; $7b8c
+	ld d, $00 ; $7b8d
+	add hl, de ; $7b8f
+	ld d, h ; $7b90
+	ld e, l ; $7b91
+	ld hl, $0001 ; $7b92
+	add hl, bc ; $7b95
+	ld [hl], e ; $7b96
+	inc hl ; $7b97
+	ld [hl], d ; $7b98
+	ld hl, $0006 ; $7b99
+	add hl, bc ; $7b9c
+	ld a, [hl] ; $7b9d
+	ld e, a ; $7b9e
+	ld hl, $0003 ; $7b9f
+	add hl, bc ; $7ba2
+	ld a, [hl+] ; $7ba3
+	ld h, [hl] ; $7ba4
+	ld l, a ; $7ba5
+	ld d, $00 ; $7ba6
+	add hl, de ; $7ba8
+	ld d, h ; $7ba9
+	ld e, l ; $7baa
+	ld hl, $0003 ; $7bab
+	add hl, bc ; $7bae
+	ld [hl], e ; $7baf
+	inc hl ; $7bb0
+	ld [hl], d ; $7bb1
+	ld hl, $0009 ; $7bb2
+	add hl, bc ; $7bb5
+	ld a, [hl+] ; $7bb6
+	ld h, [hl] ; $7bb7
+	ld l, a ; $7bb8
+	jp hl ; $7bb9
+	INCBIN "data/bank_018/d_7bba.bin" ; $7bba, 20 bytes
 Func_18_7bce:
 	ldh a, [hWramBank] ; $7bce
 	push af ; $7bd0

@@ -21,6 +21,17 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Bank $18 frame-task callbacks (2026-07-19)
+
+`$18:$7a57` was a 375-byte `bytes:4` blob that had swallowed three
+`RegisterFrameTask` callbacks — code descent never reaches (they're registered
+via `ld hl,addr; call RegisterFrameTask`, not called): `TaskFadeInPalette_18`
+(`$7a81`, steps a 16-entry palette fade from `PaletteFadeTable_18` at `$7ab5`),
+`TaskDrawObjectSprites_18` (`$7b36`) and `TaskUpdateObjects_18` (`$7b6e`, object
+update loops over the `$d800` table). Seeded the three entry points in
+`coverage/bank018_static_code.json`; the template blob shrinks to the 42-byte
+sprite template it actually is, and the palette table carves as `palettes`.
+
 ### Match-result graphics selector (2026-07-19)
 
 `$16:$4e9d` (was a 3444-byte `records:2` blob) is the two-level table the
