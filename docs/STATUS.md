@@ -21,6 +21,19 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Match-result graphics selector (2026-07-19)
+
+`$16:$4e9d` (was a 3444-byte `records:2` blob) is the two-level table the
+match-result gfx loader (`$16:$4e54`, `LoadMatchResultGfxSet`) indexes by the
+remapped match gfx index: a self-delimiting `dw` pointer table
+(`GfxSetPointerTable_16`) → 6-byte descriptor records → a contiguous pool of 21
+LZ tile streams (each decompresses to 20 tiles at VRAM $8900/$8a40/$9140).
+`carve_gfx_pointer_sets` in `disasm.py` walks the table, registers the pool as
+labeled `Lz_16_*` blobs (extracted, gitignored), and shrinks the table region
+to a `gfx_ptr_table` data table: `render_gfx_ptr_table` emits the pointers as
+`.recN` locals and each record as a `gfx_set` of three stream labels. Still
+byte-perfect.
+
 ### Match-result tilemap scripts (2026-07-19)
 
 `$16:$4abd` (480 bytes) was a `records:2` blob — really a 20-entry `dw` pointer

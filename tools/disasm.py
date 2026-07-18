@@ -845,6 +845,50 @@ class Disassembly:
         if added:
             print(f"static data slots: {added} carved")
 
+    def carve_gfx_pointer_sets(self):
+        """Bank $16's match-result graphics loader ($16:$4e54) selects a set of
+        three LZ tile streams by the remapped match gfx index, decompressing
+        them to VRAM $8900/$8a40/$9140. The selection is a two-level table at
+        $4e9d that the auto-carver leaves as one records:2 blob: a self-
+        delimiting dw pointer table indexes 6-byte descriptor records, each
+        three dw pointers into a contiguous pool of LZ streams. Carve the pool
+        into labeled lz blobs (so the records reference them by name) and shrink
+        the pointer-table/records region to a gfx_ptr_table data table."""
+        bank = 0x16
+        base = bank * BANK_SIZE
+        tbl = 0x4e9d
+
+        def flat(cpu):
+            return base + cpu - BANK_SIZE
+
+        def word(cpu):
+            o = flat(cpu)
+            return self.rom[o] | (self.rom[o + 1] << 8)
+
+        # Pointer table self-delimits at its lowest target (the first record).
+        rec_start = min(word(tbl), word(tbl + 2))
+        # Descriptor records (6 bytes) run until the lowest stream they point at.
+        p, pool = rec_start, 0xFFFF
+        while p < pool:
+            pool = min(pool, word(p), word(p + 2), word(p + 4))
+            p += 6
+        # Tile the stream pool: decompress each stream to find its compressed
+        # length and register it as an lz blob, stopping where the streams give
+        # way to the loader code that follows.
+        o, n = flat(pool), 0
+        while o < base + BANK_SIZE and o not in self.instrs:
+            try:
+                _, clen = lz.decompress(self.rom, o, base + BANK_SIZE)
+            except ValueError:
+                break
+            self.data_blobs.setdefault(o, (clen, "lz"))
+            o += clen
+            n += 1
+        # Constrain the table region so the pool blobs are not swallowed by it.
+        self.data_blobs[flat(tbl)] = (flat(pool) - flat(tbl), "copy")
+        print(f"gfx pointer sets: {n} lz streams carved "
+              f"($16:${pool:04x}..${offset_to_cpu(o):04x})")
+
     def load_hook_dumps(self, paths):
         """Ingest tools/hook_client.py captures: runtime-observed register
         snapshots at the data-helper entry points, one (h = bank, l = slot)
@@ -2252,6 +2296,14 @@ ENDM
 MACRO tilemap_copy_end
 	ds 5, $00
 ENDM
+
+; Match-result graphics set (loader $16:$4e54): three LZ tile streams
+; decompressed to VRAM $8900, $8a40, $9140 (20 tiles each). Records live in
+; GfxSetPointerTable_16 and are selected by the remapped match gfx index.
+; Usage: gfx_set tiles_lo, tiles_mid, tiles_hi
+MACRO gfx_set
+	dw \\1, \\2, \\3
+ENDM
 """
 
 
@@ -2365,6 +2417,36 @@ def render_tilemap_scripts(rom, start, end):
             src = rom[o + 2] | (rom[o + 3] << 8)
             out.append(f"\ttilemap_copy ${dest:04x}, ${src:04x}, {rom[o + 4]}")
         o += 5
+    return out
+
+
+def render_gfx_ptr_table(rom, start, end, bank, data_labels):
+    """Render the match-result graphics selector ($16:$4e9d, loader $16:$4e54).
+    A self-delimiting dw pointer table indexes 6-byte descriptor records, each
+    three dw pointers to LZ tile streams (decompressed to VRAM $8900/$8a40/
+    $9140). Pointers become `.recN` locals; each record is a `gfx_set` of the
+    three streams, resolved to their Lz_* blob labels."""
+    fbase = bank * BANK_SIZE
+    base = offset_to_cpu(start)
+
+    def word(o):
+        return rom[o] | (rom[o + 1] << 8)
+
+    def sym(v):
+        return data_labels.get(fbase + v - BANK_SIZE, f"${v:04x}")
+
+    rec_start = min(word(start), word(start + 2))
+    nptr = (rec_start - base) // 2
+    out = []
+    for i in range(nptr):
+        v = word(start + i * 2)
+        out.append(f"\tdw .rec{(v - rec_start) // 6} ; {i}")
+    o = start + nptr * 2
+    while o < end:
+        out.append(f".rec{(offset_to_cpu(o) - rec_start) // 6}:")
+        out.append(f"\tgfx_set {sym(word(o))}, {sym(word(o + 2))}, "
+                   f"{sym(word(o + 4))}")
+        o += 6
     return out
 
 
@@ -2628,6 +2710,11 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             lines.extend(render_tilemap_scripts(
                                 rom, run_start, run_start + length))
                             continue
+                        if spec == "gfx_ptr_table":
+                            lines.extend(render_gfx_ptr_table(
+                                rom, run_start, run_start + length,
+                                bank, data_labels))
+                            continue
                         body = render_spec(rom[run_start:run_start + length],
                                            spec).rstrip("\n")
                         lines.extend(body.split("\n"))
@@ -2787,6 +2874,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             elif spec == "tilemap_scripts":
                                 lines.extend(render_tilemap_scripts(
                                     rom, seg, j))
+                            elif spec == "gfx_ptr_table":
+                                lines.extend(render_gfx_ptr_table(
+                                    rom, seg, j, bank, data_labels))
                             else:
                                 body = render_spec(rom[seg:j], spec).rstrip("\n")
                                 lines.extend(body.split("\n"))
@@ -2918,6 +3008,7 @@ def main():
     if args.hooks:
         dis.load_hook_dumps(args.hooks)
     dis.add_static_data_slots()
+    dis.carve_gfx_pointer_sets()
     dis.find_sprite_banks()
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()

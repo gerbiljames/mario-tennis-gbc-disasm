@@ -320,3 +320,11 @@ ENDM
 MACRO tilemap_copy_end
 	ds 5, $00
 ENDM
+
+; Match-result graphics set (loader $16:$4e54): three LZ tile streams
+; decompressed to VRAM $8900, $8a40, $9140 (20 tiles each). Records live in
+; GfxSetPointerTable_16 and are selected by the remapped match gfx index.
+; Usage: gfx_set tiles_lo, tiles_mid, tiles_hi
+MACRO gfx_set
+	dw \1, \2, \3
+ENDM
