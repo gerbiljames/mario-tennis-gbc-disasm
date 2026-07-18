@@ -1,9 +1,10 @@
 SECTION "ROM Bank $0f", ROMX[$4000], BANK[$0f]
 
 	; $4000, 6 bytes (records:2)
-	dw $4006 ; record 0
-	dw $41db ; record 1
-	dw $5f94 ; record 2
+	dw SmallCharTestMapScripts_0f ; record 0
+	dw AwardsCeremonyMapScripts_0f ; record 1
+	dw TournamentMapScripts_0f ; record 2
+SmallCharTestMapScripts_0f:
 	; $4006, 14 bytes (records:2)
 	dw $40c6 ; record 0
 	dw $40cf ; record 1
@@ -137,6 +138,7 @@ SetPlayerActorObjectDef:
 	farcall FarPtr_04_2c ; $41d4
 	call RestorePalettesFromMaster ; $41d7
 	ret ; $41da
+AwardsCeremonyMapScripts_0f:
 	; $41db, 14 bytes (records:2)
 	dw $442d ; record 0
 	dw $4446 ; record 1
@@ -3020,6 +3022,7 @@ Label_0f_5f8a:
 	ld a, $01 ; $5f91
 Label_0f_5f93:
 	ret ; $5f93
+TournamentMapScripts_0f:
 	; $5f94, 14 bytes (records:2)
 	dw $6070 ; record 0
 	dw $60b1 ; record 1
