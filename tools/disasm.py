@@ -1700,6 +1700,29 @@ def wram_bank_seq(dis, rom, off, labels):
     return None
 
 
+def match_launcher_seq(dis, rom, off, labels):
+    """Collapse the story match-launcher idiom into load_match_settings:
+    ld a,imm / ld [wCurrentMinigameStoryMatch ($c8f6)],a / ld a,imm /
+    ld [$c8f7],a / farcall FarPtr_LoadMatchSettingsFromTable (slot $5a bank
+    $0a). 41 standalone launcher stubs (each then ret) plus inline callers
+    share it. Only fires when no label/data note lands mid-sequence."""
+    def plain(o):
+        return (o in dis.instrs and o not in labels
+                and o not in dis.data_site_notes)
+    if off in dis.data_site_notes:
+        return None
+    if (rom[off] == 0x3E and rom[off + 2] == 0xEA and rom[off + 3] == 0xF6
+            and rom[off + 4] == 0xC8 and rom[off + 5] == 0x3E
+            and rom[off + 7] == 0xEA and rom[off + 8] == 0xF7
+            and rom[off + 9] == 0xC8 and rom[off + 10] == 0xDF
+            and rom[off + 11] == 0x5A and rom[off + 12] == 0x0A
+            and plain(off + 2) and plain(off + 5) and plain(off + 7)
+            and plain(off + 10)):
+        return (f"load_match_settings ${rom[off + 1]:02x}, "
+                f"${rom[off + 6]:02x}"), 13
+    return None
+
+
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                    ramscoped=None):
     text = ins.text
@@ -1889,6 +1912,19 @@ MACRO map_script
 	db \\1, \\2
 	dw \\3, \\4
 	db \\5, \\6
+ENDM
+
+; Story match launcher: select match `match` and court `court`
+; (wCurrentMinigameStoryMatch / $c8f7), then load that match's settings via
+; FarPtr_LoadMatchSettingsFromTable. The standalone launcher stubs follow it
+; with a ret; some callers continue with more setup.
+; Usage: load_match_settings match, court
+MACRO load_match_settings
+	ld a, \\1
+	ld [wCurrentMinigameStoryMatch], a
+	ld a, \\2
+	ld [$c8f7], a
+	farcall FarPtr_LoadMatchSettingsFromTable
 ENDM
 
 ; Story location record (6 bytes) in bank $0a's StoryLocationTable, indexed by
@@ -2160,6 +2196,12 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                     if 0xFF96 in ramnames else None
                 if wb:
                     text, size = wb
+                    lines.append(f"\t{text} ; ${cpu:04x}")
+                    off += size
+                    continue
+                ml = match_launcher_seq(dis, rom, off, labels)
+                if ml:
+                    text, size = ml
                     lines.append(f"\t{text} ; ${cpu:04x}")
                     off += size
                     continue

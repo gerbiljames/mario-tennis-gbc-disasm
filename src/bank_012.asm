@@ -2699,11 +2699,7 @@ Label_12_59be:
 	ld [$c294], a ; $5a0e
 	ld [wStoryModeExitLocationRequest], a ; $5a11
 	farcall FarPtr_InitStoryMatchSettings ; $5a14
-	ld a, $00 ; $5a17
-	ld [wCurrentMinigameStoryMatch], a ; $5a19
-	ld a, $05 ; $5a1c
-	ld [$c8f7], a ; $5a1e
-	farcall FarPtr_LoadMatchSettingsFromTable ; $5a21
+	load_match_settings $00, $05 ; $5a17
 	farcall FarPtr_RunStoryMatch ; $5a24
 	farcall FarPtr_RestoreOverworldAfterMatch ; $5a27
 	ret ; $5a2a
@@ -2861,11 +2857,7 @@ Label_12_5ae3:
 	ld [$c294], a ; $5b58
 	ld [wStoryModeExitLocationRequest], a ; $5b5b
 	farcall FarPtr_InitStoryMatchSettings ; $5b5e
-	ld a, $01 ; $5b61
-	ld [wCurrentMinigameStoryMatch], a ; $5b63
-	ld a, $05 ; $5b66
-	ld [$c8f7], a ; $5b68
-	farcall FarPtr_LoadMatchSettingsFromTable ; $5b6b
+	load_match_settings $01, $05 ; $5b61
 	farcall FarPtr_RunStoryMatch ; $5b6e
 	farcall FarPtr_RestoreOverworldAfterMatch ; $5b71
 	ret ; $5b74
@@ -3509,11 +3501,7 @@ Label_12_60c4:
 	ld [$c294], a ; $6119
 	ld [wStoryModeExitLocationRequest], a ; $611c
 	farcall FarPtr_InitStoryMatchSettings ; $611f
-	ld a, $01 ; $6122
-	ld [wCurrentMinigameStoryMatch], a ; $6124
-	ld a, $07 ; $6127
-	ld [$c8f7], a ; $6129
-	farcall FarPtr_LoadMatchSettingsFromTable ; $612c
+	load_match_settings $01, $07 ; $6122
 	farcall FarPtr_RunStoryMatch ; $612f
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6132
 	ret ; $6135
@@ -3564,11 +3552,7 @@ Label_12_6136:
 	ld [$c294], a ; $6195
 	ld [wStoryModeExitLocationRequest], a ; $6198
 	farcall FarPtr_InitStoryMatchSettings ; $619b
-	ld a, $01 ; $619e
-	ld [wCurrentMinigameStoryMatch], a ; $61a0
-	ld a, $08 ; $61a3
-	ld [$c8f7], a ; $61a5
-	farcall FarPtr_LoadMatchSettingsFromTable ; $61a8
+	load_match_settings $01, $08 ; $619e
 	farcall FarPtr_RunStoryMatch ; $61ab
 	farcall FarPtr_RestoreOverworldAfterMatch ; $61ae
 	ret ; $61b1
@@ -3621,11 +3605,7 @@ Label_12_61b2:
 	ld [$c294], a ; $6215
 	ld [wStoryModeExitLocationRequest], a ; $6218
 	farcall FarPtr_InitStoryMatchSettings ; $621b
-	ld a, $01 ; $621e
-	ld [wCurrentMinigameStoryMatch], a ; $6220
-	ld a, $09 ; $6223
-	ld [$c8f7], a ; $6225
-	farcall FarPtr_LoadMatchSettingsFromTable ; $6228
+	load_match_settings $01, $09 ; $621e
 	farcall FarPtr_RunStoryMatch ; $622b
 	farcall FarPtr_RestoreOverworldAfterMatch ; $622e
 	ret ; $6231
@@ -3660,11 +3640,7 @@ Label_12_6232:
 	ld [$c294], a ; $626d
 	ld [wStoryModeExitLocationRequest], a ; $6270
 	farcall FarPtr_InitStoryMatchSettings ; $6273
-	ld a, $00 ; $6276
-	ld [wCurrentMinigameStoryMatch], a ; $6278
-	ld a, $06 ; $627b
-	ld [$c8f7], a ; $627d
-	farcall FarPtr_LoadMatchSettingsFromTable ; $6280
+	load_match_settings $00, $06 ; $6276
 	farcall FarPtr_RunStoryMatch ; $6283
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6286
 	ret ; $6289
@@ -3703,11 +3679,7 @@ Label_12_628a:
 	ld [$c294], a ; $62cc
 	ld [wStoryModeExitLocationRequest], a ; $62cf
 	farcall FarPtr_InitStoryMatchSettings ; $62d2
-	ld a, $00 ; $62d5
-	ld [wCurrentMinigameStoryMatch], a ; $62d7
-	ld a, $07 ; $62da
-	ld [$c8f7], a ; $62dc
-	farcall FarPtr_LoadMatchSettingsFromTable ; $62df
+	load_match_settings $00, $07 ; $62d5
 	farcall FarPtr_RunStoryMatch ; $62e2
 	farcall FarPtr_RestoreOverworldAfterMatch ; $62e5
 	ret ; $62e8
@@ -3746,11 +3718,7 @@ Label_12_62e9:
 	ld [$c294], a ; $632b
 	ld [wStoryModeExitLocationRequest], a ; $632e
 	farcall FarPtr_InitStoryMatchSettings ; $6331
-	ld a, $00 ; $6334
-	ld [wCurrentMinigameStoryMatch], a ; $6336
-	ld a, $08 ; $6339
-	ld [$c8f7], a ; $633b
-	farcall FarPtr_LoadMatchSettingsFromTable ; $633e
+	load_match_settings $00, $08 ; $6334
 	farcall FarPtr_RunStoryMatch ; $6341
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6344
 	ret ; $6347
@@ -3787,11 +3755,7 @@ Label_12_6348:
 	ld [$c294], a ; $6385
 	ld [wStoryModeExitLocationRequest], a ; $6388
 	farcall FarPtr_InitStoryMatchSettings ; $638b
-	ld a, $00 ; $638e
-	ld [wCurrentMinigameStoryMatch], a ; $6390
-	ld a, $09 ; $6393
-	ld [$c8f7], a ; $6395
-	farcall FarPtr_LoadMatchSettingsFromTable ; $6398
+	load_match_settings $00, $09 ; $638e
 	farcall FarPtr_RunStoryMatch ; $639b
 	farcall FarPtr_RestoreOverworldAfterMatch ; $639e
 	ret ; $63a1

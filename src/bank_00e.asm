@@ -5470,46 +5470,22 @@ PrepareStoryMatch:
 	dw LoadExhibitionMatchSettings4 ; $7bb4
 	dw LoadExhibitionMatchSettings5 ; $7bb6
 LoadExhibitionMatchSettings0:
-	ld a, $00 ; $7bb8
-	ld [wCurrentMinigameStoryMatch], a ; $7bba
-	ld a, $18 ; $7bbd
-	ld [$c8f7], a ; $7bbf
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7bc2
+	load_match_settings $00, $18 ; $7bb8
 	ret ; $7bc5
 LoadExhibitionMatchSettings1:
-	ld a, $00 ; $7bc6
-	ld [wCurrentMinigameStoryMatch], a ; $7bc8
-	ld a, $17 ; $7bcb
-	ld [$c8f7], a ; $7bcd
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7bd0
+	load_match_settings $00, $17 ; $7bc6
 	ret ; $7bd3
 LoadExhibitionMatchSettings2:
-	ld a, $00 ; $7bd4
-	ld [wCurrentMinigameStoryMatch], a ; $7bd6
-	ld a, $16 ; $7bd9
-	ld [$c8f7], a ; $7bdb
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7bde
+	load_match_settings $00, $16 ; $7bd4
 	ret ; $7be1
 LoadExhibitionMatchSettings3:
-	ld a, $01 ; $7be2
-	ld [wCurrentMinigameStoryMatch], a ; $7be4
-	ld a, $18 ; $7be7
-	ld [$c8f7], a ; $7be9
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7bec
+	load_match_settings $01, $18 ; $7be2
 	ret ; $7bef
 LoadExhibitionMatchSettings4:
-	ld a, $01 ; $7bf0
-	ld [wCurrentMinigameStoryMatch], a ; $7bf2
-	ld a, $17 ; $7bf5
-	ld [$c8f7], a ; $7bf7
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7bfa
+	load_match_settings $01, $17 ; $7bf0
 	ret ; $7bfd
 LoadExhibitionMatchSettings5:
-	ld a, $01 ; $7bfe
-	ld [wCurrentMinigameStoryMatch], a ; $7c00
-	ld a, $16 ; $7c03
-	ld [$c8f7], a ; $7c05
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7c08
+	load_match_settings $01, $16 ; $7bfe
 	ret ; $7c0b
 HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c

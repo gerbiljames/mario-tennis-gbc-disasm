@@ -226,249 +226,109 @@ Label_10_421f:
 	dw Func_10_429e ; $4262
 	dw Func_10_42ac ; $4264
 Func_10_4266:
-	ld a, $00 ; $4266
-	ld [wCurrentMinigameStoryMatch], a ; $4268
-	ld a, $18 ; $426b
-	ld [$c8f7], a ; $426d
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4270
+	load_match_settings $00, $18 ; $4266
 	ret ; $4273
 Func_10_4274:
-	ld a, $00 ; $4274
-	ld [wCurrentMinigameStoryMatch], a ; $4276
-	ld a, $17 ; $4279
-	ld [$c8f7], a ; $427b
-	farcall FarPtr_LoadMatchSettingsFromTable ; $427e
+	load_match_settings $00, $17 ; $4274
 	ret ; $4281
 Func_10_4282:
-	ld a, $00 ; $4282
-	ld [wCurrentMinigameStoryMatch], a ; $4284
-	ld a, $16 ; $4287
-	ld [$c8f7], a ; $4289
-	farcall FarPtr_LoadMatchSettingsFromTable ; $428c
+	load_match_settings $00, $16 ; $4282
 	ret ; $428f
 Func_10_4290:
-	ld a, $01 ; $4290
-	ld [wCurrentMinigameStoryMatch], a ; $4292
-	ld a, $18 ; $4295
-	ld [$c8f7], a ; $4297
-	farcall FarPtr_LoadMatchSettingsFromTable ; $429a
+	load_match_settings $01, $18 ; $4290
 	ret ; $429d
 Func_10_429e:
-	ld a, $01 ; $429e
-	ld [wCurrentMinigameStoryMatch], a ; $42a0
-	ld a, $17 ; $42a3
-	ld [$c8f7], a ; $42a5
-	farcall FarPtr_LoadMatchSettingsFromTable ; $42a8
+	load_match_settings $01, $17 ; $429e
 	ret ; $42ab
 Func_10_42ac:
-	ld a, $01 ; $42ac
-	ld [wCurrentMinigameStoryMatch], a ; $42ae
-	ld a, $16 ; $42b1
-	ld [$c8f7], a ; $42b3
-	farcall FarPtr_LoadMatchSettingsFromTable ; $42b6
+	load_match_settings $01, $16 ; $42ac
 	ret ; $42b9
 Func_10_42ba:
-	ld a, $00 ; $42ba
-	ld [wCurrentMinigameStoryMatch], a ; $42bc
-	ld a, $10 ; $42bf
-	ld [$c8f7], a ; $42c1
-	farcall FarPtr_LoadMatchSettingsFromTable ; $42c4
+	load_match_settings $00, $10 ; $42ba
 	ret ; $42c7
 Func_10_42c8:
-	ld a, $00 ; $42c8
-	ld [wCurrentMinigameStoryMatch], a ; $42ca
-	ld a, $11 ; $42cd
-	ld [$c8f7], a ; $42cf
-	farcall FarPtr_LoadMatchSettingsFromTable ; $42d2
+	load_match_settings $00, $11 ; $42c8
 	ret ; $42d5
 Func_10_42d6:
-	ld a, $00 ; $42d6
-	ld [wCurrentMinigameStoryMatch], a ; $42d8
-	ld a, $12 ; $42db
-	ld [$c8f7], a ; $42dd
-	farcall FarPtr_LoadMatchSettingsFromTable ; $42e0
+	load_match_settings $00, $12 ; $42d6
 	ret ; $42e3
 Func_10_42e4:
-	ld a, $00 ; $42e4
-	ld [wCurrentMinigameStoryMatch], a ; $42e6
-	ld a, $13 ; $42e9
-	ld [$c8f7], a ; $42eb
-	farcall FarPtr_LoadMatchSettingsFromTable ; $42ee
+	load_match_settings $00, $13 ; $42e4
 	ret ; $42f1
 Func_10_42f2:
-	ld a, $01 ; $42f2
-	ld [wCurrentMinigameStoryMatch], a ; $42f4
-	ld a, $11 ; $42f7
-	ld [$c8f7], a ; $42f9
-	farcall FarPtr_LoadMatchSettingsFromTable ; $42fc
+	load_match_settings $01, $11 ; $42f2
 	ret ; $42ff
 Func_10_4300:
-	ld a, $01 ; $4300
-	ld [wCurrentMinigameStoryMatch], a ; $4302
-	ld a, $12 ; $4305
-	ld [$c8f7], a ; $4307
-	farcall FarPtr_LoadMatchSettingsFromTable ; $430a
+	load_match_settings $01, $12 ; $4300
 	ret ; $430d
 Func_10_430e:
-	ld a, $01 ; $430e
-	ld [wCurrentMinigameStoryMatch], a ; $4310
-	ld a, $13 ; $4313
-	ld [$c8f7], a ; $4315
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4318
+	load_match_settings $01, $13 ; $430e
 	ret ; $431b
 Func_10_431c:
-	ld a, $00 ; $431c
-	ld [wCurrentMinigameStoryMatch], a ; $431e
-	ld a, $00 ; $4321
-	ld [$c8f7], a ; $4323
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4326
+	load_match_settings $00, $00 ; $431c
 	ret ; $4329
 Func_10_432a:
-	ld a, $00 ; $432a
-	ld [wCurrentMinigameStoryMatch], a ; $432c
-	ld a, $04 ; $432f
-	ld [$c8f7], a ; $4331
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4334
+	load_match_settings $00, $04 ; $432a
 	ret ; $4337
 Func_10_4338:
-	ld a, $00 ; $4338
-	ld [wCurrentMinigameStoryMatch], a ; $433a
-	ld a, $03 ; $433d
-	ld [$c8f7], a ; $433f
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4342
+	load_match_settings $00, $03 ; $4338
 	ret ; $4345
 Func_10_4346:
-	ld a, $00 ; $4346
-	ld [wCurrentMinigameStoryMatch], a ; $4348
-	ld a, $02 ; $434b
-	ld [$c8f7], a ; $434d
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4350
+	load_match_settings $00, $02 ; $4346
 	ret ; $4353
 Func_10_4354:
-	ld a, $00 ; $4354
-	ld [wCurrentMinigameStoryMatch], a ; $4356
-	ld a, $01 ; $4359
-	ld [$c8f7], a ; $435b
-	farcall FarPtr_LoadMatchSettingsFromTable ; $435e
+	load_match_settings $00, $01 ; $4354
 	ret ; $4361
 Func_10_4362:
-	ld a, $00 ; $4362
-	ld [wCurrentMinigameStoryMatch], a ; $4364
-	ld a, $09 ; $4367
-	ld [$c8f7], a ; $4369
-	farcall FarPtr_LoadMatchSettingsFromTable ; $436c
+	load_match_settings $00, $09 ; $4362
 	ret ; $436f
 Func_10_4370:
-	ld a, $00 ; $4370
-	ld [wCurrentMinigameStoryMatch], a ; $4372
-	ld a, $08 ; $4375
-	ld [$c8f7], a ; $4377
-	farcall FarPtr_LoadMatchSettingsFromTable ; $437a
+	load_match_settings $00, $08 ; $4370
 	ret ; $437d
 Func_10_437e:
-	ld a, $00 ; $437e
-	ld [wCurrentMinigameStoryMatch], a ; $4380
-	ld a, $07 ; $4383
-	ld [$c8f7], a ; $4385
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4388
+	load_match_settings $00, $07 ; $437e
 	ret ; $438b
 Func_10_438c:
-	ld a, $00 ; $438c
-	ld [wCurrentMinigameStoryMatch], a ; $438e
-	ld a, $06 ; $4391
-	ld [$c8f7], a ; $4393
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4396
+	load_match_settings $00, $06 ; $438c
 	ret ; $4399
 Func_10_439a:
-	ld a, $00 ; $439a
-	ld [wCurrentMinigameStoryMatch], a ; $439c
-	ld a, $05 ; $439f
-	ld [$c8f7], a ; $43a1
-	farcall FarPtr_LoadMatchSettingsFromTable ; $43a4
+	load_match_settings $00, $05 ; $439a
 	ret ; $43a7
 Func_10_43a8:
-	ld a, $00 ; $43a8
-	ld [wCurrentMinigameStoryMatch], a ; $43aa
-	ld a, $02 ; $43ad
-	ld [$c8f7], a ; $43af
-	farcall FarPtr_LoadMatchSettingsFromTable ; $43b2
+	load_match_settings $00, $02 ; $43a8
 	ret ; $43b5
 Func_10_43b6:
-	ld a, $00 ; $43b6
-	ld [wCurrentMinigameStoryMatch], a ; $43b8
-	ld a, $0a ; $43bb
-	ld [$c8f7], a ; $43bd
-	farcall FarPtr_LoadMatchSettingsFromTable ; $43c0
+	load_match_settings $00, $0a ; $43b6
 	ret ; $43c3
 Func_10_43c4:
-	ld a, $01 ; $43c4
-	ld [wCurrentMinigameStoryMatch], a ; $43c6
-	ld a, $00 ; $43c9
-	ld [$c8f7], a ; $43cb
-	farcall FarPtr_LoadMatchSettingsFromTable ; $43ce
+	load_match_settings $01, $00 ; $43c4
 	ret ; $43d1
 Func_10_43d2:
-	ld a, $01 ; $43d2
-	ld [wCurrentMinigameStoryMatch], a ; $43d4
-	ld a, $02 ; $43d7
-	ld [$c8f7], a ; $43d9
-	farcall FarPtr_LoadMatchSettingsFromTable ; $43dc
+	load_match_settings $01, $02 ; $43d2
 	ret ; $43df
 Func_10_43e0:
-	ld a, $01 ; $43e0
-	ld [wCurrentMinigameStoryMatch], a ; $43e2
-	ld a, $03 ; $43e5
-	ld [$c8f7], a ; $43e7
-	farcall FarPtr_LoadMatchSettingsFromTable ; $43ea
+	load_match_settings $01, $03 ; $43e0
 	ret ; $43ed
 Func_10_43ee:
-	ld a, $01 ; $43ee
-	ld [wCurrentMinigameStoryMatch], a ; $43f0
-	ld a, $04 ; $43f3
-	ld [$c8f7], a ; $43f5
-	farcall FarPtr_LoadMatchSettingsFromTable ; $43f8
+	load_match_settings $01, $04 ; $43ee
 	ret ; $43fb
 Func_10_43fc:
-	ld a, $01 ; $43fc
-	ld [wCurrentMinigameStoryMatch], a ; $43fe
-	ld a, $05 ; $4401
-	ld [$c8f7], a ; $4403
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4406
+	load_match_settings $01, $05 ; $43fc
 	ret ; $4409
 Func_10_440a:
-	ld a, $01 ; $440a
-	ld [wCurrentMinigameStoryMatch], a ; $440c
-	ld a, $07 ; $440f
-	ld [$c8f7], a ; $4411
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4414
+	load_match_settings $01, $07 ; $440a
 	ret ; $4417
 Func_10_4418:
-	ld a, $01 ; $4418
-	ld [wCurrentMinigameStoryMatch], a ; $441a
-	ld a, $08 ; $441d
-	ld [$c8f7], a ; $441f
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4422
+	load_match_settings $01, $08 ; $4418
 	ret ; $4425
 Func_10_4426:
-	ld a, $01 ; $4426
-	ld [wCurrentMinigameStoryMatch], a ; $4428
-	ld a, $09 ; $442b
-	ld [$c8f7], a ; $442d
-	farcall FarPtr_LoadMatchSettingsFromTable ; $4430
+	load_match_settings $01, $09 ; $4426
 	ret ; $4433
 Func_10_4434:
-	ld a, $01 ; $4434
-	ld [wCurrentMinigameStoryMatch], a ; $4436
-	ld a, $0d ; $4439
-	ld [$c8f7], a ; $443b
-	farcall FarPtr_LoadMatchSettingsFromTable ; $443e
+	load_match_settings $01, $0d ; $4434
 	ret ; $4441
 Func_10_4442:
-	ld a, $01 ; $4442
-	ld [wCurrentMinigameStoryMatch], a ; $4444
-	ld a, $0a ; $4447
-	ld [$c8f7], a ; $4449
-	farcall FarPtr_LoadMatchSettingsFromTable ; $444c
+	load_match_settings $01, $0a ; $4442
 	ret ; $444f
 RunDrillMatchListMenu:
 	ld hl, $048d ; $4450

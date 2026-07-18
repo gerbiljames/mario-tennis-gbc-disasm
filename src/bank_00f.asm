@@ -4410,36 +4410,20 @@ Label_0f_71bf:
 	farcall FarPtr_InitStoryMatchSettings ; $71dc
 	test_flag $07, 5 ; $71df
 	jr z, Label_0f_71f3 ; $71e2
-	ld a, $00 ; $71e4
-	ld [wCurrentMinigameStoryMatch], a ; $71e6
-	ld a, $13 ; $71e9
-	ld [$c8f7], a ; $71eb
-	farcall FarPtr_LoadMatchSettingsFromTable ; $71ee
+	load_match_settings $00, $13 ; $71e4
 	jr Label_0f_7228 ; $71f1
 Label_0f_71f3:
 	test_flag $07, 6 ; $71f3
 	jr z, Label_0f_7207 ; $71f6
-	ld a, $00 ; $71f8
-	ld [wCurrentMinigameStoryMatch], a ; $71fa
-	ld a, $12 ; $71fd
-	ld [$c8f7], a ; $71ff
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7202
+	load_match_settings $00, $12 ; $71f8
 	jr Label_0f_7228 ; $7205
 Label_0f_7207:
 	test_flag $07, 7 ; $7207
 	jr z, Label_0f_721b ; $720a
-	ld a, $00 ; $720c
-	ld [wCurrentMinigameStoryMatch], a ; $720e
-	ld a, $11 ; $7211
-	ld [$c8f7], a ; $7213
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7216
+	load_match_settings $00, $11 ; $720c
 	jr Label_0f_7228 ; $7219
 Label_0f_721b:
-	ld a, $00 ; $721b
-	ld [wCurrentMinigameStoryMatch], a ; $721d
-	ld a, $10 ; $7220
-	ld [$c8f7], a ; $7222
-	farcall FarPtr_LoadMatchSettingsFromTable ; $7225
+	load_match_settings $00, $10 ; $721b
 Label_0f_7228:
 	farcall FarPtr_RunStoryMatch ; $7228
 	farcall FarPtr_RestoreOverworldAfterMatch ; $722b
@@ -4600,27 +4584,15 @@ Label_0f_735f:
 	farcall FarPtr_InitStoryMatchSettings ; $737c
 	test_flag $06, 6 ; $737f
 	jp z, Label_0f_7394 ; $7382
-	ld a, $01 ; $7385
-	ld [wCurrentMinigameStoryMatch], a ; $7387
-	ld a, $13 ; $738a
-	ld [$c8f7], a ; $738c
-	farcall FarPtr_LoadMatchSettingsFromTable ; $738f
+	load_match_settings $01, $13 ; $7385
 	jr Label_0f_73b7 ; $7392
 Label_0f_7394:
 	test_flag $06, 7 ; $7394
 	jp z, Label_0f_73aa ; $7397
-	ld a, $01 ; $739a
-	ld [wCurrentMinigameStoryMatch], a ; $739c
-	ld a, $12 ; $739f
-	ld [$c8f7], a ; $73a1
-	farcall FarPtr_LoadMatchSettingsFromTable ; $73a4
+	load_match_settings $01, $12 ; $739a
 	jp Label_0f_73b7 ; $73a7
 Label_0f_73aa:
-	ld a, $01 ; $73aa
-	ld [wCurrentMinigameStoryMatch], a ; $73ac
-	ld a, $11 ; $73af
-	ld [$c8f7], a ; $73b1
-	farcall FarPtr_LoadMatchSettingsFromTable ; $73b4
+	load_match_settings $01, $11 ; $73aa
 Label_0f_73b7:
 	farcall FarPtr_RunStoryMatch ; $73b7
 	farcall FarPtr_RestoreOverworldAfterMatch ; $73ba

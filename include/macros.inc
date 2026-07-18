@@ -137,6 +137,19 @@ MACRO map_script
 	db \5, \6
 ENDM
 
+; Story match launcher: select match `match` and court `court`
+; (wCurrentMinigameStoryMatch / $c8f7), then load that match's settings via
+; FarPtr_LoadMatchSettingsFromTable. The standalone launcher stubs follow it
+; with a ret; some callers continue with more setup.
+; Usage: load_match_settings match, court
+MACRO load_match_settings
+	ld a, \1
+	ld [wCurrentMinigameStoryMatch], a
+	ld a, \2
+	ld [$c8f7], a
+	farcall FarPtr_LoadMatchSettingsFromTable
+ENDM
+
 ; Story location record (6 bytes) in bank $0a's StoryLocationTable, indexed by
 ; wStoryModeCurrentLocation (GetStoryLocationRecordPtr). `map_scripts` is a
 ; slot in the target bank's $4000 directory (a DataPtr_*MapScripts label); the

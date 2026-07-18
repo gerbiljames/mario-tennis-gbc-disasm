@@ -199,7 +199,10 @@ uniform 14-byte functions that store a match id into
 reached via dw tables read through RAM. The rigid shape is scanned and
 seeded statically (runs of 3+), and the launcher dw tables render as
 labeled `ptr_words` entries — 41 stubs + a 35-entry table in bank $10's
-story match-select data.
+story match-select data. The 5-instruction body (set match + court `$c8f7`,
+`farcall FarPtr_LoadMatchSettingsFromTable`) now collapses to the
+`load_match_settings match, court` macro via `match_launcher_seq` (70 sites
+across banks $0e-$13: the 41 ret-stubs plus 29 inline callers).
 
 **WRAM bank switches** render as the `wram_bank` macro (macros.inc): the
 `ldh [hWramBank], a` + `ldh [rWBK], a` shadow-write pair, with an optional
