@@ -16,7 +16,7 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `9556a1b`); the whole history rebuilds
+Everything below is **committed** (HEAD `6c41521`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -342,9 +342,16 @@ flags (`wMatchPointFlag`/`wSetPointFlag`/`wGamePointFlag` via
 `wMatchRngState`, bank $6b cutscene driver step/timer/scroll).
 A 2026-07-18 pass swept the hottest unnamed addresses per subsystem;
 deliberately left unnamed: the story-script scratch pool `$c2b0-$c2ff`
-(meaning changes per location script), the shared HRAM scratch pool
-`$ffd0-$ffef` (sound/serial/actor engines reuse the same bytes), and
-single-bank cutscene scratch at `$cb3f-$cb4d`.
+(meaning changes per location script) and unproven mode-local bytes.
+**Union overlays**: ranges reused by non-concurrent subsystems are modeled
+via `ram_unions.json` → RGBDS `UNION`/`NEXTU` blocks in `ram/*.asm`, with
+*scope-aware* operand substitution in `disasm.py` (a variant's names render
+only at code sites inside its declared bank/address scopes; a `default`
+variant covers everything outside scoped ranges; unproven consumers keep
+numeric addresses). Current overlays: `$ffd0-$ffeb` (serial-link input slots
+default; bank-0 sound driver, sprite queue, story actor engine scoped) and
+`$c780-$c784` (char-select cursor, bank `$1b`). See docs/ram_map.md
+"Union overlays".
 `disasm.py` now also inlines curated RAM symbols into `ld hl/de/bc, imm`
 pointer setups (same curated-only rule as data labels), so 16-bit fields
 read via pointer render symbolically. Data banks:

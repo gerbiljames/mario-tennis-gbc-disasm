@@ -413,11 +413,11 @@ Label_0a_4255:
 	ld a, [$c323] ; $4258
 	ld b, a ; $425b
 	ld a, l ; $425c
-	ldh [$ffea], a ; $425d
+	ldh [hActorPtr], a ; $425d
 	ld a, h ; $425f
 	ldh [$ffeb], a ; $4260
 	wram_bank $04 ; $4262
-	ld hl, $ffea ; $4268
+	ld hl, hActorPtr ; $4268
 	ld a, [hl+] ; $426b
 	ld h, [hl] ; $426c
 	add a, $0c ; $426d
@@ -652,7 +652,7 @@ ScriptSetActorPosition:
 	call GetActorStateAddr ; $43c1
 	jr z, Label_0a_43d5 ; $43c4
 	ld a, l ; $43c6
-	ldh [$ffea], a ; $43c7
+	ldh [hActorPtr], a ; $43c7
 	ld a, h ; $43c9
 	ldh [$ffeb], a ; $43ca
 	wram_bank $04 ; $43cc
@@ -663,7 +663,7 @@ Label_0a_43d5:
 Func_0a_43d8:
 	push bc ; $43d8
 	push af ; $43d9
-	ld hl, $ffea ; $43da
+	ld hl, hActorPtr ; $43da
 	ld a, [hl+] ; $43dd
 	ld h, [hl] ; $43de
 	add a, $0c ; $43df
@@ -676,7 +676,7 @@ Func_0a_43d8:
 	ld bc, $0004 ; $43e7
 	call CopyMemoryBC ; $43ea
 	pop bc ; $43ed
-	ld hl, $ffea ; $43ee
+	ld hl, hActorPtr ; $43ee
 	ld a, [hl+] ; $43f1
 	ld h, [hl] ; $43f2
 	add a, $05 ; $43f3
@@ -699,7 +699,7 @@ ScriptSetActorMoveTarget:
 	call GetActorStateAddr ; $4408
 	jr z, Label_0a_441c ; $440b
 	ld a, l ; $440d
-	ldh [$ffea], a ; $440e
+	ldh [hActorPtr], a ; $440e
 	ld a, h ; $4410
 	ldh [$ffeb], a ; $4411
 	wram_bank $04 ; $4413
@@ -710,7 +710,7 @@ Label_0a_441c:
 Func_0a_441f:
 	push bc ; $441f
 	push af ; $4420
-	ld hl, $ffea ; $4421
+	ld hl, hActorPtr ; $4421
 	ld a, [hl+] ; $4424
 	ld h, [hl] ; $4425
 	add a, $08 ; $4426
@@ -723,7 +723,7 @@ Func_0a_441f:
 	ld bc, $0004 ; $442e
 	call CopyMemoryBC ; $4431
 	pop bc ; $4434
-	ld hl, $ffea ; $4435
+	ld hl, hActorPtr ; $4435
 	ld a, [hl+] ; $4438
 	ld h, [hl] ; $4439
 	add a, $05 ; $443a
@@ -751,7 +751,7 @@ MoveActorTowardPoint:
 	call GetActorStateAddr ; $4454
 	jr z, Label_0a_4462 ; $4457
 	ld a, l ; $4459
-	ldh [$ffea], a ; $445a
+	ldh [hActorPtr], a ; $445a
 	ld a, h ; $445c
 	ldh [$ffeb], a ; $445d
 	call MoveActorTowardPointRaw ; $445f
@@ -775,7 +775,7 @@ MoveActorTowardPointRaw:
 	ld a, [hl] ; $4472
 	push af ; $4473
 	push hl ; $4474
-	ld hl, $ffea ; $4475
+	ld hl, hActorPtr ; $4475
 	ld a, [hl+] ; $4478
 	ld b, [hl] ; $4479
 	ld c, a ; $447a
@@ -817,7 +817,7 @@ MoveActorTowardPointRaw:
 	add hl, de ; $44a7
 	ld e, l ; $44a8
 	ld d, h ; $44a9
-	ld hl, $ffea ; $44aa
+	ld hl, hActorPtr ; $44aa
 	ld a, [hl+] ; $44ad
 	ld h, [hl] ; $44ae
 	add a, $08 ; $44af
@@ -834,7 +834,7 @@ MoveActorTowardPointRaw:
 	add hl, bc ; $44bd
 	ld c, l ; $44be
 	ld b, h ; $44bf
-	ld hl, $ffea ; $44c0
+	ld hl, hActorPtr ; $44c0
 	ld a, [hl+] ; $44c3
 	ld h, [hl] ; $44c4
 	add a, $05 ; $44c5
@@ -857,7 +857,7 @@ MoveActorByDelta:
 	call GetActorStateAddr ; $44da
 	jr z, Label_0a_44ee ; $44dd
 	ld a, l ; $44df
-	ldh [$ffea], a ; $44e0
+	ldh [hActorPtr], a ; $44e0
 	ld a, h ; $44e2
 	ldh [$ffeb], a ; $44e3
 	wram_bank $04 ; $44e5
@@ -877,7 +877,7 @@ MoveActorByDeltaRaw:
 	ld d, b ; $44f9
 	ld c, l ; $44fa
 	ld b, h ; $44fb
-	ld hl, $ffea ; $44fc
+	ld hl, hActorPtr ; $44fc
 	ld a, [hl+] ; $44ff
 	ld h, [hl] ; $4500
 	add a, $0c ; $4501
@@ -888,7 +888,7 @@ MoveActorByDeltaRaw:
 	add hl, de ; $4507
 	ld e, l ; $4508
 	ld d, h ; $4509
-	ld hl, $ffea ; $450a
+	ld hl, hActorPtr ; $450a
 	ld a, [hl+] ; $450d
 	ld h, [hl] ; $450e
 	add a, $08 ; $450f
@@ -908,7 +908,7 @@ MoveActorByDeltaRaw:
 	ld d, b ; $451e
 	ld c, l ; $451f
 	ld b, h ; $4520
-	ld hl, $ffea ; $4521
+	ld hl, hActorPtr ; $4521
 	ld a, [hl+] ; $4524
 	ld h, [hl] ; $4525
 	add a, $0e ; $4526
@@ -919,7 +919,7 @@ MoveActorByDeltaRaw:
 	add hl, de ; $452c
 	ld e, l ; $452d
 	ld d, h ; $452e
-	ld hl, $ffea ; $452f
+	ld hl, hActorPtr ; $452f
 	ld a, [hl+] ; $4532
 	ld h, [hl] ; $4533
 	add a, $0a ; $4534
@@ -927,7 +927,7 @@ MoveActorByDeltaRaw:
 	ld a, e ; $4537
 	ld [hl+], a ; $4538
 	ld [hl], d ; $4539
-	ld hl, $ffea ; $453a
+	ld hl, hActorPtr ; $453a
 	ld a, [hl+] ; $453d
 	ld h, [hl] ; $453e
 	add a, $05 ; $453f
@@ -948,7 +948,7 @@ MoveActorByAngle:
 	call GetActorStateAddr ; $4552
 	jr z, Label_0a_4566 ; $4555
 	ld a, l ; $4557
-	ldh [$ffea], a ; $4558
+	ldh [hActorPtr], a ; $4558
 	ld a, h ; $455a
 	ldh [$ffeb], a ; $455b
 	wram_bank $04 ; $455d
@@ -980,7 +980,7 @@ MoveActorByAngleRaw:
 	push de ; $457f
 	ld e, l ; $4580
 	ld d, h ; $4581
-	ld hl, $ffea ; $4582
+	ld hl, hActorPtr ; $4582
 	ld a, [hl+] ; $4585
 	ld h, [hl] ; $4586
 	add a, $0c ; $4587
@@ -991,7 +991,7 @@ MoveActorByAngleRaw:
 	add hl, de ; $458d
 	ld e, l ; $458e
 	ld d, h ; $458f
-	ld hl, $ffea ; $4590
+	ld hl, hActorPtr ; $4590
 	ld a, [hl+] ; $4593
 	ld h, [hl] ; $4594
 	add a, $08 ; $4595
@@ -1000,7 +1000,7 @@ MoveActorByAngleRaw:
 	ld [hl+], a ; $4599
 	ld [hl], d ; $459a
 	pop de ; $459b
-	ld hl, $ffea ; $459c
+	ld hl, hActorPtr ; $459c
 	ld a, [hl+] ; $459f
 	ld h, [hl] ; $45a0
 	add a, $0e ; $45a1
@@ -1011,7 +1011,7 @@ MoveActorByAngleRaw:
 	add hl, de ; $45a7
 	ld e, l ; $45a8
 	ld d, h ; $45a9
-	ld hl, $ffea ; $45aa
+	ld hl, hActorPtr ; $45aa
 	ld a, [hl+] ; $45ad
 	ld h, [hl] ; $45ae
 	add a, $0a ; $45af
@@ -1019,7 +1019,7 @@ MoveActorByAngleRaw:
 	ld a, e ; $45b2
 	ld [hl+], a ; $45b3
 	ld [hl], d ; $45b4
-	ld hl, $ffea ; $45b5
+	ld hl, hActorPtr ; $45b5
 	ld a, [hl+] ; $45b8
 	ld h, [hl] ; $45b9
 	add a, $05 ; $45ba
@@ -1075,11 +1075,11 @@ FaceActorTowardActor:
 	dec h ; $4604
 	jr z, Label_0a_466a ; $4605
 	ld a, l ; $4607
-	ldh [$ffea], a ; $4608
+	ldh [hActorPtr], a ; $4608
 	ld a, h ; $460a
 	ldh [$ffeb], a ; $460b
 	wram_bank $04 ; $460d
-	ld hl, $ffea ; $4613
+	ld hl, hActorPtr ; $4613
 	ld a, [hl+] ; $4616
 	ld h, [hl] ; $4617
 	add a, $0c ; $4618
@@ -1096,10 +1096,10 @@ FaceActorTowardActor:
 	ld a, d ; $4624
 	call GetActorStateAddr ; $4625
 	ld a, l ; $4628
-	ldh [$ffea], a ; $4629
+	ldh [hActorPtr], a ; $4629
 	ld a, h ; $462b
 	ldh [$ffeb], a ; $462c
-	ld hl, $ffea ; $462e
+	ld hl, hActorPtr ; $462e
 	ld a, [hl+] ; $4631
 	ld h, [hl] ; $4632
 	add a, $0e ; $4633
@@ -1118,7 +1118,7 @@ FaceActorTowardActor:
 	ld h, a ; $4641
 	ld b, h ; $4642
 	ld c, l ; $4643
-	ld hl, $ffea ; $4644
+	ld hl, hActorPtr ; $4644
 	ld a, [hl+] ; $4647
 	ld h, [hl] ; $4648
 	add a, $0c ; $4649
@@ -1141,7 +1141,7 @@ FaceActorTowardActor:
 	ld l, c ; $465b
 	call AngleFromVectorCoarse ; $465c
 	push af ; $465f
-	ld hl, $ffea ; $4660
+	ld hl, hActorPtr ; $4660
 	ld a, [hl+] ; $4663
 	ld h, [hl] ; $4664
 	add a, $14 ; $4665
@@ -1171,11 +1171,11 @@ FaceActorsTowardEachOther:
 	jp z, Label_0a_46fd ; $4682
 	push hl ; $4685
 	ld a, l ; $4686
-	ldh [$ffea], a ; $4687
+	ldh [hActorPtr], a ; $4687
 	ld a, h ; $4689
 	ldh [$ffeb], a ; $468a
 	wram_bank $04 ; $468c
-	ld hl, $ffea ; $4692
+	ld hl, hActorPtr ; $4692
 	ld a, [hl+] ; $4695
 	ld h, [hl] ; $4696
 	add a, $0c ; $4697
@@ -1192,10 +1192,10 @@ FaceActorsTowardEachOther:
 	ld a, d ; $46a3
 	call GetActorStateAddr ; $46a4
 	ld a, l ; $46a7
-	ldh [$ffea], a ; $46a8
+	ldh [hActorPtr], a ; $46a8
 	ld a, h ; $46aa
 	ldh [$ffeb], a ; $46ab
-	ld hl, $ffea ; $46ad
+	ld hl, hActorPtr ; $46ad
 	ld a, [hl+] ; $46b0
 	ld h, [hl] ; $46b1
 	add a, $0e ; $46b2
@@ -1214,7 +1214,7 @@ FaceActorsTowardEachOther:
 	ld h, a ; $46c0
 	ld b, h ; $46c1
 	ld c, l ; $46c2
-	ld hl, $ffea ; $46c3
+	ld hl, hActorPtr ; $46c3
 	ld a, [hl+] ; $46c6
 	ld h, [hl] ; $46c7
 	add a, $0c ; $46c8
@@ -1237,7 +1237,7 @@ FaceActorsTowardEachOther:
 	ld l, c ; $46da
 	call AngleFromVectorCoarse ; $46db
 	push af ; $46de
-	ld hl, $ffea ; $46df
+	ld hl, hActorPtr ; $46df
 	ld a, [hl+] ; $46e2
 	ld h, [hl] ; $46e3
 	add a, $14 ; $46e4
@@ -1248,10 +1248,10 @@ FaceActorsTowardEachOther:
 	pop hl ; $46eb
 	ld d, a ; $46ec
 	ld a, l ; $46ed
-	ldh [$ffea], a ; $46ee
+	ldh [hActorPtr], a ; $46ee
 	ld a, h ; $46f0
 	ldh [$ffeb], a ; $46f1
-	ld hl, $ffea ; $46f3
+	ld hl, hActorPtr ; $46f3
 	ld a, [hl+] ; $46f6
 	ld h, [hl] ; $46f7
 	add a, $14 ; $46f8
@@ -1377,7 +1377,7 @@ MovePlayerToPosition:
 	ld d, a ; $47c7
 	ld hl, $d040 ; $47c8
 	ld a, l ; $47cb
-	ldh [$ffea], a ; $47cc
+	ldh [hActorPtr], a ; $47cc
 	ld a, h ; $47ce
 	ldh [$ffeb], a ; $47cf
 	wram_bank $04 ; $47d1
@@ -1399,7 +1399,7 @@ Label_0a_47e0:
 	pop bc ; $47ee
 	pop af ; $47ef
 	ld a, l ; $47f0
-	ldh [$ffea], a ; $47f1
+	ldh [hActorPtr], a ; $47f1
 	ld a, h ; $47f3
 	ldh [$ffeb], a ; $47f4
 	call Func_0a_43d8 ; $47f6
@@ -1431,10 +1431,10 @@ MovePlayerToActor:
 	ld hl, sp + 0 ; $4824
 	call GetActorStateAddr ; $4826
 	ld a, l ; $4829
-	ldh [$ffea], a ; $482a
+	ldh [hActorPtr], a ; $482a
 	ld a, h ; $482c
 	ldh [$ffeb], a ; $482d
-	ld hl, $ffea ; $482f
+	ld hl, hActorPtr ; $482f
 	ld a, [hl+] ; $4832
 	ld h, [hl] ; $4833
 	add a, $0c ; $4834
@@ -1461,7 +1461,7 @@ MovePlayerToActor:
 	ld d, a ; $484c
 	ld hl, $d040 ; $484d
 	ld a, l ; $4850
-	ldh [$ffea], a ; $4851
+	ldh [hActorPtr], a ; $4851
 	ld a, h ; $4853
 	ldh [$ffeb], a ; $4854
 	ld a, d ; $4856
@@ -1482,7 +1482,7 @@ Label_0a_485f:
 	pop bc ; $486d
 	pop af ; $486e
 	ld a, l ; $486f
-	ldh [$ffea], a ; $4870
+	ldh [hActorPtr], a ; $4870
 	ld a, h ; $4872
 	ldh [$ffeb], a ; $4873
 	call Func_0a_43d8 ; $4875
@@ -1507,7 +1507,7 @@ WaitPlayerMoveDone:
 	ld bc, $0258 ; $4895
 	ld hl, $d040 ; $4898
 	ld a, l ; $489b
-	ldh [$ffea], a ; $489c
+	ldh [hActorPtr], a ; $489c
 	ld a, h ; $489e
 	ldh [$ffeb], a ; $489f
 	wram_bank $04 ; $48a1

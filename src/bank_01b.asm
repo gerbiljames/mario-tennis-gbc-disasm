@@ -295,7 +295,7 @@ Label_1b_41ad:
 	ld d, a ; $41b3
 	ld a, [wMenuCursorY] ; $41b4
 	ld e, a ; $41b7
-	ldh a, [$ffd3] ; $41b8
+	ldh a, [hLinkInput] ; $41b8
 	bit 4, a ; $41ba
 	jr z, Label_1b_41d3 ; $41bc
 	ld a, [wMenuCursorX] ; $41be
@@ -389,10 +389,10 @@ Label_1b_422a:
 	jr z, Label_1b_4242 ; $423d
 	call LinkErrorReset ; $423f
 Label_1b_4242:
-	ldh a, [$ffd5] ; $4242
+	ldh a, [hLinkRemoteInputBuf] ; $4242
 	jr Label_1b_4248 ; $4244
 Label_1b_4246:
-	ldh a, [$ffd4] ; $4246
+	ldh a, [hLinkRemoteInput] ; $4246
 Label_1b_4248:
 	ld h, a ; $4248
 	ld a, [wMenuCursorLockFlags] ; $4249
@@ -512,9 +512,9 @@ Label_1b_42f5:
 	ld a, $01 ; $42f5
 	ret ; $42f7
 	INCBIN "data/bank_01b/d_42f8.bin" ; $42f8, 21 bytes
-	ldh a, [$ffd4] ; $430d
+	ldh a, [hLinkRemoteInput] ; $430d
 	jr Label_1b_4313 ; $430f
-	ldh a, [$ffd5] ; $4311
+	ldh a, [hLinkRemoteInputBuf] ; $4311
 Label_1b_4313:
 	ld h, a ; $4313
 	ld a, [wMenuCursorLockFlags] ; $4314
@@ -2736,10 +2736,10 @@ StartCharSelectCursorTask:
 	ld hl, $6035 ; $602e
 	call RegisterFrameTask ; $6031
 	ret ; $6034
-	ld a, [$c781] ; $6035
+	ld a, [wCharSelectChar] ; $6035
 	ld de, $0004 ; $6038
 	call GetCharSelectRosterField ; $603b
-	ld a, [$c781] ; $603e
+	ld a, [wCharSelectChar] ; $603e
 	farcall FarPtr_DrawCharSelectCursor ; $6041
 	ret ; $6044
 DrawCharSelectPrompt:
@@ -2796,7 +2796,7 @@ Label_1b_60ab:
 	ld a, [hl] ; $60ab
 	cp a, $ff ; $60ac
 	jr nz, Label_1b_6075 ; $60ae
-	ld a, [$c781] ; $60b0
+	ld a, [wCharSelectChar] ; $60b0
 	farcall FarPtr_18_24 ; $60b3
 	ld a, [$d58b] ; $60b6
 	farcall FarPtr_1b_12 ; $60b9
@@ -2810,12 +2810,12 @@ Label_1b_60ab:
 	call LoadCharSelectRosterTable ; $60cc
 	pop de ; $60cf
 	ld a, d ; $60d0
-	ld [$c783], a ; $60d1
+	ld [wCharSelectCol], a ; $60d1
 	ld a, e ; $60d4
-	ld [$c784], a ; $60d5
+	ld [wCharSelectRow], a ; $60d5
 	farcall FarPtr_UpdateCharSelectSelection ; $60d8
-	ld a, [$c781] ; $60db
-	ld [$c782], a ; $60de
+	ld a, [wCharSelectChar] ; $60db
+	ld [wCharSelectPrevChar], a ; $60de
 	ld c, $20 ; $60e1
 	call BeginFadeOut ; $60e3
 	call WaitFadeEnd ; $60e6
@@ -2843,7 +2843,7 @@ Label_1b_6119:
 	jr z, Label_1b_6135 ; $6123
 	ld a, [wTargetZoneX2] ; $6125
 	ld b, a ; $6128
-	ld a, [$c781] ; $6129
+	ld a, [wCharSelectChar] ; $6129
 	farcall FarPtr_18_2c ; $612c
 	sound $5f ; $612f
 	ld a, $fe ; $6131
@@ -2854,10 +2854,10 @@ Label_1b_6135:
 	jr z, Label_1b_614c ; $6139
 	ld a, [wTargetZoneX2] ; $613b
 	ld b, a ; $613e
-	ld a, [$c781] ; $613f
+	ld a, [wCharSelectChar] ; $613f
 	farcall FarPtr_18_2c ; $6142
 	sound $5f ; $6145
-	ld a, [$c781] ; $6147
+	ld a, [wCharSelectChar] ; $6147
 	jr Label_1b_6169 ; $614a
 Label_1b_614c:
 	ldh a, [hInputRisingEdge] ; $614c
@@ -2869,24 +2869,24 @@ Label_1b_614c:
 Label_1b_6158:
 	call MoveCharSelectCursor ; $6158
 	call UpdateCharSelectSelection ; $615b
-	ld a, [$c781] ; $615e
+	ld a, [wCharSelectChar] ; $615e
 	farcall FarPtr_18_24 ; $6161
 	call AdvanceFrame ; $6164
 	jr Label_1b_6119 ; $6167
 Label_1b_6169:
-	ld hl, $c783 ; $6169
+	ld hl, wCharSelectCol ; $6169
 	ld d, [hl] ; $616c
-	ld hl, $c784 ; $616d
+	ld hl, wCharSelectRow ; $616d
 	ld e, [hl] ; $6170
 	ret ; $6171
 UpdateCharSelectSelection:
-	ld a, [$c781] ; $6172
-	ld [$c782], a ; $6175
-	ld a, [$c784] ; $6178
+	ld a, [wCharSelectChar] ; $6172
+	ld [wCharSelectPrevChar], a ; $6175
+	ld a, [wCharSelectRow] ; $6178
 	add a, a ; $617b
 	add a, a ; $617c
 	add a, a ; $617d
-	ld hl, $c783 ; $617e
+	ld hl, wCharSelectCol ; $617e
 	add a, [hl] ; $6181
 	add a, $a0 ; $6182
 	ld l, a ; $6184
@@ -2897,7 +2897,7 @@ UpdateCharSelectSelection:
 	cp a, $ff ; $618a
 Label_1b_618c:
 	jr z, Label_1b_618c ; $618c
-	ld [$c781], a ; $618e
+	ld [wCharSelectChar], a ; $618e
 	ret ; $6191
 MoveCharSelectCursor:
 	ldh a, [hInputPressed] ; $6192
@@ -2905,9 +2905,9 @@ MoveCharSelectCursor:
 	and a, $f0 ; $6195
 	jr z, Label_1b_61b9 ; $6197
 	sound $5e ; $6199
-	ld a, [$c783] ; $619b
+	ld a, [wCharSelectCol] ; $619b
 	ld d, a ; $619e
-	ld a, [$c784] ; $619f
+	ld a, [wCharSelectRow] ; $619f
 	ld e, a ; $61a2
 Label_1b_61a3:
 	ld hl, $c7a0 ; $61a3
@@ -2916,9 +2916,9 @@ Label_1b_61a3:
 	farcall FarPtr_18_26 ; $61ac
 	jr z, Label_1b_61a3 ; $61af
 	ld a, d ; $61b1
-	ld [$c783], a ; $61b2
+	ld [wCharSelectCol], a ; $61b2
 	ld a, e ; $61b5
-	ld [$c784], a ; $61b6
+	ld [wCharSelectRow], a ; $61b6
 Label_1b_61b9:
 	ret ; $61b9
 RunNewGameSetup:
@@ -3474,14 +3474,14 @@ StartUnlockDebugCursorTask:
 	ld hl, $668d ; $6686
 	call RegisterFrameTask ; $6689
 	ret ; $668c
-	ld a, [$c781] ; $668d
+	ld a, [wCharSelectChar] ; $668d
 	ld de, $0004 ; $6690
 	call GetUnlockDebugRosterField ; $6693
-	ld a, [$c781] ; $6696
+	ld a, [wCharSelectChar] ; $6696
 	farcall FarPtr_DrawCharSelectCursor ; $6699
 	ret ; $669c
 UpdateUnlockDebugSelectedMugshot:
-	ld a, [$c781] ; $669d
+	ld a, [wCharSelectChar] ; $669d
 	push af ; $66a0
 	ld de, $0006 ; $66a1
 	call GetUnlockDebugRosterField ; $66a4
@@ -3502,11 +3502,11 @@ Label_1b_66bb:
 	ld hl, $66c4 ; $66bd
 	call RegisterFrameTask ; $66c0
 	ret ; $66c3
-	ld hl, $c781 ; $66c4
-	ld a, [$c782] ; $66c7
+	ld hl, wCharSelectChar ; $66c4
+	ld a, [wCharSelectPrevChar] ; $66c7
 	cp a, [hl] ; $66ca
 	jr z, Label_1b_66d6 ; $66cb
-	ld a, [$c781] ; $66cd
+	ld a, [wCharSelectChar] ; $66cd
 	ld de, $0006 ; $66d0
 	call GetUnlockDebugRosterField ; $66d3
 Label_1b_66d6:
@@ -3540,7 +3540,7 @@ Label_1b_670a:
 	ld a, [hl] ; $670a
 	cp a, $ff ; $670b
 	jr nz, Label_1b_66dd ; $670d
-	ld a, [$c781] ; $670f
+	ld a, [wCharSelectChar] ; $670f
 	farcall FarPtr_18_24 ; $6712
 	ld a, [$d58b] ; $6715
 	farcall FarPtr_1b_12 ; $6718
@@ -3552,8 +3552,8 @@ RunMinigameFlagsDebugScreen:
 	call LoadUnlockDebugRosterTable ; $6728
 	ld hl, $cb1f ; $672b
 	call UpdateUnlockDebugSelection ; $672e
-	ld a, [$c781] ; $6731
-	ld [$c782], a ; $6734
+	ld a, [wCharSelectChar] ; $6731
+	ld [wCharSelectPrevChar], a ; $6734
 	call ReadUnlockFlagsSaveBlock ; $6737
 	ld c, $20 ; $673a
 	call BeginFadeOut ; $673c
@@ -3582,7 +3582,7 @@ Label_1b_6778:
 	ldh a, [hInputRisingEdge] ; $677e
 	and a, $01 ; $6780
 	jr z, Label_1b_679d ; $6782
-	ld a, [$c781] ; $6784
+	ld a, [wCharSelectChar] ; $6784
 	ld b, a ; $6787
 	push bc ; $6788
 	farcall FarPtr_CheckUnlockFlag ; $6789
@@ -3615,7 +3615,7 @@ Label_1b_67af:
 Label_1b_67b8:
 	call MoveUnlockDebugCursor ; $67b8
 	call UpdateUnlockDebugSelection ; $67bb
-	ld a, [$c781] ; $67be
+	ld a, [wCharSelectChar] ; $67be
 	call AdvanceFrame ; $67c1
 	jr Label_1b_6778 ; $67c4
 Label_1b_67c6:
@@ -3627,13 +3627,13 @@ Label_1b_67c6:
 	call AdvanceFrame ; $67d4
 	ret ; $67d7
 UpdateUnlockDebugSelection:
-	ld a, [$c781] ; $67d8
-	ld [$c782], a ; $67db
-	ld a, [$c784] ; $67de
+	ld a, [wCharSelectChar] ; $67d8
+	ld [wCharSelectPrevChar], a ; $67db
+	ld a, [wCharSelectRow] ; $67de
 	add a, a ; $67e1
 	add a, a ; $67e2
 	add a, a ; $67e3
-	ld hl, $c783 ; $67e4
+	ld hl, wCharSelectCol ; $67e4
 	add a, [hl] ; $67e7
 	add a, $a0 ; $67e8
 	ld l, a ; $67ea
@@ -3641,7 +3641,7 @@ UpdateUnlockDebugSelection:
 	sub a, l ; $67ed
 	ld h, a ; $67ee
 	ld a, [hl] ; $67ef
-	ld [$c781], a ; $67f0
+	ld [wCharSelectChar], a ; $67f0
 	ret ; $67f3
 MoveUnlockDebugCursor:
 	ldh a, [hInputPressed] ; $67f4
@@ -3649,9 +3649,9 @@ MoveUnlockDebugCursor:
 	and a, $f0 ; $67f7
 	jr z, Label_1b_6826 ; $67f9
 	sound $5e ; $67fb
-	ld a, [$c783] ; $67fd
+	ld a, [wCharSelectCol] ; $67fd
 	ld d, a ; $6800
-	ld a, [$c784] ; $6801
+	ld a, [wCharSelectRow] ; $6801
 	ld e, a ; $6804
 	ld hl, $c7a0 ; $6805
 	call StepUnlockDebugCursor ; $6808
@@ -3668,9 +3668,9 @@ Label_1b_6819:
 	ld [$d58b], a ; $681b
 Label_1b_681e:
 	ld a, d ; $681e
-	ld [$c783], a ; $681f
+	ld [wCharSelectCol], a ; $681f
 	ld a, e ; $6822
-	ld [$c784], a ; $6823
+	ld [wCharSelectRow], a ; $6823
 Label_1b_6826:
 	ret ; $6826
 StepUnlockDebugCursor:
@@ -3763,7 +3763,7 @@ ToggleSelectedUnlockFlag:
 	push af ; $68a6
 	wram_bank $06 ; $68a7
 	ld hl, $d400 ; $68ad
-	ld a, [$c781] ; $68b0
+	ld a, [wCharSelectChar] ; $68b0
 	cp a, $1a ; $68b3
 	jr c, Label_1b_68ce ; $68b5
 	cp a, $20 ; $68b7

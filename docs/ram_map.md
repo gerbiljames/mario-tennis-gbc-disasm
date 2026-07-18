@@ -231,6 +231,25 @@ Addresses named by this project from disassembly evidence; also in
 | `0xffc2` | HRAM | `hLinkState` | [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths |
 | `0xffc8` | HRAM | `hLinkCounter` | [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8 |
 
+## Union overlays (`ram_unions.json`)
+
+Some RAM ranges are reused by several subsystems that never run at the same
+time. These are modeled as RGBDS `UNION`/`NEXTU` overlays in the generated
+`ram/*.asm`, driven by `ram_unions.json`: each variant carries its own symbols
+plus the code *scopes* (bank, or bank + CPU-address range) where it applies.
+`disasm.py` substitutes a variant's names only at code sites inside its
+scopes; a variant marked `default` applies everywhere outside every scoped
+variant's ranges. Sites in unproven consumers keep the numeric address.
+
+| range | variant (scope) | symbols |
+|---|---|---|
+| `$c780-$c784` | character select (bank `$1b`) | `wCharSelectChar`/`PrevChar`/`Col`/`Row` — cursor state over the roster grid at `$c7a0` |
+| `$ffd0-$ffeb` | serial-link input slots (default) | `hLinkInput` (merged effective input, also the scripted-input feed), `hLinkRemoteInput`, `hLinkRemoteInputBuf` |
+| | sound driver (bank 0 `$3373-$3ddf`) | `hSndScriptPtr`, `hSndDataPtr`, `hSndDataBank`, `hSndVolume` |
+| | sprite queue (bank 0 `$2ced-$2d9f`) | `hSpriteBlitY`, `hSpriteBlitX` |
+| | story actor engine (banks `$04/$05/$0a`) | `hActorPtr` |
+
+
 ## Match engine per-character structs (WRAM banks 4-7)
 
 The match engine (bank $08) keeps one character struct per **banked WRAM

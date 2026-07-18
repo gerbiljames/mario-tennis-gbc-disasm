@@ -4290,11 +4290,11 @@ Label_05_5ac2:
 	ld a, [$c323] ; $5ac5
 	ld b, a ; $5ac8
 	ld a, l ; $5ac9
-	ldh [$ffea], a ; $5aca
+	ldh [hActorPtr], a ; $5aca
 	ld a, h ; $5acc
 	ldh [$ffeb], a ; $5acd
 	wram_bank $04 ; $5acf
-	ld hl, $ffea ; $5ad5
+	ld hl, hActorPtr ; $5ad5
 	ld a, [hl+] ; $5ad8
 	ld h, [hl] ; $5ad9
 	add a, $0e ; $5ada
@@ -5211,10 +5211,10 @@ GetSpeakerVoice:
 	push af ; $6098
 	wram_bank $04 ; $6099
 	ld a, l ; $609f
-	ldh [$ffea], a ; $60a0
+	ldh [hActorPtr], a ; $60a0
 	ld a, h ; $60a2
 	ldh [$ffeb], a ; $60a3
-	ld hl, $ffea ; $60a5
+	ld hl, hActorPtr ; $60a5
 	ld a, [hl+] ; $60a8
 	ld h, [hl] ; $60a9
 	add a, $21 ; $60aa
@@ -5550,11 +5550,11 @@ OpenCenteredDialogueWindow:
 	ld a, [$c323] ; $639a
 	ld b, a ; $639d
 	ld a, l ; $639e
-	ldh [$ffea], a ; $639f
+	ldh [hActorPtr], a ; $639f
 	ld a, h ; $63a1
 	ldh [$ffeb], a ; $63a2
 	wram_bank $04 ; $63a4
-	ld hl, $ffea ; $63aa
+	ld hl, hActorPtr ; $63aa
 	ld a, [hl+] ; $63ad
 	ld h, [hl] ; $63ae
 	add a, $0e ; $63af

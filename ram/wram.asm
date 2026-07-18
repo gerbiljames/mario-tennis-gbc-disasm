@@ -375,7 +375,24 @@ wTextBuffer:: db
 
 ; 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString
 wInlineTextBuffer:: ds 32
-	ds 172
+	ds 160
+
+; Mode-local scratch ($c780-$c78f is reused by each game mode;
+; only proven consumers are named, sites in other modes stay numeric)
+UNION
+; character select (bank $1b)
+	ds 1
+; [8-bit] Character id under the char-select cursor, looked up from the roster grid at $c7a0 by UpdateCharSelectSelection
+wCharSelectChar:: db
+; [8-bit] Character id selected on the previous frame (change detection)
+wCharSelectPrevChar:: db
+; [8-bit] Char-select cursor column in the roster grid
+wCharSelectCol:: db
+; [8-bit] Char-select cursor row in the roster grid
+wCharSelectRow:: db
+ENDU
+
+	ds 7
 
 ; [8-bit] Nonzero draws the 4-corner court target zone (training drills)
 wTargetZoneEnabled:: db

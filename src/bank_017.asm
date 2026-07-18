@@ -272,7 +272,7 @@ Label_17_4183:
 	ld d, a ; $4189
 	ld a, [wMenuCursorY] ; $418a
 	ld e, a ; $418d
-	ldh a, [$ffd3] ; $418e
+	ldh a, [hLinkInput] ; $418e
 	bit 4, a ; $4190
 	jr z, Label_17_41a9 ; $4192
 	ld a, [wMenuCursorX] ; $4194
@@ -366,10 +366,10 @@ Label_17_4200:
 	jr z, Label_17_4218 ; $4213
 	call LinkErrorReset ; $4215
 Label_17_4218:
-	ldh a, [$ffd5] ; $4218
+	ldh a, [hLinkRemoteInputBuf] ; $4218
 	jr Label_17_421e ; $421a
 Label_17_421c:
-	ldh a, [$ffd4] ; $421c
+	ldh a, [hLinkRemoteInput] ; $421c
 Label_17_421e:
 	ld h, a ; $421e
 	ld a, [wMenuCursorLockFlags] ; $421f
@@ -499,10 +499,10 @@ Label_17_42cb:
 	jr z, Label_17_42e3 ; $42de
 	call LinkErrorReset ; $42e0
 Label_17_42e3:
-	ldh a, [$ffd4] ; $42e3
+	ldh a, [hLinkRemoteInput] ; $42e3
 	jr Label_17_42e9 ; $42e5
 Label_17_42e7:
-	ldh a, [$ffd5] ; $42e7
+	ldh a, [hLinkRemoteInputBuf] ; $42e7
 Label_17_42e9:
 	ld h, a ; $42e9
 	ld a, [wMenuCursorLockFlags] ; $42ea

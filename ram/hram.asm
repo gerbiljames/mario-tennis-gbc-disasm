@@ -133,7 +133,48 @@ hActiveJingle:: db
 
 ; [8-bit] Music (0x00 - on, 0x01 - off)
 hMusic:: db
-	ds 45
+	ds 1
+
+; Shared HRAM scratch pool: the serial-link input path, the bank-0
+; sound driver, the sprite queue and the story actor engine reuse the same
+; bytes (they never run concurrently). Only proven consumers are named;
+; sites outside every variant's scope keep the numeric address.
+UNION
+; serial-link input slots (default: link-aware match/menu code in many banks)
+	ds 3
+; [8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters
+hLinkInput:: db
+; [8-bit] Input byte decoded from the last received link frame
+hLinkRemoteInput:: db
+; [8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)
+hLinkRemoteInputBuf:: db
+	ds 22
+NEXTU
+; sound driver (bank 0, $3373-$3ddf)
+; [16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)
+hSndScriptPtr:: dw
+	ds 1
+; [16-bit] Pointer to the current channel's note/command data
+hSndDataPtr:: dw
+; [8-bit] ROM bank of the current channel's data (loaded into hRomBank/$2000)
+hSndDataBank:: db
+	ds 2
+; [8-bit] Current channel volume/envelope value (high nibble = level; envelope steps by $10)
+hSndVolume:: db
+NEXTU
+; sprite queue (bank 0, $2ced-$2d9f)
+; [8-bit] Screen Y origin of the multi-sprite block being queued (QueueSprite32x32)
+hSpriteBlitY:: db
+; [8-bit] Screen X origin of the multi-sprite block being queued
+hSpriteBlitX:: db
+NEXTU
+; story actor engine (banks $04/$05/$0a)
+	ds 26
+; [16-bit] Pointer to the actor struct currently being processed (stashed around GetActorStateAddr / StepActorScript)
+hActorPtr:: dw
+ENDU
+
+	ds 16
 
 ; [16-bit] RNG state (x*5 + $3573 per VBlank)
 hRandomSeed:: dw

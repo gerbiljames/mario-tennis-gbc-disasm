@@ -278,7 +278,7 @@ Func_38_4188:
 	ld d, a ; $418b
 	ld a, [wMenuCursorY] ; $418c
 	ld e, a ; $418f
-	ldh a, [$ffd3] ; $4190
+	ldh a, [hLinkInput] ; $4190
 	bit 4, a ; $4192
 	jr z, Label_38_41ab ; $4194
 	ld a, [wMenuCursorX] ; $4196
@@ -372,10 +372,10 @@ Label_38_4202:
 	jr z, Label_38_421a ; $4215
 	call LinkErrorReset ; $4217
 Label_38_421a:
-	ldh a, [$ffd5] ; $421a
+	ldh a, [hLinkRemoteInputBuf] ; $421a
 	jr Label_38_4220 ; $421c
 Label_38_421e:
-	ldh a, [$ffd4] ; $421e
+	ldh a, [hLinkRemoteInput] ; $421e
 Label_38_4220:
 	ld h, a ; $4220
 	ld a, [wMenuCursorLockFlags] ; $4221
@@ -495,9 +495,9 @@ Label_38_42cd:
 	ld a, $01 ; $42cd
 	ret ; $42cf
 	INCBIN "data/bank_038/d_42d0.bin" ; $42d0, 21 bytes
-	ldh a, [$ffd4] ; $42e5
+	ldh a, [hLinkRemoteInput] ; $42e5
 	jr Label_38_42eb ; $42e7
-	ldh a, [$ffd5] ; $42e9
+	ldh a, [hLinkRemoteInputBuf] ; $42e9
 Label_38_42eb:
 	ld h, a ; $42eb
 	ld a, [wMenuCursorLockFlags] ; $42ec
@@ -866,7 +866,7 @@ RunMatchTypeMenuLink:
 	pop af ; $4526
 	sound $14 ; $4527
 Label_38_4529:
-	ldh a, [$ffd3] ; $4529
+	ldh a, [hLinkInput] ; $4529
 	ld [wMenuInputPressed], a ; $452b
 	call AdjustMatchTypeSetting ; $452e
 	ld b, $01 ; $4531
@@ -4768,8 +4768,8 @@ Label_38_63fd:
 	ld [wMenuCursor2Y], a ; $644d
 	ldh [$ffe3], a ; $6450
 	xor a, a ; $6452
-	ldh [$ffd5], a ; $6453
-	ldh [$ffd4], a ; $6455
+	ldh [hLinkRemoteInputBuf], a ; $6453
+	ldh [hLinkRemoteInput], a ; $6455
 	ld [$d838], a ; $6457
 	ld [$cb72], a ; $645a
 	ld a, $01 ; $645d
@@ -4781,7 +4781,7 @@ Label_38_646e:
 	push af ; $646e
 	farcall FarPtr_RunLinkCommandFrame ; $646f
 	pop af ; $6472
-	ldh a, [$ffd5] ; $6473
+	ldh a, [hLinkRemoteInputBuf] ; $6473
 	ld [wMenuInputPressed], a ; $6475
 	ld a, [wMenuInputPressed] ; $6478
 	xor a, $0f ; $647b
@@ -4865,7 +4865,7 @@ Label_38_6505:
 	ld a, $ff ; $6525
 	ret ; $6527
 Func_38_6528:
-	ldh a, [$ffd4] ; $6528
+	ldh a, [hLinkRemoteInput] ; $6528
 	cp a, $20 ; $652a
 	jr nz, Label_38_6534 ; $652c
 	call JumpSoftReset ; $652e
@@ -5191,11 +5191,11 @@ Func_38_676f:
 	ld a, [$d814] ; $6778
 	cp a, $04 ; $677b
 	jr z, Label_38_67df ; $677d
-	ldh a, [$ffd4] ; $677f
+	ldh a, [hLinkRemoteInput] ; $677f
 	cp a, $21 ; $6781
 	jr nz, Label_38_678b ; $6783
 	ld a, $22 ; $6785
-	ldh [$ffd4], a ; $6787
+	ldh [hLinkRemoteInput], a ; $6787
 	jr Label_38_67df ; $6789
 Label_38_678b:
 	ld a, [$d811] ; $678b
@@ -5780,7 +5780,7 @@ Label_38_6b42:
 	push af ; $6b42
 	farcall FarPtr_RunLinkInputFrame ; $6b43
 	pop af ; $6b46
-	ldh a, [$ffd5] ; $6b47
+	ldh a, [hLinkRemoteInputBuf] ; $6b47
 	ld [wMenuInputPressed], a ; $6b49
 	ld a, [wMenuInputPressed] ; $6b4c
 	xor a, $0f ; $6b4f
@@ -5806,7 +5806,7 @@ Label_38_6b56:
 	jr Label_38_6b42 ; $6b76
 	ret ; $6b78
 Func_38_6b79:
-	ldh a, [$ffd4] ; $6b79
+	ldh a, [hLinkRemoteInput] ; $6b79
 	bit 5, a ; $6b7b
 	jr nz, Label_38_6b8c ; $6b7d
 	bit 4, a ; $6b7f

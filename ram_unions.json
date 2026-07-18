@@ -1,0 +1,62 @@
+{
+ "unions": [
+  {
+   "start": "0xc780",
+   "end": "0xc785",
+   "comment": "Mode-local scratch ($c780-$c78f is reused by each game mode;\nonly proven consumers are named, sites in other modes stay numeric)",
+   "variants": [
+    {
+     "context": "character select (bank $1b)",
+     "scopes": [{"bank": "0x1b"}],
+     "symbols": {
+      "0xc781": {"name": "wCharSelectChar", "note": "[8-bit] Character id under the char-select cursor, looked up from the roster grid at $c7a0 by UpdateCharSelectSelection"},
+      "0xc782": {"name": "wCharSelectPrevChar", "note": "[8-bit] Character id selected on the previous frame (change detection)"},
+      "0xc783": {"name": "wCharSelectCol", "note": "[8-bit] Char-select cursor column in the roster grid"},
+      "0xc784": {"name": "wCharSelectRow", "note": "[8-bit] Char-select cursor row in the roster grid"}
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xffd0",
+   "end": "0xffec",
+   "comment": "Shared HRAM scratch pool: the serial-link input path, the bank-0\nsound driver, the sprite queue and the story actor engine reuse the same\nbytes (they never run concurrently). Only proven consumers are named;\nsites outside every variant's scope keep the numeric address.",
+   "variants": [
+    {
+     "context": "serial-link input slots (default: link-aware match/menu code in many banks)",
+     "default": true,
+     "symbols": {
+      "0xffd3": {"name": "hLinkInput", "note": "[8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters"},
+      "0xffd4": {"name": "hLinkRemoteInput", "note": "[8-bit] Input byte decoded from the last received link frame"},
+      "0xffd5": {"name": "hLinkRemoteInputBuf", "note": "[8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)"}
+     }
+    },
+    {
+     "context": "sound driver (bank 0, $3373-$3ddf)",
+     "scopes": [{"bank": "0x00", "start": "0x3373", "end": "0x3de0"}],
+     "symbols": {
+      "0xffd0": {"name": "hSndScriptPtr", "note": "[16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)"},
+      "0xffd3": {"name": "hSndDataPtr", "note": "[16-bit] Pointer to the current channel's note/command data"},
+      "0xffd5": {"name": "hSndDataBank", "note": "[8-bit] ROM bank of the current channel's data (loaded into hRomBank/$2000)"},
+      "0xffd8": {"name": "hSndVolume", "note": "[8-bit] Current channel volume/envelope value (high nibble = level; envelope steps by $10)"}
+     }
+    },
+    {
+     "context": "sprite queue (bank 0, $2ced-$2d9f)",
+     "scopes": [{"bank": "0x00", "start": "0x2ced", "end": "0x2da0"}],
+     "symbols": {
+      "0xffd0": {"name": "hSpriteBlitY", "note": "[8-bit] Screen Y origin of the multi-sprite block being queued (QueueSprite32x32)"},
+      "0xffd1": {"name": "hSpriteBlitX", "note": "[8-bit] Screen X origin of the multi-sprite block being queued"}
+     }
+    },
+    {
+     "context": "story actor engine (banks $04/$05/$0a)",
+     "scopes": [{"bank": "0x04"}, {"bank": "0x05"}, {"bank": "0x0a"}],
+     "symbols": {
+      "0xffea": {"name": "hActorPtr", "note": "[16-bit] Pointer to the actor struct currently being processed (stashed around GetActorStateAddr / StepActorScript)"}
+     }
+    }
+   ]
+  }
+ ]
+}

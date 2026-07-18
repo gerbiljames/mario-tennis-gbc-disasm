@@ -282,7 +282,7 @@ Label_04_41f2:
 	push bc ; $41f7
 	push hl ; $41f8
 	ld a, l ; $41f9
-	ldh [$ffea], a ; $41fa
+	ldh [hActorPtr], a ; $41fa
 	ld a, h ; $41fc
 	ldh [$ffeb], a ; $41fd
 	ld c, l ; $41ff
@@ -498,7 +498,7 @@ Label_04_4318:
 	ld a, e ; $4323
 	call VectorFromLengthAndAngleRaw ; $4324
 	push hl ; $4327
-	ld hl, $ffea ; $4328
+	ld hl, hActorPtr ; $4328
 	ld a, [hl+] ; $432b
 	ld b, [hl] ; $432c
 	ld c, a ; $432d
@@ -550,7 +550,7 @@ Label_04_4365:
 	inc c ; $436f
 Label_04_4370:
 	push hl ; $4370
-	ld hl, $ffea ; $4371
+	ld hl, hActorPtr ; $4371
 	ld a, [hl+] ; $4374
 	ld h, [hl] ; $4375
 	add a, $0e ; $4376
@@ -567,7 +567,7 @@ Label_04_4370:
 	ld a, h ; $4382
 	ld [de], a ; $4383
 	push hl ; $4384
-	ld hl, $ffea ; $4385
+	ld hl, hActorPtr ; $4385
 	ld a, [hl+] ; $4388
 	ld h, [hl] ; $4389
 	add a, $0a ; $438a
@@ -595,7 +595,7 @@ Label_04_439d:
 	jr z, Label_04_43a7 ; $43a3
 	set 1, b ; $43a5
 Label_04_43a7:
-	ld hl, $ffea ; $43a7
+	ld hl, hActorPtr ; $43a7
 	ld a, [hl+] ; $43aa
 	ld h, [hl] ; $43ab
 	add a, $0c ; $43ac
@@ -612,7 +612,7 @@ Label_04_43a7:
 	ld a, h ; $43b8
 	ld [de], a ; $43b9
 	push hl ; $43ba
-	ld hl, $ffea ; $43bb
+	ld hl, hActorPtr ; $43bb
 	ld a, [hl+] ; $43be
 	ld h, [hl] ; $43bf
 	add a, $08 ; $43c0
@@ -642,7 +642,7 @@ Label_04_43dc:
 	ld a, b ; $43dc
 	and a, c ; $43dd
 	jr z, Label_04_4400 ; $43de
-	ld hl, $ffea ; $43e0
+	ld hl, hActorPtr ; $43e0
 	ld a, [hl+] ; $43e3
 	ld b, [hl] ; $43e4
 	ld c, a ; $43e5
@@ -756,7 +756,7 @@ Label_04_446f:
 	ld a, [$daf7] ; $44ad
 	call FarReadWord ; $44b0
 	push bc ; $44b3
-	ld hl, $ffea ; $44b4
+	ld hl, hActorPtr ; $44b4
 	ld a, [hl+] ; $44b7
 	ld b, [hl] ; $44b8
 	ld c, a ; $44b9
@@ -810,7 +810,7 @@ Label_04_4500:
 	ld h, b ; $4510
 	call VectorFromLengthAndAngle ; $4511
 	push hl ; $4514
-	ld hl, $ffea ; $4515
+	ld hl, hActorPtr ; $4515
 	ld a, [hl+] ; $4518
 	ld h, [hl] ; $4519
 	add a, $0e ; $451a
@@ -821,7 +821,7 @@ Label_04_4500:
 	add hl, de ; $4520
 	ld e, l ; $4521
 	ld d, h ; $4522
-	ld hl, $ffea ; $4523
+	ld hl, hActorPtr ; $4523
 	ld a, [hl+] ; $4526
 	ld h, [hl] ; $4527
 	add a, $0a ; $4528
@@ -830,7 +830,7 @@ Label_04_4500:
 	ld [hl+], a ; $452c
 	ld [hl], d ; $452d
 	pop de ; $452e
-	ld hl, $ffea ; $452f
+	ld hl, hActorPtr ; $452f
 	ld a, [hl+] ; $4532
 	ld h, [hl] ; $4533
 	add a, $0c ; $4534
@@ -841,7 +841,7 @@ Label_04_4500:
 	add hl, de ; $453a
 	ld e, l ; $453b
 	ld d, h ; $453c
-	ld hl, $ffea ; $453d
+	ld hl, hActorPtr ; $453d
 	ld a, [hl+] ; $4540
 	ld h, [hl] ; $4541
 	add a, $08 ; $4542
@@ -850,7 +850,7 @@ Label_04_4500:
 	ld [hl+], a ; $4546
 	ld [hl], d ; $4547
 	pop de ; $4548
-	ld hl, $ffea ; $4549
+	ld hl, hActorPtr ; $4549
 	ld a, [hl+] ; $454c
 	ld h, [hl] ; $454d
 	add a, $05 ; $454e
@@ -861,7 +861,7 @@ Label_04_4500:
 	INCBIN "data/bank_004/d_4556.bin" ; $4556, 37 bytes
 	inc de ; $457b
 	push de ; $457c
-	ld hl, $ffea ; $457d
+	ld hl, hActorPtr ; $457d
 	ld a, [hl+] ; $4580
 	ld h, [hl] ; $4581
 	add a, $08 ; $4582
@@ -874,7 +874,7 @@ Label_04_4500:
 	call FarCopyBytes ; $458e
 	ld e, l ; $4591
 	ld d, h ; $4592
-	ld hl, $ffea ; $4593
+	ld hl, hActorPtr ; $4593
 	ld a, [hl+] ; $4596
 	ld h, [hl] ; $4597
 	add a, $05 ; $4598
@@ -891,7 +891,7 @@ Label_04_4500:
 	ld d, h ; $45aa
 	inc de ; $45ab
 	inc de ; $45ac
-	ld hl, $ffea ; $45ad
+	ld hl, hActorPtr ; $45ad
 	ld a, [hl+] ; $45b0
 	ld h, [hl] ; $45b1
 	add a, $0c ; $45b2
@@ -902,7 +902,7 @@ Label_04_4500:
 	add hl, bc ; $45b8
 	ld c, l ; $45b9
 	ld b, h ; $45ba
-	ld hl, $ffea ; $45bb
+	ld hl, hActorPtr ; $45bb
 	ld a, [hl+] ; $45be
 	ld h, [hl] ; $45bf
 	add a, $08 ; $45c0
@@ -918,7 +918,7 @@ Label_04_4500:
 	ld d, h ; $45cf
 	inc de ; $45d0
 	inc de ; $45d1
-	ld hl, $ffea ; $45d2
+	ld hl, hActorPtr ; $45d2
 	ld a, [hl+] ; $45d5
 	ld h, [hl] ; $45d6
 	add a, $0e ; $45d7
@@ -929,7 +929,7 @@ Label_04_4500:
 	add hl, bc ; $45dd
 	ld c, l ; $45de
 	ld b, h ; $45df
-	ld hl, $ffea ; $45e0
+	ld hl, hActorPtr ; $45e0
 	ld a, [hl+] ; $45e3
 	ld h, [hl] ; $45e4
 	add a, $0a ; $45e5
@@ -937,7 +937,7 @@ Label_04_4500:
 	ld a, c ; $45e8
 	ld [hl+], a ; $45e9
 	ld [hl], b ; $45ea
-	ld hl, $ffea ; $45eb
+	ld hl, hActorPtr ; $45eb
 	ld a, [hl+] ; $45ee
 	ld h, [hl] ; $45ef
 	add a, $05 ; $45f0
@@ -945,7 +945,7 @@ Label_04_4500:
 	set 7, [hl] ; $45f3
 	ld a, $01 ; $45f5
 	ret ; $45f7
-	ld hl, $ffea ; $45f8
+	ld hl, hActorPtr ; $45f8
 	ld a, [hl+] ; $45fb
 	ld h, [hl] ; $45fc
 	add a, $05 ; $45fd
@@ -967,7 +967,7 @@ Label_04_4608:
 	call FarReadByte ; $4612
 	dec a ; $4615
 	ld b, a ; $4616
-	ld hl, $ffea ; $4617
+	ld hl, hActorPtr ; $4617
 	ld a, [hl+] ; $461a
 	ld h, [hl] ; $461b
 	add a, $03 ; $461c
@@ -978,7 +978,7 @@ Label_04_4608:
 	ret ; $4622
 	inc de ; $4623
 	push de ; $4624
-	ld hl, $ffea ; $4625
+	ld hl, hActorPtr ; $4625
 	ld a, [hl+] ; $4628
 	ld b, [hl] ; $4629
 	ld c, a ; $462a
@@ -1073,7 +1073,7 @@ Label_04_46ad:
 	ret ; $46af
 	inc de ; $46b0
 	push de ; $46b1
-	ld hl, $ffea ; $46b2
+	ld hl, hActorPtr ; $46b2
 	ld a, [hl+] ; $46b5
 	ld b, [hl] ; $46b6
 	ld c, a ; $46b7
@@ -1107,7 +1107,7 @@ Label_04_46ad:
 	push de ; $46dc
 	ld e, c ; $46dd
 	ld d, b ; $46de
-	ld hl, $ffea ; $46df
+	ld hl, hActorPtr ; $46df
 	ld a, [hl+] ; $46e2
 	ld b, [hl] ; $46e3
 	ld c, a ; $46e4
@@ -1165,7 +1165,7 @@ Label_04_4710:
 	call Func_04_534b ; $472b
 	and a, a ; $472e
 	jr nz, Label_04_4757 ; $472f
-	ld hl, $ffea ; $4731
+	ld hl, hActorPtr ; $4731
 	ld a, [hl+] ; $4734
 	ld h, [hl] ; $4735
 	add a, $08 ; $4736
@@ -1177,13 +1177,13 @@ Label_04_4710:
 	ld a, e ; $473d
 	ld [hl+], a ; $473e
 	ld [hl], d ; $473f
-	ld hl, $ffea ; $4740
+	ld hl, hActorPtr ; $4740
 	ld a, [hl+] ; $4743
 	ld b, [hl] ; $4744
 	ld c, a ; $4745
 	call IsActorAtTarget ; $4746
 	jr z, Label_04_4757 ; $4749
-	ld hl, $ffea ; $474b
+	ld hl, hActorPtr ; $474b
 	ld a, [hl+] ; $474e
 	ld b, [hl] ; $474f
 	ld c, a ; $4750
@@ -1240,7 +1240,7 @@ Label_04_477b:
 	inc de ; $4793
 	pop af ; $4794
 	push af ; $4795
-	ld hl, $ffea ; $4796
+	ld hl, hActorPtr ; $4796
 	add a, [hl] ; $4799
 	inc hl ; $479a
 	ld h, [hl] ; $479b
@@ -1280,7 +1280,7 @@ Label_04_47b7:
 	inc de ; $47cc
 	pop af ; $47cd
 	push af ; $47ce
-	ld hl, $ffea ; $47cf
+	ld hl, hActorPtr ; $47cf
 	add a, [hl] ; $47d2
 	inc hl ; $47d3
 	ld h, [hl] ; $47d4
@@ -1326,7 +1326,7 @@ Label_04_47fa:
 	inc de ; $482d
 	push de ; $482e
 	ld d, a ; $482f
-	ld hl, $ffea ; $4830
+	ld hl, hActorPtr ; $4830
 	ld a, [hl+] ; $4833
 	ld b, [hl] ; $4834
 	ld c, a ; $4835
@@ -1344,19 +1344,19 @@ Label_04_47fa:
 	call PlaySoundManaged ; $4848
 	ld a, $01 ; $484b
 	ret ; $484d
-	ld hl, $ffea ; $484e
+	ld hl, hActorPtr ; $484e
 	ld a, [hl+] ; $4851
 	ld h, [hl] ; $4852
 	add a, $0d ; $4853
 	ld l, a ; $4855
 	ld b, [hl] ; $4856
-	ld hl, $ffea ; $4857
+	ld hl, hActorPtr ; $4857
 	ld a, [hl+] ; $485a
 	ld h, [hl] ; $485b
 	add a, $0f ; $485c
 	ld l, a ; $485e
 	ld c, [hl] ; $485f
-	ld hl, $ffea ; $4860
+	ld hl, hActorPtr ; $4860
 	ld a, [hl+] ; $4863
 	ld h, [hl] ; $4864
 	add a, $16 ; $4865
@@ -1364,7 +1364,7 @@ Label_04_47fa:
 	ld a, c ; $4868
 	ld [hl+], a ; $4869
 	ld [hl], b ; $486a
-	ld hl, $ffea ; $486b
+	ld hl, hActorPtr ; $486b
 	ld a, [hl+] ; $486e
 	ld h, [hl] ; $486f
 	add a, $06 ; $4870
@@ -1372,7 +1372,7 @@ Label_04_47fa:
 	ld [hl], $08 ; $4873
 	inc hl ; $4875
 	ld [hl], $00 ; $4876
-	ld hl, $ffea ; $4878
+	ld hl, hActorPtr ; $4878
 	ld a, [hl+] ; $487b
 	ld h, [hl] ; $487c
 	add a, $05 ; $487d
@@ -1381,7 +1381,7 @@ Label_04_47fa:
 	inc de ; $4882
 	ld a, $00 ; $4883
 	ret ; $4885
-	ld hl, $ffea ; $4886
+	ld hl, hActorPtr ; $4886
 	ld a, [hl+] ; $4889
 	ld h, [hl] ; $488a
 	add a, $30 ; $488b
@@ -1420,7 +1420,7 @@ Label_04_48bf:
 	ret ; $48c2
 Func_04_48c3:
 	push bc ; $48c3
-	ld hl, $ffea ; $48c4
+	ld hl, hActorPtr ; $48c4
 	ld a, [hl+] ; $48c7
 	ld b, [hl] ; $48c8
 	ld c, a ; $48c9
@@ -1481,7 +1481,7 @@ Func_04_48c3:
 	and a, a ; $492e
 	jr nz, Label_04_4946 ; $492f
 	push hl ; $4931
-	ld hl, $ffea ; $4932
+	ld hl, hActorPtr ; $4932
 	ld a, [hl+] ; $4935
 	ld b, [hl] ; $4936
 	ld c, a ; $4937
@@ -1497,14 +1497,14 @@ Label_04_4946:
 Label_04_4947:
 	pop bc ; $4947
 	ret ; $4948
-	ld hl, $ffea ; $4949
+	ld hl, hActorPtr ; $4949
 	ld a, [hl+] ; $494c
 	ld h, [hl] ; $494d
 	add a, $05 ; $494e
 	ld l, a ; $4950
 	bit 7, [hl] ; $4951
 	jr nz, Label_04_4962 ; $4953
-	ld hl, $ffea ; $4955
+	ld hl, hActorPtr ; $4955
 	ld a, [hl+] ; $4958
 	ld h, [hl] ; $4959
 	add a, $03 ; $495a
@@ -1513,14 +1513,14 @@ Label_04_4947:
 	inc de ; $495f
 	jr Label_04_4979 ; $4960
 Label_04_4962:
-	ld hl, $ffea ; $4962
+	ld hl, hActorPtr ; $4962
 	ld a, [hl+] ; $4965
 	ld h, [hl] ; $4966
 	add a, $05 ; $4967
 	ld l, a ; $4969
 	bit 6, [hl] ; $496a
 	jr z, Label_04_4979 ; $496c
-	ld hl, $ffea ; $496e
+	ld hl, hActorPtr ; $496e
 	ld a, [hl+] ; $4971
 	ld h, [hl] ; $4972
 	add a, $03 ; $4973
@@ -1547,7 +1547,7 @@ Label_04_4979:
 	call FarReadByte ; $4991
 	push af ; $4994
 	push hl ; $4995
-	ld hl, $ffea ; $4996
+	ld hl, hActorPtr ; $4996
 	ld a, [hl+] ; $4999
 	ld b, [hl] ; $499a
 	ld c, a ; $499b
@@ -1577,7 +1577,7 @@ Label_04_4979:
 	add hl, de ; $49bc
 	ld e, l ; $49bd
 	ld d, h ; $49be
-	ld hl, $ffea ; $49bf
+	ld hl, hActorPtr ; $49bf
 	ld a, [hl+] ; $49c2
 	ld h, [hl] ; $49c3
 	add a, $08 ; $49c4
@@ -1625,7 +1625,7 @@ Label_04_4979:
 	ld h, a ; $4a03
 	ld c, [hl] ; $4a04
 	pop af ; $4a05
-	ld hl, $ffea ; $4a06
+	ld hl, hActorPtr ; $4a06
 	add a, [hl] ; $4a09
 	inc hl ; $4a0a
 	ld h, [hl] ; $4a0b
@@ -2430,7 +2430,7 @@ Label_04_5168:
 	ret ; $516a
 	wram_bank $04 ; $516b
 	call BuildNearbyActorList ; $5171
-	ld hl, $ffea ; $5174
+	ld hl, hActorPtr ; $5174
 	ld a, [hl+] ; $5177
 	ld b, [hl] ; $5178
 	ld c, a ; $5179
@@ -2490,7 +2490,7 @@ Label_04_51cc:
 Label_04_51dd:
 	push bc ; $51dd
 	ld [$daea], a ; $51de
-	ld hl, $ffea ; $51e1
+	ld hl, hActorPtr ; $51e1
 	ld a, [hl+] ; $51e4
 	ld b, [hl] ; $51e5
 	ld c, a ; $51e6
@@ -2628,7 +2628,7 @@ Label_04_52e1:
 	ret ; $52e6
 Label_04_52e7:
 	push bc ; $52e7
-	ld hl, $ffea ; $52e8
+	ld hl, hActorPtr ; $52e8
 	ld a, [hl+] ; $52eb
 	ld b, [hl] ; $52ec
 	ld c, a ; $52ed

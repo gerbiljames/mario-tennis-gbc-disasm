@@ -272,7 +272,7 @@ Label_3e_41b5:
 	ld d, a ; $41bb
 	ld a, [wMenuCursorY] ; $41bc
 	ld e, a ; $41bf
-	ldh a, [$ffd3] ; $41c0
+	ldh a, [hLinkInput] ; $41c0
 	bit 4, a ; $41c2
 	jr z, Label_3e_41db ; $41c4
 	ld a, [wMenuCursorX] ; $41c6
@@ -366,10 +366,10 @@ Label_3e_4232:
 	jr z, Label_3e_424a ; $4245
 	call LinkErrorReset ; $4247
 Label_3e_424a:
-	ldh a, [$ffd5] ; $424a
+	ldh a, [hLinkRemoteInputBuf] ; $424a
 	jr Label_3e_4250 ; $424c
 Label_3e_424e:
-	ldh a, [$ffd4] ; $424e
+	ldh a, [hLinkRemoteInput] ; $424e
 Label_3e_4250:
 	ld h, a ; $4250
 	ld a, [wMenuCursorLockFlags] ; $4251
@@ -499,10 +499,10 @@ Label_3e_42fd:
 	jr z, Label_3e_4315 ; $4310
 	call LinkErrorReset ; $4312
 Label_3e_4315:
-	ldh a, [$ffd4] ; $4315
+	ldh a, [hLinkRemoteInput] ; $4315
 	jr Label_3e_431b ; $4317
 Label_3e_4319:
-	ldh a, [$ffd5] ; $4319
+	ldh a, [hLinkRemoteInputBuf] ; $4319
 Label_3e_431b:
 	ld h, a ; $431b
 	ld a, [wMenuCursorLockFlags] ; $431c
@@ -813,7 +813,7 @@ RunLinkMatchRulesMenu:
 	wram_bank $03 ; $451f
 Label_3e_4525:
 	farcall FarPtr_TickMenuBgScroll ; $4525
-	ldh a, [$ffd3] ; $4528
+	ldh a, [hLinkInput] ; $4528
 	ld [wMenuInputPressed], a ; $452a
 	call HandleMatchRulesToggleInput ; $452d
 	ld b, $01 ; $4530
@@ -3639,7 +3639,7 @@ Label_3e_5c8c:
 	push af ; $5c8c
 	farcall FarPtr_RunLinkInputFrame ; $5c8d
 	pop af ; $5c90
-	ldh a, [$ffd3] ; $5c91
+	ldh a, [hLinkInput] ; $5c91
 	ld [wMenuInputPressed], a ; $5c93
 	ld b, $02 ; $5c96
 	ld c, $02 ; $5c98
@@ -4437,7 +4437,7 @@ RunLinkCourtSelect9Menu:
 	pop af ; $6622
 	wram_bank $03 ; $6623
 Label_3e_6629:
-	ldh a, [$ffd3] ; $6629
+	ldh a, [hLinkInput] ; $6629
 	ld [wMenuInputPressed], a ; $662b
 	push af ; $662e
 	farcall FarPtr_RunLinkInputFrame ; $662f

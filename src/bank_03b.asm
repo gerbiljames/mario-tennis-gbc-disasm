@@ -303,7 +303,7 @@ MoveMenuCursorRepeat:
 	ld d, a ; $41ab
 	ld a, [wMenuCursorY] ; $41ac
 	ld e, a ; $41af
-	ldh a, [$ffd3] ; $41b0
+	ldh a, [hLinkInput] ; $41b0
 	bit 4, a ; $41b2
 	jr z, Label_3b_41cb ; $41b4
 	ld a, [wMenuCursorX] ; $41b6
@@ -398,10 +398,10 @@ MoveMenuCursorLinkLocal:
 	jr z, Label_3b_423a ; $4235
 	call LinkErrorReset ; $4237
 Label_3b_423a:
-	ldh a, [$ffd5] ; $423a
+	ldh a, [hLinkRemoteInputBuf] ; $423a
 	jr Label_3b_4240 ; $423c
 Label_3b_423e:
-	ldh a, [$ffd4] ; $423e
+	ldh a, [hLinkRemoteInput] ; $423e
 Label_3b_4240:
 	ld h, a ; $4240
 	ld a, [wMenuCursorLockFlags] ; $4241
@@ -532,10 +532,10 @@ MoveMenuCursorLinkRemote:
 	jr z, Label_3b_4305 ; $4300
 	call LinkErrorReset ; $4302
 Label_3b_4305:
-	ldh a, [$ffd4] ; $4305
+	ldh a, [hLinkRemoteInput] ; $4305
 	jr Label_3b_430b ; $4307
 Label_3b_4309:
-	ldh a, [$ffd5] ; $4309
+	ldh a, [hLinkRemoteInputBuf] ; $4309
 Label_3b_430b:
 	ld h, a ; $430b
 	ld a, [wMenuCursorLockFlags] ; $430c

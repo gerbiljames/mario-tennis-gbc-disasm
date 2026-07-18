@@ -566,7 +566,7 @@ ReadMatchInputRepeat:
 	ldh a, [hInputPressed] ; $4422
 	ret ; $4424
 ReadScriptedMatchInput:
-	ldh a, [$ffd3] ; $4425
+	ldh a, [hLinkInput] ; $4425
 	ret ; $4427
 StepMatchFrames:
 	ld b, a ; $4428
@@ -7850,7 +7850,7 @@ ReadCharInput:
 	dw $782d ; record 4
 	dw $7833 ; record 5
 	dw $783f ; record 6
-	ldh a, [$ffd3] ; $782d
+	ldh a, [hLinkInput] ; $782d
 	ld [$df1f], a ; $782f
 	ret ; $7832
 	ldh a, [hLinkState] ; $7833
@@ -7866,10 +7866,10 @@ ReadCharInput:
 	jr z, Label_08_784f ; $7847
 	jr ReadCharPadInput ; $7849
 Label_08_784b:
-	ldh a, [$ffd5] ; $784b
+	ldh a, [hLinkRemoteInputBuf] ; $784b
 	jr Label_08_7851 ; $784d
 Label_08_784f:
-	ldh a, [$ffd4] ; $784f
+	ldh a, [hLinkRemoteInput] ; $784f
 Label_08_7851:
 	ld [$df1f], a ; $7851
 	ret ; $7854

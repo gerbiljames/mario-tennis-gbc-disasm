@@ -1413,26 +1413,152 @@ def _ds_directive(size):
     return {1: "db", 2: "dw"}.get(size, f"ds {size}")
 
 
-def write_ram_layout(regions):
+def _scope_to_flat(s):
+    """Convert a union-variant scope ({bank[, start, end] in CPU addresses})
+    to a flat-offset half-open range."""
+    bank = int(s["bank"], 0)
+    if "start" in s:
+        st, en = int(s["start"], 0), int(s["end"], 0)
+        if bank == 0:
+            return (st, en)
+        return (bank * BANK_SIZE + st - 0x4000, bank * BANK_SIZE + en - 0x4000)
+    return (bank * BANK_SIZE, (bank + 1) * BANK_SIZE)
+
+
+class ScopedRamNames:
+    """RAM symbols whose name depends on the referencing code's location
+    (union variants). resolve() picks the variant whose scope contains the
+    site; a default variant applies only outside every scoped variant's
+    ranges, so unknown consumers inside a scoped engine stay numeric."""
+
+    def __init__(self):
+        self.by_addr = {}
+
+    def add(self, addr, name, ranges, default_mask=None):
+        e = self.by_addr.setdefault(addr, {"scoped": [], "default": None,
+                                           "mask": []})
+        if default_mask is not None:
+            e["default"] = name
+            e["mask"] = default_mask
+        else:
+            e["scoped"].append((ranges, name))
+
+    def resolve(self, addr, off):
+        e = self.by_addr.get(addr)
+        if not e:
+            return None
+        for ranges, name in e["scoped"]:
+            if any(lo <= off < hi for lo, hi in ranges):
+                return name
+        if e["default"] and not any(lo <= off < hi for lo, hi in e["mask"]):
+            return e["default"]
+        return None
+
+
+def load_ram_unions(path):
+    """Load ram_unions.json: address ranges reused by several subsystems
+    (RGBDS UNION/NEXTU overlays). Returns (unions_by_region, ScopedRamNames)."""
+    unions_by_region, scoped = {}, ScopedRamNames()
+    if not Path(path).exists():
+        return unions_by_region, scoped
+    data = json.loads(Path(path).read_text())
+    for u in data.get("unions", []):
+        start, end = int(u["start"], 0), int(u["end"], 0)
+        mask = [_scope_to_flat(s) for v in u["variants"]
+                for s in v.get("scopes", [])]
+        variants = []
+        for v in u["variants"]:
+            ranges = [_scope_to_flat(s) for s in v.get("scopes", [])]
+            syms = []
+            for addr_s, e in sorted(v["symbols"].items(),
+                                    key=lambda kv: int(kv[0], 0)):
+                addr, name = int(addr_s, 0), e["name"]
+                exp = region_prefix(addr)
+                if exp and not (name.startswith(exp) and name[1:2].isupper()):
+                    print(f"warning: {path}: {addr_s} name {name!r} should be "
+                          f"{exp}PascalCase", file=sys.stderr)
+                if not start <= addr < end:
+                    print(f"warning: {path}: {addr_s} outside union "
+                          f"${start:04x}-${end:04x}", file=sys.stderr)
+                syms.append((addr, name, ram_field_size(e), e.get("note", "")))
+                if v.get("default"):
+                    scoped.add(addr, name, None, default_mask=mask)
+                else:
+                    scoped.add(addr, name, ranges)
+            variants.append((v.get("context", ""), syms))
+        for ri, (rs, re_, _mem, _path) in enumerate(RAM_REGIONS):
+            if rs <= start < re_:
+                unions_by_region.setdefault(ri, []).append(
+                    (start, end, u.get("comment", ""), variants))
+                break
+        else:
+            print(f"warning: {path}: union {u['start']} outside known RAM "
+                  f"regions", file=sys.stderr)
+    return unions_by_region, scoped
+
+
+def _emit_union_block(out, start, end, comment, variants):
+    for ln in comment.split("\n"):
+        out.append(f"; {ln}".rstrip() if ln.strip() else ";")
+    out.append("UNION")
+    for vi, (context, syms) in enumerate(variants):
+        if vi:
+            out.append("NEXTU")
+        if context:
+            out.append(f"; {context}")
+        cursor = start
+        for addr, name, size, note in syms:
+            if addr > cursor:
+                out.append(f"\tds {addr - cursor}")
+            for ln in (note or "").split("\n"):
+                out.append(f"; {ln}".rstrip() if ln.strip() else ";")
+            out.append(f"{name}:: {_ds_directive(size)}")
+            cursor = addr + size
+        if vi == 0 and cursor < end:
+            out.append(f"\tds {end - cursor}")
+    out.append("ENDU")
+    out.append("")
+
+
+def write_ram_layout(regions, unions_by_region=None):
     """Emit ram.asm + ram/*.asm from {region_index: [(addr, name, size, note)]}.
     Each region becomes one fixed-address SECTION; ds fills the gaps between
     named symbols so every symbol lands at its exact hardware address."""
     files = {}  # layout file -> list of section text blocks
+    unions_by_region = unions_by_region or {}
     for ri, (start, end, mem, path) in enumerate(RAM_REGIONS):
-        syms = sorted(regions.get(ri, []))
-        if not syms:
+        items = [("sym", addr, name, size, note)
+                 for addr, name, size, note in regions.get(ri, [])]
+        for ustart, uend, comment, variants in unions_by_region.get(ri, []):
+            for addr, *_rest in regions.get(ri, []):
+                if ustart <= addr < uend:
+                    raise SystemExit(
+                        f"ram_map/ram_unions conflict: ${addr:04x} inside "
+                        f"union ${ustart:04x}-${uend:04x}")
+            items.append(("union", ustart, uend, comment, variants))
+        if not items:
             continue
-        base = syms[0][0]
+        items.sort(key=lambda t: t[1])
+        base = items[0][1]
         out = [f'SECTION "{mem} ${base:04x}", {mem}[${base:04x}]', ""]
-        for i, (addr, name, size, note) in enumerate(syms):
-            nxt = syms[i + 1][0] if i + 1 < len(syms) else end
+        for i, item in enumerate(items):
+            nxt = items[i + 1][1] if i + 1 < len(items) else end
+            if item[0] == "union":
+                _tag, ustart, uend, comment, variants = item
+                _emit_union_block(out, ustart, uend, comment, variants)
+                gap = nxt - uend
+                if gap > 0 and i + 1 < len(items):
+                    out.append(f"\tds {gap}")
+                    out.append("")
+                continue
+            _tag, addr, name, size, note = item
             span = nxt - addr
             emitted = max(1, min(size, span))
             for ln in (note or "").split("\n"):
                 out.append(f"; {ln}".rstrip() if ln.strip() else ";")
             out.append(f"{name}:: {_ds_directive(emitted)}")
             gap = span - emitted
-            if gap > 0 and i + 1 < len(syms):
+            if gap > 0 and i + 1 < len(items):
                 out.append(f"\tds {gap}")
             out.append("")
         files.setdefault(path, []).append("\n".join(out).rstrip() + "\n")
@@ -1448,7 +1574,7 @@ def write_ram_layout(regions):
     Path("ram.asm").write_text(_GENERATED_HDR + "\n" + "\n".join(includes) + "\n")
 
 
-def load_ram_map(path):
+def load_ram_map(path, unions_by_region=None):
     """Map RAM addresses to names from ram_map.json (for operand rendering) and
     emit the RAM layout files (ram.asm + ram/*.asm)."""
     if not Path(path).exists():
@@ -1474,7 +1600,7 @@ def load_ram_map(path):
         else:
             print(f"warning: {path}: {addr_s} outside known RAM regions",
                   file=sys.stderr)
-    write_ram_layout(regions)
+    write_ram_layout(regions, unions_by_region)
     return names
 
 
@@ -1543,7 +1669,8 @@ def wram_bank_seq(dis, rom, off, labels):
     return None
 
 
-def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None):
+def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
+                   ramscoped=None):
     text = ins.text
     # A 16-bit immediate load whose value points at a named data region is a
     # pointer setup; inline the label. Bounded to data_labels (curated data
@@ -1564,6 +1691,10 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None):
             # named RAM address is a pointer setup, not a constant.
             if ramnames and imm in ramnames:
                 return f"ld {m.group(1)}, {ramnames[imm]}"
+            if ramscoped:
+                sn = ramscoped.resolve(imm, off)
+                if sn:
+                    return f"ld {m.group(1)}, {sn}"
     if "$ff" in text and hwregs:
         m = HWADDR_RE.search(text)
         if m:
@@ -1576,6 +1707,10 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None):
             addr = int(m.group(1), 16)
             if addr in ramnames:
                 text = text.replace(f"[${m.group(1)}]", f"[{ramnames[addr]}]")
+            elif ramscoped:
+                sn = ramscoped.resolve(addr, off)
+                if sn:
+                    text = text.replace(f"[${m.group(1)}]", f"[{sn}]")
     if ins.target is None:
         return text
     t = target_to_offset(ins.target, off)
@@ -1706,7 +1841,7 @@ def render_object_header(rom, off, data_labels, ptr_labels):
 
 
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
-         curated=None):
+         curated=None, ramscoped=None):
     data_tables = data_tables or {}
     curated = curated or set()
     rom = dis.rom
@@ -1874,7 +2009,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                                 f"FarPtr_{fbank:02x}_{slot:02x}")
                         lines.append(f"\tfarcall {sl} ; ${cpu:04x}")
                 elif off in dis.inline_arg_calls and ins.size == 4:
-                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels)} ; ${cpu:04x}")
+                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels, ramscoped)} ; ${cpu:04x}")
                     lines.append(f"\tdb ${rom[off+3]:02x} ; ${offset_to_cpu(off+3):04x} inline arg")
                 else:
                     note = dis.data_site_notes.get(off)
@@ -1883,7 +2018,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         sl = data_slot_names.get(
                             note, f"DataPtr_{note[0]:02x}_{note[1]:02x}")
                         suffix = f" -> {sl}"
-                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels)} ; ${cpu:04x}{suffix}")
+                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels, ramscoped)} ; ${cpu:04x}{suffix}")
                 off += ins.size
             else:
                 run_start = off
@@ -2102,6 +2237,7 @@ def main():
     ap.add_argument("--data-tables", default="data_tables.json")
     ap.add_argument("--hardware-inc", default="include/hardware.inc")
     ap.add_argument("--ram-map", default="ram_map.json")
+    ap.add_argument("--ram-unions", default="ram_unions.json")
     ap.add_argument("--hooks", nargs="*", default=[],
                     help="hook_client.py dump(s) of data-helper call captures")
     ap.add_argument("--no-descent", action="store_true")
@@ -2162,11 +2298,12 @@ def main():
         dis.scan_data_slots()
     labels = build_labels(dis, overrides)
     hwregs = load_hwregs(args.hardware_inc)
-    ramnames = load_ram_map(args.ram_map)
+    unions_by_region, ramscoped = load_ram_unions(args.ram_unions)
+    ramnames = load_ram_map(args.ram_map, unions_by_region)
     Path(args.srcdir).mkdir(parents=True, exist_ok=True)
     curated = set(overrides.values()) if overrides else set()
     emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables,
-         curated)
+         curated, ramscoped)
 
 
 if __name__ == "__main__":

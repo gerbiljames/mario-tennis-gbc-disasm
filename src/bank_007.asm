@@ -116,7 +116,7 @@ RunLinkMatchFrameMaster:
 	call PrepareLinkStatePayload ; $4083
 	call ExchangeLinkFrameByteMaster ; $4086
 	call SerialDecodeInput ; $4089
-	ldh a, [$ffd3] ; $408c
+	ldh a, [hLinkInput] ; $408c
 	call SoftResetIfABStartSelect ; $408e
 	farcall FarPtr_UpdateMatchFrame ; $4091
 	call SerialEncodeInput ; $4094
@@ -129,7 +129,7 @@ RunLinkMatchFrameSlave:
 	call PrepareLinkStatePayload ; $409c
 	call ExchangeLinkFrameByteSlave ; $409f
 	call SerialDecodeInput ; $40a2
-	ldh a, [$ffd3] ; $40a5
+	ldh a, [hLinkInput] ; $40a5
 	call SoftResetIfABStartSelect ; $40a7
 	farcall FarPtr_UpdateMatchFrame ; $40aa
 	call SerialEncodeInput ; $40ad
@@ -1331,7 +1331,7 @@ RunLinkInputFrameMaster:
 	call PrepareLinkInputPayload ; $4809
 	call ExchangeLinkFrameByteMaster ; $480c
 	call SerialDecodeInput ; $480f
-	ldh a, [$ffd3] ; $4812
+	ldh a, [hLinkInput] ; $4812
 	call SoftResetIfABStartSelect ; $4814
 	call SerialEncodeInput ; $4817
 	pop bc ; $481a
@@ -1343,7 +1343,7 @@ RunLinkInputFrameSlave:
 	call PrepareLinkInputPayload ; $481f
 	call ExchangeLinkFrameByteSlave ; $4822
 	call SerialDecodeInput ; $4825
-	ldh a, [$ffd3] ; $4828
+	ldh a, [hLinkInput] ; $4828
 	call SoftResetIfABStartSelect ; $482a
 	call SerialEncodeInput ; $482d
 	pop hl ; $4830
@@ -1608,7 +1608,7 @@ PrepareLinkStatePayload:
 	xor a, $c0 ; $49fc
 	ldh [$ffdc], a ; $49fe
 	ldh a, [$ffd6] ; $4a00
-	ldh [$ffd5], a ; $4a02
+	ldh [hLinkRemoteInputBuf], a ; $4a02
 	call ReadJoypadThunk ; $4a04
 	ldh a, [hPlayerInputFlags] ; $4a07
 	and a, $f0 ; $4a09
@@ -1624,7 +1624,7 @@ PrepareLinkInputPayload:
 	xor a, $c0 ; $4a18
 	ldh [$ffdc], a ; $4a1a
 	ldh a, [$ffd6] ; $4a1c
-	ldh [$ffd5], a ; $4a1e
+	ldh [hLinkRemoteInputBuf], a ; $4a1e
 	call ReadJoypadThunk ; $4a20
 	ldh a, [hInputPressed] ; $4a23
 	ldh [$ffd6], a ; $4a25
@@ -1948,7 +1948,7 @@ SerialEncodeCommand:
 	jr z, Label_07_4c49 ; $4c39
 	sound $72 ; $4c3b
 	xor a, a ; $4c3d
-	ldh [$ffd5], a ; $4c3e
+	ldh [hLinkRemoteInputBuf], a ; $4c3e
 	ldh [$ffd6], a ; $4c40
 	ld a, $c0 ; $4c42
 	ldh [hLinkTxByte], a ; $4c44
@@ -1990,37 +1990,37 @@ SerialDecodeCommand:
 	jr z, Label_07_4c7f ; $4c76
 	sound $72 ; $4c78
 	xor a, a ; $4c7a
-	ldh [$ffd3], a ; $4c7b
+	ldh [hLinkInput], a ; $4c7b
 	jr Label_07_4cae ; $4c7d
 Label_07_4c7f:
 	ld a, b ; $4c7f
 	and a, $3f ; $4c80
-	ldh [$ffd4], a ; $4c82
+	ldh [hLinkRemoteInput], a ; $4c82
 	ldh a, [hLinkState] ; $4c84
 	cp a, $01 ; $4c86
 	jr nz, Label_07_4c96 ; $4c88
-	ldh a, [$ffd5] ; $4c8a
+	ldh a, [hLinkRemoteInputBuf] ; $4c8a
 	or a, a ; $4c8c
 	jr nz, Label_07_4cac ; $4c8d
-	ldh a, [$ffd4] ; $4c8f
+	ldh a, [hLinkRemoteInput] ; $4c8f
 	call DecodeLinkCommandCode ; $4c91
 	jr Label_07_4cac ; $4c94
 Label_07_4c96:
-	ldh a, [$ffd5] ; $4c96
+	ldh a, [hLinkRemoteInputBuf] ; $4c96
 	ld b, a ; $4c98
 	ldh a, [$ffde] ; $4c99
-	ldh [$ffd5], a ; $4c9b
+	ldh [hLinkRemoteInputBuf], a ; $4c9b
 	ld a, b ; $4c9d
 	ldh [$ffde], a ; $4c9e
-	ldh a, [$ffd4] ; $4ca0
+	ldh a, [hLinkRemoteInput] ; $4ca0
 	or a, a ; $4ca2
 	jr z, Label_07_4caa ; $4ca3
 	call DecodeLinkCommandCode ; $4ca5
 	jr Label_07_4cac ; $4ca8
 Label_07_4caa:
-	ldh a, [$ffd5] ; $4caa
+	ldh a, [hLinkRemoteInputBuf] ; $4caa
 Label_07_4cac:
-	ldh [$ffd3], a ; $4cac
+	ldh [hLinkInput], a ; $4cac
 Label_07_4cae:
 	pop bc ; $4cae
 	pop af ; $4caf
