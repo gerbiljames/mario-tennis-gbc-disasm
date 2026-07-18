@@ -217,6 +217,14 @@ MACRO script_face
 	ld b, \2
 	farcall FarPtr_SetActorFacing
 ENDM
+; Turns two actors to face each other (actor1 in b, actor2 in a).
+; Usage: script_face_pair actor1, actor2
+MACRO script_face_pair
+	ld a, \1
+	ld b, a
+	ld a, \2
+	farcall FarPtr_FaceActorsTowardEachOther
+ENDM
 ; Usage: script_speak actor
 MACRO script_speak
 	ld a, \1

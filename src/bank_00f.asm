@@ -1503,20 +1503,14 @@ Label_0f_56a8:
 	script_speak $04 ; $5747
 	ld a, $1e ; $574c
 	call DelayFrames ; $574e
-	ld a, $00 ; $5751
-	ld b, a ; $5753
-	ld a, $03 ; $5754
-	farcall FarPtr_FaceActorsTowardEachOther ; $5756
+	script_face_pair $00, $03 ; $5751
 	ld a, $50 ; $5759
 	call DelayFrames ; $575b
 	ld a, $04 ; $575e
 	ld b, a ; $5760
 	ld a, $03 ; $5761
 	farcall FarPtr_FaceActorTowardActor ; $5763
-	ld a, $04 ; $5766
-	ld b, a ; $5768
-	ld a, $00 ; $5769
-	farcall FarPtr_FaceActorsTowardEachOther ; $576b
+	script_face_pair $04, $00 ; $5766
 	ld a, $1e ; $576e
 	call DelayFrames ; $5770
 	script_set_anim $04, $04 ; $5773
@@ -1640,10 +1634,7 @@ Label_0f_5889:
 	script_speak $05 ; $5961
 	ld a, $1e ; $5966
 	call DelayFrames ; $5968
-	ld a, $02 ; $596b
-	ld b, a ; $596d
-	ld a, $00 ; $596e
-	farcall FarPtr_FaceActorsTowardEachOther ; $5970
+	script_face_pair $02, $00 ; $596b
 	ld a, $3c ; $5973
 	call DelayFrames ; $5975
 	script_face $00, $00 ; $5978
@@ -1711,10 +1702,7 @@ Label_0f_5889:
 	script_face $05, $c0 ; $5a91
 	ld a, $1e ; $5a98
 	call DelayFrames ; $5a9a
-	ld a, $00 ; $5a9d
-	ld b, a ; $5a9f
-	ld a, $02 ; $5aa0
-	farcall FarPtr_FaceActorsTowardEachOther ; $5aa2
+	script_face_pair $00, $02 ; $5a9d
 	call Func_0f_5aec ; $5aa5
 	script_set_anim $02, $02 ; $5aa8
 	script_wait_idle $02 ; $5aaf
@@ -1835,10 +1823,7 @@ Func_0f_5b4d:
 	farcall FarPtr_ScriptSetActorPosition ; $5c4e
 	ret ; $5c51
 AnnounceWinnersToPodiums:
-	ld a, $0c ; $5c52
-	ld b, a ; $5c54
-	ld a, $0b ; $5c55
-	farcall FarPtr_FaceActorsTowardEachOther ; $5c57
+	script_face_pair $0c, $0b ; $5c52
 	ld a, $1e ; $5c5a
 	call DelayFrames ; $5c5c
 	script_set_anim $0b, $03 ; $5c5f
@@ -3037,10 +3022,7 @@ IslandOpenRoundCallCutscene:
 	script_face $05, $c0 ; $706f
 	call QueueUpcomingRoundNameText ; $7076
 	script_speak $04 ; $7079
-	ld a, $05 ; $707e
-	ld b, a ; $7080
-	ld a, $04 ; $7081
-	farcall FarPtr_FaceActorsTowardEachOther ; $7083
+	script_face_pair $05, $04 ; $707e
 	script_set_anim $04, $03 ; $7086
 	script_wait_idle $04 ; $708d
 	script_move_target $05, $1000, $1700 ; $7092
@@ -3057,10 +3039,7 @@ Label_0f_70bb:
 	test_flag $05, 7 ; $70cc
 	jp nz, Label_0f_722f ; $70cf
 	script_set_speed $00, $0020 ; $70d2
-	ld a, $0a ; $70da
-	ld b, a ; $70dc
-	ld a, $00 ; $70dd
-	farcall FarPtr_FaceActorsTowardEachOther ; $70df
+	script_face_pair $0a, $00 ; $70da
 	script_wait_frames $1e ; $70e2
 	script_face $00, $40 ; $70e9
 	script_face $0a, $40 ; $70f0
@@ -3150,10 +3129,7 @@ Label_0f_7228:
 	farcall FarPtr_RestoreOverworldAfterMatch ; $722b
 	ret ; $722e
 Label_0f_722f:
-	ld a, $02 ; $722f
-	ld b, a ; $7231
-	ld a, $00 ; $7232
-	farcall FarPtr_FaceActorsTowardEachOther ; $7234
+	script_face_pair $02, $00 ; $722f
 	script_set_speed $00, $0020 ; $7237
 	script_set_speed $02, $0020 ; $723f
 	script_wait_frames $14 ; $7247
@@ -3784,10 +3760,7 @@ IslandOpenBreakCutscene:
 Label_0f_79b1:
 	call QueueShortText ; $79b1
 	script_speak $06 ; $79b4
-	ld a, $07 ; $79b9
-	ld b, a ; $79bb
-	ld a, $06 ; $79bc
-	farcall FarPtr_FaceActorsTowardEachOther ; $79be
+	script_face_pair $07, $06 ; $79b9
 	script_wait_frames $14 ; $79c1
 	script_set_anim $06, $03 ; $79c8
 	script_set_anim $07, $03 ; $79cf

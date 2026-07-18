@@ -357,10 +357,7 @@ Label_12_44c5:
 	script_wait_frames $1e ; $45e4
 	script_move_target $03, $1500, $1f00 ; $45eb
 	script_wait_frames $78 ; $45f6
-	ld a, $00 ; $45fd
-	ld b, a ; $45ff
-	ld a, $04 ; $4600
-	farcall FarPtr_FaceActorsTowardEachOther ; $4602
+	script_face_pair $00, $04 ; $45fd
 	script_set_anim $00, $03 ; $4605
 	script_set_anim $04, $03 ; $460c
 	script_wait_idle $04 ; $4613
@@ -748,10 +745,7 @@ Label_12_4a6c:
 	test_flag $05, 7 ; $4a6c
 	jr z, Label_12_4aae ; $4a6f
 	script_wait_frames $28 ; $4a71
-	ld a, $02 ; $4a78
-	ld b, a ; $4a7a
-	ld a, $00 ; $4a7b
-	farcall FarPtr_FaceActorsTowardEachOther ; $4a7d
+	script_face_pair $02, $00 ; $4a78
 	script_wait_frames $1e ; $4a80
 	script_set_anim $00, $03 ; $4a87
 	script_set_anim $02, $03 ; $4a8e
@@ -898,10 +892,7 @@ Label_12_4bfc:
 	test_flag $05, 7 ; $4c56
 	jr z, Label_12_4c98 ; $4c59
 	script_wait_frames $1e ; $4c5b
-	ld a, $02 ; $4c62
-	ld b, a ; $4c64
-	ld a, $00 ; $4c65
-	farcall FarPtr_FaceActorsTowardEachOther ; $4c67
+	script_face_pair $02, $00 ; $4c62
 	script_wait_frames $1e ; $4c6a
 	script_set_anim $00, $03 ; $4c71
 	script_set_anim $02, $03 ; $4c78
@@ -1366,10 +1357,7 @@ Label_12_51ba:
 	farcall FarPtr_SetActorNullScript ; $51f0
 	script_move_target $02, $0700, $3900 ; $51f3
 	script_wait_move $02 ; $51fe
-	ld a, $02 ; $5203
-	ld b, a ; $5205
-	ld a, $00 ; $5206
-	farcall FarPtr_FaceActorsTowardEachOther ; $5208
+	script_face_pair $02, $00 ; $5203
 	script_wait_frames $1e ; $520b
 	script_set_anim $00, $03 ; $5212
 	script_set_anim $02, $03 ; $5219
@@ -3168,10 +3156,7 @@ RunSeniorRankingMatchIntro:
 	farcall FarPtr_WaitActorScriptDone ; $68ac
 	ld a, $01 ; $68af
 	farcall FarPtr_SetActorNullScript ; $68b1
-	ld a, $00 ; $68b4
-	ld b, a ; $68b6
-	ld a, $06 ; $68b7
-	farcall FarPtr_FaceActorsTowardEachOther ; $68b9
+	script_face_pair $00, $06 ; $68b4
 	script_set_anim $06, $02 ; $68bc
 	script_wait_idle $06 ; $68c3
 	script_set_text $103a ; $68c8
@@ -3556,10 +3541,7 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_frames $3c ; $6e99
 	script_move_target $09, $2300, $1300 ; $6ea0
 	script_wait_move $09 ; $6eab
-	ld a, $09 ; $6eb0
-	ld b, a ; $6eb2
-	ld a, $08 ; $6eb3
-	farcall FarPtr_FaceActorsTowardEachOther ; $6eb5
+	script_face_pair $09, $08 ; $6eb0
 	script_wait_frames $14 ; $6eb8
 	ld a, $11 ; $6ebf
 	ld bc, $2400 ; $6ec1
@@ -3728,10 +3710,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_text $1082 ; $7136
 	script_move_target $04, $2500, $1300 ; $713c
 	script_wait_move $04 ; $7147
-	ld a, $05 ; $714c
-	ld b, a ; $714e
-	ld a, $04 ; $714f
-	farcall FarPtr_FaceActorsTowardEachOther ; $7151
+	script_face_pair $05, $04 ; $714c
 	script_set_anim $04, $02 ; $7154
 	script_speak $04 ; $715b
 	script_face $05, $40 ; $7160
@@ -3760,10 +3739,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_anim $03, $02 ; $7201
 	script_wait_idle $03 ; $7208
 	script_speak $03 ; $720d
-	ld a, $02 ; $7212
-	ld b, a ; $7214
-	ld a, $00 ; $7215
-	farcall FarPtr_FaceActorsTowardEachOther ; $7217
+	script_face_pair $02, $00 ; $7212
 	script_wait_frames $1e ; $721a
 	script_face $00, $40 ; $7221
 	script_face $02, $40 ; $7228
@@ -3806,10 +3782,7 @@ SeniorMatchVictorySceneDispatch:
 	script_move_target $04, $2500, $1500 ; $730f
 	script_wait_move $04 ; $731a
 	script_speak $04 ; $731f
-	ld a, $02 ; $7324
-	ld b, a ; $7326
-	ld a, $00 ; $7327
-	farcall FarPtr_FaceActorsTowardEachOther ; $7329
+	script_face_pair $02, $00 ; $7324
 	script_wait_frames $0a ; $732c
 	script_set_anim $00, $02 ; $7333
 	script_set_anim $02, $02 ; $733a

@@ -3427,10 +3427,7 @@ Label_10_6512:
 	script_set_anim $08, $02 ; $656c
 	script_set_anim $09, $02 ; $6573
 	script_wait_idle $09 ; $657a
-	ld a, $07 ; $657f
-	ld b, a ; $6581
-	ld a, $08 ; $6582
-	farcall FarPtr_FaceActorsTowardEachOther ; $6584
+	script_face_pair $07, $08 ; $657f
 	script_wait_frames $28 ; $6587
 	script_face $07, $c0 ; $658e
 	script_face $08, $c0 ; $6595
@@ -3478,10 +3475,7 @@ Label_10_6512:
 	ld a, $07 ; $663b
 	ld b, $00 ; $663d
 	farcall FarPtr_ScriptSetActorFacingLock ; $663f
-	ld a, $08 ; $6642
-	ld b, a ; $6644
-	ld a, $07 ; $6645
-	farcall FarPtr_FaceActorsTowardEachOther ; $6647
+	script_face_pair $08, $07 ; $6642
 	script_speak $07 ; $664a
 	ld a, $08 ; $664f
 	ld b, a ; $6651
@@ -3499,10 +3493,7 @@ Label_10_6512:
 	ld a, $09 ; $668c
 	ld b, $00 ; $668e
 	farcall FarPtr_ScriptSetActorFacingLock ; $6690
-	ld a, $08 ; $6693
-	ld b, a ; $6695
-	ld a, $09 ; $6696
-	farcall FarPtr_FaceActorsTowardEachOther ; $6698
+	script_face_pair $08, $09 ; $6693
 	script_speak $09 ; $669b
 	jr Label_10_66c6 ; $66a0
 Label_10_66a2:
@@ -3533,10 +3524,7 @@ Label_10_66c6:
 	ld a, $07 ; $66fc
 	ld b, $00 ; $66fe
 	farcall FarPtr_ScriptSetActorFacingLock ; $6700
-	ld a, $08 ; $6703
-	ld b, a ; $6705
-	ld a, $07 ; $6706
-	farcall FarPtr_FaceActorsTowardEachOther ; $6708
+	script_face_pair $08, $07 ; $6703
 	script_set_anim $08, $02 ; $670b
 	script_wait_idle $08 ; $6712
 	ld a, $08 ; $6717
@@ -3554,10 +3542,7 @@ Label_10_66c6:
 	ld a, $09 ; $674d
 	ld b, $00 ; $674f
 	farcall FarPtr_ScriptSetActorFacingLock ; $6751
-	ld a, $08 ; $6754
-	ld b, a ; $6756
-	ld a, $09 ; $6757
-	farcall FarPtr_FaceActorsTowardEachOther ; $6759
+	script_face_pair $08, $09 ; $6754
 	script_set_anim $08, $02 ; $675c
 	script_wait_idle $08 ; $6763
 	script_set_anim $09, $03 ; $6768
@@ -3844,18 +3829,12 @@ Label_10_6c60:
 	script_set_anim $06, $03 ; $6cbc
 	script_wait_idle $06 ; $6cc3
 	script_speak $06 ; $6cc8
-	ld a, $08 ; $6ccd
-	ld b, a ; $6ccf
-	ld a, $07 ; $6cd0
-	farcall FarPtr_FaceActorsTowardEachOther ; $6cd2
+	script_face_pair $08, $07 ; $6ccd
 	script_set_anim $07, $03 ; $6cd5
 	script_set_anim $08, $03 ; $6cdc
 	script_wait_idle $08 ; $6ce3
 	script_wait_frames $28 ; $6ce8
-	ld a, $08 ; $6cef
-	ld b, a ; $6cf1
-	ld a, $09 ; $6cf2
-	farcall FarPtr_FaceActorsTowardEachOther ; $6cf4
+	script_face_pair $08, $09 ; $6cef
 	script_set_anim $09, $03 ; $6cf7
 	script_set_anim $08, $03 ; $6cfe
 	script_wait_idle $08 ; $6d05
@@ -3924,10 +3903,7 @@ Label_10_6c60:
 	script_wait_frames $1e ; $6dfe
 	script_move_target $09, $1d00, $3200 ; $6e05
 	script_wait_move $09 ; $6e10
-	ld a, $09 ; $6e15
-	ld b, a ; $6e17
-	ld a, $00 ; $6e18
-	farcall FarPtr_FaceActorsTowardEachOther ; $6e1a
+	script_face_pair $09, $00 ; $6e15
 	ld a, $09 ; $6e1d
 	ld b, a ; $6e1f
 	ld a, $02 ; $6e20
@@ -3952,10 +3928,7 @@ Label_10_6e27:
 	script_wait_frames $1e ; $6e68
 	script_move_target $09, $1e00, $3200 ; $6e6f
 	script_wait_move $09 ; $6e7a
-	ld a, $09 ; $6e7f
-	ld b, a ; $6e81
-	ld a, $00 ; $6e82
-	farcall FarPtr_FaceActorsTowardEachOther ; $6e84
+	script_face_pair $09, $00 ; $6e7f
 Label_10_6e87:
 	script_set_anim $09, $04 ; $6e87
 	script_wait_idle $09 ; $6e8e
@@ -4168,10 +4141,7 @@ Label_10_71f0:
 	script_set_anim $02, $03 ; $7220
 	script_wait_idle $02 ; $7227
 	script_wait_frames $0a ; $722c
-	ld a, $02 ; $7233
-	ld b, a ; $7235
-	ld a, $00 ; $7236
-	farcall FarPtr_FaceActorsTowardEachOther ; $7238
+	script_face_pair $02, $00 ; $7233
 	script_wait_frames $1e ; $723b
 	script_set_anim $00, $03 ; $7242
 	script_set_anim $02, $03 ; $7249
@@ -4699,10 +4669,7 @@ Label_10_785b:
 	script_set_anim $00, $03 ; $7909
 	script_wait_idle $00 ; $7910
 	script_wait_frames $0f ; $7915
-	ld a, $04 ; $791c
-	ld b, a ; $791e
-	ld a, $03 ; $791f
-	farcall FarPtr_FaceActorsTowardEachOther ; $7921
+	script_face_pair $04, $03 ; $791c
 	script_set_anim $03, $03 ; $7924
 	script_set_anim $04, $03 ; $792b
 	script_wait_idle $04 ; $7932

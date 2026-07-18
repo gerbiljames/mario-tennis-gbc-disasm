@@ -345,10 +345,7 @@ AcademyCourtsTourCutscene:
 	script_move_player $3200, $1300 ; $45b7
 	farcall FarPtr_WaitPlayerMoveDone ; $45c1
 	script_wait_frames $1e ; $45c4
-	ld a, $00 ; $45cb
-	ld b, a ; $45cd
-	ld a, $06 ; $45ce
-	farcall FarPtr_FaceActorsTowardEachOther ; $45d0
+	script_face_pair $00, $06 ; $45cb
 	script_speak $06 ; $45d3
 	script_wait_frames $0f ; $45d8
 	script_set_anim $00, $03 ; $45df
@@ -372,10 +369,7 @@ AcademyCourtsTourCutscene:
 	call UnregisterFrameTask ; $4635
 	script_move_player $3200, $0d00 ; $4638
 	farcall FarPtr_WaitPlayerMoveDone ; $4642
-	ld a, $00 ; $4645
-	ld b, a ; $4647
-	ld a, $06 ; $4648
-	farcall FarPtr_FaceActorsTowardEachOther ; $464a
+	script_face_pair $00, $06 ; $4645
 	script_speak $06 ; $464d
 	script_set_anim $00, $03 ; $4652
 	script_wait_idle $00 ; $4659
@@ -565,10 +559,7 @@ Label_13_49c1:
 	script_set_anim $00, $03 ; $4a11
 	script_wait_idle $00 ; $4a18
 	script_wait_frames $0f ; $4a1d
-	ld a, $08 ; $4a24
-	ld b, a ; $4a26
-	ld a, $07 ; $4a27
-	farcall FarPtr_FaceActorsTowardEachOther ; $4a29
+	script_face_pair $08, $07 ; $4a24
 	script_wait_frames $46 ; $4a2c
 	ld a, $00 ; $4a33
 	ld b, a ; $4a35

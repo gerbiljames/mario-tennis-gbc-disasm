@@ -472,10 +472,7 @@ Func_27_490c:
 	script_face $04, $c0 ; $49a9
 	script_wait_move $05 ; $49b0
 	script_face $05, $c0 ; $49b5
-	ld a, $05 ; $49bc
-	ld b, a ; $49be
-	ld a, $04 ; $49bf
-	farcall FarPtr_FaceActorsTowardEachOther ; $49c1
+	script_face_pair $05, $04 ; $49bc
 	script_set_anim $04, $03 ; $49c4
 	script_wait_idle $04 ; $49cb
 	script_move_target $05, $1000, $1700 ; $49d0
@@ -484,10 +481,7 @@ Func_27_490c:
 	test_flag $05, 7 ; $49e7
 	jp nz, Label_27_4a88 ; $49ea
 	script_set_speed $00, $0020 ; $49ed
-	ld a, $0a ; $49f5
-	ld b, a ; $49f7
-	ld a, $00 ; $49f8
-	farcall FarPtr_FaceActorsTowardEachOther ; $49fa
+	script_face_pair $0a, $00 ; $49f5
 	script_wait_frames $1e ; $49fd
 	script_face $00, $40 ; $4a04
 	script_face $0a, $40 ; $4a0b
@@ -522,10 +516,7 @@ Func_27_490c:
 	ld [wStoryModeExitLocationRequest], a ; $4a84
 	ret ; $4a87
 Label_27_4a88:
-	ld a, $02 ; $4a88
-	ld b, a ; $4a8a
-	ld a, $00 ; $4a8b
-	farcall FarPtr_FaceActorsTowardEachOther ; $4a8d
+	script_face_pair $02, $00 ; $4a88
 	script_set_speed $00, $0020 ; $4a90
 	script_set_speed $02, $0020 ; $4a98
 	script_wait_frames $14 ; $4aa0
@@ -880,10 +871,7 @@ Label_27_5057:
 	script_wait_idle $03 ; $5083
 	ld a, $3c ; $5088
 	call Func_27_7856 ; $508a
-	ld a, $02 ; $508d
-	ld b, a ; $508f
-	ld a, $00 ; $5090
-	farcall FarPtr_FaceActorsTowardEachOther ; $5092
+	script_face_pair $02, $00 ; $508d
 	ld a, $1e ; $5095
 	call Func_27_7856 ; $5097
 	script_set_anim $00, $03 ; $509a
@@ -1744,10 +1732,7 @@ Label_27_5eec:
 	call BeginFadeIn ; $5f22
 	script_move_target $04, $2500, $1300 ; $5f25
 	script_wait_move $04 ; $5f30
-	ld a, $05 ; $5f35
-	ld b, a ; $5f37
-	ld a, $04 ; $5f38
-	farcall FarPtr_FaceActorsTowardEachOther ; $5f3a
+	script_face_pair $05, $04 ; $5f35
 	script_set_anim $04, $02 ; $5f3d
 	ld a, $32 ; $5f44
 	call Func_27_7856 ; $5f46
@@ -1780,10 +1765,7 @@ Label_27_5eec:
 	script_wait_idle $03 ; $5fed
 	ld a, $14 ; $5ff2
 	call Func_27_7856 ; $5ff4
-	ld a, $02 ; $5ff7
-	ld b, a ; $5ff9
-	ld a, $00 ; $5ffa
-	farcall FarPtr_FaceActorsTowardEachOther ; $5ffc
+	script_face_pair $02, $00 ; $5ff7
 	ld a, $28 ; $5fff
 	call Func_27_7856 ; $6001
 	script_face $00, $40 ; $6004
@@ -3077,10 +3059,7 @@ Label_27_7659:
 	call Func_27_7856 ; $768d
 	test_flag $05, 7 ; $7690
 	jp z, Label_27_7704 ; $7693
-	ld a, $0a ; $7696
-	ld b, a ; $7698
-	ld a, $00 ; $7699
-	farcall FarPtr_FaceActorsTowardEachOther ; $769b
+	script_face_pair $0a, $00 ; $7696
 	ld a, $1e ; $769e
 	call Func_27_7856 ; $76a0
 	script_set_anim $00, $03 ; $76a3
@@ -3095,10 +3074,7 @@ Label_27_7659:
 	script_wait_idle $0c ; $76ce
 	ld a, $32 ; $76d3
 	call Func_27_7856 ; $76d5
-	ld a, $0c ; $76d8
-	ld b, a ; $76da
-	ld a, $08 ; $76db
-	farcall FarPtr_FaceActorsTowardEachOther ; $76dd
+	script_face_pair $0c, $08 ; $76d8
 	script_set_anim $08, $03 ; $76e0
 	script_set_anim $0c, $03 ; $76e7
 	script_wait_idle $0c ; $76ee
@@ -3106,10 +3082,7 @@ Label_27_7659:
 	script_face $08, $40 ; $76fa
 	jp Label_27_7748 ; $7701
 Label_27_7704:
-	ld a, $0b ; $7704
-	ld b, a ; $7706
-	ld a, $00 ; $7707
-	farcall FarPtr_FaceActorsTowardEachOther ; $7709
+	script_face_pair $0b, $00 ; $7704
 	ld a, $1e ; $770c
 	call Func_27_7856 ; $770e
 	script_set_anim $00, $03 ; $7711
@@ -3133,14 +3106,8 @@ Label_27_7748:
 	script_wait_idle $0b ; $7769
 	ld a, $14 ; $776e
 	call Func_27_7856 ; $7770
-	ld a, $0b ; $7773
-	ld b, a ; $7775
-	ld a, $00 ; $7776
-	farcall FarPtr_FaceActorsTowardEachOther ; $7778
-	ld a, $09 ; $777b
-	ld b, a ; $777d
-	ld a, $0a ; $777e
-	farcall FarPtr_FaceActorsTowardEachOther ; $7780
+	script_face_pair $0b, $00 ; $7773
+	script_face_pair $09, $0a ; $777b
 	ld a, $0a ; $7783
 	call Func_27_7856 ; $7785
 	ld a, $00 ; $7788

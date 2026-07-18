@@ -1784,6 +1784,8 @@ SCRIPT_COMMANDS = (
         ((0x3E, 2, 'b'), (0x16, 2, 'b'))),
     ("script_face", "FarPtr_SetActorFacing",
         ((0x3E, 2, 'b'), (0x06, 2, 'b'))),
+    ("script_face_pair", "FarPtr_FaceActorsTowardEachOther",
+        ((0x3E, 2, 'b'), (0x47, 1, 'x'), (0x3E, 2, 'b'))),
     ("script_move_player", "FarPtr_MovePlayerToPosition",
         ((0xAF, 1, 'x'), (0x01, 3, 'w'), (0x11, 3, 'w'))),
     ("script_player_speed", "FarPtr_SetPlayerMoveSpeed",
@@ -2114,6 +2116,14 @@ MACRO script_face
 	ld a, \\1
 	ld b, \\2
 	farcall FarPtr_SetActorFacing
+ENDM
+; Turns two actors to face each other (actor1 in b, actor2 in a).
+; Usage: script_face_pair actor1, actor2
+MACRO script_face_pair
+	ld a, \\1
+	ld b, a
+	ld a, \\2
+	farcall FarPtr_FaceActorsTowardEachOther
 ENDM
 ; Usage: script_speak actor
 MACRO script_speak
