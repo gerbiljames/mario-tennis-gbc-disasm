@@ -69,6 +69,16 @@ arrival scripts (`Func_10_7532`/`Func_10_7578`) were buried after the `$ff`
 terminator, so the table over-ran to 197 bytes; now 57 bytes (7 records) with
 the arrival scripts decoded as `script_*` cutscene code. Byte-perfect.
 
+### script_set_actor_script macro (2026-07-19)
+
+Added a `script_set_actor_script actor, script` command:
+`ldh a,[hRomBank]; ld b,a; ld a,actor; ld de,script; farcall
+FarPtr_ScriptSetActorScript` (`ScriptSetActorScript`, `$0a:$434f` — sets an
+actor's script to a pointer in the current bank). Needed a new `'p'` step kind
+(16-bit pointer operand resolved to a label when known). Collapses 327 of 328
+sites across banks $0e-$15/$27; the lone holdout loads `de` from a table, not an
+immediate. Byte-perfect.
+
 ### script_fade_in macro (2026-07-19)
 
 Added a `script_fade_in speed` command: `ld c, speed; call BeginFadeIn`

@@ -454,11 +454,7 @@ MachineCourtStartLevelScene:
 	jr z, Label_14_4515 ; $4503
 	ld a, $02 ; $4505
 	farcall FarPtr_SetActorNullScript ; $4507
-	ldh a, [hRomBank] ; $450a
-	ld b, a ; $450c
-	ld a, $02 ; $450d
-	ld de, $4808 ; $450f
-	farcall FarPtr_ScriptSetActorScript ; $4512
+	script_set_actor_script $02, $4808 ; $450a
 Label_14_4515:
 	script_set_speed $00, $0020 ; $4515
 	script_move_player $3800, $3300 ; $451d
@@ -506,11 +502,7 @@ Label_14_45a6:
 	ld a, $02 ; $45c5
 	farcall FarPtr_SetActorNullScript ; $45c7
 	script_set_speed $00, $0020 ; $45ca
-	ldh a, [hRomBank] ; $45d2
-	ld b, a ; $45d4
-	ld a, $02 ; $45d5
-	ld de, $4808 ; $45d7
-	farcall FarPtr_ScriptSetActorScript ; $45da
+	script_set_actor_script $02, $4808 ; $45d2
 	script_move_target $00, $3100, $2b00 ; $45dd
 	script_wait_move $00 ; $45e8
 	script_face $00, $40 ; $45ed
@@ -1723,29 +1715,13 @@ Label_14_54df:
 	script_set_position $04, $0600, $2900 ; $5538
 	script_set_position $05, $0600, $2900 ; $5543
 	script_set_position $06, $0600, $2900 ; $554e
-	ldh a, [hRomBank] ; $5559
-	ld b, a ; $555b
-	ld a, $03 ; $555c
-	ld de, $563b ; $555e
-	farcall FarPtr_ScriptSetActorScript ; $5561
+	script_set_actor_script $03, $563b ; $5559
 	script_wait_frames $1e ; $5564
-	ldh a, [hRomBank] ; $556b
-	ld b, a ; $556d
-	ld a, $04 ; $556e
-	ld de, $563b ; $5570
-	farcall FarPtr_ScriptSetActorScript ; $5573
+	script_set_actor_script $04, $563b ; $556b
 	script_wait_frames $1e ; $5576
-	ldh a, [hRomBank] ; $557d
-	ld b, a ; $557f
-	ld a, $05 ; $5580
-	ld de, $563b ; $5582
-	farcall FarPtr_ScriptSetActorScript ; $5585
+	script_set_actor_script $05, $563b ; $557d
 	script_wait_frames $1e ; $5588
-	ldh a, [hRomBank] ; $558f
-	ld b, a ; $5591
-	ld a, $06 ; $5592
-	ld de, $563b ; $5594
-	farcall FarPtr_ScriptSetActorScript ; $5597
+	script_set_actor_script $06, $563b ; $558f
 	script_wait_frames $50 ; $559a
 	script_set_position $00, $0600, $2900 ; $55a1
 	script_set_active $00, $02 ; $55ac

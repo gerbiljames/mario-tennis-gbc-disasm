@@ -3858,16 +3858,8 @@ Label_10_71f0:
 	script_move_target $02, $2100, $3500 ; $7277
 	script_wait_move $02 ; $7282
 	call Func_10_7339 ; $7287
-	ldh a, [hRomBank] ; $728a
-	ld b, a ; $728c
-	ld a, $00 ; $728d
-	ld de, $741c ; $728f
-	farcall FarPtr_ScriptSetActorScript ; $7292
-	ldh a, [hRomBank] ; $7295
-	ld b, a ; $7297
-	ld a, $02 ; $7298
-	ld de, $741c ; $729a
-	farcall FarPtr_ScriptSetActorScript ; $729d
+	script_set_actor_script $00, $741c ; $728a
+	script_set_actor_script $02, $741c ; $7295
 	script_wait_frames $28 ; $72a0
 	jr Label_10_7314 ; $72a7
 Label_10_72a9:
@@ -3885,11 +3877,7 @@ Label_10_72a9:
 	script_move_target $00, $2100, $3700 ; $72ef
 	script_wait_move $00 ; $72fa
 	call Func_10_7339 ; $72ff
-	ldh a, [hRomBank] ; $7302
-	ld b, a ; $7304
-	ld a, $00 ; $7305
-	ld de, $741c ; $7307
-	farcall FarPtr_ScriptSetActorScript ; $730a
+	script_set_actor_script $00, $741c ; $7302
 	script_wait_frames $14 ; $730d
 Label_10_7314:
 	call Func_10_736f ; $7314
@@ -4229,11 +4217,7 @@ AcademyMainBldgInitScript_10:
 	sra a ; $771d
 	cp a, $02 ; $771f
 	jr nz, Label_10_772e ; $7721
-	ldh a, [hRomBank] ; $7723
-	ld b, a ; $7725
-	ld a, $03 ; $7726
-	ld de, $7b8b ; $7728
-	farcall FarPtr_ScriptSetActorScript ; $772b
+	script_set_actor_script $03, $7b8b ; $7723
 Label_10_772e:
 	ld a, $01 ; $772e
 	ld hl, $79d0 ; $7730

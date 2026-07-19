@@ -1986,6 +1986,11 @@ SCRIPT_COMMANDS = (
     # Start a fade-in at speed c (BeginFadeIn, $00:$1d2e).
     ("script_fade_in",
         ((0x0E, 2, 'b'), ('C', "BeginFadeIn"))),
+    # Set actor `actor`'s script to `script` (a pointer in the current bank,
+    # captured via hRomBank -> b). ScriptSetActorScript ($0a:$434f).
+    ("script_set_actor_script",
+        ((0xF0, 2, 'x'), (0x47, 1, 'x'), (0x3E, 2, 'b'), (0x11, 3, 'p'),
+         ('F', "FarPtr_ScriptSetActorScript"))),
 )
 
 
@@ -2038,6 +2043,11 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
                     args.append(f"${rom[p + 1]:02x}")
                 elif kind == 'w':
                     args.append(f"${rom[p + 1] | (rom[p + 2] << 8):04x}")
+                elif kind == 'p':  # 16-bit pointer -> label if one is known
+                    v = rom[p + 1] | (rom[p + 2] << 8)
+                    tgt = ((p // BANK_SIZE) * BANK_SIZE + v - BANK_SIZE
+                           if BANK_SIZE <= v < 0x8000 else v)
+                    args.append(labels.get(tgt, f"${v:04x}"))
                 p += size
         if ok:
             return (f"{macro} " + ", ".join(args)).rstrip(), p - off
@@ -2431,6 +2441,17 @@ ENDM
 MACRO script_fade_in
 	ld c, \\1
 	call BeginFadeIn
+ENDM
+
+; Set actor `actor`'s script to `script`, a code pointer in the current bank
+; (captured through hRomBank into b). ScriptSetActorScript ($0a:$434f).
+; Usage: script_set_actor_script actor, script
+MACRO script_set_actor_script
+	ldh a, [hRomBank]
+	ld b, a
+	ld a, \\1
+	ld de, \\2
+	farcall FarPtr_ScriptSetActorScript
 ENDM
 
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):

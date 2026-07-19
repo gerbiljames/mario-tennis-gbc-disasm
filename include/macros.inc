@@ -335,6 +335,17 @@ MACRO script_fade_in
 	call BeginFadeIn
 ENDM
 
+; Set actor `actor`'s script to `script`, a code pointer in the current bank
+; (captured through hRomBank into b). ScriptSetActorScript ($0a:$434f).
+; Usage: script_set_actor_script actor, script
+MACRO script_set_actor_script
+	ldh a, [hRomBank]
+	ld b, a
+	ld a, \1
+	ld de, \2
+	farcall FarPtr_ScriptSetActorScript
+ENDM
+
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
 ; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
 ; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result

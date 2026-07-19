@@ -2091,11 +2091,7 @@ CourtyardNpcScripts_13:
 	and a, a ; $5f39
 	jr z, Label_13_5f4d ; $5f3a
 	script_speak $05 ; $5f3c
-	ldh a, [hRomBank] ; $5f41
-	ld b, a ; $5f43
-	ld a, $05 ; $5f44
-	ld de, $7a40 ; $5f46
-	farcall FarPtr_ScriptSetActorScript ; $5f49
+	script_set_actor_script $05, $7a40 ; $5f41
 	ret ; $5f4c
 Label_13_5f4d:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5f4d
@@ -2123,11 +2119,7 @@ Label_13_60c6:
 	script_set_anim $05, $01 ; $60d1
 	script_set_text $0428 ; $60d8
 	script_speak $05 ; $60de
-	ldh a, [hRomBank] ; $60e3
-	ld b, a ; $60e5
-	ld a, $05 ; $60e6
-	ld de, $7a40 ; $60e8
-	farcall FarPtr_ScriptSetActorScript ; $60eb
+	script_set_actor_script $05, $7a40 ; $60e3
 	ret ; $60ee
 	INCBIN "data/bank_013/d_60ef.bin" ; $60ef, 41 bytes
 	ld a, $05 ; $6118
@@ -2135,11 +2127,7 @@ Label_13_60c6:
 	script_set_anim $05, $01 ; $611d
 	script_set_text $042d ; $6124
 	script_speak $05 ; $612a
-	ldh a, [hRomBank] ; $612f
-	ld b, a ; $6131
-	ld a, $05 ; $6132
-	ld de, $7a40 ; $6134
-	farcall FarPtr_ScriptSetActorScript ; $6137
+	script_set_actor_script $05, $7a40 ; $612f
 	ret ; $613a
 	INCBIN "data/bank_013/d_613b.bin" ; $613b, 41 bytes
 CourtyardFacingScripts_13:
@@ -2235,11 +2223,7 @@ Label_13_6222:
 	farcall FarPtr_WriteStoryStateWord ; $6235
 	script_set_position $09, $3f00, $3f00 ; $6238
 	script_face $04, $00 ; $6243
-	ldh a, [hRomBank] ; $624a
-	ld b, a ; $624c
-	ld a, $06 ; $624d
-	ld de, $7cf5 ; $624f
-	farcall FarPtr_ScriptSetActorScript ; $6252
+	script_set_actor_script $06, $7cf5 ; $624a
 	ld a, $18 ; $6255
 	ld d, $08 ; $6257
 	ld e, $10 ; $6259
@@ -2249,11 +2233,7 @@ Label_13_6222:
 	ld e, $10 ; $6262
 	farcall FarPtr_WriteBehaviorMapCell ; $6264
 	script_set_position $07, $0f00, $1700 ; $6267
-	ldh a, [hRomBank] ; $6272
-	ld b, a ; $6274
-	ld a, $07 ; $6275
-	ld de, $7b2f ; $6277
-	farcall FarPtr_ScriptSetActorScript ; $627a
+	script_set_actor_script $07, $7b2f ; $6272
 	ret ; $627d
 Label_13_627e:
 	test_flag $15, 7 ; $627e
@@ -2461,33 +2441,13 @@ SetupStoryMinigameMatch0:
 	ld a, $07 ; $6a1c
 	farcall FarPtr_SetActorNullScript ; $6a1e
 	script_set_speed $07, $0018 ; $6a21
-	ldh a, [hRomBank] ; $6a29
-	ld b, a ; $6a2b
-	ld a, $03 ; $6a2c
-	ld de, $6b19 ; $6a2e
-	farcall FarPtr_ScriptSetActorScript ; $6a31
-	ldh a, [hRomBank] ; $6a34
-	ld b, a ; $6a36
-	ld a, $06 ; $6a37
-	ld de, $6b31 ; $6a39
-	farcall FarPtr_ScriptSetActorScript ; $6a3c
-	ldh a, [hRomBank] ; $6a3f
-	ld b, a ; $6a41
-	ld a, $07 ; $6a42
-	ld de, $6b47 ; $6a44
-	farcall FarPtr_ScriptSetActorScript ; $6a47
-	ldh a, [hRomBank] ; $6a4a
-	ld b, a ; $6a4c
-	ld a, $05 ; $6a4d
-	ld de, $6b69 ; $6a4f
-	farcall FarPtr_ScriptSetActorScript ; $6a52
+	script_set_actor_script $03, $6b19 ; $6a29
+	script_set_actor_script $06, $6b31 ; $6a34
+	script_set_actor_script $07, $6b47 ; $6a3f
+	script_set_actor_script $05, $6b69 ; $6a4a
 	script_move_player $0c00, $1c00 ; $6a55
 	farcall FarPtr_WaitPlayerMoveDone ; $6a5f
-	ldh a, [hRomBank] ; $6a62
-	ld b, a ; $6a64
-	ld a, $00 ; $6a65
-	ld de, $6be7 ; $6a67
-	farcall FarPtr_ScriptSetActorScript ; $6a6a
+	script_set_actor_script $00, $6be7 ; $6a62
 	ld a, $05 ; $6a6d
 	farcall FarPtr_WaitActorScriptDone ; $6a6f
 	farcall FarPtr_InitStoryMatchSettings ; $6a72
@@ -2503,36 +2463,12 @@ SetupStoryMinigameMatch0:
 	script_set_anim $05, $01 ; $6a9b
 	script_set_anim $05, $03 ; $6aa2
 	script_wait_idle $05 ; $6aa9
-	ldh a, [hRomBank] ; $6aae
-	ld b, a ; $6ab0
-	ld a, $05 ; $6ab1
-	ld de, $6b69 ; $6ab3
-	farcall FarPtr_ScriptSetActorScript ; $6ab6
-	ldh a, [hRomBank] ; $6ab9
-	ld b, a ; $6abb
-	ld a, $06 ; $6abc
-	ld de, $6b80 ; $6abe
-	farcall FarPtr_ScriptSetActorScript ; $6ac1
-	ldh a, [hRomBank] ; $6ac4
-	ld b, a ; $6ac6
-	ld a, $07 ; $6ac7
-	ld de, $6b47 ; $6ac9
-	farcall FarPtr_ScriptSetActorScript ; $6acc
-	ldh a, [hRomBank] ; $6acf
-	ld b, a ; $6ad1
-	ld a, $00 ; $6ad2
-	ld de, $6be7 ; $6ad4
-	farcall FarPtr_ScriptSetActorScript ; $6ad7
-	ldh a, [hRomBank] ; $6ada
-	ld b, a ; $6adc
-	ld a, $02 ; $6add
-	ld de, $6bdc ; $6adf
-	farcall FarPtr_ScriptSetActorScript ; $6ae2
-	ldh a, [hRomBank] ; $6ae5
-	ld b, a ; $6ae7
-	ld a, $03 ; $6ae8
-	ld de, $6b19 ; $6aea
-	farcall FarPtr_ScriptSetActorScript ; $6aed
+	script_set_actor_script $05, $6b69 ; $6aae
+	script_set_actor_script $06, $6b80 ; $6ab9
+	script_set_actor_script $07, $6b47 ; $6ac4
+	script_set_actor_script $00, $6be7 ; $6acf
+	script_set_actor_script $02, $6bdc ; $6ada
+	script_set_actor_script $03, $6b19 ; $6ae5
 	script_move_player $0c00, $1c00 ; $6af0
 	farcall FarPtr_WaitPlayerMoveDone ; $6afa
 	ld a, $05 ; $6afd
@@ -2612,36 +2548,12 @@ Label_13_6d44:
 	script_set_speed $00, $0020 ; $6d72
 	script_set_speed $02, $0020 ; $6d7a
 	script_set_speed $07, $0018 ; $6d82
-	ldh a, [hRomBank] ; $6d8a
-	ld b, a ; $6d8c
-	ld a, $04 ; $6d8d
-	ld de, $6b97 ; $6d8f
-	farcall FarPtr_ScriptSetActorScript ; $6d92
-	ldh a, [hRomBank] ; $6d95
-	ld b, a ; $6d97
-	ld a, $00 ; $6d98
-	ld de, $6be7 ; $6d9a
-	farcall FarPtr_ScriptSetActorScript ; $6d9d
-	ldh a, [hRomBank] ; $6da0
-	ld b, a ; $6da2
-	ld a, $07 ; $6da3
-	ld de, $6b47 ; $6da5
-	farcall FarPtr_ScriptSetActorScript ; $6da8
-	ldh a, [hRomBank] ; $6dab
-	ld b, a ; $6dad
-	ld a, $03 ; $6dae
-	ld de, $6b19 ; $6db0
-	farcall FarPtr_ScriptSetActorScript ; $6db3
-	ldh a, [hRomBank] ; $6db6
-	ld b, a ; $6db8
-	ld a, $05 ; $6db9
-	ld de, $6b24 ; $6dbb
-	farcall FarPtr_ScriptSetActorScript ; $6dbe
-	ldh a, [hRomBank] ; $6dc1
-	ld b, a ; $6dc3
-	ld a, $06 ; $6dc4
-	ld de, $6b31 ; $6dc6
-	farcall FarPtr_ScriptSetActorScript ; $6dc9
+	script_set_actor_script $04, $6b97 ; $6d8a
+	script_set_actor_script $00, $6be7 ; $6d95
+	script_set_actor_script $07, $6b47 ; $6da0
+	script_set_actor_script $03, $6b19 ; $6dab
+	script_set_actor_script $05, $6b24 ; $6db6
+	script_set_actor_script $06, $6b31 ; $6dc1
 	script_move_player $0c00, $1b00 ; $6dcc
 	farcall FarPtr_WaitPlayerMoveDone ; $6dd6
 	ld a, $04 ; $6dd9
@@ -2749,49 +2661,17 @@ Label_13_6fb6:
 	ld [wStoryModeExitLocationRequest], a ; $6fdc
 	script_set_speed $00, $0020 ; $6fdf
 	script_set_speed $02, $0020 ; $6fe7
-	ldh a, [hRomBank] ; $6fef
-	ld b, a ; $6ff1
-	ld a, $04 ; $6ff2
-	ld de, $6bae ; $6ff4
-	farcall FarPtr_ScriptSetActorScript ; $6ff7
-	ldh a, [hRomBank] ; $6ffa
-	ld b, a ; $6ffc
-	ld a, $09 ; $6ffd
-	ld de, $6bc5 ; $6fff
-	farcall FarPtr_ScriptSetActorScript ; $7002
-	ldh a, [hRomBank] ; $7005
-	ld b, a ; $7007
-	ld a, $00 ; $7008
-	ld de, $6be7 ; $700a
-	farcall FarPtr_ScriptSetActorScript ; $700d
-	ldh a, [hRomBank] ; $7010
-	ld b, a ; $7012
-	ld a, $02 ; $7013
-	ld de, $6bdc ; $7015
-	farcall FarPtr_ScriptSetActorScript ; $7018
+	script_set_actor_script $04, $6bae ; $6fef
+	script_set_actor_script $09, $6bc5 ; $6ffa
+	script_set_actor_script $00, $6be7 ; $7005
+	script_set_actor_script $02, $6bdc ; $7010
 	ld a, $07 ; $701b
 	farcall FarPtr_SetActorNullScript ; $701d
 	script_set_speed $07, $0018 ; $7020
-	ldh a, [hRomBank] ; $7028
-	ld b, a ; $702a
-	ld a, $03 ; $702b
-	ld de, $6b19 ; $702d
-	farcall FarPtr_ScriptSetActorScript ; $7030
-	ldh a, [hRomBank] ; $7033
-	ld b, a ; $7035
-	ld a, $05 ; $7036
-	ld de, $6b24 ; $7038
-	farcall FarPtr_ScriptSetActorScript ; $703b
-	ldh a, [hRomBank] ; $703e
-	ld b, a ; $7040
-	ld a, $06 ; $7041
-	ld de, $6b3c ; $7043
-	farcall FarPtr_ScriptSetActorScript ; $7046
-	ldh a, [hRomBank] ; $7049
-	ld b, a ; $704b
-	ld a, $07 ; $704c
-	ld de, $6b58 ; $704e
-	farcall FarPtr_ScriptSetActorScript ; $7051
+	script_set_actor_script $03, $6b19 ; $7028
+	script_set_actor_script $05, $6b24 ; $7033
+	script_set_actor_script $06, $6b3c ; $703e
+	script_set_actor_script $07, $6b58 ; $7049
 	script_move_player $0c00, $1b00 ; $7054
 	farcall FarPtr_WaitPlayerMoveDone ; $705e
 	ld a, $04 ; $7061
@@ -2833,23 +2713,11 @@ Label_13_70ac:
 	farcall FarPtr_04_20 ; $70c5
 	ret ; $70c8
 Func_13_70c9:
-	ldh a, [hRomBank] ; $70c9
-	ld b, a ; $70cb
-	ld a, $04 ; $70cc
-	ld de, $6bf2 ; $70ce
-	farcall FarPtr_ScriptSetActorScript ; $70d1
+	script_set_actor_script $04, $6bf2 ; $70c9
 	ret ; $70d4
 Func_13_70d5:
-	ldh a, [hRomBank] ; $70d5
-	ld b, a ; $70d7
-	ld a, $04 ; $70d8
-	ld de, $6bfd ; $70da
-	farcall FarPtr_ScriptSetActorScript ; $70dd
-	ldh a, [hRomBank] ; $70e0
-	ld b, a ; $70e2
-	ld a, $09 ; $70e3
-	ld de, $6c08 ; $70e5
-	farcall FarPtr_ScriptSetActorScript ; $70e8
+	script_set_actor_script $04, $6bfd ; $70d5
+	script_set_actor_script $09, $6c08 ; $70e0
 	ret ; $70eb
 	wram_bank $04 ; $70ec
 	ld a, [wMatchWinLoseFlag] ; $70f2
@@ -2893,27 +2761,11 @@ SinglesTravelingTeamVictoryCutscene:
 	farcall FarPtr_WaitPlayerMoveDone ; $71c3
 	script_wait_frames $28 ; $71c6
 	script_move_player_to_actor $00 ; $71cd
-	ldh a, [hRomBank] ; $71d4
-	ld b, a ; $71d6
-	ld a, $08 ; $71d7
-	ld de, $7a43 ; $71d9
-	farcall FarPtr_ScriptSetActorScript ; $71dc
-	ldh a, [hRomBank] ; $71df
-	ld b, a ; $71e1
-	ld a, $09 ; $71e2
-	ld de, $7aa7 ; $71e4
-	farcall FarPtr_ScriptSetActorScript ; $71e7
-	ldh a, [hRomBank] ; $71ea
-	ld b, a ; $71ec
-	ld a, $0d ; $71ed
-	ld de, $7aa0 ; $71ef
-	farcall FarPtr_ScriptSetActorScript ; $71f2
+	script_set_actor_script $08, $7a43 ; $71d4
+	script_set_actor_script $09, $7aa7 ; $71df
+	script_set_actor_script $0d, $7aa0 ; $71ea
 	script_wait_frames $0a ; $71f5
-	ldh a, [hRomBank] ; $71fc
-	ld b, a ; $71fe
-	ld a, $03 ; $71ff
-	ld de, $7a7d ; $7201
-	farcall FarPtr_ScriptSetActorScript ; $7204
+	script_set_actor_script $03, $7a7d ; $71fc
 	farcall FarPtr_WaitPlayerMoveDone ; $7207
 	ld a, $03 ; $720a
 	farcall FarPtr_WaitActorScriptDone ; $720c
@@ -3164,22 +3016,10 @@ Label_13_7769:
 	script_facing_lock $00, $00 ; $777b
 	script_face $00, $00 ; $7782
 	script_face $02, $00 ; $7789
-	ldh a, [hRomBank] ; $7790
-	ld b, a ; $7792
-	ld a, $08 ; $7793
-	ld de, $7a43 ; $7795
-	farcall FarPtr_ScriptSetActorScript ; $7798
-	ldh a, [hRomBank] ; $779b
-	ld b, a ; $779d
-	ld a, $03 ; $779e
-	ld de, $7a60 ; $77a0
-	farcall FarPtr_ScriptSetActorScript ; $77a3
+	script_set_actor_script $08, $7a43 ; $7790
+	script_set_actor_script $03, $7a60 ; $779b
 	script_wait_frames $14 ; $77a6
-	ldh a, [hRomBank] ; $77ad
-	ld b, a ; $77af
-	ld a, $09 ; $77b0
-	ld de, $7ac9 ; $77b2
-	farcall FarPtr_ScriptSetActorScript ; $77b5
+	script_set_actor_script $09, $7ac9 ; $77ad
 	script_move_player $0b00, $1d00 ; $77b8
 	farcall FarPtr_WaitPlayerMoveDone ; $77c2
 	ld a, $09 ; $77c5
