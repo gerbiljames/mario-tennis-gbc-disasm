@@ -2495,8 +2495,118 @@ VarsityCourtTourActors_13:
 	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4f, $01, $00
 	map_actor $0000, ActorScript_13_7b25, $2b00, $0b00, $40, $49, $01, $00
 	map_actor_end
-VarsityCourtTourCutsceneBody_13:
-	INCBIN "data/bank_013/d_667a.bin" ; $667a, 918 bytes
+DecompressVarsityCourtTourRecords_13:
+	ldh a, [hWramBank] ; $667a
+	push af ; $667c
+	wram_bank $01 ; $667d
+	ld c, $04 ; $6683
+	xor a, a ; $6685
+Label_13_6686:
+	push bc ; $6686
+	push af ; $6687
+	ld hl, VarsityCourtTourLzPtrs_13 ; $6688
+	sla a ; $668b
+	add a, l ; $668d
+	ld l, a ; $668e
+	jr nc, Label_13_6692 ; $668f
+	inc h ; $6691
+Label_13_6692:
+	ld a, [hl+] ; $6692
+	ld h, [hl] ; $6693
+	ld l, a ; $6694
+	ld de, $d000 ; $6695
+	call DecompressData ; $6698
+	pop af ; $669b
+	push af ; $669c
+	ld hl, $a000 ; $669d
+	ld d, a ; $66a0
+	ld e, $00 ; $66a1
+	add hl, de ; $66a3
+	ld d, h ; $66a4
+	ld e, l ; $66a5
+	ld hl, $d000 ; $66a6
+	ld c, $10 ; $66a9
+	call QueueVRAMCopy ; $66ab
+	pop af ; $66ae
+	pop bc ; $66af
+	inc a ; $66b0
+	dec c ; $66b1
+	jr nz, Label_13_6686 ; $66b2
+	ld hl, VarsityCourtTourPalette_13 ; $66b4
+	ld de, $0801 ; $66b7
+	call LoadPaletteShadow ; $66ba
+	pop af ; $66bd
+	wram_bank ; $66be
+	ret ; $66c2
+QueueVarsityCourtTourSprites_13:
+	ld a, [$c321] ; $66c3
+	cp a, $18 ; $66c6
+	ret c ; $66c8
+	ld a, [$c323] ; $66c9
+	cp a, $10 ; $66cc
+	ret c ; $66ce
+	ldh a, [hVBlankCounter] ; $66cf
+	srl a ; $66d1
+	srl a ; $66d3
+	srl a ; $66d5
+	and a, $03 ; $66d7
+	push af ; $66d9
+	ld hl, VarsityCourtTourSpritePtrs_13 ; $66da
+	sla a ; $66dd
+	add a, l ; $66df
+	ld l, a ; $66e0
+	jr nc, Label_13_66e4 ; $66e1
+	inc h ; $66e3
+Label_13_66e4:
+	ld a, [hl+] ; $66e4
+	ld h, [hl] ; $66e5
+	ld l, a ; $66e6
+	pop af ; $66e7
+	swap a ; $66e8
+	ld c, a ; $66ea
+	ldh a, [hScrollX] ; $66eb
+	ld b, a ; $66ed
+	ld a, $70 ; $66ee
+	sub a, b ; $66f0
+	ld d, a ; $66f1
+	ldh a, [hScrollY] ; $66f2
+	ld b, a ; $66f4
+	ld a, $20 ; $66f5
+	sub a, b ; $66f7
+	ld e, a ; $66f8
+	ld b, $08 ; $66f9
+	call QueueSpriteTemplate ; $66fb
+	ret ; $66fe
+VarsityCourtTourSpritePtrs_13:
+	; $66ff, 8 bytes (records:2)
+	dw VarsityCourtTourSprite0_13 ; record 0
+	dw VarsityCourtTourSprite1_13 ; record 1
+	dw VarsityCourtTourSprite2_13 ; record 2
+	dw VarsityCourtTourSprite3_13 ; record 3
+VarsityCourtTourSprite0_13:
+	INCBIN "data/bank_013/d_6707.bin" ; $6707, 33 bytes
+VarsityCourtTourSprite1_13:
+	INCBIN "data/bank_013/d_6728.bin" ; $6728, 33 bytes
+VarsityCourtTourSprite2_13:
+	INCBIN "data/bank_013/d_6749.bin" ; $6749, 33 bytes
+VarsityCourtTourSprite3_13:
+	INCBIN "data/bank_013/d_676a.bin" ; $676a, 33 bytes
+VarsityCourtTourLzPtrs_13:
+	; $678b, 8 bytes (records:2)
+	dw VarsityCourtTourLz0_13 ; record 0
+	dw VarsityCourtTourLz1_13 ; record 1
+	dw VarsityCourtTourLz2_13 ; record 2
+	dw VarsityCourtTourLz3_13 ; record 3
+VarsityCourtTourLz0_13:
+	INCBIN "data/bank_013/d_6793.bin" ; $6793, 158 bytes
+VarsityCourtTourLz1_13:
+	INCBIN "data/bank_013/d_6831.bin" ; $6831, 157 bytes
+VarsityCourtTourLz2_13:
+	INCBIN "data/bank_013/d_68ce.bin" ; $68ce, 161 bytes
+VarsityCourtTourLz3_13:
+	INCBIN "data/bank_013/d_696f.bin" ; $696f, 153 bytes
+VarsityCourtTourPalette_13:
+	INCBIN "data/bank_013/d_6a08.bin" ; $6a08, 8 bytes
 SetupStoryMinigameMatch0:
 	script_null_script $05 ; $6a10
 	script_set_anim $05, $01 ; $6a15

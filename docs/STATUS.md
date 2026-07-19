@@ -21,6 +21,24 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Carve VarsityCourtTourCutsceneBody_13 (2026-07-19)
+
+The 918-byte `$13:$667a` blob (reached only by dynamic dispatch, never in
+coverage) was uncarved code + data. Decoded it into:
+
+- **`DecompressVarsityCourtTourRecords_13`** (`$667a`) — loops 4x, `DecompressData`
+  each LZ block into `$d000` then `QueueVRAMCopy`s `$10` bytes to `$a000+i*$100`,
+  then `LoadPaletteShadow` from the trailing palette.
+- **`QueueVarsityCourtTourSprites_13`** (`$66c3`) — indexes a 4-entry table and
+  `QueueSpriteTemplate`s the selected sprite block.
+- Two `records:2` pointer tables (`VarsityCourtTourSpritePtrs_13` `$66ff`,
+  `VarsityCourtTourLzPtrs_13` `$678b`), each resolving to its four labeled blocks:
+  4x 33-byte sprite blocks, 4 LZ blocks, and an 8-byte palette (`$6a08`).
+
+Seeded the two routine entries (`bank013_static_code.json`), declared the two
+tables (`data_tables.json`), and labeled every sub-block (`labels.json`). All the
+data blocks stay raw INCBIN, so no LZ round-trip is needed. Byte-perfect.
+
 ### script_get_actor_state macro (2026-07-19)
 
 Added a `script_get_actor_state actor` command: `ld a, actor; farcall
