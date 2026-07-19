@@ -2060,9 +2060,20 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
     return None
 
 
+IMM8_RE = re.compile(r"\$[0-9a-f]{1,2}$")
+
+
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
-                   ramscoped=None):
+                   ramscoped=None, constants=None):
     text = ins.text
+    # A curated 8-bit immediate (constants.json maps the instruction offset to a
+    # named constant, e.g. a wCurrentShotType code). Keyed by exact offset, so
+    # only the tagged `ld r, n8` / `cp a, n8` sites are affected; a wrong tag
+    # changes the assembled byte and fails the byte-perfect compare.
+    if constants and off in constants and ins.target is None:
+        m = IMM8_RE.search(text)
+        if m:
+            return text[:m.start()] + constants[off]
     # A 16-bit immediate load whose value points at a named data region is a
     # pointer setup; inline the label. Bounded to data_labels (curated data
     # offsets) so numeric constants that alias code addresses are untouched.
@@ -2961,9 +2972,10 @@ def render_object_header(rom, off, data_labels, ptr_labels):
 
 
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
-         curated=None, ramscoped=None):
+         curated=None, ramscoped=None, constants=None):
     data_tables = data_tables or {}
     curated = curated or set()
+    constants = constants or {}
     rom = dis.rom
     nbanks = len(rom) // BANK_SIZE
     manifest = []
@@ -3143,7 +3155,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                                 f"FarPtr_{fbank:02x}_{slot:02x}")
                         lines.append(f"\tfarcall {sl} ; ${cpu:04x}")
                 elif off in dis.inline_arg_calls and ins.size == 4:
-                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels, ramscoped)} ; ${cpu:04x}")
+                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels, ramscoped, constants)} ; ${cpu:04x}")
                     lines.append(f"\tdb ${rom[off+3]:02x} ; ${offset_to_cpu(off+3):04x} inline arg")
                 else:
                     note = dis.data_site_notes.get(off)
@@ -3152,7 +3164,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         sl = data_slot_names.get(
                             note, f"DataPtr_{note[0]:02x}_{note[1]:02x}")
                         suffix = f" -> {sl}"
-                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels, ramscoped)} ; ${cpu:04x}{suffix}")
+                    lines.append(f"\t{render_operand(ins, off, labels, hwregs, ramnames, operand_labels, ramscoped, constants)} ; ${cpu:04x}{suffix}")
                 off += ins.size
             else:
                 run_start = off
@@ -3506,6 +3518,7 @@ def main():
     ap.add_argument("--manifest", default="data.manifest")
     ap.add_argument("--labels", default="labels.json")
     ap.add_argument("--data-tables", default="data_tables.json")
+    ap.add_argument("--constants", default="constants.json")
     ap.add_argument("--hardware-inc", default="include/hardware.inc")
     ap.add_argument("--ram-map", default="ram_map.json")
     ap.add_argument("--ram-unions", default="ram_unions.json")
@@ -3585,8 +3598,12 @@ def main():
     ramnames = load_ram_map(args.ram_map, unions_by_region)
     Path(args.srcdir).mkdir(parents=True, exist_ok=True)
     curated = set(overrides.values()) if overrides else set()
+    constants = {}
+    if Path(args.constants).exists():
+        constants = {int(k, 0): v
+                     for k, v in json.loads(Path(args.constants).read_text()).items()}
     emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables,
-         curated, ramscoped)
+         curated, ramscoped, constants)
 
 
 if __name__ == "__main__":

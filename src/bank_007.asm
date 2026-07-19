@@ -3268,7 +3268,7 @@ Label_07_58b1:
 	ld [hl], d ; $58bc
 	ret ; $58bd
 Label_07_58be:
-	ld a, $00 ; $58be
+	ld a, SHOTTYPE_TOPSPIN ; $58be
 	ld [wCurrentShotType], a ; $58c0
 	call NormalizeBallHeightForShot ; $58c3
 	call ApplyShotTypePresets ; $58c6
@@ -3288,7 +3288,7 @@ Label_07_58d3:
 	farcall FarPtr_23_00 ; $58e8
 	ret ; $58eb
 Label_07_58ec:
-	ld a, $02 ; $58ec
+	ld a, SHOTTYPE_SLICE ; $58ec
 	ld [wCurrentShotType], a ; $58ee
 	call NormalizeBallHeightForShot ; $58f1
 	call ApplyShotTypePresets ; $58f4
@@ -3350,7 +3350,7 @@ Label_07_5967:
 	farcall FarPtr_ProjectShotPlacement2 ; $5978
 	ret ; $597b
 Label_07_597c:
-	ld a, $05 ; $597c
+	ld a, SHOTTYPE_REACH ; $597c
 	ld [wCurrentShotType], a ; $597e
 	call NormalizeBallHeightForShot ; $5981
 	call ApplyShotTypePresets ; $5984
@@ -3359,7 +3359,7 @@ Label_07_597c:
 	farcall FarPtr_24_0c ; $598d
 	ret ; $5990
 Label_07_5991:
-	ld a, $09 ; $5991
+	ld a, SHOTTYPE_SMASH ; $5991
 	ld [wCurrentShotType], a ; $5993
 	ld a, $01 ; $5996
 	ld [$c4a6], a ; $5998

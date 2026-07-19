@@ -21,6 +21,26 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Shot-type constants + disassembler constant mechanism (2026-07-19)
+
+Identified the `wCurrentShotType` codes by decoding the button-sequence
+selection tables in `SelectRallyShotType`/`SelectServeShotType` (`$08`): the
+`df16` (first button) x `df17` (second button) tables give A=topspin ($00),
+B=slice ($02), A->B=lob ($0a), B->A=drop ($0b), A+B=smash ($09), a "power"
+variant per doubled button ($01/$03), the ball-smashable "reach" variants
+($05-$08 -> bank `$2c` ProjectShotPlacement), and three serve codes ($0c-$0e);
+$09/$0a/$0b independently confirmed by the `Record{Smash,Lob,DropShot}Stat` `cp`
+checks.
+
+Added a general **immediate-operand constant mechanism** to the disassembler:
+`constants.json` maps an instruction's flat offset to a named constant, and
+`render_operand` substitutes it into the `ld r, n8` / `cp a, n8` operand (keyed
+by exact offset, so a wrong tag fails the byte-perfect compare). Constants live
+in the new hand-maintained `include/constants.inc`, preincluded for every bank
+via the Makefile `PRELUDE`. Defined `SHOTTYPE_*` for all 15 codes and tagged the
+7 highest-confidence sites (the four handler writes in `$07`, the three
+`Record*Stat` checks in `$08`). Byte-perfect.
+
 ### Label bank $2c shot-placement offset tables (2026-07-19)
 
 The three parallel `$2c` handlers at `$7281`/`$72d3`/`$7325` each do `ld bc,

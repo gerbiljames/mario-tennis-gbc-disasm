@@ -177,7 +177,7 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc480` | WRAM | `wLandingMarkerX` | [16-bit] Projected X of the lob landing marker |
 | `0xc482` | WRAM | `wLandingMarkerY` | [16-bit] Projected Y of the lob landing marker |
 | `0xc492` | WRAM | `wMatchFramesAbort` | [8-bit] Companion abort flag to wMatchAbortFlag ($ff set by every quit-menu action): makes StepMatchFrames return immediately and suppresses result jingles |
-| `0xc4a0` | WRAM | `wCurrentShotType` | [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot) |
+| `0xc4a0` | WRAM | `wCurrentShotType` | [8-bit] Shot-type code of the shot in flight. Selected from the A/B button sequence by `SelectRallyShotType`/`SelectServeShotType` (`$08`) and dispatched via the rst00 jumptable at `$07:$5445`. Codes: $00 topspin (A), $01 power topspin (A->A), $02 slice (B), $03 power slice (B->B), $04 neutral, $05-$08 reach/smash-range variants, $09 smash (A+B), $0a lob (A->B), $0b drop (B->A), $0c-$0e serves. See `SHOTTYPE_*` in `include/constants.inc`. |
 | `0xc4a8` | WRAM | `wBounceEffectTimer` | [8-bit] Frames left of the ball-bounce dust effect (starts at $14) |
 | `0xc4a9` | WRAM | `wHitSparkTimer` | [8-bit] Frames left of the normal swing-hit spark (starts at $10) |
 | `0xc4aa` | WRAM | `wSpecialHitTimer` | [8-bit] Frames left of the special-shot hit flash (starts at $10; drives the bank $28 screen effect) |

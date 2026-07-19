@@ -3814,7 +3814,7 @@ RecordReturnAceStat:
 	jp Label_08_5cb2 ; $5c7c
 RecordSmashAceStat:
 	ld a, [wCurrentShotType] ; $5c7f
-	cp a, $09 ; $5c82
+	cp a, SHOTTYPE_SMASH ; $5c82
 	ret nz ; $5c84
 	ld a, $03 ; $5c85
 	ld [$c491], a ; $5c87
@@ -3822,7 +3822,7 @@ RecordSmashAceStat:
 	jp Label_08_5cb2 ; $5c8d
 RecordLobWinnerStat:
 	ld a, [wCurrentShotType] ; $5c90
-	cp a, $0a ; $5c93
+	cp a, SHOTTYPE_LOB ; $5c93
 	ret nz ; $5c95
 	ld a, $04 ; $5c96
 	ld [$c491], a ; $5c98
@@ -3830,7 +3830,7 @@ RecordLobWinnerStat:
 	jp Label_08_5cb2 ; $5c9e
 RecordDropShotWinnerStat:
 	ld a, [wCurrentShotType] ; $5ca1
-	cp a, $0b ; $5ca4
+	cp a, SHOTTYPE_DROP ; $5ca4
 	ret nz ; $5ca6
 	ld a, $05 ; $5ca7
 	ld [$c491], a ; $5ca9
