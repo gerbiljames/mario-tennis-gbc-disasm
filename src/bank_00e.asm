@@ -443,24 +443,21 @@ Func_0e_4610:
 	ret ; $4618
 TrainingGymInitScript_0e:
 	call ComputeTrainingGymProgressIndex ; $4619
-	ld a, $07 ; $461c
-	farcall FarPtr_GetActorStateAddr ; $461e
+	script_get_actor_state $07 ; $461c
 	ld a, $03 ; $4621
 	ld e, l ; $4623
 	ld d, h ; $4624
 	ld hl, $0018 ; $4625
 	add hl, de ; $4628
 	ld [hl], a ; $4629
-	ld a, $08 ; $462a
-	farcall FarPtr_GetActorStateAddr ; $462c
+	script_get_actor_state $08 ; $462a
 	ld a, $03 ; $462f
 	ld e, l ; $4631
 	ld d, h ; $4632
 	ld hl, $0018 ; $4633
 	add hl, de ; $4636
 	ld [hl], a ; $4637
-	ld a, $09 ; $4638
-	farcall FarPtr_GetActorStateAddr ; $463a
+	script_get_actor_state $09 ; $4638
 	ld a, $03 ; $463d
 	ld e, l ; $463f
 	ld d, h ; $4640
@@ -512,8 +509,7 @@ Label_0e_46b9:
 	script_set_position $07, $2900, $0700 ; $46b9
 	script_set_position $08, $2700, $0500 ; $46c4
 	script_set_position $09, $2500, $0700 ; $46cf
-	ld a, $07 ; $46da
-	farcall FarPtr_GetActorStateAddr ; $46dc
+	script_get_actor_state $07 ; $46da
 	ld a, $01 ; $46df
 	ld e, l ; $46e1
 	ld d, h ; $46e2
@@ -971,8 +967,7 @@ ActorScript_0e_4a80:
 	as_call $4ce5
 	as_wait_move
 	as_jump ActorScript_0e_4a80
-	ld a, $0c ; $4c37
-	farcall FarPtr_GetActorStateAddr ; $4c39
+	script_get_actor_state $0c ; $4c37
 	ld c, l ; $4c3c
 	ld b, h ; $4c3d
 	ld hl, $000e ; $4c3e
@@ -993,8 +988,7 @@ ActorScript_0e_4a80:
 	ld a, e ; $4c55
 	ld [hl+], a ; $4c56
 	ld [hl], d ; $4c57
-	ld a, $0a ; $4c58
-	farcall FarPtr_GetActorStateAddr ; $4c5a
+	script_get_actor_state $0a ; $4c58
 	ld c, l ; $4c5d
 	ld b, h ; $4c5e
 	ld hl, $000a ; $4c5f
@@ -1016,8 +1010,7 @@ ActorScript_0e_4a80:
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
 	jp Label_0e_4d3c ; $4c79
-	ld a, $0a ; $4c7c
-	farcall FarPtr_GetActorStateAddr ; $4c7e
+	script_get_actor_state $0a ; $4c7c
 	ld c, l ; $4c81
 	ld b, h ; $4c82
 	ld hl, $0005 ; $4c83
@@ -1026,8 +1019,7 @@ ActorScript_0e_4a80:
 	ld b, $00 ; $4c89
 	ld a, $00 ; $4c8b
 	ret ; $4c8d
-	ld a, $0a ; $4c8e
-	farcall FarPtr_GetActorStateAddr ; $4c90
+	script_get_actor_state $0a ; $4c8e
 	ld c, l ; $4c93
 	ld b, h ; $4c94
 	ld hl, $000e ; $4c95
@@ -1048,8 +1040,7 @@ ActorScript_0e_4a80:
 	ld a, e ; $4cac
 	ld [hl+], a ; $4cad
 	ld [hl], d ; $4cae
-	ld a, $0b ; $4caf
-	farcall FarPtr_GetActorStateAddr ; $4cb1
+	script_get_actor_state $0b ; $4caf
 	ld c, l ; $4cb4
 	ld b, h ; $4cb5
 	ld hl, $000a ; $4cb6
@@ -1071,8 +1062,7 @@ ActorScript_0e_4a80:
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
 	jp Label_0e_4d3c ; $4cd0
-	ld a, $0b ; $4cd3
-	farcall FarPtr_GetActorStateAddr ; $4cd5
+	script_get_actor_state $0b ; $4cd3
 	ld c, l ; $4cd8
 	ld b, h ; $4cd9
 	ld hl, $0005 ; $4cda
@@ -1081,8 +1071,7 @@ ActorScript_0e_4a80:
 	ld b, $00 ; $4ce0
 	ld a, $00 ; $4ce2
 	ret ; $4ce4
-	ld a, $0b ; $4ce5
-	farcall FarPtr_GetActorStateAddr ; $4ce7
+	script_get_actor_state $0b ; $4ce5
 	ld c, l ; $4cea
 	ld b, h ; $4ceb
 	ld hl, $000e ; $4cec
@@ -1103,8 +1092,7 @@ ActorScript_0e_4a80:
 	ld a, e ; $4d03
 	ld [hl+], a ; $4d04
 	ld [hl], d ; $4d05
-	ld a, $0c ; $4d06
-	farcall FarPtr_GetActorStateAddr ; $4d08
+	script_get_actor_state $0c ; $4d06
 	ld c, l ; $4d0b
 	ld b, h ; $4d0c
 	ld hl, $000a ; $4d0d
@@ -1126,8 +1114,7 @@ ActorScript_0e_4a80:
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
 	jp Label_0e_4d3c ; $4d27
-	ld a, $0c ; $4d2a
-	farcall FarPtr_GetActorStateAddr ; $4d2c
+	script_get_actor_state $0c ; $4d2a
 	ld c, l ; $4d2f
 	ld b, h ; $4d30
 	ld hl, $0005 ; $4d31
@@ -1615,8 +1602,7 @@ Func_0e_520f:
 	ld a, [$c90e] ; $520f
 	and a, a ; $5212
 	jr z, Label_0e_5224 ; $5213
-	ld a, $00 ; $5215
-	farcall FarPtr_GetActorStateAddr ; $5217
+	script_get_actor_state $00 ; $5215
 	ld c, l ; $521a
 	ld b, h ; $521b
 	ld hl, $0037 ; $521c
@@ -2284,8 +2270,7 @@ Label_0e_5d49:
 	jr z, ExhibitionAcceptedDoubles ; $6047
 	script_set_text $307d ; $6049
 	call ExhibitionDeclinedCutscene ; $604f
-	ld a, $02 ; $6052
-	farcall FarPtr_GetActorStateAddr ; $6054
+	script_get_actor_state $02 ; $6052
 	ld c, l ; $6057
 	ld b, h ; $6058
 	ld de, $d000 ; $6059
@@ -2587,8 +2572,7 @@ Label_0e_660b:
 	script_speak $08 ; $6629
 	test_flag $05, 7 ; $662e
 	jr z, Label_0e_6640 ; $6631
-	ld a, $02 ; $6633
-	farcall FarPtr_GetActorStateAddr ; $6635
+	script_get_actor_state $02 ; $6633
 	ld c, l ; $6638
 	ld b, h ; $6639
 	ld de, $d000 ; $663a
@@ -2747,8 +2731,7 @@ Label_0e_695e:
 	ret ; $6986
 MoveDoublesPartnerToPlayer:
 	wram_bank $04 ; $6987
-	ld a, $00 ; $698d
-	farcall FarPtr_GetActorStateAddr ; $698f
+	script_get_actor_state $00 ; $698d
 	ld c, l ; $6992
 	ld b, h ; $6993
 	ld hl, $000e ; $6994

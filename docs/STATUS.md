@@ -21,6 +21,17 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### script_get_actor_state macro (2026-07-19)
+
+Added a `script_get_actor_state actor` command: `ld a, actor; farcall
+FarPtr_GetActorStateAddr` (`GetActorStateAddr`, `$0a:$4311` — returns the
+actor's state-struct address, `$d000 + actor*$40`, in hl; callers copy it into
+bc/de to read/write state fields). Same two-step shape as `script_wait_move`.
+Collapses 132 of 136 sites across banks $0e-$15/$27; the 4 holdouts load the
+actor id from `$c2b1` (3) or are a shared function entry (1). `script_set_objdef`
+(which embeds the same farcall after a leading `ld d`) is unaffected — it anchors
+earlier, so its 38 sites still collapse whole. Byte-perfect.
+
 ### script_wait_actor_script macro (2026-07-19)
 
 Added a `script_wait_actor_script actor` command: `ld a, actor; farcall

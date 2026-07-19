@@ -674,8 +674,7 @@ Label_12_4a6c:
 	script_set_anim $00, $03 ; $4a87
 	script_set_anim $02, $03 ; $4a8e
 	script_wait_idle $02 ; $4a95
-	ld a, $02 ; $4a9a
-	farcall FarPtr_GetActorStateAddr ; $4a9c
+	script_get_actor_state $02 ; $4a9a
 	ld c, l ; $4a9f
 	ld b, h ; $4aa0
 	ld de, $d000 ; $4aa1
@@ -751,8 +750,7 @@ WallPracticeExitCourtScript:
 	script_face $07, $40 ; $4b7b
 	test_flag $05, 7 ; $4b82
 	jr z, Label_12_4b94 ; $4b85
-	ld a, $02 ; $4b87
-	farcall FarPtr_GetActorStateAddr ; $4b89
+	script_get_actor_state $02 ; $4b87
 	ld c, l ; $4b8c
 	ld b, h ; $4b8d
 	ld de, $d000 ; $4b8e
@@ -816,8 +814,7 @@ Label_12_4bfc:
 	script_set_anim $00, $03 ; $4c71
 	script_set_anim $02, $03 ; $4c78
 	script_wait_idle $02 ; $4c7f
-	ld a, $02 ; $4c84
-	farcall FarPtr_GetActorStateAddr ; $4c86
+	script_get_actor_state $02 ; $4c84
 	ld c, l ; $4c89
 	ld b, h ; $4c8a
 	ld de, $d000 ; $4c8b
@@ -855,8 +852,7 @@ Func_12_4ce9:
 	clear_flag $0f, 5 ; $4d13
 	test_flag $05, 7 ; $4d16
 	jr z, Label_12_4d28 ; $4d19
-	ld a, $02 ; $4d1b
-	farcall FarPtr_GetActorStateAddr ; $4d1d
+	script_get_actor_state $02 ; $4d1b
 	ld c, l ; $4d20
 	ld b, h ; $4d21
 	ld de, $d000 ; $4d22
@@ -1527,8 +1523,7 @@ Label_12_57f4:
 	script_set_anim $00, $03 ; $57ff
 	script_set_anim $02, $03 ; $5806
 	script_wait_idle $02 ; $580d
-	ld a, $02 ; $5812
-	farcall FarPtr_GetActorStateAddr ; $5814
+	script_get_actor_state $02 ; $5812
 	ld c, l ; $5817
 	ld b, h ; $5818
 	ld de, $d000 ; $5819
@@ -1817,8 +1812,7 @@ Label_12_5ac5:
 	script_speak $0a ; $5add
 	ret ; $5ae2
 Label_12_5ae3:
-	ld a, $0a ; $5ae3
-	farcall FarPtr_GetActorStateAddr ; $5ae5
+	script_get_actor_state $0a ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9
 	ld hl, $0005 ; $5aea
@@ -2061,8 +2055,7 @@ Func_12_5dbe:
 	jr c, Label_12_5ddc ; $5dc3
 	cp a, $0d ; $5dc5
 	jr nc, Label_12_5ddc ; $5dc7
-	ld a, $03 ; $5dc9
-	farcall FarPtr_GetActorStateAddr ; $5dcb
+	script_get_actor_state $03 ; $5dc9
 	ld c, l ; $5dce
 	ld b, h ; $5dcf
 	ld d, $3b ; $5dd0
@@ -2121,8 +2114,7 @@ Func_12_5e91:
 	ld a, [$c94d] ; $5e91
 	or a, a ; $5e94
 	jr nz, Label_12_5eaa ; $5e95
-	ld a, $0c ; $5e97
-	farcall FarPtr_GetActorStateAddr ; $5e99
+	script_get_actor_state $0c ; $5e97
 	ld c, l ; $5e9c
 	ld b, h ; $5e9d
 	ld d, $28 ; $5e9e
@@ -2248,8 +2240,7 @@ Label_12_605a:
 Label_12_6087:
 	script_set_text $1070 ; $6087
 	script_speak $03 ; $608d
-	ld a, $02 ; $6092
-	farcall FarPtr_GetActorStateAddr ; $6094
+	script_get_actor_state $02 ; $6092
 	ld c, l ; $6097
 	ld b, h ; $6098
 	ld de, $d000 ; $6099
@@ -2484,8 +2475,7 @@ RunSeniorRankingMatchIntro:
 	script_move_player_to_actor $09 ; $6533
 	farcall FarPtr_WaitPlayerMoveDone ; $653a
 	ld bc, $d040 ; $653d
-	ld a, $09 ; $6540
-	farcall FarPtr_GetActorStateAddr ; $6542
+	script_get_actor_state $09 ; $6540
 	ld e, l ; $6545
 	ld d, h ; $6546
 	farcall FarPtr_04_1e ; $6547
@@ -2524,8 +2514,7 @@ RunSeniorRankingMatchIntro:
 	script_move_player_to_actor $07 ; $661c
 	farcall FarPtr_WaitPlayerMoveDone ; $6623
 	ld bc, $d040 ; $6626
-	ld a, $07 ; $6629
-	farcall FarPtr_GetActorStateAddr ; $662b
+	script_get_actor_state $07 ; $6629
 	ld e, l ; $662e
 	ld d, h ; $662f
 	farcall FarPtr_04_1e ; $6630
@@ -2594,8 +2583,7 @@ RunSeniorRankingMatchIntro:
 	script_move_player_to_actor $07 ; $67cc
 	farcall FarPtr_WaitPlayerMoveDone ; $67d3
 	ld bc, $d040 ; $67d6
-	ld a, $07 ; $67d9
-	farcall FarPtr_GetActorStateAddr ; $67db
+	script_get_actor_state $07 ; $67d9
 	ld e, l ; $67de
 	ld d, h ; $67df
 	farcall FarPtr_04_1e ; $67e0
@@ -2622,8 +2610,7 @@ RunSeniorRankingMatchIntro:
 	script_move_player_to_actor $06 ; $6866
 	farcall FarPtr_WaitPlayerMoveDone ; $686d
 	ld bc, $d040 ; $6870
-	ld a, $06 ; $6873
-	farcall FarPtr_GetActorStateAddr ; $6875
+	script_get_actor_state $06 ; $6873
 	ld e, l ; $6878
 	ld d, h ; $6879
 	farcall FarPtr_04_1e ; $687a
@@ -2655,8 +2642,7 @@ RunSeniorRankingMatchIntro:
 	script_move_player_to_actor $05 ; $691e
 	farcall FarPtr_WaitPlayerMoveDone ; $6925
 	ld bc, $d040 ; $6928
-	ld a, $05 ; $692b
-	farcall FarPtr_GetActorStateAddr ; $692d
+	script_get_actor_state $05 ; $692b
 	ld e, l ; $6930
 	ld d, h ; $6931
 	farcall FarPtr_04_1e ; $6932
@@ -2816,8 +2802,7 @@ Label_12_6bc4:
 	script_speak $03 ; $6bc4
 	call ResumeSeniorOpponentScripts ; $6bc9
 	script_wait_frames $1e ; $6bcc
-	ld a, $02 ; $6bd3
-	farcall FarPtr_GetActorStateAddr ; $6bd5
+	script_get_actor_state $02 ; $6bd3
 	ld c, l ; $6bd8
 	ld b, h ; $6bd9
 	ld de, $d000 ; $6bda
@@ -3114,8 +3099,7 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_frames $3c ; $6f44
 	script_face $03, $40 ; $6f4b
 	script_face $00, $40 ; $6f52
-	ld a, $02 ; $6f59
-	farcall FarPtr_GetActorStateAddr ; $6f5b
+	script_get_actor_state $02 ; $6f59
 	ld c, l ; $6f5e
 	ld b, h ; $6f5f
 	ld de, $d000 ; $6f60
@@ -3156,8 +3140,7 @@ SeniorMatchVictorySceneDispatch:
 	script_face $03, $40 ; $704b
 	script_face $00, $40 ; $7052
 	script_face $02, $40 ; $7059
-	ld a, $02 ; $7060
-	farcall FarPtr_GetActorStateAddr ; $7062
+	script_get_actor_state $02 ; $7060
 	ld c, l ; $7065
 	ld b, h ; $7066
 	ld de, $d000 ; $7067

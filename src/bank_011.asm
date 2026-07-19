@@ -256,8 +256,7 @@ Func_11_4343:
 	ld d, $58 ; $434c
 	add a, d ; $434e
 	ld d, a ; $434f
-	ld a, $02 ; $4350
-	farcall FarPtr_GetActorStateAddr ; $4352
+	script_get_actor_state $02 ; $4350
 	ld c, l ; $4355
 	ld b, h ; $4356
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4357
@@ -267,8 +266,7 @@ Label_11_4361:
 	ld d, $56 ; $4364
 	add a, d ; $4366
 	ld d, a ; $4367
-	ld a, $00 ; $4368
-	farcall FarPtr_GetActorStateAddr ; $436a
+	script_get_actor_state $00 ; $4368
 	ld c, l ; $436d
 	ld b, h ; $436e
 	farcall FarPtr_LoadActorObjectDefIfValid ; $436f
@@ -592,8 +590,7 @@ LateStudentCrashCutscene:
 	script_move_target $11, $1800, $2000 ; $48ec
 	script_wait_frames $1e ; $48f7
 	ld bc, $d040 ; $48fe
-	ld a, $11 ; $4901
-	farcall FarPtr_GetActorStateAddr ; $4903
+	script_get_actor_state $11 ; $4901
 	ld e, l ; $4906
 	ld d, h ; $4907
 	farcall FarPtr_04_1e ; $4908
@@ -762,8 +759,7 @@ LateStudentCrashImpact:
 	script_move_player $1800, $2400 ; $4d16
 	script_move_target $00, $1700, $2400 ; $4d20
 	script_jump_velocity $00, $ff00 ; $4d2b
-	ld a, $00 ; $4d33
-	farcall FarPtr_GetActorStateAddr ; $4d35
+	script_get_actor_state $00 ; $4d33
 	ld c, l ; $4d38
 	ld b, h ; $4d39
 	ld hl, $0037 ; $4d3a
@@ -781,8 +777,7 @@ Func_11_4d68:
 	script_null_script $00 ; $4d68
 	script_set_speed $00, $0010 ; $4d6d
 	script_jump_velocity $00, $ff80 ; $4d75
-	ld a, $00 ; $4d7d
-	farcall FarPtr_GetActorStateAddr ; $4d7f
+	script_get_actor_state $00 ; $4d7d
 	ld c, l ; $4d82
 	ld b, h ; $4d83
 	ld hl, $0037 ; $4d84
@@ -931,8 +926,7 @@ Label_11_4fcf:
 	ld d, $58 ; $4ff3
 	add a, d ; $4ff5
 	ld d, a ; $4ff6
-	ld a, $05 ; $4ff7
-	farcall FarPtr_GetActorStateAddr ; $4ff9
+	script_get_actor_state $05 ; $4ff7
 	ld c, l ; $4ffc
 	ld b, h ; $4ffd
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4ffe
@@ -944,8 +938,7 @@ Label_11_501a:
 	ld d, $56 ; $501d
 	add a, d ; $501f
 	ld d, a ; $5020
-	ld a, $00 ; $5021
-	farcall FarPtr_GetActorStateAddr ; $5023
+	script_get_actor_state $00 ; $5021
 	ld c, l ; $5026
 	ld b, h ; $5027
 	farcall FarPtr_LoadActorObjectDefIfValid ; $5028
@@ -1841,8 +1834,7 @@ Label_11_5db7:
 	script_wait_move $00 ; $5e9f
 	script_face $00, $40 ; $5ea4
 	script_wait_frames $28 ; $5eab
-	ld a, $02 ; $5eb2
-	farcall FarPtr_GetActorStateAddr ; $5eb4
+	script_get_actor_state $02 ; $5eb2
 	ld c, l ; $5eb7
 	ld b, h ; $5eb8
 	ld de, $d000 ; $5eb9
@@ -1884,8 +1876,7 @@ Label_11_5ec0:
 	script_wait_frames $3c ; $5f9c
 	script_wait_move $00 ; $5fa3
 	script_face $00, $40 ; $5fa8
-	ld a, $02 ; $5faf
-	farcall FarPtr_GetActorStateAddr ; $5fb1
+	script_get_actor_state $02 ; $5faf
 	ld c, l ; $5fb4
 	ld b, h ; $5fb5
 	ld de, $d000 ; $5fb6
@@ -3039,8 +3030,7 @@ Label_11_7590:
 	script_move_player_to_actor $04 ; $75bb
 	farcall FarPtr_WaitPlayerMoveDone ; $75c2
 	ld bc, $d040 ; $75c5
-	ld a, $04 ; $75c8
-	farcall FarPtr_GetActorStateAddr ; $75ca
+	script_get_actor_state $04 ; $75c8
 	ld e, l ; $75cd
 	ld d, h ; $75ce
 	farcall FarPtr_04_1e ; $75cf

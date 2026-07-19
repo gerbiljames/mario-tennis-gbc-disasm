@@ -323,6 +323,14 @@ MACRO script_set_objdef
 	ld b, h
 	farcall FarPtr_LoadActorObjectDefIfValid
 ENDM
+; Fetch `actor`'s state-struct address ($d000 + actor*$40) into hl. Callers
+; then copy it into bc/de to read or write state fields. GetActorStateAddr
+; ($0a:$4311).
+; Usage: script_get_actor_state actor
+MACRO script_get_actor_state
+	ld a, \1
+	farcall FarPtr_GetActorStateAddr
+ENDM
 ; Usage: script_face actor, facing
 MACRO script_face
 	ld a, \1

@@ -744,8 +744,7 @@ Label_13_4fd0:
 	script_speak $03 ; $4fd3
 	script_set_anim $00, $03 ; $4fd8
 	script_wait_idle $00 ; $4fdf
-	ld a, $03 ; $4fe4
-	farcall FarPtr_GetActorStateAddr ; $4fe6
+	script_get_actor_state $03 ; $4fe4
 	ld c, l ; $4fe9
 	ld b, h ; $4fea
 	ld de, $d000 ; $4feb
@@ -946,8 +945,7 @@ Label_13_51d3:
 	script_face $03, $40 ; $51e3
 	script_null_script $02 ; $51ea
 	script_set_position $02, $0100, $0100 ; $51ef
-	ld a, $03 ; $51fa
-	farcall FarPtr_GetActorStateAddr ; $51fc
+	script_get_actor_state $03 ; $51fa
 	ld c, l ; $51ff
 	ld b, h ; $5200
 	ld hl, $0005 ; $5201
@@ -964,14 +962,12 @@ Label_13_521b:
 	script_null_script $02 ; $5220
 	script_set_position $02, $0100, $0100 ; $5225
 	call Func_13_5c39 ; $5230
-	ld a, $03 ; $5233
-	farcall FarPtr_GetActorStateAddr ; $5235
+	script_get_actor_state $03 ; $5233
 	ld c, l ; $5238
 	ld b, h ; $5239
 	ld de, $d000 ; $523a
 	farcall FarPtr_04_20 ; $523d
-	ld a, $03 ; $5240
-	farcall FarPtr_GetActorStateAddr ; $5242
+	script_get_actor_state $03 ; $5240
 	ld c, l ; $5245
 	ld b, h ; $5246
 	ld hl, $0005 ; $5247
@@ -1071,15 +1067,13 @@ Label_13_5355:
 	script_speak $03 ; $5355
 	script_set_anim $00, $03 ; $535a
 	script_wait_idle $00 ; $5361
-	ld a, $03 ; $5366
-	farcall FarPtr_GetActorStateAddr ; $5368
+	script_get_actor_state $03 ; $5366
 	ld c, l ; $536b
 	ld b, h ; $536c
 	ld de, $d000 ; $536d
 	farcall FarPtr_04_20 ; $5370
 	script_face $00, $40 ; $5373
-	ld a, $03 ; $537a
-	farcall FarPtr_GetActorStateAddr ; $537c
+	script_get_actor_state $03 ; $537a
 	ld c, l ; $537f
 	ld b, h ; $5380
 	ld hl, $0005 ; $5381
@@ -1355,14 +1349,12 @@ Label_13_56d4:
 	ld [wMatchIsDoubles], a ; $5716
 	call Func_13_5067 ; $5719
 	script_wait_frames $05 ; $571c
-	ld a, $03 ; $5723
-	farcall FarPtr_GetActorStateAddr ; $5725
+	script_get_actor_state $03 ; $5723
 	ld c, l ; $5728
 	ld b, h ; $5729
 	ld de, $d000 ; $572a
 	farcall FarPtr_04_20 ; $572d
-	ld a, $03 ; $5730
-	farcall FarPtr_GetActorStateAddr ; $5732
+	script_get_actor_state $03 ; $5730
 	ld c, l ; $5735
 	ld b, h ; $5736
 	ld hl, $0005 ; $5737
@@ -1380,8 +1372,7 @@ Label_13_574c:
 	ld a, $00 ; $5760
 	ld [wMatchIsDoubles], a ; $5762
 	script_null_script $03 ; $5765
-	ld a, $03 ; $576a
-	farcall FarPtr_GetActorStateAddr ; $576c
+	script_get_actor_state $03 ; $576a
 	ld c, l ; $576f
 	ld b, h ; $5770
 	ld hl, $0005 ; $5771
@@ -1417,8 +1408,7 @@ Label_13_5795:
 	script_wait_frames $05 ; $57d5
 	script_face $03, $40 ; $57dc
 	script_wait_frames $05 ; $57e3
-	ld a, $03 ; $57ea
-	farcall FarPtr_GetActorStateAddr ; $57ec
+	script_get_actor_state $03 ; $57ea
 	ld c, l ; $57ef
 	ld b, h ; $57f0
 	ld hl, $0005 ; $57f1
@@ -1441,14 +1431,12 @@ Label_13_5807:
 	ld [wMatchIsDoubles], a ; $5834
 	set_flag $05, 7 ; $5837
 	call Func_13_5067 ; $583a
-	ld a, $03 ; $583d
-	farcall FarPtr_GetActorStateAddr ; $583f
+	script_get_actor_state $03 ; $583d
 	ld c, l ; $5842
 	ld b, h ; $5843
 	ld de, $d000 ; $5844
 	farcall FarPtr_04_20 ; $5847
-	ld a, $03 ; $584a
-	farcall FarPtr_GetActorStateAddr ; $584c
+	script_get_actor_state $03 ; $584a
 	ld c, l ; $584f
 	ld b, h ; $5850
 	ld hl, $0005 ; $5851
@@ -1806,14 +1794,12 @@ Label_13_5b01:
 	script_wait_idle $00 ; $5b4b
 	script_face $00, $40 ; $5b50
 	script_wait_frames $05 ; $5b57
-	ld a, $03 ; $5b5e
-	farcall FarPtr_GetActorStateAddr ; $5b60
+	script_get_actor_state $03 ; $5b5e
 	ld c, l ; $5b63
 	ld b, h ; $5b64
 	ld de, $d000 ; $5b65
 	farcall FarPtr_04_20 ; $5b68
-	ld a, $03 ; $5b6b
-	farcall FarPtr_GetActorStateAddr ; $5b6d
+	script_get_actor_state $03 ; $5b6b
 	ld c, l ; $5b70
 	ld b, h ; $5b71
 	ld hl, $0005 ; $5b72
@@ -1917,8 +1903,7 @@ Func_13_5c27:
 	farcall FarPtr_ScriptSetActorPosition ; $5c35
 	ret ; $5c38
 Func_13_5c39:
-	ld a, $00 ; $5c39
-	farcall FarPtr_GetActorStateAddr ; $5c3b
+	script_get_actor_state $00 ; $5c39
 	ld c, l ; $5c3e
 	ld b, h ; $5c3f
 	ld hl, $000c ; $5c40
@@ -2875,8 +2860,7 @@ Label_13_6fb6:
 	ret ; $707c
 Label_13_707d:
 	script_speak $03 ; $707d
-	ld a, $02 ; $7082
-	farcall FarPtr_GetActorStateAddr ; $7084
+	script_get_actor_state $02 ; $7082
 	ld c, l ; $7087
 	ld b, h ; $7088
 	ld de, $d000 ; $7089
@@ -2897,8 +2881,7 @@ Label_13_70ac:
 	script_speak $03 ; $70ac
 	call Func_13_70d5 ; $70b1
 	script_wait_frames $3c ; $70b4
-	ld a, $02 ; $70bb
-	farcall FarPtr_GetActorStateAddr ; $70bd
+	script_get_actor_state $02 ; $70bb
 	ld c, l ; $70c0
 	ld b, h ; $70c1
 	ld de, $d000 ; $70c2
@@ -3119,8 +3102,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_idle $00 ; $75bb
 	script_move_angle $00, $80, $0100 ; $75c0
 	script_wait_move $00 ; $75ca
-	ld a, $02 ; $75cf
-	farcall FarPtr_GetActorStateAddr ; $75d1
+	script_get_actor_state $02 ; $75cf
 	ld de, $0018 ; $75d4
 	add hl, de ; $75d7
 	ld [hl], $04 ; $75d8
@@ -3139,8 +3121,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_idle $02 ; $7626
 	script_set_anim $02, $02 ; $762b
 	script_wait_idle $02 ; $7632
-	ld a, $02 ; $7637
-	farcall FarPtr_GetActorStateAddr ; $7639
+	script_get_actor_state $02 ; $7637
 	ld de, $0018 ; $763c
 	add hl, de ; $763f
 	ld [hl], $01 ; $7640
@@ -3172,8 +3153,7 @@ Label_13_7672:
 	script_wait_idle $00 ; $76e0
 	script_move_angle $00, $80, $0100 ; $76e5
 	script_wait_move $00 ; $76ef
-	ld a, $02 ; $76f4
-	farcall FarPtr_GetActorStateAddr ; $76f6
+	script_get_actor_state $02 ; $76f4
 	ld de, $0018 ; $76f9
 	add hl, de ; $76fc
 	ld [hl], $03 ; $76fd
@@ -3185,8 +3165,7 @@ Label_13_7672:
 	script_wait_frames $28 ; $771e
 	script_set_anim $02, $02 ; $7725
 	script_wait_idle $02 ; $772c
-	ld a, $02 ; $7731
-	farcall FarPtr_GetActorStateAddr ; $7733
+	script_get_actor_state $02 ; $7731
 	ld de, $0018 ; $7736
 	add hl, de ; $7739
 	ld [hl], $01 ; $773a

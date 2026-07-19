@@ -122,8 +122,7 @@ MachineLevel1ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $412b
 	script_set_text $20af ; $412e
 	script_speak $05 ; $4134
-	ld a, $02 ; $4139
-	farcall FarPtr_GetActorStateAddr ; $413b
+	script_get_actor_state $02 ; $4139
 	ld c, l ; $413e
 	ld b, h ; $413f
 	ld de, $d000 ; $4140
@@ -144,8 +143,7 @@ MachineLevel2ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4160
 	script_set_text $20b7 ; $4163
 	script_speak $05 ; $4169
-	ld a, $02 ; $416e
-	farcall FarPtr_GetActorStateAddr ; $4170
+	script_get_actor_state $02 ; $416e
 	ld c, l ; $4173
 	ld b, h ; $4174
 	ld de, $d000 ; $4175
@@ -166,8 +164,7 @@ MachineLevel3ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4195
 	script_set_text $20be ; $4198
 	script_speak $05 ; $419e
-	ld a, $02 ; $41a3
-	farcall FarPtr_GetActorStateAddr ; $41a5
+	script_get_actor_state $02 ; $41a3
 	ld c, l ; $41a8
 	ld b, h ; $41a9
 	ld de, $d000 ; $41aa
@@ -188,8 +185,7 @@ MachineLevel4ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $41ca
 	script_set_text $20c5 ; $41cd
 	script_speak $05 ; $41d3
-	ld a, $02 ; $41d8
-	farcall FarPtr_GetActorStateAddr ; $41da
+	script_get_actor_state $02 ; $41d8
 	ld c, l ; $41dd
 	ld b, h ; $41de
 	ld de, $d000 ; $41df
@@ -230,8 +226,7 @@ Func_14_4227:
 	script_wait_frames $05 ; $424d
 	script_face $05, $80 ; $4254
 	script_face $00, $00 ; $425b
-	ld a, $02 ; $4262
-	farcall FarPtr_GetActorStateAddr ; $4264
+	script_get_actor_state $02 ; $4262
 	ld c, l ; $4267
 	ld b, h ; $4268
 	ld de, $d000 ; $4269
@@ -322,8 +317,7 @@ MachineCourtGameOverExitScene:
 	script_move_target $05, $2d00, $2b00 ; $437f
 	script_wait_move $05 ; $438a
 	script_face $05, $80 ; $438f
-	ld a, $02 ; $4396
-	farcall FarPtr_GetActorStateAddr ; $4398
+	script_get_actor_state $02 ; $4396
 	ld c, l ; $439b
 	ld b, h ; $439c
 	ld de, $d000 ; $439d
@@ -648,8 +642,7 @@ MachineCourtHandleRetryChoice:
 	script_move_target $05, $2d00, $2b00 ; $47a8
 	script_wait_move $05 ; $47b3
 	script_face $05, $80 ; $47b8
-	ld a, $02 ; $47bf
-	farcall FarPtr_GetActorStateAddr ; $47c1
+	script_get_actor_state $02 ; $47bf
 	ld c, l ; $47c4
 	ld b, h ; $47c5
 	ld de, $d000 ; $47c6
@@ -797,8 +790,7 @@ MachineExpertNewRecordScene:
 	farcall FarPtr_PushTextArgNumber ; $48e0
 	call MachineCourtWalkToAttendantCutscene ; $48e3
 	script_speak $05 ; $48e6
-	ld a, $02 ; $48eb
-	farcall FarPtr_GetActorStateAddr ; $48ed
+	script_get_actor_state $02 ; $48eb
 	ld c, l ; $48f0
 	ld b, h ; $48f1
 	ld de, $d000 ; $48f2
@@ -835,8 +827,7 @@ MachineExpertCounterMaxScene:
 	call MachineCourtWalkToAttendantCutscene ; $4936
 	script_speak $05 ; $4939
 	script_speak $05 ; $493e
-	ld a, $02 ; $4943
-	farcall FarPtr_GetActorStateAddr ; $4945
+	script_get_actor_state $02 ; $4943
 	ld c, l ; $4948
 	ld b, h ; $4949
 	ld de, $d000 ; $494a
@@ -1422,8 +1413,7 @@ Func_14_51ea:
 	ld d, $58 ; $51f3
 	add a, d ; $51f5
 	ld d, a ; $51f6
-	ld a, $02 ; $51f7
-	farcall FarPtr_GetActorStateAddr ; $51f9
+	script_get_actor_state $02 ; $51f7
 	ld c, l ; $51fc
 	ld b, h ; $51fd
 	farcall FarPtr_LoadActorObjectDefIfValid ; $51fe
@@ -1433,8 +1423,7 @@ Label_14_5208:
 	ld d, $56 ; $520b
 	add a, d ; $520d
 	ld d, a ; $520e
-	ld a, $00 ; $520f
-	farcall FarPtr_GetActorStateAddr ; $5211
+	script_get_actor_state $00 ; $520f
 	ld c, l ; $5214
 	ld b, h ; $5215
 	farcall FarPtr_LoadActorObjectDefIfValid ; $5216
@@ -1517,8 +1506,7 @@ Label_14_5303:
 	ld d, $58 ; $533d
 	add a, d ; $533f
 	ld d, a ; $5340
-	ld a, $05 ; $5341
-	farcall FarPtr_GetActorStateAddr ; $5343
+	script_get_actor_state $05 ; $5341
 	ld c, l ; $5346
 	ld b, h ; $5347
 	farcall FarPtr_LoadActorObjectDefIfValid ; $5348
@@ -1528,8 +1516,7 @@ Label_14_5352:
 	ld d, $56 ; $5355
 	add a, d ; $5357
 	ld d, a ; $5358
-	ld a, $00 ; $5359
-	farcall FarPtr_GetActorStateAddr ; $535b
+	script_get_actor_state $00 ; $5359
 	ld c, l ; $535e
 	ld b, h ; $535f
 	farcall FarPtr_LoadActorObjectDefIfValid ; $5360

@@ -262,8 +262,7 @@ Func_0f_44b3:
 	ld d, $58 ; $4518
 	add a, d ; $451a
 	ld d, a ; $451b
-	ld a, $15 ; $451c
-	farcall FarPtr_GetActorStateAddr ; $451e
+	script_get_actor_state $15 ; $451c
 	ld c, l ; $4521
 	ld b, h ; $4522
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4523
@@ -342,8 +341,7 @@ Label_0f_4661:
 	script_face $02, $40 ; $46e6
 	ld a, $01 ; $46ed
 	call DelayFrames ; $46ef
-	ld a, $02 ; $46f2
-	farcall FarPtr_GetActorStateAddr ; $46f4
+	script_get_actor_state $02 ; $46f2
 	ld c, l ; $46f7
 	ld b, h ; $46f8
 	ld de, $d000 ; $46f9
@@ -354,8 +352,7 @@ Label_0f_4700:
 	script_face $00, $40 ; $470b
 	ld a, $01 ; $4712
 	call DelayFrames ; $4714
-	ld a, $03 ; $4717
-	farcall FarPtr_GetActorStateAddr ; $4719
+	script_get_actor_state $03 ; $4717
 	ld c, l ; $471c
 	ld b, h ; $471d
 	ld de, $d000 ; $471e
@@ -454,16 +451,14 @@ Func_0f_4725:
 	script_set_anim $11, $04 ; $4961
 	script_wait_idle $11 ; $4968
 	script_speak $11 ; $496d
-	ld a, $16 ; $4972
-	farcall FarPtr_GetActorStateAddr ; $4974
+	script_get_actor_state $16 ; $4972
 	ld a, $01 ; $4977
 	ld e, l ; $4979
 	ld d, h ; $497a
 	ld hl, $0018 ; $497b
 	add hl, de ; $497e
 	ld [hl], a ; $497f
-	ld a, $0c ; $4980
-	farcall FarPtr_GetActorStateAddr ; $4982
+	script_get_actor_state $0c ; $4980
 	ld a, $01 ; $4985
 	ld e, l ; $4987
 	ld d, h ; $4988
@@ -641,8 +636,7 @@ Func_0f_4725:
 	ld d, $26 ; $4e41
 	add a, d ; $4e43
 	ld d, a ; $4e44
-	ld a, $16 ; $4e45
-	farcall FarPtr_GetActorStateAddr ; $4e47
+	script_get_actor_state $16 ; $4e45
 	ld c, l ; $4e4a
 	ld b, h ; $4e4b
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4e4c
@@ -683,12 +677,10 @@ Label_0f_4ea7:
 	call DelayFrames ; $4edd
 	call AnnounceWinnersToPodiums ; $4ee0
 	script_face $00, $40 ; $4ee3
-	ld a, $05 ; $4eea
-	farcall FarPtr_GetActorStateAddr ; $4eec
+	script_get_actor_state $05 ; $4eea
 	ld c, l ; $4eef
 	ld b, h ; $4ef0
-	ld a, $04 ; $4ef1
-	farcall FarPtr_GetActorStateAddr ; $4ef3
+	script_get_actor_state $04 ; $4ef1
 	ld e, l ; $4ef6
 	ld d, h ; $4ef7
 	farcall FarPtr_04_20 ; $4ef8
@@ -715,8 +707,7 @@ Label_0f_4ea7:
 	ld d, $58 ; $4f81
 	add a, d ; $4f83
 	ld d, a ; $4f84
-	ld a, $11 ; $4f85
-	farcall FarPtr_GetActorStateAddr ; $4f87
+	script_get_actor_state $11 ; $4f85
 	ld c, l ; $4f8a
 	ld b, h ; $4f8b
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4f8c
@@ -930,8 +921,7 @@ Label_0f_4ea7:
 	ld d, $26 ; $5514
 	add a, d ; $5516
 	ld d, a ; $5517
-	ld a, $16 ; $5518
-	farcall FarPtr_GetActorStateAddr ; $551a
+	script_get_actor_state $16 ; $5518
 	ld c, l ; $551d
 	ld b, h ; $551e
 	farcall FarPtr_LoadActorObjectDefIfValid ; $551f
@@ -1015,8 +1005,7 @@ Label_0f_5600:
 	ld e, a ; $5614
 	ld a, $03 ; $5615
 	farcall FarPtr_ScriptSetActorPosition ; $5617
-	ld a, $03 ; $561a
-	farcall FarPtr_GetActorStateAddr ; $561c
+	script_get_actor_state $03 ; $561a
 	ld c, l ; $561f
 	ld b, h ; $5620
 	ld de, $d000 ; $5621
@@ -1037,8 +1026,7 @@ ReplacePlayerWithStandInActor:
 	ld d, $56 ; $5644
 	add a, d ; $5646
 	ld d, a ; $5647
-	ld a, $16 ; $5648
-	farcall FarPtr_GetActorStateAddr ; $564a
+	script_get_actor_state $16 ; $5648
 	ld c, l ; $564d
 	ld b, h ; $564e
 	farcall FarPtr_LoadActorObjectDefIfValid ; $564f
@@ -1165,8 +1153,7 @@ Label_0f_56a8:
 	script_speak $03 ; $586a
 	script_set_anim $00, $03 ; $586f
 	script_wait_idle $00 ; $5876
-	ld a, $03 ; $587b
-	farcall FarPtr_GetActorStateAddr ; $587d
+	script_get_actor_state $03 ; $587b
 	ld c, l ; $5880
 	ld b, h ; $5881
 	ld de, $d000 ; $5882
@@ -1285,8 +1272,7 @@ Label_0f_5889:
 	call Func_0f_5aec ; $5acf
 	script_set_anim $00, $03 ; $5ad2
 	script_wait_idle $00 ; $5ad9
-	ld a, $02 ; $5ade
-	farcall FarPtr_GetActorStateAddr ; $5ae0
+	script_get_actor_state $02 ; $5ade
 	ld c, l ; $5ae3
 	ld b, h ; $5ae4
 	ld de, $d000 ; $5ae5
@@ -1476,8 +1462,7 @@ Func_0f_5e4a:
 	ret ; $5f51
 SavePlayerActorPosition:
 	wram_bank $04 ; $5f52
-	ld a, $00 ; $5f58
-	farcall FarPtr_GetActorStateAddr ; $5f5a
+	script_get_actor_state $00 ; $5f58
 	ld c, l ; $5f5d
 	ld b, h ; $5f5e
 	ld hl, $000c ; $5f5f
@@ -1955,8 +1940,7 @@ Label_0f_6582:
 	script_set_anim $04, $03 ; $6585
 	script_wait_idle $04 ; $658c
 	script_speak $04 ; $6591
-	ld a, $05 ; $6596
-	farcall FarPtr_GetActorStateAddr ; $6598
+	script_get_actor_state $05 ; $6596
 	ld c, l ; $659b
 	ld b, h ; $659c
 	ld de, $d000 ; $659d
@@ -2759,8 +2743,7 @@ Label_0f_74b0:
 	call ComputeIslandOpenRound ; $74c1
 	farcall FarPtr_BeginCutsceneScriptMode ; $74c4
 	call SetPlayerAndPartnerObjectDefs ; $74c7
-	ld a, $08 ; $74ca
-	farcall FarPtr_GetActorStateAddr ; $74cc
+	script_get_actor_state $08 ; $74ca
 	ld c, l ; $74cf
 	ld b, h ; $74d0
 	ld hl, $0037 ; $74d1
@@ -2954,8 +2937,7 @@ Label_0f_76f6:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $775d
 	farcall FarPtr_AdvanceDialogueTextCursor ; $7760
 Label_0f_7763:
-	ld a, $08 ; $7763
-	farcall FarPtr_GetActorStateAddr ; $7765
+	script_get_actor_state $08 ; $7763
 	ld c, l ; $7768
 	ld b, h ; $7769
 	ld hl, $0037 ; $776a
@@ -2999,8 +2981,7 @@ Label_0f_7811:
 	script_face_toward $04, $02 ; $781c
 	script_speak $03 ; $7824
 	set_flag $17, 1 ; $7829
-	ld a, $02 ; $782c
-	farcall FarPtr_GetActorStateAddr ; $782e
+	script_get_actor_state $02 ; $782c
 	ld c, l ; $7831
 	ld b, h ; $7832
 	ld de, $d000 ; $7833
@@ -3141,8 +3122,7 @@ Label_0f_7a2a:
 	ld d, $59 ; $7a2a
 	jr Label_0f_7a2e ; $7a2c
 Label_0f_7a2e:
-	ld a, $05 ; $7a2e
-	farcall FarPtr_GetActorStateAddr ; $7a30
+	script_get_actor_state $05 ; $7a2e
 	ld c, l ; $7a33
 	ld b, h ; $7a34
 	farcall FarPtr_LoadActorObjectDefIfValid ; $7a35
@@ -3244,8 +3224,7 @@ SetPlayerAndPartnerObjectDefs:
 	ld d, $58 ; $7b29
 	add a, d ; $7b2b
 	ld d, a ; $7b2c
-	ld a, $02 ; $7b2d
-	farcall FarPtr_GetActorStateAddr ; $7b2f
+	script_get_actor_state $02 ; $7b2d
 	ld c, l ; $7b32
 	ld b, h ; $7b33
 	farcall FarPtr_LoadActorObjectDefIfValid ; $7b34
@@ -3255,8 +3234,7 @@ Label_0f_7b3e:
 	ld d, $56 ; $7b41
 	add a, d ; $7b43
 	ld d, a ; $7b44
-	ld a, $00 ; $7b45
-	farcall FarPtr_GetActorStateAddr ; $7b47
+	script_get_actor_state $00 ; $7b45
 	ld c, l ; $7b4a
 	ld b, h ; $7b4b
 	farcall FarPtr_LoadActorObjectDefIfValid ; $7b4c

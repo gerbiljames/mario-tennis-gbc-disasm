@@ -3043,8 +3043,7 @@ Func_10_613e:
 	nop ; $6159
 Func_10_615a:
 	wram_bank $04 ; $615a
-	ld a, $00 ; $6160
-	farcall FarPtr_GetActorStateAddr ; $6162
+	script_get_actor_state $00 ; $6160
 	ld c, l ; $6165
 	ld b, h ; $6166
 	ld hl, $000c ; $6167
@@ -3122,8 +3121,7 @@ Func_10_623b:
 	script_set_text $0205 ; $6248
 	jr Label_10_62b0 ; $624e
 Label_10_6250:
-	ld a, $06 ; $6250
-	farcall FarPtr_GetActorStateAddr ; $6252
+	script_get_actor_state $06 ; $6250
 	ld c, l ; $6255
 	ld b, h ; $6256
 	ld hl, $0037 ; $6257

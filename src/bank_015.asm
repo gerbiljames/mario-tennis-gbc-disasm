@@ -371,8 +371,7 @@ Label_15_46ca:
 	ld d, $59 ; $46ca
 	jr Label_15_46ce ; $46cc
 Label_15_46ce:
-	ld a, $05 ; $46ce
-	farcall FarPtr_GetActorStateAddr ; $46d0
+	script_get_actor_state $05 ; $46ce
 	ld c, l ; $46d3
 	ld b, h ; $46d4
 	farcall FarPtr_LoadActorObjectDefIfValid ; $46d5
@@ -436,8 +435,7 @@ SetPlayerPartnerActorSprites:
 	ld d, $58 ; $4768
 	add a, d ; $476a
 	ld d, a ; $476b
-	ld a, $02 ; $476c
-	farcall FarPtr_GetActorStateAddr ; $476e
+	script_get_actor_state $02 ; $476c
 	ld c, l ; $4771
 	ld b, h ; $4772
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4773
@@ -447,8 +445,7 @@ Label_15_477d:
 	ld d, $56 ; $4780
 	add a, d ; $4782
 	ld d, a ; $4783
-	ld a, $00 ; $4784
-	farcall FarPtr_GetActorStateAddr ; $4786
+	script_get_actor_state $00 ; $4784
 	ld c, l ; $4789
 	ld b, h ; $478a
 	farcall FarPtr_LoadActorObjectDefIfValid ; $478b
@@ -756,8 +753,7 @@ Label_15_4b11:
 Func_15_4b21:
 	script_move_player_to_actor $13 ; $4b21
 	farcall FarPtr_WaitPlayerMoveDone ; $4b28
-	ld a, $00 ; $4b2b
-	farcall FarPtr_GetActorStateAddr ; $4b2d
+	script_get_actor_state $00 ; $4b2b
 	ld a, $01 ; $4b30
 	ld e, l ; $4b32
 	ld d, h ; $4b33
@@ -784,8 +780,7 @@ Label_15_4b6e:
 	script_set_anim $13, $01 ; $4b7d
 	script_wait_idle $13 ; $4b84
 	script_face $13, $80 ; $4b89
-	ld a, $13 ; $4b90
-	farcall FarPtr_GetActorStateAddr ; $4b92
+	script_get_actor_state $13 ; $4b90
 	ld a, $02 ; $4b95
 	ld e, l ; $4b97
 	ld d, h ; $4b98
@@ -794,8 +789,7 @@ Label_15_4b6e:
 	ld [hl], a ; $4b9d
 	script_set_anim $13, $02 ; $4b9e
 	script_wait_idle $13 ; $4ba5
-	ld a, $13 ; $4baa
-	farcall FarPtr_GetActorStateAddr ; $4bac
+	script_get_actor_state $13 ; $4baa
 	ld a, $01 ; $4baf
 	ld e, l ; $4bb1
 	ld d, h ; $4bb2
@@ -843,8 +837,7 @@ Label_15_4b6e:
 	script_set_position $13, $3f00, $3f00 ; $4cc5
 	script_facing_lock $00, $00 ; $4cd0
 	script_face $00, $40 ; $4cd7
-	ld a, $00 ; $4cde
-	farcall FarPtr_GetActorStateAddr ; $4ce0
+	script_get_actor_state $00 ; $4cde
 	ld a, $02 ; $4ce3
 	ld e, l ; $4ce5
 	ld d, h ; $4ce6
@@ -856,8 +849,7 @@ Label_15_4b6e:
 	sound $99 ; $4cfe
 	script_wait_frames $50 ; $4d00
 Func_15_4d07:
-	ld a, $00 ; $4d07
-	farcall FarPtr_GetActorStateAddr ; $4d09
+	script_get_actor_state $00 ; $4d07
 	ld a, $01 ; $4d0c
 	ld e, l ; $4d0e
 	ld d, h ; $4d0f
@@ -951,8 +943,7 @@ Label_15_4e24:
 	cp a, $96 ; $4ecd
 	jp nc, Label_15_4eef ; $4ecf
 	farcall FarPtr_AdvanceDialogueTextCursor ; $4ed2
-	ld a, $15 ; $4ed5
-	farcall FarPtr_GetActorStateAddr ; $4ed7
+	script_get_actor_state $15 ; $4ed5
 	ld c, l ; $4eda
 	ld b, h ; $4edb
 	ld hl, $0037 ; $4edc
@@ -1672,8 +1663,7 @@ Func_15_5777:
 	ld a, [$c90e] ; $5777
 	and a, a ; $577a
 	jr z, Label_15_578c ; $577b
-	ld a, $00 ; $577d
-	farcall FarPtr_GetActorStateAddr ; $577f
+	script_get_actor_state $00 ; $577d
 	ld c, l ; $5782
 	ld b, h ; $5783
 	ld hl, $0037 ; $5784
@@ -2341,8 +2331,7 @@ Label_15_618b:
 	farcall FarPtr_ScriptSetActorMoveTarget ; $61a6
 	script_move_target $00, $1300, $2b00 ; $61a9
 	script_wait_move $00 ; $61b4
-	ld a, $02 ; $61b9
-	farcall FarPtr_GetActorStateAddr ; $61bb
+	script_get_actor_state $02 ; $61b9
 	ld c, l ; $61be
 	ld b, h ; $61bf
 	ld de, $d000 ; $61c0
@@ -2361,8 +2350,7 @@ Label_15_61d5:
 	script_wait_frames $1e ; $61e1
 	script_move_target $00, $1300, $1300 ; $61e8
 	script_wait_move $00 ; $61f3
-	ld a, $02 ; $61f8
-	farcall FarPtr_GetActorStateAddr ; $61fa
+	script_get_actor_state $02 ; $61f8
 	ld c, l ; $61fd
 	ld b, h ; $61fe
 	ld de, $d000 ; $61ff
@@ -2381,8 +2369,7 @@ Label_15_6214:
 	script_wait_frames $1e ; $6220
 	script_move_target $00, $2d00, $2b00 ; $6227
 	script_wait_move $00 ; $6232
-	ld a, $02 ; $6237
-	farcall FarPtr_GetActorStateAddr ; $6239
+	script_get_actor_state $02 ; $6237
 	ld c, l ; $623c
 	ld b, h ; $623d
 	ld de, $d000 ; $623e
@@ -2405,8 +2392,7 @@ MovePlayerToLessonCourtSpot:
 Label_15_6265:
 	script_move_target $00, $1300, $2b00 ; $6265
 	script_wait_move $00 ; $6270
-	ld a, $02 ; $6275
-	farcall FarPtr_GetActorStateAddr ; $6277
+	script_get_actor_state $02 ; $6275
 	ld c, l ; $627a
 	ld b, h ; $627b
 	ld de, $d000 ; $627c
@@ -2415,8 +2401,7 @@ Label_15_6265:
 Label_15_6283:
 	script_move_target $00, $1300, $1300 ; $6283
 	script_wait_move $00 ; $628e
-	ld a, $02 ; $6293
-	farcall FarPtr_GetActorStateAddr ; $6295
+	script_get_actor_state $02 ; $6293
 	ld c, l ; $6298
 	ld b, h ; $6299
 	ld de, $d000 ; $629a
@@ -2425,8 +2410,7 @@ Label_15_6283:
 Label_15_62a1:
 	script_move_target $00, $2d00, $2b00 ; $62a1
 	script_wait_move $00 ; $62ac
-	ld a, $02 ; $62b1
-	farcall FarPtr_GetActorStateAddr ; $62b3
+	script_get_actor_state $02 ; $62b1
 	ld c, l ; $62b6
 	ld b, h ; $62b7
 	ld de, $d000 ; $62b8

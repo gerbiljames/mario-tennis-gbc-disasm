@@ -1954,6 +1954,8 @@ SCRIPT_COMMANDS = (
         ((0x16, 2, 'b'), (0x3E, 2, 'b'), ('F', "FarPtr_GetActorStateAddr"),
          (0x4D, 1, 'x'), (0x44, 1, 'x'),
          ('F', "FarPtr_LoadActorObjectDefIfValid"))),
+    ("script_get_actor_state",
+        ((0x3E, 2, 'b'), ('F', "FarPtr_GetActorStateAddr"))),
     ("script_move_player_to_actor",
         ((0x3E, 2, 'b'), (0x06, 2, 'z'), ('F', "FarPtr_MovePlayerToActor"))),
     ("script_move_player",
@@ -2434,6 +2436,14 @@ MACRO script_set_objdef
 	ld c, l
 	ld b, h
 	farcall FarPtr_LoadActorObjectDefIfValid
+ENDM
+; Fetch `actor`'s state-struct address ($d000 + actor*$40) into hl. Callers
+; then copy it into bc/de to read or write state fields. GetActorStateAddr
+; ($0a:$4311).
+; Usage: script_get_actor_state actor
+MACRO script_get_actor_state
+	ld a, \\1
+	farcall FarPtr_GetActorStateAddr
 ENDM
 ; Usage: script_face actor, facing
 MACRO script_face

@@ -154,8 +154,7 @@ Label_27_437b:
 	ld d, $26 ; $437e
 	add a, d ; $4380
 	ld d, a ; $4381
-	ld a, $09 ; $4382
-	farcall FarPtr_GetActorStateAddr ; $4384
+	script_get_actor_state $09 ; $4382
 	ld c, l ; $4387
 	ld b, h ; $4388
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4389
@@ -246,8 +245,7 @@ Func_27_45be:
 	ld d, $58 ; $45c7
 	add a, d ; $45c9
 	ld d, a ; $45ca
-	ld a, $02 ; $45cb
-	farcall FarPtr_GetActorStateAddr ; $45cd
+	script_get_actor_state $02 ; $45cb
 	ld c, l ; $45d0
 	ld b, h ; $45d1
 	farcall FarPtr_LoadActorObjectDefIfValid ; $45d2
@@ -260,8 +258,7 @@ Label_27_45f3:
 	ld d, $56 ; $45f6
 	add a, d ; $45f8
 	ld d, a ; $45f9
-	ld a, $09 ; $45fa
-	farcall FarPtr_GetActorStateAddr ; $45fc
+	script_get_actor_state $09 ; $45fa
 	ld c, l ; $45ff
 	ld b, h ; $4600
 	farcall FarPtr_LoadActorObjectDefIfValid ; $4601
@@ -841,8 +838,7 @@ Label_27_5299:
 	ld a, [$c90e] ; $5299
 	and a, a ; $529c
 	jr z, Label_27_52ae ; $529d
-	ld a, $00 ; $529f
-	farcall FarPtr_GetActorStateAddr ; $52a1
+	script_get_actor_state $00 ; $529f
 	ld c, l ; $52a4
 	ld b, h ; $52a5
 	ld hl, $0037 ; $52a6
@@ -857,8 +853,7 @@ Label_27_52ae:
 	ld [wStoryModeShowLocationName], a ; $52c1
 	script_fade_in $04 ; $52c4
 	script_delay $78 ; $52c9
-	ld a, $00 ; $52ce
-	farcall FarPtr_GetActorStateAddr ; $52d0
+	script_get_actor_state $00 ; $52ce
 	ld a, $01 ; $52d3
 	ld e, l ; $52d5
 	ld d, h ; $52d6
@@ -953,8 +948,7 @@ Label_27_53f9:
 	script_wait_idle $06 ; $549a
 	script_facing_lock $06, $00 ; $549f
 	script_set_speed $06, $0030 ; $54a6
-	ld a, $06 ; $54ae
-	farcall FarPtr_GetActorStateAddr ; $54b0
+	script_get_actor_state $06 ; $54ae
 	ld a, $04 ; $54b3
 	ld e, l ; $54b5
 	ld d, h ; $54b6
@@ -1184,8 +1178,7 @@ SceneSharedData_27:
 	script_wait_idle $00 ; $596e
 	script_move_angle $00, $80, $0100 ; $5973
 	script_wait_move $00 ; $597d
-	ld a, $02 ; $5982
-	farcall FarPtr_GetActorStateAddr ; $5984
+	script_get_actor_state $02 ; $5982
 	ld de, $0018 ; $5987
 	add hl, de ; $598a
 	ld [hl], $04 ; $598b
@@ -1204,8 +1197,7 @@ SceneSharedData_27:
 	script_wait_idle $02 ; $59d9
 	script_set_anim $02, $02 ; $59de
 	script_wait_idle $02 ; $59e5
-	ld a, $02 ; $59ea
-	farcall FarPtr_GetActorStateAddr ; $59ec
+	script_get_actor_state $02 ; $59ea
 	ld de, $0018 ; $59ef
 	add hl, de ; $59f2
 	ld [hl], $01 ; $59f3
@@ -1234,8 +1226,7 @@ Label_27_5a25:
 	script_wait_idle $00 ; $5a83
 	script_move_angle $00, $80, $0100 ; $5a88
 	script_wait_move $00 ; $5a92
-	ld a, $02 ; $5a97
-	farcall FarPtr_GetActorStateAddr ; $5a99
+	script_get_actor_state $02 ; $5a97
 	ld de, $0018 ; $5a9c
 	add hl, de ; $5a9f
 	ld [hl], $03 ; $5aa0
@@ -1247,8 +1238,7 @@ Label_27_5a25:
 	script_wait_frames $28 ; $5ac1
 	script_set_anim $02, $02 ; $5ac8
 	script_wait_idle $02 ; $5acf
-	ld a, $02 ; $5ad4
-	farcall FarPtr_GetActorStateAddr ; $5ad6
+	script_get_actor_state $02 ; $5ad4
 	ld de, $0018 ; $5ad9
 	add hl, de ; $5adc
 	ld [hl], $01 ; $5add
@@ -2434,8 +2424,7 @@ Label_27_737e:
 	script_move_target $06, $1800, $2000 ; $74b5
 	script_wait_frames $1e ; $74c0
 	ld bc, $d040 ; $74c7
-	ld a, $06 ; $74ca
-	farcall FarPtr_GetActorStateAddr ; $74cc
+	script_get_actor_state $06 ; $74ca
 	ld e, l ; $74cf
 	ld d, h ; $74d0
 	farcall FarPtr_04_1e ; $74d1
@@ -2480,8 +2469,7 @@ Func_27_7595:
 	script_move_player $1800, $2400 ; $75b5
 	script_move_target $00, $1700, $2400 ; $75bf
 	script_jump_velocity $00, $ff00 ; $75ca
-	ld a, $00 ; $75d2
-	farcall FarPtr_GetActorStateAddr ; $75d4
+	script_get_actor_state $00 ; $75d2
 	ld c, l ; $75d7
 	ld b, h ; $75d8
 	ld hl, $0037 ; $75d9
@@ -2510,8 +2498,7 @@ Label_27_760e:
 	ld d, $58 ; $7632
 	add a, d ; $7634
 	ld d, a ; $7635
-	ld a, $0a ; $7636
-	farcall FarPtr_GetActorStateAddr ; $7638
+	script_get_actor_state $0a ; $7636
 	ld c, l ; $763b
 	ld b, h ; $763c
 	farcall FarPtr_LoadActorObjectDefIfValid ; $763d
@@ -2523,8 +2510,7 @@ Label_27_7659:
 	ld d, $56 ; $765c
 	add a, d ; $765e
 	ld d, a ; $765f
-	ld a, $00 ; $7660
-	farcall FarPtr_GetActorStateAddr ; $7662
+	script_get_actor_state $00 ; $7660
 	ld c, l ; $7665
 	ld b, h ; $7666
 	farcall FarPtr_LoadActorObjectDefIfValid ; $7667
