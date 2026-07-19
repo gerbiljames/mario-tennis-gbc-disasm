@@ -6647,8 +6647,8 @@ SelectServeShotType:
 	ld a, [hl] ; $7075
 	ld [$df14], a ; $7076
 	ret ; $7079
-	; $707a, 4 bytes (bytes:4)
-	db $0c, $0c, $0d, $0e ; 0x00
+	; $707a, 4 bytes (enum:SHOTTYPE:4)
+	db SHOTTYPE_SERVE_0, SHOTTYPE_SERVE_0, SHOTTYPE_SERVE_1, SHOTTYPE_SERVE_2 ; 0x00
 SelectRallyShotType:
 	ld a, [$df17] ; $707e
 	add a, a ; $7081
@@ -6666,22 +6666,22 @@ SelectRallyShotType:
 	ld a, [hl] ; $7096
 	ld [$df14], a ; $7097
 	ret ; $709a
-	; $709b, 16 bytes (bytes:4)
-	db $08, $08, $08, $04 ; 0x00
-	db $08, $06, $0b, $04 ; 0x04
-	db $08, $0a, $07, $04 ; 0x08
-	db $04, $04, $04, $04 ; 0x0c
+	; $709b, 16 bytes (enum:SHOTTYPE:4)
+	db SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_BASIC, SHOTTYPE_NEUTRAL ; 0x00
+	db SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04
+	db SHOTTYPE_REACH_BASIC, SHOTTYPE_LOB, SHOTTYPE_REACH_POWER_SLICE, SHOTTYPE_NEUTRAL ; 0x08
+	db SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL ; 0x0c
 Label_08_70ab:
 	ld hl, $70b4 ; $70ab
 	add hl, de ; $70ae
 	ld a, [hl] ; $70af
 	ld [$df14], a ; $70b0
 	ret ; $70b3
-	; $70b4, 16 bytes (bytes:4)
-	db $00, $00, $02, $04 ; 0x00
-	db $00, $01, $0b, $04 ; 0x04
-	db $00, $0a, $03, $04 ; 0x08
-	db $04, $04, $04, $04 ; 0x0c
+	; $70b4, 16 bytes (enum:SHOTTYPE:4)
+	db SHOTTYPE_TOPSPIN, SHOTTYPE_TOPSPIN, SHOTTYPE_SLICE, SHOTTYPE_NEUTRAL ; 0x00
+	db SHOTTYPE_TOPSPIN, SHOTTYPE_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04
+	db SHOTTYPE_TOPSPIN, SHOTTYPE_LOB, SHOTTYPE_POWER_SLICE, SHOTTYPE_NEUTRAL ; 0x08
+	db SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL ; 0x0c
 ComputeBallEtaToChar:
 	ld hl, wBallVelocityDepth ; $70c4
 	ld a, [hl+] ; $70c7

@@ -1558,6 +1558,30 @@ def load_hwregs(path):
     return regs
 
 
+def load_const_defs(path):
+    """Map constant name -> value from constants.inc (`def NAME equ $xx`).
+    Used to render `enum:<PREFIX>:<cols>` data tables symbolically."""
+    import re
+    defs = {}
+    if not Path(path).exists():
+        return defs
+    for m in re.finditer(r"^def\s+(\w+)\s+equ\s+\$([0-9a-f]+)\b",
+                         Path(path).read_text(), re.MULTILINE | re.IGNORECASE):
+        defs[m.group(1)] = int(m.group(2), 16)
+    return defs
+
+
+def render_enum_table(data, val2name, cols):
+    """Render a byte table as rows of `cols` named constants (falling back to a
+    bare $xx for any value with no constant), with the row's byte offset."""
+    out = []
+    for i in range(0, len(data), cols):
+        row = data[i:i + cols]
+        items = ", ".join(val2name.get(b, f"${b:02x}") for b in row)
+        out.append(f"\tdb {items} ; {i:#04x}")
+    return out
+
+
 def region_prefix(addr):
     """Expected name prefix for a RAM address, by memory region."""
     if 0x8000 <= addr < 0xa000:
@@ -2972,10 +2996,11 @@ def render_object_header(rom, off, data_labels, ptr_labels):
 
 
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
-         curated=None, ramscoped=None, constants=None):
+         curated=None, ramscoped=None, constants=None, const_defs=None):
     data_tables = data_tables or {}
     curated = curated or set()
     constants = constants or {}
+    const_defs = const_defs or {}
     rom = dis.rom
     nbanks = len(rom) // BANK_SIZE
     manifest = []
@@ -3249,6 +3274,14 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 rom, run_start, run_start + length,
                                 bank, data_labels))
                             continue
+                        if spec.startswith("enum:"):
+                            _, prefix, cols = spec.split(":")
+                            val2name = {v: n for n, v in const_defs.items()
+                                        if n.startswith(prefix + "_")}
+                            lines.extend(render_enum_table(
+                                rom[run_start:run_start + length],
+                                val2name, int(cols)))
+                            continue
                         body = render_spec(rom[run_start:run_start + length],
                                            spec).rstrip("\n")
                         lines.extend(body.split("\n"))
@@ -3439,6 +3472,12 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             elif spec == "lz_ptr_table":
                                 lines.extend(render_lz_ptr_table(
                                     rom, seg, j, bank, data_labels))
+                            elif spec.startswith("enum:"):
+                                _, prefix, cols = spec.split(":")
+                                val2name = {v: n for n, v in const_defs.items()
+                                            if n.startswith(prefix + "_")}
+                                lines.extend(render_enum_table(
+                                    rom[seg:j], val2name, int(cols)))
                             else:
                                 body = render_spec(rom[seg:j], spec).rstrip("\n")
                                 lines.extend(body.split("\n"))
@@ -3602,8 +3641,9 @@ def main():
     if Path(args.constants).exists():
         constants = {int(k, 0): v
                      for k, v in json.loads(Path(args.constants).read_text()).items()}
+    const_defs = load_const_defs("include/constants.inc")
     emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables,
-         curated, ramscoped, constants)
+         curated, ramscoped, constants, const_defs)
 
 
 if __name__ == "__main__":

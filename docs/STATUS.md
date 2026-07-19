@@ -41,6 +41,13 @@ via the Makefile `PRELUDE`. Defined `SHOTTYPE_*` for all 15 codes and tagged the
 7 highest-confidence sites (the four handler writes in `$07`, the three
 `Record*Stat` checks in `$08`). Byte-perfect.
 
+Also added an `enum:<PREFIX>:<cols>` **data-table spec**: it renders each byte of
+a table as a constant of that group (parsed from `constants.inc`), `cols` per
+row, falling back to `$xx` for unnamed values. Retyped the three shot-select
+tables (`$08:$707a/$709b/$70b4`) from `bytes:4` to `enum:SHOTTYPE:4`, so the
+`SelectServeShotType`/`SelectRallyShotType` button x direction maps now read as
+their `SHOTTYPE_*` results directly in the source. Byte-perfect.
+
 ### Label bank $2c shot-placement offset tables (2026-07-19)
 
 The three parallel `$2c` handlers at `$7281`/`$72d3`/`$7325` each do `ld bc,
