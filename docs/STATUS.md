@@ -36,6 +36,17 @@ banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
 with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
 blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
+### Bank $39 tile-block slot table (2026-07-19)
+
+`TileBlockPtrs_39` ($39:$46b7, 244 bytes) was a `records:2` blob of bare words.
+`LoadCompressedTileBlock` ($39:$468b) indexes it by `b*2` and feeds each word to
+`DecompressDataFromBank` as `h:l` — i.e. each entry is a `(bank, slot)` pair into
+that bank's $4000 pointer table. Retyped it as a `SLOT_RECORD_RENDERS` table (1
+slot word/record) so all 122 entries render as `dslot DataPtr_bb_ss` referencing
+their target slots (banks $18/$1b/$39/$3c/$3d/$3e/$3f/$6c/$6d). Registered the
+three slots only reached through this table ($18:$92/$94, $3f:$78) as LZ data
+slots so they resolve too.
+
 ### Bank $15 tour-scene actor list (2026-07-19)
 
 `$15:$5c4f` was a 164-byte `bytes:14` blob — actually the `map_actor` spawn

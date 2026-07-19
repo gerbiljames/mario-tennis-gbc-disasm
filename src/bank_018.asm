@@ -144,7 +144,13 @@ DataPtr_MarioMiniGamesPalettes:
 	dw MarioMiniGamesPalettes ; $408c
 FarPtr_18_8e:
 	dw Func_18_7617 ; $408e
-	INCBIN "data/bank_018/d_4090.bin" ; $4090, 664 bytes
+	db $59 ; $4090
+	db $76 ; $4091
+DataPtr_18_92:
+	dw Lz_18_7521 ; $4092
+DataPtr_18_94:
+	dw Lz_18_7568 ; $4094
+	INCBIN "data/bank_018/d_4096.bin" ; $4096, 658 bytes
 Func_18_4328:
 	push af ; $4328
 	push bc ; $4329
@@ -1278,7 +1284,10 @@ MarioMiniGamesPalettes:
 	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
 	dw $029f, $6bff, $001f, $0000 ; pal 6: #ffa400 #ffffd5 #ff0000 #000000
 	dw $318c, $6bff, $7d4a, $0000 ; pal 7: #626262 #ffffd5 #5252ff #000000
-	INCBIN "data/bank_018/d_7521.bin" ; $7521, 246 bytes
+Lz_18_7521:
+	INCBIN "data/bank_018/lz_7521.bin" ; $7521, 71 bytes
+Lz_18_7568:
+	INCBIN "data/bank_018/lz_7568.bin" ; $7568, 175 bytes
 Func_18_7617:
 	ld a, c ; $7617
 	ld [$cb6d], a ; $7618

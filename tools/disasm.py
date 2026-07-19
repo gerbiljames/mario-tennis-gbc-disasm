@@ -650,6 +650,10 @@ class Disassembly:
     # read). Their slots are proven elsewhere (hooks, bank bootstrap).
     SLOT_RECORD_RENDERS = {
         "SceneGfxSlotTable": 8,  # words per record
+        # LoadCompressedTileBlock ($39:$468b) indexes this by b*2, then reads
+        # the (bank, slot) word as h:l into DecompressDataFromBank -- one
+        # $4000-table data slot per record.
+        "TileBlockPtrs_39": 1,
     }
 
     def add_slot_record_tables(self, overrides):
@@ -842,8 +846,12 @@ class Disassembly:
                  0x14: (0x00, 0x02, 0x04, 0x06),
                  0x27: tuple(range(0x00, 0x18, 2))}
         # Bank $1b slots $2e-$3e are LZ-compressed 2bpp graphics streams
-        # (each decompresses to a whole number of tiles).
-        lz_slots = {0x1b: tuple(range(0x2e, 0x40, 2))}
+        # (each decompresses to a whole number of tiles). Banks $18/$3f slots
+        # below are LZ tile blocks reached only through TileBlockPtrs_39
+        # (LoadCompressedTileBlock, $39:$468b), so no hook resolves them.
+        lz_slots = {0x1b: tuple(range(0x2e, 0x40, 2)),
+                    0x18: (0x92, 0x94),
+                    0x3f: (0x78,)}
         added = 0
         for bank, sl in slots.items():
             for slot in sl:

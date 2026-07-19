@@ -377,7 +377,7 @@ bank_017/lz_7570.bin 05f570 200
 bank_017/lz_7770.bin 05f770 135
 bank_017/lz_78a5.bin 05f8a5 57
 bank_017/d_793c.bin 05f93c 23d
-bank_018/d_4090.bin 060090 298
+bank_018/d_4096.bin 060096 292
 bank_018/d_448b.bin 06048b 10
 bank_018/d_44ae.bin 0604ae 40
 bank_018/d_458a.bin 06058a 40
@@ -421,7 +421,8 @@ bank_018/lz_724e.bin 06324e 44
 bank_018/lz_7292.bin 063292 49
 bank_018/lz_72db.bin 0632db 130
 bank_018/lz_740b.bin 06340b d6
-bank_018/d_7521.bin 063521 f6
+bank_018/lz_7521.bin 063521 47
+bank_018/lz_7568.bin 063568 af
 bank_018/d_769b.bin 06369b 19
 bank_018/d_773a.bin 06373a 6
 bank_018/d_7754.bin 063754 8
@@ -903,7 +904,7 @@ bank_03f/lz_7a1d.bin 0ffa1d 46
 bank_03f/lz_7a63.bin 0ffa63 4a
 bank_03f/lz_7aad.bin 0ffaad 4a
 bank_03f/lz_7af7.bin 0ffaf7 99
-bank_03f/d_7b90.bin 0ffb90 b9
+bank_03f/lz_7b90.bin 0ffb90 b9
 bank_040/d_4130.bin 100130 f0
 bank_040/d_4220.bin 100220 f0
 bank_040/d_4310.bin 100310 f0
