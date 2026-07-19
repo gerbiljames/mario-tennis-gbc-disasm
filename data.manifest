@@ -564,7 +564,9 @@ bank_02a/d_427d.bin 0a827d 1c20
 bank_02b/d_427d.bin 0ac27d 1c20
 bank_02c/d_4106.bin 0b0106 33
 bank_02c/d_419a.bin 0b019a 33
-bank_02c/d_4281.bin 0b0281 3000
+bank_02c/d_4281.bin 0b0281 c00
+bank_02c/d_4e81.bin 0b0e81 1200
+bank_02c/d_6081.bin 0b2081 1200
 bank_02d/d_4000.bin 0b4000 1000
 bank_02d/d_5000.bin 0b5000 1000
 bank_02e/d_4000.bin 0b8000 3fe0

@@ -421,11 +421,16 @@ Label_2c_427c:
 	ld l, a ; $427e
 	add hl, de ; $427f
 	ret ; $4280
-	INCBIN "data/bank_02c/d_4281.bin" ; $4281, 12288 bytes
+ShotPlacementData0_2c:
+	INCBIN "data/bank_02c/d_4281.bin" ; $4281, 3072 bytes
+ShotPlacementData1_2c:
+	INCBIN "data/bank_02c/d_4e81.bin" ; $4e81, 4608 bytes
+ShotPlacementData2_2c:
+	INCBIN "data/bank_02c/d_6081.bin" ; $6081, 4608 bytes
 Func_2c_7281:
 	farcall FarPtr_ComputeShotPlacement ; $7281
 	push bc ; $7284
-	ld hl, $4281 ; $7285
+	ld hl, ShotPlacementData0_2c ; $7285
 	ld bc, ShotPlacementOffsets0_2c ; $7288
 	call Func_2c_4250 ; $728b
 	pop bc ; $728e
@@ -468,7 +473,7 @@ ShotPlacementOffsets0_2c:
 Func_2c_72d3:
 	farcall FarPtr_ComputeShotPlacement ; $72d3
 	push bc ; $72d6
-	ld hl, $4e81 ; $72d7
+	ld hl, ShotPlacementData1_2c ; $72d7
 	ld bc, ShotPlacementOffsets1_2c ; $72da
 	call Func_2c_4250 ; $72dd
 	pop bc ; $72e0
@@ -511,7 +516,7 @@ ShotPlacementOffsets1_2c:
 Func_2c_7325:
 	farcall FarPtr_ComputeShotPlacement ; $7325
 	push bc ; $7328
-	ld hl, $6081 ; $7329
+	ld hl, ShotPlacementData2_2c ; $7329
 	ld bc, ShotPlacementOffsets2_2c ; $732c
 	call Func_2c_4250 ; $732f
 	pop bc ; $7332

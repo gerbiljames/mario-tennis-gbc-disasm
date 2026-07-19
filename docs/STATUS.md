@@ -27,9 +27,10 @@ The three parallel `$2c` handlers at `$7281`/`$72d3`/`$7325` each do `ld bc,
 <table>; call Func_2c_4250` (which indexes the table by ball height). The three
 64-byte `records:2` tables (`$7293`/`$72e5`/`$7337`) were already typed but
 unlabeled, so the `ld bc` sites rendered as bare `$xxxx`. Named them
-`ShotPlacementOffsets0-2_2c` so the references resolve. (The paired `ld hl,
-$4281`/`$4e81`/`$6081` bases point into the 12 KB `$4281` data blob — three
-sub-tables that could likewise be split/labeled.) Byte-perfect.
+`ShotPlacementOffsets0-2_2c` so the references resolve. The paired `ld hl,
+$4281`/`$4e81`/`$6081` bases were the only three references into the 12 KB
+`$4281` blob, so split it there into `ShotPlacementData0-2_2c`
+(3072/4608/4608 bytes) — every handler is now fully symbolic. Byte-perfect.
 
 ### Carve VarsityCourtTourCutsceneBody_13 (2026-07-19)
 
