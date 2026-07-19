@@ -36,6 +36,16 @@ banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
 with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
 blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
+### Fix $13:$78d7 mis-seeded map_actor list (2026-07-19)
+
+`$13:$78d7` (loaded by two cutscenes via `ld hl,$78d7; farcall
+ScriptRespawnLocationActors`) is a `map_actor` spawn list, but a static code seed
+sat on the list start — decoding the 11 actor records as garbage code. The seed
+was meant for the init script that *follows* the list (`$797b`, four `set_flag`s)
+but was placed a list-length too early. Moved the seed to `$797b`, declared
+`$78d7` as `map_actors` (`DoublesTravelingTeamActors_13`), and labeled the init
+script. Byte-perfect.
+
 ### SeniorCourt story location (2026-07-19)
 
 The `$12:$52f7` story-location map_tree (`SeniorCourtStoryCmds_12`) and its seven

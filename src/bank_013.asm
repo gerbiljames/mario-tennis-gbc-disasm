@@ -3143,7 +3143,7 @@ Label_13_7340:
 DoublesTravelingTeamVictoryCutscene:
 	script_set_text $0416 ; $744f
 	ldh a, [hRomBank] ; $7455
-	ld hl, $78d7 ; $7457
+	ld hl, DoublesTravelingTeamActors_13 ; $7457
 	farcall FarPtr_ScriptRespawnLocationActors ; $745a
 	farcall FarPtr_BeginCutsceneScriptMode ; $745d
 	call Func_13_62be ; $7460
@@ -3368,146 +3368,21 @@ Func_13_78c4:
 	ld c, a ; $78d2
 	farcall FarPtr_18_8e ; $78d3
 	ret ; $78d6
-	nop ; $78d7
-	nop ; $78d8
-	dec h ; $78d9
-	ld a, e ; $78da
-	nop ; $78db
-	add hl, de ; $78dc
-	nop ; $78dd
-	dec e ; $78de
-	add a, b ; $78df
-	nop ; $78e0
-	ld c, e ; $78e1
-	ld bc, $0000 ; $78e2
-	nop ; $78e5
-	nop ; $78e6
-	dec h ; $78e7
-	ld a, e ; $78e8
-	nop ; $78e9
-	dec c ; $78ea
-	nop ; $78eb
-	rla ; $78ec
-	ld b, b ; $78ed
-	nop ; $78ee
-	ld l, b ; $78ef
-	ld bc, $0007 ; $78f0
-	nop ; $78f3
-	nop ; $78f4
-	dec h ; $78f5
-	ld a, e ; $78f6
-	nop ; $78f7
-	inc de ; $78f8
-	nop ; $78f9
-	ld hl, $0080 ; $78fa
-	ld h, l ; $78fd
-	ld bc, $0003 ; $78fe
-	nop ; $7901
-	nop ; $7902
-	dec h ; $7903
-	ld a, e ; $7904
-	nop ; $7905
-	inc de ; $7906
-	nop ; $7907
-	inc hl ; $7908
-	add a, b ; $7909
-	nop ; $790a
-	ld h, a ; $790b
-	ld bc, $0006 ; $790c
-	nop ; $790f
-	nop ; $7910
-	dec h ; $7911
-	ld a, e ; $7912
-	nop ; $7913
-	inc de ; $7914
-	nop ; $7915
-	rla ; $7916
-	add a, b ; $7917
-	nop ; $7918
-	ld l, e ; $7919
-	ld bc, $0006 ; $791a
-	nop ; $791d
-	nop ; $791e
-	dec h ; $791f
-	ld a, e ; $7920
-	nop ; $7921
-	rla ; $7922
-	nop ; $7923
-	dec e ; $7924
-	add a, b ; $7925
-	nop ; $7926
-	ld c, c ; $7927
-	ld bc, $0000 ; $7928
-	nop ; $792b
-	nop ; $792c
-	dec h ; $792d
-	ld a, e ; $792e
-	nop ; $792f
-	dec bc ; $7930
-	nop ; $7931
-	inc de ; $7932
-	ld b, b ; $7933
-	nop ; $7934
-	ld c, d ; $7935
-	ld bc, $0000 ; $7936
-	nop ; $7939
-	nop ; $793a
-	dec h ; $793b
-	ld a, e ; $793c
-	nop ; $793d
-	dec a ; $793e
-	nop ; $793f
-	dec a ; $7940
-	add a, b ; $7941
-	nop ; $7942
-	ld d, e ; $7943
-	ld bc, $0000 ; $7944
-	nop ; $7947
-	nop ; $7948
-	dec h ; $7949
-	ld a, e ; $794a
-	nop ; $794b
-	dec a ; $794c
-	nop ; $794d
-	dec a ; $794e
-	add a, b ; $794f
-	nop ; $7950
-	ld c, h ; $7951
-	ld bc, $0000 ; $7952
-	nop ; $7955
-	nop ; $7956
-	dec h ; $7957
-	ld a, e ; $7958
-	nop ; $7959
-	dec a ; $795a
-	nop ; $795b
-	dec a ; $795c
-	add a, b ; $795d
-	nop ; $795e
-	ld c, h ; $795f
-	ld bc, $0000 ; $7960
-	nop ; $7963
-	nop ; $7964
-	dec h ; $7965
-	ld a, e ; $7966
-	nop ; $7967
-	dec a ; $7968
-	nop ; $7969
-	dec a ; $796a
-	add a, b ; $796b
-	nop ; $796c
-	ld c, h ; $796d
-	ld bc, $0000 ; $796e
-	nop ; $7971
-	nop ; $7972
-	nop ; $7973
-	nop ; $7974
-	nop ; $7975
-	nop ; $7976
-	nop ; $7977
-	nop ; $7978
-	nop ; $7979
-	rst Rst38 ; $797a
+DoublesTravelingTeamActors_13:
+	; $78d7, 164 bytes (map_actors)
+	map_actor $0000, $7b25, $1900, $1d00, $80, $4b, $01, $00
+	map_actor $0000, $7b25, $0d00, $1700, $40, $68, $01, $07
+	map_actor $0000, $7b25, $1300, $2100, $80, $65, $01, $03
+	map_actor $0000, $7b25, $1300, $2300, $80, $67, $01, $06
+	map_actor $0000, $7b25, $1300, $1700, $80, $6b, $01, $06
+	map_actor $0000, $7b25, $1700, $1d00, $80, $49, $01, $00
+	map_actor $0000, $7b25, $0b00, $1300, $40, $4a, $01, $00
+	map_actor $0000, $7b25, $3d00, $3d00, $80, $53, $01, $00
+	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor_end
+DoublesTravelingTeamInitScript_13:
 	set_flag $0a, 3 ; $797b
 	set_flag $0a, 7 ; $797e
 	set_flag $08, 2 ; $7981
@@ -3550,7 +3425,7 @@ Label_13_79a4:
 	ret ; $79e4
 Label_13_79e5:
 	ldh a, [hRomBank] ; $79e5
-	ld hl, $78d7 ; $79e7
+	ld hl, DoublesTravelingTeamActors_13 ; $79e7
 	farcall FarPtr_ScriptRespawnLocationActors ; $79ea
 	farcall FarPtr_BeginCutsceneScriptMode ; $79ed
 	call Func_13_62be ; $79f0
