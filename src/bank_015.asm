@@ -1036,7 +1036,7 @@ Label_15_4f9f:
 	script_wait_frames $1e ; $5053
 	ret ; $505a
 TrainingCourtNpcScripts_15:
-	; $505b, 144 bytes (map_scripts)
+	; $505b, 161 bytes (map_scripts)
 	map_script $03, $ff, $0000, Func_15_497a, $1b, $00
 	map_script $04, $ff, $0000, Func_15_499b, $1b, $00
 	map_script $05, $ff, $0000, Func_15_49bc, $1b, $00
@@ -1055,10 +1055,8 @@ TrainingCourtNpcScripts_15:
 	map_script $10, $ff, $0000, Func_15_4ae1, $1b, $00
 	map_script $11, $ff, $0000, Func_15_51a8, $03, $00
 	map_script $12, $40, $0000, Func_15_51be, $03, $00
-	; $50eb, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff12, $0000, $51eb, $0003 ; record 0
-	dw $ff13, $0000, $4b21, $0000 ; record 1
+	map_script $12, $ff, $0000, Func_15_51eb, $03, $00
+	map_script $13, $ff, $0000, Func_15_4b21, $00, $00
 	db $ff
 Func_15_50fc:
 	test_flag $18, 0 ; $50fc

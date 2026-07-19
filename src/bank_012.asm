@@ -838,14 +838,12 @@ Func_12_4ca9:
 	farcall FarPtr_EndCutsceneScriptMode ; $4cbc
 	ret ; $4cbf
 WallPracticeRoomTileTriggers_12:
-	; $4cc0, 8 bytes (map_scripts)
+	; $4cc0, 42 bytes (map_scripts)
 	map_script $02, $ff, $9c00, $4ce9, $00, $00
-	; $4cc8, 34 bytes (records:8)
-; 4 records x 8 bytes
-	dw $ff03, $0000, $4d29, $0001 ; record 0
-	dw $ff04, $0000, $4d98, $0001 ; record 1
-	dw $ff05, $0000, $4e0d, $0001 ; record 2
-	dw $ff06, $0000, $4e82, $0001 ; record 3
+	map_script $03, $ff, $0000, Func_12_4d29, $01, $00
+	map_script $04, $ff, $0000, Func_12_4d98, $01, $00
+	map_script $05, $ff, $0000, Func_12_4e0d, $01, $00
+	map_script $06, $ff, $0000, Func_12_4e82, $01, $00
 	db $ff, $3e
 	nop ; $4cea
 	ld bc, $0500 ; $4ceb
