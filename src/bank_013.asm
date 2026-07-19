@@ -2859,7 +2859,7 @@ Func_13_70d5:
 SinglesTravelingTeamVictoryCutscene:
 	wram_bank $06 ; $70fb
 	ldh a, [hRomBank] ; $7101
-	ld hl, $739c ; $7103
+	ld hl, SinglesTravelingTeamActors_13 ; $7103
 	farcall FarPtr_ScriptRespawnLocationActors ; $7106
 	ld a, $01 ; $7109
 	farcall FarPtr_SetActorNullScript ; $710b
@@ -2995,146 +2995,21 @@ Label_13_7340:
 	ld [$c294], a ; $7395
 	ld [wStoryModeExitLocationRequest], a ; $7398
 	ret ; $739b
-	nop ; $739c
-	nop ; $739d
-	dec h ; $739e
-	ld a, e ; $739f
-	nop ; $73a0
-	add hl, de ; $73a1
-	nop ; $73a2
-	rra ; $73a3
-	add a, b ; $73a4
-	nop ; $73a5
-	ld c, e ; $73a6
-	ld bc, $0000 ; $73a7
-	nop ; $73aa
-	nop ; $73ab
-	dec h ; $73ac
-	ld a, e ; $73ad
-	nop ; $73ae
-	dec bc ; $73af
-	nop ; $73b0
-	inc de ; $73b1
-	ld b, b ; $73b2
-	nop ; $73b3
-	ld l, b ; $73b4
-	ld bc, $0007 ; $73b5
-	nop ; $73b8
-	nop ; $73b9
-	dec h ; $73ba
-	ld a, e ; $73bb
-	nop ; $73bc
-	inc de ; $73bd
-	nop ; $73be
-	ld hl, $0080 ; $73bf
-	ld h, l ; $73c2
-	ld bc, $0003 ; $73c3
-	nop ; $73c6
-	nop ; $73c7
-	dec h ; $73c8
-	ld a, e ; $73c9
-	nop ; $73ca
-	inc de ; $73cb
-	nop ; $73cc
-	inc hl ; $73cd
-	add a, b ; $73ce
-	nop ; $73cf
-	ld h, a ; $73d0
-	ld bc, $0006 ; $73d1
-	nop ; $73d4
-	nop ; $73d5
-	dec h ; $73d6
-	ld a, e ; $73d7
-	nop ; $73d8
-	inc de ; $73d9
-	nop ; $73da
-	rla ; $73db
-	add a, b ; $73dc
-	nop ; $73dd
-	ld l, e ; $73de
-	ld bc, $0006 ; $73df
-	nop ; $73e2
-	nop ; $73e3
-	dec h ; $73e4
-	ld a, e ; $73e5
-	nop ; $73e6
-	dec de ; $73e7
-	nop ; $73e8
-	dec e ; $73e9
-	add a, b ; $73ea
-	nop ; $73eb
-	ld c, c ; $73ec
-	ld bc, $0000 ; $73ed
-	nop ; $73f0
-	nop ; $73f1
-	dec h ; $73f2
-	ld a, e ; $73f3
-	nop ; $73f4
-	add hl, de ; $73f5
-	nop ; $73f6
-	dec e ; $73f7
-	add a, b ; $73f8
-	nop ; $73f9
-	ld c, d ; $73fa
-	ld bc, $0000 ; $73fb
-	nop ; $73fe
-	nop ; $73ff
-	dec h ; $7400
-	ld a, e ; $7401
-	nop ; $7402
-	dec a ; $7403
-	nop ; $7404
-	dec a ; $7405
-	add a, b ; $7406
-	nop ; $7407
-	ld d, e ; $7408
-	ld bc, $0000 ; $7409
-	nop ; $740c
-	nop ; $740d
-	dec h ; $740e
-	ld a, e ; $740f
-	nop ; $7410
-	dec a ; $7411
-	nop ; $7412
-	dec a ; $7413
-	add a, b ; $7414
-	nop ; $7415
-	ld c, h ; $7416
-	ld bc, $0000 ; $7417
-	nop ; $741a
-	nop ; $741b
-	dec h ; $741c
-	ld a, e ; $741d
-	nop ; $741e
-	dec a ; $741f
-	nop ; $7420
-	dec a ; $7421
-	add a, b ; $7422
-	nop ; $7423
-	ld c, l ; $7424
-	ld bc, $0000 ; $7425
-	nop ; $7428
-	nop ; $7429
-	dec h ; $742a
-	ld a, e ; $742b
-	nop ; $742c
-	rla ; $742d
-	nop ; $742e
-	dec e ; $742f
-	add a, b ; $7430
-	nop ; $7431
-	add hl, hl ; $7432
-	ld bc, $0000 ; $7433
-	nop ; $7436
-	nop ; $7437
-	nop ; $7438
-	nop ; $7439
-	nop ; $743a
-	nop ; $743b
-	nop ; $743c
-	nop ; $743d
-	nop ; $743e
-	rst Rst38 ; $743f
+SinglesTravelingTeamActors_13:
+	; $739c, 164 bytes (map_actors)
+	map_actor $0000, $7b25, $1900, $1f00, $80, $4b, $01, $00
+	map_actor $0000, $7b25, $0b00, $1300, $40, $68, $01, $07
+	map_actor $0000, $7b25, $1300, $2100, $80, $65, $01, $03
+	map_actor $0000, $7b25, $1300, $2300, $80, $67, $01, $06
+	map_actor $0000, $7b25, $1300, $1700, $80, $6b, $01, $06
+	map_actor $0000, $7b25, $1b00, $1d00, $80, $49, $01, $00
+	map_actor $0000, $7b25, $1900, $1d00, $80, $4a, $01, $00
+	map_actor $0000, $7b25, $3d00, $3d00, $80, $53, $01, $00
+	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, $7b25, $3d00, $3d00, $80, $4d, $01, $00
+	map_actor $0000, $7b25, $1700, $1d00, $80, $29, $01, $00
+	map_actor_end
+RunDoublesTravelingTeamVictoryIfWon_13:
 	wram_bank $04 ; $7440
 	ld a, [wMatchWinLoseFlag] ; $7446
 	cp a, $01 ; $7449
@@ -3413,7 +3288,7 @@ Label_13_79a4:
 	test_flag $05, 7 ; $79b6
 	jr nz, Label_13_79e5 ; $79b9
 	ldh a, [hRomBank] ; $79bb
-	ld hl, $739c ; $79bd
+	ld hl, SinglesTravelingTeamActors_13 ; $79bd
 	farcall FarPtr_ScriptRespawnLocationActors ; $79c0
 	farcall FarPtr_BeginCutsceneScriptMode ; $79c3
 	script_fade_in $04 ; $79c6

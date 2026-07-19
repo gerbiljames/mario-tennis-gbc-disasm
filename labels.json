@@ -1558,6 +1558,8 @@
 "0x4e36c": "VarsityCourtTourCutscene",
 "0x4ea10": "SetupStoryMinigameMatch0",
 "0x4f0fb": "SinglesTravelingTeamVictoryCutscene",
+"0x4f39c": "SinglesTravelingTeamActors_13",
+"0x4f440": "RunDoublesTravelingTeamVictoryIfWon_13",
 "0x4f44f": "DoublesTravelingTeamVictoryCutscene",
 "0x4f8d7": "DoublesTravelingTeamActors_13",
 "0x4f97b": "DoublesTravelingTeamInitScript_13",
