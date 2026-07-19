@@ -56,6 +56,37 @@ each seed past its list, declared the lists as `map_actors`
 (`DoublesTravelingTeamActors_13`/`SinglesTravelingTeamActors_13`), and labeled
 the trailing code. Byte-perfect.
 
+### Story-scene directories + respawn variant tables as macros (2026-07-19)
+
+The story "scene" tables reached via `story_location`'s DataPtr
+(`AcademyArrivalScene_11`, `JuniorClassCourtSingles/DoublesScene_11`,
+`WallPracticeRoomStoryCmds_12`) are each a full 7-word `map_tree` — same layout
+as a location directory — but were seeded as generic `records:2` headers with
+`records:8`/`bytes:14`/`bytes:16` slots. Retyped the four headers `map_tree` and
+their slots `map_entries`/`map_scripts`/`map_actors`, with `<Scene><Role>` slot
+labels; the arrival/handler pointers now carve as `script_*` cutscene code.
+
+Then swept every flag-selected variant table installed at runtime — NpcScript
+tables via `WriteStoryStateWord de=$000c` (map-tree slot 3) and actor lists via
+`ScriptRespawnLocationActors`:
+
+- **map_scripts (NpcScript variants):** 8 in bank `$11`
+  (`JuniorClassCourt{Singles,Doubles}NpcScripts{A-D}_11`), 5 in bank `$13`
+  (`VarsityCourtNpcScripts{A-E}_13`). Each `ld hl,table` dispatch now resolves
+  symbolically.
+- **map_actors (respawn variants):** 11 scene actor lists retagged from
+  `bytes:14` (`$10`/`$11`/`$12`/`$1a`), plus ~19 more that were raw blobs across
+  banks `$12`/`$13`/`$27`. The embedded ones sit inside larger uncarved code
+  blobs, so a curated label at each list start (which splits the enclosing data
+  run) plus a bounding label at the two chain tails not already on a
+  label/code boundary keeps each list rendering as exactly its `map_actor`
+  records + `map_actor_end`.
+- **split fixes:** two `map_scripts` tables (`$12:$4cc0`, `$15:$505b`) had an
+  interior `records:8` key that truncated the run mid-table; dropped the keys so
+  every record renders as `map_script`.
+
+All config-only (data_tables.json + labels.json); byte-perfect throughout.
+
 ### SeniorCourt story location (2026-07-19)
 
 The `$12:$52f7` story-location map_tree (`SeniorCourtStoryCmds_12`) and its seven
