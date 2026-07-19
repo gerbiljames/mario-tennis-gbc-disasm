@@ -2080,6 +2080,7 @@ CourtyardNpcScripts_13:
 	map_script $06, $ff, $0000, $0216, $03, $00
 	map_script $07, $ff, $0000, $0217, $13, $00
 	db $ff
+Func_13_5f15:
 	ld a, $05 ; $5f15
 	farcall FarPtr_SetActorNullScript ; $5f17
 	script_set_anim $05, $01 ; $5f1a
@@ -2107,7 +2108,89 @@ Label_13_5f4d:
 	ld [wStoryModeExitLocationRequest], a ; $5f69
 	call SetupStoryMinigameMatch0 ; $5f6c
 	ret ; $5f6f
-	INCBIN "data/bank_013/d_5f70.bin" ; $5f70, 328 bytes
+VarsityCourtNpcScriptsA_13:
+	; $5f70, 49 bytes (map_scripts)
+	map_script $03, $40, $0000, Func_13_6c13, $03, $00
+	map_script $03, $ff, $0000, Func_13_6c40, $03, $00
+	map_script $04, $ff, $0000, $021a, $03, $00
+	map_script $05, $ff, $0000, Func_13_5f15, $03, $00
+	map_script $06, $ff, $0000, $021e, $13, $00
+	map_script $07, $ff, $0000, $021f, $13, $00
+	db $ff
+Func_13_5fa1:
+	script_set_text $0403 ; $5fa1
+	ld a, $09 ; $5fa7
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5fa9
+	farcall FarPtr_RunDialogueYesNoPrompt ; $5fac
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5faf
+	script_wait_frames $05 ; $5fb2
+	and a, a ; $5fb9
+	jr z, Label_13_5fbf ; $5fba
+	farcall FarPtr_AdvanceDialogueTextCursor ; $5fbc
+Label_13_5fbf:
+	script_speak $09 ; $5fbf
+	ret ; $5fc4
+Func_13_5fc5:
+	ld a, $05 ; $5fc5
+	farcall FarPtr_SetActorNullScript ; $5fc7
+	script_set_anim $05, $01 ; $5fca
+	script_set_text $0407 ; $5fd1
+	ld a, $05 ; $5fd7
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5fd9
+	farcall FarPtr_RunDialogueYesNoPrompt ; $5fdc
+	farcall FarPtr_ScriptCloseDialogueWindow ; $5fdf
+	script_wait_frames $05 ; $5fe2
+	and a, a ; $5fe9
+	jr z, Label_13_5ffd ; $5fea
+	script_speak $05 ; $5fec
+	script_set_actor_script $05, ActorObjDef_13_7a40 ; $5ff1
+	ret ; $5ffc
+Label_13_5ffd:
+	farcall FarPtr_AdvanceDialogueTextCursor ; $5ffd
+	script_speak $05 ; $6000
+	ld hl, wStoryModePlayersXPosition ; $6005
+	ld de, wStoryModeSpawnPosition ; $6008
+	ld bc, $0005 ; $600b
+	call CopyMemoryBC ; $600e
+	ld a, $ff ; $6011
+	ld [wStoryModeEntryPoint], a ; $6013
+	ld [$c294], a ; $6016
+	ld [wStoryModeExitLocationRequest], a ; $6019
+	call Func_13_6a89 ; $601c
+	ret ; $601f
+VarsityCourtNpcScriptsB_13:
+	; $6020, 57 bytes (map_scripts)
+	map_script $03, $40, $0000, Func_13_6e20, $03, $00
+	map_script $03, $ff, $0000, Func_13_6e4d, $03, $00
+	map_script $04, $ff, $0000, $0406, $03, $00
+	map_script $05, $ff, $0000, Func_13_5fc5, $03, $00
+	map_script $06, $ff, $0000, $040a, $03, $00
+	map_script $07, $ff, $0000, $040b, $13, $00
+	map_script $09, $ff, $0000, Func_13_5fa1, $03, $00
+	db $ff
+Func_13_6059:
+	ld a, $03 ; $6059
+	farcall FarPtr_SetActorNullScript ; $605b
+	script_set_anim $03, $01 ; $605e
+	script_set_text $0422 ; $6065
+	script_speak $03 ; $606b
+	script_set_actor_script $03, ActorObjDef_13_7a40 ; $6070
+	ret ; $607b
+Func_13_607c:
+	ld a, $03 ; $607c
+	farcall FarPtr_SetActorNullScript ; $607e
+	script_set_anim $04, $01 ; $6081
+	script_set_text $0423 ; $6088
+	script_speak $04 ; $608e
+	script_set_actor_script $04, ActorObjDef_13_7a40 ; $6093
+	ret ; $609e
+VarsityCourtNpcScriptsC_13:
+	; $609f, 25 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_13_6059, $03, $00
+	map_script $04, $ff, $0000, Func_13_607c, $03, $00
+	map_script $05, $ff, $0000, Func_13_60b8, $13, $00
+	db $ff
+Func_13_60b8:
 	script_set_text $0424 ; $60b8
 	test_flag $07, 6 ; $60be
 	jr z, Label_13_60c6 ; $60c1
@@ -2115,6 +2198,7 @@ Label_13_5f4d:
 Label_13_60c6:
 	script_speak $05 ; $60c6
 	ret ; $60cb
+Func_13_60cc:
 	ld a, $05 ; $60cc
 	farcall FarPtr_SetActorNullScript ; $60ce
 	script_set_anim $05, $01 ; $60d1
@@ -2122,7 +2206,15 @@ Label_13_60c6:
 	script_speak $05 ; $60de
 	script_set_actor_script $05, ActorObjDef_13_7a40 ; $60e3
 	ret ; $60ee
-	INCBIN "data/bank_013/d_60ef.bin" ; $60ef, 41 bytes
+VarsityCourtNpcScriptsD_13:
+	; $60ef, 41 bytes (map_scripts)
+	map_script $03, $ff, $0000, $0426, $03, $00
+	map_script $04, $ff, $0000, $0427, $03, $00
+	map_script $05, $ff, $0000, Func_13_60cc, $03, $00
+	map_script $06, $ff, $0000, $0429, $03, $00
+	map_script $07, $ff, $0000, $042a, $13, $00
+	db $ff
+Func_13_6118:
 	ld a, $05 ; $6118
 	farcall FarPtr_SetActorNullScript ; $611a
 	script_set_anim $05, $01 ; $611d
@@ -2130,7 +2222,14 @@ Label_13_60c6:
 	script_speak $05 ; $612a
 	script_set_actor_script $05, ActorObjDef_13_7a40 ; $612f
 	ret ; $613a
-	INCBIN "data/bank_013/d_613b.bin" ; $613b, 41 bytes
+VarsityCourtNpcScriptsE_13:
+	; $613b, 41 bytes (map_scripts)
+	map_script $03, $ff, $0000, $042b, $03, $00
+	map_script $04, $ff, $0000, $042c, $03, $00
+	map_script $05, $ff, $0000, Func_13_6118, $03, $00
+	map_script $06, $ff, $0000, $042e, $13, $00
+	map_script $07, $ff, $0000, $042f, $13, $00
+	db $ff
 CourtyardFacingScripts_13:
 	; $6164, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, Func_13_616d, $00, $00
@@ -2171,7 +2270,7 @@ SetupVarsityCourtSceneVariant:
 	jr nz, Label_13_6222 ; $61ac
 	test_flag $16, 0 ; $61ae
 	jr z, Label_13_61e1 ; $61b1
-	ld hl, $60ef ; $61b3
+	ld hl, VarsityCourtNpcScriptsD_13 ; $61b3
 	ld de, $000c ; $61b6
 	farcall FarPtr_WriteStoryStateWord ; $61b9
 	ld a, $18 ; $61bc
@@ -2191,7 +2290,7 @@ Label_13_61e1:
 	ldh a, [hRomBank] ; $61e6
 	ld hl, $5dca ; $61e8
 	farcall FarPtr_ScriptRespawnLocationActors ; $61eb
-	ld hl, $609f ; $61ee
+	ld hl, VarsityCourtNpcScriptsC_13 ; $61ee
 	ld de, $000c ; $61f1
 	farcall FarPtr_WriteStoryStateWord ; $61f4
 	ld a, $18 ; $61f7
@@ -2209,7 +2308,7 @@ Label_13_620a:
 	ldh a, [hRomBank] ; $6210
 	ld hl, $5ce4 ; $6212
 	farcall FarPtr_ScriptRespawnLocationActors ; $6215
-	ld hl, $5f70 ; $6218
+	ld hl, VarsityCourtNpcScriptsA_13 ; $6218
 	ld de, $000c ; $621b
 	farcall FarPtr_WriteStoryStateWord ; $621e
 	ret ; $6221
@@ -2219,7 +2318,7 @@ Label_13_6222:
 	ldh a, [hRomBank] ; $6227
 	ld hl, $5d50 ; $6229
 	farcall FarPtr_ScriptRespawnLocationActors ; $622c
-	ld hl, $613b ; $622f
+	ld hl, VarsityCourtNpcScriptsE_13 ; $622f
 	ld de, $000c ; $6232
 	farcall FarPtr_WriteStoryStateWord ; $6235
 	script_set_position $09, $3f00, $3f00 ; $6238
@@ -2242,7 +2341,7 @@ Label_13_627e:
 	ldh a, [hRomBank] ; $6283
 	ld hl, $5dfe ; $6285
 	farcall FarPtr_ScriptRespawnLocationActors ; $6288
-	ld hl, $609f ; $628b
+	ld hl, VarsityCourtNpcScriptsC_13 ; $628b
 	ld de, $000c ; $628e
 	farcall FarPtr_WriteStoryStateWord ; $6291
 	ld a, $18 ; $6294
@@ -2260,7 +2359,7 @@ Label_13_62a7:
 	ldh a, [hRomBank] ; $62ac
 	ld hl, $5d50 ; $62ae
 	farcall FarPtr_ScriptRespawnLocationActors ; $62b1
-	ld hl, $6020 ; $62b4
+	ld hl, VarsityCourtNpcScriptsB_13 ; $62b4
 	ld de, $000c ; $62b7
 	farcall FarPtr_WriteStoryStateWord ; $62ba
 Label_13_62bd:
@@ -2456,6 +2555,7 @@ SetupStoryMinigameMatch0:
 	farcall FarPtr_RunStoryMatch ; $6a82
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6a85
 	ret ; $6a88
+Func_13_6a89:
 	ld a, $05 ; $6a89
 	farcall FarPtr_SetActorNullScript ; $6a8b
 	ld a, $07 ; $6a8e
@@ -2480,12 +2580,14 @@ SetupStoryMinigameMatch0:
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6b15
 	ret ; $6b18
 	INCBIN "data/bank_013/d_6b19.bin" ; $6b19, 250 bytes
+Func_13_6c13:
 	script_set_speed $00, $0008 ; $6c13
 	script_facing_lock $00, $01 ; $6c1b
 	script_move_target $00, $0d00, $1f00 ; $6c22
 	script_wait_move $00 ; $6c2d
 	script_facing_lock $00, $00 ; $6c32
 	script_face $00, $c0 ; $6c39
+Func_13_6c40:
 	script_set_text $0220 ; $6c40
 	ld a, $03 ; $6c46
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6c48
@@ -2582,12 +2684,14 @@ Label_13_6e17:
 	script_speak $03 ; $6e17
 	call Func_13_70c9 ; $6e1c
 	ret ; $6e1f
+Func_13_6e20:
 	script_set_speed $00, $0008 ; $6e20
 	script_facing_lock $00, $01 ; $6e28
 	script_move_target $00, $0d00, $1f00 ; $6e2f
 	script_wait_move $00 ; $6e3a
 	script_facing_lock $00, $00 ; $6e3f
 	script_face $00, $c0 ; $6e46
+Func_13_6e4d:
 	ld a, $02 ; $6e4d
 	farcall FarPtr_SetActorNullScript ; $6e4f
 	script_set_text $040c ; $6e52

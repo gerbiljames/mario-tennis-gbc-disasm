@@ -3289,5 +3289,10 @@
  "0x46ba5": "JuniorClassCourtSinglesNpcScriptsA_11",
  "0x46be6": "JuniorClassCourtSinglesNpcScriptsB_11",
  "0x46c27": "JuniorClassCourtSinglesNpcScriptsC_11",
- "0x46c68": "JuniorClassCourtSinglesNpcScriptsD_11"
+ "0x46c68": "JuniorClassCourtSinglesNpcScriptsD_11",
+ "0x4df70": "VarsityCourtNpcScriptsA_13",
+ "0x4e020": "VarsityCourtNpcScriptsB_13",
+ "0x4e09f": "VarsityCourtNpcScriptsC_13",
+ "0x4e0ef": "VarsityCourtNpcScriptsD_13",
+ "0x4e13b": "VarsityCourtNpcScriptsE_13"
 }
