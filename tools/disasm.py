@@ -2095,9 +2095,15 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
     # only the tagged `ld r, n8` / `cp a, n8` sites are affected; a wrong tag
     # changes the assembled byte and fails the byte-perfect compare.
     if constants and off in constants and ins.target is None:
+        name = constants[off]
+        # bit/set/res N, r: the index is baked into the opcode, so replacing it
+        # with a (numerically equal) named bit constant is a pure text change.
+        mb = re.match(r"(bit|res|set) \d+, (.*)$", text)
+        if mb:
+            return f"{mb.group(1)} {name}, {mb.group(2)}"
         m = IMM8_RE.search(text)
         if m:
-            return text[:m.start()] + constants[off]
+            return text[:m.start()] + name
     # A 16-bit immediate load whose value points at a named data region is a
     # pointer setup; inline the label. Bounded to data_labels (curated data
     # offsets) so numeric constants that alias code addresses are untouched.

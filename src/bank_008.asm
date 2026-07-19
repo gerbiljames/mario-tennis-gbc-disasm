@@ -6735,10 +6735,10 @@ PredictBallLateralOffset:
 	ret ; $7111
 BufferShotButtonPress:
 	ld a, [$df1f] ; $7112
-	and a, $03 ; $7115
+	and a, PADF_A | PADF_B ; $7115
 	ret z ; $7117
 	ld b, a ; $7118
-	cp a, $03 ; $7119
+	cp a, PADF_A | PADF_B ; $7119
 	jr z, Label_08_714c ; $711b
 	ld a, [$df11] ; $711d
 	and a, a ; $7120
@@ -6773,10 +6773,10 @@ Label_08_714c:
 CaptureServeAim:
 	ld a, [$df1f] ; $7151
 	ld b, $01 ; $7154
-	bit 4, a ; $7156
+	bit PADB_RIGHT, a ; $7156
 	jr nz, Label_08_7162 ; $7158
 	ld b, $ff ; $715a
-	bit 5, a ; $715c
+	bit PADB_LEFT, a ; $715c
 	jr nz, Label_08_7162 ; $715e
 	ld b, $00 ; $7160
 Label_08_7162:
@@ -6785,13 +6785,13 @@ Label_08_7162:
 	ret ; $7166
 CaptureShotAim:
 	ld a, [$df1f] ; $7167
-	cp a, $20 ; $716a
+	cp a, PADF_LEFT ; $716a
 	jr z, Label_08_717c ; $716c
-	bit 5, a ; $716e
+	bit PADB_LEFT, a ; $716e
 	jr nz, Label_08_7182 ; $7170
-	cp a, $10 ; $7172
+	cp a, PADF_RIGHT ; $7172
 	jr z, Label_08_7194 ; $7174
-	bit 4, a ; $7176
+	bit PADB_RIGHT, a ; $7176
 	jr nz, Label_08_718e ; $7178
 	jr Label_08_7188 ; $717a
 Label_08_717c:

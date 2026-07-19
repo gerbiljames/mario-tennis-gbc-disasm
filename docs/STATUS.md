@@ -21,6 +21,18 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Joypad button constants (2026-07-19)
+
+`$df1f` (the per-character input byte from `ReadCharPadInput`) uses the standard
+GB joypad layout — buttons in the low nibble, d-pad in the high. Added `PADF_*`
+(masks) and `PADB_*` (bit indices) to `constants.inc` and extended the
+immediate-constant mechanism to also rewrite `bit`/`set`/`res` index operands
+(the index is baked into the opcode, so it's a pure text change). Constant values
+may now be expressions — tagged the shot-input aim/button sites in `$08`
+(`BufferShotButtonPress`, `CaptureServeAim`, `CaptureShotAim`) so e.g.
+`and a, $03` reads `and a, PADF_A | PADF_B` and `bit 4, a` reads
+`bit PADB_RIGHT, a`. Byte-perfect.
+
 ### Shot-type constants + disassembler constant mechanism (2026-07-19)
 
 Identified the `wCurrentShotType` codes by decoding the button-sequence
