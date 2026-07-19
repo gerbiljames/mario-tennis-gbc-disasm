@@ -426,11 +426,12 @@ Func_2c_7281:
 	farcall FarPtr_ComputeShotPlacement ; $7281
 	push bc ; $7284
 	ld hl, $4281 ; $7285
-	ld bc, $7293 ; $7288
+	ld bc, ShotPlacementOffsets0_2c ; $7288
 	call Func_2c_4250 ; $728b
 	pop bc ; $728e
 	call Func_2c_41cd ; $728f
 	ret ; $7292
+ShotPlacementOffsets0_2c:
 	; $7293, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -468,11 +469,12 @@ Func_2c_72d3:
 	farcall FarPtr_ComputeShotPlacement ; $72d3
 	push bc ; $72d6
 	ld hl, $4e81 ; $72d7
-	ld bc, $72e5 ; $72da
+	ld bc, ShotPlacementOffsets1_2c ; $72da
 	call Func_2c_4250 ; $72dd
 	pop bc ; $72e0
 	call Func_2c_4139 ; $72e1
 	ret ; $72e4
+ShotPlacementOffsets1_2c:
 	; $72e5, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -510,11 +512,12 @@ Func_2c_7325:
 	farcall FarPtr_ComputeShotPlacement ; $7325
 	push bc ; $7328
 	ld hl, $6081 ; $7329
-	ld bc, $7337 ; $732c
+	ld bc, ShotPlacementOffsets2_2c ; $732c
 	call Func_2c_4250 ; $732f
 	pop bc ; $7332
 	call Func_2c_4139 ; $7333
 	ret ; $7336
+ShotPlacementOffsets2_2c:
 	; $7337, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1

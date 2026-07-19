@@ -21,6 +21,16 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Label bank $2c shot-placement offset tables (2026-07-19)
+
+The three parallel `$2c` handlers at `$7281`/`$72d3`/`$7325` each do `ld bc,
+<table>; call Func_2c_4250` (which indexes the table by ball height). The three
+64-byte `records:2` tables (`$7293`/`$72e5`/`$7337`) were already typed but
+unlabeled, so the `ld bc` sites rendered as bare `$xxxx`. Named them
+`ShotPlacementOffsets0-2_2c` so the references resolve. (The paired `ld hl,
+$4281`/`$4e81`/`$6081` bases point into the 12 KB `$4281` data blob — three
+sub-tables that could likewise be split/labeled.) Byte-perfect.
+
 ### Carve VarsityCourtTourCutsceneBody_13 (2026-07-19)
 
 The 918-byte `$13:$667a` blob (reached only by dynamic dispatch, never in
