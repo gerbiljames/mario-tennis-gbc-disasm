@@ -2651,9 +2651,9 @@ Label_10_5dd3:
 	dw $0c7b ; record 2
 	dw $0ca3 ; record 3
 	dw $0ccb ; record 4
-Func_10_5de6:
+RestaurantNpc08Face80_10:
 	set_flag $1c, 1 ; $5de6
-Func_10_5de9:
+RestaurantNpc08_10:
 	test_flag $0f, 3 ; $5de9
 	jr nz, Label_10_5e5c ; $5dec
 	ld a, [$c2b1] ; $5dee
@@ -2969,8 +2969,8 @@ RestaurantNpcScripts_10:
 	map_script $05, $ff, $0000, RestaurantNpc05_10, $03, $00
 	map_script $06, $ff, $0000, RestaurantNpc06_10, $03, $00
 	map_script $12, $ff, $0000, RestaurantNpc12_10, $00, $00
-	map_script $08, $80, $0000, Func_10_5de6, $03, $00
-	map_script $08, $ff, $0000, Func_10_5de9, $03, $00
+	map_script $08, $80, $0000, RestaurantNpc08Face80_10, $03, $00
+	map_script $08, $ff, $0000, RestaurantNpc08_10, $03, $00
 	map_script $09, $ff, $0000, RestaurantNpc09_10, $03, $00
 	map_script $0a, $ff, $0000, RestaurantNpc0A_10, $13, $00
 	map_script $0b, $ff, $0000, RestaurantNpc0B_10, $03, $00

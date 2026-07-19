@@ -1409,7 +1409,7 @@ Label_12_55d3:
 	dw $10a8 ; record 3
 	dw $10b0 ; record 4
 	dw $10ba ; record 5
-Func_12_55e8:
+SeniorCourtNpc03_12:
 	ld a, [$c2b1] ; $55e8
 	cp a, $02 ; $55eb
 	jr c, Label_12_5606 ; $55ed
@@ -1417,7 +1417,7 @@ Func_12_55e8:
 	jr nc, Label_12_55b5 ; $55f1
 	call Func_12_5ef1 ; $55f3
 	ret ; $55f6
-Func_12_55f7:
+SeniorCourtNpc03Face40Flag0000_12:
 	ld a, [$c2b1] ; $55f7
 	cp a, $02 ; $55fa
 	jr c, Label_12_5606 ; $55fc
@@ -1440,9 +1440,9 @@ Label_12_5606:
 Label_12_562a:
 	script_speak $03 ; $562a
 	ret ; $562f
-Func_12_5630:
+SeniorCourtNpc03Face10_12:
 	test_flag $05, 7 ; $5630
-	jr z, Func_12_55e8 ; $5633
+	jr z, SeniorCourtNpc03_12 ; $5633
 	test_flag $0e, 4 ; $5635
 	jp nz, Label_12_57f4 ; $5638
 	script_set_speed $00, $0010 ; $563b
@@ -1458,9 +1458,9 @@ Func_12_5630:
 	script_face_toward $03, $02 ; $568b
 	script_wait_move $00 ; $5693
 	jp Label_12_5747 ; $5698
-Func_12_569b:
+SeniorCourtNpc03Face40Flag0840_12:
 	test_flag $05, 7 ; $569b
-	jp z, Func_12_55f7 ; $569e
+	jp z, SeniorCourtNpc03Face40Flag0000_12 ; $569e
 	test_flag $0e, 4 ; $56a1
 	jp nz, Label_12_57f4 ; $56a4
 	script_set_speed $02, $0010 ; $56a7
@@ -1962,10 +1962,10 @@ Label_12_5bfa:
 	dw $10ba ; record 29
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
-	map_script $03, $10, $0840, Func_12_5630, $01, $00
-	map_script $03, $40, $0840, Func_12_569b, $01, $00
-	map_script $03, $40, $0000, Func_12_55f7, $01, $00
-	map_script $03, $ff, $0000, Func_12_55e8, $01, $00
+	map_script $03, $10, $0840, SeniorCourtNpc03Face10_12, $01, $00
+	map_script $03, $40, $0840, SeniorCourtNpc03Face40Flag0840_12, $01, $00
+	map_script $03, $40, $0000, SeniorCourtNpc03Face40Flag0000_12, $01, $00
+	map_script $03, $ff, $0000, SeniorCourtNpc03_12, $01, $00
 	map_script $04, $ff, $0000, SeniorCourtNpc04_12, $1b, $00
 	map_script $05, $ff, $0000, SeniorCourtNpc05_12, $13, $00
 	map_script $06, $ff, $08a0, SeniorCourtNpc06_12, $13, $00

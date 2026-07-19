@@ -2208,16 +2208,16 @@ IslandOpenRound1ScriptsDoubles_0f:
 	map_script $07, $ff, $0000, $281b, $13, $00
 	map_script $08, $ff, $0000, $281c, $03, $00
 	map_script $09, $ff, $0000, $281d, $03, $00
-	map_script $0a, $ff, $0000, Func_0f_6bda, $03, $00
-	map_script $0b, $ff, $0000, Func_0f_6bfe, $03, $00
+	map_script $0a, $ff, $0000, IslandOpenRound1DoublesNpc0A_0f, $03, $00
+	map_script $0b, $ff, $0000, IslandOpenRound1DoublesNpc0B_0f, $03, $00
 	map_script $0c, $ff, $0000, $2824, $03, $00
-	map_script $0d, $ff, $0000, Func_0f_6c22, $13, $00
+	map_script $0d, $ff, $0000, IslandOpenRound1DoublesNpc0D_0f, $13, $00
 	map_script $0e, $ff, $0000, $2828, $03, $00
 	map_script $0f, $ff, $0000, $2829, $03, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
-Func_0f_6bda:
+IslandOpenRound1DoublesNpc0A_0f:
 	script_set_text $281e ; $6bda
 	ld a, $0a ; $6be0
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6be2
@@ -2230,7 +2230,7 @@ Func_0f_6bda:
 Label_0f_6bf8:
 	script_speak $0a ; $6bf8
 	ret ; $6bfd
-Func_0f_6bfe:
+IslandOpenRound1DoublesNpc0B_0f:
 	script_set_text $2821 ; $6bfe
 	ld a, $0b ; $6c04
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6c06
@@ -2243,7 +2243,7 @@ Func_0f_6bfe:
 Label_0f_6c1c:
 	script_speak $0b ; $6c1c
 	ret ; $6c21
-Func_0f_6c22:
+IslandOpenRound1DoublesNpc0D_0f:
 	script_set_text $2825 ; $6c22
 	ld a, $0d ; $6c28
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6c2a
@@ -2276,18 +2276,18 @@ IslandOpenRound2ScriptsDoubles_0f:
 	; $6d06, 97 bytes (map_scripts)
 	map_script $06, $ff, $0000, $282a, $03, $00
 	map_script $07, $ff, $0000, $282b, $03, $00
-	map_script $08, $ff, $0000, Func_0f_6d67, $03, $00
+	map_script $08, $ff, $0000, IslandOpenRound2DoublesNpc08_0f, $03, $00
 	map_script $09, $ff, $0000, $282f, $03, $00
 	map_script $0a, $ff, $0000, $2830, $03, $00
 	map_script $0b, $ff, $0000, $2831, $03, $00
 	map_script $0c, $ff, $0000, $2832, $03, $00
-	map_script $0d, $ff, $0000, Func_0f_6d8b, $13, $00
+	map_script $0d, $ff, $0000, IslandOpenRound2DoublesNpc0D_0f, $13, $00
 	map_script $0e, $ff, $0000, $2836, $13, $00
 	map_script $0f, $ff, $0000, $2837, $13, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
-Func_0f_6d67:
+IslandOpenRound2DoublesNpc08_0f:
 	script_set_text $282c ; $6d67
 	ld a, $08 ; $6d6d
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6d6f
@@ -2300,7 +2300,7 @@ Func_0f_6d67:
 Label_0f_6d85:
 	script_speak $08 ; $6d85
 	ret ; $6d8a
-Func_0f_6d8b:
+IslandOpenRound2DoublesNpc0D_0f:
 	script_set_text $2833 ; $6d8b
 	ld a, $0d ; $6d91
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6d93
@@ -2336,15 +2336,15 @@ IslandOpenRound3ScriptsDoubles_0f:
 	map_script $08, $ff, $0000, $283a, $03, $00
 	map_script $09, $ff, $0000, $283b, $03, $00
 	map_script $0a, $ff, $0000, $283c, $03, $00
-	map_script $0b, $ff, $0000, Func_0f_6ef4, $03, $00
-	map_script $0c, $ff, $0000, Func_0f_6ed0, $03, $00
+	map_script $0b, $ff, $0000, IslandOpenRound3DoublesNpc0B_0f, $03, $00
+	map_script $0c, $ff, $0000, IslandOpenRound3DoublesNpc0C_0f, $03, $00
 	map_script $0d, $ff, $0000, $2843, $03, $00
 	map_script $0e, $ff, $0000, $2844, $13, $00
 	map_script $0f, $ff, $0000, $2845, $13, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
-Func_0f_6ed0:
+IslandOpenRound3DoublesNpc0C_0f:
 	script_set_text $2840 ; $6ed0
 	ld a, $0c ; $6ed6
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6ed8
@@ -2357,7 +2357,7 @@ Func_0f_6ed0:
 Label_0f_6eee:
 	script_speak $0c ; $6eee
 	ret ; $6ef3
-Func_0f_6ef4:
+IslandOpenRound3DoublesNpc0B_0f:
 	script_set_text $283d ; $6ef4
 	ld a, $0b ; $6efa
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6efc
@@ -2813,11 +2813,11 @@ IslandOpenRoundActorsSingles_0f:
 	map_actor_end
 IslandOpenRoundScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_0f_7649, $03, $00
-	map_script $04, $ff, $0000, Func_0f_762e, $03, $00
-	map_script $05, $ff, $0000, Func_0f_766c, $03, $00
+	map_script $03, $ff, $0000, IslandOpenRoundSinglesNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, IslandOpenRoundSinglesNpc04_0f, $03, $00
+	map_script $05, $ff, $0000, IslandOpenRoundSinglesNpc05_0f, $03, $00
 	db $ff
-Func_0f_762e:
+IslandOpenRoundSinglesNpc04_0f:
 	script_set_text $2849 ; $762e
 	ld a, [$c2b0] ; $7634
 	dec a ; $7637
@@ -2830,7 +2830,7 @@ Label_0f_7640:
 	call QueueShortText ; $7640
 	script_speak $04 ; $7643
 	ret ; $7648
-Func_0f_7649:
+IslandOpenRoundSinglesNpc03_0f:
 	ld a, [$c2b0] ; $7649
 	add a, a ; $764c
 	add a, $99 ; $764d
@@ -2846,7 +2846,7 @@ Func_0f_7649:
 	script_wait_idle $03 ; $7661
 	script_speak $03 ; $7666
 	ret ; $766b
-Func_0f_766c:
+IslandOpenRoundSinglesNpc05_0f:
 	ld a, [$c2b0] ; $766c
 	dec a ; $766f
 	add a, a ; $7670
@@ -3003,10 +3003,10 @@ IslandOpenRoundActorsDoubles_0f:
 	map_actor_end
 IslandOpenRoundScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_0f_78cc, $03, $00
-	map_script $04, $ff, $0000, Func_0f_78b1, $03, $00
+	map_script $03, $ff, $0000, IslandOpenRoundDoublesNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, IslandOpenRoundDoublesNpc04_0f, $03, $00
 	db $ff
-Func_0f_78b1:
+IslandOpenRoundDoublesNpc04_0f:
 	script_set_text $2849 ; $78b1
 	ld a, [$c2b0] ; $78b7
 	dec a ; $78ba
@@ -3019,7 +3019,7 @@ Label_0f_78c3:
 	call QueueShortText ; $78c3
 	script_speak $04 ; $78c6
 	ret ; $78cb
-Func_0f_78cc:
+IslandOpenRoundDoublesNpc03_0f:
 	ld a, [$c2b0] ; $78cc
 	dec a ; $78cf
 	add a, a ; $78d0

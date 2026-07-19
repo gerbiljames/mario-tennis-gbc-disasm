@@ -1038,21 +1038,21 @@ TrainingCourtNpcScripts_15:
 	map_script $04, $ff, $0000, TrainingCourtNpc04_15, $1b, $00
 	map_script $05, $ff, $0000, TrainingCourtNpc05_15, $1b, $00
 	map_script $06, $ff, $0000, TrainingCourtNpc06_15, $03, $00
-	map_script $07, $80, $0000, Func_15_5112, $03, $00
-	map_script $07, $ff, $0000, Func_15_513f, $03, $00
+	map_script $07, $80, $0000, TrainingCourtNpc07Face80_15, $03, $00
+	map_script $07, $ff, $0000, TrainingCourtNpc07_15, $03, $00
 	map_script $08, $ff, $0000, TrainingCourtNpc08_15, $1b, $00
 	map_script $09, $ff, $0000, TrainingCourtNpc09_15, $1b, $00
 	map_script $0a, $ff, $0000, TrainingCourtNpc0A_15, $1b, $00
 	map_script $0b, $ff, $0000, TrainingCourtNpc0B_15, $1b, $00
 	map_script $0c, $ff, $0000, TrainingCourtNpc0C_15, $03, $00
-	map_script $0d, $40, $0000, Func_15_526a, $03, $00
-	map_script $0d, $ff, $0000, Func_15_5297, $03, $00
+	map_script $0d, $40, $0000, TrainingCourtNpc0DFace40_15, $03, $00
+	map_script $0d, $ff, $0000, TrainingCourtNpc0D_15, $03, $00
 	map_script $0e, $ff, $0000, TrainingCourtNpc0E_15, $1b, $00
 	map_script $0f, $ff, $0000, TrainingCourtNpc0F_15, $1b, $00
 	map_script $10, $ff, $0000, TrainingCourtNpc10_15, $1b, $00
 	map_script $11, $ff, $0000, TrainingCourtNpc11_15, $03, $00
-	map_script $12, $40, $0000, Func_15_51be, $03, $00
-	map_script $12, $ff, $0000, Func_15_51eb, $03, $00
+	map_script $12, $40, $0000, TrainingCourtNpc12Face40_15, $03, $00
+	map_script $12, $ff, $0000, TrainingCourtNpc12_15, $03, $00
 	map_script $13, $ff, $0000, TrainingCourtNpc13_15, $00, $00
 	db $ff
 TrainingCourtNpc06_15:
@@ -1068,14 +1068,14 @@ Label_15_5105:
 Label_15_510e:
 	call Func_15_6586 ; $510e
 	ret ; $5111
-Func_15_5112:
+TrainingCourtNpc07Face80_15:
 	script_set_speed $00, $0008 ; $5112
 	script_facing_lock $00, $01 ; $511a
 	script_move_target $00, $1300, $1300 ; $5121
 	script_wait_move $00 ; $512c
 	script_facing_lock $00, $00 ; $5131
 	script_face $00, $40 ; $5138
-Func_15_513f:
+TrainingCourtNpc07_15:
 	test_flag $18, 3 ; $513f
 	jr nz, Label_15_5148 ; $5142
 	call Func_15_66f5 ; $5144
@@ -1131,14 +1131,14 @@ Label_15_51b1:
 Label_15_51ba:
 	call Func_15_6a2d ; $51ba
 	ret ; $51bd
-Func_15_51be:
+TrainingCourtNpc12Face40_15:
 	script_set_speed $00, $0008 ; $51be
 	script_facing_lock $00, $01 ; $51c6
 	script_move_target $00, $2d00, $2b00 ; $51cd
 	script_wait_move $00 ; $51d8
 	script_facing_lock $00, $00 ; $51dd
 	script_face $00, $c0 ; $51e4
-Func_15_51eb:
+TrainingCourtNpc12_15:
 	test_flag $19, 1 ; $51eb
 	jr nz, Label_15_51f4 ; $51ee
 	call NetCoachVolleyLessonScene ; $51f0
@@ -1194,14 +1194,14 @@ Label_15_525d:
 Label_15_5266:
 	call ReturnMatchChallengeScene ; $5266
 	ret ; $5269
-Func_15_526a:
+TrainingCourtNpc0DFace40_15:
 	script_set_speed $00, $0008 ; $526a
 	script_facing_lock $00, $01 ; $5272
 	script_move_target $00, $1300, $2b00 ; $5279
 	script_wait_move $00 ; $5284
 	script_facing_lock $00, $00 ; $5289
 	script_face $00, $c0 ; $5290
-Func_15_5297:
+TrainingCourtNpc0D_15:
 	test_flag $19, 7 ; $5297
 	jr nz, Label_15_52a0 ; $529a
 	call ReturnCoachReturnLessonScene ; $529c
