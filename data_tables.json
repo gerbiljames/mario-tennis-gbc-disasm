@@ -315,10 +315,10 @@
  "0x49271": "records:2",
  "0x4927f": "records:2",
  "0x492b9": "bytes:16",
- "0x492f7": "records:2",
- "0x49305": "bytes:14",
- "0x4956f": "bytes:16",
- "0x49580": "records:8",
+ "0x492f7": "map_tree",
+ "0x49305": "map_actors",
+ "0x4956f": "map_entries",
+ "0x49580": "map_scripts",
  "0x495dc": "records:2",
  "0x49847": "records:2",
  "0x4992d": "records:2",
@@ -327,8 +327,8 @@
  "0x49b75": "records:2",
  "0x49bbf": "records:2",
  "0x49c11": "records:2",
- "0x49c4d": "records:8",
- "0x49cc7": "records:8",
+ "0x49c4d": "map_scripts",
+ "0x49cc7": "map_scripts",
  "0x49d7a": "bytes:14",
  "0x49f70": "records:8",
  "0x4a24e": "records:8",
@@ -750,5 +750,6 @@
  "0x1b2ef3": "palettes",
  "0x1b349b": "palettes",
  "0x1b54b3": "palettes",
- "0x1b6104": "palettes"
+ "0x1b6104": "palettes",
+ "0x49cc6": "map_scripts"
 }

@@ -1310,68 +1310,72 @@ RestoreWallPracticeRoomActors:
 Label_12_52f6:
 	ret ; $52f6
 SeniorCourtStoryCmds_12:
-	; $52f7, 14 bytes (records:2)
-	dw $556f ; record 0
-	dw $5580 ; record 1
-	dw $5305 ; record 2
-	dw $5c4d ; record 3
-	dw $5cc6 ; record 4
-	dw $5cc7 ; record 5
-	dw $5d1c ; record 6
-	; $5305, 618 bytes (bytes:14)
-	db $00, $00, $89, $7a, $00, $29, $00, $19, $80, $00, $49, $01, $00, $00 ; 0x00
-	db $00, $00, $e3, $79, $00, $35, $00, $1e, $c0, $00, $65, $06, $07, $00 ; 0x0e
-	db $00, $00, $59, $7c, $00, $32, $00, $1e, $00, $00, $64, $01, $05, $00 ; 0x1c
-	db $00, $00, $93, $7a, $00, $33, $00, $11, $80, $00, $69, $01, $04, $00 ; 0x2a
-	db $00, $00, $89, $7a, $00, $29, $00, $13, $80, $00, $66, $01, $06, $00 ; 0x38
-	db $00, $00, $e3, $79, $00, $0b, $00, $15, $c0, $00, $6b, $01, $05, $00 ; 0x46
-	db $00, $00, $66, $7c, $00, $0b, $00, $13, $40, $00, $67, $01, $03, $00 ; 0x54
-	db $00, $00, $f0, $7b, $00, $15, $00, $17, $c0, $00, $68, $01, $06, $00 ; 0x62
-	db $00, $00, $89, $7b, $00, $13, $00, $0b, $40, $00, $6a, $01, $03, $00 ; 0x70
-	db $e0, $05, $93, $7a, $00, $09, $00, $0b, $40, $00, $29, $01, $00, $00 ; 0x7e
-	db $00, $00, $bf, $7a, $00, $22, $00, $13, $40, $00, $54, $01, $00, $00 ; 0x8c
-	db $00, $00, $22, $7b, $00, $25, $00, $1d, $c0, $00, $54, $01, $04, $00 ; 0x9a
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff, $00, $00, $89, $7a ; 0xa8
-	db $00, $2d, $00, $19, $40, $00, $49, $01, $00, $00, $00, $00, $89, $7a ; 0xb6
-	db $00, $29, $00, $1b, $80, $00, $65, $01, $07, $00, $00, $00, $59, $7c ; 0xc4
-	db $00, $39, $00, $1d, $80, $00, $64, $01, $05, $00, $00, $00, $89, $7a ; 0xd2
-	db $00, $2d, $00, $13, $00, $00, $69, $01, $04, $00, $00, $00, $89, $7a ; 0xe0
-	db $00, $2b, $00, $11, $80, $00, $66, $01, $06, $00, $00, $00, $e3, $79 ; 0xee
-	db $00, $0a, $00, $15, $c0, $00, $6b, $01, $05, $00, $00, $00, $89, $7a ; 0xfc
-	db $00, $03, $00, $17, $00, $00, $67, $01, $03, $00, $00, $00, $59, $7c ; 0x10a
-	db $00, $12, $00, $0d, $00, $00, $68, $01, $06, $00, $00, $00, $ea, $79 ; 0x118
-	db $00, $15, $00, $0d, $40, $00, $6a, $06, $03, $00, $e0, $05, $93, $7a ; 0x126
-	db $00, $03, $00, $0b, $40, $00, $29, $01, $00, $00, $00, $00, $bf, $7a ; 0x134
-	db $00, $22, $00, $11, $40, $00, $54, $01, $05, $00, $00, $00, $22, $7b ; 0x142
-	db $00, $26, $00, $1d, $c0, $00, $54, $01, $00, $00, $00, $00, $89, $7b ; 0x150
-	db $00, $32, $00, $11, $40, $00, $54, $01, $00, $00, $00, $00, $f0, $7b ; 0x15e
-	db $00, $36, $00, $1d, $c0, $00, $54, $01, $06, $00, $00, $00, $89, $7a ; 0x16c
-	db $00, $40, $00, $40, $c0, $00, $53, $01, $00, $00, $00, $00, $00, $00 ; 0x17a
-	db $00, $00, $00, $00, $00, $ff, $00, $00, $89, $7a, $00, $2d, $00, $19 ; 0x188
-	db $40, $00, $49, $01, $00, $00, $00, $00, $e3, $79, $00, $2d, $00, $11 ; 0x196
-	db $c0, $00, $65, $06, $07, $00, $00, $00, $59, $7c, $00, $2d, $00, $0f ; 0x1a4
-	db $40, $00, $64, $01, $05, $00, $00, $00, $89, $7a, $00, $39, $00, $1d ; 0x1b2
-	db $80, $00, $69, $01, $04, $00, $00, $00, $89, $7a, $00, $39, $00, $1b ; 0x1c0
-	db $80, $00, $66, $01, $06, $00, $00, $00, $e3, $79, $00, $23, $00, $1e ; 0x1ce
-	db $c0, $00, $6b, $01, $05, $00, $00, $00, $89, $7a, $00, $23, $00, $1c ; 0x1dc
-	db $40, $00, $67, $01, $03, $00, $00, $00, $89, $7a, $00, $09, $00, $07 ; 0x1ea
-	db $00, $00, $68, $01, $06, $00, $00, $00, $89, $7a, $00, $0b, $00, $07 ; 0x1f8
-	db $80, $00, $6a, $01, $03, $00, $e0, $05, $93, $7a, $00, $03, $00, $0b ; 0x206
-	db $40, $00, $29, $01, $00, $00, $00, $00, $bf, $7a, $00, $12, $00, $0b ; 0x214
-	db $40, $00, $54, $01, $05, $00, $00, $00, $22, $7b, $00, $16, $00, $16 ; 0x222
-	db $c0, $00, $54, $01, $00, $00, $00, $00, $89, $7b, $00, $32, $00, $11 ; 0x230
-	db $40, $00, $54, $01, $00, $00, $00, $00, $f0, $7b, $00, $36, $00, $1d ; 0x23e
-	db $c0, $00, $54, $01, $06, $00, $00, $00, $89, $7a, $00, $40, $00, $40 ; 0x24c
-	db $c0, $00, $53, $01, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x25a
-	db $00, $ff ; 0x268
-	; $556f, 17 bytes (bytes:16)
-	db $01, $c0, $00, $2b, $00, $23, $00, $00, $09, $c0, $00, $0b, $00, $19, $00, $00 ; 0x00
-	db $ff ; 0x10
-	; $5580, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $5591, $0308 ; record 0
-	dw $ff0f, $0000, $7ab1, $0f10 ; record 1
+	; $52f7, 14 bytes (map_tree)
+	dw SeniorCourtEntryPoints_12 ; slot 0 EntryPoints
+	dw SeniorCourtExitTriggers_12 ; slot 1 ExitTriggers
+	dw SeniorCourtActors_12 ; slot 2 Actors
+	dw SeniorCourtNpcScripts_12 ; slot 3 NpcScripts
+	dw SeniorCourtFacingScripts_12 ; slot 4 FacingScripts
+	dw SeniorCourtTileTriggers_12 ; slot 5 TileTriggers
+	dw SeniorCourtInitScript_12 ; slot 6 InitScript
+SeniorCourtActors_12:
+	; $5305, 618 bytes (map_actors)
+	map_actor $0000, $7a89, $2900, $1900, $80, $49, $01, $00
+	map_actor $0000, $79e3, $3500, $1e00, $c0, $65, $06, $07
+	map_actor $0000, $7c59, $3200, $1e00, $00, $64, $01, $05
+	map_actor $0000, $7a93, $3300, $1100, $80, $69, $01, $04
+	map_actor $0000, $7a89, $2900, $1300, $80, $66, $01, $06
+	map_actor $0000, $79e3, $0b00, $1500, $c0, $6b, $01, $05
+	map_actor $0000, $7c66, $0b00, $1300, $40, $67, $01, $03
+	map_actor $0000, $7bf0, $1500, $1700, $c0, $68, $01, $06
+	map_actor $0000, $7b89, $1300, $0b00, $40, $6a, $01, $03
+	map_actor $05e0, $7a93, $0900, $0b00, $40, $29, $01, $00
+	map_actor $0000, $7abf, $2200, $1300, $40, $54, $01, $00
+	map_actor $0000, $7b22, $2500, $1d00, $c0, $54, $01, $04
+	map_actor_end
+	map_actor $0000, $7a89, $2d00, $1900, $40, $49, $01, $00
+	map_actor $0000, $7a89, $2900, $1b00, $80, $65, $01, $07
+	map_actor $0000, $7c59, $3900, $1d00, $80, $64, $01, $05
+	map_actor $0000, $7a89, $2d00, $1300, $00, $69, $01, $04
+	map_actor $0000, $7a89, $2b00, $1100, $80, $66, $01, $06
+	map_actor $0000, $79e3, $0a00, $1500, $c0, $6b, $01, $05
+	map_actor $0000, $7a89, $0300, $1700, $00, $67, $01, $03
+	map_actor $0000, $7c59, $1200, $0d00, $00, $68, $01, $06
+	map_actor $0000, $79ea, $1500, $0d00, $40, $6a, $06, $03
+	map_actor $05e0, $7a93, $0300, $0b00, $40, $29, $01, $00
+	map_actor $0000, $7abf, $2200, $1100, $40, $54, $01, $05
+	map_actor $0000, $7b22, $2600, $1d00, $c0, $54, $01, $00
+	map_actor $0000, $7b89, $3200, $1100, $40, $54, $01, $00
+	map_actor $0000, $7bf0, $3600, $1d00, $c0, $54, $01, $06
+	map_actor $0000, $7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor_end
+	map_actor $0000, $7a89, $2d00, $1900, $40, $49, $01, $00
+	map_actor $0000, $79e3, $2d00, $1100, $c0, $65, $06, $07
+	map_actor $0000, $7c59, $2d00, $0f00, $40, $64, $01, $05
+	map_actor $0000, $7a89, $3900, $1d00, $80, $69, $01, $04
+	map_actor $0000, $7a89, $3900, $1b00, $80, $66, $01, $06
+	map_actor $0000, $79e3, $2300, $1e00, $c0, $6b, $01, $05
+	map_actor $0000, $7a89, $2300, $1c00, $40, $67, $01, $03
+	map_actor $0000, $7a89, $0900, $0700, $00, $68, $01, $06
+	map_actor $0000, $7a89, $0b00, $0700, $80, $6a, $01, $03
+	map_actor $05e0, $7a93, $0300, $0b00, $40, $29, $01, $00
+	map_actor $0000, $7abf, $1200, $0b00, $40, $54, $01, $05
+	map_actor $0000, $7b22, $1600, $1600, $c0, $54, $01, $00
+	map_actor $0000, $7b89, $3200, $1100, $40, $54, $01, $00
+	map_actor $0000, $7bf0, $3600, $1d00, $c0, $54, $01, $06
+	map_actor $0000, $7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor_end
+SeniorCourtEntryPoints_12:
+	; $556f, 17 bytes (map_entries)
+	map_entry $01, $c0, $2b00, $2300, $0000
+	map_entry $09, $c0, $0b00, $1900, $0000
 	db $ff
+SeniorCourtExitTriggers_12:
+	; $5580, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_12_5591, $08, $03
+	map_script $0f, $ff, $0000, Func_12_7ab1, $10, $0f
+	db $ff
+Func_12_5591:
 	clear_flag $0f, 4 ; $5591
 	script_move_angle $00, $40, $0200 ; $5594
 	script_move_angle $02, $40, $0200 ; $559e
@@ -1440,6 +1444,7 @@ Label_12_5606:
 Label_12_562a:
 	script_speak $03 ; $562a
 	ret ; $562f
+Func_12_5630:
 	test_flag $05, 7 ; $5630
 	jr z, Label_12_55e8 ; $5633
 	test_flag $0e, 4 ; $5635
@@ -1458,6 +1463,7 @@ Label_12_562a:
 	script_face_toward $03, $02 ; $568b
 	script_wait_move $00 ; $5693
 	jp Label_12_5747 ; $5698
+Func_12_569b:
 	test_flag $05, 7 ; $569b
 	jp z, Label_12_55f7 ; $569e
 	test_flag $0e, 4 ; $56a1
@@ -1531,6 +1537,7 @@ Label_12_57f4:
 	ld de, $d000 ; $5819
 	farcall FarPtr_04_20 ; $581c
 	ret ; $581f
+Func_12_5820:
 	ld a, [$c2b1] ; $5820
 	add a, a ; $5823
 	add a, $47 ; $5824
@@ -1553,7 +1560,7 @@ Label_12_583f:
 	jr c, Label_12_5846 ; $5844
 Label_12_5846:
 	ret ; $5846
-	; $5847, 207 bytes (records:2)
+	; $5847, 18 bytes (records:2)
 	dw $100e ; record 0
 	dw $100e ; record 1
 	dw $101a ; record 2
@@ -1563,101 +1570,71 @@ Label_12_5846:
 	dw $1055 ; record 6
 	dw $1055 ; record 7
 	dw $1056 ; record 8
-	dw $b1fa ; record 9
-	dw $87c2 ; record 10
-	dw $95c6 ; record 11
-	dw $ce6f ; record 12
-	dw $9558 ; record 13
-	dw $2a67 ; record 14
-	dw $6f66 ; record 15
-	dw $0edf ; record 16
-	dw $fa0a ; record 17
-	dw $c2b1 ; record 18
-	dw $04fe ; record 19
-	dw $0628 ; record 20
-	dw $053e ; record 21
-	dw $08df ; record 22
-	dw $c90a ; record 23
-	dw $053e ; record 24
-	dw $0adf ; record 25
-	dw $df0a ; record 26
-	dw $0a12 ; record 27
-	dw $0cdf ; record 28
-	dw $f50a ; record 29
-	dw $053e ; record 30
-	dw $04df ; record 31
-	dw $f10a ; record 32
-	dw $28a7 ; record 33
-	dw $df03 ; record 34
-	dw $0a10 ; record 35
-	dw $053e ; record 36
-	dw $08df ; record 37
-	dw $c90a ; record 38
-	dw $100f ; record 39
-	dw $1018 ; record 40
-	dw $101c ; record 41
-	dw $101c ; record 42
-	dw $101d ; record 43
-	dw $1020 ; record 44
-	dw $1057 ; record 45
-	dw $1057 ; record 46
-	dw $1058 ; record 47
-	dw $108e ; record 48
-	dw $1097 ; record 49
-	dw $109f ; record 50
-	dw $10a8 ; record 51
-	dw $10b1 ; record 52
-	dw $10ba ; record 53
-	dw $b1fa ; record 54
-	dw $87c2 ; record 55
-	dw $f8c6 ; record 56
-	dw $ce6f ; record 57
-	dw $9558 ; record 58
-	dw $2a67 ; record 59
-	dw $6f66 ; record 60
-	dw $0edf ; record 61
-	dw $fa0a ; record 62
-	dw $c2b1 ; record 63
-	dw $06fe ; record 64
-	dw $0628 ; record 65
-	dw $063e ; record 66
-	dw $08df ; record 67
-	dw $c90a ; record 68
-	dw $063e ; record 69
-	dw $0adf ; record 70
-	dw $df0a ; record 71
-	dw $0a12 ; record 72
-	dw $0cdf ; record 73
-	dw $f50a ; record 74
-	dw $053e ; record 75
-	dw $04df ; record 76
-	dw $f10a ; record 77
-	dw $28a7 ; record 78
-	dw $df0c ; record 79
-	dw $0a10 ; record 80
-	dw $4dfa ; record 81
-	dw $b7c9 ; record 82
-	dw $0320 ; record 83
-	dw $10df ; record 84
-	dw $3e0a ; record 85
-	dw $df06 ; record 86
-	dw $0a08 ; record 87
-	dw $10c9 ; record 88
-	dw $1010 ; record 89
-	dw $2110 ; record 90
-	dw $2210 ; record 91
-	dw $2310 ; record 92
-	dw $2410 ; record 93
-	dw $5910 ; record 94
-	dw $5e10 ; record 95
-	dw $6010 ; record 96
-	dw $8f10 ; record 97
-	dw $9810 ; record 98
-	dw $a010 ; record 99
-	dw $a910 ; record 100
-	dw $b210 ; record 101
-	dw $bb10 ; record 102
-	db $10
+Func_12_5859:
+	ld a, [$c2b1] ; $5859
+	add a, a ; $585c
+	add a, $95 ; $585d
+	ld l, a ; $585f
+	adc a, $58 ; $5860
+	sub a, l ; $5862
+	ld h, a ; $5863
+	ld a, [hl+] ; $5864
+	ld h, [hl] ; $5865
+	ld l, a ; $5866
+	farcall FarPtr_InitDialogueTextCursor ; $5867
+	ld a, [$c2b1] ; $586a
+	cp a, $04 ; $586d
+	jr z, Label_12_5877 ; $586f
+	script_speak $05 ; $5871
+	ret ; $5876
+Label_12_5877:
+	ld a, $05 ; $5877
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5879
+	farcall FarPtr_RunDialogueYesNoPrompt ; $587c
+	farcall FarPtr_ScriptCloseDialogueWindow ; $587f
+	script_wait_frames $05 ; $5882
+	and a, a ; $5889
+	jr z, Label_12_588f ; $588a
+	farcall FarPtr_AdvanceDialogueTextCursor ; $588c
+Label_12_588f:
+	script_speak $05 ; $588f
+	ret ; $5894
+	INCBIN "data/bank_012/d_5895.bin" ; $5895, 30 bytes
+Func_12_58b3:
+	ld a, [$c2b1] ; $58b3
+	add a, a ; $58b6
+	add a, $f8 ; $58b7
+	ld l, a ; $58b9
+	adc a, $58 ; $58ba
+	sub a, l ; $58bc
+	ld h, a ; $58bd
+	ld a, [hl+] ; $58be
+	ld h, [hl] ; $58bf
+	ld l, a ; $58c0
+	farcall FarPtr_InitDialogueTextCursor ; $58c1
+	ld a, [$c2b1] ; $58c4
+	cp a, $06 ; $58c7
+	jr z, Label_12_58d1 ; $58c9
+	script_speak $06 ; $58cb
+	ret ; $58d0
+Label_12_58d1:
+	ld a, $06 ; $58d1
+	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $58d3
+	farcall FarPtr_RunDialogueYesNoPrompt ; $58d6
+	farcall FarPtr_ScriptCloseDialogueWindow ; $58d9
+	script_wait_frames $05 ; $58dc
+	and a, a ; $58e3
+	jr z, Label_12_58f2 ; $58e4
+	farcall FarPtr_AdvanceDialogueTextCursor ; $58e6
+	ld a, [$c94d] ; $58e9
+	or a, a ; $58ec
+	jr nz, Label_12_58f2 ; $58ed
+	farcall FarPtr_AdvanceDialogueTextCursor ; $58ef
+Label_12_58f2:
+	script_speak $06 ; $58f2
+	ret ; $58f7
+	INCBIN "data/bank_012/d_58f8.bin" ; $58f8, 30 bytes
+Func_12_5916:
 	ld a, [$c2b1] ; $5916
 	add a, a ; $5919
 	add a, $2d ; $591a
@@ -1687,6 +1664,7 @@ Label_12_5846:
 	dw $10aa ; record 12
 	dw $10b3 ; record 13
 	dw $10bc ; record 14
+Func_12_594b:
 	ld a, [$c2b1] ; $594b
 	add a, a ; $594e
 	add a, $2b ; $594f
@@ -1777,6 +1755,7 @@ Label_12_59be:
 	dw $10ab ; record 12
 	dw $10b4 ; record 13
 	dw $10bd ; record 14
+Func_12_5a49:
 	ld a, [$c2b1] ; $5a49
 	add a, a ; $5a4c
 	add a, $6e ; $5a4d
@@ -1811,6 +1790,7 @@ Label_12_5a68:
 	dw $10ac ; record 12
 	dw $10b5 ; record 13
 	dw $10be ; record 14
+Func_12_5a8c:
 	ld a, [$c2b1] ; $5a8c
 	add a, a ; $5a8f
 	add a, $75 ; $5a90
@@ -1913,6 +1893,7 @@ Label_12_5ae3:
 	dw $10ad ; record 12
 	dw $10b6 ; record 13
 	dw $10bf ; record 14
+Func_12_5b93:
 	ld a, [$c2b1] ; $5b93
 	add a, a ; $5b96
 	add a, $bf ; $5b97
@@ -1952,6 +1933,7 @@ Label_12_5bb9:
 	dw $10ae ; record 12
 	dw $10b7 ; record 13
 	dw $10ae ; record 14
+Func_12_5bdd:
 	ld a, [$c94d] ; $5bdd
 	or a, a ; $5be0
 	jr nz, Label_12_5bfa ; $5be1
@@ -2013,28 +1995,31 @@ Label_12_5bfa:
 	dw $10af ; record 27
 	dw $10b9 ; record 28
 	dw $10ba ; record 29
-	; $5c4d, 122 bytes (records:8)
-; 15 records x 8 bytes
-	dw $1003, $0840, $5630, $0001 ; record 0
-	dw $4003, $0840, $569b, $0001 ; record 1
-	dw $4003, $0000, $55f7, $0001 ; record 2
-	dw $ff03, $0000, $55e8, $0001 ; record 3
-	dw $ff04, $0000, $5820, $001b ; record 4
-	dw $ff05, $0000, $5859, $0013 ; record 5
-	dw $ff06, $08a0, $58b3, $0013 ; record 6
-	dw $ff06, $0000, $58b3, $0011 ; record 7
-	dw $ff07, $08a0, $5916, $0003 ; record 8
-	dw $ff07, $0000, $5916, $0001 ; record 9
-	dw $ff08, $0000, $594b, $000b ; record 10
-	dw $ff09, $0000, $5a49, $0013 ; record 11
-	dw $ff0a, $0000, $5a8c, $0013 ; record 12
-	dw $ff0b, $0000, $5b93, $001b ; record 13
-	dw $ff0c, $0000, $5bdd, $0013 ; record 14
-	db $ff, $ff
-	; $5cc7, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0f80, $5cd0, $0000 ; record 0
+SeniorCourtNpcScripts_12:
+	; $5c4d, 121 bytes (map_scripts)
+	map_script $03, $10, $0840, Func_12_5630, $01, $00
+	map_script $03, $40, $0840, Func_12_569b, $01, $00
+	map_script $03, $40, $0000, Label_12_55f7, $01, $00
+	map_script $03, $ff, $0000, Label_12_55e8, $01, $00
+	map_script $04, $ff, $0000, Func_12_5820, $1b, $00
+	map_script $05, $ff, $0000, Func_12_5859, $13, $00
+	map_script $06, $ff, $08a0, Func_12_58b3, $13, $00
+	map_script $06, $ff, $0000, Func_12_58b3, $11, $00
+	map_script $07, $ff, $08a0, Func_12_5916, $03, $00
+	map_script $07, $ff, $0000, Func_12_5916, $01, $00
+	map_script $08, $ff, $0000, Func_12_594b, $0b, $00
+	map_script $09, $ff, $0000, Func_12_5a49, $13, $00
+	map_script $0a, $ff, $0000, Func_12_5a8c, $13, $00
+	map_script $0b, $ff, $0000, Func_12_5b93, $1b, $00
+	map_script $0c, $ff, $0000, Func_12_5bdd, $13, $00
 	db $ff
+SeniorCourtFacingScripts_12:
+	ds 1, $ff ; $5cc6, fill
+SeniorCourtTileTriggers_12:
+	; $5cc7, 9 bytes (map_scripts)
+	map_script $01, $ff, $0f80, Func_12_5cd0, $00, $00
+	db $ff
+Func_12_5cd0:
 	set_flag $0f, 4 ; $5cd0
 	ld a, $0a ; $5cd3
 	farcall FarPtr_SetActorNullScript ; $5cd5
@@ -2049,6 +2034,7 @@ Label_12_5bfa:
 	script_face_toward $00, $0a ; $5d0b
 	script_face_toward $00, $0b ; $5d13
 	ret ; $5d1b
+SeniorCourtInitScript_12:
 	call ComputeSeniorCourtStageB ; $5d1c
 	call ComputeSeniorCourtStage ; $5d1f
 	ld a, [$c2b1] ; $5d22

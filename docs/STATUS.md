@@ -36,6 +36,16 @@ banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
 with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
 blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
+### SeniorCourt story location (2026-07-19)
+
+The `$12:$52f7` story-location map_tree (`SeniorCourtStoryCmds_12`) and its seven
+sub-tables were left as `records:2`/`bytes:14` raw data — the bank's other
+location (`$4006`) was already tagged but this one was missed. Retyped the
+data_tables specs (`map_tree` + `map_actors`/`map_entries`/`map_scripts` per
+slot) and named the sub-tables `SeniorCourt<Role>_12`, so the tree renders as 7
+labeled slots and the sub-tables as `map_*` macros (Actors is several
+`map_actor` lists; the InitScript is code). Config-only; byte-perfect.
+
 ### Seed map-script/entry code targets (2026-07-19)
 
 `map_script_code_targets` yields the handler/arrival-script pointers embedded in
