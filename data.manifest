@@ -548,10 +548,14 @@ bank_022/d_427d.bin 08827d 3c00
 bank_023/d_427d.bin 08c27d 3c00
 bank_024/d_410e.bin 09010e 5b
 bank_024/d_4289.bin 090289 300
-bank_024/d_459c.bin 09059c 70f
+bank_024/d_459c.bin 09059c 4
+bank_024/d_45a0.bin 0905a0 70b
 bank_024/d_4d47.bin 090d47 459
-bank_024/d_51b9.bin 0911b9 644
-bank_024/d_583c.bin 09183c e08
+bank_024/d_51b9.bin 0911b9 40
+bank_024/d_51f9.bin 0911f9 4
+bank_024/d_51fd.bin 0911fd 600
+bank_024/d_583c.bin 09183c 8
+bank_024/d_5844.bin 091844 e00
 bank_024/d_6707.bin 092707 1000
 bank_024/d_7719.bin 093719 40
 bank_025/text_4004.asm 094004 3b34

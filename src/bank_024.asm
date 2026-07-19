@@ -439,16 +439,20 @@ Label_24_4284:
 	ld l, a ; $4286
 	add hl, de ; $4287
 	ret ; $4288
+BallPosDataLob_24:
 	INCBIN "data/bank_024/d_4289.bin" ; $4289, 768 bytes
 ShotBallPathLob:
 	farcall FarPtr_ComputeShotPlacement ; $4589
-	ld hl, $4289 ; $458c
-	ld bc, $459c ; $458f
+	ld hl, BallPosDataLob_24 ; $458c
+	ld bc, BallPosBlockOffsetsLob_24 ; $458f
 	ld a, [wLobPlacementIndex] ; $4592
 	call LookupBallPosByShotIndex_24 ; $4595
 	call ApplyBallTrajectoryCapped_24 ; $4598
 	ret ; $459b
-	INCBIN "data/bank_024/d_459c.bin" ; $459c, 1807 bytes
+BallPosBlockOffsetsLob_24:
+	INCBIN "data/bank_024/d_459c.bin" ; $459c, 4 bytes
+BallPosDataDrop_24:
+	INCBIN "data/bank_024/d_45a0.bin" ; $45a0, 1803 bytes
 	push af ; $4cab
 	sbc a, b ; $4cac
 	cp a, $e0 ; $4cad
@@ -560,15 +564,20 @@ Label_24_4d1f:
 	INCBIN "data/bank_024/d_4d47.bin" ; $4d47, 1113 bytes
 ShotBallPathDrop:
 	farcall FarPtr_ComputeShotPlacement ; $51a0
-	ld hl, $45a0 ; $51a3
-	ld bc, $51b9 ; $51a6
+	ld hl, BallPosDataDrop_24 ; $51a3
+	ld bc, BallPosAimOffsetsDrop_24 ; $51a6
 	call LookupBallPosByAim_24 ; $51a9
-	ld bc, $51f9 ; $51ac
+	ld bc, BallPosBlockOffsetsDrop_24 ; $51ac
 	ld a, [wDropPlacementIndex] ; $51af
 	call LookupBallPosByShotIndex_24 ; $51b2
 	call ApplyBallTrajectoryCapped_24 ; $51b5
 	ret ; $51b8
-	INCBIN "data/bank_024/d_51b9.bin" ; $51b9, 1604 bytes
+BallPosAimOffsetsDrop_24:
+	INCBIN "data/bank_024/d_51b9.bin" ; $51b9, 64 bytes
+BallPosBlockOffsetsDrop_24:
+	INCBIN "data/bank_024/d_51f9.bin" ; $51f9, 4 bytes
+BallPosDataFallback_24:
+	INCBIN "data/bank_024/d_51fd.bin" ; $51fd, 1536 bytes
 ApplyFallbackBallTrajectory_24:
 	ld a, $01 ; $57fd
 	ld [$c4c6], a ; $57ff
@@ -603,20 +612,24 @@ Label_24_5824:
 	ld a, [hl+] ; $5831
 	ld d, [hl] ; $5832
 	ld e, a ; $5833
-	ld hl, $51fd ; $5834
+	ld hl, BallPosDataFallback_24 ; $5834
 	add hl, de ; $5837
 	call ApplyBallTrajectoryCapped_24 ; $5838
 	ret ; $583b
-	INCBIN "data/bank_024/d_583c.bin" ; $583c, 3592 bytes
+BallPosFallbackOffsets_24:
+	INCBIN "data/bank_024/d_583c.bin" ; $583c, 8 bytes
+BallPosDataNeutral_24:
+	INCBIN "data/bank_024/d_5844.bin" ; $5844, 3584 bytes
 ShotBallPathNeutral:
 	farcall FarPtr_ComputeShotPlacement ; $6644
 	push bc ; $6647
-	ld hl, $5844 ; $6648
-	ld bc, $6656 ; $664b
+	ld hl, BallPosDataNeutral_24 ; $6648
+	ld bc, BallPosHeightOffsetsNeutral_24 ; $664b
 	call LookupBallPosByHeight_24 ; $664e
 	pop bc ; $6651
 	call ApplyBallTrajectory_24 ; $6652
 	ret ; $6655
+BallPosHeightOffsetsNeutral_24:
 	; $6656, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -716,6 +729,7 @@ Label_24_66b0:
 	add hl, de ; $66ed
 	call SetBallTargetFromAim_24 ; $66ee
 	ret ; $66f1
+SmashVelocityBySpeed_24:
 	; $66f2, 20 bytes (records:2)
 	dw $fa60 ; record 0
 	dw $faf0 ; record 1
@@ -729,15 +743,17 @@ Label_24_66b0:
 	dw $ff70 ; record 9
 Func_24_6706:
 	ret ; $6706
+BallPosDataReach_24:
 	INCBIN "data/bank_024/d_6707.bin" ; $6707, 4096 bytes
 ShotBallPathReach:
 	farcall FarPtr_ComputeShotPlacement ; $7707
 	push bc ; $770a
-	ld hl, $6707 ; $770b
-	ld bc, $7719 ; $770e
+	ld hl, BallPosDataReach_24 ; $770b
+	ld bc, BallPosHeightOffsetsReach_24 ; $770e
 	call LookupBallPosByHeight_24 ; $7711
 	pop bc ; $7714
 	call ApplyBallTrajectory_24 ; $7715
 	ret ; $7718
+BallPosHeightOffsetsReach_24:
 	INCBIN "data/bank_024/d_7719.bin" ; $7719, 64 bytes
 	ds 2215, $ff ; $7759, fill

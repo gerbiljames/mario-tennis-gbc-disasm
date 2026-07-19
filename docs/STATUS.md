@@ -21,6 +21,24 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Carve bank $24's ball-path data tables (2026-07-19)
+
+Split bank `$24`'s data blobs into 12 named per-shot tables so the five entries'
+`ld hl,$xxxx`/`ld bc,$xxxx` pointers resolve: `BallPosDataLob_24` +
+`BallPosBlockOffsetsLob_24`; `BallPosDataDrop_24` + `BallPosAimOffsetsDrop_24` +
+`BallPosBlockOffsetsDrop_24`; `BallPosDataNeutral_24` +
+`BallPosHeightOffsetsNeutral_24`; `BallPosDataReach_24` +
+`BallPosHeightOffsetsReach_24`; the shared-fallback `BallPosDataFallback_24` +
+`BallPosFallbackOffsets_24`; and `SmashVelocityBySpeed_24` (smash indexes it by
+`wSmashServeSpeedIndex`). The `BlockOffsets` tables are 4 bytes each — the
+lob/drop placement index is just 0/1. Carve is label-driven: `disasm.py`
+rewrites `data.manifest` from the curated labels, so the split needs no manual
+manifest edit (only a re-extract). Two tables are reached by computed addressing
+(`add a,n`/`adc a,n`) so their label documents the address without a pointer to
+rewrite. The two remaining blobs (`d_410e`, `d_4d47`) are unreferenced — dead
+copies of the stride-6 `ApplyBallTrajectory` code this bank doesn't enter. This
+completes bank `$24` and the whole shot pipeline. Byte-perfect.
+
 ### Name bank $24's ball-path code (2026-07-19)
 
 Bank `$24` (the shared multi-entry ball-path bank for lob/drop/neutral/smash/
