@@ -2,7 +2,7 @@ SECTION "ROM Bank $22", ROMX[$4000], BANK[$22]
 
 FarPtr_ShotBallPathTopspin:
 	dw ShotBallPathTopspin ; $4000
-Func_22_4002:
+BallTrajEntryPtr6_22:
 	push hl ; $4002
 	ld l, e ; $4003
 	ld h, d ; $4004
@@ -18,7 +18,7 @@ Func_22_4002:
 	pop de ; $400f
 	add hl, de ; $4010
 	ret ; $4011
-Func_22_4012:
+BallTrajEntryPtr4_22:
 	push hl ; $4012
 	ld l, e ; $4013
 	ld h, d ; $4014
@@ -31,7 +31,7 @@ Func_22_4012:
 	pop de ; $401c
 	add hl, de ; $401d
 	ret ; $401e
-Func_22_401f:
+SeekBallTrajEntry6_22:
 	ld a, [$c48e] ; $401f
 	ld d, a ; $4022
 	ld a, [$c48f] ; $4023
@@ -57,7 +57,7 @@ Label_22_403b:
 	jr Label_22_4027 ; $403b
 Label_22_403d:
 	ret ; $403d
-Func_22_403e:
+SeekBallTrajEntry4_22:
 	ld a, [$c48e] ; $403e
 	ld d, a ; $4041
 	ld a, [$c48f] ; $4042
@@ -83,7 +83,7 @@ Label_22_405a:
 	jr Label_22_4046 ; $405a
 Label_22_405c:
 	ret ; $405c
-Func_22_405d:
+SetBallVelocityFromEntry6_22:
 	ld a, [hl+] ; $405d
 	ld c, a ; $405e
 	ld a, [hl+] ; $405f
@@ -117,7 +117,7 @@ Label_22_4076:
 	pop hl ; $407f
 	farcall FarPtr_SetBallVelocityPolar ; $4080
 	ret ; $4083
-Func_22_4084:
+SetBallVelocityFromEntry4_22:
 	ld a, [hl+] ; $4084
 	ld c, a ; $4085
 	ld a, [hl+] ; $4086
@@ -216,7 +216,7 @@ Label_22_40f0:
 	ld [hl+], a ; $40ff
 	ld [hl], d ; $4100
 	ret ; $4101
-Func_22_4102:
+ApplyBallTrajectory_22:
 	xor a, a ; $4102
 	sub a, c ; $4103
 	ld c, a ; $4104
@@ -227,7 +227,7 @@ Func_22_4102:
 	ld e, a ; $410b
 	ld a, [$c48b] ; $410c
 	ld d, a ; $410f
-	call Func_22_4002 ; $4110
+	call BallTrajEntryPtr6_22 ; $4110
 	push hl ; $4113
 	ld a, [hl+] ; $4114
 	ld h, [hl] ; $4115
@@ -237,9 +237,9 @@ Func_22_4102:
 	ld d, h ; $4119
 	pop hl ; $411a
 	jp c, Label_22_41f1 ; $411b
-	call Func_22_401f ; $411e
+	call SeekBallTrajEntry6_22 ; $411e
 	push de ; $4121
-	call Func_22_405d ; $4122
+	call SetBallVelocityFromEntry6_22 ; $4122
 	pop de ; $4125
 	ld h, d ; $4126
 	ld l, $00 ; $4127
@@ -247,7 +247,7 @@ Func_22_4102:
 	rr l ; $412b
 	sra h ; $412d
 	rr l ; $412f
-	call Func_22_41f5 ; $4131
+	call SetBallTargetFromAim_22 ; $4131
 	ret ; $4134
 	xor a, a ; $4135
 	sub a, c ; $4136
@@ -259,10 +259,10 @@ Func_22_4102:
 	ld e, a ; $413e
 	ld a, [$c48b] ; $413f
 	ld d, a ; $4142
-	call Func_22_4002 ; $4143
-	call Func_22_401f ; $4146
+	call BallTrajEntryPtr6_22 ; $4143
+	call SeekBallTrajEntry6_22 ; $4146
 	push de ; $4149
-	call Func_22_405d ; $414a
+	call SetBallVelocityFromEntry6_22 ; $414a
 	pop de ; $414d
 	ld h, d ; $414e
 	ld l, $00 ; $414f
@@ -270,7 +270,7 @@ Func_22_4102:
 	rr l ; $4153
 	sra h ; $4155
 	rr l ; $4157
-	call Func_22_41f5 ; $4159
+	call SetBallTargetFromAim_22 ; $4159
 	ret ; $415c
 	push hl ; $415d
 	ld hl, wShotAimAngle ; $415e
@@ -306,10 +306,10 @@ Func_22_4102:
 Label_22_4189:
 	pop hl ; $4189
 	push de ; $418a
-	call Func_22_4002 ; $418b
-	call Func_22_405d ; $418e
+	call BallTrajEntryPtr6_22 ; $418b
+	call SetBallVelocityFromEntry6_22 ; $418e
 	pop hl ; $4191
-	call Func_22_41f5 ; $4192
+	call SetBallTargetFromAim_22 ; $4192
 	ret ; $4195
 	xor a, a ; $4196
 	sub a, c ; $4197
@@ -321,7 +321,7 @@ Label_22_4189:
 	ld e, a ; $419f
 	ld a, [$c48b] ; $41a0
 	ld d, a ; $41a3
-	call Func_22_4012 ; $41a4
+	call BallTrajEntryPtr4_22 ; $41a4
 	push hl ; $41a7
 	ld a, [hl+] ; $41a8
 	ld h, [hl] ; $41a9
@@ -331,9 +331,9 @@ Label_22_4189:
 	ld d, h ; $41ad
 	pop hl ; $41ae
 	jp c, Label_22_41f1 ; $41af
-	call Func_22_403e ; $41b2
+	call SeekBallTrajEntry4_22 ; $41b2
 	push de ; $41b5
-	call Func_22_4084 ; $41b6
+	call SetBallVelocityFromEntry4_22 ; $41b6
 	pop de ; $41b9
 	ld h, d ; $41ba
 	ld l, $00 ; $41bb
@@ -341,7 +341,7 @@ Label_22_4189:
 	rr l ; $41bf
 	sra h ; $41c1
 	rr l ; $41c3
-	call Func_22_41f5 ; $41c5
+	call SetBallTargetFromAim_22 ; $41c5
 	ret ; $41c8
 	xor a, a ; $41c9
 	sub a, c ; $41ca
@@ -353,10 +353,10 @@ Label_22_4189:
 	ld e, a ; $41d2
 	ld a, [$c48b] ; $41d3
 	ld d, a ; $41d6
-	call Func_22_4012 ; $41d7
-	call Func_22_403e ; $41da
+	call BallTrajEntryPtr4_22 ; $41d7
+	call SeekBallTrajEntry4_22 ; $41da
 	push de ; $41dd
-	call Func_22_4084 ; $41de
+	call SetBallVelocityFromEntry4_22 ; $41de
 	pop de ; $41e1
 	ld h, d ; $41e2
 	ld l, $00 ; $41e3
@@ -364,12 +364,12 @@ Label_22_4189:
 	rr l ; $41e7
 	sra h ; $41e9
 	rr l ; $41eb
-	call Func_22_41f5 ; $41ed
+	call SetBallTargetFromAim_22 ; $41ed
 	ret ; $41f0
 Label_22_41f1:
 	farcall FarPtr_24_04 ; $41f1
 	ret ; $41f4
-Func_22_41f5:
+SetBallTargetFromAim_22:
 	ld a, [wShotAimAngle] ; $41f5
 	ld c, a ; $41f8
 	ld a, [$c43b] ; $41f9
@@ -432,7 +432,7 @@ Label_22_4247:
 	ld l, a ; $4249
 	add hl, de ; $424a
 	ret ; $424b
-Func_22_424c:
+LookupBallPosByHeight_22:
 	ld e, l ; $424c
 	ld d, h ; $424d
 	ld hl, wBallHeight ; $424e
@@ -464,7 +464,7 @@ Label_22_4269:
 	ld l, a ; $426b
 	add hl, de ; $426c
 	ret ; $426d
-Func_22_426e:
+LookupBallPosByShotIndex_22:
 	ld e, l ; $426e
 	ld d, h ; $426f
 	add a, a ; $4270
@@ -487,12 +487,12 @@ ShotBallPathTopspin:
 	push bc ; $7e80
 	ld hl, BallPosData_22 ; $7e81
 	ld bc, BallPosHeightOffsets_22 ; $7e84
-	call Func_22_424c ; $7e87
+	call LookupBallPosByHeight_22 ; $7e87
 	ld bc, BallPosBlockOffsets_22 ; $7e8a
 	ld a, [wTopspinPlacementIndex] ; $7e8d
-	call Func_22_426e ; $7e90
+	call LookupBallPosByShotIndex_22 ; $7e90
 	pop bc ; $7e93
-	call Func_22_4102 ; $7e94
+	call ApplyBallTrajectory_22 ; $7e94
 	ret ; $7e97
 BallPosHeightOffsets_22:
 	; $7e98, 64 bytes (records:2)

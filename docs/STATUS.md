@@ -21,6 +21,23 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Name the ball-path engine helpers (2026-07-19)
+
+Banks `$20`-`$23` and `$29`/`$2a`/`$2b` (the non-`$24` `ShotBallPath*` banks)
+share a **byte-identical** ball-trajectory engine — confirmed by comparing the
+`$4002`-`$4278` code region across all seven (identical; `$24` differs). Named
+its 11 helpers once by observed behavior and applied them per bank (`_XX`
+suffix, only where each offset is actually referenced): `LookupBallPosByHeight`
+(indexes `BallPosData` by `wBallHeight`) / `LookupBallPosByShotIndex` (by the
+shot's placement index) — the two calls the entry makes; `ApplyBallTrajectory`
+(the main worker); `SeekBallTrajEntry6`/`4` + `BallTrajEntryPtr6`/`4` (walk the
+stride-6/4 trajectory tables); `SetBallVelocityFromEntry6`/`4` (-> `farcall
+SetBallVelocityPolar`); and the two target solvers `SetBallTargetFromAim` (via
+`MulSinCos`) and `SetBallTargetByPrediction` (via `PredictBallXAtDepth`). 67
+labels across the 7 banks. The `BallPos*` data tables were already carved in
+prior passes. (Bank `$24`, a shared 5-shot multi-entry bank with its own code,
+is left for a later pass.) Byte-perfect.
+
 ### Name the shot-placement index RAM (2026-07-19)
 
 The `ShotPlacement<Type>` handlers each pass two indices to

@@ -2,7 +2,7 @@ SECTION "ROM Bank $29", ROMX[$4000], BANK[$29]
 
 FarPtr_ShotBallPathServeTopspin:
 	dw ShotBallPathServeTopspin ; $4000
-Func_29_4002:
+BallTrajEntryPtr6_29:
 	push hl ; $4002
 	ld l, e ; $4003
 	ld h, d ; $4004
@@ -19,7 +19,7 @@ Func_29_4002:
 	add hl, de ; $4010
 	ret ; $4011
 	INCBIN "data/bank_029/d_4012.bin" ; $4012, 13 bytes
-Func_29_401f:
+SeekBallTrajEntry6_29:
 	ld a, [$c48e] ; $401f
 	ld d, a ; $4022
 	ld a, [$c48f] ; $4023
@@ -46,7 +46,7 @@ Label_29_403b:
 Label_29_403d:
 	ret ; $403d
 	INCBIN "data/bank_029/d_403e.bin" ; $403e, 31 bytes
-Func_29_405d:
+SetBallVelocityFromEntry6_29:
 	ld a, [hl+] ; $405d
 	ld c, a ; $405e
 	ld a, [hl+] ; $405f
@@ -81,7 +81,7 @@ Label_29_4076:
 	farcall FarPtr_SetBallVelocityPolar ; $4080
 	ret ; $4083
 	INCBIN "data/bank_029/d_4084.bin" ; $4084, 20 bytes
-Func_29_4098:
+SetBallTargetByPrediction_29:
 	ld a, [hl+] ; $4098
 	ld c, a ; $4099
 	ld a, [hl+] ; $409a
@@ -174,7 +174,7 @@ Label_29_40f0:
 	ld e, a ; $410b
 	ld a, [$c48b] ; $410c
 	ld d, a ; $410f
-	call Func_29_4002 ; $4110
+	call BallTrajEntryPtr6_29 ; $4110
 	push hl ; $4113
 	ld a, [hl+] ; $4114
 	ld h, [hl] ; $4115
@@ -184,9 +184,9 @@ Label_29_40f0:
 	ld d, h ; $4119
 	pop hl ; $411a
 	jp c, Label_29_41f1 ; $411b
-	call Func_29_401f ; $411e
+	call SeekBallTrajEntry6_29 ; $411e
 	push de ; $4121
-	call Func_29_405d ; $4122
+	call SetBallVelocityFromEntry6_29 ; $4122
 	pop de ; $4125
 	ld h, d ; $4126
 	ld l, $00 ; $4127
@@ -194,13 +194,13 @@ Label_29_40f0:
 	rr l ; $412b
 	sra h ; $412d
 	rr l ; $412f
-	call Func_29_41f5 ; $4131
+	call SetBallTargetFromAim_29 ; $4131
 	ret ; $4134
 	INCBIN "data/bank_029/d_4135.bin" ; $4135, 188 bytes
 Label_29_41f1:
 	farcall FarPtr_24_04 ; $41f1
 	ret ; $41f4
-Func_29_41f5:
+SetBallTargetFromAim_29:
 	ld a, [wShotAimAngle] ; $41f5
 	ld c, a ; $41f8
 	ld a, [$c43b] ; $41f9
@@ -232,7 +232,7 @@ Func_29_41f5:
 	ld [hl], d ; $421f
 	ret ; $4220
 	INCBIN "data/bank_029/d_4221.bin" ; $4221, 43 bytes
-Func_29_424c:
+LookupBallPosByHeight_29:
 	ld e, l ; $424c
 	ld d, h ; $424d
 	ld hl, wBallHeight ; $424e
@@ -264,7 +264,7 @@ Label_29_4269:
 	ld l, a ; $426b
 	add hl, de ; $426c
 	ret ; $426d
-Func_29_426e:
+LookupBallPosByShotIndex_29:
 	ld e, l ; $426e
 	ld d, h ; $426f
 	add a, a ; $4270
@@ -287,13 +287,13 @@ ShotBallPathServeTopspin:
 	ld hl, BallPosData_29 ; $5ea0
 	ld bc, $5ebf ; $5ea3
 	ld a, [wTopspinPlacementIndex] ; $5ea6
-	call Func_29_426e ; $5ea9
+	call LookupBallPosByShotIndex_29 ; $5ea9
 	ld bc, $5ed3 ; $5eac
 	ld a, [wSmashServeSpeedIndex] ; $5eaf
-	call Func_29_426e ; $5eb2
+	call LookupBallPosByShotIndex_29 ; $5eb2
 	ld bc, $5ee7 ; $5eb5
-	call Func_29_424c ; $5eb8
-	call Func_29_4098 ; $5ebb
+	call LookupBallPosByHeight_29 ; $5eb8
+	call SetBallTargetByPrediction_29 ; $5ebb
 	ret ; $5ebe
 	; $5ebf, 104 bytes (records:2)
 	dw $0000 ; record 0
