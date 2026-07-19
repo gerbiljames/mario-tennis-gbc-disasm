@@ -2244,6 +2244,7 @@
 "0x9f2fa": "End1MainBldgFacingScripts_27",
 "0x9f2fb": "End1MainBldgTileTriggers_27",
 "0x9f2fc": "End1MainBldgInitScript_27",
+"0x9f856": "WaitScriptFramesSaveA",
 "0x9f885": "MapScriptNop_27",
 "0xa05e0": "MatchGfxTilesA_28",
 "0xa0ba0": "MatchGfxPalettesA_28",
