@@ -1320,6 +1320,7 @@ Func_11_5771:
 Label_11_57c6:
 	script_speak $0b ; $57c6
 	ret ; $57cb
+Func_11_57cc:
 	script_set_text $0897 ; $57cc
 	script_speak $0a ; $57d2
 	script_set_anim $0a, $04 ; $57d7
@@ -1349,42 +1350,43 @@ JuniorClassCourtDoublesNpcScripts_11:
 	map_script $0a, $ff, $0000, Label_11_566e, $03, $00
 	map_script $0b, $ff, $0000, Func_11_5771, $03, $00
 	db $ff
-	; $586b, 73 bytes (records:8)
-; 9 records x 8 bytes
-	dw $ff03, $0000, $0889, $0003 ; record 0
-	dw $ff04, $0000, $0891, $0001 ; record 1
-	dw $ff05, $0000, $0893, $0003 ; record 2
-	dw $ff06, $0000, $0892, $0011 ; record 3
-	dw $ff07, $0000, $0894, $0003 ; record 4
-	dw $ff08, $0000, $0895, $001b ; record 5
-	dw $ff09, $0000, $0896, $001b ; record 6
-	dw $ff0a, $0000, $57cc, $0003 ; record 7
-	dw $ff0b, $0000, $0899, $0003 ; record 8
+JuniorClassCourtDoublesNpcScriptsA_11:
+	; $586b, 73 bytes (map_scripts)
+	map_script $03, $ff, $0000, $0889, $03, $00
+	map_script $04, $ff, $0000, $0891, $01, $00
+	map_script $05, $ff, $0000, $0893, $03, $00
+	map_script $06, $ff, $0000, $0892, $11, $00
+	map_script $07, $ff, $0000, $0894, $03, $00
+	map_script $08, $ff, $0000, $0895, $1b, $00
+	map_script $09, $ff, $0000, $0896, $1b, $00
+	map_script $0a, $ff, $0000, Func_11_57cc, $03, $00
+	map_script $0b, $ff, $0000, $0899, $03, $00
 	db $ff
-	; $58b4, 73 bytes (records:8)
-; 9 records x 8 bytes
-	dw $ff03, $0000, $08a2, $0003 ; record 0
-	dw $ff04, $0000, $08a3, $0001 ; record 1
-	dw $ff05, $0000, $08a5, $0003 ; record 2
-	dw $ff06, $0000, $08a4, $0011 ; record 3
-	dw $ff07, $0000, $08a6, $0003 ; record 4
-	dw $ff08, $0000, $08a7, $001b ; record 5
-	dw $ff09, $0000, $08a8, $001b ; record 6
-	dw $ff0a, $0000, $08a9, $0001 ; record 7
-	dw $ff0b, $0000, $08aa, $0001 ; record 8
+JuniorClassCourtDoublesNpcScriptsB_11:
+	; $58b4, 73 bytes (map_scripts)
+	map_script $03, $ff, $0000, $08a2, $03, $00
+	map_script $04, $ff, $0000, $08a3, $01, $00
+	map_script $05, $ff, $0000, $08a5, $03, $00
+	map_script $06, $ff, $0000, $08a4, $11, $00
+	map_script $07, $ff, $0000, $08a6, $03, $00
+	map_script $08, $ff, $0000, $08a7, $1b, $00
+	map_script $09, $ff, $0000, $08a8, $1b, $00
+	map_script $0a, $ff, $0000, $08a9, $01, $00
+	map_script $0b, $ff, $0000, $08aa, $01, $00
 	db $ff
-	; $58fd, 73 bytes (records:8)
-; 9 records x 8 bytes
-	dw $ff03, $0000, $08b6, $0003 ; record 0
-	dw $ff04, $0000, $08b7, $0003 ; record 1
-	dw $ff05, $0000, $08b9, $0003 ; record 2
-	dw $ff06, $0000, $08b8, $0011 ; record 3
-	dw $ff07, $0000, $5946, $0003 ; record 4
-	dw $ff08, $0000, $08bd, $0013 ; record 5
-	dw $ff09, $0000, $08be, $001b ; record 6
-	dw $ff0a, $0000, $5990, $0003 ; record 7
-	dw $ff0b, $0000, $08c3, $0003 ; record 8
+JuniorClassCourtDoublesNpcScriptsC_11:
+	; $58fd, 73 bytes (map_scripts)
+	map_script $03, $ff, $0000, $08b6, $03, $00
+	map_script $04, $ff, $0000, $08b7, $03, $00
+	map_script $05, $ff, $0000, $08b9, $03, $00
+	map_script $06, $ff, $0000, $08b8, $11, $00
+	map_script $07, $ff, $0000, Func_11_5946, $03, $00
+	map_script $08, $ff, $0000, $08bd, $13, $00
+	map_script $09, $ff, $0000, $08be, $1b, $00
+	map_script $0a, $ff, $0000, Func_11_5990, $03, $00
+	map_script $0b, $ff, $0000, $08c3, $03, $00
 	db $ff
+Func_11_5946:
 	script_set_text $08ba ; $5946
 	ld a, $07 ; $594c
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $594e
@@ -1397,6 +1399,7 @@ JuniorClassCourtDoublesNpcScripts_11:
 Label_11_5965:
 	script_speak $07 ; $5965
 	ret ; $596a
+Func_11_596b:
 	script_set_text $0c18 ; $596b
 	ld a, $07 ; $5971
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5973
@@ -1409,22 +1412,24 @@ Label_11_5965:
 Label_11_598a:
 	script_speak $07 ; $598a
 	ret ; $598f
+Func_11_5990:
 	script_set_text $08bf ; $5990
 	script_speak $0a ; $5996
 	set_flag $10, 2 ; $599b
 	ret ; $599e
-	; $599f, 73 bytes (records:8)
-; 9 records x 8 bytes
-	dw $ff03, $0000, $0c14, $0001 ; record 0
-	dw $ff04, $0000, $0c15, $0003 ; record 1
-	dw $ff05, $0000, $0c17, $0003 ; record 2
-	dw $ff06, $0000, $0c16, $0011 ; record 3
-	dw $ff07, $0000, $596b, $0003 ; record 4
-	dw $ff08, $0000, $0c1b, $0013 ; record 5
-	dw $ff09, $0000, $0c1c, $001b ; record 6
-	dw $ff0a, $0000, $59e8, $0003 ; record 7
-	dw $ff0b, $0000, $0c1d, $0003 ; record 8
+JuniorClassCourtDoublesNpcScriptsD_11:
+	; $599f, 73 bytes (map_scripts)
+	map_script $03, $ff, $0000, $0c14, $01, $00
+	map_script $04, $ff, $0000, $0c15, $03, $00
+	map_script $05, $ff, $0000, $0c17, $03, $00
+	map_script $06, $ff, $0000, $0c16, $11, $00
+	map_script $07, $ff, $0000, Func_11_596b, $03, $00
+	map_script $08, $ff, $0000, $0c1b, $13, $00
+	map_script $09, $ff, $0000, $0c1c, $1b, $00
+	map_script $0a, $ff, $0000, Func_11_59e8, $03, $00
+	map_script $0b, $ff, $0000, $0c1d, $03, $00
 	db $ff
+Func_11_59e8:
 	test_flag $10, 2 ; $59e8
 	jr nz, Label_11_59f9 ; $59eb
 	script_set_text $0c0f ; $59ed
@@ -1478,28 +1483,28 @@ Label_11_5a66:
 	jr nz, Label_11_5aed ; $5a8a
 	ret ; $5a8c
 Label_11_5a8d:
-	ld hl, $599f ; $5a8d
+	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
 	ld de, $000c ; $5a90
 	farcall FarPtr_WriteStoryStateWord ; $5a93
 	script_set_position $06, $2000, $1900 ; $5a96
 	script_set_actor_script $06, $7bb3 ; $5aa1
 	ret ; $5aac
 Label_11_5aad:
-	ld hl, $58fd ; $5aad
+	ld hl, JuniorClassCourtDoublesNpcScriptsC_11 ; $5aad
 	ld de, $000c ; $5ab0
 	farcall FarPtr_WriteStoryStateWord ; $5ab3
 	script_set_position $06, $2000, $1900 ; $5ab6
 	script_set_actor_script $06, $7bb3 ; $5ac1
 	ret ; $5acc
 Label_11_5acd:
-	ld hl, $58b4 ; $5acd
+	ld hl, JuniorClassCourtDoublesNpcScriptsB_11 ; $5acd
 	ld de, $000c ; $5ad0
 	farcall FarPtr_WriteStoryStateWord ; $5ad3
 	script_set_position $06, $2000, $1900 ; $5ad6
 	script_set_actor_script $06, $7bb3 ; $5ae1
 	ret ; $5aec
 Label_11_5aed:
-	ld hl, $586b ; $5aed
+	ld hl, JuniorClassCourtDoublesNpcScriptsA_11 ; $5aed
 	ld de, $000c ; $5af0
 	farcall FarPtr_WriteStoryStateWord ; $5af3
 	script_set_position $06, $2000, $1900 ; $5af6
@@ -2225,50 +2230,51 @@ JuniorClassCourtSinglesNpcScripts_11:
 	map_script $0a, $ff, $0000, Func_11_6b00, $03, $00
 	map_script $0b, $ff, $0000, Func_11_6b17, $1b, $00
 	db $ff
-	; $6ba5, 65 bytes (records:8)
-; 8 records x 8 bytes
-	dw $ff03, $0000, $0889, $0001 ; record 0
-	dw $ff05, $0000, $088a, $0003 ; record 1
-	dw $ff06, $0000, $088b, $0001 ; record 2
-	dw $ff07, $0000, $088c, $0003 ; record 3
-	dw $ff08, $0000, $088d, $0003 ; record 4
-	dw $ff09, $0000, $088e, $0003 ; record 5
-	dw $ff0a, $0000, $088f, $0013 ; record 6
-	dw $ff0b, $0000, $0890, $0013 ; record 7
+JuniorClassCourtSinglesNpcScriptsA_11:
+	; $6ba5, 65 bytes (map_scripts)
+	map_script $03, $ff, $0000, $0889, $01, $00
+	map_script $05, $ff, $0000, $088a, $03, $00
+	map_script $06, $ff, $0000, $088b, $01, $00
+	map_script $07, $ff, $0000, $088c, $03, $00
+	map_script $08, $ff, $0000, $088d, $03, $00
+	map_script $09, $ff, $0000, $088e, $03, $00
+	map_script $0a, $ff, $0000, $088f, $13, $00
+	map_script $0b, $ff, $0000, $0890, $13, $00
 	db $ff
-	; $6be6, 65 bytes (records:8)
-; 8 records x 8 bytes
-	dw $ff03, $0000, $089a, $0003 ; record 0
-	dw $ff05, $0000, $089b, $0003 ; record 1
-	dw $ff06, $0000, $089c, $0001 ; record 2
-	dw $ff07, $0000, $089d, $0003 ; record 3
-	dw $ff08, $0000, $089e, $0003 ; record 4
-	dw $ff09, $0000, $089f, $0003 ; record 5
-	dw $ff0a, $0000, $08a0, $0013 ; record 6
-	dw $ff0b, $0000, $08a1, $0013 ; record 7
+JuniorClassCourtSinglesNpcScriptsB_11:
+	; $6be6, 65 bytes (map_scripts)
+	map_script $03, $ff, $0000, $089a, $03, $00
+	map_script $05, $ff, $0000, $089b, $03, $00
+	map_script $06, $ff, $0000, $089c, $01, $00
+	map_script $07, $ff, $0000, $089d, $03, $00
+	map_script $08, $ff, $0000, $089e, $03, $00
+	map_script $09, $ff, $0000, $089f, $03, $00
+	map_script $0a, $ff, $0000, $08a0, $13, $00
+	map_script $0b, $ff, $0000, $08a1, $13, $00
 	db $ff
-	; $6c27, 65 bytes (records:8)
-; 8 records x 8 bytes
-	dw $ff03, $0000, $08ab, $0003 ; record 0
-	dw $ff05, $0000, $08ac, $0003 ; record 1
-	dw $ff06, $0000, $08ad, $0001 ; record 2
-	dw $ff07, $0000, $08ae, $0003 ; record 3
-	dw $ff08, $0000, $08af, $0003 ; record 4
-	dw $ff09, $0000, $08b0, $0003 ; record 5
-	dw $ff0a, $0000, $08b1, $0003 ; record 6
-	dw $ff0b, $0000, $08b5, $0013 ; record 7
+JuniorClassCourtSinglesNpcScriptsC_11:
+	; $6c27, 65 bytes (map_scripts)
+	map_script $03, $ff, $0000, $08ab, $03, $00
+	map_script $05, $ff, $0000, $08ac, $03, $00
+	map_script $06, $ff, $0000, $08ad, $01, $00
+	map_script $07, $ff, $0000, $08ae, $03, $00
+	map_script $08, $ff, $0000, $08af, $03, $00
+	map_script $09, $ff, $0000, $08b0, $03, $00
+	map_script $0a, $ff, $0000, $08b1, $03, $00
+	map_script $0b, $ff, $0000, $08b5, $13, $00
 	db $ff
-	; $6c68, 65 bytes (records:8)
-; 8 records x 8 bytes
-	dw $ff03, $0000, $0c09, $0001 ; record 0
-	dw $ff05, $0000, $0c0a, $0003 ; record 1
-	dw $ff06, $0000, $0c0b, $0001 ; record 2
-	dw $ff07, $0000, $0c0c, $0003 ; record 3
-	dw $ff08, $0000, $0c0d, $0003 ; record 4
-	dw $ff09, $0000, $0c0e, $0003 ; record 5
-	dw $ff0a, $0000, $6ca9, $0003 ; record 6
-	dw $ff0b, $0000, $0c13, $0013 ; record 7
+JuniorClassCourtSinglesNpcScriptsD_11:
+	; $6c68, 65 bytes (map_scripts)
+	map_script $03, $ff, $0000, $0c09, $01, $00
+	map_script $05, $ff, $0000, $0c0a, $03, $00
+	map_script $06, $ff, $0000, $0c0b, $01, $00
+	map_script $07, $ff, $0000, $0c0c, $03, $00
+	map_script $08, $ff, $0000, $0c0d, $03, $00
+	map_script $09, $ff, $0000, $0c0e, $03, $00
+	map_script $0a, $ff, $0000, Func_11_6ca9, $03, $00
+	map_script $0b, $ff, $0000, $0c13, $13, $00
 	db $ff
+Func_11_6ca9:
 	test_flag $10, 2 ; $6ca9
 	jr nz, Label_11_6cba ; $6cac
 	script_set_text $0c0f ; $6cae
@@ -2322,19 +2328,19 @@ Label_11_6d15:
 	jr nz, Label_11_6d91 ; $6d39
 	ret ; $6d3b
 Label_11_6d3c:
-	ld hl, $6c68 ; $6d3c
+	ld hl, JuniorClassCourtSinglesNpcScriptsD_11 ; $6d3c
 	ld de, $000c ; $6d3f
 	farcall FarPtr_WriteStoryStateWord ; $6d42
 	script_set_position $04, $3f00, $2900 ; $6d45
 	ret ; $6d50
 Label_11_6d51:
-	ld hl, $6c27 ; $6d51
+	ld hl, JuniorClassCourtSinglesNpcScriptsC_11 ; $6d51
 	ld de, $000c ; $6d54
 	farcall FarPtr_WriteStoryStateWord ; $6d57
 	script_set_position $04, $3f00, $2900 ; $6d5a
 	ret ; $6d65
 Label_11_6d66:
-	ld hl, $6be6 ; $6d66
+	ld hl, JuniorClassCourtSinglesNpcScriptsB_11 ; $6d66
 	ld de, $000c ; $6d69
 	farcall FarPtr_WriteStoryStateWord ; $6d6c
 	script_set_position $0a, $3d00, $1100 ; $6d6f
@@ -2342,7 +2348,7 @@ Label_11_6d66:
 	script_set_position $04, $3f00, $2900 ; $6d85
 	ret ; $6d90
 Label_11_6d91:
-	ld hl, $6ba5 ; $6d91
+	ld hl, JuniorClassCourtSinglesNpcScriptsA_11 ; $6d91
 	ld de, $000c ; $6d94
 	farcall FarPtr_WriteStoryStateWord ; $6d97
 	script_set_position $0a, $3d00, $1100 ; $6d9a

@@ -3281,5 +3281,13 @@
  "0x48818": "WallPracticeRoomNpcScripts_12",
  "0x48ca0": "WallPracticeRoomFacingScripts_12",
  "0x48cc0": "WallPracticeRoomTileTriggers_12",
- "0x48f03": "WallPracticeRoomInitScript_12"
+ "0x48f03": "WallPracticeRoomInitScript_12",
+ "0x4586b": "JuniorClassCourtDoublesNpcScriptsA_11",
+ "0x458b4": "JuniorClassCourtDoublesNpcScriptsB_11",
+ "0x458fd": "JuniorClassCourtDoublesNpcScriptsC_11",
+ "0x4599f": "JuniorClassCourtDoublesNpcScriptsD_11",
+ "0x46ba5": "JuniorClassCourtSinglesNpcScriptsA_11",
+ "0x46be6": "JuniorClassCourtSinglesNpcScriptsB_11",
+ "0x46c27": "JuniorClassCourtSinglesNpcScriptsC_11",
+ "0x46c68": "JuniorClassCourtSinglesNpcScriptsD_11"
 }
