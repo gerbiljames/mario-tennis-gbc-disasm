@@ -3661,5 +3661,17 @@
  "0xac098": "SetBallTargetByPrediction_2b",
  "0xac1f5": "SetBallTargetFromAim_2b",
  "0xac24c": "LookupBallPosByHeight_2b",
- "0xac26e": "LookupBallPosByShotIndex_2b"
+ "0xac26e": "LookupBallPosByShotIndex_2b",
+ "0x9000e": "BallTrajEntryPtr6_24",
+ "0x9001e": "BallTrajEntryPtr4_24",
+ "0x9004a": "SeekBallTrajEntry4_24",
+ "0x90069": "SetBallVelocityFromEntry6_24",
+ "0x90090": "SetBallVelocityFromEntry4_24",
+ "0x90201": "SetBallTargetFromAim_24",
+ "0x90258": "LookupBallPosByHeight_24",
+ "0x9027a": "LookupBallPosByShotIndex_24",
+ "0x90169": "ApplyBallTrajectoryCapped_24",
+ "0x901a2": "ApplyBallTrajectory_24",
+ "0x9022d": "LookupBallPosByAim_24",
+ "0x917fd": "ApplyFallbackBallTrajectory_24"
 }

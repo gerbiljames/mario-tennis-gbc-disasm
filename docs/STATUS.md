@@ -21,6 +21,22 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Name bank $24's ball-path code (2026-07-19)
+
+Bank `$24` (the shared multi-entry ball-path bank for lob/drop/neutral/smash/
+reach) runs the same engine as `$20`-`$23` but relocated +0xc (its 7-entry
+`FarPtr` table pushes the code down); the first 0x10f bytes are byte-identical.
+Mapped and named its eight shared helpers (`BallTrajEntryPtr6`/`4`,
+`SeekBallTrajEntry4`, `SetBallVelocityFromEntry6`/`4`, `SetBallTargetFromAim`,
+`LookupBallPosByHeight`/`ByShotIndex` — each verified byte-identical to the `$22`
+copy) plus four bank-specific ones: `ApplyBallTrajectory_24` (stride-4 worker,
+used by neutral/reach), `ApplyBallTrajectoryCapped_24` (clamps range at `$c48c`,
+used by lob/drop), `LookupBallPosByAim_24` (index via `VectorLengthFromAngle`),
+and `ApplyFallbackBallTrajectory_24` — the `FarPtr_24_04` every engine bank jumps
+to on the out-of-range carry path. Byte-perfect. (The per-shot `BallPos*` data
+tables in `$24`'s blobs are still raw `ld hl,$xxxx` pointers — a data-carving
+follow-up.)
+
 ### Name the ball-path engine helpers (2026-07-19)
 
 Banks `$20`-`$23` and `$29`/`$2a`/`$2b` (the non-`$24` `ShotBallPath*` banks)

@@ -309,7 +309,7 @@ Func_2c_41cd:
 	rr l ; $41ef
 	call Func_2c_41f9 ; $41f1
 	ret ; $41f4
-	farcall FarPtr_24_04 ; $41f5
+	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41f5
 	ret ; $41f8
 Func_2c_41f9:
 	ld a, [wShotAimAngle] ; $41f9

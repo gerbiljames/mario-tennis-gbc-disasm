@@ -367,7 +367,7 @@ Label_22_4189:
 	call SetBallTargetFromAim_22 ; $41ed
 	ret ; $41f0
 Label_22_41f1:
-	farcall FarPtr_24_04 ; $41f1
+	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41f1
 	ret ; $41f4
 SetBallTargetFromAim_22:
 	ld a, [wShotAimAngle] ; $41f5

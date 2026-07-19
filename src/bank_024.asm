@@ -4,8 +4,8 @@ FarPtr_ShotBallPathLob:
 	dw ShotBallPathLob ; $4000
 FarPtr_ShotBallPathDrop:
 	dw ShotBallPathDrop ; $4002
-FarPtr_24_04:
-	dw Func_24_57fd ; $4004
+FarPtr_ApplyFallbackBallTrajectory_24:
+	dw ApplyFallbackBallTrajectory_24 ; $4004
 FarPtr_ShotBallPathNeutral:
 	dw ShotBallPathNeutral ; $4006
 FarPtr_ShotBallPathSmash:
@@ -14,7 +14,7 @@ FarPtr_24_0a:
 	dw Func_24_6706 ; $400a
 FarPtr_ShotBallPathReach:
 	dw ShotBallPathReach ; $400c
-Func_24_400e:
+BallTrajEntryPtr6_24:
 	push hl ; $400e
 	ld l, e ; $400f
 	ld h, d ; $4010
@@ -30,7 +30,7 @@ Func_24_400e:
 	pop de ; $401b
 	add hl, de ; $401c
 	ret ; $401d
-Func_24_401e:
+BallTrajEntryPtr4_24:
 	push hl ; $401e
 	ld l, e ; $401f
 	ld h, d ; $4020
@@ -68,7 +68,7 @@ Label_24_4047:
 	jr Label_24_4033 ; $4047
 Label_24_4049:
 	ret ; $4049
-Func_24_404a:
+SeekBallTrajEntry4_24:
 	ld a, [$c48e] ; $404a
 	ld d, a ; $404d
 	ld a, [$c48f] ; $404e
@@ -94,7 +94,7 @@ Label_24_4066:
 	jr Label_24_4052 ; $4066
 Label_24_4068:
 	ret ; $4068
-Func_24_4069:
+SetBallVelocityFromEntry6_24:
 	ld a, [hl+] ; $4069
 	ld c, a ; $406a
 	ld a, [hl+] ; $406b
@@ -128,7 +128,7 @@ Label_24_4082:
 	pop hl ; $408b
 	farcall FarPtr_SetBallVelocityPolar ; $408c
 	ret ; $408f
-Func_24_4090:
+SetBallVelocityFromEntry4_24:
 	ld a, [hl+] ; $4090
 	ld c, a ; $4091
 	ld a, [hl+] ; $4092
@@ -228,7 +228,7 @@ Label_24_40fc:
 	ld [hl], d ; $410c
 	ret ; $410d
 	INCBIN "data/bank_024/d_410e.bin" ; $410e, 91 bytes
-Func_24_4169:
+ApplyBallTrajectoryCapped_24:
 	push hl ; $4169
 	ld hl, wShotAimAngle ; $416a
 	ld a, [hl+] ; $416d
@@ -263,12 +263,12 @@ Func_24_4169:
 Label_24_4195:
 	pop hl ; $4195
 	push de ; $4196
-	call Func_24_400e ; $4197
-	call Func_24_4069 ; $419a
+	call BallTrajEntryPtr6_24 ; $4197
+	call SetBallVelocityFromEntry6_24 ; $419a
 	pop hl ; $419d
-	call Func_24_4201 ; $419e
+	call SetBallTargetFromAim_24 ; $419e
 	ret ; $41a1
-Func_24_41a2:
+ApplyBallTrajectory_24:
 	xor a, a ; $41a2
 	sub a, c ; $41a3
 	ld c, a ; $41a4
@@ -279,7 +279,7 @@ Func_24_41a2:
 	ld e, a ; $41ab
 	ld a, [$c48b] ; $41ac
 	ld d, a ; $41af
-	call Func_24_401e ; $41b0
+	call BallTrajEntryPtr4_24 ; $41b0
 	push hl ; $41b3
 	ld a, [hl+] ; $41b4
 	ld h, [hl] ; $41b5
@@ -289,9 +289,9 @@ Func_24_41a2:
 	ld d, h ; $41b9
 	pop hl ; $41ba
 	jp c, Label_24_41fd ; $41bb
-	call Func_24_404a ; $41be
+	call SeekBallTrajEntry4_24 ; $41be
 	push de ; $41c1
-	call Func_24_4090 ; $41c2
+	call SetBallVelocityFromEntry4_24 ; $41c2
 	pop de ; $41c5
 	ld h, d ; $41c6
 	ld l, $00 ; $41c7
@@ -299,7 +299,7 @@ Func_24_41a2:
 	rr l ; $41cb
 	sra h ; $41cd
 	rr l ; $41cf
-	call Func_24_4201 ; $41d1
+	call SetBallTargetFromAim_24 ; $41d1
 	ret ; $41d4
 	xor a, a ; $41d5
 	sub a, c ; $41d6
@@ -311,10 +311,10 @@ Func_24_41a2:
 	ld e, a ; $41de
 	ld a, [$c48b] ; $41df
 	ld d, a ; $41e2
-	call Func_24_401e ; $41e3
-	call Func_24_404a ; $41e6
+	call BallTrajEntryPtr4_24 ; $41e3
+	call SeekBallTrajEntry4_24 ; $41e6
 	push de ; $41e9
-	call Func_24_4090 ; $41ea
+	call SetBallVelocityFromEntry4_24 ; $41ea
 	pop de ; $41ed
 	ld h, d ; $41ee
 	ld l, $00 ; $41ef
@@ -322,12 +322,12 @@ Func_24_41a2:
 	rr l ; $41f3
 	sra h ; $41f5
 	rr l ; $41f7
-	call Func_24_4201 ; $41f9
+	call SetBallTargetFromAim_24 ; $41f9
 	ret ; $41fc
 Label_24_41fd:
-	farcall FarPtr_24_04 ; $41fd
+	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41fd
 	ret ; $4200
-Func_24_4201:
+SetBallTargetFromAim_24:
 	ld a, [wShotAimAngle] ; $4201
 	ld c, a ; $4204
 	ld a, [$c43b] ; $4205
@@ -358,7 +358,7 @@ Func_24_4201:
 	ld [hl+], a ; $422a
 	ld [hl], d ; $422b
 	ret ; $422c
-Func_24_422d:
+LookupBallPosByAim_24:
 	push hl ; $422d
 	push bc ; $422e
 	ld hl, wShotAimAngle ; $422f
@@ -391,7 +391,7 @@ Label_24_4253:
 	ld l, a ; $4255
 	add hl, de ; $4256
 	ret ; $4257
-Func_24_4258:
+LookupBallPosByHeight_24:
 	ld e, l ; $4258
 	ld d, h ; $4259
 	ld hl, wBallHeight ; $425a
@@ -423,7 +423,7 @@ Label_24_4275:
 	ld l, a ; $4277
 	add hl, de ; $4278
 	ret ; $4279
-Func_24_427a:
+LookupBallPosByShotIndex_24:
 	ld e, l ; $427a
 	ld d, h ; $427b
 	add a, a ; $427c
@@ -445,8 +445,8 @@ ShotBallPathLob:
 	ld hl, $4289 ; $458c
 	ld bc, $459c ; $458f
 	ld a, [wLobPlacementIndex] ; $4592
-	call Func_24_427a ; $4595
-	call Func_24_4169 ; $4598
+	call LookupBallPosByShotIndex_24 ; $4595
+	call ApplyBallTrajectoryCapped_24 ; $4598
 	ret ; $459b
 	INCBIN "data/bank_024/d_459c.bin" ; $459c, 1807 bytes
 	push af ; $4cab
@@ -562,14 +562,14 @@ ShotBallPathDrop:
 	farcall FarPtr_ComputeShotPlacement ; $51a0
 	ld hl, $45a0 ; $51a3
 	ld bc, $51b9 ; $51a6
-	call Func_24_422d ; $51a9
+	call LookupBallPosByAim_24 ; $51a9
 	ld bc, $51f9 ; $51ac
 	ld a, [wDropPlacementIndex] ; $51af
-	call Func_24_427a ; $51b2
-	call Func_24_4169 ; $51b5
+	call LookupBallPosByShotIndex_24 ; $51b2
+	call ApplyBallTrajectoryCapped_24 ; $51b5
 	ret ; $51b8
 	INCBIN "data/bank_024/d_51b9.bin" ; $51b9, 1604 bytes
-Func_24_57fd:
+ApplyFallbackBallTrajectory_24:
 	ld a, $01 ; $57fd
 	ld [$c4c6], a ; $57ff
 	xor a, a ; $5802
@@ -605,7 +605,7 @@ Label_24_5824:
 	ld e, a ; $5833
 	ld hl, $51fd ; $5834
 	add hl, de ; $5837
-	call Func_24_4169 ; $5838
+	call ApplyBallTrajectoryCapped_24 ; $5838
 	ret ; $583b
 	INCBIN "data/bank_024/d_583c.bin" ; $583c, 3592 bytes
 ShotBallPathNeutral:
@@ -613,9 +613,9 @@ ShotBallPathNeutral:
 	push bc ; $6647
 	ld hl, $5844 ; $6648
 	ld bc, $6656 ; $664b
-	call Func_24_4258 ; $664e
+	call LookupBallPosByHeight_24 ; $664e
 	pop bc ; $6651
-	call Func_24_41a2 ; $6652
+	call ApplyBallTrajectory_24 ; $6652
 	ret ; $6655
 	; $6656, 64 bytes (records:2)
 	dw $0000 ; record 0
@@ -714,7 +714,7 @@ Label_24_66b0:
 	ld e, a ; $66e9
 	ld hl, rJOYP ; $66ea
 	add hl, de ; $66ed
-	call Func_24_4201 ; $66ee
+	call SetBallTargetFromAim_24 ; $66ee
 	ret ; $66f1
 	; $66f2, 20 bytes (records:2)
 	dw $fa60 ; record 0
@@ -735,9 +735,9 @@ ShotBallPathReach:
 	push bc ; $770a
 	ld hl, $6707 ; $770b
 	ld bc, $7719 ; $770e
-	call Func_24_4258 ; $7711
+	call LookupBallPosByHeight_24 ; $7711
 	pop bc ; $7714
-	call Func_24_41a2 ; $7715
+	call ApplyBallTrajectory_24 ; $7715
 	ret ; $7718
 	INCBIN "data/bank_024/d_7719.bin" ; $7719, 64 bytes
 	ds 2215, $ff ; $7759, fill

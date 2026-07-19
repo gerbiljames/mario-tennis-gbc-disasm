@@ -198,7 +198,7 @@ Label_29_40f0:
 	ret ; $4134
 	INCBIN "data/bank_029/d_4135.bin" ; $4135, 188 bytes
 Label_29_41f1:
-	farcall FarPtr_24_04 ; $41f1
+	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41f1
 	ret ; $41f4
 SetBallTargetFromAim_29:
 	ld a, [wShotAimAngle] ; $41f5
