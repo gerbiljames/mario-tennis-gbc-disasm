@@ -19,9 +19,9 @@ TennisMachineRoomMapScripts_14:
 	dw TennisMachineRoomInitScript_14 ; slot 6 InitScript
 TennisMachineRoomActors_14:
 	; $4016, 52 bytes (map_actors)
-	map_actor $0000, $78b1, $2b00, $3300, $00, $3d, $01, $00
-	map_actor $0000, $78b1, $2b00, $3100, $00, $3d, $01, $00
-	map_actor $0000, $78b1, $2d00, $2b00, $80, $3e, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $2b00, $3300, $00, $3d, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $2b00, $3100, $00, $3d, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $2d00, $2b00, $80, $3e, $01, $00
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
@@ -920,23 +920,23 @@ Court2MapScripts_14:
 	dw Court2InitScript_14 ; slot 6 InitScript
 Court2Actors_14:
 	; $4a47, 248 bytes (map_actors)
-	map_actor $0000, $78b1, $1d00, $1500, $00, $25, $01, $00
-	map_actor $0000, $78b1, $1900, $1800, $40, $25, $01, $00
-	map_actor $0000, $78b1, $1b00, $1c00, $80, $30, $01, $05
-	map_actor $0000, $78b1, $1b00, $1a00, $80, $39, $01, $05
-	map_actor $0000, $78bb, $0700, $3100, $00, $39, $01, $04
-	map_actor $0000, $78b1, $0900, $2300, $00, $39, $01, $04
-	map_actor $0000, $78b1, $0b00, $2300, $80, $3a, $01, $00
-	map_actor $0000, $78b1, $0b00, $2b00, $00, $23, $01, $00
-	map_actor $0000, $78b1, $0f00, $2b00, $80, $24, $01, $00
-	map_actor $0000, $78b1, $fd00, $0100, $40, $4c, $01, $00
-	map_actor $0000, $78b1, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, $78b1, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, $78b1, $1b00, $0c00, $80, $39, $01, $00
-	map_actor $0000, $78b1, $1900, $0e00, $80, $39, $01, $06
-	map_actor $0000, $78b1, $1b00, $1000, $80, $3a, $01, $03
-	map_actor $0000, $78b1, $0500, $1b00, $00, $33, $01, $00
-	map_actor $0000, $78b1, $0500, $1d00, $00, $3a, $01, $04
+	map_actor $0000, ActorObjDef_14_78b1, $1d00, $1500, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1900, $1800, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1b00, $1c00, $80, $30, $01, $05
+	map_actor $0000, ActorObjDef_14_78b1, $1b00, $1a00, $80, $39, $01, $05
+	map_actor $0000, ActorObjDef_14_78bb, $0700, $3100, $00, $39, $01, $04
+	map_actor $0000, ActorObjDef_14_78b1, $0900, $2300, $00, $39, $01, $04
+	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2300, $80, $3a, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2b00, $00, $23, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0f00, $2b00, $80, $24, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1b00, $0c00, $80, $39, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1900, $0e00, $80, $39, $01, $06
+	map_actor $0000, ActorObjDef_14_78b1, $1b00, $1000, $80, $3a, $01, $03
+	map_actor $0000, ActorObjDef_14_78b1, $0500, $1b00, $00, $33, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0500, $1d00, $00, $3a, $01, $04
 	map_actor_end
 Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
@@ -1209,18 +1209,18 @@ Label_14_4eaf:
 	ret ; $4eb3
 Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)
-	map_actor $0000, $78b1, $1d00, $1500, $00, $25, $01, $00
-	map_actor $0000, $78b1, $1b00, $2300, $40, $25, $01, $00
-	map_actor $0000, $78b1, $1f00, $2d00, $80, $30, $01, $05
-	map_actor $0000, $78bb, $1d00, $3000, $c0, $39, $01, $05
-	map_actor $0000, $78bb, $0700, $3100, $00, $39, $01, $04
-	map_actor $0000, $78b1, $0900, $2300, $00, $39, $01, $04
-	map_actor $0000, $78b1, $0b00, $2300, $80, $3a, $01, $00
-	map_actor $0000, $78b1, $0b00, $2b00, $00, $23, $01, $00
-	map_actor $0000, $78b1, $0f00, $2b00, $80, $24, $01, $00
-	map_actor $0000, $78b1, $fd00, $0100, $40, $4c, $01, $00
-	map_actor $0000, $78b1, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, $78b1, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1d00, $1500, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1b00, $2300, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1f00, $2d00, $80, $30, $01, $05
+	map_actor $0000, ActorObjDef_14_78bb, $1d00, $3000, $c0, $39, $01, $05
+	map_actor $0000, ActorObjDef_14_78bb, $0700, $3100, $00, $39, $01, $04
+	map_actor $0000, ActorObjDef_14_78b1, $0900, $2300, $00, $39, $01, $04
+	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2300, $80, $3a, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2b00, $00, $23, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0f00, $2b00, $80, $24, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4d, $01, $00
 	map_actor_end
 Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
@@ -1249,15 +1249,15 @@ Court1MapScripts_14:
 	dw Court1InitScript_14 ; slot 6 InitScript
 Court1Actors_14:
 	; $4fba, 136 bytes (map_actors)
-	map_actor $0000, $78b1, $0b00, $1500, $80, $25, $01, $00
-	map_actor $0000, $78b1, $1100, $2300, $40, $25, $01, $00
-	map_actor $0000, $78b1, $2300, $1900, $80, $39, $01, $03
-	map_actor $0000, $78b1, $2300, $1c00, $80, $32, $01, $03
-	map_actor $0000, $78b1, $0e00, $0d00, $00, $39, $01, $00
-	map_actor $0000, $78b1, $0f00, $0f00, $00, $39, $01, $06
-	map_actor $0000, $78b1, $0e00, $1100, $00, $3a, $01, $03
-	map_actor $0000, $78b1, $2300, $0f00, $80, $33, $01, $00
-	map_actor $0000, $78b1, $2100, $1100, $80, $3a, $01, $04
+	map_actor $0000, ActorObjDef_14_78b1, $0b00, $1500, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1100, $2300, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $2300, $1900, $80, $39, $01, $03
+	map_actor $0000, ActorObjDef_14_78b1, $2300, $1c00, $80, $32, $01, $03
+	map_actor $0000, ActorObjDef_14_78b1, $0e00, $0d00, $00, $39, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0f00, $0f00, $00, $39, $01, $06
+	map_actor $0000, ActorObjDef_14_78b1, $0e00, $1100, $00, $3a, $01, $03
+	map_actor $0000, ActorObjDef_14_78b1, $2300, $0f00, $80, $33, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $2100, $1100, $80, $3a, $01, $04
 	map_actor_end
 Court1EntryPoints_14:
 	; $5042, 17 bytes (map_entries)
@@ -1394,10 +1394,10 @@ Label_14_515c:
 	ret ; $5161
 Court1ActorsAlt_14:
 	; $5162, 66 bytes (map_actors)
-	map_actor $0000, $78b1, $0b00, $1500, $80, $25, $01, $00
-	map_actor $0000, $78b1, $1100, $2300, $40, $25, $01, $00
-	map_actor $0000, $78b1, $1b00, $2300, $40, $39, $01, $03
-	map_actor $0000, $78b1, $1d00, $2300, $40, $32, $01, $03
+	map_actor $0000, ActorObjDef_14_78b1, $0b00, $1500, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1100, $2300, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $1b00, $2300, $40, $39, $01, $03
+	map_actor $0000, ActorObjDef_14_78b1, $1d00, $2300, $40, $32, $01, $03
 	map_actor_end
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
@@ -1451,10 +1451,10 @@ IslandSkyMapScripts_14:
 	dw IslandSkyInitScript_14 ; slot 6 InitScript
 IslandSkyActors_14:
 	; $522f, 66 bytes (map_actors)
-	map_actor $0000, $78b1, $0600, $2700, $40, $63, $01, $00
-	map_actor $0000, $78b1, $0600, $2700, $40, $5c, $01, $00
-	map_actor $0000, $78b1, $0600, $2700, $40, $5b, $01, $00
-	map_actor $0000, $78b1, $0600, $2700, $40, $5a, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $63, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $5b, $01, $00
+	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $5a, $01, $00
 	map_actor_end
 IslandSkyEntryPoints_14:
 	; $5271, 49 bytes (map_entries)
@@ -3004,7 +3004,10 @@ PlayWaterSpriteMoveSfx:
 	sound $7b ; $78ae
 Label_14_78b0:
 	ret ; $78b0
-	INCBIN "data/bank_014/d_78b1.bin" ; $78b1, 40 bytes
+ActorObjDef_14_78b1:
+	INCBIN "data/bank_014/d_78b1.bin" ; $78b1, 10 bytes
+ActorObjDef_14_78bb:
+	INCBIN "data/bank_014/d_78bb.bin" ; $78bb, 30 bytes
 MapScriptNop_14:
 	ret ; $78d9
 MapScriptClearActiveFlag_14:

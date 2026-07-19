@@ -15,17 +15,17 @@ TournamentCourtyardMapScripts_15:
 	dw TournamentCourtyardInitScript_15 ; slot 6 InitScript
 TournamentCourtyardActors_15:
 	; $4012, 164 bytes (map_actors)
-	map_actor $0000, $41ba, $0900, $1d80, $40, $21, $01, $00
-	map_actor $0000, $7d6d, $0700, $1d80, $40, $22, $01, $00
-	map_actor $0000, $7d77, $0d00, $1b00, $80, $33, $01, $03
-	map_actor $0000, $7d77, $1d00, $2300, $c0, $34, $01, $07
-	map_actor $0000, $7d6d, $1f00, $1d00, $80, $30, $01, $05
-	map_actor $0000, $7d6d, $0b00, $2700, $80, $39, $01, $00
-	map_actor $0000, $7d6d, $0900, $2900, $c0, $3a, $01, $00
-	map_actor $0000, $7d6d, $1b40, $2640, $80, $36, $01, $00
-	map_actor $0000, $7d6d, $1cc0, $2640, $80, $36, $01, $00
-	map_actor $0000, $7d6d, $0740, $2640, $80, $36, $01, $00
-	map_actor $0000, $7d6d, $08c0, $2640, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_15_41ba, $0900, $1d80, $40, $21, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $0700, $1d80, $40, $22, $01, $00
+	map_actor $0000, ActorObjDef_15_7d77, $0d00, $1b00, $80, $33, $01, $03
+	map_actor $0000, ActorObjDef_15_7d77, $1d00, $2300, $c0, $34, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $1f00, $1d00, $80, $30, $01, $05
+	map_actor $0000, ActorObjDef_15_7d6d, $0b00, $2700, $80, $39, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $0900, $2900, $c0, $3a, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $1b40, $2640, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $1cc0, $2640, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $0740, $2640, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $08c0, $2640, $80, $36, $01, $00
 	map_actor_end
 TournamentCourtyardEntryPoints_15:
 	; $40b6, 41 bytes (map_entries)
@@ -114,20 +114,21 @@ Label_15_41b0:
 	call InitTournamentSiteSceneVariant ; $41b3
 	call TournamentSiteEntryWalkIn ; $41b6
 	ret ; $41b9
+ActorObjDef_15_41ba:
 	INCBIN "data/bank_015/d_41ba.bin" ; $41ba, 19 bytes
 TournamentSiteRespawnActors_15:
 	; $41cd, 164 bytes (map_actors)
-	map_actor $0000, $7d6d, $1200, $3400, $40, $63, $01, $00
-	map_actor $0000, $7d6d, $1100, $3700, $40, $5a, $01, $00
-	map_actor $0000, $7d6d, $1300, $3900, $40, $5b, $01, $00
-	map_actor $0000, $7d6d, $1300, $3700, $40, $5c, $01, $00
-	map_actor $0000, $41ba, $0900, $1d80, $40, $21, $01, $00
-	map_actor $0000, $7d6d, $0700, $1d80, $40, $22, $01, $00
-	map_actor $0000, $7d77, $0d00, $1b00, $80, $33, $01, $03
-	map_actor $0000, $7d77, $1d00, $2300, $c0, $34, $01, $07
-	map_actor $0000, $7d6d, $1f00, $1d00, $80, $30, $01, $05
-	map_actor $0000, $7d6d, $0b00, $2700, $80, $39, $01, $00
-	map_actor $0000, $7d6d, $0900, $2900, $c0, $3a, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $1200, $3400, $40, $63, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $1100, $3700, $40, $5a, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $3900, $40, $5b, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $3700, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_15_41ba, $0900, $1d80, $40, $21, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $0700, $1d80, $40, $22, $01, $00
+	map_actor $0000, ActorObjDef_15_7d77, $0d00, $1b00, $80, $33, $01, $03
+	map_actor $0000, ActorObjDef_15_7d77, $1d00, $2300, $c0, $34, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $1f00, $1d00, $80, $30, $01, $05
+	map_actor $0000, ActorObjDef_15_7d6d, $0b00, $2700, $80, $39, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $0900, $2900, $c0, $3a, $01, $00
 	map_actor_end
 InitTournamentSiteSceneVariant:
 	ld a, $00 ; $4271
@@ -458,27 +459,27 @@ TrainingCourtMapScripts_15:
 	dw TrainingCourtInitScript_15 ; slot 6 InitScript
 TrainingCourtActors_15:
 	; $47a4, 304 bytes (map_actors)
-	map_actor $0000, $55e9, $0b00, $0700, $40, $33, $01, $03
-	map_actor $0000, $55e9, $0b00, $1700, $c0, $32, $01, $07
-	map_actor $0000, $55e9, $0e00, $1700, $c0, $34, $01, $05
-	map_actor $0000, $7d6d, $1300, $0b00, $80, $68, $01, $00
-	map_actor $0000, $7d6d, $1300, $1500, $80, $67, $01, $06
-	map_actor $0000, $55e6, $0b00, $2100, $40, $34, $01, $03
-	map_actor $0000, $55e6, $0d00, $2100, $40, $39, $01, $05
-	map_actor $0000, $55e6, $0c00, $2d00, $c0, $33, $01, $04
-	map_actor $0000, $7f3d, $0700, $2d00, $00, $6a, $01, $07
-	map_actor $0000, $7d6d, $1300, $2700, $40, $64, $01, $06
-	map_actor $0000, $7d6d, $1300, $2900, $c0, $68, $01, $04
-	map_actor $0000, $55e6, $3300, $2a00, $c0, $39, $01, $06
-	map_actor $0000, $55e6, $3500, $2400, $40, $32, $01, $03
-	map_actor $0000, $55e6, $3500, $2a00, $c0, $34, $01, $07
-	map_actor $0000, $7d6d, $2d00, $2100, $00, $66, $01, $07
-	map_actor $0000, $7d6d, $2d00, $2900, $00, $6b, $01, $07
-	map_actor $0000, $55e2, $3f00, $0300, $40, $33, $01, $07
-	map_actor $0000, $7d6d, $3f00, $0500, $40, $6c, $01, $00
-	map_actor $0000, $7d6d, $3f00, $0700, $40, $35, $01, $05
-	map_actor $0000, $7d6d, $3f00, $0900, $40, $50, $01, $00
-	map_actor $0000, $7d6d, $3f00, $0b00, $40, $53, $01, $00
+	map_actor $0000, ActorObjDef_15_55e9, $0b00, $0700, $40, $33, $01, $03
+	map_actor $0000, ActorObjDef_15_55e9, $0b00, $1700, $c0, $32, $01, $07
+	map_actor $0000, ActorObjDef_15_55e9, $0e00, $1700, $c0, $34, $01, $05
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $0b00, $80, $68, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $1500, $80, $67, $01, $06
+	map_actor $0000, ActorObjDef_15_55e6, $0b00, $2100, $40, $34, $01, $03
+	map_actor $0000, ActorObjDef_15_55e6, $0d00, $2100, $40, $39, $01, $05
+	map_actor $0000, ActorObjDef_15_55e6, $0c00, $2d00, $c0, $33, $01, $04
+	map_actor $0000, ActorObjDef_15_7f3d, $0700, $2d00, $00, $6a, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $2700, $40, $64, $01, $06
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $2900, $c0, $68, $01, $04
+	map_actor $0000, ActorObjDef_15_55e6, $3300, $2a00, $c0, $39, $01, $06
+	map_actor $0000, ActorObjDef_15_55e6, $3500, $2400, $40, $32, $01, $03
+	map_actor $0000, ActorObjDef_15_55e6, $3500, $2a00, $c0, $34, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $2d00, $2100, $00, $66, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $2d00, $2900, $00, $6b, $01, $07
+	map_actor $0000, ActorObjDef_15_55e2, $3f00, $0300, $40, $33, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $3f00, $0500, $40, $6c, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $3f00, $0700, $40, $35, $01, $05
+	map_actor $0000, ActorObjDef_15_7d6d, $3f00, $0900, $40, $50, $01, $00
+	map_actor $0000, ActorObjDef_15_7d6d, $3f00, $0b00, $40, $53, $01, $00
 	map_actor_end
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
@@ -1466,7 +1467,12 @@ Label_15_5597:
 	script_fade_in $04 ; $55d9
 	call WaitFadeEnd ; $55de
 	ret ; $55e1
-	INCBIN "data/bank_015/d_55e2.bin" ; $55e2, 14 bytes
+ActorObjDef_15_55e2:
+	INCBIN "data/bank_015/d_55e2.bin" ; $55e2, 4 bytes
+ActorObjDef_15_55e6:
+	INCBIN "data/bank_015/d_55e6.bin" ; $55e6, 3 bytes
+ActorObjDef_15_55e9:
+	INCBIN "data/bank_015/d_55e9.bin" ; $55e9, 7 bytes
 	ldh a, [hInputRisingEdge] ; $55f0
 	and a, $03 ; $55f2
 	ld d, a ; $55f4
@@ -1848,17 +1854,17 @@ TrainingCourtIntroTourScene:
 	ret ; $5c4e
 TrainingCourtTourActors_15:
 	; $5c4f, 164 bytes (map_actors)
-	map_actor $0000, $55e6, $3300, $2a00, $c0, $39, $01, $06
-	map_actor $0000, $55e6, $3500, $2300, $40, $32, $01, $03
-	map_actor $0000, $55e6, $3500, $2a00, $c0, $34, $01, $07
-	map_actor $0000, $7d6d, $2d00, $2100, $00, $66, $01, $07
-	map_actor $0000, $55e6, $0b00, $2300, $40, $34, $01, $03
-	map_actor $0000, $55e6, $0d00, $2300, $40, $39, $01, $05
-	map_actor $0000, $55e6, $0c00, $2900, $c0, $33, $01, $04
-	map_actor $0000, $7d6d, $1300, $2700, $40, $64, $01, $06
-	map_actor $0000, $7d6d, $1300, $2900, $c0, $68, $01, $04
-	map_actor $0000, $7d6d, $2d00, $2900, $00, $6b, $01, $07
-	map_actor $0000, $7d6d, $0100, $0100, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_15_55e6, $3300, $2a00, $c0, $39, $01, $06
+	map_actor $0000, ActorObjDef_15_55e6, $3500, $2300, $40, $32, $01, $03
+	map_actor $0000, ActorObjDef_15_55e6, $3500, $2a00, $c0, $34, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $2d00, $2100, $00, $66, $01, $07
+	map_actor $0000, ActorObjDef_15_55e6, $0b00, $2300, $40, $34, $01, $03
+	map_actor $0000, ActorObjDef_15_55e6, $0d00, $2300, $40, $39, $01, $05
+	map_actor $0000, ActorObjDef_15_55e6, $0c00, $2900, $c0, $33, $01, $04
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $2700, $40, $64, $01, $06
+	map_actor $0000, ActorObjDef_15_7d6d, $1300, $2900, $c0, $68, $01, $04
+	map_actor $0000, ActorObjDef_15_7d6d, $2d00, $2900, $00, $6b, $01, $07
+	map_actor $0000, ActorObjDef_15_7d6d, $0100, $0100, $40, $49, $01, $00
 	map_actor_end
 ServeChallengerResultScene:
 	xor a, a ; $5cf3
@@ -4357,10 +4363,15 @@ Label_15_7d49:
 	script_set_speed $00, $0020 ; $7d5c
 	script_set_speed $02, $0020 ; $7d64
 	ret ; $7d6c
-	INCBIN "data/bank_015/d_7d6d.bin" ; $7d6d, 40 bytes
+ActorObjDef_15_7d6d:
+	INCBIN "data/bank_015/d_7d6d.bin" ; $7d6d, 10 bytes
+ActorObjDef_15_7d77:
+	INCBIN "data/bank_015/d_7d77.bin" ; $7d77, 30 bytes
 Func_15_7d95:
 	ret ; $7d95
-	INCBIN "data/bank_015/d_7d96.bin" ; $7d96, 522 bytes
+	INCBIN "data/bank_015/d_7d96.bin" ; $7d96, 423 bytes
+ActorObjDef_15_7f3d:
+	INCBIN "data/bank_015/d_7f3d.bin" ; $7f3d, 99 bytes
 ComputeTrainingCourtProgressIndex:
 	ld a, $00 ; $7fa0
 	test_flag $0a, 3 ; $7fa2

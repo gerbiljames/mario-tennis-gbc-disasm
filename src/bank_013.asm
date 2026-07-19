@@ -629,9 +629,9 @@ DormRoomMapScripts_13:
 	dw DormRoomInitScript_13 ; slot 6 InitScript
 DormRoomActors_13:
 	; $4e2e, 52 bytes (map_actors)
-	map_actor $0000, $7b25, $0b00, $0900, $40, $29, $01, $00
-	map_actor $0000, $585f, $0600, $1080, $40, $55, $01, $00
-	map_actor $0000, $7b25, $2900, $2900, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0b00, $0900, $40, $29, $01, $00
+	map_actor $0000, ActorObjDef_13_585f, $0600, $1080, $40, $55, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $2900, $2900, $40, $4c, $01, $00
 	map_actor_end
 DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
@@ -990,12 +990,12 @@ Func_13_524e:
 	ret ; $5269
 StoryCmdHandlersC_13:
 	; $526a, 16 bytes (records:2)
-	dw $585f ; record 0
+	dw ActorObjDef_13_585f ; record 0
 	dw $5877 ; record 1
 	dw $5881 ; record 2
 	dw $588b ; record 3
-	dw $585f ; record 4
-	dw $585f ; record 5
+	dw ActorObjDef_13_585f ; record 4
+	dw ActorObjDef_13_585f ; record 5
 	dw $588b ; record 6
 	dw $588b ; record 7
 Label_13_527a:
@@ -1451,6 +1451,7 @@ Label_13_5807:
 	set 4, [hl] ; $5855
 	script_face $00, $40 ; $5857
 	ret ; $585e
+ActorObjDef_13_585f:
 	inc de ; $585f
 	add hl, bc ; $5860
 	ld [bc], a ; $5861
@@ -2000,38 +2001,38 @@ CourtyardMapScripts_13:
 	dw CourtyardInitScript_13 ; slot 6 InitScript
 CourtyardActors_13:
 	; $5c86, 442 bytes (map_actors)
-	map_actor $0000, $7b25, $0d00, $1d00, $40, $4b, $01, $00
-	map_actor $0000, $7b25, $0500, $1d00, $00, $68, $01, $07
-	map_actor $0000, $7a40, $0d00, $2300, $c0, $65, $06, $03
-	map_actor $0000, $7b25, $0800, $1300, $c0, $67, $01, $06
-	map_actor $0000, $7b2f, $0f00, $1700, $40, $6b, $01, $06
-	map_actor $0000, $7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0500, $1d00, $00, $68, $01, $07
+	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2300, $c0, $65, $06, $03
+	map_actor $0000, ActorObjDef_13_7b25, $0800, $1300, $c0, $67, $01, $06
+	map_actor $0000, ActorObjDef_13_7b2f, $0f00, $1700, $40, $6b, $01, $06
+	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
-	map_actor $0000, $7b25, $0d00, $1d00, $40, $4b, $01, $00
-	map_actor $0000, $7b25, $0500, $1d00, $00, $68, $01, $07
-	map_actor $0000, $7a40, $0d00, $2300, $c0, $65, $01, $03
-	map_actor $0000, $7b25, $0800, $1300, $c0, $67, $01, $04
-	map_actor $0000, $7b2f, $0f00, $1700, $40, $6b, $01, $06
-	map_actor $0000, $7b25, $2d00, $3d00, $40, $49, $01, $00
-	map_actor $0000, $7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0500, $1d00, $00, $68, $01, $07
+	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2300, $c0, $65, $01, $03
+	map_actor $0000, ActorObjDef_13_7b25, $0800, $1300, $c0, $67, $01, $04
+	map_actor $0000, ActorObjDef_13_7b2f, $0f00, $1700, $40, $6b, $01, $06
+	map_actor $0000, ActorObjDef_13_7b25, $2d00, $3d00, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
-	map_actor $0000, $7b25, $0d00, $1d00, $40, $4b, $01, $00
-	map_actor $0000, $7b25, $0500, $2300, $c0, $68, $01, $07
-	map_actor $0000, $7a40, $0d00, $2500, $c0, $65, $01, $03
-	map_actor $0000, $7b25, $1000, $2500, $80, $67, $01, $04
-	map_actor $0000, $7b25, $0800, $1300, $c0, $6b, $01, $06
-	map_actor $0000, $7b25, $2d00, $3d00, $40, $49, $01, $00
-	map_actor $0000, $7b25, $0500, $2100, $40, $4a, $01, $00
-	map_actor $0000, $7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0500, $2300, $c0, $68, $01, $07
+	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2500, $c0, $65, $01, $03
+	map_actor $0000, ActorObjDef_13_7b25, $1000, $2500, $80, $67, $01, $04
+	map_actor $0000, ActorObjDef_13_7b25, $0800, $1300, $c0, $6b, $01, $06
+	map_actor $0000, ActorObjDef_13_7b25, $2d00, $3d00, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0500, $2100, $40, $4a, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
-	map_actor $0000, $7a40, $1000, $1500, $40, $68, $01, $07
-	map_actor $0000, $7a40, $0d00, $2500, $c0, $65, $01, $03
-	map_actor $0000, $7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_13_7a40, $1000, $1500, $40, $68, $01, $07
+	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2500, $c0, $65, $01, $03
+	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
-	map_actor $0000, $7a40, $0d00, $1d00, $40, $68, $01, $07
-	map_actor $0000, $7a40, $0d00, $2300, $c0, $65, $01, $03
-	map_actor $0000, $7b2f, $0900, $1500, $40, $4a, $01, $00
-	map_actor $0000, $7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorObjDef_13_7a40, $0d00, $1d00, $40, $68, $01, $07
+	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2300, $c0, $65, $01, $03
+	map_actor $0000, ActorObjDef_13_7b2f, $0900, $1500, $40, $4a, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
 CourtyardEntryPoints_13:
 	; $5e40, 57 bytes (map_entries)
@@ -2091,7 +2092,7 @@ CourtyardNpcScripts_13:
 	and a, a ; $5f39
 	jr z, Label_13_5f4d ; $5f3a
 	script_speak $05 ; $5f3c
-	script_set_actor_script $05, $7a40 ; $5f41
+	script_set_actor_script $05, ActorObjDef_13_7a40 ; $5f41
 	ret ; $5f4c
 Label_13_5f4d:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5f4d
@@ -2119,7 +2120,7 @@ Label_13_60c6:
 	script_set_anim $05, $01 ; $60d1
 	script_set_text $0428 ; $60d8
 	script_speak $05 ; $60de
-	script_set_actor_script $05, $7a40 ; $60e3
+	script_set_actor_script $05, ActorObjDef_13_7a40 ; $60e3
 	ret ; $60ee
 	INCBIN "data/bank_013/d_60ef.bin" ; $60ef, 41 bytes
 	ld a, $05 ; $6118
@@ -2127,7 +2128,7 @@ Label_13_60c6:
 	script_set_anim $05, $01 ; $611d
 	script_set_text $042d ; $6124
 	script_speak $05 ; $612a
-	script_set_actor_script $05, $7a40 ; $612f
+	script_set_actor_script $05, ActorObjDef_13_7a40 ; $612f
 	ret ; $613a
 	INCBIN "data/bank_013/d_613b.bin" ; $613b, 41 bytes
 CourtyardFacingScripts_13:
@@ -2233,7 +2234,7 @@ Label_13_6222:
 	ld e, $10 ; $6262
 	farcall FarPtr_WriteBehaviorMapCell ; $6264
 	script_set_position $07, $0f00, $1700 ; $6267
-	script_set_actor_script $07, $7b2f ; $6272
+	script_set_actor_script $07, ActorObjDef_13_7b2f ; $6272
 	ret ; $627d
 Label_13_627e:
 	test_flag $15, 7 ; $627e
@@ -2849,17 +2850,17 @@ Label_13_7340:
 	ret ; $739b
 SinglesTravelingTeamActors_13:
 	; $739c, 164 bytes (map_actors)
-	map_actor $0000, $7b25, $1900, $1f00, $80, $4b, $01, $00
-	map_actor $0000, $7b25, $0b00, $1300, $40, $68, $01, $07
-	map_actor $0000, $7b25, $1300, $2100, $80, $65, $01, $03
-	map_actor $0000, $7b25, $1300, $2300, $80, $67, $01, $06
-	map_actor $0000, $7b25, $1300, $1700, $80, $6b, $01, $06
-	map_actor $0000, $7b25, $1b00, $1d00, $80, $49, $01, $00
-	map_actor $0000, $7b25, $1900, $1d00, $80, $4a, $01, $00
-	map_actor $0000, $7b25, $3d00, $3d00, $80, $53, $01, $00
-	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
-	map_actor $0000, $7b25, $3d00, $3d00, $80, $4d, $01, $00
-	map_actor $0000, $7b25, $1700, $1d00, $80, $29, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $1900, $1f00, $80, $4b, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0b00, $1300, $40, $68, $01, $07
+	map_actor $0000, ActorObjDef_13_7b25, $1300, $2100, $80, $65, $01, $03
+	map_actor $0000, ActorObjDef_13_7b25, $1300, $2300, $80, $67, $01, $06
+	map_actor $0000, ActorObjDef_13_7b25, $1300, $1700, $80, $6b, $01, $06
+	map_actor $0000, ActorObjDef_13_7b25, $1b00, $1d00, $80, $49, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $1900, $1d00, $80, $4a, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3d00, $3d00, $80, $53, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3d00, $3d00, $80, $4d, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $1700, $1d00, $80, $29, $01, $00
 	map_actor_end
 RunDoublesTravelingTeamVictoryIfWon_13:
 	wram_bank $04 ; $7440
@@ -3085,17 +3086,17 @@ Func_13_78c4:
 	ret ; $78d6
 DoublesTravelingTeamActors_13:
 	; $78d7, 164 bytes (map_actors)
-	map_actor $0000, $7b25, $1900, $1d00, $80, $4b, $01, $00
-	map_actor $0000, $7b25, $0d00, $1700, $40, $68, $01, $07
-	map_actor $0000, $7b25, $1300, $2100, $80, $65, $01, $03
-	map_actor $0000, $7b25, $1300, $2300, $80, $67, $01, $06
-	map_actor $0000, $7b25, $1300, $1700, $80, $6b, $01, $06
-	map_actor $0000, $7b25, $1700, $1d00, $80, $49, $01, $00
-	map_actor $0000, $7b25, $0b00, $1300, $40, $4a, $01, $00
-	map_actor $0000, $7b25, $3d00, $3d00, $80, $53, $01, $00
-	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
-	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
-	map_actor $0000, $7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $1900, $1d00, $80, $4b, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0d00, $1700, $40, $68, $01, $07
+	map_actor $0000, ActorObjDef_13_7b25, $1300, $2100, $80, $65, $01, $03
+	map_actor $0000, ActorObjDef_13_7b25, $1300, $2300, $80, $67, $01, $06
+	map_actor $0000, ActorObjDef_13_7b25, $1300, $1700, $80, $6b, $01, $06
+	map_actor $0000, ActorObjDef_13_7b25, $1700, $1d00, $80, $49, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $0b00, $1300, $40, $4a, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3d00, $3d00, $80, $53, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
 	map_actor_end
 DoublesTravelingTeamInitScript_13:
 	set_flag $0a, 3 ; $797b
@@ -3159,6 +3160,7 @@ Label_13_79e5:
 	farcall FarPtr_WaitPlayerMoveDone ; $7a39
 	call Func_13_7ae0 ; $7a3c
 	ret ; $7a3f
+ActorObjDef_13_7a40:
 	INCBIN "data/bank_013/d_7a40.bin" ; $7a40, 160 bytes
 Func_13_7ae0:
 	ld c, $08 ; $7ae0
@@ -3196,7 +3198,10 @@ Label_13_7b1f:
 	ld b, $01 ; $7b1f
 	ld c, $01 ; $7b21
 	jr Label_13_7b1b ; $7b23
-	INCBIN "data/bank_013/d_7b25.bin" ; $7b25, 40 bytes
+ActorObjDef_13_7b25:
+	INCBIN "data/bank_013/d_7b25.bin" ; $7b25, 10 bytes
+ActorObjDef_13_7b2f:
+	INCBIN "data/bank_013/d_7b2f.bin" ; $7b2f, 30 bytes
 Func_13_7b4d:
 	ret ; $7b4d
 	xor a, a ; $7b4e

@@ -35,33 +35,33 @@ End17AwardCeremonyMapScripts_27:
 	dw End17AwardCeremonyInitScript_27 ; slot 6 InitScript
 End17AwardCeremonyActors_27:
 	; $4026, 178 bytes (map_actors)
-	map_actor $0000, $785d, $0f00, $1600, $c0, $25, $01, $00
-	map_actor $0000, $785d, $0c00, $1300, $c0, $63, $01, $00
-	map_actor $0000, $785d, $0e80, $17c0, $40, $74, $01, $00
-	map_actor $0000, $785d, $0f00, $1600, $c0, $25, $01, $00
-	map_actor $0000, $785d, $0e00, $0e40, $40, $5c, $01, $00
-	map_actor $0000, $785d, $0a00, $0dc0, $40, $61, $01, $00
-	map_actor $0000, $785d, $0c00, $0d40, $40, $26, $01, $00
-	map_actor $0000, $785d, $0700, $0500, $40, $30, $01, $00
-	map_actor $0000, $785d, $0f00, $0700, $40, $3a, $01, $00
-	map_actor $0000, $785d, $0e80, $1b00, $c0, $62, $01, $00
-	map_actor $0000, $785d, $0980, $1b00, $c0, $23, $01, $00
-	map_actor $0000, $785d, $0800, $1940, $00, $25, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $1600, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0c00, $1300, $c0, $63, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0e80, $17c0, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $1600, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0e00, $0e40, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0a00, $0dc0, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0c00, $0d40, $40, $26, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0700, $0500, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $0700, $40, $3a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0e80, $1b00, $c0, $62, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0980, $1b00, $c0, $23, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0800, $1940, $00, $25, $01, $05
 	map_actor_end
 End17AwardCeremonyActorsAlt_27:
 	; $40d8, 178 bytes (map_actors)
-	map_actor $0000, $785d, $0f00, $1600, $c0, $25, $01, $00
-	map_actor $0000, $785d, $0e00, $1300, $c0, $63, $01, $00
-	map_actor $0000, $785d, $0e80, $17c0, $40, $74, $01, $00
-	map_actor $0000, $785d, $0f00, $1600, $c0, $25, $01, $00
-	map_actor $0000, $785d, $0900, $0e00, $40, $62, $01, $00
-	map_actor $0000, $785d, $0b00, $0e00, $40, $61, $01, $00
-	map_actor $0000, $785d, $0d00, $0d60, $40, $26, $01, $00
-	map_actor $0000, $785d, $0700, $0500, $40, $30, $01, $00
-	map_actor $0000, $785d, $0f00, $0700, $40, $3a, $01, $00
-	map_actor $0000, $785d, $0f00, $1b00, $c0, $5c, $01, $00
-	map_actor $0000, $785d, $0900, $1b00, $c0, $23, $01, $00
-	map_actor $0000, $785d, $0800, $1940, $00, $25, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $1600, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0e00, $1300, $c0, $63, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0e80, $17c0, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $1600, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0900, $0e00, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0b00, $0e00, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0d00, $0d60, $40, $26, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0700, $0500, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $0700, $40, $3a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $1b00, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0900, $1b00, $c0, $23, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0800, $1940, $00, $25, $01, $05
 	map_actor_end
 End17AwardCeremonyEntryPoints_27:
 	; $418a, 9 bytes (map_entries)
@@ -279,20 +279,20 @@ End16BeforeFinalsMapScripts_27:
 	dw End16BeforeFinalsInitScript_27 ; slot 6 InitScript
 End16BeforeFinalsActors_27:
 	; $461a, 206 bytes (map_actors)
-	map_actor $0000, $785d, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $785d, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $785d, $0100, $0c00, $00, $25, $01, $00
-	map_actor $0000, $785d, $2300, $1100, $c0, $5c, $01, $00
-	map_actor $0000, $787b, $2300, $1700, $c0, $5b, $01, $00
-	map_actor $0000, $785d, $2100, $1100, $00, $5a, $01, $00
-	map_actor $0000, $785d, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, $785d, $1100, $1500, $40, $5d, $01, $00
-	map_actor $0000, $785d, $1900, $1300, $40, $60, $01, $00
-	map_actor $0000, $785d, $1700, $1300, $40, $61, $01, $00
-	map_actor $0000, $785d, $0f00, $1300, $40, $62, $01, $00
-	map_actor $0000, $785d, $1900, $1500, $40, $5e, $01, $00
-	map_actor $0000, $785d, $1700, $1500, $40, $1e, $01, $00
-	map_actor $0000, $785d, $1100, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0100, $0c00, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_27_787b, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2100, $1100, $00, $5a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1100, $1500, $40, $5d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1900, $1300, $40, $60, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1700, $1300, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $1300, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1900, $1500, $40, $5e, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1700, $1500, $40, $1e, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1100, $1300, $40, $1f, $01, $00
 	map_actor_end
 End16BeforeFinalsEntryPoints_27:
 	; $46e8, 9 bytes (map_entries)
@@ -436,14 +436,14 @@ End12PrincipalsOfficeMapScripts_27:
 	dw End12PrincipalsOfficeInitScript_27 ; slot 6 InitScript
 End12PrincipalsOfficeActors_27:
 	; $4bca, 122 bytes (map_actors)
-	map_actor $0000, $785d, $fd00, $0100, $40, $4e, $01, $00
-	map_actor $0000, $785d, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, $785d, $fd00, $0100, $40, $51, $01, $00
-	map_actor $0000, $785d, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, $785d, $2000, $2f00, $40, $63, $01, $00
-	map_actor $0000, $785d, $2200, $3300, $80, $4b, $01, $00
-	map_actor $0000, $785d, $2000, $3300, $80, $4a, $01, $00
-	map_actor $0000, $785d, $1e00, $3300, $00, $49, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $fd00, $0100, $40, $4e, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $fd00, $0100, $40, $51, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2000, $2f00, $40, $63, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2200, $3300, $80, $4b, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2000, $3300, $80, $4a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1e00, $3300, $00, $49, $01, $00
 	map_actor_end
 End12PrincipalsOfficeEntryPoints_27:
 	; $4c44, 17 bytes (map_entries)
@@ -719,9 +719,9 @@ End11TrainingCourtMapScripts_27:
 	dw End11TrainingCourtInitScript_27 ; slot 6 InitScript
 End11TrainingCourtActors_27:
 	; $521f, 52 bytes (map_actors)
-	map_actor $0000, $785d, $3f00, $0500, $40, $6c, $01, $00
-	map_actor $0000, $785d, $3f00, $0500, $40, $4d, $01, $00
-	map_actor $0000, $785d, $3f00, $0500, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3f00, $0500, $40, $6c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3f00, $0500, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3f00, $0500, $40, $4c, $01, $00
 	map_actor_end
 End11TrainingCourtEntryPoints_27:
 	; $5253, 17 bytes (map_entries)
@@ -748,7 +748,7 @@ End11TrainingCourtInitScript_27:
 Label_27_527e:
 	test_flag $05, 7 ; $527e
 	jr z, Label_27_5299 ; $5281
-	script_set_actor_script $02, $785d ; $5283
+	script_set_actor_script $02, ActorObjDef_27_785d ; $5283
 	script_set_position $02, $3f00, $3f00 ; $528e
 Label_27_5299:
 	ld a, [$c90e] ; $5299
@@ -1208,19 +1208,19 @@ End8SrCourtMapScripts_27:
 	dw End8SrCourtInitScript_27 ; slot 6 InitScript
 End8SrCourtActors_27:
 	; $5e23, 94 bytes (map_actors)
-	map_actor $0000, $785d, $2b00, $2700, $c0, $49, $01, $00
-	map_actor $0000, $785d, $2200, $0f00, $40, $65, $01, $07
-	map_actor $0000, $785d, $2d00, $1300, $00, $69, $01, $04
-	map_actor $0000, $785d, $1b00, $0d00, $80, $66, $01, $06
-	map_actor $0000, $785d, $2900, $1300, $80, $54, $01, $05
-	map_actor $0000, $785d, $2900, $1900, $80, $54, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2b00, $2700, $c0, $49, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2200, $0f00, $40, $65, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $2d00, $1300, $00, $69, $01, $04
+	map_actor $0000, ActorObjDef_27_785d, $1b00, $0d00, $80, $66, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $2900, $1300, $80, $54, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $2900, $1900, $80, $54, $01, $00
 	map_actor_end
 End8SrCourtActorsAlt_27:
 	; $5e81, 66 bytes (map_actors)
-	map_actor $0000, $785d, $2b00, $2700, $c0, $49, $01, $00
-	map_actor $0000, $785d, $2500, $0f00, $40, $65, $01, $07
-	map_actor $0000, $785d, $2300, $1300, $40, $64, $01, $05
-	map_actor $0000, $785d, $1b00, $0d00, $80, $6b, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $2b00, $2700, $c0, $49, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2500, $0f00, $40, $65, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $2300, $1300, $40, $64, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $1b00, $0d00, $80, $6b, $01, $05
 	map_actor_end
 End8SrCourtEntryPoints_27:
 	; $5ec3, 9 bytes (map_entries)
@@ -1363,11 +1363,11 @@ End7TrainingCtrMapScripts_27:
 	dw End7TrainingCtrInitScript_27 ; slot 6 InitScript
 End7TrainingCtrActors_27:
 	; $618d, 80 bytes (map_actors)
-	map_actor $0000, $785d, $2b00, $3300, $00, $3d, $01, $00
-	map_actor $0000, $785d, $2b00, $3100, $00, $3d, $01, $00
-	map_actor $0000, $785d, $2d00, $2b00, $80, $3e, $01, $00
-	map_actor $0000, $785d, $1900, $1100, $c0, $39, $01, $06
-	map_actor $0000, $785d, $0d00, $1300, $00, $39, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $2b00, $3300, $00, $3d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2b00, $3100, $00, $3d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2d00, $2b00, $80, $3e, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1900, $1100, $c0, $39, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $0d00, $1300, $00, $39, $01, $07
 	map_actor_end
 End7TrainingCtrEntryPoints_27:
 	; $61dd, 17 bytes (map_entries)
@@ -1502,23 +1502,23 @@ End5ServiceAceMapScripts_27:
 	dw End5ServiceAceInitScript_27 ; slot 6 InitScript
 End5ServiceAceActors_27:
 	; $6455, 248 bytes (map_actors)
-	map_actor $0000, $785d, $1100, $1900, $80, $2f, $01, $00
-	map_actor $0000, $785d, $2100, $1500, $c0, $2f, $01, $07
-	map_actor $0000, $785d, $1600, $1300, $40, $30, $01, $00
-	map_actor $0000, $785d, $1d00, $1700, $c0, $31, $01, $00
-	map_actor $0000, $785d, $2900, $2900, $00, $4c, $01, $00
-	map_actor $0000, $785d, $2100, $1100, $00, $33, $01, $00
-	map_actor $0000, $785d, $0900, $0f00, $00, $34, $01, $00
-	map_actor $0000, $7867, $0b00, $1900, $80, $30, $01, $06
-	map_actor $0000, $785d, $0d00, $0f00, $80, $3a, $01, $00
-	map_actor $0000, $785d, $1500, $0b00, $80, $33, $01, $00
-	map_actor $0000, $785d, $1d00, $0b00, $80, $3c, $01, $04
-	map_actor $0000, $785d, $1b00, $0900, $40, $3b, $01, $00
-	map_actor $0000, $785d, $1d00, $0f00, $80, $3c, $01, $00
-	map_actor $0000, $785d, $1900, $0f00, $00, $3b, $01, $06
-	map_actor $0000, $785d, $2900, $2900, $00, $4f, $01, $00
-	map_actor $0000, $785d, $1b00, $1200, $40, $3a, $01, $00
-	map_actor $0000, $785d, $1900, $0900, $40, $35, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1100, $1900, $80, $2f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2100, $1500, $c0, $2f, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $1600, $1300, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1d00, $1700, $c0, $31, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2900, $2900, $00, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2100, $1100, $00, $33, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0900, $0f00, $00, $34, $01, $00
+	map_actor $0000, ActorObjDef_27_7867, $0b00, $1900, $80, $30, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $0d00, $0f00, $80, $3a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1500, $0b00, $80, $33, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1d00, $0b00, $80, $3c, $01, $04
+	map_actor $0000, ActorObjDef_27_785d, $1b00, $0900, $40, $3b, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1d00, $0f00, $80, $3c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1900, $0f00, $00, $3b, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $2900, $2900, $00, $4f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1b00, $1200, $40, $3a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1900, $0900, $40, $35, $01, $00
 	map_actor_end
 End5ServiceAceEntryPoints_27:
 	; $654d, 17 bytes (map_entries)
@@ -1578,38 +1578,38 @@ End4JrCourtMapScripts_27:
 	dw End4JrCourtInitScript_27 ; slot 6 InitScript
 End4JrCourtActors_27:
 	; $6630, 234 bytes (map_actors)
-	map_actor $0000, $785d, $1300, $1300, $40, $37, $01, $00
-	map_actor $0000, $785d, $2300, $1700, $80, $68, $01, $05
-	map_actor $0000, $785d, $0500, $1500, $00, $6b, $01, $04
-	map_actor $0000, $785d, $1300, $0d00, $00, $67, $01, $07
-	map_actor $0000, $785d, $1f00, $1500, $80, $6a, $01, $07
-	map_actor $0000, $785d, $2500, $0900, $00, $66, $01, $03
-	map_actor $0000, $785d, $3100, $1500, $00, $65, $01, $06
-	map_actor $0000, $785d, $3d00, $1900, $80, $64, $01, $04
-	map_actor $0000, $682f, $3100, $0700, $40, $69, $01, $03
-	map_actor $0000, $795d, $0800, $0b00, $40, $54, $01, $05
-	map_actor $0000, $79c4, $0c00, $1700, $c0, $54, $01, $00
-	map_actor $0000, $7893, $1800, $0b00, $40, $54, $01, $00
-	map_actor $0000, $78f6, $1c00, $1700, $c0, $54, $01, $05
-	map_actor $0000, $795d, $3400, $0b00, $40, $54, $01, $05
-	map_actor $0000, $79c4, $3800, $1700, $c0, $54, $01, $00
-	map_actor $0000, $785d, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1300, $1300, $40, $37, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2300, $1700, $80, $68, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $0500, $1500, $00, $6b, $01, $04
+	map_actor $0000, ActorObjDef_27_785d, $1300, $0d00, $00, $67, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $1f00, $1500, $80, $6a, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $2500, $0900, $00, $66, $01, $03
+	map_actor $0000, ActorObjDef_27_785d, $3100, $1500, $00, $65, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $1900, $80, $64, $01, $04
+	map_actor $0000, ActorObjDef_27_682f, $3100, $0700, $40, $69, $01, $03
+	map_actor $0000, ActorObjDef_27_795d, $0800, $0b00, $40, $54, $01, $05
+	map_actor $0000, ActorObjDef_27_79c4, $0c00, $1700, $c0, $54, $01, $00
+	map_actor $0000, ActorObjDef_27_7893, $1800, $0b00, $40, $54, $01, $00
+	map_actor $0000, ActorObjDef_27_78f6, $1c00, $1700, $c0, $54, $01, $05
+	map_actor $0000, ActorObjDef_27_795d, $3400, $0b00, $40, $54, $01, $05
+	map_actor $0000, ActorObjDef_27_79c4, $3800, $1700, $c0, $54, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $4000, $4000, $c0, $53, $01, $00
 	map_actor_end
 End4JrCourtActorsAlt_27:
 	; $671a, 192 bytes (map_actors)
-	map_actor $0000, $785d, $1300, $1300, $40, $37, $01, $00
-	map_actor $0000, $785d, $2300, $1700, $80, $68, $01, $05
-	map_actor $0000, $785d, $0500, $1500, $00, $6b, $01, $04
-	map_actor $0000, $785d, $2100, $1500, $40, $67, $01, $07
-	map_actor $0000, $785d, $0500, $1300, $00, $6a, $01, $07
-	map_actor $0000, $785d, $1b00, $1300, $40, $66, $01, $03
-	map_actor $0000, $785d, $1b00, $1500, $c0, $65, $01, $06
-	map_actor $0000, $785d, $3700, $0700, $80, $64, $01, $04
-	map_actor $0000, $785d, $3500, $0700, $00, $69, $01, $03
-	map_actor $0000, $795d, $0800, $0b00, $40, $54, $01, $05
-	map_actor $0000, $79c4, $0c00, $1700, $c0, $54, $01, $00
-	map_actor $0000, $7893, $2a00, $0b00, $40, $54, $01, $00
-	map_actor $0000, $78f6, $2e00, $1700, $c0, $54, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $1300, $1300, $40, $37, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2300, $1700, $80, $68, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $0500, $1500, $00, $6b, $01, $04
+	map_actor $0000, ActorObjDef_27_785d, $2100, $1500, $40, $67, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $0500, $1300, $00, $6a, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $1b00, $1300, $40, $66, $01, $03
+	map_actor $0000, ActorObjDef_27_785d, $1b00, $1500, $c0, $65, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $3700, $0700, $80, $64, $01, $04
+	map_actor $0000, ActorObjDef_27_785d, $3500, $0700, $00, $69, $01, $03
+	map_actor $0000, ActorObjDef_27_795d, $0800, $0b00, $40, $54, $01, $05
+	map_actor $0000, ActorObjDef_27_79c4, $0c00, $1700, $c0, $54, $01, $00
+	map_actor $0000, ActorObjDef_27_7893, $2a00, $0b00, $40, $54, $01, $00
+	map_actor $0000, ActorObjDef_27_78f6, $2e00, $1700, $c0, $54, $01, $05
 	map_actor_end
 End4JrCourtEntryPoints_27:
 	; $67da, 10 bytes (map_entries)
@@ -1638,7 +1638,9 @@ Label_27_6808:
 	cp a, $01 ; $680b
 	jp z, Label_27_6a54 ; $680d
 	ret ; $6810
-	INCBIN "data/bank_027/d_6811.bin" ; $6811, 85 bytes
+	INCBIN "data/bank_027/d_6811.bin" ; $6811, 30 bytes
+ActorObjDef_27_682f:
+	INCBIN "data/bank_027/d_682f.bin" ; $682f, 55 bytes
 Func_27_6866:
 	script_wait_frames $0f ; $6866
 	script_face_toward $07, $03 ; $686d
@@ -1784,10 +1786,10 @@ End3DormEntMapScripts_27:
 	dw End3DormEntInitScript_27 ; slot 6 InitScript
 End3DormEntActors_27:
 	; $6c26, 66 bytes (map_actors)
-	map_actor $0000, $785d, $0100, $0100, $40, $49, $01, $00
-	map_actor $0000, $785d, $0100, $0100, $40, $29, $01, $00
-	map_actor $0000, $785d, $0100, $0100, $40, $4c, $01, $00
-	map_actor $0000, $785d, $0100, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0100, $0100, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0100, $0100, $40, $29, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0100, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0100, $0100, $40, $4d, $01, $00
 	map_actor_end
 End3DormEntEntryPoints_27:
 	; $6c68, 25 bytes (map_entries)
@@ -1813,7 +1815,7 @@ End3DormEntInitScript_27:
 Func_27_6c94:
 	test_flag $05, 7 ; $6c94
 	jr z, Label_27_6caf ; $6c97
-	script_set_actor_script $02, $785d ; $6c99
+	script_set_actor_script $02, ActorObjDef_27_785d ; $6c99
 	script_set_position $02, $3f00, $3f00 ; $6ca4
 Label_27_6caf:
 	script_set_speed $03, $0010 ; $6caf
@@ -1945,7 +1947,7 @@ Func_27_6f57:
 	farcall FarPtr_BeginCutsceneScriptMode ; $6f5f
 	test_flag $05, 7 ; $6f62
 	jr z, Label_27_6f7d ; $6f65
-	script_set_actor_script $02, $785d ; $6f67
+	script_set_actor_script $02, ActorObjDef_27_785d ; $6f67
 	script_set_position $02, $3f00, $3f00 ; $6f72
 Label_27_6f7d:
 	script_set_position $00, $3f00, $3f00 ; $6f7d
@@ -2035,16 +2037,16 @@ End1MainBldgMapScripts_27:
 	dw End1MainBldgInitScript_27 ; slot 6 InitScript
 End1MainBldgActors_27:
 	; $7221, 150 bytes (map_actors)
-	map_actor $0000, $785d, $1500, $3d00, $00, $4d, $01, $00
-	map_actor $0000, $785d, $1500, $3d00, $00, $4c, $01, $00
-	map_actor $0000, $785d, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, $785d, $1500, $3d00, $40, $63, $01, $00
-	map_actor $0000, $785d, $1500, $3d00, $00, $4f, $01, $00
-	map_actor $0000, $785d, $1800, $1100, $40, $63, $01, $00
-	map_actor $0000, $785d, $1a00, $1500, $c0, $5c, $01, $00
-	map_actor $0000, $785d, $1600, $1500, $c0, $5b, $01, $00
-	map_actor $0000, $785d, $1900, $1700, $c0, $5a, $01, $00
-	map_actor $0000, $785d, $0100, $1900, $c0, $4a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1500, $3d00, $00, $4d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1500, $3d00, $00, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1500, $3d00, $40, $63, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1500, $3d00, $00, $4f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1800, $1100, $40, $63, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1a00, $1500, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1600, $1500, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1900, $1700, $c0, $5a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0100, $1900, $c0, $4a, $01, $00
 	map_actor_end
 End1MainBldgEntryPoints_27:
 	; $72b7, 25 bytes (map_entries)
@@ -2086,7 +2088,7 @@ Label_27_730a:
 	script_set_position $0c, $3f00, $3f00 ; $7358
 	test_flag $05, 7 ; $7363
 	jr z, Label_27_737e ; $7366
-	script_set_actor_script $02, $785d ; $7368
+	script_set_actor_script $02, ActorObjDef_27_785d ; $7368
 	script_set_position $02, $3f00, $3f00 ; $7373
 Label_27_737e:
 	script_player_speed $0040 ; $737e
@@ -2311,8 +2313,21 @@ WaitScriptFramesSaveA:
 	farcall FarPtr_WaitScriptFrames ; $7858
 	pop af ; $785b
 	ret ; $785c
-	INCBIN "data/bank_027/d_785d.bin" ; $785d, 40 bytes
+ActorObjDef_27_785d:
+	INCBIN "data/bank_027/d_785d.bin" ; $785d, 10 bytes
+ActorObjDef_27_7867:
+	INCBIN "data/bank_027/d_7867.bin" ; $7867, 20 bytes
+ActorObjDef_27_787b:
+	INCBIN "data/bank_027/d_787b.bin" ; $787b, 10 bytes
 MapScriptNop_27:
 	ret ; $7885
-	INCBIN "data/bank_027/d_7886.bin" ; $7886, 571 bytes
+	INCBIN "data/bank_027/d_7886.bin" ; $7886, 13 bytes
+ActorObjDef_27_7893:
+	INCBIN "data/bank_027/d_7893.bin" ; $7893, 99 bytes
+ActorObjDef_27_78f6:
+	INCBIN "data/bank_027/d_78f6.bin" ; $78f6, 103 bytes
+ActorObjDef_27_795d:
+	INCBIN "data/bank_027/d_795d.bin" ; $795d, 103 bytes
+ActorObjDef_27_79c4:
+	INCBIN "data/bank_027/d_79c4.bin" ; $79c4, 253 bytes
 	ds 1343, $ff ; $7ac1, fill

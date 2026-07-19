@@ -27,15 +27,15 @@ MatchSelectMapScripts_10:
 	dw Func_10_4190 ; slot 6 InitScript
 MatchSelectActors_10:
 	; $401e, 136 bytes (map_actors)
-	map_actor $0000, $7bd1, $0700, $1100, $40, $49, $01, $00
-	map_actor $0000, $7bd1, $0700, $0700, $80, $46, $01, $03
-	map_actor $0000, $7bd1, $0d00, $0700, $80, $47, $01, $03
-	map_actor $0000, $7bd1, $0700, $0b00, $40, $54, $01, $03
-	map_actor $0000, $7bd1, $0d00, $0b00, $40, $55, $01, $03
-	map_actor $0000, $7bd1, $0d00, $1100, $40, $6c, $01, $05
-	map_actor $0000, $7bd1, $0500, $0e00, $40, $43, $01, $03
-	map_actor $0000, $7bd1, $1100, $0e00, $40, $43, $01, $03
-	map_actor $0000, $7bd1, $1100, $0c00, $40, $43, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $0700, $1100, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0700, $0700, $80, $46, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0700, $80, $47, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $0700, $0b00, $40, $54, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0b00, $40, $55, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $1100, $40, $6c, $01, $05
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0e00, $40, $43, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $1100, $0e00, $40, $43, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $1100, $0c00, $40, $43, $01, $03
 	map_actor_end
 MatchSelectEntryPoints_10:
 	; $40a6, 9 bytes (map_entries)
@@ -580,22 +580,22 @@ Test2MapScripts_10:
 	dw Test2InitScript_10 ; slot 6 InitScript
 Test2Actors_10:
 	; $469b, 234 bytes (map_actors)
-	map_actor $0000, $7bd1, $0500, $0f00, $40, $55, $01, $00
-	map_actor $0000, $7bd1, $0500, $0500, $40, $27, $01, $07
-	map_actor $0000, $7bd1, $0500, $0300, $40, $26, $01, $00
-	map_actor $0000, $7bd1, $0500, $0900, $40, $29, $01, $05
-	map_actor $0000, $7bd1, $0500, $0700, $40, $28, $01, $00
-	map_actor $0000, $7bd1, $0500, $0d00, $40, $2a, $01, $07
-	map_actor $0000, $7bd1, $0500, $0b00, $40, $2d, $01, $00
-	map_actor $0000, $7bd1, $0500, $1100, $40, $2b, $01, $00
-	map_actor $0000, $7bd1, $0d00, $0300, $40, $2f, $01, $00
-	map_actor $0000, $7bd1, $0d00, $0500, $40, $2f, $01, $07
-	map_actor $0000, $7bd1, $0d00, $0700, $40, $30, $01, $00
-	map_actor $0000, $7bd1, $0d00, $0900, $40, $30, $01, $05
-	map_actor $0000, $7bd1, $0d00, $0b00, $40, $2f, $01, $00
-	map_actor $0000, $7bd1, $0d00, $0d00, $40, $2f, $01, $07
-	map_actor $0000, $7bd1, $0d00, $0f00, $40, $30, $01, $00
-	map_actor $0000, $7bd1, $0d00, $1100, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0f00, $40, $55, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0500, $40, $27, $01, $07
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0300, $40, $26, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0900, $40, $29, $01, $05
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0700, $40, $28, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0d00, $40, $2a, $01, $07
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0b00, $40, $2d, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $1100, $40, $2b, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0300, $40, $2f, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0500, $40, $2f, $01, $07
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0700, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0900, $40, $30, $01, $05
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0b00, $40, $2f, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0d00, $40, $2f, $01, $07
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0f00, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $1100, $40, $30, $01, $00
 	map_actor_end
 Test2EntryPoints_10:
 	; $4785, 9 bytes (map_entries)
@@ -2142,13 +2142,13 @@ CafeteriaMapScripts_10:
 	dw CafeteriaInitScript_10 ; slot 6 InitScript
 CafeteriaActors_10:
 	; $5804, 108 bytes (map_actors)
-	map_actor $0000, $7bd1, $3b00, $3700, $40, $30, $01, $00
-	map_actor $0000, $7bd1, $3d00, $3900, $80, $30, $01, $05
-	map_actor $0000, $7bd1, $3d00, $3b00, $80, $3a, $01, $00
-	map_actor $0000, $7bd1, $2f00, $3100, $00, $3a, $01, $07
-	map_actor $0000, $7bd1, $3300, $3100, $80, $3b, $01, $00
-	map_actor $0000, $7bd1, $3700, $2f00, $00, $3c, $01, $00
-	map_actor $0000, $7bd1, $3b00, $2f00, $80, $3b, $01, $04
+	map_actor $0000, ActorObjDef_10_7bd1, $3b00, $3700, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $3d00, $3900, $80, $30, $01, $05
+	map_actor $0000, ActorObjDef_10_7bd1, $3d00, $3b00, $80, $3a, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $2f00, $3100, $00, $3a, $01, $07
+	map_actor $0000, ActorObjDef_10_7bd1, $3300, $3100, $80, $3b, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $3700, $2f00, $00, $3c, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $3b00, $2f00, $80, $3b, $01, $04
 	map_actor_end
 CafeteriaEntryPoints_10:
 	; $5870, 9 bytes (map_entries)
@@ -2414,23 +2414,23 @@ RestaurantMapScripts_10:
 	dw RestaurantInitScript_10 ; slot 6 InitScript
 RestaurantActors_10:
 	; $5a8e, 248 bytes (map_actors)
-	map_actor $0000, $7bd1, $1100, $1900, $80, $2f, $01, $00
-	map_actor $0000, $7bd1, $2100, $1500, $c0, $2f, $01, $07
-	map_actor $0000, $7bd1, $1600, $1300, $40, $30, $01, $00
-	map_actor $0000, $7bd1, $1d00, $1700, $c0, $31, $01, $00
-	map_actor $0000, $7bd1, $2900, $2900, $00, $4c, $01, $00
-	map_actor $0000, $7bd1, $2100, $1100, $00, $33, $01, $00
-	map_actor $0000, $7bd1, $0900, $0f00, $00, $34, $01, $00
-	map_actor $0000, $7bdb, $0b00, $1900, $80, $30, $01, $06
-	map_actor $0000, $7bd1, $0d00, $0f00, $80, $3a, $01, $00
-	map_actor $0000, $7bd1, $1500, $0b00, $80, $33, $01, $00
-	map_actor $0000, $7bd1, $1d00, $0b00, $80, $3c, $01, $04
-	map_actor $0000, $7bd1, $1b00, $0900, $40, $3b, $01, $00
-	map_actor $0000, $7bd1, $1d00, $0f00, $80, $3c, $01, $00
-	map_actor $0000, $7bd1, $1900, $0f00, $00, $3b, $01, $06
-	map_actor $0000, $7bd1, $2900, $2900, $00, $4f, $01, $00
-	map_actor $0000, $7bd1, $1b00, $1200, $40, $3a, $01, $00
-	map_actor $0000, $7bd1, $1900, $0900, $40, $35, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1100, $1900, $80, $2f, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $2100, $1500, $c0, $2f, $01, $07
+	map_actor $0000, ActorObjDef_10_7bd1, $1600, $1300, $40, $30, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1d00, $1700, $c0, $31, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $2900, $2900, $00, $4c, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $2100, $1100, $00, $33, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0900, $0f00, $00, $34, $01, $00
+	map_actor $0000, ActorObjDef_10_7bdb, $0b00, $1900, $80, $30, $01, $06
+	map_actor $0000, ActorObjDef_10_7bd1, $0d00, $0f00, $80, $3a, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1500, $0b00, $80, $33, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1d00, $0b00, $80, $3c, $01, $04
+	map_actor $0000, ActorObjDef_10_7bd1, $1b00, $0900, $40, $3b, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1d00, $0f00, $80, $3c, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1900, $0f00, $00, $3b, $01, $06
+	map_actor $0000, ActorObjDef_10_7bd1, $2900, $2900, $00, $4f, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1b00, $1200, $40, $3a, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1900, $0900, $40, $35, $01, $00
 	map_actor_end
 RestaurantEntryPoints_10:
 	; $5b86, 17 bytes (map_entries)
@@ -3097,10 +3097,10 @@ AcademyWingMapScripts_10:
 	dw AcademyWingInitScript_10 ; slot 6 InitScript
 AcademyWingActors_10:
 	; $61bf, 66 bytes (map_actors)
-	map_actor $0000, $7bd1, $3f00, $1900, $00, $63, $01, $00
-	map_actor $0000, $7bd1, $1900, $3f00, $00, $36, $01, $00
-	map_actor $0000, $7bd1, $2700, $3240, $40, $74, $01, $00
-	map_actor $0000, $7bd1, $2700, $30c0, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $3f00, $1900, $00, $63, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $1900, $3f00, $00, $36, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $2700, $3240, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $2700, $30c0, $40, $74, $01, $00
 	map_actor_end
 AcademyWingEntryPoints_10:
 	; $6201, 17 bytes (map_entries)
@@ -4014,10 +4014,10 @@ AcademyMainBldgMapScripts_10:
 	dw AcademyMainBldgInitScript_10 ; slot 6 InitScript
 AcademyMainBldgActors_10:
 	; $74b7, 66 bytes (map_actors)
-	map_actor $0000, $7bd1, $1d00, $1780, $40, $3f, $01, $04
-	map_actor $0000, $7bd1, $0e80, $0f00, $80, $40, $01, $00
-	map_actor $0000, $7bd1, $0500, $0f80, $40, $3f, $01, $07
-	map_actor $0000, $7bdb, $2800, $1e00, $40, $41, $01, $03
+	map_actor $0000, ActorObjDef_10_7bd1, $1d00, $1780, $40, $3f, $01, $04
+	map_actor $0000, ActorObjDef_10_7bd1, $0e80, $0f00, $80, $40, $01, $00
+	map_actor $0000, ActorObjDef_10_7bd1, $0500, $0f80, $40, $3f, $01, $07
+	map_actor $0000, ActorObjDef_10_7bdb, $2800, $1e00, $40, $41, $01, $03
 	map_actor_end
 AcademyMainBldgEntryPoints_10:
 	; $74f9, 57 bytes (map_entries)
@@ -4539,7 +4539,10 @@ Func_10_7bb6:
 	inc a ; $7bcf
 Label_10_7bd0:
 	ret ; $7bd0
-	INCBIN "data/bank_010/d_7bd1.bin" ; $7bd1, 40 bytes
+ActorObjDef_10_7bd1:
+	INCBIN "data/bank_010/d_7bd1.bin" ; $7bd1, 10 bytes
+ActorObjDef_10_7bdb:
+	INCBIN "data/bank_010/d_7bdb.bin" ; $7bdb, 30 bytes
 MapScriptNop_10:
 	ret ; $7bf9
 MapScriptClearActiveFlag_10:

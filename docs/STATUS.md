@@ -36,6 +36,15 @@ banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
 with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
 blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
+### Label map_actor objdef sub-tables (2026-07-19)
+
+Every `map_actor` record's 2nd field is a pointer to an actor object-definition
+(`SpawnActorFromTemplate` → `SpawnActor`), but these rendered as bare numbers. 44
+distinct objdefs are referenced across the story banks ($0e-$15/$27), all shared
+and unlabeled. Added generic `ActorObjDef_bb_cccc` labels for each so the records
+read `map_actor $0000, ActorObjDef_0f_7b57, …`; overlapping defs (e.g.
+`$7b2f` inside `$7b25`'s blob) split into separate labeled blobs. Byte-perfect.
+
 ### Fix mis-seeded bank $13 map_actor lists (2026-07-19)
 
 Two TravelingTeam `map_actor` spawn lists (loaded via `ld hl,addr; farcall

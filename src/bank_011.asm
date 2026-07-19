@@ -19,10 +19,10 @@ CenterCourtMapScripts_11:
 	dw CenterCourtInitScript_11 ; slot 6 InitScript
 CenterCourtActors_11:
 	; $4016, 66 bytes (map_actors)
-	map_actor $0000, $7ba9, $0f00, $2e00, $80, $25, $01, $00
-	map_actor $0000, $7ba9, $0d00, $1300, $40, $25, $01, $00
-	map_actor $0000, $7ba9, $1f00, $2e00, $00, $39, $01, $07
-	map_actor $0000, $7ba9, $2100, $2e00, $80, $32, $01, $07
+	map_actor $0000, ActorObjDef_11_7ba9, $0f00, $2e00, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_11_7ba9, $0d00, $1300, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_11_7ba9, $1f00, $2e00, $00, $39, $01, $07
+	map_actor $0000, ActorObjDef_11_7ba9, $2100, $2e00, $80, $32, $01, $07
 	map_actor_end
 CenterCourtEntryPoints_11:
 	; $4058, 25 bytes (map_entries)
@@ -1411,10 +1411,10 @@ Label_11_5a18:
 	jr z, Label_11_5a66 ; $5a2a
 	script_set_position $08, $2500, $0900 ; $5a2c
 	script_face $08, $00 ; $5a37
-	script_set_actor_script $08, $7ba9 ; $5a3e
+	script_set_actor_script $08, ActorObjDef_11_7ba9 ; $5a3e
 	script_set_position $09, $2500, $0b00 ; $5a49
 	script_face $09, $00 ; $5a54
-	script_set_actor_script $09, $7ba9 ; $5a5b
+	script_set_actor_script $09, ActorObjDef_11_7ba9 ; $5a5b
 Label_11_5a66:
 	ld a, [wStoryModeEntryPoint] ; $5a66
 	cp a, $0f ; $5a69
@@ -1597,7 +1597,7 @@ Label_11_5fbd:
 	script_move_player $1900, $0d00 ; $5fc6
 	script_set_position $08, $2500, $0900 ; $5fd0
 	script_face $08, $00 ; $5fdb
-	script_set_actor_script $08, $7ba9 ; $5fe2
+	script_set_actor_script $08, ActorObjDef_11_7ba9 ; $5fe2
 	script_set_position $09, $2500, $0b00 ; $5fed
 	script_face $09, $00 ; $5ff8
 	script_set_position $03, $1300, $1f00 ; $5fff
@@ -2895,6 +2895,7 @@ Func_11_7b6b:
 	script_set_actor_script $0c, $7ca9 ; $7b92
 	script_set_actor_script $0d, $7d10 ; $7b9d
 	ret ; $7ba8
+ActorObjDef_11_7ba9:
 	INCBIN "data/bank_011/d_7ba9.bin" ; $7ba9, 40 bytes
 Func_11_7bd1:
 	ret ; $7bd1

@@ -17,18 +17,18 @@ TrainingGymMapScripts_0e:
 	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, $7c6e, $2500, $0d00, $40, $42, $01, $00
-	map_actor $0000, $7c6e, $2900, $0f00, $40, $45, $01, $05
-	map_actor $0000, $7c6e, $2500, $1500, $40, $43, $01, $07
-	map_actor $0000, $7c6e, $2900, $1300, $40, $44, $01, $05
-	map_actor $0000, $7c6e, $2500, $0500, $40, $47, $01, $07
-	map_actor $0000, $7c6e, $2700, $0700, $40, $46, $01, $00
-	map_actor $0000, $7c6e, $2900, $0500, $40, $47, $01, $00
-	map_actor $0000, $4712, $2100, $0c00, $40, $3b, $01, $00
-	map_actor $0000, $48c9, $2c00, $0b00, $80, $3c, $01, $00
-	map_actor $0000, $4a80, $2d60, $1700, $00, $3b, $01, $06
-	map_actor $0000, $5225, $1900, $1100, $c0, $39, $01, $06
-	map_actor $0000, $7c6e, $0d00, $1300, $00, $39, $01, $07
+	map_actor $0000, ActorObjDef_0e_7c6e, $2500, $0d00, $40, $42, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $2900, $0f00, $40, $45, $01, $05
+	map_actor $0000, ActorObjDef_0e_7c6e, $2500, $1500, $40, $43, $01, $07
+	map_actor $0000, ActorObjDef_0e_7c6e, $2900, $1300, $40, $44, $01, $05
+	map_actor $0000, ActorObjDef_0e_7c6e, $2500, $0500, $40, $47, $01, $07
+	map_actor $0000, ActorObjDef_0e_7c6e, $2700, $0700, $40, $46, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $2900, $0500, $40, $47, $01, $00
+	map_actor $0000, ActorObjDef_0e_4712, $2100, $0c00, $40, $3b, $01, $00
+	map_actor $0000, ActorObjDef_0e_48c9, $2c00, $0b00, $80, $3c, $01, $00
+	map_actor $0000, ActorObjDef_0e_4a80, $2d60, $1700, $00, $3b, $01, $06
+	map_actor $0000, ActorObjDef_0e_5225, $1900, $1100, $c0, $39, $01, $06
+	map_actor $0000, ActorObjDef_0e_7c6e, $0d00, $1300, $00, $39, $01, $07
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
@@ -527,7 +527,12 @@ Label_0e_46e9:
 	script_set_position $09, $2500, $0700 ; $46ff
 	script_set_anim $07, $02 ; $470a
 	ret ; $4711
-	INCBIN "data/bank_00e/d_4712.bin" ; $4712, 1317 bytes
+ActorObjDef_0e_4712:
+	INCBIN "data/bank_00e/d_4712.bin" ; $4712, 439 bytes
+ActorObjDef_0e_48c9:
+	INCBIN "data/bank_00e/d_48c9.bin" ; $48c9, 439 bytes
+ActorObjDef_0e_4a80:
+	INCBIN "data/bank_00e/d_4a80.bin" ; $4a80, 439 bytes
 	ld a, $0c ; $4c37
 	farcall FarPtr_GetActorStateAddr ; $4c39
 	ld c, l ; $4c3c
@@ -1159,6 +1164,7 @@ Func_0e_520f:
 	ld [hl], a ; $5223
 Label_0e_5224:
 	ret ; $5224
+ActorObjDef_0e_5225:
 	INCBIN "data/bank_00e/d_5225.bin" ; $5225, 35 bytes
 MarioWorldMapScripts_0e:
 	; $5248, 14 bytes (map_tree)
@@ -1171,24 +1177,24 @@ MarioWorldMapScripts_0e:
 	dw MarioWorldInitScript_0e ; slot 6 InitScript
 MarioWorldActors_0e:
 	; $5256, 262 bytes (map_actors)
-	map_actor $0000, $7c6e, $1500, $3d00, $00, $4c, $01, $00
-	map_actor $0000, $7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, $7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, $7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, $7c6e, $1500, $3d00, $00, $4e, $01, $00
-	map_actor $0000, $7c6e, $1200, $1300, $40, $2e, $01, $00
-	map_actor $0000, $7c6e, $1800, $1200, $40, $2c, $01, $00
-	map_actor $0000, $7c6e, $1800, $0f40, $40, $6f, $01, $00
-	map_actor $0000, $7c6e, $1800, $0d00, $40, $6d, $01, $00
-	map_actor $0000, $7c6e, $1700, $1400, $40, $6e, $01, $00
-	map_actor $0000, $7c6e, $0a00, $0f00, $40, $73, $01, $00
-	map_actor $0000, $7c6e, $0c00, $1100, $40, $2b, $01, $00
-	map_actor $0000, $7c6e, $0c00, $0f00, $40, $2d, $01, $00
-	map_actor $0000, $7c6e, $0c00, $0d00, $40, $48, $01, $00
-	map_actor $0000, $7c6e, $0e00, $0b00, $40, $72, $01, $00
-	map_actor $0000, $7c6e, $1600, $0b00, $40, $2a, $01, $00
-	map_actor $0000, $7c6e, $0f00, $1f00, $40, $70, $01, $00
-	map_actor $0000, $7c6e, $1500, $1f00, $40, $71, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $4c, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $4e, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1200, $1300, $40, $2e, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1800, $1200, $40, $2c, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1800, $0f40, $40, $6f, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1800, $0d00, $40, $6d, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1400, $40, $6e, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0a00, $0f00, $40, $73, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0c00, $1100, $40, $2b, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0c00, $0f00, $40, $2d, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0c00, $0d00, $40, $48, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0e00, $0b00, $40, $72, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1600, $0b00, $40, $2a, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0f00, $1f00, $40, $70, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $1f00, $40, $71, $01, $00
 	map_actor_end
 MarioWorldEntryPoints_0e:
 	; $535c, 41 bytes (map_entries)
@@ -1613,7 +1619,7 @@ MarioWorldArrivalDoubles:
 	test_flag $16, 3 ; $5bbf
 	jp nz, Label_0e_69c5 ; $5bc2
 Label_0e_5bc5:
-	script_set_actor_script $02, $7c6e ; $5bc5
+	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $5bc5
 	script_set_position $00, $3f00, $3f00 ; $5bd0
 	script_set_position $02, $3f00, $3f00 ; $5bdb
 	script_fade_in $04 ; $5be6
@@ -1907,7 +1913,7 @@ Func_0e_633d:
 	script_set_speed $00, $0010 ; $6390
 	jp PromptExhibitionMatch ; $6398
 Label_0e_639b:
-	script_set_actor_script $02, $7c6e ; $639b
+	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $639b
 	call MoveDoublesPartnerToPlayer ; $63a6
 	script_face $08, $40 ; $63a9
 	script_set_actor_script $00, $630b ; $63b0
@@ -1933,7 +1939,7 @@ Func_0e_63f4:
 	script_face $08, $40 ; $6435
 	jp PromptExhibitionMatch ; $643c
 Label_0e_643f:
-	script_set_actor_script $02, $7c6e ; $643f
+	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $643f
 	call MoveDoublesPartnerToPlayer ; $644a
 	script_face $08, $40 ; $644d
 	script_set_actor_script $00, $63da ; $6454
@@ -1958,7 +1964,7 @@ Func_0e_64a4:
 	script_face $08, $40 ; $64e0
 	jp PromptExhibitionMatch ; $64e7
 Label_0e_64ea:
-	script_set_actor_script $02, $7c6e ; $64ea
+	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $64ea
 	call MoveDoublesPartnerToPlayer ; $64f5
 	script_face $08, $40 ; $64f8
 	script_set_actor_script $00, $647e ; $64ff
@@ -1983,7 +1989,7 @@ Func_0e_654f:
 	script_face $08, $40 ; $658b
 	jp PromptExhibitionMatch ; $6592
 Label_0e_6595:
-	script_set_actor_script $02, $7c6e ; $6595
+	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $6595
 	call MoveDoublesPartnerToPlayer ; $65a0
 	script_face $08, $40 ; $65a3
 	script_set_actor_script $00, $6529 ; $65aa
@@ -2585,20 +2591,20 @@ SpecialCourtMapScripts_0e:
 	dw SpecialCourtInitScript_0e ; slot 6 InitScript
 SpecialCourtActors_0e:
 	; $7604, 206 bytes (map_actors)
-	map_actor $0000, $7c6e, $0f00, $0500, $40, $2e, $01, $00
-	map_actor $0000, $7c6e, $1700, $0d00, $80, $6d, $01, $00
-	map_actor $0000, $7c6e, $1700, $0f00, $80, $6f, $01, $00
-	map_actor $0000, $7c6e, $1700, $1100, $80, $2c, $01, $00
-	map_actor $0000, $7c6e, $1700, $1900, $80, $6e, $01, $00
-	map_actor $0000, $7c6e, $0480, $0f00, $00, $73, $01, $00
-	map_actor $0000, $7c6e, $0500, $1100, $00, $2d, $01, $00
-	map_actor $0000, $7c6e, $0500, $1900, $00, $48, $01, $00
-	map_actor $0000, $7c6e, $0500, $1b00, $00, $2b, $01, $00
-	map_actor $0000, $7c6e, $0d00, $0500, $40, $72, $01, $00
-	map_actor $0000, $7c6e, $0d00, $1700, $40, $2a, $01, $00
-	map_actor $0000, $7c6e, $0500, $1f00, $c0, $70, $01, $00
-	map_actor $0000, $7c6e, $0500, $0d00, $00, $71, $01, $00
-	map_actor $0000, $7c6e, $1700, $1b00, $80, $71, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0f00, $0500, $40, $2e, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $0d00, $80, $6d, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $0f00, $80, $6f, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1100, $80, $2c, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1900, $80, $6e, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0480, $0f00, $00, $73, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1100, $00, $2d, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1900, $00, $48, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1b00, $00, $2b, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0d00, $0500, $40, $72, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0d00, $1700, $40, $2a, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1f00, $c0, $70, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $0d00, $00, $71, $01, $00
+	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1b00, $80, $71, $01, $00
 	map_actor_end
 SpecialCourtEntryPoints_0e:
 	; $76d2, 9 bytes (map_entries)
@@ -2747,7 +2753,7 @@ Label_0e_7927:
 	farcall FarPtr_WaitActorScriptDone ; $7a0d
 	script_set_speed $0e, $0020 ; $7a10
 	script_set_actor_script $0e, $7b24 ; $7a18
-	script_set_actor_script $02, $7c6e ; $7a23
+	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $7a23
 	script_move_target $02, $0f00, $1b00 ; $7a2e
 	ld a, $0e ; $7a39
 	farcall FarPtr_WaitActorScriptDone ; $7a3b
@@ -2886,6 +2892,7 @@ Label_0e_7c5b:
 	ld [$c294], a ; $7c67
 	ld [wStoryModeExitLocationRequest], a ; $7c6a
 	ret ; $7c6d
+ActorObjDef_0e_7c6e:
 	INCBIN "data/bank_00e/d_7c6e.bin" ; $7c6e, 40 bytes
 MapScriptNop_0e:
 	ret ; $7c96

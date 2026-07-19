@@ -17,10 +17,10 @@ DormEntranceMapScripts_12:
 	dw DormEntranceInitScript_12 ; slot 6 InitScript
 DormEntranceActors_12:
 	; $4014, 66 bytes (map_actors)
-	map_actor $0000, $7a89, $0100, $0100, $40, $49, $01, $00
-	map_actor $0000, $7a89, $0100, $0100, $40, $29, $01, $00
-	map_actor $0000, $7a89, $0100, $0100, $40, $4c, $01, $00
-	map_actor $0000, $7a89, $0100, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $29, $01, $00
+	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $4d, $01, $00
 	map_actor_end
 DormEntranceEntryPoints_12:
 	; $4056, 25 bytes (map_entries)
@@ -1309,50 +1309,50 @@ SeniorCourtStoryCmds_12:
 	dw SeniorCourtInitScript_12 ; slot 6 InitScript
 SeniorCourtActors_12:
 	; $5305, 618 bytes (map_actors)
-	map_actor $0000, $7a89, $2900, $1900, $80, $49, $01, $00
-	map_actor $0000, $79e3, $3500, $1e00, $c0, $65, $06, $07
-	map_actor $0000, $7c59, $3200, $1e00, $00, $64, $01, $05
-	map_actor $0000, $7a93, $3300, $1100, $80, $69, $01, $04
-	map_actor $0000, $7a89, $2900, $1300, $80, $66, $01, $06
-	map_actor $0000, $79e3, $0b00, $1500, $c0, $6b, $01, $05
-	map_actor $0000, $7c66, $0b00, $1300, $40, $67, $01, $03
-	map_actor $0000, $7bf0, $1500, $1700, $c0, $68, $01, $06
-	map_actor $0000, $7b89, $1300, $0b00, $40, $6a, $01, $03
-	map_actor $05e0, $7a93, $0900, $0b00, $40, $29, $01, $00
-	map_actor $0000, $7abf, $2200, $1300, $40, $54, $01, $00
-	map_actor $0000, $7b22, $2500, $1d00, $c0, $54, $01, $04
+	map_actor $0000, ActorObjDef_12_7a89, $2900, $1900, $80, $49, $01, $00
+	map_actor $0000, ActorObjDef_12_79e3, $3500, $1e00, $c0, $65, $06, $07
+	map_actor $0000, ActorObjDef_12_7c59, $3200, $1e00, $00, $64, $01, $05
+	map_actor $0000, ActorObjDef_12_7a93, $3300, $1100, $80, $69, $01, $04
+	map_actor $0000, ActorObjDef_12_7a89, $2900, $1300, $80, $66, $01, $06
+	map_actor $0000, ActorObjDef_12_79e3, $0b00, $1500, $c0, $6b, $01, $05
+	map_actor $0000, ActorObjDef_12_7c66, $0b00, $1300, $40, $67, $01, $03
+	map_actor $0000, ActorObjDef_12_7bf0, $1500, $1700, $c0, $68, $01, $06
+	map_actor $0000, ActorObjDef_12_7b89, $1300, $0b00, $40, $6a, $01, $03
+	map_actor $05e0, ActorObjDef_12_7a93, $0900, $0b00, $40, $29, $01, $00
+	map_actor $0000, ActorObjDef_12_7abf, $2200, $1300, $40, $54, $01, $00
+	map_actor $0000, ActorObjDef_12_7b22, $2500, $1d00, $c0, $54, $01, $04
 	map_actor_end
-	map_actor $0000, $7a89, $2d00, $1900, $40, $49, $01, $00
-	map_actor $0000, $7a89, $2900, $1b00, $80, $65, $01, $07
-	map_actor $0000, $7c59, $3900, $1d00, $80, $64, $01, $05
-	map_actor $0000, $7a89, $2d00, $1300, $00, $69, $01, $04
-	map_actor $0000, $7a89, $2b00, $1100, $80, $66, $01, $06
-	map_actor $0000, $79e3, $0a00, $1500, $c0, $6b, $01, $05
-	map_actor $0000, $7a89, $0300, $1700, $00, $67, $01, $03
-	map_actor $0000, $7c59, $1200, $0d00, $00, $68, $01, $06
-	map_actor $0000, $79ea, $1500, $0d00, $40, $6a, $06, $03
-	map_actor $05e0, $7a93, $0300, $0b00, $40, $29, $01, $00
-	map_actor $0000, $7abf, $2200, $1100, $40, $54, $01, $05
-	map_actor $0000, $7b22, $2600, $1d00, $c0, $54, $01, $00
-	map_actor $0000, $7b89, $3200, $1100, $40, $54, $01, $00
-	map_actor $0000, $7bf0, $3600, $1d00, $c0, $54, $01, $06
-	map_actor $0000, $7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1900, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_12_7a89, $2900, $1b00, $80, $65, $01, $07
+	map_actor $0000, ActorObjDef_12_7c59, $3900, $1d00, $80, $64, $01, $05
+	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1300, $00, $69, $01, $04
+	map_actor $0000, ActorObjDef_12_7a89, $2b00, $1100, $80, $66, $01, $06
+	map_actor $0000, ActorObjDef_12_79e3, $0a00, $1500, $c0, $6b, $01, $05
+	map_actor $0000, ActorObjDef_12_7a89, $0300, $1700, $00, $67, $01, $03
+	map_actor $0000, ActorObjDef_12_7c59, $1200, $0d00, $00, $68, $01, $06
+	map_actor $0000, ActorObjDef_12_79ea, $1500, $0d00, $40, $6a, $06, $03
+	map_actor $05e0, ActorObjDef_12_7a93, $0300, $0b00, $40, $29, $01, $00
+	map_actor $0000, ActorObjDef_12_7abf, $2200, $1100, $40, $54, $01, $05
+	map_actor $0000, ActorObjDef_12_7b22, $2600, $1d00, $c0, $54, $01, $00
+	map_actor $0000, ActorObjDef_12_7b89, $3200, $1100, $40, $54, $01, $00
+	map_actor $0000, ActorObjDef_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
+	map_actor $0000, ActorObjDef_12_7a89, $4000, $4000, $c0, $53, $01, $00
 	map_actor_end
-	map_actor $0000, $7a89, $2d00, $1900, $40, $49, $01, $00
-	map_actor $0000, $79e3, $2d00, $1100, $c0, $65, $06, $07
-	map_actor $0000, $7c59, $2d00, $0f00, $40, $64, $01, $05
-	map_actor $0000, $7a89, $3900, $1d00, $80, $69, $01, $04
-	map_actor $0000, $7a89, $3900, $1b00, $80, $66, $01, $06
-	map_actor $0000, $79e3, $2300, $1e00, $c0, $6b, $01, $05
-	map_actor $0000, $7a89, $2300, $1c00, $40, $67, $01, $03
-	map_actor $0000, $7a89, $0900, $0700, $00, $68, $01, $06
-	map_actor $0000, $7a89, $0b00, $0700, $80, $6a, $01, $03
-	map_actor $05e0, $7a93, $0300, $0b00, $40, $29, $01, $00
-	map_actor $0000, $7abf, $1200, $0b00, $40, $54, $01, $05
-	map_actor $0000, $7b22, $1600, $1600, $c0, $54, $01, $00
-	map_actor $0000, $7b89, $3200, $1100, $40, $54, $01, $00
-	map_actor $0000, $7bf0, $3600, $1d00, $c0, $54, $01, $06
-	map_actor $0000, $7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1900, $40, $49, $01, $00
+	map_actor $0000, ActorObjDef_12_79e3, $2d00, $1100, $c0, $65, $06, $07
+	map_actor $0000, ActorObjDef_12_7c59, $2d00, $0f00, $40, $64, $01, $05
+	map_actor $0000, ActorObjDef_12_7a89, $3900, $1d00, $80, $69, $01, $04
+	map_actor $0000, ActorObjDef_12_7a89, $3900, $1b00, $80, $66, $01, $06
+	map_actor $0000, ActorObjDef_12_79e3, $2300, $1e00, $c0, $6b, $01, $05
+	map_actor $0000, ActorObjDef_12_7a89, $2300, $1c00, $40, $67, $01, $03
+	map_actor $0000, ActorObjDef_12_7a89, $0900, $0700, $00, $68, $01, $06
+	map_actor $0000, ActorObjDef_12_7a89, $0b00, $0700, $80, $6a, $01, $03
+	map_actor $05e0, ActorObjDef_12_7a93, $0300, $0b00, $40, $29, $01, $00
+	map_actor $0000, ActorObjDef_12_7abf, $1200, $0b00, $40, $54, $01, $05
+	map_actor $0000, ActorObjDef_12_7b22, $1600, $1600, $c0, $54, $01, $00
+	map_actor $0000, ActorObjDef_12_7b89, $3200, $1100, $40, $54, $01, $00
+	map_actor $0000, ActorObjDef_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
+	map_actor $0000, ActorObjDef_12_7a89, $4000, $4000, $c0, $53, $01, $00
 	map_actor_end
 SeniorCourtEntryPoints_12:
 	; $556f, 17 bytes (map_entries)
@@ -2451,8 +2451,8 @@ StartSeniorCourtPairARally:
 	script_move_target $0e, $2500, $1d00 ; $6474
 	script_wait_move $0d ; $647f
 	script_wait_move $0e ; $6484
-	script_set_actor_script $0d, $7abf ; $6489
-	script_set_actor_script $0e, $7b22 ; $6494
+	script_set_actor_script $0d, ActorObjDef_12_7abf ; $6489
+	script_set_actor_script $0e, ActorObjDef_12_7b22 ; $6494
 	ret ; $649f
 StartSeniorCourtPairBRally:
 	script_move_target $0f, $3200, $1100 ; $64a0
@@ -2460,8 +2460,8 @@ StartSeniorCourtPairBRally:
 	script_wait_move $0f ; $64b6
 	script_wait_move $10 ; $64bb
 	script_face $10, $c0 ; $64c0
-	script_set_actor_script $0f, $7b89 ; $64c7
-	script_set_actor_script $10, $7bf0 ; $64d2
+	script_set_actor_script $0f, ActorObjDef_12_7b89 ; $64c7
+	script_set_actor_script $10, ActorObjDef_12_7bf0 ; $64d2
 	ret ; $64dd
 RunSeniorRankingMatchIntro:
 	ld a, [$c2b1] ; $64de
@@ -2759,7 +2759,7 @@ ResumeSeniorOpponentScripts:
 	script_set_actor_script $04, $79a2 ; $6a9c
 	ld a, $05 ; $6aa7
 	farcall FarPtr_WaitActorScriptDone ; $6aa9
-	script_set_actor_script $05, $7c59 ; $6aac
+	script_set_actor_script $05, ActorObjDef_12_7c59 ; $6aac
 	ret ; $6ab7
 	script_set_actor_script $07, $6c29 ; $6ab8
 	ret ; $6ac3
@@ -3373,7 +3373,11 @@ FadeInSeniorCourtNearPairB:
 	script_fade_in $20 ; $7824
 	call WaitFadeEnd ; $7829
 	ret ; $782c
-	INCBIN "data/bank_012/d_782d.bin" ; $782d, 571 bytes
+	INCBIN "data/bank_012/d_782d.bin" ; $782d, 438 bytes
+ActorObjDef_12_79e3:
+	INCBIN "data/bank_012/d_79e3.bin" ; $79e3, 7 bytes
+ActorObjDef_12_79ea:
+	INCBIN "data/bank_012/d_79ea.bin" ; $79ea, 126 bytes
 PushTextArgFetchedString:
 	ldh a, [hWramBank] ; $7a68
 	push af ; $7a6a
@@ -3386,10 +3390,25 @@ PushTextArgFetchedString:
 	pop af ; $7a83
 	wram_bank ; $7a84
 	ret ; $7a88
-	INCBIN "data/bank_012/d_7a89.bin" ; $7a89, 40 bytes
+ActorObjDef_12_7a89:
+	INCBIN "data/bank_012/d_7a89.bin" ; $7a89, 10 bytes
+ActorObjDef_12_7a93:
+	INCBIN "data/bank_012/d_7a93.bin" ; $7a93, 30 bytes
 Func_12_7ab1:
 	ret ; $7ab1
-	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 451 bytes
+	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 13 bytes
+ActorObjDef_12_7abf:
+	INCBIN "data/bank_012/d_7abf.bin" ; $7abf, 99 bytes
+ActorObjDef_12_7b22:
+	INCBIN "data/bank_012/d_7b22.bin" ; $7b22, 103 bytes
+ActorObjDef_12_7b89:
+	INCBIN "data/bank_012/d_7b89.bin" ; $7b89, 103 bytes
+ActorObjDef_12_7bf0:
+	INCBIN "data/bank_012/d_7bf0.bin" ; $7bf0, 105 bytes
+ActorObjDef_12_7c59:
+	INCBIN "data/bank_012/d_7c59.bin" ; $7c59, 13 bytes
+ActorObjDef_12_7c66:
+	INCBIN "data/bank_012/d_7c66.bin" ; $7c66, 15 bytes
 ComputeSeniorCourtStageB:
 	test_flag $05, 7 ; $7c75
 	jr nz, Label_12_7c9c ; $7c78

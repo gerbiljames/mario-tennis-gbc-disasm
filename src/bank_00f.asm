@@ -17,18 +17,18 @@ SmallCharTestMapScripts_0f:
 	dw SmallCharTestInitScript_0f ; slot 6 InitScript
 SmallCharTestActors_0f:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, $7b57, $0700, $0300, $40, $26, $01, $00
-	map_actor $0000, $7b57, $0d00, $0300, $40, $2b, $01, $00
-	map_actor $0000, $7b57, $0700, $0700, $40, $2c, $01, $00
-	map_actor $0000, $7b57, $0d00, $0700, $40, $2d, $01, $00
-	map_actor $0000, $7b57, $0500, $0d00, $40, $70, $01, $00
-	map_actor $0000, $7b57, $0900, $0d00, $40, $71, $01, $00
-	map_actor $0000, $7b57, $0d00, $0d00, $40, $72, $01, $00
-	map_actor $0000, $7b57, $1100, $0d00, $40, $73, $01, $00
-	map_actor $0000, $7b57, $0500, $1100, $40, $6d, $01, $00
-	map_actor $0000, $7b57, $0900, $1100, $40, $6e, $01, $00
-	map_actor $0000, $7b57, $0d00, $1100, $40, $48, $01, $00
-	map_actor $0000, $7b57, $1100, $1100, $40, $2b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0700, $0300, $40, $26, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0d00, $0300, $40, $2b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0700, $0700, $40, $2c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0d00, $0700, $40, $2d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0500, $0d00, $40, $70, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0900, $0d00, $40, $71, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0d00, $0d00, $40, $72, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $0d00, $40, $73, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0500, $1100, $40, $6d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0900, $1100, $40, $6e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0d00, $1100, $40, $48, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1100, $40, $2b, $01, $00
 	map_actor_end
 SmallCharTestEntryPoints_0f:
 	; $40c6, 9 bytes (map_entries)
@@ -159,49 +159,49 @@ AwardsCeremonyMapScripts_0f:
 	dw AwardsCeremonyInitScript_0f ; slot 6 InitScript
 AwardsCeremonyActors_0f:
 	; $41e9, 290 bytes (map_actors)
-	map_actor $0000, $7b57, $0b00, $2700, $c0, $5c, $01, $00
-	map_actor $0000, $7b57, $0d00, $2700, $c0, $61, $01, $00
-	map_actor $0000, $7b57, $0e80, $1b00, $80, $62, $01, $00
-	map_actor $0000, $7b57, $0800, $1f00, $00, $5d, $01, $00
-	map_actor $0000, $7b57, $0700, $2100, $00, $5e, $01, $00
-	map_actor $0000, $7b57, $0800, $1d00, $00, $5f, $01, $00
-	map_actor $0000, $7b57, $0f00, $1d00, $80, $24, $01, $00
-	map_actor $0000, $7b57, $0980, $1b00, $00, $23, $01, $00
-	map_actor $0000, $7b57, $0800, $1940, $00, $25, $01, $05
-	map_actor $0000, $7b57, $0800, $1700, $00, $63, $01, $00
-	map_actor $0000, $7b57, $0ec0, $1780, $40, $74, $01, $00
-	map_actor $0000, $7b57, $1040, $17c0, $40, $74, $01, $00
-	map_actor $0000, $7b57, $1180, $17c0, $40, $74, $01, $00
-	map_actor $0000, $7b57, $0f00, $1600, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1100, $2100, $80, $5b, $01, $00
-	map_actor $0000, $7b57, $1000, $1f00, $80, $5a, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $4e, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $26, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0b00, $2700, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0d00, $2700, $c0, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0e80, $1b00, $80, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1f00, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0700, $2100, $00, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1d00, $00, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1d00, $80, $24, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0980, $1b00, $00, $23, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1940, $00, $25, $01, $05
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1700, $00, $63, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0ec0, $1780, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1040, $17c0, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1180, $17c0, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1600, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $2100, $80, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1000, $1f00, $80, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $4e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $26, $01, $00
 	map_actor_end
 AwardsCeremonyActorsDoubles_0f:
 	; $430b, 290 bytes (map_actors)
-	map_actor $0000, $7b57, $0f00, $1b00, $80, $5c, $01, $00
-	map_actor $0000, $7b57, $0d00, $2700, $c0, $61, $01, $00
-	map_actor $0000, $7b57, $0d00, $2900, $c0, $62, $01, $00
-	map_actor $0000, $7b57, $0800, $1f00, $00, $5d, $01, $00
-	map_actor $0000, $7b57, $0700, $2100, $00, $5e, $01, $00
-	map_actor $0000, $7b57, $0800, $1d00, $00, $5f, $01, $00
-	map_actor $0000, $7b57, $0f00, $1d00, $80, $24, $01, $00
-	map_actor $0000, $7b57, $0900, $1b00, $00, $23, $01, $00
-	map_actor $0000, $7b57, $0800, $1940, $00, $25, $01, $05
-	map_actor $0000, $7b57, $0800, $1700, $00, $63, $01, $00
-	map_actor $0000, $7b57, $0f00, $1780, $40, $74, $01, $00
-	map_actor $0000, $7b57, $1100, $17c0, $40, $74, $01, $00
-	map_actor $0000, $7b57, $2900, $2900, $40, $74, $01, $00
-	map_actor $0000, $7b57, $0f00, $1600, $80, $25, $01, $00
-	map_actor $0000, $7b57, $2f00, $2100, $80, $5b, $01, $00
-	map_actor $0000, $7b57, $1000, $2000, $80, $5a, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $4e, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, $7b57, $fd00, $0100, $40, $26, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1b00, $80, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0d00, $2700, $c0, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0d00, $2900, $c0, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1f00, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0700, $2100, $00, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1d00, $00, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1d00, $80, $24, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0900, $1b00, $00, $23, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1940, $00, $25, $01, $05
+	map_actor $0000, ActorObjDef_0f_7b57, $0800, $1700, $00, $63, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1780, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $17c0, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $2900, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1600, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2f00, $2100, $80, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1000, $2000, $80, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $4e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $fd00, $0100, $40, $26, $01, $00
 	map_actor_end
 AwardsCeremonyEntryPoints_0f:
 	; $442d, 25 bytes (map_entries)
@@ -1523,20 +1523,20 @@ TournamentMapScripts_0f:
 	dw TournamentInitScript_0f ; slot 6 InitScript
 TournamentActors_0f:
 	; $5fa2, 206 bytes (map_actors)
-	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $0c00, $00, $25, $01, $00
-	map_actor $0000, $7b57, $2300, $1100, $c0, $5c, $01, $00
-	map_actor $0000, $7b75, $2300, $1700, $c0, $5b, $01, $00
-	map_actor $0000, $7b57, $2100, $1100, $00, $5a, $01, $00
-	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, $7b57, $1100, $1500, $40, $5d, $01, $00
-	map_actor $0000, $7b57, $1900, $1300, $40, $60, $01, $00
-	map_actor $0000, $7b57, $1700, $1300, $40, $61, $01, $00
-	map_actor $0000, $7b57, $0f00, $1300, $40, $62, $01, $00
-	map_actor $0000, $7b57, $1900, $1500, $40, $5e, $01, $00
-	map_actor $0000, $7b57, $1700, $1500, $40, $1e, $01, $00
-	map_actor $0000, $7b57, $1100, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $0c00, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b75, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2100, $1100, $00, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1500, $40, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1900, $1300, $40, $60, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1300, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1300, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1900, $1500, $40, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1500, $40, $1e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1300, $40, $1f, $01, $00
 	map_actor_end
 TournamentEntryPoints_0f:
 	; $6070, 65 bytes (map_entries)
@@ -1962,9 +1962,9 @@ Label_0f_65a6:
 	ret ; $65c1
 IslandOpenRoundActors_0f:
 	; $65c2, 52 bytes (map_actors)
-	map_actor $0000, $7b57, $1c00, $2c00, $c0, $5c, $01, $00
-	map_actor $0000, $7b57, $1c00, $2f00, $c0, $5a, $01, $00
-	map_actor $0000, $7b57, $1d00, $3100, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1c00, $2c00, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1c00, $2f00, $c0, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $3100, $c0, $5b, $01, $00
 	map_actor_end
 IslandOpenRoundScripts_0f:
 	; $65f6, 25 bytes (map_scripts)
@@ -2095,20 +2095,20 @@ Label_0f_6702:
 	ret ; $6713
 IslandOpenRound1Actors_0f:
 	; $6714, 206 bytes (map_actors)
-	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, $7b57, $1900, $1500, $40, $5c, $01, $00
-	map_actor $0000, $7b57, $1900, $1300, $40, $5b, $01, $00
-	map_actor $0000, $7b57, $1100, $1300, $40, $5a, $01, $00
-	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, $7b57, $1100, $1500, $40, $5f, $01, $00
-	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, $7b57, $1700, $1300, $40, $61, $01, $00
-	map_actor $0000, $7b57, $0f00, $1300, $40, $62, $01, $00
-	map_actor $0000, $7b57, $1d00, $1500, $40, $5e, $01, $00
-	map_actor $0000, $7b57, $1700, $1500, $40, $1e, $01, $00
-	map_actor $0000, $7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1900, $1500, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1900, $1300, $40, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1300, $40, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1500, $40, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1300, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1300, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1500, $40, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1500, $40, $1e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7a73, $2900, $1300, $40, $1f, $01, $00
 	map_actor_end
 IslandOpenRound1Scripts_0f:
 	; $67e2, 105 bytes (map_scripts)
@@ -2128,20 +2128,20 @@ IslandOpenRound1Scripts_0f:
 	db $ff
 IslandOpenRound2Actors_0f:
 	; $684b, 206 bytes (map_actors)
-	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, $7b57, $1700, $1500, $40, $5c, $01, $00
-	map_actor $0000, $7b75, $2300, $1700, $c0, $5b, $01, $00
-	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, $7b57, $1100, $1500, $40, $5a, $01, $00
-	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, $7b57, $1900, $1500, $40, $61, $01, $00
-	map_actor $0000, $7b61, $0700, $1f00, $40, $62, $01, $00
-	map_actor $0000, $7b57, $1d00, $1300, $00, $5e, $01, $00
-	map_actor $0000, $7b57, $0500, $2100, $40, $1e, $01, $00
-	map_actor $0000, $7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1500, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b75, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1500, $40, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1900, $1500, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b61, $0700, $1f00, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1300, $00, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0500, $2100, $40, $1e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7a73, $2900, $1300, $40, $1f, $01, $00
 	map_actor_end
 IslandOpenRound2Scripts_0f:
 	; $6919, 105 bytes (map_scripts)
@@ -2161,20 +2161,20 @@ IslandOpenRound2Scripts_0f:
 	db $ff
 IslandOpenRound3Actors_0f:
 	; $6982, 206 bytes (map_actors)
-	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $7b57, $0e00, $0400, $00, $25, $01, $00
-	map_actor $0000, $7b57, $2300, $1100, $c0, $5c, $01, $00
-	map_actor $0000, $7b75, $2300, $1700, $c0, $5b, $01, $00
-	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, $7b57, $1100, $1500, $40, $61, $01, $00
-	map_actor $0000, $7b57, $2100, $1100, $00, $5a, $01, $00
-	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, $7b61, $0700, $1f00, $40, $62, $01, $00
-	map_actor $0000, $7b57, $1d00, $1300, $00, $5e, $01, $00
-	map_actor $0000, $7b57, $0500, $2100, $40, $1e, $01, $00
-	map_actor $0000, $7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0e00, $0400, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b75, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1500, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2100, $1100, $00, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b61, $0700, $1f00, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1300, $00, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0500, $2100, $40, $1e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7a73, $2900, $1300, $40, $1f, $01, $00
 	map_actor_end
 IslandOpenRound3Scripts_0f:
 	; $6a50, 105 bytes (map_scripts)
@@ -2194,19 +2194,19 @@ IslandOpenRound3Scripts_0f:
 	db $ff
 IslandOpenRound1ActorsDoubles_0f:
 	; $6ab9, 192 bytes (map_actors)
-	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, $7b57, $2300, $1100, $c0, $5c, $01, $00
-	map_actor $0000, $7b75, $2300, $1700, $00, $5a, $01, $00
-	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, $7b57, $0f00, $1300, $40, $5d, $01, $00
-	map_actor $0000, $7b57, $1100, $1300, $40, $5e, $01, $00
-	map_actor $0000, $7b57, $1700, $1300, $c0, $61, $01, $00
-	map_actor $0000, $7a50, $1900, $10c0, $80, $62, $01, $00
-	map_actor $0000, $7b57, $1700, $1500, $40, $1f, $01, $00
-	map_actor $0000, $7b57, $1900, $1500, $40, $1e, $01, $05
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b75, $2300, $1700, $00, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1300, $40, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1300, $40, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1300, $c0, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7a50, $1900, $10c0, $80, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1500, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1900, $1500, $40, $1e, $01, $05
 	map_actor_end
 IslandOpenRound1ScriptsDoubles_0f:
 	; $6b79, 97 bytes (map_scripts)
@@ -2264,19 +2264,19 @@ Label_0f_6c40:
 	ret ; $6c45
 IslandOpenRound2ActorsDoubles_0f:
 	; $6c46, 192 bytes (map_actors)
-	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, $7b57, $1700, $1500, $40, $5c, $01, $00
-	map_actor $0000, $7b57, $1900, $1500, $40, $5a, $01, $00
-	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, $7b57, $1d00, $1500, $40, $5e, $01, $00
-	map_actor $0000, $7b57, $0f00, $1300, $40, $5f, $01, $00
-	map_actor $0000, $7b57, $1100, $1300, $40, $60, $01, $00
-	map_actor $0000, $7b57, $1700, $1300, $c0, $61, $01, $00
-	map_actor $0000, $7a50, $1900, $10c0, $80, $62, $01, $00
-	map_actor $0000, $7b57, $2900, $1300, $c0, $1f, $01, $00
-	map_actor $0000, $7b75, $2500, $1900, $40, $1e, $01, $05
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $0b00, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1500, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1900, $1500, $40, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1500, $40, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1300, $40, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1300, $40, $60, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1700, $1300, $c0, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7a50, $1900, $10c0, $80, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1300, $c0, $1f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b75, $2500, $1900, $40, $1e, $01, $05
 	map_actor_end
 IslandOpenRound2ScriptsDoubles_0f:
 	; $6d06, 97 bytes (map_scripts)
@@ -2321,19 +2321,19 @@ Label_0f_6da9:
 	ret ; $6dae
 IslandOpenRound3ActorsDoubles_0f:
 	; $6daf, 192 bytes (map_actors)
-	map_actor $0000, $7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, $7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, $7b57, $0e00, $0400, $00, $25, $01, $00
-	map_actor $0000, $7b57, $2300, $1100, $40, $5c, $01, $00
-	map_actor $0000, $7b57, $2300, $1300, $c0, $5a, $01, $00
-	map_actor $0000, $7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, $7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, $7b57, $0f00, $1300, $40, $61, $01, $00
-	map_actor $0000, $7b57, $1100, $1300, $40, $62, $01, $00
-	map_actor $0000, $7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, $7b57, $1d00, $1500, $40, $5e, $01, $00
-	map_actor $0000, $7b57, $2900, $1500, $40, $1f, $01, $00
-	map_actor $0000, $7b75, $2400, $1800, $40, $1e, $01, $05
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0e00, $0400, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2300, $1100, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2300, $1300, $c0, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0f00, $1300, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1100, $1300, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $1d00, $1500, $40, $5e, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2900, $1500, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b75, $2400, $1800, $40, $1e, $01, $05
 	map_actor_end
 IslandOpenRound3ScriptsDoubles_0f:
 	; $6e6f, 97 bytes (map_scripts)
@@ -2773,12 +2773,12 @@ Label_0f_7571:
 	ret ; $75b6
 IslandOpenRoundActorsSingles_0f:
 	; $75b7, 94 bytes (map_actors)
-	map_actor $0000, $7b57, $2300, $1100, $00, $5c, $01, $00
-	map_actor $0000, $7b57, $2500, $1300, $c0, $5a, $01, $00
-	map_actor $0000, $7b57, $2700, $1100, $80, $5b, $01, $00
-	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $3100, $c0, $4c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2300, $1100, $00, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2500, $1300, $c0, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $3100, $c0, $4c, $01, $00
 	map_actor_end
 IslandOpenRoundScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
@@ -2966,12 +2966,12 @@ Label_0f_7811:
 	dw $284e ; record 3
 IslandOpenRoundActorsDoubles_0f:
 	; $7842, 94 bytes (map_actors)
-	map_actor $0000, $7b57, $2100, $1100, $00, $5c, $01, $00
-	map_actor $0000, $7b57, $2700, $1100, $80, $5a, $01, $00
-	map_actor $0000, $7b57, $3d00, $3d00, $c0, $5b, $01, $00
-	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, $7b57, $0100, $3100, $c0, $4c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2100, $1100, $00, $5c, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $2700, $1100, $80, $5a, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $3d00, $3d00, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $3100, $c0, $25, $01, $00
+	map_actor $0000, ActorObjDef_0f_7b57, $0100, $3100, $c0, $4c, $01, $00
 	map_actor_end
 IslandOpenRoundScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)
@@ -3104,7 +3104,10 @@ Label_0f_7a2e:
 	farcall FarPtr_SetActorNullScript ; $7a41
 	script_set_position $02, $3f00, $3f00 ; $7a44
 	ret ; $7a4f
-	INCBIN "data/bank_00f/d_7a50.bin" ; $7a50, 62 bytes
+ActorObjDef_0f_7a50:
+	INCBIN "data/bank_00f/d_7a50.bin" ; $7a50, 35 bytes
+ActorObjDef_0f_7a73:
+	INCBIN "data/bank_00f/d_7a73.bin" ; $7a73, 27 bytes
 QueueShortText:
 	ldh a, [hWramBank] ; $7a8e
 	push af ; $7a90
@@ -3191,5 +3194,10 @@ Label_0f_7b3e:
 	farcall FarPtr_LoadActorObjectDefIfValid ; $7b4c
 	script_set_anim $00, $01 ; $7b4f
 	ret ; $7b56
-	INCBIN "data/bank_00f/d_7b57.bin" ; $7b57, 612 bytes
+ActorObjDef_0f_7b57:
+	INCBIN "data/bank_00f/d_7b57.bin" ; $7b57, 10 bytes
+ActorObjDef_0f_7b61:
+	INCBIN "data/bank_00f/d_7b61.bin" ; $7b61, 20 bytes
+ActorObjDef_0f_7b75:
+	INCBIN "data/bank_00f/d_7b75.bin" ; $7b75, 582 bytes
 	ds 581, $ff ; $7dbb, fill
