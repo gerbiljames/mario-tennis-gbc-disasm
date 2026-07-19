@@ -1713,6 +1713,8 @@
 "0x5890c": "LoadWinLoseScreenAssets",
 "0x58963": "SetWinLosePortraitPaletteAttrs",
 "0x58a0f": "LoadMatchResultPalettes",
+"0x58d04": "ResultSpriteTemplateLeft_16",
+"0x58d55": "ResultSpriteTemplateRight_16",
 "0x58a71": "BuildMatchResultTilemap",
 "0x58abd": "MatchResultTilemapScripts_16",
 "0x58dde": "GetResultSpriteWobbleOffset",

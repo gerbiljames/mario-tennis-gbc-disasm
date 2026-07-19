@@ -812,54 +812,56 @@ Func_16_4cea:
 	jr z, Label_16_4cfd ; $4cf9
 	ld b, $0a ; $4cfb
 Label_16_4cfd:
-	ld hl, $4d04 ; $4cfd
+	ld hl, ResultSpriteTemplateLeft_16 ; $4cfd
 	call QueueSpriteTemplate ; $4d00
 	ret ; $4d03
-	; $4d04, 65 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $20, $08, $02, $00 ; 0x04
-	db $10, $10, $04, $00 ; 0x08
-	db $20, $10, $06, $00 ; 0x0c
-	db $10, $18, $08, $00 ; 0x10
-	db $20, $18, $0a, $00 ; 0x14
-	db $10, $20, $0c, $00 ; 0x18
-	db $20, $20, $0e, $00 ; 0x1c
-	db $10, $28, $10, $00 ; 0x20
-	db $20, $28, $12, $00 ; 0x24
-	db $10, $30, $14, $00 ; 0x28
-	db $20, $30, $16, $00 ; 0x2c
-	db $10, $38, $18, $00 ; 0x30
-	db $20, $38, $1a, $00 ; 0x34
-	db $10, $40, $1c, $00 ; 0x38
-	db $20, $40, $1e, $00 ; 0x3c
-	db $80 ; 0x40
+ResultSpriteTemplateLeft_16:
+	; $4d04, 65 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite $10, $28, $10, $00
+	oam_sprite $20, $28, $12, $00
+	oam_sprite $10, $30, $14, $00
+	oam_sprite $20, $30, $16, $00
+	oam_sprite $10, $38, $18, $00
+	oam_sprite $20, $38, $1a, $00
+	oam_sprite $10, $40, $1c, $00
+	oam_sprite $20, $40, $1e, $00
+	oam_sprite_end
 Func_16_4d45:
 	call GetResultSpriteWobbleOffset ; $4d45
 	add a, d ; $4d48
 	ld d, a ; $4d49
 	ld c, $20 ; $4d4a
 	ld b, $09 ; $4d4c
-	ld hl, $4d55 ; $4d4e
+	ld hl, ResultSpriteTemplateRight_16 ; $4d4e
 	call QueueSpriteTemplate ; $4d51
 	ret ; $4d54
-	; $4d55, 65 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $20, $08, $02, $00 ; 0x04
-	db $10, $10, $04, $00 ; 0x08
-	db $20, $10, $06, $00 ; 0x0c
-	db $10, $18, $08, $00 ; 0x10
-	db $20, $18, $0a, $00 ; 0x14
-	db $10, $20, $0c, $00 ; 0x18
-	db $20, $20, $0e, $00 ; 0x1c
-	db $10, $28, $10, $00 ; 0x20
-	db $20, $28, $12, $00 ; 0x24
-	db $10, $30, $14, $00 ; 0x28
-	db $20, $30, $16, $00 ; 0x2c
-	db $10, $38, $18, $00 ; 0x30
-	db $20, $38, $1a, $00 ; 0x34
-	db $10, $40, $1c, $00 ; 0x38
-	db $20, $40, $1e, $00 ; 0x3c
-	db $80 ; 0x40
+ResultSpriteTemplateRight_16:
+	; $4d55, 65 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite $10, $28, $10, $00
+	oam_sprite $20, $28, $12, $00
+	oam_sprite $10, $30, $14, $00
+	oam_sprite $20, $30, $16, $00
+	oam_sprite $10, $38, $18, $00
+	oam_sprite $20, $38, $1a, $00
+	oam_sprite $10, $40, $1c, $00
+	oam_sprite $20, $40, $1e, $00
+	oam_sprite_end
 Func_16_4d96:
 	call GetResultSpriteWobbleOffset ; $4d96
 	ld b, a ; $4d99

@@ -2306,6 +2306,18 @@ MACRO tilemap_copy_end
 	ds 5, $00
 ENDM
 
+; QueueSpriteTemplate ($1e9d) sprite record: one hardware sprite as {dy, dx,
+; tile, attr} deltas added to the base position/tile/attr passed in the call.
+; A list ends with oam_sprite_end (a $80 dy byte, which the loader stops on).
+; Usage: oam_sprite dy, dx, tile, attr
+MACRO oam_sprite
+	db \\1, \\2, \\3, \\4
+ENDM
+
+MACRO oam_sprite_end
+	db $80
+ENDM
+
 ; Match-result graphics set (loader $16:$4e54): three LZ tile streams
 ; decompressed to VRAM $8900, $8a40, $9140 (20 tiles each). Records live in
 ; GfxSetPointerTable_16 and are selected by the remapped match gfx index.

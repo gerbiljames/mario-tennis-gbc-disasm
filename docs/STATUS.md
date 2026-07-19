@@ -21,6 +21,16 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Sprite-template spec (2026-07-19)
+
+`QueueSpriteTemplate` ($1e9d) reads 4-byte {dy, dx, tile, attr} OAM records
+ended by a $80 dy byte. These were correctly-typed data but rendered as generic
+`bytes:4` with the sentinel dangling as a bare `db $80`. New `sprite_template`
+render spec + `oam_sprite`/`oam_sprite_end` macros give them a readable form;
+applied to `$16:$4d04`/`$4d55` (`ResultSpriteTemplateLeft_16`/`Right_16`, the
+match-result sprite blocks — identical templates drawn at different x offsets).
+~100 more such templates game-wide could adopt the spec.
+
 ### Bank $15 tour-scene actor list (2026-07-19)
 
 `$15:$5c4f` was a 164-byte `bytes:14` blob — actually the `map_actor` spawn

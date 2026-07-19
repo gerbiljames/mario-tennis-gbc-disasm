@@ -253,10 +253,31 @@ def render_fill(data: bytes) -> str:
     return "\n".join(out) + "\n"
 
 
+def render_sprite_template(data: bytes) -> str:
+    """Render a QueueSpriteTemplate ($1e9d) sprite list: 4-byte {dy, dx, tile,
+    attr} records the loader adds to a base position, ended by a $80 dy byte it
+    stops on (oam_sprite_end). Reassembles identically."""
+    out = []
+    i = 0
+    while i + 4 <= len(data) and data[i] != 0x80:
+        rec = data[i:i + 4]
+        out.append("\toam_sprite " + ", ".join(f"${b:02x}" for b in rec))
+        i += 4
+    if i < len(data) and data[i] == 0x80:
+        out.append("\toam_sprite_end")
+        i += 1
+    while i < len(data):
+        out.append(f"\tdb ${data[i]:02x}")
+        i += 1
+    return "\n".join(out) + "\n"
+
+
 def render_spec(data: bytes, spec: str) -> str:
     kind, _, param = spec.partition(":")
     if kind == "palettes":
         return render_palettes(data)
+    if kind == "sprite_template":
+        return render_sprite_template(data)
     if kind == "records":
         return render_records(data, int(param or 16))
     if kind == "bytes":
