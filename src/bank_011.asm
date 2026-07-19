@@ -299,14 +299,15 @@ Label_11_4395:
 	ret ; $43ec
 	INCBIN "data/bank_011/d_43ed.bin" ; $43ed, 20 bytes
 AcademyArrivalScene_11:
-	; $4401, 14 bytes (records:2)
-	dw $4515 ; record 0
-	dw $457c ; record 1
-	dw $440f ; record 2
-	dw $4682 ; record 3
-	dw $46a3 ; record 4
-	dw $46a4 ; record 5
-	dw $46b1 ; record 6
+	; $4401, 14 bytes (map_tree)
+	dw AcademyArrivalEntryPoints_11 ; slot 0 EntryPoints
+	dw AcademyArrivalExitTriggers_11 ; slot 1 ExitTriggers
+	dw AcademyArrivalActors_11 ; slot 2 Actors
+	dw AcademyArrivalNpcScripts_11 ; slot 3 NpcScripts
+	dw AcademyArrivalFacingScripts_11 ; slot 4 FacingScripts
+	dw AcademyArrivalTileTriggers_11 ; slot 5 TileTriggers
+	dw AcademyArrivalInitScript_11 ; slot 6 InitScript
+AcademyArrivalActors_11:
 	; $440f, 262 bytes (map_actors)
 	map_actor $0000, $7bb3, $1900, $1900, $40, $30, $01, $05
 	map_actor $0000, ActorObjDef_11_7ba9, $1500, $2500, $80, $32, $01, $00
@@ -327,21 +328,37 @@ AcademyArrivalScene_11:
 	map_actor $0000, ActorObjDef_11_7ba9, $1500, $3d00, $00, $4f, $01, $00
 	map_actor $0000, ActorObjDef_11_7ba9, $1800, $3300, $c0, $30, $01, $03
 	map_actor_end
-	; $4515, 103 bytes (bytes:16)
-	db $01, $40, $00, $18, $00, $11, $36, $45, $02, $c0, $00, $18, $00, $33, $fd, $42 ; 0x00
-	db $0c, $40, $00, $18, $00, $2f, $00, $00, $0f, $c0, $00, $18, $00, $2f, $00, $00 ; 0x10
-	db $ff, $fa, $95, $c2, $fe, $ff, $ca, $7b, $45, $f7, $e0, $05, $28, $26, $3e, $02 ; 0x20
-	db $01, $ff, $00, $df, $18, $0a, $3e, $02, $06, $c0, $11, $00, $02, $df, $2a, $0a ; 0x30
-	db $3e, $02, $df, $20, $0a, $3e, $02, $06, $40, $df, $2e, $0a, $3e, $02, $01, $10 ; 0x40
-	db $00, $df, $18, $0a, $3e, $00, $01, $10, $00, $df, $18, $0a, $3e, $00, $06, $40 ; 0x50
-	db $11, $00, $02, $df, $2a, $0a, $c9 ; 0x60
-	; $457c, 33 bytes (records:8)
-; 4 records x 8 bytes
-	dw $ff01, $0000, $7bd1, $0105 ; record 0
-	dw $ff02, $0000, $7bd1, $011b ; record 1
-	dw $ff03, $0000, $7bd1, $0f1b ; record 2
-	dw $ff0f, $0000, $7bd1, $0f05 ; record 3
+AcademyArrivalEntryPoints_11:
+	; $4515, 33 bytes (map_entries)
+	map_entry $01, $40, $1800, $1100, Func_11_4536
+	map_entry $02, $c0, $1800, $3300, Func_11_42fd
+	map_entry $0c, $40, $1800, $2f00, $0000
+	map_entry $0f, $c0, $1800, $2f00, $0000
 	db $ff
+Func_11_4536:
+	ld a, [wStoryModeEntryPoint] ; $4536
+	cp a, $ff ; $4539
+	jp z, Label_11_457b ; $453b
+	test_flag $05, 7 ; $453e
+	jr z, Label_11_4569 ; $4541
+	script_set_speed $02, $00ff ; $4543
+	script_move_angle $02, $c0, $0200 ; $454b
+	script_wait_move $02 ; $4555
+	script_face $02, $40 ; $455a
+	script_set_speed $02, $0010 ; $4561
+Label_11_4569:
+	script_set_speed $00, $0010 ; $4569
+	script_move_angle $00, $40, $0200 ; $4571
+Label_11_457b:
+	ret ; $457b
+AcademyArrivalExitTriggers_11:
+	; $457c, 33 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_11_7bd1, $05, $01
+	map_script $02, $ff, $0000, Func_11_7bd1, $1b, $01
+	map_script $03, $ff, $0000, Func_11_7bd1, $1b, $0f
+	map_script $0f, $ff, $0000, Func_11_7bd1, $05, $0f
+	db $ff
+Func_11_459d:
 	ld a, [$c2b0] ; $459d
 	add a, a ; $45a0
 	add a, $e1 ; $45a1
@@ -386,6 +403,7 @@ Label_11_45db:
 	dw $1847 ; record 7
 	dw $184c ; record 8
 	dw $184c ; record 9
+Func_11_45f5:
 	ld a, [$c2b0] ; $45f5
 	add a, a ; $45f8
 	add a, $0c ; $45f9
@@ -410,6 +428,7 @@ Label_11_45db:
 	dw $184a ; record 7
 	dw $184d ; record 8
 	dw $184d ; record 9
+Func_11_4620:
 	ld a, [$c2b0] ; $4620
 	sra a ; $4623
 	add a, a ; $4625
@@ -430,6 +449,7 @@ Label_11_45db:
 	dw $1846 ; record 2
 	dw $184b ; record 3
 	dw $184e ; record 4
+Func_11_4643:
 	script_set_text $1860 ; $4643
 	test_flag $05, 7 ; $4649
 	jr nz, Label_11_4670 ; $464c
@@ -452,17 +472,23 @@ Label_11_4670:
 	jr z, Label_11_465e ; $467b
 	farcall FarPtr_AdvanceDialogueTextCursor ; $467d
 	jr Label_11_465e ; $4680
-	; $4682, 34 bytes (records:8)
-; 4 records x 8 bytes
-	dw $ff03, $0000, $459d, $0013 ; record 0
-	dw $ff04, $0000, $45f5, $0001 ; record 1
-	dw $ff05, $0000, $4620, $0001 ; record 2
-	dw $ff14, $0000, $4643, $0003 ; record 3
-	db $ff, $ff
-	; $46a4, 13 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff0f, $0000, $46ad, $0000 ; record 0
-	db $ff, $cd, $40, $4f, $c9
+AcademyArrivalNpcScripts_11:
+	; $4682, 33 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_11_459d, $13, $00
+	map_script $04, $ff, $0000, Func_11_45f5, $01, $00
+	map_script $05, $ff, $0000, Func_11_4620, $01, $00
+	map_script $14, $ff, $0000, Func_11_4643, $03, $00
+	db $ff
+AcademyArrivalFacingScripts_11:
+	ds 1, $ff ; $46a3, fill
+AcademyArrivalTileTriggers_11:
+	; $46a4, 9 bytes (map_scripts)
+	map_script $0f, $ff, $0000, Func_11_46ad, $00, $00
+	db $ff
+Func_11_46ad:
+	call Func_11_4f40 ; $46ad
+	ret ; $46b0
+AcademyArrivalInitScript_11:
 	call ComputeRankingProgressIndex ; $46b1
 	call Func_11_5482 ; $46b4
 	call Func_11_54a6 ; $46b7
@@ -853,6 +879,7 @@ Func_11_4f1b:
 	ld e, $12 ; $4f3a
 	farcall FarPtr_WriteBehaviorMapCell ; $4f3c
 	ret ; $4f3f
+Func_11_4f40:
 	script_set_anim $12, $02 ; $4f40
 	script_wait_idle $12 ; $4f47
 	script_move_target $00, $1800, $1300 ; $4f4c
@@ -1113,14 +1140,15 @@ Func_11_54a6:
 Label_11_54bf:
 	ret ; $54bf
 JuniorClassCourtDoublesScene_11:
-	; $54c0, 14 bytes (records:2)
-	dw $558e ; record 0
-	dw $559f ; record 1
-	dw $54ce ; record 2
-	dw $581a ; record 3
-	dw $5a1e ; record 4
-	dw $5a20 ; record 5
-	dw $5a22 ; record 6
+	; $54c0, 14 bytes (map_tree)
+	dw JuniorClassCourtDoublesEntryPoints_11 ; slot 0 EntryPoints
+	dw JuniorClassCourtDoublesExitTriggers_11 ; slot 1 ExitTriggers
+	dw JuniorClassCourtDoublesActors_11 ; slot 2 Actors
+	dw JuniorClassCourtDoublesNpcScripts_11 ; slot 3 NpcScripts
+	dw JuniorClassCourtDoublesFacingScripts_11 ; slot 4 FacingScripts
+	dw JuniorClassCourtDoublesTileTriggers_11 ; slot 5 TileTriggers
+	dw JuniorClassCourtDoublesInitScript_11 ; slot 6 InitScript
+JuniorClassCourtDoublesActors_11:
 	; $54ce, 192 bytes (map_actors)
 	map_actor $0000, ActorObjDef_11_7ba9, $1300, $1300, $40, $37, $01, $00
 	map_actor $0000, ActorObjDef_11_7ba9, $2300, $1700, $80, $68, $01, $05
@@ -1136,14 +1164,17 @@ JuniorClassCourtDoublesScene_11:
 	map_actor $0000, $7bdf, $2a00, $0b00, $40, $54, $01, $00
 	map_actor $0000, $7c42, $2e00, $1700, $c0, $54, $01, $05
 	map_actor_end
-	; $558e, 17 bytes (bytes:16)
-	db $01, $c0, $00, $13, $00, $1d, $fd, $42, $09, $c0, $00, $37, $00, $19, $00, $00 ; 0x00
-	db $ff ; 0x10
-	; $559f, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $7bd1, $0508 ; record 0
-	dw $ff0f, $0000, $7bd1, $0f0c ; record 1
+JuniorClassCourtDoublesEntryPoints_11:
+	; $558e, 17 bytes (map_entries)
+	map_entry $01, $c0, $1300, $1d00, Func_11_42fd
+	map_entry $09, $c0, $3700, $1900, $0000
 	db $ff
+JuniorClassCourtDoublesExitTriggers_11:
+	; $559f, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_11_7bd1, $08, $05
+	map_script $0f, $ff, $0000, Func_11_7bd1, $0c, $0f
+	db $ff
+Func_11_55b0:
 	script_set_text $0869 ; $55b0
 	test_flag $08, 2 ; $55b6
 	jr nz, Label_11_55c6 ; $55b9
@@ -1154,6 +1185,7 @@ JuniorClassCourtDoublesScene_11:
 Label_11_55c6:
 	script_speak $04 ; $55c6
 	ret ; $55cb
+Func_11_55cc:
 	script_set_text $0878 ; $55cc
 	test_flag $08, 1 ; $55d2
 	jr nz, Label_11_55e2 ; $55d5
@@ -1164,6 +1196,7 @@ Label_11_55c6:
 Label_11_55e2:
 	script_speak $05 ; $55e2
 	ret ; $55e7
+Func_11_55e8:
 	script_set_text $086c ; $55e8
 	test_flag $08, 2 ; $55ee
 	jr nz, Label_11_5616 ; $55f1
@@ -1182,6 +1215,7 @@ Label_11_55e2:
 Label_11_5616:
 	script_speak $06 ; $5616
 	ret ; $561b
+Func_11_561c:
 	script_set_text $087b ; $561c
 	test_flag $08, 1 ; $5622
 	jr nz, Label_11_5632 ; $5625
@@ -1192,6 +1226,7 @@ Label_11_5616:
 Label_11_5632:
 	script_speak $07 ; $5632
 	ret ; $5637
+Func_11_5638:
 	script_set_text $087e ; $5638
 	test_flag $08, 0 ; $563e
 	jr nz, Label_11_5646 ; $5641
@@ -1199,6 +1234,7 @@ Label_11_5632:
 Label_11_5646:
 	script_speak $08 ; $5646
 	ret ; $564b
+Func_11_564c:
 	script_set_text $0880 ; $564c
 	test_flag $08, 0 ; $5652
 	jr nz, Label_11_5646 ; $5655
@@ -1264,6 +1300,7 @@ Label_11_566e:
 	farcall FarPtr_RunStoryMatch ; $576a
 	farcall FarPtr_RestoreOverworldAfterMatch ; $576d
 	ret ; $5770
+Func_11_5771:
 	script_set_text $0888 ; $5771
 	test_flag $08, 0 ; $5777
 	jr nz, Label_11_57c6 ; $577a
@@ -1289,26 +1326,28 @@ Label_11_57c6:
 	script_wait_idle $0a ; $57de
 	script_speak $0a ; $57e3
 	ret ; $57e8
+Func_11_57e9:
 	script_set_speed $00, $0008 ; $57e9
 	script_facing_lock $00, $01 ; $57f1
 	script_move_target $00, $1300, $1500 ; $57f8
 	script_wait_move $00 ; $5803
 	script_facing_lock $00, $00 ; $5808
 	script_face $00, $c0 ; $580f
+Func_11_5816:
 	call OfferDoublesRankingMatch ; $5816
 	ret ; $5819
-	; $581a, 81 bytes (records:8)
-; 10 records x 8 bytes
-	dw $4003, $0000, $57e9, $0003 ; record 0
-	dw $ff03, $0000, $5816, $0003 ; record 1
-	dw $ff04, $0000, $55b0, $0003 ; record 2
-	dw $ff05, $0000, $55cc, $0003 ; record 3
-	dw $ff06, $0000, $55e8, $0001 ; record 4
-	dw $ff07, $0000, $561c, $0003 ; record 5
-	dw $ff08, $0000, $5638, $001b ; record 6
-	dw $ff09, $0000, $564c, $001b ; record 7
-	dw $ff0a, $0000, $566e, $0003 ; record 8
-	dw $ff0b, $0000, $5771, $0003 ; record 9
+JuniorClassCourtDoublesNpcScripts_11:
+	; $581a, 81 bytes (map_scripts)
+	map_script $03, $40, $0000, Func_11_57e9, $03, $00
+	map_script $03, $ff, $0000, Func_11_5816, $03, $00
+	map_script $04, $ff, $0000, Func_11_55b0, $03, $00
+	map_script $05, $ff, $0000, Func_11_55cc, $03, $00
+	map_script $06, $ff, $0000, Func_11_55e8, $01, $00
+	map_script $07, $ff, $0000, Func_11_561c, $03, $00
+	map_script $08, $ff, $0000, Func_11_5638, $1b, $00
+	map_script $09, $ff, $0000, Func_11_564c, $1b, $00
+	map_script $0a, $ff, $0000, Label_11_566e, $03, $00
+	map_script $0b, $ff, $0000, Func_11_5771, $03, $00
 	db $ff
 	; $586b, 73 bytes (records:8)
 ; 9 records x 8 bytes
@@ -1404,7 +1443,13 @@ Label_11_59f9:
 Label_11_5a18:
 	script_speak $0a ; $5a18
 	ret ; $5a1d
-	INCBIN "data/bank_011/d_5a1e.bin" ; $5a1e, 4 bytes
+JuniorClassCourtDoublesFacingScripts_11:
+	; $5a1e, 2 bytes (map_scripts)
+	db $ff, $c9
+JuniorClassCourtDoublesTileTriggers_11:
+	; $5a20, 2 bytes (map_scripts)
+	db $ff, $c9
+JuniorClassCourtDoublesInitScript_11:
 	test_flag $08, 2 ; $5a22
 	jr nz, Label_11_5a66 ; $5a25
 	test_flag $08, 0 ; $5a27
@@ -1970,15 +2015,15 @@ Label_11_6803:
 	ret ; $681e
 	INCBIN "data/bank_011/d_681f.bin" ; $681f, 3 bytes
 JuniorClassCourtSinglesScene_11:
-	; $6822, 14 bytes (records:2)
-; 7 records x 2 bytes
-	dw $691a ; record 0
-	dw $692c ; record 1
-	dw $6830 ; record 2
-	dw $6b54 ; record 3
-	dw $6cfc ; record 4
-	dw $6cfd ; record 5
-	dw $6cfe ; record 6
+	; $6822, 14 bytes (map_tree)
+	dw JuniorClassCourtSinglesEntryPoints_11 ; slot 0 EntryPoints
+	dw JuniorClassCourtSinglesExitTriggers_11 ; slot 1 ExitTriggers
+	dw JuniorClassCourtSinglesActors_11 ; slot 2 Actors
+	dw JuniorClassCourtSinglesNpcScripts_11 ; slot 3 NpcScripts
+	dw JuniorClassCourtSinglesFacingScripts_11 ; slot 4 FacingScripts
+	dw JuniorClassCourtSinglesTileTriggers_11 ; slot 5 TileTriggers
+	dw JuniorClassCourtSinglesInitScript_11 ; slot 6 InitScript
+JuniorClassCourtSinglesActors_11:
 	; $6830, 234 bytes (map_actors)
 	map_actor $0000, ActorObjDef_11_7ba9, $1300, $1300, $40, $37, $01, $00
 	map_actor $0000, ActorObjDef_11_7ba9, $2300, $1700, $80, $68, $01, $05
@@ -1997,22 +2042,27 @@ JuniorClassCourtSinglesScene_11:
 	map_actor $0000, $7d10, $3800, $1700, $c0, $54, $01, $00
 	map_actor $0000, ActorObjDef_11_7ba9, $4000, $4000, $c0, $53, $01, $00
 	map_actor_end
-	; $691a, 18 bytes (bytes:16)
-	db $01, $c0, $00, $13, $00, $1d, $fd, $42, $09, $c0, $00, $2d, $00, $19, $00, $00 ; 0x00
-	db $ff, $c9 ; 0x10
-	; $692c, 17 bytes (records:8)
-; 2 records x 8 bytes
-	dw $ff01, $0000, $7bd1, $0508 ; record 0
-	dw $ff0f, $0000, $7bd1, $0f0b ; record 1
+JuniorClassCourtSinglesEntryPoints_11:
+	; $691a, 18 bytes (map_entries)
+	map_entry $01, $c0, $1300, $1d00, Func_11_42fd
+	map_entry $09, $c0, $2d00, $1900, $0000
+	db $ff, $c9
+JuniorClassCourtSinglesExitTriggers_11:
+	; $692c, 17 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_11_7bd1, $08, $05
+	map_script $0f, $ff, $0000, Func_11_7bd1, $0b, $0f
 	db $ff
+Func_11_693d:
 	script_set_speed $00, $0008 ; $693d
 	script_facing_lock $00, $01 ; $6945
 	script_move_target $00, $1300, $1500 ; $694c
 	script_wait_move $00 ; $6957
 	script_facing_lock $00, $00 ; $695c
 	script_face $00, $c0 ; $6963
+Func_11_696a:
 	call OfferSinglesRankingMatch ; $696a
 	ret ; $696d
+Func_11_696e:
 	script_set_text $083e ; $696e
 	test_flag $0a, 3 ; $6974
 	jr nz, Label_11_6984 ; $6977
@@ -2023,6 +2073,7 @@ JuniorClassCourtSinglesScene_11:
 Label_11_6984:
 	script_speak $04 ; $6984
 	ret ; $6989
+Func_11_698a:
 	script_set_text $0841 ; $698a
 	test_flag $0a, 2 ; $6990
 	jr nz, Label_11_69a3 ; $6993
@@ -2045,6 +2096,7 @@ Label_11_69a9:
 Label_11_69c1:
 	script_speak $05 ; $69c1
 	ret ; $69c6
+Func_11_69c7:
 	script_set_text $0846 ; $69c7
 	test_flag $0a, 1 ; $69cd
 	jr nz, Label_11_69f5 ; $69d0
@@ -2063,6 +2115,7 @@ Label_11_69c1:
 Label_11_69f5:
 	script_speak $06 ; $69f5
 	ret ; $69fa
+Func_11_69fb:
 	script_set_text $084b ; $69fb
 	test_flag $0a, 0 ; $6a01
 	jr nz, Label_11_6a09 ; $6a04
@@ -2070,6 +2123,7 @@ Label_11_69f5:
 Label_11_6a09:
 	script_speak $07 ; $6a09
 	ret ; $6a0e
+Func_11_6a0f:
 	test_flag $0a, 0 ; $6a0f
 	jr z, Label_11_6a20 ; $6a12
 	script_set_text $0856 ; $6a14
@@ -2122,6 +2176,7 @@ Label_11_6a41:
 	farcall FarPtr_RunStoryMatch ; $6ae2
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6ae5
 	ret ; $6ae8
+Func_11_6ae9:
 	script_set_text $0851 ; $6ae9
 	test_flag $0a, 0 ; $6aef
 	jr z, Label_11_6afa ; $6af2
@@ -2129,6 +2184,7 @@ Label_11_6a41:
 Label_11_6afa:
 	script_speak $09 ; $6afa
 	ret ; $6aff
+Func_11_6b00:
 	script_set_text $0852 ; $6b00
 	test_flag $0a, 0 ; $6b06
 	jr z, Label_11_6b11 ; $6b09
@@ -2136,6 +2192,7 @@ Label_11_6afa:
 Label_11_6b11:
 	script_speak $0a ; $6b11
 	ret ; $6b16
+Func_11_6b17:
 	script_face_toward $00, $0b ; $6b17
 	test_flag $0a, 0 ; $6b1f
 	jr z, Label_11_6b30 ; $6b22
@@ -2155,18 +2212,18 @@ Label_11_6b30:
 Label_11_6b4e:
 	script_speak $0b ; $6b4e
 	ret ; $6b53
-	; $6b54, 81 bytes (records:8)
-; 10 records x 8 bytes
-	dw $4003, $0000, $693d, $0003 ; record 0
-	dw $ff03, $0000, $696a, $0003 ; record 1
-	dw $ff04, $0000, $696e, $0003 ; record 2
-	dw $ff05, $0000, $698a, $0003 ; record 3
-	dw $ff06, $0000, $69c7, $0003 ; record 4
-	dw $ff07, $0000, $69fb, $0003 ; record 5
-	dw $ff08, $0000, $6a0f, $0001 ; record 6
-	dw $ff09, $0000, $6ae9, $0003 ; record 7
-	dw $ff0a, $0000, $6b00, $0003 ; record 8
-	dw $ff0b, $0000, $6b17, $001b ; record 9
+JuniorClassCourtSinglesNpcScripts_11:
+	; $6b54, 81 bytes (map_scripts)
+	map_script $03, $40, $0000, Func_11_693d, $03, $00
+	map_script $03, $ff, $0000, Func_11_696a, $03, $00
+	map_script $04, $ff, $0000, Func_11_696e, $03, $00
+	map_script $05, $ff, $0000, Func_11_698a, $03, $00
+	map_script $06, $ff, $0000, Func_11_69c7, $03, $00
+	map_script $07, $ff, $0000, Func_11_69fb, $03, $00
+	map_script $08, $ff, $0000, Func_11_6a0f, $01, $00
+	map_script $09, $ff, $0000, Func_11_6ae9, $03, $00
+	map_script $0a, $ff, $0000, Func_11_6b00, $03, $00
+	map_script $0b, $ff, $0000, Func_11_6b17, $1b, $00
 	db $ff
 	; $6ba5, 65 bytes (records:8)
 ; 8 records x 8 bytes
@@ -2238,7 +2295,11 @@ Label_11_6ce4:
 	script_set_text $0c1f ; $6cf0
 	script_speak $0a ; $6cf6
 	ret ; $6cfb
-	ds 2, $ff ; $6cfc, fill
+JuniorClassCourtSinglesFacingScripts_11:
+	ds 1, $ff ; $6cfc, fill
+JuniorClassCourtSinglesTileTriggers_11:
+	ds 1, $ff ; $6cfd, fill
+JuniorClassCourtSinglesInitScript_11:
 	test_flag $0a, 0 ; $6cfe
 	jr z, Label_11_6d15 ; $6d01
 	script_set_position $07, $2500, $0b00 ; $6d03

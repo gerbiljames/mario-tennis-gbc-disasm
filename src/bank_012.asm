@@ -307,14 +307,15 @@ Label_12_44c5:
 	ld [wStoryModeExitLocationRequest], a ; $4678
 	ret ; $467b
 WallPracticeRoomStoryCmds_12:
-	; $467c, 14 bytes (records:2)
-	dw $46da ; record 0
-	dw $4716 ; record 1
-	dw $468a ; record 2
-	dw $4818 ; record 3
-	dw $4ca0 ; record 4
-	dw $4cc0 ; record 5
-	dw $4f03 ; record 6
+	; $467c, 14 bytes (map_tree)
+	dw WallPracticeRoomEntryPoints_12 ; slot 0 EntryPoints
+	dw WallPracticeRoomExitTriggers_12 ; slot 1 ExitTriggers
+	dw WallPracticeRoomActors_12 ; slot 2 Actors
+	dw WallPracticeRoomNpcScripts_12 ; slot 3 NpcScripts
+	dw WallPracticeRoomFacingScripts_12 ; slot 4 FacingScripts
+	dw WallPracticeRoomTileTriggers_12 ; slot 5 TileTriggers
+	dw WallPracticeRoomInitScript_12 ; slot 6 InitScript
+WallPracticeRoomActors_12:
 	; $468a, 80 bytes (map_actors)
 	map_actor $0000, ActorObjDef_12_7a89, $0300, $3900, $00, $39, $01, $00
 	map_actor $0000, ActorObjDef_12_7a89, $0800, $3700, $c0, $32, $01, $00
@@ -322,9 +323,13 @@ WallPracticeRoomStoryCmds_12:
 	map_actor $0000, ActorObjDef_12_7a89, $1300, $3900, $00, $3e, $01, $00
 	map_actor $0000, ActorObjDef_12_7a89, $0500, $3700, $40, $3d, $01, $00
 	map_actor_end
-	; $46da, 25 bytes (bytes:16)
-	db $01, $c0, $00, $0f, $00, $39, $f3, $46, $0a, $c0, $00, $0c, $00, $31, $00, $00 ; 0x00
-	db $0b, $c0, $00, $0c, $00, $31, $00, $00, $ff ; 0x10
+WallPracticeRoomEntryPoints_12:
+	; $46da, 25 bytes (map_entries)
+	map_entry $01, $c0, $0f00, $3900, Func_12_46f3
+	map_entry $0a, $c0, $0c00, $3100, $0000
+	map_entry $0b, $c0, $0c00, $3100, $0000
+	db $ff
+Func_12_46f3:
 	ld a, [wStoryModeEntryPoint] ; $46f3
 	cp a, $ff ; $46f6
 	jp z, Label_12_4715 ; $46f8
@@ -335,10 +340,11 @@ WallPracticeRoomStoryCmds_12:
 	script_face $02, $c0 ; $470e
 Label_12_4715:
 	ret ; $4715
-	; $4716, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff05, $0000, $7ab1, $0211 ; record 0
+WallPracticeRoomExitTriggers_12:
+	; $4716, 9 bytes (map_scripts)
+	map_script $05, $ff, $0000, Func_12_7ab1, $11, $02
 	db $ff
+Func_12_471f:
 	ld a, [$c2b0] ; $471f
 	add a, a ; $4722
 	add a, $73 ; $4723
@@ -385,6 +391,7 @@ Label_12_4761:
 	dw $1815 ; record 4
 	dw $1815 ; record 5
 	dw $182c ; record 6
+Func_12_4781:
 	ld a, [$c2b0] ; $4781
 	add a, a ; $4784
 	add a, $98 ; $4785
@@ -406,6 +413,7 @@ Label_12_4761:
 	dw $1816 ; record 4
 	dw $1816 ; record 5
 	dw $182d ; record 6
+Func_12_47a6:
 	ld a, [$c2b0] ; $47a6
 	add a, a ; $47a9
 	add a, $e5 ; $47aa
@@ -437,6 +445,7 @@ Label_12_47c4:
 	dw $1817 ; record 4
 	dw $1817 ; record 5
 	dw $182e ; record 6
+Func_12_47f3:
 	ld a, [$c2b0] ; $47f3
 	add a, a ; $47f6
 	add a, $0a ; $47f7
@@ -458,13 +467,13 @@ Label_12_47c4:
 	dw $1818 ; record 4
 	dw $1818 ; record 5
 	dw $182f ; record 6
-	; $4818, 41 bytes (records:8)
-; 5 records x 8 bytes
-	dw $ff03, $0000, $471f, $0001 ; record 0
-	dw $ff04, $0000, $4781, $0001 ; record 1
-	dw $ff05, $0000, $47a6, $0001 ; record 2
-	dw $ff06, $0000, $47f3, $0003 ; record 3
-	dw $ff07, $0000, $50cc, $0001 ; record 4
+WallPracticeRoomNpcScripts_12:
+	; $4818, 41 bytes (map_scripts)
+	map_script $03, $ff, $0000, Func_12_471f, $01, $00
+	map_script $04, $ff, $0000, Func_12_4781, $01, $00
+	map_script $05, $ff, $0000, Func_12_47a6, $01, $00
+	map_script $06, $ff, $0000, Func_12_47f3, $03, $00
+	map_script $07, $ff, $0000, Func_12_50cc, $01, $00
 	db $ff
 WallPracticeMasterResultScript:
 	script_fade_in $06 ; $4841
@@ -817,19 +826,20 @@ Label_12_4bfc:
 Label_12_4c98:
 	script_wait_frames $0a ; $4c98
 	ret ; $4c9f
-	; $4ca0, 9 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff01, $0000, $4ca9, $0000 ; record 0
+WallPracticeRoomFacingScripts_12:
+	; $4ca0, 9 bytes (map_scripts)
+	map_script $01, $ff, $0000, Func_12_4ca9, $00, $00
 	db $ff
+Func_12_4ca9:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ca9
 	script_fade_in $10 ; $4cac
 	script_set_text $0483 ; $4cb1
 	script_speak $00 ; $4cb7
 	farcall FarPtr_EndCutsceneScriptMode ; $4cbc
 	ret ; $4cbf
-	; $4cc0, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $ff02, $9c00, $4ce9, $0000 ; record 0
+WallPracticeRoomTileTriggers_12:
+	; $4cc0, 8 bytes (map_scripts)
+	map_script $02, $ff, $9c00, $4ce9, $00, $00
 	; $4cc8, 34 bytes (records:8)
 ; 4 records x 8 bytes
 	dw $ff03, $0000, $4d29, $0001 ; record 0
@@ -857,6 +867,7 @@ Label_12_4c98:
 	farcall FarPtr_04_20 ; $4d25
 Label_12_4d28:
 	ret ; $4d28
+Func_12_4d29:
 	script_set_text $1830 ; $4d29
 	ld a, $07 ; $4d2f
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4d31
@@ -886,6 +897,7 @@ Label_12_4d28:
 	farcall FarPtr_EndCutsceneScriptMode ; $4d94
 Label_12_4d97:
 	ret ; $4d97
+Func_12_4d98:
 	test_flag $1a, 7 ; $4d98
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text $1831 ; $4d9e
@@ -917,6 +929,7 @@ Label_12_4d97:
 	farcall FarPtr_EndCutsceneScriptMode ; $4e09
 Label_12_4e0c:
 	ret ; $4e0c
+Func_12_4e0d:
 	test_flag $1b, 0 ; $4e0d
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text $1832 ; $4e13
@@ -948,6 +961,7 @@ Label_12_4e0c:
 	farcall FarPtr_EndCutsceneScriptMode ; $4e7e
 Label_12_4e81:
 	ret ; $4e81
+Func_12_4e82:
 	test_flag $1b, 1 ; $4e82
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text $1833 ; $4e88
@@ -983,6 +997,7 @@ WallPracticeLevelLockedScript:
 	script_set_text $1834 ; $4ef7
 	script_speak $07 ; $4efd
 	ret ; $4f02
+WallPracticeRoomInitScript_12:
 	farcall FarPtr_WaitPlayerMoveDone ; $4f03
 	ld a, $00 ; $4f06
 	ld [$c329], a ; $4f08
@@ -1130,6 +1145,7 @@ SetupWallPracticeLevelSigns:
 Label_12_50c8:
 	ld [$c2b0], a ; $50c8
 	ret ; $50cb
+Func_12_50cc:
 	test_flag $1c, 0 ; $50cc
 	jr z, Label_12_50dd ; $50cf
 	script_set_text $1508 ; $50d1
