@@ -3329,7 +3329,7 @@ Label_07_593d:
 	call ApplyShotTypePresets ; $5945
 	call WeakenShotByCharge ; $5948
 	call ComputeShotTrajectory ; $594b
-	farcall FarPtr_2c_00 ; $594e
+	farcall FarPtr_ProjectShotPlacement0 ; $594e
 	ret ; $5951
 Label_07_5952:
 	call CheckBallInSmashRange ; $5952
@@ -3338,7 +3338,7 @@ Label_07_5952:
 	call ApplyShotTypePresets ; $595a
 	call WeakenShotByCharge ; $595d
 	call ComputeShotTrajectory ; $5960
-	farcall FarPtr_2c_02 ; $5963
+	farcall FarPtr_ProjectShotPlacement1 ; $5963
 	ret ; $5966
 Label_07_5967:
 	call CheckBallInSmashRange ; $5967
@@ -3347,7 +3347,7 @@ Label_07_5967:
 	call ApplyShotTypePresets ; $596f
 	call WeakenShotByCharge ; $5972
 	call ComputeShotTrajectory ; $5975
-	farcall FarPtr_2c_04 ; $5978
+	farcall FarPtr_ProjectShotPlacement2 ; $5978
 	ret ; $597b
 Label_07_597c:
 	ld a, $05 ; $597c

@@ -1,11 +1,11 @@
 SECTION "ROM Bank $2c", ROMX[$4000], BANK[$2c]
 
-FarPtr_2c_00:
-	dw Func_2c_7281 ; $4000
-FarPtr_2c_02:
-	dw Func_2c_72d3 ; $4002
-FarPtr_2c_04:
-	dw Func_2c_7325 ; $4004
+FarPtr_ProjectShotPlacement0:
+	dw ProjectShotPlacement0 ; $4000
+FarPtr_ProjectShotPlacement1:
+	dw ProjectShotPlacement1 ; $4002
+FarPtr_ProjectShotPlacement2:
+	dw ProjectShotPlacement2 ; $4004
 Func_2c_4006:
 	push hl ; $4006
 	ld l, e ; $4007
@@ -427,7 +427,7 @@ ShotPlacementData1_2c:
 	INCBIN "data/bank_02c/d_4e81.bin" ; $4e81, 4608 bytes
 ShotPlacementData2_2c:
 	INCBIN "data/bank_02c/d_6081.bin" ; $6081, 4608 bytes
-Func_2c_7281:
+ProjectShotPlacement0:
 	farcall FarPtr_ComputeShotPlacement ; $7281
 	push bc ; $7284
 	ld hl, ShotPlacementData0_2c ; $7285
@@ -470,7 +470,7 @@ ShotPlacementOffsets0_2c:
 	dw $0b00 ; record 29
 	dw $0b00 ; record 30
 	dw $0b00 ; record 31
-Func_2c_72d3:
+ProjectShotPlacement1:
 	farcall FarPtr_ComputeShotPlacement ; $72d3
 	push bc ; $72d6
 	ld hl, ShotPlacementData1_2c ; $72d7
@@ -513,7 +513,7 @@ ShotPlacementOffsets1_2c:
 	dw $1080 ; record 29
 	dw $1080 ; record 30
 	dw $1080 ; record 31
-Func_2c_7325:
+ProjectShotPlacement2:
 	farcall FarPtr_ComputeShotPlacement ; $7325
 	push bc ; $7328
 	ld hl, ShotPlacementData2_2c ; $7329

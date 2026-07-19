@@ -32,6 +32,14 @@ $4281`/`$4e81`/`$6081` bases were the only three references into the 12 KB
 `$4281` blob, so split it there into `ShotPlacementData0-2_2c`
 (3072/4608/4608 bytes) — every handler is now fully symbolic. Byte-perfect.
 
+Then named the three handlers themselves: they are slots 0-2 of bank `$2c`'s
+farcall table, dispatched from bank `$7`'s `wCurrentShotType` jumptable (types
+6/7/8, all gated on `CheckBallInSmashRange`) and each projecting a shot's
+on-screen placement via its paired data/offset tables. Named them
+`ProjectShotPlacement0-2` with matching `FarPtr_ProjectShotPlacement0-2` slots,
+so the bank-`$7` `farcall` sites and the dispatch table read meaningfully.
+Byte-perfect.
+
 ### Carve VarsityCourtTourCutsceneBody_13 (2026-07-19)
 
 The 918-byte `$13:$667a` blob (reached only by dynamic dispatch, never in
