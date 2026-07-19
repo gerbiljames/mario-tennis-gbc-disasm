@@ -166,7 +166,7 @@ CenterCourtInitScript_11:
 	ld a, [wStoryModeEntryPoint] ; $41aa
 	cp a, $0f ; $41ad
 	jp z, Label_11_437a ; $41af
-	call Func_11_42fd ; $41b2
+	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
 Func_11_41b6:
 	ld a, $00 ; $41b6
@@ -233,7 +233,7 @@ Label_11_420d:
 	map_actor $0000, ActorScript_11_7ba9, $2b00, $1e00, $80, $6b, $01, $00
 	map_actor $0000, ActorScript_11_7ba9, $2700, $1d00, $80, $6a, $01, $04
 	map_actor_end
-Func_11_42fd:
+MapArrivalWalk_11:
 	ld a, [wStoryModeEntryPoint] ; $42fd
 	cp a, $ff ; $4300
 	jp z, Label_11_4342 ; $4302
@@ -339,7 +339,7 @@ AcademyArrivalActors_11:
 AcademyArrivalEntryPoints_11:
 	; $4515, 33 bytes (map_entries)
 	map_entry $01, $40, $1800, $1100, AcademyArrivalArrival01_11
-	map_entry $02, $c0, $1800, $3300, Func_11_42fd
+	map_entry $02, $c0, $1800, $3300, MapArrivalWalk_11
 	map_entry $0c, $40, $1800, $2f00, $0000
 	map_entry $0f, $c0, $1800, $2f00, $0000
 	db $ff
@@ -1169,7 +1169,7 @@ JuniorClassCourtDoublesActors_11:
 	map_actor_end
 JuniorClassCourtDoublesEntryPoints_11:
 	; $558e, 17 bytes (map_entries)
-	map_entry $01, $c0, $1300, $1d00, Func_11_42fd
+	map_entry $01, $c0, $1300, $1d00, MapArrivalWalk_11
 	map_entry $09, $c0, $3700, $1900, $0000
 	db $ff
 JuniorClassCourtDoublesExitTriggers_11:
@@ -2282,7 +2282,7 @@ JuniorClassCourtSinglesActors_11:
 	map_actor_end
 JuniorClassCourtSinglesEntryPoints_11:
 	; $691a, 18 bytes (map_entries)
-	map_entry $01, $c0, $1300, $1d00, Func_11_42fd
+	map_entry $01, $c0, $1300, $1d00, MapArrivalWalk_11
 	map_entry $09, $c0, $2d00, $1900, $0000
 	db $ff, $c9
 JuniorClassCourtSinglesExitTriggers_11:

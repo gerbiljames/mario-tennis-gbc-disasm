@@ -2401,7 +2401,7 @@ CafeteriaInitScript_10:
 	ld a, $00 ; $5a74
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5a76
 	call EnableLCD ; $5a79
-	call Func_10_7b5f ; $5a7c
+	call MapArrivalWalkPair_10 ; $5a7c
 	ret ; $5a7f
 RestaurantMapScripts_10:
 	; $5a80, 14 bytes (map_tree)
@@ -2435,7 +2435,7 @@ RestaurantActors_10:
 RestaurantEntryPoints_10:
 	; $5b86, 17 bytes (map_entries)
 	map_entry $01, $c0, $0c00, $2100, RestaurantArrival01_10
-	map_entry $02, $40, $0500, $1700, Func_10_7b5f
+	map_entry $02, $40, $0500, $1700, MapArrivalWalkPair_10
 	db $ff
 RestaurantArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $5b97
@@ -3103,7 +3103,7 @@ AcademyWingActors_10:
 	map_actor_end
 AcademyWingEntryPoints_10:
 	; $6201, 17 bytes (map_entries)
-	map_entry $01, $40, $3b00, $3900, Func_10_7b5f
+	map_entry $01, $40, $3b00, $3900, MapArrivalWalkPair_10
 	map_entry $0f, $c0, $2000, $3400, MapScriptNop_10
 	db $ff
 AcademyWingExitTriggers_10:
@@ -3256,7 +3256,7 @@ Label_10_6462:
 	ld h, $02 ; $647f
 	ld l, $02 ; $6481
 	farcall FarPtr_CopyBehaviorMapRect ; $6483
-	call Func_10_7b5f ; $6486
+	call MapArrivalWalkPair_10 ; $6486
 	call Func_10_7443 ; $6489
 	script_set_position $03, $1d00, $3000 ; $648c
 	script_face $03, $c0 ; $6497
@@ -4015,8 +4015,8 @@ AcademyMainBldgEntryPoints_10:
 	; $74f9, 57 bytes (map_entries)
 	map_entry $01, $c0, $2200, $2100, AcademyMainBldgArrival01_10
 	map_entry $02, $40, $2200, $0700, AcademyMainBldgArrival02_10
-	map_entry $03, $40, $3500, $1900, Func_10_7b5f
-	map_entry $04, $40, $3b00, $3900, Func_10_7b5f
+	map_entry $03, $40, $3500, $1900, MapArrivalWalkPair_10
+	map_entry $04, $40, $3b00, $3900, MapArrivalWalkPair_10
 	map_entry $0d, $c0, $2100, $3b00, $0000
 	map_entry $0e, $c0, $2200, $1300, $0000
 	map_entry $0f, $c0, $2200, $1d00, $0000
@@ -4504,7 +4504,7 @@ Func_10_7b1f:
 	script_move_angle $00, $80, $0080 ; $7b54
 Label_10_7b5e:
 	ret ; $7b5e
-Func_10_7b5f:
+MapArrivalWalkPair_10:
 	ld a, [wStoryModeEntryPoint] ; $7b5f
 	cp a, $ff ; $7b62
 	jr z, Label_10_7b8a ; $7b64
