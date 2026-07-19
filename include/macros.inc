@@ -320,6 +320,14 @@ MACRO script_copy_scene_rect
 	farcall FarPtr_CopySceneTilemapRect
 ENDM
 
+; Wait `frames` frames through WaitScriptFramesSaveA ($27:$7856), the
+; af-preserving subroutine wrapper around FarPtr_WaitScriptFrames.
+; Usage: script_delay frames
+MACRO script_delay
+	ld a, \1
+	call WaitScriptFramesSaveA
+ENDM
+
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
 ; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
 ; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result

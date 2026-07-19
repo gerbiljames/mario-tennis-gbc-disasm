@@ -107,11 +107,9 @@ Label_27_41cd:
 	script_set_speed $05, $0010 ; $4205
 	script_set_speed $06, $0010 ; $420d
 	script_face $06, $40 ; $4215
-	ld a, $1e ; $421c
-	call WaitScriptFramesSaveA ; $421e
+	script_delay $1e ; $421c
 	script_set_position $05, $0f80, $1600 ; $4221
-	ld a, $1e ; $422c
-	call WaitScriptFramesSaveA ; $422e
+	script_delay $1e ; $422c
 	script_set_position $06, $3f00, $3f00 ; $4231
 	script_set_position $03, $0f00, $1600 ; $423c
 	script_set_position $05, $0f00, $1500 ; $4247
@@ -136,8 +134,7 @@ Label_27_41cd:
 	script_move_target $04, $0c00, $1100 ; $42ec
 	script_move_target $05, $0c00, $1000 ; $42f7
 	script_wait_move $05 ; $4302
-	ld a, $50 ; $4307
-	call WaitScriptFramesSaveA ; $4309
+	script_delay $50 ; $4307
 	script_move_target $04, $0c00, $0f80 ; $430c
 	script_move_target $05, $0c00, $0e40 ; $4317
 	script_wait_move $05 ; $4322
@@ -148,12 +145,10 @@ Label_27_41cd:
 	script_face $04, $c0 ; $4345
 	script_set_anim $0e, $02 ; $434c
 	script_wait_idle $0e ; $4353
-	ld a, $32 ; $4358
-	call WaitScriptFramesSaveA ; $435a
+	script_delay $32 ; $4358
 	script_face $07, $80 ; $435d
 	script_face $08, $00 ; $4364
-	ld a, $3c ; $436b
-	call WaitScriptFramesSaveA ; $436d
+	script_delay $3c ; $436b
 	script_set_position $05, $0b40, $0c40 ; $4370
 Label_27_437b:
 	ld a, [$c90d] ; $437b
@@ -171,8 +166,7 @@ Label_27_437b:
 	script_player_speed $0006 ; $43a1
 	script_move_player $0c00, $0d00 ; $43a7
 	farcall FarPtr_WaitPlayerMoveDone ; $43b1
-	ld a, $32 ; $43b4
-	call WaitScriptFramesSaveA ; $43b6
+	script_delay $32 ; $43b4
 	ld a, $01 ; $43b9
 	ld [$c294], a ; $43bb
 	ld [wStoryModeExitLocationRequest], a ; $43be
@@ -185,11 +179,9 @@ Label_27_43c2:
 	script_move_target $06, $0f00, $1600 ; $43e2
 	script_wait_move $06 ; $43ed
 	script_face $06, $40 ; $43f2
-	ld a, $14 ; $43f9
-	call WaitScriptFramesSaveA ; $43fb
+	script_delay $14 ; $43f9
 	script_set_position $05, $0f80, $1600 ; $43fe
-	ld a, $14 ; $4409
-	call WaitScriptFramesSaveA ; $440b
+	script_delay $14 ; $4409
 	script_set_position $06, $3f00, $3f00 ; $440e
 	script_set_position $03, $0f00, $1600 ; $4419
 	script_set_position $05, $0f00, $1500 ; $4424
@@ -210,30 +202,25 @@ Label_27_43c2:
 	script_move_target $04, $0f00, $1100 ; $44a3
 	script_move_target $05, $0fc0, $1100 ; $44ae
 	script_wait_move $05 ; $44b9
-	ld a, $3c ; $44be
-	call WaitScriptFramesSaveA ; $44c0
+	script_delay $3c ; $44be
 	script_set_anim $02, $03 ; $44c3
 	script_wait_idle $02 ; $44ca
 	script_set_anim $04, $03 ; $44cf
 	script_wait_idle $04 ; $44d6
-	ld a, $3c ; $44db
-	call WaitScriptFramesSaveA ; $44dd
+	script_delay $3c ; $44db
 	script_set_position $05, $0e40, $1100 ; $44e0
 	script_move_target $04, $0d00, $1100 ; $44eb
 	script_move_target $05, $0c40, $1100 ; $44f6
 	script_wait_move $05 ; $4501
-	ld a, $04 ; $4506
-	call WaitScriptFramesSaveA ; $4508
+	script_delay $04 ; $4506
 	script_face $04, $c0 ; $450b
 	script_move_target $05, $0d00, $1000 ; $4512
 	script_wait_move $05 ; $451d
-	ld a, $32 ; $4522
-	call WaitScriptFramesSaveA ; $4524
+	script_delay $32 ; $4522
 	script_move_target $04, $0d00, $1000 ; $4527
 	script_move_target $05, $0d00, $0e80 ; $4532
 	script_wait_move $05 ; $453d
-	ld a, $05 ; $4542
-	call WaitScriptFramesSaveA ; $4544
+	script_delay $05 ; $4542
 	script_facing_lock $04, $01 ; $4547
 	script_move_target $04, $0d00, $1100 ; $454e
 	script_wait_move $04 ; $4559
@@ -241,18 +228,15 @@ Label_27_43c2:
 	script_face $04, $c0 ; $4565
 	script_set_anim $0e, $02 ; $456c
 	script_wait_idle $0e ; $4573
-	ld a, $1e ; $4578
-	call WaitScriptFramesSaveA ; $457a
+	script_delay $1e ; $4578
 	script_set_anim $09, $03 ; $457d
 	script_set_anim $02, $03 ; $4584
 	script_wait_idle $02 ; $458b
-	ld a, $1e ; $4590
-	call WaitScriptFramesSaveA ; $4592
+	script_delay $1e ; $4590
 	script_face $02, $80 ; $4595
 	script_face $07, $00 ; $459c
 	script_face $08, $00 ; $45a3
-	ld a, $3c ; $45aa
-	call WaitScriptFramesSaveA ; $45ac
+	script_delay $3c ; $45aa
 	script_set_position $05, $0c40, $0c60 ; $45af
 	jp Label_27_437b ; $45ba
 	ret ; $45bd
@@ -547,23 +531,19 @@ Label_27_4c8c:
 	script_set_position $02, $2b00, $3b00 ; $4c9b
 	ld c, $04 ; $4ca6
 	call BeginFadeIn ; $4ca8
-	ld a, $14 ; $4cab
-	call WaitScriptFramesSaveA ; $4cad
+	script_delay $14 ; $4cab
 	script_move_target $07, $1e00, $2f00 ; $4cb0
 	script_wait_move $07 ; $4cbb
 	script_face $07, $40 ; $4cc0
-	ld a, $1e ; $4cc7
-	call WaitScriptFramesSaveA ; $4cc9
+	script_delay $1e ; $4cc7
 	script_move_target $07, $2200, $2f00 ; $4ccc
 	script_wait_move $07 ; $4cd7
 	script_face $07, $40 ; $4cdc
-	ld a, $1e ; $4ce3
-	call WaitScriptFramesSaveA ; $4ce5
+	script_delay $1e ; $4ce3
 	script_move_target $07, $2000, $2f00 ; $4ce8
 	script_wait_move $07 ; $4cf3
 	script_face $07, $40 ; $4cf8
-	ld a, $0a ; $4cff
-	call WaitScriptFramesSaveA ; $4d01
+	script_delay $0a ; $4cff
 	script_set_anim $07, $02 ; $4d04
 	script_wait_idle $07 ; $4d0b
 	script_face $08, $c0 ; $4d10
@@ -571,19 +551,15 @@ Label_27_4c8c:
 	script_face $0a, $c0 ; $4d1e
 	sound $96 ; $4d25
 	script_set_position $04, $1f80, $3180 ; $4d27
-	ld a, $28 ; $4d32
-	call WaitScriptFramesSaveA ; $4d34
+	script_delay $28 ; $4d32
 	sound $96 ; $4d37
 	script_set_position $06, $2180, $3180 ; $4d39
-	ld a, $28 ; $4d44
-	call WaitScriptFramesSaveA ; $4d46
+	script_delay $28 ; $4d44
 	sound $96 ; $4d49
 	script_set_position $04, $2380, $3180 ; $4d4b
-	ld a, $28 ; $4d56
-	call WaitScriptFramesSaveA ; $4d58
+	script_delay $28 ; $4d56
 	script_set_position $06, $3f00, $3f00 ; $4d5b
-	ld a, $28 ; $4d66
-	call WaitScriptFramesSaveA ; $4d68
+	script_delay $28 ; $4d66
 	script_set_position $04, $3f00, $3f00 ; $4d6b
 	test_flag $05, 7 ; $4d76
 	jp z, Label_27_4e13 ; $4d79
@@ -606,8 +582,7 @@ Label_27_4c8c:
 	script_wait_move $02 ; $4df9
 	script_face $00, $c0 ; $4dfe
 	script_face $02, $c0 ; $4e05
-	ld a, $01 ; $4e0c
-	call WaitScriptFramesSaveA ; $4e0e
+	script_delay $01 ; $4e0c
 	jr Label_27_4e59 ; $4e11
 Label_27_4e13:
 	script_move_target $00, $2100, $3b00 ; $4e13
@@ -619,8 +594,7 @@ Label_27_4e13:
 	script_move_target $00, $2000, $3500 ; $4e3d
 	script_wait_move $00 ; $4e48
 	script_face $00, $c0 ; $4e4d
-	ld a, $01 ; $4e54
-	call WaitScriptFramesSaveA ; $4e56
+	script_delay $01 ; $4e54
 Label_27_4e59:
 	call Func_27_51a1 ; $4e59
 	script_set_anim $07, $02 ; $4e5c
@@ -628,8 +602,7 @@ Label_27_4e59:
 	script_set_anim $09, $02 ; $4e6a
 	script_set_anim $0a, $02 ; $4e71
 	script_wait_idle $0a ; $4e78
-	ld a, $1e ; $4e7d
-	call WaitScriptFramesSaveA ; $4e7f
+	script_delay $1e ; $4e7d
 	script_move_target $0a, $1d00, $3500 ; $4e82
 	script_move_target $09, $2300, $3500 ; $4e8d
 	script_move_target $08, $2500, $3500 ; $4e98
@@ -637,32 +610,26 @@ Label_27_4e59:
 	script_face $0a, $00 ; $4ea8
 	script_face $09, $80 ; $4eaf
 	script_face $08, $80 ; $4eb6
-	ld a, $0a ; $4ebd
-	call WaitScriptFramesSaveA ; $4ebf
+	script_delay $0a ; $4ebd
 	test_flag $05, 7 ; $4ec2
 	jp z, Label_27_4f62 ; $4ec5
-	ld a, $3c ; $4ec8
-	call WaitScriptFramesSaveA ; $4eca
+	script_delay $3c ; $4ec8
 	script_face_toward $02, $00 ; $4ecd
 	script_set_anim $00, $02 ; $4ed5
 	script_wait_idle $00 ; $4edc
-	ld a, $14 ; $4ee1
-	call WaitScriptFramesSaveA ; $4ee3
+	script_delay $14 ; $4ee1
 	script_face_toward $00, $02 ; $4ee6
-	ld a, $01 ; $4eee
-	call WaitScriptFramesSaveA ; $4ef0
+	script_delay $01 ; $4eee
 	script_set_anim $02, $03 ; $4ef3
 	script_wait_idle $02 ; $4efa
-	ld a, $14 ; $4eff
-	call WaitScriptFramesSaveA ; $4f01
+	script_delay $14 ; $4eff
 	script_face $00, $c0 ; $4f04
 	script_face $02, $c0 ; $4f0b
 	script_set_anim $08, $03 ; $4f12
 	script_set_anim $09, $03 ; $4f19
 	script_set_anim $0a, $03 ; $4f20
 	script_wait_idle $0a ; $4f27
-	ld a, $28 ; $4f2c
-	call WaitScriptFramesSaveA ; $4f2e
+	script_delay $28 ; $4f2c
 	script_set_anim $00, $03 ; $4f31
 	script_set_anim $02, $03 ; $4f38
 	script_wait_idle $02 ; $4f3f
@@ -673,26 +640,21 @@ Label_27_4e59:
 Label_27_4f62:
 	sound $96 ; $4f62
 	script_set_position $04, $2180, $3380 ; $4f64
-	ld a, $50 ; $4f6f
-	call WaitScriptFramesSaveA ; $4f71
+	script_delay $50 ; $4f6f
 	script_set_position $04, $3f00, $3f00 ; $4f74
 	script_face_toward $0a, $00 ; $4f7f
-	ld a, $28 ; $4f87
-	call WaitScriptFramesSaveA ; $4f89
+	script_delay $28 ; $4f87
 	script_face_toward $00, $0a ; $4f8c
-	ld a, $01 ; $4f94
-	call WaitScriptFramesSaveA ; $4f96
+	script_delay $01 ; $4f94
 	script_set_anim $0a, $03 ; $4f99
 	script_wait_idle $0a ; $4fa0
-	ld a, $14 ; $4fa5
-	call WaitScriptFramesSaveA ; $4fa7
+	script_delay $14 ; $4fa5
 	script_face $00, $c0 ; $4faa
 	script_set_anim $08, $03 ; $4fb1
 	script_set_anim $09, $03 ; $4fb8
 	script_set_anim $0a, $03 ; $4fbf
 	script_wait_idle $0a ; $4fc6
-	ld a, $28 ; $4fcb
-	call WaitScriptFramesSaveA ; $4fcd
+	script_delay $28 ; $4fcb
 	script_set_anim $00, $03 ; $4fd0
 	script_move_target $00, $2000, $3200 ; $4fd7
 	script_wait_move $00 ; $4fe2
@@ -736,11 +698,9 @@ Label_27_5057:
 	script_wait_idle $00 ; $5077
 	script_set_anim $03, $03 ; $507c
 	script_wait_idle $03 ; $5083
-	ld a, $3c ; $5088
-	call WaitScriptFramesSaveA ; $508a
+	script_delay $3c ; $5088
 	script_face_pair $02, $00 ; $508d
-	ld a, $1e ; $5095
-	call WaitScriptFramesSaveA ; $5097
+	script_delay $1e ; $5095
 	script_set_anim $00, $03 ; $509a
 	script_set_anim $02, $03 ; $50a1
 	script_wait_idle $02 ; $50a8
@@ -761,16 +721,14 @@ Label_27_5057:
 	ld a, $02 ; $50f0
 	ld de, SceneFrameDataHi_27 ; $50f2
 	farcall FarPtr_ScriptSetActorScript ; $50f5
-	ld a, $14 ; $50f8
-	call WaitScriptFramesSaveA ; $50fa
+	script_delay $14 ; $50f8
 	jr Label_27_514f ; $50fd
 Label_27_50ff:
 	script_set_anim $00, $03 ; $50ff
 	script_wait_idle $00 ; $5106
 	script_set_anim $03, $03 ; $510b
 	script_wait_idle $03 ; $5112
-	ld a, $3c ; $5117
-	call WaitScriptFramesSaveA ; $5119
+	script_delay $3c ; $5117
 	script_move_target $00, $2100, $3400 ; $511c
 	script_wait_move $00 ; $5127
 	script_move_target $00, $2100, $3700 ; $512c
@@ -781,12 +739,10 @@ Label_27_50ff:
 	ld a, $00 ; $5142
 	ld de, SceneFrameDataHi_27 ; $5144
 	farcall FarPtr_ScriptSetActorScript ; $5147
-	ld a, $14 ; $514a
-	call WaitScriptFramesSaveA ; $514c
+	script_delay $14 ; $514a
 Label_27_514f:
 	call Func_27_51a1 ; $514f
-	ld a, $3c ; $5152
-	call WaitScriptFramesSaveA ; $5154
+	script_delay $3c ; $5152
 	set_flag $0d, 5 ; $5157
 	ld c, $04 ; $515a
 	call BeginFadeOut ; $515c
@@ -882,8 +838,7 @@ Label_27_52ae:
 	ld [wStoryModeShowLocationName], a ; $52c1
 	ld c, $04 ; $52c4
 	call BeginFadeIn ; $52c6
-	ld a, $78 ; $52c9
-	call WaitScriptFramesSaveA ; $52cb
+	script_delay $78 ; $52c9
 	ld a, $00 ; $52ce
 	farcall FarPtr_GetActorStateAddr ; $52d0
 	ld a, $01 ; $52d3
@@ -897,27 +852,20 @@ Label_27_52ae:
 	ld a, $00 ; $52e8
 	farcall FarPtr_SetActorNullScript ; $52ea
 	script_set_anim $00, $01 ; $52ed
-	ld a, $3c ; $52f4
-	call WaitScriptFramesSaveA ; $52f6
+	script_delay $3c ; $52f4
 	script_face $00, $80 ; $52f9
-	ld a, $1e ; $5300
-	call WaitScriptFramesSaveA ; $5302
+	script_delay $1e ; $5300
 	script_face $00, $00 ; $5305
-	ld a, $1e ; $530c
-	call WaitScriptFramesSaveA ; $530e
+	script_delay $1e ; $530c
 	script_face $00, $80 ; $5311
-	ld a, $1e ; $5318
-	call WaitScriptFramesSaveA ; $531a
+	script_delay $1e ; $5318
 	script_face $00, $00 ; $531d
-	ld a, $1e ; $5324
-	call WaitScriptFramesSaveA ; $5326
+	script_delay $1e ; $5324
 	script_face $00, $40 ; $5329
-	ld a, $1e ; $5330
-	call WaitScriptFramesSaveA ; $5332
+	script_delay $1e ; $5330
 	sound $98 ; $5335
 	script_set_position $04, $3480, $0b80 ; $5337
-	ld a, $3c ; $5342
-	call WaitScriptFramesSaveA ; $5344
+	script_delay $3c ; $5342
 	script_set_position $03, $3300, $0700 ; $5347
 	script_set_active $03, $00 ; $5352
 	script_player_speed $0010 ; $5359
@@ -925,8 +873,7 @@ Label_27_52ae:
 	ld hl, $5580 ; $5366
 	ld de, $0206 ; $5369
 	call LoadPalettesImmediate ; $536c
-	ld a, $1e ; $536f
-	call WaitScriptFramesSaveA ; $5371
+	script_delay $1e ; $536f
 	ld hl, $55c0 ; $5374
 	ld de, $0206 ; $5377
 	call LoadPalettesImmediate ; $537a
@@ -944,22 +891,18 @@ Label_27_537f:
 	sub a, $02 ; $539c
 	jp nz, Label_27_537f ; $539e
 	script_set_active $03, $02 ; $53a1
-	ld a, $3c ; $53a8
-	call WaitScriptFramesSaveA ; $53aa
+	script_delay $3c ; $53a8
 	script_set_position $04, $3f00, $3f00 ; $53ad
 	script_face $00, $c0 ; $53b8
-	ld a, $1e ; $53bf
-	call WaitScriptFramesSaveA ; $53c1
+	script_delay $1e ; $53bf
 	sound $97 ; $53c4
 	script_set_position $05, $3480, $0b80 ; $53c6
-	ld a, $14 ; $53d1
-	call WaitScriptFramesSaveA ; $53d3
+	script_delay $14 ; $53d1
 	script_jump_velocity $05, $ff40 ; $53d6
 	script_jump_velocity $00, $ff40 ; $53de
 	ld a, $00 ; $53e6
 	farcall FarPtr_ScriptWaitActorJumpDone ; $53e8
-	ld a, $1e ; $53eb
-	call WaitScriptFramesSaveA ; $53ed
+	script_delay $1e ; $53eb
 	ld a, $01 ; $53f0
 	ld [$c294], a ; $53f2
 	ld [wStoryModeExitLocationRequest], a ; $53f5
@@ -1418,13 +1361,11 @@ Label_27_5eec:
 	script_wait_move $04 ; $5f30
 	script_face_pair $05, $04 ; $5f35
 	script_set_anim $04, $02 ; $5f3d
-	ld a, $32 ; $5f44
-	call WaitScriptFramesSaveA ; $5f46
+	script_delay $32 ; $5f44
 	script_face $05, $40 ; $5f49
 	script_set_anim $05, $04 ; $5f50
 	script_wait_idle $05 ; $5f57
-	ld a, $32 ; $5f5c
-	call WaitScriptFramesSaveA ; $5f5e
+	script_delay $32 ; $5f5c
 	script_set_anim $04, $02 ; $5f61
 	script_set_anim $05, $02 ; $5f68
 	script_set_anim $02, $02 ; $5f6f
@@ -1432,14 +1373,12 @@ Label_27_5eec:
 	script_face $00, $40 ; $5f7d
 	script_face $02, $40 ; $5f84
 	script_face $04, $40 ; $5f8b
-	ld a, $1e ; $5f92
-	call WaitScriptFramesSaveA ; $5f94
+	script_delay $1e ; $5f92
 	script_player_speed $0030 ; $5f97
 	script_set_speed $03, $0010 ; $5f9d
 	script_move_player $2b00, $1f00 ; $5fa5
 	script_move_target $03, $2b00, $2000 ; $5faf
-	ld a, $5a ; $5fba
-	call WaitScriptFramesSaveA ; $5fbc
+	script_delay $5a ; $5fba
 	script_player_speed $0010 ; $5fbf
 	script_move_player $2400, $1b00 ; $5fc5
 	script_move_target $03, $2500, $1f00 ; $5fcf
@@ -1447,11 +1386,9 @@ Label_27_5eec:
 	script_face $03, $c0 ; $5fdf
 	script_set_anim $03, $02 ; $5fe6
 	script_wait_idle $03 ; $5fed
-	ld a, $14 ; $5ff2
-	call WaitScriptFramesSaveA ; $5ff4
+	script_delay $14 ; $5ff2
 	script_face_pair $02, $00 ; $5ff7
-	ld a, $28 ; $5fff
-	call WaitScriptFramesSaveA ; $6001
+	script_delay $28 ; $5fff
 	script_face $00, $40 ; $6004
 	script_face $02, $40 ; $600b
 	script_set_anim $02, $03 ; $6012
@@ -1459,8 +1396,7 @@ Label_27_5eec:
 	script_wait_idle $00 ; $6020
 	script_set_anim $03, $03 ; $6025
 	script_wait_idle $03 ; $602c
-	ld a, $14 ; $6031
-	call WaitScriptFramesSaveA ; $6033
+	script_delay $14 ; $6031
 	script_move_target $03, $2500, $1d00 ; $6036
 	script_wait_move $03 ; $6041
 	script_set_anim $03, $02 ; $6046
@@ -1483,22 +1419,18 @@ Label_27_6075:
 	call BeginFadeIn ; $6095
 	script_move_target $04, $2400, $1300 ; $6098
 	script_wait_move $04 ; $60a3
-	ld a, $14 ; $60a8
-	call WaitScriptFramesSaveA ; $60aa
-	ld a, $28 ; $60ad
-	call WaitScriptFramesSaveA ; $60af
+	script_delay $14 ; $60a8
+	script_delay $28 ; $60ad
 	script_set_anim $04, $02 ; $60b2
 	script_set_anim $00, $02 ; $60b9
 	script_wait_idle $00 ; $60c0
 	script_face $00, $40 ; $60c5
-	ld a, $1e ; $60cc
-	call WaitScriptFramesSaveA ; $60ce
+	script_delay $1e ; $60cc
 	script_player_speed $0030 ; $60d1
 	script_set_speed $03, $0010 ; $60d7
 	script_move_player $2b00, $1f00 ; $60df
 	script_move_target $03, $2b00, $1f00 ; $60e9
-	ld a, $5a ; $60f4
-	call WaitScriptFramesSaveA ; $60f6
+	script_delay $5a ; $60f4
 	script_player_speed $0010 ; $60f9
 	script_move_player $2400, $1b00 ; $60ff
 	script_wait_move $03 ; $6109
@@ -1508,20 +1440,16 @@ Label_27_6075:
 	script_wait_move $03 ; $6129
 	script_move_target $03, $2400, $1d00 ; $612e
 	script_wait_move $03 ; $6139
-	ld a, $1e ; $613e
-	call WaitScriptFramesSaveA ; $6140
+	script_delay $1e ; $613e
 	script_set_anim $03, $02 ; $6143
 	script_wait_idle $03 ; $614a
-	ld a, $1e ; $614f
-	call WaitScriptFramesSaveA ; $6151
+	script_delay $1e ; $614f
 	script_set_anim $00, $03 ; $6154
 	script_wait_idle $00 ; $615b
-	ld a, $14 ; $6160
-	call WaitScriptFramesSaveA ; $6162
+	script_delay $14 ; $6160
 	script_set_anim $03, $03 ; $6165
 	script_wait_idle $03 ; $616c
-	ld a, $28 ; $6171
-	call WaitScriptFramesSaveA ; $6173
+	script_delay $28 ; $6171
 	ld a, $01 ; $6176
 	ld [$c294], a ; $6178
 	ld [wStoryModeExitLocationRequest], a ; $617b
@@ -2464,25 +2392,20 @@ Label_27_7659:
 	ld c, $04 ; $7683
 	call BeginFadeIn ; $7685
 	call WaitFadeEnd ; $7688
-	ld a, $3c ; $768b
-	call WaitScriptFramesSaveA ; $768d
+	script_delay $3c ; $768b
 	test_flag $05, 7 ; $7690
 	jp z, Label_27_7704 ; $7693
 	script_face_pair $0a, $00 ; $7696
-	ld a, $1e ; $769e
-	call WaitScriptFramesSaveA ; $76a0
+	script_delay $1e ; $769e
 	script_set_anim $00, $03 ; $76a3
 	script_set_anim $0a, $03 ; $76aa
 	script_wait_idle $0a ; $76b1
-	ld a, $1e ; $76b6
-	call WaitScriptFramesSaveA ; $76b8
+	script_delay $1e ; $76b6
 	script_face $0a, $c0 ; $76bb
-	ld a, $1e ; $76c2
-	call WaitScriptFramesSaveA ; $76c4
+	script_delay $1e ; $76c2
 	script_set_anim $0c, $02 ; $76c7
 	script_wait_idle $0c ; $76ce
-	ld a, $32 ; $76d3
-	call WaitScriptFramesSaveA ; $76d5
+	script_delay $32 ; $76d3
 	script_face_pair $0c, $08 ; $76d8
 	script_set_anim $08, $03 ; $76e0
 	script_set_anim $0c, $03 ; $76e7
@@ -2492,33 +2415,27 @@ Label_27_7659:
 	jp Label_27_7748 ; $7701
 Label_27_7704:
 	script_face_pair $0b, $00 ; $7704
-	ld a, $1e ; $770c
-	call WaitScriptFramesSaveA ; $770e
+	script_delay $1e ; $770c
 	script_set_anim $00, $03 ; $7711
 	script_set_anim $0b, $03 ; $7718
 	script_wait_idle $0b ; $771f
-	ld a, $0a ; $7724
-	call WaitScriptFramesSaveA ; $7726
+	script_delay $0a ; $7724
 	script_face $00, $c0 ; $7729
 	script_face $0b, $c0 ; $7730
-	ld a, $14 ; $7737
-	call WaitScriptFramesSaveA ; $7739
+	script_delay $14 ; $7737
 	script_set_anim $08, $03 ; $773c
 	script_wait_idle $08 ; $7743
 Label_27_7748:
-	ld a, $28 ; $7748
-	call WaitScriptFramesSaveA ; $774a
+	script_delay $28 ; $7748
 	script_set_anim $09, $03 ; $774d
 	script_set_anim $0a, $03 ; $7754
 	script_set_anim $00, $03 ; $775b
 	script_set_anim $0b, $03 ; $7762
 	script_wait_idle $0b ; $7769
-	ld a, $14 ; $776e
-	call WaitScriptFramesSaveA ; $7770
+	script_delay $14 ; $776e
 	script_face_pair $0b, $00 ; $7773
 	script_face_pair $09, $0a ; $777b
-	ld a, $0a ; $7783
-	call WaitScriptFramesSaveA ; $7785
+	script_delay $0a ; $7783
 	script_facing_lock $00, $01 ; $7788
 	script_facing_lock $0b, $01 ; $778f
 	script_facing_lock $0a, $01 ; $7796

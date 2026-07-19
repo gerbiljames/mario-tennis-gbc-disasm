@@ -58,6 +58,14 @@ arrival scripts (`Func_10_7532`/`Func_10_7578`) were buried after the `$ff`
 terminator, so the table over-ran to 197 bytes; now 57 bytes (7 records) with
 the arrival scripts decoded as `script_*` cutscene code. Byte-perfect.
 
+### script_delay macro (2026-07-19)
+
+Added a `script_delay frames` command: `ld a, frames; call WaitScriptFramesSaveA`
+(`$27:$7856`, the af-preserving wrapper around `FarPtr_WaitScriptFrames`). This
+needed a new `'C'` step kind in `script_cmd_seq` — a `call` to a curated
+same-bank label (the existing steps only matched farcalls). Collapses all 83
+cutscene sites in bank $27. Byte-perfect.
+
 ### script_copy_scene_rect macro (2026-07-19)
 
 Added a `script_copy_scene_rect src_col, src_row, dst_col, dst_row, width, height`

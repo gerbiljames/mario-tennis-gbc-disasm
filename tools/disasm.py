@@ -1979,6 +1979,10 @@ SCRIPT_COMMANDS = (
     ("script_copy_scene_rect",
         ((0x06, 2, 'b'), (0x0E, 2, 'b'), (0x16, 2, 'b'), (0x1E, 2, 'b'),
          (0x26, 2, 'b'), (0x2E, 2, 'b'), ('F', "FarPtr_CopySceneTilemapRect"))),
+    # Wait `frames` frames via the af-preserving WaitScriptFramesSaveA wrapper
+    # (bank $27's cutscenes call it instead of inlining script_wait_frames).
+    ("script_delay",
+        ((0x3E, 2, 'b'), ('C', "WaitScriptFramesSaveA"))),
 )
 
 
@@ -2008,6 +2012,16 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
                     ok = False
                     break
                 p += 3  # rst18 + slot + bank
+            elif step[0] == 'C':  # `call` to a named same-bank helper
+                if p + 3 > len(rom) or rom[p] != 0xCD:
+                    ok = False
+                    break
+                tgt = ((p // BANK_SIZE) * BANK_SIZE
+                       + (rom[p + 1] | (rom[p + 2] << 8)) - BANK_SIZE)
+                if labels.get(tgt) != step[1]:
+                    ok = False
+                    break
+                p += 3
             else:
                 opc, size, kind = step
                 if p + size > len(rom) or rom[p] != opc:
@@ -2398,6 +2412,14 @@ MACRO script_copy_scene_rect
 	ld h, \\5
 	ld l, \\6
 	farcall FarPtr_CopySceneTilemapRect
+ENDM
+
+; Wait `frames` frames through WaitScriptFramesSaveA ($27:$7856), the
+; af-preserving subroutine wrapper around FarPtr_WaitScriptFrames.
+; Usage: script_delay frames
+MACRO script_delay
+	ld a, \\1
+	call WaitScriptFramesSaveA
 ENDM
 
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
