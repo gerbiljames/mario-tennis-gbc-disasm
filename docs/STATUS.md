@@ -34,7 +34,11 @@ variant tables get their variant in the name (`IslandOpenRound1DoublesNpc0A_0f`,
 `VarsityCourtCNpc03_13`, `JuniorClassCourtDoublesDNpc0A_11`). Same-NPC records
 that share an id but differ by approach direction / story flag are disambiguated
 by the record's `facing_mask` (and `flag_cond` where facing collides):
-`MarioWorldNpc08Face10/20/40/80_0e`, `SeniorCourtNpc03Face40Flag0000/0840_12`.
+`MarioWorldNpc08FaceUp/Down/Left/Right_0e`, `SeniorCourtNpc03FaceUpFlag0000/0840_12`.
+The `facing_mask` direction was decoded from the engine
+(`CheckTriggerFacingMask` `$0a:$53bd`; table `$0a:$53b9` + d-pad→facing table
+`$04:$532d`): mask `$10`=facing Right, `$20`=Left, `$40`=Up, `$80`=Down,
+`$ff`=any.
 Also named the per-bank no-op exit handlers (`MapScriptNop_0f/_11/_12/_13/_15`),
 the two `Development` respawn-actor scripts, the shared `RestaurantPlaza`
 arrival walk, `TournamentExit_0f`, `Court2SpectatorChat_14`, and the two shared
