@@ -4202,7 +4202,7 @@ UpdateDebugOverlay:
 	jr Label_00_18be ; $18b8
 Label_00_18ba:
 	ldh a, [hPlayerInputFlags] ; $18ba
-	bit 2, a ; $18bc
+	bit PADB_SELECT, a ; $18bc
 Label_00_18be:
 	xor a, a ; $18be
 	jr Label_00_18c3 ; $18bf
@@ -6641,8 +6641,8 @@ Label_00_267e:
 	or a, a ; $268c
 	jr nz, Label_00_269d ; $268d
 	ldh a, [hPlayerInputFlags] ; $268f
-	and a, $0c ; $2691
-	cp a, $0c ; $2693
+	and a, PADF_SELECT | PADF_START ; $2691
+	cp a, PADF_SELECT | PADF_START ; $2693
 	jr nz, Label_00_269d ; $2695
 	ld a, $01 ; $2697
 	ldh [$ff9a], a ; $2699
@@ -6653,7 +6653,7 @@ Label_00_269d:
 	jr z, Label_00_26f3 ; $26a0
 Label_00_26a2:
 	ldh a, [hInputRisingEdge] ; $26a2
-	bit 2, a ; $26a4
+	bit PADB_SELECT, a ; $26a4
 	jr z, Label_00_26b5 ; $26a6
 	ldh a, [hDebugStepMode] ; $26a8
 	inc a ; $26aa
@@ -6665,7 +6665,7 @@ Label_00_26b1:
 	jr Label_00_26c4 ; $26b3
 Label_00_26b5:
 	ldh a, [hPlayerInputFlags] ; $26b5
-	bit 3, a ; $26b7
+	bit PADB_START, a ; $26b7
 	jr z, Label_00_26c4 ; $26b9
 	bit 2, a ; $26bb
 	jr nz, Label_00_26c4 ; $26bd

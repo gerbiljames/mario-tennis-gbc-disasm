@@ -233,7 +233,7 @@ MoveMenuCursorGrid:
 	ld a, [wMenuCursorY] ; $4136
 	ld e, a ; $4139
 	ld a, [wMenuInputPressed] ; $413a
-	bit 4, a ; $413d
+	bit PADB_RIGHT, a ; $413d
 	jr z, Label_1b_4156 ; $413f
 	ld a, [wMenuCursorX] ; $4141
 	inc a ; $4144
@@ -1644,7 +1644,7 @@ RankingBoardAnimState_5504_1b:
 WaitForAOrBPress:
 	call AdvanceFrame ; $5507
 	ldh a, [hInputPressed] ; $550a
-	and a, $03 ; $550c
+	and a, PADF_A | PADF_B ; $550c
 	jr z, WaitForAOrBPress ; $550e
 	ret ; $5510
 DrawSinglesRankingNames:
@@ -2902,7 +2902,7 @@ Label_1b_60ab:
 Label_1b_6119:
 	wram_bank $01 ; $6119
 	ldh a, [hInputRisingEdge] ; $611f
-	and a, $08 ; $6121
+	and a, PADF_START ; $6121
 	jr z, Label_1b_6135 ; $6123
 	ld a, [wTargetZoneX2] ; $6125
 	ld b, a ; $6128
@@ -2913,7 +2913,7 @@ Label_1b_6119:
 	jr Label_1b_6169 ; $6133
 Label_1b_6135:
 	ldh a, [hInputRisingEdge] ; $6135
-	and a, $01 ; $6137
+	and a, PADF_A ; $6137
 	jr z, Label_1b_614c ; $6139
 	ld a, [wTargetZoneX2] ; $613b
 	ld b, a ; $613e
@@ -2924,7 +2924,7 @@ Label_1b_6135:
 	jr Label_1b_6169 ; $614a
 Label_1b_614c:
 	ldh a, [hInputRisingEdge] ; $614c
-	and a, $02 ; $614e
+	and a, PADF_B ; $614e
 	jr z, Label_1b_6158 ; $6150
 	sound $62 ; $6152
 	ld a, $ff ; $6154
@@ -3640,7 +3640,7 @@ RunMinigameFlagsDebugScreen:
 Label_1b_6778:
 	wram_bank $01 ; $6778
 	ldh a, [hInputRisingEdge] ; $677e
-	and a, $01 ; $6780
+	and a, PADF_A ; $6780
 	jr z, Label_1b_679d ; $6782
 	ld a, [wCharSelectChar] ; $6784
 	ld b, a ; $6787
@@ -3659,7 +3659,7 @@ Label_1b_6796:
 	jr Label_1b_67c6 ; $679b
 Label_1b_679d:
 	ldh a, [hInputRisingEdge] ; $679d
-	and a, $02 ; $679f
+	and a, PADF_B ; $679f
 	jr z, Label_1b_67af ; $67a1
 	sound $62 ; $67a3
 	ld hl, $cb1f ; $67a5
@@ -3669,7 +3669,7 @@ Label_1b_679d:
 	jr Label_1b_67c6 ; $67ad
 Label_1b_67af:
 	ldh a, [hInputRisingEdge] ; $67af
-	and a, $08 ; $67b1
+	and a, PADF_START ; $67b1
 	jr z, Label_1b_67b8 ; $67b3
 	call ToggleSelectedUnlockFlag ; $67b5
 Label_1b_67b8:
@@ -4063,7 +4063,7 @@ ShowNoN64DataFoundScreen:
 	call WaitFadeEnd ; $6b4c
 Label_1b_6b4f:
 	ldh a, [hInputRisingEdge] ; $6b4f
-	and a, $03 ; $6b51
+	and a, PADF_A | PADF_B ; $6b51
 	jr nz, Label_1b_6b5a ; $6b53
 	call AdvanceFrame ; $6b55
 	jr Label_1b_6b4f ; $6b58
@@ -4101,7 +4101,7 @@ ShowTrophiesPlaceholderScreen:
 	call WaitFadeEnd ; $6b8b
 Label_1b_6b8e:
 	ldh a, [hInputRisingEdge] ; $6b8e
-	and a, $03 ; $6b90
+	and a, PADF_A | PADF_B ; $6b90
 	jr nz, Label_1b_6b99 ; $6b92
 	call AdvanceFrame ; $6b94
 	jr Label_1b_6b8e ; $6b97
@@ -4489,7 +4489,7 @@ Label_1b_6e78:
 	call RedrawMinigameLevelSelect2 ; $6e8d
 Label_1b_6e90:
 	ld a, [wMenuInputPressed] ; $6e90
-	bit 0, a ; $6e93
+	bit PADB_A, a ; $6e93
 	jr nz, Label_1b_6e9d ; $6e95
 	bit 1, a ; $6e97
 	jr nz, Label_1b_6ede ; $6e99
@@ -4683,7 +4683,7 @@ Label_1b_7019:
 	call RedrawMinigameLevelSelect3 ; $702e
 Label_1b_7031:
 	ld a, [wMenuInputPressed] ; $7031
-	bit 0, a ; $7034
+	bit PADB_A, a ; $7034
 	jr nz, Label_1b_703e ; $7036
 	bit 1, a ; $7038
 	jr nz, Label_1b_7067 ; $703a
@@ -4813,7 +4813,7 @@ Label_1b_71a0:
 	call RedrawSavedDataTypeSelect ; $71b4
 Label_1b_71b7:
 	ld a, [wMenuInputPressed] ; $71b7
-	bit 0, a ; $71ba
+	bit PADB_A, a ; $71ba
 	jr nz, Label_1b_71c4 ; $71bc
 	bit 1, a ; $71be
 	jr nz, Label_1b_71e7 ; $71c0
@@ -5094,7 +5094,7 @@ Label_1b_7413:
 	call ScrollMinigameDataList ; $7418
 	call AdvanceFrame ; $741b
 	ld a, [wMenuInputPressed] ; $741e
-	bit 0, a ; $7421
+	bit PADB_A, a ; $7421
 	jr nz, Label_1b_742b ; $7423
 	bit 1, a ; $7425
 	jr nz, Label_1b_7439 ; $7427
@@ -5154,7 +5154,7 @@ ScrollMinigameDataList:
 	or a, a ; $74a0
 	ret z ; $74a1
 	ld a, [wMenuInputPressed] ; $74a2
-	bit 7, a ; $74a5
+	bit PADB_DOWN, a ; $74a5
 	jr nz, Label_1b_74ae ; $74a7
 	bit 6, a ; $74a9
 	jr nz, Label_1b_74ba ; $74ab

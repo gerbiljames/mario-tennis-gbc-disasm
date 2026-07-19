@@ -1362,7 +1362,7 @@ Func_6b_518d:
 	ret ; $51a4
 Label_6b_51a5:
 	ldh a, [hInputRisingEdge] ; $51a5
-	bit 0, a ; $51a7
+	bit PADB_A, a ; $51a7
 	jr nz, Label_6b_51ad ; $51a9
 	jr Label_6b_51a5 ; $51ab
 Label_6b_51ad:
@@ -2234,7 +2234,7 @@ Label_6b_765f:
 	call Func_6b_771f ; $765f
 	call AdvanceFrame ; $7662
 	ldh a, [hInputRisingEdge] ; $7665
-	bit 0, a ; $7667
+	bit PADB_A, a ; $7667
 	jr nz, Label_6b_7680 ; $7669
 	bit 3, a ; $766b
 	jr nz, Label_6b_7680 ; $766d

@@ -306,7 +306,7 @@ Label_16_44f9:
 	pop de ; $4509
 	ldh a, [hInputPressed] ; $450a
 	ld [wMenuInputPressed], a ; $450c
-	bit 0, a ; $450f
+	bit PADB_A, a ; $450f
 	jr nz, Label_16_451d ; $4511
 	bit 1, a ; $4513
 	jr nz, Label_16_451d ; $4515
@@ -1157,7 +1157,7 @@ RunMatchStatsScreen:
 Label_16_5c5f:
 	call PrintMatchSetScores ; $5c5f
 	ldh a, [hInputPressed] ; $5c62
-	bit 5, a ; $5c64
+	bit PADB_LEFT, a ; $5c64
 	jr nz, Label_16_5c75 ; $5c66
 	bit 0, a ; $5c68
 	jr nz, Label_16_5c7f ; $5c6a

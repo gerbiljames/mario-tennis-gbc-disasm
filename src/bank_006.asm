@@ -4060,7 +4060,7 @@ AdjustDebugStatDigit:
 	ret ; $6ca7
 AdjustDebugStatByte:
 	ldh a, [hInputPressed] ; $6ca8
-	bit 5, a ; $6caa
+	bit PADB_LEFT, a ; $6caa
 	jr nz, Label_06_6cb3 ; $6cac
 	bit 4, a ; $6cae
 	jr nz, Label_06_6cb7 ; $6cb0
@@ -4077,7 +4077,7 @@ Label_06_6cb7:
 	ret ; $6cba
 AdjustDebugStatWord:
 	ldh a, [hInputPressed] ; $6cbb
-	bit 5, a ; $6cbd
+	bit PADB_LEFT, a ; $6cbd
 	jr nz, Label_06_6cc6 ; $6cbf
 	bit 4, a ; $6cc1
 	jr nz, Label_06_6cd3 ; $6cc3

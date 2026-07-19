@@ -191,7 +191,7 @@ MoveMenuCursorBox:
 	ld a, [wMenuCursorY] ; $410e
 	ld e, a ; $4111
 	ld a, [wMenuInputPressed] ; $4112
-	bit 4, a ; $4115
+	bit PADB_RIGHT, a ; $4115
 	jr z, Label_38_412e ; $4117
 	ld a, [wMenuCursorX] ; $4119
 	inc a ; $411c
@@ -817,7 +817,7 @@ Label_38_44ad:
 Label_38_44c2:
 	call AdvanceFrame ; $44c2
 	ld a, [wMenuInputPressed] ; $44c5
-	bit 0, a ; $44c8
+	bit PADB_A, a ; $44c8
 	jr nz, Label_38_44d2 ; $44ca
 	bit 1, a ; $44cc
 	jr nz, Label_38_44e1 ; $44ce
@@ -878,7 +878,7 @@ Label_38_453e:
 	farcall FarPtr_RunLinkInputFrame ; $453f
 	pop af ; $4542
 	ld a, [wMenuInputPressed] ; $4543
-	bit 0, a ; $4546
+	bit PADB_A, a ; $4546
 	jr nz, Label_38_4550 ; $4548
 	bit 1, a ; $454a
 	jr nz, Label_38_456e ; $454c
@@ -1066,7 +1066,7 @@ Label_38_4743:
 	INCBIN "data/bank_038/d_4749.bin" ; $4749, 6 bytes
 AdjustMatchTypeSetting:
 	ld a, [wMenuInputPressed] ; $474f
-	bit 5, a ; $4752
+	bit PADB_LEFT, a ; $4752
 	jr nz, Label_38_475b ; $4754
 	bit 4, a ; $4756
 	jr nz, Label_38_4791 ; $4758
@@ -1197,7 +1197,7 @@ Label_38_4857:
 Label_38_4869:
 	call AdvanceFrame ; $4869
 	ldh a, [hInputPressed] ; $486c
-	bit 0, a ; $486e
+	bit PADB_A, a ; $486e
 	jr nz, Label_38_487c ; $4870
 	bit 1, a ; $4872
 	jr nz, Label_38_48d3 ; $4874
@@ -2044,7 +2044,7 @@ Func_38_5195:
 	jr z, Label_38_51ee ; $51a3
 	ld a, [wMenuInputPressed] ; $51a5
 	ldh a, [hInputPressed] ; $51a8
-	bit 4, a ; $51aa
+	bit PADB_RIGHT, a ; $51aa
 	jr nz, Label_38_51bc ; $51ac
 	bit 5, a ; $51ae
 	jr nz, Label_38_51d2 ; $51b0
@@ -2196,7 +2196,7 @@ Label_38_52b0:
 	ret ; $52b8
 Func_38_52b9:
 	ld a, [wMenuInputPressed] ; $52b9
-	bit 0, a ; $52bc
+	bit PADB_A, a ; $52bc
 	jr nz, Label_38_52c9 ; $52be
 	bit 1, a ; $52c0
 	jr nz, Label_38_52cd ; $52c2
@@ -4499,7 +4499,7 @@ Label_38_6230:
 	call Func_38_630f ; $6230
 	call Func_38_633b ; $6233
 	ld a, [wMenuInputPressed] ; $6236
-	bit 0, a ; $6239
+	bit PADB_A, a ; $6239
 	jr nz, Label_38_628d ; $623b
 	bit 1, a ; $623d
 	jr nz, Label_38_6243 ; $623f
@@ -4612,7 +4612,7 @@ Func_38_62c8:
 	ret ; $630e
 Func_38_630f:
 	ld a, [wMenuInputPressed] ; $630f
-	bit 5, a ; $6312
+	bit PADB_LEFT, a ; $6312
 	jr nz, Label_38_631b ; $6314
 	bit 4, a ; $6316
 	jr nz, Label_38_6323 ; $6318
@@ -5146,7 +5146,7 @@ Func_38_6720:
 	and a, $f0 ; $6723
 	ret nz ; $6725
 	ld a, [wMenuInputPressed] ; $6726
-	bit 0, a ; $6729
+	bit PADB_A, a ; $6729
 	jr nz, Label_38_6736 ; $672b
 	bit 1, a ; $672d
 	jr nz, Label_38_673a ; $672f
@@ -5881,7 +5881,7 @@ Label_38_6bf1:
 	call Func_38_630f ; $6bf1
 	call Func_38_633b ; $6bf4
 	ld a, [wMenuInputPressed] ; $6bf7
-	bit 0, a ; $6bfa
+	bit PADB_A, a ; $6bfa
 	jr nz, Label_38_6c17 ; $6bfc
 	bit 1, a ; $6bfe
 	jr nz, Label_38_6c04 ; $6c00
@@ -6267,7 +6267,7 @@ Label_38_6e5b:
 Label_38_6e7b:
 	call AdvanceFrame ; $6e7b
 	ld a, [wMenuInputPressed] ; $6e7e
-	bit 0, a ; $6e81
+	bit PADB_A, a ; $6e81
 	jr nz, Label_38_6e8f ; $6e83
 	bit 1, a ; $6e85
 	jr nz, Label_38_6eb0 ; $6e87
@@ -6475,7 +6475,7 @@ Func_38_7072:
 	cp a, $05 ; $7077
 	jr nz, Label_38_708f ; $7079
 	ldh a, [hInputPressed] ; $707b
-	bit 4, a ; $707d
+	bit PADB_RIGHT, a ; $707d
 	jr nz, Label_38_7087 ; $707f
 	bit 5, a ; $7081
 	jr nz, Label_38_708c ; $7083

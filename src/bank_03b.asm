@@ -216,7 +216,7 @@ MoveMenuCursor:
 	ld a, [wMenuCursorY] ; $412e
 	ld e, a ; $4131
 	ld a, [wMenuInputPressed] ; $4132
-	bit 4, a ; $4135
+	bit PADB_RIGHT, a ; $4135
 	jr z, Label_3b_414e ; $4137
 	ld a, [wMenuCursorX] ; $4139
 	inc a ; $413c
@@ -865,7 +865,7 @@ Label_3b_44d7:
 	call ScrollN64ExhibDataCursor ; $44dc
 	call AdvanceFrame ; $44df
 	ld a, [wMenuInputPressed] ; $44e2
-	bit 0, a ; $44e5
+	bit PADB_A, a ; $44e5
 	jr nz, Label_3b_44ef ; $44e7
 	bit 1, a ; $44e9
 	jr nz, Label_3b_44fd ; $44eb
@@ -887,7 +887,7 @@ Label_3b_44fd:
 	ret ; $450c
 ScrollN64ExhibDataCursor:
 	ld a, [wMenuInputPressed] ; $450d
-	bit 5, a ; $4510
+	bit PADB_LEFT, a ; $4510
 	jr z, Label_3b_4525 ; $4512
 	ld a, [$dc12] ; $4514
 	or a, a ; $4517
@@ -1556,7 +1556,7 @@ Label_3b_4990:
 	ld [wMenuInputPressed], a ; $4992
 	call AdvanceFrame ; $4995
 	ld a, [wMenuInputPressed] ; $4998
-	bit 0, a ; $499b
+	bit PADB_A, a ; $499b
 	jr nz, Label_3b_49bf ; $499d
 	bit 1, a ; $499f
 	jr nz, Label_3b_49d4 ; $49a1
@@ -1984,7 +1984,7 @@ Label_3b_4d27:
 	call ScrollN64TnmtDataCursor ; $4d2c
 	call AdvanceFrame ; $4d2f
 	ld a, [wMenuInputPressed] ; $4d32
-	bit 0, a ; $4d35
+	bit PADB_A, a ; $4d35
 	jr nz, Label_3b_4d3f ; $4d37
 	bit 1, a ; $4d39
 	jr nz, Label_3b_4d4d ; $4d3b
@@ -2006,7 +2006,7 @@ Label_3b_4d4d:
 	ret ; $4d5c
 ScrollN64TnmtDataCursor:
 	ld a, [wMenuInputPressed] ; $4d5d
-	bit 5, a ; $4d60
+	bit PADB_LEFT, a ; $4d60
 	jr z, Label_3b_4d75 ; $4d62
 	ld a, [$d801] ; $4d64
 	or a, a ; $4d67
@@ -2580,7 +2580,7 @@ Label_3b_517d:
 	call ScrollRingShotCursor ; $5182
 	call AdvanceFrame ; $5185
 	ld a, [wMenuInputPressed] ; $5188
-	bit 0, a ; $518b
+	bit PADB_A, a ; $518b
 	jr nz, Label_3b_5195 ; $518d
 	bit 1, a ; $518f
 	jr nz, Label_3b_51a3 ; $5191
@@ -2866,7 +2866,7 @@ Label_3b_53c3:
 	ret ; $53c5
 ScrollRingShotCursor:
 	ld a, [wMenuInputPressed] ; $53c6
-	bit 4, a ; $53c9
+	bit PADB_RIGHT, a ; $53c9
 	jr nz, Label_3b_53da ; $53cb
 	bit 5, a ; $53cd
 	jr nz, Label_3b_53ea ; $53cf
@@ -3227,7 +3227,7 @@ Label_3b_563d:
 	call DrawMainMenuSelection ; $563f
 Label_3b_5642:
 	ld a, [wMenuInputPressed] ; $5642
-	bit 0, a ; $5645
+	bit PADB_A, a ; $5645
 	jr nz, Label_3b_5655 ; $5647
 	bit 1, a ; $5649
 	jr nz, Label_3b_5696 ; $564b
@@ -4056,7 +4056,7 @@ Label_3b_5ca3:
 	farcall FarPtr_39_04 ; $5ca6
 	call AdvanceFrame ; $5ca9
 	ldh a, [hInputPressed] ; $5cac
-	bit 0, a ; $5cae
+	bit PADB_A, a ; $5cae
 	jr nz, Label_3b_5cbb ; $5cb0
 	bit 1, a ; $5cb2
 	jr nz, Label_3b_5cbb ; $5cb4
@@ -4122,7 +4122,7 @@ Label_3b_5d28:
 	call DrawMatchFormatCaption ; $5d3f
 Label_3b_5d42:
 	ld a, [wMenuInputPressed] ; $5d42
-	bit 0, a ; $5d45
+	bit PADB_A, a ; $5d45
 	jr nz, Label_3b_5d4f ; $5d47
 	bit 1, a ; $5d49
 	jr nz, Label_3b_5d69 ; $5d4b
@@ -4377,7 +4377,7 @@ Label_3b_5f28:
 	ret ; $5f3b
 HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
-	bit 5, a ; $5f3f
+	bit PADB_LEFT, a ; $5f3f
 	jr nz, Label_3b_5f48 ; $5f41
 	bit 4, a ; $5f43
 	jr nz, Label_3b_5f9f ; $5f45
@@ -4804,7 +4804,7 @@ Label_3b_626a:
 Label_3b_627c:
 	call AdvanceFrame ; $627c
 	ld a, [wMenuInputPressed] ; $627f
-	bit 0, a ; $6282
+	bit PADB_A, a ; $6282
 	jr nz, Label_3b_628c ; $6284
 	bit 1, a ; $6286
 	jr nz, Label_3b_62cb ; $6288
@@ -5515,7 +5515,7 @@ Label_3b_67e2:
 	call DrawSavedDataSourceGrid ; $67f2
 Label_3b_67f5:
 	ld a, [wMenuInputPressed] ; $67f5
-	bit 0, a ; $67f8
+	bit PADB_A, a ; $67f8
 	jr nz, Label_3b_6802 ; $67fa
 	bit 1, a ; $67fc
 	jr nz, Label_3b_6857 ; $67fe
@@ -6103,7 +6103,7 @@ Label_3b_6cbb:
 Label_3b_6ccb:
 	call AdvanceFrame ; $6ccb
 	ld a, [wMenuInputPressed] ; $6cce
-	bit 0, a ; $6cd1
+	bit PADB_A, a ; $6cd1
 	jr nz, Label_3b_6cdb ; $6cd3
 	bit 1, a ; $6cd5
 	jr nz, Label_3b_6d1a ; $6cd7
@@ -6308,7 +6308,7 @@ MoveSavedDataPickerCursor:
 	or a, a ; $6e8a
 	jr nz, Label_3b_6ef2 ; $6e8b
 	ld a, [wMenuInputPressed] ; $6e8d
-	bit 4, a ; $6e90
+	bit PADB_RIGHT, a ; $6e90
 	jr nz, Label_3b_6ea4 ; $6e92
 	bit 5, a ; $6e94
 	jr nz, Label_3b_6ebe ; $6e96
@@ -6369,7 +6369,7 @@ Label_3b_6ee2:
 	jr Label_3b_6f55 ; $6ef0
 Label_3b_6ef2:
 	ld a, [wMenuInputPressed] ; $6ef2
-	bit 4, a ; $6ef5
+	bit PADB_RIGHT, a ; $6ef5
 	jr nz, Label_3b_6f08 ; $6ef7
 	bit 5, a ; $6ef9
 	jr nz, Label_3b_6f21 ; $6efb
@@ -6765,7 +6765,7 @@ Label_3b_71eb:
 	call DrawN64RecordTypeGrid ; $71ff
 Label_3b_7202:
 	ld a, [wMenuInputPressed] ; $7202
-	bit 0, a ; $7205
+	bit PADB_A, a ; $7205
 	jr nz, Label_3b_720f ; $7207
 	bit 1, a ; $7209
 	jr nz, Label_3b_722c ; $720b
@@ -7172,7 +7172,7 @@ Label_3b_74fa:
 	call DrawN64TransferItemGrid ; $750e
 Label_3b_7511:
 	ld a, [wMenuInputPressed] ; $7511
-	bit 0, a ; $7514
+	bit PADB_A, a ; $7514
 	jr nz, Label_3b_751e ; $7516
 	bit 1, a ; $7518
 	jr nz, Label_3b_753b ; $751a
@@ -7472,7 +7472,7 @@ ShowTournamentBracket:
 	db $78 ; $7789 inline arg
 Label_3b_778a:
 	ldh a, [hInputPressed] ; $778a
-	bit 0, a ; $778c
+	bit PADB_A, a ; $778c
 	jr nz, Label_3b_7799 ; $778e
 	bit 1, a ; $7790
 	jr nz, Label_3b_7799 ; $7792
@@ -7829,7 +7829,7 @@ Label_3b_7a3f:
 	call ScrollStarChartCursorSmall ; $7a3f
 Label_3b_7a42:
 	ld a, [wMenuInputPressed] ; $7a42
-	bit 0, a ; $7a45
+	bit PADB_A, a ; $7a45
 	jr nz, Label_3b_7a4f ; $7a47
 	bit 1, a ; $7a49
 	jr nz, Label_3b_7a5d ; $7a4b
@@ -7951,7 +7951,7 @@ BuildStarCharExhibScreen:
 	ret ; $7b4e
 ScrollStarChartCursorFull:
 	ld a, [wMenuInputPressed] ; $7b4f
-	bit 5, a ; $7b52
+	bit PADB_LEFT, a ; $7b52
 	jr z, Label_3b_7b6a ; $7b54
 	ld a, [wMenuCursorX] ; $7b56
 	or a, a ; $7b59
@@ -8002,7 +8002,7 @@ Label_3b_7bb4:
 	ret ; $7bb4
 ScrollStarChartCursorSmall:
 	ld a, [wMenuInputPressed] ; $7bb5
-	bit 6, a ; $7bb8
+	bit PADB_UP, a ; $7bb8
 	jr z, Label_3b_7bd0 ; $7bba
 	ld a, [wMenuCursorY] ; $7bbc
 	or a, a ; $7bbf

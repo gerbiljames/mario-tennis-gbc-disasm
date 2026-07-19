@@ -645,7 +645,7 @@ Func_18_463b:
 	push af ; $463b
 	ld d, a ; $463c
 	ldh a, [hPlayerInputFlags] ; $463d
-	bit 2, a ; $463f
+	bit PADB_SELECT, a ; $463f
 	jr z, Label_18_464e ; $4641
 	ldh a, [hDebugStepMode] ; $4643
 	or a, a ; $4645
@@ -832,22 +832,22 @@ ForceFlushBgMapToVram:
 	ret ; $5420
 RunTwoOptionSelect:
 	ldh a, [hInputRisingEdge] ; $5421
-	and a, $20 ; $5423
+	and a, PADF_LEFT ; $5423
 	jr z, Label_18_542b ; $5425
 	ld b, $00 ; $5427
 	sound $5e ; $5429
 Label_18_542b:
 	ldh a, [hInputRisingEdge] ; $542b
-	and a, $10 ; $542d
+	and a, PADF_RIGHT ; $542d
 	jr z, Label_18_5435 ; $542f
 	ld b, $01 ; $5431
 	sound $5e ; $5433
 Label_18_5435:
 	ldh a, [hInputRisingEdge] ; $5435
-	and a, $01 ; $5437
+	and a, PADF_A ; $5437
 	jr nz, Label_18_545f ; $5439
 	ldh a, [hInputRisingEdge] ; $543b
-	and a, $02 ; $543d
+	and a, PADF_B ; $543d
 	jr z, Label_18_5445 ; $543f
 	ld b, $ff ; $5441
 	jr Label_18_545f ; $5443
@@ -876,22 +876,22 @@ Label_18_5466:
 	ret ; $5468
 Func_18_5469:
 	ldh a, [hInputRisingEdge] ; $5469
-	and a, $20 ; $546b
+	and a, PADF_LEFT ; $546b
 	jr z, Label_18_5473 ; $546d
 	ld b, $00 ; $546f
 	sound $5e ; $5471
 Label_18_5473:
 	ldh a, [hInputRisingEdge] ; $5473
-	and a, $10 ; $5475
+	and a, PADF_RIGHT ; $5475
 	jr z, Label_18_547d ; $5477
 	ld b, $01 ; $5479
 	sound $5e ; $547b
 Label_18_547d:
 	ldh a, [hInputRisingEdge] ; $547d
-	and a, $01 ; $547f
+	and a, PADF_A ; $547f
 	jr nz, Label_18_54a7 ; $5481
 	ldh a, [hInputRisingEdge] ; $5483
-	and a, $02 ; $5485
+	and a, PADF_B ; $5485
 	jr z, Label_18_548d ; $5487
 	ld b, $ff ; $5489
 	jr Label_18_54a7 ; $548b
@@ -1385,7 +1385,7 @@ Label_18_76cf:
 Label_18_76ec:
 	call AdvanceFrame ; $76ec
 	ldh a, [hInputPressed] ; $76ef
-	and a, $03 ; $76f1
+	and a, PADF_A | PADF_B ; $76f1
 	jr z, Label_18_76ec ; $76f3
 	ld c, $10 ; $76f5
 	call BeginFadeOut ; $76f7
@@ -1401,7 +1401,7 @@ Label_18_76ec:
 Label_18_7716:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719
-	and a, $03 ; $771b
+	and a, PADF_A | PADF_B ; $771b
 	jr z, Label_18_7716 ; $771d
 	ret ; $771f
 Func_18_7720:
@@ -1505,7 +1505,7 @@ Label_18_77e8:
 Label_18_782b:
 	call AdvanceFrame ; $782b
 	ldh a, [hInputPressed] ; $782e
-	and a, $03 ; $7830
+	and a, PADF_A | PADF_B ; $7830
 	jr z, Label_18_782b ; $7832
 	ret ; $7834
 Func_18_7835:
@@ -1614,7 +1614,7 @@ Func_18_792c:
 Label_18_7958:
 	call AdvanceFrame ; $7958
 	ldh a, [hInputPressed] ; $795b
-	and a, $03 ; $795d
+	and a, PADF_A | PADF_B ; $795d
 	jr z, Label_18_7958 ; $795f
 	ld c, $02 ; $7961
 	call BeginFadeOut ; $7963
@@ -1668,7 +1668,7 @@ Label_18_79be:
 Label_18_79de:
 	call AdvanceFrame ; $79de
 	ldh a, [hInputPressed] ; $79e1
-	and a, $03 ; $79e3
+	and a, PADF_A | PADF_B ; $79e3
 	jr z, Label_18_79de ; $79e5
 	ld de, $0120 ; $79e7
 	farcall FarPtr_SetSaveFlag ; $79ea

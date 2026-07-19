@@ -2318,7 +2318,7 @@ Label_08_52b1:
 	ret ; $52d9
 StartLandingMarker:
 	ld a, [wCurrentShotType] ; $52da
-	cp a, $0a ; $52dd
+	cp a, SHOTTYPE_LOB ; $52dd
 	jr z, Label_08_52e8 ; $52df
 	ld a, [$c4c6] ; $52e1
 	and a, a ; $52e4
@@ -5822,7 +5822,7 @@ Label_08_6b3e:
 CharServeTossPhase:
 	call HandleServePositioning ; $6b3f
 	ld a, [$df1f] ; $6b42
-	and a, $03 ; $6b45
+	and a, PADF_A | PADF_B ; $6b45
 	jr z, Label_08_6b8c ; $6b47
 	ld bc, rWBK ; $6b49
 	ld hl, $df04 ; $6b4c
@@ -6113,12 +6113,12 @@ StartCharSwing:
 	bit 7, h ; $6d62
 	jr nz, Label_08_6d6f ; $6d64
 	ld a, [$df1f] ; $6d66
-	bit 4, a ; $6d69
+	bit PADB_RIGHT, a ; $6d69
 	jr z, Label_08_6da0 ; $6d6b
 	jr Label_08_6d76 ; $6d6d
 Label_08_6d6f:
 	ld a, [$df1f] ; $6d6f
-	bit 5, a ; $6d72
+	bit PADB_LEFT, a ; $6d72
 	jr z, Label_08_6da0 ; $6d74
 Label_08_6d76:
 	ld a, [$df72] ; $6d76
@@ -6212,7 +6212,7 @@ Label_08_6df4:
 	ld [hl], $12 ; $6df7
 	ld d, $00 ; $6df9
 	ld a, [$df1f] ; $6dfb
-	bit 4, a ; $6dfe
+	bit PADB_RIGHT, a ; $6dfe
 	jr nz, Label_08_6e04 ; $6e00
 	ld d, $80 ; $6e02
 Label_08_6e04:
@@ -6839,13 +6839,13 @@ Label_08_71bf:
 	cp a, $30 ; $71bf
 	jp nc, Label_08_71dc ; $71c1
 	ld a, [$df1f] ; $71c4
-	and a, $30 ; $71c7
+	and a, PADF_RIGHT | PADF_LEFT ; $71c7
 	jr z, Label_08_71d0 ; $71c9
 	ld hl, $df50 ; $71cb
 	set 6, [hl] ; $71ce
 Label_08_71d0:
 	ld a, [$df1f] ; $71d0
-	and a, $c0 ; $71d3
+	and a, PADF_UP | PADF_DOWN ; $71d3
 	jr z, Label_08_71dc ; $71d5
 	ld hl, $df50 ; $71d7
 	set 7, [hl] ; $71da
@@ -6856,7 +6856,7 @@ HandleServePositioning:
 	and a, a ; $71e0
 	jr nz, Label_08_7229 ; $71e1
 	ld a, [$df1f] ; $71e3
-	and a, $30 ; $71e6
+	and a, PADF_RIGHT | PADF_LEFT ; $71e6
 	jr z, Label_08_7228 ; $71e8
 	swap a ; $71ea
 	add a, $86 ; $71ec
@@ -6904,7 +6904,7 @@ Label_08_7228:
 	ret ; $7228
 Label_08_7229:
 	ld a, [$df1f] ; $7229
-	and a, $30 ; $722c
+	and a, PADF_RIGHT | PADF_LEFT ; $722c
 	jr z, Label_08_7266 ; $722e
 	swap a ; $7230
 	add a, $86 ; $7232
@@ -6947,7 +6947,7 @@ Label_08_7266:
 	ret ; $7266
 CheckSwingRelease:
 	ld a, [$df1f] ; $7267
-	and a, $04 ; $726a
+	and a, PADF_SELECT ; $726a
 	jr z, Label_08_7280 ; $726c
 	xor a, a ; $726e
 	ld [$df4d], a ; $726f
@@ -8125,13 +8125,13 @@ AiMoveLaterallyToBallLine:
 Label_08_79d3:
 	call SetCharTargetMirrored ; $79d3
 	jp AiAdvancePhase ; $79d6
-AiIsIncomingDropOrShortShot:
+AiIsIncomingDropOrLobShot:
 	ld a, [wCurrentShotType] ; $79d9
-	cp a, $0b ; $79dc
+	cp a, SHOTTYPE_DROP ; $79dc
 	jr z, Label_08_79ef ; $79de
-AiIsIncomingDropShot:
+AiIsIncomingLobShot:
 	ld a, [wCurrentShotType] ; $79e0
-	cp a, $0a ; $79e3
+	cp a, SHOTTYPE_LOB ; $79e3
 	jr z, Label_08_79ef ; $79e5
 	ld a, [$c4c6] ; $79e7
 	and a, a ; $79ea
@@ -8640,19 +8640,19 @@ AiChoosePositionByStrategy:
 	dw Label_08_7d48 ; $7d31 jumptable
 	dw Label_08_7d55 ; $7d33 jumptable
 	dw Label_08_7d3e ; $7d35 jumptable
-	call AiIsIncomingDropShot ; $7d37
+	call AiIsIncomingLobShot ; $7d37
 	and a, a ; $7d3a
 	jp nz, AiRushToBallLanding ; $7d3b
 Label_08_7d3e:
 	jp AiMoveBehindBallLanding ; $7d3e
 Label_08_7d41:
-	call AiIsIncomingDropOrShortShot ; $7d41
+	call AiIsIncomingDropOrLobShot ; $7d41
 	and a, a ; $7d44
 	jp nz, AiRushToBallLanding ; $7d45
 Label_08_7d48:
 	jp AiMoveLaterallyToBallLine ; $7d48
 Label_08_7d4b:
-	call AiIsIncomingDropOrShortShot ; $7d4b
+	call AiIsIncomingDropOrLobShot ; $7d4b
 	and a, a ; $7d4e
 	jp nz, AiRushToBallLanding ; $7d4f
 	jp AiInterceptAtMidCourt ; $7d52
@@ -8662,12 +8662,12 @@ Label_08_7d58:
 	ld hl, $df50 ; $7d58
 	bit 4, [hl] ; $7d5b
 	jr z, Label_08_7d69 ; $7d5d
-	call AiIsIncomingDropOrShortShot ; $7d5f
+	call AiIsIncomingDropOrLobShot ; $7d5f
 	and a, a ; $7d62
 	jp nz, AiRushToBallLanding ; $7d63
 	jp AiInterceptAtMidCourt ; $7d66
 Label_08_7d69:
-	call AiIsIncomingDropShot ; $7d69
+	call AiIsIncomingLobShot ; $7d69
 	and a, a ; $7d6c
 	jp nz, AiRushToBallLanding ; $7d6d
 	jp AiMoveBehindBallLanding ; $7d70

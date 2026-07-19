@@ -2301,7 +2301,7 @@ Label_1c_5291:
 	call Func_1c_53a3 ; $5291
 	call AdvanceFrame ; $5294
 	ldh a, [hInputRisingEdge] ; $5297
-	bit 0, a ; $5299
+	bit PADB_A, a ; $5299
 	jr nz, Label_1c_52b1 ; $529b
 	bit 1, a ; $529d
 	jr nz, Label_1c_52c1 ; $529f

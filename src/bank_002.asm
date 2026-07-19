@@ -2196,7 +2196,7 @@ Label_02_513f:
 	call AdvanceFrame ; $513f
 	call AdvanceRandomSeed ; $5142
 	ldh a, [hInputPressed] ; $5145
-	bit 6, a ; $5147
+	bit PADB_UP, a ; $5147
 	jr z, Label_02_5159 ; $5149
 	push de ; $514b
 	ld a, $00 ; $514c

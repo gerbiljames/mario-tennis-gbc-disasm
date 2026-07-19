@@ -2731,7 +2731,7 @@ Func_3f_5588:
 	push af ; $5589
 	wram_bank $06 ; $558a
 	ldh a, [hInputRisingEdge] ; $5590
-	bit 0, a ; $5592
+	bit PADB_A, a ; $5592
 	jr z, Label_3f_559e ; $5594
 	pop af ; $5596
 	sound $5f ; $5597
@@ -2748,7 +2748,7 @@ Label_3f_559e:
 	jr Label_3f_55fc ; $55a8
 Label_3f_55aa:
 	ldh a, [hInputPressed] ; $55aa
-	bit 6, a ; $55ac
+	bit PADB_UP, a ; $55ac
 	jr z, Label_3f_55d1 ; $55ae
 	ld a, [$cb2e] ; $55b0
 	ld b, a ; $55b3
@@ -2804,7 +2804,7 @@ Func_3f_55ff:
 	res 3, a ; $560c
 	ld [$cb37], a ; $560e
 	ldh a, [hInputRisingEdge] ; $5611
-	bit 0, a ; $5613
+	bit PADB_A, a ; $5613
 	jp z, Label_3f_56a4 ; $5615
 	sound $5f ; $5618
 	call Func_3f_4e7b ; $561a
@@ -2888,7 +2888,7 @@ Label_3f_56b8:
 	jp Label_3f_5746 ; $56bb
 Label_3f_56be:
 	ldh a, [hInputPressed] ; $56be
-	bit 6, a ; $56c0
+	bit PADB_UP, a ; $56c0
 	jr z, Label_3f_56ea ; $56c2
 	sound $5e ; $56c4
 	ld a, [$cb2e] ; $56c6

@@ -467,7 +467,7 @@ Func_1a_4399:
 	or a, a ; $439c
 	jr z, Label_1a_43a8 ; $439d
 	ldh a, [hPlayerInputFlags] ; $439f
-	bit 2, a ; $43a1
+	bit PADB_SELECT, a ; $43a1
 	jr z, Label_1a_43a8 ; $43a3
 	call Func_1a_43aa ; $43a5
 Label_1a_43a8:
@@ -515,7 +515,7 @@ Label_1a_43cb:
 	farcall FarPtr_05_10 ; $4402
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
-	and a, $01 ; $440a
+	and a, PADF_A ; $440a
 	jr z, Label_1a_4418 ; $440c
 	sound $5f ; $440e
 	ld de, $0064 ; $4410
@@ -523,7 +523,7 @@ Label_1a_43cb:
 	jr Label_1a_43cb ; $4416
 Label_1a_4418:
 	ldh a, [hPlayerInputFlags] ; $4418
-	and a, $10 ; $441a
+	and a, PADF_RIGHT ; $441a
 	jr z, Label_1a_4428 ; $441c
 	sound $5e ; $441e
 	ld de, $000a ; $4420
@@ -531,7 +531,7 @@ Label_1a_4418:
 	jr Label_1a_43cb ; $4426
 Label_1a_4428:
 	ldh a, [hPlayerInputFlags] ; $4428
-	and a, $20 ; $442a
+	and a, PADF_LEFT ; $442a
 	jr z, Label_1a_4438 ; $442c
 	sound $5e ; $442e
 	ld de, $0001 ; $4430
@@ -539,7 +539,7 @@ Label_1a_4428:
 	jr Label_1a_43cb ; $4436
 Label_1a_4438:
 	ldh a, [hPlayerInputFlags] ; $4438
-	and a, $c0 ; $443a
+	and a, PADF_UP | PADF_DOWN ; $443a
 	jr z, Label_1a_4446 ; $443c
 	sound $62 ; $443e
 	ld a, c ; $4440
@@ -548,7 +548,7 @@ Label_1a_4438:
 	jr Label_1a_43cb ; $4444
 Label_1a_4446:
 	ldh a, [hPlayerInputFlags] ; $4446
-	and a, $02 ; $4448
+	and a, PADF_B ; $4448
 	jp z, Label_1a_43cb ; $444a
 	ld a, [$cb26] ; $444d
 	farcall FarPtr_CloseWindow ; $4450
@@ -756,7 +756,7 @@ Label_1a_460d:
 	and a, a ; $4619
 	jr nz, Label_1a_462a ; $461a
 	ldh a, [hPlayerInputFlags] ; $461c
-	and a, $03 ; $461e
+	and a, PADF_A | PADF_B ; $461e
 	jr nz, Label_1a_462a ; $4620
 	sound $5e ; $4622
 	call WaitFramesCmd ; $4624
@@ -2717,7 +2717,7 @@ Label_1a_68e8:
 	wram_bank $06 ; $68e8
 	call AdvanceFrame ; $68ee
 	ldh a, [hInputPressed] ; $68f1
-	bit 6, a ; $68f3
+	bit PADB_UP, a ; $68f3
 	jr nz, Label_1a_691b ; $68f5
 	bit 7, a ; $68f7
 	jr nz, Label_1a_6934 ; $68f9
@@ -3144,7 +3144,7 @@ Func_1a_6c9f:
 	wram_bank $06 ; $6ca2
 	call AdvanceFrame ; $6ca8
 	ldh a, [hInputPressed] ; $6cab
-	bit 6, a ; $6cad
+	bit PADB_UP, a ; $6cad
 	jr nz, Label_1a_6cd5 ; $6caf
 	bit 7, a ; $6cb1
 	jr nz, Label_1a_6d23 ; $6cb3
@@ -3653,7 +3653,7 @@ Label_1a_79c8:
 	call Func_1a_7a1d ; $79c8
 	call AdvanceFrame ; $79cb
 	ldh a, [hInputRisingEdge] ; $79ce
-	bit 0, a ; $79d0
+	bit PADB_A, a ; $79d0
 	jr nz, Label_1a_79e8 ; $79d2
 	bit 1, a ; $79d4
 	jr nz, Label_1a_79f8 ; $79d6

@@ -186,7 +186,7 @@ Label_05_40ad:
 	wram_bank ; $40d0
 	ret ; $40d4
 	ldh a, [hPlayerInputFlags] ; $40d5
-	bit 0, a ; $40d7
+	bit PADB_A, a ; $40d7
 	jr nz, Label_05_40dd ; $40d9
 	jr Label_05_40fa ; $40db
 Label_05_40dd:
@@ -1379,10 +1379,10 @@ RunMenuSelection:
 Label_05_47ca:
 	call AdvanceFrame ; $47ca
 	ldh a, [hInputRisingEdge] ; $47cd
-	bit 0, a ; $47cf
+	bit PADB_A, a ; $47cf
 	jr nz, Label_05_4840 ; $47d1
 	ldh a, [hInputPressed] ; $47d3
-	bit 6, a ; $47d5
+	bit PADB_UP, a ; $47d5
 	jr z, Label_05_47e5 ; $47d7
 	dec b ; $47d9
 	bit 7, b ; $47da
@@ -1393,7 +1393,7 @@ Label_05_47ca:
 	jr Label_05_47f7 ; $47e3
 Label_05_47e5:
 	ldh a, [hInputPressed] ; $47e5
-	and a, $80 ; $47e7
+	and a, PADF_DOWN ; $47e7
 	jp z, Label_05_486d ; $47e9
 	ld a, [$d831] ; $47ec
 	ld c, a ; $47ef
@@ -1480,14 +1480,14 @@ Label_05_4840:
 	jp Label_05_48e6 ; $486a
 Label_05_486d:
 	ldh a, [hInputRisingEdge] ; $486d
-	and a, $08 ; $486f
+	and a, PADF_START ; $486f
 	jp z, Label_05_487b ; $4871
 	sound $62 ; $4874
 	ld a, $ff ; $4876
 	jp Label_05_48af ; $4878
 Label_05_487b:
 	ldh a, [hInputPressed] ; $487b
-	and a, $02 ; $487d
+	and a, PADF_B ; $487d
 	jp z, Label_05_4888 ; $487f
 	sound $62 ; $4882
 	ld a, $ff ; $4884
@@ -1502,13 +1502,13 @@ Label_05_4888:
 	srl a ; $4896
 	jp z, Label_05_47ca ; $4898
 	ldh a, [hInputPressed] ; $489b
-	and a, $20 ; $489d
+	and a, PADF_LEFT ; $489d
 	jp z, Label_05_48a6 ; $489f
 	ld a, $fe ; $48a2
 	jr Label_05_48af ; $48a4
 Label_05_48a6:
 	ldh a, [hInputPressed] ; $48a6
-	and a, $10 ; $48a8
+	and a, PADF_RIGHT ; $48a8
 	jp z, Label_05_47ca ; $48aa
 	ld a, $fd ; $48ad
 Label_05_48af:
@@ -1859,7 +1859,7 @@ RunMenuSelectionShared:
 Label_05_4afd:
 	call AdvanceFrame ; $4afd
 	ldh a, [hInputPressed] ; $4b00
-	bit 0, a ; $4b02
+	bit PADB_A, a ; $4b02
 	jp nz, Label_05_4b72 ; $4b04
 	bit 6, a ; $4b07
 	jr z, Label_05_4b17 ; $4b09
@@ -1872,7 +1872,7 @@ Label_05_4afd:
 	jr Label_05_4b29 ; $4b15
 Label_05_4b17:
 	ldh a, [hInputPressed] ; $4b17
-	and a, $80 ; $4b19
+	and a, PADF_DOWN ; $4b19
 	jp z, Label_05_4ba5 ; $4b1b
 	ld a, [$d831] ; $4b1e
 	ld c, a ; $4b21
@@ -1963,7 +1963,7 @@ Label_05_4b72:
 	jp Label_05_4c6b ; $4ba2
 Label_05_4ba5:
 	ldh a, [hInputRisingEdge] ; $4ba5
-	and a, $08 ; $4ba7
+	and a, PADF_START ; $4ba7
 	jp z, Label_05_4bbb ; $4ba9
 	sound $62 ; $4bac
 	ld a, [$cb2a] ; $4bae
@@ -1973,7 +1973,7 @@ Label_05_4ba5:
 	jp Label_05_4c2b ; $4bb8
 Label_05_4bbb:
 	ldh a, [hInputPressed] ; $4bbb
-	and a, $02 ; $4bbd
+	and a, PADF_B ; $4bbd
 	jp z, Label_05_4bd1 ; $4bbf
 	sound $62 ; $4bc2
 	ld a, [$cb2a] ; $4bc4
@@ -1990,7 +1990,7 @@ Label_05_4bd1:
 	or a, a ; $4bd8
 	jr z, Label_05_4c00 ; $4bd9
 	ldh a, [hInputPressed] ; $4bdb
-	and a, $20 ; $4bdd
+	and a, PADF_LEFT ; $4bdd
 	jp z, Label_05_4bee ; $4bdf
 	ld a, [$cb2a] ; $4be2
 	and a, $f0 ; $4be5
@@ -1999,7 +1999,7 @@ Label_05_4bd1:
 	jr Label_05_4c30 ; $4bec
 Label_05_4bee:
 	ldh a, [hInputPressed] ; $4bee
-	and a, $10 ; $4bf0
+	and a, PADF_RIGHT ; $4bf0
 	jr z, Label_05_4c00 ; $4bf2
 	ld a, [$cb2a] ; $4bf4
 	and a, $f0 ; $4bf7
@@ -2020,13 +2020,13 @@ Label_05_4c00:
 	sra a ; $4c12
 	jp z, Label_05_4afd ; $4c14
 	ldh a, [hInputPressed] ; $4c17
-	and a, $20 ; $4c19
+	and a, PADF_LEFT ; $4c19
 	jp z, Label_05_4c22 ; $4c1b
 	ld a, $fe ; $4c1e
 	jr Label_05_4c2b ; $4c20
 Label_05_4c22:
 	ldh a, [hInputPressed] ; $4c22
-	and a, $10 ; $4c24
+	and a, PADF_RIGHT ; $4c24
 	jp z, Label_05_4afd ; $4c26
 	ld a, $fd ; $4c29
 Label_05_4c2b:
@@ -2097,7 +2097,7 @@ Label_05_4c85:
 	bit 0, b ; $4c8c
 	jr z, Label_05_4c9a ; $4c8e
 	ldh a, [hInputPressed] ; $4c90
-	and a, $c0 ; $4c92
+	and a, PADF_UP | PADF_DOWN ; $4c92
 	jr nz, Label_05_4c9a ; $4c94
 	pop bc ; $4c96
 	ld a, $01 ; $4c97
@@ -5818,7 +5818,7 @@ DebugMoveFlagCursor:
 	ld a, [$c716] ; $654e
 	ld e, a ; $6551
 	ldh a, [hPlayerInputFlags] ; $6552
-	bit 5, a ; $6554
+	bit PADB_LEFT, a ; $6554
 	jr nz, Label_05_6566 ; $6556
 	bit 4, a ; $6558
 	jr nz, Label_05_6569 ; $655a
@@ -5899,10 +5899,10 @@ Label_05_65b8:
 	call RegisterFrameTask ; $6617
 Label_05_661a:
 	ldh a, [hInputRisingEdge] ; $661a
-	bit 1, a ; $661c
+	bit PADB_B, a ; $661c
 	jr nz, Label_05_6683 ; $661e
 	ldh a, [hInputRisingEdge] ; $6620
-	bit 0, a ; $6622
+	bit PADB_A, a ; $6622
 	jr z, Label_05_663b ; $6624
 	call DebugToggleSelectedFlag ; $6626
 	call DebugDrawFlagsWindow1 ; $6629
@@ -5913,7 +5913,7 @@ Label_05_661a:
 	call RedrawWindowRows ; $6638
 Label_05_663b:
 	ldh a, [hInputRisingEdge] ; $663b
-	bit 3, a ; $663d
+	bit PADB_START, a ; $663d
 	jr z, Label_05_665c ; $663f
 	ld a, [$c714] ; $6641
 	inc a ; $6644
@@ -6109,10 +6109,10 @@ RunDebugWarpMenu:
 	call AdvanceFrame ; $67f0
 Label_05_67f3:
 	ldh a, [hInputRisingEdge] ; $67f3
-	and a, $02 ; $67f5
+	and a, PADF_B ; $67f5
 	jr nz, Label_05_6857 ; $67f7
 	ldh a, [hInputRisingEdge] ; $67f9
-	and a, $01 ; $67fb
+	and a, PADF_A ; $67fb
 	jr z, Label_05_6815 ; $67fd
 	ld a, [$c700] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
@@ -6124,7 +6124,7 @@ Label_05_67f3:
 	jr Label_05_6857 ; $6813
 Label_05_6815:
 	ldh a, [hInputPressed] ; $6815
-	and a, $c0 ; $6817
+	and a, PADF_UP | PADF_DOWN ; $6817
 	jr z, Label_05_6825 ; $6819
 	ld hl, $c703 ; $681b
 	ld a, [hl] ; $681e
@@ -6170,7 +6170,7 @@ DebugStepValueWithDpad:
 	push bc ; $6862
 	ld b, a ; $6863
 	ldh a, [hInputPressed] ; $6864
-	bit 4, a ; $6866
+	bit PADB_RIGHT, a ; $6866
 	jr nz, Label_05_6871 ; $6868
 	bit 5, a ; $686a
 	jr nz, Label_05_6874 ; $686c
@@ -6279,10 +6279,10 @@ RunDebugColorEditor:
 	call DebugDrawColorComponents ; $69e5
 Label_05_69e8:
 	ldh a, [hInputRisingEdge] ; $69e8
-	and a, $03 ; $69ea
+	and a, PADF_A | PADF_B ; $69ea
 	jr nz, Label_05_6a4d ; $69ec
 	ldh a, [hPlayerInputFlags] ; $69ee
-	bit 5, a ; $69f0
+	bit PADB_LEFT, a ; $69f0
 	jr z, Label_05_69f7 ; $69f2
 	dec e ; $69f4
 	jr Label_05_6a13 ; $69f5
@@ -6393,7 +6393,7 @@ Label_05_6a86:
 	call RegisterFrameTask ; $6aaf
 Label_05_6ab2:
 	ldh a, [hInputRisingEdge] ; $6ab2
-	bit 1, a ; $6ab4
+	bit PADB_B, a ; $6ab4
 	jr nz, Label_05_6af6 ; $6ab6
 	bit 0, a ; $6ab8
 	jr z, Label_05_6abf ; $6aba
@@ -6404,7 +6404,7 @@ Label_05_6abf:
 	ld a, [$c713] ; $6ac3
 	ld e, a ; $6ac6
 	ldh a, [hInputPressed] ; $6ac7
-	bit 5, a ; $6ac9
+	bit PADB_LEFT, a ; $6ac9
 	jr z, Label_05_6ad0 ; $6acb
 	dec d ; $6acd
 	jr Label_05_6ae5 ; $6ace
@@ -6899,7 +6899,7 @@ RunDebugWindowDemo:
 Label_05_6de3:
 	ldh a, [hPlayerInputFlags] ; $6de3
 	ld hl, hScrollX ; $6de5
-	bit 4, a ; $6de8
+	bit PADB_RIGHT, a ; $6de8
 	jr z, Label_05_6def ; $6dea
 	inc [hl] ; $6dec
 	jr Label_05_6df4 ; $6ded

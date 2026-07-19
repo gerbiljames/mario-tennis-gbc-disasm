@@ -2144,7 +2144,7 @@ AwardHitScore:
 	ld [$dc73], a ; $52fb
 	ld hl, $0001 ; $52fe
 	ld a, [wCurrentShotType] ; $5301
-	cp a, $09 ; $5304
+	cp a, SHOTTYPE_SMASH ; $5304
 	jr nz, Label_0d_5310 ; $5306
 	ld a, $20 ; $5308
 	ld [$dc73], a ; $530a

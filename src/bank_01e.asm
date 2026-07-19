@@ -1302,7 +1302,7 @@ Func_1e_4b2c:
 	call Func_1e_4b46 ; $4b2c
 	call AdvanceFrame ; $4b2f
 	ldh a, [hInputRisingEdge] ; $4b32
-	bit 6, a ; $4b34
+	bit PADB_UP, a ; $4b34
 	jr nz, Label_1e_4b61 ; $4b36
 	bit 7, a ; $4b38
 	jr nz, Label_1e_4b61 ; $4b3a
@@ -2237,11 +2237,11 @@ Func_1e_5b66:
 	ret z ; $5b74
 	call AdvanceFrame ; $5b75
 	ldh a, [hInputRisingEdge] ; $5b78
-	and a, $03 ; $5b7a
+	and a, PADF_A | PADF_B ; $5b7a
 	jr nz, Label_1e_5b9b ; $5b7c
 	call AdvanceFrame ; $5b7e
 	ldh a, [hInputRisingEdge] ; $5b81
-	and a, $03 ; $5b83
+	and a, PADF_A | PADF_B ; $5b83
 	jr nz, Label_1e_5b9b ; $5b85
 	dec hl ; $5b87
 	dec de ; $5b88
@@ -2278,7 +2278,7 @@ Func_1e_5bad:
 Label_1e_5baf:
 	call AdvanceFrame ; $5baf
 	ldh a, [hInputRisingEdge] ; $5bb2
-	and a, $03 ; $5bb4
+	and a, PADF_A | PADF_B ; $5bb4
 	ret nz ; $5bb6
 	dec c ; $5bb7
 	jr nz, Label_1e_5baf ; $5bb8
@@ -4397,7 +4397,7 @@ Label_1e_7353:
 	call AdvanceFrame ; $7353
 	wram_bank $05 ; $7356
 	ldh a, [hInputPressed] ; $735c
-	bit 6, a ; $735e
+	bit PADB_UP, a ; $735e
 	call nz, Func_1e_73b0 ; $7360
 	bit 7, a ; $7363
 	call nz, Func_1e_7382 ; $7365

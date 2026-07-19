@@ -83,7 +83,7 @@ Label_01_40b2:
 	ldh [hDebugStepMode], a ; $40bd
 Label_01_40bf:
 	ldh a, [hInputPressed] ; $40bf
-	bit 0, a ; $40c1
+	bit PADB_A, a ; $40c1
 	jr z, Label_01_40cf ; $40c3
 	push de ; $40c5
 	ld de, $07e0 ; $40c6
@@ -112,7 +112,7 @@ Unused_01_MenuRedraw:
 	ldh [hDebugStepMode], a ; $40f7
 Label_01_40f9:
 	ldh a, [hInputPressed] ; $40f9
-	bit 3, a ; $40fb
+	bit PADB_START, a ; $40fb
 	jr z, Label_01_4113 ; $40fd
 	ld a, $01 ; $40ff
 	ldh [hDebugStepMode], a ; $4101
@@ -468,7 +468,7 @@ Func_01_6a5b:
 Label_01_6a8a:
 	call AdvanceFrame ; $6a8a
 	ldh a, [hInputPressed] ; $6a8d
-	and a, $c0 ; $6a8f
+	and a, PADF_UP | PADF_DOWN ; $6a8f
 	jr z, Label_01_6a97 ; $6a91
 	ld a, b ; $6a93
 	xor a, $01 ; $6a94
@@ -478,7 +478,7 @@ Label_01_6a97:
 	or a, a ; $6a98
 	jr nz, Label_01_6abd ; $6a99
 	ldh a, [hInputPressed] ; $6a9b
-	bit 4, a ; $6a9d
+	bit PADB_RIGHT, a ; $6a9d
 	jr z, Label_01_6aa4 ; $6a9f
 	inc d ; $6aa1
 	jr Label_01_6aa9 ; $6aa2
@@ -501,7 +501,7 @@ Label_01_6ab2:
 	jr Label_01_6add ; $6abb
 Label_01_6abd:
 	ldh a, [hInputPressed] ; $6abd
-	bit 4, a ; $6abf
+	bit PADB_RIGHT, a ; $6abf
 	jr z, Label_01_6ac6 ; $6ac1
 	inc e ; $6ac3
 	jr Label_01_6acb ; $6ac4
@@ -571,7 +571,7 @@ Label_01_6b17:
 	pop af ; $6b2b
 	pop de ; $6b2c
 	ldh a, [hInputPressed] ; $6b2d
-	bit 0, a ; $6b2f
+	bit PADB_A, a ; $6b2f
 	jr z, Label_01_6b61 ; $6b31
 	bit 0, b ; $6b33
 	jr nz, Label_01_6b4d ; $6b35

@@ -225,7 +225,7 @@ TitleScreenTiles:
 Label_6d_6aaa:
 	call AdvanceFrame ; $6aaa
 	ldh a, [hInputPressed] ; $6aad
-	and a, $03 ; $6aaf
+	and a, PADF_A | PADF_B ; $6aaf
 	jr z, Label_6d_6aaa ; $6ab1
 	ld c, $01 ; $6ab3
 	call BeginFadeOut ; $6ab5

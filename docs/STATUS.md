@@ -21,6 +21,26 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Apply shot-type / joypad constants ROM-wide (2026-07-19)
+
+Swept every bank for sites that operate on a known input value or
+`wCurrentShotType` and tagged them in `constants.json` so the source reads
+symbolically. Input sites were found with a straight-line taint scan: an
+`ld a,[<input>]` from a standard-layout byte (`hPlayerInputFlags`,
+`hInputPressed`, `hInputRepeatButtons`, `hInputRisingEdge`, `wMenuInputPressed`)
+taints `a`, and the first `and`/`or`/`xor`/`cp a, n8` or `bit`/`res`/`set N, a`
+before any branch, label, or `a`-write is tagged — 172 sites across banks
+`$00`-`$7f` now read e.g. `bit PADB_A, a`, `and a, PADF_START`,
+`and a, PADF_A | PADF_B`. Whole-nibble masks (`$f0`/`$0f`/`$f3`) are left raw —
+they select a nibble, not a button. Also tagged four more `wCurrentShotType`
+compares (`StartLandingMarker` lob check `$08:$52dd`, the drop/lob AI checks
+`$08:$79dc/$79e3`, the smash check `$0d:$5304`).
+
+Renamed the two AI shot-class predicates whose old names disagreed with the
+confirmed codes ($0a=lob, $0b=drop): `AiIsIncomingDropShot` (which tests $0a)
+-> `AiIsIncomingLobShot`, and its drop-then-lob entry point
+`AiIsIncomingDropOrShortShot` -> `AiIsIncomingDropOrLobShot`. Byte-perfect.
+
 ### Joypad button constants (2026-07-19)
 
 `$df1f` (the per-character input byte from `ReadCharPadInput`) uses the standard

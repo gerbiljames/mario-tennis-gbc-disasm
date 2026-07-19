@@ -2899,7 +2899,7 @@ WriteStarVictoryGrid:
 	ret ; $524e
 Func_03_524f:
 	ldh a, [hPlayerInputFlags] ; $524f
-	bit 0, a ; $5251
+	bit PADB_A, a ; $5251
 	jr nz, Label_03_5270 ; $5253
 	ld hl, $ffb0 ; $5255
 	ld a, [hl+] ; $5258
@@ -3093,7 +3093,7 @@ Label_03_53b1:
 	pop de ; $53c7
 Label_03_53c8:
 	ldh a, [hPlayerInputFlags] ; $53c8
-	bit 0, a ; $53ca
+	bit PADB_A, a ; $53ca
 	jr nz, Label_03_53d4 ; $53cc
 	ldh a, [hVBlankCounter] ; $53ce
 	bit 3, a ; $53d0
@@ -3123,7 +3123,7 @@ Label_03_53d4:
 Label_03_53f8:
 	call AdvanceFrame ; $53f8
 	ldh a, [hInputPressed] ; $53fb
-	bit 6, a ; $53fd
+	bit PADB_UP, a ; $53fd
 	jr z, Label_03_540c ; $53ff
 	ld bc, $f0f8 ; $5401
 	call Func_03_524f ; $5404
@@ -3194,7 +3194,7 @@ Label_03_547f:
 	jr z, Label_03_54ad ; $5481
 	sound $5f ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
-	bit 0, a ; $5487
+	bit PADB_A, a ; $5487
 	jr nz, Label_03_549c ; $5489
 	push de ; $548b
 	ld hl, $54c8 ; $548c

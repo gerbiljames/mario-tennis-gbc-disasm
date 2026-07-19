@@ -186,7 +186,7 @@ Label_17_40b9:
 	ld a, [wMenuCursorY] ; $410c
 	ld e, a ; $410f
 	ld a, [wMenuInputPressed] ; $4110
-	bit 4, a ; $4113
+	bit PADB_RIGHT, a ; $4113
 	jr z, Label_17_412c ; $4115
 	ld a, [wMenuCursorX] ; $4117
 	inc a ; $411a
@@ -1367,7 +1367,7 @@ LoadCourtDiagramScreen:
 WaitForInputBlinking:
 	call AdvanceFrame ; $497e
 	ldh a, [hInputRisingEdge] ; $4981
-	and a, $03 ; $4983
+	and a, PADF_A | PADF_B ; $4983
 	jr nz, Label_17_498c ; $4985
 	call DrawBlinkingPrompt ; $4987
 	jr WaitForInputBlinking ; $498a
@@ -1376,7 +1376,7 @@ Label_17_498c:
 AdvanceFrameCheckInput:
 	call AdvanceFrame ; $498d
 	ldh a, [hInputRisingEdge] ; $4990
-	and a, $03 ; $4992
+	and a, PADF_A | PADF_B ; $4992
 	jr nz, Label_17_499e ; $4994
 	dec c ; $4996
 	jr z, Label_17_499c ; $4997
@@ -5081,7 +5081,7 @@ Label_17_70f4:
 Label_17_7107:
 	call AdvanceFrame ; $7107
 	ldh a, [hInputRisingEdge] ; $710a
-	bit 0, a ; $710c
+	bit PADB_A, a ; $710c
 	jr nz, Label_17_711e ; $710e
 	bit 7, a ; $7110
 	jr nz, Label_17_711e ; $7112

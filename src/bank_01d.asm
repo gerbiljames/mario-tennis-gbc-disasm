@@ -1504,7 +1504,7 @@ RunDrillResultInputLoop:
 Label_1d_4cbf:
 	call AdvanceFrame ; $4cbf
 	ldh a, [hInputRisingEdge] ; $4cc2
-	bit 4, a ; $4cc4
+	bit PADB_RIGHT, a ; $4cc4
 	jr nz, Label_1d_4cd9 ; $4cc6
 	bit 5, a ; $4cc8
 	jp nz, Label_1d_4d3a ; $4cca
@@ -1588,7 +1588,7 @@ Label_1d_4d9d:
 Label_1d_4da0:
 	call AdvanceFrame ; $4da0
 	ldh a, [hInputRisingEdge] ; $4da3
-	bit 4, a ; $4da5
+	bit PADB_RIGHT, a ; $4da5
 	jr nz, Label_1d_4db3 ; $4da7
 	bit 1, a ; $4da9
 	jr nz, Label_1d_4df9 ; $4dab
@@ -1630,7 +1630,7 @@ Label_1d_4dfc:
 Label_1d_4dff:
 	call AdvanceFrame ; $4dff
 	ldh a, [hInputRisingEdge] ; $4e02
-	bit 5, a ; $4e04
+	bit PADB_LEFT, a ; $4e04
 	jr nz, Label_1d_4e12 ; $4e06
 	bit 1, a ; $4e08
 	jr nz, Label_1d_4e58 ; $4e0a
@@ -3089,7 +3089,7 @@ Label_1d_5aa5:
 	call Func_1d_5afa ; $5aa5
 	call AdvanceFrame ; $5aa8
 	ldh a, [hInputRisingEdge] ; $5aab
-	bit 0, a ; $5aad
+	bit PADB_A, a ; $5aad
 	jr nz, Label_1d_5ac5 ; $5aaf
 	bit 1, a ; $5ab1
 	jr nz, Label_1d_5ad5 ; $5ab3
@@ -4228,7 +4228,7 @@ Label_1d_6f77:
 	call Func_1d_734b ; $6f7a
 	call AdvanceFrame ; $6f7d
 	ldh a, [hPlayerInputFlags] ; $6f80
-	bit 1, a ; $6f82
+	bit PADB_B, a ; $6f82
 	jr z, Label_1d_6f92 ; $6f84
 	push af ; $6f86
 	wram_bank $06 ; $6f87
@@ -4252,7 +4252,7 @@ Label_1d_6f92:
 	ld hl, $d17f ; $6fb5
 	res 1, [hl] ; $6fb8
 	ldh a, [hInputRisingEdge] ; $6fba
-	bit 6, a ; $6fbc
+	bit PADB_UP, a ; $6fbc
 	jr nz, Label_1d_6fc7 ; $6fbe
 	bit 7, a ; $6fc0
 	jr nz, Label_1d_6ff3 ; $6fc2
@@ -4948,7 +4948,7 @@ Label_1d_7528:
 	call Func_1d_77a7 ; $752b
 	call AdvanceFrame ; $752e
 	ldh a, [hInputRisingEdge] ; $7531
-	bit 6, a ; $7533
+	bit PADB_UP, a ; $7533
 	jr nz, Label_1d_757f ; $7535
 	bit 7, a ; $7537
 	jr nz, Label_1d_757f ; $7539

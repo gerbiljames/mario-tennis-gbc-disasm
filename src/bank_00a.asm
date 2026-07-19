@@ -169,7 +169,7 @@ FarPtr_RunEndingCreditsSequence:
 	push de ; $40a6
 	push hl ; $40a7
 	ldh a, [hInputRisingEdge] ; $40a8
-	and a, $08 ; $40aa
+	and a, PADF_START ; $40aa
 	jr z, Label_0a_40cb ; $40ac
 	test_flag $02, 6 ; $40ae
 	jr z, Label_0a_40c0 ; $40b1
@@ -3950,7 +3950,7 @@ LoadAndDisplayScene:
 	ret ; $5e1e
 SceneViewerSelectScene:
 	ldh a, [hInputRisingEdge] ; $5e1f
-	bit 1, a ; $5e21
+	bit PADB_B, a ; $5e21
 	ret z ; $5e23
 	ld a, [$c32d] ; $5e24
 	dec a ; $5e27
@@ -3984,7 +3984,7 @@ Label_0a_5e51:
 Label_0a_5e68:
 	call AdvanceFrame ; $5e68
 	ldh a, [hPlayerInputFlags] ; $5e6b
-	and a, $02 ; $5e6d
+	and a, PADF_B ; $5e6d
 	jr nz, Label_0a_5e68 ; $5e6f
 	farcall FarPtr_RunMenuSelection ; $5e71
 	ld [wCurrentScene], a ; $5e74
@@ -5860,7 +5860,7 @@ Label_0a_6ee3:
 	or a, a ; $6ef8
 	jr z, Label_0a_6f01 ; $6ef9
 	ldh a, [hPlayerInputFlags] ; $6efb
-	bit 2, a ; $6efd
+	bit PADB_SELECT, a ; $6efd
 	jr nz, Label_0a_6f03 ; $6eff
 Label_0a_6f01:
 	jr Label_0a_6e91 ; $6f01

@@ -186,7 +186,7 @@ MoveMenuCursorGrid_3e:
 	ld a, [wMenuCursorY] ; $413e
 	ld e, a ; $4141
 	ld a, [wMenuInputPressed] ; $4142
-	bit 4, a ; $4145
+	bit PADB_RIGHT, a ; $4145
 	jr z, Label_3e_415e ; $4147
 	ld a, [wMenuCursorX] ; $4149
 	inc a ; $414c
@@ -827,7 +827,7 @@ Label_3e_453f:
 	farcall FarPtr_RunLinkInputFrame ; $4540
 	pop af ; $4543
 	ld a, [wMenuInputPressed] ; $4544
-	bit 0, a ; $4547
+	bit PADB_A, a ; $4547
 	jr nz, Label_3e_4551 ; $4549
 	bit 1, a ; $454b
 	jr nz, Label_3e_4579 ; $454d
@@ -1097,7 +1097,7 @@ Label_3e_4749:
 	ret ; $475c
 HandleMatchRulesToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
-	bit 5, a ; $4760
+	bit PADB_LEFT, a ; $4760
 	jr nz, Label_3e_4769 ; $4762
 	bit 4, a ; $4764
 	jr nz, Label_3e_47c0 ; $4766
@@ -1695,7 +1695,7 @@ Label_3e_4c5a:
 	call AdvanceFrame ; $4c5a
 	ldh a, [hInputPressed] ; $4c5d
 	ld [wMenuInputPressed], a ; $4c5f
-	bit 0, a ; $4c62
+	bit PADB_A, a ; $4c62
 	jr nz, Label_3e_4c80 ; $4c64
 	bit 1, a ; $4c66
 	jr nz, Label_3e_4c9b ; $4c68
@@ -1970,7 +1970,7 @@ Label_3e_4edb:
 	call RedrawRacketShoesChoiceMenu ; $4eef
 Label_3e_4ef2:
 	ld a, [wMenuInputPressed] ; $4ef2
-	bit 0, a ; $4ef5
+	bit PADB_A, a ; $4ef5
 	jr nz, Label_3e_4eff ; $4ef7
 	bit 1, a ; $4ef9
 	jr nz, Label_3e_4f1c ; $4efb
@@ -2359,7 +2359,7 @@ Label_3e_51cb:
 	call RedrawPlayAlonePartnerMenu ; $51df
 Label_3e_51e2:
 	ld a, [wMenuInputPressed] ; $51e2
-	bit 0, a ; $51e5
+	bit PADB_A, a ; $51e5
 	jr nz, Label_3e_51ef ; $51e7
 	bit 1, a ; $51e9
 	jr nz, Label_3e_5212 ; $51eb
@@ -2590,7 +2590,7 @@ ShowEquipmentStatusScreen:
 	call WaitFadeEnd ; $53af
 Label_3e_53b2:
 	ldh a, [hInputPressed] ; $53b2
-	bit 0, a ; $53b4
+	bit PADB_A, a ; $53b4
 	jr nz, Label_3e_53c1 ; $53b6
 	bit 1, a ; $53b8
 	jr nz, Label_3e_53c1 ; $53ba
@@ -2824,7 +2824,7 @@ Label_3e_5591:
 HandleEquipSelectInput:
 	ldh a, [hInputPressed] ; $55af
 	ld [wMenuInputPressed], a ; $55b1
-	bit 0, a ; $55b4
+	bit PADB_A, a ; $55b4
 	jr nz, Label_3e_55be ; $55b6
 	bit 1, a ; $55b8
 	jr nz, Label_3e_55f9 ; $55ba
@@ -3578,7 +3578,7 @@ Label_3e_5bd7:
 	call RedrawCourtSelect4Menu ; $5beb
 Label_3e_5bee:
 	ld a, [wMenuInputPressed] ; $5bee
-	bit 0, a ; $5bf1
+	bit PADB_A, a ; $5bf1
 	jr nz, Label_3e_5bfb ; $5bf3
 	bit 1, a ; $5bf5
 	jr nz, Label_3e_5c1e ; $5bf7
@@ -3662,7 +3662,7 @@ Label_3e_5c8c:
 	call RedrawCourtSelect4Menu ; $5ca2
 Label_3e_5ca5:
 	ld a, [wMenuInputPressed] ; $5ca5
-	bit 0, a ; $5ca8
+	bit PADB_A, a ; $5ca8
 	jr nz, Label_3e_5cb2 ; $5caa
 	bit 1, a ; $5cac
 	jr nz, Label_3e_5cd9 ; $5cae
@@ -4368,7 +4368,7 @@ Label_3e_655b:
 	call RedrawCourtSelect9Menu ; $656f
 Label_3e_6572:
 	ld a, [wMenuInputPressed] ; $6572
-	bit 0, a ; $6575
+	bit PADB_A, a ; $6575
 	jr nz, Label_3e_657f ; $6577
 	bit 1, a ; $6579
 	jr nz, Label_3e_65b2 ; $657b
@@ -4466,7 +4466,7 @@ Label_3e_6629:
 	call RedrawCourtSelect9Menu ; $663f
 Label_3e_6642:
 	ld a, [wMenuInputPressed] ; $6642
-	bit 0, a ; $6645
+	bit PADB_A, a ; $6645
 	jr nz, Label_3e_664f ; $6647
 	bit 1, a ; $6649
 	jr nz, Label_3e_6686 ; $664b

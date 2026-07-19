@@ -3127,7 +3127,7 @@ Func_39_6df9:
 	or a, a ; $6dfc
 	jr nz, Label_39_6e64 ; $6dfd
 	ld a, [wMenuInputPressed] ; $6dff
-	bit 4, a ; $6e02
+	bit PADB_RIGHT, a ; $6e02
 	jr nz, Label_39_6e16 ; $6e04
 	bit 5, a ; $6e06
 	jr nz, Label_39_6e30 ; $6e08
@@ -3188,7 +3188,7 @@ Label_39_6e54:
 	jr Label_39_6eb9 ; $6e62
 Label_39_6e64:
 	ld a, [wMenuInputPressed] ; $6e64
-	bit 4, a ; $6e67
+	bit PADB_RIGHT, a ; $6e67
 	jr nz, Label_39_6e7a ; $6e69
 	bit 5, a ; $6e6b
 	jr nz, Label_39_6e8c ; $6e6d
@@ -3352,7 +3352,7 @@ Func_39_6f67:
 	or a, a ; $6f73
 	jr nz, Label_39_6fc0 ; $6f74
 	ldh a, [hInputRisingEdge] ; $6f76
-	bit 0, a ; $6f78
+	bit PADB_A, a ; $6f78
 	jr z, Label_39_6fa5 ; $6f7a
 	ld c, $00 ; $6f7c
 Label_39_6f7e:

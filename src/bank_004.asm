@@ -2435,7 +2435,7 @@ Label_04_5168:
 	ld b, [hl] ; $5178
 	ld c, a ; $5179
 	ldh a, [hInputRisingEdge] ; $517a
-	bit 0, a ; $517c
+	bit PADB_A, a ; $517c
 	jr z, Label_04_5192 ; $517e
 	ld hl, wStoryModeInteractRequest ; $5180
 	ld [hl], $01 ; $5183
@@ -2448,13 +2448,13 @@ Label_04_5168:
 	call Func_04_5141 ; $518f
 Label_04_5192:
 	ldh a, [hInputRisingEdge] ; $5192
-	bit 3, a ; $5194
+	bit PADB_START, a ; $5194
 	jr z, Label_04_519d ; $5196
 	ld hl, wStoryModeMenuRequest ; $5198
 	ld [hl], $01 ; $519b
 Label_04_519d:
 	ldh a, [hPlayerInputFlags] ; $519d
-	bit 1, a ; $519f
+	bit PADB_B, a ; $519f
 	jr z, Label_04_51a6 ; $51a1
 	set_flag $02, 1 ; $51a3
 Label_04_51a6:

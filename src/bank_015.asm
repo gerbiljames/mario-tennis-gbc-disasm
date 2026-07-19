@@ -1472,7 +1472,7 @@ ActorScript_15_55e9:
 	as_wait $3c
 	as_jump ActorScript_15_55e9
 	ldh a, [hInputRisingEdge] ; $55f0
-	and a, $03 ; $55f2
+	and a, PADF_A | PADF_B ; $55f2
 	ld d, a ; $55f4
 	ld hl, $c2b8 ; $55f5
 	ld a, [hl] ; $55f8
