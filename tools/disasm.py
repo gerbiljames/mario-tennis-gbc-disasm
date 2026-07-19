@@ -917,6 +917,20 @@ class Disassembly:
             self.data_blobs[flat(tbl)] = (flat(pool) - flat(tbl), "copy")
         print(f"gfx pointer sets: {total} lz streams carved")
 
+    def carve_tilemap_dispatch(self):
+        """Merge the L1/L2 pointer tables ($39:$4e60) and their record-list pool
+        ($39:$50dc) into one tilemap_dispatch blob so the whole two-level
+        structure renders with shared local labels (see render_tilemap_dispatch).
+        The auto-carver splits it into a records:2 table and a bytes:6 pool."""
+        bank = 0x39
+        base = bank * BANK_SIZE
+        tbl = base + 0x4e60 - BANK_SIZE
+        pool = base + 0x50dc - BANK_SIZE
+        if pool in self.data_blobs and tbl in self.data_blobs:
+            plen = self.data_blobs[pool][0]
+            del self.data_blobs[pool]
+            self.data_blobs[tbl] = ((pool - tbl) + plen, "copy")
+
     def carve_sprite_templates(self, queue_flat):
         """Carve the operand of every `call QueueSpriteTemplate` ($00:$1e9d) as
         a sprite_template blob. The helper reads a list of 4-byte
@@ -2382,6 +2396,20 @@ MACRO tilemap_copy_end
 	ds 5, $00
 ENDM
 
+; Tilemap-assembly record (dispatch at $39:$4e11, via CopyTilemapRect): copy a
+; `height`x`width` rectangle from `src` to `dest` in the tilemap shadow (and
+; again at a +$0400 buffer offset). Lists end with tilemap_rect_end (a record
+; whose height byte is 0, which the loop stops on).
+; Usage: tilemap_rect src, dest, height, width
+MACRO tilemap_rect
+	dw \\1, \\2
+	db \\3, \\4
+ENDM
+
+MACRO tilemap_rect_end
+	ds 6, $00
+ENDM
+
 ; QueueSpriteTemplate ($1e9d) sprite record: one hardware sprite as {dy, dx,
 ; tile, attr} deltas added to the base position/tile/attr passed in the call.
 ; A list ends with oam_sprite_end (a $80 dy byte, which the loader stops on).
@@ -2514,6 +2542,61 @@ def render_tilemap_scripts(rom, start, end):
             src = rom[o + 2] | (rom[o + 3] << 8)
             out.append(f"\ttilemap_copy ${dest:04x}, ${src:04x}, {rom[o + 4]}")
         o += 5
+    return out
+
+
+def render_tilemap_dispatch(rom, start, end):
+    """Render the two-level tilemap-assembly dispatch ($39:$4e60, indexer at
+    $39:$4e11). A self-delimiting L1 pointer table (indexed by b) points at L2
+    pointer tables (indexed by c) that point at lists of 6-byte
+    {src, dest, height, width} records ended by a height-0 record. L1/L2 tables
+    become `.l2_N`/`.rl_N` locals; records render as `tilemap_rect` macros."""
+    base = offset_to_cpu(start)
+    end_cpu = base + (end - start)
+
+    def flat(cpu):
+        return start + (cpu - base)
+
+    def w(cpu):
+        f = flat(cpu)
+        return rom[f] | (rom[f + 1] << 8)
+
+    # L1 and the packed L2 region each self-delimit at their lowest target.
+    p, lo, l1 = base, 0xFFFF, []
+    while p < lo:
+        v = w(p); l1.append(v); lo = min(lo, v); p += 2
+    l1_end = p
+    q, lo2 = l1_end, 0xFFFF
+    while q < lo2:
+        lo2 = min(lo2, w(q)); q += 2
+    rec_start = lo2
+    l2_idx = {a: i for i, a in enumerate(sorted(set(l1)))}
+    rl_targets = {w(c) for c in range(l1_end, rec_start, 2)}
+    rl_idx = {a: i for i, a in enumerate(
+        sorted(a for a in rl_targets if rec_start <= a < end_cpu))}
+
+    out = [f"\tdw .l2_{l2_idx[v]} ; {i}" for i, v in enumerate(l1)]
+    cpu = l1_end
+    while cpu < rec_start:
+        if cpu in l2_idx:
+            out.append(f".l2_{l2_idx[cpu]}:")
+        t = w(cpu)
+        out.append(f"\tdw {'.rl_%d' % rl_idx[t] if t in rl_idx else f'${t:04x}'}")
+        cpu += 2
+    while cpu < end_cpu:
+        if cpu in rl_idx:
+            out.append(f".rl_{rl_idx[cpu]}:")
+        f = flat(cpu)
+        if rom[f + 4] == 0:
+            if any(rom[f:f + 6]):
+                out.append("\tdb " + ", ".join(f"${b:02x}" for b in rom[f:f + 6]))
+            else:
+                out.append("\ttilemap_rect_end")
+        else:
+            out.append(f"\ttilemap_rect ${rom[f] | (rom[f+1]<<8):04x}, "
+                       f"${rom[f+2] | (rom[f+3]<<8):04x}, "
+                       f"${rom[f+4]:02x}, ${rom[f+5]:02x}")
+        cpu += 6
     return out
 
 
@@ -2826,6 +2909,10 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             lines.extend(render_tilemap_scripts(
                                 rom, run_start, run_start + length))
                             continue
+                        if spec == "tilemap_dispatch":
+                            lines.extend(render_tilemap_dispatch(
+                                rom, run_start, run_start + length))
+                            continue
                         if spec == "gfx_ptr_table":
                             lines.extend(render_gfx_ptr_table(
                                 rom, run_start, run_start + length,
@@ -2995,6 +3082,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             elif spec == "tilemap_scripts":
                                 lines.extend(render_tilemap_scripts(
                                     rom, seg, j))
+                            elif spec == "tilemap_dispatch":
+                                lines.extend(render_tilemap_dispatch(
+                                    rom, seg, j))
                             elif spec == "gfx_ptr_table":
                                 lines.extend(render_gfx_ptr_table(
                                     rom, seg, j, bank, data_labels))
@@ -3133,6 +3223,7 @@ def main():
         dis.load_hook_dumps(args.hooks)
     dis.add_static_data_slots()
     dis.carve_gfx_pointer_sets()
+    dis.carve_tilemap_dispatch()
     for k, v in (overrides or {}).items():
         if v == "QueueSpriteTemplate":
             dis.carve_sprite_templates(int(k, 0))

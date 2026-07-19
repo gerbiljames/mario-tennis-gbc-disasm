@@ -321,6 +321,20 @@ MACRO tilemap_copy_end
 	ds 5, $00
 ENDM
 
+; Tilemap-assembly record (dispatch at $39:$4e11, via CopyTilemapRect): copy a
+; `height`x`width` rectangle from `src` to `dest` in the tilemap shadow (and
+; again at a +$0400 buffer offset). Lists end with tilemap_rect_end (a record
+; whose height byte is 0, which the loop stops on).
+; Usage: tilemap_rect src, dest, height, width
+MACRO tilemap_rect
+	dw \1, \2
+	db \3, \4
+ENDM
+
+MACRO tilemap_rect_end
+	ds 6, $00
+ENDM
+
 ; QueueSpriteTemplate ($1e9d) sprite record: one hardware sprite as {dy, dx,
 ; tile, attr} deltas added to the base position/tile/attr passed in the call.
 ; A list ends with oam_sprite_end (a $80 dy byte, which the loader stops on).

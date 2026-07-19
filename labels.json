@@ -2324,6 +2324,7 @@
 "0xe4bf3": "ResetScreenAndTextWindows",
 "0xe4cab": "FlushWram3MapRows",
 "0xe4deb": "RestoreMenuBgAndDrawPanel",
+"0xe4e60": "TilemapAssemblyDispatch_39",
 "0xe6f10": "DrawDecimalNumberSprites_39",
 "0xe6f4f": "DrawDigitSprite_39",
 "0xe734e": "DigitFontTiles",

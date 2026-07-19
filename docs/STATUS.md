@@ -36,6 +36,18 @@ banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
 with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
 blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
+### Bank $39 tilemap-assembly dispatch (2026-07-19)
+
+`$39:$4e60` was a `records:2` blob (L1/L2 pointer tables) plus a separate
+`bytes:6` pool of record lists. The indexer at `$39:$4e11` does a two-level
+lookup: L1 table (by `b`) → L2 tables (by `c`) → lists of 6-byte
+{src, dest, height, width} `CopyTilemapRect` records (height-0 terminated).
+`carve_tilemap_dispatch` merges both into one `tilemap_dispatch` blob
+(`TilemapAssemblyDispatch_39`); `render_tilemap_dispatch` emits the two pointer
+levels as `.l2_N`/`.rl_N` locals and the records as `tilemap_rect`/
+`tilemap_rect_end` macros — 24 L1 entries, 20 L2 tables, 214 record lists (6
+unused slots point past the pool at the following code). Still byte-perfect.
+
 ### Bank $39 tile-block slot table (2026-07-19)
 
 `TileBlockPtrs_39` ($39:$46b7, 244 bytes) was a `records:2` blob of bare words.
