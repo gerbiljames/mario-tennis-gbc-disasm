@@ -3222,6 +3222,12 @@ def main():
         dis.infer_tables()
         dis.seed_text_entries()
         dis.seed_launcher_stubs()
+        # Map-script/entry handlers and arrival scripts are reached only through
+        # indirect dispatch (CallHLInBankA), so descent never finds them and
+        # their code otherwise falls into the map table's own data blob. Seed
+        # the pointers the tables embed so the code is decoded and the records
+        # reference each handler by name.
+        dis.seed(list(map_script_code_targets(rom, data_tables)))
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()

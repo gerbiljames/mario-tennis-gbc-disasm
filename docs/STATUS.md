@@ -36,6 +36,18 @@ banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
 with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
 blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
+### Seed map-script/entry code targets (2026-07-19)
+
+`map_script_code_targets` yields the handler/arrival-script pointers embedded in
+`map_scripts`/`map_entries` tables, but it was only wired into labeling
+(naming targets descent already reached). Now `main` also *seeds* them before a
+re-descend, so a handler reached only through its table's indirect dispatch gets
+decoded instead of falling into the table's data blob. Surgical in effect —
+only `AcademyMainBldgEntryPoints_10` ($10:$74f9) had such a handler: its two
+arrival scripts (`Func_10_7532`/`Func_10_7578`) were buried after the `$ff`
+terminator, so the table over-ran to 197 bytes; now 57 bytes (7 records) with
+the arrival scripts decoded as `script_*` cutscene code. Byte-perfect.
+
 ### script_copy_scene_rect macro (2026-07-19)
 
 Added a `script_copy_scene_rect src_col, src_row, dst_col, dst_row, width, height`

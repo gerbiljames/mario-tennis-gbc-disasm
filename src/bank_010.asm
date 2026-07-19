@@ -4066,32 +4066,47 @@ AcademyMainBldgActors_10:
 	map_actor $0000, $7bdb, $2800, $1e00, $40, $41, $01, $03
 	map_actor_end
 AcademyMainBldgEntryPoints_10:
-	; $74f9, 197 bytes (map_entries)
-	map_entry $01, $c0, $2200, $2100, $7578
-	map_entry $02, $40, $2200, $0700, $7532
+	; $74f9, 57 bytes (map_entries)
+	map_entry $01, $c0, $2200, $2100, Func_10_7578
+	map_entry $02, $40, $2200, $0700, Func_10_7532
 	map_entry $03, $40, $3500, $1900, Func_10_7b5f
 	map_entry $04, $40, $3b00, $3900, Func_10_7b5f
 	map_entry $0d, $c0, $2100, $3b00, $0000
 	map_entry $0e, $c0, $2200, $1300, $0000
 	map_entry $0f, $c0, $2200, $1d00, $0000
-	db $ff, $fa, $95, $c2, $fe, $ff, $ca, $77
-	db $75, $f7, $e0, $05, $28, $26, $3e, $02
-	db $01, $ff, $00, $df, $18, $0a, $3e, $02
-	db $06, $c0, $11, $00, $02, $df, $2a, $0a
-	db $3e, $02, $df, $20, $0a, $3e, $02, $06
-	db $40, $df, $2e, $0a, $3e, $02, $01, $10
-	db $00, $df, $18, $0a, $3e, $00, $01, $10
-	db $00, $df, $18, $0a, $3e, $00, $06, $40
-	db $11, $00, $02, $df, $2a, $0a, $c9, $fa
-	db $95, $c2, $fe, $ff, $ca, $bd, $75, $f7
-	db $e0, $05, $28, $26, $3e, $02, $01, $ff
-	db $00, $df, $18, $0a, $3e, $02, $06, $40
-	db $11, $00, $02, $df, $2a, $0a, $3e, $02
-	db $df, $20, $0a, $3e, $02, $06, $c0, $df
-	db $2e, $0a, $3e, $02, $01, $10, $00, $df
-	db $18, $0a, $3e, $00, $01, $10, $00, $df
-	db $18, $0a, $3e, $00, $06, $c0, $11, $00
-	db $02, $df, $2a, $0a, $c9
+	db $ff
+Func_10_7532:
+	ld a, [wStoryModeEntryPoint] ; $7532
+	cp a, $ff ; $7535
+	jp z, Label_10_7577 ; $7537
+	test_flag $05, 7 ; $753a
+	jr z, Label_10_7565 ; $753d
+	script_set_speed $02, $00ff ; $753f
+	script_move_angle $02, $c0, $0200 ; $7547
+	script_wait_move $02 ; $7551
+	script_face $02, $40 ; $7556
+	script_set_speed $02, $0010 ; $755d
+Label_10_7565:
+	script_set_speed $00, $0010 ; $7565
+	script_move_angle $00, $40, $0200 ; $756d
+Label_10_7577:
+	ret ; $7577
+Func_10_7578:
+	ld a, [wStoryModeEntryPoint] ; $7578
+	cp a, $ff ; $757b
+	jp z, Label_10_75bd ; $757d
+	test_flag $05, 7 ; $7580
+	jr z, Label_10_75ab ; $7583
+	script_set_speed $02, $00ff ; $7585
+	script_move_angle $02, $40, $0200 ; $758d
+	script_wait_move $02 ; $7597
+	script_face $02, $c0 ; $759c
+	script_set_speed $02, $0010 ; $75a3
+Label_10_75ab:
+	script_set_speed $00, $0010 ; $75ab
+	script_move_angle $00, $c0, $0200 ; $75b3
+Label_10_75bd:
+	ret ; $75bd
 AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_10, $14, $01
