@@ -983,21 +983,22 @@ Label_39_4ba4:
 	xor a, a ; $4bb4
 	ld [$cb19], a ; $4bb5
 Label_39_4bb8:
-	ld hl, $4bbf ; $4bb8
+	ld hl, SpriteTemplate_39_4bbf ; $4bb8
 	call QueueSpriteTemplate ; $4bbb
 	ret ; $4bbe
-	; $4bbf, 41 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $10, $48, $10, $00 ; 0x20
-	db $10, $50, $12, $00 ; 0x24
-	db $80 ; 0x28
+SpriteTemplate_39_4bbf:
+	; $4bbf, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 Func_39_4be8:
 	ld b, $11 ; $4be8
 	ld c, $10 ; $4bea

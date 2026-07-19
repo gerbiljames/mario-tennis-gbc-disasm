@@ -116,6 +116,16 @@ def load_coverage(paths, nbanks):
     return seeds
 
 
+def _writes_hl(text):
+    """True if an instruction modifies hl (so a preceding `ld hl, imm` no longer
+    holds that immediate). Covers reloads, arithmetic, inc/dec, hl+/- accesses,
+    pop hl, and 8-bit writes to h or l."""
+    return (text.startswith(("ld hl", "add hl", "inc hl", "dec hl",
+                             "ld l,", "ld h,", "inc l", "inc h",
+                             "dec l", "dec h", "pop hl"))
+            or "[hl+]" in text or "[hl-]" in text)
+
+
 def offset_to_cpu(off):
     return off if off < BANK_SIZE else BANK_SIZE + off % BANK_SIZE
 
@@ -144,6 +154,7 @@ class Disassembly:
         self.data_slots = {}  # entry_flat -> (bank, slot, src_flat, kind)
         self.data_blobs = {}  # src_flat -> (length or None, kind)
         self.object_headers = set()  # src_flat of 16-byte object headers
+        self.sprite_templates = set()  # src_flat of QueueSpriteTemplate lists
         self.data_site_notes = {}  # `ld hl` setup offset -> (bank, slot)
         self.ptr_words = {}   # word offset -> (target_flat or None, note)
         self.ptr_labels = {}  # flat offset -> generated structure label
@@ -897,6 +908,58 @@ class Disassembly:
             total += tile_pool(pool)
             self.data_blobs[flat(tbl)] = (flat(pool) - flat(tbl), "copy")
         print(f"gfx pointer sets: {total} lz streams carved")
+
+    def carve_sprite_templates(self, queue_flat):
+        """Carve the operand of every `call QueueSpriteTemplate` ($00:$1e9d) as
+        a sprite_template blob. The helper reads a list of 4-byte
+        {dy, dx, tile, attr} OAM records from hl, stopping at a $80 dy byte;
+        many lists sit packed back-to-back in an otherwise anonymous blob.
+        Backtrack from each call to the nearest same-bank `ld hl, imm` (opcode
+        $21) that sets the pointer, size the list by its $80 terminator, and
+        register it (blobs already carved by an earlier pass are left alone)."""
+        qcpu = offset_to_cpu(queue_flat)
+        added = 0
+        last_hl = None  # (bank, hl_end, cpu) of the most recent `ld hl, imm`
+        for off in sorted(self.instrs):
+            op = self.rom[off]
+            if op == 0x21:  # ld hl, imm16 -- a direct pointer load
+                cpu = self.rom[off + 1] | (self.rom[off + 2] << 8)
+                last_hl = (off // BANK_SIZE, off + 3, cpu)
+                continue
+            # Any other write to hl (indexing a table, dereferencing, reload)
+            # means the loaded imm is not the template pointer itself.
+            if last_hl is not None and _writes_hl(self.instrs[off].text):
+                last_hl = None
+            if (op == 0xCD and last_hl is not None
+                  and (self.rom[off + 1] | (self.rom[off + 2] << 8)) == qcpu):
+                bank, hl_end, cpu = last_hl
+                # only accept a pointer set in the same bank, close to the call
+                if (bank == off // BANK_SIZE and 0x4000 <= cpu < 0x8000
+                        and 0 <= off - hl_end <= 24):
+                    src = bank * BANK_SIZE + cpu - BANK_SIZE
+                    length = self._sprite_template_len(src)
+                    # Override plain data blobs (packed templates share one
+                    # anonymous blob) but never lz/object/slot-record data.
+                    existing = self.data_blobs.get(src)
+                    overridable = existing is None or existing[1] == "copy"
+                    if length and overridable and src not in self.instrs \
+                            and src not in self.object_headers \
+                            and src not in self.slot_record_tables:
+                        self.data_blobs[src] = (length, "sprite")
+                        self.sprite_templates.add(src)
+                        added += 1
+        if added:
+            print(f"sprite templates: {added} carved")
+
+    def _sprite_template_len(self, src):
+        """Length of a QueueSpriteTemplate list at src: 4-byte records up to a
+        $80 dy byte (inclusive), else None if none appears within 40 records."""
+        for n in range(40):
+            if src + n * 4 >= len(self.rom):
+                return None
+            if self.rom[src + n * 4] == 0x80:
+                return n * 4 + 1
+        return None
 
     def load_hook_dumps(self, paths):
         """Ingest tools/hook_client.py captures: runtime-observed register
@@ -1757,6 +1820,11 @@ def build_labels(dis, overrides=None, data_tables=None):
     for target in map_script_code_targets(dis.rom, data_tables or {}):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    # Name each carved sprite-template so the `ld hl` load sites resolve to it.
+    for src in dis.sprite_templates:
+        if src not in labels:
+            labels[src] = \
+                f"SpriteTemplate_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
     return labels
 
 
@@ -2555,7 +2623,7 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                 or src in data_entries or src in jt_entries
                 or src in dis.ptr_words):
             continue
-        stem = "Lz" if kind == "lz" else "Data"
+        stem = {"lz": "Lz", "sprite": "SpriteTemplate"}.get(kind, "Data")
         label = labels.get(src) or \
             f"{stem}_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
         data_marks[src] = (length, label, kind)
@@ -2730,6 +2798,12 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                 if run_start in dis.object_headers:
                     lines.extend(render_object_header(rom, run_start, data_labels,
                                                       dis.ptr_labels))
+                    continue
+                if run_start in dis.sprite_templates and mark and mark[0]:
+                    lines.append(f"\t; ${cpu:04x}, {length} bytes (sprite_template)")
+                    body = render_spec(rom[run_start:run_start + length],
+                                       "sprite_template").rstrip("\n")
+                    lines.extend(body.split("\n"))
                     continue
                 if mark and mark[0]:
                     if run_start in data_tables:
@@ -3051,6 +3125,10 @@ def main():
         dis.load_hook_dumps(args.hooks)
     dis.add_static_data_slots()
     dis.carve_gfx_pointer_sets()
+    for k, v in (overrides or {}).items():
+        if v == "QueueSpriteTemplate":
+            dis.carve_sprite_templates(int(k, 0))
+            break
     dis.find_sprite_banks()
     dis.find_sound_banks()
     dis.find_walk_sprite_banks()

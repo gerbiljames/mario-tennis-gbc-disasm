@@ -1694,7 +1694,19 @@ Label_15_578c:
 	ld de, $8010 ; $57a6
 	farcall FarPtr_DrawDecimalNumberSprites_39 ; $57a9
 	ret ; $57ac
-	INCBIN "data/bank_015/d_57ad.bin" ; $57ad, 235 bytes
+SpriteTemplate_15_57ad:
+	; $57ad, 13 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite_end
+SpriteTemplate_15_57ba:
+	; $57ba, 13 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite_end
+	INCBIN "data/bank_015/d_57c7.bin" ; $57c7, 209 bytes
 LoadWaterSpriteMinigameHudGfx:
 	ldh a, [hWramBank] ; $5898
 	push af ; $589a
@@ -1710,13 +1722,13 @@ LoadWaterSpriteMinigameHudGfx:
 	wram_bank ; $58b6
 	ret ; $58ba
 QueueWaterSpriteMinigameTimerPanel:
-	ld hl, $57ad ; $58bb
+	ld hl, SpriteTemplate_15_57ad ; $58bb
 	ld c, $00 ; $58be
 	ld b, $08 ; $58c0
 	call QueueSpriteTemplate ; $58c2
 	ret ; $58c5
 QueueWaterSpriteMinigameCounterPanel:
-	ld hl, $57ba ; $58c6
+	ld hl, SpriteTemplate_15_57ba ; $58c6
 	ld c, $06 ; $58c9
 	ld b, $08 ; $58cb
 	call QueueSpriteTemplate ; $58cd

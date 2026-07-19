@@ -592,7 +592,7 @@ LoadTourPointerSpriteGfx_13:
 	wram_bank ; $4cfa
 	ret ; $4cfe
 QueueTourPointerSprite_13:
-	ld hl, $4d20 ; $4cff
+	ld hl, SpriteTemplate_13_4d20 ; $4cff
 	ld c, $00 ; $4d02
 	ld b, $08 ; $4d04
 	call QueueSpriteTemplate ; $4d06
@@ -609,7 +609,12 @@ QueueTourPointerSprite_13:
 	ld e, a ; $4d1b
 	call QueueTourPointerSprite_13 ; $4d1c
 	ret ; $4d1f
-	INCBIN "data/bank_013/d_4d20.bin" ; $4d20, 88 bytes
+SpriteTemplate_13_4d20:
+	; $4d20, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_013/d_4d29.bin" ; $4d29, 79 bytes
 AnimateDoorOpen_13:
 	sound $71 ; $4d78
 	ld b, $14 ; $4d7a

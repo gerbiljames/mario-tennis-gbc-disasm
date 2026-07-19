@@ -4625,7 +4625,7 @@ Label_1b_6f7e:
 	ld e, a ; $6f80
 	farcall FarPtr_ApplySpriteBobOffset ; $6f81
 	ld b, $08 ; $6f84
-	ld hl, $6f9f ; $6f86
+	ld hl, SpriteTemplate_1b_6f9f ; $6f86
 	push de ; $6f89
 	call QueueSpriteTemplate ; $6f8a
 	pop de ; $6f8d
@@ -4633,12 +4633,28 @@ Label_1b_6f7e:
 	add hl, de ; $6f91
 	ld d, h ; $6f92
 	ld e, l ; $6f93
-	ld hl, $6fc0 ; $6f94
+	ld hl, SpriteTemplate_1b_6fc0 ; $6f94
 	ld b, $08 ; $6f97
 	ld c, $70 ; $6f99
 	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
-	INCBIN "data/bank_01b/d_6f9f.bin" ; $6f9f, 51 bytes
+SpriteTemplate_1b_6f9f:
+	; $6f9f, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_1b_6fc0:
+	; $6fc0, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_01b/d_6fc9.bin" ; $6fc9, 9 bytes
 RunMinigameLevelSelect3:
 	call ResumeBGM ; $6fd2
 	sound $08 ; $6fd5
@@ -4937,13 +4953,13 @@ DrawSavedDataCursorOption0:
 	ld b, $08 ; $72ba
 	ld de, $0c50 ; $72bc
 	farcall FarPtr_ApplySpriteBobOffset ; $72bf
-	ld hl, $72fa ; $72c2
+	ld hl, SpriteTemplate_1b_72fa ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld de, $2448 ; $72cc
 	farcall FarPtr_ApplySpriteBobOffset ; $72cf
-	ld hl, $7340 ; $72d2
+	ld hl, SpriteTemplate_1b_7340 ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
 DrawSavedDataCursorOption1:
@@ -4951,16 +4967,44 @@ DrawSavedDataCursorOption1:
 	ld b, $08 ; $72db
 	ld de, $5050 ; $72dd
 	farcall FarPtr_ApplySpriteBobOffset ; $72e0
-	ld hl, $731b ; $72e3
+	ld hl, SpriteTemplate_1b_731b ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld de, $6c48 ; $72ed
 	farcall FarPtr_ApplySpriteBobOffset ; $72f0
-	ld hl, $7340 ; $72f3
+	ld hl, SpriteTemplate_1b_7340 ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
-	INCBIN "data/bank_01b/d_72fa.bin" ; $72fa, 88 bytes
+SpriteTemplate_1b_72fa:
+	; $72fa, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_1b_731b:
+	; $731b, 37 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite_end
+SpriteTemplate_1b_7340:
+	; $7340, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_01b/d_7349.bin" ; $7349, 9 bytes
 RedrawSavedDataTypeSelect:
 	wram_bank $03 ; $7352
 	ld b, $00 ; $7358

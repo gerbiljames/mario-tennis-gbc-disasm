@@ -1425,34 +1425,35 @@ Func_18_7740:
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
 	INCBIN "data/bank_018/d_7754.bin" ; $7754, 8 bytes
-	ld hl, $776a ; $775c
+	ld hl, SpriteTemplate_18_776a ; $775c
 	ld de, $283a ; $775f
 	ld c, $00 ; $7762
 	ld b, $00 ; $7764
 	call QueueSpriteTemplate ; $7766
 	ret ; $7769
-	; $776a, 81 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $20, $08, $02, $00 ; 0x04
-	db $10, $10, $04, $00 ; 0x08
-	db $20, $10, $06, $00 ; 0x0c
-	db $10, $18, $08, $00 ; 0x10
-	db $20, $18, $0a, $00 ; 0x14
-	db $10, $20, $0c, $00 ; 0x18
-	db $20, $20, $0e, $00 ; 0x1c
-	db $10, $28, $10, $00 ; 0x20
-	db $20, $28, $12, $00 ; 0x24
-	db $10, $30, $14, $00 ; 0x28
-	db $20, $30, $16, $00 ; 0x2c
-	db $10, $38, $18, $00 ; 0x30
-	db $20, $38, $1a, $00 ; 0x34
-	db $10, $40, $1c, $00 ; 0x38
-	db $20, $40, $1e, $00 ; 0x3c
-	db $10, $48, $20, $00 ; 0x40
-	db $20, $48, $22, $00 ; 0x44
-	db $10, $50, $24, $00 ; 0x48
-	db $20, $50, $26, $00 ; 0x4c
-	db $80 ; 0x50
+SpriteTemplate_18_776a:
+	; $776a, 81 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite $10, $28, $10, $00
+	oam_sprite $20, $28, $12, $00
+	oam_sprite $10, $30, $14, $00
+	oam_sprite $20, $30, $16, $00
+	oam_sprite $10, $38, $18, $00
+	oam_sprite $20, $38, $1a, $00
+	oam_sprite $10, $40, $1c, $00
+	oam_sprite $20, $40, $1e, $00
+	oam_sprite $10, $48, $20, $00
+	oam_sprite $20, $48, $22, $00
+	oam_sprite $10, $50, $24, $00
+	oam_sprite $20, $50, $26, $00
+	oam_sprite_end
 Func_18_77bb:
 	call Func_18_7835 ; $77bb
 	call Func_18_7bce ; $77be
@@ -1561,34 +1562,35 @@ Func_18_78b1:
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 8 bytes
-	ld hl, $78db ; $78cd
+	ld hl, SpriteTemplate_18_78db ; $78cd
 	ld de, $283a ; $78d0
 	ld c, $00 ; $78d3
 	ld b, $00 ; $78d5
 	call QueueSpriteTemplate ; $78d7
 	ret ; $78da
-	; $78db, 81 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $20, $08, $02, $00 ; 0x04
-	db $10, $10, $04, $00 ; 0x08
-	db $20, $10, $06, $00 ; 0x0c
-	db $10, $18, $08, $00 ; 0x10
-	db $20, $18, $0a, $00 ; 0x14
-	db $10, $20, $0c, $00 ; 0x18
-	db $20, $20, $0e, $00 ; 0x1c
-	db $10, $28, $10, $00 ; 0x20
-	db $20, $28, $12, $00 ; 0x24
-	db $10, $30, $14, $00 ; 0x28
-	db $20, $30, $16, $00 ; 0x2c
-	db $10, $38, $18, $00 ; 0x30
-	db $20, $38, $1a, $00 ; 0x34
-	db $10, $40, $1c, $00 ; 0x38
-	db $20, $40, $1e, $00 ; 0x3c
-	db $10, $48, $20, $00 ; 0x40
-	db $20, $48, $22, $00 ; 0x44
-	db $10, $50, $24, $00 ; 0x48
-	db $20, $50, $26, $00 ; 0x4c
-	db $80 ; 0x50
+SpriteTemplate_18_78db:
+	; $78db, 81 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite $10, $28, $10, $00
+	oam_sprite $20, $28, $12, $00
+	oam_sprite $10, $30, $14, $00
+	oam_sprite $20, $30, $16, $00
+	oam_sprite $10, $38, $18, $00
+	oam_sprite $20, $38, $1a, $00
+	oam_sprite $10, $40, $1c, $00
+	oam_sprite $20, $40, $1e, $00
+	oam_sprite $10, $48, $20, $00
+	oam_sprite $20, $48, $22, $00
+	oam_sprite $10, $50, $24, $00
+	oam_sprite $20, $50, $26, $00
+	oam_sprite_end
 Func_18_792c:
 	call Func_18_7647 ; $792c
 	sound $09 ; $792f
@@ -1712,24 +1714,26 @@ Func_18_7a2d:
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 8 bytes
-	ld hl, $7a57 ; $7a49
+	ld hl, SpriteTemplate_18_7a57 ; $7a49
 	ld de, $2840 ; $7a4c
 	ld c, $00 ; $7a4f
 	ld b, $00 ; $7a51
 	call QueueSpriteTemplate ; $7a53
 	ret ; $7a56
-	; $7a57, 42 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $10, $48, $10, $00 ; 0x20
-	db $10, $50, $12, $00 ; 0x24
-	db $80, $c9 ; 0x28
+SpriteTemplate_18_7a57:
+	; $7a57, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
+	ret ; $7a80
 TaskFadeInPalette_18:
 	ldh a, [hWramBank] ; $7a81
 	push af ; $7a83

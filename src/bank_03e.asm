@@ -1348,7 +1348,7 @@ Label_3e_4922:
 	ld e, a ; $4924
 	farcall FarPtr_ApplySpriteBobOffset ; $4925
 	ld b, $08 ; $4928
-	ld hl, $4943 ; $492a
+	ld hl, SpriteTemplate_3e_4943 ; $492a
 	push de ; $492d
 	call QueueSpriteTemplate ; $492e
 	pop de ; $4931
@@ -1356,12 +1356,28 @@ Label_3e_4922:
 	add hl, de ; $4935
 	ld d, h ; $4936
 	ld e, l ; $4937
-	ld hl, $4964 ; $4938
+	ld hl, SpriteTemplate_3e_4964 ; $4938
 	ld b, $08 ; $493b
 	ld c, $70 ; $493d
 	call QueueSpriteTemplate ; $493f
 	ret ; $4942
-	INCBIN "data/bank_03e/d_4943.bin" ; $4943, 63 bytes
+SpriteTemplate_3e_4943:
+	; $4943, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3e_4964:
+	; $4964, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03e/d_496d.bin" ; $496d, 21 bytes
 DrawMatchRulesCaption:
 	wram_bank $03 ; $4982
 	ld de, $d1e0 ; $4988
@@ -2247,7 +2263,7 @@ Label_3e_5111:
 	ld e, a ; $5113
 	farcall FarPtr_ApplySpriteBobOffset ; $5114
 	ld b, $08 ; $5117
-	ld hl, $5132 ; $5119
+	ld hl, SpriteTemplate_3e_5132 ; $5119
 	push de ; $511c
 	call QueueSpriteTemplate ; $511d
 	pop de ; $5120
@@ -2255,25 +2271,28 @@ Label_3e_5111:
 	add hl, de ; $5124
 	ld d, h ; $5125
 	ld e, l ; $5126
-	ld hl, $5153 ; $5127
+	ld hl, SpriteTemplate_3e_5153 ; $5127
 	ld b, $08 ; $512a
 	ld c, $70 ; $512c
 	call QueueSpriteTemplate ; $512e
 	ret ; $5131
-	; $5132, 51 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80, $10, $08, $00 ; 0x20
-	db $00, $10, $10, $02 ; 0x24
-	db $00, $80, $50, $0c ; 0x28
-	db $50, $54, $50, $5c ; 0x2c
-	db $00, $10, $20 ; 0x30
+SpriteTemplate_3e_5132:
+	; $5132, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3e_5153:
+	; $5153, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03e/d_515c.bin" ; $515c, 9 bytes
 SetChoiceTabAttrRect:
 	push af ; $5165
 	push bc ; $5166
@@ -3974,7 +3993,7 @@ Label_3e_5ed8:
 	add hl, de ; $5edc
 	ld d, h ; $5edd
 	ld e, l ; $5ede
-	ld hl, $5f38 ; $5edf
+	ld hl, SpriteTemplate_3e_5f38 ; $5edf
 	ld b, $08 ; $5ee2
 	ld c, $72 ; $5ee4
 	call QueueSpriteTemplate ; $5ee6
@@ -3984,7 +4003,7 @@ Label_3e_5ed8:
 	dw $5ef2 ; record 1
 	dw $5ef2 ; record 2
 	dw $5f13 ; record 3
-	; $5ef2, 95 bytes (bytes:8)
+	; $5ef2, 70 bytes (bytes:8)
 	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
 	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
 	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
@@ -3993,10 +4012,13 @@ Label_3e_5ed8:
 	db $00, $10, $18, $04, $00, $10, $20, $06 ; 0x28
 	db $00, $10, $28, $08, $00, $10, $30, $0a ; 0x30
 	db $00, $10, $38, $0c, $00, $10, $40, $0e ; 0x38
-	db $00, $10, $48, $10, $00, $80, $10, $08 ; 0x40
-	db $00, $00, $10, $10, $02, $00, $80, $38 ; 0x48
-	db $14, $38, $4c, $60, $14, $60, $48, $00 ; 0x50
-	db $10, $20, $30, $17, $17, $17, $1b ; 0x58
+	db $00, $10, $48, $10, $00, $80 ; 0x40
+SpriteTemplate_3e_5f38:
+	; $5f38, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03e/d_5f41.bin" ; $5f41, 16 bytes
 RedrawCourtSelect4Menu:
 	wram_bank $03 ; $5f51
 	ld b, $00 ; $5f57
@@ -4632,12 +4654,18 @@ Label_3e_6769:
 	add hl, de ; $676d
 	ld d, h ; $676e
 	ld e, l ; $676f
-	ld hl, $67d3 ; $6770
+	ld hl, SpriteTemplate_3e_67d3 ; $6770
 	ld b, $08 ; $6773
 	ld c, $72 ; $6775
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
-	INCBIN "data/bank_03e/d_677b.bin" ; $677b, 145 bytes
+	INCBIN "data/bank_03e/d_677b.bin" ; $677b, 88 bytes
+SpriteTemplate_3e_67d3:
+	; $67d3, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03e/d_67dc.bin" ; $67dc, 48 bytes
 AdjustCursorForLockedCourt:
 	push bc ; $680c
 	push hl ; $680d

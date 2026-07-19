@@ -1296,7 +1296,7 @@ Label_6b_4e41:
 	call Func_6b_518d ; $4e44
 	ld c, $40 ; $4e47
 	ld b, $09 ; $4e49
-	ld hl, $4e8e ; $4e4b
+	ld hl, SpriteTemplate_6b_4e8e ; $4e4b
 	call QueueSpriteTemplate ; $4e4e
 	ld a, [wCutsceneStepTimer] ; $4e51
 	sub a, $20 ; $4e54
@@ -1313,7 +1313,7 @@ Label_6b_4e5f:
 	call Func_6b_518d ; $4e62
 	ld c, $44 ; $4e65
 	ld b, $09 ; $4e67
-	ld hl, $4e97 ; $4e69
+	ld hl, SpriteTemplate_6b_4e97 ; $4e69
 	call QueueSpriteTemplate ; $4e6c
 	ld a, [wCutsceneStepTimer] ; $4e6f
 	sub a, $20 ; $4e72
@@ -1330,202 +1330,24 @@ Label_6b_4e7d:
 	call Func_6b_518d ; $4e80
 	ld c, $48 ; $4e83
 	ld b, $09 ; $4e85
-	ld hl, $4ea0 ; $4e87
+	ld hl, SpriteTemplate_6b_4ea0 ; $4e87
 	call QueueSpriteTemplate ; $4e8a
 	ret ; $4e8d
-	; $4e8e, 767 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $80, $10, $08, $00 ; 0x08
-	db $00, $10, $10, $02 ; 0x0c
-	db $00, $80, $10, $08 ; 0x10
-	db $00, $00, $80, $3c ; 0x14
-	db $34, $3c, $34, $3c ; 0x18
-	db $34, $3c, $34, $3b ; 0x1c
-	db $35, $3b, $35, $3b ; 0x20
-	db $35, $3b, $35, $3a ; 0x24
-	db $36, $3a, $36, $3a ; 0x28
-	db $36, $3a, $36, $39 ; 0x2c
-	db $37, $39, $37, $39 ; 0x30
-	db $37, $39, $37, $38 ; 0x34
-	db $38, $38, $38, $38 ; 0x38
-	db $38, $38, $38, $37 ; 0x3c
-	db $39, $37, $39, $37 ; 0x40
-	db $39, $37, $39, $36 ; 0x44
-	db $3a, $36, $3a, $36 ; 0x48
-	db $3a, $36, $3a, $35 ; 0x4c
-	db $3b, $35, $3b, $35 ; 0x50
-	db $3b, $35, $3b, $34 ; 0x54
-	db $3c, $34, $3c, $34 ; 0x58
-	db $3c, $34, $3c, $34 ; 0x5c
-	db $3c, $34, $3c, $34 ; 0x60
-	db $3c, $34, $3c, $34 ; 0x64
-	db $3c, $34, $3c, $34 ; 0x68
-	db $3c, $34, $3c, $34 ; 0x6c
-	db $3c, $34, $3c, $34 ; 0x70
-	db $3c, $34, $3c, $34 ; 0x74
-	db $3c, $34, $3c, $34 ; 0x78
-	db $3c, $34, $3c, $34 ; 0x7c
-	db $3c, $34, $3c, $34 ; 0x80
-	db $3c, $34, $3c, $34 ; 0x84
-	db $3c, $34, $3c, $34 ; 0x88
-	db $3c, $34, $3c, $34 ; 0x8c
-	db $3c, $34, $3c, $34 ; 0x90
-	db $3c, $34, $3c, $34 ; 0x94
-	db $3c, $34, $3c, $34 ; 0x98
-	db $3c, $34, $3c, $34 ; 0x9c
-	db $3c, $34, $3c, $34 ; 0xa0
-	db $3c, $34, $3c, $34 ; 0xa4
-	db $3c, $34, $3c, $34 ; 0xa8
-	db $3c, $34, $3c, $34 ; 0xac
-	db $3c, $34, $3c, $34 ; 0xb0
-	db $3c, $34, $3c, $34 ; 0xb4
-	db $3c, $34, $3c, $34 ; 0xb8
-	db $3c, $34, $3c, $34 ; 0xbc
-	db $3c, $34, $3c, $34 ; 0xc0
-	db $3c, $34, $3c, $34 ; 0xc4
-	db $3c, $34, $3c, $34 ; 0xc8
-	db $3c, $34, $3c, $34 ; 0xcc
-	db $3c, $34, $3c, $34 ; 0xd0
-	db $3c, $34, $3c, $34 ; 0xd4
-	db $3c, $34, $3c, $34 ; 0xd8
-	db $3c, $34, $3c, $34 ; 0xdc
-	db $3c, $34, $3c, $34 ; 0xe0
-	db $3c, $34, $3c, $34 ; 0xe4
-	db $3c, $34, $3c, $34 ; 0xe8
-	db $3c, $34, $3c, $34 ; 0xec
-	db $3c, $34, $3c, $34 ; 0xf0
-	db $3c, $34, $3c, $34 ; 0xf4
-	db $3c, $34, $3c, $34 ; 0xf8
-	db $3c, $34, $3c, $34 ; 0xfc
-	db $3c, $34, $3c, $34 ; 0x100
-	db $3c, $34, $3c, $43 ; 0x104
-	db $2d, $43, $2d, $43 ; 0x108
-	db $2d, $42, $2e, $42 ; 0x10c
-	db $2e, $42, $2e, $40 ; 0x110
-	db $2f, $40, $2f, $40 ; 0x114
-	db $2f, $3f, $30, $3f ; 0x118
-	db $30, $3f, $30, $3e ; 0x11c
-	db $31, $3e, $31, $3e ; 0x120
-	db $31, $3d, $32, $3d ; 0x124
-	db $32, $3d, $32, $3c ; 0x128
-	db $33, $3c, $33, $3c ; 0x12c
-	db $33, $3b, $34, $3b ; 0x130
-	db $34, $3b, $34, $3a ; 0x134
-	db $35, $3a, $35, $3a ; 0x138
-	db $35, $39, $36, $39 ; 0x13c
-	db $36, $39, $36, $38 ; 0x140
-	db $37, $38, $37, $38 ; 0x144
-	db $37, $38, $37, $37 ; 0x148
-	db $38, $37, $38, $37 ; 0x14c
-	db $38, $37, $38, $36 ; 0x150
-	db $39, $36, $39, $36 ; 0x154
-	db $39, $36, $39, $36 ; 0x158
-	db $39, $36, $39, $35 ; 0x15c
-	db $3a, $35, $3a, $35 ; 0x160
-	db $3a, $35, $3a, $34 ; 0x164
-	db $3b, $34, $3b, $34 ; 0x168
-	db $3b, $34, $3b, $34 ; 0x16c
-	db $3c, $34, $3c, $34 ; 0x170
-	db $3c, $34, $3c, $34 ; 0x174
-	db $3c, $34, $3c, $34 ; 0x178
-	db $3c, $34, $3c, $34 ; 0x17c
-	db $3c, $34, $3c, $34 ; 0x180
-	db $3c, $34, $3c, $34 ; 0x184
-	db $3c, $34, $3c, $34 ; 0x188
-	db $3c, $34, $3c, $34 ; 0x18c
-	db $3c, $34, $3c, $34 ; 0x190
-	db $3c, $34, $3c, $34 ; 0x194
-	db $3c, $34, $3c, $34 ; 0x198
-	db $3c, $34, $3c, $34 ; 0x19c
-	db $3c, $34, $3c, $34 ; 0x1a0
-	db $3c, $34, $3c, $34 ; 0x1a4
-	db $3c, $34, $3c, $34 ; 0x1a8
-	db $3c, $34, $3c, $34 ; 0x1ac
-	db $3c, $34, $3c, $34 ; 0x1b0
-	db $3c, $34, $3c, $34 ; 0x1b4
-	db $3c, $34, $3c, $34 ; 0x1b8
-	db $3c, $34, $3c, $34 ; 0x1bc
-	db $3c, $34, $3c, $34 ; 0x1c0
-	db $3c, $34, $3c, $34 ; 0x1c4
-	db $3c, $34, $3c, $34 ; 0x1c8
-	db $3c, $34, $3c, $34 ; 0x1cc
-	db $3c, $34, $3c, $34 ; 0x1d0
-	db $3c, $34, $3c, $34 ; 0x1d4
-	db $3c, $34, $3c, $34 ; 0x1d8
-	db $3c, $34, $3c, $53 ; 0x1dc
-	db $1d, $53, $1d, $52 ; 0x1e0
-	db $1e, $52, $1e, $51 ; 0x1e4
-	db $1f, $51, $1f, $50 ; 0x1e8
-	db $20, $50, $20, $4f ; 0x1ec
-	db $21, $4f, $21, $4e ; 0x1f0
-	db $22, $4e, $22, $4d ; 0x1f4
-	db $23, $4d, $23, $4c ; 0x1f8
-	db $24, $4c, $24, $4b ; 0x1fc
-	db $25, $4b, $25, $4a ; 0x200
-	db $26, $4a, $26, $49 ; 0x204
-	db $27, $49, $27, $48 ; 0x208
-	db $28, $48, $28, $47 ; 0x20c
-	db $29, $47, $29, $46 ; 0x210
-	db $2a, $46, $2a, $45 ; 0x214
-	db $2b, $45, $2b, $44 ; 0x218
-	db $2c, $44, $2c, $43 ; 0x21c
-	db $2d, $43, $2d, $43 ; 0x220
-	db $2d, $42, $2e, $42 ; 0x224
-	db $2e, $42, $2e, $41 ; 0x228
-	db $2f, $41, $2f, $41 ; 0x22c
-	db $2f, $40, $30, $40 ; 0x230
-	db $30, $40, $30, $3f ; 0x234
-	db $31, $3f, $31, $3f ; 0x238
-	db $31, $3e, $32, $3e ; 0x23c
-	db $32, $3e, $32, $3d ; 0x240
-	db $33, $3d, $33, $3d ; 0x244
-	db $33, $3c, $34, $3c ; 0x248
-	db $34, $3c, $34, $3b ; 0x24c
-	db $35, $3b, $35, $3b ; 0x250
-	db $35, $3a, $36, $3a ; 0x254
-	db $36, $3a, $36, $39 ; 0x258
-	db $37, $39, $37, $39 ; 0x25c
-	db $37, $38, $37, $38 ; 0x260
-	db $37, $38, $38, $37 ; 0x264
-	db $38, $37, $38, $37 ; 0x268
-	db $39, $36, $39, $36 ; 0x26c
-	db $3a, $36, $3a, $35 ; 0x270
-	db $3a, $35, $3b, $34 ; 0x274
-	db $3c, $34, $3c, $34 ; 0x278
-	db $3c, $34, $3c, $34 ; 0x27c
-	db $3c, $34, $3c, $34 ; 0x280
-	db $3c, $34, $3c, $34 ; 0x284
-	db $3c, $34, $3c, $34 ; 0x288
-	db $3c, $34, $3c, $34 ; 0x28c
-	db $3c, $34, $3c, $34 ; 0x290
-	db $3c, $34, $3c, $34 ; 0x294
-	db $3c, $34, $3c, $34 ; 0x298
-	db $3c, $34, $3c, $34 ; 0x29c
-	db $3c, $34, $3c, $34 ; 0x2a0
-	db $3c, $34, $3c, $34 ; 0x2a4
-	db $3c, $34, $3c, $34 ; 0x2a8
-	db $3c, $34, $3c, $34 ; 0x2ac
-	db $3c, $34, $3c, $34 ; 0x2b0
-	db $3c, $34, $3c, $34 ; 0x2b4
-	db $3c, $34, $3c, $34 ; 0x2b8
-	db $3c, $34, $3c, $34 ; 0x2bc
-	db $3c, $34, $3c, $34 ; 0x2c0
-	db $3c, $34, $3c, $34 ; 0x2c4
-	db $3c, $34, $3c, $34 ; 0x2c8
-	db $3c, $34, $3c, $34 ; 0x2cc
-	db $3c, $34, $3c, $34 ; 0x2d0
-	db $3c, $34, $3c, $34 ; 0x2d4
-	db $3c, $34, $3c, $34 ; 0x2d8
-	db $3c, $34, $3c, $34 ; 0x2dc
-	db $3c, $34, $3c, $34 ; 0x2e0
-	db $3c, $34, $3c, $34 ; 0x2e4
-	db $3c, $34, $3c, $34 ; 0x2e8
-	db $3c, $34, $3c, $34 ; 0x2ec
-	db $3c, $34, $3c, $34 ; 0x2f0
-	db $3c, $34, $3c, $34 ; 0x2f4
-	db $3c, $34, $3c, $34 ; 0x2f8
-	db $3c, $34, $3c ; 0x2fc
+SpriteTemplate_6b_4e8e:
+	; $4e8e, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_6b_4e97:
+	; $4e97, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_6b_4ea0:
+	; $4ea0, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+	INCBIN "data/bank_06b/d_4ea5.bin" ; $4ea5, 744 bytes
 Func_6b_518d:
 	push bc ; $518d
 	push hl ; $518e
@@ -1640,7 +1462,7 @@ Palettes_6b_525a:
 ; GBC palettes (BGR555), 4 colors each
 	dw $569f, $73ff, $115f, $0000 ; pal 0: #ffa4ac #ffffe6 #ff5220 #000000
 	dw $331f, $77ff, $025f, $0000 ; pal 1: #ffc562 #ffffee #ff9400 #000000
-	ld hl, $52b6 ; $526a
+	ld hl, SpriteTemplate_6b_52b6 ; $526a
 	ld a, [$cb44] ; $526d
 	ld d, $10 ; $5270
 	add a, d ; $5272
@@ -1651,7 +1473,7 @@ Palettes_6b_525a:
 	ld c, $00 ; $527b
 	ld b, $08 ; $527d
 	call QueueSpriteTemplate ; $527f
-	ld hl, $52c3 ; $5282
+	ld hl, SpriteTemplate_6b_52c3 ; $5282
 	ld a, [$cb44] ; $5285
 	ld d, $08 ; $5288
 	add a, d ; $528a
@@ -1664,7 +1486,7 @@ Palettes_6b_525a:
 	ld c, $06 ; $5296
 	ld b, $08 ; $5298
 	call QueueSpriteTemplate ; $529a
-	ld hl, $52d8 ; $529d
+	ld hl, SpriteTemplate_6b_52d8 ; $529d
 	ld a, [$cb44] ; $52a0
 	ld d, a ; $52a3
 	ld a, [$cb45] ; $52a4
@@ -1676,25 +1498,32 @@ Palettes_6b_525a:
 	ld b, $08 ; $52b0
 	call QueueSpriteTemplate ; $52b2
 	ret ; $52b5
-	; $52b6, 67 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $80, $10, $08, $00 ; 0x0c
-	db $00, $10, $10, $02 ; 0x10
-	db $00, $10, $18, $04 ; 0x14
-	db $00, $10, $20, $06 ; 0x18
-	db $00, $10, $28, $08 ; 0x1c
-	db $00, $80, $10, $08 ; 0x20
-	db $00, $00, $10, $10 ; 0x24
-	db $02, $00, $10, $18 ; 0x28
-	db $04, $00, $10, $20 ; 0x2c
-	db $06, $00, $10, $28 ; 0x30
-	db $08, $00, $10, $30 ; 0x34
-	db $0a, $00, $10, $38 ; 0x38
-	db $0c, $00, $10, $40 ; 0x3c
-	db $0e, $00, $80 ; 0x40
-	ld hl, $5360 ; $52f9
+SpriteTemplate_6b_52b6:
+	; $52b6, 13 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite_end
+SpriteTemplate_6b_52c3:
+	; $52c3, 21 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite_end
+SpriteTemplate_6b_52d8:
+	; $52d8, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+	ld hl, SpriteTemplate_6b_5360 ; $52f9
 	ld a, [$cb46] ; $52fc
 	ld d, $18 ; $52ff
 	add a, d ; $5301
@@ -1705,7 +1534,7 @@ Palettes_6b_525a:
 	ld c, $20 ; $530a
 	ld b, $09 ; $530c
 	call QueueSpriteTemplate ; $530e
-	ld hl, $536d ; $5311
+	ld hl, SpriteTemplate_6b_536d ; $5311
 	ld a, [$cb46] ; $5314
 	ld d, $08 ; $5317
 	add a, d ; $5319
@@ -1718,7 +1547,7 @@ Palettes_6b_525a:
 	ld c, $26 ; $5325
 	ld b, $09 ; $5327
 	call QueueSpriteTemplate ; $5329
-	ld hl, $5392 ; $532c
+	ld hl, SpriteTemplate_6b_5392 ; $532c
 	ld a, [$cb46] ; $532f
 	ld d, a ; $5332
 	ld a, [$cb47] ; $5333
@@ -1729,7 +1558,7 @@ Palettes_6b_525a:
 	ld c, $38 ; $533d
 	ld b, $09 ; $533f
 	call QueueSpriteTemplate ; $5341
-	ld hl, $53b3 ; $5344
+	ld hl, SpriteTemplate_6b_53b3 ; $5344
 	ld a, [$cb46] ; $5347
 	ld d, $48 ; $534a
 	add a, d ; $534c
@@ -1743,29 +1572,39 @@ Palettes_6b_525a:
 	ld b, $09 ; $535a
 	call QueueSpriteTemplate ; $535c
 	ret ; $535f
-	; $5360, 88 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $80, $10, $08, $00 ; 0x0c
-	db $00, $10, $10, $02 ; 0x10
-	db $00, $10, $18, $04 ; 0x14
-	db $00, $10, $20, $06 ; 0x18
-	db $00, $10, $28, $08 ; 0x1c
-	db $00, $10, $30, $0a ; 0x20
-	db $00, $10, $38, $0c ; 0x24
-	db $00, $10, $40, $0e ; 0x28
-	db $00, $10, $48, $10 ; 0x2c
-	db $00, $80, $10, $08 ; 0x30
-	db $00, $00, $10, $10 ; 0x34
-	db $02, $00, $10, $18 ; 0x38
-	db $04, $00, $10, $20 ; 0x3c
-	db $06, $00, $10, $28 ; 0x40
-	db $08, $00, $10, $30 ; 0x44
-	db $0a, $00, $10, $38 ; 0x48
-	db $0c, $00, $10, $40 ; 0x4c
-	db $0e, $00, $80, $10 ; 0x50
-	db $08, $00, $00, $80 ; 0x54
+SpriteTemplate_6b_5360:
+	; $5360, 13 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite_end
+SpriteTemplate_6b_536d:
+	; $536d, 37 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite_end
+SpriteTemplate_6b_5392:
+	; $5392, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_6b_53b3:
+	; $53b3, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
 Func_6b_53b8:
 	push hl ; $53b8
 	ld a, [wCutsceneStepTimer] ; $53b9
@@ -1996,28 +1835,24 @@ Func_6b_6126:
 	inc h ; $612e
 Label_6b_612f:
 	ld c, [hl] ; $612f
-	ld hl, $613d ; $6130
+	ld hl, SpriteTemplate_6b_613d ; $6130
 	ld b, $08 ; $6133
 	call QueueSpriteTemplate ; $6135
 	ret ; $6138
-	; $6139, 67 bytes (bytes:4)
+	; $6139, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00
-	db $10, $08, $00, $00 ; 0x04
-	db $20, $08, $02, $00 ; 0x08
-	db $10, $10, $04, $00 ; 0x0c
-	db $20, $10, $06, $00 ; 0x10
-	db $10, $18, $08, $00 ; 0x14
-	db $20, $18, $0a, $00 ; 0x18
-	db $10, $20, $0c, $00 ; 0x1c
-	db $20, $20, $0e, $00 ; 0x20
-	db $80, $fa, $40, $cb ; 0x24
-	db $fe, $14, $38, $16 ; 0x28
-	db $fa, $23, $c3, $b7 ; 0x2c
-	db $28, $10, $fa, $23 ; 0x30
-	db $c3, $67, $fa, $22 ; 0x34
-	db $c3, $6f, $7c, $ea ; 0x38
-	db $23, $c3, $7d, $ea ; 0x3c
-	db $22, $c3, $c9 ; 0x40
+SpriteTemplate_6b_613d:
+	; $613d, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
+	INCBIN "data/bank_06b/d_615e.bin" ; $615e, 30 bytes
 Func_6b_617c:
 	call DisableLCDSafely ; $617c
 	farcall FarPtr_InitSceneScroll ; $617f
@@ -2469,12 +2304,25 @@ Label_6b_76ca:
 Label_6b_76d6:
 	ld b, [hl] ; $76d6
 	ld de, $2858 ; $76d7
-	ld hl, $76f6 ; $76da
+	ld hl, SpriteTemplate_6b_76f6 ; $76da
 	call QueueSpriteTemplate ; $76dd
 	pop af ; $76e0
 	wram_bank ; $76e1
 	ret ; $76e5
-	INCBIN "data/bank_06b/d_76e6.bin" ; $76e6, 57 bytes
+	INCBIN "data/bank_06b/d_76e6.bin" ; $76e6, 16 bytes
+SpriteTemplate_6b_76f6:
+	; $76f6, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 Func_6b_771f:
 	ld a, [$d802] ; $771f
 	or a, a ; $7722

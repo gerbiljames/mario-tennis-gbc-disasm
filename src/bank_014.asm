@@ -1812,7 +1812,19 @@ Label_14_5603:
 	ld [$c294], a ; $5634
 	ld [wStoryModeExitLocationRequest], a ; $5637
 	ret ; $563a
-	INCBIN "data/bank_014/d_563b.bin" ; $563b, 2110 bytes
+	INCBIN "data/bank_014/d_563b.bin" ; $563b, 2069 bytes
+SpriteTemplate_14_5e50:
+	; $5e50, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
+	INCBIN "data/bank_014/d_5e71.bin" ; $5e71, 8 bytes
 LoadWaterSpriteObjGfx:
 	ldh a, [hWramBank] ; $5e79
 	push af ; $5e7b
@@ -1848,11 +1860,17 @@ LoadWaterSpriteObjGfx:
 	ld b, $10 ; $5ec2
 Label_14_5ec4:
 	ld c, b ; $5ec4
-	ld hl, $5e50 ; $5ec5
+	ld hl, SpriteTemplate_14_5e50 ; $5ec5
 	ld b, $08 ; $5ec8
 	call QueueSpriteTemplate ; $5eca
 	ret ; $5ecd
-	INCBIN "data/bank_014/d_5ece.bin" ; $5ece, 467 bytes
+	INCBIN "data/bank_014/d_5ece.bin" ; $5ece, 450 bytes
+SpriteTemplate_14_6090:
+	; $6090, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_014/d_6099.bin" ; $6099, 8 bytes
 Func_14_60a1:
 	ldh a, [hWramBank] ; $60a1
 	push af ; $60a3
@@ -1949,7 +1967,7 @@ Label_14_615c:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $615c
 	add a, $20 ; $615f
 	ld c, a ; $6161
-	ld hl, $6090 ; $6162
+	ld hl, SpriteTemplate_14_6090 ; $6162
 	ld b, $01 ; $6165
 	call QueueSpriteTemplate ; $6167
 Label_14_616a:
@@ -2047,7 +2065,7 @@ Label_14_6216:
 	ld a, [$c2b7] ; $6216
 	add a, $20 ; $6219
 	ld c, a ; $621b
-	ld hl, $6090 ; $621c
+	ld hl, SpriteTemplate_14_6090 ; $621c
 	ld b, $01 ; $621f
 	call QueueSpriteTemplate ; $6221
 Label_14_6224:
@@ -2097,7 +2115,7 @@ LoadWaterSpriteObjGfx2:
 	ld b, $00 ; $627f
 Label_14_6281:
 	ld c, b ; $6281
-	ld hl, $5e50 ; $6282
+	ld hl, SpriteTemplate_14_5e50 ; $6282
 	ld b, $08 ; $6285
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
@@ -2330,7 +2348,7 @@ Label_14_64a0:
 	and a, $03 ; $64b3
 	inc a ; $64b5
 	ld b, a ; $64b6
-	ld hl, $6e80 ; $64b7
+	ld hl, SpriteTemplate_14_6e80 ; $64b7
 	call QueueSpriteTemplate ; $64ba
 Label_14_64bd:
 	ret ; $64bd
@@ -2483,7 +2501,19 @@ Label_14_6662:
 	ld [$c294], a ; $666e
 	ld [wStoryModeExitLocationRequest], a ; $6671
 	ret ; $6674
-	INCBIN "data/bank_014/d_6675.bin" ; $6675, 2310 bytes
+	INCBIN "data/bank_014/d_6675.bin" ; $6675, 2059 bytes
+SpriteTemplate_14_6e80:
+	; $6e80, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
+	INCBIN "data/bank_014/d_6ea1.bin" ; $6ea1, 218 bytes
 Label_14_6f7b:
 	call DisableLCDSafely ; $6f7b
 	call LoadWaterSpriteObjGfx ; $6f7e
@@ -2691,7 +2721,17 @@ Label_14_7170:
 	ld [$c294], a ; $7184
 	ld [wStoryModeExitLocationRequest], a ; $7187
 	ret ; $718a
-	INCBIN "data/bank_014/d_718b.bin" ; $718b, 543 bytes
+	INCBIN "data/bank_014/d_718b.bin" ; $718b, 486 bytes
+SpriteTemplate_14_7371:
+	; $7371, 25 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite_end
+	INCBIN "data/bank_014/d_738a.bin" ; $738a, 32 bytes
 Func_14_73aa:
 	ldh a, [hWramBank] ; $73aa
 	push af ; $73ac
@@ -2751,7 +2791,7 @@ Label_14_7408:
 	sub a, b ; $7419
 	ld e, a ; $741a
 	ld c, $20 ; $741b
-	ld hl, $7371 ; $741d
+	ld hl, SpriteTemplate_14_7371 ; $741d
 	ld a, [wWaterSpriteMinigameFlag] ; $7420
 	swap a ; $7423
 	and a, $03 ; $7425
@@ -2759,7 +2799,12 @@ Label_14_7408:
 	ld b, a ; $7428
 	call QueueSpriteTemplate ; $7429
 	ret ; $742c
-	INCBIN "data/bank_014/d_742d.bin" ; $742d, 268 bytes
+	INCBIN "data/bank_014/d_742d.bin" ; $742d, 259 bytes
+SpriteTemplate_14_7530:
+	; $7530, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
 Func_14_7539:
 	ldh a, [hWramBank] ; $7539
 	push af ; $753b
@@ -2778,7 +2823,7 @@ Func_14_7539:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
-	ld hl, $7530 ; $7564
+	ld hl, SpriteTemplate_14_7530 ; $7564
 	ld b, $08 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
@@ -2821,7 +2866,7 @@ Func_14_7688:
 	ld e, a ; $76b8
 	ld a, [wWaterSpriteMinigameSwingCount] ; $76b9
 	ld c, a ; $76bc
-	ld hl, $7530 ; $76bd
+	ld hl, SpriteTemplate_14_7530 ; $76bd
 	ld b, $08 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5

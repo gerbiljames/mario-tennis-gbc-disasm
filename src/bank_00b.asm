@@ -829,7 +829,11 @@ QueueDrillSprite_0b:
 	call QueueSpriteTemplate ; $46e4
 	ret ; $46e7
 DrillSpriteTemplate_0b:
-	INCBIN "data/bank_00b/d_46e8.bin" ; $46e8, 29 bytes
+	; $46e8, 9 bytes (sprite_template)
+	oam_sprite $f1, $04, $00, $00
+	oam_sprite $01, $04, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_00b/d_46f1.bin" ; $46f1, 20 bytes
 RunTrainingDrillByID:
 	push af ; $4705
 	farcall FarPtr_08_06 ; $4706

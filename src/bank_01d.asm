@@ -1428,7 +1428,7 @@ Label_1d_4c14:
 	jr z, Label_1d_4c2e ; $4c1b
 	ld de, $0103 ; $4c1d
 	call Func_1d_4c60 ; $4c20
-	ld hl, $679a ; $4c23
+	ld hl, SpriteTemplate_1d_679a ; $4c23
 	ld b, $0e ; $4c26
 	ld c, $28 ; $4c28
 	call QueueSpriteTemplate ; $4c2a
@@ -1436,7 +1436,7 @@ Label_1d_4c14:
 Label_1d_4c2e:
 	ld de, $7f03 ; $4c2e
 	call Func_1d_4c80 ; $4c31
-	ld hl, $681b ; $4c34
+	ld hl, SpriteTemplate_1d_681b ; $4c34
 	ld b, $0e ; $4c37
 	ld c, $30 ; $4c39
 	call QueueSpriteTemplate ; $4c3b
@@ -1444,13 +1444,13 @@ Label_1d_4c2e:
 Label_1d_4c3f:
 	ld de, $1010 ; $4c3f
 	call Func_1d_4c60 ; $4c42
-	ld hl, $666a ; $4c45
+	ld hl, SpriteTemplate_1d_666a ; $4c45
 	ld b, $0e ; $4c48
 	ld c, $14 ; $4c4a
 	call QueueSpriteTemplate ; $4c4c
 	ld de, $6810 ; $4c4f
 	call Func_1d_4c80 ; $4c52
-	ld hl, $670c ; $4c55
+	ld hl, SpriteTemplate_1d_670c ; $4c55
 	ld b, $0e ; $4c58
 	ld c, $1e ; $4c5a
 	call QueueSpriteTemplate ; $4c5c
@@ -3253,7 +3253,40 @@ StopCharDataValuesSyncTask:
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
 DrillDisplayData_1d:
-	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 3079 bytes
+	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 2629 bytes
+SpriteTemplate_1d_666a:
+	; $666a, 21 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite_end
+	INCBIN "data/bank_01d/d_667f.bin" ; $667f, 141 bytes
+SpriteTemplate_1d_670c:
+	; $670c, 21 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite_end
+	INCBIN "data/bank_01d/d_6721.bin" ; $6721, 121 bytes
+SpriteTemplate_1d_679a:
+	; $679a, 17 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite_end
+	INCBIN "data/bank_01d/d_67ab.bin" ; $67ab, 112 bytes
+SpriteTemplate_1d_681b:
+	; $681b, 17 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite_end
 Func_1d_682c:
 	wram_bank $06 ; $682c
 	xor a, a ; $6832
@@ -5105,7 +5138,7 @@ Label_1d_76b2:
 	call Func_1d_771e ; $76b5
 	ld de, $262f ; $76b8
 	call QueueSprite ; $76bb
-	ld hl, $7b59 ; $76be
+	ld hl, SpriteTemplate_1d_7b59 ; $76be
 	ld bc, $0e2c ; $76c1
 	ld de, $142e ; $76c4
 	call QueueSpriteTemplate ; $76c7
@@ -5140,7 +5173,7 @@ Label_1d_7705:
 	call Func_1d_771e ; $7708
 	ld de, $2662 ; $770b
 	call QueueSprite ; $770e
-	ld hl, $7c7d ; $7711
+	ld hl, SpriteTemplate_1d_7c7d ; $7711
 	ld bc, $0e44 ; $7714
 	ld de, $1461 ; $7717
 	call QueueSpriteTemplate ; $771a
@@ -5163,7 +5196,7 @@ Func_1d_771e:
 	inc a ; $7738
 	ld e, a ; $7739
 	ld d, $19 ; $773a
-	ld hl, $7930 ; $773c
+	ld hl, SpriteTemplate_1d_7930 ; $773c
 	ld bc, $0e00 ; $773f
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
@@ -5173,14 +5206,14 @@ Func_1d_771e:
 	ld a, [$d164] ; $7769
 	add a, d ; $776c
 	ld d, a ; $776d
-	ld hl, $797a ; $776e
+	ld hl, SpriteTemplate_1d_797a ; $776e
 	ld bc, $0f0c ; $7771
 	call QueueSpriteTemplate ; $7774
 	ld de, $3849 ; $7777
 	ld a, [$d173] ; $777a
 	add a, d ; $777d
 	ld d, a ; $777e
-	ld hl, $797a ; $777f
+	ld hl, SpriteTemplate_1d_797a ; $777f
 	ld bc, $0f0c ; $7782
 	call QueueSpriteTemplate ; $7785
 	ret ; $7788
@@ -5193,7 +5226,7 @@ Label_1d_7793:
 	wram_bank $06 ; $7793
 	ld a, [$d181] ; $7799
 	ld d, a ; $779c
-	ld hl, $79b4 ; $779d
+	ld hl, SpriteTemplate_1d_79b4 ; $779d
 	ld bc, $0f10 ; $77a0
 	call QueueSpriteTemplate ; $77a3
 	ret ; $77a6
@@ -5216,7 +5249,61 @@ Label_1d_77be:
 	sound $2f ; $77c5
 	ret ; $77c7
 DrillDisplayData2_1d:
-	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 1254 bytes
+	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 360 bytes
+SpriteTemplate_1d_7930:
+	; $7930, 25 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite_end
+	INCBIN "data/bank_01d/d_7949.bin" ; $7949, 49 bytes
+SpriteTemplate_1d_797a:
+	; $797a, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_01d/d_7983.bin" ; $7983, 49 bytes
+SpriteTemplate_1d_79b4:
+	; $79b4, 13 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite_end
+	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 408 bytes
+SpriteTemplate_1d_7b59:
+	; $7b59, 49 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite $10, $28, $10, $00
+	oam_sprite $20, $28, $12, $00
+	oam_sprite $10, $30, $14, $00
+	oam_sprite $20, $30, $16, $00
+	oam_sprite_end
+	INCBIN "data/bank_01d/d_7b8a.bin" ; $7b8a, 243 bytes
+SpriteTemplate_1d_7c7d:
+	; $7c7d, 49 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite $10, $28, $10, $00
+	oam_sprite $20, $28, $12, $00
+	oam_sprite $10, $30, $14, $00
+	oam_sprite $20, $30, $16, $00
+	oam_sprite_end
 ClearDrillResultBuffer:
 	push af ; $7cae
 	push bc ; $7caf

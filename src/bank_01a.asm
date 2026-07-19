@@ -956,7 +956,7 @@ Label_1a_4790:
 	ld d, [hl] ; $479c
 	ld e, a ; $479d
 	ld bc, $0e00 ; $479e
-	ld hl, $4840 ; $47a1
+	ld hl, SpriteTemplate_1a_4840 ; $47a1
 	ld bc, $09c0 ; $47a4
 	ld de, $7058 ; $47a7
 	call QueueSpriteTemplate ; $47aa
@@ -1001,7 +1001,15 @@ Label_1a_47ff:
 	pop bc ; $4806
 	pop af ; $4807
 	ret ; $4808
-	INCBIN "data/bank_01a/d_4809.bin" ; $4809, 73 bytes
+	INCBIN "data/bank_01a/d_4809.bin" ; $4809, 55 bytes
+SpriteTemplate_1a_4840:
+	; $4840, 17 bytes (sprite_template)
+	oam_sprite $00, $00, $00, $00
+	oam_sprite $00, $08, $02, $00
+	oam_sprite $10, $00, $04, $00
+	oam_sprite $10, $08, $06, $00
+	oam_sprite_end
+	db $00 ; $4851
 Func_1a_4852:
 	wram_bank $01 ; $4852
 	push hl ; $4858

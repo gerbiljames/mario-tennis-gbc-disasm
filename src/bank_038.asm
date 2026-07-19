@@ -2460,10 +2460,20 @@ Func_38_549a:
 	ld b, $0f ; $549c
 	ld de, $0840 ; $549e
 	farcall FarPtr_39_14 ; $54a1
-	ld hl, $54ab ; $54a4
+	ld hl, SpriteTemplate_38_54ab ; $54a4
 	call QueueSpriteTemplate ; $54a7
 	ret ; $54aa
-	INCBIN "data/bank_038/d_54ab.bin" ; $54ab, 33 bytes
+SpriteTemplate_38_54ab:
+	; $54ab, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
 Func_38_54cc:
 	ldh a, [hWramBank] ; $54cc
 	push af ; $54ce

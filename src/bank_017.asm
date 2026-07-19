@@ -1079,14 +1079,18 @@ Label_17_46aa:
 	ld d, a ; $46ee
 	ld a, [$d811] ; $46ef
 	ld e, a ; $46f2
-	ld hl, $4703 ; $46f3
+	ld hl, SpriteTemplate_17_4703 ; $46f3
 	ld b, $08 ; $46f6
 	ld c, $00 ; $46f8
 	call QueueSpriteTemplate ; $46fa
 	pop af ; $46fd
 	wram_bank ; $46fe
 	ret ; $4702
-	INCBIN "data/bank_017/d_4703.bin" ; $4703, 9 bytes
+SpriteTemplate_17_4703:
+	; $4703, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
 	ldh a, [hWramBank] ; $470c
 	push af ; $470e
 	wram_bank $03 ; $470f
@@ -1094,14 +1098,18 @@ Label_17_46aa:
 	ld d, a ; $4718
 	ld a, [$d813] ; $4719
 	ld e, a ; $471c
-	ld hl, $472d ; $471d
+	ld hl, SpriteTemplate_17_472d ; $471d
 	ld b, $08 ; $4720
 	ld c, $04 ; $4722
 	call QueueSpriteTemplate ; $4724
 	pop af ; $4727
 	wram_bank ; $4728
 	ret ; $472c
-	INCBIN "data/bank_017/d_472d.bin" ; $472d, 9 bytes
+SpriteTemplate_17_472d:
+	; $472d, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
 	ldh a, [hWramBank] ; $4736
 	push af ; $4738
 	wram_bank $03 ; $4739
@@ -1134,12 +1142,16 @@ Label_17_4773:
 	ld a, [$d81d] ; $4773
 	ld e, a ; $4776
 	ld c, $60 ; $4777
-	ld hl, $4785 ; $4779
+	ld hl, SpriteTemplate_17_4785 ; $4779
 	call QueueSpriteTemplate ; $477c
 	pop af ; $477f
 	wram_bank ; $4780
 	ret ; $4784
-	INCBIN "data/bank_017/d_4785.bin" ; $4785, 9 bytes
+SpriteTemplate_17_4785:
+	; $4785, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
 	ldh a, [hWramBank] ; $478e
 	push af ; $4790
 	wram_bank $03 ; $4791
@@ -1155,7 +1167,7 @@ Label_17_47a2:
 	ld a, [$d822] ; $47a6
 	cp a, $06 ; $47a9
 	jr nc, Label_17_47b0 ; $47ab
-	ld hl, $47cd ; $47ad
+	ld hl, SpriteTemplate_17_47cd ; $47ad
 Label_17_47b0:
 	ld a, [$d814] ; $47b0
 	ld d, a ; $47b3
@@ -1166,7 +1178,16 @@ Label_17_47b0:
 	pop af ; $47bd
 	wram_bank ; $47be
 	ret ; $47c2
-	INCBIN "data/bank_017/d_47c3.bin" ; $47c3, 89 bytes
+	INCBIN "data/bank_017/d_47c3.bin" ; $47c3, 10 bytes
+SpriteTemplate_17_47cd:
+	; $47cd, 21 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite_end
+	INCBIN "data/bank_017/d_47e2.bin" ; $47e2, 58 bytes
 	ldh a, [hWramBank] ; $481c
 	push af ; $481e
 	wram_bank $03 ; $481f
@@ -1199,12 +1220,16 @@ Label_17_4859:
 	ld d, a ; $485c
 	ld a, [$d817] ; $485d
 	ld e, a ; $4860
-	ld hl, $486d ; $4861
+	ld hl, SpriteTemplate_17_486d ; $4861
 	call QueueSpriteTemplate ; $4864
 	pop af ; $4867
 	wram_bank ; $4868
 	ret ; $486c
-	INCBIN "data/bank_017/d_486d.bin" ; $486d, 9 bytes
+SpriteTemplate_17_486d:
+	; $486d, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
 	ldh a, [hWramBank] ; $4876
 	push af ; $4878
 	wram_bank $03 ; $4879
@@ -5487,7 +5512,7 @@ Label_17_74ef:
 Label_17_74fd:
 	ld b, [hl] ; $74fd
 	ld de, $7e68 ; $74fe
-	ld hl, $7527 ; $7501
+	ld hl, SpriteTemplate_17_7527 ; $7501
 	call QueueSpriteTemplate ; $7504
 	pop bc ; $7507
 	ld a, $12 ; $7508
@@ -5502,26 +5527,24 @@ Label_17_74fd:
 Label_17_7517:
 	ld b, [hl] ; $7517
 	ld de, $7e68 ; $7518
-	ld hl, $7527 ; $751b
+	ld hl, SpriteTemplate_17_7527 ; $751b
 	call QueueSpriteTemplate ; $751e
 	pop af ; $7521
 	wram_bank ; $7522
 	ret ; $7526
-	; $7527, 55 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $20, $08, $02, $00 ; 0x04
-	db $30, $08, $04, $00 ; 0x08
-	db $10, $10, $06, $00 ; 0x0c
-	db $20, $10, $08, $00 ; 0x10
-	db $30, $10, $0a, $00 ; 0x14
-	db $10, $18, $0c, $00 ; 0x18
-	db $20, $18, $0e, $00 ; 0x1c
-	db $30, $18, $10, $00 ; 0x20
-	db $80, $00, $24, $48 ; 0x24
-	db $10, $34, $58, $01 ; 0x28
-	db $01, $01, $09, $09 ; 0x2c
-	db $09, $02, $02, $02 ; 0x30
-	db $0a, $0a, $0a ; 0x34
+SpriteTemplate_17_7527:
+	; $7527, 37 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $30, $08, $04, $00
+	oam_sprite $10, $10, $06, $00
+	oam_sprite $20, $10, $08, $00
+	oam_sprite $30, $10, $0a, $00
+	oam_sprite $10, $18, $0c, $00
+	oam_sprite $20, $18, $0e, $00
+	oam_sprite $30, $18, $10, $00
+	oam_sprite_end
+	INCBIN "data/bank_017/d_754c.bin" ; $754c, 18 bytes
 	ld de, $7888 ; $755e
 	ld c, $00 ; $7561
 	call ApplySpriteWobbleY_17 ; $7563

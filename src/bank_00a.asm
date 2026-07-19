@@ -5294,10 +5294,15 @@ Label_0a_66e1:
 	ld a, [hl+] ; $66ec
 	ld b, [hl] ; $66ed
 	ld c, a ; $66ee
-	ld hl, $670e ; $66ef
+	ld hl, SpriteTemplate_0a_670e ; $66ef
 	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
-	INCBIN "data/bank_00a/d_66f6.bin" ; $66f6, 33 bytes
+	INCBIN "data/bank_00a/d_66f6.bin" ; $66f6, 24 bytes
+SpriteTemplate_0a_670e:
+	; $670e, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
 HandleMinigameTargetHit:
 	ld hl, $dcf0 ; $6717
 	bit 2, [hl] ; $671a
@@ -5713,10 +5718,21 @@ Label_0a_6d90:
 	ld a, [hl+] ; $6d9b
 	ld b, [hl] ; $6d9c
 	ld c, a ; $6d9d
-	ld hl, $6dbd ; $6d9e
+	ld hl, SpriteTemplate_0a_6dbd ; $6d9e
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
-	INCBIN "data/bank_00a/d_6da5.bin" ; $6da5, 57 bytes
+	INCBIN "data/bank_00a/d_6da5.bin" ; $6da5, 24 bytes
+SpriteTemplate_0a_6dbd:
+	; $6dbd, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
 HandleMinigameTargetHitAlt:
 	ld hl, $dcf0 ; $6dde
 	bit 2, [hl] ; $6de1

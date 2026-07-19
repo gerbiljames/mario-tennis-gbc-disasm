@@ -21,15 +21,20 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
-### Sprite-template spec (2026-07-19)
+### Sprite-template spec + game-wide sweep (2026-07-19)
 
-`QueueSpriteTemplate` ($1e9d) reads 4-byte {dy, dx, tile, attr} OAM records
-ended by a $80 dy byte. These were correctly-typed data but rendered as generic
-`bytes:4` with the sentinel dangling as a bare `db $80`. New `sprite_template`
-render spec + `oam_sprite`/`oam_sprite_end` macros give them a readable form;
-applied to `$16:$4d04`/`$4d55` (`ResultSpriteTemplateLeft_16`/`Right_16`, the
-match-result sprite blocks — identical templates drawn at different x offsets).
-~100 more such templates game-wide could adopt the spec.
+`QueueSpriteTemplate` ($00:$1e9d) reads 4-byte {dy, dx, tile, attr} OAM records
+ended by a $80 dy byte. New `sprite_template` render spec + `oam_sprite`/
+`oam_sprite_end` macros give them a readable form. `carve_sprite_templates` in
+`disasm.py` auto-finds every `call QueueSpriteTemplate`, backtracks to the
+nearest same-bank `ld hl, imm` that sets the pointer (rejecting cases where hl
+is indexed/dereferenced first — those are pointer tables, not templates), sizes
+the list by its $80 terminator, and carves it as a labeled `SpriteTemplate_bb_cccc`
+blob — splitting the packed runs (e.g. bank $03's 54 back-to-back templates)
+that otherwise sat in one anonymous blob. **135 templates carved across ~20
+banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
+with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
+blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
 ### Bank $15 tour-scene actor list (2026-07-19)
 

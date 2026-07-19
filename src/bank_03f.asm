@@ -1956,7 +1956,7 @@ Label_3f_4f2b:
 	ld de, $807d ; $4f2b
 Label_3f_4f2e:
 	push hl ; $4f2e
-	ld hl, $50d0 ; $4f2f
+	ld hl, SpriteTemplate_3f_50d0 ; $4f2f
 	call QueueSpriteTemplate ; $4f32
 	pop hl ; $4f35
 	ld a, [hl+] ; $4f36
@@ -1972,7 +1972,7 @@ Label_3f_4f46:
 	ld de, $786d ; $4f46
 Label_3f_4f49:
 	push hl ; $4f49
-	ld hl, $50d9 ; $4f4a
+	ld hl, SpriteTemplate_3f_50d9 ; $4f4a
 	call QueueSpriteTemplate ; $4f4d
 	pop hl ; $4f50
 	ld a, [hl+] ; $4f51
@@ -1988,7 +1988,7 @@ Label_3f_4f61:
 	ld de, $787d ; $4f61
 Label_3f_4f64:
 	push hl ; $4f64
-	ld hl, $50d9 ; $4f65
+	ld hl, SpriteTemplate_3f_50d9 ; $4f65
 	call QueueSpriteTemplate ; $4f68
 	pop hl ; $4f6b
 	ld a, [hl+] ; $4f6c
@@ -2003,7 +2003,7 @@ Label_3f_4f64:
 Label_3f_4f7c:
 	ld de, $788d ; $4f7c
 Label_3f_4f7f:
-	ld hl, $50d9 ; $4f7f
+	ld hl, SpriteTemplate_3f_50d9 ; $4f7f
 	call QueueSpriteTemplate ; $4f82
 Label_3f_4f85:
 	ld a, [$cb37] ; $4f85
@@ -2040,13 +2040,13 @@ Label_3f_4fb9:
 	ld a, [hl] ; $4fb9
 	add a, $0a ; $4fba
 	ld d, a ; $4fbc
-	ld hl, $501f ; $4fbd
+	ld hl, SpriteTemplate_3f_501f ; $4fbd
 	ld bc, $0b28 ; $4fc0
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [$cb37] ; $4fc6
 	bit 2, a ; $4fc9
 	jr z, Label_3f_4fd9 ; $4fcb
-	ld hl, $5006 ; $4fcd
+	ld hl, SpriteTemplate_3f_5006 ; $4fcd
 	ld de, $1810 ; $4fd0
 	ld bc, $0d34 ; $4fd3
 	call QueueSpriteTemplate ; $4fd6
@@ -2054,7 +2054,7 @@ Label_3f_4fd9:
 	ld a, [$cb37] ; $4fd9
 	bit 3, a ; $4fdc
 	jr z, Label_3f_4fec ; $4fde
-	ld hl, $5006 ; $4fe0
+	ld hl, SpriteTemplate_3f_5006 ; $4fe0
 	ld de, $8810 ; $4fe3
 	ld bc, $0d3a ; $4fe6
 	call QueueSpriteTemplate ; $4fe9
@@ -2066,7 +2066,34 @@ Label_3f_4fec:
 	pop af ; $4ff0
 	wram_bank ; $4ff1
 	ret ; $4ff5
-	INCBIN "data/bank_03f/d_4ff6.bin" ; $4ff6, 244 bytes
+	INCBIN "data/bank_03f/d_4ff6.bin" ; $4ff6, 16 bytes
+SpriteTemplate_3f_5006:
+	; $5006, 25 bytes (sprite_template)
+	oam_sprite $00, $00, $00, $00
+	oam_sprite $10, $00, $20, $00
+	oam_sprite $00, $08, $02, $00
+	oam_sprite $10, $08, $22, $00
+	oam_sprite $00, $10, $04, $00
+	oam_sprite $10, $10, $24, $00
+	oam_sprite_end
+SpriteTemplate_3f_501f:
+	; $501f, 9 bytes (sprite_template)
+	oam_sprite $00, $00, $00, $00
+	oam_sprite $00, $08, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03f/d_5028.bin" ; $5028, 168 bytes
+SpriteTemplate_3f_50d0:
+	; $50d0, 9 bytes (sprite_template)
+	oam_sprite $00, $00, $00, $00
+	oam_sprite $00, $08, $02, $00
+	oam_sprite_end
+SpriteTemplate_3f_50d9:
+	; $50d9, 17 bytes (sprite_template)
+	oam_sprite $00, $00, $00, $00
+	oam_sprite $00, $08, $02, $00
+	oam_sprite $00, $10, $04, $00
+	oam_sprite $00, $18, $06, $00
+	oam_sprite_end
 Func_3f_50ea:
 	push af ; $50ea
 	push bc ; $50eb

@@ -3762,7 +3762,7 @@ QueueMatchMenuCursorSprite:
 	add a, $fc ; $69b8
 	ld d, a ; $69ba
 	call AdjustSpriteCoordsForScroll ; $69bb
-	ld hl, $69e7 ; $69be
+	ld hl, SpriteTemplate_06_69e7 ; $69be
 	ld bc, $0000 ; $69c1
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
@@ -3778,64 +3778,38 @@ QueueMatchMenuCursorSprite:
 	ld d, h ; $69d6
 	farcall FarPtr_AddBobbingOffsetYLarge ; $69d7
 	call AdjustSpriteCoordsForScroll ; $69da
-	ld hl, $6a10 ; $69dd
+	ld hl, SpriteTemplate_06_6a10 ; $69dd
 	ld bc, $0000 ; $69e0
 	call QueueSpriteTemplate ; $69e3
 	ret ; $69e6
-	; $69e7, 211 bytes (bytes:4)
-	db $00, $20, $64, $02 ; 0x00
-	db $00, $28, $66, $02 ; 0x04
-	db $10, $08, $40, $02 ; 0x08
-	db $10, $10, $42, $02 ; 0x0c
-	db $10, $18, $44, $02 ; 0x10
-	db $10, $20, $46, $02 ; 0x14
-	db $10, $28, $48, $02 ; 0x18
-	db $10, $30, $4a, $02 ; 0x1c
-	db $10, $38, $4c, $02 ; 0x20
-	db $10, $40, $4e, $02 ; 0x24
-	db $80, $10, $08, $50 ; 0x28
-	db $02, $10, $10, $52 ; 0x2c
-	db $02, $10, $18, $54 ; 0x30
-	db $02, $10, $20, $56 ; 0x34
-	db $02, $10, $28, $58 ; 0x38
-	db $02, $10, $30, $5a ; 0x3c
-	db $02, $10, $38, $5c ; 0x40
-	db $02, $10, $40, $5e ; 0x44
-	db $02, $10, $48, $60 ; 0x48
-	db $02, $10, $50, $62 ; 0x4c
-	db $02, $80, $57, $6a ; 0x50
-	db $5e, $6a, $63, $6a ; 0x54
-	db $6a, $6a, $70, $6a ; 0x58
-	db $77, $6a, $7e, $6a ; 0x5c
-	db $86, $6a, $8d, $6a ; 0x60
-	db $95, $6a, $9a, $6a ; 0x64
-	db $a1, $6a, $a7, $6a ; 0x68
-	db $ae, $6a, $b4, $6a ; 0x6c
-	db $20, $53, $50, $45 ; 0x70
-	db $45, $44, $00, $20 ; 0x74
-	db $41, $44, $44, $00 ; 0x78
-	db $20, $42, $52, $41 ; 0x7c
-	db $4b, $45, $00, $20 ; 0x80
-	db $54, $55, $52, $4e ; 0x84
-	db $00, $20, $41, $4e ; 0x88
-	db $47, $4c, $45, $00 ; 0x8c
-	db $20, $50, $4c, $41 ; 0x90
-	db $43, $45, $00, $20 ; 0x94
-	db $53, $54, $52, $4f ; 0x98
-	db $4b, $45, $00, $20 ; 0x9c
-	db $53, $45, $52, $56 ; 0xa0
-	db $45, $00, $20, $56 ; 0xa4
-	db $4f, $4c, $4c, $45 ; 0xa8
-	db $59, $00, $20, $54 ; 0xac
-	db $4f, $50, $00, $20 ; 0xb0
-	db $53, $4c, $49, $43 ; 0xb4
-	db $45, $00, $40, $48 ; 0xb8
-	db $49, $47, $48, $00 ; 0xbc
-	db $40, $52, $45, $41 ; 0xc0
-	db $43, $48, $00, $40 ; 0xc4
-	db $4a, $55, $4d, $50 ; 0xc8
-	db $00, $40, $44, $49 ; 0xcc
-	db $56, $45, $00 ; 0xd0
+SpriteTemplate_06_69e7:
+	; $69e7, 41 bytes (sprite_template)
+	oam_sprite $00, $20, $64, $02
+	oam_sprite $00, $28, $66, $02
+	oam_sprite $10, $08, $40, $02
+	oam_sprite $10, $10, $42, $02
+	oam_sprite $10, $18, $44, $02
+	oam_sprite $10, $20, $46, $02
+	oam_sprite $10, $28, $48, $02
+	oam_sprite $10, $30, $4a, $02
+	oam_sprite $10, $38, $4c, $02
+	oam_sprite $10, $40, $4e, $02
+	oam_sprite_end
+SpriteTemplate_06_6a10:
+	; $6a10, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $50, $02
+	oam_sprite $10, $10, $52, $02
+	oam_sprite $10, $18, $54, $02
+	oam_sprite $10, $20, $56, $02
+	oam_sprite $10, $28, $58, $02
+	oam_sprite $10, $30, $5a, $02
+	oam_sprite $10, $38, $5c, $02
+	oam_sprite $10, $40, $5e, $02
+	oam_sprite $10, $48, $60, $02
+	oam_sprite $10, $50, $62, $02
+	oam_sprite_end
+Text_06_6a39:
+	INCLUDE "data/bank_006/text_6a39.asm" ; $6a39, 129 bytes
 DrawDebugStatsLabels:
 	ld de, $0000 ; $6aba
 	call GetShadowAttrmapAddr ; $6abd
@@ -4901,317 +4875,24 @@ QueueStoryMenuCursorSprite:
 	add a, $fc ; $72cf
 	ld d, a ; $72d1
 	call AdjustSpriteCoordsForScroll ; $72d2
-	ld hl, $72df ; $72d5
+	ld hl, SpriteTemplate_06_72df ; $72d5
 	ld bc, $0000 ; $72d8
 	call QueueSpriteTemplate ; $72db
 	ret ; $72de
-	; $72df, 1223 bytes (bytes:4)
-	db $00, $20, $64, $02 ; 0x00
-	db $00, $28, $66, $02 ; 0x04
-	db $10, $08, $70, $02 ; 0x08
-	db $10, $10, $72, $02 ; 0x0c
-	db $10, $18, $74, $02 ; 0x10
-	db $10, $20, $76, $02 ; 0x14
-	db $10, $28, $78, $02 ; 0x18
-	db $10, $30, $7a, $02 ; 0x1c
-	db $10, $38, $7c, $02 ; 0x20
-	db $10, $40, $7e, $02 ; 0x24
-	db $80, $00, $00, $00 ; 0x28
-	db $00, $00, $00, $00 ; 0x2c
-	db $00, $fd, $00, $ff ; 0x30
-	db $ff, $3f, $1f, $60 ; 0x34
-	db $3f, $47, $3c, $ef ; 0x38
-	db $4f, $38, $4f, $39 ; 0x3c
-	db $fc, $e0, $3c, $4f ; 0x40
-	db $3f, $7a, $f6, $e0 ; 0x44
-	db $38, $fa, $e0, $1f ; 0x48
-	db $60, $00, $3f, $c3 ; 0x4c
-	db $e2, $eb, $ff, $ff ; 0x50
-	db $fd, $e0, $20, $fe ; 0x54
-	db $e0, $f9, $ff, $79 ; 0x58
-	db $fb, $ef, $39, $fe ; 0x5c
-	db $e2, $79, $ef, $ff ; 0x60
-	db $cf, $ff, $7e, $e6 ; 0x64
-	db $e0, $00, $00, $03 ; 0x68
-	db $0c, $07, $f8, $e0 ; 0x6c
-	db $e1, $ff, $63, $ff ; 0x70
-	db $41, $ff, $c9, $ff ; 0x74
-	db $c9, $7f, $b5, $c1 ; 0x78
-	db $fe, $e0, $c9, $fe ; 0x7c
-	db $e0, $ff, $7f, $e0 ; 0x80
-	db $e3, $c0, $d7, $30 ; 0x84
-	db $e0, $1f, $c0, $e1 ; 0x88
-	db $02, $fe, $e0, $ce ; 0x8c
-	db $ff, $7b, $ce, $7b ; 0x90
-	db $fe, $e3, $cf, $7b ; 0x94
-	db $ff, $79, $c0, $e3 ; 0x98
-	db $be, $a0, $e5, $4c ; 0x9c
-	db $ff, $48, $ff, $49 ; 0xa0
-	db $fc, $e0, $4c, $7f ; 0xa4
-	db $ff, $4f, $ff, $08 ; 0xa8
-	db $ff, $18, $ff, $ff ; 0xac
-	db $e0, $7e, $e0, $e5 ; 0xb0
-	db $fc, $f8, $06, $fc ; 0xb4
-	db $e2, $3c, $fe, $e0 ; 0xb8
-	db $d7, $fc, $e2, $7c ; 0xbc
-	db $f8, $e2, $3c, $f8 ; 0xc0
-	db $e0, $fc, $c2, $0f ; 0xc4
-	db $f8, $06, $00, $fc ; 0xc8
-	db $23, $ff, $00, $00 ; 0xcc
-	db $00, $ff, $00, $00 ; 0xd0
-	db $00, $7f, $3f, $c0 ; 0xd4
-	db $7f, $bf, $ff, $62 ; 0xd8
-	db $ff, $42, $ff, $4e ; 0xdc
-	db $ff, $4e, $fb, $fc ; 0xe0
-	db $fe, $e0, $f6, $e0 ; 0xe4
-	db $63, $ff, $7f, $bf ; 0xe8
-	db $3f, $c0, $fb, $00 ; 0xec
-	db $7f, $e2, $e0, $00 ; 0xf0
-	db $00, $ff, $ff, $00 ; 0xf4
-	db $d7, $ff, $cf, $78 ; 0xf8
-	db $fe, $e0, $79, $fa ; 0xfc
-	db $e3, $ff, $08, $e0 ; 0x100
-	db $fe, $e0, $ff, $e0 ; 0x104
-	db $e6, $e0, $e0, $e6 ; 0x108
-	db $ce, $e0, $41, $ff ; 0x10c
-	db $c9, $ab, $ff, $49 ; 0x110
-	db $fa, $e0, $c1, $fa ; 0x114
-	db $e0, $49, $e0, $e6 ; 0x118
-	db $03, $f7, $0c, $07 ; 0x11c
-	db $f8, $c0, $e0, $f8 ; 0x120
-	db $0f, $fd, $07, $cb ; 0x124
-	db $fd, $27, $fc, $e0 ; 0x128
-	db $0f, $fa, $e0, $fe ; 0x12c
-	db $e1, $ff, $fd, $5e ; 0x130
-	db $c0, $e3, $c0, $30 ; 0x134
-	db $e0, $1f, $c0, $e1 ; 0x138
-	db $80, $9b, $e0, $5f ; 0x13c
-	db $39, $ff, $19, $ff ; 0x140
-	db $89, $ba, $e0, $09 ; 0x144
-	db $f8, $e0, $be, $a0 ; 0x148
-	db $ed, $c6, $ff, $82 ; 0x14c
-	db $ff, $93, $fe, $e0 ; 0x150
-	db $83, $a8, $fe, $e0 ; 0x154
-	db $f8, $e1, $80, $ed ; 0x158
-	db $12, $fe, $e0, $32 ; 0x15c
-	db $fe, $e4, $30, $df ; 0x160
-	db $ff, $38, $ff, $ff ; 0x164
-	db $ef, $60, $e6, $fe ; 0x168
-	db $fc, $57, $03, $fe ; 0x16c
-	db $ff, $20, $e3, $46 ; 0x170
-	db $f8, $e0, $72, $16 ; 0x174
-	db $e0, $ff, $c6, $ff ; 0x178
-	db $fe, $fd, $fc, $03 ; 0x17c
-	db $00, $fe, $03, $00 ; 0x180
-	db $00, $00, $00, $00 ; 0x184
-	db $ff, $00, $00, $00 ; 0x188
-	db $07, $03, $0c, $07 ; 0x18c
-	db $0f, $fd, $04, $fe ; 0x190
-	db $ec, $07, $0f, $03 ; 0x194
-	db $0c, $00, $07, $de ; 0x198
-	db $e2, $e0, $00, $00 ; 0x19c
-	db $ff, $ff, $fd, $e0 ; 0x1a0
-	db $c8, $ff, $77, $08 ; 0x1a4
-	db $ff, $09, $fa, $e0 ; 0x1a8
-	db $c8, $ff, $c9, $fa ; 0x1ac
-	db $e2, $f8, $ff, $e0 ; 0x1b0
-	db $e6, $e0, $e0, $e7 ; 0x1b4
-	db $30, $ff, $20, $ff ; 0x1b8
-	db $e7, $2e, $fc, $e0 ; 0x1bc
-	db $30, $ff, $fe, $f6 ; 0x1c0
-	db $e0, $20, $e0, $e6 ; 0x1c4
-	db $a4, $e0, $fd, $f8 ; 0x1c8
-	db $c0, $e1, $60, $ff ; 0x1cc
-	db $40, $ff, $cf, $ff ; 0x1d0
-	db $d5, $c1, $f8, $e0 ; 0x1d4
-	db $7c, $f6, $e0, $c1 ; 0x1d8
-	db $c0, $e6, $c0, $30 ; 0x1dc
-	db $fb, $e0, $1f, $a0 ; 0x1e0
-	db $e0, $fe, $c3, $ff ; 0x1e4
-	db $81, $ff, $e5, $99 ; 0x1e8
-	db $fe, $e0, $81, $f8 ; 0x1ec
-	db $e4, $a0, $ed, $82 ; 0x1f0
-	db $ff, $02, $af, $ff ; 0x1f4
-	db $3e, $ff, $22, $fe ; 0x1f8
-	db $e0, $32, $f6, $e0 ; 0x1fc
-	db $86, $ea, $80, $ee ; 0x200
-	db $0c, $60, $e0, $79 ; 0x204
-	db $5c, $e0, $0c, $ff ; 0x208
-	db $7f, $fa, $56, $e0 ; 0x20c
-	db $08, $60, $e9, $f0 ; 0x210
-	db $e0, $18, $f0, $f8 ; 0x214
-	db $5d, $10, $fe, $e0 ; 0x218
-	db $f0, $f8, $30, $f8 ; 0x21c
-	db $e0, $90, $f4, $e0 ; 0x220
-	db $ff, $30, $f8, $f0 ; 0x224
-	db $e8, $e0, $18, $00 ; 0x228
-	db $f0, $03, $00, $00 ; 0x22c
-	db $00, $00, $00, $f9 ; 0x230
-	db $00, $ff, $ff, $fe ; 0x234
-	db $fd, $7f, $3f, $c0 ; 0x238
-	db $7f, $bf, $ff, $60 ; 0x23c
-	db $ff, $40, $ff, $4f ; 0x240
-	db $ff, $41, $ff, $f7 ; 0x244
-	db $60, $ff, $7c, $f6 ; 0x248
-	db $e0, $41, $ff, $7f ; 0x24c
-	db $ff, $ff, $3f, $c0 ; 0x250
-	db $00, $7f, $00, $00 ; 0x254
-	db $03, $0c, $ff, $07 ; 0x258
-	db $f8, $ff, $00, $ff ; 0x25c
-	db $f1, $9f, $f3, $7d ; 0x260
-	db $9e, $fe, $e5, $ff ; 0x264
-	db $82, $ff, $c3, $ff ; 0x268
-	db $df, $e0, $7b, $00 ; 0x26c
-	db $00, $fd, $e0, $c0 ; 0x270
-	db $30, $e0, $1f, $e0 ; 0x274
-	db $e0, $bf, $ff, $0c ; 0x278
-	db $ff, $04, $ff, $64 ; 0x27c
-	db $fe, $e4, $04, $9f ; 0x280
-	db $ff, $0e, $ff, $ff ; 0x284
-	db $fb, $e0, $e3, $81 ; 0x288
-	db $e0, $fe, $df, $fc ; 0x28c
-	db $03, $fe, $ff, $92 ; 0x290
-	db $fe, $e8, $02, $ff ; 0x294
-	db $ff, $06, $ff, $fe ; 0x298
-	db $fd, $fc, $03, $00 ; 0x29c
-	db $fe, $00, $63, $ff ; 0x2a0
-	db $ff, $fd, $00, $00 ; 0x2a4
-	db $00, $f9, $00, $ff ; 0x2a8
-	db $ff, $fe, $fd, $7f ; 0x2ac
-	db $3f, $c0, $7f, $bf ; 0x2b0
-	db $f5, $60, $fe, $e0 ; 0x2b4
-	db $67, $fa, $e4, $67 ; 0x2b8
-	db $bc, $67, $bc, $ff ; 0x2bc
-	db $7f, $bc, $3f, $c0 ; 0x2c0
-	db $00, $7f, $00, $00 ; 0x2c4
-	db $ff, $03, $0c, $07 ; 0x2c8
-	db $f8, $ff, $00, $ff ; 0x2cc
-	db $fe, $1f, $c3, $ff ; 0x2d0
-	db $81, $ff, $99, $fc ; 0x2d4
-	db $e0, $fa, $e1, $fe ; 0x2d8
-	db $e1, $f6, $ff, $e0 ; 0x2dc
-	db $00, $00, $fd, $e0 ; 0x2e0
-	db $c0, $30, $e0, $1f ; 0x2e4
-	db $fe, $e0, $e0, $ff ; 0x2e8
-	db $82, $ff, $02, $ff ; 0x2ec
-	db $3f, $ff, $ff, $07 ; 0x2f0
-	db $fe, $83, $fe, $f3 ; 0x2f4
-	db $fe, $03, $fe, $cf ; 0x2f8
-	db $07, $fe, $ff, $fc ; 0x2fc
-	db $e0, $e3, $81, $e0 ; 0x300
-	db $fe, $fc, $ef, $03 ; 0x304
-	db $fe, $fd, $06, $fe ; 0x308
-	db $e0, $9e, $fd, $9e ; 0x30c
-	db $fd, $f1, $fe, $e5 ; 0x310
-	db $fe, $f1, $fc, $03 ; 0x314
-	db $00, $fe, $00, $63 ; 0x318
-	db $ff, $ff, $fd, $00 ; 0x31c
-	db $00, $00, $ff, $00 ; 0x320
-	db $00, $00, $07, $03 ; 0x324
-	db $0c, $07, $09, $f7 ; 0x328
-	db $07, $0b, $06, $fe ; 0x32c
-	db $e8, $07, $0b, $07 ; 0x330
-	db $09, $ef, $03, $0c ; 0x334
-	db $00, $07, $e2, $e0 ; 0x338
-	db $00, $00, $ff, $f5 ; 0x33c
-	db $ff, $fd, $e0, $12 ; 0x340
-	db $fe, $e0, $72, $ff ; 0x344
-	db $70, $df, $87, $70 ; 0x348
-	db $df, $72, $f4, $e2 ; 0x34c
-	db $ff, $e0, $e6, $e0 ; 0x350
-	db $e0, $e7, $63, $2f ; 0x354
-	db $ff, $41, $ff, $49 ; 0x358
-	db $fe, $e0, $41, $f8 ; 0x35c
-	db $e4, $e0, $e5, $ef ; 0x360
-	db $03, $04, $03, $fc ; 0x364
-	db $c0, $e0, $f8, $0f ; 0x368
-	db $fc, $67, $07, $fc ; 0x36c
-	db $27, $fe, $e0, $f8 ; 0x370
-	db $e2, $ff, $25, $c0 ; 0x374
-	db $e6, $ef, $c0, $20 ; 0x378
-	db $c0, $3f, $a0, $e0 ; 0x37c
-	db $7e, $c3, $7f, $f7 ; 0x380
-	db $c1, $7f, $c9, $fe ; 0x384
-	db $e4, $c1, $7f, $c3 ; 0x388
-	db $7f, $fb, $ff, $7f ; 0x38c
-	db $a0, $eb, $8c, $ff ; 0x390
-	db $04, $ff, $27, $af ; 0x394
-	db $ff, $27, $fd, $07 ; 0x398
-	db $fe, $e0, $27, $fe ; 0x39c
-	db $e0, $ff, $fd, $fd ; 0x3a0
-	db $80, $eb, $0c, $ff ; 0x3a4
-	db $08, $ff, $39, $ff ; 0x3a8
-	db $d7, $39, $ef, $38 ; 0x3ac
-	db $fe, $e0, $39, $fe ; 0x3b0
-	db $e0, $ff, $ef, $fe ; 0x3b4
-	db $60, $e6, $f0, $e0 ; 0x3b8
-	db $18, $f0, $c8, $70 ; 0x3bc
-	db $e8, $fd, $30, $fe ; 0x3c0
-	db $ea, $f0, $e8, $e0 ; 0x3c4
-	db $18, $00, $f0, $03 ; 0x3c8
-	db $00, $00, $00, $00 ; 0x3cc
-	db $00, $7d, $00, $ff ; 0x3d0
-	db $ff, $03, $01, $06 ; 0x3d4
-	db $03, $04, $fe, $ef ; 0x3d8
-	db $6f, $01, $06, $00 ; 0x3dc
-	db $03, $c3, $e2, $ff ; 0x3e0
-	db $ff, $fd, $e0, $bd ; 0x3e4
-	db $90, $fe, $e0, $9c ; 0x3e8
-	db $ff, $9c, $f7, $fe ; 0x3ec
-	db $e5, $ff, $73, $f7 ; 0x3f0
-	db $ff, $e6, $e0, $c3 ; 0x3f4
-	db $e0, $0c, $07, $f8 ; 0x3f8
-	db $e0, $e1, $fd, $20 ; 0x3fc
-	db $fe, $e0, $e7, $ff ; 0x400
-	db $e0, $bf, $e0, $bf ; 0x404
-	db $bd, $e7, $fc, $e0 ; 0x408
-	db $e0, $bf, $ff, $bf ; 0x40c
-	db $e0, $e3, $c0, $f7 ; 0x410
-	db $30, $e0, $1f, $c0 ; 0x414
-	db $e0, $f7, $9c, $ff ; 0x418
-	db $88, $8f, $ff, $80 ; 0x41c
-	db $ff, $94, $bc, $e6 ; 0x420
-	db $c0, $e5, $a0, $e5 ; 0x424
-	db $c1, $bf, $ff, $81 ; 0x428
-	db $ff, $9f, $ff, $83 ; 0x42c
-	db $f8, $e0, $f9, $de ; 0x430
-	db $f6, $e0, $83, $ff ; 0x434
-	db $ff, $fe, $e0, $e6 ; 0x438
-	db $c0, $80, $f7, $60 ; 0x43c
-	db $c0, $20, $fe, $ef ; 0x440
-	db $80, $60, $00, $c0 ; 0x444
-	db $00, $23, $ff, $00 ; 0x448
-	db $00, $00, $fd, $00 ; 0x44c
-	db $ff, $ff, $07, $03 ; 0x450
-	db $0c, $07, $0b, $06 ; 0x454
-	db $7e, $fe, $ec, $07 ; 0x458
-	db $0b, $03, $0c, $00 ; 0x45c
-	db $07, $c3, $e2, $fb ; 0x460
-	db $ff, $ff, $fd, $e0 ; 0x464
-	db $cc, $ff, $48, $ff ; 0x468
-	db $09, $9e, $fe, $e4 ; 0x46c
-	db $48, $ff, $6c, $ff ; 0x470
-	db $ff, $e0, $e6, $e0 ; 0x474
-	db $00, $f5, $00, $c4 ; 0x478
-	db $e0, $f8, $e0, $e1 ; 0x47c
-	db $61, $ff, $20, $ff ; 0x480
-	db $75, $24, $fc, $e0 ; 0x484
-	db $21, $fa, $e0, $24 ; 0x488
-	db $ff, $64, $e0, $e6 ; 0x48c
-	db $ef, $c0, $30, $e0 ; 0x490
-	db $1f, $c0, $e1, $93 ; 0x494
-	db $ff, $82, $a2, $fe ; 0x498
-	db $e2, $92, $fe, $e4 ; 0x49c
-	db $c0, $e5, $a0, $e5 ; 0x4a0
-	db $19, $a2, $e0, $49 ; 0x4a4
-	db $54, $fe, $e0, $a0 ; 0x4a8
-	db $e3, $48, $e0, $e9 ; 0x4ac
-	db $e0, $bc, $e0, $10 ; 0x4b0
-	db $fe, $e8, $fb, $d0 ; 0x4b4
-	db $60, $fe, $e0, $e0 ; 0x4b8
-	db $d0, $c0, $30, $00 ; 0x4bc
-	db $01, $e0, $23, $ff ; 0x4c0
-	db $00, $00, $00 ; 0x4c4
+SpriteTemplate_06_72df:
+	; $72df, 41 bytes (sprite_template)
+	oam_sprite $00, $20, $64, $02
+	oam_sprite $00, $28, $66, $02
+	oam_sprite $10, $08, $70, $02
+	oam_sprite $10, $10, $72, $02
+	oam_sprite $10, $18, $74, $02
+	oam_sprite $10, $20, $76, $02
+	oam_sprite $10, $28, $78, $02
+	oam_sprite $10, $30, $7a, $02
+	oam_sprite $10, $38, $7c, $02
+	oam_sprite $10, $40, $7e, $02
+	oam_sprite_end
+	INCBIN "data/bank_006/d_7308.bin" ; $7308, 1182 bytes
 DrawStoryMenuItem:
 	push de ; $77a6
 	add a, a ; $77a7

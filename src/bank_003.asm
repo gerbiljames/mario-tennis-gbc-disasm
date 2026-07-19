@@ -4133,7 +4133,7 @@ Label_03_5bc2:
 	ld de, $8000 ; $5bd4
 	ld c, $04 ; $5bd7
 	call QueueVRAMCopy ; $5bd9
-	ld hl, $6e75 ; $5bdc
+	ld hl, SpriteTemplate_03_6e75 ; $5bdc
 	ld d, $fe ; $5bdf
 	ld e, $80 ; $5be1
 	ld bc, $0300 ; $5be3
@@ -4148,7 +4148,7 @@ Label_03_5bea:
 	ld de, $8000 ; $5bfc
 	ld c, $04 ; $5bff
 	call QueueVRAMCopy ; $5c01
-	ld hl, $6e7e ; $5c04
+	ld hl, SpriteTemplate_03_6e7e ; $5c04
 	ld d, $fe ; $5c07
 	ld e, $80 ; $5c09
 	ld bc, $0300 ; $5c0b
@@ -4163,7 +4163,7 @@ Label_03_5c12:
 	ld de, $8000 ; $5c24
 	ld c, $04 ; $5c27
 	call QueueVRAMCopy ; $5c29
-	ld hl, $6e87 ; $5c2c
+	ld hl, SpriteTemplate_03_6e87 ; $5c2c
 	ld d, $fe ; $5c2f
 	ld e, $80 ; $5c31
 	ld bc, $0300 ; $5c33
@@ -4178,7 +4178,7 @@ Label_03_5c3a:
 	ld de, $8000 ; $5c4c
 	ld c, $04 ; $5c4f
 	call QueueVRAMCopy ; $5c51
-	ld hl, $6e90 ; $5c54
+	ld hl, SpriteTemplate_03_6e90 ; $5c54
 	ld d, $fe ; $5c57
 	ld e, $80 ; $5c59
 	ld bc, $0300 ; $5c5b
@@ -4193,7 +4193,7 @@ Label_03_5c62:
 	ld de, $8000 ; $5c74
 	ld c, $04 ; $5c77
 	call QueueVRAMCopy ; $5c79
-	ld hl, $6e99 ; $5c7c
+	ld hl, SpriteTemplate_03_6e99 ; $5c7c
 	ld d, $fe ; $5c7f
 	ld e, $80 ; $5c81
 	ld bc, $0300 ; $5c83
@@ -4208,7 +4208,7 @@ Label_03_5c8a:
 	ld de, $8000 ; $5c9c
 	ld c, $04 ; $5c9f
 	call QueueVRAMCopy ; $5ca1
-	ld hl, $6ea2 ; $5ca4
+	ld hl, SpriteTemplate_03_6ea2 ; $5ca4
 	ld d, $fe ; $5ca7
 	ld e, $80 ; $5ca9
 	ld bc, $0300 ; $5cab
@@ -4223,7 +4223,7 @@ Label_03_5cb2:
 	ld de, $8000 ; $5cc4
 	ld c, $04 ; $5cc7
 	call QueueVRAMCopy ; $5cc9
-	ld hl, $6eab ; $5ccc
+	ld hl, SpriteTemplate_03_6eab ; $5ccc
 	ld d, $fe ; $5ccf
 	ld e, $80 ; $5cd1
 	ld bc, $0300 ; $5cd3
@@ -4238,7 +4238,7 @@ Label_03_5cda:
 	ld de, $8000 ; $5cec
 	ld c, $04 ; $5cef
 	call QueueVRAMCopy ; $5cf1
-	ld hl, $6eb4 ; $5cf4
+	ld hl, SpriteTemplate_03_6eb4 ; $5cf4
 	ld d, $fe ; $5cf7
 	ld e, $80 ; $5cf9
 	ld bc, $0300 ; $5cfb
@@ -4253,14 +4253,14 @@ Label_03_5d02:
 	ld de, $8000 ; $5d14
 	ld c, $04 ; $5d17
 	call QueueVRAMCopy ; $5d19
-	ld hl, $6ebd ; $5d1c
+	ld hl, SpriteTemplate_03_6ebd ; $5d1c
 	ld d, $fe ; $5d1f
 	ld e, $80 ; $5d21
 	ld bc, $0300 ; $5d23
 	call QueueSpriteTemplate ; $5d26
 	ret ; $5d29
 Label_03_5d2a:
-	ld hl, $6ebd ; $5d2a
+	ld hl, SpriteTemplate_03_6ebd ; $5d2a
 	ld d, $fe ; $5d2d
 	ld e, $80 ; $5d2f
 	ld bc, $0300 ; $5d31
@@ -4301,7 +4301,7 @@ Label_03_5d76:
 	ld de, $8040 ; $5d88
 	ld c, $04 ; $5d8b
 	call QueueVRAMCopy ; $5d8d
-	ld hl, $6ec6 ; $5d90
+	ld hl, SpriteTemplate_03_6ec6 ; $5d90
 	ld d, $0e ; $5d93
 	ld e, $80 ; $5d95
 	ld bc, $0204 ; $5d97
@@ -4316,7 +4316,7 @@ Label_03_5d9e:
 	ld de, $8040 ; $5db0
 	ld c, $04 ; $5db3
 	call QueueVRAMCopy ; $5db5
-	ld hl, $6ecf ; $5db8
+	ld hl, SpriteTemplate_03_6ecf ; $5db8
 	ld d, $0e ; $5dbb
 	ld e, $80 ; $5dbd
 	ld bc, $0204 ; $5dbf
@@ -4331,7 +4331,7 @@ Label_03_5dc6:
 	ld de, $8040 ; $5dd8
 	ld c, $04 ; $5ddb
 	call QueueVRAMCopy ; $5ddd
-	ld hl, $6ed8 ; $5de0
+	ld hl, SpriteTemplate_03_6ed8 ; $5de0
 	ld d, $0e ; $5de3
 	ld e, $80 ; $5de5
 	ld bc, $0204 ; $5de7
@@ -4346,7 +4346,7 @@ Label_03_5dee:
 	ld de, $8040 ; $5e00
 	ld c, $04 ; $5e03
 	call QueueVRAMCopy ; $5e05
-	ld hl, $6ee1 ; $5e08
+	ld hl, SpriteTemplate_03_6ee1 ; $5e08
 	ld d, $0e ; $5e0b
 	ld e, $80 ; $5e0d
 	ld bc, $0204 ; $5e0f
@@ -4361,7 +4361,7 @@ Label_03_5e16:
 	ld de, $8040 ; $5e28
 	ld c, $04 ; $5e2b
 	call QueueVRAMCopy ; $5e2d
-	ld hl, $6eea ; $5e30
+	ld hl, SpriteTemplate_03_6eea ; $5e30
 	ld d, $0e ; $5e33
 	ld e, $80 ; $5e35
 	ld bc, $0204 ; $5e37
@@ -4376,7 +4376,7 @@ Label_03_5e3e:
 	ld de, $8040 ; $5e50
 	ld c, $04 ; $5e53
 	call QueueVRAMCopy ; $5e55
-	ld hl, $6ef3 ; $5e58
+	ld hl, SpriteTemplate_03_6ef3 ; $5e58
 	ld d, $0e ; $5e5b
 	ld e, $80 ; $5e5d
 	ld bc, $0204 ; $5e5f
@@ -4391,7 +4391,7 @@ Label_03_5e66:
 	ld de, $8040 ; $5e78
 	ld c, $04 ; $5e7b
 	call QueueVRAMCopy ; $5e7d
-	ld hl, $6efc ; $5e80
+	ld hl, SpriteTemplate_03_6efc ; $5e80
 	ld d, $0e ; $5e83
 	ld e, $80 ; $5e85
 	ld bc, $0204 ; $5e87
@@ -4406,7 +4406,7 @@ Label_03_5e8e:
 	ld de, $8040 ; $5ea0
 	ld c, $04 ; $5ea3
 	call QueueVRAMCopy ; $5ea5
-	ld hl, $6f05 ; $5ea8
+	ld hl, SpriteTemplate_03_6f05 ; $5ea8
 	ld d, $0e ; $5eab
 	ld e, $80 ; $5ead
 	ld bc, $0204 ; $5eaf
@@ -4421,14 +4421,14 @@ Label_03_5eb6:
 	ld de, $8040 ; $5ec8
 	ld c, $04 ; $5ecb
 	call QueueVRAMCopy ; $5ecd
-	ld hl, $6f0e ; $5ed0
+	ld hl, SpriteTemplate_03_6f0e ; $5ed0
 	ld d, $0e ; $5ed3
 	ld e, $80 ; $5ed5
 	ld bc, $0204 ; $5ed7
 	call QueueSpriteTemplate ; $5eda
 	ret ; $5edd
 Label_03_5ede:
-	ld hl, $6f0e ; $5ede
+	ld hl, SpriteTemplate_03_6f0e ; $5ede
 	ld d, $0e ; $5ee1
 	ld e, $80 ; $5ee3
 	ld bc, $0204 ; $5ee5
@@ -4469,7 +4469,7 @@ Label_03_5f2a:
 	ld de, $8080 ; $5f3c
 	ld c, $04 ; $5f3f
 	call QueueVRAMCopy ; $5f41
-	ld hl, $6f17 ; $5f44
+	ld hl, SpriteTemplate_03_6f17 ; $5f44
 	ld d, $1e ; $5f47
 	ld e, $80 ; $5f49
 	ld bc, $0308 ; $5f4b
@@ -4484,7 +4484,7 @@ Label_03_5f52:
 	ld de, $8080 ; $5f64
 	ld c, $04 ; $5f67
 	call QueueVRAMCopy ; $5f69
-	ld hl, $6f20 ; $5f6c
+	ld hl, SpriteTemplate_03_6f20 ; $5f6c
 	ld d, $1e ; $5f6f
 	ld e, $80 ; $5f71
 	ld bc, $0308 ; $5f73
@@ -4499,7 +4499,7 @@ Label_03_5f7a:
 	ld de, $8080 ; $5f8c
 	ld c, $04 ; $5f8f
 	call QueueVRAMCopy ; $5f91
-	ld hl, $6f29 ; $5f94
+	ld hl, SpriteTemplate_03_6f29 ; $5f94
 	ld d, $1e ; $5f97
 	ld e, $80 ; $5f99
 	ld bc, $0308 ; $5f9b
@@ -4514,7 +4514,7 @@ Label_03_5fa2:
 	ld de, $8080 ; $5fb4
 	ld c, $04 ; $5fb7
 	call QueueVRAMCopy ; $5fb9
-	ld hl, $6f32 ; $5fbc
+	ld hl, SpriteTemplate_03_6f32 ; $5fbc
 	ld d, $1e ; $5fbf
 	ld e, $80 ; $5fc1
 	ld bc, $0308 ; $5fc3
@@ -4529,7 +4529,7 @@ Label_03_5fca:
 	ld de, $8080 ; $5fdc
 	ld c, $04 ; $5fdf
 	call QueueVRAMCopy ; $5fe1
-	ld hl, $6f3b ; $5fe4
+	ld hl, SpriteTemplate_03_6f3b ; $5fe4
 	ld d, $1e ; $5fe7
 	ld e, $80 ; $5fe9
 	ld bc, $0308 ; $5feb
@@ -4544,7 +4544,7 @@ Label_03_5ff2:
 	ld de, $8080 ; $6004
 	ld c, $04 ; $6007
 	call QueueVRAMCopy ; $6009
-	ld hl, $6f44 ; $600c
+	ld hl, SpriteTemplate_03_6f44 ; $600c
 	ld d, $1e ; $600f
 	ld e, $80 ; $6011
 	ld bc, $0308 ; $6013
@@ -4559,7 +4559,7 @@ Label_03_601a:
 	ld de, $8080 ; $602c
 	ld c, $04 ; $602f
 	call QueueVRAMCopy ; $6031
-	ld hl, $6f4d ; $6034
+	ld hl, SpriteTemplate_03_6f4d ; $6034
 	ld d, $1e ; $6037
 	ld e, $80 ; $6039
 	ld bc, $0308 ; $603b
@@ -4574,7 +4574,7 @@ Label_03_6042:
 	ld de, $8080 ; $6054
 	ld c, $04 ; $6057
 	call QueueVRAMCopy ; $6059
-	ld hl, $6f56 ; $605c
+	ld hl, SpriteTemplate_03_6f56 ; $605c
 	ld d, $1e ; $605f
 	ld e, $80 ; $6061
 	ld bc, $0308 ; $6063
@@ -4589,14 +4589,14 @@ Label_03_606a:
 	ld de, $8080 ; $607c
 	ld c, $04 ; $607f
 	call QueueVRAMCopy ; $6081
-	ld hl, $6f5f ; $6084
+	ld hl, SpriteTemplate_03_6f5f ; $6084
 	ld d, $1e ; $6087
 	ld e, $80 ; $6089
 	ld bc, $0308 ; $608b
 	call QueueSpriteTemplate ; $608e
 	ret ; $6091
 Label_03_6092:
-	ld hl, $6f5f ; $6092
+	ld hl, SpriteTemplate_03_6f5f ; $6092
 	ld d, $1e ; $6095
 	ld e, $80 ; $6097
 	ld bc, $0308 ; $6099
@@ -4637,7 +4637,7 @@ Label_03_60de:
 	ld de, $80c0 ; $60f0
 	ld c, $02 ; $60f3
 	call QueueVRAMCopy ; $60f5
-	ld hl, $6f68 ; $60f8
+	ld hl, SpriteTemplate_03_6f68 ; $60f8
 	ld d, $2e ; $60fb
 	ld e, $80 ; $60fd
 	ld bc, $030c ; $60ff
@@ -4652,7 +4652,7 @@ Label_03_6106:
 	ld de, $80c0 ; $6118
 	ld c, $02 ; $611b
 	call QueueVRAMCopy ; $611d
-	ld hl, $6f6d ; $6120
+	ld hl, SpriteTemplate_03_6f6d ; $6120
 	ld d, $2e ; $6123
 	ld e, $80 ; $6125
 	ld bc, $030c ; $6127
@@ -4667,7 +4667,7 @@ Label_03_612e:
 	ld de, $80c0 ; $6140
 	ld c, $02 ; $6143
 	call QueueVRAMCopy ; $6145
-	ld hl, $6f72 ; $6148
+	ld hl, SpriteTemplate_03_6f72 ; $6148
 	ld d, $2e ; $614b
 	ld e, $80 ; $614d
 	ld bc, $030c ; $614f
@@ -4682,7 +4682,7 @@ Label_03_6156:
 	ld de, $80c0 ; $6168
 	ld c, $02 ; $616b
 	call QueueVRAMCopy ; $616d
-	ld hl, $6f77 ; $6170
+	ld hl, SpriteTemplate_03_6f77 ; $6170
 	ld d, $2e ; $6173
 	ld e, $80 ; $6175
 	ld bc, $030c ; $6177
@@ -4697,7 +4697,7 @@ Label_03_617e:
 	ld de, $80c0 ; $6190
 	ld c, $02 ; $6193
 	call QueueVRAMCopy ; $6195
-	ld hl, $6f7c ; $6198
+	ld hl, SpriteTemplate_03_6f7c ; $6198
 	ld d, $2e ; $619b
 	ld e, $80 ; $619d
 	ld bc, $030c ; $619f
@@ -4712,7 +4712,7 @@ Label_03_61a6:
 	ld de, $80c0 ; $61b8
 	ld c, $02 ; $61bb
 	call QueueVRAMCopy ; $61bd
-	ld hl, $6f81 ; $61c0
+	ld hl, SpriteTemplate_03_6f81 ; $61c0
 	ld d, $2e ; $61c3
 	ld e, $80 ; $61c5
 	ld bc, $030c ; $61c7
@@ -4727,7 +4727,7 @@ Label_03_61ce:
 	ld de, $80c0 ; $61e0
 	ld c, $02 ; $61e3
 	call QueueVRAMCopy ; $61e5
-	ld hl, $6f86 ; $61e8
+	ld hl, SpriteTemplate_03_6f86 ; $61e8
 	ld d, $2e ; $61eb
 	ld e, $80 ; $61ed
 	ld bc, $030c ; $61ef
@@ -4742,7 +4742,7 @@ Label_03_61f6:
 	ld de, $80c0 ; $6208
 	ld c, $02 ; $620b
 	call QueueVRAMCopy ; $620d
-	ld hl, $6f8b ; $6210
+	ld hl, SpriteTemplate_03_6f8b ; $6210
 	ld d, $2e ; $6213
 	ld e, $80 ; $6215
 	ld bc, $030c ; $6217
@@ -4757,14 +4757,14 @@ Label_03_621e:
 	ld de, $80c0 ; $6230
 	ld c, $02 ; $6233
 	call QueueVRAMCopy ; $6235
-	ld hl, $6f90 ; $6238
+	ld hl, SpriteTemplate_03_6f90 ; $6238
 	ld d, $2e ; $623b
 	ld e, $80 ; $623d
 	ld bc, $030c ; $623f
 	call QueueSpriteTemplate ; $6242
 	ret ; $6245
 Label_03_6246:
-	ld hl, $6f90 ; $6246
+	ld hl, SpriteTemplate_03_6f90 ; $6246
 	ld d, $2e ; $6249
 	ld e, $80 ; $624b
 	ld bc, $030c ; $624d
@@ -4805,7 +4805,7 @@ Label_03_6292:
 	ld de, $80e0 ; $62a4
 	ld c, $02 ; $62a7
 	call QueueVRAMCopy ; $62a9
-	ld hl, $6f95 ; $62ac
+	ld hl, SpriteTemplate_03_6f95 ; $62ac
 	ld d, $36 ; $62af
 	ld e, $80 ; $62b1
 	ld bc, $020e ; $62b3
@@ -4820,7 +4820,7 @@ Label_03_62ba:
 	ld de, $80e0 ; $62cc
 	ld c, $02 ; $62cf
 	call QueueVRAMCopy ; $62d1
-	ld hl, $6f9a ; $62d4
+	ld hl, SpriteTemplate_03_6f9a ; $62d4
 	ld d, $36 ; $62d7
 	ld e, $80 ; $62d9
 	ld bc, $020e ; $62db
@@ -4835,7 +4835,7 @@ Label_03_62e2:
 	ld de, $80e0 ; $62f4
 	ld c, $02 ; $62f7
 	call QueueVRAMCopy ; $62f9
-	ld hl, $6f9f ; $62fc
+	ld hl, SpriteTemplate_03_6f9f ; $62fc
 	ld d, $36 ; $62ff
 	ld e, $80 ; $6301
 	ld bc, $020e ; $6303
@@ -4850,7 +4850,7 @@ Label_03_630a:
 	ld de, $80e0 ; $631c
 	ld c, $02 ; $631f
 	call QueueVRAMCopy ; $6321
-	ld hl, $6fa4 ; $6324
+	ld hl, SpriteTemplate_03_6fa4 ; $6324
 	ld d, $36 ; $6327
 	ld e, $80 ; $6329
 	ld bc, $020e ; $632b
@@ -4865,7 +4865,7 @@ Label_03_6332:
 	ld de, $80e0 ; $6344
 	ld c, $02 ; $6347
 	call QueueVRAMCopy ; $6349
-	ld hl, $6fa9 ; $634c
+	ld hl, SpriteTemplate_03_6fa9 ; $634c
 	ld d, $36 ; $634f
 	ld e, $80 ; $6351
 	ld bc, $020e ; $6353
@@ -4880,7 +4880,7 @@ Label_03_635a:
 	ld de, $80e0 ; $636c
 	ld c, $02 ; $636f
 	call QueueVRAMCopy ; $6371
-	ld hl, $6fae ; $6374
+	ld hl, SpriteTemplate_03_6fae ; $6374
 	ld d, $36 ; $6377
 	ld e, $80 ; $6379
 	ld bc, $020e ; $637b
@@ -4895,7 +4895,7 @@ Label_03_6382:
 	ld de, $80e0 ; $6394
 	ld c, $02 ; $6397
 	call QueueVRAMCopy ; $6399
-	ld hl, $6fb3 ; $639c
+	ld hl, SpriteTemplate_03_6fb3 ; $639c
 	ld d, $36 ; $639f
 	ld e, $80 ; $63a1
 	ld bc, $020e ; $63a3
@@ -4910,7 +4910,7 @@ Label_03_63aa:
 	ld de, $80e0 ; $63bc
 	ld c, $02 ; $63bf
 	call QueueVRAMCopy ; $63c1
-	ld hl, $6fb8 ; $63c4
+	ld hl, SpriteTemplate_03_6fb8 ; $63c4
 	ld d, $36 ; $63c7
 	ld e, $80 ; $63c9
 	ld bc, $020e ; $63cb
@@ -4925,14 +4925,14 @@ Label_03_63d2:
 	ld de, $80e0 ; $63e4
 	ld c, $02 ; $63e7
 	call QueueVRAMCopy ; $63e9
-	ld hl, $6fbd ; $63ec
+	ld hl, SpriteTemplate_03_6fbd ; $63ec
 	ld d, $36 ; $63ef
 	ld e, $80 ; $63f1
 	ld bc, $020e ; $63f3
 	call QueueSpriteTemplate ; $63f6
 	ret ; $63f9
 Label_03_63fa:
-	ld hl, $6fbd ; $63fa
+	ld hl, SpriteTemplate_03_6fbd ; $63fa
 	ld d, $36 ; $63fd
 	ld e, $80 ; $63ff
 	ld bc, $020e ; $6401
@@ -4973,7 +4973,7 @@ Label_03_6446:
 	ld de, $8100 ; $6458
 	ld c, $02 ; $645b
 	call QueueVRAMCopy ; $645d
-	ld hl, $6fc2 ; $6460
+	ld hl, SpriteTemplate_03_6fc2 ; $6460
 	ld d, $3e ; $6463
 	ld e, $80 ; $6465
 	ld bc, $0310 ; $6467
@@ -4988,7 +4988,7 @@ Label_03_646e:
 	ld de, $8100 ; $6480
 	ld c, $02 ; $6483
 	call QueueVRAMCopy ; $6485
-	ld hl, $6fc7 ; $6488
+	ld hl, SpriteTemplate_03_6fc7 ; $6488
 	ld d, $3e ; $648b
 	ld e, $80 ; $648d
 	ld bc, $0310 ; $648f
@@ -5003,7 +5003,7 @@ Label_03_6496:
 	ld de, $8100 ; $64a8
 	ld c, $02 ; $64ab
 	call QueueVRAMCopy ; $64ad
-	ld hl, $6fcc ; $64b0
+	ld hl, SpriteTemplate_03_6fcc ; $64b0
 	ld d, $3e ; $64b3
 	ld e, $80 ; $64b5
 	ld bc, $0310 ; $64b7
@@ -5018,7 +5018,7 @@ Label_03_64be:
 	ld de, $8100 ; $64d0
 	ld c, $02 ; $64d3
 	call QueueVRAMCopy ; $64d5
-	ld hl, $6fd1 ; $64d8
+	ld hl, SpriteTemplate_03_6fd1 ; $64d8
 	ld d, $3e ; $64db
 	ld e, $80 ; $64dd
 	ld bc, $0310 ; $64df
@@ -5033,7 +5033,7 @@ Label_03_64e6:
 	ld de, $8100 ; $64f8
 	ld c, $02 ; $64fb
 	call QueueVRAMCopy ; $64fd
-	ld hl, $6fd6 ; $6500
+	ld hl, SpriteTemplate_03_6fd6 ; $6500
 	ld d, $3e ; $6503
 	ld e, $80 ; $6505
 	ld bc, $0310 ; $6507
@@ -5048,7 +5048,7 @@ Label_03_650e:
 	ld de, $8100 ; $6520
 	ld c, $02 ; $6523
 	call QueueVRAMCopy ; $6525
-	ld hl, $6fdb ; $6528
+	ld hl, SpriteTemplate_03_6fdb ; $6528
 	ld d, $3e ; $652b
 	ld e, $80 ; $652d
 	ld bc, $0310 ; $652f
@@ -5063,7 +5063,7 @@ Label_03_6536:
 	ld de, $8100 ; $6548
 	ld c, $02 ; $654b
 	call QueueVRAMCopy ; $654d
-	ld hl, $6fe0 ; $6550
+	ld hl, SpriteTemplate_03_6fe0 ; $6550
 	ld d, $3e ; $6553
 	ld e, $80 ; $6555
 	ld bc, $0310 ; $6557
@@ -5078,7 +5078,7 @@ Label_03_655e:
 	ld de, $8100 ; $6570
 	ld c, $02 ; $6573
 	call QueueVRAMCopy ; $6575
-	ld hl, $6fe5 ; $6578
+	ld hl, SpriteTemplate_03_6fe5 ; $6578
 	ld d, $3e ; $657b
 	ld e, $80 ; $657d
 	ld bc, $0310 ; $657f
@@ -5093,14 +5093,14 @@ Label_03_6586:
 	ld de, $8100 ; $6598
 	ld c, $02 ; $659b
 	call QueueVRAMCopy ; $659d
-	ld hl, $6fea ; $65a0
+	ld hl, SpriteTemplate_03_6fea ; $65a0
 	ld d, $3e ; $65a3
 	ld e, $80 ; $65a5
 	ld bc, $0310 ; $65a7
 	call QueueSpriteTemplate ; $65aa
 	ret ; $65ad
 Label_03_65ae:
-	ld hl, $6fea ; $65ae
+	ld hl, SpriteTemplate_03_6fea ; $65ae
 	ld d, $3e ; $65b1
 	ld e, $80 ; $65b3
 	ld bc, $0310 ; $65b5
@@ -5141,7 +5141,250 @@ Label_03_65ae:
 	ldh [rAUD1SWEEP], a ; $662d
 	rra ; $662f
 	ld a, [$31e7] ; $6630
-	INCBIN "data/bank_003/d_6633.bin" ; $6633, 2492 bytes
+	INCBIN "data/bank_003/d_6633.bin" ; $6633, 2114 bytes
+SpriteTemplate_03_6e75:
+	; $6e75, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6e7e:
+	; $6e7e, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6e87:
+	; $6e87, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6e90:
+	; $6e90, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6e99:
+	; $6e99, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6ea2:
+	; $6ea2, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6eab:
+	; $6eab, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6eb4:
+	; $6eb4, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6ebd:
+	; $6ebd, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6ec6:
+	; $6ec6, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6ecf:
+	; $6ecf, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6ed8:
+	; $6ed8, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6ee1:
+	; $6ee1, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6eea:
+	; $6eea, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6ef3:
+	; $6ef3, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6efc:
+	; $6efc, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f05:
+	; $6f05, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f0e:
+	; $6f0e, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f17:
+	; $6f17, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f20:
+	; $6f20, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f29:
+	; $6f29, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f32:
+	; $6f32, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f3b:
+	; $6f3b, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f44:
+	; $6f44, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f4d:
+	; $6f4d, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f56:
+	; $6f56, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f5f:
+	; $6f5f, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+SpriteTemplate_03_6f68:
+	; $6f68, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f6d:
+	; $6f6d, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f72:
+	; $6f72, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f77:
+	; $6f77, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f7c:
+	; $6f7c, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f81:
+	; $6f81, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f86:
+	; $6f86, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f8b:
+	; $6f8b, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f90:
+	; $6f90, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f95:
+	; $6f95, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f9a:
+	; $6f9a, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6f9f:
+	; $6f9f, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fa4:
+	; $6fa4, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fa9:
+	; $6fa9, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fae:
+	; $6fae, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fb3:
+	; $6fb3, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fb8:
+	; $6fb8, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fbd:
+	; $6fbd, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fc2:
+	; $6fc2, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fc7:
+	; $6fc7, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fcc:
+	; $6fcc, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fd1:
+	; $6fd1, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fd6:
+	; $6fd6, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fdb:
+	; $6fdb, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fe0:
+	; $6fe0, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fe5:
+	; $6fe5, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_03_6fea:
+	; $6fea, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
 FillMemoryDE:
 	ld a, b ; $6fef
 	ld [hl+], a ; $6ff0

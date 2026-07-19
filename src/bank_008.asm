@@ -2648,7 +2648,7 @@ DrawTargetZone:
 	ld bc, $0000 ; $5533
 	call Func_08_59b8 ; $5536
 	call ApplyCameraProjection ; $5539
-	ld hl, $55a0 ; $553c
+	ld hl, SpriteTemplate_08_55a0 ; $553c
 	ld bc, $0920 ; $553f
 	call QueueSpriteTemplate ; $5542
 	ld hl, wTargetZoneDepth1 ; $5545
@@ -2662,7 +2662,7 @@ DrawTargetZone:
 	ld bc, $0000 ; $5551
 	call Func_08_59b8 ; $5554
 	call ApplyCameraProjection ; $5557
-	ld hl, $55a5 ; $555a
+	ld hl, SpriteTemplate_08_55a5 ; $555a
 	ld bc, $0922 ; $555d
 	call QueueSpriteTemplate ; $5560
 	ld hl, wTargetZoneDepth2 ; $5563
@@ -2676,7 +2676,7 @@ DrawTargetZone:
 	ld bc, $0000 ; $556f
 	call Func_08_59b8 ; $5572
 	call ApplyCameraProjection ; $5575
-	ld hl, $55aa ; $5578
+	ld hl, SpriteTemplate_08_55aa ; $5578
 	ld bc, $0924 ; $557b
 	call QueueSpriteTemplate ; $557e
 	ld hl, wTargetZoneDepth2 ; $5581
@@ -2690,16 +2690,26 @@ DrawTargetZone:
 	ld bc, $0000 ; $558d
 	call Func_08_59b8 ; $5590
 	call ApplyCameraProjection ; $5593
-	ld hl, $55af ; $5596
+	ld hl, SpriteTemplate_08_55af ; $5596
 	ld bc, $0926 ; $5599
 	call QueueSpriteTemplate ; $559c
 	ret ; $559f
-	; $55a0, 20 bytes (records:5)
-; 4 records x 5 bytes
-	db $10, $08, $00, $00, $80 ; record 0
-	db $10, $01, $00, $00, $80 ; record 1
-	db $09, $08, $00, $00, $80 ; record 2
-	db $09, $01, $00, $00, $80 ; record 3
+SpriteTemplate_08_55a0:
+	; $55a0, 5 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_08_55a5:
+	; $55a5, 5 bytes (sprite_template)
+	oam_sprite $10, $01, $00, $00
+	oam_sprite_end
+SpriteTemplate_08_55aa:
+	; $55aa, 5 bytes (sprite_template)
+	oam_sprite $09, $08, $00, $00
+	oam_sprite_end
+SpriteTemplate_08_55af:
+	; $55af, 5 bytes (sprite_template)
+	oam_sprite $09, $01, $00, $00
+	oam_sprite_end
 ApplyBallAirDrag:
 	ld a, [$c42d] ; $55b4
 	bit 7, a ; $55b7

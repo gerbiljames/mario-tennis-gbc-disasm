@@ -3557,7 +3557,7 @@ Label_3b_58a5:
 	ld e, l ; $58ac
 	add a, d ; $58ad
 	ld d, a ; $58ae
-	ld hl, $5912 ; $58af
+	ld hl, SpriteTemplate_3b_5912 ; $58af
 	ld b, $08 ; $58b2
 	ld c, $72 ; $58b4
 	call QueueSpriteTemplate ; $58b6
@@ -3572,7 +3572,7 @@ Label_3b_58a5:
 	dw $58cc ; record 6
 	dw $58cc ; record 7
 	dw $58cc ; record 8
-	; $58cc, 156 bytes (bytes:4)
+	; $58cc, 70 bytes (bytes:4)
 	db $10, $08, $00, $00 ; 0x00
 	db $10, $10, $02, $00 ; 0x04
 	db $10, $18, $04, $00 ; 0x08
@@ -3590,28 +3590,13 @@ Label_3b_58a5:
 	db $00, $10, $38, $0c ; 0x38
 	db $00, $10, $40, $0e ; 0x3c
 	db $00, $10, $48, $10 ; 0x40
-	db $00, $80, $10, $08 ; 0x44
-	db $00, $00, $10, $10 ; 0x48
-	db $02, $00, $80, $2e ; 0x4c
-	db $fc, $2e, $26, $2e ; 0x50
-	db $5c, $52, $fe, $52 ; 0x54
-	db $2c, $52, $5e, $68 ; 0x58
-	db $fc, $68, $2c, $68 ; 0x5c
-	db $5e, $10, $20, $32 ; 0x60
-	db $00, $00, $00, $42 ; 0x64
-	db $52, $62, $00, $04 ; 0x68
-	db $00, $00, $00, $00 ; 0x6c
-	db $00, $00, $00, $10 ; 0x70
-	db $08, $00, $00, $10 ; 0x74
-	db $10, $02, $00, $10 ; 0x78
-	db $18, $04, $00, $10 ; 0x7c
-	db $20, $06, $00, $10 ; 0x80
-	db $28, $08, $00, $10 ; 0x84
-	db $30, $0a, $00, $10 ; 0x88
-	db $38, $0c, $00, $10 ; 0x8c
-	db $40, $0e, $00, $10 ; 0x90
-	db $48, $10, $00, $10 ; 0x94
-	db $50, $12, $00, $80 ; 0x98
+	db $00, $80 ; 0x44
+SpriteTemplate_3b_5912:
+	; $5912, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03b/d_591b.bin" ; $591b, 77 bytes
 DrawMainMenuSelection:
 	wram_bank $03 ; $5968
 	ld b, $00 ; $596e
@@ -4658,7 +4643,7 @@ Label_3b_6104:
 	ld e, a ; $6106
 	farcall FarPtr_ApplySpriteBobOffset ; $6107
 	ld b, $08 ; $610a
-	ld hl, $6125 ; $610c
+	ld hl, SpriteTemplate_3b_6125 ; $610c
 	push de ; $610f
 	call QueueSpriteTemplate ; $6110
 	pop de ; $6113
@@ -4666,28 +4651,28 @@ Label_3b_6104:
 	add hl, de ; $6117
 	ld d, h ; $6118
 	ld e, l ; $6119
-	ld hl, $6146 ; $611a
+	ld hl, SpriteTemplate_3b_6146 ; $611a
 	ld b, $08 ; $611d
 	ld c, $70 ; $611f
 	call QueueSpriteTemplate ; $6121
 	ret ; $6124
-	; $6125, 63 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80, $10, $08, $00 ; 0x20
-	db $00, $10, $10, $02 ; 0x24
-	db $00, $80, $2d, $0a ; 0x28
-	db $2d, $54, $4f, $0c ; 0x2c
-	db $4f, $54, $6a, $00 ; 0x30
-	db $6a, $2c, $6a, $5d ; 0x34
-	db $00, $10, $20, $30 ; 0x38
-	db $40, $50, $60 ; 0x3c
+SpriteTemplate_3b_6125:
+	; $6125, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3b_6146:
+	; $6146, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03b/d_614f.bin" ; $614f, 21 bytes
 DrawMatchFormatCaption:
 	wram_bank $03 ; $6164
 	ld de, $d1e0 ; $616a
@@ -5102,7 +5087,7 @@ Label_3b_648a:
 Label_3b_6499:
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
-	ld hl, $64ca ; $649d
+	ld hl, SpriteTemplate_3b_64ca ; $649d
 	push de ; $64a0
 	call QueueSpriteTemplate ; $64a1
 	pop de ; $64a4
@@ -5110,7 +5095,7 @@ Label_3b_6499:
 	add hl, de ; $64a8
 	ld d, h ; $64a9
 	ld e, l ; $64aa
-	ld hl, $64eb ; $64ab
+	ld hl, SpriteTemplate_3b_64eb ; $64ab
 	ld b, $08 ; $64ae
 	ld c, $70 ; $64b0
 	call QueueSpriteTemplate ; $64b2
@@ -5130,40 +5115,23 @@ Label_3b_64c6:
 	pop bc ; $64c7
 	pop de ; $64c8
 	ret ; $64c9
-	; $64ca, 131 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80, $10, $08, $00 ; 0x20
-	db $00, $10, $10, $02 ; 0x24
-	db $00, $80, $08, $00 ; 0x28
-	db $08, $00, $08, $00 ; 0x2c
-	db $08, $08, $08, $30 ; 0x30
-	db $fc, $30, $2c, $30 ; 0x34
-	db $5c, $50, $fc, $50 ; 0x38
-	db $2c, $50, $5e, $6c ; 0x3c
-	db $fc, $6c, $2c, $6c ; 0x40
-	db $5e, $38, $fc, $38 ; 0x44
-	db $2c, $38, $5c, $60 ; 0x48
-	db $14, $60, $44, $60 ; 0x4c
-	db $44, $00, $30, $50 ; 0x50
-	db $40, $20, $20, $40 ; 0x54
-	db $10, $30, $10, $08 ; 0x58
-	db $00, $00, $10, $10 ; 0x5c
-	db $02, $00, $10, $18 ; 0x60
-	db $04, $00, $10, $20 ; 0x64
-	db $06, $00, $10, $28 ; 0x68
-	db $08, $00, $10, $30 ; 0x6c
-	db $0a, $00, $10, $38 ; 0x70
-	db $0c, $00, $10, $40 ; 0x74
-	db $0e, $00, $10, $48 ; 0x78
-	db $10, $00, $10, $50 ; 0x7c
-	db $12, $00, $80 ; 0x80
+SpriteTemplate_3b_64ca:
+	; $64ca, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3b_64eb:
+	; $64eb, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03b/d_64f4.bin" ; $64f4, 89 bytes
 OverrideMinigameCursorIfLocked:
 	push bc ; $654d
 	push hl ; $654e
@@ -5802,7 +5770,7 @@ Label_3b_69f8:
 	ld e, a ; $69fa
 	farcall FarPtr_ApplySpriteBobOffset ; $69fb
 	ld b, $08 ; $69fe
-	ld hl, $6a19 ; $6a00
+	ld hl, SpriteTemplate_3b_6a19 ; $6a00
 	push de ; $6a03
 	call QueueSpriteTemplate ; $6a04
 	pop de ; $6a07
@@ -5810,38 +5778,28 @@ Label_3b_69f8:
 	add hl, de ; $6a0b
 	ld d, h ; $6a0c
 	ld e, l ; $6a0d
-	ld hl, $6a3a ; $6a0e
+	ld hl, SpriteTemplate_3b_6a3a ; $6a0e
 	ld b, $08 ; $6a11
 	ld c, $70 ; $6a13
 	call QueueSpriteTemplate ; $6a15
 	ret ; $6a18
-	; $6a19, 101 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80, $10, $08, $00 ; 0x20
-	db $00, $10, $10, $02 ; 0x24
-	db $00, $80, $38, $fc ; 0x28
-	db $38, $2c, $38, $5c ; 0x2c
-	db $60, $0c, $60, $4d ; 0x30
-	db $60, $3e, $00, $10 ; 0x34
-	db $20, $40, $30, $40 ; 0x38
-	db $10, $08, $00, $00 ; 0x3c
-	db $10, $10, $02, $00 ; 0x40
-	db $10, $18, $04, $00 ; 0x44
-	db $10, $20, $06, $00 ; 0x48
-	db $10, $28, $08, $00 ; 0x4c
-	db $10, $30, $0a, $00 ; 0x50
-	db $10, $38, $0c, $00 ; 0x54
-	db $10, $40, $0e, $00 ; 0x58
-	db $10, $48, $10, $00 ; 0x5c
-	db $10, $50, $12, $00 ; 0x60
-	db $80 ; 0x64
+SpriteTemplate_3b_6a19:
+	; $6a19, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3b_6a3a:
+	; $6a3a, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03b/d_6a43.bin" ; $6a43, 59 bytes
 DrawSavedDataSourceGrid:
 	wram_bank $03 ; $6a7e
 	ld b, $00 ; $6a84
@@ -6505,7 +6463,7 @@ Label_3b_6f77:
 	ld e, a ; $6f79
 	farcall FarPtr_ApplySpriteBobOffset ; $6f7a
 	ld b, $08 ; $6f7d
-	ld hl, $6f98 ; $6f7f
+	ld hl, SpriteTemplate_3b_6f98 ; $6f7f
 	push de ; $6f82
 	call QueueSpriteTemplate ; $6f83
 	pop de ; $6f86
@@ -6513,37 +6471,28 @@ Label_3b_6f77:
 	add hl, de ; $6f8a
 	ld d, h ; $6f8b
 	ld e, l ; $6f8c
-	ld hl, $6fb9 ; $6f8d
+	ld hl, SpriteTemplate_3b_6fb9 ; $6f8d
 	ld b, $08 ; $6f90
 	ld c, $70 ; $6f92
 	call QueueSpriteTemplate ; $6f94
 	ret ; $6f97
-	; $6f98, 99 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80, $10, $08, $00 ; 0x20
-	db $00, $10, $10, $02 ; 0x24
-	db $00, $80, $3a, $fe ; 0x28
-	db $3a, $2c, $3a, $5c ; 0x2c
-	db $60, $0c, $60, $4c ; 0x30
-	db $00, $10, $20, $30 ; 0x34
-	db $40, $30, $10, $08 ; 0x38
-	db $00, $00, $10, $10 ; 0x3c
-	db $02, $00, $10, $18 ; 0x40
-	db $04, $00, $10, $20 ; 0x44
-	db $06, $00, $10, $28 ; 0x48
-	db $08, $00, $10, $30 ; 0x4c
-	db $0a, $00, $10, $38 ; 0x50
-	db $0c, $00, $10, $40 ; 0x54
-	db $0e, $00, $10, $48 ; 0x58
-	db $10, $00, $10, $50 ; 0x5c
-	db $12, $00, $80 ; 0x60
+SpriteTemplate_3b_6f98:
+	; $6f98, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3b_6fb9:
+	; $6fb9, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03b/d_6fc2.bin" ; $6fc2, 57 bytes
 DrawEraseSavedDataGrid:
 	wram_bank $03 ; $6ffb
 	ld b, $00 ; $7001
@@ -7032,7 +6981,7 @@ Label_3b_736b:
 	ld e, a ; $736d
 	farcall FarPtr_ApplySpriteBobOffset ; $736e
 	ld b, $08 ; $7371
-	ld hl, $738c ; $7373
+	ld hl, SpriteTemplate_3b_738c ; $7373
 	push de ; $7376
 	call QueueSpriteTemplate ; $7377
 	pop de ; $737a
@@ -7040,25 +6989,28 @@ Label_3b_736b:
 	add hl, de ; $737e
 	ld d, h ; $737f
 	ld e, l ; $7380
-	ld hl, $73ad ; $7381
+	ld hl, SpriteTemplate_3b_73ad ; $7381
 	ld b, $08 ; $7384
 	ld c, $70 ; $7386
 	call QueueSpriteTemplate ; $7388
 	ret ; $738b
-	; $738c, 51 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80, $10, $08, $00 ; 0x20
-	db $00, $10, $10, $02 ; 0x24
-	db $00, $80, $50, $fc ; 0x28
-	db $50, $2c, $50, $5c ; 0x2c
-	db $00, $10, $20 ; 0x30
+SpriteTemplate_3b_738c:
+	; $738c, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3b_73ad:
+	; $73ad, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03b/d_73b6.bin" ; $73b6, 9 bytes
 DrawN64RecordTypeGrid:
 	wram_bank $03 ; $73bf
 	ld b, $00 ; $73c5
@@ -7477,7 +7429,7 @@ Label_3b_7706:
 	ld e, a ; $7708
 	farcall FarPtr_ApplySpriteBobOffset ; $7709
 	ld b, $08 ; $770c
-	ld hl, $7727 ; $770e
+	ld hl, SpriteTemplate_3b_7727 ; $770e
 	push de ; $7711
 	call QueueSpriteTemplate ; $7712
 	pop de ; $7715
@@ -7485,26 +7437,28 @@ Label_3b_7706:
 	add hl, de ; $7719
 	ld d, h ; $771a
 	ld e, l ; $771b
-	ld hl, $7748 ; $771c
+	ld hl, SpriteTemplate_3b_7748 ; $771c
 	ld b, $08 ; $771f
 	ld c, $70 ; $7721
 	call QueueSpriteTemplate ; $7723
 	ret ; $7726
-	; $7727, 54 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80, $10, $08, $00 ; 0x20
-	db $00, $10, $10, $02 ; 0x24
-	db $00, $80, $38, $14 ; 0x28
-	db $38, $4c, $60, $14 ; 0x2c
-	db $60, $4a, $00, $10 ; 0x30
-	db $20, $30 ; 0x34
+SpriteTemplate_3b_7727:
+	; $7727, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_3b_7748:
+	; $7748, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_03b/d_7751.bin" ; $7751, 12 bytes
 ShowTournamentBracket:
 	wram_bank $03 ; $775d
 	ld a, b ; $7763
