@@ -2771,8 +2771,7 @@ WalkToServeChallengeCourtCutscene:
 	script_set_actor_script $00, ActorScript_15_66d3 ; $669e
 	script_set_actor_script $06, ActorScript_15_66c8 ; $66a9
 	script_set_actor_script $02, ActorScript_15_66e4 ; $66b4
-	ld a, $00 ; $66bf
-	farcall FarPtr_WaitActorScriptDone ; $66c1
+	script_wait_actor_script $00 ; $66bf
 	call PlayerPartnerGestureCutscene ; $66c4
 	ret ; $66c7
 ActorScript_15_66c8:
@@ -3077,8 +3076,7 @@ Func_15_6af7:
 	script_set_actor_script $00, ActorScript_15_6b54 ; $6b11
 	script_wait_frames $0a ; $6b1c
 	script_set_actor_script $02, ActorScript_15_6b71 ; $6b23
-	ld a, $00 ; $6b2e
-	farcall FarPtr_WaitActorScriptDone ; $6b30
+	script_wait_actor_script $00 ; $6b2e
 	call PlayerPartnerGestureCutscene ; $6b33
 	ld a, $0f ; $6b36
 	ld [wStoryModeCurrentLocation], a ; $6b38
@@ -3376,8 +3374,7 @@ WalkToStrokeChallengeCourtCutscene:
 	script_set_actor_script $0c, ActorScript_15_6f9c ; $6f60
 	script_set_actor_script $00, ActorScript_15_6fa7 ; $6f6b
 	script_set_actor_script $02, ActorScript_15_6fbe ; $6f76
-	ld a, $00 ; $6f81
-	farcall FarPtr_WaitActorScriptDone ; $6f83
+	script_wait_actor_script $00 ; $6f81
 	call PlayerPartnerGestureCutscene ; $6f86
 	ld a, $0f ; $6f89
 	ld [wStoryModeCurrentLocation], a ; $6f8b
@@ -4313,11 +4310,9 @@ ServeCoachWalkToCourtAndStartLesson:
 	script_set_actor_script $00, ActorScript_15_7b1a ; $7ab3
 	script_set_actor_script $02, ActorScript_15_7b25 ; $7abe
 	script_move_player $1800, $0f00 ; $7ac9
-	ld a, $00 ; $7ad3
-	farcall FarPtr_WaitActorScriptDone ; $7ad5
+	script_wait_actor_script $00 ; $7ad3
 	farcall FarPtr_WaitPlayerMoveDone ; $7ad8
-	ld a, $07 ; $7adb
-	farcall FarPtr_WaitActorScriptDone ; $7add
+	script_wait_actor_script $07 ; $7adb
 	script_wait_frames $05 ; $7ae0
 	call PlayerPartnerGestureCutscene ; $7ae7
 	ld a, $0f ; $7aea
@@ -4359,11 +4354,9 @@ NetCoachWalkToCourtAndStartLesson:
 	script_set_actor_script $00, ActorScript_15_7bb3 ; $7b46
 	script_set_actor_script $02, ActorScript_15_7bbe ; $7b51
 	script_move_player $2800, $2600 ; $7b5c
-	ld a, $00 ; $7b66
-	farcall FarPtr_WaitActorScriptDone ; $7b68
+	script_wait_actor_script $00 ; $7b66
 	farcall FarPtr_WaitPlayerMoveDone ; $7b6b
-	ld a, $12 ; $7b6e
-	farcall FarPtr_WaitActorScriptDone ; $7b70
+	script_wait_actor_script $12 ; $7b6e
 	script_wait_frames $05 ; $7b73
 	call PlayerPartnerGestureCutscene ; $7b7a
 	ld a, $0f ; $7b7d
@@ -4407,11 +4400,9 @@ ReturnCoachWalkToCourtAndStartLesson:
 	script_set_actor_script $00, ActorScript_15_7c4c ; $7bdf
 	script_set_actor_script $02, ActorScript_15_7c57 ; $7bea
 	script_move_player $1800, $2700 ; $7bf5
-	ld a, $00 ; $7bff
-	farcall FarPtr_WaitActorScriptDone ; $7c01
+	script_wait_actor_script $00 ; $7bff
 	farcall FarPtr_WaitPlayerMoveDone ; $7c04
-	ld a, $0d ; $7c07
-	farcall FarPtr_WaitActorScriptDone ; $7c09
+	script_wait_actor_script $0d ; $7c07
 	script_wait_frames $05 ; $7c0c
 	call PlayerPartnerGestureCutscene ; $7c13
 	ld a, $0f ; $7c16

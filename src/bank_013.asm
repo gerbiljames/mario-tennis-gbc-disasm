@@ -2524,8 +2524,7 @@ SetupStoryMinigameMatch0:
 	script_move_player $0c00, $1c00 ; $6a55
 	farcall FarPtr_WaitPlayerMoveDone ; $6a5f
 	script_set_actor_script $00, ActorScript_13_6be7 ; $6a62
-	ld a, $05 ; $6a6d
-	farcall FarPtr_WaitActorScriptDone ; $6a6f
+	script_wait_actor_script $05 ; $6a6d
 	farcall FarPtr_InitStoryMatchSettings ; $6a72
 	load_match_settings $000a ; $6a75
 	farcall FarPtr_RunStoryMatch ; $6a82
@@ -2546,8 +2545,7 @@ Func_13_6a89:
 	script_set_actor_script $03, ActorScript_13_6b19 ; $6ae5
 	script_move_player $0c00, $1c00 ; $6af0
 	farcall FarPtr_WaitPlayerMoveDone ; $6afa
-	ld a, $05 ; $6afd
-	farcall FarPtr_WaitActorScriptDone ; $6aff
+	script_wait_actor_script $05 ; $6afd
 	farcall FarPtr_InitStoryMatchSettings ; $6b02
 	load_match_settings $010a ; $6b05
 	farcall FarPtr_RunStoryMatch ; $6b12
@@ -2752,8 +2750,7 @@ Label_13_6d44:
 	script_set_actor_script $06, ActorScript_13_6b31 ; $6dc1
 	script_move_player $0c00, $1b00 ; $6dcc
 	farcall FarPtr_WaitPlayerMoveDone ; $6dd6
-	ld a, $04 ; $6dd9
-	farcall FarPtr_WaitActorScriptDone ; $6ddb
+	script_wait_actor_script $04 ; $6dd9
 	farcall FarPtr_InitStoryMatchSettings ; $6dde
 	load_match_settings $000b ; $6de1
 	farcall FarPtr_RunStoryMatch ; $6dee
@@ -2870,8 +2867,7 @@ Label_13_6fb6:
 	script_set_actor_script $07, ActorScript_13_6b58 ; $7049
 	script_move_player $0c00, $1b00 ; $7054
 	farcall FarPtr_WaitPlayerMoveDone ; $705e
-	ld a, $04 ; $7061
-	farcall FarPtr_WaitActorScriptDone ; $7063
+	script_wait_actor_script $04 ; $7061
 	farcall FarPtr_InitStoryMatchSettings ; $7066
 	load_match_settings $010d ; $7069
 	farcall FarPtr_RunStoryMatch ; $7076
@@ -2962,8 +2958,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_wait_frames $0a ; $71f5
 	script_set_actor_script $03, ActorScript_13_7a7d ; $71fc
 	farcall FarPtr_WaitPlayerMoveDone ; $7207
-	ld a, $03 ; $720a
-	farcall FarPtr_WaitActorScriptDone ; $720c
+	script_wait_actor_script $03 ; $720a
 	script_face_toward $00, $0d ; $720f
 	test_flag $1c, 0 ; $7217
 	jr z, Label_13_724d ; $721a
@@ -3215,8 +3210,7 @@ Label_13_7769:
 	script_set_actor_script $09, ActorScript_13_7ac9 ; $77ad
 	script_move_player $0b00, $1d00 ; $77b8
 	farcall FarPtr_WaitPlayerMoveDone ; $77c2
-	ld a, $09 ; $77c5
-	farcall FarPtr_WaitActorScriptDone ; $77c7
+	script_wait_actor_script $09 ; $77c5
 	script_face_toward $00, $09 ; $77ca
 	script_face_toward $03, $02 ; $77d2
 	script_set_anim $09, $04 ; $77da

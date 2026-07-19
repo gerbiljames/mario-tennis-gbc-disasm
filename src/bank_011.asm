@@ -288,8 +288,7 @@ Label_11_4395:
 	script_set_anim $00, $03 ; $43b0
 	script_wait_idle $00 ; $43b7
 	script_wait_frames $1e ; $43bc
-	ld a, $00 ; $43c3
-	farcall FarPtr_WaitActorScriptDone ; $43c5
+	script_wait_actor_script $00 ; $43c3
 	script_move_player $2300, $2400 ; $43c8
 	script_set_actor_script $00, ActorScript_11_43f4 ; $43d2
 	script_wait_frames $f0 ; $43dd
@@ -1291,8 +1290,7 @@ Func_11_566e:
 	script_wait_move $0a ; $5715
 	script_face $0a, $40 ; $571a
 	script_face $0b, $40 ; $5721
-	ld a, $00 ; $5728
-	farcall FarPtr_WaitActorScriptDone ; $572a
+	script_wait_actor_script $00 ; $5728
 	ld hl, wStoryModePlayersXPosition ; $572d
 	ld de, wStoryModeSpawnPosition ; $5730
 	ld bc, $0005 ; $5733
@@ -2188,8 +2186,7 @@ Label_11_6642:
 	script_face $07, $80 ; $6665
 	script_set_actor_script $0c, ActorScript_11_6df8 ; $666c
 	script_set_actor_script $0d, ActorScript_11_6e07 ; $6677
-	ld a, $0d ; $6682
-	farcall FarPtr_WaitActorScriptDone ; $6684
+	script_wait_actor_script $0d ; $6682
 	script_null_script $02 ; $6687
 	script_move_player $0b00, $1100 ; $668c
 	script_set_actor_script $05, ActorScript_11_5b98 ; $6696
@@ -2197,8 +2194,7 @@ Label_11_6642:
 	script_wait_frames $1e ; $66ac
 	script_set_actor_script $00, ActorScript_11_7773 ; $66b3
 	script_set_actor_script $02, ActorScript_11_5d27 ; $66be
-	ld a, $00 ; $66c9
-	farcall FarPtr_WaitActorScriptDone ; $66cb
+	script_wait_actor_script $00 ; $66c9
 	script_face $00, $c0 ; $66ce
 	script_face $02, $c0 ; $66d5
 	script_wait_frames $3c ; $66dc
@@ -2246,24 +2242,20 @@ LoadDoublesRankingOpponentGraphics:
 Label_11_67b0:
 	script_set_actor_script $08, ActorScript_11_5b14 ; $67b0
 	script_set_actor_script $09, ActorScript_11_5b42 ; $67bb
-	ld a, $09 ; $67c6
-	farcall FarPtr_WaitActorScriptDone ; $67c8
+	script_wait_actor_script $09 ; $67c6
 	script_set_actor_script $09, ActorScript_11_681f ; $67cb
-	ld a, $08 ; $67d6
-	farcall FarPtr_WaitActorScriptDone ; $67d8
+	script_wait_actor_script $08 ; $67d6
 	script_set_actor_script $08, ActorScript_11_7d86 ; $67db
 	ret ; $67e6
 Label_11_67e7:
 	script_set_actor_script $05, ActorScript_11_5bfa ; $67e7
 	script_set_actor_script $07, ActorScript_11_5c45 ; $67f2
-	ld a, $05 ; $67fd
-	farcall FarPtr_WaitActorScriptDone ; $67ff
+	script_wait_actor_script $05 ; $67fd
 	ret ; $6802
 Label_11_6803:
 	script_set_actor_script $04, ActorScript_11_5c7f ; $6803
 	script_set_actor_script $06, ActorScript_11_5cbf ; $680e
-	ld a, $04 ; $6819
-	farcall FarPtr_WaitActorScriptDone ; $681b
+	script_wait_actor_script $04 ; $6819
 	ret ; $681e
 ActorScript_11_681f:
 	; $681f, 3 bytes (actor_script)
@@ -2927,23 +2919,19 @@ LoadRankingOpponentGraphics:
 	ret ; $7324
 Label_11_7325:
 	script_set_actor_script $07, ActorScript_11_766b ; $7325
-	ld a, $07 ; $7330
-	farcall FarPtr_WaitActorScriptDone ; $7332
+	script_wait_actor_script $07 ; $7330
 	ret ; $7335
 Label_11_7336:
 	script_set_actor_script $06, ActorScript_11_76cd ; $7336
-	ld a, $06 ; $7341
-	farcall FarPtr_WaitActorScriptDone ; $7343
+	script_wait_actor_script $06 ; $7341
 	ret ; $7346
 Label_11_7347:
 	script_set_actor_script $05, ActorScript_11_7700 ; $7347
-	ld a, $05 ; $7352
-	farcall FarPtr_WaitActorScriptDone ; $7354
+	script_wait_actor_script $05 ; $7352
 	ret ; $7357
 Label_11_7358:
 	script_set_actor_script $04, ActorScript_11_7745 ; $7358
-	ld a, $04 ; $7363
-	farcall FarPtr_WaitActorScriptDone ; $7365
+	script_wait_actor_script $04 ; $7363
 	ret ; $7368
 DrawRankingOpponentInfo:
 	test_flag $0a, 0 ; $7369
@@ -2973,8 +2961,7 @@ Label_11_7381:
 	script_move_player_to_actor $00 ; $73e3
 	script_face $03, $40 ; $73ea
 	farcall FarPtr_WaitPlayerMoveDone ; $73f1
-	ld a, $07 ; $73f4
-	farcall FarPtr_WaitActorScriptDone ; $73f6
+	script_wait_actor_script $07 ; $73f4
 	script_face_toward $00, $07 ; $73f9
 	script_set_anim $07, $02 ; $7401
 	script_wait_idle $07 ; $7408
@@ -3001,11 +2988,9 @@ Label_11_7438:
 	script_set_actor_script $06, ActorScript_11_76ab ; $7481
 	script_move_player_to_actor $00 ; $748c
 	script_face $03, $40 ; $7493
-	ld a, $06 ; $749a
-	farcall FarPtr_WaitActorScriptDone ; $749c
+	script_wait_actor_script $06 ; $749a
 	script_face_toward $06, $00 ; $749f
-	ld a, $06 ; $74a7
-	farcall FarPtr_WaitActorScriptDone ; $74a9
+	script_wait_actor_script $06 ; $74a7
 	script_set_anim $06, $02 ; $74ac
 	script_wait_idle $06 ; $74b3
 	script_set_text $082c ; $74b8
@@ -3032,8 +3017,7 @@ Label_11_74e3:
 	script_wait_frames $0a ; $7537
 	script_move_player_to_actor $00 ; $753e
 	script_face $03, $40 ; $7545
-	ld a, $05 ; $754c
-	farcall FarPtr_WaitActorScriptDone ; $754e
+	script_wait_actor_script $05 ; $754c
 	script_face_toward $05, $00 ; $7551
 	script_set_anim $05, $02 ; $7559
 	script_wait_idle $05 ; $7560
@@ -3066,8 +3050,7 @@ Label_11_7590:
 	script_set_actor_script $04, ActorScript_11_7728 ; $75e6
 	script_face $03, $40 ; $75f1
 	script_move_player_to_actor $00 ; $75f8
-	ld a, $04 ; $75ff
-	farcall FarPtr_WaitActorScriptDone ; $7601
+	script_wait_actor_script $04 ; $75ff
 	script_face_toward $04, $00 ; $7604
 	script_set_anim $04, $02 ; $760c
 	script_wait_idle $04 ; $7613
@@ -3280,14 +3263,12 @@ Label_11_7843:
 	script_wait_frames $1e ; $785f
 	script_set_actor_script $0e, ActorScript_11_6dbc ; $7866
 	script_set_actor_script $0f, ActorScript_11_6dcb ; $7871
-	ld a, $0f ; $787c
-	farcall FarPtr_WaitActorScriptDone ; $787e
+	script_wait_actor_script $0f ; $787c
 	script_move_player $1b00, $1100 ; $7881
 	script_set_actor_script $07, ActorScript_11_765a ; $788b
 	script_set_actor_script $00, ActorScript_11_7762 ; $7896
 	farcall FarPtr_WaitPlayerMoveDone ; $78a1
-	ld a, $07 ; $78a4
-	farcall FarPtr_WaitActorScriptDone ; $78a6
+	script_wait_actor_script $07 ; $78a4
 	script_wait_frames $14 ; $78a9
 	ld a, $0f ; $78b0
 	ld [$c294], a ; $78b2
@@ -3310,8 +3291,7 @@ Label_11_78cf:
 	script_set_actor_script $06, ActorScript_11_76bc ; $7919
 	script_set_actor_script $00, ActorScript_11_7773 ; $7924
 	farcall FarPtr_WaitPlayerMoveDone ; $792f
-	ld a, $06 ; $7932
-	farcall FarPtr_WaitActorScriptDone ; $7934
+	script_wait_actor_script $06 ; $7932
 	script_wait_frames $28 ; $7937
 	ld a, $0f ; $793e
 	ld [$c294], a ; $7940
@@ -3333,8 +3313,7 @@ Label_11_795d:
 	script_move_player $0b00, $1100 ; $799d
 	script_set_actor_script $05, ActorScript_11_76bc ; $79a7
 	script_set_actor_script $00, ActorScript_11_7773 ; $79b2
-	ld a, $05 ; $79bd
-	farcall FarPtr_WaitActorScriptDone ; $79bf
+	script_wait_actor_script $05 ; $79bd
 	script_wait_frames $28 ; $79c2
 	ld a, $0f ; $79c9
 	ld [$c294], a ; $79cb
@@ -3357,8 +3336,7 @@ Label_11_79e8:
 	script_set_actor_script $04, ActorScript_11_765a ; $7a32
 	script_set_actor_script $00, ActorScript_11_7762 ; $7a3d
 	farcall FarPtr_WaitPlayerMoveDone ; $7a48
-	ld a, $04 ; $7a4b
-	farcall FarPtr_WaitActorScriptDone ; $7a4d
+	script_wait_actor_script $04 ; $7a4b
 	script_wait_frames $28 ; $7a50
 	ld a, $0f ; $7a57
 	ld [$c294], a ; $7a59

@@ -1969,6 +1969,8 @@ SCRIPT_COMMANDS = (
         ((0x3E, 2, 'b'), ('F', "FarPtr_ScriptWaitActorIdle"))),
     ("script_wait_move",
         ((0x3E, 2, 'b'), ('F', "FarPtr_ScriptWaitActorMoveDone"))),
+    ("script_wait_actor_script",
+        ((0x3E, 2, 'b'), ('F', "FarPtr_WaitActorScriptDone"))),
     ("script_null_script",
         ((0x3E, 2, 'b'), ('F', "FarPtr_SetActorNullScript"))),
     # Always bracketed by push af / pop af (it clobbers a with the frame count
@@ -2490,6 +2492,14 @@ ENDM
 MACRO script_wait_move
 	ld a, \\1
 	farcall FarPtr_ScriptWaitActorMoveDone
+ENDM
+; Blocks the cutscene until `actor`'s script finishes (CheckActorScriptEnd),
+; advancing a frame each poll, with a ~600-frame timeout. WaitActorScriptDone
+; ($0a:$4372).
+; Usage: script_wait_actor_script actor
+MACRO script_wait_actor_script
+	ld a, \\1
+	farcall FarPtr_WaitActorScriptDone
 ENDM
 ; Detaches `actor`'s script: installs the shared null/idle script ($0a:$4766)
 ; via SetActorScript so the actor stops running its own bytecode and the

@@ -21,6 +21,14 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### script_wait_actor_script macro (2026-07-19)
+
+Added a `script_wait_actor_script actor` command: `ld a, actor; farcall
+FarPtr_WaitActorScriptDone` (`WaitActorScriptDone`, `$0a:$4372` — blocks the
+cutscene, advancing a frame per poll until the actor's script ends, ~600-frame
+timeout). Same two-step shape as `script_wait_move`. Collapses all 81 sites
+across banks $0e/$0f/$11/$12/$13/$15/$27. Byte-perfect.
+
 ### Audit StoryLocationTable trees end-to-end (2026-07-19)
 
 Walked all 42 `story_location` map_scripts pointers and, recursively, every

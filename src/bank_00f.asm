@@ -1627,8 +1627,7 @@ Func_0f_61b7:
 	script_null_script $02 ; $61bc
 	script_set_actor_script $00, ActorScript_0f_61e0 ; $61c1
 	script_set_actor_script $02, ActorScript_0f_61eb ; $61cc
-	ld a, $00 ; $61d7
-	farcall FarPtr_WaitActorScriptDone ; $61d9
+	script_wait_actor_script $00 ; $61d7
 	call IslandOpenRoundCallCutscene ; $61dc
 	ret ; $61df
 ActorScript_0f_61e0:
@@ -1647,8 +1646,7 @@ Func_0f_61f6:
 	ld a, $00 ; $61f6
 	ld [$c2b1], a ; $61f8
 	script_set_actor_script $00, ActorScript_0f_61eb ; $61fb
-	ld a, $00 ; $6206
-	farcall FarPtr_WaitActorScriptDone ; $6208
+	script_wait_actor_script $00 ; $6206
 	call IslandOpenRoundCallCutscene ; $620b
 	ret ; $620e
 TournamentInitScript_0f:

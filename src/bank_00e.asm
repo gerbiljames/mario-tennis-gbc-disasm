@@ -2077,8 +2077,7 @@ ExhibitionAcceptedSingles:
 	script_set_actor_script $10, ActorScript_0e_552d ; $5af8
 	script_wait_frames $28 ; $5b03
 	script_set_actor_script $0e, ActorScript_0e_552d ; $5b0a
-	ld a, $0e ; $5b15
-	farcall FarPtr_WaitActorScriptDone ; $5b17
+	script_wait_actor_script $0e ; $5b15
 	script_move_player $1200, $0d00 ; $5b1a
 	script_move_target $13, $1000, $0f00 ; $5b24
 	script_wait_move $13 ; $5b2f
@@ -2096,8 +2095,7 @@ ExhibitionAcceptedSingles:
 	script_set_actor_script $00, ActorScript_0e_5545 ; $5b83
 	script_wait_frames $3c ; $5b8e
 	script_move_player $1500, $0d00 ; $5b95
-	ld a, $00 ; $5b9f
-	farcall FarPtr_WaitActorScriptDone ; $5ba1
+	script_wait_actor_script $00 ; $5b9f
 	call Func_0e_7150 ; $5ba4
 	ld a, $1c ; $5ba7
 	ld [wStoryModeCurrentLocation], a ; $5ba9
@@ -2357,8 +2355,7 @@ ExhibitionAcceptedDoubles:
 	script_move_target $0e, $1500, $1300 ; $6232
 	script_wait_move $0e ; $623d
 	script_set_actor_script $0e, ActorScript_0e_552d ; $6242
-	ld a, $0e ; $624d
-	farcall FarPtr_WaitActorScriptDone ; $624f
+	script_wait_actor_script $0e ; $624d
 	script_move_player $1200, $0d00 ; $6252
 	script_move_target $13, $1000, $0f00 ; $625c
 	script_wait_move $13 ; $6267
@@ -2379,8 +2376,7 @@ ExhibitionAcceptedDoubles:
 	script_set_actor_script $02, ActorScript_0e_5545 ; $62d4
 	script_wait_frames $3c ; $62df
 	script_move_player $1500, $0d00 ; $62e6
-	ld a, $02 ; $62f0
-	farcall FarPtr_WaitActorScriptDone ; $62f2
+	script_wait_actor_script $02 ; $62f0
 	call Func_0e_7150 ; $62f5
 	ld a, $1c ; $62f8
 	ld [wStoryModeCurrentLocation], a ; $62fa
@@ -2434,10 +2430,8 @@ Label_0e_639b:
 	script_set_actor_script $00, ActorScript_0e_630b ; $63b0
 	script_wait_frames $14 ; $63bb
 	script_set_actor_script $02, ActorScript_0e_6324 ; $63c2
-	ld a, $00 ; $63cd
-	farcall FarPtr_WaitActorScriptDone ; $63cf
-	ld a, $02 ; $63d2
-	farcall FarPtr_WaitActorScriptDone ; $63d4
+	script_wait_actor_script $00 ; $63cd
+	script_wait_actor_script $02 ; $63d2
 	jp PromptExhibitionMatch ; $63d7
 ActorScript_0e_63da:
 	; $63da, 13 bytes (actor_script)
@@ -2473,10 +2467,8 @@ Label_0e_643f:
 	script_set_actor_script $00, ActorScript_0e_63da ; $6454
 	script_wait_frames $14 ; $645f
 	script_set_actor_script $02, ActorScript_0e_63e7 ; $6466
-	ld a, $00 ; $6471
-	farcall FarPtr_WaitActorScriptDone ; $6473
-	ld a, $02 ; $6476
-	farcall FarPtr_WaitActorScriptDone ; $6478
+	script_wait_actor_script $00 ; $6471
+	script_wait_actor_script $02 ; $6476
 	jp PromptExhibitionMatch ; $647b
 ActorScript_0e_647e:
 	; $647e, 19 bytes (actor_script)
@@ -2515,10 +2507,8 @@ Label_0e_64ea:
 	script_set_actor_script $00, ActorScript_0e_647e ; $64ff
 	script_wait_frames $14 ; $650a
 	script_set_actor_script $02, ActorScript_0e_6491 ; $6511
-	ld a, $00 ; $651c
-	farcall FarPtr_WaitActorScriptDone ; $651e
-	ld a, $02 ; $6521
-	farcall FarPtr_WaitActorScriptDone ; $6523
+	script_wait_actor_script $00 ; $651c
+	script_wait_actor_script $02 ; $6521
 	jp PromptExhibitionMatch ; $6526
 ActorScript_0e_6529:
 	; $6529, 19 bytes (actor_script)
@@ -2557,10 +2547,8 @@ Label_0e_6595:
 	script_set_actor_script $00, ActorScript_0e_6529 ; $65aa
 	script_wait_frames $14 ; $65b5
 	script_set_actor_script $02, ActorScript_0e_653c ; $65bc
-	ld a, $00 ; $65c7
-	farcall FarPtr_WaitActorScriptDone ; $65c9
-	ld a, $02 ; $65cc
-	farcall FarPtr_WaitActorScriptDone ; $65ce
+	script_wait_actor_script $00 ; $65c7
+	script_wait_actor_script $02 ; $65cc
 	jp PromptExhibitionMatch ; $65d1
 PromptExhibitionMatch:
 	farcall FarPtr_BeginCutsceneScriptMode ; $65d4
@@ -2714,8 +2702,7 @@ Label_0e_687b:
 	script_set_actor_script $10, ActorScript_0e_552d ; $688d
 	script_wait_frames $14 ; $6898
 	script_set_actor_script $0e, ActorScript_0e_552d ; $689f
-	ld a, $0e ; $68aa
-	farcall FarPtr_WaitActorScriptDone ; $68ac
+	script_wait_actor_script $0e ; $68aa
 	script_move_player $1200, $0d00 ; $68af
 	test_flag $05, 7 ; $68b9
 	jr nz, Label_0e_68cb ; $68bc
@@ -2747,8 +2734,7 @@ Label_0e_691e:
 	script_set_actor_script $02, ActorScript_0e_5545 ; $6953
 Label_0e_695e:
 	script_move_player $1500, $0d00 ; $695e
-	ld a, $00 ; $6968
-	farcall FarPtr_WaitActorScriptDone ; $696a
+	script_wait_actor_script $00 ; $6968
 	call Func_0e_7150 ; $696d
 	ld a, $1c ; $6970
 	ld [wStoryModeCurrentLocation], a ; $6972
@@ -3222,12 +3208,10 @@ ExhibitionMatchIntroCutscene:
 	script_set_actor_script $00, ActorScript_0e_7b11 ; $7796
 	script_wait_frames $5a ; $77a1
 	script_move_player $0e00, $1700 ; $77a8
-	ld a, $0e ; $77b2
-	farcall FarPtr_WaitActorScriptDone ; $77b4
+	script_wait_actor_script $0e ; $77b2
 	script_set_speed $0e, $0020 ; $77b7
 	script_set_actor_script $0e, ActorScript_0e_7b24 ; $77bf
-	ld a, $0e ; $77ca
-	farcall FarPtr_WaitActorScriptDone ; $77cc
+	script_wait_actor_script $0e ; $77ca
 	script_wait_frames $3c ; $77cf
 	script_set_anim $0d, $03 ; $77d6
 	script_set_anim $00, $03 ; $77dd
@@ -3310,14 +3294,12 @@ Label_0e_7927:
 	script_set_actor_script $02, ActorScript_0e_7b11 ; $79ef
 	script_wait_frames $5a ; $79fa
 	script_move_player $0e00, $1700 ; $7a01
-	ld a, $0e ; $7a0b
-	farcall FarPtr_WaitActorScriptDone ; $7a0d
+	script_wait_actor_script $0e ; $7a0b
 	script_set_speed $0e, $0020 ; $7a10
 	script_set_actor_script $0e, ActorScript_0e_7b24 ; $7a18
 	script_set_actor_script $02, ActorScript_0e_7c6e ; $7a23
 	script_move_target $02, $0f00, $1b00 ; $7a2e
-	ld a, $0e ; $7a39
-	farcall FarPtr_WaitActorScriptDone ; $7a3b
+	script_wait_actor_script $0e ; $7a39
 	script_wait_frames $3c ; $7a3e
 	script_set_anim $03, $03 ; $7a45
 	script_wait_idle $03 ; $7a4c
@@ -3348,10 +3330,8 @@ Label_0e_7a66:
 	script_set_actor_script $03, ActorScript_0e_7b46 ; $7adb
 	script_set_actor_script $00, ActorScript_0e_7b5d ; $7ae6
 	script_set_actor_script $02, ActorScript_0e_7b6e ; $7af1
-	ld a, $0d ; $7afc
-	farcall FarPtr_WaitActorScriptDone ; $7afe
-	ld a, $03 ; $7b01
-	farcall FarPtr_WaitActorScriptDone ; $7b03
+	script_wait_actor_script $0d ; $7afc
+	script_wait_actor_script $03 ; $7b01
 	script_wait_frames $3c ; $7b06
 	call PrepareStoryMatch ; $7b0d
 	ret ; $7b10

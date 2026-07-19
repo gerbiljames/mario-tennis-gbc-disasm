@@ -381,6 +381,14 @@ MACRO script_wait_move
 	ld a, \1
 	farcall FarPtr_ScriptWaitActorMoveDone
 ENDM
+; Blocks the cutscene until `actor`'s script finishes (CheckActorScriptEnd),
+; advancing a frame each poll, with a ~600-frame timeout. WaitActorScriptDone
+; ($0a:$4372).
+; Usage: script_wait_actor_script actor
+MACRO script_wait_actor_script
+	ld a, \1
+	farcall FarPtr_WaitActorScriptDone
+ENDM
 ; Detaches `actor`'s script: installs the shared null/idle script ($0a:$4766)
 ; via SetActorScript so the actor stops running its own bytecode and the
 ; cutscene can drive it directly. SetActorNullScript ($0a:$4364).
