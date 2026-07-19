@@ -21,6 +21,19 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Name the shot-type dispatch handlers (2026-07-19)
+
+Two `$07` jump tables dispatch directly on `wCurrentShotType` (`ld a,
+[wCurrentShotType]` / `rst Rst00`), so each entry is uniquely identified by its
+shot-type index. Named all their targets: the 12-entry executor table at `$5445`
+(applies per-type ball-height/preset/trajectory then farcalls the shot's physics
+bank) -> `ExecuteShot{Topspin,PowerTopspin,Slice,PowerSlice,Neutral,Reach,
+ReachPowerTopspin,ReachPowerSlice,ReachBasic,Smash,Lob,Drop}`; and the 15-entry
+`ComputeShotPlacement` table at `$5165` (each loads a distinct per-type placement
+sub-table from the `$4d21` blob via `LoadShotPlacementEntry`, then computes shot
+speed) -> `ShotPlacement<Type>`, including the three serves
+(`ServeTopspin`/`ServeSlice`/`ServeFlat`). Byte-perfect.
+
 ### Apply shot-type / joypad constants ROM-wide (2026-07-19)
 
 Swept every bank for sites that operate on a known input value or

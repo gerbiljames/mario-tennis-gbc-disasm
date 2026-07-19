@@ -2113,22 +2113,22 @@ Label_07_4d0c:
 ComputeShotPlacement:
 	ld a, [wCurrentShotType] ; $5161
 	rst Rst00 ; $5164
-	dw Label_07_5183 ; $5165 jumptable
-	dw Label_07_519b ; $5167 jumptable
-	dw Label_07_51b3 ; $5169 jumptable
-	dw Label_07_51cb ; $516b jumptable
-	dw Label_07_51e3 ; $516d jumptable
-	dw Label_07_5248 ; $516f jumptable
-	dw Label_07_5222 ; $5171 jumptable
-	dw Label_07_5235 ; $5173 jumptable
-	dw Label_07_520f ; $5175 jumptable
-	dw Label_07_51f9 ; $5177 jumptable
-	dw Label_07_525b ; $5179 jumptable
-	dw Label_07_5268 ; $517b jumptable
-	dw Label_07_5275 ; $517d jumptable
-	dw Label_07_5284 ; $517f jumptable
-	dw Label_07_5293 ; $5181 jumptable
-Label_07_5183:
+	dw ShotPlacementTopspin ; $5165 jumptable
+	dw ShotPlacementPowerTopspin ; $5167 jumptable
+	dw ShotPlacementSlice ; $5169 jumptable
+	dw ShotPlacementPowerSlice ; $516b jumptable
+	dw ShotPlacementNeutral ; $516d jumptable
+	dw ShotPlacementReach ; $516f jumptable
+	dw ShotPlacementReachPowerTopspin ; $5171 jumptable
+	dw ShotPlacementReachPowerSlice ; $5173 jumptable
+	dw ShotPlacementReachBasic ; $5175 jumptable
+	dw ShotPlacementSmash ; $5177 jumptable
+	dw ShotPlacementLob ; $5179 jumptable
+	dw ShotPlacementDrop ; $517b jumptable
+	dw ShotPlacementServeTopspin ; $517d jumptable
+	dw ShotPlacementServeSlice ; $517f jumptable
+	dw ShotPlacementServeFlat ; $5181 jumptable
+ShotPlacementTopspin:
 	ld hl, $4d31 ; $5183
 	ld a, [$df6e] ; $5186
 	ld d, a ; $5189
@@ -2139,7 +2139,7 @@ Label_07_5183:
 	call AddChargeSpeedBonus ; $5194
 	call FinalizeShotSpeed ; $5197
 	ret ; $519a
-Label_07_519b:
+ShotPlacementPowerTopspin:
 	ld hl, $4d81 ; $519b
 	ld a, [$df6e] ; $519e
 	ld d, a ; $51a1
@@ -2150,7 +2150,7 @@ Label_07_519b:
 	call AddChargeSpeedBonus ; $51ac
 	call FinalizeShotSpeed ; $51af
 	ret ; $51b2
-Label_07_51b3:
+ShotPlacementSlice:
 	ld hl, $4dd1 ; $51b3
 	ld a, [$df6f] ; $51b6
 	ld d, a ; $51b9
@@ -2161,7 +2161,7 @@ Label_07_51b3:
 	call AddChargeSpeedBonusHalf ; $51c4
 	call FinalizeShotSpeed ; $51c7
 	ret ; $51ca
-Label_07_51cb:
+ShotPlacementPowerSlice:
 	ld hl, $4e21 ; $51cb
 	ld a, [$df6f] ; $51ce
 	ld d, a ; $51d1
@@ -2172,7 +2172,7 @@ Label_07_51cb:
 	call AddChargeSpeedBonusHalf ; $51dc
 	call FinalizeShotSpeed ; $51df
 	ret ; $51e2
-Label_07_51e3:
+ShotPlacementNeutral:
 	ld hl, $4e71 ; $51e3
 	ld d, $00 ; $51e6
 	ld a, [$df6b] ; $51e8
@@ -2182,7 +2182,7 @@ Label_07_51e3:
 	call AddChargeSpeedBonus ; $51f2
 	call FinalizeShotSpeed ; $51f5
 	ret ; $51f8
-Label_07_51f9:
+ShotPlacementSmash:
 	ld hl, $4ec1 ; $51f9
 	ld d, $00 ; $51fc
 	ld a, [$df6c] ; $51fe
@@ -2192,7 +2192,7 @@ Label_07_51f9:
 	call AddChargeSpeedBonus ; $5208
 	call FinalizeShotSpeed ; $520b
 	ret ; $520e
-Label_07_520f:
+ShotPlacementReachBasic:
 	ld hl, $4f11 ; $520f
 	ld d, $00 ; $5212
 	ld a, [$df6d] ; $5214
@@ -2201,7 +2201,7 @@ Label_07_520f:
 	call AddBallSpeed3Sixteenths ; $521b
 	call FinalizeShotSpeed ; $521e
 	ret ; $5221
-Label_07_5222:
+ShotPlacementReachPowerTopspin:
 	ld hl, $4f61 ; $5222
 	ld d, $00 ; $5225
 	ld a, [$df6d] ; $5227
@@ -2210,7 +2210,7 @@ Label_07_5222:
 	call AddBallSpeedQuarter ; $522e
 	call FinalizeShotSpeed ; $5231
 	ret ; $5234
-Label_07_5235:
+ShotPlacementReachPowerSlice:
 	ld hl, $4fb1 ; $5235
 	ld d, $00 ; $5238
 	ld a, [$df6d] ; $523a
@@ -2219,7 +2219,7 @@ Label_07_5235:
 	call AddBallSpeedEighth ; $5241
 	call FinalizeShotSpeed ; $5244
 	ret ; $5247
-Label_07_5248:
+ShotPlacementReach:
 	ld hl, $5001 ; $5248
 	ld d, $00 ; $524b
 	ld a, [$df6d] ; $524d
@@ -2228,21 +2228,21 @@ Label_07_5248:
 	call AddBallSpeed3Sixteenths ; $5254
 	call FinalizeShotSpeed ; $5257
 	ret ; $525a
-Label_07_525b:
+ShotPlacementLob:
 	ld hl, $5051 ; $525b
 	ld a, [$df92] ; $525e
 	ld d, a ; $5261
 	ld e, $00 ; $5262
 	call LoadShotPlacementEntry ; $5264
 	ret ; $5267
-Label_07_5268:
+ShotPlacementDrop:
 	ld hl, $5061 ; $5268
 	ld a, [$df93] ; $526b
 	ld d, a ; $526e
 	ld e, $00 ; $526f
 	call LoadShotPlacementEntry ; $5271
 	ret ; $5274
-Label_07_5275:
+ShotPlacementServeTopspin:
 	ld hl, $5071 ; $5275
 	ld a, [$df6e] ; $5278
 	ld d, a ; $527b
@@ -2250,7 +2250,7 @@ Label_07_5275:
 	ld e, a ; $527f
 	call LoadShotPlacementEntry ; $5280
 	ret ; $5283
-Label_07_5284:
+ShotPlacementServeSlice:
 	ld hl, $50c1 ; $5284
 	ld a, [$df6f] ; $5287
 	ld d, a ; $528a
@@ -2258,7 +2258,7 @@ Label_07_5284:
 	ld e, a ; $528e
 	call LoadShotPlacementEntry ; $528f
 	ret ; $5292
-Label_07_5293:
+ShotPlacementServeFlat:
 	ld hl, $5111 ; $5293
 	ld d, $00 ; $5296
 	ld a, [$df6c] ; $5298
@@ -2530,18 +2530,18 @@ Label_07_541c:
 	push hl ; $5440
 	ld a, [wCurrentShotType] ; $5441
 	rst Rst00 ; $5444
-	dw Label_07_58be ; $5445 jumptable
-	dw Label_07_58d3 ; $5447 jumptable
-	dw Label_07_58ec ; $5449 jumptable
-	dw Label_07_5901 ; $544b jumptable
-	dw Label_07_59a8 ; $544d jumptable
-	dw Label_07_597c ; $544f jumptable
-	dw Label_07_5952 ; $5451 jumptable
-	dw Label_07_5967 ; $5453 jumptable
-	dw Label_07_593d ; $5455 jumptable
-	dw Label_07_5991 ; $5457 jumptable
-	dw Label_07_591a ; $5459 jumptable
-	dw Label_07_592d ; $545b jumptable
+	dw ExecuteShotTopspin ; $5445 jumptable
+	dw ExecuteShotPowerTopspin ; $5447 jumptable
+	dw ExecuteShotSlice ; $5449 jumptable
+	dw ExecuteShotPowerSlice ; $544b jumptable
+	dw ExecuteShotNeutral ; $544d jumptable
+	dw ExecuteShotReach ; $544f jumptable
+	dw ExecuteShotReachPowerTopspin ; $5451 jumptable
+	dw ExecuteShotReachPowerSlice ; $5453 jumptable
+	dw ExecuteShotReachBasic ; $5455 jumptable
+	dw ExecuteShotSmash ; $5457 jumptable
+	dw ExecuteShotLob ; $5459 jumptable
+	dw ExecuteShotDrop ; $545b jumptable
 	dw Label_07_59c5 ; $545d jumptable
 	dw Label_07_59d2 ; $545f jumptable
 	dw Label_07_59df ; $5461 jumptable
@@ -3267,7 +3267,7 @@ Label_07_58b1:
 	ld [hl+], a ; $58bb
 	ld [hl], d ; $58bc
 	ret ; $58bd
-Label_07_58be:
+ExecuteShotTopspin:
 	ld a, SHOTTYPE_TOPSPIN ; $58be
 	ld [wCurrentShotType], a ; $58c0
 	call NormalizeBallHeightForShot ; $58c3
@@ -3276,10 +3276,10 @@ Label_07_58be:
 	call ComputeShotTrajectory ; $58cc
 	farcall FarPtr_22_00 ; $58cf
 	ret ; $58d2
-Label_07_58d3:
+ExecuteShotPowerTopspin:
 	ld hl, $df0f ; $58d3
 	bit 1, [hl] ; $58d6
-	jr nz, Label_07_58be ; $58d8
+	jr nz, ExecuteShotTopspin ; $58d8
 	ld a, $01 ; $58da
 	ld [$c4a6], a ; $58dc
 	call NormalizeBallHeightForShot ; $58df
@@ -3287,7 +3287,7 @@ Label_07_58d3:
 	call ComputeShotTrajectory ; $58e5
 	farcall FarPtr_23_00 ; $58e8
 	ret ; $58eb
-Label_07_58ec:
+ExecuteShotSlice:
 	ld a, SHOTTYPE_SLICE ; $58ec
 	ld [wCurrentShotType], a ; $58ee
 	call NormalizeBallHeightForShot ; $58f1
@@ -3296,10 +3296,10 @@ Label_07_58ec:
 	call ComputeShotTrajectory ; $58fa
 	farcall FarPtr_20_00 ; $58fd
 	ret ; $5900
-Label_07_5901:
+ExecuteShotPowerSlice:
 	ld hl, $df0f ; $5901
 	bit 1, [hl] ; $5904
-	jr nz, Label_07_58ec ; $5906
+	jr nz, ExecuteShotSlice ; $5906
 	ld a, $01 ; $5908
 	ld [$c4a6], a ; $590a
 	call NormalizeBallHeightForShot ; $590d
@@ -3307,7 +3307,7 @@ Label_07_5901:
 	call ComputeShotTrajectory ; $5913
 	farcall FarPtr_21_00 ; $5916
 	ret ; $5919
-Label_07_591a:
+ExecuteShotLob:
 	call RaiseBallHeightForLob ; $591a
 	call ApplyShotTypePresets ; $591d
 	call BoostShotByCharge ; $5920
@@ -3315,41 +3315,41 @@ Label_07_591a:
 	farcall FarPtr_ComputeShotTrajectory ; $5926
 	farcall FarPtr_24_00 ; $5929
 	ret ; $592c
-Label_07_592d:
+ExecuteShotDrop:
 	call RaiseBallHeightForLob ; $592d
 	call ApplyShotTypePresets ; $5930
 	call WeakenShotByCharge ; $5933
 	call ComputeShotTrajectory ; $5936
 	farcall FarPtr_24_02 ; $5939
 	ret ; $593c
-Label_07_593d:
+ExecuteShotReachBasic:
 	call CheckBallInSmashRange ; $593d
-	jr z, Label_07_597c ; $5940
+	jr z, ExecuteShotReach ; $5940
 	call NormalizeBallHeightForShot ; $5942
 	call ApplyShotTypePresets ; $5945
 	call WeakenShotByCharge ; $5948
 	call ComputeShotTrajectory ; $594b
 	farcall FarPtr_ProjectShotPlacement0 ; $594e
 	ret ; $5951
-Label_07_5952:
+ExecuteShotReachPowerTopspin:
 	call CheckBallInSmashRange ; $5952
-	jr z, Label_07_597c ; $5955
+	jr z, ExecuteShotReach ; $5955
 	call NormalizeBallHeightForShot ; $5957
 	call ApplyShotTypePresets ; $595a
 	call WeakenShotByCharge ; $595d
 	call ComputeShotTrajectory ; $5960
 	farcall FarPtr_ProjectShotPlacement1 ; $5963
 	ret ; $5966
-Label_07_5967:
+ExecuteShotReachPowerSlice:
 	call CheckBallInSmashRange ; $5967
-	jr z, Label_07_597c ; $596a
+	jr z, ExecuteShotReach ; $596a
 	call NormalizeBallHeightForShot ; $596c
 	call ApplyShotTypePresets ; $596f
 	call WeakenShotByCharge ; $5972
 	call ComputeShotTrajectory ; $5975
 	farcall FarPtr_ProjectShotPlacement2 ; $5978
 	ret ; $597b
-Label_07_597c:
+ExecuteShotReach:
 	ld a, SHOTTYPE_REACH ; $597c
 	ld [wCurrentShotType], a ; $597e
 	call NormalizeBallHeightForShot ; $5981
@@ -3358,7 +3358,7 @@ Label_07_597c:
 	call ComputeShotTrajectory ; $598a
 	farcall FarPtr_24_0c ; $598d
 	ret ; $5990
-Label_07_5991:
+ExecuteShotSmash:
 	ld a, SHOTTYPE_SMASH ; $5991
 	ld [wCurrentShotType], a ; $5993
 	ld a, $01 ; $5996
@@ -3368,14 +3368,14 @@ Label_07_5991:
 	call ComputeShotTrajectory ; $59a1
 	farcall FarPtr_24_08 ; $59a4
 	ret ; $59a7
-Label_07_59a8:
+ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
 	jr z, Label_07_59b8 ; $59ab
 	ld a, [$df15] ; $59ad
 	cp a, $07 ; $59b0
-	jr z, Label_07_5991 ; $59b2
+	jr z, ExecuteShotSmash ; $59b2
 	cp a, $08 ; $59b4
-	jr z, Label_07_5991 ; $59b6
+	jr z, ExecuteShotSmash ; $59b6
 Label_07_59b8:
 	call NormalizeBallHeightForShot ; $59b8
 	call ApplyShotTypePresets ; $59bb
