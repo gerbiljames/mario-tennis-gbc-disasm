@@ -3159,13 +3159,13 @@ AcademyWingNpcScripts_10:
 	db $ff
 AcademyWingFacingScripts_10:
 	; $62bf, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, Label_10_6355, $00, $00
+	map_script $01, $ff, $0000, Func_10_6355, $00, $00
 	map_script $02, $ff, $0000, Func_10_62d0, $00, $00
 	db $ff
 Func_10_62d0:
 	ld a, [$c2b0] ; $62d0
 	cp a, $01 ; $62d3
-	jr nz, Label_10_6355 ; $62d5
+	jr nz, Func_10_6355 ; $62d5
 	farcall FarPtr_BeginCutsceneScriptMode ; $62d7
 	script_player_speed $0020 ; $62da
 	script_move_player $2100, $3300 ; $62e0
@@ -3187,7 +3187,7 @@ Func_10_62d0:
 	script_wait_idle $00 ; $634c
 	farcall FarPtr_EndCutsceneScriptMode ; $6351
 	ret ; $6354
-Label_10_6355:
+Func_10_6355:
 	script_set_text $01c3 ; $6355
 	script_speak $00 ; $635b
 	ret ; $6360

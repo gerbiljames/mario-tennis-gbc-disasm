@@ -1256,7 +1256,7 @@ Label_11_5660:
 	script_speak $0a ; $5660
 	script_face_pair $0b, $0a ; $5665
 	ret ; $566d
-Label_11_566e:
+Func_11_566e:
 	script_set_text $0887 ; $566e
 	test_flag $08, 0 ; $5674
 	jp nz, Label_11_5660 ; $5677
@@ -1319,7 +1319,7 @@ Func_11_5771:
 	script_face_toward $00, $0a ; $5787
 	script_set_anim $0a, $02 ; $578f
 	script_wait_idle $0a ; $5796
-	jp Label_11_566e ; $579b
+	jp Func_11_566e ; $579b
 	script_set_text $0852 ; $579e
 	script_face_toward $00, $0a ; $57a4
 	script_set_anim $0a, $04 ; $57ac
@@ -1357,7 +1357,7 @@ JuniorClassCourtDoublesNpcScripts_11:
 	map_script $07, $ff, $0000, Func_11_561c, $03, $00
 	map_script $08, $ff, $0000, Func_11_5638, $1b, $00
 	map_script $09, $ff, $0000, Func_11_564c, $1b, $00
-	map_script $0a, $ff, $0000, Label_11_566e, $03, $00
+	map_script $0a, $ff, $0000, Func_11_566e, $03, $00
 	map_script $0b, $ff, $0000, Func_11_5771, $03, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsA_11:
