@@ -856,8 +856,7 @@ RunN64ExhibData:
 	ld hl, $4567 ; $44c0
 	call RegisterFrameTask ; $44c3
 	call EnableLCD ; $44c6
-	ld c, $10 ; $44c9
-	call BeginFadeIn ; $44cb
+	script_fade_in $10 ; $44c9
 	call WaitFadeEnd ; $44ce
 	wram_bank $03 ; $44d1
 Label_3b_44d7:
@@ -1549,8 +1548,7 @@ RunTrophiesScreen:
 	ld [$d901], a ; $4979
 	ld [$d900], a ; $497c
 	call EnableLCD ; $497f
-	ld c, $10 ; $4982
-	call BeginFadeIn ; $4984
+	script_fade_in $10 ; $4982
 	call WaitFadeEnd ; $4987
 	wram_bank $03 ; $498a
 Label_3b_4990:
@@ -1977,8 +1975,7 @@ RunN64TnmtData:
 	ld hl, $50d6 ; $4d10
 	call RegisterFrameTask ; $4d13
 	call EnableLCD ; $4d16
-	ld c, $10 ; $4d19
-	call BeginFadeIn ; $4d1b
+	script_fade_in $10 ; $4d19
 	call WaitFadeEnd ; $4d1e
 	wram_bank $03 ; $4d21
 Label_3b_4d27:
@@ -2574,8 +2571,7 @@ RunN64RingShotData:
 	ld hl, $558f ; $5166
 	call RegisterFrameTask ; $5169
 	call EnableLCD ; $516c
-	ld c, $10 ; $516f
-	call BeginFadeIn ; $5171
+	script_fade_in $10 ; $516f
 	call WaitFadeEnd ; $5174
 	wram_bank $03 ; $5177
 Label_3b_517d:
@@ -4075,8 +4071,7 @@ Label_3b_5cbb:
 	call DisableLCDSafely ; $5cc3
 	farcall FarPtr_ResetScreenAndTextWindows ; $5cc6
 	call EnableLCD ; $5cc9
-	ld c, $40 ; $5ccc
-	call BeginFadeIn ; $5cce
+	script_fade_in $40 ; $5ccc
 	call WaitFadeEnd ; $5cd1
 	pop af ; $5cd4
 	jr Label_3b_5ce0 ; $5cd5
@@ -4092,8 +4087,7 @@ RestoreScreenAfterLinkAttempt:
 	farcall FarPtr_01_0a ; $5ce4
 	farcall FarPtr_ResetScreenAndTextWindows ; $5ce7
 	call EnableLCD ; $5cea
-	ld c, $10 ; $5ced
-	call BeginFadeIn ; $5cef
+	script_fade_in $10 ; $5ced
 	ret ; $5cf2
 RunMatchFormatSelect:
 	ld hl, rIE ; $5cf3
@@ -7468,8 +7462,7 @@ ShowTournamentBracket:
 	call DisableLCDSafely ; $776b
 	call BuildTournamentBracketScreen ; $776e
 	call EnableLCD ; $7771
-	ld c, $10 ; $7774
-	call BeginFadeIn ; $7776
+	script_fade_in $10 ; $7774
 	call WaitFadeEnd ; $7779
 	ld a, $01 ; $777c
 	ld hl, $79d6 ; $777e
@@ -7820,8 +7813,7 @@ RunStarCharExhibResults:
 	ld hl, $7a6d ; $7a15
 	call RegisterFrameTask ; $7a18
 	call EnableLCD ; $7a1b
-	ld c, $10 ; $7a1e
-	call BeginFadeIn ; $7a20
+	script_fade_in $10 ; $7a1e
 	call WaitFadeEnd ; $7a23
 	wram_bank $03 ; $7a26
 Label_3b_7a2c:

@@ -273,8 +273,7 @@ MachineCourtResultScene:
 Label_14_42d3:
 	script_set_position $05, $2d00, $2900 ; $42d3
 	script_face $05, $40 ; $42de
-	ld c, $06 ; $42e5
-	call BeginFadeIn ; $42e7
+	script_fade_in $06 ; $42e5
 	call WaitFadeEnd ; $42ea
 	script_wait_frames $28 ; $42ed
 	script_set_speed $00, $0020 ; $42f4
@@ -614,8 +613,7 @@ MachinePracticeResultScene:
 Label_14_46ef:
 	script_set_position $05, $2d00, $2900 ; $46ef
 	script_face $05, $40 ; $46fa
-	ld c, $06 ; $4701
-	call BeginFadeIn ; $4703
+	script_fade_in $06 ; $4701
 	call WaitFadeEnd ; $4706
 	script_wait_frames $28 ; $4709
 	ld a, [wMatchExitRequest] ; $4710
@@ -1552,8 +1550,7 @@ Label_14_5352:
 	script_set_position $00, $0600, $2700 ; $5378
 	xor a, a ; $5383
 	ld [wStoryModeShowLocationName], a ; $5384
-	ld c, $04 ; $5387
-	call BeginFadeIn ; $5389
+	script_fade_in $04 ; $5387
 	call WaitFadeEnd ; $538c
 	ld a, $3b ; $538f
 	ld [$c2b0], a ; $5391
@@ -1563,8 +1560,7 @@ Label_14_5352:
 Label_14_539c:
 	xor a, a ; $539c
 	ld [wStoryModeShowLocationName], a ; $539d
-	ld c, $06 ; $53a0
-	call BeginFadeIn ; $53a2
+	script_fade_in $06 ; $53a0
 	call WaitFadeEnd ; $53a5
 	sound $7a ; $53a8
 	script_wait_frames $3c ; $53aa
@@ -2119,8 +2115,7 @@ Label_14_628b:
 Label_14_62d2:
 	xor a, a ; $62d2
 	ld [wStoryModeShowLocationName], a ; $62d3
-	ld c, $06 ; $62d6
-	call BeginFadeIn ; $62d8
+	script_fade_in $06 ; $62d6
 	call WaitFadeEnd ; $62db
 	sound $7a ; $62de
 	script_wait_frames $3c ; $62e0
@@ -2360,8 +2355,7 @@ Label_14_650b:
 	script_set_position $00, $3f00, $3f00 ; $650b
 	xor a, a ; $6516
 	ld [wStoryModeShowLocationName], a ; $6517
-	ld c, $04 ; $651a
-	call BeginFadeIn ; $651c
+	script_fade_in $04 ; $651a
 	call WaitFadeEnd ; $651f
 	script_player_speed $0006 ; $6522
 	script_move_player $0500, $2300 ; $6528
@@ -2518,8 +2512,7 @@ Label_14_6f7b:
 Label_14_6fcd:
 	xor a, a ; $6fcd
 	ld [wStoryModeShowLocationName], a ; $6fce
-	ld c, $06 ; $6fd1
-	call BeginFadeIn ; $6fd3
+	script_fade_in $06 ; $6fd1
 	call WaitFadeEnd ; $6fd6
 	sound $7a ; $6fd9
 	script_wait_frames $3c ; $6fdb
@@ -2866,8 +2859,7 @@ Label_14_76c6:
 Label_14_7703:
 	xor a, a ; $7703
 	ld [wStoryModeShowLocationName], a ; $7704
-	ld c, $06 ; $7707
-	call BeginFadeIn ; $7709
+	script_fade_in $06 ; $7707
 	call WaitFadeEnd ; $770c
 	script_wait_frames $3c ; $770f
 	call Func_14_787b ; $7716

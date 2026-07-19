@@ -110,8 +110,7 @@ Func_12_4179:
 	script_set_position $00, $1600, $1f00 ; $4197
 	script_set_position $03, $1600, $1d00 ; $41a2
 	script_face $03, $c0 ; $41ad
-	ld c, $20 ; $41b4
-	call BeginFadeIn ; $41b6
+	script_fade_in $20 ; $41b4
 	script_wait_frames $14 ; $41b9
 	script_move_target $03, $1600, $1100 ; $41c0
 	script_move_player $1600, $0f00 ; $41cb
@@ -468,8 +467,7 @@ Label_12_47c4:
 	dw $ff07, $0000, $50cc, $0001 ; record 4
 	db $ff
 WallPracticeMasterResultScript:
-	ld c, $06 ; $4841
-	call BeginFadeIn ; $4843
+	script_fade_in $06 ; $4841
 	call WaitFadeEnd ; $4846
 	xor a, a ; $4849
 	ld [wStoryModeShowLocationName], a ; $484a
@@ -480,8 +478,7 @@ WallPracticeMasterResultScript:
 	jr nz, WallPracticeScoreRetryPrompt ; $4857
 	jp WallPracticeMaxScoreScript ; $4859
 WallPracticeScoreRetryPrompt:
-	ld c, $06 ; $485c
-	call BeginFadeIn ; $485e
+	script_fade_in $06 ; $485c
 	call WaitFadeEnd ; $4861
 	xor a, a ; $4864
 	ld [wStoryModeShowLocationName], a ; $4865
@@ -699,8 +696,7 @@ Label_12_4ad0:
 	ld a, [$c2b0] ; $4ad0
 	cp a, $04 ; $4ad3
 	jp z, WallPracticeScoreRetryPrompt ; $4ad5
-	ld c, $06 ; $4ad8
-	call BeginFadeIn ; $4ada
+	script_fade_in $06 ; $4ad8
 	call WaitFadeEnd ; $4add
 	ld a, [wPointOutcome] ; $4ae0
 	cp a, $09 ; $4ae3
@@ -761,8 +757,7 @@ Label_12_4b94:
 	dw $14f5 ; record 2
 Label_12_4ba2:
 	script_set_text $14ff ; $4ba2
-	ld c, $06 ; $4ba8
-	call BeginFadeIn ; $4baa
+	script_fade_in $06 ; $4ba8
 	call WaitFadeEnd ; $4bad
 	jr Label_12_4bfc ; $4bb0
 Label_12_4bb2:
@@ -779,20 +774,17 @@ Label_12_4bb2:
 	pop af ; $4bc9
 	wram_bank ; $4bca
 	script_set_text $14fe ; $4bce
-	ld c, $06 ; $4bd4
-	call BeginFadeIn ; $4bd6
+	script_fade_in $06 ; $4bd4
 	call WaitFadeEnd ; $4bd9
 	jr Label_12_4bfc ; $4bdc
 Label_12_4bde:
 	script_set_text $14fd ; $4bde
-	ld c, $06 ; $4be4
-	call BeginFadeIn ; $4be6
+	script_fade_in $06 ; $4be4
 	call WaitFadeEnd ; $4be9
 	jr Label_12_4bfc ; $4bec
 Label_12_4bee:
 	script_set_text $14fc ; $4bee
-	ld c, $06 ; $4bf4
-	call BeginFadeIn ; $4bf6
+	script_fade_in $06 ; $4bf4
 	call WaitFadeEnd ; $4bf9
 Label_12_4bfc:
 	script_set_anim $07, $02 ; $4bfc
@@ -830,8 +822,7 @@ Label_12_4c98:
 	dw $ff01, $0000, $4ca9, $0000 ; record 0
 	db $ff
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ca9
-	ld c, $10 ; $4cac
-	call BeginFadeIn ; $4cae
+	script_fade_in $10 ; $4cac
 	script_set_text $0483 ; $4cb1
 	script_speak $00 ; $4cb7
 	farcall FarPtr_EndCutsceneScriptMode ; $4cbc
@@ -1026,8 +1017,7 @@ Label_12_4f55:
 	ld a, [wMatchExitRequest] ; $4f67
 	cp a, $01 ; $4f6a
 	jp nz, Label_12_4f7e ; $4f6c
-	ld c, $06 ; $4f6f
-	call BeginFadeIn ; $4f71
+	script_fade_in $06 ; $4f6f
 	call WaitFadeEnd ; $4f74
 	xor a, a ; $4f77
 	ld [wStoryModeShowLocationName], a ; $4f78
@@ -1049,8 +1039,7 @@ Label_12_4fa6:
 	set_flag $1c, 0 ; $4fa6
 	script_set_position $07, $0300, $3700 ; $4fa9
 	script_face $07, $00 ; $4fb4
-	ld c, $06 ; $4fbb
-	call BeginFadeIn ; $4fbd
+	script_fade_in $06 ; $4fbb
 	call WaitFadeEnd ; $4fc0
 	xor a, a ; $4fc3
 	ld [wStoryModeShowLocationName], a ; $4fc4
@@ -3154,8 +3143,7 @@ SeniorMatchVictorySceneDispatch:
 	script_player_speed $0040 ; $6e7e
 	script_move_player $2600, $1700 ; $6e84
 	farcall FarPtr_WaitPlayerMoveDone ; $6e8e
-	ld c, $08 ; $6e91
-	call BeginFadeIn ; $6e93
+	script_fade_in $08 ; $6e91
 	call WaitFadeEnd ; $6e96
 	script_wait_frames $3c ; $6e99
 	script_move_target $09, $2300, $1300 ; $6ea0
@@ -3278,8 +3266,7 @@ SeniorMatchVictorySceneDispatch:
 	farcall FarPtr_WaitPlayerMoveDone ; $7121
 	script_face $03, $80 ; $7124
 	farcall FarPtr_WaitPlayerMoveDone ; $712b
-	ld c, $20 ; $712e
-	call BeginFadeIn ; $7130
+	script_fade_in $20 ; $712e
 	call WaitFadeEnd ; $7133
 	script_set_text $1082 ; $7136
 	script_move_target $04, $2500, $1300 ; $713c
@@ -3470,8 +3457,7 @@ SeniorMatchVictorySceneDispatch:
 	script_face $04, $40 ; $756d
 	script_face $03, $c0 ; $7574
 	call PlaceSeniorCourtPairA ; $757b
-	ld c, $08 ; $757e
-	call BeginFadeIn ; $7580
+	script_fade_in $08 ; $757e
 	call WaitFadeEnd ; $7583
 	script_wait_frames $1e ; $7586
 	script_set_text $104e ; $758d
@@ -3609,8 +3595,7 @@ FadeInSeniorCourtNearPairA:
 	script_face $00, $c0 ; $77e3
 	script_face $03, $80 ; $77ea
 	farcall FarPtr_WaitPlayerMoveDone ; $77f1
-	ld c, $20 ; $77f4
-	call BeginFadeIn ; $77f6
+	script_fade_in $20 ; $77f4
 	call WaitFadeEnd ; $77f9
 	ret ; $77fc
 FadeInSeniorCourtNearPairB:
@@ -3621,8 +3606,7 @@ FadeInSeniorCourtNearPairB:
 	script_face $00, $c0 ; $7813
 	script_face $03, $00 ; $781a
 	farcall FarPtr_WaitPlayerMoveDone ; $7821
-	ld c, $20 ; $7824
-	call BeginFadeIn ; $7826
+	script_fade_in $20 ; $7824
 	call WaitFadeEnd ; $7829
 	ret ; $782c
 	INCBIN "data/bank_012/d_782d.bin" ; $782d, 571 bytes

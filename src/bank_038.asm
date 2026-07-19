@@ -802,8 +802,7 @@ RunMatchTypeMenu:
 	ld hl, $4408 ; $449c
 	call RegisterFrameTask ; $449f
 	call EnableLCD ; $44a2
-	ld c, $10 ; $44a5
-	call BeginFadeIn ; $44a7
+	script_fade_in $10 ; $44a5
 	call WaitFadeEnd ; $44aa
 Label_38_44ad:
 	ldh a, [hInputPressed] ; $44ad
@@ -853,8 +852,7 @@ RunMatchTypeMenuLink:
 	call RegisterFrameTask ; $450a
 	call EnableLCD ; $450d
 	farcall FarPtr_ResyncLinkSession ; $4510
-	ld c, $10 ; $4513
-	call BeginFadeIn ; $4515
+	script_fade_in $10 ; $4513
 	push af ; $4518
 	farcall FarPtr_RunLinkInputFrame ; $4519
 	pop af ; $451c
@@ -1180,8 +1178,7 @@ Func_38_47c7:
 	ld hl, $4e23 ; $4839
 	call RegisterFrameTask ; $483c
 	call EnableLCD ; $483f
-	ld c, $08 ; $4842
-	call BeginFadeIn ; $4844
+	script_fade_in $08 ; $4842
 	call WaitFadeEnd ; $4847
 	ld hl, rIE ; $484a
 	res 2, [hl] ; $484d
@@ -1837,8 +1834,7 @@ Func_38_4e65:
 	call Func_38_5a82 ; $4e89
 	call Func_38_4f6f ; $4e8c
 	call EnableLCD ; $4e8f
-	ld c, $10 ; $4e92
-	call BeginFadeIn ; $4e94
+	script_fade_in $10 ; $4e92
 	call WaitFadeEnd ; $4e97
 	ld hl, rIE ; $4e9a
 	res 2, [hl] ; $4e9d
@@ -4761,8 +4757,7 @@ Label_38_63fd:
 	ld [wMatchTypeNumberOfSets], a ; $6429
 	call EnableLCD ; $642c
 	farcall FarPtr_ResyncLinkSession ; $642f
-	ld c, $10 ; $6432
-	call BeginFadeIn ; $6434
+	script_fade_in $10 ; $6432
 	push af ; $6437
 	farcall FarPtr_RunLinkCommandFrame ; $6438
 	pop af ; $643b
@@ -6245,8 +6240,7 @@ RunNameEntryScreen:
 	ld hl, $7385 ; $6e3d
 	call RegisterFrameTask ; $6e40
 	call EnableLCD ; $6e43
-	ld c, $10 ; $6e46
-	call BeginFadeIn ; $6e48
+	script_fade_in $10 ; $6e46
 	call WaitFadeEnd ; $6e4b
 	ld hl, rIE ; $6e4e
 	res 2, [hl] ; $6e51
@@ -6878,8 +6872,7 @@ Label_38_745f:
 	farcall FarPtr_ResetScreenAndTextWindows ; $746d
 	farcall FarPtr_LoadCourtSelectGraphics ; $7470
 	call EnableLCD ; $7473
-	ld c, $10 ; $7476
-	call BeginFadeIn ; $7478
+	script_fade_in $10 ; $7476
 	xor a, a ; $747b
 	ldh [$ffd8], a ; $747c
 	call ResetSerialState ; $747e

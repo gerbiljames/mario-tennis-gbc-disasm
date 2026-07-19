@@ -771,8 +771,7 @@ RestoreMenuScreenAndFadeIn:
 	farcall FarPtr_01_0a ; $44bc
 	farcall FarPtr_ResetScreenAndTextWindows ; $44bf
 	call EnableLCD ; $44c2
-	ld c, $10 ; $44c5
-	call BeginFadeIn ; $44c7
+	script_fade_in $10 ; $44c5
 	ret ; $44ca
 RunLinkMatchRulesMenu:
 	call EnableTimerInterrupt ; $44cb
@@ -1441,8 +1440,7 @@ ShowLinkMessageScreen:
 	ld a, $03 ; $49fa
 	ld [$cb0c], a ; $49fc
 	call EnableLCD ; $49ff
-	ld c, $08 ; $4a02
-	call BeginFadeIn ; $4a04
+	script_fade_in $08 ; $4a02
 	call WaitFadeEnd ; $4a07
 	pop af ; $4a0a
 	wram_bank ; $4a0b
@@ -1529,8 +1527,7 @@ ShowLinkErrorScreen:
 	ld a, $05 ; $4abf
 	ld [$cb0c], a ; $4ac1
 	call EnableLCD ; $4ac4
-	ld c, $08 ; $4ac7
-	call BeginFadeIn ; $4ac9
+	script_fade_in $08 ; $4ac7
 	call WaitFadeEnd ; $4acc
 Label_3e_4acf:
 	call AdvanceFrame ; $4acf
@@ -1688,8 +1685,7 @@ RunEraseDataConfirmMenu:
 	call RegisterFrameTask ; $4c3b
 	call AnimateEraseConfirmPalette ; $4c3e
 	call EnableLCD ; $4c41
-	ld c, $08 ; $4c44
-	call BeginFadeIn ; $4c46
+	script_fade_in $08 ; $4c44
 	call WaitFadeEnd ; $4c49
 	ld a, $01 ; $4c4c
 	ld hl, $4e34 ; $4c4e
@@ -2590,8 +2586,7 @@ ShowEquipmentStatusScreen:
 	ldh [hScrollY], a ; $53a2
 	call DrawEquipmentStatusScreen ; $53a4
 	call EnableLCD ; $53a7
-	ld c, $10 ; $53aa
-	call BeginFadeIn ; $53ac
+	script_fade_in $10 ; $53aa
 	call WaitFadeEnd ; $53af
 Label_3e_53b2:
 	ldh a, [hInputPressed] ; $53b2
@@ -2713,8 +2708,7 @@ RunRacketSelectScreen:
 	ld hl, $59eb ; $54cd
 	call RegisterFrameTask ; $54d0
 	call EnableLCD ; $54d3
-	ld c, $10 ; $54d6
-	call BeginFadeIn ; $54d8
+	script_fade_in $10 ; $54d6
 	call WaitFadeEnd ; $54db
 Label_3e_54de:
 	call HandleEquipSelectInput ; $54de
@@ -2917,8 +2911,7 @@ RunShoesSelectScreen:
 	ld hl, $59eb ; $5655
 	call RegisterFrameTask ; $5658
 	call EnableLCD ; $565b
-	ld c, $10 ; $565e
-	call BeginFadeIn ; $5660
+	script_fade_in $10 ; $565e
 	call WaitFadeEnd ; $5663
 Label_3e_5666:
 	call HandleEquipSelectInput ; $5666

@@ -961,8 +961,7 @@ Label_1b_4eb5:
 	call DisableLCDSafely ; $4eb5
 	call BuildRankingBoardScreen ; $4eb8
 	call EnableLCD ; $4ebb
-	ld c, $04 ; $4ebe
-	call BeginFadeIn ; $4ec0
+	script_fade_in $04 ; $4ebe
 	call WaitFadeEnd ; $4ec3
 	wram_bank $03 ; $4ec6
 	call DispatchRankingBoardAnim ; $4ecc
@@ -2897,8 +2896,7 @@ Label_1b_60ab:
 	ld c, $24 ; $6106
 	call QueueVRAMCopy ; $6108
 	call EnableLCD ; $610b
-	ld c, $20 ; $610e
-	call BeginFadeIn ; $6110
+	script_fade_in $20 ; $610e
 	call WaitFadeEnd ; $6113
 	call StartCharSelectCursorTask ; $6116
 Label_1b_6119:
@@ -3366,8 +3364,7 @@ RunLevelUpStatusTrophiesMenu:
 	farcall FarPtr_CreateMenuWindowFromText ; $648c
 	farcall FarPtr_RestoreShadowTilemap ; $648f
 	farcall FarPtr_RenderMenuWindowText ; $6492
-	ld c, $20 ; $6495
-	call BeginFadeIn ; $6497
+	script_fade_in $20 ; $6495
 	call WaitFadeEnd ; $649a
 	farcall FarPtr_RunMenuSelection ; $649d
 	ld b, a ; $64a0
@@ -3412,8 +3409,7 @@ Label_1b_64e7:
 	farcall FarPtr_CreateMenuWindowFromText ; $64f1
 	farcall FarPtr_RestoreShadowTilemap ; $64f4
 	farcall FarPtr_RenderMenuWindowText ; $64f7
-	ld c, $20 ; $64fa
-	call BeginFadeIn ; $64fc
+	script_fade_in $20 ; $64fa
 	call WaitFadeEnd ; $64ff
 	farcall FarPtr_RunMenuSelection ; $6502
 	ld b, a ; $6505
@@ -3639,8 +3635,7 @@ RunMinigameFlagsDebugScreen:
 	call QueueVRAMCopy ; $6767
 	call LoadUnlockDebugCursorGfx ; $676a
 	call EnableLCD ; $676d
-	ld c, $20 ; $6770
-	call BeginFadeIn ; $6772
+	script_fade_in $20 ; $6770
 	call WaitFadeEnd ; $6775
 Label_1b_6778:
 	wram_bank $01 ; $6778
@@ -3883,8 +3878,7 @@ Func_1b_6982:
 	ld [$c7c8], a ; $6997
 	farcall FarPtr_ForceFlushBgMapToVram ; $699a
 	call EnableLCD ; $699d
-	ld c, $20 ; $69a0
-	call BeginFadeIn ; $69a2
+	script_fade_in $20 ; $69a0
 	call WaitFadeEnd ; $69a5
 	wram_bank $07 ; $69a8
 	xor a, a ; $69ae
@@ -3917,8 +3911,7 @@ Func_1b_69d6:
 	call Func_1b_6aad ; $69f2
 	farcall FarPtr_ForceFlushBgMapToVram ; $69f5
 	call EnableLCD ; $69f8
-	ld c, $20 ; $69fb
-	call BeginFadeIn ; $69fd
+	script_fade_in $20 ; $69fb
 	call WaitFadeEnd ; $6a00
 Label_1b_6a03:
 	and a, a ; $6a03
@@ -4066,8 +4059,7 @@ ShowNoN64DataFoundScreen:
 	farcall FarPtr_RenderProportionalTextAt32 ; $6b3e
 	farcall FarPtr_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
-	ld c, $20 ; $6b47
-	call BeginFadeIn ; $6b49
+	script_fade_in $20 ; $6b47
 	call WaitFadeEnd ; $6b4c
 Label_1b_6b4f:
 	ldh a, [hInputRisingEdge] ; $6b4f
@@ -4105,8 +4097,7 @@ ShowTrophiesPlaceholderScreen:
 	call DisableLCDSafely ; $6b7d
 	farcall FarPtr_ForceFlushBgMapToVram ; $6b80
 	call EnableLCD ; $6b83
-	ld c, $20 ; $6b86
-	call BeginFadeIn ; $6b88
+	script_fade_in $20 ; $6b86
 	call WaitFadeEnd ; $6b8b
 Label_1b_6b8e:
 	ldh a, [hInputRisingEdge] ; $6b8e
@@ -5094,8 +5085,7 @@ ShowMinigameDataScreen:
 	ld hl, $7827 ; $73fc
 	call RegisterFrameTask ; $73ff
 	call EnableLCD ; $7402
-	ld c, $10 ; $7405
-	call BeginFadeIn ; $7407
+	script_fade_in $10 ; $7405
 	call WaitFadeEnd ; $740a
 	wram_bank $03 ; $740d
 Label_1b_7413:

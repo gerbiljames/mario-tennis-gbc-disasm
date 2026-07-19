@@ -894,8 +894,7 @@ Label_0b_4767:
 	call ClearBGForDrillResult ; $4772
 	farcall FarPtr_01_0a ; $4775
 	call EnableLCD ; $4778
-	ld c, $08 ; $477b
-	call BeginFadeIn ; $477d
+	script_fade_in $08 ; $477b
 	call WaitFadeEnd ; $4780
 	ld a, [$c2e3] ; $4783
 	ld l, a ; $4786

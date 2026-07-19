@@ -97,8 +97,7 @@ Label_27_41cd:
 	script_set_position $00, $3f00, $3f00 ; $41d8
 	xor a, a ; $41e3
 	ld [wStoryModeShowLocationName], a ; $41e4
-	ld c, $04 ; $41e7
-	call BeginFadeIn ; $41e9
+	script_fade_in $04 ; $41e7
 	call WaitFadeEnd ; $41ec
 	test_flag $05, 7 ; $41ef
 	jp nz, Label_27_43c2 ; $41f2
@@ -353,8 +352,7 @@ Label_27_48f0:
 	farcall FarPtr_WaitActorScriptDone ; $4908
 	ret ; $490b
 Func_27_490c:
-	ld c, $08 ; $490c
-	call BeginFadeIn ; $490e
+	script_fade_in $08 ; $490c
 	call WaitFadeEnd ; $4911
 	call Func_27_48a8 ; $4914
 	farcall FarPtr_BeginCutsceneScriptMode ; $4917
@@ -529,8 +527,7 @@ Label_27_4c8c:
 	ld [wStoryModeShowLocationName], a ; $4c8d
 	script_set_position $00, $2b00, $3b00 ; $4c90
 	script_set_position $02, $2b00, $3b00 ; $4c9b
-	ld c, $04 ; $4ca6
-	call BeginFadeIn ; $4ca8
+	script_fade_in $04 ; $4ca6
 	script_delay $14 ; $4cab
 	script_move_target $07, $1e00, $2f00 ; $4cb0
 	script_wait_move $07 ; $4cbb
@@ -689,8 +686,7 @@ Label_27_5057:
 	script_face $00, $c0 ; $5057
 	xor a, a ; $505e
 	ld [wStoryModeShowLocationName], a ; $505f
-	ld c, $04 ; $5062
-	call BeginFadeIn ; $5064
+	script_fade_in $04 ; $5062
 	call WaitFadeEnd ; $5067
 	test_flag $05, 7 ; $506a
 	jp z, Label_27_50ff ; $506d
@@ -836,8 +832,7 @@ Label_27_52ae:
 	farcall FarPtr_ScriptSetActorScript ; $52bd
 	xor a, a ; $52c0
 	ld [wStoryModeShowLocationName], a ; $52c1
-	ld c, $04 ; $52c4
-	call BeginFadeIn ; $52c6
+	script_fade_in $04 ; $52c4
 	script_delay $78 ; $52c9
 	ld a, $00 ; $52ce
 	farcall FarPtr_GetActorStateAddr ; $52d0
@@ -922,8 +917,7 @@ Label_27_53f9:
 	script_face $02, $00 ; $5438
 	script_move_player $1800, $0f00 ; $543f
 	farcall FarPtr_WaitPlayerMoveDone ; $5449
-	ld c, $08 ; $544c
-	call BeginFadeIn ; $544e
+	script_fade_in $08 ; $544c
 	call WaitFadeEnd ; $5451
 	script_wait_frames $1e ; $5454
 	script_set_anim $06, $02 ; $545b
@@ -1018,8 +1012,7 @@ Label_27_564b:
 	script_face $02, $c0 ; $5684
 	script_move_player $0b00, $1100 ; $568b
 	farcall FarPtr_WaitPlayerMoveDone ; $5695
-	ld c, $04 ; $5698
-	call BeginFadeIn ; $569a
+	script_fade_in $04 ; $5698
 	script_player_speed $0020 ; $569d
 	script_move_player $0b00, $1700 ; $56a3
 	farcall FarPtr_WaitPlayerMoveDone ; $56ad
@@ -1122,8 +1115,7 @@ SceneSharedData_27:
 	script_face $02, $c0 ; $5867
 	script_move_player $0b00, $1100 ; $586e
 	farcall FarPtr_WaitPlayerMoveDone ; $5878
-	ld c, $04 ; $587b
-	call BeginFadeIn ; $587d
+	script_fade_in $04 ; $587b
 	script_player_speed $0020 ; $5880
 	script_move_player $0b00, $1700 ; $5886
 	farcall FarPtr_WaitPlayerMoveDone ; $5890
@@ -1355,8 +1347,7 @@ Label_27_5eec:
 	script_face $03, $80 ; $5f15
 	xor a, a ; $5f1c
 	ld [wStoryModeShowLocationName], a ; $5f1d
-	ld c, $04 ; $5f20
-	call BeginFadeIn ; $5f22
+	script_fade_in $04 ; $5f20
 	script_move_target $04, $2500, $1300 ; $5f25
 	script_wait_move $04 ; $5f30
 	script_face_pair $05, $04 ; $5f35
@@ -1415,8 +1406,7 @@ Label_27_6075:
 	script_face $00, $c0 ; $6088
 	xor a, a ; $608f
 	ld [wStoryModeShowLocationName], a ; $6090
-	ld c, $04 ; $6093
-	call BeginFadeIn ; $6095
+	script_fade_in $04 ; $6093
 	script_move_target $04, $2400, $1300 ; $6098
 	script_wait_move $04 ; $60a3
 	script_delay $14 ; $60a8
@@ -1533,8 +1523,7 @@ Label_27_6270:
 	farcall FarPtr_WaitPlayerMoveDone ; $6292
 	script_set_position $00, $2900, $3700 ; $6295
 	script_set_position $02, $2900, $3700 ; $62a0
-	ld c, $04 ; $62ab
-	call BeginFadeIn ; $62ad
+	script_fade_in $04 ; $62ab
 	script_move_player $2900, $2b00 ; $62b0
 	script_move_target $00, $2900, $2b00 ; $62ba
 	script_wait_move $00 ; $62c5
@@ -1569,8 +1558,7 @@ Label_27_6370:
 	script_set_speed $02, $0010 ; $637b
 	script_set_speed $00, $0010 ; $6383
 	script_player_speed $0018 ; $638b
-	ld c, $04 ; $6391
-	call BeginFadeIn ; $6393
+	script_fade_in $04 ; $6391
 	script_move_angle $00, $c0, $0400 ; $6396
 	script_wait_move $00 ; $63a0
 	script_move_player $0f00, $1300 ; $63a5
@@ -1642,8 +1630,7 @@ Func_27_656f:
 	farcall FarPtr_BeginCutsceneScriptMode ; $656f
 	script_player_speed $0010 ; $6572
 	script_move_player $0f00, $1100 ; $6578
-	ld c, $08 ; $6582
-	call BeginFadeIn ; $6584
+	script_fade_in $08 ; $6582
 	script_set_speed $00, $0018 ; $6587
 	script_move_target $00, $0d00, $1700 ; $658f
 	script_wait_move $00 ; $659a
@@ -1848,8 +1835,7 @@ Label_27_69ee:
 	ret ; $6a53
 Label_27_6a54:
 	script_move_player $1300, $1500 ; $6a54
-	ld c, $04 ; $6a5e
-	call BeginFadeIn ; $6a60
+	script_fade_in $04 ; $6a5e
 	script_move_target $00, $1300, $1500 ; $6a63
 	script_wait_move $00 ; $6a6e
 	test_flag $05, 7 ; $6a73
@@ -1965,8 +1951,7 @@ Label_27_6caf:
 	script_set_position $00, $1600, $1f00 ; $6ccd
 	script_set_position $03, $1600, $1d00 ; $6cd8
 	script_face $03, $c0 ; $6ce3
-	ld c, $20 ; $6cea
-	call BeginFadeIn ; $6cec
+	script_fade_in $20 ; $6cea
 	script_move_target $03, $1600, $1100 ; $6cef
 	script_move_player $1600, $0f00 ; $6cfa
 	script_move_target $00, $1600, $1400 ; $6d04
@@ -2099,8 +2084,7 @@ Label_27_6f7d:
 	script_set_position $06, $3f00, $3f00 ; $6f88
 	script_set_position $07, $3f00, $3f00 ; $6f93
 	script_set_position $08, $3f00, $3f00 ; $6f9e
-	ld c, $04 ; $6fa9
-	call BeginFadeIn ; $6fab
+	script_fade_in $04 ; $6fa9
 	script_set_position $06, $4100, $0d00 ; $6fae
 	script_move_target $06, $1b00, $0d00 ; $6fb9
 	script_set_position $00, $4300, $0d00 ; $6fc4
@@ -2244,8 +2228,7 @@ Label_27_737e:
 	script_player_speed $0040 ; $737e
 	script_move_player $1800, $1200 ; $7384
 	farcall FarPtr_WaitPlayerMoveDone ; $738e
-	ld c, $04 ; $7391
-	call BeginFadeIn ; $7393
+	script_fade_in $04 ; $7391
 	call WaitFadeEnd ; $7396
 	script_move_target $00, $1800, $2100 ; $7399
 	script_wait_frames $14 ; $73a4
@@ -2389,8 +2372,7 @@ Label_27_7659:
 	script_set_anim $00, $01 ; $766a
 	script_set_position $00, $1700, $1700 ; $7671
 	script_face $00, $c0 ; $767c
-	ld c, $04 ; $7683
-	call BeginFadeIn ; $7685
+	script_fade_in $04 ; $7683
 	call WaitFadeEnd ; $7688
 	script_delay $3c ; $768b
 	test_flag $05, 7 ; $7690

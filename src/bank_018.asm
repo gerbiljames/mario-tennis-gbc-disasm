@@ -1344,8 +1344,7 @@ Label_18_7668:
 	farcall FarPtr_LoadScreenAssetRecord ; $7676
 	farcall FarPtr_QueueWram3MapToVRAM ; $7679
 	call EnableLCD ; $767c
-	ld c, $10 ; $767f
-	call BeginFadeIn ; $7681
+	script_fade_in $10 ; $767f
 	call WaitFadeEnd ; $7684
 Label_18_7687:
 	call AdvanceFrame ; $7687
@@ -1365,8 +1364,7 @@ Func_18_76b4:
 	call Func_18_7720 ; $76b4
 	call Func_18_7740 ; $76b7
 	call EnableLCD ; $76ba
-	ld c, $02 ; $76bd
-	call BeginFadeIn ; $76bf
+	script_fade_in $02 ; $76bd
 	call WaitFadeEnd ; $76c2
 	wram_bank $03 ; $76c5
 	xor a, a ; $76cb
@@ -1395,8 +1393,7 @@ Label_18_76ec:
 	call DisableLCDSafely ; $76fd
 	call FillAllBgPalettes ; $7700
 	call EnableLCD ; $7703
-	ld c, $10 ; $7706
-	call BeginFadeIn ; $7708
+	script_fade_in $10 ; $7706
 	call WaitFadeEnd ; $770b
 	ld a, $01 ; $770e
 	ld hl, $775c ; $7710
@@ -1474,8 +1471,7 @@ Func_18_77bb:
 	call RegisterFrameTask ; $77ce
 	sound $2c ; $77d1
 	call EnableLCD ; $77d3
-	ld c, $02 ; $77d6
-	call BeginFadeIn ; $77d8
+	script_fade_in $02 ; $77d6
 	call WaitFadeEnd ; $77db
 	wram_bank $03 ; $77de
 	xor a, a ; $77e4
@@ -1503,8 +1499,7 @@ Label_18_77e8:
 	ld hl, $78cd ; $7818
 	call RegisterFrameTask ; $781b
 	call EnableLCD ; $781e
-	ld c, $40 ; $7821
-	call BeginFadeIn ; $7823
+	script_fade_in $40 ; $7821
 	call WaitFadeEnd ; $7826
 	sound $2d ; $7829
 Label_18_782b:
@@ -1614,8 +1609,7 @@ Func_18_792c:
 	ld hl, $7b6e ; $7947
 	call RegisterFrameTask ; $794a
 	call EnableLCD ; $794d
-	ld c, $01 ; $7950
-	call BeginFadeIn ; $7952
+	script_fade_in $01 ; $7950
 	call WaitFadeEnd ; $7955
 Label_18_7958:
 	call AdvanceFrame ; $7958
@@ -1652,8 +1646,7 @@ Label_18_798a:
 	farcall FarPtr_QueueWram3MapToVRAM ; $79a3
 	call Func_18_7a2d ; $79a6
 	call EnableLCD ; $79a9
-	ld c, $02 ; $79ac
-	call BeginFadeIn ; $79ae
+	script_fade_in $02 ; $79ac
 	call WaitFadeEnd ; $79b1
 	wram_bank $03 ; $79b4
 	xor a, a ; $79ba

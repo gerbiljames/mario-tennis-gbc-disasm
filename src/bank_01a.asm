@@ -727,8 +727,7 @@ Label_1a_4564:
 	ld hl, $477a ; $45d9
 	call RegisterFrameTask ; $45dc
 	call EnableLCD ; $45df
-	ld c, $10 ; $45e2
-	call BeginFadeIn ; $45e4
+	script_fade_in $10 ; $45e2
 	call WaitFadeEnd ; $45e7
 	ld a, $0f ; $45ea
 	ld hl, $4e65 ; $45ec
@@ -923,8 +922,7 @@ Label_1a_473e:
 	ld hl, $477a ; $475f
 	call RegisterFrameTask ; $4762
 	call EnableLCD ; $4765
-	ld c, $10 ; $4768
-	call BeginFadeIn ; $476a
+	script_fade_in $10 ; $4768
 	call WaitFadeEnd ; $476d
 	pop af ; $4770
 	wram_bank ; $4771
@@ -2660,8 +2658,7 @@ Label_1a_67db:
 	ld de, $8700 ; $683a
 	farcall FarPtr_LoadOnCourtCharTilesA ; $683d
 	call AdvanceFrame ; $6840
-	ld c, $10 ; $6843
-	call BeginFadeIn ; $6845
+	script_fade_in $10 ; $6843
 	call WaitFadeEnd ; $6848
 	call Func_1a_6c9f ; $684b
 	ld hl, $6c28 ; $684e
@@ -2714,8 +2711,7 @@ Func_1a_686c:
 	ld a, $01 ; $68d8
 	ld hl, $6ab3 ; $68da
 	call RegisterFrameTask ; $68dd
-	ld c, $10 ; $68e0
-	call BeginFadeIn ; $68e2
+	script_fade_in $10 ; $68e0
 	call WaitFadeEnd ; $68e5
 Label_1a_68e8:
 	wram_bank $06 ; $68e8
@@ -3647,8 +3643,7 @@ Func_1a_7945:
 	call AdvanceFrame ; $79ac
 	farcall FarPtr_StartCharDataScreenAnimTask ; $79af
 	farcall FarPtr_StartCharDataValuesSyncTask ; $79b2
-	ld c, $10 ; $79b5
-	call BeginFadeIn ; $79b7
+	script_fade_in $10 ; $79b5
 	call WaitFadeEnd ; $79ba
 	wram_bank $06 ; $79bd
 	ld a, $01 ; $79c3

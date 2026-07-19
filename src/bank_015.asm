@@ -259,8 +259,7 @@ TournamentSiteArrivalScene:
 	script_player_speed $00ff ; $445b
 	script_move_player $1200, $2900 ; $4461
 	farcall FarPtr_WaitPlayerMoveDone ; $446b
-	ld c, $04 ; $446e
-	call BeginFadeIn ; $4470
+	script_fade_in $04 ; $446e
 	call WaitFadeEnd ; $4473
 	script_move_target $03, $1200, $2900 ; $4476
 	script_move_target $04, $1100, $2c00 ; $4481
@@ -976,8 +975,7 @@ Label_15_4ef5:
 	sound $8e ; $4f12
 	script_set_position $15, $3300, $0900 ; $4f14
 	script_wait_frames $1e ; $4f1f
-	ld c, $03 ; $4f26
-	call BeginFadeIn ; $4f28
+	script_fade_in $03 ; $4f26
 	call WaitFadeEnd ; $4f2b
 	script_wait_frames $3c ; $4f2e
 	sound $8f ; $4f35
@@ -1372,8 +1370,7 @@ Label_15_53d2:
 	script_player_speed $00f0 ; $5418
 	script_move_player $1800, $0f00 ; $541e
 	farcall FarPtr_WaitPlayerMoveDone ; $5428
-	ld c, $08 ; $542b
-	call BeginFadeIn ; $542d
+	script_fade_in $08 ; $542b
 	call WaitFadeEnd ; $5430
 	call WalkChallengerOntoCourt ; $5433
 	ret ; $5436
@@ -1388,8 +1385,7 @@ Label_15_5437:
 	script_face $00, $40 ; $5464
 	script_face $02, $40 ; $546b
 	script_face $07, $80 ; $5472
-	ld c, $04 ; $5479
-	call BeginFadeIn ; $547b
+	script_fade_in $04 ; $5479
 	call WaitFadeEnd ; $547e
 	ret ; $5481
 Label_15_5482:
@@ -1413,8 +1409,7 @@ Label_15_5482:
 	script_player_speed $00f0 ; $54c8
 	script_move_player $2800, $2900 ; $54ce
 	farcall FarPtr_WaitPlayerMoveDone ; $54d8
-	ld c, $08 ; $54db
-	call BeginFadeIn ; $54dd
+	script_fade_in $08 ; $54db
 	call WaitFadeEnd ; $54e0
 	call WalkChallengerOntoCourt ; $54e3
 	ret ; $54e6
@@ -1429,8 +1424,7 @@ Label_15_54e7:
 	script_face $00, $c0 ; $5514
 	script_face $02, $c0 ; $551b
 	script_face $12, $00 ; $5522
-	ld c, $04 ; $5529
-	call BeginFadeIn ; $552b
+	script_fade_in $04 ; $5529
 	call WaitFadeEnd ; $552e
 	ret ; $5531
 Label_15_5532:
@@ -1454,8 +1448,7 @@ Label_15_5532:
 	script_player_speed $00f0 ; $5578
 	script_move_player $1800, $2800 ; $557e
 	farcall FarPtr_WaitPlayerMoveDone ; $5588
-	ld c, $08 ; $558b
-	call BeginFadeIn ; $558d
+	script_fade_in $08 ; $558b
 	call WaitFadeEnd ; $5590
 	call WalkChallengerOntoCourt ; $5593
 	ret ; $5596
@@ -1470,8 +1463,7 @@ Label_15_5597:
 	script_face $00, $c0 ; $55c4
 	script_face $02, $c0 ; $55cb
 	script_face $0d, $c0 ; $55d2
-	ld c, $04 ; $55d9
-	call BeginFadeIn ; $55db
+	script_fade_in $04 ; $55d9
 	call WaitFadeEnd ; $55de
 	ret ; $55e1
 	INCBIN "data/bank_015/d_55e2.bin" ; $55e2, 14 bytes
@@ -1768,8 +1760,7 @@ TrainingCourtIntroTourScene:
 	script_set_position $00, $0500, $3700 ; $5a02
 	script_move_target $00, $1f00, $3700 ; $5a0d
 	script_move_player $1f00, $3700 ; $5a18
-	ld c, $04 ; $5a22
-	call BeginFadeIn ; $5a24
+	script_fade_in $04 ; $5a22
 	call WaitFadeEnd ; $5a27
 	script_wait_move $0d ; $5a2a
 	script_move_target $0d, $1f00, $2b00 ; $5a2f
@@ -1890,8 +1881,7 @@ ServeChallengerResultScene:
 	script_player_speed $00f0 ; $5d39
 	script_move_player $1800, $0f00 ; $5d3f
 	farcall FarPtr_WaitPlayerMoveDone ; $5d49
-	ld c, $08 ; $5d4c
-	call BeginFadeIn ; $5d4e
+	script_fade_in $08 ; $5d4c
 	call WaitFadeEnd ; $5d51
 	ld a, [wPointWinLoseFlag] ; $5d54
 	inc a ; $5d57
@@ -1933,8 +1923,7 @@ NetChallengerResultScene:
 	script_player_speed $00f0 ; $5dba
 	script_move_player $2800, $2900 ; $5dc0
 	farcall FarPtr_WaitPlayerMoveDone ; $5dca
-	ld c, $08 ; $5dcd
-	call BeginFadeIn ; $5dcf
+	script_fade_in $08 ; $5dcd
 	call WaitFadeEnd ; $5dd2
 	ld a, [wPointWinLoseFlag] ; $5dd5
 	inc a ; $5dd8
@@ -1975,8 +1964,7 @@ StrokeChallengerResultScene:
 	script_player_speed $00f0 ; $5e39
 	script_move_player $1800, $2800 ; $5e3f
 	farcall FarPtr_WaitPlayerMoveDone ; $5e49
-	ld c, $08 ; $5e4c
-	call BeginFadeIn ; $5e4e
+	script_fade_in $08 ; $5e4c
 	call WaitFadeEnd ; $5e51
 	ld a, [wPointWinLoseFlag] ; $5e54
 	inc a ; $5e57
@@ -3850,8 +3838,7 @@ InitServeCoachScene:
 	script_face $00, $40 ; $750e
 	script_face $02, $40 ; $7515
 	script_face $07, $c0 ; $751c
-	ld c, $04 ; $7523
-	call BeginFadeIn ; $7525
+	script_fade_in $04 ; $7523
 	call WaitFadeEnd ; $7528
 	ret ; $752b
 Label_15_752c:
@@ -4041,8 +4028,7 @@ InitNetCoachScene:
 	script_face $00, $c0 ; $777f
 	script_face $02, $c0 ; $7786
 	script_face $12, $40 ; $778d
-	ld c, $04 ; $7794
-	call BeginFadeIn ; $7796
+	script_fade_in $04 ; $7794
 	call WaitFadeEnd ; $7799
 	ret ; $779c
 Label_15_779d:
@@ -4235,8 +4221,7 @@ InitReturnCoachScene:
 	script_face $00, $c0 ; $79f8
 	script_face $02, $c0 ; $79ff
 	script_face $0d, $40 ; $7a06
-	ld c, $04 ; $7a0d
-	call BeginFadeIn ; $7a0f
+	script_fade_in $04 ; $7a0d
 	call WaitFadeEnd ; $7a12
 	ret ; $7a15
 Label_15_7a16:

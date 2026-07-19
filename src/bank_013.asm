@@ -69,8 +69,7 @@ Func_13_40eb:
 	script_set_anim $00, $08 ; $40fb
 	script_set_speed $02, $0018 ; $4102
 	script_set_anim $02, $08 ; $410a
-	ld c, $08 ; $4111
-	call BeginFadeIn ; $4113
+	script_fade_in $08 ; $4111
 	script_wait_frames $14 ; $4116
 	script_move_target $00, $0700, $0c80 ; $411d
 	script_wait_frames $14 ; $4128
@@ -89,8 +88,7 @@ Func_13_4163:
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $416b
 	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $417a
 	script_set_speed $00, $0018 ; $4189
-	ld c, $08 ; $4191
-	call BeginFadeIn ; $4193
+	script_fade_in $08 ; $4191
 	call WaitFadeEnd ; $4196
 	script_wait_frames $05 ; $4199
 	sound $50 ; $41a0
@@ -111,8 +109,7 @@ Func_13_41cf:
 	script_set_anim $00, $08 ; $41de
 	script_set_speed $02, $000c ; $41e5
 	script_set_anim $02, $08 ; $41ed
-	ld c, $08 ; $41f4
-	call BeginFadeIn ; $41f6
+	script_fade_in $08 ; $41f4
 	script_wait_frames $0a ; $41f9
 	script_move_angle $00, $40, $0500 ; $4200
 	script_wait_frames $28 ; $420a
@@ -282,8 +279,7 @@ AcademyCourtsTourCutscene:
 	script_set_position $00, $3f00, $3f00 ; $44fc
 	script_set_position $06, $3f00, $3f00 ; $4507
 	call LoadTourPointerSpriteGfx_13 ; $4512
-	ld c, $04 ; $4515
-	call BeginFadeIn ; $4517
+	script_fade_in $04 ; $4515
 	call WaitFadeEnd ; $451a
 	script_set_position $06, $3200, $1300 ; $451d
 	script_move_target $06, $3200, $0d00 ; $4528
@@ -384,8 +380,7 @@ ServiceAceCoachIntroCutscene:
 	script_set_position $06, $3f00, $3f00 ; $4784
 	script_set_position $07, $3f00, $3f00 ; $478f
 	script_set_position $08, $3f00, $3f00 ; $479a
-	ld c, $04 ; $47a5
-	call BeginFadeIn ; $47a7
+	script_fade_in $04 ; $47a5
 	call WaitFadeEnd ; $47aa
 	script_set_position $06, $4100, $0d00 ; $47ad
 	script_move_target $06, $1b00, $0d00 ; $47b8
@@ -675,8 +670,7 @@ DormRoomFacingScripts_13:
 	db $ff
 Func_13_4ed4:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ed4
-	ld c, $10 ; $4ed7
-	call BeginFadeIn ; $4ed9
+	script_fade_in $10 ; $4ed7
 	script_set_text $0483 ; $4edc
 	script_speak $00 ; $4ee2
 	farcall FarPtr_EndCutsceneScriptMode ; $4ee7
@@ -1010,8 +1004,7 @@ Label_13_527a:
 	script_set_position $02, $1500, $1f00 ; $527f
 	script_set_position $03, $0b00, $1000 ; $528a
 	script_face $03, $c0 ; $5295
-	ld c, $04 ; $529c
-	call BeginFadeIn ; $529e
+	script_fade_in $04 ; $529c
 	call WaitFadeEnd ; $52a1
 	script_move_target $03, $0b00, $0a00 ; $52a4
 	ret ; $52af
@@ -1052,8 +1045,7 @@ Label_13_5302:
 	script_face $02, $40 ; $5312
 	script_set_position $03, $0b00, $0a00 ; $5319
 	script_face $03, $40 ; $5324
-	ld c, $04 ; $532b
-	call BeginFadeIn ; $532d
+	script_fade_in $04 ; $532b
 	call WaitFadeEnd ; $5330
 	test_flag $05, 7 ; $5333
 	jr z, Label_13_538f ; $5336
@@ -1109,8 +1101,7 @@ Label_13_53c4:
 	farcall FarPtr_WaitPlayerMoveDone ; $53e4
 	script_wait_frames $78 ; $53e7
 	script_wait_frames $b4 ; $53ee
-	ld c, $04 ; $53f5
-	call BeginFadeIn ; $53f7
+	script_fade_in $04 ; $53f5
 	call WaitJingleEnd ; $53fa
 	sound $1c ; $53fd
 	script_wait_frames $0a ; $53ff
@@ -1235,8 +1226,7 @@ Label_13_55ac:
 Label_13_55bd:
 	script_wait_frames $1e ; $55bd
 	script_move_target $00, $0b00, $0e00 ; $55c4
-	ld c, $04 ; $55cf
-	call BeginFadeIn ; $55d1
+	script_fade_in $04 ; $55cf
 	call WaitFadeEnd ; $55d4
 	script_move_player $0b00, $0c40 ; $55d7
 	farcall FarPtr_WaitPlayerMoveDone ; $55e1
@@ -1762,8 +1752,7 @@ ShowStoryNarration_13:
 	script_set_active $00, $00 ; $5a40
 	script_set_active $02, $00 ; $5a47
 	script_copy_scene_rect $00, $20, $00, $00, $16, $18 ; $5a4e
-	ld c, $08 ; $5a5d
-	call BeginFadeIn ; $5a5f
+	script_fade_in $08 ; $5a5d
 	script_wait_frames $04 ; $5a62
 	script_speak $85 ; $5a69
 	script_wait_frames $04 ; $5a6e
@@ -1837,8 +1826,7 @@ Label_13_5b01:
 	script_face $02, $40 ; $5b11
 	script_set_position $03, $0b00, $0a00 ; $5b18
 	script_face $03, $40 ; $5b23
-	ld c, $04 ; $5b2a
-	call BeginFadeIn ; $5b2c
+	script_fade_in $04 ; $5b2a
 	call WaitFadeEnd ; $5b2f
 	test_flag $05, 7 ; $5b32
 	jr z, Label_13_5b79 ; $5b35
@@ -2362,8 +2350,7 @@ VarsityCourtTourCutscene:
 	farcall FarPtr_BeginCutsceneScriptMode ; $6374
 	script_set_position $00, $3f00, $3f00 ; $6377
 	script_set_position $06, $3f00, $3f00 ; $6382
-	ld c, $04 ; $638d
-	call BeginFadeIn ; $638f
+	script_fade_in $04 ; $638d
 	call WaitFadeEnd ; $6392
 	script_set_position $06, $2200, $3300 ; $6395
 	script_move_target $06, $2200, $1d00 ; $63a0
@@ -2884,8 +2871,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_face $02, $c0 ; $7134
 	script_move_player $0b00, $1100 ; $713b
 	farcall FarPtr_WaitPlayerMoveDone ; $7145
-	ld c, $04 ; $7148
-	call BeginFadeIn ; $714a
+	script_fade_in $04 ; $7148
 	call WaitFadeEnd ; $714d
 	script_wait_frames $3c ; $7150
 	script_set_text $022a ; $7157
@@ -3172,8 +3158,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_face $02, $c0 ; $7490
 	script_move_player $0b00, $1100 ; $7497
 	farcall FarPtr_WaitPlayerMoveDone ; $74a1
-	ld c, $04 ; $74a4
-	call BeginFadeIn ; $74a6
+	script_fade_in $04 ; $74a4
 	call WaitFadeEnd ; $74a9
 	script_wait_frames $3c ; $74ac
 	script_player_speed $0020 ; $74b3
@@ -3556,8 +3541,7 @@ Label_13_79a4:
 	ld hl, $739c ; $79bd
 	farcall FarPtr_ScriptRespawnLocationActors ; $79c0
 	farcall FarPtr_BeginCutsceneScriptMode ; $79c3
-	ld c, $04 ; $79c6
-	call BeginFadeIn ; $79c8
+	script_fade_in $04 ; $79c6
 	call WaitFadeEnd ; $79cb
 	script_player_speed $0018 ; $79ce
 	script_move_player $0900, $1300 ; $79d4
@@ -3579,8 +3563,7 @@ Label_13_79e5:
 	script_set_position $02, $0d00, $2300 ; $7a0e
 	script_face $00, $c0 ; $7a19
 	script_face $02, $c0 ; $7a20
-	ld c, $04 ; $7a27
-	call BeginFadeIn ; $7a29
+	script_fade_in $04 ; $7a27
 	call WaitFadeEnd ; $7a2c
 	script_move_player $0900, $1300 ; $7a2f
 	farcall FarPtr_WaitPlayerMoveDone ; $7a39

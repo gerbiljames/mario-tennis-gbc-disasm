@@ -70,8 +70,7 @@ Label_1c_4038:
 	ld a, $01 ; $407a
 	ld hl, $5049 ; $407c
 	call RegisterFrameTask ; $407f
-	ld c, $10 ; $4082
-	call BeginFadeIn ; $4084
+	script_fade_in $10 ; $4082
 	call WaitFadeEnd ; $4087
 	ld a, $01 ; $408a
 	ld hl, $45fa ; $408c
@@ -2665,8 +2664,7 @@ Func_1c_5572:
 	ld a, $01 ; $55e9
 	ld hl, $4e54 ; $55eb
 	call RegisterFrameTask ; $55ee
-	ld c, $10 ; $55f1
-	call BeginFadeIn ; $55f3
+	script_fade_in $10 ; $55f1
 	call WaitFadeEnd ; $55f6
 	ld a, $01 ; $55f9
 	ld hl, $45fa ; $55fb

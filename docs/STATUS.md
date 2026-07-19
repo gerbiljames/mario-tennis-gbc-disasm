@@ -58,6 +58,13 @@ arrival scripts (`Func_10_7532`/`Func_10_7578`) were buried after the `$ff`
 terminator, so the table over-ran to 197 bytes; now 57 bytes (7 records) with
 the arrival scripts decoded as `script_*` cutscene code. Byte-perfect.
 
+### script_fade_in macro (2026-07-19)
+
+Added a `script_fade_in speed` command: `ld c, speed; call BeginFadeIn`
+(`$00:$1d2e`). Extended the `'C'` step kind to resolve ROM0 call targets
+(cpu < $4000) as well as same-bank ones. Collapses all 218 `BeginFadeIn` call
+sites game-wide. Byte-perfect.
+
 ### script_delay macro (2026-07-19)
 
 Added a `script_delay frames` command: `ld a, frames; call WaitScriptFramesSaveA`

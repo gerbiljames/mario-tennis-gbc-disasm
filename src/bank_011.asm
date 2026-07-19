@@ -282,8 +282,7 @@ Label_11_437a:
 Label_11_4395:
 	xor a, a ; $4395
 	ld [wStoryModeShowLocationName], a ; $4396
-	ld c, $04 ; $4399
-	call BeginFadeIn ; $439b
+	script_fade_in $04 ; $4399
 	ldh a, [hRomBank] ; $439e
 	ld b, a ; $43a0
 	ld a, $00 ; $43a1
@@ -496,8 +495,7 @@ LateStudentCrashCutscene:
 	script_face $03, $00 ; $4707
 	script_set_position $04, $3300, $1500 ; $470e
 	script_set_position $05, $3300, $1500 ; $4719
-	ld c, $04 ; $4724
-	call BeginFadeIn ; $4726
+	script_fade_in $04 ; $4724
 	call WaitFadeEnd ; $4729
 	script_move_target $00, $1800, $2d00 ; $472c
 	script_wait_move $00 ; $4737
@@ -931,8 +929,7 @@ Label_11_501a:
 	script_face $00, $c0 ; $503d
 	script_move_player_to_actor $03 ; $5044
 	farcall FarPtr_WaitPlayerMoveDone ; $504b
-	ld c, $08 ; $504e
-	call BeginFadeIn ; $5050
+	script_fade_in $08 ; $504e
 	call WaitFadeEnd ; $5053
 	script_wait_frames $3c ; $5056
 	script_set_text $01ed ; $505d
@@ -1079,8 +1076,7 @@ Label_11_5415:
 	script_move_target $00, $1800, $3b00 ; $5420
 	xor a, a ; $542b
 	ld [wStoryModeShowLocationName], a ; $542c
-	ld c, $04 ; $542f
-	call BeginFadeIn ; $5431
+	script_fade_in $04 ; $542f
 	call WaitFadeEnd ; $5434
 	script_wait_frames $3c ; $5437
 	script_set_anim $03, $03 ; $543e
@@ -1570,8 +1566,7 @@ Label_11_5db7:
 	script_face $09, $40 ; $5e23
 	script_face $03, $00 ; $5e2a
 	farcall FarPtr_WaitPlayerMoveDone ; $5e31
-	ld c, $04 ; $5e34
-	call BeginFadeIn ; $5e36
+	script_fade_in $04 ; $5e34
 	call WaitFadeEnd ; $5e39
 	script_set_text $0865 ; $5e3c
 	script_set_anim $08, $02 ; $5e42
@@ -1620,8 +1615,7 @@ Label_11_5ec0:
 	script_face $05, $40 ; $5f17
 	script_face $03, $80 ; $5f1e
 	farcall FarPtr_WaitPlayerMoveDone ; $5f25
-	ld c, $04 ; $5f28
-	call BeginFadeIn ; $5f2a
+	script_fade_in $04 ; $5f28
 	call WaitFadeEnd ; $5f2d
 	script_set_text $0865 ; $5f30
 	script_set_anim $07, $02 ; $5f36
@@ -1681,8 +1675,7 @@ Label_11_5fbd:
 	script_face $06, $40 ; $604b
 	script_face $03, $c0 ; $6052
 	farcall FarPtr_WaitPlayerMoveDone ; $6059
-	ld c, $04 ; $605c
-	call BeginFadeIn ; $605e
+	script_fade_in $04 ; $605c
 	call WaitFadeEnd ; $6061
 	script_wait_frames $1e ; $6064
 	script_set_text $0871 ; $606b
@@ -2502,8 +2495,7 @@ Label_11_6eb1:
 	script_face $00, $c0 ; $6edd
 	script_face $07, $40 ; $6ee4
 	script_face $03, $00 ; $6eeb
-	ld c, $04 ; $6ef2
-	call BeginFadeIn ; $6ef4
+	script_fade_in $04 ; $6ef2
 	call WaitFadeEnd ; $6ef7
 	script_set_text $0833 ; $6efa
 	script_speak $07 ; $6f00
@@ -2532,8 +2524,7 @@ Label_11_6f44:
 	script_face $00, $c0 ; $6f70
 	script_face $06, $40 ; $6f77
 	script_face $03, $80 ; $6f7e
-	ld c, $04 ; $6f85
-	call BeginFadeIn ; $6f87
+	script_fade_in $04 ; $6f85
 	call WaitFadeEnd ; $6f8a
 	script_set_text $0846 ; $6f8d
 	script_speak $06 ; $6f93
@@ -2563,8 +2554,7 @@ Label_11_6fdd:
 	script_face $00, $c0 ; $7009
 	script_face $05, $40 ; $7010
 	script_face $03, $80 ; $7017
-	ld c, $04 ; $701e
-	call BeginFadeIn ; $7020
+	script_fade_in $04 ; $701e
 	call WaitFadeEnd ; $7023
 	script_set_text $0841 ; $7026
 	script_speak $05 ; $702c
@@ -2595,8 +2585,7 @@ Label_11_7076:
 	script_face $04, $40 ; $70b1
 	script_face $03, $c0 ; $70b8
 	call Func_11_7a76 ; $70bf
-	ld c, $04 ; $70c2
-	call BeginFadeIn ; $70c4
+	script_fade_in $04 ; $70c2
 	call WaitFadeEnd ; $70c7
 	script_wait_frames $3c ; $70ca
 	script_set_text $0837 ; $70d1

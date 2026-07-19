@@ -3005,8 +3005,7 @@ SaveSlotDebugEditor:
 	call EnableLCD ; $5331
 	ld c, $7f ; $5334
 	call BeginFadeOut ; $5336
-	ld c, $7f ; $5339
-	call BeginFadeIn ; $533b
+	script_fade_in $7f ; $5339
 	farcall FarPtr_InitStoryModeState ; $533e
 	ld de, $0000 ; $5341
 Label_03_5344:
@@ -5738,8 +5737,7 @@ Func_03_751e:
 	ld [wCameraY], a ; $758c
 	ld [$c323], a ; $758f
 	call AdvanceFrame ; $7592
-	ld c, $04 ; $7595
-	call BeginFadeIn ; $7597
+	script_fade_in $04 ; $7595
 	call WaitFadeEnd ; $759a
 	call WaitFramesCmd ; $759d
 	db $78 ; $75a0 inline arg

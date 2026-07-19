@@ -66,8 +66,7 @@ Func_0e_4145:
 	script_copy_scene_rect $0a, $0a, $3d, $0c, $02, $02 ; $4160
 	script_copy_scene_rect $3d, $0a, $0a, $0a, $02, $02 ; $416f
 	script_wait_frames $02 ; $417e
-	ld c, $08 ; $4185
-	call BeginFadeIn ; $4187
+	script_fade_in $08 ; $4185
 	call WaitFadeEnd ; $418a
 	script_move_target $00, $0b00, $0e00 ; $418d
 	script_wait_move $00 ; $4198
@@ -89,8 +88,7 @@ Func_0e_41e2:
 	farcall FarPtr_WaitPlayerMoveDone ; $41f9
 	script_copy_scene_rect $0a, $0a, $3d, $0c, $02, $02 ; $41fc
 	script_copy_scene_rect $3d, $0a, $14, $0a, $02, $02 ; $420b
-	ld c, $08 ; $421a
-	call BeginFadeIn ; $421c
+	script_fade_in $08 ; $421a
 	call WaitFadeEnd ; $421f
 	script_move_target $00, $1500, $0e00 ; $4222
 	script_wait_move $00 ; $422d
@@ -1016,8 +1014,7 @@ Label_0e_5012:
 RepairCounterCheckEquipChanged:
 	xor a, a ; $5015
 	ld [wStoryModeShowLocationName], a ; $5016
-	ld c, $08 ; $5019
-	call BeginFadeIn ; $501b
+	script_fade_in $08 ; $5019
 	call WaitFadeEnd ; $501e
 	call CompareEquippedRacketToMinigameFlag ; $5021
 	cp a, $ff ; $5024
@@ -1085,8 +1082,7 @@ RepairCounterReopenServiceMenu:
 	call FetchAndPushShortTextArg ; $50ea
 	set_flag $0f, 7 ; $50ed
 	script_face_toward $00, $0e ; $50f0
-	ld c, $08 ; $50f8
-	call BeginFadeIn ; $50fa
+	script_fade_in $08 ; $50f8
 	call WaitFadeEnd ; $50fd
 	ld hl, $20ec ; $5100
 	ld de, $0101 ; $5103
@@ -1382,8 +1378,7 @@ MarioWorldArrivalSingles:
 	jp nz, Label_0e_69b3 ; $5587
 Label_0e_558a:
 	script_set_position $00, $3f00, $3f00 ; $558a
-	ld c, $04 ; $5595
-	call BeginFadeIn ; $5597
+	script_fade_in $04 ; $5595
 	call WaitFadeEnd ; $559a
 	script_wait_frames $28 ; $559d
 	call Func_0e_6a51 ; $55a4
@@ -1685,8 +1680,7 @@ Label_0e_5bc5:
 	farcall FarPtr_ScriptSetActorScript ; $5bcd
 	script_set_position $00, $3f00, $3f00 ; $5bd0
 	script_set_position $02, $3f00, $3f00 ; $5bdb
-	ld c, $04 ; $5be6
-	call BeginFadeIn ; $5be8
+	script_fade_in $04 ; $5be6
 	call WaitFadeEnd ; $5beb
 	script_wait_frames $28 ; $5bee
 	call Func_0e_6a51 ; $5bf5
@@ -2875,8 +2869,7 @@ ExhibitionMatchIntroCutscene:
 	script_move_target $02, $0500, $2300 ; $7753
 	script_player_speed $0014 ; $775e
 	script_move_player $0e00, $1b00 ; $7764
-	ld c, $04 ; $776e
-	call BeginFadeIn ; $7770
+	script_fade_in $04 ; $776e
 	call WaitFadeEnd ; $7773
 	script_wait_move $0e ; $7776
 	ldh a, [hRomBank] ; $777b
@@ -2973,8 +2966,7 @@ Label_0e_7927:
 	script_move_target $02, $0500, $2300 ; $7986
 	script_player_speed $0014 ; $7991
 	script_move_player $0e00, $1b00 ; $7997
-	ld c, $04 ; $79a1
-	call BeginFadeIn ; $79a3
+	script_fade_in $04 ; $79a1
 	call WaitFadeEnd ; $79a6
 	script_wait_move $0e ; $79a9
 	ldh a, [hRomBank] ; $79ae

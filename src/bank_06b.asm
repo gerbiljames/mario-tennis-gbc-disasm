@@ -258,8 +258,7 @@ Unused_6b_ExitHandler_415f:
 	ld [hl+], a ; $41c3
 	ld [hl], d ; $41c4
 	call EnableLCD ; $41c5
-	ld c, $20 ; $41c8
-	call BeginFadeIn ; $41ca
+	script_fade_in $20 ; $41c8
 	call WaitFadeEnd ; $41cd
 	jp Label_6b_407c ; $41d0
 	ld c, $0a ; $41d3
@@ -341,8 +340,7 @@ Label_6b_420d:
 	ld hl, $526a ; $42a1
 	call RegisterFrameTask ; $42a4
 	call EnableLCD ; $42a7
-	ld c, $40 ; $42aa
-	call BeginFadeIn ; $42ac
+	script_fade_in $40 ; $42aa
 	jp Label_6b_407c ; $42af
 Palettes_6b_42b2:
 	; $42b2, 64 bytes (palettes)
@@ -461,8 +459,7 @@ Label_6b_43cc:
 	xor a, a ; $4443
 	ld [$cb43], a ; $4444
 	call EnableLCD ; $4447
-	ld c, $7f ; $444a
-	call BeginFadeIn ; $444c
+	script_fade_in $7f ; $444a
 	call WaitFadeEnd ; $444f
 	jp Label_6b_407c ; $4452
 	ld hl, $52f9 ; $4455
@@ -582,8 +579,7 @@ Label_6b_43cc:
 	ld hl, $52f9 ; $45a1
 	call RegisterFrameTask ; $45a4
 	call EnableLCD ; $45a7
-	ld c, $10 ; $45aa
-	call BeginFadeIn ; $45ac
+	script_fade_in $10 ; $45aa
 	call WaitFadeEnd ; $45af
 	jp Label_6b_407c ; $45b2
 	ld hl, rIE ; $45b5
@@ -659,8 +655,7 @@ Label_6b_43cc:
 	ld [$cb46], a ; $466e
 	ld [$cb47], a ; $4671
 	call EnableLCD ; $4674
-	ld c, $08 ; $4677
-	call BeginFadeIn ; $4679
+	script_fade_in $08 ; $4677
 	call WaitFadeEnd ; $467c
 	ld a, $01 ; $467f
 	ld hl, $7083 ; $4681
@@ -773,8 +768,7 @@ Palettes_6b_475a:
 	ld hl, $7366 ; $47b0
 	call RegisterFrameTask ; $47b3
 	call EnableLCD ; $47b6
-	ld c, $10 ; $47b9
-	call BeginFadeIn ; $47bb
+	script_fade_in $10 ; $47b9
 	call WaitFadeEnd ; $47be
 	jp Label_6b_407c ; $47c1
 	ld c, $0a ; $47c4
@@ -804,8 +798,7 @@ Palettes_6b_475a:
 	ld hl, $7395 ; $47ff
 	call RegisterFrameTask ; $4802
 	call EnableLCD ; $4805
-	ld c, $10 ; $4808
-	call BeginFadeIn ; $480a
+	script_fade_in $10 ; $4808
 	call WaitFadeEnd ; $480d
 	jp Label_6b_407c ; $4810
 	ld c, $0a ; $4813
@@ -835,8 +828,7 @@ Palettes_6b_475a:
 	ld hl, $73c4 ; $484e
 	call RegisterFrameTask ; $4851
 	call EnableLCD ; $4854
-	ld c, $10 ; $4857
-	call BeginFadeIn ; $4859
+	script_fade_in $10 ; $4857
 	call WaitFadeEnd ; $485c
 	jp Label_6b_407c ; $485f
 	ld c, $0a ; $4862
@@ -873,8 +865,7 @@ Unused_6b_State11_Init:
 	call Func_6b_545e ; $48b2
 	call Func_6b_6075 ; $48b5
 	call EnableLCD ; $48b8
-	ld c, $20 ; $48bb
-	call BeginFadeIn ; $48bd
+	script_fade_in $20 ; $48bb
 	call WaitFadeEnd ; $48c0
 	xor a, a ; $48c3
 	ld [wCutsceneStepTimer], a ; $48c4
@@ -1019,8 +1010,7 @@ Label_6b_494e:
 	ldh [hScrollY], a ; $4a2f
 	ld [wCutsceneStepTimer], a ; $4a31
 	call EnableLCD ; $4a34
-	ld c, $08 ; $4a37
-	call BeginFadeIn ; $4a39
+	script_fade_in $08 ; $4a37
 	call WaitFadeEnd ; $4a3c
 	jp Label_6b_407c ; $4a3f
 	ld a, [wCutsceneStepTimer] ; $4a42
@@ -1390,8 +1380,7 @@ Func_6b_51ae:
 	ldh [hScrollY], a ; $51c3
 	sound $65 ; $51c5
 	call EnableLCD ; $51c7
-	ld c, $20 ; $51ca
-	call BeginFadeIn ; $51cc
+	script_fade_in $20 ; $51ca
 	call WaitFadeEnd ; $51cf
 Label_6b_51d2:
 	call AdvanceFrame ; $51d2
@@ -2236,8 +2225,7 @@ Func_6b_75af:
 	call RegisterFrameTask ; $7644
 	sound $02 ; $7647
 	call EnableLCD ; $7649
-	ld c, $04 ; $764c
-	call BeginFadeIn ; $764e
+	script_fade_in $04 ; $764c
 	call WaitFadeEnd ; $7651
 	wram_bank $03 ; $7654
 	ld a, $9f ; $765a

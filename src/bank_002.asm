@@ -2006,8 +2006,7 @@ Func_02_4fa6:
 	call EnableLCD ; $4fb9
 	ld c, $7f ; $4fbc
 	call BeginFadeOut ; $4fbe
-	ld c, $7f ; $4fc1
-	call BeginFadeIn ; $4fc3
+	script_fade_in $7f ; $4fc1
 	farcall FarPtr_InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9
 Label_02_4fcb:

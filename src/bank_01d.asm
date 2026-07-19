@@ -71,8 +71,7 @@ ShowCharDataScreen:
 	ld hl, $48c7 ; $4092
 	call RegisterFrameTask ; $4095
 	farcall FarPtr_StartCharDataScreenAnimTask ; $4098
-	ld c, $10 ; $409b
-	call BeginFadeIn ; $409d
+	script_fade_in $10 ; $409b
 	call WaitFadeEnd ; $40a0
 	call RunDrillResultInputLoop ; $40a3
 	ld hl, rIE ; $40a6
@@ -3081,8 +3080,7 @@ PromptCharDataConfirm:
 	call EnableLCD ; $5a89
 	call AdvanceFrame ; $5a8c
 	farcall FarPtr_StartCharDataScreenAnimTask ; $5a8f
-	ld c, $10 ; $5a92
-	call BeginFadeIn ; $5a94
+	script_fade_in $10 ; $5a92
 	call WaitFadeEnd ; $5a97
 	wram_bank $06 ; $5a9a
 	ld a, $01 ; $5aa0
@@ -3389,8 +3387,7 @@ Func_1d_68a3:
 	call RegisterFrameTask ; $68f1
 	xor a, a ; $68f4
 	ld [$cb00], a ; $68f5
-	ld c, $10 ; $68f8
-	call BeginFadeIn ; $68fa
+	script_fade_in $10 ; $68f8
 	call WaitFadeEnd ; $68fd
 	wram_bank $06 ; $6900
 	xor a, a ; $6906

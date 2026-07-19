@@ -6862,8 +6862,7 @@ RunDebugWindowDemo:
 	ld a, $02 ; $6d89
 	ldh [hScrollX], a ; $6d8b
 	ldh [hScrollY], a ; $6d8d
-	ld c, $7f ; $6d8f
-	call BeginFadeIn ; $6d91
+	script_fade_in $7f ; $6d8f
 	call WaitFadeEnd ; $6d94
 	call RestoreShadowTilemap ; $6d97
 	call WaitFramesCmd ; $6d9a

@@ -1983,6 +1983,9 @@ SCRIPT_COMMANDS = (
     # (bank $27's cutscenes call it instead of inlining script_wait_frames).
     ("script_delay",
         ((0x3E, 2, 'b'), ('C', "WaitScriptFramesSaveA"))),
+    # Start a fade-in at speed c (BeginFadeIn, $00:$1d2e).
+    ("script_fade_in",
+        ((0x0E, 2, 'b'), ('C', "BeginFadeIn"))),
 )
 
 
@@ -2012,12 +2015,13 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
                     ok = False
                     break
                 p += 3  # rst18 + slot + bank
-            elif step[0] == 'C':  # `call` to a named same-bank helper
+            elif step[0] == 'C':  # `call` to a named ROM0 / same-bank helper
                 if p + 3 > len(rom) or rom[p] != 0xCD:
                     ok = False
                     break
-                tgt = ((p // BANK_SIZE) * BANK_SIZE
-                       + (rom[p + 1] | (rom[p + 2] << 8)) - BANK_SIZE)
+                cpu = rom[p + 1] | (rom[p + 2] << 8)
+                tgt = cpu if cpu < BANK_SIZE else \
+                    (p // BANK_SIZE) * BANK_SIZE + cpu - BANK_SIZE
                 if labels.get(tgt) != step[1]:
                     ok = False
                     break
@@ -2420,6 +2424,13 @@ ENDM
 MACRO script_delay
 	ld a, \\1
 	call WaitScriptFramesSaveA
+ENDM
+
+; Start a screen fade-in at speed `speed` (BeginFadeIn, $00:$1d2e; speed 0 is
+; treated as 1). Usage: script_fade_in speed
+MACRO script_fade_in
+	ld c, \\1
+	call BeginFadeIn
 ENDM
 
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):

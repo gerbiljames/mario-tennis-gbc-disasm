@@ -68,8 +68,7 @@ Func_01_4018:
 	farcall FarPtr_InitStoryModeState ; $4097
 	farcall FarPtr_InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d
-	ld c, $7f ; $40a0
-	call BeginFadeIn ; $40a2
+	script_fade_in $7f ; $40a0
 Label_01_40a5:
 	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], $00 ; $40a8

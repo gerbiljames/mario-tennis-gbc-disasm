@@ -253,8 +253,7 @@ RunMatch:
 	call ClearMemory16 ; $41b2
 	ld a, $ff ; $41b5
 	ld [$c7b5], a ; $41b7
-	ld c, $20 ; $41ba
-	call BeginFadeIn ; $41bc
+	script_fade_in $20 ; $41ba
 	wram_bank $04 ; $41bf
 	call PlayCourtIntro ; $41c5
 	xor a, a ; $41c8
@@ -5007,8 +5006,7 @@ RunMinigameMatch:
 	call EnableLCD ; $6568
 	ld a, [wMatchBGM] ; $656b
 	call PlaySoundManaged ; $656e
-	ld c, $20 ; $6571
-	call BeginFadeIn ; $6573
+	script_fade_in $20 ; $6571
 	xor a, a ; $6576
 	ld [$c4c0], a ; $6577
 	call RunMinigamePointLoop ; $657a

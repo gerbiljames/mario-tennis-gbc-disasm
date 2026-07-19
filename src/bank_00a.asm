@@ -1407,8 +1407,7 @@ Label_0a_47e0:
 	farcall FarPtr_RestoreShadowTilemap ; $47fc
 	ld b, $05 ; $47ff
 	call AdvanceFrame ; $4801
-	ld c, $7f ; $4804
-	call BeginFadeIn ; $4806
+	script_fade_in $7f ; $4804
 	call WaitFadeEnd ; $4809
 Label_0a_480c:
 	add sp, 4 ; $480c
@@ -1490,8 +1489,7 @@ Label_0a_485f:
 	farcall FarPtr_RestoreShadowTilemap ; $487b
 	ld b, $05 ; $487e
 	call AdvanceFrame ; $4880
-	ld c, $7f ; $4883
-	call BeginFadeIn ; $4885
+	script_fade_in $7f ; $4883
 	call WaitFadeEnd ; $4888
 Label_0a_488b:
 	add sp, 4 ; $488b
@@ -1777,8 +1775,7 @@ RunClearStatusSetupMenu:
 	farcall FarPtr_CreateWindowFromScreenRect ; $4bda
 	ld [$df05], a ; $4bdd
 	farcall FarPtr_DrawTextWindowFrame ; $4be0
-	ld c, $10 ; $4be3
-	call BeginFadeIn ; $4be5
+	script_fade_in $10 ; $4be3
 	call WaitFadeEnd ; $4be8
 	wram_bank $05 ; $4beb
 Label_0a_4bf1:
@@ -2240,8 +2237,7 @@ Label_0a_4fc4:
 	call RunLocationExit ; $4fd0
 	jp Label_0a_50df ; $4fd3
 Label_0a_4fd6:
-	ld c, $08 ; $4fd6
-	call BeginFadeIn ; $4fd8
+	script_fade_in $08 ; $4fd6
 	call WaitFadeEnd ; $4fdb
 	ld a, [wStoryModeShowLocationName] ; $4fde
 	and a, a ; $4fe1

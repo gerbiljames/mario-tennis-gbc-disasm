@@ -74,8 +74,7 @@ Func_10_40ef:
 	db $3c ; $40f8 inline arg
 	call EnableLCD ; $40f9
 	farcall FarPtr_03_38 ; $40fc
-	ld c, $04 ; $40ff
-	call BeginFadeIn ; $4101
+	script_fade_in $04 ; $40ff
 	call WaitFadeEnd ; $4104
 	sound $14 ; $4107
 	ld a, $01 ; $4109
@@ -902,8 +901,7 @@ Test2FacingScripts_10:
 	db $ff
 Func_10_4b69:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4b69
-	ld c, $10 ; $4b6c
-	call BeginFadeIn ; $4b6e
+	script_fade_in $10 ; $4b6c
 	script_set_text $0483 ; $4b71
 	script_speak $00 ; $4b77
 	farcall FarPtr_EndCutsceneScriptMode ; $4b7c
@@ -973,8 +971,7 @@ Func_10_4cff:
 	ldh a, [hRomBank] ; $4d07
 	ld hl, $4ce3 ; $4d09
 	farcall FarPtr_ScriptRespawnLocationActors ; $4d0c
-	ld c, $10 ; $4d0f
-	call BeginFadeIn ; $4d11
+	script_fade_in $10 ; $4d0f
 	call WaitFadeEnd ; $4d14
 	ret ; $4d17
 	script_move_target $03, $0100, $0100 ; $4d18
@@ -1001,8 +998,7 @@ Func_10_4d70:
 	ldh a, [hRomBank] ; $4d78
 	ld hl, DevelopmentActors_10 ; $4d7a
 	farcall FarPtr_ScriptRespawnLocationActors ; $4d7d
-	ld c, $10 ; $4d80
-	call BeginFadeIn ; $4d82
+	script_fade_in $10 ; $4d80
 	call WaitFadeEnd ; $4d85
 	ret ; $4d88
 	farcall FarPtr_BeginCutsceneScriptMode ; $4d89
@@ -1041,8 +1037,7 @@ DevelopmentFacingScripts_10:
 	db $ff
 Func_10_4e39:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4e39
-	ld c, $10 ; $4e3c
-	call BeginFadeIn ; $4e3e
+	script_fade_in $10 ; $4e3c
 	script_set_text $0483 ; $4e41
 	script_speak $00 ; $4e47
 	farcall FarPtr_EndCutsceneScriptMode ; $4e4c
@@ -1174,8 +1169,7 @@ Label_10_4f68:
 	farcall FarPtr_01_0a ; $4f6b
 	farcall FarPtr_ResetScreenAndTextWindows ; $4f6e
 	call EnableLCD ; $4f71
-	ld c, $10 ; $4f74
-	call BeginFadeIn ; $4f76
+	script_fade_in $10 ; $4f74
 	call WaitFadeEnd ; $4f79
 Label_10_4f7c:
 	xor a, a ; $4f7c
@@ -1240,8 +1234,7 @@ MatchSelectHandlersB_10:
 	ld a, [$c8a5] ; $4ff8
 	or a, a ; $4ffb
 	jr nz, Label_10_5006 ; $4ffc
-	ld c, $10 ; $4ffe
-	call BeginFadeIn ; $5000
+	script_fade_in $10 ; $4ffe
 	call WaitFadeEnd ; $5003
 Label_10_5006:
 	ld a, [$c8a5] ; $5006
@@ -1288,8 +1281,7 @@ Label_10_5041:
 	farcall FarPtr_01_0a ; $5062
 	farcall FarPtr_ResetScreenAndTextWindows ; $5065
 	call EnableLCD ; $5068
-	ld c, $10 ; $506b
-	call BeginFadeIn ; $506d
+	script_fade_in $10 ; $506b
 	jp Label_10_4f7c ; $5070
 Label_10_5073:
 	call ResetGameTimer ; $5073
@@ -1310,8 +1302,7 @@ Label_10_5093:
 	call DisableLCDSafely ; $5093
 	farcall FarPtr_ResetScreenAndTextWindows ; $5096
 	call EnableLCD ; $5099
-	ld c, $10 ; $509c
-	call BeginFadeIn ; $509e
+	script_fade_in $10 ; $509c
 	call WaitFadeEnd ; $50a1
 Label_10_50a4:
 	xor a, a ; $50a4
@@ -1374,8 +1365,7 @@ Label_10_5124:
 	farcall FarPtr_ResetScreenAndTextWindows ; $5127
 	call EnableLCD ; $512a
 	push af ; $512d
-	ld c, $10 ; $512e
-	call BeginFadeIn ; $5130
+	script_fade_in $10 ; $512e
 	call WaitFadeEnd ; $5133
 	pop af ; $5136
 Label_10_5137:
@@ -1412,8 +1402,7 @@ Label_10_5159:
 	cp a, $ff ; $517e
 	jr nz, Label_10_5191 ; $5180
 	call EnableLCD ; $5182
-	ld c, $10 ; $5185
-	call BeginFadeIn ; $5187
+	script_fade_in $10 ; $5185
 	ld a, $00 ; $518a
 	ld [wMenuSlideDirection], a ; $518c
 	jr Label_10_5149 ; $518f
@@ -1425,8 +1414,7 @@ Label_10_5191:
 	or a, a ; $519c
 	jr z, Label_10_51b6 ; $519d
 	call EnableLCD ; $519f
-	ld c, $10 ; $51a2
-	call BeginFadeIn ; $51a4
+	script_fade_in $10 ; $51a2
 	farcall FarPtr_RunCourtSelect9Menu ; $51a7
 	cp a, $ff ; $51aa
 	jr nz, Label_10_51cd ; $51ac
@@ -1435,8 +1423,7 @@ Label_10_5191:
 	jp z, Label_10_5159 ; $51b3
 Label_10_51b6:
 	call EnableLCD ; $51b6
-	ld c, $10 ; $51b9
-	call BeginFadeIn ; $51bb
+	script_fade_in $10 ; $51b9
 	farcall FarPtr_RunCourtSelect4Menu ; $51be
 	cp a, $ff ; $51c1
 	jr nz, Label_10_51cd ; $51c3
@@ -1471,8 +1458,7 @@ Label_10_51fd:
 	farcall FarPtr_01_0a ; $5205
 	farcall FarPtr_ResetScreenAndTextWindows ; $5208
 	call EnableLCD ; $520b
-	ld c, $10 ; $520e
-	call BeginFadeIn ; $5210
+	script_fade_in $10 ; $520e
 	jp Label_10_4f7c ; $5213
 Label_10_5216:
 	xor a, a ; $5216
@@ -1510,8 +1496,7 @@ Label_10_5241:
 	farcall FarPtr_01_0a ; $5259
 	farcall FarPtr_ResetScreenAndTextWindows ; $525c
 	call EnableLCD ; $525f
-	ld c, $10 ; $5262
-	call BeginFadeIn ; $5264
+	script_fade_in $10 ; $5262
 	ld a, $00 ; $5267
 	ld [wMenuSlideDirection], a ; $5269
 	jr Label_10_5229 ; $526c
@@ -1525,8 +1510,7 @@ Label_10_526e:
 	farcall FarPtr_01_0a ; $527f
 	farcall FarPtr_ResetScreenAndTextWindows ; $5282
 	call EnableLCD ; $5285
-	ld c, $10 ; $5288
-	call BeginFadeIn ; $528a
+	script_fade_in $10 ; $5288
 	call WaitFadeEnd ; $528d
 	ld a, [wMatchSelectNewLevelRequest] ; $5290
 	or a, a ; $5293
@@ -1551,8 +1535,7 @@ Label_10_526e:
 	farcall FarPtr_01_0a ; $52c0
 	farcall FarPtr_ResetScreenAndTextWindows ; $52c3
 	call EnableLCD ; $52c6
-	ld c, $10 ; $52c9
-	call BeginFadeIn ; $52cb
+	script_fade_in $10 ; $52c9
 	jp Label_10_4f7c ; $52ce
 Label_10_52d1:
 	farcall FarPtr_RunSavedDataSourceSelect ; $52d1
@@ -1577,8 +1560,7 @@ Label_10_52e4:
 	farcall FarPtr_01_0a ; $52ff
 	farcall FarPtr_ResetScreenAndTextWindows ; $5302
 	call EnableLCD ; $5305
-	ld c, $10 ; $5308
-	call BeginFadeIn ; $530a
+	script_fade_in $10 ; $5308
 	ld a, $00 ; $530d
 	ld [wMenuSlideDirection], a ; $530f
 	jp Label_10_52e4 ; $5312
@@ -1596,8 +1578,7 @@ Label_10_5315:
 	farcall FarPtr_01_0a ; $532f
 	farcall FarPtr_ResetScreenAndTextWindows ; $5332
 	call EnableLCD ; $5335
-	ld c, $10 ; $5338
-	call BeginFadeIn ; $533a
+	script_fade_in $10 ; $5338
 	ld a, $00 ; $533d
 	ld [wMenuSlideDirection], a ; $533f
 	jp Label_10_52e4 ; $5342
@@ -1612,8 +1593,7 @@ Label_10_5345:
 	farcall FarPtr_01_0a ; $5357
 	farcall FarPtr_ResetScreenAndTextWindows ; $535a
 	call EnableLCD ; $535d
-	ld c, $10 ; $5360
-	call BeginFadeIn ; $5362
+	script_fade_in $10 ; $5360
 	ld a, $00 ; $5365
 	ld [wMenuSlideDirection], a ; $5367
 	jp Label_10_52e4 ; $536a
@@ -1637,8 +1617,7 @@ Label_10_5380:
 	farcall FarPtr_01_0a ; $5394
 	farcall FarPtr_ResetScreenAndTextWindows ; $5397
 	call EnableLCD ; $539a
-	ld c, $10 ; $539d
-	call BeginFadeIn ; $539f
+	script_fade_in $10 ; $539d
 	ld a, $00 ; $53a2
 	ld [wMenuSlideDirection], a ; $53a4
 	jp Label_10_536d ; $53a7
@@ -1653,8 +1632,7 @@ Label_10_53aa:
 	farcall FarPtr_01_0a ; $53be
 	farcall FarPtr_ResetScreenAndTextWindows ; $53c1
 	call EnableLCD ; $53c4
-	ld c, $10 ; $53c7
-	call BeginFadeIn ; $53c9
+	script_fade_in $10 ; $53c7
 	ld a, $00 ; $53cc
 	ld [wMenuSlideDirection], a ; $53ce
 	jp Label_10_536d ; $53d1
@@ -1680,8 +1658,7 @@ Label_10_53e2:
 	farcall FarPtr_01_0a ; $53fb
 	farcall FarPtr_ResetScreenAndTextWindows ; $53fe
 	call EnableLCD ; $5401
-	ld c, $10 ; $5404
-	call BeginFadeIn ; $5406
+	script_fade_in $10 ; $5404
 	ld a, $00 ; $5409
 	ld [wMenuSlideDirection], a ; $540b
 	jp Label_10_53d8 ; $540e
@@ -1697,8 +1674,7 @@ Label_10_5411:
 	farcall FarPtr_01_0a ; $5427
 	farcall FarPtr_ResetScreenAndTextWindows ; $542a
 	call EnableLCD ; $542d
-	ld c, $10 ; $5430
-	call BeginFadeIn ; $5432
+	script_fade_in $10 ; $5430
 	ld a, $00 ; $5435
 	ld [wMenuSlideDirection], a ; $5437
 	jp Label_10_53d8 ; $543a
@@ -1716,8 +1692,7 @@ Label_10_543d:
 	farcall FarPtr_01_0a ; $5456
 	farcall FarPtr_ResetScreenAndTextWindows ; $5459
 	call EnableLCD ; $545c
-	ld c, $10 ; $545f
-	call BeginFadeIn ; $5461
+	script_fade_in $10 ; $545f
 	ld a, $00 ; $5464
 	ld [wMenuSlideDirection], a ; $5466
 	jp Label_10_53d4 ; $5469
@@ -1732,8 +1707,7 @@ Label_10_546c:
 	farcall FarPtr_01_0a ; $547e
 	farcall FarPtr_ResetScreenAndTextWindows ; $5481
 	call EnableLCD ; $5484
-	ld c, $10 ; $5487
-	call BeginFadeIn ; $5489
+	script_fade_in $10 ; $5487
 	ld a, $00 ; $548c
 	ld [wMenuSlideDirection], a ; $548e
 	jp Label_10_53d4 ; $5491
@@ -1743,8 +1717,7 @@ Label_10_5494:
 	farcall FarPtr_01_0a ; $549a
 	farcall FarPtr_ResetScreenAndTextWindows ; $549d
 	call EnableLCD ; $54a0
-	ld c, $10 ; $54a3
-	call BeginFadeIn ; $54a5
+	script_fade_in $10 ; $54a3
 	ld a, $00 ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
 	jp Label_10_53d4 ; $54ad
@@ -1757,8 +1730,7 @@ Label_10_5494:
 	farcall FarPtr_01_0a ; $54c0
 	farcall FarPtr_ResetScreenAndTextWindows ; $54c3
 	call EnableLCD ; $54c6
-	ld c, $10 ; $54c9
-	call BeginFadeIn ; $54cb
+	script_fade_in $10 ; $54c9
 	ld a, $00 ; $54ce
 	ld [wMenuSlideDirection], a ; $54d0
 	jp Label_10_4f7c ; $54d3
@@ -1810,8 +1782,7 @@ Label_10_5520:
 	farcall FarPtr_01_0a ; $5523
 	farcall FarPtr_ResetScreenAndTextWindows ; $5526
 	call EnableLCD ; $5529
-	ld c, $10 ; $552c
-	call BeginFadeIn ; $552e
+	script_fade_in $10 ; $552c
 	ld a, $00 ; $5531
 	ld [wMenuSlideDirection], a ; $5533
 	jp Label_10_54d6 ; $5536
@@ -1828,8 +1799,7 @@ Label_10_554c:
 	farcall FarPtr_01_0a ; $554f
 	farcall FarPtr_ResetScreenAndTextWindows ; $5552
 	call EnableLCD ; $5555
-	ld c, $10 ; $5558
-	call BeginFadeIn ; $555a
+	script_fade_in $10 ; $5558
 	ld a, $00 ; $555d
 	ld [wMenuSlideDirection], a ; $555f
 	jp Label_10_54d6 ; $5562
@@ -1844,8 +1814,7 @@ Label_10_554c:
 	farcall FarPtr_01_0a ; $5578
 	farcall FarPtr_ResetScreenAndTextWindows ; $557b
 	call EnableLCD ; $557e
-	ld c, $10 ; $5581
-	call BeginFadeIn ; $5583
+	script_fade_in $10 ; $5581
 	ld a, $00 ; $5586
 	ld [wMenuSlideDirection], a ; $5588
 	xor a, a ; $558b
@@ -1857,8 +1826,7 @@ Label_10_5592:
 	farcall FarPtr_01_0a ; $5598
 	farcall FarPtr_ResetScreenAndTextWindows ; $559b
 	call EnableLCD ; $559e
-	ld c, $10 ; $55a1
-	call BeginFadeIn ; $55a3
+	script_fade_in $10 ; $55a1
 	ld a, $00 ; $55a6
 	ld [wMenuSlideDirection], a ; $55a8
 	xor a, a ; $55ab
@@ -3340,8 +3308,7 @@ Label_10_6512:
 	xor a, a ; $6530
 	ld [wStoryModeShowLocationName], a ; $6531
 	script_set_position $00, $2b00, $3b00 ; $6534
-	ld c, $08 ; $653f
-	call BeginFadeIn ; $6541
+	script_fade_in $08 ; $653f
 	call WaitFadeEnd ; $6544
 	script_wait_frames $3c ; $6547
 	script_set_anim $06, $02 ; $654e
@@ -3780,8 +3747,7 @@ Label_10_7029:
 	script_face $00, $c0 ; $7029
 	xor a, a ; $7030
 	ld [wStoryModeShowLocationName], a ; $7031
-	ld c, $04 ; $7034
-	call BeginFadeIn ; $7036
+	script_fade_in $04 ; $7034
 	call WaitFadeEnd ; $7039
 	script_wait_frames $3c ; $703c
 	script_set_text $01f2 ; $7043
@@ -4285,8 +4251,7 @@ Func_10_7741:
 	farcall FarPtr_BeginCutsceneScriptMode ; $7749
 	script_set_position $00, $2200, $2580 ; $774c
 	script_set_position $03, $2200, $2400 ; $7757
-	ld c, $04 ; $7762
-	call BeginFadeIn ; $7764
+	script_fade_in $04 ; $7762
 	script_wait_frames $1e ; $7767
 	script_face $03, $c0 ; $776e
 	script_wait_frames $0a ; $7775

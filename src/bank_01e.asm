@@ -64,8 +64,7 @@ Label_1e_4031:
 	ld a, $01 ; $4078
 	ld hl, $4a76 ; $407a
 	call RegisterFrameTask ; $407d
-	ld c, $10 ; $4080
-	call BeginFadeIn ; $4082
+	script_fade_in $10 ; $4080
 	call WaitFadeEnd ; $4085
 	call Func_1e_4b2c ; $4088
 	ld c, $10 ; $408b
@@ -1480,8 +1479,7 @@ Label_1e_5438:
 	ld a, $01 ; $5483
 	ld hl, $5a4e ; $5485
 	call RegisterFrameTask ; $5488
-	ld c, $10 ; $548b
-	call BeginFadeIn ; $548d
+	script_fade_in $10 ; $548b
 	call WaitFadeEnd ; $5490
 	call WaitFramesCmd ; $5493
 	db $14 ; $5496 inline arg
@@ -4393,8 +4391,7 @@ Label_1e_730a:
 	ld a, $01 ; $7343
 	ld hl, $7a8d ; $7345
 	call RegisterFrameTask ; $7348
-	ld c, $10 ; $734b
-	call BeginFadeIn ; $734d
+	script_fade_in $10 ; $734b
 	call WaitFadeEnd ; $7350
 Label_1e_7353:
 	call AdvanceFrame ; $7353

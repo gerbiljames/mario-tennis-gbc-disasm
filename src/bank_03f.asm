@@ -195,8 +195,7 @@ Label_3f_4106:
 	call EnableLCD ; $410c
 	sound $05 ; $410f
 	call AdvanceFrame ; $4111
-	ld c, $10 ; $4114
-	call BeginFadeIn ; $4116
+	script_fade_in $10 ; $4114
 	call WaitFadeEnd ; $4119
 	ld a, $1d ; $411c
 	ld hl, $4e8d ; $411e
@@ -275,8 +274,7 @@ Func_3f_4194:
 	ld a, [$cb37] ; $41cd
 	set 1, a ; $41d0
 	ld [$cb37], a ; $41d2
-	ld c, $10 ; $41d5
-	call BeginFadeIn ; $41d7
+	script_fade_in $10 ; $41d5
 	call WaitFadeEnd ; $41da
 	ld a, $08 ; $41dd
 	ret ; $41df
@@ -304,8 +302,7 @@ Func_3f_41e0:
 	ld a, [$cb37] ; $4217
 	res 1, a ; $421a
 	ld [$cb37], a ; $421c
-	ld c, $10 ; $421f
-	call BeginFadeIn ; $4221
+	script_fade_in $10 ; $421f
 	call WaitFadeEnd ; $4224
 	ld a, $02 ; $4227
 	ret ; $4229

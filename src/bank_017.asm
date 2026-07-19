@@ -819,8 +819,7 @@ ShowDrillBriefingScreen:
 	call RegisterFrameTask ; $44ae
 	ld a, $03 ; $44b1
 	ld [$cb0c], a ; $44b3
-	ld c, $10 ; $44b6
-	call BeginFadeIn ; $44b8
+	script_fade_in $10 ; $44b6
 	call WaitFadeEnd ; $44bb
 	ld a, [$c8f7] ; $44be
 	cp a, $12 ; $44c1
@@ -858,8 +857,7 @@ ShowCourtDiagramTestScreen:
 	call RegisterFrameTask ; $44fd
 	ld a, $03 ; $4500
 	ld [$cb0c], a ; $4502
-	ld c, $10 ; $4505
-	call BeginFadeIn ; $4507
+	script_fade_in $10 ; $4505
 	call WaitFadeEnd ; $450a
 	ld a, $50 ; $450d
 	ld [$d810], a ; $450f
@@ -4803,8 +4801,7 @@ ShowRulesScreen:
 	ld hl, $4406 ; $6f56
 	call RegisterFrameTask ; $6f59
 	call EnableLCD ; $6f5c
-	ld c, $20 ; $6f5f
-	call BeginFadeIn ; $6f61
+	script_fade_in $20 ; $6f5f
 	call WaitFadeEnd ; $6f64
 	wram_bank $03 ; $6f67
 	ld a, $01 ; $6f6d

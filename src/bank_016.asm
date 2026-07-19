@@ -279,8 +279,7 @@ Label_16_44b9:
 	ld hl, $4cb1 ; $44c9
 	call RegisterFrameTask ; $44cc
 	call EnableLCD ; $44cf
-	ld c, $10 ; $44d2
-	call BeginFadeIn ; $44d4
+	script_fade_in $10 ; $44d2
 	call WaitFadeEnd ; $44d7
 	ld a, $08 ; $44da
 	ldh [rSTAT], a ; $44dc
@@ -1153,8 +1152,7 @@ RunMatchStatsScreen:
 	ld hl, $43f6 ; $5c4e
 	call RegisterFrameTask ; $5c51
 	call EnableLCD ; $5c54
-	ld c, $10 ; $5c57
-	call BeginFadeIn ; $5c59
+	script_fade_in $10 ; $5c57
 	call WaitFadeEnd ; $5c5c
 Label_16_5c5f:
 	call PrintMatchSetScores ; $5c5f

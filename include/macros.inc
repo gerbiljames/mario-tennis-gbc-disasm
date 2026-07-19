@@ -328,6 +328,13 @@ MACRO script_delay
 	call WaitScriptFramesSaveA
 ENDM
 
+; Start a screen fade-in at speed `speed` (BeginFadeIn, $00:$1d2e; speed 0 is
+; treated as 1). Usage: script_fade_in speed
+MACRO script_fade_in
+	ld c, \1
+	call BeginFadeIn
+ENDM
+
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
 ; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
 ; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result

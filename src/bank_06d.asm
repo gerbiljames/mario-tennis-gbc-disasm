@@ -220,8 +220,7 @@ TitleScreenTiles:
 	ld hl, $6abf ; $6a99
 	call RegisterFrameTask ; $6a9c
 	call EnableLCD ; $6a9f
-	ld c, $10 ; $6aa2
-	call BeginFadeIn ; $6aa4
+	script_fade_in $10 ; $6aa2
 	call WaitFadeEnd ; $6aa7
 Label_6d_6aaa:
 	call AdvanceFrame ; $6aaa

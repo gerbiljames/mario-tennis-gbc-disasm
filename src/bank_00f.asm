@@ -1347,8 +1347,7 @@ Func_0f_5b4d:
 	farcall FarPtr_WaitPlayerMoveDone ; $5b5d
 	xor a, a ; $5b60
 	ld [wStoryModeShowLocationName], a ; $5b61
-	ld c, $04 ; $5b64
-	call BeginFadeIn ; $5b66
+	script_fade_in $04 ; $5b64
 	call WaitFadeEnd ; $5b69
 	script_set_objdef $30, $13 ; $5b6c
 	script_set_anim $13, $01 ; $5b78
@@ -1933,8 +1932,7 @@ IslandOpenArrivalCutscene:
 	script_player_speed $00ff ; $6440
 	script_move_player $1c00, $2500 ; $6446
 	farcall FarPtr_WaitPlayerMoveDone ; $6450
-	ld c, $04 ; $6453
-	call BeginFadeIn ; $6455
+	script_fade_in $04 ; $6453
 	call WaitFadeEnd ; $6458
 	script_player_speed $0018 ; $645b
 	script_move_player $1c00, $1b00 ; $6461
@@ -2826,8 +2824,7 @@ Label_0f_74b0:
 	ld a, [hl] ; $74d5
 	xor a, $20 ; $74d6
 	ld [hl], a ; $74d8
-	ld c, $04 ; $74d9
-	call BeginFadeIn ; $74db
+	script_fade_in $04 ; $74d9
 	call WaitFadeEnd ; $74de
 	ld a, [$c2b0] ; $74e1
 	add a, a ; $74e4
@@ -2988,14 +2985,12 @@ Label_0f_76f6:
 	farcall FarPtr_SetActorNullScript ; $770f
 	script_set_position $02, $2500, $1100 ; $7712
 	script_face $02, $c0 ; $771d
-	ld c, $04 ; $7724
-	call BeginFadeIn ; $7726
+	script_fade_in $04 ; $7724
 	call WaitFadeEnd ; $7729
 	call ComputeIslandOpenRound ; $772c
 	farcall FarPtr_BeginCutsceneScriptMode ; $772f
 	script_face_toward $00, $02 ; $7732
-	ld c, $04 ; $773a
-	call BeginFadeIn ; $773c
+	script_fade_in $04 ; $773a
 	call WaitFadeEnd ; $773f
 	ld a, [$c2b0] ; $7742
 	dec a ; $7745
