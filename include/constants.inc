@@ -8,7 +8,8 @@
 ; A->B = lob, B->A = drop, A+B = smash; doubling a button gives its "power"
 ; variant. When the ball is in smash range (df50 bit 4) the ground strokes are
 ; swapped for their "reach" variants ($06/$07/$08, dispatched to bank $2c's
-; ProjectShotPlacement0-2). Serves are three separate codes.
+; ProjectShotPlacement0-2). Serves mirror the ground strokes by first button:
+; A -> topspin serve, B -> slice serve, A+B -> flat serve (SelectServeShotType).
 def SHOTTYPE_TOPSPIN            equ $00 ; A
 def SHOTTYPE_POWER_TOPSPIN      equ $01 ; A -> A
 def SHOTTYPE_SLICE              equ $02 ; B
@@ -21,6 +22,6 @@ def SHOTTYPE_REACH_BASIC       equ $08 ; A / B, ball smashable
 def SHOTTYPE_SMASH             equ $09 ; A + B
 def SHOTTYPE_LOB               equ $0a ; A -> B
 def SHOTTYPE_DROP              equ $0b ; B -> A
-def SHOTTYPE_SERVE_0           equ $0c
-def SHOTTYPE_SERVE_1           equ $0d
-def SHOTTYPE_SERVE_2           equ $0e
+def SHOTTYPE_SERVE_TOPSPIN     equ $0c ; serve, A
+def SHOTTYPE_SERVE_SLICE       equ $0d ; serve, B
+def SHOTTYPE_SERVE_FLAT        equ $0e ; serve, A+B

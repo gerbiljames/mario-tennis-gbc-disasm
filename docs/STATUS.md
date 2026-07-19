@@ -48,6 +48,12 @@ tables (`$08:$707a/$709b/$70b4`) from `bytes:4` to `enum:SHOTTYPE:4`, so the
 `SelectServeShotType`/`SelectRallyShotType` button x direction maps now read as
 their `SHOTTYPE_*` results directly in the source. Byte-perfect.
 
+Identified the three serve types: `BufferShotButtonPress` masks `$df1f & $03`
+into the first-button field `$df16` (A=1, B=2, A+B=3), which `SelectServeShotType`
+indexes — so serves mirror the ground strokes by first button. Renamed
+`SHOTTYPE_SERVE_0/1/2` -> `SHOTTYPE_SERVE_TOPSPIN/SLICE/FLAT` ($0c/$0d/$0e; A+B is
+smash in a rally but flat/power on serve). Byte-perfect.
+
 ### Label bank $2c shot-placement offset tables (2026-07-19)
 
 The three parallel `$2c` handlers at `$7281`/`$72d3`/`$7325` each do `ld bc,
