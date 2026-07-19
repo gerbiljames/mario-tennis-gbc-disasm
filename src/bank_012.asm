@@ -24,11 +24,11 @@ DormEntranceActors_12:
 	map_actor_end
 DormEntranceEntryPoints_12:
 	; $4056, 25 bytes (map_entries)
-	map_entry $01, $c0, $1600, $1b00, Func_12_40b5
-	map_entry $02, $40, $1600, $0d00, Func_12_406f
+	map_entry $01, $c0, $1600, $1b00, DormEntranceArrival01_12
+	map_entry $02, $40, $1600, $0d00, DormEntranceArrival02_12
 	map_entry $0f, $c0, $1600, $1b00, $0000
 	db $ff
-Func_12_406f:
+DormEntranceArrival02_12:
 	ld a, [wStoryModeEntryPoint] ; $406f
 	cp a, $ff ; $4072
 	jp z, Label_12_40b4 ; $4074
@@ -44,7 +44,7 @@ Label_12_40a2:
 	script_move_angle $00, $40, $0200 ; $40aa
 Label_12_40b4:
 	ret ; $40b4
-Func_12_40b5:
+DormEntranceArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $40b5
 	cp a, $ff ; $40b8
 	jp z, Label_12_40fa ; $40ba
@@ -62,9 +62,9 @@ Label_12_40fa:
 	ret ; $40fa
 DormEntranceExitTriggers_12:
 	; $40fb, 25 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_12_7ab1, $0a, $02
-	map_script $03, $ff, $0000, Func_12_7ab1, $08, $01
-	map_script $0f, $ff, $0000, Func_12_7ab1, $0a, $0f
+	map_script $01, $ff, $0000, MapScriptNop_12, $0a, $02
+	map_script $03, $ff, $0000, MapScriptNop_12, $08, $01
+	map_script $0f, $ff, $0000, MapScriptNop_12, $0a, $0f
 	db $ff
 DormEntranceNpcScripts_12:
 	ds 1, $ff ; $4114, fill
@@ -72,9 +72,9 @@ DormEntranceFacingScripts_12:
 	ds 1, $ff ; $4115, fill
 DormEntranceTileTriggers_12:
 	; $4116, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_12_411f, $00, $00
+	map_script $01, $ff, $0000, DormEntranceTile01_12, $00, $00
 	db $ff
-Func_12_411f:
+DormEntranceTile01_12:
 	script_set_active $00, $00 ; $411f
 	script_move_target $00, $1600, $0900 ; $4126
 	script_wait_move $00 ; $4131
@@ -325,11 +325,11 @@ WallPracticeRoomActors_12:
 	map_actor_end
 WallPracticeRoomEntryPoints_12:
 	; $46da, 25 bytes (map_entries)
-	map_entry $01, $c0, $0f00, $3900, Func_12_46f3
+	map_entry $01, $c0, $0f00, $3900, WallPracticeRoomArrival01_12
 	map_entry $0a, $c0, $0c00, $3100, $0000
 	map_entry $0b, $c0, $0c00, $3100, $0000
 	db $ff
-Func_12_46f3:
+WallPracticeRoomArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $46f3
 	cp a, $ff ; $46f6
 	jp z, Label_12_4715 ; $46f8
@@ -342,9 +342,9 @@ Label_12_4715:
 	ret ; $4715
 WallPracticeRoomExitTriggers_12:
 	; $4716, 9 bytes (map_scripts)
-	map_script $05, $ff, $0000, Func_12_7ab1, $11, $02
+	map_script $05, $ff, $0000, MapScriptNop_12, $11, $02
 	db $ff
-Func_12_471f:
+WallPracticeRoomNpc03_12:
 	ld a, [$c2b0] ; $471f
 	add a, a ; $4722
 	add a, $73 ; $4723
@@ -391,7 +391,7 @@ Label_12_4761:
 	dw $1815 ; record 4
 	dw $1815 ; record 5
 	dw $182c ; record 6
-Func_12_4781:
+WallPracticeRoomNpc04_12:
 	ld a, [$c2b0] ; $4781
 	add a, a ; $4784
 	add a, $98 ; $4785
@@ -413,7 +413,7 @@ Func_12_4781:
 	dw $1816 ; record 4
 	dw $1816 ; record 5
 	dw $182d ; record 6
-Func_12_47a6:
+WallPracticeRoomNpc05_12:
 	ld a, [$c2b0] ; $47a6
 	add a, a ; $47a9
 	add a, $e5 ; $47aa
@@ -445,7 +445,7 @@ Label_12_47c4:
 	dw $1817 ; record 4
 	dw $1817 ; record 5
 	dw $182e ; record 6
-Func_12_47f3:
+WallPracticeRoomNpc06_12:
 	ld a, [$c2b0] ; $47f3
 	add a, a ; $47f6
 	add a, $0a ; $47f7
@@ -469,11 +469,11 @@ Func_12_47f3:
 	dw $182f ; record 6
 WallPracticeRoomNpcScripts_12:
 	; $4818, 41 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_12_471f, $01, $00
-	map_script $04, $ff, $0000, Func_12_4781, $01, $00
-	map_script $05, $ff, $0000, Func_12_47a6, $01, $00
-	map_script $06, $ff, $0000, Func_12_47f3, $03, $00
-	map_script $07, $ff, $0000, Func_12_50cc, $01, $00
+	map_script $03, $ff, $0000, WallPracticeRoomNpc03_12, $01, $00
+	map_script $04, $ff, $0000, WallPracticeRoomNpc04_12, $01, $00
+	map_script $05, $ff, $0000, WallPracticeRoomNpc05_12, $01, $00
+	map_script $06, $ff, $0000, WallPracticeRoomNpc06_12, $03, $00
+	map_script $07, $ff, $0000, WallPracticeRoomNpc07_12, $01, $00
 	db $ff
 WallPracticeMasterResultScript:
 	script_fade_in $06 ; $4841
@@ -825,9 +825,9 @@ Label_12_4c98:
 	ret ; $4c9f
 WallPracticeRoomFacingScripts_12:
 	; $4ca0, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_12_4ca9, $00, $00
+	map_script $01, $ff, $0000, WallPracticeRoomFacing01_12, $00, $00
 	db $ff
-Func_12_4ca9:
+WallPracticeRoomFacing01_12:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ca9
 	script_fade_in $10 ; $4cac
 	script_set_text $0483 ; $4cb1
@@ -836,13 +836,13 @@ Func_12_4ca9:
 	ret ; $4cbf
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
-	map_script $02, $ff, $9c00, Func_12_4ce9, $00, $00
-	map_script $03, $ff, $0000, Func_12_4d29, $01, $00
-	map_script $04, $ff, $0000, Func_12_4d98, $01, $00
-	map_script $05, $ff, $0000, Func_12_4e0d, $01, $00
-	map_script $06, $ff, $0000, Func_12_4e82, $01, $00
+	map_script $02, $ff, $9c00, WallPracticeRoomTile02_12, $00, $00
+	map_script $03, $ff, $0000, WallPracticeRoomTile03_12, $01, $00
+	map_script $04, $ff, $0000, WallPracticeRoomTile04_12, $01, $00
+	map_script $05, $ff, $0000, WallPracticeRoomTile05_12, $01, $00
+	map_script $06, $ff, $0000, WallPracticeRoomTile06_12, $01, $00
 	db $ff
-Func_12_4ce9:
+WallPracticeRoomTile02_12:
 	script_move_target $00, $0500, $3900 ; $4ce9
 	script_wait_move $00 ; $4cf4
 	script_move_target $07, $0500, $3700 ; $4cf9
@@ -859,7 +859,7 @@ Func_12_4ce9:
 	farcall FarPtr_04_20 ; $4d25
 Label_12_4d28:
 	ret ; $4d28
-Func_12_4d29:
+WallPracticeRoomTile03_12:
 	script_set_text $1830 ; $4d29
 	ld a, $07 ; $4d2f
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4d31
@@ -889,7 +889,7 @@ Func_12_4d29:
 	farcall FarPtr_EndCutsceneScriptMode ; $4d94
 Label_12_4d97:
 	ret ; $4d97
-Func_12_4d98:
+WallPracticeRoomTile04_12:
 	test_flag $1a, 7 ; $4d98
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text $1831 ; $4d9e
@@ -921,7 +921,7 @@ Func_12_4d98:
 	farcall FarPtr_EndCutsceneScriptMode ; $4e09
 Label_12_4e0c:
 	ret ; $4e0c
-Func_12_4e0d:
+WallPracticeRoomTile05_12:
 	test_flag $1b, 0 ; $4e0d
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text $1832 ; $4e13
@@ -953,7 +953,7 @@ Func_12_4e0d:
 	farcall FarPtr_EndCutsceneScriptMode ; $4e7e
 Label_12_4e81:
 	ret ; $4e81
-Func_12_4e82:
+WallPracticeRoomTile06_12:
 	test_flag $1b, 1 ; $4e82
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text $1833 ; $4e88
@@ -1135,7 +1135,7 @@ SetupWallPracticeLevelSigns:
 Label_12_50c8:
 	ld [$c2b0], a ; $50c8
 	ret ; $50cb
-Func_12_50cc:
+WallPracticeRoomNpc07_12:
 	test_flag $1c, 0 ; $50cc
 	jr z, Label_12_50dd ; $50cf
 	script_set_text $1508 ; $50d1
@@ -1368,10 +1368,10 @@ SeniorCourtEntryPoints_12:
 	db $ff
 SeniorCourtExitTriggers_12:
 	; $5580, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_12_5591, $08, $03
-	map_script $0f, $ff, $0000, Func_12_7ab1, $10, $0f
+	map_script $01, $ff, $0000, SeniorCourtExit01_12, $08, $03
+	map_script $0f, $ff, $0000, MapScriptNop_12, $10, $0f
 	db $ff
-Func_12_5591:
+SeniorCourtExit01_12:
 	clear_flag $0f, 4 ; $5591
 	script_move_angle $00, $40, $0200 ; $5594
 	script_move_angle $02, $40, $0200 ; $559e
@@ -1529,7 +1529,7 @@ Label_12_57f4:
 	ld de, $d000 ; $5819
 	farcall FarPtr_04_20 ; $581c
 	ret ; $581f
-Func_12_5820:
+SeniorCourtNpc04_12:
 	ld a, [$c2b1] ; $5820
 	add a, a ; $5823
 	add a, $47 ; $5824
@@ -1562,7 +1562,7 @@ Label_12_5846:
 	dw $1055 ; record 6
 	dw $1055 ; record 7
 	dw $1056 ; record 8
-Func_12_5859:
+SeniorCourtNpc05_12:
 	ld a, [$c2b1] ; $5859
 	add a, a ; $585c
 	add a, $95 ; $585d
@@ -1592,7 +1592,7 @@ Label_12_588f:
 	script_speak $05 ; $588f
 	ret ; $5894
 	INCBIN "data/bank_012/d_5895.bin" ; $5895, 30 bytes
-Func_12_58b3:
+SeniorCourtNpc06_12:
 	ld a, [$c2b1] ; $58b3
 	add a, a ; $58b6
 	add a, $f8 ; $58b7
@@ -1626,7 +1626,7 @@ Label_12_58f2:
 	script_speak $06 ; $58f2
 	ret ; $58f7
 	INCBIN "data/bank_012/d_58f8.bin" ; $58f8, 30 bytes
-Func_12_5916:
+SeniorCourtNpc07_12:
 	ld a, [$c2b1] ; $5916
 	add a, a ; $5919
 	add a, $2d ; $591a
@@ -1656,7 +1656,7 @@ Func_12_5916:
 	dw $10aa ; record 12
 	dw $10b3 ; record 13
 	dw $10bc ; record 14
-Func_12_594b:
+SeniorCourtNpc08_12:
 	ld a, [$c2b1] ; $594b
 	add a, a ; $594e
 	add a, $2b ; $594f
@@ -1738,7 +1738,7 @@ Label_12_59be:
 	dw $10ab ; record 12
 	dw $10b4 ; record 13
 	dw $10bd ; record 14
-Func_12_5a49:
+SeniorCourtNpc09_12:
 	ld a, [$c2b1] ; $5a49
 	add a, a ; $5a4c
 	add a, $6e ; $5a4d
@@ -1773,7 +1773,7 @@ Label_12_5a68:
 	dw $10ac ; record 12
 	dw $10b5 ; record 13
 	dw $10be ; record 14
-Func_12_5a8c:
+SeniorCourtNpc0A_12:
 	ld a, [$c2b1] ; $5a8c
 	add a, a ; $5a8f
 	add a, $75 ; $5a90
@@ -1858,7 +1858,7 @@ Label_12_5ae3:
 	dw $10ad ; record 12
 	dw $10b6 ; record 13
 	dw $10bf ; record 14
-Func_12_5b93:
+SeniorCourtNpc0B_12:
 	ld a, [$c2b1] ; $5b93
 	add a, a ; $5b96
 	add a, $bf ; $5b97
@@ -1898,7 +1898,7 @@ Label_12_5bb9:
 	dw $10ae ; record 12
 	dw $10b7 ; record 13
 	dw $10ae ; record 14
-Func_12_5bdd:
+SeniorCourtNpc0C_12:
 	ld a, [$c94d] ; $5bdd
 	or a, a ; $5be0
 	jr nz, Label_12_5bfa ; $5be1
@@ -1966,25 +1966,25 @@ SeniorCourtNpcScripts_12:
 	map_script $03, $40, $0840, Func_12_569b, $01, $00
 	map_script $03, $40, $0000, Func_12_55f7, $01, $00
 	map_script $03, $ff, $0000, Func_12_55e8, $01, $00
-	map_script $04, $ff, $0000, Func_12_5820, $1b, $00
-	map_script $05, $ff, $0000, Func_12_5859, $13, $00
-	map_script $06, $ff, $08a0, Func_12_58b3, $13, $00
-	map_script $06, $ff, $0000, Func_12_58b3, $11, $00
-	map_script $07, $ff, $08a0, Func_12_5916, $03, $00
-	map_script $07, $ff, $0000, Func_12_5916, $01, $00
-	map_script $08, $ff, $0000, Func_12_594b, $0b, $00
-	map_script $09, $ff, $0000, Func_12_5a49, $13, $00
-	map_script $0a, $ff, $0000, Func_12_5a8c, $13, $00
-	map_script $0b, $ff, $0000, Func_12_5b93, $1b, $00
-	map_script $0c, $ff, $0000, Func_12_5bdd, $13, $00
+	map_script $04, $ff, $0000, SeniorCourtNpc04_12, $1b, $00
+	map_script $05, $ff, $0000, SeniorCourtNpc05_12, $13, $00
+	map_script $06, $ff, $08a0, SeniorCourtNpc06_12, $13, $00
+	map_script $06, $ff, $0000, SeniorCourtNpc06_12, $11, $00
+	map_script $07, $ff, $08a0, SeniorCourtNpc07_12, $03, $00
+	map_script $07, $ff, $0000, SeniorCourtNpc07_12, $01, $00
+	map_script $08, $ff, $0000, SeniorCourtNpc08_12, $0b, $00
+	map_script $09, $ff, $0000, SeniorCourtNpc09_12, $13, $00
+	map_script $0a, $ff, $0000, SeniorCourtNpc0A_12, $13, $00
+	map_script $0b, $ff, $0000, SeniorCourtNpc0B_12, $1b, $00
+	map_script $0c, $ff, $0000, SeniorCourtNpc0C_12, $13, $00
 	db $ff
 SeniorCourtFacingScripts_12:
 	ds 1, $ff ; $5cc6, fill
 SeniorCourtTileTriggers_12:
 	; $5cc7, 9 bytes (map_scripts)
-	map_script $01, $ff, $0f80, Func_12_5cd0, $00, $00
+	map_script $01, $ff, $0f80, SeniorCourtTile01_12, $00, $00
 	db $ff
-Func_12_5cd0:
+SeniorCourtTile01_12:
 	set_flag $0f, 4 ; $5cd0
 	script_null_script $0a ; $5cd3
 	script_null_script $0b ; $5cd8
@@ -3807,7 +3807,7 @@ ActorScript_12_7a93:
 	as_wait_move2
 	as_wait $28
 	as_jump .L15
-Func_12_7ab1:
+MapScriptNop_12:
 	ret ; $7ab1
 	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 13 bytes
 ActorScript_12_7abf:

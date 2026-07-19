@@ -37,12 +37,12 @@ TournamentCourtyardEntryPoints_15:
 	db $ff
 TournamentCourtyardExitTriggers_15:
 	; $40df, 33 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_15_7d95, $16, $02
-	map_script $02, $ff, $0000, Func_15_7d95, $17, $02
-	map_script $03, $ff, $0000, Func_15_7d95, $19, $05
-	map_script $04, $ff, $0000, Func_15_7d95, $1b, $02
+	map_script $01, $ff, $0000, MapScriptNop_15, $16, $02
+	map_script $02, $ff, $0000, MapScriptNop_15, $17, $02
+	map_script $03, $ff, $0000, MapScriptNop_15, $19, $05
+	map_script $04, $ff, $0000, MapScriptNop_15, $1b, $02
 	db $ff
-Func_15_4100:
+TournamentCourtyardNpc05_15:
 	ld a, [$c2b0] ; $4100
 	add a, a ; $4103
 	add a, $4b ; $4104
@@ -86,7 +86,7 @@ TournamentCourtyardNpcScripts_15:
 	; $4159, 57 bytes (map_scripts)
 	map_script $03, $ff, $0000, $241c, $13, $00
 	map_script $04, $ff, $0000, $241d, $03, $00
-	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
 	map_script $06, $ff, $0000, $2421, $13, $00
 	map_script $07, $ff, $0000, $2422, $03, $00
 	map_script $08, $ff, $0000, $2423, $03, $00
@@ -94,15 +94,15 @@ TournamentCourtyardNpcScripts_15:
 	db $ff
 TournamentCourtyardFacingScripts_15:
 	; $4192, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_15_419b, $00, $00
+	map_script $01, $ff, $0000, TournamentCourtyardFacing01_15, $00, $00
 	db $ff
-Func_15_419b:
+TournamentCourtyardFacing01_15:
 	ret ; $419b
 TournamentCourtyardTileTriggers_15:
 	; $419c, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_15_41a5, $00, $00
+	map_script $01, $ff, $0000, TournamentCourtyardTile01_15, $00, $00
 	db $ff
-Func_15_41a5:
+TournamentCourtyardTile01_15:
 	ret ; $41a5
 TournamentCourtyardInitScript_15:
 	ld a, [wStoryModeEntryPoint] ; $41a6
@@ -202,7 +202,7 @@ TournamentSiteScripts1_15:
 	; $42f7, 57 bytes (map_scripts)
 	map_script $03, $ff, $0000, $2425, $13, $00
 	map_script $04, $ff, $0000, $2426, $03, $00
-	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
 	map_script $06, $ff, $0000, $2429, $13, $00
 	map_script $07, $ff, $0000, $242a, $03, $00
 	map_script $08, $ff, $0000, $242b, $03, $00
@@ -212,7 +212,7 @@ TournamentSiteScripts2_15:
 	; $4330, 57 bytes (map_scripts)
 	map_script $03, $ff, $0000, $242d, $13, $00
 	map_script $04, $ff, $0000, $242e, $03, $00
-	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
 	map_script $06, $ff, $0000, $242f, $13, $00
 	map_script $07, $ff, $0000, $2430, $03, $00
 	map_script $08, $ff, $0000, $2431, $03, $00
@@ -222,7 +222,7 @@ TournamentSiteScripts3_15:
 	; $4369, 57 bytes (map_scripts)
 	map_script $03, $ff, $0000, $2433, $13, $00
 	map_script $04, $ff, $0000, $2434, $03, $00
-	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
 	map_script $06, $ff, $0000, $2435, $13, $00
 	map_script $07, $ff, $0000, $2436, $03, $00
 	map_script $08, $ff, $0000, $2437, $03, $00
@@ -232,7 +232,7 @@ TournamentSiteScripts4_15:
 	; $43a2, 57 bytes (map_scripts)
 	map_script $03, $ff, $0000, $241c, $13, $00
 	map_script $04, $ff, $0000, $2439, $03, $00
-	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
 	map_script $06, $ff, $0000, $243c, $13, $00
 	map_script $07, $ff, $0000, $243d, $03, $00
 	map_script $08, $ff, $0000, $243e, $03, $00
@@ -242,7 +242,7 @@ TournamentSiteScripts5_15:
 	; $43db, 57 bytes (map_scripts)
 	map_script $03, $ff, $0000, $2440, $13, $00
 	map_script $04, $ff, $0000, $2441, $03, $00
-	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
 	map_script $06, $ff, $0000, $2444, $13, $00
 	map_script $07, $ff, $0000, $2445, $03, $00
 	map_script $08, $ff, $0000, $2446, $03, $00
@@ -252,7 +252,7 @@ TournamentSiteScripts6_15:
 	; $4414, 57 bytes (map_scripts)
 	map_script $03, $ff, $0000, $2448, $13, $00
 	map_script $04, $ff, $0000, $2449, $03, $00
-	map_script $05, $ff, $0000, Func_15_4100, $13, $00
+	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
 	map_script $06, $ff, $0000, $244c, $13, $00
 	map_script $07, $ff, $0000, $244d, $03, $00
 	map_script $08, $ff, $0000, $244e, $03, $00
@@ -486,7 +486,7 @@ TrainingCourtActors_15:
 	map_actor_end
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
-	map_entry $01, $00, $0900, $3700, Func_15_490d
+	map_entry $01, $00, $0900, $3700, TrainingCourtArrival01_15
 	map_entry $02, $40, $1300, $1300, $0000
 	map_entry $09, $40, $1300, $1300, $0000
 	map_entry $0a, $c0, $1300, $1300, $0000
@@ -494,7 +494,7 @@ TrainingCourtEntryPoints_15:
 	map_entry $0c, $c0, $2d00, $2b00, $0000
 	map_entry $0d, $80, $1500, $2900, $0000
 	db $ff
-Func_15_490d:
+TrainingCourtArrival01_15:
 	ld a, [wStoryModeEntryPoint] ; $490d
 	cp a, $ff ; $4910
 	jp z, Label_15_4955 ; $4912
@@ -514,7 +514,7 @@ Label_15_4955:
 TrainingCourtExitTriggers_15:
 	; $4956, 17 bytes (map_scripts)
 	map_script $01, $ff, $0000, ClearTrainingCourtNpcFlags, $08, $06
-	map_script $0f, $ff, $0000, Func_15_7d95, $08, $0e
+	map_script $0f, $ff, $0000, MapScriptNop_15, $08, $0e
 	db $ff
 ClearTrainingCourtNpcFlags:
 	clear_flag $17, 2 ; $4967
@@ -524,7 +524,7 @@ ClearTrainingCourtNpcFlags:
 	clear_flag $17, 4 ; $4973
 	clear_flag $17, 7 ; $4976
 	ret ; $4979
-Func_15_497a:
+TrainingCourtNpc03_15:
 	ld a, [$c2b0] ; $497a
 	add a, a ; $497d
 	add a, $91 ; $497e
@@ -544,7 +544,7 @@ Func_15_497a:
 	dw $1a7f ; record 2
 	dw $1a7f ; record 3
 	dw $1a7f ; record 4
-Func_15_499b:
+TrainingCourtNpc04_15:
 	ld a, [$c2b0] ; $499b
 	add a, a ; $499e
 	add a, $b2 ; $499f
@@ -564,7 +564,7 @@ Func_15_499b:
 	dw $1a80 ; record 2
 	dw $1a80 ; record 3
 	dw $1a80 ; record 4
-Func_15_49bc:
+TrainingCourtNpc05_15:
 	ld a, [$c2b0] ; $49bc
 	add a, a ; $49bf
 	add a, $d3 ; $49c0
@@ -584,7 +584,7 @@ Func_15_49bc:
 	dw $1a81 ; record 2
 	dw $1a81 ; record 3
 	dw $1a81 ; record 4
-Func_15_49dd:
+TrainingCourtNpc08_15:
 	ld a, [$c2b0] ; $49dd
 	add a, a ; $49e0
 	add a, $f4 ; $49e1
@@ -604,7 +604,7 @@ Func_15_49dd:
 	dw $1a99 ; record 2
 	dw $1a99 ; record 3
 	dw $1a99 ; record 4
-Func_15_49fe:
+TrainingCourtNpc09_15:
 	ld a, [$c2b0] ; $49fe
 	add a, a ; $4a01
 	add a, $15 ; $4a02
@@ -619,7 +619,7 @@ Func_15_49fe:
 	script_speak $09 ; $4a0f
 	ret ; $4a14
 	INCBIN "data/bank_015/d_4a15.bin" ; $4a15, 10 bytes
-Func_15_4a1f:
+TrainingCourtNpc0A_15:
 	ld a, [$c2b0] ; $4a1f
 	add a, a ; $4a22
 	add a, $36 ; $4a23
@@ -639,7 +639,7 @@ Func_15_4a1f:
 	dw $1a9b ; record 2
 	dw $1a9b ; record 3
 	dw $1a9b ; record 4
-Func_15_4a40:
+TrainingCourtNpc0B_15:
 	ld a, [$c2b0] ; $4a40
 	add a, a ; $4a43
 	add a, $76 ; $4a44
@@ -671,7 +671,7 @@ Label_15_4a70:
 	dw $1a9c ; record 2
 	dw $1a9c ; record 3
 	dw $1a9c ; record 4
-Func_15_4a80:
+TrainingCourtNpc0E_15:
 	ld a, [$c2b0] ; $4a80
 	add a, a ; $4a83
 	add a, $97 ; $4a84
@@ -691,7 +691,7 @@ Func_15_4a80:
 	dw $1a8a ; record 2
 	dw $1a8a ; record 3
 	dw $1a8a ; record 4
-Func_15_4aa1:
+TrainingCourtNpc0F_15:
 	ld a, [$c2b0] ; $4aa1
 	add a, a ; $4aa4
 	add a, $d7 ; $4aa5
@@ -723,7 +723,7 @@ Label_15_4ad1:
 	dw $1a8b ; record 2
 	dw $1a8b ; record 3
 	dw $1a8b ; record 4
-Func_15_4ae1:
+TrainingCourtNpc10_15:
 	ld a, [$c2b0] ; $4ae1
 	add a, a ; $4ae4
 	add a, $17 ; $4ae5
@@ -750,7 +750,7 @@ Label_15_4b11:
 	script_speak $10 ; $4b11
 	ret ; $4b16
 	INCBIN "data/bank_015/d_4b17.bin" ; $4b17, 10 bytes
-Func_15_4b21:
+TrainingCourtNpc13_15:
 	script_move_player_to_actor $13 ; $4b21
 	farcall FarPtr_WaitPlayerMoveDone ; $4b28
 	script_get_actor_state $00 ; $4b2b
@@ -1034,28 +1034,28 @@ Label_15_4f9f:
 	ret ; $505a
 TrainingCourtNpcScripts_15:
 	; $505b, 161 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_15_497a, $1b, $00
-	map_script $04, $ff, $0000, Func_15_499b, $1b, $00
-	map_script $05, $ff, $0000, Func_15_49bc, $1b, $00
-	map_script $06, $ff, $0000, Func_15_50fc, $03, $00
+	map_script $03, $ff, $0000, TrainingCourtNpc03_15, $1b, $00
+	map_script $04, $ff, $0000, TrainingCourtNpc04_15, $1b, $00
+	map_script $05, $ff, $0000, TrainingCourtNpc05_15, $1b, $00
+	map_script $06, $ff, $0000, TrainingCourtNpc06_15, $03, $00
 	map_script $07, $80, $0000, Func_15_5112, $03, $00
 	map_script $07, $ff, $0000, Func_15_513f, $03, $00
-	map_script $08, $ff, $0000, Func_15_49dd, $1b, $00
-	map_script $09, $ff, $0000, Func_15_49fe, $1b, $00
-	map_script $0a, $ff, $0000, Func_15_4a1f, $1b, $00
-	map_script $0b, $ff, $0000, Func_15_4a40, $1b, $00
-	map_script $0c, $ff, $0000, Func_15_5254, $03, $00
+	map_script $08, $ff, $0000, TrainingCourtNpc08_15, $1b, $00
+	map_script $09, $ff, $0000, TrainingCourtNpc09_15, $1b, $00
+	map_script $0a, $ff, $0000, TrainingCourtNpc0A_15, $1b, $00
+	map_script $0b, $ff, $0000, TrainingCourtNpc0B_15, $1b, $00
+	map_script $0c, $ff, $0000, TrainingCourtNpc0C_15, $03, $00
 	map_script $0d, $40, $0000, Func_15_526a, $03, $00
 	map_script $0d, $ff, $0000, Func_15_5297, $03, $00
-	map_script $0e, $ff, $0000, Func_15_4a80, $1b, $00
-	map_script $0f, $ff, $0000, Func_15_4aa1, $1b, $00
-	map_script $10, $ff, $0000, Func_15_4ae1, $1b, $00
-	map_script $11, $ff, $0000, Func_15_51a8, $03, $00
+	map_script $0e, $ff, $0000, TrainingCourtNpc0E_15, $1b, $00
+	map_script $0f, $ff, $0000, TrainingCourtNpc0F_15, $1b, $00
+	map_script $10, $ff, $0000, TrainingCourtNpc10_15, $1b, $00
+	map_script $11, $ff, $0000, TrainingCourtNpc11_15, $03, $00
 	map_script $12, $40, $0000, Func_15_51be, $03, $00
 	map_script $12, $ff, $0000, Func_15_51eb, $03, $00
-	map_script $13, $ff, $0000, Func_15_4b21, $00, $00
+	map_script $13, $ff, $0000, TrainingCourtNpc13_15, $00, $00
 	db $ff
-Func_15_50fc:
+TrainingCourtNpc06_15:
 	test_flag $18, 0 ; $50fc
 	jr nz, Label_15_5105 ; $50ff
 	call Func_15_63e1 ; $5101
@@ -1118,7 +1118,7 @@ Label_15_519c:
 	script_set_text $1c3d ; $519c
 	script_speak $07 ; $51a2
 	ret ; $51a7
-Func_15_51a8:
+TrainingCourtNpc11_15:
 	test_flag $18, 6 ; $51a8
 	jr nz, Label_15_51b1 ; $51ab
 	call Func_15_688f ; $51ad
@@ -1181,7 +1181,7 @@ Label_15_5248:
 	script_set_text $1cbb ; $5248
 	script_speak $12 ; $524e
 	ret ; $5253
-Func_15_5254:
+TrainingCourtNpc0C_15:
 	test_flag $19, 4 ; $5254
 	jr nz, Label_15_525d ; $5257
 	call StrokeMatchChallengeScene ; $5259
@@ -1245,15 +1245,15 @@ Label_15_52f4:
 	ret ; $52ff
 TrainingCourtFacingScripts_15:
 	; $5300, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_15_5309, $00, $00
+	map_script $01, $ff, $0000, TrainingCourtFacing01_15, $00, $00
 	db $ff
-Func_15_5309:
+TrainingCourtFacing01_15:
 	ret ; $5309
 TrainingCourtTileTriggers_15:
 	; $530a, 9 bytes (map_scripts)
-	map_script $01, $40, $9000, Func_15_5313, $00, $00
+	map_script $01, $40, $9000, TrainingCourtTile01_15, $00, $00
 	db $ff
-Func_15_5313:
+TrainingCourtTile01_15:
 	script_move_target $00, $3300, $0d00 ; $5313
 	script_wait_move $00 ; $531e
 	script_face $00, $40 ; $5323
@@ -4500,7 +4500,7 @@ ActorScript_15_7d77:
 	as_wait_move2
 	as_wait $28
 	as_jump .L15
-Func_15_7d95:
+MapScriptNop_15:
 	ret ; $7d95
 	INCBIN "data/bank_015/d_7d96.bin" ; $7d96, 423 bytes
 ActorScript_15_7f3d:

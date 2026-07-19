@@ -25,11 +25,11 @@ TennisMachineRoomActors_14:
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
-	map_entry $01, $c0, $2b00, $3900, Func_14_4063
+	map_entry $01, $c0, $2b00, $3900, TennisMachineRoomArrival01_14
 	map_entry $05, $c0, $3800, $3600, $0000
 	map_entry $07, $c0, $3800, $3600, $0000
 	db $ff
-Func_14_4063:
+TennisMachineRoomArrival01_14:
 	ld a, [wStoryModeEntryPoint] ; $4063
 	cp a, $ff ; $4066
 	jp z, Label_14_4085 ; $4068
@@ -44,7 +44,7 @@ TennisMachineRoomExitTriggers_14:
 	; $4086, 9 bytes (map_scripts)
 	map_script $04, $ff, $0000, MapScriptNop_14, $11, $03
 	db $ff
-Func_14_408f:
+TennisMachineRoomNpc03_14:
 	ld a, [$c2b0] ; $408f
 	add a, a ; $4092
 	add a, $a6 ; $4093
@@ -66,7 +66,7 @@ Func_14_408f:
 	dw $20c7 ; record 4
 	dw $20cf ; record 5
 	dw $20d6 ; record 6
-Func_14_40b4:
+TennisMachineRoomNpc04_14:
 	ld a, [$c2b0] ; $40b4
 	add a, a ; $40b7
 	add a, $ec ; $40b8
@@ -104,9 +104,9 @@ Label_14_40e6:
 	dw $20d7 ; record 6
 TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_14_408f, $03, $00
-	map_script $04, $ff, $0000, Func_14_40b4, $03, $00
-	map_script $05, $ff, $0000, Func_14_442d, $00, $00
+	map_script $03, $ff, $0000, TennisMachineRoomNpc03_14, $03, $00
+	map_script $04, $ff, $0000, TennisMachineRoomNpc04_14, $03, $00
+	map_script $05, $ff, $0000, TennisMachineRoomNpc05_14, $00, $00
 	db $ff
 MachineLevel1FailedPrompt:
 	script_set_text $20db ; $4113
@@ -195,28 +195,28 @@ TennisMachineRoomFacingScripts_14:
 	ds 1, $ff ; $41e6, fill
 TennisMachineRoomTileTriggers_14:
 	; $41e7, 41 bytes (map_scripts)
-	map_script $01, $ff, $9c20, Func_14_4227, $00, $00
-	map_script $03, $ff, $0000, Func_14_4210, $01, $00
-	map_script $04, $ff, $0000, Func_14_4216, $01, $00
-	map_script $05, $ff, $0000, Func_14_421c, $01, $00
-	map_script $06, $ff, $0000, Func_14_4222, $01, $00
+	map_script $01, $ff, $9c20, TennisMachineRoomTile01_14, $00, $00
+	map_script $03, $ff, $0000, TennisMachineRoomTile03_14, $01, $00
+	map_script $04, $ff, $0000, TennisMachineRoomTile04_14, $01, $00
+	map_script $05, $ff, $0000, TennisMachineRoomTile05_14, $01, $00
+	map_script $06, $ff, $0000, TennisMachineRoomTile06_14, $01, $00
 	db $ff
-Func_14_4210:
+TennisMachineRoomTile03_14:
 	ld a, $00 ; $4210
 	jp MachinePracticeLevelPrompt ; $4212
 	ret ; $4215
-Func_14_4216:
+TennisMachineRoomTile04_14:
 	ld a, $01 ; $4216
 	jp MachinePracticeLevelPrompt ; $4218
 	ret ; $421b
-Func_14_421c:
+TennisMachineRoomTile05_14:
 	ld a, $02 ; $421c
 	jp MachinePracticeLevelPrompt ; $421e
 	ret ; $4221
-Func_14_4222:
+TennisMachineRoomTile06_14:
 	ld a, $03 ; $4222
 	jp MachinePracticeLevelPrompt ; $4224
-Func_14_4227:
+TennisMachineRoomTile01_14:
 	clear_flag $1c, 1 ; $4227
 	clear_flag $0f, 5 ; $422a
 	script_move_target $00, $2ac0, $2b00 ; $422d
@@ -363,7 +363,7 @@ ComputeMachineCourtProgress:
 Label_14_4429:
 	ld [$c2b0], a ; $4429
 	ret ; $442c
-Func_14_442d:
+TennisMachineRoomNpc05_14:
 	test_flag $1c, 0 ; $442d
 	jp nz, MachineCourtStartLevelScene ; $4430
 	ld a, [$c2b0] ; $4433
@@ -939,11 +939,11 @@ Court2ExitTriggers_14:
 	map_script $01, $ff, $0000, MapScriptNop_14, $19, $03
 	map_script $02, $ff, $0000, MapScriptNop_14, $15, $02
 	db $ff
-Func_14_4b61:
+Court2Npc03_14:
 	script_set_text $2491 ; $4b61
 	script_speak $03 ; $4b67
 	ret ; $4b6c
-Func_14_4b6d:
+Court2Npc04_14:
 	ld a, [$c2b0] ; $4b6d
 	add a, a ; $4b70
 	add a, $84 ; $4b71
@@ -965,7 +965,7 @@ Func_14_4b6d:
 	dw $2492 ; record 4
 	dw $2492 ; record 5
 	dw $2497 ; record 6
-Func_14_4b92:
+Court2Npc05_14:
 	ld a, [$c2b0] ; $4b92
 	add a, a ; $4b95
 	add a, $a9 ; $4b96
@@ -987,7 +987,7 @@ Func_14_4b92:
 	dw $2499 ; record 4
 	dw $249b ; record 5
 	dw $249d ; record 6
-Func_14_4bb7:
+Court2Npc06_14:
 	ld a, [$c2b0] ; $4bb7
 	add a, a ; $4bba
 	add a, $ce ; $4bbb
@@ -1009,7 +1009,7 @@ Func_14_4bb7:
 	dw $249a ; record 4
 	dw $249c ; record 5
 	dw $249e ; record 6
-Func_14_4bdc:
+Court2SpectatorChat_14:
 	test_flag $05, 7 ; $4bdc
 	jr z, Label_14_4bec ; $4bdf
 	test_flag $0f, 1 ; $4be1
@@ -1108,7 +1108,7 @@ Court2SpectatorsRepeatChat:
 	script_set_anim $09, $03 ; $4dbf
 	script_wait_idle $09 ; $4dc6
 	ret ; $4dcb
-Func_14_4dcc:
+Court2Npc0A_14:
 	script_set_text $246a ; $4dcc
 	test_flag $05, 7 ; $4dd2
 	jr nz, Label_14_4de6 ; $4dd5
@@ -1127,27 +1127,27 @@ Label_14_4df3:
 	ret ; $4df8
 Court2NpcScripts_14:
 	; $4df9, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_14_4b61, $03, $00
-	map_script $04, $ff, $0000, Func_14_4b6d, $03, $00
-	map_script $05, $ff, $0000, Func_14_4b92, $03, $00
-	map_script $06, $ff, $0000, Func_14_4bb7, $13, $00
+	map_script $03, $ff, $0000, Court2Npc03_14, $03, $00
+	map_script $04, $ff, $0000, Court2Npc04_14, $03, $00
+	map_script $05, $ff, $0000, Court2Npc05_14, $03, $00
+	map_script $06, $ff, $0000, Court2Npc06_14, $13, $00
 	map_script $07, $ff, $0000, $2468, $13, $00
-	map_script $08, $ff, $0000, Func_14_4bdc, $00, $00
-	map_script $09, $ff, $0000, Func_14_4bdc, $00, $00
-	map_script $0a, $ff, $0000, Func_14_4dcc, $03, $00
+	map_script $08, $ff, $0000, Court2SpectatorChat_14, $00, $00
+	map_script $09, $ff, $0000, Court2SpectatorChat_14, $00, $00
+	map_script $0a, $ff, $0000, Court2Npc0A_14, $03, $00
 	map_script $0b, $ff, $0000, $2469, $03, $00
 	db $ff
 Court2FacingScripts_14:
 	; $4e42, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_14_4e4b, $00, $00
+	map_script $01, $ff, $0000, Court2Facing01_14, $00, $00
 	db $ff
-Func_14_4e4b:
+Court2Facing01_14:
 	ret ; $4e4b
 Court2TileTriggers_14:
 	; $4e4c, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_14_4e55, $00, $00
+	map_script $01, $ff, $0000, Court2Tile01_14, $00, $00
 	db $ff
-Func_14_4e55:
+Court2Tile01_14:
 	ret ; $4e55
 Court2InitScript_14:
 	call InitCourt2SceneVariant ; $4e56
@@ -1260,15 +1260,15 @@ Court1ExitTriggers_14:
 	map_script $01, $ff, $0000, MapScriptNop_14, $19, $04
 	map_script $02, $ff, $0000, MapScriptNop_14, $15, $01
 	db $ff
-Func_14_5064:
+Court1Npc03_14:
 	script_set_text $2484 ; $5064
 	script_speak $03 ; $506a
 	ret ; $506f
-Func_14_5070:
+Court1Npc04_14:
 	script_set_text $2485 ; $5070
 	script_speak $04 ; $5076
 	ret ; $507b
-Func_14_507c:
+Court1Npc05_14:
 	ld a, [$c2b0] ; $507c
 	add a, a ; $507f
 	add a, $93 ; $5080
@@ -1290,7 +1290,7 @@ Func_14_507c:
 	dw $2486 ; record 4
 	dw $248d ; record 5
 	dw $248f ; record 6
-Func_14_50a1:
+Court1Npc06_14:
 	ld a, [$c2b0] ; $50a1
 	add a, a ; $50a4
 	add a, $b8 ; $50a5
@@ -1314,22 +1314,22 @@ Func_14_50a1:
 	dw $2490 ; record 6
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_14_5064, $03, $00
-	map_script $04, $ff, $0000, Func_14_5070, $03, $00
-	map_script $05, $ff, $0000, Func_14_507c, $03, $00
-	map_script $06, $ff, $0000, Func_14_50a1, $03, $00
+	map_script $03, $ff, $0000, Court1Npc03_14, $03, $00
+	map_script $04, $ff, $0000, Court1Npc04_14, $03, $00
+	map_script $05, $ff, $0000, Court1Npc05_14, $03, $00
+	map_script $06, $ff, $0000, Court1Npc06_14, $03, $00
 	db $ff
 Court1FacingScripts_14:
 	; $50e7, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_14_50f0, $00, $00
+	map_script $01, $ff, $0000, Court1Facing01_14, $00, $00
 	db $ff
-Func_14_50f0:
+Court1Facing01_14:
 	ret ; $50f0
 Court1TileTriggers_14:
 	; $50f1, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_14_50fa, $00, $00
+	map_script $01, $ff, $0000, Court1Tile01_14, $00, $00
 	db $ff
-Func_14_50fa:
+Court1Tile01_14:
 	ret ; $50fa
 Court1InitScript_14:
 	call InitCourt1SceneVariant ; $50fb

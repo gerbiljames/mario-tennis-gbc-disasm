@@ -20,16 +20,16 @@ RestaurantPlazaActors_13:
 	map_actor_end
 RestaurantPlazaEntryPoints_13:
 	; $401e, 65 bytes (map_entries)
-	map_entry $01, $40, $0700, $0840, Func_13_40eb
-	map_entry $02, $40, $1500, $0940, Func_13_4163
-	map_entry $03, $40, $2500, $0840, Func_13_41cf
-	map_entry $04, $c0, $3200, $0f00, Func_13_405f
-	map_entry $05, $40, $3700, $0840, Func_13_41cf
-	map_entry $06, $80, $3c00, $0d00, Func_13_40a5
+	map_entry $01, $40, $0700, $0840, RestaurantPlazaArrival01_13
+	map_entry $02, $40, $1500, $0940, RestaurantPlazaArrival02_13
+	map_entry $03, $40, $2500, $0840, RestaurantPlazaArrivalWalkIn_13
+	map_entry $04, $c0, $3200, $0f00, RestaurantPlazaArrival04_13
+	map_entry $05, $40, $3700, $0840, RestaurantPlazaArrivalWalkIn_13
+	map_entry $06, $80, $3c00, $0d00, RestaurantPlazaArrival06_13
 	map_entry $0e, $80, $3b00, $0f00, $0000
 	map_entry $0f, $80, $3200, $0f00, $0000
 	db $ff
-Func_13_405f:
+RestaurantPlazaArrival04_13:
 	ld a, [wStoryModeEntryPoint] ; $405f
 	cp a, $ff ; $4062
 	jp z, Label_13_40a4 ; $4064
@@ -45,7 +45,7 @@ Label_13_4092:
 	script_move_angle $00, $c0, $0200 ; $409a
 Label_13_40a4:
 	ret ; $40a4
-Func_13_40a5:
+RestaurantPlazaArrival06_13:
 	ld a, [wStoryModeEntryPoint] ; $40a5
 	cp a, $ff ; $40a8
 	jp z, Label_13_40ea ; $40aa
@@ -61,7 +61,7 @@ Label_13_40d8:
 	script_move_angle $00, $80, $0200 ; $40e0
 Label_13_40ea:
 	ret ; $40ea
-Func_13_40eb:
+RestaurantPlazaArrival01_13:
 	ld a, [wStoryModeEntryPoint] ; $40eb
 	cp a, $ff ; $40ee
 	jp z, Label_13_4235 ; $40f0
@@ -81,7 +81,7 @@ Func_13_40eb:
 	script_wait_move $00 ; $4156
 	script_face $00, $00 ; $415b
 	ret ; $4162
-Func_13_4163:
+RestaurantPlazaArrival02_13:
 	ld a, [wStoryModeEntryPoint] ; $4163
 	cp a, $ff ; $4166
 	jp z, Label_13_4235 ; $4168
@@ -101,7 +101,7 @@ Func_13_4163:
 Label_13_41cb:
 	call AnimateDoorClose_13 ; $41cb
 	ret ; $41ce
-Func_13_41cf:
+RestaurantPlazaArrivalWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $41cf
 	cp a, $ff ; $41d2
 	jr z, Label_13_4235 ; $41d4
@@ -122,15 +122,15 @@ Label_13_4235:
 	ret ; $4235
 RestaurantPlazaExitTriggers_13:
 	; $4236, 73 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_13_7b4d, $09, $01
-	map_script $02, $ff, $0000, Func_13_7b4d, $0d, $01
-	map_script $03, $ff, $0000, Func_13_7b4d, $10, $01
-	map_script $04, $ff, $0000, Func_13_7b4d, $07, $02
-	map_script $05, $ff, $0000, Func_13_7b4d, $0b, $01
-	map_script $06, $ff, $0000, Func_13_7b4d, $0f, $01
-	map_script $0d, $ff, $0000, Func_13_7b4d, $0c, $01
-	map_script $0e, $ff, $0000, Func_13_7b4d, $09, $0f
-	map_script $0f, $ff, $0000, Func_13_7b4d, $0f, $0f
+	map_script $01, $ff, $0000, MapScriptNop_13, $09, $01
+	map_script $02, $ff, $0000, MapScriptNop_13, $0d, $01
+	map_script $03, $ff, $0000, MapScriptNop_13, $10, $01
+	map_script $04, $ff, $0000, MapScriptNop_13, $07, $02
+	map_script $05, $ff, $0000, MapScriptNop_13, $0b, $01
+	map_script $06, $ff, $0000, MapScriptNop_13, $0f, $01
+	map_script $0d, $ff, $0000, MapScriptNop_13, $0c, $01
+	map_script $0e, $ff, $0000, MapScriptNop_13, $09, $0f
+	map_script $0f, $ff, $0000, MapScriptNop_13, $0f, $0f
 	db $ff
 	script_set_text $1430 ; $427f
 	script_speak $00 ; $4285
@@ -148,13 +148,13 @@ RestaurantPlazaFacingScripts_13:
 	db $ff
 RestaurantPlazaTileTriggers_13:
 	; $42b5, 41 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_13_42de, $00, $00
-	map_script $02, $ff, $0000, Func_13_430c, $00, $00
-	map_script $03, $ff, $0000, Func_13_4357, $00, $00
-	map_script $05, $ff, $0000, Func_13_43a1, $00, $00
-	map_script $06, $ff, $0000, Func_13_43df, $00, $00
+	map_script $01, $ff, $0000, RestaurantPlazaTile01_13, $00, $00
+	map_script $02, $ff, $0000, RestaurantPlazaTile02_13, $00, $00
+	map_script $03, $ff, $0000, RestaurantPlazaTile03_13, $00, $00
+	map_script $05, $ff, $0000, RestaurantPlazaTile05_13, $00, $00
+	map_script $06, $ff, $0000, RestaurantPlazaTile06_13, $00, $00
 	db $ff
-Func_13_42de:
+RestaurantPlazaTile01_13:
 	script_move_target $02, $0700, $0d00 ; $42de
 	script_set_speed $00, $0010 ; $42e9
 	script_move_angle $00, $c0, $0100 ; $42f1
@@ -164,7 +164,7 @@ Func_13_42de:
 	ld [$c294], a ; $4305
 	ld [wStoryModeExitLocationRequest], a ; $4308
 	ret ; $430b
-Func_13_430c:
+RestaurantPlazaTile02_13:
 	script_set_speed $00, $0010 ; $430c
 	script_move_target $02, $1500, $0d00 ; $4314
 	script_move_angle $00, $c2, $0200 ; $431f
@@ -179,7 +179,7 @@ Func_13_430c:
 	ld [$c294], a ; $4350
 	ld [wStoryModeExitLocationRequest], a ; $4353
 	ret ; $4356
-Func_13_4357:
+RestaurantPlazaTile03_13:
 	script_set_speed $02, $0040 ; $4357
 	script_move_target $02, $2500, $0d00 ; $435f
 	script_set_speed $00, $0010 ; $436a
@@ -194,7 +194,7 @@ Func_13_4357:
 	ld [$c294], a ; $439a
 	ld [wStoryModeExitLocationRequest], a ; $439d
 	ret ; $43a0
-Func_13_43a1:
+RestaurantPlazaTile05_13:
 	script_move_target $02, $3700, $0d00 ; $43a1
 	script_set_speed $00, $0010 ; $43ac
 	script_set_speed $02, $0010 ; $43b4
@@ -210,7 +210,7 @@ Func_13_43a1:
 	ld [wStoryModeExitLocationRequest], a ; $43db
 Label_13_43de:
 	ret ; $43de
-Func_13_43df:
+RestaurantPlazaTile06_13:
 	script_set_speed $00, $0020 ; $43df
 	script_move_target $02, $3b00, $0d00 ; $43e7
 	script_move_angle $00, $00, $0600 ; $43f2
@@ -658,10 +658,10 @@ DormRoomEntryPoints_13:
 	db $ff
 DormRoomExitTriggers_13:
 	; $4e93, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_13_7b4d, $09, $02
-	map_script $02, $ff, $0000, Func_13_7b4d, $00, $01
+	map_script $01, $ff, $0000, MapScriptNop_13, $09, $02
+	map_script $02, $ff, $0000, MapScriptNop_13, $00, $01
 	db $ff
-Func_13_4ea4:
+DormRoomNpc04_13:
 	call AdvanceRandomSeed ; $4ea4
 	ld a, l ; $4ea7
 	and a, $07 ; $4ea8
@@ -675,14 +675,14 @@ Func_13_4ea4:
 	ret ; $4eb9
 DormRoomNpcScripts_13:
 	; $4eba, 17 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_13_52b0, $00, $00
-	map_script $04, $ff, $0000, Func_13_4ea4, $13, $00
+	map_script $03, $ff, $0000, DormRoomNpc03_13, $00, $00
+	map_script $04, $ff, $0000, DormRoomNpc04_13, $13, $00
 	db $ff
 DormRoomFacingScripts_13:
 	; $4ecb, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_13_4ed4, $00, $00
+	map_script $01, $ff, $0000, DormRoomFacing01_13, $00, $00
 	db $ff
-Func_13_4ed4:
+DormRoomFacing01_13:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ed4
 	script_fade_in $10 ; $4ed7
 	script_set_text $0483 ; $4edc
@@ -691,9 +691,9 @@ Func_13_4ed4:
 	ret ; $4eea
 DormRoomTileTriggers_13:
 	; $4eeb, 9 bytes (map_scripts)
-	map_script $0f, $80, $0000, Func_13_4ef4, $00, $00
+	map_script $0f, $80, $0000, DormRoomTile0F_13, $00, $00
 	db $ff
-Func_13_4ef4:
+DormRoomTile0F_13:
 	script_null_script $03 ; $4ef4
 	ld a, $03 ; $4ef9
 	script_set_text $0544 ; $4efb
@@ -1013,7 +1013,7 @@ Label_13_527a:
 	call WaitFadeEnd ; $52a1
 	script_move_target $03, $0b00, $0a00 ; $52a4
 	ret ; $52af
-Func_13_52b0:
+DormRoomNpc03_13:
 	script_face_toward $00, $03 ; $52b0
 	test_flag $1c, 0 ; $52b8
 	jr z, Label_13_52c5 ; $52bb
@@ -2010,11 +2010,11 @@ CourtyardExitTriggers_13:
 	map_script $01, $ff, $0000, $0000, $11, $01
 	map_script $02, $ff, $0000, $0000, $08, $04
 	map_script $03, $ff, $0000, $0000, $05, $02
-	map_script $0a, $ff, $0000, Func_13_7b4d, $00, $0a
+	map_script $0a, $ff, $0000, MapScriptNop_13, $00, $0a
 	map_script $0e, $ff, $0000, $0000, $07, $0e
 	map_script $0f, $ff, $0000, $0000, $08, $0f
 	db $ff
-Func_13_5eaa:
+CourtyardNpc03_13:
 	script_set_text $020f ; $5eaa
 	test_flag $05, 7 ; $5eb0
 	jr z, Label_13_5ebb ; $5eb3
@@ -2033,7 +2033,7 @@ Label_13_5ed6:
 	ret ; $5edb
 CourtyardNpcScripts_13:
 	; $5edc, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_13_5eaa, $03, $00
+	map_script $03, $ff, $0000, CourtyardNpc03_13, $03, $00
 	map_script $04, $ff, $05e0, $0214, $03, $00
 	map_script $05, $ff, $05e0, $0215, $1b, $00
 	map_script $04, $ff, $0000, $0218, $03, $00
@@ -2187,9 +2187,9 @@ VarsityCourtNpcScriptsE_13:
 	db $ff
 CourtyardFacingScripts_13:
 	; $6164, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_13_616d, $00, $00
+	map_script $01, $ff, $0000, CourtyardFacing01_13, $00, $00
 	db $ff
-Func_13_616d:
+CourtyardFacing01_13:
 	call Func_13_7ae0 ; $616d
 	ld hl, wStoryModePlayersXPosition ; $6170
 	ld de, wStoryModeSpawnPosition ; $6173
@@ -3568,7 +3568,7 @@ ActorScript_13_7b2f:
 	as_wait_move2
 	as_wait $28
 	as_jump .L15
-Func_13_7b4d:
+MapScriptNop_13:
 	ret ; $7b4d
 	xor a, a ; $7b4e
 	ld [$c2da], a ; $7b4f

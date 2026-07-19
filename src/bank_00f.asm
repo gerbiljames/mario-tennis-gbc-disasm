@@ -60,7 +60,7 @@ Label_0f_40ec:
 	ld [hl], a ; $40ef
 	call SetPlayerActorObjectDef ; $40f0
 	ret ; $40f3
-Func_0f_40f4:
+SmallCharTestNpc03_0f:
 	ld hl, $c2b0 ; $40f4
 	ld a, [hl] ; $40f7
 	inc [hl] ; $40f8
@@ -68,7 +68,7 @@ Func_0f_40f4:
 	add a, $26 ; $40fb
 	call SetPlayerActorObjectDef ; $40fd
 	ret ; $4100
-Func_0f_4101:
+SmallCharTestNpc04_0f:
 	ld hl, $c2b0 ; $4101
 	ld a, [hl] ; $4104
 	inc a ; $4105
@@ -93,36 +93,36 @@ Label_0f_4115:
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
 	ret ; $4126
-Func_0f_4127:
+SmallCharTestNpc05_0f:
 	script_set_anim $00, $03 ; $4127
 	ret ; $412e
-Func_0f_412f:
+SmallCharTestNpc06_0f:
 	script_set_anim $00, $04 ; $412f
 	ret ; $4136
-Func_0f_4137:
+MapScriptNop_0f:
 	ret ; $4137
 SmallCharTestNpcScripts_0f:
 	; $4138, 97 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_0f_40f4, $00, $00
-	map_script $04, $ff, $0000, Func_0f_4101, $00, $00
-	map_script $05, $ff, $0000, Func_0f_4127, $00, $00
-	map_script $06, $ff, $0000, Func_0f_412f, $00, $00
-	map_script $07, $ff, $0000, Func_0f_4137, $01, $00
-	map_script $08, $ff, $0000, Func_0f_4137, $01, $00
-	map_script $09, $ff, $0000, Func_0f_4137, $01, $00
-	map_script $0a, $ff, $0000, Func_0f_4137, $01, $00
-	map_script $0b, $ff, $0000, Func_0f_4137, $01, $00
-	map_script $0c, $ff, $0000, Func_0f_4137, $01, $00
-	map_script $0d, $ff, $0000, Func_0f_4137, $01, $00
-	map_script $0e, $ff, $0000, Func_0f_4137, $01, $00
+	map_script $03, $ff, $0000, SmallCharTestNpc03_0f, $00, $00
+	map_script $04, $ff, $0000, SmallCharTestNpc04_0f, $00, $00
+	map_script $05, $ff, $0000, SmallCharTestNpc05_0f, $00, $00
+	map_script $06, $ff, $0000, SmallCharTestNpc06_0f, $00, $00
+	map_script $07, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $08, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $09, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $0a, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $0b, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $0c, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $0d, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $0e, $ff, $0000, MapScriptNop_0f, $01, $00
 	db $ff
 SmallCharTestFacingScripts_0f:
 	ds 1, $ff ; $4199, fill
-Func_0f_419a:
+SmallCharTestTile01_0f:
 	ret ; $419a
 SmallCharTestTileTriggers_0f:
 	; $419b, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_0f_419a, $00, $00
+	map_script $01, $ff, $0000, SmallCharTestTile01_0f, $00, $00
 	db $ff
 SmallCharTestInitScript_0f:
 	xor a, a ; $41a4
@@ -218,7 +218,7 @@ AwardsCeremonyNpcScripts_0f:
 	map_script $05, $ff, $0000, $2884, $03, $00
 	map_script $06, $ff, $0000, $287a, $03, $00
 	map_script $07, $ff, $0000, $287c, $03, $00
-	map_script $08, $ff, $0000, Func_0f_5628, $03, $00
+	map_script $08, $ff, $0000, AwardsCeremonyNpc08_0f, $03, $00
 	map_script $09, $ff, $0000, $2882, $03, $00
 	map_script $0a, $ff, $0000, $2883, $03, $00
 	map_script $11, $ff, $0000, $2879, $03, $00
@@ -226,16 +226,16 @@ AwardsCeremonyNpcScripts_0f:
 	db $ff
 AwardsCeremonyFacingScripts_0f:
 	; $4498, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_0f_44a1, $00, $00
+	map_script $01, $ff, $0000, AwardsCeremonyFacing01_0f, $00, $00
 	db $ff
-Func_0f_44a1:
+AwardsCeremonyFacing01_0f:
 	ret ; $44a1
 AwardsCeremonyTileTriggers_0f:
 	; $44a2, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_0f_44b3, $00, $00
-	map_script $02, $ff, $0000, Func_0f_4725, $00, $00
+	map_script $01, $ff, $0000, AwardsCeremonyTile01_0f, $00, $00
+	map_script $02, $ff, $0000, AwardsCeremonyTile02_0f, $00, $00
 	db $ff
-Func_0f_44b3:
+AwardsCeremonyTile01_0f:
 	ld b, $0a ; $44b3
 	ld c, $1c ; $44b5
 	ld d, $0a ; $44b7
@@ -358,7 +358,7 @@ Label_0f_4700:
 	ld de, $d000 ; $471e
 	farcall FarPtr_04_20 ; $4721
 	ret ; $4724
-Func_0f_4725:
+AwardsCeremonyTile02_0f:
 	test_flag $05, 7 ; $4725
 	jp nz, Label_0f_4ea7 ; $4728
 	script_null_script $03 ; $472b
@@ -1012,7 +1012,7 @@ Label_0f_5600:
 	farcall FarPtr_04_20 ; $5624
 Label_0f_5627:
 	ret ; $5627
-Func_0f_5628:
+AwardsCeremonyNpc08_0f:
 	script_set_text $287d ; $5628
 	call Func_0f_5f7a ; $562e
 	and a, $01 ; $5631
@@ -1296,7 +1296,7 @@ AwardsCeremonyScriptsDoubles_0f:
 	map_script $05, $ff, $0000, $28a6, $03, $00
 	map_script $06, $ff, $0000, $28af, $03, $00
 	map_script $07, $ff, $0000, $28b1, $03, $00
-	map_script $08, $ff, $0000, Func_0f_5628, $03, $00
+	map_script $08, $ff, $0000, AwardsCeremonyNpc08_0f, $03, $00
 	map_script $09, $ff, $0000, $2882, $03, $00
 	map_script $0a, $ff, $0000, $2883, $03, $00
 	map_script $12, $ff, $0000, $28b0, $03, $00
@@ -1538,16 +1538,16 @@ TournamentEntryPoints_0f:
 	db $ff
 TournamentExitTriggers_0f:
 	; $60b1, 41 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_0f_60da, $18, $01
-	map_script $02, $ff, $0000, Func_0f_60da, $18, $02
-	map_script $03, $ff, $0000, Func_0f_60da, $17, $01
-	map_script $04, $ff, $0000, Func_0f_60da, $16, $01
-	map_script $05, $ff, $0000, Func_0f_60da, $15, $03
+	map_script $01, $ff, $0000, TournamentExit_0f, $18, $01
+	map_script $02, $ff, $0000, TournamentExit_0f, $18, $02
+	map_script $03, $ff, $0000, TournamentExit_0f, $17, $01
+	map_script $04, $ff, $0000, TournamentExit_0f, $16, $01
+	map_script $05, $ff, $0000, TournamentExit_0f, $15, $03
 	db $ff
-Func_0f_60da:
+TournamentExit_0f:
 	clear_flag $17, 1 ; $60da
 	ret ; $60dd
-Func_0f_60de:
+TournamentNpc0A_0f:
 	script_set_text $24a3 ; $60de
 	ld a, $0b ; $60e4
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $60e6
@@ -1566,21 +1566,21 @@ TournamentNpcScripts_0f:
 	map_script $07, $ff, $0000, $24a0, $13, $00
 	map_script $08, $ff, $0000, $24a1, $03, $00
 	map_script $09, $ff, $0000, $24a2, $03, $00
-	map_script $0a, $ff, $0000, Func_0f_60de, $03, $00
+	map_script $0a, $ff, $0000, TournamentNpc0A_0f, $03, $00
 	map_script $0b, $ff, $0000, $24a6, $03, $00
 	map_script $0c, $ff, $0000, $24a7, $03, $00
 	map_script $0d, $ff, $0000, $24a8, $03, $00
 	map_script $0e, $ff, $0000, $24a9, $03, $00
 	map_script $0f, $ff, $0000, $24aa, $03, $00
 	map_script $10, $ff, $0000, $24ab, $03, $00
-	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
-	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
+	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 TournamentFacingScripts_0f:
 	; $616b, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_0f_6174, $00, $00
+	map_script $01, $ff, $0000, TournamentFacing01_0f, $00, $00
 	db $ff
-Func_0f_6174:
+TournamentFacing01_0f:
 	xor a, a ; $6174
 	ldh [hBGColumnBlitPending], a ; $6175
 	ldh [hBGRowBlitPending], a ; $6177
@@ -1603,10 +1603,10 @@ Func_0f_6174:
 	ret ; $61a5
 TournamentTileTriggers_0f:
 	; $61a6, 17 bytes (map_scripts)
-	map_script $0e, $ff, $0000, Func_0f_61b7, $00, $00
-	map_script $0f, $ff, $0000, Func_0f_61f6, $00, $00
+	map_script $0e, $ff, $0000, TournamentTile0E_0f, $00, $00
+	map_script $0f, $ff, $0000, TournamentTile0F_0f, $00, $00
 	db $ff
-Func_0f_61b7:
+TournamentTile0E_0f:
 	ld a, $01 ; $61b7
 	ld [$c2b1], a ; $61b9
 	script_null_script $02 ; $61bc
@@ -1627,7 +1627,7 @@ ActorScript_0f_61eb:
 	as_wait_move
 	as_set_field $14, $0040
 	as_halt
-Func_0f_61f6:
+TournamentTile0F_0f:
 	ld a, $00 ; $61f6
 	ld [$c2b1], a ; $61f8
 	script_set_actor_script $00, ActorScript_0f_61eb ; $61fb
@@ -2117,8 +2117,8 @@ IslandOpenRound1Scripts_0f:
 	map_script $0e, $ff, $0000, $24be, $03, $00
 	map_script $0f, $ff, $0000, $24bf, $03, $00
 	map_script $10, $ff, $0000, $24c0, $13, $00
-	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
-	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
+	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound2Actors_0f:
 	; $684b, 206 bytes (map_actors)
@@ -2150,8 +2150,8 @@ IslandOpenRound2Scripts_0f:
 	map_script $0e, $ff, $0000, $280c, $03, $00
 	map_script $0f, $ff, $0000, $280d, $03, $00
 	map_script $10, $ff, $0000, $280e, $13, $00
-	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
-	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
+	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound3Actors_0f:
 	; $6982, 206 bytes (map_actors)
@@ -2183,8 +2183,8 @@ IslandOpenRound3Scripts_0f:
 	map_script $0e, $ff, $0000, $2817, $03, $00
 	map_script $0f, $ff, $0000, $2818, $03, $00
 	map_script $10, $ff, $0000, $2819, $13, $00
-	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
-	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
+	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound1ActorsDoubles_0f:
 	; $6ab9, 192 bytes (map_actors)
@@ -2214,8 +2214,8 @@ IslandOpenRound1ScriptsDoubles_0f:
 	map_script $0d, $ff, $0000, Func_0f_6c22, $13, $00
 	map_script $0e, $ff, $0000, $2828, $03, $00
 	map_script $0f, $ff, $0000, $2829, $03, $00
-	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
-	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
+	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 Func_0f_6bda:
 	script_set_text $281e ; $6bda
@@ -2284,8 +2284,8 @@ IslandOpenRound2ScriptsDoubles_0f:
 	map_script $0d, $ff, $0000, Func_0f_6d8b, $13, $00
 	map_script $0e, $ff, $0000, $2836, $13, $00
 	map_script $0f, $ff, $0000, $2837, $13, $00
-	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
-	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
+	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 Func_0f_6d67:
 	script_set_text $282c ; $6d67
@@ -2341,8 +2341,8 @@ IslandOpenRound3ScriptsDoubles_0f:
 	map_script $0d, $ff, $0000, $2843, $03, $00
 	map_script $0e, $ff, $0000, $2844, $13, $00
 	map_script $0f, $ff, $0000, $2845, $13, $00
-	map_script $03, $ff, $0000, Func_0f_6f3c, $03, $00
-	map_script $04, $ff, $0000, Func_0f_6f71, $03, $00
+	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 Func_0f_6ed0:
 	script_set_text $2840 ; $6ed0
@@ -2382,7 +2382,7 @@ Label_0f_6f12:
 Label_0f_6f36:
 	script_speak $0b ; $6f36
 	ret ; $6f3b
-Func_0f_6f3c:
+TournamentNpc03_0f:
 	script_set_text $24ac ; $6f3c
 	ld a, $03 ; $6f42
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6f44
@@ -2404,7 +2404,7 @@ Label_0f_6f68:
 	farcall FarPtr_InitDialogueTextCursor ; $6f68
 	script_speak $03 ; $6f6b
 	ret ; $6f70
-Func_0f_6f71:
+TournamentNpc04_0f:
 	ld hl, $24b2 ; $6f71
 	ld a, [$c2b0] ; $6f74
 	add a, l ; $6f77

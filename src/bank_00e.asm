@@ -32,15 +32,15 @@ TrainingGymActors_0e:
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
-	map_entry $01, $c0, $1600, $1800, Func_0e_40ff
-	map_entry $02, $40, $0b00, $0c00, Func_0e_4145
-	map_entry $03, $40, $1500, $0c00, Func_0e_41e2
+	map_entry $01, $c0, $1600, $1800, TrainingGymArrival01_0e
+	map_entry $02, $40, $0b00, $0c00, TrainingGymArrival02_0e
+	map_entry $03, $40, $1500, $0c00, TrainingGymArrival03_0e
 	map_entry $0b, $40, $0d00, $0f00, $0000
 	map_entry $0c, $80, $1100, $1300, $0000
 	map_entry $0d, $40, $0d00, $0f00, $0000
 	map_entry $0e, $80, $1100, $1300, $0000
 	db $ff
-Func_0e_40ff:
+TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
 	cp a, $ff ; $4102
 	jp z, Label_0e_4144 ; $4104
@@ -56,7 +56,7 @@ Label_0e_4132:
 	script_move_angle $00, $c0, $0200 ; $413a
 Label_0e_4144:
 	ret ; $4144
-Func_0e_4145:
+TrainingGymArrival02_0e:
 	ld a, [wStoryModeEntryPoint] ; $4145
 	cp a, $ff ; $4148
 	jp z, Label_0e_41e1 ; $414a
@@ -79,7 +79,7 @@ Func_0e_4145:
 	script_copy_scene_rect $3d, $0c, $0a, $0a, $02, $02 ; $41d2
 Label_0e_41e1:
 	ret ; $41e1
-Func_0e_41e2:
+TrainingGymArrival03_0e:
 	ld a, [wStoryModeEntryPoint] ; $41e2
 	cp a, $ff ; $41e5
 	jr z, Label_0e_41e1 ; $41e7
@@ -103,10 +103,10 @@ Func_0e_41e2:
 TrainingGymExitTriggers_0e:
 	; $4277, 25 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_0e, $07, $01
-	map_script $03, $ff, $0000, Func_0e_431b, $12, $01
-	map_script $02, $ff, $0000, Func_0e_4290, $13, $01
+	map_script $03, $ff, $0000, TrainingGymExit03_0e, $12, $01
+	map_script $02, $ff, $0000, TrainingGymExit02_0e, $13, $01
 	db $ff
-Func_0e_4290:
+TrainingGymExit02_0e:
 	script_face $00, $c0 ; $4290
 	script_facing_lock $00, $01 ; $4297
 	script_set_speed $00, $0018 ; $429e
@@ -126,7 +126,7 @@ Func_0e_4290:
 	script_facing_lock $00, $00 ; $430c
 	script_wait_frames $0a ; $4313
 	ret ; $431a
-Func_0e_431b:
+TrainingGymExit03_0e:
 	script_face $00, $c0 ; $431b
 	script_facing_lock $00, $01 ; $4322
 	script_set_speed $00, $0018 ; $4329
@@ -146,7 +146,7 @@ Func_0e_431b:
 	script_facing_lock $00, $00 ; $4397
 	script_wait_frames $0a ; $439e
 	ret ; $43a5
-Func_0e_43a6:
+TrainingGymNpc03_0e:
 	ld a, [$c2b0] ; $43a6
 	add a, a ; $43a9
 	add a, $bd ; $43aa
@@ -171,7 +171,7 @@ Func_0e_43a6:
 	dw $14cc ; record 7
 	dw $14db ; record 8
 	dw $14db ; record 9
-Func_0e_43d1:
+TrainingGymNpc04_0e:
 	ld a, [$c2b0] ; $43d1
 	sra a ; $43d4
 	add a, a ; $43d6
@@ -192,7 +192,7 @@ Func_0e_43d1:
 	dw $14bf ; record 2
 	dw $14cd ; record 3
 	dw $14dc ; record 4
-Func_0e_43f4:
+TrainingGymNpc05_0e:
 	ld a, [$c2b0] ; $43f4
 	add a, a ; $43f7
 	add a, $0b ; $43f8
@@ -217,7 +217,7 @@ Func_0e_43f4:
 	dw $14cf ; record 7
 	dw $14dd ; record 8
 	dw $14dd ; record 9
-Func_0e_441f:
+TrainingGymNpc06_0e:
 	ld a, [$c2b0] ; $441f
 	add a, a ; $4422
 	add a, $36 ; $4423
@@ -242,7 +242,7 @@ Func_0e_441f:
 	dw $14d1 ; record 7
 	dw $14de ; record 8
 	dw $14de ; record 9
-Func_0e_444a:
+TrainingGymNpc07_0e:
 	ld a, [$c2b0] ; $444a
 	sra a ; $444d
 	cp a, $03 ; $444f
@@ -278,7 +278,7 @@ Label_0e_4471:
 Label_0e_448f:
 	script_speak $07 ; $448f
 	ret ; $4494
-Func_0e_4495:
+TrainingGymNpc08_0e:
 	ld a, [$c2b0] ; $4495
 	sra a ; $4498
 	add a, a ; $449a
@@ -299,7 +299,7 @@ Func_0e_4495:
 	dw $14c4 ; record 2
 	dw $14d5 ; record 3
 	dw $14e0 ; record 4
-Func_0e_44b8:
+TrainingGymNpc09_0e:
 	ld a, [$c2b0] ; $44b8
 	sra a ; $44bb
 	add a, a ; $44bd
@@ -320,7 +320,7 @@ Func_0e_44b8:
 	dw $14c5 ; record 2
 	dw $14d6 ; record 3
 	dw $14e1 ; record 4
-Func_0e_44db:
+TrainingGymNpc0A_0e:
 	ld a, [$c2b0] ; $44db
 	add a, a ; $44de
 	add a, $f2 ; $44df
@@ -345,7 +345,7 @@ Func_0e_44db:
 	dw $14d7 ; record 7
 	dw $14e2 ; record 8
 	dw $14e3 ; record 9
-Func_0e_4506:
+TrainingGymNpc0B_0e:
 	ld a, [$c2b0] ; $4506
 	add a, a ; $4509
 	add a, $1d ; $450a
@@ -370,7 +370,7 @@ Func_0e_4506:
 	dw $14d9 ; record 7
 	dw $14e4 ; record 8
 	dw $14e5 ; record 9
-Func_0e_4531:
+TrainingGymNpc0C_0e:
 	ld a, [$c2b0] ; $4531
 	sra a ; $4534
 	add a, a ; $4536
@@ -393,24 +393,24 @@ Func_0e_4531:
 	dw $14e6 ; record 4
 TrainingGymNpcScripts_0e:
 	; $4554, 89 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_0e_43a6, $03, $00
-	map_script $04, $ff, $0000, Func_0e_43d1, $03, $00
-	map_script $05, $ff, $0000, Func_0e_43f4, $03, $00
-	map_script $06, $ff, $0000, Func_0e_441f, $03, $00
-	map_script $07, $ff, $0000, Func_0e_444a, $00, $00
-	map_script $08, $ff, $0000, Func_0e_4495, $00, $00
-	map_script $09, $ff, $0000, Func_0e_44b8, $00, $00
-	map_script $0a, $ff, $0000, Func_0e_44db, $13, $00
-	map_script $0b, $ff, $0000, Func_0e_4506, $10, $00
-	map_script $0c, $ff, $0000, Func_0e_4531, $13, $00
+	map_script $03, $ff, $0000, TrainingGymNpc03_0e, $03, $00
+	map_script $04, $ff, $0000, TrainingGymNpc04_0e, $03, $00
+	map_script $05, $ff, $0000, TrainingGymNpc05_0e, $03, $00
+	map_script $06, $ff, $0000, TrainingGymNpc06_0e, $03, $00
+	map_script $07, $ff, $0000, TrainingGymNpc07_0e, $00, $00
+	map_script $08, $ff, $0000, TrainingGymNpc08_0e, $00, $00
+	map_script $09, $ff, $0000, TrainingGymNpc09_0e, $00, $00
+	map_script $0a, $ff, $0000, TrainingGymNpc0A_0e, $13, $00
+	map_script $0b, $ff, $0000, TrainingGymNpc0B_0e, $10, $00
+	map_script $0c, $ff, $0000, TrainingGymNpc0C_0e, $13, $00
 	map_script $0d, $ff, $0000, $20e2, $13, $00
 	db $ff
 TrainingGymFacingScripts_0e:
 	; $45ad, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_0e_45be, $00, $00
-	map_script $02, $ff, $0000, Func_0e_45da, $00, $00
+	map_script $01, $ff, $0000, TrainingGymFacing01_0e, $00, $00
+	map_script $02, $ff, $0000, TrainingGymFacing02_0e, $00, $00
 	db $ff
-Func_0e_45be:
+TrainingGymFacing01_0e:
 	ld a, $0b ; $45be
 	ld [$c2b1], a ; $45c0
 	script_player_speed $0040 ; $45c3
@@ -418,7 +418,7 @@ Func_0e_45be:
 	farcall FarPtr_WaitPlayerMoveDone ; $45d3
 	call RunRepairCounterDialogue ; $45d6
 	ret ; $45d9
-Func_0e_45da:
+TrainingGymFacing02_0e:
 	ld a, $0c ; $45da
 	ld [$c2b1], a ; $45dc
 	script_player_speed $0040 ; $45df
@@ -428,15 +428,15 @@ Func_0e_45da:
 	ret ; $45f5
 TrainingGymTileTriggers_0e:
 	; $45f6, 17 bytes (map_scripts)
-	map_script $02, $40, $0000, Func_0e_4607, $00, $00
-	map_script $03, $40, $0000, Func_0e_4610, $00, $00
+	map_script $02, $40, $0000, TrainingGymTile02_0e, $00, $00
+	map_script $03, $40, $0000, TrainingGymTile03_0e, $00, $00
 	db $ff
-Func_0e_4607:
+TrainingGymTile02_0e:
 	ld a, $02 ; $4607
 	ld [$c294], a ; $4609
 	ld [wStoryModeExitLocationRequest], a ; $460c
 	ret ; $460f
-Func_0e_4610:
+TrainingGymTile03_0e:
 	ld a, $03 ; $4610
 	ld [$c294], a ; $4612
 	ld [wStoryModeExitLocationRequest], a ; $4615
@@ -1668,11 +1668,11 @@ MarioWorldExitTriggers_0e:
 	; $5385, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_0e, $1b, $0e
 	db $ff
-Func_0e_538e:
+MarioWorldNpc12_0e:
 	script_set_text $308e ; $538e
 	script_speak $12 ; $5394
 	ret ; $5399
-Func_0e_539a:
+MarioWorldNpc11_0e:
 	ld hl, $308f ; $539a
 	ld a, [$c2b0] ; $539d
 	add a, l ; $53a0
@@ -1683,7 +1683,7 @@ Label_0e_53a5:
 	farcall FarPtr_InitDialogueTextCursor ; $53a5
 	script_speak $11 ; $53a8
 	ret ; $53ad
-Func_0e_53ae:
+MarioWorldNpc0B_0e:
 	ld hl, $3093 ; $53ae
 	ld a, [$c2b0] ; $53b1
 	add a, l ; $53b4
@@ -1694,27 +1694,27 @@ Label_0e_53b9:
 	farcall FarPtr_InitDialogueTextCursor ; $53b9
 	script_speak $0b ; $53bc
 	ret ; $53c1
-Func_0e_53c2:
+MarioWorldNpc09_0e:
 	script_set_text $3097 ; $53c2
 	sound $87 ; $53c8
 	script_speak $09 ; $53ca
 	ret ; $53cf
-Func_0e_53d0:
+MarioWorldNpc0A_0e:
 	script_set_text $3098 ; $53d0
 	sound $89 ; $53d6
 	script_speak $0a ; $53d8
 	ret ; $53dd
-Func_0e_53de:
+MarioWorldNpc0C_0e:
 	script_set_text $3099 ; $53de
 	sound $88 ; $53e4
 	script_speak $0c ; $53e6
 	ret ; $53eb
-Func_0e_53ec:
+MarioWorldNpc0D_0e:
 	script_set_text $309a ; $53ec
 	sound $86 ; $53f2
 	script_speak $0d ; $53f4
 	ret ; $53f9
-Func_0e_53fa:
+MarioWorldNpc0F_0e:
 	ld hl, $309b ; $53fa
 	ld a, [$c2b0] ; $53fd
 	add a, l ; $5400
@@ -1725,7 +1725,7 @@ Label_0e_5405:
 	farcall FarPtr_InitDialogueTextCursor ; $5405
 	script_speak $0f ; $5408
 	ret ; $540d
-Func_0e_540e:
+MarioWorldNpc10_0e:
 	ld hl, $309f ; $540e
 	ld a, [$c2b0] ; $5411
 	add a, l ; $5414
@@ -1736,7 +1736,7 @@ Label_0e_5419:
 	farcall FarPtr_InitDialogueTextCursor ; $5419
 	script_speak $10 ; $541c
 	ret ; $5421
-Func_0e_5422:
+MarioWorldNpc0E_0e:
 	ld hl, $30a3 ; $5422
 	ld a, [$c2b0] ; $5425
 	add a, l ; $5428
@@ -1747,11 +1747,11 @@ Label_0e_542d:
 	farcall FarPtr_InitDialogueTextCursor ; $542d
 	script_speak $0e ; $5430
 	ret ; $5435
-Func_0e_5436:
+MarioWorldNpc13_0e:
 	script_set_text $30a7 ; $5436
 	script_speak $13 ; $543c
 	ret ; $5441
-Func_0e_5442:
+MarioWorldNpc14_0e:
 	script_set_text $30a8 ; $5442
 	script_speak $14 ; $5448
 	ret ; $544d
@@ -1761,18 +1761,18 @@ MarioWorldNpcScripts_0e:
 	map_script $08, $20, $0000, Func_0e_654f, $00, $00
 	map_script $08, $40, $0000, Func_0e_63f4, $00, $00
 	map_script $08, $80, $0000, Func_0e_633d, $03, $00
-	map_script $11, $ff, $0000, Func_0e_539a, $03, $00
-	map_script $0b, $ff, $0000, Func_0e_53ae, $03, $00
-	map_script $09, $ff, $0000, Func_0e_53c2, $03, $00
-	map_script $0a, $ff, $0000, Func_0e_53d0, $03, $00
-	map_script $0c, $ff, $0000, Func_0e_53de, $03, $00
-	map_script $0d, $ff, $0000, Func_0e_53ec, $03, $00
-	map_script $0f, $ff, $0000, Func_0e_53fa, $03, $00
-	map_script $10, $ff, $0000, Func_0e_540e, $03, $00
-	map_script $0e, $ff, $0000, Func_0e_5422, $03, $00
-	map_script $13, $ff, $0000, Func_0e_5436, $03, $00
-	map_script $14, $ff, $0000, Func_0e_5442, $03, $00
-	map_script $12, $ff, $0000, Func_0e_538e, $03, $00
+	map_script $11, $ff, $0000, MarioWorldNpc11_0e, $03, $00
+	map_script $0b, $ff, $0000, MarioWorldNpc0B_0e, $03, $00
+	map_script $09, $ff, $0000, MarioWorldNpc09_0e, $03, $00
+	map_script $0a, $ff, $0000, MarioWorldNpc0A_0e, $03, $00
+	map_script $0c, $ff, $0000, MarioWorldNpc0C_0e, $03, $00
+	map_script $0d, $ff, $0000, MarioWorldNpc0D_0e, $03, $00
+	map_script $0f, $ff, $0000, MarioWorldNpc0F_0e, $03, $00
+	map_script $10, $ff, $0000, MarioWorldNpc10_0e, $03, $00
+	map_script $0e, $ff, $0000, MarioWorldNpc0E_0e, $03, $00
+	map_script $13, $ff, $0000, MarioWorldNpc13_0e, $03, $00
+	map_script $14, $ff, $0000, MarioWorldNpc14_0e, $03, $00
+	map_script $12, $ff, $0000, MarioWorldNpc12_0e, $03, $00
 	db $ff
 MarioWorldFacingScripts_0e:
 	ds 1, $ff ; $54cf, fill

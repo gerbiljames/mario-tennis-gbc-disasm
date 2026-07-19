@@ -740,7 +740,7 @@ Test2ExitTriggers_10:
 	ld a, $08 ; $4951
 	farcall FarPtr_RunTrainingDrillByID ; $4953
 	ret ; $4956
-Func_10_4957:
+Test2Npc0B_10:
 	ld hl, wStoryModePlayersXPosition ; $4957
 	ld de, wStoryModeSpawnPosition ; $495a
 	ld bc, $0005 ; $495d
@@ -757,7 +757,7 @@ Func_10_4957:
 	ld a, $09 ; $4982
 	farcall FarPtr_RunTrainingDrillByID ; $4984
 	ret ; $4987
-Func_10_4988:
+Test2Npc0C_10:
 	ld hl, wStoryModePlayersXPosition ; $4988
 	ld de, wStoryModeSpawnPosition ; $498b
 	ld bc, $0005 ; $498e
@@ -774,7 +774,7 @@ Func_10_4988:
 	ld a, $0a ; $49b3
 	farcall FarPtr_RunTrainingDrillByID ; $49b5
 	ret ; $49b8
-Func_10_49b9:
+Test2Npc0D_10:
 	ld hl, wStoryModePlayersXPosition ; $49b9
 	ld de, wStoryModeSpawnPosition ; $49bc
 	ld bc, $0005 ; $49bf
@@ -791,7 +791,7 @@ Func_10_49b9:
 	ld a, $0b ; $49e4
 	farcall FarPtr_RunTrainingDrillByID ; $49e6
 	ret ; $49e9
-Func_10_49ea:
+Test2Npc0E_10:
 	ld hl, wStoryModePlayersXPosition ; $49ea
 	ld de, wStoryModeSpawnPosition ; $49ed
 	ld bc, $0005 ; $49f0
@@ -808,7 +808,7 @@ Func_10_49ea:
 	ld a, $0c ; $4a15
 	farcall FarPtr_RunTrainingDrillByID ; $4a17
 	ret ; $4a1a
-Func_10_4a1b:
+Test2Npc0F_10:
 	ld hl, wStoryModePlayersXPosition ; $4a1b
 	ld de, wStoryModeSpawnPosition ; $4a1e
 	ld bc, $0005 ; $4a21
@@ -825,7 +825,7 @@ Func_10_4a1b:
 	ld a, $0d ; $4a46
 	farcall FarPtr_RunTrainingDrillByID ; $4a48
 	ret ; $4a4b
-Func_10_4a4c:
+Test2Npc10_10:
 	ld hl, wStoryModePlayersXPosition ; $4a4c
 	ld de, wStoryModeSpawnPosition ; $4a4f
 	ld bc, $0005 ; $4a52
@@ -842,7 +842,7 @@ Func_10_4a4c:
 	ld a, $0e ; $4a77
 	farcall FarPtr_RunTrainingDrillByID ; $4a79
 	ret ; $4a7c
-Func_10_4a7d:
+Test2Npc11_10:
 	ld hl, wStoryModePlayersXPosition ; $4a7d
 	ld de, wStoryModeSpawnPosition ; $4a80
 	ld bc, $0005 ; $4a83
@@ -859,7 +859,7 @@ Func_10_4a7d:
 	ld a, $0f ; $4aa8
 	farcall FarPtr_RunTrainingDrillByID ; $4aaa
 	ret ; $4aad
-Func_10_4aae:
+Test2Npc12_10:
 	ld hl, wStoryModePlayersXPosition ; $4aae
 	ld de, wStoryModeSpawnPosition ; $4ab1
 	ld bc, $0005 ; $4ab4
@@ -886,20 +886,20 @@ Test2NpcScripts_10:
 	map_script $08, $ff, $0000, $0c26, $00, $00
 	map_script $09, $ff, $0000, $0c27, $00, $00
 	map_script $0a, $ff, $0000, $0c28, $00, $00
-	map_script $0b, $ff, $0000, Func_10_4957, $00, $00
-	map_script $0c, $ff, $0000, Func_10_4988, $00, $00
-	map_script $0d, $ff, $0000, Func_10_49b9, $00, $00
-	map_script $0e, $ff, $0000, Func_10_49ea, $00, $00
-	map_script $0f, $ff, $0000, Func_10_4a1b, $00, $00
-	map_script $10, $ff, $0000, Func_10_4a4c, $00, $00
-	map_script $11, $ff, $0000, Func_10_4a7d, $00, $00
-	map_script $12, $ff, $0000, Func_10_4aae, $00, $00
+	map_script $0b, $ff, $0000, Test2Npc0B_10, $00, $00
+	map_script $0c, $ff, $0000, Test2Npc0C_10, $00, $00
+	map_script $0d, $ff, $0000, Test2Npc0D_10, $00, $00
+	map_script $0e, $ff, $0000, Test2Npc0E_10, $00, $00
+	map_script $0f, $ff, $0000, Test2Npc0F_10, $00, $00
+	map_script $10, $ff, $0000, Test2Npc10_10, $00, $00
+	map_script $11, $ff, $0000, Test2Npc11_10, $00, $00
+	map_script $12, $ff, $0000, Test2Npc12_10, $00, $00
 	db $ff
 Test2FacingScripts_10:
 	; $4b60, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_4b69, $00, $00
+	map_script $01, $ff, $0000, Test2Facing01_10, $00, $00
 	db $ff
-Func_10_4b69:
+Test2Facing01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4b69
 	script_fade_in $10 ; $4b6c
 	script_set_text $0483 ; $4b71
@@ -908,9 +908,9 @@ Func_10_4b69:
 	ret ; $4b7f
 Test2TileTriggers_10:
 	; $4b80, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_4b89, $00, $00
+	map_script $01, $ff, $0000, Test2Tile01_10, $00, $00
 	db $ff
-Func_10_4b89:
+Test2Tile01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4b89
 	script_set_text $0480 ; $4b8c
 	script_speak $00 ; $4b92
@@ -964,7 +964,7 @@ DevelopmentExitTriggers_10:
 	; $4cf6, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_10, $01, $01
 	db $ff
-Func_10_4cff:
+DevelopmentRespawnActors_10:
 	ld c, $10 ; $4cff
 	call BeginFadeOut ; $4d01
 	call WaitFadeEnd ; $4d04
@@ -991,7 +991,7 @@ Func_10_4cff:
 	ld [$c294], a ; $4d69
 	ld [wStoryModeExitLocationRequest], a ; $4d6c
 	ret ; $4d6f
-Func_10_4d70:
+DevelopmentRespawnActorsAlt_10:
 	ld c, $10 ; $4d70
 	call BeginFadeOut ; $4d72
 	call WaitFadeEnd ; $4d75
@@ -1014,28 +1014,28 @@ Func_10_4d70:
 	ret ; $4dae
 DevelopmentNpcScripts_10:
 	; $4daf, 129 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $04, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $05, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $06, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $07, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $08, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $09, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $0a, $ff, $0000, Func_10_4cff, $00, $00
-	map_script $0b, $ff, $0000, Func_10_4d70, $00, $00
-	map_script $0c, $ff, $0000, Func_10_4d70, $00, $00
-	map_script $0d, $ff, $0000, Func_10_4d70, $03, $00
-	map_script $0e, $ff, $0000, Func_10_4d70, $00, $00
-	map_script $0f, $ff, $0000, Func_10_4d70, $00, $00
-	map_script $10, $ff, $0000, Func_10_4d70, $00, $00
-	map_script $11, $ff, $0000, Func_10_4d70, $00, $00
-	map_script $12, $ff, $0000, Func_10_4d70, $00, $00
+	map_script $03, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $04, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $05, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $06, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $07, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $08, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $09, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $0a, $ff, $0000, DevelopmentRespawnActors_10, $00, $00
+	map_script $0b, $ff, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
+	map_script $0c, $ff, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
+	map_script $0d, $ff, $0000, DevelopmentRespawnActorsAlt_10, $03, $00
+	map_script $0e, $ff, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
+	map_script $0f, $ff, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
+	map_script $10, $ff, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
+	map_script $11, $ff, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
+	map_script $12, $ff, $0000, DevelopmentRespawnActorsAlt_10, $00, $00
 	db $ff
 DevelopmentFacingScripts_10:
 	; $4e30, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_4e39, $00, $00
+	map_script $01, $ff, $0000, DevelopmentFacing01_10, $00, $00
 	db $ff
-Func_10_4e39:
+DevelopmentFacing01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4e39
 	script_fade_in $10 ; $4e3c
 	script_set_text $0483 ; $4e41
@@ -1044,9 +1044,9 @@ Func_10_4e39:
 	ret ; $4e4f
 DevelopmentTileTriggers_10:
 	; $4e50, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_4e59, $00, $00
+	map_script $01, $ff, $0000, DevelopmentTile01_10, $00, $00
 	db $ff
-Func_10_4e59:
+DevelopmentTile01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4e59
 	script_set_text $0480 ; $4e5c
 	script_speak $00 ; $4e62
@@ -2158,7 +2158,7 @@ CafeteriaExitTriggers_10:
 	; $5879, 9 bytes (map_scripts)
 	map_script $03, $ff, $0000, Func_10_7b1f, $0d, $02
 	db $ff
-Func_10_5882:
+CafeteriaNpc03_10:
 	ld a, [$c2b0] ; $5882
 	add a, a ; $5885
 	add a, $99 ; $5886
@@ -2183,7 +2183,7 @@ Func_10_5882:
 	dw $0cb7 ; record 7
 	dw $0cda ; record 8
 	dw $0cda ; record 9
-Func_10_58ad:
+CafeteriaNpc04_10:
 	ld a, [$c2b1] ; $58ad
 	add a, a ; $58b0
 	add a, $21 ; $58b1
@@ -2238,7 +2238,7 @@ Label_10_5915:
 	dw $0c90 ; record 2
 	dw $0cb8 ; record 3
 	dw $0cdb ; record 4
-Func_10_592b:
+CafeteriaNpc05_10:
 	ld a, [$c2b1] ; $592b
 	add a, a ; $592e
 	add a, $61 ; $592f
@@ -2270,7 +2270,7 @@ Label_10_595b:
 	dw $0c91 ; record 2
 	dw $0cbb ; record 3
 	dw $0cdf ; record 4
-Func_10_596b:
+CafeteriaNpc06_10:
 	ld a, [$c2b0] ; $596b
 	add a, a ; $596e
 	add a, $82 ; $596f
@@ -2295,7 +2295,7 @@ Func_10_596b:
 	dw $0cbd ; record 7
 	dw $0cbc ; record 8
 	dw $0cbd ; record 9
-Func_10_5996:
+CafeteriaNpc07_10:
 	ld a, [$c2b0] ; $5996
 	add a, a ; $5999
 	add a, $ad ; $599a
@@ -2320,7 +2320,7 @@ Func_10_5996:
 	dw $0cbf ; record 7
 	dw $0cbe ; record 8
 	dw $0cbf ; record 9
-Func_10_59c1:
+CafeteriaNpc08_10:
 	ld a, [$c2b0] ; $59c1
 	add a, a ; $59c4
 	add a, $d8 ; $59c5
@@ -2345,7 +2345,7 @@ Func_10_59c1:
 	dw $0cc1 ; record 7
 	dw $0ce0 ; record 8
 	dw $0cc1 ; record 9
-Func_10_59ec:
+CafeteriaNpc09_10:
 	ld a, [$c2b0] ; $59ec
 	add a, a ; $59ef
 	add a, $03 ; $59f0
@@ -2372,13 +2372,13 @@ Func_10_59ec:
 	dw $0cc3 ; record 9
 CafeteriaNpcScripts_10:
 	; $5a17, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_10_5882, $03, $00
-	map_script $04, $ff, $0000, Func_10_58ad, $03, $00
-	map_script $05, $ff, $0000, Func_10_592b, $03, $00
-	map_script $06, $ff, $0000, Func_10_596b, $03, $00
-	map_script $07, $ff, $0000, Func_10_5996, $03, $00
-	map_script $08, $ff, $0000, Func_10_59c1, $03, $00
-	map_script $09, $ff, $0000, Func_10_59ec, $03, $00
+	map_script $03, $ff, $0000, CafeteriaNpc03_10, $03, $00
+	map_script $04, $ff, $0000, CafeteriaNpc04_10, $03, $00
+	map_script $05, $ff, $0000, CafeteriaNpc05_10, $03, $00
+	map_script $06, $ff, $0000, CafeteriaNpc06_10, $03, $00
+	map_script $07, $ff, $0000, CafeteriaNpc07_10, $03, $00
+	map_script $08, $ff, $0000, CafeteriaNpc08_10, $03, $00
+	map_script $09, $ff, $0000, CafeteriaNpc09_10, $03, $00
 	db $ff
 CafeteriaFacingScripts_10:
 	ds 1, $ff ; $5a50, fill
@@ -2434,10 +2434,10 @@ RestaurantActors_10:
 	map_actor_end
 RestaurantEntryPoints_10:
 	; $5b86, 17 bytes (map_entries)
-	map_entry $01, $c0, $0c00, $2100, Func_10_5b97
+	map_entry $01, $c0, $0c00, $2100, RestaurantArrival01_10
 	map_entry $02, $40, $0500, $1700, Func_10_7b5f
 	db $ff
-Func_10_5b97:
+RestaurantArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $5b97
 	cp a, $ff ; $5b9a
 	jp z, Label_10_5bdc ; $5b9c
@@ -2455,13 +2455,13 @@ Label_10_5bdc:
 	ret ; $5bdc
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_5bee, $08, $02
+	map_script $01, $ff, $0000, RestaurantExit01_10, $08, $02
 	map_script $02, $ff, $0000, Func_10_7ae6, $0e, $01
 	db $ff
-Func_10_5bee:
+RestaurantExit01_10:
 	clear_flag $0f, 3 ; $5bee
 	ret ; $5bf1
-Func_10_5bf2:
+RestaurantNpc03_10:
 	ld a, [$c2b1] ; $5bf2
 	add a, a ; $5bf5
 	add a, $13 ; $5bf6
@@ -2486,7 +2486,7 @@ Label_10_5c0d:
 	dw $0c6f ; record 2
 	dw $0c99 ; record 3
 	dw $0cc4 ; record 4
-Func_10_5c1d:
+RestaurantNpc04_10:
 	ld a, [$c2b1] ; $5c1d
 	add a, a ; $5c20
 	add a, $34 ; $5c21
@@ -2506,7 +2506,7 @@ Func_10_5c1d:
 	dw $0c70 ; record 2
 	dw $0c9a ; record 3
 	dw $0cc5 ; record 4
-Func_10_5c3e:
+RestaurantNpc05_10:
 	script_face_toward $00, $05 ; $5c3e
 	ld a, [$c2b0] ; $5c46
 	add a, a ; $5c49
@@ -2542,7 +2542,7 @@ Func_10_5c3e:
 	dw $0c9e ; record 7
 	dw $0cc6 ; record 8
 	dw $0cc6 ; record 9
-Func_10_5cb0:
+RestaurantNpc06_10:
 	script_set_anim $06, $04 ; $5cb0
 	script_wait_idle $06 ; $5cb7
 	ld a, [$c2b1] ; $5cbc
@@ -2573,7 +2573,7 @@ Label_10_5ce9:
 	script_speak $06 ; $5cf5
 	ret ; $5cfa
 	INCBIN "data/bank_010/d_5cfb.bin" ; $5cfb, 10 bytes
-Func_10_5d05:
+RestaurantNpc12_10:
 	call Func_10_612c ; $5d05
 	jp nz, Label_10_5db6 ; $5d08
 	script_set_anim $12, $03 ; $5d0b
@@ -2711,7 +2711,7 @@ Label_10_5e71:
 	dw $0c7e ; record 2
 	dw $0ca6 ; record 3
 	dw $0cce ; record 4
-Func_10_5e8b:
+RestaurantNpc09_10:
 	ld a, [$c2b0] ; $5e8b
 	add a, a ; $5e8e
 	add a, $de ; $5e8f
@@ -2758,7 +2758,7 @@ Label_10_5ed2:
 	dw $0ca8 ; record 7
 	dw $0cd0 ; record 8
 	dw $0cd0 ; record 9
-Func_10_5ef2:
+RestaurantNpc0A_10:
 	script_face_toward $00, $0a ; $5ef2
 	ld a, [$c2b0] ; $5efa
 	add a, a ; $5efd
@@ -2796,7 +2796,7 @@ Label_10_5f2a:
 	dw $0cac ; record 7
 	dw $0cd1 ; record 8
 	dw $0cd1 ; record 9
-Func_10_5f44:
+RestaurantNpc0B_10:
 	ld a, [$c2b1] ; $5f44
 	add a, a ; $5f47
 	add a, $65 ; $5f48
@@ -2821,7 +2821,7 @@ Label_10_5f5f:
 	dw $0c85 ; record 2
 	dw $0cad ; record 3
 	dw $0cd2 ; record 4
-Func_10_5f6f:
+RestaurantNpc0C_10:
 	ld a, [$c2b1] ; $5f6f
 	add a, a ; $5f72
 	add a, $bf ; $5f73
@@ -2865,7 +2865,7 @@ Label_10_5fb9:
 	dw $0c86 ; record 2
 	dw $0cae ; record 3
 	dw $0cd3 ; record 4
-Func_10_5fc9:
+RestaurantNpc0D_10:
 	ld a, [$c2b1] ; $5fc9
 	add a, a ; $5fcc
 	add a, $09 ; $5fcd
@@ -2902,7 +2902,7 @@ Label_10_6003:
 	dw $0c8a ; record 2
 	dw $0cb0 ; record 3
 	dw $0cd5 ; record 4
-Func_10_6013:
+RestaurantNpc0E_10:
 	ld a, [$c2b1] ; $6013
 	add a, a ; $6016
 	add a, $2a ; $6017
@@ -2922,7 +2922,7 @@ Func_10_6013:
 	dw $0c8b ; record 2
 	dw $0cb3 ; record 3
 	dw $0cd6 ; record 4
-Func_10_6034:
+RestaurantNpc0F_10:
 	ld a, [$c2b1] ; $6034
 	add a, a ; $6037
 	add a, $4b ; $6038
@@ -2942,7 +2942,7 @@ Func_10_6034:
 	dw $0c8c ; record 2
 	dw $0cb4 ; record 3
 	dw $0cd7 ; record 4
-Func_10_6055:
+RestaurantNpc10_10:
 	ld a, [$c2b1] ; $6055
 	add a, a ; $6058
 	add a, $6c ; $6059
@@ -2964,21 +2964,21 @@ Func_10_6055:
 	dw $0cd9 ; record 4
 RestaurantNpcScripts_10:
 	; $6076, 121 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_10_5bf2, $03, $00
-	map_script $04, $ff, $0000, Func_10_5c1d, $03, $00
-	map_script $05, $ff, $0000, Func_10_5c3e, $03, $00
-	map_script $06, $ff, $0000, Func_10_5cb0, $03, $00
-	map_script $12, $ff, $0000, Func_10_5d05, $00, $00
+	map_script $03, $ff, $0000, RestaurantNpc03_10, $03, $00
+	map_script $04, $ff, $0000, RestaurantNpc04_10, $03, $00
+	map_script $05, $ff, $0000, RestaurantNpc05_10, $03, $00
+	map_script $06, $ff, $0000, RestaurantNpc06_10, $03, $00
+	map_script $12, $ff, $0000, RestaurantNpc12_10, $00, $00
 	map_script $08, $80, $0000, Func_10_5de6, $03, $00
 	map_script $08, $ff, $0000, Func_10_5de9, $03, $00
-	map_script $09, $ff, $0000, Func_10_5e8b, $03, $00
-	map_script $0a, $ff, $0000, Func_10_5ef2, $13, $00
-	map_script $0b, $ff, $0000, Func_10_5f44, $03, $00
-	map_script $0c, $ff, $0000, Func_10_5f6f, $03, $00
-	map_script $0d, $ff, $0000, Func_10_5fc9, $03, $00
-	map_script $0e, $ff, $0000, Func_10_6013, $13, $00
-	map_script $0f, $ff, $0000, Func_10_6034, $03, $00
-	map_script $10, $ff, $0000, Func_10_6055, $03, $00
+	map_script $09, $ff, $0000, RestaurantNpc09_10, $03, $00
+	map_script $0a, $ff, $0000, RestaurantNpc0A_10, $13, $00
+	map_script $0b, $ff, $0000, RestaurantNpc0B_10, $03, $00
+	map_script $0c, $ff, $0000, RestaurantNpc0C_10, $03, $00
+	map_script $0d, $ff, $0000, RestaurantNpc0D_10, $03, $00
+	map_script $0e, $ff, $0000, RestaurantNpc0E_10, $13, $00
+	map_script $0f, $ff, $0000, RestaurantNpc0F_10, $03, $00
+	map_script $10, $ff, $0000, RestaurantNpc10_10, $03, $00
 	db $ff
 RestaurantFacingScripts_10:
 	ds 1, $ff ; $60ef, fill
@@ -3114,7 +3114,7 @@ AcademyWingExitTriggers_10:
 	map_script $04, $ff, $0000, Func_10_7b1f, $05, $03
 	map_script $0f, $ff, $0000, MapScriptNop_10, $07, $0f
 	db $ff
-Func_10_623b:
+AcademyWingNpc03_10:
 	script_face_toward $00, $03 ; $623b
 	test_flag $1c, 0 ; $6243
 	jr z, Label_10_6250 ; $6246
@@ -3153,17 +3153,17 @@ Label_10_62b0:
 	ret ; $62b5
 AcademyWingNpcScripts_10:
 	; $62b6, 9 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_10_623b, $01, $00
+	map_script $03, $ff, $0000, AcademyWingNpc03_10, $01, $00
 	db $ff
 AcademyWingFacingScripts_10:
 	; $62bf, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, Func_10_6355, $00, $00
-	map_script $02, $ff, $0000, Func_10_62d0, $00, $00
+	map_script $01, $ff, $0000, AcademyWingFacing01_10, $00, $00
+	map_script $02, $ff, $0000, AcademyWingFacing02_10, $00, $00
 	db $ff
-Func_10_62d0:
+AcademyWingFacing02_10:
 	ld a, [$c2b0] ; $62d0
 	cp a, $01 ; $62d3
-	jr nz, Func_10_6355 ; $62d5
+	jr nz, AcademyWingFacing01_10 ; $62d5
 	farcall FarPtr_BeginCutsceneScriptMode ; $62d7
 	script_player_speed $0020 ; $62da
 	script_move_player $2100, $3300 ; $62e0
@@ -3185,16 +3185,16 @@ Func_10_62d0:
 	script_wait_idle $00 ; $634c
 	farcall FarPtr_EndCutsceneScriptMode ; $6351
 	ret ; $6354
-Func_10_6355:
+AcademyWingFacing01_10:
 	script_set_text $01c3 ; $6355
 	script_speak $00 ; $635b
 	ret ; $6360
 AcademyWingTileTriggers_10:
 	; $6361, 17 bytes (map_scripts)
-	map_script $01, $40, $0000, Func_10_6372, $00, $00
-	map_script $02, $80, $0000, Func_10_63e0, $00, $00
+	map_script $01, $40, $0000, AcademyWingTile01_10, $00, $00
+	map_script $02, $80, $0000, AcademyWingTile02_10, $00, $00
 	db $ff
-Func_10_6372:
+AcademyWingTile01_10:
 	script_set_speed $00, $0014 ; $6372
 	script_face $00, $c0 ; $637a
 	call Func_10_7339 ; $6381
@@ -3214,7 +3214,7 @@ Label_10_6399:
 	script_face $00, $c0 ; $63d5
 	call Func_10_736f ; $63dc
 	ret ; $63df
-Func_10_63e0:
+AcademyWingTile02_10:
 	script_face $00, $40 ; $63e0
 	script_set_speed $00, $0010 ; $63e7
 	call Func_10_7339 ; $63ef
@@ -4013,15 +4013,15 @@ AcademyMainBldgActors_10:
 	map_actor_end
 AcademyMainBldgEntryPoints_10:
 	; $74f9, 57 bytes (map_entries)
-	map_entry $01, $c0, $2200, $2100, Func_10_7578
-	map_entry $02, $40, $2200, $0700, Func_10_7532
+	map_entry $01, $c0, $2200, $2100, AcademyMainBldgArrival01_10
+	map_entry $02, $40, $2200, $0700, AcademyMainBldgArrival02_10
 	map_entry $03, $40, $3500, $1900, Func_10_7b5f
 	map_entry $04, $40, $3b00, $3900, Func_10_7b5f
 	map_entry $0d, $c0, $2100, $3b00, $0000
 	map_entry $0e, $c0, $2200, $1300, $0000
 	map_entry $0f, $c0, $2200, $1d00, $0000
 	db $ff
-Func_10_7532:
+AcademyMainBldgArrival02_10:
 	ld a, [wStoryModeEntryPoint] ; $7532
 	cp a, $ff ; $7535
 	jp z, Label_10_7577 ; $7537
@@ -4037,7 +4037,7 @@ Label_10_7565:
 	script_move_angle $00, $40, $0200 ; $756d
 Label_10_7577:
 	ret ; $7577
-Func_10_7578:
+AcademyMainBldgArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $7578
 	cp a, $ff ; $757b
 	jp z, Label_10_75bd ; $757d
@@ -4061,7 +4061,7 @@ AcademyMainBldgExitTriggers_10:
 	map_script $04, $ff, $0000, Func_10_7b1f, $05, $03
 	map_script $0f, $ff, $0000, MapScriptNop_10, $07, $0f
 	db $ff
-Func_10_75e7:
+AcademyMainBldgNpc03_10:
 	ld a, [$c2b0] ; $75e7
 	sra a ; $75ea
 	add a, a ; $75ec
@@ -4098,7 +4098,7 @@ Label_10_7621:
 	dw $01be ; record 2
 	dw $01c4 ; record 3
 	dw $01c9 ; record 4
-Func_10_7631:
+AcademyMainBldgNpc04_10:
 	ld a, [$c2b0] ; $7631
 	sra a ; $7634
 	add a, a ; $7636
@@ -4119,7 +4119,7 @@ Func_10_7631:
 	dw $01bf ; record 2
 	dw $01c7 ; record 3
 	dw $01ca ; record 4
-Func_10_7654:
+AcademyMainBldgNpc05_10:
 	script_set_text $01ce ; $7654
 	script_speak $05 ; $765a
 	script_face $05, $40 ; $765f
@@ -4171,7 +4171,7 @@ Label_10_76a2:
 	dw $01d8 ; record 2
 	dw $01d9 ; record 3
 	dw $01da ; record 4
-Func_10_76d1:
+AcademyMainBldgNpc06_10:
 	ld a, [$c2b0] ; $76d1
 	sra a ; $76d4
 	add a, a ; $76d6
@@ -4194,10 +4194,10 @@ Func_10_76d1:
 	dw $01cb ; record 4
 AcademyMainBldgNpcScripts_10:
 	; $76f4, 33 bytes (map_scripts)
-	map_script $03, $ff, $0000, Func_10_75e7, $13, $00
-	map_script $04, $ff, $0000, Func_10_7631, $03, $00
-	map_script $05, $ff, $0000, Func_10_7654, $03, $00
-	map_script $06, $ff, $0000, Func_10_76d1, $13, $00
+	map_script $03, $ff, $0000, AcademyMainBldgNpc03_10, $13, $00
+	map_script $04, $ff, $0000, AcademyMainBldgNpc04_10, $03, $00
+	map_script $05, $ff, $0000, AcademyMainBldgNpc05_10, $03, $00
+	map_script $06, $ff, $0000, AcademyMainBldgNpc06_10, $13, $00
 	db $ff
 AcademyMainBldgFacingScripts_10:
 	ds 1, $ff ; $7715, fill
