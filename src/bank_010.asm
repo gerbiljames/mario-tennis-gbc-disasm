@@ -24,7 +24,7 @@ MatchSelectMapScripts_10:
 	dw MatchSelectHandlerTable_10 ; slot 3 NpcScripts
 	dw MatchSelectFacingScripts_10 ; slot 4 FacingScripts
 	dw MatchSelectTileTriggers_10 ; slot 5 TileTriggers
-	dw Func_10_4190 ; slot 6 InitScript
+	dw MatchSelectInitScript_10 ; slot 6 InitScript
 MatchSelectActors_10:
 	; $401e, 136 bytes (map_actors)
 	map_actor $0000, ActorScript_10_7bd1, $0700, $1100, $40, $49, $01, $00
@@ -121,7 +121,7 @@ MatchSelectFacingScripts_10:
 	ds 1, $ff ; $418e, fill
 MatchSelectTileTriggers_10:
 	ds 1, $ff ; $418f, fill
-Func_10_4190:
+MatchSelectInitScript_10:
 	xor a, a ; $4190
 	ld [wStoryModeShowLocationName], a ; $4191
 	ret ; $4194

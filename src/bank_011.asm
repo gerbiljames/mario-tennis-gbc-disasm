@@ -2,12 +2,12 @@ SECTION "ROM Bank $11", ROMX[$4000], BANK[$11]
 
 DataPtr_CenterCourtMapScripts_11:
 	dw CenterCourtMapScripts_11 ; $4000
-DataPtr_AcademyArrivalScene_11:
-	dw AcademyArrivalScene_11 ; $4002
-DataPtr_JuniorClassCourtDoublesScene_11:
-	dw JuniorClassCourtDoublesScene_11 ; $4004
-DataPtr_JuniorClassCourtSinglesScene_11:
-	dw JuniorClassCourtSinglesScene_11 ; $4006
+DataPtr_AcademyArrivalMapScripts_11:
+	dw AcademyArrivalMapScripts_11 ; $4002
+DataPtr_JuniorClassCourtDoublesMapScripts_11:
+	dw JuniorClassCourtDoublesMapScripts_11 ; $4004
+DataPtr_JuniorClassCourtSinglesMapScripts_11:
+	dw JuniorClassCourtSinglesMapScripts_11 ; $4006
 CenterCourtMapScripts_11:
 	; $4008, 14 bytes (map_tree)
 	dw CenterCourtEntryPoints_11 ; slot 0 EntryPoints
@@ -309,7 +309,7 @@ ActorScript_11_43f4:
 	as_set_pos $2300, $2400
 	as_wait_move
 	as_halt
-AcademyArrivalScene_11:
+AcademyArrivalMapScripts_11:
 	; $4401, 14 bytes (map_tree)
 	dw AcademyArrivalEntryPoints_11 ; slot 0 EntryPoints
 	dw AcademyArrivalExitTriggers_11 ; slot 1 ExitTriggers
@@ -1150,7 +1150,7 @@ Func_11_54a6:
 	script_face $14, $00 ; $54b8
 Label_11_54bf:
 	ret ; $54bf
-JuniorClassCourtDoublesScene_11:
+JuniorClassCourtDoublesMapScripts_11:
 	; $54c0, 14 bytes (map_tree)
 	dw JuniorClassCourtDoublesEntryPoints_11 ; slot 0 EntryPoints
 	dw JuniorClassCourtDoublesExitTriggers_11 ; slot 1 ExitTriggers
@@ -2269,7 +2269,7 @@ ActorScript_11_681f:
 	; $681f, 3 bytes (actor_script)
 	as_anim $06
 	as_halt
-JuniorClassCourtSinglesScene_11:
+JuniorClassCourtSinglesMapScripts_11:
 	; $6822, 14 bytes (map_tree)
 	dw JuniorClassCourtSinglesEntryPoints_11 ; slot 0 EntryPoints
 	dw JuniorClassCourtSinglesExitTriggers_11 ; slot 1 ExitTriggers
@@ -2288,7 +2288,7 @@ JuniorClassCourtSinglesActors_11:
 	map_actor $0000, ActorScript_11_7ba9, $2500, $0900, $00, $66, $01, $03
 	map_actor $0000, ActorScript_11_7ba9, $3100, $1500, $00, $65, $01, $06
 	map_actor $0000, ActorScript_11_7ba9, $3d00, $1900, $80, $64, $01, $04
-	map_actor $0000, $6e16, $3100, $0700, $40, $69, $01, $03
+	map_actor $0000, ActorScript_11_6e16, $3100, $0700, $40, $69, $01, $03
 	map_actor $0000, ActorScript_11_7ca9, $0800, $0b00, $40, $54, $01, $05
 	map_actor $0000, ActorScript_11_7d10, $0c00, $1700, $c0, $54, $01, $00
 	map_actor $0000, ActorScript_11_7bdf, $1800, $0b00, $40, $54, $01, $00
@@ -2646,16 +2646,18 @@ ActorScript_11_6df8:
 	as_set_field $14, $0000
 	as_halt
 ActorScript_11_6e07:
-	; $6e07, 70 bytes (actor_script)
+	; $6e07, 15 bytes (actor_script)
 	as_anim $01
 	as_wait $0a
 	as_set_pos $0500, $1300
 	as_wait_move
 	as_set_field $14, $0000
 	as_halt
+ActorScript_11_6e16:
+	; $6e16, 55 bytes (actor_script)
 	as_flag $01, $05, $02
 	as_set_field $06, $0008
-.L17:
+.L8:
 	as_set_pos $2d00, $0700
 	as_wait_move2
 	as_set_field $14, $0040
@@ -2672,7 +2674,7 @@ ActorScript_11_6e07:
 	as_set_field $14, $0040
 	as_wait $f0
 	as_wait $f0
-	as_jump .L17
+	as_jump .L8
 Label_11_6e4d:
 	wram_bank $04 ; $6e4d
 	ld a, [wMatchExitRequest] ; $6e53

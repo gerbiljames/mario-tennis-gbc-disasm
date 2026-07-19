@@ -21,6 +21,31 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Audit StoryLocationTable trees end-to-end (2026-07-19)
+
+Walked all 42 `story_location` map_scripts pointers and, recursively, every
+`map_tree` slot (294) and its sub-references. Findings and fixes:
+
+- **Root naming:** five trees reached via `story_location` were named
+  `…Scene_11`/`…StoryCmds_12` though structurally identical `map_tree`s; renamed
+  to the `…MapScripts_NN` convention (the `DataPtr_` wrappers auto-derive).
+- **Slot naming:** all 294 slots follow `<Base><Role>_<bank>` except the
+  match-select "Test" screen, which repurposes the tree — slot 3 keeps the
+  descriptive `MatchSelectHandlerTable_10` (a menu dispatch, not NPC scripts),
+  and slot 6's generic `Func_10_4190` was renamed `MatchSelectInitScript_10`.
+- **`map_script` handler `$12:$4ce9`:** the static-code seed sat one byte late
+  (`$4cea`), so the handler decoded as data (`db $ff, $3e`) with no label. Moved
+  the seed to `$4ce9`; it now carves as `Func_12_4ce9` and the leading `ld a,$00`
+  folds into a `script_move_target` macro. The other 226 raw `<$4000` handlers
+  are dialogue/text ids (`ShowSpeakerDialogue`), correctly left literal.
+- **`map_actor` script `$11:$6e16`:** a runtime-selected variant entry point
+  absorbed into `ActorScript_11_6e07`'s run; declared `actor_script` +
+  `ActorScript_11_6e16` so the `map_actor` resolves symbolically.
+
+Config-only (labels.json + data_tables.json + one seed offset); byte-perfect.
+(Out of scope: 4 `map_actor` raw script refs in bank `$1a`, not reached from any
+story-location tree.)
+
 ### Decode actor-script bytecode (2026-07-19)
 
 The `map_actor` `objdef` blobs are not object-definition structs but **actor
@@ -101,8 +126,8 @@ the trailing code. Byte-perfect.
 ### Story-scene directories + respawn variant tables as macros (2026-07-19)
 
 The story "scene" tables reached via `story_location`'s DataPtr
-(`AcademyArrivalScene_11`, `JuniorClassCourtSingles/DoublesScene_11`,
-`WallPracticeRoomStoryCmds_12`) are each a full 7-word `map_tree` — same layout
+(`AcademyArrivalMapScripts_11`, `JuniorClassCourtSingles/DoublesMapScripts_11`,
+`WallPracticeRoomMapScripts_12`) are each a full 7-word `map_tree` — same layout
 as a location directory — but were seeded as generic `records:2` headers with
 `records:8`/`bytes:14`/`bytes:16` slots. Retyped the four headers `map_tree` and
 their slots `map_entries`/`map_scripts`/`map_actors`, with `<Scene><Role>` slot
@@ -131,7 +156,7 @@ All config-only (data_tables.json + labels.json); byte-perfect throughout.
 
 ### SeniorCourt story location (2026-07-19)
 
-The `$12:$52f7` story-location map_tree (`SeniorCourtStoryCmds_12`) and its seven
+The `$12:$52f7` story-location map_tree (`SeniorCourtMapScripts_12`) and its seven
 sub-tables were left as `records:2`/`bytes:14` raw data — the bank's other
 location (`$4006`) was already tagged but this one was missed. Retyped the
 data_tables specs (`map_tree` + `map_actors`/`map_entries`/`map_scripts` per

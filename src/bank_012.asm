@@ -2,10 +2,10 @@ SECTION "ROM Bank $12", ROMX[$4000], BANK[$12]
 
 DataPtr_DormEntranceMapScripts_12:
 	dw DormEntranceMapScripts_12 ; $4000
-DataPtr_WallPracticeRoomStoryCmds_12:
-	dw WallPracticeRoomStoryCmds_12 ; $4002
-DataPtr_SeniorCourtStoryCmds_12:
-	dw SeniorCourtStoryCmds_12 ; $4004
+DataPtr_WallPracticeRoomMapScripts_12:
+	dw WallPracticeRoomMapScripts_12 ; $4002
+DataPtr_SeniorCourtMapScripts_12:
+	dw SeniorCourtMapScripts_12 ; $4004
 DormEntranceMapScripts_12:
 	; $4006, 14 bytes (map_tree)
 	dw DormEntranceEntryPoints_12 ; slot 0 EntryPoints
@@ -306,7 +306,7 @@ Label_12_44c5:
 	ld [$c294], a ; $4675
 	ld [wStoryModeExitLocationRequest], a ; $4678
 	ret ; $467b
-WallPracticeRoomStoryCmds_12:
+WallPracticeRoomMapScripts_12:
 	; $467c, 14 bytes (map_tree)
 	dw WallPracticeRoomEntryPoints_12 ; slot 0 EntryPoints
 	dw WallPracticeRoomExitTriggers_12 ; slot 1 ExitTriggers
@@ -838,17 +838,15 @@ Func_12_4ca9:
 	farcall FarPtr_EndCutsceneScriptMode ; $4cbc
 	ret ; $4cbf
 WallPracticeRoomTileTriggers_12:
-	; $4cc0, 42 bytes (map_scripts)
-	map_script $02, $ff, $9c00, $4ce9, $00, $00
+	; $4cc0, 41 bytes (map_scripts)
+	map_script $02, $ff, $9c00, Func_12_4ce9, $00, $00
 	map_script $03, $ff, $0000, Func_12_4d29, $01, $00
 	map_script $04, $ff, $0000, Func_12_4d98, $01, $00
 	map_script $05, $ff, $0000, Func_12_4e0d, $01, $00
 	map_script $06, $ff, $0000, Func_12_4e82, $01, $00
-	db $ff, $3e
-	nop ; $4cea
-	ld bc, $0500 ; $4ceb
-	ld de, $3900 ; $4cee
-	farcall FarPtr_ScriptSetActorMoveTarget ; $4cf1
+	db $ff
+Func_12_4ce9:
+	script_move_target $00, $0500, $3900 ; $4ce9
 	script_wait_move $00 ; $4cf4
 	script_move_target $07, $0500, $3700 ; $4cf9
 	script_wait_move $07 ; $4d04
@@ -1307,7 +1305,7 @@ RestoreWallPracticeRoomActors:
 	script_face $02, $c0 ; $52ef
 Label_12_52f6:
 	ret ; $52f6
-SeniorCourtStoryCmds_12:
+SeniorCourtMapScripts_12:
 	; $52f7, 14 bytes (map_tree)
 	dw SeniorCourtEntryPoints_12 ; slot 0 EntryPoints
 	dw SeniorCourtExitTriggers_12 ; slot 1 ExitTriggers
