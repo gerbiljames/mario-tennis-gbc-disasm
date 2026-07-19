@@ -2070,7 +2070,7 @@ Label_13_5f4d:
 	ret ; $5f6f
 VarsityCourtNpcScriptsA_13:
 	; $5f70, 49 bytes (map_scripts)
-	map_script $03, $40, $0000, VarsityCourtANpc03Face40_13, $03, $00
+	map_script $03, $40, $0000, VarsityCourtANpc03FaceUp_13, $03, $00
 	map_script $03, $ff, $0000, VarsityCourtANpc03_13, $03, $00
 	map_script $04, $ff, $0000, $021a, $03, $00
 	map_script $05, $ff, $0000, VarsityCourtANpc05_13, $03, $00
@@ -2119,7 +2119,7 @@ Label_13_5ffd:
 	ret ; $601f
 VarsityCourtNpcScriptsB_13:
 	; $6020, 57 bytes (map_scripts)
-	map_script $03, $40, $0000, VarsityCourtBNpc03Face40_13, $03, $00
+	map_script $03, $40, $0000, VarsityCourtBNpc03FaceUp_13, $03, $00
 	map_script $03, $ff, $0000, VarsityCourtBNpc03_13, $03, $00
 	map_script $04, $ff, $0000, $0406, $03, $00
 	map_script $05, $ff, $0000, VarsityCourtBNpc05_13, $03, $00
@@ -2767,7 +2767,7 @@ ActorScript_13_6c08:
 	as_wait_move
 	as_set_field $14, $0040
 	as_halt
-VarsityCourtANpc03Face40_13:
+VarsityCourtANpc03FaceUp_13:
 	script_set_speed $00, $0008 ; $6c13
 	script_facing_lock $00, $01 ; $6c1b
 	script_move_target $00, $0d00, $1f00 ; $6c22
@@ -2869,7 +2869,7 @@ Label_13_6e17:
 	script_speak $03 ; $6e17
 	call Func_13_70c9 ; $6e1c
 	ret ; $6e1f
-VarsityCourtBNpc03Face40_13:
+VarsityCourtBNpc03FaceUp_13:
 	script_set_speed $00, $0008 ; $6e20
 	script_facing_lock $00, $01 ; $6e28
 	script_move_target $00, $0d00, $1f00 ; $6e2f

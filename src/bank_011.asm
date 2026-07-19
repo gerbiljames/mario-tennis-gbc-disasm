@@ -1328,7 +1328,7 @@ JuniorClassCourtDoublesANpc0A_11:
 	script_wait_idle $0a ; $57de
 	script_speak $0a ; $57e3
 	ret ; $57e8
-JuniorClassCourtDoublesNpc03Face40_11:
+JuniorClassCourtDoublesNpc03FaceUp_11:
 	script_set_speed $00, $0008 ; $57e9
 	script_facing_lock $00, $01 ; $57f1
 	script_move_target $00, $1300, $1500 ; $57f8
@@ -1340,7 +1340,7 @@ JuniorClassCourtDoublesNpc03_11:
 	ret ; $5819
 JuniorClassCourtDoublesNpcScripts_11:
 	; $581a, 81 bytes (map_scripts)
-	map_script $03, $40, $0000, JuniorClassCourtDoublesNpc03Face40_11, $03, $00
+	map_script $03, $40, $0000, JuniorClassCourtDoublesNpc03FaceUp_11, $03, $00
 	map_script $03, $ff, $0000, JuniorClassCourtDoublesNpc03_11, $03, $00
 	map_script $04, $ff, $0000, JuniorClassCourtDoublesNpc04_11, $03, $00
 	map_script $05, $ff, $0000, JuniorClassCourtDoublesNpc05_11, $03, $00
@@ -2290,7 +2290,7 @@ JuniorClassCourtSinglesExitTriggers_11:
 	map_script $01, $ff, $0000, MapScriptNop_11, $08, $05
 	map_script $0f, $ff, $0000, MapScriptNop_11, $0b, $0f
 	db $ff
-JuniorClassCourtSinglesNpc03Face40_11:
+JuniorClassCourtSinglesNpc03FaceUp_11:
 	script_set_speed $00, $0008 ; $693d
 	script_facing_lock $00, $01 ; $6945
 	script_move_target $00, $1300, $1500 ; $694c
@@ -2452,7 +2452,7 @@ Label_11_6b4e:
 	ret ; $6b53
 JuniorClassCourtSinglesNpcScripts_11:
 	; $6b54, 81 bytes (map_scripts)
-	map_script $03, $40, $0000, JuniorClassCourtSinglesNpc03Face40_11, $03, $00
+	map_script $03, $40, $0000, JuniorClassCourtSinglesNpc03FaceUp_11, $03, $00
 	map_script $03, $ff, $0000, JuniorClassCourtSinglesNpc03_11, $03, $00
 	map_script $04, $ff, $0000, JuniorClassCourtSinglesNpc04_11, $03, $00
 	map_script $05, $ff, $0000, JuniorClassCourtSinglesNpc05_11, $03, $00

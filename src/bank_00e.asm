@@ -1757,10 +1757,10 @@ MarioWorldNpc14_0e:
 	ret ; $544d
 MarioWorldNpcScripts_0e:
 	; $544e, 129 bytes (map_scripts)
-	map_script $08, $10, $0000, MarioWorldNpc08Face10_0e, $00, $00
-	map_script $08, $20, $0000, MarioWorldNpc08Face20_0e, $00, $00
-	map_script $08, $40, $0000, MarioWorldNpc08Face40_0e, $00, $00
-	map_script $08, $80, $0000, MarioWorldNpc08Face80_0e, $03, $00
+	map_script $08, $10, $0000, MarioWorldNpc08FaceRight_0e, $00, $00
+	map_script $08, $20, $0000, MarioWorldNpc08FaceLeft_0e, $00, $00
+	map_script $08, $40, $0000, MarioWorldNpc08FaceUp_0e, $00, $00
+	map_script $08, $80, $0000, MarioWorldNpc08FaceDown_0e, $03, $00
 	map_script $11, $ff, $0000, MarioWorldNpc11_0e, $03, $00
 	map_script $0b, $ff, $0000, MarioWorldNpc0B_0e, $03, $00
 	map_script $09, $ff, $0000, MarioWorldNpc09_0e, $03, $00
@@ -2393,7 +2393,7 @@ ActorScript_0e_6324:
 	as_set_field $14, $00c0
 	as_wait $1e
 	as_halt
-MarioWorldNpc08Face80_0e:
+MarioWorldNpc08FaceDown_0e:
 	script_set_speed $00, $0018 ; $633d
 	script_set_speed $02, $0018 ; $6345
 	test_flag $05, 7 ; $634d
@@ -2432,7 +2432,7 @@ ActorScript_0e_63e7:
 	as_set_field $14, $00c0
 	as_wait $1e
 	as_halt
-MarioWorldNpc08Face40_0e:
+MarioWorldNpc08FaceUp_0e:
 	script_set_speed $00, $0018 ; $63f4
 	script_set_speed $02, $0018 ; $63fc
 	test_flag $05, 7 ; $6404
@@ -2473,7 +2473,7 @@ ActorScript_0e_6491:
 	as_set_field $14, $00c0
 	as_wait $1e
 	as_halt
-MarioWorldNpc08Face10_0e:
+MarioWorldNpc08FaceRight_0e:
 	script_set_speed $00, $0018 ; $64a4
 	script_set_speed $02, $0018 ; $64ac
 	test_flag $05, 7 ; $64b4
@@ -2513,7 +2513,7 @@ ActorScript_0e_653c:
 	as_set_field $14, $00c0
 	as_wait $1e
 	as_halt
-MarioWorldNpc08Face20_0e:
+MarioWorldNpc08FaceLeft_0e:
 	script_set_speed $00, $0018 ; $654f
 	script_set_speed $02, $0018 ; $6557
 	test_flag $05, 7 ; $655f
