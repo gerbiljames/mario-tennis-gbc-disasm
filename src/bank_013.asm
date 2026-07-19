@@ -2014,7 +2014,7 @@ CourtyardMapScripts_13:
 	dw CourtyardTileTriggers_13 ; slot 5 TileTriggers
 	dw CourtyardInitScript_13 ; slot 6 InitScript
 CourtyardActors_13:
-	; $5c86, 442 bytes (map_actors)
+	; $5c86, 94 bytes (map_actors)
 	map_actor $0000, ActorObjDef_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
 	map_actor $0000, ActorObjDef_13_7b25, $0500, $1d00, $00, $68, $01, $07
 	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2300, $c0, $65, $06, $03
@@ -2022,6 +2022,8 @@ CourtyardActors_13:
 	map_actor $0000, ActorObjDef_13_7b2f, $0f00, $1700, $40, $6b, $01, $06
 	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
+VarsityCourtActorsA_13:
+	; $5ce4, 108 bytes (map_actors)
 	map_actor $0000, ActorObjDef_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
 	map_actor $0000, ActorObjDef_13_7b25, $0500, $1d00, $00, $68, $01, $07
 	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2300, $c0, $65, $01, $03
@@ -2030,6 +2032,8 @@ CourtyardActors_13:
 	map_actor $0000, ActorObjDef_13_7b25, $2d00, $3d00, $40, $49, $01, $00
 	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
+VarsityCourtActorsB_13:
+	; $5d50, 122 bytes (map_actors)
 	map_actor $0000, ActorObjDef_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
 	map_actor $0000, ActorObjDef_13_7b25, $0500, $2300, $c0, $68, $01, $07
 	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2500, $c0, $65, $01, $03
@@ -2039,10 +2043,14 @@ CourtyardActors_13:
 	map_actor $0000, ActorObjDef_13_7b25, $0500, $2100, $40, $4a, $01, $00
 	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
+VarsityCourtActorsC_13:
+	; $5dca, 52 bytes (map_actors)
 	map_actor $0000, ActorObjDef_13_7a40, $1000, $1500, $40, $68, $01, $07
 	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2500, $c0, $65, $01, $03
 	map_actor $0000, ActorObjDef_13_7b25, $10c0, $1a60, $80, $36, $01, $00
 	map_actor_end
+VarsityCourtActorsD_13:
+	; $5dfe, 66 bytes (map_actors)
 	map_actor $0000, ActorObjDef_13_7a40, $0d00, $1d00, $40, $68, $01, $07
 	map_actor $0000, ActorObjDef_13_7a40, $0d00, $2300, $c0, $65, $01, $03
 	map_actor $0000, ActorObjDef_13_7b2f, $0900, $1500, $40, $4a, $01, $00
@@ -2302,7 +2310,7 @@ Label_13_61e1:
 	test_flag $15, 6 ; $61e1
 	jr z, Label_13_620a ; $61e4
 	ldh a, [hRomBank] ; $61e6
-	ld hl, $5dca ; $61e8
+	ld hl, VarsityCourtActorsC_13 ; $61e8
 	farcall FarPtr_ScriptRespawnLocationActors ; $61eb
 	ld hl, VarsityCourtNpcScriptsC_13 ; $61ee
 	ld de, $000c ; $61f1
@@ -2320,7 +2328,7 @@ Label_13_620a:
 	test_flag $0a, 7 ; $620a
 	jp z, Label_13_62bd ; $620d
 	ldh a, [hRomBank] ; $6210
-	ld hl, $5ce4 ; $6212
+	ld hl, VarsityCourtActorsA_13 ; $6212
 	farcall FarPtr_ScriptRespawnLocationActors ; $6215
 	ld hl, VarsityCourtNpcScriptsA_13 ; $6218
 	ld de, $000c ; $621b
@@ -2330,7 +2338,7 @@ Label_13_6222:
 	test_flag $16, 1 ; $6222
 	jr z, Label_13_627e ; $6225
 	ldh a, [hRomBank] ; $6227
-	ld hl, $5d50 ; $6229
+	ld hl, VarsityCourtActorsB_13 ; $6229
 	farcall FarPtr_ScriptRespawnLocationActors ; $622c
 	ld hl, VarsityCourtNpcScriptsE_13 ; $622f
 	ld de, $000c ; $6232
@@ -2353,7 +2361,7 @@ Label_13_627e:
 	test_flag $15, 7 ; $627e
 	jr z, Label_13_62a7 ; $6281
 	ldh a, [hRomBank] ; $6283
-	ld hl, $5dfe ; $6285
+	ld hl, VarsityCourtActorsD_13 ; $6285
 	farcall FarPtr_ScriptRespawnLocationActors ; $6288
 	ld hl, VarsityCourtNpcScriptsC_13 ; $628b
 	ld de, $000c ; $628e
@@ -2371,7 +2379,7 @@ Label_13_62a7:
 	test_flag $08, 6 ; $62a7
 	jr z, Label_13_62bd ; $62aa
 	ldh a, [hRomBank] ; $62ac
-	ld hl, $5d50 ; $62ae
+	ld hl, VarsityCourtActorsB_13 ; $62ae
 	farcall FarPtr_ScriptRespawnLocationActors ; $62b1
 	ld hl, VarsityCourtNpcScriptsB_13 ; $62b4
 	ld de, $000c ; $62b7
@@ -2439,7 +2447,7 @@ Label_13_6365:
 	INCBIN "data/bank_013/d_6366.bin" ; $6366, 6 bytes
 VarsityCourtTourCutscene:
 	ldh a, [hRomBank] ; $636c
-	ld hl, $6638 ; $636e
+	ld hl, VarsityCourtTourActors_13 ; $636e
 	farcall FarPtr_ScriptRespawnLocationActors ; $6371
 	farcall FarPtr_BeginCutsceneScriptMode ; $6374
 	script_set_position $00, $3f00, $3f00 ; $6377
@@ -2547,7 +2555,15 @@ VarsityCourtTourCutscene:
 	ld [$c294], a ; $6631
 	ld [wStoryModeExitLocationRequest], a ; $6634
 	ret ; $6637
-	INCBIN "data/bank_013/d_6638.bin" ; $6638, 984 bytes
+VarsityCourtTourActors_13:
+	; $6638, 66 bytes (map_actors)
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4f, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $2b00, $0b00, $40, $49, $01, $00
+	map_actor_end
+VarsityCourtTourCutsceneBody_13:
+	INCBIN "data/bank_013/d_667a.bin" ; $667a, 918 bytes
 SetupStoryMinigameMatch0:
 	ld a, $05 ; $6a10
 	farcall FarPtr_SetActorNullScript ; $6a12

@@ -3297,5 +3297,19 @@
  "0x4e13b": "VarsityCourtNpcScriptsE_13",
  "0x4c72c": "AcademyCourtsTourActors_13",
  "0x4cc7e": "ServiceAceCoachIntroActors_13",
- "0x9f10d": "EndRestaurantEntActorsAlt_27"
+ "0x9f10d": "EndRestaurantEntActorsAlt_27",
+ "0x4e638": "VarsityCourtTourActors_13",
+ "0x4e67a": "VarsityCourtTourCutsceneBody_13",
+ "0x4dce4": "VarsityCourtActorsA_13",
+ "0x4dd50": "VarsityCourtActorsB_13",
+ "0x4ddca": "VarsityCourtActorsC_13",
+ "0x4ddfe": "VarsityCourtActorsD_13",
+ "0x9c71a": "End16BeforeFinalsActorsAlt_27",
+ "0x9c7e8": "End16BeforeFinalsActorsAltB_27",
+ "0x9d1dd": "End12PrincipalsOfficeActorsAlt_27",
+ "0x9d507": "End11TrainingCourtActorsAlt_27",
+ "0x9dccd": "End10VarsityCourtActorsAlt_27",
+ "0x9dd71": "End10VarsityCourtActorsAltB_27",
+ "0x9c8a8": "End16BeforeFinalsScriptBody_27",
+ "0x9d557": "ActorObjDef_27_5557"
 }

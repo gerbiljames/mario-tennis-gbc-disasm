@@ -312,18 +312,50 @@ End16BeforeFinalsInitScript_27:
 	test_flag $05, 7 ; $46fd
 	jr nz, Label_27_470e ; $4700
 	ldh a, [hRomBank] ; $4702
-	ld hl, $471a ; $4704
+	ld hl, End16BeforeFinalsActorsAlt_27 ; $4704
 	farcall FarPtr_ScriptRespawnLocationActors ; $4707
 	call Func_27_490c ; $470a
 	ret ; $470d
 Label_27_470e:
 	ldh a, [hRomBank] ; $470e
-	ld hl, $47e8 ; $4710
+	ld hl, End16BeforeFinalsActorsAltB_27 ; $4710
 	farcall FarPtr_ScriptRespawnLocationActors ; $4713
 	call Func_27_490c ; $4716
 	ret ; $4719
-	INCBIN "data/bank_027/d_471a.bin" ; $471a, 398 bytes
-Func_27_48a8:
+End16BeforeFinalsActorsAlt_27:
+	; $471a, 206 bytes (map_actors)
+	map_actor $0000, ActorObjDef_27_785d, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0e00, $0400, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2300, $1100, $c0, $5c, $01, $00
+	map_actor $0000, ActorObjDef_27_787b, $2300, $1700, $c0, $5b, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1100, $1500, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2100, $1100, $00, $5a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, ActorObjDef_27_7867, $0700, $1f00, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1d00, $1300, $00, $5e, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0500, $2100, $40, $1e, $01, $00
+	map_actor $0000, ActorObjDef_27_787b, $2900, $1500, $40, $1f, $01, $00
+	map_actor_end
+End16BeforeFinalsActorsAltB_27:
+	; $47e8, 192 bytes (map_actors)
+	map_actor $0000, ActorObjDef_27_785d, $2700, $1100, $80, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1300, $0f00, $40, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0e00, $0400, $00, $25, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2300, $1100, $40, $5c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2300, $1300, $c0, $5a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2900, $1700, $80, $5f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2900, $1900, $80, $60, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0f00, $1300, $40, $61, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1100, $1300, $40, $62, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1d00, $1100, $00, $5d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1d00, $1300, $00, $5e, $01, $00
+	map_actor $0000, ActorObjDef_27_787b, $2900, $1500, $40, $1f, $01, $00
+	map_actor $0000, ActorObjDef_27_787b, $2400, $1800, $40, $1e, $01, $05
+	map_actor_end
+End16BeforeFinalsScriptBody_27:
 	script_move_target $00, $1c00, $1900 ; $48a8
 	script_wait_move $00 ; $48b3
 	test_flag $05, 7 ; $48b8
@@ -342,7 +374,7 @@ Label_27_48f0:
 Func_27_490c:
 	script_fade_in $08 ; $490c
 	call WaitFadeEnd ; $4911
-	call Func_27_48a8 ; $4914
+	call End16BeforeFinalsScriptBody_27 ; $4914
 	farcall FarPtr_BeginCutsceneScriptMode ; $4917
 	script_move_player $1100, $0f00 ; $491a
 	farcall FarPtr_WaitPlayerMoveDone ; $4924
@@ -618,7 +650,7 @@ Label_27_4fe7:
 	ret ; $4fef
 Label_27_4ff0:
 	ldh a, [hRomBank] ; $4ff0
-	ld hl, $51dd ; $4ff2
+	ld hl, End12PrincipalsOfficeActorsAlt_27 ; $4ff2
 	farcall FarPtr_ScriptRespawnLocationActors ; $4ff5
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ff8
 	script_set_anim $04, $06 ; $4ffb
@@ -707,7 +739,13 @@ Func_27_51a1:
 	script_wait_frames $04 ; $51c8
 	ret ; $51cf
 SceneFrameDataHi_27:
-	INCBIN "data/bank_027/d_51d0.bin" ; $51d0, 65 bytes
+	INCBIN "data/bank_027/d_51d0.bin" ; $51d0, 13 bytes
+End12PrincipalsOfficeActorsAlt_27:
+	; $51dd, 52 bytes (map_actors)
+	map_actor $0000, ActorObjDef_27_785d, $2000, $3000, $40, $63, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2700, $3240, $40, $74, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $2700, $30c0, $40, $74, $01, $00
+	map_actor_end
 End11TrainingCourtMapScripts_27:
 	; $5211, 14 bytes (map_tree)
 	dw End11TrainingCourtEntryPoints_27 ; slot 0 EntryPoints
@@ -840,7 +878,7 @@ Label_27_537f:
 	ret ; $53f8
 Label_27_53f9:
 	ldh a, [hRomBank] ; $53f9
-	ld hl, $5507 ; $53fb
+	ld hl, End11TrainingCourtActorsAlt_27 ; $53fb
 	farcall FarPtr_ScriptRespawnLocationActors ; $53fe
 	script_set_position $00, $1800, $1100 ; $5401
 	farcall FarPtr_BeginCutsceneScriptMode ; $540c
@@ -888,7 +926,16 @@ Label_27_53f9:
 	ld [$c294], a ; $5500
 	ld [wStoryModeExitLocationRequest], a ; $5503
 	ret ; $5506
-	INCBIN "data/bank_027/d_5507.bin" ; $5507, 233 bytes
+End11TrainingCourtActorsAlt_27:
+	; $5507, 80 bytes (map_actors)
+	map_actor $0000, ActorObjDef_27_5557, $0b00, $0700, $40, $33, $01, $03
+	map_actor $0000, ActorObjDef_27_5557, $0b00, $1700, $c0, $32, $01, $07
+	map_actor $0000, ActorObjDef_27_5557, $0e00, $1700, $c0, $34, $01, $05
+	map_actor $0000, ActorObjDef_27_785d, $1300, $0b00, $80, $68, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1300, $1500, $80, $67, $01, $06
+	map_actor_end
+ActorObjDef_27_5557:
+	INCBIN "data/bank_027/d_5557.bin" ; $5557, 153 bytes
 End10VarsityCourtMapScripts_27:
 	; $55f0, 14 bytes (map_tree)
 	dw End10VarsityCourtEntryPoints_27 ; slot 0 EntryPoints
@@ -936,7 +983,7 @@ Label_27_5643:
 Label_27_564b:
 	wram_bank $06 ; $564b
 	ldh a, [hRomBank] ; $5651
-	ld hl, $5ccd ; $5653
+	ld hl, End10VarsityCourtActorsAlt_27 ; $5653
 	farcall FarPtr_ScriptRespawnLocationActors ; $5656
 	ld a, $01 ; $5659
 	farcall FarPtr_SetActorNullScript ; $565b
@@ -1016,7 +1063,7 @@ Label_27_5805:
 	ret ; $582b
 Label_27_582c:
 	ldh a, [hRomBank] ; $582c
-	ld hl, $5d71 ; $582e
+	ld hl, End10VarsityCourtActorsAltB_27 ; $582e
 	farcall FarPtr_ScriptRespawnLocationActors ; $5831
 	farcall FarPtr_BeginCutsceneScriptMode ; $5834
 	call Func_27_5626 ; $5837
@@ -1196,7 +1243,35 @@ Label_27_5be7:
 	ld [$c294], a ; $5c29
 	ld [wStoryModeExitLocationRequest], a ; $5c2c
 	ret ; $5c2f
-	INCBIN "data/bank_027/d_5c30.bin" ; $5c30, 485 bytes
+	INCBIN "data/bank_027/d_5c30.bin" ; $5c30, 157 bytes
+End10VarsityCourtActorsAlt_27:
+	; $5ccd, 164 bytes (map_actors)
+	map_actor $0000, ActorObjDef_27_785d, $1900, $1f00, $80, $4b, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0b00, $1300, $40, $68, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $1300, $2100, $80, $65, $01, $03
+	map_actor $0000, ActorObjDef_27_785d, $1300, $2300, $80, $67, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $1300, $1700, $80, $6b, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $1b00, $1d00, $80, $49, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1900, $1d00, $80, $4a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $3d00, $80, $53, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $3d00, $80, $4d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1700, $1d00, $80, $29, $01, $00
+	map_actor_end
+End10VarsityCourtActorsAltB_27:
+	; $5d71, 164 bytes (map_actors)
+	map_actor $0000, ActorObjDef_27_785d, $1900, $1d00, $80, $4b, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0d00, $1700, $40, $68, $01, $07
+	map_actor $0000, ActorObjDef_27_785d, $1300, $2100, $80, $65, $01, $03
+	map_actor $0000, ActorObjDef_27_785d, $1300, $2300, $80, $67, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $1300, $1700, $80, $6b, $01, $06
+	map_actor $0000, ActorObjDef_27_785d, $1700, $1d00, $80, $49, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $0b00, $1300, $40, $4a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $3d00, $80, $53, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor_end
 End8SrCourtMapScripts_27:
 	; $5e15, 14 bytes (map_tree)
 	dw End8SrCourtEntryPoints_27 ; slot 0 EntryPoints

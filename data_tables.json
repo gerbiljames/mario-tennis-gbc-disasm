@@ -764,5 +764,16 @@
  "0x4e13b": "map_scripts",
  "0x4c72c": "map_actors",
  "0x4cc7e": "map_actors",
- "0x9f10d": "map_actors"
+ "0x9f10d": "map_actors",
+ "0x4e638": "map_actors",
+ "0x4dce4": "map_actors",
+ "0x4dd50": "map_actors",
+ "0x4ddca": "map_actors",
+ "0x4ddfe": "map_actors",
+ "0x9c71a": "map_actors",
+ "0x9c7e8": "map_actors",
+ "0x9d1dd": "map_actors",
+ "0x9d507": "map_actors",
+ "0x9dccd": "map_actors",
+ "0x9dd71": "map_actors"
 }
