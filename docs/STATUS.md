@@ -16,10 +16,33 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `754035a`); the whole history rebuilds
+Everything below is **committed** (HEAD `a219398`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Name story-location tree scripts (2026-07-19)
+
+Named 264 of the 270 `Func_*` story-script handlers reached through the 42
+`story_location` map_trees (banks `$0e`-`$15`/`$27`), keyed off which `map_tree`
+slot references each handler and the record's id field. Scheme:
+`<Location><Role><Id>` — e.g. `DormRoomNpc03_13`, `Court1Tile01_14`,
+`AcademyWingFacing01_10`, `CafeteriaNpc07_10` (role from slot:
+NpcScripts→`Npc`, FacingScripts→`Facing`, ExitTriggers→`Exit`,
+TileTriggers→`Tile`, EntryPoints→`Arrival`). The flag-selected NpcScript
+variant tables get their variant in the name (`IslandOpenRound1DoublesNpc0A_0f`,
+`VarsityCourtCNpc03_13`, `JuniorClassCourtDoublesDNpc0A_11`). Same-NPC records
+that share an id but differ by approach direction / story flag are disambiguated
+by the record's `facing_mask` (and `flag_cond` where facing collides):
+`MarioWorldNpc08Face10/20/40/80_0e`, `SeniorCourtNpc03Face40Flag0000/0840_12`.
+Also named the per-bank no-op exit handlers (`MapScriptNop_0f/_11/_12/_13/_15`),
+the two `Development` respawn-actor scripts, the shared `RestaurantPlaza`
+arrival walk, `TournamentExit_0f`, `Court2SpectatorChat_14`, and the two shared
+arrival-walk animations (`MapArrivalWalkPair_10`, `MapArrivalWalk_11`).
+Config-only (labels.json); byte-perfect. Left as `Func_`: the four
+`MatchSelectHandlerTable_10` slots (that tree is a menu dispatch, not NPC
+scripts) and the two near-identical bank-`$10` exit-walk helpers
+(`Func_10_7ae6`/`_7b1f`).
 
 ### Carve bank $24's ball-path data tables (2026-07-19)
 
