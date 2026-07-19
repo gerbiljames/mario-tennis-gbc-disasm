@@ -588,7 +588,7 @@ SetActorNullScript:
 	call GetActorStateAddr ; $4364
 	ld c, l ; $4367
 	ld b, h ; $4368
-	ld hl, $4766 ; $4369
+	ld hl, ActorScript_0a_4766 ; $4369
 	ldh a, [hRomBank] ; $436c
 	farcall FarPtr_SetActorScript ; $436e
 	ret ; $4371
@@ -1305,7 +1305,12 @@ SetActorActive:
 Label_0a_473f:
 	ld [hl], b ; $473f
 	ret ; $4740
-	INCBIN "data/bank_00a/d_4741.bin" ; $4741, 43 bytes
+	INCBIN "data/bank_00a/d_4741.bin" ; $4741, 37 bytes
+ActorScript_0a_4766:
+	; $4766, 6 bytes (actor_script)
+	as_halt
+	as_set_field $20, $0000
+	as_halt
 IsActorBusy:
 	xor a, a ; $476c
 	inc h ; $476d
@@ -2257,7 +2262,7 @@ Label_0a_4ff5:
 	and a, a ; $4ffe
 	jp z, Label_0a_50ca ; $4fff
 	ld bc, $d000 ; $5002
-	ld hl, $4766 ; $5005
+	ld hl, ActorScript_0a_4766 ; $5005
 	ldh a, [hRomBank] ; $5008
 	farcall FarPtr_SetActorScript ; $500a
 	ld hl, $d000 ; $500d

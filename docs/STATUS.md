@@ -1,4 +1,4 @@
-# Project status — 2026-07-18
+# Project status — 2026-07-19
 
 ## Where things stand
 
@@ -21,6 +21,47 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Decode actor-script bytecode (2026-07-19)
+
+The `map_actor` `objdef` blobs are not object-definition structs but **actor
+scripts**: a 1-byte-opcode bytecode run each frame by `StepActorScript`
+(`$04:$4229`), dispatched through the 22-entry handler table at `$04:$447d`.
+Derived the full opcode set (operand widths confirmed by round-tripping every
+blob through `rgbasm`) and documented it in `docs/actor_script.md`. New `as_*`
+opcode macros + a `render_actor_script`/`actor_script` spec in `disasm.py` turn
+the blobs into readable listings (e.g. a patrol loop of `as_set_pos`/
+`as_wait_move`/`as_wait`/`as_jump`) with local labels at jump targets; the
+relative `as_jump` back-edge assembles as `dw target - @`. Renamed
+`ActorObjDef_*` → `ActorScript_*` (supersedes the "Label map_actor objdef
+sub-tables" naming below). The decoder is a partial decode: it renders the clean
+script prefix and emits any trailing non-opcode bytes as an `unclassified tail`
+blob (five blobs; the tail bytes are *not* assumed to be code — nothing in the
+traces or references classifies them yet). Corrected an over-seed: the four
+`StoryCmdHandlersC_13` ($13:$526a) "handler" targets were actor-script fragment
+entry points inside one blob, not code — reclassified `$585f`/`$5877`/`$5881`/
+`$588b` as `actor_script`. Byte-perfect. Full reference in
+`docs/actor_script.md`.
+
+### Decode all installed actor scripts (2026-07-19)
+
+Swept every `script_set_actor_script actor, addr` site (the macro for
+`ScriptSetActorScript`): its `addr` operand is an actor script in that bank.
+Labelled all 190 previously-unlabelled targets `ActorScript_*` and registered
+them `actor_script`. Most are overlapping entry points into shared blobs (one
+region holds ~20, like `$11:$5b14…$5d27`), so the renderer now emits a global
+label reference for an `as_jump` that crosses into another entry point (fragments
+fall through or jump between each other). Fixed one more code over-seed
+(`$10:$741c`, a `script_set_actor_script` target mis-seeded as a jump-table
+handler). ActorScript labels: 48 → 238; all 238 decode. Byte-perfect. Five
+story-bank blobs decode cleanly as scripts but have **no** traceable
+install/jump/call/table/`map_actor` reference (`$0e:$7ca4`, `$13:$62db`,
+`$14:$78e7`, `$15:$7a23`, `$27:$4b41`) — left unclassified pending evidence, not
+labelled on decode-shape alone. Also caught one pre-existing mislabel:
+`SceneFrameDataHi_27` ($27:$51d0) was an install target already (wrongly) named
+as frame data — renamed `ActorScript_27_51d0`. A sweep over all 238 script
+targets (map_actor objdefs + install sites, literal and label operands) confirms
+no other non-`ActorScript_` targets remain.
+
 ### Sprite-template spec + game-wide sweep (2026-07-19)
 
 `QueueSpriteTemplate` ($00:$1e9d) reads 4-byte {dy, dx, tile, attr} OAM records
@@ -41,9 +82,10 @@ blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`
 Every `map_actor` record's 2nd field is a pointer to an actor object-definition
 (`SpawnActorFromTemplate` → `SpawnActor`), but these rendered as bare numbers. 44
 distinct objdefs are referenced across the story banks ($0e-$15/$27), all shared
-and unlabeled. Added generic `ActorObjDef_bb_cccc` labels for each so the records
-read `map_actor $0000, ActorObjDef_0f_7b57, …`; overlapping defs (e.g.
-`$7b2f` inside `$7b25`'s blob) split into separate labeled blobs. Byte-perfect.
+and unlabeled. Added generic labels for each (since renamed `ActorScript_bb_cccc`,
+see "Decode actor-script bytecode" above) so the records read `map_actor $0000,
+ActorScript_0f_7b57, …`; overlapping defs (e.g. `$7b2f` inside `$7b25`'s blob)
+split into separate labeled blobs. Byte-perfect.
 
 ### Fix mis-seeded bank $13 map_actor lists (2026-07-19)
 

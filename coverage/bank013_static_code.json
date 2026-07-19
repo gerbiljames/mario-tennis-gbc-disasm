@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $13 (story engine): 9 stranded code blobs + the handler targets of four story-command dispatch tables ($4006/$4e20/$526a/$5c78, whose entries point into the 'data' blobs). Function starts + internal flow targets + jump-table targets. Flat = 0x13*0x4000 + (cpu-0x4000). Second pass: story-command handler-stub run ($5968-$5a1a), $5c27, $4357, farcall script $6a89, $7b4e, and $4ef4 (code after a 5-byte pointer header). $797b (326011) is the DoublesTravelingTeam location init script, right after the $78d7 map_actor list (an earlier pass seeded the list start $78d7 by mistake, decoding the actor records as code). Likewise $7440 (324672) is the code after the $739c SinglesTravelingTeam map_actor list, mis-seeded at the list start $739c.",
+ "_comment": "Static code-entry seeds for bank $13 (story engine): 9 stranded code blobs + the handler targets of four story-command dispatch tables ($4006/$4e20/$526a/$5c78, whose entries point into the 'data' blobs). Function starts + internal flow targets + jump-table targets. Flat = 0x13*0x4000 + (cpu-0x4000). Second pass: story-command handler-stub run ($5968-$5a1a), $5c27, $4357, farcall script $6a89, $7b4e, and $4ef4 (code after a 5-byte pointer header). $797b (326011) is the DoublesTravelingTeam location init script, right after the $78d7 map_actor list (an earlier pass seeded the list start $78d7 by mistake, decoding the actor records as code). Likewise $7440 (324672) is the code after the $739c SinglesTravelingTeam map_actor list, mis-seeded at the list start $739c. | Correction (actor-script VM): the four $526a (StoryCmdHandlersC_13) targets $585f/$5877/$5881/$588b are actor-script fragment entry points, not code handlers; removed those over-seeds so the blob decodes as actor_script.",
  "rom": [
   311391,
   311442,
@@ -23,10 +23,6 @@
   316101,
   316107,
   316131,
-  317535,
-  317559,
-  317569,
-  317579,
   317736,
   317772,
   317784,

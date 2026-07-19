@@ -17,18 +17,18 @@ TrainingGymMapScripts_0e:
 	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorObjDef_0e_7c6e, $2500, $0d00, $40, $42, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $2900, $0f00, $40, $45, $01, $05
-	map_actor $0000, ActorObjDef_0e_7c6e, $2500, $1500, $40, $43, $01, $07
-	map_actor $0000, ActorObjDef_0e_7c6e, $2900, $1300, $40, $44, $01, $05
-	map_actor $0000, ActorObjDef_0e_7c6e, $2500, $0500, $40, $47, $01, $07
-	map_actor $0000, ActorObjDef_0e_7c6e, $2700, $0700, $40, $46, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $2900, $0500, $40, $47, $01, $00
-	map_actor $0000, ActorObjDef_0e_4712, $2100, $0c00, $40, $3b, $01, $00
-	map_actor $0000, ActorObjDef_0e_48c9, $2c00, $0b00, $80, $3c, $01, $00
-	map_actor $0000, ActorObjDef_0e_4a80, $2d60, $1700, $00, $3b, $01, $06
-	map_actor $0000, ActorObjDef_0e_5225, $1900, $1100, $c0, $39, $01, $06
-	map_actor $0000, ActorObjDef_0e_7c6e, $0d00, $1300, $00, $39, $01, $07
+	map_actor $0000, ActorScript_0e_7c6e, $2500, $0d00, $40, $42, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $2900, $0f00, $40, $45, $01, $05
+	map_actor $0000, ActorScript_0e_7c6e, $2500, $1500, $40, $43, $01, $07
+	map_actor $0000, ActorScript_0e_7c6e, $2900, $1300, $40, $44, $01, $05
+	map_actor $0000, ActorScript_0e_7c6e, $2500, $0500, $40, $47, $01, $07
+	map_actor $0000, ActorScript_0e_7c6e, $2700, $0700, $40, $46, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $2900, $0500, $40, $47, $01, $00
+	map_actor $0000, ActorScript_0e_4712, $2100, $0c00, $40, $3b, $01, $00
+	map_actor $0000, ActorScript_0e_48c9, $2c00, $0b00, $80, $3c, $01, $00
+	map_actor $0000, ActorScript_0e_4a80, $2d60, $1700, $00, $3b, $01, $06
+	map_actor $0000, ActorScript_0e_5225, $1900, $1100, $c0, $39, $01, $06
+	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1300, $00, $39, $01, $07
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
@@ -527,12 +527,450 @@ Label_0e_46e9:
 	script_set_position $09, $2500, $0700 ; $46ff
 	script_set_anim $07, $02 ; $470a
 	ret ; $4711
-ActorObjDef_0e_4712:
-	INCBIN "data/bank_00e/d_4712.bin" ; $4712, 439 bytes
-ActorObjDef_0e_48c9:
-	INCBIN "data/bank_00e/d_48c9.bin" ; $48c9, 439 bytes
-ActorObjDef_0e_4a80:
-	INCBIN "data/bank_00e/d_4a80.bin" ; $4a80, 439 bytes
+ActorScript_0e_4712:
+	; $4712, 439 bytes (actor_script)
+	as_set_pos $2100, $0d00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $0e00
+	as_call $4c37
+	as_wait_move
+	as_flag $01, $05, $02
+	as_set_pos $2100, $0f00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1000
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1100
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1200
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1300
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1400
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1500
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1600
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2200, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2300, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2400, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2500, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2600, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2700, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2800, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2900, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2a00, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2b00, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2c00, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1700
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1600
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1500
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1400
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1300
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1200
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1100
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $1000
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $0f00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $0e00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $0d00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $0c00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2d60, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2c00, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2b00, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2a00, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2900, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2800, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2700, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2600, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2500, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2400, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2300, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2200, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $0b00
+	as_call $4c37
+	as_wait_move
+	as_set_pos $2100, $0c00
+	as_call $4c37
+	as_wait_move
+	as_jump ActorScript_0e_4712
+ActorScript_0e_48c9:
+	; $48c9, 439 bytes (actor_script)
+	as_set_pos $2b00, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2a00, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_flag $01, $05, $02
+	as_set_pos $2900, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2800, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2700, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2600, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2500, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2400, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2300, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2200, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $0c00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $0d00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $0e00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $0f00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1000
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1100
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1200
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1300
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1400
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1500
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1600
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2100, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2200, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2300, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2400, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2500, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2600, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2700, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2800, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2900, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2a00, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2b00, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2c00, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1700
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1600
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1500
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1400
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1300
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1200
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1100
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $1000
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $0f00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $0e00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $0d00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $0c00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2d60, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_set_pos $2c00, $0b00
+	as_call $4c8e
+	as_wait_move
+	as_jump ActorScript_0e_48c9
+ActorScript_0e_4a80:
+	; $4a80, 439 bytes (actor_script)
+	as_set_pos $2d60, $1600
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $1500
+	as_call $4ce5
+	as_wait_move
+	as_flag $01, $05, $02
+	as_set_pos $2d60, $1400
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $1300
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $1200
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $1100
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $1000
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $0f00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $0e00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $0d00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $0c00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2c00, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2b00, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2a00, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2900, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2800, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2700, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2600, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2500, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2400, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2300, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2200, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $0b00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $0c00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $0d00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $0e00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $0f00
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1000
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1100
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1200
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1300
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1400
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1500
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1600
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2100, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2200, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2300, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2400, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2500, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2600, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2700, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2800, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2900, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2a00, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2b00, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2c00, $1700
+	as_call $4ce5
+	as_wait_move
+	as_set_pos $2d60, $1700
+	as_call $4ce5
+	as_wait_move
+	as_jump ActorScript_0e_4a80
 	ld a, $0c ; $4c37
 	farcall FarPtr_GetActorStateAddr ; $4c39
 	ld c, l ; $4c3c
@@ -1130,25 +1568,49 @@ Label_0e_515e:
 	call Func_0e_520f ; $516a
 	script_set_anim $00, $09 ; $516d
 	script_face $00, $40 ; $5174
-	script_set_actor_script $00, $51d7 ; $517b
+	script_set_actor_script $00, ActorScript_0e_51d7 ; $517b
 	script_speak $8c ; $5186
-	ld a, $00 ; $518b
-	farcall FarPtr_SetActorNullScript ; $518d
+	script_null_script $00 ; $518b
 	script_set_anim $00, $01 ; $5190
 	script_face_toward $0e, $00 ; $5197
 	call Func_0e_520f ; $519f
 	ret ; $51a2
 Label_0e_51a3:
 	script_face $00, $40 ; $51a3
-	script_set_actor_script $00, $51e4 ; $51aa
+	script_set_actor_script $00, ActorScript_0e_51e4 ; $51aa
 	script_speak $8c ; $51b5
-	ld a, $00 ; $51ba
-	farcall FarPtr_SetActorNullScript ; $51bc
+	script_null_script $00 ; $51ba
 	script_set_anim $00, $01 ; $51bf
 	script_set_speed $00, $0020 ; $51c6
 	script_face_toward $0e, $00 ; $51ce
 	ret ; $51d6
-	INCBIN "data/bank_00e/d_51d7.bin" ; $51d7, 56 bytes
+ActorScript_0e_51d7:
+	; $51d7, 13 bytes (actor_script)
+	as_anim $09
+	as_wait $1e
+	as_anim $0a
+	as_sound $91
+	as_wait $1e
+	as_jump ActorScript_0e_51d7
+ActorScript_0e_51e4:
+	; $51e4, 43 bytes (actor_script)
+	as_anim $0b
+	as_set_field $14, $0000
+	as_wait $0c
+	as_sound $92
+	as_wait $28
+	as_set_field $14, $0040
+	as_anim $01
+	as_wait $01
+	as_anim $0b
+	as_set_field $14, $0080
+	as_wait $0c
+	as_sound $92
+	as_wait $28
+	as_set_field $14, $0040
+	as_anim $01
+	as_wait $01
+	as_jump ActorScript_0e_51e4
 Func_0e_520f:
 	ld a, [$c90e] ; $520f
 	and a, a ; $5212
@@ -1164,8 +1626,20 @@ Func_0e_520f:
 	ld [hl], a ; $5223
 Label_0e_5224:
 	ret ; $5224
-ActorObjDef_0e_5225:
-	INCBIN "data/bank_00e/d_5225.bin" ; $5225, 35 bytes
+ActorScript_0e_5225:
+	; $5225, 35 bytes (actor_script)
+	as_flag $01, $05, $02
+	as_set_field $06, $0010
+.L8:
+	as_target_rel $fe00, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_wait $4b
+	as_target_rel $0200, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $4b
+	as_jump .L8
 MarioWorldMapScripts_0e:
 	; $5248, 14 bytes (map_tree)
 	dw MarioWorldEntryPoints_0e ; slot 0 EntryPoints
@@ -1177,24 +1651,24 @@ MarioWorldMapScripts_0e:
 	dw MarioWorldInitScript_0e ; slot 6 InitScript
 MarioWorldActors_0e:
 	; $5256, 262 bytes (map_actors)
-	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $4c, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $3d00, $00, $4e, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1200, $1300, $40, $2e, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1800, $1200, $40, $2c, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1800, $0f40, $40, $6f, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1800, $0d00, $40, $6d, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1400, $40, $6e, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0a00, $0f00, $40, $73, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0c00, $1100, $40, $2b, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0c00, $0f00, $40, $2d, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0c00, $0d00, $40, $48, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0e00, $0b00, $40, $72, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1600, $0b00, $40, $2a, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0f00, $1f00, $40, $70, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1500, $1f00, $40, $71, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $4c, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $4e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1200, $1300, $40, $2e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1800, $1200, $40, $2c, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1800, $0f40, $40, $6f, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1800, $0d00, $40, $6d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1400, $40, $6e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0a00, $0f00, $40, $73, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0c00, $1100, $40, $2b, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0f00, $40, $2d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0d00, $40, $48, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0e00, $0b00, $40, $72, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1600, $0b00, $40, $2a, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0f00, $1f00, $40, $70, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $1f00, $40, $71, $01, $00
 	map_actor_end
 MarioWorldEntryPoints_0e:
 	; $535c, 41 bytes (map_entries)
@@ -1349,7 +1823,27 @@ Label_0e_550c:
 	script_move_target $00, $1200, $1d00 ; $551e
 Label_0e_5529:
 	jp Label_0e_69fb ; $5529
-	INCBIN "data/bank_00e/d_552c.bin" ; $552c, 49 bytes
+	ret ; $552c
+ActorScript_0e_552d:
+	; $552d, 24 bytes (actor_script)
+	as_set_pos $1900, $0b00
+	as_wait_move
+	as_set_pos $1b00, $0b00
+	as_wait_move
+	as_set_pos $1b40, $0a00
+	as_wait_move
+	as_set_target $1500, $3d00
+	as_halt
+ActorScript_0e_5545:
+	; $5545, 24 bytes (actor_script)
+	as_set_pos $1700, $0b00
+	as_wait_move
+	as_set_pos $1b00, $0b00
+	as_wait_move
+	as_set_pos $1b40, $0a00
+	as_wait_move
+	as_set_target $1500, $3d00
+	as_halt
 ComputeMarioWorldProgressIndex:
 	test_flag $05, 7 ; $555d
 	jr nz, Label_0e_556e ; $5560
@@ -1567,22 +2061,22 @@ ExhibitionAcceptedSingles:
 	script_set_speed $0c, $0014 ; $5a61
 	script_set_speed $13, $0014 ; $5a69
 	script_set_speed $00, $0014 ; $5a71
-	script_set_actor_script $11, $552d ; $5a79
+	script_set_actor_script $11, ActorScript_0e_552d ; $5a79
 	script_wait_frames $14 ; $5a84
-	script_set_actor_script $08, $552d ; $5a8b
+	script_set_actor_script $08, ActorScript_0e_552d ; $5a8b
 	script_wait_frames $14 ; $5a96
-	script_set_actor_script $12, $552d ; $5a9d
+	script_set_actor_script $12, ActorScript_0e_552d ; $5a9d
 	script_wait_frames $64 ; $5aa8
-	script_set_actor_script $0b, $552d ; $5aaf
-	script_set_actor_script $0a, $552d ; $5aba
-	script_set_actor_script $09, $552d ; $5ac5
-	script_set_actor_script $0c, $552d ; $5ad0
-	script_set_actor_script $0d, $552d ; $5adb
+	script_set_actor_script $0b, ActorScript_0e_552d ; $5aaf
+	script_set_actor_script $0a, ActorScript_0e_552d ; $5aba
+	script_set_actor_script $09, ActorScript_0e_552d ; $5ac5
+	script_set_actor_script $0c, ActorScript_0e_552d ; $5ad0
+	script_set_actor_script $0d, ActorScript_0e_552d ; $5adb
 	script_wait_frames $3c ; $5ae6
-	script_set_actor_script $0f, $552d ; $5aed
-	script_set_actor_script $10, $552d ; $5af8
+	script_set_actor_script $0f, ActorScript_0e_552d ; $5aed
+	script_set_actor_script $10, ActorScript_0e_552d ; $5af8
 	script_wait_frames $28 ; $5b03
-	script_set_actor_script $0e, $552d ; $5b0a
+	script_set_actor_script $0e, ActorScript_0e_552d ; $5b0a
 	ld a, $0e ; $5b15
 	farcall FarPtr_WaitActorScriptDone ; $5b17
 	script_move_player $1200, $0d00 ; $5b1a
@@ -1597,9 +2091,9 @@ ExhibitionAcceptedSingles:
 	script_set_anim $00, $03 ; $5b5e
 	script_wait_idle $00 ; $5b65
 	script_wait_frames $14 ; $5b6a
-	script_set_actor_script $13, $5545 ; $5b71
+	script_set_actor_script $13, ActorScript_0e_5545 ; $5b71
 	script_wait_frames $14 ; $5b7c
-	script_set_actor_script $00, $5545 ; $5b83
+	script_set_actor_script $00, ActorScript_0e_5545 ; $5b83
 	script_wait_frames $3c ; $5b8e
 	script_move_player $1500, $0d00 ; $5b95
 	ld a, $00 ; $5b9f
@@ -1619,7 +2113,7 @@ MarioWorldArrivalDoubles:
 	test_flag $16, 3 ; $5bbf
 	jp nz, Label_0e_69c5 ; $5bc2
 Label_0e_5bc5:
-	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $5bc5
+	script_set_actor_script $02, ActorScript_0e_7c6e ; $5bc5
 	script_set_position $00, $3f00, $3f00 ; $5bd0
 	script_set_position $02, $3f00, $3f00 ; $5bdb
 	script_fade_in $04 ; $5be6
@@ -1845,24 +2339,24 @@ ExhibitionAcceptedDoubles:
 	script_set_speed $0c, $0014 ; $6189
 	script_set_speed $13, $0014 ; $6191
 	script_set_speed $00, $0014 ; $6199
-	script_set_actor_script $11, $552d ; $61a1
+	script_set_actor_script $11, ActorScript_0e_552d ; $61a1
 	script_wait_frames $14 ; $61ac
-	script_set_actor_script $08, $552d ; $61b3
+	script_set_actor_script $08, ActorScript_0e_552d ; $61b3
 	script_wait_frames $14 ; $61be
-	script_set_actor_script $12, $552d ; $61c5
+	script_set_actor_script $12, ActorScript_0e_552d ; $61c5
 	script_wait_frames $64 ; $61d0
-	script_set_actor_script $0b, $552d ; $61d7
-	script_set_actor_script $0a, $552d ; $61e2
-	script_set_actor_script $09, $552d ; $61ed
-	script_set_actor_script $0c, $552d ; $61f8
-	script_set_actor_script $0d, $552d ; $6203
+	script_set_actor_script $0b, ActorScript_0e_552d ; $61d7
+	script_set_actor_script $0a, ActorScript_0e_552d ; $61e2
+	script_set_actor_script $09, ActorScript_0e_552d ; $61ed
+	script_set_actor_script $0c, ActorScript_0e_552d ; $61f8
+	script_set_actor_script $0d, ActorScript_0e_552d ; $6203
 	script_wait_frames $3c ; $620e
-	script_set_actor_script $0f, $552d ; $6215
-	script_set_actor_script $10, $552d ; $6220
+	script_set_actor_script $0f, ActorScript_0e_552d ; $6215
+	script_set_actor_script $10, ActorScript_0e_552d ; $6220
 	script_wait_frames $1e ; $622b
 	script_move_target $0e, $1500, $1300 ; $6232
 	script_wait_move $0e ; $623d
-	script_set_actor_script $0e, $552d ; $6242
+	script_set_actor_script $0e, ActorScript_0e_552d ; $6242
 	ld a, $0e ; $624d
 	farcall FarPtr_WaitActorScriptDone ; $624f
 	script_move_player $1200, $0d00 ; $6252
@@ -1878,11 +2372,11 @@ ExhibitionAcceptedDoubles:
 	script_set_anim $00, $03 ; $629d
 	script_wait_idle $00 ; $62a4
 	script_wait_frames $14 ; $62a9
-	script_set_actor_script $13, $5545 ; $62b0
+	script_set_actor_script $13, ActorScript_0e_5545 ; $62b0
 	script_wait_frames $14 ; $62bb
-	script_set_actor_script $00, $5545 ; $62c2
+	script_set_actor_script $00, ActorScript_0e_5545 ; $62c2
 	script_wait_frames $32 ; $62cd
-	script_set_actor_script $02, $5545 ; $62d4
+	script_set_actor_script $02, ActorScript_0e_5545 ; $62d4
 	script_wait_frames $3c ; $62df
 	script_move_player $1500, $0d00 ; $62e6
 	ld a, $02 ; $62f0
@@ -1896,7 +2390,28 @@ ExhibitionAcceptedDoubles:
 	ld [$c294], a ; $6304
 	ld [wStoryModeExitLocationRequest], a ; $6307
 	ret ; $630a
-	INCBIN "data/bank_00e/d_630b.bin" ; $630b, 50 bytes
+ActorScript_0e_630b:
+	; $630b, 25 bytes (actor_script)
+	as_set_pos $1000, $0900
+	as_wait_move
+	as_set_pos $1000, $0d00
+	as_wait_move
+	as_set_pos $1100, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
+ActorScript_0e_6324:
+	; $6324, 25 bytes (actor_script)
+	as_set_pos $1000, $0900
+	as_wait_move
+	as_set_pos $1000, $0d00
+	as_wait_move
+	as_set_pos $1300, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
 Func_0e_633d:
 	script_set_speed $00, $0018 ; $633d
 	script_set_speed $02, $0018 ; $6345
@@ -1913,18 +2428,31 @@ Func_0e_633d:
 	script_set_speed $00, $0010 ; $6390
 	jp PromptExhibitionMatch ; $6398
 Label_0e_639b:
-	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $639b
+	script_set_actor_script $02, ActorScript_0e_7c6e ; $639b
 	call MoveDoublesPartnerToPlayer ; $63a6
 	script_face $08, $40 ; $63a9
-	script_set_actor_script $00, $630b ; $63b0
+	script_set_actor_script $00, ActorScript_0e_630b ; $63b0
 	script_wait_frames $14 ; $63bb
-	script_set_actor_script $02, $6324 ; $63c2
+	script_set_actor_script $02, ActorScript_0e_6324 ; $63c2
 	ld a, $00 ; $63cd
 	farcall FarPtr_WaitActorScriptDone ; $63cf
 	ld a, $02 ; $63d2
 	farcall FarPtr_WaitActorScriptDone ; $63d4
 	jp PromptExhibitionMatch ; $63d7
-	INCBIN "data/bank_00e/d_63da.bin" ; $63da, 26 bytes
+ActorScript_0e_63da:
+	; $63da, 13 bytes (actor_script)
+	as_set_pos $1100, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
+ActorScript_0e_63e7:
+	; $63e7, 13 bytes (actor_script)
+	as_set_pos $1300, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
 Func_0e_63f4:
 	script_set_speed $00, $0018 ; $63f4
 	script_set_speed $02, $0018 ; $63fc
@@ -1939,18 +2467,35 @@ Func_0e_63f4:
 	script_face $08, $40 ; $6435
 	jp PromptExhibitionMatch ; $643c
 Label_0e_643f:
-	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $643f
+	script_set_actor_script $02, ActorScript_0e_7c6e ; $643f
 	call MoveDoublesPartnerToPlayer ; $644a
 	script_face $08, $40 ; $644d
-	script_set_actor_script $00, $63da ; $6454
+	script_set_actor_script $00, ActorScript_0e_63da ; $6454
 	script_wait_frames $14 ; $645f
-	script_set_actor_script $02, $63e7 ; $6466
+	script_set_actor_script $02, ActorScript_0e_63e7 ; $6466
 	ld a, $00 ; $6471
 	farcall FarPtr_WaitActorScriptDone ; $6473
 	ld a, $02 ; $6476
 	farcall FarPtr_WaitActorScriptDone ; $6478
 	jp PromptExhibitionMatch ; $647b
-	INCBIN "data/bank_00e/d_647e.bin" ; $647e, 38 bytes
+ActorScript_0e_647e:
+	; $647e, 19 bytes (actor_script)
+	as_set_pos $1000, $0d00
+	as_wait_move
+	as_set_pos $1100, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
+ActorScript_0e_6491:
+	; $6491, 19 bytes (actor_script)
+	as_set_pos $1000, $0d00
+	as_wait_move
+	as_set_pos $1300, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
 Func_0e_64a4:
 	script_set_speed $00, $0018 ; $64a4
 	script_set_speed $02, $0018 ; $64ac
@@ -1964,18 +2509,35 @@ Func_0e_64a4:
 	script_face $08, $40 ; $64e0
 	jp PromptExhibitionMatch ; $64e7
 Label_0e_64ea:
-	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $64ea
+	script_set_actor_script $02, ActorScript_0e_7c6e ; $64ea
 	call MoveDoublesPartnerToPlayer ; $64f5
 	script_face $08, $40 ; $64f8
-	script_set_actor_script $00, $647e ; $64ff
+	script_set_actor_script $00, ActorScript_0e_647e ; $64ff
 	script_wait_frames $14 ; $650a
-	script_set_actor_script $02, $6491 ; $6511
+	script_set_actor_script $02, ActorScript_0e_6491 ; $6511
 	ld a, $00 ; $651c
 	farcall FarPtr_WaitActorScriptDone ; $651e
 	ld a, $02 ; $6521
 	farcall FarPtr_WaitActorScriptDone ; $6523
 	jp PromptExhibitionMatch ; $6526
-	INCBIN "data/bank_00e/d_6529.bin" ; $6529, 38 bytes
+ActorScript_0e_6529:
+	; $6529, 19 bytes (actor_script)
+	as_set_pos $1400, $0d00
+	as_wait_move
+	as_set_pos $1100, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
+ActorScript_0e_653c:
+	; $653c, 19 bytes (actor_script)
+	as_set_pos $1400, $0d00
+	as_wait_move
+	as_set_pos $1300, $0d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_wait $1e
+	as_halt
 Func_0e_654f:
 	script_set_speed $00, $0018 ; $654f
 	script_set_speed $02, $0018 ; $6557
@@ -1989,12 +2551,12 @@ Func_0e_654f:
 	script_face $08, $40 ; $658b
 	jp PromptExhibitionMatch ; $6592
 Label_0e_6595:
-	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $6595
+	script_set_actor_script $02, ActorScript_0e_7c6e ; $6595
 	call MoveDoublesPartnerToPlayer ; $65a0
 	script_face $08, $40 ; $65a3
-	script_set_actor_script $00, $6529 ; $65aa
+	script_set_actor_script $00, ActorScript_0e_6529 ; $65aa
 	script_wait_frames $14 ; $65b5
-	script_set_actor_script $02, $653c ; $65bc
+	script_set_actor_script $02, ActorScript_0e_653c ; $65bc
 	ld a, $00 ; $65c7
 	farcall FarPtr_WaitActorScriptDone ; $65c9
 	ld a, $02 ; $65cc
@@ -2121,11 +2683,11 @@ Label_0e_667b:
 	script_wait_frames $0a ; $67af
 	script_face $11, $00 ; $67b6
 	script_wait_frames $14 ; $67bd
-	script_set_actor_script $12, $552d ; $67c4
+	script_set_actor_script $12, ActorScript_0e_552d ; $67c4
 	script_wait_frames $14 ; $67cf
-	script_set_actor_script $08, $552d ; $67d6
+	script_set_actor_script $08, ActorScript_0e_552d ; $67d6
 	script_wait_frames $14 ; $67e1
-	script_set_actor_script $11, $552d ; $67e8
+	script_set_actor_script $11, ActorScript_0e_552d ; $67e8
 	script_wait_frames $64 ; $67f3
 	test_flag $05, 7 ; $67fa
 	jr nz, Label_0e_680c ; $67fd
@@ -2136,22 +2698,22 @@ Label_0e_680c:
 	script_move_target $00, $1100, $0900 ; $6814
 	script_move_target $02, $1300, $0900 ; $681f
 Label_0e_682a:
-	script_set_actor_script $0b, $552d ; $682a
-	script_set_actor_script $0a, $552d ; $6835
-	script_set_actor_script $09, $552d ; $6840
-	script_set_actor_script $0c, $552d ; $684b
-	script_set_actor_script $0d, $552d ; $6856
+	script_set_actor_script $0b, ActorScript_0e_552d ; $682a
+	script_set_actor_script $0a, ActorScript_0e_552d ; $6835
+	script_set_actor_script $09, ActorScript_0e_552d ; $6840
+	script_set_actor_script $0c, ActorScript_0e_552d ; $684b
+	script_set_actor_script $0d, ActorScript_0e_552d ; $6856
 	script_wait_frames $1e ; $6861
 	script_face $00, $40 ; $6868
 	test_flag $05, 7 ; $686f
 	jr z, Label_0e_687b ; $6872
 	script_face $02, $40 ; $6874
 Label_0e_687b:
-	script_set_actor_script $0f, $552d ; $687b
+	script_set_actor_script $0f, ActorScript_0e_552d ; $687b
 	script_wait_frames $28 ; $6886
-	script_set_actor_script $10, $552d ; $688d
+	script_set_actor_script $10, ActorScript_0e_552d ; $688d
 	script_wait_frames $14 ; $6898
-	script_set_actor_script $0e, $552d ; $689f
+	script_set_actor_script $0e, ActorScript_0e_552d ; $689f
 	ld a, $0e ; $68aa
 	farcall FarPtr_WaitActorScriptDone ; $68ac
 	script_move_player $1200, $0d00 ; $68af
@@ -2176,13 +2738,13 @@ Label_0e_68e1:
 Label_0e_691e:
 	script_wait_idle $00 ; $691e
 	script_wait_frames $14 ; $6923
-	script_set_actor_script $13, $5545 ; $692a
+	script_set_actor_script $13, ActorScript_0e_5545 ; $692a
 	script_wait_frames $14 ; $6935
-	script_set_actor_script $00, $5545 ; $693c
+	script_set_actor_script $00, ActorScript_0e_5545 ; $693c
 	test_flag $05, 7 ; $6947
 	jr z, Label_0e_695e ; $694a
 	script_wait_frames $28 ; $694c
-	script_set_actor_script $02, $5545 ; $6953
+	script_set_actor_script $02, ActorScript_0e_5545 ; $6953
 Label_0e_695e:
 	script_move_player $1500, $0d00 ; $695e
 	ld a, $00 ; $6968
@@ -2591,20 +3153,20 @@ SpecialCourtMapScripts_0e:
 	dw SpecialCourtInitScript_0e ; slot 6 InitScript
 SpecialCourtActors_0e:
 	; $7604, 206 bytes (map_actors)
-	map_actor $0000, ActorObjDef_0e_7c6e, $0f00, $0500, $40, $2e, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $0d00, $80, $6d, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $0f00, $80, $6f, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1100, $80, $2c, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1900, $80, $6e, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0480, $0f00, $00, $73, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1100, $00, $2d, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1900, $00, $48, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1b00, $00, $2b, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0d00, $0500, $40, $72, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0d00, $1700, $40, $2a, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $1f00, $c0, $70, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $0500, $0d00, $00, $71, $01, $00
-	map_actor $0000, ActorObjDef_0e_7c6e, $1700, $1b00, $80, $71, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0f00, $0500, $40, $2e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $0d00, $80, $6d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $0f00, $80, $6f, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1100, $80, $2c, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1900, $80, $6e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0480, $0f00, $00, $73, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1100, $00, $2d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1900, $00, $48, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1b00, $00, $2b, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0d00, $0500, $40, $72, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1700, $40, $2a, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1f00, $c0, $70, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $0d00, $00, $71, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1b00, $80, $71, $01, $00
 	map_actor_end
 SpecialCourtEntryPoints_0e:
 	; $76d2, 9 bytes (map_entries)
@@ -2654,16 +3216,16 @@ ExhibitionMatchIntroCutscene:
 	script_fade_in $04 ; $776e
 	call WaitFadeEnd ; $7773
 	script_wait_move $0e ; $7776
-	script_set_actor_script $0e, $7b11 ; $777b
+	script_set_actor_script $0e, ActorScript_0e_7b11 ; $777b
 	script_move_target $00, $0500, $1f00 ; $7786
 	script_wait_move $00 ; $7791
-	script_set_actor_script $00, $7b11 ; $7796
+	script_set_actor_script $00, ActorScript_0e_7b11 ; $7796
 	script_wait_frames $5a ; $77a1
 	script_move_player $0e00, $1700 ; $77a8
 	ld a, $0e ; $77b2
 	farcall FarPtr_WaitActorScriptDone ; $77b4
 	script_set_speed $0e, $0020 ; $77b7
-	script_set_actor_script $0e, $7b24 ; $77bf
+	script_set_actor_script $0e, ActorScript_0e_7b24 ; $77bf
 	ld a, $0e ; $77ca
 	farcall FarPtr_WaitActorScriptDone ; $77cc
 	script_wait_frames $3c ; $77cf
@@ -2726,8 +3288,7 @@ Label_0e_7927:
 	script_set_speed $00, $0014 ; $792f
 	script_set_speed $02, $0014 ; $7937
 	script_set_position $03, $0f00, $1700 ; $793f
-	ld a, $02 ; $794a
-	farcall FarPtr_SetActorNullScript ; $794c
+	script_null_script $02 ; $794a
 	script_set_position $0e, $0500, $2300 ; $794f
 	script_set_position $00, $0500, $2500 ; $795a
 	script_set_position $02, $0500, $2500 ; $7965
@@ -2739,21 +3300,21 @@ Label_0e_7927:
 	script_fade_in $04 ; $79a1
 	call WaitFadeEnd ; $79a6
 	script_wait_move $0e ; $79a9
-	script_set_actor_script $0e, $7b11 ; $79ae
+	script_set_actor_script $0e, ActorScript_0e_7b11 ; $79ae
 	script_move_target $00, $0500, $1f00 ; $79b9
 	script_move_target $02, $0500, $2100 ; $79c4
 	script_wait_move $00 ; $79cf
-	script_set_actor_script $00, $7b11 ; $79d4
+	script_set_actor_script $00, ActorScript_0e_7b11 ; $79d4
 	script_move_target $02, $0500, $1f00 ; $79df
 	script_wait_move $02 ; $79ea
-	script_set_actor_script $02, $7b11 ; $79ef
+	script_set_actor_script $02, ActorScript_0e_7b11 ; $79ef
 	script_wait_frames $5a ; $79fa
 	script_move_player $0e00, $1700 ; $7a01
 	ld a, $0e ; $7a0b
 	farcall FarPtr_WaitActorScriptDone ; $7a0d
 	script_set_speed $0e, $0020 ; $7a10
-	script_set_actor_script $0e, $7b24 ; $7a18
-	script_set_actor_script $02, ActorObjDef_0e_7c6e ; $7a23
+	script_set_actor_script $0e, ActorScript_0e_7b24 ; $7a18
+	script_set_actor_script $02, ActorScript_0e_7c6e ; $7a23
 	script_move_target $02, $0f00, $1b00 ; $7a2e
 	ld a, $0e ; $7a39
 	farcall FarPtr_WaitActorScriptDone ; $7a3b
@@ -2783,10 +3344,10 @@ Label_0e_7a66:
 	script_set_speed $02, $0020 ; $7ab8
 	script_set_speed $0d, $0020 ; $7ac0
 	script_set_speed $03, $0020 ; $7ac8
-	script_set_actor_script $0d, $7b2f ; $7ad0
-	script_set_actor_script $03, $7b46 ; $7adb
-	script_set_actor_script $00, $7b5d ; $7ae6
-	script_set_actor_script $02, $7b6e ; $7af1
+	script_set_actor_script $0d, ActorScript_0e_7b2f ; $7ad0
+	script_set_actor_script $03, ActorScript_0e_7b46 ; $7adb
+	script_set_actor_script $00, ActorScript_0e_7b5d ; $7ae6
+	script_set_actor_script $02, ActorScript_0e_7b6e ; $7af1
 	ld a, $0d ; $7afc
 	farcall FarPtr_WaitActorScriptDone ; $7afe
 	ld a, $03 ; $7b01
@@ -2794,7 +3355,57 @@ Label_0e_7a66:
 	script_wait_frames $3c ; $7b06
 	call PrepareStoryMatch ; $7b0d
 	ret ; $7b10
-	INCBIN "data/bank_00e/d_7b11.bin" ; $7b11, 110 bytes
+ActorScript_0e_7b11:
+	; $7b11, 19 bytes (actor_script)
+	as_set_pos $0500, $1f00
+	as_wait_move
+	as_set_pos $0d00, $1f00
+	as_wait_move
+	as_set_pos $0d00, $1b00
+	as_wait_move
+	as_halt
+ActorScript_0e_7b24:
+	; $7b24, 11 bytes (actor_script)
+	as_set_pos $1300, $1700
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_0e_7b2f:
+	; $7b2f, 23 bytes (actor_script)
+	as_set_pos $0900, $1700
+	as_wait_move
+	as_set_pos $0900, $0d00
+	as_wait_move
+	as_set_pos $0d00, $0d00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_0e_7b46:
+	; $7b46, 23 bytes (actor_script)
+	as_set_pos $0900, $1700
+	as_wait_move
+	as_set_pos $0900, $1100
+	as_wait_move
+	as_set_pos $0f00, $1100
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_0e_7b5d:
+	; $7b5d, 17 bytes (actor_script)
+	as_set_pos $0d00, $1d00
+	as_wait_move
+	as_set_pos $0f00, $1d00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+ActorScript_0e_7b6e:
+	; $7b6e, 17 bytes (actor_script)
+	as_set_pos $0f00, $1900
+	as_wait_move
+	as_set_pos $0d00, $1900
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
 PrepareStoryMatch:
 	ld a, $1c ; $7b7f
 	ld [wStoryModeCurrentLocation], a ; $7b81
@@ -2892,8 +3503,33 @@ Label_0e_7c5b:
 	ld [$c294], a ; $7c67
 	ld [wStoryModeExitLocationRequest], a ; $7c6a
 	ret ; $7c6d
-ActorObjDef_0e_7c6e:
-	INCBIN "data/bank_00e/d_7c6e.bin" ; $7c6e, 40 bytes
+ActorScript_0e_7c6e:
+	; $7c6e, 40 bytes (actor_script)
+	as_halt
+	as_anim $00
+	as_halt
+.L4:
+	as_step
+	as_wait $01
+	as_jump .L4
+	as_begin_path
+.Lb:
+	as_rand_box $02, $02
+	as_wait_move2
+	as_wait $28
+	as_jump .Lb
+	as_begin_path
+.L15:
+	as_rand_box $01, $02
+	as_wait_move2
+	as_wait $28
+	as_jump .L15
+	as_begin_path
+.L1f:
+	as_rand_box $01, $01
+	as_wait_move2
+	as_wait $28
+	as_jump .L1f
 MapScriptNop_0e:
 	ret ; $7c96
 MapScriptClearActiveFlag_0e:

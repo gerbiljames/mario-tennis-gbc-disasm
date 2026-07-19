@@ -17,10 +17,10 @@ DormEntranceMapScripts_12:
 	dw DormEntranceInitScript_12 ; slot 6 InitScript
 DormEntranceActors_12:
 	; $4014, 66 bytes (map_actors)
-	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $49, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $29, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $4c, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $0100, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $49, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $29, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $4d, $01, $00
 	map_actor_end
 DormEntranceEntryPoints_12:
 	; $4056, 25 bytes (map_entries)
@@ -317,11 +317,11 @@ WallPracticeRoomStoryCmds_12:
 	dw WallPracticeRoomInitScript_12 ; slot 6 InitScript
 WallPracticeRoomActors_12:
 	; $468a, 80 bytes (map_actors)
-	map_actor $0000, ActorObjDef_12_7a89, $0300, $3900, $00, $39, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $0800, $3700, $c0, $32, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $0d00, $3700, $c0, $30, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $1300, $3900, $00, $3e, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $0500, $3700, $40, $3d, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0300, $3900, $00, $39, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0800, $3700, $c0, $32, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0d00, $3700, $c0, $30, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $1300, $3900, $00, $3e, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0500, $3700, $40, $3d, $01, $00
 	map_actor_end
 WallPracticeRoomEntryPoints_12:
 	; $46da, 25 bytes (map_entries)
@@ -1020,8 +1020,7 @@ WallPracticeRoomInitScript_12:
 Label_12_4f39:
 	test_flag $05, 7 ; $4f39
 	jr z, Label_12_4f55 ; $4f3c
-	ld a, $02 ; $4f3e
-	farcall FarPtr_SetActorNullScript ; $4f40
+	script_null_script $02 ; $4f3e
 	script_set_position $02, $0700, $3900 ; $4f43
 	script_face $02, $c0 ; $4f4e
 Label_12_4f55:
@@ -1044,8 +1043,7 @@ Label_12_4f7e:
 Label_12_4f8a:
 	test_flag $05, 7 ; $4f8a
 	jr z, Label_12_4fa6 ; $4f8d
-	ld a, $02 ; $4f8f
-	farcall FarPtr_SetActorNullScript ; $4f91
+	script_null_script $02 ; $4f8f
 	script_set_position $02, $0700, $3900 ; $4f94
 	script_face $02, $c0 ; $4f9f
 Label_12_4fa6:
@@ -1211,8 +1209,7 @@ Label_12_5111:
 	script_speak $07 ; $516c
 	test_flag $05, 7 ; $5171
 	jr z, Label_12_5192 ; $5174
-	ld a, $02 ; $5176
-	farcall FarPtr_SetActorNullScript ; $5178
+	script_null_script $02 ; $5176
 	script_move_target $02, $0700, $3900 ; $517b
 	script_wait_move $02 ; $5186
 	script_face $02, $c0 ; $518b
@@ -1238,8 +1235,7 @@ Label_12_51ba:
 	test_flag $05, 7 ; $51e2
 	jr z, Label_12_522c ; $51e5
 	script_wait_frames $14 ; $51e7
-	ld a, $02 ; $51ee
-	farcall FarPtr_SetActorNullScript ; $51f0
+	script_null_script $02 ; $51ee
 	script_move_target $02, $0700, $3900 ; $51f3
 	script_wait_move $02 ; $51fe
 	script_face_pair $02, $00 ; $5203
@@ -1306,8 +1302,7 @@ RestoreWallPracticeRoomActors:
 	script_face $07, $00 ; $52d3
 	test_flag $05, 7 ; $52da
 	jr z, Label_12_52f6 ; $52dd
-	ld a, $02 ; $52df
-	farcall FarPtr_SetActorNullScript ; $52e1
+	script_null_script $02 ; $52df
 	script_set_position $02, $0700, $3900 ; $52e4
 	script_face $02, $c0 ; $52ef
 Label_12_52f6:
@@ -1323,54 +1318,54 @@ SeniorCourtStoryCmds_12:
 	dw SeniorCourtInitScript_12 ; slot 6 InitScript
 SeniorCourtActors_12:
 	; $5305, 178 bytes (map_actors)
-	map_actor $0000, ActorObjDef_12_7a89, $2900, $1900, $80, $49, $01, $00
-	map_actor $0000, ActorObjDef_12_79e3, $3500, $1e00, $c0, $65, $06, $07
-	map_actor $0000, ActorObjDef_12_7c59, $3200, $1e00, $00, $64, $01, $05
-	map_actor $0000, ActorObjDef_12_7a93, $3300, $1100, $80, $69, $01, $04
-	map_actor $0000, ActorObjDef_12_7a89, $2900, $1300, $80, $66, $01, $06
-	map_actor $0000, ActorObjDef_12_79e3, $0b00, $1500, $c0, $6b, $01, $05
-	map_actor $0000, ActorObjDef_12_7c66, $0b00, $1300, $40, $67, $01, $03
-	map_actor $0000, ActorObjDef_12_7bf0, $1500, $1700, $c0, $68, $01, $06
-	map_actor $0000, ActorObjDef_12_7b89, $1300, $0b00, $40, $6a, $01, $03
-	map_actor $05e0, ActorObjDef_12_7a93, $0900, $0b00, $40, $29, $01, $00
-	map_actor $0000, ActorObjDef_12_7abf, $2200, $1300, $40, $54, $01, $00
-	map_actor $0000, ActorObjDef_12_7b22, $2500, $1d00, $c0, $54, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $2900, $1900, $80, $49, $01, $00
+	map_actor $0000, ActorScript_12_79e3, $3500, $1e00, $c0, $65, $06, $07
+	map_actor $0000, ActorScript_12_7c59, $3200, $1e00, $00, $64, $01, $05
+	map_actor $0000, ActorScript_12_7a93, $3300, $1100, $80, $69, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $2900, $1300, $80, $66, $01, $06
+	map_actor $0000, ActorScript_12_79e3, $0b00, $1500, $c0, $6b, $01, $05
+	map_actor $0000, ActorScript_12_7c66, $0b00, $1300, $40, $67, $01, $03
+	map_actor $0000, ActorScript_12_7bf0, $1500, $1700, $c0, $68, $01, $06
+	map_actor $0000, ActorScript_12_7b89, $1300, $0b00, $40, $6a, $01, $03
+	map_actor $05e0, ActorScript_12_7a93, $0900, $0b00, $40, $29, $01, $00
+	map_actor $0000, ActorScript_12_7abf, $2200, $1300, $40, $54, $01, $00
+	map_actor $0000, ActorScript_12_7b22, $2500, $1d00, $c0, $54, $01, $04
 	map_actor_end
 SeniorCourtActorsA_12:
 	; $53b7, 220 bytes (map_actors)
-	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1900, $40, $49, $01, $00
-	map_actor $0000, ActorObjDef_12_7a89, $2900, $1b00, $80, $65, $01, $07
-	map_actor $0000, ActorObjDef_12_7c59, $3900, $1d00, $80, $64, $01, $05
-	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1300, $00, $69, $01, $04
-	map_actor $0000, ActorObjDef_12_7a89, $2b00, $1100, $80, $66, $01, $06
-	map_actor $0000, ActorObjDef_12_79e3, $0a00, $1500, $c0, $6b, $01, $05
-	map_actor $0000, ActorObjDef_12_7a89, $0300, $1700, $00, $67, $01, $03
-	map_actor $0000, ActorObjDef_12_7c59, $1200, $0d00, $00, $68, $01, $06
-	map_actor $0000, ActorObjDef_12_79ea, $1500, $0d00, $40, $6a, $06, $03
-	map_actor $05e0, ActorObjDef_12_7a93, $0300, $0b00, $40, $29, $01, $00
-	map_actor $0000, ActorObjDef_12_7abf, $2200, $1100, $40, $54, $01, $05
-	map_actor $0000, ActorObjDef_12_7b22, $2600, $1d00, $c0, $54, $01, $00
-	map_actor $0000, ActorObjDef_12_7b89, $3200, $1100, $40, $54, $01, $00
-	map_actor $0000, ActorObjDef_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
-	map_actor $0000, ActorObjDef_12_7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $2d00, $1900, $40, $49, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $2900, $1b00, $80, $65, $01, $07
+	map_actor $0000, ActorScript_12_7c59, $3900, $1d00, $80, $64, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $2d00, $1300, $00, $69, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $2b00, $1100, $80, $66, $01, $06
+	map_actor $0000, ActorScript_12_79e3, $0a00, $1500, $c0, $6b, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $0300, $1700, $00, $67, $01, $03
+	map_actor $0000, ActorScript_12_7c59, $1200, $0d00, $00, $68, $01, $06
+	map_actor $0000, ActorScript_12_79ea, $1500, $0d00, $40, $6a, $06, $03
+	map_actor $05e0, ActorScript_12_7a93, $0300, $0b00, $40, $29, $01, $00
+	map_actor $0000, ActorScript_12_7abf, $2200, $1100, $40, $54, $01, $05
+	map_actor $0000, ActorScript_12_7b22, $2600, $1d00, $c0, $54, $01, $00
+	map_actor $0000, ActorScript_12_7b89, $3200, $1100, $40, $54, $01, $00
+	map_actor $0000, ActorScript_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
+	map_actor $0000, ActorScript_12_7a89, $4000, $4000, $c0, $53, $01, $00
 	map_actor_end
 SeniorCourtActorsB_12:
 	; $5493, 220 bytes (map_actors)
-	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1900, $40, $49, $01, $00
-	map_actor $0000, ActorObjDef_12_79e3, $2d00, $1100, $c0, $65, $06, $07
-	map_actor $0000, ActorObjDef_12_7c59, $2d00, $0f00, $40, $64, $01, $05
-	map_actor $0000, ActorObjDef_12_7a89, $3900, $1d00, $80, $69, $01, $04
-	map_actor $0000, ActorObjDef_12_7a89, $3900, $1b00, $80, $66, $01, $06
-	map_actor $0000, ActorObjDef_12_79e3, $2300, $1e00, $c0, $6b, $01, $05
-	map_actor $0000, ActorObjDef_12_7a89, $2300, $1c00, $40, $67, $01, $03
-	map_actor $0000, ActorObjDef_12_7a89, $0900, $0700, $00, $68, $01, $06
-	map_actor $0000, ActorObjDef_12_7a89, $0b00, $0700, $80, $6a, $01, $03
-	map_actor $05e0, ActorObjDef_12_7a93, $0300, $0b00, $40, $29, $01, $00
-	map_actor $0000, ActorObjDef_12_7abf, $1200, $0b00, $40, $54, $01, $05
-	map_actor $0000, ActorObjDef_12_7b22, $1600, $1600, $c0, $54, $01, $00
-	map_actor $0000, ActorObjDef_12_7b89, $3200, $1100, $40, $54, $01, $00
-	map_actor $0000, ActorObjDef_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
-	map_actor $0000, ActorObjDef_12_7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $2d00, $1900, $40, $49, $01, $00
+	map_actor $0000, ActorScript_12_79e3, $2d00, $1100, $c0, $65, $06, $07
+	map_actor $0000, ActorScript_12_7c59, $2d00, $0f00, $40, $64, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $3900, $1d00, $80, $69, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $3900, $1b00, $80, $66, $01, $06
+	map_actor $0000, ActorScript_12_79e3, $2300, $1e00, $c0, $6b, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $2300, $1c00, $40, $67, $01, $03
+	map_actor $0000, ActorScript_12_7a89, $0900, $0700, $00, $68, $01, $06
+	map_actor $0000, ActorScript_12_7a89, $0b00, $0700, $80, $6a, $01, $03
+	map_actor $05e0, ActorScript_12_7a93, $0300, $0b00, $40, $29, $01, $00
+	map_actor $0000, ActorScript_12_7abf, $1200, $0b00, $40, $54, $01, $05
+	map_actor $0000, ActorScript_12_7b22, $1600, $1600, $c0, $54, $01, $00
+	map_actor $0000, ActorScript_12_7b89, $3200, $1100, $40, $54, $01, $00
+	map_actor $0000, ActorScript_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
+	map_actor $0000, ActorScript_12_7a89, $4000, $4000, $c0, $53, $01, $00
 	map_actor_end
 SeniorCourtEntryPoints_12:
 	; $556f, 17 bytes (map_entries)
@@ -1458,8 +1453,7 @@ Func_12_5630:
 	jp nz, Label_12_57f4 ; $5638
 	script_set_speed $00, $0010 ; $563b
 	script_set_speed $02, $0010 ; $5643
-	ld a, $02 ; $564b
-	farcall FarPtr_SetActorNullScript ; $564d
+	script_null_script $02 ; $564b
 	script_move_target $00, $2900, $1b00 ; $5650
 	script_move_target $02, $2700, $1d00 ; $565b
 	script_wait_move $02 ; $5666
@@ -1479,8 +1473,7 @@ Func_12_569b:
 	script_set_speed $00, $0008 ; $56af
 	script_face $00, $c0 ; $56b7
 	script_facing_lock $00, $01 ; $56be
-	ld a, $02 ; $56c5
-	farcall FarPtr_SetActorNullScript ; $56c7
+	script_null_script $02 ; $56c5
 	script_move_target $00, $2900, $1b00 ; $56ca
 	script_move_target $02, $2b00, $1b00 ; $56d5
 	script_wait_move $02 ; $56e0
@@ -1494,8 +1487,7 @@ Label_12_5704:
 	jp nz, Label_12_57f4 ; $5707
 	script_set_speed $00, $0010 ; $570a
 	script_set_speed $02, $0010 ; $5712
-	ld a, $02 ; $571a
-	farcall FarPtr_SetActorNullScript ; $571c
+	script_null_script $02 ; $571a
 	script_move_target $00, $2900, $1b00 ; $571f
 	script_move_target $02, $2b00, $1900 ; $572a
 	script_wait_move $02 ; $5735
@@ -1717,10 +1709,10 @@ Label_12_5994:
 	ret ; $59bd
 Label_12_59be:
 	script_wait_frames $0a ; $59be
-	script_set_actor_script $00, $7a5a ; $59c5
+	script_set_actor_script $00, ActorScript_12_7a5a ; $59c5
 	script_move_target $08, $0c00, $1500 ; $59d0
 	script_wait_move $08 ; $59db
-	script_set_actor_script $08, $7a41 ; $59e0
+	script_set_actor_script $08, ActorScript_12_7a41 ; $59e0
 	script_move_player $0a00, $1100 ; $59eb
 	farcall FarPtr_WaitPlayerMoveDone ; $59f5
 	ld a, $08 ; $59f8
@@ -1838,11 +1830,11 @@ Label_12_5ae3:
 	res 1, [hl] ; $5af0
 	script_set_speed $00, $0020 ; $5af2
 	script_set_speed $02, $0020 ; $5afa
-	script_set_actor_script $00, $7a07 ; $5b02
+	script_set_actor_script $00, ActorScript_12_7a07 ; $5b02
 	script_wait_frames $20 ; $5b0d
-	script_set_actor_script $02, $7a24 ; $5b14
-	script_set_actor_script $0a, $79f1 ; $5b1f
-	script_set_actor_script $0b, $79fc ; $5b2a
+	script_set_actor_script $02, ActorScript_12_7a24 ; $5b14
+	script_set_actor_script $0a, ActorScript_12_79f1 ; $5b1f
+	script_set_actor_script $0b, ActorScript_12_79fc ; $5b2a
 	script_move_player $0a00, $1100 ; $5b35
 	farcall FarPtr_WaitPlayerMoveDone ; $5b3f
 	ld a, $00 ; $5b42
@@ -2004,10 +1996,8 @@ SeniorCourtTileTriggers_12:
 	db $ff
 Func_12_5cd0:
 	set_flag $0f, 4 ; $5cd0
-	ld a, $0a ; $5cd3
-	farcall FarPtr_SetActorNullScript ; $5cd5
-	ld a, $0b ; $5cd8
-	farcall FarPtr_SetActorNullScript ; $5cda
+	script_null_script $0a ; $5cd3
+	script_null_script $0b ; $5cd8
 	script_set_anim $0a, $01 ; $5cdd
 	script_set_anim $0b, $01 ; $5ce4
 	script_move_target $0a, $1400, $1300 ; $5ceb
@@ -2032,10 +2022,8 @@ SeniorCourtInitScript_12:
 	farcall FarPtr_CopyBehaviorMapRect ; $5d35
 	test_flag $0f, 4 ; $5d38
 	jr z, Label_12_5d7b ; $5d3b
-	ld a, $0a ; $5d3d
-	farcall FarPtr_SetActorNullScript ; $5d3f
-	ld a, $0b ; $5d42
-	farcall FarPtr_SetActorNullScript ; $5d44
+	script_null_script $0a ; $5d3d
+	script_null_script $0b ; $5d42
 	script_set_anim $0a, $01 ; $5d47
 	script_set_anim $0b, $01 ; $5d4e
 	script_set_position $0a, $1400, $1300 ; $5d55
@@ -2124,8 +2112,7 @@ Label_12_5e38:
 	script_set_position $08, $1b00, $0d00 ; $5e4e
 	script_face $09, $80 ; $5e59
 	script_face $08, $80 ; $5e60
-	ld a, $08 ; $5e67
-	farcall FarPtr_SetActorNullScript ; $5e69
+	script_null_script $08 ; $5e67
 	script_set_anim $08, $01 ; $5e6c
 Label_12_5e73:
 	ld a, [$c2b1] ; $5e73
@@ -2221,8 +2208,7 @@ Label_12_5fb8:
 	farcall FarPtr_EndCutsceneScriptMode ; $5fc3
 	ret ; $5fc6
 SeniorDoublesRankOfferScene:
-	ld a, $02 ; $5fc7
-	farcall FarPtr_SetActorNullScript ; $5fc9
+	script_null_script $02 ; $5fc7
 	script_wait_frames $0a ; $5fcc
 	script_move_target $02, $2d00, $1d00 ; $5fd3
 	script_move_target $00, $2d00, $1b00 ; $5fde
@@ -2289,10 +2275,10 @@ StartSeniorRankingMatch:
 Label_12_60c4:
 	script_face $03, $80 ; $60c4
 	script_wait_frames $0f ; $60cb
-	script_set_actor_script $09, $7876 ; $60d2
-	script_set_actor_script $08, $7838 ; $60dd
-	script_set_actor_script $02, $6d0e ; $60e8
-	script_set_actor_script $00, $6cec ; $60f3
+	script_set_actor_script $09, ActorScript_12_7876 ; $60d2
+	script_set_actor_script $08, ActorScript_12_7838 ; $60dd
+	script_set_actor_script $02, ActorScript_12_6d0e ; $60e8
+	script_set_actor_script $00, ActorScript_12_6cec ; $60f3
 	script_move_player $2400, $1700 ; $60fe
 	farcall FarPtr_WaitPlayerMoveDone ; $6108
 	ld a, $08 ; $610b
@@ -2314,9 +2300,9 @@ Label_12_6136:
 	script_face $07, $00 ; $6152
 	script_face $06, $00 ; $6159
 	call Func_12_63d3 ; $6160
-	script_set_actor_script $06, $78d9 ; $6163
-	script_set_actor_script $07, $78ea ; $616e
-	script_set_actor_script $02, $6d1f ; $6179
+	script_set_actor_script $06, ActorScript_12_78d9 ; $6163
+	script_set_actor_script $07, ActorScript_12_78ea ; $616e
+	script_set_actor_script $02, ActorScript_12_6d1f ; $6179
 	farcall FarPtr_WaitPlayerMoveDone ; $6184
 	ld a, $07 ; $6187
 	farcall FarPtr_WaitActorScriptDone ; $6189
@@ -2334,10 +2320,10 @@ Label_12_61b2:
 	script_wait_frames $0f ; $61b9
 	script_face $00, $80 ; $61c0
 	script_face $07, $80 ; $61c7
-	script_set_actor_script $05, $796f ; $61ce
-	script_set_actor_script $04, $7980 ; $61d9
-	script_set_actor_script $02, $6d0e ; $61e4
-	script_set_actor_script $00, $6cec ; $61ef
+	script_set_actor_script $05, ActorScript_12_796f ; $61ce
+	script_set_actor_script $04, ActorScript_12_7980 ; $61d9
+	script_set_actor_script $02, ActorScript_12_6d0e ; $61e4
+	script_set_actor_script $00, ActorScript_12_6cec ; $61ef
 	script_move_player $2400, $1700 ; $61fa
 	farcall FarPtr_WaitPlayerMoveDone ; $6204
 	ld a, $04 ; $6207
@@ -2357,7 +2343,7 @@ Label_12_6232:
 	script_face $00, $80 ; $6240
 	script_face $07, $80 ; $6247
 	call Func_12_63a2 ; $624e
-	script_set_actor_script $07, $6c18 ; $6251
+	script_set_actor_script $07, ActorScript_12_6c18 ; $6251
 	farcall FarPtr_WaitPlayerMoveDone ; $625c
 	ld a, $07 ; $625f
 	farcall FarPtr_WaitActorScriptDone ; $6261
@@ -2377,7 +2363,7 @@ Label_12_628a:
 	script_face $06, $00 ; $629f
 	script_wait_frames $1e ; $62a6
 	call Func_12_63d3 ; $62ad
-	script_set_actor_script $06, $6c62 ; $62b0
+	script_set_actor_script $06, ActorScript_12_6c62 ; $62b0
 	farcall FarPtr_WaitPlayerMoveDone ; $62bb
 	ld a, $06 ; $62be
 	farcall FarPtr_WaitActorScriptDone ; $62c0
@@ -2397,7 +2383,7 @@ Label_12_62e9:
 	script_face $05, $00 ; $62fe
 	script_wait_frames $1e ; $6305
 	call Func_12_63d3 ; $630c
-	script_set_actor_script $05, $6c62 ; $630f
+	script_set_actor_script $05, ActorScript_12_6c62 ; $630f
 	farcall FarPtr_WaitPlayerMoveDone ; $631a
 	script_wait_frames $78 ; $631d
 	script_wait_move $00 ; $6324
@@ -2416,7 +2402,7 @@ Label_12_6348:
 	script_face $04, $80 ; $635d
 	script_wait_frames $1e ; $6364
 	call Func_12_63a2 ; $636b
-	script_set_actor_script $04, $6c18 ; $636e
+	script_set_actor_script $04, ActorScript_12_6c18 ; $636e
 	farcall FarPtr_WaitPlayerMoveDone ; $6379
 	script_wait_frames $b4 ; $637c
 	ld a, $0f ; $6383
@@ -2428,36 +2414,32 @@ Label_12_6348:
 	farcall FarPtr_RestoreOverworldAfterMatch ; $639e
 	ret ; $63a1
 Func_12_63a2:
-	script_set_actor_script $0d, $6d30 ; $63a2
-	script_set_actor_script $0e, $6d3f ; $63ad
+	script_set_actor_script $0d, ActorScript_12_6d30 ; $63a2
+	script_set_actor_script $0e, ActorScript_12_6d3f ; $63ad
 	ld a, $0e ; $63b8
 	farcall FarPtr_WaitActorScriptDone ; $63ba
 	script_move_player $2400, $1700 ; $63bd
-	script_set_actor_script $00, $6cec ; $63c7
+	script_set_actor_script $00, ActorScript_12_6cec ; $63c7
 	ret ; $63d2
 Func_12_63d3:
-	script_set_actor_script $0f, $6d4e ; $63d3
-	script_set_actor_script $10, $6d5d ; $63de
+	script_set_actor_script $0f, ActorScript_12_6d4e ; $63d3
+	script_set_actor_script $10, ActorScript_12_6d5d ; $63de
 	ld a, $0f ; $63e9
 	farcall FarPtr_WaitActorScriptDone ; $63eb
 	script_move_player $3500, $1700 ; $63ee
-	script_set_actor_script $00, $6cfd ; $63f8
+	script_set_actor_script $00, ActorScript_12_6cfd ; $63f8
 	ret ; $6403
 PlaceSeniorCourtPairA:
-	ld a, $0d ; $6404
-	farcall FarPtr_SetActorNullScript ; $6406
-	ld a, $0e ; $6409
-	farcall FarPtr_SetActorNullScript ; $640b
+	script_null_script $0d ; $6404
+	script_null_script $0e ; $6409
 	script_set_position $0d, $2900, $1300 ; $640e
 	script_set_position $0e, $2900, $1900 ; $6419
 	script_face $0d, $80 ; $6424
 	script_face $0e, $80 ; $642b
 	ret ; $6432
 PlaceSeniorCourtPairB:
-	ld a, $0f ; $6433
-	farcall FarPtr_SetActorNullScript ; $6435
-	ld a, $10 ; $6438
-	farcall FarPtr_SetActorNullScript ; $643a
+	script_null_script $0f ; $6433
+	script_null_script $10 ; $6438
 	script_set_position $0f, $3900, $1300 ; $643d
 	script_set_position $10, $3900, $1900 ; $6448
 	script_face $0f, $80 ; $6453
@@ -2469,8 +2451,8 @@ StartSeniorCourtPairARally:
 	script_move_target $0e, $2500, $1d00 ; $6474
 	script_wait_move $0d ; $647f
 	script_wait_move $0e ; $6484
-	script_set_actor_script $0d, ActorObjDef_12_7abf ; $6489
-	script_set_actor_script $0e, ActorObjDef_12_7b22 ; $6494
+	script_set_actor_script $0d, ActorScript_12_7abf ; $6489
+	script_set_actor_script $0e, ActorScript_12_7b22 ; $6494
 	ret ; $649f
 StartSeniorCourtPairBRally:
 	script_move_target $0f, $3200, $1100 ; $64a0
@@ -2478,8 +2460,8 @@ StartSeniorCourtPairBRally:
 	script_wait_move $0f ; $64b6
 	script_wait_move $10 ; $64bb
 	script_face $10, $c0 ; $64c0
-	script_set_actor_script $0f, ActorObjDef_12_7b89 ; $64c7
-	script_set_actor_script $10, ActorObjDef_12_7bf0 ; $64d2
+	script_set_actor_script $0f, ActorScript_12_7b89 ; $64c7
+	script_set_actor_script $10, ActorScript_12_7bf0 ; $64d2
 	ret ; $64dd
 RunSeniorRankingMatchIntro:
 	ld a, [$c2b1] ; $64de
@@ -2519,19 +2501,17 @@ RunSeniorRankingMatchIntro:
 	ld d, h ; $6546
 	farcall FarPtr_04_1e ; $6547
 	script_face_toward $03, $09 ; $654a
-	ld a, $08 ; $6552
-	farcall FarPtr_SetActorNullScript ; $6554
+	script_null_script $08 ; $6552
 	script_set_anim $08, $01 ; $6557
 	script_face_toward $03, $08 ; $655e
 	script_set_anim $09, $03 ; $6566
 	script_wait_idle $09 ; $656d
-	script_set_actor_script $09, $782d ; $6572
-	script_set_actor_script $08, $786b ; $657d
+	script_set_actor_script $09, ActorScript_12_782d ; $6572
+	script_set_actor_script $08, ActorScript_12_786b ; $657d
 	script_face $03, $40 ; $6588
 	ld a, $09 ; $658f
 	farcall FarPtr_WaitActorScriptDone ; $6591
-	ld a, $01 ; $6594
-	farcall FarPtr_SetActorNullScript ; $6596
+	script_null_script $01 ; $6594
 	script_move_player_to_actor $00 ; $6599
 	farcall FarPtr_WaitPlayerMoveDone ; $65a0
 	script_face_toward $09, $00 ; $65a3
@@ -2564,13 +2544,12 @@ RunSeniorRankingMatchIntro:
 	script_face_toward $03, $07 ; $6633
 	script_set_anim $07, $03 ; $663b
 	script_wait_idle $07 ; $6642
-	script_set_actor_script $07, $78ab ; $6647
-	script_set_actor_script $06, $78c2 ; $6652
+	script_set_actor_script $07, ActorScript_12_78ab ; $6647
+	script_set_actor_script $06, ActorScript_12_78c2 ; $6652
 	script_face $03, $40 ; $665d
 	ld a, $07 ; $6664
 	farcall FarPtr_WaitActorScriptDone ; $6666
-	ld a, $01 ; $6669
-	farcall FarPtr_SetActorNullScript ; $666b
+	script_null_script $01 ; $6669
 	script_move_player_to_actor $00 ; $666e
 	farcall FarPtr_WaitPlayerMoveDone ; $6675
 	script_set_text $107c ; $6678
@@ -2588,13 +2567,11 @@ RunSeniorRankingMatchIntro:
 	script_wait_frames $1e ; $66be
 	script_face_toward $04, $00 ; $66c5
 	script_face_toward $05, $02 ; $66cd
-	ld a, $04 ; $66d5
-	farcall FarPtr_SetActorNullScript ; $66d7
+	script_null_script $04 ; $66d5
 	script_set_anim $04, $01 ; $66da
 	script_wait_frames $1e ; $66e1
 	script_player_speed $0020 ; $66e8
-	ld a, $04 ; $66ee
-	farcall FarPtr_SetActorNullScript ; $66f0
+	script_null_script $04 ; $66ee
 	script_face $04, $40 ; $66f3
 	script_move_target $05, $2b00, $1100 ; $66fa
 	script_move_player_to_actor $05 ; $6705
@@ -2603,10 +2580,10 @@ RunSeniorRankingMatchIntro:
 	script_face_toward $03, $05 ; $6716
 	script_set_anim $05, $03 ; $671e
 	script_wait_idle $05 ; $6725
-	script_set_actor_script $05, $7953 ; $672a
+	script_set_actor_script $05, ActorScript_12_7953 ; $672a
 	script_wait_frames $0f ; $6735
 	script_move_player_to_actor $00 ; $673c
-	script_set_actor_script $04, $795e ; $6743
+	script_set_actor_script $04, ActorScript_12_795e ; $6743
 	script_face $03, $40 ; $674e
 	ld a, $04 ; $6755
 	farcall FarPtr_WaitActorScriptDone ; $6757
@@ -2639,12 +2616,11 @@ RunSeniorRankingMatchIntro:
 	script_face_toward $03, $07 ; $67e3
 	script_set_anim $07, $03 ; $67eb
 	script_wait_idle $07 ; $67f2
-	script_set_actor_script $07, $6c0d ; $67f7
+	script_set_actor_script $07, ActorScript_12_6c0d ; $67f7
 	script_face $03, $40 ; $6802
 	ld a, $07 ; $6809
 	farcall FarPtr_WaitActorScriptDone ; $680b
-	ld a, $01 ; $680e
-	farcall FarPtr_SetActorNullScript ; $6810
+	script_null_script $01 ; $680e
 	script_face_toward $07, $00 ; $6813
 	script_set_anim $07, $02 ; $681b
 	script_wait_idle $07 ; $6822
@@ -2669,13 +2645,12 @@ RunSeniorRankingMatchIntro:
 	script_face_toward $03, $06 ; $687d
 	script_set_anim $06, $03 ; $6885
 	script_wait_idle $06 ; $688c
-	script_set_actor_script $06, $6c51 ; $6891
+	script_set_actor_script $06, ActorScript_12_6c51 ; $6891
 	script_face $03, $40 ; $689c
 	script_move_player_to_actor $00 ; $68a3
 	ld a, $06 ; $68aa
 	farcall FarPtr_WaitActorScriptDone ; $68ac
-	ld a, $01 ; $68af
-	farcall FarPtr_SetActorNullScript ; $68b1
+	script_null_script $01 ; $68af
 	script_face_pair $00, $06 ; $68b4
 	script_set_anim $06, $02 ; $68bc
 	script_wait_idle $06 ; $68c3
@@ -2704,10 +2679,9 @@ RunSeniorRankingMatchIntro:
 	script_face_toward $03, $05 ; $6935
 	script_set_anim $05, $03 ; $693d
 	script_wait_idle $05 ; $6944
-	script_set_actor_script $05, $6c95 ; $6949
+	script_set_actor_script $05, ActorScript_12_6c95 ; $6949
 	script_face $03, $40 ; $6954
-	ld a, $01 ; $695b
-	farcall FarPtr_SetActorNullScript ; $695d
+	script_null_script $01 ; $695b
 	script_move_player_to_actor $00 ; $6960
 	farcall FarPtr_WaitPlayerMoveDone ; $6967
 	script_face_toward $00, $05 ; $696a
@@ -2732,7 +2706,7 @@ RunSeniorRankingMatchIntro:
 	script_face_toward $03, $04 ; $69de
 	script_set_anim $04, $03 ; $69e6
 	script_wait_idle $04 ; $69ed
-	script_set_actor_script $04, $6cda ; $69f2
+	script_set_actor_script $04, ActorScript_12_6cda ; $69f2
 	script_face $03, $40 ; $69fd
 	script_move_player_to_actor $00 ; $6a04
 	farcall FarPtr_WaitPlayerMoveDone ; $6a0b
@@ -2767,25 +2741,25 @@ ResumeSeniorOpponentScripts:
 	dw $6a63 ; record 4
 	dw $6a7a ; record 5
 	dw $6a91 ; record 6
-	script_set_actor_script $09, $7849 ; $6a63
-	script_set_actor_script $08, $7887 ; $6a6e
+	script_set_actor_script $09, ActorScript_12_7849 ; $6a63
+	script_set_actor_script $08, ActorScript_12_7887 ; $6a6e
 	ret ; $6a79
-	script_set_actor_script $07, $78fb ; $6a7a
-	script_set_actor_script $06, $7912 ; $6a85
+	script_set_actor_script $07, ActorScript_12_78fb ; $6a7a
+	script_set_actor_script $06, ActorScript_12_7912 ; $6a85
 	ret ; $6a90
-	script_set_actor_script $05, $7991 ; $6a91
-	script_set_actor_script $04, $79a2 ; $6a9c
+	script_set_actor_script $05, ActorScript_12_7991 ; $6a91
+	script_set_actor_script $04, ActorScript_12_79a2 ; $6a9c
 	ld a, $05 ; $6aa7
 	farcall FarPtr_WaitActorScriptDone ; $6aa9
-	script_set_actor_script $05, ActorObjDef_12_7c59 ; $6aac
+	script_set_actor_script $05, ActorScript_12_7c59 ; $6aac
 	ret ; $6ab7
-	script_set_actor_script $07, $6c29 ; $6ab8
+	script_set_actor_script $07, ActorScript_12_6c29 ; $6ab8
 	ret ; $6ac3
-	script_set_actor_script $06, $6c73 ; $6ac4
+	script_set_actor_script $06, ActorScript_12_6c73 ; $6ac4
 	ret ; $6acf
-	script_set_actor_script $05, $6cac ; $6ad0
+	script_set_actor_script $05, ActorScript_12_6cac ; $6ad0
 	ret ; $6adb
-	script_set_actor_script $04, $6ce5 ; $6adc
+	script_set_actor_script $04, ActorScript_12_6ce5 ; $6adc
 	ret ; $6ae7
 SeniorSinglesMatchConfirm:
 	script_set_text $1044 ; $6ae8
@@ -2879,7 +2853,187 @@ Label_12_6be4:
 	script_set_text $1079 ; $6bff
 	script_speak $03 ; $6c05
 	jp Label_12_6bbd ; $6c0a
-	INCBIN "data/bank_012/d_6c0d.bin" ; $6c0d, 381 bytes
+ActorScript_12_6c0d:
+	; $6c0d, 11 bytes (actor_script)
+	as_set_pos $2b00, $1b00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_6c18:
+	; $6c18, 17 bytes (actor_script)
+	as_set_pos $2b00, $0f00
+	as_wait_move
+	as_set_pos $2300, $0f00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_6c29:
+	; $6c29, 17 bytes (actor_script)
+	as_set_pos $2b00, $0f00
+	as_wait_move
+	as_set_pos $2b00, $1100
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6c3a:
+	; $6c3a, 23 bytes (actor_script)
+	as_set_pos $1900, $0f00
+	as_wait_move
+	as_set_pos $1900, $0d00
+	as_wait_move
+	as_set_pos $1b00, $0d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6c51:
+	; $6c51, 17 bytes (actor_script)
+	as_set_pos $2f00, $1300
+	as_wait_move
+	as_set_pos $2f00, $1b00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6c62:
+	; $6c62, 17 bytes (actor_script)
+	as_set_pos $2f00, $0f00
+	as_wait_move
+	as_set_pos $3300, $0f00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_6c73:
+	; $6c73, 17 bytes (actor_script)
+	as_set_pos $2f00, $0f00
+	as_wait_move
+	as_set_pos $2f00, $1300
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_6c84:
+	; $6c84, 17 bytes (actor_script)
+	as_set_pos $2d00, $0f00
+	as_wait_move
+	as_set_pos $2d00, $1300
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_6c95:
+	; $6c95, 23 bytes (actor_script)
+	as_set_pos $3900, $1f00
+	as_wait_move
+	as_set_pos $2f00, $1f00
+	as_wait_move
+	as_set_pos $2f00, $1b00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6cac:
+	; $6cac, 23 bytes (actor_script)
+	as_set_pos $2f00, $1f00
+	as_wait_move
+	as_set_pos $3900, $1f00
+	as_wait_move
+	as_set_pos $3900, $1d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6cc3:
+	; $6cc3, 23 bytes (actor_script)
+	as_set_pos $3900, $0f00
+	as_wait_move
+	as_set_pos $3b00, $1700
+	as_wait_move
+	as_set_pos $3900, $1d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6cda:
+	; $6cda, 11 bytes (actor_script)
+	as_set_pos $2b00, $1b00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_6ce5:
+	; $6ce5, 7 bytes (actor_script)
+	as_set_pos $2900, $1b00
+	as_wait_move
+	as_halt
+ActorScript_12_6cec:
+	; $6cec, 17 bytes (actor_script)
+	as_set_pos $2d00, $1f00
+	as_wait_move
+	as_set_pos $2500, $1f00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+ActorScript_12_6cfd:
+	; $6cfd, 17 bytes (actor_script)
+	as_set_pos $2d00, $1f00
+	as_wait_move
+	as_set_pos $3700, $1f00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+ActorScript_12_6d0e:
+	; $6d0e, 17 bytes (actor_script)
+	as_set_pos $2900, $1f00
+	as_wait_move
+	as_set_pos $2300, $1c00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+ActorScript_12_6d1f:
+	; $6d1f, 17 bytes (actor_script)
+	as_set_pos $2d00, $1f00
+	as_wait_move
+	as_set_pos $3300, $1b00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+ActorScript_12_6d30:
+	; $6d30, 15 bytes (actor_script)
+	as_anim $01
+	as_wait $0a
+	as_set_pos $2900, $1300
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6d3f:
+	; $6d3f, 15 bytes (actor_script)
+	as_anim $01
+	as_wait $0a
+	as_set_pos $2900, $1900
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6d4e:
+	; $6d4e, 15 bytes (actor_script)
+	as_anim $01
+	as_wait $0a
+	as_set_pos $3900, $1300
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_6d5d:
+	; $6d5d, 45 bytes (actor_script)
+	as_anim $01
+	as_wait $0a
+	as_set_pos $3900, $1900
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+	as_anim $01
+	as_wait $0a
+	as_set_pos $0500, $0b00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+	as_anim $01
+	as_wait $0a
+	as_set_pos $0500, $1300
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
 Label_12_6d8a:
 	ld a, $10 ; $6d8a
 	ld [wStoryModeCurrentLocation], a ; $6d8c
@@ -2910,8 +3064,7 @@ Label_12_6db5:
 SeniorMatchVictorySceneDispatch:
 	xor a, a ; $6ded
 	ld [wStoryModeShowLocationName], a ; $6dee
-	ld a, $01 ; $6df1
-	farcall FarPtr_SetActorNullScript ; $6df3
+	script_null_script $01 ; $6df1
 	ld a, [$c2b1] ; $6df6
 	sub a, $02 ; $6df9
 	add a, a ; $6dfb
@@ -2936,10 +3089,8 @@ SeniorMatchVictorySceneDispatch:
 	dw $6f6a ; record 6
 	dw $752a ; record 7
 	dw $7071 ; record 8
-	ld a, $02 ; $6e1f
-	farcall FarPtr_SetActorNullScript ; $6e21
-	ld a, $08 ; $6e24
-	farcall FarPtr_SetActorNullScript ; $6e26
+	script_null_script $02 ; $6e1f
+	script_null_script $08 ; $6e24
 	script_face $03, $80 ; $6e29
 	script_set_position $08, $2500, $1300 ; $6e30
 	script_face $08, $40 ; $6e3b
@@ -2970,8 +3121,8 @@ SeniorMatchVictorySceneDispatch:
 	ld a, $03 ; $6ef2
 	farcall FarPtr_ScriptWaitActorJumpDone ; $6ef4
 	script_speak $03 ; $6ef7
-	script_set_actor_script $08, $7894 ; $6efc
-	script_set_actor_script $09, $7854 ; $6f07
+	script_set_actor_script $08, ActorScript_12_7894 ; $6efc
+	script_set_actor_script $09, ActorScript_12_7854 ; $6f07
 	script_wait_frames $3c ; $6f12
 	script_move_target $03, $2d00, $1900 ; $6f19
 	script_move_player $2d00, $1b00 ; $6f24
@@ -2988,8 +3139,7 @@ SeniorMatchVictorySceneDispatch:
 	farcall FarPtr_04_20 ; $6f63
 	farcall FarPtr_EndCutsceneScriptMode ; $6f66
 	ret ; $6f69
-	ld a, $02 ; $6f6a
-	farcall FarPtr_SetActorNullScript ; $6f6c
+	script_null_script $02 ; $6f6a
 	script_face $03, $00 ; $6f6f
 	script_set_position $07, $3300, $1100 ; $6f76
 	script_face $07, $40 ; $6f81
@@ -3017,8 +3167,8 @@ SeniorMatchVictorySceneDispatch:
 	script_move_player $2d00, $1b00 ; $7012
 	script_move_target $00, $2d00, $1b00 ; $701c
 	script_move_target $02, $2d00, $1d00 ; $7027
-	script_set_actor_script $07, $7940 ; $7032
-	script_set_actor_script $06, $7929 ; $703d
+	script_set_actor_script $07, ActorScript_12_7940 ; $7032
+	script_set_actor_script $06, ActorScript_12_7929 ; $703d
 	call StartSeniorCourtPairBRally ; $7048
 	script_face $03, $40 ; $704b
 	script_face $00, $40 ; $7052
@@ -3035,21 +3185,17 @@ SeniorMatchVictorySceneDispatch:
 	script_set_position $08, $1b00, $0d00 ; $707c
 	script_face $09, $80 ; $7087
 	script_face $08, $80 ; $708e
-	ld a, $08 ; $7095
-	farcall FarPtr_SetActorNullScript ; $7097
+	script_null_script $08 ; $7095
 	script_set_anim $08, $01 ; $709a
-	ld a, $02 ; $70a1
-	farcall FarPtr_SetActorNullScript ; $70a3
+	script_null_script $02 ; $70a1
 	script_set_position $03, $2b00, $2700 ; $70a6
 	script_set_position $04, $2500, $0f00 ; $70b1
 	script_face $04, $40 ; $70bc
-	ld a, $04 ; $70c3
-	farcall FarPtr_SetActorNullScript ; $70c5
+	script_null_script $04 ; $70c3
 	script_set_anim $04, $01 ; $70c8
 	script_set_position $05, $2300, $1300 ; $70cf
 	script_face $05, $40 ; $70da
-	ld a, $05 ; $70e1
-	farcall FarPtr_SetActorNullScript ; $70e3
+	script_null_script $05 ; $70e1
 	script_set_anim $05, $01 ; $70e6
 	script_set_position $00, $2500, $1b00 ; $70ed
 	script_face $00, $c0 ; $70f8
@@ -3175,7 +3321,7 @@ SeniorMatchVictorySceneDispatch:
 	ld a, $03 ; $73da
 	farcall FarPtr_ScriptWaitActorJumpDone ; $73dc
 	script_speak $03 ; $73df
-	script_set_actor_script $07, $6c3a ; $73e4
+	script_set_actor_script $07, ActorScript_12_6c3a ; $73e4
 	script_wait_frames $3c ; $73ef
 	script_move_target $03, $2d00, $1900 ; $73f6
 	script_move_player $2d00, $1b00 ; $7401
@@ -3201,7 +3347,7 @@ SeniorMatchVictorySceneDispatch:
 	farcall FarPtr_ScriptWaitActorJumpDone ; $7481
 	script_set_text $104c ; $7484
 	script_speak $03 ; $748a
-	script_set_actor_script $06, $6c84 ; $748f
+	script_set_actor_script $06, ActorScript_12_6c84 ; $748f
 	script_move_target $00, $2d00, $1b00 ; $749a
 	script_wait_move $00 ; $74a5
 	script_face $00, $40 ; $74aa
@@ -3221,7 +3367,7 @@ SeniorMatchVictorySceneDispatch:
 	farcall FarPtr_ScriptWaitActorJumpDone ; $74f3
 	script_set_text $104d ; $74f6
 	script_speak $03 ; $74fc
-	script_set_actor_script $05, $6cc3 ; $7501
+	script_set_actor_script $05, ActorScript_12_6cc3 ; $7501
 	script_move_target $00, $2d00, $1b00 ; $750c
 	script_wait_move $00 ; $7517
 	script_face $00, $40 ; $751c
@@ -3391,11 +3537,269 @@ FadeInSeniorCourtNearPairB:
 	script_fade_in $20 ; $7824
 	call WaitFadeEnd ; $7829
 	ret ; $782c
-	INCBIN "data/bank_012/d_782d.bin" ; $782d, 438 bytes
-ActorObjDef_12_79e3:
-	INCBIN "data/bank_012/d_79e3.bin" ; $79e3, 7 bytes
-ActorObjDef_12_79ea:
-	INCBIN "data/bank_012/d_79ea.bin" ; $79ea, 126 bytes
+ActorScript_12_782d:
+	; $782d, 11 bytes (actor_script)
+	as_set_pos $2b00, $1b00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_7838:
+	; $7838, 17 bytes (actor_script)
+	as_set_pos $2b00, $0f00
+	as_wait_move
+	as_set_pos $2300, $0f00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_7849:
+	; $7849, 11 bytes (actor_script)
+	as_set_pos $2300, $1c00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_7854:
+	; $7854, 23 bytes (actor_script)
+	as_set_pos $1900, $0f00
+	as_wait_move
+	as_set_pos $1900, $0b00
+	as_wait_move
+	as_set_pos $1b00, $0b00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_786b:
+	; $786b, 11 bytes (actor_script)
+	as_set_pos $2b00, $1d00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_7876:
+	; $7876, 17 bytes (actor_script)
+	as_set_pos $2b00, $1300
+	as_wait_move
+	as_set_pos $2500, $1300
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_7887:
+	; $7887, 13 bytes (actor_script)
+	as_set_pos $2300, $1e00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $06
+	as_halt
+ActorScript_12_7894:
+	; $7894, 23 bytes (actor_script)
+	as_set_pos $1900, $0f00
+	as_wait_move
+	as_set_pos $1900, $0d00
+	as_wait_move
+	as_set_pos $1b00, $0d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_78ab:
+	; $78ab, 23 bytes (actor_script)
+	as_set_pos $3900, $1f00
+	as_wait_move
+	as_set_pos $2f00, $1f00
+	as_wait_move
+	as_set_pos $2f00, $1d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_78c2:
+	; $78c2, 23 bytes (actor_script)
+	as_set_pos $3900, $1f00
+	as_wait_move
+	as_set_pos $2f00, $1f00
+	as_wait_move
+	as_set_pos $2f00, $1b00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_78d9:
+	; $78d9, 17 bytes (actor_script)
+	as_set_pos $2f00, $0f00
+	as_wait_move
+	as_set_pos $3300, $0f00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_78ea:
+	; $78ea, 17 bytes (actor_script)
+	as_set_pos $2f00, $1300
+	as_wait_move
+	as_set_pos $3500, $1300
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_78fb:
+	; $78fb, 23 bytes (actor_script)
+	as_set_pos $2f00, $1f00
+	as_wait_move
+	as_set_pos $3900, $1f00
+	as_wait_move
+	as_set_pos $3900, $1b00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_7912:
+	; $7912, 23 bytes (actor_script)
+	as_set_pos $2f00, $1f00
+	as_wait_move
+	as_set_pos $3900, $1f00
+	as_wait_move
+	as_set_pos $3900, $1d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_7929:
+	; $7929, 23 bytes (actor_script)
+	as_set_pos $3900, $0f00
+	as_wait_move
+	as_set_pos $3b00, $1300
+	as_wait_move
+	as_set_pos $3900, $1d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_7940:
+	; $7940, 19 bytes (actor_script)
+	as_wait $10
+	as_set_pos $3b00, $1300
+	as_wait_move
+	as_set_pos $3900, $1b00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_7953:
+	; $7953, 11 bytes (actor_script)
+	as_set_pos $2b00, $1d00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_795e:
+	; $795e, 17 bytes (actor_script)
+	as_set_pos $2b00, $1100
+	as_wait_move
+	as_set_pos $2b00, $1b00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
+ActorScript_12_796f:
+	; $796f, 17 bytes (actor_script)
+	as_set_pos $2b00, $1300
+	as_wait_move
+	as_set_pos $2500, $1300
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_7980:
+	; $7980, 17 bytes (actor_script)
+	as_set_pos $2b00, $0f00
+	as_wait_move
+	as_set_pos $2300, $0f00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_7991:
+	; $7991, 17 bytes (actor_script)
+	as_set_pos $2b00, $0f00
+	as_wait_move
+	as_set_pos $2d00, $0f00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_79a2:
+	; $79a2, 65 bytes (actor_script)
+	as_set_pos $2b00, $1100
+	as_wait_move
+	as_set_pos $2d00, $1100
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $06
+	as_halt
+	as_set_pos $1900, $0f00
+	as_wait_move
+	as_set_pos $1900, $0d00
+	as_wait_move
+	as_set_pos $1b00, $0d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+	as_set_pos $1900, $0f00
+	as_wait_move
+	as_set_pos $1900, $0d00
+	as_wait_move
+	as_set_pos $1b00, $0d00
+	as_wait_move
+	as_set_field $14, $0080
+	as_halt
+ActorScript_12_79e3:
+	; $79e3, 7 bytes (actor_script)
+	as_set_field $14, $00c0
+	as_anim $06
+	as_halt
+ActorScript_12_79ea:
+	; $79ea, 7 bytes (actor_script)
+	as_set_field $14, $0040
+	as_anim $06
+	as_halt
+ActorScript_12_79f1:
+	; $79f1, 11 bytes (actor_script)
+	as_set_pos $0900, $0900
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_79fc:
+	; $79fc, 11 bytes (actor_script)
+	as_set_pos $0b00, $0d00
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_7a07:
+	; $7a07, 29 bytes (actor_script)
+	as_set_pos $0700, $0900
+	as_wait_move
+	as_set_pos $0500, $0900
+	as_wait_move
+	as_set_pos $0500, $1900
+	as_wait_move
+	as_set_pos $0b00, $1900
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+ActorScript_12_7a24:
+	; $7a24, 29 bytes (actor_script)
+	as_set_pos $0700, $0900
+	as_wait_move
+	as_set_pos $0500, $0900
+	as_wait_move
+	as_set_pos $0500, $1500
+	as_wait_move
+	as_set_pos $0900, $1500
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+ActorScript_12_7a41:
+	; $7a41, 25 bytes (actor_script)
+	as_anim $02
+	as_set_pos $0f00, $1500
+	as_wait_move
+	as_set_pos $0f00, $0900
+	as_wait_move
+	as_set_pos $0900, $0900
+	as_wait_move
+	as_set_field $14, $0040
+	as_halt
+ActorScript_12_7a5a:
+	; $7a5a, 14 bytes (actor_script)
+	as_set_pos $0b00, $1900
+	as_wait_move
+	as_set_field $14, $00c0
+	as_halt
+	INCBIN "data/bank_012/d_7a65.bin" ; $7a65, 3 bytes (unclassified tail)
 PushTextArgFetchedString:
 	ldh a, [hWramBank] ; $7a68
 	push af ; $7a6a
@@ -3408,25 +3812,221 @@ PushTextArgFetchedString:
 	pop af ; $7a83
 	wram_bank ; $7a84
 	ret ; $7a88
-ActorObjDef_12_7a89:
-	INCBIN "data/bank_012/d_7a89.bin" ; $7a89, 10 bytes
-ActorObjDef_12_7a93:
-	INCBIN "data/bank_012/d_7a93.bin" ; $7a93, 30 bytes
+ActorScript_12_7a89:
+	; $7a89, 10 bytes (actor_script)
+	as_halt
+	as_anim $00
+	as_halt
+.L4:
+	as_step
+	as_wait $01
+	as_jump .L4
+ActorScript_12_7a93:
+	; $7a93, 30 bytes (actor_script)
+	as_begin_path
+.L1:
+	as_rand_box $02, $02
+	as_wait_move2
+	as_wait $28
+	as_jump .L1
+	as_begin_path
+.Lb:
+	as_rand_box $01, $02
+	as_wait_move2
+	as_wait $28
+	as_jump .Lb
+	as_begin_path
+.L15:
+	as_rand_box $01, $01
+	as_wait_move2
+	as_wait $28
+	as_jump .L15
 Func_12_7ab1:
 	ret ; $7ab1
 	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 13 bytes
-ActorObjDef_12_7abf:
-	INCBIN "data/bank_012/d_7abf.bin" ; $7abf, 99 bytes
-ActorObjDef_12_7b22:
-	INCBIN "data/bank_012/d_7b22.bin" ; $7b22, 103 bytes
-ActorObjDef_12_7b89:
-	INCBIN "data/bank_012/d_7b89.bin" ; $7b89, 103 bytes
-ActorObjDef_12_7bf0:
-	INCBIN "data/bank_012/d_7bf0.bin" ; $7bf0, 105 bytes
-ActorObjDef_12_7c59:
-	INCBIN "data/bank_012/d_7c59.bin" ; $7c59, 13 bytes
-ActorObjDef_12_7c66:
-	INCBIN "data/bank_012/d_7c66.bin" ; $7c66, 15 bytes
+ActorScript_12_7abf:
+	; $7abf, 99 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_12_7abf
+ActorScript_12_7b22:
+	; $7b22, 103 bytes (actor_script)
+	as_anim $00
+	as_wait $3c
+.L4:
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_jump .L4
+ActorScript_12_7b89:
+	; $7b89, 103 bytes (actor_script)
+	as_anim $00
+	as_wait $1e
+.L4:
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $0040
+	as_anim $05
+	as_wait $4b
+	as_jump .L4
+ActorScript_12_7bf0:
+	; $7bf0, 105 bytes (actor_script)
+	as_anim $00
+	as_wait $1e
+	as_wait $3c
+.L6:
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, $00c0
+	as_anim $05
+	as_wait $4b
+	as_jump .L6
+ActorScript_12_7c59:
+	; $7c59, 13 bytes (actor_script)
+	as_wait $f0
+	as_anim $03
+	as_wait $50
+	as_anim $03
+	as_wait $3c
+	as_jump ActorScript_12_7c59
+ActorScript_12_7c66:
+	; $7c66, 15 bytes (actor_script)
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $03
+	as_jump ActorScript_12_7c66
 ComputeSeniorCourtStageB:
 	test_flag $05, 7 ; $7c75
 	jr nz, Label_12_7c9c ; $7c78

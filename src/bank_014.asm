@@ -19,9 +19,9 @@ TennisMachineRoomMapScripts_14:
 	dw TennisMachineRoomInitScript_14 ; slot 6 InitScript
 TennisMachineRoomActors_14:
 	; $4016, 52 bytes (map_actors)
-	map_actor $0000, ActorObjDef_14_78b1, $2b00, $3300, $00, $3d, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $2b00, $3100, $00, $3d, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $2d00, $2b00, $80, $3e, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $2b00, $3300, $00, $3d, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $2b00, $3100, $00, $3d, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $2d00, $2b00, $80, $3e, $01, $00
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
@@ -265,8 +265,7 @@ TennisMachineRoomInitScript_14:
 MachineCourtResultScene:
 	test_flag $05, 7 ; $42b0
 	jr z, Label_14_42d3 ; $42b3
-	ld a, $02 ; $42b5
-	farcall FarPtr_SetActorNullScript ; $42b7
+	script_null_script $02 ; $42b5
 	script_wait_frames $0a ; $42ba
 	script_set_position $02, $2900, $2b00 ; $42c1
 	script_face $02, $00 ; $42cc
@@ -452,9 +451,8 @@ MachineCourtStartLevelScene:
 	script_face $05, $40 ; $44f9
 	test_flag $05, 7 ; $4500
 	jr z, Label_14_4515 ; $4503
-	ld a, $02 ; $4505
-	farcall FarPtr_SetActorNullScript ; $4507
-	script_set_actor_script $02, $4808 ; $450a
+	script_null_script $02 ; $4505
+	script_set_actor_script $02, ActorScript_14_4808 ; $450a
 Label_14_4515:
 	script_set_speed $00, $0020 ; $4515
 	script_move_player $3800, $3300 ; $451d
@@ -499,10 +497,9 @@ Label_14_45a6:
 	script_move_target $05, $2d00, $2900 ; $45ae
 	script_wait_move $05 ; $45b9
 	script_face $05, $40 ; $45be
-	ld a, $02 ; $45c5
-	farcall FarPtr_SetActorNullScript ; $45c7
+	script_null_script $02 ; $45c5
 	script_set_speed $00, $0020 ; $45ca
-	script_set_actor_script $02, $4808 ; $45d2
+	script_set_actor_script $02, ActorScript_14_4808 ; $45d2
 	script_move_target $00, $3100, $2b00 ; $45dd
 	script_wait_move $00 ; $45e8
 	script_face $00, $40 ; $45ed
@@ -597,8 +594,7 @@ MachinePracticeResultScene:
 	set_flag $1c, 1 ; $46c9
 	test_flag $05, 7 ; $46cc
 	jr z, Label_14_46ef ; $46cf
-	ld a, $02 ; $46d1
-	farcall FarPtr_SetActorNullScript ; $46d3
+	script_null_script $02 ; $46d1
 	script_set_position $02, $2900, $2b00 ; $46d6
 	script_face $02, $00 ; $46e1
 	script_wait_frames $0a ; $46e8
@@ -686,7 +682,12 @@ Label_14_4801:
 	ld a, [$c8f7] ; $4801
 	farcall FarPtr_RunTrainingDrillByID ; $4804
 	ret ; $4807
-	INCBIN "data/bank_014/d_4808.bin" ; $4808, 11 bytes
+ActorScript_14_4808:
+	; $4808, 11 bytes (actor_script)
+	as_set_pos $2900, $2b00
+	as_wait_move
+	as_set_field $14, $0000
+	as_halt
 	ldh a, [hWramBank] ; $4813
 	push af ; $4815
 	wram_bank $07 ; $4816
@@ -902,8 +903,7 @@ Label_14_4a00:
 	set_flag $1c, 1 ; $4a05
 	script_set_position $05, $2d00, $2900 ; $4a08
 	script_face $05, $40 ; $4a13
-	ld a, $02 ; $4a1a
-	farcall FarPtr_SetActorNullScript ; $4a1c
+	script_null_script $02 ; $4a1a
 	script_wait_frames $01 ; $4a1f
 	script_set_position $02, $2900, $2b00 ; $4a26
 	script_face $02, $00 ; $4a31
@@ -920,23 +920,23 @@ Court2MapScripts_14:
 	dw Court2InitScript_14 ; slot 6 InitScript
 Court2Actors_14:
 	; $4a47, 248 bytes (map_actors)
-	map_actor $0000, ActorObjDef_14_78b1, $1d00, $1500, $00, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1900, $1800, $40, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1b00, $1c00, $80, $30, $01, $05
-	map_actor $0000, ActorObjDef_14_78b1, $1b00, $1a00, $80, $39, $01, $05
-	map_actor $0000, ActorObjDef_14_78bb, $0700, $3100, $00, $39, $01, $04
-	map_actor $0000, ActorObjDef_14_78b1, $0900, $2300, $00, $39, $01, $04
-	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2300, $80, $3a, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2b00, $00, $23, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0f00, $2b00, $80, $24, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4c, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1b00, $0c00, $80, $39, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1900, $0e00, $80, $39, $01, $06
-	map_actor $0000, ActorObjDef_14_78b1, $1b00, $1000, $80, $3a, $01, $03
-	map_actor $0000, ActorObjDef_14_78b1, $0500, $1b00, $00, $33, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0500, $1d00, $00, $3a, $01, $04
+	map_actor $0000, ActorScript_14_78b1, $1d00, $1500, $00, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1900, $1800, $40, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1b00, $1c00, $80, $30, $01, $05
+	map_actor $0000, ActorScript_14_78b1, $1b00, $1a00, $80, $39, $01, $05
+	map_actor $0000, ActorScript_14_78bb, $0700, $3100, $00, $39, $01, $04
+	map_actor $0000, ActorScript_14_78b1, $0900, $2300, $00, $39, $01, $04
+	map_actor $0000, ActorScript_14_78b1, $0b00, $2300, $80, $3a, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0b00, $2b00, $00, $23, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0f00, $2b00, $80, $24, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1b00, $0c00, $80, $39, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1900, $0e00, $80, $39, $01, $06
+	map_actor $0000, ActorScript_14_78b1, $1b00, $1000, $80, $3a, $01, $03
+	map_actor $0000, ActorScript_14_78b1, $0500, $1b00, $00, $33, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0500, $1d00, $00, $3a, $01, $04
 	map_actor_end
 Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
@@ -1209,18 +1209,18 @@ Label_14_4eaf:
 	ret ; $4eb3
 Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)
-	map_actor $0000, ActorObjDef_14_78b1, $1d00, $1500, $00, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1b00, $2300, $40, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1f00, $2d00, $80, $30, $01, $05
-	map_actor $0000, ActorObjDef_14_78bb, $1d00, $3000, $c0, $39, $01, $05
-	map_actor $0000, ActorObjDef_14_78bb, $0700, $3100, $00, $39, $01, $04
-	map_actor $0000, ActorObjDef_14_78b1, $0900, $2300, $00, $39, $01, $04
-	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2300, $80, $3a, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0b00, $2b00, $00, $23, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0f00, $2b00, $80, $24, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4c, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1d00, $1500, $00, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1b00, $2300, $40, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1f00, $2d00, $80, $30, $01, $05
+	map_actor $0000, ActorScript_14_78bb, $1d00, $3000, $c0, $39, $01, $05
+	map_actor $0000, ActorScript_14_78bb, $0700, $3100, $00, $39, $01, $04
+	map_actor $0000, ActorScript_14_78b1, $0900, $2300, $00, $39, $01, $04
+	map_actor $0000, ActorScript_14_78b1, $0b00, $2300, $80, $3a, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0b00, $2b00, $00, $23, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0f00, $2b00, $80, $24, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, $40, $53, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, $40, $4d, $01, $00
 	map_actor_end
 Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
@@ -1249,15 +1249,15 @@ Court1MapScripts_14:
 	dw Court1InitScript_14 ; slot 6 InitScript
 Court1Actors_14:
 	; $4fba, 136 bytes (map_actors)
-	map_actor $0000, ActorObjDef_14_78b1, $0b00, $1500, $80, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1100, $2300, $40, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $2300, $1900, $80, $39, $01, $03
-	map_actor $0000, ActorObjDef_14_78b1, $2300, $1c00, $80, $32, $01, $03
-	map_actor $0000, ActorObjDef_14_78b1, $0e00, $0d00, $00, $39, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0f00, $0f00, $00, $39, $01, $06
-	map_actor $0000, ActorObjDef_14_78b1, $0e00, $1100, $00, $3a, $01, $03
-	map_actor $0000, ActorObjDef_14_78b1, $2300, $0f00, $80, $33, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $2100, $1100, $80, $3a, $01, $04
+	map_actor $0000, ActorScript_14_78b1, $0b00, $1500, $80, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1100, $2300, $40, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $2300, $1900, $80, $39, $01, $03
+	map_actor $0000, ActorScript_14_78b1, $2300, $1c00, $80, $32, $01, $03
+	map_actor $0000, ActorScript_14_78b1, $0e00, $0d00, $00, $39, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0f00, $0f00, $00, $39, $01, $06
+	map_actor $0000, ActorScript_14_78b1, $0e00, $1100, $00, $3a, $01, $03
+	map_actor $0000, ActorScript_14_78b1, $2300, $0f00, $80, $33, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $2100, $1100, $80, $3a, $01, $04
 	map_actor_end
 Court1EntryPoints_14:
 	; $5042, 17 bytes (map_entries)
@@ -1394,10 +1394,10 @@ Label_14_515c:
 	ret ; $5161
 Court1ActorsAlt_14:
 	; $5162, 66 bytes (map_actors)
-	map_actor $0000, ActorObjDef_14_78b1, $0b00, $1500, $80, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1100, $2300, $40, $25, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $1b00, $2300, $40, $39, $01, $03
-	map_actor $0000, ActorObjDef_14_78b1, $1d00, $2300, $40, $32, $01, $03
+	map_actor $0000, ActorScript_14_78b1, $0b00, $1500, $80, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1100, $2300, $40, $25, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $1b00, $2300, $40, $39, $01, $03
+	map_actor $0000, ActorScript_14_78b1, $1d00, $2300, $40, $32, $01, $03
 	map_actor_end
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
@@ -1451,10 +1451,10 @@ IslandSkyMapScripts_14:
 	dw IslandSkyInitScript_14 ; slot 6 InitScript
 IslandSkyActors_14:
 	; $522f, 66 bytes (map_actors)
-	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $63, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $5c, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $5b, $01, $00
-	map_actor $0000, ActorObjDef_14_78b1, $0600, $2700, $40, $5a, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0600, $2700, $40, $63, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0600, $2700, $40, $5c, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0600, $2700, $40, $5b, $01, $00
+	map_actor $0000, ActorScript_14_78b1, $0600, $2700, $40, $5a, $01, $00
 	map_actor_end
 IslandSkyEntryPoints_14:
 	; $5271, 49 bytes (map_entries)
@@ -1511,8 +1511,7 @@ Label_14_5303:
 	call RegisterFrameTask ; $5321
 	test_flag $05, 7 ; $5324
 	jp z, Label_14_5352 ; $5327
-	ld a, $02 ; $532a
-	farcall FarPtr_SetActorNullScript ; $532c
+	script_null_script $02 ; $532a
 	script_set_position $02, $3f00, $3f00 ; $532f
 	ld a, [$c94d] ; $533a
 	ld d, $58 ; $533d
@@ -1715,13 +1714,13 @@ Label_14_54df:
 	script_set_position $04, $0600, $2900 ; $5538
 	script_set_position $05, $0600, $2900 ; $5543
 	script_set_position $06, $0600, $2900 ; $554e
-	script_set_actor_script $03, $563b ; $5559
+	script_set_actor_script $03, ActorScript_14_563b ; $5559
 	script_wait_frames $1e ; $5564
-	script_set_actor_script $04, $563b ; $556b
+	script_set_actor_script $04, ActorScript_14_563b ; $556b
 	script_wait_frames $1e ; $5576
-	script_set_actor_script $05, $563b ; $557d
+	script_set_actor_script $05, ActorScript_14_563b ; $557d
 	script_wait_frames $1e ; $5588
-	script_set_actor_script $06, $563b ; $558f
+	script_set_actor_script $06, ActorScript_14_563b ; $558f
 	script_wait_frames $50 ; $559a
 	script_set_position $00, $0600, $2900 ; $55a1
 	script_set_active $00, $02 ; $55ac
@@ -1760,7 +1759,167 @@ Label_14_5603:
 	ld [$c294], a ; $5634
 	ld [wStoryModeExitLocationRequest], a ; $5637
 	ret ; $563a
-	INCBIN "data/bank_014/d_563b.bin" ; $563b, 2069 bytes
+ActorScript_14_563b:
+	; $563b, 2069 bytes (actor_script)
+	as_set_pos $0b00, $2900
+	as_wait_move
+	as_set_pos $0b00, $2700
+	as_wait_move
+	as_set_target $0100, $0100
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_wait $01
+	as_target_rel $0205, $0100
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	as_halt
+	INCBIN "data/bank_014/d_56ea.bin" ; $56ea, 1894 bytes (unclassified tail)
 SpriteTemplate_14_5e50:
 	; $5e50, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -2085,8 +2244,7 @@ Label_14_628b:
 	script_set_active $03, $00 ; $62b5
 	test_flag $05, 7 ; $62bc
 	jp z, Label_14_62d2 ; $62bf
-	ld a, $02 ; $62c2
-	farcall FarPtr_SetActorNullScript ; $62c4
+	script_null_script $02 ; $62c2
 	script_set_position $02, $3f00, $3f00 ; $62c7
 Label_14_62d2:
 	xor a, a ; $62d2
@@ -2324,8 +2482,7 @@ Label_14_64e1:
 	call EnableLCD ; $64f2
 	test_flag $05, 7 ; $64f5
 	jp z, Label_14_650b ; $64f8
-	ld a, $02 ; $64fb
-	farcall FarPtr_SetActorNullScript ; $64fd
+	script_null_script $02 ; $64fb
 	script_set_position $02, $3f00, $3f00 ; $6500
 Label_14_650b:
 	script_set_position $00, $3f00, $3f00 ; $650b
@@ -2482,8 +2639,7 @@ Label_14_6f7b:
 	script_set_position $00, $3f00, $3f00 ; $6fac
 	test_flag $05, 7 ; $6fb7
 	jp z, Label_14_6fcd ; $6fba
-	ld a, $02 ; $6fbd
-	farcall FarPtr_SetActorNullScript ; $6fbf
+	script_null_script $02 ; $6fbd
 	script_set_position $02, $3f00, $3f00 ; $6fc2
 Label_14_6fcd:
 	xor a, a ; $6fcd
@@ -2829,8 +2985,7 @@ Label_14_76c6:
 	script_set_position $00, $3f00, $3f00 ; $76e2
 	test_flag $05, 7 ; $76ed
 	jp z, Label_14_7703 ; $76f0
-	ld a, $02 ; $76f3
-	farcall FarPtr_SetActorNullScript ; $76f5
+	script_null_script $02 ; $76f3
 	script_set_position $02, $3f00, $3f00 ; $76f8
 Label_14_7703:
 	xor a, a ; $7703
@@ -3004,10 +3159,35 @@ PlayWaterSpriteMoveSfx:
 	sound $7b ; $78ae
 Label_14_78b0:
 	ret ; $78b0
-ActorObjDef_14_78b1:
-	INCBIN "data/bank_014/d_78b1.bin" ; $78b1, 10 bytes
-ActorObjDef_14_78bb:
-	INCBIN "data/bank_014/d_78bb.bin" ; $78bb, 30 bytes
+ActorScript_14_78b1:
+	; $78b1, 10 bytes (actor_script)
+	as_halt
+	as_anim $00
+	as_halt
+.L4:
+	as_step
+	as_wait $01
+	as_jump .L4
+ActorScript_14_78bb:
+	; $78bb, 30 bytes (actor_script)
+	as_begin_path
+.L1:
+	as_rand_box $02, $02
+	as_wait_move2
+	as_wait $28
+	as_jump .L1
+	as_begin_path
+.Lb:
+	as_rand_box $01, $02
+	as_wait_move2
+	as_wait $28
+	as_jump .Lb
+	as_begin_path
+.L15:
+	as_rand_box $01, $01
+	as_wait_move2
+	as_wait $28
+	as_jump .L15
 MapScriptNop_14:
 	ret ; $78d9
 MapScriptClearActiveFlag_14:
