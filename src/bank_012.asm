@@ -1322,7 +1322,7 @@ SeniorCourtStoryCmds_12:
 	dw SeniorCourtTileTriggers_12 ; slot 5 TileTriggers
 	dw SeniorCourtInitScript_12 ; slot 6 InitScript
 SeniorCourtActors_12:
-	; $5305, 618 bytes (map_actors)
+	; $5305, 178 bytes (map_actors)
 	map_actor $0000, ActorObjDef_12_7a89, $2900, $1900, $80, $49, $01, $00
 	map_actor $0000, ActorObjDef_12_79e3, $3500, $1e00, $c0, $65, $06, $07
 	map_actor $0000, ActorObjDef_12_7c59, $3200, $1e00, $00, $64, $01, $05
@@ -1336,6 +1336,8 @@ SeniorCourtActors_12:
 	map_actor $0000, ActorObjDef_12_7abf, $2200, $1300, $40, $54, $01, $00
 	map_actor $0000, ActorObjDef_12_7b22, $2500, $1d00, $c0, $54, $01, $04
 	map_actor_end
+SeniorCourtActorsA_12:
+	; $53b7, 220 bytes (map_actors)
 	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1900, $40, $49, $01, $00
 	map_actor $0000, ActorObjDef_12_7a89, $2900, $1b00, $80, $65, $01, $07
 	map_actor $0000, ActorObjDef_12_7c59, $3900, $1d00, $80, $64, $01, $05
@@ -1352,6 +1354,8 @@ SeniorCourtActors_12:
 	map_actor $0000, ActorObjDef_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
 	map_actor $0000, ActorObjDef_12_7a89, $4000, $4000, $c0, $53, $01, $00
 	map_actor_end
+SeniorCourtActorsB_12:
+	; $5493, 220 bytes (map_actors)
 	map_actor $0000, ActorObjDef_12_7a89, $2d00, $1900, $40, $49, $01, $00
 	map_actor $0000, ActorObjDef_12_79e3, $2d00, $1100, $c0, $65, $06, $07
 	map_actor $0000, ActorObjDef_12_7c59, $2d00, $0f00, $40, $64, $01, $05
@@ -2044,7 +2048,7 @@ Label_12_5d7b:
 	test_flag $0a, 3 ; $5d80
 	jr z, Label_12_5d8d ; $5d83
 	ldh a, [hRomBank] ; $5d85
-	ld hl, $53b7 ; $5d87
+	ld hl, SeniorCourtActorsA_12 ; $5d87
 	farcall FarPtr_ScriptRespawnLocationActors ; $5d8a
 Label_12_5d8d:
 	call Func_12_5e12 ; $5d8d
@@ -2064,7 +2068,7 @@ Label_12_5daf:
 	test_flag $08, 2 ; $5daf
 	jr z, Label_12_5d8d ; $5db2
 	ldh a, [hRomBank] ; $5db4
-	ld hl, $5493 ; $5db6
+	ld hl, SeniorCourtActorsB_12 ; $5db6
 	farcall FarPtr_ScriptRespawnLocationActors ; $5db9
 	jr Label_12_5d8d ; $5dbc
 Func_12_5dbe:
