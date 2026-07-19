@@ -286,10 +286,10 @@ ShotBallPathServeTopspin:
 	farcall FarPtr_ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_29 ; $5ea0
 	ld bc, $5ebf ; $5ea3
-	ld a, [$df6e] ; $5ea6
+	ld a, [wTopspinPlacementIndex] ; $5ea6
 	call Func_29_426e ; $5ea9
 	ld bc, $5ed3 ; $5eac
-	ld a, [$df6c] ; $5eaf
+	ld a, [wSmashServeSpeedIndex] ; $5eaf
 	call Func_29_426e ; $5eb2
 	ld bc, $5ee7 ; $5eb5
 	call Func_29_424c ; $5eb8

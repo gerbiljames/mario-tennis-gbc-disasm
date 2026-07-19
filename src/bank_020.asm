@@ -489,7 +489,7 @@ ShotBallPathSlice:
 	ld bc, BallPosHeightOffsets_20 ; $7e84
 	call Func_20_424c ; $7e87
 	ld bc, BallPosBlockOffsets_20 ; $7e8a
-	ld a, [$df6f] ; $7e8d
+	ld a, [wSlicePlacementIndex] ; $7e8d
 	call Func_20_426e ; $7e90
 	pop bc ; $7e93
 	call Func_20_4102 ; $7e94

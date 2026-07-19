@@ -1149,6 +1149,41 @@
   "note": "WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber",
   "size": 32
  },
+ "0xdf6b": {
+  "name": "wGroundStrokeSpeedIndex",
+  "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry",
+  "size": 1
+ },
+ "0xdf6c": {
+  "name": "wSmashServeSpeedIndex",
+  "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves",
+  "size": 1
+ },
+ "0xdf6d": {
+  "name": "wReachSpeedIndex",
+  "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the reach (smash-range) shot variants",
+  "size": 1
+ },
+ "0xdf6e": {
+  "name": "wTopspinPlacementIndex",
+  "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for topspin and serve-topspin; selects bytes 0-3 -> target offsets in LoadShotPlacementEntry",
+  "size": 1
+ },
+ "0xdf6f": {
+  "name": "wSlicePlacementIndex",
+  "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for slice and serve-slice",
+  "size": 1
+ },
+ "0xdf92": {
+  "name": "wLobPlacementIndex",
+  "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataLob (set from df91 bit 0)",
+  "size": 1
+ },
+ "0xdf93": {
+  "name": "wDropPlacementIndex",
+  "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataDrop (set from df91 bit 1)",
+  "size": 1
+ },
  "0xff8a": {
   "name": "hScrollY",
   "note": "[8-bit] SCY shadow, applied in VBlank",

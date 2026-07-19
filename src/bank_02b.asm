@@ -489,7 +489,7 @@ ShotBallPathServeFlat:
 	xor a, a ; $5ea6
 	call Func_2b_426e ; $5ea7
 	ld bc, BallPosSubOffsets_2b ; $5eaa
-	ld a, [$df6c] ; $5ead
+	ld a, [wSmashServeSpeedIndex] ; $5ead
 	call Func_2b_426e ; $5eb0
 	ld bc, BallPosHeightOffsets_2b ; $5eb3
 	call Func_2b_424c ; $5eb6

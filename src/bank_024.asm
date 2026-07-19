@@ -444,7 +444,7 @@ ShotBallPathLob:
 	farcall FarPtr_ComputeShotPlacement ; $4589
 	ld hl, $4289 ; $458c
 	ld bc, $459c ; $458f
-	ld a, [$df92] ; $4592
+	ld a, [wLobPlacementIndex] ; $4592
 	call Func_24_427a ; $4595
 	call Func_24_4169 ; $4598
 	ret ; $459b
@@ -564,7 +564,7 @@ ShotBallPathDrop:
 	ld bc, $51b9 ; $51a6
 	call Func_24_422d ; $51a9
 	ld bc, $51f9 ; $51ac
-	ld a, [$df93] ; $51af
+	ld a, [wDropPlacementIndex] ; $51af
 	call Func_24_427a ; $51b2
 	call Func_24_4169 ; $51b5
 	ret ; $51b8
@@ -689,7 +689,7 @@ Label_24_66b0:
 	rr c ; $66c3
 	add hl, bc ; $66c5
 	call AngleFromVector16 ; $66c6
-	ld a, [$df6c] ; $66c9
+	ld a, [wSmashServeSpeedIndex] ; $66c9
 	add a, a ; $66cc
 	add a, $f2 ; $66cd
 	ld l, a ; $66cf

@@ -21,6 +21,19 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Name the shot-placement index RAM (2026-07-19)
+
+The `ShotPlacement<Type>` handlers each pass two indices to
+`LoadShotPlacementEntry`: `d` selects a placement/target row (bytes 0-3, incl. a
+court-side-signed lateral offset) and `e` selects a speed row (bytes 4-5). Traced
+which `$df` byte feeds each and named them in `ram_map.json` (per-character
+banked struct, WRAM4-7): `wTopspinPlacementIndex`/`wSlicePlacementIndex` (the `d`
+inputs, shared with the matching serves), `wLobPlacementIndex`/
+`wDropPlacementIndex` (`d` for lob/drop, set from `df91` bits 0/1),
+`wGroundStrokeSpeedIndex`/`wSmashServeSpeedIndex`/`wReachSpeedIndex` (the `e`
+inputs per shot group). All are loaded as a block from the character's stat
+struct at point setup (`$07:$5be6`). Byte-perfect.
+
 ### Name the per-shot-type ball-path banks (2026-07-19)
 
 The executor table's last step per shot type is `farcall FarPtr_XX_00` into a

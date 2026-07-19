@@ -2161,9 +2161,9 @@ ComputeShotPlacement:
 	dw ShotPlacementServeFlat ; $5181 jumptable
 ShotPlacementTopspin:
 	ld hl, ShotPlacementDataTopspin_07 ; $5183
-	ld a, [$df6e] ; $5186
+	ld a, [wTopspinPlacementIndex] ; $5186
 	ld d, a ; $5189
-	ld a, [$df6b] ; $518a
+	ld a, [wGroundStrokeSpeedIndex] ; $518a
 	ld e, a ; $518d
 	call LoadShotPlacementEntry ; $518e
 	call AddBallSpeedQuarter ; $5191
@@ -2172,9 +2172,9 @@ ShotPlacementTopspin:
 	ret ; $519a
 ShotPlacementPowerTopspin:
 	ld hl, ShotPlacementDataPowerTopspin_07 ; $519b
-	ld a, [$df6e] ; $519e
+	ld a, [wTopspinPlacementIndex] ; $519e
 	ld d, a ; $51a1
-	ld a, [$df6b] ; $51a2
+	ld a, [wGroundStrokeSpeedIndex] ; $51a2
 	ld e, a ; $51a5
 	call LoadShotPlacementEntry ; $51a6
 	call AddBallSpeedQuarter ; $51a9
@@ -2183,9 +2183,9 @@ ShotPlacementPowerTopspin:
 	ret ; $51b2
 ShotPlacementSlice:
 	ld hl, ShotPlacementDataSlice_07 ; $51b3
-	ld a, [$df6f] ; $51b6
+	ld a, [wSlicePlacementIndex] ; $51b6
 	ld d, a ; $51b9
-	ld a, [$df6b] ; $51ba
+	ld a, [wGroundStrokeSpeedIndex] ; $51ba
 	ld e, a ; $51bd
 	call LoadShotPlacementEntry ; $51be
 	call AddBallSpeedEighth ; $51c1
@@ -2194,9 +2194,9 @@ ShotPlacementSlice:
 	ret ; $51ca
 ShotPlacementPowerSlice:
 	ld hl, ShotPlacementDataPowerSlice_07 ; $51cb
-	ld a, [$df6f] ; $51ce
+	ld a, [wSlicePlacementIndex] ; $51ce
 	ld d, a ; $51d1
-	ld a, [$df6b] ; $51d2
+	ld a, [wGroundStrokeSpeedIndex] ; $51d2
 	ld e, a ; $51d5
 	call LoadShotPlacementEntry ; $51d6
 	call AddBallSpeedEighth ; $51d9
@@ -2206,7 +2206,7 @@ ShotPlacementPowerSlice:
 ShotPlacementNeutral:
 	ld hl, ShotPlacementDataNeutral_07 ; $51e3
 	ld d, $00 ; $51e6
-	ld a, [$df6b] ; $51e8
+	ld a, [wGroundStrokeSpeedIndex] ; $51e8
 	ld e, a ; $51eb
 	call LoadShotPlacementEntry ; $51ec
 	call AddBallSpeedQuarter ; $51ef
@@ -2216,7 +2216,7 @@ ShotPlacementNeutral:
 ShotPlacementSmash:
 	ld hl, ShotPlacementDataSmash_07 ; $51f9
 	ld d, $00 ; $51fc
-	ld a, [$df6c] ; $51fe
+	ld a, [wSmashServeSpeedIndex] ; $51fe
 	ld e, a ; $5201
 	call LoadShotPlacementEntry ; $5202
 	call AddBallSpeed3Sixteenths ; $5205
@@ -2226,7 +2226,7 @@ ShotPlacementSmash:
 ShotPlacementReachBasic:
 	ld hl, ShotPlacementDataReachBasic_07 ; $520f
 	ld d, $00 ; $5212
-	ld a, [$df6d] ; $5214
+	ld a, [wReachSpeedIndex] ; $5214
 	ld e, a ; $5217
 	call LoadShotPlacementEntry ; $5218
 	call AddBallSpeed3Sixteenths ; $521b
@@ -2235,7 +2235,7 @@ ShotPlacementReachBasic:
 ShotPlacementReachPowerTopspin:
 	ld hl, ShotPlacementDataReachPowerTopspin_07 ; $5222
 	ld d, $00 ; $5225
-	ld a, [$df6d] ; $5227
+	ld a, [wReachSpeedIndex] ; $5227
 	ld e, a ; $522a
 	call LoadShotPlacementEntry ; $522b
 	call AddBallSpeedQuarter ; $522e
@@ -2244,7 +2244,7 @@ ShotPlacementReachPowerTopspin:
 ShotPlacementReachPowerSlice:
 	ld hl, ShotPlacementDataReachPowerSlice_07 ; $5235
 	ld d, $00 ; $5238
-	ld a, [$df6d] ; $523a
+	ld a, [wReachSpeedIndex] ; $523a
 	ld e, a ; $523d
 	call LoadShotPlacementEntry ; $523e
 	call AddBallSpeedEighth ; $5241
@@ -2253,7 +2253,7 @@ ShotPlacementReachPowerSlice:
 ShotPlacementReach:
 	ld hl, ShotPlacementDataReach_07 ; $5248
 	ld d, $00 ; $524b
-	ld a, [$df6d] ; $524d
+	ld a, [wReachSpeedIndex] ; $524d
 	ld e, a ; $5250
 	call LoadShotPlacementEntry ; $5251
 	call AddBallSpeed3Sixteenths ; $5254
@@ -2261,38 +2261,38 @@ ShotPlacementReach:
 	ret ; $525a
 ShotPlacementLob:
 	ld hl, ShotPlacementDataLob_07 ; $525b
-	ld a, [$df92] ; $525e
+	ld a, [wLobPlacementIndex] ; $525e
 	ld d, a ; $5261
 	ld e, $00 ; $5262
 	call LoadShotPlacementEntry ; $5264
 	ret ; $5267
 ShotPlacementDrop:
 	ld hl, ShotPlacementDataDrop_07 ; $5268
-	ld a, [$df93] ; $526b
+	ld a, [wDropPlacementIndex] ; $526b
 	ld d, a ; $526e
 	ld e, $00 ; $526f
 	call LoadShotPlacementEntry ; $5271
 	ret ; $5274
 ShotPlacementServeTopspin:
 	ld hl, ShotPlacementDataServeTopspin_07 ; $5275
-	ld a, [$df6e] ; $5278
+	ld a, [wTopspinPlacementIndex] ; $5278
 	ld d, a ; $527b
-	ld a, [$df6c] ; $527c
+	ld a, [wSmashServeSpeedIndex] ; $527c
 	ld e, a ; $527f
 	call LoadShotPlacementEntry ; $5280
 	ret ; $5283
 ShotPlacementServeSlice:
 	ld hl, ShotPlacementDataServeSlice_07 ; $5284
-	ld a, [$df6f] ; $5287
+	ld a, [wSlicePlacementIndex] ; $5287
 	ld d, a ; $528a
-	ld a, [$df6c] ; $528b
+	ld a, [wSmashServeSpeedIndex] ; $528b
 	ld e, a ; $528e
 	call LoadShotPlacementEntry ; $528f
 	ret ; $5292
 ShotPlacementServeFlat:
 	ld hl, ShotPlacementDataServeFlat_07 ; $5293
 	ld d, $00 ; $5296
-	ld a, [$df6c] ; $5298
+	ld a, [wSmashServeSpeedIndex] ; $5298
 	ld e, a ; $529b
 	call LoadShotPlacementEntry ; $529c
 	ret ; $529f
@@ -3706,23 +3706,23 @@ Label_07_5b54:
 	ld hl, $0023 ; $5bc1
 	add hl, de ; $5bc4
 	ld a, [hl] ; $5bc5
-	ld [$df6b], a ; $5bc6
+	ld [wGroundStrokeSpeedIndex], a ; $5bc6
 	ld hl, $0022 ; $5bc9
 	add hl, de ; $5bcc
 	ld a, [hl] ; $5bcd
-	ld [$df6c], a ; $5bce
+	ld [wSmashServeSpeedIndex], a ; $5bce
 	ld hl, $0024 ; $5bd1
 	add hl, de ; $5bd4
 	ld a, [hl] ; $5bd5
-	ld [$df6d], a ; $5bd6
+	ld [wReachSpeedIndex], a ; $5bd6
 	ld hl, $0021 ; $5bd9
 	add hl, de ; $5bdc
 	ld a, [hl] ; $5bdd
-	ld [$df6f], a ; $5bde
+	ld [wSlicePlacementIndex], a ; $5bde
 	ld hl, $0020 ; $5be1
 	add hl, de ; $5be4
 	ld a, [hl] ; $5be5
-	ld [$df6e], a ; $5be6
+	ld [wTopspinPlacementIndex], a ; $5be6
 	ld hl, $000f ; $5be9
 	add hl, de ; $5bec
 	ld a, [hl] ; $5bed
@@ -3753,14 +3753,14 @@ Label_07_5b54:
 	jr z, Label_07_5c24 ; $5c20
 	ld a, $01 ; $5c22
 Label_07_5c24:
-	ld [$df92], a ; $5c24
+	ld [wLobPlacementIndex], a ; $5c24
 	ld a, $00 ; $5c27
 	ld hl, $df91 ; $5c29
 	bit 1, [hl] ; $5c2c
 	jr z, Label_07_5c32 ; $5c2e
 	ld a, $01 ; $5c30
 Label_07_5c32:
-	ld [$df93], a ; $5c32
+	ld [wDropPlacementIndex], a ; $5c32
 	ld a, [$c4ee] ; $5c35
 	bit 1, a ; $5c38
 	ret z ; $5c3a

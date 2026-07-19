@@ -489,7 +489,7 @@ ShotBallPathTopspin:
 	ld bc, BallPosHeightOffsets_22 ; $7e84
 	call Func_22_424c ; $7e87
 	ld bc, BallPosBlockOffsets_22 ; $7e8a
-	ld a, [$df6e] ; $7e8d
+	ld a, [wTopspinPlacementIndex] ; $7e8d
 	call Func_22_426e ; $7e90
 	pop bc ; $7e93
 	call Func_22_4102 ; $7e94

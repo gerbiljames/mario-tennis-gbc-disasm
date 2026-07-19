@@ -1155,3 +1155,26 @@ wTextArgStringQueue:: ds 32
 
 ; WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
 wTextArgNumberQueue:: ds 32
+	ds 1659
+
+; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
+wGroundStrokeSpeedIndex:: db
+
+; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves
+wSmashServeSpeedIndex:: db
+
+; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the reach (smash-range) shot variants
+wReachSpeedIndex:: db
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for topspin and serve-topspin; selects bytes 0-3 -> target offsets in LoadShotPlacementEntry
+wTopspinPlacementIndex:: db
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for slice and serve-slice
+wSlicePlacementIndex:: db
+	ds 34
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataLob (set from df91 bit 0)
+wLobPlacementIndex:: db
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataDrop (set from df91 bit 1)
+wDropPlacementIndex:: db

@@ -486,10 +486,10 @@ ShotBallPathServeSlice:
 	farcall FarPtr_ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_2a ; $5ea0
 	ld bc, BallPosBlockOffsets_2a ; $5ea3
-	ld a, [$df6f] ; $5ea6
+	ld a, [wSlicePlacementIndex] ; $5ea6
 	call Func_2a_426e ; $5ea9
 	ld bc, BallPosSubOffsets_2a ; $5eac
-	ld a, [$df6c] ; $5eaf
+	ld a, [wSmashServeSpeedIndex] ; $5eaf
 	call Func_2a_426e ; $5eb2
 	ld bc, BallPosHeightOffsets_2a ; $5eb5
 	call Func_2a_424c ; $5eb8

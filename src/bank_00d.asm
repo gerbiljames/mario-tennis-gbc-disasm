@@ -958,10 +958,10 @@ LaunchBall:
 	ld h, a ; $482b
 	ld a, [hl] ; $482c
 	dec a ; $482d
-	ld [$df6b], a ; $482e
-	ld [$df6d], a ; $4831
-	ld [$df6f], a ; $4834
-	ld [$df6e], a ; $4837
+	ld [wGroundStrokeSpeedIndex], a ; $482e
+	ld [wReachSpeedIndex], a ; $4831
+	ld [wSlicePlacementIndex], a ; $4834
+	ld [wTopspinPlacementIndex], a ; $4837
 	ld a, [$c784] ; $483a
 	add a, a ; $483d
 	add a, a ; $483e
