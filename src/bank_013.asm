@@ -86,20 +86,8 @@ Func_13_4163:
 	ld a, [wStoryModeEntryPoint] ; $4163
 	cp a, $ff ; $4166
 	jp z, Label_13_4235 ; $4168
-	ld b, $14 ; $416b
-	ld c, $08 ; $416d
-	ld d, $06 ; $416f
-	ld e, $15 ; $4171
-	ld h, $02 ; $4173
-	ld l, $02 ; $4175
-	farcall FarPtr_CopySceneTilemapRect ; $4177
-	ld b, $04 ; $417a
-	ld c, $15 ; $417c
-	ld d, $14 ; $417e
-	ld e, $08 ; $4180
-	ld h, $02 ; $4182
-	ld l, $02 ; $4184
-	farcall FarPtr_CopySceneTilemapRect ; $4186
+	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $416b
+	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $417a
 	script_set_speed $00, $0018 ; $4189
 	ld c, $08 ; $4191
 	call BeginFadeIn ; $4193
@@ -617,71 +605,23 @@ SpriteTemplate_13_4d20:
 	INCBIN "data/bank_013/d_4d29.bin" ; $4d29, 79 bytes
 AnimateDoorOpen_13:
 	sound $71 ; $4d78
-	ld b, $14 ; $4d7a
-	ld c, $08 ; $4d7c
-	ld d, $06 ; $4d7e
-	ld e, $15 ; $4d80
-	ld h, $02 ; $4d82
-	ld l, $02 ; $4d84
-	farcall FarPtr_CopySceneTilemapRect ; $4d86
-	ld b, $00 ; $4d89
-	ld c, $15 ; $4d8b
-	ld d, $14 ; $4d8d
-	ld e, $08 ; $4d8f
-	ld h, $02 ; $4d91
-	ld l, $02 ; $4d93
-	farcall FarPtr_CopySceneTilemapRect ; $4d95
+	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $4d7a
+	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $4d89
 	script_wait_frames $02 ; $4d98
-	ld b, $02 ; $4d9f
-	ld c, $15 ; $4da1
-	ld d, $14 ; $4da3
-	ld e, $08 ; $4da5
-	ld h, $02 ; $4da7
-	ld l, $02 ; $4da9
-	farcall FarPtr_CopySceneTilemapRect ; $4dab
+	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $4d9f
 	script_wait_frames $02 ; $4dae
-	ld b, $04 ; $4db5
-	ld c, $15 ; $4db7
-	ld d, $14 ; $4db9
-	ld e, $08 ; $4dbb
-	ld h, $02 ; $4dbd
-	ld l, $02 ; $4dbf
-	farcall FarPtr_CopySceneTilemapRect ; $4dc1
+	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $4db5
 	script_wait_frames $02 ; $4dc4
 	ret ; $4dcb
 AnimateDoorClose_13:
 	sound $71 ; $4dcc
-	ld b, $04 ; $4dce
-	ld c, $15 ; $4dd0
-	ld d, $14 ; $4dd2
-	ld e, $08 ; $4dd4
-	ld h, $02 ; $4dd6
-	ld l, $02 ; $4dd8
-	farcall FarPtr_CopySceneTilemapRect ; $4dda
+	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $4dce
 	script_wait_frames $01 ; $4ddd
-	ld b, $02 ; $4de4
-	ld c, $15 ; $4de6
-	ld d, $14 ; $4de8
-	ld e, $08 ; $4dea
-	ld h, $02 ; $4dec
-	ld l, $02 ; $4dee
-	farcall FarPtr_CopySceneTilemapRect ; $4df0
+	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $4de4
 	script_wait_frames $01 ; $4df3
-	ld b, $00 ; $4dfa
-	ld c, $15 ; $4dfc
-	ld d, $14 ; $4dfe
-	ld e, $08 ; $4e00
-	ld h, $02 ; $4e02
-	ld l, $02 ; $4e04
-	farcall FarPtr_CopySceneTilemapRect ; $4e06
+	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $4dfa
 	script_wait_frames $01 ; $4e09
-	ld b, $06 ; $4e10
-	ld c, $15 ; $4e12
-	ld d, $14 ; $4e14
-	ld e, $08 ; $4e16
-	ld h, $02 ; $4e18
-	ld l, $02 ; $4e1a
-	farcall FarPtr_CopySceneTilemapRect ; $4e1c
+	script_copy_scene_rect $06, $15, $14, $08, $02, $02 ; $4e10
 	ret ; $4e1f
 DormRoomMapScripts_13:
 	; $4e20, 14 bytes (map_tree)
@@ -959,13 +899,7 @@ Func_13_5130:
 	ld h, $16 ; $5150
 	ld l, $16 ; $5152
 	farcall FarPtr_CopyBehaviorMapRect ; $5154
-	ld b, $20 ; $5157
-	ld c, $00 ; $5159
-	ld d, $00 ; $515b
-	ld e, $00 ; $515d
-	ld h, $16 ; $515f
-	ld l, $18 ; $5161
-	farcall FarPtr_CopySceneTilemapRect ; $5163
+	script_copy_scene_rect $20, $00, $00, $00, $16, $18 ; $5157
 	script_set_objdef $28, $03 ; $5166
 	script_set_anim $03, $01 ; $5172
 	script_set_position $04, $1f00, $1500 ; $5179
@@ -1827,13 +1761,7 @@ ShowStoryNarration_13:
 	script_set_position $04, $3f00, $3f00 ; $5a35
 	script_set_active $00, $00 ; $5a40
 	script_set_active $02, $00 ; $5a47
-	ld b, $00 ; $5a4e
-	ld c, $20 ; $5a50
-	ld d, $00 ; $5a52
-	ld e, $00 ; $5a54
-	ld h, $16 ; $5a56
-	ld l, $18 ; $5a58
-	farcall FarPtr_CopySceneTilemapRect ; $5a5a
+	script_copy_scene_rect $00, $20, $00, $00, $16, $18 ; $5a4e
 	ld c, $08 ; $5a5d
 	call BeginFadeIn ; $5a5f
 	script_wait_frames $04 ; $5a62

@@ -335,43 +335,19 @@ ComputeMachineCourtProgress:
 	ld a, $00 ; $43a4
 	test_flag $1a, 2 ; $43a6
 	jp z, Label_14_4429 ; $43a9
-	ld b, $1e ; $43ac
-	ld c, $2c ; $43ae
-	ld d, $30 ; $43b0
-	ld e, $2c ; $43b2
-	ld h, $02 ; $43b4
-	ld l, $02 ; $43b6
-	farcall FarPtr_CopySceneTilemapRect ; $43b8
+	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $43ac
 	ld a, $01 ; $43bb
 	test_flag $1a, 3 ; $43bd
 	jp z, Label_14_4429 ; $43c0
-	ld b, $1e ; $43c3
-	ld c, $30 ; $43c5
-	ld d, $30 ; $43c7
-	ld e, $30 ; $43c9
-	ld h, $02 ; $43cb
-	ld l, $02 ; $43cd
-	farcall FarPtr_CopySceneTilemapRect ; $43cf
+	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $43c3
 	ld a, $02 ; $43d2
 	test_flag $1a, 4 ; $43d4
 	jr z, Label_14_4429 ; $43d7
-	ld b, $1e ; $43d9
-	ld c, $34 ; $43db
-	ld d, $30 ; $43dd
-	ld e, $34 ; $43df
-	ld h, $02 ; $43e1
-	ld l, $02 ; $43e3
-	farcall FarPtr_CopySceneTilemapRect ; $43e5
+	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $43d9
 	ld a, $03 ; $43e8
 	test_flag $1a, 5 ; $43ea
 	jr z, Label_14_4429 ; $43ed
-	ld b, $1e ; $43ef
-	ld c, $38 ; $43f1
-	ld d, $30 ; $43f3
-	ld e, $38 ; $43f5
-	ld h, $02 ; $43f7
-	ld l, $02 ; $43f9
-	farcall FarPtr_CopySceneTilemapRect ; $43fb
+	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $43ef
 	ld a, $04 ; $43fe
 	ld b, a ; $4400
 	ld a, $01 ; $4401

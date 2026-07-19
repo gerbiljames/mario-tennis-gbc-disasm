@@ -83,13 +83,7 @@ End17AwardCeremonyInitScript_27:
 	ldh a, [hRomBank] ; $41a4
 	ld hl, End17AwardCeremonyActorsAlt_27 ; $41a6
 	farcall FarPtr_ScriptRespawnLocationActors ; $41a9
-	ld b, $1a ; $41ac
-	ld c, $0d ; $41ae
-	ld d, $08 ; $41b0
-	ld e, $0d ; $41b2
-	ld h, $08 ; $41b4
-	ld l, $03 ; $41b6
-	farcall FarPtr_CopySceneTilemapRect ; $41b8
+	script_copy_scene_rect $1a, $0d, $08, $0d, $08, $03 ; $41ac
 	farcall FarPtr_BeginCutsceneScriptMode ; $41bb
 	jr Label_27_41c7 ; $41be
 Label_27_41c0:
@@ -804,40 +798,16 @@ Label_27_514f:
 Func_27_516b:
 	script_wait_frames $0a ; $516b
 	sound $79 ; $5172
-	ld b, $07 ; $5174
-	ld c, $38 ; $5176
-	ld d, $20 ; $5178
-	ld e, $38 ; $517a
-	ld h, $02 ; $517c
-	ld l, $02 ; $517e
-	farcall FarPtr_CopySceneTilemapRect ; $5180
+	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $5174
 	script_wait_frames $02 ; $5183
-	ld b, $0b ; $518a
-	ld c, $38 ; $518c
-	ld d, $20 ; $518e
-	ld e, $38 ; $5190
-	ld h, $02 ; $5192
-	ld l, $02 ; $5194
-	farcall FarPtr_CopySceneTilemapRect ; $5196
+	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $518a
 	script_wait_frames $04 ; $5199
 	ret ; $51a0
 Func_27_51a1:
 	sound $79 ; $51a1
-	ld b, $07 ; $51a3
-	ld c, $38 ; $51a5
-	ld d, $20 ; $51a7
-	ld e, $38 ; $51a9
-	ld h, $02 ; $51ab
-	ld l, $02 ; $51ad
-	farcall FarPtr_CopySceneTilemapRect ; $51af
+	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $51a3
 	script_wait_frames $02 ; $51b2
-	ld b, $03 ; $51b9
-	ld c, $38 ; $51bb
-	ld d, $20 ; $51bd
-	ld e, $38 ; $51bf
-	ld h, $02 ; $51c1
-	ld l, $02 ; $51c3
-	farcall FarPtr_CopySceneTilemapRect ; $51c5
+	script_copy_scene_rect $03, $38, $20, $38, $02, $02 ; $51b9
 	script_wait_frames $04 ; $51c8
 	ret ; $51cf
 SceneFrameDataHi_27:
@@ -1600,43 +1570,19 @@ Func_27_620f:
 	ld a, $00 ; $620f
 	test_flag $1a, 2 ; $6211
 	jp z, Label_27_626c ; $6214
-	ld b, $1e ; $6217
-	ld c, $2c ; $6219
-	ld d, $30 ; $621b
-	ld e, $2c ; $621d
-	ld h, $02 ; $621f
-	ld l, $02 ; $6221
-	farcall FarPtr_CopySceneTilemapRect ; $6223
+	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $6217
 	ld a, $01 ; $6226
 	test_flag $1a, 3 ; $6228
 	jp z, Label_27_626c ; $622b
-	ld b, $1e ; $622e
-	ld c, $30 ; $6230
-	ld d, $30 ; $6232
-	ld e, $30 ; $6234
-	ld h, $02 ; $6236
-	ld l, $02 ; $6238
-	farcall FarPtr_CopySceneTilemapRect ; $623a
+	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $622e
 	ld a, $02 ; $623d
 	test_flag $1a, 4 ; $623f
 	jr z, Label_27_626c ; $6242
-	ld b, $1e ; $6244
-	ld c, $34 ; $6246
-	ld d, $30 ; $6248
-	ld e, $34 ; $624a
-	ld h, $02 ; $624c
-	ld l, $02 ; $624e
-	farcall FarPtr_CopySceneTilemapRect ; $6250
+	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $6244
 	ld a, $03 ; $6253
 	test_flag $1a, 5 ; $6255
 	jr z, Label_27_626c ; $6258
-	ld b, $1e ; $625a
-	ld c, $38 ; $625c
-	ld d, $30 ; $625e
-	ld e, $38 ; $6260
-	ld h, $02 ; $6262
-	ld l, $02 ; $6264
-	farcall FarPtr_CopySceneTilemapRect ; $6266
+	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $625a
 	ld a, $04 ; $6269
 	ld b, a ; $626b
 Label_27_626c:
@@ -2280,71 +2226,23 @@ Label_27_6f7d:
 	INCBIN "data/bank_027/d_710d.bin" ; $710d, 94 bytes
 Func_27_716b:
 	sound $71 ; $716b
-	ld b, $14 ; $716d
-	ld c, $08 ; $716f
-	ld d, $06 ; $7171
-	ld e, $15 ; $7173
-	ld h, $02 ; $7175
-	ld l, $02 ; $7177
-	farcall FarPtr_CopySceneTilemapRect ; $7179
-	ld b, $00 ; $717c
-	ld c, $15 ; $717e
-	ld d, $14 ; $7180
-	ld e, $08 ; $7182
-	ld h, $02 ; $7184
-	ld l, $02 ; $7186
-	farcall FarPtr_CopySceneTilemapRect ; $7188
+	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $716d
+	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $717c
 	script_wait_frames $02 ; $718b
-	ld b, $02 ; $7192
-	ld c, $15 ; $7194
-	ld d, $14 ; $7196
-	ld e, $08 ; $7198
-	ld h, $02 ; $719a
-	ld l, $02 ; $719c
-	farcall FarPtr_CopySceneTilemapRect ; $719e
+	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $7192
 	script_wait_frames $02 ; $71a1
-	ld b, $04 ; $71a8
-	ld c, $15 ; $71aa
-	ld d, $14 ; $71ac
-	ld e, $08 ; $71ae
-	ld h, $02 ; $71b0
-	ld l, $02 ; $71b2
-	farcall FarPtr_CopySceneTilemapRect ; $71b4
+	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $71a8
 	script_wait_frames $02 ; $71b7
 	ret ; $71be
 Func_27_71bf:
 	sound $71 ; $71bf
-	ld b, $04 ; $71c1
-	ld c, $15 ; $71c3
-	ld d, $14 ; $71c5
-	ld e, $08 ; $71c7
-	ld h, $02 ; $71c9
-	ld l, $02 ; $71cb
-	farcall FarPtr_CopySceneTilemapRect ; $71cd
+	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $71c1
 	script_wait_frames $01 ; $71d0
-	ld b, $02 ; $71d7
-	ld c, $15 ; $71d9
-	ld d, $14 ; $71db
-	ld e, $08 ; $71dd
-	ld h, $02 ; $71df
-	ld l, $02 ; $71e1
-	farcall FarPtr_CopySceneTilemapRect ; $71e3
+	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $71d7
 	script_wait_frames $01 ; $71e6
-	ld b, $00 ; $71ed
-	ld c, $15 ; $71ef
-	ld d, $14 ; $71f1
-	ld e, $08 ; $71f3
-	ld h, $02 ; $71f5
-	ld l, $02 ; $71f7
-	farcall FarPtr_CopySceneTilemapRect ; $71f9
+	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $71ed
 	script_wait_frames $01 ; $71fc
-	ld b, $06 ; $7203
-	ld c, $15 ; $7205
-	ld d, $14 ; $7207
-	ld e, $08 ; $7209
-	ld h, $02 ; $720b
-	ld l, $02 ; $720d
-	farcall FarPtr_CopySceneTilemapRect ; $720f
+	script_copy_scene_rect $06, $15, $14, $08, $02, $02 ; $7203
 	ret ; $7212
 End1MainBldgMapScripts_27:
 	; $7213, 14 bytes (map_tree)

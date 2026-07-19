@@ -305,6 +305,21 @@ MACRO script_wait_frames
 	pop af
 ENDM
 
+; Copy a width x height tile rectangle between two scene-tilemap cells
+; (CopySceneTilemapRect, $0a:$619e -- CopyMemoryBC of `width` tiles per row for
+; `height` rows). Source cell is (src_col, src_row), dest cell (dst_col,
+; dst_row); addresses via GetSceneTilemapAddr ($d000 + col + row*$40).
+; Usage: script_copy_scene_rect src_col, src_row, dst_col, dst_row, width, height
+MACRO script_copy_scene_rect
+	ld b, \1
+	ld c, \2
+	ld d, \3
+	ld e, \4
+	ld h, \5
+	ld l, \6
+	farcall FarPtr_CopySceneTilemapRect
+ENDM
+
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):
 ; copy a `rows`-tall, 2-tile-wide rectangle from `src` to `dest` in the BG
 ; tilemap shadow. Lists live in MatchResultTilemapScripts_16, one per result

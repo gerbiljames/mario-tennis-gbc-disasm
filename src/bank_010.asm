@@ -3942,40 +3942,16 @@ Label_10_7314:
 Func_10_7339:
 	script_wait_frames $0a ; $7339
 	sound $79 ; $7340
-	ld b, $07 ; $7342
-	ld c, $38 ; $7344
-	ld d, $20 ; $7346
-	ld e, $38 ; $7348
-	ld h, $02 ; $734a
-	ld l, $02 ; $734c
-	farcall FarPtr_CopySceneTilemapRect ; $734e
+	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7342
 	script_wait_frames $02 ; $7351
-	ld b, $0b ; $7358
-	ld c, $38 ; $735a
-	ld d, $20 ; $735c
-	ld e, $38 ; $735e
-	ld h, $02 ; $7360
-	ld l, $02 ; $7362
-	farcall FarPtr_CopySceneTilemapRect ; $7364
+	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $7358
 	script_wait_frames $04 ; $7367
 	ret ; $736e
 Func_10_736f:
 	sound $79 ; $736f
-	ld b, $07 ; $7371
-	ld c, $38 ; $7373
-	ld d, $20 ; $7375
-	ld e, $38 ; $7377
-	ld h, $02 ; $7379
-	ld l, $02 ; $737b
-	farcall FarPtr_CopySceneTilemapRect ; $737d
+	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7371
 	script_wait_frames $02 ; $7380
-	ld b, $03 ; $7387
-	ld c, $38 ; $7389
-	ld d, $20 ; $738b
-	ld e, $38 ; $738d
-	ld h, $02 ; $738f
-	ld l, $02 ; $7391
-	farcall FarPtr_CopySceneTilemapRect ; $7393
+	script_copy_scene_rect $03, $38, $20, $38, $02, $02 ; $7387
 	script_wait_frames $04 ; $7396
 	ret ; $739d
 	; $739e, 80 bytes (bytes:14)

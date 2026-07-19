@@ -36,6 +36,14 @@ banks**; the `ld hl` load sites resolve to the labels. One dynamic-length list
 with no $80 terminator ($1b:$6572, bounded by the sprite-queue cap) is left as a
 blob. Match-result pair keeps curated names (`ResultSpriteTemplateLeft/Right_16`).
 
+### script_copy_scene_rect macro (2026-07-19)
+
+Added a `script_copy_scene_rect src_col, src_row, dst_col, dst_row, width, height`
+command to `SCRIPT_COMMANDS`: the six `ld b/c/d/e/h/l` immediates feeding
+`farcall FarPtr_CopySceneTilemapRect` (`CopySceneTilemapRect`, `$0a:$619e`, which
+copies a tile rectangle between two scene-tilemap cells via `GetSceneTilemapAddr`).
+Collapses all 61 call sites across banks $0e/$0f/$10/$12/$13/$14/$27. Byte-perfect.
+
 ### Bank $39 tilemap-assembly dispatch (2026-07-19)
 
 `$39:$4e60` was a `records:2` blob (L1/L2 pointer tables) plus a separate

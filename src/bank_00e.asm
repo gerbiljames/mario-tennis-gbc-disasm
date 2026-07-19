@@ -63,20 +63,8 @@ Func_0e_4145:
 	script_set_speed $00, $0010 ; $414d
 	script_set_speed $02, $0010 ; $4155
 	farcall FarPtr_WaitPlayerMoveDone ; $415d
-	ld b, $0a ; $4160
-	ld c, $0a ; $4162
-	ld d, $3d ; $4164
-	ld e, $0c ; $4166
-	ld h, $02 ; $4168
-	ld l, $02 ; $416a
-	farcall FarPtr_CopySceneTilemapRect ; $416c
-	ld b, $3d ; $416f
-	ld c, $0a ; $4171
-	ld d, $0a ; $4173
-	ld e, $0a ; $4175
-	ld h, $02 ; $4177
-	ld l, $02 ; $4179
-	farcall FarPtr_CopySceneTilemapRect ; $417b
+	script_copy_scene_rect $0a, $0a, $3d, $0c, $02, $02 ; $4160
+	script_copy_scene_rect $3d, $0a, $0a, $0a, $02, $02 ; $416f
 	script_wait_frames $02 ; $417e
 	ld c, $08 ; $4185
 	call BeginFadeIn ; $4187
@@ -85,29 +73,11 @@ Func_0e_4145:
 	script_wait_move $00 ; $4198
 	sound $71 ; $419d
 	script_wait_frames $02 ; $419f
-	ld b, $3a ; $41a6
-	ld c, $0a ; $41a8
-	ld d, $0a ; $41aa
-	ld e, $0a ; $41ac
-	ld h, $02 ; $41ae
-	ld l, $02 ; $41b0
-	farcall FarPtr_CopySceneTilemapRect ; $41b2
+	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $41a6
 	script_wait_frames $02 ; $41b5
-	ld b, $37 ; $41bc
-	ld c, $0a ; $41be
-	ld d, $0a ; $41c0
-	ld e, $0a ; $41c2
-	ld h, $02 ; $41c4
-	ld l, $02 ; $41c6
-	farcall FarPtr_CopySceneTilemapRect ; $41c8
+	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $41bc
 	script_wait_frames $02 ; $41cb
-	ld b, $3d ; $41d2
-	ld c, $0c ; $41d4
-	ld d, $0a ; $41d6
-	ld e, $0a ; $41d8
-	ld h, $02 ; $41da
-	ld l, $02 ; $41dc
-	farcall FarPtr_CopySceneTilemapRect ; $41de
+	script_copy_scene_rect $3d, $0c, $0a, $0a, $02, $02 ; $41d2
 Label_0e_41e1:
 	ret ; $41e1
 Func_0e_41e2:
@@ -117,20 +87,8 @@ Func_0e_41e2:
 	script_set_speed $00, $0010 ; $41e9
 	script_set_speed $02, $0010 ; $41f1
 	farcall FarPtr_WaitPlayerMoveDone ; $41f9
-	ld b, $0a ; $41fc
-	ld c, $0a ; $41fe
-	ld d, $3d ; $4200
-	ld e, $0c ; $4202
-	ld h, $02 ; $4204
-	ld l, $02 ; $4206
-	farcall FarPtr_CopySceneTilemapRect ; $4208
-	ld b, $3d ; $420b
-	ld c, $0a ; $420d
-	ld d, $14 ; $420f
-	ld e, $0a ; $4211
-	ld h, $02 ; $4213
-	ld l, $02 ; $4215
-	farcall FarPtr_CopySceneTilemapRect ; $4217
+	script_copy_scene_rect $0a, $0a, $3d, $0c, $02, $02 ; $41fc
+	script_copy_scene_rect $3d, $0a, $14, $0a, $02, $02 ; $420b
 	ld c, $08 ; $421a
 	call BeginFadeIn ; $421c
 	call WaitFadeEnd ; $421f
@@ -138,29 +96,11 @@ Func_0e_41e2:
 	script_wait_move $00 ; $422d
 	sound $71 ; $4232
 	script_wait_frames $02 ; $4234
-	ld b, $3a ; $423b
-	ld c, $0a ; $423d
-	ld d, $14 ; $423f
-	ld e, $0a ; $4241
-	ld h, $02 ; $4243
-	ld l, $02 ; $4245
-	farcall FarPtr_CopySceneTilemapRect ; $4247
+	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $423b
 	script_wait_frames $02 ; $424a
-	ld b, $37 ; $4251
-	ld c, $0a ; $4253
-	ld d, $14 ; $4255
-	ld e, $0a ; $4257
-	ld h, $02 ; $4259
-	ld l, $02 ; $425b
-	farcall FarPtr_CopySceneTilemapRect ; $425d
+	script_copy_scene_rect $37, $0a, $14, $0a, $02, $02 ; $4251
 	script_wait_frames $02 ; $4260
-	ld b, $3d ; $4267
-	ld c, $0c ; $4269
-	ld d, $14 ; $426b
-	ld e, $0a ; $426d
-	ld h, $02 ; $426f
-	ld l, $02 ; $4271
-	farcall FarPtr_CopySceneTilemapRect ; $4273
+	script_copy_scene_rect $3d, $0c, $14, $0a, $02, $02 ; $4267
 	ret ; $4276
 TrainingGymExitTriggers_0e:
 	; $4277, 25 bytes (map_scripts)
@@ -176,29 +116,11 @@ Func_0e_4290:
 	script_wait_move $00 ; $42b1
 	farcall FarPtr_WaitPlayerMoveDone ; $42b6
 	sound $71 ; $42b9
-	ld b, $37 ; $42bb
-	ld c, $0a ; $42bd
-	ld d, $0a ; $42bf
-	ld e, $0a ; $42c1
-	ld h, $02 ; $42c3
-	ld l, $02 ; $42c5
-	farcall FarPtr_CopySceneTilemapRect ; $42c7
+	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $42bb
 	script_wait_frames $02 ; $42ca
-	ld b, $3a ; $42d1
-	ld c, $0a ; $42d3
-	ld d, $0a ; $42d5
-	ld e, $0a ; $42d7
-	ld h, $02 ; $42d9
-	ld l, $02 ; $42db
-	farcall FarPtr_CopySceneTilemapRect ; $42dd
+	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $42d1
 	script_wait_frames $02 ; $42e0
-	ld b, $3d ; $42e7
-	ld c, $0a ; $42e9
-	ld d, $0a ; $42eb
-	ld e, $0a ; $42ed
-	ld h, $02 ; $42ef
-	ld l, $02 ; $42f1
-	farcall FarPtr_CopySceneTilemapRect ; $42f3
+	script_copy_scene_rect $3d, $0a, $0a, $0a, $02, $02 ; $42e7
 	script_wait_frames $02 ; $42f6
 	script_move_angle $00, $c0, $0100 ; $42fd
 	ld c, $08 ; $4307
@@ -214,29 +136,11 @@ Func_0e_431b:
 	script_wait_move $00 ; $433c
 	farcall FarPtr_WaitPlayerMoveDone ; $4341
 	sound $71 ; $4344
-	ld b, $37 ; $4346
-	ld c, $0a ; $4348
-	ld d, $14 ; $434a
-	ld e, $0a ; $434c
-	ld h, $02 ; $434e
-	ld l, $02 ; $4350
-	farcall FarPtr_CopySceneTilemapRect ; $4352
+	script_copy_scene_rect $37, $0a, $14, $0a, $02, $02 ; $4346
 	script_wait_frames $02 ; $4355
-	ld b, $3a ; $435c
-	ld c, $0a ; $435e
-	ld d, $14 ; $4360
-	ld e, $0a ; $4362
-	ld h, $02 ; $4364
-	ld l, $02 ; $4366
-	farcall FarPtr_CopySceneTilemapRect ; $4368
+	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $435c
 	script_wait_frames $02 ; $436b
-	ld b, $3d ; $4372
-	ld c, $0a ; $4374
-	ld d, $14 ; $4376
-	ld e, $0a ; $4378
-	ld h, $02 ; $437a
-	ld l, $02 ; $437c
-	farcall FarPtr_CopySceneTilemapRect ; $437e
+	script_copy_scene_rect $3d, $0a, $14, $0a, $02, $02 ; $4372
 	script_wait_frames $02 ; $4381
 	script_move_angle $00, $c0, $0100 ; $4388
 	ld c, $08 ; $4392
@@ -2877,27 +2781,9 @@ Func_0e_7150:
 	ld [hl+], a ; $718f
 	ld [hl+], a ; $7190
 	ld [hl+], a ; $7191
-	ld b, $00 ; $7192
-	ld c, $2b ; $7194
-	ld d, $1a ; $7196
-	ld e, $0c ; $7198
-	ld h, $04 ; $719a
-	ld l, $02 ; $719c
-	farcall FarPtr_CopySceneTilemapRect ; $719e
-	ld b, $04 ; $71a1
-	ld c, $2d ; $71a3
-	ld d, $14 ; $71a5
-	ld e, $14 ; $71a7
-	ld h, $06 ; $71a9
-	ld l, $02 ; $71ab
-	farcall FarPtr_CopySceneTilemapRect ; $71ad
-	ld b, $0a ; $71b0
-	ld c, $2b ; $71b2
-	ld d, $1a ; $71b4
-	ld e, $12 ; $71b6
-	ld h, $06 ; $71b8
-	ld l, $02 ; $71ba
-	farcall FarPtr_CopySceneTilemapRect ; $71bc
+	script_copy_scene_rect $00, $2b, $1a, $0c, $04, $02 ; $7192
+	script_copy_scene_rect $04, $2d, $14, $14, $06, $02 ; $71a1
+	script_copy_scene_rect $0a, $2b, $1a, $12, $06, $02 ; $71b0
 	sound $09 ; $71bf
 	ld a, $01 ; $71c1
 	ld hl, $71e9 ; $71c3

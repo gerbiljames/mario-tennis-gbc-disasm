@@ -1118,43 +1118,19 @@ SetupWallPracticeLevelSigns:
 	ld a, $00 ; $505f
 	test_flag $1a, 6 ; $5061
 	jp z, Label_12_50c8 ; $5064
-	ld b, $1e ; $5067
-	ld c, $2c ; $5069
-	ld d, $02 ; $506b
-	ld e, $2c ; $506d
-	ld h, $02 ; $506f
-	ld l, $02 ; $5071
-	farcall FarPtr_CopySceneTilemapRect ; $5073
+	script_copy_scene_rect $1e, $2c, $02, $2c, $02, $02 ; $5067
 	ld a, $01 ; $5076
 	test_flag $1a, 7 ; $5078
 	jr z, Label_12_50c8 ; $507b
-	ld b, $1e ; $507d
-	ld c, $30 ; $507f
-	ld d, $06 ; $5081
-	ld e, $2c ; $5083
-	ld h, $02 ; $5085
-	ld l, $02 ; $5087
-	farcall FarPtr_CopySceneTilemapRect ; $5089
+	script_copy_scene_rect $1e, $30, $06, $2c, $02, $02 ; $507d
 	ld a, $02 ; $508c
 	test_flag $1b, 0 ; $508e
 	jr z, Label_12_50c8 ; $5091
-	ld b, $1e ; $5093
-	ld c, $34 ; $5095
-	ld d, $10 ; $5097
-	ld e, $2c ; $5099
-	ld h, $02 ; $509b
-	ld l, $02 ; $509d
-	farcall FarPtr_CopySceneTilemapRect ; $509f
+	script_copy_scene_rect $1e, $34, $10, $2c, $02, $02 ; $5093
 	ld a, $03 ; $50a2
 	test_flag $1b, 1 ; $50a4
 	jr z, Label_12_50c8 ; $50a7
-	ld b, $1e ; $50a9
-	ld c, $38 ; $50ab
-	ld d, $14 ; $50ad
-	ld e, $2c ; $50af
-	ld h, $02 ; $50b1
-	ld l, $02 ; $50b3
-	farcall FarPtr_CopySceneTilemapRect ; $50b5
+	script_copy_scene_rect $1e, $38, $14, $2c, $02, $02 ; $50a9
 	ld a, $04 ; $50b8
 	test_flag $1b, 3 ; $50ba
 	jr z, Label_12_50c8 ; $50bd

@@ -1974,6 +1974,11 @@ SCRIPT_COMMANDS = (
     ("script_wait_frames",
         ((0xF5, 1, 'x'), (0x3E, 2, 'b'), ('F', "FarPtr_WaitScriptFrames"),
          (0xF1, 1, 'x'))),
+    # Copy a width x height tile rectangle between two scene-tilemap cells:
+    # source (b=col, c=row) -> dest (d=col, e=row), h=width, l=height.
+    ("script_copy_scene_rect",
+        ((0x06, 2, 'b'), (0x0E, 2, 'b'), (0x16, 2, 'b'), (0x1E, 2, 'b'),
+         (0x26, 2, 'b'), (0x2E, 2, 'b'), ('F', "FarPtr_CopySceneTilemapRect"))),
 )
 
 
@@ -2378,6 +2383,21 @@ MACRO script_wait_frames
 	ld a, \\1
 	farcall FarPtr_WaitScriptFrames
 	pop af
+ENDM
+
+; Copy a width x height tile rectangle between two scene-tilemap cells
+; (CopySceneTilemapRect, $0a:$619e -- CopyMemoryBC of `width` tiles per row for
+; `height` rows). Source cell is (src_col, src_row), dest cell (dst_col,
+; dst_row); addresses via GetSceneTilemapAddr ($d000 + col + row*$40).
+; Usage: script_copy_scene_rect src_col, src_row, dst_col, dst_row, width, height
+MACRO script_copy_scene_rect
+	ld b, \\1
+	ld c, \\2
+	ld d, \\3
+	ld e, \\4
+	ld h, \\5
+	ld l, \\6
+	farcall FarPtr_CopySceneTilemapRect
 ENDM
 
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):

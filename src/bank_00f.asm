@@ -1006,13 +1006,7 @@ AwardsCeremonyInitScript_0f:
 	ld hl, AwardsCeremonyScriptsDoubles_0f ; $558e
 	ld de, $000c ; $5591
 	farcall FarPtr_WriteStoryStateWord ; $5594
-	ld b, $1a ; $5597
-	ld c, $0d ; $5599
-	ld d, $08 ; $559b
-	ld e, $0d ; $559d
-	ld h, $08 ; $559f
-	ld l, $03 ; $55a1
-	farcall FarPtr_CopySceneTilemapRect ; $55a3
+	script_copy_scene_rect $1a, $0d, $08, $0d, $08, $03 ; $5597
 	farcall FarPtr_BeginCutsceneScriptMode ; $55a6
 Label_0f_55a9:
 	script_set_anim $0e, $08 ; $55a9
