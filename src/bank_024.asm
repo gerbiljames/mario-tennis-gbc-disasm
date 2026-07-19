@@ -1,19 +1,19 @@
 SECTION "ROM Bank $24", ROMX[$4000], BANK[$24]
 
-FarPtr_24_00:
-	dw Func_24_4589 ; $4000
-FarPtr_24_02:
-	dw Func_24_51a0 ; $4002
+FarPtr_ShotBallPathLob:
+	dw ShotBallPathLob ; $4000
+FarPtr_ShotBallPathDrop:
+	dw ShotBallPathDrop ; $4002
 FarPtr_24_04:
 	dw Func_24_57fd ; $4004
-FarPtr_24_06:
-	dw Func_24_6644 ; $4006
-FarPtr_24_08:
-	dw Func_24_6696 ; $4008
+FarPtr_ShotBallPathNeutral:
+	dw ShotBallPathNeutral ; $4006
+FarPtr_ShotBallPathSmash:
+	dw ShotBallPathSmash ; $4008
 FarPtr_24_0a:
 	dw Func_24_6706 ; $400a
-FarPtr_24_0c:
-	dw Func_24_7707 ; $400c
+FarPtr_ShotBallPathReach:
+	dw ShotBallPathReach ; $400c
 Func_24_400e:
 	push hl ; $400e
 	ld l, e ; $400f
@@ -440,7 +440,7 @@ Label_24_4284:
 	add hl, de ; $4287
 	ret ; $4288
 	INCBIN "data/bank_024/d_4289.bin" ; $4289, 768 bytes
-Func_24_4589:
+ShotBallPathLob:
 	farcall FarPtr_ComputeShotPlacement ; $4589
 	ld hl, $4289 ; $458c
 	ld bc, $459c ; $458f
@@ -558,7 +558,7 @@ Label_24_4d1f:
 	add hl, bc ; $4d45
 	sub a, b ; $4d46
 	INCBIN "data/bank_024/d_4d47.bin" ; $4d47, 1113 bytes
-Func_24_51a0:
+ShotBallPathDrop:
 	farcall FarPtr_ComputeShotPlacement ; $51a0
 	ld hl, $45a0 ; $51a3
 	ld bc, $51b9 ; $51a6
@@ -608,7 +608,7 @@ Label_24_5824:
 	call Func_24_4169 ; $5838
 	ret ; $583b
 	INCBIN "data/bank_024/d_583c.bin" ; $583c, 3592 bytes
-Func_24_6644:
+ShotBallPathNeutral:
 	farcall FarPtr_ComputeShotPlacement ; $6644
 	push bc ; $6647
 	ld hl, $5844 ; $6648
@@ -650,7 +650,7 @@ Func_24_6644:
 	dw $0d00 ; record 29
 	dw $0d00 ; record 30
 	dw $0d00 ; record 31
-Func_24_6696:
+ShotBallPathSmash:
 	farcall FarPtr_ComputeShotPlacement ; $6696
 	push bc ; $6699
 	ld hl, $c48c ; $669a
@@ -730,7 +730,7 @@ Label_24_66b0:
 Func_24_6706:
 	ret ; $6706
 	INCBIN "data/bank_024/d_6707.bin" ; $6707, 4096 bytes
-Func_24_7707:
+ShotBallPathReach:
 	farcall FarPtr_ComputeShotPlacement ; $7707
 	push bc ; $770a
 	ld hl, $6707 ; $770b

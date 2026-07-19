@@ -1,7 +1,7 @@
 SECTION "ROM Bank $2a", ROMX[$4000], BANK[$2a]
 
-FarPtr_2a_00:
-	dw Func_2a_5e9d ; $4000
+FarPtr_ShotBallPathServeSlice:
+	dw ShotBallPathServeSlice ; $4000
 Func_2a_4002:
 	push hl ; $4002
 	ld l, e ; $4003
@@ -482,7 +482,7 @@ Label_2a_4278:
 	ret ; $427c
 BallPosData_2a:
 	INCBIN "data/bank_02a/d_427d.bin" ; $427d, 7200 bytes
-Func_2a_5e9d:
+ShotBallPathServeSlice:
 	farcall FarPtr_ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_2a ; $5ea0
 	ld bc, BallPosBlockOffsets_2a ; $5ea3

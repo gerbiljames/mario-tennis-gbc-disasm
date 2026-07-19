@@ -3579,5 +3579,20 @@
  "0x1d061": "ShotPlacementDataDrop_07",
  "0x1d071": "ShotPlacementDataServeTopspin_07",
  "0x1d0c1": "ShotPlacementDataServeSlice_07",
- "0x1d111": "ShotPlacementDataServeFlat_07"
+ "0x1d111": "ShotPlacementDataServeFlat_07",
+ "0x1d9c5": "ExecuteShotServeTopspin",
+ "0x1d9d2": "ExecuteShotServeSlice",
+ "0x1d9df": "ExecuteShotServeFlat",
+ "0x83e7d": "ShotBallPathSlice",
+ "0x87e7d": "ShotBallPathPowerSlice",
+ "0x8be7d": "ShotBallPathTopspin",
+ "0x8fe7d": "ShotBallPathPowerTopspin",
+ "0x90589": "ShotBallPathLob",
+ "0x911a0": "ShotBallPathDrop",
+ "0x92644": "ShotBallPathNeutral",
+ "0x92696": "ShotBallPathSmash",
+ "0x93707": "ShotBallPathReach",
+ "0xa5e9d": "ShotBallPathServeTopspin",
+ "0xa9e9d": "ShotBallPathServeSlice",
+ "0xade9d": "ShotBallPathServeFlat"
 }

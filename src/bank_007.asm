@@ -2573,9 +2573,9 @@ Label_07_541c:
 	dw ExecuteShotSmash ; $5457 jumptable
 	dw ExecuteShotLob ; $5459 jumptable
 	dw ExecuteShotDrop ; $545b jumptable
-	dw Label_07_59c5 ; $545d jumptable
-	dw Label_07_59d2 ; $545f jumptable
-	dw Label_07_59df ; $5461 jumptable
+	dw ExecuteShotServeTopspin ; $545d jumptable
+	dw ExecuteShotServeSlice ; $545f jumptable
+	dw ExecuteShotServeFlat ; $5461 jumptable
 	call ApplyShotRecoil ; $5463
 	xor a, a ; $5466
 	ld [$df4b], a ; $5467
@@ -3305,7 +3305,7 @@ ExecuteShotTopspin:
 	call ApplyShotTypePresets ; $58c6
 	call WeakenShotByCharge ; $58c9
 	call ComputeShotTrajectory ; $58cc
-	farcall FarPtr_22_00 ; $58cf
+	farcall FarPtr_ShotBallPathTopspin ; $58cf
 	ret ; $58d2
 ExecuteShotPowerTopspin:
 	ld hl, $df0f ; $58d3
@@ -3316,7 +3316,7 @@ ExecuteShotPowerTopspin:
 	call NormalizeBallHeightForShot ; $58df
 	call ApplyShotTypePresets ; $58e2
 	call ComputeShotTrajectory ; $58e5
-	farcall FarPtr_23_00 ; $58e8
+	farcall FarPtr_ShotBallPathPowerTopspin ; $58e8
 	ret ; $58eb
 ExecuteShotSlice:
 	ld a, SHOTTYPE_SLICE ; $58ec
@@ -3325,7 +3325,7 @@ ExecuteShotSlice:
 	call ApplyShotTypePresets ; $58f4
 	call WeakenShotByCharge ; $58f7
 	call ComputeShotTrajectory ; $58fa
-	farcall FarPtr_20_00 ; $58fd
+	farcall FarPtr_ShotBallPathSlice ; $58fd
 	ret ; $5900
 ExecuteShotPowerSlice:
 	ld hl, $df0f ; $5901
@@ -3336,7 +3336,7 @@ ExecuteShotPowerSlice:
 	call NormalizeBallHeightForShot ; $590d
 	call ApplyShotTypePresets ; $5910
 	call ComputeShotTrajectory ; $5913
-	farcall FarPtr_21_00 ; $5916
+	farcall FarPtr_ShotBallPathPowerSlice ; $5916
 	ret ; $5919
 ExecuteShotLob:
 	call RaiseBallHeightForLob ; $591a
@@ -3344,14 +3344,14 @@ ExecuteShotLob:
 	call BoostShotByCharge ; $5920
 	call NudgeShotByPlayerMomentum ; $5923
 	farcall FarPtr_ComputeShotTrajectory ; $5926
-	farcall FarPtr_24_00 ; $5929
+	farcall FarPtr_ShotBallPathLob ; $5929
 	ret ; $592c
 ExecuteShotDrop:
 	call RaiseBallHeightForLob ; $592d
 	call ApplyShotTypePresets ; $5930
 	call WeakenShotByCharge ; $5933
 	call ComputeShotTrajectory ; $5936
-	farcall FarPtr_24_02 ; $5939
+	farcall FarPtr_ShotBallPathDrop ; $5939
 	ret ; $593c
 ExecuteShotReachBasic:
 	call CheckBallInSmashRange ; $593d
@@ -3387,7 +3387,7 @@ ExecuteShotReach:
 	call ApplyShotTypePresets ; $5984
 	call WeakenShotByCharge ; $5987
 	call ComputeShotTrajectory ; $598a
-	farcall FarPtr_24_0c ; $598d
+	farcall FarPtr_ShotBallPathReach ; $598d
 	ret ; $5990
 ExecuteShotSmash:
 	ld a, SHOTTYPE_SMASH ; $5991
@@ -3397,7 +3397,7 @@ ExecuteShotSmash:
 	call NormalizeBallHeightForShot ; $599b
 	call ApplyShotTypePresets ; $599e
 	call ComputeShotTrajectory ; $59a1
-	farcall FarPtr_24_08 ; $59a4
+	farcall FarPtr_ShotBallPathSmash ; $59a4
 	ret ; $59a7
 ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
@@ -3411,24 +3411,24 @@ Label_07_59b8:
 	call NormalizeBallHeightForShot ; $59b8
 	call ApplyShotTypePresets ; $59bb
 	call ComputeShotTrajectory ; $59be
-	farcall FarPtr_24_06 ; $59c1
+	farcall FarPtr_ShotBallPathNeutral ; $59c1
 	ret ; $59c4
-Label_07_59c5:
+ExecuteShotServeTopspin:
 	call ApplyShotTypePresets ; $59c5
 	call ComputeShotTrajectory ; $59c8
-	farcall FarPtr_29_00 ; $59cb
+	farcall FarPtr_ShotBallPathServeTopspin ; $59cb
 	call Func_07_5a01 ; $59ce
 	ret ; $59d1
-Label_07_59d2:
+ExecuteShotServeSlice:
 	call ApplyShotTypePresets ; $59d2
 	call ComputeShotTrajectory ; $59d5
-	farcall FarPtr_2a_00 ; $59d8
+	farcall FarPtr_ShotBallPathServeSlice ; $59d8
 	call Func_07_5a01 ; $59db
 	ret ; $59de
-Label_07_59df:
+ExecuteShotServeFlat:
 	call ApplyShotTypePresets ; $59df
 	call ComputeShotTrajectory ; $59e2
-	farcall FarPtr_2b_00 ; $59e5
+	farcall FarPtr_ShotBallPathServeFlat ; $59e5
 	call Func_07_5a01 ; $59e8
 	ret ; $59eb
 	ld hl, wBallHeight ; $59ec

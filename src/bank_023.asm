@@ -1,7 +1,7 @@
 SECTION "ROM Bank $23", ROMX[$4000], BANK[$23]
 
-FarPtr_23_00:
-	dw Func_23_7e7d ; $4000
+FarPtr_ShotBallPathPowerTopspin:
+	dw ShotBallPathPowerTopspin ; $4000
 Func_23_4002:
 	push hl ; $4002
 	ld l, e ; $4003
@@ -482,7 +482,7 @@ Label_23_4278:
 	ret ; $427c
 BallPosData_23:
 	INCBIN "data/bank_023/d_427d.bin" ; $427d, 15360 bytes
-Func_23_7e7d:
+ShotBallPathPowerTopspin:
 	farcall FarPtr_ComputeShotPlacement ; $7e7d
 	push bc ; $7e80
 	ld hl, BallPosData_23 ; $7e81

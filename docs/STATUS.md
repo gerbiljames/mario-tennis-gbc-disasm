@@ -21,6 +21,23 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Name the per-shot-type ball-path banks (2026-07-19)
+
+The executor table's last step per shot type is `farcall FarPtr_XX_00` into a
+dedicated ball-path bank; each target was confirmed to have exactly one caller
+(its `ExecuteShot<Type>` handler) and follows the same shape (`farcall
+ComputeShotPlacement` then apply the bank's `BallPos*` tables). Named the 12
+entry points `ShotBallPath<Type>`: `$20`=Slice, `$21`=PowerSlice, `$22`=Topspin,
+`$23`=PowerTopspin; bank `$24`'s multi-entry table = Lob(`_00`)/Drop(`_02`)/
+Neutral(`_06`)/Smash(`_08`)/Reach(`_0c`); `$29`/`$2a`/`$2b` = the three serves.
+(`FarPtr_24_04` is a 9-caller shared helper and `FarPtr_24_0a` is unused — left
+unnamed.)
+
+Also completed the executor jump table itself: it has 15 entries like
+`ComputeShotPlacement`, and the `$0c`-`$0e` serve slots were still
+`Label_07_*` -> `ExecuteShotServe{Topspin,Slice,Flat}` (they dispatch into
+`$29`/`$2a`/`$2b`). Byte-perfect.
+
 ### Carve the shot-placement sub-tables (2026-07-19)
 
 The `$07:$4d21` blob (1088 bytes) was the backing data for the 15
