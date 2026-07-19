@@ -3563,5 +3563,21 @@
  "0x1d268": "ShotPlacementDrop",
  "0x1d275": "ShotPlacementServeTopspin",
  "0x1d284": "ShotPlacementServeSlice",
- "0x1d293": "ShotPlacementServeFlat"
+ "0x1d293": "ShotPlacementServeFlat",
+ "0x1cd21": "LinkStateBytePtrs_07",
+ "0x1cd31": "ShotPlacementDataTopspin_07",
+ "0x1cd81": "ShotPlacementDataPowerTopspin_07",
+ "0x1cdd1": "ShotPlacementDataSlice_07",
+ "0x1ce21": "ShotPlacementDataPowerSlice_07",
+ "0x1ce71": "ShotPlacementDataNeutral_07",
+ "0x1cec1": "ShotPlacementDataSmash_07",
+ "0x1cf11": "ShotPlacementDataReachBasic_07",
+ "0x1cf61": "ShotPlacementDataReachPowerTopspin_07",
+ "0x1cfb1": "ShotPlacementDataReachPowerSlice_07",
+ "0x1d001": "ShotPlacementDataReach_07",
+ "0x1d051": "ShotPlacementDataLob_07",
+ "0x1d061": "ShotPlacementDataDrop_07",
+ "0x1d071": "ShotPlacementDataServeTopspin_07",
+ "0x1d0c1": "ShotPlacementDataServeSlice_07",
+ "0x1d111": "ShotPlacementDataServeFlat_07"
 }

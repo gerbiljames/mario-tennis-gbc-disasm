@@ -21,6 +21,19 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Carve the shot-placement sub-tables (2026-07-19)
+
+The `$07:$4d21` blob (1088 bytes) was the backing data for the 15
+`ShotPlacement<Type>` handlers: each does `ld hl, <base>` then
+`LoadShotPlacementEntry`, which indexes 8-byte rows (`d`=row -> bytes 0-3 =
+two scalars + a signed 16-bit; `e`=row -> bytes 4-5). The 15 bases are spaced
+0x50 (10 rows) apart, except Lob (`$5051`) and Drop (`$5061`) at 0x10 (2 rows).
+Split the blob at those bases into `ShotPlacementData<Type>_07` (13x80 + 2x16),
+so every handler's base pointer now resolves. The blob's leading 16 bytes turned
+out not to be placement data at all — it's a pointer-pair table indexed by
+`[$ffdd]` and dereferenced by `ComposeLinkStateByte` (`$4cfe`), carved off as
+`LinkStateBytePtrs_07`. Byte-perfect.
+
 ### Name the shot-type dispatch handlers (2026-07-19)
 
 Two `$07` jump tables dispatch directly on `wCurrentShotType` (`ld a,

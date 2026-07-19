@@ -2084,7 +2084,7 @@ ComposeLinkStateByte:
 	ldh a, [$ffdd] ; $4d00
 	add a, a ; $4d02
 	add a, a ; $4d03
-	ld hl, $4d21 ; $4d04
+	ld hl, LinkStateBytePtrs_07 ; $4d04
 	add a, l ; $4d07
 	ld l, a ; $4d08
 	jr nc, Label_07_4d0c ; $4d09
@@ -2109,7 +2109,38 @@ Label_07_4d0c:
 	pop hl ; $4d1e
 	pop bc ; $4d1f
 	ret ; $4d20
-	INCBIN "data/bank_007/d_4d21.bin" ; $4d21, 1088 bytes
+LinkStateBytePtrs_07:
+	INCBIN "data/bank_007/d_4d21.bin" ; $4d21, 16 bytes
+ShotPlacementDataTopspin_07:
+	INCBIN "data/bank_007/d_4d31.bin" ; $4d31, 80 bytes
+ShotPlacementDataPowerTopspin_07:
+	INCBIN "data/bank_007/d_4d81.bin" ; $4d81, 80 bytes
+ShotPlacementDataSlice_07:
+	INCBIN "data/bank_007/d_4dd1.bin" ; $4dd1, 80 bytes
+ShotPlacementDataPowerSlice_07:
+	INCBIN "data/bank_007/d_4e21.bin" ; $4e21, 80 bytes
+ShotPlacementDataNeutral_07:
+	INCBIN "data/bank_007/d_4e71.bin" ; $4e71, 80 bytes
+ShotPlacementDataSmash_07:
+	INCBIN "data/bank_007/d_4ec1.bin" ; $4ec1, 80 bytes
+ShotPlacementDataReachBasic_07:
+	INCBIN "data/bank_007/d_4f11.bin" ; $4f11, 80 bytes
+ShotPlacementDataReachPowerTopspin_07:
+	INCBIN "data/bank_007/d_4f61.bin" ; $4f61, 80 bytes
+ShotPlacementDataReachPowerSlice_07:
+	INCBIN "data/bank_007/d_4fb1.bin" ; $4fb1, 80 bytes
+ShotPlacementDataReach_07:
+	INCBIN "data/bank_007/d_5001.bin" ; $5001, 80 bytes
+ShotPlacementDataLob_07:
+	INCBIN "data/bank_007/d_5051.bin" ; $5051, 16 bytes
+ShotPlacementDataDrop_07:
+	INCBIN "data/bank_007/d_5061.bin" ; $5061, 16 bytes
+ShotPlacementDataServeTopspin_07:
+	INCBIN "data/bank_007/d_5071.bin" ; $5071, 80 bytes
+ShotPlacementDataServeSlice_07:
+	INCBIN "data/bank_007/d_50c1.bin" ; $50c1, 80 bytes
+ShotPlacementDataServeFlat_07:
+	INCBIN "data/bank_007/d_5111.bin" ; $5111, 80 bytes
 ComputeShotPlacement:
 	ld a, [wCurrentShotType] ; $5161
 	rst Rst00 ; $5164
@@ -2129,7 +2160,7 @@ ComputeShotPlacement:
 	dw ShotPlacementServeSlice ; $517f jumptable
 	dw ShotPlacementServeFlat ; $5181 jumptable
 ShotPlacementTopspin:
-	ld hl, $4d31 ; $5183
+	ld hl, ShotPlacementDataTopspin_07 ; $5183
 	ld a, [$df6e] ; $5186
 	ld d, a ; $5189
 	ld a, [$df6b] ; $518a
@@ -2140,7 +2171,7 @@ ShotPlacementTopspin:
 	call FinalizeShotSpeed ; $5197
 	ret ; $519a
 ShotPlacementPowerTopspin:
-	ld hl, $4d81 ; $519b
+	ld hl, ShotPlacementDataPowerTopspin_07 ; $519b
 	ld a, [$df6e] ; $519e
 	ld d, a ; $51a1
 	ld a, [$df6b] ; $51a2
@@ -2151,7 +2182,7 @@ ShotPlacementPowerTopspin:
 	call FinalizeShotSpeed ; $51af
 	ret ; $51b2
 ShotPlacementSlice:
-	ld hl, $4dd1 ; $51b3
+	ld hl, ShotPlacementDataSlice_07 ; $51b3
 	ld a, [$df6f] ; $51b6
 	ld d, a ; $51b9
 	ld a, [$df6b] ; $51ba
@@ -2162,7 +2193,7 @@ ShotPlacementSlice:
 	call FinalizeShotSpeed ; $51c7
 	ret ; $51ca
 ShotPlacementPowerSlice:
-	ld hl, $4e21 ; $51cb
+	ld hl, ShotPlacementDataPowerSlice_07 ; $51cb
 	ld a, [$df6f] ; $51ce
 	ld d, a ; $51d1
 	ld a, [$df6b] ; $51d2
@@ -2173,7 +2204,7 @@ ShotPlacementPowerSlice:
 	call FinalizeShotSpeed ; $51df
 	ret ; $51e2
 ShotPlacementNeutral:
-	ld hl, $4e71 ; $51e3
+	ld hl, ShotPlacementDataNeutral_07 ; $51e3
 	ld d, $00 ; $51e6
 	ld a, [$df6b] ; $51e8
 	ld e, a ; $51eb
@@ -2183,7 +2214,7 @@ ShotPlacementNeutral:
 	call FinalizeShotSpeed ; $51f5
 	ret ; $51f8
 ShotPlacementSmash:
-	ld hl, $4ec1 ; $51f9
+	ld hl, ShotPlacementDataSmash_07 ; $51f9
 	ld d, $00 ; $51fc
 	ld a, [$df6c] ; $51fe
 	ld e, a ; $5201
@@ -2193,7 +2224,7 @@ ShotPlacementSmash:
 	call FinalizeShotSpeed ; $520b
 	ret ; $520e
 ShotPlacementReachBasic:
-	ld hl, $4f11 ; $520f
+	ld hl, ShotPlacementDataReachBasic_07 ; $520f
 	ld d, $00 ; $5212
 	ld a, [$df6d] ; $5214
 	ld e, a ; $5217
@@ -2202,7 +2233,7 @@ ShotPlacementReachBasic:
 	call FinalizeShotSpeed ; $521e
 	ret ; $5221
 ShotPlacementReachPowerTopspin:
-	ld hl, $4f61 ; $5222
+	ld hl, ShotPlacementDataReachPowerTopspin_07 ; $5222
 	ld d, $00 ; $5225
 	ld a, [$df6d] ; $5227
 	ld e, a ; $522a
@@ -2211,7 +2242,7 @@ ShotPlacementReachPowerTopspin:
 	call FinalizeShotSpeed ; $5231
 	ret ; $5234
 ShotPlacementReachPowerSlice:
-	ld hl, $4fb1 ; $5235
+	ld hl, ShotPlacementDataReachPowerSlice_07 ; $5235
 	ld d, $00 ; $5238
 	ld a, [$df6d] ; $523a
 	ld e, a ; $523d
@@ -2220,7 +2251,7 @@ ShotPlacementReachPowerSlice:
 	call FinalizeShotSpeed ; $5244
 	ret ; $5247
 ShotPlacementReach:
-	ld hl, $5001 ; $5248
+	ld hl, ShotPlacementDataReach_07 ; $5248
 	ld d, $00 ; $524b
 	ld a, [$df6d] ; $524d
 	ld e, a ; $5250
@@ -2229,21 +2260,21 @@ ShotPlacementReach:
 	call FinalizeShotSpeed ; $5257
 	ret ; $525a
 ShotPlacementLob:
-	ld hl, $5051 ; $525b
+	ld hl, ShotPlacementDataLob_07 ; $525b
 	ld a, [$df92] ; $525e
 	ld d, a ; $5261
 	ld e, $00 ; $5262
 	call LoadShotPlacementEntry ; $5264
 	ret ; $5267
 ShotPlacementDrop:
-	ld hl, $5061 ; $5268
+	ld hl, ShotPlacementDataDrop_07 ; $5268
 	ld a, [$df93] ; $526b
 	ld d, a ; $526e
 	ld e, $00 ; $526f
 	call LoadShotPlacementEntry ; $5271
 	ret ; $5274
 ShotPlacementServeTopspin:
-	ld hl, $5071 ; $5275
+	ld hl, ShotPlacementDataServeTopspin_07 ; $5275
 	ld a, [$df6e] ; $5278
 	ld d, a ; $527b
 	ld a, [$df6c] ; $527c
@@ -2251,7 +2282,7 @@ ShotPlacementServeTopspin:
 	call LoadShotPlacementEntry ; $5280
 	ret ; $5283
 ShotPlacementServeSlice:
-	ld hl, $50c1 ; $5284
+	ld hl, ShotPlacementDataServeSlice_07 ; $5284
 	ld a, [$df6f] ; $5287
 	ld d, a ; $528a
 	ld a, [$df6c] ; $528b
@@ -2259,7 +2290,7 @@ ShotPlacementServeSlice:
 	call LoadShotPlacementEntry ; $528f
 	ret ; $5292
 ShotPlacementServeFlat:
-	ld hl, $5111 ; $5293
+	ld hl, ShotPlacementDataServeFlat_07 ; $5293
 	ld d, $00 ; $5296
 	ld a, [$df6c] ; $5298
 	ld e, a ; $529b
