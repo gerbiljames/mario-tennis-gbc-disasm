@@ -273,7 +273,7 @@ Label_13_44f0:
 	ret ; $44f0
 AcademyCourtsTourCutscene:
 	ldh a, [hRomBank] ; $44f1
-	ld hl, $472c ; $44f3
+	ld hl, AcademyCourtsTourActors_13 ; $44f3
 	farcall FarPtr_ScriptRespawnLocationActors ; $44f6
 	farcall FarPtr_BeginCutsceneScriptMode ; $44f9
 	script_set_position $00, $3f00, $3f00 ; $44fc
@@ -370,10 +370,16 @@ AcademyCourtsTourCutscene:
 	ld [wStoryModeExitLocationRequest], a ; $4725
 	farcall FarPtr_EndCutsceneScriptMode ; $4728
 	ret ; $472b
-	INCBIN "data/bank_013/d_472c.bin" ; $472c, 66 bytes
+AcademyCourtsTourActors_13:
+	; $472c, 66 bytes (map_actors)
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4f, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $3200, $1300, $40, $49, $01, $00
+	map_actor_end
 ServiceAceCoachIntroCutscene:
 	ldh a, [hRomBank] ; $476e
-	ld hl, $4c7e ; $4770
+	ld hl, ServiceAceCoachIntroActors_13 ; $4770
 	farcall FarPtr_ScriptRespawnLocationActors ; $4773
 	farcall FarPtr_BeginCutsceneScriptMode ; $4776
 	script_set_position $00, $3f00, $3f00 ; $4779
@@ -559,7 +565,15 @@ Label_13_49c1:
 	ld [wStoryModeExitLocationRequest], a ; $4c77
 	farcall FarPtr_EndCutsceneScriptMode ; $4c7a
 	ret ; $4c7d
-	INCBIN "data/bank_013/d_4c7e.bin" ; $4c7e, 94 bytes
+ServiceAceCoachIntroActors_13:
+	; $4c7e, 94 bytes (map_actors)
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $fd00, $0100, $40, $4f, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $4100, $0d00, $80, $49, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $1500, $0d00, $40, $4a, $01, $00
+	map_actor $0000, ActorObjDef_13_7b25, $1300, $0d00, $40, $4b, $01, $00
+	map_actor_end
 LoadTourPointerSpriteGfx_13:
 	ldh a, [hWramBank] ; $4cdc
 	push af ; $4cde

@@ -761,5 +761,8 @@
  "0x4e020": "map_scripts",
  "0x4e09f": "map_scripts",
  "0x4e0ef": "map_scripts",
- "0x4e13b": "map_scripts"
+ "0x4e13b": "map_scripts",
+ "0x4c72c": "map_actors",
+ "0x4cc7e": "map_actors",
+ "0x9f10d": "map_actors"
 }

@@ -1942,7 +1942,7 @@ Label_27_6f56:
 	ret ; $6f56
 Func_27_6f57:
 	ldh a, [hRomBank] ; $6f57
-	ld hl, $710d ; $6f59
+	ld hl, EndRestaurantEntActorsAlt_27 ; $6f59
 	farcall FarPtr_ScriptRespawnLocationActors ; $6f5c
 	farcall FarPtr_BeginCutsceneScriptMode ; $6f5f
 	test_flag $05, 7 ; $6f62
@@ -2005,7 +2005,15 @@ Label_27_6f7d:
 	ld [wStoryModeExitLocationRequest], a ; $7106
 	farcall FarPtr_EndCutsceneScriptMode ; $7109
 	ret ; $710c
-	INCBIN "data/bank_027/d_710d.bin" ; $710d, 94 bytes
+EndRestaurantEntActorsAlt_27:
+	; $710d, 94 bytes (map_actors)
+	map_actor $0000, ActorObjDef_27_785d, $fd00, $0100, $40, $4c, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $fd00, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $fd00, $0100, $40, $4f, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $4100, $0d00, $80, $49, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1500, $0d00, $40, $4a, $01, $00
+	map_actor $0000, ActorObjDef_27_785d, $1300, $0d00, $40, $4b, $01, $00
+	map_actor_end
 Func_27_716b:
 	sound $71 ; $716b
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $716d

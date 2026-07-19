@@ -3294,5 +3294,8 @@
  "0x4e020": "VarsityCourtNpcScriptsB_13",
  "0x4e09f": "VarsityCourtNpcScriptsC_13",
  "0x4e0ef": "VarsityCourtNpcScriptsD_13",
- "0x4e13b": "VarsityCourtNpcScriptsE_13"
+ "0x4e13b": "VarsityCourtNpcScriptsE_13",
+ "0x4c72c": "AcademyCourtsTourActors_13",
+ "0x4cc7e": "ServiceAceCoachIntroActors_13",
+ "0x9f10d": "EndRestaurantEntActorsAlt_27"
 }
