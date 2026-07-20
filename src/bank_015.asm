@@ -15,32 +15,32 @@ TournamentCourtyardMapScripts_15:
 	dw TournamentCourtyardInitScript_15 ; slot 6 InitScript
 TournamentCourtyardActors_15:
 	; $4012, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_41ba, $0900, $1d80, $40, $21, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0700, $1d80, $40, $22, $01, $00
-	map_actor $0000, ActorScript_15_7d77, $0d00, $1b00, $80, $33, $01, $03
-	map_actor $0000, ActorScript_15_7d77, $1d00, $2300, $c0, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $1f00, $1d00, $80, $30, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $0b00, $2700, $80, $39, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0900, $2900, $c0, $3a, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1b40, $2640, $80, $36, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1cc0, $2640, $80, $36, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0740, $2640, $80, $36, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $08c0, $2640, $80, $36, $01, $00
+	map_actor $0000, ActorScript_15_41ba, $0900, $1d80, FACE_DOWN, $21, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $0700, $1d80, FACE_DOWN, $22, $01, $00
+	map_actor $0000, ActorScript_15_7d77, $0d00, $1b00, FACE_LEFT, $33, $01, $03
+	map_actor $0000, ActorScript_15_7d77, $1d00, $2300, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $1f00, $1d00, FACE_LEFT, $30, $01, $05
+	map_actor $0000, ActorScript_15_7d6d, $0b00, $2700, FACE_LEFT, $39, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $0900, $2900, FACE_UP, $3a, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $1b40, $2640, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $1cc0, $2640, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $0740, $2640, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $08c0, $2640, FACE_LEFT, $36, $01, $00
 	map_actor_end
 TournamentCourtyardEntryPoints_15:
 	; $40b6, 41 bytes (map_entries)
-	map_entry $01, $80, $2100, $1400, $0000
-	map_entry $02, $00, $0300, $1400, $0000
-	map_entry $03, $40, $1200, $0d00, $0000
-	map_entry $04, $c0, $1200, $2900, $0000
-	map_entry $0f, $c0, $1100, $3900, $0000
+	map_entry $01, FACE_LEFT, $2100, $1400, $0000
+	map_entry $02, FACE_RIGHT, $0300, $1400, $0000
+	map_entry $03, FACE_DOWN, $1200, $0d00, $0000
+	map_entry $04, FACE_UP, $1200, $2900, $0000
+	map_entry $0f, FACE_UP, $1100, $3900, $0000
 	db $ff
 TournamentCourtyardExitTriggers_15:
 	; $40df, 33 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_15, $16, $02
-	map_script $02, $ff, $0000, MapScriptNop_15, $17, $02
-	map_script $03, $ff, $0000, MapScriptNop_15, $19, $05
-	map_script $04, $ff, $0000, MapScriptNop_15, $1b, $02
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_15, $16, $02
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_15, $17, $02
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_15, $19, $05
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_15, $1b, $02
 	db $ff
 TournamentCourtyardNpc05_15:
 	ld a, [$c2b0] ; $4100
@@ -84,23 +84,23 @@ Label_15_413f:
 	dw $244a ; record 6
 TournamentCourtyardNpcScripts_15:
 	; $4159, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_28, $13, $00
-	map_script $04, $ff, $0000, Text_1f_29, $03, $00
-	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, Text_1f_33, $13, $00
-	map_script $07, $ff, $0000, Text_1f_34, $03, $00
-	map_script $08, $ff, $0000, Text_1f_35, $03, $00
-	map_script $09, $ff, $0000, Text_1f_36, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_28, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_29, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_33, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_34, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_35, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_36, $03, $00
 	db $ff
 TournamentCourtyardFacingScripts_15:
 	; $4192, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, TournamentCourtyardFacing01_15, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, TournamentCourtyardFacing01_15, $00, $00
 	db $ff
 TournamentCourtyardFacing01_15:
 	ret ; $419b
 TournamentCourtyardTileTriggers_15:
 	; $419c, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, TournamentCourtyardTile01_15, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, TournamentCourtyardTile01_15, $00, $00
 	db $ff
 TournamentCourtyardTile01_15:
 	ret ; $41a5
@@ -125,17 +125,17 @@ ActorScript_15_41ba:
 	as_jump ActorScript_15_41ba
 TournamentSiteRespawnActors_15:
 	; $41cd, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_7d6d, $1200, $3400, $40, $63, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1100, $3700, $40, $5a, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1300, $3900, $40, $5b, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1300, $3700, $40, $5c, $01, $00
-	map_actor $0000, ActorScript_15_41ba, $0900, $1d80, $40, $21, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0700, $1d80, $40, $22, $01, $00
-	map_actor $0000, ActorScript_15_7d77, $0d00, $1b00, $80, $33, $01, $03
-	map_actor $0000, ActorScript_15_7d77, $1d00, $2300, $c0, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $1f00, $1d00, $80, $30, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $0b00, $2700, $80, $39, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0900, $2900, $c0, $3a, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $1200, $3400, FACE_DOWN, $63, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $1100, $3700, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $1300, $3900, FACE_DOWN, $5b, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $1300, $3700, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_15_41ba, $0900, $1d80, FACE_DOWN, $21, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $0700, $1d80, FACE_DOWN, $22, $01, $00
+	map_actor $0000, ActorScript_15_7d77, $0d00, $1b00, FACE_LEFT, $33, $01, $03
+	map_actor $0000, ActorScript_15_7d77, $1d00, $2300, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $1f00, $1d00, FACE_LEFT, $30, $01, $05
+	map_actor $0000, ActorScript_15_7d6d, $0b00, $2700, FACE_LEFT, $39, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $0900, $2900, FACE_UP, $3a, $01, $00
 	map_actor_end
 InitTournamentSiteSceneVariant:
 	ld a, $00 ; $4271
@@ -200,63 +200,63 @@ Label_15_42e8:
 	ret ; $42f6
 TournamentSiteScripts1_15:
 	; $42f7, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_37, $13, $00
-	map_script $04, $ff, $0000, Text_1f_38, $03, $00
-	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, Text_1f_41, $13, $00
-	map_script $07, $ff, $0000, Text_1f_42, $03, $00
-	map_script $08, $ff, $0000, Text_1f_43, $03, $00
-	map_script $09, $ff, $0000, Text_1f_44, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_37, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_38, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_41, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_42, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_43, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_44, $03, $00
 	db $ff
 TournamentSiteScripts2_15:
 	; $4330, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_45, $13, $00
-	map_script $04, $ff, $0000, Text_1f_46, $03, $00
-	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, Text_1f_47, $13, $00
-	map_script $07, $ff, $0000, Text_1f_48, $03, $00
-	map_script $08, $ff, $0000, Text_1f_49, $03, $00
-	map_script $09, $ff, $0000, Text_1f_50, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_45, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_46, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_47, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_48, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_49, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_50, $03, $00
 	db $ff
 TournamentSiteScripts3_15:
 	; $4369, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_51, $13, $00
-	map_script $04, $ff, $0000, Text_1f_52, $03, $00
-	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, Text_1f_53, $13, $00
-	map_script $07, $ff, $0000, Text_1f_54, $03, $00
-	map_script $08, $ff, $0000, Text_1f_55, $03, $00
-	map_script $09, $ff, $0000, Text_1f_56, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_51, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_52, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_53, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_54, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_55, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_56, $03, $00
 	db $ff
 TournamentSiteScripts4_15:
 	; $43a2, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_28, $13, $00
-	map_script $04, $ff, $0000, Text_1f_57, $03, $00
-	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, Text_1f_60, $13, $00
-	map_script $07, $ff, $0000, Text_1f_61, $03, $00
-	map_script $08, $ff, $0000, Text_1f_62, $03, $00
-	map_script $09, $ff, $0000, Text_1f_63, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_28, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_57, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_60, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_61, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_62, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_63, $03, $00
 	db $ff
 TournamentSiteScripts5_15:
 	; $43db, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_64, $13, $00
-	map_script $04, $ff, $0000, Text_1f_65, $03, $00
-	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, Text_1f_68, $13, $00
-	map_script $07, $ff, $0000, Text_1f_69, $03, $00
-	map_script $08, $ff, $0000, Text_1f_70, $03, $00
-	map_script $09, $ff, $0000, Text_1f_71, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_64, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_65, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_68, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_69, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_70, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_71, $03, $00
 	db $ff
 TournamentSiteScripts6_15:
 	; $4414, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_72, $13, $00
-	map_script $04, $ff, $0000, Text_1f_73, $03, $00
-	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, Text_1f_76, $13, $00
-	map_script $07, $ff, $0000, Text_1f_77, $03, $00
-	map_script $08, $ff, $0000, Text_1f_78, $03, $00
-	map_script $09, $ff, $0000, Text_1f_79, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_72, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_73, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TournamentCourtyardNpc05_15, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_76, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_77, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_78, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_79, $03, $00
 	db $ff
 TournamentSiteArrivalScene:
 	ldh a, [hRomBank] ; $444d
@@ -462,37 +462,37 @@ TrainingCourtMapScripts_15:
 	dw TrainingCourtInitScript_15 ; slot 6 InitScript
 TrainingCourtActors_15:
 	; $47a4, 304 bytes (map_actors)
-	map_actor $0000, ActorScript_15_55e9, $0b00, $0700, $40, $33, $01, $03
-	map_actor $0000, ActorScript_15_55e9, $0b00, $1700, $c0, $32, $01, $07
-	map_actor $0000, ActorScript_15_55e9, $0e00, $1700, $c0, $34, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $1300, $0b00, $80, $68, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1300, $1500, $80, $67, $01, $06
-	map_actor $0000, ActorScript_15_55e6, $0b00, $2100, $40, $34, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $0d00, $2100, $40, $39, $01, $05
-	map_actor $0000, ActorScript_15_55e6, $0c00, $2d00, $c0, $33, $01, $04
-	map_actor $0000, ActorScript_15_7f3d, $0700, $2d00, $00, $6a, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2700, $40, $64, $01, $06
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2900, $c0, $68, $01, $04
-	map_actor $0000, ActorScript_15_55e6, $3300, $2a00, $c0, $39, $01, $06
-	map_actor $0000, ActorScript_15_55e6, $3500, $2400, $40, $32, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $3500, $2a00, $c0, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2100, $00, $66, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2900, $00, $6b, $01, $07
-	map_actor $0000, ActorScript_15_55e2, $3f00, $0300, $40, $33, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0500, $40, $6c, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0700, $40, $35, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0900, $40, $50, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0b00, $40, $53, $01, $00
+	map_actor $0000, ActorScript_15_55e9, $0b00, $0700, FACE_DOWN, $33, $01, $03
+	map_actor $0000, ActorScript_15_55e9, $0b00, $1700, FACE_UP, $32, $01, $07
+	map_actor $0000, ActorScript_15_55e9, $0e00, $1700, FACE_UP, $34, $01, $05
+	map_actor $0000, ActorScript_15_7d6d, $1300, $0b00, FACE_LEFT, $68, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $1300, $1500, FACE_LEFT, $67, $01, $06
+	map_actor $0000, ActorScript_15_55e6, $0b00, $2100, FACE_DOWN, $34, $01, $03
+	map_actor $0000, ActorScript_15_55e6, $0d00, $2100, FACE_DOWN, $39, $01, $05
+	map_actor $0000, ActorScript_15_55e6, $0c00, $2d00, FACE_UP, $33, $01, $04
+	map_actor $0000, ActorScript_15_7f3d, $0700, $2d00, FACE_RIGHT, $6a, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $1300, $2700, FACE_DOWN, $64, $01, $06
+	map_actor $0000, ActorScript_15_7d6d, $1300, $2900, FACE_UP, $68, $01, $04
+	map_actor $0000, ActorScript_15_55e6, $3300, $2a00, FACE_UP, $39, $01, $06
+	map_actor $0000, ActorScript_15_55e6, $3500, $2400, FACE_DOWN, $32, $01, $03
+	map_actor $0000, ActorScript_15_55e6, $3500, $2a00, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $2d00, $2100, FACE_RIGHT, $66, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $2d00, $2900, FACE_RIGHT, $6b, $01, $07
+	map_actor $0000, ActorScript_15_55e2, $3f00, $0300, FACE_DOWN, $33, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $3f00, $0500, FACE_DOWN, $6c, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $3f00, $0700, FACE_DOWN, $35, $01, $05
+	map_actor $0000, ActorScript_15_7d6d, $3f00, $0900, FACE_DOWN, $50, $01, $00
+	map_actor $0000, ActorScript_15_7d6d, $3f00, $0b00, FACE_DOWN, $53, $01, $00
 	map_actor_end
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
-	map_entry $01, $00, $0900, $3700, TrainingCourtArrival01_15
-	map_entry $02, $40, $1300, $1300, $0000
-	map_entry $09, $40, $1300, $1300, $0000
-	map_entry $0a, $c0, $1300, $1300, $0000
-	map_entry $0b, $40, $1300, $1300, $0000
-	map_entry $0c, $c0, $2d00, $2b00, $0000
-	map_entry $0d, $80, $1500, $2900, $0000
+	map_entry $01, FACE_RIGHT, $0900, $3700, TrainingCourtArrival01_15
+	map_entry $02, FACE_DOWN, $1300, $1300, $0000
+	map_entry $09, FACE_DOWN, $1300, $1300, $0000
+	map_entry $0a, FACE_UP, $1300, $1300, $0000
+	map_entry $0b, FACE_DOWN, $1300, $1300, $0000
+	map_entry $0c, FACE_UP, $2d00, $2b00, $0000
+	map_entry $0d, FACE_LEFT, $1500, $2900, $0000
 	db $ff
 TrainingCourtArrival01_15:
 	ld a, [wStoryModeEntryPoint] ; $490d
@@ -513,8 +513,8 @@ Label_15_4955:
 	ret ; $4955
 TrainingCourtExitTriggers_15:
 	; $4956, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, ClearTrainingCourtNpcFlags, $08, $06
-	map_script $0f, $ff, $0000, MapScriptNop_15, $08, $0e
+	map_script $01, FACEMASK_ANY, $0000, ClearTrainingCourtNpcFlags, $08, $06
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_15, $08, $0e
 	db $ff
 ClearTrainingCourtNpcFlags:
 	clear_flag $17, 2 ; $4967
@@ -1034,26 +1034,26 @@ Label_15_4f9f:
 	ret ; $505a
 TrainingCourtNpcScripts_15:
 	; $505b, 161 bytes (map_scripts)
-	map_script $03, $ff, $0000, TrainingCourtNpc03_15, $1b, $00
-	map_script $04, $ff, $0000, TrainingCourtNpc04_15, $1b, $00
-	map_script $05, $ff, $0000, TrainingCourtNpc05_15, $1b, $00
-	map_script $06, $ff, $0000, TrainingCourtNpc06_15, $03, $00
-	map_script $07, $80, $0000, TrainingCourtNpc07FaceDown_15, $03, $00
-	map_script $07, $ff, $0000, TrainingCourtNpc07_15, $03, $00
-	map_script $08, $ff, $0000, TrainingCourtNpc08_15, $1b, $00
-	map_script $09, $ff, $0000, TrainingCourtNpc09_15, $1b, $00
-	map_script $0a, $ff, $0000, TrainingCourtNpc0A_15, $1b, $00
-	map_script $0b, $ff, $0000, TrainingCourtNpc0B_15, $1b, $00
-	map_script $0c, $ff, $0000, TrainingCourtNpc0C_15, $03, $00
-	map_script $0d, $40, $0000, TrainingCourtNpc0DFaceUp_15, $03, $00
-	map_script $0d, $ff, $0000, TrainingCourtNpc0D_15, $03, $00
-	map_script $0e, $ff, $0000, TrainingCourtNpc0E_15, $1b, $00
-	map_script $0f, $ff, $0000, TrainingCourtNpc0F_15, $1b, $00
-	map_script $10, $ff, $0000, TrainingCourtNpc10_15, $1b, $00
-	map_script $11, $ff, $0000, TrainingCourtNpc11_15, $03, $00
-	map_script $12, $40, $0000, TrainingCourtNpc12FaceUp_15, $03, $00
-	map_script $12, $ff, $0000, TrainingCourtNpc12_15, $03, $00
-	map_script $13, $ff, $0000, TrainingCourtNpc13_15, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, TrainingCourtNpc03_15, $1b, $00
+	map_script $04, FACEMASK_ANY, $0000, TrainingCourtNpc04_15, $1b, $00
+	map_script $05, FACEMASK_ANY, $0000, TrainingCourtNpc05_15, $1b, $00
+	map_script $06, FACEMASK_ANY, $0000, TrainingCourtNpc06_15, $03, $00
+	map_script $07, FACEMASK_DOWN, $0000, TrainingCourtNpc07FaceDown_15, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, TrainingCourtNpc07_15, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, TrainingCourtNpc08_15, $1b, $00
+	map_script $09, FACEMASK_ANY, $0000, TrainingCourtNpc09_15, $1b, $00
+	map_script $0a, FACEMASK_ANY, $0000, TrainingCourtNpc0A_15, $1b, $00
+	map_script $0b, FACEMASK_ANY, $0000, TrainingCourtNpc0B_15, $1b, $00
+	map_script $0c, FACEMASK_ANY, $0000, TrainingCourtNpc0C_15, $03, $00
+	map_script $0d, FACEMASK_UP, $0000, TrainingCourtNpc0DFaceUp_15, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, TrainingCourtNpc0D_15, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, TrainingCourtNpc0E_15, $1b, $00
+	map_script $0f, FACEMASK_ANY, $0000, TrainingCourtNpc0F_15, $1b, $00
+	map_script $10, FACEMASK_ANY, $0000, TrainingCourtNpc10_15, $1b, $00
+	map_script $11, FACEMASK_ANY, $0000, TrainingCourtNpc11_15, $03, $00
+	map_script $12, FACEMASK_UP, $0000, TrainingCourtNpc12FaceUp_15, $03, $00
+	map_script $12, FACEMASK_ANY, $0000, TrainingCourtNpc12_15, $03, $00
+	map_script $13, FACEMASK_ANY, $0000, TrainingCourtNpc13_15, $00, $00
 	db $ff
 TrainingCourtNpc06_15:
 	test_flag $18, 0 ; $50fc
@@ -1245,13 +1245,13 @@ Label_15_52f4:
 	ret ; $52ff
 TrainingCourtFacingScripts_15:
 	; $5300, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, TrainingCourtFacing01_15, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, TrainingCourtFacing01_15, $00, $00
 	db $ff
 TrainingCourtFacing01_15:
 	ret ; $5309
 TrainingCourtTileTriggers_15:
 	; $530a, 9 bytes (map_scripts)
-	map_script $01, $40, $9000, TrainingCourtTile01_15, $00, $00
+	map_script $01, FACEMASK_UP, $9000, TrainingCourtTile01_15, $00, $00
 	db $ff
 TrainingCourtTile01_15:
 	script_move_target $00, $3300, $0d00 ; $5313
@@ -1851,17 +1851,17 @@ TrainingCourtIntroTourScene:
 	ret ; $5c4e
 TrainingCourtTourActors_15:
 	; $5c4f, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_55e6, $3300, $2a00, $c0, $39, $01, $06
-	map_actor $0000, ActorScript_15_55e6, $3500, $2300, $40, $32, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $3500, $2a00, $c0, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2100, $00, $66, $01, $07
-	map_actor $0000, ActorScript_15_55e6, $0b00, $2300, $40, $34, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $0d00, $2300, $40, $39, $01, $05
-	map_actor $0000, ActorScript_15_55e6, $0c00, $2900, $c0, $33, $01, $04
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2700, $40, $64, $01, $06
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2900, $c0, $68, $01, $04
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2900, $00, $6b, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $0100, $0100, $40, $49, $01, $00
+	map_actor $0000, ActorScript_15_55e6, $3300, $2a00, FACE_UP, $39, $01, $06
+	map_actor $0000, ActorScript_15_55e6, $3500, $2300, FACE_DOWN, $32, $01, $03
+	map_actor $0000, ActorScript_15_55e6, $3500, $2a00, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $2d00, $2100, FACE_RIGHT, $66, $01, $07
+	map_actor $0000, ActorScript_15_55e6, $0b00, $2300, FACE_DOWN, $34, $01, $03
+	map_actor $0000, ActorScript_15_55e6, $0d00, $2300, FACE_DOWN, $39, $01, $05
+	map_actor $0000, ActorScript_15_55e6, $0c00, $2900, FACE_UP, $33, $01, $04
+	map_actor $0000, ActorScript_15_7d6d, $1300, $2700, FACE_DOWN, $64, $01, $06
+	map_actor $0000, ActorScript_15_7d6d, $1300, $2900, FACE_UP, $68, $01, $04
+	map_actor $0000, ActorScript_15_7d6d, $2d00, $2900, FACE_RIGHT, $6b, $01, $07
+	map_actor $0000, ActorScript_15_7d6d, $0100, $0100, FACE_DOWN, $49, $01, $00
 	map_actor_end
 ServeChallengerResultScene:
 	xor a, a ; $5cf3

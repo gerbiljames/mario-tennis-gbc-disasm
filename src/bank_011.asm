@@ -19,21 +19,21 @@ CenterCourtMapScripts_11:
 	dw CenterCourtInitScript_11 ; slot 6 InitScript
 CenterCourtActors_11:
 	; $4016, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_11_7ba9, $0f00, $2e00, $80, $25, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $0d00, $1300, $40, $25, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1f00, $2e00, $00, $39, $01, $07
-	map_actor $0000, ActorScript_11_7ba9, $2100, $2e00, $80, $32, $01, $07
+	map_actor $0000, ActorScript_11_7ba9, $0f00, $2e00, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $0d00, $1300, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1f00, $2e00, FACE_RIGHT, $39, $01, $07
+	map_actor $0000, ActorScript_11_7ba9, $2100, $2e00, FACE_LEFT, $32, $01, $07
 	map_actor_end
 CenterCourtEntryPoints_11:
 	; $4058, 25 bytes (map_entries)
-	map_entry $01, $c0, $0c00, $3100, $0000
-	map_entry $02, $c0, $2400, $3100, $0000
-	map_entry $0f, $c0, $0c00, $3100, $0000
+	map_entry $01, FACE_UP, $0c00, $3100, $0000
+	map_entry $02, FACE_UP, $2400, $3100, $0000
+	map_entry $0f, FACE_UP, $0c00, $3100, $0000
 	db $ff
 CenterCourtExitTriggers_11:
 	; $4071, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_11, $19, $01
-	map_script $02, $ff, $0000, MapScriptNop_11, $19, $02
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $19, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, $19, $02
 	db $ff
 CenterCourtNpc03_11:
 	script_set_text Text_1f_80 ; $4082
@@ -143,20 +143,20 @@ CenterCourtNpc06_11:
 	dw $2467 ; record 6
 CenterCourtNpcScripts_11:
 	; $416f, 33 bytes (map_scripts)
-	map_script $03, $ff, $0000, CenterCourtNpc03_11, $03, $00
-	map_script $04, $ff, $0000, CenterCourtNpc04_11, $03, $00
-	map_script $05, $ff, $0000, CenterCourtNpc05_11, $03, $00
-	map_script $06, $ff, $0000, CenterCourtNpc06_11, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, CenterCourtNpc03_11, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, CenterCourtNpc04_11, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, CenterCourtNpc05_11, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, CenterCourtNpc06_11, $03, $00
 	db $ff
 CenterCourtFacingScripts_11:
 	; $4190, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, CenterCourtFacing01_11, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, CenterCourtFacing01_11, $00, $00
 	db $ff
 CenterCourtFacing01_11:
 	ret ; $4199
 CenterCourtTileTriggers_11:
 	; $419a, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, CenterCourtTile01_11, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, CenterCourtTile01_11, $00, $00
 	db $ff
 CenterCourtTile01_11:
 	ret ; $41a3
@@ -216,22 +216,22 @@ Label_11_420d:
 	ld [$c2b0], a ; $420f
 	ret ; $4212
 	; $4213, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_7ba9, $0f00, $2e00, $80, $25, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $0d00, $2700, $40, $25, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $2500, $2400, $80, $39, $01, $07
-	map_actor $0000, ActorScript_11_7ba9, $2300, $2100, $80, $32, $01, $07
-	map_actor $0000, ActorScript_11_7ba9, $2700, $2300, $80, $23, $01, $04
-	map_actor $0000, ActorScript_11_7ba9, $2700, $2100, $80, $39, $01, $06
-	map_actor $0000, ActorScript_11_7ba9, $2500, $2000, $80, $3a, $01, $03
-	map_actor $0000, ActorScript_11_7ba9, $0b00, $2400, $00, $33, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $0d00, $2100, $00, $3a, $01, $04
-	map_actor $0000, ActorScript_11_7ba9, $0900, $2300, $00, $39, $01, $03
-	map_actor $0000, ActorScript_11_7ba9, $0500, $2000, $00, $39, $01, $06
-	map_actor $0000, ActorScript_11_7ba9, $0900, $2100, $00, $3a, $01, $03
-	map_actor $0000, ActorScript_11_7ba9, $2b00, $2200, $80, $33, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $2b00, $2000, $80, $3a, $01, $04
-	map_actor $0000, ActorScript_11_7ba9, $2b00, $1e00, $80, $6b, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $2700, $1d00, $80, $6a, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $0f00, $2e00, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $0d00, $2700, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $2500, $2400, FACE_LEFT, $39, $01, $07
+	map_actor $0000, ActorScript_11_7ba9, $2300, $2100, FACE_LEFT, $32, $01, $07
+	map_actor $0000, ActorScript_11_7ba9, $2700, $2300, FACE_LEFT, $23, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $2700, $2100, FACE_LEFT, $39, $01, $06
+	map_actor $0000, ActorScript_11_7ba9, $2500, $2000, FACE_LEFT, $3a, $01, $03
+	map_actor $0000, ActorScript_11_7ba9, $0b00, $2400, FACE_RIGHT, $33, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $0d00, $2100, FACE_RIGHT, $3a, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $0900, $2300, FACE_RIGHT, $39, $01, $03
+	map_actor $0000, ActorScript_11_7ba9, $0500, $2000, FACE_RIGHT, $39, $01, $06
+	map_actor $0000, ActorScript_11_7ba9, $0900, $2100, FACE_RIGHT, $3a, $01, $03
+	map_actor $0000, ActorScript_11_7ba9, $2b00, $2200, FACE_LEFT, $33, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $2b00, $2000, FACE_LEFT, $3a, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $2b00, $1e00, FACE_LEFT, $6b, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $2700, $1d00, FACE_LEFT, $6a, $01, $04
 	map_actor_end
 MapArrivalWalk_11:
 	ld a, [wStoryModeEntryPoint] ; $42fd
@@ -317,31 +317,31 @@ AcademyArrivalMapScripts_11:
 	dw AcademyArrivalInitScript_11 ; slot 6 InitScript
 AcademyArrivalActors_11:
 	; $440f, 262 bytes (map_actors)
-	map_actor $0000, ActorScript_11_7bb3, $1900, $1900, $40, $30, $01, $05
-	map_actor $0000, ActorScript_11_7ba9, $1500, $2500, $80, $32, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1500, $2700, $80, $39, $01, $00
-	map_actor $0000, ActorScript_11_7bdf, $0100, $1c00, $40, $54, $01, $03
-	map_actor $0000, ActorScript_11_7c42, $0500, $2800, $c0, $54, $01, $04
-	map_actor $0000, ActorScript_11_7ca9, $0a00, $1c00, $40, $54, $01, $07
-	map_actor $0000, ActorScript_11_7d10, $0f00, $2800, $c0, $54, $01, $06
-	map_actor $0000, ActorScript_11_7bdf, $2200, $1c00, $40, $54, $01, $06
-	map_actor $0000, ActorScript_11_7c42, $2600, $2800, $c0, $54, $01, $03
-	map_actor $0000, ActorScript_11_7ca9, $2c00, $1c00, $40, $54, $01, $07
-	map_actor $0000, ActorScript_11_7d10, $3000, $2800, $c0, $54, $01, $04
-	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, $00, $4d, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, $00, $4c, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, $40, $63, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, $40, $49, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, $00, $4f, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1800, $3300, $c0, $30, $01, $03
+	map_actor $0000, ActorScript_11_7bb3, $1900, $1900, FACE_DOWN, $30, $01, $05
+	map_actor $0000, ActorScript_11_7ba9, $1500, $2500, FACE_LEFT, $32, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1500, $2700, FACE_LEFT, $39, $01, $00
+	map_actor $0000, ActorScript_11_7bdf, $0100, $1c00, FACE_DOWN, $54, $01, $03
+	map_actor $0000, ActorScript_11_7c42, $0500, $2800, FACE_UP, $54, $01, $04
+	map_actor $0000, ActorScript_11_7ca9, $0a00, $1c00, FACE_DOWN, $54, $01, $07
+	map_actor $0000, ActorScript_11_7d10, $0f00, $2800, FACE_UP, $54, $01, $06
+	map_actor $0000, ActorScript_11_7bdf, $2200, $1c00, FACE_DOWN, $54, $01, $06
+	map_actor $0000, ActorScript_11_7c42, $2600, $2800, FACE_UP, $54, $01, $03
+	map_actor $0000, ActorScript_11_7ca9, $2c00, $1c00, FACE_DOWN, $54, $01, $07
+	map_actor $0000, ActorScript_11_7d10, $3000, $2800, FACE_UP, $54, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, FACE_RIGHT, $4d, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, FACE_RIGHT, $4c, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, FACE_RIGHT, $53, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, FACE_DOWN, $63, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1500, $3d00, FACE_RIGHT, $4f, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1800, $3300, FACE_UP, $30, $01, $03
 	map_actor_end
 AcademyArrivalEntryPoints_11:
 	; $4515, 33 bytes (map_entries)
-	map_entry $01, $40, $1800, $1100, AcademyArrivalArrival01_11
-	map_entry $02, $c0, $1800, $3300, MapArrivalWalk_11
-	map_entry $0c, $40, $1800, $2f00, $0000
-	map_entry $0f, $c0, $1800, $2f00, $0000
+	map_entry $01, FACE_DOWN, $1800, $1100, AcademyArrivalArrival01_11
+	map_entry $02, FACE_UP, $1800, $3300, MapArrivalWalk_11
+	map_entry $0c, FACE_DOWN, $1800, $2f00, $0000
+	map_entry $0f, FACE_UP, $1800, $2f00, $0000
 	db $ff
 AcademyArrivalArrival01_11:
 	ld a, [wStoryModeEntryPoint] ; $4536
@@ -361,10 +361,10 @@ Label_11_457b:
 	ret ; $457b
 AcademyArrivalExitTriggers_11:
 	; $457c, 33 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_11, $05, $01
-	map_script $02, $ff, $0000, MapScriptNop_11, $1b, $01
-	map_script $03, $ff, $0000, MapScriptNop_11, $1b, $0f
-	map_script $0f, $ff, $0000, MapScriptNop_11, $05, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $05, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, $1b, $01
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_11, $1b, $0f
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, $05, $0f
 	db $ff
 AcademyArrivalNpc03_11:
 	ld a, [$c2b0] ; $459d
@@ -482,16 +482,16 @@ Label_11_4670:
 	jr Label_11_465e ; $4680
 AcademyArrivalNpcScripts_11:
 	; $4682, 33 bytes (map_scripts)
-	map_script $03, $ff, $0000, AcademyArrivalNpc03_11, $13, $00
-	map_script $04, $ff, $0000, AcademyArrivalNpc04_11, $01, $00
-	map_script $05, $ff, $0000, AcademyArrivalNpc05_11, $01, $00
-	map_script $14, $ff, $0000, AcademyArrivalNpc14_11, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, AcademyArrivalNpc03_11, $13, $00
+	map_script $04, FACEMASK_ANY, $0000, AcademyArrivalNpc04_11, $01, $00
+	map_script $05, FACEMASK_ANY, $0000, AcademyArrivalNpc05_11, $01, $00
+	map_script $14, FACEMASK_ANY, $0000, AcademyArrivalNpc14_11, $03, $00
 	db $ff
 AcademyArrivalFacingScripts_11:
 	ds 1, $ff ; $46a3, fill
 AcademyArrivalTileTriggers_11:
 	; $46a4, 9 bytes (map_scripts)
-	map_script $0f, $ff, $0000, AcademyArrivalTile0F_11, $00, $00
+	map_script $0f, FACEMASK_ANY, $0000, AcademyArrivalTile0F_11, $00, $00
 	db $ff
 AcademyArrivalTile0F_11:
 	call Func_11_4f40 ; $46ad
@@ -1070,12 +1070,12 @@ Label_11_51d9:
 	ld [wStoryModeExitLocationRequest], a ; $5379
 	ret ; $537c
 	; $537d, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_11_7ba9, $1800, $1100, $40, $63, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1a00, $1500, $c0, $5c, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1600, $1500, $c0, $5b, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1900, $1700, $c0, $5a, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $0100, $1900, $c0, $4a, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $1500, $2f00, $00, $30, $01, $03
+	map_actor $0000, ActorScript_11_7ba9, $1800, $1100, FACE_DOWN, $63, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1a00, $1500, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1600, $1500, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1900, $1700, FACE_UP, $5a, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $0100, $1900, FACE_UP, $4a, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1500, $2f00, FACE_RIGHT, $30, $01, $03
 	map_actor_end
 Label_11_53db:
 	ldh a, [hRomBank] ; $53db
@@ -1112,7 +1112,7 @@ Label_11_5415:
 	ld [wStoryModeExitLocationRequest], a ; $5466
 	ret ; $5469
 	; $546a, 24 bytes (map_actors)
-	map_actor $0000, ActorScript_11_7ba9, $1500, $2f00, $00, $30, $01, $03
+	map_actor $0000, ActorScript_11_7ba9, $1500, $2f00, FACE_RIGHT, $30, $01, $03
 	map_actor_end
 Func_11_5482:
 	test_flag $05, 7 ; $5482
@@ -1153,29 +1153,29 @@ JuniorClassCourtDoublesMapScripts_11:
 	dw JuniorClassCourtDoublesInitScript_11 ; slot 6 InitScript
 JuniorClassCourtDoublesActors_11:
 	; $54ce, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_11_7ba9, $1300, $1300, $40, $37, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $2300, $1700, $80, $68, $01, $05
-	map_actor $0000, ActorScript_11_7ba9, $0500, $1500, $00, $6b, $01, $04
-	map_actor $0000, ActorScript_11_7ba9, $2100, $1500, $40, $67, $01, $07
-	map_actor $0000, ActorScript_11_7ba9, $0500, $1300, $00, $6a, $01, $07
-	map_actor $0000, ActorScript_11_7d86, $1b00, $1300, $40, $66, $01, $03
-	map_actor $0000, ActorScript_11_681f, $1b00, $1500, $c0, $65, $01, $06
-	map_actor $0000, ActorScript_11_7ba9, $3700, $0700, $80, $64, $01, $04
-	map_actor $0000, ActorScript_11_7ba9, $3500, $0700, $00, $69, $01, $03
-	map_actor $0000, ActorScript_11_7ca9, $0800, $0b00, $40, $54, $01, $05
-	map_actor $0000, ActorScript_11_7d10, $0c00, $1700, $c0, $54, $01, $00
-	map_actor $0000, ActorScript_11_7bdf, $2a00, $0b00, $40, $54, $01, $00
-	map_actor $0000, ActorScript_11_7c42, $2e00, $1700, $c0, $54, $01, $05
+	map_actor $0000, ActorScript_11_7ba9, $1300, $1300, FACE_DOWN, $37, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $2300, $1700, FACE_LEFT, $68, $01, $05
+	map_actor $0000, ActorScript_11_7ba9, $0500, $1500, FACE_RIGHT, $6b, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $2100, $1500, FACE_DOWN, $67, $01, $07
+	map_actor $0000, ActorScript_11_7ba9, $0500, $1300, FACE_RIGHT, $6a, $01, $07
+	map_actor $0000, ActorScript_11_7d86, $1b00, $1300, FACE_DOWN, $66, $01, $03
+	map_actor $0000, ActorScript_11_681f, $1b00, $1500, FACE_UP, $65, $01, $06
+	map_actor $0000, ActorScript_11_7ba9, $3700, $0700, FACE_LEFT, $64, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $3500, $0700, FACE_RIGHT, $69, $01, $03
+	map_actor $0000, ActorScript_11_7ca9, $0800, $0b00, FACE_DOWN, $54, $01, $05
+	map_actor $0000, ActorScript_11_7d10, $0c00, $1700, FACE_UP, $54, $01, $00
+	map_actor $0000, ActorScript_11_7bdf, $2a00, $0b00, FACE_DOWN, $54, $01, $00
+	map_actor $0000, ActorScript_11_7c42, $2e00, $1700, FACE_UP, $54, $01, $05
 	map_actor_end
 JuniorClassCourtDoublesEntryPoints_11:
 	; $558e, 17 bytes (map_entries)
-	map_entry $01, $c0, $1300, $1d00, MapArrivalWalk_11
-	map_entry $09, $c0, $3700, $1900, $0000
+	map_entry $01, FACE_UP, $1300, $1d00, MapArrivalWalk_11
+	map_entry $09, FACE_UP, $3700, $1900, $0000
 	db $ff
 JuniorClassCourtDoublesExitTriggers_11:
 	; $559f, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_11, $08, $05
-	map_script $0f, $ff, $0000, MapScriptNop_11, $0c, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $08, $05
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, $0c, $0f
 	db $ff
 JuniorClassCourtDoublesNpc04_11:
 	script_set_text Text_32_105 ; $55b0
@@ -1340,52 +1340,52 @@ JuniorClassCourtDoublesNpc03_11:
 	ret ; $5819
 JuniorClassCourtDoublesNpcScripts_11:
 	; $581a, 81 bytes (map_scripts)
-	map_script $03, $40, $0000, JuniorClassCourtDoublesNpc03FaceUp_11, $03, $00
-	map_script $03, $ff, $0000, JuniorClassCourtDoublesNpc03_11, $03, $00
-	map_script $04, $ff, $0000, JuniorClassCourtDoublesNpc04_11, $03, $00
-	map_script $05, $ff, $0000, JuniorClassCourtDoublesNpc05_11, $03, $00
-	map_script $06, $ff, $0000, JuniorClassCourtDoublesNpc06_11, $01, $00
-	map_script $07, $ff, $0000, JuniorClassCourtDoublesNpc07_11, $03, $00
-	map_script $08, $ff, $0000, JuniorClassCourtDoublesNpc08_11, $1b, $00
-	map_script $09, $ff, $0000, JuniorClassCourtDoublesNpc09_11, $1b, $00
-	map_script $0a, $ff, $0000, JuniorClassCourtDoublesNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, JuniorClassCourtDoublesNpc0B_11, $03, $00
+	map_script $03, FACEMASK_UP, $0000, JuniorClassCourtDoublesNpc03FaceUp_11, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc03_11, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc04_11, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc05_11, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc06_11, $01, $00
+	map_script $07, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc07_11, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc08_11, $1b, $00
+	map_script $09, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc09_11, $1b, $00
+	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc0A_11, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, JuniorClassCourtDoublesNpc0B_11, $03, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsA_11:
 	; $586b, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_32_137, $03, $00
-	map_script $04, $ff, $0000, Text_32_145, $01, $00
-	map_script $05, $ff, $0000, Text_32_147, $03, $00
-	map_script $06, $ff, $0000, Text_32_146, $11, $00
-	map_script $07, $ff, $0000, Text_32_148, $03, $00
-	map_script $08, $ff, $0000, Text_32_149, $1b, $00
-	map_script $09, $ff, $0000, Text_32_150, $1b, $00
-	map_script $0a, $ff, $0000, JuniorClassCourtDoublesANpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, Text_32_153, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_32_137, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_32_145, $01, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_32_147, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_32_146, $11, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_32_148, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_32_149, $1b, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_32_150, $1b, $00
+	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesANpc0A_11, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_32_153, $03, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsB_11:
 	; $58b4, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_32_162, $03, $00
-	map_script $04, $ff, $0000, Text_32_163, $01, $00
-	map_script $05, $ff, $0000, Text_32_165, $03, $00
-	map_script $06, $ff, $0000, Text_32_164, $11, $00
-	map_script $07, $ff, $0000, Text_32_166, $03, $00
-	map_script $08, $ff, $0000, Text_32_167, $1b, $00
-	map_script $09, $ff, $0000, Text_32_168, $1b, $00
-	map_script $0a, $ff, $0000, Text_32_169, $01, $00
-	map_script $0b, $ff, $0000, Text_32_170, $01, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_32_162, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_32_163, $01, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_32_165, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_32_164, $11, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_32_166, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_32_167, $1b, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_32_168, $1b, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_32_169, $01, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_32_170, $01, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsC_11:
 	; $58fd, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_32_182, $03, $00
-	map_script $04, $ff, $0000, Text_32_183, $03, $00
-	map_script $05, $ff, $0000, Text_32_185, $03, $00
-	map_script $06, $ff, $0000, Text_32_184, $11, $00
-	map_script $07, $ff, $0000, JuniorClassCourtDoublesCNpc07_11, $03, $00
-	map_script $08, $ff, $0000, Text_32_189, $13, $00
-	map_script $09, $ff, $0000, Text_32_190, $1b, $00
-	map_script $0a, $ff, $0000, JuniorClassCourtDoublesCNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, Text_32_195, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_32_182, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_32_183, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_32_185, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_32_184, $11, $00
+	map_script $07, FACEMASK_ANY, $0000, JuniorClassCourtDoublesCNpc07_11, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_32_189, $13, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_32_190, $1b, $00
+	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesCNpc0A_11, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_32_195, $03, $00
 	db $ff
 JuniorClassCourtDoublesCNpc07_11:
 	script_set_text Text_32_186 ; $5946
@@ -1420,15 +1420,15 @@ JuniorClassCourtDoublesCNpc0A_11:
 	ret ; $599e
 JuniorClassCourtDoublesNpcScriptsD_11:
 	; $599f, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_33_20, $01, $00
-	map_script $04, $ff, $0000, Text_33_21, $03, $00
-	map_script $05, $ff, $0000, Text_33_23, $03, $00
-	map_script $06, $ff, $0000, Text_33_22, $11, $00
-	map_script $07, $ff, $0000, JuniorClassCourtDoublesDNpc07_11, $03, $00
-	map_script $08, $ff, $0000, Text_33_27, $13, $00
-	map_script $09, $ff, $0000, Text_33_28, $1b, $00
-	map_script $0a, $ff, $0000, JuniorClassCourtDoublesDNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, Text_33_29, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_33_20, $01, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_33_21, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_33_23, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_33_22, $11, $00
+	map_script $07, FACEMASK_ANY, $0000, JuniorClassCourtDoublesDNpc07_11, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_33_27, $13, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_33_28, $1b, $00
+	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtDoublesDNpc0A_11, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_33_29, $03, $00
 	db $ff
 JuniorClassCourtDoublesDNpc0A_11:
 	test_flag $10, 2 ; $59e8
@@ -2263,32 +2263,32 @@ JuniorClassCourtSinglesMapScripts_11:
 	dw JuniorClassCourtSinglesInitScript_11 ; slot 6 InitScript
 JuniorClassCourtSinglesActors_11:
 	; $6830, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_7ba9, $1300, $1300, $40, $37, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $2300, $1700, $80, $68, $01, $05
-	map_actor $0000, ActorScript_11_7ba9, $0500, $1500, $00, $6b, $01, $04
-	map_actor $0000, ActorScript_11_7ba9, $1300, $0d00, $00, $67, $01, $07
-	map_actor $0000, ActorScript_11_7ba9, $1f00, $1500, $80, $6a, $01, $07
-	map_actor $0000, ActorScript_11_7ba9, $2500, $0900, $00, $66, $01, $03
-	map_actor $0000, ActorScript_11_7ba9, $3100, $1500, $00, $65, $01, $06
-	map_actor $0000, ActorScript_11_7ba9, $3d00, $1900, $80, $64, $01, $04
-	map_actor $0000, ActorScript_11_6e16, $3100, $0700, $40, $69, $01, $03
-	map_actor $0000, ActorScript_11_7ca9, $0800, $0b00, $40, $54, $01, $05
-	map_actor $0000, ActorScript_11_7d10, $0c00, $1700, $c0, $54, $01, $00
-	map_actor $0000, ActorScript_11_7bdf, $1800, $0b00, $40, $54, $01, $00
-	map_actor $0000, ActorScript_11_7c42, $1c00, $1700, $c0, $54, $01, $05
-	map_actor $0000, ActorScript_11_7ca9, $3400, $0b00, $40, $54, $01, $05
-	map_actor $0000, ActorScript_11_7d10, $3800, $1700, $c0, $54, $01, $00
-	map_actor $0000, ActorScript_11_7ba9, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $1300, $1300, FACE_DOWN, $37, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $2300, $1700, FACE_LEFT, $68, $01, $05
+	map_actor $0000, ActorScript_11_7ba9, $0500, $1500, FACE_RIGHT, $6b, $01, $04
+	map_actor $0000, ActorScript_11_7ba9, $1300, $0d00, FACE_RIGHT, $67, $01, $07
+	map_actor $0000, ActorScript_11_7ba9, $1f00, $1500, FACE_LEFT, $6a, $01, $07
+	map_actor $0000, ActorScript_11_7ba9, $2500, $0900, FACE_RIGHT, $66, $01, $03
+	map_actor $0000, ActorScript_11_7ba9, $3100, $1500, FACE_RIGHT, $65, $01, $06
+	map_actor $0000, ActorScript_11_7ba9, $3d00, $1900, FACE_LEFT, $64, $01, $04
+	map_actor $0000, ActorScript_11_6e16, $3100, $0700, FACE_DOWN, $69, $01, $03
+	map_actor $0000, ActorScript_11_7ca9, $0800, $0b00, FACE_DOWN, $54, $01, $05
+	map_actor $0000, ActorScript_11_7d10, $0c00, $1700, FACE_UP, $54, $01, $00
+	map_actor $0000, ActorScript_11_7bdf, $1800, $0b00, FACE_DOWN, $54, $01, $00
+	map_actor $0000, ActorScript_11_7c42, $1c00, $1700, FACE_UP, $54, $01, $05
+	map_actor $0000, ActorScript_11_7ca9, $3400, $0b00, FACE_DOWN, $54, $01, $05
+	map_actor $0000, ActorScript_11_7d10, $3800, $1700, FACE_UP, $54, $01, $00
+	map_actor $0000, ActorScript_11_7ba9, $4000, $4000, FACE_UP, $53, $01, $00
 	map_actor_end
 JuniorClassCourtSinglesEntryPoints_11:
 	; $691a, 18 bytes (map_entries)
-	map_entry $01, $c0, $1300, $1d00, MapArrivalWalk_11
-	map_entry $09, $c0, $2d00, $1900, $0000
+	map_entry $01, FACE_UP, $1300, $1d00, MapArrivalWalk_11
+	map_entry $09, FACE_UP, $2d00, $1900, $0000
 	db $ff, $c9
 JuniorClassCourtSinglesExitTriggers_11:
 	; $692c, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_11, $08, $05
-	map_script $0f, $ff, $0000, MapScriptNop_11, $0b, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $08, $05
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, $0b, $0f
 	db $ff
 JuniorClassCourtSinglesNpc03FaceUp_11:
 	script_set_speed $00, $0008 ; $693d
@@ -2452,60 +2452,60 @@ Label_11_6b4e:
 	ret ; $6b53
 JuniorClassCourtSinglesNpcScripts_11:
 	; $6b54, 81 bytes (map_scripts)
-	map_script $03, $40, $0000, JuniorClassCourtSinglesNpc03FaceUp_11, $03, $00
-	map_script $03, $ff, $0000, JuniorClassCourtSinglesNpc03_11, $03, $00
-	map_script $04, $ff, $0000, JuniorClassCourtSinglesNpc04_11, $03, $00
-	map_script $05, $ff, $0000, JuniorClassCourtSinglesNpc05_11, $03, $00
-	map_script $06, $ff, $0000, JuniorClassCourtSinglesNpc06_11, $03, $00
-	map_script $07, $ff, $0000, JuniorClassCourtSinglesNpc07_11, $03, $00
-	map_script $08, $ff, $0000, JuniorClassCourtSinglesNpc08_11, $01, $00
-	map_script $09, $ff, $0000, JuniorClassCourtSinglesNpc09_11, $03, $00
-	map_script $0a, $ff, $0000, JuniorClassCourtSinglesNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, JuniorClassCourtSinglesNpc0B_11, $1b, $00
+	map_script $03, FACEMASK_UP, $0000, JuniorClassCourtSinglesNpc03FaceUp_11, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc03_11, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc04_11, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc05_11, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc06_11, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc07_11, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc08_11, $01, $00
+	map_script $09, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc09_11, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc0A_11, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, JuniorClassCourtSinglesNpc0B_11, $1b, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsA_11:
 	; $6ba5, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_32_137, $01, $00
-	map_script $05, $ff, $0000, Text_32_138, $03, $00
-	map_script $06, $ff, $0000, Text_32_139, $01, $00
-	map_script $07, $ff, $0000, Text_32_140, $03, $00
-	map_script $08, $ff, $0000, Text_32_141, $03, $00
-	map_script $09, $ff, $0000, Text_32_142, $03, $00
-	map_script $0a, $ff, $0000, Text_32_143, $13, $00
-	map_script $0b, $ff, $0000, Text_32_144, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_32_137, $01, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_32_138, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_32_139, $01, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_32_140, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_32_141, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_32_142, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_32_143, $13, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_32_144, $13, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsB_11:
 	; $6be6, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_32_154, $03, $00
-	map_script $05, $ff, $0000, Text_32_155, $03, $00
-	map_script $06, $ff, $0000, Text_32_156, $01, $00
-	map_script $07, $ff, $0000, Text_32_157, $03, $00
-	map_script $08, $ff, $0000, Text_32_158, $03, $00
-	map_script $09, $ff, $0000, Text_32_159, $03, $00
-	map_script $0a, $ff, $0000, Text_32_160, $13, $00
-	map_script $0b, $ff, $0000, Text_32_161, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_32_154, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_32_155, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_32_156, $01, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_32_157, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_32_158, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_32_159, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_32_160, $13, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_32_161, $13, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsC_11:
 	; $6c27, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_32_171, $03, $00
-	map_script $05, $ff, $0000, Text_32_172, $03, $00
-	map_script $06, $ff, $0000, Text_32_173, $01, $00
-	map_script $07, $ff, $0000, Text_32_174, $03, $00
-	map_script $08, $ff, $0000, Text_32_175, $03, $00
-	map_script $09, $ff, $0000, Text_32_176, $03, $00
-	map_script $0a, $ff, $0000, Text_32_177, $03, $00
-	map_script $0b, $ff, $0000, Text_32_181, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_32_171, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_32_172, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_32_173, $01, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_32_174, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_32_175, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_32_176, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_32_177, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_32_181, $13, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsD_11:
 	; $6c68, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_33_9, $01, $00
-	map_script $05, $ff, $0000, Text_33_10, $03, $00
-	map_script $06, $ff, $0000, Text_33_11, $01, $00
-	map_script $07, $ff, $0000, Text_33_12, $03, $00
-	map_script $08, $ff, $0000, Text_33_13, $03, $00
-	map_script $09, $ff, $0000, Text_33_14, $03, $00
-	map_script $0a, $ff, $0000, JuniorClassCourtSinglesDNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, Text_33_19, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_33_9, $01, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_33_10, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_33_11, $01, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_33_12, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_33_13, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_33_14, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, JuniorClassCourtSinglesDNpc0A_11, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_33_19, $13, $00
 	db $ff
 JuniorClassCourtSinglesDNpc0A_11:
 	test_flag $10, 2 ; $6ca9

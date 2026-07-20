@@ -20,14 +20,14 @@ RestaurantPlazaActors_13:
 	map_actor_end
 RestaurantPlazaEntryPoints_13:
 	; $401e, 65 bytes (map_entries)
-	map_entry $01, $40, $0700, $0840, RestaurantPlazaArrival01_13
-	map_entry $02, $40, $1500, $0940, RestaurantPlazaArrival02_13
-	map_entry $03, $40, $2500, $0840, RestaurantPlazaArrivalWalkIn_13
-	map_entry $04, $c0, $3200, $0f00, RestaurantPlazaArrival04_13
-	map_entry $05, $40, $3700, $0840, RestaurantPlazaArrivalWalkIn_13
-	map_entry $06, $80, $3c00, $0d00, RestaurantPlazaArrival06_13
-	map_entry $0e, $80, $3b00, $0f00, $0000
-	map_entry $0f, $80, $3200, $0f00, $0000
+	map_entry $01, FACE_DOWN, $0700, $0840, RestaurantPlazaArrival01_13
+	map_entry $02, FACE_DOWN, $1500, $0940, RestaurantPlazaArrival02_13
+	map_entry $03, FACE_DOWN, $2500, $0840, RestaurantPlazaArrivalWalkIn_13
+	map_entry $04, FACE_UP, $3200, $0f00, RestaurantPlazaArrival04_13
+	map_entry $05, FACE_DOWN, $3700, $0840, RestaurantPlazaArrivalWalkIn_13
+	map_entry $06, FACE_LEFT, $3c00, $0d00, RestaurantPlazaArrival06_13
+	map_entry $0e, FACE_LEFT, $3b00, $0f00, $0000
+	map_entry $0f, FACE_LEFT, $3200, $0f00, $0000
 	db $ff
 RestaurantPlazaArrival04_13:
 	ld a, [wStoryModeEntryPoint] ; $405f
@@ -122,37 +122,37 @@ Label_13_4235:
 	ret ; $4235
 RestaurantPlazaExitTriggers_13:
 	; $4236, 73 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_13, $09, $01
-	map_script $02, $ff, $0000, MapScriptNop_13, $0d, $01
-	map_script $03, $ff, $0000, MapScriptNop_13, $10, $01
-	map_script $04, $ff, $0000, MapScriptNop_13, $07, $02
-	map_script $05, $ff, $0000, MapScriptNop_13, $0b, $01
-	map_script $06, $ff, $0000, MapScriptNop_13, $0f, $01
-	map_script $0d, $ff, $0000, MapScriptNop_13, $0c, $01
-	map_script $0e, $ff, $0000, MapScriptNop_13, $09, $0f
-	map_script $0f, $ff, $0000, MapScriptNop_13, $0f, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, $09, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, $0d, $01
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_13, $10, $01
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_13, $07, $02
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_13, $0b, $01
+	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_13, $0f, $01
+	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_13, $0c, $01
+	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_13, $09, $0f
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, $0f, $0f
 	db $ff
 	script_set_text Text_35_48 ; $427f
 	script_speak $00 ; $4285
 	ret ; $428a
 RestaurantPlazaNpcScripts_13:
 	; $428b, 9 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_35_55, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_35_55, $00, $00
 	db $ff
 RestaurantPlazaFacingScripts_13:
 	; $4294, 33 bytes (map_scripts)
-	map_script $01, $ff, $0000, Text_31_70, $00, $00
-	map_script $02, $ff, $0000, Text_31_71, $00, $00
-	map_script $03, $ff, $0000, Text_31_72, $00, $00
-	map_script $04, $ff, $0000, Text_31_73, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, Text_31_70, $00, $00
+	map_script $02, FACEMASK_ANY, $0000, Text_31_71, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_31_72, $00, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_31_73, $00, $00
 	db $ff
 RestaurantPlazaTileTriggers_13:
 	; $42b5, 41 bytes (map_scripts)
-	map_script $01, $ff, $0000, RestaurantPlazaTile01_13, $00, $00
-	map_script $02, $ff, $0000, RestaurantPlazaTile02_13, $00, $00
-	map_script $03, $ff, $0000, RestaurantPlazaTile03_13, $00, $00
-	map_script $05, $ff, $0000, RestaurantPlazaTile05_13, $00, $00
-	map_script $06, $ff, $0000, RestaurantPlazaTile06_13, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, RestaurantPlazaTile01_13, $00, $00
+	map_script $02, FACEMASK_ANY, $0000, RestaurantPlazaTile02_13, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, RestaurantPlazaTile03_13, $00, $00
+	map_script $05, FACEMASK_ANY, $0000, RestaurantPlazaTile05_13, $00, $00
+	map_script $06, FACEMASK_ANY, $0000, RestaurantPlazaTile06_13, $00, $00
 	db $ff
 RestaurantPlazaTile01_13:
 	script_move_target $02, $0700, $0d00 ; $42de
@@ -372,10 +372,10 @@ AcademyCourtsTourCutscene:
 	ret ; $472b
 AcademyCourtsTourActors_13:
 	; $472c, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4f, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3200, $1300, $40, $49, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4f, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3200, $1300, FACE_DOWN, $49, $01, $00
 	map_actor_end
 ServiceAceCoachIntroCutscene:
 	ldh a, [hRomBank] ; $476e
@@ -567,12 +567,12 @@ Label_13_49c1:
 	ret ; $4c7d
 ServiceAceCoachIntroActors_13:
 	; $4c7e, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4f, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $4100, $0d00, $80, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1500, $0d00, $40, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1300, $0d00, $40, $4b, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4f, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $4100, $0d00, FACE_LEFT, $49, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $1500, $0d00, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $1300, $0d00, FACE_DOWN, $4b, $01, $00
 	map_actor_end
 LoadTourPointerSpriteGfx_13:
 	ldh a, [hWramBank] ; $4cdc
@@ -643,23 +643,23 @@ DormRoomMapScripts_13:
 	dw DormRoomInitScript_13 ; slot 6 InitScript
 DormRoomActors_13:
 	; $4e2e, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0b00, $0900, $40, $29, $01, $00
-	map_actor $0000, ActorScript_13_585f, $0600, $1080, $40, $55, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $2900, $2900, $40, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0b00, $0900, FACE_DOWN, $29, $01, $00
+	map_actor $0000, ActorScript_13_585f, $0600, $1080, FACE_DOWN, $55, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $2900, $2900, FACE_DOWN, $4c, $01, $00
 	map_actor_end
 DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
-	map_entry $01, $c0, $0b00, $0d00, $0000
-	map_entry $02, $c0, $0b00, $1300, $0000
-	map_entry $03, $c0, $0b00, $0d00, $0000
-	map_entry $04, $c0, $0b00, $0d00, $0000
-	map_entry $0e, $c0, $0b00, $0d00, $0000
-	map_entry $0f, $c0, $0b00, $0d00, $0000
+	map_entry $01, FACE_UP, $0b00, $0d00, $0000
+	map_entry $02, FACE_UP, $0b00, $1300, $0000
+	map_entry $03, FACE_UP, $0b00, $0d00, $0000
+	map_entry $04, FACE_UP, $0b00, $0d00, $0000
+	map_entry $0e, FACE_UP, $0b00, $0d00, $0000
+	map_entry $0f, FACE_UP, $0b00, $0d00, $0000
 	db $ff
 DormRoomExitTriggers_13:
 	; $4e93, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_13, $09, $02
-	map_script $02, $ff, $0000, MapScriptNop_13, $00, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, $09, $02
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, $00, $01
 	db $ff
 DormRoomNpc04_13:
 	call AdvanceRandomSeed ; $4ea4
@@ -675,12 +675,12 @@ DormRoomNpc04_13:
 	ret ; $4eb9
 DormRoomNpcScripts_13:
 	; $4eba, 17 bytes (map_scripts)
-	map_script $03, $ff, $0000, DormRoomNpc03_13, $00, $00
-	map_script $04, $ff, $0000, DormRoomNpc04_13, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, DormRoomNpc03_13, $00, $00
+	map_script $04, FACEMASK_ANY, $0000, DormRoomNpc04_13, $13, $00
 	db $ff
 DormRoomFacingScripts_13:
 	; $4ecb, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, DormRoomFacing01_13, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, DormRoomFacing01_13, $00, $00
 	db $ff
 DormRoomFacing01_13:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ed4
@@ -691,7 +691,7 @@ DormRoomFacing01_13:
 	ret ; $4eea
 DormRoomTileTriggers_13:
 	; $4eeb, 9 bytes (map_scripts)
-	map_script $0f, $80, $0000, DormRoomTile0F_13, $00, $00
+	map_script $0f, FACEMASK_DOWN, $0000, DormRoomTile0F_13, $00, $00
 	db $ff
 DormRoomTile0F_13:
 	script_null_script $03 ; $4ef4
@@ -1954,65 +1954,65 @@ CourtyardMapScripts_13:
 	dw CourtyardInitScript_13 ; slot 6 InitScript
 CourtyardActors_13:
 	; $5c86, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $1d00, $00, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, $c0, $65, $06, $03
-	map_actor $0000, ActorScript_13_7b25, $0800, $1300, $c0, $67, $01, $06
-	map_actor $0000, ActorScript_13_7b2f, $0f00, $1700, $40, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0500, $1d00, FACE_RIGHT, $68, $01, $07
+	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, FACE_UP, $65, $06, $03
+	map_actor $0000, ActorScript_13_7b25, $0800, $1300, FACE_UP, $67, $01, $06
+	map_actor $0000, ActorScript_13_7b2f, $0f00, $1700, FACE_DOWN, $6b, $01, $06
+	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsA_13:
 	; $5ce4, 108 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $1d00, $00, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, $c0, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $0800, $1300, $c0, $67, $01, $04
-	map_actor $0000, ActorScript_13_7b2f, $0f00, $1700, $40, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $2d00, $3d00, $40, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0500, $1d00, FACE_RIGHT, $68, $01, $07
+	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_7b25, $0800, $1300, FACE_UP, $67, $01, $04
+	map_actor $0000, ActorScript_13_7b2f, $0f00, $1700, FACE_DOWN, $6b, $01, $06
+	map_actor $0000, ActorScript_13_7b25, $2d00, $3d00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsB_13:
 	; $5d50, 122 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, $40, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $2300, $c0, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2500, $c0, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $1000, $2500, $80, $67, $01, $04
-	map_actor $0000, ActorScript_13_7b25, $0800, $1300, $c0, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $2d00, $3d00, $40, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $2100, $40, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0500, $2300, FACE_UP, $68, $01, $07
+	map_actor $0000, ActorScript_13_7a40, $0d00, $2500, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_7b25, $1000, $2500, FACE_LEFT, $67, $01, $04
+	map_actor $0000, ActorScript_13_7b25, $0800, $1300, FACE_UP, $6b, $01, $06
+	map_actor $0000, ActorScript_13_7b25, $2d00, $3d00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0500, $2100, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsC_13:
 	; $5dca, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7a40, $1000, $1500, $40, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2500, $c0, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorScript_13_7a40, $1000, $1500, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_7a40, $0d00, $2500, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsD_13:
 	; $5dfe, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7a40, $0d00, $1d00, $40, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, $c0, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b2f, $0900, $1500, $40, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, $80, $36, $01, $00
+	map_actor $0000, ActorScript_13_7a40, $0d00, $1d00, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_7b2f, $0900, $1500, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 CourtyardEntryPoints_13:
 	; $5e40, 57 bytes (map_entries)
-	map_entry $01, $40, $3600, $1600, $0000
-	map_entry $02, $40, $2200, $0b00, $0000
-	map_entry $03, $c0, $2200, $3100, $0000
-	map_entry $0a, $c0, $1100, $1d00, $0000
-	map_entry $0d, $c0, $0d00, $1f00, $0000
-	map_entry $0e, $c0, $0f00, $1f00, $0000
-	map_entry $0f, $c0, $2200, $2f00, $0000
+	map_entry $01, FACE_DOWN, $3600, $1600, $0000
+	map_entry $02, FACE_DOWN, $2200, $0b00, $0000
+	map_entry $03, FACE_UP, $2200, $3100, $0000
+	map_entry $0a, FACE_UP, $1100, $1d00, $0000
+	map_entry $0d, FACE_UP, $0d00, $1f00, $0000
+	map_entry $0e, FACE_UP, $0f00, $1f00, $0000
+	map_entry $0f, FACE_UP, $2200, $2f00, $0000
 	db $ff
 CourtyardExitTriggers_13:
 	; $5e79, 49 bytes (map_scripts)
-	map_script $01, $ff, $0000, $0000, $11, $01
-	map_script $02, $ff, $0000, $0000, $08, $04
-	map_script $03, $ff, $0000, $0000, $05, $02
-	map_script $0a, $ff, $0000, MapScriptNop_13, $00, $0a
-	map_script $0e, $ff, $0000, $0000, $07, $0e
-	map_script $0f, $ff, $0000, $0000, $08, $0f
+	map_script $01, FACEMASK_ANY, $0000, $0000, $11, $01
+	map_script $02, FACEMASK_ANY, $0000, $0000, $08, $04
+	map_script $03, FACEMASK_ANY, $0000, $0000, $05, $02
+	map_script $0a, FACEMASK_ANY, $0000, MapScriptNop_13, $00, $0a
+	map_script $0e, FACEMASK_ANY, $0000, $0000, $07, $0e
+	map_script $0f, FACEMASK_ANY, $0000, $0000, $08, $0f
 	db $ff
 CourtyardNpc03_13:
 	script_set_text Text_30_527 ; $5eaa
@@ -2033,13 +2033,13 @@ Label_13_5ed6:
 	ret ; $5edb
 CourtyardNpcScripts_13:
 	; $5edc, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, CourtyardNpc03_13, $03, $00
-	map_script $04, $ff, $05e0, Text_30_532, $03, $00
-	map_script $05, $ff, $05e0, Text_30_533, $1b, $00
-	map_script $04, $ff, $0000, Text_30_536, $03, $00
-	map_script $05, $ff, $0000, Text_30_537, $1b, $00
-	map_script $06, $ff, $0000, Text_30_534, $03, $00
-	map_script $07, $ff, $0000, Text_30_535, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, CourtyardNpc03_13, $03, $00
+	map_script $04, FACEMASK_ANY, $05e0, Text_30_532, $03, $00
+	map_script $05, FACEMASK_ANY, $05e0, Text_30_533, $1b, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_30_536, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_30_537, $1b, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_30_534, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_30_535, $13, $00
 	db $ff
 VarsityCourtANpc05_13:
 	script_null_script $05 ; $5f15
@@ -2070,12 +2070,12 @@ Label_13_5f4d:
 	ret ; $5f6f
 VarsityCourtNpcScriptsA_13:
 	; $5f70, 49 bytes (map_scripts)
-	map_script $03, $40, $0000, VarsityCourtANpc03FaceUp_13, $03, $00
-	map_script $03, $ff, $0000, VarsityCourtANpc03_13, $03, $00
-	map_script $04, $ff, $0000, Text_30_538, $03, $00
-	map_script $05, $ff, $0000, VarsityCourtANpc05_13, $03, $00
-	map_script $06, $ff, $0000, Text_30_542, $13, $00
-	map_script $07, $ff, $0000, Text_30_543, $13, $00
+	map_script $03, FACEMASK_UP, $0000, VarsityCourtANpc03FaceUp_13, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, VarsityCourtANpc03_13, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_30_538, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtANpc05_13, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_30_542, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_30_543, $13, $00
 	db $ff
 VarsityCourtBNpc09_13:
 	script_set_text Text_31_3 ; $5fa1
@@ -2119,13 +2119,13 @@ Label_13_5ffd:
 	ret ; $601f
 VarsityCourtNpcScriptsB_13:
 	; $6020, 57 bytes (map_scripts)
-	map_script $03, $40, $0000, VarsityCourtBNpc03FaceUp_13, $03, $00
-	map_script $03, $ff, $0000, VarsityCourtBNpc03_13, $03, $00
-	map_script $04, $ff, $0000, Text_31_6, $03, $00
-	map_script $05, $ff, $0000, VarsityCourtBNpc05_13, $03, $00
-	map_script $06, $ff, $0000, Text_31_10, $03, $00
-	map_script $07, $ff, $0000, Text_31_11, $13, $00
-	map_script $09, $ff, $0000, VarsityCourtBNpc09_13, $03, $00
+	map_script $03, FACEMASK_UP, $0000, VarsityCourtBNpc03FaceUp_13, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, VarsityCourtBNpc03_13, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_31_6, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtBNpc05_13, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_31_10, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_31_11, $13, $00
+	map_script $09, FACEMASK_ANY, $0000, VarsityCourtBNpc09_13, $03, $00
 	db $ff
 VarsityCourtCNpc03_13:
 	script_null_script $03 ; $6059
@@ -2143,9 +2143,9 @@ VarsityCourtCNpc04_13:
 	ret ; $609e
 VarsityCourtNpcScriptsC_13:
 	; $609f, 25 bytes (map_scripts)
-	map_script $03, $ff, $0000, VarsityCourtCNpc03_13, $03, $00
-	map_script $04, $ff, $0000, VarsityCourtCNpc04_13, $03, $00
-	map_script $05, $ff, $0000, VarsityCourtCNpc05_13, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, VarsityCourtCNpc03_13, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, VarsityCourtCNpc04_13, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtCNpc05_13, $13, $00
 	db $ff
 VarsityCourtCNpc05_13:
 	script_set_text Text_31_36 ; $60b8
@@ -2164,11 +2164,11 @@ VarsityCourtDNpc05_13:
 	ret ; $60ee
 VarsityCourtNpcScriptsD_13:
 	; $60ef, 41 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_31_38, $03, $00
-	map_script $04, $ff, $0000, Text_31_39, $03, $00
-	map_script $05, $ff, $0000, VarsityCourtDNpc05_13, $03, $00
-	map_script $06, $ff, $0000, Text_31_41, $03, $00
-	map_script $07, $ff, $0000, Text_31_42, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_31_38, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_31_39, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtDNpc05_13, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_31_41, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_31_42, $13, $00
 	db $ff
 VarsityCourtENpc05_13:
 	script_null_script $05 ; $6118
@@ -2179,15 +2179,15 @@ VarsityCourtENpc05_13:
 	ret ; $613a
 VarsityCourtNpcScriptsE_13:
 	; $613b, 41 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_31_43, $03, $00
-	map_script $04, $ff, $0000, Text_31_44, $03, $00
-	map_script $05, $ff, $0000, VarsityCourtENpc05_13, $03, $00
-	map_script $06, $ff, $0000, Text_31_46, $13, $00
-	map_script $07, $ff, $0000, Text_31_47, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_31_43, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_31_44, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, VarsityCourtENpc05_13, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_31_46, $13, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_31_47, $13, $00
 	db $ff
 CourtyardFacingScripts_13:
 	; $6164, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, CourtyardFacing01_13, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, CourtyardFacing01_13, $00, $00
 	db $ff
 CourtyardFacing01_13:
 	call Func_13_7ae0 ; $616d
@@ -2490,10 +2490,10 @@ VarsityCourtTourCutscene:
 	ret ; $6637
 VarsityCourtTourActors_13:
 	; $6638, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, $40, $4f, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $2b00, $0b00, $40, $49, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4f, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $2b00, $0b00, FACE_DOWN, $49, $01, $00
 	map_actor_end
 DecompressVarsityCourtTourRecords_13:
 	ldh a, [hWramBank] ; $667a
@@ -3132,17 +3132,17 @@ Label_13_7340:
 	ret ; $739b
 SinglesTravelingTeamActors_13:
 	; $739c, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $1900, $1f00, $80, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0b00, $1300, $40, $68, $01, $07
-	map_actor $0000, ActorScript_13_7b25, $1300, $2100, $80, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $1300, $2300, $80, $67, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1300, $1700, $80, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1b00, $1d00, $80, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1900, $1d00, $80, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, $80, $53, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, $80, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1700, $1d00, $80, $29, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $1900, $1f00, FACE_LEFT, $4b, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0b00, $1300, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_7b25, $1300, $2100, FACE_LEFT, $65, $01, $03
+	map_actor $0000, ActorScript_13_7b25, $1300, $2300, FACE_LEFT, $67, $01, $06
+	map_actor $0000, ActorScript_13_7b25, $1300, $1700, FACE_LEFT, $6b, $01, $06
+	map_actor $0000, ActorScript_13_7b25, $1b00, $1d00, FACE_LEFT, $49, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $1900, $1d00, FACE_LEFT, $4a, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $53, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4d, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $1700, $1d00, FACE_LEFT, $29, $01, $00
 	map_actor_end
 RunDoublesTravelingTeamVictoryIfWon_13:
 	wram_bank $04 ; $7440
@@ -3361,17 +3361,17 @@ Func_13_78c4:
 	ret ; $78d6
 DoublesTravelingTeamActors_13:
 	; $78d7, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $1900, $1d00, $80, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1700, $40, $68, $01, $07
-	map_actor $0000, ActorScript_13_7b25, $1300, $2100, $80, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $1300, $2300, $80, $67, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1300, $1700, $80, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1700, $1d00, $80, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0b00, $1300, $40, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, $80, $53, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, $80, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $1900, $1d00, FACE_LEFT, $4b, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0d00, $1700, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_7b25, $1300, $2100, FACE_LEFT, $65, $01, $03
+	map_actor $0000, ActorScript_13_7b25, $1300, $2300, FACE_LEFT, $67, $01, $06
+	map_actor $0000, ActorScript_13_7b25, $1300, $1700, FACE_LEFT, $6b, $01, $06
+	map_actor $0000, ActorScript_13_7b25, $1700, $1d00, FACE_LEFT, $49, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $0b00, $1300, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $53, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
 	map_actor_end
 DoublesTravelingTeamInitScript_13:
 	set_flag $0a, 3 ; $797b

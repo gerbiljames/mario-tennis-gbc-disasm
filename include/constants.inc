@@ -23,6 +23,28 @@ def PADB_LEFT    equ 5
 def PADB_UP      equ 6
 def PADB_DOWN    equ 7
 
+; --- Overworld actor facing (map_actor `facing`, map_entry `sprite`) ---
+; The facing byte stored in an actor's state ($daXX). Its top 2 bits are a
+; direction index (0-3); CheckTriggerFacingMask ($0a:$53bd) shifts them out and
+; looks them up in a table -> PADF bit to test against a FACEMASK_* below. The
+; byte doubles as the movement angle fed to as_move (0/64/128/192 on a 256-unit
+; circle). These are the NPC/overworld facings, deliberately distinct from the
+; PADF_* joypad masks even where the value coincides.
+def FACE_RIGHT   equ $00
+def FACE_DOWN    equ $40
+def FACE_LEFT    equ $80
+def FACE_UP      equ $c0
+
+; --- Story-script facing mask (map_script `facing_mask`) ---
+; The direction an actor must face for FindStoryScriptEntry ($0a:$53e4) to run
+; the record. PADF-layout bits (matched against the facing->PADF table lookup);
+; FACEMASK_ANY ($ff) matches every facing.
+def FACEMASK_ANY   equ $ff
+def FACEMASK_RIGHT equ $10
+def FACEMASK_LEFT  equ $20
+def FACEMASK_UP    equ $40
+def FACEMASK_DOWN  equ $80
+
 ; --- Shot types (wCurrentShotType, $c4a0) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
 ; SelectServeShotType ($08:$707e/$706b), which index the button (df16) x

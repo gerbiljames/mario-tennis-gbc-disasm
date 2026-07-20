@@ -21,6 +21,24 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Map-table facing constants (2026-07-20)
+
+Replaced the raw facing bytes in the three story map tables with named
+constants. The `facing` field of `map_actor` and the (previously `sprite`,
+now correctly labelled `facing`) field of `map_entry` hold an actor facing
+byte whose top 2 bits are a direction index — verified against
+`CheckTriggerFacingMask` (`$0a:$53bd`) and its `$0a:$53b9` index→PADF table
+`[$10,$80,$20,$40]`: `$00`=Right, `$40`=Down, `$80`=Left, `$c0`=Up. Added
+`FACE_RIGHT/DOWN/LEFT/UP` to `constants.inc`, plus `FACEMASK_ANY` (`$ff`) and
+`FACEMASK_RIGHT/LEFT/UP/DOWN` (PADF-layout bits) for the `map_script`
+`facing_mask` field. Deliberately separate names from the `PADF_*` joypad
+masks even where values coincide (these are NPC/overworld facings, not
+controls). `disasm.py`'s `render_map_table` emits them symbolically
+(`ACTOR_FACING_NAMES`/`FACING_MASK_NAMES`); 1496 facing + 623 facing_mask
+fields across banks `$0e-$15`, `$16`, `$1a`, `$27` now read as constants. The
+existing `...FaceRight`/`...FaceUp` handler labels corroborate the compass
+mapping. Byte-perfect.
+
 ### Symbolic dialogue text ids (2026-07-20)
 
 Made dialogue text references read symbolically instead of as raw hex. A text id

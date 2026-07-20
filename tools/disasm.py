@@ -2292,7 +2292,7 @@ ENDM
 ; Actor spawn template (14 bytes, list terminated by a $ff sentinel byte).
 ; SpawnActorFromTemplate ($04:$4c60) spawns `objdef` unless `cond` is met,
 ; then seeds the actor's position, facing, object id, animation, and (if
-; nonzero) a palette override.
+; nonzero) a palette override. `facing` is a FACE_* constant (constants.inc).
 ; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette
 MACRO map_actor
 	dw \\1, \\2, \\3, \\4
@@ -2392,16 +2392,18 @@ MACRO as_flag        ; $15 set or clear a state flag bit (field, mode, bit index
 ENDM
 
 ; Entry-point spawn record (8 bytes, table terminated by $ff). Selected by
-; wStoryModeEntryPoint; places the main character and runs `arrival_script`.
-; Usage: map_entry id, sprite, x, y, arrival_script
+; wStoryModeEntryPoint; places the main character (facing a FACE_* direction,
+; constants.inc) and runs `arrival_script`.
+; Usage: map_entry id, facing, x, y, arrival_script
 MACRO map_entry
 	db \\1, \\2
 	dw \\3, \\4, \\5
 ENDM
 
 ; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
-; ($0a:$53e4) matches `id` (and `facing_mask` against the actor's facing),
-; checks `flag_cond`, then runs `handler` with the two arg bytes.
+; ($0a:$53e4) matches `id` (and `facing_mask`, a FACEMASK_* constant in
+; constants.inc, against the actor's facing), checks `flag_cond`, then runs
+; `handler` with the two arg bytes.
 ; Usage: map_script id, facing_mask, flag_cond, handler, arg0, arg1
 MACRO map_script
 	db \\1, \\2
@@ -2697,6 +2699,17 @@ ENDM
 MAP_TREE_SLOTS = ("EntryPoints", "ExitTriggers", "Actors", "NpcScripts",
                   "FacingScripts", "TileTriggers", "InitScript")
 
+# Overworld actor facing byte (map_actor `facing`, map_entry `sprite`): the top
+# 2 bits are a direction index (CheckTriggerFacingMask $0a:$53bd). Rendered as
+# the FACE_* constants from constants.inc.
+ACTOR_FACING_NAMES = {0x00: "FACE_RIGHT", 0x40: "FACE_DOWN",
+                      0x80: "FACE_LEFT", 0xc0: "FACE_UP"}
+# map_script `facing_mask`: a PADF-layout mask the actor's facing must match
+# ($ff = any). Rendered as the FACEMASK_* constants from constants.inc.
+FACING_MASK_NAMES = {0xff: "FACEMASK_ANY", 0x10: "FACEMASK_RIGHT",
+                     0x20: "FACEMASK_LEFT", 0x40: "FACEMASK_UP",
+                     0x80: "FACEMASK_DOWN"}
+
 # Story-location names, indexed by location id, from the in-game name popup
 # (text id $0179 + loc = string bank $30 index 377 + loc). Annotates the
 # StoryLocationTable so each record documents which location it selects.
@@ -2832,6 +2845,12 @@ def render_map_table(spec, rom, seg, end, bank, labels):
             return labels[base + v - 0x4000]
         return f"${v:04x}"
 
+    def facing(v):
+        return ACTOR_FACING_NAMES.get(v, f"${v:02x}")
+
+    def facemask(v):
+        return FACING_MASK_NAMES.get(v, f"${v:02x}")
+
     out, p = [], seg
     if spec == "map_tree":
         for r, role in enumerate(MAP_TREE_SLOTS):
@@ -2849,7 +2868,7 @@ def render_map_table(spec, rom, seg, end, bank, labels):
             nonlocal p
             while p + 14 <= end and rom[p + 9] != 0xFF:
                 out.append(f"\tmap_actor {sym(p)}, {sym(p + 2)}, ${word(p + 4):04x}, "
-                           f"${word(p + 6):04x}, ${rom[p + 8]:02x}, ${rom[p + 10]:02x}, "
+                           f"${word(p + 6):04x}, {facing(rom[p + 8])}, ${rom[p + 10]:02x}, "
                            f"${rom[p + 11]:02x}, ${rom[p + 12]:02x}")
                 p += 14
         emit_actors()
@@ -2859,7 +2878,7 @@ def render_map_table(spec, rom, seg, end, bank, labels):
             emit_actors()
     elif spec == "map_entries":
         while p + 8 <= end and rom[p] != 0xFF:
-            out.append(f"\tmap_entry ${rom[p]:02x}, ${rom[p + 1]:02x}, "
+            out.append(f"\tmap_entry ${rom[p]:02x}, {facing(rom[p + 1])}, "
                        f"${word(p + 2):04x}, ${word(p + 4):04x}, {sym(p + 6)}")
             p += 8
     elif spec == "map_scripts":
@@ -2869,7 +2888,7 @@ def render_map_table(spec, rom, seg, end, bank, labels):
             handler = sym(p + 4)
             if handler.startswith("$"):
                 handler = text_id_name(word(p + 4)) or handler
-            out.append(f"\tmap_script ${rom[p]:02x}, ${rom[p + 1]:02x}, "
+            out.append(f"\tmap_script ${rom[p]:02x}, {facemask(rom[p + 1])}, "
                        f"{sym(p + 2)}, {handler}, ${rom[p + 6]:02x}, "
                        f"${rom[p + 7]:02x}")
             p += 8

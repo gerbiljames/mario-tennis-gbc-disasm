@@ -106,7 +106,7 @@ ENDM
 ; Actor spawn template (14 bytes, list terminated by a $ff sentinel byte).
 ; SpawnActorFromTemplate ($04:$4c60) spawns `objdef` unless `cond` is met,
 ; then seeds the actor's position, facing, object id, animation, and (if
-; nonzero) a palette override.
+; nonzero) a palette override. `facing` is a FACE_* constant (constants.inc).
 ; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette
 MACRO map_actor
 	dw \1, \2, \3, \4
@@ -206,16 +206,18 @@ MACRO as_flag        ; $15 set or clear a state flag bit (field, mode, bit index
 ENDM
 
 ; Entry-point spawn record (8 bytes, table terminated by $ff). Selected by
-; wStoryModeEntryPoint; places the main character and runs `arrival_script`.
-; Usage: map_entry id, sprite, x, y, arrival_script
+; wStoryModeEntryPoint; places the main character (facing a FACE_* direction,
+; constants.inc) and runs `arrival_script`.
+; Usage: map_entry id, facing, x, y, arrival_script
 MACRO map_entry
 	db \1, \2
 	dw \3, \4, \5
 ENDM
 
 ; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
-; ($0a:$53e4) matches `id` (and `facing_mask` against the actor's facing),
-; checks `flag_cond`, then runs `handler` with the two arg bytes.
+; ($0a:$53e4) matches `id` (and `facing_mask`, a FACEMASK_* constant in
+; constants.inc, against the actor's facing), checks `flag_cond`, then runs
+; `handler` with the two arg bytes.
 ; Usage: map_script id, facing_mask, flag_cond, handler, arg0, arg1
 MACRO map_script
 	db \1, \2

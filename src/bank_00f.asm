@@ -17,22 +17,22 @@ SmallCharTestMapScripts_0f:
 	dw SmallCharTestInitScript_0f ; slot 6 InitScript
 SmallCharTestActors_0f:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $0700, $0300, $40, $26, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0d00, $0300, $40, $2b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0700, $0700, $40, $2c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0d00, $0700, $40, $2d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0500, $0d00, $40, $70, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0900, $0d00, $40, $71, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0d00, $0d00, $40, $72, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $0d00, $40, $73, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0500, $1100, $40, $6d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0900, $1100, $40, $6e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0d00, $1100, $40, $48, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1100, $40, $2b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0700, $0300, FACE_DOWN, $26, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0d00, $0300, FACE_DOWN, $2b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0700, $0700, FACE_DOWN, $2c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0d00, $0700, FACE_DOWN, $2d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0500, $0d00, FACE_DOWN, $70, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0900, $0d00, FACE_DOWN, $71, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0d00, $0d00, FACE_DOWN, $72, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $0d00, FACE_DOWN, $73, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0500, $1100, FACE_DOWN, $6d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0900, $1100, FACE_DOWN, $6e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0d00, $1100, FACE_DOWN, $48, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1100, FACE_DOWN, $2b, $01, $00
 	map_actor_end
 SmallCharTestEntryPoints_0f:
 	; $40c6, 9 bytes (map_entries)
-	map_entry $01, $40, $0b00, $0b00, $0000
+	map_entry $01, FACE_DOWN, $0b00, $0b00, $0000
 	db $ff
 SmallCharTestExitTriggers_0f:
 	ds 1, $ff ; $40cf, fill
@@ -103,18 +103,18 @@ MapScriptNop_0f:
 	ret ; $4137
 SmallCharTestNpcScripts_0f:
 	; $4138, 97 bytes (map_scripts)
-	map_script $03, $ff, $0000, SmallCharTestNpc03_0f, $00, $00
-	map_script $04, $ff, $0000, SmallCharTestNpc04_0f, $00, $00
-	map_script $05, $ff, $0000, SmallCharTestNpc05_0f, $00, $00
-	map_script $06, $ff, $0000, SmallCharTestNpc06_0f, $00, $00
-	map_script $07, $ff, $0000, MapScriptNop_0f, $01, $00
-	map_script $08, $ff, $0000, MapScriptNop_0f, $01, $00
-	map_script $09, $ff, $0000, MapScriptNop_0f, $01, $00
-	map_script $0a, $ff, $0000, MapScriptNop_0f, $01, $00
-	map_script $0b, $ff, $0000, MapScriptNop_0f, $01, $00
-	map_script $0c, $ff, $0000, MapScriptNop_0f, $01, $00
-	map_script $0d, $ff, $0000, MapScriptNop_0f, $01, $00
-	map_script $0e, $ff, $0000, MapScriptNop_0f, $01, $00
+	map_script $03, FACEMASK_ANY, $0000, SmallCharTestNpc03_0f, $00, $00
+	map_script $04, FACEMASK_ANY, $0000, SmallCharTestNpc04_0f, $00, $00
+	map_script $05, FACEMASK_ANY, $0000, SmallCharTestNpc05_0f, $00, $00
+	map_script $06, FACEMASK_ANY, $0000, SmallCharTestNpc06_0f, $00, $00
+	map_script $07, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
+	map_script $08, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
+	map_script $09, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
+	map_script $0a, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
+	map_script $0b, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
+	map_script $0c, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
+	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
+	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_0f, $01, $00
 	db $ff
 SmallCharTestFacingScripts_0f:
 	ds 1, $ff ; $4199, fill
@@ -122,7 +122,7 @@ SmallCharTestTile01_0f:
 	ret ; $419a
 SmallCharTestTileTriggers_0f:
 	; $419b, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, SmallCharTestTile01_0f, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, SmallCharTestTile01_0f, $00, $00
 	db $ff
 SmallCharTestInitScript_0f:
 	xor a, a ; $41a4
@@ -159,81 +159,81 @@ AwardsCeremonyMapScripts_0f:
 	dw AwardsCeremonyInitScript_0f ; slot 6 InitScript
 AwardsCeremonyActors_0f:
 	; $41e9, 290 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $0b00, $2700, $c0, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0d00, $2700, $c0, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0e80, $1b00, $80, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1f00, $00, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0700, $2100, $00, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1d00, $00, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1d00, $80, $24, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0980, $1b00, $00, $23, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1940, $00, $25, $01, $05
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1700, $00, $63, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0ec0, $1780, $40, $74, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1040, $17c0, $40, $74, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1180, $17c0, $40, $74, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1600, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $2100, $80, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1000, $1f00, $80, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $4e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $26, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0b00, $2700, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0d00, $2700, FACE_UP, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0e80, $1b00, FACE_LEFT, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1f00, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0700, $2100, FACE_RIGHT, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1d00, FACE_RIGHT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1d00, FACE_LEFT, $24, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0980, $1b00, FACE_RIGHT, $23, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1940, FACE_RIGHT, $25, $01, $05
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1700, FACE_RIGHT, $63, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0ec0, $1780, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1040, $17c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1180, $17c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1600, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $2100, FACE_LEFT, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1000, $1f00, FACE_LEFT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $4e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $53, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $26, $01, $00
 	map_actor_end
 AwardsCeremonyActorsDoubles_0f:
 	; $430b, 290 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1b00, $80, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0d00, $2700, $c0, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0d00, $2900, $c0, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1f00, $00, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0700, $2100, $00, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1d00, $00, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1d00, $80, $24, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0900, $1b00, $00, $23, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1940, $00, $25, $01, $05
-	map_actor $0000, ActorScript_0f_7b57, $0800, $1700, $00, $63, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1780, $40, $74, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $17c0, $40, $74, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $2900, $40, $74, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1600, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2f00, $2100, $80, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1000, $2000, $80, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $4e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $53, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $4d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, $40, $26, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1b00, FACE_LEFT, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0d00, $2700, FACE_UP, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0d00, $2900, FACE_UP, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1f00, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0700, $2100, FACE_RIGHT, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1d00, FACE_RIGHT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1d00, FACE_LEFT, $24, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0900, $1b00, FACE_RIGHT, $23, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1940, FACE_RIGHT, $25, $01, $05
+	map_actor $0000, ActorScript_0f_7b57, $0800, $1700, FACE_RIGHT, $63, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1780, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $17c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $2900, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1600, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2f00, $2100, FACE_LEFT, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1000, $2000, FACE_LEFT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $4e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $53, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $fd00, $0100, FACE_DOWN, $26, $01, $00
 	map_actor_end
 AwardsCeremonyEntryPoints_0f:
 	; $442d, 25 bytes (map_entries)
-	map_entry $01, $c0, $0c00, $2900, $0000
-	map_entry $0a, $c0, $0c00, $2900, $0000
-	map_entry $0b, $c0, $0b00, $2900, $0000
+	map_entry $01, FACE_UP, $0c00, $2900, $0000
+	map_entry $0a, FACE_UP, $0c00, $2900, $0000
+	map_entry $0b, FACE_UP, $0b00, $2900, $0000
 	db $ff
 AwardsCeremonyExitTriggers_0f:
 	ds 1, $ff ; $4446, fill
 AwardsCeremonyNpcScripts_0f:
 	; $4447, 81 bytes (map_scripts)
-	map_script $03, $ff, $0000, $0000, $03, $00
-	map_script $04, $ff, $0000, Text_25_115, $03, $00
-	map_script $05, $ff, $0000, Text_25_132, $03, $00
-	map_script $06, $ff, $0000, Text_25_122, $03, $00
-	map_script $07, $ff, $0000, Text_25_124, $03, $00
-	map_script $08, $ff, $0000, AwardsCeremonyNpc08_0f, $03, $00
-	map_script $09, $ff, $0000, Text_25_130, $03, $00
-	map_script $0a, $ff, $0000, Text_25_131, $03, $00
-	map_script $11, $ff, $0000, Text_25_121, $03, $00
-	map_script $12, $ff, $0000, Text_25_123, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, $0000, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_25_115, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_25_132, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_122, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_124, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, AwardsCeremonyNpc08_0f, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_130, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_131, $03, $00
+	map_script $11, FACEMASK_ANY, $0000, Text_25_121, $03, $00
+	map_script $12, FACEMASK_ANY, $0000, Text_25_123, $03, $00
 	db $ff
 AwardsCeremonyFacingScripts_0f:
 	; $4498, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, AwardsCeremonyFacing01_0f, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, AwardsCeremonyFacing01_0f, $00, $00
 	db $ff
 AwardsCeremonyFacing01_0f:
 	ret ; $44a1
 AwardsCeremonyTileTriggers_0f:
 	; $44a2, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, AwardsCeremonyTile01_0f, $00, $00
-	map_script $02, $ff, $0000, AwardsCeremonyTile02_0f, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, AwardsCeremonyTile01_0f, $00, $00
+	map_script $02, FACEMASK_ANY, $0000, AwardsCeremonyTile02_0f, $00, $00
 	db $ff
 AwardsCeremonyTile01_0f:
 	ld b, $0a ; $44b3
@@ -1291,15 +1291,15 @@ Label_0f_5afb:
 	ret ; $5b03
 AwardsCeremonyScriptsDoubles_0f:
 	; $5b04, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_25_183, $03, $00
-	map_script $04, $ff, $0000, Text_25_165, $03, $00
-	map_script $05, $ff, $0000, Text_25_166, $03, $00
-	map_script $06, $ff, $0000, Text_25_175, $03, $00
-	map_script $07, $ff, $0000, Text_25_177, $03, $00
-	map_script $08, $ff, $0000, AwardsCeremonyNpc08_0f, $03, $00
-	map_script $09, $ff, $0000, Text_25_130, $03, $00
-	map_script $0a, $ff, $0000, Text_25_131, $03, $00
-	map_script $12, $ff, $0000, Text_25_176, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_25_183, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_25_165, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_25_166, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_175, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_177, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, AwardsCeremonyNpc08_0f, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_130, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_131, $03, $00
+	map_script $12, FACEMASK_ANY, $0000, Text_25_176, $03, $00
 	db $ff
 Func_0f_5b4d:
 	script_player_speed $00ff ; $5b4d
@@ -1510,39 +1510,39 @@ TournamentMapScripts_0f:
 	dw TournamentInitScript_0f ; slot 6 InitScript
 TournamentActors_0f:
 	; $5fa2, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $0c00, $00, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, $c0, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, $c0, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2100, $1100, $00, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, $40, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1900, $1300, $40, $60, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, $40, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, $40, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, $40, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, $40, $1e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $0c00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2100, $1100, FACE_RIGHT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, FACE_DOWN, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1900, $1300, FACE_DOWN, $60, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, FACE_DOWN, $1f, $01, $00
 	map_actor_end
 TournamentEntryPoints_0f:
 	; $6070, 65 bytes (map_entries)
-	map_entry $01, $40, $0e00, $0900, $0000
-	map_entry $02, $40, $2a00, $0900, $0000
-	map_entry $03, $00, $0500, $0b00, $0000
-	map_entry $04, $80, $3300, $0b00, $0000
-	map_entry $05, $c0, $1c00, $2300, $0000
-	map_entry $0a, $40, $2500, $1100, $0000
-	map_entry $0b, $40, $2300, $1100, $0000
-	map_entry $0f, $c0, $1b00, $3100, $0000
+	map_entry $01, FACE_DOWN, $0e00, $0900, $0000
+	map_entry $02, FACE_DOWN, $2a00, $0900, $0000
+	map_entry $03, FACE_RIGHT, $0500, $0b00, $0000
+	map_entry $04, FACE_LEFT, $3300, $0b00, $0000
+	map_entry $05, FACE_UP, $1c00, $2300, $0000
+	map_entry $0a, FACE_DOWN, $2500, $1100, $0000
+	map_entry $0b, FACE_DOWN, $2300, $1100, $0000
+	map_entry $0f, FACE_UP, $1b00, $3100, $0000
 	db $ff
 TournamentExitTriggers_0f:
 	; $60b1, 41 bytes (map_scripts)
-	map_script $01, $ff, $0000, TournamentExit_0f, $18, $01
-	map_script $02, $ff, $0000, TournamentExit_0f, $18, $02
-	map_script $03, $ff, $0000, TournamentExit_0f, $17, $01
-	map_script $04, $ff, $0000, TournamentExit_0f, $16, $01
-	map_script $05, $ff, $0000, TournamentExit_0f, $15, $03
+	map_script $01, FACEMASK_ANY, $0000, TournamentExit_0f, $18, $01
+	map_script $02, FACEMASK_ANY, $0000, TournamentExit_0f, $18, $02
+	map_script $03, FACEMASK_ANY, $0000, TournamentExit_0f, $17, $01
+	map_script $04, FACEMASK_ANY, $0000, TournamentExit_0f, $16, $01
+	map_script $05, FACEMASK_ANY, $0000, TournamentExit_0f, $15, $03
 	db $ff
 TournamentExit_0f:
 	clear_flag $17, 1 ; $60da
@@ -1562,23 +1562,23 @@ Label_0f_60fc:
 	ret ; $6101
 TournamentNpcScripts_0f:
 	; $6102, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, Text_1f_159, $03, $00
-	map_script $07, $ff, $0000, Text_1f_160, $13, $00
-	map_script $08, $ff, $0000, Text_1f_161, $03, $00
-	map_script $09, $ff, $0000, Text_1f_162, $03, $00
-	map_script $0a, $ff, $0000, TournamentNpc0A_0f, $03, $00
-	map_script $0b, $ff, $0000, Text_1f_166, $03, $00
-	map_script $0c, $ff, $0000, Text_1f_167, $03, $00
-	map_script $0d, $ff, $0000, Text_1f_168, $03, $00
-	map_script $0e, $ff, $0000, Text_1f_169, $03, $00
-	map_script $0f, $ff, $0000, Text_1f_170, $03, $00
-	map_script $10, $ff, $0000, Text_1f_171, $03, $00
-	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_159, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_160, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_161, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_162, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, TournamentNpc0A_0f, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_1f_166, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_1f_167, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_1f_168, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_1f_169, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_1f_170, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_1f_171, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 TournamentFacingScripts_0f:
 	; $616b, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, TournamentFacing01_0f, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, TournamentFacing01_0f, $00, $00
 	db $ff
 TournamentFacing01_0f:
 	xor a, a ; $6174
@@ -1603,8 +1603,8 @@ TournamentFacing01_0f:
 	ret ; $61a5
 TournamentTileTriggers_0f:
 	; $61a6, 17 bytes (map_scripts)
-	map_script $0e, $ff, $0000, TournamentTile0E_0f, $00, $00
-	map_script $0f, $ff, $0000, TournamentTile0F_0f, $00, $00
+	map_script $0e, FACEMASK_ANY, $0000, TournamentTile0E_0f, $00, $00
+	map_script $0f, FACEMASK_ANY, $0000, TournamentTile0F_0f, $00, $00
 	db $ff
 TournamentTile0E_0f:
 	ld a, $01 ; $61b7
@@ -1956,15 +1956,15 @@ Label_0f_65a6:
 	ret ; $65c1
 IslandOpenRoundActors_0f:
 	; $65c2, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $1c00, $2c00, $c0, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1c00, $2f00, $c0, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $3100, $c0, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1c00, $2c00, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1c00, $2f00, FACE_UP, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $3100, FACE_UP, $5b, $01, $00
 	map_actor_end
 IslandOpenRoundScripts_0f:
 	; $65f6, 25 bytes (map_scripts)
-	map_script $03, $ff, $0000, Text_1f_25, $03, $00
-	map_script $04, $ff, $0000, Text_1f_26, $03, $00
-	map_script $05, $ff, $0000, Text_1f_27, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_25, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_26, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_1f_27, $03, $00
 	db $ff
 ComputeIslandOpenRound:
 	test_flag $05, 7 ; $660f
@@ -2089,133 +2089,133 @@ Label_0f_6702:
 	ret ; $6713
 IslandOpenRound1Actors_0f:
 	; $6714, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, $40, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1900, $1300, $40, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, $40, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, $40, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, $40, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, $40, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1500, $40, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, $40, $1e, $01, $00
-	map_actor $0000, ActorScript_0f_7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1900, $1300, FACE_DOWN, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, FACE_DOWN, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_7a73, $2900, $1300, FACE_DOWN, $1f, $01, $00
 	map_actor_end
 IslandOpenRound1Scripts_0f:
 	; $67e2, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, Text_1f_182, $03, $00
-	map_script $07, $ff, $0000, Text_1f_183, $03, $00
-	map_script $08, $ff, $0000, Text_1f_184, $03, $00
-	map_script $09, $ff, $0000, Text_1f_185, $03, $00
-	map_script $0a, $ff, $0000, Text_1f_186, $03, $00
-	map_script $0b, $ff, $0000, Text_1f_187, $03, $00
-	map_script $0c, $ff, $0000, Text_1f_188, $03, $00
-	map_script $0d, $ff, $0000, Text_1f_189, $03, $00
-	map_script $0e, $ff, $0000, Text_1f_190, $03, $00
-	map_script $0f, $ff, $0000, Text_1f_191, $03, $00
-	map_script $10, $ff, $0000, Text_1f_192, $13, $00
-	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_182, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_183, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_184, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_185, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_1f_186, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_1f_187, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_1f_188, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_1f_189, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_1f_190, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_1f_191, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_1f_192, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound2Actors_0f:
 	; $684b, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, $40, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, $c0, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, $40, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, $40, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7b61, $0700, $1f00, $40, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1300, $00, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0500, $2100, $40, $1e, $01, $00
-	map_actor $0000, ActorScript_0f_7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7b61, $0700, $1f00, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1300, FACE_RIGHT, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0500, $2100, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_7a73, $2900, $1300, FACE_DOWN, $1f, $01, $00
 	map_actor_end
 IslandOpenRound2Scripts_0f:
 	; $6919, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, Text_25_4, $03, $00
-	map_script $07, $ff, $0000, Text_25_5, $13, $00
-	map_script $08, $ff, $0000, Text_25_6, $03, $00
-	map_script $09, $ff, $0000, Text_25_7, $03, $00
-	map_script $0a, $ff, $0000, Text_25_8, $03, $00
-	map_script $0b, $ff, $0000, Text_25_9, $03, $00
-	map_script $0c, $ff, $0000, Text_25_10, $03, $00
-	map_script $0d, $ff, $0000, Text_25_11, $13, $00
-	map_script $0e, $ff, $0000, Text_25_12, $03, $00
-	map_script $0f, $ff, $0000, Text_25_13, $03, $00
-	map_script $10, $ff, $0000, Text_25_14, $13, $00
-	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_4, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_5, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_6, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_7, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_8, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_9, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_10, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_11, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_12, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_13, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_25_14, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound3Actors_0f:
 	; $6982, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0e00, $0400, $00, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, $c0, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, $c0, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, $40, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2100, $1100, $00, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, ActorScript_0f_7b61, $0700, $1f00, $40, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1300, $00, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0500, $2100, $40, $1e, $01, $00
-	map_actor $0000, ActorScript_0f_7a73, $2900, $1300, $40, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0e00, $0400, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1500, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2100, $1100, FACE_RIGHT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_7b61, $0700, $1f00, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1300, FACE_RIGHT, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0500, $2100, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_7a73, $2900, $1300, FACE_DOWN, $1f, $01, $00
 	map_actor_end
 IslandOpenRound3Scripts_0f:
 	; $6a50, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, Text_25_15, $03, $00
-	map_script $07, $ff, $0000, Text_25_16, $13, $00
-	map_script $08, $ff, $0000, Text_25_17, $03, $00
-	map_script $09, $ff, $0000, Text_25_18, $03, $00
-	map_script $0a, $ff, $0000, Text_25_19, $03, $00
-	map_script $0b, $ff, $0000, Text_25_20, $03, $00
-	map_script $0c, $ff, $0000, Text_25_21, $03, $00
-	map_script $0d, $ff, $0000, Text_25_22, $13, $00
-	map_script $0e, $ff, $0000, Text_25_23, $03, $00
-	map_script $0f, $ff, $0000, Text_25_24, $03, $00
-	map_script $10, $ff, $0000, Text_25_25, $13, $00
-	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_15, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_16, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_17, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_18, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_19, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_20, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_21, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_22, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_23, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_24, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_25_25, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound1ActorsDoubles_0f:
 	; $6ab9, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, $c0, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, $00, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, $40, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, $40, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, $c0, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7a50, $1900, $10c0, $80, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, $40, $1f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, $40, $1e, $01, $05
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b75, $2300, $1700, FACE_RIGHT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, FACE_DOWN, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, FACE_UP, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7a50, $1900, $10c0, FACE_LEFT, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, FACE_DOWN, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, FACE_DOWN, $1e, $01, $05
 	map_actor_end
 IslandOpenRound1ScriptsDoubles_0f:
 	; $6b79, 97 bytes (map_scripts)
-	map_script $06, $ff, $0000, Text_25_26, $03, $00
-	map_script $07, $ff, $0000, Text_25_27, $13, $00
-	map_script $08, $ff, $0000, Text_25_28, $03, $00
-	map_script $09, $ff, $0000, Text_25_29, $03, $00
-	map_script $0a, $ff, $0000, IslandOpenRound1DoublesNpc0A_0f, $03, $00
-	map_script $0b, $ff, $0000, IslandOpenRound1DoublesNpc0B_0f, $03, $00
-	map_script $0c, $ff, $0000, Text_25_36, $03, $00
-	map_script $0d, $ff, $0000, IslandOpenRound1DoublesNpc0D_0f, $13, $00
-	map_script $0e, $ff, $0000, Text_25_40, $03, $00
-	map_script $0f, $ff, $0000, Text_25_41, $03, $00
-	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_26, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_27, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_28, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_29, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0A_0f, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0B_0f, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_36, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0D_0f, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_40, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_41, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound1DoublesNpc0A_0f:
 	script_set_text Text_25_30 ; $6bda
@@ -2258,34 +2258,34 @@ Label_0f_6c40:
 	ret ; $6c45
 IslandOpenRound2ActorsDoubles_0f:
 	; $6c46, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, $00, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, $40, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, $40, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1500, $40, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, $40, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, $40, $60, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, $c0, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7a50, $1900, $10c0, $80, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1300, $c0, $1f, $01, $00
-	map_actor $0000, ActorScript_0f_7b75, $2500, $1900, $40, $1e, $01, $05
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1500, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1900, $1500, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, FACE_DOWN, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, FACE_DOWN, $60, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1700, $1300, FACE_UP, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7a50, $1900, $10c0, FACE_LEFT, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1300, FACE_UP, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_7b75, $2500, $1900, FACE_DOWN, $1e, $01, $05
 	map_actor_end
 IslandOpenRound2ScriptsDoubles_0f:
 	; $6d06, 97 bytes (map_scripts)
-	map_script $06, $ff, $0000, Text_25_42, $03, $00
-	map_script $07, $ff, $0000, Text_25_43, $03, $00
-	map_script $08, $ff, $0000, IslandOpenRound2DoublesNpc08_0f, $03, $00
-	map_script $09, $ff, $0000, Text_25_47, $03, $00
-	map_script $0a, $ff, $0000, Text_25_48, $03, $00
-	map_script $0b, $ff, $0000, Text_25_49, $03, $00
-	map_script $0c, $ff, $0000, Text_25_50, $03, $00
-	map_script $0d, $ff, $0000, IslandOpenRound2DoublesNpc0D_0f, $13, $00
-	map_script $0e, $ff, $0000, Text_25_54, $13, $00
-	map_script $0f, $ff, $0000, Text_25_55, $13, $00
-	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_42, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_43, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, IslandOpenRound2DoublesNpc08_0f, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_47, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_48, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_49, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_50, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, IslandOpenRound2DoublesNpc0D_0f, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_54, $13, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_55, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound2DoublesNpc08_0f:
 	script_set_text Text_25_44 ; $6d67
@@ -2315,34 +2315,34 @@ Label_0f_6da9:
 	ret ; $6dae
 IslandOpenRound3ActorsDoubles_0f:
 	; $6daf, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, $40, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0e00, $0400, $00, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, $40, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2300, $1300, $c0, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, $80, $5f, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, $80, $60, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, $40, $61, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, $40, $62, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, $00, $5d, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $1d00, $1500, $40, $5e, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2900, $1500, $40, $1f, $01, $00
-	map_actor $0000, ActorScript_0f_7b75, $2400, $1800, $40, $1e, $01, $05
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0e00, $0400, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2300, $1300, FACE_UP, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0f00, $1300, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1100, $1300, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $1d00, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2900, $1500, FACE_DOWN, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_7b75, $2400, $1800, FACE_DOWN, $1e, $01, $05
 	map_actor_end
 IslandOpenRound3ScriptsDoubles_0f:
 	; $6e6f, 97 bytes (map_scripts)
-	map_script $06, $ff, $0000, Text_25_56, $03, $00
-	map_script $07, $ff, $0000, Text_25_57, $03, $00
-	map_script $08, $ff, $0000, Text_25_58, $03, $00
-	map_script $09, $ff, $0000, Text_25_59, $03, $00
-	map_script $0a, $ff, $0000, Text_25_60, $03, $00
-	map_script $0b, $ff, $0000, IslandOpenRound3DoublesNpc0B_0f, $03, $00
-	map_script $0c, $ff, $0000, IslandOpenRound3DoublesNpc0C_0f, $03, $00
-	map_script $0d, $ff, $0000, Text_25_67, $03, $00
-	map_script $0e, $ff, $0000, Text_25_68, $13, $00
-	map_script $0f, $ff, $0000, Text_25_69, $13, $00
-	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, Text_25_56, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_57, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_58, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_59, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_60, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, IslandOpenRound3DoublesNpc0B_0f, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, IslandOpenRound3DoublesNpc0C_0f, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_67, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_68, $13, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_69, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound3DoublesNpc0C_0f:
 	script_set_text Text_25_64 ; $6ed0
@@ -2804,18 +2804,18 @@ Label_0f_7571:
 	ret ; $75b6
 IslandOpenRoundActorsSingles_0f:
 	; $75b7, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, $00, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2500, $1300, $c0, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, $c0, $4c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2300, $1100, FACE_RIGHT, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2500, $1300, FACE_UP, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, FACE_UP, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, FACE_UP, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, FACE_UP, $4c, $01, $00
 	map_actor_end
 IslandOpenRoundScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
-	map_script $03, $ff, $0000, IslandOpenRoundSinglesNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, IslandOpenRoundSinglesNpc04_0f, $03, $00
-	map_script $05, $ff, $0000, IslandOpenRoundSinglesNpc05_0f, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, $03, $00
 	db $ff
 IslandOpenRoundSinglesNpc04_0f:
 	script_set_text Text_25_73 ; $762e
@@ -2994,17 +2994,17 @@ Label_0f_7811:
 	dw $284e ; record 3
 IslandOpenRoundActorsDoubles_0f:
 	; $7842, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_0f_7b57, $2100, $1100, $00, $5c, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, $80, $5a, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $3d00, $3d00, $c0, $5b, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, $c0, $25, $01, $00
-	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, $c0, $4c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2100, $1100, FACE_RIGHT, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $2700, $1100, FACE_LEFT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $3d00, $3d00, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, FACE_UP, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, FACE_UP, $25, $01, $00
+	map_actor $0000, ActorScript_0f_7b57, $0100, $3100, FACE_UP, $4c, $01, $00
 	map_actor_end
 IslandOpenRoundScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)
-	map_script $03, $ff, $0000, IslandOpenRoundDoublesNpc03_0f, $03, $00
-	map_script $04, $ff, $0000, IslandOpenRoundDoublesNpc04_0f, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, $03, $00
 	db $ff
 IslandOpenRoundDoublesNpc04_0f:
 	script_set_text Text_25_73 ; $78b1

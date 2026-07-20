@@ -17,16 +17,16 @@ DormEntranceMapScripts_12:
 	dw DormEntranceInitScript_12 ; slot 6 InitScript
 DormEntranceActors_12:
 	; $4014, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $49, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $29, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $4c, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $0100, $0100, $40, $4d, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, FACE_DOWN, $29, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0100, $0100, FACE_DOWN, $4d, $01, $00
 	map_actor_end
 DormEntranceEntryPoints_12:
 	; $4056, 25 bytes (map_entries)
-	map_entry $01, $c0, $1600, $1b00, DormEntranceArrival01_12
-	map_entry $02, $40, $1600, $0d00, DormEntranceArrival02_12
-	map_entry $0f, $c0, $1600, $1b00, $0000
+	map_entry $01, FACE_UP, $1600, $1b00, DormEntranceArrival01_12
+	map_entry $02, FACE_DOWN, $1600, $0d00, DormEntranceArrival02_12
+	map_entry $0f, FACE_UP, $1600, $1b00, $0000
 	db $ff
 DormEntranceArrival02_12:
 	ld a, [wStoryModeEntryPoint] ; $406f
@@ -62,9 +62,9 @@ Label_12_40fa:
 	ret ; $40fa
 DormEntranceExitTriggers_12:
 	; $40fb, 25 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_12, $0a, $02
-	map_script $03, $ff, $0000, MapScriptNop_12, $08, $01
-	map_script $0f, $ff, $0000, MapScriptNop_12, $0a, $0f
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_12, $0a, $02
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_12, $08, $01
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, $0a, $0f
 	db $ff
 DormEntranceNpcScripts_12:
 	ds 1, $ff ; $4114, fill
@@ -72,7 +72,7 @@ DormEntranceFacingScripts_12:
 	ds 1, $ff ; $4115, fill
 DormEntranceTileTriggers_12:
 	; $4116, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, DormEntranceTile01_12, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, DormEntranceTile01_12, $00, $00
 	db $ff
 DormEntranceTile01_12:
 	script_set_active $00, $00 ; $411f
@@ -317,17 +317,17 @@ WallPracticeRoomMapScripts_12:
 	dw WallPracticeRoomInitScript_12 ; slot 6 InitScript
 WallPracticeRoomActors_12:
 	; $468a, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_12_7a89, $0300, $3900, $00, $39, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $0800, $3700, $c0, $32, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $0d00, $3700, $c0, $30, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $1300, $3900, $00, $3e, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $0500, $3700, $40, $3d, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0300, $3900, FACE_RIGHT, $39, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0800, $3700, FACE_UP, $32, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0d00, $3700, FACE_UP, $30, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $1300, $3900, FACE_RIGHT, $3e, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $0500, $3700, FACE_DOWN, $3d, $01, $00
 	map_actor_end
 WallPracticeRoomEntryPoints_12:
 	; $46da, 25 bytes (map_entries)
-	map_entry $01, $c0, $0f00, $3900, WallPracticeRoomArrival01_12
-	map_entry $0a, $c0, $0c00, $3100, $0000
-	map_entry $0b, $c0, $0c00, $3100, $0000
+	map_entry $01, FACE_UP, $0f00, $3900, WallPracticeRoomArrival01_12
+	map_entry $0a, FACE_UP, $0c00, $3100, $0000
+	map_entry $0b, FACE_UP, $0c00, $3100, $0000
 	db $ff
 WallPracticeRoomArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $46f3
@@ -342,7 +342,7 @@ Label_12_4715:
 	ret ; $4715
 WallPracticeRoomExitTriggers_12:
 	; $4716, 9 bytes (map_scripts)
-	map_script $05, $ff, $0000, MapScriptNop_12, $11, $02
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_12, $11, $02
 	db $ff
 WallPracticeRoomNpc03_12:
 	ld a, [$c2b0] ; $471f
@@ -469,11 +469,11 @@ WallPracticeRoomNpc06_12:
 	dw $182f ; record 6
 WallPracticeRoomNpcScripts_12:
 	; $4818, 41 bytes (map_scripts)
-	map_script $03, $ff, $0000, WallPracticeRoomNpc03_12, $01, $00
-	map_script $04, $ff, $0000, WallPracticeRoomNpc04_12, $01, $00
-	map_script $05, $ff, $0000, WallPracticeRoomNpc05_12, $01, $00
-	map_script $06, $ff, $0000, WallPracticeRoomNpc06_12, $03, $00
-	map_script $07, $ff, $0000, WallPracticeRoomNpc07_12, $01, $00
+	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomNpc03_12, $01, $00
+	map_script $04, FACEMASK_ANY, $0000, WallPracticeRoomNpc04_12, $01, $00
+	map_script $05, FACEMASK_ANY, $0000, WallPracticeRoomNpc05_12, $01, $00
+	map_script $06, FACEMASK_ANY, $0000, WallPracticeRoomNpc06_12, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, WallPracticeRoomNpc07_12, $01, $00
 	db $ff
 WallPracticeMasterResultScript:
 	script_fade_in $06 ; $4841
@@ -825,7 +825,7 @@ Label_12_4c98:
 	ret ; $4c9f
 WallPracticeRoomFacingScripts_12:
 	; $4ca0, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, WallPracticeRoomFacing01_12, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomFacing01_12, $00, $00
 	db $ff
 WallPracticeRoomFacing01_12:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4ca9
@@ -836,11 +836,11 @@ WallPracticeRoomFacing01_12:
 	ret ; $4cbf
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
-	map_script $02, $ff, $9c00, WallPracticeRoomTile02_12, $00, $00
-	map_script $03, $ff, $0000, WallPracticeRoomTile03_12, $01, $00
-	map_script $04, $ff, $0000, WallPracticeRoomTile04_12, $01, $00
-	map_script $05, $ff, $0000, WallPracticeRoomTile05_12, $01, $00
-	map_script $06, $ff, $0000, WallPracticeRoomTile06_12, $01, $00
+	map_script $02, FACEMASK_ANY, $9c00, WallPracticeRoomTile02_12, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomTile03_12, $01, $00
+	map_script $04, FACEMASK_ANY, $0000, WallPracticeRoomTile04_12, $01, $00
+	map_script $05, FACEMASK_ANY, $0000, WallPracticeRoomTile05_12, $01, $00
+	map_script $06, FACEMASK_ANY, $0000, WallPracticeRoomTile06_12, $01, $00
 	db $ff
 WallPracticeRoomTile02_12:
 	script_move_target $00, $0500, $3900 ; $4ce9
@@ -1312,64 +1312,64 @@ SeniorCourtMapScripts_12:
 	dw SeniorCourtInitScript_12 ; slot 6 InitScript
 SeniorCourtActors_12:
 	; $5305, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_12_7a89, $2900, $1900, $80, $49, $01, $00
-	map_actor $0000, ActorScript_12_79e3, $3500, $1e00, $c0, $65, $06, $07
-	map_actor $0000, ActorScript_12_7c59, $3200, $1e00, $00, $64, $01, $05
-	map_actor $0000, ActorScript_12_7a93, $3300, $1100, $80, $69, $01, $04
-	map_actor $0000, ActorScript_12_7a89, $2900, $1300, $80, $66, $01, $06
-	map_actor $0000, ActorScript_12_79e3, $0b00, $1500, $c0, $6b, $01, $05
-	map_actor $0000, ActorScript_12_7c66, $0b00, $1300, $40, $67, $01, $03
-	map_actor $0000, ActorScript_12_7bf0, $1500, $1700, $c0, $68, $01, $06
-	map_actor $0000, ActorScript_12_7b89, $1300, $0b00, $40, $6a, $01, $03
-	map_actor $05e0, ActorScript_12_7a93, $0900, $0b00, $40, $29, $01, $00
-	map_actor $0000, ActorScript_12_7abf, $2200, $1300, $40, $54, $01, $00
-	map_actor $0000, ActorScript_12_7b22, $2500, $1d00, $c0, $54, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $2900, $1900, FACE_LEFT, $49, $01, $00
+	map_actor $0000, ActorScript_12_79e3, $3500, $1e00, FACE_UP, $65, $06, $07
+	map_actor $0000, ActorScript_12_7c59, $3200, $1e00, FACE_RIGHT, $64, $01, $05
+	map_actor $0000, ActorScript_12_7a93, $3300, $1100, FACE_LEFT, $69, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $2900, $1300, FACE_LEFT, $66, $01, $06
+	map_actor $0000, ActorScript_12_79e3, $0b00, $1500, FACE_UP, $6b, $01, $05
+	map_actor $0000, ActorScript_12_7c66, $0b00, $1300, FACE_DOWN, $67, $01, $03
+	map_actor $0000, ActorScript_12_7bf0, $1500, $1700, FACE_UP, $68, $01, $06
+	map_actor $0000, ActorScript_12_7b89, $1300, $0b00, FACE_DOWN, $6a, $01, $03
+	map_actor $05e0, ActorScript_12_7a93, $0900, $0b00, FACE_DOWN, $29, $01, $00
+	map_actor $0000, ActorScript_12_7abf, $2200, $1300, FACE_DOWN, $54, $01, $00
+	map_actor $0000, ActorScript_12_7b22, $2500, $1d00, FACE_UP, $54, $01, $04
 	map_actor_end
 SeniorCourtActorsA_12:
 	; $53b7, 220 bytes (map_actors)
-	map_actor $0000, ActorScript_12_7a89, $2d00, $1900, $40, $49, $01, $00
-	map_actor $0000, ActorScript_12_7a89, $2900, $1b00, $80, $65, $01, $07
-	map_actor $0000, ActorScript_12_7c59, $3900, $1d00, $80, $64, $01, $05
-	map_actor $0000, ActorScript_12_7a89, $2d00, $1300, $00, $69, $01, $04
-	map_actor $0000, ActorScript_12_7a89, $2b00, $1100, $80, $66, $01, $06
-	map_actor $0000, ActorScript_12_79e3, $0a00, $1500, $c0, $6b, $01, $05
-	map_actor $0000, ActorScript_12_7a89, $0300, $1700, $00, $67, $01, $03
-	map_actor $0000, ActorScript_12_7c59, $1200, $0d00, $00, $68, $01, $06
-	map_actor $0000, ActorScript_12_79ea, $1500, $0d00, $40, $6a, $06, $03
-	map_actor $05e0, ActorScript_12_7a93, $0300, $0b00, $40, $29, $01, $00
-	map_actor $0000, ActorScript_12_7abf, $2200, $1100, $40, $54, $01, $05
-	map_actor $0000, ActorScript_12_7b22, $2600, $1d00, $c0, $54, $01, $00
-	map_actor $0000, ActorScript_12_7b89, $3200, $1100, $40, $54, $01, $00
-	map_actor $0000, ActorScript_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
-	map_actor $0000, ActorScript_12_7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $2d00, $1900, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $2900, $1b00, FACE_LEFT, $65, $01, $07
+	map_actor $0000, ActorScript_12_7c59, $3900, $1d00, FACE_LEFT, $64, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $2d00, $1300, FACE_RIGHT, $69, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $2b00, $1100, FACE_LEFT, $66, $01, $06
+	map_actor $0000, ActorScript_12_79e3, $0a00, $1500, FACE_UP, $6b, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $0300, $1700, FACE_RIGHT, $67, $01, $03
+	map_actor $0000, ActorScript_12_7c59, $1200, $0d00, FACE_RIGHT, $68, $01, $06
+	map_actor $0000, ActorScript_12_79ea, $1500, $0d00, FACE_DOWN, $6a, $06, $03
+	map_actor $05e0, ActorScript_12_7a93, $0300, $0b00, FACE_DOWN, $29, $01, $00
+	map_actor $0000, ActorScript_12_7abf, $2200, $1100, FACE_DOWN, $54, $01, $05
+	map_actor $0000, ActorScript_12_7b22, $2600, $1d00, FACE_UP, $54, $01, $00
+	map_actor $0000, ActorScript_12_7b89, $3200, $1100, FACE_DOWN, $54, $01, $00
+	map_actor $0000, ActorScript_12_7bf0, $3600, $1d00, FACE_UP, $54, $01, $06
+	map_actor $0000, ActorScript_12_7a89, $4000, $4000, FACE_UP, $53, $01, $00
 	map_actor_end
 SeniorCourtActorsB_12:
 	; $5493, 220 bytes (map_actors)
-	map_actor $0000, ActorScript_12_7a89, $2d00, $1900, $40, $49, $01, $00
-	map_actor $0000, ActorScript_12_79e3, $2d00, $1100, $c0, $65, $06, $07
-	map_actor $0000, ActorScript_12_7c59, $2d00, $0f00, $40, $64, $01, $05
-	map_actor $0000, ActorScript_12_7a89, $3900, $1d00, $80, $69, $01, $04
-	map_actor $0000, ActorScript_12_7a89, $3900, $1b00, $80, $66, $01, $06
-	map_actor $0000, ActorScript_12_79e3, $2300, $1e00, $c0, $6b, $01, $05
-	map_actor $0000, ActorScript_12_7a89, $2300, $1c00, $40, $67, $01, $03
-	map_actor $0000, ActorScript_12_7a89, $0900, $0700, $00, $68, $01, $06
-	map_actor $0000, ActorScript_12_7a89, $0b00, $0700, $80, $6a, $01, $03
-	map_actor $05e0, ActorScript_12_7a93, $0300, $0b00, $40, $29, $01, $00
-	map_actor $0000, ActorScript_12_7abf, $1200, $0b00, $40, $54, $01, $05
-	map_actor $0000, ActorScript_12_7b22, $1600, $1600, $c0, $54, $01, $00
-	map_actor $0000, ActorScript_12_7b89, $3200, $1100, $40, $54, $01, $00
-	map_actor $0000, ActorScript_12_7bf0, $3600, $1d00, $c0, $54, $01, $06
-	map_actor $0000, ActorScript_12_7a89, $4000, $4000, $c0, $53, $01, $00
+	map_actor $0000, ActorScript_12_7a89, $2d00, $1900, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_12_79e3, $2d00, $1100, FACE_UP, $65, $06, $07
+	map_actor $0000, ActorScript_12_7c59, $2d00, $0f00, FACE_DOWN, $64, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $3900, $1d00, FACE_LEFT, $69, $01, $04
+	map_actor $0000, ActorScript_12_7a89, $3900, $1b00, FACE_LEFT, $66, $01, $06
+	map_actor $0000, ActorScript_12_79e3, $2300, $1e00, FACE_UP, $6b, $01, $05
+	map_actor $0000, ActorScript_12_7a89, $2300, $1c00, FACE_DOWN, $67, $01, $03
+	map_actor $0000, ActorScript_12_7a89, $0900, $0700, FACE_RIGHT, $68, $01, $06
+	map_actor $0000, ActorScript_12_7a89, $0b00, $0700, FACE_LEFT, $6a, $01, $03
+	map_actor $05e0, ActorScript_12_7a93, $0300, $0b00, FACE_DOWN, $29, $01, $00
+	map_actor $0000, ActorScript_12_7abf, $1200, $0b00, FACE_DOWN, $54, $01, $05
+	map_actor $0000, ActorScript_12_7b22, $1600, $1600, FACE_UP, $54, $01, $00
+	map_actor $0000, ActorScript_12_7b89, $3200, $1100, FACE_DOWN, $54, $01, $00
+	map_actor $0000, ActorScript_12_7bf0, $3600, $1d00, FACE_UP, $54, $01, $06
+	map_actor $0000, ActorScript_12_7a89, $4000, $4000, FACE_UP, $53, $01, $00
 	map_actor_end
 SeniorCourtEntryPoints_12:
 	; $556f, 17 bytes (map_entries)
-	map_entry $01, $c0, $2b00, $2300, $0000
-	map_entry $09, $c0, $0b00, $1900, $0000
+	map_entry $01, FACE_UP, $2b00, $2300, $0000
+	map_entry $09, FACE_UP, $0b00, $1900, $0000
 	db $ff
 SeniorCourtExitTriggers_12:
 	; $5580, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, SeniorCourtExit01_12, $08, $03
-	map_script $0f, $ff, $0000, MapScriptNop_12, $10, $0f
+	map_script $01, FACEMASK_ANY, $0000, SeniorCourtExit01_12, $08, $03
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, $10, $0f
 	db $ff
 SeniorCourtExit01_12:
 	clear_flag $0f, 4 ; $5591
@@ -1962,27 +1962,27 @@ Label_12_5bfa:
 	dw $10ba ; record 29
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
-	map_script $03, $10, $0840, SeniorCourtNpc03FaceRight_12, $01, $00
-	map_script $03, $40, $0840, SeniorCourtNpc03FaceUpFlag0840_12, $01, $00
-	map_script $03, $40, $0000, SeniorCourtNpc03FaceUpFlag0000_12, $01, $00
-	map_script $03, $ff, $0000, SeniorCourtNpc03_12, $01, $00
-	map_script $04, $ff, $0000, SeniorCourtNpc04_12, $1b, $00
-	map_script $05, $ff, $0000, SeniorCourtNpc05_12, $13, $00
-	map_script $06, $ff, $08a0, SeniorCourtNpc06_12, $13, $00
-	map_script $06, $ff, $0000, SeniorCourtNpc06_12, $11, $00
-	map_script $07, $ff, $08a0, SeniorCourtNpc07_12, $03, $00
-	map_script $07, $ff, $0000, SeniorCourtNpc07_12, $01, $00
-	map_script $08, $ff, $0000, SeniorCourtNpc08_12, $0b, $00
-	map_script $09, $ff, $0000, SeniorCourtNpc09_12, $13, $00
-	map_script $0a, $ff, $0000, SeniorCourtNpc0A_12, $13, $00
-	map_script $0b, $ff, $0000, SeniorCourtNpc0B_12, $1b, $00
-	map_script $0c, $ff, $0000, SeniorCourtNpc0C_12, $13, $00
+	map_script $03, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, $01, $00
+	map_script $03, FACEMASK_UP, $0840, SeniorCourtNpc03FaceUpFlag0840_12, $01, $00
+	map_script $03, FACEMASK_UP, $0000, SeniorCourtNpc03FaceUpFlag0000_12, $01, $00
+	map_script $03, FACEMASK_ANY, $0000, SeniorCourtNpc03_12, $01, $00
+	map_script $04, FACEMASK_ANY, $0000, SeniorCourtNpc04_12, $1b, $00
+	map_script $05, FACEMASK_ANY, $0000, SeniorCourtNpc05_12, $13, $00
+	map_script $06, FACEMASK_ANY, $08a0, SeniorCourtNpc06_12, $13, $00
+	map_script $06, FACEMASK_ANY, $0000, SeniorCourtNpc06_12, $11, $00
+	map_script $07, FACEMASK_ANY, $08a0, SeniorCourtNpc07_12, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, SeniorCourtNpc07_12, $01, $00
+	map_script $08, FACEMASK_ANY, $0000, SeniorCourtNpc08_12, $0b, $00
+	map_script $09, FACEMASK_ANY, $0000, SeniorCourtNpc09_12, $13, $00
+	map_script $0a, FACEMASK_ANY, $0000, SeniorCourtNpc0A_12, $13, $00
+	map_script $0b, FACEMASK_ANY, $0000, SeniorCourtNpc0B_12, $1b, $00
+	map_script $0c, FACEMASK_ANY, $0000, SeniorCourtNpc0C_12, $13, $00
 	db $ff
 SeniorCourtFacingScripts_12:
 	ds 1, $ff ; $5cc6, fill
 SeniorCourtTileTriggers_12:
 	; $5cc7, 9 bytes (map_scripts)
-	map_script $01, $ff, $0f80, SeniorCourtTile01_12, $00, $00
+	map_script $01, FACEMASK_ANY, $0f80, SeniorCourtTile01_12, $00, $00
 	db $ff
 SeniorCourtTile01_12:
 	set_flag $0f, 4 ; $5cd0

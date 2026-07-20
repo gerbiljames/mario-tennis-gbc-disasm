@@ -17,28 +17,28 @@ TrainingGymMapScripts_0e:
 	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_7c6e, $2500, $0d00, $40, $42, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $2900, $0f00, $40, $45, $01, $05
-	map_actor $0000, ActorScript_0e_7c6e, $2500, $1500, $40, $43, $01, $07
-	map_actor $0000, ActorScript_0e_7c6e, $2900, $1300, $40, $44, $01, $05
-	map_actor $0000, ActorScript_0e_7c6e, $2500, $0500, $40, $47, $01, $07
-	map_actor $0000, ActorScript_0e_7c6e, $2700, $0700, $40, $46, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $2900, $0500, $40, $47, $01, $00
-	map_actor $0000, ActorScript_0e_4712, $2100, $0c00, $40, $3b, $01, $00
-	map_actor $0000, ActorScript_0e_48c9, $2c00, $0b00, $80, $3c, $01, $00
-	map_actor $0000, ActorScript_0e_4a80, $2d60, $1700, $00, $3b, $01, $06
-	map_actor $0000, ActorScript_0e_5225, $1900, $1100, $c0, $39, $01, $06
-	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1300, $00, $39, $01, $07
+	map_actor $0000, ActorScript_0e_7c6e, $2500, $0d00, FACE_DOWN, $42, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $2900, $0f00, FACE_DOWN, $45, $01, $05
+	map_actor $0000, ActorScript_0e_7c6e, $2500, $1500, FACE_DOWN, $43, $01, $07
+	map_actor $0000, ActorScript_0e_7c6e, $2900, $1300, FACE_DOWN, $44, $01, $05
+	map_actor $0000, ActorScript_0e_7c6e, $2500, $0500, FACE_DOWN, $47, $01, $07
+	map_actor $0000, ActorScript_0e_7c6e, $2700, $0700, FACE_DOWN, $46, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $2900, $0500, FACE_DOWN, $47, $01, $00
+	map_actor $0000, ActorScript_0e_4712, $2100, $0c00, FACE_DOWN, $3b, $01, $00
+	map_actor $0000, ActorScript_0e_48c9, $2c00, $0b00, FACE_LEFT, $3c, $01, $00
+	map_actor $0000, ActorScript_0e_4a80, $2d60, $1700, FACE_RIGHT, $3b, $01, $06
+	map_actor $0000, ActorScript_0e_5225, $1900, $1100, FACE_UP, $39, $01, $06
+	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1300, FACE_RIGHT, $39, $01, $07
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
-	map_entry $01, $c0, $1600, $1800, TrainingGymArrival01_0e
-	map_entry $02, $40, $0b00, $0c00, TrainingGymArrival02_0e
-	map_entry $03, $40, $1500, $0c00, TrainingGymArrival03_0e
-	map_entry $0b, $40, $0d00, $0f00, $0000
-	map_entry $0c, $80, $1100, $1300, $0000
-	map_entry $0d, $40, $0d00, $0f00, $0000
-	map_entry $0e, $80, $1100, $1300, $0000
+	map_entry $01, FACE_UP, $1600, $1800, TrainingGymArrival01_0e
+	map_entry $02, FACE_DOWN, $0b00, $0c00, TrainingGymArrival02_0e
+	map_entry $03, FACE_DOWN, $1500, $0c00, TrainingGymArrival03_0e
+	map_entry $0b, FACE_DOWN, $0d00, $0f00, $0000
+	map_entry $0c, FACE_LEFT, $1100, $1300, $0000
+	map_entry $0d, FACE_DOWN, $0d00, $0f00, $0000
+	map_entry $0e, FACE_LEFT, $1100, $1300, $0000
 	db $ff
 TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
@@ -102,9 +102,9 @@ TrainingGymArrival03_0e:
 	ret ; $4276
 TrainingGymExitTriggers_0e:
 	; $4277, 25 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_0e, $07, $01
-	map_script $03, $ff, $0000, TrainingGymExit03_0e, $12, $01
-	map_script $02, $ff, $0000, TrainingGymExit02_0e, $13, $01
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, $07, $01
+	map_script $03, FACEMASK_ANY, $0000, TrainingGymExit03_0e, $12, $01
+	map_script $02, FACEMASK_ANY, $0000, TrainingGymExit02_0e, $13, $01
 	db $ff
 TrainingGymExit02_0e:
 	script_face $00, $c0 ; $4290
@@ -393,22 +393,22 @@ TrainingGymNpc0C_0e:
 	dw $14e6 ; record 4
 TrainingGymNpcScripts_0e:
 	; $4554, 89 bytes (map_scripts)
-	map_script $03, $ff, $0000, TrainingGymNpc03_0e, $03, $00
-	map_script $04, $ff, $0000, TrainingGymNpc04_0e, $03, $00
-	map_script $05, $ff, $0000, TrainingGymNpc05_0e, $03, $00
-	map_script $06, $ff, $0000, TrainingGymNpc06_0e, $03, $00
-	map_script $07, $ff, $0000, TrainingGymNpc07_0e, $00, $00
-	map_script $08, $ff, $0000, TrainingGymNpc08_0e, $00, $00
-	map_script $09, $ff, $0000, TrainingGymNpc09_0e, $00, $00
-	map_script $0a, $ff, $0000, TrainingGymNpc0A_0e, $13, $00
-	map_script $0b, $ff, $0000, TrainingGymNpc0B_0e, $10, $00
-	map_script $0c, $ff, $0000, TrainingGymNpc0C_0e, $13, $00
-	map_script $0d, $ff, $0000, Text_6e_226, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TrainingGymNpc03_0e, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TrainingGymNpc04_0e, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, TrainingGymNpc05_0e, $03, $00
+	map_script $06, FACEMASK_ANY, $0000, TrainingGymNpc06_0e, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, TrainingGymNpc07_0e, $00, $00
+	map_script $08, FACEMASK_ANY, $0000, TrainingGymNpc08_0e, $00, $00
+	map_script $09, FACEMASK_ANY, $0000, TrainingGymNpc09_0e, $00, $00
+	map_script $0a, FACEMASK_ANY, $0000, TrainingGymNpc0A_0e, $13, $00
+	map_script $0b, FACEMASK_ANY, $0000, TrainingGymNpc0B_0e, $10, $00
+	map_script $0c, FACEMASK_ANY, $0000, TrainingGymNpc0C_0e, $13, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_6e_226, $13, $00
 	db $ff
 TrainingGymFacingScripts_0e:
 	; $45ad, 17 bytes (map_scripts)
-	map_script $01, $ff, $0000, TrainingGymFacing01_0e, $00, $00
-	map_script $02, $ff, $0000, TrainingGymFacing02_0e, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, TrainingGymFacing01_0e, $00, $00
+	map_script $02, FACEMASK_ANY, $0000, TrainingGymFacing02_0e, $00, $00
 	db $ff
 TrainingGymFacing01_0e:
 	ld a, $0b ; $45be
@@ -428,8 +428,8 @@ TrainingGymFacing02_0e:
 	ret ; $45f5
 TrainingGymTileTriggers_0e:
 	; $45f6, 17 bytes (map_scripts)
-	map_script $02, $40, $0000, TrainingGymTile02_0e, $00, $00
-	map_script $03, $40, $0000, TrainingGymTile03_0e, $00, $00
+	map_script $02, FACEMASK_UP, $0000, TrainingGymTile02_0e, $00, $00
+	map_script $03, FACEMASK_UP, $0000, TrainingGymTile03_0e, $00, $00
 	db $ff
 TrainingGymTile02_0e:
 	ld a, $02 ; $4607
@@ -1637,36 +1637,36 @@ MarioWorldMapScripts_0e:
 	dw MarioWorldInitScript_0e ; slot 6 InitScript
 MarioWorldActors_0e:
 	; $5256, 262 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $4c, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $53, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, $00, $4e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1200, $1300, $40, $2e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1800, $1200, $40, $2c, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1800, $0f40, $40, $6f, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1800, $0d00, $40, $6d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1400, $40, $6e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0a00, $0f00, $40, $73, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0c00, $1100, $40, $2b, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0f00, $40, $2d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0d00, $40, $48, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0e00, $0b00, $40, $72, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1600, $0b00, $40, $2a, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0f00, $1f00, $40, $70, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $1f00, $40, $71, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $4c, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $53, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $53, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $53, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $4e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1200, $1300, FACE_DOWN, $2e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1800, $1200, FACE_DOWN, $2c, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1800, $0f40, FACE_DOWN, $6f, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1800, $0d00, FACE_DOWN, $6d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1400, FACE_DOWN, $6e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0a00, $0f00, FACE_DOWN, $73, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0c00, $1100, FACE_DOWN, $2b, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0f00, FACE_DOWN, $2d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0d00, FACE_DOWN, $48, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0e00, $0b00, FACE_DOWN, $72, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1600, $0b00, FACE_DOWN, $2a, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0f00, $1f00, FACE_DOWN, $70, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1500, $1f00, FACE_DOWN, $71, $01, $00
 	map_actor_end
 MarioWorldEntryPoints_0e:
 	; $535c, 41 bytes (map_entries)
-	map_entry $01, $c0, $1200, $2100, $0000
-	map_entry $02, $40, $1b00, $0b00, $0000
-	map_entry $0a, $c0, $1200, $0800, $0000
-	map_entry $0e, $c0, $1200, $0f00, $0000
-	map_entry $0f, $c0, $1200, $0800, $0000
+	map_entry $01, FACE_UP, $1200, $2100, $0000
+	map_entry $02, FACE_DOWN, $1b00, $0b00, $0000
+	map_entry $0a, FACE_UP, $1200, $0800, $0000
+	map_entry $0e, FACE_UP, $1200, $0f00, $0000
+	map_entry $0f, FACE_UP, $1200, $0800, $0000
 	db $ff
 MarioWorldExitTriggers_0e:
 	; $5385, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_0e, $1b, $0e
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, $1b, $0e
 	db $ff
 MarioWorldNpc12Mario_0e:
 	script_set_text Text_5e_142 ; $538e
@@ -1757,22 +1757,22 @@ MarioWorldNpc14_0e:
 	ret ; $544d
 MarioWorldNpcScripts_0e:
 	; $544e, 129 bytes (map_scripts)
-	map_script $08, $10, $0000, MarioWorldNpc08FaceRight_0e, $00, $00
-	map_script $08, $20, $0000, MarioWorldNpc08FaceLeft_0e, $00, $00
-	map_script $08, $40, $0000, MarioWorldNpc08FaceUp_0e, $00, $00
-	map_script $08, $80, $0000, MarioWorldNpc08FaceDown_0e, $03, $00
-	map_script $11, $ff, $0000, MarioWorldNpc11_0e, $03, $00
-	map_script $0b, $ff, $0000, MarioWorldNpc0BLuigi_0e, $03, $00
-	map_script $09, $ff, $0000, MarioWorldNpc09Yoshi_0e, $03, $00
-	map_script $0a, $ff, $0000, MarioWorldNpc0ABabyMario_0e, $03, $00
-	map_script $0c, $ff, $0000, MarioWorldNpc0C_0e, $03, $00
-	map_script $0d, $ff, $0000, MarioWorldNpc0D_0e, $03, $00
-	map_script $0f, $ff, $0000, MarioWorldNpc0FBowser_0e, $03, $00
-	map_script $10, $ff, $0000, MarioWorldNpc10Wario_0e, $03, $00
-	map_script $0e, $ff, $0000, MarioWorldNpc0EWaluigi_0e, $03, $00
-	map_script $13, $ff, $0000, MarioWorldNpc13_0e, $03, $00
-	map_script $14, $ff, $0000, MarioWorldNpc14_0e, $03, $00
-	map_script $12, $ff, $0000, MarioWorldNpc12Mario_0e, $03, $00
+	map_script $08, FACEMASK_RIGHT, $0000, MarioWorldNpc08FaceRight_0e, $00, $00
+	map_script $08, FACEMASK_LEFT, $0000, MarioWorldNpc08FaceLeft_0e, $00, $00
+	map_script $08, FACEMASK_UP, $0000, MarioWorldNpc08FaceUp_0e, $00, $00
+	map_script $08, FACEMASK_DOWN, $0000, MarioWorldNpc08FaceDown_0e, $03, $00
+	map_script $11, FACEMASK_ANY, $0000, MarioWorldNpc11_0e, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, MarioWorldNpc0BLuigi_0e, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, MarioWorldNpc09Yoshi_0e, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, MarioWorldNpc0ABabyMario_0e, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, MarioWorldNpc0C_0e, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, MarioWorldNpc0D_0e, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, MarioWorldNpc0FBowser_0e, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, MarioWorldNpc10Wario_0e, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, MarioWorldNpc0EWaluigi_0e, $03, $00
+	map_script $13, FACEMASK_ANY, $0000, MarioWorldNpc13_0e, $03, $00
+	map_script $14, FACEMASK_ANY, $0000, MarioWorldNpc14_0e, $03, $00
+	map_script $12, FACEMASK_ANY, $0000, MarioWorldNpc12Mario_0e, $03, $00
 	db $ff
 MarioWorldFacingScripts_0e:
 	ds 1, $ff ; $54cf, fill
@@ -3122,28 +3122,28 @@ SpecialCourtMapScripts_0e:
 	dw SpecialCourtInitScript_0e ; slot 6 InitScript
 SpecialCourtActors_0e:
 	; $7604, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_7c6e, $0f00, $0500, $40, $2e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $0d00, $80, $6d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $0f00, $80, $6f, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1100, $80, $2c, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1900, $80, $6e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0480, $0f00, $00, $73, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1100, $00, $2d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1900, $00, $48, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1b00, $00, $2b, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0d00, $0500, $40, $72, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1700, $40, $2a, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1f00, $c0, $70, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $0d00, $00, $71, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1b00, $80, $71, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0f00, $0500, FACE_DOWN, $2e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $0d00, FACE_LEFT, $6d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $0f00, FACE_LEFT, $6f, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1100, FACE_LEFT, $2c, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1900, FACE_LEFT, $6e, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0480, $0f00, FACE_RIGHT, $73, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1100, FACE_RIGHT, $2d, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1900, FACE_RIGHT, $48, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1b00, FACE_RIGHT, $2b, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0d00, $0500, FACE_DOWN, $72, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1700, FACE_DOWN, $2a, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $1f00, FACE_UP, $70, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $0500, $0d00, FACE_RIGHT, $71, $01, $00
+	map_actor $0000, ActorScript_0e_7c6e, $1700, $1b00, FACE_LEFT, $71, $01, $00
 	map_actor_end
 SpecialCourtEntryPoints_0e:
 	; $76d2, 9 bytes (map_entries)
-	map_entry $01, $c0, $0500, $2100, $0000
+	map_entry $01, FACE_UP, $0500, $2100, $0000
 	db $ff
 SpecialCourtExitTriggers_0e:
 	; $76db, 9 bytes (map_scripts)
-	map_script $01, $ff, $0000, MapScriptNop_0e, $08, $06
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, $08, $06
 	db $ff
 SpecialCourtNpcScripts_0e:
 	ds 1, $ff ; $76e4, fill
