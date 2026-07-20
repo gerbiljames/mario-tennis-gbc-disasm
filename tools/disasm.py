@@ -1866,12 +1866,37 @@ def build_labels(dis, overrides=None, data_tables=None):
     for target in map_script_code_targets(dis.rom, data_tables or {}):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    rft = next((int(k, 0) for k, n in (overrides or {}).items()
+                if n == "RegisterFrameTask"), None)
+    for target in frame_task_targets(dis, rft):
+        if target not in labels:
+            labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     # Name each carved sprite-template so the `ld hl` load sites resolve to it.
     for src in dis.sprite_templates:
         if src not in labels:
             labels[src] = \
                 f"SpriteTemplate_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
     return labels
+
+
+def frame_task_targets(dis, register_frame_task):
+    """Code targets of `ld hl, n16` immediately before `call RegisterFrameTask`
+    -- per-frame task functions installed into the task list and only ever
+    reached through the task dispatcher, so recursive descent never labels them.
+    Seeding them lets the 400-odd registration sites reference the task by name."""
+    if register_frame_task is None:
+        return
+    rom = dis.rom
+    for o, ins in dis.instrs.items():
+        if rom[o] != 0x21 or o + 3 not in dis.instrs or rom[o + 3] != 0xCD:
+            continue  # ld hl, n16 ; call nn
+        if target_to_offset(rom[o + 4] | (rom[o + 5] << 8), o + 3) != register_frame_task:
+            continue
+        imm = rom[o + 1] | (rom[o + 2] << 8)
+        b = (o // BANK_SIZE) * BANK_SIZE
+        flat = imm if imm < 0x4000 else (b + imm - 0x4000 if b else None)
+        if flat is not None and flat in dis.instrs:
+            yield flat
 
 
 def map_script_code_targets(rom, data_tables):
@@ -3196,6 +3221,26 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
             return far_slot_names.get((b, s), f"FarPtr_{b:02x}_{s:02x}")
         return None
 
+    # `ld hl, n16` immediately before `call RegisterFrameTask` loads a code
+    # pointer (the task function), so resolve it to that function's label - the
+    # 400-odd registration sites then read `ld hl, UpdateActors` instead of raw
+    # hex. Gated on the following call so numeric constants aren't touched.
+    register_frame_task = next(
+        (o for o, n in labels.items() if n == "RegisterFrameTask"), None)
+    frametask_ptr_sites = {}
+    if register_frame_task is not None:
+        for o, ins in dis.instrs.items():
+            if rom[o] != 0x21 or o + 3 not in dis.instrs or rom[o + 3] != 0xCD:
+                continue  # ld hl, n16 followed by `call nn`
+            call_tgt = rom[o + 4] | (rom[o + 5] << 8)
+            if target_to_offset(call_tgt, o + 3) != register_frame_task:
+                continue
+            imm = rom[o + 1] | (rom[o + 2] << 8)
+            b = (o // BANK_SIZE) * BANK_SIZE
+            flat = imm if imm < 0x4000 else (b + imm - 0x4000 if b else None)
+            if flat in labels:
+                frametask_ptr_sites[o] = labels[flat]
+
     for bank in range(nbanks):
         base = bank * BANK_SIZE
         lines = []
@@ -3267,6 +3312,10 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                     text, size = sc
                     lines.append(f"\t{text} ; ${cpu:04x}")
                     off += size
+                    continue
+                if off in frametask_ptr_sites:
+                    lines.append(f"\tld hl, {frametask_ptr_sites[off]} ; ${cpu:04x}")
+                    off += ins.size
                     continue
                 if off in dis.farcalls and ins.text == "farcall {far}":
                     fbank, slot, entry, _target = dis.farcalls[off]

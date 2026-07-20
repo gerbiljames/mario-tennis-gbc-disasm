@@ -62,7 +62,7 @@ Label_1e_4031:
 	call EnableLCD ; $4072
 	call AdvanceFrame ; $4075
 	ld a, $01 ; $4078
-	ld hl, $4a76 ; $407a
+	ld hl, Func_1e_4a76 ; $407a
 	call RegisterFrameTask ; $407d
 	script_fade_in $10 ; $4080
 	call WaitFadeEnd ; $4085
@@ -1195,6 +1195,7 @@ Label_1e_4a43:
 	farcall FarPtr_LoadIndexedPaletteThunk ; $4a6c
 	wram_bank $04 ; $4a6f
 	ret ; $4a75
+Func_1e_4a76:
 	wram_bank $04 ; $4a76
 	xor a, a ; $4a7c
 	call Func_1e_4aa8 ; $4a7d
@@ -1474,10 +1475,10 @@ Label_1e_5438:
 	call EnableLCD ; $5475
 	call AdvanceFrame ; $5478
 	ld a, $01 ; $547b
-	ld hl, $5914 ; $547d
+	ld hl, Func_1e_5914 ; $547d
 	call RegisterFrameTask ; $5480
 	ld a, $01 ; $5483
-	ld hl, $5a4e ; $5485
+	ld hl, Func_1e_5a4e ; $5485
 	call RegisterFrameTask ; $5488
 	script_fade_in $10 ; $548b
 	call WaitFadeEnd ; $5490
@@ -1929,6 +1930,7 @@ FillTilemapRun:
 	dec c ; $5910
 	jr nz, FillTilemapRun ; $5911
 	ret ; $5913
+Func_1e_5914:
 	ld b, $04 ; $5914
 	ld a, [$c8b9] ; $5916
 	or a, a ; $5919
@@ -2100,6 +2102,7 @@ Label_1e_5a3f:
 	xor a, a ; $5a42
 	ret ; $5a43
 	INCBIN "data/bank_01e/d_5a44.bin" ; $5a44, 10 bytes
+Func_1e_5a4e:
 	wram_bank $06 ; $5a4e
 	ld hl, $d005 ; $5a54
 	ld a, [hl+] ; $5a57
@@ -4386,10 +4389,10 @@ Label_1e_730a:
 	ld a, $03 ; $7336
 	ld [$cb0c], a ; $7338
 	ld a, $01 ; $733b
-	ld hl, $737e ; $733d
+	ld hl, Func_1e_737e ; $733d
 	call RegisterFrameTask ; $7340
 	ld a, $01 ; $7343
-	ld hl, $7a8d ; $7345
+	ld hl, Func_1e_7a8d ; $7345
 	call RegisterFrameTask ; $7348
 	script_fade_in $10 ; $734b
 	call WaitFadeEnd ; $7350
@@ -4415,6 +4418,7 @@ Label_1e_7378:
 	pop af ; $7378
 	wram_bank ; $7379
 	ret ; $737d
+Func_1e_737e:
 	farcall FarPtr_39_04 ; $737e
 	ret ; $7381
 Func_1e_7382:
@@ -4971,6 +4975,7 @@ Func_1e_7a68:
 	pop bc ; $7a8a
 	pop af ; $7a8b
 	ret ; $7a8c
+Func_1e_7a8d:
 	xor a, a ; $7a8d
 	ld [$df07], a ; $7a8e
 	ld [$df08], a ; $7a91

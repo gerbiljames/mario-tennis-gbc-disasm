@@ -30,10 +30,10 @@ RunMinigameEndMenu:
 	ld b, $00 ; $4031
 	call DrawScoreboard ; $4033
 	ld a, $0a ; $4036
-	ld hl, $506a ; $4038
+	ld hl, Func_06_506a ; $4038
 	call RegisterFrameTask ; $403b
 	ld a, $0a ; $403e
-	ld hl, $69c8 ; $4040
+	ld hl, Func_06_69c8 ; $4040
 	call RegisterFrameTask ; $4043
 Label_06_4046:
 	xor a, a ; $4046
@@ -79,10 +79,10 @@ Label_06_40a7:
 	ld b, $00 ; $40a7
 	call DrawScoreboard ; $40a9
 	ld a, $0a ; $40ac
-	ld hl, $506a ; $40ae
+	ld hl, Func_06_506a ; $40ae
 	call RegisterFrameTask ; $40b1
 	ld a, $0a ; $40b4
-	ld hl, $69c8 ; $40b6
+	ld hl, Func_06_69c8 ; $40b6
 	call RegisterFrameTask ; $40b9
 	ld b, $00 ; $40bc
 	ld a, [$c4c8] ; $40be
@@ -381,7 +381,7 @@ ShowRulesPageSequence:
 	cp a, $ff ; $431e
 	jr z, Label_06_432a ; $4320
 	ld a, $01 ; $4322
-	ld hl, $4373 ; $4324
+	ld hl, Func_06_4373 ; $4324
 	call RegisterFrameTask ; $4327
 Label_06_432a:
 	farcall FarPtr_PrepareGlyphBuffer ; $432a
@@ -421,6 +421,7 @@ Label_06_435d:
 	jr ShowRulesPageSequence ; $4370
 Label_06_4372:
 	ret ; $4372
+Func_06_4373:
 	ld de, $9080 ; $4373
 	farcall FarPtr_AddBobbingOffsetY ; $4376
 	ld bc, $0a70 ; $4379
@@ -1142,10 +1143,10 @@ ShowMatchScoreboardScreen:
 	call DrawScoreboardCaption ; $48c9
 	farcall FarPtr_UploadGlyphBuffer ; $48cc
 	ld a, $0a ; $48cf
-	ld hl, $506a ; $48d1
+	ld hl, Func_06_506a ; $48d1
 	call RegisterFrameTask ; $48d4
 	ld a, $0a ; $48d7
-	ld hl, $69c8 ; $48d9
+	ld hl, Func_06_69c8 ; $48d9
 	call RegisterFrameTask ; $48dc
 	farcall FarPtr_StepMatchFrame ; $48df
 	call FlushTilemapToVram ; $48e2
@@ -1772,6 +1773,7 @@ CopyTextRectPair:
 	ld l, a ; $5065
 	call CopyTextRect ; $5066
 	ret ; $5069
+Func_06_506a:
 	ld a, [$c4e4] ; $506a
 	ld h, a ; $506d
 	ld a, [$c4e3] ; $506e
@@ -3766,6 +3768,7 @@ QueueMatchMenuCursorSprite:
 	ld bc, $0000 ; $69c1
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
+Func_06_69c8:
 	ld h, $05 ; $69c8
 	ld a, [$c4e3] ; $69ca
 	ld l, a ; $69cd

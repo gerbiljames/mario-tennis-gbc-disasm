@@ -67,6 +67,23 @@ animation ids index each actor's own table (per-objdef), obj_id/coords/speeds/
 timers are per-instance data, and the activity byte / state-field selectors /
 flag words aren't nameable without deeper tracing. Byte-perfect.
 
+### Name the actor frame tasks + resolve RegisterFrameTask sites (2026-07-21)
+
+Named the two per-frame tasks `InitActorEngine` registers: `UpdateActors`
+($04:$41e7, iterates all 24 actor slots -> `StepActorScript` + movement each
+frame, then syncs the player position out) and `DrawActors` ($04:$4a82,
+`ComputeSpriteScrollOffset` then `DrawActorSprite`/`AdvanceActorAnimation` per
+active actor). Their registration sites read `ld hl, UpdateActors` etc.
+
+Generalised that: a `ld hl, n16` immediately before `call RegisterFrameTask`
+loads a task-function pointer, but the target is reached only through the task
+dispatcher so recursive descent never labelled it (like the `map_scripts`
+handlers). `build_labels` now seeds a `Func_*` label at each such target
+(`frame_task_targets`) and the emit loop resolves the load to it. 403 of 427
+registration sites across the ROM now name their task (139 distinct functions
+labelled); the remaining 24 point into still-`INCBIN` blobs -- i.e. uncarved
+frame-task code, a future carving lead. Byte-perfect.
+
 ### Name actor-engine functions from the spawn analysis (2026-07-20)
 
 Used the actor spawn/facing reverse-engineering to name six previously

@@ -134,6 +134,7 @@ SetCursorPairFromIndex:
 	INCBIN "data/bank_016/d_43cb.bin" ; $43cb, 14 bytes
 ClearWram3Buffer64:
 	INCBIN "data/bank_016/d_43d9.bin" ; $43d9, 29 bytes
+Func_16_43f6:
 	farcall FarPtr_39_04 ; $43f6
 	ret ; $43f9
 	push af ; $43fa
@@ -273,10 +274,10 @@ Label_16_44b9:
 	call InitMatchWinLoseScreen ; $44b9
 	farcall FarPtr_39_04 ; $44bc
 	ld a, $01 ; $44bf
-	ld hl, $43f6 ; $44c1
+	ld hl, Func_16_43f6 ; $44c1
 	call RegisterFrameTask ; $44c4
 	ld a, $01 ; $44c7
-	ld hl, $4cb1 ; $44c9
+	ld hl, Func_16_4cb1 ; $44c9
 	call RegisterFrameTask ; $44cc
 	call EnableLCD ; $44cf
 	script_fade_in $10 ; $44d2
@@ -292,7 +293,7 @@ Label_16_44b9:
 	xor a, a ; $44ed
 	ld [$cb01], a ; $44ee
 	ld a, $01 ; $44f1
-	ld hl, $4c9d ; $44f3
+	ld hl, Func_16_4c9d ; $44f3
 	call RegisterFrameTask ; $44f6
 Label_16_44f9:
 	call AdvanceFrame ; $44f9
@@ -765,6 +766,7 @@ MatchResultTilemapScripts_16:
 	tilemap_copy $d000, $d280, 20
 	tilemap_copy $d20c, $d359, 7
 	tilemap_copy_end
+Func_16_4c9d:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
 	cp a, $ff ; $4ca0
 	jr nz, Label_16_4ca9 ; $4ca2
@@ -776,6 +778,7 @@ Label_16_4ca9:
 	inc a ; $4cac
 	ld [$cb01], a ; $4cad
 	ret ; $4cb0
+Func_16_4cb1:
 	ld a, [wMatchWinLoseFlag] ; $4cb1
 	cp a, $ff ; $4cb4
 	jr z, Label_16_4cd1 ; $4cb6
@@ -1149,7 +1152,7 @@ RunMatchStatsScreen:
 	call InitMatchStatsScreen ; $5c46
 	call LoadMatchResultPalettes ; $5c49
 	ld a, $01 ; $5c4c
-	ld hl, $43f6 ; $5c4e
+	ld hl, Func_16_43f6 ; $5c4e
 	call RegisterFrameTask ; $5c51
 	call EnableLCD ; $5c54
 	script_fade_in $10 ; $5c57

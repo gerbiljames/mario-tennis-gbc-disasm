@@ -59,10 +59,10 @@ ClearActorSlots:
 InitActorEngine:
 	call ClearActorSlots ; $4041
 	ld a, $10 ; $4044
-	ld hl, $41e7 ; $4046
+	ld hl, UpdateActors ; $4046
 	call RegisterFrameTask ; $4049
 	ld a, $01 ; $404c
-	ld hl, $4a82 ; $404e
+	ld hl, DrawActors ; $404e
 	call RegisterFrameTask ; $4051
 	ret ; $4054
 SpawnActor:
@@ -290,6 +290,7 @@ ActorScript_Deactivate:
 	; $41e2, 5 bytes (actor_script)
 	as_set_field $20, $0000
 	as_halt
+UpdateActors:
 	wram_bank $04 ; $41e7
 	ld hl, $d000 ; $41ed
 	ld c, $18 ; $41f0
@@ -1735,6 +1736,7 @@ Label_04_4a6d:
 	ld [hl+], a ; $4a7f
 	ld [hl], b ; $4a80
 	ret ; $4a81
+DrawActors:
 	test_flag $02, 4 ; $4a82
 	ret nz ; $4a85
 	wram_bank $04 ; $4a86

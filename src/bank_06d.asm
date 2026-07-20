@@ -217,7 +217,7 @@ TitleScreenTiles:
 	farcall FarPtr_6b_16 ; $6a91
 	farcall FarPtr_QueueWram3MapToVRAM ; $6a94
 	ld a, $01 ; $6a97
-	ld hl, $6abf ; $6a99
+	ld hl, Func_6d_6abf ; $6a99
 	call RegisterFrameTask ; $6a9c
 	call EnableLCD ; $6a9f
 	script_fade_in $10 ; $6aa2
@@ -232,6 +232,7 @@ Label_6d_6aaa:
 	call WaitFadeEnd ; $6ab8
 	call ClearFrameTasks ; $6abb
 	ret ; $6abe
+Func_6d_6abf:
 	ld de, $4020 ; $6abf
 	ld c, $03 ; $6ac2
 	farcall FarPtr_6b_18 ; $6ac4

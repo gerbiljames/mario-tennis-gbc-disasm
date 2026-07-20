@@ -794,7 +794,7 @@ RunLinkMatchRulesMenu:
 	farcall FarPtr_39_26 ; $44f7
 	call DrawMatchRulesInitialState ; $44fa
 	ld a, $01 ; $44fd
-	ld hl, $48f1 ; $44ff
+	ld hl, MatchRulesCursorSpriteTask ; $44ff
 	call RegisterFrameTask ; $4502
 	call DrawMatchRulesCaption ; $4505
 	farcall FarPtr_ResyncLinkSessionWithTimer ; $4508
@@ -1678,17 +1678,17 @@ RunEraseDataConfirmMenu:
 	xor a, a ; $4c2a
 	ld [$cb0b], a ; $4c2b
 	ld a, $01 ; $4c2e
-	ld hl, $4438 ; $4c30
+	ld hl, Func_3e_4438 ; $4c30
 	call RegisterFrameTask ; $4c33
 	ld a, $01 ; $4c36
-	ld hl, $4e0c ; $4c38
+	ld hl, EraseConfirmCursorSpriteTask ; $4c38
 	call RegisterFrameTask ; $4c3b
 	call AnimateEraseConfirmPalette ; $4c3e
 	call EnableLCD ; $4c41
 	script_fade_in $08 ; $4c44
 	call WaitFadeEnd ; $4c49
 	ld a, $01 ; $4c4c
-	ld hl, $4e34 ; $4c4e
+	ld hl, AnimateEraseConfirmPalette ; $4c4e
 	call RegisterFrameTask ; $4c51
 	wram_bank $03 ; $4c54
 Label_3e_4c5a:
@@ -1953,7 +1953,7 @@ RunRacketShoesChoiceMenu:
 	ld b, $02 ; $4ec5
 	call SetMenuCursorFromIndex_3e ; $4ec7
 	ld a, $01 ; $4eca
-	ld hl, $50f5 ; $4ecc
+	ld hl, ChoiceTabCursorSpriteTask ; $4ecc
 	call RegisterFrameTask ; $4ecf
 	call RedrawRacketShoesChoiceMenu ; $4ed2
 	wram_bank $03 ; $4ed5
@@ -2342,7 +2342,7 @@ RunPlayAlonePartnerMenu:
 	ld b, $02 ; $51b5
 	call SetMenuCursorFromIndex_3e ; $51b7
 	ld a, $01 ; $51ba
-	ld hl, $50f5 ; $51bc
+	ld hl, ChoiceTabCursorSpriteTask ; $51bc
 	call RegisterFrameTask ; $51bf
 	call RedrawPlayAlonePartnerMenu ; $51c2
 	wram_bank $03 ; $51c5
@@ -2702,10 +2702,10 @@ RunRacketSelectScreen:
 	call DisableLCDSafely ; $54bd
 	call LoadRacketSelectScreen ; $54c0
 	ld a, $01 ; $54c3
-	ld hl, $59cd ; $54c5
+	ld hl, EquipListCursorSpriteTask ; $54c5
 	call RegisterFrameTask ; $54c8
 	ld a, $01 ; $54cb
-	ld hl, $59eb ; $54cd
+	ld hl, EquippedItemMarkerSpriteTask ; $54cd
 	call RegisterFrameTask ; $54d0
 	call EnableLCD ; $54d3
 	script_fade_in $10 ; $54d6
@@ -2905,10 +2905,10 @@ RunShoesSelectScreen:
 	call DisableLCDSafely ; $5645
 	call LoadShoesSelectScreen ; $5648
 	ld a, $01 ; $564b
-	ld hl, $59cd ; $564d
+	ld hl, EquipListCursorSpriteTask ; $564d
 	call RegisterFrameTask ; $5650
 	ld a, $01 ; $5653
-	ld hl, $59eb ; $5655
+	ld hl, EquippedItemMarkerSpriteTask ; $5655
 	call RegisterFrameTask ; $5658
 	call EnableLCD ; $565b
 	script_fade_in $10 ; $565e
@@ -3561,7 +3561,7 @@ RunCourtSelect4Menu:
 	ld b, $02 ; $5bc1
 	call SetMenuCursorFromIndex_3e ; $5bc3
 	ld a, $01 ; $5bc6
-	ld hl, $5e93 ; $5bc8
+	ld hl, CourtSelect4CursorSpriteTask ; $5bc8
 	call RegisterFrameTask ; $5bcb
 	call RedrawCourtSelect4Menu ; $5bce
 	wram_bank $03 ; $5bd1
@@ -3633,7 +3633,7 @@ RunLinkCourtSelect4Menu:
 	ld b, $02 ; $5c64
 	call SetMenuCursorFromIndex_3e ; $5c66
 	ld a, $01 ; $5c69
-	ld hl, $5e93 ; $5c6b
+	ld hl, CourtSelect4CursorSpriteTask ; $5c6b
 	call RegisterFrameTask ; $5c6e
 	call RedrawCourtSelect4Menu ; $5c71
 	farcall FarPtr_ResyncLinkSessionWithTimer ; $5c74
@@ -4351,7 +4351,7 @@ RunCourtSelect9Menu:
 	ld b, $03 ; $6545
 	call SetMenuCursorFromIndex_3e ; $6547
 	ld a, $01 ; $654a
-	ld hl, $6714 ; $654c
+	ld hl, CourtSelect9CursorSpriteTask ; $654c
 	call RegisterFrameTask ; $654f
 	call RedrawCourtSelect9Menu ; $6552
 	wram_bank $03 ; $6555
@@ -4437,7 +4437,7 @@ RunLinkCourtSelect9Menu:
 	ld b, $03 ; $6601
 	call SetMenuCursorFromIndex_3e ; $6603
 	ld a, $01 ; $6606
-	ld hl, $6714 ; $6608
+	ld hl, CourtSelect9CursorSpriteTask ; $6608
 	call RegisterFrameTask ; $660b
 	call RedrawCourtSelect9Menu ; $660e
 	farcall FarPtr_ResyncLinkSessionWithTimer ; $6611

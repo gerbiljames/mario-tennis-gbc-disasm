@@ -54,7 +54,7 @@ Func_6b_402a:
 	res 3, [hl] ; $403f
 	sound $01 ; $4041
 	ld a, $01 ; $4043
-	ld hl, $53f1 ; $4045
+	ld hl, Func_6b_53f1 ; $4045
 	call RegisterFrameTask ; $4048
 	call Func_6b_406a ; $404b
 	ld c, $7f ; $404e
@@ -266,7 +266,7 @@ Unused_6b_ExitHandler_415f:
 	call WaitFadeEnd ; $41d8
 	call ClearFrameTasks ; $41db
 	ld a, $01 ; $41de
-	ld hl, $53f1 ; $41e0
+	ld hl, Func_6b_53f1 ; $41e0
 	call RegisterFrameTask ; $41e3
 	xor a, a ; $41e6
 	ldh [hScrollX], a ; $41e7
@@ -337,7 +337,7 @@ Label_6b_420d:
 	ld de, $dc00 ; $4299
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
-	ld hl, $526a ; $42a1
+	ld hl, Func_6b_526a ; $42a1
 	call RegisterFrameTask ; $42a4
 	call EnableLCD ; $42a7
 	script_fade_in $40 ; $42aa
@@ -450,7 +450,7 @@ Label_6b_43cc:
 	ld de, $dc00 ; $442b
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
-	ld hl, $52f9 ; $4433
+	ld hl, Func_6b_52f9 ; $4433
 	call RegisterFrameTask ; $4436
 	ld a, $a0 ; $4439
 	ld [$cb46], a ; $443b
@@ -562,7 +562,7 @@ Label_6b_43cc:
 	xor a, a ; $4577
 	ld [$cb01], a ; $4578
 	ld a, $01 ; $457b
-	ld hl, $53db ; $457d
+	ld hl, Func_6b_53db ; $457d
 	call RegisterFrameTask ; $4580
 	ld a, $a0 ; $4583
 	ld [$cb46], a ; $4585
@@ -573,10 +573,10 @@ Label_6b_43cc:
 	ld a, $10 ; $4592
 	ld [$cb45], a ; $4594
 	ld a, $01 ; $4597
-	ld hl, $526a ; $4599
+	ld hl, Func_6b_526a ; $4599
 	call RegisterFrameTask ; $459c
 	ld a, $01 ; $459f
-	ld hl, $52f9 ; $45a1
+	ld hl, Func_6b_52f9 ; $45a1
 	call RegisterFrameTask ; $45a4
 	call EnableLCD ; $45a7
 	script_fade_in $10 ; $45aa
@@ -658,12 +658,12 @@ Label_6b_43cc:
 	script_fade_in $08 ; $4677
 	call WaitFadeEnd ; $467c
 	ld a, $01 ; $467f
-	ld hl, $7083 ; $4681
+	ld hl, Func_6b_7083 ; $4681
 	call RegisterFrameTask ; $4684
 	jp Label_6b_407c ; $4687
 	call ClearFrameTasks ; $468a
 	ld a, $01 ; $468d
-	ld hl, $53f1 ; $468f
+	ld hl, Func_6b_53f1 ; $468f
 	call RegisterFrameTask ; $4692
 	xor a, a ; $4695
 	ldh [hScrollX], a ; $4696
@@ -765,7 +765,7 @@ Palettes_6b_475a:
 	ld a, $b0 ; $47a9
 	ld [wCutsceneScrollX], a ; $47ab
 	ld a, $01 ; $47ae
-	ld hl, $7366 ; $47b0
+	ld hl, Func_6b_7366 ; $47b0
 	call RegisterFrameTask ; $47b3
 	call EnableLCD ; $47b6
 	script_fade_in $10 ; $47b9
@@ -795,7 +795,7 @@ Palettes_6b_475a:
 	xor a, a ; $47f9
 	ld [wCutsceneStepTimer], a ; $47fa
 	ld a, $01 ; $47fd
-	ld hl, $7395 ; $47ff
+	ld hl, Func_6b_7395 ; $47ff
 	call RegisterFrameTask ; $4802
 	call EnableLCD ; $4805
 	script_fade_in $10 ; $4808
@@ -825,7 +825,7 @@ Palettes_6b_475a:
 	xor a, a ; $4848
 	ld [wCutsceneStepTimer], a ; $4849
 	ld a, $01 ; $484c
-	ld hl, $73c4 ; $484e
+	ld hl, Func_6b_73c4 ; $484e
 	call RegisterFrameTask ; $4851
 	call EnableLCD ; $4854
 	script_fade_in $10 ; $4857
@@ -1091,7 +1091,7 @@ Palettes_6b_4a58:
 	ld [$cb44], a ; $4b35
 	ldh [hScrollY], a ; $4b38
 	ld a, $08 ; $4b3a
-	ld hl, $7569 ; $4b3c
+	ld hl, Func_6b_7569 ; $4b3c
 	call RegisterFrameTask ; $4b3f
 	ld hl, $d060 ; $4b42
 	ld de, $9c60 ; $4b45
@@ -1451,6 +1451,7 @@ Palettes_6b_525a:
 ; GBC palettes (BGR555), 4 colors each
 	dw $569f, $73ff, $115f, $0000 ; pal 0: #ffa4ac #ffffe6 #ff5220 #000000
 	dw $331f, $77ff, $025f, $0000 ; pal 1: #ffc562 #ffffee #ff9400 #000000
+Func_6b_526a:
 	ld hl, SpriteTemplate_6b_52b6 ; $526a
 	ld a, [$cb44] ; $526d
 	ld d, $10 ; $5270
@@ -1512,6 +1513,7 @@ SpriteTemplate_6b_52d8:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
+Func_6b_52f9:
 	ld hl, SpriteTemplate_6b_5360 ; $52f9
 	ld a, [$cb46] ; $52fc
 	ld d, $18 ; $52ff
@@ -1610,6 +1612,7 @@ Label_6b_53c6:
 	pop hl ; $53c9
 	ret ; $53ca
 	INCBIN "data/bank_06b/d_53cb.bin" ; $53cb, 16 bytes
+Func_6b_53db:
 	ld a, [wCutsceneScrollX] ; $53db
 	add a, $03 ; $53de
 	ld [wCutsceneScrollX], a ; $53e0
@@ -1619,6 +1622,7 @@ Label_6b_53c6:
 	ld [$cb43], a ; $53ea
 	ld [$cb01], a ; $53ed
 	ret ; $53f0
+Func_6b_53f1:
 	ldh a, [hInputRisingEdge] ; $53f1
 	and a, $09 ; $53f3
 	ret z ; $53f5
@@ -1879,25 +1883,26 @@ Func_6b_617c:
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 3741 bytes
+Func_6b_7083:
 	ld a, [$cb44] ; $7083
 	inc a ; $7086
 	ld [$cb44], a ; $7087
 	cp a, $5a ; $708a
 	jr nz, Label_6b_7096 ; $708c
 	ld a, $01 ; $708e
-	ld hl, $731b ; $7090
+	ld hl, Func_6b_731b ; $7090
 	call RegisterFrameTask ; $7093
 Label_6b_7096:
 	cp a, $aa ; $7096
 	jr nz, Label_6b_70a2 ; $7098
 	ld a, $01 ; $709a
-	ld hl, $72af ; $709c
+	ld hl, Func_6b_72af ; $709c
 	call RegisterFrameTask ; $709f
 Label_6b_70a2:
 	cp a, $01 ; $70a2
 	jr nz, Label_6b_70ae ; $70a4
 	ld a, $01 ; $70a6
-	ld hl, $72dd ; $70a8
+	ld hl, Func_6b_72dd ; $70a8
 	call RegisterFrameTask ; $70ab
 Label_6b_70ae:
 	ret ; $70ae
@@ -1967,6 +1972,7 @@ Label_6b_70ae:
 	dw $167a, $6fda, $7f00, $1480 ; pal 61: #d59c29 #d5f6de #00c5ff #002029
 	dw $0e7c, $6fdc, $7f00, $0c40 ; pal 62: #e69c18 #e6f6de #00c5ff #001018
 	dw $025f, $6bff, $7f00, $0000 ; pal 63: #ff9400 #ffffd5 #00c5ff #000000
+Func_6b_72af:
 	ldh a, [hVBlankCounter] ; $72af
 	and a, $03 ; $72b1
 	cp a, $03 ; $72b3
@@ -1992,6 +1998,7 @@ Label_6b_72d6:
 	ld hl, $72af ; $72d6
 	call UnregisterFrameTask ; $72d9
 	ret ; $72dc
+Func_6b_72dd:
 	ldh a, [hVBlankCounter] ; $72dd
 	and a, $03 ; $72df
 	cp a, $03 ; $72e1
@@ -2027,6 +2034,7 @@ Label_6b_7314:
 	ld hl, $72dd ; $7314
 	call UnregisterFrameTask ; $7317
 	ret ; $731a
+Func_6b_731b:
 	ldh a, [hVBlankCounter] ; $731b
 	and a, $03 ; $731d
 	cp a, $03 ; $731f
@@ -2070,6 +2078,7 @@ Label_6b_735f:
 	ld hl, $731b ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365
+Func_6b_7366:
 	ld a, [wCutsceneStepTimer] ; $7366
 	cp a, $10 ; $7369
 	jr nc, Label_6b_7380 ; $736b
@@ -2088,6 +2097,7 @@ Label_6b_7375:
 Label_6b_7380:
 	ret ; $7380
 	INCBIN "data/bank_06b/d_7381.bin" ; $7381, 20 bytes
+Func_6b_7395:
 	ld a, [wCutsceneStepTimer] ; $7395
 	cp a, $10 ; $7398
 	jr nc, Label_6b_73af ; $739a
@@ -2106,6 +2116,7 @@ Label_6b_73a4:
 Label_6b_73af:
 	ret ; $73af
 	INCBIN "data/bank_06b/d_73b0.bin" ; $73b0, 20 bytes
+Func_6b_73c4:
 	ld a, [wCutsceneStepTimer] ; $73c4
 	cp a, $10 ; $73c7
 	jr nc, Label_6b_73de ; $73c9
@@ -2150,6 +2161,7 @@ Func_6b_73f2:
 	wram_bank ; $7433
 	ret ; $7437
 	INCBIN "data/bank_06b/d_7438.bin" ; $7438, 305 bytes
+Func_6b_7569:
 	ld a, [$cb44] ; $7569
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
@@ -2221,7 +2233,7 @@ Func_6b_75af:
 	ld de, $0801 ; $7639
 	call LoadPaletteShadow ; $763c
 	ld a, $01 ; $763f
-	ld hl, $76b6 ; $7641
+	ld hl, Func_6b_76b6 ; $7641
 	call RegisterFrameTask ; $7644
 	sound $02 ; $7647
 	call EnableLCD ; $7649
@@ -2272,6 +2284,7 @@ Label_6b_76a6:
 	call WaitFadeEnd ; $76b0
 	ld a, $ff ; $76b3
 	ret ; $76b5
+Func_6b_76b6:
 	ldh a, [hWramBank] ; $76b6
 	push af ; $76b8
 	wram_bank $03 ; $76b9

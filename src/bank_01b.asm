@@ -2797,9 +2797,10 @@ LoadCharSelectScreenGfx:
 StartCharSelectCursorTask:
 	farcall FarPtr_LoadCharSelectCursorGfx ; $6029
 	ld a, $0a ; $602c
-	ld hl, $6035 ; $602e
+	ld hl, Func_1b_6035 ; $602e
 	call RegisterFrameTask ; $6031
 	ret ; $6034
+Func_1b_6035:
 	ld a, [wCharSelectChar] ; $6035
 	ld de, $0004 ; $6038
 	call GetCharSelectRosterField ; $603b
@@ -3520,9 +3521,10 @@ Func_1b_664a:
 	ld de, $0801 ; $6662
 	call LoadPaletteShadow ; $6665
 	ld a, $0a ; $6668
-	ld hl, $6671 ; $666a
+	ld hl, Func_1b_6671 ; $666a
 	call RegisterFrameTask ; $666d
 	ret ; $6670
+Func_1b_6671:
 	ld de, $2cfa ; $6671
 	farcall FarPtr_ApplySpriteBobOffset_18 ; $6674
 	ld hl, $6572 ; $6677
@@ -3532,9 +3534,10 @@ Func_1b_664a:
 StartUnlockDebugCursorTask:
 	farcall FarPtr_LoadCharSelectCursorGfx ; $6681
 	ld a, $0a ; $6684
-	ld hl, $668d ; $6686
+	ld hl, Func_1b_668d ; $6686
 	call RegisterFrameTask ; $6689
 	ret ; $668c
+Func_1b_668d:
 	ld a, [wCharSelectChar] ; $668d
 	ld de, $0004 ; $6690
 	call GetUnlockDebugRosterField ; $6693
@@ -3560,9 +3563,10 @@ Label_1b_66b6:
 	ld [$d58b], a ; $66b8
 Label_1b_66bb:
 	ld a, $0a ; $66bb
-	ld hl, $66c4 ; $66bd
+	ld hl, Func_1b_66c4 ; $66bd
 	call RegisterFrameTask ; $66c0
 	ret ; $66c3
+Func_1b_66c4:
 	ld hl, wCharSelectChar ; $66c4
 	ld a, [wCharSelectPrevChar] ; $66c7
 	cp a, [hl] ; $66ca
@@ -3886,7 +3890,7 @@ Func_1b_6982:
 	ld a, $0c ; $69b2
 	ld [$db27], a ; $69b4
 	ld a, $01 ; $69b7
-	ld hl, $69d6 ; $69b9
+	ld hl, Func_1b_69d6 ; $69b9
 	call RegisterFrameTask ; $69bc
 	ld b, $01 ; $69bf
 	farcall FarPtr_18_34 ; $69c1
@@ -4472,7 +4476,7 @@ RunMinigameLevelSelect2:
 	call SetMenuCursorFromIndex ; $6e5e
 	wram_bank $03 ; $6e61
 	ld a, $01 ; $6e67
-	ld hl, $6f62 ; $6e69
+	ld hl, Func_1b_6f62 ; $6e69
 	call RegisterFrameTask ; $6e6c
 	call RedrawMinigameLevelSelect2 ; $6e6f
 	wram_bank $03 ; $6e72
@@ -4592,6 +4596,7 @@ Label_1b_6f4e:
 	pop af ; $6f5c
 	ret ; $6f5d
 	INCBIN "data/bank_01b/d_6f5e.bin" ; $6f5e, 4 bytes
+Func_1b_6f62:
 	farcall FarPtr_TickMenuBgScroll ; $6f62
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex ; $6f67
@@ -4793,10 +4798,10 @@ RunSavedDataTypeSelect:
 	ld b, $02 ; $7182
 	call SetMenuCursorFromIndex ; $7184
 	ld a, $01 ; $7187
-	ld hl, $72a4 ; $7189
+	ld hl, Func_1b_72a4 ; $7189
 	call RegisterFrameTask ; $718c
 	ld a, $01 ; $718f
-	ld hl, $72a8 ; $7191
+	ld hl, Func_1b_72a8 ; $7191
 	call RegisterFrameTask ; $7194
 	call RedrawSavedDataTypeSelect ; $7197
 	wram_bank $03 ; $719a
@@ -4928,8 +4933,10 @@ Label_1b_723a:
 	wram_bank ; $7295
 	ret ; $7299
 	INCBIN "data/bank_01b/d_729a.bin" ; $729a, 10 bytes
+Func_1b_72a4:
 	farcall FarPtr_TickMenuBgScroll ; $72a4
 	ret ; $72a7
+Func_1b_72a8:
 	ld c, $02 ; $72a8
 	call GetMenuCursorIndex ; $72aa
 	or a, a ; $72ad
@@ -5079,10 +5086,10 @@ ShowMinigameDataScreen:
 	ld hl, $4430 ; $73ec
 	call RegisterFrameTask ; $73ef
 	ld a, $01 ; $73f2
-	ld hl, $76b9 ; $73f4
+	ld hl, Func_1b_76b9 ; $73f4
 	call RegisterFrameTask ; $73f7
 	ld a, $01 ; $73fa
-	ld hl, $7827 ; $73fc
+	ld hl, Func_1b_7827 ; $73fc
 	call RegisterFrameTask ; $73ff
 	call EnableLCD ; $7402
 	script_fade_in $10 ; $7405
@@ -5457,6 +5464,7 @@ Label_1b_76ab:
 	ld l, a ; $76ad
 	ret ; $76ae
 	INCBIN "data/bank_01b/d_76af.bin" ; $76af, 10 bytes
+Func_1b_76b9:
 	call CheckMinigameDataScrollable ; $76b9
 	or a, a ; $76bc
 	ret z ; $76bd
@@ -5667,6 +5675,7 @@ Label_1b_780c:
 	ld c, $02 ; $7821
 	farcall FarPtr_CopyTilemapRect ; $7823
 	ret ; $7826
+Func_1b_7827:
 	ldh a, [hWramBank] ; $7827
 	push af ; $7829
 	wram_bank $03 ; $782a

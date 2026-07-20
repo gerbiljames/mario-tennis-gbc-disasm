@@ -618,7 +618,7 @@ ShowExpGainScreen:
 	jr nz, Label_1a_4527 ; $450e
 	call Func_1a_4a7d ; $4510
 	ld a, $0e ; $4513
-	ld hl, $4779 ; $4515
+	ld hl, Func_1a_4779 ; $4515
 	call RegisterFrameTask ; $4518
 	call Func_1a_4bb9 ; $451b
 	jp Label_1a_473e ; $451e
@@ -724,13 +724,13 @@ Label_1a_4564:
 	call QueueVRAMCopy ; $45d1
 	call CopyMapToScrollBuffers ; $45d4
 	ld a, $0f ; $45d7
-	ld hl, $477a ; $45d9
+	ld hl, Func_1a_477a ; $45d9
 	call RegisterFrameTask ; $45dc
 	call EnableLCD ; $45df
 	script_fade_in $10 ; $45e2
 	call WaitFadeEnd ; $45e7
 	ld a, $0f ; $45ea
-	ld hl, $4e65 ; $45ec
+	ld hl, Func_1a_4e65 ; $45ec
 	call RegisterFrameTask ; $45ef
 	wram_bank $06 ; $45f2
 	pop de ; $45f8
@@ -919,7 +919,7 @@ Label_1a_473e:
 	call QueueVRAMCopy ; $4757
 	call CopyMapToScrollBuffers ; $475a
 	ld a, $0f ; $475d
-	ld hl, $477a ; $475f
+	ld hl, Func_1a_477a ; $475f
 	call RegisterFrameTask ; $4762
 	call EnableLCD ; $4765
 	script_fade_in $10 ; $4768
@@ -930,7 +930,9 @@ Label_1a_473e:
 	pop de ; $4776
 	pop bc ; $4777
 	ret ; $4778
+Func_1a_4779:
 	ret ; $4779
+Func_1a_477a:
 	push af ; $477a
 	push bc ; $477b
 	push de ; $477c
@@ -1910,6 +1912,7 @@ Label_1a_4da4:
 	pop bc ; $4e62
 	pop af ; $4e63
 	ret ; $4e64
+Func_1a_4e65:
 	wram_bank $06 ; $4e65
 	ld hl, $d232 ; $4e6b
 	ld a, [hl+] ; $4e6e
@@ -2648,7 +2651,7 @@ Label_1a_67db:
 	call Func_1a_6f3d ; $681a
 	call EnableLCD ; $681d
 	ld a, $01 ; $6820
-	ld hl, $6c28 ; $6822
+	ld hl, Func_1a_6c28 ; $6822
 	call RegisterFrameTask ; $6825
 	call Func_1a_70c0 ; $6828
 	call Func_1a_6e41 ; $682b
@@ -2709,7 +2712,7 @@ Func_1a_686c:
 	call QueueVRAMCopy ; $68d2
 	call EnableLCD ; $68d5
 	ld a, $01 ; $68d8
-	ld hl, $6ab3 ; $68da
+	ld hl, Func_1a_6ab3 ; $68da
 	call RegisterFrameTask ; $68dd
 	script_fade_in $10 ; $68e0
 	call WaitFadeEnd ; $68e5
@@ -2938,6 +2941,7 @@ Func_1a_6a9b:
 	ld e, l ; $6aaf
 	pop hl ; $6ab0
 	jr Func_1a_6a9b ; $6ab1
+Func_1a_6ab3:
 	wram_bank $06 ; $6ab3
 	ldh a, [hVBlankCounter] ; $6ab9
 	and a, $1c ; $6abb
@@ -3098,6 +3102,7 @@ Func_1a_6c0b:
 	farcall FarPtr_GetCharPaletteIndex ; $6c21
 	ld [$d004], a ; $6c24
 	ret ; $6c27
+Func_1a_6c28:
 	wram_bank $06 ; $6c28
 	ld a, [$d000] ; $6c2e
 	or a, a ; $6c31

@@ -301,7 +301,7 @@ AcademyCourtsTourCutscene:
 	ld a, $48 ; $4599
 	ld [$c2b1], a ; $459b
 	ld a, $01 ; $459e
-	ld hl, $4d0a ; $45a0
+	ld hl, Func_13_4d0a ; $45a0
 	call RegisterFrameTask ; $45a3
 	script_set_text Text_31_48 ; $45a6
 	script_speak $06 ; $45ac
@@ -327,7 +327,7 @@ AcademyCourtsTourCutscene:
 	ld a, $48 ; $4620
 	ld [$c2b1], a ; $4622
 	ld a, $01 ; $4625
-	ld hl, $4d0a ; $4627
+	ld hl, Func_13_4d0a ; $4627
 	call RegisterFrameTask ; $462a
 	script_speak $06 ; $462d
 	ld hl, $4d0a ; $4632
@@ -594,6 +594,7 @@ QueueTourPointerSprite_13:
 	ld b, $08 ; $4d04
 	call QueueSpriteTemplate ; $4d06
 	ret ; $4d09
+Func_13_4d0a:
 	ld a, [$c2b0] ; $4d0a
 	ld d, a ; $4d0d
 	ldh a, [hVBlankCounter] ; $4d0e

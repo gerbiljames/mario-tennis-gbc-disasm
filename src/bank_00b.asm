@@ -475,6 +475,7 @@ Label_0b_4467:
 	wram_bank ; $4468
 	xor a, a ; $446c
 	ret ; $446d
+Func_0b_446e:
 	ldh a, [hWramBank] ; $446e
 	push af ; $4470
 	wram_bank $05 ; $4471
@@ -1256,7 +1257,7 @@ Label_0b_5d0a:
 	farcall FarPtr_09_2c ; $5d2d
 	farcall FarPtr_StepMatchFrame ; $5d30
 	ld a, $01 ; $5d33
-	ld hl, $446e ; $5d35
+	ld hl, Func_0b_446e ; $5d35
 	call RegisterFrameTask ; $5d38
 	farcall FarPtr_StartPointEndReactions ; $5d3b
 	ld hl, $446e ; $5d3e
@@ -1516,7 +1517,7 @@ Label_0b_5e8d:
 	ld a, $5a ; $6baf
 	ld [$c2ef], a ; $6bb1
 	ld a, $01 ; $6bb4
-	ld hl, $6bd0 ; $6bb6
+	ld hl, Func_0b_6bd0 ; $6bb6
 	call RegisterFrameTask ; $6bb9
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bbc
 	ld hl, $6bcc ; $6bbf
@@ -1529,6 +1530,7 @@ Label_0b_6bc7:
 	ld [$c7b5], a ; $6bc8
 	ret ; $6bcb
 	INCBIN "data/bank_00b/d_6bcc.bin" ; $6bcc, 4 bytes
+Func_0b_6bd0:
 	ld hl, $c2ef ; $6bd0
 	dec [hl] ; $6bd3
 	ret nz ; $6bd4
@@ -1647,7 +1649,7 @@ Label_0b_6c92:
 	farcall FarPtr_09_2c ; $6cb5
 	farcall FarPtr_StepMatchFrame ; $6cb8
 	ld a, $01 ; $6cbb
-	ld hl, $446e ; $6cbd
+	ld hl, Func_0b_446e ; $6cbd
 	call RegisterFrameTask ; $6cc0
 	farcall FarPtr_StartPointEndReactions ; $6cc3
 	ld hl, $446e ; $6cc6
@@ -1821,7 +1823,7 @@ Label_0b_6da6:
 	farcall FarPtr_09_2c ; $715f
 	farcall FarPtr_StepMatchFrame ; $7162
 	ld a, $01 ; $7165
-	ld hl, $446e ; $7167
+	ld hl, Func_0b_446e ; $7167
 	call RegisterFrameTask ; $716a
 	farcall FarPtr_StartPointEndReactions ; $716d
 	ld hl, $446e ; $7170

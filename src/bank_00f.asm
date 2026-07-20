@@ -130,9 +130,10 @@ SmallCharTestInitScript_0f:
 	farcall FarPtr_GetObjectDefCount ; $41a8
 	ld [$c2b1], a ; $41ab
 	ld a, $01 ; $41ae
-	ld hl, $41b7 ; $41b0
+	ld hl, Func_0f_41b7 ; $41b0
 	call RegisterFrameTask ; $41b3
 	ret ; $41b6
+Func_0f_41b7:
 	ldh a, [hInputRisingEdge] ; $41b7
 	and a, $f0 ; $41b9
 	jr z, Label_0f_41c4 ; $41bb
@@ -1636,7 +1637,7 @@ TournamentTile0F_0f:
 	ret ; $620e
 TournamentInitScript_0f:
 	ld a, $01 ; $620f
-	ld hl, $6310 ; $6211
+	ld hl, Func_0f_6310 ; $6211
 	call RegisterFrameTask ; $6214
 	ld a, [wStoryModeEntryPoint] ; $6217
 	cp a, $ff ; $621a
@@ -1716,6 +1717,7 @@ Label_0f_6306:
 	call SetPlayerAndPartnerObjectDefs ; $6309
 	call Func_0f_7aaf ; $630c
 	ret ; $630f
+Func_0f_6310:
 	ld a, $00 ; $6310
 	call Func_0f_631f ; $6312
 	test_flag $05, 7 ; $6315

@@ -164,6 +164,7 @@ FarPtr_StopSceneScrollTask:
 	dw StopSceneScrollTask ; $40a0
 FarPtr_RunEndingCreditsSequence:
 	dw RunEndingCreditsSequence ; $40a2
+Func_0a_40a4:
 	push af ; $40a4
 	push bc ; $40a5
 	push de ; $40a6
@@ -210,7 +211,7 @@ BeginCutsceneScriptMode:
 	or a, a ; $40f5
 	jr z, Label_0a_4100 ; $40f6
 	ld a, $01 ; $40f8
-	ld hl, $40a4 ; $40fa
+	ld hl, Func_0a_40a4 ; $40fa
 	call RegisterFrameTask ; $40fd
 Label_0a_4100:
 	pop hl ; $4100
@@ -1549,7 +1550,7 @@ SetScreenShake:
 	inc a ; $48d0
 	jr nz, Label_0a_48db ; $48d1
 	ld a, $01 ; $48d3
-	ld hl, $4908 ; $48d5
+	ld hl, Func_0a_4908 ; $48d5
 	call RegisterFrameTask ; $48d8
 Label_0a_48db:
 	pop af ; $48db
@@ -1577,6 +1578,7 @@ Label_0a_48fb:
 	pop bc ; $4905
 	pop af ; $4906
 	ret ; $4907
+Func_0a_4908:
 	push af ; $4908
 	push bc ; $4909
 	push de ; $490a
@@ -2135,6 +2137,7 @@ Label_0a_4ee9:
 ClearStatusSetupMenuEntry:
 	call RunClearStatusSetupMenu ; $4ef8
 	ret ; $4efb
+Func_0a_4efc:
 	test_flag $04, 0 ; $4efc
 	jr z, Label_0a_4f2b ; $4eff
 	wram_bank $04 ; $4f01
@@ -2170,7 +2173,7 @@ RunStoryModeOverworld:
 Label_0a_4f30:
 	call ClearFrameTasks ; $4f30
 	ld a, $01 ; $4f33
-	ld hl, $4efc ; $4f35
+	ld hl, Func_0a_4efc ; $4f35
 	call RegisterFrameTask ; $4f38
 	call RunStoryLocation ; $4f3b
 	jr Label_0a_4f30 ; $4f3e
@@ -3516,7 +3519,7 @@ InitSceneScroll:
 	ld [$c32b], a ; $595c
 	ld [$c32c], a ; $595f
 	ld a, $0f ; $5962
-	ld hl, $5976 ; $5964
+	ld hl, UpdateSceneScroll ; $5964
 	call RegisterFrameTask ; $5967
 	pop hl ; $596a
 	pop de ; $596b
@@ -4300,7 +4303,7 @@ Label_0a_6054:
 	ldh [hBGRowBlitPending], a ; $6057
 	farcall FarPtr_InitTextWindows ; $6059
 	ld a, $01 ; $605c
-	ld hl, $60c1 ; $605e
+	ld hl, Func_0a_60c1 ; $605e
 	call RegisterFrameTask ; $6061
 	ld a, [wCurrentScene] ; $6064
 	call InitSceneTileAnimations ; $6067
@@ -4354,6 +4357,7 @@ Label_0a_60b6:
 	call SceneViewerSelectScene ; $60b9
 	call AdvanceFrame ; $60bc
 	jr Label_0a_60b6 ; $60bf
+Func_0a_60c1:
 	ret ; $60c1
 UpdateSceneViewerScroll:
 	ld a, [$c321] ; $60c2
@@ -4840,7 +4844,7 @@ Label_0a_6430:
 	ld [de], a ; $6441
 Label_0a_6442:
 	ld a, $01 ; $6442
-	ld hl, $6465 ; $6444
+	ld hl, Func_0a_6465 ; $6444
 	call RegisterFrameTask ; $6447
 	add sp, 2 ; $644a
 Label_0a_644c:
@@ -4863,6 +4867,7 @@ StopSceneTileAnimations:
 	pop bc ; $6462
 	pop af ; $6463
 	ret ; $6464
+Func_0a_6465:
 	test_flag $03, 0 ; $6465
 	ret nz ; $6468
 	test_flag $03, 2 ; $6469

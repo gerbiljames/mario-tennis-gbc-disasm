@@ -78,7 +78,7 @@ Func_10_40ef:
 	call WaitFadeEnd ; $4104
 	sound $14 ; $4107
 	ld a, $01 ; $4109
-	ld hl, $4141 ; $410b
+	ld hl, Func_10_4141 ; $410b
 	call RegisterFrameTask ; $410e
 	call WaitFramesCmd ; $4111
 	db $78 ; $4114 inline arg
@@ -103,6 +103,7 @@ Func_10_4137:
 	farcall FarPtr_RunEndingCreditsSequence ; $413a
 	farcall FarPtr_EndCutsceneScriptMode ; $413d
 	ret ; $4140
+Func_10_4141:
 	farcall FarPtr_03_3a ; $4141
 	ret ; $4144
 MatchSelectHandlerTable_10:
@@ -4212,7 +4213,7 @@ AcademyMainBldgInitScript_10:
 	script_set_actor_script $03, ActorScript_10_7b8b ; $7723
 Label_10_772e:
 	ld a, $01 ; $772e
-	ld hl, $79d0 ; $7730
+	ld hl, Func_10_79d0 ; $7730
 	call RegisterFrameTask ; $7733
 	ld a, [wStoryModeEntryPoint] ; $7736
 	cp a, $0f ; $7739
@@ -4324,6 +4325,7 @@ Label_10_785b:
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4d, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4f, $01, $00
 	map_actor_end
+Func_10_79d0:
 	ld a, $00 ; $79d0
 	call Func_10_79df ; $79d2
 	test_flag $05, 7 ; $79d5

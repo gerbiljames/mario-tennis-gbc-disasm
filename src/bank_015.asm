@@ -1471,6 +1471,7 @@ ActorScript_15_55e9:
 	as_anim $08
 	as_wait $3c
 	as_jump ActorScript_15_55e9
+Func_15_55f0:
 	ldh a, [hInputRisingEdge] ; $55f0
 	and a, PADF_A | PADF_B ; $55f2
 	ld d, a ; $55f4
@@ -1575,7 +1576,7 @@ Label_15_566c:
 	ld a, $01 ; $56a8
 	ld [$c2b9], a ; $56aa
 	ld a, $01 ; $56ad
-	ld hl, $578d ; $56af
+	ld hl, Func_15_578d ; $56af
 	call RegisterFrameTask ; $56b2
 	script_wait_frames $32 ; $56b5
 	ld l, $03 ; $56bc
@@ -1594,7 +1595,7 @@ Label_15_56c7:
 	sound $75 ; $56d9
 	call Func_15_5777 ; $56db
 	ld a, $01 ; $56de
-	ld hl, $55f0 ; $56e0
+	ld hl, Func_15_55f0 ; $56e0
 	call RegisterFrameTask ; $56e3
 Label_15_56e6:
 	call AdvanceFrame ; $56e6
@@ -1673,6 +1674,7 @@ Func_15_5777:
 	ld [hl], a ; $578b
 Label_15_578c:
 	ret ; $578c
+Func_15_578d:
 	ld hl, wWaterSpriteMinigameTimer ; $578d
 	ld a, [hl+] ; $5790
 	ld h, [hl] ; $5791
@@ -1728,6 +1730,7 @@ QueueWaterSpriteMinigameCounterPanel:
 	ld b, $08 ; $58cb
 	call QueueSpriteTemplate ; $58cd
 	ret ; $58d0
+Func_15_58d1:
 	ld a, [wWaterSpriteMinigameFlag] ; $58d1
 	ld d, a ; $58d4
 	ld e, $18 ; $58d5
@@ -1744,7 +1747,7 @@ InitWaterSpriteMinigameHud:
 	ld a, $a0 ; $58ec
 	ld [$c2bb], a ; $58ee
 	ld a, $01 ; $58f1
-	ld hl, $58d1 ; $58f3
+	ld hl, Func_15_58d1 ; $58f3
 	call RegisterFrameTask ; $58f6
 	ret ; $58f9
 	INCBIN "data/bank_015/d_58fa.bin" ; $58fa, 198 bytes

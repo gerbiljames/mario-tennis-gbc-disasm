@@ -1368,7 +1368,7 @@ RunMenuSelection:
 	inc hl ; $47b8
 	ld [hl], d ; $47b9
 	ld a, $01 ; $47ba
-	ld hl, $48f1 ; $47bc
+	ld hl, Func_05_48f1 ; $47bc
 	call RegisterFrameTask ; $47bf
 	pop hl ; $47c2
 	pop de ; $47c3
@@ -1554,6 +1554,7 @@ Label_05_48e6:
 	pop de ; $48ee
 	pop bc ; $48ef
 	ret ; $48f0
+Func_05_48f1:
 	push af ; $48f1
 	push bc ; $48f2
 	push de ; $48f3
@@ -1693,6 +1694,7 @@ Label_05_49cc:
 	pop de ; $49d9
 	pop bc ; $49da
 	ret ; $49db
+Func_05_49dc:
 	push af ; $49dc
 	push bc ; $49dd
 	push de ; $49de
@@ -1730,7 +1732,7 @@ RunPagedTextMenuAutoSize:
 	xor a, a ; $4a17
 	ld [$d846], a ; $4a18
 	ld a, $01 ; $4a1b
-	ld hl, $49dc ; $4a1d
+	ld hl, Func_05_49dc ; $4a1d
 	call RegisterFrameTask ; $4a20
 Label_05_4a23:
 	call FetchDialogueText ; $4a23
@@ -1848,7 +1850,7 @@ RunMenuSelectionShared:
 	inc hl ; $4aeb
 	ld [hl], d ; $4aec
 	ld a, $01 ; $4aed
-	ld hl, $4c9d ; $4aef
+	ld hl, Func_05_4c9d ; $4aef
 	call RegisterFrameTask ; $4af2
 	pop hl ; $4af5
 	pop de ; $4af6
@@ -2106,6 +2108,7 @@ Label_05_4c9a:
 	pop bc ; $4c9a
 	xor a, a ; $4c9b
 	ret ; $4c9c
+Func_05_4c9d:
 	wram_bank $05 ; $4c9d
 	ld a, [$cb28] ; $4ca3
 	bit 7, a ; $4ca6
@@ -2527,7 +2530,7 @@ TextCmdWaitButtonPage:
 	push de ; $4f8f
 	push hl ; $4f90
 	ld a, $01 ; $4f91
-	ld hl, $4fe3 ; $4f93
+	ld hl, TextContinueArrowBlinkTask ; $4f93
 	call RegisterFrameTask ; $4f96
 	call WaitTextAdvanceInput ; $4f99
 	ld a, $10 ; $4f9c
@@ -6389,7 +6392,7 @@ Label_05_6a86:
 	ld a, [$c710] ; $6aa4
 	call RedrawWindowRows ; $6aa7
 	ld a, $0f ; $6aaa
-	ld hl, $6b03 ; $6aac
+	ld hl, Func_05_6b03 ; $6aac
 	call RegisterFrameTask ; $6aaf
 Label_05_6ab2:
 	ldh a, [hInputRisingEdge] ; $6ab2
@@ -6438,6 +6441,7 @@ Label_05_6af6:
 	ld hl, $6b03 ; $6afc
 	call UnregisterFrameTask ; $6aff
 	ret ; $6b02
+Func_05_6b03:
 	ld a, [wCameraX] ; $6b03
 	rlca ; $6b06
 	rlca ; $6b07

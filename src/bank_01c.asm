@@ -65,15 +65,15 @@ Label_1c_4038:
 	call EnableLCD ; $406c
 	call AdvanceFrame ; $406f
 	ld a, $01 ; $4072
-	ld hl, $4e54 ; $4074
+	ld hl, Func_1c_4e54 ; $4074
 	call RegisterFrameTask ; $4077
 	ld a, $01 ; $407a
-	ld hl, $5049 ; $407c
+	ld hl, Func_1c_5049 ; $407c
 	call RegisterFrameTask ; $407f
 	script_fade_in $10 ; $4082
 	call WaitFadeEnd ; $4087
 	ld a, $01 ; $408a
-	ld hl, $45fa ; $408c
+	ld hl, CharDataScreenAnimTask ; $408c
 	call RegisterFrameTask ; $408f
 	call Func_1c_4682 ; $4092
 	wram_bank $06 ; $4095
@@ -82,7 +82,7 @@ Label_1c_4038:
 	call Func_1c_4dd6 ; $409f
 	call Func_1c_495d ; $40a2
 	ld a, $01 ; $40a5
-	ld hl, $54f2 ; $40a7
+	ld hl, Func_1c_54f2 ; $40a7
 	call RegisterFrameTask ; $40aa
 	jr Label_1c_40b2 ; $40ad
 Label_1c_40af:
@@ -1829,6 +1829,7 @@ Label_1c_4e32:
 	db $96, $65, $22, $66 ; 0x14
 	db $ba, $66, $4d, $67 ; 0x18
 	db $a7, $67 ; 0x1c
+Func_1c_4e54:
 	wram_bank $06 ; $4e54
 	ld b, $0e ; $4e5a
 	ld a, [$d00a] ; $4e5c
@@ -2053,6 +2054,7 @@ Label_1c_4fe2:
 	ld e, a ; $4fe7
 	ret ; $4fe8
 	INCBIN "data/bank_01c/d_4fe9.bin" ; $4fe9, 96 bytes
+Func_1c_5049:
 	wram_bank $06 ; $5049
 	ld a, [$d009] ; $504f
 	cp a, $0a ; $5052
@@ -2357,7 +2359,7 @@ Label_1c_52c1:
 	ld [$d027], a ; $5325
 	call Func_1c_495d ; $5328
 	ld a, $01 ; $532b
-	ld hl, $5049 ; $532d
+	ld hl, Func_1c_5049 ; $532d
 	call RegisterFrameTask ; $5330
 	call RestoreCharDataScreenRow ; $5333
 	call Func_1c_489b ; $5336
@@ -2392,7 +2394,7 @@ Label_1c_52c1:
 	call Func_1c_4dd6 ; $5392
 	call Func_1c_495d ; $5395
 	ld a, $01 ; $5398
-	ld hl, $54f2 ; $539a
+	ld hl, Func_1c_54f2 ; $539a
 	call RegisterFrameTask ; $539d
 	jp Func_1c_509d ; $53a0
 Func_1c_53a3:
@@ -2573,6 +2575,7 @@ Func_1c_54e3:
 	ld [$d024], a ; $54eb
 	call Func_1c_49eb ; $54ee
 	ret ; $54f1
+Func_1c_54f2:
 	wram_bank $06 ; $54f2
 	ld a, [$d019] ; $54f8
 	ld de, $4c24 ; $54fb
@@ -2662,12 +2665,12 @@ Func_1c_5572:
 	call EnableLCD ; $55e3
 	call AdvanceFrame ; $55e6
 	ld a, $01 ; $55e9
-	ld hl, $4e54 ; $55eb
+	ld hl, Func_1c_4e54 ; $55eb
 	call RegisterFrameTask ; $55ee
 	script_fade_in $10 ; $55f1
 	call WaitFadeEnd ; $55f6
 	ld a, $01 ; $55f9
-	ld hl, $45fa ; $55fb
+	ld hl, CharDataScreenAnimTask ; $55fb
 	call RegisterFrameTask ; $55fe
 	call RestoreCharDataScreenRow ; $5601
 	call Func_1c_489b ; $5604
@@ -2886,7 +2889,7 @@ Func_1c_728b:
 	ret ; $72eb
 StartCharDataScreenAnimTask:
 	ld a, $01 ; $72ec
-	ld hl, $45fa ; $72ee
+	ld hl, CharDataScreenAnimTask ; $72ee
 	call RegisterFrameTask ; $72f1
 	ret ; $72f4
 StopCharDataScreenAnimTask:

@@ -738,6 +738,7 @@ Label_3b_441e:
 	pop af ; $4422
 	wram_bank ; $4423
 	ret ; $4427
+Func_3b_4428:
 	farcall FarPtr_39_04 ; $4428
 	ret ; $442b
 DrawNameWithDiacritics_3b:
@@ -850,10 +851,10 @@ RunN64ExhibData:
 	xor a, a ; $44b2
 	ld [$cb0b], a ; $44b3
 	ld a, $01 ; $44b6
-	ld hl, $4428 ; $44b8
+	ld hl, Func_3b_4428 ; $44b8
 	call RegisterFrameTask ; $44bb
 	ld a, $01 ; $44be
-	ld hl, $4567 ; $44c0
+	ld hl, N64ExhibScrollArrowsTask ; $44c0
 	call RegisterFrameTask ; $44c3
 	call EnableLCD ; $44c6
 	script_fade_in $10 ; $44c9
@@ -1542,7 +1543,7 @@ RunTrophiesScreen:
 	ld a, $00 ; $496b
 	ld [$cb0b], a ; $496d
 	ld a, $01 ; $4970
-	ld hl, $4428 ; $4972
+	ld hl, Func_3b_4428 ; $4972
 	call RegisterFrameTask ; $4975
 	xor a, a ; $4978
 	ld [$d901], a ; $4979
@@ -1969,10 +1970,10 @@ RunN64TnmtData:
 	xor a, a ; $4d02
 	ld [$cb0b], a ; $4d03
 	ld a, $01 ; $4d06
-	ld hl, $4428 ; $4d08
+	ld hl, Func_3b_4428 ; $4d08
 	call RegisterFrameTask ; $4d0b
 	ld a, $01 ; $4d0e
-	ld hl, $50d6 ; $4d10
+	ld hl, N64TnmtScrollArrowsTask ; $4d10
 	call RegisterFrameTask ; $4d13
 	call EnableLCD ; $4d16
 	script_fade_in $10 ; $4d19
@@ -2562,13 +2563,13 @@ RunN64RingShotData:
 	xor a, a ; $5150
 	ld [$cb0b], a ; $5151
 	ld a, $01 ; $5154
-	ld hl, $4428 ; $5156
+	ld hl, Func_3b_4428 ; $5156
 	call RegisterFrameTask ; $5159
 	ld a, $01 ; $515c
-	ld hl, $5491 ; $515e
+	ld hl, RingShotScrollArrowsTask ; $515e
 	call RegisterFrameTask ; $5161
 	ld a, $01 ; $5164
-	ld hl, $558f ; $5166
+	ld hl, RingShotScoreDrawTask ; $5166
 	call RegisterFrameTask ; $5169
 	call EnableLCD ; $516c
 	script_fade_in $10 ; $516f
@@ -3205,7 +3206,7 @@ RunMainMenu:
 	ld b, a ; $560b
 	call MainMenuSlideIn ; $560c
 	ld a, $7f ; $560f
-	ld hl, $5863 ; $5611
+	ld hl, MainMenuCursorSpriteTask ; $5611
 	call RegisterFrameTask ; $5614
 	call DrawMainMenuSelection ; $5617
 	call ResetSerialState ; $561a
@@ -4104,7 +4105,7 @@ RunMatchFormatSelect:
 	farcall FarPtr_39_26 ; $5d11
 	call InitMatchFormatOptions ; $5d14
 	ld a, $01 ; $5d17
-	ld hl, $60d0 ; $5d19
+	ld hl, MatchFormatCursorSpriteTask ; $5d19
 	call RegisterFrameTask ; $5d1c
 	call DrawMatchFormatCaption ; $5d1f
 	wram_bank $03 ; $5d22
@@ -4767,7 +4768,7 @@ Label_3b_621d:
 	ld b, $03 ; $622b
 	call SetMenuCursorFromCellIndex ; $622d
 	ld a, $01 ; $6230
-	ld hl, $646d ; $6232
+	ld hl, MinigameSelectCursorSpriteTask ; $6232
 	call RegisterFrameTask ; $6235
 	call DrawMinigameSelectCaption ; $6238
 	call CheckMinigameGridExpanded ; $623b
@@ -5500,7 +5501,7 @@ RunSavedDataSourceSelect:
 	ld b, $03 ; $67cc
 	call SetMenuCursorFromCellIndex ; $67ce
 	ld a, $01 ; $67d1
-	ld hl, $69dc ; $67d3
+	ld hl, SavedDataSourceCursorSpriteTask ; $67d3
 	call RegisterFrameTask ; $67d6
 	call DrawSavedDataSourceGrid ; $67d9
 	wram_bank $03 ; $67dc
@@ -6088,7 +6089,7 @@ RunEraseSavedDataSelect:
 	ld b, $03 ; $6ca5
 	call SetMenuCursorFromCellIndex ; $6ca7
 	ld a, $01 ; $6caa
-	ld hl, $6f5b ; $6cac
+	ld hl, EraseSavedDataCursorSpriteTask ; $6cac
 	call RegisterFrameTask ; $6caf
 	call DrawEraseSavedDataGrid ; $6cb2
 	wram_bank $03 ; $6cb5
@@ -6748,7 +6749,7 @@ RunN64RecordTypeSelect:
 	ld b, $03 ; $71d5
 	call SetMenuCursorFromCellIndex ; $71d7
 	ld a, $01 ; $71da
-	ld hl, $734f ; $71dc
+	ld hl, N64RecordTypeCursorSpriteTask ; $71dc
 	call RegisterFrameTask ; $71df
 	call DrawN64RecordTypeGrid ; $71e2
 	wram_bank $03 ; $71e5
@@ -7155,7 +7156,7 @@ RunN64TransferItemSelect:
 	ld b, $02 ; $74e4
 	call SetMenuCursorFromCellIndex ; $74e6
 	ld a, $01 ; $74e9
-	ld hl, $76ea ; $74eb
+	ld hl, N64TransferItemCursorSpriteTask ; $74eb
 	call RegisterFrameTask ; $74ee
 	call DrawN64TransferItemGrid ; $74f1
 	wram_bank $03 ; $74f4
@@ -7465,7 +7466,7 @@ ShowTournamentBracket:
 	script_fade_in $10 ; $7774
 	call WaitFadeEnd ; $7779
 	ld a, $01 ; $777c
-	ld hl, $79d6 ; $777e
+	ld hl, BracketHighlightBlinkTask ; $777e
 	call RegisterFrameTask ; $7781
 	sound $78 ; $7784
 	call WaitFramesCmd ; $7786
@@ -7807,10 +7808,10 @@ RunStarCharExhibResults:
 	ld a, $03 ; $7a06
 	ld [$cb0c], a ; $7a08
 	ld a, $01 ; $7a0b
-	ld hl, $4428 ; $7a0d
+	ld hl, Func_3b_4428 ; $7a0d
 	call RegisterFrameTask ; $7a10
 	ld a, $01 ; $7a13
-	ld hl, $7a6d ; $7a15
+	ld hl, StarChartScrollArrowsTask ; $7a15
 	call RegisterFrameTask ; $7a18
 	call EnableLCD ; $7a1b
 	script_fade_in $10 ; $7a1e

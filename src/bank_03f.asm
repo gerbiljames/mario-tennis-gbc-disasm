@@ -198,7 +198,7 @@ Label_3f_4106:
 	script_fade_in $10 ; $4114
 	call WaitFadeEnd ; $4119
 	ld a, $1d ; $411c
-	ld hl, $4e8d ; $411e
+	ld hl, Func_3f_4e8d ; $411e
 	call RegisterFrameTask ; $4121
 	wram_bank $06 ; $4124
 	ld a, [$cb34] ; $412a
@@ -1858,6 +1858,7 @@ Func_3f_4e7b:
 Label_3f_4e89:
 	ld [$cb38], a ; $4e89
 	ret ; $4e8c
+Func_3f_4e8d:
 	ldh a, [hWramBank] ; $4e8d
 	push af ; $4e8f
 	push af ; $4e90

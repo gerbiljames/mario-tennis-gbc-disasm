@@ -1496,7 +1496,7 @@ Label_14_5303:
 	ld a, $88 ; $5317
 	ld [$c2b1], a ; $5319
 	ld a, $01 ; $531c
-	ld hl, $5e9c ; $531e
+	ld hl, Func_14_5e9c ; $531e
 	call RegisterFrameTask ; $5321
 	test_flag $05, 7 ; $5324
 	jp z, Label_14_5352 ; $5327
@@ -1680,7 +1680,7 @@ Label_14_54df:
 	ld a, $00 ; $54f2
 	ld [$c2be], a ; $54f4
 	ld a, $01 ; $54f7
-	ld hl, $60c4 ; $54f9
+	ld hl, Func_14_60c4 ; $54f9
 	call RegisterFrameTask ; $54fc
 	script_wait_frames $0a ; $54ff
 	ld a, $50 ; $5506
@@ -1694,7 +1694,7 @@ Label_14_54df:
 	ld a, $00 ; $5519
 	ld [$c2bf], a ; $551b
 	ld a, $01 ; $551e
-	ld hl, $617e ; $5520
+	ld hl, Func_14_617e ; $5520
 	call RegisterFrameTask ; $5523
 	script_wait_frames $50 ; $5526
 	script_set_position $03, $0600, $2900 ; $552d
@@ -1933,6 +1933,7 @@ LoadWaterSpriteObjGfx:
 	pop af ; $5e96
 	wram_bank ; $5e97
 	ret ; $5e9b
+Func_14_5e9c:
 	call GetWaterSpriteScreenPos ; $5e9c
 	ld b, $00 ; $5e9f
 	ld a, [$c2b1] ; $5ea1
@@ -1979,6 +1980,7 @@ Func_14_60a1:
 	pop af ; $60be
 	wram_bank ; $60bf
 	ret ; $60c3
+Func_14_60c4:
 	ldh a, [hScrollX] ; $60c4
 	ld b, a ; $60c6
 	ld a, [$c2b2] ; $60c7
@@ -2077,6 +2079,7 @@ Func_14_616b:
 	ld [wWaterSpriteMinigameTimer], a ; $617a
 Label_14_617d:
 	ret ; $617d
+Func_14_617e:
 	ldh a, [hScrollX] ; $617e
 	ld b, a ; $6180
 	ld a, [$c2b3] ; $6181
@@ -2189,6 +2192,7 @@ LoadWaterSpriteObjGfx2:
 	pop af ; $6255
 	wram_bank ; $6256
 	ret ; $625a
+Func_14_625b:
 	call GetWaterSpriteScreenPos ; $625b
 	ld b, $10 ; $625e
 	ld a, [$c2b2] ; $6260
@@ -2225,7 +2229,7 @@ Label_14_628b:
 	ld a, $00 ; $62a1
 	ld [$c2b2], a ; $62a3
 	ld a, $01 ; $62a6
-	ld hl, $625b ; $62a8
+	ld hl, Func_14_625b ; $62a8
 	call RegisterFrameTask ; $62ab
 	script_set_active ACTOR_PLAYER, $00 ; $62ae
 	script_set_active $03, $00 ; $62b5
@@ -2382,6 +2386,7 @@ Func_14_6427:
 	pop af ; $6444
 	wram_bank ; $6445
 	ret ; $6449
+Func_14_644a:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $644a
 	cp a, $04 ; $644d
 	jp nc, Label_14_64bd ; $644f
@@ -2502,7 +2507,7 @@ Label_14_650b:
 	ld a, $1e ; $656e
 	ld [$c2b8], a ; $6570
 	ld a, $01 ; $6573
-	ld hl, $644a ; $6575
+	ld hl, Func_14_644a ; $6575
 	call RegisterFrameTask ; $6578
 	script_wait_frames $50 ; $657b
 	ld a, $48 ; $6582
@@ -2614,14 +2619,14 @@ Label_14_6f7b:
 	ld a, $88 ; $6f8c
 	ld [$c2b1], a ; $6f8e
 	ld a, $01 ; $6f91
-	ld hl, $5e9c ; $6f93
+	ld hl, Func_14_5e9c ; $6f93
 	call RegisterFrameTask ; $6f96
 	ld a, $00 ; $6f99
 	ld [wWaterSpriteMinigameFlag], a ; $6f9b
 	ld [$c2bb], a ; $6f9e
 	ld [$c2be], a ; $6fa1
 	ld a, $01 ; $6fa4
-	ld hl, $73d8 ; $6fa6
+	ld hl, Func_14_73d8 ; $6fa6
 	call RegisterFrameTask ; $6fa9
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $6fac
 	test_flag $05, 7 ; $6fb7
@@ -2717,7 +2722,7 @@ Label_14_7090:
 	ld a, $a8 ; $70af
 	ld [$c2b1], a ; $70b1
 	ld a, $01 ; $70b4
-	ld hl, $755c ; $70b6
+	ld hl, Func_14_755c ; $70b6
 	call RegisterFrameTask ; $70b9
 	ld h, $50 ; $70bc
 Label_14_70be:
@@ -2838,6 +2843,7 @@ Func_14_73aa:
 	pop af ; $73d2
 	wram_bank ; $73d3
 	ret ; $73d7
+Func_14_73d8:
 	ldh a, [hScrollX] ; $73d8
 	ld b, a ; $73da
 	ld a, $40 ; $73db
@@ -2907,6 +2913,7 @@ Func_14_7539:
 	pop af ; $7556
 	wram_bank ; $7557
 	ret ; $755b
+Func_14_755c:
 	call GetWaterSpriteScreenPos ; $755c
 	ld a, [wWaterSpriteMinigameSwingCount] ; $755f
 	ld c, a ; $7562
@@ -2942,6 +2949,7 @@ Func_14_7688:
 	pop af ; $76a5
 	wram_bank ; $76a6
 	ret ; $76aa
+Func_14_76ab:
 	ldh a, [hScrollX] ; $76ab
 	ld b, a ; $76ad
 	ld a, $54 ; $76ae
@@ -2967,7 +2975,7 @@ Label_14_76c6:
 	ld [wWaterSpriteMinigameFlag], a ; $76d4
 	ld [$c2bb], a ; $76d7
 	ld a, $01 ; $76da
-	ld hl, $73d8 ; $76dc
+	ld hl, Func_14_73d8 ; $76dc
 	call RegisterFrameTask ; $76df
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $76e2
 	test_flag $05, 7 ; $76ed
@@ -2990,7 +2998,7 @@ Label_14_7703:
 	ld a, $58 ; $772d
 	ld [$c2b1], a ; $772f
 	ld a, $01 ; $7732
-	ld hl, $755c ; $7734
+	ld hl, Func_14_755c ; $7734
 	call RegisterFrameTask ; $7737
 	ld h, $4b ; $773a
 Label_14_773c:
@@ -3028,7 +3036,7 @@ Label_14_7779:
 	ld a, $3c ; $7793
 	ld [$c2b2], a ; $7795
 	ld a, $01 ; $7798
-	ld hl, $625b ; $779a
+	ld hl, Func_14_625b ; $779a
 	call RegisterFrameTask ; $779d
 	ld h, $20 ; $77a0
 Label_14_77a2:
@@ -3124,7 +3132,7 @@ Func_14_787b:
 	ld [wWaterSpriteMinigameSwingCount], a ; $787c
 	call AdvanceFrame ; $787f
 	ld a, $01 ; $7882
-	ld hl, $76ab ; $7884
+	ld hl, Func_14_76ab ; $7884
 	call RegisterFrameTask ; $7887
 	sound $84 ; $788a
 	ld h, $04 ; $788c

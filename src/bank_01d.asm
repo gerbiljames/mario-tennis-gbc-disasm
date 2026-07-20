@@ -62,13 +62,13 @@ ShowCharDataScreen:
 	call EnableLCD ; $407a
 	call AdvanceFrame ; $407d
 	ld a, $01 ; $4080
-	ld hl, $40cc ; $4082
+	ld hl, Func_1d_40cc ; $4082
 	call RegisterFrameTask ; $4085
 	ld a, $01 ; $4088
-	ld hl, $4c04 ; $408a
+	ld hl, Func_1d_4c04 ; $408a
 	call RegisterFrameTask ; $408d
 	ld a, $01 ; $4090
-	ld hl, $48c7 ; $4092
+	ld hl, CharDataValuesSyncTask ; $4092
 	call RegisterFrameTask ; $4095
 	farcall FarPtr_StartCharDataScreenAnimTask ; $4098
 	script_fade_in $10 ; $409b
@@ -88,6 +88,7 @@ ShowCharDataScreen:
 	farcall FarPtr_StopCharDataScreenAnimTask ; $40c5
 	call ClearFrameTasks ; $40c8
 	ret ; $40cb
+Func_1d_40cc:
 	farcall FarPtr_TickMenuBgScroll ; $40cc
 	ret ; $40cf
 InitDrillWorkRam:
@@ -1413,6 +1414,7 @@ Label_1d_4be8:
 	inc hl ; $4c00
 	inc hl ; $4c01
 	jr Func_1d_4bb6 ; $4c02
+Func_1d_4c04:
 	wram_bank $06 ; $4c04
 	ld a, [$d143] ; $4c0a
 	or a, a ; $4c0d
@@ -1520,10 +1522,10 @@ Label_1d_4cd9:
 	ld hl, $4e76 ; $4ce1
 	call UnregisterFrameTask ; $4ce4
 	ld a, $01 ; $4ce7
-	ld hl, $4e5e ; $4ce9
+	ld hl, Func_1d_4e5e ; $4ce9
 	call RegisterFrameTask ; $4cec
 	ld a, $01 ; $4cef
-	ld hl, $57d2 ; $4cf1
+	ld hl, Func_1d_57d2 ; $4cf1
 	call RegisterFrameTask ; $4cf4
 	wram_bank $06 ; $4cf7
 	ld a, [$d12f] ; $4cfd
@@ -1553,10 +1555,10 @@ Label_1d_4d3a:
 	ld hl, $4e76 ; $4d42
 	call UnregisterFrameTask ; $4d45
 	ld a, $01 ; $4d48
-	ld hl, $4e5e ; $4d4a
+	ld hl, Func_1d_4e5e ; $4d4a
 	call RegisterFrameTask ; $4d4d
 	ld a, $01 ; $4d50
-	ld hl, $57d2 ; $4d52
+	ld hl, Func_1d_57d2 ; $4d52
 	call RegisterFrameTask ; $4d55
 	wram_bank $06 ; $4d58
 	ld a, [$d122] ; $4d5e
@@ -1600,7 +1602,7 @@ Label_1d_4db3:
 	ld hl, $4e76 ; $4db5
 	call UnregisterFrameTask ; $4db8
 	ld a, $01 ; $4dbb
-	ld hl, $4e5e ; $4dbd
+	ld hl, Func_1d_4e5e ; $4dbd
 	call RegisterFrameTask ; $4dc0
 	call Func_1d_5268 ; $4dc3
 	wram_bank $06 ; $4dc6
@@ -1608,16 +1610,16 @@ Label_1d_4db3:
 	ld [$d142], a ; $4dcd
 	call ClearFrameTasks ; $4dd0
 	ld a, $01 ; $4dd3
-	ld hl, $40cc ; $4dd5
+	ld hl, Func_1d_40cc ; $4dd5
 	call RegisterFrameTask ; $4dd8
 	ld a, $01 ; $4ddb
 	ld hl, $4e76 ; $4ddd
 	call RegisterFrameTask ; $4de0
 	ld a, $01 ; $4de3
-	ld hl, $4c04 ; $4de5
+	ld hl, Func_1d_4c04 ; $4de5
 	call RegisterFrameTask ; $4de8
 	ld a, $01 ; $4deb
-	ld hl, $48c7 ; $4ded
+	ld hl, CharDataValuesSyncTask ; $4ded
 	call RegisterFrameTask ; $4df0
 	farcall FarPtr_StartCharDataScreenAnimTask ; $4df3
 	jp Label_1d_4cbf ; $4df6
@@ -1642,7 +1644,7 @@ Label_1d_4e12:
 	ld hl, $4e76 ; $4e14
 	call UnregisterFrameTask ; $4e17
 	ld a, $01 ; $4e1a
-	ld hl, $4e5e ; $4e1c
+	ld hl, Func_1d_4e5e ; $4e1c
 	call RegisterFrameTask ; $4e1f
 	call Func_1d_5603 ; $4e22
 	wram_bank $06 ; $4e25
@@ -1650,16 +1652,16 @@ Label_1d_4e12:
 	ld [$d142], a ; $4e2c
 	call ClearFrameTasks ; $4e2f
 	ld a, $01 ; $4e32
-	ld hl, $40cc ; $4e34
+	ld hl, Func_1d_40cc ; $4e34
 	call RegisterFrameTask ; $4e37
 	ld a, $01 ; $4e3a
 	ld hl, $4e76 ; $4e3c
 	call RegisterFrameTask ; $4e3f
 	ld a, $01 ; $4e42
-	ld hl, $4c04 ; $4e44
+	ld hl, Func_1d_4c04 ; $4e44
 	call RegisterFrameTask ; $4e47
 	ld a, $01 ; $4e4a
-	ld hl, $48c7 ; $4e4c
+	ld hl, CharDataValuesSyncTask ; $4e4c
 	call RegisterFrameTask ; $4e4f
 	farcall FarPtr_StartCharDataScreenAnimTask ; $4e52
 	jp Label_1d_4cbf ; $4e55
@@ -1669,6 +1671,7 @@ Label_1d_4e58:
 Label_1d_4e5b:
 	sound $5f ; $4e5b
 	ret ; $4e5d
+Func_1d_4e5e:
 	wram_bank $06 ; $4e5e
 	ld a, [$d143] ; $4e64
 	add a, $04 ; $4e67
@@ -2705,6 +2708,7 @@ Func_1d_5603:
 	ld [hl+], a ; $57cf
 	ld [hl], a ; $57d0
 	ret ; $57d1
+Func_1d_57d2:
 	wram_bank $06 ; $57d2
 	ld b, $0f ; $57d8
 	ld a, [$d00a] ; $57da
@@ -3243,7 +3247,7 @@ Func_1d_5c0b:
 	ret ; $5c14
 StartCharDataValuesSyncTask:
 	ld a, $01 ; $5c15
-	ld hl, $48c7 ; $5c17
+	ld hl, CharDataValuesSyncTask ; $5c17
 	call RegisterFrameTask ; $5c1a
 	ret ; $5c1d
 StopCharDataValuesSyncTask:
@@ -3374,16 +3378,16 @@ Func_1d_68a3:
 	call EnableLCD ; $68ce
 	call AdvanceFrame ; $68d1
 	ld a, $04 ; $68d4
-	ld hl, $7727 ; $68d6
+	ld hl, Func_1d_7727 ; $68d6
 	call RegisterFrameTask ; $68d9
 	ld a, $04 ; $68dc
-	ld hl, $7760 ; $68de
+	ld hl, Func_1d_7760 ; $68de
 	call RegisterFrameTask ; $68e1
 	ld a, $01 ; $68e4
-	ld hl, $7789 ; $68e6
+	ld hl, Func_1d_7789 ; $68e6
 	call RegisterFrameTask ; $68e9
 	ld a, $08 ; $68ec
-	ld hl, $765e ; $68ee
+	ld hl, Func_1d_765e ; $68ee
 	call RegisterFrameTask ; $68f1
 	xor a, a ; $68f4
 	ld [$cb00], a ; $68f5
@@ -4269,7 +4273,7 @@ Label_1d_6fc7:
 	ld hl, $70e6 ; $6fdd
 	call UnregisterFrameTask ; $6fe0
 	ld a, $01 ; $6fe3
-	ld hl, $70cc ; $6fe5
+	ld hl, Func_1d_70cc ; $6fe5
 	call RegisterFrameTask ; $6fe8
 	ld hl, $d17f ; $6feb
 	set 0, [hl] ; $6fee
@@ -4286,7 +4290,7 @@ Label_1d_6ff3:
 	ld hl, $70cc ; $700a
 	call UnregisterFrameTask ; $700d
 	ld a, $01 ; $7010
-	ld hl, $70e6 ; $7012
+	ld hl, Func_1d_70e6 ; $7012
 	call RegisterFrameTask ; $7015
 	ld hl, $d17f ; $7018
 	set 0, [hl] ; $701b
@@ -4363,6 +4367,7 @@ Label_1d_70b9:
 Label_1d_70c6:
 	call Func_1d_7133 ; $70c6
 	jp Func_1d_6f3e ; $70c9
+Func_1d_70cc:
 	wram_bank $06 ; $70cc
 	ld a, [$d180] ; $70d2
 	dec a ; $70d5
@@ -4373,6 +4378,7 @@ Label_1d_70c6:
 	ld hl, $70cc ; $70df
 	call UnregisterFrameTask ; $70e2
 	ret ; $70e5
+Func_1d_70e6:
 	wram_bank $06 ; $70e6
 	ld a, [$d180] ; $70ec
 	inc a ; $70ef
@@ -5094,6 +5100,7 @@ Label_1d_7642:
 	inc hl ; $765a
 	inc hl ; $765b
 	jr Func_1d_7610 ; $765c
+Func_1d_765e:
 	wram_bank $06 ; $765e
 	ld a, [$d17f] ; $7664
 	bit 0, a ; $7667
@@ -5182,6 +5189,7 @@ Func_1d_771e:
 	ld c, a ; $7723
 	ld b, $0e ; $7724
 	ret ; $7726
+Func_1d_7727:
 	wram_bank $06 ; $7727
 	ld a, [$d180] ; $772d
 	add a, $46 ; $7730
@@ -5198,6 +5206,7 @@ Func_1d_771e:
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
 	INCBIN "data/bank_01d/d_7746.bin" ; $7746, 26 bytes
+Func_1d_7760:
 	wram_bank $06 ; $7760
 	ld de, $3801 ; $7766
 	ld a, [$d164] ; $7769
@@ -5214,6 +5223,7 @@ Func_1d_771e:
 	ld bc, $0f0c ; $7782
 	call QueueSpriteTemplate ; $7785
 	ret ; $7788
+Func_1d_7789:
 	ld e, $01 ; $7789
 	ld a, [$cb00] ; $778b
 	or a, a ; $778e

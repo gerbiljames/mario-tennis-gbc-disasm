@@ -796,7 +796,7 @@ RunMatchTypeMenu:
 	farcall FarPtr_01_0a ; $448c
 	call Func_38_460f ; $448f
 	ld a, $01 ; $4492
-	ld hl, $458d ; $4494
+	ld hl, Func_38_458d ; $4494
 	call RegisterFrameTask ; $4497
 	ld a, $01 ; $449a
 	ld hl, $4408 ; $449c
@@ -845,7 +845,7 @@ RunMatchTypeMenuLink:
 	call DisableLCDSafely ; $44f7
 	call Func_38_460f ; $44fa
 	ld a, $01 ; $44fd
-	ld hl, $458d ; $44ff
+	ld hl, Func_38_458d ; $44ff
 	call RegisterFrameTask ; $4502
 	ld a, $01 ; $4505
 	ld hl, $4408 ; $4507
@@ -915,6 +915,7 @@ Label_38_456e:
 	call ClearFrameTasks ; $4587
 	ld a, $ff ; $458a
 	ret ; $458c
+Func_38_458d:
 	ld a, [wMatchFormatDoubles] ; $458d
 	add a, a ; $4590
 	ld hl, $45ff ; $4591
@@ -1172,10 +1173,10 @@ Func_38_47c7:
 	ld hl, $4408 ; $4829
 	call RegisterFrameTask ; $482c
 	ld a, $01 ; $482f
-	ld hl, $4bac ; $4831
+	ld hl, Func_38_4bac ; $4831
 	call RegisterFrameTask ; $4834
 	ld a, $01 ; $4837
-	ld hl, $4e23 ; $4839
+	ld hl, Func_38_4e23 ; $4839
 	call RegisterFrameTask ; $483c
 	call EnableLCD ; $483f
 	script_fade_in $08 ; $4842
@@ -1183,7 +1184,7 @@ Func_38_47c7:
 	ld hl, rIE ; $484a
 	res 2, [hl] ; $484d
 	ld a, $01 ; $484f
-	ld hl, $4e52 ; $4851
+	ld hl, Func_38_4e52 ; $4851
 	call RegisterFrameTask ; $4854
 Label_38_4857:
 	ldh a, [hInputPressed] ; $4857
@@ -1786,6 +1787,7 @@ Label_38_4e1d:
 	ld b, [hl] ; $4e1d
 	ret ; $4e1e
 	INCBIN "data/bank_038/d_4e1f.bin" ; $4e1f, 4 bytes
+Func_38_4e23:
 	ld c, $02 ; $4e23
 	call GetMenuCursorLinearIndex ; $4e25
 	add a, a ; $4e28
@@ -1809,6 +1811,7 @@ Label_38_4e44:
 	call QueueSprite ; $4e46
 	ret ; $4e49
 	INCBIN "data/bank_038/d_4e4a.bin" ; $4e4a, 8 bytes
+Func_38_4e52:
 	farcall FarPtr_TickMenuBgScroll ; $4e52
 	ret ; $4e55
 	ldh a, [hWramBank] ; $4e56
@@ -1839,7 +1842,7 @@ Func_38_4e65:
 	ld hl, rIE ; $4e9a
 	res 2, [hl] ; $4e9d
 	ld a, $01 ; $4e9f
-	ld hl, $4e52 ; $4ea1
+	ld hl, Func_38_4e52 ; $4ea1
 	call RegisterFrameTask ; $4ea4
 	call Func_38_575e ; $4ea7
 Label_38_4eaa:
@@ -4778,7 +4781,7 @@ Label_38_63fd:
 	ld [$d838], a ; $6457
 	ld [$cb72], a ; $645a
 	ld a, $01 ; $645d
-	ld hl, $4e52 ; $645f
+	ld hl, Func_38_4e52 ; $645f
 	call RegisterFrameTask ; $6462
 	wram_bank $03 ; $6465
 	call Func_38_575e ; $646b
@@ -6234,10 +6237,10 @@ RunNameEntryScreen:
 	ld hl, $4408 ; $6e2d
 	call RegisterFrameTask ; $6e30
 	ld a, $01 ; $6e33
-	ld hl, $7090 ; $6e35
+	ld hl, Func_38_7090 ; $6e35
 	call RegisterFrameTask ; $6e38
 	ld a, $01 ; $6e3b
-	ld hl, $7385 ; $6e3d
+	ld hl, Func_38_7385 ; $6e3d
 	call RegisterFrameTask ; $6e40
 	call EnableLCD ; $6e43
 	script_fade_in $10 ; $6e46
@@ -6245,7 +6248,7 @@ RunNameEntryScreen:
 	ld hl, rIE ; $6e4e
 	res 2, [hl] ; $6e51
 	ld a, $01 ; $6e53
-	ld hl, $4e52 ; $6e55
+	ld hl, Func_38_4e52 ; $6e55
 	call RegisterFrameTask ; $6e58
 Label_38_6e5b:
 	ld a, [wMenuCursorX] ; $6e5b
@@ -6487,6 +6490,7 @@ Label_38_708c:
 	call Func_38_725b ; $708c
 Label_38_708f:
 	ret ; $708f
+Func_38_7090:
 	ld c, $0f ; $7090
 	call GetMenuCursorLinearIndex ; $7092
 	add a, a ; $7095
@@ -6740,6 +6744,7 @@ IsNameBufferFull:
 Label_38_7383:
 	xor a, a ; $7383
 	ret ; $7384
+Func_38_7385:
 	ld c, $00 ; $7385
 	ld de, $3c38 ; $7387
 	call GetEnteredNameLength ; $738a

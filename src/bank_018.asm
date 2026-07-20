@@ -766,9 +766,10 @@ Func_18_537a:
 	ld de, $d90b ; $53a4
 	call Func_18_5586 ; $53a7
 	ld a, $0a ; $53aa
-	ld hl, $53b3 ; $53ac
+	ld hl, Func_18_53b3 ; $53ac
 	call RegisterFrameTask ; $53af
 	ret ; $53b2
+Func_18_53b3:
 	ld a, [$c78a] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
@@ -1396,7 +1397,7 @@ Label_18_76ec:
 	script_fade_in $10 ; $7706
 	call WaitFadeEnd ; $770b
 	ld a, $01 ; $770e
-	ld hl, $775c ; $7710
+	ld hl, Func_18_775c ; $7710
 	call RegisterFrameTask ; $7713
 Label_18_7716:
 	call AdvanceFrame ; $7716
@@ -1431,6 +1432,7 @@ Func_18_7740:
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
 	INCBIN "data/bank_018/d_7754.bin" ; $7754, 8 bytes
+Func_18_775c:
 	ld hl, SpriteTemplate_18_776a ; $775c
 	ld de, $283a ; $775f
 	ld c, $00 ; $7762
@@ -1464,10 +1466,10 @@ Func_18_77bb:
 	call Func_18_7835 ; $77bb
 	call Func_18_7bce ; $77be
 	ld a, $01 ; $77c1
-	ld hl, $7b36 ; $77c3
+	ld hl, TaskDrawObjectSprites_18 ; $77c3
 	call RegisterFrameTask ; $77c6
 	ld a, $01 ; $77c9
-	ld hl, $7b6e ; $77cb
+	ld hl, TaskUpdateObjects_18 ; $77cb
 	call RegisterFrameTask ; $77ce
 	sound $2c ; $77d1
 	call EnableLCD ; $77d3
@@ -1496,7 +1498,7 @@ Label_18_77e8:
 	call Func_18_78b1 ; $7810
 	call FillAllBgPalettes ; $7813
 	ld a, $01 ; $7816
-	ld hl, $78cd ; $7818
+	ld hl, Func_18_78cd ; $7818
 	call RegisterFrameTask ; $781b
 	call EnableLCD ; $781e
 	script_fade_in $40 ; $7821
@@ -1566,6 +1568,7 @@ Func_18_78b1:
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 8 bytes
+Func_18_78cd:
 	ld hl, SpriteTemplate_18_78db ; $78cd
 	ld de, $283a ; $78d0
 	ld c, $00 ; $78d3
@@ -1603,10 +1606,10 @@ Func_18_792c:
 	farcall FarPtr_QueueWram3MapToVRAM ; $7937
 	call Func_18_7d03 ; $793a
 	ld a, $01 ; $793d
-	ld hl, $7b36 ; $793f
+	ld hl, TaskDrawObjectSprites_18 ; $793f
 	call RegisterFrameTask ; $7942
 	ld a, $01 ; $7945
-	ld hl, $7b6e ; $7947
+	ld hl, TaskUpdateObjects_18 ; $7947
 	call RegisterFrameTask ; $794a
 	call EnableLCD ; $794d
 	script_fade_in $01 ; $7950
@@ -1659,10 +1662,10 @@ Label_18_79be:
 	cp a, $b4 ; $79c8
 	jr nz, Label_18_79be ; $79ca
 	ld a, $01 ; $79cc
-	ld hl, $7a81 ; $79ce
+	ld hl, TaskFadeInPalette_18 ; $79ce
 	call RegisterFrameTask ; $79d1
 	ld a, $01 ; $79d4
-	ld hl, $7a49 ; $79d6
+	ld hl, Func_18_7a49 ; $79d6
 	call RegisterFrameTask ; $79d9
 	sound $2d ; $79dc
 Label_18_79de:
@@ -1716,6 +1719,7 @@ Func_18_7a2d:
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 8 bytes
+Func_18_7a49:
 	ld hl, SpriteTemplate_18_7a57 ; $7a49
 	ld de, $2840 ; $7a4c
 	ld c, $00 ; $7a4f

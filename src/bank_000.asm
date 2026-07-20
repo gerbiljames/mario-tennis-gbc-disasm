@@ -7287,10 +7287,11 @@ EnableTimerInterrupt:
 	xor a, a ; $2a46
 	ld [$c3a6], a ; $2a47
 	ld a, $05 ; $2a4a
-	ld hl, $2a54 ; $2a4c
+	ld hl, Func_00_2a54 ; $2a4c
 	call RegisterFrameTask ; $2a4f
 	pop af ; $2a52
 	ret ; $2a53
+Func_00_2a54:
 	push af ; $2a54
 	push bc ; $2a55
 	push de ; $2a56
