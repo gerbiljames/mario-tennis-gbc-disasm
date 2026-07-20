@@ -44,9 +44,9 @@ Label_06_4046:
 	ld a, [wMatchMenuSelection] ; $4052
 	cp a, $ff ; $4055
 	jr z, Label_06_4046 ; $4057
-	ld hl, $506a ; $4059
+	ld hl, Func_06_506a ; $4059
 	call UnregisterFrameTask ; $405c
-	ld hl, $69c8 ; $405f
+	ld hl, Func_06_69c8 ; $405f
 	call UnregisterFrameTask ; $4062
 	call RestoreBgTilemap ; $4065
 	call FlushTilemapToVram ; $4068
@@ -111,9 +111,9 @@ Label_06_40c6:
 	and a, a ; $40ec
 	jr z, Label_06_40a7 ; $40ed
 Label_06_40ef:
-	ld hl, $506a ; $40ef
+	ld hl, Func_06_506a ; $40ef
 	call UnregisterFrameTask ; $40f2
-	ld hl, $69c8 ; $40f5
+	ld hl, Func_06_69c8 ; $40f5
 	call UnregisterFrameTask ; $40f8
 	call RestoreBgTilemap ; $40fb
 	call FlushTilemapToVram ; $40fe
@@ -125,7 +125,7 @@ Label_06_40ef:
 	wram_bank ; $410b
 	ret ; $410f
 MatchPauseMenu_CheckRules:
-	ld hl, $506a ; $4110
+	ld hl, Func_06_506a ; $4110
 	call UnregisterFrameTask ; $4113
 	call RestoreBgTilemap ; $4116
 	ld hl, $412f ; $4119
@@ -415,7 +415,7 @@ Label_06_435d:
 	and a, $03 ; $4363
 	jr z, Label_06_435d ; $4365
 	sound $5f ; $4367
-	ld hl, $4373 ; $4369
+	ld hl, Func_06_4373 ; $4369
 	call UnregisterFrameTask ; $436c
 	pop hl ; $436f
 	jr ShowRulesPageSequence ; $4370
@@ -428,7 +428,7 @@ Func_06_4373:
 	call QueueSprite16 ; $437c
 	ret ; $437f
 MatchPauseMenu_ReviewControls:
-	ld hl, $506a ; $4380
+	ld hl, Func_06_506a ; $4380
 	call UnregisterFrameTask ; $4383
 	call RestoreBgTilemap ; $4386
 	ld de, $0002 ; $4389
@@ -1159,9 +1159,9 @@ Label_06_48ee:
 	farcall FarPtr_StepMatchFrame ; $48f5
 	jr Label_06_48ee ; $48f8
 Label_06_48fa:
-	ld hl, $506a ; $48fa
+	ld hl, Func_06_506a ; $48fa
 	call UnregisterFrameTask ; $48fd
-	ld hl, $69c8 ; $4900
+	ld hl, Func_06_69c8 ; $4900
 	call UnregisterFrameTask ; $4903
 	call RestoreBgTilemap ; $4906
 	call FlushTilemapToVram ; $4909

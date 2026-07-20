@@ -305,7 +305,7 @@ AcademyCourtsTourCutscene:
 	call RegisterFrameTask ; $45a3
 	script_set_text Text_31_48 ; $45a6
 	script_speak $06 ; $45ac
-	ld hl, $4d0a ; $45b1
+	ld hl, Func_13_4d0a ; $45b1
 	call UnregisterFrameTask ; $45b4
 	script_move_player $3200, $1300 ; $45b7
 	farcall FarPtr_WaitPlayerMoveDone ; $45c1
@@ -330,7 +330,7 @@ AcademyCourtsTourCutscene:
 	ld hl, Func_13_4d0a ; $4627
 	call RegisterFrameTask ; $462a
 	script_speak $06 ; $462d
-	ld hl, $4d0a ; $4632
+	ld hl, Func_13_4d0a ; $4632
 	call UnregisterFrameTask ; $4635
 	script_move_player $3200, $0d00 ; $4638
 	farcall FarPtr_WaitPlayerMoveDone ; $4642

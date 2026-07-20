@@ -734,7 +734,9 @@ Label_1b_4426:
 	pop af ; $442a
 	wram_bank ; $442b
 	ret ; $442f
-	INCBIN "data/bank_01b/d_4430.bin" ; $4430, 4 bytes
+Func_1b_4430:
+	farcall FarPtr_39_04 ; $4430
+	ret ; $4433
 DrawNameWithDiacritics:
 	push af ; $4434
 	push bc ; $4435
@@ -1022,13 +1024,13 @@ Label_1b_4f4f:
 	ld de, $0806 ; $4f55
 	call LoadPaletteShadow ; $4f58
 	ld a, $01 ; $4f5b
-	ld hl, $5a45 ; $4f5d
+	ld hl, Func_1b_5a45 ; $4f5d
 	call RegisterFrameTask ; $4f60
 	ld a, [$d802] ; $4f63
 	cp a, $02 ; $4f66
 	jr nz, Label_1b_4f72 ; $4f68
 	ld a, $01 ; $4f6a
-	ld hl, $5a04 ; $4f6c
+	ld hl, Func_1b_5a04 ; $4f6c
 	call RegisterFrameTask ; $4f6f
 Label_1b_4f72:
 	farcall FarPtr_QueueWram3MapToVRAM ; $4f72
@@ -2220,7 +2222,117 @@ Func_1b_58c5:
 	ret ; $5910
 	ret ; $5911
 RankingBoardAnimTask_1b:
-	INCBIN "data/bank_01b/d_5912.bin" ; $5912, 348 bytes
+	ld a, [$d855] ; $5912
+	or a, a ; $5915
+	jr nz, Label_1b_591d ; $5916
+	ld a, $a0 ; $5918
+	ld [$d856], a ; $591a
+Label_1b_591d:
+	ld a, [$d855] ; $591d
+	ld hl, $597b ; $5920
+	add a, l ; $5923
+	ld l, a ; $5924
+	jr nc, Label_1b_5928 ; $5925
+	inc h ; $5927
+Label_1b_5928:
+	ld b, [hl] ; $5928
+	ld a, [$d856] ; $5929
+	add a, b ; $592c
+	ld [$d856], a ; $592d
+	ld hl, SpriteTemplate_1b_595a ; $5930
+	ld e, $40 ; $5933
+	ld a, [$d800] ; $5935
+	or a, a ; $5938
+	jr z, Label_1b_593d ; $5939
+	ld e, $50 ; $593b
+Label_1b_593d:
+	ld a, [$d856] ; $593d
+	ld d, a ; $5940
+	ld c, $10 ; $5941
+	ld b, $0c ; $5943
+	call QueueSpriteTemplate ; $5945
+	ld a, [$d855] ; $5948
+	inc a ; $594b
+	ld [$d855], a ; $594c
+	cp a, $87 ; $594f
+	jr nz, Label_1b_5959 ; $5951
+	ld hl, RankingBoardAnimTask_1b ; $5953
+	call UnregisterFrameTask ; $5956
+Label_1b_5959:
+	ret ; $5959
+SpriteTemplate_1b_595a:
+	; $595a, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+	INCBIN "data/bank_01b/d_597b.bin" ; $597b, 137 bytes
+Func_1b_5a04:
+	ld a, [$d855] ; $5a04
+	or a, a ; $5a07
+	jr nz, Label_1b_5a0a ; $5a08
+Label_1b_5a0a:
+	ld de, $3040 ; $5a0a
+	ld a, [$d800] ; $5a0d
+	or a, a ; $5a10
+	jr z, Label_1b_5a16 ; $5a11
+	ld de, $3050 ; $5a13
+Label_1b_5a16:
+	farcall FarPtr_ApplySpriteBobOffset ; $5a16
+	ld hl, SpriteTemplate_1b_5a24 ; $5a19
+	ld c, $20 ; $5a1c
+	ld b, $0d ; $5a1e
+	call QueueSpriteTemplate ; $5a20
+	ret ; $5a23
+SpriteTemplate_1b_5a24:
+	; $5a24, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+Func_1b_5a45:
+	ld c, $00 ; $5a45
+Label_1b_5a47:
+	call GetRankingMarkerSlot ; $5a47
+	ld a, [hl+] ; $5a4a
+	cp a, $ff ; $5a4b
+	jr z, Label_1b_5a57 ; $5a4d
+	ld b, a ; $5a4f
+	ld a, [hl+] ; $5a50
+	ld d, a ; $5a51
+	ld a, [hl+] ; $5a52
+	ld e, a ; $5a53
+	call Func_1b_5a5f ; $5a54
+Label_1b_5a57:
+	ld a, c ; $5a57
+	inc a ; $5a58
+	ld c, a ; $5a59
+	cp a, $0c ; $5a5a
+	jr nz, Label_1b_5a47 ; $5a5c
+	ret ; $5a5e
+Func_1b_5a5f:
+	push af ; $5a5f
+	push bc ; $5a60
+	ld a, b ; $5a61
+	add a, a ; $5a62
+	ld c, a ; $5a63
+	ld a, b ; $5a64
+	or a, $08 ; $5a65
+	ld b, a ; $5a67
+	call QueueSprite ; $5a68
+	pop bc ; $5a6b
+	pop af ; $5a6c
+	ret ; $5a6d
 Func_1b_5a6e:
 	ld b, h ; $5a6e
 	ld c, l ; $5a6f
@@ -2235,7 +2347,7 @@ Func_1b_5a6e:
 	xor a, a ; $5a7c
 	ld [wTextPageBreakRequest], a ; $5a7d
 	ld a, $01 ; $5a80
-	ld hl, $5ada ; $5a82
+	ld hl, Func_1b_5ada ; $5a82
 	call RegisterFrameTask ; $5a85
 	ret ; $5a88
 Func_1b_5a89:
@@ -2252,7 +2364,7 @@ Func_1b_5a89:
 	xor a, a ; $5a97
 	ld [$d851], a ; $5a98
 	ld a, $01 ; $5a9b
-	ld hl, $5b08 ; $5a9d
+	ld hl, Func_1b_5b08 ; $5a9d
 	call RegisterFrameTask ; $5aa0
 	ret ; $5aa3
 Func_1b_5aa4:
@@ -2269,7 +2381,7 @@ Func_1b_5aa4:
 	xor a, a ; $5ab2
 	ld [$d852], a ; $5ab3
 	ld a, $01 ; $5ab6
-	ld hl, $5b36 ; $5ab8
+	ld hl, Func_1b_5b36 ; $5ab8
 	call RegisterFrameTask ; $5abb
 	ret ; $5abe
 Func_1b_5abf:
@@ -2286,10 +2398,136 @@ Func_1b_5abf:
 	xor a, a ; $5acd
 	ld [$d853], a ; $5ace
 	ld a, $01 ; $5ad1
-	ld hl, $5b65 ; $5ad3
+	ld hl, Func_1b_5b65 ; $5ad3
 	call RegisterFrameTask ; $5ad6
 	ret ; $5ad9
-	INCBIN "data/bank_01b/d_5ada.bin" ; $5ada, 343 bytes
+Func_1b_5ada:
+	ld hl, $d848 ; $5ada
+	ld a, [hl+] ; $5add
+	ld d, [hl] ; $5ade
+	ld e, a ; $5adf
+	ld a, [wTextPageBreakRequest] ; $5ae0
+	ld h, $00 ; $5ae3
+	ld l, a ; $5ae5
+	add hl, de ; $5ae6
+	ld a, [hl] ; $5ae7
+	cp a, $40 ; $5ae8
+	jr z, Label_1b_5af9 ; $5aea
+	ld c, a ; $5aec
+	ld hl, $d840 ; $5aed
+	ld a, [hl+] ; $5af0
+	ld h, [hl] ; $5af1
+	ld l, a ; $5af2
+	inc hl ; $5af3
+	ld a, [hl] ; $5af4
+	add a, c ; $5af5
+	ld [hl], a ; $5af6
+	jr Label_1b_5b00 ; $5af7
+Label_1b_5af9:
+	ld hl, Func_1b_5ada ; $5af9
+	call UnregisterFrameTask ; $5afc
+	ret ; $5aff
+Label_1b_5b00:
+	ld a, [wTextPageBreakRequest] ; $5b00
+	inc a ; $5b03
+	ld [wTextPageBreakRequest], a ; $5b04
+	ret ; $5b07
+Func_1b_5b08:
+	ld hl, wTextArgStringCount ; $5b08
+	ld a, [hl+] ; $5b0b
+	ld d, [hl] ; $5b0c
+	ld e, a ; $5b0d
+	ld a, [$d851] ; $5b0e
+	ld h, $00 ; $5b11
+	ld l, a ; $5b13
+	add hl, de ; $5b14
+	ld a, [hl] ; $5b15
+	cp a, $40 ; $5b16
+	jr z, Label_1b_5b27 ; $5b18
+	ld c, a ; $5b1a
+	ld hl, $d842 ; $5b1b
+	ld a, [hl+] ; $5b1e
+	ld h, [hl] ; $5b1f
+	ld l, a ; $5b20
+	inc hl ; $5b21
+	ld a, [hl] ; $5b22
+	add a, c ; $5b23
+	ld [hl], a ; $5b24
+	jr Label_1b_5b2e ; $5b25
+Label_1b_5b27:
+	ld hl, Func_1b_5b08 ; $5b27
+	call UnregisterFrameTask ; $5b2a
+	ret ; $5b2d
+Label_1b_5b2e:
+	ld a, [$d851] ; $5b2e
+	inc a ; $5b31
+	ld [$d851], a ; $5b32
+	ret ; $5b35
+Func_1b_5b36:
+	ld hl, $d84c ; $5b36
+	ld a, [hl+] ; $5b39
+	ld d, [hl] ; $5b3a
+	ld e, a ; $5b3b
+	ld a, [$d852] ; $5b3c
+	ld h, $00 ; $5b3f
+	ld l, a ; $5b41
+	add hl, de ; $5b42
+	ld a, [hl] ; $5b43
+	cp a, $40 ; $5b44
+	jr z, Label_1b_5b56 ; $5b46
+	ld c, a ; $5b48
+	ld hl, $d844 ; $5b49
+	ld a, [hl+] ; $5b4c
+	ld h, [hl] ; $5b4d
+	ld l, a ; $5b4e
+	inc hl ; $5b4f
+	inc hl ; $5b50
+	ld a, [hl] ; $5b51
+	add a, c ; $5b52
+	ld [hl], a ; $5b53
+	jr Label_1b_5b5d ; $5b54
+Label_1b_5b56:
+	ld hl, Func_1b_5b36 ; $5b56
+	call UnregisterFrameTask ; $5b59
+	ret ; $5b5c
+Label_1b_5b5d:
+	ld a, [$d852] ; $5b5d
+	inc a ; $5b60
+	ld [$d852], a ; $5b61
+	ret ; $5b64
+Func_1b_5b65:
+	ld hl, $d84e ; $5b65
+	ld a, [hl+] ; $5b68
+	ld d, [hl] ; $5b69
+	ld e, a ; $5b6a
+	ld a, [$d853] ; $5b6b
+	ld h, $00 ; $5b6e
+	ld l, a ; $5b70
+	add hl, de ; $5b71
+	ld a, [hl] ; $5b72
+	cp a, $40 ; $5b73
+	jr z, Label_1b_5b85 ; $5b75
+	ld c, a ; $5b77
+	ld hl, $d846 ; $5b78
+	ld a, [hl+] ; $5b7b
+	ld h, [hl] ; $5b7c
+	ld l, a ; $5b7d
+	inc hl ; $5b7e
+	inc hl ; $5b7f
+	ld a, [hl] ; $5b80
+	add a, c ; $5b81
+	ld [hl], a ; $5b82
+	jr Label_1b_5b8c ; $5b83
+Label_1b_5b85:
+	ld hl, Func_1b_5b65 ; $5b85
+	call UnregisterFrameTask ; $5b88
+	ret ; $5b8b
+Label_1b_5b8c:
+	ld a, [$d853] ; $5b8c
+	inc a ; $5b8f
+	ld [$d853], a ; $5b90
+	ret ; $5b93
+	INCBIN "data/bank_01b/d_5b94.bin" ; $5b94, 157 bytes
 ClearRankingMarkerSlots:
 	ld hl, $d803 ; $5c31
 	ld bc, $0030 ; $5c34
@@ -3895,7 +4133,7 @@ Func_1b_6982:
 	ld b, $01 ; $69bf
 	farcall FarPtr_18_34 ; $69c1
 	push af ; $69c4
-	ld hl, $69d6 ; $69c5
+	ld hl, Func_1b_69d6 ; $69c5
 	call UnregisterFrameTask ; $69c8
 	pop af ; $69cb
 	ret ; $69cc
@@ -4671,7 +4909,7 @@ RunMinigameLevelSelect3:
 	call SetMenuCursorFromIndex ; $6fff
 	wram_bank $03 ; $7002
 	ld a, $01 ; $7008
-	ld hl, $70ed ; $700a
+	ld hl, Func_1b_70ed ; $700a
 	call RegisterFrameTask ; $700d
 	call RedrawMinigameLevelSelect3 ; $7010
 	wram_bank $03 ; $7013
@@ -4779,7 +5017,62 @@ Label_1b_70d7:
 	pop bc ; $70e4
 	pop af ; $70e5
 	ret ; $70e6
-	INCBIN "data/bank_01b/d_70e7.bin" ; $70e7, 118 bytes
+	INCBIN "data/bank_01b/d_70e7.bin" ; $70e7, 6 bytes
+Func_1b_70ed:
+	farcall FarPtr_TickMenuBgScroll ; $70ed
+	ld c, $03 ; $70f0
+	call GetMenuCursorIndex ; $70f2
+	push af ; $70f5
+	ld hl, $715a ; $70f6
+	add a, l ; $70f9
+	ld l, a ; $70fa
+	jr nc, Label_1b_70fe ; $70fb
+	inc h ; $70fd
+Label_1b_70fe:
+	ld c, [hl] ; $70fe
+	pop af ; $70ff
+	ld hl, $7154 ; $7100
+	add a, a ; $7103
+	add a, l ; $7104
+	ld l, a ; $7105
+	jr nc, Label_1b_7109 ; $7106
+	inc h ; $7108
+Label_1b_7109:
+	ld a, [hl+] ; $7109
+	ld d, [hl] ; $710a
+	ld e, a ; $710b
+	farcall FarPtr_ApplySpriteBobOffset ; $710c
+	ld b, $08 ; $710f
+	ld hl, SpriteTemplate_1b_712a ; $7111
+	push de ; $7114
+	call QueueSpriteTemplate ; $7115
+	pop de ; $7118
+	ld hl, $17f8 ; $7119
+	add hl, de ; $711c
+	ld d, h ; $711d
+	ld e, l ; $711e
+	ld hl, SpriteTemplate_1b_714b ; $711f
+	ld b, $08 ; $7122
+	ld c, $70 ; $7124
+	call QueueSpriteTemplate ; $7126
+	ret ; $7129
+SpriteTemplate_1b_712a:
+	; $712a, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+SpriteTemplate_1b_714b:
+	; $714b, 9 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite_end
+	INCBIN "data/bank_01b/d_7154.bin" ; $7154, 9 bytes
 RunSavedDataTypeSelect:
 	sound $03 ; $715d
 	ld hl, rIE ; $715f
@@ -5083,7 +5376,7 @@ ShowMinigameDataScreen:
 	ld a, $01 ; $73e5
 	ld [$cb0b], a ; $73e7
 	ld a, $01 ; $73ea
-	ld hl, $4430 ; $73ec
+	ld hl, Func_1b_4430 ; $73ec
 	call RegisterFrameTask ; $73ef
 	ld a, $01 ; $73f2
 	ld hl, Func_1b_76b9 ; $73f4

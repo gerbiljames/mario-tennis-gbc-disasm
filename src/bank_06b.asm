@@ -353,7 +353,7 @@ Palettes_6b_42b2:
 	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
-	ld hl, $526a ; $42f2
+	ld hl, Func_6b_526a ; $42f2
 	call UnregisterFrameTask ; $42f5
 	xor a, a ; $42f8
 	ld [wCutsceneStepTimer], a ; $42f9
@@ -462,7 +462,7 @@ Label_6b_43cc:
 	script_fade_in $7f ; $444a
 	call WaitFadeEnd ; $444f
 	jp Label_6b_407c ; $4452
-	ld hl, $52f9 ; $4455
+	ld hl, Func_6b_52f9 ; $4455
 	call UnregisterFrameTask ; $4458
 	xor a, a ; $445b
 	ld [wCutsceneStepTimer], a ; $445c
@@ -597,9 +597,9 @@ Label_6b_43cc:
 	call QueueVRAMCopy ; $45d6
 	pop af ; $45d9
 	wram_bank ; $45da
-	ld hl, $526a ; $45de
+	ld hl, Func_6b_526a ; $45de
 	call UnregisterFrameTask ; $45e1
-	ld hl, $53db ; $45e4
+	ld hl, Func_6b_53db ; $45e4
 	call UnregisterFrameTask ; $45e7
 	xor a, a ; $45ea
 	ldh [hScrollX], a ; $45eb
@@ -617,7 +617,7 @@ Label_6b_43cc:
 	call QueueVRAMCopy ; $460c
 	pop af ; $460f
 	wram_bank ; $4610
-	ld hl, $52f9 ; $4614
+	ld hl, Func_6b_52f9 ; $4614
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
 	jp Label_6b_40af ; $461d
@@ -774,7 +774,7 @@ Palettes_6b_475a:
 	ld c, $0a ; $47c4
 	call BeginFadeOut ; $47c6
 	call WaitFadeEnd ; $47c9
-	ld hl, $7366 ; $47cc
+	ld hl, Func_6b_7366 ; $47cc
 	call UnregisterFrameTask ; $47cf
 	xor a, a ; $47d2
 	ldh [hScrollX], a ; $47d3
@@ -804,7 +804,7 @@ Palettes_6b_475a:
 	ld c, $0a ; $4813
 	call BeginFadeOut ; $4815
 	call WaitFadeEnd ; $4818
-	ld hl, $7395 ; $481b
+	ld hl, Func_6b_7395 ; $481b
 	call UnregisterFrameTask ; $481e
 	xor a, a ; $4821
 	ldh [hScrollX], a ; $4822
@@ -834,7 +834,7 @@ Palettes_6b_475a:
 	ld c, $0a ; $4862
 	call BeginFadeOut ; $4864
 	call WaitFadeEnd ; $4867
-	ld hl, $73c4 ; $486a
+	ld hl, Func_6b_73c4 ; $486a
 	call UnregisterFrameTask ; $486d
 	xor a, a ; $4870
 	ldh [hScrollX], a ; $4871
@@ -1156,7 +1156,7 @@ Label_6b_4be3:
 	inc a ; $4be6
 	ld [wCutsceneStepTimer], a ; $4be7
 	jp Label_6b_407c ; $4bea
-	ld hl, $7569 ; $4bed
+	ld hl, Func_6b_7569 ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank $03 ; $4bf3
 	ld a, $00 ; $4bf9
@@ -1995,7 +1995,7 @@ Label_6b_72cf:
 	call LoadPalettesImmediate ; $72d2
 	ret ; $72d5
 Label_6b_72d6:
-	ld hl, $72af ; $72d6
+	ld hl, Func_6b_72af ; $72d6
 	call UnregisterFrameTask ; $72d9
 	ret ; $72dc
 Func_6b_72dd:
@@ -2031,7 +2031,7 @@ Label_6b_730d:
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
 Label_6b_7314:
-	ld hl, $72dd ; $7314
+	ld hl, Func_6b_72dd ; $7314
 	call UnregisterFrameTask ; $7317
 	ret ; $731a
 Func_6b_731b:
@@ -2075,7 +2075,7 @@ Label_6b_7358:
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e
 Label_6b_735f:
-	ld hl, $731b ; $735f
+	ld hl, Func_6b_731b ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365
 Func_6b_7366:

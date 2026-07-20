@@ -1866,10 +1866,10 @@ def build_labels(dis, overrides=None, data_tables=None):
     for target in map_script_code_targets(dis.rom, data_tables or {}):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
-    rft = next((int(k, 0) for k, n in (overrides or {}).items()
-                if n == "RegisterFrameTask"), None)
+    rft = {int(k, 0) for k, n in (overrides or {}).items()
+           if n in FRAME_TASK_PTR_CALLS}
     for target in frame_task_targets(dis, rft):
-        if target not in labels:
+        if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     # Name each carved sprite-template so the `ld hl` load sites resolve to it.
     for src in dis.sprite_templates:
@@ -1879,23 +1879,27 @@ def build_labels(dis, overrides=None, data_tables=None):
     return labels
 
 
-def frame_task_targets(dis, register_frame_task):
-    """Code targets of `ld hl, n16` immediately before `call RegisterFrameTask`
-    -- per-frame task functions installed into the task list and only ever
-    reached through the task dispatcher, so recursive descent never labels them.
-    Seeding them lets the 400-odd registration sites reference the task by name."""
-    if register_frame_task is None:
+# ROM0 helpers that take a task-function pointer in hl (`ld hl, fn; call ...`).
+FRAME_TASK_PTR_CALLS = ("RegisterFrameTask", "UnregisterFrameTask")
+
+
+def frame_task_targets(dis, call_targets):
+    """Code targets of `ld hl, n16` immediately before a `call` to a frame-task
+    helper (register/unregister) -- per-frame task functions reached only
+    through the task dispatcher, so recursive descent never labels them. Seeding
+    them lets the registration sites reference the task by name."""
+    if not call_targets:
         return
     rom = dis.rom
     for o, ins in dis.instrs.items():
         if rom[o] != 0x21 or o + 3 not in dis.instrs or rom[o + 3] != 0xCD:
             continue  # ld hl, n16 ; call nn
-        if target_to_offset(rom[o + 4] | (rom[o + 5] << 8), o + 3) != register_frame_task:
+        if target_to_offset(rom[o + 4] | (rom[o + 5] << 8), o + 3) not in call_targets:
             continue
         imm = rom[o + 1] | (rom[o + 2] << 8)
         b = (o // BANK_SIZE) * BANK_SIZE
         flat = imm if imm < 0x4000 else (b + imm - 0x4000 if b else None)
-        if flat is not None and flat in dis.instrs:
+        if flat is not None and 0 <= flat < len(rom):
             yield flat
 
 
@@ -3225,15 +3229,14 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
     # pointer (the task function), so resolve it to that function's label - the
     # 400-odd registration sites then read `ld hl, UpdateActors` instead of raw
     # hex. Gated on the following call so numeric constants aren't touched.
-    register_frame_task = next(
-        (o for o, n in labels.items() if n == "RegisterFrameTask"), None)
+    frame_task_calls = {o for o, n in labels.items() if n in FRAME_TASK_PTR_CALLS}
     frametask_ptr_sites = {}
-    if register_frame_task is not None:
+    if frame_task_calls:
         for o, ins in dis.instrs.items():
             if rom[o] != 0x21 or o + 3 not in dis.instrs or rom[o + 3] != 0xCD:
                 continue  # ld hl, n16 followed by `call nn`
             call_tgt = rom[o + 4] | (rom[o + 5] << 8)
-            if target_to_offset(call_tgt, o + 3) != register_frame_task:
+            if target_to_offset(call_tgt, o + 3) not in frame_task_calls:
                 continue
             imm = rom[o + 1] | (rom[o + 2] << 8)
             b = (o // BANK_SIZE) * BANK_SIZE
@@ -3759,6 +3762,12 @@ def main():
         # the pointers the tables embed so the code is decoded and the records
         # reference each handler by name.
         dis.seed(list(map_script_code_targets(rom, data_tables)))
+        # Frame-task functions installed via `ld hl, fn; call RegisterFrameTask`
+        # run only through the task dispatcher; those not hit by coverage stay
+        # INCBIN blobs. Seed the statically-visible pointers so the code decodes.
+        rft = {int(k, 0) for k, n in (overrides or {}).items()
+               if n in FRAME_TASK_PTR_CALLS}
+        dis.seed(list(frame_task_targets(dis, rft)))
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()

@@ -246,7 +246,7 @@ Label_3f_4178:
 	call WaitFadeEnd ; $4186
 	pop af ; $4189
 	call Func_3f_4244 ; $418a
-	ld hl, $4e8d ; $418d
+	ld hl, Func_3f_4e8d ; $418d
 	call UnregisterFrameTask ; $4190
 	ret ; $4193
 Func_3f_4194:

@@ -97,11 +97,11 @@ Label_1c_40b2:
 	ld de, wStorySlotData ; $40c1
 	ld c, $08 ; $40c4
 	call CopyMemoryFast ; $40c6
-	ld hl, $4e54 ; $40c9
+	ld hl, Func_1c_4e54 ; $40c9
 	call UnregisterFrameTask ; $40cc
-	ld hl, $5049 ; $40cf
+	ld hl, Func_1c_5049 ; $40cf
 	call UnregisterFrameTask ; $40d2
-	ld hl, $45fa ; $40d5
+	ld hl, CharDataScreenAnimTask ; $40d5
 	call UnregisterFrameTask ; $40d8
 	sound $00 ; $40db
 	call DisableLCDSafely ; $40dd
@@ -2224,7 +2224,7 @@ Label_1c_51a3:
 	ld a, [$d0b6] ; $51a9
 	or a, a ; $51ac
 	jp nz, Label_1c_528d ; $51ad
-	ld hl, $54f2 ; $51b0
+	ld hl, Func_1c_54f2 ; $51b0
 	call UnregisterFrameTask ; $51b3
 	call Func_1c_4c43 ; $51b6
 	call CharDataScreen_DrawStats ; $51b9
@@ -2257,7 +2257,7 @@ Label_1c_51a3:
 	wram_bank $06 ; $520e
 	ld a, $03 ; $5214
 	ld [$d027], a ; $5216
-	ld hl, $5049 ; $5219
+	ld hl, Func_1c_5049 ; $5219
 	call UnregisterFrameTask ; $521c
 	call RestoreCharDataScreenRow ; $521f
 	call Func_1c_489b ; $5222
@@ -2893,7 +2893,7 @@ StartCharDataScreenAnimTask:
 	call RegisterFrameTask ; $72f1
 	ret ; $72f4
 StopCharDataScreenAnimTask:
-	ld hl, $45fa ; $72f5
+	ld hl, CharDataScreenAnimTask ; $72f5
 	call UnregisterFrameTask ; $72f8
 	ret ; $72fb
 Func_1c_72fc:

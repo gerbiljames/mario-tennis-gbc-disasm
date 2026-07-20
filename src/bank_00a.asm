@@ -230,7 +230,7 @@ EndCutsceneScriptMode:
 	ld bc, $d040 ; $4110
 	ld de, $d000 ; $4113
 	farcall FarPtr_AttachActorWaypointFollower ; $4116
-	ld hl, $40a4 ; $4119
+	ld hl, Func_0a_40a4 ; $4119
 	call UnregisterFrameTask ; $411c
 	clear_flag $02, 6 ; $411f
 	ldh a, [hWramBank] ; $4122
@@ -1566,7 +1566,7 @@ Label_0a_48e4:
 	xor a, a ; $48ec
 	ld [$c368], a ; $48ed
 	ld [$c369], a ; $48f0
-	ld hl, $4908 ; $48f3
+	ld hl, Func_0a_4908 ; $48f3
 	call UnregisterFrameTask ; $48f6
 	ld a, $ff ; $48f9
 Label_0a_48fb:
@@ -3527,7 +3527,7 @@ InitSceneScroll:
 	pop af ; $596d
 	ret ; $596e
 StopSceneScrollTask:
-	ld hl, $5976 ; $596f
+	ld hl, UpdateSceneScroll ; $596f
 	call UnregisterFrameTask ; $5972
 	ret ; $5975
 UpdateSceneScroll:
@@ -4312,7 +4312,7 @@ Label_0a_6054:
 	pop bc ; $606c
 	pop af ; $606d
 	ret ; $606e
-	ld hl, $60c1 ; $606f
+	ld hl, Func_0a_60c1 ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
 InitSceneViewerDefault:
@@ -4860,7 +4860,7 @@ StopSceneTileAnimations:
 	push bc ; $6457
 	push de ; $6458
 	push hl ; $6459
-	ld hl, $6465 ; $645a
+	ld hl, Func_0a_6465 ; $645a
 	call UnregisterFrameTask ; $645d
 	pop hl ; $6460
 	pop de ; $6461

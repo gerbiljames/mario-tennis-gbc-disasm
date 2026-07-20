@@ -94,7 +94,7 @@ Func_10_40ef:
 	db $ff ; $4128 inline arg
 	call WaitFramesCmd ; $4129
 	db $ff ; $412c inline arg
-	ld hl, $4141 ; $412d
+	ld hl, Func_10_4141 ; $412d
 	call UnregisterFrameTask ; $4130
 	farcall FarPtr_EndCutsceneScriptMode ; $4133
 	ret ; $4136

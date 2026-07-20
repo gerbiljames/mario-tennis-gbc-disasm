@@ -689,7 +689,9 @@ Label_38_43fe:
 	pop af ; $4402
 	wram_bank ; $4403
 	ret ; $4407
-	INCBIN "data/bank_038/d_4408.bin" ; $4408, 4 bytes
+Func_38_4408:
+	farcall FarPtr_39_04 ; $4408
+	ret ; $440b
 CopyStringToTilemap:
 	push af ; $440c
 	push bc ; $440d
@@ -799,7 +801,7 @@ RunMatchTypeMenu:
 	ld hl, Func_38_458d ; $4494
 	call RegisterFrameTask ; $4497
 	ld a, $01 ; $449a
-	ld hl, $4408 ; $449c
+	ld hl, Func_38_4408 ; $449c
 	call RegisterFrameTask ; $449f
 	call EnableLCD ; $44a2
 	script_fade_in $10 ; $44a5
@@ -848,7 +850,7 @@ RunMatchTypeMenuLink:
 	ld hl, Func_38_458d ; $44ff
 	call RegisterFrameTask ; $4502
 	ld a, $01 ; $4505
-	ld hl, $4408 ; $4507
+	ld hl, Func_38_4408 ; $4507
 	call RegisterFrameTask ; $450a
 	call EnableLCD ; $450d
 	farcall FarPtr_ResyncLinkSession ; $4510
@@ -1170,7 +1172,7 @@ Func_38_47c7:
 	call Func_38_4975 ; $4821
 	call Func_38_4bac ; $4824
 	ld a, $01 ; $4827
-	ld hl, $4408 ; $4829
+	ld hl, Func_38_4408 ; $4829
 	call RegisterFrameTask ; $482c
 	ld a, $01 ; $482f
 	ld hl, Func_38_4bac ; $4831
@@ -6234,7 +6236,7 @@ RunNameEntryScreen:
 	call ClearFrameTasks ; $6e25
 	call Func_38_6f6e ; $6e28
 	ld a, $01 ; $6e2b
-	ld hl, $4408 ; $6e2d
+	ld hl, Func_38_4408 ; $6e2d
 	call RegisterFrameTask ; $6e30
 	ld a, $01 ; $6e33
 	ld hl, Func_38_7090 ; $6e35

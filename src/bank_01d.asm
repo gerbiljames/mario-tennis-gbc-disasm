@@ -79,11 +79,11 @@ ShowCharDataScreen:
 	ld c, $10 ; $40ab
 	call BeginFadeOut ; $40ad
 	call WaitFadeEnd ; $40b0
-	ld hl, $4c04 ; $40b3
+	ld hl, Func_1d_4c04 ; $40b3
 	call UnregisterFrameTask ; $40b6
-	ld hl, $48c7 ; $40b9
+	ld hl, CharDataValuesSyncTask ; $40b9
 	call UnregisterFrameTask ; $40bc
-	ld hl, $40cc ; $40bf
+	ld hl, Func_1d_40cc ; $40bf
 	call UnregisterFrameTask ; $40c2
 	farcall FarPtr_StopCharDataScreenAnimTask ; $40c5
 	call ClearFrameTasks ; $40c8
@@ -1517,9 +1517,9 @@ Label_1d_4cbf:
 	jr Label_1d_4cbf ; $4cd7
 Label_1d_4cd9:
 	sound $5e ; $4cd9
-	ld hl, $40cc ; $4cdb
+	ld hl, Func_1d_40cc ; $4cdb
 	call UnregisterFrameTask ; $4cde
-	ld hl, $4e76 ; $4ce1
+	ld hl, Func_1d_4e76 ; $4ce1
 	call UnregisterFrameTask ; $4ce4
 	ld a, $01 ; $4ce7
 	ld hl, Func_1d_4e5e ; $4ce9
@@ -1545,14 +1545,14 @@ Label_1d_4cd9:
 	ld a, $02 ; $4d2a
 	ld [$d142], a ; $4d2c
 	ld a, $01 ; $4d2f
-	ld hl, $4e76 ; $4d31
+	ld hl, Func_1d_4e76 ; $4d31
 	call RegisterFrameTask ; $4d34
 	jp Label_1d_4dff ; $4d37
 Label_1d_4d3a:
 	sound $5e ; $4d3a
-	ld hl, $40cc ; $4d3c
+	ld hl, Func_1d_40cc ; $4d3c
 	call UnregisterFrameTask ; $4d3f
-	ld hl, $4e76 ; $4d42
+	ld hl, Func_1d_4e76 ; $4d42
 	call UnregisterFrameTask ; $4d45
 	ld a, $01 ; $4d48
 	ld hl, Func_1d_4e5e ; $4d4a
@@ -1578,7 +1578,7 @@ Label_1d_4d3a:
 	ld a, $01 ; $4d8b
 	ld [$d142], a ; $4d8d
 	ld a, $01 ; $4d90
-	ld hl, $4e76 ; $4d92
+	ld hl, Func_1d_4e76 ; $4d92
 	call RegisterFrameTask ; $4d95
 	jr Label_1d_4da0 ; $4d98
 Label_1d_4d9a:
@@ -1599,7 +1599,7 @@ Label_1d_4da0:
 	jr Label_1d_4da0 ; $4db1
 Label_1d_4db3:
 	sound $5e ; $4db3
-	ld hl, $4e76 ; $4db5
+	ld hl, Func_1d_4e76 ; $4db5
 	call UnregisterFrameTask ; $4db8
 	ld a, $01 ; $4dbb
 	ld hl, Func_1d_4e5e ; $4dbd
@@ -1613,7 +1613,7 @@ Label_1d_4db3:
 	ld hl, Func_1d_40cc ; $4dd5
 	call RegisterFrameTask ; $4dd8
 	ld a, $01 ; $4ddb
-	ld hl, $4e76 ; $4ddd
+	ld hl, Func_1d_4e76 ; $4ddd
 	call RegisterFrameTask ; $4de0
 	ld a, $01 ; $4de3
 	ld hl, Func_1d_4c04 ; $4de5
@@ -1641,7 +1641,7 @@ Label_1d_4dff:
 	jr Label_1d_4dff ; $4e10
 Label_1d_4e12:
 	sound $5e ; $4e12
-	ld hl, $4e76 ; $4e14
+	ld hl, Func_1d_4e76 ; $4e14
 	call UnregisterFrameTask ; $4e17
 	ld a, $01 ; $4e1a
 	ld hl, Func_1d_4e5e ; $4e1c
@@ -1655,7 +1655,7 @@ Label_1d_4e12:
 	ld hl, Func_1d_40cc ; $4e34
 	call RegisterFrameTask ; $4e37
 	ld a, $01 ; $4e3a
-	ld hl, $4e76 ; $4e3c
+	ld hl, Func_1d_4e76 ; $4e3c
 	call RegisterFrameTask ; $4e3f
 	ld a, $01 ; $4e42
 	ld hl, Func_1d_4c04 ; $4e44
@@ -1678,10 +1678,19 @@ Func_1d_4e5e:
 	ld [$d143], a ; $4e69
 	cp a, $40 ; $4e6c
 	ret c ; $4e6e
-	ld hl, $4e5e ; $4e6f
+	ld hl, Func_1d_4e5e ; $4e6f
 	call UnregisterFrameTask ; $4e72
 	ret ; $4e75
-	INCBIN "data/bank_01d/d_4e76.bin" ; $4e76, 23 bytes
+Func_1d_4e76:
+	wram_bank $06 ; $4e76
+	ld a, [$d143] ; $4e7c
+	sub a, $08 ; $4e7f
+	ld [$d143], a ; $4e81
+	or a, a ; $4e84
+	ret nz ; $4e85
+	ld hl, Func_1d_4e76 ; $4e86
+	call UnregisterFrameTask ; $4e89
+	ret ; $4e8c
 BuildCharStatDisplay:
 	wram_bank $06 ; $4e8d
 	push af ; $4e93
@@ -3251,7 +3260,7 @@ StartCharDataValuesSyncTask:
 	call RegisterFrameTask ; $5c1a
 	ret ; $5c1d
 StopCharDataValuesSyncTask:
-	ld hl, $48c7 ; $5c1e
+	ld hl, CharDataValuesSyncTask ; $5c1e
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
 DrillDisplayData_1d:
@@ -3402,13 +3411,13 @@ Func_1d_68a3:
 	ld c, $10 ; $6913
 	call BeginFadeOut ; $6915
 	call WaitFadeEnd ; $6918
-	ld hl, $7727 ; $691b
+	ld hl, Func_1d_7727 ; $691b
 	call UnregisterFrameTask ; $691e
-	ld hl, $7760 ; $6921
+	ld hl, Func_1d_7760 ; $6921
 	call UnregisterFrameTask ; $6924
-	ld hl, $7789 ; $6927
+	ld hl, Func_1d_7789 ; $6927
 	call UnregisterFrameTask ; $692a
-	ld hl, $765e ; $692d
+	ld hl, Func_1d_765e ; $692d
 	call UnregisterFrameTask ; $6930
 	ret ; $6933
 InitLevelUpScreenState:
@@ -4270,7 +4279,7 @@ Label_1d_6fc7:
 	xor a, a ; $6fd6
 	ld [$cb00], a ; $6fd7
 	call Func_1d_7189 ; $6fda
-	ld hl, $70e6 ; $6fdd
+	ld hl, Func_1d_70e6 ; $6fdd
 	call UnregisterFrameTask ; $6fe0
 	ld a, $01 ; $6fe3
 	ld hl, Func_1d_70cc ; $6fe5
@@ -4287,7 +4296,7 @@ Label_1d_6ff3:
 	ld a, $01 ; $7002
 	ld [$cb00], a ; $7004
 	call Func_1d_7189 ; $7007
-	ld hl, $70cc ; $700a
+	ld hl, Func_1d_70cc ; $700a
 	call UnregisterFrameTask ; $700d
 	ld a, $01 ; $7010
 	ld hl, Func_1d_70e6 ; $7012
@@ -4375,7 +4384,7 @@ Func_1d_70cc:
 	ret nz ; $70d9
 	ld hl, $d17f ; $70da
 	res 0, [hl] ; $70dd
-	ld hl, $70cc ; $70df
+	ld hl, Func_1d_70cc ; $70df
 	call UnregisterFrameTask ; $70e2
 	ret ; $70e5
 Func_1d_70e6:
@@ -4387,7 +4396,7 @@ Func_1d_70e6:
 	ret nz ; $70f5
 	ld hl, $d17f ; $70f6
 	res 0, [hl] ; $70f9
-	ld hl, $70e6 ; $70fb
+	ld hl, Func_1d_70e6 ; $70fb
 	call UnregisterFrameTask ; $70fe
 	ret ; $7101
 Func_1d_7102:

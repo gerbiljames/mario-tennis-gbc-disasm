@@ -5426,7 +5426,7 @@ Func_03_6ff7:
 	push af ; $703a
 	ld [$d1fe], a ; $703b
 	ld a, $01 ; $703e
-	ld hl, $72a0 ; $7040
+	ld hl, Func_03_72a0 ; $7040
 	call RegisterFrameTask ; $7043
 Label_03_7046:
 	call AdvanceFrame ; $7046
@@ -5460,7 +5460,64 @@ Label_03_7051:
 	pop bc ; $708b
 	pop af ; $708c
 	ret ; $708d
-	INCBIN "data/bank_003/d_708e.bin" ; $708e, 677 bytes
+	INCBIN "data/bank_003/d_708e.bin" ; $708e, 530 bytes
+Func_03_72a0:
+	ldh a, [hWramBank] ; $72a0
+	push af ; $72a2
+	wram_bank $06 ; $72a3
+	ld a, [$d1fe] ; $72a9
+	ld b, a ; $72ac
+	ld hl, $7301 ; $72ad
+	ld a, b ; $72b0
+	add a, a ; $72b1
+	add a, l ; $72b2
+	ld l, a ; $72b3
+	jr nc, Label_03_72b7 ; $72b4
+	inc h ; $72b6
+Label_03_72b7:
+	ld a, [hl+] ; $72b7
+	ld c, a ; $72b8
+	ld e, [hl] ; $72b9
+	ld d, $00 ; $72ba
+	pop af ; $72bc
+	wram_bank ; $72bd
+	ldh a, [hVBlankCounter] ; $72c1
+	and a, $01 ; $72c3
+	jr nz, Label_03_72db ; $72c5
+	ldh a, [hScrollY] ; $72c7
+	add a, c ; $72c9
+	ldh [hScrollY], a ; $72ca
+	ld hl, $cb02 ; $72cc
+	ld a, [hl+] ; $72cf
+	ld h, [hl] ; $72d0
+	ld l, a ; $72d1
+	add hl, de ; $72d2
+	ld d, h ; $72d3
+	ld e, l ; $72d4
+	ld hl, $cb02 ; $72d5
+	ld a, e ; $72d8
+	ld [hl+], a ; $72d9
+	ld [hl], d ; $72da
+Label_03_72db:
+	ld a, [$cb60] ; $72db
+	inc a ; $72de
+	ld [$cb60], a ; $72df
+	and a, $3f ; $72e2
+	ld b, a ; $72e4
+	ld a, $90 ; $72e5
+	sub a, b ; $72e7
+	ldh [rWY], a ; $72e8
+	ld a, b ; $72ea
+	cp a, $3f ; $72eb
+	jr nz, Label_03_7300 ; $72ed
+	ld hl, Func_03_72a0 ; $72ef
+	call UnregisterFrameTask ; $72f2
+	wram_bank $06 ; $72f5
+	ld a, $01 ; $72fb
+	ld [$d000], a ; $72fd
+Label_03_7300:
+	ret ; $7300
+	INCBIN "data/bank_003/d_7301.bin" ; $7301, 50 bytes
 Func_03_7333:
 	push af ; $7333
 	push bc ; $7334

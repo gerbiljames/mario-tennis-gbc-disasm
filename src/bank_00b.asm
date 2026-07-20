@@ -1260,7 +1260,7 @@ Label_0b_5d0a:
 	ld hl, Func_0b_446e ; $5d35
 	call RegisterFrameTask ; $5d38
 	farcall FarPtr_StartPointEndReactions ; $5d3b
-	ld hl, $446e ; $5d3e
+	ld hl, Func_0b_446e ; $5d3e
 	call UnregisterFrameTask ; $5d41
 	call PlayDrillPointEndSequence ; $5d44
 	ret ; $5d47
@@ -1536,7 +1536,7 @@ Func_0b_6bd0:
 	ret nz ; $6bd4
 	ld a, $01 ; $6bd5
 	ld [wTargetZoneEnabled], a ; $6bd7
-	ld hl, $6bd0 ; $6bda
+	ld hl, Func_0b_6bd0 ; $6bda
 	call UnregisterFrameTask ; $6bdd
 	ret ; $6be0
 	call Func_0b_6cd0 ; $6be1
@@ -1652,7 +1652,7 @@ Label_0b_6c92:
 	ld hl, Func_0b_446e ; $6cbd
 	call RegisterFrameTask ; $6cc0
 	farcall FarPtr_StartPointEndReactions ; $6cc3
-	ld hl, $446e ; $6cc6
+	ld hl, Func_0b_446e ; $6cc6
 	call UnregisterFrameTask ; $6cc9
 	call PlayDrillPointEndSequence ; $6ccc
 	ret ; $6ccf
@@ -1826,7 +1826,7 @@ Label_0b_6da6:
 	ld hl, Func_0b_446e ; $7167
 	call RegisterFrameTask ; $716a
 	farcall FarPtr_StartPointEndReactions ; $716d
-	ld hl, $446e ; $7170
+	ld hl, Func_0b_446e ; $7170
 	call UnregisterFrameTask ; $7173
 	call PlayDrillPointEndSequence ; $7176
 	ret ; $7179

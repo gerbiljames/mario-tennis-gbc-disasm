@@ -75,14 +75,20 @@ frame, then syncs the player position out) and `DrawActors` ($04:$4a82,
 `ComputeSpriteScrollOffset` then `DrawActorSprite`/`AdvanceActorAnimation` per
 active actor). Their registration sites read `ld hl, UpdateActors` etc.
 
-Generalised that: a `ld hl, n16` immediately before `call RegisterFrameTask`
-loads a task-function pointer, but the target is reached only through the task
-dispatcher so recursive descent never labelled it (like the `map_scripts`
-handlers). `build_labels` now seeds a `Func_*` label at each such target
-(`frame_task_targets`) and the emit loop resolves the load to it. 403 of 427
-registration sites across the ROM now name their task (139 distinct functions
-labelled); the remaining 24 point into still-`INCBIN` blobs -- i.e. uncarved
-frame-task code, a future carving lead. Byte-perfect.
+Generalised that: a `ld hl, n16` immediately before a `call` to a frame-task
+helper (`RegisterFrameTask`/`UnregisterFrameTask`) loads a task-function
+pointer, but the target is reached only through the task dispatcher so recursive
+descent never labelled it (like the `map_scripts` handlers). `build_labels` now
+seeds a `Func_*` label at each such target (`frame_task_targets`) and the emit
+loop resolves the load to it. Then **carved** the task functions that coverage
+never executed: `main` seeds those same pointers before a re-descent, decoding
+10 `INCBIN` blobs into 20 frame-task functions (+519 instructions), several
+self-documenting (e.g. `Func_1d_4e76` decrements a timer then
+`ld hl, Func_1d_4e76 / call UnregisterFrameTask` to remove itself). Now 423/427
+`RegisterFrameTask` and 95/95 `UnregisterFrameTask` sites name their task. The 4
+remaining are tiny bank-switch functions embedded mid-blob inside regions the
+LZ/slot scan claims as data (false-positive compression) -- left rather than
+destabilise the data inference. Byte-perfect.
 
 ### Name actor-engine functions from the spawn analysis (2026-07-20)
 

@@ -254,7 +254,7 @@ ScreenAssetRecordTable:
 	dslot DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap4, DataPtr_ChampionMedalAttrmap4, DataPtr_ChampionMedalPalettes ; record 65
 	dslot DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap5, DataPtr_ChampionMedalAttrmap5, DataPtr_ChampionMedalPalettes ; record 66
 	dslot DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap6, DataPtr_ChampionMedalAttrmap6, DataPtr_ChampionMedalPalettes ; record 67
-	dslot DataPtr_RulesScreenTiles, DataPtr_RulesScreenTilemap, DataPtr_RulesScreenAttrmap, DataPtr_RulesScreenPalettes ; record 68
+	dslot DataPtr_17_0e, DataPtr_RulesScreenTilemap, DataPtr_RulesScreenAttrmap, DataPtr_RulesScreenPalettes ; record 68
 	dslot DataPtr_AwardCeremonyTiles, DataPtr_AwardCeremonyTilesAlias1, DataPtr_AwardCeremonyTilesAlias2, DataPtr_AwardCeremonyTilesAlias3 ; record 69
 QueueWram3MapToVRAM:
 	wram_bank $03 ; $4325

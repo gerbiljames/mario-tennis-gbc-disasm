@@ -2495,7 +2495,7 @@ Label_14_650b:
 	ld a, $1e ; $654b
 	ld [$c2b9], a ; $654d
 	ld a, $01 ; $6550
-	ld hl, $6ef0 ; $6552
+	ld hl, Func_14_6ef0 ; $6552
 	call RegisterFrameTask ; $6555
 	script_wait_frames $50 ; $6558
 	ld a, $40 ; $655f
@@ -2608,7 +2608,84 @@ SpriteTemplate_14_6e80:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-	INCBIN "data/bank_014/d_6ea1.bin" ; $6ea1, 218 bytes
+	INCBIN "data/bank_014/d_6ea1.bin" ; $6ea1, 79 bytes
+Func_14_6ef0:
+	ld a, [$c2b7] ; $6ef0
+	cp a, $04 ; $6ef3
+	jp nc, Label_14_6f63 ; $6ef5
+	ld a, [$c2b7] ; $6ef8
+	and a, a ; $6efb
+	jr nz, Label_14_6f01 ; $6efc
+	call Func_14_6f64 ; $6efe
+Label_14_6f01:
+	ldh a, [hScrollX] ; $6f01
+	ld b, a ; $6f03
+	ld a, [$c2b3] ; $6f04
+	sub a, b ; $6f07
+	ld d, a ; $6f08
+	ldh a, [hScrollY] ; $6f09
+	ld b, a ; $6f0b
+	ld a, [$c2b5] ; $6f0c
+	sub a, b ; $6f0f
+	ld e, a ; $6f10
+	ld a, [$c2b9] ; $6f11
+	dec a ; $6f14
+	ld [$c2b9], a ; $6f15
+	and a, a ; $6f18
+	jp nz, Label_14_6f46 ; $6f19
+	ld a, [$c2b7] ; $6f1c
+	inc a ; $6f1f
+	ld [$c2b7], a ; $6f20
+	cp a, $04 ; $6f23
+	jp nc, Label_14_6f63 ; $6f25
+	ld a, [$c2b7] ; $6f28
+	add a, $d5 ; $6f2b
+	ld l, a ; $6f2d
+	adc a, $64 ; $6f2e
+	sub a, l ; $6f30
+	ld h, a ; $6f31
+	ld a, [hl] ; $6f32
+	ld [$c2b9], a ; $6f33
+	ld a, [$c2b7] ; $6f36
+	cp a, $01 ; $6f39
+	jr nz, Label_14_6f46 ; $6f3b
+	ld a, [$c2b9] ; $6f3d
+	cp a, $0c ; $6f40
+	jr nz, Label_14_6f46 ; $6f42
+	sound $81 ; $6f44
+Label_14_6f46:
+	ld a, [$c2b7] ; $6f46
+	add a, $dd ; $6f49
+	ld l, a ; $6f4b
+	adc a, $64 ; $6f4c
+	sub a, l ; $6f4e
+	ld h, a ; $6f4f
+	ld a, [hl] ; $6f50
+	add a, $10 ; $6f51
+	ld c, a ; $6f53
+	ld a, [$c2b9] ; $6f54
+	srl a ; $6f57
+	and a, $03 ; $6f59
+	inc a ; $6f5b
+	ld b, a ; $6f5c
+	ld hl, SpriteTemplate_14_6e80 ; $6f5d
+	call QueueSpriteTemplate ; $6f60
+Label_14_6f63:
+	ret ; $6f63
+Func_14_6f64:
+	ld b, $03 ; $6f64
+	ld a, [$c2b9] ; $6f66
+	cp a, $14 ; $6f69
+	jr nc, Label_14_6f73 ; $6f6b
+	dec b ; $6f6d
+	cp a, $0a ; $6f6e
+	jr nc, Label_14_6f73 ; $6f70
+	dec b ; $6f72
+Label_14_6f73:
+	ld a, [$c2b5] ; $6f73
+	sub a, b ; $6f76
+	ld [$c2b5], a ; $6f77
+	ret ; $6f7a
 Label_14_6f7b:
 	call DisableLCDSafely ; $6f7b
 	call LoadWaterSpriteObjGfx ; $6f7e
@@ -2707,7 +2784,7 @@ Label_14_7067:
 Label_14_7085:
 	dec h ; $7085
 	jr nz, Label_14_7067 ; $7086
-	ld hl, $5e9c ; $7088
+	ld hl, Func_14_5e9c ; $7088
 	call UnregisterFrameTask ; $708b
 	ld h, $1e ; $708e
 Label_14_7090:
@@ -2742,7 +2819,7 @@ Label_14_70be:
 Label_14_70e0:
 	dec h ; $70e0
 	jr nz, Label_14_70be ; $70e1
-	ld hl, $755c ; $70e3
+	ld hl, Func_14_755c ; $70e3
 	call UnregisterFrameTask ; $70e6
 	call Func_14_7688 ; $70e9
 	call Func_14_787b ; $70ec
@@ -3018,7 +3095,7 @@ Label_14_773c:
 Label_14_775e:
 	dec h ; $775e
 	jr nz, Label_14_773c ; $775f
-	ld hl, $755c ; $7761
+	ld hl, Func_14_755c ; $7761
 	call UnregisterFrameTask ; $7764
 	script_player_speed $0012 ; $7767
 	script_move_player $0b00, $1800 ; $776d
@@ -3143,7 +3220,7 @@ Label_14_788e:
 	ld [wWaterSpriteMinigameSwingCount], a ; $789a
 	dec h ; $789d
 	jr nz, Label_14_788e ; $789e
-	ld hl, $76ab ; $78a0
+	ld hl, Func_14_76ab ; $78a0
 	call UnregisterFrameTask ; $78a3
 	ret ; $78a6
 PlayWaterSpriteMoveSfx:

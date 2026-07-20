@@ -886,9 +886,9 @@ Label_1a_4709:
 	ld c, $10 ; $4709
 	call BeginFadeOut ; $470b
 	call WaitFadeEnd ; $470e
-	ld hl, $477a ; $4711
+	ld hl, Func_1a_477a ; $4711
 	call UnregisterFrameTask ; $4714
-	ld hl, $4e65 ; $4717
+	ld hl, Func_1a_4e65 ; $4717
 	call UnregisterFrameTask ; $471a
 	call AdvanceFrame ; $471d
 	pop de ; $4720
@@ -2664,7 +2664,7 @@ Label_1a_67db:
 	script_fade_in $10 ; $6843
 	call WaitFadeEnd ; $6848
 	call Func_1a_6c9f ; $684b
-	ld hl, $6c28 ; $684e
+	ld hl, Func_1a_6c28 ; $684e
 	call UnregisterFrameTask ; $6851
 Label_1a_6854:
 	ld c, $10 ; $6854
@@ -2826,7 +2826,7 @@ Label_1a_69a9:
 	call AdvanceFrame ; $69c2
 	jp Label_1a_68e8 ; $69c5
 Label_1a_69c8:
-	ld hl, $6ab3 ; $69c8
+	ld hl, Func_1a_6ab3 ; $69c8
 	call UnregisterFrameTask ; $69cb
 	sound $5f ; $69ce
 	ld a, [$cb62] ; $69d0
@@ -2840,7 +2840,7 @@ Label_1a_69c8:
 	ld [$d002], a ; $69dc
 	ret ; $69df
 Label_1a_69e0:
-	ld hl, $6ab3 ; $69e0
+	ld hl, Func_1a_6ab3 ; $69e0
 	call UnregisterFrameTask ; $69e3
 	sound $62 ; $69e6
 	ld a, $ff ; $69e8

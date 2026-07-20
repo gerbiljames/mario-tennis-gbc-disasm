@@ -14,8 +14,8 @@ FarPtr_ShowDrillBriefingScreen:
 	dw ShowDrillBriefingScreen ; $400a
 FarPtr_ShowRulesScreen:
 	dw ShowRulesScreen ; $400c
-DataPtr_RulesScreenTiles:
-	dw RulesScreenTiles ; $400e
+DataPtr_17_0e:
+	dw $7570 ; $400e
 DataPtr_RulesScreenTilemap:
 	dw RulesScreenTilemap ; $4010
 DataPtr_RulesScreenAttrmap:
@@ -5103,7 +5103,7 @@ Label_17_7107:
 	jr Label_17_7107 ; $711c
 Label_17_711e:
 	sound $5f ; $711e
-	ld hl, $755e ; $7120
+	ld hl, Func_17_755e ; $7120
 	call UnregisterFrameTask ; $7123
 	ld hl, RulesScreenTiles ; $7126
 	call UnregisterFrameTask ; $7129
@@ -5116,7 +5116,7 @@ Label_17_711e:
 	jp Label_17_70a4 ; $7139
 Label_17_713c:
 	sound $62 ; $713c
-	ld hl, $755e ; $713e
+	ld hl, Func_17_755e ; $713e
 	call UnregisterFrameTask ; $7141
 	ld hl, RulesScreenTiles ; $7144
 	call UnregisterFrameTask ; $7147
@@ -5565,7 +5565,18 @@ Func_17_755e:
 	farcall FarPtr_39_1a ; $756c
 	ret ; $756f
 RulesScreenTiles:
-	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes
+	rst Rst38 ; $7570
+	nop ; $7571
+	rst Rst38 ; $7572
+	ccf ; $7573
+	rst Rst38 ; $7574
+	ld a, a ; $7575
+	ldh [$ff7f], a ; $7576
+	ret nz ; $7578
+	xor a, [hl] ; $7579
+	cp a, $e4 ; $757a
+	rst Rst00 ; $757c
+	INCBIN "data/bank_017/d_757d.bin" ; $757d, 499 bytes
 RulesScreenTilemap:
 	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 309 bytes
 RulesScreenAttrmap:

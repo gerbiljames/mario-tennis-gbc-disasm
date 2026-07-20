@@ -3093,7 +3093,7 @@ Func_0e_7150:
 	script_copy_scene_rect $0a, $2b, $1a, $12, $06, $02 ; $71b0
 	sound $09 ; $71bf
 	ld a, $01 ; $71c1
-	ld hl, $71e9 ; $71c3
+	ld hl, Func_0e_71e9 ; $71c3
 	call RegisterFrameTask ; $71c6
 	wram_bank $06 ; $71c9
 Label_0e_71cf:
@@ -3110,7 +3110,165 @@ Label_0e_71e2:
 	ld c, $03 ; $71e2
 	call BeginFadeOut ; $71e4
 	jr Label_0e_71cf ; $71e7
-	INCBIN "data/bank_00e/d_71e9.bin" ; $71e9, 1037 bytes
+Func_0e_71e9:
+	wram_bank $06 ; $71e9
+	ldh a, [hVBlankCounter] ; $71ef
+	and a, $01 ; $71f1
+	jr nz, Label_0e_7200 ; $71f3
+	ld hl, $d000 ; $71f5
+	ld a, [hl] ; $71f8
+	inc a ; $71f9
+	cp a, $06 ; $71fa
+	jr nz, Label_0e_71ff ; $71fc
+	xor a, a ; $71fe
+Label_0e_71ff:
+	ld [hl], a ; $71ff
+Label_0e_7200:
+	ld a, [$d000] ; $7200
+	rlca ; $7203
+	add a, $80 ; $7204
+	ld l, a ; $7206
+	adc a, $74 ; $7207
+	sub a, l ; $7209
+	ld h, a ; $720a
+	push hl ; $720b
+	ld c, [hl] ; $720c
+	ld b, $09 ; $720d
+	ld de, $8026 ; $720f
+	call Func_0e_724a ; $7212
+	call QueueSprite ; $7215
+	pop hl ; $7218
+	inc hl ; $7219
+	ld c, [hl] ; $721a
+	ld b, $09 ; $721b
+	ld de, $8826 ; $721d
+	call Func_0e_724a ; $7220
+	push de ; $7223
+	call QueueSprite ; $7224
+	pop de ; $7227
+	ld a, $fc ; $7228
+	add a, d ; $722a
+	ld d, a ; $722b
+	ld hl, $d040 ; $722c
+	ld a, e ; $722f
+	ld [hl+], a ; $7230
+	ld [hl], d ; $7231
+	call Func_0e_7265 ; $7232
+	ld hl, $d001 ; $7235
+	ld a, [hl] ; $7238
+	inc a ; $7239
+	inc a ; $723a
+	ld [hl], a ; $723b
+	ld hl, $d002 ; $723c
+	ld a, [hl] ; $723f
+	dec a ; $7240
+	ld [hl], a ; $7241
+	ret nz ; $7242
+	ld hl, Func_0e_71e9 ; $7243
+	call UnregisterFrameTask ; $7246
+	ret ; $7249
+Func_0e_724a:
+	ld a, [$d001] ; $724a
+	add a, $8c ; $724d
+	ld l, a ; $724f
+	adc a, $74 ; $7250
+	sub a, l ; $7252
+	ld h, a ; $7253
+	ld a, [hl] ; $7254
+	add a, d ; $7255
+	ld d, a ; $7256
+	ld a, [$d001] ; $7257
+	add a, $41 ; $725a
+	ld l, a ; $725c
+	adc a, $75 ; $725d
+	sub a, l ; $725f
+	ld h, a ; $7260
+	ld a, [hl] ; $7261
+	add a, e ; $7262
+	ld e, a ; $7263
+	ret ; $7264
+Func_0e_7265:
+	ld c, $00 ; $7265
+	ld hl, $d003 ; $7267
+	ld b, $10 ; $726a
+Label_0e_726c:
+	ld a, [hl] ; $726c
+	or a, a ; $726d
+	jr z, Label_0e_7277 ; $726e
+	inc hl ; $7270
+	inc c ; $7271
+	dec b ; $7272
+	jr nz, Label_0e_726c ; $7273
+	jr Label_0e_729d ; $7275
+Label_0e_7277:
+	ld [hl], $10 ; $7277
+	ld a, c ; $7279
+	rlca ; $727a
+	add a, $14 ; $727b
+	ld l, a ; $727d
+	adc a, $d0 ; $727e
+	sub a, l ; $7280
+	ld h, a ; $7281
+	ld a, [$d040] ; $7282
+	ld [hl+], a ; $7285
+	ld a, [$d041] ; $7286
+	ld [hl], a ; $7289
+	dec hl ; $728a
+	push hl ; $728b
+	ld a, [hl+] ; $728c
+	ld d, [hl] ; $728d
+	ld e, a ; $728e
+	ldh a, [hVBlankCounter] ; $728f
+	and a, $07 ; $7291
+	push af ; $7293
+	add a, d ; $7294
+	ld d, a ; $7295
+	pop af ; $7296
+	add a, e ; $7297
+	ld e, a ; $7298
+	pop hl ; $7299
+	ld a, e ; $729a
+	ld [hl+], a ; $729b
+	ld [hl], d ; $729c
+Label_0e_729d:
+	ld hl, $d003 ; $729d
+	ld b, $00 ; $72a0
+	ld c, $10 ; $72a2
+Label_0e_72a4:
+	push bc ; $72a4
+	push hl ; $72a5
+	ld a, [hl] ; $72a6
+	or a, a ; $72a7
+	jr z, Label_0e_72c1 ; $72a8
+	and a, $02 ; $72aa
+	jr z, Label_0e_72c1 ; $72ac
+	ld a, b ; $72ae
+	rlca ; $72af
+	add a, $14 ; $72b0
+	ld l, a ; $72b2
+	adc a, $d0 ; $72b3
+	sub a, l ; $72b5
+	ld h, a ; $72b6
+	ld a, [hl+] ; $72b7
+	ld d, [hl] ; $72b8
+	ld e, a ; $72b9
+	ld b, $09 ; $72ba
+	ld c, $18 ; $72bc
+	call QueueSprite ; $72be
+Label_0e_72c1:
+	pop hl ; $72c1
+	pop bc ; $72c2
+	ld a, [hl] ; $72c3
+	or a, a ; $72c4
+	jr z, Label_0e_72c8 ; $72c5
+	dec [hl] ; $72c7
+Label_0e_72c8:
+	inc hl ; $72c8
+	inc b ; $72c9
+	dec c ; $72ca
+	jr nz, Label_0e_72a4 ; $72cb
+	ret ; $72cd
+	INCBIN "data/bank_00e/d_72ce.bin" ; $72ce, 808 bytes
 SpecialCourtMapScripts_0e:
 	; $75f6, 14 bytes (map_tree)
 	dw SpecialCourtEntryPoints_0e ; slot 0 EntryPoints

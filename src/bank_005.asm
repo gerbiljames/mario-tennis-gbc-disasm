@@ -1461,7 +1461,7 @@ Label_05_4840:
 	push bc ; $4847
 	push de ; $4848
 	push hl ; $4849
-	ld hl, $48f1 ; $484a
+	ld hl, Func_05_48f1 ; $484a
 	call UnregisterFrameTask ; $484d
 	call AdvanceFrame ; $4850
 	ld a, [$d830] ; $4853
@@ -1517,7 +1517,7 @@ Label_05_48af:
 	push bc ; $48b3
 	push de ; $48b4
 	push hl ; $48b5
-	ld hl, $48f1 ; $48b6
+	ld hl, Func_05_48f1 ; $48b6
 	call UnregisterFrameTask ; $48b9
 	call AdvanceFrame ; $48bc
 	ld a, [$d83e] ; $48bf
@@ -1798,7 +1798,7 @@ Label_05_4a90:
 	ld [$d830], a ; $4a90
 	add sp, 3 ; $4a93
 	push af ; $4a95
-	ld hl, $49dc ; $4a96
+	ld hl, Func_05_49dc ; $4a96
 	call UnregisterFrameTask ; $4a99
 	pop af ; $4a9c
 	ld b, a ; $4a9d
@@ -1946,7 +1946,7 @@ Label_05_4b72:
 	push bc ; $4b7f
 	push de ; $4b80
 	push hl ; $4b81
-	ld hl, $4c9d ; $4b82
+	ld hl, Func_05_4c9d ; $4b82
 	call UnregisterFrameTask ; $4b85
 	call AdvanceFrame ; $4b88
 	ld a, [$d830] ; $4b8b
@@ -2045,7 +2045,7 @@ Label_05_4c37:
 	push bc ; $4c38
 	push de ; $4c39
 	push hl ; $4c3a
-	ld hl, $4c9d ; $4c3b
+	ld hl, Func_05_4c9d ; $4c3b
 	call UnregisterFrameTask ; $4c3e
 	call AdvanceFrame ; $4c41
 	ld a, [$d83e] ; $4c44
@@ -2536,7 +2536,7 @@ TextCmdWaitButtonPage:
 	ld a, $10 ; $4f9c
 	ld [wTextArrowBlinkCounter], a ; $4f9e
 	call AdvanceFrame ; $4fa1
-	ld hl, $4fe3 ; $4fa4
+	ld hl, TextContinueArrowBlinkTask ; $4fa4
 	call UnregisterFrameTask ; $4fa7
 	set_flag $03, 1 ; $4faa
 	call AdvanceFrame ; $4fad
@@ -5853,7 +5853,9 @@ Label_05_6570:
 	pop bc ; $657e
 	pop af ; $657f
 	ret ; $6580
-	INCBIN "data/bank_005/d_6581.bin" ; $6581, 33 bytes
+Func_05_6581:
+	ret ; $6581
+	INCBIN "data/bank_005/d_6582.bin" ; $6582, 32 bytes
 RunDebugFlagEditor:
 	push af ; $65a2
 	push bc ; $65a3
@@ -5898,7 +5900,7 @@ Label_05_65b8:
 	ld a, [$c719] ; $660c
 	call RedrawWindowRows ; $660f
 	ld a, $0f ; $6612
-	ld hl, $6581 ; $6614
+	ld hl, Func_05_6581 ; $6614
 	call RegisterFrameTask ; $6617
 Label_05_661a:
 	ldh a, [hInputRisingEdge] ; $661a
@@ -5951,7 +5953,7 @@ Label_05_6683:
 	call CloseWindow ; $668c
 	ld a, [$c719] ; $668f
 	call CloseWindow ; $6692
-	ld hl, $6581 ; $6695
+	ld hl, Func_05_6581 ; $6695
 	call UnregisterFrameTask ; $6698
 	pop hl ; $669b
 	pop de ; $669c
@@ -6438,7 +6440,7 @@ Label_05_6ae5:
 Label_05_6af6:
 	ld a, [$c710] ; $6af6
 	call CloseWindow ; $6af9
-	ld hl, $6b03 ; $6afc
+	ld hl, Func_05_6b03 ; $6afc
 	call UnregisterFrameTask ; $6aff
 	ret ; $6b02
 Func_05_6b03:

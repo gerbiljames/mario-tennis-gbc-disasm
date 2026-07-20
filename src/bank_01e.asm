@@ -70,7 +70,7 @@ Label_1e_4031:
 	ld c, $10 ; $408b
 	call BeginFadeOut ; $408d
 	call WaitFadeEnd ; $4090
-	ld hl, $4a76 ; $4093
+	ld hl, Func_1e_4a76 ; $4093
 	call UnregisterFrameTask ; $4096
 	farcall FarPtr_01_0a ; $4099
 	wram_bank $06 ; $409c
@@ -1488,9 +1488,9 @@ Label_1e_5438:
 	ld c, $10 ; $549a
 	call BeginFadeOut ; $549c
 	call WaitFadeEnd ; $549f
-	ld hl, $5914 ; $54a2
+	ld hl, Func_1e_5914 ; $54a2
 	call UnregisterFrameTask ; $54a5
-	ld hl, $5a4e ; $54a8
+	ld hl, Func_1e_5a4e ; $54a8
 	call UnregisterFrameTask ; $54ab
 	wram_bank $06 ; $54ae
 	ld hl, $d005 ; $54b4

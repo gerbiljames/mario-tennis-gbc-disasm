@@ -1524,7 +1524,7 @@ Label_15_562d:
 	ld [hl], d ; $563d
 	ret ; $563e
 Label_15_563f:
-	ld hl, $55f0 ; $563f
+	ld hl, Func_15_55f0 ; $563f
 	call UnregisterFrameTask ; $5642
 	xor a, a ; $5645
 	ld [$c2b9], a ; $5646
@@ -1621,7 +1621,7 @@ Label_15_5708:
 	script_wait_idle ACTOR_PLAYER ; $5711
 	script_wait_frames $3c ; $5716
 	call Func_15_5777 ; $571d
-	ld hl, $578d ; $5720
+	ld hl, Func_15_578d ; $5720
 	call UnregisterFrameTask ; $5723
 	ld b, $30 ; $5726
 	ld e, $10 ; $5728
@@ -1648,7 +1648,7 @@ Label_15_572a:
 	script_wait_frames $01 ; $574d
 	dec b ; $5754
 	jp nz, Label_15_572a ; $5755
-	ld hl, $58d1 ; $5758
+	ld hl, Func_15_58d1 ; $5758
 	call UnregisterFrameTask ; $575b
 	call WaitFramesCmd ; $575e
 	db $3c ; $5761 inline arg
