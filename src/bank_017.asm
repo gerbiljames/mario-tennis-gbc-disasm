@@ -14,8 +14,8 @@ FarPtr_ShowDrillBriefingScreen:
 	dw ShowDrillBriefingScreen ; $400a
 FarPtr_ShowRulesScreen:
 	dw ShowRulesScreen ; $400c
-DataPtr_17_0e:
-	dw $7570 ; $400e
+DataPtr_RulesScreenTiles:
+	dw RulesScreenTiles ; $400e
 DataPtr_RulesScreenTilemap:
 	dw RulesScreenTilemap ; $4010
 DataPtr_RulesScreenAttrmap:
@@ -915,7 +915,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $20 ; $4594
 	ld [$d821], a ; $4596
 	ld a, $01 ; $4599
-	ld hl, $47ef ; $459b
+	ld hl, Func_17_47ef ; $459b
 	call RegisterFrameTask ; $459e
 	ld a, $01 ; $45a1
 	ld [$d825], a ; $45a3
@@ -1192,7 +1192,28 @@ SpriteTemplate_17_47cd:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-	INCBIN "data/bank_017/d_47e2.bin" ; $47e2, 58 bytes
+	INCBIN "data/bank_017/d_47e2.bin" ; $47e2, 13 bytes
+Func_17_47ef:
+	ldh a, [hWramBank] ; $47ef
+	push af ; $47f1
+	wram_bank $03 ; $47f2
+	ld a, [$d81a] ; $47f8
+	ld d, a ; $47fb
+	ld a, [$d81b] ; $47fc
+	ld e, a ; $47ff
+	ld c, $6a ; $4800
+	ld b, $09 ; $4802
+	call QueueSprite ; $4804
+	ld a, [$d820] ; $4807
+	ld d, a ; $480a
+	ld a, [$d821] ; $480b
+	ld e, a ; $480e
+	ld c, $6a ; $480f
+	ld b, $09 ; $4811
+	call QueueSprite ; $4813
+	pop af ; $4816
+	wram_bank ; $4817
+	ret ; $481b
 Func_17_481c:
 	ldh a, [hWramBank] ; $481c
 	push af ; $481e
@@ -2559,7 +2580,7 @@ Label_17_5cfa:
 	ld hl, Func_17_4754 ; $5d4c
 	call RegisterFrameTask ; $5d4f
 	ld a, $01 ; $5d52
-	ld hl, $47ef ; $5d54
+	ld hl, Func_17_47ef ; $5d54
 	call RegisterFrameTask ; $5d57
 	ld a, $01 ; $5d5a
 	ld hl, Func_17_4676 ; $5d5c
@@ -2585,7 +2606,7 @@ Label_17_5cfa:
 	ld hl, Func_17_46e2 ; $5d92
 	call RegisterFrameTask ; $5d95
 	ld a, $01 ; $5d98
-	ld hl, $47ef ; $5d9a
+	ld hl, Func_17_47ef ; $5d9a
 	call RegisterFrameTask ; $5d9d
 	ld a, $01 ; $5da0
 	ld hl, Func_17_4676 ; $5da2
@@ -5565,18 +5586,7 @@ Func_17_755e:
 	farcall FarPtr_39_1a ; $756c
 	ret ; $756f
 RulesScreenTiles:
-	rst Rst38 ; $7570
-	nop ; $7571
-	rst Rst38 ; $7572
-	ccf ; $7573
-	rst Rst38 ; $7574
-	ld a, a ; $7575
-	ldh [$ff7f], a ; $7576
-	ret nz ; $7578
-	xor a, [hl] ; $7579
-	cp a, $e4 ; $757a
-	rst Rst00 ; $757c
-	INCBIN "data/bank_017/d_757d.bin" ; $757d, 499 bytes
+	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes
 RulesScreenTilemap:
 	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 309 bytes
 RulesScreenAttrmap:

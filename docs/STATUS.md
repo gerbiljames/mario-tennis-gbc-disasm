@@ -78,17 +78,20 @@ active actor). Their registration sites read `ld hl, UpdateActors` etc.
 Generalised that: a `ld hl, n16` immediately before a `call` to a frame-task
 helper (`RegisterFrameTask`/`UnregisterFrameTask`) loads a task-function
 pointer, but the target is reached only through the task dispatcher so recursive
-descent never labelled it (like the `map_scripts` handlers). `build_labels` now
+descent never labelled it (like the `map_scripts` handlers). `build_labels`
 seeds a `Func_*` label at each such target (`frame_task_targets`) and the emit
 loop resolves the load to it. Then **carved** the task functions that coverage
-never executed: `main` seeds those same pointers before a re-descent, decoding
-10 `INCBIN` blobs into 20 frame-task functions (+519 instructions), several
-self-documenting (e.g. `Func_1d_4e76` decrements a timer then
-`ld hl, Func_1d_4e76 / call UnregisterFrameTask` to remove itself). Now 423/427
-`RegisterFrameTask` and 95/95 `UnregisterFrameTask` sites name their task. The 4
-remaining are tiny bank-switch functions embedded mid-blob inside regions the
-LZ/slot scan claims as data (false-positive compression) -- left rather than
-destabilise the data inference. Byte-perfect.
+never executed: `main` seeds those pointers so they decode -- 12 `INCBIN` blobs
+into 24 frame-task functions, several self-documenting (e.g. `Func_1d_4e76`
+decrements a timer then `ld hl, Func_1d_4e76 / call UnregisterFrameTask` to
+remove itself; mid-blob functions split their data prefix off cleanly). All
+427/427 `RegisterFrameTask` and 95/95 `UnregisterFrameTask` sites now name their
+task. Two correctness points: the seed runs *after* the jump-table descent
+fixpoint (some registration sites surface late), and it seeds only
+`RegisterFrameTask` targets -- `RunFrameTasks` executes the registered pointer
+so it is code, whereas an `UnregisterFrameTask` key can be a stale pointer into
+data (`RulesScreenTiles`, an LZ graphics stream, is unregistered but never
+registered; seeding it would wrongly carve the graphics as code). Byte-perfect.
 
 ### Name actor-engine functions from the spawn analysis (2026-07-20)
 

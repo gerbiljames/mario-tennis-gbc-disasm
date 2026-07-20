@@ -4105,10 +4105,52 @@ LoadUnlockDebugCursorGfx:
 	ld de, $0801 ; $68fb
 	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
-	ld hl, $6938 ; $6903
+	ld hl, Func_1b_6938 ; $6903
 	call RegisterFrameTask ; $6906
 	ret ; $6909
-	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 120 bytes
+	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 46 bytes
+Func_1b_6938:
+	ldh a, [hWramBank] ; $6938
+	push af ; $693a
+	wram_bank $06 ; $693b
+	ld hl, $d402 ; $6941
+	xor a, a ; $6944
+Label_1b_6945:
+	push af ; $6945
+	add a, a ; $6946
+	bit 0, [hl] ; $6947
+	inc hl ; $6949
+	jr z, Label_1b_695c ; $694a
+	push hl ; $694c
+	ld hl, $6968 ; $694d
+	add a, l ; $6950
+	ld l, a ; $6951
+	jr nc, Label_1b_6955 ; $6952
+	inc h ; $6954
+Label_1b_6955:
+	ld d, [hl] ; $6955
+	inc hl ; $6956
+	ld e, [hl] ; $6957
+	pop hl ; $6958
+	call Func_1b_6974 ; $6959
+Label_1b_695c:
+	pop af ; $695c
+	inc a ; $695d
+	cp a, $06 ; $695e
+	jr c, Label_1b_6945 ; $6960
+	pop af ; $6962
+	wram_bank ; $6963
+	ret ; $6967
+	INCBIN "data/bank_01b/d_6968.bin" ; $6968, 12 bytes
+Func_1b_6974:
+	push hl ; $6974
+	farcall FarPtr_ApplySpriteBobOffset_18 ; $6975
+	ld c, $50 ; $6978
+	ld b, $00 ; $697a
+	call QueueSprite ; $697c
+	pop hl ; $697f
+	ret ; $6980
+	ret ; $6981
 Func_1b_6982:
 	wram_bank $01 ; $6982
 	ld c, $20 ; $6988

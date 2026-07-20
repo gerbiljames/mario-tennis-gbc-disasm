@@ -1867,7 +1867,7 @@ def build_labels(dis, overrides=None, data_tables=None):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     rft = {int(k, 0) for k, n in (overrides or {}).items()
-           if n in FRAME_TASK_PTR_CALLS}
+           if n in FRAME_TASK_REGISTER}
     for target in frame_task_targets(dis, rft):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
@@ -1880,7 +1880,12 @@ def build_labels(dis, overrides=None, data_tables=None):
 
 
 # ROM0 helpers that take a task-function pointer in hl (`ld hl, fn; call ...`).
+# Both are matched when *resolving* a pointer load, but only RegisterFrameTask
+# targets are seeded/carved: RunFrameTasks executes the registered pointer, so
+# it is guaranteed code, whereas an UnregisterFrameTask key may be a stale
+# pointer into data (e.g. RulesScreenTiles, an LZ graphics stream).
 FRAME_TASK_PTR_CALLS = ("RegisterFrameTask", "UnregisterFrameTask")
+FRAME_TASK_REGISTER = ("RegisterFrameTask",)
 
 
 def frame_task_targets(dis, call_targets):
@@ -3762,12 +3767,6 @@ def main():
         # the pointers the tables embed so the code is decoded and the records
         # reference each handler by name.
         dis.seed(list(map_script_code_targets(rom, data_tables)))
-        # Frame-task functions installed via `ld hl, fn; call RegisterFrameTask`
-        # run only through the task dispatcher; those not hit by coverage stay
-        # INCBIN blobs. Seed the statically-visible pointers so the code decodes.
-        rft = {int(k, 0) for k, n in (overrides or {}).items()
-               if n in FRAME_TASK_PTR_CALLS}
-        dis.seed(list(frame_task_targets(dis, rft)))
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()
@@ -3776,6 +3775,15 @@ def main():
             if not dis.parse_jumptables():
                 break
             dis.descend()
+        # Frame-task functions installed via `ld hl, fn; call RegisterFrameTask`
+        # run only through the task dispatcher; those not hit by coverage stay
+        # INCBIN blobs. Seed after the jump-table fixpoint so all registration
+        # sites are decoded (some surface late through jump-table descent), then
+        # decode the pointed-at functions.
+        rft = {int(k, 0) for k, n in (overrides or {}).items()
+               if n in FRAME_TASK_REGISTER}
+        dis.seed(list(frame_task_targets(dis, rft)))
+        dis.descend()
     helpers = {}
     if overrides:
         for name, kind in (("CopyDataFromBank", "copy"),
