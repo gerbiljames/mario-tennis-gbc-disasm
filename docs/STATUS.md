@@ -16,10 +16,26 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `8acebf7`); the whole history rebuilds
+Everything below is **committed** (HEAD `abd354b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Symbolic dialogue text ids (2026-07-20)
+
+Made dialogue text references read symbolically instead of as raw hex. A text id
+(passed in hl to `FetchDialogueText`) is a `(fetcher, index)` code, not an
+address — so it can't be a label, and the string itself can't live in the
+committed tree (no ROM bytes). `disasm.py` now decodes each id to its text
+`bank:string-index` coordinate and renders it as `Text_<bank>_<index>`, backed
+by a generated `include/text_ids.inc` (`def Text_bb_iii equ $xxxx`; value = the
+raw id, so bytes are unchanged), added to the Makefile `PRELUDE`. Wired into the
+two unambiguous sites — `script_set_text` operands and `map_script` handlers
+`<$4000` (the dialogue-id handlers `RunStoryScriptOrDialogue` routes to
+`ShowSpeakerDialogue`). 586 ids named; read one with
+`tools/strings.py --index --bank <bank>` (e.g. `Text_5e_151` = "Yoshi!"). The
+per-NPC `records:2` dialogue tables (`dw $0c3b`) are still raw — they'd need a
+per-table text-id spec. Byte-perfect.
 
 ### Identify story NPCs (2026-07-20)
 
