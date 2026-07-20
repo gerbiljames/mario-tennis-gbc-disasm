@@ -34,10 +34,10 @@ FarPtr_AttachActorWaypointFollower:
 	dw AttachActorWaypointFollower ; $401e
 FarPtr_AttachActorStepMover:
 	dw AttachActorStepMover ; $4020
-FarPtr_04_22:
-	dw Func_04_534b ; $4022
-FarPtr_04_24:
-	dw Func_04_53d7 ; $4024
+FarPtr_IsTerrainBlockedAtPoint:
+	dw IsTerrainBlockedAtPoint ; $4022
+FarPtr_FindActorAtPoint:
+	dw FindActorAtPoint ; $4024
 FarPtr_04_26:
 	dw Func_04_54d7 ; $4026
 FarPtr_WaitActorMoveDone:
@@ -530,7 +530,7 @@ Label_04_4318:
 	ld e, l ; $434e
 	ld d, h ; $434f
 	pop hl ; $4350
-	call Func_04_537a ; $4351
+	call IsPointNearPlayer ; $4351
 	pop hl ; $4354
 	pop de ; $4355
 	and a, a ; $4356
@@ -1163,7 +1163,7 @@ Label_04_4710:
 	ld d, h ; $4728
 	ld l, c ; $4729
 	ld h, b ; $472a
-	call Func_04_534b ; $472b
+	call IsTerrainBlockedAtPoint ; $472b
 	and a, a ; $472e
 	jr nz, Label_04_4757 ; $472f
 	ld hl, hActorPtr ; $4731
@@ -1430,7 +1430,7 @@ Func_04_48c3:
 	and a, $fc ; $48ce
 	ld [$daf4], a ; $48d0
 	ld hl, $0100 ; $48d3
-	call Func_04_5113 ; $48d6
+	call ProjectPointFromActor ; $48d6
 	push de ; $48d9
 	push hl ; $48da
 	ld e, d ; $48db
@@ -1454,7 +1454,7 @@ Func_04_48c3:
 	ld a, [$daf4] ; $48f6
 	ld bc, $00e0 ; $48f9
 	call Func_04_512f ; $48fc
-	call Func_04_534b ; $48ff
+	call IsTerrainBlockedAtPoint ; $48ff
 	pop hl ; $4902
 	pop de ; $4903
 	and a, a ; $4904
@@ -1465,7 +1465,7 @@ Func_04_48c3:
 	add a, $20 ; $490c
 	ld bc, $00e0 ; $490e
 	call Func_04_512f ; $4911
-	call Func_04_534b ; $4914
+	call IsTerrainBlockedAtPoint ; $4914
 	pop hl ; $4917
 	pop de ; $4918
 	and a, a ; $4919
@@ -1476,7 +1476,7 @@ Func_04_48c3:
 	add a, $e0 ; $4921
 	ld bc, $00e0 ; $4923
 	call Func_04_512f ; $4926
-	call Func_04_534b ; $4929
+	call IsTerrainBlockedAtPoint ; $4929
 	pop hl ; $492c
 	pop de ; $492d
 	and a, a ; $492e
@@ -2303,8 +2303,9 @@ SetActorMoveTarget:
 	ld [hl+], a ; $506f
 	ld [hl], d ; $5070
 	ret ; $5071
+ActorHeadingOffsetTable:
 	INCBIN "data/bank_004/d_5072.bin" ; $5072, 96 bytes
-Func_04_50d2:
+GetPointAheadOfActorFixed:
 	rrca ; $50d2
 	rrca ; $50d3
 	rrca ; $50d4
@@ -2312,7 +2313,7 @@ Func_04_50d2:
 	ld d, a ; $50d7
 	ld a, $40 ; $50d8
 	jr Label_04_50ea ; $50da
-Func_04_50dc:
+GetPointAheadOfActorRanged:
 	rrca ; $50dc
 	rrca ; $50dd
 	rrca ; $50de
@@ -2360,7 +2361,7 @@ Label_04_50ea:
 	add hl, de ; $5110
 	pop de ; $5111
 	ret ; $5112
-Func_04_5113:
+ProjectPointFromActor:
 	call VectorFromLengthAndAngle ; $5113
 	push hl ; $5116
 	ld hl, $000e ; $5117
@@ -2400,7 +2401,7 @@ Func_04_512f:
 	ld l, c ; $513e
 	ld h, b ; $513f
 	ret ; $5140
-Func_04_5141:
+CheckTileTriggerAtPoint:
 	push af ; $5141
 	push de ; $5142
 	ld e, d ; $5143
@@ -2429,6 +2430,7 @@ Label_04_5168:
 	pop de ; $5168
 	pop af ; $5169
 	ret ; $516a
+UpdatePlayerControl:
 	wram_bank $04 ; $516b
 	call BuildNearbyActorList ; $5171
 	ld hl, hActorPtr ; $5174
@@ -2446,7 +2448,7 @@ Label_04_5168:
 	ld hl, $000d ; $518a
 	add hl, bc ; $518d
 	ld h, [hl] ; $518e
-	call Func_04_5141 ; $518f
+	call CheckTileTriggerAtPoint ; $518f
 Label_04_5192:
 	ldh a, [hInputRisingEdge] ; $5192
 	bit PADB_START, a ; $5194
@@ -2548,27 +2550,27 @@ Label_04_523f:
 	ld d, $00 ; $5242
 	jp nz, Label_04_52b5 ; $5244
 	ld a, [$daea] ; $5247
-	call Func_04_50d2 ; $524a
-	call Func_04_533d ; $524d
+	call GetPointAheadOfActorFixed ; $524a
+	call IsPointBlocked ; $524d
 	and a, a ; $5250
 	jr nz, Label_04_52a3 ; $5251
 	ld a, [$daea] ; $5253
 	add a, $20 ; $5256
-	call Func_04_50dc ; $5258
-	call Func_04_533d ; $525b
+	call GetPointAheadOfActorRanged ; $5258
+	call IsPointBlocked ; $525b
 	and a, a ; $525e
 	jr nz, Label_04_5283 ; $525f
 	ld a, [$daea] ; $5261
 	add a, $e0 ; $5264
-	call Func_04_50dc ; $5266
-	call Func_04_533d ; $5269
+	call GetPointAheadOfActorRanged ; $5266
+	call IsPointBlocked ; $5269
 	and a, a ; $526c
 	ld d, $00 ; $526d
 	jr z, Label_04_52b5 ; $526f
 	ld a, [$daea] ; $5271
 	add a, $40 ; $5274
-	call Func_04_50d2 ; $5276
-	call Func_04_533d ; $5279
+	call GetPointAheadOfActorFixed ; $5276
+	call IsPointBlocked ; $5279
 	and a, a ; $527c
 	ld d, $20 ; $527d
 	jr z, Label_04_52b5 ; $527f
@@ -2576,14 +2578,14 @@ Label_04_523f:
 Label_04_5283:
 	ld a, [$daea] ; $5283
 	add a, $e0 ; $5286
-	call Func_04_50dc ; $5288
-	call Func_04_533d ; $528b
+	call GetPointAheadOfActorRanged ; $5288
+	call IsPointBlocked ; $528b
 	and a, a ; $528e
 	jr nz, Label_04_52a3 ; $528f
 	ld a, [$daea] ; $5291
 	add a, $c0 ; $5294
-	call Func_04_50d2 ; $5296
-	call Func_04_533d ; $5299
+	call GetPointAheadOfActorFixed ; $5296
+	call IsPointBlocked ; $5299
 	and a, a ; $529c
 	ld d, $e0 ; $529d
 	jr z, Label_04_52b5 ; $529f
@@ -2606,8 +2608,8 @@ Label_04_52b5:
 	ld l, a ; $52bb
 	ld a, [$daea] ; $52bc
 	add a, d ; $52bf
-	call Func_04_5113 ; $52c0
-	call Func_04_5141 ; $52c3
+	call ProjectPointFromActor ; $52c0
+	call CheckTileTriggerAtPoint ; $52c3
 	call SetActorMoveTarget ; $52c6
 	ld hl, $0005 ; $52c9
 	add hl, bc ; $52cc
@@ -2677,17 +2679,17 @@ Label_04_52e7:
 	xor a, a ; $532b
 	ret ; $532c
 	INCBIN "data/bank_004/d_532d.bin" ; $532d, 16 bytes
-Func_04_533d:
-	call Func_04_534b ; $533d
+IsPointBlocked:
+	call IsTerrainBlockedAtPoint ; $533d
 	and a, a ; $5340
 	jr nz, Label_04_5348 ; $5341
-	call Func_04_53d7 ; $5343
+	call FindActorAtPoint ; $5343
 	jr Label_04_534a ; $5346
 Label_04_5348:
 	or a, $80 ; $5348
 Label_04_534a:
 	ret ; $534a
-Func_04_534b:
+IsTerrainBlockedAtPoint:
 	push de ; $534b
 	ld e, d ; $534c
 	ld d, h ; $534d
@@ -2727,7 +2729,7 @@ Label_04_5377:
 	ld a, $ff ; $5377
 Label_04_5379:
 	ret ; $5379
-Func_04_537a:
+IsPointNearPlayer:
 	push bc ; $537a
 	push de ; $537b
 	push hl ; $537c
@@ -2801,7 +2803,7 @@ Label_04_53d3:
 	pop de ; $53d4
 	pop bc ; $53d5
 	ret ; $53d6
-Func_04_53d7:
+FindActorAtPoint:
 	push bc ; $53d7
 	push de ; $53d8
 	push hl ; $53d9

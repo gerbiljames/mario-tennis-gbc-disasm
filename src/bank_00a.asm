@@ -2615,21 +2615,21 @@ FindActorFacingPlayer:
 	ld a, $00 ; $5251
 	call GetPointAheadOfActor ; $5253
 Label_0a_5256:
-	farcall FarPtr_04_24 ; $5256
+	farcall FarPtr_FindActorAtPoint ; $5256
 	and a, a ; $5259
 	jr nz, Label_0a_527b ; $525a
 	ld hl, $d000 ; $525c
 	ld de, $0180 ; $525f
 	ld a, $f0 ; $5262
 	call GetPointAheadOfActor ; $5264
-	farcall FarPtr_04_24 ; $5267
+	farcall FarPtr_FindActorAtPoint ; $5267
 	and a, a ; $526a
 	jr nz, Label_0a_527b ; $526b
 	ld hl, $d000 ; $526d
 	ld de, $0180 ; $5270
 	ld a, $10 ; $5273
 	call GetPointAheadOfActor ; $5275
-	farcall FarPtr_04_24 ; $5278
+	farcall FarPtr_FindActorAtPoint ; $5278
 Label_0a_527b:
 	pop hl ; $527b
 	pop de ; $527c

@@ -82,6 +82,19 @@ load sites now read the label), and `FacingToPadBitTable` ($0a:$53b9, the
 split out of its data blob). Story cutscenes turned out to `farcall` the
 step-mover installer, so those sites now read meaningfully too.
 
+Then identified the movement/geometry helper cluster the follower/facing code
+leans on (10 more `labels.json` names, byte-perfect): `UpdatePlayerControl`
+($04:$516b, the per-frame player input handler — A=interact, START=menu, d-pad
+=move; the script the `$41d2` pool entry `as_call`s), `CheckTileTriggerAtPoint`
+($5141, reads the behavior map and raises `wStoryModeTriggerScript`/
+`ExitLocationRequest`), `IsPointBlocked` ($533d) = `IsTerrainBlockedAtPoint`
+($534b, collision map) + `FindActorAtPoint` ($53d7, scans the nearby-actor list
+at $da00), `IsPointNearPlayer` ($537a, distance² vs threshold),
+`ProjectPointFromActor` ($5113, via `VectorFromLengthAndAngle`),
+`GetPointAheadOfActorFixed`/`Ranged` ($50d2/$50dc, look up
+`ActorHeadingOffsetTable` at $5072). These are the primitives the actor
+obstacle-avoidance loop ($5227+) and NPC-interaction detection use.
+
 ### Reserved actor-slot constants (2026-07-20)
 
 Extended the actor-slot naming to the other two reserved system slots, adopting
