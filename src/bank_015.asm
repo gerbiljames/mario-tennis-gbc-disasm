@@ -71,7 +71,7 @@ Label_15_4128:
 	script_speak $05 ; $4139
 	ret ; $413e
 Label_15_413f:
-	script_set_text $2420 ; $413f
+	script_set_text Text_1f_32 ; $413f
 	script_speak $05 ; $4145
 	ret ; $414a
 	; $414b, 14 bytes (records:2)
@@ -84,13 +84,13 @@ Label_15_413f:
 	dw $244a ; record 6
 TournamentCourtyardNpcScripts_15:
 	; $4159, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, $241c, $13, $00
-	map_script $04, $ff, $0000, $241d, $03, $00
+	map_script $03, $ff, $0000, Text_1f_28, $13, $00
+	map_script $04, $ff, $0000, Text_1f_29, $03, $00
 	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, $2421, $13, $00
-	map_script $07, $ff, $0000, $2422, $03, $00
-	map_script $08, $ff, $0000, $2423, $03, $00
-	map_script $09, $ff, $0000, $2424, $03, $00
+	map_script $06, $ff, $0000, Text_1f_33, $13, $00
+	map_script $07, $ff, $0000, Text_1f_34, $03, $00
+	map_script $08, $ff, $0000, Text_1f_35, $03, $00
+	map_script $09, $ff, $0000, Text_1f_36, $03, $00
 	db $ff
 TournamentCourtyardFacingScripts_15:
 	; $4192, 9 bytes (map_scripts)
@@ -200,63 +200,63 @@ Label_15_42e8:
 	ret ; $42f6
 TournamentSiteScripts1_15:
 	; $42f7, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, $2425, $13, $00
-	map_script $04, $ff, $0000, $2426, $03, $00
+	map_script $03, $ff, $0000, Text_1f_37, $13, $00
+	map_script $04, $ff, $0000, Text_1f_38, $03, $00
 	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, $2429, $13, $00
-	map_script $07, $ff, $0000, $242a, $03, $00
-	map_script $08, $ff, $0000, $242b, $03, $00
-	map_script $09, $ff, $0000, $242c, $03, $00
+	map_script $06, $ff, $0000, Text_1f_41, $13, $00
+	map_script $07, $ff, $0000, Text_1f_42, $03, $00
+	map_script $08, $ff, $0000, Text_1f_43, $03, $00
+	map_script $09, $ff, $0000, Text_1f_44, $03, $00
 	db $ff
 TournamentSiteScripts2_15:
 	; $4330, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, $242d, $13, $00
-	map_script $04, $ff, $0000, $242e, $03, $00
+	map_script $03, $ff, $0000, Text_1f_45, $13, $00
+	map_script $04, $ff, $0000, Text_1f_46, $03, $00
 	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, $242f, $13, $00
-	map_script $07, $ff, $0000, $2430, $03, $00
-	map_script $08, $ff, $0000, $2431, $03, $00
-	map_script $09, $ff, $0000, $2432, $03, $00
+	map_script $06, $ff, $0000, Text_1f_47, $13, $00
+	map_script $07, $ff, $0000, Text_1f_48, $03, $00
+	map_script $08, $ff, $0000, Text_1f_49, $03, $00
+	map_script $09, $ff, $0000, Text_1f_50, $03, $00
 	db $ff
 TournamentSiteScripts3_15:
 	; $4369, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, $2433, $13, $00
-	map_script $04, $ff, $0000, $2434, $03, $00
+	map_script $03, $ff, $0000, Text_1f_51, $13, $00
+	map_script $04, $ff, $0000, Text_1f_52, $03, $00
 	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, $2435, $13, $00
-	map_script $07, $ff, $0000, $2436, $03, $00
-	map_script $08, $ff, $0000, $2437, $03, $00
-	map_script $09, $ff, $0000, $2438, $03, $00
+	map_script $06, $ff, $0000, Text_1f_53, $13, $00
+	map_script $07, $ff, $0000, Text_1f_54, $03, $00
+	map_script $08, $ff, $0000, Text_1f_55, $03, $00
+	map_script $09, $ff, $0000, Text_1f_56, $03, $00
 	db $ff
 TournamentSiteScripts4_15:
 	; $43a2, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, $241c, $13, $00
-	map_script $04, $ff, $0000, $2439, $03, $00
+	map_script $03, $ff, $0000, Text_1f_28, $13, $00
+	map_script $04, $ff, $0000, Text_1f_57, $03, $00
 	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, $243c, $13, $00
-	map_script $07, $ff, $0000, $243d, $03, $00
-	map_script $08, $ff, $0000, $243e, $03, $00
-	map_script $09, $ff, $0000, $243f, $03, $00
+	map_script $06, $ff, $0000, Text_1f_60, $13, $00
+	map_script $07, $ff, $0000, Text_1f_61, $03, $00
+	map_script $08, $ff, $0000, Text_1f_62, $03, $00
+	map_script $09, $ff, $0000, Text_1f_63, $03, $00
 	db $ff
 TournamentSiteScripts5_15:
 	; $43db, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, $2440, $13, $00
-	map_script $04, $ff, $0000, $2441, $03, $00
+	map_script $03, $ff, $0000, Text_1f_64, $13, $00
+	map_script $04, $ff, $0000, Text_1f_65, $03, $00
 	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, $2444, $13, $00
-	map_script $07, $ff, $0000, $2445, $03, $00
-	map_script $08, $ff, $0000, $2446, $03, $00
-	map_script $09, $ff, $0000, $2447, $03, $00
+	map_script $06, $ff, $0000, Text_1f_68, $13, $00
+	map_script $07, $ff, $0000, Text_1f_69, $03, $00
+	map_script $08, $ff, $0000, Text_1f_70, $03, $00
+	map_script $09, $ff, $0000, Text_1f_71, $03, $00
 	db $ff
 TournamentSiteScripts6_15:
 	; $4414, 57 bytes (map_scripts)
-	map_script $03, $ff, $0000, $2448, $13, $00
-	map_script $04, $ff, $0000, $2449, $03, $00
+	map_script $03, $ff, $0000, Text_1f_72, $13, $00
+	map_script $04, $ff, $0000, Text_1f_73, $03, $00
 	map_script $05, $ff, $0000, TournamentCourtyardNpc05_15, $13, $00
-	map_script $06, $ff, $0000, $244c, $13, $00
-	map_script $07, $ff, $0000, $244d, $03, $00
-	map_script $08, $ff, $0000, $244e, $03, $00
-	map_script $09, $ff, $0000, $244f, $03, $00
+	map_script $06, $ff, $0000, Text_1f_76, $13, $00
+	map_script $07, $ff, $0000, Text_1f_77, $03, $00
+	map_script $08, $ff, $0000, Text_1f_78, $03, $00
+	map_script $09, $ff, $0000, Text_1f_79, $03, $00
 	db $ff
 TournamentSiteArrivalScene:
 	ldh a, [hRomBank] ; $444d
@@ -285,7 +285,7 @@ TournamentSiteArrivalScene:
 	script_wait_move $00 ; $44f9
 	script_wait_frames $28 ; $44fe
 	script_face $03, $40 ; $4505
-	script_set_text $240d ; $450c
+	script_set_text Text_1f_13 ; $450c
 	script_speak $03 ; $4512
 	script_set_anim $04, $03 ; $4517
 	script_set_anim $05, $03 ; $451e
@@ -760,7 +760,7 @@ TrainingCourtNpc13_15:
 	ld hl, $0018 ; $4b34
 	add hl, de ; $4b37
 	ld [hl], a ; $4b38
-	script_set_text $1a9f ; $4b39
+	script_set_text Text_36_671 ; $4b39
 	ld a, $13 ; $4b3f
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4b41
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4b44
@@ -860,7 +860,7 @@ Func_15_4d07:
 	farcall FarPtr_WaitPlayerMoveDone ; $4d1c
 	script_move_player $3300, $0c00 ; $4d1f
 	farcall FarPtr_WaitPlayerMoveDone ; $4d29
-	script_set_text $1aa3 ; $4d2c
+	script_set_text Text_36_675 ; $4d2c
 	script_speak $00 ; $4d32
 	script_set_position $16, $3f00, $3f00 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
@@ -876,7 +876,7 @@ Label_15_4d5c:
 	ret ; $4d5c
 WaterSpriteRacketRewardScene:
 	script_wait_frames $3c ; $4d5d
-	script_set_text $1aa5 ; $4d64
+	script_set_text Text_36_677 ; $4d64
 	script_speak $14 ; $4d6a
 	script_wait_frames $1e ; $4d6f
 	script_face $00, $80 ; $4d76
@@ -989,7 +989,7 @@ Label_15_4ef5:
 	script_set_position $17, $3f00, $3f00 ; $4f72
 	script_set_anim $14, $03 ; $4f7d
 	script_wait_idle $14 ; $4f84
-	script_set_text $1aab ; $4f89
+	script_set_text Text_36_683 ; $4f89
 	script_speak $14 ; $4f8f
 	script_wait_frames $32 ; $4f94
 	sound $90 ; $4f9b
@@ -1090,10 +1090,10 @@ Label_15_5148:
 	call Func_15_677e ; $5157
 	ret ; $515a
 Label_15_515b:
-	script_set_text $1c21 ; $515b
+	script_set_text Text_37_33 ; $515b
 	test_flag $0a, 3 ; $5161
 	jr z, Label_15_516c ; $5164
-	script_set_text $1c22 ; $5166
+	script_set_text Text_37_34 ; $5166
 Label_15_516c:
 	script_speak $07 ; $516c
 	ret ; $5171
@@ -1107,15 +1107,15 @@ Label_15_5172:
 	call Func_15_67fc ; $5181
 	ret ; $5184
 Label_15_5185:
-	script_set_text $1c32 ; $5185
+	script_set_text Text_37_50 ; $5185
 	test_flag $0a, 7 ; $518b
 	jr z, Label_15_5196 ; $518e
-	script_set_text $1c22 ; $5190
+	script_set_text Text_37_34 ; $5190
 Label_15_5196:
 	script_speak $07 ; $5196
 	ret ; $519b
 Label_15_519c:
-	script_set_text $1c3d ; $519c
+	script_set_text Text_37_61 ; $519c
 	script_speak $07 ; $51a2
 	ret ; $51a7
 TrainingCourtNpc11_15:
@@ -1153,10 +1153,10 @@ Label_15_51f4:
 	call NetCoachSmashLessonScene ; $5203
 	ret ; $5206
 Label_15_5207:
-	script_set_text $1c80 ; $5207
+	script_set_text Text_37_128 ; $5207
 	test_flag $0a, 7 ; $520d
 	jr z, Label_15_5218 ; $5210
-	script_set_text $1c83 ; $5212
+	script_set_text Text_37_131 ; $5212
 Label_15_5218:
 	script_speak $12 ; $5218
 	ret ; $521d
@@ -1170,15 +1170,15 @@ Label_15_521e:
 	call NetCoachDropShotLessonScene ; $522d
 	ret ; $5230
 Label_15_5231:
-	script_set_text $1c9e ; $5231
+	script_set_text Text_37_158 ; $5231
 	test_flag $0a, 7 ; $5237
 	jr z, Label_15_5242 ; $523a
-	script_set_text $1c9c ; $523c
+	script_set_text Text_37_156 ; $523c
 Label_15_5242:
 	script_speak $12 ; $5242
 	ret ; $5247
 Label_15_5248:
-	script_set_text $1cbb ; $5248
+	script_set_text Text_37_187 ; $5248
 	script_speak $12 ; $524e
 	ret ; $5253
 TrainingCourtNpc0C_15:
@@ -1216,13 +1216,13 @@ Label_15_52a0:
 	call ReturnCoachLobLessonScene ; $52af
 	ret ; $52b2
 Label_15_52b3:
-	script_set_text $1ce1 ; $52b3
+	script_set_text Text_37_225 ; $52b3
 	test_flag $0a, 3 ; $52b9
 	jr z, Label_15_52cf ; $52bc
-	script_set_text $1ce2 ; $52be
+	script_set_text Text_37_226 ; $52be
 	test_flag $0a, 7 ; $52c4
 	jr z, Label_15_52cf ; $52c7
-	script_set_text $1ce2 ; $52c9
+	script_set_text Text_37_226 ; $52c9
 Label_15_52cf:
 	script_speak $0d ; $52cf
 	ret ; $52d4
@@ -1236,11 +1236,11 @@ Label_15_52d5:
 	call ReturnCoachPassingShotLessonScene ; $52e4
 	ret ; $52e7
 Label_15_52e8:
-	script_set_text $1cf8 ; $52e8
+	script_set_text Text_37_248 ; $52e8
 	script_speak $0d ; $52ee
 	ret ; $52f3
 Label_15_52f4:
-	script_set_text $2012 ; $52f4
+	script_set_text Text_6e_18 ; $52f4
 	script_speak $0d ; $52fa
 	ret ; $52ff
 TrainingCourtFacingScripts_15:
@@ -1651,7 +1651,7 @@ Label_15_572a:
 	call UnregisterFrameTask ; $575b
 	call WaitFramesCmd ; $575e
 	db $3c ; $5761 inline arg
-	script_set_text $1aa4 ; $5762
+	script_set_text Text_36_676 ; $5762
 	ld hl, wWaterSpriteMinigameSwingCount ; $5768
 	ld a, [hl+] ; $576b
 	ld h, [hl] ; $576c
@@ -1781,7 +1781,7 @@ TrainingCourtIntroTourScene:
 	script_wait_frames $3c ; $5a84
 	script_face $0d, $00 ; $5a8b
 	script_player_speed $0040 ; $5a92
-	script_set_text $1a73 ; $5a98
+	script_set_text Text_36_627 ; $5a98
 	script_speak $0d ; $5a9e
 	script_set_anim $00, $03 ; $5aa3
 	script_wait_idle $00 ; $5aaa
@@ -2586,7 +2586,7 @@ Label_15_63b9:
 	ret ; $63e0
 Func_15_63e1:
 	script_face_toward $06, $02 ; $63e1
-	script_set_text $2014 ; $63e9
+	script_set_text Text_6e_20 ; $63e9
 	ld a, $06 ; $63ef
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $63f1
 	farcall FarPtr_RunDialogueYesNoPrompt ; $63f4
@@ -2636,7 +2636,7 @@ Label_15_64a2:
 	ret ; $64a7
 Func_15_64a8:
 	script_face_toward $06, $02 ; $64a8
-	script_set_text $2026 ; $64b0
+	script_set_text Text_6e_38 ; $64b0
 	ld a, $06 ; $64b6
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $64b8
 	farcall FarPtr_RunDialogueYesNoPrompt ; $64bb
@@ -2688,7 +2688,7 @@ Func_15_64a8:
 	ret ; $6585
 Func_15_6586:
 	script_face_toward $06, $02 ; $6586
-	script_set_text $2034 ; $658e
+	script_set_text Text_6e_52 ; $658e
 	ld a, $06 ; $6594
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6596
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6599
@@ -2785,10 +2785,10 @@ Func_15_66f5:
 	script_face_toward $07, $02 ; $66f5
 	test_flag $0a, 3 ; $66fd
 	jr nz, Label_15_670a ; $6700
-	script_set_text $1c10 ; $6702
+	script_set_text Text_37_16 ; $6702
 	jr Label_15_6710 ; $6708
 Label_15_670a:
-	script_set_text $1c16 ; $670a
+	script_set_text Text_37_22 ; $670a
 Label_15_6710:
 	ld a, $07 ; $6710
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6712
@@ -2827,7 +2827,7 @@ Label_15_6710:
 	ret ; $677d
 Func_15_677e:
 	script_face_toward $07, $02 ; $677e
-	script_set_text $1c24 ; $6786
+	script_set_text Text_37_36 ; $6786
 	ld a, $07 ; $678c
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $678e
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6791
@@ -2865,7 +2865,7 @@ Func_15_677e:
 	ret ; $67fb
 Func_15_67fc:
 	script_face_toward $07, $02 ; $67fc
-	script_set_text $1c33 ; $6804
+	script_set_text Text_37_51 ; $6804
 	ld a, $07 ; $680a
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $680c
 	farcall FarPtr_RunDialogueYesNoPrompt ; $680f
@@ -2904,7 +2904,7 @@ Func_15_67fc:
 	INCBIN "data/bank_015/d_687a.bin" ; $687a, 21 bytes
 Func_15_688f:
 	script_face_toward $11, $02 ; $688f
-	script_set_text $2040 ; $6897
+	script_set_text Text_6e_64 ; $6897
 	ld a, $11 ; $689d
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $689f
 	farcall FarPtr_RunDialogueYesNoPrompt ; $68a2
@@ -2929,7 +2929,7 @@ Func_15_688f:
 	and a, a ; $68e1
 	jp z, Label_15_6900 ; $68e2
 Label_15_68e5:
-	script_set_text $2045 ; $68e5
+	script_set_text Text_6e_69 ; $68e5
 	ld a, $11 ; $68eb
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $68ed
 	farcall FarPtr_RunDialogueYesNoPrompt ; $68f0
@@ -2938,7 +2938,7 @@ Label_15_68e5:
 	and a, a ; $68fd
 	jr nz, Label_15_68e5 ; $68fe
 Label_15_6900:
-	script_set_text $2046 ; $6900
+	script_set_text Text_6e_70 ; $6900
 	script_set_anim $11, $03 ; $6906
 	script_wait_idle $11 ; $690d
 	script_face $11, $80 ; $6912
@@ -2961,7 +2961,7 @@ Label_15_695d:
 	ret ; $6962
 Func_15_6963:
 	script_face_toward $11, $02 ; $6963
-	script_set_text $2055 ; $696b
+	script_set_text Text_6e_85 ; $696b
 	ld a, $11 ; $6971
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6973
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6976
@@ -3008,7 +3008,7 @@ Label_15_6a27:
 	ret ; $6a2c
 Func_15_6a2d:
 	script_face_toward $11, $02 ; $6a2d
-	script_set_text $2062 ; $6a35
+	script_set_text Text_6e_98 ; $6a35
 	ld a, $11 ; $6a3b
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6a3d
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6a40
@@ -3105,7 +3105,7 @@ Label_15_6b8e:
 	ret ; $6b93
 StrokeMatchChallengeScene:
 	script_face_toward $0c, $02 ; $6b94
-	script_set_text $206f ; $6b9c
+	script_set_text Text_6e_111 ; $6b9c
 	ld a, $0c ; $6ba2
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6ba4
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6ba7
@@ -3144,7 +3144,7 @@ StrokeMatchChallengeScene:
 	ret ; $6c3b
 LobMatchChallengeScene:
 	script_face_toward $0c, $02 ; $6c3c
-	script_set_text $2085 ; $6c44
+	script_set_text Text_6e_133 ; $6c44
 	ld a, $0c ; $6c4a
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6c4c
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6c4f
@@ -3183,7 +3183,7 @@ LobMatchChallengeScene:
 	ret ; $6ce3
 ReturnMatchChallengeScene:
 	script_face_toward $0c, $02 ; $6ce4
-	script_set_text $2095 ; $6cec
+	script_set_text Text_6e_149 ; $6cec
 	ld a, $0c ; $6cf2
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6cf4
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6cf7
@@ -3230,7 +3230,7 @@ Label_15_6dae:
 	script_speak $0d ; $6dae
 	ret ; $6db3
 ReturnCoachReturnLessonScene:
-	script_set_text $1cc4 ; $6db4
+	script_set_text Text_37_196 ; $6db4
 	test_flag $0a, 3 ; $6dba
 	jr z, Label_15_6dc2 ; $6dbd
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6dbf
@@ -3238,7 +3238,7 @@ Label_15_6dc2:
 	script_face_toward $0d, $02 ; $6dc2
 	ld a, $0d ; $6dca
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6dcc
-	script_set_text $1cc6 ; $6dcf
+	script_set_text Text_37_198 ; $6dcf
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6dd5
 	farcall FarPtr_ScriptCloseDialogueWindow ; $6dd8
 	script_wait_frames $05 ; $6ddb
@@ -3256,7 +3256,7 @@ Label_15_6dc2:
 	script_speak $0d ; $6e02
 	call MovePartyToReturnCoachSpot ; $6e07
 	script_face $0d, $00 ; $6e0a
-	script_set_text $1cca ; $6e11
+	script_set_text Text_37_202 ; $6e11
 	script_speak $0d ; $6e17
 	script_set_anim $0d, $02 ; $6e1c
 	script_wait_idle $0d ; $6e23
@@ -3276,7 +3276,7 @@ Label_15_6dc2:
 	ret ; $6e4a
 ReturnCoachLobLessonScene:
 	script_face_toward $0d, $02 ; $6e4b
-	script_set_text $1ce3 ; $6e53
+	script_set_text Text_37_227 ; $6e53
 	ld a, $0d ; $6e59
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6e5b
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6e5e
@@ -3315,7 +3315,7 @@ ReturnCoachLobLessonScene:
 	ret ; $6ecd
 ReturnCoachPassingShotLessonScene:
 	script_face_toward $0d, $02 ; $6ece
-	script_set_text $1cf9 ; $6ed6
+	script_set_text Text_37_249 ; $6ed6
 	ld a, $0d ; $6edc
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6ede
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6ee1
@@ -3396,10 +3396,10 @@ NetCoachVolleyLessonScene:
 	script_face_toward $12, $02 ; $6fcf
 	test_flag $0a, 3 ; $6fd7
 	jr nz, Label_15_6fe4 ; $6fda
-	script_set_text $1c5d ; $6fdc
+	script_set_text Text_37_93 ; $6fdc
 	jr Label_15_6fea ; $6fe2
 Label_15_6fe4:
-	script_set_text $1c64 ; $6fe4
+	script_set_text Text_37_100 ; $6fe4
 Label_15_6fea:
 	ld a, $12 ; $6fea
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6fec
@@ -3423,7 +3423,7 @@ Label_15_6fea:
 	script_speak $12 ; $7029
 	script_set_anim $12, $02 ; $702e
 	script_wait_idle $12 ; $7035
-	script_set_text $1c63 ; $703a
+	script_set_text Text_37_99 ; $703a
 	script_speak $12 ; $7040
 	ld a, $09 ; $7045
 	ld [$c8f7], a ; $7047
@@ -3444,7 +3444,7 @@ Label_15_7068:
 	ret ; $706d
 NetCoachSmashLessonScene:
 	script_face_toward $12, $02 ; $706e
-	script_set_text $1c86 ; $7076
+	script_set_text Text_37_134 ; $7076
 	ld a, $12 ; $707c
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $707e
 	farcall FarPtr_RunDialogueYesNoPrompt ; $7081
@@ -3495,7 +3495,7 @@ NetCoachSmashLessonScene:
 	ret ; $711c
 NetCoachDropShotLessonScene:
 	script_face_toward $12, $02 ; $711d
-	script_set_text $1c9f ; $7125
+	script_set_text Text_37_159 ; $7125
 	ld a, $12 ; $712b
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $712d
 	farcall FarPtr_RunDialogueYesNoPrompt ; $7130
@@ -3698,7 +3698,7 @@ Label_15_72b4:
 	dw Label_15_73f0 ; $72c5 jumptable
 Label_15_72c7:
 	call InitServeCoachScene ; $72c7
-	script_set_text $1c1c ; $72ca
+	script_set_text Text_37_28 ; $72ca
 	script_speak $07 ; $72d0
 	test_flag $0a, 3 ; $72d5
 	jr z, Label_15_72dd ; $72d8
@@ -3710,7 +3710,7 @@ Label_15_72dd:
 	script_speak $07 ; $72f1
 	script_set_anim $07, $02 ; $72f6
 	script_wait_idle $07 ; $72fd
-	script_set_text $1c1f ; $7302
+	script_set_text Text_37_31 ; $7302
 	script_speak $07 ; $7308
 	script_set_anim $07, $04 ; $730d
 	script_wait_idle $07 ; $7314
@@ -3725,10 +3725,10 @@ Label_15_7326:
 	ret ; $7335
 Label_15_7336:
 	call InitServeCoachScene ; $7336
-	script_set_text $1c2a ; $7339
+	script_set_text Text_37_42 ; $7339
 	test_flag $0a, 7 ; $733f
 	jr z, Label_15_734a ; $7342
-	script_set_text $1c2e ; $7344
+	script_set_text Text_37_46 ; $7344
 Label_15_734a:
 	script_speak $07 ; $734a
 	script_face_toward $00, $07 ; $734f
@@ -3747,7 +3747,7 @@ Label_15_734a:
 	ret ; $739b
 Label_15_739c:
 	call InitServeCoachScene ; $739c
-	script_set_text $1c39 ; $739f
+	script_set_text Text_37_57 ; $739f
 	script_speak $07 ; $73a5
 	script_face_toward $00, $07 ; $73aa
 	script_set_anim $07, $03 ; $73b2
@@ -3764,47 +3764,47 @@ Label_15_739c:
 	ret ; $73ef
 Label_15_73f0:
 	call InitServeCoachScene ; $73f0
-	script_set_text $1c3e ; $73f3
+	script_set_text Text_37_62 ; $73f3
 	call ServeCoachChainedRetryPrompt ; $73f9
 	ret ; $73fc
 Label_15_73fd:
 	call InitServeCoachScene ; $73fd
-	script_set_text $1c43 ; $7400
+	script_set_text Text_37_67 ; $7400
 	call ServeCoachTwoStageRetryPrompt ; $7406
 	ret ; $7409
 Label_15_740a:
 	call InitServeCoachScene ; $740a
-	script_set_text $1c48 ; $740d
+	script_set_text Text_37_72 ; $740d
 	call ServeCoachRetryPrompt ; $7413
 	ret ; $7416
 Label_15_7417:
 	call InitServeCoachScene ; $7417
-	script_set_text $1c4b ; $741a
+	script_set_text Text_37_75 ; $741a
 	call ServeCoachRetryPrompt ; $7420
 	ret ; $7423
 Label_15_7424:
 	call InitServeCoachScene ; $7424
-	script_set_text $1c4e ; $7427
+	script_set_text Text_37_78 ; $7427
 	call ServeCoachRetryPrompt ; $742d
 	ret ; $7430
 Label_15_7431:
 	call InitServeCoachScene ; $7431
-	script_set_text $1c51 ; $7434
+	script_set_text Text_37_81 ; $7434
 	call ServeCoachRetryPrompt ; $743a
 	ret ; $743d
 Label_15_743e:
 	call InitServeCoachScene ; $743e
-	script_set_text $1c54 ; $7441
+	script_set_text Text_37_84 ; $7441
 	call ServeCoachRetryPrompt ; $7447
 	ret ; $744a
 Label_15_744b:
 	call InitServeCoachScene ; $744b
-	script_set_text $1c57 ; $744e
+	script_set_text Text_37_87 ; $744e
 	call ServeCoachRetryPrompt ; $7454
 	ret ; $7457
 Label_15_7458:
 	call InitServeCoachScene ; $7458
-	script_set_text $1c5a ; $745b
+	script_set_text Text_37_90 ; $745b
 	call ServeCoachRetryPrompt ; $7461
 	ret ; $7464
 ServeCoachChainedRetryPrompt:
@@ -3843,10 +3843,10 @@ Label_15_74b3:
 	script_wait_frames $05 ; $74be
 	and a, a ; $74c5
 	jp z, Label_15_74d2 ; $74c6
-	script_set_text $1c47 ; $74c9
+	script_set_text Text_37_71 ; $74c9
 	jp Label_15_752c ; $74cf
 Label_15_74d2:
-	script_set_text $1c41 ; $74d2
+	script_set_text Text_37_65 ; $74d2
 	script_speak $07 ; $74d8
 	call ServeCoachWalkToCourtAndStartLesson ; $74dd
 	ret ; $74e0
@@ -3906,13 +3906,13 @@ Label_15_7563:
 	dw Label_15_76c0 ; $7576 jumptable
 	dw Label_15_768c ; $7578 jumptable
 Label_15_757a:
-	script_set_text $1c7e ; $757a
+	script_set_text Text_37_126 ; $757a
 	call InitNetCoachScene ; $7580
 	script_speak $12 ; $7583
 	script_face_toward $00, $12 ; $7588
 	test_flag $0a, 3 ; $7590
 	jr z, Label_15_759b ; $7593
-	script_set_text $1c82 ; $7595
+	script_set_text Text_37_130 ; $7595
 Label_15_759b:
 	script_set_anim $12, $03 ; $759b
 	script_wait_idle $12 ; $75a2
@@ -3928,14 +3928,14 @@ Label_15_759b:
 	ret ; $75d8
 Label_15_75d9:
 	call InitNetCoachScene ; $75d9
-	script_set_text $1c97 ; $75dc
+	script_set_text Text_37_151 ; $75dc
 	script_speak $12 ; $75e2
 	script_face_toward $00, $12 ; $75e7
 	script_set_anim $12, $03 ; $75ef
 	script_wait_idle $12 ; $75f6
 	test_flag $0a, 7 ; $75fb
 	jr z, Label_15_7606 ; $75fe
-	script_set_text $1c9b ; $7600
+	script_set_text Text_37_155 ; $7600
 Label_15_7606:
 	script_speak $12 ; $7606
 	script_set_anim $12, $02 ; $760b
@@ -3949,7 +3949,7 @@ Label_15_7606:
 	ret ; $7637
 Label_15_7638:
 	call InitNetCoachScene ; $7638
-	script_set_text $1cb7 ; $763b
+	script_set_text Text_37_183 ; $763b
 	script_speak $12 ; $7641
 	script_face_toward $00, $12 ; $7646
 	script_set_anim $12, $03 ; $764e
@@ -3966,62 +3966,62 @@ Label_15_7638:
 	ret ; $768b
 Label_15_768c:
 	call InitNetCoachScene ; $768c
-	script_set_text $1c6b ; $768f
+	script_set_text Text_37_107 ; $768f
 	call NetCoachResultRetryPrompt ; $7695
 	ret ; $7698
 Label_15_7699:
 	call InitNetCoachScene ; $7699
-	script_set_text $1c6f ; $769c
+	script_set_text Text_37_111 ; $769c
 	call NetCoachResultRetryPrompt ; $76a2
 	ret ; $76a5
 Label_15_76a6:
 	call InitNetCoachScene ; $76a6
-	script_set_text $1c73 ; $76a9
+	script_set_text Text_37_115 ; $76a9
 	call NetCoachResultRetryPrompt ; $76af
 	ret ; $76b2
 Label_15_76b3:
 	call InitNetCoachScene ; $76b3
-	script_set_text $1c77 ; $76b6
+	script_set_text Text_37_119 ; $76b6
 	call NetCoachResultRetryPrompt ; $76bc
 	ret ; $76bf
 Label_15_76c0:
 	call InitNetCoachScene ; $76c0
-	script_set_text $1c7b ; $76c3
+	script_set_text Text_37_123 ; $76c3
 	call NetCoachRetryPrompt ; $76c9
 	ret ; $76cc
 Label_15_76cd:
 	call InitNetCoachScene ; $76cd
-	script_set_text $1c90 ; $76d0
+	script_set_text Text_37_144 ; $76d0
 	call NetCoachResultRetryPrompt ; $76d6
 	ret ; $76d9
 Label_15_76da:
 	call InitNetCoachScene ; $76da
-	script_set_text $1c94 ; $76dd
+	script_set_text Text_37_148 ; $76dd
 	call NetCoachRetryPrompt ; $76e3
 	ret ; $76e6
 Label_15_76e7:
 	call InitNetCoachScene ; $76e7
-	script_set_text $1cac ; $76ea
+	script_set_text Text_37_172 ; $76ea
 	call NetCoachResultRetryPrompt ; $76f0
 	ret ; $76f3
 Label_15_76f4:
 	call InitNetCoachScene ; $76f4
-	script_set_text $1cb0 ; $76f7
+	script_set_text Text_37_176 ; $76f7
 	call NetCoachResultRetryPrompt ; $76fd
 	ret ; $7700
 Label_15_7701:
 	call InitNetCoachScene ; $7701
-	script_set_text $1cb4 ; $7704
+	script_set_text Text_37_180 ; $7704
 	call NetCoachRetryPrompt ; $770a
 	ret ; $770d
 Label_15_770e:
 	call InitNetCoachScene ; $770e
-	script_set_text $1cbc ; $7711
+	script_set_text Text_37_188 ; $7711
 	call NetCoachResultRetryPrompt ; $7717
 	ret ; $771a
 Label_15_771b:
 	call InitNetCoachScene ; $771b
-	script_set_text $1cc0 ; $771e
+	script_set_text Text_37_192 ; $771e
 	call NetCoachResultRetryPrompt ; $7724
 	ret ; $7727
 NetCoachResultRetryPrompt:
@@ -4093,7 +4093,7 @@ Label_15_77d0:
 	dw Label_15_78f5 ; $77e1 jumptable
 Label_15_77e3:
 	call InitReturnCoachScene ; $77e3
-	script_set_text $1cdd ; $77e6
+	script_set_text Text_37_221 ; $77e6
 	script_speak $0d ; $77ec
 	script_face_toward $00, $0d ; $77f1
 	script_set_anim $0d, $03 ; $77f9
@@ -4106,7 +4106,7 @@ Label_15_77e3:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $781b
 Label_15_781e:
 	script_speak $0d ; $781e
-	script_set_text $1ce1 ; $7823
+	script_set_text Text_37_225 ; $7823
 	script_set_anim $0d, $04 ; $7829
 	script_wait_idle $0d ; $7830
 	test_flag $0a, 3 ; $7835
@@ -4119,7 +4119,7 @@ Label_15_783d:
 	ret ; $784c
 Label_15_784d:
 	call InitReturnCoachScene ; $784d
-	script_set_text $1cf5 ; $7850
+	script_set_text Text_37_245 ; $7850
 	script_speak $0d ; $7856
 	script_face_toward $00, $0d ; $785b
 	script_set_anim $0d, $03 ; $7863
@@ -4136,7 +4136,7 @@ Label_15_784d:
 	ret ; $78a0
 Label_15_78a1:
 	call InitReturnCoachScene ; $78a1
-	script_set_text $200f ; $78a4
+	script_set_text Text_6e_15 ; $78a4
 	script_speak $0d ; $78aa
 	script_face_toward $00, $0d ; $78af
 	script_set_anim $0d, $03 ; $78b7
@@ -4153,67 +4153,67 @@ Label_15_78a1:
 	ret ; $78f4
 Label_15_78f5:
 	call InitReturnCoachScene ; $78f5
-	script_set_text $1ccb ; $78f8
+	script_set_text Text_37_203 ; $78f8
 	call ReturnCoachResultRetryPrompt ; $78fe
 	ret ; $7901
 Label_15_7902:
 	call InitReturnCoachScene ; $7902
-	script_set_text $1ccf ; $7905
+	script_set_text Text_37_207 ; $7905
 	call ReturnCoachResultRetryPrompt ; $790b
 	ret ; $790e
 Label_15_790f:
 	call InitReturnCoachScene ; $790f
-	script_set_text $1cd3 ; $7912
+	script_set_text Text_37_211 ; $7912
 	call ReturnCoachResultRetryPrompt ; $7918
 	ret ; $791b
 Label_15_791c:
 	call InitReturnCoachScene ; $791c
-	script_set_text $1cd7 ; $791f
+	script_set_text Text_37_215 ; $791f
 	call ReturnCoachRetryPrompt ; $7925
 	ret ; $7928
 Label_15_7929:
 	call InitReturnCoachScene ; $7929
-	script_set_text $1cda ; $792c
+	script_set_text Text_37_218 ; $792c
 	call ReturnCoachRetryPrompt ; $7932
 	ret ; $7935
 Label_15_7936:
 	call InitReturnCoachScene ; $7936
-	script_set_text $1ce9 ; $7939
+	script_set_text Text_37_233 ; $7939
 	call ReturnCoachRetryPrompt ; $793f
 	ret ; $7942
 Label_15_7943:
 	call InitReturnCoachScene ; $7943
-	script_set_text $1cec ; $7946
+	script_set_text Text_37_236 ; $7946
 	call ReturnCoachRetryPrompt ; $794c
 	ret ; $794f
 Label_15_7950:
 	call InitReturnCoachScene ; $7950
-	script_set_text $1cef ; $7953
+	script_set_text Text_37_239 ; $7953
 	call ReturnCoachRetryPrompt ; $7959
 	ret ; $795c
 Label_15_795d:
 	call InitReturnCoachScene ; $795d
-	script_set_text $1cf2 ; $7960
+	script_set_text Text_37_242 ; $7960
 	call ReturnCoachRetryPrompt ; $7966
 	ret ; $7969
 Label_15_796a:
 	call InitReturnCoachScene ; $796a
-	script_set_text $1cff ; $796d
+	script_set_text Text_37_255 ; $796d
 	call ReturnCoachResultRetryPrompt ; $7973
 	ret ; $7976
 Label_15_7977:
 	call InitReturnCoachScene ; $7977
-	script_set_text $2003 ; $797a
+	script_set_text Text_6e_3 ; $797a
 	call ReturnCoachResultRetryPrompt ; $7980
 	ret ; $7983
 Label_15_7984:
 	call InitReturnCoachScene ; $7984
-	script_set_text $2007 ; $7987
+	script_set_text Text_6e_7 ; $7987
 	call ReturnCoachResultRetryPrompt ; $798d
 	ret ; $7990
 Label_15_7991:
 	call InitReturnCoachScene ; $7991
-	script_set_text $200b ; $7994
+	script_set_text Text_6e_11 ; $7994
 	call ReturnCoachResultRetryPrompt ; $799a
 	ret ; $799d
 ReturnCoachResultRetryPrompt:
@@ -4275,7 +4275,7 @@ Label_15_7a75:
 	cp a, $0c ; $7a75
 	jr nc, Label_15_7a8b ; $7a77
 	call InitNetCoachScene ; $7a79
-	script_set_text $1c6a ; $7a7c
+	script_set_text Text_37_106 ; $7a7c
 	script_speak $12 ; $7a82
 	call NetCoachWalkToCourtAndStartLesson ; $7a87
 	ret ; $7a8a

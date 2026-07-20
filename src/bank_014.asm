@@ -109,7 +109,7 @@ TennisMachineRoomNpcScripts_14:
 	map_script $05, $ff, $0000, TennisMachineRoomNpc05_14, $00, $00
 	db $ff
 MachineLevel1FailedPrompt:
-	script_set_text $20db ; $4113
+	script_set_text Text_6e_219 ; $4113
 	ld hl, $000f ; $4119
 	farcall FarPtr_PushTextArgNumber ; $411c
 	ld hl, wMinigamesCurrentScore ; $411f
@@ -120,7 +120,7 @@ MachineLevel1FailedPrompt:
 	jp MachineCourtHandleRetryChoice ; $4128
 MachineLevel1ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $412b
-	script_set_text $20af ; $412e
+	script_set_text Text_6e_175 ; $412e
 	script_speak $05 ; $4134
 	script_get_actor_state $02 ; $4139
 	ld c, l ; $413e
@@ -129,7 +129,7 @@ MachineLevel1ClearedScene:
 	farcall FarPtr_04_20 ; $4143
 	ret ; $4146
 MachineLevel2FailedPrompt:
-	script_set_text $20db ; $4147
+	script_set_text Text_6e_219 ; $4147
 	ld hl, $001e ; $414d
 	farcall FarPtr_PushTextArgNumber ; $4150
 	ld hl, wMinigamesCurrentScore ; $4153
@@ -141,7 +141,7 @@ MachineLevel2FailedPrompt:
 	ret ; $415f
 MachineLevel2ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4160
-	script_set_text $20b7 ; $4163
+	script_set_text Text_6e_183 ; $4163
 	script_speak $05 ; $4169
 	script_get_actor_state $02 ; $416e
 	ld c, l ; $4173
@@ -150,7 +150,7 @@ MachineLevel2ClearedScene:
 	farcall FarPtr_04_20 ; $4178
 	ret ; $417b
 MachineLevel3FailedPrompt:
-	script_set_text $20db ; $417c
+	script_set_text Text_6e_219 ; $417c
 	ld hl, $003c ; $4182
 	farcall FarPtr_PushTextArgNumber ; $4185
 	ld hl, wMinigamesCurrentScore ; $4188
@@ -162,7 +162,7 @@ MachineLevel3FailedPrompt:
 	ret ; $4194
 MachineLevel3ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $4195
-	script_set_text $20be ; $4198
+	script_set_text Text_6e_190 ; $4198
 	script_speak $05 ; $419e
 	script_get_actor_state $02 ; $41a3
 	ld c, l ; $41a8
@@ -171,7 +171,7 @@ MachineLevel3ClearedScene:
 	farcall FarPtr_04_20 ; $41ad
 	ret ; $41b0
 MachineLevel4FailedPrompt:
-	script_set_text $20db ; $41b1
+	script_set_text Text_6e_219 ; $41b1
 	ld hl, $0064 ; $41b7
 	farcall FarPtr_PushTextArgNumber ; $41ba
 	ld hl, wMinigamesCurrentScore ; $41bd
@@ -183,7 +183,7 @@ MachineLevel4FailedPrompt:
 	ret ; $41c9
 MachineLevel4ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $41ca
-	script_set_text $20c5 ; $41cd
+	script_set_text Text_6e_197 ; $41cd
 	script_speak $05 ; $41d3
 	script_get_actor_state $02 ; $41d8
 	ld c, l ; $41dd
@@ -305,7 +305,7 @@ Label_14_4326:
 	dw MachineExpertResultScene ; $4336 jumptable
 	dw MachineExpertResultScene ; $4338 jumptable
 MachineCourtGameOverExitScene:
-	script_set_text $20dc ; $433a
+	script_set_text Text_6e_220 ; $433a
 	script_speak $05 ; $4340
 	script_move_target $00, $3300, $3600 ; $4345
 	script_wait_move $00 ; $4350
@@ -415,7 +415,7 @@ Label_14_449b:
 Label_14_44a9:
 	test_flag $1a, 2 ; $44a9
 	jr z, Label_14_44ca ; $44ac
-	script_set_text $20de ; $44ae
+	script_set_text Text_6e_222 ; $44ae
 	ld a, $05 ; $44b4
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $44b6
 	farcall FarPtr_RunDialogueYesNoPrompt ; $44b9
@@ -461,7 +461,7 @@ Label_14_4515:
 	ld a, [$c2b0] ; $4565
 	cp a, $04 ; $4568
 	jr c, Label_14_4577 ; $456a
-	script_set_text $20cc ; $456c
+	script_set_text Text_6e_204 ; $456c
 	script_speak $05 ; $4572
 Label_14_4577:
 	ld c, $06 ; $4577
@@ -515,7 +515,7 @@ MachinePracticeLevelPrompt:
 	ld [$c2b8], a ; $4612
 	call TestMachineLevelClearedFlag ; $4615
 	jr z, MachineLevelNotClearedMessage ; $4618
-	script_set_text $20e0 ; $461a
+	script_set_text Text_6e_224 ; $461a
 	ld a, [$c2b8] ; $4620
 	inc a ; $4623
 	ld h, $00 ; $4624
@@ -551,7 +551,7 @@ MachinePracticeLevelPrompt:
 Label_14_4692:
 	ret ; $4692
 MachineLevelNotClearedMessage:
-	script_set_text $20e1 ; $4693
+	script_set_text Text_6e_225 ; $4693
 	script_speak $05 ; $4699
 	ret ; $469e
 TestMachineLevelClearedFlag:
@@ -601,7 +601,7 @@ Label_14_46ef:
 	ld a, [wMatchExitRequest] ; $4710
 	and a, a ; $4713
 	jp nz, Label_14_474d ; $4714
-	script_set_text $20db ; $4717
+	script_set_text Text_6e_219 ; $4717
 	ld hl, wMinigamesTargetScore ; $471d
 	ld a, [hl+] ; $4720
 	ld h, [hl] ; $4721
@@ -630,7 +630,7 @@ MachineCourtHandleRetryChoice:
 	script_wait_frames $05 ; $4759
 	and a, a ; $4760
 	jr z, MachineCourtRestartLevel ; $4761
-	script_set_text $20dc ; $4763
+	script_set_text Text_6e_220 ; $4763
 	script_speak $05 ; $4769
 	script_move_target $00, $3300, $3600 ; $476e
 	script_wait_move $00 ; $4779
@@ -772,7 +772,7 @@ Label_14_484f:
 	ld h, a ; $48ba
 	jp nc, MachineExpertNewRecordScene ; $48bb
 MachineExpertRetryPrompt:
-	script_set_text $20dd ; $48be
+	script_set_text Text_6e_221 ; $48be
 	ld hl, wMinigamesCurrentScore ; $48c4
 	ld a, [hl+] ; $48c7
 	ld h, [hl] ; $48c8
@@ -782,7 +782,7 @@ MachineExpertRetryPrompt:
 	ret ; $48d0
 MachineExpertNewRecordScene:
 	call SaveMachineExpertRecord ; $48d1
-	script_set_text $20ce ; $48d4
+	script_set_text Text_6e_206 ; $48d4
 	ld hl, wMinigamesCurrentScore ; $48da
 	ld a, [hl+] ; $48dd
 	ld h, [hl] ; $48de
@@ -817,13 +817,13 @@ MachineExpertCounterMaxScene:
 	ld h, a ; $491a
 	jp z, MachineExpertRetryPrompt ; $491b
 	call SaveMachineExpertRecord ; $491e
-	script_set_text $20d4 ; $4921
+	script_set_text Text_6e_212 ; $4921
 	ld hl, wMinigamesCurrentScore ; $4927
 	ld a, [hl+] ; $492a
 	ld h, [hl] ; $492b
 	ld l, a ; $492c
 	farcall FarPtr_PushTextArgNumber ; $492d
-	script_set_text $20d4 ; $4930
+	script_set_text Text_6e_212 ; $4930
 	call MachineCourtWalkToAttendantCutscene ; $4936
 	script_speak $05 ; $4939
 	script_speak $05 ; $493e
@@ -940,7 +940,7 @@ Court2ExitTriggers_14:
 	map_script $02, $ff, $0000, MapScriptNop_14, $15, $02
 	db $ff
 Court2Npc03_14:
-	script_set_text $2491 ; $4b61
+	script_set_text Text_1f_145 ; $4b61
 	script_speak $03 ; $4b67
 	ret ; $4b6c
 Court2Npc04_14:
@@ -1095,7 +1095,7 @@ Court2SpectatorsRepeatChat:
 	script_set_anim $08, $02 ; $4d6d
 	script_wait_idle $08 ; $4d74
 	script_face_toward $00, $08 ; $4d79
-	script_set_text $246f ; $4d81
+	script_set_text Text_1f_111 ; $4d81
 	script_speak $08 ; $4d87
 	script_set_anim $09, $02 ; $4d8c
 	script_wait_idle $09 ; $4d93
@@ -1109,19 +1109,19 @@ Court2SpectatorsRepeatChat:
 	script_wait_idle $09 ; $4dc6
 	ret ; $4dcb
 Court2Npc0A_14:
-	script_set_text $246a ; $4dcc
+	script_set_text Text_1f_106 ; $4dcc
 	test_flag $05, 7 ; $4dd2
 	jr nz, Label_14_4de6 ; $4dd5
 	ld a, [$c2b0] ; $4dd7
 	cp a, $03 ; $4dda
 	jr nz, Label_14_4df3 ; $4ddc
-	script_set_text $2471 ; $4dde
+	script_set_text Text_1f_113 ; $4dde
 	jr Label_14_4df3 ; $4de4
 Label_14_4de6:
 	ld a, [$c2b0] ; $4de6
 	cp a, $06 ; $4de9
 	jr nz, Label_14_4df3 ; $4deb
-	script_set_text $2471 ; $4ded
+	script_set_text Text_1f_113 ; $4ded
 Label_14_4df3:
 	script_speak $0a ; $4df3
 	ret ; $4df8
@@ -1131,11 +1131,11 @@ Court2NpcScripts_14:
 	map_script $04, $ff, $0000, Court2Npc04_14, $03, $00
 	map_script $05, $ff, $0000, Court2Npc05_14, $03, $00
 	map_script $06, $ff, $0000, Court2Npc06_14, $13, $00
-	map_script $07, $ff, $0000, $2468, $13, $00
+	map_script $07, $ff, $0000, Text_1f_104, $13, $00
 	map_script $08, $ff, $0000, Court2SpectatorChat_14, $00, $00
 	map_script $09, $ff, $0000, Court2SpectatorChat_14, $00, $00
 	map_script $0a, $ff, $0000, Court2Npc0A_14, $03, $00
-	map_script $0b, $ff, $0000, $2469, $03, $00
+	map_script $0b, $ff, $0000, Text_1f_105, $03, $00
 	db $ff
 Court2FacingScripts_14:
 	; $4e42, 9 bytes (map_scripts)
@@ -1261,11 +1261,11 @@ Court1ExitTriggers_14:
 	map_script $02, $ff, $0000, MapScriptNop_14, $15, $01
 	db $ff
 Court1Npc03_14:
-	script_set_text $2484 ; $5064
+	script_set_text Text_1f_132 ; $5064
 	script_speak $03 ; $506a
 	ret ; $506f
 Court1Npc04_14:
-	script_set_text $2485 ; $5070
+	script_set_text Text_1f_133 ; $5070
 	script_speak $04 ; $5076
 	ret ; $507b
 Court1Npc05_14:
@@ -1461,7 +1461,7 @@ IslandSkyExitTriggers_14:
 	ret ; $52ab
 IslandSkyNpcScripts_14:
 	; $52ac, 9 bytes (map_scripts)
-	map_script $03, $ff, $0000, $1430, $00, $00
+	map_script $03, $ff, $0000, Text_35_48, $00, $00
 	db $ff
 IslandSkyFacingScripts_14:
 	ds 1, $ff ; $52b5, fill

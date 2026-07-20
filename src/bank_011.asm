@@ -36,33 +36,33 @@ CenterCourtExitTriggers_11:
 	map_script $02, $ff, $0000, MapScriptNop_11, $19, $02
 	db $ff
 CenterCourtNpc03_11:
-	script_set_text $2450 ; $4082
+	script_set_text Text_1f_80 ; $4082
 	test_flag $05, 7 ; $4088
 	jr nz, Label_11_409c ; $408b
 	ld a, [$c2b0] ; $408d
 	cp a, $03 ; $4090
 	jr nz, Label_11_40a9 ; $4092
-	script_set_text $245b ; $4094
+	script_set_text Text_1f_91 ; $4094
 	jr Label_11_40a9 ; $409a
 Label_11_409c:
 	ld a, [$c2b0] ; $409c
 	cp a, $06 ; $409f
 	jr nz, Label_11_40a9 ; $40a1
-	script_set_text $245b ; $40a3
+	script_set_text Text_1f_91 ; $40a3
 Label_11_40a9:
 	script_speak $03 ; $40a9
 	ret ; $40ae
 CenterCourtNpc04_11:
 	test_flag $05, 7 ; $40af
 	jr z, Label_11_40c9 ; $40b2
-	script_set_text $2460 ; $40b4
+	script_set_text Text_1f_96 ; $40b4
 	ld a, [$c2b0] ; $40ba
 	cp a, $06 ; $40bd
 	jr nz, Label_11_40fa ; $40bf
-	script_set_text $2465 ; $40c1
+	script_set_text Text_1f_101 ; $40c1
 	jr Label_11_40fa ; $40c7
 Label_11_40c9:
-	script_set_text $2451 ; $40c9
+	script_set_text Text_1f_81 ; $40c9
 	ld a, $04 ; $40cf
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $40d1
 	farcall FarPtr_RunDialogueYesNoPrompt ; $40d4
@@ -458,7 +458,7 @@ AcademyArrivalNpc05_11:
 	dw $184b ; record 3
 	dw $184e ; record 4
 AcademyArrivalNpc14_11:
-	script_set_text $1860 ; $4643
+	script_set_text Text_36_96 ; $4643
 	test_flag $05, 7 ; $4649
 	jr nz, Label_11_4670 ; $464c
 	test_flag $15, 6 ; $464e
@@ -553,7 +553,7 @@ LateStudentCrashCutscene:
 	script_set_anim $11, $04 ; $47f2
 	script_wait_idle $11 ; $47f9
 	script_face $11, $c0 ; $47fe
-	script_set_text $184f ; $4805
+	script_set_text Text_36_79 ; $4805
 	script_speak $11 ; $480b
 	script_set_anim $11, $03 ; $4810
 	script_wait_idle $11 ; $4817
@@ -663,7 +663,7 @@ LateStudentCrashCutscene:
 	script_set_anim $11, $02 ; $4ae8
 	script_wait_idle $11 ; $4aef
 Label_11_4af4:
-	script_set_text $1857 ; $4af4
+	script_set_text Text_36_87 ; $4af4
 	ld a, $11 ; $4afa
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4afc
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4aff
@@ -675,7 +675,7 @@ Label_11_4af4:
 	script_speak $11 ; $4b16
 	jr Label_11_4af4 ; $4b1b
 Label_11_4b1d:
-	script_set_text $1859 ; $4b1d
+	script_set_text Text_36_89 ; $4b1d
 	script_set_anim $11, $03 ; $4b23
 	script_wait_idle $11 ; $4b2a
 	script_speak $11 ; $4b2f
@@ -799,7 +799,7 @@ AcademyArrivalGreetingScene:
 	script_move_target $00, $1800, $2400 ; $4db4
 	script_wait_move $00 ; $4dbf
 	script_move_target $00, $1800, $1300 ; $4dc4
-	script_set_text $01a3 ; $4dcf
+	script_set_text Text_30_419 ; $4dcf
 	script_wait_frames $78 ; $4dd5
 	script_set_position $12, $1800, $0f00 ; $4ddc
 	script_wait_move $00 ; $4de7
@@ -827,7 +827,7 @@ Label_11_4df5:
 	script_wait_frames $0f ; $4e68
 	script_set_anim $12, $03 ; $4e6f
 	script_wait_idle $12 ; $4e76
-	script_set_text $01a5 ; $4e7b
+	script_set_text Text_30_421 ; $4e7b
 	script_speak $03 ; $4e81
 	script_set_position $0e, $1940, $11c0 ; $4e86
 	sound $98 ; $4e91
@@ -857,13 +857,13 @@ Label_11_4ee1:
 	jr z, Label_11_4f0c ; $4ef4
 	xor a, a ; $4ef6
 	ld [wStoryModeShowLocationName], a ; $4ef7
-	script_set_text $01ab ; $4efa
+	script_set_text Text_30_427 ; $4efa
 	script_speak $12 ; $4f00
 	set_flag $05, 6 ; $4f05
 	call Func_11_4f1b ; $4f08
 	ret ; $4f0b
 Label_11_4f0c:
-	script_set_text $01aa ; $4f0c
+	script_set_text Text_30_426 ; $4f0c
 	script_speak $12 ; $4f12
 	call FollowGuideIntoAcademy ; $4f17
 	ret ; $4f1a
@@ -893,7 +893,7 @@ Func_11_4f40:
 	script_face_toward $12, $00 ; $4f5c
 	script_set_anim $12, $03 ; $4f64
 	script_wait_idle $12 ; $4f6b
-	script_set_text $01ac ; $4f70
+	script_set_text Text_30_428 ; $4f70
 	script_speak $12 ; $4f76
 	script_speak $12 ; $4f7b
 	call FollowGuideIntoAcademy ; $4f80
@@ -950,7 +950,7 @@ Label_11_501a:
 	script_fade_in $08 ; $504e
 	call WaitFadeEnd ; $5053
 	script_wait_frames $3c ; $5056
-	script_set_text $01ed ; $505d
+	script_set_text Text_30_493 ; $505d
 	script_speak $03 ; $5063
 	test_flag $05, 7 ; $5068
 	jp z, Label_11_5158 ; $506b
@@ -1178,7 +1178,7 @@ JuniorClassCourtDoublesExitTriggers_11:
 	map_script $0f, $ff, $0000, MapScriptNop_11, $0c, $0f
 	db $ff
 JuniorClassCourtDoublesNpc04_11:
-	script_set_text $0869 ; $55b0
+	script_set_text Text_32_105 ; $55b0
 	test_flag $08, 2 ; $55b6
 	jr nz, Label_11_55c6 ; $55b9
 	farcall FarPtr_AdvanceDialogueTextCursor ; $55bb
@@ -1189,7 +1189,7 @@ Label_11_55c6:
 	script_speak $04 ; $55c6
 	ret ; $55cb
 JuniorClassCourtDoublesNpc05_11:
-	script_set_text $0878 ; $55cc
+	script_set_text Text_32_120 ; $55cc
 	test_flag $08, 1 ; $55d2
 	jr nz, Label_11_55e2 ; $55d5
 	farcall FarPtr_AdvanceDialogueTextCursor ; $55d7
@@ -1200,7 +1200,7 @@ Label_11_55e2:
 	script_speak $05 ; $55e2
 	ret ; $55e7
 JuniorClassCourtDoublesNpc06_11:
-	script_set_text $086c ; $55e8
+	script_set_text Text_32_108 ; $55e8
 	test_flag $08, 2 ; $55ee
 	jr nz, Label_11_5616 ; $55f1
 	farcall FarPtr_AdvanceDialogueTextCursor ; $55f3
@@ -1219,7 +1219,7 @@ Label_11_5616:
 	script_speak $06 ; $5616
 	ret ; $561b
 JuniorClassCourtDoublesNpc07_11:
-	script_set_text $087b ; $561c
+	script_set_text Text_32_123 ; $561c
 	test_flag $08, 1 ; $5622
 	jr nz, Label_11_5632 ; $5625
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5627
@@ -1230,7 +1230,7 @@ Label_11_5632:
 	script_speak $07 ; $5632
 	ret ; $5637
 JuniorClassCourtDoublesNpc08_11:
-	script_set_text $087e ; $5638
+	script_set_text Text_32_126 ; $5638
 	test_flag $08, 0 ; $563e
 	jr nz, Label_11_5646 ; $5641
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5643
@@ -1238,7 +1238,7 @@ Label_11_5646:
 	script_speak $08 ; $5646
 	ret ; $564b
 JuniorClassCourtDoublesNpc09_11:
-	script_set_text $0880 ; $564c
+	script_set_text Text_32_128 ; $564c
 	test_flag $08, 0 ; $5652
 	jr nz, Label_11_5646 ; $5655
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5657
@@ -1249,10 +1249,10 @@ Label_11_5660:
 	script_face_pair $0b, $0a ; $5665
 	ret ; $566d
 JuniorClassCourtDoublesNpc0A_11:
-	script_set_text $0887 ; $566e
+	script_set_text Text_32_135 ; $566e
 	test_flag $08, 0 ; $5674
 	jp nz, Label_11_5660 ; $5677
-	script_set_text $0883 ; $567a
+	script_set_text Text_32_131 ; $567a
 	ld a, $0a ; $5680
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5682
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5685
@@ -1302,16 +1302,16 @@ JuniorClassCourtDoublesNpc0A_11:
 	farcall FarPtr_RestoreOverworldAfterMatch ; $576d
 	ret ; $5770
 JuniorClassCourtDoublesNpc0B_11:
-	script_set_text $0888 ; $5771
+	script_set_text Text_32_136 ; $5771
 	test_flag $08, 0 ; $5777
 	jr nz, Label_11_57c6 ; $577a
-	script_set_text $0882 ; $577c
+	script_set_text Text_32_130 ; $577c
 	script_speak $0b ; $5782
 	script_face_toward $00, $0a ; $5787
 	script_set_anim $0a, $02 ; $578f
 	script_wait_idle $0a ; $5796
 	jp JuniorClassCourtDoublesNpc0A_11 ; $579b
-	script_set_text $0852 ; $579e
+	script_set_text Text_32_82 ; $579e
 	script_face_toward $00, $0a ; $57a4
 	script_set_anim $0a, $04 ; $57ac
 	script_wait_idle $0a ; $57b3
@@ -1322,7 +1322,7 @@ Label_11_57c6:
 	script_speak $0b ; $57c6
 	ret ; $57cb
 JuniorClassCourtDoublesANpc0A_11:
-	script_set_text $0897 ; $57cc
+	script_set_text Text_32_151 ; $57cc
 	script_speak $0a ; $57d2
 	script_set_anim $0a, $04 ; $57d7
 	script_wait_idle $0a ; $57de
@@ -1353,42 +1353,42 @@ JuniorClassCourtDoublesNpcScripts_11:
 	db $ff
 JuniorClassCourtDoublesNpcScriptsA_11:
 	; $586b, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, $0889, $03, $00
-	map_script $04, $ff, $0000, $0891, $01, $00
-	map_script $05, $ff, $0000, $0893, $03, $00
-	map_script $06, $ff, $0000, $0892, $11, $00
-	map_script $07, $ff, $0000, $0894, $03, $00
-	map_script $08, $ff, $0000, $0895, $1b, $00
-	map_script $09, $ff, $0000, $0896, $1b, $00
+	map_script $03, $ff, $0000, Text_32_137, $03, $00
+	map_script $04, $ff, $0000, Text_32_145, $01, $00
+	map_script $05, $ff, $0000, Text_32_147, $03, $00
+	map_script $06, $ff, $0000, Text_32_146, $11, $00
+	map_script $07, $ff, $0000, Text_32_148, $03, $00
+	map_script $08, $ff, $0000, Text_32_149, $1b, $00
+	map_script $09, $ff, $0000, Text_32_150, $1b, $00
 	map_script $0a, $ff, $0000, JuniorClassCourtDoublesANpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, $0899, $03, $00
+	map_script $0b, $ff, $0000, Text_32_153, $03, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsB_11:
 	; $58b4, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, $08a2, $03, $00
-	map_script $04, $ff, $0000, $08a3, $01, $00
-	map_script $05, $ff, $0000, $08a5, $03, $00
-	map_script $06, $ff, $0000, $08a4, $11, $00
-	map_script $07, $ff, $0000, $08a6, $03, $00
-	map_script $08, $ff, $0000, $08a7, $1b, $00
-	map_script $09, $ff, $0000, $08a8, $1b, $00
-	map_script $0a, $ff, $0000, $08a9, $01, $00
-	map_script $0b, $ff, $0000, $08aa, $01, $00
+	map_script $03, $ff, $0000, Text_32_162, $03, $00
+	map_script $04, $ff, $0000, Text_32_163, $01, $00
+	map_script $05, $ff, $0000, Text_32_165, $03, $00
+	map_script $06, $ff, $0000, Text_32_164, $11, $00
+	map_script $07, $ff, $0000, Text_32_166, $03, $00
+	map_script $08, $ff, $0000, Text_32_167, $1b, $00
+	map_script $09, $ff, $0000, Text_32_168, $1b, $00
+	map_script $0a, $ff, $0000, Text_32_169, $01, $00
+	map_script $0b, $ff, $0000, Text_32_170, $01, $00
 	db $ff
 JuniorClassCourtDoublesNpcScriptsC_11:
 	; $58fd, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, $08b6, $03, $00
-	map_script $04, $ff, $0000, $08b7, $03, $00
-	map_script $05, $ff, $0000, $08b9, $03, $00
-	map_script $06, $ff, $0000, $08b8, $11, $00
+	map_script $03, $ff, $0000, Text_32_182, $03, $00
+	map_script $04, $ff, $0000, Text_32_183, $03, $00
+	map_script $05, $ff, $0000, Text_32_185, $03, $00
+	map_script $06, $ff, $0000, Text_32_184, $11, $00
 	map_script $07, $ff, $0000, JuniorClassCourtDoublesCNpc07_11, $03, $00
-	map_script $08, $ff, $0000, $08bd, $13, $00
-	map_script $09, $ff, $0000, $08be, $1b, $00
+	map_script $08, $ff, $0000, Text_32_189, $13, $00
+	map_script $09, $ff, $0000, Text_32_190, $1b, $00
 	map_script $0a, $ff, $0000, JuniorClassCourtDoublesCNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, $08c3, $03, $00
+	map_script $0b, $ff, $0000, Text_32_195, $03, $00
 	db $ff
 JuniorClassCourtDoublesCNpc07_11:
-	script_set_text $08ba ; $5946
+	script_set_text Text_32_186 ; $5946
 	ld a, $07 ; $594c
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $594e
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5951
@@ -1401,7 +1401,7 @@ Label_11_5965:
 	script_speak $07 ; $5965
 	ret ; $596a
 JuniorClassCourtDoublesDNpc07_11:
-	script_set_text $0c18 ; $596b
+	script_set_text Text_33_24 ; $596b
 	ld a, $07 ; $5971
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5973
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5976
@@ -1414,30 +1414,30 @@ Label_11_598a:
 	script_speak $07 ; $598a
 	ret ; $598f
 JuniorClassCourtDoublesCNpc0A_11:
-	script_set_text $08bf ; $5990
+	script_set_text Text_32_191 ; $5990
 	script_speak $0a ; $5996
 	set_flag $10, 2 ; $599b
 	ret ; $599e
 JuniorClassCourtDoublesNpcScriptsD_11:
 	; $599f, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, $0c14, $01, $00
-	map_script $04, $ff, $0000, $0c15, $03, $00
-	map_script $05, $ff, $0000, $0c17, $03, $00
-	map_script $06, $ff, $0000, $0c16, $11, $00
+	map_script $03, $ff, $0000, Text_33_20, $01, $00
+	map_script $04, $ff, $0000, Text_33_21, $03, $00
+	map_script $05, $ff, $0000, Text_33_23, $03, $00
+	map_script $06, $ff, $0000, Text_33_22, $11, $00
 	map_script $07, $ff, $0000, JuniorClassCourtDoublesDNpc07_11, $03, $00
-	map_script $08, $ff, $0000, $0c1b, $13, $00
-	map_script $09, $ff, $0000, $0c1c, $1b, $00
+	map_script $08, $ff, $0000, Text_33_27, $13, $00
+	map_script $09, $ff, $0000, Text_33_28, $1b, $00
 	map_script $0a, $ff, $0000, JuniorClassCourtDoublesDNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, $0c1d, $03, $00
+	map_script $0b, $ff, $0000, Text_33_29, $03, $00
 	db $ff
 JuniorClassCourtDoublesDNpc0A_11:
 	test_flag $10, 2 ; $59e8
 	jr nz, Label_11_59f9 ; $59eb
-	script_set_text $0c0f ; $59ed
+	script_set_text Text_33_15 ; $59ed
 	script_speak $0a ; $59f3
 	ret ; $59f8
 Label_11_59f9:
-	script_set_text $0c1e ; $59f9
+	script_set_text Text_33_30 ; $59f9
 	ld a, $0a ; $59ff
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5a01
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5a04
@@ -1817,7 +1817,7 @@ Label_11_5db7:
 	farcall FarPtr_WaitPlayerMoveDone ; $5e31
 	script_fade_in $04 ; $5e34
 	call WaitFadeEnd ; $5e39
-	script_set_text $0865 ; $5e3c
+	script_set_text Text_32_101 ; $5e3c
 	script_set_anim $08, $02 ; $5e42
 	script_speak $08 ; $5e49
 	script_set_anim $09, $04 ; $5e4e
@@ -1857,12 +1857,12 @@ Label_11_5ec0:
 	farcall FarPtr_WaitPlayerMoveDone ; $5f25
 	script_fade_in $04 ; $5f28
 	call WaitFadeEnd ; $5f2d
-	script_set_text $0865 ; $5f30
+	script_set_text Text_32_101 ; $5f30
 	script_set_anim $07, $02 ; $5f36
 	script_speak $07 ; $5f3d
 	script_set_anim $05, $04 ; $5f42
 	script_speak $05 ; $5f49
-	script_set_text $0868 ; $5f4e
+	script_set_text Text_32_104 ; $5f4e
 	script_jump_velocity $03, $ff80 ; $5f54
 	ld a, $03 ; $5f5c
 	farcall FarPtr_ScriptWaitActorJumpDone ; $5f5e
@@ -1905,7 +1905,7 @@ Label_11_5fbd:
 	script_fade_in $04 ; $605c
 	call WaitFadeEnd ; $6061
 	script_wait_frames $1e ; $6064
-	script_set_text $0871 ; $606b
+	script_set_text Text_32_113 ; $606b
 	script_set_anim $04, $02 ; $6071
 	script_speak $04 ; $6078
 	script_set_anim $06, $04 ; $607d
@@ -1941,7 +1941,7 @@ Label_11_5fbd:
 	script_set_anim $02, $03 ; $614a
 	script_wait_idle $02 ; $6151
 	script_wait_frames $1e ; $6156
-	script_set_text $0875 ; $615d
+	script_set_text Text_32_117 ; $615d
 	script_set_anim $03, $03 ; $6163
 	script_wait_idle $03 ; $616a
 	script_speak $03 ; $616f
@@ -1998,7 +1998,7 @@ Label_11_5fbd:
 	script_wait_frames $1e ; $6296
 	ret ; $629d
 OfferDoublesRankingMatch:
-	script_set_text $085a ; $629e
+	script_set_text Text_32_90 ; $629e
 	ld a, $03 ; $62a4
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $62a6
 	farcall FarPtr_RunDialogueYesNoPrompt ; $62a9
@@ -2059,7 +2059,7 @@ Label_11_6364:
 	script_wait_frames $32 ; $639a
 	script_face $00, $00 ; $63a1
 	script_face $02, $00 ; $63a8
-	script_set_text $085f ; $63af
+	script_set_text Text_32_95 ; $63af
 	script_set_anim $08, $02 ; $63b5
 	script_wait_idle $08 ; $63bc
 	script_move_target $08, $1500, $1500 ; $63c1
@@ -2087,7 +2087,7 @@ Label_11_6432:
 	script_face $00, $80 ; $6449
 	script_face $02, $80 ; $6450
 	script_wait_frames $1e ; $6457
-	script_set_text $0861 ; $645e
+	script_set_text Text_32_97 ; $645e
 	script_set_actor_script $05, ActorScript_11_76e9 ; $6464
 	script_set_actor_script $07, ActorScript_11_5c2e ; $646f
 	script_move_player_to_actor $00 ; $647a
@@ -2117,7 +2117,7 @@ Label_11_64db:
 	script_face $06, $80 ; $6507
 	script_set_anim $06, $02 ; $650e
 	script_wait_idle $06 ; $6515
-	script_set_text $0863 ; $651a
+	script_set_text Text_32_99 ; $651a
 	script_set_actor_script $04, ActorScript_11_7728 ; $6520
 	script_wait_frames $0f ; $652b
 	script_set_actor_script $06, ActorScript_11_5cff ; $6532
@@ -2301,7 +2301,7 @@ JuniorClassCourtSinglesNpc03_11:
 	call OfferSinglesRankingMatch ; $696a
 	ret ; $696d
 JuniorClassCourtSinglesNpc04_11:
-	script_set_text $083e ; $696e
+	script_set_text Text_32_62 ; $696e
 	test_flag $0a, 3 ; $6974
 	jr nz, Label_11_6984 ; $6977
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6979
@@ -2312,13 +2312,13 @@ Label_11_6984:
 	script_speak $04 ; $6984
 	ret ; $6989
 JuniorClassCourtSinglesNpc05_11:
-	script_set_text $0841 ; $698a
+	script_set_text Text_32_65 ; $698a
 	test_flag $0a, 2 ; $6990
 	jr nz, Label_11_69a3 ; $6993
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6995
 	test_flag $0a, 1 ; $6998
 	jr nz, Label_11_69a9 ; $699b
-	script_set_text $0845 ; $699d
+	script_set_text Text_32_69 ; $699d
 Label_11_69a3:
 	script_speak $05 ; $69a3
 	ret ; $69a8
@@ -2335,7 +2335,7 @@ Label_11_69c1:
 	script_speak $05 ; $69c1
 	ret ; $69c6
 JuniorClassCourtSinglesNpc06_11:
-	script_set_text $0846 ; $69c7
+	script_set_text Text_32_70 ; $69c7
 	test_flag $0a, 1 ; $69cd
 	jr nz, Label_11_69f5 ; $69d0
 	farcall FarPtr_AdvanceDialogueTextCursor ; $69d2
@@ -2354,7 +2354,7 @@ Label_11_69f5:
 	script_speak $06 ; $69f5
 	ret ; $69fa
 JuniorClassCourtSinglesNpc07_11:
-	script_set_text $084b ; $69fb
+	script_set_text Text_32_75 ; $69fb
 	test_flag $0a, 0 ; $6a01
 	jr nz, Label_11_6a09 ; $6a04
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6a06
@@ -2364,11 +2364,11 @@ Label_11_6a09:
 JuniorClassCourtSinglesNpc08_11:
 	test_flag $0a, 0 ; $6a0f
 	jr z, Label_11_6a20 ; $6a12
-	script_set_text $0856 ; $6a14
+	script_set_text Text_32_86 ; $6a14
 	script_speak $08 ; $6a1a
 	ret ; $6a1f
 Label_11_6a20:
-	script_set_text $084d ; $6a20
+	script_set_text Text_32_77 ; $6a20
 	ld a, $08 ; $6a26
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6a28
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6a2b
@@ -2415,18 +2415,18 @@ Label_11_6a41:
 	farcall FarPtr_RestoreOverworldAfterMatch ; $6ae5
 	ret ; $6ae8
 JuniorClassCourtSinglesNpc09_11:
-	script_set_text $0851 ; $6ae9
+	script_set_text Text_32_81 ; $6ae9
 	test_flag $0a, 0 ; $6aef
 	jr z, Label_11_6afa ; $6af2
-	script_set_text $0857 ; $6af4
+	script_set_text Text_32_87 ; $6af4
 Label_11_6afa:
 	script_speak $09 ; $6afa
 	ret ; $6aff
 JuniorClassCourtSinglesNpc0A_11:
-	script_set_text $0852 ; $6b00
+	script_set_text Text_32_82 ; $6b00
 	test_flag $0a, 0 ; $6b06
 	jr z, Label_11_6b11 ; $6b09
-	script_set_text $0858 ; $6b0b
+	script_set_text Text_32_88 ; $6b0b
 Label_11_6b11:
 	script_speak $0a ; $6b11
 	ret ; $6b16
@@ -2434,11 +2434,11 @@ JuniorClassCourtSinglesNpc0B_11:
 	script_face_toward $00, $0b ; $6b17
 	test_flag $0a, 0 ; $6b1f
 	jr z, Label_11_6b30 ; $6b22
-	script_set_text $0859 ; $6b24
+	script_set_text Text_32_89 ; $6b24
 	script_speak $0b ; $6b2a
 	ret ; $6b2f
 Label_11_6b30:
-	script_set_text $0853 ; $6b30
+	script_set_text Text_32_83 ; $6b30
 	ld a, $0b ; $6b36
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6b38
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6b3b
@@ -2465,56 +2465,56 @@ JuniorClassCourtSinglesNpcScripts_11:
 	db $ff
 JuniorClassCourtSinglesNpcScriptsA_11:
 	; $6ba5, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, $0889, $01, $00
-	map_script $05, $ff, $0000, $088a, $03, $00
-	map_script $06, $ff, $0000, $088b, $01, $00
-	map_script $07, $ff, $0000, $088c, $03, $00
-	map_script $08, $ff, $0000, $088d, $03, $00
-	map_script $09, $ff, $0000, $088e, $03, $00
-	map_script $0a, $ff, $0000, $088f, $13, $00
-	map_script $0b, $ff, $0000, $0890, $13, $00
+	map_script $03, $ff, $0000, Text_32_137, $01, $00
+	map_script $05, $ff, $0000, Text_32_138, $03, $00
+	map_script $06, $ff, $0000, Text_32_139, $01, $00
+	map_script $07, $ff, $0000, Text_32_140, $03, $00
+	map_script $08, $ff, $0000, Text_32_141, $03, $00
+	map_script $09, $ff, $0000, Text_32_142, $03, $00
+	map_script $0a, $ff, $0000, Text_32_143, $13, $00
+	map_script $0b, $ff, $0000, Text_32_144, $13, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsB_11:
 	; $6be6, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, $089a, $03, $00
-	map_script $05, $ff, $0000, $089b, $03, $00
-	map_script $06, $ff, $0000, $089c, $01, $00
-	map_script $07, $ff, $0000, $089d, $03, $00
-	map_script $08, $ff, $0000, $089e, $03, $00
-	map_script $09, $ff, $0000, $089f, $03, $00
-	map_script $0a, $ff, $0000, $08a0, $13, $00
-	map_script $0b, $ff, $0000, $08a1, $13, $00
+	map_script $03, $ff, $0000, Text_32_154, $03, $00
+	map_script $05, $ff, $0000, Text_32_155, $03, $00
+	map_script $06, $ff, $0000, Text_32_156, $01, $00
+	map_script $07, $ff, $0000, Text_32_157, $03, $00
+	map_script $08, $ff, $0000, Text_32_158, $03, $00
+	map_script $09, $ff, $0000, Text_32_159, $03, $00
+	map_script $0a, $ff, $0000, Text_32_160, $13, $00
+	map_script $0b, $ff, $0000, Text_32_161, $13, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsC_11:
 	; $6c27, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, $08ab, $03, $00
-	map_script $05, $ff, $0000, $08ac, $03, $00
-	map_script $06, $ff, $0000, $08ad, $01, $00
-	map_script $07, $ff, $0000, $08ae, $03, $00
-	map_script $08, $ff, $0000, $08af, $03, $00
-	map_script $09, $ff, $0000, $08b0, $03, $00
-	map_script $0a, $ff, $0000, $08b1, $03, $00
-	map_script $0b, $ff, $0000, $08b5, $13, $00
+	map_script $03, $ff, $0000, Text_32_171, $03, $00
+	map_script $05, $ff, $0000, Text_32_172, $03, $00
+	map_script $06, $ff, $0000, Text_32_173, $01, $00
+	map_script $07, $ff, $0000, Text_32_174, $03, $00
+	map_script $08, $ff, $0000, Text_32_175, $03, $00
+	map_script $09, $ff, $0000, Text_32_176, $03, $00
+	map_script $0a, $ff, $0000, Text_32_177, $03, $00
+	map_script $0b, $ff, $0000, Text_32_181, $13, $00
 	db $ff
 JuniorClassCourtSinglesNpcScriptsD_11:
 	; $6c68, 65 bytes (map_scripts)
-	map_script $03, $ff, $0000, $0c09, $01, $00
-	map_script $05, $ff, $0000, $0c0a, $03, $00
-	map_script $06, $ff, $0000, $0c0b, $01, $00
-	map_script $07, $ff, $0000, $0c0c, $03, $00
-	map_script $08, $ff, $0000, $0c0d, $03, $00
-	map_script $09, $ff, $0000, $0c0e, $03, $00
+	map_script $03, $ff, $0000, Text_33_9, $01, $00
+	map_script $05, $ff, $0000, Text_33_10, $03, $00
+	map_script $06, $ff, $0000, Text_33_11, $01, $00
+	map_script $07, $ff, $0000, Text_33_12, $03, $00
+	map_script $08, $ff, $0000, Text_33_13, $03, $00
+	map_script $09, $ff, $0000, Text_33_14, $03, $00
 	map_script $0a, $ff, $0000, JuniorClassCourtSinglesDNpc0A_11, $03, $00
-	map_script $0b, $ff, $0000, $0c13, $13, $00
+	map_script $0b, $ff, $0000, Text_33_19, $13, $00
 	db $ff
 JuniorClassCourtSinglesDNpc0A_11:
 	test_flag $10, 2 ; $6ca9
 	jr nz, Label_11_6cba ; $6cac
-	script_set_text $0c0f ; $6cae
+	script_set_text Text_33_15 ; $6cae
 	script_speak $0a ; $6cb4
 	ret ; $6cb9
 Label_11_6cba:
-	script_set_text $0c10 ; $6cba
+	script_set_text Text_33_16 ; $6cba
 	ld a, $0a ; $6cc0
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6cc2
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6cc5
@@ -2531,7 +2531,7 @@ Label_11_6cd9:
 Label_11_6ce4:
 	script_set_anim $0a, $03 ; $6ce4
 	script_wait_idle $0a ; $6ceb
-	script_set_text $0c1f ; $6cf0
+	script_set_text Text_33_31 ; $6cf0
 	script_speak $0a ; $6cf6
 	ret ; $6cfb
 JuniorClassCourtSinglesFacingScripts_11:
@@ -2706,7 +2706,7 @@ Label_11_6eb1:
 	script_face $03, $00 ; $6eeb
 	script_fade_in $04 ; $6ef2
 	call WaitFadeEnd ; $6ef7
-	script_set_text $0833 ; $6efa
+	script_set_text Text_32_51 ; $6efa
 	script_speak $07 ; $6f00
 	script_jump_velocity $03, $ff80 ; $6f05
 	ld a, $03 ; $6f0d
@@ -2731,12 +2731,12 @@ Label_11_6f44:
 	script_face $03, $80 ; $6f7e
 	script_fade_in $04 ; $6f85
 	call WaitFadeEnd ; $6f8a
-	script_set_text $0846 ; $6f8d
+	script_set_text Text_32_70 ; $6f8d
 	script_speak $06 ; $6f93
 	script_jump_velocity $03, $ff80 ; $6f98
 	ld a, $03 ; $6fa0
 	farcall FarPtr_ScriptWaitActorJumpDone ; $6fa2
-	script_set_text $0835 ; $6fa5
+	script_set_text Text_32_53 ; $6fa5
 	script_speak $03 ; $6fab
 	script_set_actor_script $06, ActorScript_11_76de ; $6fb0
 	script_move_target $00, $1300, $1500 ; $6fbb
@@ -2757,12 +2757,12 @@ Label_11_6fdd:
 	script_face $03, $80 ; $7017
 	script_fade_in $04 ; $701e
 	call WaitFadeEnd ; $7023
-	script_set_text $0841 ; $7026
+	script_set_text Text_32_65 ; $7026
 	script_speak $05 ; $702c
 	script_jump_velocity $03, $ff80 ; $7031
 	ld a, $03 ; $7039
 	farcall FarPtr_ScriptWaitActorJumpDone ; $703b
-	script_set_text $0836 ; $703e
+	script_set_text Text_32_54 ; $703e
 	script_speak $03 ; $7044
 	script_set_actor_script $05, ActorScript_11_7717 ; $7049
 	script_move_target $00, $1300, $1500 ; $7054
@@ -2785,7 +2785,7 @@ Label_11_7076:
 	script_fade_in $04 ; $70c2
 	call WaitFadeEnd ; $70c7
 	script_wait_frames $3c ; $70ca
-	script_set_text $0837 ; $70d1
+	script_set_text Text_32_55 ; $70d1
 	script_move_target $04, $1a00, $0d00 ; $70d7
 	script_wait_move $04 ; $70e2
 	script_set_anim $04, $02 ; $70e7
@@ -2859,7 +2859,7 @@ Label_11_7076:
 	call WaitFadeEnd ; $7284
 	ret ; $7287
 PromptChallengeRankingOpponent:
-	script_set_text $0822 ; $7288
+	script_set_text Text_32_34 ; $7288
 	test_flag $0a, 0 ; $728e
 	jr z, Label_11_7296 ; $7291
 	farcall FarPtr_AdvanceDialogueTextCursor ; $7293
@@ -2876,7 +2876,7 @@ Label_11_7296:
 Label_11_72b8:
 	script_set_anim $03, $03 ; $72b8
 	script_wait_idle $03 ; $72bf
-	script_set_text $0828 ; $72c4
+	script_set_text Text_32_40 ; $72c4
 	script_speak $03 ; $72ca
 	call StartNextRankingMatch ; $72cf
 	script_set_speed $00, $0018 ; $72d2
@@ -2887,7 +2887,7 @@ Label_11_72e3:
 	call LoadRankingOpponentGraphics ; $72e8
 	ret ; $72eb
 Label_11_72ec:
-	script_set_text $0825 ; $72ec
+	script_set_text Text_32_37 ; $72ec
 	ld a, $03 ; $72f2
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $72f4
 	farcall FarPtr_RunDialogueYesNoPrompt ; $72f7
@@ -2956,7 +2956,7 @@ Label_11_7381:
 	script_face_toward $00, $07 ; $73f9
 	script_set_anim $07, $02 ; $7401
 	script_wait_idle $07 ; $7408
-	script_set_text $082a ; $740d
+	script_set_text Text_32_42 ; $740d
 	script_speak $07 ; $7413
 	script_set_anim $07, $03 ; $7418
 	script_wait_idle $07 ; $741f
@@ -2984,7 +2984,7 @@ Label_11_7438:
 	script_wait_actor_script $06 ; $74a7
 	script_set_anim $06, $02 ; $74ac
 	script_wait_idle $06 ; $74b3
-	script_set_text $082c ; $74b8
+	script_set_text Text_32_44 ; $74b8
 	script_speak $06 ; $74be
 	script_set_anim $06, $03 ; $74c3
 	script_wait_idle $06 ; $74ca
@@ -3012,7 +3012,7 @@ Label_11_74e3:
 	script_face_toward $05, $00 ; $7551
 	script_set_anim $05, $02 ; $7559
 	script_wait_idle $05 ; $7560
-	script_set_text $082e ; $7565
+	script_set_text Text_32_46 ; $7565
 	script_speak $05 ; $756b
 	script_set_anim $05, $03 ; $7570
 	script_wait_idle $05 ; $7577
@@ -3044,7 +3044,7 @@ Label_11_7590:
 	script_face_toward $04, $00 ; $7604
 	script_set_anim $04, $02 ; $760c
 	script_wait_idle $04 ; $7613
-	script_set_text $0830 ; $7618
+	script_set_text Text_32_48 ; $7618
 	script_speak $04 ; $761e
 	script_set_anim $04, $03 ; $7623
 	script_wait_idle $04 ; $762a
@@ -3195,7 +3195,7 @@ ActorScript_11_7773:
 	as_set_field $14, $00c0
 	as_halt
 OfferSinglesRankingMatch:
-	script_set_text $081c ; $7784
+	script_set_text Text_32_28 ; $7784
 	ld a, $03 ; $778a
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $778c
 	farcall FarPtr_RunDialogueYesNoPrompt ; $778f

@@ -355,7 +355,7 @@ RunDrillMatchListMenu:
 	farcall FarPtr_SaveStorySlotWithTimer ; $4489
 	ret ; $448c
 Func_10_448d:
-	script_set_text $28a4 ; $448d
+	script_set_text Text_25_164 ; $448d
 	script_speak $80 ; $4493
 	ret ; $4498
 	ld hl, wStoryModePlayersXPosition ; $4499
@@ -623,7 +623,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $47e6
 	ld hl, $0001 ; $47e9
 	farcall FarPtr_PushTextArgNumber ; $47ec
-	script_set_text $0161 ; $47ef
+	script_set_text Text_30_353 ; $47ef
 	script_speak $80 ; $47f5
 	ld a, $01 ; $47fa
 	farcall FarPtr_RunTrainingDrillByID ; $47fc
@@ -639,7 +639,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $4817
 	ld hl, $0002 ; $481a
 	farcall FarPtr_PushTextArgNumber ; $481d
-	script_set_text $0161 ; $4820
+	script_set_text Text_30_353 ; $4820
 	script_speak $80 ; $4826
 	ld a, $02 ; $482b
 	farcall FarPtr_RunTrainingDrillByID ; $482d
@@ -655,7 +655,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $4848
 	ld hl, $0003 ; $484b
 	farcall FarPtr_PushTextArgNumber ; $484e
-	script_set_text $0161 ; $4851
+	script_set_text Text_30_353 ; $4851
 	script_speak $80 ; $4857
 	ld a, $03 ; $485c
 	farcall FarPtr_RunTrainingDrillByID ; $485e
@@ -671,7 +671,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $4879
 	ld hl, $0004 ; $487c
 	farcall FarPtr_PushTextArgNumber ; $487f
-	script_set_text $0161 ; $4882
+	script_set_text Text_30_353 ; $4882
 	script_speak $80 ; $4888
 	ld a, $04 ; $488d
 	farcall FarPtr_RunTrainingDrillByID ; $488f
@@ -687,7 +687,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $48aa
 	ld hl, $0005 ; $48ad
 	farcall FarPtr_PushTextArgNumber ; $48b0
-	script_set_text $0161 ; $48b3
+	script_set_text Text_30_353 ; $48b3
 	script_speak $80 ; $48b9
 	ld a, $05 ; $48be
 	farcall FarPtr_RunTrainingDrillByID ; $48c0
@@ -703,7 +703,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $48db
 	ld hl, $0006 ; $48de
 	farcall FarPtr_PushTextArgNumber ; $48e1
-	script_set_text $0161 ; $48e4
+	script_set_text Text_30_353 ; $48e4
 	script_speak $80 ; $48ea
 	ld a, $06 ; $48ef
 	farcall FarPtr_RunTrainingDrillByID ; $48f1
@@ -719,7 +719,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $490c
 	ld hl, $0007 ; $490f
 	farcall FarPtr_PushTextArgNumber ; $4912
-	script_set_text $0161 ; $4915
+	script_set_text Text_30_353 ; $4915
 	script_speak $80 ; $491b
 	ld a, $07 ; $4920
 	farcall FarPtr_RunTrainingDrillByID ; $4922
@@ -735,7 +735,7 @@ Test2ExitTriggers_10:
 	set_flag $03, 6 ; $493d
 	ld hl, $0008 ; $4940
 	farcall FarPtr_PushTextArgNumber ; $4943
-	script_set_text $0161 ; $4946
+	script_set_text Text_30_353 ; $4946
 	script_speak $80 ; $494c
 	ld a, $08 ; $4951
 	farcall FarPtr_RunTrainingDrillByID ; $4953
@@ -752,7 +752,7 @@ Test2Npc0B_10:
 	set_flag $03, 6 ; $496e
 	ld hl, $0009 ; $4971
 	farcall FarPtr_PushTextArgNumber ; $4974
-	script_set_text $0161 ; $4977
+	script_set_text Text_30_353 ; $4977
 	script_speak $80 ; $497d
 	ld a, $09 ; $4982
 	farcall FarPtr_RunTrainingDrillByID ; $4984
@@ -769,7 +769,7 @@ Test2Npc0C_10:
 	set_flag $03, 6 ; $499f
 	ld hl, $000a ; $49a2
 	farcall FarPtr_PushTextArgNumber ; $49a5
-	script_set_text $0161 ; $49a8
+	script_set_text Text_30_353 ; $49a8
 	script_speak $80 ; $49ae
 	ld a, $0a ; $49b3
 	farcall FarPtr_RunTrainingDrillByID ; $49b5
@@ -786,7 +786,7 @@ Test2Npc0D_10:
 	set_flag $03, 6 ; $49d0
 	ld hl, $000b ; $49d3
 	farcall FarPtr_PushTextArgNumber ; $49d6
-	script_set_text $0161 ; $49d9
+	script_set_text Text_30_353 ; $49d9
 	script_speak $80 ; $49df
 	ld a, $0b ; $49e4
 	farcall FarPtr_RunTrainingDrillByID ; $49e6
@@ -803,7 +803,7 @@ Test2Npc0E_10:
 	set_flag $03, 6 ; $4a01
 	ld hl, $000c ; $4a04
 	farcall FarPtr_PushTextArgNumber ; $4a07
-	script_set_text $0161 ; $4a0a
+	script_set_text Text_30_353 ; $4a0a
 	script_speak $80 ; $4a10
 	ld a, $0c ; $4a15
 	farcall FarPtr_RunTrainingDrillByID ; $4a17
@@ -820,7 +820,7 @@ Test2Npc0F_10:
 	set_flag $03, 6 ; $4a32
 	ld hl, $000d ; $4a35
 	farcall FarPtr_PushTextArgNumber ; $4a38
-	script_set_text $0161 ; $4a3b
+	script_set_text Text_30_353 ; $4a3b
 	script_speak $80 ; $4a41
 	ld a, $0d ; $4a46
 	farcall FarPtr_RunTrainingDrillByID ; $4a48
@@ -837,7 +837,7 @@ Test2Npc10_10:
 	set_flag $03, 6 ; $4a63
 	ld hl, $000e ; $4a66
 	farcall FarPtr_PushTextArgNumber ; $4a69
-	script_set_text $0161 ; $4a6c
+	script_set_text Text_30_353 ; $4a6c
 	script_speak $80 ; $4a72
 	ld a, $0e ; $4a77
 	farcall FarPtr_RunTrainingDrillByID ; $4a79
@@ -854,7 +854,7 @@ Test2Npc11_10:
 	set_flag $03, 6 ; $4a94
 	ld hl, $000f ; $4a97
 	farcall FarPtr_PushTextArgNumber ; $4a9a
-	script_set_text $0161 ; $4a9d
+	script_set_text Text_30_353 ; $4a9d
 	script_speak $80 ; $4aa3
 	ld a, $0f ; $4aa8
 	farcall FarPtr_RunTrainingDrillByID ; $4aaa
@@ -871,21 +871,21 @@ Test2Npc12_10:
 	set_flag $03, 6 ; $4ac5
 	ld hl, $0010 ; $4ac8
 	farcall FarPtr_PushTextArgNumber ; $4acb
-	script_set_text $0161 ; $4ace
+	script_set_text Text_30_353 ; $4ace
 	script_speak $80 ; $4ad4
 	ld a, $10 ; $4ad9
 	farcall FarPtr_RunTrainingDrillByID ; $4adb
 	ret ; $4ade
 Test2NpcScripts_10:
 	; $4adf, 129 bytes (map_scripts)
-	map_script $03, $ff, $0000, $0c21, $00, $00
-	map_script $04, $ff, $0000, $0c22, $00, $00
-	map_script $05, $ff, $0000, $0c23, $00, $00
-	map_script $06, $ff, $0000, $0c24, $00, $00
-	map_script $07, $ff, $0000, $0c25, $00, $00
-	map_script $08, $ff, $0000, $0c26, $00, $00
-	map_script $09, $ff, $0000, $0c27, $00, $00
-	map_script $0a, $ff, $0000, $0c28, $00, $00
+	map_script $03, $ff, $0000, Text_33_33, $00, $00
+	map_script $04, $ff, $0000, Text_33_34, $00, $00
+	map_script $05, $ff, $0000, Text_33_35, $00, $00
+	map_script $06, $ff, $0000, Text_33_36, $00, $00
+	map_script $07, $ff, $0000, Text_33_37, $00, $00
+	map_script $08, $ff, $0000, Text_33_38, $00, $00
+	map_script $09, $ff, $0000, Text_33_39, $00, $00
+	map_script $0a, $ff, $0000, Text_33_40, $00, $00
 	map_script $0b, $ff, $0000, Test2Npc0B_10, $00, $00
 	map_script $0c, $ff, $0000, Test2Npc0C_10, $00, $00
 	map_script $0d, $ff, $0000, Test2Npc0D_10, $00, $00
@@ -902,7 +902,7 @@ Test2FacingScripts_10:
 Test2Facing01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4b69
 	script_fade_in $10 ; $4b6c
-	script_set_text $0483 ; $4b71
+	script_set_text Text_31_131 ; $4b71
 	script_speak $00 ; $4b77
 	farcall FarPtr_EndCutsceneScriptMode ; $4b7c
 	ret ; $4b7f
@@ -912,7 +912,7 @@ Test2TileTriggers_10:
 	db $ff
 Test2Tile01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4b89
-	script_set_text $0480 ; $4b8c
+	script_set_text Text_31_128 ; $4b8c
 	script_speak $00 ; $4b92
 	farcall FarPtr_EndCutsceneScriptMode ; $4b97
 	ret ; $4b9a
@@ -1002,7 +1002,7 @@ DevelopmentRespawnActorsAlt_10:
 	call WaitFadeEnd ; $4d85
 	ret ; $4d88
 	farcall FarPtr_BeginCutsceneScriptMode ; $4d89
-	script_set_text $0001 ; $4d8c
+	script_set_text Text_30_1 ; $4d8c
 	script_speak $00 ; $4d92
 	farcall FarPtr_EndCutsceneScriptMode ; $4d97
 	ret ; $4d9a
@@ -1038,7 +1038,7 @@ DevelopmentFacingScripts_10:
 DevelopmentFacing01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4e39
 	script_fade_in $10 ; $4e3c
-	script_set_text $0483 ; $4e41
+	script_set_text Text_31_131 ; $4e41
 	script_speak $00 ; $4e47
 	farcall FarPtr_EndCutsceneScriptMode ; $4e4c
 	ret ; $4e4f
@@ -1048,7 +1048,7 @@ DevelopmentTileTriggers_10:
 	db $ff
 DevelopmentTile01_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $4e59
-	script_set_text $0480 ; $4e5c
+	script_set_text Text_31_128 ; $4e5c
 	script_speak $00 ; $4e62
 	farcall FarPtr_EndCutsceneScriptMode ; $4e67
 	ret ; $4e6a
@@ -2225,11 +2225,11 @@ Label_10_58f4:
 	script_wait_frames $05 ; $58ff
 	and a, a ; $5906
 	jr z, Label_10_5915 ; $5907
-	script_set_text $0cde ; $5909
+	script_set_text Text_33_222 ; $5909
 	script_speak $04 ; $590f
 	ret ; $5914
 Label_10_5915:
-	script_set_text $0cdd ; $5915
+	script_set_text Text_33_221 ; $5915
 	script_speak $04 ; $591b
 	ret ; $5920
 	; $5921, 10 bytes (records:2)
@@ -2736,7 +2736,7 @@ Label_10_5ea9:
 	script_wait_frames $05 ; $5eb4
 	and a, a ; $5ebb
 	jr nz, Label_10_5ed2 ; $5ebc
-	script_set_text $0ca9 ; $5ebe
+	script_set_text Text_33_169 ; $5ebe
 	test_flag $05, 7 ; $5ec4
 	jr z, Label_10_5ecc ; $5ec7
 	farcall FarPtr_AdvanceDialogueTextCursor ; $5ec9
@@ -2744,7 +2744,7 @@ Label_10_5ecc:
 	script_speak $09 ; $5ecc
 	ret ; $5ed1
 Label_10_5ed2:
-	script_set_text $0cab ; $5ed2
+	script_set_text Text_33_171 ; $5ed2
 	script_speak $09 ; $5ed8
 	ret ; $5edd
 	; $5ede, 20 bytes (records:2)
@@ -3118,7 +3118,7 @@ AcademyWingNpc03_10:
 	script_face_toward $00, $03 ; $623b
 	test_flag $1c, 0 ; $6243
 	jr z, Label_10_6250 ; $6246
-	script_set_text $0205 ; $6248
+	script_set_text Text_30_517 ; $6248
 	jr Label_10_62b0 ; $624e
 Label_10_6250:
 	script_get_actor_state $06 ; $6250
@@ -3133,20 +3133,20 @@ Label_10_6250:
 	sound $97 ; $626a
 	script_wait_frames $3c ; $626c
 	script_set_position $06, $0100, $0100 ; $6273
-	script_set_text $0201 ; $627e
+	script_set_text Text_30_513 ; $627e
 	test_flag $05, 7 ; $6284
 	jr z, Label_10_628c ; $6287
 	farcall FarPtr_AdvanceDialogueTextCursor ; $6289
 Label_10_628c:
 	ld a, $03 ; $628c
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $628e
-	script_set_text $0203 ; $6291
+	script_set_text Text_30_515 ; $6291
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6297
 	farcall FarPtr_ScriptCloseDialogueWindow ; $629a
 	script_wait_frames $05 ; $629d
 	and a, a ; $62a4
 	jr nz, Label_10_62b0 ; $62a5
-	script_set_text $0204 ; $62a7
+	script_set_text Text_30_516 ; $62a7
 	set_flag $1c, 0 ; $62ad
 Label_10_62b0:
 	script_speak $03 ; $62b0
@@ -3167,7 +3167,7 @@ AcademyWingFacing02_10:
 	farcall FarPtr_BeginCutsceneScriptMode ; $62d7
 	script_player_speed $0020 ; $62da
 	script_move_player $2100, $3300 ; $62e0
-	script_set_text $01c1 ; $62ea
+	script_set_text Text_30_449 ; $62ea
 	script_face $03, $40 ; $62f0
 	script_wait_frames $0a ; $62f7
 	script_speak $04 ; $62fe
@@ -3186,7 +3186,7 @@ AcademyWingFacing02_10:
 	farcall FarPtr_EndCutsceneScriptMode ; $6351
 	ret ; $6354
 AcademyWingFacing01_10:
-	script_set_text $01c3 ; $6355
+	script_set_text Text_30_451 ; $6355
 	script_speak $00 ; $635b
 	ret ; $6360
 AcademyWingTileTriggers_10:
@@ -3311,7 +3311,7 @@ Label_10_6512:
 	script_wait_frames $3c ; $6547
 	script_set_anim $06, $02 ; $654e
 	script_wait_idle $06 ; $6555
-	script_set_text $01db ; $655a
+	script_set_text Text_30_475 ; $655a
 	script_speak $06 ; $6560
 	script_set_anim $07, $02 ; $6565
 	script_set_anim $08, $02 ; $656c
@@ -3409,7 +3409,7 @@ Label_10_66c6:
 	script_face $07, $c0 ; $67e1
 	script_face $08, $c0 ; $67e8
 	script_face $09, $c0 ; $67ef
-	script_set_text $01e2 ; $67f6
+	script_set_text Text_30_482 ; $67f6
 	script_speak $06 ; $67fc
 	script_set_objdef $53, $03 ; $6801
 	script_set_anim $03, $01 ; $680d
@@ -3665,7 +3665,7 @@ Label_10_6e27:
 Label_10_6e87:
 	script_set_anim $09, $04 ; $6e87
 	script_wait_idle $09 ; $6e8e
-	script_set_text $01eb ; $6e93
+	script_set_text Text_30_491 ; $6e93
 	ld a, $09 ; $6e99
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6e9b
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6e9e
@@ -3694,7 +3694,7 @@ Label_10_6ee3:
 Label_10_6f0c:
 	script_set_anim $00, $03 ; $6f0c
 	script_wait_idle $00 ; $6f13
-	script_set_text $01ec ; $6f18
+	script_set_text Text_30_492 ; $6f18
 	script_speak $06 ; $6f1e
 	ld c, $04 ; $6f23
 	call BeginFadeOut ; $6f25
@@ -3746,7 +3746,7 @@ Label_10_7029:
 	script_fade_in $04 ; $7034
 	call WaitFadeEnd ; $7039
 	script_wait_frames $3c ; $703c
-	script_set_text $01f2 ; $7043
+	script_set_text Text_30_498 ; $7043
 	call Func_10_73ee ; $7049
 	test_flag $05, 7 ; $704c
 	jp z, Label_10_7059 ; $704f
@@ -3774,7 +3774,7 @@ Label_10_7095:
 	script_speak $03 ; $70a8
 	script_face $03, $c0 ; $70ad
 	script_wait_frames $50 ; $70b4
-	script_set_text $01f8 ; $70bb
+	script_set_text Text_30_504 ; $70bb
 	call Func_10_73ee ; $70c1
 	test_flag $05, 7 ; $70c4
 	jp z, Label_10_7101 ; $70c7
@@ -3827,7 +3827,7 @@ Label_10_71bb:
 	script_wait_idle $00 ; $71d7
 	script_set_anim $03, $02 ; $71dc
 	script_wait_idle $03 ; $71e3
-	script_set_text $01ff ; $71e8
+	script_set_text Text_30_511 ; $71e8
 	jr Label_10_71bb ; $71ee
 Label_10_71f0:
 	test_flag $05, 7 ; $71f0
@@ -3836,7 +3836,7 @@ Label_10_71f0:
 	script_wait_idle $00 ; $71fd
 	script_set_anim $03, $03 ; $7202
 	script_wait_idle $03 ; $7209
-	script_set_text $0200 ; $720e
+	script_set_text Text_30_512 ; $720e
 	script_speak $03 ; $7214
 	script_set_anim $00, $03 ; $7219
 	script_set_anim $02, $03 ; $7220
@@ -3863,7 +3863,7 @@ Label_10_72a9:
 	script_wait_idle $00 ; $72b0
 	script_set_anim $03, $03 ; $72b5
 	script_wait_idle $03 ; $72bc
-	script_set_text $0200 ; $72c1
+	script_set_text Text_30_512 ; $72c1
 	script_speak $03 ; $72c7
 	script_set_anim $00, $03 ; $72cc
 	script_wait_idle $00 ; $72d3
@@ -4120,7 +4120,7 @@ AcademyMainBldgNpc04_10:
 	dw $01c7 ; record 3
 	dw $01ca ; record 4
 AcademyMainBldgNpc05_10:
-	script_set_text $01ce ; $7654
+	script_set_text Text_30_462 ; $7654
 	script_speak $05 ; $765a
 	script_face $05, $40 ; $765f
 	test_flag $05, 7 ; $7666
@@ -4150,7 +4150,7 @@ Label_10_7683:
 	dw $01d3 ; record 3
 	dw $01d4 ; record 4
 Label_10_76a2:
-	script_set_text $01d5 ; $76a2
+	script_set_text Text_30_469 ; $76a2
 	script_wait_frames $14 ; $76a8
 	script_speak $05 ; $76af
 	call Func_10_7bb6 ; $76b4
@@ -4239,7 +4239,7 @@ Func_10_7741:
 	script_move_target $00, $2200, $1900 ; $77a6
 	script_face $04, $00 ; $77b1
 	farcall FarPtr_WaitPlayerMoveDone ; $77b8
-	script_set_text $01ae ; $77bb
+	script_set_text Text_30_430 ; $77bb
 	script_speak $04 ; $77c1
 	script_wait_move $03 ; $77c6
 	script_wait_frames $0a ; $77cb

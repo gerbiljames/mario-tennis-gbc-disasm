@@ -266,7 +266,7 @@ TrainingGymNpc07_0e:
 	dw $14d2 ; record 3
 	dw $14df ; record 4
 Label_0e_4471:
-	script_set_text $14d2 ; $4471
+	script_set_text Text_35_210 ; $4471
 	ld a, $07 ; $4477
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4479
 	farcall FarPtr_RunDialogueYesNoPrompt ; $447c
@@ -403,7 +403,7 @@ TrainingGymNpcScripts_0e:
 	map_script $0a, $ff, $0000, TrainingGymNpc0A_0e, $13, $00
 	map_script $0b, $ff, $0000, TrainingGymNpc0B_0e, $10, $00
 	map_script $0c, $ff, $0000, TrainingGymNpc0C_0e, $13, $00
-	map_script $0d, $ff, $0000, $20e2, $13, $00
+	map_script $0d, $ff, $0000, Text_6e_226, $13, $00
 	db $ff
 TrainingGymFacingScripts_0e:
 	; $45ad, 17 bytes (map_scripts)
@@ -1197,10 +1197,10 @@ Label_0e_4da5:
 	jr nz, Label_0e_4dcd ; $4da8
 	test_flag $0f, 6 ; $4daa
 	jr z, Label_0e_4db7 ; $4dad
-	script_set_text $20e4 ; $4daf
+	script_set_text Text_6e_228 ; $4daf
 	jr Label_0e_4dc0 ; $4db5
 Label_0e_4db7:
-	script_set_text $20e3 ; $4db7
+	script_set_text Text_6e_227 ; $4db7
 	set_flag $0f, 6 ; $4dbd
 Label_0e_4dc0:
 	script_speak $0e ; $4dc0
@@ -1209,33 +1209,33 @@ Label_0e_4dc0:
 Label_0e_4dcd:
 	test_flag $0f, 6 ; $4dcd
 	jr z, Label_0e_4dda ; $4dd0
-	script_set_text $20e6 ; $4dd2
+	script_set_text Text_6e_230 ; $4dd2
 	jr Label_0e_4dc0 ; $4dd8
 Label_0e_4dda:
-	script_set_text $20e5 ; $4dda
+	script_set_text Text_6e_229 ; $4dda
 	set_flag $0f, 6 ; $4de0
 	jr Label_0e_4dc0 ; $4de3
 Label_0e_4de5:
 	set_flag $0c, 1 ; $4de5
 	set_flag $0c, 2 ; $4de8
 	set_flag $0d, 0 ; $4deb
-	script_set_text $20e9 ; $4dee
+	script_set_text Text_6e_233 ; $4dee
 	jr Label_0e_4e26 ; $4df4
 	set_flag $0c, 1 ; $4df6
 	set_flag $0c, 2 ; $4df9
 	set_flag $0d, 0 ; $4dfc
 	set_flag $0c, 3 ; $4dff
 	set_flag $0c, 7 ; $4e02
-	script_set_text $20e9 ; $4e05
+	script_set_text Text_6e_233 ; $4e05
 	jr Label_0e_4e26 ; $4e0b
 Label_0e_4e0d:
 	set_flag $0c, 1 ; $4e0d
 	test_flag $0f, 7 ; $4e10
 	jr z, Label_0e_4e1d ; $4e13
-	script_set_text $20e9 ; $4e15
+	script_set_text Text_6e_233 ; $4e15
 	jr Label_0e_4e26 ; $4e1b
 Label_0e_4e1d:
-	script_set_text $20e7 ; $4e1d
+	script_set_text Text_6e_231 ; $4e1d
 	set_flag $0f, 7 ; $4e23
 Label_0e_4e26:
 	script_face_toward $00, $0e ; $4e26
@@ -1247,11 +1247,11 @@ Label_0e_4e26:
 	and a, a ; $4e40
 	jr z, Label_0e_4e4f ; $4e41
 RepairCounterFarewell:
-	script_set_text $20ea ; $4e43
+	script_set_text Text_6e_234 ; $4e43
 	script_speak $0e ; $4e49
 	ret ; $4e4e
 Label_0e_4e4f:
-	script_set_text $20eb ; $4e4f
+	script_set_text Text_6e_235 ; $4e4f
 	script_speak $0e ; $4e55
 	script_wait_frames $05 ; $4e5a
 RepairCounterServiceMenu:
@@ -1268,9 +1268,9 @@ Label_0e_4e6a:
 	jp z, RepairCounterChangeRackets ; $4e79
 	test_flag $0a, 7 ; $4e7c
 	jp nz, RepairCounterChangeShoes ; $4e7f
-	script_set_text $20e8 ; $4e82
+	script_set_text Text_6e_232 ; $4e82
 	script_speak $0e ; $4e88
-	script_set_text $20f2 ; $4e8d
+	script_set_text Text_6e_242 ; $4e8d
 	ld a, $0e ; $4e93
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4e95
 	farcall FarPtr_RunDialogueYesNoPrompt ; $4e98
@@ -1305,7 +1305,7 @@ PrepareEquipmentSelectScreen:
 	ld [$c321], a ; $4ee5
 	ret ; $4ee8
 RepairCounterChangeRackets:
-	script_set_text $20ed ; $4ee9
+	script_set_text Text_6e_237 ; $4ee9
 	script_speak $0e ; $4eef
 	call PrepareEquipmentSelectScreen ; $4ef4
 	farcall FarPtr_RunRacketSelectScreen ; $4ef7
@@ -1313,7 +1313,7 @@ RepairCounterChangeRackets:
 	jr nz, Label_0e_4f1d ; $4efb
 	jr RestoreScreenAfterEquipSelect ; $4efd
 RepairCounterChangeShoes:
-	script_set_text $20ee ; $4eff
+	script_set_text Text_6e_238 ; $4eff
 	script_speak $0e ; $4f05
 	call PrepareEquipmentSelectScreen ; $4f0a
 	farcall FarPtr_RunShoesSelectScreen ; $4f0d
@@ -1475,11 +1475,11 @@ Label_0e_5056:
 	call ShowEquipChangeConfirmation ; $5064
 	set_flag $0f, 7 ; $5067
 	script_face_toward $00, $0e ; $506a
-	script_set_text $20f1 ; $5072
+	script_set_text Text_6e_241 ; $5072
 	call PushEquipmentNameTextArg ; $5078
 	script_speak $0e ; $507b
 Label_0e_5080:
-	script_set_text $20f2 ; $5080
+	script_set_text Text_6e_242 ; $5080
 	ld a, $0e ; $5086
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5088
 	farcall FarPtr_RunDialogueYesNoPrompt ; $508b
@@ -1507,7 +1507,7 @@ RepairCounterChangedReturnB:
 RepairCounterReopenServiceMenu:
 	xor a, a ; $50dd
 	ld [wStoryModeShowLocationName], a ; $50de
-	script_set_text $20ef ; $50e1
+	script_set_text Text_6e_239 ; $50e1
 	ld hl, $00e6 ; $50e7
 	call FetchAndPushShortTextArg ; $50ea
 	set_flag $0f, 7 ; $50ed
@@ -1526,9 +1526,9 @@ RepairCounterReopenServiceMenu:
 	jp z, RepairCounterChangeRackets ; $5118
 	test_flag $0a, 7 ; $511b
 	jp nz, RepairCounterChangeShoes ; $511e
-	script_set_text $20e8 ; $5121
+	script_set_text Text_6e_232 ; $5121
 	script_speak $0e ; $5127
-	script_set_text $20f2 ; $512c
+	script_set_text Text_6e_242 ; $512c
 	ld a, $0e ; $5132
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5134
 	farcall FarPtr_RunDialogueYesNoPrompt ; $5137
@@ -1669,7 +1669,7 @@ MarioWorldExitTriggers_0e:
 	map_script $01, $ff, $0000, MapScriptNop_0e, $1b, $0e
 	db $ff
 MarioWorldNpc12Mario_0e:
-	script_set_text $308e ; $538e
+	script_set_text Text_5e_142 ; $538e
 	script_speak $12 ; $5394
 	ret ; $5399
 MarioWorldNpc11_0e:
@@ -1695,22 +1695,22 @@ Label_0e_53b9:
 	script_speak $0b ; $53bc
 	ret ; $53c1
 MarioWorldNpc09Yoshi_0e:
-	script_set_text $3097 ; $53c2
+	script_set_text Text_5e_151 ; $53c2
 	sound $87 ; $53c8
 	script_speak $09 ; $53ca
 	ret ; $53cf
 MarioWorldNpc0ABabyMario_0e:
-	script_set_text $3098 ; $53d0
+	script_set_text Text_5e_152 ; $53d0
 	sound $89 ; $53d6
 	script_speak $0a ; $53d8
 	ret ; $53dd
 MarioWorldNpc0C_0e:
-	script_set_text $3099 ; $53de
+	script_set_text Text_5e_153 ; $53de
 	sound $88 ; $53e4
 	script_speak $0c ; $53e6
 	ret ; $53eb
 MarioWorldNpc0D_0e:
-	script_set_text $309a ; $53ec
+	script_set_text Text_5e_154 ; $53ec
 	sound $86 ; $53f2
 	script_speak $0d ; $53f4
 	ret ; $53f9
@@ -1748,11 +1748,11 @@ Label_0e_542d:
 	script_speak $0e ; $5430
 	ret ; $5435
 MarioWorldNpc13_0e:
-	script_set_text $30a7 ; $5436
+	script_set_text Text_5e_167 ; $5436
 	script_speak $13 ; $543c
 	ret ; $5441
 MarioWorldNpc14_0e:
-	script_set_text $30a8 ; $5442
+	script_set_text Text_5e_168 ; $5442
 	script_speak $14 ; $5448
 	ret ; $544d
 MarioWorldNpcScripts_0e:
@@ -1870,7 +1870,7 @@ Label_0e_558a:
 	script_wait_frames $0a ; $55e3
 	test_flag $0d, 6 ; $55ea
 	jr nz, Label_0e_55ff ; $55ed
-	script_set_text $304b ; $55ef
+	script_set_text Text_5e_75 ; $55ef
 	script_speak $13 ; $55f5
 	script_speak $13 ; $55fa
 Label_0e_55ff:
@@ -1998,7 +1998,7 @@ Label_0e_56c0:
 	script_wait_frames $05 ; $5924
 	and a, a ; $592b
 	jr z, ExhibitionAcceptedSingles ; $592c
-	script_set_text $3060 ; $592e
+	script_set_text Text_5e_96 ; $592e
 	call ExhibitionDeclinedCutscene ; $5934
 	ret ; $5937
 ExhibitionAcceptedSingles:
@@ -2006,7 +2006,7 @@ ExhibitionAcceptedSingles:
 	script_set_anim $0f, $03 ; $593f
 	script_wait_idle $0f ; $5946
 	script_wait_frames $0a ; $594b
-	script_set_text $3063 ; $5952
+	script_set_text Text_5e_99 ; $5952
 	script_speak $0f ; $5958
 	script_speak $08 ; $595d
 	script_face $0b, $c0 ; $5962
@@ -2117,7 +2117,7 @@ Label_0e_5bc5:
 	script_wait_frames $0a ; $5c52
 	test_flag $0d, 6 ; $5c59
 	jr nz, Label_0e_5c6e ; $5c5c
-	script_set_text $3066 ; $5c5e
+	script_set_text Text_5e_102 ; $5c5e
 	script_speak $13 ; $5c64
 	script_speak $13 ; $5c69
 Label_0e_5c6e:
@@ -2268,7 +2268,7 @@ Label_0e_5d49:
 	script_wait_frames $05 ; $603f
 	and a, a ; $6046
 	jr z, ExhibitionAcceptedDoubles ; $6047
-	script_set_text $307d ; $6049
+	script_set_text Text_5e_125 ; $6049
 	call ExhibitionDeclinedCutscene ; $604f
 	script_get_actor_state $02 ; $6052
 	ld c, l ; $6057
@@ -2281,7 +2281,7 @@ ExhibitionAcceptedDoubles:
 	script_set_anim $0f, $03 ; $6067
 	script_wait_idle $0f ; $606e
 	script_wait_frames $0a ; $6073
-	script_set_text $3080 ; $607a
+	script_set_text Text_5e_128 ; $607a
 	script_speak $0f ; $6080
 	script_speak $08 ; $6085
 	script_face $0b, $c0 ; $608a
@@ -3222,7 +3222,7 @@ Label_0e_77fe:
 	script_wait_move $03 ; $7859
 	script_set_anim $03, $03 ; $785e
 	script_wait_idle $03 ; $7865
-	script_set_text $30a9 ; $786a
+	script_set_text Text_5e_169 ; $786a
 	script_speak $03 ; $7870
 	script_player_speed $0040 ; $7875
 	script_move_player $0e00, $1400 ; $787b
@@ -3294,7 +3294,7 @@ Label_0e_7927:
 	ld [wStoryModeExitLocationRequest], a ; $7a62
 	ret ; $7a65
 Label_0e_7a66:
-	script_set_text $30aa ; $7a66
+	script_set_text Text_5e_170 ; $7a66
 	script_speak $03 ; $7a6c
 	script_wait_frames $14 ; $7a71
 	script_set_anim $0d, $03 ; $7a78

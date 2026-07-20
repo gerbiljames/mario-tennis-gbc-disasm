@@ -382,7 +382,7 @@ RestoreMessageSpeed:
 	ret ; $42cd
 Label_1a_42ce:
 	clear_flag $06, 1 ; $42ce
-	script_set_text $049c ; $42d1
+	script_set_text Text_31_156 ; $42d1
 	ld a, $80 ; $42d7
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $42d9
 	farcall FarPtr_RunDialogueYesNoPrompt ; $42dc
@@ -420,7 +420,7 @@ Label_1a_4317:
 Label_1a_432e:
 	jp Func_1a_402c ; $432e
 Label_1a_4331:
-	script_set_text $049d ; $4331
+	script_set_text Text_31_157 ; $4331
 	ld a, $80 ; $4337
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4339
 	ld a, $01 ; $433c

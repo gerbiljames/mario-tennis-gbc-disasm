@@ -214,15 +214,15 @@ AwardsCeremonyExitTriggers_0f:
 AwardsCeremonyNpcScripts_0f:
 	; $4447, 81 bytes (map_scripts)
 	map_script $03, $ff, $0000, $0000, $03, $00
-	map_script $04, $ff, $0000, $2873, $03, $00
-	map_script $05, $ff, $0000, $2884, $03, $00
-	map_script $06, $ff, $0000, $287a, $03, $00
-	map_script $07, $ff, $0000, $287c, $03, $00
+	map_script $04, $ff, $0000, Text_25_115, $03, $00
+	map_script $05, $ff, $0000, Text_25_132, $03, $00
+	map_script $06, $ff, $0000, Text_25_122, $03, $00
+	map_script $07, $ff, $0000, Text_25_124, $03, $00
 	map_script $08, $ff, $0000, AwardsCeremonyNpc08_0f, $03, $00
-	map_script $09, $ff, $0000, $2882, $03, $00
-	map_script $0a, $ff, $0000, $2883, $03, $00
-	map_script $11, $ff, $0000, $2879, $03, $00
-	map_script $12, $ff, $0000, $287b, $03, $00
+	map_script $09, $ff, $0000, Text_25_130, $03, $00
+	map_script $0a, $ff, $0000, Text_25_131, $03, $00
+	map_script $11, $ff, $0000, Text_25_121, $03, $00
+	map_script $12, $ff, $0000, Text_25_123, $03, $00
 	db $ff
 AwardsCeremonyFacingScripts_0f:
 	; $4498, 9 bytes (map_scripts)
@@ -245,12 +245,12 @@ AwardsCeremonyTile01_0f:
 	farcall FarPtr_CopyBehaviorMapRect ; $44bf
 	call CutsceneStompScreenShake ; $44c2
 	call CutsceneStompScreenShake ; $44c5
-	script_set_text $287e ; $44c8
+	script_set_text Text_25_126 ; $44c8
 	script_speak $08 ; $44ce
 	test_flag $05, 7 ; $44d3
 	jp z, Label_0f_45b6 ; $44d6
 	set_flag $10, 4 ; $44d9
-	script_set_text $28b4 ; $44dc
+	script_set_text Text_25_180 ; $44dc
 	script_null_script $02 ; $44e2
 	script_move_target $02, $0d00, $1b00 ; $44e7
 	script_wait_move $02 ; $44f2
@@ -773,7 +773,7 @@ Label_0f_4ea7:
 	script_move_target $10, $1100, $1600 ; $517a
 	script_wait_move $10 ; $5185
 	script_face $10, $c0 ; $518a
-	script_set_text $28b9 ; $5191
+	script_set_text Text_25_185 ; $5191
 	script_set_speed $0c, $0010 ; $5197
 	script_move_target $0c, $0a00, $1100 ; $519f
 	script_move_target $0f, $0a00, $1000 ; $51aa
@@ -1013,11 +1013,11 @@ Label_0f_5600:
 Label_0f_5627:
 	ret ; $5627
 AwardsCeremonyNpc08_0f:
-	script_set_text $287d ; $5628
+	script_set_text Text_25_125 ; $5628
 	call Func_0f_5f7a ; $562e
 	and a, $01 ; $5631
 	jr z, Label_0f_563b ; $5633
-	script_set_text $2881 ; $5635
+	script_set_text Text_25_129 ; $5635
 Label_0f_563b:
 	script_speak $08 ; $563b
 	ret ; $5640
@@ -1071,7 +1071,7 @@ Label_0f_56a8:
 	script_face_toward $00, $03 ; $56b7
 	ld a, $0a ; $56bf
 	call DelayFrames ; $56c1
-	script_set_text $286b ; $56c4
+	script_set_text Text_25_107 ; $56c4
 	script_speak $03 ; $56ca
 	script_set_anim $03, $03 ; $56cf
 	script_wait_idle $03 ; $56d6
@@ -1164,7 +1164,7 @@ Label_0f_5889:
 	script_set_position $02, $0b00, $2700 ; $588e
 	script_face $02, $c0 ; $5899
 	call Func_0f_5b4d ; $58a0
-	script_set_text $2897 ; $58a3
+	script_set_text Text_25_151 ; $58a3
 	script_set_anim $02, $02 ; $58a9
 	script_wait_idle $02 ; $58b0
 	script_face $02, $40 ; $58b5
@@ -1291,15 +1291,15 @@ Label_0f_5afb:
 	ret ; $5b03
 AwardsCeremonyScriptsDoubles_0f:
 	; $5b04, 73 bytes (map_scripts)
-	map_script $03, $ff, $0000, $28b7, $03, $00
-	map_script $04, $ff, $0000, $28a5, $03, $00
-	map_script $05, $ff, $0000, $28a6, $03, $00
-	map_script $06, $ff, $0000, $28af, $03, $00
-	map_script $07, $ff, $0000, $28b1, $03, $00
+	map_script $03, $ff, $0000, Text_25_183, $03, $00
+	map_script $04, $ff, $0000, Text_25_165, $03, $00
+	map_script $05, $ff, $0000, Text_25_166, $03, $00
+	map_script $06, $ff, $0000, Text_25_175, $03, $00
+	map_script $07, $ff, $0000, Text_25_177, $03, $00
 	map_script $08, $ff, $0000, AwardsCeremonyNpc08_0f, $03, $00
-	map_script $09, $ff, $0000, $2882, $03, $00
-	map_script $0a, $ff, $0000, $2883, $03, $00
-	map_script $12, $ff, $0000, $28b0, $03, $00
+	map_script $09, $ff, $0000, Text_25_130, $03, $00
+	map_script $0a, $ff, $0000, Text_25_131, $03, $00
+	map_script $12, $ff, $0000, Text_25_176, $03, $00
 	db $ff
 Func_0f_5b4d:
 	script_player_speed $00ff ; $5b4d
@@ -1352,7 +1352,7 @@ AnnounceWinnersToPodiums:
 	call DelayFrames ; $5c79
 	script_face $0b, $00 ; $5c7c
 	script_face $0c, $00 ; $5c83
-	script_set_text $2885 ; $5c8a
+	script_set_text Text_25_133 ; $5c8a
 	script_speak $0b ; $5c90
 	ret ; $5c95
 Func_0f_5c96:
@@ -1548,7 +1548,7 @@ TournamentExit_0f:
 	clear_flag $17, 1 ; $60da
 	ret ; $60dd
 TournamentNpc0A_0f:
-	script_set_text $24a3 ; $60de
+	script_set_text Text_1f_163 ; $60de
 	ld a, $0b ; $60e4
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $60e6
 	farcall FarPtr_RunDialogueYesNoPrompt ; $60e9
@@ -1562,17 +1562,17 @@ Label_0f_60fc:
 	ret ; $6101
 TournamentNpcScripts_0f:
 	; $6102, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, $249f, $03, $00
-	map_script $07, $ff, $0000, $24a0, $13, $00
-	map_script $08, $ff, $0000, $24a1, $03, $00
-	map_script $09, $ff, $0000, $24a2, $03, $00
+	map_script $06, $ff, $0000, Text_1f_159, $03, $00
+	map_script $07, $ff, $0000, Text_1f_160, $13, $00
+	map_script $08, $ff, $0000, Text_1f_161, $03, $00
+	map_script $09, $ff, $0000, Text_1f_162, $03, $00
 	map_script $0a, $ff, $0000, TournamentNpc0A_0f, $03, $00
-	map_script $0b, $ff, $0000, $24a6, $03, $00
-	map_script $0c, $ff, $0000, $24a7, $03, $00
-	map_script $0d, $ff, $0000, $24a8, $03, $00
-	map_script $0e, $ff, $0000, $24a9, $03, $00
-	map_script $0f, $ff, $0000, $24aa, $03, $00
-	map_script $10, $ff, $0000, $24ab, $03, $00
+	map_script $0b, $ff, $0000, Text_1f_166, $03, $00
+	map_script $0c, $ff, $0000, Text_1f_167, $03, $00
+	map_script $0d, $ff, $0000, Text_1f_168, $03, $00
+	map_script $0e, $ff, $0000, Text_1f_169, $03, $00
+	map_script $0f, $ff, $0000, Text_1f_170, $03, $00
+	map_script $10, $ff, $0000, Text_1f_171, $03, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
@@ -1898,7 +1898,7 @@ IslandOpenArrivalCutscene:
 	script_wait_move $00 ; $6497
 	script_wait_frames $28 ; $649c
 	script_face $03, $40 ; $64a3
-	script_set_text $2415 ; $64aa
+	script_set_text Text_1f_21 ; $64aa
 	script_face $00, $40 ; $64b0
 	script_wait_frames $28 ; $64b7
 	script_face $00, $80 ; $64be
@@ -1962,9 +1962,9 @@ IslandOpenRoundActors_0f:
 	map_actor_end
 IslandOpenRoundScripts_0f:
 	; $65f6, 25 bytes (map_scripts)
-	map_script $03, $ff, $0000, $2419, $03, $00
-	map_script $04, $ff, $0000, $241a, $03, $00
-	map_script $05, $ff, $0000, $241b, $03, $00
+	map_script $03, $ff, $0000, Text_1f_25, $03, $00
+	map_script $04, $ff, $0000, Text_1f_26, $03, $00
+	map_script $05, $ff, $0000, Text_1f_27, $03, $00
 	db $ff
 ComputeIslandOpenRound:
 	test_flag $05, 7 ; $660f
@@ -2106,17 +2106,17 @@ IslandOpenRound1Actors_0f:
 	map_actor_end
 IslandOpenRound1Scripts_0f:
 	; $67e2, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, $24b6, $03, $00
-	map_script $07, $ff, $0000, $24b7, $03, $00
-	map_script $08, $ff, $0000, $24b8, $03, $00
-	map_script $09, $ff, $0000, $24b9, $03, $00
-	map_script $0a, $ff, $0000, $24ba, $03, $00
-	map_script $0b, $ff, $0000, $24bb, $03, $00
-	map_script $0c, $ff, $0000, $24bc, $03, $00
-	map_script $0d, $ff, $0000, $24bd, $03, $00
-	map_script $0e, $ff, $0000, $24be, $03, $00
-	map_script $0f, $ff, $0000, $24bf, $03, $00
-	map_script $10, $ff, $0000, $24c0, $13, $00
+	map_script $06, $ff, $0000, Text_1f_182, $03, $00
+	map_script $07, $ff, $0000, Text_1f_183, $03, $00
+	map_script $08, $ff, $0000, Text_1f_184, $03, $00
+	map_script $09, $ff, $0000, Text_1f_185, $03, $00
+	map_script $0a, $ff, $0000, Text_1f_186, $03, $00
+	map_script $0b, $ff, $0000, Text_1f_187, $03, $00
+	map_script $0c, $ff, $0000, Text_1f_188, $03, $00
+	map_script $0d, $ff, $0000, Text_1f_189, $03, $00
+	map_script $0e, $ff, $0000, Text_1f_190, $03, $00
+	map_script $0f, $ff, $0000, Text_1f_191, $03, $00
+	map_script $10, $ff, $0000, Text_1f_192, $13, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
@@ -2139,17 +2139,17 @@ IslandOpenRound2Actors_0f:
 	map_actor_end
 IslandOpenRound2Scripts_0f:
 	; $6919, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, $2804, $03, $00
-	map_script $07, $ff, $0000, $2805, $13, $00
-	map_script $08, $ff, $0000, $2806, $03, $00
-	map_script $09, $ff, $0000, $2807, $03, $00
-	map_script $0a, $ff, $0000, $2808, $03, $00
-	map_script $0b, $ff, $0000, $2809, $03, $00
-	map_script $0c, $ff, $0000, $280a, $03, $00
-	map_script $0d, $ff, $0000, $280b, $13, $00
-	map_script $0e, $ff, $0000, $280c, $03, $00
-	map_script $0f, $ff, $0000, $280d, $03, $00
-	map_script $10, $ff, $0000, $280e, $13, $00
+	map_script $06, $ff, $0000, Text_25_4, $03, $00
+	map_script $07, $ff, $0000, Text_25_5, $13, $00
+	map_script $08, $ff, $0000, Text_25_6, $03, $00
+	map_script $09, $ff, $0000, Text_25_7, $03, $00
+	map_script $0a, $ff, $0000, Text_25_8, $03, $00
+	map_script $0b, $ff, $0000, Text_25_9, $03, $00
+	map_script $0c, $ff, $0000, Text_25_10, $03, $00
+	map_script $0d, $ff, $0000, Text_25_11, $13, $00
+	map_script $0e, $ff, $0000, Text_25_12, $03, $00
+	map_script $0f, $ff, $0000, Text_25_13, $03, $00
+	map_script $10, $ff, $0000, Text_25_14, $13, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
@@ -2172,17 +2172,17 @@ IslandOpenRound3Actors_0f:
 	map_actor_end
 IslandOpenRound3Scripts_0f:
 	; $6a50, 105 bytes (map_scripts)
-	map_script $06, $ff, $0000, $280f, $03, $00
-	map_script $07, $ff, $0000, $2810, $13, $00
-	map_script $08, $ff, $0000, $2811, $03, $00
-	map_script $09, $ff, $0000, $2812, $03, $00
-	map_script $0a, $ff, $0000, $2813, $03, $00
-	map_script $0b, $ff, $0000, $2814, $03, $00
-	map_script $0c, $ff, $0000, $2815, $03, $00
-	map_script $0d, $ff, $0000, $2816, $13, $00
-	map_script $0e, $ff, $0000, $2817, $03, $00
-	map_script $0f, $ff, $0000, $2818, $03, $00
-	map_script $10, $ff, $0000, $2819, $13, $00
+	map_script $06, $ff, $0000, Text_25_15, $03, $00
+	map_script $07, $ff, $0000, Text_25_16, $13, $00
+	map_script $08, $ff, $0000, Text_25_17, $03, $00
+	map_script $09, $ff, $0000, Text_25_18, $03, $00
+	map_script $0a, $ff, $0000, Text_25_19, $03, $00
+	map_script $0b, $ff, $0000, Text_25_20, $03, $00
+	map_script $0c, $ff, $0000, Text_25_21, $03, $00
+	map_script $0d, $ff, $0000, Text_25_22, $13, $00
+	map_script $0e, $ff, $0000, Text_25_23, $03, $00
+	map_script $0f, $ff, $0000, Text_25_24, $03, $00
+	map_script $10, $ff, $0000, Text_25_25, $13, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
@@ -2204,21 +2204,21 @@ IslandOpenRound1ActorsDoubles_0f:
 	map_actor_end
 IslandOpenRound1ScriptsDoubles_0f:
 	; $6b79, 97 bytes (map_scripts)
-	map_script $06, $ff, $0000, $281a, $03, $00
-	map_script $07, $ff, $0000, $281b, $13, $00
-	map_script $08, $ff, $0000, $281c, $03, $00
-	map_script $09, $ff, $0000, $281d, $03, $00
+	map_script $06, $ff, $0000, Text_25_26, $03, $00
+	map_script $07, $ff, $0000, Text_25_27, $13, $00
+	map_script $08, $ff, $0000, Text_25_28, $03, $00
+	map_script $09, $ff, $0000, Text_25_29, $03, $00
 	map_script $0a, $ff, $0000, IslandOpenRound1DoublesNpc0A_0f, $03, $00
 	map_script $0b, $ff, $0000, IslandOpenRound1DoublesNpc0B_0f, $03, $00
-	map_script $0c, $ff, $0000, $2824, $03, $00
+	map_script $0c, $ff, $0000, Text_25_36, $03, $00
 	map_script $0d, $ff, $0000, IslandOpenRound1DoublesNpc0D_0f, $13, $00
-	map_script $0e, $ff, $0000, $2828, $03, $00
-	map_script $0f, $ff, $0000, $2829, $03, $00
+	map_script $0e, $ff, $0000, Text_25_40, $03, $00
+	map_script $0f, $ff, $0000, Text_25_41, $03, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound1DoublesNpc0A_0f:
-	script_set_text $281e ; $6bda
+	script_set_text Text_25_30 ; $6bda
 	ld a, $0a ; $6be0
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6be2
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6be5
@@ -2231,7 +2231,7 @@ Label_0f_6bf8:
 	script_speak $0a ; $6bf8
 	ret ; $6bfd
 IslandOpenRound1DoublesNpc0B_0f:
-	script_set_text $2821 ; $6bfe
+	script_set_text Text_25_33 ; $6bfe
 	ld a, $0b ; $6c04
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6c06
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6c09
@@ -2244,7 +2244,7 @@ Label_0f_6c1c:
 	script_speak $0b ; $6c1c
 	ret ; $6c21
 IslandOpenRound1DoublesNpc0D_0f:
-	script_set_text $2825 ; $6c22
+	script_set_text Text_25_37 ; $6c22
 	ld a, $0d ; $6c28
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6c2a
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6c2d
@@ -2274,21 +2274,21 @@ IslandOpenRound2ActorsDoubles_0f:
 	map_actor_end
 IslandOpenRound2ScriptsDoubles_0f:
 	; $6d06, 97 bytes (map_scripts)
-	map_script $06, $ff, $0000, $282a, $03, $00
-	map_script $07, $ff, $0000, $282b, $03, $00
+	map_script $06, $ff, $0000, Text_25_42, $03, $00
+	map_script $07, $ff, $0000, Text_25_43, $03, $00
 	map_script $08, $ff, $0000, IslandOpenRound2DoublesNpc08_0f, $03, $00
-	map_script $09, $ff, $0000, $282f, $03, $00
-	map_script $0a, $ff, $0000, $2830, $03, $00
-	map_script $0b, $ff, $0000, $2831, $03, $00
-	map_script $0c, $ff, $0000, $2832, $03, $00
+	map_script $09, $ff, $0000, Text_25_47, $03, $00
+	map_script $0a, $ff, $0000, Text_25_48, $03, $00
+	map_script $0b, $ff, $0000, Text_25_49, $03, $00
+	map_script $0c, $ff, $0000, Text_25_50, $03, $00
 	map_script $0d, $ff, $0000, IslandOpenRound2DoublesNpc0D_0f, $13, $00
-	map_script $0e, $ff, $0000, $2836, $13, $00
-	map_script $0f, $ff, $0000, $2837, $13, $00
+	map_script $0e, $ff, $0000, Text_25_54, $13, $00
+	map_script $0f, $ff, $0000, Text_25_55, $13, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound2DoublesNpc08_0f:
-	script_set_text $282c ; $6d67
+	script_set_text Text_25_44 ; $6d67
 	ld a, $08 ; $6d6d
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6d6f
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6d72
@@ -2301,7 +2301,7 @@ Label_0f_6d85:
 	script_speak $08 ; $6d85
 	ret ; $6d8a
 IslandOpenRound2DoublesNpc0D_0f:
-	script_set_text $2833 ; $6d8b
+	script_set_text Text_25_51 ; $6d8b
 	ld a, $0d ; $6d91
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6d93
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6d96
@@ -2331,21 +2331,21 @@ IslandOpenRound3ActorsDoubles_0f:
 	map_actor_end
 IslandOpenRound3ScriptsDoubles_0f:
 	; $6e6f, 97 bytes (map_scripts)
-	map_script $06, $ff, $0000, $2838, $03, $00
-	map_script $07, $ff, $0000, $2839, $03, $00
-	map_script $08, $ff, $0000, $283a, $03, $00
-	map_script $09, $ff, $0000, $283b, $03, $00
-	map_script $0a, $ff, $0000, $283c, $03, $00
+	map_script $06, $ff, $0000, Text_25_56, $03, $00
+	map_script $07, $ff, $0000, Text_25_57, $03, $00
+	map_script $08, $ff, $0000, Text_25_58, $03, $00
+	map_script $09, $ff, $0000, Text_25_59, $03, $00
+	map_script $0a, $ff, $0000, Text_25_60, $03, $00
 	map_script $0b, $ff, $0000, IslandOpenRound3DoublesNpc0B_0f, $03, $00
 	map_script $0c, $ff, $0000, IslandOpenRound3DoublesNpc0C_0f, $03, $00
-	map_script $0d, $ff, $0000, $2843, $03, $00
-	map_script $0e, $ff, $0000, $2844, $13, $00
-	map_script $0f, $ff, $0000, $2845, $13, $00
+	map_script $0d, $ff, $0000, Text_25_67, $03, $00
+	map_script $0e, $ff, $0000, Text_25_68, $13, $00
+	map_script $0f, $ff, $0000, Text_25_69, $13, $00
 	map_script $03, $ff, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, $ff, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
 IslandOpenRound3DoublesNpc0C_0f:
-	script_set_text $2840 ; $6ed0
+	script_set_text Text_25_64 ; $6ed0
 	ld a, $0c ; $6ed6
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6ed8
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6edb
@@ -2358,7 +2358,7 @@ Label_0f_6eee:
 	script_speak $0c ; $6eee
 	ret ; $6ef3
 IslandOpenRound3DoublesNpc0B_0f:
-	script_set_text $283d ; $6ef4
+	script_set_text Text_25_61 ; $6ef4
 	ld a, $0b ; $6efa
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6efc
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6eff
@@ -2370,7 +2370,7 @@ IslandOpenRound3DoublesNpc0B_0f:
 Label_0f_6f12:
 	script_speak $0b ; $6f12
 	ret ; $6f17
-	script_set_text $24a3 ; $6f18
+	script_set_text Text_1f_163 ; $6f18
 	ld a, $0b ; $6f1e
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6f20
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6f23
@@ -2383,7 +2383,7 @@ Label_0f_6f36:
 	script_speak $0b ; $6f36
 	ret ; $6f3b
 TournamentNpc03_0f:
-	script_set_text $24ac ; $6f3c
+	script_set_text Text_1f_172 ; $6f3c
 	ld a, $03 ; $6f42
 	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6f44
 	farcall FarPtr_RunDialogueYesNoPrompt ; $6f47
@@ -2430,7 +2430,7 @@ Func_0f_6f85:
 Label_0f_6fc2:
 	ret ; $6fc2
 IslandOpenRoundCallCutscene:
-	script_set_text $285e ; $6fc3
+	script_set_text Text_25_94 ; $6fc3
 	script_move_player $1100, $0f00 ; $6fc9
 	farcall FarPtr_WaitPlayerMoveDone ; $6fd3
 	script_move_target $05, $0e00, $0c00 ; $6fd6
@@ -2781,7 +2781,7 @@ Label_0f_74b0:
 	script_face_toward $04, $00 ; $754f
 	script_speak $04 ; $7557
 	call IslandOpenBreakCutscene ; $755c
-	script_set_text $2849 ; $755f
+	script_set_text Text_25_73 ; $755f
 	ld a, [$c2b0] ; $7565
 	dec a ; $7568
 	ld hl, $2862 ; $7569
@@ -2818,7 +2818,7 @@ IslandOpenRoundScriptsSingles_0f:
 	map_script $05, $ff, $0000, IslandOpenRoundSinglesNpc05_0f, $03, $00
 	db $ff
 IslandOpenRoundSinglesNpc04_0f:
-	script_set_text $2849 ; $762e
+	script_set_text Text_25_73 ; $762e
 	ld a, [$c2b0] ; $7634
 	dec a ; $7637
 	ld hl, $2862 ; $7638
@@ -2967,7 +2967,7 @@ Label_0f_7763:
 	call IslandOpenBreakCutscene ; $77ed
 	script_face_toward $00, $04 ; $77f0
 	script_face $03, $00 ; $77f8
-	script_set_text $2849 ; $77ff
+	script_set_text Text_25_73 ; $77ff
 	ld a, [$c2b0] ; $7805
 	dec a ; $7808
 	ld hl, $2862 ; $7809
@@ -3007,7 +3007,7 @@ IslandOpenRoundScriptsDoubles_0f:
 	map_script $04, $ff, $0000, IslandOpenRoundDoublesNpc04_0f, $03, $00
 	db $ff
 IslandOpenRoundDoublesNpc04_0f:
-	script_set_text $2849 ; $78b1
+	script_set_text Text_25_73 ; $78b1
 	ld a, [$c2b0] ; $78b7
 	dec a ; $78ba
 	ld hl, $2862 ; $78bb
@@ -3069,7 +3069,7 @@ IslandOpenBreakCutscene:
 	script_move_target $06, $2300, $1700 ; $7927
 	script_move_target $07, $2500, $1700 ; $7932
 	script_wait_move $07 ; $793d
-	script_set_text $2869 ; $7942
+	script_set_text Text_25_105 ; $7942
 	script_move_player $2300, $1100 ; $7948
 	farcall FarPtr_WaitPlayerMoveDone ; $7952
 	script_face $03, $40 ; $7955
