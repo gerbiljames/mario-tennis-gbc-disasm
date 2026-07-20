@@ -95,6 +95,17 @@ at $da00), `IsPointNearPlayer` ($537a, distance² vs threshold),
 `ActorHeadingOffsetTable` at $5072). These are the primitives the actor
 obstacle-avoidance loop ($5227+) and NPC-interaction detection use.
 
+Finally carved bank $04's only actor-script bytecode -- the 22-byte pool at
+$41d1 (every bank-4 spawn template's `objdef` points into it) -- from an opaque
+`INCBIN` into readable `as_*` macros, one `actor_script` spec + label per entry
+point: `ActorScript_Idle` ($41d1, `as_halt`; the default an actor gets before a
+behavior is attached), `ActorScript_PlayerControl` ($41d2, `as_call
+UpdatePlayerControl` loop), `ActorScript_FollowWaypoints` ($41d8, `as_follow_wp`
+loop), `ActorScript_StepToTarget` ($41dc, `as_step`/`as_wait` loop), and
+`ActorScript_Deactivate` ($41e2, `as_set_field $20,$0` then halt). The
+`AttachActor*` installers now read as installing the matching script, closing
+the loop with those names. Byte-perfect.
+
 ### Reserved actor-slot constants (2026-07-20)
 
 Extended the actor-slot naming to the other two reserved system slots, adopting

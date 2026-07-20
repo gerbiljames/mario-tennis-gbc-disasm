@@ -203,7 +203,7 @@ AttachActorControllerScript:
 	push de ; $415f
 	push hl ; $4160
 	ldh a, [hRomBank] ; $4161
-	ld hl, $41d2 ; $4163
+	ld hl, ActorScript_PlayerControl ; $4163
 	call SetActorScript ; $4166
 	ld hl, $0005 ; $4169
 	add hl, bc ; $416c
@@ -230,7 +230,7 @@ AttachActorWaypointFollower:
 	ld [hl+], a ; $418c
 	ld [hl], d ; $418d
 	ldh a, [hRomBank] ; $418e
-	ld hl, $41d8 ; $4190
+	ld hl, ActorScript_FollowWaypoints ; $4190
 	call SetActorScript ; $4193
 	ld hl, $0020 ; $4196
 	add hl, bc ; $4199
@@ -255,7 +255,7 @@ AttachActorStepMover:
 	ld [hl+], a ; $41b1
 	ld [hl], d ; $41b2
 	ldh a, [hRomBank] ; $41b3
-	ld hl, $41dc ; $41b5
+	ld hl, ActorScript_StepToTarget ; $41b5
 	call SetActorScript ; $41b8
 	ld hl, $0005 ; $41bb
 	add hl, bc ; $41be
@@ -270,8 +270,26 @@ AttachActorStepMover:
 	pop de ; $41ce
 	pop af ; $41cf
 	ret ; $41d0
-FollowerActorScript_04:
-	INCBIN "data/bank_004/d_41d1.bin" ; $41d1, 22 bytes
+ActorScript_Idle:
+	; $41d1, 1 bytes (actor_script)
+	as_halt
+ActorScript_PlayerControl:
+	; $41d2, 6 bytes (actor_script)
+	as_call UpdatePlayerControl
+	as_jump ActorScript_PlayerControl
+ActorScript_FollowWaypoints:
+	; $41d8, 4 bytes (actor_script)
+	as_follow_wp
+	as_jump ActorScript_FollowWaypoints
+ActorScript_StepToTarget:
+	; $41dc, 6 bytes (actor_script)
+	as_step
+	as_wait $01
+	as_jump ActorScript_StepToTarget
+ActorScript_Deactivate:
+	; $41e2, 5 bytes (actor_script)
+	as_set_field $20, $0000
+	as_halt
 	wram_bank $04 ; $41e7
 	ld hl, $d000 ; $41ed
 	ld c, $18 ; $41f0
@@ -2019,7 +2037,7 @@ SpawnActorFromTemplate:
 	pop de ; $4c6c
 	jr z, Label_04_4c79 ; $4c6d
 	ldh a, [hRomBank] ; $4c6f
-	ld hl, FollowerActorScript_04 ; $4c71
+	ld hl, ActorScript_Idle ; $4c71
 	call SpawnActor ; $4c74
 	jr Label_04_4cf3 ; $4c77
 Label_04_4c79:
@@ -2162,7 +2180,7 @@ Func_04_4d2c:
 	call SpawnActorFromTemplate ; $4d31
 	call AttachActorControllerScript ; $4d34
 	ldh a, [hRomBank] ; $4d37
-	ld hl, FollowerActorScript_04 ; $4d39
+	ld hl, ActorScript_Idle ; $4d39
 	call SpawnActor ; $4d3c
 	ld hl, $1700 ; $4d3f
 	ld de, $1d00 ; $4d42
@@ -2209,7 +2227,7 @@ SpawnMainCharacterActor:
 	push de ; $4e9b
 	push hl ; $4e9c
 	ldh a, [hRomBank] ; $4e9d
-	ld de, FollowerActorScript_04 ; $4e9f
+	ld de, ActorScript_Idle ; $4e9f
 	call SpawnActor ; $4ea2
 	ld a, $01 ; $4ea5
 	call SetActorMode ; $4ea7
