@@ -1906,7 +1906,8 @@ Label_6b_70a2:
 	call RegisterFrameTask ; $70ab
 Label_6b_70ae:
 	ret ; $70ae
-	; $70af, 512 bytes (palettes)
+Palettes_6b_70af:
+	; $70af, 128 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
 	dw $7f00, $7ee2, $7f00, $76e0 ; pal 1: #00c5ff #10bdff #00c5ff #00bdee
@@ -1924,54 +1925,63 @@ Label_6b_70ae:
 	dw $7f00, $6fda, $7dc8, $1480 ; pal 13: #00c5ff #d5f6de #4173ff #002029
 	dw $7f00, $6fdc, $7da9, $0c40 ; pal 14: #00c5ff #e6f6de #4a6aff #001018
 	dw $7f00, $6bff, $7d8a, $0000 ; pal 15: #00c5ff #ffffd5 #5262ff #000000
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 16: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7700, $7f02, $7f00, $76e0 ; pal 17: #00c5ee #10c5ff #00c5ff #00bdee
-	dw $6b00, $7f04, $7f00, $6ea0 ; pal 18: #00c5d5 #20c5ff #00c5ff #00acde
-	dw $66e0, $7f06, $7f00, $6680 ; pal 19: #00bdcd #31c5ff #00c5ff #00a4cd
-	dw $5ee0, $7ee8, $7f00, $5e40 ; pal 20: #00bdbd #41bdff #00c5ff #0094bd
-	dw $56c0, $7eea, $7f00, $5600 ; pal 21: #00b4ac #52bdff #00c5ff #0083ac
-	dw $4ec0, $7eec, $7f00, $4de0 ; pal 22: #00b49c #62bdff #00c5ff #007b9c
-	dw $46a0, $7eee, $7f00, $45a0 ; pal 23: #00ac8b #73bdff #00c5ff #006a8b
-	dw $3ea0, $7ed0, $7f00, $3d80 ; pal 24: #00ac7b #83b4ff #00c5ff #00627b
-	dw $36a0, $7ed2, $7f00, $3540 ; pal 25: #00ac6a #94b4ff #00c5ff #00526a
-	dw $2e80, $7ed4, $7f00, $2d00 ; pal 26: #00a45a #a4b4ff #00c5ff #00415a
-	dw $2680, $7ed6, $7f00, $24e0 ; pal 27: #00a44a #b4b4ff #00c5ff #00394a
-	dw $1e80, $7eb8, $7f00, $1ca0 ; pal 28: #00a439 #c5acff #00c5ff #002939
-	dw $1660, $7eba, $7f00, $1480 ; pal 29: #009c29 #d5acff #00c5ff #002029
-	dw $0e60, $7ebc, $7f00, $0c40 ; pal 30: #009c18 #e6acff #00c5ff #001018
-	dw $0240, $7e9f, $7f00, $0000 ; pal 31: #009400 #ffa4ff #00c5ff #000000
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 32: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7ee2, $7700, $7f00, $76e0 ; pal 33: #10bdff #00c5ee #00c5ff #00bdee
-	dw $7f04, $6b00, $7f00, $6ea0 ; pal 34: #20c5ff #00c5d5 #00c5ff #00acde
-	dw $7b26, $66e0, $7f00, $6680 ; pal 35: #31cdf6 #00bdcd #00c5ff #00a4cd
-	dw $7b28, $5ee0, $7f00, $5e40 ; pal 36: #41cdf6 #00bdbd #00c5ff #0094bd
-	dw $7b4a, $56c0, $7f00, $5600 ; pal 37: #52d5f6 #00b4ac #00c5ff #0083ac
-	dw $774c, $4ec0, $7f00, $4de0 ; pal 38: #62d5ee #00b49c #00c5ff #007b9c
-	dw $776e, $46a0, $7f00, $45a0 ; pal 39: #73deee #00ac8b #00c5ff #006a8b
-	dw $7770, $3ea0, $7f00, $3d80 ; pal 40: #83deee #00ac7b #00c5ff #00627b
-	dw $7392, $36a0, $7f00, $3540 ; pal 41: #94e6e6 #00ac6a #00c5ff #00526a
-	dw $7394, $2e80, $7f00, $2d00 ; pal 42: #a4e6e6 #00a45a #00c5ff #00415a
-	dw $73b6, $2680, $7f00, $24e0 ; pal 43: #b4eee6 #00a44a #00c5ff #00394a
-	dw $6fb8, $1e80, $7f00, $1ca0 ; pal 44: #c5eede #00a439 #00c5ff #002939
-	dw $6fda, $1660, $7f00, $1480 ; pal 45: #d5f6de #009c29 #00c5ff #002029
-	dw $6fdc, $0e60, $7f00, $0c40 ; pal 46: #e6f6de #009c18 #00c5ff #001018
-	dw $6bff, $0240, $7f00, $0000 ; pal 47: #ffffd5 #009400 #00c5ff #000000
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 48: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7702, $7ee2, $7f00, $76e0 ; pal 49: #10c5ee #10bdff #00c5ff #00bdee
-	dw $6f04, $7f04, $7f00, $6ea0 ; pal 50: #20c5de #20c5ff #00c5ff #00acde
-	dw $66e6, $7b26, $7f00, $6680 ; pal 51: #31bdcd #31cdf6 #00c5ff #00a4cd
-	dw $5ee8, $7b28, $7f00, $5e40 ; pal 52: #41bdbd #41cdf6 #00c5ff #0094bd
-	dw $56ca, $7b4a, $7f00, $5600 ; pal 53: #52b4ac #52d5f6 #00c5ff #0083ac
-	dw $4ecc, $774c, $7f00, $4de0 ; pal 54: #62b49c #62d5ee #00c5ff #007b9c
-	dw $46ce, $776e, $7f00, $45a0 ; pal 55: #73b48b #73deee #00c5ff #006a8b
-	dw $3eb0, $7770, $7f00, $3d80 ; pal 56: #83ac7b #83deee #00c5ff #00627b
-	dw $36b2, $7392, $7f00, $3540 ; pal 57: #94ac6a #94e6e6 #00c5ff #00526a
-	dw $2e94, $7394, $7f00, $2d00 ; pal 58: #a4a45a #a4e6e6 #00c5ff #00415a
-	dw $2696, $73b6, $7f00, $24e0 ; pal 59: #b4a44a #b4eee6 #00c5ff #00394a
-	dw $1e98, $6fb8, $7f00, $1ca0 ; pal 60: #c5a439 #c5eede #00c5ff #002939
-	dw $167a, $6fda, $7f00, $1480 ; pal 61: #d59c29 #d5f6de #00c5ff #002029
-	dw $0e7c, $6fdc, $7f00, $0c40 ; pal 62: #e69c18 #e6f6de #00c5ff #001018
-	dw $025f, $6bff, $7f00, $0000 ; pal 63: #ff9400 #ffffd5 #00c5ff #000000
+Palettes_6b_712f:
+	; $712f, 128 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7700, $7f02, $7f00, $76e0 ; pal 1: #00c5ee #10c5ff #00c5ff #00bdee
+	dw $6b00, $7f04, $7f00, $6ea0 ; pal 2: #00c5d5 #20c5ff #00c5ff #00acde
+	dw $66e0, $7f06, $7f00, $6680 ; pal 3: #00bdcd #31c5ff #00c5ff #00a4cd
+	dw $5ee0, $7ee8, $7f00, $5e40 ; pal 4: #00bdbd #41bdff #00c5ff #0094bd
+	dw $56c0, $7eea, $7f00, $5600 ; pal 5: #00b4ac #52bdff #00c5ff #0083ac
+	dw $4ec0, $7eec, $7f00, $4de0 ; pal 6: #00b49c #62bdff #00c5ff #007b9c
+	dw $46a0, $7eee, $7f00, $45a0 ; pal 7: #00ac8b #73bdff #00c5ff #006a8b
+	dw $3ea0, $7ed0, $7f00, $3d80 ; pal 8: #00ac7b #83b4ff #00c5ff #00627b
+	dw $36a0, $7ed2, $7f00, $3540 ; pal 9: #00ac6a #94b4ff #00c5ff #00526a
+	dw $2e80, $7ed4, $7f00, $2d00 ; pal 10: #00a45a #a4b4ff #00c5ff #00415a
+	dw $2680, $7ed6, $7f00, $24e0 ; pal 11: #00a44a #b4b4ff #00c5ff #00394a
+	dw $1e80, $7eb8, $7f00, $1ca0 ; pal 12: #00a439 #c5acff #00c5ff #002939
+	dw $1660, $7eba, $7f00, $1480 ; pal 13: #009c29 #d5acff #00c5ff #002029
+	dw $0e60, $7ebc, $7f00, $0c40 ; pal 14: #009c18 #e6acff #00c5ff #001018
+	dw $0240, $7e9f, $7f00, $0000 ; pal 15: #009400 #ffa4ff #00c5ff #000000
+Palettes_6b_71af:
+	; $71af, 128 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7ee2, $7700, $7f00, $76e0 ; pal 1: #10bdff #00c5ee #00c5ff #00bdee
+	dw $7f04, $6b00, $7f00, $6ea0 ; pal 2: #20c5ff #00c5d5 #00c5ff #00acde
+	dw $7b26, $66e0, $7f00, $6680 ; pal 3: #31cdf6 #00bdcd #00c5ff #00a4cd
+	dw $7b28, $5ee0, $7f00, $5e40 ; pal 4: #41cdf6 #00bdbd #00c5ff #0094bd
+	dw $7b4a, $56c0, $7f00, $5600 ; pal 5: #52d5f6 #00b4ac #00c5ff #0083ac
+	dw $774c, $4ec0, $7f00, $4de0 ; pal 6: #62d5ee #00b49c #00c5ff #007b9c
+	dw $776e, $46a0, $7f00, $45a0 ; pal 7: #73deee #00ac8b #00c5ff #006a8b
+	dw $7770, $3ea0, $7f00, $3d80 ; pal 8: #83deee #00ac7b #00c5ff #00627b
+	dw $7392, $36a0, $7f00, $3540 ; pal 9: #94e6e6 #00ac6a #00c5ff #00526a
+	dw $7394, $2e80, $7f00, $2d00 ; pal 10: #a4e6e6 #00a45a #00c5ff #00415a
+	dw $73b6, $2680, $7f00, $24e0 ; pal 11: #b4eee6 #00a44a #00c5ff #00394a
+	dw $6fb8, $1e80, $7f00, $1ca0 ; pal 12: #c5eede #00a439 #00c5ff #002939
+	dw $6fda, $1660, $7f00, $1480 ; pal 13: #d5f6de #009c29 #00c5ff #002029
+	dw $6fdc, $0e60, $7f00, $0c40 ; pal 14: #e6f6de #009c18 #00c5ff #001018
+	dw $6bff, $0240, $7f00, $0000 ; pal 15: #ffffd5 #009400 #00c5ff #000000
+Palettes_6b_722f:
+	; $722f, 128 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7702, $7ee2, $7f00, $76e0 ; pal 1: #10c5ee #10bdff #00c5ff #00bdee
+	dw $6f04, $7f04, $7f00, $6ea0 ; pal 2: #20c5de #20c5ff #00c5ff #00acde
+	dw $66e6, $7b26, $7f00, $6680 ; pal 3: #31bdcd #31cdf6 #00c5ff #00a4cd
+	dw $5ee8, $7b28, $7f00, $5e40 ; pal 4: #41bdbd #41cdf6 #00c5ff #0094bd
+	dw $56ca, $7b4a, $7f00, $5600 ; pal 5: #52b4ac #52d5f6 #00c5ff #0083ac
+	dw $4ecc, $774c, $7f00, $4de0 ; pal 6: #62b49c #62d5ee #00c5ff #007b9c
+	dw $46ce, $776e, $7f00, $45a0 ; pal 7: #73b48b #73deee #00c5ff #006a8b
+	dw $3eb0, $7770, $7f00, $3d80 ; pal 8: #83ac7b #83deee #00c5ff #00627b
+	dw $36b2, $7392, $7f00, $3540 ; pal 9: #94ac6a #94e6e6 #00c5ff #00526a
+	dw $2e94, $7394, $7f00, $2d00 ; pal 10: #a4a45a #a4e6e6 #00c5ff #00415a
+	dw $2696, $73b6, $7f00, $24e0 ; pal 11: #b4a44a #b4eee6 #00c5ff #00394a
+	dw $1e98, $6fb8, $7f00, $1ca0 ; pal 12: #c5a439 #c5eede #00c5ff #002939
+	dw $167a, $6fda, $7f00, $1480 ; pal 13: #d59c29 #d5f6de #00c5ff #002029
+	dw $0e7c, $6fdc, $7f00, $0c40 ; pal 14: #e69c18 #e6f6de #00c5ff #001018
+	dw $025f, $6bff, $7f00, $0000 ; pal 15: #ff9400 #ffffd5 #00c5ff #000000
 Func_6b_72af:
 	ldh a, [hVBlankCounter] ; $72af
 	and a, $03 ; $72b1
@@ -1985,7 +1995,7 @@ Func_6b_72af:
 	sla a ; $72c1
 	sla a ; $72c3
 	sla a ; $72c5
-	ld hl, $70af ; $72c7
+	ld hl, Palettes_6b_70af ; $72c7
 	add a, l ; $72ca
 	ld l, a ; $72cb
 	jr nc, Label_6b_72cf ; $72cc
@@ -2012,7 +2022,7 @@ Func_6b_72dd:
 	sla a ; $72f1
 	sla a ; $72f3
 	push af ; $72f5
-	ld hl, $712f ; $72f6
+	ld hl, Palettes_6b_712f ; $72f6
 	add a, l ; $72f9
 	ld l, a ; $72fa
 	jr nc, Label_6b_72fe ; $72fb
@@ -2021,7 +2031,7 @@ Label_6b_72fe:
 	ld de, $0201 ; $72fe
 	call LoadPalettesImmediate ; $7301
 	pop af ; $7304
-	ld hl, $71af ; $7305
+	ld hl, Palettes_6b_71af ; $7305
 	add a, l ; $7308
 	ld l, a ; $7309
 	jr nc, Label_6b_730d ; $730a
@@ -2047,7 +2057,7 @@ Func_6b_731b:
 	sla a ; $732d
 	sla a ; $732f
 	sla a ; $7331
-	ld hl, $722f ; $7333
+	ld hl, Palettes_6b_722f ; $7333
 	add a, l ; $7336
 	ld l, a ; $7337
 	jr nc, Label_6b_733b ; $7338
@@ -2065,7 +2075,7 @@ Label_6b_7342:
 	sla a ; $734a
 	sla a ; $734c
 	sla a ; $734e
-	ld hl, $722f ; $7350
+	ld hl, Palettes_6b_722f ; $7350
 	add a, l ; $7353
 	ld l, a ; $7354
 	jr nc, Label_6b_7358 ; $7355
