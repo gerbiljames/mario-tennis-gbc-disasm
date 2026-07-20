@@ -679,7 +679,7 @@ ActorScript_14_4808:
 	; $4808, 11 bytes (actor_script)
 	as_set_pos $2900, $2b00
 	as_wait_move
-	as_set_field $14, $0000
+	as_set_field $14, FACE_RIGHT
 	as_halt
 	ldh a, [hWramBank] ; $4813
 	push af ; $4815

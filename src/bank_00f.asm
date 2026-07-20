@@ -1619,13 +1619,13 @@ ActorScript_0f_61e0:
 	; $61e0, 11 bytes (actor_script)
 	as_set_pos $1100, $1500
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_0f_61eb:
 	; $61eb, 11 bytes (actor_script)
 	as_set_pos $0f00, $1500
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 TournamentTile0F_0f:
 	ld a, $00 ; $61f6
@@ -3137,11 +3137,11 @@ ActorScript_0f_7a50:
 .L8:
 	as_target_rel $fe00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_wait $4b
 	as_target_rel $0200, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_wait $4b
 	as_jump .L8
 ActorScript_0f_7a73:

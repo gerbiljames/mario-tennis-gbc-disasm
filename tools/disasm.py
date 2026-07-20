@@ -2360,7 +2360,7 @@ MACRO as_jump        ; $0c jump to `target` (signed rel16, relative to the opera
 	db $0c
 	dw \\1 - @
 ENDM
-MACRO as_set_field   ; $0d write a state field (selector byte, value word; type table $04:$47fd)
+MACRO as_set_field   ; $0d write a state field (selector byte, value word; type table $04:$47fd). Selector $14 = facing (FACE_* value)
 	db $0d, \\1
 	dw \\2
 ENDM
@@ -2817,6 +2817,9 @@ def render_actor_script(rom, start, end, bank, labels):
                 ref = None
                 if op == 0x12 and 0x4000 <= word < 0x8000:
                     ref = labels.get(base + word - 0x4000)
+                elif op == 0x0d and args and args[0] == "$14":
+                    # as_set_field $14 (the actor facing field) -> FACE_* value
+                    ref = ACTOR_FACING_NAMES.get(word)
                 args.append(ref or f"${word:04x}")
                 i += 2
             elif k == "rel":

@@ -363,7 +363,7 @@ ActorScript_27_48ce:
 	; $48ce, 11 bytes (actor_script)
 	as_set_pos $1100, $1500
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_27_48d9:
 	; $48d9, 23 bytes (actor_script)
@@ -373,7 +373,7 @@ ActorScript_27_48d9:
 	as_wait_move
 	as_set_pos $0f00, $1500
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 Label_27_48f0:
 	script_set_actor_script $00, ActorScript_27_48ce ; $48f0
@@ -493,11 +493,11 @@ ActorScript_27_4b80:
 .L21:
 	as_target_rel $fe00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_wait $4b
 	as_target_rel $0200, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_wait $4b
 	as_jump .L21
 End12PrincipalsOfficeMapScripts_27:
@@ -1305,7 +1305,7 @@ ActorScript_27_5c30:
 	as_wait_move
 	as_set_pos $0a00, $2100
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_27_5c4d:
 	; $5c4d, 29 bytes (actor_script)
@@ -1317,7 +1317,7 @@ ActorScript_27_5c4d:
 	as_wait_move
 	as_set_pos $0c00, $2100
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_27_5c6a:
 	; $5c6a, 35 bytes (actor_script)
@@ -1331,7 +1331,7 @@ ActorScript_27_5c6a:
 	as_wait_move
 	as_set_pos $0c00, $2100
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_27_5c8d:
 	; $5c8d, 7 bytes (actor_script)
@@ -1349,7 +1349,7 @@ ActorScript_27_5c94:
 	as_set_pos $0700, $1d00
 	as_set_pos $0900, $1d00
 	as_wait_move
-	as_set_field $14, $0000
+	as_set_field $14, FACE_RIGHT
 	as_halt
 ActorScript_27_5cb6:
 	; $5cb6, 23 bytes (actor_script)
@@ -1359,7 +1359,7 @@ ActorScript_27_5cb6:
 	as_wait_move
 	as_set_pos $0900, $1d00
 	as_wait_move
-	as_set_field $14, $0000
+	as_set_field $14, FACE_RIGHT
 	as_halt
 End10VarsityCourtActorsAlt_27:
 	; $5ccd, 164 bytes (map_actors)
@@ -1682,15 +1682,15 @@ Label_27_6370:
 ActorScript_27_6424:
 	; $6424, 35 bytes (actor_script)
 	as_anim $0b
-	as_set_field $14, $0000
+	as_set_field $14, FACE_RIGHT
 	as_wait $32
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_anim $0b
-	as_set_field $14, $0080
+	as_set_field $14, FACE_LEFT
 	as_wait $32
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_jump ActorScript_27_6424
@@ -1847,7 +1847,7 @@ ActorScript_27_6811:
 	as_wait $0a
 	as_set_pos $1f00, $0d00
 	as_wait_move
-	as_set_field $14, $0080
+	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_27_6820:
 	; $6820, 15 bytes (actor_script)
@@ -1855,7 +1855,7 @@ ActorScript_27_6820:
 	as_wait $0a
 	as_set_pos $1f00, $1300
 	as_wait_move
-	as_set_field $14, $0080
+	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_27_682f:
 	; $682f, 55 bytes (actor_script)
@@ -1864,7 +1864,7 @@ ActorScript_27_682f:
 .L8:
 	as_set_pos $2d00, $0700
 	as_wait_move2
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_wait $c8
 	as_wait $f0
 	as_set_pos $3300, $0700
@@ -1875,7 +1875,7 @@ ActorScript_27_682f:
 	as_wait $3c
 	as_set_pos $3300, $0700
 	as_wait_move2
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_wait $f0
 	as_wait $f0
 	as_jump .L8
@@ -1915,7 +1915,7 @@ ActorScript_27_6918:
 	as_wait_move
 	as_set_pos $1500, $1500
 	as_wait_move
-	as_set_field $14, $0080
+	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_27_692f:
 	; $692f, 17 bytes (actor_script)
@@ -1923,7 +1923,7 @@ ActorScript_27_692f:
 	as_wait_move
 	as_set_pos $1900, $0900
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_27_6940:
 	; $6940, 17 bytes (actor_script)
@@ -1931,7 +1931,7 @@ ActorScript_27_6940:
 	as_wait_move
 	as_set_pos $1b00, $1900
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_halt
 Func_27_6951:
 	farcall FarPtr_BeginCutsceneScriptMode ; $6951
@@ -2041,7 +2041,7 @@ ActorScript_27_6bf0:
 	as_wait_move
 	as_set_pos $1700, $0900
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_27_6c04:
 	; $6c04, 20 bytes (actor_script)
@@ -2051,7 +2051,7 @@ ActorScript_27_6c04:
 	as_wait_move
 	as_set_pos $1b00, $0e00
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 End3DormEntMapScripts_27:
 	; $6c18, 14 bytes (map_tree)
@@ -2635,37 +2635,37 @@ ActorScript_27_7893:
 	as_anim $01
 	as_target_rel $0400, $0200
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $fe00
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_jump ActorScript_27_7893
@@ -2677,37 +2677,37 @@ ActorScript_27_78f6:
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $fe00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0200
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_jump .L4
@@ -2719,37 +2719,37 @@ ActorScript_27_795d:
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0200
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $fe00
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
 	as_jump .L4
@@ -2762,37 +2762,37 @@ ActorScript_27_79c4:
 	as_anim $01
 	as_target_rel $fc00, $fe00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0200
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $fc00, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_anim $01
 	as_target_rel $0400, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
 	as_jump .L6

@@ -1582,19 +1582,19 @@ ActorScript_0e_51d7:
 ActorScript_0e_51e4:
 	; $51e4, 43 bytes (actor_script)
 	as_anim $0b
-	as_set_field $14, $0000
+	as_set_field $14, FACE_RIGHT
 	as_wait $0c
 	as_sound $92
 	as_wait $28
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_anim $0b
-	as_set_field $14, $0080
+	as_set_field $14, FACE_LEFT
 	as_wait $0c
 	as_sound $92
 	as_wait $28
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_anim $01
 	as_wait $01
 	as_jump ActorScript_0e_51e4
@@ -1619,11 +1619,11 @@ ActorScript_0e_5225:
 .L8:
 	as_target_rel $fe00, $0000
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_wait $4b
 	as_target_rel $0200, $0000
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $4b
 	as_jump .L8
 MarioWorldMapScripts_0e:
@@ -2379,7 +2379,7 @@ ActorScript_0e_630b:
 	as_wait_move
 	as_set_pos $1100, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_6324:
@@ -2390,7 +2390,7 @@ ActorScript_0e_6324:
 	as_wait_move
 	as_set_pos $1300, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 MarioWorldNpc08FaceDown_0e:
@@ -2422,14 +2422,14 @@ ActorScript_0e_63da:
 	; $63da, 13 bytes (actor_script)
 	as_set_pos $1100, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_63e7:
 	; $63e7, 13 bytes (actor_script)
 	as_set_pos $1300, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 MarioWorldNpc08FaceUp_0e:
@@ -2461,7 +2461,7 @@ ActorScript_0e_647e:
 	as_wait_move
 	as_set_pos $1100, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_6491:
@@ -2470,7 +2470,7 @@ ActorScript_0e_6491:
 	as_wait_move
 	as_set_pos $1300, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 MarioWorldNpc08FaceRight_0e:
@@ -2501,7 +2501,7 @@ ActorScript_0e_6529:
 	as_wait_move
 	as_set_pos $1100, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_653c:
@@ -2510,7 +2510,7 @@ ActorScript_0e_653c:
 	as_wait_move
 	as_set_pos $1300, $0d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 MarioWorldNpc08FaceLeft_0e:
@@ -3331,7 +3331,7 @@ ActorScript_0e_7b24:
 	; $7b24, 11 bytes (actor_script)
 	as_set_pos $1300, $1700
 	as_wait_move
-	as_set_field $14, $0080
+	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_0e_7b2f:
 	; $7b2f, 23 bytes (actor_script)
@@ -3341,7 +3341,7 @@ ActorScript_0e_7b2f:
 	as_wait_move
 	as_set_pos $0d00, $0d00
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_0e_7b46:
 	; $7b46, 23 bytes (actor_script)
@@ -3351,7 +3351,7 @@ ActorScript_0e_7b46:
 	as_wait_move
 	as_set_pos $0f00, $1100
 	as_wait_move
-	as_set_field $14, $0040
+	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_0e_7b5d:
 	; $7b5d, 17 bytes (actor_script)
@@ -3359,7 +3359,7 @@ ActorScript_0e_7b5d:
 	as_wait_move
 	as_set_pos $0f00, $1d00
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_0e_7b6e:
 	; $7b6e, 17 bytes (actor_script)
@@ -3367,7 +3367,7 @@ ActorScript_0e_7b6e:
 	as_wait_move
 	as_set_pos $0d00, $1900
 	as_wait_move
-	as_set_field $14, $00c0
+	as_set_field $14, FACE_UP
 	as_halt
 PrepareStoryMatch:
 	ld a, $1c ; $7b7f

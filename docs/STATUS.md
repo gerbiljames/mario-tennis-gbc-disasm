@@ -39,6 +39,16 @@ fields across banks `$0e-$15`, `$16`, `$1a`, `$27` now read as constants. The
 existing `...FaceRight`/`...FaceUp` handler labels corroborate the compass
 mapping. Byte-perfect.
 
+Extended the same `FACE_*` constants to the actor-script bytecode: the
+`as_set_field` opcode's selector `$14` is the actor facing field (state
++$14), and its 267 value words are exactly `$0000/$0040/$0080/$00c0`.
+`render_actor_script` now emits `as_set_field $14, FACE_*` (the `dw` still
+assembles to the same word). The `flag_cond`/`cond` words in these tables were
+left raw: they decode to a (flag-byte, bit, negate-bit-15) triple via
+`EvalFlagCondition`/`TestGameFlag`, but only ~7 distinct event flags appear and
+their in-game meanings aren't recoverable without per-flag tracing, so named
+constants would obscure rather than clarify.
+
 ### Symbolic dialogue text ids (2026-07-20)
 
 Made dialogue text references read symbolically instead of as raw hex. A text id
