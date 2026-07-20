@@ -2054,9 +2054,14 @@ def text_id_name(idv):
 # Cutscene script macros whose arg 1 is a FACE_* cardinal (facing or angle).
 FACING_ARG_MACROS = {"script_face", "script_facing_lock", "script_move_angle"}
 
-# Cutscene script macros -> the emitted-arg indices that are actor slots (an
-# arg of $00 renders as ACTOR_PLAYER). Only the target-actor immediates; slot
-# ids elsewhere in the arg list stay literal.
+# The three reserved system actor slots (see constants.inc). Slots 3+ are
+# scene-local and stay literal.
+RESERVED_ACTOR_SLOTS = {"$00": "ACTOR_PLAYER", "$01": "ACTOR_PLAYER_SHADOW",
+                        "$02": "ACTOR_PARTNER"}
+
+# Cutscene script macros -> the emitted-arg indices that are actor slots (a
+# reserved slot renders as its ACTOR_* name). Only the target-actor immediates;
+# slot ids elsewhere in the arg list stay literal.
 ACTOR_SLOT_ARGS = {
     "script_move_target": (0,), "script_set_position": (0,),
     "script_move_angle": (0,), "script_set_speed": (0,),
@@ -2138,8 +2143,8 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
                     and args[1].startswith("$"):
                 args[1] = ACTOR_FACING_NAMES.get(int(args[1][1:], 16), args[1])
             for ai in ACTOR_SLOT_ARGS.get(macro, ()):
-                if ai < len(args) and args[ai] == "$00":
-                    args[ai] = "ACTOR_PLAYER"
+                if ai < len(args) and args[ai] in RESERVED_ACTOR_SLOTS:
+                    args[ai] = RESERVED_ACTOR_SLOTS[args[ai]]
             return (f"{macro} " + ", ".join(args)).rstrip(), p - off
     return None
 

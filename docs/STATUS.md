@@ -67,6 +67,20 @@ animation ids index each actor's own table (per-objdef), obj_id/coords/speeds/
 timers are per-instance data, and the activity byte / state-field selectors /
 flag words aren't nameable without deeper tracing. Byte-perfect.
 
+### Reserved actor-slot constants (2026-07-20)
+
+Extended the actor-slot naming to the other two reserved system slots, adopting
+pokecrystal's reserved-`PLAYER` idiom. `InitLocationActors` ($0a:$5485) always
+spawns, in order, the player (slot 0) + its `$04:$41d1` follower (slot 1) + a
+companion (slot 2, `Func_04_4f10`, singles/doubles template variants but always
+one slot) before `SpawnActorsFromList` — so the location's `map_actor` list
+starts at slot 3 (`SpawnActor` allocates the first free slot; base verified from
+the spawn code). Added `ACTOR_PLAYER_SHADOW = $01` (15 sites, all
+`script_null_script`) and `ACTOR_PARTNER = $02` (802 sites); `RESERVED_ACTOR_SLOTS`
+in `script_cmd_seq` renders all three. Slots 3+ are scene-local (name = base +
+list index) and stay literal — they'd need pokecrystal-style per-scene
+`object_const_def` machinery (a separate, larger pass). Byte-perfect.
+
 ### Symbolic dialogue text ids (2026-07-20)
 
 Made dialogue text references read symbolically instead of as raw hex. A text id

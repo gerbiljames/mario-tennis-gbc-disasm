@@ -35,12 +35,18 @@ def FACE_DOWN    equ $40
 def FACE_LEFT    equ $80
 def FACE_UP      equ $c0
 
-; --- Cutscene actor slot ---
+; --- Cutscene actor slots ---
 ; The actor an overworld/cutscene `script_*` command targets (index into the
-; actor state array at $d000, stride $40). Slot 0 is always the player; other
-; slots are the scene's own actors in spawn order, so only the player has a
-; stable name.
-def ACTOR_PLAYER equ $00
+; actor state array at $d000, stride $40). Slots are filled in a fixed order
+; when a story location loads (InitLocationActors, $0a:$5485): the player and
+; two paired system actors first, then the location's `map_actor` list in order
+; (SpawnActor always takes the first free slot, so list entry i -> slot 3+i).
+; Only the three reserved system slots have a stable name; the rest are
+; scene-local (see the per-scene actor ids). ACTOR_PLAYER_SHADOW and
+; ACTOR_PARTNER both run the $04:$41d1 follower script.
+def ACTOR_PLAYER        equ $00 ; the main character sprite
+def ACTOR_PLAYER_SHADOW equ $01 ; player's paired follower actor ($41d1)
+def ACTOR_PARTNER       equ $02 ; companion/doubles partner (Func_04_4f10)
 
 ; --- Story-script facing mask (map_script `facing_mask`) ---
 ; The direction an actor must face for FindStoryScriptEntry ($0a:$53e4) to run
