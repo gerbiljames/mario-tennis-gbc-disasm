@@ -16,10 +16,29 @@ user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `a219398`); the whole history rebuilds
+Everything below is **committed** (HEAD `8acebf7`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Identify story NPCs (2026-07-20)
+
+Investigated who the overworld map NPCs are. An NPC script picks its dialogue
+text id from a per-NPC `records:2` table indexed by the story-progress counter
+`[$c2b0]`, then `InitDialogueTextCursor` + `script_speak`. Resolving those ids
+(via the [[text-id-decoding]] fetcher math) shows **most map NPCs are anonymous
+academy students/staff** giving tennis tips/flavor (e.g. the Cafeteria set,
+bank `$33`) — so the `<Loc>Npc<id>` object-id naming is the right level; no
+dialogue name-drops a character. The **named cast is a separate roster/name
+table** at bank `$30` `$466d` (Alex, Nina, Harry, Kate, Allie, Joy, Brian, Pam,
+Bob, Beth, Fay, Curt, Mark, Sean, Sammi, Elden, Spike, Emily, B. Coz, A. Coz,
+Kevin, then the Mario cast + Rankers) used by match/ranking screens, not the
+overworld. The exception is **Peach's Castle** (MarioWorld, loc 29): its NPCs
+are the Mario cast, each with a signature voice line (bank `$5e`) — renamed the
+seven unmistakable ones (`MarioWorldNpc09Yoshi`/`0ABabyMario`/`0BLuigi`/
+`0EWaluigi`/`0FBowser`/`10Wario`/`12Mario_0e`). Probable but not renamed:
+Npc0C=DK ("Oo-hoo"), Npc11=Peach (castle host greeting), Npc13/14 = flavor/exit
+Toads. Byte-perfect (labels-only).
 
 ### Name story-location tree scripts (2026-07-19)
 
