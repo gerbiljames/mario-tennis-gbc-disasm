@@ -1668,7 +1668,7 @@ MarioWorldExitTriggers_0e:
 	; $5385, 9 bytes (map_scripts)
 	map_script $01, $ff, $0000, MapScriptNop_0e, $1b, $0e
 	db $ff
-MarioWorldNpc12_0e:
+MarioWorldNpc12Mario_0e:
 	script_set_text $308e ; $538e
 	script_speak $12 ; $5394
 	ret ; $5399
@@ -1683,7 +1683,7 @@ Label_0e_53a5:
 	farcall FarPtr_InitDialogueTextCursor ; $53a5
 	script_speak $11 ; $53a8
 	ret ; $53ad
-MarioWorldNpc0B_0e:
+MarioWorldNpc0BLuigi_0e:
 	ld hl, $3093 ; $53ae
 	ld a, [$c2b0] ; $53b1
 	add a, l ; $53b4
@@ -1694,12 +1694,12 @@ Label_0e_53b9:
 	farcall FarPtr_InitDialogueTextCursor ; $53b9
 	script_speak $0b ; $53bc
 	ret ; $53c1
-MarioWorldNpc09_0e:
+MarioWorldNpc09Yoshi_0e:
 	script_set_text $3097 ; $53c2
 	sound $87 ; $53c8
 	script_speak $09 ; $53ca
 	ret ; $53cf
-MarioWorldNpc0A_0e:
+MarioWorldNpc0ABabyMario_0e:
 	script_set_text $3098 ; $53d0
 	sound $89 ; $53d6
 	script_speak $0a ; $53d8
@@ -1714,7 +1714,7 @@ MarioWorldNpc0D_0e:
 	sound $86 ; $53f2
 	script_speak $0d ; $53f4
 	ret ; $53f9
-MarioWorldNpc0F_0e:
+MarioWorldNpc0FBowser_0e:
 	ld hl, $309b ; $53fa
 	ld a, [$c2b0] ; $53fd
 	add a, l ; $5400
@@ -1725,7 +1725,7 @@ Label_0e_5405:
 	farcall FarPtr_InitDialogueTextCursor ; $5405
 	script_speak $0f ; $5408
 	ret ; $540d
-MarioWorldNpc10_0e:
+MarioWorldNpc10Wario_0e:
 	ld hl, $309f ; $540e
 	ld a, [$c2b0] ; $5411
 	add a, l ; $5414
@@ -1736,7 +1736,7 @@ Label_0e_5419:
 	farcall FarPtr_InitDialogueTextCursor ; $5419
 	script_speak $10 ; $541c
 	ret ; $5421
-MarioWorldNpc0E_0e:
+MarioWorldNpc0EWaluigi_0e:
 	ld hl, $30a3 ; $5422
 	ld a, [$c2b0] ; $5425
 	add a, l ; $5428
@@ -1762,17 +1762,17 @@ MarioWorldNpcScripts_0e:
 	map_script $08, $40, $0000, MarioWorldNpc08FaceUp_0e, $00, $00
 	map_script $08, $80, $0000, MarioWorldNpc08FaceDown_0e, $03, $00
 	map_script $11, $ff, $0000, MarioWorldNpc11_0e, $03, $00
-	map_script $0b, $ff, $0000, MarioWorldNpc0B_0e, $03, $00
-	map_script $09, $ff, $0000, MarioWorldNpc09_0e, $03, $00
-	map_script $0a, $ff, $0000, MarioWorldNpc0A_0e, $03, $00
+	map_script $0b, $ff, $0000, MarioWorldNpc0BLuigi_0e, $03, $00
+	map_script $09, $ff, $0000, MarioWorldNpc09Yoshi_0e, $03, $00
+	map_script $0a, $ff, $0000, MarioWorldNpc0ABabyMario_0e, $03, $00
 	map_script $0c, $ff, $0000, MarioWorldNpc0C_0e, $03, $00
 	map_script $0d, $ff, $0000, MarioWorldNpc0D_0e, $03, $00
-	map_script $0f, $ff, $0000, MarioWorldNpc0F_0e, $03, $00
-	map_script $10, $ff, $0000, MarioWorldNpc10_0e, $03, $00
-	map_script $0e, $ff, $0000, MarioWorldNpc0E_0e, $03, $00
+	map_script $0f, $ff, $0000, MarioWorldNpc0FBowser_0e, $03, $00
+	map_script $10, $ff, $0000, MarioWorldNpc10Wario_0e, $03, $00
+	map_script $0e, $ff, $0000, MarioWorldNpc0EWaluigi_0e, $03, $00
 	map_script $13, $ff, $0000, MarioWorldNpc13_0e, $03, $00
 	map_script $14, $ff, $0000, MarioWorldNpc14_0e, $03, $00
-	map_script $12, $ff, $0000, MarioWorldNpc12_0e, $03, $00
+	map_script $12, $ff, $0000, MarioWorldNpc12Mario_0e, $03, $00
 	db $ff
 MarioWorldFacingScripts_0e:
 	ds 1, $ff ; $54cf, fill
