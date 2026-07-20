@@ -345,7 +345,7 @@ Label_0f_4661:
 	ld c, l ; $46f7
 	ld b, h ; $46f8
 	ld de, $d000 ; $46f9
-	farcall FarPtr_04_20 ; $46fc
+	farcall FarPtr_AttachActorStepMover ; $46fc
 	ret ; $46ff
 Label_0f_4700:
 	script_set_position ACTOR_PLAYER, $0b80, $1b00 ; $4700
@@ -356,7 +356,7 @@ Label_0f_4700:
 	ld c, l ; $471c
 	ld b, h ; $471d
 	ld de, $d000 ; $471e
-	farcall FarPtr_04_20 ; $4721
+	farcall FarPtr_AttachActorStepMover ; $4721
 	ret ; $4724
 AwardsCeremonyTile02_0f:
 	test_flag $05, 7 ; $4725
@@ -683,7 +683,7 @@ Label_0f_4ea7:
 	script_get_actor_state $04 ; $4ef1
 	ld e, l ; $4ef6
 	ld d, h ; $4ef7
-	farcall FarPtr_04_20 ; $4ef8
+	farcall FarPtr_AttachActorStepMover ; $4ef8
 	script_move_target $04, $0c00, $1d00 ; $4efb
 	script_wait_move $04 ; $4f06
 	ld a, $0a ; $4f0b
@@ -1009,7 +1009,7 @@ Label_0f_5600:
 	ld c, l ; $561f
 	ld b, h ; $5620
 	ld de, $d000 ; $5621
-	farcall FarPtr_04_20 ; $5624
+	farcall FarPtr_AttachActorStepMover ; $5624
 Label_0f_5627:
 	ret ; $5627
 AwardsCeremonyNpc08_0f:
@@ -1157,7 +1157,7 @@ Label_0f_56a8:
 	ld c, l ; $5880
 	ld b, h ; $5881
 	ld de, $d000 ; $5882
-	farcall FarPtr_04_20 ; $5885
+	farcall FarPtr_AttachActorStepMover ; $5885
 	ret ; $5888
 Label_0f_5889:
 	script_null_script ACTOR_PARTNER ; $5889
@@ -1276,7 +1276,7 @@ Label_0f_5889:
 	ld c, l ; $5ae3
 	ld b, h ; $5ae4
 	ld de, $d000 ; $5ae5
-	farcall FarPtr_04_20 ; $5ae8
+	farcall FarPtr_AttachActorStepMover ; $5ae8
 	ret ; $5aeb
 Func_0f_5aec:
 	ld a, [$c94d] ; $5aec
@@ -1944,7 +1944,7 @@ Label_0f_6582:
 	ld c, l ; $659b
 	ld b, h ; $659c
 	ld de, $d000 ; $659d
-	farcall FarPtr_04_20 ; $65a0
+	farcall FarPtr_AttachActorStepMover ; $65a0
 	set_flag $15, 7 ; $65a3
 Label_0f_65a6:
 	script_player_speed $0018 ; $65a6
@@ -2985,7 +2985,7 @@ Label_0f_7811:
 	ld c, l ; $7831
 	ld b, h ; $7832
 	ld de, $d000 ; $7833
-	farcall FarPtr_04_20 ; $7836
+	farcall FarPtr_AttachActorStepMover ; $7836
 	ret ; $7839
 	; $783a, 8 bytes (records:2)
 	dw $2852 ; record 0

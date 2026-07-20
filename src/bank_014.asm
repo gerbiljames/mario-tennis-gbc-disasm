@@ -126,7 +126,7 @@ MachineLevel1ClearedScene:
 	ld c, l ; $413e
 	ld b, h ; $413f
 	ld de, $d000 ; $4140
-	farcall FarPtr_04_20 ; $4143
+	farcall FarPtr_AttachActorStepMover ; $4143
 	ret ; $4146
 MachineLevel2FailedPrompt:
 	script_set_text Text_6e_219 ; $4147
@@ -147,7 +147,7 @@ MachineLevel2ClearedScene:
 	ld c, l ; $4173
 	ld b, h ; $4174
 	ld de, $d000 ; $4175
-	farcall FarPtr_04_20 ; $4178
+	farcall FarPtr_AttachActorStepMover ; $4178
 	ret ; $417b
 MachineLevel3FailedPrompt:
 	script_set_text Text_6e_219 ; $417c
@@ -168,7 +168,7 @@ MachineLevel3ClearedScene:
 	ld c, l ; $41a8
 	ld b, h ; $41a9
 	ld de, $d000 ; $41aa
-	farcall FarPtr_04_20 ; $41ad
+	farcall FarPtr_AttachActorStepMover ; $41ad
 	ret ; $41b0
 MachineLevel4FailedPrompt:
 	script_set_text Text_6e_219 ; $41b1
@@ -189,7 +189,7 @@ MachineLevel4ClearedScene:
 	ld c, l ; $41dd
 	ld b, h ; $41de
 	ld de, $d000 ; $41df
-	farcall FarPtr_04_20 ; $41e2
+	farcall FarPtr_AttachActorStepMover ; $41e2
 	ret ; $41e5
 TennisMachineRoomFacingScripts_14:
 	ds 1, $ff ; $41e6, fill
@@ -230,7 +230,7 @@ TennisMachineRoomTile01_14:
 	ld c, l ; $4267
 	ld b, h ; $4268
 	ld de, $d000 ; $4269
-	farcall FarPtr_04_20 ; $426c
+	farcall FarPtr_AttachActorStepMover ; $426c
 	ret ; $426f
 	; $4270, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $1a ; 0x00
@@ -321,7 +321,7 @@ MachineCourtGameOverExitScene:
 	ld c, l ; $439b
 	ld b, h ; $439c
 	ld de, $d000 ; $439d
-	farcall FarPtr_04_20 ; $43a0
+	farcall FarPtr_AttachActorStepMover ; $43a0
 	ret ; $43a3
 ComputeMachineCourtProgress:
 	ld a, $00 ; $43a4
@@ -646,7 +646,7 @@ MachineCourtHandleRetryChoice:
 	ld c, l ; $47c4
 	ld b, h ; $47c5
 	ld de, $d000 ; $47c6
-	farcall FarPtr_04_20 ; $47c9
+	farcall FarPtr_AttachActorStepMover ; $47c9
 	ret ; $47cc
 MachineCourtRestartLevel:
 	ld a, [$c8f7] ; $47cd
@@ -794,7 +794,7 @@ MachineExpertNewRecordScene:
 	ld c, l ; $48f0
 	ld b, h ; $48f1
 	ld de, $d000 ; $48f2
-	farcall FarPtr_04_20 ; $48f5
+	farcall FarPtr_AttachActorStepMover ; $48f5
 	ret ; $48f8
 MachineExpertCounterMaxScene:
 	ldh a, [hWramBank] ; $48f9
@@ -831,7 +831,7 @@ MachineExpertCounterMaxScene:
 	ld c, l ; $4948
 	ld b, h ; $4949
 	ld de, $d000 ; $494a
-	farcall FarPtr_04_20 ; $494d
+	farcall FarPtr_AttachActorStepMover ; $494d
 	ret ; $4950
 	ld hl, wMinigamesCurrentScore ; $4951
 	ld a, [hl+] ; $4954

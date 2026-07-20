@@ -67,6 +67,21 @@ animation ids index each actor's own table (per-objdef), obj_id/coords/speeds/
 timers are per-instance data, and the activity byte / state-field selectors /
 flag words aren't nameable without deeper tracing. Byte-perfect.
 
+### Name actor-engine functions from the spawn analysis (2026-07-20)
+
+Used the actor spawn/facing reverse-engineering to name six previously
+anonymous symbols in `labels.json` (renames propagate to the auto-derived
+`FarPtr_*` slot labels and every `farcall`/operand site; byte-perfect):
+`SpawnCompanionActor` ($04:$4f10, the slot-2 companion spawn), the three
+built-in follower/controller installers `AttachActorControllerScript`
+/`AttachActorWaypointFollower`/`AttachActorStepMover` ($04:$415b/$417b/$41a6,
+which `SetActorScript` the `$41d1`-pool entry points `$41d2`/`$41d8`/`$41dc`),
+`FollowerActorScript_04` ($04:$41d1, the follower script pool — its `ld hl`
+load sites now read the label), and `FacingToPadBitTable` ($0a:$53b9, the
+`[$10,$80,$20,$40]` facing-dir->PADF table behind `CheckTriggerFacingMask`,
+split out of its data blob). Story cutscenes turned out to `farcall` the
+step-mover installer, so those sites now read meaningfully too.
+
 ### Reserved actor-slot constants (2026-07-20)
 
 Extended the actor-slot naming to the other two reserved system slots, adopting

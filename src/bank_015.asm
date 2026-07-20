@@ -2335,7 +2335,7 @@ Label_15_618b:
 	ld c, l ; $61be
 	ld b, h ; $61bf
 	ld de, $d000 ; $61c0
-	farcall FarPtr_04_20 ; $61c3
+	farcall FarPtr_AttachActorStepMover ; $61c3
 	ld a, [$c2b1] ; $61c6
 	farcall FarPtr_ScriptWaitActorMoveDone ; $61c9
 	ld a, [$c2b1] ; $61cc
@@ -2354,7 +2354,7 @@ Label_15_61d5:
 	ld c, l ; $61fd
 	ld b, h ; $61fe
 	ld de, $d000 ; $61ff
-	farcall FarPtr_04_20 ; $6202
+	farcall FarPtr_AttachActorStepMover ; $6202
 	ld a, [$c2b1] ; $6205
 	farcall FarPtr_ScriptWaitActorMoveDone ; $6208
 	ld a, [$c2b1] ; $620b
@@ -2373,7 +2373,7 @@ Label_15_6214:
 	ld c, l ; $623c
 	ld b, h ; $623d
 	ld de, $d000 ; $623e
-	farcall FarPtr_04_20 ; $6241
+	farcall FarPtr_AttachActorStepMover ; $6241
 	ld a, [$c2b1] ; $6244
 	farcall FarPtr_ScriptWaitActorMoveDone ; $6247
 	ld a, [$c2b1] ; $624a
@@ -2396,7 +2396,7 @@ Label_15_6265:
 	ld c, l ; $627a
 	ld b, h ; $627b
 	ld de, $d000 ; $627c
-	farcall FarPtr_04_20 ; $627f
+	farcall FarPtr_AttachActorStepMover ; $627f
 	ret ; $6282
 Label_15_6283:
 	script_move_target ACTOR_PLAYER, $1300, $1300 ; $6283
@@ -2405,7 +2405,7 @@ Label_15_6283:
 	ld c, l ; $6298
 	ld b, h ; $6299
 	ld de, $d000 ; $629a
-	farcall FarPtr_04_20 ; $629d
+	farcall FarPtr_AttachActorStepMover ; $629d
 	ret ; $62a0
 Label_15_62a1:
 	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $62a1
@@ -2414,7 +2414,7 @@ Label_15_62a1:
 	ld c, l ; $62b6
 	ld b, h ; $62b7
 	ld de, $d000 ; $62b8
-	farcall FarPtr_04_20 ; $62bb
+	farcall FarPtr_AttachActorStepMover ; $62bb
 	ret ; $62be
 Label_15_62bf:
 	ld hl, wWaterSpriteMinigameFlag ; $62bf

@@ -748,7 +748,7 @@ Label_13_4fd0:
 	ld c, l ; $4fe9
 	ld b, h ; $4fea
 	ld de, $d000 ; $4feb
-	farcall FarPtr_04_20 ; $4fee
+	farcall FarPtr_AttachActorStepMover ; $4fee
 	script_set_speed ACTOR_PLAYER, $0030 ; $4ff1
 	script_move_target ACTOR_PLAYER, $0b00, $1400 ; $4ff9
 	script_wait_frames $0a ; $5004
@@ -966,7 +966,7 @@ Label_13_521b:
 	ld c, l ; $5238
 	ld b, h ; $5239
 	ld de, $d000 ; $523a
-	farcall FarPtr_04_20 ; $523d
+	farcall FarPtr_AttachActorStepMover ; $523d
 	script_get_actor_state $03 ; $5240
 	ld c, l ; $5245
 	ld b, h ; $5246
@@ -1071,7 +1071,7 @@ Label_13_5355:
 	ld c, l ; $536b
 	ld b, h ; $536c
 	ld de, $d000 ; $536d
-	farcall FarPtr_04_20 ; $5370
+	farcall FarPtr_AttachActorStepMover ; $5370
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5373
 	script_get_actor_state $03 ; $537a
 	ld c, l ; $537f
@@ -1353,7 +1353,7 @@ Label_13_56d4:
 	ld c, l ; $5728
 	ld b, h ; $5729
 	ld de, $d000 ; $572a
-	farcall FarPtr_04_20 ; $572d
+	farcall FarPtr_AttachActorStepMover ; $572d
 	script_get_actor_state $03 ; $5730
 	ld c, l ; $5735
 	ld b, h ; $5736
@@ -1435,7 +1435,7 @@ Label_13_5807:
 	ld c, l ; $5842
 	ld b, h ; $5843
 	ld de, $d000 ; $5844
-	farcall FarPtr_04_20 ; $5847
+	farcall FarPtr_AttachActorStepMover ; $5847
 	script_get_actor_state $03 ; $584a
 	ld c, l ; $584f
 	ld b, h ; $5850
@@ -1798,7 +1798,7 @@ Label_13_5b01:
 	ld c, l ; $5b63
 	ld b, h ; $5b64
 	ld de, $d000 ; $5b65
-	farcall FarPtr_04_20 ; $5b68
+	farcall FarPtr_AttachActorStepMover ; $5b68
 	script_get_actor_state $03 ; $5b6b
 	ld c, l ; $5b70
 	ld b, h ; $5b71
@@ -2974,7 +2974,7 @@ Label_13_707d:
 	ld c, l ; $7087
 	ld b, h ; $7088
 	ld de, $d000 ; $7089
-	farcall FarPtr_04_20 ; $708c
+	farcall FarPtr_AttachActorStepMover ; $708c
 	ret ; $708f
 Label_13_7090:
 	farcall FarPtr_AdvanceDialogueTextCursor ; $7090
@@ -2995,7 +2995,7 @@ Label_13_70ac:
 	ld c, l ; $70c0
 	ld b, h ; $70c1
 	ld de, $d000 ; $70c2
-	farcall FarPtr_04_20 ; $70c5
+	farcall FarPtr_AttachActorStepMover ; $70c5
 	ret ; $70c8
 Func_13_70c9:
 	script_set_actor_script $04, ActorScript_13_6bf2 ; $70c9

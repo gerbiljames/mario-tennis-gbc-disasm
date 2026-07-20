@@ -593,7 +593,7 @@ LateStudentCrashCutscene:
 	script_get_actor_state $11 ; $4901
 	ld e, l ; $4906
 	ld d, h ; $4907
-	farcall FarPtr_04_1e ; $4908
+	farcall FarPtr_AttachActorWaypointFollower ; $4908
 	script_move_target ACTOR_PLAYER, $1800, $1e00 ; $490b
 	script_wait_frames $14 ; $4916
 	call LateStudentCrashImpact ; $491d
@@ -1838,7 +1838,7 @@ Label_11_5db7:
 	ld c, l ; $5eb7
 	ld b, h ; $5eb8
 	ld de, $d000 ; $5eb9
-	farcall FarPtr_04_20 ; $5ebc
+	farcall FarPtr_AttachActorStepMover ; $5ebc
 	ret ; $5ebf
 Label_11_5ec0:
 	set_flag $08, 1 ; $5ec0
@@ -1880,7 +1880,7 @@ Label_11_5ec0:
 	ld c, l ; $5fb4
 	ld b, h ; $5fb5
 	ld de, $d000 ; $5fb6
-	farcall FarPtr_04_20 ; $5fb9
+	farcall FarPtr_AttachActorStepMover ; $5fb9
 	ret ; $5fbc
 Label_11_5fbd:
 	set_flag $08, 2 ; $5fbd
@@ -3033,7 +3033,7 @@ Label_11_7590:
 	script_get_actor_state $04 ; $75c8
 	ld e, l ; $75cd
 	ld d, h ; $75ce
-	farcall FarPtr_04_1e ; $75cf
+	farcall FarPtr_AttachActorWaypointFollower ; $75cf
 	script_face_toward $03, $04 ; $75d2
 	script_set_anim $04, $03 ; $75da
 	script_wait_idle $04 ; $75e1

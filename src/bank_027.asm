@@ -2427,7 +2427,7 @@ Label_27_737e:
 	script_get_actor_state $06 ; $74ca
 	ld e, l ; $74cf
 	ld d, h ; $74d0
-	farcall FarPtr_04_1e ; $74d1
+	farcall FarPtr_AttachActorWaypointFollower ; $74d1
 	script_move_target ACTOR_PLAYER, $1800, $1e00 ; $74d4
 	script_wait_frames $14 ; $74df
 	call Func_27_7595 ; $74e6

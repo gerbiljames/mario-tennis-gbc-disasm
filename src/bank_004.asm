@@ -26,14 +26,14 @@ FarPtr_SetActorAnimationChecked:
 	dw SetActorAnimationChecked ; $4016
 FarPtr_SpawnMainCharacterActor:
 	dw SpawnMainCharacterActor ; $4018
-FarPtr_04_1a:
-	dw Func_04_4f10 ; $401a
-FarPtr_04_1c:
-	dw Func_04_415b ; $401c
-FarPtr_04_1e:
-	dw Func_04_417b ; $401e
-FarPtr_04_20:
-	dw Func_04_41a6 ; $4020
+FarPtr_SpawnCompanionActor:
+	dw SpawnCompanionActor ; $401a
+FarPtr_AttachActorControllerScript:
+	dw AttachActorControllerScript ; $401c
+FarPtr_AttachActorWaypointFollower:
+	dw AttachActorWaypointFollower ; $401e
+FarPtr_AttachActorStepMover:
+	dw AttachActorStepMover ; $4020
 FarPtr_04_22:
 	dw Func_04_534b ; $4022
 FarPtr_04_24:
@@ -195,7 +195,7 @@ SetActorMode:
 	pop hl ; $4158
 	pop af ; $4159
 	ret ; $415a
-Func_04_415b:
+AttachActorControllerScript:
 	inc b ; $415b
 	dec b ; $415c
 	ret z ; $415d
@@ -216,7 +216,7 @@ Func_04_415b:
 	pop de ; $4178
 	pop af ; $4179
 	ret ; $417a
-Func_04_417b:
+AttachActorWaypointFollower:
 	inc b ; $417b
 	dec b ; $417c
 	ret z ; $417d
@@ -242,7 +242,7 @@ Func_04_417b:
 	pop de ; $41a3
 	pop af ; $41a4
 	ret ; $41a5
-Func_04_41a6:
+AttachActorStepMover:
 	inc b ; $41a6
 	dec b ; $41a7
 	ret z ; $41a8
@@ -270,6 +270,7 @@ Func_04_41a6:
 	pop de ; $41ce
 	pop af ; $41cf
 	ret ; $41d0
+FollowerActorScript_04:
 	INCBIN "data/bank_004/d_41d1.bin" ; $41d1, 22 bytes
 	wram_bank $04 ; $41e7
 	ld hl, $d000 ; $41ed
@@ -2018,7 +2019,7 @@ SpawnActorFromTemplate:
 	pop de ; $4c6c
 	jr z, Label_04_4c79 ; $4c6d
 	ldh a, [hRomBank] ; $4c6f
-	ld hl, $41d1 ; $4c71
+	ld hl, FollowerActorScript_04 ; $4c71
 	call SpawnActor ; $4c74
 	jr Label_04_4cf3 ; $4c77
 Label_04_4c79:
@@ -2159,20 +2160,20 @@ Func_04_4d2c:
 	ldh a, [hRomBank] ; $4d2c
 	ld hl, $4da5 ; $4d2e
 	call SpawnActorFromTemplate ; $4d31
-	call Func_04_415b ; $4d34
+	call AttachActorControllerScript ; $4d34
 	ldh a, [hRomBank] ; $4d37
-	ld hl, $41d1 ; $4d39
+	ld hl, FollowerActorScript_04 ; $4d39
 	call SpawnActor ; $4d3c
 	ld hl, $1700 ; $4d3f
 	ld de, $1d00 ; $4d42
 	call SetActorPosition ; $4d45
 	ld de, $d000 ; $4d48
-	call Func_04_417b ; $4d4b
+	call AttachActorWaypointFollower ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
 	ld hl, $4e05 ; $4d50
 	call SpawnActorFromTemplate ; $4d53
 	ld de, $d000 ; $4d56
-	call Func_04_41a6 ; $4d59
+	call AttachActorStepMover ; $4d59
 	ld hl, $4e1d ; $4d5c
 	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
@@ -2208,12 +2209,12 @@ SpawnMainCharacterActor:
 	push de ; $4e9b
 	push hl ; $4e9c
 	ldh a, [hRomBank] ; $4e9d
-	ld de, $41d1 ; $4e9f
+	ld de, FollowerActorScript_04 ; $4e9f
 	call SpawnActor ; $4ea2
 	ld a, $01 ; $4ea5
 	call SetActorMode ; $4ea7
 	ld de, $d000 ; $4eaa
-	call Func_04_417b ; $4ead
+	call AttachActorWaypointFollower ; $4ead
 	pop hl ; $4eb0
 	pop de ; $4eb1
 	call SetActorPosition ; $4eb2
@@ -2230,7 +2231,7 @@ SpawnMainCharacterActor:
 	pop af ; $4ec6
 	ret ; $4ec7
 	INCBIN "data/bank_004/d_4ec8.bin" ; $4ec8, 72 bytes
-Func_04_4f10:
+SpawnCompanionActor:
 	push af ; $4f10
 	push bc ; $4f11
 	push de ; $4f12
@@ -2260,7 +2261,7 @@ Label_04_4f3b:
 	cp a, $ff ; $4f46
 	jr z, Label_04_4f70 ; $4f48
 	ld de, $d000 ; $4f4a
-	call Func_04_41a6 ; $4f4d
+	call AttachActorStepMover ; $4f4d
 	ld de, $d000 ; $4f50
 	ld hl, $0014 ; $4f53
 	add hl, de ; $4f56

@@ -678,7 +678,7 @@ Label_12_4a6c:
 	ld c, l ; $4a9f
 	ld b, h ; $4aa0
 	ld de, $d000 ; $4aa1
-	farcall FarPtr_04_20 ; $4aa4
+	farcall FarPtr_AttachActorStepMover ; $4aa4
 	script_wait_frames $28 ; $4aa7
 Label_12_4aae:
 	ret ; $4aae
@@ -754,7 +754,7 @@ WallPracticeExitCourtScript:
 	ld c, l ; $4b8c
 	ld b, h ; $4b8d
 	ld de, $d000 ; $4b8e
-	farcall FarPtr_04_20 ; $4b91
+	farcall FarPtr_AttachActorStepMover ; $4b91
 Label_12_4b94:
 	script_wait_frames $0a ; $4b94
 	ret ; $4b9b
@@ -818,7 +818,7 @@ Label_12_4bfc:
 	ld c, l ; $4c89
 	ld b, h ; $4c8a
 	ld de, $d000 ; $4c8b
-	farcall FarPtr_04_20 ; $4c8e
+	farcall FarPtr_AttachActorStepMover ; $4c8e
 	script_wait_frames $14 ; $4c91
 Label_12_4c98:
 	script_wait_frames $0a ; $4c98
@@ -856,7 +856,7 @@ WallPracticeRoomTile02_12:
 	ld c, l ; $4d20
 	ld b, h ; $4d21
 	ld de, $d000 ; $4d22
-	farcall FarPtr_04_20 ; $4d25
+	farcall FarPtr_AttachActorStepMover ; $4d25
 Label_12_4d28:
 	ret ; $4d28
 WallPracticeRoomTile03_12:
@@ -1527,7 +1527,7 @@ Label_12_57f4:
 	ld c, l ; $5817
 	ld b, h ; $5818
 	ld de, $d000 ; $5819
-	farcall FarPtr_04_20 ; $581c
+	farcall FarPtr_AttachActorStepMover ; $581c
 	ret ; $581f
 SeniorCourtNpc04_12:
 	ld a, [$c2b1] ; $5820
@@ -2244,7 +2244,7 @@ Label_12_6087:
 	ld c, l ; $6097
 	ld b, h ; $6098
 	ld de, $d000 ; $6099
-	farcall FarPtr_04_20 ; $609c
+	farcall FarPtr_AttachActorStepMover ; $609c
 	ret ; $609f
 StartSeniorRankingMatch:
 	script_set_speed ACTOR_PLAYER, $0020 ; $60a0
@@ -2478,7 +2478,7 @@ RunSeniorRankingMatchIntro:
 	script_get_actor_state $09 ; $6540
 	ld e, l ; $6545
 	ld d, h ; $6546
-	farcall FarPtr_04_1e ; $6547
+	farcall FarPtr_AttachActorWaypointFollower ; $6547
 	script_face_toward $03, $09 ; $654a
 	script_null_script $08 ; $6552
 	script_set_anim $08, $01 ; $6557
@@ -2517,7 +2517,7 @@ RunSeniorRankingMatchIntro:
 	script_get_actor_state $07 ; $6629
 	ld e, l ; $662e
 	ld d, h ; $662f
-	farcall FarPtr_04_1e ; $6630
+	farcall FarPtr_AttachActorWaypointFollower ; $6630
 	script_face_toward $03, $07 ; $6633
 	script_set_anim $07, $03 ; $663b
 	script_wait_idle $07 ; $6642
@@ -2586,7 +2586,7 @@ RunSeniorRankingMatchIntro:
 	script_get_actor_state $07 ; $67d9
 	ld e, l ; $67de
 	ld d, h ; $67df
-	farcall FarPtr_04_1e ; $67e0
+	farcall FarPtr_AttachActorWaypointFollower ; $67e0
 	script_face_toward $03, $07 ; $67e3
 	script_set_anim $07, $03 ; $67eb
 	script_wait_idle $07 ; $67f2
@@ -2613,7 +2613,7 @@ RunSeniorRankingMatchIntro:
 	script_get_actor_state $06 ; $6873
 	ld e, l ; $6878
 	ld d, h ; $6879
-	farcall FarPtr_04_1e ; $687a
+	farcall FarPtr_AttachActorWaypointFollower ; $687a
 	script_face_toward $03, $06 ; $687d
 	script_set_anim $06, $03 ; $6885
 	script_wait_idle $06 ; $688c
@@ -2645,7 +2645,7 @@ RunSeniorRankingMatchIntro:
 	script_get_actor_state $05 ; $692b
 	ld e, l ; $6930
 	ld d, h ; $6931
-	farcall FarPtr_04_1e ; $6932
+	farcall FarPtr_AttachActorWaypointFollower ; $6932
 	script_face_toward $03, $05 ; $6935
 	script_set_anim $05, $03 ; $693d
 	script_wait_idle $05 ; $6944
@@ -2806,7 +2806,7 @@ Label_12_6bc4:
 	ld c, l ; $6bd8
 	ld b, h ; $6bd9
 	ld de, $d000 ; $6bda
-	farcall FarPtr_04_20 ; $6bdd
+	farcall FarPtr_AttachActorStepMover ; $6bdd
 	farcall FarPtr_EndCutsceneScriptMode ; $6be0
 	ret ; $6be3
 Label_12_6be4:
@@ -3103,7 +3103,7 @@ SeniorMatchVictorySceneDispatch:
 	ld c, l ; $6f5e
 	ld b, h ; $6f5f
 	ld de, $d000 ; $6f60
-	farcall FarPtr_04_20 ; $6f63
+	farcall FarPtr_AttachActorStepMover ; $6f63
 	farcall FarPtr_EndCutsceneScriptMode ; $6f66
 	ret ; $6f69
 	script_null_script ACTOR_PARTNER ; $6f6a
@@ -3144,7 +3144,7 @@ SeniorMatchVictorySceneDispatch:
 	ld c, l ; $7065
 	ld b, h ; $7066
 	ld de, $d000 ; $7067
-	farcall FarPtr_04_20 ; $706a
+	farcall FarPtr_AttachActorStepMover ; $706a
 	farcall FarPtr_EndCutsceneScriptMode ; $706d
 	ret ; $7070
 	script_set_position $09, $1b00, $0b00 ; $7071

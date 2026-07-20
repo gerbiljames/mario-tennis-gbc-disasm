@@ -2274,7 +2274,7 @@ Label_0e_5d49:
 	ld c, l ; $6057
 	ld b, h ; $6058
 	ld de, $d000 ; $6059
-	farcall FarPtr_04_20 ; $605c
+	farcall FarPtr_AttachActorStepMover ; $605c
 	ret ; $605f
 ExhibitionAcceptedDoubles:
 	script_wait_frames $0a ; $6060
@@ -2576,7 +2576,7 @@ Label_0e_660b:
 	ld c, l ; $6638
 	ld b, h ; $6639
 	ld de, $d000 ; $663a
-	farcall FarPtr_04_20 ; $663d
+	farcall FarPtr_AttachActorStepMover ; $663d
 Label_0e_6640:
 	farcall FarPtr_EndCutsceneScriptMode ; $6640
 	ret ; $6643

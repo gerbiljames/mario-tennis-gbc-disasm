@@ -228,7 +228,7 @@ EndCutsceneScriptMode:
 	ld [$c369], a ; $410d
 	ld bc, $d040 ; $4110
 	ld de, $d000 ; $4113
-	farcall FarPtr_04_1e ; $4116
+	farcall FarPtr_AttachActorWaypointFollower ; $4116
 	ld hl, $40a4 ; $4119
 	call UnregisterFrameTask ; $411c
 	clear_flag $02, 6 ; $411f
@@ -2363,7 +2363,7 @@ Label_0a_50c7:
 Label_0a_50ca:
 	call WaitFadeEnd ; $50ca
 	ld bc, $d000 ; $50cd
-	farcall FarPtr_04_1c ; $50d0
+	farcall FarPtr_AttachActorControllerScript ; $50d0
 Label_0a_50d3:
 	call AdvanceFrame ; $50d3
 	call CheckStoryEventRequests ; $50d6
@@ -2775,7 +2775,9 @@ Label_0a_539d:
 	pop de ; $539f
 	pop bc ; $53a0
 	ret ; $53a1
-	INCBIN "data/bank_00a/d_53a2.bin" ; $53a2, 27 bytes
+	INCBIN "data/bank_00a/d_53a2.bin" ; $53a2, 23 bytes
+FacingToPadBitTable:
+	INCBIN "data/bank_00a/d_53b9.bin" ; $53b9, 4 bytes
 CheckTriggerFacingMask:
 	push bc ; $53bd
 	push hl ; $53be
@@ -2904,7 +2906,7 @@ InitLocationActors:
 	farcall FarPtr_SpawnMainCharacterActor ; $5485
 	pop hl ; $5488
 	pop af ; $5489
-	farcall FarPtr_04_1a ; $548a
+	farcall FarPtr_SpawnCompanionActor ; $548a
 	farcall FarPtr_SpawnActorsFromList ; $548d
 	pop hl ; $5490
 	pop de ; $5491
