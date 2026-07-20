@@ -2054,6 +2054,22 @@ def text_id_name(idv):
 # Cutscene script macros whose arg 1 is a FACE_* cardinal (facing or angle).
 FACING_ARG_MACROS = {"script_face", "script_facing_lock", "script_move_angle"}
 
+# Cutscene script macros -> the emitted-arg indices that are actor slots (an
+# arg of $00 renders as ACTOR_PLAYER). Only the target-actor immediates; slot
+# ids elsewhere in the arg list stay literal.
+ACTOR_SLOT_ARGS = {
+    "script_move_target": (0,), "script_set_position": (0,),
+    "script_move_angle": (0,), "script_set_speed": (0,),
+    "script_jump_velocity": (0,), "script_set_anim": (0,),
+    "script_face": (0,), "script_face_pair": (0, 1),
+    "script_face_toward": (0, 1), "script_facing_lock": (0,),
+    "script_set_active": (0,), "script_set_objdef": (1,),
+    "script_get_actor_state": (0,), "script_move_player_to_actor": (0,),
+    "script_speak": (0,), "script_wait_idle": (0,), "script_wait_move": (0,),
+    "script_wait_actor_script": (0,), "script_null_script": (0,),
+    "script_set_actor_script": (0,),
+}
+
 
 def script_cmd_seq(dis, rom, off, labels, far_slot_names):
     """Collapse a cutscene script command (a fixed run of register setups and
@@ -2118,9 +2134,12 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
             # The facing byte (arg 1) of the facing/angle setters is the FACE_*
             # cardinal encoding shared with the map tables (the byte doubles as
             # the movement angle for script_move_angle).
-            elif macro in FACING_ARG_MACROS and len(args) >= 2 \
+            if macro in FACING_ARG_MACROS and len(args) >= 2 \
                     and args[1].startswith("$"):
                 args[1] = ACTOR_FACING_NAMES.get(int(args[1][1:], 16), args[1])
+            for ai in ACTOR_SLOT_ARGS.get(macro, ()):
+                if ai < len(args) and args[ai] == "$00":
+                    args[ai] = "ACTOR_PLAYER"
             return (f"{macro} " + ", ".join(args)).rstrip(), p - off
     return None
 
@@ -2451,7 +2470,7 @@ ENDM
 ; Cutscene script commands. Story cutscenes are hand-written native code: fixed
 ; register setups feeding farcalls into the script engine (FarPtr_Script*, bank
 ; $0a). Each macro collapses one setup+farcall; the disassembler emits them via
-; script_cmd_seq. `actor` is the target actor slot ($00 = the player).
+; script_cmd_seq. `actor` is the target actor slot (ACTOR_PLAYER = the player).
 ; Usage: script_move_target actor, x, y
 MACRO script_move_target
 	ld a, \\1

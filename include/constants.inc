@@ -35,6 +35,13 @@ def FACE_DOWN    equ $40
 def FACE_LEFT    equ $80
 def FACE_UP      equ $c0
 
+; --- Cutscene actor slot ---
+; The actor an overworld/cutscene `script_*` command targets (index into the
+; actor state array at $d000, stride $40). Slot 0 is always the player; other
+; slots are the scene's own actors in spawn order, so only the player has a
+; stable name.
+def ACTOR_PLAYER equ $00
+
 ; --- Story-script facing mask (map_script `facing_mask`) ---
 ; The direction an actor must face for FindStoryScriptEntry ($0a:$53e4) to run
 ; the record. PADF-layout bits (matched against the facing->PADF table lookup);

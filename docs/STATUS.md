@@ -55,6 +55,18 @@ facing/angle: `script_face` and `script_facing_lock` (facing arg) and
 maps arg 1 of those macros to a `FACE_*` name (~1100 sites, all `$00/$40/$80/
 $c0`). Byte-perfect.
 
+Named the cutscene actor slot `$00` `ACTOR_PLAYER` (constants.inc). The actor
+array (`$d000`, stride `$40`) is slot 0 = player, other slots = the scene's
+own actors in spawn order — so only slot 0 has a stable name. `script_cmd_seq`
+renders the target-actor arg of the 20 actor-targeting `script_*` commands as
+`ACTOR_PLAYER` when it is `$00` (`ACTOR_SLOT_ARGS` maps each macro to its
+actor-slot arg positions — e.g. `script_set_objdef`'s actor is arg 1, and
+`script_face_toward` has two). 1679 sites; other slots stay literal. An audit
+of the remaining `as_*`/`script_*` args found no further clean global enums:
+animation ids index each actor's own table (per-objdef), obj_id/coords/speeds/
+timers are per-instance data, and the activity byte / state-field selectors /
+flag words aren't nameable without deeper tracing. Byte-perfect.
+
 ### Symbolic dialogue text ids (2026-07-20)
 
 Made dialogue text references read symbolically instead of as raw hex. A text id

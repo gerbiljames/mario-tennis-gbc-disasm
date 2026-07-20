@@ -255,7 +255,7 @@ ENDM
 ; Cutscene script commands. Story cutscenes are hand-written native code: fixed
 ; register setups feeding farcalls into the script engine (FarPtr_Script*, bank
 ; $0a). Each macro collapses one setup+farcall; the disassembler emits them via
-; script_cmd_seq. `actor` is the target actor slot ($00 = the player).
+; script_cmd_seq. `actor` is the target actor slot (ACTOR_PLAYER = the player).
 ; Usage: script_move_target actor, x, y
 MACRO script_move_target
 	ld a, \1
