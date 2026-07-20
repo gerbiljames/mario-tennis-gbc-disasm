@@ -49,6 +49,12 @@ left raw: they decode to a (flag-byte, bit, negate-bit-15) triple via
 their in-game meanings aren't recoverable without per-flag tracing, so named
 constants would obscure rather than clarify.
 
+Also applied `FACE_*` to the cutscene `script_*` commands that set a cardinal
+facing/angle: `script_face` and `script_facing_lock` (facing arg) and
+`script_move_angle` (the byte doubles as the movement angle). `script_cmd_seq`
+maps arg 1 of those macros to a `FACE_*` name (~1100 sites, all `$00/$40/$80/
+$c0`). Byte-perfect.
+
 ### Symbolic dialogue text ids (2026-07-20)
 
 Made dialogue text references read symbolically instead of as raw hex. A text id

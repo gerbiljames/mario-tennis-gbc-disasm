@@ -2051,6 +2051,10 @@ def text_id_name(idv):
     return name
 
 
+# Cutscene script macros whose arg 1 is a FACE_* cardinal (facing or angle).
+FACING_ARG_MACROS = {"script_face", "script_facing_lock", "script_move_angle"}
+
+
 def script_cmd_seq(dis, rom, off, labels, far_slot_names):
     """Collapse a cutscene script command (a fixed run of register setups and
     farcalls into the FarPtr_Script* engine) into a script_* macro. Steps are
@@ -2111,6 +2115,12 @@ def script_cmd_seq(dis, rom, off, labels, far_slot_names):
                 name = text_id_name(int(args[0][1:], 16))
                 if name:
                     args[0] = name
+            # The facing byte (arg 1) of the facing/angle setters is the FACE_*
+            # cardinal encoding shared with the map tables (the byte doubles as
+            # the movement angle for script_move_angle).
+            elif macro in FACING_ARG_MACROS and len(args) >= 2 \
+                    and args[1].startswith("$"):
+                args[1] = ACTOR_FACING_NAMES.get(int(args[1][1:], 16), args[1])
             return (f"{macro} " + ", ".join(args)).rstrip(), p - off
     return None
 
@@ -2457,7 +2467,7 @@ MACRO script_set_position
 	ld de, \\3
 	farcall FarPtr_ScriptSetActorPosition
 ENDM
-; Usage: script_move_angle actor, angle, distance
+; Usage: script_move_angle actor, angle, distance  (angle is a FACE_* cardinal)
 MACRO script_move_angle
 	ld a, \\1
 	ld b, \\2
@@ -2519,7 +2529,7 @@ MACRO script_get_actor_state
 	ld a, \\1
 	farcall FarPtr_GetActorStateAddr
 ENDM
-; Usage: script_face actor, facing
+; Usage: script_face actor, facing  (facing is a FACE_* constant)
 MACRO script_face
 	ld a, \\1
 	ld b, \\2

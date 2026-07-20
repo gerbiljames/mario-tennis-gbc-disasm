@@ -271,7 +271,7 @@ MACRO script_set_position
 	ld de, \3
 	farcall FarPtr_ScriptSetActorPosition
 ENDM
-; Usage: script_move_angle actor, angle, distance
+; Usage: script_move_angle actor, angle, distance  (angle is a FACE_* cardinal)
 MACRO script_move_angle
 	ld a, \1
 	ld b, \2
@@ -333,7 +333,7 @@ MACRO script_get_actor_state
 	ld a, \1
 	farcall FarPtr_GetActorStateAddr
 ENDM
-; Usage: script_face actor, facing
+; Usage: script_face actor, facing  (facing is a FACE_* constant)
 MACRO script_face
 	ld a, \1
 	ld b, \2
