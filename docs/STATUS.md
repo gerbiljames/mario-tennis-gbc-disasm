@@ -21,6 +21,32 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Label obvious same-bank pointer loads (2026-07-21)
+
+Swept every `ld bc/de/hl, imm` whose immediate is a same-bank pointer and named
+its target so the load reads symbolically. `pointer_load_targets` in `disasm.py`
+gates each site on a **pointer-use** test (`_pointer_load_used`): the loaded
+value must be dereferenced (`[hl`/`[de]`/`[bc]`), dispatched (`jp hl`), pushed
+for a computed jump, or used as a table base (`add hl, de/bc` then a deref).
+This rejects coincidental 16-bit constants that alias an in-bank address -- e.g.
+`ld de, $4000` before `add hl, de; jr c` (an overflow check), never
+dereferenced. Targets landing mid-instruction are also rejected.
+
+Naming is split by what emit can reliably define. Code targets (instruction
+starts) get a `Func_` label; `data_tables` starts (e.g. the `$6b:$40bd` intro
+cutscene jump table, loaded by three `ld de` sites) a `Data_` label. Pointers
+into **unlabeled raw data** (`ptr_data_targets`) are split out of their blob and
+named `Data_*` by emit's seg-loop -- but only when they are *not* interior to a
+typed run (`data_tables` spec or slot-record table), so a table like the
+`$3f:$444f` `records:2` block is never truncated (its `$4487` sub-pointer stays
+raw). A final `resolve_pointer_loads` post-pass rewrites each load against the
+label emit *actually* emitted (built by pairing every label line with the
+following `; $cpu`), so text-table pointers resolve to their existing `Text_*`
+label (`$37:$4004` -> `Text_37_4004`) and a target with no emitted label is left
+as raw hex rather than an undefined symbol. 77 loads across 31 banks now read
+symbolically (46 `Data_`, 18 `Func_`, 13 `Text_`; 36 new labels); the raw-blob
+splits conserve bytes in `data.manifest`. Byte-perfect.
+
 ### Map-table facing constants (2026-07-20)
 
 Replaced the raw facing bytes in the three story map tables with named

@@ -3585,6 +3585,7 @@ Label_03_57cf:
 	pop bc ; $57d6
 	pop af ; $57d7
 	ret ; $57d8
+Data_03_57d9:
 	INCBIN "data/bank_003/d_57d9.bin" ; $57d9, 9 bytes
 CheckUnlockCondition:
 	push bc ; $57e2
@@ -3608,7 +3609,7 @@ Label_03_57fd:
 Label_03_5804:
 	ld a, b ; $5804
 	sub a, $02 ; $5805
-	ld hl, $57d9 ; $5807
+	ld hl, Data_03_57d9 ; $5807
 	ld d, $00 ; $580a
 	ld e, a ; $580c
 	add hl, de ; $580d

@@ -3331,7 +3331,7 @@ Label_05_5462:
 	ret ; $546b
 DispatchControlCode:
 	push hl ; $546c
-	ld hl, $5488 ; $546d
+	ld hl, Func_05_5488 ; $546d
 	push hl ; $5470
 	push af ; $5471
 	push bc ; $5472
@@ -3352,6 +3352,7 @@ DispatchControlCode:
 	pop bc ; $5485
 	pop af ; $5486
 	jp hl ; $5487
+Func_05_5488:
 	pop hl ; $5488
 	ret ; $5489
 	ret ; $548a
@@ -4687,7 +4688,7 @@ AddTextIdOffset:
 	sra a ; $5d50
 	ld e, a ; $5d52
 	ld d, $00 ; $5d53
-	ld hl, $5d99 ; $5d55
+	ld hl, Data_05_5d99 ; $5d55
 	add hl, de ; $5d58
 	ld e, [hl] ; $5d59
 	inc hl ; $5d5a
@@ -4742,6 +4743,7 @@ Label_05_5d91:
 	pop bc ; $5d96
 	pop af ; $5d97
 	ret ; $5d98
+Data_05_5d99:
 	INCBIN "data/bank_005/d_5d99.bin" ; $5d99, 26 bytes
 RenderProportionalTextAt:
 	push af ; $5db3
@@ -5231,7 +5233,7 @@ GetSpeakerVoice:
 	ld l, a ; $60b7
 	ld h, $00 ; $60b8
 	add hl, hl ; $60ba
-	ld de, $60cb ; $60bb
+	ld de, Data_05_60cb ; $60bb
 	add hl, de ; $60be
 	inc hl ; $60bf
 	ld b, [hl] ; $60c0
@@ -5243,6 +5245,7 @@ Label_05_60c6:
 	pop de ; $60c8
 	pop bc ; $60c9
 	ret ; $60ca
+Data_05_60cb:
 	INCBIN "data/bank_005/d_60cb.bin" ; $60cb, 175 bytes
 ResetTextWindowsAndRestoreMap:
 	call InitTextWindows ; $617a
@@ -6837,7 +6840,7 @@ FetchSRAMText:
 	push bc ; $6d3b
 	push de ; $6d3c
 	push hl ; $6d3d
-	ld hl, $6d65 ; $6d3e
+	ld hl, Data_05_6d65 ; $6d3e
 	sla e ; $6d41
 	rl d ; $6d43
 	add hl, de ; $6d45
@@ -6860,6 +6863,7 @@ Label_05_6d5e:
 	pop de ; $6d62
 	pop bc ; $6d63
 	ret ; $6d64
+Data_05_6d65:
 	INCBIN "data/bank_005/d_6d65.bin" ; $6d65, 32 bytes
 RunDebugWindowDemo:
 	ldh a, [hWramBank] ; $6d85

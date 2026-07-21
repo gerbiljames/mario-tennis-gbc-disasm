@@ -3643,7 +3643,7 @@ Label_1d_6b3b:
 	ret z ; $6b4c
 	call Func_1d_6b60 ; $6b4d
 Label_1d_6b50:
-	ld hl, $6b69 ; $6b50
+	ld hl, Data_1d_6b69 ; $6b50
 	ld a, [hl+] ; $6b53
 	ld [de], a ; $6b54
 	inc de ; $6b55
@@ -3663,6 +3663,7 @@ Label_1d_6b63:
 	jr nz, Label_1d_6b63 ; $6b65
 	pop bc ; $6b67
 	ret ; $6b68
+Data_1d_6b69:
 	INCBIN "data/bank_01d/d_6b69.bin" ; $6b69, 18 bytes
 Func_1d_6b7b:
 	wram_bank $06 ; $6b7b
@@ -4201,13 +4202,14 @@ Label_1d_6f1d:
 	ret z ; $6f29
 	inc de ; $6f2a
 Label_1d_6f2b:
-	ld hl, $6f35 ; $6f2b
+	ld hl, Data_1d_6f35 ; $6f2b
 	ld a, [hl] ; $6f2e
 	ld [de], a ; $6f2f
 	inc de ; $6f30
 	dec c ; $6f31
 	ret z ; $6f32
 	jr Label_1d_6f2b ; $6f33
+Data_1d_6f35:
 	INCBIN "data/bank_01d/d_6f35.bin" ; $6f35, 9 bytes
 Func_1d_6f3e:
 	wram_bank $06 ; $6f3e

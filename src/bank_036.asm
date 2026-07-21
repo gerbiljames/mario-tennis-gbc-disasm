@@ -22,7 +22,7 @@ FetchText_36:
 	push bc ; $7ece
 	push de ; $7ecf
 	push hl ; $7ed0
-	ld hl, $4004 ; $7ed1
+	ld hl, Text_36_4004 ; $7ed1
 	sla e ; $7ed4
 	rl d ; $7ed6
 	add hl, de ; $7ed8

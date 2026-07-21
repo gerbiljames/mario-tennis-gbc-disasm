@@ -1549,7 +1549,7 @@ Label_17_4a64:
 	nop ; $4a93
 	INCBIN "data/bank_017/d_4a94.bin" ; $4a94, 5 bytes
 DecompressGraphicsList:
-	ld hl, $4abb ; $4a99
+	ld hl, Data_17_4abb ; $4a99
 Label_17_4a9c:
 	ld a, [hl+] ; $4a9c
 	ld b, [hl] ; $4a9d
@@ -1578,6 +1578,7 @@ Label_17_4ab8:
 	jr Label_17_4a9c ; $4ab8
 Label_17_4aba:
 	ret ; $4aba
+Data_17_4abb:
 	; $4abb, 82 bytes (bytes:4)
 	db $02, $4f, $00, $80 ; 0x00
 	db $3d, $4f, $40, $80 ; 0x04

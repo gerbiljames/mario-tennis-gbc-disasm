@@ -78,13 +78,14 @@ StartMinigameByID:
 	ld l, a ; $4081
 	ld h, $00 ; $4082
 	add hl, hl ; $4084
-	ld de, $4090 ; $4085
+	ld de, Data_0d_4090 ; $4085
 	add hl, de ; $4088
 	ld a, [hl+] ; $4089
 	ld b, [hl] ; $408a
 	ld c, a ; $408b
 	call InitMinigameFromConfig ; $408c
 	ret ; $408f
+Data_0d_4090:
 	; $4090, 63 bytes (records:2)
 	dw $44fa ; record 0
 	dw $4959 ; record 1
@@ -1857,7 +1858,7 @@ Func_0d_4e80:
 	ld [wPointOutcomeSide], a ; $4e92
 	ret ; $4e95
 Func_0d_4e96:
-	ld hl, $4ec1 ; $4e96
+	ld hl, Data_0d_4ec1 ; $4e96
 Label_0d_4e99:
 	ld a, [hl+] ; $4e99
 	cp a, $ff ; $4e9a
@@ -1887,7 +1888,12 @@ Label_0d_4ebc:
 Label_0d_4ebe:
 	ld a, $01 ; $4ebe
 	ret ; $4ec0
-	INCBIN "data/bank_00d/d_4ec1.bin" ; $4ec1, 569 bytes
+Data_0d_4ec1:
+	INCBIN "data/bank_00d/d_4ec1.bin" ; $4ec1, 69 bytes
+Data_0d_4f06:
+	INCBIN "data/bank_00d/d_4f06.bin" ; $4f06, 250 bytes
+Data_0d_5000:
+	INCBIN "data/bank_00d/d_5000.bin" ; $5000, 250 bytes
 Func_0d_50fa:
 	add a, a ; $50fa
 	add a, $3a ; $50fb
@@ -1898,11 +1904,11 @@ Func_0d_50fa:
 	ld a, [hl+] ; $5102
 	ld b, [hl] ; $5103
 	ld c, a ; $5104
-	ld hl, $5000 ; $5105
+	ld hl, Data_0d_5000 ; $5105
 	add hl, bc ; $5108
 	push hl ; $5109
 	push hl ; $510a
-	ld hl, $4f06 ; $510b
+	ld hl, Data_0d_4f06 ; $510b
 	add hl, bc ; $510e
 	push hl ; $510f
 	push hl ; $5110
@@ -2806,6 +2812,7 @@ Label_0d_5926:
 	pop af ; $593b
 	wram_bank ; $593c
 	ret ; $5940
+Data_0d_5941:
 	INCBIN "data/bank_00d/d_5941.bin" ; $5941, 56 bytes
 Func_0d_5979:
 	ld hl, $5941 ; $5979
@@ -2818,7 +2825,7 @@ Func_0d_5979:
 Func_0d_598b:
 	ld a, $02 ; $598b
 	farcall FarPtr_StepMatchFrames ; $598d
-	ld hl, $5941 ; $5990
+	ld hl, Data_0d_5941 ; $5990
 	ld b, $18 ; $5993
 	ld c, $00 ; $5995
 Label_0d_5997:

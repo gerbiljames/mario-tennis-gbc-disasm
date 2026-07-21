@@ -97,7 +97,7 @@ Label_06_40c6:
 	cp a, $ff ; $40d0
 	jr z, Label_06_40ef ; $40d2
 	push af ; $40d4
-	ld hl, $40e5 ; $40d5
+	ld hl, Func_06_40e5 ; $40d5
 	push hl ; $40d8
 	ld a, [wMatchMenuSelection] ; $40d9
 	rst Rst00 ; $40dc
@@ -105,6 +105,7 @@ Label_06_40c6:
 	dw MatchPauseMenu_ReviewControls ; $40df jumptable
 	dw MatchPauseMenu_ChangeOptions ; $40e1 jumptable
 	dw MatchPauseMenu_SaveQuit ; $40e3 jumptable
+Func_06_40e5:
 	pop af ; $40e5
 	ld [wMatchMenuSelection], a ; $40e6
 	ld a, [wMatchAbortFlag] ; $40e9
@@ -128,7 +129,7 @@ MatchPauseMenu_CheckRules:
 	ld hl, Func_06_506a ; $4110
 	call UnregisterFrameTask ; $4113
 	call RestoreBgTilemap ; $4116
-	ld hl, $412f ; $4119
+	ld hl, Func_06_412f ; $4119
 	push hl ; $411c
 	ld a, [wGameMode] ; $411d
 	cp a, $08 ; $4120
@@ -137,6 +138,7 @@ MatchPauseMenu_CheckRules:
 	cp a, $02 ; $4128
 	jp z, ShowTrainingRulesPages ; $412a
 	jr ShowMatchRulesPages ; $412d
+Func_06_412f:
 	call RestoreBgTilemap ; $412f
 	ret ; $4132
 ShowMatchRulesPages:
@@ -489,12 +491,13 @@ Label_06_43fb:
 	cp a, $ff ; $4406
 	jr z, Label_06_441d ; $4408
 	push af ; $440a
-	ld hl, $4417 ; $440b
+	ld hl, Func_06_4417 ; $440b
 	push hl ; $440e
 	ld a, [wMatchMenuSelection] ; $440f
 	rst Rst00 ; $4412
 	dw MatchPauseMenu_CameraSelect ; $4413 jumptable
 	dw MatchPauseMenu_MusicToggle ; $4415 jumptable
+Func_06_4417:
 	pop af ; $4417
 	ld [wMatchMenuSelection], a ; $4418
 	jr Label_06_43fb ; $441b
@@ -1297,7 +1300,7 @@ DrawScoreboardPackedPips:
 Label_06_4a1c:
 	push bc ; $4a1c
 	push de ; $4a1d
-	ld hl, $4a2f ; $4a1e
+	ld hl, Func_06_4a2f ; $4a1e
 	push hl ; $4a21
 	ld a, c ; $4a22
 	and a, $03 ; $4a23
@@ -1307,6 +1310,7 @@ Label_06_4a1c:
 	dw DrawScoreboardPipFilled ; $4a29 jumptable
 	dw DrawScoreboardPipAlt ; $4a2b jumptable
 	dw DrawScoreboardPipAlt ; $4a2d jumptable
+Func_06_4a2f:
 	pop de ; $4a2f
 	pop bc ; $4a30
 	inc d ; $4a31
@@ -4322,7 +4326,7 @@ Label_06_6e52:
 	cp a, $ff ; $6e68
 	jr z, Label_06_6e94 ; $6e6a
 	push af ; $6e6c
-	ld hl, $6e7d ; $6e6d
+	ld hl, Func_06_6e7d ; $6e6d
 	push hl ; $6e70
 	ld a, [wMatchMenuSelection] ; $6e71
 	rst Rst00 ; $6e74
@@ -4330,6 +4334,7 @@ Label_06_6e52:
 	dw StoryPauseMenu_GameProgress ; $6e77 jumptable
 	dw StoryPauseMenu_Options ; $6e79 jumptable
 	dw StoryPauseMenu_SaveQuit ; $6e7b jumptable
+Func_06_6e7d:
 	ld b, a ; $6e7d
 	pop af ; $6e7e
 	ld [wMatchMenuSelection], a ; $6e7f
@@ -4497,12 +4502,13 @@ Label_06_6fc7:
 	cp a, $ff ; $6fd2
 	jr z, Label_06_6fe9 ; $6fd4
 	push af ; $6fd6
-	ld hl, $6fe3 ; $6fd7
+	ld hl, Func_06_6fe3 ; $6fd7
 	push hl ; $6fda
 	ld a, [wMatchMenuSelection] ; $6fdb
 	rst Rst00 ; $6fde
 	dw StoryPauseMenu_MessageSpeed ; $6fdf jumptable
 	dw StoryPauseMenu_MusicToggle ; $6fe1 jumptable
+Func_06_6fe3:
 	pop af ; $6fe3
 	ld [wMatchMenuSelection], a ; $6fe4
 	jr Label_06_6fc7 ; $6fe7

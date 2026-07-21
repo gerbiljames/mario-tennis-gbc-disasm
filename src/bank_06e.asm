@@ -22,7 +22,7 @@ FetchText_6e:
 	push bc ; $7b18
 	push de ; $7b19
 	push hl ; $7b1a
-	ld hl, $4004 ; $7b1b
+	ld hl, Text_6e_4004 ; $7b1b
 	sla e ; $7b1e
 	rl d ; $7b20
 	add hl, de ; $7b22

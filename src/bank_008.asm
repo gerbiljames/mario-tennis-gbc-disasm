@@ -1050,12 +1050,13 @@ Label_08_4726:
 Label_08_4736:
 	ret ; $4736
 PlaySet:
-	ld hl, $4745 ; $4737
+	ld hl, Func_08_4745 ; $4737
 	push hl ; $473a
 	ld a, [wTiebreakerIndicator] ; $473b
 	and a, a ; $473e
 	jp z, Label_08_4758 ; $473f
 	jp Label_08_4782 ; $4742
+Func_08_4745:
 	ld a, [wMatchAbortFlag] ; $4745
 	and a, $80 ; $4748
 	jr nz, Label_08_4757 ; $474a
@@ -1136,12 +1137,13 @@ InitTiebreakPointCounter:
 	; $47de, 4 bytes (bytes:4)
 	db $00, $12, $0c, $06 ; 0x00
 AssignCourtPositions:
-	ld hl, $47ef ; $47e2
+	ld hl, Func_08_47ef ; $47e2
 	push hl ; $47e5
 	ld a, [wTiebreakerIndicator] ; $47e6
 	and a, a ; $47e9
 	jp nz, Label_08_48c9 ; $47ea
 	jr Label_08_4808 ; $47ed
+Func_08_47ef:
 	call CheckServerEndChanged ; $47ef
 	call UpdateViewFlipState ; $47f2
 	call FlipAllCharPositions ; $47f5
@@ -1167,7 +1169,7 @@ Label_08_4808:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $481e
 	rrca ; $4821
 	ret nc ; $4822
-	ld hl, $4833 ; $4823
+	ld hl, Func_08_4833 ; $4823
 	push hl ; $4826
 	ld a, [wOnCourtCharCountMinus1] ; $4827
 	rst Rst00 ; $482a
@@ -1175,6 +1177,7 @@ Label_08_4808:
 	dw Label_08_4847 ; $482d jumptable
 	dw Label_08_4847 ; $482f jumptable
 	dw Label_08_4853 ; $4831 jumptable
+Func_08_4833:
 	ld a, [wOnCourtCharCountMinus1] ; $4833
 	rst Rst00 ; $4836
 	dw Label_08_4888 ; $4837 jumptable
@@ -1643,7 +1646,7 @@ ResolvePointOutcome:
 	ld l, a ; $4dff
 	call SetCameraTarget ; $4e00
 	call StepMatchFrame ; $4e03
-	ld hl, $4e22 ; $4e06
+	ld hl, Func_08_4e22 ; $4e06
 	push hl ; $4e09
 	ld a, [wPointOutcome] ; $4e0a
 	rst Rst00 ; $4e0d
@@ -1657,7 +1660,8 @@ ResolvePointOutcome:
 	dw Label_08_4e49 ; $4e1c jumptable
 	dw Label_08_4e5b ; $4e1e jumptable
 	dw Label_00_03ae ; $4e20 jumptable
-	ld hl, $4e3e ; $4e22
+Func_08_4e22:
+	ld hl, Func_08_4e3e ; $4e22
 	push hl ; $4e25
 	ld a, [wMatchWinLoseFlag] ; $4e26
 	and a, a ; $4e29
@@ -1669,6 +1673,7 @@ ResolvePointOutcome:
 	and a, a ; $4e37
 	jp nz, Label_08_4f23 ; $4e38
 	jp Label_08_4ea3 ; $4e3b
+Func_08_4e3e:
 	ld a, $46 ; $4e3e
 	call StepMatchFramesSkippable ; $4e40
 	ld a, $0a ; $4e43
@@ -6661,22 +6666,24 @@ SelectRallyShotType:
 	ld hl, $df50 ; $708b
 	bit 4, [hl] ; $708e
 	jr z, Label_08_70ab ; $7090
-	ld hl, $709b ; $7092
+	ld hl, Data_08_709b ; $7092
 	add hl, de ; $7095
 	ld a, [hl] ; $7096
 	ld [$df14], a ; $7097
 	ret ; $709a
+Data_08_709b:
 	; $709b, 16 bytes (enum:SHOTTYPE:4)
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_BASIC, SHOTTYPE_NEUTRAL ; 0x00
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_LOB, SHOTTYPE_REACH_POWER_SLICE, SHOTTYPE_NEUTRAL ; 0x08
 	db SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL ; 0x0c
 Label_08_70ab:
-	ld hl, $70b4 ; $70ab
+	ld hl, Data_08_70b4 ; $70ab
 	add hl, de ; $70ae
 	ld a, [hl] ; $70af
 	ld [$df14], a ; $70b0
 	ret ; $70b3
+Data_08_70b4:
 	; $70b4, 16 bytes (enum:SHOTTYPE:4)
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_TOPSPIN, SHOTTYPE_SLICE, SHOTTYPE_NEUTRAL ; 0x00
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04

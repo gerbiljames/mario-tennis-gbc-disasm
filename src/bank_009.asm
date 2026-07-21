@@ -565,20 +565,22 @@ ProcessObjSlot:
 	ld de, $ddf0 ; $46c0
 	ld c, $01 ; $46c3
 	call CopyMemoryFast ; $46c5
-	ld hl, $46d3 ; $46c8
+	ld hl, Func_09_46d3 ; $46c8
 	push hl ; $46cb
 	ld hl, $ddf8 ; $46cc
 	ld a, [hl+] ; $46cf
 	ld h, [hl] ; $46d0
 	ld l, a ; $46d1
 	jp hl ; $46d2
-	ld hl, $46e1 ; $46d3
+Func_09_46d3:
+	ld hl, Func_09_46e1 ; $46d3
 	push hl ; $46d6
 	ld a, [$ddff] ; $46d7
 	and a, a ; $46da
 	jr z, Label_09_46f0 ; $46db
 	cp a, $01 ; $46dd
 	jr z, Label_09_4718 ; $46df
+Func_09_46e1:
 	ld hl, $ddfd ; $46e1
 	ld a, [hl] ; $46e4
 	inc [hl] ; $46e5

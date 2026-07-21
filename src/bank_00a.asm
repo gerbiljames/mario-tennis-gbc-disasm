@@ -1716,7 +1716,7 @@ LoadMatchSettingsFromTable:
 	ld a, $00 ; $4a64
 	jr nz, Label_0a_4a6c ; $4a66
 	inc a ; $4a68
-	ld de, $4b2f ; $4a69
+	ld de, Data_0a_4b2f ; $4a69
 Label_0a_4a6c:
 	call SetMatchDoublesMode ; $4a6c
 	ld a, [$c8f7] ; $4a6f
@@ -1758,7 +1758,9 @@ Label_0a_4aa2:
 	ld a, [hl] ; $4aad
 	ld [wMatchBGM], a ; $4aae
 	ret ; $4ab1
-	INCBIN "data/bank_00a/d_4ab2.bin" ; $4ab2, 250 bytes
+	INCBIN "data/bank_00a/d_4ab2.bin" ; $4ab2, 125 bytes
+Data_0a_4b2f:
+	INCBIN "data/bank_00a/d_4b2f.bin" ; $4b2f, 125 bytes
 RunClearStatusSetupMenu:
 	push bc ; $4bac
 	push de ; $4bad
@@ -1995,7 +1997,7 @@ Label_0a_4dae:
 	ld a, [$df03] ; $4dbc
 	or a, a ; $4dbf
 	ret z ; $4dc0
-	ld hl, $4df2 ; $4dc1
+	ld hl, Data_0a_4df2 ; $4dc1
 Label_0a_4dc4:
 	ld a, [hl+] ; $4dc4
 	ld d, [hl] ; $4dc5
@@ -2011,7 +2013,7 @@ Label_0a_4dd3:
 	ld a, [$df03] ; $4dd3
 	cp a, $01 ; $4dd6
 	ret z ; $4dd8
-	ld hl, $4e00 ; $4dd9
+	ld hl, Data_0a_4e00 ; $4dd9
 Label_0a_4ddc:
 	ld a, [hl+] ; $4ddc
 	ld d, [hl] ; $4ddd
@@ -2025,7 +2027,11 @@ Label_0a_4ddc:
 	jr Label_0a_4ddc ; $4de9
 Label_0a_4deb:
 	ret ; $4deb
-	INCBIN "data/bank_00a/d_4dec.bin" ; $4dec, 34 bytes
+	INCBIN "data/bank_00a/d_4dec.bin" ; $4dec, 6 bytes
+Data_0a_4df2:
+	INCBIN "data/bank_00a/d_4df2.bin" ; $4df2, 14 bytes
+Data_0a_4e00:
+	INCBIN "data/bank_00a/d_4e00.bin" ; $4e00, 14 bytes
 SetMinigameClearFlags:
 	ld c, $09 ; $4e0e
 	ld de, $0a00 ; $4e10
@@ -2055,7 +2061,7 @@ Label_0a_4e2a:
 	add a, c ; $4e34
 	ld c, a ; $4e35
 	inc c ; $4e36
-	ld hl, $4e4b ; $4e37
+	ld hl, Data_0a_4e4b ; $4e37
 Label_0a_4e3a:
 	ld a, [hl+] ; $4e3a
 	ld d, [hl] ; $4e3b
@@ -2070,6 +2076,7 @@ Label_0a_4e3a:
 	jr Label_0a_4e3a ; $4e48
 Label_0a_4e4a:
 	ret ; $4e4a
+Data_0a_4e4b:
 	INCBIN "data/bank_00a/d_4e4b.bin" ; $4e4b, 42 bytes
 SetMinigameClearFlagsAlt:
 	ld c, $09 ; $4e75
@@ -2092,7 +2099,7 @@ Label_0a_4e7a:
 	add a, c ; $4e91
 	ld c, a ; $4e92
 	inc c ; $4e93
-	ld hl, $4ea8 ; $4e94
+	ld hl, Data_0a_4ea8 ; $4e94
 Label_0a_4e97:
 	ld a, [hl+] ; $4e97
 	ld d, [hl] ; $4e98
@@ -2107,6 +2114,7 @@ Label_0a_4e97:
 	jr Label_0a_4e97 ; $4ea5
 Label_0a_4ea7:
 	ret ; $4ea7
+Data_0a_4ea8:
 	INCBIN "data/bank_00a/d_4ea8.bin" ; $4ea8, 34 bytes
 GetClearStatusResultCode:
 	ld hl, $4eee ; $4eca
@@ -5590,7 +5598,7 @@ Label_0a_68c0:
 	ld d, [hl] ; $68c4
 	ld e, a ; $68c5
 Label_0a_68c6:
-	ld hl, $68d7 ; $68c6
+	ld hl, Func_0a_68d7 ; $68c6
 	push hl ; $68c9
 	ld a, [de] ; $68ca
 	add a, a ; $68cb
@@ -5603,6 +5611,7 @@ Label_0a_68c6:
 	ld h, [hl] ; $68d4
 	ld l, a ; $68d5
 	jp hl ; $68d6
+Func_0a_68d7:
 	ld hl, $dcf4 ; $68d7
 	ld [hl], e ; $68da
 	inc hl ; $68db

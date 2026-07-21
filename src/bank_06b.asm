@@ -74,7 +74,7 @@ Func_6b_406a:
 	ld l, a ; $406d
 	ld h, $00 ; $406e
 	add hl, hl ; $4070
-	ld de, $40bd ; $4071
+	ld de, Data_6b_40bd ; $4071
 	add hl, de ; $4074
 	ld a, [hl+] ; $4075
 	ld h, [hl] ; $4076
@@ -92,7 +92,7 @@ Label_6b_407c:
 	ld l, a ; $4088
 	ld h, $00 ; $4089
 	add hl, hl ; $408b
-	ld de, $40bd ; $408c
+	ld de, Data_6b_40bd ; $408c
 	add hl, de ; $408f
 	ld a, [hl+] ; $4090
 	ld h, [hl] ; $4091
@@ -108,7 +108,7 @@ Label_6b_4099:
 	ld l, a ; $409c
 	ld h, $00 ; $409d
 	add hl, hl ; $409f
-	ld de, $40bd ; $40a0
+	ld de, Data_6b_40bd ; $40a0
 	add hl, de ; $40a3
 	ld a, [hl+] ; $40a4
 	ld h, [hl] ; $40a5
@@ -130,6 +130,7 @@ Label_6b_40af:
 	jr z, Func_6b_406a ; $40ba
 Label_6b_40bc:
 	ret ; $40bc
+Data_6b_40bd:
 	; $40bd, 156 bytes (records:2)
 	dw $40e1 ; record 0
 	dw $413b ; record 1

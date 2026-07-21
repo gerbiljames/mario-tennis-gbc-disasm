@@ -11,6 +11,7 @@ data.manifest, which setup.sh extracts from the user's ROM at setup time, so
 no ROM bytes land in the repository.
 """
 import argparse
+import bisect
 import json
 import re
 import sys
@@ -1820,7 +1821,7 @@ def load_ram_map(path, unions_by_region=None):
     return names
 
 
-def build_labels(dis, overrides=None, data_tables=None):
+def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
     labels = {}
     for off, name in VECTOR_LABELS.items():
         if off in dis.instrs:
@@ -1876,7 +1877,45 @@ def build_labels(dis, overrides=None, data_tables=None):
         if src not in labels:
             labels[src] = \
                 f"SpriteTemplate_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
-    return labels
+    # Same-bank pointer-load targets (`ld hl, table` etc.) that recursive descent
+    # never named. Code targets (instruction starts) get a Func_ label and
+    # data-table starts (data_tables keys) a Data_ label -- both reliably emitted.
+    dt = data_tables or {}
+    for target in set((ptr_sites or {}).values()):
+        if target in labels:
+            continue
+        if target in dis.instrs:
+            labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+        elif target in dt:
+            labels[target] = f"Data_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    # Pointers into unlabeled raw data: emit splits the enclosing blob at these
+    # and names them Data_* (see emit's seg-loop). Skip any target interior to a
+    # typed run (data_tables spec or slot-record table) so its structured
+    # rendering isn't truncated; text/special regions that never reach the raw
+    # seg-loop simply stay unnamed (the load is left raw, never undefined).
+    typed = sorted(set(dt) | set(dis.slot_record_tables))
+    instr_keys = sorted(dis.instrs)
+    label_keys = sorted(labels)
+
+    def in_typed_run(target):
+        i = bisect.bisect_right(typed, target) - 1
+        if i < 0 or typed[i] == target:
+            return False
+        k = typed[i]
+        end = (k // BANK_SIZE + 1) * BANK_SIZE
+        for arr in (typed, instr_keys, label_keys):
+            j = bisect.bisect_right(arr, k)
+            if j < len(arr):
+                end = min(end, arr[j])
+        return target < end
+
+    ptr_data_targets = set()
+    for target in set((ptr_sites or {}).values()):
+        if target in labels or target in dis.instrs or target in dt:
+            continue
+        if not in_typed_run(target):
+            ptr_data_targets.add(target)
+    return labels, ptr_data_targets
 
 
 # ROM0 helpers that take a task-function pointer in hl (`ld hl, fn; call ...`).
@@ -1906,6 +1945,78 @@ def frame_task_targets(dis, call_targets):
         flat = imm if imm < 0x4000 else (b + imm - 0x4000 if b else None)
         if flat is not None and 0 <= flat < len(rom):
             yield flat
+
+
+# `ld bc/de/hl, n16` opcodes -- a 16-bit immediate load whose value may be a
+# same-bank pointer.
+LD_IMM16_REG = {0x01: "bc", 0x11: "de", 0x21: "hl"}
+
+
+def _pointer_load_used(dis, order, idx, o, reg):
+    """Straight-line forward scan from a `ld reg, imm` at offset `o`: True if the
+    loaded value is used as a pointer -- dereferenced (`[hl`/`[de]`/`[bc]`),
+    dispatched through (`jp hl`), pushed for a computed-jump dispatch, or used as
+    a table base (`add hl, de/bc` then the resulting hl is dereferenced). A
+    coincidental numeric constant (e.g. `ld de, $4000` before `add hl, de; jr c`,
+    an overflow check) is rejected because hl is never dereferenced."""
+    ptr = {reg}
+    i = idx[o] + 1
+    prev_end = o + dis.instrs[o].size
+    for _ in range(12):
+        if i >= len(order):
+            break
+        no = order[i]
+        if no != prev_end:
+            break  # data gap -- no longer straight-line
+        ins = dis.instrs[no]
+        t = ins.text
+        if (("hl" in ptr and ("[hl" in t or t == "jp hl"))
+                or ("de" in ptr and "[de]" in t)
+                or ("bc" in ptr and "[bc]" in t)):
+            return True
+        if t in ("push hl", "push de", "push bc") and t.split()[1] in ptr:
+            return True
+        if t in ("add hl, de", "add hl, bc") and t.split(", ")[1] in ptr:
+            ptr = ptr | {"hl"}
+        else:
+            for r in ("hl", "de", "bc"):
+                if r in ptr and (t.startswith(f"ld {r},")
+                                 or t.startswith(f"ld {r[0]},")
+                                 or t.startswith(f"ld {r[1]},")
+                                 or t == f"pop {r}"):
+                    ptr = ptr - {r}
+        if not ptr or ins.ends_flow:
+            break
+        prev_end = no + ins.size
+        i += 1
+    return False
+
+
+def pointer_load_targets(dis):
+    """`ld bc/de/hl, imm` sites whose immediate is a same-bank pointer: the value
+    lands on an instruction start or a data byte (never mid-instruction) and is
+    provably used as a pointer (see `_pointer_load_used`). Returns
+    {site_offset: target_flat_offset}. The pointer-use gate keeps coincidental
+    16-bit constants that happen to alias an in-bank address from being named."""
+    rom = dis.rom
+    order = sorted(dis.instrs)
+    idx = {o: i for i, o in enumerate(order)}
+    out = {}
+    for o in order:
+        reg = LD_IMM16_REG.get(rom[o])
+        if reg is None or dis.instrs[o].size != 3:
+            continue
+        imm = rom[o + 1] | (rom[o + 2] << 8)
+        base = (o // BANK_SIZE) * BANK_SIZE
+        if not (base and 0x4000 <= imm < 0x8000):
+            continue  # same-bank window only
+        flat = base + (imm - 0x4000)
+        if flat not in dis.instrs and flat in dis.code_bytes:
+            continue  # points mid-instruction -- not a real code pointer
+        if not _pointer_load_used(dis, order, idx, o, reg):
+            continue
+        out[o] = flat
+    return out
 
 
 def map_script_code_targets(rom, data_tables):
@@ -3127,8 +3238,41 @@ def render_object_header(rom, off, data_labels, ptr_labels):
             f"\tdw {lbl(w[3])}, {lbl(w[4])}, {lbl(w[5])} ; frame pointers (continue in body)"]
 
 
+_LABEL_LINE_RE = re.compile(r"^([A-Za-z_][\w.]*):$")
+_CPU_COMMENT_RE = re.compile(r"; \$([0-9a-f]{4})\b")
+_PTR_LOAD_LINE_RE = re.compile(
+    r"^(\tld (?:hl|de|bc), )\$[0-9a-f]{1,4}( ; \$([0-9a-f]{4}).*)$")
+
+
+def resolve_pointer_loads(lines, base, ptr_sites):
+    """Post-pass over an emitted bank's source lines: rewrite each vetted
+    pointer-load (`ld reg, $imm`) to the label emit actually defines at its
+    target. The emitted-label map is built by pairing every label line with the
+    `; $cpu` of the following line, so it covers code, text (`Text_*`), blob
+    (`Data_/Lz_`), and slot (`DataPtr_/FarPtr_`) labels alike -- a target with no
+    emitted label is left as raw hex rather than an undefined symbol."""
+    emitted = {}
+    for i, line in enumerate(lines[:-1]):
+        m = _LABEL_LINE_RE.match(line)
+        if not m:
+            continue
+        c = _CPU_COMMENT_RE.search(lines[i + 1])
+        if c:
+            emitted[base + (int(c.group(1), 16) - 0x4000)] = m.group(1)
+    for i, line in enumerate(lines):
+        m = _PTR_LOAD_LINE_RE.match(line)
+        if not m:
+            continue
+        site = base + (int(m.group(3), 16) - 0x4000)
+        target = ptr_sites.get(site)
+        if target is not None and target in emitted:
+            lines[i] = f"{m.group(1)}{emitted[target]}{m.group(2)}"
+
+
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
-         curated=None, ramscoped=None, constants=None, const_defs=None):
+         curated=None, ramscoped=None, constants=None, const_defs=None,
+         ptr_sites=None, ptr_data_targets=None):
+    ptr_data_targets = ptr_data_targets or set()
     data_tables = data_tables or {}
     curated = curated or set()
     constants = constants or {}
@@ -3495,6 +3639,10 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                      if seg < t < j), default=0)
                         if lstop and (not stop or lstop < stop):
                             stop = lstop
+                        pstop = min((t for t in ptr_data_targets
+                                     if seg < t < j), default=0)
+                        if pstop and (not stop or pstop < stop):
+                            stop = pstop
                         if stop:
                             j = stop
                         # A slot-record table renders each record as a
@@ -3677,6 +3825,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             # computed jump/call), so emit it as the ret it is.
                             if seg in labels:
                                 lines.append(f"{labels[seg]}:")
+                            elif seg in ptr_data_targets:
+                                lines.append(f"Data_{bank:02x}_{scpu:04x}:")
                             for k in range(n):
                                 b = rom[seg + k]
                                 mn = "ret" if b == 0xC9 else f"db ${b:02x}"
@@ -3684,16 +3834,24 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         else:
                             if seg in labels:
                                 lines.append(f"{labels[seg]}:")
+                            elif seg in ptr_data_targets:
+                                lines.append(f"Data_{bank:02x}_{scpu:04x}:")
                             blob = f"bank_{bank:03x}/d_{scpu:04x}.bin"
                             lines.append(f'\tINCBIN "data/{blob}" ; ${scpu:04x}, {n} bytes')
                             manifest.append((blob, seg, n, None))
                     else:
+                        dscpu = offset_to_cpu(seg)
                         if seg in labels and lines[-1] != f"{labels[seg]}:":
                             lines.append(f"{labels[seg]}:")
+                        elif seg in ptr_data_targets \
+                                and lines[-1] != f"Data_{bank:02x}_{dscpu:04x}:":
+                            lines.append(f"Data_{bank:02x}_{dscpu:04x}:")
                         lines.append(f"\tds {j - seg}, ${b:02x} "
-                                     f"; ${offset_to_cpu(seg):04x}, fill")
+                                     f"; ${dscpu:04x}, fill")
                     seg = j
         lines.append("")
+        if ptr_sites:
+            resolve_pointer_loads(lines, base, ptr_sites)
         Path(srcdir, f"bank_{bank:03x}.asm").write_text("\n".join(lines))
     # Dialogue text-id constants collected while rendering (script_set_text
     # operands and map_script text-id handlers). Name = the string's
@@ -3811,7 +3969,8 @@ def main():
     dis.follow_frame_arrays()
     if helpers or args.hooks:
         dis.scan_data_slots()
-    labels = build_labels(dis, overrides, data_tables)
+    ptr_sites = pointer_load_targets(dis)
+    labels, ptr_data_targets = build_labels(dis, overrides, data_tables, ptr_sites)
     hwregs = load_hwregs(args.hardware_inc)
     unions_by_region, ramscoped = load_ram_unions(args.ram_unions)
     ramnames = load_ram_map(args.ram_map, unions_by_region)
@@ -3823,7 +3982,7 @@ def main():
                      for k, v in json.loads(Path(args.constants).read_text()).items()}
     const_defs = load_const_defs("include/constants.inc")
     emit(dis, labels, hwregs, ramnames, args.srcdir, args.manifest, data_tables,
-         curated, ramscoped, constants, const_defs)
+         curated, ramscoped, constants, const_defs, ptr_sites, ptr_data_targets)
 
 
 if __name__ == "__main__":

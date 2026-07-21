@@ -837,7 +837,9 @@ Label_1b_44ae:
 	inc de ; $44ae
 	pop hl ; $44af
 	ret ; $44b0
-	INCBIN "data/bank_01b/d_44b1.bin" ; $44b1, 2395 bytes
+	INCBIN "data/bank_01b/d_44b1.bin" ; $44b1, 2107 bytes
+Data_1b_4cec:
+	INCBIN "data/bank_01b/d_4cec.bin" ; $4cec, 288 bytes
 Func_1b_4e0c:
 	ret ; $4e0c
 Func_1b_4e0d:
@@ -919,7 +921,7 @@ Label_1b_4e6c:
 	ld h, $00 ; $4e6d
 	add hl, hl ; $4e6f
 	add hl, hl ; $4e70
-	ld bc, $4cec ; $4e71
+	ld bc, Data_1b_4cec ; $4e71
 	add hl, bc ; $4e74
 	ld a, [hl+] ; $4e75
 	ld h, [hl] ; $4e76

@@ -846,7 +846,7 @@ RunTrainingDrillByID:
 	ld l, a ; $4713
 	ld h, $00 ; $4714
 	add hl, hl ; $4716
-	ld de, $47b4 ; $4717
+	ld de, Data_0b_47b4 ; $4717
 	add hl, de ; $471a
 	ld a, [hl+] ; $471b
 	ld b, [hl] ; $471c
@@ -922,6 +922,7 @@ Label_0b_47a7:
 Label_0b_47ae:
 	call RunDoublesDrillMatch ; $47ae
 	jp Label_0b_473f ; $47b1
+Data_0b_47b4:
 	; $47b4, 36 bytes (records:2)
 	dw $482c ; record 0
 	dw $49c7 ; record 1

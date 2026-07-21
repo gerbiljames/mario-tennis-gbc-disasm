@@ -1928,7 +1928,7 @@ Func_18_7be7:
 	db $ff, $6b, $bf, $53, $9f, $02, $00, $00 ; 0x10
 Func_18_7c27:
 	ld c, $00 ; $7c27
-	ld hl, $7c53 ; $7c29
+	ld hl, Data_18_7c53 ; $7c29
 	ld de, $d800 ; $7c2c
 Label_18_7c2f:
 	push af ; $7c2f
@@ -1958,6 +1958,7 @@ Label_18_7c4c:
 	cp a, $10 ; $7c4e
 	jr nz, Label_18_7c2f ; $7c50
 	ret ; $7c52
+Data_18_7c53:
 	INCBIN "data/bank_018/d_7c53.bin" ; $7c53, 176 bytes
 Func_18_7d03:
 	ldh a, [hWramBank] ; $7d03
@@ -1989,7 +1990,7 @@ Func_18_7d1c:
 	INCBIN "data/bank_018/d_7d44.bin" ; $7d44, 24 bytes
 Func_18_7d5c:
 	ld c, $00 ; $7d5c
-	ld hl, $7d88 ; $7d5e
+	ld hl, Data_18_7d88 ; $7d5e
 	ld de, $d800 ; $7d61
 Label_18_7d64:
 	push af ; $7d64
@@ -2019,5 +2020,6 @@ Label_18_7d81:
 	cp a, $10 ; $7d83
 	jr nz, Label_18_7d64 ; $7d85
 	ret ; $7d87
+Data_18_7d88:
 	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 365 bytes
 	ds 267, $ff ; $7ef5, fill

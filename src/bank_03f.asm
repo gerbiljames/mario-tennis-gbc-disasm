@@ -2108,7 +2108,7 @@ Label_3f_50ee:
 	ret ; $50f6
 Func_3f_50f7:
 	wram_bank $06 ; $50f7
-	ld hl, $539e ; $50fd
+	ld hl, Data_3f_539e ; $50fd
 	ld c, $00 ; $5100
 	ld a, [$cb32] ; $5102
 	ld d, a ; $5105
@@ -2128,7 +2128,7 @@ Label_3f_5115:
 	ret ; $5119
 Func_3f_511a:
 	wram_bank $06 ; $511a
-	ld hl, $539e ; $5120
+	ld hl, Data_3f_539e ; $5120
 	ld c, $00 ; $5123
 Label_3f_5125:
 	ld a, [hl+] ; $5125
@@ -2144,7 +2144,7 @@ Func_3f_5134:
 	ld d, $00 ; $5134
 	ld c, a ; $5136
 	inc c ; $5137
-	ld hl, $539e ; $5138
+	ld hl, Data_3f_539e ; $5138
 Label_3f_513b:
 	ld a, [hl+] ; $513b
 	cp a, $00 ; $513c
@@ -2161,7 +2161,7 @@ Func_3f_514a:
 	ld d, $00 ; $514a
 	ld c, a ; $514c
 	inc c ; $514d
-	ld hl, $539e ; $514e
+	ld hl, Data_3f_539e ; $514e
 Label_3f_5151:
 	ld a, [hl+] ; $5151
 	cp a, $00 ; $5152
@@ -2330,7 +2330,7 @@ Label_3f_5244:
 	ld a, c ; $5244
 	cp a, $40 ; $5245
 	jr nz, Label_3f_523a ; $5247
-	ld hl, $539e ; $5249
+	ld hl, Data_3f_539e ; $5249
 	ld d, $ff ; $524c
 Label_3f_524e:
 	inc d ; $524e
@@ -2375,7 +2375,7 @@ Label_3f_526f:
 	ld a, [$cb2d] ; $528d
 	ld b, a ; $5290
 	inc b ; $5291
-	ld hl, $539e ; $5292
+	ld hl, Data_3f_539e ; $5292
 	ld a, [$cb32] ; $5295
 	ld e, a ; $5298
 Label_3f_5299:
@@ -2485,7 +2485,7 @@ Func_3f_5334:
 	inc b ; $5338
 	ld a, [$cb32] ; $5339
 	ld e, a ; $533c
-	ld hl, $539e ; $533d
+	ld hl, Data_3f_539e ; $533d
 	ld d, $00 ; $5340
 Label_3f_5342:
 	ld a, [hl+] ; $5342
@@ -2543,11 +2543,12 @@ Label_3f_538a:
 	jr Label_3f_538a ; $539b
 Label_3f_539d:
 	ret ; $539d
+Data_3f_539e:
 	INCBIN "data/bank_03f/d_539e.bin" ; $539e, 121 bytes
 Func_3f_5417:
 	wram_bank $06 ; $5417
 	ld c, $00 ; $541d
-	ld hl, $539e ; $541f
+	ld hl, Data_3f_539e ; $541f
 	ld a, [$cb32] ; $5422
 	ld e, a ; $5425
 	ld a, [$cb2e] ; $5426
@@ -2599,7 +2600,7 @@ Func_3f_5468:
 	ld b, a ; $5475
 	inc b ; $5476
 	ld c, $00 ; $5477
-	ld hl, $539e ; $5479
+	ld hl, Data_3f_539e ; $5479
 	ld a, [$cb32] ; $547c
 	ld e, a ; $547f
 Label_3f_5480:

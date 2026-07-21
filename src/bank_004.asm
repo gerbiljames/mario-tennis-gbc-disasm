@@ -353,7 +353,7 @@ Label_04_4247:
 	ld l, e ; $424b
 	ld h, d ; $424c
 	call FarReadByte ; $424d
-	ld hl, $4260 ; $4250
+	ld hl, Func_04_4260 ; $4250
 	push hl ; $4253
 	add a, a ; $4254
 	add a, $7d ; $4255
@@ -365,6 +365,7 @@ Label_04_4247:
 	ld h, [hl] ; $425d
 	ld l, a ; $425e
 	jp hl ; $425f
+Func_04_4260:
 	pop bc ; $4260
 	ld hl, $0000 ; $4261
 	add hl, bc ; $4264
@@ -1977,7 +1978,7 @@ Label_04_4c07:
 GetObjectDefCount:
 	push bc ; $4c0b
 	push hl ; $4c0c
-	ld hl, $4f75 ; $4c0d
+	ld hl, Data_04_4f75 ; $4c0d
 	ld c, $ff ; $4c10
 Label_04_4c12:
 	inc c ; $4c12
@@ -2308,6 +2309,7 @@ Label_04_4f70:
 	pop bc ; $4f72
 	pop af ; $4f73
 	ret ; $4f74
+Data_04_4f75:
 	INCBIN "data/bank_004/d_4f75.bin" ; $4f75, 236 bytes
 SetActorMoveTarget:
 	push hl ; $5061
@@ -2501,7 +2503,7 @@ Label_04_51b0:
 	ld [$daee], a ; $51c6
 	jp Label_04_52e7 ; $51c9
 Label_04_51cc:
-	ld hl, $532d ; $51cc
+	ld hl, Data_04_532d ; $51cc
 	swap a ; $51cf
 	ld d, $00 ; $51d1
 	ld e, a ; $51d3
@@ -2698,6 +2700,7 @@ Label_04_52e7:
 	pop bc ; $532a
 	xor a, a ; $532b
 	ret ; $532c
+Data_04_532d:
 	INCBIN "data/bank_004/d_532d.bin" ; $532d, 16 bytes
 IsPointBlocked:
 	call IsTerrainBlockedAtPoint ; $533d

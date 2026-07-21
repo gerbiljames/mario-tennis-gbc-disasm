@@ -1100,6 +1100,7 @@ Label_1a_4933:
 	ld c, $24 ; $494a
 	call CopyMemoryFast ; $494c
 	ret ; $494f
+Data_1a_4950:
 	; $4950, 200 bytes (records:2)
 	dw $0b00 ; record 0
 	dw $0b01 ; record 1
@@ -1207,7 +1208,7 @@ Func_1a_4a18:
 	push de ; $4a1a
 	push hl ; $4a1b
 	ld c, $00 ; $4a1c
-	ld hl, $4950 ; $4a1e
+	ld hl, Data_1a_4950 ; $4a1e
 Label_1a_4a21:
 	ld a, c ; $4a21
 	cp a, $05 ; $4a22
@@ -1235,6 +1236,7 @@ Label_1a_4a3c:
 	pop bc ; $4a3e
 	pop af ; $4a3f
 	ret ; $4a40
+Data_1a_4a41:
 	; $4a41, 60 bytes (records:2)
 	dw $0b00 ; record 0
 	dw $0b01 ; record 1
@@ -1273,7 +1275,7 @@ Func_1a_4a7d:
 	push hl ; $4a80
 	ld bc, $0005 ; $4a81
 	ld a, $00 ; $4a84
-	ld hl, $4a41 ; $4a86
+	ld hl, Data_1a_4a41 ; $4a86
 Label_1a_4a89:
 	ld a, c ; $4a89
 	cp a, $0a ; $4a8a
@@ -2618,7 +2620,19 @@ Label_1a_54cd:
 	and a, $fe ; $551d
 	ld [$d151], a ; $551f
 	ret ; $5522
-	INCBIN "data/bank_01a/d_5523.bin" ; $5523, 4785 bytes
+	INCBIN "data/bank_01a/d_5523.bin" ; $5523, 3849 bytes
+Data_1a_642c:
+	INCBIN "data/bank_01a/d_642c.bin" ; $642c, 16 bytes
+Data_1a_643c:
+	INCBIN "data/bank_01a/d_643c.bin" ; $643c, 24 bytes
+Data_1a_6454:
+	INCBIN "data/bank_01a/d_6454.bin" ; $6454, 16 bytes
+Data_1a_6464:
+	INCBIN "data/bank_01a/d_6464.bin" ; $6464, 16 bytes
+Data_1a_6474:
+	INCBIN "data/bank_01a/d_6474.bin" ; $6474, 16 bytes
+Data_1a_6484:
+	INCBIN "data/bank_01a/d_6484.bin" ; $6484, 848 bytes
 Func_1a_67d4:
 	xor a, a ; $67d4
 	ld [$cb62], a ; $67d5
@@ -4073,7 +4087,7 @@ Label_1a_7cdf:
 	ld l, a ; $7cef
 	ld a, [$d01e] ; $7cf0
 	add a, l ; $7cf3
-	ld de, $642c ; $7cf4
+	ld de, Data_1a_642c ; $7cf4
 	call Func_1a_7e23 ; $7cf7
 	push de ; $7cfa
 	call QueueSprite ; $7cfb
@@ -4095,7 +4109,7 @@ Label_1a_7d0c:
 	ld l, a ; $7d1c
 	ld a, [$d01f] ; $7d1d
 	add a, l ; $7d20
-	ld de, $643c ; $7d21
+	ld de, Data_1a_643c ; $7d21
 	call Func_1a_7e23 ; $7d24
 	push de ; $7d27
 	call QueueSprite ; $7d28
@@ -4117,7 +4131,7 @@ Label_1a_7d39:
 	ld l, a ; $7d49
 	ld a, [$d020] ; $7d4a
 	add a, l ; $7d4d
-	ld de, $6454 ; $7d4e
+	ld de, Data_1a_6454 ; $7d4e
 	call Func_1a_7e23 ; $7d51
 	push de ; $7d54
 	call QueueSprite ; $7d55
@@ -4139,7 +4153,7 @@ Label_1a_7d66:
 	ld l, a ; $7d76
 	ld a, [$d021] ; $7d77
 	add a, l ; $7d7a
-	ld de, $6464 ; $7d7b
+	ld de, Data_1a_6464 ; $7d7b
 	call Func_1a_7e23 ; $7d7e
 	push de ; $7d81
 	call QueueSprite ; $7d82
@@ -4161,7 +4175,7 @@ Label_1a_7d93:
 	ld l, a ; $7da3
 	ld a, [$d022] ; $7da4
 	add a, l ; $7da7
-	ld de, $6474 ; $7da8
+	ld de, Data_1a_6474 ; $7da8
 	call Func_1a_7e23 ; $7dab
 	push de ; $7dae
 	call QueueSprite ; $7daf
@@ -4183,7 +4197,7 @@ Label_1a_7dc0:
 	ld l, a ; $7dd0
 	ld a, [$d023] ; $7dd1
 	add a, l ; $7dd4
-	ld de, $6484 ; $7dd5
+	ld de, Data_1a_6484 ; $7dd5
 	call Func_1a_7e23 ; $7dd8
 	push de ; $7ddb
 	call QueueSprite ; $7ddc

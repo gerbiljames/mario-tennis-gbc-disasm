@@ -2557,7 +2557,7 @@ Label_07_541c:
 	ld a, e ; $543a
 	ld [hl+], a ; $543b
 	ld [hl], d ; $543c
-	ld hl, $5463 ; $543d
+	ld hl, Func_07_5463 ; $543d
 	push hl ; $5440
 	ld a, [wCurrentShotType] ; $5441
 	rst Rst00 ; $5444
@@ -2576,6 +2576,7 @@ Label_07_541c:
 	dw ExecuteShotServeTopspin ; $545d jumptable
 	dw ExecuteShotServeSlice ; $545f jumptable
 	dw ExecuteShotServeFlat ; $5461 jumptable
+Func_07_5463:
 	call ApplyShotRecoil ; $5463
 	xor a, a ; $5466
 	ld [$df4b], a ; $5467
