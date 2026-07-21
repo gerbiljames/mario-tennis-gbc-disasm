@@ -18,22 +18,22 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 	farptr ApplySpriteBobOffset_18 ; $401e
 	farptr LoadCharSelectCursorGfx ; $4020
 	farptr DrawCharSelectCursor ; $4022
-	farptr Func_18_4507 ; $4024
-	farptr Func_18_452a ; $4026
+	farptr LoadCharacterRecordToBuffer ; $4024
+	farptr CheckCharacterUnlocked ; $4026
 	farptr CheckUnlockFlag ; $4028
 	farptr MoveGridCursor ; $402a
-	farptr Func_18_463b ; $402c
+	farptr InitPlayerRecordForCharacter ; $402c
 	farptr ForceFlushBgMapToVram ; $402e
 	farptr Func_18_5365 ; $4030
 	farptr RunTwoOptionSelect ; $4032
-	farptr Func_18_5469 ; $4034
+	farptr RunTwoOptionSelectB ; $4034
 	farptr Func_18_52de ; $4036
-	farptr Func_18_537a ; $4038
+	farptr SetupScoreboardDisplay ; $4038
 	farptr Func_18_5372 ; $403a
-	farptr Func_18_5379 ; $403c
+	farptr StubNop_18_5379 ; $403c
 	farptr DrawDecimalNumberSprites ; $403e
 	farptr Func_18_5561 ; $4040
-	farptr Func_18_5586 ; $4042
+	farptr DrawTileBlock6x2ToTilemap ; $4042
 	farptr LoadOnCourtCharTilesA ; $4044
 	farptr LoadOnCourtCharTilesB ; $4046
 DataPtr_18_48:
@@ -106,7 +106,7 @@ DataPtr_MarioMiniGamesAttrmap:
 	dw MarioMiniGamesAttrmap ; $408a
 DataPtr_MarioMiniGamesPalettes:
 	dw MarioMiniGamesPalettes ; $408c
-	farptr Func_18_7617 ; $408e
+	farptr RunStorySceneByMode ; $408e
 	db $59 ; $4090
 	db $76 ; $4091
 DataPtr_18_92:
@@ -418,7 +418,7 @@ Label_18_4503:
 	pop bc ; $4504
 	pop af ; $4505
 	ret ; $4506
-Func_18_4507:
+LoadCharacterRecordToBuffer:
 	cp a, $84 ; $4507
 	jr z, Label_18_4522 ; $4509
 	push af ; $450b
@@ -441,7 +441,7 @@ Label_18_4522:
 	ld [$d58b], a ; $4525
 	pop af ; $4528
 	ret ; $4529
-Func_18_452a:
+CheckCharacterUnlocked:
 	bit 7, a ; $452a
 	jr z, Label_18_4534 ; $452c
 	ld a, [$d58b] ; $452e
@@ -604,7 +604,7 @@ Label_18_462c:
 	jr MoveGridCursor ; $4638
 Label_18_463a:
 	ret ; $463a
-Func_18_463b:
+InitPlayerRecordForCharacter:
 	push af ; $463b
 	ld d, a ; $463c
 	ldh a, [hPlayerInputFlags] ; $463d
@@ -694,10 +694,10 @@ Func_18_52de:
 	ld de, $0e01 ; $5351
 	call Func_18_437c ; $5354
 	call Func_18_55f8 ; $5357
-	call Func_18_537a ; $535a
+	call SetupScoreboardDisplay ; $535a
 	ld hl, $c7bc ; $535d
 	ld b, [hl] ; $5360
-	call Func_18_5379 ; $5361
+	call StubNop_18_5379 ; $5361
 	ret ; $5364
 Func_18_5365:
 	ld hl, $d9a0 ; $5365
@@ -709,30 +709,30 @@ Func_18_5372:
 	ld a, [$c918] ; $5372
 	ld [$c78a], a ; $5375
 	ret ; $5378
-Func_18_5379:
+StubNop_18_5379:
 	ret ; $5379
-Func_18_537a:
+SetupScoreboardDisplay:
 	ld a, [$c78d] ; $537a
-	call Func_18_53e4 ; $537d
+	call GetTextSlotPointer ; $537d
 	ld de, $d84b ; $5380
-	call Func_18_5586 ; $5383
+	call DrawTileBlock6x2ToTilemap ; $5383
 	ld a, [$c78e] ; $5386
-	call Func_18_53e4 ; $5389
+	call GetTextSlotPointer ; $5389
 	ld de, $d88b ; $538c
-	call Func_18_5586 ; $538f
+	call DrawTileBlock6x2ToTilemap ; $538f
 	ld a, [$c78f] ; $5392
-	call Func_18_53e4 ; $5395
+	call GetTextSlotPointer ; $5395
 	ld de, wTextArgStringQueue + 27 ; $5398
-	call Func_18_5586 ; $539b
+	call DrawTileBlock6x2ToTilemap ; $539b
 	ld a, [wTargetZoneX1] ; $539e
-	call Func_18_53e4 ; $53a1
+	call GetTextSlotPointer ; $53a1
 	ld de, $d90b ; $53a4
-	call Func_18_5586 ; $53a7
+	call DrawTileBlock6x2ToTilemap ; $53a7
 	ld a, $0a ; $53aa
-	ld hl, Func_18_53b3 ; $53ac
+	ld hl, DrawScoreNumbersTask ; $53ac
 	call RegisterFrameTask ; $53af
 	ret ; $53b2
-Func_18_53b3:
+DrawScoreNumbersTask:
 	ld a, [$c78a] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
@@ -757,7 +757,7 @@ Label_18_53cf:
 	xor a, a ; $53df
 	ld [$c783], a ; $53e0
 	ret ; $53e3
-Func_18_53e4:
+GetTextSlotPointer:
 	add a, $04 ; $53e4
 	and a, $0f ; $53e6
 	add a, a ; $53e8
@@ -838,7 +838,7 @@ Label_18_545f:
 Label_18_5466:
 	sound $5f ; $5466
 	ret ; $5468
-Func_18_5469:
+RunTwoOptionSelectB:
 	ldh a, [hInputRisingEdge] ; $5469
 	and a, PADF_LEFT ; $546b
 	jr z, Label_18_5473 ; $546d
@@ -872,7 +872,7 @@ Label_18_5497:
 	call QueueSprite16 ; $549e
 	pop bc ; $54a1
 	call AdvanceFrame ; $54a2
-	jr Func_18_5469 ; $54a5
+	jr RunTwoOptionSelectB ; $54a5
 Label_18_54a7:
 	ld a, b ; $54a7
 	and a, a ; $54a8
@@ -953,18 +953,18 @@ Label_18_5502:
 Func_18_5561:
 	ld hl, $51d8 ; $5561
 	ld de, $dde1 ; $5564
-	call Func_18_55b9 ; $5567
+	call CopyBytes11 ; $5567
 	ld hl, $51e8 ; $556a
 	ld de, $de01 ; $556d
-	call Func_18_55b9 ; $5570
+	call CopyBytes11 ; $5570
 	ld hl, $51b8 ; $5573
 	ld de, $d9e1 ; $5576
-	call Func_18_55b9 ; $5579
+	call CopyBytes11 ; $5579
 	ld hl, $51c8 ; $557c
 	ld de, $da01 ; $557f
-	call Func_18_55b9 ; $5582
+	call CopyBytes11 ; $5582
 	ret ; $5585
-Func_18_5586:
+DrawTileBlock6x2ToTilemap:
 	ld a, [hl+] ; $5586
 	ld [de], a ; $5587
 	inc de ; $5588
@@ -1014,7 +1014,7 @@ Label_18_55a6:
 	ld [de], a ; $55b6
 	inc de ; $55b7
 	ret ; $55b8
-Func_18_55b9:
+CopyBytes11:
 	ld a, [hl+] ; $55b9
 	ld [de], a ; $55ba
 	inc de ; $55bb
@@ -1252,33 +1252,33 @@ Lz_18_7521:
 	INCBIN "data/bank_018/lz_7521.bin" ; $7521, 71 bytes
 Lz_18_7568:
 	INCBIN "data/bank_018/lz_7568.bin" ; $7568, 175 bytes
-Func_18_7617:
+RunStorySceneByMode:
 	ld a, c ; $7617
 	ld [$cb6d], a ; $7618
-	call Func_18_7632 ; $761b
+	call FadeOutAndResetScreen ; $761b
 	ld a, b ; $761e
 	or a, a ; $761f
 	jr nz, Label_18_7626 ; $7620
-	call Func_18_76b4 ; $7622
+	call PlayScreenSequence0 ; $7622
 	ret ; $7625
 Label_18_7626:
 	cp a, $01 ; $7626
 	jr nz, Label_18_762e ; $7628
-	call Func_18_77bb ; $762a
+	call PlayScreenSequence1 ; $762a
 	ret ; $762d
 Label_18_762e:
-	call Func_18_792c ; $762e
+	call PlayScreenSequence2 ; $762e
 	ret ; $7631
-Func_18_7632:
+FadeOutAndResetScreen:
 	call EnableLCD ; $7632
 	ld c, $10 ; $7635
 	call BeginFadeOut ; $7637
 	call WaitFadeEnd ; $763a
 	call DisableLCDSafely ; $763d
 	call ClearFrameTasks ; $7640
-	call Func_18_7647 ; $7643
+	call ResetScrollAndCamera ; $7643
 	ret ; $7646
-Func_18_7647:
+ResetScrollAndCamera:
 	xor a, a ; $7647
 	ldh [hScrollX], a ; $7648
 	ldh [hScrollY], a ; $764a
@@ -1287,7 +1287,7 @@ Func_18_7647:
 	ld [wCameraY], a ; $7652
 	ld [wCameraY + 1], a ; $7655
 	ret ; $7658
-	call Func_18_7632 ; $7659
+	call FadeOutAndResetScreen ; $7659
 	ld c, $00 ; $765c
 Label_18_765e:
 	push bc ; $765e
@@ -1324,9 +1324,9 @@ Label_18_7687:
 	ld c, $00 ; $7697
 	jr Label_18_765e ; $7699
 	INCBIN "data/bank_018/d_769b.bin" ; $769b, 25 bytes
-Func_18_76b4:
-	call Func_18_7720 ; $76b4
-	call Func_18_7740 ; $76b7
+PlayScreenSequence0:
+	call SetupScreen0Assets ; $76b4
+	call LoadScreen0TilesAndPalette ; $76b7
 	call EnableLCD ; $76ba
 	script_fade_in $02 ; $76bd
 	call WaitFadeEnd ; $76c2
@@ -1360,7 +1360,7 @@ Label_18_76ec:
 	script_fade_in $10 ; $7706
 	call WaitFadeEnd ; $770b
 	ld a, $01 ; $770e
-	ld hl, Func_18_775c ; $7710
+	ld hl, QueueScreen0Sprites ; $7710
 	call RegisterFrameTask ; $7713
 Label_18_7716:
 	call AdvanceFrame ; $7716
@@ -1368,13 +1368,13 @@ Label_18_7716:
 	and a, PADF_A | PADF_B ; $771b
 	jr z, Label_18_7716 ; $771d
 	ret ; $771f
-Func_18_7720:
-	call Func_18_7647 ; $7720
-	call Func_18_772d ; $7723
+SetupScreen0Assets:
+	call ResetScrollAndCamera ; $7720
+	call LookupScreen0AssetId ; $7723
 	farcall LoadScreenAssetRecord ; $7726
 	farcall QueueWram3MapToVRAM ; $7729
 	ret ; $772c
-Func_18_772d:
+LookupScreen0AssetId:
 	ld a, [$cb6d] ; $772d
 	ld hl, $773a ; $7730
 	add a, l ; $7733
@@ -1385,7 +1385,7 @@ Label_18_7738:
 	ld c, [hl] ; $7738
 	ret ; $7739
 	INCBIN "data/bank_018/d_773a.bin" ; $773a, 6 bytes
-Func_18_7740:
+LoadScreen0TilesAndPalette:
 	ld b, $06 ; $7740
 	ld c, $28 ; $7742
 	ld de, $8000 ; $7744
@@ -1395,7 +1395,7 @@ Func_18_7740:
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
 	INCBIN "data/bank_018/d_7754.bin" ; $7754, 8 bytes
-Func_18_775c:
+QueueScreen0Sprites:
 	ld hl, SpriteTemplate_18_776a ; $775c
 	ld de, $283a ; $775f
 	ld c, $00 ; $7762
@@ -1425,9 +1425,9 @@ SpriteTemplate_18_776a:
 	oam_sprite $10, $50, $24, $00
 	oam_sprite $20, $50, $26, $00
 	oam_sprite_end
-Func_18_77bb:
-	call Func_18_7835 ; $77bb
-	call Func_18_7bce ; $77be
+PlayScreenSequence1:
+	call SetupScreen1Assets ; $77bb
+	call InitObjectSceneA ; $77be
 	ld a, $01 ; $77c1
 	ld hl, TaskDrawObjectSprites_18 ; $77c3
 	call RegisterFrameTask ; $77c6
@@ -1458,10 +1458,10 @@ Label_18_77e8:
 	call DisableLCDSafely ; $7807
 	farcall Func_03_59c5 ; $780a
 	call DisableLCDSafely ; $780d
-	call Func_18_78b1 ; $7810
+	call LoadScreen1ObjTiles ; $7810
 	call FillAllBgPalettes ; $7813
 	ld a, $01 ; $7816
-	ld hl, Func_18_78cd ; $7818
+	ld hl, QueueScreen1Sprites ; $7818
 	call RegisterFrameTask ; $781b
 	call EnableLCD ; $781e
 	script_fade_in $40 ; $7821
@@ -1473,13 +1473,13 @@ Label_18_782b:
 	and a, PADF_A | PADF_B ; $7830
 	jr z, Label_18_782b ; $7832
 	ret ; $7834
-Func_18_7835:
-	call Func_18_7647 ; $7835
-	call Func_18_7842 ; $7838
+SetupScreen1Assets:
+	call ResetScrollAndCamera ; $7835
+	call LookupScreen1AssetId ; $7838
 	farcall LoadScreenAssetRecord ; $783b
 	farcall QueueWram3MapToVRAM ; $783e
 	ret ; $7841
-Func_18_7842:
+LookupScreen1AssetId:
 	ld a, [$cb6d] ; $7842
 	ld hl, $784f ; $7845
 	add a, l ; $7848
@@ -1491,7 +1491,7 @@ Label_18_784d:
 	ret ; $784e
 	INCBIN "data/bank_018/d_784f.bin" ; $784f, 6 bytes
 FillAllBgPalettes:
-	call Func_18_7647 ; $7855
+	call ResetScrollAndCamera ; $7855
 	ld c, $32 ; $7858
 	farcall LoadScreenAssetRecord ; $785a
 	ld hl, $78a9 ; $785d
@@ -1521,7 +1521,7 @@ FillAllBgPalettes:
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
 	INCBIN "data/bank_018/d_78a9.bin" ; $78a9, 8 bytes
-Func_18_78b1:
+LoadScreen1ObjTiles:
 	ld b, $07 ; $78b1
 	ld c, $28 ; $78b3
 	ld de, $8000 ; $78b5
@@ -1531,7 +1531,7 @@ Func_18_78b1:
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 8 bytes
-Func_18_78cd:
+QueueScreen1Sprites:
 	ld hl, SpriteTemplate_18_78db ; $78cd
 	ld de, $283a ; $78d0
 	ld c, $00 ; $78d3
@@ -1561,13 +1561,13 @@ SpriteTemplate_18_78db:
 	oam_sprite $10, $50, $24, $00
 	oam_sprite $20, $50, $26, $00
 	oam_sprite_end
-Func_18_792c:
-	call Func_18_7647 ; $792c
+PlayScreenSequence2:
+	call ResetScrollAndCamera ; $792c
 	sound $09 ; $792f
-	call Func_18_7a07 ; $7931
+	call LookupScreen2AssetIdA ; $7931
 	farcall LoadScreenAssetRecord ; $7934
 	farcall QueueWram3MapToVRAM ; $7937
-	call Func_18_7d03 ; $793a
+	call InitObjectSceneB ; $793a
 	ld a, $01 ; $793d
 	ld hl, TaskDrawObjectSprites_18 ; $793f
 	call RegisterFrameTask ; $7942
@@ -1605,12 +1605,12 @@ Label_18_798a:
 	xor a, a ; $7990
 	ld [$da00], a ; $7991
 	call ClearFrameTasks ; $7994
-	call Func_18_7647 ; $7997
+	call ResetScrollAndCamera ; $7997
 	call DisableLCDSafely ; $799a
-	call Func_18_7a1a ; $799d
+	call LookupScreen2AssetIdB ; $799d
 	farcall LoadScreenAssetRecord ; $79a0
 	farcall QueueWram3MapToVRAM ; $79a3
-	call Func_18_7a2d ; $79a6
+	call LoadScreen2ObjTiles ; $79a6
 	call EnableLCD ; $79a9
 	script_fade_in $02 ; $79ac
 	call WaitFadeEnd ; $79b1
@@ -1628,7 +1628,7 @@ Label_18_79be:
 	ld hl, TaskFadeInPalette_18 ; $79ce
 	call RegisterFrameTask ; $79d1
 	ld a, $01 ; $79d4
-	ld hl, Func_18_7a49 ; $79d6
+	ld hl, QueueScreen2Sprites ; $79d6
 	call RegisterFrameTask ; $79d9
 	sound $2d ; $79dc
 Label_18_79de:
@@ -1650,7 +1650,7 @@ Label_18_79fd:
 Label_18_7a03:
 	farcall SaveStorySlotWithTimer ; $7a03
 	ret ; $7a06
-Func_18_7a07:
+LookupScreen2AssetIdA:
 	ld a, [$cb6d] ; $7a07
 	ld hl, $7a14 ; $7a0a
 	add a, l ; $7a0d
@@ -1661,7 +1661,7 @@ Label_18_7a12:
 	ld c, [hl] ; $7a12
 	ret ; $7a13
 	INCBIN "data/bank_018/d_7a14.bin" ; $7a14, 6 bytes
-Func_18_7a1a:
+LookupScreen2AssetIdB:
 	ld a, [$cb6d] ; $7a1a
 	ld hl, $7a27 ; $7a1d
 	add a, l ; $7a20
@@ -1672,7 +1672,7 @@ Label_18_7a25:
 	ld c, [hl] ; $7a25
 	ret ; $7a26
 	INCBIN "data/bank_018/d_7a27.bin" ; $7a27, 6 bytes
-Func_18_7a2d:
+LoadScreen2ObjTiles:
 	ld b, $08 ; $7a2d
 	ld c, $14 ; $7a2f
 	ld de, $8000 ; $7a31
@@ -1682,7 +1682,7 @@ Func_18_7a2d:
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 8 bytes
-Func_18_7a49:
+QueueScreen2Sprites:
 	ld hl, SpriteTemplate_18_7a57 ; $7a49
 	ld de, $2840 ; $7a4c
 	ld c, $00 ; $7a4f
@@ -1858,17 +1858,17 @@ Label_18_7b7e:
 	ld l, a ; $7bb8
 	jp hl ; $7bb9
 	INCBIN "data/bank_018/d_7bba.bin" ; $7bba, 20 bytes
-Func_18_7bce:
+InitObjectSceneA:
 	ldh a, [hWramBank] ; $7bce
 	push af ; $7bd0
 	wram_bank $03 ; $7bd1
 	ld hl, $d800 ; $7bd7
 	ld bc, $0100 ; $7bda
 	call ClearBytes ; $7bdd
-	call Func_18_7c27 ; $7be0
-	call Func_18_7be7 ; $7be3
+	call PopulateObjectArrayA ; $7be0
+	call LoadObjectSceneATiles ; $7be3
 	ret ; $7be6
-Func_18_7be7:
+LoadObjectSceneATiles:
 	ld b, $00 ; $7be7
 	ld c, $10 ; $7be9
 	ld de, $8000 ; $7beb
@@ -1889,7 +1889,7 @@ Func_18_7be7:
 	db $ff, $6b, $df, $5a, $ff, $20, $00, $00 ; 0x00
 	db $ff, $6b, $b8, $3b, $80, $12, $00, $00 ; 0x08
 	db $ff, $6b, $bf, $53, $9f, $02, $00, $00 ; 0x10
-Func_18_7c27:
+PopulateObjectArrayA:
 	ld c, $00 ; $7c27
 	ld hl, ObjectSpawnTable_18_7c53 ; $7c29
 	ld de, $d800 ; $7c2c
@@ -1940,17 +1940,17 @@ ObjectSpawnTable_18_7c53:
 	db $02, $00, $18, $00, $98, $34, $52, $00, $02, $38, $7e ; record 13
 	db $03, $00, $8c, $00, $0c, $45, $c0, $00, $01, $38, $7e ; record 14
 	db $01, $00, $a0, $00, $30, $55, $a0, $00, $00, $38, $7e ; record 15
-Func_18_7d03:
+InitObjectSceneB:
 	ldh a, [hWramBank] ; $7d03
 	push af ; $7d05
 	wram_bank $03 ; $7d06
 	ld hl, $d800 ; $7d0c
 	ld bc, $0100 ; $7d0f
 	call ClearBytes ; $7d12
-	call Func_18_7d5c ; $7d15
-	call Func_18_7d1c ; $7d18
+	call PopulateObjectArrayB ; $7d15
+	call LoadObjectSceneBTiles ; $7d18
 	ret ; $7d1b
-Func_18_7d1c:
+LoadObjectSceneBTiles:
 	ld b, $03 ; $7d1c
 	ld c, $10 ; $7d1e
 	ld de, $8000 ; $7d20
@@ -1968,7 +1968,7 @@ Func_18_7d1c:
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
 	INCBIN "data/bank_018/d_7d44.bin" ; $7d44, 24 bytes
-Func_18_7d5c:
+PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e
 	ld de, $d800 ; $7d61

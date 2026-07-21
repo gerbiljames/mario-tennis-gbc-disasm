@@ -3602,7 +3602,7 @@ Label_0e_7c37:
 	ld a, [$c90d] ; $7c3e
 	add a, $04 ; $7c41
 	ld c, a ; $7c43
-	farcall Func_18_7617 ; $7c44
+	farcall RunStorySceneByMode ; $7c44
 	jr Label_0e_7c5b ; $7c47
 Label_0e_7c49:
 	ld b, $02 ; $7c49
@@ -3614,7 +3614,7 @@ Label_0e_7c49:
 	xor a, d ; $7c55
 	or a, c ; $7c56
 	ld c, a ; $7c57
-	farcall Func_18_7617 ; $7c58
+	farcall RunStorySceneByMode ; $7c58
 Label_0e_7c5b:
 	ld a, $00 ; $7c5b
 	ld [wStoryModeCurrentLocation], a ; $7c5d

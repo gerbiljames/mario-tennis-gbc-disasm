@@ -3743,8 +3743,8 @@ Label_3b_5ac3:
 	push af ; $5ac4
 	wram_bank $02 ; $5ac5
 	pop af ; $5acb
-	farcall Func_18_4507 ; $5acc
-	farcall Func_18_452a ; $5acf
+	farcall LoadCharacterRecordToBuffer ; $5acc
+	farcall CheckCharacterUnlocked ; $5acf
 	ld hl, $0000 ; $5ad2
 	add hl, bc ; $5ad5
 	wram_bank $02 ; $5ad6

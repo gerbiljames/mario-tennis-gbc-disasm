@@ -3120,8 +3120,8 @@ DrawCharSelectMugshots:
 	ld hl, $ce40 ; $6072
 Label_1b_6075:
 	ld a, [hl] ; $6075
-	farcall Func_18_4507 ; $6076
-	farcall Func_18_452a ; $6079
+	farcall LoadCharacterRecordToBuffer ; $6076
+	farcall CheckCharacterUnlocked ; $6079
 	jr z, Label_1b_60a4 ; $607c
 	ld a, [$d58b] ; $607e
 	farcall LoadCharMugshotToBuffer ; $6081
@@ -3152,7 +3152,7 @@ Label_1b_60ab:
 	cp a, $ff ; $60ac
 	jr nz, Label_1b_6075 ; $60ae
 	ld a, [wCharSelectChar] ; $60b0
-	farcall Func_18_4507 ; $60b3
+	farcall LoadCharacterRecordToBuffer ; $60b3
 	ld a, [$d58b] ; $60b6
 	farcall Func_1b_4e43 ; $60b9
 	ret ; $60bc
@@ -3198,7 +3198,7 @@ Label_1b_6119:
 	ld a, [wTargetZoneX2] ; $6125
 	ld b, a ; $6128
 	ld a, [wCharSelectChar] ; $6129
-	farcall Func_18_463b ; $612c
+	farcall InitPlayerRecordForCharacter ; $612c
 	sound $5f ; $612f
 	ld a, $fe ; $6131
 	jr Label_1b_6169 ; $6133
@@ -3209,7 +3209,7 @@ Label_1b_6135:
 	ld a, [wTargetZoneX2] ; $613b
 	ld b, a ; $613e
 	ld a, [wCharSelectChar] ; $613f
-	farcall Func_18_463b ; $6142
+	farcall InitPlayerRecordForCharacter ; $6142
 	sound $5f ; $6145
 	ld a, [wCharSelectChar] ; $6147
 	jr Label_1b_6169 ; $614a
@@ -3224,7 +3224,7 @@ Label_1b_6158:
 	call MoveCharSelectCursor ; $6158
 	call UpdateCharSelectSelection ; $615b
 	ld a, [wCharSelectChar] ; $615e
-	farcall Func_18_4507 ; $6161
+	farcall LoadCharacterRecordToBuffer ; $6161
 	call AdvanceFrame ; $6164
 	jr Label_1b_6119 ; $6167
 Label_1b_6169:
@@ -3266,8 +3266,8 @@ MoveCharSelectCursor:
 Label_1b_61a3:
 	ld hl, $c7a0 ; $61a3
 	farcall MoveGridCursor ; $61a6
-	farcall Func_18_4507 ; $61a9
-	farcall Func_18_452a ; $61ac
+	farcall LoadCharacterRecordToBuffer ; $61a9
+	farcall CheckCharacterUnlocked ; $61ac
 	jr z, Label_1b_61a3 ; $61af
 	ld a, d ; $61b1
 	ld [wCharSelectCol], a ; $61b2
@@ -3289,7 +3289,7 @@ RunNewGameSetup:
 	xor a, a ; $61d7
 Label_1b_61d8:
 	push af ; $61d8
-	farcall Func_18_4507 ; $61d9
+	farcall LoadCharacterRecordToBuffer ; $61d9
 	ld a, [$d58e] ; $61dc
 	ld [hl+], a ; $61df
 	ld a, [$d58c] ; $61e0
@@ -3846,7 +3846,7 @@ UpdateUnlockDebugSelectedMugshot:
 	pop bc ; $66ad
 	ld a, b ; $66ae
 	jr z, Label_1b_66b6 ; $66af
-	farcall Func_18_4507 ; $66b1
+	farcall LoadCharacterRecordToBuffer ; $66b1
 	jr Label_1b_66bb ; $66b4
 Label_1b_66b6:
 	ld a, $20 ; $66b6
@@ -3871,7 +3871,7 @@ DrawUnlockDebugMugshots:
 	ld hl, $ce40 ; $66da
 Label_1b_66dd:
 	ld a, [hl] ; $66dd
-	farcall Func_18_4507 ; $66de
+	farcall LoadCharacterRecordToBuffer ; $66de
 	farcall CheckUnlockFlag ; $66e1
 	jr z, Label_1b_6703 ; $66e4
 	ld a, [$d58b] ; $66e6
@@ -3896,7 +3896,7 @@ Label_1b_670a:
 	cp a, $ff ; $670b
 	jr nz, Label_1b_66dd ; $670d
 	ld a, [wCharSelectChar] ; $670f
-	farcall Func_18_4507 ; $6712
+	farcall LoadCharacterRecordToBuffer ; $6712
 	ld a, [$d58b] ; $6715
 	farcall Func_1b_4e43 ; $6718
 	ret ; $671b
@@ -4015,7 +4015,7 @@ MoveUnlockDebugCursor:
 	pop bc ; $6810
 	ld a, b ; $6811
 	jr z, Label_1b_6819 ; $6812
-	farcall Func_18_4507 ; $6814
+	farcall LoadCharacterRecordToBuffer ; $6814
 	jr Label_1b_681e ; $6817
 Label_1b_6819:
 	ld a, $20 ; $6819
@@ -4225,7 +4225,7 @@ Func_1b_6982:
 	ld hl, Func_1b_69d6 ; $69b9
 	call RegisterFrameTask ; $69bc
 	ld b, $01 ; $69bf
-	farcall Func_18_5469 ; $69c1
+	farcall RunTwoOptionSelectB ; $69c1
 	push af ; $69c4
 	ld hl, Func_1b_69d6 ; $69c5
 	call UnregisterFrameTask ; $69c8
@@ -4253,7 +4253,7 @@ Label_1b_6a03:
 	and a, a ; $6a03
 	jr nz, Label_1b_6a03 ; $6a04
 	ld b, $00 ; $6a06
-	farcall Func_18_5379 ; $6a08
+	farcall StubNop_18_5379 ; $6a08
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
 	ld hl, $ca00 ; $6a0f

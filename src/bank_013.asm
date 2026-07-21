@@ -3122,7 +3122,7 @@ Label_13_7340:
 	ld a, [$c90d] ; $7380
 	add a, $04 ; $7383
 	ld c, a ; $7385
-	farcall Func_18_7617 ; $7386
+	farcall RunStorySceneByMode ; $7386
 	ld a, $00 ; $7389
 	ld [wStoryModeCurrentLocation], a ; $738b
 	ld a, $0a ; $738e
@@ -3358,7 +3358,7 @@ Func_13_78c4:
 	xor a, d ; $78d0
 	or a, c ; $78d1
 	ld c, a ; $78d2
-	farcall Func_18_7617 ; $78d3
+	farcall RunStorySceneByMode ; $78d3
 	ret ; $78d6
 DoublesTravelingTeamActors_13:
 	; $78d7, 164 bytes (map_actors)

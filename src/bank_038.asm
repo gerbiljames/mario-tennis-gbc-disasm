@@ -3774,8 +3774,8 @@ Func_38_5d83:
 	ld a, $80 ; $5d9c
 Label_38_5d9e:
 	push af ; $5d9e
-	farcall Func_18_4507 ; $5d9f
-	farcall Func_18_452a ; $5da2
+	farcall LoadCharacterRecordToBuffer ; $5d9f
+	farcall CheckCharacterUnlocked ; $5da2
 	ld hl, $0000 ; $5da5
 	add hl, bc ; $5da8
 	ld a, [$d58b] ; $5da9
