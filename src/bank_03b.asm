@@ -918,7 +918,7 @@ N64ExhibScrollArrowsTask:
 	ld b, $08 ; $457f
 	ld c, $00 ; $4581
 	ld h, $00 ; $4583
-	farcall Func_39_4a53 ; $4585
+	farcall QueueStackedSpritePair ; $4585
 Label_3b_4588:
 	ld a, [$dc12] ; $4588
 	or a, a ; $458b
@@ -929,7 +929,7 @@ Label_3b_4588:
 	ld b, $08 ; $4596
 	ld c, $00 ; $4598
 	ld h, $01 ; $459a
-	farcall Func_39_4a53 ; $459c
+	farcall QueueStackedSpritePair ; $459c
 Label_3b_459f:
 	ld a, [$dc13] ; $459f
 	or a, a ; $45a2
@@ -940,7 +940,7 @@ Label_3b_459f:
 	ld b, $08 ; $45ad
 	ld c, $00 ; $45af
 	ld h, $02 ; $45b1
-	farcall Func_39_4a53 ; $45b3
+	farcall QueueStackedSpritePair ; $45b3
 Label_3b_45b6:
 	ld a, [$dc13] ; $45b6
 	cp a, $0c ; $45b9
@@ -951,7 +951,7 @@ Label_3b_45b6:
 	ld b, $08 ; $45c5
 	ld c, $00 ; $45c7
 	ld h, $03 ; $45c9
-	farcall Func_39_4a53 ; $45cb
+	farcall QueueStackedSpritePair ; $45cb
 Label_3b_45ce:
 	pop af ; $45ce
 	wram_bank ; $45cf
@@ -966,7 +966,7 @@ BuildN64ExhibDataScreen:
 	ld de, $aac0 ; $45e6
 	call LoadChartWindowTiles ; $45e9
 	ld de, $a000 ; $45ec
-	farcall Func_39_4a16 ; $45ef
+	farcall LoadStatLabelTileBlocks ; $45ef
 	ld b, $08 ; $45f2
 	ld c, $0f ; $45f4
 	farcall LoadIndexedPalette ; $45f6
@@ -2042,7 +2042,7 @@ BuildN64TnmtDataScreen:
 	ld de, $aac0 ; $4ddf
 	call LoadChartWindowTiles ; $4de2
 	ld de, $a000 ; $4de5
-	farcall Func_39_4a16 ; $4de8
+	farcall LoadStatLabelTileBlocks ; $4de8
 	ld b, $08 ; $4deb
 	ld c, $0f ; $4ded
 	farcall LoadIndexedPalette ; $4def
@@ -2490,7 +2490,7 @@ N64TnmtScrollArrowsTask:
 	ld b, $08 ; $50f3
 	ld c, $00 ; $50f5
 	ld h, $00 ; $50f7
-	farcall Func_39_4a53 ; $50f9
+	farcall QueueStackedSpritePair ; $50f9
 Label_3b_50fc:
 	ld a, [$d801] ; $50fc
 	or a, a ; $50ff
@@ -2501,7 +2501,7 @@ Label_3b_50fc:
 	ld b, $08 ; $510a
 	ld c, $00 ; $510c
 	ld h, $01 ; $510e
-	farcall Func_39_4a53 ; $5110
+	farcall QueueStackedSpritePair ; $5110
 Label_3b_5113:
 	ld a, [$d802] ; $5113
 	or a, a ; $5116
@@ -2512,7 +2512,7 @@ Label_3b_5113:
 	ld b, $08 ; $5121
 	ld c, $00 ; $5123
 	ld h, $02 ; $5125
-	farcall Func_39_4a53 ; $5127
+	farcall QueueStackedSpritePair ; $5127
 Label_3b_512a:
 	ld a, [$d802] ; $512a
 	cp a, $0b ; $512d
@@ -2523,7 +2523,7 @@ Label_3b_512a:
 	ld b, $08 ; $5139
 	ld c, $00 ; $513b
 	ld h, $03 ; $513d
-	farcall Func_39_4a53 ; $513f
+	farcall QueueStackedSpritePair ; $513f
 Label_3b_5142:
 	pop af ; $5142
 	wram_bank ; $5143
@@ -2585,14 +2585,14 @@ BuildN64RingShotScreen:
 	ld de, $aac0 ; $51ce
 	call LoadChartWindowTiles ; $51d1
 	ld de, $a000 ; $51d4
-	farcall Func_39_4a16 ; $51d7
+	farcall LoadStatLabelTileBlocks ; $51d7
 	ld b, $08 ; $51da
 	ld c, $0f ; $51dc
 	farcall LoadIndexedPalette ; $51de
 	ld de, $a100 ; $51e1
 	ld b, $09 ; $51e4
 	ld c, $00 ; $51e6
-	farcall Func_39_6ec0 ; $51e8
+	farcall InitNumberSpriteGfx ; $51e8
 	ld a, $09 ; $51eb
 	ld [$cb6c], a ; $51ed
 	ld a, $10 ; $51f0
@@ -2951,7 +2951,7 @@ RingShotScrollArrowsTask:
 	ld b, $08 ; $54a9
 	ld c, $00 ; $54ab
 	ld h, $00 ; $54ad
-	farcall Func_39_4a53 ; $54af
+	farcall QueueStackedSpritePair ; $54af
 Label_3b_54b2:
 	ld a, [wMenuCursorX] ; $54b2
 	or a, a ; $54b5
@@ -2962,7 +2962,7 @@ Label_3b_54b2:
 	ld b, $08 ; $54c0
 	ld c, $00 ; $54c2
 	ld h, $01 ; $54c4
-	farcall Func_39_4a53 ; $54c6
+	farcall QueueStackedSpritePair ; $54c6
 Label_3b_54c9:
 	ld a, [wMenuCursorY] ; $54c9
 	or a, a ; $54cc
@@ -2973,7 +2973,7 @@ Label_3b_54c9:
 	ld b, $08 ; $54d7
 	ld c, $00 ; $54d9
 	ld h, $02 ; $54db
-	farcall Func_39_4a53 ; $54dd
+	farcall QueueStackedSpritePair ; $54dd
 Label_3b_54e0:
 	ld a, [wMenuCursorY] ; $54e0
 	cp a, $0b ; $54e3
@@ -2984,7 +2984,7 @@ Label_3b_54e0:
 	ld b, $08 ; $54ef
 	ld c, $00 ; $54f1
 	ld h, $03 ; $54f3
-	farcall Func_39_4a53 ; $54f5
+	farcall QueueStackedSpritePair ; $54f5
 Label_3b_54f8:
 	pop af ; $54f8
 	wram_bank ; $54f9
@@ -3164,7 +3164,7 @@ RunMainMenu:
 	farcall InitMenuBgScroll ; $55e5
 	ld b, $01 ; $55e8
 	ld c, $01 ; $55ea
-	farcall Func_39_4b3a ; $55ec
+	farcall LoadMenuHighlightPalettes ; $55ec
 	ld b, $03 ; $55ef
 	ld a, [$cb1b] ; $55f1
 	ld c, a ; $55f4
@@ -3182,11 +3182,11 @@ RunMainMenu:
 	call RegisterFrameTask ; $5614
 	call DrawMainMenuSelection ; $5617
 	call ResetSerialState ; $561a
-	farcall Func_39_6fe7 ; $561d
+	farcall ResetCheatCodeBuffer ; $561d
 	wram_bank $03 ; $5620
 Label_3b_5626:
 	call AdvanceFrame ; $5626
-	farcall Func_39_6f67 ; $5629
+	farcall UpdateCheatCodeEntry ; $5629
 	ldh a, [hInputPressed] ; $562c
 	ld [wMenuInputPressed], a ; $562e
 	ld b, $03 ; $5631
@@ -4074,7 +4074,7 @@ RunMatchFormatSelect:
 	farcall InitMenuBgScroll ; $5d0a
 	ld b, $01 ; $5d0d
 	ld c, $01 ; $5d0f
-	farcall Func_39_4b3a ; $5d11
+	farcall LoadMenuHighlightPalettes ; $5d11
 	call InitMatchFormatOptions ; $5d14
 	ld a, $01 ; $5d17
 	ld hl, MatchFormatCursorSpriteTask ; $5d19
@@ -4734,7 +4734,7 @@ Label_3b_621d:
 	farcall InitMenuBgScroll ; $621d
 	ld b, $01 ; $6220
 	ld c, $01 ; $6222
-	farcall Func_39_4b3a ; $6224
+	farcall LoadMenuHighlightPalettes ; $6224
 	ld a, [$cb20] ; $6227
 	ld c, a ; $622a
 	ld b, $03 ; $622b
@@ -4758,7 +4758,7 @@ Label_3b_624f:
 	call CheckMinigameGridExpanded ; $6254
 	or a, a ; $6257
 	jr nz, Label_3b_626a ; $6258
-	farcall Func_39_6df9 ; $625a
+	farcall MoveMinigameGridCursor ; $625a
 	or a, a ; $625d
 	jr z, Label_3b_627c ; $625e
 	sound $5e ; $6260
@@ -5430,7 +5430,7 @@ DrawMinigameSelectGrid6:
 	ld b, $00 ; $6769
 	ld c, $00 ; $676b
 Label_3b_676d:
-	farcall Func_39_6dc2 ; $676d
+	farcall FillMenuGridCellTile ; $676d
 	ld a, b ; $6770
 	inc a ; $6771
 	ld b, a ; $6772
@@ -5440,7 +5440,7 @@ Label_3b_676d:
 	call GetMenuCursorCellIndex ; $6779
 	ld b, a ; $677c
 	ld c, $01 ; $677d
-	farcall Func_39_6dc2 ; $677f
+	farcall FillMenuGridCellTile ; $677f
 	ld c, $03 ; $6782
 	call GetMenuCursorCellIndex ; $6784
 	call LoadMinigameCharPalette ; $6787
@@ -5462,7 +5462,7 @@ RunSavedDataSourceSelect:
 	farcall InitMenuBgScroll ; $67ae
 	ld b, $01 ; $67b1
 	ld c, $01 ; $67b3
-	farcall Func_39_4b3a ; $67b5
+	farcall LoadMenuHighlightPalettes ; $67b5
 	call LoadN64RecordsToWram2 ; $67b8
 	wram_bank $03 ; $67bb
 	ld a, [wMenuSlideDirection] ; $67c1
@@ -6056,7 +6056,7 @@ RunEraseSavedDataSelect:
 	farcall InitMenuBgScroll ; $6c99
 	ld b, $01 ; $6c9c
 	ld c, $01 ; $6c9e
-	farcall Func_39_4b3a ; $6ca0
+	farcall LoadMenuHighlightPalettes ; $6ca0
 	ld c, $00 ; $6ca3
 	ld b, $03 ; $6ca5
 	call SetMenuCursorFromCellIndex ; $6ca7
@@ -6711,7 +6711,7 @@ RunN64RecordTypeSelect:
 	farcall InitMenuBgScroll ; $71ba
 	ld b, $01 ; $71bd
 	ld c, $01 ; $71bf
-	farcall Func_39_4b3a ; $71c1
+	farcall LoadMenuHighlightPalettes ; $71c1
 	wram_bank $03 ; $71c4
 	ld a, [wMenuSlideDirection] ; $71ca
 	ld b, a ; $71cd
@@ -7122,7 +7122,7 @@ RunN64TransferItemSelect:
 	farcall InitMenuBgScroll ; $74d6
 	ld b, $01 ; $74d9
 	ld c, $01 ; $74db
-	farcall Func_39_4b3a ; $74dd
+	farcall LoadMenuHighlightPalettes ; $74dd
 	ld a, [$cb1d] ; $74e0
 	ld c, a ; $74e3
 	ld b, $02 ; $74e4
@@ -7838,7 +7838,7 @@ StarChartScrollArrowsTask:
 	ld b, $08 ; $7a8b
 	ld c, $00 ; $7a8d
 	ld h, $00 ; $7a8f
-	farcall Func_39_4a53 ; $7a91
+	farcall QueueStackedSpritePair ; $7a91
 Label_3b_7a94:
 	ld a, [wMenuCursorX] ; $7a94
 	or a, a ; $7a97
@@ -7849,7 +7849,7 @@ Label_3b_7a94:
 	ld b, $08 ; $7aa2
 	ld c, $00 ; $7aa4
 	ld h, $01 ; $7aa6
-	farcall Func_39_4a53 ; $7aa8
+	farcall QueueStackedSpritePair ; $7aa8
 Label_3b_7aab:
 	ld a, [wMenuCursorY] ; $7aab
 	or a, a ; $7aae
@@ -7860,7 +7860,7 @@ Label_3b_7aab:
 	ld b, $08 ; $7ab9
 	ld c, $00 ; $7abb
 	ld h, $02 ; $7abd
-	farcall Func_39_4a53 ; $7abf
+	farcall QueueStackedSpritePair ; $7abf
 Label_3b_7ac2:
 	ld a, [wMenuCursorY] ; $7ac2
 	cp a, $05 ; $7ac5
@@ -7871,7 +7871,7 @@ Label_3b_7ac2:
 	ld b, $08 ; $7ad1
 	ld c, $00 ; $7ad3
 	ld h, $03 ; $7ad5
-	farcall Func_39_4a53 ; $7ad7
+	farcall QueueStackedSpritePair ; $7ad7
 Label_3b_7ada:
 	jr Label_3b_7b0b ; $7ada
 Label_3b_7adc:
@@ -7884,7 +7884,7 @@ Label_3b_7adc:
 	ld b, $08 ; $7aea
 	ld c, $00 ; $7aec
 	ld h, $02 ; $7aee
-	farcall Func_39_4a53 ; $7af0
+	farcall QueueStackedSpritePair ; $7af0
 Label_3b_7af3:
 	ld a, [wMenuCursorY] ; $7af3
 	cp a, $01 ; $7af6
@@ -7895,7 +7895,7 @@ Label_3b_7af3:
 	ld b, $08 ; $7b02
 	ld c, $00 ; $7b04
 	ld h, $03 ; $7b06
-	farcall Func_39_4a53 ; $7b08
+	farcall QueueStackedSpritePair ; $7b08
 Label_3b_7b0b:
 	pop af ; $7b0b
 	wram_bank ; $7b0c
@@ -7910,7 +7910,7 @@ BuildStarCharExhibScreen:
 	ld de, $aac0 ; $7b23
 	call LoadChartWindowTiles ; $7b26
 	ld de, $a000 ; $7b29
-	farcall Func_39_4a16 ; $7b2c
+	farcall LoadStatLabelTileBlocks ; $7b2c
 	ld b, $08 ; $7b2f
 	ld c, $0f ; $7b31
 	farcall LoadIndexedPalette ; $7b33

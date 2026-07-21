@@ -1183,7 +1183,7 @@ InitMatchStatsScreen:
 	ld de, $a000 ; $5c8f
 	ld c, $00 ; $5c92
 	ld b, $08 ; $5c94
-	farcall Func_39_6ec0 ; $5c96
+	farcall InitNumberSpriteGfx ; $5c96
 	ld a, $00 ; $5c99
 	ld d, $04 ; $5c9b
 	farcall LoadIndexedPalette_18 ; $5c9d

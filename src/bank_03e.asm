@@ -766,7 +766,7 @@ RunLinkMatchRulesMenu:
 	farcall InitMenuBgScroll ; $44f0
 	ld b, $01 ; $44f3
 	ld c, $01 ; $44f5
-	farcall Func_39_4b3a ; $44f7
+	farcall LoadMenuHighlightPalettes ; $44f7
 	call DrawMatchRulesInitialState ; $44fa
 	ld a, $01 ; $44fd
 	ld hl, MatchRulesCursorSpriteTask ; $44ff
@@ -1759,7 +1759,7 @@ LoadEraseDataConfirmScreen:
 	farcall InitMenuBgScroll ; $4d2b
 	ld b, $01 ; $4d2e
 	ld c, $01 ; $4d30
-	farcall Func_39_4b3a ; $4d32
+	farcall LoadMenuHighlightPalettes ; $4d32
 	farcall PrepareGlyphBuffer ; $4d35
 	wram_bank $03 ; $4d38
 	ld a, [$d800] ; $4d3e
@@ -1922,7 +1922,7 @@ RunRacketShoesChoiceMenu:
 	farcall InitMenuBgScroll ; $4eb7
 	ld b, $01 ; $4eba
 	ld c, $01 ; $4ebc
-	farcall Func_39_4b3a ; $4ebe
+	farcall LoadMenuHighlightPalettes ; $4ebe
 	ld a, [$cb24] ; $4ec1
 	ld c, a ; $4ec4
 	ld b, $02 ; $4ec5
@@ -2311,7 +2311,7 @@ RunPlayAlonePartnerMenu:
 	farcall InitMenuBgScroll ; $51a9
 	ld b, $01 ; $51ac
 	ld c, $01 ; $51ae
-	farcall Func_39_4b3a ; $51b0
+	farcall LoadMenuHighlightPalettes ; $51b0
 	xor a, a ; $51b3
 	ld c, a ; $51b4
 	ld b, $02 ; $51b5
@@ -3101,7 +3101,7 @@ LoadEquipSelectCommon:
 	call CreateEquipCaptionWindow ; $5807
 	call CreateEquipListWindow ; $580a
 	ld de, $a000 ; $580d
-	farcall Func_39_44d3 ; $5810
+	farcall LoadFixedTileBlockAndPalette ; $5810
 	ret ; $5813
 CreateEquipListWindow:
 	ld d, $00 ; $5814
@@ -3411,7 +3411,7 @@ DrawStatModLabel:
 	call GetStatModLabelTile ; $5ad3
 	call GetStatModLabelLen ; $5ad6
 	ld c, a ; $5ad9
-	farcall Func_39_745a ; $5ada
+	farcall FillIncrementingBytes ; $5ada
 	pop hl ; $5add
 	pop de ; $5ade
 	pop bc ; $5adf
@@ -3525,7 +3525,7 @@ RunCourtSelect4Menu:
 	farcall InitMenuBgScroll ; $5ba3
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
-	farcall Func_39_4b3a ; $5baa
+	farcall LoadMenuHighlightPalettes ; $5baa
 	call LoadCourtSelectHeader ; $5bad
 	wram_bank $03 ; $5bb0
 	ld a, [wMenuSlideDirection] ; $5bb6
@@ -3597,7 +3597,7 @@ RunLinkCourtSelect4Menu:
 	farcall InitMenuBgScroll ; $5c46
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
-	farcall Func_39_4b3a ; $5c4d
+	farcall LoadMenuHighlightPalettes ; $5c4d
 	call LoadCourtSelectHeader ; $5c50
 	wram_bank $03 ; $5c53
 	ld a, [wMenuSlideDirection] ; $5c59
@@ -4169,19 +4169,19 @@ DrawCourtSelectTitleLeft:
 	ld b, $30 ; $6139
 	ld hl, $d1e0 ; $613b
 	ld c, $04 ; $613e
-	farcall Func_39_745a ; $6140
+	farcall FillIncrementingBytes ; $6140
 	ld hl, $d200 ; $6143
 	ld c, $04 ; $6146
-	farcall Func_39_745a ; $6148
+	farcall FillIncrementingBytes ; $6148
 	ld hl, $d220 ; $614b
 	ld c, $04 ; $614e
-	farcall Func_39_745a ; $6150
+	farcall FillIncrementingBytes ; $6150
 	ret ; $6153
 DrawCourtSelectTitleRight:
 	ld b, $40 ; $6154
 	ld hl, $d209 ; $6156
 	ld c, $05 ; $6159
-	farcall Func_39_745a ; $615b
+	farcall FillIncrementingBytes ; $615b
 	ret ; $615e
 FlushCourtSelectTitleRow:
 	ldh a, [hWramBank] ; $615f
@@ -4264,7 +4264,7 @@ Label_3e_64b8:
 Label_3e_64bd:
 	ld hl, $d204 ; $64bd
 	ld c, $05 ; $64c0
-	farcall Func_39_745a ; $64c2
+	farcall FillIncrementingBytes ; $64c2
 	ret ; $64c5
 	INCBIN "data/bank_03e/d_64c6.bin" ; $64c6, 9 bytes
 DrawCourtNameRight:
@@ -4288,7 +4288,7 @@ Label_3e_64e1:
 Label_3e_64e6:
 	ld hl, $d20e ; $64e6
 	ld c, $06 ; $64e9
-	farcall Func_39_745a ; $64eb
+	farcall FillIncrementingBytes ; $64eb
 	ret ; $64ee
 	INCBIN "data/bank_03e/d_64ef.bin" ; $64ef, 9 bytes
 FadeOutAndResetMenuScreen:
@@ -4315,7 +4315,7 @@ RunCourtSelect9Menu:
 	farcall InitMenuBgScroll ; $6529
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
-	farcall Func_39_4b3a ; $6530
+	farcall LoadMenuHighlightPalettes ; $6530
 	call LoadCourtSelectHeader ; $6533
 	wram_bank $03 ; $6536
 	ld a, [wMenuSlideDirection] ; $653c
@@ -4401,7 +4401,7 @@ RunLinkCourtSelect9Menu:
 	farcall InitMenuBgScroll ; $65e3
 	ld b, $01 ; $65e6
 	ld c, $01 ; $65e8
-	farcall Func_39_4b3a ; $65ea
+	farcall LoadMenuHighlightPalettes ; $65ea
 	call LoadCourtSelectHeader ; $65ed
 	wram_bank $03 ; $65f0
 	ld a, [wMenuSlideDirection] ; $65f6

@@ -5170,7 +5170,7 @@ LoadRulesScreen:
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, $a000 ; $718c
-	farcall Func_39_4a16 ; $718f
+	farcall LoadStatLabelTileBlocks ; $718f
 	ld b, $08 ; $7192
 	ld c, $0f ; $7194
 	farcall LoadIndexedPalette ; $7196
@@ -5581,7 +5581,7 @@ Func_17_755e:
 	ld b, $08 ; $7566
 	ld c, $00 ; $7568
 	ld h, $03 ; $756a
-	farcall Func_39_4a53 ; $756c
+	farcall QueueStackedSpritePair ; $756c
 	ret ; $756f
 RulesScreenTiles:
 	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes

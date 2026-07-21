@@ -4800,7 +4800,7 @@ RunMinigameLevelSelect2:
 	farcall InitMenuBgScroll ; $6e48
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
-	farcall Func_39_4b3a ; $6e4f
+	farcall LoadMenuHighlightPalettes ; $6e4f
 	wram_bank $02 ; $6e52
 	ld a, [$d001] ; $6e58
 	ld c, a ; $6e5b
@@ -4995,7 +4995,7 @@ RunMinigameLevelSelect3:
 	farcall InitMenuBgScroll ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
-	farcall Func_39_4b3a ; $6ff0
+	farcall LoadMenuHighlightPalettes ; $6ff0
 	wram_bank $02 ; $6ff3
 	ld a, [$d001] ; $6ff9
 	ld c, a ; $6ffc
@@ -5179,7 +5179,7 @@ RunSavedDataTypeSelect:
 	farcall InitMenuBgScroll ; $7174
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
-	farcall Func_39_4b3a ; $717b
+	farcall LoadMenuHighlightPalettes ; $717b
 	ld a, [$cb25] ; $717e
 	ld c, a ; $7181
 	ld b, $02 ; $7182
@@ -5519,14 +5519,14 @@ BuildMinigameDataScreen:
 	ld de, $aac0 ; $745e
 	farcall LoadChartWindowTiles ; $7461
 	ld de, $a000 ; $7464
-	farcall Func_39_4a16 ; $7467
+	farcall LoadStatLabelTileBlocks ; $7467
 	ld b, $08 ; $746a
 	ld c, $0f ; $746c
 	farcall LoadIndexedPalette ; $746e
 	ld de, $a100 ; $7471
 	ld b, $09 ; $7474
 	ld c, $00 ; $7476
-	farcall Func_39_6ec0 ; $7478
+	farcall InitNumberSpriteGfx ; $7478
 	ld a, $09 ; $747b
 	ld [$cb6c], a ; $747d
 	ld a, $10 ; $7480
@@ -5864,7 +5864,7 @@ Func_1b_76b9:
 	ld b, $08 ; $76cc
 	ld c, $00 ; $76ce
 	ld h, $02 ; $76d0
-	farcall Func_39_4a53 ; $76d2
+	farcall QueueStackedSpritePair ; $76d2
 Label_1b_76d5:
 	ld a, [wMenuCursorY] ; $76d5
 	cp a, $04 ; $76d8
@@ -5875,7 +5875,7 @@ Label_1b_76d5:
 	ld b, $08 ; $76e4
 	ld c, $00 ; $76e6
 	ld h, $03 ; $76e8
-	farcall Func_39_4a53 ; $76ea
+	farcall QueueStackedSpritePair ; $76ea
 Label_1b_76ed:
 	ret ; $76ed
 DrawMinigameDataMarks:

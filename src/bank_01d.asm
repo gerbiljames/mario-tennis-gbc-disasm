@@ -37,7 +37,7 @@ ShowCharDataScreen:
 	farcall InitMenuBgScroll ; $4057
 	ld b, $05 ; $405a
 	ld c, $05 ; $405c
-	farcall Func_39_4b3a ; $405e
+	farcall LoadMenuHighlightPalettes ; $405e
 	ld a, $0d ; $4061
 	ld [$cb17], a ; $4063
 	ld a, $0d ; $4066

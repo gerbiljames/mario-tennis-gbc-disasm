@@ -3,25 +3,25 @@ SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 	farptr LoadScreenAssetRecord ; $4000
 	farptr QueueWram3MapToVRAM ; $4002
 	farptr UpdateAnimatedTiles ; $4004
-	farptr Func_39_44d3 ; $4006
-	farptr Func_39_451e ; $4008
+	farptr LoadFixedTileBlockAndPalette ; $4006
+	farptr LoadFixedBgPalette0 ; $4008
 	farptr CopyTilemapRect ; $400a
 	farptr FillTilemapRect ; $400c
 	farptr LoadIndexedPalette ; $400e
 	farptr LoadCompressedTileBlock ; $4010
-	farptr Func_39_4661 ; $4012
-	farptr Func_39_4a75 ; $4014
+	farptr LoadFixedPaletteSet ; $4012
+	farptr ApplySpriteWaveOffset ; $4014
 	farptr ApplySpriteBobOffset ; $4016
-	farptr Func_39_4a16 ; $4018
-	farptr Func_39_4a53 ; $401a
-	farptr Func_39_4c38 ; $401c
+	farptr LoadStatLabelTileBlocks ; $4018
+	farptr QueueStackedSpritePair ; $401a
+	farptr LoadStadiumBgGraphics ; $401c
 	farptr FlushWram3MapRows ; $401e
 	farptr RestoreMenuBgAndDrawPanel ; $4020
 	farptr ResetScreenAndTextWindows ; $4022
 	farptr InitMenuBgScroll ; $4024
-	farptr Func_39_4b3a ; $4026
+	farptr LoadMenuHighlightPalettes ; $4026
 	farptr TickMenuBgScroll ; $4028
-	farptr Func_39_4be8 ; $402a
+	farptr LoadMenuFontTiles ; $402a
 	farptr QueueWram3MapToVRAMAlias1, QueueWram3MapToVRAM ; $402c
 	farptr QueueWram3MapToVRAMAlias2, QueueWram3MapToVRAM ; $402e
 	farptr QueueWram3MapToVRAMAlias3, QueueWram3MapToVRAM ; $4030
@@ -70,12 +70,12 @@ DataPtr_39_5c:
 	dw Lz_39_4833 ; $405c
 DataPtr_StatLabelTiles:
 	dw StatLabelTiles ; $405e
-	farptr Func_39_6dc2 ; $4060
-	farptr Func_39_6df9 ; $4062
-	farptr Func_39_6ec0 ; $4064
+	farptr FillMenuGridCellTile ; $4060
+	farptr MoveMinigameGridCursor ; $4062
+	farptr InitNumberSpriteGfx ; $4064
 	farptr DrawDecimalNumberSprites_39 ; $4066
-	farptr Func_39_6fe7 ; $4068
-	farptr Func_39_6f67 ; $406a
+	farptr ResetCheatCodeBuffer ; $4068
+	farptr UpdateCheatCodeEntry ; $406a
 DataPtr_39_6c:
 	dw Lz_39_7009 ; $406c
 DataPtr_39_6e:
@@ -92,7 +92,7 @@ DataPtr_39_78:
 	dw Lz_39_725d ; $4078
 DataPtr_DigitFontTiles:
 	dw DigitFontTiles ; $407a
-	farptr Func_39_745a ; $407c
+	farptr FillIncrementingBytes ; $407c
 LoadScreenAssetRecord:
 	ld hl, ScreenAssetRecordTable ; $407e
 	ld b, $00 ; $4081
@@ -457,7 +457,7 @@ Label_39_43f9:
 	dw $1882 ; record 101
 	dw $1884 ; record 102
 	dw $1886 ; record 103
-Func_39_44d3:
+LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank $01 ; $44d4
 	ld hl, $44f6 ; $44da
@@ -472,7 +472,7 @@ Func_39_44d3:
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
 	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 40 bytes
-Func_39_451e:
+LoadFixedBgPalette0:
 	ld de, $0001 ; $451e
 	ld hl, $4528 ; $4521
 	call LoadPaletteShadow ; $4524
@@ -597,7 +597,7 @@ LoadIndexedPalette:
 	dw $0000, $0000, $0000, $0000 ; pal 22: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 23: #000000 #000000 #000000 #000000
 	dw $6280, $0000, $001f, $02df ; pal 24: #00a4c5 #000000 #ff0000 #ffb400
-Func_39_4661:
+LoadFixedPaletteSet:
 	ld hl, $466b ; $4661
 	ld de, $0904 ; $4664
 	call LoadPaletteShadow ; $4667
@@ -768,7 +768,7 @@ Lz_39_4833:
 	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 240 bytes
 StatLabelTiles:
 	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 243 bytes
-Func_39_4a16:
+LoadStatLabelTileBlocks:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18
 	push de ; $4a1a
@@ -806,7 +806,7 @@ Func_39_4a16:
 	ld d, h ; $4a50
 	ld e, l ; $4a51
 	ret ; $4a52
-Func_39_4a53:
+QueueStackedSpritePair:
 	push af ; $4a53
 	push bc ; $4a54
 	push de ; $4a55
@@ -836,7 +836,7 @@ Func_39_4a53:
 	pop bc ; $4a72
 	pop af ; $4a73
 	ret ; $4a74
-Func_39_4a75:
+ApplySpriteWaveOffset:
 	ldh a, [hVBlankCounter] ; $4a75
 	and a, $3f ; $4a77
 	add a, $84 ; $4a79
@@ -880,7 +880,7 @@ InitMenuBgScroll:
 	xor a, a ; $4b35
 	ld [$cb19], a ; $4b36
 	ret ; $4b39
-Func_39_4b3a:
+LoadMenuHighlightPalettes:
 	push bc ; $4b3a
 	ld a, c ; $4b3b
 	add a, $08 ; $4b3c
@@ -966,7 +966,7 @@ SpriteTemplate_39_4bbf:
 	oam_sprite $10, $48, $10, $00
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
-Func_39_4be8:
+LoadMenuFontTiles:
 	ld b, $11 ; $4be8
 	ld c, $10 ; $4bea
 	ld de, $9000 ; $4bec
@@ -979,7 +979,7 @@ ResetScreenAndTextWindows:
 	ld [wCameraX + 1], a ; $4bfa
 	ld [wCameraY], a ; $4bfd
 	ld [wCameraY + 1], a ; $4c00
-	farcall Func_39_4c38 ; $4c03
+	farcall LoadStadiumBgGraphics ; $4c03
 	farcall ResetTextWindowState ; $4c06
 	ld b, $11 ; $4c09
 	ld c, $10 ; $4c0b
@@ -999,7 +999,7 @@ ResetScreenAndTextWindows:
 	farcall RedrawWindowRows ; $4c31
 	farcall QueueWram3MapToVRAM ; $4c34
 	ret ; $4c37
-Func_39_4c38:
+LoadStadiumBgGraphics:
 	ldh a, [hWramBank] ; $4c38
 	push af ; $4c3a
 	wram_bank $01 ; $4c3b
@@ -3046,7 +3046,7 @@ TilemapAssemblyDispatch_39:
 .rl_213:
 	tilemap_rect $da4f, $d11c, $03, $03
 	tilemap_rect_end
-Func_39_6dc2:
+FillMenuGridCellTile:
 	push af ; $6dc2
 	push bc ; $6dc3
 	push de ; $6dc4
@@ -3089,7 +3089,7 @@ Label_39_6de1:
 	dw $d525 ; record 3
 	dw $d52b ; record 4
 	dw $d52b ; record 5
-Func_39_6df9:
+MoveMinigameGridCursor:
 	ld a, [wMenuCursorY] ; $6df9
 	or a, a ; $6dfc
 	jr nz, Label_39_6e64 ; $6dfd
@@ -3207,7 +3207,7 @@ Label_39_6ea9:
 Label_39_6eb9:
 	ret ; $6eb9
 	INCBIN "data/bank_039/d_6eba.bin" ; $6eba, 6 bytes
-Func_39_6ec0:
+InitNumberSpriteGfx:
 	push af ; $6ec0
 	push bc ; $6ec1
 	push de ; $6ec2
@@ -3311,7 +3311,7 @@ DrawDigitSprite_39:
 	pop bc ; $6f64
 	pop af ; $6f65
 	ret ; $6f66
-Func_39_6f67:
+UpdateCheatCodeEntry:
 	ldh a, [hWramBank] ; $6f67
 	push af ; $6f69
 	wram_bank $01 ; $6f6a
@@ -3345,7 +3345,7 @@ Label_39_6f91:
 	ld a, c ; $6f96
 	cp a, $20 ; $6f97
 	jr nz, Label_39_6f7e ; $6f99
-	call Func_39_7003 ; $6f9b
+	call TriggerCheatUnlock ; $6f9b
 	ld a, $01 ; $6f9e
 	ld [$cb71], a ; $6fa0
 	jr Label_39_6fc0 ; $6fa3
@@ -3371,7 +3371,7 @@ Label_39_6fc0:
 	wram_bank ; $6fc1
 	ret ; $6fc5
 	INCBIN "data/bank_039/d_6fc6.bin" ; $6fc6, 33 bytes
-Func_39_6fe7:
+ResetCheatCodeBuffer:
 	ldh a, [hWramBank] ; $6fe7
 	push af ; $6fe9
 	wram_bank $01 ; $6fea
@@ -3383,7 +3383,7 @@ Func_39_6fe7:
 	pop af ; $6ffd
 	wram_bank ; $6ffe
 	ret ; $7002
-Func_39_7003:
+TriggerCheatUnlock:
 	sound $65 ; $7003
 	farcall ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
@@ -3422,13 +3422,13 @@ DigitFontTiles:
 	pop bc ; $7457
 	pop af ; $7458
 	ret ; $7459
-Func_39_745a:
+FillIncrementingBytes:
 	ld a, b ; $745a
 	ld [hl+], a ; $745b
 	inc b ; $745c
 	dec c ; $745d
 	ld a, c ; $745e
 	or a, a ; $745f
-	jr nz, Func_39_745a ; $7460
+	jr nz, FillIncrementingBytes ; $7460
 	ret ; $7462
 	ds 2973, $ff ; $7463, fill

@@ -1001,7 +1001,7 @@ Func_38_460f:
 	call Func_38_4722 ; $464b
 	farcall QueueWram3MapToVRAM ; $464e
 	ld de, $a000 ; $4651
-	farcall Func_39_44d3 ; $4654
+	farcall LoadFixedTileBlockAndPalette ; $4654
 	ld b, $08 ; $4657
 	ld c, $0d ; $4659
 	farcall LoadIndexedPalette ; $465b
@@ -1423,7 +1423,7 @@ Label_38_4a61:
 	farcall InitMenuBgScroll ; $4a85
 	ld b, $01 ; $4a88
 	ld c, $01 ; $4a8a
-	farcall Func_39_4b3a ; $4a8c
+	farcall LoadMenuHighlightPalettes ; $4a8c
 	ld a, $10 ; $4a8f
 	ld [$cb15], a ; $4a91
 	ld [$cb16], a ; $4a94
@@ -2004,7 +2004,7 @@ Func_38_4f6f:
 	call Func_38_598b ; $503b
 	farcall QueueWram3MapToVRAM ; $503e
 	ld de, $a000 ; $5041
-	farcall Func_39_44d3 ; $5044
+	farcall LoadFixedTileBlockAndPalette ; $5044
 	ld hl, $507f ; $5047
 	ld de, $0b05 ; $504a
 	call LoadPalettesMasterOnly ; $504d
@@ -2014,7 +2014,7 @@ Func_38_4f6f:
 	farcall InitMenuBgScroll ; $5057
 	ld b, $01 ; $505a
 	ld c, $01 ; $505c
-	farcall Func_39_4b3a ; $505e
+	farcall LoadMenuHighlightPalettes ; $505e
 	ld a, $30 ; $5061
 	ld [$cb15], a ; $5063
 	ld [$cb16], a ; $5066
@@ -2448,7 +2448,7 @@ Func_38_549a:
 	ld c, $20 ; $549a
 	ld b, $0f ; $549c
 	ld de, $0840 ; $549e
-	farcall Func_39_4a75 ; $54a1
+	farcall ApplySpriteWaveOffset ; $54a1
 	ld hl, SpriteTemplate_38_54ab ; $54a4
 	call QueueSpriteTemplate ; $54a7
 	ret ; $54aa
@@ -6436,7 +6436,7 @@ Func_38_6f6e:
 	farcall InitMenuBgScroll ; $701a
 	ld b, $01 ; $701d
 	ld c, $01 ; $701f
-	farcall Func_39_4b3a ; $7021
+	farcall LoadMenuHighlightPalettes ; $7021
 	ld a, $10 ; $7024
 	ld [$cb15], a ; $7026
 	ld [$cb16], a ; $7029

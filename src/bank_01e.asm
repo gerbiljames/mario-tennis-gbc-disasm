@@ -4698,7 +4698,7 @@ Label_1e_74f1:
 	farcall UploadGlyphBuffer ; $74f6
 	ret ; $74f9
 LoadGameProgressScreenAssets:
-	farcall Func_39_4be8 ; $74fa
+	farcall LoadMenuFontTiles ; $74fa
 	call Func_1e_79e8 ; $74fd
 	call Func_1e_7a14 ; $7500
 	ret ; $7503
@@ -5024,7 +5024,7 @@ Label_1e_7aab:
 	ld c, $20 ; $7aba
 	ld b, $00 ; $7abc
 	ld h, $02 ; $7abe
-	farcall Func_39_4a53 ; $7ac0
+	farcall QueueStackedSpritePair ; $7ac0
 Label_1e_7ac3:
 	ld a, [$df08] ; $7ac3
 	or a, a ; $7ac6
@@ -5036,7 +5036,7 @@ Label_1e_7ac3:
 	ld c, $20 ; $7ad2
 	ld b, $00 ; $7ad4
 	ld h, $03 ; $7ad6
-	farcall Func_39_4a53 ; $7ad8
+	farcall QueueStackedSpritePair ; $7ad8
 Label_1e_7adb:
 	ld hl, $df70 ; $7adb
 	ld a, [$df05] ; $7ade
@@ -5112,7 +5112,7 @@ Label_1e_7b47:
 	ret ; $7b4b
 Func_1e_7b4c:
 	ld de, $8200 ; $7b4c
-	farcall Func_39_4a16 ; $7b4f
+	farcall LoadStatLabelTileBlocks ; $7b4f
 	ld b, $08 ; $7b52
 	ld c, $0f ; $7b54
 	farcall LoadIndexedPalette ; $7b56
