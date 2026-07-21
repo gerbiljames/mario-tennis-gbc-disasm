@@ -1710,13 +1710,13 @@ SetMatchNumberOfGames:
 	ld [wMatchTypeNumberOfGames], a ; $4a58
 	ret ; $4a5b
 LoadMatchSettingsFromTable:
-	ld de, $4ab2 ; $4a5c
+	ld de, MatchSettingsTable_0a_4ab2 ; $4a5c
 	ld a, [wCurrentMinigameStoryMatch] ; $4a5f
 	cp a, $01 ; $4a62
 	ld a, $00 ; $4a64
 	jr nz, Label_0a_4a6c ; $4a66
 	inc a ; $4a68
-	ld de, Data_0a_4b2f ; $4a69
+	ld de, StoryMatchSettingsTable_0a_4b2f ; $4a69
 Label_0a_4a6c:
 	call SetMatchDoublesMode ; $4a6c
 	ld a, [$c8f7] ; $4a6f
@@ -1758,9 +1758,62 @@ Label_0a_4aa2:
 	ld a, [hl] ; $4aad
 	ld [wMatchBGM], a ; $4aae
 	ret ; $4ab1
-	INCBIN "data/bank_00a/d_4ab2.bin" ; $4ab2, 125 bytes
-Data_0a_4b2f:
-	INCBIN "data/bank_00a/d_4b2f.bin" ; $4b2f, 125 bytes
+MatchSettingsTable_0a_4ab2:
+	; $4ab2, 125 bytes (records:5)
+; 25 records x 5 bytes
+	db $03, $24, $00, $36, $20 ; record 0
+	db $01, $23, $00, $36, $21 ; record 1
+	db $01, $22, $00, $36, $21 ; record 2
+	db $01, $21, $00, $36, $21 ; record 3
+	db $01, $20, $00, $36, $21 ; record 4
+	db $03, $2c, $01, $36, $20 ; record 5
+	db $01, $2b, $01, $36, $22 ; record 6
+	db $01, $2a, $01, $36, $22 ; record 7
+	db $01, $29, $01, $36, $22 ; record 8
+	db $01, $28, $01, $36, $22 ; record 9
+	db $03, $34, $03, $36, $20 ; record 10
+	db $01, $33, $03, $36, $23 ; record 11
+	db $00, $00, $00, $12, $23 ; record 12
+	db $00, $00, $00, $12, $23 ; record 13
+	db $00, $00, $00, $12, $23 ; record 14
+	db $03, $34, $02, $56, $20 ; record 15
+	db $02, $0e, $0d, $56, $26 ; record 16
+	db $02, $10, $0d, $56, $26 ; record 17
+	db $02, $11, $0d, $56, $27 ; record 18
+	db $02, $13, $0c, $56, $28 ; record 19
+	db $03, $34, $02, $56, $20 ; record 20
+	db $00, $00, $00, $12, $29 ; record 21
+	db $0a, $5d, $05, $56, $29 ; record 22
+	db $0a, $5c, $05, $56, $29 ; record 23
+	db $0a, $5b, $05, $56, $29 ; record 24
+StoryMatchSettingsTable_0a_4b2f:
+	; $4b2f, 125 bytes (records:5)
+; 25 records x 5 bytes
+	db $03, $27, $00, $36, $20 ; record 0
+	db $00, $00, $00, $36, $21 ; record 1
+	db $01, $24, $00, $36, $21 ; record 2
+	db $01, $21, $00, $36, $21 ; record 3
+	db $01, $20, $00, $36, $21 ; record 4
+	db $03, $2e, $01, $36, $20 ; record 5
+	db $00, $00, $00, $36, $22 ; record 6
+	db $01, $2c, $01, $36, $22 ; record 7
+	db $01, $2a, $01, $36, $22 ; record 8
+	db $01, $28, $01, $36, $22 ; record 9
+	db $03, $34, $03, $36, $20 ; record 10
+	db $00, $00, $00, $12, $23 ; record 11
+	db $00, $00, $00, $12, $23 ; record 12
+	db $01, $32, $03, $36, $23 ; record 13
+	db $01, $30, $03, $36, $23 ; record 14
+	db $03, $34, $02, $56, $20 ; record 15
+	db $00, $00, $00, $12, $26 ; record 16
+	db $02, $0e, $0d, $56, $26 ; record 17
+	db $02, $10, $0d, $56, $27 ; record 18
+	db $02, $13, $0c, $56, $28 ; record 19
+	db $03, $34, $02, $56, $20 ; record 20
+	db $00, $00, $00, $12, $29 ; record 21
+	db $0a, $60, $05, $56, $29 ; record 22
+	db $0a, $5f, $05, $56, $29 ; record 23
+	db $0a, $5e, $05, $56, $29 ; record 24
 RunClearStatusSetupMenu:
 	push bc ; $4bac
 	push de ; $4bad
@@ -1997,7 +2050,7 @@ Label_0a_4dae:
 	ld a, [$df03] ; $4dbc
 	or a, a ; $4dbf
 	ret z ; $4dc0
-	ld hl, Data_0a_4df2 ; $4dc1
+	ld hl, RankingFlagList_0a_4df2 ; $4dc1
 Label_0a_4dc4:
 	ld a, [hl+] ; $4dc4
 	ld d, [hl] ; $4dc5
@@ -2013,7 +2066,7 @@ Label_0a_4dd3:
 	ld a, [$df03] ; $4dd3
 	cp a, $01 ; $4dd6
 	ret z ; $4dd8
-	ld hl, Data_0a_4e00 ; $4dd9
+	ld hl, RankingFlagList_0a_4e00 ; $4dd9
 Label_0a_4ddc:
 	ld a, [hl+] ; $4ddc
 	ld d, [hl] ; $4ddd
@@ -2028,10 +2081,24 @@ Label_0a_4ddc:
 Label_0a_4deb:
 	ret ; $4deb
 	INCBIN "data/bank_00a/d_4dec.bin" ; $4dec, 6 bytes
-Data_0a_4df2:
-	INCBIN "data/bank_00a/d_4df2.bin" ; $4df2, 14 bytes
-Data_0a_4e00:
-	INCBIN "data/bank_00a/d_4e00.bin" ; $4e00, 14 bytes
+RankingFlagList_0a_4df2:
+	; $4df2, 14 bytes (records:2)
+	dw $1800 ; record 0
+	dw $1860 ; record 1
+	dw $18c0 ; record 2
+	dw $1920 ; record 3
+	dw $1980 ; record 4
+	dw $19e0 ; record 5
+	dw $ffff ; record 6
+RankingFlagList_0a_4e00:
+	; $4e00, 14 bytes (records:2)
+	dw $1820 ; record 0
+	dw $1880 ; record 1
+	dw $18e0 ; record 2
+	dw $1940 ; record 3
+	dw $19a0 ; record 4
+	dw $1a00 ; record 5
+	dw $ffff ; record 6
 SetMinigameClearFlags:
 	ld c, $09 ; $4e0e
 	ld de, $0a00 ; $4e10
@@ -2061,7 +2128,7 @@ Label_0a_4e2a:
 	add a, c ; $4e34
 	ld c, a ; $4e35
 	inc c ; $4e36
-	ld hl, Data_0a_4e4b ; $4e37
+	ld hl, RankingFlagList_0a_4e4b ; $4e37
 Label_0a_4e3a:
 	ld a, [hl+] ; $4e3a
 	ld d, [hl] ; $4e3b
@@ -2076,8 +2143,29 @@ Label_0a_4e3a:
 	jr Label_0a_4e3a ; $4e48
 Label_0a_4e4a:
 	ret ; $4e4a
-Data_0a_4e4b:
-	INCBIN "data/bank_00a/d_4e4b.bin" ; $4e4b, 42 bytes
+RankingFlagList_0a_4e4b:
+	; $4e4b, 42 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0a00 ; record 1
+	dw $0a20 ; record 2
+	dw $0a40 ; record 3
+	dw $0a60 ; record 4
+	dw $0000 ; record 5
+	dw $0a80 ; record 6
+	dw $0aa0 ; record 7
+	dw $0ac0 ; record 8
+	dw $0ae0 ; record 9
+	dw $0000 ; record 10
+	dw $0b00 ; record 11
+	dw $0000 ; record 12
+	dw $0000 ; record 13
+	dw $0000 ; record 14
+	dw $0000 ; record 15
+	dw $07e0 ; record 16
+	dw $07c0 ; record 17
+	dw $07a0 ; record 18
+	dw $0780 ; record 19
+	dw $ffff ; record 20
 SetMinigameClearFlagsAlt:
 	ld c, $09 ; $4e75
 	ld de, $0a00 ; $4e77
@@ -2099,7 +2187,7 @@ Label_0a_4e7a:
 	add a, c ; $4e91
 	ld c, a ; $4e92
 	inc c ; $4e93
-	ld hl, Data_0a_4ea8 ; $4e94
+	ld hl, RankingFlagList_0a_4ea8 ; $4e94
 Label_0a_4e97:
 	ld a, [hl+] ; $4e97
 	ld d, [hl] ; $4e98
@@ -2114,8 +2202,25 @@ Label_0a_4e97:
 	jr Label_0a_4e97 ; $4ea5
 Label_0a_4ea7:
 	ret ; $4ea7
-Data_0a_4ea8:
-	INCBIN "data/bank_00a/d_4ea8.bin" ; $4ea8, 34 bytes
+RankingFlagList_0a_4ea8:
+	; $4ea8, 34 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0800 ; record 1
+	dw $0820 ; record 2
+	dw $0840 ; record 3
+	dw $0000 ; record 4
+	dw $0880 ; record 5
+	dw $08a0 ; record 6
+	dw $08c0 ; record 7
+	dw $0000 ; record 8
+	dw $0900 ; record 9
+	dw $0000 ; record 10
+	dw $0000 ; record 11
+	dw $0000 ; record 12
+	dw $07e0 ; record 13
+	dw $07c0 ; record 14
+	dw $07a0 ; record 15
+	dw $ffff ; record 16
 GetClearStatusResultCode:
 	ld hl, $4eee ; $4eca
 	ld a, [$df02] ; $4ecd

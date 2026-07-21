@@ -838,8 +838,81 @@ Label_1b_44ae:
 	pop hl ; $44af
 	ret ; $44b0
 	INCBIN "data/bank_01b/d_44b1.bin" ; $44b1, 2107 bytes
-Data_1b_4cec:
-	INCBIN "data/bank_01b/d_4cec.bin" ; $4cec, 288 bytes
+CharMugshotGfxPointers_1b_4cec:
+	; $4cec, 288 bytes (records:4)
+; 72 records x 4 bytes
+	dw $44b1, $4df8 ; record 0
+	dw $454f, $4df8 ; record 1
+	dw $45f2, $4df8 ; record 2
+	dw $4684, $4df8 ; record 3
+	dw $4c6e, $4df8 ; record 4
+	dw $4c6e, $4df8 ; record 5
+	dw $4c6e, $4df8 ; record 6
+	dw $4c6e, $4df8 ; record 7
+	dw $4c6e, $4df8 ; record 8
+	dw $4c6e, $4df8 ; record 9
+	dw $4c6e, $4df8 ; record 10
+	dw $4c6e, $4df8 ; record 11
+	dw $4c6e, $4df8 ; record 12
+	dw $4c6e, $4df8 ; record 13
+	dw $4c6e, $4df8 ; record 14
+	dw $4c6e, $4df8 ; record 15
+	dw $4c6e, $4df8 ; record 16
+	dw $4c6e, $4df8 ; record 17
+	dw $4c6e, $4df8 ; record 18
+	dw $4c6e, $4df8 ; record 19
+	dw $4c6e, $4df8 ; record 20
+	dw $4c6e, $4df8 ; record 21
+	dw $4c6e, $4df8 ; record 22
+	dw $4c6e, $4df8 ; record 23
+	dw $4c6e, $4df8 ; record 24
+	dw $4c6e, $4df8 ; record 25
+	dw $4729, $4df8 ; record 26
+	dw $47cb, $4df8 ; record 27
+	dw $4869, $4df8 ; record 28
+	dw $48f4, $4df8 ; record 29
+	dw $4999, $4df8 ; record 30
+	dw $4a3b, $4df8 ; record 31
+	dw $4c6e, $4df8 ; record 32
+	dw $4c6e, $4df8 ; record 33
+	dw $4c6e, $4df8 ; record 34
+	dw $4c6e, $4df8 ; record 35
+	dw $4c6e, $4df8 ; record 36
+	dw $4c6e, $4df8 ; record 37
+	dw $4c6e, $4df8 ; record 38
+	dw $4c6e, $4df8 ; record 39
+	dw $4c6e, $4df8 ; record 40
+	dw $4c6e, $4df8 ; record 41
+	dw $4c6e, $4df8 ; record 42
+	dw $4c6e, $4df8 ; record 43
+	dw $4c6e, $4df8 ; record 44
+	dw $4c6e, $4df8 ; record 45
+	dw $4c6e, $4df8 ; record 46
+	dw $4c6e, $4df8 ; record 47
+	dw $4c6e, $4df8 ; record 48
+	dw $4c6e, $4df8 ; record 49
+	dw $4c6e, $4df8 ; record 50
+	dw $4c6e, $4df8 ; record 51
+	dw $4c6e, $4df8 ; record 52
+	dw $4c6e, $4df8 ; record 53
+	dw $4c6e, $4df8 ; record 54
+	dw $4c6e, $4df8 ; record 55
+	dw $4c6e, $4df8 ; record 56
+	dw $4c6e, $4df8 ; record 57
+	dw $4c6e, $4df8 ; record 58
+	dw $4c6e, $4df8 ; record 59
+	dw $4c6e, $4df8 ; record 60
+	dw $4c6e, $4df8 ; record 61
+	dw $4c6e, $4df8 ; record 62
+	dw $4c6e, $4df8 ; record 63
+	dw $4ad4, $4dfc ; record 64
+	dw $4b42, $4dfc ; record 65
+	dw $4bd5, $4dfc ; record 66
+	dw $6400, $00ff ; record 67
+	dw $6400, $00ff ; record 68
+	dw $d600, $d690 ; record 69
+	dw $d720, $0000 ; record 70
+	dw $0090, $0120 ; record 71
 Func_1b_4e0c:
 	ret ; $4e0c
 Func_1b_4e0d:
@@ -921,7 +994,7 @@ Label_1b_4e6c:
 	ld h, $00 ; $4e6d
 	add hl, hl ; $4e6f
 	add hl, hl ; $4e70
-	ld bc, Data_1b_4cec ; $4e71
+	ld bc, CharMugshotGfxPointers_1b_4cec ; $4e71
 	add hl, bc ; $4e74
 	ld a, [hl+] ; $4e75
 	ld h, [hl] ; $4e76

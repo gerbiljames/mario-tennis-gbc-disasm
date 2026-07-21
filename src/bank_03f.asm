@@ -2108,7 +2108,7 @@ Label_3f_50ee:
 	ret ; $50f6
 Func_3f_50f7:
 	wram_bank $06 ; $50f7
-	ld hl, Data_3f_539e ; $50fd
+	ld hl, SelectionMaskGrid_3f_539e ; $50fd
 	ld c, $00 ; $5100
 	ld a, [$cb32] ; $5102
 	ld d, a ; $5105
@@ -2128,7 +2128,7 @@ Label_3f_5115:
 	ret ; $5119
 Func_3f_511a:
 	wram_bank $06 ; $511a
-	ld hl, Data_3f_539e ; $5120
+	ld hl, SelectionMaskGrid_3f_539e ; $5120
 	ld c, $00 ; $5123
 Label_3f_5125:
 	ld a, [hl+] ; $5125
@@ -2144,7 +2144,7 @@ Func_3f_5134:
 	ld d, $00 ; $5134
 	ld c, a ; $5136
 	inc c ; $5137
-	ld hl, Data_3f_539e ; $5138
+	ld hl, SelectionMaskGrid_3f_539e ; $5138
 Label_3f_513b:
 	ld a, [hl+] ; $513b
 	cp a, $00 ; $513c
@@ -2161,7 +2161,7 @@ Func_3f_514a:
 	ld d, $00 ; $514a
 	ld c, a ; $514c
 	inc c ; $514d
-	ld hl, Data_3f_539e ; $514e
+	ld hl, SelectionMaskGrid_3f_539e ; $514e
 Label_3f_5151:
 	ld a, [hl+] ; $5151
 	cp a, $00 ; $5152
@@ -2208,7 +2208,7 @@ Label_3f_5191:
 	ret ; $5191
 Func_3f_5192:
 	wram_bank $06 ; $5192
-	ld hl, $539e ; $5198
+	ld hl, SelectionMaskGrid_3f_539e ; $5198
 	call Func_3f_517b ; $519b
 	ld b, a ; $519e
 	ld c, a ; $519f
@@ -2284,7 +2284,7 @@ Label_3f_51fb:
 	cp a, $40 ; $51fc
 	jr nz, Label_3f_5207 ; $51fe
 	ld c, $00 ; $5200
-	ld hl, $539e ; $5202
+	ld hl, SelectionMaskGrid_3f_539e ; $5202
 	jr Label_3f_51fb ; $5205
 Label_3f_5207:
 	and a, e ; $5207
@@ -2294,7 +2294,7 @@ Label_3f_5207:
 	ret ; $520e
 Func_3f_520f:
 	wram_bank $06 ; $520f
-	ld hl, $539e ; $5215
+	ld hl, SelectionMaskGrid_3f_539e ; $5215
 	ld a, [$cb2f] ; $5218
 	ld b, a ; $521b
 	ld a, [$cb2e] ; $521c
@@ -2330,7 +2330,7 @@ Label_3f_5244:
 	ld a, c ; $5244
 	cp a, $40 ; $5245
 	jr nz, Label_3f_523a ; $5247
-	ld hl, Data_3f_539e ; $5249
+	ld hl, SelectionMaskGrid_3f_539e ; $5249
 	ld d, $ff ; $524c
 Label_3f_524e:
 	inc d ; $524e
@@ -2338,7 +2338,7 @@ Label_3f_524f:
 	ld a, [hl+] ; $524f
 	cp a, $40 ; $5250
 	jr nz, Label_3f_5259 ; $5252
-	ld hl, $539e ; $5254
+	ld hl, SelectionMaskGrid_3f_539e ; $5254
 	ld d, $00 ; $5257
 Label_3f_5259:
 	and a, e ; $5259
@@ -2375,7 +2375,7 @@ Label_3f_526f:
 	ld a, [$cb2d] ; $528d
 	ld b, a ; $5290
 	inc b ; $5291
-	ld hl, Data_3f_539e ; $5292
+	ld hl, SelectionMaskGrid_3f_539e ; $5292
 	ld a, [$cb32] ; $5295
 	ld e, a ; $5298
 Label_3f_5299:
@@ -2428,7 +2428,7 @@ Label_3f_52d6:
 	jr z, Label_3f_52d6 ; $52d9
 	cp a, $40 ; $52db
 	jr nz, Label_3f_52e6 ; $52dd
-	ld hl, $539e ; $52df
+	ld hl, SelectionMaskGrid_3f_539e ; $52df
 	ld c, $00 ; $52e2
 	jr Label_3f_52d5 ; $52e4
 Label_3f_52e6:
@@ -2485,7 +2485,7 @@ Func_3f_5334:
 	inc b ; $5338
 	ld a, [$cb32] ; $5339
 	ld e, a ; $533c
-	ld hl, Data_3f_539e ; $533d
+	ld hl, SelectionMaskGrid_3f_539e ; $533d
 	ld d, $00 ; $5340
 Label_3f_5342:
 	ld a, [hl+] ; $5342
@@ -2543,12 +2543,12 @@ Label_3f_538a:
 	jr Label_3f_538a ; $539b
 Label_3f_539d:
 	ret ; $539d
-Data_3f_539e:
+SelectionMaskGrid_3f_539e:
 	INCBIN "data/bank_03f/d_539e.bin" ; $539e, 121 bytes
 Func_3f_5417:
 	wram_bank $06 ; $5417
 	ld c, $00 ; $541d
-	ld hl, Data_3f_539e ; $541f
+	ld hl, SelectionMaskGrid_3f_539e ; $541f
 	ld a, [$cb32] ; $5422
 	ld e, a ; $5425
 	ld a, [$cb2e] ; $5426
@@ -2600,7 +2600,7 @@ Func_3f_5468:
 	ld b, a ; $5475
 	inc b ; $5476
 	ld c, $00 ; $5477
-	ld hl, Data_3f_539e ; $5479
+	ld hl, SelectionMaskGrid_3f_539e ; $5479
 	ld a, [$cb32] ; $547c
 	ld e, a ; $547f
 Label_3f_5480:

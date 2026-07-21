@@ -21,6 +21,33 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Carve code-indexed data tables (2026-07-21)
+
+Swept every raw-INCBIN `Data_*` blob that a `ld hl/de/bc, imm` site loads as a
+**table base** (28 candidates ROM-wide) and carved the 22 that are genuine
+tables: each gets a `data_tables.json` render spec (so it emits structured
+`db`/`dw` rows instead of an anonymous INCBIN) and a `labels.json` semantic
+name (so the load reads symbolically). 21 blobs leave `data.manifest`; adding
+the sibling `MatchSettingsTable_0a_4ab2` (whose raw `ld de, $4ab2` now resolves)
+makes 23 new names across banks $03-$3f. Highlights: `MinigameBestScoreFlagTable_1e`
+(27 `SetSaveFlag` word ids, `[variant*3+level]`), `SramTextOffsetTable_05` (16
+`$a800`-relative offsets), `DpadMaskToAngleTable_04` (d-pad bitmask → 8-way angle,
+$20 units), the `RankingFlagList_0a_*` `SetGameFlag` word lists, the two
+`Match{,Story}SettingsTable_0a` 5-byte record tables, `ObjectSpawnTable_18_7c53`
+(16 × 11-byte descriptors), `CharMugshotGfxPointers_1b_4cec`, and the
+`MatchUiTilemap{Tiles,Attrs}_0d` layer pair. Two blobs are name-only (kept as
+INCBIN): `SelectionMaskGrid_3f_539e` (a `$00`/`$40`-delimited bitmask stream,
+not fixed-stride) and `ObjectSpawnTable_18_7d88` (16 records + a mixed tail).
+Byte-perfect.
+
+The 6 bank-$1a `ld de, $64xx` "candidates" (`$642c/643c/6454/6464/6474/6484`)
+are **false positives**, left untouched: `QueueSprite` treats `de` as an OAM
+*position* (e→Y, d→X), and the low bytes `$2c,$3c,$54,$64,$74,$84` are the
+successive Y rows of a sprite column — coincidental 16-bit constants that alias
+into a graphics blob, never dereferenced. They slip past `_pointer_load_used`
+only because the `push de` that passes the position to `QueueSprite` matches the
+computed-jump heuristic; tightening that gate is future work.
+
 ### Label obvious same-bank pointer loads (2026-07-21)
 
 Swept every `ld bc/de/hl, imm` whose immediate is a same-bank pointer and named

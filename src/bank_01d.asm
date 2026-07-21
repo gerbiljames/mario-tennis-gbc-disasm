@@ -3643,7 +3643,7 @@ Label_1d_6b3b:
 	ret z ; $6b4c
 	call Func_1d_6b60 ; $6b4d
 Label_1d_6b50:
-	ld hl, Data_1d_6b69 ; $6b50
+	ld hl, TilePairTable_1d_6b69 ; $6b50
 	ld a, [hl+] ; $6b53
 	ld [de], a ; $6b54
 	inc de ; $6b55
@@ -3663,8 +3663,17 @@ Label_1d_6b63:
 	jr nz, Label_1d_6b63 ; $6b65
 	pop bc ; $6b67
 	ret ; $6b68
-Data_1d_6b69:
-	INCBIN "data/bank_01d/d_6b69.bin" ; $6b69, 18 bytes
+TilePairTable_1d_6b69:
+	; $6b69, 18 bytes (bytes:2)
+	db $11, $32 ; 0x00
+	db $07, $08 ; 0x02
+	db $25, $26 ; 0x04
+	db $15, $16 ; 0x06
+	db $05, $06 ; 0x08
+	db $23, $24 ; 0x0a
+	db $13, $14 ; 0x0c
+	db $03, $04 ; 0x0e
+	db $03, $04 ; 0x10
 Func_1d_6b7b:
 	wram_bank $06 ; $6b7b
 	ld a, [$d0b6] ; $6b81
@@ -4202,15 +4211,18 @@ Label_1d_6f1d:
 	ret z ; $6f29
 	inc de ; $6f2a
 Label_1d_6f2b:
-	ld hl, Data_1d_6f35 ; $6f2b
+	ld hl, TileGrid3x3_1d_6f35 ; $6f2b
 	ld a, [hl] ; $6f2e
 	ld [de], a ; $6f2f
 	inc de ; $6f30
 	dec c ; $6f31
 	ret z ; $6f32
 	jr Label_1d_6f2b ; $6f33
-Data_1d_6f35:
-	INCBIN "data/bank_01d/d_6f35.bin" ; $6f35, 9 bytes
+TileGrid3x3_1d_6f35:
+	; $6f35, 9 bytes (bytes:3)
+	db $0d, $1d, $2d ; 0x00
+	db $0e, $1e, $2e ; 0x03
+	db $0f, $1f, $2f ; 0x06
 Func_1d_6f3e:
 	wram_bank $06 ; $6f3e
 	ld a, [$d0b6] ; $6f44

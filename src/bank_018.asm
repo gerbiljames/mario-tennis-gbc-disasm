@@ -1928,7 +1928,7 @@ Func_18_7be7:
 	db $ff, $6b, $bf, $53, $9f, $02, $00, $00 ; 0x10
 Func_18_7c27:
 	ld c, $00 ; $7c27
-	ld hl, Data_18_7c53 ; $7c29
+	ld hl, ObjectSpawnTable_18_7c53 ; $7c29
 	ld de, $d800 ; $7c2c
 Label_18_7c2f:
 	push af ; $7c2f
@@ -1958,8 +1958,25 @@ Label_18_7c4c:
 	cp a, $10 ; $7c4e
 	jr nz, Label_18_7c2f ; $7c50
 	ret ; $7c52
-Data_18_7c53:
-	INCBIN "data/bank_018/d_7c53.bin" ; $7c53, 176 bytes
+ObjectSpawnTable_18_7c53:
+	; $7c53, 176 bytes (records:11)
+; 16 records x 11 bytes
+	db $01, $00, $14, $00, $00, $40, $a0, $00, $00, $38, $7e ; record 0
+	db $02, $00, $24, $00, $18, $50, $c3, $04, $01, $38, $7e ; record 1
+	db $03, $00, $a3, $00, $3c, $45, $85, $08, $02, $38, $7e ; record 2
+	db $01, $00, $d0, $00, $00, $70, $ff, $0c, $01, $38, $7e ; record 3
+	db $02, $00, $54, $00, $24, $40, $b3, $10, $03, $38, $7e ; record 4
+	db $03, $00, $48, $00, $48, $80, $c5, $14, $01, $38, $7e ; record 5
+	db $01, $00, $9c, $00, $24, $30, $d2, $18, $00, $38, $7e ; record 6
+	db $02, $00, $66, $00, $10, $45, $82, $1c, $01, $38, $7e ; record 7
+	db $03, $00, $44, $00, $14, $61, $90, $20, $03, $38, $7e ; record 8
+	db $01, $00, $c2, $00, $28, $4f, $a4, $24, $00, $38, $7e ; record 9
+	db $02, $00, $5a, $00, $4c, $43, $55, $28, $01, $38, $7e ; record 10
+	db $03, $00, $30, $00, $60, $42, $b4, $2c, $02, $38, $7e ; record 11
+	db $01, $00, $63, $00, $44, $64, $f0, $00, $01, $38, $7e ; record 12
+	db $02, $00, $18, $00, $98, $34, $52, $00, $02, $38, $7e ; record 13
+	db $03, $00, $8c, $00, $0c, $45, $c0, $00, $01, $38, $7e ; record 14
+	db $01, $00, $a0, $00, $30, $55, $a0, $00, $00, $38, $7e ; record 15
 Func_18_7d03:
 	ldh a, [hWramBank] ; $7d03
 	push af ; $7d05
@@ -1990,7 +2007,7 @@ Func_18_7d1c:
 	INCBIN "data/bank_018/d_7d44.bin" ; $7d44, 24 bytes
 Func_18_7d5c:
 	ld c, $00 ; $7d5c
-	ld hl, Data_18_7d88 ; $7d5e
+	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e
 	ld de, $d800 ; $7d61
 Label_18_7d64:
 	push af ; $7d64
@@ -2020,6 +2037,6 @@ Label_18_7d81:
 	cp a, $10 ; $7d83
 	jr nz, Label_18_7d64 ; $7d85
 	ret ; $7d87
-Data_18_7d88:
+ObjectSpawnTable_18_7d88:
 	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 365 bytes
 	ds 267, $ff ; $7ef5, fill

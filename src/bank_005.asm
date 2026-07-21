@@ -4688,7 +4688,7 @@ AddTextIdOffset:
 	sra a ; $5d50
 	ld e, a ; $5d52
 	ld d, $00 ; $5d53
-	ld hl, Data_05_5d99 ; $5d55
+	ld hl, WordLookupTable_05_5d99 ; $5d55
 	add hl, de ; $5d58
 	ld e, [hl] ; $5d59
 	inc hl ; $5d5a
@@ -4743,8 +4743,21 @@ Label_05_5d91:
 	pop bc ; $5d96
 	pop af ; $5d97
 	ret ; $5d98
-Data_05_5d99:
-	INCBIN "data/bank_005/d_5d99.bin" ; $5d99, 26 bytes
+WordLookupTable_05_5d99:
+	; $5d99, 26 bytes (records:2)
+	dw $0230 ; record 0
+	dw $015b ; record 1
+	dw $00bb ; record 2
+	dw $00dd ; record 3
+	dw $011f ; record 4
+	dw $010e ; record 5
+	dw $02c7 ; record 6
+	dw $0100 ; record 7
+	dw $00f2 ; record 8
+	dw $00bd ; record 9
+	dw $010b ; record 10
+	dw $00f9 ; record 11
+	dw $0143 ; record 12
 RenderProportionalTextAt:
 	push af ; $5db3
 	push bc ; $5db4
@@ -5233,7 +5246,7 @@ GetSpeakerVoice:
 	ld l, a ; $60b7
 	ld h, $00 ; $60b8
 	add hl, hl ; $60ba
-	ld de, Data_05_60cb ; $60bb
+	ld de, ActorTypePropertyTable_05_60cb ; $60bb
 	add hl, de ; $60be
 	inc hl ; $60bf
 	ld b, [hl] ; $60c0
@@ -5245,8 +5258,96 @@ Label_05_60c6:
 	pop de ; $60c8
 	pop bc ; $60c9
 	ret ; $60ca
-Data_05_60cb:
-	INCBIN "data/bank_005/d_60cb.bin" ; $60cb, 175 bytes
+ActorTypePropertyTable_05_60cb:
+	; $60cb, 175 bytes (bytes:2)
+	db $1e, $04 ; 0x00
+	db $1f, $03 ; 0x02
+	db $20, $04 ; 0x04
+	db $21, $06 ; 0x06
+	db $22, $05 ; 0x08
+	db $23, $07 ; 0x0a
+	db $24, $07 ; 0x0c
+	db $25, $04 ; 0x0e
+	db $26, $08 ; 0x10
+	db $27, $08 ; 0x12
+	db $28, $04 ; 0x14
+	db $29, $03 ; 0x16
+	db $2a, $05 ; 0x18
+	db $2b, $07 ; 0x1a
+	db $2c, $08 ; 0x1c
+	db $2d, $06 ; 0x1e
+	db $2e, $01 ; 0x20
+	db $2f, $03 ; 0x22
+	db $30, $04 ; 0x24
+	db $31, $04 ; 0x26
+	db $32, $04 ; 0x28
+	db $33, $02 ; 0x2a
+	db $34, $04 ; 0x2c
+	db $35, $08 ; 0x2e
+	db $36, $08 ; 0x30
+	db $37, $04 ; 0x32
+	db $38, $03 ; 0x34
+	db $39, $02 ; 0x36
+	db $3a, $01 ; 0x38
+	db $3b, $03 ; 0x3a
+	db $3c, $04 ; 0x3c
+	db $3d, $04 ; 0x3e
+	db $3e, $03 ; 0x40
+	db $3f, $03 ; 0x42
+	db $40, $04 ; 0x44
+	db $41, $07 ; 0x46
+	db $42, $04 ; 0x48
+	db $43, $04 ; 0x4a
+	db $44, $03 ; 0x4c
+	db $45, $03 ; 0x4e
+	db $46, $03 ; 0x50
+	db $47, $04 ; 0x52
+	db $48, $06 ; 0x54
+	db $49, $03 ; 0x56
+	db $4a, $02 ; 0x58
+	db $4b, $04 ; 0x5a
+	db $4c, $08 ; 0x5c
+	db $4d, $08 ; 0x5e
+	db $4e, $08 ; 0x60
+	db $4f, $08 ; 0x62
+	db $50, $08 ; 0x64
+	db $51, $08 ; 0x66
+	db $52, $08 ; 0x68
+	db $53, $08 ; 0x6a
+	db $54, $04 ; 0x6c
+	db $55, $00 ; 0x6e
+	db $56, $02 ; 0x70
+	db $57, $01 ; 0x72
+	db $58, $04 ; 0x74
+	db $59, $03 ; 0x76
+	db $5a, $03 ; 0x78
+	db $5b, $02 ; 0x7a
+	db $5c, $04 ; 0x7c
+	db $5d, $01 ; 0x7e
+	db $5e, $02 ; 0x80
+	db $5f, $05 ; 0x82
+	db $60, $06 ; 0x84
+	db $61, $04 ; 0x86
+	db $62, $06 ; 0x88
+	db $63, $05 ; 0x8a
+	db $64, $02 ; 0x8c
+	db $65, $03 ; 0x8e
+	db $66, $04 ; 0x90
+	db $67, $06 ; 0x92
+	db $68, $04 ; 0x94
+	db $69, $01 ; 0x96
+	db $6a, $03 ; 0x98
+	db $6b, $05 ; 0x9a
+	db $6c, $03 ; 0x9c
+	db $6d, $02 ; 0x9e
+	db $6e, $08 ; 0xa0
+	db $6f, $08 ; 0xa2
+	db $70, $00 ; 0xa4
+	db $71, $02 ; 0xa6
+	db $72, $03 ; 0xa8
+	db $73, $08 ; 0xaa
+	db $74, $08 ; 0xac
+	db $ff ; 0xae
 ResetTextWindowsAndRestoreMap:
 	call InitTextWindows ; $617a
 	call RestoreShadowTilemap ; $617d
@@ -6840,7 +6941,7 @@ FetchSRAMText:
 	push bc ; $6d3b
 	push de ; $6d3c
 	push hl ; $6d3d
-	ld hl, Data_05_6d65 ; $6d3e
+	ld hl, SramTextOffsetTable_05 ; $6d3e
 	sla e ; $6d41
 	rl d ; $6d43
 	add hl, de ; $6d45
@@ -6863,8 +6964,24 @@ Label_05_6d5e:
 	pop de ; $6d62
 	pop bc ; $6d63
 	ret ; $6d64
-Data_05_6d65:
-	INCBIN "data/bank_005/d_6d65.bin" ; $6d65, 32 bytes
+SramTextOffsetTable_05:
+	; $6d65, 32 bytes (records:2)
+	dw $0009 ; record 0
+	dw $0089 ; record 1
+	dw $0109 ; record 2
+	dw $0189 ; record 3
+	dw $0209 ; record 4
+	dw $0289 ; record 5
+	dw $0309 ; record 6
+	dw $0389 ; record 7
+	dw $0409 ; record 8
+	dw $0489 ; record 9
+	dw $0509 ; record 10
+	dw $0589 ; record 11
+	dw $0609 ; record 12
+	dw $0689 ; record 13
+	dw $0709 ; record 14
+	dw $0789 ; record 15
 RunDebugWindowDemo:
 	ldh a, [hWramBank] ; $6d85
 	push af ; $6d87

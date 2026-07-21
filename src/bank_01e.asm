@@ -3786,15 +3786,42 @@ Label_1e_6eee:
 	jr nc, Label_1e_6ef7 ; $6ef4
 	inc h ; $6ef6
 Label_1e_6ef7:
-	ld de, Data_1e_6f02 ; $6ef7
+	ld de, MinigameBestScoreFlagTable_1e ; $6ef7
 	add hl, de ; $6efa
 	ld a, [hl+] ; $6efb
 	ld d, [hl] ; $6efc
 	ld e, a ; $6efd
 	farcall FarPtr_SetSaveFlag ; $6efe
 	ret ; $6f01
-Data_1e_6f02:
-	INCBIN "data/bank_01e/d_6f02.bin" ; $6f02, 54 bytes
+MinigameBestScoreFlagTable_1e:
+	; $6f02, 54 bytes (records:2)
+	dw $0280 ; record 0
+	dw $02a0 ; record 1
+	dw $02c0 ; record 2
+	dw $02e0 ; record 3
+	dw $0300 ; record 4
+	dw $0320 ; record 5
+	dw $0340 ; record 6
+	dw $0360 ; record 7
+	dw $0380 ; record 8
+	dw $03a0 ; record 9
+	dw $03c0 ; record 10
+	dw $03e0 ; record 11
+	dw $0500 ; record 12
+	dw $0520 ; record 13
+	dw $0540 ; record 14
+	dw $0560 ; record 15
+	dw $0580 ; record 16
+	dw $05a0 ; record 17
+	dw $05c0 ; record 18
+	dw $05e0 ; record 19
+	dw $0600 ; record 20
+	dw $0620 ; record 21
+	dw $0640 ; record 22
+	dw $0660 ; record 23
+	dw $0680 ; record 24
+	dw $06a0 ; record 25
+	dw $06c0 ; record 26
 UpdateMinigameBestScore:
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
