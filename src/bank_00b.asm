@@ -279,7 +279,7 @@ Func_0b_41c3:
 	ld [wMatchAbortFlag], a ; $41d6
 	ret ; $41d9
 	ld a, [wPointOutcome] ; $41da
-	cp a, $04 ; $41dd
+	cp a, COURTBANNER_NET ; $41dd
 	ret z ; $41df
 	cp a, $01 ; $41e0
 	ret z ; $41e2
@@ -384,7 +384,7 @@ PlayDrillPointEndSequence:
 	ld l, a ; $43b1
 	farcall SetCameraTarget ; $43b2
 	ld a, [wPointOutcome] ; $43b5
-	cp a, $06 ; $43b8
+	cp a, COURTBANNER_START ; $43b8
 	jr z, Label_0b_43dc ; $43ba
 	cp a, $07 ; $43bc
 	jr z, Label_0b_43dc ; $43be
@@ -485,7 +485,7 @@ Func_0b_446e:
 	wram_bank ; $447f
 	ret ; $4483
 	ld a, [wPointOutcome] ; $4484
-	cp a, $01 ; $4487
+	cp a, COURTBANNER_FAULT ; $4487
 	jr z, Label_0b_44ec ; $4489
 	cp a, $03 ; $448b
 	jr z, Label_0b_44ec ; $448d
@@ -549,7 +549,7 @@ Label_0b_44ec:
 	ld [$c2e6], a ; $44ee
 	ret ; $44f1
 	ld a, [wPointOutcome] ; $44f2
-	cp a, $01 ; $44f5
+	cp a, COURTBANNER_FAULT ; $44f5
 	jr z, Label_0b_452e ; $44f7
 	cp a, $03 ; $44f9
 	jr z, Label_0b_452e ; $44fb
@@ -1068,7 +1068,7 @@ Label_0b_4994:
 	INCBIN "data/bank_00b/d_4996.bin" ; $4996, 10 bytes
 Label_0b_49a0:
 	ld a, [wPointOutcome] ; $49a0
-	cp a, $07 ; $49a3
+	cp a, COURTBANNER_BREAK_POINT ; $49a3
 	ld a, $00 ; $49a5
 	ret z ; $49a7
 	ld a, $04 ; $49a8
@@ -1145,7 +1145,7 @@ Label_0b_5c49:
 	INCBIN "data/bank_00b/d_5c4e.bin" ; $5c4e, 4 bytes
 	call Func_0b_5d48 ; $5c52
 	ld a, [wPointOutcome] ; $5c55
-	cp a, $04 ; $5c58
+	cp a, COURTBANNER_NET ; $5c58
 	jr z, Label_0b_5c62 ; $5c5a
 	cp a, $05 ; $5c5c
 	jr z, Label_0b_5c62 ; $5c5e
@@ -1426,7 +1426,7 @@ Label_0b_5e55:
 	ld a, $00 ; $5e5a
 	ret nz ; $5e5c
 	ld a, [wPointOutcome] ; $5e5d
-	cp a, $04 ; $5e60
+	cp a, COURTBANNER_NET ; $5e60
 	jr z, Label_0b_5e75 ; $5e62
 	ld a, $2e ; $5e64
 	ld b, $00 ; $5e66
@@ -1541,7 +1541,7 @@ Func_0b_6bd0:
 	ret ; $6be0
 	call Func_0b_6cd0 ; $6be1
 	ld a, [wPointOutcome] ; $6be4
-	cp a, $05 ; $6be7
+	cp a, COURTBANNER_OUT ; $6be7
 	jr z, Label_0b_6bed ; $6be9
 	jr Label_0b_6bf1 ; $6beb
 Label_0b_6bed:

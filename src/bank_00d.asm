@@ -531,7 +531,7 @@ Func_0d_43a3:
 	ret ; $43b9
 Func_0d_43ba:
 	ld a, [wPointOutcome] ; $43ba
-	cp a, $06 ; $43bd
+	cp a, COURTBANNER_START ; $43bd
 	jr z, Label_0d_43de ; $43bf
 	cp a, $09 ; $43c1
 	jr z, Label_0d_43de ; $43c3
@@ -552,7 +552,7 @@ DetermineMinigamePointResult:
 	and a, a ; $43e2
 	jr nz, Label_0d_43ee ; $43e3
 	ld a, [wPointOutcome] ; $43e5
-	cp a, $0b ; $43e8
+	cp a, COURTBANNER_GAME_SET ; $43e8
 	jr z, Label_0d_43f6 ; $43ea
 	jr Label_0d_440a ; $43ec
 Label_0d_43ee:
@@ -1792,7 +1792,7 @@ Label_0d_4de5:
 	call Func_0d_47c3 ; $4df7
 	call Func_0d_4e80 ; $4dfa
 	ld a, [wPointOutcome] ; $4dfd
-	cp a, $06 ; $4e00
+	cp a, COURTBANNER_START ; $4e00
 	ret nz ; $4e02
 	call Func_0d_4e96 ; $4e03
 	ld d, $00 ; $4e06
