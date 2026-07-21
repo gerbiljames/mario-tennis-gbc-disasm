@@ -1423,7 +1423,7 @@ Label_38_4a61:
 	farcall InitMenuBgScroll ; $4a85
 	ld b, $01 ; $4a88
 	ld c, $01 ; $4a8a
-	farcall LoadMenuHighlightPalettes ; $4a8c
+	farcall Func_39_4b3a ; $4a8c
 	ld a, $10 ; $4a8f
 	ld [$cb15], a ; $4a91
 	ld [$cb16], a ; $4a94
@@ -2014,7 +2014,7 @@ Func_38_4f6f:
 	farcall InitMenuBgScroll ; $5057
 	ld b, $01 ; $505a
 	ld c, $01 ; $505c
-	farcall LoadMenuHighlightPalettes ; $505e
+	farcall Func_39_4b3a ; $505e
 	ld a, $30 ; $5061
 	ld [$cb15], a ; $5063
 	ld [$cb16], a ; $5066
@@ -6436,7 +6436,7 @@ Func_38_6f6e:
 	farcall InitMenuBgScroll ; $701a
 	ld b, $01 ; $701d
 	ld c, $01 ; $701f
-	farcall LoadMenuHighlightPalettes ; $7021
+	farcall Func_39_4b3a ; $7021
 	ld a, $10 ; $7024
 	ld [$cb15], a ; $7026
 	ld [$cb16], a ; $7029

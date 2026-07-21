@@ -766,7 +766,7 @@ RunLinkMatchRulesMenu:
 	farcall InitMenuBgScroll ; $44f0
 	ld b, $01 ; $44f3
 	ld c, $01 ; $44f5
-	farcall LoadMenuHighlightPalettes ; $44f7
+	farcall Func_39_4b3a ; $44f7
 	call DrawMatchRulesInitialState ; $44fa
 	ld a, $01 ; $44fd
 	ld hl, MatchRulesCursorSpriteTask ; $44ff
@@ -1759,7 +1759,7 @@ LoadEraseDataConfirmScreen:
 	farcall InitMenuBgScroll ; $4d2b
 	ld b, $01 ; $4d2e
 	ld c, $01 ; $4d30
-	farcall LoadMenuHighlightPalettes ; $4d32
+	farcall Func_39_4b3a ; $4d32
 	farcall PrepareGlyphBuffer ; $4d35
 	wram_bank $03 ; $4d38
 	ld a, [$d800] ; $4d3e
@@ -1922,7 +1922,7 @@ RunRacketShoesChoiceMenu:
 	farcall InitMenuBgScroll ; $4eb7
 	ld b, $01 ; $4eba
 	ld c, $01 ; $4ebc
-	farcall LoadMenuHighlightPalettes ; $4ebe
+	farcall Func_39_4b3a ; $4ebe
 	ld a, [$cb24] ; $4ec1
 	ld c, a ; $4ec4
 	ld b, $02 ; $4ec5
@@ -2311,7 +2311,7 @@ RunPlayAlonePartnerMenu:
 	farcall InitMenuBgScroll ; $51a9
 	ld b, $01 ; $51ac
 	ld c, $01 ; $51ae
-	farcall LoadMenuHighlightPalettes ; $51b0
+	farcall Func_39_4b3a ; $51b0
 	xor a, a ; $51b3
 	ld c, a ; $51b4
 	ld b, $02 ; $51b5
@@ -3525,7 +3525,7 @@ RunCourtSelect4Menu:
 	farcall InitMenuBgScroll ; $5ba3
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
-	farcall LoadMenuHighlightPalettes ; $5baa
+	farcall Func_39_4b3a ; $5baa
 	call LoadCourtSelectHeader ; $5bad
 	wram_bank $03 ; $5bb0
 	ld a, [wMenuSlideDirection] ; $5bb6
@@ -3597,7 +3597,7 @@ RunLinkCourtSelect4Menu:
 	farcall InitMenuBgScroll ; $5c46
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
-	farcall LoadMenuHighlightPalettes ; $5c4d
+	farcall Func_39_4b3a ; $5c4d
 	call LoadCourtSelectHeader ; $5c50
 	wram_bank $03 ; $5c53
 	ld a, [wMenuSlideDirection] ; $5c59
@@ -4315,7 +4315,7 @@ RunCourtSelect9Menu:
 	farcall InitMenuBgScroll ; $6529
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
-	farcall LoadMenuHighlightPalettes ; $6530
+	farcall Func_39_4b3a ; $6530
 	call LoadCourtSelectHeader ; $6533
 	wram_bank $03 ; $6536
 	ld a, [wMenuSlideDirection] ; $653c
@@ -4401,7 +4401,7 @@ RunLinkCourtSelect9Menu:
 	farcall InitMenuBgScroll ; $65e3
 	ld b, $01 ; $65e6
 	ld c, $01 ; $65e8
-	farcall LoadMenuHighlightPalettes ; $65ea
+	farcall Func_39_4b3a ; $65ea
 	call LoadCourtSelectHeader ; $65ed
 	wram_bank $03 ; $65f0
 	ld a, [wMenuSlideDirection] ; $65f6

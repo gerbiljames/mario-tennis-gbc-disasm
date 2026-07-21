@@ -25,7 +25,7 @@ SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 	farptr GetExpRemainingToNextLevel ; $402c
 	farptr GetExpProgressInCurrentLevel ; $402e
 	farptr GetExpRequiredForLevel ; $4030
-	farptr MapCharIdToBaseVariant ; $4032
+	farptr Func_02_4128 ; $4032
 	farptr GetCharPaletteIndex ; $4034
 	farptr RemapExtendedCharId ; $4036
 	farptr GetCharGroupEntry ; $4038
@@ -188,7 +188,7 @@ Label_02_4103:
 	pop af ; $4122
 	wram_bank ; $4123
 	ret ; $4127
-MapCharIdToBaseVariant:
+Func_02_4128:
 	push hl ; $4128
 	add a, $33 ; $4129
 	ld l, a ; $412b

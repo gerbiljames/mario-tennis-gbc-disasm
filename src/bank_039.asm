@@ -12,14 +12,14 @@ SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 	farptr LoadFixedPaletteSet ; $4012
 	farptr ApplySpriteWaveOffset ; $4014
 	farptr ApplySpriteBobOffset ; $4016
-	farptr LoadStatLabelTileBlocks ; $4018
+	farptr Func_39_4a16 ; $4018
 	farptr QueueStackedSpritePair ; $401a
 	farptr LoadStadiumBgGraphics ; $401c
 	farptr FlushWram3MapRows ; $401e
 	farptr RestoreMenuBgAndDrawPanel ; $4020
 	farptr ResetScreenAndTextWindows ; $4022
 	farptr InitMenuBgScroll ; $4024
-	farptr LoadMenuHighlightPalettes ; $4026
+	farptr Func_39_4b3a ; $4026
 	farptr TickMenuBgScroll ; $4028
 	farptr LoadMenuFontTiles ; $402a
 	farptr QueueWram3MapToVRAMAlias1, QueueWram3MapToVRAM ; $402c
@@ -768,7 +768,7 @@ Lz_39_4833:
 	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 240 bytes
 StatLabelTiles:
 	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 243 bytes
-LoadStatLabelTileBlocks:
+Func_39_4a16:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18
 	push de ; $4a1a
@@ -880,7 +880,7 @@ InitMenuBgScroll:
 	xor a, a ; $4b35
 	ld [$cb19], a ; $4b36
 	ret ; $4b39
-LoadMenuHighlightPalettes:
+Func_39_4b3a:
 	push bc ; $4b3a
 	ld a, c ; $4b3b
 	add a, $08 ; $4b3c

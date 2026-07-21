@@ -5170,7 +5170,7 @@ LoadRulesScreen:
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, $a000 ; $718c
-	farcall LoadStatLabelTileBlocks ; $718f
+	farcall Func_39_4a16 ; $718f
 	ld b, $08 ; $7192
 	ld c, $0f ; $7194
 	farcall LoadIndexedPalette ; $7196

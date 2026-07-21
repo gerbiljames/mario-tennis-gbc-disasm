@@ -5112,7 +5112,7 @@ Label_1e_7b47:
 	ret ; $7b4b
 Func_1e_7b4c:
 	ld de, $8200 ; $7b4c
-	farcall LoadStatLabelTileBlocks ; $7b4f
+	farcall Func_39_4a16 ; $7b4f
 	ld b, $08 ; $7b52
 	ld c, $0f ; $7b54
 	farcall LoadIndexedPalette ; $7b56
