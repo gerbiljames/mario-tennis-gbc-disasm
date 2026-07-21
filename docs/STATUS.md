@@ -29,11 +29,14 @@ tables: each gets a `data_tables.json` render spec (so it emits structured
 `db`/`dw` rows instead of an anonymous INCBIN) and a `labels.json` semantic
 name (so the load reads symbolically). 21 blobs leave `data.manifest`; adding
 the sibling `MatchSettingsTable_0a_4ab2` (whose raw `ld de, $4ab2` now resolves)
-makes 23 new names across banks $03-$3f. Highlights: `MinigameBestScoreFlagTable_1e`
-(27 `SetSaveFlag` word ids, `[variant*3+level]`), `SramTextOffsetTable_05` (16
-`$a800`-relative offsets), `DpadMaskToAngleTable_04` (d-pad bitmask → 8-way angle,
-$20 units), the `RankingFlagList_0a_*` `SetGameFlag` word lists, the two
-`Match{,Story}SettingsTable_0a` 5-byte record tables, `ObjectSpawnTable_18_7c53`
+makes 23 new names across banks $03-$3f. Highlights: `MinigameClearFlagTable_1e`
+(27 `SetSaveFlag` ids indexed `[(minigameId-$1c)*3 + level]`, set on a win by the
+new `SetMinigameClearFlag`; `$c8f7` is the low byte of the BE
+`wCurrentMinigameStoryMatch`, so $1c-$24 = the 9 minigames), `SramTextOffsetTable_05`
+(16 `$a800`-relative offsets), `DpadMaskToAngleTable_04` (d-pad bitmask → 8-way
+angle, $20 units), the `RankingFlagList_0a_*` `SetGameFlag` word lists, the
+`{Singles,Doubles}MatchSettingsTable_0a` 5-byte record tables (chosen by the
+category byte of `wCurrentMinigameStoryMatch`), `ObjectSpawnTable_18_7c53`
 (16 × 11-byte descriptors), `CharMugshotGfxPointers_1b_4cec`, and the
 `MatchUiTilemap{Tiles,Attrs}_0d` layer pair. Two blobs are name-only (kept as
 INCBIN): `SelectionMaskGrid_3f_539e` (a `$00`/`$40`-delimited bitmask stream,

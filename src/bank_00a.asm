@@ -1710,13 +1710,13 @@ SetMatchNumberOfGames:
 	ld [wMatchTypeNumberOfGames], a ; $4a58
 	ret ; $4a5b
 LoadMatchSettingsFromTable:
-	ld de, MatchSettingsTable_0a_4ab2 ; $4a5c
+	ld de, SinglesMatchSettingsTable_0a ; $4a5c
 	ld a, [wCurrentMinigameStoryMatch] ; $4a5f
 	cp a, $01 ; $4a62
 	ld a, $00 ; $4a64
 	jr nz, Label_0a_4a6c ; $4a66
 	inc a ; $4a68
-	ld de, StoryMatchSettingsTable_0a_4b2f ; $4a69
+	ld de, DoublesMatchSettingsTable_0a ; $4a69
 Label_0a_4a6c:
 	call SetMatchDoublesMode ; $4a6c
 	ld a, [$c8f7] ; $4a6f
@@ -1758,7 +1758,7 @@ Label_0a_4aa2:
 	ld a, [hl] ; $4aad
 	ld [wMatchBGM], a ; $4aae
 	ret ; $4ab1
-MatchSettingsTable_0a_4ab2:
+SinglesMatchSettingsTable_0a:
 	; $4ab2, 125 bytes (records:5)
 ; 25 records x 5 bytes
 	db $03, $24, $00, $36, $20 ; record 0
@@ -1786,7 +1786,7 @@ MatchSettingsTable_0a_4ab2:
 	db $0a, $5d, $05, $56, $29 ; record 22
 	db $0a, $5c, $05, $56, $29 ; record 23
 	db $0a, $5b, $05, $56, $29 ; record 24
-StoryMatchSettingsTable_0a_4b2f:
+DoublesMatchSettingsTable_0a:
 	; $4b2f, 125 bytes (records:5)
 ; 25 records x 5 bytes
 	db $03, $27, $00, $36, $20 ; record 0

@@ -2511,7 +2511,7 @@ Label_1e_6688:
 	ld a, [wPointWinLoseFlag] ; $668b
 	cp a, $01 ; $668e
 	ret nz ; $6690
-	call Func_1e_6edc ; $6691
+	call SetMinigameClearFlag ; $6691
 	ret ; $6694
 Label_1e_6695:
 	ld a, h ; $6695
@@ -3765,7 +3765,7 @@ Label_1e_6ece:
 	ret ; $6eda
 Label_1e_6edb:
 	ret ; $6edb
-Func_1e_6edc:
+SetMinigameClearFlag:
 	ld a, [$c8f7] ; $6edc
 	sub a, $1c ; $6edf
 	bit 7, a ; $6ee1
@@ -3786,14 +3786,14 @@ Label_1e_6eee:
 	jr nc, Label_1e_6ef7 ; $6ef4
 	inc h ; $6ef6
 Label_1e_6ef7:
-	ld de, MinigameBestScoreFlagTable_1e ; $6ef7
+	ld de, MinigameClearFlagTable_1e ; $6ef7
 	add hl, de ; $6efa
 	ld a, [hl+] ; $6efb
 	ld d, [hl] ; $6efc
 	ld e, a ; $6efd
 	farcall FarPtr_SetSaveFlag ; $6efe
 	ret ; $6f01
-MinigameBestScoreFlagTable_1e:
+MinigameClearFlagTable_1e:
 	; $6f02, 54 bytes (records:2)
 	dw $0280 ; record 0
 	dw $02a0 ; record 1
