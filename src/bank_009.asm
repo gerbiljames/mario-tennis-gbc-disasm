@@ -1,59 +1,32 @@
 SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 
-FarPtr_InitAllObjSlots:
-	dw InitAllObjSlots ; $4000
-FarPtr_UpdateAllObjSprites:
-	dw UpdateAllObjSprites ; $4002
-FarPtr_09_04:
-	dw Func_09_4036 ; $4004
-FarPtr_LoadOnCourtCharacterGfx:
-	dw LoadOnCourtCharacterGfx ; $4006
-FarPtr_LoadServeGfx:
-	dw LoadServeGfx ; $4008
-FarPtr_09_0a:
-	dw Func_09_412a ; $400a
-FarPtr_09_0c:
-	dw Func_09_4190 ; $400c
-FarPtr_09_0e:
-	dw Func_09_4242 ; $400e
-FarPtr_09_10:
-	dw Func_09_4282 ; $4010
-FarPtr_09_12:
-	dw Func_09_4367 ; $4012
-FarPtr_09_14:
-	dw Func_09_4371 ; $4014
-FarPtr_09_16:
-	dw Func_09_437b ; $4016
-FarPtr_09_18:
-	dw Func_09_4310 ; $4018
-FarPtr_09_1a:
-	dw Func_09_431d ; $401a
-FarPtr_09_1c:
-	dw Func_09_42d8 ; $401c
-FarPtr_09_1e:
-	dw Func_09_42f6 ; $401e
-FarPtr_InitAllObjSlotsAlias1:
-	dw InitAllObjSlots ; $4020
-FarPtr_InitAllObjSlotsAlias2:
-	dw InitAllObjSlots ; $4022
-FarPtr_09_24:
-	dw Func_09_45c4 ; $4024
-FarPtr_09_26:
-	dw Func_09_4098 ; $4026
-FarPtr_09_28:
-	dw Func_09_6100 ; $4028
-FarPtr_09_2a:
-	dw Func_09_610c ; $402a
-FarPtr_09_2c:
-	dw Func_09_611b ; $402c
-FarPtr_09_2e:
-	dw Func_09_612a ; $402e
-FarPtr_09_30:
-	dw Func_09_6139 ; $4030
-FarPtr_09_32:
-	dw Func_09_422c ; $4032
-FarPtr_09_34:
-	dw Func_09_4238 ; $4034
+	farptr InitAllObjSlots ; $4000
+	farptr UpdateAllObjSprites ; $4002
+	farptr Func_09_4036 ; $4004
+	farptr LoadOnCourtCharacterGfx ; $4006
+	farptr LoadServeGfx ; $4008
+	farptr Func_09_412a ; $400a
+	farptr Func_09_4190 ; $400c
+	farptr Func_09_4242 ; $400e
+	farptr Func_09_4282 ; $4010
+	farptr Func_09_4367 ; $4012
+	farptr Func_09_4371 ; $4014
+	farptr Func_09_437b ; $4016
+	farptr Func_09_4310 ; $4018
+	farptr Func_09_431d ; $401a
+	farptr Func_09_42d8 ; $401c
+	farptr Func_09_42f6 ; $401e
+	farptr InitAllObjSlotsAlias1, InitAllObjSlots ; $4020
+	farptr InitAllObjSlotsAlias2, InitAllObjSlots ; $4022
+	farptr Func_09_45c4 ; $4024
+	farptr Func_09_4098 ; $4026
+	farptr Func_09_6100 ; $4028
+	farptr Func_09_610c ; $402a
+	farptr Func_09_611b ; $402c
+	farptr Func_09_612a ; $402e
+	farptr Func_09_6139 ; $4030
+	farptr Func_09_422c ; $4032
+	farptr Func_09_4238 ; $4034
 Func_09_4036:
 	ld a, [wTiebreakerIndicator] ; $4036
 	and a, a ; $4039
@@ -128,7 +101,7 @@ Label_09_40b1:
 LoadOnCourtCharacterGfx:
 	ld a, $ff ; $40b5
 	ld de, $8140 ; $40b7
-	farcall FarPtr_LoadOnCourtCharTilesB ; $40ba
+	farcall LoadOnCourtCharTilesB ; $40ba
 	ld a, [wOnCourtCharCountMinus1] ; $40bd
 	rst Rst00 ; $40c0
 	dw Label_09_4111 ; $40c1 jumptable
@@ -139,34 +112,34 @@ Label_09_40c9:
 	wram_bank $06 ; $40c9
 	ld a, [$df7e] ; $40cf
 	ld de, $8100 ; $40d2
-	farcall FarPtr_LoadOnCourtCharTilesA ; $40d5
+	farcall LoadOnCourtCharTilesA ; $40d5
 	ld a, [$df7e] ; $40d8
 	ld de, $8140 ; $40db
-	farcall FarPtr_LoadOnCourtCharTilesB ; $40de
+	farcall LoadOnCourtCharTilesB ; $40de
 Label_09_40e1:
 	wram_bank $07 ; $40e1
 	ld a, [$df7e] ; $40e7
 	ld de, $8180 ; $40ea
-	farcall FarPtr_LoadOnCourtCharTilesA ; $40ed
+	farcall LoadOnCourtCharTilesA ; $40ed
 	ld a, [$df7e] ; $40f0
 	ld de, $81c0 ; $40f3
-	farcall FarPtr_LoadOnCourtCharTilesB ; $40f6
+	farcall LoadOnCourtCharTilesB ; $40f6
 Label_09_40f9:
 	wram_bank $05 ; $40f9
 	ld a, [$df7e] ; $40ff
 	ld de, $8080 ; $4102
-	farcall FarPtr_LoadOnCourtCharTilesA ; $4105
+	farcall LoadOnCourtCharTilesA ; $4105
 	ld a, [$df7e] ; $4108
 	ld de, $80c0 ; $410b
-	farcall FarPtr_LoadOnCourtCharTilesB ; $410e
+	farcall LoadOnCourtCharTilesB ; $410e
 Label_09_4111:
 	wram_bank $04 ; $4111
 	ld a, [$df7e] ; $4117
 	ld de, $8000 ; $411a
-	farcall FarPtr_LoadOnCourtCharTilesA ; $411d
+	farcall LoadOnCourtCharTilesA ; $411d
 	ld a, [$df7e] ; $4120
 	ld de, $8040 ; $4123
-	farcall FarPtr_LoadOnCourtCharTilesB ; $4126
+	farcall LoadOnCourtCharTilesB ; $4126
 	ret ; $4129
 Func_09_412a:
 	wram_bank $04 ; $412a
@@ -615,7 +588,7 @@ Label_09_4718:
 	ld hl, $ddf1 ; $4718
 	bit 0, [hl] ; $471b
 	ret z ; $471d
-	farcall FarPtr_FindServerCharBank ; $471e
+	farcall FindServerCharBank ; $471e
 	ld a, b ; $4721
 	wram_bank ; $4722
 	ld a, [$df53] ; $4726

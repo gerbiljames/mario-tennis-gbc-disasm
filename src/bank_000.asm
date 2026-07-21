@@ -5170,7 +5170,7 @@ Label_00_1da5:
 	or a, a ; $1dac
 	jr z, Label_00_1db6 ; $1dad
 	push af ; $1daf
-	farcall FarPtr_SyncLinkFrame ; $1db0
+	farcall SyncLinkFrame ; $1db0
 	pop af ; $1db3
 	jr Label_00_1db9 ; $1db4
 Label_00_1db6:
@@ -5186,7 +5186,7 @@ Label_00_1dbe:
 	and a, a ; $1dc0
 	jr z, Label_00_1dca ; $1dc1
 	push af ; $1dc3
-	farcall FarPtr_SyncLinkFrame ; $1dc4
+	farcall SyncLinkFrame ; $1dc4
 	pop af ; $1dc7
 	jr Label_00_1dbe ; $1dc8
 Label_00_1dca:
@@ -6523,7 +6523,7 @@ Label_00_2596:
 	ldh a, [hIsCGB] ; $25a5
 	or a, a ; $25a7
 	jr nz, Label_00_25ad ; $25a8
-	farcall FarPtr_01_02 ; $25aa
+	farcall Func_01_6030 ; $25aa
 Label_00_25ad:
 	xor a, a ; $25ad
 	ldh [rVBK], a ; $25ae
@@ -6585,7 +6585,7 @@ Label_00_25ad:
 	ld a, $c0 ; $2624
 	ld [wSpriteBufferPage], a ; $2626
 	call InitSerialLink ; $2629
-	farcall FarPtr_01_00 ; $262c
+	farcall Func_01_4018 ; $262c
 	stop ; $262f
 AdvanceFrame:
 	push af ; $2631
@@ -6953,7 +6953,7 @@ Label_00_2848:
 	pop bc ; $2849
 	ret ; $284a
 LinkErrorReset:
-	farcall FarPtr_ShowLinkErrorScreen ; $284b
+	farcall ShowLinkErrorScreen ; $284b
 	jp SoftReset ; $284e
 ReadJoypadThunk:
 	call ReadJoypad ; $2851
@@ -7336,7 +7336,7 @@ Label_00_2a90:
 Func_00_2a9e:
 	push bc ; $2a9e
 	ld c, $11 ; $2a9f
-	farcall FarPtr_RenderProportionalTextAt ; $2aa1
+	farcall RenderProportionalTextAt ; $2aa1
 	pop bc ; $2aa4
 	ret ; $2aa5
 CopyTextString:

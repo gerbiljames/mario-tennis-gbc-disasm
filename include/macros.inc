@@ -7,7 +7,7 @@
 ; operands.
 MACRO farcall
 	rst Rst18
-	db LOW(\1), BANK(\1)
+	db LOW(FarPtr_\1), BANK(FarPtr_\1)
 ENDM
 
 ; Sound/music command (handler $2fb3): one inline id byte.
@@ -25,6 +25,18 @@ MACRO dslot
 	db LOW(\1), BANK(\1)
 	SHIFT
 	ENDR
+ENDM
+
+; One $4000 pointer-table entry: defines the FarPtr_<suffix> label and the dw
+; slot that farcall's operand bytes index. One arg when the target symbol is
+; the suffix (farptr RunMatch -> FarPtr_RunMatch: dw RunMatch); two when they
+; differ (farptr 24_0a, Func_24_6706).
+MACRO farptr
+IF _NARG == 1
+FarPtr_\1: dw \1
+ELSE
+FarPtr_\1: dw \2
+ENDC
 ENDM
 
 ; Game text (see the generated data/bank_XXX/text_*.asm): a string is db
@@ -237,7 +249,7 @@ MACRO load_match_settings
 	ld [wCurrentMinigameStoryMatch], a
 	ld a, LOW(\1)
 	ld [wCurrentMinigameStoryMatch + 1], a
-	farcall FarPtr_LoadMatchSettingsFromTable
+	farcall LoadMatchSettingsFromTable
 ENDM
 
 ; Story location record (6 bytes) in bank $0a's StoryLocationTable, indexed by
@@ -261,7 +273,7 @@ MACRO script_move_target
 	ld a, \1
 	ld bc, \2
 	ld de, \3
-	farcall FarPtr_ScriptSetActorMoveTarget
+	farcall ScriptSetActorMoveTarget
 ENDM
 ; Instantly places an actor (no walking).
 ; Usage: script_set_position actor, x, y
@@ -269,50 +281,50 @@ MACRO script_set_position
 	ld a, \1
 	ld bc, \2
 	ld de, \3
-	farcall FarPtr_ScriptSetActorPosition
+	farcall ScriptSetActorPosition
 ENDM
 ; Usage: script_move_angle actor, angle, distance  (angle is a FACE_* cardinal)
 MACRO script_move_angle
 	ld a, \1
 	ld b, \2
 	ld de, \3
-	farcall FarPtr_MoveActorByAngle
+	farcall MoveActorByAngle
 ENDM
 ; Usage: script_set_speed actor, speed
 MACRO script_set_speed
 	ld a, \1
 	ld bc, \2
-	farcall FarPtr_ScriptSetActorMoveSpeed
+	farcall ScriptSetActorMoveSpeed
 ENDM
 ; Sets an actor's jump velocity (de, signed 16-bit).
 ; Usage: script_jump_velocity actor, velocity
 MACRO script_jump_velocity
 	ld a, \1
 	ld de, \2
-	farcall FarPtr_ScriptSetActorJumpVelocity
+	farcall ScriptSetActorJumpVelocity
 ENDM
 ; Usage: script_move_player x, y (moves actor $00, the player)
 MACRO script_move_player
 	xor a, a
 	ld bc, \1
 	ld de, \2
-	farcall FarPtr_MovePlayerToPosition
+	farcall MovePlayerToPosition
 ENDM
 ; Usage: script_player_speed speed
 MACRO script_player_speed
 	ld bc, \1
-	farcall FarPtr_SetPlayerMoveSpeed
+	farcall SetPlayerMoveSpeed
 ENDM
 ; Usage: script_set_text text_id (sets the next dialogue's text)
 MACRO script_set_text
 	ld hl, \1
-	farcall FarPtr_InitDialogueTextCursor
+	farcall InitDialogueTextCursor
 ENDM
 ; Usage: script_set_anim actor, anim
 MACRO script_set_anim
 	ld a, \1
 	ld d, \2
-	farcall FarPtr_ScriptSetActorAnimation
+	farcall ScriptSetActorAnimation
 ENDM
 ; Installs object definition `objdef` into `actor`: fetch the actor's state
 ; pointer into bc, then LoadActorObjectDefIfValid(bc, d = objdef).
@@ -320,10 +332,10 @@ ENDM
 MACRO script_set_objdef
 	ld d, \1
 	ld a, \2
-	farcall FarPtr_GetActorStateAddr
+	farcall GetActorStateAddr
 	ld c, l
 	ld b, h
-	farcall FarPtr_LoadActorObjectDefIfValid
+	farcall LoadActorObjectDefIfValid
 ENDM
 ; Fetch `actor`'s state-struct address ($d000 + actor*$40) into hl. Callers
 ; then copy it into bc/de to read or write state fields. GetActorStateAddr
@@ -331,13 +343,13 @@ ENDM
 ; Usage: script_get_actor_state actor
 MACRO script_get_actor_state
 	ld a, \1
-	farcall FarPtr_GetActorStateAddr
+	farcall GetActorStateAddr
 ENDM
 ; Usage: script_face actor, facing  (facing is a FACE_* constant)
 MACRO script_face
 	ld a, \1
 	ld b, \2
-	farcall FarPtr_SetActorFacing
+	farcall SetActorFacing
 ENDM
 ; Turns two actors to face each other (actor1 in b, actor2 in a).
 ; Usage: script_face_pair actor1, actor2
@@ -345,7 +357,7 @@ MACRO script_face_pair
 	ld a, \1
 	ld b, a
 	ld a, \2
-	farcall FarPtr_FaceActorsTowardEachOther
+	farcall FaceActorsTowardEachOther
 ENDM
 ; Turns `actor` (in b) to face `target` (in a); only `actor` turns.
 ; Usage: script_face_toward actor, target
@@ -353,43 +365,43 @@ MACRO script_face_toward
 	ld a, \1
 	ld b, a
 	ld a, \2
-	farcall FarPtr_FaceActorTowardActor
+	farcall FaceActorTowardActor
 ENDM
 ; Sets an actor's facing and locks it (won't auto-turn while walking).
 ; Usage: script_facing_lock actor, facing
 MACRO script_facing_lock
 	ld a, \1
 	ld b, \2
-	farcall FarPtr_ScriptSetActorFacingLock
+	farcall ScriptSetActorFacingLock
 ENDM
 ; Writes `state` to the actor's activity byte (state struct +$20).
 ; Usage: script_set_active actor, state
 MACRO script_set_active
 	ld a, \1
 	ld b, \2
-	farcall FarPtr_SetActorActive
+	farcall SetActorActive
 ENDM
 ; Walks the player to `actor` (b is a position offset, always $00 here).
 ; Usage: script_move_player_to_actor actor
 MACRO script_move_player_to_actor
 	ld a, \1
 	ld b, $00
-	farcall FarPtr_MovePlayerToActor
+	farcall MovePlayerToActor
 ENDM
 ; Usage: script_speak actor
 MACRO script_speak
 	ld a, \1
-	farcall FarPtr_ScriptShowSpeakerDialogue
+	farcall ScriptShowSpeakerDialogue
 ENDM
 ; Usage: script_wait_idle actor
 MACRO script_wait_idle
 	ld a, \1
-	farcall FarPtr_ScriptWaitActorIdle
+	farcall ScriptWaitActorIdle
 ENDM
 ; Usage: script_wait_move actor
 MACRO script_wait_move
 	ld a, \1
-	farcall FarPtr_ScriptWaitActorMoveDone
+	farcall ScriptWaitActorMoveDone
 ENDM
 ; Blocks the cutscene until `actor`'s script finishes (CheckActorScriptEnd),
 ; advancing a frame each poll, with a ~600-frame timeout. WaitActorScriptDone
@@ -397,7 +409,7 @@ ENDM
 ; Usage: script_wait_actor_script actor
 MACRO script_wait_actor_script
 	ld a, \1
-	farcall FarPtr_WaitActorScriptDone
+	farcall WaitActorScriptDone
 ENDM
 ; Detaches `actor`'s script: installs the shared null/idle script ($0a:$4766)
 ; via SetActorScript so the actor stops running its own bytecode and the
@@ -405,7 +417,7 @@ ENDM
 ; Usage: script_null_script actor
 MACRO script_null_script
 	ld a, \1
-	farcall FarPtr_SetActorNullScript
+	farcall SetActorNullScript
 ENDM
 ; Waits `frames` frames, preserving a (callers hold an actor id there while the
 ; wait clobbers it with the frame count).
@@ -413,7 +425,7 @@ ENDM
 MACRO script_wait_frames
 	push af
 	ld a, \1
-	farcall FarPtr_WaitScriptFrames
+	farcall WaitScriptFrames
 	pop af
 ENDM
 
@@ -429,7 +441,7 @@ MACRO script_copy_scene_rect
 	ld e, \4
 	ld h, \5
 	ld l, \6
-	farcall FarPtr_CopySceneTilemapRect
+	farcall CopySceneTilemapRect
 ENDM
 
 ; Wait `frames` frames through WaitScriptFramesSaveA ($27:$7856), the
@@ -455,7 +467,7 @@ MACRO script_set_actor_script
 	ld b, a
 	ld a, \1
 	ld de, \2
-	farcall FarPtr_ScriptSetActorScript
+	farcall ScriptSetActorScript
 ENDM
 
 ; Match-result tilemap-copy record (routine at $16:$4a71, via CopyTilemapRect):

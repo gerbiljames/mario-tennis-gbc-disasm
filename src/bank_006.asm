@@ -1,31 +1,24 @@
 SECTION "ROM Bank $06", ROMX[$4000], BANK[$06]
 
-FarPtr_RunMatchPauseMenu:
-	dw RunMatchPauseMenu ; $4000
-FarPtr_RunDebugStatsEditor:
-	dw RunDebugStatsEditor ; $4002
-FarPtr_ShowMessageWindow:
-	dw ShowMessageWindow ; $4004
-FarPtr_ShowMatchScoreboardScreen:
-	dw ShowMatchScoreboardScreen ; $4006
-FarPtr_RunStoryModeMenu:
-	dw RunStoryModeMenu ; $4008
-FarPtr_FlushTilemapToVram:
-	dw FlushTilemapToVram ; $400a
-FarPtr_RunMinigameEndMenu:
-	dw RunMinigameEndMenu ; $400c
+	farptr RunMatchPauseMenu ; $4000
+	farptr RunDebugStatsEditor ; $4002
+	farptr ShowMessageWindow ; $4004
+	farptr ShowMatchScoreboardScreen ; $4006
+	farptr RunStoryModeMenu ; $4008
+	farptr FlushTilemapToVram ; $400a
+	farptr RunMinigameEndMenu ; $400c
 RunMinigameEndMenu:
 	ldh a, [hWramBank] ; $400e
 	push af ; $4010
-	farcall FarPtr_StepMatchFrame ; $4011
+	farcall StepMatchFrame ; $4011
 	call PrepareScoreboardGfx ; $4014
-	farcall FarPtr_StepMatchFrame ; $4017
+	farcall StepMatchFrame ; $4017
 	call LoadScoreboardModeGfx ; $401a
 	ld hl, $5280 ; $401d
 	ld de, $8640 ; $4020
 	ld c, $04 ; $4023
 	call QueueVRAMCopy ; $4025
-	farcall FarPtr_StepMatchFrame ; $4028
+	farcall StepMatchFrame ; $4028
 	wram_bank $02 ; $402b
 	ld b, $00 ; $4031
 	call DrawScoreboard ; $4033
@@ -50,7 +43,7 @@ Label_06_4046:
 	call UnregisterFrameTask ; $4062
 	call RestoreBgTilemap ; $4065
 	call FlushTilemapToVram ; $4068
-	farcall FarPtr_StepMatchFrame ; $406b
+	farcall StepMatchFrame ; $406b
 	pop af ; $406e
 	wram_bank ; $406f
 	ret ; $4073
@@ -59,21 +52,21 @@ RunMatchPauseMenu:
 	push af ; $4076
 	ldh a, [$ffdd] ; $4077
 	push af ; $4079
-	farcall FarPtr_StepMatchFrame ; $407a
-	farcall FarPtr_StepMatchFrame ; $407d
+	farcall StepMatchFrame ; $407a
+	farcall StepMatchFrame ; $407d
 	sound $63 ; $4080
 	xor a, a ; $4082
 	ld [wMatchMenuSelection], a ; $4083
 	ld a, $02 ; $4086
 	ldh [$ffdd], a ; $4088
 	call PrepareScoreboardGfx ; $408a
-	farcall FarPtr_StepMatchFrame ; $408d
+	farcall StepMatchFrame ; $408d
 	call LoadScoreboardModeGfx ; $4090
 	ld hl, $5280 ; $4093
 	ld de, $8640 ; $4096
 	ld c, $04 ; $4099
 	call QueueVRAMCopy ; $409b
-	farcall FarPtr_StepMatchFrame ; $409e
+	farcall StepMatchFrame ; $409e
 	wram_bank $02 ; $40a1
 Label_06_40a7:
 	ld b, $00 ; $40a7
@@ -118,8 +111,8 @@ Label_06_40ef:
 	call UnregisterFrameTask ; $40f8
 	call RestoreBgTilemap ; $40fb
 	call FlushTilemapToVram ; $40fe
-	farcall FarPtr_StepMatchFrame ; $4101
-	farcall FarPtr_StepMatchFrame ; $4104
+	farcall StepMatchFrame ; $4101
+	farcall StepMatchFrame ; $4104
 	pop af ; $4107
 	ldh [$ffdd], a ; $4108
 	pop af ; $410a
@@ -386,7 +379,7 @@ ShowRulesPageSequence:
 	ld hl, Func_06_4373 ; $4324
 	call RegisterFrameTask ; $4327
 Label_06_432a:
-	farcall FarPtr_PrepareGlyphBuffer ; $432a
+	farcall PrepareGlyphBuffer ; $432a
 	ld hl, $c4ea ; $432d
 	ld a, [hl+] ; $4330
 	ld h, [hl] ; $4331
@@ -408,12 +401,12 @@ Label_06_432a:
 Label_06_434e:
 	ld de, $0106 ; $434e
 	call DrawMenuTextLine ; $4351
-	farcall FarPtr_StepMatchFrame ; $4354
-	farcall FarPtr_UploadGlyphBuffer ; $4357
+	farcall StepMatchFrame ; $4354
+	farcall UploadGlyphBuffer ; $4357
 	call FlushTilemapToVram ; $435a
 Label_06_435d:
-	farcall FarPtr_StepMatchFrame ; $435d
-	farcall FarPtr_ReadMatchInputPressed ; $4360
+	farcall StepMatchFrame ; $435d
+	farcall ReadMatchInputPressed ; $4360
 	and a, $03 ; $4363
 	jr z, Label_06_435d ; $4365
 	sound $5f ; $4367
@@ -425,7 +418,7 @@ Label_06_4372:
 	ret ; $4372
 Func_06_4373:
 	ld de, $9080 ; $4373
-	farcall FarPtr_AddBobbingOffsetY ; $4376
+	farcall AddBobbingOffsetY ; $4376
 	ld bc, $0a70 ; $4379
 	call QueueSprite16 ; $437c
 	ret ; $437f
@@ -436,7 +429,7 @@ MatchPauseMenu_ReviewControls:
 	ld de, $0002 ; $4389
 	ld bc, $130e ; $438c
 	call DrawWindowFrameAt ; $438f
-	farcall FarPtr_PrepareGlyphBuffer ; $4392
+	farcall PrepareGlyphBuffer ; $4392
 	ld de, $0103 ; $4395
 	ld hl, $0157 ; $4398
 	call DrawMenuTextLine ; $439b
@@ -446,14 +439,14 @@ MatchPauseMenu_ReviewControls:
 	ld de, $010c ; $43a7
 	ld hl, $0159 ; $43aa
 	call DrawMenuTextLine ; $43ad
-	farcall FarPtr_UploadGlyphBuffer ; $43b0
+	farcall UploadGlyphBuffer ; $43b0
 	call FlushTilemapToVram ; $43b3
-	farcall FarPtr_StepMatchFrame ; $43b6
+	farcall StepMatchFrame ; $43b6
 Label_06_43b9:
-	farcall FarPtr_ReadMatchInputPressed ; $43b9
+	farcall ReadMatchInputPressed ; $43b9
 	and a, $03 ; $43bc
 	jr nz, Label_06_43e8 ; $43be
-	farcall FarPtr_ReadMatchInputPressed ; $43c0
+	farcall ReadMatchInputPressed ; $43c0
 	and a, $40 ; $43c3
 	jr z, Label_06_43e3 ; $43c5
 	ldh a, [hDebugStepMode] ; $43c7
@@ -470,7 +463,7 @@ Label_06_43b9:
 	wram_bank ; $43dd
 	jr Label_06_43e8 ; $43e1
 Label_06_43e3:
-	farcall FarPtr_StepMatchFrame ; $43e3
+	farcall StepMatchFrame ; $43e3
 	jr Label_06_43b9 ; $43e6
 Label_06_43e8:
 	call RestoreBgTilemap ; $43e8
@@ -513,7 +506,7 @@ MatchPauseMenu_CameraSelect:
 	cp a, $ff ; $442f
 	jr z, Label_06_4439 ; $4431
 	ld [$c4dd], a ; $4433
-	farcall FarPtr_SetStorySlotFlagB ; $4436
+	farcall SetStorySlotFlagB ; $4436
 Label_06_4439:
 	ret ; $4439
 MatchPauseMenu_MusicToggle:
@@ -532,7 +525,7 @@ MatchPauseMenu_MusicToggle:
 	jr z, Label_06_4461 ; $4458
 	ldh a, [hMusic] ; $445a
 	and a, $01 ; $445c
-	farcall FarPtr_SetStorySlotFlagA ; $445e
+	farcall SetStorySlotFlagA ; $445e
 Label_06_4461:
 	ret ; $4461
 MatchPauseMenu_SaveQuit:
@@ -621,7 +614,7 @@ ShowMessageWindow:
 	wram_bank $02 ; $4505
 	ld a, $01 ; $450b
 	ld [$c4c0], a ; $450d
-	farcall FarPtr_StepMatchFrame ; $4510
+	farcall StepMatchFrame ; $4510
 	push bc ; $4513
 	push de ; $4514
 	push hl ; $4515
@@ -637,7 +630,7 @@ ShowMessageWindow:
 	pop hl ; $4525
 	pop de ; $4526
 	pop bc ; $4527
-	farcall FarPtr_PrepareGlyphBuffer ; $4528
+	farcall PrepareGlyphBuffer ; $4528
 	push hl ; $452b
 	inc d ; $452c
 	inc e ; $452d
@@ -646,19 +639,19 @@ ShowMessageWindow:
 	dec c ; $4532
 	dec c ; $4533
 	pop hl ; $4534
-	farcall FarPtr_RenderProportionalTextAt ; $4535
-	farcall FarPtr_UploadGlyphBuffer ; $4538
+	farcall RenderProportionalTextAt ; $4535
+	farcall UploadGlyphBuffer ; $4538
 	call FlushTilemapToVram ; $453b
 	ld a, $1e ; $453e
-	farcall FarPtr_StepMatchFrames ; $4540
+	farcall StepMatchFrames ; $4540
 Label_06_4543:
-	farcall FarPtr_StepMatchFrame ; $4543
-	farcall FarPtr_ReadMatchInputPressed ; $4546
+	farcall StepMatchFrame ; $4543
+	farcall ReadMatchInputPressed ; $4546
 	and a, $0f ; $4549
 	jr z, Label_06_4543 ; $454b
 	call RestoreBgTilemap ; $454d
 	call FlushTilemapToVram ; $4550
-	farcall FarPtr_StepMatchFrame ; $4553
+	farcall StepMatchFrame ; $4553
 	xor a, a ; $4556
 	ld [$c4c0], a ; $4557
 	pop af ; $455a
@@ -874,7 +867,7 @@ RunMatchMenu:
 	call ClearAttrPriorityRegion ; $46fc
 	jr Label_06_4733 ; $46ff
 Label_06_4701:
-	farcall FarPtr_ReadMatchInputPressed ; $4701
+	farcall ReadMatchInputPressed ; $4701
 	and a, $0a ; $4704
 	jr z, Label_06_4711 ; $4706
 	sound $62 ; $4708
@@ -882,13 +875,13 @@ Label_06_4701:
 	ld [wMatchMenuSelection], a ; $470c
 	jr Label_06_4776 ; $470f
 Label_06_4711:
-	farcall FarPtr_ReadMatchInputPressed ; $4711
+	farcall ReadMatchInputPressed ; $4711
 	and a, $01 ; $4714
 	jr z, Label_06_471c ; $4716
 	sound $5f ; $4718
 	jr Label_06_4776 ; $471a
 Label_06_471c:
-	farcall FarPtr_ReadMatchInputRepeat ; $471c
+	farcall ReadMatchInputRepeat ; $471c
 	and a, $30 ; $471f
 	jr z, Label_06_476e ; $4721
 	ld b, a ; $4723
@@ -899,7 +892,7 @@ Label_06_471c:
 	ld [wMatchMenuSelection], a ; $472e
 	sound $5e ; $4731
 Label_06_4733:
-	farcall FarPtr_PrepareGlyphBuffer ; $4733
+	farcall PrepareGlyphBuffer ; $4733
 	ld hl, wGlyphPenX ; $4736
 	ld de, $2000 ; $4739
 	ld a, e ; $473c
@@ -923,16 +916,16 @@ Label_06_4733:
 	ld de, $000e ; $4759
 	call DrawMenuCaptionWindow ; $475c
 	call DrawScoreboardCaption ; $475f
-	farcall FarPtr_UploadGlyphBuffer ; $4762
-	farcall FarPtr_StepMatchFrame ; $4765
+	farcall UploadGlyphBuffer ; $4762
+	farcall StepMatchFrame ; $4765
 	call FlushTilemapToVram ; $4768
-	farcall FarPtr_StepMatchFrame ; $476b
+	farcall StepMatchFrame ; $476b
 Label_06_476e:
 	call DrawMatchMenuCursor ; $476e
-	farcall FarPtr_StepMatchFrame ; $4771
+	farcall StepMatchFrame ; $4771
 	jr Label_06_4701 ; $4774
 Label_06_4776:
-	farcall FarPtr_StepMatchFrame ; $4776
+	farcall StepMatchFrame ; $4776
 	ret ; $4779
 DrawScoreboardCaption:
 	ld a, [$c494] ; $477a
@@ -1134,32 +1127,32 @@ Label_06_488a:
 ShowMatchScoreboardScreen:
 	ldh a, [hWramBank] ; $48ad
 	push af ; $48af
-	farcall FarPtr_StepMatchFrame ; $48b0
+	farcall StepMatchFrame ; $48b0
 	call PrepareScoreboardGfx ; $48b3
-	farcall FarPtr_StepMatchFrame ; $48b6
+	farcall StepMatchFrame ; $48b6
 	ld a, $05 ; $48b9
 	ld [$c4e3], a ; $48bb
 	call LoadScoreboardModeGfx ; $48be
 	ld b, $01 ; $48c1
 	call DrawScoreboard ; $48c3
-	farcall FarPtr_PrepareGlyphBuffer ; $48c6
+	farcall PrepareGlyphBuffer ; $48c6
 	call DrawScoreboardCaption ; $48c9
-	farcall FarPtr_UploadGlyphBuffer ; $48cc
+	farcall UploadGlyphBuffer ; $48cc
 	ld a, $0a ; $48cf
 	ld hl, Func_06_506a ; $48d1
 	call RegisterFrameTask ; $48d4
 	ld a, $0a ; $48d7
 	ld hl, Func_06_69c8 ; $48d9
 	call RegisterFrameTask ; $48dc
-	farcall FarPtr_StepMatchFrame ; $48df
+	farcall StepMatchFrame ; $48df
 	call FlushTilemapToVram ; $48e2
-	farcall FarPtr_StepMatchFrame ; $48e5
+	farcall StepMatchFrame ; $48e5
 	wram_bank $02 ; $48e8
 Label_06_48ee:
-	farcall FarPtr_ReadMatchInputPressed ; $48ee
+	farcall ReadMatchInputPressed ; $48ee
 	and a, $0f ; $48f1
 	jr nz, Label_06_48fa ; $48f3
-	farcall FarPtr_StepMatchFrame ; $48f5
+	farcall StepMatchFrame ; $48f5
 	jr Label_06_48ee ; $48f8
 Label_06_48fa:
 	ld hl, Func_06_506a ; $48fa
@@ -1168,7 +1161,7 @@ Label_06_48fa:
 	call UnregisterFrameTask ; $4903
 	call RestoreBgTilemap ; $4906
 	call FlushTilemapToVram ; $4909
-	farcall FarPtr_StepMatchFrame ; $490c
+	farcall StepMatchFrame ; $490c
 	pop af ; $490f
 	wram_bank ; $4910
 	ret ; $4914
@@ -1197,37 +1190,37 @@ Label_06_4937:
 	dw Label_06_4943 ; $4941 jumptable
 Label_06_4943:
 	wram_bank $06 ; $4943
-	farcall FarPtr_ReloadCharFrameGfx ; $4949
+	farcall ReloadCharFrameGfx ; $4949
 Label_06_494c:
 	wram_bank $07 ; $494c
-	farcall FarPtr_ReloadCharFrameGfx ; $4952
+	farcall ReloadCharFrameGfx ; $4952
 Label_06_4955:
 	wram_bank $05 ; $4955
-	farcall FarPtr_ReloadCharFrameGfx ; $495b
+	farcall ReloadCharFrameGfx ; $495b
 Label_06_495e:
 	wram_bank $04 ; $495e
-	farcall FarPtr_ReloadCharFrameGfx ; $4964
-	farcall FarPtr_StepMatchFrame ; $4967
+	farcall ReloadCharFrameGfx ; $4964
+	farcall StepMatchFrame ; $4967
 	ld a, [$c8f5] ; $496a
 	cp a, $02 ; $496d
 	jr z, Label_06_49a0 ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
 	ld de, $8700 ; $4976
-	farcall FarPtr_09_28 ; $4979
+	farcall Func_09_6100 ; $4979
 	ld a, [wPlayer1SetsWon] ; $497c
 	ld b, $01 ; $497f
 	ld de, $8680 ; $4981
-	farcall FarPtr_09_28 ; $4984
+	farcall Func_09_6100 ; $4984
 	ld a, [wPlayer2GamesWon] ; $4987
 	ld b, $01 ; $498a
 	ld de, $8740 ; $498c
-	farcall FarPtr_09_28 ; $498f
+	farcall Func_09_6100 ; $498f
 	ld a, [wPlayer2SetsWon] ; $4992
 	ld b, $01 ; $4995
 	ld de, $86c0 ; $4997
-	farcall FarPtr_09_28 ; $499a
-	farcall FarPtr_StepMatchFrame ; $499d
+	farcall Func_09_6100 ; $499a
+	farcall StepMatchFrame ; $499d
 Label_06_49a0:
 	wram_bank $02 ; $49a0
 	ret ; $49a6
@@ -1830,7 +1823,7 @@ Label_06_50ac:
 	ld l, a ; $50bb
 	ld b, $01 ; $50bc
 	ld a, $04 ; $50be
-	farcall FarPtr_DrawNumberWithSprites ; $50c0
+	farcall DrawNumberWithSprites ; $50c0
 	pop de ; $50c3
 	ld a, e ; $50c4
 	add a, $18 ; $50c5
@@ -1847,7 +1840,7 @@ Label_06_50d7:
 	ld l, a ; $50d9
 	ld b, $02 ; $50da
 	ld a, $04 ; $50dc
-	farcall FarPtr_DrawNumberWithSprites ; $50de
+	farcall DrawNumberWithSprites ; $50de
 	ret ; $50e1
 	; $50e2, 311 bytes (bytes:4)
 	db $20, $18, $00, $04 ; 0x00
@@ -3783,7 +3776,7 @@ Func_06_69c8:
 	add hl, de ; $69d4
 	ld e, l ; $69d5
 	ld d, h ; $69d6
-	farcall FarPtr_AddBobbingOffsetYLarge ; $69d7
+	farcall AddBobbingOffsetYLarge ; $69d7
 	call AdjustSpriteCoordsForScroll ; $69da
 	ld hl, SpriteTemplate_06_6a10 ; $69dd
 	ld bc, $0000 ; $69e0
@@ -3931,28 +3924,28 @@ DrawDebugStatWord:
 RunDebugStatsEditor:
 	ldh a, [hWramBank] ; $6b84
 	push af ; $6b86
-	farcall FarPtr_StepMatchFrame ; $6b87
-	farcall FarPtr_01_12 ; $6b8a
+	farcall StepMatchFrame ; $6b87
+	farcall Func_01_50d6 ; $6b8a
 	wram_bank $04 ; $6b8d
 	ld hl, $df00 ; $6b93
 	ld de, $c700 ; $6b96
 	ld c, $08 ; $6b99
 	call CopyMemoryFast ; $6b9b
 	wram_bank $02 ; $6b9e
-	farcall FarPtr_StepMatchFrame ; $6ba4
+	farcall StepMatchFrame ; $6ba4
 	xor a, a ; $6ba7
 	ld [wMatchMenuSelection], a ; $6ba8
 	call DrawDebugStatsLabels ; $6bab
 	call DrawDebugStatsValues ; $6bae
 	call FlushTilemapToVram ; $6bb1
-	farcall FarPtr_StepMatchFrame ; $6bb4
+	farcall StepMatchFrame ; $6bb4
 Label_06_6bb7:
-	farcall FarPtr_ReadMatchInputPressed ; $6bb7
+	farcall ReadMatchInputPressed ; $6bb7
 	and a, $0d ; $6bba
 	jr nz, Label_06_6bc9 ; $6bbc
 	call HandleDebugStatsInput ; $6bbe
 	call FlushTilemapToVramIfDirty ; $6bc1
-	farcall FarPtr_StepMatchFrame ; $6bc4
+	farcall StepMatchFrame ; $6bc4
 	jr Label_06_6bb7 ; $6bc7
 Label_06_6bc9:
 	and a, $08 ; $6bc9
@@ -3965,7 +3958,7 @@ Label_06_6bc9:
 Label_06_6bd6:
 	call RestoreBgTilemap ; $6bd6
 	call FlushTilemapToVram ; $6bd9
-	farcall FarPtr_StepMatchFrame ; $6bdc
+	farcall StepMatchFrame ; $6bdc
 	wram_bank $04 ; $6bdf
 	ld hl, $c700 ; $6be5
 	ld de, $df00 ; $6be8
@@ -4130,7 +4123,7 @@ RunStoryMenu:
 	call DrawStoryMenuItems ; $6d16
 	jr Label_06_6d4d ; $6d19
 Label_06_6d1b:
-	farcall FarPtr_ReadMatchInputPressed ; $6d1b
+	farcall ReadMatchInputPressed ; $6d1b
 	and a, $0a ; $6d1e
 	jr z, Label_06_6d2b ; $6d20
 	sound $62 ; $6d22
@@ -4138,13 +4131,13 @@ Label_06_6d1b:
 	ld [wMatchMenuSelection], a ; $6d26
 	jr Label_06_6d70 ; $6d29
 Label_06_6d2b:
-	farcall FarPtr_ReadMatchInputPressed ; $6d2b
+	farcall ReadMatchInputPressed ; $6d2b
 	and a, $01 ; $6d2e
 	jr z, Label_06_6d36 ; $6d30
 	sound $5f ; $6d32
 	jr Label_06_6d70 ; $6d34
 Label_06_6d36:
-	farcall FarPtr_ReadMatchInputRepeat ; $6d36
+	farcall ReadMatchInputRepeat ; $6d36
 	and a, $30 ; $6d39
 	jr z, Label_06_6d68 ; $6d3b
 	ld b, a ; $6d3d
@@ -4292,7 +4285,7 @@ Label_06_6df4:
 RunStoryModeMenu:
 	ldh a, [hWramBank] ; $6e17
 	push af ; $6e19
-	farcall FarPtr_StopSceneTileAnimations ; $6e1a
+	farcall StopSceneTileAnimations ; $6e1a
 	ldh a, [$ffdd] ; $6e1d
 	push af ; $6e1f
 	call AdvanceFrame ; $6e20
@@ -4301,17 +4294,17 @@ RunStoryModeMenu:
 	ld [wMatchMenuSelection], a ; $6e26
 	ld a, $02 ; $6e29
 	ldh [$ffdd], a ; $6e2b
-	farcall FarPtr_InitTextWindows ; $6e2d
+	farcall InitTextWindows ; $6e2d
 	ld a, $81 ; $6e30
 	ld [wWindowTileAttr], a ; $6e32
 	set_flag $02, 4 ; $6e35
-	farcall FarPtr_28_0a ; $6e38
+	farcall Func_28_60c9 ; $6e38
 	call RestoreStoryTilemapNoPriority ; $6e3b
 	ld d, $00 ; $6e3e
 	ld e, $0e ; $6e40
 	ld b, $13 ; $6e42
 	ld c, $03 ; $6e44
-	farcall FarPtr_CreateWindowFromScreenRect ; $6e46
+	farcall CreateWindowFromScreenRect ; $6e46
 	call AdvanceFrame ; $6e49
 	wram_bank $05 ; $6e4c
 Label_06_6e52:
@@ -4354,11 +4347,11 @@ Label_06_6e94:
 	call RedrawStoryTilemapRows ; $6e97
 	call AdvanceFrame ; $6e9a
 	clear_flag $02, 4 ; $6e9d
-	farcall FarPtr_01_14 ; $6ea0
+	farcall Func_01_50ec ; $6ea0
 	pop af ; $6ea3
 	ldh [$ffdd], a ; $6ea4
-	farcall FarPtr_InitTextWindows ; $6ea6
-	farcall FarPtr_InitSceneTileAnimations ; $6ea9
+	farcall InitTextWindows ; $6ea6
+	farcall InitSceneTileAnimations ; $6ea9
 	pop af ; $6eac
 	wram_bank ; $6ead
 	ret ; $6eb1
@@ -4369,7 +4362,7 @@ Label_06_6eb2:
 	pop af ; $6eb8
 	ldh [$ffdd], a ; $6eb9
 	clear_flag $02, 4 ; $6ebb
-	farcall FarPtr_InitSceneTileAnimations ; $6ebe
+	farcall InitSceneTileAnimations ; $6ebe
 	pop af ; $6ec1
 	wram_bank ; $6ec2
 	ret ; $6ec6
@@ -4380,7 +4373,7 @@ Label_06_6eb2:
 	call QueueVRAMCopy ; $6ed2
 	jr Label_06_6f07 ; $6ed5
 Label_06_6ed7:
-	farcall FarPtr_ReadMatchInputPressed ; $6ed7
+	farcall ReadMatchInputPressed ; $6ed7
 	and a, $0e ; $6eda
 	jr z, Label_06_6ee7 ; $6edc
 	sound $62 ; $6ede
@@ -4388,13 +4381,13 @@ Label_06_6ed7:
 	ld [wMatchMenuSelection], a ; $6ee2
 	jr Label_06_6f36 ; $6ee5
 Label_06_6ee7:
-	farcall FarPtr_ReadMatchInputPressed ; $6ee7
+	farcall ReadMatchInputPressed ; $6ee7
 	and a, $01 ; $6eea
 	jr z, Label_06_6ef2 ; $6eec
 	sound $5f ; $6eee
 	jr Label_06_6f36 ; $6ef0
 Label_06_6ef2:
-	farcall FarPtr_ReadMatchInputRepeat ; $6ef2
+	farcall ReadMatchInputRepeat ; $6ef2
 	and a, $30 ; $6ef5
 	jr z, Label_06_6f20 ; $6ef7
 	ld b, a ; $6ef9
@@ -4461,7 +4454,7 @@ StoryPauseMenu_CharPartnerData:
 	ld [$c294], a ; $6f77
 	ld [wStoryModeExitLocationRequest], a ; $6f7a
 	ld a, $01 ; $6f7d
-	farcall FarPtr_ShowCharDataScreen ; $6f7f
+	farcall ShowCharDataScreen ; $6f7f
 	xor a, a ; $6f82
 	ret ; $6f83
 StoryPauseMenu_Equipment:
@@ -4473,7 +4466,7 @@ StoryPauseMenu_Equipment:
 	ld [wStoryModeEntryPoint], a ; $6f92
 	ld [$c294], a ; $6f95
 	ld [wStoryModeExitLocationRequest], a ; $6f98
-	farcall FarPtr_ShowEquipmentStatusScreen ; $6f9b
+	farcall ShowEquipmentStatusScreen ; $6f9b
 	xor a, a ; $6f9e
 	ret ; $6f9f
 StoryPauseMenu_GameProgress:
@@ -4485,7 +4478,7 @@ StoryPauseMenu_GameProgress:
 	ld [wStoryModeEntryPoint], a ; $6fae
 	ld [$c294], a ; $6fb1
 	ld [wStoryModeExitLocationRequest], a ; $6fb4
-	farcall FarPtr_ShowGameProgressScreen ; $6fb7
+	farcall ShowGameProgressScreen ; $6fb7
 	xor a, a ; $6fba
 	ret ; $6fbb
 StoryPauseMenu_Options:
@@ -4546,7 +4539,7 @@ StoryPauseMenu_MusicToggle:
 	call SetMusicMuted ; $7024
 	ldh a, [hMusic] ; $7027
 	and a, $01 ; $7029
-	farcall FarPtr_SetStorySlotFlagA ; $702b
+	farcall SetStorySlotFlagA ; $702b
 Label_06_702e:
 	ret ; $702e
 StoryPauseMenu_SaveQuit:
@@ -4573,8 +4566,8 @@ StoryPauseMenu_SaveQuit:
 	res 7, a ; $7062
 	ld [wMessageSpeed], a ; $7064
 	ld bc, rIE ; $7067
-	farcall FarPtr_SaveStoryReturnPoint ; $706a
-	farcall FarPtr_SaveStorySlotWithTimer ; $706d
+	farcall SaveStoryReturnPoint ; $706a
+	farcall SaveStorySlotWithTimer ; $706d
 	ld a, $00 ; $7070
 	ld [wStoryModeCurrentLocation], a ; $7072
 	ld a, $01 ; $7075
@@ -4646,7 +4639,7 @@ Label_06_70f8:
 	add a, [hl] ; $7101
 	call LoadStoryMenuItemGfx ; $7102
 Label_06_7105:
-	farcall FarPtr_ReadMatchInputPressed ; $7105
+	farcall ReadMatchInputPressed ; $7105
 	and a, $02 ; $7108
 	jr z, Label_06_7115 ; $710a
 	sound $62 ; $710c
@@ -4654,13 +4647,13 @@ Label_06_7105:
 	ld [wMatchMenuSelection], a ; $7110
 	jr Label_06_7172 ; $7113
 Label_06_7115:
-	farcall FarPtr_ReadMatchInputPressed ; $7115
+	farcall ReadMatchInputPressed ; $7115
 	and a, $01 ; $7118
 	jr z, Label_06_7120 ; $711a
 	sound $5f ; $711c
 	jr Label_06_7172 ; $711e
 Label_06_7120:
-	farcall FarPtr_ReadMatchInputRepeat ; $7120
+	farcall ReadMatchInputRepeat ; $7120
 	and a, $30 ; $7123
 	jr z, Label_06_715b ; $7125
 	ld b, a ; $7127
@@ -4738,7 +4731,7 @@ Label_06_71ac:
 	add a, [hl] ; $71bb
 	call LoadStoryMenuItemGfx ; $71bc
 Label_06_71bf:
-	farcall FarPtr_ReadMatchInputPressed ; $71bf
+	farcall ReadMatchInputPressed ; $71bf
 	and a, $02 ; $71c2
 	jr z, Label_06_71cf ; $71c4
 	sound $62 ; $71c6
@@ -4746,13 +4739,13 @@ Label_06_71bf:
 	ld [wMatchMenuSelection], a ; $71ca
 	jr Label_06_722a ; $71cd
 Label_06_71cf:
-	farcall FarPtr_ReadMatchInputPressed ; $71cf
+	farcall ReadMatchInputPressed ; $71cf
 	and a, $01 ; $71d2
 	jr z, Label_06_71da ; $71d4
 	sound $5f ; $71d6
 	jr Label_06_722a ; $71d8
 Label_06_71da:
-	farcall FarPtr_ReadMatchInputRepeat ; $71da
+	farcall ReadMatchInputRepeat ; $71da
 	and a, $30 ; $71dd
 	jr z, Label_06_7213 ; $71df
 	ld b, a ; $71e1
@@ -4799,21 +4792,21 @@ Label_06_722a:
 	INCBIN "data/bank_006/d_7231.bin" ; $7231, 6 bytes
 RedrawStoryTilemapRows:
 	wram_bank $05 ; $7237
-	farcall FarPtr_RedrawAllTilemapRows ; $723d
+	farcall RedrawAllTilemapRows ; $723d
 	ret ; $7240
 RestoreStoryShadowTilemap:
-	farcall FarPtr_RestoreShadowTilemap ; $7241
+	farcall RestoreShadowTilemap ; $7241
 	ret ; $7244
 RestoreStoryTilemapNoPriority:
-	farcall FarPtr_RestoreShadowTilemap ; $7245
+	farcall RestoreShadowTilemap ; $7245
 	call ClearStoryAttrPriorityBits ; $7248
-	farcall FarPtr_RedrawAllTilemapRows ; $724b
+	farcall RedrawAllTilemapRows ; $724b
 	ret ; $724e
 DrawStoryMenuCaption:
 	push hl ; $724f
-	farcall FarPtr_PrepareGlyphBuffer ; $7250
+	farcall PrepareGlyphBuffer ; $7250
 	xor a, a ; $7253
-	farcall FarPtr_DrawTextWindowFrame ; $7254
+	farcall DrawTextWindowFrame ; $7254
 	ld hl, $0101 ; $7257
 	add hl, de ; $725a
 	ld e, l ; $725b
@@ -4821,8 +4814,8 @@ DrawStoryMenuCaption:
 	call GetShadowTilemapAddr ; $725d
 	pop hl ; $7260
 	ld c, $11 ; $7261
-	farcall FarPtr_RenderProportionalTextAt ; $7263
-	farcall FarPtr_UploadGlyphBuffer ; $7266
+	farcall RenderProportionalTextAt ; $7263
+	farcall UploadGlyphBuffer ; $7266
 	ret ; $7269
 ClearStoryAttrPriorityBits:
 	wram_bank $05 ; $726a

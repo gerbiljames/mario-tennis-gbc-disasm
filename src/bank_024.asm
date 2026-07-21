@@ -1,19 +1,12 @@
 SECTION "ROM Bank $24", ROMX[$4000], BANK[$24]
 
-FarPtr_ShotBallPathLob:
-	dw ShotBallPathLob ; $4000
-FarPtr_ShotBallPathDrop:
-	dw ShotBallPathDrop ; $4002
-FarPtr_ApplyFallbackBallTrajectory_24:
-	dw ApplyFallbackBallTrajectory_24 ; $4004
-FarPtr_ShotBallPathNeutral:
-	dw ShotBallPathNeutral ; $4006
-FarPtr_ShotBallPathSmash:
-	dw ShotBallPathSmash ; $4008
-FarPtr_24_0a:
-	dw Func_24_6706 ; $400a
-FarPtr_ShotBallPathReach:
-	dw ShotBallPathReach ; $400c
+	farptr ShotBallPathLob ; $4000
+	farptr ShotBallPathDrop ; $4002
+	farptr ApplyFallbackBallTrajectory_24 ; $4004
+	farptr ShotBallPathNeutral ; $4006
+	farptr ShotBallPathSmash ; $4008
+	farptr Func_24_6706 ; $400a
+	farptr ShotBallPathReach ; $400c
 BallTrajEntryPtr6_24:
 	push hl ; $400e
 	ld l, e ; $400f
@@ -126,7 +119,7 @@ Label_24_4082:
 	ld e, l ; $4089
 	ld d, h ; $408a
 	pop hl ; $408b
-	farcall FarPtr_SetBallVelocityPolar ; $408c
+	farcall SetBallVelocityPolar ; $408c
 	ret ; $408f
 SetBallVelocityFromEntry4_24:
 	ld a, [hl+] ; $4090
@@ -143,7 +136,7 @@ SetBallVelocityFromEntry4_24:
 	ld d, [hl] ; $409d
 	ld e, a ; $409e
 	pop hl ; $409f
-	farcall FarPtr_SetBallVelocityPolar ; $40a0
+	farcall SetBallVelocityPolar ; $40a0
 	ret ; $40a3
 	ld a, [hl+] ; $40a4
 	ld c, a ; $40a5
@@ -203,7 +196,7 @@ Label_24_40df:
 	ld e, l ; $40e6
 	ld d, h ; $40e7
 	pop hl ; $40e8
-	farcall FarPtr_SetBallVelocityPolar ; $40e9
+	farcall SetBallVelocityPolar ; $40e9
 	ld de, $fd40 ; $40ec
 	ld a, [$df0a] ; $40ef
 	and a, $02 ; $40f2
@@ -219,7 +212,7 @@ Label_24_40fc:
 	ld a, e ; $40ff
 	ld [hl+], a ; $4100
 	ld [hl], d ; $4101
-	farcall FarPtr_PredictBallXAtDepth ; $4102
+	farcall PredictBallXAtDepth ; $4102
 	ld e, l ; $4105
 	ld d, h ; $4106
 	ld hl, wBallTargetX ; $4107
@@ -325,7 +318,7 @@ ApplyBallTrajectory_24:
 	call SetBallTargetFromAim_24 ; $41f9
 	ret ; $41fc
 Label_24_41fd:
-	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41fd
+	farcall ApplyFallbackBallTrajectory_24 ; $41fd
 	ret ; $4200
 SetBallTargetFromAim_24:
 	ld a, [wShotAimAngle] ; $4201
@@ -442,7 +435,7 @@ Label_24_4284:
 BallPosDataLob_24:
 	INCBIN "data/bank_024/d_4289.bin" ; $4289, 768 bytes
 ShotBallPathLob:
-	farcall FarPtr_ComputeShotPlacement ; $4589
+	farcall ComputeShotPlacement ; $4589
 	ld hl, BallPosDataLob_24 ; $458c
 	ld bc, BallPosBlockOffsetsLob_24 ; $458f
 	ld a, [wLobPlacementIndex] ; $4592
@@ -563,7 +556,7 @@ Label_24_4d1f:
 	sub a, b ; $4d46
 	INCBIN "data/bank_024/d_4d47.bin" ; $4d47, 1113 bytes
 ShotBallPathDrop:
-	farcall FarPtr_ComputeShotPlacement ; $51a0
+	farcall ComputeShotPlacement ; $51a0
 	ld hl, BallPosDataDrop_24 ; $51a3
 	ld bc, BallPosAimOffsetsDrop_24 ; $51a6
 	call LookupBallPosByAim_24 ; $51a9
@@ -601,7 +594,7 @@ ApplyFallbackBallTrajectory_24:
 	ld bc, $00e0 ; $5821
 Label_24_5824:
 	push af ; $5824
-	farcall FarPtr_ComputeShotTrajectory ; $5825
+	farcall ComputeShotTrajectory ; $5825
 	pop af ; $5828
 	add a, a ; $5829
 	add a, $3c ; $582a
@@ -621,7 +614,7 @@ BallPosFallbackOffsets_24:
 BallPosDataNeutral_24:
 	INCBIN "data/bank_024/d_5844.bin" ; $5844, 3584 bytes
 ShotBallPathNeutral:
-	farcall FarPtr_ComputeShotPlacement ; $6644
+	farcall ComputeShotPlacement ; $6644
 	push bc ; $6647
 	ld hl, BallPosDataNeutral_24 ; $6648
 	ld bc, BallPosHeightOffsetsNeutral_24 ; $664b
@@ -664,7 +657,7 @@ BallPosHeightOffsetsNeutral_24:
 	dw $0d00 ; record 30
 	dw $0d00 ; record 31
 ShotBallPathSmash:
-	farcall FarPtr_ComputeShotPlacement ; $6696
+	farcall ComputeShotPlacement ; $6696
 	push bc ; $6699
 	ld hl, $c48c ; $669a
 	ld a, [hl+] ; $669d
@@ -720,7 +713,7 @@ Label_24_66b0:
 	ld d, [hl] ; $66de
 	ld e, a ; $66df
 	pop hl ; $66e0
-	farcall FarPtr_SetBallVelocityPolar ; $66e1
+	farcall SetBallVelocityPolar ; $66e1
 	ld hl, $c48c ; $66e4
 	ld a, [hl+] ; $66e7
 	ld d, [hl] ; $66e8
@@ -746,7 +739,7 @@ Func_24_6706:
 BallPosDataReach_24:
 	INCBIN "data/bank_024/d_6707.bin" ; $6707, 4096 bytes
 ShotBallPathReach:
-	farcall FarPtr_ComputeShotPlacement ; $7707
+	farcall ComputeShotPlacement ; $7707
 	push bc ; $770a
 	ld hl, BallPosDataReach_24 ; $770b
 	ld bc, BallPosHeightOffsetsReach_24 ; $770e

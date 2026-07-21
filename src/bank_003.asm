@@ -1,79 +1,42 @@
 SECTION "ROM Bank $03", ROMX[$4000], BANK[$03]
 
-FarPtr_WipeAllSaveRam:
-	dw WipeAllSaveRam ; $4000
-FarPtr_ValidateSaveRam:
-	dw ValidateSaveRam ; $4002
-FarPtr_WriteSaveBlock:
-	dw WriteSaveBlock ; $4004
-FarPtr_ReadSaveBlock:
-	dw ReadSaveBlock ; $4006
-FarPtr_ReadSaveBlockTag:
-	dw ReadSaveBlockTag ; $4008
-FarPtr_VerifySaveBlock:
-	dw VerifySaveBlock ; $400a
-FarPtr_InvalidateStorySlot:
-	dw InvalidateStorySlot ; $400c
-FarPtr_ResetAllSaveBlocks:
-	dw ResetAllSaveBlocks ; $400e
-FarPtr_EraseAndInitSaveRam:
-	dw EraseAndInitSaveRam ; $4010
-FarPtr_RepairAllSaveSlots:
-	dw RepairAllSaveSlots ; $4012
-FarPtr_ReinitSaveRamPreservingBlock6:
-	dw ReinitSaveRamPreservingBlock6 ; $4014
-FarPtr_EraseStorySlotSaveData:
-	dw EraseStorySlotSaveData ; $4016
-FarPtr_SaveStorySlotWithTimer:
-	dw SaveStorySlotWithTimer ; $4018
-FarPtr_CheckStorySlot:
-	dw CheckStorySlot ; $401a
-FarPtr_TestSaveFlag:
-	dw TestSaveFlag ; $401c
-FarPtr_SetSaveFlag:
-	dw SetSaveFlag ; $401e
-FarPtr_ClearSaveFlag:
-	dw ClearSaveFlag ; $4020
-FarPtr_SaveSlotDebugEditor:
-	dw SaveSlotDebugEditor ; $4022
-FarPtr_ReadExhibitionSaveBlock:
-	dw ReadExhibitionSaveBlock ; $4024
-FarPtr_WriteExhibitionSaveBlock:
-	dw WriteExhibitionSaveBlock ; $4026
-FarPtr_ClearSaveBlock11:
-	dw ClearSaveBlock11 ; $4028
-FarPtr_UpdateMinigameRecord:
-	dw UpdateMinigameRecord ; $402a
-FarPtr_ReadMinigameRecord:
-	dw ReadMinigameRecord ; $402c
-FarPtr_ApplyN64RecordsUnlockFlags:
-	dw ApplyN64RecordsUnlockFlags ; $402e
-FarPtr_UpdateUnlockablesSaveBlock:
-	dw UpdateUnlockablesSaveBlock ; $4030
-FarPtr_ReadStarVictoryGrid:
-	dw ReadStarVictoryGrid ; $4032
-FarPtr_WriteStarVictoryGrid:
-	dw WriteStarVictoryGrid ; $4034
-FarPtr_03_36:
-	dw Func_03_59c5 ; $4036
-FarPtr_03_38:
-	dw Func_03_5b28 ; $4038
-FarPtr_03_3a:
-	dw Func_03_5b4d ; $403a
-FarPtr_03_3c:
-	dw Func_03_6ff7 ; $403c
-FarPtr_03_3e:
-	dw Func_03_751e ; $403e
-FarPtr_03_40:
-	dw Func_03_75ab ; $4040
-FarPtr_03_42:
-	dw Func_03_7687 ; $4042
-FarPtr_03_44:
-	dw Func_03_7719 ; $4044
-FarPtr_SetAllUnlockablesInSaveBlock:
-	dw SetAllUnlockablesInSaveBlock ; $4046
-FarPtr_SaveStorySlot:
-	dw SaveStorySlot ; $4048
+	farptr WipeAllSaveRam ; $4000
+	farptr ValidateSaveRam ; $4002
+	farptr WriteSaveBlock ; $4004
+	farptr ReadSaveBlock ; $4006
+	farptr ReadSaveBlockTag ; $4008
+	farptr VerifySaveBlock ; $400a
+	farptr InvalidateStorySlot ; $400c
+	farptr ResetAllSaveBlocks ; $400e
+	farptr EraseAndInitSaveRam ; $4010
+	farptr RepairAllSaveSlots ; $4012
+	farptr ReinitSaveRamPreservingBlock6 ; $4014
+	farptr EraseStorySlotSaveData ; $4016
+	farptr SaveStorySlotWithTimer ; $4018
+	farptr CheckStorySlot ; $401a
+	farptr TestSaveFlag ; $401c
+	farptr SetSaveFlag ; $401e
+	farptr ClearSaveFlag ; $4020
+	farptr SaveSlotDebugEditor ; $4022
+	farptr ReadExhibitionSaveBlock ; $4024
+	farptr WriteExhibitionSaveBlock ; $4026
+	farptr ClearSaveBlock11 ; $4028
+	farptr UpdateMinigameRecord ; $402a
+	farptr ReadMinigameRecord ; $402c
+	farptr ApplyN64RecordsUnlockFlags ; $402e
+	farptr UpdateUnlockablesSaveBlock ; $4030
+	farptr ReadStarVictoryGrid ; $4032
+	farptr WriteStarVictoryGrid ; $4034
+	farptr Func_03_59c5 ; $4036
+	farptr Func_03_5b28 ; $4038
+	farptr Func_03_5b4d ; $403a
+	farptr Func_03_6ff7 ; $403c
+	farptr Func_03_751e ; $403e
+	farptr Func_03_75ab ; $4040
+	farptr Func_03_7687 ; $4042
+	farptr Func_03_7719 ; $4044
+	farptr SetAllUnlockablesInSaveBlock ; $4046
+	farptr SaveStorySlot ; $4048
 InitSaveHeader:
 	push af ; $404a
 	push bc ; $404b
@@ -2238,31 +2201,31 @@ EraseStorySlotSaveData:
 	jr z, Label_03_4e77 ; $4e51
 	push de ; $4e53
 	ld de, $0440 ; $4e54
-	farcall FarPtr_ClearSaveFlag ; $4e57
+	farcall ClearSaveFlag ; $4e57
 	pop de ; $4e5a
 	push de ; $4e5b
 	ld de, $04c0 ; $4e5c
-	farcall FarPtr_ClearSaveFlag ; $4e5f
+	farcall ClearSaveFlag ; $4e5f
 	pop de ; $4e62
 	jr Label_03_4e87 ; $4e63
 Label_03_4e65:
 	push de ; $4e65
 	ld de, $0400 ; $4e66
-	farcall FarPtr_ClearSaveFlag ; $4e69
+	farcall ClearSaveFlag ; $4e69
 	pop de ; $4e6c
 	push de ; $4e6d
 	ld de, $0480 ; $4e6e
-	farcall FarPtr_ClearSaveFlag ; $4e71
+	farcall ClearSaveFlag ; $4e71
 	pop de ; $4e74
 	jr Label_03_4e87 ; $4e75
 Label_03_4e77:
 	push de ; $4e77
 	ld de, $0420 ; $4e78
-	farcall FarPtr_ClearSaveFlag ; $4e7b
+	farcall ClearSaveFlag ; $4e7b
 	pop de ; $4e7e
 	push de ; $4e7f
 	ld de, $04a0 ; $4e80
-	farcall FarPtr_ClearSaveFlag ; $4e83
+	farcall ClearSaveFlag ; $4e83
 	pop de ; $4e86
 Label_03_4e87:
 	xor a, a ; $4e87
@@ -2754,13 +2717,13 @@ InitCurrentSlotMinigameRecords:
 	ld hl, $d480 ; $5154
 	call ReadSaveBlock ; $5157
 	xor a, a ; $515a
-	farcall FarPtr_GetDefaultMinigameRecordValue ; $515b
+	farcall GetDefaultMinigameRecordValue ; $515b
 	ld hl, $d480 ; $515e
 	ld a, e ; $5161
 	ld [hl+], a ; $5162
 	ld [hl], d ; $5163
 	ld a, $01 ; $5164
-	farcall FarPtr_GetDefaultMinigameRecordValue ; $5166
+	farcall GetDefaultMinigameRecordValue ; $5166
 	ld hl, $d482 ; $5169
 	ld a, e ; $516c
 	ld [hl+], a ; $516d
@@ -2814,7 +2777,7 @@ Label_03_51bc:
 	jr z, Label_03_51ce ; $51be
 	push af ; $51c0
 	push hl ; $51c1
-	farcall FarPtr_GetDefaultMinigameRecordValue ; $51c2
+	farcall GetDefaultMinigameRecordValue ; $51c2
 	pop hl ; $51c5
 	ld a, e ; $51c6
 	ld [hl+], a ; $51c7
@@ -3001,12 +2964,12 @@ SaveSlotDebugEditor:
 	ldh [$ffb0], a ; $5329
 	ld a, h ; $532b
 	ldh [$ffb1], a ; $532c
-	farcall FarPtr_InitTextWindows ; $532e
+	farcall InitTextWindows ; $532e
 	call EnableLCD ; $5331
 	ld c, $7f ; $5334
 	call BeginFadeOut ; $5336
 	script_fade_in $7f ; $5339
-	farcall FarPtr_InitStoryModeState ; $533e
+	farcall InitStoryModeState ; $533e
 	ld de, $0000 ; $5341
 Label_03_5344:
 	call ReadCurrentSlotBlock ; $5344
@@ -3437,23 +3400,23 @@ ApplyN64RecordsUnlockFlags:
 	jr z, Label_03_56f1 ; $56c7
 	push de ; $56c9
 	ld de, $07c0 ; $56ca
-	farcall FarPtr_SetSaveFlag ; $56cd
+	farcall SetSaveFlag ; $56cd
 	pop de ; $56d0
 	push de ; $56d1
 	ld de, $0140 ; $56d2
-	farcall FarPtr_SetSaveFlag ; $56d5
+	farcall SetSaveFlag ; $56d5
 	pop de ; $56d8
 	push de ; $56d9
 	ld de, $0160 ; $56da
-	farcall FarPtr_SetSaveFlag ; $56dd
+	farcall SetSaveFlag ; $56dd
 	pop de ; $56e0
 	push de ; $56e1
 	ld de, $0180 ; $56e2
-	farcall FarPtr_SetSaveFlag ; $56e5
+	farcall SetSaveFlag ; $56e5
 	pop de ; $56e8
 	push de ; $56e9
 	ld de, $01a0 ; $56ea
-	farcall FarPtr_SetSaveFlag ; $56ed
+	farcall SetSaveFlag ; $56ed
 	pop de ; $56f0
 Label_03_56f1:
 	pop af ; $56f1
@@ -3633,7 +3596,7 @@ Label_03_5804:
 	jr z, Label_03_5838 ; $581c
 Label_03_581e:
 	ld a, b ; $581e
-	farcall FarPtr_GetDefaultMinigameRecordValue ; $581f
+	farcall GetDefaultMinigameRecordValue ; $581f
 	ld a, b ; $5822
 	call ReadMinigameRecord ; $5823
 	ld hl, $de00 ; $5826
@@ -3907,7 +3870,7 @@ FillMemory16:
 	ret ; $59c4
 Func_03_59c5:
 	call ClearFrameTasks ; $59c5
-	farcall FarPtr_01_0a ; $59c8
+	farcall Func_01_50e2 ; $59c8
 	call DisableLCDSafely ; $59cb
 	xor a, a ; $59ce
 	ldh [hScrollX], a ; $59cf
@@ -3951,7 +3914,7 @@ Label_03_59ff:
 	wram_bank $03 ; $5a28
 	ld de, $d000 ; $5a2e
 	ld c, $10 ; $5a31
-	farcall FarPtr_FetchAndDrawDialogueText ; $5a33
+	farcall FetchAndDrawDialogueText ; $5a33
 	call Func_03_5b1a ; $5a36
 	and a, a ; $5a39
 	jr nz, Label_03_5a49 ; $5a3a
@@ -4008,7 +3971,7 @@ Label_03_5a9a:
 	call BeginFadeOut ; $5a9c
 	call WaitFadeEnd ; $5a9f
 	call ClearFrameTasks ; $5aa2
-	farcall FarPtr_01_0a ; $5aa5
+	farcall Func_01_50e2 ; $5aa5
 	ret ; $5aa8
 Func_03_5aa9:
 	wram_bank $06 ; $5aa9
@@ -5425,7 +5388,7 @@ Func_03_6ff7:
 	ld c, $10 ; $701d
 	call QueueVRAMCopy ; $701f
 	call AdvanceFrame ; $7022
-	farcall FarPtr_StopSceneScrollTask ; $7025
+	farcall StopSceneScrollTask ; $7025
 	ld a, $90 ; $7028
 	ldh [rWY], a ; $702a
 	wram_bank $06 ; $702c
@@ -5737,7 +5700,7 @@ Func_03_74f2:
 	push hl ; $74f5
 	ldh a, [hWramBank] ; $74f6
 	push af ; $74f8
-	farcall FarPtr_FetchDialogueText ; $74f9
+	farcall FetchDialogueText ; $74f9
 	ld hl, wTextBuffer ; $74fc
 	wram_bank $01 ; $74ff
 	ld c, $14 ; $7505
@@ -5781,11 +5744,11 @@ Func_03_751e:
 	ld hl, $3140 ; $7547
 	ld de, $d0c0 ; $754a
 	ld bc, $0020 ; $754d
-	farcall FarPtr_FetchAndDrawDialogueText ; $7550
+	farcall FetchAndDrawDialogueText ; $7550
 	ld hl, $3142 ; $7553
 	ld de, $d180 ; $7556
 	ld bc, $0020 ; $7559
-	farcall FarPtr_FetchAndDrawDialogueText ; $755c
+	farcall FetchAndDrawDialogueText ; $755c
 	wram_bank $02 ; $755f
 	ld hl, $d000 ; $7565
 	ld de, $b800 ; $7568

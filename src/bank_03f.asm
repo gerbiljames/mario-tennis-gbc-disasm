@@ -1,7 +1,6 @@
 SECTION "ROM Bank $3f", ROMX[$4000], BANK[$3f]
 
-FarPtr_TennisDictionaryScreen:
-	dw TennisDictionaryScreen ; $4000
+	farptr TennisDictionaryScreen ; $4000
 DataPtr_HardCourtLabelTiles:
 	dw HardCourtLabelTiles ; $4002
 DataPtr_ClayCourtLabelTiles:
@@ -191,7 +190,7 @@ Label_3f_40be:
 	ld [$cb33], a ; $4103
 Label_3f_4106:
 	call DisableLCDSafely ; $4106
-	farcall FarPtr_01_04 ; $4109
+	farcall Func_01_5062 ; $4109
 	call EnableLCD ; $410c
 	sound $05 ; $410f
 	call AdvanceFrame ; $4111
@@ -262,12 +261,12 @@ ShowTennisDictionaryPageDefault:
 	ld b, a ; $41ae
 	xor a, a ; $41af
 	call Func_3f_54c8 ; $41b0
-	farcall FarPtr_UpdateSceneScroll ; $41b3
+	farcall UpdateSceneScroll ; $41b3
 	call AdvanceFrame ; $41b6
 	call DisableLCDSafely ; $41b9
 	call LoadTennisDictionaryAssetsDefault ; $41bc
 	ld a, $01 ; $41bf
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $41c1
+	farcall CopyScrolledSceneTilemapToVram ; $41c1
 	call EnableLCD ; $41c4
 	call Func_3f_5417 ; $41c7
 	call Func_3f_5261 ; $41ca
@@ -291,12 +290,12 @@ ShowTennisDictionaryPageChar6:
 	ld b, a ; $41f7
 	ld a, $01 ; $41f8
 	call Func_3f_54c8 ; $41fa
-	farcall FarPtr_UpdateSceneScroll ; $41fd
+	farcall UpdateSceneScroll ; $41fd
 	call AdvanceFrame ; $4200
 	call DisableLCDSafely ; $4203
 	call LoadTennisDictionaryAssetsChar6 ; $4206
 	ld a, $01 ; $4209
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $420b
+	farcall CopyScrolledSceneTilemapToVram ; $420b
 	call EnableLCD ; $420e
 	wram_bank $06 ; $4211
 	ld a, [$cb37] ; $4217
@@ -316,11 +315,11 @@ ShowTennisDictionaryPageChar6:
 	ld [wCameraX + 1], a ; $4234
 	jr Label_3f_423f ; $4237
 Label_3f_4239:
-	farcall FarPtr_UpdateSceneScroll ; $4239
+	farcall UpdateSceneScroll ; $4239
 	ld a, $01 ; $423c
 	ret ; $423e
 Label_3f_423f:
-	farcall FarPtr_UpdateSceneScroll ; $423f
+	farcall UpdateSceneScroll ; $423f
 	xor a, a ; $4242
 	ret ; $4243
 ResetTennisDictionaryScroll:
@@ -536,11 +535,11 @@ Label_3f_4426:
 	wram_bank $06 ; $442b
 	call EnableLCD ; $4431
 	wram_bank $06 ; $4434
-	farcall FarPtr_UpdateSceneScroll ; $443a
+	farcall UpdateSceneScroll ; $443a
 	call DisableLCDSafely ; $443d
 	wram_bank $03 ; $4440
 	ld a, $01 ; $4446
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4448
+	farcall CopyScrolledSceneTilemapToVram ; $4448
 	call EnableLCD ; $444b
 	ret ; $444e
 TennisDictionaryClearList:
@@ -1138,7 +1137,7 @@ Label_3f_5259:
 	ld [$cb2d], a ; $525d
 	ret ; $5260
 Func_3f_5261:
-	farcall FarPtr_PrepareGlyphBuffer ; $5261
+	farcall PrepareGlyphBuffer ; $5261
 	wram_bank $03 ; $5264
 	ld c, $0e ; $526a
 	ld hl, TennisDictionaryClearList2 ; $526c
@@ -1255,7 +1254,7 @@ Label_3f_5302:
 	ld [wShadowTilemapBank], a ; $530c
 	ld a, c ; $530f
 	ld c, $0c ; $5310
-	farcall FarPtr_RenderProportionalTextAt ; $5312
+	farcall RenderProportionalTextAt ; $5312
 	ld c, a ; $5315
 	pop af ; $5316
 	ld [wShadowTilemapBank], a ; $5317
@@ -1264,7 +1263,7 @@ Label_3f_5302:
 	ld a, b ; $531c
 	cp a, $06 ; $531d
 	jr nz, Label_3f_52d5 ; $531f
-	farcall FarPtr_RestoreShadowTilemap ; $5321
+	farcall RestoreShadowTilemap ; $5321
 	call Func_3f_5334 ; $5324
 	call Func_3f_5749 ; $5327
 	call Func_3f_578f ; $532a
@@ -1305,7 +1304,7 @@ Label_3f_5366:
 	push de ; $5366
 	ld c, $40 ; $5367
 	ld de, $d050 ; $5369
-	farcall FarPtr_RenderTextToBuffer64 ; $536c
+	farcall RenderTextToBuffer64 ; $536c
 	pop de ; $536f
 	ld a, d ; $5370
 	inc a ; $5371
@@ -1320,7 +1319,7 @@ Label_3f_5377:
 	inc h ; $537e
 Label_3f_537f:
 	ld de, $d05e ; $537f
-	farcall FarPtr_RenderTextToBuffer64 ; $5382
+	farcall RenderTextToBuffer64 ; $5382
 	ld a, $06 ; $5385
 	ld [$d040], a ; $5387
 Label_3f_538a:
@@ -1628,7 +1627,7 @@ Label_3f_5640:
 	inc h ; $564d
 Label_3f_564e:
 	push hl ; $564e
-	farcall FarPtr_ResetTextWindowsAndRestoreMap ; $564f
+	farcall ResetTextWindowsAndRestoreMap ; $564f
 	ld a, $05 ; $5652
 	ld [wShadowTilemapBank], a ; $5654
 	pop hl ; $5657
@@ -1636,12 +1635,12 @@ Label_3f_564e:
 	ld e, $06 ; $565a
 	ld b, $14 ; $565c
 	ld c, $05 ; $565e
-	farcall FarPtr_CreateDialogueWindow ; $5660
+	farcall CreateDialogueWindow ; $5660
 	push hl ; $5663
 	xor a, a ; $5664
-	farcall FarPtr_AddTextIdOffset ; $5665
+	farcall AddTextIdOffset ; $5665
 	ld b, $00 ; $5668
-	farcall FarPtr_SetWindowTextId ; $566a
+	farcall SetWindowTextId ; $566a
 	pop hl ; $566d
 	ld a, [wMessageSpeed] ; $566e
 	push af ; $5671
@@ -1650,14 +1649,14 @@ Label_3f_564e:
 	ld [wMessageSpeed], a ; $5675
 	xor a, a ; $5678
 	set_flag $04, 3 ; $5679
-	farcall FarPtr_RedrawWindowText ; $567c
+	farcall RedrawWindowText ; $567c
 	clear_flag $04, 3 ; $567f
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a, a ; $5686
-	farcall FarPtr_RestoreTilemapUnderWindow ; $5687
-	farcall FarPtr_RedrawWindowRowsSafe ; $568a
-	farcall FarPtr_CloseWindowAlt ; $568d
+	farcall RestoreTilemapUnderWindow ; $5687
+	farcall RedrawWindowRowsSafe ; $568a
+	farcall CloseWindowAlt ; $568d
 	wram_bank $06 ; $5690
 	ld a, [$cb37] ; $5696
 	res 0, a ; $5699

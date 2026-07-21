@@ -1,77 +1,41 @@
 SECTION "ROM Bank $07", ROMX[$4000], BANK[$07]
 
-FarPtr_TryEstablishLink:
-	dw TryEstablishLink ; $4000
-FarPtr_EnableSerialAndVBlankInterrupts:
-	dw EnableSerialAndVBlankInterrupts ; $4002
-FarPtr_RunLinkMatchFrameMaster:
-	dw RunLinkMatchFrameMaster ; $4004
-FarPtr_RunLinkMatchFrameSlave:
-	dw RunLinkMatchFrameSlave ; $4006
-FarPtr_ExchangeNibbleBlockMaster:
-	dw ExchangeNibbleBlockMaster ; $4008
-FarPtr_ExchangeNibbleBlockSlave:
-	dw ExchangeNibbleBlockSlave ; $400a
-FarPtr_SendNibbleBlockSlave:
-	dw SendNibbleBlockSlave ; $400c
-FarPtr_ReceiveNibbleBlockMaster:
-	dw ReceiveNibbleBlockMaster ; $400e
-FarPtr_UnpackBytesToNibbles:
-	dw UnpackBytesToNibbles ; $4010
-FarPtr_ExchangeLinkFrameByteMaster:
-	dw ExchangeLinkFrameByteMaster ; $4012
-FarPtr_ExchangeLinkFrameByteSlave:
-	dw ExchangeLinkFrameByteSlave ; $4014
-FarPtr_SyncLinkFrameMaster:
-	dw SyncLinkFrameMaster ; $4016
-FarPtr_SyncLinkFrameSlave:
-	dw SyncLinkFrameSlave ; $4018
-FarPtr_SyncLinkFrame:
-	dw SyncLinkFrame ; $401a
-FarPtr_RunLinkMatchFrame:
-	dw RunLinkMatchFrame ; $401c
-FarPtr_ExchangeLinkReadySignal:
-	dw ExchangeLinkReadySignal ; $401e
-FarPtr_RunLinkInputFrame:
-	dw RunLinkInputFrame ; $4020
-FarPtr_UpdateLinkSession:
-	dw UpdateLinkSession ; $4022
-FarPtr_EndLinkSession:
-	dw EndLinkSession ; $4024
-FarPtr_ExchangeHandshakeBlockMaster:
-	dw ExchangeHandshakeBlockMaster ; $4026
-FarPtr_ExchangeHandshakeBlockSlave:
-	dw ExchangeHandshakeBlockSlave ; $4028
-FarPtr_ExchangeLinkBlockToWram5:
-	dw ExchangeLinkBlockToWram5 ; $402a
-FarPtr_PrimeSlaveSerialReply:
-	dw PrimeSlaveSerialReply ; $402c
-FarPtr_PrepareLinkStatePayload:
-	dw PrepareLinkStatePayload ; $402e
-FarPtr_PrepareLinkInputPayload:
-	dw PrepareLinkInputPayload ; $4030
-FarPtr_ResyncLinkSession:
-	dw ResyncLinkSession ; $4032
-FarPtr_ResyncLinkSessionWithTimer:
-	dw ResyncLinkSessionWithTimer ; $4034
-FarPtr_RunLinkCommandFrame:
-	dw RunLinkCommandFrame ; $4036
-FarPtr_ExchangeLinkDataBlock:
-	dw ExchangeLinkDataBlock ; $4038
-FarPtr_ComputeShotPlacement:
-	dw ComputeShotPlacement ; $403a
-FarPtr_ExecuteShot:
-	dw ExecuteShot ; $403c
-FarPtr_ComputeShotTrajectory:
-	dw ComputeShotTrajectory ; $403e
-FarPtr_LookupCharSpriteSet:
-	dw LookupCharSpriteSet ; $4040
-FarPtr_SetupCharacterSprite:
-	dw SetupCharacterSprite ; $4042
-FarPtr_LoadCharacterAttributes:
-	dw LoadCharacterAttributes ; $4044
-FarPtr_RunDebugTestMatch:
-	dw RunDebugTestMatch ; $4046
+	farptr TryEstablishLink ; $4000
+	farptr EnableSerialAndVBlankInterrupts ; $4002
+	farptr RunLinkMatchFrameMaster ; $4004
+	farptr RunLinkMatchFrameSlave ; $4006
+	farptr ExchangeNibbleBlockMaster ; $4008
+	farptr ExchangeNibbleBlockSlave ; $400a
+	farptr SendNibbleBlockSlave ; $400c
+	farptr ReceiveNibbleBlockMaster ; $400e
+	farptr UnpackBytesToNibbles ; $4010
+	farptr ExchangeLinkFrameByteMaster ; $4012
+	farptr ExchangeLinkFrameByteSlave ; $4014
+	farptr SyncLinkFrameMaster ; $4016
+	farptr SyncLinkFrameSlave ; $4018
+	farptr SyncLinkFrame ; $401a
+	farptr RunLinkMatchFrame ; $401c
+	farptr ExchangeLinkReadySignal ; $401e
+	farptr RunLinkInputFrame ; $4020
+	farptr UpdateLinkSession ; $4022
+	farptr EndLinkSession ; $4024
+	farptr ExchangeHandshakeBlockMaster ; $4026
+	farptr ExchangeHandshakeBlockSlave ; $4028
+	farptr ExchangeLinkBlockToWram5 ; $402a
+	farptr PrimeSlaveSerialReply ; $402c
+	farptr PrepareLinkStatePayload ; $402e
+	farptr PrepareLinkInputPayload ; $4030
+	farptr ResyncLinkSession ; $4032
+	farptr ResyncLinkSessionWithTimer ; $4034
+	farptr RunLinkCommandFrame ; $4036
+	farptr ExchangeLinkDataBlock ; $4038
+	farptr ComputeShotPlacement ; $403a
+	farptr ExecuteShot ; $403c
+	farptr ComputeShotTrajectory ; $403e
+	farptr LookupCharSpriteSet ; $4040
+	farptr SetupCharacterSprite ; $4042
+	farptr LoadCharacterAttributes ; $4044
+	farptr RunDebugTestMatch ; $4046
 TryEstablishLink:
 	di ; $4048
 	ldh a, [hLinkRxByte] ; $4049
@@ -118,7 +82,7 @@ RunLinkMatchFrameMaster:
 	call SerialDecodeInput ; $4089
 	ldh a, [hLinkInput] ; $408c
 	call SoftResetIfABStartSelect ; $408e
-	farcall FarPtr_UpdateMatchFrame ; $4091
+	farcall UpdateMatchFrame ; $4091
 	call SerialEncodeInput ; $4094
 	pop hl ; $4097
 	pop bc ; $4098
@@ -131,7 +95,7 @@ RunLinkMatchFrameSlave:
 	call SerialDecodeInput ; $40a2
 	ldh a, [hLinkInput] ; $40a5
 	call SoftResetIfABStartSelect ; $40a7
-	farcall FarPtr_UpdateMatchFrame ; $40aa
+	farcall UpdateMatchFrame ; $40aa
 	call SerialEncodeInput ; $40ad
 	pop hl ; $40b0
 	pop bc ; $40b1
@@ -1376,7 +1340,7 @@ UpdateLinkSession:
 	call DisableLCDSafely ; $4859
 	ld a, $01 ; $485c
 	ldh [$ffd8], a ; $485e
-	farcall FarPtr_ExchangeLinkReadySignal ; $4860
+	farcall ExchangeLinkReadySignal ; $4860
 	ldh a, [hLinkState] ; $4863
 	cp a, $02 ; $4865
 	jp z, Label_07_48a7 ; $4867
@@ -1412,7 +1376,7 @@ Label_07_48ae:
 	xor a, a ; $48ae
 	ldh [$ffe2], a ; $48af
 	call SerialEncodeInput ; $48b1
-	farcall FarPtr_PrimeSlaveSerialReply ; $48b4
+	farcall PrimeSlaveSerialReply ; $48b4
 	xor a, a ; $48b7
 	ldh [$ffde], a ; $48b8
 	ld hl, $df1e ; $48ba
@@ -1431,13 +1395,13 @@ Label_07_48df:
 	xor a, a ; $48df
 	ldh [$ffe9], a ; $48e0
 	push af ; $48e2
-	farcall FarPtr_SyncLinkFrame ; $48e3
+	farcall SyncLinkFrame ; $48e3
 	pop af ; $48e6
 	push af ; $48e7
-	farcall FarPtr_SyncLinkFrame ; $48e8
+	farcall SyncLinkFrame ; $48e8
 	pop af ; $48eb
 	push af ; $48ec
-	farcall FarPtr_SyncLinkFrame ; $48ed
+	farcall SyncLinkFrame ; $48ed
 	pop af ; $48f0
 Label_07_48f1:
 	pop hl ; $48f1
@@ -1676,7 +1640,7 @@ ResyncLinkSession:
 	ldh [$ffe7], a ; $4a61
 	ld a, $01 ; $4a63
 	ldh [$ffd8], a ; $4a65
-	farcall FarPtr_ExchangeLinkReadySignal ; $4a67
+	farcall ExchangeLinkReadySignal ; $4a67
 	ldh a, [hLinkState] ; $4a6a
 	cp a, $02 ; $4a6c
 	jr z, Label_07_4a8c ; $4a6e
@@ -1699,7 +1663,7 @@ Label_07_4a8c:
 	ldh [$ffdc], a ; $4a91
 Label_07_4a93:
 	call SerialEncodeInput ; $4a93
-	farcall FarPtr_PrimeSlaveSerialReply ; $4a96
+	farcall PrimeSlaveSerialReply ; $4a96
 	xor a, a ; $4a99
 	ldh [$ffde], a ; $4a9a
 	ld a, $01 ; $4a9c
@@ -1721,7 +1685,7 @@ ResyncLinkSessionWithTimer:
 	ldh [$ffe7], a ; $4ab6
 	ld a, $01 ; $4ab8
 	ldh [$ffd8], a ; $4aba
-	farcall FarPtr_ExchangeLinkReadySignal ; $4abc
+	farcall ExchangeLinkReadySignal ; $4abc
 	ldh a, [hLinkState] ; $4abf
 	cp a, $02 ; $4ac1
 	jr z, Label_07_4ae1 ; $4ac3
@@ -1744,7 +1708,7 @@ Label_07_4ae1:
 	ldh [$ffdc], a ; $4ae6
 Label_07_4ae8:
 	call SerialEncodeInput ; $4ae8
-	farcall FarPtr_PrimeSlaveSerialReply ; $4aeb
+	farcall PrimeSlaveSerialReply ; $4aeb
 	xor a, a ; $4aee
 	ldh [$ffde], a ; $4aef
 	ld a, $01 ; $4af1
@@ -1828,8 +1792,8 @@ Label_07_4b50:
 	ldh [$ffd7], a ; $4b6c
 	ei ; $4b6e
 	call AwaitSerialByte ; $4b6f
-	farcall FarPtr_AnimateLinkStatusPalette ; $4b72
-	farcall FarPtr_39_04 ; $4b75
+	farcall AnimateLinkStatusPalette ; $4b72
+	farcall Func_39_4342 ; $4b75
 	jr c, Label_07_4ba2 ; $4b78
 	cp a, $c1 ; $4b7a
 	jr z, Label_07_4ba2 ; $4b7c
@@ -1847,7 +1811,7 @@ Label_07_4b50:
 	push de ; $4b91
 	push hl ; $4b92
 	ld c, $02 ; $4b93
-	farcall FarPtr_ShowLinkStatusMessage ; $4b95
+	farcall ShowLinkStatusMessage ; $4b95
 	pop hl ; $4b98
 	pop de ; $4b99
 	pop bc ; $4b9a
@@ -1937,7 +1901,7 @@ SerialEncodeCommand:
 	ld b, a ; $4c28
 	push hl ; $4c29
 	push de ; $4c2a
-	farcall FarPtr_38_0a ; $4c2b
+	farcall Func_38_6c8a ; $4c2b
 	pop de ; $4c2e
 	pop hl ; $4c2f
 	ld c, b ; $4c30
@@ -2783,7 +2747,7 @@ ApplyShotTypePresets:
 	ld [$c4a1], a ; $5591
 	ld a, [hl+] ; $5594
 	push hl ; $5595
-	farcall FarPtr_SetBallTrailColor ; $5596
+	farcall SetBallTrailColor ; $5596
 	pop hl ; $5599
 	ld a, [hl+] ; $559a
 	ld b, [hl] ; $559b
@@ -2987,7 +2951,7 @@ Label_07_5703:
 Label_07_570c:
 	ret ; $570c
 GetRandomAimJitter:
-	farcall FarPtr_AdvanceMatchRng ; $570d
+	farcall AdvanceMatchRng ; $570d
 	ld l, a ; $5710
 	ld h, $00 ; $5711
 	ld a, [$df6a] ; $5713
@@ -3306,7 +3270,7 @@ ExecuteShotTopspin:
 	call ApplyShotTypePresets ; $58c6
 	call WeakenShotByCharge ; $58c9
 	call ComputeShotTrajectory ; $58cc
-	farcall FarPtr_ShotBallPathTopspin ; $58cf
+	farcall ShotBallPathTopspin ; $58cf
 	ret ; $58d2
 ExecuteShotPowerTopspin:
 	ld hl, $df0f ; $58d3
@@ -3317,7 +3281,7 @@ ExecuteShotPowerTopspin:
 	call NormalizeBallHeightForShot ; $58df
 	call ApplyShotTypePresets ; $58e2
 	call ComputeShotTrajectory ; $58e5
-	farcall FarPtr_ShotBallPathPowerTopspin ; $58e8
+	farcall ShotBallPathPowerTopspin ; $58e8
 	ret ; $58eb
 ExecuteShotSlice:
 	ld a, SHOTTYPE_SLICE ; $58ec
@@ -3326,7 +3290,7 @@ ExecuteShotSlice:
 	call ApplyShotTypePresets ; $58f4
 	call WeakenShotByCharge ; $58f7
 	call ComputeShotTrajectory ; $58fa
-	farcall FarPtr_ShotBallPathSlice ; $58fd
+	farcall ShotBallPathSlice ; $58fd
 	ret ; $5900
 ExecuteShotPowerSlice:
 	ld hl, $df0f ; $5901
@@ -3337,22 +3301,22 @@ ExecuteShotPowerSlice:
 	call NormalizeBallHeightForShot ; $590d
 	call ApplyShotTypePresets ; $5910
 	call ComputeShotTrajectory ; $5913
-	farcall FarPtr_ShotBallPathPowerSlice ; $5916
+	farcall ShotBallPathPowerSlice ; $5916
 	ret ; $5919
 ExecuteShotLob:
 	call RaiseBallHeightForLob ; $591a
 	call ApplyShotTypePresets ; $591d
 	call BoostShotByCharge ; $5920
 	call NudgeShotByPlayerMomentum ; $5923
-	farcall FarPtr_ComputeShotTrajectory ; $5926
-	farcall FarPtr_ShotBallPathLob ; $5929
+	farcall ComputeShotTrajectory ; $5926
+	farcall ShotBallPathLob ; $5929
 	ret ; $592c
 ExecuteShotDrop:
 	call RaiseBallHeightForLob ; $592d
 	call ApplyShotTypePresets ; $5930
 	call WeakenShotByCharge ; $5933
 	call ComputeShotTrajectory ; $5936
-	farcall FarPtr_ShotBallPathDrop ; $5939
+	farcall ShotBallPathDrop ; $5939
 	ret ; $593c
 ExecuteShotReachBasic:
 	call CheckBallInSmashRange ; $593d
@@ -3361,7 +3325,7 @@ ExecuteShotReachBasic:
 	call ApplyShotTypePresets ; $5945
 	call WeakenShotByCharge ; $5948
 	call ComputeShotTrajectory ; $594b
-	farcall FarPtr_ProjectShotPlacement0 ; $594e
+	farcall ProjectShotPlacement0 ; $594e
 	ret ; $5951
 ExecuteShotReachPowerTopspin:
 	call CheckBallInSmashRange ; $5952
@@ -3370,7 +3334,7 @@ ExecuteShotReachPowerTopspin:
 	call ApplyShotTypePresets ; $595a
 	call WeakenShotByCharge ; $595d
 	call ComputeShotTrajectory ; $5960
-	farcall FarPtr_ProjectShotPlacement1 ; $5963
+	farcall ProjectShotPlacement1 ; $5963
 	ret ; $5966
 ExecuteShotReachPowerSlice:
 	call CheckBallInSmashRange ; $5967
@@ -3379,7 +3343,7 @@ ExecuteShotReachPowerSlice:
 	call ApplyShotTypePresets ; $596f
 	call WeakenShotByCharge ; $5972
 	call ComputeShotTrajectory ; $5975
-	farcall FarPtr_ProjectShotPlacement2 ; $5978
+	farcall ProjectShotPlacement2 ; $5978
 	ret ; $597b
 ExecuteShotReach:
 	ld a, SHOTTYPE_REACH ; $597c
@@ -3388,7 +3352,7 @@ ExecuteShotReach:
 	call ApplyShotTypePresets ; $5984
 	call WeakenShotByCharge ; $5987
 	call ComputeShotTrajectory ; $598a
-	farcall FarPtr_ShotBallPathReach ; $598d
+	farcall ShotBallPathReach ; $598d
 	ret ; $5990
 ExecuteShotSmash:
 	ld a, SHOTTYPE_SMASH ; $5991
@@ -3398,7 +3362,7 @@ ExecuteShotSmash:
 	call NormalizeBallHeightForShot ; $599b
 	call ApplyShotTypePresets ; $599e
 	call ComputeShotTrajectory ; $59a1
-	farcall FarPtr_ShotBallPathSmash ; $59a4
+	farcall ShotBallPathSmash ; $59a4
 	ret ; $59a7
 ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
@@ -3412,24 +3376,24 @@ Label_07_59b8:
 	call NormalizeBallHeightForShot ; $59b8
 	call ApplyShotTypePresets ; $59bb
 	call ComputeShotTrajectory ; $59be
-	farcall FarPtr_ShotBallPathNeutral ; $59c1
+	farcall ShotBallPathNeutral ; $59c1
 	ret ; $59c4
 ExecuteShotServeTopspin:
 	call ApplyShotTypePresets ; $59c5
 	call ComputeShotTrajectory ; $59c8
-	farcall FarPtr_ShotBallPathServeTopspin ; $59cb
+	farcall ShotBallPathServeTopspin ; $59cb
 	call Func_07_5a01 ; $59ce
 	ret ; $59d1
 ExecuteShotServeSlice:
 	call ApplyShotTypePresets ; $59d2
 	call ComputeShotTrajectory ; $59d5
-	farcall FarPtr_ShotBallPathServeSlice ; $59d8
+	farcall ShotBallPathServeSlice ; $59d8
 	call Func_07_5a01 ; $59db
 	ret ; $59de
 ExecuteShotServeFlat:
 	call ApplyShotTypePresets ; $59df
 	call ComputeShotTrajectory ; $59e2
-	farcall FarPtr_ShotBallPathServeFlat ; $59e5
+	farcall ShotBallPathServeFlat ; $59e5
 	call Func_07_5a01 ; $59e8
 	ret ; $59eb
 	ld hl, wBallHeight ; $59ec
@@ -3486,7 +3450,7 @@ CharSpriteSetTable:
 	INCBIN "data/bank_007/d_5a50.bin" ; $5a50, 32 bytes
 SetupCharacterSprite:
 	push de ; $5a70
-	farcall FarPtr_04_12 ; $5a71
+	farcall Func_04_4b68 ; $5a71
 	pop de ; $5a74
 	ld a, e ; $5a75
 	ld [$df3a], a ; $5a76
@@ -3515,7 +3479,7 @@ SetupCharacterSprite:
 	ld a, e ; $5aa0
 	ld [hl+], a ; $5aa1
 	ld [hl], d ; $5aa2
-	farcall FarPtr_ReloadCharFrameGfx ; $5aa3
+	farcall ReloadCharFrameGfx ; $5aa3
 	ret ; $5aa6
 	INCBIN "data/bank_007/d_5aa7.bin" ; $5aa7, 12 bytes
 LoadCharacterAttributes:
@@ -4003,64 +3967,64 @@ RunDebugTestMatch:
 	ld [wMatchPlayerChar], a ; $5e6a
 	ld b, a ; $5e6d
 	ld c, $00 ; $5e6e
-	farcall FarPtr_02_18 ; $5e70
+	farcall Func_02_4066 ; $5e70
 	ld a, $1d ; $5e73
 	ld [wMatchOpponentChar], a ; $5e75
 	ld b, a ; $5e78
 	ld c, $02 ; $5e79
-	farcall FarPtr_02_18 ; $5e7b
+	farcall Func_02_4066 ; $5e7b
 	ld a, $1f ; $5e7e
 	ld b, a ; $5e80
 	ld c, $01 ; $5e81
-	farcall FarPtr_02_18 ; $5e83
+	farcall Func_02_4066 ; $5e83
 	ld a, $1c ; $5e86
 	ld b, a ; $5e88
 	ld c, $03 ; $5e89
-	farcall FarPtr_02_18 ; $5e8b
+	farcall Func_02_4066 ; $5e8b
 	ld a, $00 ; $5e8e
-	farcall FarPtr_SetStorySlotFlagB ; $5e90
+	farcall SetStorySlotFlagB ; $5e90
 	ld a, $01 ; $5e93
-	farcall FarPtr_SetStorySlotFlagA ; $5e95
+	farcall SetStorySlotFlagA ; $5e95
 	ld a, $fe ; $5e98
 	ld [$c4ee], a ; $5e9a
-	farcall FarPtr_RunMatch ; $5e9d
+	farcall RunMatch ; $5e9d
 	ret ; $5ea0
-	farcall FarPtr_08_06 ; $5ea1
+	farcall Func_08_6544 ; $5ea1
 	ld a, $02 ; $5ea4
 	ld [wCurrentlyUsedCourt], a ; $5ea6
 	ld a, $02 ; $5ea9
 	ld [wOnCourtCharCount], a ; $5eab
 	ldh a, [hRomBank] ; $5eae
 	ld de, ModeHookTable_07 ; $5eb0
-	farcall FarPtr_SetModeHookTable ; $5eb3
+	farcall SetModeHookTable ; $5eb3
 	ld de, $5ff6 ; $5eb6
-	farcall FarPtr_SetMinigamePointTable ; $5eb9
+	farcall SetMinigamePointTable ; $5eb9
 	ld a, $01 ; $5ebc
 	ld [wTargetZoneEnabled], a ; $5ebe
 	ld a, $1a ; $5ec1
 	ld [wMatchPlayerChar], a ; $5ec3
 	ld a, $1c ; $5ec6
 	ld [wMatchOpponentChar], a ; $5ec8
-	farcall FarPtr_RunN64ExhibData ; $5ecb
-	farcall FarPtr_RunMinigameMatch ; $5ece
+	farcall RunN64ExhibData ; $5ecb
+	farcall RunMinigameMatch ; $5ece
 	ret ; $5ed1
 Func_07_5ed2:
 	ret ; $5ed2
 ResolveTargetModePoint:
-	farcall FarPtr_09_26 ; $5ed3
-	farcall FarPtr_ResolvePointWinner ; $5ed6
+	farcall Func_09_4098 ; $5ed3
+	farcall ResolvePointWinner ; $5ed6
 	ld [wPointWinLoseFlag], a ; $5ed9
-	farcall FarPtr_UpdatePointStats ; $5edc
-	farcall FarPtr_AwardPoint ; $5edf
+	farcall UpdatePointStats ; $5edc
+	farcall AwardPoint ; $5edf
 	ld a, [wPlayer1PointsWon] ; $5ee2
 	ld b, $01 ; $5ee5
-	farcall FarPtr_09_2a ; $5ee7
+	farcall Func_09_610c ; $5ee7
 	ld a, [wPlayer2PointsWon] ; $5eea
 	ld b, $01 ; $5eed
-	farcall FarPtr_09_2c ; $5eef
-	farcall FarPtr_StepMatchFrame ; $5ef2
-	farcall FarPtr_StartPointEndReactions ; $5ef5
-	farcall FarPtr_ResolvePointOutcome ; $5ef8
+	farcall Func_09_611b ; $5eef
+	farcall StepMatchFrame ; $5ef2
+	farcall StartPointEndReactions ; $5ef5
+	farcall ResolvePointOutcome ; $5ef8
 	ret ; $5efb
 ModeHookTable_07:
 	INCBIN "data/bank_007/d_5efc.bin" ; $5efc, 17 bytes
@@ -4069,15 +4033,15 @@ ModeHookTable_07:
 	ld a, $01 ; $5f11
 	ld [$c4c0], a ; $5f13
 	ld a, $14 ; $5f16
-	farcall FarPtr_StepMatchFrames ; $5f18
+	farcall StepMatchFrames ; $5f18
 	ld a, $00 ; $5f1b
 	ld [$c4c0], a ; $5f1d
 	clear_flag $0c, 4 ; $5f20
 	ret ; $5f23
 	ret ; $5f24
-	farcall FarPtr_IsBallInTargetZone ; $5f25
+	farcall IsBallInTargetZone ; $5f25
 	jr z, Label_07_5f48 ; $5f28
-	farcall FarPtr_AdvanceMatchRng ; $5f2a
+	farcall AdvanceMatchRng ; $5f2a
 	ld h, $00 ; $5f2d
 	ld l, a ; $5f2f
 	add hl, hl ; $5f30
@@ -4089,36 +4053,36 @@ ModeHookTable_07:
 	ld h, a ; $5f36
 	ld e, l ; $5f37
 	ld d, h ; $5f38
-	farcall FarPtr_SetTargetZoneCorner1 ; $5f39
-	farcall FarPtr_AdvanceMatchRng ; $5f3c
+	farcall SetTargetZoneCorner1 ; $5f39
+	farcall AdvanceMatchRng ; $5f3c
 	ld h, $00 ; $5f3f
 	ld l, a ; $5f41
 	add hl, hl ; $5f42
 	ld e, l ; $5f43
 	ld d, h ; $5f44
-	farcall FarPtr_SetTargetZoneCorner2 ; $5f45
+	farcall SetTargetZoneCorner2 ; $5f45
 Label_07_5f48:
 	ret ; $5f48
 	set_flag $0c, 4 ; $5f49
 	ret ; $5f4c
 	ld hl, $fdc0 ; $5f4d
 	ld de, $fd80 ; $5f50
-	farcall FarPtr_SetBallGatePoint1 ; $5f53
+	farcall SetBallGatePoint1 ; $5f53
 	ld hl, $0240 ; $5f56
 	ld de, $fd80 ; $5f59
-	farcall FarPtr_SetBallGatePoint2 ; $5f5c
+	farcall SetBallGatePoint2 ; $5f5c
 	ld hl, $ff60 ; $5f5f
 	ld de, $fd60 ; $5f62
-	farcall FarPtr_SetTargetZoneCorner1 ; $5f65
+	farcall SetTargetZoneCorner1 ; $5f65
 	ld hl, $0000 ; $5f68
 	ld de, rJOYP ; $5f6b
-	farcall FarPtr_SetTargetZoneCorner2 ; $5f6e
+	farcall SetTargetZoneCorner2 ; $5f6e
 	call Func_07_5ed2 ; $5f71
 	ret ; $5f74
 	ld hl, $013f ; $5f75
 	ld de, $000b ; $5f78
 	ld bc, $1305 ; $5f7b
-	farcall FarPtr_ShowMessageWindow ; $5f7e
+	farcall ShowMessageWindow ; $5f7e
 	call ResolveTargetModePoint ; $5f81
 	ld a, [wCharacter1ServiceAces] ; $5f84
 	ld hl, wCharacter2ServiceAces ; $5f87

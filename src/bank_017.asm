@@ -1,7 +1,6 @@
 SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 
-FarPtr_ShowCourtDiagramTestScreen:
-	dw ShowCourtDiagramTestScreen ; $4000
+	farptr ShowCourtDiagramTestScreen ; $4000
 DataPtr_CourtDiagramTiles:
 	dw CourtDiagramTiles ; $4002
 DataPtr_CourtDiagramTilemap:
@@ -10,10 +9,8 @@ DataPtr_CourtDiagramAttrmap:
 	dw CourtDiagramAttrmap ; $4006
 DataPtr_CourtDiagramPalettes:
 	dw CourtDiagramPalettes ; $4008
-FarPtr_ShowDrillBriefingScreen:
-	dw ShowDrillBriefingScreen ; $400a
-FarPtr_ShowRulesScreen:
-	dw ShowRulesScreen ; $400c
+	farptr ShowDrillBriefingScreen ; $400a
+	farptr ShowRulesScreen ; $400c
 DataPtr_RulesScreenTiles:
 	dw RulesScreenTiles ; $400e
 DataPtr_RulesScreenTilemap:
@@ -699,7 +696,7 @@ Label_17_43fc:
 	wram_bank ; $4401
 	ret ; $4405
 Func_17_4406:
-	farcall FarPtr_39_04 ; $4406
+	farcall Func_39_4342 ; $4406
 	ret ; $4409
 	push af ; $440a
 	push bc ; $440b
@@ -811,7 +808,7 @@ ShowDrillBriefingScreen:
 	call ClearFrameTasks ; $4496
 	call DisableLCDSafely ; $4499
 	call LoadCourtDiagramScreen ; $449c
-	farcall FarPtr_PrepareGlyphBuffer ; $449f
+	farcall PrepareGlyphBuffer ; $449f
 	call EnableLCD ; $44a2
 	xor a, a ; $44a5
 	ld [$cb0b], a ; $44a6
@@ -988,11 +985,11 @@ ShowCourtDiagramTestScreen:
 	ret ; $4653
 DrawBriefingCaption:
 	call ClearBriefingCaptionTilemap ; $4654
-	farcall FarPtr_PrepareGlyphBuffer ; $4657
+	farcall PrepareGlyphBuffer ; $4657
 	ld de, $d181 ; $465a
 	ld c, $12 ; $465d
-	farcall FarPtr_RenderProportionalTextAt ; $465f
-	farcall FarPtr_UploadGlyphBuffer ; $4662
+	farcall RenderProportionalTextAt ; $465f
+	farcall UploadGlyphBuffer ; $4662
 	call QueueCaptionRowToVRAM ; $4665
 	call AdvanceFrame ; $4668
 	ret ; $466b
@@ -1388,12 +1385,12 @@ Label_17_4953:
 	ret ; $495f
 LoadCourtDiagramScreen:
 	ld c, $24 ; $4960
-	farcall FarPtr_LoadScreenAssetRecord ; $4962
+	farcall LoadScreenAssetRecord ; $4962
 	call InitCourtDiagramTextWindow ; $4965
 	wram_bank $03 ; $4968
 	call DecompressGraphicsList ; $496e
 	call LoadCourtDiagramObjPalettes ; $4971
-	farcall FarPtr_QueueWram3MapToVRAM ; $4974
+	farcall QueueWram3MapToVRAM ; $4974
 	wram_bank $03 ; $4977
 	ret ; $497d
 WaitForInputBlinking:
@@ -1418,11 +1415,11 @@ Label_17_499c:
 Label_17_499e:
 	ret ; $499e
 InitCourtDiagramTextWindow:
-	farcall FarPtr_ResetTextWindowState ; $499f
+	farcall ResetTextWindowState ; $499f
 	ld b, $11 ; $49a2
 	ld c, $10 ; $49a4
 	ld de, $9000 ; $49a6
-	farcall FarPtr_LoadCompressedTileBlock ; $49a9
+	farcall LoadCompressedTileBlock ; $49a9
 	wram_bank $05 ; $49ac
 	ld a, $03 ; $49b2
 	ld [wShadowTilemapBank], a ; $49b4
@@ -1432,9 +1429,9 @@ InitCourtDiagramTextWindow:
 	ld e, $0b ; $49be
 	ld b, $14 ; $49c0
 	ld c, $07 ; $49c2
-	farcall FarPtr_CreateWindowFromScreenRect ; $49c4
-	farcall FarPtr_DrawTextWindowFrame ; $49c7
-	farcall FarPtr_RedrawWindowRows ; $49ca
+	farcall CreateWindowFromScreenRect ; $49c4
+	farcall DrawTextWindowFrame ; $49c7
+	farcall RedrawWindowRows ; $49ca
 	ret ; $49cd
 ClearBriefingCaptionTilemap:
 	push af ; $49ce
@@ -1445,7 +1442,7 @@ ClearBriefingCaptionTilemap:
 	ld b, $14 ; $49d5
 	ld c, $01 ; $49d7
 	ld h, $03 ; $49d9
-	farcall FarPtr_FillTilemapRect ; $49db
+	farcall FillTilemapRect ; $49db
 	ld a, $02 ; $49de
 	ld [$d160], a ; $49e0
 	ld a, $04 ; $49e3
@@ -1454,7 +1451,7 @@ ClearBriefingCaptionTilemap:
 	ld b, $12 ; $49eb
 	ld c, $05 ; $49ed
 	ld h, $20 ; $49ef
-	farcall FarPtr_FillTilemapRect ; $49f1
+	farcall FillTilemapRect ; $49f1
 	pop hl ; $49f4
 	pop de ; $49f5
 	pop bc ; $49f6
@@ -1469,7 +1466,7 @@ QueueCaptionRowToVRAM:
 	ret ; $4a05
 	ld hl, $0135 ; $4a06
 	ld de, $d1c1 ; $4a09
-	farcall FarPtr_RenderProportionalTextAt ; $4a0c
+	farcall RenderProportionalTextAt ; $4a0c
 	ld hl, $d1a0 ; $4a0f
 	ld de, $99a0 ; $4a12
 	ld c, $0c ; $4a15
@@ -1485,7 +1482,7 @@ RestoreDiagramServiceBoxes:
 	ld de, $d067 ; $4a39
 	ld c, $06 ; $4a3c
 	ld b, $06 ; $4a3e
-	farcall FarPtr_CopyTilemapRect ; $4a40
+	farcall CopyTilemapRect ; $4a40
 	pop hl ; $4a43
 	pop de ; $4a44
 	pop bc ; $4a45
@@ -1525,7 +1522,7 @@ Label_17_4a64:
 	inc hl ; $4a6e
 	ld c, [hl] ; $4a6f
 	pop hl ; $4a70
-	farcall FarPtr_CopyTilemapRect ; $4a71
+	farcall CopyTilemapRect ; $4a71
 	ret ; $4a74
 	ld b, e ; $4a75
 	jp nc, $d08a ; $4a76
@@ -4859,14 +4856,14 @@ RunMinigameRulesPages:
 	ld a, [$cb20] ; $6f9a
 	inc a ; $6f9d
 	inc a ; $6f9e
-	farcall FarPtr_ReadMinigameRecord ; $6f9f
+	farcall ReadMinigameRecord ; $6f9f
 	wram_bank $07 ; $6fa2
 	ld hl, $de00 ; $6fa8
 	ld a, [hl+] ; $6fab
 	ld h, [hl] ; $6fac
 	ld l, a ; $6fad
 	wram_bank $03 ; $6fae
-	farcall FarPtr_PushTextArgNumber ; $6fb4
+	farcall PushTextArgNumber ; $6fb4
 	ld a, [$cb20] ; $6fb7
 	ld hl, $6fdb ; $6fba
 	add a, a ; $6fbd
@@ -5106,10 +5103,10 @@ Label_17_70e5:
 Label_17_70f4:
 	ld de, $d082 ; $70f4
 	ld c, $20 ; $70f7
-	farcall FarPtr_PrepareGlyphBuffer ; $70f9
+	farcall PrepareGlyphBuffer ; $70f9
 	ld c, $10 ; $70fc
-	farcall FarPtr_RenderProportionalTextAt ; $70fe
-	farcall FarPtr_UploadGlyphBuffer ; $7101
+	farcall RenderProportionalTextAt ; $70fe
+	farcall UploadGlyphBuffer ; $7101
 	call QueueRulesPageToVRAM ; $7104
 Label_17_7107:
 	call AdvanceFrame ; $7107
@@ -5154,12 +5151,12 @@ Label_17_7153:
 	ret ; $7156
 LoadRulesScreen:
 	call LoadRulesBorderAnimTiles ; $7157
-	farcall FarPtr_01_0a ; $715a
+	farcall Func_01_50e2 ; $715a
 	ld c, $44 ; $715d
-	farcall FarPtr_LoadScreenAssetRecord ; $715f
+	farcall LoadScreenAssetRecord ; $715f
 	ldh a, [hWramBank] ; $7162
 	push af ; $7164
-	farcall FarPtr_InitTextWindows ; $7165
+	farcall InitTextWindows ; $7165
 	wram_bank $05 ; $7168
 	ld a, $03 ; $716e
 	ld [wShadowTilemapBank], a ; $7170
@@ -5167,20 +5164,20 @@ LoadRulesScreen:
 	ld [wWindowTileAttr], a ; $7175
 	pop af ; $7178
 	wram_bank ; $7179
-	farcall FarPtr_PrepareGlyphBuffer ; $717d
+	farcall PrepareGlyphBuffer ; $717d
 	call ClearRulesScreenTextArea ; $7180
 	ld hl, $7b39 ; $7183
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, $a000 ; $718c
-	farcall FarPtr_39_18 ; $718f
+	farcall Func_39_4a16 ; $718f
 	ld b, $08 ; $7192
 	ld c, $0f ; $7194
-	farcall FarPtr_LoadIndexedPalette ; $7196
+	farcall LoadIndexedPalette ; $7196
 	ld b, $11 ; $7199
 	ld c, $10 ; $719b
 	ld de, $9000 ; $719d
-	farcall FarPtr_LoadCompressedTileBlock ; $71a0
+	farcall LoadCompressedTileBlock ; $71a0
 	ld a, $03 ; $71a3
 	ld [wShadowTilemapBank], a ; $71a5
 	ld hl, wShadowTilemapPtr ; $71a8
@@ -5191,7 +5188,7 @@ LoadRulesScreen:
 	ld a, $01 ; $71b1
 	ld hl, Func_17_74db ; $71b3
 	call RegisterFrameTask ; $71b6
-	farcall FarPtr_QueueWram3MapToVRAM ; $71b9
+	farcall QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
 ClearRulesScreenTextArea:
 	ldh a, [hWramBank] ; $71bd
@@ -5201,7 +5198,7 @@ ClearRulesScreenTextArea:
 	ld b, $10 ; $71c9
 	ld c, $0e ; $71cb
 	ld h, $00 ; $71cd
-	farcall FarPtr_FillTilemapRect ; $71cf
+	farcall FillTilemapRect ; $71cf
 	call ClearRulesPageRows ; $71d2
 	pop af ; $71d5
 	wram_bank ; $71d6
@@ -5214,12 +5211,12 @@ ClearRulesPageRows:
 	ld b, $10 ; $71e7
 	ld c, $01 ; $71e9
 	ld h, $03 ; $71eb
-	farcall FarPtr_FillTilemapRect ; $71ed
+	farcall FillTilemapRect ; $71ed
 	ld de, $d082 ; $71f0
 	ld b, $10 ; $71f3
 	ld c, $0d ; $71f5
 	ld h, $20 ; $71f7
-	farcall FarPtr_FillTilemapRect ; $71f9
+	farcall FillTilemapRect ; $71f9
 	pop af ; $71fc
 	wram_bank ; $71fd
 	ret ; $7201
@@ -5231,12 +5228,12 @@ PrepareRulesPageTilemap:
 	ld b, $10 ; $720e
 	ld c, $01 ; $7210
 	ld h, $03 ; $7212
-	farcall FarPtr_FillTilemapRect ; $7214
+	farcall FillTilemapRect ; $7214
 	ld de, $d082 ; $7217
 	ld b, $10 ; $721a
 	ld c, $0d ; $721c
 	ld h, $20 ; $721e
-	farcall FarPtr_FillTilemapRect ; $7220
+	farcall FillTilemapRect ; $7220
 	ld a, [$dc05] ; $7223
 	or a, a ; $7226
 	jr nz, Label_17_723b ; $7227
@@ -5246,14 +5243,14 @@ PrepareRulesPageTilemap:
 	ld de, $d482 ; $722f
 	ld b, $10 ; $7232
 	ld c, $01 ; $7234
-	farcall FarPtr_FillTilemapRect ; $7236
+	farcall FillTilemapRect ; $7236
 	jr Label_17_7247 ; $7239
 Label_17_723b:
 	ld de, $d482 ; $723b
 	ld b, $10 ; $723e
 	ld c, $01 ; $7240
 	ld h, $00 ; $7242
-	farcall FarPtr_FillTilemapRect ; $7244
+	farcall FillTilemapRect ; $7244
 Label_17_7247:
 	pop af ; $7247
 	wram_bank ; $7248
@@ -5584,7 +5581,7 @@ Func_17_755e:
 	ld b, $08 ; $7566
 	ld c, $00 ; $7568
 	ld h, $03 ; $756a
-	farcall FarPtr_39_1a ; $756c
+	farcall Func_39_4a53 ; $756c
 	ret ; $756f
 RulesScreenTiles:
 	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes

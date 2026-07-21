@@ -1,23 +1,14 @@
 SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 
-FarPtr_28_00:
-	dw Func_28_5eb0 ; $4000
-FarPtr_28_02:
-	dw Func_28_5efb ; $4002
-FarPtr_28_04:
-	dw Func_28_6030 ; $4004
-FarPtr_28_06:
-	dw Func_28_6044 ; $4006
-FarPtr_28_08:
-	dw Func_28_6058 ; $4008
-FarPtr_28_0a:
-	dw Func_28_60c9 ; $400a
-FarPtr_28_0c:
-	dw Func_28_606c ; $400c
-FarPtr_28_0e:
-	dw Func_28_60a0 ; $400e
-FarPtr_28_10:
-	dw Func_28_6086 ; $4010
+	farptr Func_28_5eb0 ; $4000
+	farptr Func_28_5efb ; $4002
+	farptr Func_28_6030 ; $4004
+	farptr Func_28_6044 ; $4006
+	farptr Func_28_6058 ; $4008
+	farptr Func_28_60c9 ; $400a
+	farptr Func_28_606c ; $400c
+	farptr Func_28_60a0 ; $400e
+	farptr Func_28_6086 ; $4010
 	INCBIN "data/bank_028/d_4012.bin" ; $4012, 1486 bytes
 MatchGfxTilesA_28:
 	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes

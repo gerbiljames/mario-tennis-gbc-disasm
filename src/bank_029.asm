@@ -1,7 +1,6 @@
 SECTION "ROM Bank $29", ROMX[$4000], BANK[$29]
 
-FarPtr_ShotBallPathServeTopspin:
-	dw ShotBallPathServeTopspin ; $4000
+	farptr ShotBallPathServeTopspin ; $4000
 BallTrajEntryPtr6_29:
 	push hl ; $4002
 	ld l, e ; $4003
@@ -78,7 +77,7 @@ Label_29_4076:
 	ld e, l ; $407d
 	ld d, h ; $407e
 	pop hl ; $407f
-	farcall FarPtr_SetBallVelocityPolar ; $4080
+	farcall SetBallVelocityPolar ; $4080
 	ret ; $4083
 	INCBIN "data/bank_029/d_4084.bin" ; $4084, 20 bytes
 SetBallTargetByPrediction_29:
@@ -140,7 +139,7 @@ Label_29_40d3:
 	ld e, l ; $40da
 	ld d, h ; $40db
 	pop hl ; $40dc
-	farcall FarPtr_SetBallVelocityPolar ; $40dd
+	farcall SetBallVelocityPolar ; $40dd
 	ld de, $fd40 ; $40e0
 	ld a, [$df0a] ; $40e3
 	and a, $02 ; $40e6
@@ -156,7 +155,7 @@ Label_29_40f0:
 	ld a, e ; $40f3
 	ld [hl+], a ; $40f4
 	ld [hl], d ; $40f5
-	farcall FarPtr_PredictBallXAtDepth ; $40f6
+	farcall PredictBallXAtDepth ; $40f6
 	ld e, l ; $40f9
 	ld d, h ; $40fa
 	ld hl, wBallTargetX ; $40fb
@@ -198,7 +197,7 @@ Label_29_40f0:
 	ret ; $4134
 	INCBIN "data/bank_029/d_4135.bin" ; $4135, 188 bytes
 Label_29_41f1:
-	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41f1
+	farcall ApplyFallbackBallTrajectory_24 ; $41f1
 	ret ; $41f4
 SetBallTargetFromAim_29:
 	ld a, [wShotAimAngle] ; $41f5
@@ -283,7 +282,7 @@ Label_29_4278:
 BallPosData_29:
 	INCBIN "data/bank_029/d_427d.bin" ; $427d, 7200 bytes
 ShotBallPathServeTopspin:
-	farcall FarPtr_ComputeShotPlacement ; $5e9d
+	farcall ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_29 ; $5ea0
 	ld bc, $5ebf ; $5ea3
 	ld a, [wTopspinPlacementIndex] ; $5ea6

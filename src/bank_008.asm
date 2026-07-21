@@ -1,117 +1,61 @@
 SECTION "ROM Bank $08", ROMX[$4000], BANK[$08]
 
-FarPtr_InitDefaultMatchSettings:
-	dw InitDefaultMatchSettings ; $4000
-FarPtr_ResetMatchState:
-	dw ResetMatchState ; $4002
-FarPtr_RunMatch:
-	dw RunMatch ; $4004
-FarPtr_08_06:
-	dw Func_08_6544 ; $4006
-FarPtr_RunMinigameMatch:
-	dw RunMinigameMatch ; $4008
-FarPtr_UpdateMatchFrame:
-	dw UpdateMatchFrame ; $400a
-FarPtr_InitChar:
-	dw InitChar ; $400c
-FarPtr_ClearSpriteSlots:
-	dw ClearSpriteSlots ; $400e
-FarPtr_DrawCharSprite:
-	dw DrawCharSprite ; $4010
-FarPtr_StepCharAnimation:
-	dw StepCharAnimation ; $4012
-FarPtr_ReloadCharFacingTiles:
-	dw ReloadCharFacingTiles ; $4014
-FarPtr_BuildCharSpriteSlots:
-	dw BuildCharSpriteSlots ; $4016
-FarPtr_UpdateCharFacingOctant:
-	dw UpdateCharFacingOctant ; $4018
-FarPtr_EaseCharFacing:
-	dw EaseCharFacing ; $401a
-FarPtr_SetCharState:
-	dw SetCharState ; $401c
-FarPtr_ReloadCharFrameGfx:
-	dw ReloadCharFrameGfx ; $401e
-FarPtr_SetCharAnimation:
-	dw SetCharAnimation ; $4020
-FarPtr_SetCharPosAndTarget:
-	dw SetCharPosAndTarget ; $4022
-FarPtr_SetBallTrailColor:
-	dw SetBallTrailColor ; $4024
-FarPtr_SetBallVelocityPolar:
-	dw SetBallVelocityPolar ; $4026
-FarPtr_SetBallSpinComponents:
-	dw SetBallSpinComponents ; $4028
-FarPtr_CheckBallOutOfBounds:
-	dw CheckBallOutOfBounds ; $402a
-FarPtr_FindServerCharBank:
-	dw FindServerCharBank ; $402c
-FarPtr_SetCameraTarget:
-	dw SetCameraTarget ; $402e
-FarPtr_PredictBallXAtDepth:
-	dw PredictBallXAtDepth ; $4030
-FarPtr_MulHLByTangent:
-	dw MulHLByTangent ; $4032
-FarPtr_StartBounceEffect:
-	dw StartBounceEffect ; $4034
-FarPtr_AdvanceMatchRng:
-	dw AdvanceMatchRng ; $4036
-FarPtr_ReadMatchInputHeld:
-	dw ReadMatchInputHeld ; $4038
-FarPtr_ReadMatchInputPressed:
-	dw ReadMatchInputPressed ; $403a
-FarPtr_ReadMatchInputRepeat:
-	dw ReadMatchInputRepeat ; $403c
-FarPtr_StepMatchFrame:
-	dw StepMatchFrame ; $403e
-FarPtr_StepMatchFrames:
-	dw StepMatchFrames ; $4040
-FarPtr_StepMatchFramesSkippable:
-	dw StepMatchFramesSkippable ; $4042
-FarPtr_08_44:
-	dw Func_08_59b8 ; $4044
-FarPtr_ApplyCameraProjection:
-	dw ApplyCameraProjection ; $4046
-FarPtr_SetModeHookTable:
-	dw SetModeHookTable ; $4048
-FarPtr_SetMinigamePointTable:
-	dw SetMinigamePointTable ; $404a
-FarPtr_SetBallGatePoint1:
-	dw SetBallGatePoint1 ; $404c
-FarPtr_SetBallGatePoint2:
-	dw SetBallGatePoint2 ; $404e
-FarPtr_DidBallCrossGate:
-	dw DidBallCrossGate ; $4050
-FarPtr_SetTargetZoneCorner1:
-	dw SetTargetZoneCorner1 ; $4052
-FarPtr_SetTargetZoneCorner2:
-	dw SetTargetZoneCorner2 ; $4054
-FarPtr_IsBallInTargetZone:
-	dw IsBallInTargetZone ; $4056
-FarPtr_ResolvePointWinner:
-	dw ResolvePointWinner ; $4058
-FarPtr_UpdatePointStats:
-	dw UpdatePointStats ; $405a
-FarPtr_AwardPoint:
-	dw AwardPoint ; $405c
-FarPtr_StartPointEndReactions:
-	dw StartPointEndReactions ; $405e
-FarPtr_ResolvePointOutcome:
-	dw ResolvePointOutcome ; $4060
-FarPtr_SetBallPosition:
-	dw SetBallPosition ; $4062
-FarPtr_HandleServeFault:
-	dw HandleServeFault ; $4064
-FarPtr_SetCharTarget:
-	dw SetCharTarget ; $4066
-FarPtr_SelectRallyShotType:
-	dw SelectRallyShotType ; $4068
-FarPtr_RunMatchFramesUntilInput:
-	dw RunMatchFramesUntilInput ; $406a
-FarPtr_CharPointEndReaction:
-	dw CharPointEndReaction ; $406c
-FarPtr_MulMem24ByFrac:
-	dw MulMem24ByFrac ; $406e
+	farptr InitDefaultMatchSettings ; $4000
+	farptr ResetMatchState ; $4002
+	farptr RunMatch ; $4004
+	farptr Func_08_6544 ; $4006
+	farptr RunMinigameMatch ; $4008
+	farptr UpdateMatchFrame ; $400a
+	farptr InitChar ; $400c
+	farptr ClearSpriteSlots ; $400e
+	farptr DrawCharSprite ; $4010
+	farptr StepCharAnimation ; $4012
+	farptr ReloadCharFacingTiles ; $4014
+	farptr BuildCharSpriteSlots ; $4016
+	farptr UpdateCharFacingOctant ; $4018
+	farptr EaseCharFacing ; $401a
+	farptr SetCharState ; $401c
+	farptr ReloadCharFrameGfx ; $401e
+	farptr SetCharAnimation ; $4020
+	farptr SetCharPosAndTarget ; $4022
+	farptr SetBallTrailColor ; $4024
+	farptr SetBallVelocityPolar ; $4026
+	farptr SetBallSpinComponents ; $4028
+	farptr CheckBallOutOfBounds ; $402a
+	farptr FindServerCharBank ; $402c
+	farptr SetCameraTarget ; $402e
+	farptr PredictBallXAtDepth ; $4030
+	farptr MulHLByTangent ; $4032
+	farptr StartBounceEffect ; $4034
+	farptr AdvanceMatchRng ; $4036
+	farptr ReadMatchInputHeld ; $4038
+	farptr ReadMatchInputPressed ; $403a
+	farptr ReadMatchInputRepeat ; $403c
+	farptr StepMatchFrame ; $403e
+	farptr StepMatchFrames ; $4040
+	farptr StepMatchFramesSkippable ; $4042
+	farptr Func_08_59b8 ; $4044
+	farptr ApplyCameraProjection ; $4046
+	farptr SetModeHookTable ; $4048
+	farptr SetMinigamePointTable ; $404a
+	farptr SetBallGatePoint1 ; $404c
+	farptr SetBallGatePoint2 ; $404e
+	farptr DidBallCrossGate ; $4050
+	farptr SetTargetZoneCorner1 ; $4052
+	farptr SetTargetZoneCorner2 ; $4054
+	farptr IsBallInTargetZone ; $4056
+	farptr ResolvePointWinner ; $4058
+	farptr UpdatePointStats ; $405a
+	farptr AwardPoint ; $405c
+	farptr StartPointEndReactions ; $405e
+	farptr ResolvePointOutcome ; $4060
+	farptr SetBallPosition ; $4062
+	farptr HandleServeFault ; $4064
+	farptr SetCharTarget ; $4066
+	farptr SelectRallyShotType ; $4068
+	farptr RunMatchFramesUntilInput ; $406a
+	farptr CharPointEndReaction ; $406c
+	farptr MulMem24ByFrac ; $406e
 InitDefaultMatchSettings:
 	xor a, a ; $4070
 	ld [wKeepMatchStatsFlag], a ; $4071
@@ -213,7 +157,7 @@ Label_08_413b:
 	ret ; $4144
 InitMatchScene:
 	call ClearFrameTasks ; $4145
-	farcall FarPtr_ResetTextWindowState ; $4148
+	farcall ResetTextWindowState ; $4148
 	ld a, $02 ; $414b
 	ld [wShadowTilemapBank], a ; $414d
 	ld a, $00 ; $4150
@@ -225,16 +169,16 @@ InitMatchScene:
 	wram_bank $04 ; $4161
 	call ResetBallState ; $4167
 	call InitAllChars ; $416a
-	farcall FarPtr_InitAllObjSlots ; $416d
+	farcall InitAllObjSlots ; $416d
 	call ClearSpriteSlots ; $4170
 	call AssignCourtPositions ; $4173
 	xor a, a ; $4176
 	ld [$c4cd], a ; $4177
-	farcall FarPtr_09_04 ; $417a
+	farcall Func_09_4036 ; $417a
 	call Func_08_5e93 ; $417d
 	call UploadCourtTilemap ; $4180
 	call UploadCourtAttrmap ; $4183
-	farcall FarPtr_28_00 ; $4186
+	farcall Func_28_5eb0 ; $4186
 	wram_bank $04 ; $4189
 	ret ; $418f
 RunMatch:
@@ -245,7 +189,7 @@ RunMatch:
 	call DisableLCDSafely ; $419b
 	call InitMatchScene ; $419e
 	call EnableLCD ; $41a1
-	farcall FarPtr_UpdateLinkSession ; $41a4
+	farcall UpdateLinkSession ; $41a4
 	ld a, [wMatchBGM] ; $41a7
 	call PlaySoundManaged ; $41aa
 	ld hl, $c780 ; $41ad
@@ -261,7 +205,7 @@ RunMatch:
 	call RunMatchPlayLoop ; $41cc
 	ldh a, [hLinkState] ; $41cf
 	ld [$c493], a ; $41d1
-	farcall FarPtr_EndLinkSession ; $41d4
+	farcall EndLinkSession ; $41d4
 	ld a, [wGameMode] ; $41d7
 	cp a, $08 ; $41da
 	call z, ShowMatchResultScreens ; $41dc
@@ -269,10 +213,10 @@ RunMatch:
 	call BeginFadeOut ; $41e1
 	call WaitFadeEnd ; $41e4
 	call AdvanceFrame ; $41e7
-	farcall FarPtr_RunMatchWinLoseScreen ; $41ea
-	farcall FarPtr_01_0a ; $41ed
+	farcall RunMatchWinLoseScreen ; $41ea
+	farcall Func_01_50e2 ; $41ed
 	call AdvanceFrame ; $41f0
-	farcall FarPtr_ProcessMatchRewards ; $41f3
+	farcall ProcessMatchRewards ; $41f3
 	ret ; $41f6
 UpdateMatchFrame:
 	wram_bank $04 ; $41f7
@@ -300,7 +244,7 @@ Label_08_422f:
 	ld a, [$c4c0] ; $422f
 	and a, a ; $4232
 	jr nz, Label_08_4238 ; $4233
-	farcall FarPtr_UpdateMinigameTargets ; $4235
+	farcall UpdateMinigameTargets ; $4235
 Label_08_4238:
 	ld a, [$c4c1] ; $4238
 	and a, a ; $423b
@@ -379,7 +323,7 @@ Label_08_42d4:
 	and a, a ; $42d7
 	jr z, Label_08_42f2 ; $42d8
 	ld a, $0e ; $42da
-	farcall FarPtr_09_12 ; $42dc
+	farcall Func_09_4367 ; $42dc
 	ld a, [$c4d4] ; $42df
 	and a, $02 ; $42e2
 	ld de, $f0d8 ; $42e4
@@ -387,7 +331,7 @@ Label_08_42d4:
 	ld de, $f000 ; $42e9
 Label_08_42ec:
 	ld bc, $ddb0 ; $42ec
-	farcall FarPtr_09_24 ; $42ef
+	farcall Func_09_45c4 ; $42ef
 Label_08_42f2:
 	ret ; $42f2
 Label_08_42f3:
@@ -616,7 +560,7 @@ StepMatchFrame:
 	ldh a, [$ffd8] ; $446c
 	and a, a ; $446e
 	jr z, Label_08_4476 ; $446f
-	farcall FarPtr_RunLinkMatchFrame ; $4471
+	farcall RunLinkMatchFrame ; $4471
 	jr Label_08_4480 ; $4474
 Label_08_4476:
 	call AdvanceFrame ; $4476
@@ -650,7 +594,7 @@ HandlePauseMenu:
 	ld a, $ff ; $44a6
 	ld [$c4c0], a ; $44a8
 	ld [$c4c1], a ; $44ab
-	farcall FarPtr_RunMatchPauseMenu ; $44ae
+	farcall RunMatchPauseMenu ; $44ae
 	call ReinitPointAfterPause ; $44b1
 	ld a, $00 ; $44b4
 	ld [$c4c1], a ; $44b6
@@ -669,7 +613,7 @@ ReinitPointAfterPause:
 	call UpdateMatchCamera ; $44d0
 	ld hl, $4cb2 ; $44d3
 	call ForEachCharBank ; $44d6
-	farcall FarPtr_LoadServeGfx ; $44d9
+	farcall LoadServeGfx ; $44d9
 	ld a, [$c4d2] ; $44dc
 	wram_bank ; $44df
 	ld a, $03 ; $44e3
@@ -687,7 +631,7 @@ CheckDebugStatsEditorHotkey:
 	ld a, $ff ; $44fa
 	ld [$c4c0], a ; $44fc
 	ld [$c4c1], a ; $44ff
-	farcall FarPtr_RunDebugStatsEditor ; $4502
+	farcall RunDebugStatsEditor ; $4502
 	ld a, $00 ; $4505
 	ld [$c4c0], a ; $4507
 	ld [$c4c1], a ; $450a
@@ -702,7 +646,7 @@ InitViewFlipPreference:
 	ld a, [wGameMode] ; $451c
 	cp a, $08 ; $451f
 	jr z, Label_08_452e ; $4521
-	farcall FarPtr_TestStorySlotFlagB ; $4523
+	farcall TestStorySlotFlagB ; $4523
 	ld [$c4dd], a ; $4526
 	xor a, a ; $4529
 	ld [$c4c8], a ; $452a
@@ -717,7 +661,7 @@ ApplyMatchBgmPreference:
 	ld a, [wGameMode] ; $4539
 	cp a, $09 ; $453c
 	jr z, Label_08_4547 ; $453e
-	farcall FarPtr_TestStorySlotFlagA ; $4540
+	farcall TestStorySlotFlagA ; $4540
 	call SetMusicMuted ; $4543
 	ret ; $4546
 Label_08_4547:
@@ -1096,10 +1040,10 @@ Label_08_4782:
 	ld [$c4cc], a ; $478c
 	sound $0e ; $478f
 	ld a, $0f ; $4791
-	farcall FarPtr_09_12 ; $4793
+	farcall Func_09_4367 ; $4793
 	ld a, $50 ; $4796
 	call StepMatchFrames ; $4798
-	farcall FarPtr_09_16 ; $479b
+	farcall Func_09_437b ; $479b
 	ld a, $0f ; $479e
 	call StepMatchFrames ; $47a0
 Label_08_47a3:
@@ -1527,7 +1471,7 @@ PlayPoint:
 	call ResetPointState ; $4d0f
 	ld hl, $c4c8 ; $4d12
 	res 1, [hl] ; $4d15
-	farcall FarPtr_LoadServeGfx ; $4d17
+	farcall LoadServeGfx ; $4d17
 	call StepMatchFrame ; $4d1a
 	call AnnouncePointSituation ; $4d1d
 	ld hl, $4f91 ; $4d20
@@ -1547,10 +1491,10 @@ Label_08_4d26:
 	call StepMatchFrames ; $4d3f
 Label_08_4d42:
 	call EndPointBallEffects ; $4d42
-	farcall FarPtr_09_26 ; $4d45
+	farcall Func_09_4098 ; $4d45
 	call ScorePoint ; $4d48
 	call StepMatchFrame ; $4d4b
-	farcall FarPtr_09_04 ; $4d4e
+	farcall Func_09_4036 ; $4d4e
 	call StepMatchFrame ; $4d51
 	call StartPointEndReactions ; $4d54
 	call ResolvePointOutcome ; $4d57
@@ -1610,7 +1554,7 @@ AnnouncePointSituation:
 	ld d, $07 ; $4db9
 Label_08_4dbb:
 	ld a, d ; $4dbb
-	farcall FarPtr_09_12 ; $4dbc
+	farcall Func_09_4367 ; $4dbc
 	ld a, [wGamePointFlag] ; $4dbf
 	inc a ; $4dc2
 	srl a ; $4dc3
@@ -1625,12 +1569,12 @@ Label_08_4dbb:
 	ld de, $3420 ; $4dd8
 Label_08_4ddb:
 	ld bc, $ddb0 ; $4ddb
-	farcall FarPtr_09_24 ; $4dde
+	farcall Func_09_45c4 ; $4dde
 	ld a, $0a ; $4de1
 	call StepMatchFrames ; $4de3
 	ld a, $1e ; $4de6
 	call StepMatchFramesSkippable ; $4de8
-	farcall FarPtr_09_16 ; $4deb
+	farcall Func_09_437b ; $4deb
 	ld a, $0a ; $4dee
 	call StepMatchFrames ; $4df0
 Label_08_4df3:
@@ -1683,7 +1627,7 @@ Label_08_4e49:
 	ld hl, $0174 ; $4e49
 	ld de, $0504 ; $4e4c
 	ld bc, $0a07 ; $4e4f
-	farcall FarPtr_ShowMessageWindow ; $4e52
+	farcall ShowMessageWindow ; $4e52
 	ld a, $0a ; $4e55
 	call StepMatchFrames ; $4e57
 	ret ; $4e5a
@@ -1691,7 +1635,7 @@ Label_08_4e5b:
 	ld hl, $0175 ; $4e5b
 	ld de, $0204 ; $4e5e
 	ld bc, $0f07 ; $4e61
-	farcall FarPtr_ShowMessageWindow ; $4e64
+	farcall ShowMessageWindow ; $4e64
 	ld a, $0a ; $4e67
 	call StepMatchFrames ; $4e69
 	ret ; $4e6c
@@ -1701,22 +1645,22 @@ Label_08_4e6d:
 	ret z ; $4e71
 	ld a, [$c491] ; $4e72
 	add a, $17 ; $4e75
-	farcall FarPtr_09_12 ; $4e77
+	farcall Func_09_4367 ; $4e77
 	ld a, $0a ; $4e7a
 	call StepMatchFrames ; $4e7c
 	ld a, $1e ; $4e7f
 	call StepMatchFramesSkippable ; $4e81
-	farcall FarPtr_09_16 ; $4e84
+	farcall Func_09_437b ; $4e84
 	ld a, $0a ; $4e87
 	call StepMatchFrames ; $4e89
 	ret ; $4e8c
 Label_08_4e8d:
 	ld a, [wPointOutcome] ; $4e8d
 	add a, $00 ; $4e90
-	farcall FarPtr_09_12 ; $4e92
+	farcall Func_09_4367 ; $4e92
 	ld a, $1e ; $4e95
 	call StepMatchFrames ; $4e97
-	farcall FarPtr_09_16 ; $4e9a
+	farcall Func_09_437b ; $4e9a
 	ld a, $0a ; $4e9d
 	call StepMatchFrames ; $4e9f
 	ret ; $4ea2
@@ -1724,7 +1668,7 @@ Label_08_4ea3:
 	ld a, [wPointWinLoseFlag] ; $4ea3
 	and a, a ; $4ea6
 	ret z ; $4ea7
-	farcall FarPtr_09_0a ; $4ea8
+	farcall Func_09_412a ; $4ea8
 	ld a, $0a ; $4eab
 	call StepMatchFrames ; $4ead
 	ld a, $0a ; $4eb0
@@ -1735,12 +1679,12 @@ Label_08_4ea3:
 	sound $69 ; $4ebb
 	call StepMatchFrame ; $4ebd
 Label_08_4ec0:
-	farcall FarPtr_09_26 ; $4ec0
+	farcall Func_09_4098 ; $4ec0
 	ld a, $0a ; $4ec3
 	call StepMatchFrames ; $4ec5
 	ld a, $1e ; $4ec8
 	call StepMatchFramesSkippable ; $4eca
-	farcall FarPtr_09_0c ; $4ecd
+	farcall Func_09_4190 ; $4ecd
 	ret ; $4ed0
 Label_08_4ed1:
 	ld a, [wGameMode] ; $4ed1
@@ -1750,68 +1694,68 @@ Label_08_4ed1:
 	add a, a ; $4edb
 	jr nc, Label_08_4ee4 ; $4edc
 	ld d, $17 ; $4ede
-	farcall FarPtr_ShowMinigamePointResult ; $4ee0
+	farcall ShowMinigamePointResult ; $4ee0
 	ret ; $4ee3
 Label_08_4ee4:
 	ld a, [wMinigameLevel] ; $4ee4
 	add a, $12 ; $4ee7
 	ld d, a ; $4ee9
-	farcall FarPtr_ShowMinigamePointResult ; $4eea
+	farcall ShowMinigamePointResult ; $4eea
 	ret ; $4eed
 Label_08_4eee:
 	ld a, $0d ; $4eee
-	farcall FarPtr_09_12 ; $4ef0
+	farcall Func_09_4367 ; $4ef0
 	ld a, $0a ; $4ef3
 	call StepMatchFrames ; $4ef5
 	ld a, [wGameWinLoseFlag] ; $4ef8
-	farcall FarPtr_09_1c ; $4efb
+	farcall Func_09_42d8 ; $4efb
 	ld a, $0a ; $4efe
 	call StepMatchFrames ; $4f00
 	ld a, $2d ; $4f03
 	call StepMatchFramesSkippable ; $4f05
-	farcall FarPtr_09_1e ; $4f08
-	farcall FarPtr_09_16 ; $4f0b
+	farcall Func_09_42f6 ; $4f08
+	farcall Func_09_437b ; $4f0b
 	ret ; $4f0e
 Label_08_4f0f:
 	ld a, [wPlayer1SetsWon] ; $4f0f
 	ld b, $01 ; $4f12
-	farcall FarPtr_09_2e ; $4f14
+	farcall Func_09_612a ; $4f14
 	ld a, [wPlayer2SetsWon] ; $4f17
 	ld b, $01 ; $4f1a
-	farcall FarPtr_09_30 ; $4f1c
+	farcall Func_09_6139 ; $4f1c
 	ld d, $0c ; $4f1f
 	jr Label_08_4f37 ; $4f21
 Label_08_4f23:
 	ld a, [wPlayer1GamesWon] ; $4f23
 	ld b, $01 ; $4f26
-	farcall FarPtr_09_2e ; $4f28
+	farcall Func_09_612a ; $4f28
 	ld a, [wPlayer2GamesWon] ; $4f2b
 	ld b, $01 ; $4f2e
-	farcall FarPtr_09_30 ; $4f30
+	farcall Func_09_6139 ; $4f30
 	ld d, $0b ; $4f33
 	jr Label_08_4f37 ; $4f35
 Label_08_4f37:
 	call StepMatchFrame ; $4f37
 	ld a, d ; $4f3a
-	farcall FarPtr_09_12 ; $4f3b
+	farcall Func_09_4367 ; $4f3b
 	ld a, $0a ; $4f3e
 	call StepMatchFrames ; $4f40
 	ld a, [wGameWinLoseFlag] ; $4f43
-	farcall FarPtr_09_1c ; $4f46
+	farcall Func_09_42d8 ; $4f46
 	ld a, $0a ; $4f49
 	call StepMatchFrames ; $4f4b
 	ld a, $28 ; $4f4e
 	call StepMatchFramesSkippable ; $4f50
-	farcall FarPtr_09_1e ; $4f53
+	farcall Func_09_42f6 ; $4f53
 	ld a, $0a ; $4f56
 	call StepMatchFrames ; $4f58
-	farcall FarPtr_09_32 ; $4f5b
+	farcall Func_09_422c ; $4f5b
 	ld a, $0a ; $4f5e
 	call StepMatchFrames ; $4f60
 	ld a, $28 ; $4f63
 	call StepMatchFramesSkippable ; $4f65
-	farcall FarPtr_09_34 ; $4f68
-	farcall FarPtr_09_16 ; $4f6b
+	farcall Func_09_4238 ; $4f68
+	farcall Func_09_437b ; $4f6b
 	ret ; $4f6e
 	ld a, $00 ; $4f6f
 	call SetCharState ; $4f71
@@ -2416,7 +2360,7 @@ DrawLandingMarker:
 	ld a, [hl] ; $536b
 	cp a, $ff ; $536c
 	ret z ; $536e
-	farcall FarPtr_28_08 ; $536f
+	farcall Func_28_6058 ; $536f
 	ret ; $5372
 	; $5373, 16 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
@@ -2562,7 +2506,7 @@ DrawSpecialHitEffect:
 	ld a, [hl] ; $5464
 	cp a, $ff ; $5465
 	ret z ; $5467
-	farcall FarPtr_28_04 ; $5468
+	farcall Func_28_6030 ; $5468
 	ret ; $546b
 	; $546c, 16 bytes (bytes:4)
 	db $ff, $ff, $ff, $03 ; 0x00
@@ -2601,7 +2545,7 @@ DrawBallTouchCharEffect:
 	ld a, [hl] ; $54ba
 	cp a, $ff ; $54bb
 	ret z ; $54bd
-	farcall FarPtr_28_06 ; $54be
+	farcall Func_28_6044 ; $54be
 	ret ; $54c1
 	; $54c2, 40 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
@@ -4065,7 +4009,7 @@ LoadCourtSceneData:
 	ld a, [hl+] ; $5e41
 	ld [$c4ad], a ; $5e42
 	ld a, [hl+] ; $5e45
-	farcall FarPtr_LoadCourtSceneGraphics ; $5e46
+	farcall LoadCourtSceneGraphics ; $5e46
 	call SnapshotCourtTilemaps ; $5e49
 	pop af ; $5e4c
 	wram_bank ; $5e4d
@@ -4235,12 +4179,12 @@ RunChangeoverSequence:
 	jr z, Label_08_5fb4 ; $5f9b
 	call StepMatchFrame ; $5f9d
 	ld a, $00 ; $5fa0
-	farcall FarPtr_09_12 ; $5fa2
+	farcall Func_09_4367 ; $5fa2
 	call StepMatchFrame ; $5fa5
 Label_08_5fa8:
 	call StepMatchFrame ; $5fa8
 	call WalkCharsToNewEnds ; $5fab
-	farcall FarPtr_09_16 ; $5fae
+	farcall Func_09_437b ; $5fae
 	call StepMatchFrame ; $5fb1
 Label_08_5fb4:
 	xor a, a ; $5fb4
@@ -5020,7 +4964,7 @@ RunMinigameMatch:
 	call BeginFadeOut ; $6582
 	call WaitFadeEnd ; $6585
 	call AdvanceFrame ; $6588
-	farcall FarPtr_01_0a ; $658b
+	farcall Func_01_50e2 ; $658b
 	call AdvanceFrame ; $658e
 	ret ; $6591
 ShowMatchResultScreens:
@@ -5036,10 +4980,10 @@ ShowMatchResultScreens:
 	ld a, [wPointWinLoseFlag] ; $65a6
 	cp a, $01 ; $65a9
 	jr z, Label_08_65b2 ; $65ab
-	farcall FarPtr_RunMinigameEndMenu ; $65ad
+	farcall RunMinigameEndMenu ; $65ad
 	jr Label_08_65b5 ; $65b0
 Label_08_65b2:
-	farcall FarPtr_ShowMatchScoreboardScreen ; $65b2
+	farcall ShowMatchScoreboardScreen ; $65b2
 Label_08_65b5:
 	ld a, $00 ; $65b5
 	ld [$c4c1], a ; $65b7
@@ -5102,7 +5046,7 @@ Label_08_6626:
 Label_08_6630:
 	ret ; $6630
 PlayMinigamePoint:
-	farcall FarPtr_LoadServeGfx ; $6631
+	farcall LoadServeGfx ; $6631
 	call StepMatchFrame ; $6634
 	ld a, $01 ; $6637
 	ld [$c4c5], a ; $6639
@@ -5454,16 +5398,16 @@ InitChar:
 	ld a, d ; $684d
 	ld [$df78], a ; $684e
 	ld a, [$df78] ; $6851
-	farcall FarPtr_RemapExtendedCharId ; $6854
+	farcall RemapExtendedCharId ; $6854
 	ld [$df7e], a ; $6857
 	ld a, [$df7e] ; $685a
-	farcall FarPtr_LookupCharSpriteSet ; $685d
+	farcall LookupCharSpriteSet ; $685d
 	ld d, a ; $6860
 	ld a, e ; $6861
 	add a, $03 ; $6862
 	ld e, a ; $6864
-	farcall FarPtr_SetupCharacterSprite ; $6865
-	farcall FarPtr_LoadCharacterAttributes ; $6868
+	farcall SetupCharacterSprite ; $6865
+	farcall LoadCharacterAttributes ; $6868
 	ld a, $00 ; $686b
 	call SetCharState ; $686d
 	ld hl, $03c0 ; $6870
@@ -5540,7 +5484,7 @@ Label_08_6910:
 	call InitChar ; $6920
 	ld a, $00 ; $6923
 	ld [$df1e], a ; $6925
-	farcall FarPtr_LoadOnCourtCharacterGfx ; $6928
+	farcall LoadOnCourtCharacterGfx ; $6928
 	ret ; $692b
 UpdateAllChars:
 	wram_bank $04 ; $692c
@@ -5807,7 +5751,7 @@ CharServeInitPhase:
 	ldh a, [hWramBank] ; $6b18
 	push af ; $6b1a
 	wram_bank $04 ; $6b1b
-	farcall FarPtr_09_0e ; $6b21
+	farcall Func_09_4242 ; $6b21
 	pop af ; $6b24
 	wram_bank ; $6b25
 Label_08_6b29:
@@ -5850,7 +5794,7 @@ CharServeTossPhase:
 	ldh a, [hWramBank] ; $6b72
 	push af ; $6b74
 	wram_bank $04 ; $6b75
-	farcall FarPtr_09_10 ; $6b7b
+	farcall Func_09_4282 ; $6b7b
 	pop af ; $6b7e
 	wram_bank ; $6b7f
 	ld d, $0f ; $6b83
@@ -5897,7 +5841,7 @@ CharServeStrikePhase:
 	jr nz, Label_08_6bd8 ; $6bc9
 	call CaptureServeAim ; $6bcb
 	call SelectServeShotType ; $6bce
-	farcall FarPtr_ExecuteShot ; $6bd1
+	farcall ExecuteShot ; $6bd1
 	ld hl, $df19 ; $6bd4
 	inc [hl] ; $6bd7
 Label_08_6bd8:
@@ -5993,7 +5937,7 @@ CharSwingContactPhase:
 	bit 1, [hl] ; $6c8a
 	jr z, Label_08_6c98 ; $6c8c
 	call SelectRallyShotType ; $6c8e
-	farcall FarPtr_ExecuteShot ; $6c91
+	farcall ExecuteShot ; $6c91
 	ld hl, $df19 ; $6c94
 	inc [hl] ; $6c97
 Label_08_6c98:
@@ -6059,7 +6003,7 @@ Label_08_6cf1:
 	ldh a, [hWramBank] ; $6cf9
 	push af ; $6cfb
 	wram_bank $04 ; $6cfc
-	farcall FarPtr_09_10 ; $6d02
+	farcall Func_09_4282 ; $6d02
 	pop af ; $6d05
 	wram_bank ; $6d06
 	jp AdvanceCharStatePhase ; $6d0a
@@ -8378,7 +8322,7 @@ AiPickShotButtons:
 	jr z, Label_08_7b92 ; $7b7f
 	ld b, $30 ; $7b81
 	ld a, [$df7d] ; $7b83
-	farcall FarPtr_DoesCharGroupRowContain ; $7b86
+	farcall DoesCharGroupRowContain ; $7b86
 	and a, a ; $7b89
 	jr z, Label_08_7b92 ; $7b8a
 	ld a, $30 ; $7b8c
@@ -8407,7 +8351,7 @@ Label_08_7ba9:
 	jr nz, Label_08_7c00 ; $7baf
 	ld b, $12 ; $7bb1
 	ld a, [$df7d] ; $7bb3
-	farcall FarPtr_DoesCharGroupRowContain ; $7bb6
+	farcall DoesCharGroupRowContain ; $7bb6
 	and a, a ; $7bb9
 	jr z, Label_08_7c00 ; $7bba
 	ld a, [wMatchIsDoubles] ; $7bbc
@@ -8454,7 +8398,7 @@ Label_08_7c00:
 	and a, $0f ; $7c03
 	ld b, a ; $7c05
 	ld a, [$df7d] ; $7c06
-	farcall FarPtr_GetCharGroupEntry ; $7c09
+	farcall GetCharGroupEntry ; $7c09
 	ld [$df58], a ; $7c0c
 	ret ; $7c0f
 AiPressFirstShotButton:

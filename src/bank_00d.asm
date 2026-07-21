@@ -1,11 +1,8 @@
 SECTION "ROM Bank $0d", ROMX[$4000], BANK[$0d]
 
-FarPtr_StartMinigameByID:
-	dw StartMinigameByID ; $4000
-FarPtr_GetDefaultMinigameRecordValue:
-	dw GetDefaultMinigameRecordValue ; $4002
-FarPtr_ShowMinigamePointResult:
-	dw ShowMinigamePointResult ; $4004
+	farptr StartMinigameByID ; $4000
+	farptr GetDefaultMinigameRecordValue ; $4002
+	farptr ShowMinigamePointResult ; $4004
 InitMinigameFromConfig:
 	ld hl, $0000 ; $4006
 	add hl, bc ; $4009
@@ -38,7 +35,7 @@ InitMinigameFromConfig:
 	add hl, bc ; $403f
 	ld b, [hl] ; $4040
 	ld c, $00 ; $4041
-	farcall FarPtr_02_18 ; $4043
+	farcall Func_02_4066 ; $4043
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4046
 	ld [wMatchPlayerChar], a ; $4049
 	ld a, [wMatchOpponentChar] ; $404c
@@ -46,7 +43,7 @@ InitMinigameFromConfig:
 	jr z, Label_0d_4059 ; $4051
 	ld b, a ; $4053
 	ld c, $02 ; $4054
-	farcall FarPtr_02_18 ; $4056
+	farcall Func_02_4066 ; $4056
 Label_0d_4059:
 	pop bc ; $4059
 	ld hl, $0008 ; $405a
@@ -55,13 +52,13 @@ Label_0d_4059:
 	ld d, [hl] ; $405f
 	ld e, a ; $4060
 	ldh a, [hRomBank] ; $4061
-	farcall FarPtr_SetModeHookTable ; $4063
+	farcall SetModeHookTable ; $4063
 	ld hl, $000a ; $4066
 	add hl, bc ; $4069
 	ld a, [hl+] ; $406a
 	ld d, [hl] ; $406b
 	ld e, a ; $406c
-	farcall FarPtr_SetMinigamePointTable ; $406d
+	farcall SetMinigamePointTable ; $406d
 	ld hl, $000c ; $4070
 	add hl, bc ; $4073
 	ld a, [hl+] ; $4074
@@ -144,7 +141,7 @@ InitMinigameScore:
 	sub a, l ; $40f5
 	ld h, a ; $40f6
 	ld a, [hl] ; $40f7
-	farcall FarPtr_ReadMinigameRecord ; $40f8
+	farcall ReadMinigameRecord ; $40f8
 	ldh a, [hWramBank] ; $40fb
 	push af ; $40fd
 	wram_bank $07 ; $40fe
@@ -347,7 +344,7 @@ UpdateScorePopup:
 	ld a, [hl+] ; $424b
 	ld h, [hl] ; $424c
 	ld l, a ; $424d
-	farcall FarPtr_ApplyCameraProjection ; $424e
+	farcall ApplyCameraProjection ; $424e
 	ld a, [$c787] ; $4251
 	add a, e ; $4254
 	add a, $e8 ; $4255
@@ -358,7 +355,7 @@ UpdateScorePopup:
 	ld l, a ; $425d
 	ld b, $01 ; $425e
 	ld a, $01 ; $4260
-	farcall FarPtr_DrawNumberWithSprites ; $4262
+	farcall DrawNumberWithSprites ; $4262
 	ret ; $4265
 AddToMinigameScore:
 	ld hl, wMinigamesCurrentScore ; $4266
@@ -542,12 +539,12 @@ Func_0d_43ba:
 	jr z, Label_0d_43de ; $43c7
 	ld a, [wPointOutcome] ; $43c9
 	add a, $00 ; $43cc
-	farcall FarPtr_09_12 ; $43ce
+	farcall Func_09_4367 ; $43ce
 	ld a, $1e ; $43d1
-	farcall FarPtr_StepMatchFrames ; $43d3
-	farcall FarPtr_09_16 ; $43d6
+	farcall StepMatchFrames ; $43d3
+	farcall Func_09_437b ; $43d6
 	ld a, $0a ; $43d9
-	farcall FarPtr_StepMatchFrames ; $43db
+	farcall StepMatchFrames ; $43db
 Label_0d_43de:
 	ret ; $43de
 DetermineMinigamePointResult:
@@ -589,17 +586,17 @@ ShowMinigamePointResult:
 Label_0d_441c:
 	sound $0a ; $441c
 Label_0d_441e:
-	farcall FarPtr_StepMatchFrame ; $441e
+	farcall StepMatchFrame ; $441e
 	ld a, d ; $4421
-	farcall FarPtr_09_12 ; $4422
+	farcall Func_09_4367 ; $4422
 	ld a, $0a ; $4425
-	farcall FarPtr_StepMatchFrames ; $4427
+	farcall StepMatchFrames ; $4427
 	ld a, $2d ; $442a
-	farcall FarPtr_StepMatchFramesSkippable ; $442c
-	farcall FarPtr_RunMatchFramesUntilInput ; $442f
-	farcall FarPtr_09_16 ; $4432
+	farcall StepMatchFramesSkippable ; $442c
+	farcall RunMatchFramesUntilInput ; $442f
+	farcall Func_09_437b ; $4432
 	ld a, $0f ; $4435
-	farcall FarPtr_StepMatchFrames ; $4437
+	farcall StepMatchFrames ; $4437
 	ld a, $80 ; $443a
 	ld [wMatchAbortFlag], a ; $443c
 	ret ; $443f
@@ -641,7 +638,7 @@ Func_0d_4465:
 	pop de ; $447e
 	push bc ; $447f
 	ld bc, $0000 ; $4480
-	farcall FarPtr_08_44 ; $4483
+	farcall Func_08_59b8 ; $4483
 	ld e, c ; $4486
 	ld d, b ; $4487
 	pop bc ; $4488
@@ -673,7 +670,7 @@ Func_0d_449a:
 	ld l, c ; $44a7
 	ld h, b ; $44a8
 	ld bc, $0000 ; $44a9
-	farcall FarPtr_08_44 ; $44ac
+	farcall Func_08_59b8 ; $44ac
 	ld e, l ; $44af
 	ld d, h ; $44b0
 	ld hl, $dc7a ; $44b1
@@ -764,15 +761,15 @@ Func_0d_4678:
 	wram_bank $04 ; $4696
 	ld hl, $0000 ; $469c
 	ld de, $0480 ; $469f
-	farcall FarPtr_SetCharPosAndTarget ; $46a2
+	farcall SetCharPosAndTarget ; $46a2
 	ld a, $05 ; $46a5
-	farcall FarPtr_SetCharState ; $46a7
+	farcall SetCharState ; $46a7
 	wram_bank $05 ; $46aa
 	ld a, [$c785] ; $46b0
 	call Func_0d_4926 ; $46b3
-	farcall FarPtr_SetCharPosAndTarget ; $46b6
+	farcall SetCharPosAndTarget ; $46b6
 	ld a, $06 ; $46b9
-	farcall FarPtr_SetCharState ; $46bb
+	farcall SetCharState ; $46bb
 	ld a, $04 ; $46be
 	ld [$df6a], a ; $46c0
 	xor a, a ; $46c3
@@ -821,14 +818,14 @@ Label_0d_470b:
 	push af ; $4711
 	wram_bank $05 ; $4712
 	ld d, $05 ; $4718
-	farcall FarPtr_SetCharAnimation ; $471a
+	farcall SetCharAnimation ; $471a
 	pop af ; $471d
 	wram_bank ; $471e
 	ld a, [$c7a7] ; $4722
 	and a, a ; $4725
 	jr z, Label_0d_472d ; $4726
 	ld a, $0f ; $4728
-	farcall FarPtr_StepMatchFrames ; $472a
+	farcall StepMatchFrames ; $472a
 Label_0d_472d:
 	ld hl, $c780 ; $472d
 	ld a, [hl+] ; $4730
@@ -850,7 +847,7 @@ Label_0d_472d:
 	call Func_0d_48b6 ; $474d
 	ret ; $4750
 Func_0d_4751:
-	farcall FarPtr_ResolvePointWinner ; $4751
+	farcall ResolvePointWinner ; $4751
 	add a, a ; $4754
 	jr c, Func_0d_475d ; $4755
 	ld de, $0001 ; $4757
@@ -860,11 +857,11 @@ Func_0d_475d:
 	push af ; $475f
 	wram_bank $04 ; $4760
 	ld a, $05 ; $4766
-	farcall FarPtr_SetCharState ; $4768
+	farcall SetCharState ; $4768
 	pop af ; $476b
 	wram_bank ; $476c
 	call Func_0d_43ba ; $4770
-	farcall FarPtr_ResolvePointWinner ; $4773
+	farcall ResolvePointWinner ; $4773
 	add a, a ; $4776
 	jr c, Label_0d_479b ; $4777
 	ld a, [$c784] ; $4779
@@ -882,7 +879,7 @@ Func_0d_475d:
 	sub a, l ; $478b
 	ld h, a ; $478c
 	ld a, [hl] ; $478d
-	farcall FarPtr_StepMatchFrames ; $478e
+	farcall StepMatchFrames ; $478e
 	call IsMinigameTargetReached ; $4791
 	and a, a ; $4794
 	ret z ; $4795
@@ -894,9 +891,9 @@ Label_0d_479b:
 	ldh a, [hWramBank] ; $479f
 	push af ; $47a1
 	wram_bank $04 ; $47a2
-	farcall FarPtr_CharPointEndReaction ; $47a8
+	farcall CharPointEndReaction ; $47a8
 	wram_bank $05 ; $47ab
-	farcall FarPtr_CharPointEndReaction ; $47b1
+	farcall CharPointEndReaction ; $47b1
 	pop af ; $47b4
 	wram_bank ; $47b5
 	pop de ; $47b9
@@ -981,7 +978,7 @@ LaunchBall:
 	adc a, $45 ; $484e
 	sub a, l ; $4850
 	ld h, a ; $4851
-	farcall FarPtr_AdvanceMatchRng ; $4852
+	farcall AdvanceMatchRng ; $4852
 	and a, $0f ; $4855
 	add a, l ; $4857
 	ld l, a ; $4858
@@ -995,7 +992,7 @@ Label_0d_485c:
 	ld a, [hl] ; $4864
 	and a, $0f ; $4865
 	ld [$df17], a ; $4867
-	farcall FarPtr_SelectRallyShotType ; $486a
+	farcall SelectRallyShotType ; $486a
 	ld a, [$c786] ; $486d
 	add a, $75 ; $4870
 	ld l, a ; $4872
@@ -1022,8 +1019,8 @@ Label_0d_485c:
 	ld a, [hl+] ; $4892
 	ld h, [hl] ; $4893
 	ld l, a ; $4894
-	farcall FarPtr_SetBallPosition ; $4895
-	farcall FarPtr_AdvanceMatchRng ; $4898
+	farcall SetBallPosition ; $4895
+	farcall AdvanceMatchRng ; $4898
 	and a, $07 ; $489b
 	add a, $43 ; $489d
 	ld l, a ; $489f
@@ -1044,7 +1041,7 @@ Func_0d_48b6:
 	wram_bank $05 ; $48b9
 	ld a, [$c785] ; $48bf
 	call Func_0d_4926 ; $48c2
-	farcall FarPtr_SetCharTarget ; $48c5
+	farcall SetCharTarget ; $48c5
 	pop af ; $48c8
 	wram_bank ; $48c9
 	ret ; $48cd
@@ -1056,22 +1053,22 @@ PlayMinigameCountdown:
 	push af ; $48db
 	sound $00 ; $48dc
 	ld a, $14 ; $48de
-	farcall FarPtr_StepMatchFrames ; $48e0
+	farcall StepMatchFrames ; $48e0
 	ld a, $03 ; $48e3
 Label_0d_48e5:
 	push af ; $48e5
 	ld b, $01 ; $48e6
 	ld de, $8200 ; $48e8
-	farcall FarPtr_09_28 ; $48eb
+	farcall Func_09_6100 ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a, a ; $48f1
 	jr nz, Label_0d_48f6 ; $48f2
 	sound $74 ; $48f4
 Label_0d_48f6:
 	ld a, $11 ; $48f6
-	farcall FarPtr_09_14 ; $48f8
+	farcall Func_09_4371 ; $48f8
 	ld a, $28 ; $48fb
-	farcall FarPtr_StepMatchFrames ; $48fd
+	farcall StepMatchFrames ; $48fd
 	pop af ; $4900
 	dec a ; $4901
 	jr nz, Label_0d_48e5 ; $4902
@@ -1081,10 +1078,10 @@ Label_0d_48f6:
 	sound $75 ; $490a
 Label_0d_490c:
 	ld a, $10 ; $490c
-	farcall FarPtr_09_12 ; $490e
+	farcall Func_09_4367 ; $490e
 	ld a, $28 ; $4911
-	farcall FarPtr_StepMatchFrames ; $4913
-	farcall FarPtr_09_16 ; $4916
+	farcall StepMatchFrames ; $4913
+	farcall Func_09_437b ; $4916
 	pop af ; $4919
 	ld b, a ; $491a
 	ld a, [wMatchFramesAbort] ; $491b
@@ -1163,7 +1160,7 @@ Func_0d_493a:
 	ret ; $498c
 	call Func_0d_46d7 ; $498d
 	ret ; $4990
-	farcall FarPtr_AdvanceMatchRng ; $4991
+	farcall AdvanceMatchRng ; $4991
 	and a, $01 ; $4994
 	inc a ; $4996
 	ld hl, $c785 ; $4997
@@ -1221,7 +1218,7 @@ Label_0d_49a1:
 	ret ; $49e9
 	call Func_0d_46d7 ; $49ea
 	ret ; $49ed
-	farcall FarPtr_AdvanceMatchRng ; $49ee
+	farcall AdvanceMatchRng ; $49ee
 	and a, $03 ; $49f1
 	inc a ; $49f3
 	ld hl, $c785 ; $49f4
@@ -1280,7 +1277,7 @@ Label_0d_49fe:
 	ret ; $4a46
 	call Func_0d_46d7 ; $4a47
 	ret ; $4a4a
-	farcall FarPtr_AdvanceMatchRng ; $4a4b
+	farcall AdvanceMatchRng ; $4a4b
 	and a, $07 ; $4a4e
 	inc a ; $4a50
 	ld hl, $c785 ; $4a51
@@ -1318,9 +1315,9 @@ Label_0d_4a5b:
 	ld [$c7b9], a ; $4a82
 	ld a, $00 ; $4a85
 	ld [wMinigameLevel], a ; $4a87
-	farcall FarPtr_InitMinigameTargets ; $4a8a
+	farcall InitMinigameTargets ; $4a8a
 	ld a, $00 ; $4a8d
-	farcall FarPtr_SpawnMinigameTargetFormation ; $4a8f
+	farcall SpawnMinigameTargetFormation ; $4a8f
 	ret ; $4a92
 	INCBIN "data/bank_00d/d_4a93.bin" ; $4a93, 16 bytes
 	call Func_0d_4abb ; $4aa3
@@ -1384,7 +1381,7 @@ Func_0d_4b01:
 	wram_bank $04 ; $4b14
 	ld hl, $0000 ; $4b1a
 	ld de, $04e0 ; $4b1d
-	farcall FarPtr_SetCharPosAndTarget ; $4b20
+	farcall SetCharPosAndTarget ; $4b20
 	pop af ; $4b23
 	wram_bank ; $4b24
 	ret ; $4b28
@@ -1393,7 +1390,7 @@ Func_0d_4b29:
 	push af ; $4b2b
 	wram_bank $04 ; $4b2c
 	ld a, $05 ; $4b32
-	farcall FarPtr_SetCharState ; $4b34
+	farcall SetCharState ; $4b34
 	pop af ; $4b37
 	wram_bank ; $4b38
 	call Func_0d_43ba ; $4b3c
@@ -1402,7 +1399,7 @@ Func_0d_4b29:
 	ldh a, [hWramBank] ; $4b43
 	push af ; $4b45
 	wram_bank $04 ; $4b46
-	farcall FarPtr_CharPointEndReaction ; $4b4c
+	farcall CharPointEndReaction ; $4b4c
 	pop af ; $4b4f
 	wram_bank ; $4b50
 	pop de ; $4b54
@@ -1422,7 +1419,7 @@ Func_0d_4b59:
 Func_0d_4b70:
 	ld a, $01 ; $4b70
 	ld [$c4c9], a ; $4b72
-	farcall FarPtr_StartBounceEffect ; $4b75
+	farcall StartBounceEffect ; $4b75
 	xor a, a ; $4b78
 	ld [$c4b2], a ; $4b79
 	ld hl, $c4be ; $4b7c
@@ -1454,7 +1451,7 @@ Func_0d_4b70:
 	ld [hl+], a ; $4b9d
 	ld hl, $c423 ; $4b9e
 	ld b, $e6 ; $4ba1
-	farcall FarPtr_MulMem24ByFrac ; $4ba3
+	farcall MulMem24ByFrac ; $4ba3
 	ld hl, $c423 ; $4ba6
 	ld [hl+], a ; $4ba9
 	ld a, e ; $4baa
@@ -1468,7 +1465,7 @@ Func_0d_4b70:
 	push af ; $4bb5
 	wram_bank $04 ; $4bb6
 	ld a, $01 ; $4bbc
-	farcall FarPtr_SetCharState ; $4bbe
+	farcall SetCharState ; $4bbe
 	pop af ; $4bc1
 	wram_bank ; $4bc2
 	ret ; $4bc6
@@ -1500,16 +1497,16 @@ DrawMinigameScore:
 	ld l, a ; $4bef
 	ld b, $01 ; $4bf0
 	ld a, $04 ; $4bf2
-	farcall FarPtr_DrawNumberWithSprites ; $4bf4
+	farcall DrawNumberWithSprites ; $4bf4
 	ret ; $4bf7
 	INCBIN "data/bank_00d/d_4bf8.bin" ; $4bf8, 16 bytes
 	ld a, $01 ; $4c08
 	ld [$c7b9], a ; $4c0a
 	ld a, $01 ; $4c0d
 	ld [wMinigameLevel], a ; $4c0f
-	farcall FarPtr_InitMinigameTargets ; $4c12
+	farcall InitMinigameTargets ; $4c12
 	ld a, $01 ; $4c15
-	farcall FarPtr_SpawnMinigameTargetFormation ; $4c17
+	farcall SpawnMinigameTargetFormation ; $4c17
 	ret ; $4c1a
 	dec hl ; $4c1b
 	ld c, h ; $4c1c
@@ -1557,9 +1554,9 @@ DrawMinigameScore:
 	ld [$c7b9], a ; $4c55
 	ld a, $02 ; $4c58
 	ld [wMinigameLevel], a ; $4c5a
-	farcall FarPtr_InitMinigameTargets ; $4c5d
+	farcall InitMinigameTargets ; $4c5d
 	ld a, $02 ; $4c60
-	farcall FarPtr_SpawnMinigameTargetFormation ; $4c62
+	farcall SpawnMinigameTargetFormation ; $4c62
 	ret ; $4c65
 	halt ; $4c66
 	ld c, h ; $4c67
@@ -1607,9 +1604,9 @@ DrawMinigameScore:
 	ld [$c7b9], a ; $4ca0
 	ld a, $03 ; $4ca3
 	ld [wMinigameLevel], a ; $4ca5
-	farcall FarPtr_InitMinigameTargets ; $4ca8
+	farcall InitMinigameTargets ; $4ca8
 	ld a, $03 ; $4cab
-	farcall FarPtr_SpawnMinigameTargetFormation ; $4cad
+	farcall SpawnMinigameTargetFormation ; $4cad
 	ret ; $4cb0
 	pop bc ; $4cb1
 	ld c, h ; $4cb2
@@ -1659,7 +1656,7 @@ DrawMinigameScore:
 	ret ; $4d11
 	call Func_0d_46d7 ; $4d12
 	ret ; $4d15
-	farcall FarPtr_AdvanceMatchRng ; $4d16
+	farcall AdvanceMatchRng ; $4d16
 	and a, $07 ; $4d19
 	inc a ; $4d1b
 	ld hl, $c785 ; $4d1c
@@ -1699,9 +1696,9 @@ Label_0d_4d26:
 	ld [$c7b9], a ; $4d52
 	ld a, $04 ; $4d55
 	ld [wMinigameLevel], a ; $4d57
-	farcall FarPtr_InitMinigameTargets ; $4d5a
+	farcall InitMinigameTargets ; $4d5a
 	ld a, $04 ; $4d5d
-	farcall FarPtr_SpawnMinigameTargetFormation ; $4d5f
+	farcall SpawnMinigameTargetFormation ; $4d5f
 	ret ; $4d62
 	ld [hl], e ; $4d63
 	ld c, l ; $4d64
@@ -1773,7 +1770,7 @@ Label_0d_4dac:
 	call Func_0d_4e1c ; $4dce
 	ret ; $4dd1
 	call Func_0d_4e20 ; $4dd2
-	farcall FarPtr_AdvanceMatchRng ; $4dd5
+	farcall AdvanceMatchRng ; $4dd5
 	and a, $01 ; $4dd8
 	inc a ; $4dda
 	ld hl, $c785 ; $4ddb
@@ -1827,7 +1824,7 @@ Func_0d_4e20:
 	ld a, [hl+] ; $4e34
 	ld h, [hl] ; $4e35
 	ld l, a ; $4e36
-	farcall FarPtr_AdvanceMatchRng ; $4e37
+	farcall AdvanceMatchRng ; $4e37
 	and a, $0f ; $4e3a
 	add a, l ; $4e3c
 	ld l, a ; $4e3d
@@ -1849,7 +1846,7 @@ Func_0d_4e80:
 	ld a, [$c4b8] ; $4e80
 	and a, $01 ; $4e83
 	ret nz ; $4e85
-	farcall FarPtr_IsBallInTargetZone ; $4e86
+	farcall IsBallInTargetZone ; $4e86
 	and a, a ; $4e89
 	ret nz ; $4e8a
 	ld a, $05 ; $4e8b
@@ -2091,7 +2088,7 @@ Label_0d_51b5:
 	call UpdateMinigameActors ; $51d9
 	ret ; $51dc
 	call Func_0d_521e ; $51dd
-	farcall FarPtr_AdvanceMatchRng ; $51e0
+	farcall AdvanceMatchRng ; $51e0
 	and a, $01 ; $51e3
 	inc a ; $51e5
 	ld hl, $c785 ; $51e6
@@ -2148,7 +2145,7 @@ Label_0d_5244:
 	ld a, [$dc73] ; $5244
 	and a, a ; $5247
 	jr z, Label_0d_525b ; $5248
-	farcall FarPtr_AdvanceMatchRng ; $524a
+	farcall AdvanceMatchRng ; $524a
 	ld h, $00 ; $524d
 	ld l, a ; $524f
 	add hl, hl ; $5250
@@ -2174,7 +2171,7 @@ Label_0d_5270:
 	ld a, [hl] ; $5277
 	and a, a ; $5278
 	ret nz ; $5279
-	farcall FarPtr_AdvanceMatchRng ; $527a
+	farcall AdvanceMatchRng ; $527a
 	ld h, $00 ; $527d
 	ld l, a ; $527f
 	add hl, hl ; $5280
@@ -2324,7 +2321,7 @@ Func_0d_535f:
 	ld a, [hl] ; $5376
 	cp a, $ff ; $5377
 	ret z ; $5379
-	farcall FarPtr_28_0c ; $537a
+	farcall Func_28_606c ; $537a
 	ret ; $537d
 	; $537e, 32 bytes (bytes:8)
 	db $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
@@ -2349,7 +2346,7 @@ Func_0d_53aa:
 	ld b, a ; $53b4
 	ld l, e ; $53b5
 	ld h, d ; $53b6
-	farcall FarPtr_ApplyCameraProjection ; $53b7
+	farcall ApplyCameraProjection ; $53b7
 	ld a, [$c789] ; $53ba
 	add a, $c6 ; $53bd
 	ld l, a ; $53bf
@@ -2432,7 +2429,7 @@ Func_0d_55b4:
 	ld bc, $0018 ; $55bd
 	call CopyMemoryBC ; $55c0
 	call Func_0d_4302 ; $55c3
-	farcall FarPtr_FlushTilemapToVram ; $55c6
+	farcall FlushTilemapToVram ; $55c6
 	ret ; $55c9
 	ld hl, $c78e ; $55ca
 	ld a, [hl] ; $55cd
@@ -2473,7 +2470,7 @@ Label_0d_55fd:
 	and a, a ; $560b
 	ret z ; $560c
 	sub a, $04 ; $560d
-	farcall FarPtr_DeflectBallOffMinigameTarget ; $560f
+	farcall DeflectBallOffMinigameTarget ; $560f
 	sound $77 ; $5612
 	ret ; $5614
 	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 67 bytes
@@ -2544,11 +2541,11 @@ Func_0d_56c0:
 	ldh a, [hWramBank] ; $56c7
 	push af ; $56c9
 	wram_bank $04 ; $56ca
-	farcall FarPtr_CharPointEndReaction ; $56d0
+	farcall CharPointEndReaction ; $56d0
 	ld a, [$df57] ; $56d3
 	push af ; $56d6
 	wram_bank $05 ; $56d7
-	farcall FarPtr_CharPointEndReaction ; $56dd
+	farcall CharPointEndReaction ; $56dd
 	pop af ; $56e0
 	ld [$df57], a ; $56e1
 	pop af ; $56e4
@@ -2611,7 +2608,7 @@ Label_0d_573d:
 	ld a, [hl] ; $5744
 	and a, a ; $5745
 	ret nz ; $5746
-	farcall FarPtr_AdvanceMatchRng ; $5747
+	farcall AdvanceMatchRng ; $5747
 	ld h, $00 ; $574a
 	ld l, a ; $574c
 	add hl, hl ; $574d
@@ -2747,7 +2744,7 @@ Func_0d_57fd:
 	ld a, [hl] ; $5814
 	cp a, $ff ; $5815
 	ret z ; $5817
-	farcall FarPtr_28_10 ; $5818
+	farcall Func_28_6086 ; $5818
 	ret ; $581b
 	nop ; $581c
 	rst Rst38 ; $581d
@@ -2795,7 +2792,7 @@ Func_0d_5848:
 	ld b, a ; $5852
 	ld l, e ; $5853
 	ld h, d ; $5854
-	farcall FarPtr_ApplyCameraProjection ; $5855
+	farcall ApplyCameraProjection ; $5855
 	ld a, [$c789] ; $5858
 	add a, $66 ; $585b
 	ld l, a ; $585d
@@ -2832,7 +2829,7 @@ Func_0d_5848:
 	ld a, $01 ; $588a
 	ld [$c7bc], a ; $588c
 Label_0d_588f:
-	farcall FarPtr_InitMinigameTargets ; $588f
+	farcall InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
 	add a, $a3 ; $5895
 	ld l, a ; $5897
@@ -2842,7 +2839,7 @@ Label_0d_588f:
 	ld a, [hl] ; $589c
 	and a, a ; $589d
 	ret z ; $589e
-	farcall FarPtr_SpawnMinigameTargetFormation ; $589f
+	farcall SpawnMinigameTargetFormation ; $589f
 	ret ; $58a2
 	nop ; $58a3
 	rlca ; $58a4
@@ -2894,7 +2891,7 @@ Func_0d_58d1:
 	ld a, b ; $58f2
 	ld b, $01 ; $58f3
 	call Func_0d_431b ; $58f5
-	farcall FarPtr_FlushTilemapToVram ; $58f8
+	farcall FlushTilemapToVram ; $58f8
 	pop af ; $58fb
 	wram_bank ; $58fc
 	sound $97 ; $5900
@@ -2949,7 +2946,7 @@ Func_0d_5979:
 	ret ; $598a
 Func_0d_598b:
 	ld a, $02 ; $598b
-	farcall FarPtr_StepMatchFrames ; $598d
+	farcall StepMatchFrames ; $598d
 	ld hl, TileRowPattern_0d_5941 ; $5990
 	ld b, $18 ; $5993
 	ld c, $00 ; $5995
@@ -2962,10 +2959,10 @@ Label_0d_5997:
 	ld b, a ; $599e
 	ld a, c ; $599f
 	call Func_0d_431b ; $59a0
-	farcall FarPtr_FlushTilemapToVram ; $59a3
+	farcall FlushTilemapToVram ; $59a3
 	sound $94 ; $59a6
 	ld a, $08 ; $59a8
-	farcall FarPtr_StepMatchFrames ; $59aa
+	farcall StepMatchFrames ; $59aa
 	pop hl ; $59ad
 	pop bc ; $59ae
 Label_0d_59af:

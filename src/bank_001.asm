@@ -1,34 +1,22 @@
 SECTION "ROM Bank $01", ROMX[$4000], BANK[$01]
 
-FarPtr_01_00:
-	dw Func_01_4018 ; $4000
-FarPtr_01_02:
-	dw Func_01_6030 ; $4002
-FarPtr_01_04:
-	dw Func_01_5062 ; $4004
-FarPtr_01_06:
-	dw Func_01_5076 ; $4006
-FarPtr_01_08:
-	dw Func_01_5050 ; $4008
-FarPtr_01_0a:
-	dw Func_01_50e2 ; $400a
-FarPtr_01_0c:
-	dw Func_01_5176 ; $400c
-FarPtr_01_0e:
-	dw Func_01_5188 ; $400e
-FarPtr_01_10:
-	dw Func_01_519a ; $4010
-FarPtr_01_12:
-	dw Func_01_50d6 ; $4012
-FarPtr_01_14:
-	dw Func_01_50ec ; $4014
-FarPtr_01_16:
-	dw Func_01_6a5b ; $4016
+	farptr Func_01_4018 ; $4000
+	farptr Func_01_6030 ; $4002
+	farptr Func_01_5062 ; $4004
+	farptr Func_01_5076 ; $4006
+	farptr Func_01_5050 ; $4008
+	farptr Func_01_50e2 ; $400a
+	farptr Func_01_5176 ; $400c
+	farptr Func_01_5188 ; $400e
+	farptr Func_01_519a ; $4010
+	farptr Func_01_50d6 ; $4012
+	farptr Func_01_50ec ; $4014
+	farptr Func_01_6a5b ; $4016
 Func_01_4018:
 	call InitSerialLink ; $4018
 	push de ; $401b
 	ld de, $07e0 ; $401c
-	farcall FarPtr_ClearSaveFlag ; $401f
+	farcall ClearSaveFlag ; $401f
 	pop de ; $4022
 	call DisableLCDSafely ; $4023
 	wram_bank $01 ; $4026
@@ -61,12 +49,12 @@ Func_01_4018:
 	call ClearDebugTextBuffer ; $4082
 	call Func_01_50e2 ; $4085
 	call Func_01_5188 ; $4088
-	farcall FarPtr_ValidateSaveRam ; $408b
-	farcall FarPtr_RepairAllSaveSlots ; $408e
-	farcall FarPtr_ApplyN64RecordsUnlockFlags ; $4091
-	farcall FarPtr_UpdateUnlockablesSaveBlock ; $4094
-	farcall FarPtr_InitStoryModeState ; $4097
-	farcall FarPtr_InitDefaultMatchSettings ; $409a
+	farcall ValidateSaveRam ; $408b
+	farcall RepairAllSaveSlots ; $408e
+	farcall ApplyN64RecordsUnlockFlags ; $4091
+	farcall UpdateUnlockablesSaveBlock ; $4094
+	farcall InitStoryModeState ; $4097
+	farcall InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d
 	script_fade_in $7f ; $40a0
 Label_01_40a5:
@@ -74,7 +62,7 @@ Label_01_40a5:
 	ld [hl], $00 ; $40a8
 	ld hl, wStoryModeEntryPoint ; $40aa
 	ld [hl], $0a ; $40ad
-	farcall FarPtr_RunStoryModeOverworld ; $40af
+	farcall RunStoryModeOverworld ; $40af
 Label_01_40b2:
 	ld hl, $0153 ; $40b2
 	ld de, $0511 ; $40b5
@@ -87,7 +75,7 @@ Label_01_40bf:
 	jr z, Label_01_40cf ; $40c3
 	push de ; $40c5
 	ld de, $07e0 ; $40c6
-	farcall FarPtr_SetSaveFlag ; $40c9
+	farcall SetSaveFlag ; $40c9
 	pop de ; $40cc
 	jr Label_01_40d8 ; $40cd
 Label_01_40cf:
@@ -102,7 +90,7 @@ Label_01_40d8:
 	ld [hl], $00 ; $40df
 	ld hl, wStoryModeEntryPoint ; $40e1
 	ld [hl], $0a ; $40e4
-	farcall FarPtr_RunStoryModeOverworld ; $40e6
+	farcall RunStoryModeOverworld ; $40e6
 	jp Label_01_40b2 ; $40e9
 Unused_01_MenuRedraw:
 	ld hl, $0153 ; $40ec
@@ -120,19 +108,19 @@ Label_01_40f9:
 	ld [hl], $00 ; $4106
 	ld hl, wStoryModeEntryPoint ; $4108
 	ld [hl], $0a ; $410b
-	farcall FarPtr_RunStoryModeOverworld ; $410d
+	farcall RunStoryModeOverworld ; $410d
 	jp Label_01_40a5 ; $4110
 Label_01_4113:
 	bit 2, a ; $4113
 	jr z, Label_01_411a ; $4115
-	farcall FarPtr_01_16 ; $4117
+	farcall Func_01_6a5b ; $4117
 Label_01_411a:
 	bit 0, a ; $411a
 	jr z, Label_01_4127 ; $411c
 	ld a, $01 ; $411e
 	ldh [hDebugStepMode], a ; $4120
 Label_01_4122:
-	farcall FarPtr_RunDebugTestMatch ; $4122
+	farcall RunDebugTestMatch ; $4122
 	jr Label_01_4122 ; $4125
 Label_01_4127:
 	bit 1, a ; $4127
@@ -140,8 +128,8 @@ Label_01_4127:
 	ld a, $01 ; $412b
 	ldh [hDebugStepMode], a ; $412d
 Label_01_412f:
-	farcall FarPtr_3b_00 ; $412f
-	farcall FarPtr_RunMatch ; $4132
+	farcall Func_3b_44a9 ; $412f
+	farcall RunMatch ; $4132
 	jp Label_01_412f ; $4135
 Label_01_4138:
 	bit 6, a ; $4138
@@ -150,13 +138,13 @@ Label_01_4138:
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
 	ld [wCurrentStorySlot], a ; $4143
-	farcall FarPtr_CheckStorySlot ; $4146
+	farcall CheckStorySlot ; $4146
 	ld b, $00 ; $4149
 	ld c, $04 ; $414b
-	farcall FarPtr_ShowTournamentBracket ; $414d
+	farcall ShowTournamentBracket ; $414d
 	ld b, $01 ; $4150
 	ld c, $02 ; $4152
-	farcall FarPtr_ShowTournamentBracket ; $4154
+	farcall ShowTournamentBracket ; $4154
 	ld a, $01 ; $4157
 	ld [wCurrentMinigameStoryMatch], a ; $4159
 	ld a, $11 ; $415c
@@ -165,7 +153,7 @@ Label_01_4138:
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
 	ld [wCurrentStorySlot], a ; $4168
-	farcall FarPtr_CheckStorySlot ; $416b
+	farcall CheckStorySlot ; $416b
 	ld a, $17 ; $416e
 	ld [wPlayer1CurrentMainCharacter], a ; $4170
 	ld a, $18 ; $4173
@@ -181,25 +169,25 @@ Label_01_4138:
 	ld a, $00 ; $418d
 	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
 Label_01_4192:
-	farcall FarPtr_RunMatchWinLoseScreen ; $4192
+	farcall RunMatchWinLoseScreen ; $4192
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4195
 	inc a ; $4198
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
 	jr Label_01_4192 ; $419c
 Unused_01_MatchSetup:
-	farcall FarPtr_ShowEquipmentStatusScreen ; $419e
+	farcall ShowEquipmentStatusScreen ; $419e
 	ld de, $002f ; $41a1
 	call ClearGameFlagByNumber ; $41a4
 	ld a, $04 ; $41a7
 	ld [wGameMode], a ; $41a9
-	farcall FarPtr_RunMatchStatsScreen ; $41ac
-	farcall FarPtr_ShowLinkErrorScreen ; $41af
-	farcall FarPtr_ShowLinkMessageScreen ; $41b2
-	farcall FarPtr_RunShoesSelectScreen ; $41b5
-	farcall FarPtr_RunRacketSelectScreen ; $41b8
+	farcall RunMatchStatsScreen ; $41ac
+	farcall ShowLinkErrorScreen ; $41af
+	farcall ShowLinkMessageScreen ; $41b2
+	farcall RunShoesSelectScreen ; $41b5
+	farcall RunRacketSelectScreen ; $41b8
 	ld a, $01 ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
-	farcall FarPtr_1a_08 ; $41bf
+	farcall Func_1a_67d4 ; $41bf
 Label_01_41c2:
 	bit 7, a ; $41c2
 	jr z, Label_01_41db ; $41c4
@@ -208,8 +196,8 @@ Label_01_41c2:
 	ld a, $00 ; $41ca
 	ldh [hDebugStepMode], a ; $41cc
 Label_01_41ce:
-	farcall FarPtr_6b_00 ; $41ce
-	farcall FarPtr_6b_02 ; $41d1
+	farcall Func_6b_402a ; $41ce
+	farcall Func_6b_75af ; $41d1
 	jr Label_01_41ce ; $41d4
 Unused_01_41d6:
 	jp Label_01_40a5 ; $41d6
@@ -226,13 +214,13 @@ Label_01_41db:
 	ld [hl], $0a ; $41eb
 	ld a, $00 ; $41ed
 	ld [wStoryModeMainCharacterOverworldSprite], a ; $41ef
-	farcall FarPtr_RunStoryModeOverworld ; $41f2
+	farcall RunStoryModeOverworld ; $41f2
 Label_01_41f5:
 	bit 5, a ; $41f5
 	jr z, Label_01_4209 ; $41f7
 	ld a, $01 ; $41f9
 	ldh [hDebugStepMode], a ; $41fb
-	farcall FarPtr_1a_08 ; $41fd
+	farcall Func_1a_67d4 ; $41fd
 	ld a, $00 ; $4200
 	ldh [hDebugStepMode], a ; $4202
 Label_01_4204:

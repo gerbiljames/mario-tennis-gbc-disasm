@@ -1,55 +1,30 @@
 SECTION "ROM Bank $3e", ROMX[$4000], BANK[$3e]
 
-FarPtr_RunLinkMatchRulesMenu:
-	dw RunLinkMatchRulesMenu ; $4000
-FarPtr_RestoreMenuScreenAndFadeIn:
-	dw RestoreMenuScreenAndFadeIn ; $4002
-FarPtr_ShowLinkMessageScreen:
-	dw ShowLinkMessageScreen ; $4004
-FarPtr_RunEraseDataConfirmMenu:
-	dw RunEraseDataConfirmMenu ; $4006
-FarPtr_RunRacketShoesChoiceMenu:
-	dw RunRacketShoesChoiceMenu ; $4008
-FarPtr_RunPlayAlonePartnerMenu:
-	dw RunPlayAlonePartnerMenu ; $400a
-FarPtr_RunRacketSelectScreen:
-	dw RunRacketSelectScreen ; $400c
-FarPtr_RunShoesSelectScreen:
-	dw RunShoesSelectScreen ; $400e
-FarPtr_ShowEquipmentStatusScreen:
-	dw ShowEquipmentStatusScreen ; $4010
-FarPtr_ShowLinkErrorScreen:
-	dw ShowLinkErrorScreen ; $4012
-FarPtr_3e_14:
-	dw Func_3e_4438 ; $4014
-FarPtr_AnimateLinkStatusPalette:
-	dw AnimateLinkStatusPalette ; $4016
-FarPtr_RunCourtSelect4Menu:
-	dw RunCourtSelect4Menu ; $4018
-FarPtr_RunLinkCourtSelect4Menu:
-	dw RunLinkCourtSelect4Menu ; $401a
-FarPtr_RunCourtSelect9Menu:
-	dw RunCourtSelect9Menu ; $401c
-FarPtr_RunLinkCourtSelect9Menu:
-	dw RunLinkCourtSelect9Menu ; $401e
-FarPtr_LoadCourtSelectGraphics:
-	dw LoadCourtSelectGraphics ; $4020
-FarPtr_ComputeUnlockedCourtFlags:
-	dw ComputeUnlockedCourtFlags ; $4022
-FarPtr_StubNop_3e:
-	dw StubNop_3e ; $4024
-FarPtr_OpenChoiceTabPanel:
-	dw OpenChoiceTabPanel ; $4026
-FarPtr_CloseChoiceTabPanel:
-	dw CloseChoiceTabPanel ; $4028
-FarPtr_OpenCourtSelect4Panel:
-	dw OpenCourtSelect4Panel ; $402a
-FarPtr_CloseCourtSelect4Panel:
-	dw CloseCourtSelect4Panel ; $402c
-FarPtr_SetCourtSelect4TabAttrRect:
-	dw SetCourtSelect4TabAttrRect ; $402e
-FarPtr_ShowLinkStatusMessage:
-	dw ShowLinkStatusMessage ; $4030
+	farptr RunLinkMatchRulesMenu ; $4000
+	farptr RestoreMenuScreenAndFadeIn ; $4002
+	farptr ShowLinkMessageScreen ; $4004
+	farptr RunEraseDataConfirmMenu ; $4006
+	farptr RunRacketShoesChoiceMenu ; $4008
+	farptr RunPlayAlonePartnerMenu ; $400a
+	farptr RunRacketSelectScreen ; $400c
+	farptr RunShoesSelectScreen ; $400e
+	farptr ShowEquipmentStatusScreen ; $4010
+	farptr ShowLinkErrorScreen ; $4012
+	farptr Func_3e_4438 ; $4014
+	farptr AnimateLinkStatusPalette ; $4016
+	farptr RunCourtSelect4Menu ; $4018
+	farptr RunLinkCourtSelect4Menu ; $401a
+	farptr RunCourtSelect9Menu ; $401c
+	farptr RunLinkCourtSelect9Menu ; $401e
+	farptr LoadCourtSelectGraphics ; $4020
+	farptr ComputeUnlockedCourtFlags ; $4022
+	farptr StubNop_3e ; $4024
+	farptr OpenChoiceTabPanel ; $4026
+	farptr CloseChoiceTabPanel ; $4028
+	farptr OpenCourtSelect4Panel ; $402a
+	farptr CloseCourtSelect4Panel ; $402c
+	farptr SetCourtSelect4TabAttrRect ; $402e
+	farptr ShowLinkStatusMessage ; $4030
 DataPtr_AwardCeremonyTiles:
 	dw AwardCeremonyTiles ; $4032
 DataPtr_AwardCeremonyTilesAlias1:
@@ -665,7 +640,7 @@ Label_3e_4407:
 	ret ; $440a
 	INCBIN "data/bank_03e/d_440b.bin" ; $440b, 45 bytes
 Func_3e_4438:
-	farcall FarPtr_39_04 ; $4438
+	farcall Func_39_4342 ; $4438
 	ret ; $443b
 	push af ; $443c
 	push bc ; $443d
@@ -768,8 +743,8 @@ Label_3e_44b6:
 	ret ; $44b8
 RestoreMenuScreenAndFadeIn:
 	call DisableLCDSafely ; $44b9
-	farcall FarPtr_01_0a ; $44bc
-	farcall FarPtr_ResetScreenAndTextWindows ; $44bf
+	farcall Func_01_50e2 ; $44bc
+	farcall ResetScreenAndTextWindows ; $44bf
 	call EnableLCD ; $44c2
 	script_fade_in $10 ; $44c5
 	ret ; $44ca
@@ -788,30 +763,30 @@ RunLinkMatchRulesMenu:
 	ld a, [wMenuSlideDirection] ; $44e9
 	ld b, a ; $44ec
 	call OpenMatchRulesPanel ; $44ed
-	farcall FarPtr_InitMenuBgScroll ; $44f0
+	farcall InitMenuBgScroll ; $44f0
 	ld b, $01 ; $44f3
 	ld c, $01 ; $44f5
-	farcall FarPtr_39_26 ; $44f7
+	farcall Func_39_4b3a ; $44f7
 	call DrawMatchRulesInitialState ; $44fa
 	ld a, $01 ; $44fd
 	ld hl, MatchRulesCursorSpriteTask ; $44ff
 	call RegisterFrameTask ; $4502
 	call DrawMatchRulesCaption ; $4505
-	farcall FarPtr_ResyncLinkSessionWithTimer ; $4508
+	farcall ResyncLinkSessionWithTimer ; $4508
 	push af ; $450b
-	farcall FarPtr_RunLinkInputFrame ; $450c
+	farcall RunLinkInputFrame ; $450c
 	pop af ; $450f
 	push af ; $4510
-	farcall FarPtr_RunLinkInputFrame ; $4511
+	farcall RunLinkInputFrame ; $4511
 	pop af ; $4514
 	push af ; $4515
-	farcall FarPtr_RunLinkInputFrame ; $4516
+	farcall RunLinkInputFrame ; $4516
 	pop af ; $4519
 	ld hl, rIE ; $451a
 	res 2, [hl] ; $451d
 	wram_bank $03 ; $451f
 Label_3e_4525:
-	farcall FarPtr_TickMenuBgScroll ; $4525
+	farcall TickMenuBgScroll ; $4525
 	ldh a, [hLinkInput] ; $4528
 	ld [wMenuInputPressed], a ; $452a
 	call HandleMatchRulesToggleInput ; $452d
@@ -824,7 +799,7 @@ Label_3e_4525:
 	call DrawMatchRulesCaption ; $453c
 Label_3e_453f:
 	push af ; $453f
-	farcall FarPtr_RunLinkInputFrame ; $4540
+	farcall RunLinkInputFrame ; $4540
 	pop af ; $4543
 	ld a, [wMenuInputPressed] ; $4544
 	bit PADB_A, a ; $4547
@@ -835,7 +810,7 @@ Label_3e_453f:
 Label_3e_4551:
 	sound $5f ; $4551
 	push af ; $4553
-	farcall FarPtr_SyncLinkFrame ; $4554
+	farcall SyncLinkFrame ; $4554
 	pop af ; $4557
 	xor a, a ; $4558
 	ldh [$ffd8], a ; $4559
@@ -854,7 +829,7 @@ Label_3e_4551:
 Label_3e_4579:
 	sound $62 ; $4579
 	push af ; $457b
-	farcall FarPtr_SyncLinkFrame ; $457c
+	farcall SyncLinkFrame ; $457c
 	pop af ; $457f
 	xor a, a ; $4580
 	ldh [$ffd8], a ; $4581
@@ -968,51 +943,51 @@ Label_3e_4637:
 	ld b, $23 ; $4656
 	ld c, $10 ; $4658
 	ld de, $a000 ; $465a
-	farcall FarPtr_LoadCompressedTileBlock ; $465d
+	farcall LoadCompressedTileBlock ; $465d
 	call AdvanceFrame ; $4660
 	ld b, $24 ; $4663
 	ld c, $10 ; $4665
 	ld de, $a100 ; $4667
-	farcall FarPtr_LoadCompressedTileBlock ; $466a
+	farcall LoadCompressedTileBlock ; $466a
 	call AdvanceFrame ; $466d
 	ld b, $25 ; $4670
 	ld c, $10 ; $4672
 	ld de, $a200 ; $4674
-	farcall FarPtr_LoadCompressedTileBlock ; $4677
+	farcall LoadCompressedTileBlock ; $4677
 	call AdvanceFrame ; $467a
 	ld b, $26 ; $467d
 	ld c, $10 ; $467f
 	ld de, $a300 ; $4681
-	farcall FarPtr_LoadCompressedTileBlock ; $4684
+	farcall LoadCompressedTileBlock ; $4684
 	call AdvanceFrame ; $4687
 	ld b, $27 ; $468a
 	ld c, $10 ; $468c
 	ld de, $a400 ; $468e
-	farcall FarPtr_LoadCompressedTileBlock ; $4691
+	farcall LoadCompressedTileBlock ; $4691
 	call AdvanceFrame ; $4694
 	ld b, $28 ; $4697
 	ld c, $10 ; $4699
 	ld de, $a500 ; $469b
-	farcall FarPtr_LoadCompressedTileBlock ; $469e
+	farcall LoadCompressedTileBlock ; $469e
 	call AdvanceFrame ; $46a1
 	ld b, $29 ; $46a4
 	ld c, $10 ; $46a6
 	ld de, $a600 ; $46a8
-	farcall FarPtr_LoadCompressedTileBlock ; $46ab
+	farcall LoadCompressedTileBlock ; $46ab
 	call AdvanceFrame ; $46ae
 	ld b, $1b ; $46b1
 	ld c, $04 ; $46b3
 	ld de, $a700 ; $46b5
-	farcall FarPtr_LoadCompressedTileBlock ; $46b8
+	farcall LoadCompressedTileBlock ; $46b8
 	call AdvanceFrame ; $46bb
 	ld b, $3f ; $46be
 	ld c, $14 ; $46c0
 	ld de, $8000 ; $46c2
-	farcall FarPtr_LoadCompressedTileBlock ; $46c5
+	farcall LoadCompressedTileBlock ; $46c5
 	call AdvanceFrame ; $46c8
 	ld b, $08 ; $46cb
 	ld c, $10 ; $46cd
-	farcall FarPtr_LoadIndexedPalette ; $46cf
+	farcall LoadIndexedPalette ; $46cf
 	pop af ; $46d2
 	wram_bank ; $46d3
 	ret ; $46d7
@@ -1039,9 +1014,9 @@ OpenMatchRulesPanel:
 Label_3e_46fa:
 	call AdvanceFrame ; $46fa
 	ld b, $02 ; $46fd
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $46ff
+	farcall RestoreMenuBgAndDrawPanel ; $46ff
 	ld b, $00 ; $4702
-	farcall FarPtr_FlushWram3MapRows ; $4704
+	farcall FlushWram3MapRows ; $4704
 	ld a, c ; $4707
 	inc a ; $4708
 	ld c, a ; $4709
@@ -1054,9 +1029,9 @@ Label_3e_4712:
 Label_3e_4714:
 	call AdvanceFrame ; $4714
 	ld b, $03 ; $4717
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $4719
+	farcall RestoreMenuBgAndDrawPanel ; $4719
 	ld b, $00 ; $471c
-	farcall FarPtr_FlushWram3MapRows ; $471e
+	farcall FlushWram3MapRows ; $471e
 	ld a, c ; $4721
 	dec a ; $4722
 	ld c, a ; $4723
@@ -1072,9 +1047,9 @@ CloseMatchRulesPanel:
 Label_3e_4732:
 	call AdvanceFrame ; $4732
 	ld b, $03 ; $4735
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $4737
+	farcall RestoreMenuBgAndDrawPanel ; $4737
 	ld b, $00 ; $473a
-	farcall FarPtr_FlushWram3MapRows ; $473c
+	farcall FlushWram3MapRows ; $473c
 	ld a, c ; $473f
 	inc a ; $4740
 	ld c, a ; $4741
@@ -1086,9 +1061,9 @@ Label_3e_4747:
 Label_3e_4749:
 	call AdvanceFrame ; $4749
 	ld b, $02 ; $474c
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $474e
+	farcall RestoreMenuBgAndDrawPanel ; $474e
 	ld b, $00 ; $4751
-	farcall FarPtr_FlushWram3MapRows ; $4753
+	farcall FlushWram3MapRows ; $4753
 	ld a, c ; $4756
 	dec a ; $4757
 	ld c, a ; $4758
@@ -1268,7 +1243,7 @@ Label_3e_4893:
 Label_3e_4895:
 	ld b, $05 ; $4895
 	ld c, $03 ; $4897
-	farcall FarPtr_FillTilemapRect ; $4899
+	farcall FillTilemapRect ; $4899
 	pop af ; $489c
 	wram_bank ; $489d
 	pop hl ; $48a1
@@ -1345,7 +1320,7 @@ Label_3e_4922:
 	ld a, [hl+] ; $4922
 	ld d, [hl] ; $4923
 	ld e, a ; $4924
-	farcall FarPtr_ApplySpriteBobOffset ; $4925
+	farcall ApplySpriteBobOffset ; $4925
 	ld b, $08 ; $4928
 	ld hl, SpriteTemplate_3e_4943 ; $492a
 	push de ; $492d
@@ -1383,7 +1358,7 @@ DrawMatchRulesCaption:
 	ld b, $14 ; $498b
 	ld c, $01 ; $498d
 	ld h, $03 ; $498f
-	farcall FarPtr_FillTilemapRect ; $4991
+	farcall FillTilemapRect ; $4991
 	ld a, $02 ; $4994
 	ld [$d1e0], a ; $4996
 	ld a, $04 ; $4999
@@ -1392,8 +1367,8 @@ DrawMatchRulesCaption:
 	ld b, $12 ; $49a1
 	ld c, $01 ; $49a3
 	ld h, $20 ; $49a5
-	farcall FarPtr_FillTilemapRect ; $49a7
-	farcall FarPtr_RenderMatchFormatOptionText ; $49aa
+	farcall FillTilemapRect ; $49a7
+	farcall RenderMatchFormatOptionText ; $49aa
 	ld hl, $d1e0 ; $49ad
 	ld de, $99e0 ; $49b0
 	ld c, $04 ; $49b3
@@ -1422,7 +1397,7 @@ Label_3e_49ce:
 	inc h ; $49d9
 Label_3e_49da:
 	ld c, $20 ; $49da
-	farcall FarPtr_RenderTextToBuffer64 ; $49dc
+	farcall RenderTextToBuffer64 ; $49dc
 	ret ; $49df
 	INCBIN "data/bank_03e/d_49e0.bin" ; $49e0, 6 bytes
 ShowLinkMessageScreen:
@@ -1451,12 +1426,12 @@ ShowLinkMessageScreen:
 	ret ; $4a13
 LoadLinkMessageScreen:
 	ld c, $11 ; $4a14
-	farcall FarPtr_LoadScreenAssetRecord ; $4a16
-	farcall FarPtr_ResetTextWindowState ; $4a19
+	farcall LoadScreenAssetRecord ; $4a16
+	farcall ResetTextWindowState ; $4a19
 	ld b, $11 ; $4a1c
 	ld c, $10 ; $4a1e
 	ld de, $9000 ; $4a20
-	farcall FarPtr_LoadCompressedTileBlock ; $4a23
+	farcall LoadCompressedTileBlock ; $4a23
 	wram_bank $05 ; $4a26
 	ld a, $03 ; $4a2c
 	ld [wShadowTilemapBank], a ; $4a2e
@@ -1466,12 +1441,12 @@ LoadLinkMessageScreen:
 	ld e, $0b ; $4a38
 	ld b, $14 ; $4a3a
 	ld c, $07 ; $4a3c
-	farcall FarPtr_CreateWindowFromScreenRect ; $4a3e
-	farcall FarPtr_DrawTextWindowFrame ; $4a41
-	farcall FarPtr_RedrawWindowRows ; $4a44
+	farcall CreateWindowFromScreenRect ; $4a3e
+	farcall DrawTextWindowFrame ; $4a41
+	farcall RedrawWindowRows ; $4a44
 	wram_bank $03 ; $4a47
-	farcall FarPtr_PrepareGlyphBuffer ; $4a4d
-	farcall FarPtr_QueueWram3MapToVRAM ; $4a50
+	farcall PrepareGlyphBuffer ; $4a4d
+	farcall QueueWram3MapToVRAM ; $4a50
 	ret ; $4a53
 AnimateLinkStatusPalette:
 	push af ; $4a54
@@ -1539,12 +1514,12 @@ Label_3e_4acf:
 	ret ; $4add
 LoadLinkErrorScreen:
 	ld c, $22 ; $4ade
-	farcall FarPtr_LoadScreenAssetRecord ; $4ae0
-	farcall FarPtr_ResetTextWindowState ; $4ae3
+	farcall LoadScreenAssetRecord ; $4ae0
+	farcall ResetTextWindowState ; $4ae3
 	ld b, $11 ; $4ae6
 	ld c, $10 ; $4ae8
 	ld de, $9000 ; $4aea
-	farcall FarPtr_LoadCompressedTileBlock ; $4aed
+	farcall LoadCompressedTileBlock ; $4aed
 	wram_bank $05 ; $4af0
 	ld a, $03 ; $4af6
 	ld [wShadowTilemapBank], a ; $4af8
@@ -1554,21 +1529,21 @@ LoadLinkErrorScreen:
 	ld e, $0d ; $4b02
 	ld b, $14 ; $4b04
 	ld c, $05 ; $4b06
-	farcall FarPtr_CreateWindowFromScreenRect ; $4b08
-	farcall FarPtr_DrawTextWindowFrame ; $4b0b
-	farcall FarPtr_RedrawWindowRows ; $4b0e
-	farcall FarPtr_PrepareGlyphBuffer ; $4b11
+	farcall CreateWindowFromScreenRect ; $4b08
+	farcall DrawTextWindowFrame ; $4b0b
+	farcall RedrawWindowRows ; $4b0e
+	farcall PrepareGlyphBuffer ; $4b11
 	wram_bank $03 ; $4b14
 	ld hl, $012b ; $4b1a
 	ld de, $d1c1 ; $4b1d
 	ld c, $12 ; $4b20
-	farcall FarPtr_RenderProportionalTextAt ; $4b22
+	farcall RenderProportionalTextAt ; $4b22
 	ld hl, $012c ; $4b25
 	ld de, $d201 ; $4b28
 	ld c, $12 ; $4b2b
-	farcall FarPtr_RenderProportionalTextAt ; $4b2d
-	farcall FarPtr_UploadGlyphBuffer ; $4b30
-	farcall FarPtr_QueueWram3MapToVRAM ; $4b33
+	farcall RenderProportionalTextAt ; $4b2d
+	farcall UploadGlyphBuffer ; $4b30
+	farcall QueueWram3MapToVRAM ; $4b33
 	ret ; $4b36
 AnimateLinkErrorPalette:
 	ldh a, [hWramBank] ; $4b37
@@ -1618,7 +1593,7 @@ ShowLinkStatusMessage:
 	push bc ; $4ba3
 	wram_bank $03 ; $4ba4
 	call ClearLinkMessageWindow ; $4baa
-	farcall FarPtr_PrepareGlyphBuffer ; $4bad
+	farcall PrepareGlyphBuffer ; $4bad
 	wram_bank $03 ; $4bb0
 	pop bc ; $4bb6
 	ld a, c ; $4bb7
@@ -1631,21 +1606,21 @@ Label_3e_4bc1:
 	ld hl, $0129 ; $4bc1
 	ld de, $d181 ; $4bc4
 	ld c, $12 ; $4bc7
-	farcall FarPtr_RenderProportionalTextAt ; $4bc9
+	farcall RenderProportionalTextAt ; $4bc9
 	jr Label_3e_4be6 ; $4bcc
 Label_3e_4bce:
 	ld hl, $012a ; $4bce
 	ld de, $d181 ; $4bd1
 	ld c, $12 ; $4bd4
-	farcall FarPtr_RenderProportionalTextAt ; $4bd6
+	farcall RenderProportionalTextAt ; $4bd6
 	jr Label_3e_4be6 ; $4bd9
 Label_3e_4bdb:
 	ld hl, $0128 ; $4bdb
 	ld de, $d181 ; $4bde
 	ld c, $12 ; $4be1
-	farcall FarPtr_RenderProportionalTextAt ; $4be3
+	farcall RenderProportionalTextAt ; $4be3
 Label_3e_4be6:
-	farcall FarPtr_UploadGlyphBuffer ; $4be6
+	farcall UploadGlyphBuffer ; $4be6
 	call FlushLinkMessageRows ; $4be9
 	ret ; $4bec
 ClearLinkMessageWindow:
@@ -1653,12 +1628,12 @@ ClearLinkMessageWindow:
 	ld b, $12 ; $4bf0
 	ld c, $01 ; $4bf2
 	ld h, $03 ; $4bf4
-	farcall FarPtr_FillTilemapRect ; $4bf6
+	farcall FillTilemapRect ; $4bf6
 	ld de, $d181 ; $4bf9
 	ld b, $12 ; $4bfc
 	ld c, $05 ; $4bfe
 	ld h, $20 ; $4c00
-	farcall FarPtr_FillTilemapRect ; $4c02
+	farcall FillTilemapRect ; $4c02
 	ret ; $4c05
 FlushLinkMessageRows:
 	ld hl, $d160 ; $4c06
@@ -1739,29 +1714,29 @@ LoadEraseDataConfirmScreen:
 	call SetMenuCursorFromIndex_3e ; $4cb3
 	ld hl, $a000 ; $4cb6
 	ld de, $0801 ; $4cb9
-	farcall FarPtr_18_06 ; $4cbc
+	farcall Func_18_437c ; $4cbc
 	ld a, $0a ; $4cbf
 	ld [$cb6c], a ; $4cc1
 	ld a, $10 ; $4cc4
 	ld [$cb6b], a ; $4cc6
 	ld c, $10 ; $4cc9
-	farcall FarPtr_LoadScreenAssetRecord ; $4ccb
+	farcall LoadScreenAssetRecord ; $4ccb
 	wram_bank $03 ; $4cce
 	ld de, $d4a3 ; $4cd4
 	ld b, $0e ; $4cd7
 	ld c, $06 ; $4cd9
 	ld h, $00 ; $4cdb
-	farcall FarPtr_FillTilemapRect ; $4cdd
+	farcall FillTilemapRect ; $4cdd
 	ld de, $d0a3 ; $4ce0
 	ld b, $0e ; $4ce3
 	ld c, $06 ; $4ce5
 	ld h, $20 ; $4ce7
-	farcall FarPtr_FillTilemapRect ; $4ce9
-	farcall FarPtr_ResetTextWindowState ; $4cec
+	farcall FillTilemapRect ; $4ce9
+	farcall ResetTextWindowState ; $4cec
 	ld b, $11 ; $4cef
 	ld c, $10 ; $4cf1
 	ld de, $9000 ; $4cf3
-	farcall FarPtr_LoadCompressedTileBlock ; $4cf6
+	farcall LoadCompressedTileBlock ; $4cf6
 	wram_bank $05 ; $4cf9
 	ld a, $03 ; $4cff
 	ld [wShadowTilemapBank], a ; $4d01
@@ -1771,21 +1746,21 @@ LoadEraseDataConfirmScreen:
 	ld e, $0d ; $4d0b
 	ld b, $0f ; $4d0d
 	ld c, $05 ; $4d0f
-	farcall FarPtr_CreateWindowFromScreenRect ; $4d11
-	farcall FarPtr_DrawTextWindowFrame ; $4d14
-	farcall FarPtr_RedrawWindowRows ; $4d17
+	farcall CreateWindowFromScreenRect ; $4d11
+	farcall DrawTextWindowFrame ; $4d14
+	farcall RedrawWindowRows ; $4d17
 	ld d, $0f ; $4d1a
 	ld e, $0d ; $4d1c
 	ld b, $05 ; $4d1e
 	ld c, $05 ; $4d20
-	farcall FarPtr_CreateWindowFromScreenRect ; $4d22
-	farcall FarPtr_DrawTextWindowFrame ; $4d25
-	farcall FarPtr_RedrawWindowRows ; $4d28
-	farcall FarPtr_InitMenuBgScroll ; $4d2b
+	farcall CreateWindowFromScreenRect ; $4d22
+	farcall DrawTextWindowFrame ; $4d25
+	farcall RedrawWindowRows ; $4d28
+	farcall InitMenuBgScroll ; $4d2b
 	ld b, $01 ; $4d2e
 	ld c, $01 ; $4d30
-	farcall FarPtr_39_26 ; $4d32
-	farcall FarPtr_PrepareGlyphBuffer ; $4d35
+	farcall Func_39_4b3a ; $4d32
+	farcall PrepareGlyphBuffer ; $4d35
 	wram_bank $03 ; $4d38
 	ld a, [$d800] ; $4d3e
 	cp a, $02 ; $4d41
@@ -1793,23 +1768,23 @@ LoadEraseDataConfirmScreen:
 	ld hl, $00dd ; $4d45
 	ld de, $d0c3 ; $4d48
 	ld c, $0e ; $4d4b
-	farcall FarPtr_RenderProportionalTextAt ; $4d4d
+	farcall RenderProportionalTextAt ; $4d4d
 	ld hl, $00de ; $4d50
 	ld de, $d103 ; $4d53
 	ld c, $0e ; $4d56
-	farcall FarPtr_RenderProportionalTextAt ; $4d58
+	farcall RenderProportionalTextAt ; $4d58
 	ld hl, $00df ; $4d5b
 	ld de, $d1c2 ; $4d5e
 	ld c, $0e ; $4d61
-	farcall FarPtr_RenderProportionalTextAt ; $4d63
+	farcall RenderProportionalTextAt ; $4d63
 	ld hl, $00dc ; $4d66
 	ld de, $d202 ; $4d69
 	ld c, $0e ; $4d6c
-	farcall FarPtr_RenderProportionalTextAt ; $4d6e
+	farcall RenderProportionalTextAt ; $4d6e
 	ld b, $41 ; $4d71
 	ld c, $14 ; $4d73
 	ld de, $8000 ; $4d75
-	farcall FarPtr_LoadCompressedTileBlock ; $4d78
+	farcall LoadCompressedTileBlock ; $4d78
 	jp Label_3e_4def ; $4d7b
 Label_3e_4d7e:
 	or a, a ; $4d7e
@@ -1817,56 +1792,56 @@ Label_3e_4d7e:
 	ld hl, $00d8 ; $4d81
 	ld de, $d0c3 ; $4d84
 	ld c, $0e ; $4d87
-	farcall FarPtr_RenderProportionalTextAt ; $4d89
+	farcall RenderProportionalTextAt ; $4d89
 	ld hl, $00d9 ; $4d8c
 	ld de, $d103 ; $4d8f
 	ld c, $0e ; $4d92
-	farcall FarPtr_RenderProportionalTextAt ; $4d94
+	farcall RenderProportionalTextAt ; $4d94
 	ld hl, $00db ; $4d97
 	ld de, $d1c2 ; $4d9a
 	ld c, $0e ; $4d9d
-	farcall FarPtr_RenderProportionalTextAt ; $4d9f
+	farcall RenderProportionalTextAt ; $4d9f
 	ld hl, $00dc ; $4da2
 	ld de, $d202 ; $4da5
 	ld c, $0e ; $4da8
-	farcall FarPtr_RenderProportionalTextAt ; $4daa
+	farcall RenderProportionalTextAt ; $4daa
 	ld b, $45 ; $4dad
 	ld c, $14 ; $4daf
 	ld de, $8000 ; $4db1
-	farcall FarPtr_LoadCompressedTileBlock ; $4db4
+	farcall LoadCompressedTileBlock ; $4db4
 	jr Label_3e_4def ; $4db7
 Label_3e_4db9:
 	ld hl, $00d6 ; $4db9
 	ld de, $d0c3 ; $4dbc
 	ld c, $0e ; $4dbf
-	farcall FarPtr_RenderProportionalTextAt ; $4dc1
+	farcall RenderProportionalTextAt ; $4dc1
 	ld hl, $00d7 ; $4dc4
 	ld de, $d103 ; $4dc7
 	ld c, $0e ; $4dca
-	farcall FarPtr_RenderProportionalTextAt ; $4dcc
+	farcall RenderProportionalTextAt ; $4dcc
 	ld hl, $00da ; $4dcf
 	ld de, $d1c2 ; $4dd2
 	ld c, $0e ; $4dd5
-	farcall FarPtr_RenderProportionalTextAt ; $4dd7
+	farcall RenderProportionalTextAt ; $4dd7
 	ld hl, $00dc ; $4dda
 	ld de, $d202 ; $4ddd
 	ld c, $0e ; $4de0
-	farcall FarPtr_RenderProportionalTextAt ; $4de2
+	farcall RenderProportionalTextAt ; $4de2
 	ld b, $46 ; $4de5
 	ld c, $14 ; $4de7
 	ld de, $8000 ; $4de9
-	farcall FarPtr_LoadCompressedTileBlock ; $4dec
+	farcall LoadCompressedTileBlock ; $4dec
 Label_3e_4def:
 	ld hl, $007a ; $4def
 	ld de, $d1d0 ; $4df2
 	ld c, $04 ; $4df5
-	farcall FarPtr_RenderProportionalTextAt ; $4df7
+	farcall RenderProportionalTextAt ; $4df7
 	ld hl, $007b ; $4dfa
 	ld de, $d210 ; $4dfd
 	ld c, $04 ; $4e00
-	farcall FarPtr_RenderProportionalTextAt ; $4e02
-	farcall FarPtr_UploadGlyphBuffer ; $4e05
-	farcall FarPtr_QueueWram3MapToVRAM ; $4e08
+	farcall RenderProportionalTextAt ; $4e02
+	farcall UploadGlyphBuffer ; $4e05
+	farcall QueueWram3MapToVRAM ; $4e08
 	ret ; $4e0b
 EraseConfirmCursorSpriteTask:
 	ld de, $7376 ; $4e0c
@@ -1889,7 +1864,7 @@ QueueEraseConfirmCursorSprites:
 	ld c, $02 ; $4e29
 	ld b, $08 ; $4e2b
 	call QueueSprite ; $4e2d
-	farcall FarPtr_TickMenuBgScroll ; $4e30
+	farcall TickMenuBgScroll ; $4e30
 	ret ; $4e33
 AnimateEraseConfirmPalette:
 	ldh a, [hWramBank] ; $4e34
@@ -1944,10 +1919,10 @@ RunRacketShoesChoiceMenu:
 	ld a, [wMenuSlideDirection] ; $4eb0
 	ld b, a ; $4eb3
 	call OpenChoiceTabPanel ; $4eb4
-	farcall FarPtr_InitMenuBgScroll ; $4eb7
+	farcall InitMenuBgScroll ; $4eb7
 	ld b, $01 ; $4eba
 	ld c, $01 ; $4ebc
-	farcall FarPtr_39_26 ; $4ebe
+	farcall Func_39_4b3a ; $4ebe
 	ld a, [$cb24] ; $4ec1
 	ld c, a ; $4ec4
 	ld b, $02 ; $4ec5
@@ -2058,26 +2033,26 @@ Label_3e_4f63:
 	ld b, $4a ; $4f82
 	ld c, $10 ; $4f84
 	ld de, $a000 ; $4f86
-	farcall FarPtr_LoadCompressedTileBlock ; $4f89
+	farcall LoadCompressedTileBlock ; $4f89
 	call AdvanceFrame ; $4f8c
 	ld b, $4b ; $4f8f
 	ld c, $10 ; $4f91
 	ld de, $a100 ; $4f93
-	farcall FarPtr_LoadCompressedTileBlock ; $4f96
+	farcall LoadCompressedTileBlock ; $4f96
 	call AdvanceFrame ; $4f99
 	ld b, $1b ; $4f9c
 	ld c, $04 ; $4f9e
 	ld de, $a700 ; $4fa0
-	farcall FarPtr_LoadCompressedTileBlock ; $4fa3
+	farcall LoadCompressedTileBlock ; $4fa3
 	call AdvanceFrame ; $4fa6
 	ld b, $4c ; $4fa9
 	ld c, $14 ; $4fab
 	ld de, $8000 ; $4fad
-	farcall FarPtr_LoadCompressedTileBlock ; $4fb0
+	farcall LoadCompressedTileBlock ; $4fb0
 	call AdvanceFrame ; $4fb3
 	ld b, $08 ; $4fb6
 	ld c, $10 ; $4fb8
-	farcall FarPtr_LoadIndexedPalette ; $4fba
+	farcall LoadIndexedPalette ; $4fba
 	pop af ; $4fbd
 	wram_bank ; $4fbe
 	ret ; $4fc2
@@ -2106,7 +2081,7 @@ Label_3e_4fd9:
 	ld b, $14 ; $4fff
 	ld c, $01 ; $5001
 	ld h, $03 ; $5003
-	farcall FarPtr_FillTilemapRect ; $5005
+	farcall FillTilemapRect ; $5005
 	ld a, $02 ; $5008
 	ld [$d1e0], a ; $500a
 	ld a, $04 ; $500d
@@ -2115,7 +2090,7 @@ Label_3e_4fd9:
 	ld b, $12 ; $5015
 	ld c, $01 ; $5017
 	ld h, $20 ; $5019
-	farcall FarPtr_FillTilemapRect ; $501b
+	farcall FillTilemapRect ; $501b
 	call DrawRacketShoesChoiceCaption ; $501e
 	ld hl, $d4e0 ; $5021
 	ld de, $b8e0 ; $5024
@@ -2168,7 +2143,7 @@ DrawRacketShoesChoiceCaption:
 Label_3e_5084:
 	ld de, $d201 ; $5084
 	ld c, $20 ; $5087
-	farcall FarPtr_RenderTextToBuffer64 ; $5089
+	farcall RenderTextToBuffer64 ; $5089
 	pop af ; $508c
 	wram_bank ; $508d
 	ret ; $5091
@@ -2180,9 +2155,9 @@ OpenChoiceTabPanel:
 Label_3e_5098:
 	call AdvanceFrame ; $5098
 	ld b, $10 ; $509b
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $509d
+	farcall RestoreMenuBgAndDrawPanel ; $509d
 	ld b, $03 ; $50a0
-	farcall FarPtr_FlushWram3MapRows ; $50a2
+	farcall FlushWram3MapRows ; $50a2
 	ld a, c ; $50a5
 	inc a ; $50a6
 	ld c, a ; $50a7
@@ -2194,9 +2169,9 @@ Label_3e_50ad:
 Label_3e_50af:
 	call AdvanceFrame ; $50af
 	ld b, $11 ; $50b2
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $50b4
+	farcall RestoreMenuBgAndDrawPanel ; $50b4
 	ld b, $03 ; $50b7
-	farcall FarPtr_FlushWram3MapRows ; $50b9
+	farcall FlushWram3MapRows ; $50b9
 	ld a, c ; $50bc
 	dec a ; $50bd
 	ld c, a ; $50be
@@ -2211,9 +2186,9 @@ CloseChoiceTabPanel:
 Label_3e_50ca:
 	call AdvanceFrame ; $50ca
 	ld b, $11 ; $50cd
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $50cf
+	farcall RestoreMenuBgAndDrawPanel ; $50cf
 	ld b, $03 ; $50d2
-	farcall FarPtr_FlushWram3MapRows ; $50d4
+	farcall FlushWram3MapRows ; $50d4
 	ld a, c ; $50d7
 	inc a ; $50d8
 	ld c, a ; $50d9
@@ -2225,9 +2200,9 @@ Label_3e_50df:
 Label_3e_50e1:
 	call AdvanceFrame ; $50e1
 	ld b, $10 ; $50e4
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $50e6
+	farcall RestoreMenuBgAndDrawPanel ; $50e6
 	ld b, $03 ; $50e9
-	farcall FarPtr_FlushWram3MapRows ; $50eb
+	farcall FlushWram3MapRows ; $50eb
 	ld a, c ; $50ee
 	dec a ; $50ef
 	ld c, a ; $50f0
@@ -2235,7 +2210,7 @@ Label_3e_50e1:
 	jr nz, Label_3e_50e1 ; $50f2
 	ret ; $50f4
 ChoiceTabCursorSpriteTask:
-	farcall FarPtr_TickMenuBgScroll ; $50f5
+	farcall TickMenuBgScroll ; $50f5
 	ld c, $02 ; $50f8
 	call GetMenuCursorIndex_3e ; $50fa
 	push af ; $50fd
@@ -2257,7 +2232,7 @@ Label_3e_5111:
 	ld a, [hl+] ; $5111
 	ld d, [hl] ; $5112
 	ld e, a ; $5113
-	farcall FarPtr_ApplySpriteBobOffset ; $5114
+	farcall ApplySpriteBobOffset ; $5114
 	ld b, $08 ; $5117
 	ld hl, SpriteTemplate_3e_5132 ; $5119
 	push de ; $511c
@@ -2317,7 +2292,7 @@ Label_3e_517e:
 	pop hl ; $5181
 	ld b, $05 ; $5182
 	ld c, $03 ; $5184
-	farcall FarPtr_FillTilemapRect ; $5186
+	farcall FillTilemapRect ; $5186
 	pop hl ; $5189
 	pop de ; $518a
 	pop bc ; $518b
@@ -2333,10 +2308,10 @@ RunPlayAlonePartnerMenu:
 	ld a, [wMenuSlideDirection] ; $51a2
 	ld b, a ; $51a5
 	call OpenChoiceTabPanel ; $51a6
-	farcall FarPtr_InitMenuBgScroll ; $51a9
+	farcall InitMenuBgScroll ; $51a9
 	ld b, $01 ; $51ac
 	ld c, $01 ; $51ae
-	farcall FarPtr_39_26 ; $51b0
+	farcall Func_39_4b3a ; $51b0
 	xor a, a ; $51b3
 	ld c, a ; $51b4
 	ld b, $02 ; $51b5
@@ -2451,22 +2426,22 @@ Label_3e_5259:
 	ld b, $23 ; $5278
 	ld c, $10 ; $527a
 	ld de, $a000 ; $527c
-	farcall FarPtr_LoadCompressedTileBlock ; $527f
+	farcall LoadCompressedTileBlock ; $527f
 	call AdvanceFrame ; $5282
 	ld b, $24 ; $5285
 	ld c, $10 ; $5287
 	ld de, $a100 ; $5289
-	farcall FarPtr_LoadCompressedTileBlock ; $528c
+	farcall LoadCompressedTileBlock ; $528c
 	call AdvanceFrame ; $528f
 	ld b, $1b ; $5292
 	ld c, $04 ; $5294
 	ld de, $a700 ; $5296
-	farcall FarPtr_LoadCompressedTileBlock ; $5299
+	farcall LoadCompressedTileBlock ; $5299
 	call AdvanceFrame ; $529c
 	call AdvanceFrame ; $529f
 	ld b, $08 ; $52a2
 	ld c, $10 ; $52a4
-	farcall FarPtr_LoadIndexedPalette ; $52a6
+	farcall LoadIndexedPalette ; $52a6
 	pop af ; $52a9
 	wram_bank ; $52aa
 	ret ; $52ae
@@ -2495,7 +2470,7 @@ Label_3e_52c1:
 	ld b, $14 ; $52e7
 	ld c, $01 ; $52e9
 	ld h, $03 ; $52eb
-	farcall FarPtr_FillTilemapRect ; $52ed
+	farcall FillTilemapRect ; $52ed
 	ld a, $02 ; $52f0
 	ld [$d1e0], a ; $52f2
 	ld a, $04 ; $52f5
@@ -2504,7 +2479,7 @@ Label_3e_52c1:
 	ld b, $12 ; $52fd
 	ld c, $01 ; $52ff
 	ld h, $20 ; $5301
-	farcall FarPtr_FillTilemapRect ; $5303
+	farcall FillTilemapRect ; $5303
 	call DrawPlayAlonePartnerCaption ; $5306
 	ld hl, $d4e0 ; $5309
 	ld de, $b8e0 ; $530c
@@ -2567,7 +2542,7 @@ Label_3e_536d:
 	inc h ; $5378
 Label_3e_5379:
 	ld c, $20 ; $5379
-	farcall FarPtr_RenderTextToBuffer64 ; $537b
+	farcall RenderTextToBuffer64 ; $537b
 	pop af ; $537e
 	wram_bank ; $537f
 	ret ; $5383
@@ -2580,7 +2555,7 @@ ShowEquipmentStatusScreen:
 	call AdvanceFrame ; $5393
 	call AdvanceFrame ; $5396
 	call DisableLCDSafely ; $5399
-	farcall FarPtr_01_0a ; $539c
+	farcall Func_01_50e2 ; $539c
 	xor a, a ; $539f
 	ldh [hScrollX], a ; $53a0
 	ldh [hScrollY], a ; $53a2
@@ -2605,24 +2580,24 @@ Label_3e_53c1:
 	ret ; $53ce
 DrawEquipmentStatusScreen:
 	call LoadEquipmentStatusWindows ; $53cf
-	farcall FarPtr_PrepareGlyphBuffer ; $53d2
+	farcall PrepareGlyphBuffer ; $53d2
 	wram_bank $03 ; $53d5
 	ld hl, $d800 ; $53db
 	ld bc, $0003 ; $53de
 	call ClearMemory16 ; $53e1
 	call DrawEquippedRacketPanel ; $53e4
 	call DrawEquippedShoesPanel ; $53e7
-	farcall FarPtr_UploadGlyphBuffer ; $53ea
-	farcall FarPtr_QueueWram3MapToVRAM ; $53ed
+	farcall UploadGlyphBuffer ; $53ea
+	farcall QueueWram3MapToVRAM ; $53ed
 	ret ; $53f0
 LoadEquipmentStatusWindows:
 	ld c, $21 ; $53f1
-	farcall FarPtr_LoadScreenAssetRecord ; $53f3
-	farcall FarPtr_ResetTextWindowState ; $53f6
+	farcall LoadScreenAssetRecord ; $53f3
+	farcall ResetTextWindowState ; $53f6
 	ld b, $11 ; $53f9
 	ld c, $10 ; $53fb
 	ld de, $9000 ; $53fd
-	farcall FarPtr_LoadCompressedTileBlock ; $5400
+	farcall LoadCompressedTileBlock ; $5400
 	wram_bank $05 ; $5403
 	ld a, $03 ; $5409
 	ld [wShadowTilemapBank], a ; $540b
@@ -2632,16 +2607,16 @@ LoadEquipmentStatusWindows:
 	ld e, $00 ; $5415
 	ld b, $14 ; $5417
 	ld c, $09 ; $5419
-	farcall FarPtr_CreateWindowFromScreenRect ; $541b
-	farcall FarPtr_DrawTextWindowFrame ; $541e
-	farcall FarPtr_RedrawWindowRows ; $5421
+	farcall CreateWindowFromScreenRect ; $541b
+	farcall DrawTextWindowFrame ; $541e
+	farcall RedrawWindowRows ; $5421
 	ld d, $00 ; $5424
 	ld e, $09 ; $5426
 	ld b, $14 ; $5428
 	ld c, $09 ; $542a
-	farcall FarPtr_CreateWindowFromScreenRect ; $542c
-	farcall FarPtr_DrawTextWindowFrame ; $542f
-	farcall FarPtr_RedrawWindowRows ; $5432
+	farcall CreateWindowFromScreenRect ; $542c
+	farcall DrawTextWindowFrame ; $542f
+	farcall RedrawWindowRows ; $5432
 	call SetEquipmentStatusAttrRects ; $5435
 	ret ; $5438
 SetEquipmentStatusAttrRects:
@@ -2650,12 +2625,12 @@ SetEquipmentStatusAttrRects:
 	ld b, $12 ; $5442
 	ld c, $05 ; $5444
 	ld h, $08 ; $5446
-	farcall FarPtr_FillTilemapRect ; $5448
+	farcall FillTilemapRect ; $5448
 	ld de, $d461 ; $544b
 	ld b, $12 ; $544e
 	ld c, $05 ; $5450
 	ld h, $08 ; $5452
-	farcall FarPtr_FillTilemapRect ; $5454
+	farcall FillTilemapRect ; $5454
 	ret ; $5457
 DrawEquippedRacketPanel:
 	ld a, $00 ; $5458
@@ -2734,13 +2709,13 @@ Label_3e_54f4:
 	ld a, $ff ; $5505
 	ret ; $5507
 Label_3e_5508:
-	farcall FarPtr_RefreshMainCharacterStats ; $5508
+	farcall RefreshMainCharacterStats ; $5508
 	xor a, a ; $550b
 	ret ; $550c
 LoadRacketSelectScreen:
 	ld c, $21 ; $550d
-	farcall FarPtr_LoadScreenAssetRecord ; $550f
-	farcall FarPtr_PrepareGlyphBuffer ; $5512
+	farcall LoadScreenAssetRecord ; $550f
+	farcall PrepareGlyphBuffer ; $5512
 	call LoadEquipSelectCommon ; $5515
 	ld c, $00 ; $5518
 	ld b, $07 ; $551a
@@ -2760,11 +2735,11 @@ LoadRacketSelectScreen:
 	ld b, $63 ; $5544
 	ld c, $02 ; $5546
 	ld de, $a200 ; $5548
-	farcall FarPtr_LoadCompressedTileBlock ; $554b
+	farcall LoadCompressedTileBlock ; $554b
 	ld hl, $555b ; $554e
 	ld de, $0901 ; $5551
 	call LoadPaletteShadow ; $5554
-	farcall FarPtr_QueueWram3MapToVRAM ; $5557
+	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
 	INCBIN "data/bank_03e/d_555b.bin" ; $555b, 8 bytes
 DrawOwnedItemIcons:
@@ -2803,7 +2778,7 @@ Label_3e_558a:
 Label_3e_5591:
 	ld b, $02 ; $5591
 	ld c, $02 ; $5593
-	farcall FarPtr_CopyTilemapRect ; $5595
+	farcall CopyTilemapRect ; $5595
 	ld bc, $0400 ; $5598
 	add hl, bc ; $559b
 	push hl ; $559c
@@ -2815,7 +2790,7 @@ Label_3e_5591:
 	pop hl ; $55a2
 	ld b, $02 ; $55a3
 	ld c, $02 ; $55a5
-	farcall FarPtr_CopyTilemapRect ; $55a7
+	farcall CopyTilemapRect ; $55a7
 	pop hl ; $55aa
 	pop de ; $55ab
 	pop bc ; $55ac
@@ -2886,7 +2861,7 @@ Label_3e_5620:
 Label_3e_5623:
 	ret ; $5623
 DrawRacketInfoPanel:
-	farcall FarPtr_PrepareGlyphBuffer ; $5624
+	farcall PrepareGlyphBuffer ; $5624
 	call DrawHoveredItemStatMods ; $5627
 	call GetHoveredItemId ; $562a
 	ld c, a ; $562d
@@ -2899,7 +2874,7 @@ DrawRacketInfoPanel:
 	pop bc ; $563a
 	ld de, $d0a8 ; $563b
 	call RenderRacketNameText ; $563e
-	farcall FarPtr_UploadGlyphBuffer ; $5641
+	farcall UploadGlyphBuffer ; $5641
 	ret ; $5644
 RunShoesSelectScreen:
 	call DisableLCDSafely ; $5645
@@ -2937,26 +2912,26 @@ Label_3e_567c:
 	ld a, $ff ; $568d
 	ret ; $568f
 Label_3e_5690:
-	farcall FarPtr_RefreshMainCharacterStats ; $5690
+	farcall RefreshMainCharacterStats ; $5690
 	xor a, a ; $5693
 	ret ; $5694
 	ret ; $5695
 LoadShoesSelectScreen:
 	ld c, $21 ; $5696
-	farcall FarPtr_LoadScreenAssetRecord ; $5698
-	farcall FarPtr_PrepareGlyphBuffer ; $569b
+	farcall LoadScreenAssetRecord ; $5698
+	farcall PrepareGlyphBuffer ; $569b
 	call LoadEquipSelectCommon ; $569e
 	wram_bank $03 ; $56a1
 	ld hl, $d340 ; $56a7
 	ld de, $d000 ; $56aa
 	ld b, $14 ; $56ad
 	ld c, $04 ; $56af
-	farcall FarPtr_CopyTilemapRect ; $56b1
+	farcall CopyTilemapRect ; $56b1
 	ld hl, $d740 ; $56b4
 	ld de, $d400 ; $56b7
 	ld b, $14 ; $56ba
 	ld c, $04 ; $56bc
-	farcall FarPtr_CopyTilemapRect ; $56be
+	farcall CopyTilemapRect ; $56be
 	ld c, $00 ; $56c1
 	ld b, $07 ; $56c3
 	call SetMenuCursorFromIndex_3e ; $56c5
@@ -2975,14 +2950,14 @@ LoadShoesSelectScreen:
 	ld b, $63 ; $56ed
 	ld c, $02 ; $56ef
 	ld de, $a200 ; $56f1
-	farcall FarPtr_LoadCompressedTileBlock ; $56f4
+	farcall LoadCompressedTileBlock ; $56f4
 	ld hl, $555b ; $56f7
 	ld de, $0901 ; $56fa
 	call LoadPaletteShadow ; $56fd
-	farcall FarPtr_QueueWram3MapToVRAM ; $5700
+	farcall QueueWram3MapToVRAM ; $5700
 	ret ; $5703
 DrawShoesInfoPanel:
-	farcall FarPtr_PrepareGlyphBuffer ; $5704
+	farcall PrepareGlyphBuffer ; $5704
 	call DrawHoveredItemStatMods ; $5707
 	call GetHoveredItemId ; $570a
 	ld c, a ; $570d
@@ -2995,7 +2970,7 @@ DrawShoesInfoPanel:
 	pop bc ; $571a
 	ld de, $d0a8 ; $571b
 	call RenderShoesNameText ; $571e
-	farcall FarPtr_UploadGlyphBuffer ; $5721
+	farcall UploadGlyphBuffer ; $5721
 	ret ; $5724
 BuildOwnedItemList:
 	xor a, a ; $5725
@@ -3117,31 +3092,31 @@ Label_3e_57e6:
 	ret ; $57e9
 	INCBIN "data/bank_03e/d_57ea.bin" ; $57ea, 10 bytes
 LoadEquipSelectCommon:
-	farcall FarPtr_ResetTextWindowState ; $57f4
+	farcall ResetTextWindowState ; $57f4
 	ld b, $11 ; $57f7
 	ld c, $10 ; $57f9
 	ld de, $9000 ; $57fb
-	farcall FarPtr_LoadCompressedTileBlock ; $57fe
+	farcall LoadCompressedTileBlock ; $57fe
 	wram_bank $05 ; $5801
 	call CreateEquipCaptionWindow ; $5807
 	call CreateEquipListWindow ; $580a
 	ld de, $a000 ; $580d
-	farcall FarPtr_39_06 ; $5810
+	farcall Func_39_44d3 ; $5810
 	ret ; $5813
 CreateEquipListWindow:
 	ld d, $00 ; $5814
 	ld e, $04 ; $5816
 	ld b, $14 ; $5818
 	ld c, $09 ; $581a
-	farcall FarPtr_CreateWindowFromScreenRect ; $581c
-	farcall FarPtr_DrawTextWindowFrame ; $581f
-	farcall FarPtr_RedrawWindowRows ; $5822
+	farcall CreateWindowFromScreenRect ; $581c
+	farcall DrawTextWindowFrame ; $581f
+	farcall RedrawWindowRows ; $5822
 	wram_bank $03 ; $5825
 	ld de, $d4e1 ; $582b
 	ld b, $12 ; $582e
 	ld c, $05 ; $5830
 	ld h, $08 ; $5832
-	farcall FarPtr_FillTilemapRect ; $5834
+	farcall FillTilemapRect ; $5834
 	ret ; $5837
 CreateEquipCaptionWindow:
 	ld a, $03 ; $5838
@@ -3152,16 +3127,16 @@ CreateEquipCaptionWindow:
 	ld e, $0d ; $5844
 	ld b, $14 ; $5846
 	ld c, $05 ; $5848
-	farcall FarPtr_CreateWindowFromScreenRect ; $584a
-	farcall FarPtr_DrawTextWindowFrame ; $584d
-	farcall FarPtr_RedrawWindowRows ; $5850
+	farcall CreateWindowFromScreenRect ; $584a
+	farcall DrawTextWindowFrame ; $584d
+	farcall RedrawWindowRows ; $5850
 	ret ; $5853
 ClearEquipSelectTextRows:
 	ld de, $d1a0 ; $5854
 	ld b, $14 ; $5857
 	ld c, $01 ; $5859
 	ld h, $03 ; $585b
-	farcall FarPtr_FillTilemapRect ; $585d
+	farcall FillTilemapRect ; $585d
 	ld a, $02 ; $5860
 	ld [$d1a0], a ; $5862
 	ld a, $04 ; $5865
@@ -3170,12 +3145,12 @@ ClearEquipSelectTextRows:
 	ld b, $12 ; $586d
 	ld c, $03 ; $586f
 	ld h, $20 ; $5871
-	farcall FarPtr_FillTilemapRect ; $5873
+	farcall FillTilemapRect ; $5873
 	ld de, $d080 ; $5876
 	ld b, $14 ; $5879
 	ld c, $01 ; $587b
 	ld h, $03 ; $587d
-	farcall FarPtr_FillTilemapRect ; $587f
+	farcall FillTilemapRect ; $587f
 	ld a, $02 ; $5882
 	ld [$d080], a ; $5884
 	ld a, $04 ; $5887
@@ -3184,7 +3159,7 @@ ClearEquipSelectTextRows:
 	ld b, $12 ; $588f
 	ld c, $07 ; $5891
 	ld h, $20 ; $5893
-	farcall FarPtr_FillTilemapRect ; $5895
+	farcall FillTilemapRect ; $5895
 	ret ; $5898
 FlushEquipSelectTextRows:
 	ld hl, $d080 ; $5899
@@ -3293,7 +3268,7 @@ Label_3e_59ad:
 	ld de, $d1c1 ; $59ad
 	ld c, $12 ; $59b0
 	push hl ; $59b2
-	farcall FarPtr_RenderProportionalTextAt ; $59b3
+	farcall RenderProportionalTextAt ; $59b3
 	pop hl ; $59b6
 	ret ; $59b7
 RenderShoesNameText:
@@ -3309,7 +3284,7 @@ Label_3e_59c1:
 	inc h ; $59c6
 Label_3e_59c7:
 	ld c, $12 ; $59c7
-	farcall FarPtr_RenderProportionalTextAt ; $59c9
+	farcall RenderProportionalTextAt ; $59c9
 	ret ; $59cc
 EquipListCursorSpriteTask:
 	ld c, $07 ; $59cd
@@ -3436,7 +3411,7 @@ DrawStatModLabel:
 	call GetStatModLabelTile ; $5ad3
 	call GetStatModLabelLen ; $5ad6
 	ld c, a ; $5ad9
-	farcall FarPtr_39_7c ; $5ada
+	farcall Func_39_745a ; $5ada
 	pop hl ; $5add
 	pop de ; $5ade
 	pop bc ; $5adf
@@ -3547,10 +3522,10 @@ RunCourtSelect4Menu:
 	call ClearFrameTasks ; $5b9b
 	ld hl, rIE ; $5b9e
 	res 2, [hl] ; $5ba1
-	farcall FarPtr_InitMenuBgScroll ; $5ba3
+	farcall InitMenuBgScroll ; $5ba3
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
-	farcall FarPtr_39_26 ; $5baa
+	farcall Func_39_4b3a ; $5baa
 	call LoadCourtSelectHeader ; $5bad
 	wram_bank $03 ; $5bb0
 	ld a, [wMenuSlideDirection] ; $5bb6
@@ -3619,10 +3594,10 @@ RunLinkCourtSelect4Menu:
 	call ClearFrameTasks ; $5c3e
 	call EnableTimerInterrupt ; $5c41
 	sound $03 ; $5c44
-	farcall FarPtr_InitMenuBgScroll ; $5c46
+	farcall InitMenuBgScroll ; $5c46
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
-	farcall FarPtr_39_26 ; $5c4d
+	farcall Func_39_4b3a ; $5c4d
 	call LoadCourtSelectHeader ; $5c50
 	wram_bank $03 ; $5c53
 	ld a, [wMenuSlideDirection] ; $5c59
@@ -3636,20 +3611,20 @@ RunLinkCourtSelect4Menu:
 	ld hl, CourtSelect4CursorSpriteTask ; $5c6b
 	call RegisterFrameTask ; $5c6e
 	call RedrawCourtSelect4Menu ; $5c71
-	farcall FarPtr_ResyncLinkSessionWithTimer ; $5c74
+	farcall ResyncLinkSessionWithTimer ; $5c74
 	push af ; $5c77
-	farcall FarPtr_RunLinkInputFrame ; $5c78
+	farcall RunLinkInputFrame ; $5c78
 	pop af ; $5c7b
 	push af ; $5c7c
-	farcall FarPtr_RunLinkInputFrame ; $5c7d
+	farcall RunLinkInputFrame ; $5c7d
 	pop af ; $5c80
 	push af ; $5c81
-	farcall FarPtr_RunLinkInputFrame ; $5c82
+	farcall RunLinkInputFrame ; $5c82
 	pop af ; $5c85
 	wram_bank $03 ; $5c86
 Label_3e_5c8c:
 	push af ; $5c8c
-	farcall FarPtr_RunLinkInputFrame ; $5c8d
+	farcall RunLinkInputFrame ; $5c8d
 	pop af ; $5c90
 	ldh a, [hLinkInput] ; $5c91
 	ld [wMenuInputPressed], a ; $5c93
@@ -3670,7 +3645,7 @@ Label_3e_5ca5:
 Label_3e_5cb2:
 	sound $60 ; $5cb2
 	push af ; $5cb4
-	farcall FarPtr_SyncLinkFrame ; $5cb5
+	farcall SyncLinkFrame ; $5cb5
 	pop af ; $5cb8
 	call ClearFrameTasks ; $5cb9
 	xor a, a ; $5cbc
@@ -3690,7 +3665,7 @@ Label_3e_5cb2:
 Label_3e_5cd9:
 	sound $62 ; $5cd9
 	push af ; $5cdb
-	farcall FarPtr_SyncLinkFrame ; $5cdc
+	farcall SyncLinkFrame ; $5cdc
 	pop af ; $5cdf
 	xor a, a ; $5ce0
 	ldh [$ffd8], a ; $5ce1
@@ -3780,54 +3755,54 @@ Label_3e_5d50:
 	ld b, $65 ; $5d6c
 	ld c, $12 ; $5d6e
 	ld de, $a000 ; $5d70
-	farcall FarPtr_LoadCompressedTileBlock ; $5d73
+	farcall LoadCompressedTileBlock ; $5d73
 	ld b, $66 ; $5d76
 	ld c, $12 ; $5d78
 	ld de, $a100 ; $5d7a
-	farcall FarPtr_LoadCompressedTileBlock ; $5d7d
+	farcall LoadCompressedTileBlock ; $5d7d
 	ld b, $67 ; $5d80
 	ld c, $12 ; $5d82
 	ld de, $a200 ; $5d84
-	farcall FarPtr_LoadCompressedTileBlock ; $5d87
+	farcall LoadCompressedTileBlock ; $5d87
 	ld b, $68 ; $5d8a
 	ld c, $14 ; $5d8c
 	ld de, $a300 ; $5d8e
-	farcall FarPtr_LoadCompressedTileBlock ; $5d91
+	farcall LoadCompressedTileBlock ; $5d91
 	ld b, $6a ; $5d94
 	ld c, $12 ; $5d96
 	ld de, $a420 ; $5d98
-	farcall FarPtr_LoadCompressedTileBlock ; $5d9b
+	farcall LoadCompressedTileBlock ; $5d9b
 	ld b, $6b ; $5d9e
 	ld c, $12 ; $5da0
 	ld de, $a520 ; $5da2
-	farcall FarPtr_LoadCompressedTileBlock ; $5da5
+	farcall LoadCompressedTileBlock ; $5da5
 	ld b, $6c ; $5da8
 	ld c, $12 ; $5daa
 	ld de, $a620 ; $5dac
-	farcall FarPtr_LoadCompressedTileBlock ; $5daf
+	farcall LoadCompressedTileBlock ; $5daf
 	ld b, $6d ; $5db2
 	ld c, $12 ; $5db4
 	ld de, $8200 ; $5db6
-	farcall FarPtr_LoadCompressedTileBlock ; $5db9
+	farcall LoadCompressedTileBlock ; $5db9
 	ld b, $6e ; $5dbc
 	ld c, $12 ; $5dbe
 	ld de, $8300 ; $5dc0
-	farcall FarPtr_LoadCompressedTileBlock ; $5dc3
+	farcall LoadCompressedTileBlock ; $5dc3
 	ld b, $6f ; $5dc6
 	ld c, $12 ; $5dc8
 	ld de, $8400 ; $5dca
-	farcall FarPtr_LoadCompressedTileBlock ; $5dcd
+	farcall LoadCompressedTileBlock ; $5dcd
 	ld b, $1b ; $5dd0
 	ld c, $04 ; $5dd2
 	ld de, $a720 ; $5dd4
-	farcall FarPtr_LoadCompressedTileBlock ; $5dd7
+	farcall LoadCompressedTileBlock ; $5dd7
 	ld b, $40 ; $5dda
 	ld c, $14 ; $5ddc
 	ld de, $8000 ; $5dde
-	farcall FarPtr_LoadCompressedTileBlock ; $5de1
+	farcall LoadCompressedTileBlock ; $5de1
 	ld b, $08 ; $5de4
 	ld c, $10 ; $5de6
-	farcall FarPtr_LoadIndexedPalette ; $5de8
+	farcall LoadIndexedPalette ; $5de8
 	pop af ; $5deb
 	wram_bank ; $5dec
 	ret ; $5df0
@@ -3875,9 +3850,9 @@ OpenCourtSelect4Panel:
 Label_3e_5e30:
 	call AdvanceFrame ; $5e30
 	ld b, $12 ; $5e33
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5e35
+	farcall RestoreMenuBgAndDrawPanel ; $5e35
 	ld b, $02 ; $5e38
-	farcall FarPtr_FlushWram3MapRows ; $5e3a
+	farcall FlushWram3MapRows ; $5e3a
 	ld a, c ; $5e3d
 	inc a ; $5e3e
 	ld c, a ; $5e3f
@@ -3890,9 +3865,9 @@ Label_3e_5e48:
 Label_3e_5e4a:
 	call AdvanceFrame ; $5e4a
 	ld b, $13 ; $5e4d
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5e4f
+	farcall RestoreMenuBgAndDrawPanel ; $5e4f
 	ld b, $02 ; $5e52
-	farcall FarPtr_FlushWram3MapRows ; $5e54
+	farcall FlushWram3MapRows ; $5e54
 	ld a, c ; $5e57
 	dec a ; $5e58
 	ld c, a ; $5e59
@@ -3908,9 +3883,9 @@ CloseCourtSelect4Panel:
 Label_3e_5e68:
 	call AdvanceFrame ; $5e68
 	ld b, $13 ; $5e6b
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5e6d
+	farcall RestoreMenuBgAndDrawPanel ; $5e6d
 	ld b, $02 ; $5e70
-	farcall FarPtr_FlushWram3MapRows ; $5e72
+	farcall FlushWram3MapRows ; $5e72
 	ld a, c ; $5e75
 	inc a ; $5e76
 	ld c, a ; $5e77
@@ -3922,9 +3897,9 @@ Label_3e_5e7d:
 Label_3e_5e7f:
 	call AdvanceFrame ; $5e7f
 	ld b, $12 ; $5e82
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $5e84
+	farcall RestoreMenuBgAndDrawPanel ; $5e84
 	ld b, $02 ; $5e87
-	farcall FarPtr_FlushWram3MapRows ; $5e89
+	farcall FlushWram3MapRows ; $5e89
 	ld a, c ; $5e8c
 	dec a ; $5e8d
 	ld c, a ; $5e8e
@@ -3932,7 +3907,7 @@ Label_3e_5e7f:
 	jr nz, Label_3e_5e7f ; $5e90
 	ret ; $5e92
 CourtSelect4CursorSpriteTask:
-	farcall FarPtr_TickMenuBgScroll ; $5e93
+	farcall TickMenuBgScroll ; $5e93
 	ld c, $02 ; $5e96
 	call GetMenuCursorIndex_3e ; $5e98
 	push af ; $5e9b
@@ -3955,7 +3930,7 @@ Label_3e_5eb0:
 	ld a, [hl+] ; $5eb0
 	ld d, [hl] ; $5eb1
 	ld e, a ; $5eb2
-	farcall FarPtr_ApplySpriteBobOffset ; $5eb3
+	farcall ApplySpriteBobOffset ; $5eb3
 	ld b, [hl] ; $5eb6
 	pop af ; $5eb7
 	add a, a ; $5eb8
@@ -4083,7 +4058,7 @@ Label_3e_5fc6:
 	pop hl ; $5fc9
 	ld b, $05 ; $5fca
 	ld c, $03 ; $5fcc
-	farcall FarPtr_FillTilemapRect ; $5fce
+	farcall FillTilemapRect ; $5fce
 	pop hl ; $5fd1
 	pop de ; $5fd2
 	pop bc ; $5fd3
@@ -4194,19 +4169,19 @@ DrawCourtSelectTitleLeft:
 	ld b, $30 ; $6139
 	ld hl, $d1e0 ; $613b
 	ld c, $04 ; $613e
-	farcall FarPtr_39_7c ; $6140
+	farcall Func_39_745a ; $6140
 	ld hl, $d200 ; $6143
 	ld c, $04 ; $6146
-	farcall FarPtr_39_7c ; $6148
+	farcall Func_39_745a ; $6148
 	ld hl, $d220 ; $614b
 	ld c, $04 ; $614e
-	farcall FarPtr_39_7c ; $6150
+	farcall Func_39_745a ; $6150
 	ret ; $6153
 DrawCourtSelectTitleRight:
 	ld b, $40 ; $6154
 	ld hl, $d209 ; $6156
 	ld c, $05 ; $6159
-	farcall FarPtr_39_7c ; $615b
+	farcall Func_39_745a ; $615b
 	ret ; $615e
 FlushCourtSelectTitleRow:
 	ldh a, [hWramBank] ; $615f
@@ -4289,7 +4264,7 @@ Label_3e_64b8:
 Label_3e_64bd:
 	ld hl, $d204 ; $64bd
 	ld c, $05 ; $64c0
-	farcall FarPtr_39_7c ; $64c2
+	farcall Func_39_745a ; $64c2
 	ret ; $64c5
 	INCBIN "data/bank_03e/d_64c6.bin" ; $64c6, 9 bytes
 DrawCourtNameRight:
@@ -4313,7 +4288,7 @@ Label_3e_64e1:
 Label_3e_64e6:
 	ld hl, $d20e ; $64e6
 	ld c, $06 ; $64e9
-	farcall FarPtr_39_7c ; $64eb
+	farcall Func_39_745a ; $64eb
 	ret ; $64ee
 	INCBIN "data/bank_03e/d_64ef.bin" ; $64ef, 9 bytes
 FadeOutAndResetMenuScreen:
@@ -4324,8 +4299,8 @@ FadeOutAndResetMenuScreen:
 	call BeginFadeOut ; $6503
 	call WaitFadeEnd ; $6506
 	call DisableLCDSafely ; $6509
-	farcall FarPtr_01_0a ; $650c
-	farcall FarPtr_ResetScreenAndTextWindows ; $650f
+	farcall Func_01_50e2 ; $650c
+	farcall ResetScreenAndTextWindows ; $650f
 	pop af ; $6512
 	wram_bank ; $6513
 	ret ; $6517
@@ -4337,10 +4312,10 @@ RunCourtSelect9Menu:
 	call ClearFrameTasks ; $6521
 	ld hl, rIE ; $6524
 	res 2, [hl] ; $6527
-	farcall FarPtr_InitMenuBgScroll ; $6529
+	farcall InitMenuBgScroll ; $6529
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
-	farcall FarPtr_39_26 ; $6530
+	farcall Func_39_4b3a ; $6530
 	call LoadCourtSelectHeader ; $6533
 	wram_bank $03 ; $6536
 	ld a, [wMenuSlideDirection] ; $653c
@@ -4423,10 +4398,10 @@ RunLinkCourtSelect9Menu:
 	or a, b ; $65de
 	ld b, a ; $65df
 	call StoreCourtUnlockBits ; $65e0
-	farcall FarPtr_InitMenuBgScroll ; $65e3
+	farcall InitMenuBgScroll ; $65e3
 	ld b, $01 ; $65e6
 	ld c, $01 ; $65e8
-	farcall FarPtr_39_26 ; $65ea
+	farcall Func_39_4b3a ; $65ea
 	call LoadCourtSelectHeader ; $65ed
 	wram_bank $03 ; $65f0
 	ld a, [wMenuSlideDirection] ; $65f6
@@ -4440,22 +4415,22 @@ RunLinkCourtSelect9Menu:
 	ld hl, CourtSelect9CursorSpriteTask ; $6608
 	call RegisterFrameTask ; $660b
 	call RedrawCourtSelect9Menu ; $660e
-	farcall FarPtr_ResyncLinkSessionWithTimer ; $6611
+	farcall ResyncLinkSessionWithTimer ; $6611
 	push af ; $6614
-	farcall FarPtr_RunLinkInputFrame ; $6615
+	farcall RunLinkInputFrame ; $6615
 	pop af ; $6618
 	push af ; $6619
-	farcall FarPtr_RunLinkInputFrame ; $661a
+	farcall RunLinkInputFrame ; $661a
 	pop af ; $661d
 	push af ; $661e
-	farcall FarPtr_RunLinkInputFrame ; $661f
+	farcall RunLinkInputFrame ; $661f
 	pop af ; $6622
 	wram_bank $03 ; $6623
 Label_3e_6629:
 	ldh a, [hLinkInput] ; $6629
 	ld [wMenuInputPressed], a ; $662b
 	push af ; $662e
-	farcall FarPtr_RunLinkInputFrame ; $662f
+	farcall RunLinkInputFrame ; $662f
 	pop af ; $6632
 	ld b, $03 ; $6633
 	ld c, $03 ; $6635
@@ -4483,7 +4458,7 @@ Label_3e_664f:
 Label_3e_665f:
 	sound $60 ; $665f
 	push af ; $6661
-	farcall FarPtr_SyncLinkFrame ; $6662
+	farcall SyncLinkFrame ; $6662
 	pop af ; $6665
 	call ClearFrameTasks ; $6666
 	xor a, a ; $6669
@@ -4503,7 +4478,7 @@ Label_3e_665f:
 Label_3e_6686:
 	sound $62 ; $6686
 	push af ; $6688
-	farcall FarPtr_SyncLinkFrame ; $6689
+	farcall SyncLinkFrame ; $6689
 	pop af ; $668c
 	xor a, a ; $668d
 	ldh [$ffd8], a ; $668e
@@ -4526,9 +4501,9 @@ OpenCourtSelect9Panel:
 Label_3e_66b1:
 	call AdvanceFrame ; $66b1
 	ld b, $14 ; $66b4
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $66b6
+	farcall RestoreMenuBgAndDrawPanel ; $66b6
 	ld b, $00 ; $66b9
-	farcall FarPtr_FlushWram3MapRows ; $66bb
+	farcall FlushWram3MapRows ; $66bb
 	ld a, c ; $66be
 	inc a ; $66bf
 	ld c, a ; $66c0
@@ -4541,9 +4516,9 @@ Label_3e_66c9:
 Label_3e_66cb:
 	call AdvanceFrame ; $66cb
 	ld b, $15 ; $66ce
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $66d0
+	farcall RestoreMenuBgAndDrawPanel ; $66d0
 	ld b, $00 ; $66d3
-	farcall FarPtr_FlushWram3MapRows ; $66d5
+	farcall FlushWram3MapRows ; $66d5
 	ld a, c ; $66d8
 	dec a ; $66d9
 	ld c, a ; $66da
@@ -4559,9 +4534,9 @@ CloseCourtSelect9Panel:
 Label_3e_66e9:
 	call AdvanceFrame ; $66e9
 	ld b, $15 ; $66ec
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $66ee
+	farcall RestoreMenuBgAndDrawPanel ; $66ee
 	ld b, $00 ; $66f1
-	farcall FarPtr_FlushWram3MapRows ; $66f3
+	farcall FlushWram3MapRows ; $66f3
 	ld a, c ; $66f6
 	inc a ; $66f7
 	ld c, a ; $66f8
@@ -4573,9 +4548,9 @@ Label_3e_66fe:
 Label_3e_6700:
 	call AdvanceFrame ; $6700
 	ld b, $14 ; $6703
-	farcall FarPtr_RestoreMenuBgAndDrawPanel ; $6705
+	farcall RestoreMenuBgAndDrawPanel ; $6705
 	ld b, $00 ; $6708
-	farcall FarPtr_FlushWram3MapRows ; $670a
+	farcall FlushWram3MapRows ; $670a
 	ld a, c ; $670d
 	dec a ; $670e
 	ld c, a ; $670f
@@ -4583,7 +4558,7 @@ Label_3e_6700:
 	jr nz, Label_3e_6700 ; $6711
 	ret ; $6713
 CourtSelect9CursorSpriteTask:
-	farcall FarPtr_TickMenuBgScroll ; $6714
+	farcall TickMenuBgScroll ; $6714
 	ld c, $03 ; $6717
 	call GetMenuCursorIndex_3e ; $6719
 	push af ; $671c
@@ -4606,7 +4581,7 @@ Label_3e_6731:
 	ld a, [hl+] ; $6731
 	ld d, [hl] ; $6732
 	ld e, a ; $6733
-	farcall FarPtr_ApplySpriteBobOffset ; $6734
+	farcall ApplySpriteBobOffset ; $6734
 	push bc ; $6737
 	ld c, $03 ; $6738
 	call GetMenuCursorIndex_3e ; $673a
@@ -4752,7 +4727,7 @@ Label_3e_68a4:
 	pop hl ; $68a7
 	ld b, $05 ; $68a8
 	ld c, $03 ; $68aa
-	farcall FarPtr_FillTilemapRect ; $68ac
+	farcall FillTilemapRect ; $68ac
 	pop hl ; $68af
 	pop de ; $68b0
 	pop bc ; $68b1
@@ -4856,7 +4831,7 @@ Label_3e_69ae:
 	ld a, [hl+] ; $69ae
 	ld d, [hl] ; $69af
 	ld e, a ; $69b0
-	farcall FarPtr_TestSaveFlag ; $69b1
+	farcall TestSaveFlag ; $69b1
 	jr z, Label_3e_69ba ; $69b4
 	ld a, $01 ; $69b6
 	or a, b ; $69b8

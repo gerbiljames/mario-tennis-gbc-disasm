@@ -1,31 +1,21 @@
 SECTION "ROM Bank $6b", ROMX[$4000], BANK[$6b]
 
-FarPtr_6b_00:
-	dw Func_6b_402a ; $4000
-FarPtr_6b_02:
-	dw Func_6b_75af ; $4002
+	farptr Func_6b_402a ; $4000
+	farptr Func_6b_75af ; $4002
 DataPtr_TitleScreenTilemap:
 	dw TitleScreenTilemap ; $4004
 DataPtr_TitleScreenAttrmap:
 	dw TitleScreenAttrmap ; $4006
 DataPtr_TitleScreenPalettes:
 	dw TitleScreenPalettes ; $4008
-FarPtr_Func_6b_73f2:
-	dw Func_6b_73f2 ; $400a
-FarPtr_Func_6b_73f2Alias1:
-	dw Func_6b_73f2 ; $400c
-FarPtr_Func_6b_73f2Alias2:
-	dw Func_6b_73f2 ; $400e
-FarPtr_Func_6b_73f2Alias3:
-	dw Func_6b_73f2 ; $4010
-FarPtr_6b_12:
-	dw Func_6b_51ae ; $4012
-FarPtr_6b_14:
-	dw Func_6b_51e7 ; $4014
-FarPtr_6b_16:
-	dw Func_6b_6075 ; $4016
-FarPtr_6b_18:
-	dw Func_6b_6126 ; $4018
+	farptr Func_6b_73f2 ; $400a
+	farptr Func_6b_73f2Alias1, Func_6b_73f2 ; $400c
+	farptr Func_6b_73f2Alias2, Func_6b_73f2 ; $400e
+	farptr Func_6b_73f2Alias3, Func_6b_73f2 ; $4010
+	farptr Func_6b_51ae ; $4012
+	farptr Func_6b_51e7 ; $4014
+	farptr Func_6b_6075 ; $4016
+	farptr Func_6b_6126 ; $4018
 DataPtr_AwardCeremonyTilemap:
 	dw AwardCeremonyTilemap ; $401a
 DataPtr_AwardCeremonyAttrmap:
@@ -355,7 +345,7 @@ IntroCutsceneState01Init_6b:
 	ld a, $28 ; $4238
 	ld [$cb47], a ; $423a
 	ld c, $16 ; $423d
-	farcall FarPtr_LoadScreenAssetRecord ; $423f
+	farcall LoadScreenAssetRecord ; $423f
 	call Func_6b_520a ; $4242
 	ldh a, [hWramBank] ; $4245
 	push af ; $4247
@@ -364,10 +354,10 @@ IntroCutsceneState01Init_6b:
 	ld de, $d560 ; $4250
 	ld b, $20 ; $4253
 	ld c, $01 ; $4255
-	farcall FarPtr_FillTilemapRect ; $4257
+	farcall FillTilemapRect ; $4257
 	pop af ; $425a
 	wram_bank ; $425b
-	farcall FarPtr_QueueWram3MapToVRAM ; $425f
+	farcall QueueWram3MapToVRAM ; $425f
 	wram_bank $01 ; $4262
 	ld hl, $6c2a ; $4268 -> DataPtr_IntroSwingTiles
 	ld de, $d000 ; $426b
@@ -475,7 +465,7 @@ Label_6b_43cc:
 IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
 	ld c, $17 ; $43d2
-	farcall FarPtr_LoadScreenAssetRecord ; $43d4
+	farcall LoadScreenAssetRecord ; $43d4
 	ldh a, [hWramBank] ; $43d7
 	push af ; $43d9
 	wram_bank $03 ; $43da
@@ -483,10 +473,10 @@ IntroCutsceneState03Init_6b:
 	ld de, $d560 ; $43e2
 	ld b, $20 ; $43e5
 	ld c, $01 ; $43e7
-	farcall FarPtr_FillTilemapRect ; $43e9
+	farcall FillTilemapRect ; $43e9
 	pop af ; $43ec
 	wram_bank ; $43ed
-	farcall FarPtr_QueueWram3MapToVRAM ; $43f1
+	farcall QueueWram3MapToVRAM ; $43f1
 	wram_bank $01 ; $43f4
 	ld hl, $6c32 ; $43fa -> DataPtr_IntroCloseupTiles
 	ld de, $d000 ; $43fd
@@ -595,7 +585,7 @@ IntroCutsceneState04Update_6b:
 IntroCutsceneState05Init_6b:
 	call DisableLCDSafely ; $452e
 	ld c, $18 ; $4531
-	farcall FarPtr_LoadScreenAssetRecord ; $4533
+	farcall LoadScreenAssetRecord ; $4533
 	ldh a, [hWramBank] ; $4536
 	push af ; $4538
 	wram_bank $03 ; $4539
@@ -603,17 +593,17 @@ IntroCutsceneState05Init_6b:
 	ld de, $d500 ; $4541
 	ld b, $20 ; $4544
 	ld c, $01 ; $4546
-	farcall FarPtr_FillTilemapRect ; $4548
+	farcall FillTilemapRect ; $4548
 	ld h, $8a ; $454b
 	ld de, $d5c0 ; $454d
 	ld b, $20 ; $4550
 	ld c, $01 ; $4552
-	farcall FarPtr_FillTilemapRect ; $4554
+	farcall FillTilemapRect ; $4554
 	pop af ; $4557
 	wram_bank ; $4558
-	farcall FarPtr_QueueWram3MapToVRAM ; $455c
+	farcall QueueWram3MapToVRAM ; $455c
 	ld c, $19 ; $455f
-	farcall FarPtr_LoadScreenAssetRecord ; $4561
+	farcall LoadScreenAssetRecord ; $4561
 	ld a, $08 ; $4564
 	ldh [rSTAT], a ; $4566
 	ld hl, rIE ; $4568
@@ -833,8 +823,8 @@ Palettes_6b_475a:
 IntroCutsceneState08Init_6b:
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
-	farcall FarPtr_LoadScreenAssetRecord ; $479f
-	farcall FarPtr_QueueWram3MapToVRAM ; $47a2
+	farcall LoadScreenAssetRecord ; $479f
+	farcall QueueWram3MapToVRAM ; $47a2
 	xor a, a ; $47a5
 	ld [wCutsceneStepTimer], a ; $47a6
 	ld a, $b0 ; $47a9
@@ -865,8 +855,8 @@ IntroCutsceneState08Update_6b:
 IntroCutsceneState09Init_6b:
 	call DisableLCDSafely ; $47e7
 	ld c, $1d ; $47ea
-	farcall FarPtr_LoadScreenAssetRecord ; $47ec
-	farcall FarPtr_QueueWram3MapToVRAM ; $47ef
+	farcall LoadScreenAssetRecord ; $47ec
+	farcall QueueWram3MapToVRAM ; $47ef
 	ld a, $94 ; $47f2
 	ld [wCutsceneScrollX], a ; $47f4
 	ldh [hScrollX], a ; $47f7
@@ -898,8 +888,8 @@ IntroCutsceneState09Update_6b:
 IntroCutsceneState10Init_6b:
 	call DisableLCDSafely ; $4836
 	ld c, $1e ; $4839
-	farcall FarPtr_LoadScreenAssetRecord ; $483b
-	farcall FarPtr_QueueWram3MapToVRAM ; $483e
+	farcall LoadScreenAssetRecord ; $483b
+	farcall QueueWram3MapToVRAM ; $483e
 	ld a, $a8 ; $4841
 	ld [wCutsceneScrollX], a ; $4843
 	ldh [hScrollX], a ; $4846
@@ -931,7 +921,7 @@ IntroCutsceneState10Update_6b:
 IntroCutsceneState11Init_6b:
 	call DisableLCDSafely ; $4885
 	ld c, $20 ; $4888
-	farcall FarPtr_LoadScreenAssetRecord ; $488a
+	farcall LoadScreenAssetRecord ; $488a
 	ld a, $01 ; $488d
 	ldh [hShowDebugConsole], a ; $488f
 	ld hl, rLCDC ; $4891
@@ -1465,8 +1455,8 @@ Label_6b_51ad:
 Func_6b_51ae:
 	call DisableLCDSafely ; $51ae
 	ld c, $15 ; $51b1
-	farcall FarPtr_LoadScreenAssetRecord ; $51b3
-	farcall FarPtr_QueueWram3MapToVRAM ; $51b6
+	farcall LoadScreenAssetRecord ; $51b3
+	farcall QueueWram3MapToVRAM ; $51b6
 	xor a, a ; $51b9
 	ldh [hScrollX], a ; $51ba
 	ldh [hScrollY], a ; $51bc
@@ -1512,31 +1502,31 @@ Func_6b_520a:
 	ld b, $4d ; $520a
 	ld c, $06 ; $520c
 	ld de, $a000 ; $520e
-	farcall FarPtr_LoadCompressedTileBlock ; $5211
+	farcall LoadCompressedTileBlock ; $5211
 	ld b, $4e ; $5214
 	ld c, $0a ; $5216
 	ld de, $a060 ; $5218
-	farcall FarPtr_LoadCompressedTileBlock ; $521b
+	farcall LoadCompressedTileBlock ; $521b
 	ld b, $4f ; $521e
 	ld c, $10 ; $5220
 	ld de, $a100 ; $5222
-	farcall FarPtr_LoadCompressedTileBlock ; $5225
+	farcall LoadCompressedTileBlock ; $5225
 	ld b, $50 ; $5228
 	ld c, $06 ; $522a
 	ld de, $a200 ; $522c
-	farcall FarPtr_LoadCompressedTileBlock ; $522f
+	farcall LoadCompressedTileBlock ; $522f
 	ld b, $51 ; $5232
 	ld c, $12 ; $5234
 	ld de, $a260 ; $5236
-	farcall FarPtr_LoadCompressedTileBlock ; $5239
+	farcall LoadCompressedTileBlock ; $5239
 	ld b, $52 ; $523c
 	ld c, $10 ; $523e
 	ld de, $a380 ; $5240
-	farcall FarPtr_LoadCompressedTileBlock ; $5243
+	farcall LoadCompressedTileBlock ; $5243
 	ld b, $53 ; $5246
 	ld c, $02 ; $5248
 	ld de, $a480 ; $524a
-	farcall FarPtr_LoadCompressedTileBlock ; $524d
+	farcall LoadCompressedTileBlock ; $524d
 	ld hl, Palettes_6b_525a ; $5250
 	ld de, $0802 ; $5253
 	call LoadPaletteShadow ; $5256
@@ -1726,8 +1716,8 @@ Func_6b_53f1:
 	ret ; $53fb
 Func_6b_53fc:
 	call DisableLCDSafely ; $53fc
-	farcall FarPtr_InitSceneScroll ; $53ff
-	farcall FarPtr_InitTextWindows ; $5402
+	farcall InitSceneScroll ; $53ff
+	farcall InitTextWindows ; $5402
 	wram_bank $01 ; $5405
 	ld hl, $551d ; $540b
 	ld de, $d000 ; $540e
@@ -1754,14 +1744,14 @@ Func_6b_53fc:
 	ld a, $24 ; $544f
 	ld [wCameraY + 1], a ; $5451
 	ld a, $01 ; $5454
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5456
+	farcall CopyScrolledSceneTilemapToVram ; $5456
 	xor a, a ; $5459
 	ld [wCameraY + 1], a ; $545a
 	ret ; $545d
 Func_6b_545e:
 	call DisableLCDSafely ; $545e
-	farcall FarPtr_InitSceneScroll ; $5461
-	farcall FarPtr_InitTextWindows ; $5464
+	farcall InitSceneScroll ; $5461
+	farcall InitTextWindows ; $5464
 	wram_bank $01 ; $5467
 	ld hl, $551d ; $546d
 	ld de, $d000 ; $5470
@@ -1787,12 +1777,12 @@ Func_6b_545e:
 	ld a, $24 ; $54ae
 	ld [wCameraY + 1], a ; $54b0
 	ld a, $01 ; $54b3
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $54b5
+	farcall CopyScrolledSceneTilemapToVram ; $54b5
 	ret ; $54b8
 Func_6b_54b9:
 	call DisableLCDSafely ; $54b9
-	farcall FarPtr_InitSceneScroll ; $54bc
-	farcall FarPtr_InitTextWindows ; $54bf
+	farcall InitSceneScroll ; $54bc
+	farcall InitTextWindows ; $54bf
 	wram_bank $01 ; $54c2
 	ld hl, $551d ; $54c8
 	ld de, $d000 ; $54cb
@@ -1821,38 +1811,38 @@ Func_6b_54b9:
 	ld a, $24 ; $5512
 	ld [wCameraY + 1], a ; $5514
 	ld a, $01 ; $5517
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5519
+	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 	INCBIN "data/bank_06b/d_551d.bin" ; $551d, 2904 bytes
 Func_6b_6075:
 	ld b, $54 ; $6075
 	ld c, $10 ; $6077
 	ld de, $a000 ; $6079
-	farcall FarPtr_LoadCompressedTileBlock ; $607c
+	farcall LoadCompressedTileBlock ; $607c
 	ld b, $55 ; $607f
 	ld c, $10 ; $6081
 	ld de, $a100 ; $6083
-	farcall FarPtr_LoadCompressedTileBlock ; $6086
+	farcall LoadCompressedTileBlock ; $6086
 	ld b, $56 ; $6089
 	ld c, $10 ; $608b
 	ld de, $a200 ; $608d
-	farcall FarPtr_LoadCompressedTileBlock ; $6090
+	farcall LoadCompressedTileBlock ; $6090
 	ld b, $57 ; $6093
 	ld c, $10 ; $6095
 	ld de, $a300 ; $6097
-	farcall FarPtr_LoadCompressedTileBlock ; $609a
+	farcall LoadCompressedTileBlock ; $609a
 	ld b, $58 ; $609d
 	ld c, $04 ; $609f
 	ld de, $a400 ; $60a1
-	farcall FarPtr_LoadCompressedTileBlock ; $60a4
+	farcall LoadCompressedTileBlock ; $60a4
 	ld b, $59 ; $60a7
 	ld c, $04 ; $60a9
 	ld de, $a440 ; $60ab
-	farcall FarPtr_LoadCompressedTileBlock ; $60ae
+	farcall LoadCompressedTileBlock ; $60ae
 	ld b, $5a ; $60b1
 	ld c, $04 ; $60b3
 	ld de, $a480 ; $60b5
-	farcall FarPtr_LoadCompressedTileBlock ; $60b8
+	farcall LoadCompressedTileBlock ; $60b8
 	ld hl, Palettes_6b_60c5 ; $60bb
 	ld de, $0802 ; $60be
 	call LoadPaletteShadow ; $60c1
@@ -1943,8 +1933,8 @@ SpriteTemplate_6b_613d:
 	INCBIN "data/bank_06b/d_615e.bin" ; $615e, 30 bytes
 Func_6b_617c:
 	call DisableLCDSafely ; $617c
-	farcall FarPtr_InitSceneScroll ; $617f
-	farcall FarPtr_InitTextWindows ; $6182
+	farcall InitSceneScroll ; $617f
+	farcall InitTextWindows ; $6182
 	wram_bank $01 ; $6185
 	ld hl, $61e6 ; $618b
 	ld de, $d000 ; $618e
@@ -1975,7 +1965,7 @@ Func_6b_617c:
 	ld [wCameraY], a ; $61da
 	ld [wCameraY + 1], a ; $61dd
 	ld a, $01 ; $61e0
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $61e2
+	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 3741 bytes
 Func_6b_7083:
@@ -2300,40 +2290,40 @@ Func_6b_75af:
 	call BeginFadeOut ; $75d8
 	call WaitFadeEnd ; $75db
 	ld c, $1f ; $75de
-	farcall FarPtr_LoadScreenAssetRecord ; $75e0
-	farcall FarPtr_QueueWram3MapToVRAM ; $75e3
+	farcall LoadScreenAssetRecord ; $75e0
+	farcall QueueWram3MapToVRAM ; $75e3
 	ld c, $14 ; $75e6
 	ld b, $5b ; $75e8
 	ld de, $a000 ; $75ea
-	farcall FarPtr_LoadCompressedTileBlock ; $75ed
+	farcall LoadCompressedTileBlock ; $75ed
 	ld c, $14 ; $75f0
 	ld b, $5c ; $75f2
 	ld de, $a200 ; $75f4
-	farcall FarPtr_LoadCompressedTileBlock ; $75f7
+	farcall LoadCompressedTileBlock ; $75f7
 	ld c, $14 ; $75fa
 	ld b, $5d ; $75fc
 	ld de, $a400 ; $75fe
-	farcall FarPtr_LoadCompressedTileBlock ; $7601
+	farcall LoadCompressedTileBlock ; $7601
 	ld c, $14 ; $7604
 	ld b, $5e ; $7606
 	ld de, $a600 ; $7608
-	farcall FarPtr_LoadCompressedTileBlock ; $760b
+	farcall LoadCompressedTileBlock ; $760b
 	ld c, $14 ; $760e
 	ld b, $5f ; $7610
 	ld de, $8000 ; $7612
-	farcall FarPtr_LoadCompressedTileBlock ; $7615
+	farcall LoadCompressedTileBlock ; $7615
 	ld c, $14 ; $7618
 	ld b, $60 ; $761a
 	ld de, $8200 ; $761c
-	farcall FarPtr_LoadCompressedTileBlock ; $761f
+	farcall LoadCompressedTileBlock ; $761f
 	ld c, $14 ; $7622
 	ld b, $61 ; $7624
 	ld de, $8400 ; $7626
-	farcall FarPtr_LoadCompressedTileBlock ; $7629
+	farcall LoadCompressedTileBlock ; $7629
 	ld c, $14 ; $762c
 	ld b, $62 ; $762e
 	ld de, $8600 ; $7630
-	farcall FarPtr_LoadCompressedTileBlock ; $7633
+	farcall LoadCompressedTileBlock ; $7633
 	ld hl, Palettes_6b_794f ; $7636
 	ld de, $0801 ; $7639
 	call LoadPaletteShadow ; $763c

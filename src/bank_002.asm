@@ -1,73 +1,39 @@
 SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 
-FarPtr_02_00:
-	dw Func_02_4fa6 ; $4000
-FarPtr_InitStoryModeState:
-	dw InitStoryModeState ; $4002
-FarPtr_ValidateN64TransferRecord:
-	dw ValidateN64TransferRecord ; $4004
-FarPtr_InitPlayerRecordFromTemplate:
-	dw InitPlayerRecordFromTemplate ; $4006
-FarPtr_LoadMainCharacterFromRoster:
-	dw LoadMainCharacterFromRoster ; $4008
-FarPtr_LevelUpPlayer:
-	dw LevelUpPlayer ; $400a
-FarPtr_02_0c:
-	dw Func_02_4a00 ; $400c
-FarPtr_RefreshPlayerStatsAndGetPtr:
-	dw RefreshPlayerStatsAndGetPtr ; $400e
-FarPtr_RefreshMainCharacterStats:
-	dw RefreshMainCharacterStats ; $4010
-FarPtr_RecomputeStatsWithoutRacket:
-	dw RecomputeStatsWithoutRacket ; $4012
-FarPtr_RollStoryRandomByte:
-	dw RollStoryRandomByte ; $4014
-FarPtr_02_16:
-	dw Func_02_4364 ; $4016
-FarPtr_02_18:
-	dw Func_02_4066 ; $4018
-FarPtr_02_1a:
-	dw Func_02_52aa ; $401a
-FarPtr_AddExpCapped:
-	dw AddExpCapped ; $401c
-FarPtr_Compare24Bit:
-	dw Compare24Bit ; $401e
-FarPtr_ClearCa00RecordExp:
-	dw ClearCa00RecordExp ; $4020
-FarPtr_AddExpToCa00RecordChecked:
-	dw AddExpToCa00RecordChecked ; $4022
-FarPtr_02_24:
-	dw Func_02_4d71 ; $4024
-FarPtr_AddExpToCa00Record:
-	dw AddExpToCa00Record ; $4026
-FarPtr_AddPlayerExp:
-	dw AddPlayerExp ; $4028
-FarPtr_HasReachedNextLevelExp:
-	dw HasReachedNextLevelExp ; $402a
-FarPtr_GetExpRemainingToNextLevel:
-	dw GetExpRemainingToNextLevel ; $402c
-FarPtr_GetExpProgressInCurrentLevel:
-	dw GetExpProgressInCurrentLevel ; $402e
-FarPtr_GetExpRequiredForLevel:
-	dw GetExpRequiredForLevel ; $4030
-FarPtr_02_32:
-	dw Func_02_4128 ; $4032
-FarPtr_GetCharPaletteIndex:
-	dw GetCharPaletteIndex ; $4034
-FarPtr_RemapExtendedCharId:
-	dw RemapExtendedCharId ; $4036
-FarPtr_GetCharGroupEntry:
-	dw GetCharGroupEntry ; $4038
-FarPtr_DoesCharGroupRowContain:
-	dw DoesCharGroupRowContain ; $403a
-FarPtr_SetStorySlotFlagB:
-	dw SetStorySlotFlagB ; $403c
-FarPtr_TestStorySlotFlagB:
-	dw TestStorySlotFlagB ; $403e
-FarPtr_SetStorySlotFlagA:
-	dw SetStorySlotFlagA ; $4040
-FarPtr_TestStorySlotFlagA:
-	dw TestStorySlotFlagA ; $4042
+	farptr Func_02_4fa6 ; $4000
+	farptr InitStoryModeState ; $4002
+	farptr ValidateN64TransferRecord ; $4004
+	farptr InitPlayerRecordFromTemplate ; $4006
+	farptr LoadMainCharacterFromRoster ; $4008
+	farptr LevelUpPlayer ; $400a
+	farptr Func_02_4a00 ; $400c
+	farptr RefreshPlayerStatsAndGetPtr ; $400e
+	farptr RefreshMainCharacterStats ; $4010
+	farptr RecomputeStatsWithoutRacket ; $4012
+	farptr RollStoryRandomByte ; $4014
+	farptr Func_02_4364 ; $4016
+	farptr Func_02_4066 ; $4018
+	farptr Func_02_52aa ; $401a
+	farptr AddExpCapped ; $401c
+	farptr Compare24Bit ; $401e
+	farptr ClearCa00RecordExp ; $4020
+	farptr AddExpToCa00RecordChecked ; $4022
+	farptr Func_02_4d71 ; $4024
+	farptr AddExpToCa00Record ; $4026
+	farptr AddPlayerExp ; $4028
+	farptr HasReachedNextLevelExp ; $402a
+	farptr GetExpRemainingToNextLevel ; $402c
+	farptr GetExpProgressInCurrentLevel ; $402e
+	farptr GetExpRequiredForLevel ; $4030
+	farptr Func_02_4128 ; $4032
+	farptr GetCharPaletteIndex ; $4034
+	farptr RemapExtendedCharId ; $4036
+	farptr GetCharGroupEntry ; $4038
+	farptr DoesCharGroupRowContain ; $403a
+	farptr SetStorySlotFlagB ; $403c
+	farptr TestStorySlotFlagB ; $403e
+	farptr SetStorySlotFlagA ; $4040
+	farptr TestStorySlotFlagA ; $4042
 ValidateN64TransferRecord:
 	ld a, [$c9b4] ; $4044
 	cp a, $64 ; $4047
@@ -208,7 +174,7 @@ Label_02_4103:
 	ld d, h ; $4108
 	ld e, l ; $4109
 	pop hl ; $410a
-	farcall FarPtr_FetchShortTextToBuffer ; $410b
+	farcall FetchShortTextToBuffer ; $410b
 	pop de ; $410e
 	pop af ; $410f
 	bit 6, a ; $4110
@@ -313,7 +279,7 @@ InitStoryModeState:
 	ld [hl], $02 ; $423d
 	ld a, $01 ; $423f
 	ld [wMessageSpeed], a ; $4241
-	farcall FarPtr_InitDefaultMatchSettings ; $4244
+	farcall InitDefaultMatchSettings ; $4244
 	clear_flag $01, 6 ; $4247
 	set_flag $01, 7 ; $424a
 	ld hl, $c884 ; $424d
@@ -350,7 +316,7 @@ Label_02_4274:
 	push af ; $427b
 	ld a, $00 ; $427c
 	ld [wCurrentStorySlot], a ; $427e
-	farcall FarPtr_CheckStorySlot ; $4281
+	farcall CheckStorySlot ; $4281
 	cp a, $fe ; $4284
 	jr z, Label_02_4291 ; $4286
 	ld hl, $c880 ; $4288
@@ -359,7 +325,7 @@ Label_02_4274:
 Label_02_4291:
 	ld a, $01 ; $4291
 	ld [wCurrentStorySlot], a ; $4293
-	farcall FarPtr_CheckStorySlot ; $4296
+	farcall CheckStorySlot ; $4296
 	cp a, $fe ; $4299
 	jr z, Label_02_42a6 ; $429b
 	ld hl, $c880 ; $429d
@@ -368,7 +334,7 @@ Label_02_4291:
 Label_02_42a6:
 	ld a, $02 ; $42a6
 	ld [wCurrentStorySlot], a ; $42a8
-	farcall FarPtr_CheckStorySlot ; $42ab
+	farcall CheckStorySlot ; $42ab
 	cp a, $fe ; $42ae
 	jr z, Label_02_42bb ; $42b0
 	ld hl, $c880 ; $42b2
@@ -555,7 +521,7 @@ InitPlayerRecordFromTemplate:
 	add a, c ; $43d4
 	ld e, a ; $43d5
 	ld d, b ; $43d6
-	farcall FarPtr_FetchShortTextToBuffer ; $43d7
+	farcall FetchShortTextToBuffer ; $43d7
 	pop de ; $43da
 	ld a, d ; $43db
 	add a, $1b ; $43dc
@@ -1634,10 +1600,10 @@ SetStorySlotFlagB:
 	pop af ; $4cc0
 	and a, a ; $4cc1
 	jr nz, Label_02_4cc8 ; $4cc2
-	farcall FarPtr_ClearSaveFlag ; $4cc4
+	farcall ClearSaveFlag ; $4cc4
 	ret ; $4cc7
 Label_02_4cc8:
-	farcall FarPtr_SetSaveFlag ; $4cc8
+	farcall SetSaveFlag ; $4cc8
 	ret ; $4ccb
 SaveFlagPtrs_02_4ccc:
 	; $4ccc, 8 bytes (records:2)
@@ -1656,7 +1622,7 @@ TestStorySlotFlagB:
 	ld a, [hl+] ; $4cdf
 	ld d, [hl] ; $4ce0
 	ld e, a ; $4ce1
-	farcall FarPtr_TestSaveFlag ; $4ce2
+	farcall TestSaveFlag ; $4ce2
 	jr z, Label_02_4cea ; $4ce5
 	ld a, $01 ; $4ce7
 	ret ; $4ce9
@@ -1678,10 +1644,10 @@ SetStorySlotFlagA:
 	pop af ; $4cfc
 	and a, a ; $4cfd
 	jr nz, Label_02_4d04 ; $4cfe
-	farcall FarPtr_ClearSaveFlag ; $4d00
+	farcall ClearSaveFlag ; $4d00
 	ret ; $4d03
 Label_02_4d04:
-	farcall FarPtr_SetSaveFlag ; $4d04
+	farcall SetSaveFlag ; $4d04
 	ret ; $4d07
 SaveFlagPtrs_02_4d08:
 	; $4d08, 8 bytes (records:2)
@@ -1700,7 +1666,7 @@ TestStorySlotFlagA:
 	ld a, [hl+] ; $4d1b
 	ld d, [hl] ; $4d1c
 	ld e, a ; $4d1d
-	farcall FarPtr_TestSaveFlag ; $4d1e
+	farcall TestSaveFlag ; $4d1e
 	jr z, Label_02_4d26 ; $4d21
 	ld a, $01 ; $4d23
 	ret ; $4d25
@@ -2002,15 +1968,15 @@ Func_02_4fa6:
 	ldh [hDebugStepMode], a ; $4fb0
 	xor a, a ; $4fb2
 	ld [wCurrentStorySlot], a ; $4fb3
-	farcall FarPtr_InitTextWindows ; $4fb6
+	farcall InitTextWindows ; $4fb6
 	call EnableLCD ; $4fb9
 	ld c, $7f ; $4fbc
 	call BeginFadeOut ; $4fbe
 	script_fade_in $7f ; $4fc1
-	farcall FarPtr_InitStoryModeState ; $4fc6
+	farcall InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9
 Label_02_4fcb:
-	farcall FarPtr_CheckStorySlot ; $4fcb
+	farcall CheckStorySlot ; $4fcb
 	or a, a ; $4fce
 	jr z, Label_02_4fdf ; $4fcf
 	push de ; $4fd1
@@ -2253,7 +2219,7 @@ Label_02_51a2:
 	push bc ; $51a7
 	push de ; $51a8
 	push hl ; $51a9
-	farcall FarPtr_InitStoryModeState ; $51aa
+	farcall InitStoryModeState ; $51aa
 	pop hl ; $51ad
 	pop de ; $51ae
 	pop bc ; $51af
@@ -2292,7 +2258,7 @@ Label_02_51e0:
 	ld hl, $520a ; $51e7
 	ld de, $0802 ; $51ea
 	call PrintString ; $51ed
-	farcall FarPtr_SaveStorySlotWithTimer ; $51f0
+	farcall SaveStorySlotWithTimer ; $51f0
 	pop de ; $51f3
 	jp Label_02_502a ; $51f4
 Label_02_51f7:
@@ -2311,7 +2277,7 @@ LoadStorySlot:
 	ld c, a ; $524c
 	push bc ; $524d
 	ld [wCurrentStorySlot], a ; $524e
-	farcall FarPtr_CheckStorySlot ; $5251
+	farcall CheckStorySlot ; $5251
 	pop bc ; $5254
 	pop de ; $5255
 	or a, a ; $5256
@@ -2348,7 +2314,7 @@ Unused_02_StorySlotVariant:
 	ld c, a ; $5289
 	push bc ; $528a
 	ld [wCurrentStorySlot], a ; $528b
-	farcall FarPtr_CheckStorySlot ; $528e
+	farcall CheckStorySlot ; $528e
 	pop bc ; $5291
 	pop de ; $5292
 	or a, a ; $5293

@@ -1,51 +1,28 @@
 SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 
-FarPtr_DecompressCharMugshot:
-	dw DecompressCharMugshot ; $4000
-FarPtr_LoadIndexedPaletteThunk:
-	dw LoadIndexedPaletteThunk ; $4002
-FarPtr_1b_04:
-	dw Func_1b_4e7f ; $4004
-FarPtr_Func_1b_4e80:
-	dw Func_1b_4e80 ; $4006
-FarPtr_Func_1b_4e80Alias1:
-	dw Func_1b_4e80 ; $4008
-FarPtr_1b_0a:
-	dw Func_1b_4e57 ; $400a
-FarPtr_1b_0c:
-	dw Func_1b_4e0d ; $400c
-FarPtr_SetMugshotAttrs:
-	dw SetMugshotAttrs ; $400e
-FarPtr_LoadCharMugshotToBuffer:
-	dw LoadCharMugshotToBuffer ; $4010
-FarPtr_1b_12:
-	dw Func_1b_4e43 ; $4012
-FarPtr_1b_14:
-	dw Func_1b_4e44 ; $4014
-FarPtr_1b_16:
-	dw Func_1b_4e45 ; $4016
-FarPtr_CopyMugshotBufferToVram:
-	dw CopyMugshotBufferToVram ; $4018
-FarPtr_ShowRankingBoard:
-	dw ShowRankingBoard ; $401a
-FarPtr_UpdateCharSelectSelection:
-	dw UpdateCharSelectSelection ; $401c
-FarPtr_1b_1e:
-	dw Func_1b_6982 ; $401e
-FarPtr_ShowNoN64DataFoundScreen:
-	dw ShowNoN64DataFoundScreen ; $4020
-FarPtr_RunNewGameSetup:
-	dw RunNewGameSetup ; $4022
-FarPtr_RunDebugSaveDataFlow:
-	dw RunDebugSaveDataFlow ; $4024
-FarPtr_RunMinigameFlagsDebugScreen:
-	dw RunMinigameFlagsDebugScreen ; $4026
-FarPtr_RunMinigameLevelSelect:
-	dw RunMinigameLevelSelect ; $4028
-FarPtr_RunSavedDataTypeSelect:
-	dw RunSavedDataTypeSelect ; $402a
-FarPtr_ShowMinigameDataScreen:
-	dw ShowMinigameDataScreen ; $402c
+	farptr DecompressCharMugshot ; $4000
+	farptr LoadIndexedPaletteThunk ; $4002
+	farptr Func_1b_4e7f ; $4004
+	farptr Func_1b_4e80 ; $4006
+	farptr Func_1b_4e80Alias1, Func_1b_4e80 ; $4008
+	farptr Func_1b_4e57 ; $400a
+	farptr Func_1b_4e0d ; $400c
+	farptr SetMugshotAttrs ; $400e
+	farptr LoadCharMugshotToBuffer ; $4010
+	farptr Func_1b_4e43 ; $4012
+	farptr Func_1b_4e44 ; $4014
+	farptr Func_1b_4e45 ; $4016
+	farptr CopyMugshotBufferToVram ; $4018
+	farptr ShowRankingBoard ; $401a
+	farptr UpdateCharSelectSelection ; $401c
+	farptr Func_1b_6982 ; $401e
+	farptr ShowNoN64DataFoundScreen ; $4020
+	farptr RunNewGameSetup ; $4022
+	farptr RunDebugSaveDataFlow ; $4024
+	farptr RunMinigameFlagsDebugScreen ; $4026
+	farptr RunMinigameLevelSelect ; $4028
+	farptr RunSavedDataTypeSelect ; $402a
+	farptr ShowMinigameDataScreen ; $402c
 DataPtr_1b_2e:
 	dw Lz_1b_78bd ; $402e
 DataPtr_1b_30:
@@ -735,7 +712,7 @@ Label_1b_4426:
 	wram_bank ; $442b
 	ret ; $442f
 Func_1b_4430:
-	farcall FarPtr_39_04 ; $4430
+	farcall Func_39_4342 ; $4430
 	ret ; $4433
 DrawNameWithDiacritics:
 	push af ; $4434
@@ -919,7 +896,7 @@ Func_1b_4e0d:
 	ld a, $ff ; $4e0d
 	ld [$c780], a ; $4e0f
 	ld d, $03 ; $4e12
-	farcall FarPtr_18_00 ; $4e14
+	farcall Func_18_4328 ; $4e14
 	ret ; $4e17
 SetMugshotAttrs:
 	push af ; $4e18
@@ -976,7 +953,7 @@ CopyMugshotBufferToVram:
 Func_1b_4e57:
 	ret ; $4e57
 LoadIndexedPaletteThunk:
-	farcall FarPtr_LoadIndexedPalette_18 ; $4e58
+	farcall LoadIndexedPalette_18 ; $4e58
 	ret ; $4e5b
 DecompressCharMugshot:
 	push af ; $4e5c
@@ -1067,8 +1044,8 @@ BuildRankingBoardScreen:
 	ld [wCameraX + 1], a ; $4efa
 	ld [wCameraY], a ; $4efd
 	ld [wCameraY + 1], a ; $4f00
-	farcall FarPtr_01_0a ; $4f03
-	farcall FarPtr_PrepareGlyphBuffer ; $4f06
+	farcall Func_01_50e2 ; $4f03
+	farcall PrepareGlyphBuffer ; $4f06
 	wram_bank $03 ; $4f09
 	xor a, a ; $4f0f
 	ld [$d855], a ; $4f10
@@ -1082,14 +1059,14 @@ BuildRankingBoardScreen:
 	or a, a ; $4f28
 	jr z, Label_1b_4f3e ; $4f29
 	ld c, $2a ; $4f2b
-	farcall FarPtr_LoadScreenAssetRecord ; $4f2d
+	farcall LoadScreenAssetRecord ; $4f2d
 	wram_bank $03 ; $4f30
 	call DrawDoublesRankingNames ; $4f36
 	call HighlightDoublesRankingRows ; $4f39
 	jr Label_1b_4f4f ; $4f3c
 Label_1b_4f3e:
 	ld c, $29 ; $4f3e
-	farcall FarPtr_LoadScreenAssetRecord ; $4f40
+	farcall LoadScreenAssetRecord ; $4f40
 	wram_bank $03 ; $4f43
 	call DrawSinglesRankingNames ; $4f49
 	call HighlightSinglesRankingRows ; $4f4c
@@ -1108,7 +1085,7 @@ Label_1b_4f4f:
 	ld hl, Func_1b_5a04 ; $4f6c
 	call RegisterFrameTask ; $4f6f
 Label_1b_4f72:
-	farcall FarPtr_QueueWram3MapToVRAM ; $4f72
+	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
 	; $4f76, 48 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -1739,7 +1716,7 @@ Label_1b_5528:
 	ld b, a ; $552d
 	cp a, $0c ; $552e
 	jr nz, Label_1b_5528 ; $5530
-	farcall FarPtr_UploadGlyphBuffer ; $5532
+	farcall UploadGlyphBuffer ; $5532
 	ret ; $5535
 DrawSinglesRankingEntry:
 	push af ; $5536
@@ -1769,7 +1746,7 @@ Label_1b_5551:
 	ld h, [hl] ; $5552
 	ld l, a ; $5553
 	ld c, $05 ; $5554
-	farcall FarPtr_RenderProportionalTextAt ; $5556
+	farcall RenderProportionalTextAt ; $5556
 	pop hl ; $5559
 	pop de ; $555a
 	pop bc ; $555b
@@ -1812,7 +1789,7 @@ Label_1b_5597:
 	ld h, $00 ; $5598
 	ld b, $05 ; $559a
 	ld c, $02 ; $559c
-	farcall FarPtr_FillTilemapRect ; $559e
+	farcall FillTilemapRect ; $559e
 	ld hl, $0060 ; $55a1
 	add hl, de ; $55a4
 	ld d, h ; $55a5
@@ -1830,7 +1807,7 @@ Label_1b_55b4:
 	ld h, $01 ; $55b5
 	ld b, $05 ; $55b7
 	ld c, $02 ; $55b9
-	farcall FarPtr_FillTilemapRect ; $55bb
+	farcall FillTilemapRect ; $55bb
 	ld hl, $0060 ; $55be
 	add hl, de ; $55c1
 	ld d, h ; $55c2
@@ -1864,7 +1841,7 @@ Label_1b_55f1:
 	ld b, a ; $55f6
 	cp a, $0c ; $55f7
 	jr nz, Label_1b_55f1 ; $55f9
-	farcall FarPtr_UploadGlyphBuffer ; $55fb
+	farcall UploadGlyphBuffer ; $55fb
 	ret ; $55fe
 DrawDoublesRankingEntry:
 	push af ; $55ff
@@ -1894,7 +1871,7 @@ Label_1b_561a:
 	ld h, [hl] ; $561b
 	ld l, a ; $561c
 	ld c, $05 ; $561d
-	farcall FarPtr_RenderProportionalTextAt ; $561f
+	farcall RenderProportionalTextAt ; $561f
 	pop hl ; $5622
 	pop de ; $5623
 	pop bc ; $5624
@@ -1938,7 +1915,7 @@ Label_1b_5662:
 	ld h, $00 ; $5663
 	ld b, $05 ; $5665
 	ld c, $04 ; $5667
-	farcall FarPtr_FillTilemapRect ; $5669
+	farcall FillTilemapRect ; $5669
 	ld hl, $00a0 ; $566c
 	add hl, de ; $566f
 	ld d, h ; $5670
@@ -1956,7 +1933,7 @@ Label_1b_567f:
 	ld h, $01 ; $5680
 	ld b, $05 ; $5682
 	ld c, $04 ; $5684
-	farcall FarPtr_FillTilemapRect ; $5686
+	farcall FillTilemapRect ; $5686
 	ld hl, $00a0 ; $5689
 	add hl, de ; $568c
 	ld d, h ; $568d
@@ -1973,13 +1950,13 @@ Label_1b_567f:
 	pop af ; $569a
 	ret ; $569b
 InitRankingNameRender:
-	farcall FarPtr_InitTextWindows ; $569c
+	farcall InitTextWindows ; $569c
 	wram_bank $05 ; $569f
 	ld a, $03 ; $56a5
 	ld [wShadowTilemapBank], a ; $56a7
 	ld a, $00 ; $56aa
 	ld [wWindowTileAttr], a ; $56ac
-	farcall FarPtr_PrepareGlyphBuffer ; $56af
+	farcall PrepareGlyphBuffer ; $56af
 	ret ; $56b2
 RenderPlayerNameFitted:
 	call GetStringLength ; $56b3
@@ -2110,77 +2087,77 @@ Label_1b_5779:
 	ld de, $d026 ; $577c
 	ld b, $05 ; $577f
 	ld c, $02 ; $5781
-	farcall FarPtr_CopyTilemapRect ; $5783
+	farcall CopyTilemapRect ; $5783
 	jp Label_1b_5760 ; $5786
 Label_1b_5789:
 	ld hl, $d280 ; $5789
 	ld de, $d146 ; $578c
 	ld b, $04 ; $578f
 	ld c, $02 ; $5791
-	farcall FarPtr_CopyTilemapRect ; $5793
+	farcall CopyTilemapRect ; $5793
 	jp Label_1b_5760 ; $5796
 Label_1b_5799:
 	ld hl, $d244 ; $5799
 	ld de, $d02a ; $579c
 	ld b, $04 ; $579f
 	ld c, $02 ; $57a1
-	farcall FarPtr_CopyTilemapRect ; $57a3
+	farcall CopyTilemapRect ; $57a3
 	jp Label_1b_5760 ; $57a6
 Label_1b_57a9:
 	ld hl, $d284 ; $57a9
 	ld de, $d14a ; $57ac
 	ld b, $04 ; $57af
 	ld c, $02 ; $57b1
-	farcall FarPtr_CopyTilemapRect ; $57b3
+	farcall CopyTilemapRect ; $57b3
 	jp Label_1b_5760 ; $57b6
 Label_1b_57b9:
 	ld hl, $d2c0 ; $57b9
 	ld de, $d026 ; $57bc
 	ld b, $04 ; $57bf
 	ld c, $07 ; $57c1
-	farcall FarPtr_CopyTilemapRect ; $57c3
+	farcall CopyTilemapRect ; $57c3
 	jp Label_1b_5760 ; $57c6
 Label_1b_57c9:
 	ld hl, $d2c8 ; $57c9
 	ld de, $d146 ; $57cc
 	ld b, $04 ; $57cf
 	ld c, $07 ; $57d1
-	farcall FarPtr_CopyTilemapRect ; $57d3
+	farcall CopyTilemapRect ; $57d3
 	jp Label_1b_5760 ; $57d6
 Label_1b_57d9:
 	ld hl, $d2c4 ; $57d9
 	ld de, $d02a ; $57dc
 	ld b, $04 ; $57df
 	ld c, $07 ; $57e1
-	farcall FarPtr_CopyTilemapRect ; $57e3
+	farcall CopyTilemapRect ; $57e3
 	jp Label_1b_5760 ; $57e6
 Label_1b_57e9:
 	ld hl, $d2cc ; $57e9
 	ld de, $d14a ; $57ec
 	ld b, $04 ; $57ef
 	ld c, $07 ; $57f1
-	farcall FarPtr_CopyTilemapRect ; $57f3
+	farcall CopyTilemapRect ; $57f3
 	jp Label_1b_5760 ; $57f6
 Label_1b_57f9:
 	ld hl, $d014 ; $57f9
 	ld de, $d026 ; $57fc
 	ld b, $04 ; $57ff
 	ld c, $10 ; $5801
-	farcall FarPtr_CopyTilemapRect ; $5803
+	farcall CopyTilemapRect ; $5803
 	jp Label_1b_5760 ; $5806
 Label_1b_5809:
 	ld hl, $d018 ; $5809
 	ld de, $d02a ; $580c
 	ld b, $04 ; $580f
 	ld c, $10 ; $5811
-	farcall FarPtr_CopyTilemapRect ; $5813
+	farcall CopyTilemapRect ; $5813
 	jp Label_1b_5760 ; $5816
 Label_1b_5819:
 	ld hl, $d014 ; $5819
 	ld de, $d026 ; $581c
 	ld b, $08 ; $581f
 	ld c, $10 ; $5821
-	farcall FarPtr_CopyTilemapRect ; $5823
+	farcall CopyTilemapRect ; $5823
 	jp Label_1b_5760 ; $5826
 HighlightDoublesRankingRows:
 	ld a, [$d801] ; $5829
@@ -2229,42 +2206,42 @@ Label_1b_5865:
 	ld de, $d066 ; $5868
 	ld b, $04 ; $586b
 	ld c, $04 ; $586d
-	farcall FarPtr_CopyTilemapRect ; $586f
+	farcall CopyTilemapRect ; $586f
 	jp Label_1b_5856 ; $5872
 Label_1b_5875:
 	ld hl, $d244 ; $5875
 	ld de, $d06a ; $5878
 	ld b, $04 ; $587b
 	ld c, $04 ; $587d
-	farcall FarPtr_CopyTilemapRect ; $587f
+	farcall CopyTilemapRect ; $587f
 	jp Label_1b_5856 ; $5882
 Label_1b_5885:
 	ld hl, $d248 ; $5885
 	ld de, $d066 ; $5888
 	ld b, $04 ; $588b
 	ld c, $07 ; $588d
-	farcall FarPtr_CopyTilemapRect ; $588f
+	farcall CopyTilemapRect ; $588f
 	jp Label_1b_5856 ; $5892
 Label_1b_5895:
 	ld hl, $d24c ; $5895
 	ld de, $d06a ; $5898
 	ld b, $04 ; $589b
 	ld c, $07 ; $589d
-	farcall FarPtr_CopyTilemapRect ; $589f
+	farcall CopyTilemapRect ; $589f
 	jp Label_1b_5856 ; $58a2
 Label_1b_58a5:
 	ld hl, $d248 ; $58a5
 	ld de, $d066 ; $58a8
 	ld b, $08 ; $58ab
 	ld c, $07 ; $58ad
-	farcall FarPtr_CopyTilemapRect ; $58af
+	farcall CopyTilemapRect ; $58af
 	jp Label_1b_5856 ; $58b2
 Label_1b_58b5:
 	ld hl, $d250 ; $58b5
 	ld de, $d066 ; $58b8
 	ld b, $08 ; $58bb
 	ld c, $07 ; $58bd
-	farcall FarPtr_CopyTilemapRect ; $58bf
+	farcall CopyTilemapRect ; $58bf
 	jp Label_1b_5856 ; $58c2
 Func_1b_58c5:
 	ld hl, $d000 ; $58c5
@@ -2358,7 +2335,7 @@ Label_1b_5a0a:
 	jr z, Label_1b_5a16 ; $5a11
 	ld de, $3050 ; $5a13
 Label_1b_5a16:
-	farcall FarPtr_ApplySpriteBobOffset ; $5a16
+	farcall ApplySpriteBobOffset ; $5a16
 	ld hl, SpriteTemplate_1b_5a24 ; $5a19
 	ld c, $20 ; $5a1c
 	ld b, $0d ; $5a1e
@@ -3063,7 +3040,7 @@ Label_1b_5f5d:
 	nop ; $5fc3
 FindCharSelectRosterEntry:
 	ld hl, $ce40 ; $5fc4
-	farcall FarPtr_FindRosterEntry ; $5fc7
+	farcall FindRosterEntry ; $5fc7
 	ret ; $5fca
 GetCharSelectRosterField:
 	push hl ; $5fcb
@@ -3108,7 +3085,7 @@ LoadCharSelectScreenGfx:
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
 StartCharSelectCursorTask:
-	farcall FarPtr_LoadCharSelectCursorGfx ; $6029
+	farcall LoadCharSelectCursorGfx ; $6029
 	ld a, $0a ; $602c
 	ld hl, Func_1b_6035 ; $602e
 	call RegisterFrameTask ; $6031
@@ -3118,7 +3095,7 @@ Func_1b_6035:
 	ld de, $0004 ; $6038
 	call GetCharSelectRosterField ; $603b
 	ld a, [wCharSelectChar] ; $603e
-	farcall FarPtr_DrawCharSelectCursor ; $6041
+	farcall DrawCharSelectCursor ; $6041
 	ret ; $6044
 DrawCharSelectPrompt:
 	ld hl, $d000 ; $6045
@@ -3128,7 +3105,7 @@ DrawCharSelectPrompt:
 	ld hl, $d9e0 ; $6050
 	ld de, $dde0 ; $6053
 	ld bc, $1403 ; $6056
-	farcall FarPtr_DrawBox ; $6059
+	farcall DrawBox ; $6059
 	ld hl, $0470 ; $605c
 	ld a, [$cb00] ; $605f
 	or a, a ; $6062
@@ -3136,22 +3113,22 @@ DrawCharSelectPrompt:
 	ld hl, $047b ; $6065
 Label_1b_6068:
 	ld de, $da01 ; $6068
-	farcall FarPtr_RenderProportionalTextAt32 ; $606b
+	farcall RenderProportionalTextAt32 ; $606b
 	ret ; $606e
 DrawCharSelectMugshots:
-	farcall FarPtr_1b_0c ; $606f
+	farcall Func_1b_4e0d ; $606f
 	ld hl, $ce40 ; $6072
 Label_1b_6075:
 	ld a, [hl] ; $6075
-	farcall FarPtr_18_24 ; $6076
-	farcall FarPtr_18_26 ; $6079
+	farcall Func_18_4507 ; $6076
+	farcall Func_18_452a ; $6079
 	jr z, Label_1b_60a4 ; $607c
 	ld a, [$d58b] ; $607e
-	farcall FarPtr_LoadCharMugshotToBuffer ; $6081
+	farcall LoadCharMugshotToBuffer ; $6081
 	ld a, [hl] ; $6084
 	ld de, $0002 ; $6085
 	call GetCharSelectRosterField ; $6088
-	farcall FarPtr_CopyMugshotBufferToVram ; $608b
+	farcall CopyMugshotBufferToVram ; $608b
 	ld a, [hl] ; $608e
 	ld de, $0006 ; $608f
 	call GetCharSelectRosterField ; $6092
@@ -3163,7 +3140,7 @@ Label_1b_6075:
 	sub a, c ; $609e
 	ld b, a ; $609f
 	ld a, [bc] ; $60a0
-	farcall FarPtr_SetMugshotAttrs ; $60a1
+	farcall SetMugshotAttrs ; $60a1
 Label_1b_60a4:
 	ld a, $08 ; $60a4
 	add a, l ; $60a6
@@ -3175,9 +3152,9 @@ Label_1b_60ab:
 	cp a, $ff ; $60ac
 	jr nz, Label_1b_6075 ; $60ae
 	ld a, [wCharSelectChar] ; $60b0
-	farcall FarPtr_18_24 ; $60b3
+	farcall Func_18_4507 ; $60b3
 	ld a, [$d58b] ; $60b6
-	farcall FarPtr_1b_12 ; $60b9
+	farcall Func_1b_4e43 ; $60b9
 	ret ; $60bc
 	and a, $01 ; $60bd
 	ld [wTargetZoneX2], a ; $60bf
@@ -3191,7 +3168,7 @@ Label_1b_60ab:
 	ld [wCharSelectCol], a ; $60d1
 	ld a, e ; $60d4
 	ld [wCharSelectRow], a ; $60d5
-	farcall FarPtr_UpdateCharSelectSelection ; $60d8
+	farcall UpdateCharSelectSelection ; $60d8
 	ld a, [wCharSelectChar] ; $60db
 	ld [wCharSelectPrevChar], a ; $60de
 	ld c, $20 ; $60e1
@@ -3221,7 +3198,7 @@ Label_1b_6119:
 	ld a, [wTargetZoneX2] ; $6125
 	ld b, a ; $6128
 	ld a, [wCharSelectChar] ; $6129
-	farcall FarPtr_18_2c ; $612c
+	farcall Func_18_463b ; $612c
 	sound $5f ; $612f
 	ld a, $fe ; $6131
 	jr Label_1b_6169 ; $6133
@@ -3232,7 +3209,7 @@ Label_1b_6135:
 	ld a, [wTargetZoneX2] ; $613b
 	ld b, a ; $613e
 	ld a, [wCharSelectChar] ; $613f
-	farcall FarPtr_18_2c ; $6142
+	farcall Func_18_463b ; $6142
 	sound $5f ; $6145
 	ld a, [wCharSelectChar] ; $6147
 	jr Label_1b_6169 ; $614a
@@ -3247,7 +3224,7 @@ Label_1b_6158:
 	call MoveCharSelectCursor ; $6158
 	call UpdateCharSelectSelection ; $615b
 	ld a, [wCharSelectChar] ; $615e
-	farcall FarPtr_18_24 ; $6161
+	farcall Func_18_4507 ; $6161
 	call AdvanceFrame ; $6164
 	jr Label_1b_6119 ; $6167
 Label_1b_6169:
@@ -3288,9 +3265,9 @@ MoveCharSelectCursor:
 	ld e, a ; $61a2
 Label_1b_61a3:
 	ld hl, $c7a0 ; $61a3
-	farcall FarPtr_MoveGridCursor ; $61a6
-	farcall FarPtr_18_24 ; $61a9
-	farcall FarPtr_18_26 ; $61ac
+	farcall MoveGridCursor ; $61a6
+	farcall Func_18_4507 ; $61a9
+	farcall Func_18_452a ; $61ac
 	jr z, Label_1b_61a3 ; $61af
 	ld a, d ; $61b1
 	ld [wCharSelectCol], a ; $61b2
@@ -3300,9 +3277,9 @@ Label_1b_61b9:
 	ret ; $61b9
 RunNewGameSetup:
 	sound $03 ; $61ba
-	farcall FarPtr_InitStoryModeState ; $61bc
+	farcall InitStoryModeState ; $61bc
 	ld a, $00 ; $61bf
-	farcall FarPtr_RollStoryRandomByte ; $61c1
+	farcall RollStoryRandomByte ; $61c1
 	wram_bank $01 ; $61c4
 	ld a, $01 ; $61ca
 	ld [$c7be], a ; $61cc
@@ -3312,7 +3289,7 @@ RunNewGameSetup:
 	xor a, a ; $61d7
 Label_1b_61d8:
 	push af ; $61d8
-	farcall FarPtr_18_24 ; $61d9
+	farcall Func_18_4507 ; $61d9
 	ld a, [$d58e] ; $61dc
 	ld [hl+], a ; $61df
 	ld a, [$d58c] ; $61e0
@@ -3331,7 +3308,7 @@ Label_1b_61f2:
 	ld a, [$c7bf] ; $61f6
 	ld e, a ; $61f9
 	ld b, $00 ; $61fa
-	farcall FarPtr_38_00 ; $61fc
+	farcall Func_38_47c7 ; $61fc
 	ld hl, $c7be ; $61ff
 	ld [hl], d ; $6202
 	ld hl, $c7bf ; $6203
@@ -3348,13 +3325,13 @@ Label_1b_6214:
 	jr Label_1b_61f2 ; $6218
 Label_1b_621a:
 	ld a, $01 ; $621a
-	farcall FarPtr_RollStoryRandomByte ; $621c
+	farcall RollStoryRandomByte ; $621c
 	ld a, $00 ; $621f
-	farcall FarPtr_PromptCharDataConfirm ; $6221
+	farcall PromptCharDataConfirm ; $6221
 	and a, a ; $6224
 	jr nz, Label_1b_61f2 ; $6225
 	ld a, $02 ; $6227
-	farcall FarPtr_RollStoryRandomByte ; $6229
+	farcall RollStoryRandomByte ; $6229
 Label_1b_622c:
 	xor a, a ; $622c
 	ld [$cb00], a ; $622d
@@ -3374,7 +3351,7 @@ Label_1b_623c:
 	pop af ; $6244
 	ld c, [hl] ; $6245
 	ld b, $00 ; $6246
-	farcall FarPtr_RunNameEntryScreen ; $6248
+	farcall RunNameEntryScreen ; $6248
 	and a, a ; $624b
 	jr nz, Label_1b_621a ; $624c
 	pop af ; $624e
@@ -3384,7 +3361,7 @@ Label_1b_623c:
 	ld a, $01 ; $6256
 	ld [$cb00], a ; $6258
 	ld de, $0120 ; $625b
-	farcall FarPtr_TestSaveFlag ; $625e
+	farcall TestSaveFlag ; $625e
 	jr nz, Label_1b_6293 ; $6261
 	push af ; $6263
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6264
@@ -3392,7 +3369,7 @@ Label_1b_623c:
 	inc a ; $6268
 	ld d, a ; $6269
 	ld a, [$cb00] ; $626a
-	farcall FarPtr_InitPlayerRecordFromTemplate ; $626d
+	farcall InitPlayerRecordFromTemplate ; $626d
 	push af ; $6270
 	ld hl, wStoryModeNameOfMainCharacter ; $6271
 	ld a, [$cb00] ; $6274
@@ -3409,7 +3386,7 @@ Label_1b_627c:
 	pop af ; $6284
 	ld c, [hl] ; $6285
 	ld b, $01 ; $6286
-	farcall FarPtr_RunNameEntryScreen ; $6288
+	farcall RunNameEntryScreen ; $6288
 	ld b, a ; $628b
 	pop af ; $628c
 	ld a, b ; $628d
@@ -3422,7 +3399,7 @@ Label_1b_6293:
 	ld a, [$c7bf] ; $6297
 	ld e, a ; $629a
 	ld b, $01 ; $629b
-	farcall FarPtr_38_00 ; $629d
+	farcall Func_38_47c7 ; $629d
 	ld hl, $c7be ; $62a0
 	ld [hl], d ; $62a3
 	ld hl, $c7bf ; $62a4
@@ -3438,7 +3415,7 @@ Label_1b_62b3:
 	jr Label_1b_6293 ; $62b7
 Label_1b_62b9:
 	ld a, $01 ; $62b9
-	farcall FarPtr_PromptCharDataConfirm ; $62bb
+	farcall PromptCharDataConfirm ; $62bb
 	and a, a ; $62be
 	jr nz, Label_1b_6293 ; $62bf
 	push af ; $62c1
@@ -3457,7 +3434,7 @@ Label_1b_62cd:
 	pop af ; $62d5
 	ld c, [hl] ; $62d6
 	ld b, $01 ; $62d7
-	farcall FarPtr_RunNameEntryScreen ; $62d9
+	farcall RunNameEntryScreen ; $62d9
 	and a, a ; $62dc
 	jr nz, Label_1b_62b9 ; $62dd
 Label_1b_62df:
@@ -3487,15 +3464,15 @@ RunDebugSaveDataFlow:
 	ld hl, wStorySlotData ; $630c
 	ld b, a ; $630f
 	ld [wCurrentStorySlot], a ; $6310
-	farcall FarPtr_CheckStorySlot ; $6313
+	farcall CheckStorySlot ; $6313
 	or a, a ; $6316
 	jp z, Label_1b_6399 ; $6317
 	call RunNewGameSetup ; $631a
 	cp a, $ff ; $631d
 	jp z, RunDebugSaveDataFlow ; $631f
 	ld a, $01 ; $6322
-	farcall FarPtr_EraseStorySlotSaveData ; $6324
-	farcall FarPtr_SaveStorySlotWithTimer ; $6327
+	farcall EraseStorySlotSaveData ; $6324
+	farcall SaveStorySlotWithTimer ; $6327
 	jp Label_1b_6408 ; $632a
 Label_1b_632d:
 	sound $03 ; $632d
@@ -3510,7 +3487,7 @@ Label_1b_632d:
 	jr nz, Label_1b_634c ; $6340
 	or a, a ; $6342
 	jr nz, Label_1b_632d ; $6343
-	farcall FarPtr_ReinitSaveRamPreservingBlock6 ; $6345
+	farcall ReinitSaveRamPreservingBlock6 ; $6345
 	ld b, $01 ; $6348
 	jr Label_1b_632d ; $634a
 Label_1b_634c:
@@ -3518,7 +3495,7 @@ Label_1b_634c:
 	ld b, a ; $634e
 	ld hl, $ca00 ; $634f
 	ld [wCurrentStorySlot], a ; $6352
-	farcall FarPtr_CheckStorySlot ; $6355
+	farcall CheckStorySlot ; $6355
 	or a, a ; $6358
 	jr z, Label_1b_635f ; $6359
 	sound $62 ; $635b
@@ -3547,17 +3524,17 @@ Label_1b_6375:
 	ld a, b ; $6380
 	ld [wCurrentStorySlot], a ; $6381
 	ld a, $00 ; $6384
-	farcall FarPtr_EraseStorySlotSaveData ; $6386
+	farcall EraseStorySlotSaveData ; $6386
 	ld b, $01 ; $6389
 	jp Label_1b_632d ; $638b
 Label_1b_638e:
 	ld a, $00 ; $638e
 	ld [$cb1f], a ; $6390
-	farcall FarPtr_RunMinigameFlagsDebugScreen ; $6393
+	farcall RunMinigameFlagsDebugScreen ; $6393
 	jp Label_1b_632d ; $6396
 Label_1b_6399:
 	call ClearFrameTasks ; $6399
-	farcall FarPtr_ValidateN64TransferRecord ; $639c
+	farcall ValidateN64TransferRecord ; $639c
 	or a, a ; $639f
 	jr z, Label_1b_6405 ; $63a0
 	ld hl, $c9b0 ; $63a2
@@ -3576,9 +3553,9 @@ Label_1b_6399:
 	ld h, $01 ; $63bd
 	ld l, $00 ; $63bf
 	ld a, $01 ; $63c1
-	farcall FarPtr_ShowExpGainScreen ; $63c3
+	farcall ShowExpGainScreen ; $63c3
 	ld c, $00 ; $63c6
-	farcall FarPtr_1c_00 ; $63c8
+	farcall Func_1c_401a ; $63c8
 Label_1b_63cb:
 	ld hl, $c9b2 ; $63cb
 	ld a, [hl+] ; $63ce
@@ -3596,9 +3573,9 @@ Label_1b_63cb:
 	ld h, $01 ; $63e6
 	ld l, $01 ; $63e8
 	ld a, $01 ; $63ea
-	farcall FarPtr_ShowExpGainScreen ; $63ec
+	farcall ShowExpGainScreen ; $63ec
 	ld c, $01 ; $63ef
-	farcall FarPtr_1c_00 ; $63f1
+	farcall Func_1c_401a ; $63f1
 Label_1b_63f4:
 	xor a, a ; $63f4
 	ld hl, $c9b0 ; $63f5
@@ -3610,10 +3587,10 @@ Label_1b_63f4:
 	inc hl ; $63fd
 	inc hl ; $63fe
 	ld [hl+], a ; $63ff
-	farcall FarPtr_SaveStorySlotWithTimer ; $6400
+	farcall SaveStorySlotWithTimer ; $6400
 	jr Label_1b_6408 ; $6403
 Label_1b_6405:
-	farcall FarPtr_ShowNoN64DataFoundScreen ; $6405
+	farcall ShowNoN64DataFoundScreen ; $6405
 Label_1b_6408:
 	call RunLevelUpStatusTrophiesMenu ; $6408
 	cp a, $ff ; $640b
@@ -3626,34 +3603,34 @@ Label_1b_6408:
 	push bc ; $6419
 	push de ; $641a
 	push hl ; $641b
-	farcall FarPtr_ClearDrillResultBuffer ; $641c
+	farcall ClearDrillResultBuffer ; $641c
 	ld b, $00 ; $641f
 	ld c, $00 ; $6421
 	ld de, $0040 ; $6423
-	farcall FarPtr_RecordDrillResult ; $6426
+	farcall RecordDrillResult ; $6426
 	ld b, $04 ; $6429
 	ld c, $01 ; $642b
 	ld de, $0077 ; $642d
-	farcall FarPtr_RecordDrillResult ; $6430
+	farcall RecordDrillResult ; $6430
 	ld c, $01 ; $6433
-	farcall FarPtr_ShowMatchResultsScreen ; $6435
-	farcall FarPtr_1d_06 ; $6438
+	farcall ShowMatchResultsScreen ; $6435
+	farcall Func_1d_682c ; $6438
 	pop hl ; $643b
 	pop de ; $643c
 	pop bc ; $643d
 	pop af ; $643e
 	set_flag $03, 4 ; $643f
 	ld c, $00 ; $6442
-	farcall FarPtr_1c_00 ; $6444
+	farcall Func_1c_401a ; $6444
 	clear_flag $03, 4 ; $6447
 	set_flag $03, 4 ; $644a
 	ld c, $01 ; $644d
-	farcall FarPtr_1c_00 ; $644f
+	farcall Func_1c_401a ; $644f
 	clear_flag $03, 4 ; $6452
-	farcall FarPtr_SaveStorySlotWithTimer ; $6455
+	farcall SaveStorySlotWithTimer ; $6455
 	jr Label_1b_6408 ; $6458
 Label_1b_645a:
-	farcall FarPtr_ShowCharDataScreen ; $645a
+	farcall ShowCharDataScreen ; $645a
 	jp Label_1b_6408 ; $645d
 Label_1b_6460:
 	call ShowTrophiesPlaceholderScreen ; $6460
@@ -3667,26 +3644,26 @@ RunLevelUpStatusTrophiesMenu:
 	push af ; $646c
 	call ClearFrameTasks ; $646d
 	call DisableLCDSafely ; $6470
-	farcall FarPtr_01_0a ; $6473
+	farcall Func_01_50e2 ; $6473
 	call DisableLCDSafely ; $6476
-	farcall FarPtr_ResetTextWindowState ; $6479
+	farcall ResetTextWindowState ; $6479
 	call ClearScreenMaps ; $647c
 	wram_bank $05 ; $647f
 	ld d, $02 ; $6485
 	ld e, $02 ; $6487
 	ld hl, $047c ; $6489
-	farcall FarPtr_CreateMenuWindowFromText ; $648c
-	farcall FarPtr_RestoreShadowTilemap ; $648f
-	farcall FarPtr_RenderMenuWindowText ; $6492
+	farcall CreateMenuWindowFromText ; $648c
+	farcall RestoreShadowTilemap ; $648f
+	farcall RenderMenuWindowText ; $6492
 	script_fade_in $20 ; $6495
 	call WaitFadeEnd ; $649a
-	farcall FarPtr_RunMenuSelection ; $649d
+	farcall RunMenuSelection ; $649d
 	ld b, a ; $64a0
 	ld c, $20 ; $64a1
 	call BeginFadeOut ; $64a3
 	call WaitFadeEnd ; $64a6
 	ld a, [$d82f] ; $64a9
-	farcall FarPtr_CloseWindow ; $64ac
+	farcall CloseWindow ; $64ac
 	pop af ; $64af
 	wram_bank ; $64b0
 	ld a, b ; $64b4
@@ -3702,9 +3679,9 @@ RunDebugSaveDataMenu:
 	push af ; $64be
 	call ClearFrameTasks ; $64bf
 	call DisableLCDSafely ; $64c2
-	farcall FarPtr_01_0a ; $64c5
+	farcall Func_01_50e2 ; $64c5
 	call EnableLCD ; $64c8
-	farcall FarPtr_ResetTextWindowState ; $64cb
+	farcall ResetTextWindowState ; $64cb
 	call ClearScreenMaps ; $64ce
 	call ReadUnlockFlagsSaveBlock ; $64d1
 	wram_bank $06 ; $64d4
@@ -3720,18 +3697,18 @@ Label_1b_64e7:
 	wram_bank $05 ; $64e7
 	ld d, $02 ; $64ed
 	ld e, $02 ; $64ef
-	farcall FarPtr_CreateMenuWindowFromText ; $64f1
-	farcall FarPtr_RestoreShadowTilemap ; $64f4
-	farcall FarPtr_RenderMenuWindowText ; $64f7
+	farcall CreateMenuWindowFromText ; $64f1
+	farcall RestoreShadowTilemap ; $64f4
+	farcall RenderMenuWindowText ; $64f7
 	script_fade_in $20 ; $64fa
 	call WaitFadeEnd ; $64ff
-	farcall FarPtr_RunMenuSelection ; $6502
+	farcall RunMenuSelection ; $6502
 	ld b, a ; $6505
 	ld c, $20 ; $6506
 	call BeginFadeOut ; $6508
 	call WaitFadeEnd ; $650b
 	ld a, [$d82f] ; $650e
-	farcall FarPtr_CloseWindow ; $6511
+	farcall CloseWindow ; $6511
 	pop af ; $6514
 	wram_bank ; $6515
 	ld a, b ; $6519
@@ -3776,7 +3753,7 @@ Label_1b_656a:
 	INCBIN "data/bank_01b/d_6572.bin" ; $6572, 120 bytes
 FindUnlockDebugRosterEntry:
 	ld hl, $ce40 ; $65ea
-	farcall FarPtr_FindRosterEntry ; $65ed
+	farcall FindRosterEntry ; $65ed
 	ret ; $65f0
 GetUnlockDebugRosterField:
 	push hl ; $65f1
@@ -3839,13 +3816,13 @@ Func_1b_664a:
 	ret ; $6670
 Func_1b_6671:
 	ld de, $2cfa ; $6671
-	farcall FarPtr_ApplySpriteBobOffset_18 ; $6674
+	farcall ApplySpriteBobOffset_18 ; $6674
 	ld hl, $6572 ; $6677
 	ld bc, $0050 ; $667a
 	call QueueSpriteTemplate ; $667d
 	ret ; $6680
 StartUnlockDebugCursorTask:
-	farcall FarPtr_LoadCharSelectCursorGfx ; $6681
+	farcall LoadCharSelectCursorGfx ; $6681
 	ld a, $0a ; $6684
 	ld hl, Func_1b_668d ; $6686
 	call RegisterFrameTask ; $6689
@@ -3855,7 +3832,7 @@ Func_1b_668d:
 	ld de, $0004 ; $6690
 	call GetUnlockDebugRosterField ; $6693
 	ld a, [wCharSelectChar] ; $6696
-	farcall FarPtr_DrawCharSelectCursor ; $6699
+	farcall DrawCharSelectCursor ; $6699
 	ret ; $669c
 UpdateUnlockDebugSelectedMugshot:
 	ld a, [wCharSelectChar] ; $669d
@@ -3865,11 +3842,11 @@ UpdateUnlockDebugSelectedMugshot:
 	pop af ; $66a7
 	ld b, a ; $66a8
 	push bc ; $66a9
-	farcall FarPtr_CheckUnlockFlag ; $66aa
+	farcall CheckUnlockFlag ; $66aa
 	pop bc ; $66ad
 	ld a, b ; $66ae
 	jr z, Label_1b_66b6 ; $66af
-	farcall FarPtr_18_24 ; $66b1
+	farcall Func_18_4507 ; $66b1
 	jr Label_1b_66bb ; $66b4
 Label_1b_66b6:
 	ld a, $20 ; $66b6
@@ -3890,24 +3867,24 @@ Func_1b_66c4:
 Label_1b_66d6:
 	ret ; $66d6
 DrawUnlockDebugMugshots:
-	farcall FarPtr_1b_0c ; $66d7
+	farcall Func_1b_4e0d ; $66d7
 	ld hl, $ce40 ; $66da
 Label_1b_66dd:
 	ld a, [hl] ; $66dd
-	farcall FarPtr_18_24 ; $66de
-	farcall FarPtr_CheckUnlockFlag ; $66e1
+	farcall Func_18_4507 ; $66de
+	farcall CheckUnlockFlag ; $66e1
 	jr z, Label_1b_6703 ; $66e4
 	ld a, [$d58b] ; $66e6
-	farcall FarPtr_LoadCharMugshotToBuffer ; $66e9
+	farcall LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
 	ld de, $0002 ; $66ed
 	call GetUnlockDebugRosterField ; $66f0
-	farcall FarPtr_CopyMugshotBufferToVram ; $66f3
+	farcall CopyMugshotBufferToVram ; $66f3
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call GetUnlockDebugRosterField ; $66fa
 	ld a, [$d58c] ; $66fd
-	farcall FarPtr_SetMugshotAttrs ; $6700
+	farcall SetMugshotAttrs ; $6700
 Label_1b_6703:
 	ld a, $08 ; $6703
 	add a, l ; $6705
@@ -3919,9 +3896,9 @@ Label_1b_670a:
 	cp a, $ff ; $670b
 	jr nz, Label_1b_66dd ; $670d
 	ld a, [wCharSelectChar] ; $670f
-	farcall FarPtr_18_24 ; $6712
+	farcall Func_18_4507 ; $6712
 	ld a, [$d58b] ; $6715
-	farcall FarPtr_1b_12 ; $6718
+	farcall Func_1b_4e43 ; $6718
 	ret ; $671b
 RunMinigameFlagsDebugScreen:
 	wram_bank $01 ; $671c
@@ -3962,7 +3939,7 @@ Label_1b_6778:
 	ld a, [wCharSelectChar] ; $6784
 	ld b, a ; $6787
 	push bc ; $6788
-	farcall FarPtr_CheckUnlockFlag ; $6789
+	farcall CheckUnlockFlag ; $6789
 	pop bc ; $678c
 	ld a, b ; $678d
 	jr z, Label_1b_6792 ; $678e
@@ -4034,11 +4011,11 @@ MoveUnlockDebugCursor:
 	call StepUnlockDebugCursor ; $6808
 	ld b, a ; $680b
 	push bc ; $680c
-	farcall FarPtr_CheckUnlockFlag ; $680d
+	farcall CheckUnlockFlag ; $680d
 	pop bc ; $6810
 	ld a, b ; $6811
 	jr z, Label_1b_6819 ; $6812
-	farcall FarPtr_18_24 ; $6814
+	farcall Func_18_4507 ; $6814
 	jr Label_1b_681e ; $6817
 Label_1b_6819:
 	ld a, $20 ; $6819
@@ -4117,7 +4094,7 @@ ReadUnlockFlagsSaveBlock:
 	wram_bank $06 ; $6873
 	ld hl, $d400 ; $6879
 	ld b, $0b ; $687c
-	farcall FarPtr_ReadSaveBlock ; $687e
+	farcall ReadSaveBlock ; $687e
 	ld b, a ; $6881
 	pop af ; $6882
 	wram_bank ; $6883
@@ -4131,7 +4108,7 @@ WriteUnlockFlagsSaveBlock:
 	ld hl, $d400 ; $6893
 	ld de, $0000 ; $6896
 	ld b, $0b ; $6899
-	farcall FarPtr_WriteSaveBlock ; $689b
+	farcall WriteSaveBlock ; $689b
 	pop af ; $689e
 	wram_bank ; $689f
 	ret ; $68a3
@@ -4219,7 +4196,7 @@ Label_1b_695c:
 	INCBIN "data/bank_01b/d_6968.bin" ; $6968, 12 bytes
 Func_1b_6974:
 	push hl ; $6974
-	farcall FarPtr_ApplySpriteBobOffset_18 ; $6975
+	farcall ApplySpriteBobOffset_18 ; $6975
 	ld c, $50 ; $6978
 	ld b, $00 ; $697a
 	call QueueSprite ; $697c
@@ -4235,7 +4212,7 @@ Func_1b_6982:
 	xor a, a ; $6993
 	ld [$c7bc], a ; $6994
 	ld [$c7c8], a ; $6997
-	farcall FarPtr_ForceFlushBgMapToVram ; $699a
+	farcall ForceFlushBgMapToVram ; $699a
 	call EnableLCD ; $699d
 	script_fade_in $20 ; $69a0
 	call WaitFadeEnd ; $69a5
@@ -4248,7 +4225,7 @@ Func_1b_6982:
 	ld hl, Func_1b_69d6 ; $69b9
 	call RegisterFrameTask ; $69bc
 	ld b, $01 ; $69bf
-	farcall FarPtr_18_34 ; $69c1
+	farcall Func_18_5469 ; $69c1
 	push af ; $69c4
 	ld hl, Func_1b_69d6 ; $69c5
 	call UnregisterFrameTask ; $69c8
@@ -4266,9 +4243,9 @@ Func_1b_69d6:
 	call BeginFadeOut ; $69e6
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
-	farcall FarPtr_18_36 ; $69ef
+	farcall Func_18_52de ; $69ef
 	call Func_1b_6aad ; $69f2
-	farcall FarPtr_ForceFlushBgMapToVram ; $69f5
+	farcall ForceFlushBgMapToVram ; $69f5
 	call EnableLCD ; $69f8
 	script_fade_in $20 ; $69fb
 	call WaitFadeEnd ; $6a00
@@ -4276,65 +4253,65 @@ Label_1b_6a03:
 	and a, a ; $6a03
 	jr nz, Label_1b_6a03 ; $6a04
 	ld b, $00 ; $6a06
-	farcall FarPtr_18_3c ; $6a08
+	farcall Func_18_5379 ; $6a08
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
 	ld hl, $ca00 ; $6a0f
-	farcall FarPtr_PushTextArgString ; $6a12
+	farcall PushTextArgString ; $6a12
 	ld de, $d9c1 ; $6a15
 	call CopyMainCharNameWithDiacritics ; $6a18
 	ld hl, $046a ; $6a1b
-	farcall FarPtr_RenderProportionalTextAt32 ; $6a1e
-	farcall FarPtr_18_40 ; $6a21
+	farcall RenderProportionalTextAt32 ; $6a1e
+	farcall Func_18_5561 ; $6a21
 	ret ; $6a24
 	ld hl, $046d ; $6a25
 	ld de, $d9c1 ; $6a28
-	farcall FarPtr_RenderProportionalTextAt32 ; $6a2b
-	farcall FarPtr_18_40 ; $6a2e
+	farcall RenderProportionalTextAt32 ; $6a2b
+	farcall Func_18_5561 ; $6a2e
 	ret ; $6a31
 	ld hl, $046b ; $6a32
 	ld de, $d9c1 ; $6a35
-	farcall FarPtr_RenderProportionalTextAt32 ; $6a38
-	farcall FarPtr_18_40 ; $6a3b
+	farcall RenderProportionalTextAt32 ; $6a38
+	farcall Func_18_5561 ; $6a3b
 	ret ; $6a3e
 	ld hl, $0471 ; $6a3f
 	ld de, $d9c1 ; $6a42
-	farcall FarPtr_RenderProportionalTextAt32 ; $6a45
-	farcall FarPtr_18_40 ; $6a48
+	farcall RenderProportionalTextAt32 ; $6a45
+	farcall Func_18_5561 ; $6a48
 	ret ; $6a4b
 	ld hl, $0162 ; $6a4c
 	ld de, $d9c1 ; $6a4f
-	farcall FarPtr_RenderProportionalTextAt32 ; $6a52
+	farcall RenderProportionalTextAt32 ; $6a52
 	ld hl, $0162 ; $6a55
 	ld de, $da01 ; $6a58
-	farcall FarPtr_RenderProportionalTextAt32 ; $6a5b
+	farcall RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
 	ld a, [wGameTimer + 3] ; $6a5f
 	ld h, $00 ; $6a62
 	ld l, a ; $6a64
 	ld a, $02 ; $6a65
 	ld de, $da05 ; $6a67
-	farcall FarPtr_DrawDecimalNumberToTilemap ; $6a6a
+	farcall DrawDecimalNumberToTilemap ; $6a6a
 	ld a, [wGameTimer + 2] ; $6a6d
 	add a, $64 ; $6a70
 	ld h, $00 ; $6a72
 	ld l, a ; $6a74
 	ld a, $03 ; $6a75
 	ld de, $da07 ; $6a77
-	farcall FarPtr_DrawDecimalNumberToTilemap ; $6a7a
+	farcall DrawDecimalNumberToTilemap ; $6a7a
 	ld a, [wGameTimer + 1] ; $6a7d
 	add a, $64 ; $6a80
 	ld h, $00 ; $6a82
 	ld l, a ; $6a84
 	ld a, $03 ; $6a85
 	ld de, $da0a ; $6a87
-	farcall FarPtr_DrawDecimalNumberToTilemap ; $6a8a
+	farcall DrawDecimalNumberToTilemap ; $6a8a
 	ld a, $3a ; $6a8d
 	ld de, $da07 ; $6a8f
-	farcall FarPtr_WriteTilemapByteAdvance ; $6a92
+	farcall WriteTilemapByteAdvance ; $6a92
 	ld a, $3a ; $6a95
 	ld de, $da0a ; $6a97
-	farcall FarPtr_WriteTilemapByteAdvance ; $6a9a
+	farcall WriteTilemapByteAdvance ; $6a9a
 	call Func_1b_6aa1 ; $6a9d
 	ret ; $6aa0
 Func_1b_6aa1:
@@ -4412,11 +4389,11 @@ ShowNoN64DataFoundScreen:
 	call FillTilemapRow17 ; $6b2c
 	ld hl, $047b ; $6b2f
 	ld de, $d883 ; $6b32
-	farcall FarPtr_RenderProportionalTextAt32 ; $6b35
+	farcall RenderProportionalTextAt32 ; $6b35
 	ld hl, $047c ; $6b38
 	ld de, wTextArgStringQueue + 19 ; $6b3b
-	farcall FarPtr_RenderProportionalTextAt32 ; $6b3e
-	farcall FarPtr_ForceFlushBgMapToVram ; $6b41
+	farcall RenderProportionalTextAt32 ; $6b3e
+	farcall ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
 	script_fade_in $20 ; $6b47
 	call WaitFadeEnd ; $6b4c
@@ -4454,7 +4431,7 @@ ShowTrophiesPlaceholderScreen:
 	call BeginFadeOut ; $6b77
 	call WaitFadeEnd ; $6b7a
 	call DisableLCDSafely ; $6b7d
-	farcall FarPtr_ForceFlushBgMapToVram ; $6b80
+	farcall ForceFlushBgMapToVram ; $6b80
 	call EnableLCD ; $6b83
 	script_fade_in $20 ; $6b86
 	call WaitFadeEnd ; $6b8b
@@ -4509,7 +4486,7 @@ Label_1b_6be1:
 	ld a, [hl+] ; $6be5
 	ld d, [hl] ; $6be6
 	ld e, a ; $6be7
-	farcall FarPtr_TestSaveFlag ; $6be8
+	farcall TestSaveFlag ; $6be8
 	pop hl ; $6beb
 	jr z, Label_1b_6bef ; $6bec
 	inc c ; $6bee
@@ -4519,7 +4496,7 @@ Label_1b_6bef:
 	ld a, [hl+] ; $6bf1
 	ld d, [hl] ; $6bf2
 	ld e, a ; $6bf3
-	farcall FarPtr_TestSaveFlag ; $6bf4
+	farcall TestSaveFlag ; $6bf4
 	jr z, Label_1b_6bfa ; $6bf7
 	inc c ; $6bf9
 Label_1b_6bfa:
@@ -4648,7 +4625,7 @@ Label_1b_6cc5:
 	ld b, $70 ; $6cc5
 	ld c, $10 ; $6cc7
 	ld de, $a000 ; $6cc9
-	farcall FarPtr_LoadCompressedTileBlock ; $6ccc
+	farcall LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
 	ldh a, [hWramBank] ; $6cd2
 	push af ; $6cd4
@@ -4667,26 +4644,26 @@ Label_1b_6cec:
 Label_1b_6cee:
 	ld c, $10 ; $6cee
 	ld de, $a100 ; $6cf0
-	farcall FarPtr_LoadCompressedTileBlock ; $6cf3
+	farcall LoadCompressedTileBlock ; $6cf3
 	call AdvanceFrame ; $6cf6
 	ld b, $72 ; $6cf9
 	ld c, $10 ; $6cfb
 	ld de, $a200 ; $6cfd
-	farcall FarPtr_LoadCompressedTileBlock ; $6d00
+	farcall LoadCompressedTileBlock ; $6d00
 	call AdvanceFrame ; $6d03
 	ld b, $1b ; $6d06
 	ld c, $04 ; $6d08
 	ld de, $a700 ; $6d0a
-	farcall FarPtr_LoadCompressedTileBlock ; $6d0d
+	farcall LoadCompressedTileBlock ; $6d0d
 	call AdvanceFrame ; $6d10
 	ld b, $77 ; $6d13
 	ld c, $14 ; $6d15
 	ld de, $8000 ; $6d17
-	farcall FarPtr_LoadCompressedTileBlock ; $6d1a
+	farcall LoadCompressedTileBlock ; $6d1a
 	call AdvanceFrame ; $6d1d
 	ld b, $08 ; $6d20
 	ld c, $10 ; $6d22
-	farcall FarPtr_LoadIndexedPalette ; $6d24
+	farcall LoadIndexedPalette ; $6d24
 	pop af ; $6d27
 	wram_bank ; $6d28
 	ret ; $6d2c
@@ -4737,7 +4714,7 @@ Label_1b_6d78:
 	inc h ; $6d83
 Label_1b_6d84:
 	ld c, $20 ; $6d84
-	farcall FarPtr_RenderTextToBuffer64 ; $6d86
+	farcall RenderTextToBuffer64 ; $6d86
 	pop af ; $6d89
 	wram_bank ; $6d8a
 	ret ; $6d8e
@@ -4787,7 +4764,7 @@ ClearMinigameLevelDescriptionRow:
 	ld b, $14 ; $6df7
 	ld c, $01 ; $6df9
 	ld h, $03 ; $6dfb
-	farcall FarPtr_FillTilemapRect ; $6dfd
+	farcall FillTilemapRect ; $6dfd
 	ld a, $02 ; $6e00
 	ld [$d1e0], a ; $6e02
 	ld a, $04 ; $6e05
@@ -4796,7 +4773,7 @@ ClearMinigameLevelDescriptionRow:
 	ld b, $12 ; $6e0d
 	ld c, $01 ; $6e0f
 	ld h, $20 ; $6e11
-	farcall FarPtr_FillTilemapRect ; $6e13
+	farcall FillTilemapRect ; $6e13
 	pop af ; $6e16
 	wram_bank ; $6e17
 	ret ; $6e1b
@@ -4819,11 +4796,11 @@ RunMinigameLevelSelect2:
 	wram_bank $03 ; $6e3b
 	ld a, [wMenuSlideDirection] ; $6e41
 	ld b, a ; $6e44
-	farcall FarPtr_OpenChoiceTabPanel ; $6e45
-	farcall FarPtr_InitMenuBgScroll ; $6e48
+	farcall OpenChoiceTabPanel ; $6e45
+	farcall InitMenuBgScroll ; $6e48
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
-	farcall FarPtr_39_26 ; $6e4f
+	farcall Func_39_4b3a ; $6e4f
 	wram_bank $02 ; $6e52
 	ld a, [$d001] ; $6e58
 	ld c, a ; $6e5b
@@ -4871,7 +4848,7 @@ Label_1b_6eb5:
 	set 2, [hl] ; $6ebd
 	wram_bank $03 ; $6ebf
 	ld b, $01 ; $6ec5
-	farcall FarPtr_CloseChoiceTabPanel ; $6ec7
+	farcall CloseChoiceTabPanel ; $6ec7
 	ld a, $01 ; $6eca
 	ld [wMenuSlideDirection], a ; $6ecc
 	wram_bank $02 ; $6ecf
@@ -4886,7 +4863,7 @@ Label_1b_6ede:
 	set 2, [hl] ; $6ee6
 	wram_bank $03 ; $6ee8
 	ld b, $00 ; $6eee
-	farcall FarPtr_CloseChoiceTabPanel ; $6ef0
+	farcall CloseChoiceTabPanel ; $6ef0
 	ld a, $00 ; $6ef3
 	ld [wMenuSlideDirection], a ; $6ef5
 	wram_bank $02 ; $6ef8
@@ -4944,7 +4921,7 @@ Label_1b_6f4e:
 	pop hl ; $6f51
 	ld b, $05 ; $6f52
 	ld c, $03 ; $6f54
-	farcall FarPtr_FillTilemapRect ; $6f56
+	farcall FillTilemapRect ; $6f56
 	pop hl ; $6f59
 	pop de ; $6f5a
 	pop bc ; $6f5b
@@ -4952,7 +4929,7 @@ Label_1b_6f4e:
 	ret ; $6f5d
 	INCBIN "data/bank_01b/d_6f5e.bin" ; $6f5e, 4 bytes
 Func_1b_6f62:
-	farcall FarPtr_TickMenuBgScroll ; $6f62
+	farcall TickMenuBgScroll ; $6f62
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex ; $6f67
 	push af ; $6f6a
@@ -4974,7 +4951,7 @@ Label_1b_6f7e:
 	ld a, [hl+] ; $6f7e
 	ld d, [hl] ; $6f7f
 	ld e, a ; $6f80
-	farcall FarPtr_ApplySpriteBobOffset ; $6f81
+	farcall ApplySpriteBobOffset ; $6f81
 	ld b, $08 ; $6f84
 	ld hl, SpriteTemplate_1b_6f9f ; $6f86
 	push de ; $6f89
@@ -5014,11 +4991,11 @@ RunMinigameLevelSelect3:
 	wram_bank $03 ; $6fdc
 	ld a, [wMenuSlideDirection] ; $6fe2
 	ld b, a ; $6fe5
-	farcall FarPtr_N64RecordTypeSlideIn ; $6fe6
-	farcall FarPtr_InitMenuBgScroll ; $6fe9
+	farcall N64RecordTypeSlideIn ; $6fe6
+	farcall InitMenuBgScroll ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
-	farcall FarPtr_39_26 ; $6ff0
+	farcall Func_39_4b3a ; $6ff0
 	wram_bank $02 ; $6ff3
 	ld a, [$d001] ; $6ff9
 	ld c, a ; $6ffc
@@ -5055,7 +5032,7 @@ Label_1b_703e:
 	set 2, [hl] ; $7046
 	wram_bank $03 ; $7048
 	ld b, $01 ; $704e
-	farcall FarPtr_N64RecordTypeSlideOut ; $7050
+	farcall N64RecordTypeSlideOut ; $7050
 	ld a, $01 ; $7053
 	ld [wMenuSlideDirection], a ; $7055
 	wram_bank $02 ; $7058
@@ -5070,7 +5047,7 @@ Label_1b_7067:
 	set 2, [hl] ; $706f
 	wram_bank $03 ; $7071
 	ld b, $00 ; $7077
-	farcall FarPtr_N64RecordTypeSlideOut ; $7079
+	farcall N64RecordTypeSlideOut ; $7079
 	ld a, $00 ; $707c
 	ld [wMenuSlideDirection], a ; $707e
 	wram_bank $02 ; $7081
@@ -5128,7 +5105,7 @@ Label_1b_70d7:
 	pop hl ; $70da
 	ld b, $05 ; $70db
 	ld c, $03 ; $70dd
-	farcall FarPtr_FillTilemapRect ; $70df
+	farcall FillTilemapRect ; $70df
 	pop hl ; $70e2
 	pop de ; $70e3
 	pop bc ; $70e4
@@ -5136,7 +5113,7 @@ Label_1b_70d7:
 	ret ; $70e6
 	INCBIN "data/bank_01b/d_70e7.bin" ; $70e7, 6 bytes
 Func_1b_70ed:
-	farcall FarPtr_TickMenuBgScroll ; $70ed
+	farcall TickMenuBgScroll ; $70ed
 	ld c, $03 ; $70f0
 	call GetMenuCursorIndex ; $70f2
 	push af ; $70f5
@@ -5158,7 +5135,7 @@ Label_1b_7109:
 	ld a, [hl+] ; $7109
 	ld d, [hl] ; $710a
 	ld e, a ; $710b
-	farcall FarPtr_ApplySpriteBobOffset ; $710c
+	farcall ApplySpriteBobOffset ; $710c
 	ld b, $08 ; $710f
 	ld hl, SpriteTemplate_1b_712a ; $7111
 	push de ; $7114
@@ -5198,11 +5175,11 @@ RunSavedDataTypeSelect:
 	wram_bank $03 ; $7167
 	ld a, [wMenuSlideDirection] ; $716d
 	ld b, a ; $7170
-	farcall FarPtr_OpenChoiceTabPanel ; $7171
-	farcall FarPtr_InitMenuBgScroll ; $7174
+	farcall OpenChoiceTabPanel ; $7171
+	farcall InitMenuBgScroll ; $7174
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
-	farcall FarPtr_39_26 ; $717b
+	farcall Func_39_4b3a ; $717b
 	ld a, [$cb25] ; $717e
 	ld c, a ; $7181
 	ld b, $02 ; $7182
@@ -5240,7 +5217,7 @@ Label_1b_71c4:
 	set 2, [hl] ; $71cc
 	wram_bank $03 ; $71ce
 	ld b, $01 ; $71d4
-	farcall FarPtr_CloseChoiceTabPanel ; $71d6
+	farcall CloseChoiceTabPanel ; $71d6
 	ld a, $01 ; $71d9
 	ld [wMenuSlideDirection], a ; $71db
 	ld c, $02 ; $71de
@@ -5254,7 +5231,7 @@ Label_1b_71e7:
 	set 2, [hl] ; $71ef
 	wram_bank $03 ; $71f1
 	ld b, $00 ; $71f7
-	farcall FarPtr_CloseChoiceTabPanel ; $71f9
+	farcall CloseChoiceTabPanel ; $71f9
 	ld a, $00 ; $71fc
 	ld [wMenuSlideDirection], a ; $71fe
 	wram_bank $02 ; $7201
@@ -5319,32 +5296,32 @@ Label_1b_723a:
 	ld b, $1d ; $7259
 	ld c, $10 ; $725b
 	ld de, $a000 ; $725d
-	farcall FarPtr_LoadCompressedTileBlock ; $7260
+	farcall LoadCompressedTileBlock ; $7260
 	call AdvanceFrame ; $7263
 	ld b, $1e ; $7266
 	ld c, $12 ; $7268
 	ld de, $a100 ; $726a
-	farcall FarPtr_LoadCompressedTileBlock ; $726d
+	farcall LoadCompressedTileBlock ; $726d
 	call AdvanceFrame ; $7270
 	ld b, $1b ; $7273
 	ld c, $04 ; $7275
 	ld de, $a700 ; $7277
-	farcall FarPtr_LoadCompressedTileBlock ; $727a
+	farcall LoadCompressedTileBlock ; $727a
 	call AdvanceFrame ; $727d
 	ld b, $78 ; $7280
 	ld c, $14 ; $7282
 	ld de, $8000 ; $7284
-	farcall FarPtr_LoadCompressedTileBlock ; $7287
+	farcall LoadCompressedTileBlock ; $7287
 	call AdvanceFrame ; $728a
 	ld b, $08 ; $728d
 	ld c, $10 ; $728f
-	farcall FarPtr_LoadIndexedPalette ; $7291
+	farcall LoadIndexedPalette ; $7291
 	pop af ; $7294
 	wram_bank ; $7295
 	ret ; $7299
 	INCBIN "data/bank_01b/d_729a.bin" ; $729a, 10 bytes
 Func_1b_72a4:
-	farcall FarPtr_TickMenuBgScroll ; $72a4
+	farcall TickMenuBgScroll ; $72a4
 	ret ; $72a7
 Func_1b_72a8:
 	ld c, $02 ; $72a8
@@ -5360,13 +5337,13 @@ DrawSavedDataCursorOption0:
 	ld c, $00 ; $72b8
 	ld b, $08 ; $72ba
 	ld de, $0c50 ; $72bc
-	farcall FarPtr_ApplySpriteBobOffset ; $72bf
+	farcall ApplySpriteBobOffset ; $72bf
 	ld hl, SpriteTemplate_1b_72fa ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld de, $2448 ; $72cc
-	farcall FarPtr_ApplySpriteBobOffset ; $72cf
+	farcall ApplySpriteBobOffset ; $72cf
 	ld hl, SpriteTemplate_1b_7340 ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
@@ -5374,13 +5351,13 @@ DrawSavedDataCursorOption1:
 	ld c, $10 ; $72d9
 	ld b, $08 ; $72db
 	ld de, $5050 ; $72dd
-	farcall FarPtr_ApplySpriteBobOffset ; $72e0
+	farcall ApplySpriteBobOffset ; $72e0
 	ld hl, SpriteTemplate_1b_731b ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld de, $6c48 ; $72ed
-	farcall FarPtr_ApplySpriteBobOffset ; $72f0
+	farcall ApplySpriteBobOffset ; $72f0
 	ld hl, SpriteTemplate_1b_7340 ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
@@ -5461,7 +5438,7 @@ Label_1b_739b:
 	inc h ; $73a6
 Label_1b_73a7:
 	ld c, $20 ; $73a7
-	farcall FarPtr_RenderTextToBuffer64 ; $73a9
+	farcall RenderTextToBuffer64 ; $73a9
 	pop af ; $73ac
 	wram_bank ; $73ad
 	ret ; $73b1
@@ -5533,23 +5510,23 @@ Label_1b_7439:
 	ret ; $7448
 BuildMinigameDataScreen:
 	ld c, $2b ; $7449
-	farcall FarPtr_LoadScreenAssetRecord ; $744b
+	farcall LoadScreenAssetRecord ; $744b
 	xor a, a ; $744e
 	ld [wMenuCursorX], a ; $744f
 	ld [wMenuCursorY], a ; $7452
 	wram_bank $03 ; $7455
 	call LoadMinigameDataState ; $745b
 	ld de, $aac0 ; $745e
-	farcall FarPtr_LoadChartWindowTiles ; $7461
+	farcall LoadChartWindowTiles ; $7461
 	ld de, $a000 ; $7464
-	farcall FarPtr_39_18 ; $7467
+	farcall Func_39_4a16 ; $7467
 	ld b, $08 ; $746a
 	ld c, $0f ; $746c
-	farcall FarPtr_LoadIndexedPalette ; $746e
+	farcall LoadIndexedPalette ; $746e
 	ld de, $a100 ; $7471
 	ld b, $09 ; $7474
 	ld c, $00 ; $7476
-	farcall FarPtr_39_64 ; $7478
+	farcall Func_39_6ec0 ; $7478
 	ld a, $09 ; $747b
 	ld [$cb6c], a ; $747d
 	ld a, $10 ; $7480
@@ -5564,7 +5541,7 @@ Label_1b_7490:
 Label_1b_7493:
 	call DrawMinigameDataMarks ; $7493
 	call DrawStarLegendMark ; $7496
-	farcall FarPtr_QueueWram3MapToVRAM ; $7499
+	farcall QueueWram3MapToVRAM ; $7499
 	ret ; $749c
 ScrollMinigameDataList:
 	call CheckMinigameDataScrollable ; $749d
@@ -5594,7 +5571,7 @@ Label_1b_74c4:
 	call RedrawMinigameDataRows ; $74c6
 	ret ; $74c9
 LoadMinigameDataState:
-	farcall FarPtr_BuildStarCharUnlockMask ; $74ca
+	farcall BuildStarCharUnlockMask ; $74ca
 	call LoadMinigameClearFlags ; $74cd
 	call LoadMinigameStarFlags ; $74d0
 	call LoadMinigameHighScores ; $74d3
@@ -5623,7 +5600,7 @@ Label_1b_74f8:
 	ld d, [hl] ; $74f9
 	ld e, a ; $74fa
 	pop hl ; $74fb
-	farcall FarPtr_TestSaveFlag ; $74fc
+	farcall TestSaveFlag ; $74fc
 	jr z, Label_1b_7504 ; $74ff
 	ld a, $01 ; $7501
 	ld [hl], a ; $7503
@@ -5665,7 +5642,7 @@ Label_1b_7538:
 	ld d, [hl] ; $7539
 	ld e, a ; $753a
 	pop hl ; $753b
-	farcall FarPtr_TestSaveFlag ; $753c
+	farcall TestSaveFlag ; $753c
 	jr z, Label_1b_7544 ; $753f
 	ld a, $01 ; $7541
 	ld [hl], a ; $7543
@@ -5695,7 +5672,7 @@ LoadMinigameHighScores:
 	ld bc, $0012 ; $7566
 	call ClearBytes ; $7569
 	ld de, $06c0 ; $756c
-	farcall FarPtr_TestSaveFlag ; $756f
+	farcall TestSaveFlag ; $756f
 	jr z, Label_1b_757b ; $7572
 	ld a, $01 ; $7574
 	ld hl, $d82b ; $7576
@@ -5707,7 +5684,7 @@ Label_1b_757d:
 	ld a, c ; $757d
 	inc a ; $757e
 	inc a ; $757f
-	farcall FarPtr_ReadMinigameRecord ; $7580
+	farcall ReadMinigameRecord ; $7580
 	wram_bank $07 ; $7583
 	ld hl, $de00 ; $7589
 	ld a, [hl+] ; $758c
@@ -5775,7 +5752,7 @@ DrawMinigameDataMugshotsScrolled:
 	ld b, $00 ; $7611
 Label_1b_7613:
 	push bc ; $7613
-	farcall FarPtr_GetUnlockedStarCharAtGridSlot ; $7614
+	farcall GetUnlockedStarCharAtGridSlot ; $7614
 	pop bc ; $7617
 	cp a, $15 ; $7618
 	jr nz, Label_1b_7621 ; $761a
@@ -5804,7 +5781,7 @@ DrawMinigameDataMugshotsStatic:
 	ld b, $00 ; $763f
 Label_1b_7641:
 	push bc ; $7641
-	farcall FarPtr_GetUnlockedStarCharAtGridSlot ; $7642
+	farcall GetUnlockedStarCharAtGridSlot ; $7642
 	pop bc ; $7645
 	cp a, $15 ; $7646
 	jr nz, Label_1b_764f ; $7648
@@ -5839,7 +5816,7 @@ DrawMinigameDataMugshot:
 	call MapMinigameRowToMugshotSlot ; $7676
 	call GetMinigameRowTilemapDest ; $7679
 	ld b, c ; $767c
-	farcall FarPtr_DrawChartCharIcon ; $767d
+	farcall DrawChartCharIcon ; $767d
 	pop af ; $7680
 	wram_bank ; $7681
 	pop hl ; $7685
@@ -5887,7 +5864,7 @@ Func_1b_76b9:
 	ld b, $08 ; $76cc
 	ld c, $00 ; $76ce
 	ld h, $02 ; $76d0
-	farcall FarPtr_39_1a ; $76d2
+	farcall Func_39_4a53 ; $76d2
 Label_1b_76d5:
 	ld a, [wMenuCursorY] ; $76d5
 	cp a, $04 ; $76d8
@@ -5898,7 +5875,7 @@ Label_1b_76d5:
 	ld b, $08 ; $76e4
 	ld c, $00 ; $76e6
 	ld h, $03 ; $76e8
-	farcall FarPtr_39_1a ; $76ea
+	farcall Func_39_4a53 ; $76ea
 Label_1b_76ed:
 	ret ; $76ed
 DrawMinigameDataMarks:
@@ -5994,7 +5971,7 @@ Label_1b_7764:
 	ld hl, $d055 ; $7768
 	ld b, $02 ; $776b
 	ld c, $02 ; $776d
-	farcall FarPtr_CopyTilemapRect ; $776f
+	farcall CopyTilemapRect ; $776f
 	pop de ; $7772
 	ld hl, $0400 ; $7773
 	add hl, de ; $7776
@@ -6003,7 +5980,7 @@ Label_1b_7764:
 	ld hl, $d455 ; $7779
 	ld b, $02 ; $777c
 	ld c, $02 ; $777e
-	farcall FarPtr_CopyTilemapRect ; $7780
+	farcall CopyTilemapRect ; $7780
 	pop hl ; $7783
 	pop de ; $7784
 	pop bc ; $7785
@@ -6033,32 +6010,32 @@ ClearMinigameMarkColumns:
 	ld de, $d0c6 ; $77af
 	ld b, $02 ; $77b2
 	ld c, $0a ; $77b4
-	farcall FarPtr_CopyTilemapRect ; $77b6
+	farcall CopyTilemapRect ; $77b6
 	ld hl, $d495 ; $77b9
 	ld de, $d4c6 ; $77bc
 	ld b, $02 ; $77bf
 	ld c, $0a ; $77c1
-	farcall FarPtr_CopyTilemapRect ; $77c3
+	farcall CopyTilemapRect ; $77c3
 	ld hl, $d095 ; $77c6
 	ld de, $d0ca ; $77c9
 	ld b, $02 ; $77cc
 	ld c, $0a ; $77ce
-	farcall FarPtr_CopyTilemapRect ; $77d0
+	farcall CopyTilemapRect ; $77d0
 	ld hl, $d495 ; $77d3
 	ld de, $d4ca ; $77d6
 	ld b, $02 ; $77d9
 	ld c, $0a ; $77db
-	farcall FarPtr_CopyTilemapRect ; $77dd
+	farcall CopyTilemapRect ; $77dd
 	ld hl, $d095 ; $77e0
 	ld de, $d0ce ; $77e3
 	ld b, $02 ; $77e6
 	ld c, $0a ; $77e8
-	farcall FarPtr_CopyTilemapRect ; $77ea
+	farcall CopyTilemapRect ; $77ea
 	ld hl, $d495 ; $77ed
 	ld de, $d4ce ; $77f0
 	ld b, $02 ; $77f3
 	ld c, $0a ; $77f5
-	farcall FarPtr_CopyTilemapRect ; $77f7
+	farcall CopyTilemapRect ; $77f7
 	ret ; $77fa
 DrawStarLegendMark:
 	ld hl, $d812 ; $77fb
@@ -6078,12 +6055,12 @@ Label_1b_780c:
 	ld de, $d08e ; $780f
 	ld b, $02 ; $7812
 	ld c, $02 ; $7814
-	farcall FarPtr_CopyTilemapRect ; $7816
+	farcall CopyTilemapRect ; $7816
 	ld hl, $d416 ; $7819
 	ld de, $d48e ; $781c
 	ld b, $02 ; $781f
 	ld c, $02 ; $7821
-	farcall FarPtr_CopyTilemapRect ; $7823
+	farcall CopyTilemapRect ; $7823
 	ret ; $7826
 Func_1b_7827:
 	ldh a, [hWramBank] ; $7827
@@ -6139,7 +6116,7 @@ Label_1b_786e:
 	ld a, [hl+] ; $786e
 	ld h, [hl] ; $786f
 	ld l, a ; $7870
-	farcall FarPtr_DrawDecimalNumberSprites_39 ; $7871
+	farcall DrawDecimalNumberSprites_39 ; $7871
 	ret ; $7874
 	INCBIN "data/bank_01b/d_7875.bin" ; $7875, 10 bytes
 CheckMinigameDataScrollable:
@@ -6147,7 +6124,7 @@ CheckMinigameDataScrollable:
 	push de ; $7880
 	push hl ; $7881
 	ld c, $04 ; $7882
-	farcall FarPtr_GetUnlockedStarCharAtGridSlot ; $7884
+	farcall GetUnlockedStarCharAtGridSlot ; $7884
 	cp a, $15 ; $7887
 	jr nz, Label_1b_7890 ; $7889
 	pop hl ; $788b

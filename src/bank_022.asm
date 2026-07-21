@@ -1,7 +1,6 @@
 SECTION "ROM Bank $22", ROMX[$4000], BANK[$22]
 
-FarPtr_ShotBallPathTopspin:
-	dw ShotBallPathTopspin ; $4000
+	farptr ShotBallPathTopspin ; $4000
 BallTrajEntryPtr6_22:
 	push hl ; $4002
 	ld l, e ; $4003
@@ -115,7 +114,7 @@ Label_22_4076:
 	ld e, l ; $407d
 	ld d, h ; $407e
 	pop hl ; $407f
-	farcall FarPtr_SetBallVelocityPolar ; $4080
+	farcall SetBallVelocityPolar ; $4080
 	ret ; $4083
 SetBallVelocityFromEntry4_22:
 	ld a, [hl+] ; $4084
@@ -132,7 +131,7 @@ SetBallVelocityFromEntry4_22:
 	ld d, [hl] ; $4091
 	ld e, a ; $4092
 	pop hl ; $4093
-	farcall FarPtr_SetBallVelocityPolar ; $4094
+	farcall SetBallVelocityPolar ; $4094
 	ret ; $4097
 	ld a, [hl+] ; $4098
 	ld c, a ; $4099
@@ -192,7 +191,7 @@ Label_22_40d3:
 	ld e, l ; $40da
 	ld d, h ; $40db
 	pop hl ; $40dc
-	farcall FarPtr_SetBallVelocityPolar ; $40dd
+	farcall SetBallVelocityPolar ; $40dd
 	ld de, $fd40 ; $40e0
 	ld a, [$df0a] ; $40e3
 	and a, $02 ; $40e6
@@ -208,7 +207,7 @@ Label_22_40f0:
 	ld a, e ; $40f3
 	ld [hl+], a ; $40f4
 	ld [hl], d ; $40f5
-	farcall FarPtr_PredictBallXAtDepth ; $40f6
+	farcall PredictBallXAtDepth ; $40f6
 	ld e, l ; $40f9
 	ld d, h ; $40fa
 	ld hl, wBallTargetX ; $40fb
@@ -367,7 +366,7 @@ Label_22_4189:
 	call SetBallTargetFromAim_22 ; $41ed
 	ret ; $41f0
 Label_22_41f1:
-	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41f1
+	farcall ApplyFallbackBallTrajectory_24 ; $41f1
 	ret ; $41f4
 SetBallTargetFromAim_22:
 	ld a, [wShotAimAngle] ; $41f5
@@ -483,7 +482,7 @@ Label_22_4278:
 BallPosData_22:
 	INCBIN "data/bank_022/d_427d.bin" ; $427d, 15360 bytes
 ShotBallPathTopspin:
-	farcall FarPtr_ComputeShotPlacement ; $7e7d
+	farcall ComputeShotPlacement ; $7e7d
 	push bc ; $7e80
 	ld hl, BallPosData_22 ; $7e81
 	ld bc, BallPosHeightOffsets_22 ; $7e84

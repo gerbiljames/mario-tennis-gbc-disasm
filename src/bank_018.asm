@@ -1,77 +1,41 @@
 SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 
-FarPtr_18_00:
-	dw Func_18_4328 ; $4000
-FarPtr_LoadIndexedPalette_18:
-	dw LoadIndexedPalette_18 ; $4002
-FarPtr_RenderProportionalTextAt32:
-	dw RenderProportionalTextAt32 ; $4004
-FarPtr_18_06:
-	dw Func_18_437c ; $4006
-FarPtr_StubLoadFontTiles:
-	dw StubLoadFontTiles ; $4008
-FarPtr_DrawBox:
-	dw DrawBox ; $400a
-FarPtr_FlushBgMapShadowToVram:
-	dw FlushBgMapShadowToVram ; $400c
-FarPtr_WriteTilemapByteAdvance:
-	dw WriteTilemapByteAdvance ; $400e
-FarPtr_DrawStringToTilemap:
-	dw DrawStringToTilemap ; $4010
-FarPtr_AddBobbingOffsetXY:
-	dw AddBobbingOffsetXY ; $4012
-FarPtr_AddBobbingOffsetY:
-	dw AddBobbingOffsetY ; $4014
-FarPtr_AddBobbingOffsetYLarge:
-	dw AddBobbingOffsetYLarge ; $4016
-FarPtr_StubNop_18:
-	dw StubNop_18 ; $4018
-FarPtr_DrawDecimalNumberToTilemap:
-	dw DrawDecimalNumberToTilemap ; $401a
-FarPtr_FindRosterEntry:
-	dw FindRosterEntry ; $401c
-FarPtr_ApplySpriteBobOffset_18:
-	dw ApplySpriteBobOffset_18 ; $401e
-FarPtr_LoadCharSelectCursorGfx:
-	dw LoadCharSelectCursorGfx ; $4020
-FarPtr_DrawCharSelectCursor:
-	dw DrawCharSelectCursor ; $4022
-FarPtr_18_24:
-	dw Func_18_4507 ; $4024
-FarPtr_18_26:
-	dw Func_18_452a ; $4026
-FarPtr_CheckUnlockFlag:
-	dw CheckUnlockFlag ; $4028
-FarPtr_MoveGridCursor:
-	dw MoveGridCursor ; $402a
-FarPtr_18_2c:
-	dw Func_18_463b ; $402c
-FarPtr_ForceFlushBgMapToVram:
-	dw ForceFlushBgMapToVram ; $402e
-FarPtr_18_30:
-	dw Func_18_5365 ; $4030
-FarPtr_RunTwoOptionSelect:
-	dw RunTwoOptionSelect ; $4032
-FarPtr_18_34:
-	dw Func_18_5469 ; $4034
-FarPtr_18_36:
-	dw Func_18_52de ; $4036
-FarPtr_18_38:
-	dw Func_18_537a ; $4038
-FarPtr_18_3a:
-	dw Func_18_5372 ; $403a
-FarPtr_18_3c:
-	dw Func_18_5379 ; $403c
-FarPtr_DrawDecimalNumberSprites:
-	dw DrawDecimalNumberSprites ; $403e
-FarPtr_18_40:
-	dw Func_18_5561 ; $4040
-FarPtr_18_42:
-	dw Func_18_5586 ; $4042
-FarPtr_LoadOnCourtCharTilesA:
-	dw LoadOnCourtCharTilesA ; $4044
-FarPtr_LoadOnCourtCharTilesB:
-	dw LoadOnCourtCharTilesB ; $4046
+	farptr Func_18_4328 ; $4000
+	farptr LoadIndexedPalette_18 ; $4002
+	farptr RenderProportionalTextAt32 ; $4004
+	farptr Func_18_437c ; $4006
+	farptr StubLoadFontTiles ; $4008
+	farptr DrawBox ; $400a
+	farptr FlushBgMapShadowToVram ; $400c
+	farptr WriteTilemapByteAdvance ; $400e
+	farptr DrawStringToTilemap ; $4010
+	farptr AddBobbingOffsetXY ; $4012
+	farptr AddBobbingOffsetY ; $4014
+	farptr AddBobbingOffsetYLarge ; $4016
+	farptr StubNop_18 ; $4018
+	farptr DrawDecimalNumberToTilemap ; $401a
+	farptr FindRosterEntry ; $401c
+	farptr ApplySpriteBobOffset_18 ; $401e
+	farptr LoadCharSelectCursorGfx ; $4020
+	farptr DrawCharSelectCursor ; $4022
+	farptr Func_18_4507 ; $4024
+	farptr Func_18_452a ; $4026
+	farptr CheckUnlockFlag ; $4028
+	farptr MoveGridCursor ; $402a
+	farptr Func_18_463b ; $402c
+	farptr ForceFlushBgMapToVram ; $402e
+	farptr Func_18_5365 ; $4030
+	farptr RunTwoOptionSelect ; $4032
+	farptr Func_18_5469 ; $4034
+	farptr Func_18_52de ; $4036
+	farptr Func_18_537a ; $4038
+	farptr Func_18_5372 ; $403a
+	farptr Func_18_5379 ; $403c
+	farptr DrawDecimalNumberSprites ; $403e
+	farptr Func_18_5561 ; $4040
+	farptr Func_18_5586 ; $4042
+	farptr LoadOnCourtCharTilesA ; $4044
+	farptr LoadOnCourtCharTilesB ; $4046
 DataPtr_18_48:
 	dw Lz_18_6b30 ; $4048
 DataPtr_18_4a:
@@ -142,8 +106,7 @@ DataPtr_MarioMiniGamesAttrmap:
 	dw MarioMiniGamesAttrmap ; $408a
 DataPtr_MarioMiniGamesPalettes:
 	dw MarioMiniGamesPalettes ; $408c
-FarPtr_18_8e:
-	dw Func_18_7617 ; $408e
+	farptr Func_18_7617 ; $408e
 	db $59 ; $4090
 	db $76 ; $4091
 DataPtr_18_92:
@@ -224,11 +187,11 @@ StubLoadFontTiles:
 RenderProportionalTextAt32:
 	push bc ; $439a
 	ld c, $20 ; $439b
-	farcall FarPtr_RenderProportionalTextAt ; $439d
+	farcall RenderProportionalTextAt ; $439d
 	pop bc ; $43a0
 	ret ; $43a1
 DrawStringToTilemap:
-	farcall FarPtr_WriteStringToTilemap ; $43a2
+	farcall WriteStringToTilemap ; $43a2
 	ret ; $43a5
 WriteTilemapByteAdvance:
 	ld [de], a ; $43a6
@@ -462,7 +425,7 @@ Func_18_4507:
 	push bc ; $450c
 	push de ; $450d
 	push hl ; $450e
-	farcall FarPtr_02_1a ; $450f
+	farcall Func_02_52aa ; $450f
 	ld hl, $ca80 ; $4512
 	ld de, $d580 ; $4515
 	ld c, $08 ; $4518
@@ -501,7 +464,7 @@ Label_18_453b:
 	add hl, hl ; $4544
 	ld d, h ; $4545
 	ld e, l ; $4546
-	farcall FarPtr_TestSaveFlag ; $4547
+	farcall TestSaveFlag ; $4547
 	pop de ; $454a
 	pop hl ; $454b
 	ret ; $454c
@@ -547,7 +510,7 @@ Label_18_4579:
 	jr Label_18_4587 ; $4580
 Label_18_4582:
 	res 0, e ; $4582
-	farcall FarPtr_TestSaveFlag ; $4584
+	farcall TestSaveFlag ; $4584
 Label_18_4587:
 	pop de ; $4587
 	pop hl ; $4588
@@ -651,11 +614,11 @@ Func_18_463b:
 	or a, a ; $4645
 	jr z, Label_18_464e ; $4646
 	ld a, b ; $4648
-	farcall FarPtr_LoadMainCharacterFromRoster ; $4649
+	farcall LoadMainCharacterFromRoster ; $4649
 	jr Label_18_4652 ; $464c
 Label_18_464e:
 	ld a, b ; $464e
-	farcall FarPtr_InitPlayerRecordFromTemplate ; $464f
+	farcall InitPlayerRecordFromTemplate ; $464f
 Label_18_4652:
 	pop af ; $4652
 	add a, a ; $4653
@@ -1342,8 +1305,8 @@ Label_18_7668:
 	call WaitFadeEnd ; $766f
 	call DisableLCDSafely ; $7672
 	pop bc ; $7675
-	farcall FarPtr_LoadScreenAssetRecord ; $7676
-	farcall FarPtr_QueueWram3MapToVRAM ; $7679
+	farcall LoadScreenAssetRecord ; $7676
+	farcall QueueWram3MapToVRAM ; $7679
 	call EnableLCD ; $767c
 	script_fade_in $10 ; $767f
 	call WaitFadeEnd ; $7684
@@ -1377,12 +1340,12 @@ Label_18_76cf:
 	ld [$da01], a ; $76d6
 	cp a, $fa ; $76d9
 	jr nz, Label_18_76cf ; $76db
-	farcall FarPtr_03_40 ; $76dd
+	farcall Func_03_75ab ; $76dd
 	ld b, $3f ; $76e0
 	ld c, $3f ; $76e2
 	ld d, $1e ; $76e4
-	farcall FarPtr_03_42 ; $76e6
-	farcall FarPtr_03_44 ; $76e9
+	farcall Func_03_7687 ; $76e6
+	farcall Func_03_7719 ; $76e9
 Label_18_76ec:
 	call AdvanceFrame ; $76ec
 	ldh a, [hInputPressed] ; $76ef
@@ -1408,8 +1371,8 @@ Label_18_7716:
 Func_18_7720:
 	call Func_18_7647 ; $7720
 	call Func_18_772d ; $7723
-	farcall FarPtr_LoadScreenAssetRecord ; $7726
-	farcall FarPtr_QueueWram3MapToVRAM ; $7729
+	farcall LoadScreenAssetRecord ; $7726
+	farcall QueueWram3MapToVRAM ; $7729
 	ret ; $772c
 Func_18_772d:
 	ld a, [$cb6d] ; $772d
@@ -1426,7 +1389,7 @@ Func_18_7740:
 	ld b, $06 ; $7740
 	ld c, $28 ; $7742
 	ld de, $8000 ; $7744
-	farcall FarPtr_LoadCompressedTileBlock ; $7747
+	farcall LoadCompressedTileBlock ; $7747
 	ld hl, $7754 ; $774a
 	ld de, $0801 ; $774d
 	call LoadPaletteShadow ; $7750
@@ -1493,7 +1456,7 @@ Label_18_77e8:
 	call WaitFadeEnd ; $7801
 	call ClearFrameTasks ; $7804
 	call DisableLCDSafely ; $7807
-	farcall FarPtr_03_36 ; $780a
+	farcall Func_03_59c5 ; $780a
 	call DisableLCDSafely ; $780d
 	call Func_18_78b1 ; $7810
 	call FillAllBgPalettes ; $7813
@@ -1513,8 +1476,8 @@ Label_18_782b:
 Func_18_7835:
 	call Func_18_7647 ; $7835
 	call Func_18_7842 ; $7838
-	farcall FarPtr_LoadScreenAssetRecord ; $783b
-	farcall FarPtr_QueueWram3MapToVRAM ; $783e
+	farcall LoadScreenAssetRecord ; $783b
+	farcall QueueWram3MapToVRAM ; $783e
 	ret ; $7841
 Func_18_7842:
 	ld a, [$cb6d] ; $7842
@@ -1530,7 +1493,7 @@ Label_18_784d:
 FillAllBgPalettes:
 	call Func_18_7647 ; $7855
 	ld c, $32 ; $7858
-	farcall FarPtr_LoadScreenAssetRecord ; $785a
+	farcall LoadScreenAssetRecord ; $785a
 	ld hl, $78a9 ; $785d
 	ld de, $0001 ; $7860
 	call LoadPaletteShadow ; $7863
@@ -1555,14 +1518,14 @@ FillAllBgPalettes:
 	ld hl, $78a9 ; $789c
 	ld de, $0701 ; $789f
 	call LoadPaletteShadow ; $78a2
-	farcall FarPtr_QueueWram3MapToVRAM ; $78a5
+	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
 	INCBIN "data/bank_018/d_78a9.bin" ; $78a9, 8 bytes
 Func_18_78b1:
 	ld b, $07 ; $78b1
 	ld c, $28 ; $78b3
 	ld de, $8000 ; $78b5
-	farcall FarPtr_LoadCompressedTileBlock ; $78b8
+	farcall LoadCompressedTileBlock ; $78b8
 	ld hl, $78c5 ; $78bb
 	ld de, $0801 ; $78be
 	call LoadPaletteShadow ; $78c1
@@ -1602,8 +1565,8 @@ Func_18_792c:
 	call Func_18_7647 ; $792c
 	sound $09 ; $792f
 	call Func_18_7a07 ; $7931
-	farcall FarPtr_LoadScreenAssetRecord ; $7934
-	farcall FarPtr_QueueWram3MapToVRAM ; $7937
+	farcall LoadScreenAssetRecord ; $7934
+	farcall QueueWram3MapToVRAM ; $7937
 	call Func_18_7d03 ; $793a
 	ld a, $01 ; $793d
 	ld hl, TaskDrawObjectSprites_18 ; $793f
@@ -1636,7 +1599,7 @@ Label_18_797b:
 	jr Label_18_798a ; $7983
 Label_18_7985:
 	sound $2c ; $7985
-	farcall FarPtr_RunEndingCreditsSequence ; $7987
+	farcall RunEndingCreditsSequence ; $7987
 Label_18_798a:
 	wram_bank $03 ; $798a
 	xor a, a ; $7990
@@ -1645,8 +1608,8 @@ Label_18_798a:
 	call Func_18_7647 ; $7997
 	call DisableLCDSafely ; $799a
 	call Func_18_7a1a ; $799d
-	farcall FarPtr_LoadScreenAssetRecord ; $79a0
-	farcall FarPtr_QueueWram3MapToVRAM ; $79a3
+	farcall LoadScreenAssetRecord ; $79a0
+	farcall QueueWram3MapToVRAM ; $79a3
 	call Func_18_7a2d ; $79a6
 	call EnableLCD ; $79a9
 	script_fade_in $02 ; $79ac
@@ -1674,7 +1637,7 @@ Label_18_79de:
 	and a, PADF_A | PADF_B ; $79e3
 	jr z, Label_18_79de ; $79e5
 	ld de, $0120 ; $79e7
-	farcall FarPtr_SetSaveFlag ; $79ea
+	farcall SetSaveFlag ; $79ea
 	ld de, $05e0 ; $79ed
 	call TestGameFlag ; $79f0
 	jr z, Label_18_79fd ; $79f3
@@ -1685,7 +1648,7 @@ Label_18_79fd:
 	ld de, $16e0 ; $79fd
 	call SetGameFlag ; $7a00
 Label_18_7a03:
-	farcall FarPtr_SaveStorySlotWithTimer ; $7a03
+	farcall SaveStorySlotWithTimer ; $7a03
 	ret ; $7a06
 Func_18_7a07:
 	ld a, [$cb6d] ; $7a07
@@ -1713,7 +1676,7 @@ Func_18_7a2d:
 	ld b, $08 ; $7a2d
 	ld c, $14 ; $7a2f
 	ld de, $8000 ; $7a31
-	farcall FarPtr_LoadCompressedTileBlock ; $7a34
+	farcall LoadCompressedTileBlock ; $7a34
 	ld hl, $7a41 ; $7a37
 	ld de, $0801 ; $7a3a
 	call LoadPaletteShadow ; $7a3d
@@ -1909,15 +1872,15 @@ Func_18_7be7:
 	ld b, $00 ; $7be7
 	ld c, $10 ; $7be9
 	ld de, $8000 ; $7beb
-	farcall FarPtr_LoadCompressedTileBlock ; $7bee
+	farcall LoadCompressedTileBlock ; $7bee
 	ld b, $01 ; $7bf1
 	ld c, $10 ; $7bf3
 	ld de, $8100 ; $7bf5
-	farcall FarPtr_LoadCompressedTileBlock ; $7bf8
+	farcall LoadCompressedTileBlock ; $7bf8
 	ld b, $02 ; $7bfb
 	ld c, $10 ; $7bfd
 	ld de, $8200 ; $7bff
-	farcall FarPtr_LoadCompressedTileBlock ; $7c02
+	farcall LoadCompressedTileBlock ; $7c02
 	ld hl, $7c0f ; $7c05
 	ld de, $0903 ; $7c08
 	call LoadPaletteShadow ; $7c0b
@@ -1991,15 +1954,15 @@ Func_18_7d1c:
 	ld b, $03 ; $7d1c
 	ld c, $10 ; $7d1e
 	ld de, $8000 ; $7d20
-	farcall FarPtr_LoadCompressedTileBlock ; $7d23
+	farcall LoadCompressedTileBlock ; $7d23
 	ld b, $04 ; $7d26
 	ld c, $10 ; $7d28
 	ld de, $8100 ; $7d2a
-	farcall FarPtr_LoadCompressedTileBlock ; $7d2d
+	farcall LoadCompressedTileBlock ; $7d2d
 	ld b, $05 ; $7d30
 	ld c, $10 ; $7d32
 	ld de, $8200 ; $7d34
-	farcall FarPtr_LoadCompressedTileBlock ; $7d37
+	farcall LoadCompressedTileBlock ; $7d37
 	ld hl, $7d44 ; $7d3a
 	ld de, $0903 ; $7d3d
 	call LoadPaletteShadow ; $7d40

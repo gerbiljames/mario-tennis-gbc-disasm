@@ -1,11 +1,8 @@
 SECTION "ROM Bank $2c", ROMX[$4000], BANK[$2c]
 
-FarPtr_ProjectShotPlacement0:
-	dw ProjectShotPlacement0 ; $4000
-FarPtr_ProjectShotPlacement1:
-	dw ProjectShotPlacement1 ; $4002
-FarPtr_ProjectShotPlacement2:
-	dw ProjectShotPlacement2 ; $4004
+	farptr ProjectShotPlacement0 ; $4000
+	farptr ProjectShotPlacement1 ; $4002
+	farptr ProjectShotPlacement2 ; $4004
 Func_2c_4006:
 	push hl ; $4006
 	ld l, e ; $4007
@@ -119,7 +116,7 @@ Label_2c_407a:
 	ld e, l ; $4081
 	ld d, h ; $4082
 	pop hl ; $4083
-	farcall FarPtr_SetBallVelocityPolar ; $4084
+	farcall SetBallVelocityPolar ; $4084
 	ret ; $4087
 Func_2c_4088:
 	ld a, [hl+] ; $4088
@@ -136,7 +133,7 @@ Func_2c_4088:
 	ld d, [hl] ; $4095
 	ld e, a ; $4096
 	pop hl ; $4097
-	farcall FarPtr_SetBallVelocityPolar ; $4098
+	farcall SetBallVelocityPolar ; $4098
 	ret ; $409b
 	ld a, [hl+] ; $409c
 	ld c, a ; $409d
@@ -196,7 +193,7 @@ Label_2c_40d7:
 	ld e, l ; $40de
 	ld d, h ; $40df
 	pop hl ; $40e0
-	farcall FarPtr_SetBallVelocityPolar ; $40e1
+	farcall SetBallVelocityPolar ; $40e1
 	ld de, $fd40 ; $40e4
 	ld a, [$df0a] ; $40e7
 	and a, $02 ; $40ea
@@ -212,7 +209,7 @@ Label_2c_40f4:
 	ld a, e ; $40f7
 	ld [hl+], a ; $40f8
 	ld [hl], d ; $40f9
-	farcall FarPtr_PredictBallXAtDepth ; $40fa
+	farcall PredictBallXAtDepth ; $40fa
 	ld e, l ; $40fd
 	ld d, h ; $40fe
 	ld hl, wBallTargetX ; $40ff
@@ -309,7 +306,7 @@ Func_2c_41cd:
 	rr l ; $41ef
 	call Func_2c_41f9 ; $41f1
 	ret ; $41f4
-	farcall FarPtr_ApplyFallbackBallTrajectory_24 ; $41f5
+	farcall ApplyFallbackBallTrajectory_24 ; $41f5
 	ret ; $41f8
 Func_2c_41f9:
 	ld a, [wShotAimAngle] ; $41f9
@@ -428,7 +425,7 @@ ShotPlacementData1_2c:
 ShotPlacementData2_2c:
 	INCBIN "data/bank_02c/d_6081.bin" ; $6081, 4608 bytes
 ProjectShotPlacement0:
-	farcall FarPtr_ComputeShotPlacement ; $7281
+	farcall ComputeShotPlacement ; $7281
 	push bc ; $7284
 	ld hl, ShotPlacementData0_2c ; $7285
 	ld bc, ShotPlacementOffsets0_2c ; $7288
@@ -471,7 +468,7 @@ ShotPlacementOffsets0_2c:
 	dw $0b00 ; record 30
 	dw $0b00 ; record 31
 ProjectShotPlacement1:
-	farcall FarPtr_ComputeShotPlacement ; $72d3
+	farcall ComputeShotPlacement ; $72d3
 	push bc ; $72d6
 	ld hl, ShotPlacementData1_2c ; $72d7
 	ld bc, ShotPlacementOffsets1_2c ; $72da
@@ -514,7 +511,7 @@ ShotPlacementOffsets1_2c:
 	dw $1080 ; record 30
 	dw $1080 ; record 31
 ProjectShotPlacement2:
-	farcall FarPtr_ComputeShotPlacement ; $7325
+	farcall ComputeShotPlacement ; $7325
 	push bc ; $7328
 	ld hl, ShotPlacementData2_2c ; $7329
 	ld bc, ShotPlacementOffsets2_2c ; $732c

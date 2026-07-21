@@ -83,7 +83,7 @@ DormEntranceTile01_12:
 	script_wait_frames $0f ; $4146
 	ld c, $04 ; $414d
 	call BeginFadeOut ; $414f
-	farcall FarPtr_WaitPlayerMoveDone ; $4152
+	farcall WaitPlayerMoveDone ; $4152
 	call WaitFadeEnd ; $4155
 	ld a, [$c90d] ; $4158
 	or a, a ; $415b
@@ -130,16 +130,16 @@ Func_12_4179:
 	script_set_anim ACTOR_PLAYER, $02 ; $4230
 	script_player_speed $0018 ; $4237
 	script_move_player $1600, $0b00 ; $423d
-	farcall FarPtr_WaitPlayerMoveDone ; $4247
+	farcall WaitPlayerMoveDone ; $4247
 	script_wait_frames $14 ; $424a
 	script_move_player $1100, $0b00 ; $4251
-	farcall FarPtr_WaitPlayerMoveDone ; $425b
+	farcall WaitPlayerMoveDone ; $425b
 	script_wait_frames $0a ; $425e
 	script_move_player $1a00, $0b00 ; $4265
-	farcall FarPtr_WaitPlayerMoveDone ; $426f
+	farcall WaitPlayerMoveDone ; $426f
 	script_wait_frames $0a ; $4272
 	script_move_player $1600, $0b00 ; $4279
-	farcall FarPtr_WaitPlayerMoveDone ; $4283
+	farcall WaitPlayerMoveDone ; $4283
 	script_wait_frames $1e ; $4286
 	script_move_player $1600, $1000 ; $428d
 	script_set_anim ACTOR_PLAYER, $02 ; $4297
@@ -175,7 +175,7 @@ Func_12_4179:
 	script_move_target ACTOR_PLAYER, $1680, $1200 ; $436b
 	script_jump_velocity ACTOR_PLAYER, $ff80 ; $4376
 	ld a, $00 ; $437e
-	farcall FarPtr_ScriptWaitActorJumpDone ; $4380
+	farcall ScriptWaitActorJumpDone ; $4380
 	script_face ACTOR_PLAYER, FACE_UP ; $4383
 	script_set_active $03, $02 ; $438a
 	script_set_position $03, $1500, $0b00 ; $4391
@@ -220,18 +220,18 @@ Label_12_43bb:
 	script_wait_idle $04 ; $4489
 	script_face_toward ACTOR_PLAYER, $04 ; $448e
 	ld a, $04 ; $4496
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4498
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4498
 	script_face_toward ACTOR_PLAYER, $03 ; $449b
-	farcall FarPtr_RunDialogueYesNoPrompt ; $44a3
-	farcall FarPtr_ScriptCloseDialogueWindow ; $44a6
+	farcall RunDialogueYesNoPrompt ; $44a3
+	farcall ScriptCloseDialogueWindow ; $44a6
 	script_wait_frames $05 ; $44a9
 	and a, a ; $44b0
 	jr nz, Label_12_44bd ; $44b1
 	script_speak $04 ; $44b3
-	farcall FarPtr_AdvanceDialogueTextCursor ; $44b8
+	farcall AdvanceDialogueTextCursor ; $44b8
 	jr Label_12_44c5 ; $44bb
 Label_12_44bd:
-	farcall FarPtr_AdvanceDialogueTextCursor ; $44bd
+	farcall AdvanceDialogueTextCursor ; $44bd
 	script_speak $04 ; $44c0
 Label_12_44c5:
 	script_set_anim $03, $03 ; $44c5
@@ -293,11 +293,11 @@ Label_12_44c5:
 	script_move_player $1600, $0b00 ; $464d
 	ld b, $0a ; $4657
 	ld c, $0f ; $4659
-	farcall FarPtr_SaveStoryReturnPoint ; $465b
-	farcall FarPtr_SaveStorySlotWithTimer ; $465e
+	farcall SaveStoryReturnPoint ; $465b
+	farcall SaveStorySlotWithTimer ; $465e
 	ld a, $01 ; $4661
-	farcall FarPtr_EraseStorySlotSaveData ; $4663
-	farcall FarPtr_SaveStorySlotWithTimer ; $4666
+	farcall EraseStorySlotSaveData ; $4663
+	farcall SaveStorySlotWithTimer ; $4666
 	sound $00 ; $4669
 	ld c, $04 ; $466b
 	call BeginFadeOut ; $466d
@@ -355,7 +355,7 @@ WallPracticeRoomNpc03_12:
 	ld a, [hl+] ; $472a
 	ld h, [hl] ; $472b
 	ld l, a ; $472c
-	farcall FarPtr_InitDialogueTextCursor ; $472d
+	farcall InitDialogueTextCursor ; $472d
 	ld a, [$c2b0] ; $4730
 	ld a, a ; $4733
 	rst Rst00 ; $4734
@@ -368,13 +368,13 @@ WallPracticeRoomNpc03_12:
 	dw Label_12_475b ; $4741 jumptable
 Label_12_4743:
 	ld a, $03 ; $4743
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4745
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4748
-	farcall FarPtr_ScriptCloseDialogueWindow ; $474b
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4745
+	farcall RunDialogueYesNoPrompt ; $4748
+	farcall ScriptCloseDialogueWindow ; $474b
 	script_wait_frames $05 ; $474e
 	and a, a ; $4755
 	jr z, Label_12_475b ; $4756
-	farcall FarPtr_AdvanceDialogueTextCursor ; $4758
+	farcall AdvanceDialogueTextCursor ; $4758
 Label_12_475b:
 	script_speak $03 ; $475b
 	ret ; $4760
@@ -402,7 +402,7 @@ WallPracticeRoomNpc04_12:
 	ld a, [hl+] ; $478c
 	ld h, [hl] ; $478d
 	ld l, a ; $478e
-	farcall FarPtr_InitDialogueTextCursor ; $478f
+	farcall InitDialogueTextCursor ; $478f
 	script_speak $04 ; $4792
 	ret ; $4797
 	; $4798, 14 bytes (records:2)
@@ -424,7 +424,7 @@ WallPracticeRoomNpc05_12:
 	ld a, [hl+] ; $47b1
 	ld h, [hl] ; $47b2
 	ld l, a ; $47b3
-	farcall FarPtr_InitDialogueTextCursor ; $47b4
+	farcall InitDialogueTextCursor ; $47b4
 	ld a, [$c2b0] ; $47b7
 	cp a, $04 ; $47ba
 	jr c, Label_12_47c4 ; $47bc
@@ -456,7 +456,7 @@ WallPracticeRoomNpc06_12:
 	ld a, [hl+] ; $47fe
 	ld h, [hl] ; $47ff
 	ld l, a ; $4800
-	farcall FarPtr_InitDialogueTextCursor ; $4801
+	farcall InitDialogueTextCursor ; $4801
 	script_speak $06 ; $4804
 	ret ; $4809
 	; $480a, 14 bytes (records:2)
@@ -499,7 +499,7 @@ WallPracticeScoreRetryPrompt:
 	push af ; $4870
 	wram_bank $07 ; $4871
 	ld a, $00 ; $4877
-	farcall FarPtr_ReadMinigameRecord ; $4879
+	farcall ReadMinigameRecord ; $4879
 	ld hl, $de00 ; $487c
 	ld a, [hl+] ; $487f
 	ld d, [hl] ; $4880
@@ -533,17 +533,17 @@ Label_12_48a2:
 	ld a, [hl+] ; $48af
 	ld h, [hl] ; $48b0
 	ld l, a ; $48b1
-	farcall FarPtr_InitDialogueTextCursor ; $48b2
+	farcall InitDialogueTextCursor ; $48b2
 Label_12_48b5:
 	ld hl, wMinigamesCurrentScore ; $48b5
 	ld a, [hl+] ; $48b8
 	ld h, [hl] ; $48b9
 	ld l, a ; $48ba
-	farcall FarPtr_PushTextArgNumber ; $48bb
+	farcall PushTextArgNumber ; $48bb
 	ld a, $07 ; $48be
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $48c0
-	farcall FarPtr_RunDialogueYesNoPrompt ; $48c3
-	farcall FarPtr_ScriptCloseDialogueWindow ; $48c6
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $48c0
+	farcall RunDialogueYesNoPrompt ; $48c3
+	farcall ScriptCloseDialogueWindow ; $48c6
 	script_wait_frames $05 ; $48c9
 	and a, a ; $48d0
 	jp nz, WallPracticeExitCourtScript ; $48d1
@@ -565,7 +565,7 @@ WallPracticeNewRecordScript:
 	ld [hl+], a ; $48fe
 	ld [hl], d ; $48ff
 	ld a, $00 ; $4900
-	farcall FarPtr_UpdateMinigameRecord ; $4902
+	farcall UpdateMinigameRecord ; $4902
 	pop af ; $4905
 	wram_bank ; $4906
 	call SetupWallPracticeLevelSigns ; $490a
@@ -574,11 +574,11 @@ WallPracticeNewRecordScript:
 	ld a, [hl+] ; $4916
 	ld h, [hl] ; $4917
 	ld l, a ; $4918
-	farcall FarPtr_PushTextArgNumber ; $4919
+	farcall PushTextArgNumber ; $4919
 	ld a, $07 ; $491c
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $491e
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4921
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4924
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $491e
+	farcall RunDialogueYesNoPrompt ; $4921
+	farcall ScriptCloseDialogueWindow ; $4924
 	script_wait_frames $05 ; $4927
 	and a, a ; $492e
 	jp nz, WallPracticeExitCourtScript ; $492f
@@ -591,7 +591,7 @@ WallPracticeMaxScoreScript:
 	push af ; $4943
 	wram_bank $07 ; $4944
 	ld a, $00 ; $494a
-	farcall FarPtr_ReadMinigameRecord ; $494c
+	farcall ReadMinigameRecord ; $494c
 	ld hl, $de00 ; $494f
 	ld a, [hl+] ; $4952
 	ld h, [hl] ; $4953
@@ -608,9 +608,9 @@ WallPracticeMaxScoreScript:
 	jp c, Label_12_49e5 ; $4963
 	script_set_text Text_36_43 ; $4966
 	ld a, $07 ; $496c
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $496e
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4971
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4974
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $496e
+	farcall RunDialogueYesNoPrompt ; $4971
+	farcall ScriptCloseDialogueWindow ; $4974
 	script_wait_frames $05 ; $4977
 	and a, a ; $497e
 	jr z, RelaunchWallPracticeMasterLevel ; $497f
@@ -633,7 +633,7 @@ RelaunchWallPracticeMasterLevel:
 	ld [$c294], a ; $49d9
 	ld [wStoryModeExitLocationRequest], a ; $49dc
 	ld a, $1b ; $49df
-	farcall FarPtr_RunTrainingDrillByID ; $49e1
+	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
 Label_12_49e5:
 	ldh a, [hWramBank] ; $49e5
@@ -648,7 +648,7 @@ Label_12_49e5:
 	ld [hl+], a ; $49f8
 	ld [hl], d ; $49f9
 	ld a, $00 ; $49fa
-	farcall FarPtr_UpdateMinigameRecord ; $49fc
+	farcall UpdateMinigameRecord ; $49fc
 	pop af ; $49ff
 	wram_bank ; $4a00
 	script_set_speed ACTOR_PLAYER, $0020 ; $4a04
@@ -678,7 +678,7 @@ Label_12_4a6c:
 	ld c, l ; $4a9f
 	ld b, h ; $4aa0
 	ld de, $d000 ; $4aa1
-	farcall FarPtr_AttachActorStepMover ; $4aa4
+	farcall AttachActorStepMover ; $4aa4
 	script_wait_frames $28 ; $4aa7
 Label_12_4aae:
 	ret ; $4aae
@@ -723,12 +723,12 @@ Label_12_4aef:
 	ld a, [hl+] ; $4afc
 	ld h, [hl] ; $4afd
 	ld l, a ; $4afe
-	farcall FarPtr_InitDialogueTextCursor ; $4aff
+	farcall InitDialogueTextCursor ; $4aff
 Label_12_4b02:
 	ld a, $07 ; $4b02
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4b04
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4b07
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4b0a
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4b04
+	farcall RunDialogueYesNoPrompt ; $4b07
+	farcall ScriptCloseDialogueWindow ; $4b0a
 	script_wait_frames $05 ; $4b0d
 	and a, a ; $4b14
 	jp nz, WallPracticeExitCourtScript ; $4b15
@@ -754,7 +754,7 @@ WallPracticeExitCourtScript:
 	ld c, l ; $4b8c
 	ld b, h ; $4b8d
 	ld de, $d000 ; $4b8e
-	farcall FarPtr_AttachActorStepMover ; $4b91
+	farcall AttachActorStepMover ; $4b91
 Label_12_4b94:
 	script_wait_frames $0a ; $4b94
 	ret ; $4b9b
@@ -777,7 +777,7 @@ Label_12_4bb2:
 	ld [hl+], a ; $4bc2
 	ld [hl], d ; $4bc3
 	ld a, $00 ; $4bc4
-	farcall FarPtr_UpdateMinigameRecord ; $4bc6
+	farcall UpdateMinigameRecord ; $4bc6
 	pop af ; $4bc9
 	wram_bank ; $4bca
 	script_set_text Text_35_254 ; $4bce
@@ -818,7 +818,7 @@ Label_12_4bfc:
 	ld c, l ; $4c89
 	ld b, h ; $4c8a
 	ld de, $d000 ; $4c8b
-	farcall FarPtr_AttachActorStepMover ; $4c8e
+	farcall AttachActorStepMover ; $4c8e
 	script_wait_frames $14 ; $4c91
 Label_12_4c98:
 	script_wait_frames $0a ; $4c98
@@ -828,11 +828,11 @@ WallPracticeRoomFacingScripts_12:
 	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomFacing01_12, $00, $00
 	db $ff
 WallPracticeRoomFacing01_12:
-	farcall FarPtr_BeginCutsceneScriptMode ; $4ca9
+	farcall BeginCutsceneScriptMode ; $4ca9
 	script_fade_in $10 ; $4cac
 	script_set_text Text_31_131 ; $4cb1
 	script_speak ACTOR_PLAYER ; $4cb7
-	farcall FarPtr_EndCutsceneScriptMode ; $4cbc
+	farcall EndCutsceneScriptMode ; $4cbc
 	ret ; $4cbf
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
@@ -856,15 +856,15 @@ WallPracticeRoomTile02_12:
 	ld c, l ; $4d20
 	ld b, h ; $4d21
 	ld de, $d000 ; $4d22
-	farcall FarPtr_AttachActorStepMover ; $4d25
+	farcall AttachActorStepMover ; $4d25
 Label_12_4d28:
 	ret ; $4d28
 WallPracticeRoomTile03_12:
 	script_set_text Text_36_48 ; $4d29
 	ld a, $07 ; $4d2f
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4d31
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4d34
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4d37
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4d31
+	farcall RunDialogueYesNoPrompt ; $4d34
+	farcall ScriptCloseDialogueWindow ; $4d37
 	script_wait_frames $05 ; $4d3a
 	and a, a ; $4d41
 	jr nz, Label_12_4d97 ; $4d42
@@ -885,8 +885,8 @@ WallPracticeRoomTile03_12:
 	ld [$c294], a ; $4d89
 	ld [wStoryModeExitLocationRequest], a ; $4d8c
 	ld a, $16 ; $4d8f
-	farcall FarPtr_RunTrainingDrillByID ; $4d91
-	farcall FarPtr_EndCutsceneScriptMode ; $4d94
+	farcall RunTrainingDrillByID ; $4d91
+	farcall EndCutsceneScriptMode ; $4d94
 Label_12_4d97:
 	ret ; $4d97
 WallPracticeRoomTile04_12:
@@ -894,9 +894,9 @@ WallPracticeRoomTile04_12:
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text Text_36_49 ; $4d9e
 	ld a, $07 ; $4da4
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4da6
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4da9
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4dac
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4da6
+	farcall RunDialogueYesNoPrompt ; $4da9
+	farcall ScriptCloseDialogueWindow ; $4dac
 	script_wait_frames $05 ; $4daf
 	and a, a ; $4db6
 	jr nz, Label_12_4e0c ; $4db7
@@ -917,8 +917,8 @@ WallPracticeRoomTile04_12:
 	ld [$c294], a ; $4dfe
 	ld [wStoryModeExitLocationRequest], a ; $4e01
 	ld a, $17 ; $4e04
-	farcall FarPtr_RunTrainingDrillByID ; $4e06
-	farcall FarPtr_EndCutsceneScriptMode ; $4e09
+	farcall RunTrainingDrillByID ; $4e06
+	farcall EndCutsceneScriptMode ; $4e09
 Label_12_4e0c:
 	ret ; $4e0c
 WallPracticeRoomTile05_12:
@@ -926,9 +926,9 @@ WallPracticeRoomTile05_12:
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text Text_36_50 ; $4e13
 	ld a, $07 ; $4e19
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4e1b
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4e1e
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4e21
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e1b
+	farcall RunDialogueYesNoPrompt ; $4e1e
+	farcall ScriptCloseDialogueWindow ; $4e21
 	script_wait_frames $05 ; $4e24
 	and a, a ; $4e2b
 	jr nz, Label_12_4e81 ; $4e2c
@@ -949,8 +949,8 @@ WallPracticeRoomTile05_12:
 	ld [$c294], a ; $4e73
 	ld [wStoryModeExitLocationRequest], a ; $4e76
 	ld a, $18 ; $4e79
-	farcall FarPtr_RunTrainingDrillByID ; $4e7b
-	farcall FarPtr_EndCutsceneScriptMode ; $4e7e
+	farcall RunTrainingDrillByID ; $4e7b
+	farcall EndCutsceneScriptMode ; $4e7e
 Label_12_4e81:
 	ret ; $4e81
 WallPracticeRoomTile06_12:
@@ -958,9 +958,9 @@ WallPracticeRoomTile06_12:
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text Text_36_51 ; $4e88
 	ld a, $07 ; $4e8e
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4e90
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4e93
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4e96
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e90
+	farcall RunDialogueYesNoPrompt ; $4e93
+	farcall ScriptCloseDialogueWindow ; $4e96
 	script_wait_frames $05 ; $4e99
 	and a, a ; $4ea0
 	jr nz, Label_12_4ef6 ; $4ea1
@@ -981,8 +981,8 @@ WallPracticeRoomTile06_12:
 	ld [$c294], a ; $4ee8
 	ld [wStoryModeExitLocationRequest], a ; $4eeb
 	ld a, $19 ; $4eee
-	farcall FarPtr_RunTrainingDrillByID ; $4ef0
-	farcall FarPtr_EndCutsceneScriptMode ; $4ef3
+	farcall RunTrainingDrillByID ; $4ef0
+	farcall EndCutsceneScriptMode ; $4ef3
 Label_12_4ef6:
 	ret ; $4ef6
 WallPracticeLevelLockedScript:
@@ -990,7 +990,7 @@ WallPracticeLevelLockedScript:
 	script_speak $07 ; $4efd
 	ret ; $4f02
 WallPracticeRoomInitScript_12:
-	farcall FarPtr_WaitPlayerMoveDone ; $4f03
+	farcall WaitPlayerMoveDone ; $4f03
 	ld a, $00 ; $4f06
 	ld [$c329], a ; $4f08
 	ld a, $27 ; $4f0b
@@ -1001,7 +1001,7 @@ WallPracticeRoomInitScript_12:
 	ld [$c32c], a ; $4f17
 	call DisableLCDSafely ; $4f1a
 	ld a, $00 ; $4f1d
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4f1f
+	farcall CopyScrolledSceneTilemapToVram ; $4f1f
 	call EnableLCD ; $4f22
 	call SetupWallPracticeLevelSigns ; $4f25
 	ld a, [wStoryModeEntryPoint] ; $4f28
@@ -1056,9 +1056,9 @@ Label_12_4fa6:
 	jr nz, Label_12_4ff3 ; $4fd4
 	script_set_text Text_36_53 ; $4fd6
 	ld a, $07 ; $4fdc
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4fde
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4fe1
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4fe4
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4fde
+	farcall RunDialogueYesNoPrompt ; $4fe1
+	farcall ScriptCloseDialogueWindow ; $4fe4
 	script_wait_frames $05 ; $4fe7
 	and a, a ; $4fee
 	jr nz, Label_12_505e ; $4fef
@@ -1081,12 +1081,12 @@ Label_12_5002:
 	ld a, [hl+] ; $500f
 	ld h, [hl] ; $5010
 	ld l, a ; $5011
-	farcall FarPtr_InitDialogueTextCursor ; $5012
+	farcall InitDialogueTextCursor ; $5012
 Label_12_5015:
 	ld a, $07 ; $5015
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5017
-	farcall FarPtr_RunDialogueYesNoPrompt ; $501a
-	farcall FarPtr_ScriptCloseDialogueWindow ; $501d
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $5017
+	farcall RunDialogueYesNoPrompt ; $501a
+	farcall ScriptCloseDialogueWindow ; $501d
 	script_wait_frames $05 ; $5020
 	and a, a ; $5027
 	jp nz, Label_12_505e ; $5028
@@ -1105,7 +1105,7 @@ Label_12_502b:
 	ld [$c294], a ; $5052
 	ld [wStoryModeExitLocationRequest], a ; $5055
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5058
-	farcall FarPtr_RunTrainingDrillByID ; $505b
+	farcall RunTrainingDrillByID ; $505b
 Label_12_505e:
 	ret ; $505e
 SetupWallPracticeLevelSigns:
@@ -1152,7 +1152,7 @@ Label_12_50dd:
 	ld a, [hl+] ; $50e8
 	ld h, [hl] ; $50e9
 	ld l, a ; $50ea
-	farcall FarPtr_InitDialogueTextCursor ; $50eb
+	farcall InitDialogueTextCursor ; $50eb
 	ld a, [$c2b0] ; $50ee
 	cp a, $05 ; $50f1
 	jr nz, Label_12_5111 ; $50f3
@@ -1160,19 +1160,19 @@ Label_12_50dd:
 	push af ; $50f7
 	wram_bank $07 ; $50f8
 	ld a, $00 ; $50fe
-	farcall FarPtr_ReadMinigameRecord ; $5100
+	farcall ReadMinigameRecord ; $5100
 	ld hl, $de00 ; $5103
 	ld a, [hl+] ; $5106
 	ld h, [hl] ; $5107
 	ld l, a ; $5108
 	pop af ; $5109
 	wram_bank ; $510a
-	farcall FarPtr_PushTextArgNumber ; $510e
+	farcall PushTextArgNumber ; $510e
 Label_12_5111:
 	ld a, $07 ; $5111
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5113
-	farcall FarPtr_RunDialogueYesNoPrompt ; $5116
-	farcall FarPtr_ScriptCloseDialogueWindow ; $5119
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $5113
+	farcall RunDialogueYesNoPrompt ; $5116
+	farcall ScriptCloseDialogueWindow ; $5119
 	script_wait_frames $05 ; $511c
 	and a, a ; $5123
 	jp z, Label_12_51ba ; $5124
@@ -1186,11 +1186,11 @@ Label_12_5111:
 	ld a, [hl+] ; $5132
 	ld h, [hl] ; $5133
 	ld l, a ; $5134
-	farcall FarPtr_InitDialogueTextCursor ; $5135
+	farcall InitDialogueTextCursor ; $5135
 	ld a, $07 ; $5138
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $513a
-	farcall FarPtr_RunDialogueYesNoPrompt ; $513d
-	farcall FarPtr_ScriptCloseDialogueWindow ; $5140
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $513a
+	farcall RunDialogueYesNoPrompt ; $513d
+	farcall ScriptCloseDialogueWindow ; $5140
 	script_wait_frames $05 ; $5143
 	and a, a ; $514a
 	jp nz, Label_12_51b1 ; $514b
@@ -1215,7 +1215,7 @@ Label_12_5192:
 	set_flag $0f, 5 ; $51ad
 	ret ; $51b0
 Label_12_51b1:
-	farcall FarPtr_AdvanceDialogueTextCursor ; $51b1
+	farcall AdvanceDialogueTextCursor ; $51b1
 Label_12_51b4:
 	script_speak $07 ; $51b4
 	ret ; $51b9
@@ -1283,8 +1283,8 @@ LaunchWallPracticeMinigame:
 	sub a, l ; $52af
 	ld h, a ; $52b0
 	ld a, [hl] ; $52b1
-	farcall FarPtr_RunTrainingDrillByID ; $52b2
-	farcall FarPtr_EndCutsceneScriptMode ; $52b5
+	farcall RunTrainingDrillByID ; $52b2
+	farcall EndCutsceneScriptMode ; $52b5
 	ret ; $52b8
 	; $52b9, 7 bytes (bytes:16)
 	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
@@ -1391,7 +1391,7 @@ Label_12_55b5:
 	ld a, [hl+] ; $55c2
 	ld h, [hl] ; $55c3
 	ld l, a ; $55c4
-	farcall FarPtr_InitDialogueTextCursor ; $55c5
+	farcall InitDialogueTextCursor ; $55c5
 	ld a, [$c90d] ; $55c8
 	ld hl, $001d ; $55cb
 	add a, l ; $55ce
@@ -1430,13 +1430,13 @@ Label_12_5606:
 	jp nz, Label_12_5704 ; $5609
 	script_set_text Text_34_4 ; $560c
 	ld a, $03 ; $5612
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5614
-	farcall FarPtr_RunDialogueYesNoPrompt ; $5617
-	farcall FarPtr_ScriptCloseDialogueWindow ; $561a
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $5614
+	farcall RunDialogueYesNoPrompt ; $5617
+	farcall ScriptCloseDialogueWindow ; $561a
 	script_wait_frames $05 ; $561d
 	and a, a ; $5624
 	jr z, Label_12_562a ; $5625
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5627
+	farcall AdvanceDialogueTextCursor ; $5627
 Label_12_562a:
 	script_speak $03 ; $562a
 	ret ; $562f
@@ -1527,7 +1527,7 @@ Label_12_57f4:
 	ld c, l ; $5817
 	ld b, h ; $5818
 	ld de, $d000 ; $5819
-	farcall FarPtr_AttachActorStepMover ; $581c
+	farcall AttachActorStepMover ; $581c
 	ret ; $581f
 SeniorCourtNpc04_12:
 	ld a, [$c2b1] ; $5820
@@ -1540,7 +1540,7 @@ SeniorCourtNpc04_12:
 	ld a, [hl+] ; $582b
 	ld h, [hl] ; $582c
 	ld l, a ; $582d
-	farcall FarPtr_InitDialogueTextCursor ; $582e
+	farcall InitDialogueTextCursor ; $582e
 	script_speak $04 ; $5831
 	ld a, [$c2b1] ; $5836
 	cp a, $02 ; $5839
@@ -1573,7 +1573,7 @@ SeniorCourtNpc05_12:
 	ld a, [hl+] ; $5864
 	ld h, [hl] ; $5865
 	ld l, a ; $5866
-	farcall FarPtr_InitDialogueTextCursor ; $5867
+	farcall InitDialogueTextCursor ; $5867
 	ld a, [$c2b1] ; $586a
 	cp a, $04 ; $586d
 	jr z, Label_12_5877 ; $586f
@@ -1581,13 +1581,13 @@ SeniorCourtNpc05_12:
 	ret ; $5876
 Label_12_5877:
 	ld a, $05 ; $5877
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5879
-	farcall FarPtr_RunDialogueYesNoPrompt ; $587c
-	farcall FarPtr_ScriptCloseDialogueWindow ; $587f
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $5879
+	farcall RunDialogueYesNoPrompt ; $587c
+	farcall ScriptCloseDialogueWindow ; $587f
 	script_wait_frames $05 ; $5882
 	and a, a ; $5889
 	jr z, Label_12_588f ; $588a
-	farcall FarPtr_AdvanceDialogueTextCursor ; $588c
+	farcall AdvanceDialogueTextCursor ; $588c
 Label_12_588f:
 	script_speak $05 ; $588f
 	ret ; $5894
@@ -1603,7 +1603,7 @@ SeniorCourtNpc06_12:
 	ld a, [hl+] ; $58be
 	ld h, [hl] ; $58bf
 	ld l, a ; $58c0
-	farcall FarPtr_InitDialogueTextCursor ; $58c1
+	farcall InitDialogueTextCursor ; $58c1
 	ld a, [$c2b1] ; $58c4
 	cp a, $06 ; $58c7
 	jr z, Label_12_58d1 ; $58c9
@@ -1611,17 +1611,17 @@ SeniorCourtNpc06_12:
 	ret ; $58d0
 Label_12_58d1:
 	ld a, $06 ; $58d1
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $58d3
-	farcall FarPtr_RunDialogueYesNoPrompt ; $58d6
-	farcall FarPtr_ScriptCloseDialogueWindow ; $58d9
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $58d3
+	farcall RunDialogueYesNoPrompt ; $58d6
+	farcall ScriptCloseDialogueWindow ; $58d9
 	script_wait_frames $05 ; $58dc
 	and a, a ; $58e3
 	jr z, Label_12_58f2 ; $58e4
-	farcall FarPtr_AdvanceDialogueTextCursor ; $58e6
+	farcall AdvanceDialogueTextCursor ; $58e6
 	ld a, [$c94d] ; $58e9
 	or a, a ; $58ec
 	jr nz, Label_12_58f2 ; $58ed
-	farcall FarPtr_AdvanceDialogueTextCursor ; $58ef
+	farcall AdvanceDialogueTextCursor ; $58ef
 Label_12_58f2:
 	script_speak $06 ; $58f2
 	ret ; $58f7
@@ -1637,7 +1637,7 @@ SeniorCourtNpc07_12:
 	ld a, [hl+] ; $5921
 	ld h, [hl] ; $5922
 	ld l, a ; $5923
-	farcall FarPtr_InitDialogueTextCursor ; $5924
+	farcall InitDialogueTextCursor ; $5924
 	script_speak $07 ; $5927
 	ret ; $592c
 	; $592d, 30 bytes (records:2)
@@ -1667,7 +1667,7 @@ SeniorCourtNpc08_12:
 	ld a, [hl+] ; $5956
 	ld h, [hl] ; $5957
 	ld l, a ; $5958
-	farcall FarPtr_InitDialogueTextCursor ; $5959
+	farcall InitDialogueTextCursor ; $5959
 	ld a, [$c2b1] ; $595c
 	cp a, $02 ; $595f
 	jr z, Label_12_5979 ; $5961
@@ -1679,22 +1679,22 @@ Label_12_5973:
 	ret ; $5978
 Label_12_5979:
 	ld a, $08 ; $5979
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $597b
-	farcall FarPtr_RunDialogueYesNoPrompt ; $597e
-	farcall FarPtr_ScriptCloseDialogueWindow ; $5981
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $597b
+	farcall RunDialogueYesNoPrompt ; $597e
+	farcall ScriptCloseDialogueWindow ; $5981
 	script_wait_frames $05 ; $5984
 	and a, a ; $598b
 	jr z, Label_12_5994 ; $598c
 	script_speak $08 ; $598e
 	ret ; $5993
 Label_12_5994:
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5994
+	farcall AdvanceDialogueTextCursor ; $5994
 	script_set_anim $08, $02 ; $5997
 	script_wait_idle $08 ; $599e
 	ld a, $08 ; $59a3
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $59a5
-	farcall FarPtr_RunDialogueYesNoPrompt ; $59a8
-	farcall FarPtr_ScriptCloseDialogueWindow ; $59ab
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $59a5
+	farcall RunDialogueYesNoPrompt ; $59a8
+	farcall ScriptCloseDialogueWindow ; $59ab
 	script_wait_frames $05 ; $59ae
 	and a, a ; $59b5
 	jr z, Label_12_59be ; $59b6
@@ -1707,7 +1707,7 @@ Label_12_59be:
 	script_wait_move $08 ; $59db
 	script_set_actor_script $08, ActorScript_12_7a41 ; $59e0
 	script_move_player $0a00, $1100 ; $59eb
-	farcall FarPtr_WaitPlayerMoveDone ; $59f5
+	farcall WaitPlayerMoveDone ; $59f5
 	script_wait_actor_script $08 ; $59f8
 	ld hl, wStoryModePlayersXPosition ; $59fd
 	ld de, wStoryModeSpawnPosition ; $5a00
@@ -1717,10 +1717,10 @@ Label_12_59be:
 	ld [wStoryModeEntryPoint], a ; $5a0b
 	ld [$c294], a ; $5a0e
 	ld [wStoryModeExitLocationRequest], a ; $5a11
-	farcall FarPtr_InitStoryMatchSettings ; $5a14
+	farcall InitStoryMatchSettings ; $5a14
 	load_match_settings $0005 ; $5a17
-	farcall FarPtr_RunStoryMatch ; $5a24
-	farcall FarPtr_RestoreOverworldAfterMatch ; $5a27
+	farcall RunStoryMatch ; $5a24
+	farcall RestoreOverworldAfterMatch ; $5a27
 	ret ; $5a2a
 	; $5a2b, 30 bytes (records:2)
 	dw $1012 ; record 0
@@ -1749,7 +1749,7 @@ SeniorCourtNpc09_12:
 	ld a, [hl+] ; $5a54
 	ld h, [hl] ; $5a55
 	ld l, a ; $5a56
-	farcall FarPtr_InitDialogueTextCursor ; $5a57
+	farcall InitDialogueTextCursor ; $5a57
 	ld a, [$c2b1] ; $5a5a
 	cp a, $02 ; $5a5d
 	jr nc, Label_12_5a68 ; $5a5f
@@ -1784,7 +1784,7 @@ SeniorCourtNpc0A_12:
 	ld a, [hl+] ; $5a97
 	ld h, [hl] ; $5a98
 	ld l, a ; $5a99
-	farcall FarPtr_InitDialogueTextCursor ; $5a9a
+	farcall InitDialogueTextCursor ; $5a9a
 	ld a, [$c2b1] ; $5a9d
 	cp a, $06 ; $5aa0
 	jr z, Label_12_5aaa ; $5aa2
@@ -1792,20 +1792,20 @@ SeniorCourtNpc0A_12:
 	ret ; $5aa9
 Label_12_5aaa:
 	ld a, $0a ; $5aaa
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5aac
-	farcall FarPtr_RunDialogueYesNoPrompt ; $5aaf
-	farcall FarPtr_ScriptCloseDialogueWindow ; $5ab2
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $5aac
+	farcall RunDialogueYesNoPrompt ; $5aaf
+	farcall ScriptCloseDialogueWindow ; $5ab2
 	script_wait_frames $05 ; $5ab5
 	and a, a ; $5abc
 	jr z, Label_12_5ac5 ; $5abd
 	script_speak $0a ; $5abf
 	ret ; $5ac4
 Label_12_5ac5:
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5ac5
+	farcall AdvanceDialogueTextCursor ; $5ac5
 	ld a, $0a ; $5ac8
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5aca
-	farcall FarPtr_RunDialogueYesNoPrompt ; $5acd
-	farcall FarPtr_ScriptCloseDialogueWindow ; $5ad0
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $5aca
+	farcall RunDialogueYesNoPrompt ; $5acd
+	farcall ScriptCloseDialogueWindow ; $5ad0
 	script_wait_frames $05 ; $5ad3
 	and a, a ; $5ada
 	jr z, Label_12_5ae3 ; $5adb
@@ -1827,7 +1827,7 @@ Label_12_5ae3:
 	script_set_actor_script $0a, ActorScript_12_79f1 ; $5b1f
 	script_set_actor_script $0b, ActorScript_12_79fc ; $5b2a
 	script_move_player $0a00, $1100 ; $5b35
-	farcall FarPtr_WaitPlayerMoveDone ; $5b3f
+	farcall WaitPlayerMoveDone ; $5b3f
 	script_wait_actor_script ACTOR_PLAYER ; $5b42
 	ld hl, wStoryModePlayersXPosition ; $5b47
 	ld de, wStoryModeSpawnPosition ; $5b4a
@@ -1837,10 +1837,10 @@ Label_12_5ae3:
 	ld [wStoryModeEntryPoint], a ; $5b55
 	ld [$c294], a ; $5b58
 	ld [wStoryModeExitLocationRequest], a ; $5b5b
-	farcall FarPtr_InitStoryMatchSettings ; $5b5e
+	farcall InitStoryMatchSettings ; $5b5e
 	load_match_settings $0105 ; $5b61
-	farcall FarPtr_RunStoryMatch ; $5b6e
-	farcall FarPtr_RestoreOverworldAfterMatch ; $5b71
+	farcall RunStoryMatch ; $5b6e
+	farcall RestoreOverworldAfterMatch ; $5b71
 	ret ; $5b74
 	; $5b75, 30 bytes (records:2)
 	dw $1014 ; record 0
@@ -1869,7 +1869,7 @@ SeniorCourtNpc0B_12:
 	ld a, [hl+] ; $5b9e
 	ld h, [hl] ; $5b9f
 	ld l, a ; $5ba0
-	farcall FarPtr_InitDialogueTextCursor ; $5ba1
+	farcall InitDialogueTextCursor ; $5ba1
 	ld a, [$c2b1] ; $5ba4
 	cp a, $0c ; $5ba7
 	jr c, Label_12_5bb9 ; $5ba9
@@ -1878,7 +1878,7 @@ SeniorCourtNpc0B_12:
 	ld a, [$c94d] ; $5bb0
 	and a, a ; $5bb3
 	jr nz, Label_12_5bb9 ; $5bb4
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5bb6
+	farcall AdvanceDialogueTextCursor ; $5bb6
 Label_12_5bb9:
 	script_speak $0b ; $5bb9
 	ret ; $5bbe
@@ -1912,7 +1912,7 @@ SeniorCourtNpc0C_12:
 	ld a, [hl+] ; $5bee
 	ld h, [hl] ; $5bef
 	ld l, a ; $5bf0
-	farcall FarPtr_InitDialogueTextCursor ; $5bf1
+	farcall InitDialogueTextCursor ; $5bf1
 	script_speak $0c ; $5bf4
 	ret ; $5bf9
 Label_12_5bfa:
@@ -1926,7 +1926,7 @@ Label_12_5bfa:
 	ld a, [hl+] ; $5c05
 	ld h, [hl] ; $5c06
 	ld l, a ; $5c07
-	farcall FarPtr_InitDialogueTextCursor ; $5c08
+	farcall InitDialogueTextCursor ; $5c08
 	script_speak $0c ; $5c0b
 	ret ; $5c10
 	; $5c11, 60 bytes (records:2)
@@ -2009,7 +2009,7 @@ SeniorCourtInitScript_12:
 	ld e, $0a ; $5d2f
 	ld h, $08 ; $5d31
 	ld l, $0e ; $5d33
-	farcall FarPtr_CopyBehaviorMapRect ; $5d35
+	farcall CopyBehaviorMapRect ; $5d35
 	test_flag $0f, 4 ; $5d38
 	jr z, Label_12_5d7b ; $5d3b
 	script_null_script $0a ; $5d3d
@@ -2027,7 +2027,7 @@ Label_12_5d7b:
 	jr z, Label_12_5d8d ; $5d83
 	ldh a, [hRomBank] ; $5d85
 	ld hl, SeniorCourtActorsA_12 ; $5d87
-	farcall FarPtr_ScriptRespawnLocationActors ; $5d8a
+	farcall ScriptRespawnLocationActors ; $5d8a
 Label_12_5d8d:
 	call Func_12_5e12 ; $5d8d
 	call Func_12_5e91 ; $5d90
@@ -2039,7 +2039,7 @@ Label_12_5d8d:
 	cp a, $0d ; $5da0
 	jp z, SeniorMatchVictorySceneDispatch ; $5da2
 	call Func_12_5dbe ; $5da5
-	farcall FarPtr_EndCutsceneScriptMode ; $5da8
+	farcall EndCutsceneScriptMode ; $5da8
 	call Func_12_5eab ; $5dab
 	ret ; $5dae
 Label_12_5daf:
@@ -2047,7 +2047,7 @@ Label_12_5daf:
 	jr z, Label_12_5d8d ; $5db2
 	ldh a, [hRomBank] ; $5db4
 	ld hl, SeniorCourtActorsB_12 ; $5db6
-	farcall FarPtr_ScriptRespawnLocationActors ; $5db9
+	farcall ScriptRespawnLocationActors ; $5db9
 	jr Label_12_5d8d ; $5dbc
 Func_12_5dbe:
 	ld a, [$c2b1] ; $5dbe
@@ -2059,7 +2059,7 @@ Func_12_5dbe:
 	ld c, l ; $5dce
 	ld b, h ; $5dcf
 	ld d, $3b ; $5dd0
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5dd2
+	farcall LoadActorObjectDefIfValid ; $5dd2
 	script_set_anim $03, $01 ; $5dd5
 Label_12_5ddc:
 	test_flag $05, 7 ; $5ddc
@@ -2118,7 +2118,7 @@ Func_12_5e91:
 	ld c, l ; $5e9c
 	ld b, h ; $5e9d
 	ld d, $28 ; $5e9e
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5ea0
+	farcall LoadActorObjectDefIfValid ; $5ea0
 	script_set_anim $0c, $01 ; $5ea3
 Label_12_5eaa:
 	ret ; $5eaa
@@ -2162,25 +2162,25 @@ SeniorSinglesRankOfferScene:
 	script_set_text Text_34_60 ; $5f50
 	test_flag $0a, 4 ; $5f56
 	jr z, Label_12_5f5e ; $5f59
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5f5b
+	farcall AdvanceDialogueTextCursor ; $5f5b
 Label_12_5f5e:
 	ld a, $03 ; $5f5e
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $5f60
-	farcall FarPtr_RunDialogueYesNoPrompt ; $5f63
-	farcall FarPtr_ScriptCloseDialogueWindow ; $5f66
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f60
+	farcall RunDialogueYesNoPrompt ; $5f63
+	farcall ScriptCloseDialogueWindow ; $5f66
 	script_wait_frames $05 ; $5f69
 	and a, a ; $5f70
 	jp nz, Label_12_5fb8 ; $5f71
 	script_set_text Text_34_64 ; $5f74
 	test_flag $0a, 4 ; $5f7a
 	jr z, Label_12_5f92 ; $5f7d
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5f7f
+	farcall AdvanceDialogueTextCursor ; $5f7f
 	test_flag $0a, 5 ; $5f82
 	jr z, Label_12_5f92 ; $5f85
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5f87
+	farcall AdvanceDialogueTextCursor ; $5f87
 	test_flag $0a, 6 ; $5f8a
 	jr z, Label_12_5f92 ; $5f8d
-	farcall FarPtr_AdvanceDialogueTextCursor ; $5f8f
+	farcall AdvanceDialogueTextCursor ; $5f8f
 Label_12_5f92:
 	script_speak $03 ; $5f92
 	call RunSeniorRankingMatchIntro ; $5f97
@@ -2193,7 +2193,7 @@ Label_12_5f92:
 Label_12_5fb8:
 	script_set_text Text_34_62 ; $5fb8
 	script_speak $03 ; $5fbe
-	farcall FarPtr_EndCutsceneScriptMode ; $5fc3
+	farcall EndCutsceneScriptMode ; $5fc3
 	ret ; $5fc6
 SeniorDoublesRankOfferScene:
 	script_null_script ACTOR_PARTNER ; $5fc7
@@ -2211,22 +2211,22 @@ SeniorDoublesRankOfferScene:
 	script_set_text Text_34_110 ; $6020
 	test_flag $08, 4 ; $6026
 	jr z, Label_12_602e ; $6029
-	farcall FarPtr_AdvanceDialogueTextCursor ; $602b
+	farcall AdvanceDialogueTextCursor ; $602b
 Label_12_602e:
 	ld a, $03 ; $602e
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6030
-	farcall FarPtr_RunDialogueYesNoPrompt ; $6033
-	farcall FarPtr_ScriptCloseDialogueWindow ; $6036
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6030
+	farcall RunDialogueYesNoPrompt ; $6033
+	farcall ScriptCloseDialogueWindow ; $6036
 	script_wait_frames $05 ; $6039
 	and a, a ; $6040
 	jp nz, Label_12_6087 ; $6041
 	script_set_text Text_34_113 ; $6044
 	test_flag $08, 4 ; $604a
 	jr z, Label_12_605a ; $604d
-	farcall FarPtr_AdvanceDialogueTextCursor ; $604f
+	farcall AdvanceDialogueTextCursor ; $604f
 	test_flag $08, 5 ; $6052
 	jr z, Label_12_605a ; $6055
-	farcall FarPtr_AdvanceDialogueTextCursor ; $6057
+	farcall AdvanceDialogueTextCursor ; $6057
 Label_12_605a:
 	script_speak $03 ; $605a
 	call RunSeniorRankingMatchIntro ; $605f
@@ -2244,7 +2244,7 @@ Label_12_6087:
 	ld c, l ; $6097
 	ld b, h ; $6098
 	ld de, $d000 ; $6099
-	farcall FarPtr_AttachActorStepMover ; $609c
+	farcall AttachActorStepMover ; $609c
 	ret ; $609f
 StartSeniorRankingMatch:
 	script_set_speed ACTOR_PLAYER, $0020 ; $60a0
@@ -2267,16 +2267,16 @@ Label_12_60c4:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_6d0e ; $60e8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_6cec ; $60f3
 	script_move_player $2400, $1700 ; $60fe
-	farcall FarPtr_WaitPlayerMoveDone ; $6108
+	farcall WaitPlayerMoveDone ; $6108
 	script_wait_actor_script $08 ; $610b
 	script_wait_frames $1e ; $6110
 	ld a, $0f ; $6117
 	ld [$c294], a ; $6119
 	ld [wStoryModeExitLocationRequest], a ; $611c
-	farcall FarPtr_InitStoryMatchSettings ; $611f
+	farcall InitStoryMatchSettings ; $611f
 	load_match_settings $0107 ; $6122
-	farcall FarPtr_RunStoryMatch ; $612f
-	farcall FarPtr_RestoreOverworldAfterMatch ; $6132
+	farcall RunStoryMatch ; $612f
+	farcall RestoreOverworldAfterMatch ; $6132
 	ret ; $6135
 Label_12_6136:
 	script_face $03, FACE_RIGHT ; $6136
@@ -2289,16 +2289,16 @@ Label_12_6136:
 	script_set_actor_script $06, ActorScript_12_78d9 ; $6163
 	script_set_actor_script $07, ActorScript_12_78ea ; $616e
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_6d1f ; $6179
-	farcall FarPtr_WaitPlayerMoveDone ; $6184
+	farcall WaitPlayerMoveDone ; $6184
 	script_wait_actor_script $07 ; $6187
 	script_wait_frames $1e ; $618c
 	ld a, $0f ; $6193
 	ld [$c294], a ; $6195
 	ld [wStoryModeExitLocationRequest], a ; $6198
-	farcall FarPtr_InitStoryMatchSettings ; $619b
+	farcall InitStoryMatchSettings ; $619b
 	load_match_settings $0108 ; $619e
-	farcall FarPtr_RunStoryMatch ; $61ab
-	farcall FarPtr_RestoreOverworldAfterMatch ; $61ae
+	farcall RunStoryMatch ; $61ab
+	farcall RestoreOverworldAfterMatch ; $61ae
 	ret ; $61b1
 Label_12_61b2:
 	script_face $03, FACE_LEFT ; $61b2
@@ -2310,16 +2310,16 @@ Label_12_61b2:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_6d0e ; $61e4
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_6cec ; $61ef
 	script_move_player $2400, $1700 ; $61fa
-	farcall FarPtr_WaitPlayerMoveDone ; $6204
+	farcall WaitPlayerMoveDone ; $6204
 	script_wait_actor_script $04 ; $6207
 	script_wait_frames $1e ; $620c
 	ld a, $0f ; $6213
 	ld [$c294], a ; $6215
 	ld [wStoryModeExitLocationRequest], a ; $6218
-	farcall FarPtr_InitStoryMatchSettings ; $621b
+	farcall InitStoryMatchSettings ; $621b
 	load_match_settings $0109 ; $621e
-	farcall FarPtr_RunStoryMatch ; $622b
-	farcall FarPtr_RestoreOverworldAfterMatch ; $622e
+	farcall RunStoryMatch ; $622b
+	farcall RestoreOverworldAfterMatch ; $622e
 	ret ; $6231
 Label_12_6232:
 	script_face $03, FACE_LEFT ; $6232
@@ -2328,16 +2328,16 @@ Label_12_6232:
 	script_face $07, FACE_LEFT ; $6247
 	call Func_12_63a2 ; $624e
 	script_set_actor_script $07, ActorScript_12_6c18 ; $6251
-	farcall FarPtr_WaitPlayerMoveDone ; $625c
+	farcall WaitPlayerMoveDone ; $625c
 	script_wait_actor_script $07 ; $625f
 	script_wait_frames $1e ; $6264
 	ld a, $0f ; $626b
 	ld [$c294], a ; $626d
 	ld [wStoryModeExitLocationRequest], a ; $6270
-	farcall FarPtr_InitStoryMatchSettings ; $6273
+	farcall InitStoryMatchSettings ; $6273
 	load_match_settings $0006 ; $6276
-	farcall FarPtr_RunStoryMatch ; $6283
-	farcall FarPtr_RestoreOverworldAfterMatch ; $6286
+	farcall RunStoryMatch ; $6283
+	farcall RestoreOverworldAfterMatch ; $6286
 	ret ; $6289
 Label_12_628a:
 	script_face $03, FACE_RIGHT ; $628a
@@ -2347,16 +2347,16 @@ Label_12_628a:
 	script_wait_frames $1e ; $62a6
 	call Func_12_63d3 ; $62ad
 	script_set_actor_script $06, ActorScript_12_6c62 ; $62b0
-	farcall FarPtr_WaitPlayerMoveDone ; $62bb
+	farcall WaitPlayerMoveDone ; $62bb
 	script_wait_actor_script $06 ; $62be
 	script_wait_frames $1e ; $62c3
 	ld a, $0f ; $62ca
 	ld [$c294], a ; $62cc
 	ld [wStoryModeExitLocationRequest], a ; $62cf
-	farcall FarPtr_InitStoryMatchSettings ; $62d2
+	farcall InitStoryMatchSettings ; $62d2
 	load_match_settings $0007 ; $62d5
-	farcall FarPtr_RunStoryMatch ; $62e2
-	farcall FarPtr_RestoreOverworldAfterMatch ; $62e5
+	farcall RunStoryMatch ; $62e2
+	farcall RestoreOverworldAfterMatch ; $62e5
 	ret ; $62e8
 Label_12_62e9:
 	script_face $03, FACE_RIGHT ; $62e9
@@ -2366,16 +2366,16 @@ Label_12_62e9:
 	script_wait_frames $1e ; $6305
 	call Func_12_63d3 ; $630c
 	script_set_actor_script $05, ActorScript_12_6c62 ; $630f
-	farcall FarPtr_WaitPlayerMoveDone ; $631a
+	farcall WaitPlayerMoveDone ; $631a
 	script_wait_frames $78 ; $631d
 	script_wait_move ACTOR_PLAYER ; $6324
 	ld a, $0f ; $6329
 	ld [$c294], a ; $632b
 	ld [wStoryModeExitLocationRequest], a ; $632e
-	farcall FarPtr_InitStoryMatchSettings ; $6331
+	farcall InitStoryMatchSettings ; $6331
 	load_match_settings $0008 ; $6334
-	farcall FarPtr_RunStoryMatch ; $6341
-	farcall FarPtr_RestoreOverworldAfterMatch ; $6344
+	farcall RunStoryMatch ; $6341
+	farcall RestoreOverworldAfterMatch ; $6344
 	ret ; $6347
 Label_12_6348:
 	script_face $03, FACE_LEFT ; $6348
@@ -2385,15 +2385,15 @@ Label_12_6348:
 	script_wait_frames $1e ; $6364
 	call Func_12_63a2 ; $636b
 	script_set_actor_script $04, ActorScript_12_6c18 ; $636e
-	farcall FarPtr_WaitPlayerMoveDone ; $6379
+	farcall WaitPlayerMoveDone ; $6379
 	script_wait_frames $b4 ; $637c
 	ld a, $0f ; $6383
 	ld [$c294], a ; $6385
 	ld [wStoryModeExitLocationRequest], a ; $6388
-	farcall FarPtr_InitStoryMatchSettings ; $638b
+	farcall InitStoryMatchSettings ; $638b
 	load_match_settings $0009 ; $638e
-	farcall FarPtr_RunStoryMatch ; $639b
-	farcall FarPtr_RestoreOverworldAfterMatch ; $639e
+	farcall RunStoryMatch ; $639b
+	farcall RestoreOverworldAfterMatch ; $639e
 	ret ; $63a1
 Func_12_63a2:
 	script_set_actor_script $0d, ActorScript_12_6d30 ; $63a2
@@ -2473,12 +2473,12 @@ RunSeniorRankingMatchIntro:
 	script_wait_frames $1e ; $6526
 	script_player_speed $0020 ; $652d
 	script_move_player_to_actor $09 ; $6533
-	farcall FarPtr_WaitPlayerMoveDone ; $653a
+	farcall WaitPlayerMoveDone ; $653a
 	ld bc, $d040 ; $653d
 	script_get_actor_state $09 ; $6540
 	ld e, l ; $6545
 	ld d, h ; $6546
-	farcall FarPtr_AttachActorWaypointFollower ; $6547
+	farcall AttachActorWaypointFollower ; $6547
 	script_face_toward $03, $09 ; $654a
 	script_null_script $08 ; $6552
 	script_set_anim $08, $01 ; $6557
@@ -2491,7 +2491,7 @@ RunSeniorRankingMatchIntro:
 	script_wait_actor_script $09 ; $658f
 	script_null_script ACTOR_PLAYER_SHADOW ; $6594
 	script_move_player_to_actor ACTOR_PLAYER ; $6599
-	farcall FarPtr_WaitPlayerMoveDone ; $65a0
+	farcall WaitPlayerMoveDone ; $65a0
 	script_face_toward $09, ACTOR_PLAYER ; $65a3
 	script_set_text Text_34_126 ; $65ab
 	script_set_anim $08, $03 ; $65b1
@@ -2512,12 +2512,12 @@ RunSeniorRankingMatchIntro:
 	script_wait_frames $1e ; $660f
 	script_player_speed $0020 ; $6616
 	script_move_player_to_actor $07 ; $661c
-	farcall FarPtr_WaitPlayerMoveDone ; $6623
+	farcall WaitPlayerMoveDone ; $6623
 	ld bc, $d040 ; $6626
 	script_get_actor_state $07 ; $6629
 	ld e, l ; $662e
 	ld d, h ; $662f
-	farcall FarPtr_AttachActorWaypointFollower ; $6630
+	farcall AttachActorWaypointFollower ; $6630
 	script_face_toward $03, $07 ; $6633
 	script_set_anim $07, $03 ; $663b
 	script_wait_idle $07 ; $6642
@@ -2527,7 +2527,7 @@ RunSeniorRankingMatchIntro:
 	script_wait_actor_script $07 ; $6664
 	script_null_script ACTOR_PLAYER_SHADOW ; $6669
 	script_move_player_to_actor ACTOR_PLAYER ; $666e
-	farcall FarPtr_WaitPlayerMoveDone ; $6675
+	farcall WaitPlayerMoveDone ; $6675
 	script_set_text Text_34_124 ; $6678
 	script_set_anim $06, $03 ; $667e
 	script_wait_idle $06 ; $6685
@@ -2551,7 +2551,7 @@ RunSeniorRankingMatchIntro:
 	script_face $04, FACE_DOWN ; $66f3
 	script_move_target $05, $2b00, $1100 ; $66fa
 	script_move_player_to_actor $05 ; $6705
-	farcall FarPtr_WaitPlayerMoveDone ; $670c
+	farcall WaitPlayerMoveDone ; $670c
 	script_face $05, FACE_DOWN ; $670f
 	script_face_toward $03, $05 ; $6716
 	script_set_anim $05, $03 ; $671e
@@ -2581,12 +2581,12 @@ RunSeniorRankingMatchIntro:
 	script_wait_frames $1e ; $67bf
 	script_player_speed $0020 ; $67c6
 	script_move_player_to_actor $07 ; $67cc
-	farcall FarPtr_WaitPlayerMoveDone ; $67d3
+	farcall WaitPlayerMoveDone ; $67d3
 	ld bc, $d040 ; $67d6
 	script_get_actor_state $07 ; $67d9
 	ld e, l ; $67de
 	ld d, h ; $67df
-	farcall FarPtr_AttachActorWaypointFollower ; $67e0
+	farcall AttachActorWaypointFollower ; $67e0
 	script_face_toward $03, $07 ; $67e3
 	script_set_anim $07, $03 ; $67eb
 	script_wait_idle $07 ; $67f2
@@ -2608,12 +2608,12 @@ RunSeniorRankingMatchIntro:
 	script_wait_frames $1e ; $6859
 	script_player_speed $0020 ; $6860
 	script_move_player_to_actor $06 ; $6866
-	farcall FarPtr_WaitPlayerMoveDone ; $686d
+	farcall WaitPlayerMoveDone ; $686d
 	ld bc, $d040 ; $6870
 	script_get_actor_state $06 ; $6873
 	ld e, l ; $6878
 	ld d, h ; $6879
-	farcall FarPtr_AttachActorWaypointFollower ; $687a
+	farcall AttachActorWaypointFollower ; $687a
 	script_face_toward $03, $06 ; $687d
 	script_set_anim $06, $03 ; $6885
 	script_wait_idle $06 ; $688c
@@ -2640,12 +2640,12 @@ RunSeniorRankingMatchIntro:
 	script_wait_frames $1e ; $6911
 	script_player_speed $0020 ; $6918
 	script_move_player_to_actor $05 ; $691e
-	farcall FarPtr_WaitPlayerMoveDone ; $6925
+	farcall WaitPlayerMoveDone ; $6925
 	ld bc, $d040 ; $6928
 	script_get_actor_state $05 ; $692b
 	ld e, l ; $6930
 	ld d, h ; $6931
-	farcall FarPtr_AttachActorWaypointFollower ; $6932
+	farcall AttachActorWaypointFollower ; $6932
 	script_face_toward $03, $05 ; $6935
 	script_set_anim $05, $03 ; $693d
 	script_wait_idle $05 ; $6944
@@ -2653,7 +2653,7 @@ RunSeniorRankingMatchIntro:
 	script_face $03, FACE_DOWN ; $6954
 	script_null_script ACTOR_PLAYER_SHADOW ; $695b
 	script_move_player_to_actor ACTOR_PLAYER ; $6960
-	farcall FarPtr_WaitPlayerMoveDone ; $6967
+	farcall WaitPlayerMoveDone ; $6967
 	script_face_toward ACTOR_PLAYER, $05 ; $696a
 	script_set_anim $05, $02 ; $6972
 	script_wait_idle $05 ; $6979
@@ -2672,14 +2672,14 @@ RunSeniorRankingMatchIntro:
 	script_wait_frames $1e ; $69c7
 	script_player_speed $0020 ; $69ce
 	script_move_player_to_actor $04 ; $69d4
-	farcall FarPtr_WaitPlayerMoveDone ; $69db
+	farcall WaitPlayerMoveDone ; $69db
 	script_face_toward $03, $04 ; $69de
 	script_set_anim $04, $03 ; $69e6
 	script_wait_idle $04 ; $69ed
 	script_set_actor_script $04, ActorScript_12_6cda ; $69f2
 	script_face $03, FACE_DOWN ; $69fd
 	script_move_player_to_actor ACTOR_PLAYER ; $6a04
-	farcall FarPtr_WaitPlayerMoveDone ; $6a0b
+	farcall WaitPlayerMoveDone ; $6a0b
 	script_face_toward ACTOR_PLAYER, $04 ; $6a0e
 	script_set_text Text_34_54 ; $6a16
 	script_speak $04 ; $6a1c
@@ -2734,12 +2734,12 @@ SeniorSinglesMatchConfirm:
 	script_set_text Text_34_68 ; $6ae8
 	test_flag $0a, 4 ; $6aee
 	jr z, Label_12_6af6 ; $6af1
-	farcall FarPtr_AdvanceDialogueTextCursor ; $6af3
+	farcall AdvanceDialogueTextCursor ; $6af3
 Label_12_6af6:
 	ld a, $03 ; $6af6
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6af8
-	farcall FarPtr_RunDialogueYesNoPrompt ; $6afb
-	farcall FarPtr_ScriptCloseDialogueWindow ; $6afe
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6af8
+	farcall RunDialogueYesNoPrompt ; $6afb
+	farcall ScriptCloseDialogueWindow ; $6afe
 	script_wait_frames $05 ; $6b01
 	and a, a ; $6b08
 	jp nz, Label_12_6b57 ; $6b09
@@ -2751,25 +2751,25 @@ Label_12_6b18:
 	script_set_text Text_34_70 ; $6b24
 	script_speak $03 ; $6b2a
 	call StartSeniorRankingMatch ; $6b2f
-	farcall FarPtr_EndCutsceneScriptMode ; $6b32
+	farcall EndCutsceneScriptMode ; $6b32
 	ret ; $6b35
 Label_12_6b36:
 	script_set_text Text_34_72 ; $6b36
 	test_flag $0a, 4 ; $6b3c
 	jr z, Label_12_6b44 ; $6b3f
-	farcall FarPtr_AdvanceDialogueTextCursor ; $6b41
+	farcall AdvanceDialogueTextCursor ; $6b41
 Label_12_6b44:
 	script_speak $03 ; $6b44
 	call ResumeSeniorOpponentScripts ; $6b49
 	script_wait_frames $1e ; $6b4c
-	farcall FarPtr_EndCutsceneScriptMode ; $6b53
+	farcall EndCutsceneScriptMode ; $6b53
 	ret ; $6b56
 Label_12_6b57:
 	script_set_text Text_34_71 ; $6b57
 	ld a, $03 ; $6b5d
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6b5f
-	farcall FarPtr_RunDialogueYesNoPrompt ; $6b62
-	farcall FarPtr_ScriptCloseDialogueWindow ; $6b65
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6b5f
+	farcall RunDialogueYesNoPrompt ; $6b62
+	farcall ScriptCloseDialogueWindow ; $6b65
 	script_wait_frames $05 ; $6b68
 	and a, a ; $6b6f
 	jr z, Label_12_6b36 ; $6b70
@@ -2779,12 +2779,12 @@ SeniorDoublesMatchConfirm:
 	script_set_text Text_34_116 ; $6b76
 	test_flag $08, 5 ; $6b7c
 	jr z, Label_12_6b84 ; $6b7f
-	farcall FarPtr_AdvanceDialogueTextCursor ; $6b81
+	farcall AdvanceDialogueTextCursor ; $6b81
 Label_12_6b84:
 	ld a, $03 ; $6b84
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6b86
-	farcall FarPtr_RunDialogueYesNoPrompt ; $6b89
-	farcall FarPtr_ScriptCloseDialogueWindow ; $6b8c
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6b86
+	farcall RunDialogueYesNoPrompt ; $6b89
+	farcall ScriptCloseDialogueWindow ; $6b8c
 	script_wait_frames $05 ; $6b8f
 	and a, a ; $6b96
 	jp nz, Label_12_6be4 ; $6b97
@@ -2796,7 +2796,7 @@ Label_12_6b84:
 	script_speak $03 ; $6bb8
 Label_12_6bbd:
 	call StartSeniorRankingMatch ; $6bbd
-	farcall FarPtr_EndCutsceneScriptMode ; $6bc0
+	farcall EndCutsceneScriptMode ; $6bc0
 	ret ; $6bc3
 Label_12_6bc4:
 	script_speak $03 ; $6bc4
@@ -2806,15 +2806,15 @@ Label_12_6bc4:
 	ld c, l ; $6bd8
 	ld b, h ; $6bd9
 	ld de, $d000 ; $6bda
-	farcall FarPtr_AttachActorStepMover ; $6bdd
-	farcall FarPtr_EndCutsceneScriptMode ; $6be0
+	farcall AttachActorStepMover ; $6bdd
+	farcall EndCutsceneScriptMode ; $6be0
 	ret ; $6be3
 Label_12_6be4:
 	script_set_text Text_34_119 ; $6be4
 	ld a, $03 ; $6bea
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $6bec
-	farcall FarPtr_RunDialogueYesNoPrompt ; $6bef
-	farcall FarPtr_ScriptCloseDialogueWindow ; $6bf2
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6bec
+	farcall RunDialogueYesNoPrompt ; $6bef
+	farcall ScriptCloseDialogueWindow ; $6bf2
 	script_wait_frames $05 ; $6bf5
 	and a, a ; $6bfc
 	jr z, Label_12_6bc4 ; $6bfd
@@ -3010,7 +3010,7 @@ Label_12_6d8a:
 	ld a, $ff ; $6d94
 	ld [$c294], a ; $6d96
 	ld [wStoryModeExitLocationRequest], a ; $6d99
-	farcall FarPtr_StubNop_1e ; $6d9c
+	farcall StubNop_1e ; $6d9c
 	ret ; $6d9f
 SeniorCourtPostMatchReturn:
 	wram_bank $04 ; $6da0
@@ -3027,7 +3027,7 @@ Label_12_6db5:
 	script_face ACTOR_PLAYER, FACE_UP ; $6dd0
 	script_set_position ACTOR_PARTNER, $2d00, $1d00 ; $6dd7
 	script_face ACTOR_PARTNER, FACE_UP ; $6de2
-	farcall FarPtr_WaitPlayerMoveDone ; $6de9
+	farcall WaitPlayerMoveDone ; $6de9
 	ret ; $6dec
 SeniorMatchVictorySceneDispatch:
 	xor a, a ; $6ded
@@ -3071,7 +3071,7 @@ SeniorMatchVictorySceneDispatch:
 	script_face ACTOR_PARTNER, FACE_UP ; $6e77
 	script_player_speed $0040 ; $6e7e
 	script_move_player $2600, $1700 ; $6e84
-	farcall FarPtr_WaitPlayerMoveDone ; $6e8e
+	farcall WaitPlayerMoveDone ; $6e8e
 	script_fade_in $08 ; $6e91
 	call WaitFadeEnd ; $6e96
 	script_wait_frames $3c ; $6e99
@@ -3087,7 +3087,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_position $11, $3f00, $3f00 ; $6edf
 	script_jump_velocity $03, $ff80 ; $6eea
 	ld a, $03 ; $6ef2
-	farcall FarPtr_ScriptWaitActorJumpDone ; $6ef4
+	farcall ScriptWaitActorJumpDone ; $6ef4
 	script_speak $03 ; $6ef7
 	script_set_actor_script $08, ActorScript_12_7894 ; $6efc
 	script_set_actor_script $09, ActorScript_12_7854 ; $6f07
@@ -3103,8 +3103,8 @@ SeniorMatchVictorySceneDispatch:
 	ld c, l ; $6f5e
 	ld b, h ; $6f5f
 	ld de, $d000 ; $6f60
-	farcall FarPtr_AttachActorStepMover ; $6f63
-	farcall FarPtr_EndCutsceneScriptMode ; $6f66
+	farcall AttachActorStepMover ; $6f63
+	farcall EndCutsceneScriptMode ; $6f66
 	ret ; $6f69
 	script_null_script ACTOR_PARTNER ; $6f6a
 	script_face $03, FACE_RIGHT ; $6f6f
@@ -3124,10 +3124,10 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_frames $14 ; $6fda
 	script_jump_velocity $03, $ff80 ; $6fe1
 	ld a, $03 ; $6fe9
-	farcall FarPtr_ScriptWaitActorJumpDone ; $6feb
+	farcall ScriptWaitActorJumpDone ; $6feb
 	script_jump_velocity $03, $ff80 ; $6fee
 	ld a, $03 ; $6ff6
-	farcall FarPtr_ScriptWaitActorJumpDone ; $6ff8
+	farcall ScriptWaitActorJumpDone ; $6ff8
 	script_speak $03 ; $6ffb
 	script_wait_frames $3c ; $7000
 	script_move_target $03, $2d00, $1900 ; $7007
@@ -3144,8 +3144,8 @@ SeniorMatchVictorySceneDispatch:
 	ld c, l ; $7065
 	ld b, h ; $7066
 	ld de, $d000 ; $7067
-	farcall FarPtr_AttachActorStepMover ; $706a
-	farcall FarPtr_EndCutsceneScriptMode ; $706d
+	farcall AttachActorStepMover ; $706a
+	farcall EndCutsceneScriptMode ; $706d
 	ret ; $7070
 	script_set_position $09, $1b00, $0b00 ; $7071
 	script_set_position $08, $1b00, $0d00 ; $707c
@@ -3169,9 +3169,9 @@ SeniorMatchVictorySceneDispatch:
 	script_face ACTOR_PARTNER, FACE_UP ; $710a
 	script_player_speed $0040 ; $7111
 	script_move_player $2400, $1500 ; $7117
-	farcall FarPtr_WaitPlayerMoveDone ; $7121
+	farcall WaitPlayerMoveDone ; $7121
 	script_face $03, FACE_LEFT ; $7124
-	farcall FarPtr_WaitPlayerMoveDone ; $712b
+	farcall WaitPlayerMoveDone ; $712b
 	script_fade_in $20 ; $712e
 	call WaitFadeEnd ; $7133
 	script_set_text Text_34_130 ; $7136
@@ -3198,7 +3198,7 @@ SeniorMatchVictorySceneDispatch:
 	script_move_player $2b00, $2000 ; $71c3
 	script_move_target $03, $2b00, $2000 ; $71cd
 	script_wait_move $03 ; $71d8
-	farcall FarPtr_WaitPlayerMoveDone ; $71dd
+	farcall WaitPlayerMoveDone ; $71dd
 	script_move_player $2400, $1b00 ; $71e0
 	script_move_target $03, $2500, $1f00 ; $71ea
 	script_wait_move $03 ; $71f5
@@ -3242,7 +3242,7 @@ SeniorMatchVictorySceneDispatch:
 	script_face ACTOR_PARTNER, FACE_UP ; $72e1
 	script_wait_frames $28 ; $72e8
 	script_move_player $2400, $1700 ; $72ef
-	farcall FarPtr_WaitPlayerMoveDone ; $72f9
+	farcall WaitPlayerMoveDone ; $72f9
 	script_set_anim $05, $02 ; $72fc
 	script_wait_frames $28 ; $7303
 	script_speak $05 ; $730a
@@ -3276,7 +3276,7 @@ SeniorMatchVictorySceneDispatch:
 	ld c, $08 ; $73a6
 	call BeginFadeOut ; $73a8
 	call WaitFadeEnd ; $73ab
-	farcall FarPtr_EndCutsceneScriptMode ; $73ae
+	farcall EndCutsceneScriptMode ; $73ae
 	ret ; $73b1
 	script_set_position $07, $2300, $0f00 ; $73b2
 	script_face $07, FACE_DOWN ; $73bd
@@ -3285,7 +3285,7 @@ SeniorMatchVictorySceneDispatch:
 	script_speak $07 ; $73cd
 	script_jump_velocity $03, $ff80 ; $73d2
 	ld a, $03 ; $73da
-	farcall FarPtr_ScriptWaitActorJumpDone ; $73dc
+	farcall ScriptWaitActorJumpDone ; $73dc
 	script_speak $03 ; $73df
 	script_set_actor_script $07, ActorScript_12_6c3a ; $73e4
 	script_wait_frames $3c ; $73ef
@@ -3299,7 +3299,7 @@ SeniorMatchVictorySceneDispatch:
 	script_face $03, FACE_DOWN ; $7430
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7437
 	script_wait_frames $01 ; $743e
-	farcall FarPtr_EndCutsceneScriptMode ; $7445
+	farcall EndCutsceneScriptMode ; $7445
 	ret ; $7448
 	set_flag $0a, 5 ; $7449
 	script_set_position $06, $3300, $0f00 ; $744c
@@ -3310,7 +3310,7 @@ SeniorMatchVictorySceneDispatch:
 	script_speak $06 ; $7472
 	script_jump_velocity $03, $ff80 ; $7477
 	ld a, $03 ; $747f
-	farcall FarPtr_ScriptWaitActorJumpDone ; $7481
+	farcall ScriptWaitActorJumpDone ; $7481
 	script_set_text Text_34_76 ; $7484
 	script_speak $03 ; $748a
 	script_set_actor_script $06, ActorScript_12_6c84 ; $748f
@@ -3318,7 +3318,7 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_move ACTOR_PLAYER ; $74a5
 	script_face ACTOR_PLAYER, FACE_DOWN ; $74aa
 	call StartSeniorCourtPairBRally ; $74b1
-	farcall FarPtr_EndCutsceneScriptMode ; $74b4
+	farcall EndCutsceneScriptMode ; $74b4
 	ret ; $74b7
 	set_flag $0a, 6 ; $74b8
 	call PlaceSeniorCourtPairB ; $74bb
@@ -3330,7 +3330,7 @@ SeniorMatchVictorySceneDispatch:
 	script_speak $05 ; $74e4
 	script_jump_velocity $03, $ff80 ; $74e9
 	ld a, $03 ; $74f1
-	farcall FarPtr_ScriptWaitActorJumpDone ; $74f3
+	farcall ScriptWaitActorJumpDone ; $74f3
 	script_set_text Text_34_77 ; $74f6
 	script_speak $03 ; $74fc
 	script_set_actor_script $05, ActorScript_12_6cc3 ; $7501
@@ -3338,7 +3338,7 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_move ACTOR_PLAYER ; $7517
 	script_face ACTOR_PLAYER, FACE_DOWN ; $751c
 	call StartSeniorCourtPairBRally ; $7523
-	farcall FarPtr_EndCutsceneScriptMode ; $7526
+	farcall EndCutsceneScriptMode ; $7526
 	ret ; $7529
 	script_player_speed $0040 ; $752a
 	script_set_speed $04, $0018 ; $7530
@@ -3346,7 +3346,7 @@ SeniorMatchVictorySceneDispatch:
 	script_set_position $04, $2200, $0f00 ; $7543
 	script_set_position ACTOR_PLAYER, $2400, $1b00 ; $754e
 	script_move_player $2400, $1500 ; $7559
-	farcall FarPtr_WaitPlayerMoveDone ; $7563
+	farcall WaitPlayerMoveDone ; $7563
 	script_face ACTOR_PLAYER, FACE_UP ; $7566
 	script_face $04, FACE_DOWN ; $756d
 	script_face $03, FACE_UP ; $7574
@@ -3369,7 +3369,7 @@ SeniorMatchVictorySceneDispatch:
 	script_move_player $2b00, $2000 ; $75de
 	script_move_target $03, $2b00, $1f00 ; $75e8
 	script_wait_move $03 ; $75f3
-	farcall FarPtr_WaitPlayerMoveDone ; $75f8
+	farcall WaitPlayerMoveDone ; $75f8
 	script_move_player $2400, $1e00 ; $75fb
 	script_move_target $03, $2400, $1f00 ; $7605
 	script_wait_move $03 ; $7610
@@ -3406,7 +3406,7 @@ SeniorMatchVictorySceneDispatch:
 	sound $96 ; $76d5
 	script_wait_frames $28 ; $76d7
 	script_move_player $2400, $1700 ; $76de
-	farcall FarPtr_WaitPlayerMoveDone ; $76e8
+	farcall WaitPlayerMoveDone ; $76e8
 	script_set_anim $04, $02 ; $76eb
 	script_wait_frames $28 ; $76f2
 	script_move_target $04, $2400, $1500 ; $76f9
@@ -3428,7 +3428,7 @@ SeniorMatchVictorySceneDispatch:
 	ld c, $08 ; $774a
 	call BeginFadeOut ; $774c
 	call WaitFadeEnd ; $774f
-	farcall FarPtr_EndCutsceneScriptMode ; $7752
+	farcall EndCutsceneScriptMode ; $7752
 	ret ; $7755
 ComputeSeniorCourtStage:
 	test_flag $05, 7 ; $7756
@@ -3485,10 +3485,10 @@ FadeInSeniorCourtNearPairA:
 	script_player_speed $0040 ; $77c5
 	script_set_position ACTOR_PLAYER, $2400, $1b00 ; $77cb
 	script_move_player $2400, $1500 ; $77d6
-	farcall FarPtr_WaitPlayerMoveDone ; $77e0
+	farcall WaitPlayerMoveDone ; $77e0
 	script_face ACTOR_PLAYER, FACE_UP ; $77e3
 	script_face $03, FACE_LEFT ; $77ea
-	farcall FarPtr_WaitPlayerMoveDone ; $77f1
+	farcall WaitPlayerMoveDone ; $77f1
 	script_fade_in $20 ; $77f4
 	call WaitFadeEnd ; $77f9
 	ret ; $77fc
@@ -3496,10 +3496,10 @@ FadeInSeniorCourtNearPairB:
 	call PlaceSeniorCourtPairB ; $77fd
 	script_player_speed $0040 ; $7800
 	script_move_player $3500, $1500 ; $7806
-	farcall FarPtr_WaitPlayerMoveDone ; $7810
+	farcall WaitPlayerMoveDone ; $7810
 	script_face ACTOR_PLAYER, FACE_UP ; $7813
 	script_face $03, FACE_RIGHT ; $781a
-	farcall FarPtr_WaitPlayerMoveDone ; $7821
+	farcall WaitPlayerMoveDone ; $7821
 	script_fade_in $20 ; $7824
 	call WaitFadeEnd ; $7829
 	ret ; $782c
@@ -3772,9 +3772,9 @@ PushTextArgFetchedString:
 	wram_bank $07 ; $7a6b
 	ld de, $df00 ; $7a71
 	wram_bank $05 ; $7a74
-	farcall FarPtr_FetchShortTextToBuffer ; $7a7a
+	farcall FetchShortTextToBuffer ; $7a7a
 	ld hl, $df00 ; $7a7d
-	farcall FarPtr_PushTextArgString ; $7a80
+	farcall PushTextArgString ; $7a80
 	pop af ; $7a83
 	wram_bank ; $7a84
 	ret ; $7a88

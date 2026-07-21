@@ -1,34 +1,23 @@
 SECTION "ROM Bank $1d", ROMX[$4000], BANK[$1d]
 
-FarPtr_ShowCharDataScreen:
-	dw ShowCharDataScreen ; $4000
-FarPtr_PromptCharDataConfirm:
-	dw PromptCharDataConfirm ; $4002
-FarPtr_1d_04:
-	dw Func_1d_68a3 ; $4004
-FarPtr_1d_06:
-	dw Func_1d_682c ; $4006
-FarPtr_ClearDrillResultBuffer:
-	dw ClearDrillResultBuffer ; $4008
-FarPtr_RecordDrillResult:
-	dw RecordDrillResult ; $400a
-FarPtr_InitCharDataScreenVideo:
-	dw InitCharDataScreenVideo ; $400c
-FarPtr_1d_0e:
-	dw Func_1d_5c0b ; $400e
-FarPtr_StartCharDataValuesSyncTask:
-	dw StartCharDataValuesSyncTask ; $4010
-FarPtr_StopCharDataValuesSyncTask:
-	dw StopCharDataValuesSyncTask ; $4012
-FarPtr_GrayscalePaletteColorInPlace:
-	dw GrayscalePaletteColorInPlace ; $4014
+	farptr ShowCharDataScreen ; $4000
+	farptr PromptCharDataConfirm ; $4002
+	farptr Func_1d_68a3 ; $4004
+	farptr Func_1d_682c ; $4006
+	farptr ClearDrillResultBuffer ; $4008
+	farptr RecordDrillResult ; $400a
+	farptr InitCharDataScreenVideo ; $400c
+	farptr Func_1d_5c0b ; $400e
+	farptr StartCharDataValuesSyncTask ; $4010
+	farptr StopCharDataValuesSyncTask ; $4012
+	farptr GrayscalePaletteColorInPlace ; $4014
 ShowCharDataScreen:
 	ld b, a ; $4016
 	wram_bank $06 ; $4017
 	ld a, b ; $401d
 	ld [$d149], a ; $401e
 	sound $04 ; $4021
-	farcall FarPtr_RefreshMainCharacterStats ; $4023
+	farcall RefreshMainCharacterStats ; $4023
 	call EnableLCD ; $4026
 	ld c, $7f ; $4029
 	call BeginFadeOut ; $402b
@@ -45,10 +34,10 @@ ShowCharDataScreen:
 	ld de, $a600 ; $404f
 	ld c, $14 ; $4052
 	call QueueVRAMCopy ; $4054
-	farcall FarPtr_InitMenuBgScroll ; $4057
+	farcall InitMenuBgScroll ; $4057
 	ld b, $05 ; $405a
 	ld c, $05 ; $405c
-	farcall FarPtr_39_26 ; $405e
+	farcall Func_39_4b3a ; $405e
 	ld a, $0d ; $4061
 	ld [$cb17], a ; $4063
 	ld a, $0d ; $4066
@@ -70,7 +59,7 @@ ShowCharDataScreen:
 	ld a, $01 ; $4090
 	ld hl, CharDataValuesSyncTask ; $4092
 	call RegisterFrameTask ; $4095
-	farcall FarPtr_StartCharDataScreenAnimTask ; $4098
+	farcall StartCharDataScreenAnimTask ; $4098
 	script_fade_in $10 ; $409b
 	call WaitFadeEnd ; $40a0
 	call RunDrillResultInputLoop ; $40a3
@@ -85,11 +74,11 @@ ShowCharDataScreen:
 	call UnregisterFrameTask ; $40bc
 	ld hl, Func_1d_40cc ; $40bf
 	call UnregisterFrameTask ; $40c2
-	farcall FarPtr_StopCharDataScreenAnimTask ; $40c5
+	farcall StopCharDataScreenAnimTask ; $40c5
 	call ClearFrameTasks ; $40c8
 	ret ; $40cb
 Func_1d_40cc:
-	farcall FarPtr_TickMenuBgScroll ; $40cc
+	farcall TickMenuBgScroll ; $40cc
 	ret ; $40cf
 InitDrillWorkRam:
 	wram_bank $06 ; $40d0
@@ -124,7 +113,7 @@ InitDrillWorkRam:
 	ld [$d023], a ; $411a
 	ret ; $411d
 Func_1d_411e:
-	farcall FarPtr_CharDataScreen_LoadScreen ; $411e
+	farcall CharDataScreen_LoadScreen ; $411e
 	call Func_1d_4175 ; $4121
 	xor a, a ; $4124
 	call Func_1d_4a14 ; $4125
@@ -318,7 +307,7 @@ Label_1d_436b:
 	pop af ; $4373
 	ld a, [hl] ; $4374
 	ld de, $0401 ; $4375
-	farcall FarPtr_LoadIndexedPaletteThunk ; $4378
+	farcall LoadIndexedPaletteThunk ; $4378
 	wram_bank $01 ; $437b
 	push af ; $4381
 	ld hl, wStoryModeNameOfMainCharacter ; $4382
@@ -336,7 +325,7 @@ Label_1d_438d:
 	pop af ; $4395
 	ld a, [hl] ; $4396
 	ld de, $d000 ; $4397
-	farcall FarPtr_DecompressCharMugshot ; $439a
+	farcall DecompressCharMugshot ; $439a
 	ld hl, $d000 ; $439d
 	ld de, $b200 ; $43a0
 	ld c, $03 ; $43a3
@@ -367,7 +356,7 @@ Label_1d_43cf:
 	pop af ; $43d7
 	ld a, [hl] ; $43d8
 	ld de, $0101 ; $43d9
-	farcall FarPtr_LoadIndexedPaletteThunk ; $43dc
+	farcall LoadIndexedPaletteThunk ; $43dc
 	wram_bank $01 ; $43df
 	push af ; $43e5
 	ld hl, wStoryModeNameOfMainCharacter ; $43e6
@@ -385,7 +374,7 @@ Label_1d_43f1:
 	pop af ; $43f9
 	ld a, [hl] ; $43fa
 	ld de, $d000 ; $43fb
-	farcall FarPtr_DecompressCharMugshot ; $43fe
+	farcall DecompressCharMugshot ; $43fe
 	ld hl, $d000 ; $4401
 	ld de, $b230 ; $4404
 	ld c, $03 ; $4407
@@ -484,7 +473,7 @@ Label_1d_44a7:
 	ld de, $d08e ; $44b6
 	call FormatDecimalNumberUnsigned ; $44b9
 	ld de, $d3db ; $44bc
-	farcall FarPtr_1c_04 ; $44bf
+	farcall Func_1c_44cc ; $44bf
 	wram_bank $06 ; $44c2
 	push af ; $44c8
 	ld hl, wStoryModeNameOfMainCharacter ; $44c9
@@ -507,7 +496,7 @@ Label_1d_44d4:
 	ld de, $d08e ; $44e3
 	call FormatDecimalNumberUnsigned ; $44e6
 	ld de, $d3f9 ; $44e9
-	farcall FarPtr_1c_04 ; $44ec
+	farcall Func_1c_44cc ; $44ec
 	wram_bank $06 ; $44ef
 	push af ; $44f5
 	ld hl, wStoryModeNameOfMainCharacter ; $44f6
@@ -530,7 +519,7 @@ Label_1d_4501:
 	ld de, $d08e ; $4510
 	call FormatDecimalNumberUnsigned ; $4513
 	ld de, $d403 ; $4516
-	farcall FarPtr_1c_04 ; $4519
+	farcall Func_1c_44cc ; $4519
 	wram_bank $06 ; $451c
 	push af ; $4522
 	ld hl, wStoryModeNameOfMainCharacter ; $4523
@@ -553,7 +542,7 @@ Label_1d_452e:
 	ld de, $d08e ; $453d
 	call FormatDecimalNumberUnsigned ; $4540
 	ld de, $d40d ; $4543
-	farcall FarPtr_1c_04 ; $4546
+	farcall Func_1c_44cc ; $4546
 	wram_bank $06 ; $4549
 	push af ; $454f
 	ld hl, wStoryModeNameOfMainCharacter ; $4550
@@ -576,13 +565,13 @@ Label_1d_455b:
 	ld de, $d08e ; $456a
 	call FormatDecimalNumberUnsigned ; $456d
 	ld de, $d417 ; $4570
-	farcall FarPtr_1c_04 ; $4573
+	farcall Func_1c_44cc ; $4573
 	call ComputeExpProgressBar ; $4576
 	ld de, $d42f ; $4579
 	call Func_1d_59fc ; $457c
 	wram_bank $06 ; $457f
 	xor a, a ; $4585
-	farcall FarPtr_GetExpRemainingToNextLevel ; $4586
+	farcall GetExpRemainingToNextLevel ; $4586
 	ld a, $03 ; $4589
 	ld de, $d08e ; $458b
 	call FormatDecimalNumberUnsigned ; $458e
@@ -695,7 +684,7 @@ Label_1d_463c:
 	ld de, $d08e ; $464b
 	call FormatDecimalNumberUnsigned ; $464e
 	ld de, $d46b ; $4651
-	farcall FarPtr_1c_04 ; $4654
+	farcall Func_1c_44cc ; $4654
 	wram_bank $06 ; $4657
 	push af ; $465d
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
@@ -718,7 +707,7 @@ Label_1d_4669:
 	ld de, $d08e ; $4678
 	call FormatDecimalNumberUnsigned ; $467b
 	ld de, $d489 ; $467e
-	farcall FarPtr_1c_04 ; $4681
+	farcall Func_1c_44cc ; $4681
 	wram_bank $06 ; $4684
 	push af ; $468a
 	ld hl, wStoryModeNameOfMainCharacter ; $468b
@@ -741,7 +730,7 @@ Label_1d_4696:
 	ld de, $d08e ; $46a5
 	call FormatDecimalNumberUnsigned ; $46a8
 	ld de, $d493 ; $46ab
-	farcall FarPtr_1c_04 ; $46ae
+	farcall Func_1c_44cc ; $46ae
 	wram_bank $06 ; $46b1
 	push af ; $46b7
 	ld hl, wStoryModeNameOfMainCharacter ; $46b8
@@ -764,7 +753,7 @@ Label_1d_46c3:
 	ld de, $d08e ; $46d2
 	call FormatDecimalNumberUnsigned ; $46d5
 	ld de, $d49d ; $46d8
-	farcall FarPtr_1c_04 ; $46db
+	farcall Func_1c_44cc ; $46db
 	wram_bank $06 ; $46de
 	push af ; $46e4
 	ld hl, wStoryModeNameOfMainCharacter ; $46e5
@@ -787,13 +776,13 @@ Label_1d_46f0:
 	ld de, $d08e ; $46ff
 	call FormatDecimalNumberUnsigned ; $4702
 	ld de, $d4a7 ; $4705
-	farcall FarPtr_1c_04 ; $4708
+	farcall Func_1c_44cc ; $4708
 	call ComputeExpProgressBar ; $470b
 	ld de, $d4bf ; $470e
 	call Func_1d_59fc ; $4711
 	wram_bank $06 ; $4714
 	ld a, $01 ; $471a
-	farcall FarPtr_GetExpRemainingToNextLevel ; $471c
+	farcall GetExpRemainingToNextLevel ; $471c
 	ld a, $03 ; $471f
 	ld de, $d08e ; $4721
 	call FormatDecimalNumberUnsigned ; $4724
@@ -1621,7 +1610,7 @@ Label_1d_4db3:
 	ld a, $01 ; $4deb
 	ld hl, CharDataValuesSyncTask ; $4ded
 	call RegisterFrameTask ; $4df0
-	farcall FarPtr_StartCharDataScreenAnimTask ; $4df3
+	farcall StartCharDataScreenAnimTask ; $4df3
 	jp Label_1d_4cbf ; $4df6
 Label_1d_4df9:
 	sound $62 ; $4df9
@@ -1663,7 +1652,7 @@ Label_1d_4e12:
 	ld a, $01 ; $4e4a
 	ld hl, CharDataValuesSyncTask ; $4e4c
 	call RegisterFrameTask ; $4e4f
-	farcall FarPtr_StartCharDataScreenAnimTask ; $4e52
+	farcall StartCharDataScreenAnimTask ; $4e52
 	jp Label_1d_4cbf ; $4e55
 Label_1d_4e58:
 	sound $62 ; $4e58
@@ -1944,7 +1933,7 @@ Label_1d_5007:
 	ld a, [hl] ; $5010
 	inc a ; $5011
 	ld [$d018], a ; $5012
-	farcall FarPtr_CharDataScreen_DrawStats ; $5015
+	farcall CharDataScreen_DrawStats ; $5015
 	wram_bank $03 ; $5018
 	ld hl, $d501 ; $501e
 	ld a, $a3 ; $5021
@@ -2021,7 +2010,7 @@ Label_1d_5080:
 	ld de, $d08e ; $508f
 	call FormatDecimalNumberUnsigned ; $5092
 	ld de, $d519 ; $5095
-	farcall FarPtr_1c_04 ; $5098
+	farcall Func_1c_44cc ; $5098
 	ret ; $509b
 Func_1d_509c:
 	call AdvanceFrame ; $509c
@@ -2041,7 +2030,7 @@ Func_1d_509c:
 	ld hl, DrillDisplayData_1d ; $50c3
 	ld bc, $d390 ; $50c6
 	call Func_1d_4bb6 ; $50c9
-	farcall FarPtr_1c_16 ; $50cc
+	farcall Func_1c_72fc ; $50cc
 	wram_bank $06 ; $50cf
 	ld hl, $d147 ; $50d5
 	ld de, $0020 ; $50d8
@@ -2061,7 +2050,7 @@ Func_1d_509c:
 	ld hl, $5c2e ; $50fc
 	ld bc, $d390 ; $50ff
 	call Func_1d_4bb6 ; $5102
-	farcall FarPtr_1c_16 ; $5105
+	farcall Func_1c_72fc ; $5105
 	wram_bank $06 ; $5108
 	ld hl, $d145 ; $510e
 	ld de, $ff60 ; $5111
@@ -2092,7 +2081,7 @@ Func_1d_509c:
 	ld hl, $6193 ; $5150
 	ld bc, $dc20 ; $5153
 	call Func_1d_4bb6 ; $5156
-	farcall FarPtr_1c_16 ; $5159
+	farcall Func_1c_72fc ; $5159
 	wram_bank $06 ; $515c
 	ld hl, $d145 ; $5162
 	ld de, $ff80 ; $5165
@@ -2123,7 +2112,7 @@ Func_1d_509c:
 	ld hl, $6158 ; $51a4
 	ld bc, $dc20 ; $51a7
 	call Func_1d_4bb6 ; $51aa
-	farcall FarPtr_1c_16 ; $51ad
+	farcall Func_1c_72fc ; $51ad
 	wram_bank $06 ; $51b0
 	ld hl, $d145 ; $51b6
 	ld de, hPeakLY ; $51b9
@@ -2145,7 +2134,7 @@ Func_1d_509c:
 	ld hl, $610d ; $51dd
 	ld bc, $dc20 ; $51e0
 	call Func_1d_4bb6 ; $51e3
-	farcall FarPtr_1c_16 ; $51e6
+	farcall Func_1c_72fc ; $51e6
 	wram_bank $06 ; $51e9
 	ld hl, $d145 ; $51ef
 	ld de, hLinkRxByte ; $51f2
@@ -2167,7 +2156,7 @@ Func_1d_509c:
 	ld hl, $60c2 ; $5216
 	ld bc, $dc20 ; $5219
 	call Func_1d_4bb6 ; $521c
-	farcall FarPtr_1c_16 ; $521f
+	farcall Func_1c_72fc ; $521f
 	wram_bank $06 ; $5222
 	ld hl, $d145 ; $5228
 	ld de, $ffe0 ; $522b
@@ -2189,7 +2178,7 @@ Func_1d_509c:
 	ld hl, $6077 ; $524f
 	ld bc, $dc20 ; $5252
 	call Func_1d_4bb6 ; $5255
-	farcall FarPtr_1c_16 ; $5258
+	farcall Func_1c_72fc ; $5258
 	wram_bank $06 ; $525b
 	ld hl, $d145 ; $5261
 	xor a, a ; $5264
@@ -2217,7 +2206,7 @@ Func_1d_5268:
 	ld hl, $60c2 ; $5295
 	ld bc, $dc20 ; $5298
 	call Func_1d_4bb6 ; $529b
-	farcall FarPtr_1c_16 ; $529e
+	farcall Func_1c_72fc ; $529e
 	wram_bank $06 ; $52a1
 	ld hl, $d145 ; $52a7
 	ld de, hLinkRxByte ; $52aa
@@ -2239,7 +2228,7 @@ Func_1d_5268:
 	ld hl, $610d ; $52ce
 	ld bc, $dc20 ; $52d1
 	call Func_1d_4bb6 ; $52d4
-	farcall FarPtr_1c_16 ; $52d7
+	farcall Func_1c_72fc ; $52d7
 	wram_bank $06 ; $52da
 	ld hl, $d145 ; $52e0
 	ld de, hPeakLY ; $52e3
@@ -2270,7 +2259,7 @@ Func_1d_5268:
 	ld hl, $6158 ; $5322
 	ld bc, $dc20 ; $5325
 	call Func_1d_4bb6 ; $5328
-	farcall FarPtr_1c_16 ; $532b
+	farcall Func_1c_72fc ; $532b
 	wram_bank $06 ; $532e
 	ld hl, $d145 ; $5334
 	ld de, $ff80 ; $5337
@@ -2301,7 +2290,7 @@ Func_1d_5268:
 	ld hl, $6193 ; $5376
 	ld bc, $dc20 ; $5379
 	call Func_1d_4bb6 ; $537c
-	farcall FarPtr_1c_16 ; $537f
+	farcall Func_1c_72fc ; $537f
 	wram_bank $06 ; $5382
 	ld hl, $d145 ; $5388
 	ld de, $ff60 ; $538b
@@ -2326,7 +2315,7 @@ Func_1d_5268:
 	ld hl, $5c2e ; $53b8
 	ld bc, $d390 ; $53bb
 	call Func_1d_4bb6 ; $53be
-	farcall FarPtr_1c_16 ; $53c1
+	farcall Func_1c_72fc ; $53c1
 	wram_bank $06 ; $53c4
 	ld hl, $d145 ; $53ca
 	ld de, $00a8 ; $53cd
@@ -2351,7 +2340,7 @@ Func_1d_5268:
 	ld hl, DrillDisplayData_1d ; $53fa
 	ld bc, $d390 ; $53fd
 	call Func_1d_4bb6 ; $5400
-	farcall FarPtr_1c_16 ; $5403
+	farcall Func_1c_72fc ; $5403
 	wram_bank $06 ; $5406
 	ld hl, $d147 ; $540c
 	xor a, a ; $540f
@@ -2370,7 +2359,7 @@ Func_1d_5268:
 	ld hl, DrillDisplayData_1d ; $5430
 	ld bc, $d390 ; $5433
 	call Func_1d_4bb6 ; $5436
-	farcall FarPtr_1c_16 ; $5439
+	farcall Func_1c_72fc ; $5439
 	ret ; $543c
 Func_1d_543d:
 	call AdvanceFrame ; $543d
@@ -2396,7 +2385,7 @@ Func_1d_543d:
 	ld hl, DrillDisplayData_1d ; $5473
 	ld bc, $d390 ; $5476
 	call Func_1d_4bb6 ; $5479
-	farcall FarPtr_1c_16 ; $547c
+	farcall Func_1c_72fc ; $547c
 	wram_bank $06 ; $547f
 	ld hl, $d145 ; $5485
 	ld de, $00a0 ; $5488
@@ -2430,7 +2419,7 @@ Func_1d_543d:
 	ld hl, $5c2e ; $54d0
 	ld bc, $d390 ; $54d3
 	call Func_1d_4bb6 ; $54d6
-	farcall FarPtr_1c_16 ; $54d9
+	farcall Func_1c_72fc ; $54d9
 	wram_bank $06 ; $54dc
 	ld hl, $d145 ; $54e2
 	ld de, $0080 ; $54e5
@@ -2461,7 +2450,7 @@ Func_1d_543d:
 	ld hl, $62bb ; $5524
 	ld bc, $de60 ; $5527
 	call Func_1d_4bb6 ; $552a
-	farcall FarPtr_1c_16 ; $552d
+	farcall Func_1c_72fc ; $552d
 	wram_bank $06 ; $5530
 	ld hl, $d145 ; $5536
 	ld de, $0060 ; $5539
@@ -2492,7 +2481,7 @@ Func_1d_543d:
 	ld hl, $6270 ; $5578
 	ld bc, $de60 ; $557b
 	call Func_1d_4bb6 ; $557e
-	farcall FarPtr_1c_16 ; $5581
+	farcall Func_1c_72fc ; $5581
 	wram_bank $06 ; $5584
 	ld hl, $d145 ; $558a
 	ld de, $0040 ; $558d
@@ -2514,7 +2503,7 @@ Func_1d_543d:
 	ld hl, $6225 ; $55b1
 	ld bc, $de60 ; $55b4
 	call Func_1d_4bb6 ; $55b7
-	farcall FarPtr_1c_16 ; $55ba
+	farcall Func_1c_72fc ; $55ba
 	wram_bank $06 ; $55bd
 	ld hl, $d145 ; $55c3
 	ld de, $0020 ; $55c6
@@ -2536,7 +2525,7 @@ Func_1d_543d:
 	ld hl, $61da ; $55ea
 	ld bc, $de60 ; $55ed
 	call Func_1d_4bb6 ; $55f0
-	farcall FarPtr_1c_16 ; $55f3
+	farcall Func_1c_72fc ; $55f3
 	wram_bank $06 ; $55f6
 	ld hl, $d145 ; $55fc
 	xor a, a ; $55ff
@@ -2564,7 +2553,7 @@ Func_1d_5603:
 	ld hl, $6225 ; $5630
 	ld bc, $de60 ; $5633
 	call Func_1d_4bb6 ; $5636
-	farcall FarPtr_1c_16 ; $5639
+	farcall Func_1c_72fc ; $5639
 	wram_bank $06 ; $563c
 	ld hl, $d147 ; $5642
 	ld de, $ff60 ; $5645
@@ -2595,7 +2584,7 @@ Func_1d_5603:
 	ld hl, $6270 ; $5684
 	ld bc, $de60 ; $5687
 	call Func_1d_4bb6 ; $568a
-	farcall FarPtr_1c_16 ; $568d
+	farcall Func_1c_72fc ; $568d
 	wram_bank $06 ; $5690
 	ld hl, $d147 ; $5696
 	ld de, $ff80 ; $5699
@@ -2626,7 +2615,7 @@ Func_1d_5603:
 	ld hl, $62bb ; $56d8
 	ld bc, $de60 ; $56db
 	call Func_1d_4bb6 ; $56de
-	farcall FarPtr_1c_16 ; $56e1
+	farcall Func_1c_72fc ; $56e1
 	wram_bank $06 ; $56e4
 	ld hl, $d147 ; $56ea
 	ld de, hPeakLY ; $56ed
@@ -2660,7 +2649,7 @@ Func_1d_5603:
 	ld hl, $5c2e ; $5735
 	ld bc, $d390 ; $5738
 	call Func_1d_4bb6 ; $573b
-	farcall FarPtr_1c_16 ; $573e
+	farcall Func_1c_72fc ; $573e
 	wram_bank $06 ; $5741
 	ld hl, $d147 ; $5747
 	ld de, hLinkRxByte ; $574a
@@ -2685,7 +2674,7 @@ Func_1d_5603:
 	ld hl, DrillDisplayData_1d ; $5777
 	ld bc, $d390 ; $577a
 	call Func_1d_4bb6 ; $577d
-	farcall FarPtr_1c_16 ; $5780
+	farcall Func_1c_72fc ; $5780
 	wram_bank $06 ; $5783
 	ld hl, $d147 ; $5789
 	ld de, $ffe0 ; $578c
@@ -2710,7 +2699,7 @@ Func_1d_5603:
 	ld hl, DrillDisplayData_1d ; $57b9
 	ld bc, $d390 ; $57bc
 	call Func_1d_4bb6 ; $57bf
-	farcall FarPtr_1c_16 ; $57c2
+	farcall Func_1c_72fc ; $57c2
 	wram_bank $06 ; $57c5
 	ld hl, $d147 ; $57cb
 	xor a, a ; $57ce
@@ -2929,7 +2918,7 @@ Label_1d_5981:
 	ld hl, $d145 ; $598a
 	call Func_1d_5997 ; $598d
 	call QueueSprite ; $5990
-	farcall FarPtr_1a_12 ; $5993
+	farcall Func_1a_7be5 ; $5993
 	ret ; $5996
 Func_1d_5997:
 	push bc ; $5997
@@ -2962,13 +2951,13 @@ Func_1d_59b5:
 	ret ; $59bd
 ComputeExpProgressBar:
 	ld a, [$cb00] ; $59be
-	farcall FarPtr_GetExpRemainingToNextLevel ; $59c1
+	farcall GetExpRemainingToNextLevel ; $59c1
 	ld a, h ; $59c4
 	or a, l ; $59c5
 	jp z, Label_1d_59da ; $59c6
 	push hl ; $59c9
 	ld a, [$cb00] ; $59ca
-	farcall FarPtr_GetExpProgressInCurrentLevel ; $59cd
+	farcall GetExpProgressInCurrentLevel ; $59cd
 	pop de ; $59d0
 	push hl ; $59d1
 	add hl, de ; $59d2
@@ -3092,7 +3081,7 @@ PromptCharDataConfirm:
 	call Func_1d_5b1a ; $5a86
 	call EnableLCD ; $5a89
 	call AdvanceFrame ; $5a8c
-	farcall FarPtr_StartCharDataScreenAnimTask ; $5a8f
+	farcall StartCharDataScreenAnimTask ; $5a8f
 	script_fade_in $10 ; $5a92
 	call WaitFadeEnd ; $5a97
 	wram_bank $06 ; $5a9a
@@ -3129,7 +3118,7 @@ Label_1d_5ae2:
 	ld c, $10 ; $5ae2
 	call BeginFadeOut ; $5ae4
 	call WaitFadeEnd ; $5ae7
-	farcall FarPtr_StopCharDataScreenAnimTask ; $5aea
+	farcall StopCharDataScreenAnimTask ; $5aea
 	call ClearFrameTasks ; $5aed
 	wram_bank $06 ; $5af0
 	ld a, [$d025] ; $5af6
@@ -3150,8 +3139,8 @@ Label_1d_5b10:
 	ret ; $5b19
 Func_1d_5b1a:
 	push af ; $5b1a
-	farcall FarPtr_CharDataScreen_LoadScreen ; $5b1b
-	farcall FarPtr_1c_10 ; $5b1e
+	farcall CharDataScreen_LoadScreen ; $5b1b
+	farcall Func_1c_728b ; $5b1e
 	pop af ; $5b21
 	ld [$cb00], a ; $5b22
 	push af ; $5b25
@@ -3170,7 +3159,7 @@ Label_1d_5b31:
 	pop af ; $5b39
 	ld a, [hl] ; $5b3a
 	ld de, $0401 ; $5b3b
-	farcall FarPtr_LoadIndexedPaletteThunk ; $5b3e
+	farcall LoadIndexedPaletteThunk ; $5b3e
 	wram_bank $01 ; $5b41
 	push af ; $5b47
 	ld hl, wStoryModeNameOfMainCharacter ; $5b48
@@ -3188,7 +3177,7 @@ Label_1d_5b53:
 	pop af ; $5b5b
 	ld a, [hl] ; $5b5c
 	ld de, $d000 ; $5b5d
-	farcall FarPtr_DecompressCharMugshot ; $5b60
+	farcall DecompressCharMugshot ; $5b60
 	ld hl, $d000 ; $5b63
 	ld de, $b200 ; $5b66
 	ld c, $03 ; $5b69
@@ -3245,7 +3234,7 @@ InitCharDataScreenVideo:
 	ld a, $90 ; $5bfa
 	ldh [rWY], a ; $5bfc
 	call ClearSpriteQueue ; $5bfe
-	farcall FarPtr_01_0a ; $5c01
+	farcall Func_01_50e2 ; $5c01
 	call InitDrillWorkRam ; $5c04
 	call Func_1d_411e ; $5c07
 	ret ; $5c0a
@@ -3310,28 +3299,28 @@ Label_1d_6836:
 	ld d, [hl] ; $6843
 	ld e, a ; $6844
 	xor a, a ; $6845
-	farcall FarPtr_AddPlayerExp ; $6846
+	farcall AddPlayerExp ; $6846
 	ld hl, $d176 ; $6849
 	ld a, [hl+] ; $684c
 	ld d, [hl] ; $684d
 	ld e, a ; $684e
 	ld a, $01 ; $684f
-	farcall FarPtr_AddPlayerExp ; $6851
+	farcall AddPlayerExp ; $6851
 Label_1d_6854:
 	ld c, $00 ; $6854
-	farcall FarPtr_1c_00 ; $6856
+	farcall Func_1c_401a ; $6856
 	dec a ; $6859
 	jr z, Label_1d_6873 ; $685a
 	inc a ; $685c
 	jr nz, Label_1d_686a ; $685d
-	farcall FarPtr_BackupCharData ; $685f
+	farcall BackupCharData ; $685f
 	ld c, $01 ; $6862
-	farcall FarPtr_1c_00 ; $6864
+	farcall Func_1c_401a ; $6864
 	dec a ; $6867
 	jr z, Label_1d_689c ; $6868
 Label_1d_686a:
 	ld c, $01 ; $686a
-	farcall FarPtr_1c_00 ; $686c
+	farcall Func_1c_401a ; $686c
 	dec a ; $686f
 	jr z, Label_1d_68a1 ; $6870
 	ret ; $6872
@@ -3361,7 +3350,7 @@ Label_1d_6873:
 	ld [$d0b6], a ; $6897
 	jr Label_1d_6836 ; $689a
 Label_1d_689c:
-	farcall FarPtr_RestoreCharData ; $689c
+	farcall RestoreCharData ; $689c
 	jr Label_1d_6854 ; $689f
 Label_1d_68a1:
 	jr Label_1d_6873 ; $68a1
@@ -3382,7 +3371,7 @@ Func_1d_68a3:
 	call ClearSpriteQueue ; $68c1
 	pop hl ; $68c4
 	call InitLevelUpScreenState ; $68c5
-	farcall FarPtr_1c_18 ; $68c8
+	farcall Func_1c_73f4 ; $68c8
 	call Func_1d_6977 ; $68cb
 	call EnableLCD ; $68ce
 	call AdvanceFrame ; $68d1
@@ -3725,22 +3714,22 @@ Label_1d_6bbb:
 	ld de, $d08e ; $6bd1
 	call FormatDecimalNumberUnsigned ; $6bd4
 	ld de, $d06b ; $6bd7
-	farcall FarPtr_1c_04 ; $6bda
+	farcall Func_1c_44cc ; $6bda
 	wram_bank $06 ; $6bdd
 	pop af ; $6be3
-	farcall FarPtr_GetExpRequiredForLevel ; $6be4
+	farcall GetExpRequiredForLevel ; $6be4
 	ld a, l ; $6be7
 	ld [$d162], a ; $6be8
 	ld a, h ; $6beb
 	ld [$d163], a ; $6bec
 	xor a, a ; $6bef
-	farcall FarPtr_GetExpProgressInCurrentLevel ; $6bf0
+	farcall GetExpProgressInCurrentLevel ; $6bf0
 	ld a, l ; $6bf3
 	ld [$d165], a ; $6bf4
 	ld a, h ; $6bf7
 	ld [$d166], a ; $6bf8
 	xor a, a ; $6bfb
-	farcall FarPtr_GetExpRemainingToNextLevel ; $6bfc
+	farcall GetExpRemainingToNextLevel ; $6bfc
 	ld a, l ; $6bff
 	ld [$d169], a ; $6c00
 	ld a, h ; $6c03
@@ -3811,22 +3800,22 @@ Label_1d_6c5c:
 	ld de, $d08e ; $6c72
 	call FormatDecimalNumberUnsigned ; $6c75
 	ld de, $d18b ; $6c78
-	farcall FarPtr_1c_04 ; $6c7b
+	farcall Func_1c_44cc ; $6c7b
 	wram_bank $06 ; $6c7e
 	pop af ; $6c84
-	farcall FarPtr_GetExpRequiredForLevel ; $6c85
+	farcall GetExpRequiredForLevel ; $6c85
 	ld a, l ; $6c88
 	ld [$d171], a ; $6c89
 	ld a, h ; $6c8c
 	ld [$d172], a ; $6c8d
 	ld a, $01 ; $6c90
-	farcall FarPtr_GetExpProgressInCurrentLevel ; $6c92
+	farcall GetExpProgressInCurrentLevel ; $6c92
 	ld a, l ; $6c95
 	ld [$d174], a ; $6c96
 	ld a, h ; $6c99
 	ld [$d175], a ; $6c9a
 	ld a, $01 ; $6c9d
-	farcall FarPtr_GetExpRemainingToNextLevel ; $6c9f
+	farcall GetExpRemainingToNextLevel ; $6c9f
 	ld a, l ; $6ca2
 	ld [$d178], a ; $6ca3
 	ld a, h ; $6ca6
@@ -3894,7 +3883,7 @@ Label_1d_6cff:
 	ld de, $d08e ; $6d0e
 	call FormatDecimalNumberUnsigned ; $6d11
 	ld de, $d06b ; $6d14
-	farcall FarPtr_1c_04 ; $6d17
+	farcall Func_1c_44cc ; $6d17
 	ld a, $01 ; $6d1a
 	ld [$cb00], a ; $6d1c
 	push af ; $6d1f
@@ -3936,7 +3925,7 @@ Label_1d_6d4e:
 	ld de, $d08e ; $6d5d
 	call FormatDecimalNumberUnsigned ; $6d60
 	ld de, $d18b ; $6d63
-	farcall FarPtr_1c_04 ; $6d66
+	farcall Func_1c_44cc ; $6d66
 	ret ; $6d69
 Func_1d_6d6a:
 	wram_bank $06 ; $6d6a
@@ -4488,10 +4477,10 @@ Label_1d_717c:
 Func_1d_7189:
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $7189
 	ld de, $0101 ; $718c
-	farcall FarPtr_LoadIndexedPaletteThunk ; $718f
+	farcall LoadIndexedPaletteThunk ; $718f
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7192
 	ld de, $0201 ; $7195
-	farcall FarPtr_LoadIndexedPaletteThunk ; $7198
+	farcall LoadIndexedPaletteThunk ; $7198
 	wram_bank $06 ; $719b
 	ld a, [$d16b] ; $71a1
 	ld [wBGPalettes + 58], a ; $71a4
@@ -4801,7 +4790,7 @@ Func_1d_737d:
 	inc a ; $739a
 	ld [$d161], a ; $739b
 	dec a ; $739e
-	farcall FarPtr_GetExpRequiredForLevel ; $739f
+	farcall GetExpRequiredForLevel ; $739f
 	ld a, l ; $73a2
 	ld [$d162], a ; $73a3
 	ld [$d169], a ; $73a6
@@ -4826,7 +4815,7 @@ Label_1d_73b8:
 	inc a ; $73c9
 	ld [$d170], a ; $73ca
 	dec a ; $73cd
-	farcall FarPtr_GetExpRequiredForLevel ; $73ce
+	farcall GetExpRequiredForLevel ; $73ce
 	ld a, l ; $73d1
 	ld [$d171], a ; $73d2
 	ld [$d178], a ; $73d5
@@ -4854,7 +4843,7 @@ Func_1d_73e7:
 	dec a ; $7400
 	ld [$d161], a ; $7401
 	dec a ; $7404
-	farcall FarPtr_GetExpRequiredForLevel ; $7405
+	farcall GetExpRequiredForLevel ; $7405
 	ld a, l ; $7408
 	ld [$d162], a ; $7409
 	ld a, h ; $740c
@@ -4882,7 +4871,7 @@ Label_1d_7423:
 	dec a ; $7430
 	ld [$d170], a ; $7431
 	dec a ; $7434
-	farcall FarPtr_GetExpRequiredForLevel ; $7435
+	farcall GetExpRequiredForLevel ; $7435
 	ld a, l ; $7438
 	ld [$d171], a ; $7439
 	ld a, h ; $743c
@@ -4912,14 +4901,14 @@ Label_1d_7453:
 	ld [wBGPalettes + 35], a ; $7479
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $747c
 	ld de, $0101 ; $747f
-	farcall FarPtr_LoadIndexedPaletteThunk ; $7482
+	farcall LoadIndexedPaletteThunk ; $7482
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7485
 	ld de, $0201 ; $7488
-	farcall FarPtr_LoadIndexedPaletteThunk ; $748b
+	farcall LoadIndexedPaletteThunk ; $748b
 	ld hl, hPaletteDirtyFlags ; $748e
 	set 0, [hl] ; $7491
 	sound $5f ; $7493
-	farcall FarPtr_BackupCharDataScreenRow ; $7495
+	farcall BackupCharDataScreenRow ; $7495
 	ld hl, $781d ; $7498
 	ld bc, $d240 ; $749b
 	call Func_1d_7610 ; $749e
@@ -5025,42 +5014,42 @@ Label_1d_758b:
 	ret ; $7593
 Label_1d_7594:
 	sound $62 ; $7594
-	farcall FarPtr_RestoreCharDataScreenRow ; $7596
+	farcall RestoreCharDataScreenRow ; $7596
 	ld hl, $77e1 ; $7599
 	ld bc, $d240 ; $759c
 	call Func_1d_7610 ; $759f
 	call Func_1d_7545 ; $75a2
 	call WaitFramesCmd ; $75a5
 	db $02 ; $75a8 inline arg
-	farcall FarPtr_RestoreCharDataScreenRow ; $75a9
+	farcall RestoreCharDataScreenRow ; $75a9
 	ld hl, $77f6 ; $75ac
 	ld bc, $d240 ; $75af
 	call Func_1d_7610 ; $75b2
 	call Func_1d_7545 ; $75b5
 	call WaitFramesCmd ; $75b8
 	db $02 ; $75bb inline arg
-	farcall FarPtr_RestoreCharDataScreenRow ; $75bc
+	farcall RestoreCharDataScreenRow ; $75bc
 	ld hl, $7807 ; $75bf
 	ld bc, $d240 ; $75c2
 	call Func_1d_7610 ; $75c5
 	call Func_1d_7545 ; $75c8
 	call WaitFramesCmd ; $75cb
 	db $02 ; $75ce inline arg
-	farcall FarPtr_RestoreCharDataScreenRow ; $75cf
+	farcall RestoreCharDataScreenRow ; $75cf
 	ld hl, $7814 ; $75d2
 	ld bc, $d240 ; $75d5
 	call Func_1d_7610 ; $75d8
 	call Func_1d_7545 ; $75db
 	call WaitFramesCmd ; $75de
 	db $02 ; $75e1 inline arg
-	farcall FarPtr_RestoreCharDataScreenRow ; $75e2
+	farcall RestoreCharDataScreenRow ; $75e2
 	ld hl, $781d ; $75e5
 	ld bc, $d240 ; $75e8
 	call Func_1d_7610 ; $75eb
 	call Func_1d_7545 ; $75ee
 	call WaitFramesCmd ; $75f1
 	db $02 ; $75f4 inline arg
-	farcall FarPtr_RestoreCharDataScreenRow ; $75f5
+	farcall RestoreCharDataScreenRow ; $75f5
 	call Func_1d_7545 ; $75f8
 	call WaitFramesCmd ; $75fb
 	db $02 ; $75fe inline arg

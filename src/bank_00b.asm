@@ -1,7 +1,6 @@
 SECTION "ROM Bank $0b", ROMX[$4000], BANK[$0b]
 
-FarPtr_RunTrainingDrillByID:
-	dw RunTrainingDrillByID ; $4000
+	farptr RunTrainingDrillByID ; $4000
 StartDrillFromDefinition:
 	ld hl, $0000 ; $4002
 	add hl, bc ; $4005
@@ -34,7 +33,7 @@ StartDrillFromDefinition:
 	add hl, bc ; $403b
 	ld b, [hl] ; $403c
 	ld c, $00 ; $403d
-	farcall FarPtr_02_18 ; $403f
+	farcall Func_02_4066 ; $403f
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4042
 	ld [wMatchPlayerChar], a ; $4045
 	ld a, [wMatchOpponentChar] ; $4048
@@ -42,7 +41,7 @@ StartDrillFromDefinition:
 	jr z, Label_0b_4055 ; $404d
 	ld b, a ; $404f
 	ld c, $02 ; $4050
-	farcall FarPtr_02_18 ; $4052
+	farcall Func_02_4066 ; $4052
 Label_0b_4055:
 	pop bc ; $4055
 	ld hl, $0008 ; $4056
@@ -51,13 +50,13 @@ Label_0b_4055:
 	ld d, [hl] ; $405b
 	ld e, a ; $405c
 	ldh a, [hRomBank] ; $405d
-	farcall FarPtr_SetModeHookTable ; $405f
+	farcall SetModeHookTable ; $405f
 	ld hl, $000a ; $4062
 	add hl, bc ; $4065
 	ld a, [hl+] ; $4066
 	ld d, [hl] ; $4067
 	ld e, a ; $4068
-	farcall FarPtr_SetMinigamePointTable ; $4069
+	farcall SetMinigamePointTable ; $4069
 	ld hl, $000c ; $406c
 	add hl, bc ; $406f
 	ld a, [hl+] ; $4070
@@ -187,7 +186,7 @@ Func_0b_414b:
 	push af ; $414d
 	wram_bank $05 ; $414e
 	ld a, $00 ; $4154
-	farcall FarPtr_SetCharState ; $4156
+	farcall SetCharState ; $4156
 	pop af ; $4159
 	wram_bank ; $415a
 	ret ; $415e
@@ -213,7 +212,7 @@ Label_0b_416a:
 	ld h, [hl] ; $4178
 	ld l, a ; $4179
 	push bc ; $417a
-	farcall FarPtr_SetBallGatePoint1 ; $417b
+	farcall SetBallGatePoint1 ; $417b
 	pop bc ; $417e
 	ld hl, $0006 ; $417f
 	add hl, bc ; $4182
@@ -225,7 +224,7 @@ Label_0b_416a:
 	ld a, [hl+] ; $418a
 	ld h, [hl] ; $418b
 	ld l, a ; $418c
-	farcall FarPtr_SetBallGatePoint2 ; $418d
+	farcall SetBallGatePoint2 ; $418d
 	ret ; $4190
 SetDrillTargetZoneForPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4191
@@ -250,7 +249,7 @@ Label_0b_419c:
 	ld h, [hl] ; $41aa
 	ld l, a ; $41ab
 	push bc ; $41ac
-	farcall FarPtr_SetTargetZoneCorner1 ; $41ad
+	farcall SetTargetZoneCorner1 ; $41ad
 	pop bc ; $41b0
 	ld hl, $0006 ; $41b1
 	add hl, bc ; $41b4
@@ -262,7 +261,7 @@ Label_0b_419c:
 	ld a, [hl+] ; $41bc
 	ld h, [hl] ; $41bd
 	ld l, a ; $41be
-	farcall FarPtr_SetTargetZoneCorner2 ; $41bf
+	farcall SetTargetZoneCorner2 ; $41bf
 	ret ; $41c2
 Func_0b_41c3:
 	ld a, [$c2e1] ; $41c3
@@ -290,7 +289,7 @@ RecordDrillTargetZoneHit:
 	ld a, [$c4b2] ; $41e6
 	cp a, $02 ; $41e9
 	ret nc ; $41eb
-	farcall FarPtr_IsBallInTargetZone ; $41ec
+	farcall IsBallInTargetZone ; $41ec
 	jr z, Label_0b_41f6 ; $41ef
 	xor a, a ; $41f1
 	ld [wTargetZoneEnabled], a ; $41f2
@@ -344,7 +343,7 @@ Label_0b_4226:
 	ld a, [$c78b] ; $4239
 	or a, a ; $423c
 	ret z ; $423d
-	farcall FarPtr_DidBallCrossGate ; $423e
+	farcall DidBallCrossGate ; $423e
 	ret z ; $4241
 	xor a, a ; $4242
 	ld [$c78b], a ; $4243
@@ -383,7 +382,7 @@ PlayDrillPointEndSequence:
 	ld a, [hl+] ; $43af
 	ld h, [hl] ; $43b0
 	ld l, a ; $43b1
-	farcall FarPtr_SetCameraTarget ; $43b2
+	farcall SetCameraTarget ; $43b2
 	ld a, [wPointOutcome] ; $43b5
 	cp a, $06 ; $43b8
 	jr z, Label_0b_43dc ; $43ba
@@ -396,38 +395,38 @@ PlayDrillPointEndSequence:
 	jr Label_0b_43cf ; $43c8
 Label_0b_43ca:
 	add a, $00 ; $43ca
-	farcall FarPtr_09_12 ; $43cc
+	farcall Func_09_4367 ; $43cc
 Label_0b_43cf:
 	ld a, $1e ; $43cf
-	farcall FarPtr_StepMatchFrames ; $43d1
-	farcall FarPtr_09_16 ; $43d4
+	farcall StepMatchFrames ; $43d1
+	farcall Func_09_437b ; $43d4
 	ld a, $0f ; $43d7
-	farcall FarPtr_StepMatchFrames ; $43d9
+	farcall StepMatchFrames ; $43d9
 Label_0b_43dc:
-	farcall FarPtr_09_0a ; $43dc
+	farcall Func_09_412a ; $43dc
 	ld a, $0a ; $43df
-	farcall FarPtr_StepMatchFrames ; $43e1
+	farcall StepMatchFrames ; $43e1
 	ld a, $0a ; $43e4
-	farcall FarPtr_StepMatchFramesSkippable ; $43e6
-	farcall FarPtr_09_26 ; $43e9
+	farcall StepMatchFramesSkippable ; $43e6
+	farcall Func_09_4098 ; $43e9
 	ld a, $0a ; $43ec
-	farcall FarPtr_StepMatchFrames ; $43ee
+	farcall StepMatchFrames ; $43ee
 	ld a, $1e ; $43f1
-	farcall FarPtr_StepMatchFramesSkippable ; $43f3
-	farcall FarPtr_09_0c ; $43f6
+	farcall StepMatchFramesSkippable ; $43f3
+	farcall Func_09_4190 ; $43f6
 	ld a, $46 ; $43f9
-	farcall FarPtr_StepMatchFramesSkippable ; $43fb
+	farcall StepMatchFramesSkippable ; $43fb
 	ld a, $08 ; $43fe
-	farcall FarPtr_StepMatchFrames ; $4400
+	farcall StepMatchFrames ; $4400
 	ret ; $4403
 LoadDrillOpponentChar:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
-	farcall FarPtr_02_18 ; $4407
+	farcall Func_02_4066 ; $4407
 	ldh a, [hWramBank] ; $440a
 	push af ; $440c
 	wram_bank $05 ; $440d
-	farcall FarPtr_LoadCharacterAttributes ; $4413
+	farcall LoadCharacterAttributes ; $4413
 	pop af ; $4416
 	wram_bank ; $4417
 	ret ; $441b
@@ -654,10 +653,10 @@ ShowDrillMessageByIndex:
 	ld h, b ; $4591
 	ld l, c ; $4592
 	xor a, a ; $4593
-	farcall FarPtr_AddTextIdOffset ; $4594
+	farcall AddTextIdOffset ; $4594
 	ld b, h ; $4597
 	ld c, l ; $4598
-	farcall FarPtr_MeasureDialogueWidthTiles ; $4599
+	farcall MeasureDialogueWidthTiles ; $4599
 	ld h, b ; $459c
 	ld l, c ; $459d
 	add a, $02 ; $459e
@@ -679,7 +678,7 @@ ShowDrillMessageByIndex:
 	srl a ; $45bb
 	ld d, a ; $45bd
 	ld e, $06 ; $45be
-	farcall FarPtr_ShowMessageWindow ; $45c0
+	farcall ShowMessageWindow ; $45c0
 	ret ; $45c3
 DrillMessageTextIds_0b:
 	; $45c4, 274 bytes (records:2)
@@ -823,8 +822,8 @@ DrillMessageTextIds_0b:
 QueueDrillSprite_0b:
 	ld h, [hl] ; $46d6
 	ld l, a ; $46d7
-	farcall FarPtr_08_44 ; $46d8
-	farcall FarPtr_ApplyCameraProjection ; $46db
+	farcall Func_08_59b8 ; $46d8
+	farcall ApplyCameraProjection ; $46db
 	ld hl, DrillSpriteTemplate_0b ; $46de
 	ld bc, $0930 ; $46e1
 	call QueueSpriteTemplate ; $46e4
@@ -837,7 +836,7 @@ DrillSpriteTemplate_0b:
 	INCBIN "data/bank_00b/d_46f1.bin" ; $46f1, 20 bytes
 RunTrainingDrillByID:
 	push af ; $4705
-	farcall FarPtr_08_06 ; $4706
+	farcall Func_08_6544 ; $4706
 	pop af ; $4709
 	cp a, $24 ; $470a
 	jp z, Label_0b_47ae ; $470c
@@ -854,7 +853,7 @@ RunTrainingDrillByID:
 	call StartDrillFromDefinition ; $471e
 	jr Label_0b_4726 ; $4721
 Label_0b_4723:
-	farcall FarPtr_StartMinigameByID ; $4723
+	farcall StartMinigameByID ; $4723
 Label_0b_4726:
 	ld hl, $c2e0 ; $4726
 	ld c, $02 ; $4729
@@ -866,7 +865,7 @@ Label_0b_4726:
 	ld [hl+], a ; $4737
 	ld [hl], a ; $4738
 	ld [$c7a8], a ; $4739
-	farcall FarPtr_RunMinigameMatch ; $473c
+	farcall RunMinigameMatch ; $473c
 Label_0b_473f:
 	xor a, a ; $473f
 	ldh [hScrollX], a ; $4740
@@ -891,16 +890,16 @@ Label_0b_4767:
 	test_flag $03, 6 ; $4767
 	jr z, Label_0b_47a7 ; $476a
 	call DisableLCDSafely ; $476c
-	farcall FarPtr_ResetTextWindowState ; $476f
+	farcall ResetTextWindowState ; $476f
 	call ClearBGForDrillResult ; $4772
-	farcall FarPtr_01_0a ; $4775
+	farcall Func_01_50e2 ; $4775
 	call EnableLCD ; $4778
 	script_fade_in $08 ; $477b
 	call WaitFadeEnd ; $4780
 	ld a, [$c2e3] ; $4783
 	ld l, a ; $4786
 	ld h, $00 ; $4787
-	farcall FarPtr_PushTextArgNumber ; $4789
+	farcall PushTextArgNumber ; $4789
 	ld a, [wPointWinLoseFlag] ; $478c
 	inc a ; $478f
 	srl a ; $4790
@@ -911,13 +910,13 @@ Label_0b_4767:
 	inc h ; $4799
 Label_0b_479a:
 	ld a, $80 ; $479a
-	farcall FarPtr_ShowSpeakerDialogue ; $479c
+	farcall ShowSpeakerDialogue ; $479c
 	ld c, $10 ; $479f
 	call BeginFadeOut ; $47a1
 	call WaitFadeEnd ; $47a4
 Label_0b_47a7:
 	clear_flag $03, 6 ; $47a7
-	farcall FarPtr_ProcessMatchRewards ; $47aa
+	farcall ProcessMatchRewards ; $47aa
 	ret ; $47ad
 Label_0b_47ae:
 	call RunDoublesDrillMatch ; $47ae
@@ -1234,7 +1233,7 @@ Label_0b_5cd6:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 Drill09HandlePointEnd:
-	farcall FarPtr_09_26 ; $5cf9
+	farcall Func_09_4098 ; $5cf9
 	ld a, [$c2ff] ; $5cfc
 	ld [wPointWinLoseFlag], a ; $5cff
 	cp a, $01 ; $5d02
@@ -1244,23 +1243,23 @@ Drill09HandlePointEnd:
 Label_0b_5d0a:
 	call RecordDrillPointResultBits ; $5d0a
 	call ShowQueuedDrillMessage ; $5d0d
-	farcall FarPtr_UpdatePointStats ; $5d10
-	farcall FarPtr_AwardPoint ; $5d13
+	farcall UpdatePointStats ; $5d10
+	farcall AwardPoint ; $5d13
 	ld a, [$c2eb] ; $5d16
 	ld [wPlayer1PointsWon], a ; $5d19
 	xor a, a ; $5d1c
 	ld [wPlayer2PointsWon], a ; $5d1d
 	ld a, [wPlayer1PointsWon] ; $5d20
 	ld b, $01 ; $5d23
-	farcall FarPtr_09_2a ; $5d25
+	farcall Func_09_610c ; $5d25
 	ld a, [wPlayer2PointsWon] ; $5d28
 	ld b, $01 ; $5d2b
-	farcall FarPtr_09_2c ; $5d2d
-	farcall FarPtr_StepMatchFrame ; $5d30
+	farcall Func_09_611b ; $5d2d
+	farcall StepMatchFrame ; $5d30
 	ld a, $01 ; $5d33
 	ld hl, Func_0b_446e ; $5d35
 	call RegisterFrameTask ; $5d38
-	farcall FarPtr_StartPointEndReactions ; $5d3b
+	farcall StartPointEndReactions ; $5d3b
 	ld hl, Func_0b_446e ; $5d3e
 	call UnregisterFrameTask ; $5d41
 	call PlayDrillPointEndSequence ; $5d44
@@ -1626,7 +1625,7 @@ Label_0b_6c47:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 Drill15HandlePointEnd:
-	farcall FarPtr_09_26 ; $6c81
+	farcall Func_09_4098 ; $6c81
 	ld a, [$c2ff] ; $6c84
 	ld [wPointWinLoseFlag], a ; $6c87
 	cp a, $01 ; $6c8a
@@ -1636,23 +1635,23 @@ Drill15HandlePointEnd:
 Label_0b_6c92:
 	call RecordDrillPointResultBits ; $6c92
 	call ShowQueuedDrillMessage ; $6c95
-	farcall FarPtr_UpdatePointStats ; $6c98
-	farcall FarPtr_AwardPoint ; $6c9b
+	farcall UpdatePointStats ; $6c98
+	farcall AwardPoint ; $6c9b
 	ld a, [$c2e9] ; $6c9e
 	ld [wPlayer1PointsWon], a ; $6ca1
 	xor a, a ; $6ca4
 	ld [wPlayer2PointsWon], a ; $6ca5
 	ld a, [wPlayer1PointsWon] ; $6ca8
 	ld b, $01 ; $6cab
-	farcall FarPtr_09_2a ; $6cad
+	farcall Func_09_610c ; $6cad
 	ld a, [wPlayer2PointsWon] ; $6cb0
 	ld b, $01 ; $6cb3
-	farcall FarPtr_09_2c ; $6cb5
-	farcall FarPtr_StepMatchFrame ; $6cb8
+	farcall Func_09_611b ; $6cb5
+	farcall StepMatchFrame ; $6cb8
 	ld a, $01 ; $6cbb
 	ld hl, Func_0b_446e ; $6cbd
 	call RegisterFrameTask ; $6cc0
-	farcall FarPtr_StartPointEndReactions ; $6cc3
+	farcall StartPointEndReactions ; $6cc3
 	ld hl, Func_0b_446e ; $6cc6
 	call UnregisterFrameTask ; $6cc9
 	call PlayDrillPointEndSequence ; $6ccc
@@ -1810,23 +1809,23 @@ Label_0b_6da6:
 	ld [$c2ee], a ; $6dd8
 	ret ; $6ddb
 	INCBIN "data/bank_00b/d_6ddc.bin" ; $6ddc, 870 bytes
-	farcall FarPtr_UpdatePointStats ; $7142
-	farcall FarPtr_AwardPoint ; $7145
+	farcall UpdatePointStats ; $7142
+	farcall AwardPoint ; $7145
 	ld a, [$c2e9] ; $7148
 	ld [wPlayer1PointsWon], a ; $714b
 	xor a, a ; $714e
 	ld [wPlayer2PointsWon], a ; $714f
 	ld a, [wPlayer1PointsWon] ; $7152
 	ld b, $01 ; $7155
-	farcall FarPtr_09_2a ; $7157
+	farcall Func_09_610c ; $7157
 	ld a, [wPlayer2PointsWon] ; $715a
 	ld b, $01 ; $715d
-	farcall FarPtr_09_2c ; $715f
-	farcall FarPtr_StepMatchFrame ; $7162
+	farcall Func_09_611b ; $715f
+	farcall StepMatchFrame ; $7162
 	ld a, $01 ; $7165
 	ld hl, Func_0b_446e ; $7167
 	call RegisterFrameTask ; $716a
-	farcall FarPtr_StartPointEndReactions ; $716d
+	farcall StartPointEndReactions ; $716d
 	ld hl, Func_0b_446e ; $7170
 	call UnregisterFrameTask ; $7173
 	call PlayDrillPointEndSequence ; $7176
@@ -1979,15 +1978,15 @@ RunDoublesDrillMatch:
 	ld a, b ; $7281
 	ld [wMatchPlayerChar], a ; $7282
 	ld c, $00 ; $7285
-	farcall FarPtr_02_18 ; $7287
+	farcall Func_02_4066 ; $7287
 	ld b, $1b ; $728a
 	ld a, b ; $728c
 	ld [wMatchOpponentChar], a ; $728d
 	ld c, $02 ; $7290
-	farcall FarPtr_02_18 ; $7292
+	farcall Func_02_4066 ; $7292
 	ld b, $1e ; $7295
 	ld c, $03 ; $7297
-	farcall FarPtr_02_18 ; $7299
+	farcall Func_02_4066 ; $7299
 	ld a, [wMinigameLevel] ; $729c
 	add a, a ; $729f
 	add a, $e0 ; $72a0
@@ -2024,7 +2023,7 @@ RunDoublesDrillMatch:
 	ld [$cade], a ; $72d5
 	ld a, [hl+] ; $72d8
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
-	farcall FarPtr_RunMatch ; $72dc
+	farcall RunMatch ; $72dc
 	ret ; $72df
 	; $72e0, 27 bytes (records:2)
 	dw $72e6 ; record 0

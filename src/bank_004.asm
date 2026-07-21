@@ -1,55 +1,30 @@
 SECTION "ROM Bank $04", ROMX[$4000], BANK[$04]
 
-FarPtr_InitActorEngine:
-	dw InitActorEngine ; $4000
-FarPtr_SpawnActor:
-	dw SpawnActor ; $4002
-FarPtr_SetActorScript:
-	dw SetActorScript ; $4004
-FarPtr_SetActorPosition:
-	dw SetActorPosition ; $4006
-FarPtr_SetActorMode:
-	dw SetActorMode ; $4008
-FarPtr_SpawnActorsFromList:
-	dw SpawnActorsFromList ; $400a
-FarPtr_UpdateCameraToActor:
-	dw UpdateCameraToActor ; $400c
-FarPtr_04_0e:
-	dw Func_04_4d2c ; $400e
-FarPtr_ClearActorSlots:
-	dw ClearActorSlots ; $4010
-FarPtr_04_12:
-	dw Func_04_4b68 ; $4012
-FarPtr_EvalFlagCondition:
-	dw EvalFlagCondition ; $4014
-FarPtr_SetActorAnimationChecked:
-	dw SetActorAnimationChecked ; $4016
-FarPtr_SpawnMainCharacterActor:
-	dw SpawnMainCharacterActor ; $4018
-FarPtr_SpawnCompanionActor:
-	dw SpawnCompanionActor ; $401a
-FarPtr_AttachActorControllerScript:
-	dw AttachActorControllerScript ; $401c
-FarPtr_AttachActorWaypointFollower:
-	dw AttachActorWaypointFollower ; $401e
-FarPtr_AttachActorStepMover:
-	dw AttachActorStepMover ; $4020
-FarPtr_IsTerrainBlockedAtPoint:
-	dw IsTerrainBlockedAtPoint ; $4022
-FarPtr_FindActorAtPoint:
-	dw FindActorAtPoint ; $4024
-FarPtr_04_26:
-	dw Func_04_54d7 ; $4026
-FarPtr_WaitActorMoveDone:
-	dw WaitActorMoveDone ; $4028
-FarPtr_04_2a:
-	dw Func_04_5726 ; $402a
-FarPtr_LoadActorObjectDefIfValid:
-	dw LoadActorObjectDefIfValid ; $402c
-FarPtr_GetObjectDefCount:
-	dw GetObjectDefCount ; $402e
-FarPtr_LookupTileId_04:
-	dw LookupTileId_04 ; $4030
+	farptr InitActorEngine ; $4000
+	farptr SpawnActor ; $4002
+	farptr SetActorScript ; $4004
+	farptr SetActorPosition ; $4006
+	farptr SetActorMode ; $4008
+	farptr SpawnActorsFromList ; $400a
+	farptr UpdateCameraToActor ; $400c
+	farptr Func_04_4d2c ; $400e
+	farptr ClearActorSlots ; $4010
+	farptr Func_04_4b68 ; $4012
+	farptr EvalFlagCondition ; $4014
+	farptr SetActorAnimationChecked ; $4016
+	farptr SpawnMainCharacterActor ; $4018
+	farptr SpawnCompanionActor ; $401a
+	farptr AttachActorControllerScript ; $401c
+	farptr AttachActorWaypointFollower ; $401e
+	farptr AttachActorStepMover ; $4020
+	farptr IsTerrainBlockedAtPoint ; $4022
+	farptr FindActorAtPoint ; $4024
+	farptr Func_04_54d7 ; $4026
+	farptr WaitActorMoveDone ; $4028
+	farptr Func_04_5726 ; $402a
+	farptr LoadActorObjectDefIfValid ; $402c
+	farptr GetObjectDefCount ; $402e
+	farptr LookupTileId_04 ; $4030
 ClearActorSlots:
 	wram_bank $04 ; $4032
 	ld hl, $d000 ; $4038
@@ -1914,7 +1889,7 @@ Func_04_4b68:
 	ld [hl+], a ; $4bb3
 	ld [hl+], a ; $4bb4
 	ld d, $01 ; $4bb5
-	farcall FarPtr_SetCharAnimation ; $4bb7
+	farcall SetCharAnimation ; $4bb7
 	ret ; $4bba
 SetActorAnimationChecked:
 	inc b ; $4bbb
@@ -2546,7 +2521,7 @@ CheckTileTriggerAtPoint:
 	push de ; $5142
 	ld e, d ; $5143
 	ld d, h ; $5144
-	farcall FarPtr_ReadBehaviorMapCell ; $5145
+	farcall ReadBehaviorMapCell ; $5145
 	ld d, a ; $5148
 	and a, $0f ; $5149
 	cp a, $01 ; $514b
@@ -2662,7 +2637,7 @@ Label_04_520b:
 	ld hl, $000f ; $5210
 	add hl, bc ; $5213
 	ld e, [hl] ; $5214
-	farcall FarPtr_ReadCollisionMapCell ; $5215
+	farcall ReadCollisionMapCell ; $5215
 	ld a, $00 ; $5218
 	and a, $0f ; $521a
 	cp a, $0b ; $521c
@@ -2850,7 +2825,7 @@ IsTerrainBlockedAtPoint:
 	push de ; $534b
 	ld e, d ; $534c
 	ld d, h ; $534d
-	farcall FarPtr_ReadCollisionMapCell ; $534e
+	farcall ReadCollisionMapCell ; $534e
 	and a, $0f ; $5351
 	jr z, Label_04_535a ; $5353
 	cp a, $0f ; $5355

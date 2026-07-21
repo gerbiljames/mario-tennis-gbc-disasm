@@ -1,9 +1,7 @@
 SECTION "ROM Bank $6e", ROMX[$4000], BANK[$6e]
 
-FarPtr_FetchDialogueText_6e:
-	dw FetchDialogueText_6e ; $4000
-FarPtr_FetchShortText_6e:
-	dw FetchShortText_6e ; $4002
+	farptr FetchDialogueText_6e ; $4000
+	farptr FetchShortText_6e ; $4002
 Text_6e_4004:
 	INCLUDE "data/bank_06e/text_4004.asm" ; $4004, 15108 bytes
 FetchDialogueText_6e:

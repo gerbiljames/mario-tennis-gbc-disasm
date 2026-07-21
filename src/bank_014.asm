@@ -55,7 +55,7 @@ TennisMachineRoomNpc03_14:
 	ld a, [hl+] ; $409a
 	ld h, [hl] ; $409b
 	ld l, a ; $409c
-	farcall FarPtr_InitDialogueTextCursor ; $409d
+	farcall InitDialogueTextCursor ; $409d
 	script_speak $03 ; $40a0
 	ret ; $40a5
 	; $40a6, 14 bytes (records:2)
@@ -77,20 +77,20 @@ TennisMachineRoomNpc04_14:
 	ld a, [hl+] ; $40bf
 	ld h, [hl] ; $40c0
 	ld l, a ; $40c1
-	farcall FarPtr_InitDialogueTextCursor ; $40c2
+	farcall InitDialogueTextCursor ; $40c2
 	ld a, [$c2b0] ; $40c5
 	cp a, $01 ; $40c8
 	jr z, Label_14_40ce ; $40ca
 	jr Label_14_40e6 ; $40cc
 Label_14_40ce:
 	ld a, $04 ; $40ce
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $40d0
-	farcall FarPtr_RunDialogueYesNoPrompt ; $40d3
-	farcall FarPtr_ScriptCloseDialogueWindow ; $40d6
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $40d0
+	farcall RunDialogueYesNoPrompt ; $40d3
+	farcall ScriptCloseDialogueWindow ; $40d6
 	script_wait_frames $05 ; $40d9
 	and a, a ; $40e0
 	jr z, Label_14_40e6 ; $40e1
-	farcall FarPtr_AdvanceDialogueTextCursor ; $40e3
+	farcall AdvanceDialogueTextCursor ; $40e3
 Label_14_40e6:
 	script_speak $04 ; $40e6
 	ret ; $40eb
@@ -111,12 +111,12 @@ TennisMachineRoomNpcScripts_14:
 MachineLevel1FailedPrompt:
 	script_set_text Text_6e_219 ; $4113
 	ld hl, $000f ; $4119
-	farcall FarPtr_PushTextArgNumber ; $411c
+	farcall PushTextArgNumber ; $411c
 	ld hl, wMinigamesCurrentScore ; $411f
 	ld a, [hl+] ; $4122
 	ld h, [hl] ; $4123
 	ld l, a ; $4124
-	farcall FarPtr_PushTextArgNumber ; $4125
+	farcall PushTextArgNumber ; $4125
 	jp MachineCourtHandleRetryChoice ; $4128
 MachineLevel1ClearedScene:
 	call MachineCourtWalkToAttendantCutscene ; $412b
@@ -126,17 +126,17 @@ MachineLevel1ClearedScene:
 	ld c, l ; $413e
 	ld b, h ; $413f
 	ld de, $d000 ; $4140
-	farcall FarPtr_AttachActorStepMover ; $4143
+	farcall AttachActorStepMover ; $4143
 	ret ; $4146
 MachineLevel2FailedPrompt:
 	script_set_text Text_6e_219 ; $4147
 	ld hl, $001e ; $414d
-	farcall FarPtr_PushTextArgNumber ; $4150
+	farcall PushTextArgNumber ; $4150
 	ld hl, wMinigamesCurrentScore ; $4153
 	ld a, [hl+] ; $4156
 	ld h, [hl] ; $4157
 	ld l, a ; $4158
-	farcall FarPtr_PushTextArgNumber ; $4159
+	farcall PushTextArgNumber ; $4159
 	jp MachineCourtHandleRetryChoice ; $415c
 	ret ; $415f
 MachineLevel2ClearedScene:
@@ -147,17 +147,17 @@ MachineLevel2ClearedScene:
 	ld c, l ; $4173
 	ld b, h ; $4174
 	ld de, $d000 ; $4175
-	farcall FarPtr_AttachActorStepMover ; $4178
+	farcall AttachActorStepMover ; $4178
 	ret ; $417b
 MachineLevel3FailedPrompt:
 	script_set_text Text_6e_219 ; $417c
 	ld hl, $003c ; $4182
-	farcall FarPtr_PushTextArgNumber ; $4185
+	farcall PushTextArgNumber ; $4185
 	ld hl, wMinigamesCurrentScore ; $4188
 	ld a, [hl+] ; $418b
 	ld h, [hl] ; $418c
 	ld l, a ; $418d
-	farcall FarPtr_PushTextArgNumber ; $418e
+	farcall PushTextArgNumber ; $418e
 	jp MachineCourtHandleRetryChoice ; $4191
 	ret ; $4194
 MachineLevel3ClearedScene:
@@ -168,17 +168,17 @@ MachineLevel3ClearedScene:
 	ld c, l ; $41a8
 	ld b, h ; $41a9
 	ld de, $d000 ; $41aa
-	farcall FarPtr_AttachActorStepMover ; $41ad
+	farcall AttachActorStepMover ; $41ad
 	ret ; $41b0
 MachineLevel4FailedPrompt:
 	script_set_text Text_6e_219 ; $41b1
 	ld hl, $0064 ; $41b7
-	farcall FarPtr_PushTextArgNumber ; $41ba
+	farcall PushTextArgNumber ; $41ba
 	ld hl, wMinigamesCurrentScore ; $41bd
 	ld a, [hl+] ; $41c0
 	ld h, [hl] ; $41c1
 	ld l, a ; $41c2
-	farcall FarPtr_PushTextArgNumber ; $41c3
+	farcall PushTextArgNumber ; $41c3
 	jp MachineCourtHandleRetryChoice ; $41c6
 	ret ; $41c9
 MachineLevel4ClearedScene:
@@ -189,7 +189,7 @@ MachineLevel4ClearedScene:
 	ld c, l ; $41dd
 	ld b, h ; $41de
 	ld de, $d000 ; $41df
-	farcall FarPtr_AttachActorStepMover ; $41e2
+	farcall AttachActorStepMover ; $41e2
 	ret ; $41e5
 TennisMachineRoomFacingScripts_14:
 	ds 1, $ff ; $41e6, fill
@@ -230,7 +230,7 @@ TennisMachineRoomTile01_14:
 	ld c, l ; $4267
 	ld b, h ; $4268
 	ld de, $d000 ; $4269
-	farcall FarPtr_AttachActorStepMover ; $426c
+	farcall AttachActorStepMover ; $426c
 	ret ; $426f
 	; $4270, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $1a ; 0x00
@@ -245,10 +245,10 @@ TennisMachineRoomInitScript_14:
 	ld [$c32c], a ; $4289
 	call DisableLCDSafely ; $428c
 	ld a, $00 ; $428f
-	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $4291
+	farcall CopyScrolledSceneTilemapToVram ; $4291
 	call EnableLCD ; $4294
 	call ComputeMachineCourtProgress ; $4297
-	farcall FarPtr_WaitPlayerMoveDone ; $429a
+	farcall WaitPlayerMoveDone ; $429a
 	ld a, [wStoryModeEntryPoint] ; $429d
 	cp a, $05 ; $42a0
 	jp z, MachineCourtResultScene ; $42a2
@@ -321,7 +321,7 @@ MachineCourtGameOverExitScene:
 	ld c, l ; $439b
 	ld b, h ; $439c
 	ld de, $d000 ; $439d
-	farcall FarPtr_AttachActorStepMover ; $43a0
+	farcall AttachActorStepMover ; $43a0
 	ret ; $43a3
 ComputeMachineCourtProgress:
 	ld a, $00 ; $43a4
@@ -343,7 +343,7 @@ ComputeMachineCourtProgress:
 	ld a, $04 ; $43fe
 	ld b, a ; $4400
 	ld a, $01 ; $4401
-	farcall FarPtr_ReadMinigameRecord ; $4403
+	farcall ReadMinigameRecord ; $4403
 	ldh a, [hWramBank] ; $4406
 	push af ; $4408
 	wram_bank $07 ; $4409
@@ -376,7 +376,7 @@ TennisMachineRoomNpc05_14:
 	ld a, [hl+] ; $443e
 	ld h, [hl] ; $443f
 	ld l, a ; $4440
-	farcall FarPtr_InitDialogueTextCursor ; $4441
+	farcall InitDialogueTextCursor ; $4441
 	ld a, [$c2b0] ; $4444
 	cp a, $05 ; $4447
 	jr c, Label_14_4467 ; $4449
@@ -384,26 +384,26 @@ TennisMachineRoomNpc05_14:
 	push af ; $444d
 	wram_bank $07 ; $444e
 	ld a, $01 ; $4454
-	farcall FarPtr_ReadMinigameRecord ; $4456
+	farcall ReadMinigameRecord ; $4456
 	ld hl, $de00 ; $4459
 	ld a, [hl+] ; $445c
 	ld h, [hl] ; $445d
 	ld l, a ; $445e
 	pop af ; $445f
 	wram_bank ; $4460
-	farcall FarPtr_PushTextArgNumber ; $4464
+	farcall PushTextArgNumber ; $4464
 Label_14_4467:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4467
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $446e
 	ld a, $05 ; $4475
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4477
-	farcall FarPtr_RunDialogueYesNoPrompt ; $447a
-	farcall FarPtr_ScriptCloseDialogueWindow ; $447d
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4477
+	farcall RunDialogueYesNoPrompt ; $447a
+	farcall ScriptCloseDialogueWindow ; $447d
 	script_wait_frames $05 ; $4480
 	and a, a ; $4487
 	jr nz, Label_14_44a9 ; $4488
 	set_flag $1c, 0 ; $448a
-	farcall FarPtr_AdvanceDialogueTextCursor ; $448d
+	farcall AdvanceDialogueTextCursor ; $448d
 	ld a, [$c2b0] ; $4490
 	and a, a ; $4493
 	jr nz, Label_14_449b ; $4494
@@ -417,9 +417,9 @@ Label_14_44a9:
 	jr z, Label_14_44ca ; $44ac
 	script_set_text Text_6e_222 ; $44ae
 	ld a, $05 ; $44b4
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $44b6
-	farcall FarPtr_RunDialogueYesNoPrompt ; $44b9
-	farcall FarPtr_ScriptCloseDialogueWindow ; $44bc
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $44b6
+	farcall RunDialogueYesNoPrompt ; $44b9
+	farcall ScriptCloseDialogueWindow ; $44bc
 	script_wait_frames $05 ; $44bf
 	and a, a ; $44c6
 	jp z, Label_14_45a6 ; $44c7
@@ -434,8 +434,8 @@ Label_14_44ca:
 	ld a, [hl+] ; $44d5
 	ld h, [hl] ; $44d6
 	ld l, a ; $44d7
-	farcall FarPtr_InitDialogueTextCursor ; $44d8
-	farcall FarPtr_AdvanceDialogueTextCursor ; $44db
+	farcall InitDialogueTextCursor ; $44d8
+	farcall AdvanceDialogueTextCursor ; $44db
 	script_speak $05 ; $44de
 	ret ; $44e3
 MachineCourtStartLevelScene:
@@ -482,8 +482,8 @@ Label_14_4577:
 	sub a, l ; $459c
 	ld h, a ; $459d
 	ld a, [hl] ; $459e
-	farcall FarPtr_RunTrainingDrillByID ; $459f
-	farcall FarPtr_EndCutsceneScriptMode ; $45a2
+	farcall RunTrainingDrillByID ; $459f
+	farcall EndCutsceneScriptMode ; $45a2
 	ret ; $45a5
 Label_14_45a6:
 	script_speak $05 ; $45a6
@@ -520,11 +520,11 @@ MachinePracticeLevelPrompt:
 	inc a ; $4623
 	ld h, $00 ; $4624
 	ld l, a ; $4626
-	farcall FarPtr_PushTextArgNumber ; $4627
+	farcall PushTextArgNumber ; $4627
 	ld a, $05 ; $462a
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $462c
-	farcall FarPtr_RunDialogueYesNoPrompt ; $462f
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4632
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $462c
+	farcall RunDialogueYesNoPrompt ; $462f
+	farcall ScriptCloseDialogueWindow ; $4632
 	script_wait_frames $05 ; $4635
 	and a, a ; $463c
 	jr nz, Label_14_4692 ; $463d
@@ -546,8 +546,8 @@ MachinePracticeLevelPrompt:
 	ld [wStoryModeExitLocationRequest], a ; $4684
 	ld a, [$c2b8] ; $4687
 	add a, $12 ; $468a
-	farcall FarPtr_RunTrainingDrillByID ; $468c
-	farcall FarPtr_EndCutsceneScriptMode ; $468f
+	farcall RunTrainingDrillByID ; $468c
+	farcall EndCutsceneScriptMode ; $468f
 Label_14_4692:
 	ret ; $4692
 MachineLevelNotClearedMessage:
@@ -606,17 +606,17 @@ Label_14_46ef:
 	ld a, [hl+] ; $4720
 	ld h, [hl] ; $4721
 	ld l, a ; $4722
-	farcall FarPtr_PushTextArgNumber ; $4723
+	farcall PushTextArgNumber ; $4723
 	ld hl, wMinigamesCurrentScore ; $4726
 	ld a, [hl+] ; $4729
 	ld h, [hl] ; $472a
 	ld l, a ; $472b
-	farcall FarPtr_PushTextArgNumber ; $472c
+	farcall PushTextArgNumber ; $472c
 	script_set_speed ACTOR_PLAYER, $0020 ; $472f
 	ld a, $05 ; $4737
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4739
-	farcall FarPtr_RunDialogueYesNoPrompt ; $473c
-	farcall FarPtr_ScriptCloseDialogueWindow ; $473f
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4739
+	farcall RunDialogueYesNoPrompt ; $473c
+	farcall ScriptCloseDialogueWindow ; $473f
 	script_wait_frames $05 ; $4742
 	and a, a ; $4749
 	jp z, MachineCourtRestartLevel ; $474a
@@ -624,9 +624,9 @@ Label_14_474d:
 	ret ; $474d
 MachineCourtHandleRetryChoice:
 	ld a, $05 ; $474e
-	farcall FarPtr_ScriptShowSpeakerDialogueRestoreBG ; $4750
-	farcall FarPtr_RunDialogueYesNoPrompt ; $4753
-	farcall FarPtr_ScriptCloseDialogueWindow ; $4756
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $4750
+	farcall RunDialogueYesNoPrompt ; $4753
+	farcall ScriptCloseDialogueWindow ; $4756
 	script_wait_frames $05 ; $4759
 	and a, a ; $4760
 	jr z, MachineCourtRestartLevel ; $4761
@@ -646,7 +646,7 @@ MachineCourtHandleRetryChoice:
 	ld c, l ; $47c4
 	ld b, h ; $47c5
 	ld de, $d000 ; $47c6
-	farcall FarPtr_AttachActorStepMover ; $47c9
+	farcall AttachActorStepMover ; $47c9
 	ret ; $47cc
 MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
@@ -673,7 +673,7 @@ Label_14_47ef:
 	ld [wStoryModeExitLocationRequest], a ; $47fe
 Label_14_4801:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
-	farcall FarPtr_RunTrainingDrillByID ; $4804
+	farcall RunTrainingDrillByID ; $4804
 	ret ; $4807
 ActorScript_14_4808:
 	; $4808, 11 bytes (actor_script)
@@ -685,7 +685,7 @@ ActorScript_14_4808:
 	push af ; $4815
 	wram_bank $07 ; $4816
 	ld a, $01 ; $481c
-	farcall FarPtr_ReadMinigameRecord ; $481e
+	farcall ReadMinigameRecord ; $481e
 	ld de, $0050 ; $4821
 	ld hl, $de00 ; $4824
 	ld a, e ; $4827
@@ -732,7 +732,7 @@ Label_14_484f:
 	push af ; $4876
 	wram_bank $07 ; $4877
 	ld a, $01 ; $487d
-	farcall FarPtr_ReadMinigameRecord ; $487f
+	farcall ReadMinigameRecord ; $487f
 	ld hl, $de00 ; $4882
 	ld a, [hl+] ; $4885
 	ld d, [hl] ; $4886
@@ -777,7 +777,7 @@ MachineExpertRetryPrompt:
 	ld a, [hl+] ; $48c7
 	ld h, [hl] ; $48c8
 	ld l, a ; $48c9
-	farcall FarPtr_PushTextArgNumber ; $48ca
+	farcall PushTextArgNumber ; $48ca
 	jp MachineCourtHandleRetryChoice ; $48cd
 	ret ; $48d0
 MachineExpertNewRecordScene:
@@ -787,21 +787,21 @@ MachineExpertNewRecordScene:
 	ld a, [hl+] ; $48dd
 	ld h, [hl] ; $48de
 	ld l, a ; $48df
-	farcall FarPtr_PushTextArgNumber ; $48e0
+	farcall PushTextArgNumber ; $48e0
 	call MachineCourtWalkToAttendantCutscene ; $48e3
 	script_speak $05 ; $48e6
 	script_get_actor_state ACTOR_PARTNER ; $48eb
 	ld c, l ; $48f0
 	ld b, h ; $48f1
 	ld de, $d000 ; $48f2
-	farcall FarPtr_AttachActorStepMover ; $48f5
+	farcall AttachActorStepMover ; $48f5
 	ret ; $48f8
 MachineExpertCounterMaxScene:
 	ldh a, [hWramBank] ; $48f9
 	push af ; $48fb
 	wram_bank $07 ; $48fc
 	ld a, $01 ; $4902
-	farcall FarPtr_ReadMinigameRecord ; $4904
+	farcall ReadMinigameRecord ; $4904
 	ld hl, $de00 ; $4907
 	ld a, [hl+] ; $490a
 	ld h, [hl] ; $490b
@@ -822,7 +822,7 @@ MachineExpertCounterMaxScene:
 	ld a, [hl+] ; $492a
 	ld h, [hl] ; $492b
 	ld l, a ; $492c
-	farcall FarPtr_PushTextArgNumber ; $492d
+	farcall PushTextArgNumber ; $492d
 	script_set_text Text_6e_212 ; $4930
 	call MachineCourtWalkToAttendantCutscene ; $4936
 	script_speak $05 ; $4939
@@ -831,7 +831,7 @@ MachineExpertCounterMaxScene:
 	ld c, l ; $4948
 	ld b, h ; $4949
 	ld de, $d000 ; $494a
-	farcall FarPtr_AttachActorStepMover ; $494d
+	farcall AttachActorStepMover ; $494d
 	ret ; $4950
 	ld hl, wMinigamesCurrentScore ; $4951
 	ld a, [hl+] ; $4954
@@ -868,7 +868,7 @@ SaveMachineExpertRecord:
 	ld [hl+], a ; $4987
 	ld [hl], d ; $4988
 	ld a, $01 ; $4989
-	farcall FarPtr_UpdateMinigameRecord ; $498b
+	farcall UpdateMinigameRecord ; $498b
 	pop af ; $498e
 	wram_bank ; $498f
 	call ComputeMachineCourtProgress ; $4993
@@ -954,7 +954,7 @@ Court2Npc04_14:
 	ld a, [hl+] ; $4b78
 	ld h, [hl] ; $4b79
 	ld l, a ; $4b7a
-	farcall FarPtr_InitDialogueTextCursor ; $4b7b
+	farcall InitDialogueTextCursor ; $4b7b
 	script_speak $04 ; $4b7e
 	ret ; $4b83
 	; $4b84, 14 bytes (records:2)
@@ -976,7 +976,7 @@ Court2Npc05_14:
 	ld a, [hl+] ; $4b9d
 	ld h, [hl] ; $4b9e
 	ld l, a ; $4b9f
-	farcall FarPtr_InitDialogueTextCursor ; $4ba0
+	farcall InitDialogueTextCursor ; $4ba0
 	script_speak $05 ; $4ba3
 	ret ; $4ba8
 	; $4ba9, 14 bytes (records:2)
@@ -998,7 +998,7 @@ Court2Npc06_14:
 	ld a, [hl+] ; $4bc2
 	ld h, [hl] ; $4bc3
 	ld l, a ; $4bc4
-	farcall FarPtr_InitDialogueTextCursor ; $4bc5
+	farcall InitDialogueTextCursor ; $4bc5
 	script_speak $06 ; $4bc8
 	ret ; $4bcd
 	; $4bce, 14 bytes (records:2)
@@ -1031,7 +1031,7 @@ Label_14_4bf5:
 	ld a, [hl+] ; $4c00
 	ld h, [hl] ; $4c01
 	ld l, a ; $4c02
-	farcall FarPtr_InitDialogueTextCursor ; $4c03
+	farcall InitDialogueTextCursor ; $4c03
 	script_set_anim $08, $04 ; $4c06
 	script_wait_idle $08 ; $4c0d
 	script_speak $08 ; $4c12
@@ -1163,8 +1163,8 @@ InitCourt2SceneVariant:
 	jr z, Label_14_4e7e ; $4e6d
 	ldh a, [hRomBank] ; $4e6f
 	ld hl, Court2ActorsAlt_14 ; $4e71
-	farcall FarPtr_ScriptRespawnLocationActors ; $4e74
-	farcall FarPtr_BeginCutsceneScriptMode ; $4e77
+	farcall ScriptRespawnLocationActors ; $4e74
+	farcall BeginCutsceneScriptMode ; $4e77
 	ld a, $03 ; $4e7a
 	jr Label_14_4e8e ; $4e7c
 Label_14_4e7e:
@@ -1185,8 +1185,8 @@ Label_14_4e92:
 	jr z, Label_14_4ea6 ; $4e95
 	ldh a, [hRomBank] ; $4e97
 	ld hl, Court2ActorsAlt_14 ; $4e99
-	farcall FarPtr_ScriptRespawnLocationActors ; $4e9c
-	farcall FarPtr_BeginCutsceneScriptMode ; $4e9f
+	farcall ScriptRespawnLocationActors ; $4e9c
+	farcall BeginCutsceneScriptMode ; $4e9f
 	ld a, $06 ; $4ea2
 	jr Label_14_4e8e ; $4ea4
 Label_14_4ea6:
@@ -1279,7 +1279,7 @@ Court1Npc05_14:
 	ld a, [hl+] ; $5087
 	ld h, [hl] ; $5088
 	ld l, a ; $5089
-	farcall FarPtr_InitDialogueTextCursor ; $508a
+	farcall InitDialogueTextCursor ; $508a
 	script_speak $05 ; $508d
 	ret ; $5092
 	; $5093, 14 bytes (records:2)
@@ -1301,7 +1301,7 @@ Court1Npc06_14:
 	ld a, [hl+] ; $50ac
 	ld h, [hl] ; $50ad
 	ld l, a ; $50ae
-	farcall FarPtr_InitDialogueTextCursor ; $50af
+	farcall InitDialogueTextCursor ; $50af
 	script_speak $06 ; $50b2
 	ret ; $50b7
 	; $50b8, 14 bytes (records:2)
@@ -1347,8 +1347,8 @@ InitCourt1SceneVariant:
 	ld [$c2b0], a ; $5116
 	ldh a, [hRomBank] ; $5119
 	ld hl, Court1ActorsAlt_14 ; $511b
-	farcall FarPtr_ScriptRespawnLocationActors ; $511e
-	farcall FarPtr_BeginCutsceneScriptMode ; $5121
+	farcall ScriptRespawnLocationActors ; $511e
+	farcall BeginCutsceneScriptMode ; $5121
 	ret ; $5124
 Label_14_5125:
 	test_flag $07, 6 ; $5125
@@ -1370,8 +1370,8 @@ Label_14_513b:
 	ld [$c2b0], a ; $5142
 	ldh a, [hRomBank] ; $5145
 	ld hl, Court1ActorsAlt_14 ; $5147
-	farcall FarPtr_ScriptRespawnLocationActors ; $514a
-	farcall FarPtr_BeginCutsceneScriptMode ; $514d
+	farcall ScriptRespawnLocationActors ; $514a
+	farcall BeginCutsceneScriptMode ; $514d
 	ret ; $5150
 Label_14_5151:
 	test_flag $06, 7 ; $5151
@@ -1416,7 +1416,7 @@ Func_14_51ea:
 	script_get_actor_state ACTOR_PARTNER ; $51f7
 	ld c, l ; $51fc
 	ld b, h ; $51fd
-	farcall FarPtr_LoadActorObjectDefIfValid ; $51fe
+	farcall LoadActorObjectDefIfValid ; $51fe
 	script_set_anim ACTOR_PARTNER, $01 ; $5201
 Label_14_5208:
 	ld a, [$c90d] ; $5208
@@ -1426,7 +1426,7 @@ Label_14_5208:
 	script_get_actor_state ACTOR_PLAYER ; $520f
 	ld c, l ; $5214
 	ld b, h ; $5215
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5216
+	farcall LoadActorObjectDefIfValid ; $5216
 	script_set_anim ACTOR_PLAYER, $01 ; $5219
 	ret ; $5220
 IslandSkyMapScripts_14:
@@ -1509,7 +1509,7 @@ Label_14_5303:
 	script_get_actor_state $05 ; $5341
 	ld c, l ; $5346
 	ld b, h ; $5347
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5348
+	farcall LoadActorObjectDefIfValid ; $5348
 	script_set_anim $05, $01 ; $534b
 Label_14_5352:
 	ld a, [$c90d] ; $5352
@@ -1519,7 +1519,7 @@ Label_14_5352:
 	script_get_actor_state ACTOR_PLAYER ; $5359
 	ld c, l ; $535e
 	ld b, h ; $535f
-	farcall FarPtr_LoadActorObjectDefIfValid ; $5360
+	farcall LoadActorObjectDefIfValid ; $5360
 	script_set_anim ACTOR_PLAYER, $01 ; $5363
 	script_set_active ACTOR_PLAYER, $00 ; $536a
 	ld a, [wStoryModeEntryPoint] ; $5371
@@ -2467,8 +2467,8 @@ Label_14_64cd:
 Label_14_64e1:
 	ldh a, [hRomBank] ; $64e1
 	ld hl, $6675 ; $64e3
-	farcall FarPtr_ScriptRespawnLocationActors ; $64e6
-	farcall FarPtr_BeginCutsceneScriptMode ; $64e9
+	farcall ScriptRespawnLocationActors ; $64e6
+	farcall BeginCutsceneScriptMode ; $64e9
 	call DisableLCDSafely ; $64ec
 	call Func_14_6427 ; $64ef
 	call EnableLCD ; $64f2
@@ -2484,7 +2484,7 @@ Label_14_650b:
 	call WaitFadeEnd ; $651f
 	script_player_speed $0006 ; $6522
 	script_move_player $0500, $2300 ; $6528
-	farcall FarPtr_WaitPlayerMoveDone ; $6532
+	farcall WaitPlayerMoveDone ; $6532
 	script_wait_frames $32 ; $6535
 	ld a, $50 ; $653c
 	ld [$c2b3], a ; $653e
@@ -2847,8 +2847,8 @@ Label_14_711c:
 Label_14_7124:
 	ld b, $1d ; $7124
 	ld c, $0f ; $7126
-	farcall FarPtr_SaveStoryReturnPoint ; $7128
-	farcall FarPtr_SaveStorySlotWithTimer ; $712b
+	farcall SaveStoryReturnPoint ; $7128
+	farcall SaveStorySlotWithTimer ; $712b
 	ld c, $01 ; $712e
 	call BeginFadeOut ; $7130
 	call WaitFadeEnd ; $7133

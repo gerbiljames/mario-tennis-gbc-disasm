@@ -1,155 +1,80 @@
 SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 
-FarPtr_InitTextWindows:
-	dw InitTextWindows ; $4000
-FarPtr_CreateWindowWithAttr:
-	dw CreateWindowWithAttr ; $4002
-FarPtr_CreateWindow:
-	dw CreateWindow ; $4004
-FarPtr_CreateDialogueWindow:
-	dw CreateDialogueWindow ; $4006
-FarPtr_CreateMenuWindowFromText:
-	dw CreateMenuWindowFromText ; $4008
-FarPtr_CloseActiveDialogueWindow:
-	dw CloseActiveDialogueWindow ; $400a
-FarPtr_05_0c:
-	dw Func_05_4766 ; $400c
-FarPtr_SetWindowTextId:
-	dw SetWindowTextId ; $400e
-FarPtr_05_10:
-	dw Func_05_4626 ; $4010
-FarPtr_QueueFullTilemapCopy:
-	dw QueueFullTilemapCopy ; $4012
-FarPtr_QueueFullAttrmapCopy:
-	dw QueueFullAttrmapCopy ; $4014
-FarPtr_CopyVisibleTilemapToVRAM:
-	dw CopyVisibleTilemapToVRAM ; $4016
-FarPtr_RestoreShadowTilemap:
-	dw RestoreShadowTilemap ; $4018
-FarPtr_WriteWindowCellTileAttr:
-	dw WriteWindowCellTileAttr ; $401a
-FarPtr_RenderProportionalTextAt:
-	dw RenderProportionalTextAt ; $401c
-FarPtr_FetchDialogueText:
-	dw FetchDialogueText ; $401e
-FarPtr_DrawTileAttrRect:
-	dw DrawTileAttrRect ; $4020
-FarPtr_CopyTilemapRowsAnimated:
-	dw CopyTilemapRowsAnimated ; $4022
-FarPtr_ApplyMessageSpeed:
-	dw ApplyMessageSpeed ; $4024
-FarPtr_MeasureDialogueWidthTiles:
-	dw MeasureDialogueWidthTiles ; $4026
-FarPtr_ResetWindowState:
-	dw ResetWindowState ; $4028
-FarPtr_05_2a:
-	dw Func_05_44f9 ; $402a
-FarPtr_05_2c:
-	dw Func_05_4510 ; $402c
-FarPtr_RenderTextString:
-	dw RenderTextString ; $402e
-FarPtr_RenderActiveWindowText:
-	dw RenderActiveWindowText ; $4030
-FarPtr_SetActiveWindowTextId:
-	dw SetActiveWindowTextId ; $4032
-FarPtr_ShowSpeakerDialogue:
-	dw ShowSpeakerDialogue ; $4034
-FarPtr_ShowSpeakerDialogueRestoreBG:
-	dw ShowSpeakerDialogueRestoreBG ; $4036
-FarPtr_ShowDialogueAtPosition:
-	dw ShowDialogueAtPosition ; $4038
-FarPtr_DrawDialogueAtPosition:
-	dw DrawDialogueAtPosition ; $403a
-FarPtr_RunMenuSelection:
-	dw RunMenuSelection ; $403c
-FarPtr_RunPagedTextMenu:
-	dw RunPagedTextMenu ; $403e
-FarPtr_RunPagedTextMenuAutoSize:
-	dw RunPagedTextMenuAutoSize ; $4040
-FarPtr_RunMenuSelectionShared:
-	dw RunMenuSelectionShared ; $4042
-FarPtr_AddTextIdOffset:
-	dw AddTextIdOffset ; $4044
-FarPtr_PushTextArgString:
-	dw PushTextArgString ; $4046
-FarPtr_PushTextArgNumber:
-	dw PushTextArgNumber ; $4048
-FarPtr_PushTextArgShortTextId:
-	dw PushTextArgShortTextId ; $404a
-FarPtr_05_4c:
-	dw Func_05_53ae ; $404c
-FarPtr_FetchShortTextToBuffer:
-	dw FetchShortTextToBuffer ; $404e
-FarPtr_RunDebugFlagEditor:
-	dw RunDebugFlagEditor ; $4050
-FarPtr_RunDebugMenu:
-	dw RunDebugMenu ; $4052
-FarPtr_RunDebugWarpMenu:
-	dw RunDebugWarpMenu ; $4054
-FarPtr_WriteStringToWindow:
-	dw WriteStringToWindow ; $4056
-FarPtr_GetTilemapCellAddress:
-	dw GetTilemapCellAddress ; $4058
-FarPtr_WriteDialogueToWindow:
-	dw WriteDialogueToWindow ; $405a
-FarPtr_ResetTextWindowsAndRestoreMap:
-	dw ResetTextWindowsAndRestoreMap ; $405c
-FarPtr_CreateWindowWithTextId:
-	dw CreateWindowWithTextId ; $405e
-FarPtr_RedrawWindowText:
-	dw RedrawWindowText ; $4060
-FarPtr_05_62:
-	dw Func_05_6269 ; $4062
-FarPtr_RedrawWindowRowsSafe:
-	dw RedrawWindowRowsSafe ; $4064
-FarPtr_CloseWindowAlt:
-	dw CloseWindowAlt ; $4066
-FarPtr_ShowDialogueCentered:
-	dw ShowDialogueCentered ; $4068
-FarPtr_RestoreTilemapUnderWindow:
-	dw RestoreTilemapUnderWindow ; $406a
-FarPtr_WriteStringToTilemap:
-	dw WriteStringToTilemap ; $406c
-FarPtr_WriteStringToTilemapAlt:
-	dw WriteStringToTilemapAlt ; $406e
-FarPtr_WriteStringToTilemapStreamed:
-	dw WriteStringToTilemapStreamed ; $4070
-FarPtr_RenderTextToBuffer64:
-	dw RenderTextToBuffer64 ; $4072
-FarPtr_RunDebugWindowDemo:
-	dw RunDebugWindowDemo ; $4074
-FarPtr_ResetTextWindowState:
-	dw ResetTextWindowState ; $4076
-FarPtr_CreateWindowFromScreenRect:
-	dw CreateWindowFromScreenRect ; $4078
-FarPtr_CloseWindow:
-	dw CloseWindow ; $407a
-FarPtr_DrawTextWindowFrame:
-	dw DrawTextWindowFrame ; $407c
-FarPtr_RedrawWindowRows:
-	dw RedrawWindowRows ; $407e
-FarPtr_RenderMenuWindowText:
-	dw RenderMenuWindowText ; $4080
-FarPtr_RedrawTilemapRowRange:
-	dw RedrawTilemapRowRange ; $4082
-FarPtr_RedrawAllTilemapRows:
-	dw RedrawAllTilemapRows ; $4084
-FarPtr_GetWindowStructPtr:
-	dw GetWindowStructPtr ; $4086
-FarPtr_FreeWindow:
-	dw FreeWindow ; $4088
-FarPtr_FitWindowToText:
-	dw FitWindowToText ; $408a
-FarPtr_PrepareGlyphBuffer:
-	dw PrepareGlyphBuffer ; $408c
-FarPtr_ResetGlyphStream:
-	dw ResetGlyphStream ; $408e
-FarPtr_UploadGlyphBuffer:
-	dw UploadGlyphBuffer ; $4090
-FarPtr_UploadGlyphTileRange:
-	dw UploadGlyphTileRange ; $4092
-FarPtr_UploadGlyphBufferFull:
-	dw UploadGlyphBufferFull ; $4094
+	farptr InitTextWindows ; $4000
+	farptr CreateWindowWithAttr ; $4002
+	farptr CreateWindow ; $4004
+	farptr CreateDialogueWindow ; $4006
+	farptr CreateMenuWindowFromText ; $4008
+	farptr CloseActiveDialogueWindow ; $400a
+	farptr Func_05_4766 ; $400c
+	farptr SetWindowTextId ; $400e
+	farptr Func_05_4626 ; $4010
+	farptr QueueFullTilemapCopy ; $4012
+	farptr QueueFullAttrmapCopy ; $4014
+	farptr CopyVisibleTilemapToVRAM ; $4016
+	farptr RestoreShadowTilemap ; $4018
+	farptr WriteWindowCellTileAttr ; $401a
+	farptr RenderProportionalTextAt ; $401c
+	farptr FetchDialogueText ; $401e
+	farptr DrawTileAttrRect ; $4020
+	farptr CopyTilemapRowsAnimated ; $4022
+	farptr ApplyMessageSpeed ; $4024
+	farptr MeasureDialogueWidthTiles ; $4026
+	farptr ResetWindowState ; $4028
+	farptr Func_05_44f9 ; $402a
+	farptr Func_05_4510 ; $402c
+	farptr RenderTextString ; $402e
+	farptr RenderActiveWindowText ; $4030
+	farptr SetActiveWindowTextId ; $4032
+	farptr ShowSpeakerDialogue ; $4034
+	farptr ShowSpeakerDialogueRestoreBG ; $4036
+	farptr ShowDialogueAtPosition ; $4038
+	farptr DrawDialogueAtPosition ; $403a
+	farptr RunMenuSelection ; $403c
+	farptr RunPagedTextMenu ; $403e
+	farptr RunPagedTextMenuAutoSize ; $4040
+	farptr RunMenuSelectionShared ; $4042
+	farptr AddTextIdOffset ; $4044
+	farptr PushTextArgString ; $4046
+	farptr PushTextArgNumber ; $4048
+	farptr PushTextArgShortTextId ; $404a
+	farptr Func_05_53ae ; $404c
+	farptr FetchShortTextToBuffer ; $404e
+	farptr RunDebugFlagEditor ; $4050
+	farptr RunDebugMenu ; $4052
+	farptr RunDebugWarpMenu ; $4054
+	farptr WriteStringToWindow ; $4056
+	farptr GetTilemapCellAddress ; $4058
+	farptr WriteDialogueToWindow ; $405a
+	farptr ResetTextWindowsAndRestoreMap ; $405c
+	farptr CreateWindowWithTextId ; $405e
+	farptr RedrawWindowText ; $4060
+	farptr Func_05_6269 ; $4062
+	farptr RedrawWindowRowsSafe ; $4064
+	farptr CloseWindowAlt ; $4066
+	farptr ShowDialogueCentered ; $4068
+	farptr RestoreTilemapUnderWindow ; $406a
+	farptr WriteStringToTilemap ; $406c
+	farptr WriteStringToTilemapAlt ; $406e
+	farptr WriteStringToTilemapStreamed ; $4070
+	farptr RenderTextToBuffer64 ; $4072
+	farptr RunDebugWindowDemo ; $4074
+	farptr ResetTextWindowState ; $4076
+	farptr CreateWindowFromScreenRect ; $4078
+	farptr CloseWindow ; $407a
+	farptr DrawTextWindowFrame ; $407c
+	farptr RedrawWindowRows ; $407e
+	farptr RenderMenuWindowText ; $4080
+	farptr RedrawTilemapRowRange ; $4082
+	farptr RedrawAllTilemapRows ; $4084
+	farptr GetWindowStructPtr ; $4086
+	farptr FreeWindow ; $4088
+	farptr FitWindowToText ; $408a
+	farptr PrepareGlyphBuffer ; $408c
+	farptr ResetGlyphStream ; $408e
+	farptr UploadGlyphBuffer ; $4090
+	farptr UploadGlyphTileRange ; $4092
+	farptr UploadGlyphBufferFull ; $4094
 InitTextWindows:
 	call ResetTextWindowState ; $4096
 	ret ; $4099
@@ -1640,7 +1565,7 @@ Label_05_4969:
 	ld d, $01 ; $4976
 	ld e, $01 ; $4978
 	call CreateMenuWindowPaged ; $497a
-	farcall FarPtr_RestoreShadowTilemap ; $497d
+	farcall RestoreShadowTilemap ; $497d
 	call RenderMenuWindowText ; $4980
 	call RunMenuSelection ; $4983
 	push af ; $4986
@@ -2137,18 +2062,18 @@ Label_05_4cc8:
 Label_05_4cd6:
 	ld l, $20 ; $4cd6
 	ld de, $0b01 ; $4cd8
-	farcall FarPtr_1a_02 ; $4cdb
+	farcall Func_1a_413c ; $4cdb
 	ld l, $20 ; $4cde
 	ld de, $0b03 ; $4ce0
-	farcall FarPtr_1a_02 ; $4ce3
+	farcall Func_1a_413c ; $4ce3
 	jr Label_05_4cfa ; $4ce6
 Label_05_4ce8:
 	ld l, $20 ; $4ce8
 	ld de, $0d05 ; $4cea
-	farcall FarPtr_1a_02 ; $4ced
+	farcall Func_1a_413c ; $4ced
 	ld l, $20 ; $4cf0
 	ld de, $0d07 ; $4cf2
-	farcall FarPtr_1a_02 ; $4cf5
+	farcall Func_1a_413c ; $4cf5
 	jr Label_05_4cfa ; $4cf8
 Label_05_4cfa:
 	ld hl, wTextArrowBlinkCounter ; $4cfa
@@ -2219,10 +2144,10 @@ Label_05_4d56:
 Label_05_4d6d:
 	ld l, $20 ; $4d6d
 	ld de, $0b01 ; $4d6f
-	farcall FarPtr_1a_02 ; $4d72
+	farcall Func_1a_413c ; $4d72
 	ld l, $20 ; $4d75
 	ld de, $0b03 ; $4d77
-	farcall FarPtr_1a_02 ; $4d7a
+	farcall Func_1a_413c ; $4d7a
 	ld a, [$d830] ; $4d7d
 	and a, a ; $4d80
 	jr nz, Label_05_4da0 ; $4d81
@@ -2232,10 +2157,10 @@ Label_05_4d6d:
 	jp z, Label_05_4e0a ; $4d8a
 	ld l, $0c ; $4d8d
 	ld de, $0101 ; $4d8f
-	farcall FarPtr_1a_02 ; $4d92
+	farcall Func_1a_413c ; $4d92
 	ld l, $0d ; $4d95
 	ld de, $0b01 ; $4d97
-	farcall FarPtr_1a_02 ; $4d9a
+	farcall Func_1a_413c ; $4d9a
 	jp Label_05_4e0f ; $4d9d
 Label_05_4da0:
 	call GetMenuCursorBlinkPhase ; $4da0
@@ -2244,18 +2169,18 @@ Label_05_4da0:
 	jp z, Label_05_4e0a ; $4da7
 	ld l, $0c ; $4daa
 	ld de, $0103 ; $4dac
-	farcall FarPtr_1a_02 ; $4daf
+	farcall Func_1a_413c ; $4daf
 	ld l, $0d ; $4db2
 	ld de, $0b03 ; $4db4
-	farcall FarPtr_1a_02 ; $4db7
+	farcall Func_1a_413c ; $4db7
 	jp Label_05_4e0f ; $4dba
 Label_05_4dbd:
 	ld l, $20 ; $4dbd
 	ld de, $0d05 ; $4dbf
-	farcall FarPtr_1a_02 ; $4dc2
+	farcall Func_1a_413c ; $4dc2
 	ld l, $20 ; $4dc5
 	ld de, $0d07 ; $4dc7
-	farcall FarPtr_1a_02 ; $4dca
+	farcall Func_1a_413c ; $4dca
 	ld a, [$d830] ; $4dcd
 	cp a, $03 ; $4dd0
 	jr z, Label_05_4def ; $4dd2
@@ -2265,10 +2190,10 @@ Label_05_4dbd:
 	jr z, Label_05_4e0a ; $4ddb
 	ld l, $0c ; $4ddd
 	ld de, $0105 ; $4ddf
-	farcall FarPtr_1a_02 ; $4de2
+	farcall Func_1a_413c ; $4de2
 	ld l, $0d ; $4de5
 	ld de, $0d05 ; $4de7
-	farcall FarPtr_1a_02 ; $4dea
+	farcall Func_1a_413c ; $4dea
 	jr Label_05_4e0f ; $4ded
 Label_05_4def:
 	call GetMenuCursorBlinkPhase ; $4def
@@ -2277,14 +2202,14 @@ Label_05_4def:
 	jr z, Label_05_4e0a ; $4df6
 	ld l, $0c ; $4df8
 	ld de, $0107 ; $4dfa
-	farcall FarPtr_1a_02 ; $4dfd
+	farcall Func_1a_413c ; $4dfd
 	ld l, $0d ; $4e00
 	ld de, $0d07 ; $4e02
-	farcall FarPtr_1a_02 ; $4e05
+	farcall Func_1a_413c ; $4e05
 	jr Label_05_4e0f ; $4e08
 Label_05_4e0a:
 	ld l, $20 ; $4e0a
-	farcall FarPtr_1a_02 ; $4e0c
+	farcall Func_1a_413c ; $4e0c
 Label_05_4e0f:
 	ret ; $4e0f
 GetMenuCursorBlinkPhase:
@@ -3248,7 +3173,7 @@ MeasureIndexedShortTextWidth:
 	inc h ; $53f5
 Label_05_53f6:
 	ld de, wInlineTextBuffer ; $53f6
-	farcall FarPtr_FetchShortTextToBuffer ; $53f9
+	farcall FetchShortTextToBuffer ; $53f9
 	ld hl, wInlineTextBuffer ; $53fc
 	ld b, $00 ; $53ff
 Label_05_5401:
@@ -4542,31 +4467,31 @@ DialogueTextFetchers_05:
 	dw $5c5b ; record 13
 	dw $5c5b ; record 14
 	dw $5c5b ; record 15
-	farcall FarPtr_FetchDialogueText_30 ; $5c5b
+	farcall FetchDialogueText_30 ; $5c5b
 	jr Label_05_5ca3 ; $5c5e
-	farcall FarPtr_FetchDialogueText_31 ; $5c60
+	farcall FetchDialogueText_31 ; $5c60
 	jr Label_05_5ca3 ; $5c63
-	farcall FarPtr_FetchDialogueText_32 ; $5c65
+	farcall FetchDialogueText_32 ; $5c65
 	jr Label_05_5ca3 ; $5c68
-	farcall FarPtr_FetchDialogueText_33 ; $5c6a
+	farcall FetchDialogueText_33 ; $5c6a
 	jr Label_05_5ca3 ; $5c6d
-	farcall FarPtr_FetchDialogueText_34 ; $5c6f
+	farcall FetchDialogueText_34 ; $5c6f
 	jr Label_05_5ca3 ; $5c72
-	farcall FarPtr_FetchDialogueText_35 ; $5c74
+	farcall FetchDialogueText_35 ; $5c74
 	jr Label_05_5ca3 ; $5c77
-	farcall FarPtr_FetchDialogueText_36 ; $5c79
+	farcall FetchDialogueText_36 ; $5c79
 	jr Label_05_5ca3 ; $5c7c
-	farcall FarPtr_FetchDialogueText_37 ; $5c7e
+	farcall FetchDialogueText_37 ; $5c7e
 	jr Label_05_5ca3 ; $5c81
-	farcall FarPtr_FetchDialogueText_6e ; $5c83
+	farcall FetchDialogueText_6e ; $5c83
 	jr Label_05_5ca3 ; $5c86
-	farcall FarPtr_FetchDialogueText_1f ; $5c88
+	farcall FetchDialogueText_1f ; $5c88
 	jr Label_05_5ca3 ; $5c8b
-	farcall FarPtr_FetchDialogueText_25 ; $5c8d
+	farcall FetchDialogueText_25 ; $5c8d
 	jr Label_05_5ca3 ; $5c90
-	farcall FarPtr_FetchDialogueText_26 ; $5c92
+	farcall FetchDialogueText_26 ; $5c92
 	jr Label_05_5ca3 ; $5c95
-	farcall FarPtr_FetchDialogueText_5e ; $5c97
+	farcall FetchDialogueText_5e ; $5c97
 	jr Label_05_5ca3 ; $5c9a
 Label_05_5c9c:
 	ld a, h ; $5c9c
@@ -4623,31 +4548,31 @@ ShortTextFetchers_05:
 	dw $5ce7 ; record 13
 	dw $5ce7 ; record 14
 	dw $5ce7 ; record 15
-	farcall FarPtr_FetchShortText_30 ; $5ce7
+	farcall FetchShortText_30 ; $5ce7
 	jr Label_05_5d26 ; $5cea
-	farcall FarPtr_FetchShortText_31 ; $5cec
+	farcall FetchShortText_31 ; $5cec
 	jr Label_05_5d26 ; $5cef
-	farcall FarPtr_FetchShortText_32 ; $5cf1
+	farcall FetchShortText_32 ; $5cf1
 	jr Label_05_5d26 ; $5cf4
-	farcall FarPtr_FetchShortText_33 ; $5cf6
+	farcall FetchShortText_33 ; $5cf6
 	jr Label_05_5d26 ; $5cf9
-	farcall FarPtr_FetchShortText_34 ; $5cfb
+	farcall FetchShortText_34 ; $5cfb
 	jr Label_05_5d26 ; $5cfe
-	farcall FarPtr_FetchShortText_35 ; $5d00
+	farcall FetchShortText_35 ; $5d00
 	jr Label_05_5d26 ; $5d03
-	farcall FarPtr_FetchShortText_36 ; $5d05
+	farcall FetchShortText_36 ; $5d05
 	jr Label_05_5d26 ; $5d08
-	farcall FarPtr_FetchShortText_37 ; $5d0a
+	farcall FetchShortText_37 ; $5d0a
 	jr Label_05_5d26 ; $5d0d
-	farcall FarPtr_FetchShortText_6e ; $5d0f
+	farcall FetchShortText_6e ; $5d0f
 	jr Label_05_5d26 ; $5d12
-	farcall FarPtr_FetchShortText_1f ; $5d14
+	farcall FetchShortText_1f ; $5d14
 	jr Label_05_5d26 ; $5d17
-	farcall FarPtr_FetchShortText_25 ; $5d19
+	farcall FetchShortText_25 ; $5d19
 	jr Label_05_5d26 ; $5d1c
-	farcall FarPtr_FetchShortText_26 ; $5d1e
+	farcall FetchShortText_26 ; $5d1e
 	jr Label_05_5d26 ; $5d21
-	farcall FarPtr_FetchShortText_5e ; $5d23
+	farcall FetchShortText_5e ; $5d23
 Label_05_5d26:
 	pop hl ; $5d26
 	pop de ; $5d27
@@ -6077,7 +6002,7 @@ Label_05_66a8:
 	ld de, $0a01 ; $66ab
 	call CreateMenuWindowFromText ; $66ae
 	ld [$c700], a ; $66b1
-	farcall FarPtr_RestoreShadowTilemap ; $66b4
+	farcall RestoreShadowTilemap ; $66b4
 	call RenderMenuWindowText ; $66b7
 	ld a, [$c700] ; $66ba
 	call RunMenuSelection ; $66bd
@@ -6125,11 +6050,11 @@ TextSubcmdHandlers_05:
 	ld [wStoryModeExitLocationRequest], a ; $6707
 	set_flag $03, 4 ; $670a
 	ld c, $00 ; $670d
-	farcall FarPtr_1c_00 ; $670f
+	farcall Func_1c_401a ; $670f
 	ld c, $01 ; $6712
-	farcall FarPtr_1c_00 ; $6714
+	farcall Func_1c_401a ; $6714
 	clear_flag $03, 4 ; $6717
-	farcall FarPtr_SaveStorySlotWithTimer ; $671a
+	farcall SaveStorySlotWithTimer ; $671a
 	pop hl ; $671d
 	pop de ; $671e
 	pop bc ; $671f
@@ -6208,7 +6133,7 @@ RunDebugWarpMenu:
 	ld [$c704], a ; $67d2
 	ld a, [wStoryModeCurrentLocation] ; $67d5
 	ld [$c700], a ; $67d8
-	farcall FarPtr_GetStoryLocationCount ; $67db
+	farcall GetStoryLocationCount ; $67db
 	ld [$c702], a ; $67de
 	ld de, $0000 ; $67e1
 	ld bc, $1406 ; $67e4
@@ -6376,7 +6301,7 @@ DebugDrawColorComponents:
 RunDebugColorEditor:
 	ld de, $0700 ; $69c5
 	ld bc, $0b04 ; $69c8
-	farcall FarPtr_CreateWindow ; $69cb
+	farcall CreateWindow ; $69cb
 	ld [$c711], a ; $69ce
 	call DrawTextWindowFrame ; $69d1
 	call RedrawWindowRows ; $69d4
@@ -6461,7 +6386,7 @@ RunDebugPaletteViewer:
 	ld de, $0000 ; $6a5a
 	ld bc, $0712 ; $6a5d
 	ld a, $00 ; $6a60
-	farcall FarPtr_CreateWindowWithAttr ; $6a62
+	farcall CreateWindowWithAttr ; $6a62
 	ld [$c710], a ; $6a65
 	ld a, [$c710] ; $6a68
 	call DrawTextWindowFrame ; $6a6b
@@ -7827,7 +7752,7 @@ Label_05_723f:
 	ld a, [$d82f] ; $7242
 	call DrawTextWindowFrame ; $7245
 	clear_flag $04, 3 ; $7248
-	farcall FarPtr_GetWindowStructPtr ; $724b
+	farcall GetWindowStructPtr ; $724b
 	ld b, h ; $724e
 	ld c, l ; $724f
 	ld d, [hl] ; $7250
@@ -8130,7 +8055,7 @@ ClearWindowGlyphTiles:
 	push hl ; $73e7
 	wram_bank $05 ; $73e8
 	ld a, [$d821] ; $73ee
-	farcall FarPtr_GetWindowStructPtr ; $73f1
+	farcall GetWindowStructPtr ; $73f1
 	inc hl ; $73f4
 	inc hl ; $73f5
 	ld a, [hl+] ; $73f6
@@ -8277,7 +8202,7 @@ Label_05_74d0:
 	push hl ; $74e5
 	wram_bank $05 ; $74e6
 	ld a, [$d821] ; $74ec
-	farcall FarPtr_GetWindowStructPtr ; $74ef
+	farcall GetWindowStructPtr ; $74ef
 	inc hl ; $74f2
 	inc hl ; $74f3
 	ld b, [hl] ; $74f4
@@ -8338,7 +8263,7 @@ Label_05_754d:
 	inc hl ; $7551
 	ld [hl], d ; $7552
 	ld a, [$d821] ; $7553
-	farcall FarPtr_GetWindowStructPtr ; $7556
+	farcall GetWindowStructPtr ; $7556
 	inc hl ; $7559
 	inc hl ; $755a
 	ld a, [hl] ; $755b
@@ -8839,7 +8764,7 @@ Label_05_7838:
 	call AdvanceFrame ; $784e
 	jr Label_05_7856 ; $7851
 Label_05_7853:
-	farcall FarPtr_StepMatchFrame ; $7853
+	farcall StepMatchFrame ; $7853
 Label_05_7856:
 	dec b ; $7856
 	jr nz, Label_05_7838 ; $7857

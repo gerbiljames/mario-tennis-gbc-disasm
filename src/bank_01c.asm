@@ -1,31 +1,18 @@
 SECTION "ROM Bank $1c", ROMX[$4000], BANK[$1c]
 
-FarPtr_1c_00:
-	dw Func_1c_401a ; $4000
-FarPtr_CharDataScreen_LoadScreen:
-	dw CharDataScreen_LoadScreen ; $4002
-FarPtr_1c_04:
-	dw Func_1c_44cc ; $4004
-FarPtr_CharDataScreen_DrawStats:
-	dw CharDataScreen_DrawStats ; $4006
-FarPtr_BackupCharDataScreenRow:
-	dw BackupCharDataScreenRow ; $4008
-FarPtr_RestoreCharDataScreenRow:
-	dw RestoreCharDataScreenRow ; $400a
-FarPtr_BackupCharData:
-	dw BackupCharData ; $400c
-FarPtr_RestoreCharData:
-	dw RestoreCharData ; $400e
-FarPtr_1c_10:
-	dw Func_1c_728b ; $4010
-FarPtr_StartCharDataScreenAnimTask:
-	dw StartCharDataScreenAnimTask ; $4012
-FarPtr_StopCharDataScreenAnimTask:
-	dw StopCharDataScreenAnimTask ; $4014
-FarPtr_1c_16:
-	dw Func_1c_72fc ; $4016
-FarPtr_1c_18:
-	dw Func_1c_73f4 ; $4018
+	farptr Func_1c_401a ; $4000
+	farptr CharDataScreen_LoadScreen ; $4002
+	farptr Func_1c_44cc ; $4004
+	farptr CharDataScreen_DrawStats ; $4006
+	farptr BackupCharDataScreenRow ; $4008
+	farptr RestoreCharDataScreenRow ; $400a
+	farptr BackupCharData ; $400c
+	farptr RestoreCharData ; $400e
+	farptr Func_1c_728b ; $4010
+	farptr StartCharDataScreenAnimTask ; $4012
+	farptr StopCharDataScreenAnimTask ; $4014
+	farptr Func_1c_72fc ; $4016
+	farptr Func_1c_73f4 ; $4018
 Func_1c_401a:
 	ldh a, [hWramBank] ; $401a
 	push af ; $401c
@@ -38,7 +25,7 @@ Func_1c_401a:
 	jr nz, Label_1c_4038 ; $402d
 	push bc ; $402f
 	ld a, c ; $4030
-	farcall FarPtr_HasReachedNextLevelExp ; $4031
+	farcall HasReachedNextLevelExp ; $4031
 	jp nz, Label_1c_40f1 ; $4034
 	pop bc ; $4037
 Label_1c_4038:
@@ -105,7 +92,7 @@ Label_1c_40b2:
 	call UnregisterFrameTask ; $40d8
 	sound $00 ; $40db
 	call DisableLCDSafely ; $40dd
-	farcall FarPtr_01_0a ; $40e0
+	farcall Func_01_50e2 ; $40e0
 	call EnableLCD ; $40e3
 	call AdvanceFrame ; $40e6
 	pop bc ; $40e9
@@ -233,11 +220,11 @@ Label_1c_41b2:
 	ld [$d00d], a ; $41bf
 Label_1c_41c2:
 	ld a, [$cb00] ; $41c2
-	farcall FarPtr_HasReachedNextLevelExp ; $41c5
+	farcall HasReachedNextLevelExp ; $41c5
 	jr nz, Label_1c_41d8 ; $41c8
 	ld a, [$cb00] ; $41ca
 	ld d, $00 ; $41cd
-	farcall FarPtr_LevelUpPlayer ; $41cf
+	farcall LevelUpPlayer ; $41cf
 	ld hl, $d003 ; $41d2
 	inc [hl] ; $41d5
 	jr Label_1c_41c2 ; $41d6
@@ -347,7 +334,7 @@ CharDataScreen_DrawStats:
 	jr z, Label_1c_4305 ; $4300
 	call Func_1c_4c43 ; $4302
 Label_1c_4305:
-	farcall FarPtr_CharDataScreen_BuildStats ; $4305
+	farcall CharDataScreen_BuildStats ; $4305
 	wram_bank $06 ; $4308
 	ld a, [$d00e] ; $430e
 	ld c, a ; $4311
@@ -679,7 +666,7 @@ Label_1c_45a6:
 	pop af ; $45ae
 	ld a, [hl] ; $45af
 	ld de, $0401 ; $45b0
-	farcall FarPtr_LoadIndexedPaletteThunk ; $45b3
+	farcall LoadIndexedPaletteThunk ; $45b3
 	wram_bank $01 ; $45b6
 	push af ; $45bc
 	ld hl, wStoryModeNameOfMainCharacter ; $45bd
@@ -697,7 +684,7 @@ Label_1c_45c8:
 	pop af ; $45d0
 	ld a, [hl] ; $45d1
 	ld de, $d000 ; $45d2
-	farcall FarPtr_DecompressCharMugshot ; $45d5
+	farcall DecompressCharMugshot ; $45d5
 	ld hl, $d000 ; $45d8
 	ld de, $b200 ; $45db
 	ld c, $03 ; $45de
@@ -1214,7 +1201,7 @@ Label_1c_4a86:
 	jr nz, Label_1c_4a86 ; $4a88
 	ld [$d029], a ; $4a8a
 	ld a, [$cb00] ; $4a8d
-	farcall FarPtr_RefreshPlayerStatsAndGetPtr ; $4a90
+	farcall RefreshPlayerStatsAndGetPtr ; $4a90
 	ret ; $4a93
 Func_1c_4a94:
 	wram_bank $06 ; $4a94
@@ -1478,7 +1465,7 @@ Label_1c_4c13:
 	ld d, a ; $4c28
 	ld hl, $d019 ; $4c29
 	ld a, [$cb00] ; $4c2c
-	farcall FarPtr_02_0c ; $4c2f
+	farcall Func_02_4a00 ; $4c2f
 	ret ; $4c32
 Label_1c_4c33:
 	xor a, a ; $4c33
@@ -2027,7 +2014,7 @@ Label_1c_4fbc:
 	call Func_1c_4fce ; $4fc4
 	call QueueSprite ; $4fc7
 Label_1c_4fca:
-	farcall FarPtr_1a_12 ; $4fca
+	farcall Func_1a_7be5 ; $4fca
 	ret ; $4fcd
 Func_1c_4fce:
 	rlca ; $4fce
@@ -2170,7 +2157,7 @@ Label_1c_512a:
 	sound $5f ; $5138
 	ld d, a ; $513a
 	ld a, [$cb00] ; $513b
-	farcall FarPtr_LevelUpPlayer ; $513e
+	farcall LevelUpPlayer ; $513e
 	wram_bank $06 ; $5141
 	ld hl, $d009 ; $5147
 	dec [hl] ; $514a
@@ -2189,7 +2176,7 @@ Label_1c_512a:
 	test_flag $03, 4 ; $5162
 	jr nz, Label_1c_5171 ; $5165
 	ld a, [$cb00] ; $5167
-	farcall FarPtr_HasReachedNextLevelExp ; $516a
+	farcall HasReachedNextLevelExp ; $516a
 	jr nz, Label_1c_51a3 ; $516d
 	jr Label_1c_518e ; $516f
 Label_1c_5171:
@@ -2534,7 +2521,7 @@ Label_1c_548e:
 	ld [hl], a ; $549a
 	ld [$d00d], a ; $549b
 	ld a, [$cb00] ; $549e
-	farcall FarPtr_RefreshPlayerStatsAndGetPtr ; $54a1
+	farcall RefreshPlayerStatsAndGetPtr ; $54a1
 	ld a, [$d029] ; $54a4
 	ld c, a ; $54a7
 	ld b, $00 ; $54a8
@@ -2551,7 +2538,7 @@ Label_1c_54aa:
 	ld a, [hl] ; $54b6
 	ld d, a ; $54b7
 	ld a, [$cb00] ; $54b8
-	farcall FarPtr_LevelUpPlayer ; $54bb
+	farcall LevelUpPlayer ; $54bb
 	pop bc ; $54be
 	inc b ; $54bf
 	jr Label_1c_54aa ; $54c0
@@ -2759,7 +2746,7 @@ CharDataScreen_LoadScreen:
 	ld de, $a000 ; $713a
 	ld c, $14 ; $713d
 	call QueueVRAMCopy ; $713f
-	farcall FarPtr_CharDataScreen_LoadGfx ; $7142
+	farcall CharDataScreen_LoadGfx ; $7142
 	wram_bank $01 ; $7145
 	ld hl, $59cc ; $714b
 	ld de, $d000 ; $714e
@@ -3011,7 +2998,7 @@ Label_1c_73c5:
 	ld [hl], a ; $73d1
 	ld [$d00d], a ; $73d2
 	xor a, a ; $73d5
-	farcall FarPtr_RefreshPlayerStatsAndGetPtr ; $73d6
+	farcall RefreshPlayerStatsAndGetPtr ; $73d6
 	wram_bank $06 ; $73d9
 	ld hl, $d02a ; $73df
 	ld a, [$d029] ; $73e2
@@ -3022,7 +3009,7 @@ Label_1c_73e6:
 	push hl ; $73e8
 	ld d, a ; $73e9
 	xor a, a ; $73ea
-	farcall FarPtr_LevelUpPlayer ; $73eb
+	farcall LevelUpPlayer ; $73eb
 	pop hl ; $73ee
 	pop bc ; $73ef
 	dec b ; $73f0
@@ -3049,9 +3036,9 @@ Func_1c_73fb:
 	ld a, [wMasterPalettes + 35] ; $7425
 	ld [$d17b], a ; $7428
 	ld hl, wMasterPalettes + 34 ; $742b
-	farcall FarPtr_GrayscalePaletteColorInPlace ; $742e
+	farcall GrayscalePaletteColorInPlace ; $742e
 	ld hl, wMasterPalettes + 34 ; $7431
-	farcall FarPtr_GrayscalePaletteColorInPlace ; $7434
+	farcall GrayscalePaletteColorInPlace ; $7434
 	wram_bank $01 ; $7437
 	ld hl, $7581 ; $743d
 	ld de, $d000 ; $7440
@@ -3098,7 +3085,7 @@ Label_1c_749d:
 	pop af ; $74a5
 	ld a, [hl] ; $74a6
 	ld de, $0101 ; $74a7
-	farcall FarPtr_LoadIndexedPaletteThunk ; $74aa
+	farcall LoadIndexedPaletteThunk ; $74aa
 	wram_bank $01 ; $74ad
 	push af ; $74b3
 	ld hl, wStoryModeNameOfMainCharacter ; $74b4
@@ -3116,7 +3103,7 @@ Label_1c_74bf:
 	pop af ; $74c7
 	ld a, [hl] ; $74c8
 	ld de, $d000 ; $74c9
-	farcall FarPtr_DecompressCharMugshot ; $74cc
+	farcall DecompressCharMugshot ; $74cc
 	ld hl, $d000 ; $74cf
 	ld de, $ab00 ; $74d2
 	ld c, $09 ; $74d5
@@ -3139,7 +3126,7 @@ Label_1c_74eb:
 	pop af ; $74f3
 	ld a, [hl] ; $74f4
 	ld de, $0201 ; $74f5
-	farcall FarPtr_LoadIndexedPaletteThunk ; $74f8
+	farcall LoadIndexedPaletteThunk ; $74f8
 	wram_bank $01 ; $74fb
 	push af ; $7501
 	ld hl, wStoryModeNameOfMainCharacter ; $7502
@@ -3157,19 +3144,19 @@ Label_1c_750d:
 	pop af ; $7515
 	ld a, [hl] ; $7516
 	ld de, $d000 ; $7517
-	farcall FarPtr_DecompressCharMugshot ; $751a
+	farcall DecompressCharMugshot ; $751a
 	ld hl, $d000 ; $751d
 	ld de, $ac00 ; $7520
 	ld c, $09 ; $7523
 	call QueueVRAMCopy ; $7525
 	ld hl, wMasterPalettes + 16 ; $7528
-	farcall FarPtr_GrayscalePaletteColorInPlace ; $752b
+	farcall GrayscalePaletteColorInPlace ; $752b
 	ld hl, wMasterPalettes + 18 ; $752e
-	farcall FarPtr_GrayscalePaletteColorInPlace ; $7531
+	farcall GrayscalePaletteColorInPlace ; $7531
 	ld hl, wMasterPalettes + 20 ; $7534
-	farcall FarPtr_GrayscalePaletteColorInPlace ; $7537
+	farcall GrayscalePaletteColorInPlace ; $7537
 	ld hl, wMasterPalettes + 22 ; $753a
-	farcall FarPtr_GrayscalePaletteColorInPlace ; $753d
+	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 	INCBIN "data/bank_01c/d_7541.bin" ; $7541, 2486 bytes
 	ds 265, $ff ; $7ef7, fill
