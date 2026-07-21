@@ -1286,7 +1286,7 @@ Label_10_5041:
 	jp Label_10_4f7c ; $5070
 Label_10_5073:
 	call ResetGameTimer ; $5073
-	farcall Func_02_4364 ; $5076
+	farcall GenerateUniqueStorySaveSignature ; $5076
 	farcall SaveStorySlotWithTimer ; $5079
 	test_flag $02, 5 ; $507c
 	jr nz, Label_10_508a ; $507f

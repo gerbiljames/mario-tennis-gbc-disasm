@@ -1585,17 +1585,17 @@ RestoreOverworldAfterMatch:
 AssignStoryMatchCharacters:
 	ld b, $80 ; $49aa
 	ld c, $00 ; $49ac
-	farcall Func_02_4066 ; $49ae
+	farcall InitCa00RecordFromCharId ; $49ae
 	ld a, [wMatchOpponentChar] ; $49b1
 	ld b, a ; $49b4
 	ld c, $02 ; $49b5
-	farcall Func_02_4066 ; $49b7
+	farcall InitCa00RecordFromCharId ; $49b7
 	ld a, [wMatchIsDoubles] ; $49ba
 	or a, a ; $49bd
 	jr z, Label_0a_49d8 ; $49be
 	ld b, $81 ; $49c0
 	ld c, $01 ; $49c2
-	farcall Func_02_4066 ; $49c4
+	farcall InitCa00RecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
 	ld hl, $49d9 ; $49ca
 	add a, l ; $49cd
@@ -1605,7 +1605,7 @@ AssignStoryMatchCharacters:
 Label_0a_49d2:
 	ld b, [hl] ; $49d2
 	ld c, $03 ; $49d3
-	farcall Func_02_4066 ; $49d5
+	farcall InitCa00RecordFromCharId ; $49d5
 Label_0a_49d8:
 	ret ; $49d8
 	INCBIN "data/bank_00a/d_49d9.bin" ; $49d9, 104 bytes

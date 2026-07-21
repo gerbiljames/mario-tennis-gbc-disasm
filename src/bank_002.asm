@@ -1,31 +1,31 @@
 SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 
-	farptr Func_02_4fa6 ; $4000
+	farptr DebugStoryStatsScreen ; $4000
 	farptr InitStoryModeState ; $4002
 	farptr ValidateN64TransferRecord ; $4004
 	farptr InitPlayerRecordFromTemplate ; $4006
 	farptr LoadMainCharacterFromRoster ; $4008
 	farptr LevelUpPlayer ; $400a
-	farptr Func_02_4a00 ; $400c
+	farptr ComputeLevelUpStatDeltas ; $400c
 	farptr RefreshPlayerStatsAndGetPtr ; $400e
 	farptr RefreshMainCharacterStats ; $4010
 	farptr RecomputeStatsWithoutRacket ; $4012
 	farptr RollStoryRandomByte ; $4014
-	farptr Func_02_4364 ; $4016
-	farptr Func_02_4066 ; $4018
-	farptr Func_02_52aa ; $401a
+	farptr GenerateUniqueStorySaveSignature ; $4016
+	farptr InitCa00RecordFromCharId ; $4018
+	farptr LoadCharacterRecordToCa80 ; $401a
 	farptr AddExpCapped ; $401c
 	farptr Compare24Bit ; $401e
 	farptr ClearCa00RecordExp ; $4020
 	farptr AddExpToCa00RecordChecked ; $4022
-	farptr Func_02_4d71 ; $4024
+	farptr AddExpToCa00RecordHooked ; $4024
 	farptr AddExpToCa00Record ; $4026
 	farptr AddPlayerExp ; $4028
 	farptr HasReachedNextLevelExp ; $402a
 	farptr GetExpRemainingToNextLevel ; $402c
 	farptr GetExpProgressInCurrentLevel ; $402e
 	farptr GetExpRequiredForLevel ; $4030
-	farptr Func_02_4128 ; $4032
+	farptr MapCharIdToBaseVariant ; $4032
 	farptr GetCharPaletteIndex ; $4034
 	farptr RemapExtendedCharId ; $4036
 	farptr GetCharGroupEntry ; $4038
@@ -61,7 +61,7 @@ ValidateN64TransferRecord:
 Label_02_4064:
 	xor a, a ; $4064
 	ret ; $4065
-Func_02_4066:
+InitCa00RecordFromCharId:
 	ld a, b ; $4066
 	push af ; $4067
 	ld a, c ; $4068
@@ -188,7 +188,7 @@ Label_02_4103:
 	pop af ; $4122
 	wram_bank ; $4123
 	ret ; $4127
-Func_02_4128:
+MapCharIdToBaseVariant:
 	push hl ; $4128
 	add a, $33 ; $4129
 	ld l, a ; $412b
@@ -444,7 +444,7 @@ Label_02_435a:
 	pop bc ; $4361
 	pop af ; $4362
 	ret ; $4363
-Func_02_4364:
+GenerateUniqueStorySaveSignature:
 	push af ; $4364
 	push bc ; $4365
 	push de ; $4366
@@ -1175,7 +1175,7 @@ Label_02_49f7:
 	call RecomputeCharacterStats ; $49fc
 Label_02_49ff:
 	ret ; $49ff
-Func_02_4a00:
+ComputeLevelUpStatDeltas:
 	ld e, a ; $4a00
 	ld a, l ; $4a01
 	ldh [$ffb0], a ; $4a02
@@ -1737,7 +1737,7 @@ ClearCa00RecordExp:
 AddExpToCa00RecordChecked:
 	call StubAlwaysNotZero ; $4d6d
 	ret z ; $4d70
-Func_02_4d71:
+AddExpToCa00RecordHooked:
 	call StubNop ; $4d71
 AddExpToCa00Record:
 	call GetCa00RecordPtr ; $4d74
@@ -1961,7 +1961,7 @@ CharData_02:
 	db $5a, $00, $ad, $5b, $00, $0b, $5d, $00, $69, $5e, $00, $c7, $5f, $00, $25, $61 ; 0x100
 	db $00, $83, $62, $00, $e1, $63, $00, $3f, $65, $00, $9d, $66, $00, $fb, $67, $00 ; 0x110
 	db $59, $69, $00, $b7, $6a, $00, $15, $6c, $00, $ff, $ff, $ff ; 0x120
-Func_02_4fa6:
+DebugStoryStatsScreen:
 	sound $05 ; $4fa6
 	wram_bank $01 ; $4fa8
 	ld a, $03 ; $4fae
@@ -2303,7 +2303,7 @@ Label_02_5275:
 	xor a, a ; $5277
 	ld [wCurrentStorySlot], a ; $5278
 	ld bc, $8000 ; $527b
-	call Func_02_4066 ; $527e
+	call InitCa00RecordFromCharId ; $527e
 	pop de ; $5281
 	pop bc ; $5282
 	ret ; $5283
@@ -2327,12 +2327,12 @@ Label_02_529e:
 	push bc ; $529e
 	push de ; $529f
 	ld bc, $8000 ; $52a0
-	call Func_02_4066 ; $52a3
+	call InitCa00RecordFromCharId ; $52a3
 	pop de ; $52a6
 	pop bc ; $52a7
 	xor a, a ; $52a8
 	ret ; $52a9
-Func_02_52aa:
+LoadCharacterRecordToCa80:
 	push af ; $52aa
 	push bc ; $52ab
 	push de ; $52ac
@@ -2349,7 +2349,7 @@ Func_02_52aa:
 Label_02_52c4:
 	ld b, a ; $52c4
 	ld c, $02 ; $52c5
-	call Func_02_4066 ; $52c7
+	call InitCa00RecordFromCharId ; $52c7
 Label_02_52ca:
 	pop hl ; $52ca
 	pop de ; $52cb

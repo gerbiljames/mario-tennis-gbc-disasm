@@ -33,7 +33,7 @@ StartDrillFromDefinition:
 	add hl, bc ; $403b
 	ld b, [hl] ; $403c
 	ld c, $00 ; $403d
-	farcall Func_02_4066 ; $403f
+	farcall InitCa00RecordFromCharId ; $403f
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4042
 	ld [wMatchPlayerChar], a ; $4045
 	ld a, [wMatchOpponentChar] ; $4048
@@ -41,7 +41,7 @@ StartDrillFromDefinition:
 	jr z, Label_0b_4055 ; $404d
 	ld b, a ; $404f
 	ld c, $02 ; $4050
-	farcall Func_02_4066 ; $4052
+	farcall InitCa00RecordFromCharId ; $4052
 Label_0b_4055:
 	pop bc ; $4055
 	ld hl, $0008 ; $4056
@@ -422,7 +422,7 @@ Label_0b_43dc:
 LoadDrillOpponentChar:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
-	farcall Func_02_4066 ; $4407
+	farcall InitCa00RecordFromCharId ; $4407
 	ldh a, [hWramBank] ; $440a
 	push af ; $440c
 	wram_bank $05 ; $440d
@@ -1978,15 +1978,15 @@ RunDoublesDrillMatch:
 	ld a, b ; $7281
 	ld [wMatchPlayerChar], a ; $7282
 	ld c, $00 ; $7285
-	farcall Func_02_4066 ; $7287
+	farcall InitCa00RecordFromCharId ; $7287
 	ld b, $1b ; $728a
 	ld a, b ; $728c
 	ld [wMatchOpponentChar], a ; $728d
 	ld c, $02 ; $7290
-	farcall Func_02_4066 ; $7292
+	farcall InitCa00RecordFromCharId ; $7292
 	ld b, $1e ; $7295
 	ld c, $03 ; $7297
-	farcall Func_02_4066 ; $7299
+	farcall InitCa00RecordFromCharId ; $7299
 	ld a, [wMinigameLevel] ; $729c
 	add a, a ; $729f
 	add a, $e0 ; $72a0

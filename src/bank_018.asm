@@ -425,7 +425,7 @@ Func_18_4507:
 	push bc ; $450c
 	push de ; $450d
 	push hl ; $450e
-	farcall Func_02_52aa ; $450f
+	farcall LoadCharacterRecordToCa80 ; $450f
 	ld hl, $ca80 ; $4512
 	ld de, $d580 ; $4515
 	ld c, $08 ; $4518

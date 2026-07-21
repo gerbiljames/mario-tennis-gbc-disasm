@@ -35,7 +35,7 @@ InitMinigameFromConfig:
 	add hl, bc ; $403f
 	ld b, [hl] ; $4040
 	ld c, $00 ; $4041
-	farcall Func_02_4066 ; $4043
+	farcall InitCa00RecordFromCharId ; $4043
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4046
 	ld [wMatchPlayerChar], a ; $4049
 	ld a, [wMatchOpponentChar] ; $404c
@@ -43,7 +43,7 @@ InitMinigameFromConfig:
 	jr z, Label_0d_4059 ; $4051
 	ld b, a ; $4053
 	ld c, $02 ; $4054
-	farcall Func_02_4066 ; $4056
+	farcall InitCa00RecordFromCharId ; $4056
 Label_0d_4059:
 	pop bc ; $4059
 	ld hl, $0008 ; $405a

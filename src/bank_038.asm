@@ -3945,12 +3945,12 @@ Func_38_5ea6:
 	and a, $81 ; $5ec7
 	ld b, a ; $5ec9
 	ld c, $00 ; $5eca
-	farcall Func_02_4066 ; $5ecc
+	farcall InitCa00RecordFromCharId ; $5ecc
 	jr Label_38_5ed7 ; $5ecf
 Label_38_5ed1:
 	ld b, a ; $5ed1
 	ld c, $00 ; $5ed2
-	farcall Func_02_4066 ; $5ed4
+	farcall InitCa00RecordFromCharId ; $5ed4
 Label_38_5ed7:
 	ld a, [$d817] ; $5ed7
 	cp a, $ff ; $5eda
@@ -3966,12 +3966,12 @@ Label_38_5ed7:
 	and a, $81 ; $5eec
 	ld b, a ; $5eee
 	ld c, $01 ; $5eef
-	farcall Func_02_4066 ; $5ef1
+	farcall InitCa00RecordFromCharId ; $5ef1
 	jr Label_38_5efc ; $5ef4
 Label_38_5ef6:
 	ld b, a ; $5ef6
 	ld c, $01 ; $5ef7
-	farcall Func_02_4066 ; $5ef9
+	farcall InitCa00RecordFromCharId ; $5ef9
 Label_38_5efc:
 	ld a, [$d818] ; $5efc
 	cp a, $ff ; $5eff
@@ -3987,12 +3987,12 @@ Label_38_5efc:
 	and a, $81 ; $5f11
 	ld b, a ; $5f13
 	ld c, $02 ; $5f14
-	farcall Func_02_4066 ; $5f16
+	farcall InitCa00RecordFromCharId ; $5f16
 	jr Label_38_5f21 ; $5f19
 Label_38_5f1b:
 	ld b, a ; $5f1b
 	ld c, $02 ; $5f1c
-	farcall Func_02_4066 ; $5f1e
+	farcall InitCa00RecordFromCharId ; $5f1e
 Label_38_5f21:
 	ld a, [$d819] ; $5f21
 	cp a, $ff ; $5f24
@@ -4008,12 +4008,12 @@ Label_38_5f21:
 	and a, $81 ; $5f36
 	ld b, a ; $5f38
 	ld c, $03 ; $5f39
-	farcall Func_02_4066 ; $5f3b
+	farcall InitCa00RecordFromCharId ; $5f3b
 	jr Label_38_5f46 ; $5f3e
 Label_38_5f40:
 	ld b, a ; $5f40
 	ld c, $03 ; $5f41
-	farcall Func_02_4066 ; $5f43
+	farcall InitCa00RecordFromCharId ; $5f43
 Label_38_5f46:
 	pop af ; $5f46
 	wram_bank ; $5f47
@@ -5691,12 +5691,12 @@ Func_38_6a7f:
 	and a, $81 ; $6aab
 	ld b, a ; $6aad
 	ld c, $00 ; $6aae
-	farcall Func_02_4066 ; $6ab0
+	farcall InitCa00RecordFromCharId ; $6ab0
 	jr Label_38_6abb ; $6ab3
 Label_38_6ab5:
 	ld b, a ; $6ab5
 	ld c, $00 ; $6ab6
-	farcall Func_02_4066 ; $6ab8
+	farcall InitCa00RecordFromCharId ; $6ab8
 Label_38_6abb:
 	ld a, [$d817] ; $6abb
 	cp a, $ff ; $6abe
@@ -5712,12 +5712,12 @@ Label_38_6abb:
 	and a, $81 ; $6ad0
 	ld b, a ; $6ad2
 	ld c, $01 ; $6ad3
-	farcall Func_02_4066 ; $6ad5
+	farcall InitCa00RecordFromCharId ; $6ad5
 	jr Label_38_6ae0 ; $6ad8
 Label_38_6ada:
 	ld b, a ; $6ada
 	ld c, $01 ; $6adb
-	farcall Func_02_4066 ; $6add
+	farcall InitCa00RecordFromCharId ; $6add
 Label_38_6ae0:
 	jr Label_38_6b2c ; $6ae0
 Label_38_6ae2:
@@ -5735,12 +5735,12 @@ Label_38_6ae2:
 	and a, $81 ; $6af7
 	ld b, a ; $6af9
 	ld c, $02 ; $6afa
-	farcall Func_02_4066 ; $6afc
+	farcall InitCa00RecordFromCharId ; $6afc
 	jr Label_38_6b07 ; $6aff
 Label_38_6b01:
 	ld b, a ; $6b01
 	ld c, $02 ; $6b02
-	farcall Func_02_4066 ; $6b04
+	farcall InitCa00RecordFromCharId ; $6b04
 Label_38_6b07:
 	ld a, [$d819] ; $6b07
 	cp a, $ff ; $6b0a
@@ -5756,12 +5756,12 @@ Label_38_6b07:
 	and a, $81 ; $6b1c
 	ld b, a ; $6b1e
 	ld c, $03 ; $6b1f
-	farcall Func_02_4066 ; $6b21
+	farcall InitCa00RecordFromCharId ; $6b21
 	jr Label_38_6b2c ; $6b24
 Label_38_6b26:
 	ld b, a ; $6b26
 	ld c, $03 ; $6b27
-	farcall Func_02_4066 ; $6b29
+	farcall InitCa00RecordFromCharId ; $6b29
 Label_38_6b2c:
 	pop af ; $6b2c
 	wram_bank ; $6b2d

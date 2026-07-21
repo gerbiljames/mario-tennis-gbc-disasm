@@ -1465,7 +1465,7 @@ Label_1c_4c13:
 	ld d, a ; $4c28
 	ld hl, $d019 ; $4c29
 	ld a, [$cb00] ; $4c2c
-	farcall Func_02_4a00 ; $4c2f
+	farcall ComputeLevelUpStatDeltas ; $4c2f
 	ret ; $4c32
 Label_1c_4c33:
 	xor a, a ; $4c33
