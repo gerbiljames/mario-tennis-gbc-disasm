@@ -712,7 +712,7 @@ Label_1b_4426:
 	wram_bank ; $442b
 	ret ; $442f
 Func_1b_4430:
-	farcall Func_39_4342 ; $4430
+	farcall UpdateAnimatedTiles ; $4430
 	ret ; $4433
 DrawNameWithDiacritics:
 	push af ; $4434

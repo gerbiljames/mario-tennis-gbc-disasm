@@ -1793,7 +1793,7 @@ Label_07_4b50:
 	ei ; $4b6e
 	call AwaitSerialByte ; $4b6f
 	farcall AnimateLinkStatusPalette ; $4b72
-	farcall Func_39_4342 ; $4b75
+	farcall UpdateAnimatedTiles ; $4b75
 	jr c, Label_07_4ba2 ; $4b78
 	cp a, $c1 ; $4b7a
 	jr z, Label_07_4ba2 ; $4b7c

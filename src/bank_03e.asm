@@ -10,7 +10,7 @@ SECTION "ROM Bank $3e", ROMX[$4000], BANK[$3e]
 	farptr RunShoesSelectScreen ; $400e
 	farptr ShowEquipmentStatusScreen ; $4010
 	farptr ShowLinkErrorScreen ; $4012
-	farptr Func_3e_4438 ; $4014
+	farptr UpdateAnimatedTiles_3e ; $4014
 	farptr AnimateLinkStatusPalette ; $4016
 	farptr RunCourtSelect4Menu ; $4018
 	farptr RunLinkCourtSelect4Menu ; $401a
@@ -639,8 +639,8 @@ Label_3e_4407:
 	ld [hl], a ; $4409
 	ret ; $440a
 	INCBIN "data/bank_03e/d_440b.bin" ; $440b, 45 bytes
-Func_3e_4438:
-	farcall Func_39_4342 ; $4438
+UpdateAnimatedTiles_3e:
+	farcall UpdateAnimatedTiles ; $4438
 	ret ; $443b
 	push af ; $443c
 	push bc ; $443d
@@ -1653,7 +1653,7 @@ RunEraseDataConfirmMenu:
 	xor a, a ; $4c2a
 	ld [$cb0b], a ; $4c2b
 	ld a, $01 ; $4c2e
-	ld hl, Func_3e_4438 ; $4c30
+	ld hl, UpdateAnimatedTiles_3e ; $4c30
 	call RegisterFrameTask ; $4c33
 	ld a, $01 ; $4c36
 	ld hl, EraseConfirmCursorSpriteTask ; $4c38

@@ -696,7 +696,7 @@ Label_17_43fc:
 	wram_bank ; $4401
 	ret ; $4405
 Func_17_4406:
-	farcall Func_39_4342 ; $4406
+	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
 	push af ; $440a
 	push bc ; $440b

@@ -678,7 +678,7 @@ Label_38_43fe:
 	wram_bank ; $4403
 	ret ; $4407
 Func_38_4408:
-	farcall Func_39_4342 ; $4408
+	farcall UpdateAnimatedTiles ; $4408
 	ret ; $440b
 CopyStringToTilemap:
 	push af ; $440c

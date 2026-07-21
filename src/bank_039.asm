@@ -2,7 +2,7 @@ SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 
 	farptr LoadScreenAssetRecord ; $4000
 	farptr QueueWram3MapToVRAM ; $4002
-	farptr Func_39_4342 ; $4004
+	farptr UpdateAnimatedTiles ; $4004
 	farptr Func_39_44d3 ; $4006
 	farptr Func_39_451e ; $4008
 	farptr CopyTilemapRect ; $400a
@@ -234,7 +234,7 @@ QueueWram3MapToVRAM:
 	ld c, $40 ; $433c
 	call QueueVRAMCopy ; $433e
 	ret ; $4341
-Func_39_4342:
+UpdateAnimatedTiles:
 	push af ; $4342
 	push bc ; $4343
 	push de ; $4344

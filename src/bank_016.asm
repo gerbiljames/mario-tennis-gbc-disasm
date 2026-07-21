@@ -132,7 +132,7 @@ SetCursorPairFromIndex:
 ClearWram3Buffer64:
 	INCBIN "data/bank_016/d_43d9.bin" ; $43d9, 29 bytes
 Func_16_43f6:
-	farcall Func_39_4342 ; $43f6
+	farcall UpdateAnimatedTiles ; $43f6
 	ret ; $43f9
 	push af ; $43fa
 	push bc ; $43fb
@@ -269,7 +269,7 @@ Label_16_44b7:
 	sound $0a ; $44b7
 Label_16_44b9:
 	call InitMatchWinLoseScreen ; $44b9
-	farcall Func_39_4342 ; $44bc
+	farcall UpdateAnimatedTiles ; $44bc
 	ld a, $01 ; $44bf
 	ld hl, Func_16_43f6 ; $44c1
 	call RegisterFrameTask ; $44c4

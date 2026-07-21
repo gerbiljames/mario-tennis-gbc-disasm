@@ -4441,7 +4441,7 @@ Label_1e_7378:
 	wram_bank ; $7379
 	ret ; $737d
 Func_1e_737e:
-	farcall Func_39_4342 ; $737e
+	farcall UpdateAnimatedTiles ; $737e
 	ret ; $7381
 Func_1e_7382:
 	push af ; $7382

@@ -711,7 +711,7 @@ Label_3b_441e:
 	wram_bank ; $4423
 	ret ; $4427
 Func_3b_4428:
-	farcall Func_39_4342 ; $4428
+	farcall UpdateAnimatedTiles ; $4428
 	ret ; $442b
 DrawNameWithDiacritics_3b:
 	push af ; $442c
@@ -4026,7 +4026,7 @@ Label_3b_5ca0:
 	ld de, $01f4 ; $5ca0
 Label_3b_5ca3:
 	farcall AnimateLinkStatusPalette ; $5ca3
-	farcall Func_39_4342 ; $5ca6
+	farcall UpdateAnimatedTiles ; $5ca6
 	call AdvanceFrame ; $5ca9
 	ldh a, [hInputPressed] ; $5cac
 	bit PADB_A, a ; $5cae
