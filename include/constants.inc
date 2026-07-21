@@ -82,3 +82,24 @@ def SHOTTYPE_DROP              equ $0b ; B -> A
 def SHOTTYPE_SERVE_TOPSPIN     equ $0c ; serve, A
 def SHOTTYPE_SERVE_SLICE       equ $0d ; serve, B
 def SHOTTYPE_SERVE_FLAT        equ $0e ; serve, A+B
+
+; --- On-court announcement banners (wPointOutcome, $c491) ---
+; ShowCourtBanner ($09:$4367) shows an announcement by index: the id selects
+; both the message tileset (VramTileset_09 -> TilesetTiles_09 / d_4900.bin) and
+; the banner object template. wPointOutcome holds the same id and is passed
+; straight to ShowCourtBanner, so these double as point-outcome codes. Ids read
+; off the rendered tileset; 0 is the score-digit font, not a message.
+def COURTBANNER_FAULT           equ 1
+def COURTBANNER_DOUBLE_FAULT    equ 2
+def COURTBANNER_LET             equ 3
+def COURTBANNER_NET             equ 4
+def COURTBANNER_OUT             equ 5
+def COURTBANNER_START           equ 6
+def COURTBANNER_BREAK_POINT     equ 7
+def COURTBANNER_GAME_POINT      equ 8
+def COURTBANNER_SET_POINT       equ 9
+def COURTBANNER_MATCH_POINT     equ 10
+def COURTBANNER_GAME_SET        equ 11
+def COURTBANNER_SET_MATCH       equ 12
+def COURTBANNER_NICE            equ 14
+def COURTBANNER_MINIGAME_START  equ 16

@@ -322,7 +322,7 @@ Label_08_42d4:
 	ld a, [$c4a5] ; $42d4
 	and a, a ; $42d7
 	jr z, Label_08_42f2 ; $42d8
-	ld a, $0e ; $42da
+	ld a, COURTBANNER_NICE ; $42da
 	farcall ShowCourtBanner ; $42dc
 	ld a, [$c4d4] ; $42df
 	and a, $02 ; $42e2
@@ -471,7 +471,7 @@ ApplyBallTouchOutcome:
 	ld a, [wPointOutcome] ; $43e5
 	and a, a ; $43e8
 	jr nz, Label_08_43f5 ; $43e9
-	ld a, $09 ; $43eb
+	ld a, COURTBANNER_SET_POINT ; $43eb
 	ld [wPointOutcome], a ; $43ed
 	ld a, $01 ; $43f0
 	ld [wPointOutcomeSide], a ; $43f2
@@ -3637,13 +3637,13 @@ HandleServeFault:
 	jr nz, Label_08_5b9c ; $5b8f
 	ld a, $01 ; $5b91
 	ld [wServeFaultFlag], a ; $5b93
-	ld a, $01 ; $5b96
+	ld a, COURTBANNER_FAULT ; $5b96
 	ld [wPointOutcome], a ; $5b98
 	ret ; $5b9b
 Label_08_5b9c:
 	ld a, $00 ; $5b9c
 	ld [wServeFaultFlag], a ; $5b9e
-	ld a, $02 ; $5ba1
+	ld a, COURTBANNER_DOUBLE_FAULT ; $5ba1
 	ld [wPointOutcome], a ; $5ba3
 	ret ; $5ba6
 FlagServiceReturnAce:

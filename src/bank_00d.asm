@@ -883,7 +883,7 @@ Func_0d_475d:
 	call IsMinigameTargetReached ; $4791
 	and a, a ; $4794
 	ret z ; $4795
-	ld a, $0b ; $4796
+	ld a, COURTBANNER_GAME_SET ; $4796
 	ld [wPointOutcome], a ; $4798
 Label_0d_479b:
 	call DetermineMinigamePointResult ; $479b
@@ -913,7 +913,7 @@ Func_0d_47c3:
 	ld a, [$c4b2] ; $47d0
 	cp a, $01 ; $47d3
 	jr nz, Label_0d_47e1 ; $47d5
-	ld a, $06 ; $47d7
+	ld a, COURTBANNER_START ; $47d7
 	ld [wPointOutcome], a ; $47d9
 	ld a, $01 ; $47dc
 	ld [wPointOutcomeSide], a ; $47de
@@ -1077,7 +1077,7 @@ Label_0d_48f6:
 	jr nz, Label_0d_490c ; $4908
 	sound $75 ; $490a
 Label_0d_490c:
-	ld a, $10 ; $490c
+	ld a, COURTBANNER_MINIGAME_START ; $490c
 	farcall ShowCourtBanner ; $490e
 	ld a, $28 ; $4911
 	farcall StepMatchFrames ; $4913
@@ -1414,7 +1414,7 @@ Func_0d_4b59:
 	call IsMinigameTargetReached ; $4b65
 	and a, a ; $4b68
 	jr z, Func_0d_4b70 ; $4b69
-	ld a, $0b ; $4b6b
+	ld a, COURTBANNER_GAME_SET ; $4b6b
 	ld [wPointOutcome], a ; $4b6d
 Func_0d_4b70:
 	ld a, $01 ; $4b70
@@ -1849,7 +1849,7 @@ Func_0d_4e80:
 	farcall IsBallInTargetZone ; $4e86
 	and a, a ; $4e89
 	ret nz ; $4e8a
-	ld a, $05 ; $4e8b
+	ld a, COURTBANNER_OUT ; $4e8b
 	ld [wPointOutcome], a ; $4e8d
 	ld a, $ff ; $4e90
 	ld [wPointOutcomeSide], a ; $4e92
@@ -2299,7 +2299,7 @@ Label_0d_5310:
 	call StartScorePopup ; $533c
 	ld b, $07 ; $533f
 	call Func_0d_41cb ; $5341
-	ld a, $06 ; $5344
+	ld a, COURTBANNER_START ; $5344
 	ld [wPointOutcome], a ; $5346
 	ld a, $01 ; $5349
 	ld [wPointOutcomeSide], a ; $534b
@@ -2453,7 +2453,7 @@ Func_0d_55b4:
 	call IsMinigameTargetReached ; $55ee
 	and a, a ; $55f1
 	ret z ; $55f2
-	ld a, $0b ; $55f3
+	ld a, COURTBANNER_GAME_SET ; $55f3
 	ld [wPointOutcome], a ; $55f5
 	ret ; $55f8
 	INCBIN "data/bank_00d/d_55f9.bin" ; $55f9, 4 bytes
@@ -2720,7 +2720,7 @@ Func_0d_57be:
 	call IsMinigameTargetReached ; $57e9
 	and a, a ; $57ec
 	jr z, Label_0d_57f4 ; $57ed
-	ld a, $0b ; $57ef
+	ld a, COURTBANNER_GAME_SET ; $57ef
 	ld [wPointOutcome], a ; $57f1
 Label_0d_57f4:
 	ret ; $57f4
@@ -2903,7 +2903,7 @@ Func_0d_58d1:
 	call IsMinigameTargetReached ; $590c
 	and a, a ; $590f
 	jr z, Label_0d_5918 ; $5910
-	ld a, $0b ; $5912
+	ld a, COURTBANNER_GAME_SET ; $5912
 	ld [wPointOutcome], a ; $5914
 	ret ; $5917
 Label_0d_5918:
