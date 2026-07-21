@@ -181,7 +181,7 @@ Label_0b_4119:
 	xor a, a ; $4119
 	ret ; $411a
 	INCBIN "data/bank_00b/d_411b.bin" ; $411b, 48 bytes
-Func_0b_414b:
+ResetActiveCharState:
 	ldh a, [hWramBank] ; $414b
 	push af ; $414d
 	wram_bank $05 ; $414e
@@ -263,7 +263,7 @@ Label_0b_419c:
 	ld l, a ; $41be
 	farcall SetTargetZoneCorner2 ; $41bf
 	ret ; $41c2
-Func_0b_41c3:
+UpdateDrillAbortCountdown:
 	ld a, [$c2e1] ; $41c3
 	or a, a ; $41c6
 	ret z ; $41c7
@@ -474,7 +474,7 @@ Label_0b_4467:
 	wram_bank ; $4468
 	xor a, a ; $446c
 	ret ; $446d
-Func_0b_446e:
+SyncPointWinLoseFlagTask:
 	ldh a, [hWramBank] ; $446e
 	push af ; $4470
 	wram_bank $05 ; $4471
@@ -1114,7 +1114,7 @@ Label_0b_49bf:
 	ld a, $01 ; $5c0f
 	ld [$c7bb], a ; $5c11
 	ret ; $5c14
-	call Func_0b_41c3 ; $5c15
+	call UpdateDrillAbortCountdown ; $5c15
 	ret ; $5c18
 	xor a, a ; $5c19
 	ld [$c2e1], a ; $5c1a
@@ -1143,7 +1143,7 @@ Label_0b_5c49:
 	ld [$c7b5], a ; $5c4a
 	ret ; $5c4d
 	INCBIN "data/bank_00b/d_5c4e.bin" ; $5c4e, 4 bytes
-	call Func_0b_5d48 ; $5c52
+	call Drill09JudgePointMode0 ; $5c52
 	ld a, [wPointOutcome] ; $5c55
 	cp a, COURTBANNER_NET ; $5c58
 	jr z, Label_0b_5c62 ; $5c5a
@@ -1203,15 +1203,15 @@ Label_0b_5cb7:
 Label_0b_5cbe:
 	ld a, $ff ; $5cbe
 	ret ; $5cc0
-	call Func_0b_5d63 ; $5cc1
+	call StubNop_0b_5d63 ; $5cc1
 	ret ; $5cc4
-	call Func_0b_5d5a ; $5cc5
+	call Drill09JudgePointMode2 ; $5cc5
 	ret ; $5cc8
-	call Func_0b_5d51 ; $5cc9
+	call Drill09JudgePointMode1 ; $5cc9
 	ld a, [$c4b8] ; $5ccc
 	cp a, $01 ; $5ccf
 	jr nz, Label_0b_5cd6 ; $5cd1
-	call Func_0b_414b ; $5cd3
+	call ResetActiveCharState ; $5cd3
 Label_0b_5cd6:
 	ret ; $5cd6
 	; $5cd7, 34 bytes (records:2)
@@ -1257,29 +1257,29 @@ Label_0b_5d0a:
 	farcall LoadPlayer2PointsDigitGfx ; $5d2d
 	farcall StepMatchFrame ; $5d30
 	ld a, $01 ; $5d33
-	ld hl, Func_0b_446e ; $5d35
+	ld hl, SyncPointWinLoseFlagTask ; $5d35
 	call RegisterFrameTask ; $5d38
 	farcall StartPointEndReactions ; $5d3b
-	ld hl, Func_0b_446e ; $5d3e
+	ld hl, SyncPointWinLoseFlagTask ; $5d3e
 	call UnregisterFrameTask ; $5d41
 	call PlayDrillPointEndSequence ; $5d44
 	ret ; $5d47
-Func_0b_5d48:
+Drill09JudgePointMode0:
 	ld a, $00 ; $5d48
 	call Drill09JudgePoint ; $5d4a
 	ld [$c2ff], a ; $5d4d
 	ret ; $5d50
-Func_0b_5d51:
+Drill09JudgePointMode1:
 	ld a, $01 ; $5d51
 	call Drill09JudgePoint ; $5d53
 	ld [$c2ff], a ; $5d56
 	ret ; $5d59
-Func_0b_5d5a:
+Drill09JudgePointMode2:
 	ld a, $02 ; $5d5a
 	call Drill09JudgePoint ; $5d5c
 	ld [$c2ff], a ; $5d5f
 	ret ; $5d62
-Func_0b_5d63:
+StubNop_0b_5d63:
 	ret ; $5d63
 	INCBIN "data/bank_00b/d_5d64.bin" ; $5d64, 9 bytes
 Drill09JudgePoint:
@@ -1479,7 +1479,7 @@ Label_0b_5e8d:
 	ld a, $01 ; $5ec7
 	ld [$c7bb], a ; $5ec9
 	ret ; $5ecc
-	call Func_0b_41c3 ; $5ecd
+	call UpdateDrillAbortCountdown ; $5ecd
 	ret ; $5ed0
 	INCBIN "data/bank_00b/d_5ed1.bin" ; $5ed1, 3228 bytes
 	ld a, $01 ; $6b6d
@@ -1500,7 +1500,7 @@ Label_0b_5e8d:
 	ld [$c2e9], a ; $6b89
 	ld [$c2e8], a ; $6b8c
 	ret ; $6b8f
-	call Func_0b_41c3 ; $6b90
+	call UpdateDrillAbortCountdown ; $6b90
 	ret ; $6b93
 	xor a, a ; $6b94
 	ld [$c2e1], a ; $6b95
@@ -1517,7 +1517,7 @@ Label_0b_5e8d:
 	ld a, $5a ; $6baf
 	ld [$c2ef], a ; $6bb1
 	ld a, $01 ; $6bb4
-	ld hl, Func_0b_6bd0 ; $6bb6
+	ld hl, EnableTargetZoneAfterDelayTask ; $6bb6
 	call RegisterFrameTask ; $6bb9
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bbc
 	ld hl, $6bcc ; $6bbf
@@ -1530,16 +1530,16 @@ Label_0b_6bc7:
 	ld [$c7b5], a ; $6bc8
 	ret ; $6bcb
 	INCBIN "data/bank_00b/d_6bcc.bin" ; $6bcc, 4 bytes
-Func_0b_6bd0:
+EnableTargetZoneAfterDelayTask:
 	ld hl, $c2ef ; $6bd0
 	dec [hl] ; $6bd3
 	ret nz ; $6bd4
 	ld a, $01 ; $6bd5
 	ld [wTargetZoneEnabled], a ; $6bd7
-	ld hl, Func_0b_6bd0 ; $6bda
+	ld hl, EnableTargetZoneAfterDelayTask ; $6bda
 	call UnregisterFrameTask ; $6bdd
 	ret ; $6be0
-	call Func_0b_6cd0 ; $6be1
+	call Drill15JudgePointMode0 ; $6be1
 	ld a, [wPointOutcome] ; $6be4
 	cp a, COURTBANNER_OUT ; $6be7
 	jr z, Label_0b_6bed ; $6be9
@@ -1596,15 +1596,15 @@ Label_0b_6c40:
 Label_0b_6c47:
 	ld a, $ff ; $6c47
 	ret ; $6c49
-	call Func_0b_6ceb ; $6c4a
+	call StubNop_0b_6ceb ; $6c4a
 	ret ; $6c4d
-	call Func_0b_6ce2 ; $6c4e
+	call Drill15JudgePointMode2 ; $6c4e
 	ret ; $6c51
-	call Func_0b_6cd9 ; $6c52
+	call Drill15JudgePointMode1 ; $6c52
 	ld a, [wRallyLength] ; $6c55
 	cp a, $01 ; $6c58
 	ret nz ; $6c5a
-	call Func_0b_414b ; $6c5b
+	call ResetActiveCharState ; $6c5b
 	ret ; $6c5e
 	; $6c5f, 34 bytes (records:2)
 	dw $fe50 ; record 0
@@ -1649,29 +1649,29 @@ Label_0b_6c92:
 	farcall LoadPlayer2PointsDigitGfx ; $6cb5
 	farcall StepMatchFrame ; $6cb8
 	ld a, $01 ; $6cbb
-	ld hl, Func_0b_446e ; $6cbd
+	ld hl, SyncPointWinLoseFlagTask ; $6cbd
 	call RegisterFrameTask ; $6cc0
 	farcall StartPointEndReactions ; $6cc3
-	ld hl, Func_0b_446e ; $6cc6
+	ld hl, SyncPointWinLoseFlagTask ; $6cc6
 	call UnregisterFrameTask ; $6cc9
 	call PlayDrillPointEndSequence ; $6ccc
 	ret ; $6ccf
-Func_0b_6cd0:
+Drill15JudgePointMode0:
 	ld a, $00 ; $6cd0
 	call Drill15JudgePoint ; $6cd2
 	ld [$c2ff], a ; $6cd5
 	ret ; $6cd8
-Func_0b_6cd9:
+Drill15JudgePointMode1:
 	ld a, $01 ; $6cd9
 	call Drill15JudgePoint ; $6cdb
 	ld [$c2ff], a ; $6cde
 	ret ; $6ce1
-Func_0b_6ce2:
+Drill15JudgePointMode2:
 	ld a, $02 ; $6ce2
 	call Drill15JudgePoint ; $6ce4
 	ld [$c2ff], a ; $6ce7
 	ret ; $6cea
-Func_0b_6ceb:
+StubNop_0b_6ceb:
 	ret ; $6ceb
 	INCBIN "data/bank_00b/d_6cec.bin" ; $6cec, 9 bytes
 Drill15JudgePoint:
@@ -1823,10 +1823,10 @@ Label_0b_6da6:
 	farcall LoadPlayer2PointsDigitGfx ; $715f
 	farcall StepMatchFrame ; $7162
 	ld a, $01 ; $7165
-	ld hl, Func_0b_446e ; $7167
+	ld hl, SyncPointWinLoseFlagTask ; $7167
 	call RegisterFrameTask ; $716a
 	farcall StartPointEndReactions ; $716d
-	ld hl, Func_0b_446e ; $7170
+	ld hl, SyncPointWinLoseFlagTask ; $7170
 	call UnregisterFrameTask ; $7173
 	call PlayDrillPointEndSequence ; $7176
 	ret ; $7179
