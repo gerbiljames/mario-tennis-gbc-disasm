@@ -22,7 +22,7 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr MeasureDialogueWidthTiles ; $4026
 	farptr ResetWindowState ; $4028
 	farptr Func_05_44f9 ; $402a
-	farptr Func_05_4510 ; $402c
+	farptr RunFixedTextMenu ; $402c
 	farptr RenderTextString ; $402e
 	farptr RenderActiveWindowText ; $4030
 	farptr SetActiveWindowTextId ; $4032
@@ -49,7 +49,7 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr ResetTextWindowsAndRestoreMap ; $405c
 	farptr CreateWindowWithTextId ; $405e
 	farptr RedrawWindowText ; $4060
-	farptr Func_05_6269 ; $4062
+	farptr RenderWindowTextToCompletion ; $4062
 	farptr RedrawWindowRowsSafe ; $4064
 	farptr CloseWindowAlt ; $4066
 	farptr ShowDialogueCentered ; $4068
@@ -833,7 +833,7 @@ Func_05_44f9:
 	pop de ; $450d
 	pop bc ; $450e
 	ret ; $450f
-Func_05_4510:
+RunFixedTextMenu:
 	push hl ; $4510
 	ldh a, [hWramBank] ; $4511
 	push af ; $4513
@@ -1293,7 +1293,7 @@ RunMenuSelection:
 	inc hl ; $47b8
 	ld [hl], d ; $47b9
 	ld a, $01 ; $47ba
-	ld hl, Func_05_48f1 ; $47bc
+	ld hl, AnimateTextArrowTask ; $47bc
 	call RegisterFrameTask ; $47bf
 	pop hl ; $47c2
 	pop de ; $47c3
@@ -1386,7 +1386,7 @@ Label_05_4840:
 	push bc ; $4847
 	push de ; $4848
 	push hl ; $4849
-	ld hl, Func_05_48f1 ; $484a
+	ld hl, AnimateTextArrowTask ; $484a
 	call UnregisterFrameTask ; $484d
 	call AdvanceFrame ; $4850
 	ld a, [$d830] ; $4853
@@ -1442,7 +1442,7 @@ Label_05_48af:
 	push bc ; $48b3
 	push de ; $48b4
 	push hl ; $48b5
-	ld hl, Func_05_48f1 ; $48b6
+	ld hl, AnimateTextArrowTask ; $48b6
 	call UnregisterFrameTask ; $48b9
 	call AdvanceFrame ; $48bc
 	ld a, [$d83e] ; $48bf
@@ -1479,7 +1479,7 @@ Label_05_48e6:
 	pop de ; $48ee
 	pop bc ; $48ef
 	ret ; $48f0
-Func_05_48f1:
+AnimateTextArrowTask:
 	push af ; $48f1
 	push bc ; $48f2
 	push de ; $48f3
@@ -1775,7 +1775,7 @@ RunMenuSelectionShared:
 	inc hl ; $4aeb
 	ld [hl], d ; $4aec
 	ld a, $01 ; $4aed
-	ld hl, Func_05_4c9d ; $4aef
+	ld hl, AnimateMenuScrollArrowsTask ; $4aef
 	call RegisterFrameTask ; $4af2
 	pop hl ; $4af5
 	pop de ; $4af6
@@ -1871,7 +1871,7 @@ Label_05_4b72:
 	push bc ; $4b7f
 	push de ; $4b80
 	push hl ; $4b81
-	ld hl, Func_05_4c9d ; $4b82
+	ld hl, AnimateMenuScrollArrowsTask ; $4b82
 	call UnregisterFrameTask ; $4b85
 	call AdvanceFrame ; $4b88
 	ld a, [$d830] ; $4b8b
@@ -1970,7 +1970,7 @@ Label_05_4c37:
 	push bc ; $4c38
 	push de ; $4c39
 	push hl ; $4c3a
-	ld hl, Func_05_4c9d ; $4c3b
+	ld hl, AnimateMenuScrollArrowsTask ; $4c3b
 	call UnregisterFrameTask ; $4c3e
 	call AdvanceFrame ; $4c41
 	ld a, [$d83e] ; $4c44
@@ -2033,7 +2033,7 @@ Label_05_4c9a:
 	pop bc ; $4c9a
 	xor a, a ; $4c9b
 	ret ; $4c9c
-Func_05_4c9d:
+AnimateMenuScrollArrowsTask:
 	wram_bank $05 ; $4c9d
 	ld a, [$cb28] ; $4ca3
 	bit 7, a ; $4ca6
@@ -3256,7 +3256,7 @@ Label_05_5462:
 	ret ; $546b
 DispatchControlCode:
 	push hl ; $546c
-	ld hl, Func_05_5488 ; $546d
+	ld hl, ControlCodeDispatchReturn ; $546d
 	push hl ; $5470
 	push af ; $5471
 	push bc ; $5472
@@ -3277,7 +3277,7 @@ DispatchControlCode:
 	pop bc ; $5485
 	pop af ; $5486
 	jp hl ; $5487
-Func_05_5488:
+ControlCodeDispatchReturn:
 	pop hl ; $5488
 	ret ; $5489
 	ret ; $548a
@@ -4761,7 +4761,7 @@ Label_05_5e34:
 	ld l, a ; $5e36
 	pop af ; $5e37
 	jp hl ; $5e38
-	call Func_05_725e ; $5e39
+	call RenderTextAtWindowCell ; $5e39
 	ld e, [hl] ; $5e3c
 	call $cd5e ; $5e3d
 	ld e, [hl] ; $5e40
@@ -5402,7 +5402,7 @@ Label_05_6262:
 	pop af ; $6263
 	wram_bank ; $6264
 	ret ; $6268
-Func_05_6269:
+RenderWindowTextToCompletion:
 	push af ; $6269
 	push bc ; $626a
 	push de ; $626b
@@ -6423,7 +6423,7 @@ Label_05_6a86:
 	ld a, [$c710] ; $6aa4
 	call RedrawWindowRows ; $6aa7
 	ld a, $0f ; $6aaa
-	ld hl, Func_05_6b03 ; $6aac
+	ld hl, DrawPaletteCursorSprites ; $6aac
 	call RegisterFrameTask ; $6aaf
 Label_05_6ab2:
 	ldh a, [hInputRisingEdge] ; $6ab2
@@ -6469,10 +6469,10 @@ Label_05_6ae5:
 Label_05_6af6:
 	ld a, [$c710] ; $6af6
 	call CloseWindow ; $6af9
-	ld hl, Func_05_6b03 ; $6afc
+	ld hl, DrawPaletteCursorSprites ; $6afc
 	call UnregisterFrameTask ; $6aff
 	ret ; $6b02
-Func_05_6b03:
+DrawPaletteCursorSprites:
 	ld a, [wCameraX] ; $6b03
 	rlca ; $6b06
 	rlca ; $6b07
@@ -7767,7 +7767,7 @@ Label_05_723f:
 	inc d ; $725b
 	inc d ; $725c
 	ld a, d ; $725d
-Func_05_725e:
+RenderTextAtWindowCell:
 	and a, $1f ; $725e
 	ld d, a ; $7260
 	inc e ; $7261
