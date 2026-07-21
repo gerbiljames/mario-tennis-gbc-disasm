@@ -1193,6 +1193,8 @@
  "0x24098": "UpdateGameScoreDisplay",
  "0x240b5": "LoadOnCourtCharacterGfx",
  "0x241bc": "ObjTemplates_09_41bc",
+ "0x2422c": "SpawnGameResultObj",
+ "0x24238": "DismissGameResultObj",
  "0x24242": "SpawnServeIndicatorObjs",
  "0x24282": "DismissServeIndicatorObjs",
  "0x24310": "SpawnServeIndicatorSideObj",

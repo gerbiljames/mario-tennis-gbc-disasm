@@ -1749,12 +1749,12 @@ Label_08_4f37:
 	farcall Func_09_42f6 ; $4f53
 	ld a, $0a ; $4f56
 	call StepMatchFrames ; $4f58
-	farcall Func_09_422c ; $4f5b
+	farcall SpawnGameResultObj ; $4f5b
 	ld a, $0a ; $4f5e
 	call StepMatchFrames ; $4f60
 	ld a, $28 ; $4f63
 	call StepMatchFramesSkippable ; $4f65
-	farcall Func_09_4238 ; $4f68
+	farcall DismissGameResultObj ; $4f68
 	farcall HideCourtBanner ; $4f6b
 	ret ; $4f6e
 	ld a, $00 ; $4f6f

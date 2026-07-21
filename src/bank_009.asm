@@ -25,8 +25,8 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 	farptr LoadPlayer2PointsDigitGfx ; $402c
 	farptr LoadPlayer1ScoreDigitGfx ; $402e
 	farptr LoadPlayer2ScoreDigitGfx ; $4030
-	farptr Func_09_422c ; $4032
-	farptr Func_09_4238 ; $4034
+	farptr SpawnGameResultObj ; $4032
+	farptr DismissGameResultObj ; $4034
 UpdatePointScoreDisplay:
 	ld a, [wTiebreakerIndicator] ; $4036
 	and a, a ; $4039
@@ -212,13 +212,13 @@ ObjTemplates_09_41bc:
 	dw $4040, $71f7, $4764, $0000, $4764, $0003, $0066, $0000 ; record 4
 	dw $4040, $7090, $4758, $0000, $475e, $0000, $0066, $0000 ; record 5
 	dw $4050, $7090, $4764, $0000, $4764, $0002, $0066, $0000 ; record 6
-Func_09_422c:
+SpawnGameResultObj:
 	ld a, $01 ; $422c
 	ld hl, $420c ; $422e
 	ld bc, $dda0 ; $4231
 	call LoadObjTemplate_09 ; $4234
 	ret ; $4237
-Func_09_4238:
+DismissGameResultObj:
 	ld hl, $420c ; $4238
 	ld bc, $dda0 ; $423b
 	call StartObjExitAnim ; $423e
