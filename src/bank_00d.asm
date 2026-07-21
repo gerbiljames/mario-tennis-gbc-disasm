@@ -638,7 +638,7 @@ Func_0d_4465:
 	pop de ; $447e
 	push bc ; $447f
 	ld bc, $0000 ; $4480
-	farcall Func_08_59b8 ; $4483
+	farcall ProjectWorldToScreen_08 ; $4483
 	ld e, c ; $4486
 	ld d, b ; $4487
 	pop bc ; $4488
@@ -670,7 +670,7 @@ Func_0d_449a:
 	ld l, c ; $44a7
 	ld h, b ; $44a8
 	ld bc, $0000 ; $44a9
-	farcall Func_08_59b8 ; $44ac
+	farcall ProjectWorldToScreen_08 ; $44ac
 	ld e, l ; $44af
 	ld d, h ; $44b0
 	ld hl, $dc7a ; $44b1

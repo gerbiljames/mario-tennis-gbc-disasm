@@ -822,7 +822,7 @@ DrillMessageTextIds_0b:
 QueueDrillSprite_0b:
 	ld h, [hl] ; $46d6
 	ld l, a ; $46d7
-	farcall Func_08_59b8 ; $46d8
+	farcall ProjectWorldToScreen_08 ; $46d8
 	farcall ApplyCameraProjection ; $46db
 	ld hl, DrillSpriteTemplate_0b ; $46de
 	ld bc, $0930 ; $46e1
@@ -836,7 +836,7 @@ DrillSpriteTemplate_0b:
 	INCBIN "data/bank_00b/d_46f1.bin" ; $46f1, 20 bytes
 RunTrainingDrillByID:
 	push af ; $4705
-	farcall Func_08_6544 ; $4706
+	farcall InitMinigameMatchSettings ; $4706
 	pop af ; $4709
 	cp a, $24 ; $470a
 	jp z, Label_0b_47ae ; $470c

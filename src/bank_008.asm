@@ -3,7 +3,7 @@ SECTION "ROM Bank $08", ROMX[$4000], BANK[$08]
 	farptr InitDefaultMatchSettings ; $4000
 	farptr ResetMatchState ; $4002
 	farptr RunMatch ; $4004
-	farptr Func_08_6544 ; $4006
+	farptr InitMinigameMatchSettings ; $4006
 	farptr RunMinigameMatch ; $4008
 	farptr UpdateMatchFrame ; $400a
 	farptr InitChar ; $400c
@@ -34,7 +34,7 @@ SECTION "ROM Bank $08", ROMX[$4000], BANK[$08]
 	farptr StepMatchFrame ; $403e
 	farptr StepMatchFrames ; $4040
 	farptr StepMatchFramesSkippable ; $4042
-	farptr Func_08_59b8 ; $4044
+	farptr ProjectWorldToScreen_08 ; $4044
 	farptr ApplyCameraProjection ; $4046
 	farptr SetModeHookTable ; $4048
 	farptr SetMinigamePointTable ; $404a
@@ -175,7 +175,7 @@ InitMatchScene:
 	xor a, a ; $4176
 	ld [$c4cd], a ; $4177
 	farcall UpdatePointScoreDisplay ; $417a
-	call Func_08_5e93 ; $417d
+	call RefreshCourtScoreboard ; $417d
 	call UploadCourtTilemap ; $4180
 	call UploadCourtAttrmap ; $4183
 	farcall Func_28_5eb0 ; $4186
@@ -994,13 +994,13 @@ Label_08_4726:
 Label_08_4736:
 	ret ; $4736
 PlaySet:
-	ld hl, Func_08_4745 ; $4737
+	ld hl, CheckSetComplete ; $4737
 	push hl ; $473a
 	ld a, [wTiebreakerIndicator] ; $473b
 	and a, a ; $473e
 	jp z, Label_08_4758 ; $473f
 	jp Label_08_4782 ; $4742
-Func_08_4745:
+CheckSetComplete:
 	ld a, [wMatchAbortFlag] ; $4745
 	and a, $80 ; $4748
 	jr nz, Label_08_4757 ; $474a
@@ -1081,13 +1081,13 @@ InitTiebreakPointCounter:
 	; $47de, 4 bytes (bytes:4)
 	db $00, $12, $0c, $06 ; 0x00
 AssignCourtPositions:
-	ld hl, Func_08_47ef ; $47e2
+	ld hl, FinalizeServeSideOrientation ; $47e2
 	push hl ; $47e5
 	ld a, [wTiebreakerIndicator] ; $47e6
 	and a, a ; $47e9
 	jp nz, Label_08_48c9 ; $47ea
 	jr Label_08_4808 ; $47ed
-Func_08_47ef:
+FinalizeServeSideOrientation:
 	call CheckServerEndChanged ; $47ef
 	call UpdateViewFlipState ; $47f2
 	call FlipAllCharPositions ; $47f5
@@ -1113,7 +1113,7 @@ Label_08_4808:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $481e
 	rrca ; $4821
 	ret nc ; $4822
-	ld hl, Func_08_4833 ; $4823
+	ld hl, FlipPartnerCourtPositions ; $4823
 	push hl ; $4826
 	ld a, [wOnCourtCharCountMinus1] ; $4827
 	rst Rst00 ; $482a
@@ -1121,7 +1121,7 @@ Label_08_4808:
 	dw Label_08_4847 ; $482d jumptable
 	dw Label_08_4847 ; $482f jumptable
 	dw Label_08_4853 ; $4831 jumptable
-Func_08_4833:
+FlipPartnerCourtPositions:
 	ld a, [wOnCourtCharCountMinus1] ; $4833
 	rst Rst00 ; $4836
 	dw Label_08_4888 ; $4837 jumptable
@@ -1590,7 +1590,7 @@ ResolvePointOutcome:
 	ld l, a ; $4dff
 	call SetCameraTarget ; $4e00
 	call StepMatchFrame ; $4e03
-	ld hl, Func_08_4e22 ; $4e06
+	ld hl, ResolvePointResultSequence ; $4e06
 	push hl ; $4e09
 	ld a, [wPointOutcome] ; $4e0a
 	rst Rst00 ; $4e0d
@@ -1604,8 +1604,8 @@ ResolvePointOutcome:
 	dw Label_08_4e49 ; $4e1c jumptable
 	dw Label_08_4e5b ; $4e1e jumptable
 	dw Label_00_03ae ; $4e20 jumptable
-Func_08_4e22:
-	ld hl, Func_08_4e3e ; $4e22
+ResolvePointResultSequence:
+	ld hl, DelayAfterPointResolution ; $4e22
 	push hl ; $4e25
 	ld a, [wMatchWinLoseFlag] ; $4e26
 	and a, a ; $4e29
@@ -1617,7 +1617,7 @@ Func_08_4e22:
 	and a, a ; $4e37
 	jp nz, Label_08_4f23 ; $4e38
 	jp Label_08_4ea3 ; $4e3b
-Func_08_4e3e:
+DelayAfterPointResolution:
 	ld a, $46 ; $4e3e
 	call StepMatchFramesSkippable ; $4e40
 	ld a, $0a ; $4e43
@@ -2072,7 +2072,7 @@ BuildBallSlot:
 	ld a, [hl+] ; $51ac
 	ld h, [hl] ; $51ad
 	ld l, a ; $51ae
-	call Func_08_59b8 ; $51af
+	call ProjectWorldToScreen_08 ; $51af
 	push de ; $51b2
 	ld e, l ; $51b3
 	ld d, h ; $51b4
@@ -2184,7 +2184,7 @@ BuildBallShadowSlot:
 	ld a, [hl+] ; $525f
 	ld h, [hl] ; $5260
 	ld l, a ; $5261
-	call Func_08_59b8 ; $5262
+	call ProjectWorldToScreen_08 ; $5262
 	ld e, l ; $5265
 	ld d, h ; $5266
 	ld hl, $c46c ; $5267
@@ -2317,7 +2317,7 @@ Label_08_5310:
 	ld de, rJOYP ; $5323
 Label_08_5326:
 	ld bc, $0000 ; $5326
-	call Func_08_59b8 ; $5329
+	call ProjectWorldToScreen_08 ; $5329
 	ld e, l ; $532c
 	ld d, h ; $532d
 	ld hl, wLandingMarkerX ; $532e
@@ -2378,7 +2378,7 @@ StartBounceEffect:
 	ld a, [hl+] ; $5392
 	ld h, [hl] ; $5393
 	ld l, a ; $5394
-	call Func_08_59b8 ; $5395
+	call ProjectWorldToScreen_08 ; $5395
 	ld e, l ; $5398
 	ld d, h ; $5399
 	ld hl, wBounceEffectX ; $539a
@@ -2427,7 +2427,7 @@ StartHitEffect:
 	ld a, [hl+] ; $53df
 	ld h, [hl] ; $53e0
 	ld l, a ; $53e1
-	call Func_08_59b8 ; $53e2
+	call ProjectWorldToScreen_08 ; $53e2
 	ld e, l ; $53e5
 	ld d, h ; $53e6
 	ld hl, wHitEffectX ; $53e7
@@ -2562,7 +2562,7 @@ DrawBallTouchCharEffect:
 	ld a, [hl+] ; $54f6
 	ld h, [hl] ; $54f7
 	ld l, a ; $54f8
-	call Func_08_59b8 ; $54f9
+	call ProjectWorldToScreen_08 ; $54f9
 	call ApplyCameraProjection ; $54fc
 	ld bc, $095e ; $54ff
 	call QueueSprite ; $5502
@@ -2576,7 +2576,7 @@ DrawBallTouchCharEffect:
 	ld a, [hl+] ; $5512
 	ld h, [hl] ; $5513
 	ld l, a ; $5514
-	call Func_08_59b8 ; $5515
+	call ProjectWorldToScreen_08 ; $5515
 	call ApplyCameraProjection ; $5518
 	ld bc, $0c5e ; $551b
 	call QueueSprite ; $551e
@@ -2594,7 +2594,7 @@ DrawTargetZone:
 	ld h, [hl] ; $5531
 	ld l, a ; $5532
 	ld bc, $0000 ; $5533
-	call Func_08_59b8 ; $5536
+	call ProjectWorldToScreen_08 ; $5536
 	call ApplyCameraProjection ; $5539
 	ld hl, SpriteTemplate_08_55a0 ; $553c
 	ld bc, $0920 ; $553f
@@ -2608,7 +2608,7 @@ DrawTargetZone:
 	ld h, [hl] ; $554f
 	ld l, a ; $5550
 	ld bc, $0000 ; $5551
-	call Func_08_59b8 ; $5554
+	call ProjectWorldToScreen_08 ; $5554
 	call ApplyCameraProjection ; $5557
 	ld hl, SpriteTemplate_08_55a5 ; $555a
 	ld bc, $0922 ; $555d
@@ -2622,7 +2622,7 @@ DrawTargetZone:
 	ld h, [hl] ; $556d
 	ld l, a ; $556e
 	ld bc, $0000 ; $556f
-	call Func_08_59b8 ; $5572
+	call ProjectWorldToScreen_08 ; $5572
 	call ApplyCameraProjection ; $5575
 	ld hl, SpriteTemplate_08_55aa ; $5578
 	ld bc, $0924 ; $557b
@@ -2636,7 +2636,7 @@ DrawTargetZone:
 	ld h, [hl] ; $558b
 	ld l, a ; $558c
 	ld bc, $0000 ; $558d
-	call Func_08_59b8 ; $5590
+	call ProjectWorldToScreen_08 ; $5590
 	call ApplyCameraProjection ; $5593
 	ld hl, SpriteTemplate_08_55af ; $5596
 	ld bc, $0926 ; $5599
@@ -3300,7 +3300,7 @@ Label_08_5991:
 	ld [$c4b3], a ; $59b4
 Label_08_59b7:
 	ret ; $59b7
-Func_08_59b8:
+ProjectWorldToScreen_08:
 	jp ProjectWorldToScreen ; $59b8
 ApplyCameraProjection:
 	ld e, l ; $59bb
@@ -4039,7 +4039,7 @@ UploadCourtAttrmap:
 	ld c, $40 ; $5e8d
 	call QueueVRAMCopy ; $5e8f
 	ret ; $5e92
-Func_08_5e93:
+RefreshCourtScoreboard:
 	ld a, [$c4c8] ; $5e93
 	and a, $01 ; $5e96
 	ret nz ; $5e98
@@ -4048,34 +4048,34 @@ Func_08_5e93:
 	jr nz, Label_08_5ec7 ; $5e9d
 	ld hl, $de94 ; $5e9f
 	ld de, $d99a ; $5ea2
-	call Func_08_5eef ; $5ea5
+	call CopyScoreboardTileColumn ; $5ea5
 	ld hl, $debc ; $5ea8
 	ld de, $dd9a ; $5eab
-	call Func_08_5eef ; $5eae
+	call CopyScoreboardTileColumn ; $5eae
 	ld hl, $de8a ; $5eb1
 	ld de, $d984 ; $5eb4
-	call Func_08_5eef ; $5eb7
+	call CopyScoreboardTileColumn ; $5eb7
 	ld hl, $deb2 ; $5eba
 	ld de, $dd84 ; $5ebd
-	call Func_08_5eef ; $5ec0
+	call CopyScoreboardTileColumn ; $5ec0
 	call SnapshotCourtTilemaps ; $5ec3
 	ret ; $5ec6
 Label_08_5ec7:
 	ld hl, $de80 ; $5ec7
 	ld de, $d984 ; $5eca
-	call Func_08_5eef ; $5ecd
+	call CopyScoreboardTileColumn ; $5ecd
 	ld hl, $dea8 ; $5ed0
 	ld de, $dd84 ; $5ed3
-	call Func_08_5eef ; $5ed6
+	call CopyScoreboardTileColumn ; $5ed6
 	ld hl, $de9e ; $5ed9
 	ld de, $d99a ; $5edc
-	call Func_08_5eef ; $5edf
+	call CopyScoreboardTileColumn ; $5edf
 	ld hl, $dec6 ; $5ee2
 	ld de, $dd9a ; $5ee5
-	call Func_08_5eef ; $5ee8
+	call CopyScoreboardTileColumn ; $5ee8
 	call SnapshotCourtTilemaps ; $5eeb
 	ret ; $5eee
-Func_08_5eef:
+CopyScoreboardTileColumn:
 	wram_bank $04 ; $5eef
 	push de ; $5ef5
 	ld de, wTextBuffer ; $5ef6
@@ -4151,7 +4151,7 @@ RefreshCourtAfterEndChange:
 	ld [$c4c0], a ; $5f52
 	ld [$c4c1], a ; $5f55
 	call StepMatchFrame ; $5f58
-	call Func_08_5e93 ; $5f5b
+	call RefreshCourtScoreboard ; $5f5b
 	call StepMatchFrame ; $5f5e
 	wram_bank $02 ; $5f61
 	ld hl, $d180 ; $5f67
@@ -4936,7 +4936,7 @@ DrawStandingShadowSlot:
 	ld e, a ; $653f
 	ld d, [hl] ; $6540
 	jp QueueSprite16 ; $6541
-Func_08_6544:
+InitMinigameMatchSettings:
 	call InitDefaultMatchSettings ; $6544
 	ld a, $02 ; $6547
 	ld [$c8f5], a ; $6549
@@ -7546,7 +7546,7 @@ BuildCharSpriteSlots:
 	ld a, [hl+] ; $7681
 	ld h, [hl] ; $7682
 	ld l, a ; $7683
-	call Func_08_59b8 ; $7684
+	call ProjectWorldToScreen_08 ; $7684
 	call ApplyCameraProjection ; $7687
 	ld a, d ; $768a
 	ld [$df53], a ; $768b
@@ -7672,7 +7672,7 @@ BuildAirborneShadowSlot:
 	ld a, [hl+] ; $7757
 	ld h, [hl] ; $7758
 	ld l, a ; $7759
-	call Func_08_59b8 ; $775a
+	call ProjectWorldToScreen_08 ; $775a
 	call ApplyCameraProjection ; $775d
 	ld hl, $df07 ; $7760
 	ld a, [hl+] ; $7763

@@ -926,7 +926,7 @@ Test2InitScript_10:
 	ld [$c294], a ; $4ba5
 	ld [wStoryModeExitLocationRequest], a ; $4ba8
 	ret ; $4bab
-	farcall Func_08_6544 ; $4bac
+	farcall InitMinigameMatchSettings ; $4bac
 	ld a, $02 ; $4baf
 	ld [wCurrentlyUsedCourt], a ; $4bb1
 	ld a, $02 ; $4bb4

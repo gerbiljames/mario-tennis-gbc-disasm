@@ -3989,7 +3989,7 @@ RunDebugTestMatch:
 	ld [$c4ee], a ; $5e9a
 	farcall RunMatch ; $5e9d
 	ret ; $5ea0
-	farcall Func_08_6544 ; $5ea1
+	farcall InitMinigameMatchSettings ; $5ea1
 	ld a, $02 ; $5ea4
 	ld [wCurrentlyUsedCourt], a ; $5ea6
 	ld a, $02 ; $5ea9
