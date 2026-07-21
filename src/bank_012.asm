@@ -100,9 +100,9 @@ Label_12_4167:
 DormEntranceInitScript_12:
 	ld a, [wStoryModeEntryPoint] ; $4170
 	cp a, $0f ; $4173
-	call z, Func_12_4179 ; $4175
+	call z, DormEntranceEntry0FScene ; $4175
 	ret ; $4178
-Func_12_4179:
+DormEntranceEntry0FScene:
 	script_set_speed $03, $0010 ; $4179
 	script_set_speed $04, $0010 ; $4181
 	script_set_speed ACTOR_PLAYER, $0010 ; $4189
@@ -1415,7 +1415,7 @@ SeniorCourtNpc03_12:
 	jr c, Label_12_5606 ; $55ed
 	cp a, $09 ; $55ef
 	jr nc, Label_12_55b5 ; $55f1
-	call Func_12_5ef1 ; $55f3
+	call SeniorRankOfferScenePrep ; $55f3
 	ret ; $55f6
 SeniorCourtNpc03FaceUpFlag0000_12:
 	ld a, [$c2b1] ; $55f7
@@ -1423,7 +1423,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	jr c, Label_12_5606 ; $55fc
 	cp a, $09 ; $55fe
 	jr nc, Label_12_55b5 ; $5600
-	call Func_12_5f03 ; $5602
+	call SeniorRankOfferScenePrepFacingUp ; $5602
 	ret ; $5605
 Label_12_5606:
 	test_flag $05, 7 ; $5606
@@ -2029,7 +2029,7 @@ Label_12_5d7b:
 	ld hl, SeniorCourtActorsA_12 ; $5d87
 	farcall ScriptRespawnLocationActors ; $5d8a
 Label_12_5d8d:
-	call Func_12_5e12 ; $5d8d
+	call SeniorCourtPositionActorsByProgressA ; $5d8d
 	call Func_12_5e91 ; $5d90
 	ld a, [wStoryModeEntryPoint] ; $5d93
 	cp a, $0f ; $5d96
@@ -2038,9 +2038,9 @@ Label_12_5d8d:
 	jp z, Label_12_6d8a ; $5d9d
 	cp a, $0d ; $5da0
 	jp z, SeniorMatchVictorySceneDispatch ; $5da2
-	call Func_12_5dbe ; $5da5
+	call SeniorCourtPositionActorsByProgressB ; $5da5
 	farcall EndCutsceneScriptMode ; $5da8
-	call Func_12_5eab ; $5dab
+	call SeniorCourtWalkPlayersOntoCourt ; $5dab
 	ret ; $5dae
 Label_12_5daf:
 	test_flag $08, 2 ; $5daf
@@ -2049,7 +2049,7 @@ Label_12_5daf:
 	ld hl, SeniorCourtActorsB_12 ; $5db6
 	farcall ScriptRespawnLocationActors ; $5db9
 	jr Label_12_5d8d ; $5dbc
-Func_12_5dbe:
+SeniorCourtPositionActorsByProgressB:
 	ld a, [$c2b1] ; $5dbe
 	cp a, $0b ; $5dc1
 	jr c, Label_12_5ddc ; $5dc3
@@ -2077,7 +2077,7 @@ Label_12_5df4:
 	script_set_position $04, $3f00, $3f00 ; $5dfb
 	script_set_position $05, $3f00, $3f00 ; $5e06
 	ret ; $5e11
-Func_12_5e12:
+SeniorCourtPositionActorsByProgressA:
 	test_flag $05, 7 ; $5e12
 	jr nz, Label_12_5e38 ; $5e15
 	ld a, [$c2b1] ; $5e17
@@ -2122,7 +2122,7 @@ Func_12_5e91:
 	script_set_anim $0c, $01 ; $5ea3
 Label_12_5eaa:
 	ret ; $5eaa
-Func_12_5eab:
+SeniorCourtWalkPlayersOntoCourt:
 	ld a, [wStoryModeEntryPoint] ; $5eab
 	cp a, $01 ; $5eae
 	jp nz, Label_12_5ef0 ; $5eb0
@@ -2138,13 +2138,13 @@ Label_12_5ede:
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $5ee6
 Label_12_5ef0:
 	ret ; $5ef0
-Func_12_5ef1:
+SeniorRankOfferScenePrep:
 	script_set_speed ACTOR_PLAYER, $0010 ; $5ef1
 	test_flag $05, 7 ; $5ef9
 	jp z, SeniorSinglesRankOfferScene ; $5efc
 	call SeniorDoublesRankOfferScene ; $5eff
 	ret ; $5f02
-Func_12_5f03:
+SeniorRankOfferScenePrepFacingUp:
 	script_set_speed ACTOR_PLAYER, $0008 ; $5f03
 	script_face ACTOR_PLAYER, FACE_UP ; $5f0b
 	script_facing_lock ACTOR_PLAYER, $01 ; $5f12
@@ -2285,7 +2285,7 @@ Label_12_6136:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $614b
 	script_face $07, FACE_RIGHT ; $6152
 	script_face $06, FACE_RIGHT ; $6159
-	call Func_12_63d3 ; $6160
+	call ApproachSeniorCourtPairB ; $6160
 	script_set_actor_script $06, ActorScript_12_78d9 ; $6163
 	script_set_actor_script $07, ActorScript_12_78ea ; $616e
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_6d1f ; $6179
@@ -2326,7 +2326,7 @@ Label_12_6232:
 	script_wait_frames $0f ; $6239
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6240
 	script_face $07, FACE_LEFT ; $6247
-	call Func_12_63a2 ; $624e
+	call ApproachSeniorCourtPairA ; $624e
 	script_set_actor_script $07, ActorScript_12_6c18 ; $6251
 	farcall WaitPlayerMoveDone ; $625c
 	script_wait_actor_script $07 ; $625f
@@ -2345,7 +2345,7 @@ Label_12_628a:
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6298
 	script_face $06, FACE_RIGHT ; $629f
 	script_wait_frames $1e ; $62a6
-	call Func_12_63d3 ; $62ad
+	call ApproachSeniorCourtPairB ; $62ad
 	script_set_actor_script $06, ActorScript_12_6c62 ; $62b0
 	farcall WaitPlayerMoveDone ; $62bb
 	script_wait_actor_script $06 ; $62be
@@ -2364,7 +2364,7 @@ Label_12_62e9:
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $62f7
 	script_face $05, FACE_RIGHT ; $62fe
 	script_wait_frames $1e ; $6305
-	call Func_12_63d3 ; $630c
+	call ApproachSeniorCourtPairB ; $630c
 	script_set_actor_script $05, ActorScript_12_6c62 ; $630f
 	farcall WaitPlayerMoveDone ; $631a
 	script_wait_frames $78 ; $631d
@@ -2383,7 +2383,7 @@ Label_12_6348:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6356
 	script_face $04, FACE_LEFT ; $635d
 	script_wait_frames $1e ; $6364
-	call Func_12_63a2 ; $636b
+	call ApproachSeniorCourtPairA ; $636b
 	script_set_actor_script $04, ActorScript_12_6c18 ; $636e
 	farcall WaitPlayerMoveDone ; $6379
 	script_wait_frames $b4 ; $637c
@@ -2395,14 +2395,14 @@ Label_12_6348:
 	farcall RunStoryMatch ; $639b
 	farcall RestoreOverworldAfterMatch ; $639e
 	ret ; $63a1
-Func_12_63a2:
+ApproachSeniorCourtPairA:
 	script_set_actor_script $0d, ActorScript_12_6d30 ; $63a2
 	script_set_actor_script $0e, ActorScript_12_6d3f ; $63ad
 	script_wait_actor_script $0e ; $63b8
 	script_move_player $2400, $1700 ; $63bd
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_6cec ; $63c7
 	ret ; $63d2
-Func_12_63d3:
+ApproachSeniorCourtPairB:
 	script_set_actor_script $0f, ActorScript_12_6d4e ; $63d3
 	script_set_actor_script $10, ActorScript_12_6d5d ; $63de
 	script_wait_actor_script $0f ; $63e9
