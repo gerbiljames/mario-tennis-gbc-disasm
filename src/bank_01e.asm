@@ -2512,9 +2512,9 @@ Label_1e_6695:
 	jr z, Label_1e_66a9 ; $6697
 	farcall Func_1d_682c ; $6699
 	ld c, $00 ; $669c
-	farcall Func_1c_401a ; $669e
+	farcall CharDataScreen_Show ; $669e
 	ld c, $01 ; $66a1
-	farcall Func_1c_401a ; $66a3
+	farcall CharDataScreen_Show ; $66a3
 	call Func_1e_6c62 ; $66a6
 Label_1e_66a9:
 	call Func_1e_6fb2 ; $66a9
@@ -3263,9 +3263,9 @@ Label_1e_6bc1:
 	pop hl ; $6bc1
 	farcall Func_1d_682c ; $6bc2
 	ld c, $00 ; $6bc5
-	farcall Func_1c_401a ; $6bc7
+	farcall CharDataScreen_Show ; $6bc7
 	ld c, $01 ; $6bca
-	farcall Func_1c_401a ; $6bcc
+	farcall CharDataScreen_Show ; $6bcc
 	call Func_1e_6c62 ; $6bcf
 	xor a, a ; $6bd2
 	ld hl, $c9b0 ; $6bd3

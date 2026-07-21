@@ -473,7 +473,7 @@ Label_1d_44a7:
 	ld de, $d08e ; $44b6
 	call FormatDecimalNumberUnsigned ; $44b9
 	ld de, $d3db ; $44bc
-	farcall Func_1c_44cc ; $44bf
+	farcall CharDataScreen_WriteStatNumber ; $44bf
 	wram_bank $06 ; $44c2
 	push af ; $44c8
 	ld hl, wStoryModeNameOfMainCharacter ; $44c9
@@ -496,7 +496,7 @@ Label_1d_44d4:
 	ld de, $d08e ; $44e3
 	call FormatDecimalNumberUnsigned ; $44e6
 	ld de, $d3f9 ; $44e9
-	farcall Func_1c_44cc ; $44ec
+	farcall CharDataScreen_WriteStatNumber ; $44ec
 	wram_bank $06 ; $44ef
 	push af ; $44f5
 	ld hl, wStoryModeNameOfMainCharacter ; $44f6
@@ -519,7 +519,7 @@ Label_1d_4501:
 	ld de, $d08e ; $4510
 	call FormatDecimalNumberUnsigned ; $4513
 	ld de, $d403 ; $4516
-	farcall Func_1c_44cc ; $4519
+	farcall CharDataScreen_WriteStatNumber ; $4519
 	wram_bank $06 ; $451c
 	push af ; $4522
 	ld hl, wStoryModeNameOfMainCharacter ; $4523
@@ -542,7 +542,7 @@ Label_1d_452e:
 	ld de, $d08e ; $453d
 	call FormatDecimalNumberUnsigned ; $4540
 	ld de, $d40d ; $4543
-	farcall Func_1c_44cc ; $4546
+	farcall CharDataScreen_WriteStatNumber ; $4546
 	wram_bank $06 ; $4549
 	push af ; $454f
 	ld hl, wStoryModeNameOfMainCharacter ; $4550
@@ -565,7 +565,7 @@ Label_1d_455b:
 	ld de, $d08e ; $456a
 	call FormatDecimalNumberUnsigned ; $456d
 	ld de, $d417 ; $4570
-	farcall Func_1c_44cc ; $4573
+	farcall CharDataScreen_WriteStatNumber ; $4573
 	call ComputeExpProgressBar ; $4576
 	ld de, $d42f ; $4579
 	call Func_1d_59fc ; $457c
@@ -684,7 +684,7 @@ Label_1d_463c:
 	ld de, $d08e ; $464b
 	call FormatDecimalNumberUnsigned ; $464e
 	ld de, $d46b ; $4651
-	farcall Func_1c_44cc ; $4654
+	farcall CharDataScreen_WriteStatNumber ; $4654
 	wram_bank $06 ; $4657
 	push af ; $465d
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
@@ -707,7 +707,7 @@ Label_1d_4669:
 	ld de, $d08e ; $4678
 	call FormatDecimalNumberUnsigned ; $467b
 	ld de, $d489 ; $467e
-	farcall Func_1c_44cc ; $4681
+	farcall CharDataScreen_WriteStatNumber ; $4681
 	wram_bank $06 ; $4684
 	push af ; $468a
 	ld hl, wStoryModeNameOfMainCharacter ; $468b
@@ -730,7 +730,7 @@ Label_1d_4696:
 	ld de, $d08e ; $46a5
 	call FormatDecimalNumberUnsigned ; $46a8
 	ld de, $d493 ; $46ab
-	farcall Func_1c_44cc ; $46ae
+	farcall CharDataScreen_WriteStatNumber ; $46ae
 	wram_bank $06 ; $46b1
 	push af ; $46b7
 	ld hl, wStoryModeNameOfMainCharacter ; $46b8
@@ -753,7 +753,7 @@ Label_1d_46c3:
 	ld de, $d08e ; $46d2
 	call FormatDecimalNumberUnsigned ; $46d5
 	ld de, $d49d ; $46d8
-	farcall Func_1c_44cc ; $46db
+	farcall CharDataScreen_WriteStatNumber ; $46db
 	wram_bank $06 ; $46de
 	push af ; $46e4
 	ld hl, wStoryModeNameOfMainCharacter ; $46e5
@@ -776,7 +776,7 @@ Label_1d_46f0:
 	ld de, $d08e ; $46ff
 	call FormatDecimalNumberUnsigned ; $4702
 	ld de, $d4a7 ; $4705
-	farcall Func_1c_44cc ; $4708
+	farcall CharDataScreen_WriteStatNumber ; $4708
 	call ComputeExpProgressBar ; $470b
 	ld de, $d4bf ; $470e
 	call Func_1d_59fc ; $4711
@@ -2010,7 +2010,7 @@ Label_1d_5080:
 	ld de, $d08e ; $508f
 	call FormatDecimalNumberUnsigned ; $5092
 	ld de, $d519 ; $5095
-	farcall Func_1c_44cc ; $5098
+	farcall CharDataScreen_WriteStatNumber ; $5098
 	ret ; $509b
 Func_1d_509c:
 	call AdvanceFrame ; $509c
@@ -3140,7 +3140,7 @@ Label_1d_5b10:
 Func_1d_5b1a:
 	push af ; $5b1a
 	farcall CharDataScreen_LoadScreen ; $5b1b
-	farcall Func_1c_728b ; $5b1e
+	farcall LoadCharDataScreenTilemaps ; $5b1e
 	pop af ; $5b21
 	ld [$cb00], a ; $5b22
 	push af ; $5b25
@@ -3308,19 +3308,19 @@ Label_1d_6836:
 	farcall AddPlayerExp ; $6851
 Label_1d_6854:
 	ld c, $00 ; $6854
-	farcall Func_1c_401a ; $6856
+	farcall CharDataScreen_Show ; $6856
 	dec a ; $6859
 	jr z, Label_1d_6873 ; $685a
 	inc a ; $685c
 	jr nz, Label_1d_686a ; $685d
 	farcall BackupCharData ; $685f
 	ld c, $01 ; $6862
-	farcall Func_1c_401a ; $6864
+	farcall CharDataScreen_Show ; $6864
 	dec a ; $6867
 	jr z, Label_1d_689c ; $6868
 Label_1d_686a:
 	ld c, $01 ; $686a
-	farcall Func_1c_401a ; $686c
+	farcall CharDataScreen_Show ; $686c
 	dec a ; $686f
 	jr z, Label_1d_68a1 ; $6870
 	ret ; $6872
@@ -3371,7 +3371,7 @@ Func_1d_68a3:
 	call ClearSpriteQueue ; $68c1
 	pop hl ; $68c4
 	call InitLevelUpScreenState ; $68c5
-	farcall Func_1c_73f4 ; $68c8
+	farcall LoadCharDataScreenGraphics ; $68c8
 	call Func_1d_6977 ; $68cb
 	call EnableLCD ; $68ce
 	call AdvanceFrame ; $68d1
@@ -3714,7 +3714,7 @@ Label_1d_6bbb:
 	ld de, $d08e ; $6bd1
 	call FormatDecimalNumberUnsigned ; $6bd4
 	ld de, $d06b ; $6bd7
-	farcall Func_1c_44cc ; $6bda
+	farcall CharDataScreen_WriteStatNumber ; $6bda
 	wram_bank $06 ; $6bdd
 	pop af ; $6be3
 	farcall GetExpRequiredForLevel ; $6be4
@@ -3800,7 +3800,7 @@ Label_1d_6c5c:
 	ld de, $d08e ; $6c72
 	call FormatDecimalNumberUnsigned ; $6c75
 	ld de, $d18b ; $6c78
-	farcall Func_1c_44cc ; $6c7b
+	farcall CharDataScreen_WriteStatNumber ; $6c7b
 	wram_bank $06 ; $6c7e
 	pop af ; $6c84
 	farcall GetExpRequiredForLevel ; $6c85
@@ -3883,7 +3883,7 @@ Label_1d_6cff:
 	ld de, $d08e ; $6d0e
 	call FormatDecimalNumberUnsigned ; $6d11
 	ld de, $d06b ; $6d14
-	farcall Func_1c_44cc ; $6d17
+	farcall CharDataScreen_WriteStatNumber ; $6d17
 	ld a, $01 ; $6d1a
 	ld [$cb00], a ; $6d1c
 	push af ; $6d1f
@@ -3925,7 +3925,7 @@ Label_1d_6d4e:
 	ld de, $d08e ; $6d5d
 	call FormatDecimalNumberUnsigned ; $6d60
 	ld de, $d18b ; $6d63
-	farcall Func_1c_44cc ; $6d66
+	farcall CharDataScreen_WriteStatNumber ; $6d66
 	ret ; $6d69
 Func_1d_6d6a:
 	wram_bank $06 ; $6d6a

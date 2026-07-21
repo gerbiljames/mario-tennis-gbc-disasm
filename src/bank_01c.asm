@@ -1,19 +1,19 @@
 SECTION "ROM Bank $1c", ROMX[$4000], BANK[$1c]
 
-	farptr Func_1c_401a ; $4000
+	farptr CharDataScreen_Show ; $4000
 	farptr CharDataScreen_LoadScreen ; $4002
-	farptr Func_1c_44cc ; $4004
+	farptr CharDataScreen_WriteStatNumber ; $4004
 	farptr CharDataScreen_DrawStats ; $4006
 	farptr BackupCharDataScreenRow ; $4008
 	farptr RestoreCharDataScreenRow ; $400a
 	farptr BackupCharData ; $400c
 	farptr RestoreCharData ; $400e
-	farptr Func_1c_728b ; $4010
+	farptr LoadCharDataScreenTilemaps ; $4010
 	farptr StartCharDataScreenAnimTask ; $4012
 	farptr StopCharDataScreenAnimTask ; $4014
 	farptr Func_1c_72fc ; $4016
-	farptr Func_1c_73f4 ; $4018
-Func_1c_401a:
+	farptr LoadCharDataScreenGraphics ; $4018
+CharDataScreen_Show:
 	ldh a, [hWramBank] ; $401a
 	push af ; $401c
 	wram_bank $06 ; $401d
@@ -42,9 +42,9 @@ Label_1c_4038:
 	ldh [rWY], a ; $4051
 	call ClearSpriteQueue ; $4053
 	pop bc ; $4056
-	call Func_1c_40fb ; $4057
-	call Func_1c_4c43 ; $405a
-	call Func_1c_41dc ; $405d
+	call CharDataScreen_InitState ; $4057
+	call LoadCharStats ; $405a
+	call CharDataScreen_BuildTilemap ; $405d
 	wram_bank $06 ; $4060
 	ld a, [$d0b6] ; $4066
 	or a, a ; $4069
@@ -52,30 +52,30 @@ Label_1c_4038:
 	call EnableLCD ; $406c
 	call AdvanceFrame ; $406f
 	ld a, $01 ; $4072
-	ld hl, Func_1c_4e54 ; $4074
+	ld hl, DrawStatValueSprites ; $4074
 	call RegisterFrameTask ; $4077
 	ld a, $01 ; $407a
-	ld hl, Func_1c_5049 ; $407c
+	ld hl, DrawRemainingPointsSprite ; $407c
 	call RegisterFrameTask ; $407f
 	script_fade_in $10 ; $4082
 	call WaitFadeEnd ; $4087
 	ld a, $01 ; $408a
 	ld hl, CharDataScreenAnimTask ; $408c
 	call RegisterFrameTask ; $408f
-	call Func_1c_4682 ; $4092
+	call AnimateCharDataStatsReveal ; $4092
 	wram_bank $06 ; $4095
 	xor a, a ; $409b
 	ld [$d028], a ; $409c
 	call Func_1c_4dd6 ; $409f
-	call Func_1c_495d ; $40a2
+	call FlushCharDataTilemaps ; $40a2
 	ld a, $01 ; $40a5
-	ld hl, Func_1c_54f2 ; $40a7
+	ld hl, DrawStatArrowIndicators ; $40a7
 	call RegisterFrameTask ; $40aa
 	jr Label_1c_40b2 ; $40ad
 Label_1c_40af:
-	call Func_1c_5572 ; $40af
+	call SetupCharDataScreen ; $40af
 Label_1c_40b2:
-	call Func_1c_509d ; $40b2
+	call CharDataScreen_InputLoop ; $40b2
 	push af ; $40b5
 	ld c, $10 ; $40b6
 	call BeginFadeOut ; $40b8
@@ -84,9 +84,9 @@ Label_1c_40b2:
 	ld de, wStorySlotData ; $40c1
 	ld c, $08 ; $40c4
 	call CopyMemoryFast ; $40c6
-	ld hl, Func_1c_4e54 ; $40c9
+	ld hl, DrawStatValueSprites ; $40c9
 	call UnregisterFrameTask ; $40cc
-	ld hl, Func_1c_5049 ; $40cf
+	ld hl, DrawRemainingPointsSprite ; $40cf
 	call UnregisterFrameTask ; $40d2
 	ld hl, CharDataScreenAnimTask ; $40d5
 	call UnregisterFrameTask ; $40d8
@@ -107,7 +107,7 @@ Label_1c_40f1:
 	wram_bank ; $40f4
 	ld a, $ff ; $40f8
 	ret ; $40fa
-Func_1c_40fb:
+CharDataScreen_InitState:
 	wram_bank $06 ; $40fb
 	ld a, c ; $4101
 	ld [$cb00], a ; $4102
@@ -229,12 +229,12 @@ Label_1c_41c2:
 	inc [hl] ; $41d5
 	jr Label_1c_41c2 ; $41d6
 Label_1c_41d8:
-	call Func_1c_49eb ; $41d8
+	call WriteCharStatsToDisplayBuffer ; $41d8
 	ret ; $41db
-Func_1c_41dc:
-	call Func_1c_4208 ; $41dc
+CharDataScreen_BuildTilemap:
+	call CharDataScreen_LoadUIGraphics ; $41dc
 	call CharDataScreen_DrawStats ; $41df
-	call Func_1c_459a ; $41e2
+	call CharDataScreen_DrawPortrait ; $41e2
 	wram_bank $03 ; $41e5
 	ld hl, $d000 ; $41eb
 	ld de, $9800 ; $41ee
@@ -246,7 +246,7 @@ Func_1c_41dc:
 	ld c, $24 ; $4202
 	call QueueVRAMCopy ; $4204
 	ret ; $4207
-Func_1c_4208:
+CharDataScreen_LoadUIGraphics:
 	call CharDataScreen_LoadScreen ; $4208
 	wram_bank $01 ; $420b
 	ld hl, $682e ; $4211
@@ -332,7 +332,7 @@ CharDataScreen_DrawStats:
 	ld a, [$d0b6] ; $42fc
 	or a, a ; $42ff
 	jr z, Label_1c_4305 ; $4300
-	call Func_1c_4c43 ; $4302
+	call LoadCharStats ; $4302
 Label_1c_4305:
 	farcall CharDataScreen_BuildStats ; $4305
 	wram_bank $06 ; $4308
@@ -347,11 +347,11 @@ Label_1c_4305:
 	ld de, $d08e ; $431c
 	call FormatDecimalNumberUnsigned ; $431f
 	ld de, $d251 ; $4322
-	call Func_1c_44cc ; $4325
+	call CharDataScreen_WriteStatNumber ; $4325
 	pop af ; $4328
 	ld c, $00 ; $4329
 	ld de, $d256 ; $432b
-	call Func_1c_4502 ; $432e
+	call CharDataScreen_DrawStatBar ; $432e
 	wram_bank $06 ; $4331
 	ld a, [$d00f] ; $4337
 	ld c, a ; $433a
@@ -364,11 +364,11 @@ Label_1c_4305:
 	ld de, $d08e ; $4345
 	call FormatDecimalNumberUnsigned ; $4348
 	ld de, $d265 ; $434b
-	call Func_1c_44cc ; $434e
+	call CharDataScreen_WriteStatNumber ; $434e
 	pop af ; $4351
 	ld c, $01 ; $4352
 	ld de, $d26a ; $4354
-	call Func_1c_4502 ; $4357
+	call CharDataScreen_DrawStatBar ; $4357
 	wram_bank $06 ; $435a
 	ld a, [$d010] ; $4360
 	ld c, a ; $4363
@@ -381,11 +381,11 @@ Label_1c_4305:
 	ld de, $d08e ; $436e
 	call FormatDecimalNumberUnsigned ; $4371
 	ld de, $d291 ; $4374
-	call Func_1c_44cc ; $4377
+	call CharDataScreen_WriteStatNumber ; $4377
 	pop af ; $437a
 	ld c, $00 ; $437b
 	ld de, $d296 ; $437d
-	call Func_1c_4502 ; $4380
+	call CharDataScreen_DrawStatBar ; $4380
 	wram_bank $06 ; $4383
 	ld a, [$d011] ; $4389
 	ld c, a ; $438c
@@ -398,11 +398,11 @@ Label_1c_4305:
 	ld de, $d08e ; $4397
 	call FormatDecimalNumberUnsigned ; $439a
 	ld de, $d2a5 ; $439d
-	call Func_1c_44cc ; $43a0
+	call CharDataScreen_WriteStatNumber ; $43a0
 	pop af ; $43a3
 	ld c, $00 ; $43a4
 	ld de, $d2aa ; $43a6
-	call Func_1c_4502 ; $43a9
+	call CharDataScreen_DrawStatBar ; $43a9
 	wram_bank $06 ; $43ac
 	ld a, [$d012] ; $43b2
 	ld c, a ; $43b5
@@ -415,11 +415,11 @@ Label_1c_4305:
 	ld de, $d08e ; $43c0
 	call FormatDecimalNumberUnsigned ; $43c3
 	ld de, $d2b9 ; $43c6
-	call Func_1c_44cc ; $43c9
+	call CharDataScreen_WriteStatNumber ; $43c9
 	pop af ; $43cc
 	ld c, $01 ; $43cd
 	ld de, $d2be ; $43cf
-	call Func_1c_4502 ; $43d2
+	call CharDataScreen_DrawStatBar ; $43d2
 	wram_bank $06 ; $43d5
 	ld a, [$d013] ; $43db
 	ld c, a ; $43de
@@ -432,11 +432,11 @@ Label_1c_4305:
 	ld de, $d08e ; $43e9
 	call FormatDecimalNumberUnsigned ; $43ec
 	ld de, $d2e1 ; $43ef
-	call Func_1c_44cc ; $43f2
+	call CharDataScreen_WriteStatNumber ; $43f2
 	pop af ; $43f5
 	ld c, $00 ; $43f6
 	ld de, $d2e6 ; $43f8
-	call Func_1c_4502 ; $43fb
+	call CharDataScreen_DrawStatBar ; $43fb
 	wram_bank $06 ; $43fe
 	ld a, [$d014] ; $4404
 	ld c, a ; $4407
@@ -449,11 +449,11 @@ Label_1c_4305:
 	ld de, $d08e ; $4412
 	call FormatDecimalNumberUnsigned ; $4415
 	ld de, $d2f5 ; $4418
-	call Func_1c_44cc ; $441b
+	call CharDataScreen_WriteStatNumber ; $441b
 	pop af ; $441e
 	ld c, $01 ; $441f
 	ld de, $d2fa ; $4421
-	call Func_1c_4502 ; $4424
+	call CharDataScreen_DrawStatBar ; $4424
 	wram_bank $06 ; $4427
 	ld a, [$d015] ; $442d
 	ld c, a ; $4430
@@ -466,11 +466,11 @@ Label_1c_4305:
 	ld de, $d08e ; $443b
 	call FormatDecimalNumberUnsigned ; $443e
 	ld de, $d321 ; $4441
-	call Func_1c_44cc ; $4444
+	call CharDataScreen_WriteStatNumber ; $4444
 	pop af ; $4447
 	ld c, $00 ; $4448
 	ld de, $d326 ; $444a
-	call Func_1c_4502 ; $444d
+	call CharDataScreen_DrawStatBar ; $444d
 	wram_bank $06 ; $4450
 	ld a, [$d016] ; $4456
 	ld c, a ; $4459
@@ -483,11 +483,11 @@ Label_1c_4305:
 	ld de, $d08e ; $4464
 	call FormatDecimalNumberUnsigned ; $4467
 	ld de, $d335 ; $446a
-	call Func_1c_44cc ; $446d
+	call CharDataScreen_WriteStatNumber ; $446d
 	pop af ; $4470
 	ld c, $00 ; $4471
 	ld de, $d33a ; $4473
-	call Func_1c_4502 ; $4476
+	call CharDataScreen_DrawStatBar ; $4476
 	wram_bank $06 ; $4479
 	ld a, [$d017] ; $447f
 	ld c, a ; $4482
@@ -500,11 +500,11 @@ Label_1c_4305:
 	ld de, $d08e ; $448d
 	call FormatDecimalNumberUnsigned ; $4490
 	ld de, $d349 ; $4493
-	call Func_1c_44cc ; $4496
+	call CharDataScreen_WriteStatNumber ; $4496
 	pop af ; $4499
 	ld c, $00 ; $449a
 	ld de, $d34e ; $449c
-	call Func_1c_4502 ; $449f
+	call CharDataScreen_DrawStatBar ; $449f
 	wram_bank $06 ; $44a2
 	ld a, [$d018] ; $44a8
 	ld c, a ; $44ab
@@ -517,13 +517,13 @@ Label_1c_4305:
 	ld de, $d08e ; $44b6
 	call FormatDecimalNumberUnsigned ; $44b9
 	ld de, $d35d ; $44bc
-	call Func_1c_44cc ; $44bf
+	call CharDataScreen_WriteStatNumber ; $44bf
 	pop af ; $44c2
 	ld c, $01 ; $44c3
 	ld de, $d362 ; $44c5
-	call Func_1c_4502 ; $44c8
+	call CharDataScreen_DrawStatBar ; $44c8
 	ret ; $44cb
-Func_1c_44cc:
+CharDataScreen_WriteStatNumber:
 	wram_bank $06 ; $44cc
 	ld a, [$d08e] ; $44d2
 	ld c, a ; $44d5
@@ -544,7 +544,7 @@ Func_1c_44cc:
 	xor a, a ; $44ff
 	ld [de], a ; $4500
 	ret ; $4501
-Func_1c_4502:
+CharDataScreen_DrawStatBar:
 	ld b, a ; $4502
 	ld a, c ; $4503
 	or a, a ; $4504
@@ -649,7 +649,7 @@ Label_1c_4521:
 	dw $653a ; record 30
 	dw $653f ; record 31
 	dw $6544 ; record 32
-Func_1c_459a:
+CharDataScreen_DrawPortrait:
 	push af ; $459a
 	ld hl, wStoryModeNameOfMainCharacter ; $459b
 	ld a, [$cb00] ; $459e
@@ -777,7 +777,7 @@ Label_1c_4675:
 	pop bc ; $467f
 	pop af ; $4680
 	ret ; $4681
-Func_1c_4682:
+AnimateCharDataStatsReveal:
 	sound $0d ; $4682
 	call BackupCharDataScreenRow ; $4684
 	wram_bank $06 ; $4687
@@ -789,189 +789,189 @@ Label_1c_468d:
 	call RestoreCharDataScreenRow ; $4696
 	ld hl, $57b6 ; $4699
 	ld bc, $d240 ; $469c
-	call Func_1c_490f ; $469f
+	call BlitTilemapRunsFromTable ; $469f
 	ld hl, $58cb ; $46a2
 	ld bc, $d310 ; $46a5
-	call Func_1c_490f ; $46a8
+	call BlitTilemapRunsFromTable ; $46a8
 	wram_bank $06 ; $46ab
 	ld a, $09 ; $46b1
 	ld [$d026], a ; $46b3
-	call Func_1c_495d ; $46b6
+	call FlushCharDataTilemaps ; $46b6
 	call RestoreCharDataScreenRow ; $46b9
 	ld hl, $571b ; $46bc
 	ld bc, $d240 ; $46bf
-	call Func_1c_490f ; $46c2
+	call BlitTilemapRunsFromTable ; $46c2
 	ld hl, $57a9 ; $46c5
 	ld bc, $d280 ; $46c8
-	call Func_1c_490f ; $46cb
+	call BlitTilemapRunsFromTable ; $46cb
 	ld hl, $581c ; $46ce
 	ld bc, $d2d0 ; $46d1
-	call Func_1c_490f ; $46d4
+	call BlitTilemapRunsFromTable ; $46d4
 	ld hl, $58be ; $46d7
 	ld bc, $d310 ; $46da
-	call Func_1c_490f ; $46dd
+	call BlitTilemapRunsFromTable ; $46dd
 	wram_bank $06 ; $46e0
 	ld a, $07 ; $46e6
 	ld [$d026], a ; $46e8
-	call Func_1c_495d ; $46eb
+	call FlushCharDataTilemaps ; $46eb
 	call RestoreCharDataScreenRow ; $46ee
 	ld hl, $570e ; $46f1
 	ld bc, $d240 ; $46f4
-	call Func_1c_490f ; $46f7
+	call BlitTilemapRunsFromTable ; $46f7
 	ld hl, $5794 ; $46fa
 	ld bc, $d280 ; $46fd
-	call Func_1c_490f ; $4700
+	call BlitTilemapRunsFromTable ; $4700
 	ld hl, $580f ; $4703
 	ld bc, $d2d0 ; $4706
-	call Func_1c_490f ; $4709
+	call BlitTilemapRunsFromTable ; $4709
 	ld hl, $58a9 ; $470c
 	ld bc, $d310 ; $470f
-	call Func_1c_490f ; $4712
+	call BlitTilemapRunsFromTable ; $4712
 	wram_bank $06 ; $4715
 	ld a, $05 ; $471b
 	ld [$d026], a ; $471d
-	call Func_1c_495d ; $4720
+	call FlushCharDataTilemaps ; $4720
 	call RestoreCharDataScreenRow ; $4723
 	ld hl, $56f9 ; $4726
 	ld bc, $d240 ; $4729
-	call Func_1c_490f ; $472c
+	call BlitTilemapRunsFromTable ; $472c
 	ld hl, $5777 ; $472f
 	ld bc, $d280 ; $4732
-	call Func_1c_490f ; $4735
+	call BlitTilemapRunsFromTable ; $4735
 	ld hl, $57fa ; $4738
 	ld bc, $d2d0 ; $473b
-	call Func_1c_490f ; $473e
+	call BlitTilemapRunsFromTable ; $473e
 	ld hl, $588c ; $4741
 	ld bc, $d310 ; $4744
-	call Func_1c_490f ; $4747
+	call BlitTilemapRunsFromTable ; $4747
 	wram_bank $06 ; $474a
 	ld a, $03 ; $4750
 	ld [$d026], a ; $4752
-	call Func_1c_495d ; $4755
+	call FlushCharDataTilemaps ; $4755
 	call RestoreCharDataScreenRow ; $4758
 	ld hl, $56e4 ; $475b
 	ld bc, $d240 ; $475e
-	call Func_1c_490f ; $4761
+	call BlitTilemapRunsFromTable ; $4761
 	ld hl, $575a ; $4764
 	ld bc, $d280 ; $4767
-	call Func_1c_490f ; $476a
+	call BlitTilemapRunsFromTable ; $476a
 	ld hl, $57e5 ; $476d
 	ld bc, $d2d0 ; $4770
-	call Func_1c_490f ; $4773
+	call BlitTilemapRunsFromTable ; $4773
 	ld hl, $586b ; $4776
 	ld bc, $d310 ; $4779
-	call Func_1c_490f ; $477c
+	call BlitTilemapRunsFromTable ; $477c
 	wram_bank $06 ; $477f
 	ld a, $02 ; $4785
 	ld [$d026], a ; $4787
-	call Func_1c_495d ; $478a
+	call FlushCharDataTilemaps ; $478a
 	call RestoreCharDataScreenRow ; $478d
 	ld hl, $56cf ; $4790
 	ld bc, $d240 ; $4793
-	call Func_1c_490f ; $4796
+	call BlitTilemapRunsFromTable ; $4796
 	ld hl, $573d ; $4799
 	ld bc, $d280 ; $479c
-	call Func_1c_490f ; $479f
+	call BlitTilemapRunsFromTable ; $479f
 	ld hl, $57d0 ; $47a2
 	ld bc, $d2d0 ; $47a5
-	call Func_1c_490f ; $47a8
+	call BlitTilemapRunsFromTable ; $47a8
 	ld hl, $5846 ; $47ab
 	ld bc, $d310 ; $47ae
-	call Func_1c_490f ; $47b1
+	call BlitTilemapRunsFromTable ; $47b1
 	wram_bank $06 ; $47b4
 	ld a, $01 ; $47ba
 	ld [$d026], a ; $47bc
-	call Func_1c_495d ; $47bf
+	call FlushCharDataTilemaps ; $47bf
 	call RestoreCharDataScreenRow ; $47c2
 	ld hl, $56b9 ; $47c5
 	ld bc, $d240 ; $47c8
-	call Func_1c_490f ; $47cb
+	call BlitTilemapRunsFromTable ; $47cb
 	ld hl, $5720 ; $47ce
 	ld bc, $d280 ; $47d1
-	call Func_1c_490f ; $47d4
+	call BlitTilemapRunsFromTable ; $47d4
 	ld hl, $57bb ; $47d7
 	ld bc, $d2d0 ; $47da
-	call Func_1c_490f ; $47dd
+	call BlitTilemapRunsFromTable ; $47dd
 	ld hl, $5821 ; $47e0
 	ld bc, $d310 ; $47e3
-	call Func_1c_490f ; $47e6
+	call BlitTilemapRunsFromTable ; $47e6
 	wram_bank $06 ; $47e9
 	ld hl, $d142 ; $47ef
 	dec [hl] ; $47f2
 	xor a, a ; $47f3
 	ld [$d026], a ; $47f4
-	call Func_1c_495d ; $47f7
+	call FlushCharDataTilemaps ; $47f7
 	call WaitFramesCmd ; $47fa
 	db $06 ; $47fd inline arg
 	ld hl, $58ea ; $47fe
 	ld bc, $d370 ; $4801
-	call Func_1c_490f ; $4804
-	call Func_1c_495d ; $4807
+	call BlitTilemapRunsFromTable ; $4804
+	call FlushCharDataTilemaps ; $4807
 	ld hl, $58dd ; $480a
 	ld bc, $d370 ; $480d
-	call Func_1c_490f ; $4810
-	call Func_1c_495d ; $4813
+	call BlitTilemapRunsFromTable ; $4810
+	call FlushCharDataTilemaps ; $4813
 	ld hl, $58d0 ; $4816
 	ld bc, $d370 ; $4819
-	call Func_1c_490f ; $481c
-	call Func_1c_495d ; $481f
+	call BlitTilemapRunsFromTable ; $481c
+	call FlushCharDataTilemaps ; $481f
 	ld hl, $590d ; $4822
 	ld bc, $d3a0 ; $4825
-	call Func_1c_490f ; $4828
+	call BlitTilemapRunsFromTable ; $4828
 	ld hl, $5928 ; $482b
 	ld bc, $d380 ; $482e
-	call Func_1c_490f ; $4831
+	call BlitTilemapRunsFromTable ; $4831
 	wram_bank $06 ; $4834
 	ld a, $02 ; $483a
 	ld [$d027], a ; $483c
-	call Func_1c_495d ; $483f
+	call FlushCharDataTilemaps ; $483f
 	ld hl, $5904 ; $4842
 	ld bc, $d3a0 ; $4845
-	call Func_1c_490f ; $4848
+	call BlitTilemapRunsFromTable ; $4848
 	ld hl, $591f ; $484b
 	ld bc, $d380 ; $484e
-	call Func_1c_490f ; $4851
+	call BlitTilemapRunsFromTable ; $4851
 	wram_bank $06 ; $4854
 	ld a, $01 ; $485a
 	ld [$d027], a ; $485c
-	call Func_1c_495d ; $485f
+	call FlushCharDataTilemaps ; $485f
 	ld hl, $58f7 ; $4862
 	ld bc, $d3a0 ; $4865
-	call Func_1c_490f ; $4868
+	call BlitTilemapRunsFromTable ; $4868
 	ld hl, $5912 ; $486b
 	ld bc, $d380 ; $486e
-	call Func_1c_490f ; $4871
+	call BlitTilemapRunsFromTable ; $4871
 	wram_bank $06 ; $4874
 	xor a, a ; $487a
 	ld [$d027], a ; $487b
-	call Func_1c_495d ; $487e
+	call FlushCharDataTilemaps ; $487e
 	ret ; $4881
-Func_1c_4882:
-	call Func_1c_489b ; $4882
+DrawCharStatsAndFlush:
+	call DrawCharStatRows ; $4882
 	ld hl, $58f7 ; $4885
 	ld bc, $d3a0 ; $4888
-	call Func_1c_490f ; $488b
+	call BlitTilemapRunsFromTable ; $488b
 	ld hl, $5912 ; $488e
 	ld bc, $d380 ; $4891
-	call Func_1c_490f ; $4894
-	call Func_1c_495d ; $4897
+	call BlitTilemapRunsFromTable ; $4894
+	call FlushCharDataTilemaps ; $4897
 	ret ; $489a
-Func_1c_489b:
+DrawCharStatRows:
 	ld hl, $56b9 ; $489b
 	ld bc, $d240 ; $489e
-	call Func_1c_490f ; $48a1
+	call BlitTilemapRunsFromTable ; $48a1
 	ld hl, $5720 ; $48a4
 	ld bc, $d280 ; $48a7
-	call Func_1c_490f ; $48aa
+	call BlitTilemapRunsFromTable ; $48aa
 	ld hl, $57bb ; $48ad
 	ld bc, $d2d0 ; $48b0
-	call Func_1c_490f ; $48b3
+	call BlitTilemapRunsFromTable ; $48b3
 	ld hl, $5821 ; $48b6
 	ld bc, $d310 ; $48b9
-	call Func_1c_490f ; $48bc
+	call BlitTilemapRunsFromTable ; $48bc
 	ld hl, $58d0 ; $48bf
 	ld bc, $d370 ; $48c2
-	call Func_1c_490f ; $48c5
+	call BlitTilemapRunsFromTable ; $48c5
 	ret ; $48c8
 BackupCharDataScreenRow:
 	wram_bank $03 ; $48c9
@@ -997,7 +997,7 @@ RestoreCharDataScreenRow:
 	ld c, $24 ; $4909
 	call CopyMemoryFast ; $490b
 	ret ; $490e
-Func_1c_490f:
+BlitTilemapRunsFromTable:
 	ld a, [hl] ; $490f
 	cp a, $ff ; $4910
 	ret z ; $4912
@@ -1050,13 +1050,13 @@ Label_1c_4941:
 	inc hl ; $4958
 	inc hl ; $4959
 	inc hl ; $495a
-	jr Func_1c_490f ; $495b
-Func_1c_495d:
-	call Func_1c_4967 ; $495d
-	call Func_1c_4967 ; $4960
-	call Func_1c_4967 ; $4963
+	jr BlitTilemapRunsFromTable ; $495b
+FlushCharDataTilemaps:
+	call FlushCharDataTilemapChunk ; $495d
+	call FlushCharDataTilemapChunk ; $4960
+	call FlushCharDataTilemapChunk ; $4963
 	ret ; $4966
-Func_1c_4967:
+FlushCharDataTilemapChunk:
 	wram_bank $06 ; $4967
 	ld a, [$d002] ; $496d
 	inc a ; $4970
@@ -1104,7 +1104,7 @@ Label_1c_49c5:
 	call QueueVRAMCopy ; $49e4
 	call AdvanceFrame ; $49e7
 	ret ; $49ea
-Func_1c_49eb:
+WriteCharStatsToDisplayBuffer:
 	wram_bank $06 ; $49eb
 	ld a, [$d003] ; $49f1
 	ld [$d009], a ; $49f4
@@ -1203,7 +1203,7 @@ Label_1c_4a86:
 	ld a, [$cb00] ; $4a8d
 	farcall RefreshPlayerStatsAndGetPtr ; $4a90
 	ret ; $4a93
-Func_1c_4a94:
+LoadCharStatsWithLevelUpDeltas:
 	wram_bank $06 ; $4a94
 	ld a, [$d0b6] ; $4a9a
 	or a, a ; $4a9d
@@ -1482,7 +1482,7 @@ Label_1c_4c33:
 	ld [hl+], a ; $4c40
 	ld [hl+], a ; $4c41
 	ret ; $4c42
-Func_1c_4c43:
+LoadCharStats:
 	wram_bank $06 ; $4c43
 	push af ; $4c49
 	ld hl, wStoryModeNameOfMainCharacter ; $4c4a
@@ -1816,7 +1816,7 @@ Label_1c_4e32:
 	db $96, $65, $22, $66 ; 0x14
 	db $ba, $66, $4d, $67 ; 0x18
 	db $a7, $67 ; 0x1c
-Func_1c_4e54:
+DrawStatValueSprites:
 	wram_bank $06 ; $4e54
 	ld b, $0e ; $4e5a
 	ld a, [$d00a] ; $4e5c
@@ -1846,7 +1846,7 @@ Label_1c_4e6f:
 	ld c, a ; $4e87
 	ld de, $051c ; $4e88
 	xor a, a ; $4e8b
-	call Func_1c_4fce ; $4e8c
+	call GetStatDigitSpritePos ; $4e8c
 	call QueueSprite ; $4e8f
 	pop bc ; $4e92
 	ld a, [$d08f] ; $4e93
@@ -1855,7 +1855,7 @@ Label_1c_4e6f:
 	ld c, a ; $4e99
 	ld de, $0c1c ; $4e9a
 	xor a, a ; $4e9d
-	call Func_1c_4fce ; $4e9e
+	call GetStatDigitSpritePos ; $4e9e
 	call QueueSprite ; $4ea1
 	jr Label_1c_4eb3 ; $4ea4
 Label_1c_4ea6:
@@ -1864,7 +1864,7 @@ Label_1c_4ea6:
 	ld c, a ; $4ea8
 	ld de, $091c ; $4ea9
 	xor a, a ; $4eac
-	call Func_1c_4fce ; $4ead
+	call GetStatDigitSpritePos ; $4ead
 	call QueueSprite ; $4eb0
 Label_1c_4eb3:
 	ld b, $0e ; $4eb3
@@ -1895,7 +1895,7 @@ Label_1c_4ec9:
 	ld c, a ; $4ee1
 	ld de, $0544 ; $4ee2
 	ld a, $01 ; $4ee5
-	call Func_1c_4fce ; $4ee7
+	call GetStatDigitSpritePos ; $4ee7
 	call QueueSprite ; $4eea
 	pop bc ; $4eed
 	ld a, [$d08f] ; $4eee
@@ -1904,7 +1904,7 @@ Label_1c_4ec9:
 	ld c, a ; $4ef4
 	ld de, $0c44 ; $4ef5
 	ld a, $01 ; $4ef8
-	call Func_1c_4fce ; $4efa
+	call GetStatDigitSpritePos ; $4efa
 	call QueueSprite ; $4efd
 	jr Label_1c_4f10 ; $4f00
 Label_1c_4f02:
@@ -1913,7 +1913,7 @@ Label_1c_4f02:
 	ld c, a ; $4f04
 	ld de, $0944 ; $4f05
 	ld a, $01 ; $4f08
-	call Func_1c_4fce ; $4f0a
+	call GetStatDigitSpritePos ; $4f0a
 	call QueueSprite ; $4f0d
 Label_1c_4f10:
 	ld b, $0e ; $4f10
@@ -1944,7 +1944,7 @@ Label_1c_4f26:
 	ld c, a ; $4f3e
 	ld de, $551c ; $4f3f
 	ld a, $02 ; $4f42
-	call Func_1c_4fce ; $4f44
+	call GetStatDigitSpritePos ; $4f44
 	call QueueSprite ; $4f47
 	pop bc ; $4f4a
 	ld a, [$d08f] ; $4f4b
@@ -1953,7 +1953,7 @@ Label_1c_4f26:
 	ld c, a ; $4f51
 	ld de, $5c1c ; $4f52
 	ld a, $02 ; $4f55
-	call Func_1c_4fce ; $4f57
+	call GetStatDigitSpritePos ; $4f57
 	call QueueSprite ; $4f5a
 	jr Label_1c_4f6d ; $4f5d
 Label_1c_4f5f:
@@ -1962,7 +1962,7 @@ Label_1c_4f5f:
 	ld c, a ; $4f61
 	ld de, $591c ; $4f62
 	ld a, $02 ; $4f65
-	call Func_1c_4fce ; $4f67
+	call GetStatDigitSpritePos ; $4f67
 	call QueueSprite ; $4f6a
 Label_1c_4f6d:
 	ld b, $0e ; $4f6d
@@ -1993,7 +1993,7 @@ Label_1c_4f83:
 	ld c, a ; $4f9b
 	ld de, $5544 ; $4f9c
 	ld a, $03 ; $4f9f
-	call Func_1c_4fce ; $4fa1
+	call GetStatDigitSpritePos ; $4fa1
 	call QueueSprite ; $4fa4
 	pop bc ; $4fa7
 	ld a, [$d08f] ; $4fa8
@@ -2002,7 +2002,7 @@ Label_1c_4f83:
 	ld c, a ; $4fae
 	ld de, $5c44 ; $4faf
 	ld a, $03 ; $4fb2
-	call Func_1c_4fce ; $4fb4
+	call GetStatDigitSpritePos ; $4fb4
 	call QueueSprite ; $4fb7
 	jr Label_1c_4fca ; $4fba
 Label_1c_4fbc:
@@ -2011,12 +2011,12 @@ Label_1c_4fbc:
 	ld c, a ; $4fbe
 	ld de, $5944 ; $4fbf
 	ld a, $03 ; $4fc2
-	call Func_1c_4fce ; $4fc4
+	call GetStatDigitSpritePos ; $4fc4
 	call QueueSprite ; $4fc7
 Label_1c_4fca:
 	farcall Func_1a_7be5 ; $4fca
 	ret ; $4fcd
-Func_1c_4fce:
+GetStatDigitSpritePos:
 	rlca ; $4fce
 	add a, $e9 ; $4fcf
 	ld l, a ; $4fd1
@@ -2041,7 +2041,7 @@ Label_1c_4fe2:
 	ld e, a ; $4fe7
 	ret ; $4fe8
 	INCBIN "data/bank_01c/d_4fe9.bin" ; $4fe9, 96 bytes
-Func_1c_5049:
+DrawRemainingPointsSprite:
 	wram_bank $06 ; $5049
 	ld a, [$d009] ; $504f
 	cp a, $0a ; $5052
@@ -2056,7 +2056,7 @@ Func_1c_5049:
 	rlca ; $5066
 	ld c, a ; $5067
 	ld de, $147f ; $5068
-	call Func_1c_5094 ; $506b
+	call OffsetStatSpriteX ; $506b
 	ld b, $0f ; $506e
 	call QueueSprite ; $5070
 	ld a, [$d08f] ; $5073
@@ -2064,7 +2064,7 @@ Func_1c_5049:
 	rlca ; $5078
 	ld c, a ; $5079
 	ld de, $1b7f ; $507a
-	call Func_1c_5094 ; $507d
+	call OffsetStatSpriteX ; $507d
 	ld b, $0f ; $5080
 	call QueueSprite ; $5082
 	ret ; $5085
@@ -2072,11 +2072,11 @@ Label_1c_5086:
 	rlca ; $5086
 	ld c, a ; $5087
 	ld de, $187f ; $5088
-	call Func_1c_5094 ; $508b
+	call OffsetStatSpriteX ; $508b
 	ld b, $0f ; $508e
 	call QueueSprite ; $5090
 	ret ; $5093
-Func_1c_5094:
+OffsetStatSpriteX:
 	ld a, [$d027] ; $5094
 	rlca ; $5097
 	rlca ; $5098
@@ -2084,7 +2084,7 @@ Func_1c_5094:
 	add a, e ; $509a
 	ld e, a ; $509b
 	ret ; $509c
-Func_1c_509d:
+CharDataScreen_InputLoop:
 	wram_bank $06 ; $509d
 	ld a, [$d0b6] ; $50a3
 	or a, a ; $50a6
@@ -2112,48 +2112,48 @@ Label_1c_50bd:
 	jr nz, Label_1c_50e0 ; $50d0
 	bit 6, a ; $50d2
 	jr nz, Label_1c_50d8 ; $50d4
-	jr Func_1c_509d ; $50d6
+	jr CharDataScreen_InputLoop ; $50d6
 Label_1c_50d8:
 	ld hl, $5665 ; $50d8
-	call Func_1c_53c3 ; $50db
-	jr Func_1c_509d ; $50de
+	call MoveCharDataScreenSelection ; $50db
+	jr CharDataScreen_InputLoop ; $50de
 Label_1c_50e0:
 	ld hl, $566a ; $50e0
-	call Func_1c_53c3 ; $50e3
-	jr Func_1c_509d ; $50e6
+	call MoveCharDataScreenSelection ; $50e3
+	jr CharDataScreen_InputLoop ; $50e6
 Label_1c_50e8:
 	ld hl, $566f ; $50e8
-	call Func_1c_53c3 ; $50eb
-	jr Func_1c_509d ; $50ee
+	call MoveCharDataScreenSelection ; $50eb
+	jr CharDataScreen_InputLoop ; $50ee
 Label_1c_50f0:
 	ld hl, $5674 ; $50f0
-	call Func_1c_53c3 ; $50f3
-	jp Func_1c_509d ; $50f6
+	call MoveCharDataScreenSelection ; $50f3
+	jp CharDataScreen_InputLoop ; $50f6
 Label_1c_50f9:
 	wram_bank $06 ; $50f9
 	ld a, [$d024] ; $50ff
 	cp a, $04 ; $5102
 	jr nz, Label_1c_5110 ; $5104
-	call Func_1c_5404 ; $5106
+	call ApplyCharStatLevelUp ; $5106
 	or a, a ; $5109
-	jp nz, Func_1c_509d ; $510a
+	jp nz, CharDataScreen_InputLoop ; $510a
 	ld a, $01 ; $510d
 	ret ; $510f
 Label_1c_5110:
 	ld a, $04 ; $5110
 	ld [$d024], a ; $5112
 	call RestoreCharDataScreenRow ; $5115
-	call Func_1c_4c43 ; $5118
+	call LoadCharStats ; $5118
 	call CharDataScreen_DrawStats ; $511b
-	call Func_1c_4882 ; $511e
+	call DrawCharStatsAndFlush ; $511e
 	call Func_1c_4dd6 ; $5121
-	call Func_1c_495d ; $5124
-	jp nz, Func_1c_509d ; $5127
+	call FlushCharDataTilemaps ; $5124
+	jp nz, CharDataScreen_InputLoop ; $5127
 Label_1c_512a:
 	wram_bank $06 ; $512a
 	ld a, [$d024] ; $5130
 	cp a, $04 ; $5133
-	jp z, Func_1c_509d ; $5135
+	jp z, CharDataScreen_InputLoop ; $5135
 	sound $5f ; $5138
 	ld d, a ; $513a
 	ld a, [$cb00] ; $513b
@@ -2200,94 +2200,94 @@ Label_1c_5180:
 	jr z, Label_1c_51a3 ; $518c
 Label_1c_518e:
 	call RestoreCharDataScreenRow ; $518e
-	call Func_1c_4c43 ; $5191
+	call LoadCharStats ; $5191
 	call CharDataScreen_DrawStats ; $5194
-	call Func_1c_4882 ; $5197
+	call DrawCharStatsAndFlush ; $5197
 	call Func_1c_4dd6 ; $519a
-	call Func_1c_495d ; $519d
-	jp Func_1c_509d ; $51a0
+	call FlushCharDataTilemaps ; $519d
+	jp CharDataScreen_InputLoop ; $51a0
 Label_1c_51a3:
 	wram_bank $06 ; $51a3
 	ld a, [$d0b6] ; $51a9
 	or a, a ; $51ac
 	jp nz, Label_1c_528d ; $51ad
-	ld hl, Func_1c_54f2 ; $51b0
+	ld hl, DrawStatArrowIndicators ; $51b0
 	call UnregisterFrameTask ; $51b3
-	call Func_1c_4c43 ; $51b6
+	call LoadCharStats ; $51b6
 	call CharDataScreen_DrawStats ; $51b9
 	call RestoreCharDataScreenRow ; $51bc
-	call Func_1c_489b ; $51bf
+	call DrawCharStatRows ; $51bf
 	ld hl, $5904 ; $51c2
 	ld bc, $d3a0 ; $51c5
-	call Func_1c_490f ; $51c8
+	call BlitTilemapRunsFromTable ; $51c8
 	ld hl, $591f ; $51cb
 	ld bc, $d380 ; $51ce
-	call Func_1c_490f ; $51d1
+	call BlitTilemapRunsFromTable ; $51d1
 	wram_bank $06 ; $51d4
 	ld a, $01 ; $51da
 	ld [$d027], a ; $51dc
 	ld [$d025], a ; $51df
 	ld [$d028], a ; $51e2
-	call Func_1c_495d ; $51e5
+	call FlushCharDataTilemaps ; $51e5
 	call RestoreCharDataScreenRow ; $51e8
-	call Func_1c_489b ; $51eb
+	call DrawCharStatRows ; $51eb
 	ld hl, $590d ; $51ee
 	ld bc, $d3a0 ; $51f1
-	call Func_1c_490f ; $51f4
+	call BlitTilemapRunsFromTable ; $51f4
 	ld hl, $5928 ; $51f7
 	ld bc, $d380 ; $51fa
-	call Func_1c_490f ; $51fd
+	call BlitTilemapRunsFromTable ; $51fd
 	wram_bank $06 ; $5200
 	ld a, $02 ; $5206
 	ld [$d027], a ; $5208
-	call Func_1c_495d ; $520b
+	call FlushCharDataTilemaps ; $520b
 	wram_bank $06 ; $520e
 	ld a, $03 ; $5214
 	ld [$d027], a ; $5216
-	ld hl, Func_1c_5049 ; $5219
+	ld hl, DrawRemainingPointsSprite ; $5219
 	call UnregisterFrameTask ; $521c
 	call RestoreCharDataScreenRow ; $521f
-	call Func_1c_489b ; $5222
-	call Func_1c_495d ; $5225
+	call DrawCharStatRows ; $5222
+	call FlushCharDataTilemaps ; $5225
 	call RestoreCharDataScreenRow ; $5228
-	call Func_1c_489b ; $522b
+	call DrawCharStatRows ; $522b
 	ld hl, $597b ; $522e
 	ld bc, $d410 ; $5231
-	call Func_1c_490f ; $5234
-	call Func_1c_495d ; $5237
+	call BlitTilemapRunsFromTable ; $5234
+	call FlushCharDataTilemaps ; $5237
 	call RestoreCharDataScreenRow ; $523a
-	call Func_1c_489b ; $523d
+	call DrawCharStatRows ; $523d
 	ld hl, $5943 ; $5240
 	ld bc, $d3e0 ; $5243
-	call Func_1c_490f ; $5246
+	call BlitTilemapRunsFromTable ; $5246
 	ld hl, $596a ; $5249
 	ld bc, $d410 ; $524c
-	call Func_1c_490f ; $524f
-	call Func_1c_495d ; $5252
+	call BlitTilemapRunsFromTable ; $524f
+	call FlushCharDataTilemaps ; $5252
 	call RestoreCharDataScreenRow ; $5255
-	call Func_1c_489b ; $5258
+	call DrawCharStatRows ; $5258
 	ld hl, $593a ; $525b
 	ld bc, $d3e0 ; $525e
-	call Func_1c_490f ; $5261
+	call BlitTilemapRunsFromTable ; $5261
 	ld hl, $5959 ; $5264
 	ld bc, $d410 ; $5267
-	call Func_1c_490f ; $526a
-	call Func_1c_495d ; $526d
+	call BlitTilemapRunsFromTable ; $526a
+	call FlushCharDataTilemaps ; $526d
 	call RestoreCharDataScreenRow ; $5270
-	call Func_1c_489b ; $5273
+	call DrawCharStatRows ; $5273
 	ld hl, $592d ; $5276
 	ld bc, $d3e0 ; $5279
-	call Func_1c_490f ; $527c
+	call BlitTilemapRunsFromTable ; $527c
 	ld hl, $5948 ; $527f
 	ld bc, $d410 ; $5282
-	call Func_1c_490f ; $5285
-	call Func_1c_495d ; $5288
+	call BlitTilemapRunsFromTable ; $5285
+	call FlushCharDataTilemaps ; $5288
 	jr Label_1c_5291 ; $528b
 Label_1c_528d:
 	xor a, a ; $528d
 	ld [$d0b6], a ; $528e
 Label_1c_5291:
-	call Func_1c_53a3 ; $5291
+	call DrawConfirmSelectionCursor ; $5291
 	call AdvanceFrame ; $5294
 	ldh a, [hInputRisingEdge] ; $5297
 	bit PADB_A, a ; $5299
@@ -2311,80 +2311,80 @@ Label_1c_52b1:
 	ret ; $52c0
 Label_1c_52c1:
 	sound $62 ; $52c1
-	call Func_1c_54e3 ; $52c3
+	call SelectCharDataConfirmSlot ; $52c3
 	call RestoreCharDataScreenRow ; $52c6
-	call Func_1c_4c43 ; $52c9
+	call LoadCharStats ; $52c9
 	call CharDataScreen_DrawStats ; $52cc
-	call Func_1c_489b ; $52cf
+	call DrawCharStatRows ; $52cf
 	ld hl, $593a ; $52d2
 	ld bc, $d3e0 ; $52d5
-	call Func_1c_490f ; $52d8
+	call BlitTilemapRunsFromTable ; $52d8
 	ld hl, $5959 ; $52db
 	ld bc, $d410 ; $52de
-	call Func_1c_490f ; $52e1
-	call Func_1c_495d ; $52e4
+	call BlitTilemapRunsFromTable ; $52e1
+	call FlushCharDataTilemaps ; $52e4
 	call RestoreCharDataScreenRow ; $52e7
-	call Func_1c_489b ; $52ea
+	call DrawCharStatRows ; $52ea
 	ld hl, $5943 ; $52ed
 	ld bc, $d3e0 ; $52f0
-	call Func_1c_490f ; $52f3
+	call BlitTilemapRunsFromTable ; $52f3
 	ld hl, $596a ; $52f6
 	ld bc, $d410 ; $52f9
-	call Func_1c_490f ; $52fc
-	call Func_1c_495d ; $52ff
+	call BlitTilemapRunsFromTable ; $52fc
+	call FlushCharDataTilemaps ; $52ff
 	call RestoreCharDataScreenRow ; $5302
-	call Func_1c_489b ; $5305
+	call DrawCharStatRows ; $5305
 	ld hl, $597b ; $5308
 	ld bc, $d410 ; $530b
-	call Func_1c_490f ; $530e
-	call Func_1c_495d ; $5311
+	call BlitTilemapRunsFromTable ; $530e
+	call FlushCharDataTilemaps ; $5311
 	call RestoreCharDataScreenRow ; $5314
-	call Func_1c_489b ; $5317
-	call Func_1c_495d ; $531a
+	call DrawCharStatRows ; $5317
+	call FlushCharDataTilemaps ; $531a
 	wram_bank $06 ; $531d
 	ld a, $03 ; $5323
 	ld [$d027], a ; $5325
-	call Func_1c_495d ; $5328
+	call FlushCharDataTilemaps ; $5328
 	ld a, $01 ; $532b
-	ld hl, Func_1c_5049 ; $532d
+	ld hl, DrawRemainingPointsSprite ; $532d
 	call RegisterFrameTask ; $5330
 	call RestoreCharDataScreenRow ; $5333
-	call Func_1c_489b ; $5336
+	call DrawCharStatRows ; $5336
 	ld hl, $590d ; $5339
 	ld bc, $d3a0 ; $533c
-	call Func_1c_490f ; $533f
+	call BlitTilemapRunsFromTable ; $533f
 	ld hl, $5928 ; $5342
 	ld bc, $d380 ; $5345
-	call Func_1c_490f ; $5348
+	call BlitTilemapRunsFromTable ; $5348
 	wram_bank $06 ; $534b
 	ld a, $02 ; $5351
 	ld [$d027], a ; $5353
-	call Func_1c_495d ; $5356
+	call FlushCharDataTilemaps ; $5356
 	call RestoreCharDataScreenRow ; $5359
-	call Func_1c_489b ; $535c
+	call DrawCharStatRows ; $535c
 	ld hl, $5904 ; $535f
 	ld bc, $d3a0 ; $5362
-	call Func_1c_490f ; $5365
+	call BlitTilemapRunsFromTable ; $5365
 	ld hl, $591f ; $5368
 	ld bc, $d380 ; $536b
-	call Func_1c_490f ; $536e
+	call BlitTilemapRunsFromTable ; $536e
 	wram_bank $06 ; $5371
 	ld a, $01 ; $5377
 	ld [$d027], a ; $5379
-	call Func_1c_495d ; $537c
+	call FlushCharDataTilemaps ; $537c
 	wram_bank $06 ; $537f
 	xor a, a ; $5385
 	ld [$d028], a ; $5386
 	ld [$d027], a ; $5389
 	call RestoreCharDataScreenRow ; $538c
-	call Func_1c_4882 ; $538f
+	call DrawCharStatsAndFlush ; $538f
 	call Func_1c_4dd6 ; $5392
-	call Func_1c_495d ; $5395
+	call FlushCharDataTilemaps ; $5395
 	ld a, $01 ; $5398
-	ld hl, Func_1c_54f2 ; $539a
+	ld hl, DrawStatArrowIndicators ; $539a
 	call RegisterFrameTask ; $539d
-	jp Func_1c_509d ; $53a0
-Func_1c_53a3:
+	jp CharDataScreen_InputLoop ; $53a0
+DrawConfirmSelectionCursor:
 	wram_bank $06 ; $53a3
 	ld a, [$d025] ; $53a9
 	or a, a ; $53ac
@@ -2398,7 +2398,7 @@ Label_1c_53b9:
 	ld de, $7a14 ; $53bc
 	call QueueSprite ; $53bf
 	ret ; $53c2
-Func_1c_53c3:
+MoveCharDataScreenSelection:
 	wram_bank $06 ; $53c3
 	ld a, [$d024] ; $53c9
 	add a, l ; $53cc
@@ -2414,21 +2414,21 @@ Label_1c_53d1:
 	cp a, $04 ; $53da
 	jr z, Label_1c_53f1 ; $53dc
 	call RestoreCharDataScreenRow ; $53de
-	call Func_1c_4a94 ; $53e1
+	call LoadCharStatsWithLevelUpDeltas ; $53e1
 	call CharDataScreen_DrawStats ; $53e4
-	call Func_1c_4882 ; $53e7
+	call DrawCharStatsAndFlush ; $53e7
 	call Func_1c_4dd6 ; $53ea
-	call Func_1c_495d ; $53ed
+	call FlushCharDataTilemaps ; $53ed
 	ret ; $53f0
 Label_1c_53f1:
 	call RestoreCharDataScreenRow ; $53f1
-	call Func_1c_4c43 ; $53f4
+	call LoadCharStats ; $53f4
 	call CharDataScreen_DrawStats ; $53f7
-	call Func_1c_4882 ; $53fa
+	call DrawCharStatsAndFlush ; $53fa
 	call Func_1c_4dd6 ; $53fd
-	call Func_1c_495d ; $5400
+	call FlushCharDataTilemaps ; $5400
 	ret ; $5403
-Func_1c_5404:
+ApplyCharStatLevelUp:
 	wram_bank $06 ; $5404
 	ld a, [$d029] ; $540a
 	or a, a ; $540d
@@ -2549,56 +2549,56 @@ Label_1c_54c2:
 	ld a, $04 ; $54c9
 	ld [$d024], a ; $54cb
 	call RestoreCharDataScreenRow ; $54ce
-	call Func_1c_4c43 ; $54d1
+	call LoadCharStats ; $54d1
 	call CharDataScreen_DrawStats ; $54d4
-	call Func_1c_4882 ; $54d7
+	call DrawCharStatsAndFlush ; $54d7
 	call Func_1c_4dd6 ; $54da
-	call Func_1c_495d ; $54dd
+	call FlushCharDataTilemaps ; $54dd
 	ld a, $01 ; $54e0
 	ret ; $54e2
-Func_1c_54e3:
+SelectCharDataConfirmSlot:
 	wram_bank $06 ; $54e3
 	ld a, $04 ; $54e9
 	ld [$d024], a ; $54eb
-	call Func_1c_49eb ; $54ee
+	call WriteCharStatsToDisplayBuffer ; $54ee
 	ret ; $54f1
-Func_1c_54f2:
+DrawStatArrowIndicators:
 	wram_bank $06 ; $54f2
 	ld a, [$d019] ; $54f8
 	ld de, $4c24 ; $54fb
-	call Func_1c_555c ; $54fe
+	call QueueStatChangeArrow ; $54fe
 	ld a, [$d01a] ; $5501
 	ld de, $4c34 ; $5504
-	call Func_1c_555c ; $5507
+	call QueueStatChangeArrow ; $5507
 	ld a, [$d01b] ; $550a
 	ld de, $4c4c ; $550d
-	call Func_1c_555c ; $5510
+	call QueueStatChangeArrow ; $5510
 	ld a, [$d01c] ; $5513
 	ld de, $4c5c ; $5516
-	call Func_1c_555c ; $5519
+	call QueueStatChangeArrow ; $5519
 	ld a, [$d01d] ; $551c
 	ld de, $4c6c ; $551f
-	call Func_1c_555c ; $5522
+	call QueueStatChangeArrow ; $5522
 	ld a, [$d01e] ; $5525
 	ld de, $9c24 ; $5528
-	call Func_1c_555c ; $552b
+	call QueueStatChangeArrow ; $552b
 	ld a, [$d01f] ; $552e
 	ld de, $9c34 ; $5531
-	call Func_1c_555c ; $5534
+	call QueueStatChangeArrow ; $5534
 	ld a, [$d020] ; $5537
 	ld de, $9c4c ; $553a
-	call Func_1c_555c ; $553d
+	call QueueStatChangeArrow ; $553d
 	ld a, [$d021] ; $5540
 	ld de, $9c5c ; $5543
-	call Func_1c_555c ; $5546
+	call QueueStatChangeArrow ; $5546
 	ld a, [$d022] ; $5549
 	ld de, $9c6c ; $554c
-	call Func_1c_555c ; $554f
+	call QueueStatChangeArrow ; $554f
 	ld a, [$d023] ; $5552
 	ld de, $9c7c ; $5555
-	call Func_1c_555c ; $5558
+	call QueueStatChangeArrow ; $5558
 	ret ; $555b
-Func_1c_555c:
+QueueStatChangeArrow:
 	or a, a ; $555c
 	ret z ; $555d
 	bit 7, a ; $555e
@@ -2612,24 +2612,24 @@ Label_1c_556a:
 	ld c, $d2 ; $556c
 	call QueueSprite ; $556e
 	ret ; $5571
-Func_1c_5572:
+SetupCharDataScreen:
 	sound $0d ; $5572
 	call BackupCharDataScreenRow ; $5574
 	ld hl, $56b9 ; $5577
 	ld bc, $d240 ; $557a
-	call Func_1c_490f ; $557d
+	call BlitTilemapRunsFromTable ; $557d
 	ld hl, $5720 ; $5580
 	ld bc, $d280 ; $5583
-	call Func_1c_490f ; $5586
+	call BlitTilemapRunsFromTable ; $5586
 	ld hl, $57bb ; $5589
 	ld bc, $d2d0 ; $558c
-	call Func_1c_490f ; $558f
+	call BlitTilemapRunsFromTable ; $558f
 	ld hl, $5821 ; $5592
 	ld bc, $d310 ; $5595
-	call Func_1c_490f ; $5598
+	call BlitTilemapRunsFromTable ; $5598
 	ld hl, $58d0 ; $559b
 	ld bc, $d370 ; $559e
-	call Func_1c_490f ; $55a1
+	call BlitTilemapRunsFromTable ; $55a1
 	wram_bank $06 ; $55a4
 	xor a, a ; $55aa
 	ld [$d026], a ; $55ab
@@ -2652,7 +2652,7 @@ Func_1c_5572:
 	call EnableLCD ; $55e3
 	call AdvanceFrame ; $55e6
 	ld a, $01 ; $55e9
-	ld hl, Func_1c_4e54 ; $55eb
+	ld hl, DrawStatValueSprites ; $55eb
 	call RegisterFrameTask ; $55ee
 	script_fade_in $10 ; $55f1
 	call WaitFadeEnd ; $55f6
@@ -2660,38 +2660,38 @@ Func_1c_5572:
 	ld hl, CharDataScreenAnimTask ; $55fb
 	call RegisterFrameTask ; $55fe
 	call RestoreCharDataScreenRow ; $5601
-	call Func_1c_489b ; $5604
+	call DrawCharStatRows ; $5604
 	ld hl, $597b ; $5607
 	ld bc, $d410 ; $560a
-	call Func_1c_490f ; $560d
-	call Func_1c_495d ; $5610
+	call BlitTilemapRunsFromTable ; $560d
+	call FlushCharDataTilemaps ; $5610
 	call RestoreCharDataScreenRow ; $5613
-	call Func_1c_489b ; $5616
+	call DrawCharStatRows ; $5616
 	ld hl, $5943 ; $5619
 	ld bc, $d3e0 ; $561c
-	call Func_1c_490f ; $561f
+	call BlitTilemapRunsFromTable ; $561f
 	ld hl, $596a ; $5622
 	ld bc, $d410 ; $5625
-	call Func_1c_490f ; $5628
-	call Func_1c_495d ; $562b
+	call BlitTilemapRunsFromTable ; $5628
+	call FlushCharDataTilemaps ; $562b
 	call RestoreCharDataScreenRow ; $562e
-	call Func_1c_489b ; $5631
+	call DrawCharStatRows ; $5631
 	ld hl, $593a ; $5634
 	ld bc, $d3e0 ; $5637
-	call Func_1c_490f ; $563a
+	call BlitTilemapRunsFromTable ; $563a
 	ld hl, $5959 ; $563d
 	ld bc, $d410 ; $5640
-	call Func_1c_490f ; $5643
-	call Func_1c_495d ; $5646
+	call BlitTilemapRunsFromTable ; $5643
+	call FlushCharDataTilemaps ; $5646
 	call RestoreCharDataScreenRow ; $5649
-	call Func_1c_489b ; $564c
+	call DrawCharStatRows ; $564c
 	ld hl, $592d ; $564f
 	ld bc, $d3e0 ; $5652
-	call Func_1c_490f ; $5655
+	call BlitTilemapRunsFromTable ; $5655
 	ld hl, $5948 ; $5658
 	ld bc, $d410 ; $565b
-	call Func_1c_490f ; $565e
-	call Func_1c_495d ; $5661
+	call BlitTilemapRunsFromTable ; $565e
+	call FlushCharDataTilemaps ; $5661
 	ret ; $5664
 	INCBIN "data/bank_01c/d_5665.bin" ; $5665, 2845 bytes
 	rst Rst18 ; $6182
@@ -2844,7 +2844,7 @@ CharDataScreen_LoadScreen:
 	ld bc, $0009 ; $7284
 	call CopyWram1ToWram2 ; $7287
 	ret ; $728a
-Func_1c_728b:
+LoadCharDataScreenTilemaps:
 	wram_bank $01 ; $728b
 	ld hl, $682e ; $7291
 	ld de, $d550 ; $7294
@@ -2884,7 +2884,7 @@ StopCharDataScreenAnimTask:
 	call UnregisterFrameTask ; $72f8
 	ret ; $72fb
 Func_1c_72fc:
-	call Func_1c_495d ; $72fc
+	call FlushCharDataTilemaps ; $72fc
 	ret ; $72ff
 BackupCharData:
 	wram_bank $06 ; $7300
@@ -3015,11 +3015,11 @@ Label_1c_73e6:
 	dec b ; $73f0
 	jr nz, Label_1c_73e6 ; $73f1
 	ret ; $73f3
-Func_1c_73f4:
-	call Func_1c_73fb ; $73f4
-	call Func_1c_748d ; $73f7
+LoadCharDataScreenGraphics:
+	call LoadCharDataScreenBgAndPalettes ; $73f4
+	call LoadCharDataScreenMugshots ; $73f7
 	ret ; $73fa
-Func_1c_73fb:
+LoadCharDataScreenBgAndPalettes:
 	ld hl, $7541 ; $73fb
 	ld de, $0008 ; $73fe
 	call LoadPaletteShadow ; $7401
@@ -3066,7 +3066,7 @@ Func_1c_73fb:
 	ld bc, $0240 ; $7486
 	call CopyWram1ToWram2 ; $7489
 	ret ; $748c
-Func_1c_748d:
+LoadCharDataScreenMugshots:
 	xor a, a ; $748d
 	ld [$cb00], a ; $748e
 	push af ; $7491

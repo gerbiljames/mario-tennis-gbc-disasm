@@ -372,7 +372,7 @@ Func_10_448d:
 	farcall CheckStorySlot ; $44b5
 	set_flag $03, 4 ; $44b8
 	ld c, $00 ; $44bb
-	farcall Func_1c_401a ; $44bd
+	farcall CharDataScreen_Show ; $44bd
 	clear_flag $03, 4 ; $44c0
 	ld a, $00 ; $44c3
 	ld [wCurrentStorySlot], a ; $44c5

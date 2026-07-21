@@ -3620,7 +3620,7 @@ Func_1a_70c0:
 	INCBIN "data/bank_01a/d_70d9.bin" ; $70d9, 2156 bytes
 Func_1a_7945:
 	farcall InitCharDataScreenVideo ; $7945
-	farcall Func_1c_728b ; $7948
+	farcall LoadCharDataScreenTilemaps ; $7948
 	wram_bank $01 ; $794b
 	ld hl, $7e53 ; $7951
 	ld de, $dea0 ; $7954

@@ -6050,9 +6050,9 @@ TextSubcmdHandlers_05:
 	ld [wStoryModeExitLocationRequest], a ; $6707
 	set_flag $03, 4 ; $670a
 	ld c, $00 ; $670d
-	farcall Func_1c_401a ; $670f
+	farcall CharDataScreen_Show ; $670f
 	ld c, $01 ; $6712
-	farcall Func_1c_401a ; $6714
+	farcall CharDataScreen_Show ; $6714
 	clear_flag $03, 4 ; $6717
 	farcall SaveStorySlotWithTimer ; $671a
 	pop hl ; $671d

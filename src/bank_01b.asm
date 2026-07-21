@@ -3555,7 +3555,7 @@ Label_1b_6399:
 	ld a, $01 ; $63c1
 	farcall ShowExpGainScreen ; $63c3
 	ld c, $00 ; $63c6
-	farcall Func_1c_401a ; $63c8
+	farcall CharDataScreen_Show ; $63c8
 Label_1b_63cb:
 	ld hl, $c9b2 ; $63cb
 	ld a, [hl+] ; $63ce
@@ -3575,7 +3575,7 @@ Label_1b_63cb:
 	ld a, $01 ; $63ea
 	farcall ShowExpGainScreen ; $63ec
 	ld c, $01 ; $63ef
-	farcall Func_1c_401a ; $63f1
+	farcall CharDataScreen_Show ; $63f1
 Label_1b_63f4:
 	xor a, a ; $63f4
 	ld hl, $c9b0 ; $63f5
@@ -3621,11 +3621,11 @@ Label_1b_6408:
 	pop af ; $643e
 	set_flag $03, 4 ; $643f
 	ld c, $00 ; $6442
-	farcall Func_1c_401a ; $6444
+	farcall CharDataScreen_Show ; $6444
 	clear_flag $03, 4 ; $6447
 	set_flag $03, 4 ; $644a
 	ld c, $01 ; $644d
-	farcall Func_1c_401a ; $644f
+	farcall CharDataScreen_Show ; $644f
 	clear_flag $03, 4 ; $6452
 	farcall SaveStorySlotWithTimer ; $6455
 	jr Label_1b_6408 ; $6458
