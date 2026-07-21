@@ -553,7 +553,7 @@ ScriptWaitActorMoveDone:
 	ret ; $43aa
 ScriptWaitActorJumpDone:
 	call GetActorStateAddr ; $43ab
-	farcall Func_04_5726 ; $43ae
+	farcall WaitActorJumpDone ; $43ae
 	ret ; $43b1
 ScriptSetActorPosition:
 	add sp, -4 ; $43b2
@@ -2631,7 +2631,7 @@ FindActorFacingPlayer:
 	push de ; $5228
 	push hl ; $5229
 	wram_bank $04 ; $522a
-	farcall Func_04_54d7 ; $5230
+	farcall BuildActorQueryList ; $5230
 	ld hl, $d000 ; $5233
 	ld de, $01c0 ; $5236
 	ld a, $00 ; $5239

@@ -7,9 +7,9 @@ SECTION "ROM Bank $04", ROMX[$4000], BANK[$04]
 	farptr SetActorMode ; $4008
 	farptr SpawnActorsFromList ; $400a
 	farptr UpdateCameraToActor ; $400c
-	farptr Func_04_4d2c ; $400e
+	farptr SpawnScriptedActorScene ; $400e
 	farptr ClearActorSlots ; $4010
-	farptr Func_04_4b68 ; $4012
+	farptr SetupCharSpriteFromObjectDef ; $4012
 	farptr EvalFlagCondition ; $4014
 	farptr SetActorAnimationChecked ; $4016
 	farptr SpawnMainCharacterActor ; $4018
@@ -19,12 +19,12 @@ SECTION "ROM Bank $04", ROMX[$4000], BANK[$04]
 	farptr AttachActorStepMover ; $4020
 	farptr IsTerrainBlockedAtPoint ; $4022
 	farptr FindActorAtPoint ; $4024
-	farptr Func_04_54d7 ; $4026
+	farptr BuildActorQueryList ; $4026
 	farptr WaitActorMoveDone ; $4028
-	farptr Func_04_5726 ; $402a
+	farptr WaitActorJumpDone ; $402a
 	farptr LoadActorObjectDefIfValid ; $402c
 	farptr GetObjectDefCount ; $402e
-	farptr LookupTileId_04 ; $4030
+	farptr LookupTileId ; $4030
 ClearActorSlots:
 	wram_bank $04 ; $4032
 	ld hl, $d000 ; $4038
@@ -1849,7 +1849,7 @@ Label_04_4b51:
 	pop de ; $4b65
 	pop af ; $4b66
 	ret ; $4b67
-Func_04_4b68:
+SetupCharSpriteFromObjectDef:
 	ld a, d ; $4b68
 	ld [$df21], a ; $4b69
 	add a, a ; $4b6c
@@ -1966,7 +1966,7 @@ Label_04_4c12:
 	pop hl ; $4c1a
 	pop bc ; $4c1b
 	ret ; $4c1c
-LookupTileId_04:
+LookupTileId:
 	push hl ; $4c1d
 	ld hl, TileIdLookup_04_4c29 ; $4c1e
 	add a, l ; $4c21
@@ -2152,7 +2152,7 @@ Label_04_4d21:
 	pop bc ; $4d29
 	pop af ; $4d2a
 	ret ; $4d2b
-Func_04_4d2c:
+SpawnScriptedActorScene:
 	ldh a, [hRomBank] ; $4d2c
 	ld hl, $4da5 ; $4d2e
 	call SpawnActorFromTemplate ; $4d31
@@ -3138,7 +3138,7 @@ Label_04_54c4:
 	pop bc ; $54d4
 	pop af ; $54d5
 	ret ; $54d6
-Func_04_54d7:
+BuildActorQueryList:
 	push af ; $54d7
 	push bc ; $54d8
 	push de ; $54d9
@@ -3527,7 +3527,7 @@ Label_04_56ed:
 	call QueueVRAMCopyFromBank ; $56fe
 	pop bc ; $5701
 	ret ; $5702
-Func_04_5703:
+IsActorJumping:
 	inc h ; $5703
 	dec h ; $5704
 	ret z ; $5705
@@ -3554,12 +3554,12 @@ Func_04_5703:
 	pop de ; $5723
 	pop bc ; $5724
 	ret ; $5725
-Func_04_5726:
+WaitActorJumpDone:
 	push af ; $5726
 	push bc ; $5727
 	ld c, $b4 ; $5728
 Label_04_572a:
-	call Func_04_5703 ; $572a
+	call IsActorJumping ; $572a
 	jr z, Label_04_5735 ; $572d
 	call AdvanceFrame ; $572f
 	dec c ; $5732

@@ -3450,7 +3450,7 @@ CharSpriteSetTable:
 	INCBIN "data/bank_007/d_5a50.bin" ; $5a50, 32 bytes
 SetupCharacterSprite:
 	push de ; $5a70
-	farcall Func_04_4b68 ; $5a71
+	farcall SetupCharSpriteFromObjectDef ; $5a71
 	pop de ; $5a74
 	ld a, e ; $5a75
 	ld [$df3a], a ; $5a76

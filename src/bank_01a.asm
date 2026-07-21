@@ -3469,7 +3469,7 @@ Func_1a_6f3d:
 	call Func_1a_7096 ; $6f3d
 	wram_bank $06 ; $6f40
 	ld a, [$d002] ; $6f46
-	farcall LookupTileId_04 ; $6f49
+	farcall LookupTileId ; $6f49
 	ld d, a ; $6f4c
 	wram_bank $04 ; $6f4d
 	ldh a, [hRomBank] ; $6f53
