@@ -531,7 +531,7 @@ QueueMinigameHudVRAMCopy:
 	ret ; $43b9
 ShowPointOutcomeBanner:
 	ld a, [wPointOutcome] ; $43ba
-	cp a, COURTBANNER_START ; $43bd
+	cp a, $06 ; $43bd
 	jr z, Label_0d_43de ; $43bf
 	cp a, $09 ; $43c1
 	jr z, Label_0d_43de ; $43c3
@@ -552,7 +552,7 @@ DetermineMinigamePointResult:
 	and a, a ; $43e2
 	jr nz, Label_0d_43ee ; $43e3
 	ld a, [wPointOutcome] ; $43e5
-	cp a, COURTBANNER_GAME_SET ; $43e8
+	cp a, $0b ; $43e8
 	jr z, Label_0d_43f6 ; $43ea
 	jr Label_0d_440a ; $43ec
 Label_0d_43ee:
@@ -883,7 +883,7 @@ EndMinigamePoint:
 	call IsMinigameTargetReached ; $4791
 	and a, a ; $4794
 	ret z ; $4795
-	ld a, COURTBANNER_GAME_SET ; $4796
+	ld a, $0b ; $4796
 	ld [wPointOutcome], a ; $4798
 Label_0d_479b:
 	call DetermineMinigamePointResult ; $479b
@@ -913,7 +913,7 @@ CheckMinigameStartBannerTrigger:
 	ld a, [$c4b2] ; $47d0
 	cp a, $01 ; $47d3
 	jr nz, Label_0d_47e1 ; $47d5
-	ld a, COURTBANNER_START ; $47d7
+	ld a, $06 ; $47d7
 	ld [wPointOutcome], a ; $47d9
 	ld a, $01 ; $47dc
 	ld [wPointOutcomeSide], a ; $47de
@@ -1077,7 +1077,7 @@ Label_0d_48f6:
 	jr nz, Label_0d_490c ; $4908
 	sound $75 ; $490a
 Label_0d_490c:
-	ld a, COURTBANNER_MINIGAME_START ; $490c
+	ld a, $10 ; $490c
 	farcall ShowCourtBanner ; $490e
 	ld a, $28 ; $4911
 	farcall StepMatchFrames ; $4913
@@ -1414,7 +1414,7 @@ Func_0d_4b59:
 	call IsMinigameTargetReached ; $4b65
 	and a, a ; $4b68
 	jr z, ReflectBallVelocity ; $4b69
-	ld a, COURTBANNER_GAME_SET ; $4b6b
+	ld a, $0b ; $4b6b
 	ld [wPointOutcome], a ; $4b6d
 ReflectBallVelocity:
 	ld a, $01 ; $4b70
@@ -1792,7 +1792,7 @@ Label_0d_4de5:
 	call CheckMinigameStartBannerTrigger ; $4df7
 	call CheckBallLandedOut ; $4dfa
 	ld a, [wPointOutcome] ; $4dfd
-	cp a, COURTBANNER_START ; $4e00
+	cp a, $06 ; $4e00
 	ret nz ; $4e02
 	call LookupMinigameShotResult ; $4e03
 	ld d, $00 ; $4e06
@@ -1849,7 +1849,7 @@ CheckBallLandedOut:
 	farcall IsBallInTargetZone ; $4e86
 	and a, a ; $4e89
 	ret nz ; $4e8a
-	ld a, COURTBANNER_OUT ; $4e8b
+	ld a, $05 ; $4e8b
 	ld [wPointOutcome], a ; $4e8d
 	ld a, $ff ; $4e90
 	ld [wPointOutcomeSide], a ; $4e92
@@ -2299,7 +2299,7 @@ Label_0d_5310:
 	call StartScorePopup ; $533c
 	ld b, $07 ; $533f
 	call IncrementCappedCounter ; $5341
-	ld a, COURTBANNER_START ; $5344
+	ld a, $06 ; $5344
 	ld [wPointOutcome], a ; $5346
 	ld a, $01 ; $5349
 	ld [wPointOutcomeSide], a ; $534b
@@ -2453,7 +2453,7 @@ CopyMinigameTilemapBlock:
 	call IsMinigameTargetReached ; $55ee
 	and a, a ; $55f1
 	ret z ; $55f2
-	ld a, COURTBANNER_GAME_SET ; $55f3
+	ld a, $0b ; $55f3
 	ld [wPointOutcome], a ; $55f5
 	ret ; $55f8
 	INCBIN "data/bank_00d/d_55f9.bin" ; $55f9, 4 bytes
@@ -2720,7 +2720,7 @@ ScoreBallHit:
 	call IsMinigameTargetReached ; $57e9
 	and a, a ; $57ec
 	jr z, Label_0d_57f4 ; $57ed
-	ld a, COURTBANNER_GAME_SET ; $57ef
+	ld a, $0b ; $57ef
 	ld [wPointOutcome], a ; $57f1
 Label_0d_57f4:
 	ret ; $57f4
@@ -2903,7 +2903,7 @@ ProcessTargetTileHit:
 	call IsMinigameTargetReached ; $590c
 	and a, a ; $590f
 	jr z, Label_0d_5918 ; $5910
-	ld a, COURTBANNER_GAME_SET ; $5912
+	ld a, $0b ; $5912
 	ld [wPointOutcome], a ; $5914
 	ret ; $5917
 Label_0d_5918:

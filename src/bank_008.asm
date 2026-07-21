@@ -322,7 +322,7 @@ Label_08_42d4:
 	ld a, [$c4a5] ; $42d4
 	and a, a ; $42d7
 	jr z, Label_08_42f2 ; $42d8
-	ld a, COURTBANNER_NICE ; $42da
+	ld a, $0e ; $42da
 	farcall ShowCourtBanner ; $42dc
 	ld a, [$c4d4] ; $42df
 	and a, $02 ; $42e2
@@ -471,7 +471,7 @@ ApplyBallTouchOutcome:
 	ld a, [wPointOutcome] ; $43e5
 	and a, a ; $43e8
 	jr nz, Label_08_43f5 ; $43e9
-	ld a, COURTBANNER_SET_POINT ; $43eb
+	ld a, $09 ; $43eb
 	ld [wPointOutcome], a ; $43ed
 	ld a, $01 ; $43f0
 	ld [wPointOutcomeSide], a ; $43f2
@@ -1485,7 +1485,7 @@ Label_08_4d26:
 	and a, a ; $4d33
 	jr z, Label_08_4d26 ; $4d34
 	ld a, [wPointOutcome] ; $4d36
-	cp a, COURTBANNER_SET_POINT ; $4d39
+	cp a, $09 ; $4d39
 	jr nz, Label_08_4d42 ; $4d3b
 	ld a, $28 ; $4d3d
 	call StepMatchFrames ; $4d3f
@@ -3637,18 +3637,18 @@ HandleServeFault:
 	jr nz, Label_08_5b9c ; $5b8f
 	ld a, $01 ; $5b91
 	ld [wServeFaultFlag], a ; $5b93
-	ld a, COURTBANNER_FAULT ; $5b96
+	ld a, $01 ; $5b96
 	ld [wPointOutcome], a ; $5b98
 	ret ; $5b9b
 Label_08_5b9c:
 	ld a, $00 ; $5b9c
 	ld [wServeFaultFlag], a ; $5b9e
-	ld a, COURTBANNER_DOUBLE_FAULT ; $5ba1
+	ld a, $02 ; $5ba1
 	ld [wPointOutcome], a ; $5ba3
 	ret ; $5ba6
 FlagServiceReturnAce:
 	ld a, [wPointOutcome] ; $5ba7
-	cp a, COURTBANNER_START ; $5baa
+	cp a, $06 ; $5baa
 	ret nz ; $5bac
 	ld a, [wRallyLength] ; $5bad
 	cp a, $01 ; $5bb0
@@ -3725,7 +3725,7 @@ UpdatePointStats:
 	call RecordFaultStat ; $5c2b
 	call RecordDoubleFaultStat ; $5c2e
 	ld a, [wPointOutcome] ; $5c31
-	cp a, COURTBANNER_START ; $5c34
+	cp a, $06 ; $5c34
 	ret nz ; $5c36
 	call RecordDropShotWinnerStat ; $5c37
 	call RecordLobWinnerStat ; $5c3a
@@ -3735,13 +3735,13 @@ UpdatePointStats:
 	ret ; $5c46
 RecordFaultStat:
 	ld a, [wPointOutcome] ; $5c47
-	cp a, COURTBANNER_FAULT ; $5c4a
+	cp a, $01 ; $5c4a
 	ret nz ; $5c4c
 	ld hl, wCharacter1Faults ; $5c4d
 	jp Label_08_5cb2 ; $5c50
 RecordDoubleFaultStat:
 	ld a, [wPointOutcome] ; $5c53
-	cp a, COURTBANNER_DOUBLE_FAULT ; $5c56
+	cp a, $02 ; $5c56
 	ret nz ; $5c58
 	ld hl, wCharacter1DoubleFaults ; $5c59
 	jp Label_08_5cb2 ; $5c5c
@@ -3938,7 +3938,7 @@ Label_08_5d98:
 	ret ; $5d99
 ResolvePointWinner:
 	ld a, [wPointOutcome] ; $5d9a
-	cp a, COURTBANNER_FAULT ; $5d9d
+	cp a, $01 ; $5d9d
 	jr z, Label_08_5dba ; $5d9f
 	cp a, $03 ; $5da1
 	jr z, Label_08_5dba ; $5da3
@@ -5060,7 +5060,7 @@ Label_08_663c:
 	jr z, Label_08_663c ; $664a
 Label_08_664c:
 	ld a, [wPointOutcome] ; $664c
-	cp a, COURTBANNER_SET_POINT ; $664f
+	cp a, $09 ; $664f
 	jr nz, Label_08_6658 ; $6651
 	ld a, $28 ; $6653
 	call StepMatchFrames ; $6655

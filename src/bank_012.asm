@@ -517,7 +517,7 @@ WallPracticeScoreRetryPrompt:
 	ld h, a ; $488f
 	jp nc, WallPracticeNewRecordScript ; $4890
 	ld a, [wPointOutcome] ; $4893
-	cp a, COURTBANNER_SET_POINT ; $4896
+	cp a, $09 ; $4896
 	jr nz, Label_12_48a2 ; $4898
 	script_set_text Text_35_250 ; $489a
 	jr Label_12_48b5 ; $48a0
@@ -707,7 +707,7 @@ Label_12_4ad0:
 	script_fade_in $06 ; $4ad8
 	call WaitFadeEnd ; $4add
 	ld a, [wPointOutcome] ; $4ae0
-	cp a, COURTBANNER_SET_POINT ; $4ae3
+	cp a, $09 ; $4ae3
 	jr nz, Label_12_4aef ; $4ae5
 	script_set_text Text_35_246 ; $4ae7
 	jr Label_12_4b02 ; $4aed
@@ -1065,7 +1065,7 @@ Label_12_4fa6:
 	jr Label_12_502b ; $4ff1
 Label_12_4ff3:
 	ld a, [wPointOutcome] ; $4ff3
-	cp a, COURTBANNER_SET_POINT ; $4ff6
+	cp a, $09 ; $4ff6
 	jr nz, Label_12_5002 ; $4ff8
 	script_set_text Text_35_246 ; $4ffa
 	jr Label_12_5015 ; $5000
