@@ -1,24 +1,24 @@
 SECTION "ROM Bank $38", ROMX[$4000], BANK[$38]
 
-	farptr Func_38_47c7 ; $4000
+	farptr RunCharacterSelectScreen ; $4000
 	farptr RunMatchTypeMenu ; $4002
-	farptr Func_38_7408 ; $4004
+	farptr RunLinkMatchSequence ; $4004
 	farptr RunNameEntryScreen ; $4006
 	farptr Func_38_4e65 ; $4008
-	farptr Func_38_6c8a ; $400a
+	farptr UpdateMenuCursorFromLinkInput ; $400a
 	farptr Func_38_63bd ; $400c
 	farptr RunMatchTypeMenuLink ; $400e
-	farptr Func_38_7408Alias1, Func_38_7408 ; $4010
-	farptr Func_38_407b ; $4012
-	farptr Func_38_40a5 ; $4014
-	farptr Func_38_6208 ; $4016
+	farptr RunLinkMatchSequenceAlias1, RunLinkMatchSequence ; $4010
+	farptr ApplySpriteBobOffsetX ; $4012
+	farptr ApplySpriteBobOffsetY ; $4014
+	farptr IsStarCharacter ; $4016
 DrawSelectedOptionBox:
 	push de ; $4018
 	push bc ; $4019
 	ld c, $00 ; $401a
-	call Func_38_407b ; $401c
+	call ApplySpriteBobOffsetX ; $401c
 	ld c, $00 ; $401f
-	call Func_38_40a5 ; $4021
+	call ApplySpriteBobOffsetY ; $4021
 	ld c, $00 ; $4024
 	ld b, $08 ; $4026
 	call QueueSprite ; $4028
@@ -31,9 +31,9 @@ DrawSelectedOptionBox:
 	ld d, a ; $4031
 	push de ; $4032
 	ld c, $01 ; $4033
-	call Func_38_407b ; $4035
+	call ApplySpriteBobOffsetX ; $4035
 	ld c, $00 ; $4038
-	call Func_38_40a5 ; $403a
+	call ApplySpriteBobOffsetY ; $403a
 	ld c, $00 ; $403d
 	ld b, $28 ; $403f
 	call QueueSprite ; $4041
@@ -50,9 +50,9 @@ DrawSelectedOptionBox:
 	ld d, a ; $404e
 	push de ; $404f
 	ld c, $01 ; $4050
-	call Func_38_407b ; $4052
+	call ApplySpriteBobOffsetX ; $4052
 	ld c, $01 ; $4055
-	call Func_38_40a5 ; $4057
+	call ApplySpriteBobOffsetY ; $4057
 	ld c, $00 ; $405a
 	ld b, $68 ; $405c
 	call QueueSprite ; $405e
@@ -64,15 +64,15 @@ DrawSelectedOptionBox:
 	ld e, a ; $4066
 	push de ; $4067
 	ld c, $00 ; $4068
-	call Func_38_407b ; $406a
+	call ApplySpriteBobOffsetX ; $406a
 	ld c, $01 ; $406d
-	call Func_38_40a5 ; $406f
+	call ApplySpriteBobOffsetY ; $406f
 	ld c, $00 ; $4072
 	ld b, $48 ; $4074
 	call QueueSprite ; $4076
 	pop de ; $4079
 	ret ; $407a
-Func_38_407b:
+ApplySpriteBobOffsetX:
 	ldh a, [hVBlankCounter] ; $407b
 	and a, $0f ; $407d
 	ld hl, $4095 ; $407f
@@ -96,7 +96,7 @@ Label_38_4091:
 	ld d, a ; $4093
 	ret ; $4094
 	INCBIN "data/bank_038/d_4095.bin" ; $4095, 16 bytes
-Func_38_40a5:
+ApplySpriteBobOffsetY:
 	ldh a, [hVBlankCounter] ; $40a5
 	and a, $0f ; $40a7
 	ld hl, $40bf ; $40a9
@@ -1128,7 +1128,7 @@ Label_38_47bd:
 Label_38_47c3:
 	ld [wMatchFormatSets], a ; $47c3
 	ret ; $47c6
-Func_38_47c7:
+RunCharacterSelectScreen:
 	sound $03 ; $47c7
 	wram_bank $02 ; $47c9
 	ld a, b ; $47cf
@@ -2215,7 +2215,7 @@ Label_38_52d1:
 Label_38_52df:
 	ld a, [hl] ; $52df
 	ld c, a ; $52e0
-	call Func_38_6208 ; $52e1
+	call IsStarCharacter ; $52e1
 	or a, a ; $52e4
 	jr z, Label_38_5301 ; $52e5
 	sound $5e ; $52e7
@@ -2270,7 +2270,7 @@ Label_38_533f:
 	ld [hl], b ; $533f
 	ld a, c ; $5340
 	ld c, a ; $5341
-	call Func_38_6208 ; $5342
+	call IsStarCharacter ; $5342
 	or a, a ; $5345
 	jr z, Label_38_535d ; $5346
 	ld a, [$df00] ; $5348
@@ -2472,13 +2472,13 @@ Func_38_54cc:
 	jr z, Label_38_553f ; $54da
 	ld de, $0245 ; $54dc
 	ld c, $01 ; $54df
-	call Func_38_407b ; $54e1
+	call ApplySpriteBobOffsetX ; $54e1
 	ld c, $10 ; $54e4
 	ld b, $0f ; $54e6
 	call QueueSprite ; $54e8
 	ld de, $5045 ; $54eb
 	ld c, $00 ; $54ee
-	call Func_38_407b ; $54f0
+	call ApplySpriteBobOffsetX ; $54f0
 	ld c, $12 ; $54f3
 	ld b, $0f ; $54f5
 	call QueueSprite ; $54f7
@@ -2489,7 +2489,7 @@ Func_38_54cc:
 	jr z, Label_38_5513 ; $5502
 	ld de, $2a25 ; $5504
 	ld c, $01 ; $5507
-	call Func_38_40a5 ; $5509
+	call ApplySpriteBobOffsetY ; $5509
 	ld c, $14 ; $550c
 	ld b, $0f ; $550e
 	call QueueSprite ; $5510
@@ -2512,7 +2512,7 @@ Label_38_5524:
 	jr z, Label_38_553f ; $552e
 	ld de, $2a63 ; $5530
 	ld c, $00 ; $5533
-	call Func_38_40a5 ; $5535
+	call ApplySpriteBobOffsetY ; $5535
 	ld c, $16 ; $5538
 	ld b, $0f ; $553a
 	call QueueSprite ; $553c
@@ -4455,7 +4455,7 @@ Label_38_61d6:
 	ret ; $61da
 	INCBIN "data/bank_038/d_61db.bin" ; $61db, 28 bytes
 Func_38_61f7:
-	call Func_38_6208 ; $61f7
+	call IsStarCharacter ; $61f7
 	or a, a ; $61fa
 	jr z, Label_38_6206 ; $61fb
 	ld a, [$d814] ; $61fd
@@ -4466,7 +4466,7 @@ Func_38_61f7:
 Label_38_6206:
 	xor a, a ; $6206
 	ret ; $6207
-Func_38_6208:
+IsStarCharacter:
 	ld a, c ; $6208
 	cp a, $17 ; $6209
 	jr c, Label_38_6214 ; $620b
@@ -4896,7 +4896,7 @@ Label_38_6559:
 	jp z, Label_38_6608 ; $656a
 	ld a, [$d821] ; $656d
 	ld c, a ; $6570
-	call Func_38_6208 ; $6571
+	call IsStarCharacter ; $6571
 	or a, a ; $6574
 	jr z, Label_38_659e ; $6575
 	ld a, [$d813] ; $6577
@@ -5165,7 +5165,7 @@ Label_38_673e:
 Label_38_674c:
 	ld a, [hl] ; $674c
 	ld c, a ; $674d
-	call Func_38_6208 ; $674e
+	call IsStarCharacter ; $674e
 	or a, a ; $6751
 	jr z, Label_38_676e ; $6752
 	sound $5e ; $6754
@@ -5220,7 +5220,7 @@ Label_38_67ad:
 	cp a, $ff ; $67ae
 	jr z, Label_38_67df ; $67b0
 	ld c, a ; $67b2
-	call Func_38_6208 ; $67b3
+	call IsStarCharacter ; $67b3
 	or a, a ; $67b6
 	jr z, Label_38_67ce ; $67b7
 	ld a, [$df00] ; $67b9
@@ -5963,7 +5963,7 @@ Label_38_6c88:
 	ld a, c ; $6c88
 Label_38_6c89:
 	ret ; $6c89
-Func_38_6c8a:
+UpdateMenuCursorFromLinkInput:
 	ld b, a ; $6c8a
 	ldh a, [hWramBank] ; $6c8b
 	push af ; $6c8d
@@ -6820,7 +6820,7 @@ GetActiveStoryNameBuffer:
 Label_38_7404:
 	ld bc, wStoryModeNameOfPartnerCharacter ; $7404
 	ret ; $7407
-Func_38_7408:
+RunLinkMatchSequence:
 	push bc ; $7408
 	push de ; $7409
 	push hl ; $740a

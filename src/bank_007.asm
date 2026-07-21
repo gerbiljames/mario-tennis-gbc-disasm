@@ -1901,7 +1901,7 @@ SerialEncodeCommand:
 	ld b, a ; $4c28
 	push hl ; $4c29
 	push de ; $4c2a
-	farcall Func_38_6c8a ; $4c2b
+	farcall UpdateMenuCursorFromLinkInput ; $4c2b
 	pop de ; $4c2e
 	pop hl ; $4c2f
 	ld c, b ; $4c30

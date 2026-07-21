@@ -49,7 +49,7 @@ Func_10_40b0:
 	call BeginFadeOut ; $40b5
 	call WaitFadeEnd ; $40b8
 	ld b, $00 ; $40bb
-	farcall Func_38_47c7 ; $40bd
+	farcall RunCharacterSelectScreen ; $40bd
 	ld c, $10 ; $40c0
 	call BeginFadeOut ; $40c2
 	call WaitFadeEnd ; $40c5
@@ -1524,7 +1524,7 @@ Label_10_526e:
 	ld [wCurrentStorySlot], a ; $52a2
 	farcall InitStoryModeState ; $52a5
 	farcall InitDefaultMatchSettings ; $52a8
-	farcall Func_38_7408Alias1 ; $52ab
+	farcall RunLinkMatchSequenceAlias1 ; $52ab
 	push af ; $52ae
 	call InitSerialLink ; $52af
 	pop af ; $52b2
