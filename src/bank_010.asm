@@ -69,11 +69,11 @@ Func_10_40b0:
 	ret ; $40ee
 Func_10_40ef:
 	farcall BeginCutsceneScriptMode ; $40ef
-	farcall Func_03_59c5 ; $40f2
+	farcall RunScrollingTextScreen ; $40f2
 	call WaitFramesCmd ; $40f5
 	db $3c ; $40f8 inline arg
 	call EnableLCD ; $40f9
-	farcall Func_03_5b28 ; $40fc
+	farcall SetupSceneAnimationPalettes ; $40fc
 	script_fade_in $04 ; $40ff
 	call WaitFadeEnd ; $4104
 	sound $14 ; $4107
@@ -104,7 +104,7 @@ Func_10_4137:
 	farcall EndCutsceneScriptMode ; $413d
 	ret ; $4140
 Func_10_4141:
-	farcall Func_03_5b4d ; $4141
+	farcall UpdateSceneAnimation ; $4141
 	ret ; $4144
 MatchSelectHandlerTable_10:
 	; $4145, 73 bytes (map_scripts)

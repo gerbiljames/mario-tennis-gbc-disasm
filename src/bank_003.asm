@@ -27,14 +27,14 @@ SECTION "ROM Bank $03", ROMX[$4000], BANK[$03]
 	farptr UpdateUnlockablesSaveBlock ; $4030
 	farptr ReadStarVictoryGrid ; $4032
 	farptr WriteStarVictoryGrid ; $4034
-	farptr Func_03_59c5 ; $4036
-	farptr Func_03_5b28 ; $4038
-	farptr Func_03_5b4d ; $403a
-	farptr Func_03_6ff7 ; $403c
-	farptr Func_03_751e ; $403e
-	farptr Func_03_75ab ; $4040
-	farptr Func_03_7687 ; $4042
-	farptr Func_03_7719 ; $4044
+	farptr RunScrollingTextScreen ; $4036
+	farptr SetupSceneAnimationPalettes ; $4038
+	farptr UpdateSceneAnimation ; $403a
+	farptr PlayScrollingStoryCutscene ; $403c
+	farptr ShowStoryResultScreen ; $403e
+	farptr InitGrayscalePaletteFade ; $4040
+	farptr SetupPaletteFadeMask ; $4042
+	farptr AnimatePaletteFadeToTarget ; $4044
 	farptr SetAllUnlockablesInSaveBlock ; $4046
 	farptr SaveStorySlot ; $4048
 InitSaveHeader:
@@ -2181,15 +2181,15 @@ EraseStorySlotSaveData:
 	ld a, $00 ; $4e29
 	add a, c ; $4e2b
 	ld b, a ; $4e2c
-	call Func_03_4e90 ; $4e2d
+	call ClearSaveBlock ; $4e2d
 	inc b ; $4e30
-	call Func_03_4e90 ; $4e31
+	call ClearSaveBlock ; $4e31
 	ld a, $1b ; $4e34
 	add a, c ; $4e36
 	ld b, a ; $4e37
-	call Func_03_4e90 ; $4e38
+	call ClearSaveBlock ; $4e38
 	inc b ; $4e3b
-	call Func_03_4e90 ; $4e3c
+	call ClearSaveBlock ; $4e3c
 	call MirrorSaveHeaderToBank1 ; $4e3f
 	xor a, a ; $4e42
 	ld [$0000], a ; $4e43
@@ -2237,7 +2237,7 @@ Label_03_4e8c:
 	pop de ; $4e8d
 	pop bc ; $4e8e
 	ret ; $4e8f
-Func_03_4e90:
+ClearSaveBlock:
 	ld a, h ; $4e90
 	or a, a ; $4e91
 	jr nz, Label_03_4e99 ; $4e92
@@ -3868,7 +3868,7 @@ FillMemory16:
 	dec c ; $59c1
 	jr nz, FillMemory16 ; $59c2
 	ret ; $59c4
-Func_03_59c5:
+RunScrollingTextScreen:
 	call ClearFrameTasks ; $59c5
 	farcall Func_01_50e2 ; $59c8
 	call DisableLCDSafely ; $59cb
@@ -3885,7 +3885,7 @@ Func_03_59c5:
 	ld hl, $5b20 ; $59e6
 	ld de, $0001 ; $59e9
 	call LoadPaletteShadow ; $59ec
-	call Func_03_5aa9 ; $59ef
+	call InitScrollingTextScreen ; $59ef
 	call EnableLCD ; $59f2
 	sound $2c ; $59f5
 	ld c, $08 ; $59f7
@@ -3915,7 +3915,7 @@ Label_03_59ff:
 	ld de, $d000 ; $5a2e
 	ld c, $10 ; $5a31
 	farcall FetchAndDrawDialogueText ; $5a33
-	call Func_03_5b1a ; $5a36
+	call TestTextEndMarker ; $5a36
 	and a, a ; $5a39
 	jr nz, Label_03_5a49 ; $5a3a
 	wram_bank $06 ; $5a3c
@@ -3924,7 +3924,7 @@ Label_03_59ff:
 	jr Label_03_5a73 ; $5a47
 Label_03_5a49:
 	ld de, $0090 ; $5a49
-	call Func_03_5b01 ; $5a4c
+	call GetScrollTextRowVramAddr ; $5a4c
 	push de ; $5a4f
 	wram_bank $03 ; $5a50
 	ld hl, $d000 ; $5a56
@@ -3973,7 +3973,7 @@ Label_03_5a9a:
 	call ClearFrameTasks ; $5aa2
 	farcall Func_01_50e2 ; $5aa5
 	ret ; $5aa8
-Func_03_5aa9:
+InitScrollingTextScreen:
 	wram_bank $06 ; $5aa9
 	ld hl, $d230 ; $5aaf
 	ld a, $02 ; $5ab2
@@ -4012,7 +4012,7 @@ FillMemoryBC:
 	or a, c ; $5afd
 	jr nz, FillMemoryBC ; $5afe
 	ret ; $5b00
-Func_03_5b01:
+GetScrollTextRowVramAddr:
 	ldh a, [hScrollY] ; $5b01
 	ld h, $00 ; $5b03
 	ld l, a ; $5b05
@@ -4029,12 +4029,12 @@ Func_03_5b01:
 	ld d, h ; $5b17
 	ld e, l ; $5b18
 	ret ; $5b19
-Func_03_5b1a:
+TestTextEndMarker:
 	ld a, [$d000] ; $5b1a
 	sub a, $23 ; $5b1d
 	ret ; $5b1f
 	INCBIN "data/bank_003/d_5b20.bin" ; $5b20, 8 bytes
-Func_03_5b28:
+SetupSceneAnimationPalettes:
 	ldh a, [hWramBank] ; $5b28
 	push af ; $5b2a
 	wram_bank $06 ; $5b2b
@@ -4049,16 +4049,16 @@ Func_03_5b28:
 	pop af ; $5b47
 	wram_bank ; $5b48
 	ret ; $5b4c
-Func_03_5b4d:
+UpdateSceneAnimation:
 	ldh a, [hWramBank] ; $5b4d
 	push af ; $5b4f
 	wram_bank $06 ; $5b50
-	call Func_03_5b89 ; $5b56
-	call Func_03_5d38 ; $5b59
-	call Func_03_5eec ; $5b5c
-	call Func_03_60a0 ; $5b5f
-	call Func_03_6254 ; $5b62
-	call Func_03_6408 ; $5b65
+	call LoadCutsceneAnimFrameGfx_00_08 ; $5b56
+	call LoadCutsceneAnimFrameGfx_09_11 ; $5b59
+	call LoadCutsceneAnimFrameGfx_12_1A ; $5b5c
+	call LoadCutsceneAnimFrameGfx_1B_23 ; $5b5f
+	call LoadCutsceneAnimFrameGfx_24_2C ; $5b62
+	call LoadCutsceneAnimFrameGfx_2D_35 ; $5b65
 	wram_bank $06 ; $5b68
 	ld a, [$cb60] ; $5b6e
 	and a, $03 ; $5b71
@@ -4074,7 +4074,7 @@ Label_03_5b83:
 	pop af ; $5b83
 	wram_bank ; $5b84
 	ret ; $5b88
-Func_03_5b89:
+LoadCutsceneAnimFrameGfx_00_08:
 	wram_bank $06 ; $5b89
 	ld a, [$d000] ; $5b8f
 	cp a, $00 ; $5b92
@@ -4238,7 +4238,7 @@ Label_03_5d2a:
 	ld bc, $0300 ; $5d31
 	call QueueSpriteTemplate ; $5d34
 	ret ; $5d37
-Func_03_5d38:
+LoadCutsceneAnimFrameGfx_09_11:
 	wram_bank $06 ; $5d38
 	ld a, [$d000] ; $5d3e
 	ld b, a ; $5d41
@@ -4406,7 +4406,7 @@ Label_03_5ede:
 	ld bc, $0204 ; $5ee5
 	call QueueSpriteTemplate ; $5ee8
 	ret ; $5eeb
-Func_03_5eec:
+LoadCutsceneAnimFrameGfx_12_1A:
 	wram_bank $06 ; $5eec
 	ld a, [$d000] ; $5ef2
 	ld b, a ; $5ef5
@@ -4574,7 +4574,7 @@ Label_03_6092:
 	ld bc, $0308 ; $6099
 	call QueueSpriteTemplate ; $609c
 	ret ; $609f
-Func_03_60a0:
+LoadCutsceneAnimFrameGfx_1B_23:
 	wram_bank $06 ; $60a0
 	ld a, [$d000] ; $60a6
 	ld b, a ; $60a9
@@ -4742,7 +4742,7 @@ Label_03_6246:
 	ld bc, $030c ; $624d
 	call QueueSpriteTemplate ; $6250
 	ret ; $6253
-Func_03_6254:
+LoadCutsceneAnimFrameGfx_24_2C:
 	wram_bank $06 ; $6254
 	ld a, [$d000] ; $625a
 	ld b, a ; $625d
@@ -4910,7 +4910,7 @@ Label_03_63fa:
 	ld bc, $020e ; $6401
 	call QueueSpriteTemplate ; $6404
 	ret ; $6407
-Func_03_6408:
+LoadCutsceneAnimFrameGfx_2D_35:
 	wram_bank $06 ; $6408
 	ld a, [$d000] ; $640e
 	ld b, a ; $6411
@@ -5365,7 +5365,7 @@ FillMemoryDE:
 	or a, e ; $6ff3
 	jr nz, FillMemoryDE ; $6ff4
 	ret ; $6ff6
-Func_03_6ff7:
+PlayScrollingStoryCutscene:
 	push af ; $6ff7
 	push bc ; $6ff8
 	push de ; $6ff9
@@ -5399,7 +5399,7 @@ Func_03_6ff7:
 	push af ; $703a
 	ld [$d1fe], a ; $703b
 	ld a, $01 ; $703e
-	ld hl, Func_03_72a0 ; $7040
+	ld hl, AnimateWindowSlideUpTask ; $7040
 	call RegisterFrameTask ; $7043
 Label_03_7046:
 	call AdvanceFrame ; $7046
@@ -5434,7 +5434,7 @@ Label_03_7051:
 	pop af ; $708c
 	ret ; $708d
 	INCBIN "data/bank_003/d_708e.bin" ; $708e, 530 bytes
-Func_03_72a0:
+AnimateWindowSlideUpTask:
 	ldh a, [hWramBank] ; $72a0
 	push af ; $72a2
 	wram_bank $06 ; $72a3
@@ -5483,7 +5483,7 @@ Label_03_72db:
 	ld a, b ; $72ea
 	cp a, $3f ; $72eb
 	jr nz, Label_03_7300 ; $72ed
-	ld hl, Func_03_72a0 ; $72ef
+	ld hl, AnimateWindowSlideUpTask ; $72ef
 	call UnregisterFrameTask ; $72f2
 	wram_bank $06 ; $72f5
 	ld a, $01 ; $72fb
@@ -5572,7 +5572,7 @@ Label_03_742f:
 	wram_bank $01 ; $742f
 Label_03_7435:
 	ld c, $50 ; $7435
-	call Func_03_74f2 ; $7437
+	call DrawDialogueLineToBuffer ; $7437
 	call AdvanceFrame ; $743a
 	ld a, $50 ; $743d
 	add a, e ; $743f
@@ -5693,7 +5693,7 @@ Label_03_74d1:
 	pop bc ; $74ef
 	pop af ; $74f0
 	ret ; $74f1
-Func_03_74f2:
+DrawDialogueLineToBuffer:
 	push af ; $74f2
 	push bc ; $74f3
 	push de ; $74f4
@@ -5724,7 +5724,7 @@ Label_03_7514:
 	pop bc ; $751b
 	pop af ; $751c
 	ret ; $751d
-Func_03_751e:
+ShowStoryResultScreen:
 	push af ; $751e
 	push bc ; $751f
 	push de ; $7520
@@ -5778,7 +5778,7 @@ Func_03_751e:
 	pop bc ; $75a8
 	pop af ; $75a9
 	ret ; $75aa
-Func_03_75ab:
+InitGrayscalePaletteFade:
 	ldh a, [hWramBank] ; $75ab
 	push af ; $75ad
 	wram_bank $06 ; $75ae
@@ -5789,8 +5789,8 @@ Label_03_75ba:
 	ld [hl+], a ; $75ba
 	dec b ; $75bb
 	jr nz, Label_03_75ba ; $75bc
-	call Func_03_75e9 ; $75be
-	call Func_03_7616 ; $75c1
+	call BackupMasterPalettes ; $75be
+	call DesaturateWorkingPalettes ; $75c1
 	pop af ; $75c4
 	wram_bank ; $75c5
 	ret ; $75c9
@@ -5804,12 +5804,12 @@ Label_03_75d9:
 	ld [hl+], a ; $75d9
 	dec b ; $75da
 	jr nz, Label_03_75d9 ; $75db
-	call Func_03_75e9 ; $75dd
-	call Func_03_7606 ; $75e0
+	call BackupMasterPalettes ; $75dd
+	call ClearWorkingPaletteBuffer ; $75e0
 	pop af ; $75e3
 	wram_bank ; $75e4
 	ret ; $75e8
-Func_03_75e9:
+BackupMasterPalettes:
 	ld hl, wMasterPalettes ; $75e9
 	ld de, $d140 ; $75ec
 	ld b, $80 ; $75ef
@@ -5829,7 +5829,7 @@ Label_03_75ff:
 	dec b ; $7602
 	jr nz, Label_03_75ff ; $7603
 	ret ; $7605
-Func_03_7606:
+ClearWorkingPaletteBuffer:
 	ld hl, $d0a0 ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b
@@ -5841,7 +5841,7 @@ Label_03_760e:
 	dec b ; $7612
 	jr nz, Label_03_760e ; $7613
 	ret ; $7615
-Func_03_7616:
+DesaturateWorkingPalettes:
 	ld hl, $d0a0 ; $7616
 	ld de, $d1f2 ; $7619
 	ld b, $40 ; $761c
@@ -5861,7 +5861,7 @@ Label_03_761e:
 	ld [de], a ; $762c
 	dec de ; $762d
 	dec de ; $762e
-	call Func_03_7648 ; $762f
+	call ComputeGrayscaleColor ; $762f
 	inc de ; $7632
 	inc de ; $7633
 	ld a, [de] ; $7634
@@ -5881,7 +5881,7 @@ Label_03_761e:
 	dec b ; $7644
 	jr nz, Label_03_761e ; $7645
 	ret ; $7647
-Func_03_7648:
+ComputeGrayscaleColor:
 	ld a, [de] ; $7648
 	inc de ; $7649
 	ld c, a ; $764a
@@ -5927,7 +5927,7 @@ Func_03_7648:
 Label_03_7685:
 	ld [de], a ; $7685
 	ret ; $7686
-Func_03_7687:
+SetupPaletteFadeMask:
 	ldh a, [hWramBank] ; $7687
 	push af ; $7689
 	wram_bank $06 ; $768a
@@ -6022,7 +6022,7 @@ Label_03_7713:
 	pop af ; $7713
 	wram_bank ; $7714
 	ret ; $7718
-Func_03_7719:
+AnimatePaletteFadeToTarget:
 	ldh a, [hWramBank] ; $7719
 	push af ; $771b
 	wram_bank $06 ; $771c
@@ -6043,7 +6043,7 @@ Label_03_7733:
 	ld a, [de] ; $7735
 	and a, a ; $7736
 	jr z, Label_03_773c ; $7737
-	call Func_03_7764 ; $7739
+	call StepPaletteColorsTowardTarget ; $7739
 Label_03_773c:
 	pop bc ; $773c
 	pop de ; $773d
@@ -6063,21 +6063,21 @@ Label_03_773c:
 	ld [hl], a ; $7757
 	and a, a ; $7758
 	jr nz, Label_03_7722 ; $7759
-	call Func_03_77e2 ; $775b
+	call SnapPalettesToTarget ; $775b
 	pop af ; $775e
 	wram_bank ; $775f
 	ret ; $7763
-Func_03_7764:
+StepPaletteColorsTowardTarget:
 	ld a, b ; $7764
 	ld [$d1f1], a ; $7765
 	ld hl, $d0a0 ; $7768
-	call Func_03_7829 ; $776b
+	call AdvanceToPaletteEntry ; $776b
 	ld d, h ; $776e
 	ld e, l ; $776f
 	ld hl, $d140 ; $7770
 	ld a, [$d1f1] ; $7773
 	ld b, a ; $7776
-	call Func_03_7829 ; $7777
+	call AdvanceToPaletteEntry ; $7777
 	ld b, $04 ; $777a
 Label_03_777c:
 	push bc ; $777c
@@ -6107,13 +6107,13 @@ Label_03_777c:
 	ld [hl], a ; $779c
 	ld hl, $d1f2 ; $779d
 	ld de, $d1f5 ; $77a0
-	call Func_03_77d0 ; $77a3
+	call StepColorComponentTowardTarget ; $77a3
 	ld hl, $d1f3 ; $77a6
 	ld de, $d1f6 ; $77a9
-	call Func_03_77d0 ; $77ac
+	call StepColorComponentTowardTarget ; $77ac
 	ld hl, $d1f4 ; $77af
 	ld de, $d1f7 ; $77b2
-	call Func_03_77d0 ; $77b5
+	call StepColorComponentTowardTarget ; $77b5
 	ld hl, $d1f4 ; $77b8
 	ld a, [hl-] ; $77bb
 	ld c, a ; $77bc
@@ -6133,7 +6133,7 @@ Label_03_777c:
 	dec b ; $77cc
 	jr nz, Label_03_777c ; $77cd
 	ret ; $77cf
-Func_03_77d0:
+StepColorComponentTowardTarget:
 	ld a, [de] ; $77d0
 	ld b, [hl] ; $77d1
 	sub a, b ; $77d2
@@ -6150,7 +6150,7 @@ Label_03_77dc:
 	and a, $1f ; $77de
 	ld [hl], a ; $77e0
 	ret ; $77e1
-Func_03_77e2:
+SnapPalettesToTarget:
 	ld hl, $d1e0 ; $77e2
 	ld b, $00 ; $77e5
 Label_03_77e7:
@@ -6161,12 +6161,12 @@ Label_03_77e7:
 	jr z, Label_03_7815 ; $77eb
 	ld c, b ; $77ed
 	ld hl, $d0a0 ; $77ee
-	call Func_03_7829 ; $77f1
+	call AdvanceToPaletteEntry ; $77f1
 	ld d, h ; $77f4
 	ld e, l ; $77f5
 	ld b, c ; $77f6
 	ld hl, $d140 ; $77f7
-	call Func_03_7829 ; $77fa
+	call AdvanceToPaletteEntry ; $77fa
 	ld a, [de] ; $77fd
 	ld [hl+], a ; $77fe
 	inc de ; $77ff
@@ -6204,7 +6204,7 @@ Label_03_7815:
 	ld e, $10 ; $7823
 	call LoadPalettesImmediate ; $7825
 	ret ; $7828
-Func_03_7829:
+AdvanceToPaletteEntry:
 	ld a, b ; $7829
 	and a, a ; $782a
 	ret z ; $782b
@@ -6215,5 +6215,5 @@ Func_03_7829:
 	inc h ; $7832
 Label_03_7833:
 	dec b ; $7833
-	jr Func_03_7829 ; $7834
+	jr AdvanceToPaletteEntry ; $7834
 	ds 1994, $ff ; $7836, fill

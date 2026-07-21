@@ -1340,12 +1340,12 @@ Label_18_76cf:
 	ld [$da01], a ; $76d6
 	cp a, $fa ; $76d9
 	jr nz, Label_18_76cf ; $76db
-	farcall Func_03_75ab ; $76dd
+	farcall InitGrayscalePaletteFade ; $76dd
 	ld b, $3f ; $76e0
 	ld c, $3f ; $76e2
 	ld d, $1e ; $76e4
-	farcall Func_03_7687 ; $76e6
-	farcall Func_03_7719 ; $76e9
+	farcall SetupPaletteFadeMask ; $76e6
+	farcall AnimatePaletteFadeToTarget ; $76e9
 Label_18_76ec:
 	call AdvanceFrame ; $76ec
 	ldh a, [hInputPressed] ; $76ef
@@ -1456,7 +1456,7 @@ Label_18_77e8:
 	call WaitFadeEnd ; $7801
 	call ClearFrameTasks ; $7804
 	call DisableLCDSafely ; $7807
-	farcall Func_03_59c5 ; $780a
+	farcall RunScrollingTextScreen ; $780a
 	call DisableLCDSafely ; $780d
 	call LoadScreen1ObjTiles ; $7810
 	call FillAllBgPalettes ; $7813

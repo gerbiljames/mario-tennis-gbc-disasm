@@ -5878,14 +5878,14 @@ Label_0a_6eac:
 	jr nz, Label_0a_6ee3 ; $6ec6
 	set_flag $03, 0 ; $6ec8
 	call FreezeAllActors ; $6ecb
-	farcall Func_03_75ab ; $6ece
+	farcall InitGrayscalePaletteFade ; $6ece
 	ld b, $3f ; $6ed1
 	ld c, $ff ; $6ed3
 	ld d, $1e ; $6ed5
-	farcall Func_03_7687 ; $6ed7
-	farcall Func_03_7719 ; $6eda
+	farcall SetupPaletteFadeMask ; $6ed7
+	farcall AnimatePaletteFadeToTarget ; $6eda
 	ld a, [$cb00] ; $6edd
-	farcall Func_03_6ff7 ; $6ee0
+	farcall PlayScrollingStoryCutscene ; $6ee0
 Label_0a_6ee3:
 	clear_flag $0d, 5 ; $6ee3
 	ld c, $04 ; $6ee6
@@ -5904,7 +5904,7 @@ Label_0a_6ee3:
 Label_0a_6f01:
 	jr Label_0a_6e91 ; $6f01
 Label_0a_6f03:
-	farcall Func_03_751e ; $6f03
+	farcall ShowStoryResultScreen ; $6f03
 	ld c, $08 ; $6f06
 	call BeginFadeOut ; $6f08
 	call WaitFadeEnd ; $6f0b
