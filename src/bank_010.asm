@@ -430,7 +430,7 @@ RunServiceLessonMenu:
 	cp a, $ff ; $452f
 	jp z, Label_10_421f ; $4531
 	add a, $03 ; $4534
-	ld [$c8f7], a ; $4536
+	ld [wCurrentMinigameStoryMatch + 1], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
 	ld de, wStoryModeSpawnPosition ; $453c
 	ld bc, $0005 ; $453f
@@ -452,7 +452,7 @@ RunNetLessonMenu:
 	cp a, $ff ; $4567
 	jp z, Label_10_421f ; $4569
 	add a, $09 ; $456c
-	ld [$c8f7], a ; $456e
+	ld [wCurrentMinigameStoryMatch + 1], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
 	ld de, wStoryModeSpawnPosition ; $4574
 	ld bc, $0005 ; $4577
@@ -474,7 +474,7 @@ RunStrokeLessonMenu:
 	cp a, $ff ; $459f
 	jp z, Label_10_421f ; $45a1
 	add a, $0f ; $45a4
-	ld [$c8f7], a ; $45a6
+	ld [wCurrentMinigameStoryMatch + 1], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
 	ld de, wStoryModeSpawnPosition ; $45ac
 	ld bc, $0005 ; $45af
@@ -506,8 +506,8 @@ Label_10_45cc:
 	ldh [hBGRowBlitPending], a ; $45f1
 	ldh [hScrollY], a ; $45f3
 	ldh [hScrollX], a ; $45f5
-	ld [$c321], a ; $45f7
-	ld [$c323], a ; $45fa
+	ld [wCameraX + 1], a ; $45f7
+	ld [wCameraY + 1], a ; $45fa
 	call ClearFrameTasks ; $45fd
 	ld b, $00 ; $4600
 	ld c, $01 ; $4602
@@ -518,8 +518,8 @@ Label_10_45cc:
 	ldh [hBGRowBlitPending], a ; $460c
 	ldh [hScrollY], a ; $460e
 	ldh [hScrollX], a ; $4610
-	ld [$c321], a ; $4612
-	ld [$c323], a ; $4615
+	ld [wCameraX + 1], a ; $4612
+	ld [wCameraY + 1], a ; $4615
 	call ClearFrameTasks ; $4618
 	ld b, $00 ; $461b
 	ld c, $02 ; $461d
@@ -530,8 +530,8 @@ Label_10_45cc:
 	ldh [hBGRowBlitPending], a ; $4627
 	ldh [hScrollY], a ; $4629
 	ldh [hScrollX], a ; $462b
-	ld [$c321], a ; $462d
-	ld [$c323], a ; $4630
+	ld [wCameraX + 1], a ; $462d
+	ld [wCameraY + 1], a ; $4630
 	call ClearFrameTasks ; $4633
 	ld b, $00 ; $4636
 	ld c, $03 ; $4638
@@ -1185,9 +1185,9 @@ Label_10_4f7c:
 	ldh [hScrollX], a ; $4f95
 	ldh [hScrollY], a ; $4f97
 	ld [wCameraX], a ; $4f99
-	ld [$c321], a ; $4f9c
+	ld [wCameraX + 1], a ; $4f9c
 	ld [wCameraY], a ; $4f9f
-	ld [$c323], a ; $4fa2
+	ld [wCameraY + 1], a ; $4fa2
 	ld a, $03 ; $4fa5
 	ld [$cb0c], a ; $4fa7
 	call ResumeBGM ; $4faa
@@ -1872,7 +1872,7 @@ Label_10_55fb:
 	ld [wStoryModeExitLocationRequest], a ; $5600
 	ret ; $5603
 Label_10_5604:
-	ld a, [$c8f7] ; $5604
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
 	cp a, $14 ; $5607
 	jr c, Label_10_561e ; $5609
 	ld a, $1c ; $560b

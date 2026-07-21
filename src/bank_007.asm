@@ -3161,7 +3161,7 @@ Label_07_57ec:
 	add hl, de ; $57fd
 	ld e, l ; $57fe
 	ld d, h ; $57ff
-	ld a, [$c43b] ; $5800
+	ld a, [wShotAimAngle + 1] ; $5800
 	add a, $40 ; $5803
 	bit 7, a ; $5805
 	jr z, Label_07_580f ; $5807
@@ -3207,7 +3207,7 @@ Label_07_5820:
 	pop de ; $583b
 	call MulHLByDE ; $583c
 	ld h, l ; $583f
-	ldh a, [$ffa9] ; $5840
+	ldh a, [hMulResult + 1] ; $5840
 	ld l, a ; $5842
 	ld e, l ; $5843
 	ld d, h ; $5844

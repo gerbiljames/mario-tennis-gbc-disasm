@@ -1009,9 +1009,9 @@ ResetScreenAndTextWindows:
 	ldh [hScrollX], a ; $4bf3
 	ldh [hScrollY], a ; $4bf5
 	ld [wCameraX], a ; $4bf7
-	ld [$c321], a ; $4bfa
+	ld [wCameraX + 1], a ; $4bfa
 	ld [wCameraY], a ; $4bfd
-	ld [$c323], a ; $4c00
+	ld [wCameraY + 1], a ; $4c00
 	farcall FarPtr_39_1c ; $4c03
 	farcall FarPtr_ResetTextWindowState ; $4c06
 	ld b, $11 ; $4c09

@@ -24,7 +24,7 @@ StartDrillFromDefinition:
 	ld hl, $0004 ; $4027
 	add hl, bc ; $402a
 	ld a, [hl] ; $402b
-	ld [$c8f7], a ; $402c
+	ld [wCurrentMinigameStoryMatch + 1], a ; $402c
 	ld hl, $0005 ; $402f
 	add hl, bc ; $4032
 	ld a, [hl] ; $4033
@@ -493,7 +493,7 @@ Func_0b_446e:
 	cp a, $09 ; $448f
 	ld a, $01 ; $4491
 	jr z, Label_0b_44de ; $4493
-	ld a, [$c8f7] ; $4495
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
 	cp a, $01 ; $4498
 	jr nz, Label_0b_44af ; $449a
 	ld hl, $c2f8 ; $449c
@@ -880,7 +880,7 @@ Label_0b_473f:
 	ld [$c7a8], a ; $474f
 	ld a, [wMatchRetryRequest] ; $4752
 	or a, a ; $4755
-	ld a, [$c8f7] ; $4756
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $4756
 	jp nz, RunTrainingDrillByID ; $4759
 	ld a, [wMatchExitRequest] ; $475c
 	or a, a ; $475f
@@ -1966,7 +1966,7 @@ RunDoublesDrillMatch:
 	ld a, $02 ; $7261
 	ld [wCurrentMinigameStoryMatch], a ; $7263
 	ld a, $24 ; $7266
-	ld [$c8f7], a ; $7268
+	ld [wCurrentMinigameStoryMatch + 1], a ; $7268
 	ld a, $15 ; $726b
 	ld [wMatchBGM], a ; $726d
 	ld a, $01 ; $7270

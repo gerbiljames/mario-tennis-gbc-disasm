@@ -411,7 +411,7 @@ Label_0a_4251:
 	jr Label_0a_427f ; $4253
 Label_0a_4255:
 	call GetActorStateAddr ; $4255
-	ld a, [$c323] ; $4258
+	ld a, [wCameraY + 1] ; $4258
 	ld b, a ; $425b
 	ld a, l ; $425c
 	ldh [hActorPtr], a ; $425d
@@ -1719,7 +1719,7 @@ LoadMatchSettingsFromTable:
 	ld de, DoublesMatchSettingsTable_0a ; $4a69
 Label_0a_4a6c:
 	call SetMatchDoublesMode ; $4a6c
-	ld a, [$c8f7] ; $4a6f
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a6f
 	ld l, a ; $4a72
 	ld h, $00 ; $4a73
 	add hl, hl ; $4a75
@@ -2365,7 +2365,7 @@ Label_0a_4fd6:
 	jr z, Label_0a_4ff1 ; $4fe2
 	ld a, [wStoryModeLocationNameTextId] ; $4fe4
 	ld l, a ; $4fe7
-	ld a, [$c2d7] ; $4fe8
+	ld a, [wStoryModeLocationNameTextId + 1] ; $4fe8
 	ld h, a ; $4feb
 	call ShowLocationNamePopup ; $4fec
 	jr Label_0a_4ff5 ; $4fef
@@ -2569,7 +2569,7 @@ Label_0a_5120:
 	ld a, l ; $514c
 	ld [wStoryModeLocationNameTextId], a ; $514d
 	ld a, h ; $5150
-	ld [$c2d7], a ; $5151
+	ld [wStoryModeLocationNameTextId + 1], a ; $5151
 	ld a, [wStoryModeEntryPoint] ; $5154
 	sub a, $ff ; $5157
 	ld [wStoryModeShowLocationName], a ; $5159
@@ -2630,7 +2630,7 @@ Label_0a_51a0:
 	ld bc, $0008 ; $51a6
 	call FarCopyBytes ; $51a9
 	ld a, [$c2c1] ; $51ac
-	ld [$c29a], a ; $51af
+	ld [wStoryModeSpawnPosition + 4], a ; $51af
 	ld hl, $c2c2 ; $51b2
 	ld de, wStoryModeSpawnPosition ; $51b5
 	ld bc, $0004 ; $51b8
@@ -3009,9 +3009,9 @@ InitLocationActors:
 	push hl ; $546b
 	wram_bank $04 ; $546c
 	farcall FarPtr_InitActorEngine ; $5472
-	ld hl, $c29a ; $5475
+	ld hl, wStoryModeSpawnPosition + 4 ; $5475
 	ld c, [hl] ; $5478
-	ld hl, $c298 ; $5479
+	ld hl, wStoryModeSpawnPosition + 2 ; $5479
 	ld a, [hl+] ; $547c
 	ld d, [hl] ; $547d
 	ld e, a ; $547e
@@ -3366,7 +3366,7 @@ CopySceneTilemapToVram:
 	push bc ; $575d
 	push de ; $575e
 	push hl ; $575f
-	ld a, [$c323] ; $5760
+	ld a, [wCameraY + 1] ; $5760
 	and a, $1f ; $5763
 	ld l, a ; $5765
 	ld h, $00 ; $5766
@@ -3375,14 +3375,14 @@ CopySceneTilemapToVram:
 	add hl, hl ; $576a
 	add hl, hl ; $576b
 	add hl, hl ; $576c
-	ld a, [$c321] ; $576d
+	ld a, [wCameraX + 1] ; $576d
 	and a, $1f ; $5770
 	add a, l ; $5772
 	ld l, a ; $5773
 	ld de, $9800 ; $5774
 	add hl, de ; $5777
 	push hl ; $5778
-	ld a, [$c323] ; $5779
+	ld a, [wCameraY + 1] ; $5779
 	ld l, a ; $577c
 	ld h, $00 ; $577d
 	add hl, hl ; $577f
@@ -3391,7 +3391,7 @@ CopySceneTilemapToVram:
 	add hl, hl ; $5782
 	add hl, hl ; $5783
 	add hl, hl ; $5784
-	ld a, [$c321] ; $5785
+	ld a, [wCameraX + 1] ; $5785
 	add a, l ; $5788
 	ld l, a ; $5789
 	ld de, $d000 ; $578a
@@ -3621,9 +3621,9 @@ InitSceneScroll:
 	ldh [hBGColumnBlitPending], a ; $593e
 	ldh [hBGRowBlitPending], a ; $5940
 	ld [wCameraX], a ; $5942
-	ld [$c321], a ; $5945
+	ld [wCameraX + 1], a ; $5945
 	ld [wCameraY], a ; $5948
-	ld [$c323], a ; $594b
+	ld [wCameraY + 1], a ; $594b
 	ld [$c324], a ; $594e
 	ld [$c325], a ; $5951
 	ld [$c329], a ; $5954
@@ -3646,7 +3646,7 @@ StopSceneScrollTask:
 UpdateSceneScroll:
 	ld a, [$c325] ; $5976
 	ld h, a ; $5979
-	ld a, [$c323] ; $597a
+	ld a, [wCameraY + 1] ; $597a
 	sub a, h ; $597d
 	jr z, Label_0a_5992 ; $597e
 	bit 7, a ; $5980
@@ -3660,7 +3660,7 @@ Label_0a_598c:
 Label_0a_5992:
 	ld a, [$c324] ; $5992
 	ld h, a ; $5995
-	ld a, [$c321] ; $5996
+	ld a, [wCameraX + 1] ; $5996
 	sub a, h ; $5999
 	jr z, Label_0a_59ae ; $599a
 	bit 7, a ; $599c
@@ -3674,7 +3674,7 @@ Label_0a_59a8:
 Label_0a_59ae:
 	ld a, [wCameraY] ; $59ae
 	ld l, a ; $59b1
-	ld a, [$c323] ; $59b2
+	ld a, [wCameraY + 1] ; $59b2
 	ld h, a ; $59b5
 	ld [$c325], a ; $59b6
 	add hl, hl ; $59b9
@@ -3686,7 +3686,7 @@ Label_0a_59ae:
 	ldh [hScrollY], a ; $59c1
 	ld a, [wCameraX] ; $59c3
 	ld l, a ; $59c6
-	ld a, [$c321] ; $59c7
+	ld a, [wCameraX + 1] ; $59c7
 	ld h, a ; $59ca
 	ld [$c324], a ; $59cb
 	add hl, hl ; $59ce
@@ -3743,9 +3743,9 @@ CopyScrolledSceneTilemapToVram:
 	push hl ; $5c2c
 	or a, a ; $5c2d
 	jr z, Label_0a_5c3b ; $5c2e
-	ld a, [$c321] ; $5c30
+	ld a, [wCameraX + 1] ; $5c30
 	ld h, a ; $5c33
-	ld a, [$c323] ; $5c34
+	ld a, [wCameraY + 1] ; $5c34
 	ld l, a ; $5c37
 	jp Label_0a_5c40 ; $5c38
 Label_0a_5c3b:
@@ -4473,13 +4473,13 @@ Label_0a_60b6:
 Func_0a_60c1:
 	ret ; $60c1
 UpdateSceneViewerScroll:
-	ld a, [$c321] ; $60c2
+	ld a, [wCameraX + 1] ; $60c2
 	push af ; $60c5
-	ld a, [$c323] ; $60c6
+	ld a, [wCameraY + 1] ; $60c6
 	push af ; $60c9
 	call MoveSceneViewerCamera ; $60ca
 	pop hl ; $60cd
-	ld a, [$c323] ; $60ce
+	ld a, [wCameraY + 1] ; $60ce
 	cp a, h ; $60d1
 	jr z, Label_0a_60e4 ; $60d2
 	jr c, Label_0a_60de ; $60d4
@@ -4491,7 +4491,7 @@ Label_0a_60de:
 	call BlitBGRowFrom64 ; $60e1
 Label_0a_60e4:
 	pop hl ; $60e4
-	ld a, [$c321] ; $60e5
+	ld a, [wCameraX + 1] ; $60e5
 	cp a, h ; $60e8
 	jr z, Label_0a_60fb ; $60e9
 	jr c, Label_0a_60f5 ; $60eb
@@ -4504,7 +4504,7 @@ Label_0a_60f5:
 Label_0a_60fb:
 	ld a, [wCameraY] ; $60fb
 	ld c, a ; $60fe
-	ld a, [$c323] ; $60ff
+	ld a, [wCameraY + 1] ; $60ff
 	sla c ; $6102
 	rla ; $6104
 	sla c ; $6105
@@ -4514,7 +4514,7 @@ Label_0a_60fb:
 	ldh [hScrollY], a ; $610b
 	ld a, [wCameraX] ; $610d
 	ld c, a ; $6110
-	ld a, [$c321] ; $6111
+	ld a, [wCameraX + 1] ; $6111
 	sla c ; $6114
 	rla ; $6116
 	sla c ; $6117
@@ -4537,7 +4537,7 @@ MoveSceneViewerCamera:
 	ld e, l ; $616e
 	ld a, [wCameraX] ; $616f
 	ld l, a ; $6172
-	ld a, [$c321] ; $6173
+	ld a, [wCameraX + 1] ; $6173
 	ld h, a ; $6176
 	ld a, [de] ; $6177
 	ld c, a ; $6178
@@ -4549,10 +4549,10 @@ MoveSceneViewerCamera:
 	ld a, l ; $617e
 	ld [wCameraX], a ; $617f
 	ld a, h ; $6182
-	ld [$c321], a ; $6183
+	ld [wCameraX + 1], a ; $6183
 	ld a, [wCameraY] ; $6186
 	ld l, a ; $6189
-	ld a, [$c323] ; $618a
+	ld a, [wCameraY + 1] ; $618a
 	ld h, a ; $618d
 	ld a, [de] ; $618e
 	ld c, a ; $618f
@@ -4564,7 +4564,7 @@ MoveSceneViewerCamera:
 	ld a, l ; $6195
 	ld [wCameraY], a ; $6196
 	ld a, h ; $6199
-	ld [$c323], a ; $619a
+	ld [wCameraY + 1], a ; $619a
 	ret ; $619d
 CopySceneTilemapRect:
 	push af ; $619e

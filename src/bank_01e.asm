@@ -48,9 +48,9 @@ Label_1e_4031:
 	ldh [hScrollX], a ; $404e
 	ldh [hScrollY], a ; $4050
 	ld [wCameraX], a ; $4052
-	ld [$c321], a ; $4055
+	ld [wCameraX + 1], a ; $4055
 	ld [wCameraY], a ; $4058
-	ld [$c323], a ; $405b
+	ld [wCameraY + 1], a ; $405b
 	ld a, $90 ; $405e
 	ldh [rWY], a ; $4060
 	call ClearSpriteQueue ; $4062
@@ -1462,9 +1462,9 @@ Label_1e_5438:
 	ldh [hScrollX], a ; $5452
 	ldh [hScrollY], a ; $5454
 	ld [wCameraX], a ; $5456
-	ld [$c321], a ; $5459
+	ld [wCameraX + 1], a ; $5459
 	ld [wCameraY], a ; $545c
-	ld [$c323], a ; $545f
+	ld [wCameraY + 1], a ; $545f
 	ld a, $90 ; $5462
 	ldh [rWY], a ; $5464
 	call ClearSpriteQueue ; $5466
@@ -3492,7 +3492,7 @@ Label_1e_6cec:
 Func_1e_6cf6:
 	ld a, [wCurrentMinigameStoryMatch] ; $6cf6
 	cp a, $02 ; $6cf9
-	ld a, [$c8f7] ; $6cfb
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6cfb
 	ret nz ; $6cfe
 	cp a, $1a ; $6cff
 	ret c ; $6d01
@@ -3739,7 +3739,7 @@ Label_1e_6e5b:
 	ret ; $6e62
 	INCBIN "data/bank_01e/d_6e63.bin" ; $6e63, 78 bytes
 Func_1e_6eb1:
-	ld a, [$c8f7] ; $6eb1
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
 	cp a, $1d ; $6eb4
 	jr nz, Label_1e_6ec1 ; $6eb6
 	push de ; $6eb8
@@ -3766,7 +3766,7 @@ Label_1e_6ece:
 Label_1e_6edb:
 	ret ; $6edb
 SetMinigameClearFlag:
-	ld a, [$c8f7] ; $6edc
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6edc
 	sub a, $1c ; $6edf
 	bit 7, a ; $6ee1
 	ret nz ; $6ee3
@@ -3828,7 +3828,7 @@ UpdateMinigameBestScore:
 	ld a, [wMinigameLevel] ; $6f3b
 	cp a, $02 ; $6f3e
 	jr nz, Label_1e_6f87 ; $6f40
-	ld a, [$c8f7] ; $6f42
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
 	sub a, $1c ; $6f45
 	bit 7, a ; $6f47
 	jr nz, Label_1e_6f87 ; $6f49
@@ -3862,7 +3862,7 @@ UpdateMinigameBestScore:
 	ld a, e ; $6f77
 	ld [hl+], a ; $6f78
 	ld [hl], d ; $6f79
-	ld a, [$c8f7] ; $6f7a
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f7a
 	sub a, $1c ; $6f7d
 	inc a ; $6f7f
 	inc a ; $6f80
@@ -3914,14 +3914,14 @@ Func_1e_6fbf:
 	ld b, a ; $6fc4
 	or a, a ; $6fc5
 	jr nz, Label_1e_6fd4 ; $6fc6
-	ld a, [$c8f7] ; $6fc8
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fc8
 	sub a, $13 ; $6fcb
 	add a, $04 ; $6fcd
 	and a, $07 ; $6fcf
 	ld c, a ; $6fd1
 	jr Label_1e_6fde ; $6fd2
 Label_1e_6fd4:
-	ld a, [$c8f7] ; $6fd4
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fd4
 	sub a, $13 ; $6fd7
 	add a, $03 ; $6fd9
 	and a, $03 ; $6fdb

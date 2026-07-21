@@ -330,7 +330,7 @@ Label_24_41fd:
 SetBallTargetFromAim_24:
 	ld a, [wShotAimAngle] ; $4201
 	ld c, a ; $4204
-	ld a, [$c43b] ; $4205
+	ld a, [wShotAimAngle + 1] ; $4205
 	ld b, a ; $4208
 	call MulSinCos ; $4209
 	ld c, l ; $420c

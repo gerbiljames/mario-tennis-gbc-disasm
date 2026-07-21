@@ -1770,7 +1770,7 @@ AdvanceRandomSeed:
 	push de ; $0a3b
 	ldh a, [hRandomSeed] ; $0a3c
 	ld l, a ; $0a3e
-	ldh a, [$fffd] ; $0a3f
+	ldh a, [hRandomSeed + 1] ; $0a3f
 	ld h, a ; $0a41
 	ld d, h ; $0a42
 	ld e, l ; $0a43
@@ -1782,7 +1782,7 @@ AdvanceRandomSeed:
 	ld a, l ; $0a4b
 	ldh [hRandomSeed], a ; $0a4c
 	ld a, h ; $0a4e
-	ldh [$fffd], a ; $0a4f
+	ldh [hRandomSeed + 1], a ; $0a4f
 	pop de ; $0a51
 	pop af ; $0a52
 	ret ; $0a53
@@ -2338,13 +2338,13 @@ Label_00_0d36:
 	ld a, c ; $0d3a
 	ldh [hMulResult], a ; $0d3b
 	ld a, l ; $0d3d
-	ldh [$ffa9], a ; $0d3e
+	ldh [hMulResult + 1], a ; $0d3e
 	ld a, h ; $0d40
 	ld l, h ; $0d41
-	ldh [$ffaa], a ; $0d42
+	ldh [hMulResult + 2], a ; $0d42
 	ld a, b ; $0d44
 	ld h, b ; $0d45
-	ldh [$ffab], a ; $0d46
+	ldh [hMulResult + 3], a ; $0d46
 	pop bc ; $0d48
 	pop de ; $0d49
 	ret ; $0d4a
@@ -4882,7 +4882,7 @@ SortFrameTasks:
 	ld c, $0f ; $1c3f
 Label_00_1c41:
 	ld hl, wFrameTasks ; $1c41
-	ld de, $c1c4 ; $1c44
+	ld de, wFrameTasks + 4 ; $1c44
 	ld b, c ; $1c47
 Label_00_1c48:
 	ld a, [de] ; $1c48
@@ -5533,7 +5533,7 @@ PositionSpriteWorld:
 	push bc ; $1f6f
 	ld a, [wCameraX] ; $1f70
 	ld c, a ; $1f73
-	ld a, [$c321] ; $1f74
+	ld a, [wCameraX + 1] ; $1f74
 	ld b, a ; $1f77
 	ld a, l ; $1f78
 	sub a, c ; $1f79
@@ -5591,7 +5591,7 @@ PositionSpriteWorld2:
 	push bc ; $1fb5
 	ld a, [wCameraX] ; $1fb6
 	ld c, a ; $1fb9
-	ld a, [$c321] ; $1fba
+	ld a, [wCameraX + 1] ; $1fba
 	ld b, a ; $1fbd
 	ld a, l ; $1fbe
 	sub a, c ; $1fbf
@@ -5898,7 +5898,7 @@ Label_00_2206:
 	ldh a, [hBGColumnBlitDone] ; $220b
 	ret ; $220d
 GetMapBufferAddr64:
-	ld a, [$c323] ; $220e
+	ld a, [wCameraY + 1] ; $220e
 	add a, c ; $2211
 	and a, $3f ; $2212
 	ld h, $00 ; $2214
@@ -5909,7 +5909,7 @@ GetMapBufferAddr64:
 	add hl, hl ; $221a
 	add hl, hl ; $221b
 	add hl, hl ; $221c
-	ld a, [$c321] ; $221d
+	ld a, [wCameraX + 1] ; $221d
 	add a, b ; $2220
 	and a, $3f ; $2221
 	ld d, $00 ; $2223
@@ -5919,7 +5919,7 @@ GetMapBufferAddr64:
 	add hl, de ; $222a
 	ret ; $222b
 BlitBGRowFrom64:
-	ld a, [$c323] ; $222c
+	ld a, [wCameraY + 1] ; $222c
 	add a, c ; $222f
 	and a, $1f ; $2230
 	ld h, $00 ; $2232
@@ -5934,8 +5934,8 @@ BlitBGRowFrom64:
 	ld a, l ; $223e
 	ld [wBGRowBlitDest], a ; $223f
 	ld a, h ; $2242
-	ld [$c327], a ; $2243
-	ld a, [$c321] ; $2246
+	ld [wBGRowBlitDest + 1], a ; $2243
+	ld a, [wCameraX + 1] ; $2246
 	add a, b ; $2249
 	and a, $1f ; $224a
 	ld h, $00 ; $224c
@@ -5988,13 +5988,13 @@ Label_00_228e:
 	ldh [hBGRowBlitPending], a ; $2296
 	ret ; $2298
 BlitBGColumnFrom64:
-	ld a, [$c321] ; $2299
+	ld a, [wCameraX + 1] ; $2299
 	add a, b ; $229c
 	and a, $1f ; $229d
 	ld [wBGColumnBlitX], a ; $229f
 	ld d, $00 ; $22a2
 	ld e, a ; $22a4
-	ld a, [$c323] ; $22a5
+	ld a, [wCameraY + 1] ; $22a5
 	add a, c ; $22a8
 	and a, $1f ; $22a9
 	ld h, $00 ; $22ab
@@ -6043,7 +6043,7 @@ Label_00_22df:
 	ldh [hBGColumnBlitPending], a ; $22f3
 	ret ; $22f5
 GetScrollBufferAddr:
-	ld a, [$c323] ; $22f6
+	ld a, [wCameraY + 1] ; $22f6
 	add a, c ; $22f9
 	and a, $7f ; $22fa
 	ld h, $00 ; $22fc
@@ -6053,7 +6053,7 @@ GetScrollBufferAddr:
 	add hl, hl ; $2301
 	add hl, hl ; $2302
 	add hl, hl ; $2303
-	ld a, [$c321] ; $2304
+	ld a, [wCameraX + 1] ; $2304
 	add a, b ; $2307
 	and a, $1f ; $2308
 	ld d, $00 ; $230a
@@ -6063,7 +6063,7 @@ GetScrollBufferAddr:
 	add hl, de ; $2311
 	ret ; $2312
 BlitBGStrip:
-	ld a, [$c323] ; $2313
+	ld a, [wCameraY + 1] ; $2313
 	add a, c ; $2316
 	and a, $1f ; $2317
 	ld h, $00 ; $2319
@@ -6078,8 +6078,8 @@ BlitBGStrip:
 	ld a, l ; $2325
 	ld [wBGRowBlitDest], a ; $2326
 	ld a, h ; $2329
-	ld [$c327], a ; $232a
-	ld a, [$c321] ; $232d
+	ld [wBGRowBlitDest + 1], a ; $232a
+	ld a, [wCameraX + 1] ; $232d
 	add a, b ; $2330
 	and a, $1f ; $2331
 	ld h, $00 ; $2333
@@ -6132,13 +6132,13 @@ Label_00_2375:
 	ldh [hBGRowBlitPending], a ; $237d
 	ret ; $237f
 BlitBGStrip2:
-	ld a, [$c321] ; $2380
+	ld a, [wCameraX + 1] ; $2380
 	add a, b ; $2383
 	and a, $1f ; $2384
 	ld [wBGColumnBlitX], a ; $2386
 	ld d, $00 ; $2389
 	ld e, a ; $238b
-	ld a, [$c323] ; $238c
+	ld a, [wCameraY + 1] ; $238c
 	add a, c ; $238f
 	and a, $1f ; $2390
 	ld h, $00 ; $2392

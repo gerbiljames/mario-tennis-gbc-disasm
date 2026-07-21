@@ -160,7 +160,7 @@ Label_01_4138:
 	ld a, $01 ; $4157
 	ld [wCurrentMinigameStoryMatch], a ; $4159
 	ld a, $11 ; $415c
-	ld [$c8f7], a ; $415e
+	ld [wCurrentMinigameStoryMatch + 1], a ; $415e
 	ld a, $01 ; $4161
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
@@ -179,12 +179,12 @@ Label_01_4138:
 	ld de, $002f ; $4187
 	call SetGameFlagByNumber ; $418a
 	ld a, $00 ; $418d
-	ld [$c8f7], a ; $418f
+	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
 Label_01_4192:
 	farcall FarPtr_RunMatchWinLoseScreen ; $4192
-	ld a, [$c8f7] ; $4195
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $4195
 	inc a ; $4198
-	ld [$c8f7], a ; $4199
+	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
 	jr Label_01_4192 ; $419c
 Unused_01_MatchSetup:
 	farcall FarPtr_ShowEquipmentStatusScreen ; $419e

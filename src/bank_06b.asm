@@ -285,7 +285,7 @@ IntroCutsceneState00Init_6b:
 	xor a, a ; $4194
 	ld [wCameraY], a ; $4195
 	ld a, $24 ; $4198
-	ld [$c323], a ; $419a
+	ld [wCameraY + 1], a ; $419a
 	xor a, a ; $419d
 	ld [wCutsceneStepTimer], a ; $419e
 	ld [$cb4c], a ; $41a1
@@ -294,7 +294,7 @@ IntroCutsceneState00Init_6b:
 	xor a, a ; $41aa
 	ld [wCameraY], a ; $41ab
 	ld a, $24 ; $41ae
-	ld [$c323], a ; $41b0
+	ld [wCameraY + 1], a ; $41b0
 	ld de, $015c ; $41b3
 	ld hl, $cb48 ; $41b6
 	ld a, e ; $41b9
@@ -321,9 +321,9 @@ IntroCutsceneState00Exit_6b:
 	ldh [hScrollX], a ; $41e7
 	ldh [hScrollY], a ; $41e9
 	ld [wCameraX], a ; $41eb
-	ld [$c321], a ; $41ee
+	ld [wCameraX + 1], a ; $41ee
 	ld [wCameraY], a ; $41f1
-	ld [$c323], a ; $41f4
+	ld [wCameraY + 1], a ; $41f4
 	jp Label_6b_40af ; $41f7
 IntroCutsceneState00Update_6b:
 	ld a, [wCutsceneStepTimer] ; $41fa
@@ -739,12 +739,12 @@ IntroCutsceneState07Exit_6b:
 	ldh [hScrollX], a ; $4696
 	ldh [hScrollY], a ; $4698
 	ld [wCameraX], a ; $469a
-	ld [$c321], a ; $469d
+	ld [wCameraX + 1], a ; $469d
 	ld [wCameraY], a ; $46a0
-	ld [$c323], a ; $46a3
+	ld [wCameraY + 1], a ; $46a3
 	jp Label_6b_40af ; $46a6
 IntroCutsceneState07Update_6b:
-	ld a, [$c321] ; $46a9
+	ld a, [wCameraX + 1] ; $46a9
 	cp a, $40 ; $46ac
 	jp nz, Label_6b_46c0 ; $46ae
 	ld a, [wCutsceneStepTimer] ; $46b1
@@ -761,14 +761,14 @@ Label_6b_46c0:
 	ld [wCutsceneStepTimer], a ; $46c8
 	jp Label_6b_407c ; $46cb
 Label_6b_46ce:
-	ld a, [$c321] ; $46ce
+	ld a, [wCameraX + 1] ; $46ce
 	ld h, a ; $46d1
 	ld a, [wCameraX] ; $46d2
 	ld l, a ; $46d5
 	ld bc, $0020 ; $46d6
 	add hl, bc ; $46d9
 	ld a, h ; $46da
-	ld [$c321], a ; $46db
+	ld [wCameraX + 1], a ; $46db
 	ld a, l ; $46de
 	ld [wCameraX], a ; $46df
 	jp Label_6b_407c ; $46e2
@@ -978,7 +978,7 @@ IntroCutsceneState12Init_6b:
 	xor a, a ; $48f9
 	ld [wCameraY], a ; $48fa
 	ld a, $24 ; $48fd
-	ld [$c323], a ; $48ff
+	ld [wCameraY + 1], a ; $48ff
 	ld a, $00 ; $4902
 	ld [$cb4d], a ; $4904
 	ld [$cb4c], a ; $4907
@@ -1121,7 +1121,7 @@ Palettes_6b_4a58:
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 IntroCutsceneState17Init_6b:
 	wram_bank $04 ; $4a98
-	ld hl, $d8c0 ; $4a9e
+	ld hl, wTextArgStringQueue + 16 ; $4a9e
 	ld de, $9cc0 ; $4aa1
 	ld c, $10 ; $4aa4
 	call QueueVRAMCopy ; $4aa6
@@ -1274,7 +1274,7 @@ IntroCutsceneState19Init_6b:
 	xor a, a ; $4c48
 	ld [wCameraY], a ; $4c49
 	ld a, $24 ; $4c4c
-	ld [$c323], a ; $4c4e
+	ld [wCameraY + 1], a ; $4c4e
 	ld a, $00 ; $4c51
 	ld [$cb4d], a ; $4c53
 	ld [$cb4c], a ; $4c56
@@ -1752,11 +1752,11 @@ Func_6b_53fc:
 	ld [wCameraY], a ; $5449
 	ld [wCameraX], a ; $544c
 	ld a, $24 ; $544f
-	ld [$c323], a ; $5451
+	ld [wCameraY + 1], a ; $5451
 	ld a, $01 ; $5454
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5456
 	xor a, a ; $5459
-	ld [$c323], a ; $545a
+	ld [wCameraY + 1], a ; $545a
 	ret ; $545d
 Func_6b_545e:
 	call DisableLCDSafely ; $545e
@@ -1785,7 +1785,7 @@ Func_6b_545e:
 	xor a, a ; $54aa
 	ld [wCameraY], a ; $54ab
 	ld a, $24 ; $54ae
-	ld [$c323], a ; $54b0
+	ld [wCameraY + 1], a ; $54b0
 	ld a, $01 ; $54b3
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $54b5
 	ret ; $54b8
@@ -1819,7 +1819,7 @@ Func_6b_54b9:
 	xor a, a ; $550e
 	ld [wCameraY], a ; $550f
 	ld a, $24 ; $5512
-	ld [$c323], a ; $5514
+	ld [wCameraY + 1], a ; $5514
 	ld a, $01 ; $5517
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
@@ -1880,7 +1880,7 @@ Func_6b_60d5:
 	ld a, e ; $60ef
 	ld [wCameraY], a ; $60f0
 	ld a, d ; $60f3
-	ld [$c323], a ; $60f4
+	ld [wCameraY + 1], a ; $60f4
 	ret ; $60f7
 Func_6b_60f8:
 	ld hl, $cb4a ; $60f8
@@ -1969,11 +1969,11 @@ Func_6b_617c:
 	ld de, $0008 ; $61cb
 	call LoadPaletteShadow ; $61ce
 	ld a, $20 ; $61d1
-	ld [$c321], a ; $61d3
+	ld [wCameraX + 1], a ; $61d3
 	xor a, a ; $61d6
 	ld [wCameraX], a ; $61d7
 	ld [wCameraY], a ; $61da
-	ld [$c323], a ; $61dd
+	ld [wCameraY + 1], a ; $61dd
 	ld a, $01 ; $61e0
 	farcall FarPtr_CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5

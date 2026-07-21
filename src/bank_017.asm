@@ -806,8 +806,8 @@ ShowDrillBriefingScreen:
 	ldh [hBGRowBlitPending], a ; $448a
 	ldh [hScrollY], a ; $448c
 	ldh [hScrollX], a ; $448e
-	ld [$c321], a ; $4490
-	ld [$c323], a ; $4493
+	ld [wCameraX + 1], a ; $4490
+	ld [wCameraY + 1], a ; $4493
 	call ClearFrameTasks ; $4496
 	call DisableLCDSafely ; $4499
 	call LoadCourtDiagramScreen ; $449c
@@ -822,7 +822,7 @@ ShowDrillBriefingScreen:
 	ld [$cb0c], a ; $44b3
 	script_fade_in $10 ; $44b6
 	call WaitFadeEnd ; $44bb
-	ld a, [$c8f7] ; $44be
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $44be
 	cp a, $12 ; $44c1
 	jr nc, Label_17_44e7 ; $44c3
 	sub a, $03 ; $44c5

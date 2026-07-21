@@ -1297,12 +1297,12 @@ TrainingCourtResultDispatch:
 	call TrainingCourtReentryDispatch ; $5374
 	ret ; $5377
 Label_15_5378:
-	ld a, [$c8f7] ; $5378
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5378
 	cp a, $12 ; $537b
 	jr c, Label_15_5380 ; $537d
 	ret ; $537f
 Label_15_5380:
-	ld a, [$c8f7] ; $5380
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
 	ld a, a ; $5383
 	rst Rst00 ; $5384
 	dw Label_15_5e85 ; $5385 jumptable
@@ -1324,7 +1324,7 @@ Label_15_5380:
 	dw Label_15_77bd ; $53a5 jumptable
 	dw Label_15_77d0 ; $53a7 jumptable
 TrainingCourtReentryDispatch:
-	ld a, [$c8f7] ; $53a9
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
 	ld a, a ; $53ac
 	rst Rst00 ; $53ad
 	dw Label_15_53d2 ; $53ae jumptable
@@ -2091,7 +2091,7 @@ Label_15_5f07:
 	ld a, $ff ; $5f36
 	ld [$c294], a ; $5f38
 	ld [wStoryModeExitLocationRequest], a ; $5f3b
-	ld a, [$c8f7] ; $5f3e
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5f3e
 	farcall FarPtr_RunTrainingDrillByID ; $5f41
 	farcall FarPtr_EndCutsceneScriptMode ; $5f44
 	ret ; $5f47
@@ -2129,7 +2129,7 @@ Label_15_5f58:
 	ld a, $ff ; $5f90
 	ld [$c294], a ; $5f92
 	ld [wStoryModeExitLocationRequest], a ; $5f95
-	ld a, [$c8f7] ; $5f98
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5f98
 	farcall FarPtr_RunTrainingDrillByID ; $5f9b
 	farcall FarPtr_EndCutsceneScriptMode ; $5f9e
 	ret ; $5fa1
@@ -2196,10 +2196,10 @@ Label_15_5fc2:
 	farcall FarPtr_EndCutsceneScriptMode ; $603e
 	ret ; $6041
 WalkChallengerAwayDefeated:
-	ld a, [$c8f7] ; $6042
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6042
 	sub a, $0a ; $6045
 	jp nc, Label_15_60f6 ; $6047
-	ld a, [$c8f7] ; $604a
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $604a
 	sub a, $04 ; $604d
 	jp c, Label_15_6056 ; $604f
 	jp Label_15_60af ; $6052
@@ -2313,10 +2313,10 @@ Label_15_60f6:
 	set_flag $17, 4 ; $6175
 	ret ; $6178
 WalkChallengerOntoCourt:
-	ld a, [$c8f7] ; $6179
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6179
 	sub a, $0a ; $617c
 	jr nc, Label_15_618b ; $617e
-	ld a, [$c8f7] ; $6180
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6180
 	sub a, $04 ; $6183
 	jr c, Label_15_61d5 ; $6185
 	jp Label_15_6214 ; $6187
@@ -2384,10 +2384,10 @@ Label_15_6214:
 	farcall FarPtr_SetActorFacing ; $624f
 	ret ; $6252
 MovePlayerToLessonCourtSpot:
-	ld a, [$c8f7] ; $6253
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6253
 	sub a, $0a ; $6256
 	jr nc, Label_15_6265 ; $6258
-	ld a, [$c8f7] ; $625a
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $625a
 	sub a, $04 ; $625d
 	jr c, Label_15_6283 ; $625f
 	jp Label_15_62a1 ; $6261
@@ -2815,7 +2815,7 @@ Label_15_6710:
 	script_wait_frames $14 ; $674f
 	script_speak $07 ; $6756
 	ld a, $03 ; $675b
-	ld [$c8f7], a ; $675d
+	ld [wCurrentMinigameStoryMatch + 1], a ; $675d
 	ld a, $0f ; $6760
 	ld [wStoryModeCurrentLocation], a ; $6762
 	ld a, $09 ; $6765
@@ -2853,7 +2853,7 @@ Func_15_677e:
 	script_wait_frames $14 ; $67cd
 	script_speak $07 ; $67d4
 	ld a, $04 ; $67d9
-	ld [$c8f7], a ; $67db
+	ld [wCurrentMinigameStoryMatch + 1], a ; $67db
 	ld a, $0f ; $67de
 	ld [wStoryModeCurrentLocation], a ; $67e0
 	ld a, $09 ; $67e3
@@ -2891,7 +2891,7 @@ Func_15_67fc:
 	script_wait_frames $14 ; $684b
 	script_speak $07 ; $6852
 	ld a, $05 ; $6857
-	ld [$c8f7], a ; $6859
+	ld [wCurrentMinigameStoryMatch + 1], a ; $6859
 	ld a, $0f ; $685c
 	ld [wStoryModeCurrentLocation], a ; $685e
 	ld a, $09 ; $6861
@@ -3264,7 +3264,7 @@ Label_15_6dc2:
 	script_set_anim $0d, $02 ; $6e1c
 	script_wait_idle $0d ; $6e23
 	ld a, $0f ; $6e28
-	ld [$c8f7], a ; $6e2a
+	ld [wCurrentMinigameStoryMatch + 1], a ; $6e2a
 	ld a, $0f ; $6e2d
 	ld [wStoryModeCurrentLocation], a ; $6e2f
 	ld a, $09 ; $6e32
@@ -3303,7 +3303,7 @@ ReturnCoachLobLessonScene:
 	script_set_anim $0d, $02 ; $6e9f
 	script_wait_idle $0d ; $6ea6
 	ld a, $10 ; $6eab
-	ld [$c8f7], a ; $6ead
+	ld [wCurrentMinigameStoryMatch + 1], a ; $6ead
 	ld a, $0f ; $6eb0
 	ld [wStoryModeCurrentLocation], a ; $6eb2
 	ld a, $09 ; $6eb5
@@ -3342,7 +3342,7 @@ ReturnCoachPassingShotLessonScene:
 	script_set_anim $0d, $02 ; $6f22
 	script_wait_idle $0d ; $6f29
 	ld a, $11 ; $6f2e
-	ld [$c8f7], a ; $6f30
+	ld [wCurrentMinigameStoryMatch + 1], a ; $6f30
 	ld a, $0f ; $6f33
 	ld [wStoryModeCurrentLocation], a ; $6f35
 	ld a, $09 ; $6f38
@@ -3429,7 +3429,7 @@ Label_15_6fea:
 	script_set_text Text_37_99 ; $703a
 	script_speak $12 ; $7040
 	ld a, $09 ; $7045
-	ld [$c8f7], a ; $7047
+	ld [wCurrentMinigameStoryMatch + 1], a ; $7047
 	ld a, $0f ; $704a
 	ld [wStoryModeCurrentLocation], a ; $704c
 	ld a, $09 ; $704f
@@ -3483,7 +3483,7 @@ NetCoachSmashLessonScene:
 	script_wait_idle $12 ; $70f0
 	script_speak $12 ; $70f5
 	ld a, $0a ; $70fa
-	ld [$c8f7], a ; $70fc
+	ld [wCurrentMinigameStoryMatch + 1], a ; $70fc
 	ld a, $0f ; $70ff
 	ld [wStoryModeCurrentLocation], a ; $7101
 	ld a, $09 ; $7104
@@ -3531,7 +3531,7 @@ NetCoachDropShotLessonScene:
 	script_wait_idle $12 ; $7191
 	script_speak $12 ; $7196
 	ld a, $0b ; $719b
-	ld [$c8f7], a ; $719d
+	ld [wCurrentMinigameStoryMatch + 1], a ; $719d
 	ld a, $0f ; $71a0
 	ld [wStoryModeCurrentLocation], a ; $71a2
 	ld a, $09 ; $71a5
@@ -4268,7 +4268,7 @@ PlaceSwingPracticeKidActor:
 Label_15_7a66:
 	ret ; $7a66
 StartPendingLessonScene:
-	ld a, [$c8f7] ; $7a67
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $7a67
 	cp a, $06 ; $7a6a
 	jr nc, Label_15_7a75 ; $7a6c
 	call InitServeCoachScene ; $7a6e
@@ -4309,7 +4309,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld a, $ff ; $7af4
 	ld [$c294], a ; $7af6
 	ld [wStoryModeExitLocationRequest], a ; $7af9
-	ld a, [$c8f7] ; $7afc
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $7afc
 	farcall FarPtr_RunTrainingDrillByID ; $7aff
 	ret ; $7b02
 ActorScript_15_7b03:
@@ -4353,7 +4353,7 @@ NetCoachWalkToCourtAndStartLesson:
 	ld a, $ff ; $7b87
 	ld [$c294], a ; $7b89
 	ld [wStoryModeExitLocationRequest], a ; $7b8c
-	ld a, [$c8f7] ; $7b8f
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $7b8f
 	farcall FarPtr_RunTrainingDrillByID ; $7b92
 	ret ; $7b95
 ActorScript_15_7b96:
@@ -4399,7 +4399,7 @@ ReturnCoachWalkToCourtAndStartLesson:
 	ld a, $ff ; $7c20
 	ld [$c294], a ; $7c22
 	ld [wStoryModeExitLocationRequest], a ; $7c25
-	ld a, [$c8f7] ; $7c28
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $7c28
 	farcall FarPtr_RunTrainingDrillByID ; $7c2b
 	ret ; $7c2e
 ActorScript_15_7c2f:

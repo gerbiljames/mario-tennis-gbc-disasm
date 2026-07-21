@@ -314,7 +314,7 @@ Func_2c_41cd:
 Func_2c_41f9:
 	ld a, [wShotAimAngle] ; $41f9
 	ld c, a ; $41fc
-	ld a, [$c43b] ; $41fd
+	ld a, [wShotAimAngle + 1] ; $41fd
 	ld b, a ; $4200
 	call MulSinCos ; $4201
 	ld c, l ; $4204

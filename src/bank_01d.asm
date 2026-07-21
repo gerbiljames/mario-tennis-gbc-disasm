@@ -1075,7 +1075,7 @@ CharDataValuesSyncTask:
 	ld hl, $c890 ; $48d3
 	jr Label_1d_48db ; $48d6
 Label_1d_48d8:
-	ld hl, $c0f2 ; $48d8
+	ld hl, wGameTimer + 2 ; $48d8
 Label_1d_48db:
 	ld de, $d14c ; $48db
 	ld a, [hl+] ; $48de
@@ -2033,7 +2033,7 @@ Func_1d_509c:
 	ld bc, $d7e0 ; $50ab
 	call Func_1d_4bb6 ; $50ae
 	ld hl, $5e52 ; $50b1
-	ld bc, $d8e0 ; $50b4
+	ld bc, wTextArgNumberQueue + 16 ; $50b4
 	call Func_1d_4bb6 ; $50b7
 	ld hl, $5e73 ; $50ba
 	ld bc, $d9e0 ; $50bd
@@ -2053,7 +2053,7 @@ Func_1d_509c:
 	ld bc, $d7e0 ; $50e4
 	call Func_1d_4bb6 ; $50e7
 	ld hl, $5e91 ; $50ea
-	ld bc, $d8e0 ; $50ed
+	ld bc, wTextArgNumberQueue + 16 ; $50ed
 	call Func_1d_4bb6 ; $50f0
 	ld hl, $5eb2 ; $50f3
 	ld bc, $d9e0 ; $50f6
@@ -2078,7 +2078,7 @@ Func_1d_509c:
 	ld bc, $d7e0 ; $5126
 	call Func_1d_4bb6 ; $5129
 	ld hl, $5ed0 ; $512c
-	ld bc, $d8e0 ; $512f
+	ld bc, wTextArgNumberQueue + 16 ; $512f
 	call Func_1d_4bb6 ; $5132
 	ld hl, $5ef1 ; $5135
 	ld bc, $d9e0 ; $5138
@@ -2109,7 +2109,7 @@ Func_1d_509c:
 	ld bc, $d7e0 ; $517a
 	call Func_1d_4bb6 ; $517d
 	ld hl, $5f0f ; $5180
-	ld bc, $d8e0 ; $5183
+	ld bc, wTextArgNumberQueue + 16 ; $5183
 	call Func_1d_4bb6 ; $5186
 	ld hl, $5f30 ; $5189
 	ld bc, $d9e0 ; $518c
@@ -2256,7 +2256,7 @@ Func_1d_5268:
 	ld bc, $d7e0 ; $52f8
 	call Func_1d_4bb6 ; $52fb
 	ld hl, $5f0f ; $52fe
-	ld bc, $d8e0 ; $5301
+	ld bc, wTextArgNumberQueue + 16 ; $5301
 	call Func_1d_4bb6 ; $5304
 	ld hl, $5f30 ; $5307
 	ld bc, $d9e0 ; $530a
@@ -2287,7 +2287,7 @@ Func_1d_5268:
 	ld bc, $d7e0 ; $534c
 	call Func_1d_4bb6 ; $534f
 	ld hl, $5ed0 ; $5352
-	ld bc, $d8e0 ; $5355
+	ld bc, wTextArgNumberQueue + 16 ; $5355
 	call Func_1d_4bb6 ; $5358
 	ld hl, $5ef1 ; $535b
 	ld bc, $d9e0 ; $535e
@@ -2318,7 +2318,7 @@ Func_1d_5268:
 	ld bc, $d7e0 ; $53a0
 	call Func_1d_4bb6 ; $53a3
 	ld hl, $5e91 ; $53a6
-	ld bc, $d8e0 ; $53a9
+	ld bc, wTextArgNumberQueue + 16 ; $53a9
 	call Func_1d_4bb6 ; $53ac
 	ld hl, $5eb2 ; $53af
 	ld bc, $d9e0 ; $53b2
@@ -2343,7 +2343,7 @@ Func_1d_5268:
 	ld bc, $d7e0 ; $53e2
 	call Func_1d_4bb6 ; $53e5
 	ld hl, $5e52 ; $53e8
-	ld bc, $d8e0 ; $53eb
+	ld bc, wTextArgNumberQueue + 16 ; $53eb
 	call Func_1d_4bb6 ; $53ee
 	ld hl, $5e73 ; $53f1
 	ld bc, $d9e0 ; $53f4
@@ -2362,7 +2362,7 @@ Func_1d_5268:
 	ld bc, $d7e0 ; $5418
 	call Func_1d_4bb6 ; $541b
 	ld hl, $5e13 ; $541e
-	ld bc, $d8e0 ; $5421
+	ld bc, wTextArgNumberQueue + 16 ; $5421
 	call Func_1d_4bb6 ; $5424
 	ld hl, $5e34 ; $5427
 	ld bc, $d9e0 ; $542a
@@ -2388,7 +2388,7 @@ Func_1d_543d:
 	ld bc, $d7e0 ; $545b
 	call Func_1d_4bb6 ; $545e
 	ld hl, $5f4e ; $5461
-	ld bc, $d8e0 ; $5464
+	ld bc, wTextArgNumberQueue + 16 ; $5464
 	call Func_1d_4bb6 ; $5467
 	ld hl, $5f6f ; $546a
 	ld bc, $d9e0 ; $546d
@@ -2413,7 +2413,7 @@ Func_1d_543d:
 	ld bc, $d7e0 ; $549d
 	call Func_1d_4bb6 ; $54a0
 	ld hl, $5f8d ; $54a3
-	ld bc, $d8e0 ; $54a6
+	ld bc, wTextArgNumberQueue + 16 ; $54a6
 	call Func_1d_4bb6 ; $54a9
 	ld hl, $5fae ; $54ac
 	ld bc, $d9e0 ; $54af
@@ -2447,7 +2447,7 @@ Func_1d_543d:
 	ld bc, $d7e0 ; $54fa
 	call Func_1d_4bb6 ; $54fd
 	ld hl, $5fcc ; $5500
-	ld bc, $d8e0 ; $5503
+	ld bc, wTextArgNumberQueue + 16 ; $5503
 	call Func_1d_4bb6 ; $5506
 	ld hl, $5fed ; $5509
 	ld bc, $d9e0 ; $550c
@@ -2478,7 +2478,7 @@ Func_1d_543d:
 	ld bc, $d7e0 ; $554e
 	call Func_1d_4bb6 ; $5551
 	ld hl, $600b ; $5554
-	ld bc, $d8e0 ; $5557
+	ld bc, wTextArgNumberQueue + 16 ; $5557
 	call Func_1d_4bb6 ; $555a
 	ld hl, $602c ; $555d
 	ld bc, $d9e0 ; $5560
@@ -2581,7 +2581,7 @@ Func_1d_5603:
 	ld bc, $d7e0 ; $565a
 	call Func_1d_4bb6 ; $565d
 	ld hl, $600b ; $5660
-	ld bc, $d8e0 ; $5663
+	ld bc, wTextArgNumberQueue + 16 ; $5663
 	call Func_1d_4bb6 ; $5666
 	ld hl, $602c ; $5669
 	ld bc, $d9e0 ; $566c
@@ -2612,7 +2612,7 @@ Func_1d_5603:
 	ld bc, $d7e0 ; $56ae
 	call Func_1d_4bb6 ; $56b1
 	ld hl, $5fcc ; $56b4
-	ld bc, $d8e0 ; $56b7
+	ld bc, wTextArgNumberQueue + 16 ; $56b7
 	call Func_1d_4bb6 ; $56ba
 	ld hl, $5fed ; $56bd
 	ld bc, $d9e0 ; $56c0
@@ -2643,7 +2643,7 @@ Func_1d_5603:
 	ld bc, $d7e0 ; $5702
 	call Func_1d_4bb6 ; $5705
 	ld hl, $5f8d ; $5708
-	ld bc, $d8e0 ; $570b
+	ld bc, wTextArgNumberQueue + 16 ; $570b
 	call Func_1d_4bb6 ; $570e
 	ld hl, $5fae ; $5711
 	ld bc, $d9e0 ; $5714
@@ -2677,7 +2677,7 @@ Func_1d_5603:
 	ld bc, $d7e0 ; $575f
 	call Func_1d_4bb6 ; $5762
 	ld hl, $5f4e ; $5765
-	ld bc, $d8e0 ; $5768
+	ld bc, wTextArgNumberQueue + 16 ; $5768
 	call Func_1d_4bb6 ; $576b
 	ld hl, $5f6f ; $576e
 	ld bc, $d9e0 ; $5771
@@ -2702,7 +2702,7 @@ Func_1d_5603:
 	ld bc, $d7e0 ; $57a1
 	call Func_1d_4bb6 ; $57a4
 	ld hl, $5e13 ; $57a7
-	ld bc, $d8e0 ; $57aa
+	ld bc, wTextArgNumberQueue + 16 ; $57aa
 	call Func_1d_4bb6 ; $57ad
 	ld hl, $5e34 ; $57b0
 	ld bc, $d9e0 ; $57b3
@@ -2987,9 +2987,9 @@ ScaleValueToBar:
 	call MulHLByDESigned ; $59e1
 	ldh a, [hMulResult] ; $59e4
 	ld l, a ; $59e6
-	ldh a, [$ffa9] ; $59e7
+	ldh a, [hMulResult + 1] ; $59e7
 	ld h, a ; $59e9
-	ldh a, [$ffaa] ; $59ea
+	ldh a, [hMulResult + 2] ; $59ea
 	pop de ; $59ec
 	call DivAHLByDE ; $59ed
 	ld a, h ; $59f0
@@ -3081,9 +3081,9 @@ PromptCharDataConfirm:
 	ldh [hScrollX], a ; $5a6b
 	ldh [hScrollY], a ; $5a6d
 	ld [wCameraX], a ; $5a6f
-	ld [$c321], a ; $5a72
+	ld [wCameraX + 1], a ; $5a72
 	ld [wCameraY], a ; $5a75
-	ld [$c323], a ; $5a78
+	ld [wCameraY + 1], a ; $5a78
 	ld a, $90 ; $5a7b
 	ldh [rWY], a ; $5a7d
 	call ClearSpriteQueue ; $5a7f
@@ -3239,9 +3239,9 @@ InitCharDataScreenVideo:
 	ldh [hScrollX], a ; $5bea
 	ldh [hScrollY], a ; $5bec
 	ld [wCameraX], a ; $5bee
-	ld [$c321], a ; $5bf1
+	ld [wCameraX + 1], a ; $5bf1
 	ld [wCameraY], a ; $5bf4
-	ld [$c323], a ; $5bf7
+	ld [wCameraY + 1], a ; $5bf7
 	ld a, $90 ; $5bfa
 	ldh [rWY], a ; $5bfc
 	call ClearSpriteQueue ; $5bfe
@@ -3374,9 +3374,9 @@ Func_1d_68a3:
 	ldh [hScrollX], a ; $68ad
 	ldh [hScrollY], a ; $68af
 	ld [wCameraX], a ; $68b1
-	ld [$c321], a ; $68b4
+	ld [wCameraX + 1], a ; $68b4
 	ld [wCameraY], a ; $68b7
-	ld [$c323], a ; $68ba
+	ld [wCameraY + 1], a ; $68ba
 	ld a, $90 ; $68bd
 	ldh [rWY], a ; $68bf
 	call ClearSpriteQueue ; $68c1
@@ -4494,42 +4494,42 @@ Func_1d_7189:
 	farcall FarPtr_LoadIndexedPaletteThunk ; $7198
 	wram_bank $06 ; $719b
 	ld a, [$d16b] ; $71a1
-	ld [$c13a], a ; $71a4
+	ld [wBGPalettes + 58], a ; $71a4
 	ld a, [$d16c] ; $71a7
-	ld [$c13b], a ; $71aa
+	ld [wBGPalettes + 59], a ; $71aa
 	ld a, [$d17a] ; $71ad
-	ld [$c122], a ; $71b0
+	ld [wBGPalettes + 34], a ; $71b0
 	ld a, [$d17b] ; $71b3
-	ld [$c123], a ; $71b6
+	ld [wBGPalettes + 35], a ; $71b6
 	ld a, [$cb00] ; $71b9
 	or a, a ; $71bc
 	jr nz, Label_1d_71e2 ; $71bd
-	ld hl, $c110 ; $71bf
+	ld hl, wBGPalettes + 16 ; $71bf
 	call GrayscalePaletteColorInPlace ; $71c2
-	ld hl, $c112 ; $71c5
+	ld hl, wBGPalettes + 18 ; $71c5
 	call GrayscalePaletteColorInPlace ; $71c8
-	ld hl, $c114 ; $71cb
+	ld hl, wBGPalettes + 20 ; $71cb
 	call GrayscalePaletteColorInPlace ; $71ce
-	ld hl, $c116 ; $71d1
+	ld hl, wBGPalettes + 22 ; $71d1
 	call GrayscalePaletteColorInPlace ; $71d4
 	ld a, $08 ; $71d7
-	ld [$c122], a ; $71d9
+	ld [wBGPalettes + 34], a ; $71d9
 	ld a, $21 ; $71dc
-	ld [$c123], a ; $71de
+	ld [wBGPalettes + 35], a ; $71de
 	ret ; $71e1
 Label_1d_71e2:
-	ld hl, $c108 ; $71e2
+	ld hl, wBGPalettes + 8 ; $71e2
 	call GrayscalePaletteColorInPlace ; $71e5
-	ld hl, $c10a ; $71e8
+	ld hl, wBGPalettes + 10 ; $71e8
 	call GrayscalePaletteColorInPlace ; $71eb
-	ld hl, $c10c ; $71ee
+	ld hl, wBGPalettes + 12 ; $71ee
 	call GrayscalePaletteColorInPlace ; $71f1
-	ld hl, $c10e ; $71f4
+	ld hl, wBGPalettes + 14 ; $71f4
 	call GrayscalePaletteColorInPlace ; $71f7
 	ld a, $08 ; $71fa
-	ld [$c13a], a ; $71fc
+	ld [wBGPalettes + 58], a ; $71fc
 	ld a, $21 ; $71ff
-	ld [$c13b], a ; $7201
+	ld [wBGPalettes + 59], a ; $7201
 	ret ; $7204
 GrayscalePaletteColorInPlace:
 	ld a, [hl+] ; $7205
@@ -4903,13 +4903,13 @@ Label_1d_7453:
 	set 2, [hl] ; $745c
 	wram_bank $06 ; $745e
 	ld a, [$d16b] ; $7464
-	ld [$c13a], a ; $7467
+	ld [wBGPalettes + 58], a ; $7467
 	ld a, [$d16c] ; $746a
-	ld [$c13b], a ; $746d
+	ld [wBGPalettes + 59], a ; $746d
 	ld a, [$d17a] ; $7470
-	ld [$c122], a ; $7473
+	ld [wBGPalettes + 34], a ; $7473
 	ld a, [$d17b] ; $7476
-	ld [$c123], a ; $7479
+	ld [wBGPalettes + 35], a ; $7479
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $747c
 	ld de, $0101 ; $747f
 	farcall FarPtr_LoadIndexedPaletteThunk ; $7482

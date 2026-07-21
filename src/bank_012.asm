@@ -1104,7 +1104,7 @@ Label_12_502b:
 	ld a, $ff ; $5050
 	ld [$c294], a ; $5052
 	ld [wStoryModeExitLocationRequest], a ; $5055
-	ld a, [$c8f7] ; $5058
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5058
 	farcall FarPtr_RunTrainingDrillByID ; $505b
 Label_12_505e:
 	ret ; $505e

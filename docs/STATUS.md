@@ -21,6 +21,18 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 
+### Relative labels for interior bytes of multi-byte RAM vars (2026-07-21)
+
+`load_ram_map` now expands each sized `ram_map.json` variable so a reference to
+an *interior* byte renders as `name + k` instead of a raw address -- e.g. the
+low byte of the 16-bit BE `wCurrentMinigameStoryMatch` ($c8f6) reads
+`[wCurrentMinigameStoryMatch + 1]` at all 61 sites. An interior byte that is
+itself a named symbol keeps its own name (`setdefault` never overwrites an
+explicit entry). Flows through both operand paths (`[$addr]` and pointer-setup
+immediates) with no signature change; 305 references across 42 banks now read
+symbolically (`wCameraX + 1`, `wShotAimAngle + 1`, `wBGPalettes + 34`, ...).
+Byte-perfect.
+
 ### Carve code-indexed data tables (2026-07-21)
 
 Swept every raw-INCBIN `Data_*` blob that a `ld hl/de/bc, imm` site loads as a

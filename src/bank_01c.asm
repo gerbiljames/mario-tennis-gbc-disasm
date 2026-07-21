@@ -48,9 +48,9 @@ Label_1c_4038:
 	ldh [hScrollX], a ; $403f
 	ldh [hScrollY], a ; $4041
 	ld [wCameraX], a ; $4043
-	ld [$c321], a ; $4046
+	ld [wCameraX + 1], a ; $4046
 	ld [wCameraY], a ; $4049
-	ld [$c323], a ; $404c
+	ld [wCameraY + 1], a ; $404c
 	ld a, $90 ; $404f
 	ldh [rWY], a ; $4051
 	call ClearSpriteQueue ; $4053
@@ -3040,17 +3040,17 @@ Func_1c_73fb:
 	ld de, $0808 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank $06 ; $740d
-	ld a, [$c23a] ; $7413
+	ld a, [wMasterPalettes + 58] ; $7413
 	ld [$d16b], a ; $7416
-	ld a, [$c23b] ; $7419
+	ld a, [wMasterPalettes + 59] ; $7419
 	ld [$d16c], a ; $741c
-	ld a, [$c222] ; $741f
+	ld a, [wMasterPalettes + 34] ; $741f
 	ld [$d17a], a ; $7422
-	ld a, [$c223] ; $7425
+	ld a, [wMasterPalettes + 35] ; $7425
 	ld [$d17b], a ; $7428
-	ld hl, $c222 ; $742b
+	ld hl, wMasterPalettes + 34 ; $742b
 	farcall FarPtr_GrayscalePaletteColorInPlace ; $742e
-	ld hl, $c222 ; $7431
+	ld hl, wMasterPalettes + 34 ; $7431
 	farcall FarPtr_GrayscalePaletteColorInPlace ; $7434
 	wram_bank $01 ; $7437
 	ld hl, $7581 ; $743d
@@ -3162,13 +3162,13 @@ Label_1c_750d:
 	ld de, $ac00 ; $7520
 	ld c, $09 ; $7523
 	call QueueVRAMCopy ; $7525
-	ld hl, $c210 ; $7528
+	ld hl, wMasterPalettes + 16 ; $7528
 	farcall FarPtr_GrayscalePaletteColorInPlace ; $752b
-	ld hl, $c212 ; $752e
+	ld hl, wMasterPalettes + 18 ; $752e
 	farcall FarPtr_GrayscalePaletteColorInPlace ; $7531
-	ld hl, $c214 ; $7534
+	ld hl, wMasterPalettes + 20 ; $7534
 	farcall FarPtr_GrayscalePaletteColorInPlace ; $7537
-	ld hl, $c216 ; $753a
+	ld hl, wMasterPalettes + 22 ; $753a
 	farcall FarPtr_GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 	INCBIN "data/bank_01c/d_7541.bin" ; $7541, 2486 bytes

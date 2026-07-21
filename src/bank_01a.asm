@@ -2645,9 +2645,9 @@ Label_1a_67db:
 	ldh [hScrollX], a ; $67e5
 	ldh [hScrollY], a ; $67e7
 	ld [wCameraX], a ; $67e9
-	ld [$c321], a ; $67ec
+	ld [wCameraX + 1], a ; $67ec
 	ld [wCameraY], a ; $67ef
-	ld [$c323], a ; $67f2
+	ld [wCameraY + 1], a ; $67f2
 	ld a, $90 ; $67f5
 	ldh [rWY], a ; $67f7
 	call ClearSpriteQueue ; $67f9

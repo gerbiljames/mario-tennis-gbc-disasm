@@ -28,7 +28,7 @@ InitMinigameFromConfig:
 	ld hl, $0004 ; $402b
 	add hl, bc ; $402e
 	ld a, [hl] ; $402f
-	ld [$c8f7], a ; $4030
+	ld [wCurrentMinigameStoryMatch + 1], a ; $4030
 	ld hl, $0005 ; $4033
 	add hl, bc ; $4036
 	ld a, [hl] ; $4037
@@ -129,13 +129,13 @@ InitMinigameScore:
 	ld [hl+], a ; $40d9
 	ld a, [wMinigameLevel] ; $40da
 	ld b, a ; $40dd
-	ld a, [$c8f7] ; $40de
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $40de
 	call GetMinigameTargetScore ; $40e1
 	ld hl, wMinigamesTargetScore ; $40e4
 	ld a, e ; $40e7
 	ld [hl+], a ; $40e8
 	ld [hl], d ; $40e9
-	ld a, [$c8f7] ; $40ea
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $40ea
 	sub a, $1a ; $40ed
 	ret c ; $40ef
 	add a, $16 ; $40f0

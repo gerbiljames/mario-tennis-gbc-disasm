@@ -2366,7 +2366,7 @@ Label_08_5310:
 	bit 7, h ; $5314
 	pop hl ; $5316
 	jr z, Label_08_5326 ; $5317
-	ld a, [$c453] ; $5319
+	ld a, [wBallTargetDepth + 1] ; $5319
 	bit 7, a ; $531c
 	ld de, $0100 ; $531e
 	jr z, Label_08_5326 ; $5321
@@ -2783,7 +2783,7 @@ ApplyBallSpin:
 	ld h, [hl] ; $5625
 	ld l, a ; $5626
 	call MulHLByDEAbs ; $5627
-	ldh a, [$ffa9] ; $562a
+	ldh a, [hMulResult + 1] ; $562a
 	ld e, l ; $562c
 	ld d, h ; $562d
 	sra d ; $562e
@@ -2814,7 +2814,7 @@ Label_08_564c:
 	ld h, [hl] ; $5658
 	ld l, a ; $5659
 	call MulHLByDEAbs ; $565a
-	ldh a, [$ffa9] ; $565d
+	ldh a, [hMulResult + 1] ; $565d
 	ld e, l ; $565f
 	ld d, h ; $5660
 	sra d ; $5661
@@ -2876,7 +2876,7 @@ Label_08_56a9:
 	ld h, [hl] ; $56bb
 	ld l, a ; $56bc
 	call MulHLByDEAbs ; $56bd
-	ldh a, [$ffa9] ; $56c0
+	ldh a, [hMulResult + 1] ; $56c0
 	ld e, l ; $56c2
 	ld d, h ; $56c3
 	sra d ; $56c4
@@ -2916,7 +2916,7 @@ Label_08_56ec:
 	ld h, [hl] ; $56f7
 	ld l, a ; $56f8
 	call MulHLByDEAbs ; $56f9
-	ldh a, [$ffa9] ; $56fc
+	ldh a, [hMulResult + 1] ; $56fc
 	ld e, l ; $56fe
 	ld d, h ; $56ff
 	sra d ; $5700
@@ -3007,10 +3007,10 @@ StepBallPhysics:
 	call BounceBallOffCourtFences ; $5792
 	call HandleBallNetCrossing ; $5795
 	ld b, $00 ; $5798
-	ld a, [$c407] ; $579a
+	ld a, [wBallDepth + 1] ; $579a
 	add a, a ; $579d
 	rl b ; $579e
-	ld a, [$c403] ; $57a0
+	ld a, [wBallX + 1] ; $57a0
 	add a, a ; $57a3
 	rl b ; $57a4
 	ld hl, $c4b0 ; $57a6
@@ -3084,7 +3084,7 @@ Label_08_5813:
 HandleBallNetCrossing:
 	xor a, a ; $5814
 	ld [$c4b4], a ; $5815
-	ld hl, $c407 ; $5818
+	ld hl, wBallDepth + 1 ; $5818
 	ld a, [hl] ; $581b
 	ld hl, $c417 ; $581c
 	xor a, [hl] ; $581f
@@ -3394,10 +3394,10 @@ Label_08_59e2:
 	cpl ; $59e4
 	add a, $01 ; $59e5
 	ldh [hMulResult], a ; $59e7
-	ldh a, [$ffa9] ; $59e9
+	ldh a, [hMulResult + 1] ; $59e9
 	cpl ; $59eb
 	adc a, $00 ; $59ec
-	ldh [$ffa9], a ; $59ee
+	ldh [hMulResult + 1], a ; $59ee
 	ld a, l ; $59f0
 	cpl ; $59f1
 	adc a, $00 ; $59f2
@@ -3483,7 +3483,7 @@ MulHLByTangent:
 	call GetTangent ; $5a54
 	pop de ; $5a57
 	call MulHLByDESigned32 ; $5a58
-	ldh a, [$ffa9] ; $5a5b
+	ldh a, [hMulResult + 1] ; $5a5b
 	ld d, l ; $5a5d
 	ld e, a ; $5a5e
 	ret ; $5a5f
@@ -5860,7 +5860,7 @@ CharServeTossPhase:
 Label_08_6b8c:
 	ret ; $6b8c
 CharServeSwingWindowPhase:
-	ld hl, $c428 ; $6b8d
+	ld hl, wBallVelocityHeight + 1 ; $6b8d
 	bit 7, [hl] ; $6b90
 	jr nz, Label_08_6ba9 ; $6b92
 	ld hl, $df70 ; $6b94
@@ -6155,7 +6155,7 @@ Label_08_6d95:
 	bit 7, h ; $6d9c
 	jr z, Label_08_6df4 ; $6d9e
 Label_08_6da0:
-	ld a, [$c428] ; $6da0
+	ld a, [wBallVelocityHeight + 1] ; $6da0
 	ld l, a ; $6da3
 	add a, a ; $6da4
 	sbc a, a ; $6da5
@@ -8506,7 +8506,7 @@ GetCharRoleByIndex:
 	wram_bank ; $7c52
 	ret ; $7c56
 OffsetFromBallLanding:
-	ld a, [$c43b] ; $7c57
+	ld a, [wShotAimAngle + 1] ; $7c57
 	call VectorFromLengthAndAngle ; $7c5a
 	ld c, l ; $7c5d
 	ld b, h ; $7c5e

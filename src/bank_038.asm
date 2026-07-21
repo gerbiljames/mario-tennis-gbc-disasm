@@ -1340,9 +1340,9 @@ Func_38_4975:
 	ld [$cb50], a ; $4984
 	ld [$cb51], a ; $4987
 	ld [wCameraX], a ; $498a
-	ld [$c321], a ; $498d
+	ld [wCameraX + 1], a ; $498d
 	ld [wCameraY], a ; $4990
-	ld [$c323], a ; $4993
+	ld [wCameraY + 1], a ; $4993
 	ld a, $90 ; $4996
 	ldh [rWY], a ; $4998
 	call ClearSpriteQueue ; $499a
@@ -1943,9 +1943,9 @@ Func_38_4f6f:
 	ldh [hScrollX], a ; $4f70
 	ldh [hScrollY], a ; $4f72
 	ld [wCameraX], a ; $4f74
-	ld [$c321], a ; $4f77
+	ld [wCameraX + 1], a ; $4f77
 	ld [wCameraY], a ; $4f7a
-	ld [$c323], a ; $4f7d
+	ld [wCameraY + 1], a ; $4f7d
 	call Func_38_5d83 ; $4f80
 	ld b, $03 ; $4f83
 	ld c, $00 ; $4f85

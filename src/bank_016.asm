@@ -297,7 +297,7 @@ Label_16_44b9:
 	call RegisterFrameTask ; $44f6
 Label_16_44f9:
 	call AdvanceFrame ; $44f9
-	ld a, [$c8f7] ; $44fc
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $44fc
 	push de ; $44ff
 	push af ; $4500
 	ld a, a ; $4501
@@ -586,7 +586,7 @@ Label_16_4a6f:
 	ret ; $4a6f
 	ret ; $4a70
 BuildMatchResultTilemap:
-	ld a, [$c8f7] ; $4a71
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a71
 	add a, a ; $4a74
 	ld hl, MatchResultTilemapScripts_16 ; $4a75
 	add a, l ; $4a78
@@ -960,7 +960,7 @@ Label_16_4e32:
 	call DecompressData ; $4e50
 	ret ; $4e53
 LoadMatchResultGfxSet:
-	ld a, [$c8f7] ; $4e54
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $4e54
 	call RemapDoublesMatchGfxIndex ; $4e57
 	add a, a ; $4e5a
 	ld hl, GfxSetPointerTable_16 ; $4e5b

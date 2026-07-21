@@ -1587,8 +1587,8 @@ TournamentFacing01_0f:
 	ldh [hBGRowBlitPending], a ; $6177
 	ldh [hScrollY], a ; $6179
 	ldh [hScrollX], a ; $617b
-	ld [$c321], a ; $617d
-	ld [$c323], a ; $6180
+	ld [wCameraX + 1], a ; $617d
+	ld [wCameraY + 1], a ; $6180
 	call ClearFrameTasks ; $6183
 	call GetIslandOpenRoundParams ; $6186
 	ld d, $03 ; $6189
@@ -2677,8 +2677,8 @@ Func_0f_7434:
 	ldh [hBGRowBlitPending], a ; $7437
 	ldh [hScrollY], a ; $7439
 	ldh [hScrollX], a ; $743b
-	ld [$c321], a ; $743d
-	ld [$c323], a ; $7440
+	ld [wCameraX + 1], a ; $743d
+	ld [wCameraY + 1], a ; $7440
 	call ClearFrameTasks ; $7443
 	call GetIslandOpenRoundParams ; $7446
 	farcall FarPtr_ShowRankingBoard ; $7449

@@ -1302,7 +1302,7 @@ PrepareEquipmentSelectScreen:
 	ldh [hBGRowBlitPending], a ; $4edf
 	ldh [hScrollY], a ; $4ee1
 	ldh [hScrollX], a ; $4ee3
-	ld [$c321], a ; $4ee5
+	ld [wCameraX + 1], a ; $4ee5
 	ret ; $4ee8
 RepairCounterChangeRackets:
 	script_set_text Text_6e_237 ; $4ee9

@@ -180,7 +180,7 @@ ShowMatchRulesPages:
 	db $04, $06, $ff, $ff ; 0x10
 	db $05, $07, $ff, $ff ; 0x14
 ShowTrainingRulesPages:
-	ld a, [$c8f7] ; $417d
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $417d
 	ld [$c4e5], a ; $4180
 	add a, $2b ; $4183
 	ld e, a ; $4185
@@ -237,7 +237,7 @@ ShowTrainingRulesPages:
 	db $1b, $ff, $ff, $ff ; 0x6c
 	db $1c, $ff, $ff, $ff ; 0x70
 ShowMinigameRulesPages:
-	ld a, [$c8f7] ; $421d
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $421d
 	sub a, $1c ; $4220
 	ld b, a ; $4222
 	add a, a ; $4223
@@ -255,7 +255,7 @@ ShowMinigameRulesPages:
 	ld a, e ; $4237
 	ld [hl+], a ; $4238
 	ld [hl], d ; $4239
-	ld a, [$c8f7] ; $423a
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $423a
 	sub a, $1c ; $423d
 	add a, a ; $423f
 	add a, $62 ; $4240
@@ -3278,7 +3278,7 @@ LoadScoreboardModeGfx:
 	ld h, a ; $5c98
 	jr Label_06_5ca6 ; $5c99
 Label_06_5c9b:
-	ld a, [$c8f7] ; $5c9b
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
 	add a, a ; $5c9e
 	add a, $df ; $5c9f
 	ld l, a ; $5ca1

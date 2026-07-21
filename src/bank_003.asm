@@ -3913,9 +3913,9 @@ Func_03_59c5:
 	ldh [hScrollX], a ; $59cf
 	ldh [hScrollY], a ; $59d1
 	ld [wCameraX], a ; $59d3
-	ld [$c321], a ; $59d6
+	ld [wCameraX + 1], a ; $59d6
 	ld [wCameraY], a ; $59d9
-	ld [$c323], a ; $59dc
+	ld [wCameraY + 1], a ; $59dc
 	ld a, $90 ; $59df
 	ldh [rWY], a ; $59e1
 	call ClearSpriteQueue ; $59e3
@@ -5800,9 +5800,9 @@ Func_03_751e:
 	ldh [hScrollX], a ; $7582
 	ldh [hScrollY], a ; $7584
 	ld [wCameraX], a ; $7586
-	ld [$c321], a ; $7589
+	ld [wCameraX + 1], a ; $7589
 	ld [wCameraY], a ; $758c
-	ld [$c323], a ; $758f
+	ld [wCameraY + 1], a ; $758f
 	call AdvanceFrame ; $7592
 	script_fade_in $04 ; $7595
 	call WaitFadeEnd ; $759a

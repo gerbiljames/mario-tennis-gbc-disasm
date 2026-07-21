@@ -732,7 +732,7 @@ Label_04_443c:
 	and a, $e0 ; $443d
 	ld [wCameraX], a ; $443f
 	ld a, h ; $4442
-	ld [$c321], a ; $4443
+	ld [wCameraX + 1], a ; $4443
 	ld hl, $000e ; $4446
 	add hl, bc ; $4449
 	ld a, [hl+] ; $444a
@@ -764,7 +764,7 @@ Label_04_446f:
 	and a, $e0 ; $4470
 	ld [wCameraY], a ; $4472
 	ld a, h ; $4475
-	ld [$c323], a ; $4476
+	ld [wCameraY + 1], a ; $4476
 	pop hl ; $4479
 	pop de ; $447a
 	pop af ; $447b
@@ -1109,7 +1109,7 @@ Label_04_46ad:
 	ld e, a ; $46c3
 	ld c, d ; $46c4
 	push de ; $46c5
-	ld de, $fffd ; $46c6
+	ld de, hRandomSeed + 1 ; $46c6
 	add hl, de ; $46c9
 	ld a, [hl+] ; $46ca
 	ld d, [hl] ; $46cb

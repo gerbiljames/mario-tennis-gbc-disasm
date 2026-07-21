@@ -83,7 +83,7 @@ Func_28_5eb0:
 	call z, Func_28_5efb ; $5ef7
 	ret ; $5efa
 Func_28_5efb:
-	ld a, [$c8f7] ; $5efb
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
 	sub a, $12 ; $5efe
 	jr c, Label_28_5f2a ; $5f00
 	ld a, a ; $5f02

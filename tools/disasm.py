@@ -1799,6 +1799,7 @@ def load_ram_map(path, unions_by_region=None):
     entries = json.loads(Path(path).read_text())
     names = {}
     regions = {}
+    extents = []
     for addr_s, e in sorted(entries.items(), key=lambda kv: int(kv[0], 0)):
         name = e.get("name")
         if not name:
@@ -1809,14 +1810,23 @@ def load_ram_map(path, unions_by_region=None):
             print(f"warning: {path}: {addr_s} name {name!r} should be "
                   f"{exp}PascalCase", file=sys.stderr)
         names[addr] = name
+        size = ram_field_size(e)
+        extents.append((addr, size, name))
         for ri, (start, end, _mem, _path) in enumerate(RAM_REGIONS):
             if start <= addr < end:
                 regions.setdefault(ri, []).append(
-                    (addr, name, ram_field_size(e), e.get("note", "")))
+                    (addr, name, size, e.get("note", "")))
                 break
         else:
             print(f"warning: {path}: {addr_s} outside known RAM regions",
                   file=sys.stderr)
+    # A reference to an interior byte of a multi-byte variable (e.g. the low
+    # byte of the 16-bit wCurrentMinigameStoryMatch) renders as `name + k`
+    # rather than a raw address. An interior byte that is itself a named symbol
+    # keeps its own name (the explicit entry, added above, is never overwritten).
+    for base, size, name in extents:
+        for k in range(1, size):
+            names.setdefault(base + k, f"{name} + {k}")
     write_ram_layout(regions, unions_by_region)
     return names
 

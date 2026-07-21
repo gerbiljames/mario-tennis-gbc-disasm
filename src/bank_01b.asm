@@ -1064,9 +1064,9 @@ BuildRankingBoardScreen:
 	ldh [hScrollX], a ; $4ef3
 	ldh [hScrollY], a ; $4ef5
 	ld [wCameraX], a ; $4ef7
-	ld [$c321], a ; $4efa
+	ld [wCameraX + 1], a ; $4efa
 	ld [wCameraY], a ; $4efd
-	ld [$c323], a ; $4f00
+	ld [wCameraY + 1], a ; $4f00
 	farcall FarPtr_01_0a ; $4f03
 	farcall FarPtr_PrepareGlyphBuffer ; $4f06
 	wram_bank $03 ; $4f09
@@ -4309,20 +4309,20 @@ Label_1b_6a03:
 	ld de, $da01 ; $6a58
 	farcall FarPtr_RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
-	ld a, [$c0f3] ; $6a5f
+	ld a, [wGameTimer + 3] ; $6a5f
 	ld h, $00 ; $6a62
 	ld l, a ; $6a64
 	ld a, $02 ; $6a65
 	ld de, $da05 ; $6a67
 	farcall FarPtr_DrawDecimalNumberToTilemap ; $6a6a
-	ld a, [$c0f2] ; $6a6d
+	ld a, [wGameTimer + 2] ; $6a6d
 	add a, $64 ; $6a70
 	ld h, $00 ; $6a72
 	ld l, a ; $6a74
 	ld a, $03 ; $6a75
 	ld de, $da07 ; $6a77
 	farcall FarPtr_DrawDecimalNumberToTilemap ; $6a7a
-	ld a, [$c0f1] ; $6a7d
+	ld a, [wGameTimer + 1] ; $6a7d
 	add a, $64 ; $6a80
 	ld h, $00 ; $6a82
 	ld l, a ; $6a84
@@ -4395,9 +4395,9 @@ ShowNoN64DataFoundScreen:
 	call FillTilemapRow17 ; $6afa
 	ld hl, $d8a2 ; $6afd
 	call FillTilemapRow17 ; $6b00
-	ld hl, $d8c2 ; $6b03
+	ld hl, wTextArgStringQueue + 18 ; $6b03
 	call FillTilemapRow17 ; $6b06
-	ld hl, $d8e2 ; $6b09
+	ld hl, wTextArgNumberQueue + 18 ; $6b09
 	call FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
 	ld hl, $dc62 ; $6b11
@@ -4414,7 +4414,7 @@ ShowNoN64DataFoundScreen:
 	ld de, $d883 ; $6b32
 	farcall FarPtr_RenderProportionalTextAt32 ; $6b35
 	ld hl, $047c ; $6b38
-	ld de, $d8c3 ; $6b3b
+	ld de, wTextArgStringQueue + 19 ; $6b3b
 	farcall FarPtr_RenderProportionalTextAt32 ; $6b3e
 	farcall FarPtr_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44

@@ -1790,7 +1790,7 @@ Label_11_5d9b:
 	ld [wStoryModeShowLocationName], a ; $5d9c
 	script_null_script ACTOR_PARTNER ; $5d9f
 	script_player_speed $0040 ; $5da4
-	ld a, [$c8f7] ; $5daa
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $5daa
 	sub a, $02 ; $5dad
 	ld a, a ; $5daf
 	rst Rst00 ; $5db0
@@ -2686,7 +2686,7 @@ Label_11_6e88:
 Label_11_6e9e:
 	xor a, a ; $6e9e
 	ld [wStoryModeShowLocationName], a ; $6e9f
-	ld a, [$c8f7] ; $6ea2
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $6ea2
 	sub a, $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8

@@ -254,7 +254,7 @@ Func_3f_4194:
 	call BeginFadeOut ; $4196
 	call WaitFadeEnd ; $4199
 	ld a, $0d ; $419c
-	ld [$c321], a ; $419e
+	ld [wCameraX + 1], a ; $419e
 	xor a, a ; $41a1
 	ld [wCameraX], a ; $41a2
 	wram_bank $06 ; $41a5
@@ -283,7 +283,7 @@ Func_3f_41e0:
 	call BeginFadeOut ; $41e2
 	call WaitFadeEnd ; $41e5
 	ld a, $21 ; $41e8
-	ld [$c321], a ; $41ea
+	ld [wCameraX + 1], a ; $41ea
 	xor a, a ; $41ed
 	ld [wCameraX], a ; $41ee
 	call Func_3f_5468 ; $41f1
@@ -313,7 +313,7 @@ Func_3f_41e0:
 	ld a, l ; $422f
 	ld [wCameraX], a ; $4230
 	ld a, h ; $4233
-	ld [$c321], a ; $4234
+	ld [wCameraX + 1], a ; $4234
 	jr Label_3f_423f ; $4237
 Label_3f_4239:
 	farcall FarPtr_UpdateSceneScroll ; $4239
@@ -327,7 +327,7 @@ Func_3f_4244:
 	wram_bank $06 ; $4244
 	xor a, a ; $424a
 	ldh [hScrollX], a ; $424b
-	ld [$c321], a ; $424d
+	ld [wCameraX + 1], a ; $424d
 	ld [wCameraX], a ; $4250
 	ldh [hScrollY], a ; $4253
 	ld hl, wCameraY ; $4255
@@ -413,7 +413,7 @@ Label_3f_430f:
 	ld a, $0d ; $430f
 Label_3f_4311:
 	ldh [hScrollX], a ; $4311
-	ld [$c321], a ; $4313
+	ld [wCameraX + 1], a ; $4313
 	xor a, a ; $4316
 	ld [wCameraX], a ; $4317
 	ldh [hScrollY], a ; $431a

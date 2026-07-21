@@ -272,7 +272,7 @@ CopyVisibleTilemapToVRAM:
 	push hl ; $4149
 	ld a, b ; $414a
 	wram_bank ; $414b
-	ld a, [$c323] ; $414f
+	ld a, [wCameraY + 1] ; $414f
 	and a, $1f ; $4152
 	ld l, a ; $4154
 	ld h, $00 ; $4155
@@ -317,7 +317,7 @@ Label_05_418a:
 	ld e, l ; $4193
 	ld hl, $d400 ; $4194
 	add hl, bc ; $4197
-	ld a, [$c323] ; $4198
+	ld a, [wCameraY + 1] ; $4198
 	and a, $1f ; $419b
 	ld bc, $0026 ; $419d
 	add a, $12 ; $41a0
@@ -649,7 +649,7 @@ RestoreShadowTilemap:
 	pop af ; $4381
 	ret ; $4382
 RestoreAllShadowTilemapRows:
-	ld a, [$c323] ; $4383
+	ld a, [wCameraY + 1] ; $4383
 	and a, $3f ; $4386
 	ld c, $04 ; $4388
 Label_05_438a:
@@ -685,7 +685,7 @@ RestoreTilemapUnderWindow:
 	inc hl ; $43b1
 	inc hl ; $43b2
 	ld c, [hl] ; $43b3
-	ld a, [$c323] ; $43b4
+	ld a, [wCameraY + 1] ; $43b4
 	cp a, b ; $43b7
 	jr c, Label_05_43c0 ; $43b8
 	jr z, Label_05_43c0 ; $43ba
@@ -725,7 +725,7 @@ Label_05_43e3:
 	rl b ; $43e5
 	dec a ; $43e7
 	jr nz, Label_05_43de ; $43e8
-	ld a, [$c321] ; $43ea
+	ld a, [wCameraX + 1] ; $43ea
 	and a, $3f ; $43ed
 	ld d, a ; $43ef
 	ld c, d ; $43f0
@@ -889,7 +889,7 @@ Label_05_44e9:
 	pop bc ; $44f0
 	pop af ; $44f1
 	ret ; $44f2
-	ld a, [$c323] ; $44f3
+	ld a, [wCameraY + 1] ; $44f3
 	and a, $3f ; $44f6
 	ret ; $44f8
 Func_05_44f9:
@@ -2345,7 +2345,7 @@ Label_05_4e6d:
 	ld a, l ; $4e6d
 	ld [wTextStreamPtr], a ; $4e6e
 	ld a, h ; $4e71
-	ld [$d86a], a ; $4e72
+	ld [wTextStreamPtr + 1], a ; $4e72
 	ld a, [hl] ; $4e75
 	inc hl ; $4e76
 	ld b, a ; $4e77
@@ -2459,7 +2459,7 @@ Label_05_4f1f:
 	ld a, l ; $4f1f
 	ld [wGlyphVramDest], a ; $4f20
 	ld a, h ; $4f23
-	ld [$d865], a ; $4f24
+	ld [wGlyphVramDest + 1], a ; $4f24
 	ld d, h ; $4f27
 	ld e, l ; $4f28
 	pop af ; $4f29
@@ -3397,7 +3397,7 @@ ControlCodeHandlers_05:
 	dw TextCmdApplyHandakuten ; record 31
 RenderInlineString:
 	push af ; $54cf
-	ld a, [$d86a] ; $54d0
+	ld a, [wTextStreamPtr + 1] ; $54d0
 	cp a, $c6 ; $54d3
 	jr nz, Label_05_54dd ; $54d5
 	ld a, [wTextStreamPtr] ; $54d7
@@ -3449,7 +3449,7 @@ Label_05_551b:
 	ld bc, $ffe0 ; $551f
 	add hl, bc ; $5522
 	push af ; $5523
-	ld a, [$c3b5] ; $5524
+	ld a, [wShadowTilemapPtr + 1] ; $5524
 	ld c, a ; $5527
 	ld a, h ; $5528
 	cp a, c ; $5529
@@ -4291,7 +4291,7 @@ OpenSpeechBubble:
 	jr Label_05_5aee ; $5ac0
 Label_05_5ac2:
 	call GetObjectSlotPointer ; $5ac2
-	ld a, [$c323] ; $5ac5
+	ld a, [wCameraY + 1] ; $5ac5
 	ld b, a ; $5ac8
 	ld a, l ; $5ac9
 	ldh [hActorPtr], a ; $5aca
@@ -4785,7 +4785,7 @@ RenderProportionalTextAt:
 	ld [$d867], a ; $5dde
 	ld [wTextArgShortTextWriteIndex], a ; $5de1
 	ld [$d868], a ; $5de4
-	ld a, [$c3b5] ; $5de7
+	ld a, [wShadowTilemapPtr + 1] ; $5de7
 	add a, $03 ; $5dea
 	cp a, d ; $5dec
 	jr nc, Label_05_5df3 ; $5ded
@@ -4796,7 +4796,7 @@ Label_05_5df3:
 	ld a, e ; $5df3
 	ld [wGlyphVramDest], a ; $5df4
 	ld a, d ; $5df7
-	ld [$d865], a ; $5df8
+	ld [wGlyphVramDest + 1], a ; $5df8
 	ld c, $20 ; $5dfb
 	ld b, $ff ; $5dfd
 	ld a, c ; $5dff
@@ -4906,7 +4906,7 @@ Label_05_5e9f:
 	ld l, e ; $5ea1
 	add hl, bc ; $5ea2
 	ld b, a ; $5ea3
-	ld a, [$c3b5] ; $5ea4
+	ld a, [wShadowTilemapPtr + 1] ; $5ea4
 	dec a ; $5ea7
 	cp a, h ; $5ea8
 	jr c, Label_05_5eaf ; $5ea9
@@ -5034,7 +5034,7 @@ RenderTextToBuffer64:
 	ld a, e ; $5f63
 	ld [wGlyphVramDest], a ; $5f64
 	ld a, d ; $5f67
-	ld [$d865], a ; $5f68
+	ld [wGlyphVramDest + 1], a ; $5f68
 	ld b, $ff ; $5f6b
 	ld a, c ; $5f6d
 	cpl ; $5f6e
@@ -5654,7 +5654,7 @@ OpenCenteredDialogueWindow:
 	rl b ; $6393
 	jr c, Label_05_63c3 ; $6395
 	call GetObjectSlotPointer ; $6397
-	ld a, [$c323] ; $639a
+	ld a, [wCameraY + 1] ; $639a
 	ld b, a ; $639d
 	ld a, l ; $639e
 	ldh [hActorPtr], a ; $639f
@@ -6840,7 +6840,7 @@ Label_05_6c77:
 	ld a, e ; $6c9d
 	ld [wGlyphVramDest], a ; $6c9e
 	ld a, d ; $6ca1
-	ld [$d865], a ; $6ca2
+	ld [wGlyphVramDest + 1], a ; $6ca2
 	ld b, $ff ; $6ca5
 	ld a, c ; $6ca7
 	cpl ; $6ca8
@@ -7266,7 +7266,7 @@ ClampCellPtrToShadowMap:
 	ldh a, [hWramBank] ; $6f39
 	push af ; $6f3b
 	wram_bank $05 ; $6f3c
-	ld a, [$c3b5] ; $6f42
+	ld a, [wShadowTilemapPtr + 1] ; $6f42
 	add a, $03 ; $6f45
 	cp a, h ; $6f47
 	jr nc, Label_05_6f4d ; $6f48
@@ -7282,7 +7282,7 @@ ClampCellPtrToAttrMap:
 	ldh a, [hWramBank] ; $6f55
 	push af ; $6f57
 	wram_bank $05 ; $6f58
-	ld a, [$c3b5] ; $6f5e
+	ld a, [wShadowTilemapPtr + 1] ; $6f5e
 	add a, $07 ; $6f61
 	cp a, h ; $6f63
 	jr nc, Label_05_6f69 ; $6f64
@@ -7334,7 +7334,7 @@ Label_05_6f98:
 	ld h, [hl] ; $6f9e
 	ld l, a ; $6f9f
 	add hl, de ; $6fa0
-	ld a, [$c3b5] ; $6fa1
+	ld a, [wShadowTilemapPtr + 1] ; $6fa1
 	add a, $03 ; $6fa4
 	cp a, h ; $6fa6
 	jr nc, Label_05_6fad ; $6fa7

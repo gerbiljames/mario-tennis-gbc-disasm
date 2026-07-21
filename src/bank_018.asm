@@ -759,7 +759,7 @@ Func_18_537a:
 	call Func_18_5586 ; $538f
 	ld a, [$c78f] ; $5392
 	call Func_18_53e4 ; $5395
-	ld de, $d8cb ; $5398
+	ld de, wTextArgStringQueue + 27 ; $5398
 	call Func_18_5586 ; $539b
 	ld a, [wTargetZoneX1] ; $539e
 	call Func_18_53e4 ; $53a1
@@ -1320,9 +1320,9 @@ Func_18_7647:
 	ldh [hScrollX], a ; $7648
 	ldh [hScrollY], a ; $764a
 	ld [wCameraX], a ; $764c
-	ld [$c321], a ; $764f
+	ld [wCameraX + 1], a ; $764f
 	ld [wCameraY], a ; $7652
-	ld [$c323], a ; $7655
+	ld [wCameraY + 1], a ; $7655
 	ret ; $7658
 	call Func_18_7632 ; $7659
 	ld c, $00 ; $765c

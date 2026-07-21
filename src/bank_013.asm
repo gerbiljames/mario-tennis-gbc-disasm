@@ -2540,10 +2540,10 @@ Label_13_6692:
 	wram_bank ; $66be
 	ret ; $66c2
 QueueVarsityCourtTourSprites_13:
-	ld a, [$c321] ; $66c3
+	ld a, [wCameraX + 1] ; $66c3
 	cp a, $18 ; $66c6
 	ret c ; $66c8
-	ld a, [$c323] ; $66c9
+	ld a, [wCameraY + 1] ; $66c9
 	cp a, $10 ; $66cc
 	ret c ; $66ce
 	ldh a, [hVBlankCounter] ; $66cf
@@ -3513,8 +3513,8 @@ Func_13_7ae0:
 	ldh [hBGRowBlitPending], a ; $7aeb
 	ldh [hScrollY], a ; $7aed
 	ldh [hScrollX], a ; $7aef
-	ld [$c321], a ; $7af1
-	ld [$c323], a ; $7af4
+	ld [wCameraX + 1], a ; $7af1
+	ld [wCameraY + 1], a ; $7af4
 	call ClearFrameTasks ; $7af7
 	test_flag $05, 7 ; $7afa
 	jr nz, Label_13_7b10 ; $7afd

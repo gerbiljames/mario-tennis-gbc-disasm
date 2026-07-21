@@ -649,7 +649,7 @@ MachineCourtHandleRetryChoice:
 	farcall FarPtr_AttachActorStepMover ; $47c9
 	ret ; $47cc
 MachineCourtRestartLevel:
-	ld a, [$c8f7] ; $47cd
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
 	cp a, $1a ; $47d0
 	jr z, Label_14_47ef ; $47d2
 	sub a, $12 ; $47d4
@@ -672,7 +672,7 @@ Label_14_47ef:
 	ld [$c294], a ; $47fb
 	ld [wStoryModeExitLocationRequest], a ; $47fe
 Label_14_4801:
-	ld a, [$c8f7] ; $4801
+	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
 	farcall FarPtr_RunTrainingDrillByID ; $4804
 	ret ; $4807
 ActorScript_14_4808:
@@ -1686,9 +1686,9 @@ Label_14_54df:
 	ld a, $50 ; $5506
 	ld [$c2b3], a ; $5508
 	ld a, $02 ; $550b
-	ld [$c2b5], a ; $550d
+	ld [wWaterSpriteMinigameTimer + 1], a ; $550d
 	xor a, a ; $5510
-	ld [$c2b7], a ; $5511
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $5511
 	ld a, $10 ; $5514
 	ld [$c2bd], a ; $5516
 	ld a, $00 ; $5519
@@ -2092,7 +2092,7 @@ Func_14_617e:
 Label_14_618f:
 	ldh a, [hScrollY] ; $618f
 	ld b, a ; $6191
-	ld a, [$c2b5] ; $6192
+	ld a, [wWaterSpriteMinigameTimer + 1] ; $6192
 	add a, $20 ; $6195
 	sub a, b ; $6197
 	ld e, a ; $6198
@@ -2101,7 +2101,7 @@ Label_14_618f:
 	jp z, Label_14_61ae ; $619d
 	ld a, [$c2bb] ; $61a0
 	ld b, a ; $61a3
-	ld a, [$c2b7] ; $61a4
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61a4
 	cp a, $14 ; $61a7
 	jr c, Label_14_6216 ; $61a9
 	cp a, b ; $61ab
@@ -2113,7 +2113,7 @@ Label_14_61ae:
 	ld a, $08 ; $61b4
 	ld [$c2b9], a ; $61b6
 	ld a, $00 ; $61b9
-	ld [$c2b7], a ; $61bb
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61bb
 	jp Label_14_6216 ; $61be
 Label_14_61c1:
 	ld a, [$c2b9] ; $61c1
@@ -2130,19 +2130,19 @@ Label_14_61d2:
 	ld [$c2b3], a ; $61d6
 	xor a, a ; $61d9
 	ld [$c2b9], a ; $61da
-	ld a, [$c2b7] ; $61dd
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61dd
 	add a, $04 ; $61e0
-	ld [$c2b7], a ; $61e2
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61e2
 Label_14_61e5:
 	ld a, [$c2bb] ; $61e5
 	ld b, a ; $61e8
-	ld a, [$c2b7] ; $61e9
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61e9
 	cp a, $14 ; $61ec
 	jr c, Label_14_6216 ; $61ee
 	cp a, b ; $61f0
 	jr c, Label_14_6224 ; $61f1
 	xor a, a ; $61f3
-	ld [$c2b7], a ; $61f4
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61f4
 	call AdvanceRandomSeed ; $61f7
 	ld a, l ; $61fa
 	and a, $0f ; $61fb
@@ -2154,12 +2154,12 @@ Label_14_61e5:
 	ld [$c2bb], a ; $6206
 	ld a, h ; $6209
 	and a, $0f ; $620a
-	ld [$c2b5], a ; $620c
+	ld [wWaterSpriteMinigameTimer + 1], a ; $620c
 	ld a, $10 ; $620f
 	ld [$c2bd], a ; $6211
 	jr Label_14_6224 ; $6214
 Label_14_6216:
-	ld a, [$c2b7] ; $6216
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6216
 	add a, $20 ; $6219
 	ld c, a ; $621b
 	ld hl, SpriteTemplate_14_6090 ; $621c
@@ -2173,9 +2173,9 @@ Func_14_6225:
 	jr z, Label_14_6237 ; $6229
 	dec a ; $622b
 	ld [$c2bd], a ; $622c
-	ld a, [$c2b5] ; $622f
+	ld a, [wWaterSpriteMinigameTimer + 1] ; $622f
 	sub a, $02 ; $6232
-	ld [$c2b5], a ; $6234
+	ld [wWaterSpriteMinigameTimer + 1], a ; $6234
 Label_14_6237:
 	ret ; $6237
 LoadWaterSpriteObjGfx2:
@@ -2489,9 +2489,9 @@ Label_14_650b:
 	ld a, $50 ; $653c
 	ld [$c2b3], a ; $653e
 	ld a, $28 ; $6541
-	ld [$c2b5], a ; $6543
+	ld [wWaterSpriteMinigameTimer + 1], a ; $6543
 	ld a, $00 ; $6546
-	ld [$c2b7], a ; $6548
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $6548
 	ld a, $1e ; $654b
 	ld [$c2b9], a ; $654d
 	ld a, $01 ; $6550
@@ -2513,9 +2513,9 @@ Label_14_650b:
 	ld a, $48 ; $6582
 	ld [$c2b3], a ; $6584
 	ld a, $28 ; $6587
-	ld [$c2b5], a ; $6589
+	ld [wWaterSpriteMinigameTimer + 1], a ; $6589
 	ld a, $00 ; $658c
-	ld [$c2b7], a ; $658e
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $658e
 	ld a, $1e ; $6591
 	ld [$c2b9], a ; $6593
 	script_wait_frames $28 ; $6596
@@ -2531,9 +2531,9 @@ Label_14_650b:
 	ld a, $50 ; $65b8
 	ld [$c2b3], a ; $65ba
 	ld a, $28 ; $65bd
-	ld [$c2b5], a ; $65bf
+	ld [wWaterSpriteMinigameTimer + 1], a ; $65bf
 	ld a, $00 ; $65c2
-	ld [$c2b7], a ; $65c4
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $65c4
 	ld a, $19 ; $65c7
 	ld [$c2b9], a ; $65c9
 	script_wait_frames $28 ; $65cc
@@ -2549,9 +2549,9 @@ Label_14_650b:
 	ld a, $58 ; $65ee
 	ld [$c2b3], a ; $65f0
 	ld a, $28 ; $65f3
-	ld [$c2b5], a ; $65f5
+	ld [wWaterSpriteMinigameTimer + 1], a ; $65f5
 	ld a, $00 ; $65f8
-	ld [$c2b7], a ; $65fa
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $65fa
 	ld a, $1c ; $65fd
 	ld [$c2b9], a ; $65ff
 	script_wait_frames $28 ; $6602
@@ -2567,9 +2567,9 @@ Label_14_650b:
 	ld a, $48 ; $6624
 	ld [$c2b3], a ; $6626
 	ld a, $28 ; $6629
-	ld [$c2b5], a ; $662b
+	ld [wWaterSpriteMinigameTimer + 1], a ; $662b
 	ld a, $00 ; $662e
-	ld [$c2b7], a ; $6630
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $6630
 	ld a, $1c ; $6633
 	ld [$c2b9], a ; $6635
 	script_wait_frames $48 ; $6638
@@ -2610,10 +2610,10 @@ SpriteTemplate_14_6e80:
 	oam_sprite_end
 	INCBIN "data/bank_014/d_6ea1.bin" ; $6ea1, 79 bytes
 Func_14_6ef0:
-	ld a, [$c2b7] ; $6ef0
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef0
 	cp a, $04 ; $6ef3
 	jp nc, Label_14_6f63 ; $6ef5
-	ld a, [$c2b7] ; $6ef8
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef8
 	and a, a ; $6efb
 	jr nz, Label_14_6f01 ; $6efc
 	call Func_14_6f64 ; $6efe
@@ -2625,7 +2625,7 @@ Label_14_6f01:
 	ld d, a ; $6f08
 	ldh a, [hScrollY] ; $6f09
 	ld b, a ; $6f0b
-	ld a, [$c2b5] ; $6f0c
+	ld a, [wWaterSpriteMinigameTimer + 1] ; $6f0c
 	sub a, b ; $6f0f
 	ld e, a ; $6f10
 	ld a, [$c2b9] ; $6f11
@@ -2633,12 +2633,12 @@ Label_14_6f01:
 	ld [$c2b9], a ; $6f15
 	and a, a ; $6f18
 	jp nz, Label_14_6f46 ; $6f19
-	ld a, [$c2b7] ; $6f1c
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f1c
 	inc a ; $6f1f
-	ld [$c2b7], a ; $6f20
+	ld [wWaterSpriteMinigameSwingCount + 1], a ; $6f20
 	cp a, $04 ; $6f23
 	jp nc, Label_14_6f63 ; $6f25
-	ld a, [$c2b7] ; $6f28
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f28
 	add a, $d5 ; $6f2b
 	ld l, a ; $6f2d
 	adc a, $64 ; $6f2e
@@ -2646,7 +2646,7 @@ Label_14_6f01:
 	ld h, a ; $6f31
 	ld a, [hl] ; $6f32
 	ld [$c2b9], a ; $6f33
-	ld a, [$c2b7] ; $6f36
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f36
 	cp a, $01 ; $6f39
 	jr nz, Label_14_6f46 ; $6f3b
 	ld a, [$c2b9] ; $6f3d
@@ -2654,7 +2654,7 @@ Label_14_6f01:
 	jr nz, Label_14_6f46 ; $6f42
 	sound $81 ; $6f44
 Label_14_6f46:
-	ld a, [$c2b7] ; $6f46
+	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f46
 	add a, $dd ; $6f49
 	ld l, a ; $6f4b
 	adc a, $64 ; $6f4c
@@ -2682,9 +2682,9 @@ Func_14_6f64:
 	jr nc, Label_14_6f73 ; $6f70
 	dec b ; $6f72
 Label_14_6f73:
-	ld a, [$c2b5] ; $6f73
+	ld a, [wWaterSpriteMinigameTimer + 1] ; $6f73
 	sub a, b ; $6f76
-	ld [$c2b5], a ; $6f77
+	ld [wWaterSpriteMinigameTimer + 1], a ; $6f77
 	ret ; $6f7a
 Label_14_6f7b:
 	call DisableLCDSafely ; $6f7b
