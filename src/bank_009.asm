@@ -66,7 +66,7 @@ Label_09_407c:
 	ld b, $01 ; $407c
 	call LoadPlayer2PointsDigitGfx ; $407e
 	ret ; $4081
-Func_09_4082:
+GetPointScoreForDisplay:
 	ld a, [wPlayer1PointsWon] ; $4082
 	ld d, a ; $4085
 	ld a, [wPlayer2PointsWon] ; $4086
@@ -81,7 +81,7 @@ Label_09_4094:
 	ld a, [wDeuceIndicator] ; $4094
 	ret ; $4097
 UpdateGameScoreDisplay:
-	call Func_09_4082 ; $4098
+	call GetPointScoreForDisplay ; $4098
 	and a, a ; $409b
 	jr nz, Label_09_40b1 ; $409c
 	push de ; $409e
@@ -96,7 +96,7 @@ UpdateGameScoreDisplay:
 	call LoadPlayer2ScoreDigitGfx ; $40ad
 	ret ; $40b0
 Label_09_40b1:
-	call Func_09_6148 ; $40b1
+	call LoadDeuceAdvantageGfx ; $40b1
 	ret ; $40b4
 LoadOnCourtCharacterGfx:
 	ld a, $ff ; $40b5
@@ -189,18 +189,18 @@ Func_09_4190:
 	jr nz, Label_09_41b2 ; $4194
 	ld hl, ObjTemplates_09_41bc ; $4196
 	ld bc, $dd80 ; $4199
-	call Func_09_4658 ; $419c
+	call StartObjExitAnim ; $419c
 	ld hl, ObjTemplates_09_41bc ; $419f
 	ld bc, $dd90 ; $41a2
-	call Func_09_4658 ; $41a5
+	call StartObjExitAnim ; $41a5
 	ld hl, $420c ; $41a8
 	ld bc, $dda0 ; $41ab
-	call Func_09_4658 ; $41ae
+	call StartObjExitAnim ; $41ae
 	ret ; $41b1
 Label_09_41b2:
 	ld hl, $41fc ; $41b2
 	ld bc, $dd80 ; $41b5
-	call Func_09_4658 ; $41b8
+	call StartObjExitAnim ; $41b8
 	ret ; $41bb
 ObjTemplates_09_41bc:
 	; $41bc, 112 bytes (records:16)
@@ -221,7 +221,7 @@ Func_09_422c:
 Func_09_4238:
 	ld hl, $420c ; $4238
 	ld bc, $dda0 ; $423b
-	call Func_09_4658 ; $423e
+	call StartObjExitAnim ; $423e
 	ret ; $4241
 Func_09_4242:
 	call ClearAllObjSlots ; $4242
@@ -255,10 +255,10 @@ Func_09_4282:
 	call Func_09_431d ; $4282
 	ld hl, $4298 ; $4285
 	ld bc, $dd80 ; $4288
-	call Func_09_4658 ; $428b
+	call StartObjExitAnim ; $428b
 	ld hl, $4298 ; $428e
 	ld bc, $dd90 ; $4291
-	call Func_09_4658 ; $4294
+	call StartObjExitAnim ; $4294
 	ret ; $4297
 	INCBIN "data/bank_009/d_4298.bin" ; $4298, 64 bytes
 Func_09_42d8:
@@ -280,7 +280,7 @@ Label_09_42ef:
 Func_09_42f6:
 	ld hl, $4300 ; $42f6
 	ld bc, $dd80 ; $42f9
-	call Func_09_4658 ; $42fc
+	call StartObjExitAnim ; $42fc
 	ret ; $42ff
 	INCBIN "data/bank_009/d_4300.bin" ; $4300, 16 bytes
 Func_09_4310:
@@ -292,7 +292,7 @@ Func_09_4310:
 Func_09_431d:
 	ld hl, $4327 ; $431d
 	ld bc, $ddc0 ; $4320
-	call Func_09_4658 ; $4323
+	call StartObjExitAnim ; $4323
 	ret ; $4326
 	INCBIN "data/bank_009/d_4327.bin" ; $4327, 64 bytes
 ShowCourtBanner:
@@ -310,7 +310,7 @@ SpawnCourtBannerObj:
 HideCourtBanner:
 	ld hl, $4385 ; $437b
 	ld bc, $ddb0 ; $437e
-	call Func_09_4658 ; $4381
+	call StartObjExitAnim ; $4381
 	ret ; $4384
 	INCBIN "data/bank_009/d_4385.bin" ; $4385, 83 bytes
 SetActorPositionRaw:
@@ -470,7 +470,7 @@ Label_09_4646:
 	add hl, bc ; $4654
 	set 7, [hl] ; $4655
 	ret ; $4657
-Func_09_4658:
+StartObjExitAnim:
 	ld a, $01 ; $4658
 	add a, c ; $465a
 	ld e, a ; $465b
@@ -759,7 +759,7 @@ LoadPlayer2ScoreDigitGfx:
 	ld c, $04 ; $6142
 	call QueueVRAMCopy ; $6144
 	ret ; $6147
-Func_09_6148:
+LoadDeuceAdvantageGfx:
 	ld hl, $6bc0 ; $6148
 	ld de, $8300 ; $614b
 	ld c, $08 ; $614e
