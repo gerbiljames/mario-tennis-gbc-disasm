@@ -1726,7 +1726,7 @@ Label_10_5494:
 	call BeginFadeOut ; $54b2
 	call WaitFadeEnd ; $54b5
 	ld a, $06 ; $54b8
-	farcall FarPtr_3f_00 ; $54ba
+	farcall FarPtr_TennisDictionaryScreen ; $54ba
 	call DisableLCDSafely ; $54bd
 	farcall FarPtr_01_0a ; $54c0
 	farcall FarPtr_ResetScreenAndTextWindows ; $54c3

@@ -918,6 +918,32 @@ class Disassembly:
             self.data_blobs[flat(tbl)] = (flat(pool) - flat(tbl), "copy")
         print(f"gfx pointer sets: {total} lz streams carved")
 
+    def carve_tennis_dictionary_assets(self):
+        """Bank $3f's Tennis Dictionary screen ($42fe setup) stores its assets
+        inline after the $444f ClearBytes descriptor table: a run of
+        LZ-compressed tile blocks and palette blocks, each reached through an
+        `ld hl, imm; call DecompressData/LoadPalettesMasterOnly` (no pointer
+        table, so the auto-carver leaves the lot as one records:2 blob). The
+        block starts are the immediates those call sites load; register the
+        nine lz blocks as lz blobs (each running to the next start) so they
+        render as named INCBINs. The three palette blocks ($47ae/$47f6/$4e39)
+        and the $444f/$4487 descriptor tables are declared in data_tables.json."""
+        bank = 0x3f
+        base = bank * BANK_SIZE
+
+        def flat(cpu):
+            return base + cpu - BANK_SIZE
+
+        # (start, end) of each lz block, end = next referenced block start.
+        lz_blocks = [
+            (0x44bf, 0x4541), (0x4541, 0x459c), (0x459c, 0x47ae),
+            (0x483e, 0x495d), (0x495d, 0x4a9f), (0x4a9f, 0x4bd5),
+            (0x4bd5, 0x4c89), (0x4c89, 0x4d8b), (0x4d8b, 0x4e39),
+        ]
+        for start, end in lz_blocks:
+            self.data_blobs.setdefault(flat(start), (end - start, "lz"))
+        print(f"tennis dictionary: {len(lz_blocks)} lz blocks carved")
+
     def carve_tilemap_dispatch(self):
         """Merge the L1/L2 pointer tables ($39:$4e60) and their record-list pool
         ($39:$50dc) into one tilemap_dispatch blob so the whole two-level
@@ -3965,6 +3991,7 @@ def main():
         dis.load_hook_dumps(args.hooks)
     dis.add_static_data_slots()
     dis.carve_gfx_pointer_sets()
+    dis.carve_tennis_dictionary_assets()
     dis.carve_tilemap_dispatch()
     for k, v in (overrides or {}).items():
         if v == "QueueSpriteTemplate":
