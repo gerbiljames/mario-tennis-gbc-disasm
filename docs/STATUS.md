@@ -47,6 +47,30 @@ as raw hex rather than an undefined symbol. 77 loads across 31 banks now read
 symbolically (46 `Data_`, 18 `Func_`, 13 `Text_`; 36 new labels); the raw-blob
 splits conserve bytes in `data.manifest`. Byte-perfect.
 
+### Carve the intro-cutscene state dispatch ($6b:$40bd) (2026-07-21)
+
+The `$6b:$40bd` blob the pointer-load pass had flattened to one 156-byte
+`records:2` list is really a **two-level state-machine dispatch**, indexed by
+`wCutsceneStep`: an 18-entry step->record pointer table (`$40bd..$40e0`, whose
+entries point *back into* the same region -- the "references into the table"),
+then 20 six-byte `{Init, Update, Exit}` handler records (`$40e1..$4159`). The
+three loaders confirm it -- all do `table[step]` then jump through the record at
+offset +0/+2/+4: `Func_6b_406a`=Init, `Label_6b_407c`=Update,
+`Label_6b_4099`=Exit (each a double indirection ending in `jp hl`). Carved
+config-only: typed `$40bd` (18-word step table) and each of the 20 record starts
+as `records:2`. Named by **pool-index state + word-position role** (a record's
+word 0/1/2 is Init/Update/Exit): `IntroCutsceneStateTable_6b` + 20
+`IntroCutsceneState{00..19}_6b` records + 60
+`IntroCutsceneState{NN}{Init,Update,Exit}_6b` handlers (the 54 not already
+labelled were decoded code reached only via the computed `jp hl`, so descent
+never named them). This supersedes the prior `Unused_6b_State11/12_*` labels:
+`wCutsceneStep` inits to 0 and only increments, so the step sequence visits states
+{0-10,13-19} and skips pool-records 11/12 -- but those are real defined states in
+the machine (referenced by the record pool), not dead code, so they are named like
+the rest. The step table now reads `dw IntroCutsceneState{NN}_6b` (making the
+step->state remap explicit -- step 1 -> State15, step 9 -> State13, ...) and each
+record is three role-named handler `dw`s. Byte-perfect.
+
 ### Map-table facing constants (2026-07-20)
 
 Replaced the raw facing bytes in the three story map tables with named

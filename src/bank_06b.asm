@@ -74,7 +74,7 @@ Func_6b_406a:
 	ld l, a ; $406d
 	ld h, $00 ; $406e
 	add hl, hl ; $4070
-	ld de, Data_6b_40bd ; $4071
+	ld de, IntroCutsceneStateTable_6b ; $4071
 	add hl, de ; $4074
 	ld a, [hl+] ; $4075
 	ld h, [hl] ; $4076
@@ -92,7 +92,7 @@ Label_6b_407c:
 	ld l, a ; $4088
 	ld h, $00 ; $4089
 	add hl, hl ; $408b
-	ld de, Data_6b_40bd ; $408c
+	ld de, IntroCutsceneStateTable_6b ; $408c
 	add hl, de ; $408f
 	ld a, [hl+] ; $4090
 	ld h, [hl] ; $4091
@@ -108,7 +108,7 @@ Label_6b_4099:
 	ld l, a ; $409c
 	ld h, $00 ; $409d
 	add hl, hl ; $409f
-	ld de, Data_6b_40bd ; $40a0
+	ld de, IntroCutsceneStateTable_6b ; $40a0
 	add hl, de ; $40a3
 	ld a, [hl+] ; $40a4
 	ld h, [hl] ; $40a5
@@ -130,109 +130,156 @@ Label_6b_40af:
 	jr z, Func_6b_406a ; $40ba
 Label_6b_40bc:
 	ret ; $40bc
-Data_6b_40bd:
-	; $40bd, 156 bytes (records:2)
-	dw $40e1 ; record 0
-	dw $413b ; record 1
-	dw $40e7 ; record 2
-	dw $40ed ; record 3
-	dw $40f3 ; record 4
-	dw $40f9 ; record 5
-	dw $40ff ; record 6
-	dw $4105 ; record 7
-	dw $410b ; record 8
-	dw $412f ; record 9
-	dw $4111 ; record 10
-	dw $4117 ; record 11
-	dw $411d ; record 12
-	dw $4141 ; record 13
-	dw $4147 ; record 14
-	dw $414d ; record 15
-	dw $4153 ; record 16
-	dw $4135 ; record 17
-	dw $418e ; record 18
-	dw $41fa ; record 19
-	dw $41d3 ; record 20
-	dw $421f ; record 21
-	dw $4304 ; record 22
-	dw $42f2 ; record 23
-	dw $4326 ; record 24
-	dw $43be ; record 25
-	dw $43af ; record 26
-	dw $43cf ; record 27
-	dw $4467 ; record 28
-	dw $4455 ; record 29
-	dw $4487 ; record 30
-	dw $451f ; record 31
-	dw $4510 ; record 32
-	dw $452e ; record 33
-	dw $4620 ; record 34
-	dw $45b5 ; record 35
-	dw $463d ; record 36
-	dw $464f ; record 37
-	dw $4644 ; record 38
-	dw $465e ; record 39
-	dw $46a9 ; record 40
-	dw $468a ; record 41
-	dw $479a ; record 42
-	dw $47d8 ; record 43
-	dw $47c4 ; record 44
-	dw $47e7 ; record 45
-	dw $4827 ; record 46
-	dw $4813 ; record 47
-	dw $4836 ; record 48
-	dw $4876 ; record 49
-	dw $4862 ; record 50
-	dw Unused_6b_State11_Init ; record 51
-	dw Unused_6b_State11_Update ; record 52
-	dw Unused_6b_State11_Exit ; record 53
-	dw Unused_6b_State12_Init ; record 54
-	dw Unused_6b_State12_Update ; record 55
-	dw Unused_6b_State12_Exit ; record 56
-	dw $46e5 ; record 57
-	dw $474b ; record 58
-	dw $4739 ; record 59
-	dw $4166 ; record 60
-	dw $416e ; record 61
-	dw $415c ; record 62
-	dw $4171 ; record 63
-	dw $417f ; record 64
-	dw $4178 ; record 65
-	dw $4960 ; record 66
-	dw $4a42 ; record 67
-	dw $4a51 ; record 68
-	dw $4a98 ; record 69
-	dw $4ae0 ; record 70
-	dw $4aef ; record 71
-	dw $4af2 ; record 72
-	dw $4bd0 ; record 73
-	dw $4bed ; record 74
-	dw $4c38 ; record 75
-	dw $4c79 ; record 76
-	dw $4c6e ; record 77
+IntroCutsceneStateTable_6b:
+	; $40bd, 36 bytes (records:2)
+	dw IntroCutsceneState00_6b ; record 0
+	dw IntroCutsceneState15_6b ; record 1
+	dw IntroCutsceneState01_6b ; record 2
+	dw IntroCutsceneState02_6b ; record 3
+	dw IntroCutsceneState03_6b ; record 4
+	dw IntroCutsceneState04_6b ; record 5
+	dw IntroCutsceneState05_6b ; record 6
+	dw IntroCutsceneState06_6b ; record 7
+	dw IntroCutsceneState07_6b ; record 8
+	dw IntroCutsceneState13_6b ; record 9
+	dw IntroCutsceneState08_6b ; record 10
+	dw IntroCutsceneState09_6b ; record 11
+	dw IntroCutsceneState10_6b ; record 12
+	dw IntroCutsceneState16_6b ; record 13
+	dw IntroCutsceneState17_6b ; record 14
+	dw IntroCutsceneState18_6b ; record 15
+	dw IntroCutsceneState19_6b ; record 16
+	dw IntroCutsceneState14_6b ; record 17
+IntroCutsceneState00_6b:
+	; $40e1, 6 bytes (records:2)
+	dw IntroCutsceneState00Init_6b ; record 0
+	dw IntroCutsceneState00Update_6b ; record 1
+	dw IntroCutsceneState00Exit_6b ; record 2
+IntroCutsceneState01_6b:
+	; $40e7, 6 bytes (records:2)
+	dw IntroCutsceneState01Init_6b ; record 0
+	dw IntroCutsceneState01Update_6b ; record 1
+	dw IntroCutsceneState01Exit_6b ; record 2
+IntroCutsceneState02_6b:
+	; $40ed, 6 bytes (records:2)
+	dw IntroCutsceneState02Init_6b ; record 0
+	dw IntroCutsceneState02Update_6b ; record 1
+	dw IntroCutsceneState02Exit_6b ; record 2
+IntroCutsceneState03_6b:
+	; $40f3, 6 bytes (records:2)
+	dw IntroCutsceneState03Init_6b ; record 0
+	dw IntroCutsceneState03Update_6b ; record 1
+	dw IntroCutsceneState03Exit_6b ; record 2
+IntroCutsceneState04_6b:
+	; $40f9, 6 bytes (records:2)
+	dw IntroCutsceneState04Init_6b ; record 0
+	dw IntroCutsceneState04Update_6b ; record 1
+	dw IntroCutsceneState04Exit_6b ; record 2
+IntroCutsceneState05_6b:
+	; $40ff, 6 bytes (records:2)
+	dw IntroCutsceneState05Init_6b ; record 0
+	dw IntroCutsceneState05Update_6b ; record 1
+	dw IntroCutsceneState05Exit_6b ; record 2
+IntroCutsceneState06_6b:
+	; $4105, 6 bytes (records:2)
+	dw IntroCutsceneState06Init_6b ; record 0
+	dw IntroCutsceneState06Update_6b ; record 1
+	dw IntroCutsceneState06Exit_6b ; record 2
+IntroCutsceneState07_6b:
+	; $410b, 6 bytes (records:2)
+	dw IntroCutsceneState07Init_6b ; record 0
+	dw IntroCutsceneState07Update_6b ; record 1
+	dw IntroCutsceneState07Exit_6b ; record 2
+IntroCutsceneState08_6b:
+	; $4111, 6 bytes (records:2)
+	dw IntroCutsceneState08Init_6b ; record 0
+	dw IntroCutsceneState08Update_6b ; record 1
+	dw IntroCutsceneState08Exit_6b ; record 2
+IntroCutsceneState09_6b:
+	; $4117, 6 bytes (records:2)
+	dw IntroCutsceneState09Init_6b ; record 0
+	dw IntroCutsceneState09Update_6b ; record 1
+	dw IntroCutsceneState09Exit_6b ; record 2
+IntroCutsceneState10_6b:
+	; $411d, 6 bytes (records:2)
+	dw IntroCutsceneState10Init_6b ; record 0
+	dw IntroCutsceneState10Update_6b ; record 1
+	dw IntroCutsceneState10Exit_6b ; record 2
+IntroCutsceneState11_6b:
+	; $4123, 6 bytes (records:2)
+	dw IntroCutsceneState11Init_6b ; record 0
+	dw IntroCutsceneState11Update_6b ; record 1
+	dw IntroCutsceneState11Exit_6b ; record 2
+IntroCutsceneState12_6b:
+	; $4129, 6 bytes (records:2)
+	dw IntroCutsceneState12Init_6b ; record 0
+	dw IntroCutsceneState12Update_6b ; record 1
+	dw IntroCutsceneState12Exit_6b ; record 2
+IntroCutsceneState13_6b:
+	; $412f, 6 bytes (records:2)
+	dw IntroCutsceneState13Init_6b ; record 0
+	dw IntroCutsceneState13Update_6b ; record 1
+	dw IntroCutsceneState13Exit_6b ; record 2
+IntroCutsceneState14_6b:
+	; $4135, 6 bytes (records:2)
+	dw IntroCutsceneState14Init_6b ; record 0
+	dw IntroCutsceneState14Update_6b ; record 1
+	dw IntroCutsceneState14Exit_6b ; record 2
+IntroCutsceneState15_6b:
+	; $413b, 6 bytes (records:2)
+	dw IntroCutsceneState15Init_6b ; record 0
+	dw IntroCutsceneState15Update_6b ; record 1
+	dw IntroCutsceneState15Exit_6b ; record 2
+IntroCutsceneState16_6b:
+	; $4141, 6 bytes (records:2)
+	dw IntroCutsceneState16Init_6b ; record 0
+	dw IntroCutsceneState16Update_6b ; record 1
+	dw IntroCutsceneState16Exit_6b ; record 2
+IntroCutsceneState17_6b:
+	; $4147, 6 bytes (records:2)
+	dw IntroCutsceneState17Init_6b ; record 0
+	dw IntroCutsceneState17Update_6b ; record 1
+	dw IntroCutsceneState17Exit_6b ; record 2
+IntroCutsceneState18_6b:
+	; $414d, 6 bytes (records:2)
+	dw IntroCutsceneState18Init_6b ; record 0
+	dw IntroCutsceneState18Update_6b ; record 1
+	dw IntroCutsceneState18Exit_6b ; record 2
+IntroCutsceneState19_6b:
+	; $4153, 6 bytes (records:2)
+	dw IntroCutsceneState19Init_6b ; record 0
+	dw IntroCutsceneState19Update_6b ; record 1
+	dw IntroCutsceneState19Exit_6b ; record 2
 Unused_6b_UpdateHandler_4159:
 	jp Label_6b_407c ; $4159
+IntroCutsceneState14Exit_6b:
 	jp Label_6b_40af ; $415c
 Unused_6b_ExitHandler_415f:
 	xor a, a ; $415f
 	ld [wCutsceneStepTimer], a ; $4160
 	jp Label_6b_40af ; $4163
+IntroCutsceneState14Init_6b:
 	ld a, $01 ; $4166
 	ld [wIntroCutsceneCheck], a ; $4168
 	jp Label_6b_407c ; $416b
+IntroCutsceneState14Update_6b:
 	jp Label_6b_407c ; $416e
+IntroCutsceneState15Init_6b:
 	xor a, a ; $4171
 	ld [wCutsceneStepTimer], a ; $4172
 	jp Label_6b_407c ; $4175
+IntroCutsceneState15Exit_6b:
 	xor a, a ; $4178
 	ld [wCutsceneStepTimer], a ; $4179
 	jp Label_6b_40af ; $417c
+IntroCutsceneState15Update_6b:
 	ld a, [wCutsceneStepTimer] ; $417f
 	inc a ; $4182
 	ld [wCutsceneStepTimer], a ; $4183
 	cp a, $0a ; $4186
 	jp z, Label_6b_4099 ; $4188
 	jp Label_6b_407c ; $418b
+IntroCutsceneState00Init_6b:
 	call Func_6b_54b9 ; $418e
 	call Func_6b_6075 ; $4191
 	xor a, a ; $4194
@@ -262,6 +309,7 @@ Unused_6b_ExitHandler_415f:
 	script_fade_in $20 ; $41c8
 	call WaitFadeEnd ; $41cd
 	jp Label_6b_407c ; $41d0
+IntroCutsceneState00Exit_6b:
 	ld c, $0a ; $41d3
 	call BeginFadeOut ; $41d5
 	call WaitFadeEnd ; $41d8
@@ -277,6 +325,7 @@ Unused_6b_ExitHandler_415f:
 	ld [wCameraY], a ; $41f1
 	ld [$c323], a ; $41f4
 	jp Label_6b_40af ; $41f7
+IntroCutsceneState00Update_6b:
 	ld a, [wCutsceneStepTimer] ; $41fa
 	inc a ; $41fd
 	ld [wCutsceneStepTimer], a ; $41fe
@@ -292,6 +341,7 @@ Label_6b_420d:
 	call Func_6b_60f8 ; $4216
 	call Func_6b_4e2d ; $4219
 	jp Label_6b_407c ; $421c
+IntroCutsceneState01Init_6b:
 	call DisableLCDSafely ; $421f
 	xor a, a ; $4222
 	ld [wCutsceneScrollX], a ; $4223
@@ -354,6 +404,7 @@ Palettes_6b_42b2:
 	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+IntroCutsceneState01Exit_6b:
 	ld hl, Func_6b_526a ; $42f2
 	call UnregisterFrameTask ; $42f5
 	xor a, a ; $42f8
@@ -361,6 +412,7 @@ Palettes_6b_42b2:
 	ld [wCutsceneScrollX], a ; $42fc
 	ldh [hScrollX], a ; $42ff
 	jp Label_6b_40af ; $4301
+IntroCutsceneState01Update_6b:
 	ld a, [wCutsceneScrollX] ; $4304
 	add a, $03 ; $4307
 	ld [wCutsceneScrollX], a ; $4309
@@ -376,6 +428,7 @@ Palettes_6b_42b2:
 	jp Label_6b_407c ; $4320
 Label_6b_4323:
 	jp Label_6b_4099 ; $4323
+IntroCutsceneState02Init_6b:
 	ldh a, [hWramBank] ; $4326
 	push af ; $4328
 	wram_bank $03 ; $4329
@@ -403,12 +456,14 @@ Label_6b_4323:
 	call LoadPalettesImmediate ; $4369
 	jp Label_6b_407c ; $436c
 	INCBIN "data/bank_06b/d_436f.bin" ; $436f, 64 bytes
+IntroCutsceneState02Exit_6b:
 	ld c, $06 ; $43af
 	call BeginFadeOut ; $43b1
 	call WaitFadeEnd ; $43b4
 	xor a, a ; $43b7
 	ld [wCutsceneStepTimer], a ; $43b8
 	jp Label_6b_40af ; $43bb
+IntroCutsceneState02Update_6b:
 	ld a, [wCutsceneStepTimer] ; $43be
 	inc a ; $43c1
 	ld [wCutsceneStepTimer], a ; $43c2
@@ -417,6 +472,7 @@ Label_6b_4323:
 	jp Label_6b_407c ; $43c9
 Label_6b_43cc:
 	jp Label_6b_4099 ; $43cc
+IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
 	ld c, $17 ; $43d2
 	farcall FarPtr_LoadScreenAssetRecord ; $43d4
@@ -463,6 +519,7 @@ Label_6b_43cc:
 	script_fade_in $7f ; $444a
 	call WaitFadeEnd ; $444f
 	jp Label_6b_407c ; $4452
+IntroCutsceneState03Exit_6b:
 	ld hl, Func_6b_52f9 ; $4455
 	call UnregisterFrameTask ; $4458
 	xor a, a ; $445b
@@ -470,6 +527,7 @@ Label_6b_43cc:
 	ld [$cb43], a ; $445f
 	ldh [hScrollX], a ; $4462
 	jp Label_6b_40af ; $4464
+IntroCutsceneState03Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4467
 	inc a ; $446a
 	ld [wCutsceneStepTimer], a ; $446b
@@ -483,6 +541,7 @@ Label_6b_43cc:
 	dec a ; $4480
 	ld [$cb46], a ; $4481
 	jp Label_6b_407c ; $4484
+IntroCutsceneState04Init_6b:
 	ldh a, [hWramBank] ; $4487
 	push af ; $4489
 	wram_bank $03 ; $448a
@@ -519,18 +578,21 @@ Label_6b_43cc:
 	dw $42dc, $73ff, $021f, $0000 ; pal 5: #e6b483 #ffffe6 #ff8300 #000000
 	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
 	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
+IntroCutsceneState04Exit_6b:
 	ld c, $06 ; $4510
 	call BeginFadeOut ; $4512
 	call WaitFadeEnd ; $4515
 	xor a, a ; $4518
 	ld [wCutsceneStepTimer], a ; $4519
 	jp Label_6b_40af ; $451c
+IntroCutsceneState04Update_6b:
 	ld a, [wCutsceneStepTimer] ; $451f
 	inc a ; $4522
 	ld [wCutsceneStepTimer], a ; $4523
 	cp a, $1e ; $4526
 	jp z, Label_6b_4099 ; $4528
 	jp Label_6b_407c ; $452b
+IntroCutsceneState05Init_6b:
 	call DisableLCDSafely ; $452e
 	ld c, $18 ; $4531
 	farcall FarPtr_LoadScreenAssetRecord ; $4533
@@ -583,6 +645,7 @@ Label_6b_43cc:
 	script_fade_in $10 ; $45aa
 	call WaitFadeEnd ; $45af
 	jp Label_6b_407c ; $45b2
+IntroCutsceneState05Exit_6b:
 	ld hl, rIE ; $45b5
 	res 1, [hl] ; $45b8
 	ldh a, [hWramBank] ; $45ba
@@ -622,6 +685,7 @@ Label_6b_43cc:
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
 	jp Label_6b_40af ; $461d
+IntroCutsceneState05Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4620
 	inc a ; $4623
 	ld [wCutsceneStepTimer], a ; $4624
@@ -634,19 +698,23 @@ Label_6b_43cc:
 	dec a ; $4636
 	ld [$cb46], a ; $4637
 	jp Label_6b_407c ; $463a
+IntroCutsceneState06Init_6b:
 	xor a, a ; $463d
 	ld [wCutsceneStepTimer], a ; $463e
 	jp Label_6b_407c ; $4641
+IntroCutsceneState06Exit_6b:
 	ld c, $10 ; $4644
 	call BeginFadeOut ; $4646
 	call WaitFadeEnd ; $4649
 	jp Label_6b_40af ; $464c
+IntroCutsceneState06Update_6b:
 	ld a, [wCutsceneStepTimer] ; $464f
 	inc a ; $4652
 	ld [wCutsceneStepTimer], a ; $4653
 	cp a, $64 ; $4656
 	jp z, Label_6b_4099 ; $4658
 	jp Label_6b_407c ; $465b
+IntroCutsceneState07Init_6b:
 	call Func_6b_617c ; $465e
 	call Func_6b_73f2 ; $4661
 	xor a, a ; $4664
@@ -662,6 +730,7 @@ Label_6b_43cc:
 	ld hl, Func_6b_7083 ; $4681
 	call RegisterFrameTask ; $4684
 	jp Label_6b_407c ; $4687
+IntroCutsceneState07Exit_6b:
 	call ClearFrameTasks ; $468a
 	ld a, $01 ; $468d
 	ld hl, Func_6b_53f1 ; $468f
@@ -674,6 +743,7 @@ Label_6b_43cc:
 	ld [wCameraY], a ; $46a0
 	ld [$c323], a ; $46a3
 	jp Label_6b_40af ; $46a6
+IntroCutsceneState07Update_6b:
 	ld a, [$c321] ; $46a9
 	cp a, $40 ; $46ac
 	jp nz, Label_6b_46c0 ; $46ae
@@ -702,6 +772,7 @@ Label_6b_46ce:
 	ld a, l ; $46de
 	ld [wCameraX], a ; $46df
 	jp Label_6b_407c ; $46e2
+IntroCutsceneState13Init_6b:
 	xor a, a ; $46e5
 	ldh [hScrollY], a ; $46e6
 	ldh [hScrollX], a ; $46e8
@@ -733,6 +804,7 @@ Label_6b_46ce:
 	pop af ; $4731
 	wram_bank ; $4732
 	jp Label_6b_407c ; $4736
+IntroCutsceneState13Exit_6b:
 	ld c, $10 ; $4739
 	call BeginFadeOut ; $473b
 	call WaitFadeEnd ; $473e
@@ -740,6 +812,7 @@ Label_6b_46ce:
 	xor a, a ; $4744
 	ld [wCutsceneStepTimer], a ; $4745
 	jp Label_6b_40af ; $4748
+IntroCutsceneState13Update_6b:
 	ld a, [wCutsceneStepTimer] ; $474b
 	inc a ; $474e
 	ld [wCutsceneStepTimer], a ; $474f
@@ -757,6 +830,7 @@ Palettes_6b_475a:
 	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
 	dw $7fff, $4252, $214a, $0000 ; pal 6: #ffffff #949483 #525241 #000000
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+IntroCutsceneState08Init_6b:
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
 	farcall FarPtr_LoadScreenAssetRecord ; $479f
@@ -772,6 +846,7 @@ Palettes_6b_475a:
 	script_fade_in $10 ; $47b9
 	call WaitFadeEnd ; $47be
 	jp Label_6b_407c ; $47c1
+IntroCutsceneState08Exit_6b:
 	ld c, $0a ; $47c4
 	call BeginFadeOut ; $47c6
 	call WaitFadeEnd ; $47c9
@@ -780,12 +855,14 @@ Palettes_6b_475a:
 	xor a, a ; $47d2
 	ldh [hScrollX], a ; $47d3
 	jp Label_6b_40af ; $47d5
+IntroCutsceneState08Update_6b:
 	ld a, [wCutsceneStepTimer] ; $47d8
 	inc a ; $47db
 	ld [wCutsceneStepTimer], a ; $47dc
 	cp a, $2c ; $47df
 	jp z, Label_6b_4099 ; $47e1
 	jp Label_6b_407c ; $47e4
+IntroCutsceneState09Init_6b:
 	call DisableLCDSafely ; $47e7
 	ld c, $1d ; $47ea
 	farcall FarPtr_LoadScreenAssetRecord ; $47ec
@@ -802,6 +879,7 @@ Palettes_6b_475a:
 	script_fade_in $10 ; $4808
 	call WaitFadeEnd ; $480d
 	jp Label_6b_407c ; $4810
+IntroCutsceneState09Exit_6b:
 	ld c, $0a ; $4813
 	call BeginFadeOut ; $4815
 	call WaitFadeEnd ; $4818
@@ -810,12 +888,14 @@ Palettes_6b_475a:
 	xor a, a ; $4821
 	ldh [hScrollX], a ; $4822
 	jp Label_6b_40af ; $4824
+IntroCutsceneState09Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4827
 	inc a ; $482a
 	ld [wCutsceneStepTimer], a ; $482b
 	cp a, $2b ; $482e
 	jp z, Label_6b_4099 ; $4830
 	jp Label_6b_407c ; $4833
+IntroCutsceneState10Init_6b:
 	call DisableLCDSafely ; $4836
 	ld c, $1e ; $4839
 	farcall FarPtr_LoadScreenAssetRecord ; $483b
@@ -832,6 +912,7 @@ Palettes_6b_475a:
 	script_fade_in $10 ; $4857
 	call WaitFadeEnd ; $485c
 	jp Label_6b_407c ; $485f
+IntroCutsceneState10Exit_6b:
 	ld c, $0a ; $4862
 	call BeginFadeOut ; $4864
 	call WaitFadeEnd ; $4867
@@ -840,13 +921,14 @@ Palettes_6b_475a:
 	xor a, a ; $4870
 	ldh [hScrollX], a ; $4871
 	jp Label_6b_40af ; $4873
+IntroCutsceneState10Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4876
 	inc a ; $4879
 	ld [wCutsceneStepTimer], a ; $487a
 	cp a, $2b ; $487d
 	jp z, Label_6b_4099 ; $487f
 	jp Label_6b_407c ; $4882
-Unused_6b_State11_Init:
+IntroCutsceneState11Init_6b:
 	call DisableLCDSafely ; $4885
 	ld c, $20 ; $4888
 	farcall FarPtr_LoadScreenAssetRecord ; $488a
@@ -871,7 +953,7 @@ Unused_6b_State11_Init:
 	xor a, a ; $48c3
 	ld [wCutsceneStepTimer], a ; $48c4
 	jp Label_6b_407c ; $48c7
-Unused_6b_State11_Exit:
+IntroCutsceneState11Exit_6b:
 	ld a, $00 ; $48ca
 	ldh [hShowDebugConsole], a ; $48cc
 	ld hl, rLCDC ; $48ce
@@ -882,14 +964,14 @@ Unused_6b_State11_Exit:
 	xor a, a ; $48dc
 	ld [wCutsceneStepTimer], a ; $48dd
 	jp Label_6b_40af ; $48e0
-Unused_6b_State11_Update:
+IntroCutsceneState11Update_6b:
 	ld a, [wCutsceneStepTimer] ; $48e3
 	inc a ; $48e6
 	ld [wCutsceneStepTimer], a ; $48e7
 	cp a, $70 ; $48ea
 	jp z, Label_6b_4099 ; $48ec
 	jp Label_6b_407c ; $48ef
-Unused_6b_State12_Init:
+IntroCutsceneState12Init_6b:
 	xor a, a ; $48f2
 	ld [wCutsceneStepTimer], a ; $48f3
 	ld [$cb45], a ; $48f6
@@ -911,12 +993,12 @@ Unused_6b_State12_Init:
 	ld [hl+], a ; $491a
 	ld [hl], d ; $491b
 	jp Label_6b_407c ; $491c
-Unused_6b_State12_Exit:
+IntroCutsceneState12Exit_6b:
 	ld c, $04 ; $491f
 	call BeginFadeOut ; $4921
 	call WaitFadeEnd ; $4924
 	jp Label_6b_40af ; $4927
-Unused_6b_State12_Update:
+IntroCutsceneState12Update_6b:
 	ld a, [$cb45] ; $492a
 	cp a, $0a ; $492d
 	jr z, Label_6b_493b ; $492f
@@ -940,6 +1022,7 @@ Label_6b_494e:
 	call Func_6b_60f8 ; $4957
 	call Func_6b_4e2d ; $495a
 	jp Label_6b_407c ; $495d
+IntroCutsceneState16Init_6b:
 	call DisableLCDSafely ; $4960
 	call Func_6b_53fc ; $4963
 	call Func_6b_6075 ; $4966
@@ -1014,12 +1097,14 @@ Label_6b_494e:
 	script_fade_in $08 ; $4a37
 	call WaitFadeEnd ; $4a3c
 	jp Label_6b_407c ; $4a3f
+IntroCutsceneState16Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4a42
 	inc a ; $4a45
 	ld [wCutsceneStepTimer], a ; $4a46
 	cp a, $70 ; $4a49
 	jp z, Label_6b_4099 ; $4a4b
 	jp Label_6b_407c ; $4a4e
+IntroCutsceneState16Exit_6b:
 	xor a, a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
 	jp Label_6b_40af ; $4a55
@@ -1034,6 +1119,7 @@ Palettes_6b_4a58:
 	dw $214a, $214a, $4252, $0000 ; pal 5: #525241 #525241 #949483 #000000
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+IntroCutsceneState17Init_6b:
 	wram_bank $04 ; $4a98
 	ld hl, $d8c0 ; $4a9e
 	ld de, $9cc0 ; $4aa1
@@ -1059,13 +1145,16 @@ Palettes_6b_4a58:
 	xor a, a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
 	jp Label_6b_407c ; $4add
+IntroCutsceneState17Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4ae0
 	inc a ; $4ae3
 	ld [wCutsceneStepTimer], a ; $4ae4
 	cp a, $70 ; $4ae7
 	jp z, Label_6b_4099 ; $4ae9
 	jp Label_6b_407c ; $4aec
+IntroCutsceneState17Exit_6b:
 	jp Label_6b_40af ; $4aef
+IntroCutsceneState18Init_6b:
 	ld hl, Palettes_6b_756f ; $4af2
 	ld de, $0008 ; $4af5
 	call LoadPaletteShadow ; $4af8
@@ -1144,6 +1233,7 @@ Palettes_6b_4a58:
 	xor a, a ; $4bc9
 	ld [wCutsceneStepTimer], a ; $4bca
 	jp Label_6b_407c ; $4bcd
+IntroCutsceneState18Update_6b:
 	ld a, [$cb44] ; $4bd0
 	sub a, $04 ; $4bd3
 	ld [$cb44], a ; $4bd5
@@ -1157,6 +1247,7 @@ Label_6b_4be3:
 	inc a ; $4be6
 	ld [wCutsceneStepTimer], a ; $4be7
 	jp Label_6b_407c ; $4bea
+IntroCutsceneState18Exit_6b:
 	ld hl, Func_6b_7569 ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank $03 ; $4bf3
@@ -1173,6 +1264,7 @@ Palettes_6b_4c00:
 	dw $191f, $0090, $331f, $0000 ; pal 4: #ff4131 #832000 #ffc562 #000000
 	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
+IntroCutsceneState19Init_6b:
 	ld hl, $5d25 ; $4c38
 	ld de, $0008 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
@@ -1197,10 +1289,12 @@ Palettes_6b_4c00:
 	ld [hl+], a ; $4c69
 	ld [hl], d ; $4c6a
 	jp Label_6b_407c ; $4c6b
+IntroCutsceneState19Exit_6b:
 	ld c, $04 ; $4c6e
 	call BeginFadeOut ; $4c70
 	call WaitFadeEnd ; $4c73
 	jp Label_6b_40af ; $4c76
+IntroCutsceneState19Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4c79
 	inc a ; $4c7c
 	ld [wCutsceneStepTimer], a ; $4c7d
