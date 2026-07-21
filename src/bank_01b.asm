@@ -2,20 +2,20 @@ SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 
 	farptr DecompressCharMugshot ; $4000
 	farptr LoadIndexedPaletteThunk ; $4002
-	farptr Func_1b_4e7f ; $4004
-	farptr Func_1b_4e80 ; $4006
-	farptr Func_1b_4e80Alias1, Func_1b_4e80 ; $4008
-	farptr Func_1b_4e57 ; $400a
+	farptr StubNop_1b_4e7f ; $4004
+	farptr StubNop_1b_4e80 ; $4006
+	farptr StubNop_1b_4e80Alias1, StubNop_1b_4e80 ; $4008
+	farptr StubNop_1b_4e57 ; $400a
 	farptr Func_1b_4e0d ; $400c
 	farptr SetMugshotAttrs ; $400e
 	farptr LoadCharMugshotToBuffer ; $4010
-	farptr Func_1b_4e43 ; $4012
-	farptr Func_1b_4e44 ; $4014
-	farptr Func_1b_4e45 ; $4016
+	farptr StubNop_1b_4e43 ; $4012
+	farptr StubNop_1b_4e44 ; $4014
+	farptr StubNop_1b_4e45 ; $4016
 	farptr CopyMugshotBufferToVram ; $4018
 	farptr ShowRankingBoard ; $401a
 	farptr UpdateCharSelectSelection ; $401c
-	farptr Func_1b_6982 ; $401e
+	farptr RunStoryDataConfirmMenu ; $401e
 	farptr ShowNoN64DataFoundScreen ; $4020
 	farptr RunNewGameSetup ; $4022
 	farptr RunDebugSaveDataFlow ; $4024
@@ -711,7 +711,7 @@ Label_1b_4426:
 	pop af ; $442a
 	wram_bank ; $442b
 	ret ; $442f
-Func_1b_4430:
+UpdateAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $4430
 	ret ; $4433
 DrawNameWithDiacritics:
@@ -890,7 +890,7 @@ CharMugshotGfxPointers_1b_4cec:
 	dw $d600, $d690 ; record 69
 	dw $d720, $0000 ; record 70
 	dw $0090, $0120 ; record 71
-Func_1b_4e0c:
+StubNop_1b_4e0c:
 	ret ; $4e0c
 Func_1b_4e0d:
 	ld a, $ff ; $4e0d
@@ -931,11 +931,11 @@ LoadCharMugshotToBuffer:
 	call DecompressCharMugshot ; $4e3e
 	pop de ; $4e41
 	ret ; $4e42
-Func_1b_4e43:
+StubNop_1b_4e43:
 	ret ; $4e43
-Func_1b_4e44:
+StubNop_1b_4e44:
 	ret ; $4e44
-Func_1b_4e45:
+StubNop_1b_4e45:
 	ret ; $4e45
 CopyMugshotBufferToVram:
 	push af ; $4e46
@@ -950,7 +950,7 @@ CopyMugshotBufferToVram:
 	pop bc ; $4e54
 	pop af ; $4e55
 	ret ; $4e56
-Func_1b_4e57:
+StubNop_1b_4e57:
 	ret ; $4e57
 LoadIndexedPaletteThunk:
 	farcall LoadIndexedPalette_18 ; $4e58
@@ -959,7 +959,7 @@ DecompressCharMugshot:
 	push af ; $4e5c
 	push de ; $4e5d
 	push hl ; $4e5e
-	call Func_1b_4e0c ; $4e5f
+	call StubNop_1b_4e0c ; $4e5f
 	cp a, $3f ; $4e62
 	jr nz, Label_1b_4e6c ; $4e64
 	ld b, a ; $4e66
@@ -981,9 +981,9 @@ Label_1b_4e6c:
 	pop de ; $4e7c
 	pop af ; $4e7d
 	ret ; $4e7e
-Func_1b_4e7f:
+StubNop_1b_4e7f:
 	ret ; $4e7f
-Func_1b_4e80:
+StubNop_1b_4e80:
 	ret ; $4e80
 ShowRankingBoard:
 	wram_bank $03 ; $4e81
@@ -1076,13 +1076,13 @@ Label_1b_4f4f:
 	ld de, $0806 ; $4f55
 	call LoadPaletteShadow ; $4f58
 	ld a, $01 ; $4f5b
-	ld hl, Func_1b_5a45 ; $4f5d
+	ld hl, DrawRankingMarkersTask ; $4f5d
 	call RegisterFrameTask ; $4f60
 	ld a, [$d802] ; $4f63
 	cp a, $02 ; $4f66
 	jr nz, Label_1b_4f72 ; $4f68
 	ld a, $01 ; $4f6a
-	ld hl, Func_1b_5a04 ; $4f6c
+	ld hl, RankingCursorBobTask ; $4f6c
 	call RegisterFrameTask ; $4f6f
 Label_1b_4f72:
 	farcall QueueWram3MapToVRAM ; $4f72
@@ -1230,89 +1230,89 @@ RankingBoardAnimState_5077_1b:
 	ld c, $00 ; $5085
 	call GetRankingMarkerSlot ; $5087
 	ld de, $5ba5 ; $508a
-	call Func_1b_5aa4 ; $508d
+	call StartRankingMarkerAnim2 ; $508d
 	ld c, $01 ; $5090
 	call GetRankingMarkerSlot ; $5092
 	ld de, $5bb2 ; $5095
-	call Func_1b_5a89 ; $5098
+	call StartRankingMarkerAnim1 ; $5098
 	ld b, $01 ; $509b
 	call HighlightRankingRow ; $509d
-	call Func_1b_58c5 ; $50a0
+	call PushRankingBoardTilemapRows ; $50a0
 	call WaitFramesCmd ; $50a3
 	db $1e ; $50a6 inline arg
 	sound $80 ; $50a7
 	ld c, $03 ; $50a9
 	call GetRankingMarkerSlot ; $50ab
 	ld de, $5b94 ; $50ae
-	call Func_1b_5a6e ; $50b1
+	call StartRankingMarkerAnim0 ; $50b1
 	ld c, $04 ; $50b4
 	call GetRankingMarkerSlot ; $50b6
 	ld de, $5b94 ; $50b9
-	call Func_1b_5a89 ; $50bc
+	call StartRankingMarkerAnim1 ; $50bc
 	call WaitFramesCmd ; $50bf
 	db $5a ; $50c2 inline arg
 	sound $78 ; $50c3
 	ld c, $03 ; $50c5
 	call GetRankingMarkerSlot ; $50c7
 	ld de, $5ba5 ; $50ca
-	call Func_1b_5aa4 ; $50cd
+	call StartRankingMarkerAnim2 ; $50cd
 	ld c, $04 ; $50d0
 	call GetRankingMarkerSlot ; $50d2
 	ld de, $5bb2 ; $50d5
-	call Func_1b_5a89 ; $50d8
+	call StartRankingMarkerAnim1 ; $50d8
 	ld b, $02 ; $50db
 	call HighlightRankingRow ; $50dd
-	call Func_1b_58c5 ; $50e0
+	call PushRankingBoardTilemapRows ; $50e0
 	call WaitFramesCmd ; $50e3
 	db $1e ; $50e6 inline arg
 	sound $80 ; $50e7
 	ld c, $06 ; $50e9
 	call GetRankingMarkerSlot ; $50eb
 	ld de, $5b9d ; $50ee
-	call Func_1b_5a6e ; $50f1
+	call StartRankingMarkerAnim0 ; $50f1
 	ld c, $07 ; $50f4
 	call GetRankingMarkerSlot ; $50f6
 	ld de, $5b9d ; $50f9
-	call Func_1b_5a89 ; $50fc
+	call StartRankingMarkerAnim1 ; $50fc
 	call WaitFramesCmd ; $50ff
 	db $5a ; $5102 inline arg
 	sound $78 ; $5103
 	ld c, $06 ; $5105
 	call GetRankingMarkerSlot ; $5107
 	ld de, $5ba5 ; $510a
-	call Func_1b_5aa4 ; $510d
+	call StartRankingMarkerAnim2 ; $510d
 	ld c, $07 ; $5110
 	call GetRankingMarkerSlot ; $5112
 	ld de, $5b95 ; $5115
-	call Func_1b_5a89 ; $5118
+	call StartRankingMarkerAnim1 ; $5118
 	ld b, $03 ; $511b
 	call HighlightRankingRow ; $511d
-	call Func_1b_58c5 ; $5120
+	call PushRankingBoardTilemapRows ; $5120
 	call WaitFramesCmd ; $5123
 	db $1e ; $5126 inline arg
 	sound $80 ; $5127
 	ld c, $09 ; $5129
 	call GetRankingMarkerSlot ; $512b
 	ld de, $5b9d ; $512e
-	call Func_1b_5a6e ; $5131
+	call StartRankingMarkerAnim0 ; $5131
 	ld c, $0a ; $5134
 	call GetRankingMarkerSlot ; $5136
 	ld de, $5b9d ; $5139
-	call Func_1b_5a89 ; $513c
+	call StartRankingMarkerAnim1 ; $513c
 	call WaitFramesCmd ; $513f
 	db $5a ; $5142 inline arg
 	sound $78 ; $5143
 	ld c, $09 ; $5145
 	call GetRankingMarkerSlot ; $5147
 	ld de, $5ba5 ; $514a
-	call Func_1b_5aa4 ; $514d
+	call StartRankingMarkerAnim2 ; $514d
 	ld c, $0a ; $5150
 	call GetRankingMarkerSlot ; $5152
 	ld de, $5b95 ; $5155
-	call Func_1b_5a89 ; $5158
+	call StartRankingMarkerAnim1 ; $5158
 	ld b, $04 ; $515b
 	call HighlightRankingRow ; $515d
-	call Func_1b_58c5 ; $5160
+	call PushRankingBoardTilemapRows ; $5160
 	call WaitFramesCmd ; $5163
 	db $1e ; $5166 inline arg
 	ld a, $01 ; $5167
@@ -1328,95 +1328,95 @@ RankingBoardAnimState_516f_1b:
 	ld c, $00 ; $517d
 	call GetRankingMarkerSlot ; $517f
 	ld de, $5bbb ; $5182
-	call Func_1b_5aa4 ; $5185
+	call StartRankingMarkerAnim2 ; $5185
 	ld c, $02 ; $5188
 	call GetRankingMarkerSlot ; $518a
 	ld de, $5bcc ; $518d
-	call Func_1b_5a89 ; $5190
+	call StartRankingMarkerAnim1 ; $5190
 	ld b, $05 ; $5193
 	call HighlightRankingRow ; $5195
-	call Func_1b_58c5 ; $5198
+	call PushRankingBoardTilemapRows ; $5198
 	call WaitFramesCmd ; $519b
 	db $1e ; $519e inline arg
 	sound $80 ; $519f
 	ld c, $05 ; $51a1
 	call GetRankingMarkerSlot ; $51a3
 	ld de, $5bbb ; $51a6
-	call Func_1b_5a89 ; $51a9
+	call StartRankingMarkerAnim1 ; $51a9
 	call WaitFramesCmd ; $51ac
 	db $04 ; $51af inline arg
 	ld c, $03 ; $51b0
 	call GetRankingMarkerSlot ; $51b2
 	ld de, $5bc3 ; $51b5
-	call Func_1b_5a6e ; $51b8
+	call StartRankingMarkerAnim0 ; $51b8
 	call WaitFramesCmd ; $51bb
 	db $78 ; $51be inline arg
 	sound $78 ; $51bf
 	ld c, $05 ; $51c1
 	call GetRankingMarkerSlot ; $51c3
 	ld de, $5bcc ; $51c6
-	call Func_1b_5abf ; $51c9
+	call StartRankingMarkerAnim3 ; $51c9
 	ld c, $03 ; $51cc
 	call GetRankingMarkerSlot ; $51ce
 	ld de, $5bd4 ; $51d1
-	call Func_1b_5a6e ; $51d4
+	call StartRankingMarkerAnim0 ; $51d4
 	ld b, $06 ; $51d7
 	call HighlightRankingRow ; $51d9
-	call Func_1b_58c5 ; $51dc
+	call PushRankingBoardTilemapRows ; $51dc
 	call WaitFramesCmd ; $51df
 	db $1e ; $51e2 inline arg
 	sound $80 ; $51e3
 	ld c, $08 ; $51e5
 	call GetRankingMarkerSlot ; $51e7
 	ld de, $5bcd ; $51ea
-	call Func_1b_5a89 ; $51ed
+	call StartRankingMarkerAnim1 ; $51ed
 	call WaitFramesCmd ; $51f0
 	db $04 ; $51f3 inline arg
 	ld c, $06 ; $51f4
 	call GetRankingMarkerSlot ; $51f6
 	ld de, $5bd4 ; $51f9
-	call Func_1b_5a6e ; $51fc
+	call StartRankingMarkerAnim0 ; $51fc
 	call WaitFramesCmd ; $51ff
 	db $5a ; $5202 inline arg
 	sound $78 ; $5203
 	ld c, $08 ; $5205
 	call GetRankingMarkerSlot ; $5207
 	ld de, $5bcc ; $520a
-	call Func_1b_5abf ; $520d
+	call StartRankingMarkerAnim3 ; $520d
 	ld c, $06 ; $5210
 	call GetRankingMarkerSlot ; $5212
 	ld de, $5bc3 ; $5215
-	call Func_1b_5a6e ; $5218
+	call StartRankingMarkerAnim0 ; $5218
 	ld b, $07 ; $521b
 	call HighlightRankingRow ; $521d
-	call Func_1b_58c5 ; $5220
+	call PushRankingBoardTilemapRows ; $5220
 	call WaitFramesCmd ; $5223
 	db $1e ; $5226 inline arg
 	sound $80 ; $5227
 	ld c, $0b ; $5229
 	call GetRankingMarkerSlot ; $522b
 	ld de, $5bcd ; $522e
-	call Func_1b_5a89 ; $5231
+	call StartRankingMarkerAnim1 ; $5231
 	call WaitFramesCmd ; $5234
 	db $04 ; $5237 inline arg
 	ld c, $09 ; $5238
 	call GetRankingMarkerSlot ; $523a
 	ld de, $5bd4 ; $523d
-	call Func_1b_5a6e ; $5240
+	call StartRankingMarkerAnim0 ; $5240
 	call WaitFramesCmd ; $5243
 	db $5a ; $5246 inline arg
 	sound $78 ; $5247
 	ld c, $0b ; $5249
 	call GetRankingMarkerSlot ; $524b
 	ld de, $5bbc ; $524e
-	call Func_1b_5a89 ; $5251
+	call StartRankingMarkerAnim1 ; $5251
 	ld c, $09 ; $5254
 	call GetRankingMarkerSlot ; $5256
 	ld de, $5bbb ; $5259
-	call Func_1b_5aa4 ; $525c
+	call StartRankingMarkerAnim2 ; $525c
 	ld b, $08 ; $525f
 	call HighlightRankingRow ; $5261
-	call Func_1b_58c5 ; $5264
+	call PushRankingBoardTilemapRows ; $5264
 	call WaitFramesCmd ; $5267
 	db $1e ; $526a inline arg
 	ld a, $01 ; $526b
@@ -1432,39 +1432,39 @@ RankingBoardAnimState_5273_1b:
 	ld c, $00 ; $5281
 	call GetRankingMarkerSlot ; $5283
 	ld de, $5be7 ; $5286
-	call Func_1b_5aa4 ; $5289
+	call StartRankingMarkerAnim2 ; $5289
 	ld c, $05 ; $528c
 	call GetRankingMarkerSlot ; $528e
 	ld de, $5bd4 ; $5291
-	call Func_1b_5a6e ; $5294
+	call StartRankingMarkerAnim0 ; $5294
 	ld b, $09 ; $5297
 	call HighlightRankingRow ; $5299
-	call Func_1b_58c5 ; $529c
+	call PushRankingBoardTilemapRows ; $529c
 	call WaitFramesCmd ; $529f
 	db $5a ; $52a2 inline arg
 	sound $80 ; $52a3
 	ld c, $08 ; $52a5
 	call GetRankingMarkerSlot ; $52a7
 	ld de, $5bd4 ; $52aa
-	call Func_1b_5a6e ; $52ad
+	call StartRankingMarkerAnim0 ; $52ad
 	ld c, $09 ; $52b0
 	call GetRankingMarkerSlot ; $52b2
 	ld de, $5bd4 ; $52b5
-	call Func_1b_5a89 ; $52b8
+	call StartRankingMarkerAnim1 ; $52b8
 	call WaitFramesCmd ; $52bb
 	db $5a ; $52be inline arg
 	sound $78 ; $52bf
 	ld c, $08 ; $52c1
 	call GetRankingMarkerSlot ; $52c3
 	ld de, $5b95 ; $52c6
-	call Func_1b_5a6e ; $52c9
+	call StartRankingMarkerAnim0 ; $52c9
 	ld c, $09 ; $52cc
 	call GetRankingMarkerSlot ; $52ce
 	ld de, $5c0c ; $52d1
-	call Func_1b_5abf ; $52d4
+	call StartRankingMarkerAnim3 ; $52d4
 	ld b, $0a ; $52d7
 	call HighlightRankingRow ; $52d9
-	call Func_1b_58c5 ; $52dc
+	call PushRankingBoardTilemapRows ; $52dc
 	call WaitFramesCmd ; $52df
 	db $1e ; $52e2 inline arg
 	ld a, $01 ; $52e3
@@ -1486,11 +1486,11 @@ RankingBoardAnimState_52ff_1b:
 	ld c, $00 ; $5305
 	call GetRankingMarkerSlot ; $5307
 	ld de, $5b94 ; $530a
-	call Func_1b_5a6e ; $530d
+	call StartRankingMarkerAnim0 ; $530d
 	ld c, $01 ; $5310
 	call GetRankingMarkerSlot ; $5312
 	ld de, $5b94 ; $5315
-	call Func_1b_5a89 ; $5318
+	call StartRankingMarkerAnim1 ; $5318
 	call WaitFramesCmd ; $531b
 	db $14 ; $531e inline arg
 	jp RankingBoardAnimNop_1b ; $531f
@@ -1501,13 +1501,13 @@ RankingBoardAnimState_5322_1b:
 	ld c, $02 ; $5328
 	call GetRankingMarkerSlot ; $532a
 	ld de, $5bbb ; $532d
-	call Func_1b_5a89 ; $5330
+	call StartRankingMarkerAnim1 ; $5330
 	call WaitFramesCmd ; $5333
 	db $04 ; $5336 inline arg
 	ld c, $00 ; $5337
 	call GetRankingMarkerSlot ; $5339
 	ld de, $5bc3 ; $533c
-	call Func_1b_5a6e ; $533f
+	call StartRankingMarkerAnim0 ; $533f
 	call WaitFramesCmd ; $5342
 	db $14 ; $5345 inline arg
 	jp RankingBoardAnimNop_1b ; $5346
@@ -1518,11 +1518,11 @@ RankingBoardAnimState_5349_1b:
 	ld c, $00 ; $534f
 	call GetRankingMarkerSlot ; $5351
 	ld de, $5b94 ; $5354
-	call Func_1b_5a6e ; $5357
+	call StartRankingMarkerAnim0 ; $5357
 	ld c, $05 ; $535a
 	call GetRankingMarkerSlot ; $535c
 	ld de, $5b94 ; $535f
-	call Func_1b_5a89 ; $5362
+	call StartRankingMarkerAnim1 ; $5362
 	jp RankingBoardAnimNop_1b ; $5365
 RankingBoardAnimState_5368_1b:
 	call WaitFramesCmd ; $5368
@@ -1531,11 +1531,11 @@ RankingBoardAnimState_5368_1b:
 	ld c, $00 ; $536e
 	call GetRankingMarkerSlot ; $5370
 	ld de, $5bdd ; $5373
-	call Func_1b_5a6e ; $5376
+	call StartRankingMarkerAnim0 ; $5376
 	ld c, $09 ; $5379
 	call GetRankingMarkerSlot ; $537b
 	ld de, $5be2 ; $537e
-	call Func_1b_5a89 ; $5381
+	call StartRankingMarkerAnim1 ; $5381
 	jp RankingBoardAnimNop_1b ; $5384
 RankingBoardAnimState_5387_1b:
 	ld a, $01 ; $5387
@@ -1547,39 +1547,39 @@ RankingBoardAnimState_5387_1b:
 	ld c, $00 ; $5395
 	call GetRankingMarkerSlot ; $5397
 	ld de, $5bf7 ; $539a
-	call Func_1b_5aa4 ; $539d
+	call StartRankingMarkerAnim2 ; $539d
 	ld c, $01 ; $53a0
 	call GetRankingMarkerSlot ; $53a2
 	ld de, $5bd4 ; $53a5
-	call Func_1b_5a89 ; $53a8
+	call StartRankingMarkerAnim1 ; $53a8
 	ld b, $01 ; $53ab
 	call HighlightDoublesRankingRow ; $53ad
-	call Func_1b_58c5 ; $53b0
+	call PushRankingBoardTilemapRows ; $53b0
 	call WaitFramesCmd ; $53b3
 	db $5a ; $53b6 inline arg
 	sound $80 ; $53b7
 	ld c, $03 ; $53b9
 	call GetRankingMarkerSlot ; $53bb
 	ld de, $5bd4 ; $53be
-	call Func_1b_5a6e ; $53c1
+	call StartRankingMarkerAnim0 ; $53c1
 	ld c, $04 ; $53c4
 	call GetRankingMarkerSlot ; $53c6
 	ld de, $5b9d ; $53c9
-	call Func_1b_5a89 ; $53cc
+	call StartRankingMarkerAnim1 ; $53cc
 	call WaitFramesCmd ; $53cf
 	db $5a ; $53d2 inline arg
 	sound $78 ; $53d3
 	ld c, $03 ; $53d5
 	call GetRankingMarkerSlot ; $53d7
 	ld de, $5bf7 ; $53da
-	call Func_1b_5aa4 ; $53dd
+	call StartRankingMarkerAnim2 ; $53dd
 	ld c, $04 ; $53e0
 	call GetRankingMarkerSlot ; $53e2
 	ld de, $5bc5 ; $53e5
-	call Func_1b_5a89 ; $53e8
+	call StartRankingMarkerAnim1 ; $53e8
 	ld b, $02 ; $53eb
 	call HighlightDoublesRankingRow ; $53ed
-	call Func_1b_58c5 ; $53f0
+	call PushRankingBoardTilemapRows ; $53f0
 	call WaitFramesCmd ; $53f3
 	db $5a ; $53f6 inline arg
 	jp RankingBoardAnimNop_1b ; $53f7
@@ -1593,39 +1593,39 @@ RankingBoardAnimState_53fa_1b:
 	ld c, $00 ; $5408
 	call GetRankingMarkerSlot ; $540a
 	ld de, $5bef ; $540d
-	call Func_1b_5aa4 ; $5410
+	call StartRankingMarkerAnim2 ; $5410
 	ld c, $02 ; $5413
 	call GetRankingMarkerSlot ; $5415
 	ld de, $5bcc ; $5418
-	call Func_1b_5a89 ; $541b
+	call StartRankingMarkerAnim1 ; $541b
 	ld b, $03 ; $541e
 	call HighlightDoublesRankingRow ; $5420
-	call Func_1b_58c5 ; $5423
+	call PushRankingBoardTilemapRows ; $5423
 	call WaitFramesCmd ; $5426
 	db $5a ; $5429 inline arg
 	sound $80 ; $542a
 	ld c, $03 ; $542c
 	call GetRankingMarkerSlot ; $542e
 	ld de, $5bd4 ; $5431
-	call Func_1b_5a6e ; $5434
+	call StartRankingMarkerAnim0 ; $5434
 	ld c, $05 ; $5437
 	call GetRankingMarkerSlot ; $5439
 	ld de, $5bcc ; $543c
-	call Func_1b_5a89 ; $543f
+	call StartRankingMarkerAnim1 ; $543f
 	call WaitFramesCmd ; $5442
 	db $8c ; $5445 inline arg
 	sound $78 ; $5446
 	ld c, $03 ; $5448
 	call GetRankingMarkerSlot ; $544a
 	ld de, $5bef ; $544d
-	call Func_1b_5aa4 ; $5450
+	call StartRankingMarkerAnim2 ; $5450
 	ld c, $05 ; $5453
 	call GetRankingMarkerSlot ; $5455
 	ld de, $5bbb ; $5458
-	call Func_1b_5a89 ; $545b
+	call StartRankingMarkerAnim1 ; $545b
 	ld b, $04 ; $545e
 	call HighlightDoublesRankingRow ; $5460
-	call Func_1b_58c5 ; $5463
+	call PushRankingBoardTilemapRows ; $5463
 	call WaitFramesCmd ; $5466
 	db $1e ; $5469 inline arg
 	jp RankingBoardAnimNop_1b ; $546a
@@ -1639,14 +1639,14 @@ RankingBoardAnimState_546d_1b:
 	ld c, $00 ; $547b
 	call GetRankingMarkerSlot ; $547d
 	ld de, $5b98 ; $5480
-	call Func_1b_5a6e ; $5483
+	call StartRankingMarkerAnim0 ; $5483
 	ld c, $03 ; $5486
 	call GetRankingMarkerSlot ; $5488
 	ld de, $5b94 ; $548b
-	call Func_1b_5a89 ; $548e
+	call StartRankingMarkerAnim1 ; $548e
 	ld b, $06 ; $5491
 	call HighlightDoublesRankingRow ; $5493
-	call Func_1b_58c5 ; $5496
+	call PushRankingBoardTilemapRows ; $5496
 	call WaitFramesCmd ; $5499
 	db $1e ; $549c inline arg
 	jp RankingBoardAnimNop_1b ; $549d
@@ -1659,11 +1659,11 @@ RankingBoardAnimState_54a3_1b:
 	ld c, $00 ; $54a9
 	call GetRankingMarkerSlot ; $54ab
 	ld de, $5b94 ; $54ae
-	call Func_1b_5a6e ; $54b1
+	call StartRankingMarkerAnim0 ; $54b1
 	ld c, $01 ; $54b4
 	call GetRankingMarkerSlot ; $54b6
 	ld de, $5b94 ; $54b9
-	call Func_1b_5a89 ; $54bc
+	call StartRankingMarkerAnim1 ; $54bc
 	jp RankingBoardAnimNop_1b ; $54bf
 RankingBoardAnimState_54c2_1b:
 	call WaitFramesCmd ; $54c2
@@ -1672,13 +1672,13 @@ RankingBoardAnimState_54c2_1b:
 	ld c, $02 ; $54c8
 	call GetRankingMarkerSlot ; $54ca
 	ld de, $5bbb ; $54cd
-	call Func_1b_5a89 ; $54d0
+	call StartRankingMarkerAnim1 ; $54d0
 	call WaitFramesCmd ; $54d3
 	db $08 ; $54d6 inline arg
 	ld c, $00 ; $54d7
 	call GetRankingMarkerSlot ; $54d9
 	ld de, $5b94 ; $54dc
-	call Func_1b_5a6e ; $54df
+	call StartRankingMarkerAnim0 ; $54df
 	jp RankingBoardAnimNop_1b ; $54e2
 RankingBoardAnimState_54e5_1b:
 	call WaitFramesCmd ; $54e5
@@ -1687,11 +1687,11 @@ RankingBoardAnimState_54e5_1b:
 	ld c, $00 ; $54eb
 	call GetRankingMarkerSlot ; $54ed
 	ld de, $5b94 ; $54f0
-	call Func_1b_5a6e ; $54f3
+	call StartRankingMarkerAnim0 ; $54f3
 	ld c, $03 ; $54f6
 	call GetRankingMarkerSlot ; $54f8
 	ld de, $5b9d ; $54fb
-	call Func_1b_5a89 ; $54fe
+	call StartRankingMarkerAnim1 ; $54fe
 	jp RankingBoardAnimNop_1b ; $5501
 RankingBoardAnimState_5504_1b:
 	jp RankingBoardAnimNop_1b ; $5504
@@ -2243,7 +2243,7 @@ Label_1b_58b5:
 	ld c, $07 ; $58bd
 	farcall CopyTilemapRect ; $58bf
 	jp Label_1b_5856 ; $58c2
-Func_1b_58c5:
+PushRankingBoardTilemapRows:
 	ld hl, $d000 ; $58c5
 	ld de, $9800 ; $58c8
 	ld c, $10 ; $58cb
@@ -2324,7 +2324,7 @@ SpriteTemplate_1b_595a:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
 	INCBIN "data/bank_01b/d_597b.bin" ; $597b, 137 bytes
-Func_1b_5a04:
+RankingCursorBobTask:
 	ld a, [$d855] ; $5a04
 	or a, a ; $5a07
 	jr nz, Label_1b_5a0a ; $5a08
@@ -2352,7 +2352,7 @@ SpriteTemplate_1b_5a24:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-Func_1b_5a45:
+DrawRankingMarkersTask:
 	ld c, $00 ; $5a45
 Label_1b_5a47:
 	call GetRankingMarkerSlot ; $5a47
@@ -2364,7 +2364,7 @@ Label_1b_5a47:
 	ld d, a ; $5a51
 	ld a, [hl+] ; $5a52
 	ld e, a ; $5a53
-	call Func_1b_5a5f ; $5a54
+	call QueueRankingMarkerSprite ; $5a54
 Label_1b_5a57:
 	ld a, c ; $5a57
 	inc a ; $5a58
@@ -2372,7 +2372,7 @@ Label_1b_5a57:
 	cp a, $0c ; $5a5a
 	jr nz, Label_1b_5a47 ; $5a5c
 	ret ; $5a5e
-Func_1b_5a5f:
+QueueRankingMarkerSprite:
 	push af ; $5a5f
 	push bc ; $5a60
 	ld a, b ; $5a61
@@ -2385,7 +2385,7 @@ Func_1b_5a5f:
 	pop bc ; $5a6b
 	pop af ; $5a6c
 	ret ; $5a6d
-Func_1b_5a6e:
+StartRankingMarkerAnim0:
 	ld b, h ; $5a6e
 	ld c, l ; $5a6f
 	ld hl, $d840 ; $5a70
@@ -2399,10 +2399,10 @@ Func_1b_5a6e:
 	xor a, a ; $5a7c
 	ld [wTextPageBreakRequest], a ; $5a7d
 	ld a, $01 ; $5a80
-	ld hl, Func_1b_5ada ; $5a82
+	ld hl, UpdateScriptedOffsetChannel0 ; $5a82
 	call RegisterFrameTask ; $5a85
 	ret ; $5a88
-Func_1b_5a89:
+StartRankingMarkerAnim1:
 	ld b, h ; $5a89
 	ld c, l ; $5a8a
 	ld hl, $d842 ; $5a8b
@@ -2416,10 +2416,10 @@ Func_1b_5a89:
 	xor a, a ; $5a97
 	ld [$d851], a ; $5a98
 	ld a, $01 ; $5a9b
-	ld hl, Func_1b_5b08 ; $5a9d
+	ld hl, UpdateScriptedOffsetChannel1 ; $5a9d
 	call RegisterFrameTask ; $5aa0
 	ret ; $5aa3
-Func_1b_5aa4:
+StartRankingMarkerAnim2:
 	ld b, h ; $5aa4
 	ld c, l ; $5aa5
 	ld hl, $d844 ; $5aa6
@@ -2433,10 +2433,10 @@ Func_1b_5aa4:
 	xor a, a ; $5ab2
 	ld [$d852], a ; $5ab3
 	ld a, $01 ; $5ab6
-	ld hl, Func_1b_5b36 ; $5ab8
+	ld hl, UpdateScriptedOffsetChannel2 ; $5ab8
 	call RegisterFrameTask ; $5abb
 	ret ; $5abe
-Func_1b_5abf:
+StartRankingMarkerAnim3:
 	ld b, h ; $5abf
 	ld c, l ; $5ac0
 	ld hl, $d846 ; $5ac1
@@ -2450,10 +2450,10 @@ Func_1b_5abf:
 	xor a, a ; $5acd
 	ld [$d853], a ; $5ace
 	ld a, $01 ; $5ad1
-	ld hl, Func_1b_5b65 ; $5ad3
+	ld hl, UpdateScriptedOffsetChannel3 ; $5ad3
 	call RegisterFrameTask ; $5ad6
 	ret ; $5ad9
-Func_1b_5ada:
+UpdateScriptedOffsetChannel0:
 	ld hl, $d848 ; $5ada
 	ld a, [hl+] ; $5add
 	ld d, [hl] ; $5ade
@@ -2476,7 +2476,7 @@ Func_1b_5ada:
 	ld [hl], a ; $5af6
 	jr Label_1b_5b00 ; $5af7
 Label_1b_5af9:
-	ld hl, Func_1b_5ada ; $5af9
+	ld hl, UpdateScriptedOffsetChannel0 ; $5af9
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
 Label_1b_5b00:
@@ -2484,7 +2484,7 @@ Label_1b_5b00:
 	inc a ; $5b03
 	ld [wTextPageBreakRequest], a ; $5b04
 	ret ; $5b07
-Func_1b_5b08:
+UpdateScriptedOffsetChannel1:
 	ld hl, wTextArgStringCount ; $5b08
 	ld a, [hl+] ; $5b0b
 	ld d, [hl] ; $5b0c
@@ -2507,7 +2507,7 @@ Func_1b_5b08:
 	ld [hl], a ; $5b24
 	jr Label_1b_5b2e ; $5b25
 Label_1b_5b27:
-	ld hl, Func_1b_5b08 ; $5b27
+	ld hl, UpdateScriptedOffsetChannel1 ; $5b27
 	call UnregisterFrameTask ; $5b2a
 	ret ; $5b2d
 Label_1b_5b2e:
@@ -2515,7 +2515,7 @@ Label_1b_5b2e:
 	inc a ; $5b31
 	ld [$d851], a ; $5b32
 	ret ; $5b35
-Func_1b_5b36:
+UpdateScriptedOffsetChannel2:
 	ld hl, $d84c ; $5b36
 	ld a, [hl+] ; $5b39
 	ld d, [hl] ; $5b3a
@@ -2539,7 +2539,7 @@ Func_1b_5b36:
 	ld [hl], a ; $5b53
 	jr Label_1b_5b5d ; $5b54
 Label_1b_5b56:
-	ld hl, Func_1b_5b36 ; $5b56
+	ld hl, UpdateScriptedOffsetChannel2 ; $5b56
 	call UnregisterFrameTask ; $5b59
 	ret ; $5b5c
 Label_1b_5b5d:
@@ -2547,7 +2547,7 @@ Label_1b_5b5d:
 	inc a ; $5b60
 	ld [$d852], a ; $5b61
 	ret ; $5b64
-Func_1b_5b65:
+UpdateScriptedOffsetChannel3:
 	ld hl, $d84e ; $5b65
 	ld a, [hl+] ; $5b68
 	ld d, [hl] ; $5b69
@@ -2571,7 +2571,7 @@ Func_1b_5b65:
 	ld [hl], a ; $5b82
 	jr Label_1b_5b8c ; $5b83
 Label_1b_5b85:
-	ld hl, Func_1b_5b65 ; $5b85
+	ld hl, UpdateScriptedOffsetChannel3 ; $5b85
 	call UnregisterFrameTask ; $5b88
 	ret ; $5b8b
 Label_1b_5b8c:
@@ -3087,10 +3087,10 @@ LoadCharSelectScreenGfx:
 StartCharSelectCursorTask:
 	farcall LoadCharSelectCursorGfx ; $6029
 	ld a, $0a ; $602c
-	ld hl, Func_1b_6035 ; $602e
+	ld hl, UpdateCharSelectCursorTask ; $602e
 	call RegisterFrameTask ; $6031
 	ret ; $6034
-Func_1b_6035:
+UpdateCharSelectCursorTask:
 	ld a, [wCharSelectChar] ; $6035
 	ld de, $0004 ; $6038
 	call GetCharSelectRosterField ; $603b
@@ -3154,7 +3154,7 @@ Label_1b_60ab:
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
 	ld a, [$d58b] ; $60b6
-	farcall Func_1b_4e43 ; $60b9
+	farcall StubNop_1b_4e43 ; $60b9
 	ret ; $60bc
 	and a, $01 ; $60bd
 	ld [wTargetZoneX2], a ; $60bf
@@ -3798,7 +3798,7 @@ LoadUnlockDebugScreenGfx:
 	ld de, $0008 ; $6643
 	call LoadPaletteShadow ; $6646
 	ret ; $6649
-Func_1b_664a:
+StubNop_1b_664a:
 	ret ; $664a
 	ld hl, $6572 ; $664b
 	ld de, $d000 ; $664e
@@ -3811,10 +3811,10 @@ Func_1b_664a:
 	ld de, $0801 ; $6662
 	call LoadPaletteShadow ; $6665
 	ld a, $0a ; $6668
-	ld hl, Func_1b_6671 ; $666a
+	ld hl, UpdateBobbingDecorSprite ; $666a
 	call RegisterFrameTask ; $666d
 	ret ; $6670
-Func_1b_6671:
+UpdateBobbingDecorSprite:
 	ld de, $2cfa ; $6671
 	farcall ApplySpriteBobOffset_18 ; $6674
 	ld hl, $6572 ; $6677
@@ -3824,10 +3824,10 @@ Func_1b_6671:
 StartUnlockDebugCursorTask:
 	farcall LoadCharSelectCursorGfx ; $6681
 	ld a, $0a ; $6684
-	ld hl, Func_1b_668d ; $6686
+	ld hl, UpdateUnlockDebugCursorTask ; $6686
 	call RegisterFrameTask ; $6689
 	ret ; $668c
-Func_1b_668d:
+UpdateUnlockDebugCursorTask:
 	ld a, [wCharSelectChar] ; $668d
 	ld de, $0004 ; $6690
 	call GetUnlockDebugRosterField ; $6693
@@ -3853,10 +3853,10 @@ Label_1b_66b6:
 	ld [$d58b], a ; $66b8
 Label_1b_66bb:
 	ld a, $0a ; $66bb
-	ld hl, Func_1b_66c4 ; $66bd
+	ld hl, UpdateUnlockDebugStatOnChange ; $66bd
 	call RegisterFrameTask ; $66c0
 	ret ; $66c3
-Func_1b_66c4:
+UpdateUnlockDebugStatOnChange:
 	ld hl, wCharSelectChar ; $66c4
 	ld a, [wCharSelectPrevChar] ; $66c7
 	cp a, [hl] ; $66ca
@@ -3898,7 +3898,7 @@ Label_1b_670a:
 	ld a, [wCharSelectChar] ; $670f
 	farcall LoadCharacterRecordToBuffer ; $6712
 	ld a, [$d58b] ; $6715
-	farcall Func_1b_4e43 ; $6718
+	farcall StubNop_1b_4e43 ; $6718
 	ret ; $671b
 RunMinigameFlagsDebugScreen:
 	wram_bank $01 ; $671c
@@ -3914,7 +3914,7 @@ RunMinigameFlagsDebugScreen:
 	call BeginFadeOut ; $673c
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
-	call Func_1b_664a ; $6745
+	call StubNop_1b_664a ; $6745
 	call StartUnlockDebugCursorTask ; $6748
 	call LoadUnlockDebugScreenGfx ; $674b
 	call DrawUnlockDebugMugshots ; $674e
@@ -4157,11 +4157,11 @@ LoadUnlockDebugCursorGfx:
 	ld de, $0801 ; $68fb
 	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
-	ld hl, Func_1b_6938 ; $6903
+	ld hl, DrawUnlockDebugFlagSprites ; $6903
 	call RegisterFrameTask ; $6906
 	ret ; $6909
 	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 46 bytes
-Func_1b_6938:
+DrawUnlockDebugFlagSprites:
 	ldh a, [hWramBank] ; $6938
 	push af ; $693a
 	wram_bank $06 ; $693b
@@ -4184,7 +4184,7 @@ Label_1b_6955:
 	inc hl ; $6956
 	ld e, [hl] ; $6957
 	pop hl ; $6958
-	call Func_1b_6974 ; $6959
+	call QueueBobbingFlagSprite ; $6959
 Label_1b_695c:
 	pop af ; $695c
 	inc a ; $695d
@@ -4194,7 +4194,7 @@ Label_1b_695c:
 	wram_bank ; $6963
 	ret ; $6967
 	INCBIN "data/bank_01b/d_6968.bin" ; $6968, 12 bytes
-Func_1b_6974:
+QueueBobbingFlagSprite:
 	push hl ; $6974
 	farcall ApplySpriteBobOffset_18 ; $6975
 	ld c, $50 ; $6978
@@ -4203,7 +4203,7 @@ Func_1b_6974:
 	pop hl ; $697f
 	ret ; $6980
 	ret ; $6981
-Func_1b_6982:
+RunStoryDataConfirmMenu:
 	wram_bank $01 ; $6982
 	ld c, $20 ; $6988
 	call BeginFadeOut ; $698a
@@ -4244,7 +4244,7 @@ Func_1b_69d6:
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
 	farcall Func_18_52de ; $69ef
-	call Func_1b_6aad ; $69f2
+	call StubNop_1b_6aad ; $69f2
 	farcall ForceFlushBgMapToVram ; $69f5
 	call EnableLCD ; $69f8
 	script_fade_in $20 ; $69fb
@@ -4312,15 +4312,15 @@ Label_1b_6a03:
 	ld a, $3a ; $6a95
 	ld de, $da0a ; $6a97
 	farcall WriteTilemapByteAdvance ; $6a9a
-	call Func_1b_6aa1 ; $6a9d
+	call QueueStoryInfoRowToVram ; $6a9d
 	ret ; $6aa0
-Func_1b_6aa1:
+QueueStoryInfoRowToVram:
 	ld hl, $da00 ; $6aa1
 	ld de, $9a00 ; $6aa4
 	ld c, $01 ; $6aa7
 	call QueueVRAMCopy ; $6aa9
 	ret ; $6aac
-Func_1b_6aad:
+StubNop_1b_6aad:
 	ret ; $6aad
 CopyMainCharNameWithDiacritics:
 	push de ; $6aae
@@ -4808,7 +4808,7 @@ RunMinigameLevelSelect2:
 	call SetMenuCursorFromIndex ; $6e5e
 	wram_bank $03 ; $6e61
 	ld a, $01 ; $6e67
-	ld hl, Func_1b_6f62 ; $6e69
+	ld hl, DrawMinigameLevelSelect2Cursor ; $6e69
 	call RegisterFrameTask ; $6e6c
 	call RedrawMinigameLevelSelect2 ; $6e6f
 	wram_bank $03 ; $6e72
@@ -4928,7 +4928,7 @@ Label_1b_6f4e:
 	pop af ; $6f5c
 	ret ; $6f5d
 	INCBIN "data/bank_01b/d_6f5e.bin" ; $6f5e, 4 bytes
-Func_1b_6f62:
+DrawMinigameLevelSelect2Cursor:
 	farcall TickMenuBgScroll ; $6f62
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex ; $6f67
@@ -5003,7 +5003,7 @@ RunMinigameLevelSelect3:
 	call SetMenuCursorFromIndex ; $6fff
 	wram_bank $03 ; $7002
 	ld a, $01 ; $7008
-	ld hl, Func_1b_70ed ; $700a
+	ld hl, DrawMinigameLevelSelect3Cursor ; $700a
 	call RegisterFrameTask ; $700d
 	call RedrawMinigameLevelSelect3 ; $7010
 	wram_bank $03 ; $7013
@@ -5112,7 +5112,7 @@ Label_1b_70d7:
 	pop af ; $70e5
 	ret ; $70e6
 	INCBIN "data/bank_01b/d_70e7.bin" ; $70e7, 6 bytes
-Func_1b_70ed:
+DrawMinigameLevelSelect3Cursor:
 	farcall TickMenuBgScroll ; $70ed
 	ld c, $03 ; $70f0
 	call GetMenuCursorIndex ; $70f2
@@ -5188,7 +5188,7 @@ RunSavedDataTypeSelect:
 	ld hl, Func_1b_72a4 ; $7189
 	call RegisterFrameTask ; $718c
 	ld a, $01 ; $718f
-	ld hl, Func_1b_72a8 ; $7191
+	ld hl, DrawSavedDataTypeSelectCursor ; $7191
 	call RegisterFrameTask ; $7194
 	call RedrawSavedDataTypeSelect ; $7197
 	wram_bank $03 ; $719a
@@ -5323,7 +5323,7 @@ Label_1b_723a:
 Func_1b_72a4:
 	farcall TickMenuBgScroll ; $72a4
 	ret ; $72a7
-Func_1b_72a8:
+DrawSavedDataTypeSelectCursor:
 	ld c, $02 ; $72a8
 	call GetMenuCursorIndex ; $72aa
 	or a, a ; $72ad
@@ -5470,13 +5470,13 @@ ShowMinigameDataScreen:
 	ld a, $01 ; $73e5
 	ld [$cb0b], a ; $73e7
 	ld a, $01 ; $73ea
-	ld hl, Func_1b_4430 ; $73ec
+	ld hl, UpdateAnimatedTilesTask ; $73ec
 	call RegisterFrameTask ; $73ef
 	ld a, $01 ; $73f2
-	ld hl, Func_1b_76b9 ; $73f4
+	ld hl, DrawMinigameDataScrollArrows ; $73f4
 	call RegisterFrameTask ; $73f7
 	ld a, $01 ; $73fa
-	ld hl, Func_1b_7827 ; $73fc
+	ld hl, DrawMinigameHighScoreNumbers ; $73fc
 	call RegisterFrameTask ; $73ff
 	call EnableLCD ; $7402
 	script_fade_in $10 ; $7405
@@ -5851,7 +5851,7 @@ Label_1b_76ab:
 	ld l, a ; $76ad
 	ret ; $76ae
 	INCBIN "data/bank_01b/d_76af.bin" ; $76af, 10 bytes
-Func_1b_76b9:
+DrawMinigameDataScrollArrows:
 	call CheckMinigameDataScrollable ; $76b9
 	or a, a ; $76bc
 	ret z ; $76bd
@@ -6062,7 +6062,7 @@ Label_1b_780c:
 	ld c, $02 ; $7821
 	farcall CopyTilemapRect ; $7823
 	ret ; $7826
-Func_1b_7827:
+DrawMinigameHighScoreNumbers:
 	ldh a, [hWramBank] ; $7827
 	push af ; $7829
 	wram_bank $03 ; $782a
