@@ -4016,7 +4016,7 @@ Label_0a_5e51:
 	ld a, [$d820] ; $5e5c
 	ld [$d82f], a ; $5e5f
 	farcall RestoreShadowTilemap ; $5e62
-	farcall Func_05_4626 ; $5e65
+	farcall StubNop_05_4626 ; $5e65
 Label_0a_5e68:
 	call AdvanceFrame ; $5e68
 	ldh a, [hPlayerInputFlags] ; $5e6b

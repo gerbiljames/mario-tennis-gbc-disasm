@@ -476,7 +476,7 @@ Func_1a_43aa:
 	farcall CreateWindow ; $43bd
 	ld [$cb26], a ; $43c0
 	farcall RestoreShadowTilemap ; $43c3
-	farcall Func_05_4626 ; $43c6
+	farcall StubNop_05_4626 ; $43c6
 	ld c, $00 ; $43c9
 Label_1a_43cb:
 	ld hl, $c92c ; $43cb
@@ -502,7 +502,7 @@ Label_1a_43cb:
 	ld a, [$cb26] ; $43f9
 	farcall WriteStringToWindow ; $43fc
 	farcall RestoreShadowTilemap ; $43ff
-	farcall Func_05_4626 ; $4402
+	farcall StubNop_05_4626 ; $4402
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
 	and a, PADF_A ; $440a

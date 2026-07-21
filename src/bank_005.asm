@@ -6,9 +6,9 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr CreateDialogueWindow ; $4006
 	farptr CreateMenuWindowFromText ; $4008
 	farptr CloseActiveDialogueWindow ; $400a
-	farptr Func_05_4766 ; $400c
+	farptr StubNop_05_4766 ; $400c
 	farptr SetWindowTextId ; $400e
-	farptr Func_05_4626 ; $4010
+	farptr StubNop_05_4626 ; $4010
 	farptr QueueFullTilemapCopy ; $4012
 	farptr QueueFullAttrmapCopy ; $4014
 	farptr CopyVisibleTilemapToVRAM ; $4016
@@ -840,7 +840,7 @@ RunFixedTextMenu:
 	ld hl, $001a ; $4514
 	call CreateMenuWindowFromText ; $4517
 	call RestoreShadowTilemap ; $451a
-	call Func_05_4626 ; $451d
+	call StubNop_05_4626 ; $451d
 	call RunMenuSelection ; $4520
 	ld h, a ; $4523
 	ld a, [$d82f] ; $4524
@@ -1035,7 +1035,7 @@ Label_05_4621:
 	pop bc ; $4623
 	pop hl ; $4624
 	ret ; $4625
-Func_05_4626:
+StubNop_05_4626:
 	ret ; $4626
 	push hl ; $4627
 	push bc ; $4628
@@ -1234,7 +1234,7 @@ Label_05_4762:
 	ld [hl], $ff ; $4762
 	pop af ; $4764
 	ret ; $4765
-Func_05_4766:
+StubNop_05_4766:
 	ret ; $4766
 SetWindowState:
 	call GetWindowStructPtr ; $4767
@@ -1677,7 +1677,7 @@ Label_05_4a23:
 	ld e, $05 ; $4a3c
 	call CreateMenuWindowPaged ; $4a3e
 	call RestoreShadowTilemap ; $4a41
-	call Func_05_4626 ; $4a44
+	call StubNop_05_4626 ; $4a44
 	call RunMenuSelection ; $4a47
 	push af ; $4a4a
 	ld a, [$d82f] ; $4a4b
@@ -4176,7 +4176,7 @@ Label_05_5a6e:
 Label_05_5a7b:
 	call SetActiveWindowTextId ; $5a7b
 	call RestoreShadowTilemap ; $5a7e
-	call Func_05_4626 ; $5a81
+	call StubNop_05_4626 ; $5a81
 	ld a, [wTextPageBreakRequest] ; $5a84
 	or a, a ; $5a87
 	jr nz, Label_05_5a7b ; $5a88
@@ -5882,7 +5882,7 @@ Label_05_6570:
 	pop bc ; $657e
 	pop af ; $657f
 	ret ; $6580
-Func_05_6581:
+StubNop_05_6581:
 	ret ; $6581
 	INCBIN "data/bank_005/d_6582.bin" ; $6582, 32 bytes
 RunDebugFlagEditor:
@@ -5929,7 +5929,7 @@ Label_05_65b8:
 	ld a, [$c719] ; $660c
 	call RedrawWindowRows ; $660f
 	ld a, $0f ; $6612
-	ld hl, Func_05_6581 ; $6614
+	ld hl, StubNop_05_6581 ; $6614
 	call RegisterFrameTask ; $6617
 Label_05_661a:
 	ldh a, [hInputRisingEdge] ; $661a
@@ -5982,7 +5982,7 @@ Label_05_6683:
 	call CloseWindow ; $668c
 	ld a, [$c719] ; $668f
 	call CloseWindow ; $6692
-	ld hl, Func_05_6581 ; $6695
+	ld hl, StubNop_05_6581 ; $6695
 	call UnregisterFrameTask ; $6698
 	pop hl ; $669b
 	pop de ; $669c
