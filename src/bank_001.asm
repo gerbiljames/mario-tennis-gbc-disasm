@@ -196,8 +196,8 @@ Label_01_41c2:
 	ld a, $00 ; $41ca
 	ldh [hDebugStepMode], a ; $41cc
 Label_01_41ce:
-	farcall Func_6b_402a ; $41ce
-	farcall Func_6b_75af ; $41d1
+	farcall RunIntroCutscene ; $41ce
+	farcall RunTitleScreen ; $41d1
 	jr Label_01_41ce ; $41d4
 Unused_01_41d6:
 	jp Label_01_40a5 ; $41d6

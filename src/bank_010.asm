@@ -1139,11 +1139,11 @@ Func_10_4f0d:
 	xor a, a ; $4f24
 	ld [$cb71], a ; $4f25
 Label_10_4f28:
-	farcall Func_6b_51ae ; $4f28
-	farcall Func_6b_51e7 ; $4f2b
-	farcall Func_6b_402a ; $4f2e
+	farcall ShowIntroLogoScreen ; $4f28
+	farcall ScrollOutIntroLogo ; $4f2b
+	farcall RunIntroCutscene ; $4f2e
 Label_10_4f31:
-	farcall Func_6b_75af ; $4f31
+	farcall RunTitleScreen ; $4f31
 	cp a, $ff ; $4f34
 	jr z, Label_10_4f28 ; $4f36
 	cp a, $01 ; $4f38

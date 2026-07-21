@@ -1,21 +1,21 @@
 SECTION "ROM Bank $6b", ROMX[$4000], BANK[$6b]
 
-	farptr Func_6b_402a ; $4000
-	farptr Func_6b_75af ; $4002
+	farptr RunIntroCutscene ; $4000
+	farptr RunTitleScreen ; $4002
 DataPtr_TitleScreenTilemap:
 	dw TitleScreenTilemap ; $4004
 DataPtr_TitleScreenAttrmap:
 	dw TitleScreenAttrmap ; $4006
 DataPtr_TitleScreenPalettes:
 	dw TitleScreenPalettes ; $4008
-	farptr Func_6b_73f2 ; $400a
-	farptr Func_6b_73f2Alias1, Func_6b_73f2 ; $400c
-	farptr Func_6b_73f2Alias2, Func_6b_73f2 ; $400e
-	farptr Func_6b_73f2Alias3, Func_6b_73f2 ; $4010
-	farptr Func_6b_51ae ; $4012
-	farptr Func_6b_51e7 ; $4014
-	farptr Func_6b_6075 ; $4016
-	farptr Func_6b_6126 ; $4018
+	farptr DecompressIntroTitleTiles ; $400a
+	farptr DecompressIntroTitleTilesAlias1, DecompressIntroTitleTiles ; $400c
+	farptr DecompressIntroTitleTilesAlias2, DecompressIntroTitleTiles ; $400e
+	farptr DecompressIntroTitleTilesAlias3, DecompressIntroTitleTiles ; $4010
+	farptr ShowIntroLogoScreen ; $4012
+	farptr ScrollOutIntroLogo ; $4014
+	farptr LoadIntroTilesAndPalette ; $4016
+	farptr QueueIntroSpriteBlock ; $4018
 DataPtr_AwardCeremonyTilemap:
 	dw AwardCeremonyTilemap ; $401a
 DataPtr_AwardCeremonyAttrmap:
@@ -32,7 +32,7 @@ DataPtr_AwardCeremonyTilemap4:
 	dw AwardCeremonyTilemap4 ; $4026
 DataPtr_AwardCeremonyAttrmap4:
 	dw AwardCeremonyAttrmap4 ; $4028
-Func_6b_402a:
+RunIntroCutscene:
 	xor a, a ; $402a
 	ld [wCutsceneStep], a ; $402b
 	ld [wCutsceneStepTimer], a ; $402e
@@ -44,9 +44,9 @@ Func_6b_402a:
 	res 3, [hl] ; $403f
 	sound $01 ; $4041
 	ld a, $01 ; $4043
-	ld hl, Func_6b_53f1 ; $4045
+	ld hl, CheckIntroSkipInput ; $4045
 	call RegisterFrameTask ; $4048
-	call Func_6b_406a ; $404b
+	call DispatchCutsceneStateInit ; $404b
 	ld c, $7f ; $404e
 	call BeginFadeOut ; $4050
 	call WaitFadeEnd ; $4053
@@ -59,7 +59,7 @@ Func_6b_402a:
 	res 3, [hl] ; $4064
 	call ClearDebugTextBuffer ; $4066
 	ret ; $4069
-Func_6b_406a:
+DispatchCutsceneStateInit:
 	ld a, [wCutsceneStep] ; $406a
 	ld l, a ; $406d
 	ld h, $00 ; $406e
@@ -117,7 +117,7 @@ Label_6b_40af:
 	ld [wCutsceneStep], a ; $40b3
 	ld a, [wIntroCutsceneCheck] ; $40b6
 	or a, a ; $40b9
-	jr z, Func_6b_406a ; $40ba
+	jr z, DispatchCutsceneStateInit ; $40ba
 Label_6b_40bc:
 	ret ; $40bc
 IntroCutsceneStateTable_6b:
@@ -270,8 +270,8 @@ IntroCutsceneState15Update_6b:
 	jp z, Label_6b_4099 ; $4188
 	jp Label_6b_407c ; $418b
 IntroCutsceneState00Init_6b:
-	call Func_6b_54b9 ; $418e
-	call Func_6b_6075 ; $4191
+	call InitCutsceneSceneC ; $418e
+	call LoadIntroTilesAndPalette ; $4191
 	xor a, a ; $4194
 	ld [wCameraY], a ; $4195
 	ld a, $24 ; $4198
@@ -305,7 +305,7 @@ IntroCutsceneState00Exit_6b:
 	call WaitFadeEnd ; $41d8
 	call ClearFrameTasks ; $41db
 	ld a, $01 ; $41de
-	ld hl, Func_6b_53f1 ; $41e0
+	ld hl, CheckIntroSkipInput ; $41e0
 	call RegisterFrameTask ; $41e3
 	xor a, a ; $41e6
 	ldh [hScrollX], a ; $41e7
@@ -323,13 +323,13 @@ IntroCutsceneState00Update_6b:
 	jp z, Label_6b_4099 ; $4203
 	cp a, $64 ; $4206
 	jr nc, Label_6b_420d ; $4208
-	call Func_6b_6115 ; $420a
+	call AdvanceSpriteAnimTimer ; $420a
 Label_6b_420d:
-	call Func_6b_4d61 ; $420d
-	call Func_6b_4c9e ; $4210
-	call Func_6b_60d5 ; $4213
-	call Func_6b_60f8 ; $4216
-	call Func_6b_4e2d ; $4219
+	call UpdateCutsceneScrollY ; $420d
+	call UpdateCutsceneScrollX ; $4210
+	call SetCameraYFromScrollPos ; $4213
+	call QueueScrollingSprite ; $4216
+	call QueueCutsceneAnimatedSprites ; $4219
 	jp Label_6b_407c ; $421c
 IntroCutsceneState01Init_6b:
 	call DisableLCDSafely ; $421f
@@ -346,7 +346,7 @@ IntroCutsceneState01Init_6b:
 	ld [$cb47], a ; $423a
 	ld c, $16 ; $423d
 	farcall LoadScreenAssetRecord ; $423f
-	call Func_6b_520a ; $4242
+	call LoadCutsceneTileset ; $4242
 	ldh a, [hWramBank] ; $4245
 	push af ; $4247
 	wram_bank $03 ; $4248
@@ -378,7 +378,7 @@ IntroCutsceneState01Init_6b:
 	ld de, $dc00 ; $4299
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
-	ld hl, Func_6b_526a ; $42a1
+	ld hl, QueueCutsceneSpriteGroupA ; $42a1
 	call RegisterFrameTask ; $42a4
 	call EnableLCD ; $42a7
 	script_fade_in $40 ; $42aa
@@ -395,7 +395,7 @@ Palettes_6b_42b2:
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 IntroCutsceneState01Exit_6b:
-	ld hl, Func_6b_526a ; $42f2
+	ld hl, QueueCutsceneSpriteGroupA ; $42f2
 	call UnregisterFrameTask ; $42f5
 	xor a, a ; $42f8
 	ld [wCutsceneStepTimer], a ; $42f9
@@ -497,7 +497,7 @@ IntroCutsceneState03Init_6b:
 	ld de, $dc00 ; $442b
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
-	ld hl, Func_6b_52f9 ; $4433
+	ld hl, QueueCutsceneSpriteGroupB ; $4433
 	call RegisterFrameTask ; $4436
 	ld a, $a0 ; $4439
 	ld [$cb46], a ; $443b
@@ -510,7 +510,7 @@ IntroCutsceneState03Init_6b:
 	call WaitFadeEnd ; $444f
 	jp Label_6b_407c ; $4452
 IntroCutsceneState03Exit_6b:
-	ld hl, Func_6b_52f9 ; $4455
+	ld hl, QueueCutsceneSpriteGroupB ; $4455
 	call UnregisterFrameTask ; $4458
 	xor a, a ; $445b
 	ld [wCutsceneStepTimer], a ; $445c
@@ -615,7 +615,7 @@ IntroCutsceneState05Init_6b:
 	xor a, a ; $4577
 	ld [$cb01], a ; $4578
 	ld a, $01 ; $457b
-	ld hl, Func_6b_53db ; $457d
+	ld hl, UpdateCutsceneScroll ; $457d
 	call RegisterFrameTask ; $4580
 	ld a, $a0 ; $4583
 	ld [$cb46], a ; $4585
@@ -626,10 +626,10 @@ IntroCutsceneState05Init_6b:
 	ld a, $10 ; $4592
 	ld [$cb45], a ; $4594
 	ld a, $01 ; $4597
-	ld hl, Func_6b_526a ; $4599
+	ld hl, QueueCutsceneSpriteGroupA ; $4599
 	call RegisterFrameTask ; $459c
 	ld a, $01 ; $459f
-	ld hl, Func_6b_52f9 ; $45a1
+	ld hl, QueueCutsceneSpriteGroupB ; $45a1
 	call RegisterFrameTask ; $45a4
 	call EnableLCD ; $45a7
 	script_fade_in $10 ; $45aa
@@ -651,9 +651,9 @@ IntroCutsceneState05Exit_6b:
 	call QueueVRAMCopy ; $45d6
 	pop af ; $45d9
 	wram_bank ; $45da
-	ld hl, Func_6b_526a ; $45de
+	ld hl, QueueCutsceneSpriteGroupA ; $45de
 	call UnregisterFrameTask ; $45e1
-	ld hl, Func_6b_53db ; $45e4
+	ld hl, UpdateCutsceneScroll ; $45e4
 	call UnregisterFrameTask ; $45e7
 	xor a, a ; $45ea
 	ldh [hScrollX], a ; $45eb
@@ -671,7 +671,7 @@ IntroCutsceneState05Exit_6b:
 	call QueueVRAMCopy ; $460c
 	pop af ; $460f
 	wram_bank ; $4610
-	ld hl, Func_6b_52f9 ; $4614
+	ld hl, QueueCutsceneSpriteGroupB ; $4614
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
 	jp Label_6b_40af ; $461d
@@ -705,8 +705,8 @@ IntroCutsceneState06Update_6b:
 	jp z, Label_6b_4099 ; $4658
 	jp Label_6b_407c ; $465b
 IntroCutsceneState07Init_6b:
-	call Func_6b_617c ; $465e
-	call Func_6b_73f2 ; $4661
+	call InitTitleSceneGraphics ; $465e
+	call DecompressIntroTitleTiles ; $4661
 	xor a, a ; $4664
 	ld [wCutsceneStepTimer], a ; $4665
 	ld [$cb44], a ; $4668
@@ -717,13 +717,13 @@ IntroCutsceneState07Init_6b:
 	script_fade_in $08 ; $4677
 	call WaitFadeEnd ; $467c
 	ld a, $01 ; $467f
-	ld hl, Func_6b_7083 ; $4681
+	ld hl, IntroSequenceTimerTask ; $4681
 	call RegisterFrameTask ; $4684
 	jp Label_6b_407c ; $4687
 IntroCutsceneState07Exit_6b:
 	call ClearFrameTasks ; $468a
 	ld a, $01 ; $468d
-	ld hl, Func_6b_53f1 ; $468f
+	ld hl, CheckIntroSkipInput ; $468f
 	call RegisterFrameTask ; $4692
 	xor a, a ; $4695
 	ldh [hScrollX], a ; $4696
@@ -830,7 +830,7 @@ IntroCutsceneState08Init_6b:
 	ld a, $b0 ; $47a9
 	ld [wCutsceneScrollX], a ; $47ab
 	ld a, $01 ; $47ae
-	ld hl, Func_6b_7366 ; $47b0
+	ld hl, ScrollCutsceneXRightTask ; $47b0
 	call RegisterFrameTask ; $47b3
 	call EnableLCD ; $47b6
 	script_fade_in $10 ; $47b9
@@ -840,7 +840,7 @@ IntroCutsceneState08Exit_6b:
 	ld c, $0a ; $47c4
 	call BeginFadeOut ; $47c6
 	call WaitFadeEnd ; $47c9
-	ld hl, Func_6b_7366 ; $47cc
+	ld hl, ScrollCutsceneXRightTask ; $47cc
 	call UnregisterFrameTask ; $47cf
 	xor a, a ; $47d2
 	ldh [hScrollX], a ; $47d3
@@ -863,7 +863,7 @@ IntroCutsceneState09Init_6b:
 	xor a, a ; $47f9
 	ld [wCutsceneStepTimer], a ; $47fa
 	ld a, $01 ; $47fd
-	ld hl, Func_6b_7395 ; $47ff
+	ld hl, ScrollCutsceneXLeftTask ; $47ff
 	call RegisterFrameTask ; $4802
 	call EnableLCD ; $4805
 	script_fade_in $10 ; $4808
@@ -873,7 +873,7 @@ IntroCutsceneState09Exit_6b:
 	ld c, $0a ; $4813
 	call BeginFadeOut ; $4815
 	call WaitFadeEnd ; $4818
-	ld hl, Func_6b_7395 ; $481b
+	ld hl, ScrollCutsceneXLeftTask ; $481b
 	call UnregisterFrameTask ; $481e
 	xor a, a ; $4821
 	ldh [hScrollX], a ; $4822
@@ -935,8 +935,8 @@ IntroCutsceneState11Init_6b:
 	ld de, $bc00 ; $48aa
 	ld c, $40 ; $48ad
 	call QueueVRAMCopy ; $48af
-	call Func_6b_545e ; $48b2
-	call Func_6b_6075 ; $48b5
+	call InitCutsceneSceneB ; $48b2
+	call LoadIntroTilesAndPalette ; $48b5
 	call EnableLCD ; $48b8
 	script_fade_in $20 ; $48bb
 	call WaitFadeEnd ; $48c0
@@ -994,7 +994,7 @@ IntroCutsceneState12Update_6b:
 	jr z, Label_6b_493b ; $492f
 	inc a ; $4931
 	ld [$cb45], a ; $4932
-	call Func_6b_60f8 ; $4935
+	call QueueScrollingSprite ; $4935
 	jp Label_6b_407c ; $4938
 Label_6b_493b:
 	ld a, [wCutsceneStepTimer] ; $493b
@@ -1004,18 +1004,18 @@ Label_6b_493b:
 	jp z, Label_6b_4099 ; $4944
 	cp a, $64 ; $4947
 	jr nc, Label_6b_494e ; $4949
-	call Func_6b_6115 ; $494b
+	call AdvanceSpriteAnimTimer ; $494b
 Label_6b_494e:
-	call Func_6b_4d61 ; $494e
-	call Func_6b_4c9e ; $4951
-	call Func_6b_60d5 ; $4954
-	call Func_6b_60f8 ; $4957
-	call Func_6b_4e2d ; $495a
+	call UpdateCutsceneScrollY ; $494e
+	call UpdateCutsceneScrollX ; $4951
+	call SetCameraYFromScrollPos ; $4954
+	call QueueScrollingSprite ; $4957
+	call QueueCutsceneAnimatedSprites ; $495a
 	jp Label_6b_407c ; $495d
 IntroCutsceneState16Init_6b:
 	call DisableLCDSafely ; $4960
-	call Func_6b_53fc ; $4963
-	call Func_6b_6075 ; $4966
+	call InitCutsceneSceneA ; $4963
+	call LoadIntroTilesAndPalette ; $4966
 	ld a, $02 ; $4969
 	ldh [hShowDebugConsole], a ; $496b
 	ld hl, rLCDC ; $496d
@@ -1171,7 +1171,7 @@ IntroCutsceneState18Init_6b:
 	ld [$cb44], a ; $4b35
 	ldh [hScrollY], a ; $4b38
 	ld a, $08 ; $4b3a
-	ld hl, Func_6b_7569 ; $4b3c
+	ld hl, ApplyScrollYFromWram ; $4b3c
 	call RegisterFrameTask ; $4b3f
 	ld hl, $d060 ; $4b42
 	ld de, $9c60 ; $4b45
@@ -1238,7 +1238,7 @@ Label_6b_4be3:
 	ld [wCutsceneStepTimer], a ; $4be7
 	jp Label_6b_407c ; $4bea
 IntroCutsceneState18Exit_6b:
-	ld hl, Func_6b_7569 ; $4bed
+	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank $03 ; $4bf3
 	ld a, $00 ; $4bf9
@@ -1292,15 +1292,15 @@ IntroCutsceneState19Update_6b:
 	jp z, Label_6b_4099 ; $4c82
 	cp a, $64 ; $4c85
 	jr nc, Label_6b_4c8c ; $4c87
-	call Func_6b_6115 ; $4c89
+	call AdvanceSpriteAnimTimer ; $4c89
 Label_6b_4c8c:
-	call Func_6b_4d61 ; $4c8c
-	call Func_6b_4c9e ; $4c8f
-	call Func_6b_60d5 ; $4c92
-	call Func_6b_60f8 ; $4c95
-	call Func_6b_4e2d ; $4c98
+	call UpdateCutsceneScrollY ; $4c8c
+	call UpdateCutsceneScrollX ; $4c8f
+	call SetCameraYFromScrollPos ; $4c92
+	call QueueScrollingSprite ; $4c95
+	call QueueCutsceneAnimatedSprites ; $4c98
 	jp Label_6b_407c ; $4c9b
-Func_6b_4c9e:
+UpdateCutsceneScrollX:
 	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, $4cc1 ; $4ca1
 	add a, l ; $4ca4
@@ -1326,7 +1326,7 @@ Label_6b_4ca9:
 	ld [$cb4a], a ; $4cbd
 	ret ; $4cc0
 	INCBIN "data/bank_06b/d_4cc1.bin" ; $4cc1, 160 bytes
-Func_6b_4d61:
+UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, $4d84 ; $4d64
 	add a, l ; $4d67
@@ -1352,7 +1352,7 @@ Label_6b_4d6c:
 	ld [$cb48], a ; $4d80
 	ret ; $4d83
 	INCBIN "data/bank_06b/d_4d84.bin" ; $4d84, 169 bytes
-Func_6b_4e2d:
+QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e2d
 	cp a, $20 ; $4e30
 	ret c ; $4e32
@@ -1368,7 +1368,7 @@ Label_6b_4e41:
 	ld a, [hl+] ; $4e41
 	ld d, [hl] ; $4e42
 	ld e, a ; $4e43
-	call Func_6b_518d ; $4e44
+	call ApplyCutsceneScrollToSpriteX ; $4e44
 	ld c, $40 ; $4e47
 	ld b, $09 ; $4e49
 	ld hl, SpriteTemplate_6b_4e8e ; $4e4b
@@ -1385,7 +1385,7 @@ Label_6b_4e5f:
 	ld a, [hl+] ; $4e5f
 	ld d, [hl] ; $4e60
 	ld e, a ; $4e61
-	call Func_6b_518d ; $4e62
+	call ApplyCutsceneScrollToSpriteX ; $4e62
 	ld c, $44 ; $4e65
 	ld b, $09 ; $4e67
 	ld hl, SpriteTemplate_6b_4e97 ; $4e69
@@ -1402,7 +1402,7 @@ Label_6b_4e7d:
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f
-	call Func_6b_518d ; $4e80
+	call ApplyCutsceneScrollToSpriteX ; $4e80
 	ld c, $48 ; $4e83
 	ld b, $09 ; $4e85
 	ld hl, SpriteTemplate_6b_4ea0 ; $4e87
@@ -1423,7 +1423,7 @@ SpriteTemplate_6b_4ea0:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
 	INCBIN "data/bank_06b/d_4ea5.bin" ; $4ea5, 744 bytes
-Func_6b_518d:
+ApplyCutsceneScrollToSpriteX:
 	push bc ; $518d
 	push hl ; $518e
 	ld c, d ; $518f
@@ -1452,7 +1452,7 @@ Label_6b_51a5:
 	jr Label_6b_51a5 ; $51ab
 Label_6b_51ad:
 	ret ; $51ad
-Func_6b_51ae:
+ShowIntroLogoScreen:
 	call DisableLCDSafely ; $51ae
 	ld c, $15 ; $51b1
 	farcall LoadScreenAssetRecord ; $51b3
@@ -1479,7 +1479,7 @@ Label_6b_51e2:
 	xor a, a ; $51e2
 	ld [wCutsceneStepTimer], a ; $51e3
 	ret ; $51e6
-Func_6b_51e7:
+ScrollOutIntroLogo:
 	ld a, $40 ; $51e7
 	ldh [hScrollY], a ; $51e9
 Label_6b_51eb:
@@ -1498,7 +1498,7 @@ Label_6b_51fb:
 	xor a, a ; $5206
 	ldh [hScrollY], a ; $5207
 	ret ; $5209
-Func_6b_520a:
+LoadCutsceneTileset:
 	ld b, $4d ; $520a
 	ld c, $06 ; $520c
 	ld de, $a000 ; $520e
@@ -1536,7 +1536,7 @@ Palettes_6b_525a:
 ; GBC palettes (BGR555), 4 colors each
 	dw $569f, $73ff, $115f, $0000 ; pal 0: #ffa4ac #ffffe6 #ff5220 #000000
 	dw $331f, $77ff, $025f, $0000 ; pal 1: #ffc562 #ffffee #ff9400 #000000
-Func_6b_526a:
+QueueCutsceneSpriteGroupA:
 	ld hl, SpriteTemplate_6b_52b6 ; $526a
 	ld a, [$cb44] ; $526d
 	ld d, $10 ; $5270
@@ -1544,7 +1544,7 @@ Func_6b_526a:
 	ld d, a ; $5273
 	ld a, [$cb45] ; $5274
 	ld e, a ; $5277
-	call Func_6b_53b8 ; $5278
+	call ApplyCutsceneBobOffset ; $5278
 	ld c, $00 ; $527b
 	ld b, $08 ; $527d
 	call QueueSpriteTemplate ; $527f
@@ -1557,7 +1557,7 @@ Func_6b_526a:
 	ld e, $10 ; $528f
 	add a, e ; $5291
 	ld e, a ; $5292
-	call Func_6b_53b8 ; $5293
+	call ApplyCutsceneBobOffset ; $5293
 	ld c, $06 ; $5296
 	ld b, $08 ; $5298
 	call QueueSpriteTemplate ; $529a
@@ -1568,7 +1568,7 @@ Func_6b_526a:
 	ld e, $20 ; $52a7
 	add a, e ; $52a9
 	ld e, a ; $52aa
-	call Func_6b_53b8 ; $52ab
+	call ApplyCutsceneBobOffset ; $52ab
 	ld c, $10 ; $52ae
 	ld b, $08 ; $52b0
 	call QueueSpriteTemplate ; $52b2
@@ -1598,7 +1598,7 @@ SpriteTemplate_6b_52d8:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-Func_6b_52f9:
+QueueCutsceneSpriteGroupB:
 	ld hl, SpriteTemplate_6b_5360 ; $52f9
 	ld a, [$cb46] ; $52fc
 	ld d, $18 ; $52ff
@@ -1606,7 +1606,7 @@ Func_6b_52f9:
 	ld d, a ; $5302
 	ld a, [$cb47] ; $5303
 	ld e, a ; $5306
-	call Func_6b_53b8 ; $5307
+	call ApplyCutsceneBobOffset ; $5307
 	ld c, $20 ; $530a
 	ld b, $09 ; $530c
 	call QueueSpriteTemplate ; $530e
@@ -1619,7 +1619,7 @@ Func_6b_52f9:
 	ld e, $10 ; $531e
 	add a, e ; $5320
 	ld e, a ; $5321
-	call Func_6b_53b8 ; $5322
+	call ApplyCutsceneBobOffset ; $5322
 	ld c, $26 ; $5325
 	ld b, $09 ; $5327
 	call QueueSpriteTemplate ; $5329
@@ -1630,7 +1630,7 @@ Func_6b_52f9:
 	ld e, $20 ; $5336
 	add a, e ; $5338
 	ld e, a ; $5339
-	call Func_6b_53b8 ; $533a
+	call ApplyCutsceneBobOffset ; $533a
 	ld c, $38 ; $533d
 	ld b, $09 ; $533f
 	call QueueSpriteTemplate ; $5341
@@ -1643,7 +1643,7 @@ Func_6b_52f9:
 	ld e, $20 ; $5351
 	add a, e ; $5353
 	ld e, a ; $5354
-	call Func_6b_53b8 ; $5355
+	call ApplyCutsceneBobOffset ; $5355
 	ld c, $48 ; $5358
 	ld b, $09 ; $535a
 	call QueueSpriteTemplate ; $535c
@@ -1681,7 +1681,7 @@ SpriteTemplate_6b_53b3:
 	; $53b3, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-Func_6b_53b8:
+ApplyCutsceneBobOffset:
 	push hl ; $53b8
 	ld a, [wCutsceneStepTimer] ; $53b9
 	and a, $0f ; $53bc
@@ -1697,7 +1697,7 @@ Label_6b_53c6:
 	pop hl ; $53c9
 	ret ; $53ca
 	INCBIN "data/bank_06b/d_53cb.bin" ; $53cb, 16 bytes
-Func_6b_53db:
+UpdateCutsceneScroll:
 	ld a, [wCutsceneScrollX] ; $53db
 	add a, $03 ; $53de
 	ld [wCutsceneScrollX], a ; $53e0
@@ -1707,14 +1707,14 @@ Func_6b_53db:
 	ld [$cb43], a ; $53ea
 	ld [$cb01], a ; $53ed
 	ret ; $53f0
-Func_6b_53f1:
+CheckIntroSkipInput:
 	ldh a, [hInputRisingEdge] ; $53f1
 	and a, $09 ; $53f3
 	ret z ; $53f5
 	ld a, $01 ; $53f6
 	ld [wIntroCutsceneCheck], a ; $53f8
 	ret ; $53fb
-Func_6b_53fc:
+InitCutsceneSceneA:
 	call DisableLCDSafely ; $53fc
 	farcall InitSceneScroll ; $53ff
 	farcall InitTextWindows ; $5402
@@ -1748,7 +1748,7 @@ Func_6b_53fc:
 	xor a, a ; $5459
 	ld [wCameraY + 1], a ; $545a
 	ret ; $545d
-Func_6b_545e:
+InitCutsceneSceneB:
 	call DisableLCDSafely ; $545e
 	farcall InitSceneScroll ; $5461
 	farcall InitTextWindows ; $5464
@@ -1779,7 +1779,7 @@ Func_6b_545e:
 	ld a, $01 ; $54b3
 	farcall CopyScrolledSceneTilemapToVram ; $54b5
 	ret ; $54b8
-Func_6b_54b9:
+InitCutsceneSceneC:
 	call DisableLCDSafely ; $54b9
 	farcall InitSceneScroll ; $54bc
 	farcall InitTextWindows ; $54bf
@@ -1814,7 +1814,7 @@ Func_6b_54b9:
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 	INCBIN "data/bank_06b/d_551d.bin" ; $551d, 2904 bytes
-Func_6b_6075:
+LoadIntroTilesAndPalette:
 	ld b, $54 ; $6075
 	ld c, $10 ; $6077
 	ld de, $a000 ; $6079
@@ -1852,7 +1852,7 @@ Palettes_6b_60c5:
 ; GBC palettes (BGR555), 4 colors each
 	dw $7c1f, $033f, $01af, $0000 ; pal 0: #ff00ff #ffcd00 #7b6a00 #000000
 	dw $7f4e, $7f73, $7fb9, $7fff ; pal 1: #73d5ff #9cdeff #cdeeff #ffffff
-Func_6b_60d5:
+SetCameraYFromScrollPos:
 	ld hl, $cb4a ; $60d5
 	ld a, [hl+] ; $60d8
 	ld d, [hl] ; $60d9
@@ -1872,7 +1872,7 @@ Func_6b_60d5:
 	ld a, d ; $60f3
 	ld [wCameraY + 1], a ; $60f4
 	ret ; $60f7
-Func_6b_60f8:
+QueueScrollingSprite:
 	ld hl, $cb4a ; $60f8
 	ld a, [hl+] ; $60fb
 	ld d, [hl] ; $60fc
@@ -1891,9 +1891,9 @@ Func_6b_60f8:
 	ld a, [$cb4c] ; $610b
 	ld c, a ; $610e
 	ld d, $40 ; $610f
-	call Func_6b_6126 ; $6111
+	call QueueIntroSpriteBlock ; $6111
 	ret ; $6114
-Func_6b_6115:
+AdvanceSpriteAnimTimer:
 	ld a, [$cb4d] ; $6115
 	inc a ; $6118
 	ld [$cb4d], a ; $6119
@@ -1904,7 +1904,7 @@ Func_6b_6115:
 	rrca ; $6121
 	ld [$cb4c], a ; $6122
 	ret ; $6125
-Func_6b_6126:
+QueueIntroSpriteBlock:
 	ld hl, $6139 ; $6126
 	ld a, c ; $6129
 	add a, l ; $612a
@@ -1931,7 +1931,7 @@ SpriteTemplate_6b_613d:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 	INCBIN "data/bank_06b/d_615e.bin" ; $615e, 30 bytes
-Func_6b_617c:
+InitTitleSceneGraphics:
 	call DisableLCDSafely ; $617c
 	farcall InitSceneScroll ; $617f
 	farcall InitTextWindows ; $6182
@@ -1968,26 +1968,26 @@ Func_6b_617c:
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 3741 bytes
-Func_6b_7083:
+IntroSequenceTimerTask:
 	ld a, [$cb44] ; $7083
 	inc a ; $7086
 	ld [$cb44], a ; $7087
 	cp a, $5a ; $708a
 	jr nz, Label_6b_7096 ; $708c
 	ld a, $01 ; $708e
-	ld hl, Func_6b_731b ; $7090
+	ld hl, CycleBgPalettes4To7Task ; $7090
 	call RegisterFrameTask ; $7093
 Label_6b_7096:
 	cp a, $aa ; $7096
 	jr nz, Label_6b_70a2 ; $7098
 	ld a, $01 ; $709a
-	ld hl, Func_6b_72af ; $709c
+	ld hl, AnimateBgPalette1Task ; $709c
 	call RegisterFrameTask ; $709f
 Label_6b_70a2:
 	cp a, $01 ; $70a2
 	jr nz, Label_6b_70ae ; $70a4
 	ld a, $01 ; $70a6
-	ld hl, Func_6b_72dd ; $70a8
+	ld hl, AnimateBgPalettes2And3Task ; $70a8
 	call RegisterFrameTask ; $70ab
 Label_6b_70ae:
 	ret ; $70ae
@@ -2067,7 +2067,7 @@ Palettes_6b_722f:
 	dw $167a, $6fda, $7f00, $1480 ; pal 13: #d59c29 #d5f6de #00c5ff #002029
 	dw $0e7c, $6fdc, $7f00, $0c40 ; pal 14: #e69c18 #e6f6de #00c5ff #001018
 	dw $025f, $6bff, $7f00, $0000 ; pal 15: #ff9400 #ffffd5 #00c5ff #000000
-Func_6b_72af:
+AnimateBgPalette1Task:
 	ldh a, [hVBlankCounter] ; $72af
 	and a, $03 ; $72b1
 	cp a, $03 ; $72b3
@@ -2090,10 +2090,10 @@ Label_6b_72cf:
 	call LoadPalettesImmediate ; $72d2
 	ret ; $72d5
 Label_6b_72d6:
-	ld hl, Func_6b_72af ; $72d6
+	ld hl, AnimateBgPalette1Task ; $72d6
 	call UnregisterFrameTask ; $72d9
 	ret ; $72dc
-Func_6b_72dd:
+AnimateBgPalettes2And3Task:
 	ldh a, [hVBlankCounter] ; $72dd
 	and a, $03 ; $72df
 	cp a, $03 ; $72e1
@@ -2126,10 +2126,10 @@ Label_6b_730d:
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
 Label_6b_7314:
-	ld hl, Func_6b_72dd ; $7314
+	ld hl, AnimateBgPalettes2And3Task ; $7314
 	call UnregisterFrameTask ; $7317
 	ret ; $731a
-Func_6b_731b:
+CycleBgPalettes4To7Task:
 	ldh a, [hVBlankCounter] ; $731b
 	and a, $03 ; $731d
 	cp a, $03 ; $731f
@@ -2170,10 +2170,10 @@ Label_6b_7358:
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e
 Label_6b_735f:
-	ld hl, Func_6b_731b ; $735f
+	ld hl, CycleBgPalettes4To7Task ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365
-Func_6b_7366:
+ScrollCutsceneXRightTask:
 	ld a, [wCutsceneStepTimer] ; $7366
 	cp a, $10 ; $7369
 	jr nc, Label_6b_7380 ; $736b
@@ -2192,7 +2192,7 @@ Label_6b_7375:
 Label_6b_7380:
 	ret ; $7380
 	INCBIN "data/bank_06b/d_7381.bin" ; $7381, 20 bytes
-Func_6b_7395:
+ScrollCutsceneXLeftTask:
 	ld a, [wCutsceneStepTimer] ; $7395
 	cp a, $10 ; $7398
 	jr nc, Label_6b_73af ; $739a
@@ -2230,7 +2230,7 @@ Label_6b_73d3:
 Label_6b_73de:
 	ret ; $73de
 	INCBIN "data/bank_06b/d_73df.bin" ; $73df, 19 bytes
-Func_6b_73f2:
+DecompressIntroTitleTiles:
 	ldh a, [hWramBank] ; $73f2
 	push af ; $73f4
 	wram_bank $01 ; $73f5
@@ -2256,7 +2256,7 @@ Func_6b_73f2:
 	wram_bank ; $7433
 	ret ; $7437
 	INCBIN "data/bank_06b/d_7438.bin" ; $7438, 305 bytes
-Func_6b_7569:
+ApplyScrollYFromWram:
 	ld a, [$cb44] ; $7569
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
@@ -2271,7 +2271,7 @@ Palettes_6b_756f:
 	dw $0000, $0000, $0000, $0000 ; pal 5: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
-Func_6b_75af:
+RunTitleScreen:
 	call ClearFrameTasks ; $75af
 	wram_bank $03 ; $75b2
 	xor a, a ; $75b8
@@ -2328,7 +2328,7 @@ Func_6b_75af:
 	ld de, $0801 ; $7639
 	call LoadPaletteShadow ; $763c
 	ld a, $01 ; $763f
-	ld hl, Func_6b_76b6 ; $7641
+	ld hl, QueueTitleSprite ; $7641
 	call RegisterFrameTask ; $7644
 	sound $02 ; $7647
 	call EnableLCD ; $7649
@@ -2338,7 +2338,7 @@ Func_6b_75af:
 	ld a, $9f ; $765a
 	ld [$d800], a ; $765c
 Label_6b_765f:
-	call Func_6b_771f ; $765f
+	call StepTitleSpriteAnimation ; $765f
 	call AdvanceFrame ; $7662
 	ldh a, [hInputRisingEdge] ; $7665
 	bit PADB_A, a ; $7667
@@ -2379,7 +2379,7 @@ Label_6b_76a6:
 	call WaitFadeEnd ; $76b0
 	ld a, $ff ; $76b3
 	ret ; $76b5
-Func_6b_76b6:
+QueueTitleSprite:
 	ldh a, [hWramBank] ; $76b6
 	push af ; $76b8
 	wram_bank $03 ; $76b9
@@ -2419,7 +2419,7 @@ SpriteTemplate_6b_76f6:
 	oam_sprite $10, $48, $10, $00
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
-Func_6b_771f:
+StepTitleSpriteAnimation:
 	ld a, [$d802] ; $771f
 	or a, a ; $7722
 	jr z, Label_6b_7732 ; $7723

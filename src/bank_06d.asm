@@ -214,7 +214,7 @@ TitleScreenTiles:
 	ldh [hScrollX], a ; $6a8a
 	ld c, $28 ; $6a8c
 	farcall LoadScreenAssetRecord ; $6a8e
-	farcall Func_6b_6075 ; $6a91
+	farcall LoadIntroTilesAndPalette ; $6a91
 	farcall QueueWram3MapToVRAM ; $6a94
 	ld a, $01 ; $6a97
 	ld hl, Func_6d_6abf ; $6a99
@@ -235,7 +235,7 @@ Label_6d_6aaa:
 Func_6d_6abf:
 	ld de, $4020 ; $6abf
 	ld c, $03 ; $6ac2
-	farcall Func_6b_6126 ; $6ac4
+	farcall QueueIntroSpriteBlock ; $6ac4
 	ret ; $6ac7
 Lz_6d_6ac8:
 	INCBIN "data/bank_06d/lz_6ac8.bin" ; $6ac8, 75 bytes
