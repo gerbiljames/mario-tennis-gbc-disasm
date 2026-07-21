@@ -539,10 +539,10 @@ Func_0d_43ba:
 	jr z, Label_0d_43de ; $43c7
 	ld a, [wPointOutcome] ; $43c9
 	add a, $00 ; $43cc
-	farcall Func_09_4367 ; $43ce
+	farcall ShowCourtBanner ; $43ce
 	ld a, $1e ; $43d1
 	farcall StepMatchFrames ; $43d3
-	farcall Func_09_437b ; $43d6
+	farcall HideCourtBanner ; $43d6
 	ld a, $0a ; $43d9
 	farcall StepMatchFrames ; $43db
 Label_0d_43de:
@@ -588,13 +588,13 @@ Label_0d_441c:
 Label_0d_441e:
 	farcall StepMatchFrame ; $441e
 	ld a, d ; $4421
-	farcall Func_09_4367 ; $4422
+	farcall ShowCourtBanner ; $4422
 	ld a, $0a ; $4425
 	farcall StepMatchFrames ; $4427
 	ld a, $2d ; $442a
 	farcall StepMatchFramesSkippable ; $442c
 	farcall RunMatchFramesUntilInput ; $442f
-	farcall Func_09_437b ; $4432
+	farcall HideCourtBanner ; $4432
 	ld a, $0f ; $4435
 	farcall StepMatchFrames ; $4437
 	ld a, $80 ; $443a
@@ -1059,14 +1059,14 @@ Label_0d_48e5:
 	push af ; $48e5
 	ld b, $01 ; $48e6
 	ld de, $8200 ; $48e8
-	farcall Func_09_6100 ; $48eb
+	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a, a ; $48f1
 	jr nz, Label_0d_48f6 ; $48f2
 	sound $74 ; $48f4
 Label_0d_48f6:
 	ld a, $11 ; $48f6
-	farcall Func_09_4371 ; $48f8
+	farcall SpawnCourtBannerObj ; $48f8
 	ld a, $28 ; $48fb
 	farcall StepMatchFrames ; $48fd
 	pop af ; $4900
@@ -1078,10 +1078,10 @@ Label_0d_48f6:
 	sound $75 ; $490a
 Label_0d_490c:
 	ld a, $10 ; $490c
-	farcall Func_09_4367 ; $490e
+	farcall ShowCourtBanner ; $490e
 	ld a, $28 ; $4911
 	farcall StepMatchFrames ; $4913
-	farcall Func_09_437b ; $4916
+	farcall HideCourtBanner ; $4916
 	pop af ; $4919
 	ld b, a ; $491a
 	ld a, [wMatchFramesAbort] ; $491b

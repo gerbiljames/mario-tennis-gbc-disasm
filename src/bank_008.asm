@@ -174,7 +174,7 @@ InitMatchScene:
 	call AssignCourtPositions ; $4173
 	xor a, a ; $4176
 	ld [$c4cd], a ; $4177
-	farcall Func_09_4036 ; $417a
+	farcall UpdatePointScoreDisplay ; $417a
 	call Func_08_5e93 ; $417d
 	call UploadCourtTilemap ; $4180
 	call UploadCourtAttrmap ; $4183
@@ -323,7 +323,7 @@ Label_08_42d4:
 	and a, a ; $42d7
 	jr z, Label_08_42f2 ; $42d8
 	ld a, $0e ; $42da
-	farcall Func_09_4367 ; $42dc
+	farcall ShowCourtBanner ; $42dc
 	ld a, [$c4d4] ; $42df
 	and a, $02 ; $42e2
 	ld de, $f0d8 ; $42e4
@@ -1040,10 +1040,10 @@ Label_08_4782:
 	ld [$c4cc], a ; $478c
 	sound $0e ; $478f
 	ld a, $0f ; $4791
-	farcall Func_09_4367 ; $4793
+	farcall ShowCourtBanner ; $4793
 	ld a, $50 ; $4796
 	call StepMatchFrames ; $4798
-	farcall Func_09_437b ; $479b
+	farcall HideCourtBanner ; $479b
 	ld a, $0f ; $479e
 	call StepMatchFrames ; $47a0
 Label_08_47a3:
@@ -1491,10 +1491,10 @@ Label_08_4d26:
 	call StepMatchFrames ; $4d3f
 Label_08_4d42:
 	call EndPointBallEffects ; $4d42
-	farcall Func_09_4098 ; $4d45
+	farcall UpdateGameScoreDisplay ; $4d45
 	call ScorePoint ; $4d48
 	call StepMatchFrame ; $4d4b
-	farcall Func_09_4036 ; $4d4e
+	farcall UpdatePointScoreDisplay ; $4d4e
 	call StepMatchFrame ; $4d51
 	call StartPointEndReactions ; $4d54
 	call ResolvePointOutcome ; $4d57
@@ -1554,7 +1554,7 @@ AnnouncePointSituation:
 	ld d, $07 ; $4db9
 Label_08_4dbb:
 	ld a, d ; $4dbb
-	farcall Func_09_4367 ; $4dbc
+	farcall ShowCourtBanner ; $4dbc
 	ld a, [wGamePointFlag] ; $4dbf
 	inc a ; $4dc2
 	srl a ; $4dc3
@@ -1574,7 +1574,7 @@ Label_08_4ddb:
 	call StepMatchFrames ; $4de3
 	ld a, $1e ; $4de6
 	call StepMatchFramesSkippable ; $4de8
-	farcall Func_09_437b ; $4deb
+	farcall HideCourtBanner ; $4deb
 	ld a, $0a ; $4dee
 	call StepMatchFrames ; $4df0
 Label_08_4df3:
@@ -1645,22 +1645,22 @@ Label_08_4e6d:
 	ret z ; $4e71
 	ld a, [$c491] ; $4e72
 	add a, $17 ; $4e75
-	farcall Func_09_4367 ; $4e77
+	farcall ShowCourtBanner ; $4e77
 	ld a, $0a ; $4e7a
 	call StepMatchFrames ; $4e7c
 	ld a, $1e ; $4e7f
 	call StepMatchFramesSkippable ; $4e81
-	farcall Func_09_437b ; $4e84
+	farcall HideCourtBanner ; $4e84
 	ld a, $0a ; $4e87
 	call StepMatchFrames ; $4e89
 	ret ; $4e8c
 Label_08_4e8d:
 	ld a, [wPointOutcome] ; $4e8d
 	add a, $00 ; $4e90
-	farcall Func_09_4367 ; $4e92
+	farcall ShowCourtBanner ; $4e92
 	ld a, $1e ; $4e95
 	call StepMatchFrames ; $4e97
-	farcall Func_09_437b ; $4e9a
+	farcall HideCourtBanner ; $4e9a
 	ld a, $0a ; $4e9d
 	call StepMatchFrames ; $4e9f
 	ret ; $4ea2
@@ -1679,7 +1679,7 @@ Label_08_4ea3:
 	sound $69 ; $4ebb
 	call StepMatchFrame ; $4ebd
 Label_08_4ec0:
-	farcall Func_09_4098 ; $4ec0
+	farcall UpdateGameScoreDisplay ; $4ec0
 	ld a, $0a ; $4ec3
 	call StepMatchFrames ; $4ec5
 	ld a, $1e ; $4ec8
@@ -1704,7 +1704,7 @@ Label_08_4ee4:
 	ret ; $4eed
 Label_08_4eee:
 	ld a, $0d ; $4eee
-	farcall Func_09_4367 ; $4ef0
+	farcall ShowCourtBanner ; $4ef0
 	ld a, $0a ; $4ef3
 	call StepMatchFrames ; $4ef5
 	ld a, [wGameWinLoseFlag] ; $4ef8
@@ -1714,30 +1714,30 @@ Label_08_4eee:
 	ld a, $2d ; $4f03
 	call StepMatchFramesSkippable ; $4f05
 	farcall Func_09_42f6 ; $4f08
-	farcall Func_09_437b ; $4f0b
+	farcall HideCourtBanner ; $4f0b
 	ret ; $4f0e
 Label_08_4f0f:
 	ld a, [wPlayer1SetsWon] ; $4f0f
 	ld b, $01 ; $4f12
-	farcall Func_09_612a ; $4f14
+	farcall LoadPlayer1ScoreDigitGfx ; $4f14
 	ld a, [wPlayer2SetsWon] ; $4f17
 	ld b, $01 ; $4f1a
-	farcall Func_09_6139 ; $4f1c
+	farcall LoadPlayer2ScoreDigitGfx ; $4f1c
 	ld d, $0c ; $4f1f
 	jr Label_08_4f37 ; $4f21
 Label_08_4f23:
 	ld a, [wPlayer1GamesWon] ; $4f23
 	ld b, $01 ; $4f26
-	farcall Func_09_612a ; $4f28
+	farcall LoadPlayer1ScoreDigitGfx ; $4f28
 	ld a, [wPlayer2GamesWon] ; $4f2b
 	ld b, $01 ; $4f2e
-	farcall Func_09_6139 ; $4f30
+	farcall LoadPlayer2ScoreDigitGfx ; $4f30
 	ld d, $0b ; $4f33
 	jr Label_08_4f37 ; $4f35
 Label_08_4f37:
 	call StepMatchFrame ; $4f37
 	ld a, d ; $4f3a
-	farcall Func_09_4367 ; $4f3b
+	farcall ShowCourtBanner ; $4f3b
 	ld a, $0a ; $4f3e
 	call StepMatchFrames ; $4f40
 	ld a, [wGameWinLoseFlag] ; $4f43
@@ -1755,7 +1755,7 @@ Label_08_4f37:
 	ld a, $28 ; $4f63
 	call StepMatchFramesSkippable ; $4f65
 	farcall Func_09_4238 ; $4f68
-	farcall Func_09_437b ; $4f6b
+	farcall HideCourtBanner ; $4f6b
 	ret ; $4f6e
 	ld a, $00 ; $4f6f
 	call SetCharState ; $4f71
@@ -4179,12 +4179,12 @@ RunChangeoverSequence:
 	jr z, Label_08_5fb4 ; $5f9b
 	call StepMatchFrame ; $5f9d
 	ld a, $00 ; $5fa0
-	farcall Func_09_4367 ; $5fa2
+	farcall ShowCourtBanner ; $5fa2
 	call StepMatchFrame ; $5fa5
 Label_08_5fa8:
 	call StepMatchFrame ; $5fa8
 	call WalkCharsToNewEnds ; $5fab
-	farcall Func_09_437b ; $5fae
+	farcall HideCourtBanner ; $5fae
 	call StepMatchFrame ; $5fb1
 Label_08_5fb4:
 	xor a, a ; $5fb4

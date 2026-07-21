@@ -1207,19 +1207,19 @@ Label_06_495e:
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
 	ld de, $8700 ; $4976
-	farcall Func_09_6100 ; $4979
+	farcall LoadScoreDigitGfx ; $4979
 	ld a, [wPlayer1SetsWon] ; $497c
 	ld b, $01 ; $497f
 	ld de, $8680 ; $4981
-	farcall Func_09_6100 ; $4984
+	farcall LoadScoreDigitGfx ; $4984
 	ld a, [wPlayer2GamesWon] ; $4987
 	ld b, $01 ; $498a
 	ld de, $8740 ; $498c
-	farcall Func_09_6100 ; $498f
+	farcall LoadScoreDigitGfx ; $498f
 	ld a, [wPlayer2SetsWon] ; $4992
 	ld b, $01 ; $4995
 	ld de, $86c0 ; $4997
-	farcall Func_09_6100 ; $499a
+	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
 Label_06_49a0:
 	wram_bank $02 ; $49a0

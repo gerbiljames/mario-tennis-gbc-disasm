@@ -2,16 +2,16 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 
 	farptr InitAllObjSlots ; $4000
 	farptr UpdateAllObjSprites ; $4002
-	farptr Func_09_4036 ; $4004
+	farptr UpdatePointScoreDisplay ; $4004
 	farptr LoadOnCourtCharacterGfx ; $4006
 	farptr LoadServeGfx ; $4008
 	farptr Func_09_412a ; $400a
 	farptr Func_09_4190 ; $400c
 	farptr Func_09_4242 ; $400e
 	farptr Func_09_4282 ; $4010
-	farptr Func_09_4367 ; $4012
-	farptr Func_09_4371 ; $4014
-	farptr Func_09_437b ; $4016
+	farptr ShowCourtBanner ; $4012
+	farptr SpawnCourtBannerObj ; $4014
+	farptr HideCourtBanner ; $4016
 	farptr Func_09_4310 ; $4018
 	farptr Func_09_431d ; $401a
 	farptr Func_09_42d8 ; $401c
@@ -19,15 +19,15 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 	farptr InitAllObjSlotsAlias1, InitAllObjSlots ; $4020
 	farptr InitAllObjSlotsAlias2, InitAllObjSlots ; $4022
 	farptr Func_09_45c4 ; $4024
-	farptr Func_09_4098 ; $4026
-	farptr Func_09_6100 ; $4028
-	farptr Func_09_610c ; $402a
-	farptr Func_09_611b ; $402c
-	farptr Func_09_612a ; $402e
-	farptr Func_09_6139 ; $4030
+	farptr UpdateGameScoreDisplay ; $4026
+	farptr LoadScoreDigitGfx ; $4028
+	farptr LoadPlayer1PointsDigitGfx ; $402a
+	farptr LoadPlayer2PointsDigitGfx ; $402c
+	farptr LoadPlayer1ScoreDigitGfx ; $402e
+	farptr LoadPlayer2ScoreDigitGfx ; $4030
 	farptr Func_09_422c ; $4032
 	farptr Func_09_4238 ; $4034
-Func_09_4036:
+UpdatePointScoreDisplay:
 	ld a, [wTiebreakerIndicator] ; $4036
 	and a, a ; $4039
 	jr nz, Label_09_405f ; $403a
@@ -38,7 +38,7 @@ Func_09_4036:
 	ld a, $05 ; $4046
 Label_09_4048:
 	ld b, $00 ; $4048
-	call Func_09_610c ; $404a
+	call LoadPlayer1PointsDigitGfx ; $404a
 	ld a, [wPlayer1PointsWon] ; $404d
 	cp a, $04 ; $4050
 	ld a, [wPlayer2PointsWon] ; $4052
@@ -46,7 +46,7 @@ Label_09_4048:
 	ld a, $05 ; $4057
 Label_09_4059:
 	ld b, $00 ; $4059
-	call Func_09_611b ; $405b
+	call LoadPlayer2PointsDigitGfx ; $405b
 	ret ; $405e
 Label_09_405f:
 	ld a, [wPlayer2PointsWon] ; $405f
@@ -56,7 +56,7 @@ Label_09_405f:
 	ld a, $08 ; $4069
 Label_09_406b:
 	ld b, $01 ; $406b
-	call Func_09_610c ; $406d
+	call LoadPlayer1PointsDigitGfx ; $406d
 	ld a, [wPlayer1PointsWon] ; $4070
 	cp a, $07 ; $4073
 	ld a, [wPlayer2PointsWon] ; $4075
@@ -64,7 +64,7 @@ Label_09_406b:
 	ld a, $08 ; $407a
 Label_09_407c:
 	ld b, $01 ; $407c
-	call Func_09_611b ; $407e
+	call LoadPlayer2PointsDigitGfx ; $407e
 	ret ; $4081
 Func_09_4082:
 	ld a, [wPlayer1PointsWon] ; $4082
@@ -80,7 +80,7 @@ Func_09_4082:
 Label_09_4094:
 	ld a, [wDeuceIndicator] ; $4094
 	ret ; $4097
-Func_09_4098:
+UpdateGameScoreDisplay:
 	call Func_09_4082 ; $4098
 	and a, a ; $409b
 	jr nz, Label_09_40b1 ; $409c
@@ -88,12 +88,12 @@ Func_09_4098:
 	ld a, [$c7bd] ; $409f
 	ld b, a ; $40a2
 	ld a, d ; $40a3
-	call Func_09_612a ; $40a4
+	call LoadPlayer1ScoreDigitGfx ; $40a4
 	pop de ; $40a7
 	ld a, [$c7bd] ; $40a8
 	ld b, a ; $40ab
 	ld a, e ; $40ac
-	call Func_09_6139 ; $40ad
+	call LoadPlayer2ScoreDigitGfx ; $40ad
 	ret ; $40b0
 Label_09_40b1:
 	call Func_09_6148 ; $40b1
@@ -295,19 +295,19 @@ Func_09_431d:
 	call Func_09_4658 ; $4323
 	ret ; $4326
 	INCBIN "data/bank_009/d_4327.bin" ; $4327, 64 bytes
-Func_09_4367:
+ShowCourtBanner:
 	push af ; $4367
 	call ClearAllObjSlots ; $4368
 	pop af ; $436b
 	push af ; $436c
 	call LoadTilesetGfx ; $436d
 	pop af ; $4370
-Func_09_4371:
+SpawnCourtBannerObj:
 	ld hl, $4385 ; $4371
 	ld bc, $ddb0 ; $4374
 	call LoadObjTemplate_09 ; $4377
 	ret ; $437a
-Func_09_437b:
+HideCourtBanner:
 	ld hl, $4385 ; $437b
 	ld bc, $ddb0 ; $437e
 	call Func_09_4658 ; $4381
@@ -725,34 +725,34 @@ VramTileset_09:
 	db $00, $00
 TilesetTiles_09:
 	INCBIN "data/bank_009/d_4900.bin" ; $4900, 6144 bytes
-Func_09_6100:
+LoadScoreDigitGfx:
 	ld hl, VramGfxPtrTable_09_616d ; $6100
 	call GetGfxSourcePtr ; $6103
 	ld c, $04 ; $6106
 	call QueueVRAMCopy ; $6108
 	ret ; $610b
-Func_09_610c:
+LoadPlayer1PointsDigitGfx:
 	ld hl, VramGfxPtrTable_09_616d ; $610c
 	call GetGfxSourcePtr ; $610f
 	ld de, $8780 ; $6112
 	ld c, $04 ; $6115
 	call QueueVRAMCopy ; $6117
 	ret ; $611a
-Func_09_611b:
+LoadPlayer2PointsDigitGfx:
 	ld hl, VramGfxPtrTable_09_616d ; $611b
 	call GetGfxSourcePtr ; $611e
 	ld de, $87c0 ; $6121
 	ld c, $04 ; $6124
 	call QueueVRAMCopy ; $6126
 	ret ; $6129
-Func_09_612a:
+LoadPlayer1ScoreDigitGfx:
 	ld hl, $6171 ; $612a
 	call GetGfxSourcePtr ; $612d
 	ld de, $8300 ; $6130
 	ld c, $04 ; $6133
 	call QueueVRAMCopy ; $6135
 	ret ; $6138
-Func_09_6139:
+LoadPlayer2ScoreDigitGfx:
 	ld hl, $6175 ; $6139
 	call GetGfxSourcePtr ; $613c
 	ld de, $8340 ; $613f

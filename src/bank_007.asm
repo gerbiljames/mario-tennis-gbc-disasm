@@ -4011,17 +4011,17 @@ RunDebugTestMatch:
 Func_07_5ed2:
 	ret ; $5ed2
 ResolveTargetModePoint:
-	farcall Func_09_4098 ; $5ed3
+	farcall UpdateGameScoreDisplay ; $5ed3
 	farcall ResolvePointWinner ; $5ed6
 	ld [wPointWinLoseFlag], a ; $5ed9
 	farcall UpdatePointStats ; $5edc
 	farcall AwardPoint ; $5edf
 	ld a, [wPlayer1PointsWon] ; $5ee2
 	ld b, $01 ; $5ee5
-	farcall Func_09_610c ; $5ee7
+	farcall LoadPlayer1PointsDigitGfx ; $5ee7
 	ld a, [wPlayer2PointsWon] ; $5eea
 	ld b, $01 ; $5eed
-	farcall Func_09_611b ; $5eef
+	farcall LoadPlayer2PointsDigitGfx ; $5eef
 	farcall StepMatchFrame ; $5ef2
 	farcall StartPointEndReactions ; $5ef5
 	farcall ResolvePointOutcome ; $5ef8

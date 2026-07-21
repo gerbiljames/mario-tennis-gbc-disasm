@@ -395,11 +395,11 @@ PlayDrillPointEndSequence:
 	jr Label_0b_43cf ; $43c8
 Label_0b_43ca:
 	add a, $00 ; $43ca
-	farcall Func_09_4367 ; $43cc
+	farcall ShowCourtBanner ; $43cc
 Label_0b_43cf:
 	ld a, $1e ; $43cf
 	farcall StepMatchFrames ; $43d1
-	farcall Func_09_437b ; $43d4
+	farcall HideCourtBanner ; $43d4
 	ld a, $0f ; $43d7
 	farcall StepMatchFrames ; $43d9
 Label_0b_43dc:
@@ -408,7 +408,7 @@ Label_0b_43dc:
 	farcall StepMatchFrames ; $43e1
 	ld a, $0a ; $43e4
 	farcall StepMatchFramesSkippable ; $43e6
-	farcall Func_09_4098 ; $43e9
+	farcall UpdateGameScoreDisplay ; $43e9
 	ld a, $0a ; $43ec
 	farcall StepMatchFrames ; $43ee
 	ld a, $1e ; $43f1
@@ -1233,7 +1233,7 @@ Label_0b_5cd6:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 Drill09HandlePointEnd:
-	farcall Func_09_4098 ; $5cf9
+	farcall UpdateGameScoreDisplay ; $5cf9
 	ld a, [$c2ff] ; $5cfc
 	ld [wPointWinLoseFlag], a ; $5cff
 	cp a, $01 ; $5d02
@@ -1251,10 +1251,10 @@ Label_0b_5d0a:
 	ld [wPlayer2PointsWon], a ; $5d1d
 	ld a, [wPlayer1PointsWon] ; $5d20
 	ld b, $01 ; $5d23
-	farcall Func_09_610c ; $5d25
+	farcall LoadPlayer1PointsDigitGfx ; $5d25
 	ld a, [wPlayer2PointsWon] ; $5d28
 	ld b, $01 ; $5d2b
-	farcall Func_09_611b ; $5d2d
+	farcall LoadPlayer2PointsDigitGfx ; $5d2d
 	farcall StepMatchFrame ; $5d30
 	ld a, $01 ; $5d33
 	ld hl, Func_0b_446e ; $5d35
@@ -1625,7 +1625,7 @@ Label_0b_6c47:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 Drill15HandlePointEnd:
-	farcall Func_09_4098 ; $6c81
+	farcall UpdateGameScoreDisplay ; $6c81
 	ld a, [$c2ff] ; $6c84
 	ld [wPointWinLoseFlag], a ; $6c87
 	cp a, $01 ; $6c8a
@@ -1643,10 +1643,10 @@ Label_0b_6c92:
 	ld [wPlayer2PointsWon], a ; $6ca5
 	ld a, [wPlayer1PointsWon] ; $6ca8
 	ld b, $01 ; $6cab
-	farcall Func_09_610c ; $6cad
+	farcall LoadPlayer1PointsDigitGfx ; $6cad
 	ld a, [wPlayer2PointsWon] ; $6cb0
 	ld b, $01 ; $6cb3
-	farcall Func_09_611b ; $6cb5
+	farcall LoadPlayer2PointsDigitGfx ; $6cb5
 	farcall StepMatchFrame ; $6cb8
 	ld a, $01 ; $6cbb
 	ld hl, Func_0b_446e ; $6cbd
@@ -1817,10 +1817,10 @@ Label_0b_6da6:
 	ld [wPlayer2PointsWon], a ; $714f
 	ld a, [wPlayer1PointsWon] ; $7152
 	ld b, $01 ; $7155
-	farcall Func_09_610c ; $7157
+	farcall LoadPlayer1PointsDigitGfx ; $7157
 	ld a, [wPlayer2PointsWon] ; $715a
 	ld b, $01 ; $715d
-	farcall Func_09_611b ; $715f
+	farcall LoadPlayer2PointsDigitGfx ; $715f
 	farcall StepMatchFrame ; $7162
 	ld a, $01 ; $7165
 	ld hl, Func_0b_446e ; $7167
