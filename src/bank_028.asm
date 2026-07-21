@@ -1,14 +1,14 @@
 SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 
-	farptr Func_28_5eb0 ; $4000
-	farptr Func_28_5efb ; $4002
-	farptr Func_28_6030 ; $4004
-	farptr Func_28_6044 ; $4006
-	farptr Func_28_6058 ; $4008
-	farptr Func_28_60c9 ; $400a
-	farptr Func_28_606c ; $400c
+	farptr LoadMatchGraphics ; $4000
+	farptr LoadMatchVariantGraphics ; $4002
+	farptr LoadSpecialHitEffectTiles ; $4004
+	farptr LoadBallTouchCharEffectTilesA ; $4006
+	farptr LoadBallTouchCharEffectTilesB ; $4008
+	farptr LoadMatchStoryGfx ; $400a
+	farptr QueueMatchSpriteFrameA ; $400c
 	farptr Func_28_60a0 ; $400e
-	farptr Func_28_6086 ; $4010
+	farptr QueueMatchSpriteFrameB ; $4010
 	INCBIN "data/bank_028/d_4012.bin" ; $4012, 1486 bytes
 MatchGfxTilesA_28:
 	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
@@ -46,7 +46,7 @@ MatchGfxPalettesB_28:
 	dw $294a, $021f, $4bff, $00cc ; pal 13: #525252 #ff8300 #ffff94 #623100
 	dw $294a, $001f, $7fff, $0000 ; pal 14: #525252 #ff0000 #ffffff #000000
 	dw $0260, $00ff, $27ff, $0000 ; pal 15: #009c00 #ff3900 #ffff4a #000000
-Func_28_5eb0:
+LoadMatchGraphics:
 	wram_bank $01 ; $5eb0
 	ld hl, MatchGfxPalettesA_28 ; $5eb6
 	ld de, $0803 ; $5eb9
@@ -71,9 +71,9 @@ Func_28_5eb0:
 	call QueueVRAMCopy ; $5eef
 	ld a, [$c8f5] ; $5ef2
 	cp a, $02 ; $5ef5
-	call z, Func_28_5efb ; $5ef7
+	call z, LoadMatchVariantGraphics ; $5ef7
 	ret ; $5efa
-Func_28_5efb:
+LoadMatchVariantGraphics:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
 	sub a, $12 ; $5efe
 	jr c, Label_28_5f2a ; $5f00
@@ -208,7 +208,7 @@ Func_28_6024:
 	ld c, $14 ; $602a
 	call QueueVRAMCopy ; $602c
 	ret ; $602f
-Func_28_6030:
+LoadSpecialHitEffectTiles:
 	rrca ; $6030
 	rrca ; $6031
 	and a, $c0 ; $6032
@@ -221,7 +221,7 @@ Func_28_6030:
 	ld c, $04 ; $603e
 	call QueueVRAMCopy ; $6040
 	ret ; $6043
-Func_28_6044:
+LoadBallTouchCharEffectTilesA:
 	rrca ; $6044
 	rrca ; $6045
 	and a, $40 ; $6046
@@ -234,7 +234,7 @@ Func_28_6044:
 	ld c, $04 ; $6052
 	call QueueVRAMCopy ; $6054
 	ret ; $6057
-Func_28_6058:
+LoadBallTouchCharEffectTilesB:
 	rrca ; $6058
 	rrca ; $6059
 	and a, $40 ; $605a
@@ -247,7 +247,7 @@ Func_28_6058:
 	ld c, $04 ; $6066
 	call QueueVRAMCopy ; $6068
 	ret ; $606b
-Func_28_606c:
+QueueMatchSpriteFrameA:
 	add a, a ; $606c
 	add a, $80 ; $606d
 	ld l, a ; $606f
@@ -262,7 +262,7 @@ Func_28_606c:
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
 	INCBIN "data/bank_028/d_6080.bin" ; $6080, 6 bytes
-Func_28_6086:
+QueueMatchSpriteFrameB:
 	add a, a ; $6086
 	add a, $9a ; $6087
 	ld l, a ; $6089
@@ -304,7 +304,7 @@ Func_28_60a0:
 	call QueueVRAMCopy ; $60bd
 	ret ; $60c0
 	INCBIN "data/bank_028/d_60c1.bin" ; $60c1, 8 bytes
-Func_28_60c9:
+LoadMatchStoryGfx:
 	wram_bank $01 ; $60c9
 	ld hl, MatchGfxPalettesC_28 ; $60cf
 	ld de, $0902 ; $60d2

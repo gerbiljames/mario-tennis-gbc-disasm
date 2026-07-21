@@ -178,7 +178,7 @@ InitMatchScene:
 	call RefreshCourtScoreboard ; $417d
 	call UploadCourtTilemap ; $4180
 	call UploadCourtAttrmap ; $4183
-	farcall Func_28_5eb0 ; $4186
+	farcall LoadMatchGraphics ; $4186
 	wram_bank $04 ; $4189
 	ret ; $418f
 RunMatch:
@@ -2360,7 +2360,7 @@ DrawLandingMarker:
 	ld a, [hl] ; $536b
 	cp a, $ff ; $536c
 	ret z ; $536e
-	farcall Func_28_6058 ; $536f
+	farcall LoadBallTouchCharEffectTilesB ; $536f
 	ret ; $5372
 	; $5373, 16 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
@@ -2506,7 +2506,7 @@ DrawSpecialHitEffect:
 	ld a, [hl] ; $5464
 	cp a, $ff ; $5465
 	ret z ; $5467
-	farcall Func_28_6030 ; $5468
+	farcall LoadSpecialHitEffectTiles ; $5468
 	ret ; $546b
 	; $546c, 16 bytes (bytes:4)
 	db $ff, $ff, $ff, $03 ; 0x00
@@ -2545,7 +2545,7 @@ DrawBallTouchCharEffect:
 	ld a, [hl] ; $54ba
 	cp a, $ff ; $54bb
 	ret z ; $54bd
-	farcall Func_28_6044 ; $54be
+	farcall LoadBallTouchCharEffectTilesA ; $54be
 	ret ; $54c1
 	; $54c2, 40 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00

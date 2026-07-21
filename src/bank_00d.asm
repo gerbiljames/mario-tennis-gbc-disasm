@@ -2321,7 +2321,7 @@ DrawTargetReticleSprite:
 	ld a, [hl] ; $5376
 	cp a, $ff ; $5377
 	ret z ; $5379
-	farcall Func_28_606c ; $537a
+	farcall QueueMatchSpriteFrameA ; $537a
 	ret ; $537d
 	; $537e, 32 bytes (bytes:8)
 	db $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
@@ -2744,7 +2744,7 @@ Func_0d_57fd:
 	ld a, [hl] ; $5814
 	cp a, $ff ; $5815
 	ret z ; $5817
-	farcall Func_28_6086 ; $5818
+	farcall QueueMatchSpriteFrameB ; $5818
 	ret ; $581b
 	nop ; $581c
 	rst Rst38 ; $581d

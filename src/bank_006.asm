@@ -4298,7 +4298,7 @@ RunStoryModeMenu:
 	ld a, $81 ; $6e30
 	ld [wWindowTileAttr], a ; $6e32
 	set_flag $02, 4 ; $6e35
-	farcall Func_28_60c9 ; $6e38
+	farcall LoadMatchStoryGfx ; $6e38
 	call RestoreStoryTilemapNoPriority ; $6e3b
 	ld d, $00 ; $6e3e
 	ld e, $0e ; $6e40
