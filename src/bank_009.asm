@@ -7,13 +7,13 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 	farptr LoadServeGfx ; $4008
 	farptr Func_09_412a ; $400a
 	farptr Func_09_4190 ; $400c
-	farptr Func_09_4242 ; $400e
-	farptr Func_09_4282 ; $4010
+	farptr SpawnServeIndicatorObjs ; $400e
+	farptr DismissServeIndicatorObjs ; $4010
 	farptr ShowCourtBanner ; $4012
 	farptr SpawnCourtBannerObj ; $4014
 	farptr HideCourtBanner ; $4016
-	farptr Func_09_4310 ; $4018
-	farptr Func_09_431d ; $401a
+	farptr SpawnServeIndicatorSideObj ; $4018
+	farptr DismissServeIndicatorSideObj ; $401a
 	farptr Func_09_42d8 ; $401c
 	farptr Func_09_42f6 ; $401e
 	farptr InitAllObjSlotsAlias1, InitAllObjSlots ; $4020
@@ -223,9 +223,9 @@ Func_09_4238:
 	ld bc, $dda0 ; $423b
 	call StartObjExitAnim ; $423e
 	ret ; $4241
-Func_09_4242:
+SpawnServeIndicatorObjs:
 	call ClearAllObjSlots ; $4242
-	call Func_09_4310 ; $4245
+	call SpawnServeIndicatorSideObj ; $4245
 	ld a, [$c4d4] ; $4248
 	ld hl, $4298 ; $424b
 	ld bc, $dd80 ; $424e
@@ -251,8 +251,8 @@ Label_09_4274:
 	add a, $10 ; $427e
 	ld [hl], a ; $4280
 	ret ; $4281
-Func_09_4282:
-	call Func_09_431d ; $4282
+DismissServeIndicatorObjs:
+	call DismissServeIndicatorSideObj ; $4282
 	ld hl, $4298 ; $4285
 	ld bc, $dd80 ; $4288
 	call StartObjExitAnim ; $428b
@@ -283,13 +283,13 @@ Func_09_42f6:
 	call StartObjExitAnim ; $42fc
 	ret ; $42ff
 	INCBIN "data/bank_009/d_4300.bin" ; $4300, 16 bytes
-Func_09_4310:
+SpawnServeIndicatorSideObj:
 	ld a, [$c4d4] ; $4310
 	ld hl, $4327 ; $4313
 	ld bc, $ddc0 ; $4316
 	call LoadObjTemplate_09 ; $4319
 	ret ; $431c
-Func_09_431d:
+DismissServeIndicatorSideObj:
 	ld hl, $4327 ; $431d
 	ld bc, $ddc0 ; $4320
 	call StartObjExitAnim ; $4323

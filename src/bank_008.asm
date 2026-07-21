@@ -5751,7 +5751,7 @@ CharServeInitPhase:
 	ldh a, [hWramBank] ; $6b18
 	push af ; $6b1a
 	wram_bank $04 ; $6b1b
-	farcall Func_09_4242 ; $6b21
+	farcall SpawnServeIndicatorObjs ; $6b21
 	pop af ; $6b24
 	wram_bank ; $6b25
 Label_08_6b29:
@@ -5794,7 +5794,7 @@ CharServeTossPhase:
 	ldh a, [hWramBank] ; $6b72
 	push af ; $6b74
 	wram_bank $04 ; $6b75
-	farcall Func_09_4282 ; $6b7b
+	farcall DismissServeIndicatorObjs ; $6b7b
 	pop af ; $6b7e
 	wram_bank ; $6b7f
 	ld d, $0f ; $6b83
@@ -6003,7 +6003,7 @@ Label_08_6cf1:
 	ldh a, [hWramBank] ; $6cf9
 	push af ; $6cfb
 	wram_bank $04 ; $6cfc
-	farcall Func_09_4282 ; $6d02
+	farcall DismissServeIndicatorObjs ; $6d02
 	pop af ; $6d05
 	wram_bank ; $6d06
 	jp AdvanceCharStatePhase ; $6d0a
