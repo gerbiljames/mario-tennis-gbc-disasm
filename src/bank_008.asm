@@ -1708,12 +1708,12 @@ Label_08_4eee:
 	ld a, $0a ; $4ef3
 	call StepMatchFrames ; $4ef5
 	ld a, [wGameWinLoseFlag] ; $4ef8
-	farcall Func_09_42d8 ; $4efb
+	farcall SpawnWinLoseResultObj ; $4efb
 	ld a, $0a ; $4efe
 	call StepMatchFrames ; $4f00
 	ld a, $2d ; $4f03
 	call StepMatchFramesSkippable ; $4f05
-	farcall Func_09_42f6 ; $4f08
+	farcall DismissWinLoseResultObj ; $4f08
 	farcall HideCourtBanner ; $4f0b
 	ret ; $4f0e
 Label_08_4f0f:
@@ -1741,12 +1741,12 @@ Label_08_4f37:
 	ld a, $0a ; $4f3e
 	call StepMatchFrames ; $4f40
 	ld a, [wGameWinLoseFlag] ; $4f43
-	farcall Func_09_42d8 ; $4f46
+	farcall SpawnWinLoseResultObj ; $4f46
 	ld a, $0a ; $4f49
 	call StepMatchFrames ; $4f4b
 	ld a, $28 ; $4f4e
 	call StepMatchFramesSkippable ; $4f50
-	farcall Func_09_42f6 ; $4f53
+	farcall DismissWinLoseResultObj ; $4f53
 	ld a, $0a ; $4f56
 	call StepMatchFrames ; $4f58
 	farcall SpawnGameResultObj ; $4f5b

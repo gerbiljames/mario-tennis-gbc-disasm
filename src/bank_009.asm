@@ -14,8 +14,8 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 	farptr HideCourtBanner ; $4016
 	farptr SpawnServeIndicatorSideObj ; $4018
 	farptr DismissServeIndicatorSideObj ; $401a
-	farptr Func_09_42d8 ; $401c
-	farptr Func_09_42f6 ; $401e
+	farptr SpawnWinLoseResultObj ; $401c
+	farptr DismissWinLoseResultObj ; $401e
 	farptr InitAllObjSlotsAlias1, InitAllObjSlots ; $4020
 	farptr InitAllObjSlotsAlias2, InitAllObjSlots ; $4022
 	farptr Func_09_45c4 ; $4024
@@ -261,7 +261,7 @@ DismissServeIndicatorObjs:
 	call StartObjExitAnim ; $4294
 	ret ; $4297
 	INCBIN "data/bank_009/d_4298.bin" ; $4298, 64 bytes
-Func_09_42d8:
+SpawnWinLoseResultObj:
 	push af ; $42d8
 	ld a, $00 ; $42d9
 	ld hl, $4300 ; $42db
@@ -277,7 +277,7 @@ Label_09_42ef:
 	call Func_09_71ac ; $42ef
 	call Func_09_45bc ; $42f2
 	ret ; $42f5
-Func_09_42f6:
+DismissWinLoseResultObj:
 	ld hl, $4300 ; $42f6
 	ld bc, $dd80 ; $42f9
 	call StartObjExitAnim ; $42fc

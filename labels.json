@@ -1197,6 +1197,8 @@
  "0x24238": "DismissGameResultObj",
  "0x24242": "SpawnServeIndicatorObjs",
  "0x24282": "DismissServeIndicatorObjs",
+ "0x242d8": "SpawnWinLoseResultObj",
+ "0x242f6": "DismissWinLoseResultObj",
  "0x24310": "SpawnServeIndicatorSideObj",
  "0x2431d": "DismissServeIndicatorSideObj",
  "0x24367": "ShowCourtBanner",
