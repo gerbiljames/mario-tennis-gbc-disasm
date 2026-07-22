@@ -82,3 +82,24 @@ def SHOTTYPE_DROP              equ $0b ; B -> A
 def SHOTTYPE_SERVE_TOPSPIN     equ $0c ; serve, A
 def SHOTTYPE_SERVE_SLICE       equ $0d ; serve, B
 def SHOTTYPE_SERVE_FLAT        equ $0e ; serve, A+B
+
+; --- Point outcome (wPointOutcome, $c4d8) — MATCH context ---
+; ResolvePointOutcome ($08:$4df4) dispatches `rst Rst00` on wPointOutcome:
+; 1-5 -> ShowCourtBanner(wPointOutcome) (banner id == the value), 6 -> the
+; winner banner ShowCourtBanner(wPointWinnerShotType+$17), 7/8 -> text popups.
+; So the low banner tileset ids equal these codes.
+def POINTOUTCOME_FAULT          equ 1
+def POINTOUTCOME_DOUBLE_FAULT   equ 2
+def POINTOUTCOME_LET            equ 3
+def POINTOUTCOME_NET            equ 4
+def POINTOUTCOME_OUT            equ 5
+def POINTOUTCOME_WINNER         equ 6
+
+; --- Winning-shot type (wPointWinnerShotType, $c491) ---
+; Set by the Record*Stat functions ($08:$5c5f+); the winner court banner is
+; ShowCourtBanner(value + $17) -> banner ids 24-28. Confirmed in-game.
+def POINTWINNER_SERVICE_ACE     equ 1
+def POINTWINNER_RETURN_ACE      equ 2
+def POINTWINNER_SMASH_ACE       equ 3
+def POINTWINNER_LOB             equ 4
+def POINTWINNER_DROP_SHOT       equ 5

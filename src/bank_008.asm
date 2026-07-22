@@ -3637,18 +3637,18 @@ HandleServeFault:
 	jr nz, Label_08_5b9c ; $5b8f
 	ld a, $01 ; $5b91
 	ld [wServeFaultFlag], a ; $5b93
-	ld a, $01 ; $5b96
+	ld a, POINTOUTCOME_FAULT ; $5b96
 	ld [wPointOutcome], a ; $5b98
 	ret ; $5b9b
 Label_08_5b9c:
 	ld a, $00 ; $5b9c
 	ld [wServeFaultFlag], a ; $5b9e
-	ld a, $02 ; $5ba1
+	ld a, POINTOUTCOME_DOUBLE_FAULT ; $5ba1
 	ld [wPointOutcome], a ; $5ba3
 	ret ; $5ba6
 FlagServiceReturnAce:
 	ld a, [wPointOutcome] ; $5ba7
-	cp a, $06 ; $5baa
+	cp a, POINTOUTCOME_WINNER ; $5baa
 	ret nz ; $5bac
 	ld a, [wRallyLength] ; $5bad
 	cp a, $01 ; $5bb0
@@ -3725,7 +3725,7 @@ UpdatePointStats:
 	call RecordFaultStat ; $5c2b
 	call RecordDoubleFaultStat ; $5c2e
 	ld a, [wPointOutcome] ; $5c31
-	cp a, $06 ; $5c34
+	cp a, POINTOUTCOME_WINNER ; $5c34
 	ret nz ; $5c36
 	call RecordDropShotWinnerStat ; $5c37
 	call RecordLobWinnerStat ; $5c3a
@@ -3735,13 +3735,13 @@ UpdatePointStats:
 	ret ; $5c46
 RecordFaultStat:
 	ld a, [wPointOutcome] ; $5c47
-	cp a, $01 ; $5c4a
+	cp a, POINTOUTCOME_FAULT ; $5c4a
 	ret nz ; $5c4c
 	ld hl, wCharacter1Faults ; $5c4d
 	jp Label_08_5cb2 ; $5c50
 RecordDoubleFaultStat:
 	ld a, [wPointOutcome] ; $5c53
-	cp a, $02 ; $5c56
+	cp a, POINTOUTCOME_DOUBLE_FAULT ; $5c56
 	ret nz ; $5c58
 	ld hl, wCharacter1DoubleFaults ; $5c59
 	jp Label_08_5cb2 ; $5c5c
@@ -3749,7 +3749,7 @@ RecordServiceAceStat:
 	ld a, [wServiceAceFlag] ; $5c5f
 	and a, a ; $5c62
 	ret z ; $5c63
-	ld a, $01 ; $5c64
+	ld a, POINTWINNER_SERVICE_ACE ; $5c64
 	ld [wPointWinnerShotType], a ; $5c66
 	ld hl, wCharacter1ServiceAces ; $5c69
 	jp Label_08_5cb2 ; $5c6c
@@ -3757,7 +3757,7 @@ RecordReturnAceStat:
 	ld a, [wReturnAceFlag] ; $5c6f
 	and a, a ; $5c72
 	ret z ; $5c73
-	ld a, $02 ; $5c74
+	ld a, POINTWINNER_RETURN_ACE ; $5c74
 	ld [wPointWinnerShotType], a ; $5c76
 	ld hl, wCharacter1ReturnAces ; $5c79
 	jp Label_08_5cb2 ; $5c7c
@@ -3765,7 +3765,7 @@ RecordSmashAceStat:
 	ld a, [wCurrentShotType] ; $5c7f
 	cp a, SHOTTYPE_SMASH ; $5c82
 	ret nz ; $5c84
-	ld a, $03 ; $5c85
+	ld a, POINTWINNER_SMASH_ACE ; $5c85
 	ld [wPointWinnerShotType], a ; $5c87
 	ld hl, wCharacter1SmashAces ; $5c8a
 	jp Label_08_5cb2 ; $5c8d
@@ -3773,7 +3773,7 @@ RecordLobWinnerStat:
 	ld a, [wCurrentShotType] ; $5c90
 	cp a, SHOTTYPE_LOB ; $5c93
 	ret nz ; $5c95
-	ld a, $04 ; $5c96
+	ld a, POINTWINNER_LOB ; $5c96
 	ld [wPointWinnerShotType], a ; $5c98
 	ld hl, wCharacter1LobShotWinners ; $5c9b
 	jp Label_08_5cb2 ; $5c9e
@@ -3781,7 +3781,7 @@ RecordDropShotWinnerStat:
 	ld a, [wCurrentShotType] ; $5ca1
 	cp a, SHOTTYPE_DROP ; $5ca4
 	ret nz ; $5ca6
-	ld a, $05 ; $5ca7
+	ld a, POINTWINNER_DROP_SHOT ; $5ca7
 	ld [wPointWinnerShotType], a ; $5ca9
 	ld hl, wCharacter1DropShotWinners ; $5cac
 	jp Label_08_5cb2 ; $5caf
@@ -3938,7 +3938,7 @@ Label_08_5d98:
 	ret ; $5d99
 ResolvePointWinner:
 	ld a, [wPointOutcome] ; $5d9a
-	cp a, $01 ; $5d9d
+	cp a, POINTOUTCOME_FAULT ; $5d9d
 	jr z, Label_08_5dba ; $5d9f
 	cp a, $03 ; $5da1
 	jr z, Label_08_5dba ; $5da3
