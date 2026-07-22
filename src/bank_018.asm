@@ -107,8 +107,7 @@ DataPtr_MarioMiniGamesAttrmap:
 DataPtr_MarioMiniGamesPalettes:
 	dw MarioMiniGamesPalettes ; $408c
 	farptr RunStorySceneByMode ; $408e
-	db $59 ; $4090
-	db $76 ; $4091
+	farptr DebugScreenAssetViewer ; $4090
 DataPtr_18_92:
 	dw Lz_18_7521 ; $4092
 DataPtr_18_94:
@@ -1287,12 +1286,13 @@ ResetScrollAndCamera:
 	ld [wCameraY], a ; $7652
 	ld [wCameraY + 1], a ; $7655
 	ret ; $7658
+DebugScreenAssetViewer:
 	call FadeOutAndResetScreen ; $7659
 	ld c, $00 ; $765c
 Label_18_765e:
 	push bc ; $765e
 	ld a, c ; $765f
-	ld hl, $769c ; $7660
+	ld hl, DebugScreenAssetViewerRecords ; $7660
 	add a, l ; $7663
 	ld l, a ; $7664
 	jr nc, Label_18_7668 ; $7665
@@ -1323,7 +1323,11 @@ Label_18_7687:
 	jr nz, Label_18_765e ; $7695
 	ld c, $00 ; $7697
 	jr Label_18_765e ; $7699
-	INCBIN "data/bank_018/d_769b.bin" ; $769b, 25 bytes
+	ret ; $769b
+DebugScreenAssetViewerRecords:
+	; $769c, 24 bytes (bytes:12)
+	db $2c, $2d, $2e, $2f, $30, $31, $32, $33, $34, $35, $36, $37 ; 0x00
+	db $38, $39, $3a, $3b, $3c, $3d, $3e, $3f, $40, $41, $42, $43 ; 0x0c
 PlayScreenSequence0:
 	call SetupScreen0Assets ; $76b4
 	call LoadScreen0TilesAndPalette ; $76b7

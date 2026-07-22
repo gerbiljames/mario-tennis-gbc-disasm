@@ -38,8 +38,7 @@ DataPtr_IntroCharactersTilemap2:
 	dw IntroCharactersTilemap2 ; $4022
 DataPtr_6d_24:
 	dw Lz_6d_6250 ; $4024
-	db $7f ; $4026
-	db $6a ; $4027
+	farptr ShowIntroCharacterScreen ; $4026
 DataPtr_Lz_6d_6ac8:
 	dw Lz_6d_6ac8 ; $4028
 DataPtr_Lz_6d_6ac8Alias1:
@@ -206,6 +205,7 @@ Lz_6d_6250:
 	INCBIN "data/bank_06d/lz_6250.bin" ; $6250, 133 bytes
 TitleScreenTiles:
 	INCBIN "data/bank_06d/lz_62d5.bin" ; $62d5, 1962 bytes
+ShowIntroCharacterScreen:
 	sound $22 ; $6a7f
 	call DisableLCDSafely ; $6a81
 	call ClearFrameTasks ; $6a84
@@ -217,7 +217,7 @@ TitleScreenTiles:
 	farcall LoadIntroTilesAndPalette ; $6a91
 	farcall QueueWram3MapToVRAM ; $6a94
 	ld a, $01 ; $6a97
-	ld hl, Func_6d_6abf ; $6a99
+	ld hl, IntroCharacterScreenFrameTask ; $6a99
 	call RegisterFrameTask ; $6a9c
 	call EnableLCD ; $6a9f
 	script_fade_in $10 ; $6aa2
@@ -232,7 +232,7 @@ Label_6d_6aaa:
 	call WaitFadeEnd ; $6ab8
 	call ClearFrameTasks ; $6abb
 	ret ; $6abe
-Func_6d_6abf:
+IntroCharacterScreenFrameTask:
 	ld de, $4020 ; $6abf
 	ld c, $03 ; $6ac2
 	farcall QueueIntroSpriteBlock ; $6ac4

@@ -61,6 +61,30 @@ the "TRY AGAIN" stream and 20-23 share "QUIT MINI-GAME", which matches the menu
 tables at `$466f` (ids `$00-$17`) and the item captions at text `$013f + id`
 (bank `$30` indices 319-342). Byte-perfect.
 
+### Vector-called directory slots (2026-07-23)
+
+Two `$4000` directory slots held a code pointer that no `farcall` operand
+references — they are entered through `CallVectorEntryA` (`$00:$01e6`) with a
+computed slot index — so nothing proved their kind and the entry bytes rendered
+as two loose `db`s between their labeled neighbours. `STATIC_CODE_SLOTS` in
+`disasm.py` now registers them, and both slots read as `farptr`:
+
+* `$18:$4090` -> `DebugScreenAssetViewer` (`$7659`): a leftover viewer that
+  cycles screen-asset records `$2c`-`$43`, one per button press, forever. Its
+  record list is now `DebugScreenAssetViewerRecords` (`$769c`), which also
+  freed the stray `ret` at `$769b` from the same blob.
+* `$6d:$4026` -> `ShowIntroCharacterScreen` (`$6a7f`): loads screen-asset
+  record 40 (a 4-tile blank background), the intro character tiles/palette and
+  sprite block 3 via `IntroCharacterScreenFrameTask` (`$6abf`), then waits for
+  A/B. Bank `$6b` drives the real intro cutscene with these same assets, so
+  this looks like a leftover single-screen viewer.
+
+The registration deliberately does not go into `inferred_entries`: that set
+also tells `scan_data_slots` which banks hold code tables, and marking bank
+`$6d` as one costs its unproven data slots their acceptance (slot `$20`, the
+intro palettes, regressed to raw bytes when tried that way). The emitter merges
+the curated entries in separately.
+
 ### Rest of bank $06 carved (2026-07-22)
 
 Swept every remaining blob in the match/story menu bank. A regex pass over the

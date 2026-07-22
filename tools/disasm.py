@@ -151,6 +151,7 @@ class Disassembly:
         self.farcalls = {}    # site offset -> (bank, slot, entry_flat, target_flat)
         self.inline_arg_calls = {}  # call site offset -> inline arg byte
         self.inferred_entries = {}  # entry_flat -> (bank, slot, target_flat)
+        self.static_code_entries = {}  # curated: entry -> (bank, slot, target)
         self.jt_entries = {}  # rst $00 inline jump-table entry offset -> target_flat
         self.data_boundaries = set()  # declared data-table offsets (data_tables.json)
         self.data_slots = {}  # entry_flat -> (bank, slot, src_flat, kind)
@@ -865,6 +866,32 @@ class Disassembly:
                     added += 1
         if added:
             print(f"static data slots: {added} carved")
+
+    # $4000-directory slots holding a code pointer that no `farcall` operand
+    # references: they are entered through CallVectorEntryA ($00:$01e6) with a
+    # computed slot index, so nothing static proves them and the entry bytes
+    # would render as two loose `db`s between their neighbours. Both routines
+    # are already carved (seeded in coverage/) and unreferenced otherwise.
+    STATIC_CODE_SLOTS = {0x18: (0x90,),   # -> $7659 DebugScreenAssetViewer
+                         0x6d: (0x26,)}   # -> $6a7f ShowIntroCharacterScreen
+
+    def add_static_code_slots(self):
+        for bank, slots in self.STATIC_CODE_SLOTS.items():
+            base = bank * BANK_SIZE
+            for slot in slots:
+                entry = base + slot
+                cpu = self.rom[entry] | (self.rom[entry + 1] << 8)
+                if not 0x4000 <= cpu < 0x8000:
+                    continue
+                if entry in self.code_bytes or entry + 1 in self.code_bytes:
+                    continue
+                target = base + cpu - BANK_SIZE
+                # Kept out of inferred_entries: that set also tells
+                # scan_data_slots which banks hold code tables, and marking
+                # bank $6d as one would cost its unproven data slots their
+                # acceptance. The emitter merges these in on its own.
+                self.static_code_entries[entry] = (bank, slot, target)
+                self.seed([target])
 
     def carve_gfx_pointer_sets(self):
         """Bank $16's match-result graphics tables select LZ tile streams the
@@ -3526,7 +3553,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
     data_entries = {e: v for e, v in dis.data_slots.items()
                     if e not in table_entries
                     and e not in dis.code_bytes and e + 1 not in dis.code_bytes}
-    for entry, (bank, slot, target) in dis.inferred_entries.items():
+    for entry, (bank, slot, target) in list(dis.inferred_entries.items()) \
+            + list(dis.static_code_entries.items()):
         if entry in data_entries:
             continue
         if entry not in dis.code_bytes and entry + 1 not in dis.code_bytes:
@@ -4269,6 +4297,7 @@ def main():
     if args.hooks:
         dis.load_hook_dumps(args.hooks)
     dis.add_static_data_slots()
+    dis.add_static_code_slots()
     dis.carve_gfx_pointer_sets()
     dis.carve_tennis_dictionary_assets()
     dis.carve_tilemap_dispatch()
