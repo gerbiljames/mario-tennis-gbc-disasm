@@ -613,7 +613,7 @@ ShowMessageWindow:
 	push af ; $4504
 	wram_bank $02 ; $4505
 	ld a, $01 ; $450b
-	ld [$c4c0], a ; $450d
+	ld [wMatchSimFrozen], a ; $450d
 	farcall StepMatchFrame ; $4510
 	push bc ; $4513
 	push de ; $4514
@@ -653,7 +653,7 @@ Label_06_4543:
 	call FlushTilemapToVram ; $4550
 	farcall StepMatchFrame ; $4553
 	xor a, a ; $4556
-	ld [$c4c0], a ; $4557
+	ld [wMatchSimFrozen], a ; $4557
 	pop af ; $455a
 	wram_bank ; $455b
 	pop hl ; $455f

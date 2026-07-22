@@ -2920,10 +2920,10 @@ Label_0d_5926:
 	push af ; $5928
 	wram_bank $02 ; $5929
 	ld a, $01 ; $592f
-	ld [$c4c0], a ; $5931
+	ld [wMatchSimFrozen], a ; $5931
 	call AnimateTargetGridClear ; $5934
 	xor a, a ; $5937
-	ld [$c4c0], a ; $5938
+	ld [wMatchSimFrozen], a ; $5938
 	pop af ; $593b
 	wram_bank ; $593c
 	ret ; $5940

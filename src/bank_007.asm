@@ -4031,11 +4031,11 @@ ModeHookTable_07:
 	test_flag $0c, 4 ; $5f0d
 	ret z ; $5f10
 	ld a, $01 ; $5f11
-	ld [$c4c0], a ; $5f13
+	ld [wMatchSimFrozen], a ; $5f13
 	ld a, $14 ; $5f16
 	farcall StepMatchFrames ; $5f18
 	ld a, $00 ; $5f1b
-	ld [$c4c0], a ; $5f1d
+	ld [wMatchSimFrozen], a ; $5f1d
 	clear_flag $0c, 4 ; $5f20
 	ret ; $5f23
 	ret ; $5f24

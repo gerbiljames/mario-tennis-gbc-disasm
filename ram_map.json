@@ -343,6 +343,14 @@
   "note": "[8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts",
   "size": 1
  },
+ "0xc4c0": {
+  "name": "wMatchSimFrozen",
+  "note": "[8-bit] Nonzero freezes the per-frame match simulation: UpdateMatchFrame skips ClearSpriteSlots/UpdateMatchCamera/UpdateAllChars/ball events/UpdateBallVisuals/timers and the mode hook. Set $ff during match setup and while the pause menu is open, cleared before the play loop"
+ },
+ "0xc4c1": {
+  "name": "wMatchDrawFrozen",
+  "note": "[8-bit] Nonzero freezes actor drawing: UpdateMatchFrame skips DrawActorsByDepth. Set $ff alongside wMatchSimFrozen while the pause menu is open"
+ },
  "0xc4c3": {
   "name": "wMatchAbortFlag",
   "note": "[8-bit] $ff = abort the match (bit 7 breaks the point/game/set/match loops); set by every pause/quit-menu action, cleared per point by ResetPointState"

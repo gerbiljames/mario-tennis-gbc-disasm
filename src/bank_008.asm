@@ -96,7 +96,7 @@ Label_08_40c7:
 	xor a, a ; $40c7
 	ld [wKeepMatchStatsFlag], a ; $40c8
 	ld a, $ff ; $40cb
-	ld [$c4c0], a ; $40cd
+	ld [wMatchSimFrozen], a ; $40cd
 	ld a, $01 ; $40d0
 	ld [$c4c2], a ; $40d2
 	xor a, a ; $40d5
@@ -201,7 +201,7 @@ RunMatch:
 	wram_bank $04 ; $41bf
 	call PlayCourtIntro ; $41c5
 	xor a, a ; $41c8
-	ld [$c4c0], a ; $41c9
+	ld [wMatchSimFrozen], a ; $41c9
 	call RunMatchPlayLoop ; $41cc
 	ldh a, [hLinkState] ; $41cf
 	ld [$c493], a ; $41d1
@@ -220,7 +220,7 @@ RunMatch:
 	ret ; $41f6
 UpdateMatchFrame:
 	wram_bank $04 ; $41f7
-	ld a, [$c4c0] ; $41fd
+	ld a, [wMatchSimFrozen] ; $41fd
 	and a, a ; $4200
 	jr nz, Label_08_4226 ; $4201
 	call ClearSpriteSlots ; $4203
@@ -236,17 +236,17 @@ UpdateMatchFrame:
 	ld hl, $0902 ; $4220
 	call FarCallVector ; $4223
 Label_08_4226:
-	ld a, [$c4c1] ; $4226
+	ld a, [wMatchDrawFrozen] ; $4226
 	and a, a ; $4229
 	jr nz, Label_08_422f ; $422a
 	call DrawActorsByDepth ; $422c
 Label_08_422f:
-	ld a, [$c4c0] ; $422f
+	ld a, [wMatchSimFrozen] ; $422f
 	and a, a ; $4232
 	jr nz, Label_08_4238 ; $4233
 	farcall UpdateMinigameTargets ; $4235
 Label_08_4238:
-	ld a, [$c4c1] ; $4238
+	ld a, [wMatchDrawFrozen] ; $4238
 	and a, a ; $423b
 	jr nz, Label_08_4241 ; $423c
 	call DrawMarkersAndShadows ; $423e
@@ -568,7 +568,7 @@ Label_08_4476:
 	ld hl, $ffe9 ; $447c
 	inc [hl] ; $447f
 Label_08_4480:
-	ld a, [$c4c0] ; $4480
+	ld a, [wMatchSimFrozen] ; $4480
 	and a, a ; $4483
 	jr nz, Label_08_448c ; $4484
 	call HandlePauseMenu ; $4486
@@ -592,13 +592,13 @@ HandlePauseMenu:
 	and a, a ; $44a4
 	ret nz ; $44a5
 	ld a, $ff ; $44a6
-	ld [$c4c0], a ; $44a8
-	ld [$c4c1], a ; $44ab
+	ld [wMatchSimFrozen], a ; $44a8
+	ld [wMatchDrawFrozen], a ; $44ab
 	farcall RunMatchPauseMenu ; $44ae
 	call ReinitPointAfterPause ; $44b1
 	ld a, $00 ; $44b4
-	ld [$c4c1], a ; $44b6
-	ld [$c4c0], a ; $44b9
+	ld [wMatchDrawFrozen], a ; $44b6
+	ld [wMatchSimFrozen], a ; $44b9
 	ret ; $44bc
 ReinitPointAfterPause:
 	ld a, [$c4c8] ; $44bd
@@ -629,12 +629,12 @@ CheckDebugStatsEditorHotkey:
 	and a, a ; $44f8
 	ret z ; $44f9
 	ld a, $ff ; $44fa
-	ld [$c4c0], a ; $44fc
-	ld [$c4c1], a ; $44ff
+	ld [wMatchSimFrozen], a ; $44fc
+	ld [wMatchDrawFrozen], a ; $44ff
 	farcall RunDebugStatsEditor ; $4502
 	ld a, $00 ; $4505
-	ld [$c4c0], a ; $4507
-	ld [$c4c1], a ; $450a
+	ld [wMatchSimFrozen], a ; $4507
+	ld [wMatchDrawFrozen], a ; $450a
 	ret ; $450d
 InitViewFlipPreference:
 	ld a, [wGameMode] ; $450e
@@ -4143,13 +4143,13 @@ RefreshCourtAfterEndChange:
 	ld a, [$c4ce] ; $5f43
 	and a, a ; $5f46
 	ret z ; $5f47
-	ld a, [$c4c0] ; $5f48
+	ld a, [wMatchSimFrozen] ; $5f48
 	push af ; $5f4b
-	ld a, [$c4c1] ; $5f4c
+	ld a, [wMatchDrawFrozen] ; $5f4c
 	push af ; $5f4f
 	ld a, $ff ; $5f50
-	ld [$c4c0], a ; $5f52
-	ld [$c4c1], a ; $5f55
+	ld [wMatchSimFrozen], a ; $5f52
+	ld [wMatchDrawFrozen], a ; $5f55
 	call StepMatchFrame ; $5f58
 	call RefreshCourtScoreboard ; $5f5b
 	call StepMatchFrame ; $5f5e
@@ -4163,9 +4163,9 @@ RefreshCourtAfterEndChange:
 	ld c, $0a ; $5f78
 	call QueueVRAMCopy ; $5f7a
 	pop af ; $5f7d
-	ld [$c4c1], a ; $5f7e
+	ld [wMatchDrawFrozen], a ; $5f7e
 	pop af ; $5f81
-	ld [$c4c0], a ; $5f82
+	ld [wMatchSimFrozen], a ; $5f82
 	wram_bank $04 ; $5f85
 	ret ; $5f8b
 RunChangeoverSequence:
@@ -4957,7 +4957,7 @@ RunMinigameMatch:
 	call PlaySoundManaged ; $656e
 	script_fade_in $20 ; $6571
 	xor a, a ; $6576
-	ld [$c4c0], a ; $6577
+	ld [wMatchSimFrozen], a ; $6577
 	call RunMinigamePointLoop ; $657a
 	call ShowMatchResultScreens ; $657d
 	ld c, $20 ; $6580
@@ -4972,8 +4972,8 @@ ShowMatchResultScreens:
 	and a, a ; $6595
 	ret nz ; $6596
 	ld a, $ff ; $6597
-	ld [$c4c0], a ; $6599
-	ld [$c4c1], a ; $659c
+	ld [wMatchSimFrozen], a ; $6599
+	ld [wMatchDrawFrozen], a ; $659c
 	ld a, [wGameMode] ; $659f
 	cp a, $08 ; $65a2
 	jr nz, Label_08_65b2 ; $65a4
@@ -4986,8 +4986,8 @@ Label_08_65b2:
 	farcall ShowMatchScoreboardScreen ; $65b2
 Label_08_65b5:
 	ld a, $00 ; $65b5
-	ld [$c4c1], a ; $65b7
-	ld [$c4c0], a ; $65ba
+	ld [wMatchDrawFrozen], a ; $65b7
+	ld [wMatchSimFrozen], a ; $65ba
 	ret ; $65bd
 RunMinigamePointLoop:
 	wram_bank $04 ; $65be

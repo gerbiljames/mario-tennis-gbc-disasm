@@ -315,7 +315,14 @@ wBallTrailEnabled:: db
 
 ; [8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts
 wBallTrailColor:: db
-	ds 5
+	ds 2
+
+; [8-bit] Nonzero freezes the per-frame match simulation: UpdateMatchFrame skips ClearSpriteSlots/UpdateMatchCamera/UpdateAllChars/ball events/UpdateBallVisuals/timers and the mode hook. Set $ff during match setup and while the pause menu is open, cleared before the play loop
+wMatchSimFrozen:: db
+
+; [8-bit] Nonzero freezes actor drawing: UpdateMatchFrame skips DrawActorsByDepth. Set $ff alongside wMatchSimFrozen while the pause menu is open
+wMatchDrawFrozen:: db
+	ds 1
 
 ; [8-bit] $ff = abort the match (bit 7 breaks the point/game/set/match loops); set by every pause/quit-menu action, cleared per point by ResetPointState
 wMatchAbortFlag:: db
