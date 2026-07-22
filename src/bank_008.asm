@@ -1441,7 +1441,7 @@ ResetPointState:
 	ld [wServiceAceFlag], a ; $4ccc
 	ld [wReturnAceFlag], a ; $4ccf
 	ld [$c4da], a ; $4cd2
-	ld [$c491], a ; $4cd5
+	ld [wPointWinnerShotType], a ; $4cd5
 	ld [wMatchAbortFlag], a ; $4cd8
 	ld [wPointOutcomeSide], a ; $4cdb
 	ld [wPointOutcome], a ; $4cde
@@ -1640,10 +1640,10 @@ Label_08_4e5b:
 	call StepMatchFrames ; $4e69
 	ret ; $4e6c
 Label_08_4e6d:
-	ld a, [$c491] ; $4e6d
+	ld a, [wPointWinnerShotType] ; $4e6d
 	and a, a ; $4e70
 	ret z ; $4e71
-	ld a, [$c491] ; $4e72
+	ld a, [wPointWinnerShotType] ; $4e72
 	add a, $17 ; $4e75
 	farcall ShowCourtBanner ; $4e77
 	ld a, $0a ; $4e7a
@@ -3750,7 +3750,7 @@ RecordServiceAceStat:
 	and a, a ; $5c62
 	ret z ; $5c63
 	ld a, $01 ; $5c64
-	ld [$c491], a ; $5c66
+	ld [wPointWinnerShotType], a ; $5c66
 	ld hl, wCharacter1ServiceAces ; $5c69
 	jp Label_08_5cb2 ; $5c6c
 RecordReturnAceStat:
@@ -3758,7 +3758,7 @@ RecordReturnAceStat:
 	and a, a ; $5c72
 	ret z ; $5c73
 	ld a, $02 ; $5c74
-	ld [$c491], a ; $5c76
+	ld [wPointWinnerShotType], a ; $5c76
 	ld hl, wCharacter1ReturnAces ; $5c79
 	jp Label_08_5cb2 ; $5c7c
 RecordSmashAceStat:
@@ -3766,7 +3766,7 @@ RecordSmashAceStat:
 	cp a, SHOTTYPE_SMASH ; $5c82
 	ret nz ; $5c84
 	ld a, $03 ; $5c85
-	ld [$c491], a ; $5c87
+	ld [wPointWinnerShotType], a ; $5c87
 	ld hl, wCharacter1SmashAces ; $5c8a
 	jp Label_08_5cb2 ; $5c8d
 RecordLobWinnerStat:
@@ -3774,7 +3774,7 @@ RecordLobWinnerStat:
 	cp a, SHOTTYPE_LOB ; $5c93
 	ret nz ; $5c95
 	ld a, $04 ; $5c96
-	ld [$c491], a ; $5c98
+	ld [wPointWinnerShotType], a ; $5c98
 	ld hl, wCharacter1LobShotWinners ; $5c9b
 	jp Label_08_5cb2 ; $5c9e
 RecordDropShotWinnerStat:
@@ -3782,7 +3782,7 @@ RecordDropShotWinnerStat:
 	cp a, SHOTTYPE_DROP ; $5ca4
 	ret nz ; $5ca6
 	ld a, $05 ; $5ca7
-	ld [$c491], a ; $5ca9
+	ld [wPointWinnerShotType], a ; $5ca9
 	ld hl, wCharacter1DropShotWinners ; $5cac
 	jp Label_08_5cb2 ; $5caf
 Label_08_5cb2:

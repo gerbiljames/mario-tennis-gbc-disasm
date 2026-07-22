@@ -277,7 +277,10 @@ wLandingMarkerX:: dw
 
 ; [16-bit] Projected Y of the lob landing marker
 wLandingMarkerY:: dw
-	ds 14
+	ds 13
+
+; [8-bit] Winning-shot type for the point just won: 0=none, 1=service ace, 2=return ace, 3=smash ace, 4=lob winner, 5=drop-shot winner. Reset to 0 in the per-point state clear ($08:$4cd5); set by the Record*Stat functions ($08:$5c5f+) which also credit the matching wCharacterN stat. The on-court winner banner is ShowCourtBanner(value+$17) at $08:$4e75, i.e. banner ids 24-28 (SERVICE/RETURN/SMASH ACE, LOB, DROP SHOT) - confirmed in-game.
+wPointWinnerShotType:: db
 
 ; [8-bit] Companion abort flag to wMatchAbortFlag ($ff set by every quit-menu action): makes StepMatchFrames return immediately and suppresses result jingles
 wMatchFramesAbort:: db
