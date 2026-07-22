@@ -372,7 +372,7 @@ InitMatchWinLoseScreen:
 	ld d, $07 ; $45a5
 	farcall LoadIndexedPalette_18 ; $45a7
 	call LoadMatchResultPalettes ; $45aa
-	call Func_16_4a56 ; $45ad
+	call AdjustResultTilemapForLoss ; $45ad
 	call LoadResultScreenTileGraphics ; $45b0
 	call SetWinLosePortraitPaletteAttrs ; $45b3
 	ld c, $00 ; $45b6
@@ -568,7 +568,7 @@ Label_16_4a2e:
 ; GBC palettes (BGR555), 4 colors each
 	dw $7de0, $5160, $2900, $2900 ; pal 0: #007bff #005aa4 #004152 #004152
 	dw $5a9f, $39bf, $009f, $001f ; pal 1: #ffa4b4 #ff6a73 #ff2000 #ff0000
-Func_16_4a56:
+AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp a, $ff ; $4a59
 	jr nz, Label_16_4a6f ; $4a5b
