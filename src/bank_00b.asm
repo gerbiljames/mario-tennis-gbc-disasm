@@ -444,7 +444,7 @@ Label_0b_4426:
 	ldh a, [hWramBank] ; $442c
 	push af ; $442e
 	wram_bank $05 ; $442f
-	ld de, $df00 ; $4435
+	ld de, wCharPosX ; $4435
 	add hl, de ; $4438
 	ld [hl], b ; $4439
 	pop af ; $443a
@@ -478,7 +478,7 @@ SyncPointWinLoseFlagTask:
 	ldh a, [hWramBank] ; $446e
 	push af ; $4470
 	wram_bank $05 ; $4471
-	ld hl, $df57 ; $4477
+	ld hl, wCharPointResult ; $4477
 	ld a, [wPointWinLoseFlag] ; $447a
 	ld [hl], a ; $447d
 	pop af ; $447e

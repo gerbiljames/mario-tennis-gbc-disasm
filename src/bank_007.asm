@@ -2414,13 +2414,13 @@ Label_07_5373:
 	ld b, h ; $537d
 	ret ; $537e
 AddPlayerMomentumToShot:
-	ld hl, $df42 ; $537f
+	ld hl, wCharVelDepth ; $537f
 	ld a, [hl+] ; $5382
 	ld h, [hl] ; $5383
 	ld l, a ; $5384
 	sra h ; $5385
 	rr l ; $5387
-	ld a, [$df0a] ; $5389
+	ld a, [wCharCourtPos] ; $5389
 	and a, $02 ; $538c
 	jr nz, Label_07_5396 ; $538e
 	xor a, a ; $5390
@@ -2439,7 +2439,7 @@ Label_07_5396:
 	ld b, h ; $53a0
 	ret ; $53a1
 Func_07_53a2:
-	ld hl, $df0f ; $53a2
+	ld hl, wCharFlags ; $53a2
 	bit 1, [hl] ; $53a5
 	jr z, Label_07_53af ; $53a7
 	ld hl, $f400 ; $53a9
@@ -2455,9 +2455,9 @@ ExecuteShot:
 	ret nz ; $53b5
 	ld a, $01 ; $53b6
 	ld [$c4b7], a ; $53b8
-	ld a, [$df0b] ; $53bb
+	ld a, [wCharIndex] ; $53bb
 	ld [$c4b8], a ; $53be
-	ld a, [$df09] ; $53c1
+	ld a, [wCharServeRole] ; $53c1
 	ld [$c4b9], a ; $53c4
 	ld a, [$df4a] ; $53c7
 	ld [$c4a4], a ; $53ca
@@ -2546,7 +2546,7 @@ Func_07_5463:
 	ld [$df4b], a ; $5467
 	ret ; $546a
 ApplyShotRecoil:
-	ld hl, $df0f ; $546b
+	ld hl, wCharFlags ; $546b
 	set 0, [hl] ; $546e
 	res 5, [hl] ; $5470
 	ld a, [$c4a1] ; $5472
@@ -2574,7 +2574,7 @@ ApplyShotRecoil:
 	call MulHLByAFracSigned ; $5490
 	ld e, l ; $5493
 	ld d, h ; $5494
-	ld hl, $df42 ; $5495
+	ld hl, wCharVelDepth ; $5495
 	ld a, [hl+] ; $5498
 	ld h, [hl] ; $5499
 	ld l, a ; $549a
@@ -2585,14 +2585,14 @@ ApplyShotRecoil:
 	add hl, de ; $54a3
 	ld e, l ; $54a4
 	ld d, h ; $54a5
-	ld hl, $df42 ; $54a6
+	ld hl, wCharVelDepth ; $54a6
 	ld a, e ; $54a9
 	ld [hl+], a ; $54aa
 	ld [hl], d ; $54ab
-	ld hl, $df0f ; $54ac
+	ld hl, wCharFlags ; $54ac
 	bit 1, [hl] ; $54af
 	jr nz, Label_07_54c9 ; $54b1
-	ld hl, $df40 ; $54b3
+	ld hl, wCharVelX ; $54b3
 	ld a, [hl+] ; $54b6
 	ld h, [hl] ; $54b7
 	ld l, a ; $54b8
@@ -2602,7 +2602,7 @@ ApplyShotRecoil:
 	rr l ; $54bf
 	ld e, l ; $54c1
 	ld d, h ; $54c2
-	ld hl, $df40 ; $54c3
+	ld hl, wCharVelX ; $54c3
 	ld a, e ; $54c6
 	ld [hl+], a ; $54c7
 	ld [hl], d ; $54c8
@@ -2638,7 +2638,7 @@ BoostShotByCharge:
 	ld b, h ; $54fc
 	ret ; $54fd
 NudgeShotByPlayerMomentum:
-	ld hl, $df42 ; $54fe
+	ld hl, wCharVelDepth ; $54fe
 	ld a, [hl+] ; $5501
 	ld h, [hl] ; $5502
 	ld l, a ; $5503
@@ -2650,7 +2650,7 @@ NudgeShotByPlayerMomentum:
 	rr l ; $550e
 	sra h ; $5510
 	rr l ; $5512
-	ld a, [$df0a] ; $5514
+	ld a, [wCharCourtPos] ; $5514
 	and a, $02 ; $5517
 	jr nz, Label_07_5521 ; $5519
 	xor a, a ; $551b
@@ -2759,7 +2759,7 @@ Label_07_55e9:
 	ld a, [$c7b9] ; $55ec
 	and a, a ; $55ef
 	jr nz, Label_07_5601 ; $55f0
-	ld a, [$df0a] ; $55f2
+	ld a, [wCharCourtPos] ; $55f2
 	and a, $01 ; $55f5
 	add a, a ; $55f7
 	add a, a ; $55f8
@@ -2781,7 +2781,7 @@ Label_07_560b:
 	ld a, [hl+] ; $560b
 	ld d, [hl] ; $560c
 	ld e, a ; $560d
-	ld hl, $df01 ; $560e
+	ld hl, wCharPosX + 1 ; $560e
 	ld a, [hl+] ; $5611
 	ld h, [hl] ; $5612
 	ld l, a ; $5613
@@ -2889,7 +2889,7 @@ ComputeAimBaseOffset:
 	ld a, [hl+] ; $56ba
 	ld d, [hl] ; $56bb
 	ld e, a ; $56bc
-	ld hl, $df04 ; $56bd
+	ld hl, wCharPosDepth + 1 ; $56bd
 	ld a, [hl+] ; $56c0
 	ld h, [hl] ; $56c1
 	ld l, a ; $56c2
@@ -2962,7 +2962,7 @@ GetRandomAimJitter:
 	add hl, hl ; $571c
 	ret ; $571d
 ComputeShotTrajectory:
-	ld a, [$df0a] ; $571e
+	ld a, [wCharCourtPos] ; $571e
 	and a, $02 ; $5721
 	jr nz, Label_07_572b ; $5723
 	xor a, a ; $5725
@@ -3273,7 +3273,7 @@ ExecuteShotTopspin:
 	farcall ShotBallPathTopspin ; $58cf
 	ret ; $58d2
 ExecuteShotPowerTopspin:
-	ld hl, $df0f ; $58d3
+	ld hl, wCharFlags ; $58d3
 	bit 1, [hl] ; $58d6
 	jr nz, ExecuteShotTopspin ; $58d8
 	ld a, $01 ; $58da
@@ -3293,7 +3293,7 @@ ExecuteShotSlice:
 	farcall ShotBallPathSlice ; $58fd
 	ret ; $5900
 ExecuteShotPowerSlice:
-	ld hl, $df0f ; $5901
+	ld hl, wCharFlags ; $5901
 	bit 1, [hl] ; $5904
 	jr nz, ExecuteShotSlice ; $5906
 	ld a, $01 ; $5908
@@ -3454,10 +3454,10 @@ SetupCharacterSprite:
 	pop de ; $5a74
 	ld a, e ; $5a75
 	ld [$df3a], a ; $5a76
-	ld a, [$df0b] ; $5a79
+	ld a, [wCharIndex] ; $5a79
 	add a, $04 ; $5a7c
 	ld [$df37], a ; $5a7e
-	ld a, [$df0b] ; $5a81
+	ld a, [wCharIndex] ; $5a81
 	add a, $af ; $5a84
 	ld l, a ; $5a86
 	adc a, $5a ; $5a87
@@ -3465,7 +3465,7 @@ SetupCharacterSprite:
 	ld h, a ; $5a8a
 	ld a, [hl] ; $5a8b
 	ld [$df36], a ; $5a8c
-	ld a, [$df0b] ; $5a8f
+	ld a, [wCharIndex] ; $5a8f
 	add a, a ; $5a92
 	add a, $a7 ; $5a93
 	ld l, a ; $5a95
@@ -3483,7 +3483,7 @@ SetupCharacterSprite:
 	ret ; $5aa6
 	INCBIN "data/bank_007/d_5aa7.bin" ; $5aa7, 12 bytes
 LoadCharacterAttributes:
-	ld a, [$df0b] ; $5ab3
+	ld a, [wCharIndex] ; $5ab3
 	add a, a ; $5ab6
 	add a, $42 ; $5ab7
 	ld l, a ; $5ab9
@@ -3647,7 +3647,7 @@ Label_07_5b54:
 	sub a, l ; $5b9b
 	ld h, a ; $5b9c
 	ld a, [hl] ; $5b9d
-	ld [$df68], a ; $5b9e
+	ld [wCharFacingEaseRate], a ; $5b9e
 	ld hl, $0025 ; $5ba1
 	add hl, de ; $5ba4
 	ld a, [hl] ; $5ba5
@@ -3729,7 +3729,7 @@ Label_07_5c32:
 	ld a, [$c4ee] ; $5c35
 	bit 1, a ; $5c38
 	ret z ; $5c3a
-	ld a, [$df0b] ; $5c3b
+	ld a, [wCharIndex] ; $5c3b
 	call OverrideCharStatsForDebug ; $5c3e
 	ret ; $5c41
 	INCBIN "data/bank_007/d_5c42.bin" ; $5c42, 178 bytes

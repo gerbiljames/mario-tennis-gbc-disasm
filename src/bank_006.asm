@@ -678,7 +678,7 @@ DrawMenuTextLine:
 	push hl ; $4576
 	call GetShadowTilemapAddr ; $4577
 	pop hl ; $457a
-	call Func_00_2a9e ; $457b
+	call RenderProportionalMenuText ; $457b
 	pop hl ; $457e
 	pop de ; $457f
 	inc hl ; $4580
@@ -705,7 +705,7 @@ DrawMenuCaptionWindow:
 	ld d, h ; $45a1
 	call GetShadowTilemapAddr ; $45a2
 	pop hl ; $45a5
-	call Func_00_2a9e ; $45a6
+	call RenderProportionalMenuText ; $45a6
 	ret ; $45a9
 RestoreBgTilemap:
 	ld hl, $d800 ; $45aa
@@ -3927,7 +3927,7 @@ RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6b87
 	farcall Func_01_50d6 ; $6b8a
 	wram_bank $04 ; $6b8d
-	ld hl, $df00 ; $6b93
+	ld hl, wCharPosX ; $6b93
 	ld de, $c700 ; $6b96
 	ld c, $08 ; $6b99
 	call CopyMemoryFast ; $6b9b
@@ -3961,7 +3961,7 @@ Label_06_6bd6:
 	farcall StepMatchFrame ; $6bdc
 	wram_bank $04 ; $6bdf
 	ld hl, $c700 ; $6be5
-	ld de, $df00 ; $6be8
+	ld de, wCharPosX ; $6be8
 	ld c, $08 ; $6beb
 	call CopyMemoryFast ; $6bed
 	pop af ; $6bf0

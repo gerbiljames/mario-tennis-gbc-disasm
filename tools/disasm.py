@@ -15,6 +15,7 @@ import bisect
 import json
 import re
 import sys
+from collections import deque
 from pathlib import Path
 
 HWADDR_RE = re.compile(r"\$ff[0-9a-f]{2}\b")
@@ -1668,34 +1669,137 @@ def _scope_to_flat(s):
     return (bank * BANK_SIZE, (bank + 1) * BANK_SIZE)
 
 
+def _scope_to_matcher(s):
+    """A union-variant scope -> (flat_range_or_None, wram_bank_or_None). `bank`
+    (with optional start/end) constrains the *referencing code's* ROM location;
+    `wram_bank` constrains the WRAM bank provably selected there (see
+    compute_wram_bank). Either may be given; a site matches when every present
+    constraint holds. A scope with neither would match everywhere -- rejected by
+    load_ram_unions."""
+    rng = _scope_to_flat(s) if "bank" in s else None
+    wb = int(s["wram_bank"], 0) if "wram_bank" in s else None
+    return (rng, wb)
+
+
 class ScopedRamNames:
-    """RAM symbols whose name depends on the referencing code's location
-    (union variants). resolve() picks the variant whose scope contains the
-    site; a default variant applies only outside every scoped variant's
-    ranges, so unknown consumers inside a scoped engine stay numeric."""
+    """RAM symbols whose name depends on the referencing site -- its ROM
+    location and/or the WRAM bank selected there (union variants). resolve()
+    picks the variant whose scope matches; a default variant applies only
+    outside every scoped variant's ROM ranges, so unknown consumers inside a
+    scoped engine stay numeric. `bank_at` (a rom-offset -> WRAM bank map from
+    compute_wram_bank) is supplied before rendering; a wram_bank constraint
+    fails wherever the bank is not provably known."""
 
     def __init__(self):
         self.by_addr = {}
+        self.sized = []   # (base, size, matchers, name) for interior expansion
+        self.bank_at = {}
 
-    def add(self, addr, name, ranges, default_mask=None):
+    def add(self, addr, name, matchers, size=1, default_mask=None):
         e = self.by_addr.setdefault(addr, {"scoped": [], "default": None,
                                            "mask": []})
         if default_mask is not None:
             e["default"] = name
             e["mask"] = default_mask
         else:
-            e["scoped"].append((ranges, name))
+            e["scoped"].append((matchers, name))
+            if size > 1:
+                self.sized.append((addr, size, matchers, name))
+
+    def _match(self, matchers, off):
+        for rng, wb in matchers:
+            if rng is not None and not (rng[0] <= off < rng[1]):
+                continue
+            if wb is not None and self.bank_at.get(off) != wb:
+                continue
+            return True
+        return False
 
     def resolve(self, addr, off):
         e = self.by_addr.get(addr)
-        if not e:
-            return None
-        for ranges, name in e["scoped"]:
-            if any(lo <= off < hi for lo, hi in ranges):
-                return name
-        if e["default"] and not any(lo <= off < hi for lo, hi in e["mask"]):
-            return e["default"]
+        if e:
+            for matchers, name in e["scoped"]:
+                if self._match(matchers, off):
+                    return name
+            if e["default"] and not any(lo <= off < hi for lo, hi in e["mask"]):
+                return e["default"]
+        # interior byte of a multi-byte scoped field -> `name + k` (mirrors the
+        # ram_map.json expansion; an interior byte that is itself an explicit
+        # symbol matched above and returned before reaching here)
+        for base, size, matchers, name in self.sized:
+            if base < addr < base + size and self._match(matchers, off):
+                return f"{name} + {addr - base}"
         return None
+
+
+def compute_wram_bank(dis):
+    """Forward CFG dataflow computing, per instruction, the WRAM bank
+    ($ff70/rSVBK) provably selected on entry -- or absent when unknown or
+    conflicting. `a` is tracked so the `ld a,N; ldh [rWBK],a` idiom (the
+    wram_bank macro) resolves; any other write to `a` marks it unknown, which
+    keeps the analysis conservative. Calls are assumed to preserve the bank:
+    the return edge carries the pre-call bank (clobbering `a`), and the caller's
+    bank also flows into the callee so a helper reached from a single banked
+    context inherits it. Purely informative -- RAM operand names are text, so a
+    wrong result can only mislabel, never change an assembled byte."""
+    rom, instrs, farcalls = dis.rom, dis.instrs, dis.farcalls
+    UNK, NOINFO = None, "?"
+
+    def meet(x, y):
+        if x is NOINFO:
+            return y
+        if y is NOINFO:
+            return x
+        return x if x == y else UNK
+
+    def transfer(off, st):
+        bank, a = st
+        op = rom[off]
+        if op == 0x3E:                                   # ld a, imm8
+            return (bank, rom[off + 1])
+        if op == 0xE0:                                   # ldh [n8], a
+            if rom[off + 1] == 0x70:                     # rWBK <- a
+                return (a if a is not NOINFO else UNK, a)
+            return (bank, a)                             # e.g. hWramBank shadow
+        if op == 0xEA and rom[off + 1] == 0x70 and rom[off + 2] == 0xff:
+            return (a if a is not NOINFO else UNK, a)    # ld [$ff70], a
+        return (bank, UNK)                               # any other op clobbers a
+
+    IN = {}
+    work = deque(instrs)
+    inq = set(instrs)
+    while work:
+        off = work.popleft()
+        inq.discard(off)
+        out = transfer(off, IN.get(off, (NOINFO, NOINFO)))
+        ins = instrs[off]
+        edges = []
+        if ins.is_call:
+            tgt = (farcalls[off][3] if off in farcalls
+                   else target_to_offset(ins.target, off)
+                   if ins.target is not None else None)
+            if tgt in instrs:
+                edges.append((tgt, out))
+            if not ins.ends_flow:                        # return: bank kept, a lost
+                edges.append((off + ins.size, (out[0], UNK)))
+        else:
+            if not ins.ends_flow:
+                edges.append((off + ins.size, out))
+            if ins.is_jump and ins.target is not None:
+                t = target_to_offset(ins.target, off)
+                if t in instrs:
+                    edges.append((t, out))
+        for s, es in edges:
+            if s not in instrs:
+                continue
+            cur = IN.get(s, (NOINFO, NOINFO))
+            new = (meet(cur[0], es[0]), meet(cur[1], es[1]))
+            if new != cur:
+                IN[s] = new
+                if s not in inq:
+                    work.append(s)
+                    inq.add(s)
+    return {o: st[0] for o, st in IN.items() if isinstance(st[0], int)}
 
 
 def load_ram_unions(path):
@@ -1707,11 +1811,20 @@ def load_ram_unions(path):
     data = json.loads(Path(path).read_text())
     for u in data.get("unions", []):
         start, end = int(u["start"], 0), int(u["end"], 0)
-        mask = [_scope_to_flat(s) for v in u["variants"]
-                for s in v.get("scopes", [])]
+        for v in u["variants"]:
+            for s in v.get("scopes", []):
+                if "bank" not in s and "wram_bank" not in s:
+                    print(f"warning: {path}: union {u['start']} scope {s} has "
+                          f"neither bank nor wram_bank (matches everywhere)",
+                          file=sys.stderr)
+        # default variant applies outside every scoped variant's ROM ranges
+        # (wram_bank-only scopes contribute no ROM mask)
+        mask = [m[0] for v in u["variants"]
+                for m in (_scope_to_matcher(s) for s in v.get("scopes", []))
+                if m[0] is not None]
         variants = []
         for v in u["variants"]:
-            ranges = [_scope_to_flat(s) for s in v.get("scopes", [])]
+            matchers = [_scope_to_matcher(s) for s in v.get("scopes", [])]
             syms = []
             for addr_s, e in sorted(v["symbols"].items(),
                                     key=lambda kv: int(kv[0], 0)):
@@ -1727,7 +1840,7 @@ def load_ram_unions(path):
                 if v.get("default"):
                     scoped.add(addr, name, None, default_mask=mask)
                 else:
-                    scoped.add(addr, name, ranges)
+                    scoped.add(addr, name, matchers, ram_field_size(e))
             variants.append((v.get("context", ""), syms))
         for ri, (rs, re_, _mem, _path) in enumerate(RAM_REGIONS):
             if rs <= start < re_:
@@ -4026,6 +4139,7 @@ def main():
     labels, ptr_data_targets = build_labels(dis, overrides, data_tables, ptr_sites)
     hwregs = load_hwregs(args.hardware_inc)
     unions_by_region, ramscoped = load_ram_unions(args.ram_unions)
+    ramscoped.bank_at = compute_wram_bank(dis)
     ramnames = load_ram_map(args.ram_map, unions_by_region)
     Path(args.srcdir).mkdir(parents=True, exist_ok=True)
     curated = set(overrides.values()) if overrides else set()

@@ -236,18 +236,37 @@ Addresses named by this project from disassembly evidence; also in
 Some RAM ranges are reused by several subsystems that never run at the same
 time. These are modeled as RGBDS `UNION`/`NEXTU` overlays in the generated
 `ram/*.asm`, driven by `ram_unions.json`: each variant carries its own symbols
-plus the code *scopes* (bank, or bank + CPU-address range) where it applies.
-`disasm.py` substitutes a variant's names only at code sites inside its
-scopes; a variant marked `default` applies everywhere outside every scoped
-variant's ranges. Sites in unproven consumers keep the numeric address.
+plus the code *scopes* where it applies. A scope is `{bank[, start, end]}`
+(the referencing code's ROM location) and/or `{wram_bank: N}` (the WRAM bank
+provably selected at the site, inferred by `disasm.py`'s `compute_wram_bank`
+CFG dataflow). Constraints within one scope AND; scopes within a variant OR.
+`disasm.py` substitutes a variant's names only where a scope matches; a variant
+marked `default` applies everywhere outside every scoped variant's ROM ranges.
+Sites in unproven consumers — including any WRAMX access whose bank can't be
+proven — keep the numeric address.
+
+`wram_bank: N` is the tool for banked WRAMX (`$d000-$dfff`): the same offset
+means different things per WRAM bank, so a global `ram_map.json` name would
+leak across banks. (The `$dfxx` match-engine structs below predate this and
+stay documentation-only, but are a candidate for per-bank `wram_bank` scoping.)
 
 | range | variant (scope) | symbols |
 |---|---|---|
 | `$c780-$c784` | character select (bank `$1b`) | `wCharSelectChar`/`PrevChar`/`Col`/`Row` — cursor state over the roster grid at `$c7a0` |
-| `$ffd0-$ffeb` | serial-link input slots (default) | `hLinkInput` (merged effective input, also the scripted-input feed), `hLinkRemoteInput`, `hLinkRemoteInputBuf` |
-| | sound driver (bank 0 `$3373-$3ddf`) | `hSndScriptPtr`, `hSndDataPtr`, `hSndDataBank`, `hSndVolume` |
+| `$ffd0-$ffef` | serial-link input slots (default) | `hLinkInput` (merged effective input, also the scripted-input feed), `hLinkRemoteInput`, `hLinkRemoteInputBuf` |
+| | sound driver (bank 0 `$3373-$3de0`) | full per-channel HRAM working set: `hSndScriptPtr`, `hSndVolume`, `hSndInstrument`, `hSndEnvRate/Length/Pos`, `hSndVolSlide*`, `hSndEcho*`, `hSndLoop*`, `hSndRestFlag`, … (28 fields) |
 | | sprite queue (bank 0 `$2ced-$2d9f`) | `hSpriteBlitY`, `hSpriteBlitX` |
 | | story actor engine (banks `$04/$05/$0a`) | `hActorPtr` |
+| `$d100-$d219` | sound engine (`wram_bank $07`, + bank-0 `$2f00-$3de0`) | channel state blocks `wSndChannels`, loop stack `wSndLoopSlots`, per-pass globals `wSndActiveMask`/`wSndChannelType`/`wSndRegBase`/`wSndPanShadow`/… |
+| `$df00-$df96` | match char struct (`wram_bank $04/$05/$06/$07`, + match banks `$07`/`$08`) | per-character fields `wCharPosX`/`wCharState`/`wCharVel*`/`wCharSpriteSlot`/… (32); one name each, bank = character |
+| | text-arg fetch buffer (banks `$0e`/`$0f`/`$12`) | `wTextArgFetchBuffer` — `$df00` reused as a text-arg string scratch while the match is idle (higher priority than the char variant so those sites don't read as `wCharPosX`) |
+| `$dd00-$dd23` | match ball renderer (`wram_bank $04`, + bank `$08`) | `wBallHistory` — ball position-history ring (six 6-byte records) |
+| `$de00-$de1f` | match ball renderer (`wram_bank $04`, + bank `$08`) | `wNetBallSlot`, `wBallSlot`, `wBallShadowSlot`, `wBallTrailSlots` (4-byte sprite-slot records) |
+| `$a020-$a03f`, `$a060-$a76f` | save engine (bank `$03`) | `sSaveSignature`, `sSaveMasterChecksum`, `sSaveFormatVersion`, `sSaveBlockDirectory` |
+
+Interior bytes of a multi-byte scoped field render as `name + k` (same
+expansion `ram_map.json` symbols get), so `$dd1e` reads `wBallHistory + 30` and
+`$ffd1` reads `hSndScriptPtr + 1`, under the same scope as the base.
 
 
 ## Match engine per-character structs (WRAM banks 4-7)
@@ -265,8 +284,13 @@ bank**, all at the same `$dfxx` addresses; code selects a character by writing
 | 6 | near-side partner | 4 |
 | 7 | far-side partner | 3 (Two-On-One), 4 |
 
-Known fields (addresses valid only while a bank 4-7 is mapped; **not** in
-`ram_map.json` because other WRAM banks reuse `$dfxx` for unrelated data):
+Known fields (addresses valid only while a bank 4-7 is mapped). These are named
+via a `wram_bank`-scoped union in `ram_unions.json` (see "Union overlays"
+above): one `wChar*` name per field, rendered only where the WRAM bank is
+provably 4-7 or inside match banks `$07`/`$08`. Other WRAM banks reuse `$dfxx`
+for unrelated data and stay numeric — e.g. bank `$38`'s non-char `$dfxx`
+accesses, and the text-arg scratch reuse of `$df00` in menu banks (named
+`wTextArgFetchBuffer` instead):
 
 | Address | Field |
 |---|---|
@@ -301,14 +325,14 @@ them; the draw stage flushes them into the shadow OAM buffer via
 ($1e9d). Fixed slots (in WRAM bank 4, alongside the per-character `$df80+`
 slots above):
 
-| Address | Slot |
-|---|---|
-| `$de00` | ball-at-net marker: tile `$4e`, drawn after the point resolves when the ball rests within `$1e0` of the net, with a 1px X jitter per frame (`BuildNetBallSlot`) |
-| `$de04` | the ball itself: tile picked by height band / off-screen state (`$40/$42/$44`), gated by `wBallSpriteEnabled` (`BuildBallSlot`) |
-| `$de08` | ball ground shadow: tile `$46` at the ball's height-0 projection, gated by `wBallShadowEnabled` (`BuildBallShadowSlot`) |
-| `$de0c-$de1f` | 5 ball-trail afterimages (tile = ball tile + 8), fed from the position history ring; slots 3-5 only when `wBallTrailColor` is nonzero (`BuildBallTrailSlots`) |
+| Address | Symbol | Slot |
+|---|---|---|
+| `$de00` | `wNetBallSlot` | ball-at-net marker: tile `$4e`, drawn after the point resolves when the ball rests within `$1e0` of the net, with a 1px X jitter per frame (`BuildNetBallSlot`) |
+| `$de04` | `wBallSlot` | the ball itself: tile picked by height band / off-screen state (`$40/$42/$44`), gated by `wBallSpriteEnabled` (`BuildBallSlot`) |
+| `$de08` | `wBallShadowSlot` | ball ground shadow: tile `$46` at the ball's height-0 projection, gated by `wBallShadowEnabled` (`BuildBallShadowSlot`) |
+| `$de0c-$de1f` | `wBallTrailSlots` | 5 ball-trail afterimages (tile = ball tile + 8), fed from the position history ring; slots 3-5 only when `wBallTrailColor` is nonzero (`BuildBallTrailSlots`) |
 
-`$dd00-$dd23` (bank 4) is the **ball position history ring**: six 6-byte
+`$dd00-$dd23` (bank 4) is the **ball position history ring** (`wBallHistory`): six 6-byte
 records `[projX word, projY word, tile+8, attr]`; `UpdateBallVisuals`
 ($5153) shifts it down one record per frame and `BuildBallSlot` writes the
 newest at `$dd1e`. `SetBallTrailColor` ($5189) picks one of the 8 OBJ

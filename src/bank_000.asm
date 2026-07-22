@@ -7272,6 +7272,7 @@ EnableTimerInterrupt:
 	ldh [rIE], a ; $2a2a
 	ei ; $2a2c
 	ret ; $2a2d
+QueueDeferredTilemapCopy:
 	push af ; $2a2e
 	ld [$c3a4], a ; $2a2f
 	ld a, c ; $2a32
@@ -7287,11 +7288,11 @@ EnableTimerInterrupt:
 	xor a, a ; $2a46
 	ld [$c3a6], a ; $2a47
 	ld a, $05 ; $2a4a
-	ld hl, Func_00_2a54 ; $2a4c
+	ld hl, VBlankDeferredTilemapCopyTask ; $2a4c
 	call RegisterFrameTask ; $2a4f
 	pop af ; $2a52
 	ret ; $2a53
-Func_00_2a54:
+VBlankDeferredTilemapCopyTask:
 	push af ; $2a54
 	push bc ; $2a55
 	push de ; $2a56
@@ -7333,7 +7334,7 @@ Label_00_2a90:
 	pop bc ; $2a9b
 	pop af ; $2a9c
 	ret ; $2a9d
-Func_00_2a9e:
+RenderProportionalMenuText:
 	push bc ; $2a9e
 	ld c, $11 ; $2a9f
 	farcall RenderProportionalTextAt ; $2aa1
@@ -8438,10 +8439,10 @@ InitAudioEngine:
 	ldh [rAUDENA], a ; $3086
 	xor a, a ; $3088
 	ldh [rAUDTERM], a ; $3089
-	ld [$d209], a ; $308b
+	ld [wSndPanShadow], a ; $308b
 	ld a, $77 ; $308e
 	ldh [rAUDVOL], a ; $3090
-	ld hl, $d100 ; $3092
+	ld hl, wSndChannels ; $3092
 	ld b, $06 ; $3095
 	ld a, $ff ; $3097
 Label_00_3099:
@@ -8451,7 +8452,7 @@ Label_00_3099:
 	add hl, de ; $309e
 	dec b ; $309f
 	jr nz, Label_00_3099 ; $30a0
-	ld hl, $d1c0 ; $30a2
+	ld hl, wSndLoopSlots ; $30a2
 	ld b, $48 ; $30a5
 	xor a, a ; $30a7
 Label_00_30a8:
@@ -8459,19 +8460,19 @@ Label_00_30a8:
 	dec b ; $30a9
 	jr nz, Label_00_30a8 ; $30aa
 	xor a, a ; $30ac
-	ld [$d215], a ; $30ad
-	ld [$d219], a ; $30b0
+	ld [wSndFirstChannel], a ; $30ad
+	ld [wSndWaveReloadPending], a ; $30b0
 	ret ; $30b3
 SetChannelUpdateRequest:
 	ld a, b ; $30b4
-	ld [$d212], a ; $30b5
+	ld [wSndUpdateReqMask], a ; $30b5
 	ld a, c ; $30b8
-	ld [$d213], a ; $30b9
+	ld [wSndUpdateReqData], a ; $30b9
 	xor a, a ; $30bc
-	ld [$d214], a ; $30bd
+	ld [wSndUpdateReqAck], a ; $30bd
 	ret ; $30c0
 MarkCurrentChannelUpdated:
-	ld a, [$d20f] ; $30c1
+	ld a, [wSndChannelIndex] ; $30c1
 	inc a ; $30c4
 	ld b, a ; $30c5
 	ld a, $01 ; $30c6
@@ -8482,24 +8483,24 @@ Label_00_30c8:
 	jr Label_00_30c8 ; $30cc
 Label_00_30ce:
 	ld b, a ; $30ce
-	ld a, [$d214] ; $30cf
+	ld a, [wSndUpdateReqAck] ; $30cf
 	or a, b ; $30d2
-	ld [$d214], a ; $30d3
+	ld [wSndUpdateReqAck], a ; $30d3
 	ret ; $30d6
 ApplyChannelUpdateRequest:
-	ld a, [$d214] ; $30d7
-	ld hl, $d212 ; $30da
+	ld a, [wSndUpdateReqAck] ; $30d7
+	ld hl, wSndUpdateReqMask ; $30da
 	and a, [hl] ; $30dd
 	cp a, [hl] ; $30de
 	jr nz, Label_00_310b ; $30df
-	ld hl, $d106 ; $30e1
-	ld a, [$d213] ; $30e4
+	ld hl, wSndChannels + 6 ; $30e1
+	ld a, [wSndUpdateReqData] ; $30e4
 	and a, $0f ; $30e7
 	ld b, a ; $30e9
-	ld a, [$d212] ; $30ea
+	ld a, [wSndUpdateReqMask] ; $30ea
 Label_00_30ed:
 	srl a ; $30ed
-	ld [$d214], a ; $30ef
+	ld [wSndUpdateReqAck], a ; $30ef
 	jr nc, Label_00_30f9 ; $30f2
 	ld a, [hl] ; $30f4
 	and a, $f0 ; $30f5
@@ -8512,18 +8513,18 @@ Label_00_30f9:
 	ld a, h ; $30fd
 	adc a, $00 ; $30fe
 	ld h, a ; $3100
-	ld a, [$d214] ; $3101
+	ld a, [wSndUpdateReqAck] ; $3101
 	and a, a ; $3104
 	jr nz, Label_00_30ed ; $3105
 	xor a, a ; $3107
-	ld [$d212], a ; $3108
+	ld [wSndUpdateReqMask], a ; $3108
 Label_00_310b:
 	xor a, a ; $310b
-	ld [$d214], a ; $310c
+	ld [wSndUpdateReqAck], a ; $310c
 	ret ; $310f
 CheckSfxChannelsIdle:
 	wram_bank $07 ; $3110
-	ld hl, $d140 ; $3116
+	ld hl, wSndChannels + 64 ; $3116
 	ld de, $0020 ; $3119
 	ld b, $04 ; $311c
 Label_00_311e:
@@ -8544,7 +8545,7 @@ StopAllSound:
 	push hl ; $312c
 	wram_bank $07 ; $312d
 	ld a, $ff ; $3133
-	ld hl, $d140 ; $3135
+	ld hl, wSndChannels + 64 ; $3135
 	ld de, $0020 ; $3138
 	ld b, $04 ; $313b
 Label_00_313d:
@@ -8553,7 +8554,7 @@ Label_00_313d:
 	add hl, de ; $313f
 	dec b ; $3140
 	jr nz, Label_00_313d ; $3141
-	ld hl, $d1d8 ; $3143
+	ld hl, wSndLoopSlots + 24 ; $3143
 	ld bc, $0030 ; $3146
 	call ClearBytes ; $3149
 	pop hl ; $314c
@@ -8742,13 +8743,13 @@ PlaySound:
 	push hl ; $32a9
 	wram_bank $07 ; $32aa
 	ld a, $ff ; $32b0
-	ld hl, $d100 ; $32b2
+	ld hl, wSndChannels ; $32b2
 	ld [hl+], a ; $32b5
 	ld [hl], a ; $32b6
-	ld hl, $d120 ; $32b7
+	ld hl, wSndChannels + 32 ; $32b7
 	ld [hl+], a ; $32ba
 	ld [hl], a ; $32bb
-	ld hl, $d1c0 ; $32bc
+	ld hl, wSndLoopSlots ; $32bc
 	ld bc, $0018 ; $32bf
 	call ClearBytes ; $32c2
 	pop hl ; $32c5
@@ -8816,7 +8817,7 @@ StartSoundChannel:
 	inc de ; $3315
 	ld c, a ; $3316
 	ld b, $00 ; $3317
-	ld hl, $d100 ; $3319
+	ld hl, wSndChannels ; $3319
 	add hl, bc ; $331c
 	ld a, [hl] ; $331d
 	cp a, $ff ; $331e
@@ -8834,9 +8835,9 @@ StartSoundChannel:
 	jr z, Label_00_3338 ; $3334
 	ld b, $77 ; $3336
 Label_00_3338:
-	ld a, [$d209] ; $3338
+	ld a, [wSndPanShadow] ; $3338
 	and a, b ; $333b
-	ld [$d209], a ; $333c
+	ld [wSndPanShadow], a ; $333c
 Label_00_333f:
 	xor a, a ; $333f
 	ld [hl+], a ; $3340
@@ -8899,13 +8900,13 @@ RunSoundEngine:
 UpdateSoundChannels:
 	ldh a, [hRomBank] ; $3392
 	push af ; $3394
-	ld a, [$d215] ; $3395
-	ld [$d20f], a ; $3398
+	ld a, [wSndFirstChannel] ; $3395
+	ld [wSndChannelIndex], a ; $3398
 	xor a, a ; $339b
-	ld [$d208], a ; $339c
-	ld hl, $d20e ; $339f
+	ld [wSndActiveMask], a ; $339c
+	ld hl, wSndFrameCounter ; $339f
 	inc [hl] ; $33a2
-	ld hl, $d100 ; $33a3
+	ld hl, wSndChannels ; $33a3
 Label_00_33a6:
 	ld a, [hl+] ; $33a6
 	ld b, a ; $33a7
@@ -8920,41 +8921,41 @@ Label_00_33a6:
 	ldh a, [hSndDataBank] ; $33b7
 	ldh [hRomBank], a ; $33b9
 	ld [$2000], a ; $33bb
-	ldh a, [$ffd2] ; $33be
+	ldh a, [hSndChannelType] ; $33be
 	and a, $03 ; $33c0
-	ld [$d20a], a ; $33c2
+	ld [wSndChannelType], a ; $33c2
 	ld b, a ; $33c5
 	add a, a ; $33c6
 	add a, a ; $33c7
 	add a, b ; $33c8
-	ld [$d20d], a ; $33c9
+	ld [wSndRegBase], a ; $33c9
 	inc b ; $33cc
 	ld a, $88 ; $33cd
 Label_00_33cf:
 	rlca ; $33cf
 	dec b ; $33d0
 	jr nz, Label_00_33cf ; $33d1
-	ld [$d20b], a ; $33d3
-	ld [$d20c], a ; $33d6
+	ld [wSndChannelBits], a ; $33d3
+	ld [wSndChannelPanMask], a ; $33d6
 	ldh a, [hSndScriptPtr] ; $33d9
 	ld b, a ; $33db
-	ldh a, [$ffd1] ; $33dc
+	ldh a, [hSndScriptPtr + 1] ; $33dc
 	or a, b ; $33de
 	and a, a ; $33df
 	jp z, Label_00_34dd ; $33e0
 	call TickVibrato ; $33e3
-	call Func_00_3a40 ; $33e6
-	ldh a, [$ffde] ; $33e9
+	call TickInstrumentEnvelope ; $33e6
+	ldh a, [hSndEnvLength] ; $33e9
 	ld b, a ; $33eb
-	ldh a, [$ffdf] ; $33ec
+	ldh a, [hSndEnvPos] ; $33ec
 	inc a ; $33ee
 	cp a, b ; $33ef
 	jr c, Label_00_33f3 ; $33f0
 	ld a, b ; $33f2
 Label_00_33f3:
-	ldh [$ffdf], a ; $33f3
-	ld hl, $ffd7 ; $33f5
-	ldh a, [$ffd6] ; $33f8
+	ldh [hSndEnvPos], a ; $33f3
+	ld hl, hSndLengthAccum ; $33f5
+	ldh a, [hSndToneCtrl] ; $33f8
 	and a, $0f ; $33fa
 	add a, [hl] ; $33fc
 	cp a, $10 ; $33fd
@@ -8965,22 +8966,22 @@ Label_00_33f3:
 Label_00_3406:
 	ld [hl], a ; $3406
 	call TickVolumeSlide ; $3407
-	ldh a, [$ffe8] ; $340a
+	ldh a, [hSndNoteLenTimer] ; $340a
 	and a, a ; $340c
 	jr z, Label_00_3412 ; $340d
 	dec a ; $340f
-	ldh [$ffe8], a ; $3410
+	ldh [hSndNoteLenTimer], a ; $3410
 Label_00_3412:
-	ldh a, [$ffd9] ; $3412
+	ldh a, [hSndPortamentoTimer] ; $3412
 	and a, a ; $3414
 	jr nz, Label_00_344d ; $3415
-	ldh a, [$ffeb] ; $3417
+	ldh a, [hSndEchoCtrl] ; $3417
 	and a, $f0 ; $3419
 	jr z, Label_00_342f ; $341b
-	ld hl, $ffea ; $341d
+	ld hl, hSndEchoTimer ; $341d
 	dec [hl] ; $3420
 	jr nz, Label_00_343b ; $3421
-	ldh a, [$ffe5] ; $3423
+	ldh a, [hSndEcho] ; $3423
 	and a, $f0 ; $3425
 	ld c, a ; $3427
 	ldh a, [hSndVolume] ; $3428
@@ -8990,12 +8991,12 @@ Label_00_3412:
 Label_00_342f:
 	call MarkCurrentChannelUpdated ; $342f
 Label_00_3432:
-	ldh a, [$ffe7] ; $3432
-	ldh [$ffe8], a ; $3434
+	ldh a, [hSndNoteLenReload] ; $3432
+	ldh [hSndNoteLenTimer], a ; $3434
 	call RunSoundChannelScript ; $3436
 	jr Label_00_3464 ; $3439
 Label_00_343b:
-	ldh a, [$ffeb] ; $343b
+	ldh a, [hSndEchoCtrl] ; $343b
 	and a, $0f ; $343d
 	dec a ; $343f
 	cp a, [hl] ; $3440
@@ -9006,56 +9007,56 @@ Label_00_343b:
 	jr Label_00_3464 ; $344b
 Label_00_344d:
 	dec a ; $344d
-	ldh [$ffd9], a ; $344e
+	ldh [hSndPortamentoTimer], a ; $344e
 	push af ; $3450
-	ldh a, [$ffef] ; $3451
+	ldh a, [hSndRestFlag] ; $3451
 	or a, a ; $3453
 	jr z, Label_00_3459 ; $3454
 	dec a ; $3456
-	ldh [$ffef], a ; $3457
+	ldh [hSndRestFlag], a ; $3457
 Label_00_3459:
 	pop af ; $3459
 	jr nz, Label_00_3464 ; $345a
-	ldh a, [$ffeb] ; $345c
+	ldh a, [hSndEchoCtrl] ; $345c
 	and a, $f0 ; $345e
 	jr nz, Label_00_3464 ; $3460
 	jr Label_00_342f ; $3462
 Label_00_3464:
-	ld a, [$d219] ; $3464
+	ld a, [wSndWaveReloadPending] ; $3464
 	and a, a ; $3467
 	jr z, Label_00_349f ; $3468
-	ld a, [$d20a] ; $346a
+	ld a, [wSndChannelType] ; $346a
 	cp a, $02 ; $346d
 	jr nz, Label_00_349f ; $346f
-	ld a, [$d20f] ; $3471
+	ld a, [wSndChannelIndex] ; $3471
 	cp a, $02 ; $3474
 	jr c, Label_00_349f ; $3476
-	ld a, [$d20b] ; $3478
+	ld a, [wSndChannelBits] ; $3478
 	ld b, a ; $347b
-	ld a, [$d208] ; $347c
+	ld a, [wSndActiveMask] ; $347c
 	and a, b ; $347f
 	jr nz, Label_00_349f ; $3480
-	ld a, [$d217] ; $3482
+	ld a, [wSndLoadedWaveId] ; $3482
 	ld b, a ; $3485
-	ldh a, [$ffda] ; $3486
+	ldh a, [hSndWaveId] ; $3486
 	cp a, b ; $3488
 	jr z, Label_00_349f ; $3489
 	ld e, a ; $348b
-	ld [$d217], a ; $348c
+	ld [wSndLoadedWaveId], a ; $348c
 	swap e ; $348f
 	xor a, a ; $3491
-	ld [$d219], a ; $3492
+	ld [wSndWaveReloadPending], a ; $3492
 	ldh [rAUD3ENA], a ; $3495
 	ld d, a ; $3497
 	call LoadWavePattern ; $3498
 	ld a, $80 ; $349b
 	ldh [rAUD3ENA], a ; $349d
 Label_00_349f:
-	ld a, [$d20b] ; $349f
+	ld a, [wSndChannelBits] ; $349f
 	ld b, a ; $34a2
-	ld a, [$d208] ; $34a3
+	ld a, [wSndActiveMask] ; $34a3
 	or a, b ; $34a6
-	ld [$d208], a ; $34a7
+	ld [wSndActiveMask], a ; $34a7
 	pop hl ; $34aa
 	push hl ; $34ab
 	ld e, l ; $34ac
@@ -9067,16 +9068,16 @@ Label_00_349f:
 Label_00_34b7:
 	ld de, $0020 ; $34b7
 	add hl, de ; $34ba
-	ld a, [$d20f] ; $34bb
+	ld a, [wSndChannelIndex] ; $34bb
 	inc a ; $34be
-	ld [$d20f], a ; $34bf
+	ld [wSndChannelIndex], a ; $34bf
 	cp a, $06 ; $34c2
 	jp c, Label_00_33a6 ; $34c4
-	ld a, [$d208] ; $34c7
+	ld a, [wSndActiveMask] ; $34c7
 	ld b, a ; $34ca
-	ld a, [$d209] ; $34cb
+	ld a, [wSndPanShadow] ; $34cb
 	and a, b ; $34ce
-	ld [$d209], a ; $34cf
+	ld [wSndPanShadow], a ; $34cf
 	ldh [rAUDTERM], a ; $34d2
 	pop af ; $34d4
 	ldh [hRomBank], a ; $34d5
@@ -9086,13 +9087,13 @@ Label_00_34dd:
 	ldh a, [hSndDataPtr] ; $34dd
 Label_00_34df:
 	ld l, a ; $34df
-	ldh a, [$ffd4] ; $34e0
+	ldh a, [hSndDataPtr + 1] ; $34e0
 	ld h, a ; $34e2
 	ld a, [hl+] ; $34e3
 	and a, $0f ; $34e4
 	ld d, a ; $34e6
-	ldh [$ffd7], a ; $34e7
-	ld a, [$d20a] ; $34e9
+	ldh [hSndLengthAccum], a ; $34e7
+	ld a, [wSndChannelType] ; $34e9
 	cp a, $02 ; $34ec
 	jr z, Label_00_351e ; $34ee
 	ld a, [hl+] ; $34f0
@@ -9101,50 +9102,50 @@ Label_00_34df:
 	and a, $c0 ; $34f3
 	or a, d ; $34f5
 Label_00_34f6:
-	ldh [$ffd6], a ; $34f6
+	ldh [hSndToneCtrl], a ; $34f6
 	ld a, [hl+] ; $34f8
 	swap a ; $34f9
 	ldh [hSndVolume], a ; $34fb
-	ld a, [$d20a] ; $34fd
+	ld a, [wSndChannelType] ; $34fd
 	cp a, $02 ; $3500
 	jr z, Label_00_3524 ; $3502
 	ld a, [hl+] ; $3504
-	ldh [$ffda], a ; $3505
+	ldh [hSndWaveId], a ; $3505
 Label_00_3507:
 	ld a, $ff ; $3507
-	ldh [$ffdb], a ; $3509
+	ldh [hSndNoteOffset], a ; $3509
 	xor a, a ; $350b
-	ldh [$ffdc], a ; $350c
-	ldh [$ffdd], a ; $350e
-	ldh [$ffe0], a ; $3510
-	ldh [$ffd1], a ; $3512
+	ldh [hSndTranspose], a ; $350c
+	ldh [hSndEnvRate], a ; $350e
+	ldh [hSndVolSlide], a ; $3510
+	ldh [hSndScriptPtr + 1], a ; $3512
 	dec a ; $3514
-	ldh [$ffe6], a ; $3515
+	ldh [hSndPanMask], a ; $3515
 	ld a, $02 ; $3517
 	ldh [hSndScriptPtr], a ; $3519
 	jp Label_00_3432 ; $351b
 Label_00_351e:
 	ld a, [hl+] ; $351e
-	ldh [$ffde], a ; $351f
+	ldh [hSndEnvLength], a ; $351f
 	ld a, d ; $3521
 	jr Label_00_34f6 ; $3522
 Label_00_3524:
 	xor a, a ; $3524
 	ldh [rAUD3ENA], a ; $3525
 	ld d, a ; $3527
-	ldh a, [$ffda] ; $3528
+	ldh a, [hSndWaveId] ; $3528
 	ld e, a ; $352a
 	cp a, $ff ; $352b
 	jr nz, Label_00_3533 ; $352d
 	ld e, [hl] ; $352f
 	ld a, e ; $3530
-	ldh [$ffda], a ; $3531
+	ldh [hSndWaveId], a ; $3531
 Label_00_3533:
-	ld [$d217], a ; $3533
+	ld [wSndLoadedWaveId], a ; $3533
 	swap e ; $3536
 	ld hl, WavePatternTable ; $3538
 	push de ; $353b
-	ldh a, [$ffe9] ; $353c
+	ldh a, [hSndInstrument] ; $353c
 	swap a ; $353e
 	and a, $0f ; $3540
 	add a, a ; $3542
@@ -9168,21 +9169,21 @@ Label_00_3550:
 RunSoundChannelScript:
 	ldh a, [hSndScriptPtr] ; $3558
 	ld l, a ; $355a
-	ldh a, [$ffd1] ; $355b
+	ldh a, [hSndScriptPtr + 1] ; $355b
 	ld h, a ; $355d
 	add hl, hl ; $355e
 	ldh a, [hSndDataPtr] ; $355f
 	ld e, a ; $3561
-	ldh a, [$ffd4] ; $3562
+	ldh a, [hSndDataPtr + 1] ; $3562
 	ld d, a ; $3564
 	add hl, de ; $3565
 Label_00_3566:
 	ldh a, [hSndScriptPtr] ; $3566
 	add a, $01 ; $3568
 	ldh [hSndScriptPtr], a ; $356a
-	ldh a, [$ffd1] ; $356c
+	ldh a, [hSndScriptPtr + 1] ; $356c
 	adc a, $00 ; $356e
-	ldh [$ffd1], a ; $3570
+	ldh [hSndScriptPtr + 1], a ; $3570
 	ld a, [hl+] ; $3572
 	cp a, $d0 ; $3573
 	jr nc, Label_00_35b9 ; $3575
@@ -9190,7 +9191,7 @@ Label_00_3566:
 	jp nc, Label_00_35f9 ; $3579
 	cp a, $a0 ; $357c
 	jp nc, Label_00_3635 ; $357e
-	jp Label_00_3864 ; $3581
+	jp SndTriggerNote ; $3581
 Label_00_3584:
 	cp a, $fd ; $3584
 	jr z, Label_00_358e ; $3586
@@ -9205,7 +9206,7 @@ Label_00_358e:
 	ld [hl+], a ; $3594
 	ldh a, [hSndScriptPtr] ; $3595
 	ld [hl+], a ; $3597
-	ldh a, [$ffd1] ; $3598
+	ldh a, [hSndScriptPtr + 1] ; $3598
 	ld [hl], a ; $359a
 	pop hl ; $359b
 Label_00_359c:
@@ -9213,17 +9214,17 @@ Label_00_359c:
 	jr Label_00_3566 ; $359d
 Label_00_359f:
 	ldh [hSndScriptPtr], a ; $359f
-	ldh [$ffd1], a ; $35a1
-	ld a, [$d20a] ; $35a3
+	ldh [hSndScriptPtr + 1], a ; $35a1
+	ld a, [wSndChannelType] ; $35a3
 	cp a, $02 ; $35a6
 	jr nz, Label_00_35b6 ; $35a8
-	ld a, [$d20f] ; $35aa
+	ld a, [wSndChannelIndex] ; $35aa
 	cp a, $02 ; $35ad
 	jr nc, Label_00_35b6 ; $35af
 	ld a, $ff ; $35b1
-	ld [$d219], a ; $35b3
+	ld [wSndWaveReloadPending], a ; $35b3
 Label_00_35b6:
-	jp Label_00_3b02 ; $35b6
+	jp SndReleaseChannel ; $35b6
 Label_00_35b9:
 	cp a, $f0 ; $35b9
 	jr nc, Label_00_3584 ; $35bb
@@ -9237,31 +9238,31 @@ Label_00_35c5:
 	inc a ; $35c8
 Label_00_35c9:
 	ld b, a ; $35c9
-	ld a, [$d20a] ; $35ca
+	ld a, [wSndChannelType] ; $35ca
 	cp a, $02 ; $35cd
 	jr z, Label_00_35d9 ; $35cf
 	ld a, b ; $35d1
-	ldh [$ffe0], a ; $35d2
+	ldh [hSndVolSlide], a ; $35d2
 	ld a, [hl] ; $35d4
-	ldh [$ffe1], a ; $35d5
-	ldh [$ffe2], a ; $35d7
+	ldh [hSndVolSlideReload], a ; $35d5
+	ldh [hSndVolSlideTimer], a ; $35d7
 Label_00_35d9:
 	inc hl ; $35d9
 	jp Label_00_3566 ; $35da
 Label_00_35dd:
 	and a, $0f ; $35dd
 	ld b, a ; $35df
-	ld a, [$d20a] ; $35e0
+	ld a, [wSndChannelType] ; $35e0
 	cp a, $02 ; $35e3
 	jr z, Label_00_35f5 ; $35e5
 	ldh a, [hSndVolume] ; $35e7
 	and a, $0f ; $35e9
 	jr nz, Label_00_35f5 ; $35eb
 	ld a, [hl] ; $35ed
-	ldh [$ffde], a ; $35ee
+	ldh [hSndEnvLength], a ; $35ee
 	ld a, b ; $35f0
 	swap a ; $35f1
-	ldh [$ffdd], a ; $35f3
+	ldh [hSndEnvRate], a ; $35f3
 Label_00_35f5:
 	inc hl ; $35f5
 	jp Label_00_3566 ; $35f6
@@ -9282,7 +9283,7 @@ Label_00_35f9:
 	ld a, [hl+] ; $360e
 	ldh [hSndScriptPtr], a ; $360f
 	ld a, [hl] ; $3611
-	ldh [$ffd1], a ; $3612
+	ldh [hSndScriptPtr + 1], a ; $3612
 Label_00_3614:
 	pop hl ; $3614
 	jp RunSoundChannelScript ; $3615
@@ -9299,7 +9300,7 @@ Label_00_3618:
 	ld a, [hl+] ; $3627
 	ldh [hSndScriptPtr], a ; $3628
 	ld a, [hl] ; $362a
-	ldh [$ffd1], a ; $362b
+	ldh [hSndScriptPtr + 1], a ; $362b
 	pop hl ; $362d
 	jp RunSoundChannelScript ; $362e
 Label_00_3631:
@@ -9311,9 +9312,9 @@ Label_00_3635:
 	ld a, [hl+] ; $3639
 	swap a ; $363a
 	ldh [hSndVolume], a ; $363c
-	ld a, [$d20b] ; $363e
+	ld a, [wSndChannelBits] ; $363e
 	ld b, a ; $3641
-	ld a, [$d208] ; $3642
+	ld a, [wSndActiveMask] ; $3642
 	and a, b ; $3645
 	jp nz, Label_00_3566 ; $3646
 	call ApplyChannelEnvelope ; $3649
@@ -9321,19 +9322,19 @@ Label_00_3635:
 Label_00_364f:
 	cp a, $a1 ; $364f
 	jr nz, Label_00_369e ; $3651
-	ld a, [$d20a] ; $3653
+	ld a, [wSndChannelType] ; $3653
 	cp a, $02 ; $3656
 	jr z, Label_00_3660 ; $3658
 	ld a, [hl+] ; $365a
-	ldh [$ffda], a ; $365b
+	ldh [hSndWaveId], a ; $365b
 	jp Label_00_3566 ; $365d
 Label_00_3660:
 	ld a, [hl+] ; $3660
 	ld e, a ; $3661
-	ldh [$ffda], a ; $3662
-	ld a, [$d20b] ; $3664
+	ldh [hSndWaveId], a ; $3662
+	ld a, [wSndChannelBits] ; $3664
 	ld b, a ; $3667
-	ld a, [$d208] ; $3668
+	ld a, [wSndActiveMask] ; $3668
 	and a, b ; $366b
 	jr z, Label_00_3671 ; $366c
 	jp Label_00_3566 ; $366e
@@ -9343,11 +9344,11 @@ Label_00_3671:
 	ld d, a ; $3674
 	push hl ; $3675
 	ld a, e ; $3676
-	ld [$d217], a ; $3677
+	ld [wSndLoadedWaveId], a ; $3677
 	swap e ; $367a
 	ld hl, WavePatternTable ; $367c
 	push de ; $367f
-	ldh a, [$ffe9] ; $3680
+	ldh a, [hSndInstrument] ; $3680
 	swap a ; $3682
 	and a, $0f ; $3684
 	add a, a ; $3686
@@ -9372,7 +9373,7 @@ Label_00_3694:
 Label_00_369e:
 	cp a, $a2 ; $369e
 	jr nz, Label_00_36bf ; $36a0
-	ld a, [$d20a] ; $36a2
+	ld a, [wSndChannelType] ; $36a2
 	cp a, $02 ; $36a5
 	jr z, Label_00_36b9 ; $36a7
 	ld a, [hl+] ; $36a9
@@ -9380,14 +9381,14 @@ Label_00_369e:
 	rrca ; $36ab
 	and a, $c0 ; $36ac
 	ld d, a ; $36ae
-	ldh a, [$ffd6] ; $36af
+	ldh a, [hSndToneCtrl] ; $36af
 	and a, $3f ; $36b1
 	or a, d ; $36b3
-	ldh [$ffd6], a ; $36b4
+	ldh [hSndToneCtrl], a ; $36b4
 	jp Label_00_3566 ; $36b6
 Label_00_36b9:
 	ld a, [hl+] ; $36b9
-	ldh [$ffde], a ; $36ba
+	ldh [hSndEnvLength], a ; $36ba
 	jp Label_00_3566 ; $36bc
 Label_00_36bf:
 	cp a, $a3 ; $36bf
@@ -9399,27 +9400,27 @@ Label_00_36bf:
 	ld b, a ; $36ca
 	and a, $0f ; $36cb
 	add a, a ; $36cd
-	ldh [$ffe7], a ; $36ce
-	ldh [$ffe8], a ; $36d0
+	ldh [hSndNoteLenReload], a ; $36ce
+	ldh [hSndNoteLenTimer], a ; $36d0
 	ld a, b ; $36d2
 	add a, $10 ; $36d3
 	and a, $f0 ; $36d5
 	ld e, a ; $36d7
-	ldh a, [$ffd2] ; $36d8
+	ldh a, [hSndChannelType] ; $36d8
 	and a, $0f ; $36da
 	or a, e ; $36dc
 Label_00_36dd:
-	ldh [$ffd2], a ; $36dd
+	ldh [hSndChannelType], a ; $36dd
 	jp Label_00_3566 ; $36df
 Label_00_36e2:
-	ldh a, [$ffd2] ; $36e2
+	ldh a, [hSndChannelType] ; $36e2
 	and a, $0f ; $36e4
 	jr Label_00_36dd ; $36e6
 Label_00_36e8:
 	cp a, $a4 ; $36e8
 	jr nz, Label_00_36f2 ; $36ea
 	ld a, [hl+] ; $36ec
-	ldh [$ffdb], a ; $36ed
+	ldh [hSndNoteOffset], a ; $36ed
 	jp Label_00_3566 ; $36ef
 Label_00_36f2:
 	cp a, $a5 ; $36f2
@@ -9427,10 +9428,10 @@ Label_00_36f2:
 	ld a, [hl+] ; $36f6
 	cp a, $01 ; $36f7
 	jr nz, Label_00_36ff ; $36f9
-	ldh a, [$ffe6] ; $36fb
+	ldh a, [hSndPanMask] ; $36fb
 	swap a ; $36fd
 Label_00_36ff:
-	ldh [$ffe6], a ; $36ff
+	ldh [hSndPanMask], a ; $36ff
 	jp Label_00_3566 ; $3701
 Label_00_3704:
 	cp a, $a6 ; $3704
@@ -9442,7 +9443,7 @@ Label_00_370e:
 	cp a, $a7 ; $370e
 	jr nz, Label_00_3718 ; $3710
 	ld a, [hl] ; $3712
-	ldh [$ffd9], a ; $3713
+	ldh [hSndPortamentoTimer], a ; $3713
 	jp Label_00_3947 ; $3715
 Label_00_3718:
 	cp a, $a8 ; $3718
@@ -9454,7 +9455,7 @@ Label_00_3718:
 	ld a, c ; $3721
 	and a, $f0 ; $3722
 	or a, b ; $3724
-	ldh [$ffe9], a ; $3725
+	ldh [hSndInstrument], a ; $3725
 	jp Label_00_3566 ; $3727
 Label_00_372a:
 	cp a, $a9 ; $372a
@@ -9472,10 +9473,10 @@ Label_00_372a:
 	jr z, Label_00_374c ; $3742
 	cp a, $ff ; $3744
 	jr nz, Label_00_3760 ; $3746
-	ldh a, [$ffdc] ; $3748
+	ldh a, [hSndTranspose] ; $3748
 	jr Label_00_374f ; $374a
 Label_00_374c:
-	ld a, [$d218] ; $374c
+	ld a, [wSndTranspose] ; $374c
 Label_00_374f:
 	sla a ; $374f
 	add a, l ; $3751
@@ -9486,36 +9487,36 @@ Label_00_374f:
 	ld a, [hl+] ; $3757
 	ldh [hSndScriptPtr], a ; $3758
 	ld a, [hl] ; $375a
-	ldh [$ffd1], a ; $375b
+	ldh [hSndScriptPtr + 1], a ; $375b
 	jp RunSoundChannelScript ; $375d
 Label_00_3760:
 	cp a, $80 ; $3760
 	jr nc, Label_00_3769 ; $3762
-	ldh [$ffdc], a ; $3764
+	ldh [hSndTranspose], a ; $3764
 	jp Label_00_3566 ; $3766
 Label_00_3769:
 	sub a, $80 ; $3769
-	ld [$d218], a ; $376b
+	ld [wSndTranspose], a ; $376b
 	jp Label_00_3566 ; $376e
 Label_00_3771:
-	ldh a, [$ffdc] ; $3771
+	ldh a, [hSndTranspose] ; $3771
 	inc a ; $3773
-	ldh [$ffdc], a ; $3774
+	ldh [hSndTranspose], a ; $3774
 	jp Label_00_3566 ; $3776
 Label_00_3779:
-	ldh a, [$ffdc] ; $3779
+	ldh a, [hSndTranspose] ; $3779
 	dec a ; $377b
-	ldh [$ffdc], a ; $377c
+	ldh [hSndTranspose], a ; $377c
 	jp Label_00_3566 ; $377e
 Label_00_3781:
-	ld a, [$d218] ; $3781
+	ld a, [wSndTranspose] ; $3781
 	inc a ; $3784
-	ld [$d218], a ; $3785
+	ld [wSndTranspose], a ; $3785
 	jp Label_00_3566 ; $3788
 Label_00_378b:
-	ld a, [$d218] ; $378b
+	ld a, [wSndTranspose] ; $378b
 	dec a ; $378e
-	ld [$d218], a ; $378f
+	ld [wSndTranspose], a ; $378f
 	jp Label_00_3566 ; $3792
 Label_00_3795:
 	cp a, $aa ; $3795
@@ -9525,39 +9526,39 @@ Label_00_3795:
 	and a, $f0 ; $379b
 	jr z, Label_00_37b5 ; $379d
 	swap a ; $379f
-	ldh [$ffea], a ; $37a1
+	ldh [hSndEchoTimer], a ; $37a1
 	or a, $f0 ; $37a3
-	ldh [$ffeb], a ; $37a5
+	ldh [hSndEchoCtrl], a ; $37a5
 	ld a, c ; $37a7
 	and a, $0f ; $37a8
 	ld c, a ; $37aa
-	ldh a, [$ffe5] ; $37ab
+	ldh a, [hSndEcho] ; $37ab
 	and a, $f0 ; $37ad
 	or a, c ; $37af
-	ldh [$ffe5], a ; $37b0
+	ldh [hSndEcho], a ; $37b0
 	jp Label_00_3566 ; $37b2
 Label_00_37b5:
 	xor a, a ; $37b5
-	ldh [$ffea], a ; $37b6
-	ldh [$ffe5], a ; $37b8
-	ldh [$ffeb], a ; $37ba
+	ldh [hSndEchoTimer], a ; $37b6
+	ldh [hSndEcho], a ; $37b8
+	ldh [hSndEchoCtrl], a ; $37ba
 	jp Label_00_3566 ; $37bc
 Label_00_37bf:
 	cp a, $ac ; $37bf
 	jr nz, Label_00_37fd ; $37c1
-	ldh a, [$ffec] ; $37c3
+	ldh a, [hSndLoopCount] ; $37c3
 	sub a, $01 ; $37c5
 	jr z, Label_00_37eb ; $37c7
 	jr nc, Label_00_37cc ; $37c9
 	ld a, [hl] ; $37cb
 Label_00_37cc:
-	ldh [$ffec], a ; $37cc
+	ldh [hSndLoopCount], a ; $37cc
 	ldh a, [hSndScriptPtr] ; $37ce
 	sub a, $01 ; $37d0
-	ldh [$ffed], a ; $37d2
-	ldh a, [$ffd1] ; $37d4
+	ldh [hSndLoopReturnPtr], a ; $37d2
+	ldh a, [hSndScriptPtr + 1] ; $37d4
 	sbc a, $00 ; $37d6
-	ldh [$ffee], a ; $37d8
+	ldh [hSndLoopReturnPtr + 1], a ; $37d8
 	inc hl ; $37da
 	ld a, [hl+] ; $37db
 	ld h, [hl] ; $37dc
@@ -9567,25 +9568,25 @@ Label_00_37cc:
 	ld a, l ; $37e2
 	ldh [hSndScriptPtr], a ; $37e3
 	ld a, h ; $37e5
-	ldh [$ffd1], a ; $37e6
+	ldh [hSndScriptPtr + 1], a ; $37e6
 	jp RunSoundChannelScript ; $37e8
 Label_00_37eb:
 	xor a, a ; $37eb
-	ldh [$ffec], a ; $37ec
+	ldh [hSndLoopCount], a ; $37ec
 	ldh a, [hSndScriptPtr] ; $37ee
 	add a, $01 ; $37f0
 	ldh [hSndScriptPtr], a ; $37f2
-	ldh a, [$ffd1] ; $37f4
+	ldh a, [hSndScriptPtr + 1] ; $37f4
 	adc a, $00 ; $37f6
-	ldh [$ffd1], a ; $37f8
+	ldh [hSndScriptPtr + 1], a ; $37f8
 	jp RunSoundChannelScript ; $37fa
 Label_00_37fd:
 	cp a, $ad ; $37fd
 	jr nz, Label_00_380c ; $37ff
-	ldh a, [$ffed] ; $3801
+	ldh a, [hSndLoopReturnPtr] ; $3801
 	ldh [hSndScriptPtr], a ; $3803
-	ldh a, [$ffee] ; $3805
-	ldh [$ffd1], a ; $3807
+	ldh a, [hSndLoopReturnPtr + 1] ; $3805
+	ldh [hSndScriptPtr + 1], a ; $3807
 	jp RunSoundChannelScript ; $3809
 Label_00_380c:
 	cp a, $ae ; $380c
@@ -9593,22 +9594,22 @@ Label_00_380c:
 	ld a, [hl+] ; $3810
 	and a, $10 ; $3811
 	ld b, a ; $3813
-	ldh a, [$ffd6] ; $3814
+	ldh a, [hSndToneCtrl] ; $3814
 	and a, $ef ; $3816
 	or a, b ; $3818
-	ldh [$ffd6], a ; $3819
+	ldh [hSndToneCtrl], a ; $3819
 	jp Label_00_3566 ; $381b
 Label_00_381e:
 	cp a, $af ; $381e
 	jr nz, Label_00_3832 ; $3820
 	ld a, [hl+] ; $3822
 	and a, $0f ; $3823
-	ldh [$ffd7], a ; $3825
+	ldh [hSndLengthAccum], a ; $3825
 	ld b, a ; $3827
-	ldh a, [$ffd6] ; $3828
+	ldh a, [hSndToneCtrl] ; $3828
 	and a, $f0 ; $382a
 	or a, b ; $382c
-	ldh [$ffd6], a ; $382d
+	ldh [hSndToneCtrl], a ; $382d
 	jp Label_00_3566 ; $382f
 Label_00_3832:
 	inc hl ; $3832
@@ -9617,44 +9618,44 @@ NoiseNoteTable:
 	INCBIN "data/bank_000/d_3836.bin" ; $3836, 16 bytes
 Label_00_3846:
 	xor a, a ; $3846
-	ldh [$ffef], a ; $3847
-	ld a, [$d20a] ; $3849
+	ldh [hSndRestFlag], a ; $3847
+	ld a, [wSndChannelType] ; $3849
 	cp a, $02 ; $384c
 	jr z, Label_00_3858 ; $384e
-	ldh a, [$ffe4] ; $3850
+	ldh a, [hSndPeriodHi] ; $3850
 	and a, $7f ; $3852
-	jp z, Label_00_3afa ; $3854
+	jp z, SndSilenceChannel ; $3854
 	ret ; $3857
 Label_00_3858:
-	ldh a, [$ffe4] ; $3858
+	ldh a, [hSndPeriodHi] ; $3858
 	and a, $7f ; $385a
 	ret nz ; $385c
 	call AbortIfChannelTriggered ; $385d
 	xor a, a ; $3860
 	ldh [rAUD3ENA], a ; $3861
 	ret ; $3863
-Label_00_3864:
+SndTriggerNote:
 	ld b, a ; $3864
-	ldh a, [$ffeb] ; $3865
+	ldh a, [hSndEchoCtrl] ; $3865
 	and a, $f0 ; $3867
 	jr z, Label_00_387a ; $3869
 	push de ; $386b
-	ldh a, [$ffeb] ; $386c
+	ldh a, [hSndEchoCtrl] ; $386c
 	and a, $0f ; $386e
-	ldh [$ffea], a ; $3870
+	ldh [hSndEchoTimer], a ; $3870
 	ld c, a ; $3872
 	ld a, [hl] ; $3873
 	sub a, c ; $3874
-	ldh [$ffd9], a ; $3875
+	ldh [hSndPortamentoTimer], a ; $3875
 	pop de ; $3877
 	jr Label_00_387d ; $3878
 Label_00_387a:
 	ld a, [hl] ; $387a
-	ldh [$ffd9], a ; $387b
+	ldh [hSndPortamentoTimer], a ; $387b
 Label_00_387d:
 	push bc ; $387d
 	ld c, a ; $387e
-	ldh a, [$ffdb] ; $387f
+	ldh a, [hSndNoteOffset] ; $387f
 	bit 7, a ; $3881
 	jr z, Label_00_388c ; $3883
 	add a, c ; $3885
@@ -9664,8 +9665,8 @@ Label_00_388a:
 	ld a, $01 ; $388a
 Label_00_388c:
 	pop bc ; $388c
-	ldh [$ffef], a ; $388d
-	ld a, [$d20a] ; $388f
+	ldh [hSndRestFlag], a ; $388d
+	ld a, [wSndChannelType] ; $388f
 	cp a, $03 ; $3892
 	jr nz, Label_00_38b2 ; $3894
 	ld a, b ; $3896
@@ -9693,7 +9694,7 @@ Label_00_38b2:
 	jr nc, Label_00_3846 ; $38b7
 	add a, a ; $38b9
 	ld e, a ; $38ba
-	ldh a, [$ffd6] ; $38bb
+	ldh a, [hSndToneCtrl] ; $38bb
 	and a, $10 ; $38bd
 	jr z, Label_00_38c5 ; $38bf
 	ld a, e ; $38c1
@@ -9725,9 +9726,9 @@ Label_00_38dd:
 	ld h, a ; $38e4
 Label_00_38e5:
 	xor a, a ; $38e5
-	ldh [$ffdf], a ; $38e6
+	ldh [hSndEnvPos], a ; $38e6
 	call AbortIfChannelTriggered ; $38e8
-	ld a, [$d20a] ; $38eb
+	ld a, [wSndChannelType] ; $38eb
 	cp a, $02 ; $38ee
 	jr nz, Label_00_38f9 ; $38f0
 	call LoadWavePatternIfChanged ; $38f2
@@ -9737,9 +9738,9 @@ Label_00_38f9:
 	push hl ; $38f9
 	call ApplyChannelVolumeEnvelope ; $38fa
 	pop hl ; $38fd
-	ld a, [$d20a] ; $38fe
+	ld a, [wSndChannelType] ; $38fe
 	and a, a ; $3901
-	ldh a, [$ffda] ; $3902
+	ldh a, [hSndWaveId] ; $3902
 	ld c, $10 ; $3904
 	call z, WriteChannelReg ; $3906
 	ld a, l ; $3909
@@ -9755,13 +9756,13 @@ Label_00_38f9:
 Label_00_391c:
 	ld a, $02 ; $391c
 Label_00_391e:
-	ldh [$ffe3], a ; $391e
-	ld a, [$d20a] ; $3920
+	ldh [hSndPeriodLo], a ; $391e
+	ld a, [wSndChannelType] ; $3920
 	cp a, $02 ; $3923
 	jr z, Label_00_395a ; $3925
 	cp a, $02 ; $3927
 	jr nc, Label_00_3936 ; $3929
-	ldh a, [$ffd6] ; $392b
+	ldh a, [hSndToneCtrl] ; $392b
 	and a, $c0 ; $392d
 	or a, $3f ; $392f
 	ld c, $11 ; $3931
@@ -9772,22 +9773,22 @@ Label_00_3936:
 	or a, $80 ; $3939
 Label_00_393b:
 	or a, $20 ; $393b
-	ldh [$ffe4], a ; $393d
+	ldh [hSndPeriodHi], a ; $393d
 	ld c, $14 ; $393f
 	call WriteChannelReg ; $3941
 	call ResetChannelLength ; $3944
 Label_00_3947:
-	ld a, [$d20c] ; $3947
+	ld a, [wSndChannelPanMask] ; $3947
 	ld b, a ; $394a
 	cpl ; $394b
 	ld c, a ; $394c
-	ldh a, [$ffe6] ; $394d
+	ldh a, [hSndPanMask] ; $394d
 	and a, b ; $394f
 	ld b, a ; $3950
-	ld a, [$d209] ; $3951
+	ld a, [wSndPanShadow] ; $3951
 	and a, c ; $3954
 	or a, b ; $3955
-	ld [$d209], a ; $3956
+	ld [wSndPanShadow], a ; $3956
 	ret ; $3959
 Label_00_395a:
 	xor a, a ; $395a
@@ -9799,13 +9800,13 @@ Label_00_395a:
 	and a, $07 ; $3964
 	jr Label_00_393b ; $3966
 TickVolumeSlide:
-	ld a, [$d20a] ; $3968
+	ld a, [wSndChannelType] ; $3968
 	cp a, $02 ; $396b
 	ret z ; $396d
-	ldh a, [$ffe0] ; $396e
+	ldh a, [hSndVolSlide] ; $396e
 	and a, a ; $3970
 	ret z ; $3971
-	ld hl, $ffe2 ; $3972
+	ld hl, hSndVolSlideTimer ; $3972
 	dec [hl] ; $3975
 	ret nz ; $3976
 	ldh a, [hSndVolume] ; $3977
@@ -9814,9 +9815,9 @@ TickVolumeSlide:
 	ret nc ; $397d
 	and a, $0f ; $397e
 	ld b, a ; $3980
-	ldh a, [$ffe1] ; $3981
-	ldh [$ffe2], a ; $3983
-	ld hl, $ffe0 ; $3985
+	ldh a, [hSndVolSlideReload] ; $3981
+	ldh [hSndVolSlideTimer], a ; $3983
+	ld hl, hSndVolSlide ; $3985
 	ld a, [hl] ; $3988
 	bit 7, a ; $3989
 	jr nz, Label_00_399b ; $398b
@@ -9839,33 +9840,33 @@ Label_00_399b:
 	jr ApplyChannelEnvelope ; $39a5
 TickVibrato:
 	call AbortIfChannelTriggered ; $39a7
-	ld a, [$d20a] ; $39aa
+	ld a, [wSndChannelType] ; $39aa
 	cp a, $03 ; $39ad
 	ret z ; $39af
-	ldh a, [$ffe8] ; $39b0
+	ldh a, [hSndNoteLenTimer] ; $39b0
 	and a, a ; $39b2
 	ret nz ; $39b3
-	ldh a, [$ffd2] ; $39b4
+	ldh a, [hSndChannelType] ; $39b4
 	and a, $f0 ; $39b6
 	ret z ; $39b8
 	sub a, $10 ; $39b9
 	ld b, a ; $39bb
-	ld a, [$d20e] ; $39bc
+	ld a, [wSndFrameCounter] ; $39bc
 	and a, $0f ; $39bf
 	or a, b ; $39c1
 	ld e, a ; $39c2
 	ld d, $00 ; $39c3
 	ld hl, SoundPitchTable ; $39c5
 	add hl, de ; $39c8
-	ldh a, [$ffe3] ; $39c9
+	ldh a, [hSndPeriodLo] ; $39c9
 	add a, [hl] ; $39cb
 	ld c, $13 ; $39cc
 	jr WriteChannelReg ; $39ce
 ApplyChannelVolumeEnvelope:
-	ld a, [$d20a] ; $39d0
+	ld a, [wSndChannelType] ; $39d0
 	cp a, $02 ; $39d3
 	jr z, Label_00_3a1d ; $39d5
-	ldh a, [$ffdd] ; $39d7
+	ldh a, [hSndEnvRate] ; $39d7
 	and a, a ; $39d9
 	jp nz, Label_00_3a55 ; $39da
 	ldh a, [hSndVolume] ; $39dd
@@ -9873,7 +9874,7 @@ ApplyChannelEnvelope:
 	ld b, a ; $39df
 	and a, $f0 ; $39e0
 	jr z, Label_00_39f6 ; $39e2
-	ldh a, [$ffef] ; $39e4
+	ldh a, [hSndRestFlag] ; $39e4
 	or a, a ; $39e6
 	jr nz, Label_00_39f6 ; $39e7
 	ld a, b ; $39e9
@@ -9894,7 +9895,7 @@ Label_00_39f6:
 	or a, $08 ; $39fc
 	ld b, a ; $39fe
 Label_00_39ff:
-	ld a, [$d20d] ; $39ff
+	ld a, [wSndRegBase] ; $39ff
 	add a, $12 ; $3a02
 	ld c, a ; $3a04
 	ldh a, [c] ; $3a05
@@ -9902,13 +9903,13 @@ Label_00_39ff:
 	ret z ; $3a07
 	ld a, b ; $3a08
 	ldh [c], a ; $3a09
-	ldh a, [$ffe4] ; $3a0a
+	ldh a, [hSndPeriodHi] ; $3a0a
 	ld c, $14 ; $3a0c
 	call WriteChannelReg ; $3a0e
 	jp ResetChannelLength ; $3a11
 WriteChannelReg:
 	ld b, a ; $3a14
-	ld a, [$d20d] ; $3a15
+	ld a, [wSndRegBase] ; $3a15
 	add a, c ; $3a18
 	ld c, a ; $3a19
 	ld a, b ; $3a1a
@@ -9920,7 +9921,7 @@ Label_00_3a1d:
 	jr WriteChannelReg ; $3a21
 ResetChannelLength:
 	ld c, $11 ; $3a23
-	ld a, [$d20d] ; $3a25
+	ld a, [wSndRegBase] ; $3a25
 	add a, c ; $3a28
 	ld c, a ; $3a29
 	ldh a, [c] ; $3a2a
@@ -9938,24 +9939,24 @@ Label_00_3a2f:
 	and a, $60 ; $3a3b
 	ldh [rAUD3LEVEL], a ; $3a3d
 	ret ; $3a3f
-Func_00_3a40:
+TickInstrumentEnvelope:
 	call AbortIfChannelTriggered ; $3a40
-	ldh a, [$ffe4] ; $3a43
+	ldh a, [hSndPeriodHi] ; $3a43
 	and a, $7f ; $3a45
-	jp z, Label_00_3afa ; $3a47
-	ld a, [$d20a] ; $3a4a
+	jp z, SndSilenceChannel ; $3a47
+	ld a, [wSndChannelType] ; $3a4a
 	cp a, $02 ; $3a4d
 	jr z, Label_00_3a55 ; $3a4f
-	ldh a, [$ffdd] ; $3a51
+	ldh a, [hSndEnvRate] ; $3a51
 	and a, a ; $3a53
 	ret z ; $3a54
 Label_00_3a55:
-	ldh a, [$ffde] ; $3a55
+	ldh a, [hSndEnvLength] ; $3a55
 	and a, a ; $3a57
 	ret z ; $3a58
 	ld e, $00 ; $3a59
 	ld c, a ; $3a5b
-	ldh a, [$ffdf] ; $3a5c
+	ldh a, [hSndEnvPos] ; $3a5c
 	ld b, $04 ; $3a5e
 Label_00_3a60:
 	add a, a ; $3a60
@@ -9967,15 +9968,15 @@ Label_00_3a65:
 	rl e ; $3a66
 	dec b ; $3a68
 	jr nz, Label_00_3a60 ; $3a69
-	ld a, [$d20a] ; $3a6b
+	ld a, [wSndChannelType] ; $3a6b
 	cp a, $02 ; $3a6e
 	jr z, Label_00_3a2f ; $3a70
-	ldh a, [$ffdd] ; $3a72
+	ldh a, [hSndEnvRate] ; $3a72
 	or a, e ; $3a74
 	ld e, a ; $3a75
 	ld d, $00 ; $3a76
 	push de ; $3a78
-	ldh a, [$ffe9] ; $3a79
+	ldh a, [hSndInstrument] ; $3a79
 	and a, $0f ; $3a7b
 	ld de, $3ed6 ; $3a7d
 	sla a ; $3a80
@@ -10047,7 +10048,7 @@ Label_00_3acf:
 	jp ApplyChannelEnvelope ; $3ade
 Label_00_3ae1:
 	ld c, $12 ; $3ae1
-	ld a, [$d20d] ; $3ae3
+	ld a, [wSndRegBase] ; $3ae3
 	add a, c ; $3ae6
 	ld c, a ; $3ae7
 	ldh a, [c] ; $3ae8
@@ -10062,23 +10063,23 @@ Label_00_3ae1:
 	ld a, [hl] ; $3af5
 	or a, b ; $3af6
 	jp ApplyChannelEnvelope ; $3af7
-Label_00_3afa:
+SndSilenceChannel:
 	call AbortIfChannelTriggered ; $3afa
 	ld a, $00 ; $3afd
 	jp ApplyChannelEnvelope ; $3aff
-Label_00_3b02:
+SndReleaseChannel:
 	call AbortIfChannelTriggered ; $3b02
-	ld a, [$d20b] ; $3b05
+	ld a, [wSndChannelBits] ; $3b05
 	cpl ; $3b08
 	ld b, a ; $3b09
-	ld a, [$d209] ; $3b0a
+	ld a, [wSndPanShadow] ; $3b0a
 	and a, b ; $3b0d
-	ld [$d209], a ; $3b0e
+	ld [wSndPanShadow], a ; $3b0e
 	ret ; $3b11
 AbortIfChannelTriggered:
-	ld a, [$d20b] ; $3b12
+	ld a, [wSndChannelBits] ; $3b12
 	ld b, a ; $3b15
-	ld a, [$d208] ; $3b16
+	ld a, [wSndActiveMask] ; $3b16
 	and a, b ; $3b19
 	ret z ; $3b1a
 	pop af ; $3b1b
@@ -10146,12 +10147,12 @@ SoundPitchTable:
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0xd0
 	db $00, $01, $02, $02, $03, $02, $02, $01, $00, $ff, $fe, $fe, $fd, $fe, $fe, $ff ; 0xe0
 LoadWavePatternIfChanged:
-	ld a, [$d217] ; $3d3d
+	ld a, [wSndLoadedWaveId] ; $3d3d
 	ld b, a ; $3d40
-	ldh a, [$ffda] ; $3d41
+	ldh a, [hSndWaveId] ; $3d41
 	cp a, b ; $3d43
 	ret z ; $3d44
-	ld [$d217], a ; $3d45
+	ld [wSndLoadedWaveId], a ; $3d45
 	ld e, a ; $3d48
 	swap e ; $3d49
 	xor a, a ; $3d4b
@@ -10160,7 +10161,7 @@ LoadWavePattern:
 	ld d, a ; $3d4e
 	ld hl, WavePatternTable ; $3d4f
 	push de ; $3d52
-	ldh a, [$ffe9] ; $3d53
+	ldh a, [hSndInstrument] ; $3d53
 	swap a ; $3d55
 	and a, $0f ; $3d57
 	add a, a ; $3d59
@@ -10182,7 +10183,7 @@ Label_00_3d68:
 	jr nz, Label_00_3d68 ; $3d6c
 	ret ; $3d6e
 GetChannelLoopSlot:
-	ld a, [$d20f] ; $3d6f
+	ld a, [wSndChannelIndex] ; $3d6f
 	add a, a ; $3d72
 	ld c, a ; $3d73
 	add a, a ; $3d74
@@ -10195,7 +10196,7 @@ GetChannelLoopSlot:
 	add a, a ; $3d7c
 	add a, b ; $3d7d
 	add a, c ; $3d7e
-	ld hl, $d1c0 ; $3d7f
+	ld hl, wSndLoopSlots ; $3d7f
 	add a, l ; $3d82
 	ld l, a ; $3d83
 	ld a, $00 ; $3d84
@@ -10205,7 +10206,7 @@ GetChannelLoopSlot:
 ScaleEchoVolume:
 	push de ; $3d89
 	push bc ; $3d8a
-	ldh a, [$ffe5] ; $3d8b
+	ldh a, [hSndEcho] ; $3d8b
 	and a, $0f ; $3d8d
 	inc a ; $3d8f
 	ld d, a ; $3d90
@@ -10242,10 +10243,10 @@ Label_00_3dbc:
 	ld d, a ; $3dc0
 	and a, $f0 ; $3dc1
 	ld e, a ; $3dc3
-	ldh a, [$ffe5] ; $3dc4
+	ldh a, [hSndEcho] ; $3dc4
 	and a, $0f ; $3dc6
 	or a, e ; $3dc8
-	ldh [$ffe5], a ; $3dc9
+	ldh [hSndEcho], a ; $3dc9
 	ld a, d ; $3dcb
 	and a, $0f ; $3dcc
 	or a, c ; $3dce

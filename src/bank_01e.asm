@@ -1192,7 +1192,7 @@ Func_1e_4a76:
 	wram_bank $04 ; $4a76
 	xor a, a ; $4a7c
 	call Func_1e_4aa8 ; $4a7d
-	ld hl, $df80 ; $4a80
+	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
 	wram_bank $04 ; $4a86
 	test_flag $1f, 7 ; $4a8c
@@ -1200,7 +1200,7 @@ Func_1e_4a76:
 	wram_bank $06 ; $4a90
 	ld a, $01 ; $4a96
 	call Func_1e_4aa8 ; $4a98
-	ld hl, $df80 ; $4a9b
+	ld hl, wCharSpriteSlot ; $4a9b
 	farcall DrawCharSprite ; $4a9e
 	wram_bank $04 ; $4aa1
 	ret ; $4aa7
@@ -4396,8 +4396,8 @@ Label_1e_730a:
 	call Func_1e_7499 ; $730a
 	call Func_1e_747c ; $730d
 	call Func_1e_73e3 ; $7310
-	ld [$df01], a ; $7313
-	ld a, [$df01] ; $7316
+	ld [wCharPosX + 1], a ; $7313
+	ld a, [wCharPosX + 1] ; $7316
 	set_flag $04, 3 ; $7319
 	farcall DrawTextWindowFrame ; $731c
 	clear_flag $04, 3 ; $731f
@@ -4447,18 +4447,18 @@ Func_1e_7382:
 	push af ; $7382
 	farcall ResetGlyphStream ; $7383
 	wram_bank $05 ; $7386
-	ld a, [$df03] ; $738c
+	ld a, [wCharPosDepth] ; $738c
 	sub a, $06 ; $738f
 	jr c, Label_1e_73ae ; $7391
 	ld b, a ; $7393
-	ld hl, $df05 ; $7394
+	ld hl, wCharPosDepth + 2 ; $7394
 	ld a, [hl] ; $7397
 	inc a ; $7398
 	cp a, b ; $7399
 	jr nc, Label_1e_73ae ; $739a
 	ld [hl], a ; $739c
 	sound $5e ; $739d
-	ld a, [$df01] ; $739f
+	ld a, [wCharPosX + 1] ; $739f
 	set_flag $04, 3 ; $73a2
 	farcall DrawTextWindowFrame ; $73a5
 	clear_flag $04, 3 ; $73a8
@@ -4470,14 +4470,14 @@ Func_1e_73b0:
 	push af ; $73b0
 	farcall ResetGlyphStream ; $73b1
 	wram_bank $05 ; $73b4
-	ld hl, $df05 ; $73ba
+	ld hl, wCharPosDepth + 2 ; $73ba
 	ld a, [hl] ; $73bd
 	dec a ; $73be
 	bit 7, a ; $73bf
 	jr nz, Label_1e_73d5 ; $73c1
 	ld [hl], a ; $73c3
 	sound $5e ; $73c4
-	ld a, [$df01] ; $73c6
+	ld a, [wCharPosX + 1] ; $73c6
 	set_flag $04, 3 ; $73c9
 	farcall DrawTextWindowFrame ; $73cc
 	clear_flag $04, 3 ; $73cf
@@ -4626,10 +4626,10 @@ Label_1e_748e:
 	cp a, $30 ; $7490
 	jr c, Label_1e_7486 ; $7492
 	ld a, b ; $7494
-	ld [$df03], a ; $7495
+	ld [wCharPosDepth], a ; $7495
 	ret ; $7498
 Func_1e_7499:
-	ld hl, $df40 ; $7499
+	ld hl, wCharVelX ; $7499
 	ld c, $25 ; $749c
 	xor a, a ; $749e
 Label_1e_749f:
@@ -4662,7 +4662,7 @@ Func_1e_74b6:
 	add hl, de ; $74c2
 	ld d, h ; $74c3
 	ld e, l ; $74c4
-	ld a, [$df05] ; $74c5
+	ld a, [wCharPosDepth + 2] ; $74c5
 	ld hl, $df70 ; $74c8
 	add a, l ; $74cb
 	ld l, a ; $74cc

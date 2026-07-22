@@ -3770,10 +3770,10 @@ PushTextArgFetchedString:
 	ldh a, [hWramBank] ; $7a68
 	push af ; $7a6a
 	wram_bank $07 ; $7a6b
-	ld de, $df00 ; $7a71
+	ld de, wTextArgFetchBuffer ; $7a71
 	wram_bank $05 ; $7a74
 	farcall FetchShortTextToBuffer ; $7a7a
-	ld hl, $df00 ; $7a7d
+	ld hl, wTextArgFetchBuffer ; $7a7d
 	farcall PushTextArgString ; $7a80
 	pop af ; $7a83
 	wram_bank ; $7a84

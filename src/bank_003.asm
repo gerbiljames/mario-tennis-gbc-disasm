@@ -48,7 +48,7 @@ InitSaveHeader:
 	ld hl, SaveSignature ; $4055
 	ld de, sSaveSignature ; $4058
 	call CopySaveSignature ; $405b
-	ld hl, $a061 ; $405e
+	ld hl, sSaveBlockDirectory + 1 ; $405e
 	ld [hl], $00 ; $4061
 	inc hl ; $4063
 	ld [hl], $00 ; $4064
@@ -58,7 +58,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $406a
 	inc hl ; $406c
 	ld [hl], $03 ; $406d
-	ld hl, $a071 ; $406f
+	ld hl, sSaveBlockDirectory + 17 ; $406f
 	ld [hl], $00 ; $4072
 	inc hl ; $4074
 	ld [hl], $00 ; $4075
@@ -68,7 +68,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $407b
 	inc hl ; $407d
 	ld [hl], $02 ; $407e
-	ld hl, $a081 ; $4080
+	ld hl, sSaveBlockDirectory + 33 ; $4080
 	ld [hl], $00 ; $4083
 	inc hl ; $4085
 	ld [hl], $00 ; $4086
@@ -78,7 +78,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $408c
 	inc hl ; $408e
 	ld [hl], $03 ; $408f
-	ld hl, $a091 ; $4091
+	ld hl, sSaveBlockDirectory + 49 ; $4091
 	ld [hl], $00 ; $4094
 	inc hl ; $4096
 	ld [hl], $00 ; $4097
@@ -88,7 +88,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $409d
 	inc hl ; $409f
 	ld [hl], $02 ; $40a0
-	ld hl, $a0a1 ; $40a2
+	ld hl, sSaveBlockDirectory + 65 ; $40a2
 	ld [hl], $00 ; $40a5
 	inc hl ; $40a7
 	ld [hl], $00 ; $40a8
@@ -98,7 +98,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $40ae
 	inc hl ; $40b0
 	ld [hl], $03 ; $40b1
-	ld hl, $a0b1 ; $40b3
+	ld hl, sSaveBlockDirectory + 81 ; $40b3
 	ld [hl], $00 ; $40b6
 	inc hl ; $40b8
 	ld [hl], $00 ; $40b9
@@ -108,7 +108,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $40bf
 	inc hl ; $40c1
 	ld [hl], $02 ; $40c2
-	ld hl, $a0c1 ; $40c4
+	ld hl, sSaveBlockDirectory + 97 ; $40c4
 	ld [hl], $00 ; $40c7
 	inc hl ; $40c9
 	ld [hl], $00 ; $40ca
@@ -118,7 +118,7 @@ InitSaveHeader:
 	ld [hl], $30 ; $40d0
 	inc hl ; $40d2
 	ld [hl], $00 ; $40d3
-	ld hl, $a0d1 ; $40d5
+	ld hl, sSaveBlockDirectory + 113 ; $40d5
 	ld [hl], $00 ; $40d8
 	inc hl ; $40da
 	ld [hl], $30 ; $40db
@@ -128,7 +128,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $40e1
 	inc hl ; $40e3
 	ld [hl], $00 ; $40e4
-	ld hl, $a0e1 ; $40e6
+	ld hl, sSaveBlockDirectory + 129 ; $40e6
 	ld [hl], $00 ; $40e9
 	inc hl ; $40eb
 	ld [hl], $50 ; $40ec
@@ -138,7 +138,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $40f2
 	inc hl ; $40f4
 	ld [hl], $00 ; $40f5
-	ld hl, $a0f1 ; $40f7
+	ld hl, sSaveBlockDirectory + 145 ; $40f7
 	ld [hl], $00 ; $40fa
 	inc hl ; $40fc
 	ld [hl], $70 ; $40fd
@@ -148,7 +148,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4103
 	inc hl ; $4105
 	ld [hl], $00 ; $4106
-	ld hl, $a101 ; $4108
+	ld hl, sSaveBlockDirectory + 161 ; $4108
 	ld [hl], $00 ; $410b
 	inc hl ; $410d
 	ld [hl], $90 ; $410e
@@ -158,7 +158,7 @@ InitSaveHeader:
 	ld [hl], $10 ; $4114
 	inc hl ; $4116
 	ld [hl], $00 ; $4117
-	ld hl, $a111 ; $4119
+	ld hl, sSaveBlockDirectory + 177 ; $4119
 	ld [hl], $00 ; $411c
 	inc hl ; $411e
 	ld [hl], $00 ; $411f
@@ -168,7 +168,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4125
 	inc hl ; $4127
 	ld [hl], $02 ; $4128
-	ld hl, $a121 ; $412a
+	ld hl, sSaveBlockDirectory + 193 ; $412a
 	ld [hl], $00 ; $412d
 	inc hl ; $412f
 	ld [hl], $00 ; $4130
@@ -178,7 +178,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4136
 	inc hl ; $4138
 	ld [hl], $00 ; $4139
-	ld hl, $a131 ; $413b
+	ld hl, sSaveBlockDirectory + 209 ; $413b
 	ld [hl], $00 ; $413e
 	inc hl ; $4140
 	ld [hl], $20 ; $4141
@@ -188,7 +188,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4147
 	inc hl ; $4149
 	ld [hl], $00 ; $414a
-	ld hl, $a141 ; $414c
+	ld hl, sSaveBlockDirectory + 225 ; $414c
 	ld [hl], $00 ; $414f
 	inc hl ; $4151
 	ld [hl], $40 ; $4152
@@ -198,7 +198,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4158
 	inc hl ; $415a
 	ld [hl], $00 ; $415b
-	ld hl, $a151 ; $415d
+	ld hl, sSaveBlockDirectory + 241 ; $415d
 	ld [hl], $00 ; $4160
 	inc hl ; $4162
 	ld [hl], $60 ; $4163
@@ -208,7 +208,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4169
 	inc hl ; $416b
 	ld [hl], $00 ; $416c
-	ld hl, $a161 ; $416e
+	ld hl, sSaveBlockDirectory + 257 ; $416e
 	ld [hl], $00 ; $4171
 	inc hl ; $4173
 	ld [hl], $80 ; $4174
@@ -218,7 +218,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $417a
 	inc hl ; $417c
 	ld [hl], $00 ; $417d
-	ld hl, $a171 ; $417f
+	ld hl, sSaveBlockDirectory + 273 ; $417f
 	ld [hl], $00 ; $4182
 	inc hl ; $4184
 	ld [hl], $00 ; $4185
@@ -228,7 +228,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $418b
 	inc hl ; $418d
 	ld [hl], $00 ; $418e
-	ld hl, $a181 ; $4190
+	ld hl, sSaveBlockDirectory + 289 ; $4190
 	ld [hl], $00 ; $4193
 	inc hl ; $4195
 	ld [hl], $80 ; $4196
@@ -238,7 +238,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $419c
 	inc hl ; $419e
 	ld [hl], $00 ; $419f
-	ld hl, $a191 ; $41a1
+	ld hl, sSaveBlockDirectory + 305 ; $41a1
 	ld [hl], $00 ; $41a4
 	inc hl ; $41a6
 	ld [hl], $00 ; $41a7
@@ -248,7 +248,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $41ad
 	inc hl ; $41af
 	ld [hl], $00 ; $41b0
-	ld hl, $a1a1 ; $41b2
+	ld hl, sSaveBlockDirectory + 321 ; $41b2
 	ld [hl], $00 ; $41b5
 	inc hl ; $41b7
 	ld [hl], $80 ; $41b8
@@ -258,7 +258,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $41be
 	inc hl ; $41c0
 	ld [hl], $00 ; $41c1
-	ld hl, $a1b1 ; $41c3
+	ld hl, sSaveBlockDirectory + 337 ; $41c3
 	ld [hl], $00 ; $41c6
 	inc hl ; $41c8
 	ld [hl], $00 ; $41c9
@@ -268,7 +268,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $41cf
 	inc hl ; $41d1
 	ld [hl], $00 ; $41d2
-	ld hl, $a1c1 ; $41d4
+	ld hl, sSaveBlockDirectory + 353 ; $41d4
 	ld [hl], $00 ; $41d7
 	inc hl ; $41d9
 	ld [hl], $80 ; $41da
@@ -278,7 +278,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $41e0
 	inc hl ; $41e2
 	ld [hl], $00 ; $41e3
-	ld hl, $a1d1 ; $41e5
+	ld hl, sSaveBlockDirectory + 369 ; $41e5
 	ld [hl], $00 ; $41e8
 	inc hl ; $41ea
 	ld [hl], $00 ; $41eb
@@ -288,7 +288,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $41f1
 	inc hl ; $41f3
 	ld [hl], $00 ; $41f4
-	ld hl, $a1e1 ; $41f6
+	ld hl, sSaveBlockDirectory + 385 ; $41f6
 	ld [hl], $00 ; $41f9
 	inc hl ; $41fb
 	ld [hl], $80 ; $41fc
@@ -298,7 +298,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4202
 	inc hl ; $4204
 	ld [hl], $00 ; $4205
-	ld hl, $a1f1 ; $4207
+	ld hl, sSaveBlockDirectory + 401 ; $4207
 	ld [hl], $00 ; $420a
 	inc hl ; $420c
 	ld [hl], $00 ; $420d
@@ -308,7 +308,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4213
 	inc hl ; $4215
 	ld [hl], $00 ; $4216
-	ld hl, $a201 ; $4218
+	ld hl, sSaveBlockDirectory + 417 ; $4218
 	ld [hl], $00 ; $421b
 	inc hl ; $421d
 	ld [hl], $80 ; $421e
@@ -318,7 +318,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4224
 	inc hl ; $4226
 	ld [hl], $00 ; $4227
-	ld hl, $a211 ; $4229
+	ld hl, sSaveBlockDirectory + 433 ; $4229
 	ld [hl], $01 ; $422c
 	inc hl ; $422e
 	ld [hl], $00 ; $422f
@@ -328,7 +328,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4235
 	inc hl ; $4237
 	ld [hl], $03 ; $4238
-	ld hl, $a221 ; $423a
+	ld hl, sSaveBlockDirectory + 449 ; $423a
 	ld [hl], $01 ; $423d
 	inc hl ; $423f
 	ld [hl], $00 ; $4240
@@ -338,7 +338,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4246
 	inc hl ; $4248
 	ld [hl], $02 ; $4249
-	ld hl, $a231 ; $424b
+	ld hl, sSaveBlockDirectory + 465 ; $424b
 	ld [hl], $01 ; $424e
 	inc hl ; $4250
 	ld [hl], $00 ; $4251
@@ -348,7 +348,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4257
 	inc hl ; $4259
 	ld [hl], $03 ; $425a
-	ld hl, $a241 ; $425c
+	ld hl, sSaveBlockDirectory + 481 ; $425c
 	ld [hl], $01 ; $425f
 	inc hl ; $4261
 	ld [hl], $00 ; $4262
@@ -358,7 +358,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4268
 	inc hl ; $426a
 	ld [hl], $02 ; $426b
-	ld hl, $a251 ; $426d
+	ld hl, sSaveBlockDirectory + 497 ; $426d
 	ld [hl], $01 ; $4270
 	inc hl ; $4272
 	ld [hl], $00 ; $4273
@@ -368,7 +368,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4279
 	inc hl ; $427b
 	ld [hl], $03 ; $427c
-	ld hl, $a261 ; $427e
+	ld hl, sSaveBlockDirectory + 513 ; $427e
 	ld [hl], $01 ; $4281
 	inc hl ; $4283
 	ld [hl], $00 ; $4284
@@ -378,7 +378,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $428a
 	inc hl ; $428c
 	ld [hl], $02 ; $428d
-	ld hl, $a271 ; $428f
+	ld hl, sSaveBlockDirectory + 529 ; $428f
 	ld [hl], $01 ; $4292
 	inc hl ; $4294
 	ld [hl], $00 ; $4295
@@ -388,7 +388,7 @@ InitSaveHeader:
 	ld [hl], $30 ; $429b
 	inc hl ; $429d
 	ld [hl], $00 ; $429e
-	ld hl, $a281 ; $42a0
+	ld hl, sSaveBlockDirectory + 545 ; $42a0
 	ld [hl], $01 ; $42a3
 	inc hl ; $42a5
 	ld [hl], $30 ; $42a6
@@ -398,7 +398,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $42ac
 	inc hl ; $42ae
 	ld [hl], $00 ; $42af
-	ld hl, $a291 ; $42b1
+	ld hl, sSaveBlockDirectory + 561 ; $42b1
 	ld [hl], $01 ; $42b4
 	inc hl ; $42b6
 	ld [hl], $50 ; $42b7
@@ -408,7 +408,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $42bd
 	inc hl ; $42bf
 	ld [hl], $00 ; $42c0
-	ld hl, $a2a1 ; $42c2
+	ld hl, sSaveBlockDirectory + 577 ; $42c2
 	ld [hl], $01 ; $42c5
 	inc hl ; $42c7
 	ld [hl], $70 ; $42c8
@@ -418,7 +418,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $42ce
 	inc hl ; $42d0
 	ld [hl], $00 ; $42d1
-	ld hl, $a2b1 ; $42d3
+	ld hl, sSaveBlockDirectory + 593 ; $42d3
 	ld [hl], $01 ; $42d6
 	inc hl ; $42d8
 	ld [hl], $90 ; $42d9
@@ -428,7 +428,7 @@ InitSaveHeader:
 	ld [hl], $10 ; $42df
 	inc hl ; $42e1
 	ld [hl], $00 ; $42e2
-	ld hl, $a2c1 ; $42e4
+	ld hl, sSaveBlockDirectory + 609 ; $42e4
 	ld [hl], $01 ; $42e7
 	inc hl ; $42e9
 	ld [hl], $00 ; $42ea
@@ -438,7 +438,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $42f0
 	inc hl ; $42f2
 	ld [hl], $00 ; $42f3
-	ld hl, $a2d1 ; $42f5
+	ld hl, sSaveBlockDirectory + 625 ; $42f5
 	ld [hl], $01 ; $42f8
 	inc hl ; $42fa
 	ld [hl], $80 ; $42fb
@@ -448,7 +448,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4301
 	inc hl ; $4303
 	ld [hl], $00 ; $4304
-	ld hl, $a2e1 ; $4306
+	ld hl, sSaveBlockDirectory + 641 ; $4306
 	ld [hl], $01 ; $4309
 	inc hl ; $430b
 	ld [hl], $00 ; $430c
@@ -458,7 +458,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4312
 	inc hl ; $4314
 	ld [hl], $00 ; $4315
-	ld hl, $a2f1 ; $4317
+	ld hl, sSaveBlockDirectory + 657 ; $4317
 	ld [hl], $01 ; $431a
 	inc hl ; $431c
 	ld [hl], $80 ; $431d
@@ -468,7 +468,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4323
 	inc hl ; $4325
 	ld [hl], $00 ; $4326
-	ld hl, $a301 ; $4328
+	ld hl, sSaveBlockDirectory + 673 ; $4328
 	ld [hl], $01 ; $432b
 	inc hl ; $432d
 	ld [hl], $00 ; $432e
@@ -478,7 +478,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4334
 	inc hl ; $4336
 	ld [hl], $00 ; $4337
-	ld hl, $a311 ; $4339
+	ld hl, sSaveBlockDirectory + 689 ; $4339
 	ld [hl], $01 ; $433c
 	inc hl ; $433e
 	ld [hl], $80 ; $433f
@@ -488,7 +488,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4345
 	inc hl ; $4347
 	ld [hl], $00 ; $4348
-	ld hl, $a321 ; $434a
+	ld hl, sSaveBlockDirectory + 705 ; $434a
 	ld [hl], $01 ; $434d
 	inc hl ; $434f
 	ld [hl], $00 ; $4350
@@ -498,7 +498,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4356
 	inc hl ; $4358
 	ld [hl], $00 ; $4359
-	ld hl, $a331 ; $435b
+	ld hl, sSaveBlockDirectory + 721 ; $435b
 	ld [hl], $01 ; $435e
 	inc hl ; $4360
 	ld [hl], $80 ; $4361
@@ -508,7 +508,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4367
 	inc hl ; $4369
 	ld [hl], $00 ; $436a
-	ld hl, $a341 ; $436c
+	ld hl, sSaveBlockDirectory + 737 ; $436c
 	ld [hl], $01 ; $436f
 	inc hl ; $4371
 	ld [hl], $00 ; $4372
@@ -518,7 +518,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4378
 	inc hl ; $437a
 	ld [hl], $00 ; $437b
-	ld hl, $a351 ; $437d
+	ld hl, sSaveBlockDirectory + 753 ; $437d
 	ld [hl], $01 ; $4380
 	inc hl ; $4382
 	ld [hl], $80 ; $4383
@@ -528,7 +528,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4389
 	inc hl ; $438b
 	ld [hl], $00 ; $438c
-	ld hl, $a361 ; $438e
+	ld hl, sSaveBlockDirectory + 769 ; $438e
 	ld [hl], $01 ; $4391
 	inc hl ; $4393
 	ld [hl], $00 ; $4394
@@ -538,7 +538,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $439a
 	inc hl ; $439c
 	ld [hl], $00 ; $439d
-	ld hl, $a371 ; $439f
+	ld hl, sSaveBlockDirectory + 785 ; $439f
 	ld [hl], $01 ; $43a2
 	inc hl ; $43a4
 	ld [hl], $80 ; $43a5
@@ -548,7 +548,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $43ab
 	inc hl ; $43ad
 	ld [hl], $00 ; $43ae
-	ld hl, $a381 ; $43b0
+	ld hl, sSaveBlockDirectory + 801 ; $43b0
 	ld [hl], $01 ; $43b3
 	inc hl ; $43b5
 	ld [hl], $00 ; $43b6
@@ -558,7 +558,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $43bc
 	inc hl ; $43be
 	ld [hl], $00 ; $43bf
-	ld hl, $a391 ; $43c1
+	ld hl, sSaveBlockDirectory + 817 ; $43c1
 	ld [hl], $01 ; $43c4
 	inc hl ; $43c6
 	ld [hl], $80 ; $43c7
@@ -568,7 +568,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $43cd
 	inc hl ; $43cf
 	ld [hl], $00 ; $43d0
-	ld hl, $a3a1 ; $43d2
+	ld hl, sSaveBlockDirectory + 833 ; $43d2
 	ld [hl], $01 ; $43d5
 	inc hl ; $43d7
 	ld [hl], $00 ; $43d8
@@ -578,7 +578,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $43de
 	inc hl ; $43e0
 	ld [hl], $00 ; $43e1
-	ld hl, $a3b1 ; $43e3
+	ld hl, sSaveBlockDirectory + 849 ; $43e3
 	ld [hl], $01 ; $43e6
 	inc hl ; $43e8
 	ld [hl], $80 ; $43e9
@@ -588,7 +588,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $43ef
 	inc hl ; $43f1
 	ld [hl], $00 ; $43f2
-	ld hl, $a3c1 ; $43f4
+	ld hl, sSaveBlockDirectory + 865 ; $43f4
 	ld [hl], $02 ; $43f7
 	inc hl ; $43f9
 	ld [hl], $00 ; $43fa
@@ -598,7 +598,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4400
 	inc hl ; $4402
 	ld [hl], $03 ; $4403
-	ld hl, $a3d1 ; $4405
+	ld hl, sSaveBlockDirectory + 881 ; $4405
 	ld [hl], $02 ; $4408
 	inc hl ; $440a
 	ld [hl], $00 ; $440b
@@ -608,7 +608,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4411
 	inc hl ; $4413
 	ld [hl], $03 ; $4414
-	ld hl, $a3e1 ; $4416
+	ld hl, sSaveBlockDirectory + 897 ; $4416
 	ld [hl], $02 ; $4419
 	inc hl ; $441b
 	ld [hl], $00 ; $441c
@@ -618,7 +618,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4422
 	inc hl ; $4424
 	ld [hl], $00 ; $4425
-	ld hl, $a3f1 ; $4427
+	ld hl, sSaveBlockDirectory + 913 ; $4427
 	ld [hl], $02 ; $442a
 	inc hl ; $442c
 	ld [hl], $20 ; $442d
@@ -628,7 +628,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4433
 	inc hl ; $4435
 	ld [hl], $00 ; $4436
-	ld hl, $a401 ; $4438
+	ld hl, sSaveBlockDirectory + 929 ; $4438
 	ld [hl], $02 ; $443b
 	inc hl ; $443d
 	ld [hl], $40 ; $443e
@@ -638,7 +638,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4444
 	inc hl ; $4446
 	ld [hl], $00 ; $4447
-	ld hl, $a411 ; $4449
+	ld hl, sSaveBlockDirectory + 945 ; $4449
 	ld [hl], $02 ; $444c
 	inc hl ; $444e
 	ld [hl], $60 ; $444f
@@ -648,7 +648,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4455
 	inc hl ; $4457
 	ld [hl], $00 ; $4458
-	ld hl, $a421 ; $445a
+	ld hl, sSaveBlockDirectory + 961 ; $445a
 	ld [hl], $02 ; $445d
 	inc hl ; $445f
 	ld [hl], $80 ; $4460
@@ -658,7 +658,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4466
 	inc hl ; $4468
 	ld [hl], $00 ; $4469
-	ld hl, $a431 ; $446b
+	ld hl, sSaveBlockDirectory + 977 ; $446b
 	ld [hl], $02 ; $446e
 	inc hl ; $4470
 	ld [hl], $a0 ; $4471
@@ -668,7 +668,7 @@ InitSaveHeader:
 	ld [hl], $20 ; $4477
 	inc hl ; $4479
 	ld [hl], $00 ; $447a
-	ld hl, $a441 ; $447c
+	ld hl, sSaveBlockDirectory + 993 ; $447c
 	ld [hl], $02 ; $447f
 	inc hl ; $4481
 	ld [hl], $c0 ; $4482
@@ -678,7 +678,7 @@ InitSaveHeader:
 	ld [hl], $60 ; $4488
 	inc hl ; $448a
 	ld [hl], $00 ; $448b
-	ld hl, $a451 ; $448d
+	ld hl, sSaveBlockDirectory + 1009 ; $448d
 	ld [hl], $02 ; $4490
 	inc hl ; $4492
 	ld [hl], $20 ; $4493
@@ -688,7 +688,7 @@ InitSaveHeader:
 	ld [hl], $a0 ; $4499
 	inc hl ; $449b
 	ld [hl], $0d ; $449c
-	ld hl, $a461 ; $449e
+	ld hl, sSaveBlockDirectory + 1025 ; $449e
 	ld [hl], $02 ; $44a1
 	inc hl ; $44a3
 	ld [hl], $c0 ; $44a4
@@ -698,7 +698,7 @@ InitSaveHeader:
 	ld [hl], $c0 ; $44aa
 	inc hl ; $44ac
 	ld [hl], $06 ; $44ad
-	ld hl, $a471 ; $44af
+	ld hl, sSaveBlockDirectory + 1041 ; $44af
 	ld [hl], $02 ; $44b2
 	inc hl ; $44b4
 	ld [hl], $80 ; $44b5
@@ -708,7 +708,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $44bb
 	inc hl ; $44bd
 	ld [hl], $00 ; $44be
-	ld hl, $a481 ; $44c0
+	ld hl, sSaveBlockDirectory + 1057 ; $44c0
 	ld [hl], $02 ; $44c3
 	inc hl ; $44c5
 	ld [hl], $00 ; $44c6
@@ -718,7 +718,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $44cc
 	inc hl ; $44ce
 	ld [hl], $00 ; $44cf
-	ld hl, $a491 ; $44d1
+	ld hl, sSaveBlockDirectory + 1073 ; $44d1
 	ld [hl], $02 ; $44d4
 	inc hl ; $44d6
 	ld [hl], $80 ; $44d7
@@ -728,7 +728,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $44dd
 	inc hl ; $44df
 	ld [hl], $00 ; $44e0
-	ld hl, $a4a1 ; $44e2
+	ld hl, sSaveBlockDirectory + 1089 ; $44e2
 	ld [hl], $02 ; $44e5
 	inc hl ; $44e7
 	ld [hl], $00 ; $44e8
@@ -738,7 +738,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $44ee
 	inc hl ; $44f0
 	ld [hl], $00 ; $44f1
-	ld hl, $a4b1 ; $44f3
+	ld hl, sSaveBlockDirectory + 1105 ; $44f3
 	ld [hl], $02 ; $44f6
 	inc hl ; $44f8
 	ld [hl], $80 ; $44f9
@@ -748,7 +748,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $44ff
 	inc hl ; $4501
 	ld [hl], $00 ; $4502
-	ld hl, $a4c1 ; $4504
+	ld hl, sSaveBlockDirectory + 1121 ; $4504
 	ld [hl], $02 ; $4507
 	inc hl ; $4509
 	ld [hl], $00 ; $450a
@@ -758,7 +758,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4510
 	inc hl ; $4512
 	ld [hl], $00 ; $4513
-	ld hl, $a4d1 ; $4515
+	ld hl, sSaveBlockDirectory + 1137 ; $4515
 	ld [hl], $02 ; $4518
 	inc hl ; $451a
 	ld [hl], $80 ; $451b
@@ -768,7 +768,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4521
 	inc hl ; $4523
 	ld [hl], $00 ; $4524
-	ld hl, $a4e1 ; $4526
+	ld hl, sSaveBlockDirectory + 1153 ; $4526
 	ld [hl], $02 ; $4529
 	inc hl ; $452b
 	ld [hl], $00 ; $452c
@@ -778,7 +778,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4532
 	inc hl ; $4534
 	ld [hl], $00 ; $4535
-	ld hl, $a4f1 ; $4537
+	ld hl, sSaveBlockDirectory + 1169 ; $4537
 	ld [hl], $02 ; $453a
 	inc hl ; $453c
 	ld [hl], $80 ; $453d
@@ -788,7 +788,7 @@ InitSaveHeader:
 	ld [hl], $80 ; $4543
 	inc hl ; $4545
 	ld [hl], $00 ; $4546
-	ld hl, $a501 ; $4548
+	ld hl, sSaveBlockDirectory + 1185 ; $4548
 	ld [hl], $03 ; $454b
 	inc hl ; $454d
 	ld [hl], $00 ; $454e
@@ -798,7 +798,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4554
 	inc hl ; $4556
 	ld [hl], $01 ; $4557
-	ld hl, $a511 ; $4559
+	ld hl, sSaveBlockDirectory + 1201 ; $4559
 	ld [hl], $03 ; $455c
 	inc hl ; $455e
 	ld [hl], $00 ; $455f
@@ -808,7 +808,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4565
 	inc hl ; $4567
 	ld [hl], $01 ; $4568
-	ld hl, $a521 ; $456a
+	ld hl, sSaveBlockDirectory + 1217 ; $456a
 	ld [hl], $03 ; $456d
 	inc hl ; $456f
 	ld [hl], $00 ; $4570
@@ -818,7 +818,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4576
 	inc hl ; $4578
 	ld [hl], $01 ; $4579
-	ld hl, $a531 ; $457b
+	ld hl, sSaveBlockDirectory + 1233 ; $457b
 	ld [hl], $03 ; $457e
 	inc hl ; $4580
 	ld [hl], $00 ; $4581
@@ -828,7 +828,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4587
 	inc hl ; $4589
 	ld [hl], $01 ; $458a
-	ld hl, $a541 ; $458c
+	ld hl, sSaveBlockDirectory + 1249 ; $458c
 	ld [hl], $03 ; $458f
 	inc hl ; $4591
 	ld [hl], $00 ; $4592
@@ -838,7 +838,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4598
 	inc hl ; $459a
 	ld [hl], $01 ; $459b
-	ld hl, $a551 ; $459d
+	ld hl, sSaveBlockDirectory + 1265 ; $459d
 	ld [hl], $03 ; $45a0
 	inc hl ; $45a2
 	ld [hl], $00 ; $45a3
@@ -848,7 +848,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $45a9
 	inc hl ; $45ab
 	ld [hl], $02 ; $45ac
-	ld hl, $a561 ; $45ae
+	ld hl, sSaveBlockDirectory + 1281 ; $45ae
 	ld [hl], $03 ; $45b1
 	inc hl ; $45b3
 	ld [hl], $00 ; $45b4
@@ -858,7 +858,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $45ba
 	inc hl ; $45bc
 	ld [hl], $01 ; $45bd
-	ld hl, $a571 ; $45bf
+	ld hl, sSaveBlockDirectory + 1297 ; $45bf
 	ld [hl], $03 ; $45c2
 	inc hl ; $45c4
 	ld [hl], $00 ; $45c5
@@ -868,7 +868,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $45cb
 	inc hl ; $45cd
 	ld [hl], $01 ; $45ce
-	ld hl, $a581 ; $45d0
+	ld hl, sSaveBlockDirectory + 1313 ; $45d0
 	ld [hl], $03 ; $45d3
 	inc hl ; $45d5
 	ld [hl], $00 ; $45d6
@@ -878,7 +878,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $45dc
 	inc hl ; $45de
 	ld [hl], $01 ; $45df
-	ld hl, $a591 ; $45e1
+	ld hl, sSaveBlockDirectory + 1329 ; $45e1
 	ld [hl], $03 ; $45e4
 	inc hl ; $45e6
 	ld [hl], $00 ; $45e7
@@ -888,7 +888,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $45ed
 	inc hl ; $45ef
 	ld [hl], $01 ; $45f0
-	ld hl, $a5a1 ; $45f2
+	ld hl, sSaveBlockDirectory + 1345 ; $45f2
 	ld [hl], $03 ; $45f5
 	inc hl ; $45f7
 	ld [hl], $00 ; $45f8
@@ -898,7 +898,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $45fe
 	inc hl ; $4600
 	ld [hl], $01 ; $4601
-	ld hl, $a5b1 ; $4603
+	ld hl, sSaveBlockDirectory + 1361 ; $4603
 	ld [hl], $03 ; $4606
 	inc hl ; $4608
 	ld [hl], $00 ; $4609
@@ -908,7 +908,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $460f
 	inc hl ; $4611
 	ld [hl], $02 ; $4612
-	ld hl, $a5c1 ; $4614
+	ld hl, sSaveBlockDirectory + 1377 ; $4614
 	ld [hl], $03 ; $4617
 	inc hl ; $4619
 	ld [hl], $00 ; $461a
@@ -918,7 +918,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4620
 	inc hl ; $4622
 	ld [hl], $02 ; $4623
-	ld hl, $a5d1 ; $4625
+	ld hl, sSaveBlockDirectory + 1393 ; $4625
 	ld [hl], $03 ; $4628
 	inc hl ; $462a
 	ld [hl], $00 ; $462b
@@ -928,7 +928,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4631
 	inc hl ; $4633
 	ld [hl], $05 ; $4634
-	ld hl, $a5e1 ; $4636
+	ld hl, sSaveBlockDirectory + 1409 ; $4636
 	ld [hl], $04 ; $4639
 	inc hl ; $463b
 	ld [hl], $00 ; $463c
@@ -938,7 +938,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4642
 	inc hl ; $4644
 	ld [hl], $01 ; $4645
-	ld hl, $a5f1 ; $4647
+	ld hl, sSaveBlockDirectory + 1425 ; $4647
 	ld [hl], $04 ; $464a
 	inc hl ; $464c
 	ld [hl], $00 ; $464d
@@ -948,7 +948,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4653
 	inc hl ; $4655
 	ld [hl], $01 ; $4656
-	ld hl, $a601 ; $4658
+	ld hl, sSaveBlockDirectory + 1441 ; $4658
 	ld [hl], $04 ; $465b
 	inc hl ; $465d
 	ld [hl], $00 ; $465e
@@ -958,7 +958,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4664
 	inc hl ; $4666
 	ld [hl], $01 ; $4667
-	ld hl, $a611 ; $4669
+	ld hl, sSaveBlockDirectory + 1457 ; $4669
 	ld [hl], $04 ; $466c
 	inc hl ; $466e
 	ld [hl], $00 ; $466f
@@ -968,7 +968,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4675
 	inc hl ; $4677
 	ld [hl], $01 ; $4678
-	ld hl, $a621 ; $467a
+	ld hl, sSaveBlockDirectory + 1473 ; $467a
 	ld [hl], $04 ; $467d
 	inc hl ; $467f
 	ld [hl], $00 ; $4680
@@ -978,7 +978,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4686
 	inc hl ; $4688
 	ld [hl], $01 ; $4689
-	ld hl, $a631 ; $468b
+	ld hl, sSaveBlockDirectory + 1489 ; $468b
 	ld [hl], $04 ; $468e
 	inc hl ; $4690
 	ld [hl], $00 ; $4691
@@ -988,7 +988,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4697
 	inc hl ; $4699
 	ld [hl], $02 ; $469a
-	ld hl, $a641 ; $469c
+	ld hl, sSaveBlockDirectory + 1505 ; $469c
 	ld [hl], $04 ; $469f
 	inc hl ; $46a1
 	ld [hl], $00 ; $46a2
@@ -998,7 +998,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $46a8
 	inc hl ; $46aa
 	ld [hl], $05 ; $46ab
-	ld hl, $a651 ; $46ad
+	ld hl, sSaveBlockDirectory + 1521 ; $46ad
 	ld [hl], $04 ; $46b0
 	inc hl ; $46b2
 	ld [hl], $00 ; $46b3
@@ -1008,7 +1008,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $46b9
 	inc hl ; $46bb
 	ld [hl], $05 ; $46bc
-	ld hl, $a661 ; $46be
+	ld hl, sSaveBlockDirectory + 1537 ; $46be
 	ld [hl], $04 ; $46c1
 	inc hl ; $46c3
 	ld [hl], $00 ; $46c4
@@ -1018,7 +1018,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $46ca
 	inc hl ; $46cc
 	ld [hl], $05 ; $46cd
-	ld hl, $a671 ; $46cf
+	ld hl, sSaveBlockDirectory + 1553 ; $46cf
 	ld [hl], $04 ; $46d2
 	inc hl ; $46d4
 	ld [hl], $00 ; $46d5
@@ -1028,7 +1028,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $46db
 	inc hl ; $46dd
 	ld [hl], $05 ; $46de
-	ld hl, $a681 ; $46e0
+	ld hl, sSaveBlockDirectory + 1569 ; $46e0
 	ld [hl], $05 ; $46e3
 	inc hl ; $46e5
 	ld [hl], $00 ; $46e6
@@ -1038,7 +1038,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $46ec
 	inc hl ; $46ee
 	ld [hl], $15 ; $46ef
-	ld hl, $a691 ; $46f1
+	ld hl, sSaveBlockDirectory + 1585 ; $46f1
 	ld [hl], $05 ; $46f4
 	inc hl ; $46f6
 	ld [hl], $00 ; $46f7
@@ -1048,7 +1048,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $46fd
 	inc hl ; $46ff
 	ld [hl], $02 ; $4700
-	ld hl, $a6a1 ; $4702
+	ld hl, sSaveBlockDirectory + 1601 ; $4702
 	ld [hl], $05 ; $4705
 	inc hl ; $4707
 	ld [hl], $00 ; $4708
@@ -1058,7 +1058,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $470e
 	inc hl ; $4710
 	ld [hl], $02 ; $4711
-	ld hl, $a6b1 ; $4713
+	ld hl, sSaveBlockDirectory + 1617 ; $4713
 	ld [hl], $05 ; $4716
 	inc hl ; $4718
 	ld [hl], $00 ; $4719
@@ -1068,7 +1068,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $471f
 	inc hl ; $4721
 	ld [hl], $02 ; $4722
-	ld hl, $a6c1 ; $4724
+	ld hl, sSaveBlockDirectory + 1633 ; $4724
 	ld [hl], $05 ; $4727
 	inc hl ; $4729
 	ld [hl], $00 ; $472a
@@ -1078,7 +1078,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4730
 	inc hl ; $4732
 	ld [hl], $02 ; $4733
-	ld hl, $a6d1 ; $4735
+	ld hl, sSaveBlockDirectory + 1649 ; $4735
 	ld [hl], $05 ; $4738
 	inc hl ; $473a
 	ld [hl], $00 ; $473b
@@ -1088,7 +1088,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4741
 	inc hl ; $4743
 	ld [hl], $02 ; $4744
-	ld hl, $a6e1 ; $4746
+	ld hl, sSaveBlockDirectory + 1665 ; $4746
 	ld [hl], $06 ; $4749
 	inc hl ; $474b
 	ld [hl], $00 ; $474c
@@ -1098,7 +1098,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4752
 	inc hl ; $4754
 	ld [hl], $1e ; $4755
-	ld hl, $a6f1 ; $4757
+	ld hl, sSaveBlockDirectory + 1681 ; $4757
 	ld [hl], $07 ; $475a
 	inc hl ; $475c
 	ld [hl], $00 ; $475d
@@ -1108,7 +1108,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4763
 	inc hl ; $4765
 	ld [hl], $1e ; $4766
-	ld hl, $a701 ; $4768
+	ld hl, sSaveBlockDirectory + 1697 ; $4768
 	ld [hl], $08 ; $476b
 	inc hl ; $476d
 	ld [hl], $00 ; $476e
@@ -1118,7 +1118,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4774
 	inc hl ; $4776
 	ld [hl], $1e ; $4777
-	ld hl, $a711 ; $4779
+	ld hl, sSaveBlockDirectory + 1713 ; $4779
 	ld [hl], $09 ; $477c
 	inc hl ; $477e
 	ld [hl], $00 ; $477f
@@ -1128,7 +1128,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4785
 	inc hl ; $4787
 	ld [hl], $1e ; $4788
-	ld hl, $a721 ; $478a
+	ld hl, sSaveBlockDirectory + 1729 ; $478a
 	ld [hl], $0a ; $478d
 	inc hl ; $478f
 	ld [hl], $00 ; $4790
@@ -1138,7 +1138,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $4796
 	inc hl ; $4798
 	ld [hl], $1e ; $4799
-	ld hl, $a731 ; $479b
+	ld hl, sSaveBlockDirectory + 1745 ; $479b
 	ld [hl], $0b ; $479e
 	inc hl ; $47a0
 	ld [hl], $00 ; $47a1
@@ -1148,7 +1148,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $47a7
 	inc hl ; $47a9
 	ld [hl], $1e ; $47aa
-	ld hl, $a741 ; $47ac
+	ld hl, sSaveBlockDirectory + 1761 ; $47ac
 	ld [hl], $0c ; $47af
 	inc hl ; $47b1
 	ld [hl], $00 ; $47b2
@@ -1158,7 +1158,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $47b8
 	inc hl ; $47ba
 	ld [hl], $1e ; $47bb
-	ld hl, $a751 ; $47bd
+	ld hl, sSaveBlockDirectory + 1777 ; $47bd
 	ld [hl], $0d ; $47c0
 	inc hl ; $47c2
 	ld [hl], $00 ; $47c3
@@ -1168,7 +1168,7 @@ InitSaveHeader:
 	ld [hl], $00 ; $47c9
 	inc hl ; $47cb
 	ld [hl], $1e ; $47cc
-	ld hl, $a761 ; $47ce
+	ld hl, sSaveBlockDirectory + 1793 ; $47ce
 	ld [hl], $0e ; $47d1
 	inc hl ; $47d3
 	ld [hl], $00 ; $47d4
@@ -1284,7 +1284,7 @@ UpdateSaveHeaderChecksum:
 	ld a, l ; $486d
 	ld [sSaveMasterChecksum], a ; $486e
 	ld a, h ; $4871
-	ld [$a031], a ; $4872
+	ld [sSaveMasterChecksum + 1], a ; $4872
 	add sp, -64 ; $4875
 	ld hl, sp + 0 ; $4877
 	ld d, h ; $4879
@@ -1319,7 +1319,7 @@ MirrorSaveHeaderToBank1:
 	ld a, l ; $48a8
 	ld [sSaveMasterChecksum], a ; $48a9
 	ld a, h ; $48ac
-	ld [$a031], a ; $48ad
+	ld [sSaveMasterChecksum + 1], a ; $48ad
 	ld hl, $a000 ; $48b0
 	ld de, wTextBuffer ; $48b3
 	ld c, $20 ; $48b6
@@ -1334,7 +1334,7 @@ MirrorSaveHeaderToBank1:
 	ld a, $00 ; $48cd
 	ldh [hSramBank], a ; $48cf
 	ld [$4000], a ; $48d1
-	ld hl, $a200 ; $48d4
+	ld hl, sSaveBlockDirectory + 416 ; $48d4
 	ld de, wTextBuffer ; $48d7
 	ld c, $20 ; $48da
 	call CopyMemoryFast ; $48dc
@@ -1342,13 +1342,13 @@ MirrorSaveHeaderToBank1:
 	ldh [hSramBank], a ; $48e1
 	ld [$4000], a ; $48e3
 	ld hl, wTextBuffer ; $48e6
-	ld de, $a200 ; $48e9
+	ld de, sSaveBlockDirectory + 416 ; $48e9
 	ld c, $20 ; $48ec
 	call CopyMemoryFast ; $48ee
 	ld a, $00 ; $48f1
 	ldh [hSramBank], a ; $48f3
 	ld [$4000], a ; $48f5
-	ld hl, $a400 ; $48f8
+	ld hl, sSaveBlockDirectory + 928 ; $48f8
 	ld de, wTextBuffer ; $48fb
 	ld c, $20 ; $48fe
 	call CopyMemoryFast ; $4900
@@ -1356,13 +1356,13 @@ MirrorSaveHeaderToBank1:
 	ldh [hSramBank], a ; $4905
 	ld [$4000], a ; $4907
 	ld hl, wTextBuffer ; $490a
-	ld de, $a400 ; $490d
+	ld de, sSaveBlockDirectory + 928 ; $490d
 	ld c, $20 ; $4910
 	call CopyMemoryFast ; $4912
 	ld a, $00 ; $4915
 	ldh [hSramBank], a ; $4917
 	ld [$4000], a ; $4919
-	ld hl, $a600 ; $491c
+	ld hl, sSaveBlockDirectory + 1440 ; $491c
 	ld de, wTextBuffer ; $491f
 	ld c, $20 ; $4922
 	call CopyMemoryFast ; $4924
@@ -1370,7 +1370,7 @@ MirrorSaveHeaderToBank1:
 	ldh [hSramBank], a ; $4929
 	ld [$4000], a ; $492b
 	ld hl, wTextBuffer ; $492e
-	ld de, $a600 ; $4931
+	ld de, sSaveBlockDirectory + 1440 ; $4931
 	ld c, $20 ; $4934
 	call CopyMemoryFast ; $4936
 	ld a, $00 ; $4939
@@ -1437,7 +1437,7 @@ Label_03_4980:
 	ld a, $01 ; $49a4
 	ldh [hSramBank], a ; $49a6
 	ld [$4000], a ; $49a8
-	ld hl, $a200 ; $49ab
+	ld hl, sSaveBlockDirectory + 416 ; $49ab
 	ld de, wTextBuffer ; $49ae
 	ld c, $20 ; $49b1
 	call CopyMemoryFast ; $49b3
@@ -1445,13 +1445,13 @@ Label_03_4980:
 	ldh [hSramBank], a ; $49b8
 	ld [$4000], a ; $49ba
 	ld hl, wTextBuffer ; $49bd
-	ld de, $a200 ; $49c0
+	ld de, sSaveBlockDirectory + 416 ; $49c0
 	ld c, $20 ; $49c3
 	call CopyMemoryFast ; $49c5
 	ld a, $01 ; $49c8
 	ldh [hSramBank], a ; $49ca
 	ld [$4000], a ; $49cc
-	ld hl, $a400 ; $49cf
+	ld hl, sSaveBlockDirectory + 928 ; $49cf
 	ld de, wTextBuffer ; $49d2
 	ld c, $20 ; $49d5
 	call CopyMemoryFast ; $49d7
@@ -1459,13 +1459,13 @@ Label_03_4980:
 	ldh [hSramBank], a ; $49dc
 	ld [$4000], a ; $49de
 	ld hl, wTextBuffer ; $49e1
-	ld de, $a400 ; $49e4
+	ld de, sSaveBlockDirectory + 928 ; $49e4
 	ld c, $20 ; $49e7
 	call CopyMemoryFast ; $49e9
 	ld a, $01 ; $49ec
 	ldh [hSramBank], a ; $49ee
 	ld [$4000], a ; $49f0
-	ld hl, $a600 ; $49f3
+	ld hl, sSaveBlockDirectory + 1440 ; $49f3
 	ld de, wTextBuffer ; $49f6
 	ld c, $20 ; $49f9
 	call CopyMemoryFast ; $49fb
@@ -1473,7 +1473,7 @@ Label_03_4980:
 	ldh [hSramBank], a ; $4a00
 	ld [$4000], a ; $4a02
 	ld hl, wTextBuffer ; $4a05
-	ld de, $a600 ; $4a08
+	ld de, sSaveBlockDirectory + 1440 ; $4a08
 	ld c, $20 ; $4a0b
 	call CopyMemoryFast ; $4a0d
 	ld hl, $a000 ; $4a10

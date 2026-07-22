@@ -488,7 +488,7 @@ ShotBallPathPowerTopspin:
 	ld bc, BallPosHeightOffsets_23 ; $7e84
 	call LookupBallPosByHeight_23 ; $7e87
 	ld bc, BallPosBlockOffsets_23 ; $7e8a
-	ld a, [wTopspinPlacementIndex] ; $7e8d
+	ld a, [$df6e] ; $7e8d
 	call LookupBallPosByShotIndex_23 ; $7e90
 	pop bc ; $7e93
 	call ApplyBallTrajectory_23 ; $7e94

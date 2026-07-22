@@ -3502,7 +3502,7 @@ Func_1a_6f3d:
 	ld [wMatchPlayerChar], a ; $6fa4
 	ld d, a ; $6fa7
 	wram_bank $04 ; $6fa8
-	ld hl, $df00 ; $6fae
+	ld hl, wCharPosX ; $6fae
 	ld c, $10 ; $6fb1
 	call ClearMemory16 ; $6fb3
 	ld a, $00 ; $6fb6
@@ -3532,7 +3532,7 @@ Func_1a_7012:
 	ld de, $4e15 ; $701e
 	call QueueSprite ; $7021
 	wram_bank $04 ; $7024
-	ld hl, $df00 ; $702a
+	ld hl, wCharPosX ; $702a
 	ld b, h ; $702d
 	ld c, l ; $702e
 	farcall StepCharAnimation ; $702f
@@ -3561,16 +3561,16 @@ Func_1a_7012:
 	ld d, $20 ; $705a
 	ld e, $68 ; $705c
 	ld a, d ; $705e
-	ld [$df53], a ; $705f
+	ld [wCharScreenX], a ; $705f
 	ld a, e ; $7062
-	ld [$df54], a ; $7063
+	ld [wCharScreenY], a ; $7063
 	pop hl ; $7066
 	add hl, hl ; $7067
 	add hl, hl ; $7068
 	add hl, hl ; $7069
 	pop bc ; $706a
 	push hl ; $706b
-	ld hl, $df80 ; $706c
+	ld hl, wCharSpriteSlot ; $706c
 	ld a, c ; $706f
 	ld [hl+], a ; $7070
 	ld a, b ; $7071
@@ -3579,16 +3579,16 @@ Func_1a_7012:
 	ld [hl+], a ; $7074
 	ld a, d ; $7075
 	ld [hl+], a ; $7076
-	ld a, [$df1d] ; $7077
+	ld a, [wCharSpriteFrame + 2] ; $7077
 	ld [hl+], a ; $707a
-	ld a, [$df1c] ; $707b
+	ld a, [wCharSpriteFrame + 1] ; $707b
 	ld [hl+], a ; $707e
-	ld a, [$df1b] ; $707f
+	ld a, [wCharSpriteFrame] ; $707f
 	ld [hl+], a ; $7082
 	pop af ; $7083
 	add a, $80 ; $7084
 	ld [hl+], a ; $7086
-	ld hl, $df80 ; $7087
+	ld hl, wCharSpriteSlot ; $7087
 	farcall DrawCharSprite ; $708a
 	ret ; $708d
 	INCBIN "data/bank_01a/d_708e.bin" ; $708e, 8 bytes

@@ -279,7 +279,7 @@ Label_04_41f2:
 	ld a, l ; $41f9
 	ldh [hActorPtr], a ; $41fa
 	ld a, h ; $41fc
-	ldh [$ffeb], a ; $41fd
+	ldh [hActorPtr + 1], a ; $41fd
 	ld c, l ; $41ff
 	ld b, h ; $4200
 	call StepActorScript ; $4201

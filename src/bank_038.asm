@@ -1134,19 +1134,19 @@ RunCharacterSelectScreen:
 	ld a, b ; $47cf
 	ld [$cb52], a ; $47d0
 	wram_bank $07 ; $47d3
-	ld hl, $df00 ; $47d9
+	ld hl, wCharPosX ; $47d9
 	ld c, $10 ; $47dc
 	call ClearMemory16 ; $47de
 	wram_bank $06 ; $47e1
-	ld hl, $df00 ; $47e7
+	ld hl, wCharPosX ; $47e7
 	ld c, $10 ; $47ea
 	call ClearMemory16 ; $47ec
 	wram_bank $05 ; $47ef
-	ld hl, $df00 ; $47f5
+	ld hl, wCharPosX ; $47f5
 	ld c, $10 ; $47f8
 	call ClearMemory16 ; $47fa
 	wram_bank $04 ; $47fd
-	ld hl, $df00 ; $4803
+	ld hl, wCharPosX ; $4803
 	ld c, $10 ; $4806
 	call ClearMemory16 ; $4808
 	farcall ResetMatchState ; $480b
@@ -1488,19 +1488,19 @@ Label_38_4b06:
 	ret ; $4b20
 Func_38_4b21:
 	wram_bank $07 ; $4b21
-	ld hl, $df00 ; $4b27
+	ld hl, wCharPosX ; $4b27
 	ld c, $10 ; $4b2a
 	call ClearMemory16 ; $4b2c
 	wram_bank $06 ; $4b2f
-	ld hl, $df00 ; $4b35
+	ld hl, wCharPosX ; $4b35
 	ld c, $10 ; $4b38
 	call ClearMemory16 ; $4b3a
 	wram_bank $05 ; $4b3d
-	ld hl, $df00 ; $4b43
+	ld hl, wCharPosX ; $4b43
 	ld c, $10 ; $4b46
 	call ClearMemory16 ; $4b48
 	wram_bank $04 ; $4b4b
-	ld hl, $df00 ; $4b51
+	ld hl, wCharPosX ; $4b51
 	ld c, $10 ; $4b54
 	call ClearMemory16 ; $4b56
 	ld a, $00 ; $4b59
@@ -1535,33 +1535,33 @@ Func_38_4b21:
 	ret ; $4bab
 Func_38_4bac:
 	wram_bank $04 ; $4bac
-	ld hl, $df00 ; $4bb2
+	ld hl, wCharPosX ; $4bb2
 	call Func_38_4ce2 ; $4bb5
 	ld a, $58 ; $4bb8
-	ld [$df82], a ; $4bba
+	ld [wCharSpriteSlot + 2], a ; $4bba
 	ld a, $20 ; $4bbd
-	ld [$df83], a ; $4bbf
+	ld [wCharSpriteSlot + 3], a ; $4bbf
 	wram_bank $05 ; $4bc2
-	ld hl, $df00 ; $4bc8
+	ld hl, wCharPosX ; $4bc8
 	call Func_38_4ce2 ; $4bcb
 	ld a, $58 ; $4bce
-	ld [$df82], a ; $4bd0
+	ld [wCharSpriteSlot + 2], a ; $4bd0
 	ld a, $61 ; $4bd3
-	ld [$df83], a ; $4bd5
+	ld [wCharSpriteSlot + 3], a ; $4bd5
 	wram_bank $06 ; $4bd8
-	ld hl, $df00 ; $4bde
+	ld hl, wCharPosX ; $4bde
 	call Func_38_4ce2 ; $4be1
 	ld a, $c8 ; $4be4
-	ld [$df82], a ; $4be6
+	ld [wCharSpriteSlot + 2], a ; $4be6
 	ld a, $c8 ; $4be9
-	ld [$df83], a ; $4beb
+	ld [wCharSpriteSlot + 3], a ; $4beb
 	wram_bank $07 ; $4bee
-	ld hl, $df00 ; $4bf4
+	ld hl, wCharPosX ; $4bf4
 	call Func_38_4ce2 ; $4bf7
 	ld a, $c8 ; $4bfa
-	ld [$df82], a ; $4bfc
+	ld [wCharSpriteSlot + 2], a ; $4bfc
 	ld a, $c8 ; $4bff
-	ld [$df83], a ; $4c01
+	ld [wCharSpriteSlot + 3], a ; $4c01
 	wram_bank $04 ; $4c04
 	ldh a, [hWramBank] ; $4c0a
 	push af ; $4c0c
@@ -1575,24 +1575,24 @@ Func_38_4bac:
 	jr z, Label_38_4c66 ; $4c1e
 	wram_bank $04 ; $4c20
 	ld a, $c8 ; $4c26
-	ld [$df82], a ; $4c28
+	ld [wCharSpriteSlot + 2], a ; $4c28
 	ld a, $c8 ; $4c2b
-	ld [$df83], a ; $4c2d
+	ld [wCharSpriteSlot + 3], a ; $4c2d
 	wram_bank $05 ; $4c30
 	ld a, $c8 ; $4c36
-	ld [$df82], a ; $4c38
+	ld [wCharSpriteSlot + 2], a ; $4c38
 	ld a, $c8 ; $4c3b
-	ld [$df83], a ; $4c3d
+	ld [wCharSpriteSlot + 3], a ; $4c3d
 	wram_bank $06 ; $4c40
 	ld a, $58 ; $4c46
-	ld [$df82], a ; $4c48
+	ld [wCharSpriteSlot + 2], a ; $4c48
 	ld a, $20 ; $4c4b
-	ld [$df83], a ; $4c4d
+	ld [wCharSpriteSlot + 3], a ; $4c4d
 	wram_bank $07 ; $4c50
 	ld a, $58 ; $4c56
-	ld [$df82], a ; $4c58
+	ld [wCharSpriteSlot + 2], a ; $4c58
 	ld a, $61 ; $4c5b
-	ld [$df83], a ; $4c5d
+	ld [wCharSpriteSlot + 3], a ; $4c5d
 	wram_bank $04 ; $4c60
 Label_38_4c66:
 	ldh a, [hWramBank] ; $4c66
@@ -1606,29 +1606,29 @@ Label_38_4c66:
 	or a, a ; $4c79
 	jr z, Label_38_4ca8 ; $4c7a
 	wram_bank $04 ; $4c7c
-	ld hl, $df81 ; $4c82
+	ld hl, wCharSpriteSlot + 1 ; $4c82
 	set 5, [hl] ; $4c85
 	wram_bank $05 ; $4c87
-	ld hl, $df81 ; $4c8d
+	ld hl, wCharSpriteSlot + 1 ; $4c8d
 	set 5, [hl] ; $4c90
 	wram_bank $06 ; $4c92
-	ld hl, $df81 ; $4c98
+	ld hl, wCharSpriteSlot + 1 ; $4c98
 	set 5, [hl] ; $4c9b
 	wram_bank $07 ; $4c9d
-	ld hl, $df81 ; $4ca3
+	ld hl, wCharSpriteSlot + 1 ; $4ca3
 	set 5, [hl] ; $4ca6
 Label_38_4ca8:
 	wram_bank $04 ; $4ca8
-	ld hl, $df80 ; $4cae
+	ld hl, wCharSpriteSlot ; $4cae
 	farcall DrawCharSprite ; $4cb1
 	wram_bank $05 ; $4cb4
-	ld hl, $df80 ; $4cba
+	ld hl, wCharSpriteSlot ; $4cba
 	farcall DrawCharSprite ; $4cbd
 	wram_bank $06 ; $4cc0
-	ld hl, $df80 ; $4cc6
+	ld hl, wCharSpriteSlot ; $4cc6
 	farcall DrawCharSprite ; $4cc9
 	wram_bank $07 ; $4ccc
-	ld hl, $df80 ; $4cd2
+	ld hl, wCharSpriteSlot ; $4cd2
 	farcall DrawCharSprite ; $4cd5
 	wram_bank $04 ; $4cd8
 	call Func_38_4d9b ; $4cde

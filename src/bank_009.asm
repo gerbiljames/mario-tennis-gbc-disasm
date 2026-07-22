@@ -152,7 +152,7 @@ Func_09_412a:
 	and a, $01 ; $413e
 	ld b, a ; $4140
 	wram_bank $04 ; $4141
-	ld a, [$df0a] ; $4147
+	ld a, [wCharCourtPos] ; $4147
 	and a, $02 ; $414a
 	or a, b ; $414c
 	ld b, a ; $414d

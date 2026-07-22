@@ -311,7 +311,7 @@ StartScorePopup:
 	ldh a, [hWramBank] ; $4211
 	push af ; $4213
 	wram_bank $04 ; $4214
-	ld hl, $dd1e ; $421a
+	ld hl, wBallHistory + 30 ; $421a
 	ld de, $c7a0 ; $421d
 	ld a, [hl+] ; $4220
 	ld [de], a ; $4221
@@ -396,11 +396,11 @@ GetMinigameGridCellIndex:
 	ldh a, [hWramBank] ; $42bf
 	push af ; $42c1
 	wram_bank $04 ; $42c2
-	ld hl, $dd1e ; $42c8
+	ld hl, wBallHistory + 30 ; $42c8
 	ld a, [hl+] ; $42cb
 	ld d, [hl] ; $42cc
 	ld e, a ; $42cd
-	ld hl, $dd20 ; $42ce
+	ld hl, wBallHistory + 32 ; $42ce
 	ld a, [hl+] ; $42d1
 	ld b, [hl] ; $42d2
 	ld c, a ; $42d3
@@ -791,7 +791,7 @@ DrawMinigameScoreHud:
 	ldh a, [hWramBank] ; $46e3
 	push af ; $46e5
 	wram_bank $05 ; $46e6
-	ld hl, $df81 ; $46ec
+	ld hl, wCharSpriteSlot + 1 ; $46ec
 	res 5, [hl] ; $46ef
 	pop af ; $46f1
 	wram_bank ; $46f2
@@ -1011,11 +1011,11 @@ Label_0d_485c:
 	ld a, [hl+] ; $4886
 	ld b, [hl] ; $4887
 	ld c, a ; $4888
-	ld hl, $df04 ; $4889
+	ld hl, wCharPosDepth + 1 ; $4889
 	ld a, [hl+] ; $488c
 	ld d, [hl] ; $488d
 	ld e, a ; $488e
-	ld hl, $df01 ; $488f
+	ld hl, wCharPosX + 1 ; $488f
 	ld a, [hl+] ; $4892
 	ld h, [hl] ; $4893
 	ld l, a ; $4894
@@ -1342,14 +1342,14 @@ Label_0d_4ac7:
 	ldh a, [hWramBank] ; $4ac7
 	push af ; $4ac9
 	wram_bank $04 ; $4aca
-	ld hl, $dd0c ; $4ad0
-	ld de, $de14 ; $4ad3
+	ld hl, wBallHistory + 12 ; $4ad0
+	ld de, wBallTrailSlots + 8 ; $4ad3
 	call MarkMinigameObjectOffscreen ; $4ad6
-	ld hl, $dd06 ; $4ad9
-	ld de, $de18 ; $4adc
+	ld hl, wBallHistory + 6 ; $4ad9
+	ld de, wBallTrailSlots + 12 ; $4adc
 	call MarkMinigameObjectOffscreen ; $4adf
-	ld hl, $dd00 ; $4ae2
-	ld de, $de1c ; $4ae5
+	ld hl, wBallHistory ; $4ae2
+	ld de, wBallTrailSlots + 16 ; $4ae5
 	call MarkMinigameObjectOffscreen ; $4ae8
 	pop af ; $4aeb
 	wram_bank ; $4aec
@@ -2542,12 +2542,12 @@ ResolveAndShowMinigamePoint:
 	push af ; $56c9
 	wram_bank $04 ; $56ca
 	farcall CharPointEndReaction ; $56d0
-	ld a, [$df57] ; $56d3
+	ld a, [wCharPointResult] ; $56d3
 	push af ; $56d6
 	wram_bank $05 ; $56d7
 	farcall CharPointEndReaction ; $56dd
 	pop af ; $56e0
-	ld [$df57], a ; $56e1
+	ld [wCharPointResult], a ; $56e1
 	pop af ; $56e4
 	wram_bank ; $56e5
 	pop de ; $56e9

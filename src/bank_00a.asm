@@ -334,7 +334,7 @@ Label_0a_4255:
 	ld a, l ; $425c
 	ldh [hActorPtr], a ; $425d
 	ld a, h ; $425f
-	ldh [$ffeb], a ; $4260
+	ldh [hActorPtr + 1], a ; $4260
 	wram_bank $04 ; $4262
 	ld hl, hActorPtr ; $4268
 	ld a, [hl+] ; $426b
@@ -573,7 +573,7 @@ ScriptSetActorPosition:
 	ld a, l ; $43c6
 	ldh [hActorPtr], a ; $43c7
 	ld a, h ; $43c9
-	ldh [$ffeb], a ; $43ca
+	ldh [hActorPtr + 1], a ; $43ca
 	wram_bank $04 ; $43cc
 	call Func_0a_43d8 ; $43d2
 Label_0a_43d5:
@@ -620,7 +620,7 @@ ScriptSetActorMoveTarget:
 	ld a, l ; $440d
 	ldh [hActorPtr], a ; $440e
 	ld a, h ; $4410
-	ldh [$ffeb], a ; $4411
+	ldh [hActorPtr + 1], a ; $4411
 	wram_bank $04 ; $4413
 	call Func_0a_441f ; $4419
 Label_0a_441c:
@@ -672,7 +672,7 @@ MoveActorTowardPoint:
 	ld a, l ; $4459
 	ldh [hActorPtr], a ; $445a
 	ld a, h ; $445c
-	ldh [$ffeb], a ; $445d
+	ldh [hActorPtr + 1], a ; $445d
 	call MoveActorTowardPointRaw ; $445f
 Label_0a_4462:
 	add sp, 5 ; $4462
@@ -778,7 +778,7 @@ MoveActorByDelta:
 	ld a, l ; $44df
 	ldh [hActorPtr], a ; $44e0
 	ld a, h ; $44e2
-	ldh [$ffeb], a ; $44e3
+	ldh [hActorPtr + 1], a ; $44e3
 	wram_bank $04 ; $44e5
 	call MoveActorByDeltaRaw ; $44eb
 Label_0a_44ee:
@@ -869,7 +869,7 @@ MoveActorByAngle:
 	ld a, l ; $4557
 	ldh [hActorPtr], a ; $4558
 	ld a, h ; $455a
-	ldh [$ffeb], a ; $455b
+	ldh [hActorPtr + 1], a ; $455b
 	wram_bank $04 ; $455d
 	call MoveActorByAngleRaw ; $4563
 Label_0a_4566:
@@ -996,7 +996,7 @@ FaceActorTowardActor:
 	ld a, l ; $4607
 	ldh [hActorPtr], a ; $4608
 	ld a, h ; $460a
-	ldh [$ffeb], a ; $460b
+	ldh [hActorPtr + 1], a ; $460b
 	wram_bank $04 ; $460d
 	ld hl, hActorPtr ; $4613
 	ld a, [hl+] ; $4616
@@ -1017,7 +1017,7 @@ FaceActorTowardActor:
 	ld a, l ; $4628
 	ldh [hActorPtr], a ; $4629
 	ld a, h ; $462b
-	ldh [$ffeb], a ; $462c
+	ldh [hActorPtr + 1], a ; $462c
 	ld hl, hActorPtr ; $462e
 	ld a, [hl+] ; $4631
 	ld h, [hl] ; $4632
@@ -1092,7 +1092,7 @@ FaceActorsTowardEachOther:
 	ld a, l ; $4686
 	ldh [hActorPtr], a ; $4687
 	ld a, h ; $4689
-	ldh [$ffeb], a ; $468a
+	ldh [hActorPtr + 1], a ; $468a
 	wram_bank $04 ; $468c
 	ld hl, hActorPtr ; $4692
 	ld a, [hl+] ; $4695
@@ -1113,7 +1113,7 @@ FaceActorsTowardEachOther:
 	ld a, l ; $46a7
 	ldh [hActorPtr], a ; $46a8
 	ld a, h ; $46aa
-	ldh [$ffeb], a ; $46ab
+	ldh [hActorPtr + 1], a ; $46ab
 	ld hl, hActorPtr ; $46ad
 	ld a, [hl+] ; $46b0
 	ld h, [hl] ; $46b1
@@ -1169,7 +1169,7 @@ FaceActorsTowardEachOther:
 	ld a, l ; $46ed
 	ldh [hActorPtr], a ; $46ee
 	ld a, h ; $46f0
-	ldh [$ffeb], a ; $46f1
+	ldh [hActorPtr + 1], a ; $46f1
 	ld hl, hActorPtr ; $46f3
 	ld a, [hl+] ; $46f6
 	ld h, [hl] ; $46f7
@@ -1303,7 +1303,7 @@ MovePlayerToPosition:
 	ld a, l ; $47cb
 	ldh [hActorPtr], a ; $47cc
 	ld a, h ; $47ce
-	ldh [$ffeb], a ; $47cf
+	ldh [hActorPtr + 1], a ; $47cf
 	wram_bank $04 ; $47d1
 	ld a, d ; $47d7
 	or a, a ; $47d8
@@ -1325,7 +1325,7 @@ Label_0a_47e0:
 	ld a, l ; $47f0
 	ldh [hActorPtr], a ; $47f1
 	ld a, h ; $47f3
-	ldh [$ffeb], a ; $47f4
+	ldh [hActorPtr + 1], a ; $47f4
 	call Func_0a_43d8 ; $47f6
 	call AdvanceFrame ; $47f9
 	farcall RestoreShadowTilemap ; $47fc
@@ -1356,7 +1356,7 @@ MovePlayerToActor:
 	ld a, l ; $4829
 	ldh [hActorPtr], a ; $482a
 	ld a, h ; $482c
-	ldh [$ffeb], a ; $482d
+	ldh [hActorPtr + 1], a ; $482d
 	ld hl, hActorPtr ; $482f
 	ld a, [hl+] ; $4832
 	ld h, [hl] ; $4833
@@ -1386,7 +1386,7 @@ MovePlayerToActor:
 	ld a, l ; $4850
 	ldh [hActorPtr], a ; $4851
 	ld a, h ; $4853
-	ldh [$ffeb], a ; $4854
+	ldh [hActorPtr + 1], a ; $4854
 	ld a, d ; $4856
 	or a, a ; $4857
 	jr nz, Label_0a_485f ; $4858
@@ -1407,7 +1407,7 @@ Label_0a_485f:
 	ld a, l ; $486f
 	ldh [hActorPtr], a ; $4870
 	ld a, h ; $4872
-	ldh [$ffeb], a ; $4873
+	ldh [hActorPtr + 1], a ; $4873
 	call Func_0a_43d8 ; $4875
 	call AdvanceFrame ; $4878
 	farcall RestoreShadowTilemap ; $487b
@@ -1431,7 +1431,7 @@ WaitPlayerMoveDone:
 	ld a, l ; $489b
 	ldh [hActorPtr], a ; $489c
 	ld a, h ; $489e
-	ldh [$ffeb], a ; $489f
+	ldh [hActorPtr + 1], a ; $489f
 	wram_bank $04 ; $48a1
 	ld a, $05 ; $48a7
 	add a, l ; $48a9
@@ -1743,7 +1743,7 @@ RunClearStatusSetupMenu:
 	farcall Func_01_50e2 ; $4bb8
 	call EnableLCD ; $4bbb
 	wram_bank $05 ; $4bbe
-	ld hl, $df00 ; $4bc4
+	ld hl, wCharPosX ; $4bc4
 	ld c, $02 ; $4bc7
 	call ClearMemory16 ; $4bc9
 	farcall ResetTextWindowState ; $4bcc
@@ -1753,18 +1753,18 @@ RunClearStatusSetupMenu:
 	ld b, $14 ; $4bd6
 	ld c, $07 ; $4bd8
 	farcall CreateWindowFromScreenRect ; $4bda
-	ld [$df05], a ; $4bdd
+	ld [wCharPosDepth + 2], a ; $4bdd
 	farcall DrawTextWindowFrame ; $4be0
 	script_fade_in $10 ; $4be3
 	call WaitFadeEnd ; $4be8
 	wram_bank $05 ; $4beb
 Label_0a_4bf1:
-	ld a, [$df05] ; $4bf1
+	ld a, [wCharPosDepth + 2] ; $4bf1
 	farcall DrawTextWindowFrame ; $4bf4
 	ld hl, $10e8 ; $4bf7
 	ld de, $d181 ; $4bfa
 	farcall RenderProportionalTextAt ; $4bfd
-	ld a, [$df05] ; $4c00
+	ld a, [wCharPosDepth + 2] ; $4c00
 	farcall RedrawWindowRows ; $4c03
 	ld hl, $10d7 ; $4c06
 	ld d, $01 ; $4c09
@@ -1773,20 +1773,20 @@ Label_0a_4bf1:
 	farcall RestoreShadowTilemap ; $4c10
 	farcall RenderMenuWindowText ; $4c13
 	farcall RunMenuSelection ; $4c16
-	ld [$df00], a ; $4c19
+	ld [wCharPosX], a ; $4c19
 	ld a, [$d82f] ; $4c1c
 	farcall CloseWindow ; $4c1f
-	ld a, [$df00] ; $4c22
+	ld a, [wCharPosX] ; $4c22
 	cp a, $ff ; $4c25
 	jr nz, Label_0a_4c31 ; $4c27
 	ld a, $08 ; $4c29
-	ld [$df06], a ; $4c2b
+	ld [wCharPosHeight], a ; $4c2b
 	jp Label_0a_4d1e ; $4c2e
 Label_0a_4c31:
 	or a, a ; $4c31
 	jp z, Label_0a_4c3d ; $4c32
 	ld a, $01 ; $4c35
-	ld [$df06], a ; $4c37
+	ld [wCharPosHeight], a ; $4c37
 	jp Label_0a_4d1e ; $4c3a
 Label_0a_4c3d:
 	test_flag $05, 7 ; $4c3d
@@ -1796,14 +1796,14 @@ Label_0a_4c3d:
 Label_0a_4c45:
 	ld a, $01 ; $4c45
 Label_0a_4c47:
-	ld [$df01], a ; $4c47
+	ld [wCharPosX + 1], a ; $4c47
 Label_0a_4c4a:
-	ld a, [$df05] ; $4c4a
+	ld a, [wCharPosDepth + 2] ; $4c4a
 	farcall DrawTextWindowFrame ; $4c4d
 	ld hl, $10e4 ; $4c50
 	ld de, $d181 ; $4c53
 	farcall RenderProportionalTextAt ; $4c56
-	ld a, [$df05] ; $4c59
+	ld a, [wCharPosDepth + 2] ; $4c59
 	farcall RedrawWindowRows ; $4c5c
 	ld hl, $10d9 ; $4c5f
 	ld d, $03 ; $4c62
@@ -1812,19 +1812,19 @@ Label_0a_4c4a:
 	farcall RestoreShadowTilemap ; $4c69
 	farcall RenderMenuWindowText ; $4c6c
 	farcall RunMenuSelection ; $4c6f
-	ld [$df02], a ; $4c72
+	ld [wCharPosX + 2], a ; $4c72
 	ld a, [$d82f] ; $4c75
 	farcall CloseWindow ; $4c78
-	ld a, [$df02] ; $4c7b
+	ld a, [wCharPosX + 2] ; $4c7b
 	cp a, $ff ; $4c7e
 	jp z, Label_0a_4bf1 ; $4c80
 Label_0a_4c83:
-	ld a, [$df05] ; $4c83
+	ld a, [wCharPosDepth + 2] ; $4c83
 	farcall DrawTextWindowFrame ; $4c86
 	ld hl, $10e5 ; $4c89
 	ld de, $d181 ; $4c8c
 	farcall RenderProportionalTextAt ; $4c8f
-	ld a, [$df05] ; $4c92
+	ld a, [wCharPosDepth + 2] ; $4c92
 	farcall RedrawWindowRows ; $4c95
 	ld hl, $10da ; $4c98
 	ld d, $05 ; $4c9b
@@ -1833,16 +1833,16 @@ Label_0a_4c83:
 	farcall RestoreShadowTilemap ; $4ca2
 	farcall RenderMenuWindowText ; $4ca5
 	farcall RunMenuSelection ; $4ca8
-	ld [$df03], a ; $4cab
+	ld [wCharPosDepth], a ; $4cab
 	ld a, [$d82f] ; $4cae
 	farcall CloseWindow ; $4cb1
-	ld a, [$df03] ; $4cb4
+	ld a, [wCharPosDepth] ; $4cb4
 	cp a, $ff ; $4cb7
 	jp z, Label_0a_4c4a ; $4cb9
-	ld a, [$df05] ; $4cbc
+	ld a, [wCharPosDepth + 2] ; $4cbc
 	farcall DrawTextWindowFrame ; $4cbf
 	ld hl, $10e6 ; $4cc2
-	ld a, [$df02] ; $4cc5
+	ld a, [wCharPosX + 2] ; $4cc5
 	add a, l ; $4cc8
 	ld l, a ; $4cc9
 	jr nc, Label_0a_4ccd ; $4cca
@@ -1850,9 +1850,9 @@ Label_0a_4c83:
 Label_0a_4ccd:
 	ld de, $d181 ; $4ccd
 	farcall RenderProportionalTextAt ; $4cd0
-	ld a, [$df05] ; $4cd3
+	ld a, [wCharPosDepth + 2] ; $4cd3
 	farcall RedrawWindowRows ; $4cd6
-	ld a, [$df01] ; $4cd9
+	ld a, [wCharPosX + 1] ; $4cd9
 	or a, a ; $4cdc
 	jp nz, Label_0a_4ce5 ; $4cdd
 	ld hl, $10db ; $4ce0
@@ -1860,10 +1860,10 @@ Label_0a_4ccd:
 Label_0a_4ce5:
 	ld hl, $10df ; $4ce5
 Label_0a_4ce8:
-	ld a, [$df02] ; $4ce8
+	ld a, [wCharPosX + 2] ; $4ce8
 	or a, a ; $4ceb
 	jr z, Label_0a_4cf7 ; $4cec
-	ld a, [$df03] ; $4cee
+	ld a, [wCharPosDepth] ; $4cee
 	inc a ; $4cf1
 	add a, l ; $4cf2
 	ld l, a ; $4cf3
@@ -1876,16 +1876,16 @@ Label_0a_4cf7:
 	farcall RestoreShadowTilemap ; $4cfe
 	farcall RenderMenuWindowText ; $4d01
 	farcall RunMenuSelection ; $4d04
-	ld [$df04], a ; $4d07
+	ld [wCharPosDepth + 1], a ; $4d07
 	ld a, [$d82f] ; $4d0a
 	farcall CloseWindow ; $4d0d
-	ld a, [$df04] ; $4d10
+	ld a, [wCharPosDepth + 1] ; $4d10
 	cp a, $ff ; $4d13
 	jp z, Label_0a_4c83 ; $4d15
 	call ApplyClearStatusFlags ; $4d18
 	call GetClearStatusResultCode ; $4d1b
 Label_0a_4d1e:
-	ld hl, $df06 ; $4d1e
+	ld hl, wCharPosHeight ; $4d1e
 	ld b, [hl] ; $4d21
 	pop af ; $4d22
 	wram_bank ; $4d23
@@ -1929,24 +1929,24 @@ Label_0a_4d78:
 	jr nz, Label_0a_4d78 ; $4d7d
 	ret ; $4d7f
 ApplyClearStatusFlags:
-	ld a, [$df00] ; $4d80
+	ld a, [wCharPosX] ; $4d80
 	or a, a ; $4d83
 	ret nz ; $4d84
 	clear_flag $05, 7 ; $4d85
-	ld a, [$df01] ; $4d88
+	ld a, [wCharPosX + 1] ; $4d88
 	or a, a ; $4d8b
 	jr z, Label_0a_4d91 ; $4d8c
 	set_flag $05, 7 ; $4d8e
 Label_0a_4d91:
 	call SetRankingMatchClearFlags ; $4d91
-	ld a, [$df01] ; $4d94
+	ld a, [wCharPosX + 1] ; $4d94
 	or a, a ; $4d97
 	jr nz, Label_0a_4d9f ; $4d98
 Label_0a_4d9a:
 	call SetMinigameClearFlags ; $4d9a
 	jr Label_0a_4da8 ; $4d9d
 Label_0a_4d9f:
-	ld a, [$df02] ; $4d9f
+	ld a, [wCharPosX + 2] ; $4d9f
 	or a, a ; $4da2
 	jr z, Label_0a_4d9a ; $4da3
 	call SetMinigameClearFlagsAlt ; $4da5
@@ -1965,7 +1965,7 @@ Label_0a_4dae:
 	ld e, l ; $4db8
 	dec c ; $4db9
 	jr nz, Label_0a_4dae ; $4dba
-	ld a, [$df03] ; $4dbc
+	ld a, [wCharPosDepth] ; $4dbc
 	or a, a ; $4dbf
 	ret z ; $4dc0
 	ld hl, RankingFlagList_0a_4df2 ; $4dc1
@@ -1981,7 +1981,7 @@ Label_0a_4dc4:
 	call SetGameFlag ; $4dce
 	jr Label_0a_4dc4 ; $4dd1
 Label_0a_4dd3:
-	ld a, [$df03] ; $4dd3
+	ld a, [wCharPosDepth] ; $4dd3
 	cp a, $01 ; $4dd6
 	ret z ; $4dd8
 	ld hl, RankingFlagList_0a_4e00 ; $4dd9
@@ -2030,13 +2030,13 @@ Label_0a_4e13:
 	ld e, l ; $4e1d
 	dec c ; $4e1e
 	jr nz, Label_0a_4e13 ; $4e1f
-	ld a, [$df02] ; $4e21
+	ld a, [wCharPosX + 2] ; $4e21
 	or a, a ; $4e24
 	jr z, Label_0a_4e2a ; $4e25
-	ld a, [$df04] ; $4e27
+	ld a, [wCharPosDepth + 1] ; $4e27
 Label_0a_4e2a:
 	ld b, a ; $4e2a
-	ld a, [$df03] ; $4e2b
+	ld a, [wCharPosDepth] ; $4e2b
 	ld c, a ; $4e2e
 	add a, a ; $4e2f
 	add a, a ; $4e30
@@ -2097,11 +2097,11 @@ Label_0a_4e7a:
 	ld e, l ; $4e84
 	dec c ; $4e85
 	jr nz, Label_0a_4e7a ; $4e86
-	ld a, [$df03] ; $4e88
+	ld a, [wCharPosDepth] ; $4e88
 	add a, a ; $4e8b
 	add a, a ; $4e8c
 	ld c, a ; $4e8d
-	ld a, [$df04] ; $4e8e
+	ld a, [wCharPosDepth + 1] ; $4e8e
 	add a, c ; $4e91
 	ld c, a ; $4e92
 	inc c ; $4e93
@@ -2141,19 +2141,19 @@ RankingFlagList_0a_4ea8:
 	dw $ffff ; record 16
 GetClearStatusResultCode:
 	ld hl, $4eee ; $4eca
-	ld a, [$df02] ; $4ecd
+	ld a, [wCharPosX + 2] ; $4ecd
 	ld b, a ; $4ed0
 	or a, a ; $4ed1
 	jr z, Label_0a_4ee0 ; $4ed2
-	ld a, [$df03] ; $4ed4
+	ld a, [wCharPosDepth] ; $4ed4
 	inc a ; $4ed7
 	inc a ; $4ed8
 	add a, a ; $4ed9
 	ld b, a ; $4eda
-	ld a, [$df01] ; $4edb
+	ld a, [wCharPosX + 1] ; $4edb
 	jr Label_0a_4ee3 ; $4ede
 Label_0a_4ee0:
-	ld a, [$df04] ; $4ee0
+	ld a, [wCharPosDepth + 1] ; $4ee0
 Label_0a_4ee3:
 	add a, b ; $4ee3
 	add a, l ; $4ee4
@@ -2162,7 +2162,7 @@ Label_0a_4ee3:
 	inc h ; $4ee8
 Label_0a_4ee9:
 	ld a, [hl] ; $4ee9
-	ld [$df06], a ; $4eea
+	ld [wCharPosHeight], a ; $4eea
 	ret ; $4eed
 	INCBIN "data/bank_00a/d_4eee.bin" ; $4eee, 10 bytes
 ClearStatusSetupMenuEntry:
@@ -5357,7 +5357,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [$c4b4] ; $672d
 	and a, a ; $6730
 	ret z ; $6731
-	ld hl, $dd1e ; $6732
+	ld hl, wBallHistory + 30 ; $6732
 	ld a, [hl+] ; $6735
 	ld d, [hl] ; $6736
 	ld e, a ; $6737
@@ -5377,7 +5377,7 @@ CheckBallHitsMinigameTarget:
 	add hl, de ; $674b
 	bit 7, h ; $674c
 	jr nz, Label_0a_6773 ; $674e
-	ld hl, $dd20 ; $6750
+	ld hl, wBallHistory + 32 ; $6750
 	ld a, [hl+] ; $6753
 	ld d, [hl] ; $6754
 	ld e, a ; $6755
@@ -5790,7 +5790,7 @@ CheckBallHitsMinigameTargetAlt:
 	ret z ; $6df8
 	ld a, $01 ; $6df9
 	ld [$c78e], a ; $6dfb
-	ld hl, $dd1e ; $6dfe
+	ld hl, wBallHistory + 30 ; $6dfe
 	ld a, [hl+] ; $6e01
 	ld d, [hl] ; $6e02
 	ld e, a ; $6e03
@@ -5810,7 +5810,7 @@ CheckBallHitsMinigameTargetAlt:
 	add hl, de ; $6e17
 	bit 7, h ; $6e18
 	jr nz, Label_0a_6e3f ; $6e1a
-	ld hl, $dd20 ; $6e1c
+	ld hl, wBallHistory + 32 ; $6e1c
 	ld a, [hl+] ; $6e1f
 	ld d, [hl] ; $6e20
 	ld e, a ; $6e21

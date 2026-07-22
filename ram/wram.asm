@@ -1120,7 +1120,52 @@ wGlyphTileWritePtr:: dw
 wDebugTextBuffer:: ds 576
 
 
-SECTION "WRAMX $d841", WRAMX[$d841]
+SECTION "WRAMX $d100", WRAMX[$d100]
+
+; Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;
+; scoped to the driver's code range so the same $d1xx/$d2xx offsets
+; in other WRAM banks keep their numeric address.
+UNION
+; sound engine (bank 0)
+; [192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)
+wSndChannels:: ds 192
+; [72 bytes] Per-channel loop bookkeeping (counter + return pointer per loop level); base resolved by GetChannelLoopSlot
+wSndLoopSlots:: ds 72
+; [8-bit] Bitmask of channels already serviced/keyed this update pass (AbortIfChannelTriggered tests it; folded into rAUDTERM at the end)
+wSndActiveMask:: db
+; [8-bit] Shadow of rAUDTERM: per-channel left/right output enable bits accumulated across channels
+wSndPanShadow:: db
+; [8-bit] Current channel type (0=square1/sweep, 1=square2, 2=wave, 3=noise)
+wSndChannelType:: db
+; [8-bit] Current channel's stereo output bit-pair (ch1=$11 .. ch4=$88), used for active-channel tracking
+wSndChannelBits:: db
+; [8-bit] Same bit-pair as wSndChannelBits, masked against hSndPanMask to build wSndPanShadow
+wSndChannelPanMask:: db
+; [8-bit] Current channel's APU register offset (type*5); WriteChannelReg forms rAUD via $ff10+this+reg
+wSndRegBase:: db
+; [8-bit] Free-running update counter; low nibble supplies the vibrato phase in TickVibrato
+wSndFrameCounter:: db
+; [8-bit] Index (0-5) of the channel currently being updated
+wSndChannelIndex:: db
+	ds 2
+; [8-bit] Pending channel-update request: mask of channels to reconfigure (SetChannelUpdateRequest)
+wSndUpdateReqMask:: db
+; [8-bit] Value applied by the pending channel-update request (low nibble)
+wSndUpdateReqData:: db
+; [8-bit] Accumulator of channels that have acknowledged the pending update request
+wSndUpdateReqAck:: db
+; [8-bit] Channel index the update pass starts from (normally 0)
+wSndFirstChannel:: db
+	ds 1
+; [8-bit] Wave-pattern id currently loaded into wave RAM (change detection for the wave channel)
+wSndLoadedWaveId:: db
+; [8-bit] Global transpose added to note ids (cmd $a9 $fe/$f2/$f3)
+wSndTranspose:: db
+; [8-bit] Non-zero to force the wave channel to reload its pattern on the next note
+wSndWaveReloadPending:: db
+ENDU
+
+	ds 1575
 
 ; WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile)
 wTextArrowBlinkCounter:: db
@@ -1158,26 +1203,122 @@ wTextArgStringQueue:: ds 32
 
 ; WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
 wTextArgNumberQueue:: ds 32
-	ds 1659
+	ds 1040
 
+; Match ball-visuals history ring (WRAM bank 4 only); shared renderer
+; state, so scoped by the selected WRAM bank plus the bank-$08 renderer.
+UNION
+; match ball history ring (WRAM bank 4)
+; [36 bytes] Ball position-history ring (WRAM bank 4): six 6-byte records [projX word, projY word, tile+8, attr]; UpdateBallVisuals ($5153) shifts it down one record per frame and BuildBallSlot writes the newest at +$1e
+wBallHistory:: ds 36
+ENDU
+
+	ds 220
+
+; Match ball sprite slots (WRAM bank 4 only), alongside the per-character
+; $df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.
+UNION
+; match ball sprite slots (WRAM bank 4)
+; [4 bytes] Match sprite-slot record [tile, attr, screenY, screenX] (WRAM bank 4): ball-at-net marker (tile $4e), drawn after the point resolves when the ball rests within $1e0 of the net (BuildNetBallSlot)
+wNetBallSlot:: ds 4
+; [4 bytes] Match sprite-slot record (WRAM bank 4): the ball, tile picked by height band / off-screen state ($40/$42/$44), gated by wBallSpriteEnabled (BuildBallSlot)
+wBallSlot:: ds 4
+; [4 bytes] Match sprite-slot record (WRAM bank 4): ball ground shadow (tile $46) at the ball's height-0 projection, gated by wBallShadowEnabled (BuildBallShadowSlot)
+wBallShadowSlot:: ds 4
+; [20 bytes] Five match sprite-slot records (WRAM bank 4): ball-trail afterimages (tile = ball tile + 8) fed from the history ring; slots 3-5 only when wBallTrailColor is nonzero (BuildBallTrailSlots)
+wBallTrailSlots:: ds 20
+ENDU
+
+	ds 224
+
+; Match-engine per-character struct, replicated across WRAM banks 4-7
+; (bank = character: 4 near-P1, 5 far-P1, 6 near-partner, 7 far-partner).
+; Same field, different character per bank -- one name each. Scoped by the
+; provably-selected WRAM bank, plus the match banks $07/$08 whose
+; callback-reached (jp hl) accesses the dataflow can't prove. Only the
+; named field offsets render; other $dfxx bytes stay numeric.
+UNION
+; text-arg fetch buffer (menu banks reuse the idle char struct)
+; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
+wTextArgFetchBuffer:: db
+	ds 150
+NEXTU
+; match character struct (WRAM banks 4-7)
+; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
+wCharPosX:: ds 3
+; [3 bytes] Per-character banked struct (WRAM4-7): depth position (toward/away from net), same 24-bit fixed-point format; the two court sides carry opposite signs
+wCharPosDepth:: ds 3
+; [3 bytes] Per-character banked struct (WRAM4-7): height above court, same 24-bit fixed-point format (zeroed by SetCharPosAndTarget)
+wCharPosHeight:: ds 3
+; [8-bit] Per-character banked struct (WRAM4-7): serve/side role code (court-position record byte 4-7); XORed with 2 on the per-point side swap, mapped through the $4fa0 table at point start
+wCharServeRole:: db
+; [8-bit] Per-character banked struct (WRAM4-7): court position code (court-position record byte 0-3; XORed with 3 on the tiebreak side-swap)
+wCharCourtPos:: db
+; [8-bit] Per-character banked struct (WRAM4-7): character index 0-3 (== WRAM bank - 4); bit 0 set = far side (used by CharPointEndReaction and the edge-arrow sprite)
+wCharIndex:: db
+	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): desired facing direction, eased toward by wCharFacingShown
+wCharFacingDesired:: db
+; [8-bit] Per-character banked struct (WRAM4-7): displayed facing, eased toward wCharFacingDesired by at most wCharFacingEaseRate per frame ($75c0)
+wCharFacingShown:: db
+; [8-bit] Per-character banked struct (WRAM4-7): state flags; bit 2 = airborne (set on jump $6dd5, cleared on landing; selects the shadow slot drawn)
+wCharFlags:: db
+	ds 8
+; [8-bit] Per-character banked struct (WRAM4-7): state-machine index (RST00 jumptable at $6a77; set via SetCharState)
+wCharState:: db
+	ds 2
+; [3 bytes] Per-character banked struct (WRAM4-7): current sprite frame pointer (hi/lo) + h-flip flag, consumed by DrawCharSprite ($650a)
+wCharSpriteFrame:: ds 3
+	ds 4
+; [8-bit] Per-character banked struct (WRAM4-7): active flag (UpdateChar exits when 0)
+wCharActive:: db
+	ds 29
+; [16-bit] Per-character banked struct (WRAM4-7): X velocity (zeroed on placement and at point end)
+wCharVelX:: dw
+; [16-bit] Per-character banked struct (WRAM4-7): depth velocity
+wCharVelDepth:: dw
+; [16-bit] Per-character banked struct (WRAM4-7): height velocity
+wCharVelHeight:: dw
+; [16-bit] Per-character banked struct (WRAM4-7): walk-target X (integer part)
+wCharWalkTargetX:: dw
+; [16-bit] Per-character banked struct (WRAM4-7): walk-target depth; MoveCharTowardTarget ($7541) walks toward it, snapping when both deltas < $18 (CheckCharNearTarget $78be)
+wCharWalkTargetDepth:: dw
+	ds 9
+; [8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)
+wCharScreenX:: db
+; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
+wCharScreenY:: db
+	ds 2
+; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
+wCharPointResult:: db
+	ds 16
+; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
+wCharFacingEaseRate:: db
+	ds 2
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 wGroundStrokeSpeedIndex:: db
-
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves
 wSmashServeSpeedIndex:: db
-
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the reach (smash-range) shot variants
 wReachSpeedIndex:: db
-
 ; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for topspin and serve-topspin; selects bytes 0-3 -> target offsets in LoadShotPlacementEntry
 wTopspinPlacementIndex:: db
-
 ; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for slice and serve-slice
 wSlicePlacementIndex:: db
-	ds 34
-
+	ds 16
+; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
+wCharSpriteSlot:: ds 4
+	ds 4
+; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
+wCharAirShadowSlot:: ds 4
+; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)
+wCharGroundShadowSlot:: ds 4
+	ds 2
 ; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataLob (set from df91 bit 0)
 wLobPlacementIndex:: db
-
 ; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataDrop (set from df91 bit 1)
 wDropPlacementIndex:: db
+	ds 2
+; [8-bit] Per-character banked struct (WRAM4-7): draw-order depth key ((depth*8)>>8 + $80); DrawActorsByDepth paints teammates back-to-front
+wCharDepthKey:: db
+ENDU

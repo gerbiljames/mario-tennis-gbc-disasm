@@ -1341,10 +1341,10 @@ FetchAndPushShortTextArg:
 	ldh a, [hWramBank] ; $4f3c
 	push af ; $4f3e
 	wram_bank $07 ; $4f3f
-	ld de, $df00 ; $4f45
+	ld de, wTextArgFetchBuffer ; $4f45
 	wram_bank $05 ; $4f48
 	farcall FetchShortTextToBuffer ; $4f4e
-	ld hl, $df00 ; $4f51
+	ld hl, wTextArgFetchBuffer ; $4f51
 	farcall PushTextArgString ; $4f54
 	pop af ; $4f57
 	wram_bank ; $4f58

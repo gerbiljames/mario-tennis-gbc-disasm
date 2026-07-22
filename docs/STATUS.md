@@ -1,4 +1,4 @@
-# Project status — 2026-07-21
+# Project status — 2026-07-22
 
 ## Where things stand
 
@@ -20,6 +20,78 @@ Everything below is **committed** (HEAD `a2daa3b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Match ball renderer WRAM + scoped interior-byte expansion (2026-07-22)
+
+Named the bank-4 ball-renderer state via `wram_bank $04` scoping (+ bank `$08`
+renderer range): `wBallHistory` (`$dd00`, the 36-byte position-history ring) and
+the ball sprite slots `wNetBallSlot`/`wBallSlot`/`wBallShadowSlot`/
+`wBallTrailSlots` (`$de00-$de1f`). The same `$dd`/`$de` offsets are heavily
+aliased — ~11 other banks touch them under non-4 WRAM banks — and all correctly
+stay numeric. Also extended scoped-union symbols to **interior-byte expansion**
+(previously only `ram_map.json` symbols expanded): a reference to an interior
+byte of a multi-byte scoped field renders `name + k`, so `$dd1e` reads
+`wBallHistory + 30`, and retroactively the sound/char unions' 16-bit pointers
+and multi-byte fields (`hSndScriptPtr + 1`, `wCharPosX + 1`) now read
+symbolically too. 48 ball-renderer references across match banks `$08`/`$0a`/
+`$0d`; byte-perfect.
+
+### Match per-character struct named via WRAM-bank scoping (2026-07-22)
+
+Applied the new `wram_bank` scoping (below) to the match engine's per-character
+struct at `$df00-$df96`, replicated across WRAM banks 4-7 (bank = character:
+4 near-P1, 5 far-P1, 6 near-partner, 7 far-partner). 32 fields named once each
+(`wCharPosX`/`wCharPosDepth`/`wCharPosHeight`, `wCharState`, `wCharActive`,
+`wCharVel*`, `wCharWalkTarget*`, `wCharFacing*`, `wCharSpriteSlot`/shadow slots,
+`wCharDepthKey`, the shot speed/placement indices, …) — **306 references across
+10 match banks**, up from 7 leak-prone globals. The 7 pre-existing fields
+(`wGroundStrokeSpeedIndex` etc.) moved out of `ram_map.json` (where they leaked
+into every bank) into the scoped union. Scope: `wram_bank $04-$07` (catches the
+statically-banked accesses anywhere, incl. bank `$38` whose 13 *non-char*
+`$dfxx` accesses correctly stay numeric) plus match banks `$07`/`$08` as ROM
+ranges (their char accesses run through `ForEachCharBank`'s `jp hl`, which the
+dataflow can't follow). A second, higher-priority union variant names `$df00`
+`wTextArgFetchBuffer` in menu banks `$0e`/`$0f`/`$12`, where the idle char
+struct is reused as a text-arg scratch buffer — so those 6 sites read correctly
+instead of as `wCharPosX`. Config-only; byte-perfect. See docs/ram_map.md.
+
+### WRAM-bank-aware RAM symbol scoping (2026-07-22)
+
+Banked WRAMX (`$d000-$dfff`) and SRAM (`$a000-$bfff`) are bank-switched, but
+`ram_map.json` names are bank-blind — a `$dxxx` name rendered in every bank,
+which mislabeled ~18 banks that reuse the sound engine's `$d1xx` offsets in
+their own WRAM bank. `ram_unions.json` scopes now accept `{"wram_bank": N}`
+in addition to (or combined with) the ROM-location `{bank, start, end}`.
+`disasm.py`'s new `compute_wram_bank` runs a forward control-flow dataflow
+that tracks the WRAM bank (`$ff70`/rSVBK) provably selected at each
+instruction — seeded by the `wram_bank`/`ld a,N; ldh [rWBK],a` idiom, `a`
+tracked through it, calls assumed to preserve the bank (return edge keeps the
+pre-call bank; the caller's bank flows into the callee so single-context
+helpers inherit it). Where the bank is unknown or conflicting, the name stays
+numeric. This is a text-only concern (RAM operands never change assembled
+bytes), so a wrong inference can only mislabel, never break the byte-perfect
+compare. The sound-engine WRAM union uses `wram_bank $07` (with the bank-0
+code range retained as a fallback for the few driver sites where an
+assume-preserved call — e.g. `PlaySound`'s SFX path through `StopAllSound`,
+which leaves bank 7 selected — defeats the dataflow).
+
+### Bank 0 sound engine mapped (2026-07-22)
+
+Reverse-engineered the bank-0 music/SFX driver (`$3078`–`$3ddf`) and named its
+state. The per-channel state is a 32-byte block (`wSndChannels` `$d100`, 6
+slots) mirrored into an HRAM working set at `$ffd0` while a channel is serviced;
+all 28 HRAM fields (`hSndScriptPtr` … `hSndRestFlag`) are now named in the
+sound-driver variant of the `$ffd0` union (`ram_unions.json`, scoped to
+`$3373`–`$3de0`, extended to `$fff0` to cover the loop/rest bytes), and the
+per-pass globals `$d208`–`$d219` (`wSndActiveMask`, `wSndChannelType`,
+`wSndRegBase`, `wSndPanShadow`, …). The whole `$d100`–`$d219` block is a
+`wram_bank $07`-scoped union (see the WRAM-bank section above), so the same
+offsets in other WRAM banks stay numeric. Named the per-tick effect
+`TickInstrumentEnvelope` (`$3a40`, was `Func_00_3a40`) plus the `SndTriggerNote`
+/ `SndSilenceChannel` / `SndReleaseChannel` script handlers. Config-only
+(labels.json + ram_map.json + ram_unions.json); byte-perfect. Full architecture,
+HRAM/global field tables, and the `$a0`–`$ef` command set are in
+[docs/sound_engine.md](sound_engine.md).
 
 ### Relative labels for interior bytes of multi-byte RAM vars (2026-07-21)
 
@@ -1299,12 +1371,16 @@ deliberately left unnamed: the story-script scratch pool `$c2b0-$c2ff`
 **Union overlays**: ranges reused by non-concurrent subsystems are modeled
 via `ram_unions.json` → RGBDS `UNION`/`NEXTU` blocks in `ram/*.asm`, with
 *scope-aware* operand substitution in `disasm.py` (a variant's names render
-only at code sites inside its declared bank/address scopes; a `default`
-variant covers everything outside scoped ranges; unproven consumers keep
-numeric addresses). Current overlays: `$ffd0-$ffeb` (serial-link input slots
-default; bank-0 sound driver, sprite queue, story actor engine scoped) and
-`$c780-$c784` (char-select cursor, bank `$1b`). See docs/ram_map.md
-"Union overlays".
+only at code sites inside its declared scopes; a `default` variant covers
+everything outside scoped ranges; unproven consumers keep numeric addresses).
+A scope is `{bank[, start, end]}` (ROM location) and/or `{wram_bank: N}`
+(the WRAM bank provably selected at the site, from `compute_wram_bank`'s CFG
+dataflow — see the dated section below); constraints in one scope AND, scopes
+within a variant OR. Current overlays: `$ffd0-$ffef` (serial-link input slots
+default; bank-0 sound driver, sprite queue, story actor engine scoped),
+`$d100-$d219` (sound-engine WRAM, `wram_bank $07` + bank-0 range),
+`$c780-$c784` (char-select cursor, bank `$1b`), and the bank-`$03` save
+header/directory. See docs/ram_map.md "Union overlays".
 `disasm.py` now also inlines curated RAM symbols into `ld hl/de/bc, imm`
 pointer setups (same curated-only rule as data labels), so 16-bit fields
 read via pointer render symbolically. Data banks:

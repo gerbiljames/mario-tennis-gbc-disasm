@@ -74,3 +74,11 @@ that the VBlank handler jumps to when it detects the reset button combo.
 | `InitAudioEngine` | `$3078` | One-time sound hardware init: enables `rAUDENA`, clears `rAUDTERM`, sets `rAUDVOL`, clears wave/channel RAM. |
 | `StopAllSound` | `$3129` | Silences all sound channels by writing `$ff`/0 into the channel state RAM. |
 | `PlaySound` | `$3297` | Starts playback of the sound/song whose id is passed in `a` (0 = stop via `StopAllSound`). |
+| `RunSoundEngine` | `$3373` | Per-tick driver: mirrors each channel's state to HRAM `$ffd0`, runs the effect chain, steps the script. See [sound_engine.md](sound_engine.md). |
+| `RunSoundChannelScript` | `$3558` | Script interpreter — decodes one command opcode (`$00`-`$ef`) per note step. |
+| `SndTriggerNote` | `$3864` | Note-on: computes the APU period and keys the channel. |
+| `TickInstrumentEnvelope` | `$3a40` | Per-tick: advances the `hSndInstrument`-selected volume-envelope sequence. |
+
+The bank-0 music/SFX driver (`$3078`-`$3ddf`) is documented in full — channel
+state block, HRAM working set, per-pass globals, and the command set — in
+[docs/sound_engine.md](sound_engine.md).

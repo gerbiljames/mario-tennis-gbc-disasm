@@ -3162,10 +3162,10 @@ QueueShortText:
 	ldh a, [hWramBank] ; $7a8e
 	push af ; $7a90
 	wram_bank $07 ; $7a91
-	ld de, $df00 ; $7a97
+	ld de, wTextArgFetchBuffer ; $7a97
 	wram_bank $05 ; $7a9a
 	farcall FetchShortTextToBuffer ; $7aa0
-	ld hl, $df00 ; $7aa3
+	ld hl, wTextArgFetchBuffer ; $7aa3
 	farcall PushTextArgString ; $7aa6
 	pop af ; $7aa9
 	wram_bank ; $7aaa
