@@ -3014,6 +3014,75 @@ MACRO tilemap_rect_end
 	ds 6, $00
 ENDM
 
+; A rectangular block of tilemap (or attrmap) bytes, stored row-major and
+; copied by CopyTextRect/CopyTextRectPair. `tilemap_begin` declares the
+; geometry, one `tilemap_row` follows per row (rgbasm checks that its argument
+; count matches the declared width), and `tilemap_end` checks the row count and
+; the total size -- so a mis-carved width fails the build instead of quietly
+; rendering ragged rows.
+; Usage: tilemap_begin width, height / tilemap_row ... / tilemap_end
+MACRO tilemap_begin
+DEF _TM_W = \\1
+DEF _TM_H = \\2
+DEF _TM_ROWS = 0
+DEF _TM_START = @
+ENDM
+
+MACRO tilemap_row
+	ASSERT _NARG == _TM_W, "tilemap_row: {d:_NARG} bytes, width is {d:_TM_W}"
+	db \\#
+DEF _TM_ROWS += 1
+ENDM
+
+MACRO tilemap_end
+	ASSERT _TM_ROWS == _TM_H, "tilemap_end: {d:_TM_ROWS} rows, height is {d:_TM_H}"
+	ASSERT @ - _TM_START == _TM_W * _TM_H, "tilemap_end: size mismatch"
+ENDM
+
+; One rules screen's page list (ShowRulesPageSequence $06:$4316): the page
+; offsets, added to the screen's base text id, that it walks until the $ff
+; terminator. The lists sit in a fixed-stride array, so `rules_pages_stride`
+; declares the stride once and `rules_pages` pads each list out to it with the
+; terminator byte.
+; Usage: rules_pages_stride bytes / rules_pages page, ...
+MACRO rules_pages_stride
+DEF _RP_W = \\1
+ENDM
+
+MACRO rules_pages
+	ASSERT _NARG < _RP_W, "rules_pages: no room for the $ff terminator"
+	db \\#
+	ds _RP_W - _NARG, $ff
+ENDM
+
+; One menu of the match/story pause menu system: the item ids it lists, in
+; display order. The 8-byte record is {id0..id3, count, $00 x3} -- the count is
+; derived from the argument list (GetMatchMenuItemCount/GetStoryMenuItemCount
+; read it at +4), so a menu cannot disagree with its own length.
+; Usage: menu_def item, ... (1-4 items)
+MACRO menu_def
+	db \\#
+	ds 4 - _NARG, $00
+	db _NARG
+	ds 3, $00
+ENDM
+
+; The tile and attribute blocks of one rectangle whose geometry is fixed by the
+; drawing code rather than stored (e.g. the 3x2 menu item labels, drawn with
+; `ld bc, $0302`). One record per menu item id.
+; Usage: rect_ptrs tiles, attrs
+MACRO rect_ptrs
+	dw \\1, \\2
+ENDM
+
+; CopyTextRectPair descriptor: the geometry plus the tile and attribute blocks
+; of one rectangle (both `tilemap_begin width, height` blocks of the same size).
+; Usage: rect_pair height, width, tiles, attrs
+MACRO rect_pair
+	db \\1, \\2
+	dw \\3, \\4
+ENDM
+
 ; QueueSpriteTemplate ($1e9d) sprite record: one hardware sprite as {dy, dx,
 ; tile, attr} deltas added to the base position/tile/attr passed in the call.
 ; A list ends with oam_sprite_end (a $80 dy byte, which the loader stops on).
@@ -3903,6 +3972,79 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 if tail:
                                     lines.append("\tdb " + ", ".join(
                                         f"${rom[j - tail + k]:02x}" for k in range(tail)))
+                            elif spec.startswith("rules_pages:"):
+                                w = int(spec.split(":")[1])
+                                lines.append(f"\trules_pages_stride {w}")
+                                for r in range((j - seg) // w):
+                                    rec = rom[seg + r * w:seg + r * w + w]
+                                    n = rec.index(0xFF) if 0xFF in rec else w
+                                    # The macro rebuilds the padding, so a list
+                                    # without a clean $ff tail stays literal.
+                                    if n == w or any(x != 0xFF for x in rec[n:]):
+                                        lines.append("\tdb " + ", ".join(
+                                            f"${x:02x}" for x in rec)
+                                            + f" ; list {r}")
+                                        continue
+                                    pages = ", ".join(f"${x:02x}" for x in rec[:n])
+                                    lines.append(f"\trules_pages {pages} ; list {r}")
+                                tail = (j - seg) % w
+                                if tail:
+                                    lines.append("\tdb " + ", ".join(
+                                        f"${x:02x}" for x in rom[j - tail:j]))
+                            elif spec.startswith("menu_def:"):
+                                prefix = spec.split(":")[1]
+                                val2name = {v: n for n, v in const_defs.items()
+                                            if n.startswith(prefix + "_")}
+                                for r in range((j - seg) // 8):
+                                    b = rom[seg + r * 8:seg + r * 8 + 8]
+                                    cnt = b[4]
+                                    # Only a well-formed record (count in range,
+                                    # unused id slots and the tail zeroed) can
+                                    # take the macro, which rebuilds both.
+                                    if not (1 <= cnt <= 4 and not any(b[5:8])
+                                            and not any(b[cnt:4])):
+                                        lines.append("\tdb " + ", ".join(
+                                            f"${x:02x}" for x in b)
+                                            + f" ; menu {r}")
+                                        continue
+                                    ids = ", ".join(val2name.get(x, f"${x:02x}")
+                                                    for x in b[:cnt])
+                                    lines.append(f"\tmenu_def {ids} ; menu {r}")
+                                tail = (j - seg) % 8
+                                if tail:
+                                    lines.append("\tdb " + ", ".join(
+                                        f"${x:02x}" for x in rom[j - tail:j]))
+                            elif spec == "rect_ptrs":
+                                for r in range((j - seg) // 4):
+                                    b = rom[seg + r * 4:seg + r * 4 + 4]
+                                    refs = []
+                                    for w in (b[0] | (b[1] << 8), b[2] | (b[3] << 8)):
+                                        tgt = (bank * 0x4000 + w - 0x4000
+                                               if 0x4000 <= w < 0x8000 else None)
+                                        refs.append(labels.get(tgt) or f"${w:04x}")
+                                    lines.append(f"\trect_ptrs {refs[0]}, {refs[1]}"
+                                                 f" ; item {r}")
+                                tail = (j - seg) % 4
+                                if tail:
+                                    lines.append("\tdb " + ", ".join(
+                                        f"${x:02x}" for x in rom[j - tail:j]))
+                            elif spec == "rect_pair":
+                                # {height, width, tiles, attrs}; the two blocks
+                                # live in the same bank, so they resolve to the
+                                # tilemap/attrmap labels.
+                                for r in range((j - seg) // 6):
+                                    b = rom[seg + r * 6:seg + r * 6 + 6]
+                                    refs = []
+                                    for w in (b[2] | (b[3] << 8), b[4] | (b[5] << 8)):
+                                        tgt = (bank * 0x4000 + w - 0x4000
+                                               if 0x4000 <= w < 0x8000 else None)
+                                        refs.append(labels.get(tgt) or f"${w:04x}")
+                                    lines.append(f"\trect_pair {b[0]}, {b[1]}, "
+                                                 f"{refs[0]}, {refs[1]}")
+                                tail = (j - seg) % 6
+                                if tail:
+                                    lines.append("\tdb " + ", ".join(
+                                        f"${x:02x}" for x in rom[j - tail:j]))
                             elif spec.startswith("map_"):
                                 lines.extend(render_map_table(
                                     spec, rom, seg, j, bank, labels))
@@ -3972,13 +4114,21 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         letters = sum(1 for b in rom[body:j]
                                       if 0x61 <= (b | 0x20) <= 0x7A)
                         spaces = rom[body:j].count(0x20)
-                        if n >= 32 and m >= 32 and txt >= m * 0.95 \
-                                and letters >= m // 3 and spaces >= m // 20:
+                        # A short run splits out of a string pool only when a
+                        # curated label names it, so one label per string can
+                        # make a pointer table symbolic; the size floors still
+                        # guard the unlabeled auto-detection.
+                        named_string = (seg in labels and 3 <= n < 32
+                                        and txt == n and letters)
+                        if named_string or (n >= 32 and m >= 32
+                                            and txt >= m * 0.95
+                                            and letters >= m // 3
+                                            and spaces >= m // 20):
                             # text renders as generated db source (still
                             # under gitignored data/, so no ROM content
                             # lands in the repository)
                             blob = f"bank_{bank:03x}/text_{scpu:04x}.asm"
-                            lines.append(f"Text_{bank:02x}_{scpu:04x}:")
+                            lines.append(f"{labels.get(seg, f'Text_{bank:02x}_{scpu:04x}')}:")
                             lines.append(f'\tINCLUDE "data/{blob}" ; ${scpu:04x}, {n} bytes')
                             manifest.append((blob, seg, n, None))
                         elif n <= INLINE_DB_MAX:

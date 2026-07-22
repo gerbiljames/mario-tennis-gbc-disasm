@@ -500,6 +500,75 @@ MACRO tilemap_rect_end
 	ds 6, $00
 ENDM
 
+; A rectangular block of tilemap (or attrmap) bytes, stored row-major and
+; copied by CopyTextRect/CopyTextRectPair. `tilemap_begin` declares the
+; geometry, one `tilemap_row` follows per row (rgbasm checks that its argument
+; count matches the declared width), and `tilemap_end` checks the row count and
+; the total size -- so a mis-carved width fails the build instead of quietly
+; rendering ragged rows.
+; Usage: tilemap_begin width, height / tilemap_row ... / tilemap_end
+MACRO tilemap_begin
+DEF _TM_W = \1
+DEF _TM_H = \2
+DEF _TM_ROWS = 0
+DEF _TM_START = @
+ENDM
+
+MACRO tilemap_row
+	ASSERT _NARG == _TM_W, "tilemap_row: {d:_NARG} bytes, width is {d:_TM_W}"
+	db \#
+DEF _TM_ROWS += 1
+ENDM
+
+MACRO tilemap_end
+	ASSERT _TM_ROWS == _TM_H, "tilemap_end: {d:_TM_ROWS} rows, height is {d:_TM_H}"
+	ASSERT @ - _TM_START == _TM_W * _TM_H, "tilemap_end: size mismatch"
+ENDM
+
+; One rules screen's page list (ShowRulesPageSequence $06:$4316): the page
+; offsets, added to the screen's base text id, that it walks until the $ff
+; terminator. The lists sit in a fixed-stride array, so `rules_pages_stride`
+; declares the stride once and `rules_pages` pads each list out to it with the
+; terminator byte.
+; Usage: rules_pages_stride bytes / rules_pages page, ...
+MACRO rules_pages_stride
+DEF _RP_W = \1
+ENDM
+
+MACRO rules_pages
+	ASSERT _NARG < _RP_W, "rules_pages: no room for the $ff terminator"
+	db \#
+	ds _RP_W - _NARG, $ff
+ENDM
+
+; One menu of the match/story pause menu system: the item ids it lists, in
+; display order. The 8-byte record is {id0..id3, count, $00 x3} -- the count is
+; derived from the argument list (GetMatchMenuItemCount/GetStoryMenuItemCount
+; read it at +4), so a menu cannot disagree with its own length.
+; Usage: menu_def item, ... (1-4 items)
+MACRO menu_def
+	db \#
+	ds 4 - _NARG, $00
+	db _NARG
+	ds 3, $00
+ENDM
+
+; The tile and attribute blocks of one rectangle whose geometry is fixed by the
+; drawing code rather than stored (e.g. the 3x2 menu item labels, drawn with
+; `ld bc, $0302`). One record per menu item id.
+; Usage: rect_ptrs tiles, attrs
+MACRO rect_ptrs
+	dw \1, \2
+ENDM
+
+; CopyTextRectPair descriptor: the geometry plus the tile and attribute blocks
+; of one rectangle (both `tilemap_begin width, height` blocks of the same size).
+; Usage: rect_pair height, width, tiles, attrs
+MACRO rect_pair
+	db \1, \2
+	dw \3, \4
+ENDM
+
 ; QueueSpriteTemplate ($1e9d) sprite record: one hardware sprite as {dy, dx,
 ; tile, attr} deltas added to the base position/tile/attr passed in the call.
 ; A list ends with oam_sprite_end (a $80 dy byte, which the loader stops on).

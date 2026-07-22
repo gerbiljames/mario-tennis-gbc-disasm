@@ -207,6 +207,46 @@ def render_byte_table(data: bytes, cols: int) -> str:
     return "\n".join(out) + "\n"
 
 
+def render_tilemap(data: bytes, width: int) -> str:
+    """Render a rectangular tilemap/attrmap block as one `tilemap_row` per row,
+    bracketed by `tilemap_begin width, height` / `tilemap_end` so rgbasm checks
+    the geometry. A trailing partial row (width not a divisor) stays literal."""
+    height = len(data) // width
+    out = [f"\ttilemap_begin {width}, {height}"]
+    for r in range(height):
+        row = data[r * width:(r + 1) * width]
+        out.append("\ttilemap_row " + ", ".join(f"${b:02x}" for b in row)
+                   + f" ; row {r}")
+    out.append("\ttilemap_end")
+    for b in data[height * width:]:
+        out.append(f"\tdb ${b:02x}")
+    return "\n".join(out) + "\n"
+
+
+def render_rect_ptrs(data: bytes) -> str:
+    """Render {tiles, attrs} pointer records for a fixed-geometry rectangle."""
+    out = []
+    for i in range(0, len(data) - 3, 4):
+        r = data[i:i + 4]
+        out.append(f"\trect_ptrs ${r[0] | (r[1] << 8):04x}, "
+                   f"${r[2] | (r[3] << 8):04x}")
+    for b in data[len(data) // 4 * 4:]:
+        out.append(f"\tdb ${b:02x}")
+    return "\n".join(out) + "\n"
+
+
+def render_rect_pair(data: bytes) -> str:
+    """Render CopyTextRectPair descriptors: {height, width, tiles, attrs}."""
+    out = []
+    for i in range(0, len(data) - 5, 6):
+        r = data[i:i + 6]
+        out.append(f"\trect_pair {r[0]}, {r[1]}, "
+                   f"${r[2] | (r[3] << 8):04x}, ${r[4] | (r[5] << 8):04x}")
+    for b in data[len(data) // 6 * 6:]:
+        out.append(f"\tdb ${b:02x}")
+    return "\n".join(out) + "\n"
+
+
 def render_squares(data: bytes) -> str:
     """Render an n-squared lookup table (i^2 as 16-bit LE) as a compile-time
     FOR loop instead of 256 literal dw rows. The longest i^2 prefix becomes
@@ -282,6 +322,12 @@ def render_spec(data: bytes, spec: str) -> str:
         return render_records(data, int(param or 16))
     if kind == "bytes":
         return render_byte_table(data, int(param or 8))
+    if kind == "tilemap":
+        return render_tilemap(data, int(param or 20))
+    if kind == "rect_pair":
+        return render_rect_pair(data)
+    if kind == "rect_ptrs":
+        return render_rect_ptrs(data)
     if kind == "sound_index":
         return render_sound_index(data)
     if kind == "squares":

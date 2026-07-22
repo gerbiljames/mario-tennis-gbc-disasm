@@ -1186,7 +1186,7 @@ InitSaveHeader:
 	pop af ; $47e7
 	ret ; $47e8
 SaveSignature:
-	INCBIN "data/bank_003/d_47e9.bin" ; $47e9, 16 bytes
+	INCLUDE "data/bank_003/text_47e9.asm" ; $47e9, 16 bytes
 WipeAllSaveRam:
 	ld e, $00 ; $47f9
 Label_03_47fb:

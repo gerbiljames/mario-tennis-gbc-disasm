@@ -1,9 +1,9 @@
-# Project status — 2026-07-22
+# Project status — 2026-07-23
 
 ## Where things stand
 
-**~155.2K instructions / 399,700 bytes of proven code+structured source
-(19.1% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~155.8K instructions / 394,769 bytes of proven code+structured source
+(18.8% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -11,15 +11,153 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
+(The byte count is down 5,257 from the 2026-07-22 figure of 400,026: bank
+`$06`'s two LZ payloads used to sit inside `records:2`/`bytes:14` data tables,
+which the metric counted as structured source even though `dw`/`db` rows over
+compressed graphics are not structure. They are now named `INCBIN` streams --
+less "proven" by the counter, more correct in the source.)
+
 **Every remaining anonymous blob has been classified as code, table, or data**
 (see "Blob classification pass" below): a ROM-wide code-shape screen of all
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `a2daa3b`); the whole history rebuilds
+Everything below is **committed** (HEAD `1cf0f0c`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+
+### Pause-menu rules pages carved (bank $06, 2026-07-22)
+
+Split bank `$06`'s 180-byte `$4262` blob into the two tables
+`ShowMinigameRulesPages` (`$421d`) indexes with the inline
+`add a,lo / adc a,hi / sub a,l` base trick (which leaves no label reference for
+the auto-carver to follow): `MinigameRulesTextIdBases` (`$4262`, 9 words) and
+`MinigameRulesPageLists` (`$4274`, 27 x 6 bytes = 9 minigames x 3 levels, each
+a `$ff`-terminated list of page offsets added to the base id). Also named the
+sibling lists `MatchRulesPageLists` (`$4165`) and `TrainingRulesPageLists`
+(`$41a9`), fed to the same `ShowRulesPageSequence` (`$4316`). All three now use
+the `rules_pages` macro (below), which writes just the page offsets and pads
+each list out to the array stride with the `$ff` terminator. The base ids
+decode (bank `$26`) to each minigame's rules text and confirm the layout:
+Boo Blast `26:135`, Shooting Star `26:141`, Perfect Shot `26:146`, Target Shot
+`26:150`, Fruit Fantasy `26:159`, Banana Bunch `26:162`, Treasure Box `26:165`,
+Medallion Match `26:177`, Two-on-One `26:189`; captions come from `26:71+slot`
+(the "<Minigame>: Level N" strings). Config-only; byte-perfect.
+
+### Match menu item graphics carved (bank $06, 2026-07-22)
+
+Split bank `$06`'s 2,630-byte `$5244` blob — another inline-base table
+(`LoadMatchMenuItemGfx` `$5219`) — into `MatchMenuItemGfxPointers` (`$5244`,
+24 words, one per menu item id, now rendering symbolically), 12 bytes of
+alignment padding, `ScoreboardModeGfxTail` (`$5280`, 4 raw tiles copied to VRAM
+`$8640`, continuing the 20 tiles `LoadScoreboardModeGfx` decompresses to
+`$8500`), and 17 distinct LZ streams. Each stream was decompressed and rendered
+to identify the word art, so they carry real names:
+`MatchMenuItemGfx_Rules`/`_Controls`/`_Options`/`_Save`/`_CameraMode`/`_Music`/
+`_Normal`/`_Player`/`_On`/`_Off`/`_Cancel`/`_SaveNarrow`/`_ToMainMenu`/
+`_ToLevelSelect`/`_TryAgain`/`_QuitMatch`/`_QuitMinigame`. Item ids 14-18 share
+the "TRY AGAIN" stream and 20-23 share "QUIT MINI-GAME", which matches the menu
+tables at `$466f` (ids `$00-$17`) and the item captions at text `$013f + id`
+(bank `$30` indices 319-342). Byte-perfect.
+
+### Rest of bank $06 carved (2026-07-22)
+
+Swept every remaining blob in the match/story menu bank. A regex pass over the
+bank's inline-base idiom (`add a,lo / ld l,a / adc a,hi / sub a,l`) found all
+23 code-computed table bases, and each was resolved to a pointer table plus its
+payload:
+
+* **Scoreboard window tilemaps** (`$4a83`, was one 1,474-byte `bytes:4` blob):
+  `ScoreboardPipTiles`/`ScoreboardPipAttrs` (2x2 rects), the three
+  `ScoreboardPip*Rect` descriptors `DrawScoreboardPip*` loads, six
+  `ScoreboardTilemap0-5` + six `ScoreboardAttrmap0-5` (19x7, 19x5, 19x14 -- now
+  rendering as real window frames row by row), the six-record
+  `ScoreboardTilemapDesc0-5` array (`{height, width, tiles, attrs}`, verified by
+  chaining each pointer to the next map) and `ScoreboardTilemapPointers`
+  (`$5035`, by `$c494`).
+* **Scoreboard sprite layouts**: `ScoreboardSpriteTemplatePointers` (`$509c`)
+  over seven `SpriteTemplate_06_*` lists (`$50e2`-`$5218`) -- the `$80`
+  terminators meant the old `bytes:4` stride rendered them shifted.
+* **Mode banners**: `ScoreboardModeGfxPointers` (`$5cc9`, 11 by game mode) and
+  `ScoreboardMinigameGfxPointers` (`$5cdf`, 42 by story match) over 15 LZ
+  streams, each decompressed and read off the tiles:
+  `ScoreboardModeGfx_RankingMatch`/`_IslandOpen`/`_PracticeMatch`/`_Exhibition`/
+  `_MiniGames`/`_TennisMachine`/`_WallPractice`/`_MarioMiniGames`/
+  `_LinkedMatch`/`_ServiceMatch`/`_ServicePractice`/`_NetPlayMatch`/
+  `_NetPlayPractice`/`_StrokeMatch`/`_StrokePractice`.
+* **Story menu item graphics**: `StoryMenuItemGfxPointers` (`$72ae`) over eight
+  new streams (`_Status`, `_ClearStatus`, `_Messages`, `_Slow`, `_Fast`,
+  `_CharData`, `_Items`, `_Normal`) plus eight shared with the match menu, which
+  now show up as cross-references to the `MatchMenuItemGfx_*` labels.
+* **Menu geometry**: `MatchMenuDefs`/`StoryMenuDefs` (`$466f`/`$6ce0`), whose
+  8-byte records now use a `menu_def` macro that takes just the item ids and
+  derives the stored count from the argument list (see below), `SaveQuitMenuIdByGameMode` (`$44f3`), the
+  item/cursor position pools split by menu size (`*Pos2Items`/`3Items`/
+  `4Items`), the three story cursor-position tables, and the item rect arrays
+  `MatchMenuItemRectPointers` (`$6835`, 24 items over 16 `MatchMenuItemRect_*`
+  + `MatchMenuItemAttr_*` pairs, rendered with a `rect_ptrs` record per item)
+  and `StoryMenuItemRectPointers` (`$77cb`), whose 16 targets are
+  labeled per item (`StoryMenuItemRect_Status` ... `_Items`, same suffixes as
+  the `StoryMenuItemGfx_*` streams since both tables share the item-id space)
+  and render as 3x2 `tilemap` blocks. `StoryMenuDefs` confirms the mapping:
+  its menus are contiguous id runs that group exactly as the graphics do --
+  {0-3} = STATUS/CLEAR STATUS/OPTIONS/SAVE, {14,15} = CHAR. DATA/ITEMS,
+  {4,5} = MESSAGES/MUSIC, {6,7,8} = SLOW/NORMAL/FAST, {9,10} = ON/OFF,
+  {11,12,13} = SAVE/TO MAIN MENU/CANCEL.
+* **`DebugStatNamePointers`** (`$6a39`): a 15-word table that had been swallowed
+  into the following text stream and rendered as ASCII garbage. Each of its
+  strings (" SPEED"/" ADD"/.../"@DIVE") is now labeled `DebugStatName_*`, so
+  the table reads symbolically. Two `disasm.py` changes back this: a text run
+  starting at a labeled offset keeps the curated label instead of the generated
+  `Text_bb_xxxx` one, and a *labeled* short all-ASCII run (3-31 bytes, below
+  the auto-detection floors) now renders as a text include rather than a binary
+  blob. The latter also turned three previously opaque blobs elsewhere into
+  readable strings: `SaveSignature` ("CAMELOTGBTENNIS"), `HexDigitChars_05`
+  ("0123456789ABCDEF") and `EnterNameText_38` ("Enter Name").
+* **44 bytes of stranded code** at `$698b` (draws a 12x2 caption rect pair, then
+  menu item `$05` when `$c4c8` is set) sat inside the `$6835` blob; seeded via
+  `coverage/bank006_static2.json`. Nothing in the bank references it, so it is
+  either dead or entered through RAM dispatch.
+
+Bank `$06` now has no unlabeled data outside three alignment-padding runs.
+Byte-perfect.
+
+### tilemap / rect_pair macros (2026-07-22)
+
+Two new data specs, so rectangular tilemap data reads as a rectangle and the
+assembler checks the carve:
+
+* `tilemap:W` renders a block as `tilemap_begin W, H` + one `tilemap_row` per
+  row + `tilemap_end`. `tilemap_row` asserts its argument count equals the
+  declared width, and `tilemap_end` asserts the row count and total size -- so
+  a mis-guessed width now fails the build (`tilemap_row: 19 bytes, width is
+  18`) instead of quietly rendering ragged rows. The macros emit only the row
+  bytes, so the data round-trips unchanged.
+* `rect_pair` renders a `{height, width, tiles, attrs}` CopyTextRectPair
+  descriptor with both pointers resolved to their block labels; `rect_ptrs` is
+  its pointer-only sibling for rectangles whose geometry lives in the code.
+* `rules_pages:<stride>` renders a rules-screen page list as just its page
+  offsets; `rules_pages_stride` declares the array stride once per table and
+  the macro pads each list with the `$ff` terminator, asserting there is room
+  for one. Lists whose tail isn't clean `$ff` padding stay literal `db` rows
+  (none in bank `$06`: all 6 + 29 + 27 lists fit).
+* `menu_def:<PREFIX>` renders a pause-menu record as just its item ids, named
+  from the `<PREFIX>_*` constants: `menu_def MATCHMENUITEM_SAVE_GAME,
+  MATCHMENUITEM_QUIT_GAME, MATCHMENUITEM_CANCEL`. The macro emits the ids,
+  pads the unused id slots, and writes the stored count as `_NARG` -- so the
+  count can no longer disagree with the list (adding an id to a menu and
+  rebuilding changes the count byte too). Records that don't fit the shape
+  (count out of range, non-zero padding) fall back to a literal `db` row, and
+  all 21 records in bank `$06` fit. The two id sets are documented as
+  `MATCHMENUITEM_*` / `STORYMENUITEM_*` in `constants.inc`, each name taken
+  from the item's own caption text (`$013f + id` / `$0162 + id`, bank `$30`),
+  with the word art noted in a trailing comment where it differs.
+
+Applied to bank `$06`'s scoreboard windows (six tilemap/attrmap pairs, the
+three score pips, the three 12x2 caption rects) and their nine descriptors.
+Both specs live in `render_spec` (`tools/extract.py`), so they work for inline
+`data_tables.json` runs and for extracted blob files alike.
 
 ### Match ball renderer WRAM + scoped interior-byte expansion (2026-07-22)
 

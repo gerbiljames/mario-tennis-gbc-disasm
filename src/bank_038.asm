@@ -6507,7 +6507,7 @@ DrawEnterNameLabel:
 	wram_bank ; $716c
 	ret ; $7170
 EnterNameText_38:
-	INCBIN "data/bank_038/d_7171.bin" ; $7171, 11 bytes
+	INCLUDE "data/bank_038/text_7171.asm" ; $7171, 11 bytes
 Func_38_717c:
 	ldh a, [hWramBank] ; $717c
 	push af ; $717e

@@ -103,3 +103,54 @@ def POINTWINNER_RETURN_ACE      equ 2
 def POINTWINNER_SMASH_ACE       equ 3
 def POINTWINNER_LOB             equ 4
 def POINTWINNER_DROP_SHOT       equ 5
+
+; --- Match pause-menu item ids (MatchMenuDefs $06:$466f) ---
+; GetMatchMenuItemId returns one of these; they index MatchMenuItemGfxPointers
+; (the selected item's word art), MatchMenuItemRectPointers (its 3x2 label in
+; the list) and the item caption at text id $013f + id (bank $30, 319+id).
+; The names follow those captions; the comment gives the word art when it
+; differs, and several ids deliberately share one graphic.
+def MATCHMENUITEM_RULES              equ $00 ; "RULES"
+def MATCHMENUITEM_CONTROLS           equ $01 ; "CONTROLS"
+def MATCHMENUITEM_OPTIONS            equ $02 ; "OPTIONS"
+def MATCHMENUITEM_SAVE               equ $03 ; "SAVE" (opens the save/quit menu)
+def MATCHMENUITEM_CAMERA_MODE        equ $04 ; "CAMERA MODE"
+def MATCHMENUITEM_MUSIC              equ $05 ; "MUSIC"
+def MATCHMENUITEM_CAMERA_NORMAL      equ $06 ; "NORMAL"
+def MATCHMENUITEM_CAMERA_PLAYER      equ $07 ; "PLAYER"
+def MATCHMENUITEM_MUSIC_ON           equ $08 ; "ON"
+def MATCHMENUITEM_MUSIC_OFF          equ $09 ; "OFF"
+def MATCHMENUITEM_CANCEL             equ $0a ; "CANCEL"
+def MATCHMENUITEM_SAVE_GAME          equ $0b ; "SAVE" (narrow; performs the save)
+def MATCHMENUITEM_TO_MAIN_MENU       equ $0c ; "TO MAIN MENU"
+def MATCHMENUITEM_TO_LEVEL_SELECT    equ $0d ; "TO LEVEL SELECT"
+def MATCHMENUITEM_RETRY_MINIGAME     equ $0e ; "TRY AGAIN"
+def MATCHMENUITEM_RETRY_PRACTICE     equ $0f ; "TRY AGAIN"
+def MATCHMENUITEM_RETRY_MACHINE      equ $10 ; "TRY AGAIN"
+def MATCHMENUITEM_RETRY_PRACTICE_ALT equ $11 ; "TRY AGAIN"
+def MATCHMENUITEM_RETRY_GAME         equ $12 ; "TRY AGAIN"
+def MATCHMENUITEM_QUIT_GAME          equ $13 ; "QUIT MATCH"
+def MATCHMENUITEM_QUIT_MATCH         equ $14 ; "QUIT MINI-GAME"
+def MATCHMENUITEM_QUIT_PRACTICE      equ $15 ; "QUIT MINI-GAME"
+def MATCHMENUITEM_QUIT_MACHINE       equ $16 ; "QUIT MINI-GAME"
+def MATCHMENUITEM_QUIT_PRACTICE_ALT  equ $17 ; "QUIT MINI-GAME"
+
+; --- Story pause-menu item ids (StoryMenuDefs $06:$6ce0) ---
+; Same shape for the story-mode pause menu: StoryMenuItemGfxPointers,
+; StoryMenuItemRectPointers, caption at text id $0162 + id (bank $30, 354+id).
+def STORYMENUITEM_STATUS        equ $00 ; "STATUS"
+def STORYMENUITEM_CLEAR_STATUS  equ $01 ; "CLEAR STATUS" (game progress)
+def STORYMENUITEM_OPTIONS       equ $02 ; "OPTIONS"
+def STORYMENUITEM_SAVE          equ $03 ; "SAVE" (opens the save/quit menu)
+def STORYMENUITEM_MESSAGES      equ $04 ; "MESSAGES"
+def STORYMENUITEM_MUSIC         equ $05 ; "MUSIC"
+def STORYMENUITEM_MSG_SLOW      equ $06 ; "SLOW"
+def STORYMENUITEM_MSG_NORMAL    equ $07 ; "NORMAL"
+def STORYMENUITEM_MSG_FAST      equ $08 ; "FAST"
+def STORYMENUITEM_MUSIC_ON      equ $09 ; "ON"
+def STORYMENUITEM_MUSIC_OFF     equ $0a ; "OFF"
+def STORYMENUITEM_SAVE_GAME     equ $0b ; "SAVE" (narrow; performs the save)
+def STORYMENUITEM_TO_MAIN_MENU  equ $0c ; "TO MAIN MENU"
+def STORYMENUITEM_CANCEL        equ $0d ; "CANCEL" (continue game)
+def STORYMENUITEM_CHAR_DATA     equ $0e ; "CHAR. DATA"
+def STORYMENUITEM_ITEMS         equ $0f ; "ITEMS"

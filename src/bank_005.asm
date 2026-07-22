@@ -5718,7 +5718,7 @@ DebugDrawFlagsWindow2:
 	pop af ; $6486
 	ret ; $6487
 HexDigitChars_05:
-	INCBIN "data/bank_005/d_6488.bin" ; $6488, 16 bytes
+	INCLUDE "data/bank_005/text_6488.asm" ; $6488, 16 bytes
 DebugDrawHexRowLabel:
 	push af ; $6498
 	push bc ; $6499
