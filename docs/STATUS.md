@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~156.2K instructions / 400,260 bytes of proven code+structured source
-(19.1% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~156.2K instructions / 401,784 bytes of proven code+structured source
+(19.2% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -26,7 +26,42 @@ Everything below is **committed** (HEAD `7492079`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,931 of 19,215 labels are human-named** (up from 4,816 on 2026-07-23).
+**6,037 of 19,326 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Banks $09 and $0a: every blob now named (2026-07-25)
+
+**Bank $09** (match objects) had 10 unlabelled blobs. Four are 16-byte
+object-template arrays for `LoadObjTemplate_09` (which indexes `a * 16`):
+`ServeIndicatorObjTemplates_09`, `WinLoseResultObjTemplate_09`,
+`ServeIndicatorSideObjTemplates_09`, and `CourtBannerObjTemplates_09` —
+29 records, exactly matching the 29 entries of `VramTileset_09`. Three more
+are stranded code (two obj-flag togglers and a `res 0, [hl]` fragment).
+
+The last four are pointer tables whose targets are `sprite_template`
+regions **inside the following blob**: `$7112`/`$7129` (serve indicators) and
+`$71a4`/`$71bb` (character icons), each 4 words picked by
+`wOnCourtCharCountMinus1`. The nine templates they reach account for every
+byte — `$7129`'s 108 bytes are 8 bytes of table plus 4 x 25, and `$71bb`'s
+93 are 8 plus 9 + 17 + 9 + 17 + 33 — and one of them, `$71f7`, is also
+referenced from the object-template table.
+
+`TilesetTiles_09` stays one INCBIN on purpose: its 29 `VramTileset_09`
+entries **overlap** (records 12-15 share ranges and record 17 re-points at
+`$4900`), so there is no partition to carve it into.
+
+**Bank $0a** (court scene + minigame targets) had 26. The find was a second
+small script VM: `$6809` is a 9-word opcode table
+(`MinigameTargetOpHandlers_0a`), and seeding its handlers recovered three
+more blobs that were opcode implementations. The 922-byte `$68e1` blob is
+its **script pool**: nine pointer tables at `$6c96`-`$6d48` name 57 entry
+points that partition the pool exactly, from `$68e1` to the last script
+ending at `$6c7b`. Scripts are mostly 10 bytes, with the last of each group
+running longer.
+
+Also carved there: a pair-swap index table, `DPadMoveVectors_0a` (16
+direction combos of `{dx, dy}`, indexed by `hPlayerInputFlags >> 2 & $3c`),
+two palette blocks, a `FACEMASK_*` table, and four more stranded helpers —
+one of which is a byte-for-byte copy of bank `$04`'s `EvalFlagCondition`.
 
 ### Banks $05 and $07 carved; $06 was already clean (2026-07-25)
 

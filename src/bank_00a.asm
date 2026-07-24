@@ -163,7 +163,9 @@ EndCutsceneScriptMode:
 	pop bc ; $4138
 	pop af ; $4139
 	ret ; $413a
-	INCBIN "data/bank_00a/d_413b.bin" ; $413b, 4 bytes
+Unused_0a_413b:
+	; $413b, 4 bytes (bytes:4)
+	db $0b, $0c, $fe, $ff ; 0x00
 WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140
@@ -1224,7 +1226,36 @@ SetActorActive:
 Label_0a_473f:
 	ld [hl], b ; $473f
 	ret ; $4740
-	INCBIN "data/bank_00a/d_4741.bin" ; $4741, 37 bytes
+	ld a, d ; $4741
+	or a, e ; $4742
+	ret z ; $4743
+	ld a, e ; $4744
+	cpl ; $4745
+	add a, $01 ; $4746
+	ld e, a ; $4748
+	ld a, d ; $4749
+	sbc a, $00 ; $474a
+	cpl ; $474c
+	ld d, a ; $474d
+	add hl, de ; $474e
+	ret ; $474f
+	inc h ; $4750
+	dec h ; $4751
+	ret z ; $4752
+	push af ; $4753
+	push hl ; $4754
+	ld a, $16 ; $4755
+	add a, l ; $4757
+	ld l, a ; $4758
+	ld [hl], e ; $4759
+	inc hl ; $475a
+	ld [hl], d ; $475b
+	pop hl ; $475c
+	pop af ; $475d
+	ret ; $475e
+Unused_0a_475f:
+	; $475f, 7 bytes (bytes:7)
+	db $0c, $ff, $ff, $0b, $0c, $fe, $ff ; 0x00
 ActorScript_0a_4766:
 	; $4766, 6 bytes (actor_script)
 	as_halt
@@ -1597,7 +1628,7 @@ AssignStoryMatchCharacters:
 	ld c, $01 ; $49c2
 	farcall InitCa00RecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
-	ld hl, $49d9 ; $49ca
+	ld hl, PairSwapIndexTable_0a ; $49ca
 	add a, l ; $49cd
 	ld l, a ; $49ce
 	jr nc, Label_0a_49d2 ; $49cf
@@ -1608,7 +1639,15 @@ Label_0a_49d2:
 	farcall InitCa00RecordFromCharId ; $49d5
 Label_0a_49d8:
 	ret ; $49d8
-	INCBIN "data/bank_00a/d_49d9.bin" ; $49d9, 104 bytes
+PairSwapIndexTable_0a:
+	; $49d9, 104 bytes (bytes:16)
+	db $02, $03, $00, $01, $05, $04, $07, $06, $09, $08, $0b, $0a, $0c, $0e, $0d, $10 ; 0x00
+	db $0f, $14, $13, $12, $11, $14, $17, $16, $19, $18, $1b, $1a, $1d, $1c, $1f, $1e ; 0x10
+	db $22, $23, $20, $21, $25, $24, $27, $26, $29, $28, $2b, $2a, $2d, $2c, $2f, $2e ; 0x20
+	db $31, $30, $33, $32, $35, $34, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x30
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x40
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $61, $62 ; 0x50
+	db $63, $5e, $5f, $60, $00, $00, $00, $00 ; 0x60
 SetMatchDoublesMode:
 	ld [wMatchIsDoubles], a ; $4a41
 	sla a ; $4a44
@@ -1998,7 +2037,11 @@ Label_0a_4ddc:
 	jr Label_0a_4ddc ; $4de9
 Label_0a_4deb:
 	ret ; $4deb
-	INCBIN "data/bank_00a/d_4dec.bin" ; $4dec, 6 bytes
+RankingFlagListPtrs_0a:
+	; $4dec, 6 bytes (records:2)
+	dw $0000 ; record 0
+	dw RankingFlagList_0a_4df2 ; record 1
+	dw RankingFlagList_0a_4e00 ; record 2
 RankingFlagList_0a_4df2:
 	; $4df2, 14 bytes (records:2)
 	dw $1800 ; record 0
@@ -2140,7 +2183,7 @@ RankingFlagList_0a_4ea8:
 	dw $07a0 ; record 15
 	dw $ffff ; record 16
 GetClearStatusResultCode:
-	ld hl, $4eee ; $4eca
+	ld hl, IndexTable_0a_4eee ; $4eca
 	ld a, [wCharPosX + 2] ; $4ecd
 	ld b, a ; $4ed0
 	or a, a ; $4ed1
@@ -2164,7 +2207,9 @@ Label_0a_4ee9:
 	ld a, [hl] ; $4ee9
 	ld [wCharPosHeight], a ; $4eea
 	ret ; $4eed
-	INCBIN "data/bank_00a/d_4eee.bin" ; $4eee, 10 bytes
+IndexTable_0a_4eee:
+	; $4eee, 10 bytes (bytes:10)
+	db $01, $02, $03, $00, $04, $05, $06, $06, $07, $07 ; 0x00
 ClearStatusSetupMenuEntry:
 	call RunClearStatusSetupMenu ; $4ef8
 	ret ; $4efb
@@ -2767,11 +2812,18 @@ Label_0a_531f:
 	pop af ; $5335
 	ret ; $5336
 LoadStoryObjPalettes:
-	ld hl, $5341 ; $5337
+	ld hl, Palettes_0a_5341 ; $5337
 	ld de, $0b05 ; $533a
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
-	INCBIN "data/bank_00a/d_5341.bin" ; $5341, 40 bytes
+Palettes_0a_5341:
+	; $5341, 40 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1adc, $6bff, $1e40, $0000 ; pal 0: #e6b431 #ffffd5 #009439 #000000
+	dw $225f, $6bff, $505c, $0000 ; pal 1: #ff9441 #ffffd5 #e610a4 #000000
+	dw $331f, $6bff, $01df, $0000 ; pal 2: #ffc562 #ffffd5 #ff7300 #000000
+	dw $5a9f, $6bff, $001f, $0000 ; pal 3: #ffa4b4 #ffffd5 #ff0000 #000000
+	dw $3acc, $6bff, $7d4a, $0000 ; pal 4: #62b473 #ffffd5 #5252ff #000000
 GetTileTriggerAtPlayer:
 	push bc ; $5369
 	push de ; $536a
@@ -2809,9 +2861,26 @@ Label_0a_539d:
 	pop de ; $539f
 	pop bc ; $53a0
 	ret ; $53a1
-	INCBIN "data/bank_00a/d_53a2.bin" ; $53a2, 23 bytes
-FacingToPadBitTable:
-	INCBIN "data/bank_00a/d_53b9.bin" ; $53b9, 4 bytes
+	ld a, e ; $53a2
+	or a, d ; $53a3
+	ret z ; $53a4
+	bit 7, d ; $53a5
+	jr nz, Label_0a_53ad ; $53a7
+	call TestGameFlag ; $53a9
+	ret ; $53ac
+Label_0a_53ad:
+	res 7, d ; $53ad
+	call TestGameFlag ; $53af
+	jr z, Label_0a_53b6 ; $53b2
+	xor a, a ; $53b4
+	ret ; $53b5
+Label_0a_53b6:
+	xor a, a ; $53b6
+	inc a ; $53b7
+	ret ; $53b8
+FacingMaskTable_0a:
+	; $53b9, 4 bytes (enum:FACEMASK:4)
+	db FACEMASK_RIGHT, FACEMASK_DOWN, FACEMASK_LEFT, FACEMASK_UP ; 0x00
 CheckTriggerFacingMask:
 	push bc ; $53bd
 	push hl ; $53be
@@ -4441,13 +4510,31 @@ Label_0a_60fb:
 	rla ; $611c
 	ldh [hScrollX], a ; $611d
 	ret ; $611f
-	INCBIN "data/bank_00a/d_6120.bin" ; $6120, 64 bytes
+DPadMoveVectors_0a:
+	; $6120, 64 bytes (records:4)
+; 16 records x 4 bytes
+	dw $0000, $0000 ; record 0
+	dw $0040, $0000 ; record 1
+	dw $ffc0, $0000 ; record 2
+	dw $0000, $0000 ; record 3
+	dw $0000, $ffc0 ; record 4
+	dw $002d, $ffd3 ; record 5
+	dw $ffd3, $ffd3 ; record 6
+	dw $0000, $ffc0 ; record 7
+	dw $0000, $0040 ; record 8
+	dw $002d, $002d ; record 9
+	dw $ffd3, $002d ; record 10
+	dw $0000, $0040 ; record 11
+	dw $0000, $0000 ; record 12
+	dw $0040, $0000 ; record 13
+	dw $ffc0, $0000 ; record 14
+	dw $0000, $0000 ; record 15
 MoveSceneViewerCamera:
 	ldh a, [hPlayerInputFlags] ; $6160
 	rra ; $6162
 	rra ; $6163
 	and a, $3c ; $6164
-	ld hl, $6120 ; $6166
+	ld hl, DPadMoveVectors_0a ; $6166
 	ld d, $00 ; $6169
 	ld e, a ; $616b
 	add hl, de ; $616c
@@ -4662,7 +4749,68 @@ Label_0a_628d:
 	ld a, d ; $6298
 	ld [hl], a ; $6299
 	ret ; $629a
-	INCBIN "data/bank_00a/d_629b.bin" ; $629b, 93 bytes
+	ld a, [$cbf0] ; $629b
+	or a, a ; $629e
+	jr nz, Label_0a_62e6 ; $629f
+Label_0a_62a1:
+	ld hl, SpriteList_0a_62eb ; $62a1
+	ld a, [$cbf1] ; $62a4
+	add a, l ; $62a7
+	ld l, a ; $62a8
+	ld a, h ; $62a9
+	adc a, $00 ; $62aa
+	ld h, a ; $62ac
+	ld a, [hl] ; $62ad
+	cp a, $ff ; $62ae
+	jr nz, Label_0a_62b8 ; $62b0
+	xor a, a ; $62b2
+	ld [$cbf1], a ; $62b3
+	jr Label_0a_62a1 ; $62b6
+Label_0a_62b8:
+	ld b, a ; $62b8
+	inc hl ; $62b9
+	ld c, [hl] ; $62ba
+	inc hl ; $62bb
+	ld e, [hl] ; $62bc
+	inc hl ; $62bd
+	ld a, [hl] ; $62be
+	push af ; $62bf
+	push bc ; $62c0
+	ld l, e ; $62c1
+	ld h, $00 ; $62c2
+	add hl, hl ; $62c4
+	add hl, hl ; $62c5
+	add hl, hl ; $62c6
+	add hl, hl ; $62c7
+	ld de, $b000 ; $62c8
+	add hl, de ; $62cb
+	push hl ; $62cc
+	ld l, b ; $62cd
+	ld h, $00 ; $62ce
+	add hl, hl ; $62d0
+	add hl, hl ; $62d1
+	add hl, hl ; $62d2
+	add hl, hl ; $62d3
+	ld bc, $62f8 ; $62d4
+	add hl, bc ; $62d7
+	pop de ; $62d8
+	pop bc ; $62d9
+	call QueueVRAMCopy ; $62da
+	ld a, [$cbf1] ; $62dd
+	add a, $04 ; $62e0
+	ld [$cbf1], a ; $62e2
+	pop af ; $62e5
+Label_0a_62e6:
+	dec a ; $62e6
+	ld [$cbf0], a ; $62e7
+	ret ; $62ea
+SpriteList_0a_62eb:
+	; $62eb, 13 bytes (records:4)
+; 3 records x 4 bytes
+	dw $1000, $0a50 ; record 0
+	dw $1010, $0a50 ; record 1
+	dw $1020, $0a50 ; record 2
+	db $ff
 LoadCourtSceneGraphics:
 	push af ; $62f8
 	push bc ; $62f9
@@ -5336,7 +5484,11 @@ Label_0a_66e1:
 	ld hl, SpriteTemplate_0a_670e ; $66ef
 	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
-	INCBIN "data/bank_00a/d_66f6.bin" ; $66f6, 24 bytes
+Table_0a_66f6:
+	; $66f6, 24 bytes (bytes:8)
+	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
+	db $00, $01, $02, $03, $04, $06, $00, $01 ; 0x08
+	db $02, $04, $06, $00, $01, $02, $04, $06 ; 0x10
 SpriteTemplate_0a_670e:
 	; $670e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5514,7 +5666,29 @@ Label_0a_6804:
 	add a, $08 ; $6805
 	ld d, a ; $6807
 	ret ; $6808
-	INCBIN "data/bank_00a/d_6809.bin" ; $6809, 29 bytes
+MinigameTargetOpHandlers_0a:
+	; $6809, 18 bytes (records:2)
+	dw MinigameTargetOp_00 ; record 0
+	dw MinigameTargetOp_01 ; record 1
+	dw MinigameTargetOp_02 ; record 2
+	dw MinigameTargetOp_03 ; record 3
+	dw MinigameTargetOp_04 ; record 4
+	dw MinigameTargetOp_05 ; record 5
+	dw MinigameTargetOp_06 ; record 6
+	dw MinigameTargetOp_07 ; record 7
+	dw MinigameTargetOp_08 ; record 8
+MinigameTargetOp_00:
+	xor a, a ; $681b
+	ret ; $681c
+MinigameTargetOp_01:
+	inc de ; $681d
+	ld a, [de] ; $681e
+	inc de ; $681f
+	dec a ; $6820
+	ld [$dcf3], a ; $6821
+	xor a, a ; $6824
+	ret ; $6825
+MinigameTargetOp_02:
 	inc de ; $6826
 	ld l, e ; $6827
 	ld h, d ; $6828
@@ -5527,7 +5701,19 @@ Label_0a_6804:
 	ld d, h ; $682f
 	ld a, $01 ; $6830
 	ret ; $6832
-	INCBIN "data/bank_00a/d_6833.bin" ; $6833, 13 bytes
+MinigameTargetOp_03:
+	inc de ; $6833
+	ld a, [de] ; $6834
+	ld l, a ; $6835
+	inc de ; $6836
+	ld a, [de] ; $6837
+	ld h, a ; $6838
+	inc de ; $6839
+	push de ; $683a
+	call JumpToHL ; $683b
+	pop de ; $683e
+	ret ; $683f
+MinigameTargetOp_04:
 	ld hl, $dcf0 ; $6840
 	bit 1, [hl] ; $6843
 	jr nz, Label_0a_684b ; $6845
@@ -5537,6 +5723,7 @@ Label_0a_6804:
 Label_0a_684b:
 	xor a, a ; $684b
 	ret ; $684c
+MinigameTargetOp_05:
 	inc de ; $684d
 	ld l, e ; $684e
 	ld h, d ; $684f
@@ -5559,6 +5746,7 @@ Label_0a_684b:
 	res 1, [hl] ; $6864
 	ld a, $01 ; $6866
 	ret ; $6868
+MinigameTargetOp_06:
 	inc de ; $6869
 	ld a, [de] ; $686a
 	ld b, a ; $686b
@@ -5601,13 +5789,23 @@ Label_0a_684b:
 	set 1, [hl] ; $689c
 	ld a, $01 ; $689e
 	ret ; $68a0
+MinigameTargetOp_07:
 	inc de ; $68a1
 	ld a, [de] ; $68a2
 	inc de ; $68a3
 	ld [$dcf1], a ; $68a4
 	ld a, $01 ; $68a7
 	ret ; $68a9
-	INCBIN "data/bank_00a/d_68aa.bin" ; $68aa, 13 bytes
+MinigameTargetOp_08:
+	inc de ; $68aa
+	ld a, [de] ; $68ab
+	inc de ; $68ac
+	ld hl, $dcf1 ; $68ad
+	add a, [hl] ; $68b0
+	and a, $03 ; $68b1
+	ld [hl], a ; $68b3
+	ld a, $01 ; $68b4
+	ret ; $68b6
 RunMinigameTargetScript:
 	ld hl, $dcf3 ; $68b7
 	ld a, [hl] ; $68ba
@@ -5642,7 +5840,120 @@ MinigameTargetScriptOpReturn:
 	and a, a ; $68dd
 	jr nz, Label_0a_68c6 ; $68de
 	ret ; $68e0
-	INCBIN "data/bank_00a/d_68e1.bin" ; $68e1, 922 bytes
+MinigameTargetScript_0a_68e1:
+	INCBIN "data/bank_00a/d_68e1.bin" ; $68e1, 10 bytes
+MinigameTargetScript_0a_68eb:
+	INCBIN "data/bank_00a/d_68eb.bin" ; $68eb, 10 bytes
+MinigameTargetScript_0a_68f5:
+	INCBIN "data/bank_00a/d_68f5.bin" ; $68f5, 10 bytes
+MinigameTargetScript_0a_68ff:
+	INCBIN "data/bank_00a/d_68ff.bin" ; $68ff, 33 bytes
+MinigameTargetScript_0a_6920:
+	INCBIN "data/bank_00a/d_6920.bin" ; $6920, 10 bytes
+MinigameTargetScript_0a_692a:
+	INCBIN "data/bank_00a/d_692a.bin" ; $692a, 10 bytes
+MinigameTargetScript_0a_6934:
+	INCBIN "data/bank_00a/d_6934.bin" ; $6934, 10 bytes
+MinigameTargetScript_0a_693e:
+	INCBIN "data/bank_00a/d_693e.bin" ; $693e, 10 bytes
+MinigameTargetScript_0a_6948:
+	INCBIN "data/bank_00a/d_6948.bin" ; $6948, 10 bytes
+MinigameTargetScript_0a_6952:
+	INCBIN "data/bank_00a/d_6952.bin" ; $6952, 10 bytes
+MinigameTargetScript_0a_695c:
+	INCBIN "data/bank_00a/d_695c.bin" ; $695c, 10 bytes
+MinigameTargetScript_0a_6966:
+	INCBIN "data/bank_00a/d_6966.bin" ; $6966, 33 bytes
+MinigameTargetScript_0a_6987:
+	INCBIN "data/bank_00a/d_6987.bin" ; $6987, 10 bytes
+MinigameTargetScript_0a_6991:
+	INCBIN "data/bank_00a/d_6991.bin" ; $6991, 10 bytes
+MinigameTargetScript_0a_699b:
+	INCBIN "data/bank_00a/d_699b.bin" ; $699b, 10 bytes
+MinigameTargetScript_0a_69a5:
+	INCBIN "data/bank_00a/d_69a5.bin" ; $69a5, 10 bytes
+MinigameTargetScript_0a_69af:
+	INCBIN "data/bank_00a/d_69af.bin" ; $69af, 10 bytes
+MinigameTargetScript_0a_69b9:
+	INCBIN "data/bank_00a/d_69b9.bin" ; $69b9, 10 bytes
+MinigameTargetScript_0a_69c3:
+	INCBIN "data/bank_00a/d_69c3.bin" ; $69c3, 10 bytes
+MinigameTargetScript_0a_69cd:
+	INCBIN "data/bank_00a/d_69cd.bin" ; $69cd, 144 bytes
+MinigameTargetScript_0a_6a5d:
+	INCBIN "data/bank_00a/d_6a5d.bin" ; $6a5d, 10 bytes
+MinigameTargetScript_0a_6a67:
+	INCBIN "data/bank_00a/d_6a67.bin" ; $6a67, 10 bytes
+MinigameTargetScript_0a_6a71:
+	INCBIN "data/bank_00a/d_6a71.bin" ; $6a71, 10 bytes
+MinigameTargetScript_0a_6a7b:
+	INCBIN "data/bank_00a/d_6a7b.bin" ; $6a7b, 10 bytes
+MinigameTargetScript_0a_6a85:
+	INCBIN "data/bank_00a/d_6a85.bin" ; $6a85, 10 bytes
+MinigameTargetScript_0a_6a8f:
+	INCBIN "data/bank_00a/d_6a8f.bin" ; $6a8f, 10 bytes
+MinigameTargetScript_0a_6a99:
+	INCBIN "data/bank_00a/d_6a99.bin" ; $6a99, 10 bytes
+MinigameTargetScript_0a_6aa3:
+	INCBIN "data/bank_00a/d_6aa3.bin" ; $6aa3, 10 bytes
+MinigameTargetScript_0a_6aad:
+	INCBIN "data/bank_00a/d_6aad.bin" ; $6aad, 10 bytes
+MinigameTargetScript_0a_6ab7:
+	INCBIN "data/bank_00a/d_6ab7.bin" ; $6ab7, 10 bytes
+MinigameTargetScript_0a_6ac1:
+	INCBIN "data/bank_00a/d_6ac1.bin" ; $6ac1, 10 bytes
+MinigameTargetScript_0a_6acb:
+	INCBIN "data/bank_00a/d_6acb.bin" ; $6acb, 70 bytes
+MinigameTargetScript_0a_6b11:
+	INCBIN "data/bank_00a/d_6b11.bin" ; $6b11, 10 bytes
+MinigameTargetScript_0a_6b1b:
+	INCBIN "data/bank_00a/d_6b1b.bin" ; $6b1b, 10 bytes
+MinigameTargetScript_0a_6b25:
+	INCBIN "data/bank_00a/d_6b25.bin" ; $6b25, 10 bytes
+MinigameTargetScript_0a_6b2f:
+	INCBIN "data/bank_00a/d_6b2f.bin" ; $6b2f, 10 bytes
+MinigameTargetScript_0a_6b39:
+	INCBIN "data/bank_00a/d_6b39.bin" ; $6b39, 10 bytes
+MinigameTargetScript_0a_6b43:
+	INCBIN "data/bank_00a/d_6b43.bin" ; $6b43, 10 bytes
+MinigameTargetScript_0a_6b4d:
+	INCBIN "data/bank_00a/d_6b4d.bin" ; $6b4d, 10 bytes
+MinigameTargetScript_0a_6b57:
+	INCBIN "data/bank_00a/d_6b57.bin" ; $6b57, 10 bytes
+MinigameTargetScript_0a_6b61:
+	INCBIN "data/bank_00a/d_6b61.bin" ; $6b61, 10 bytes
+MinigameTargetScript_0a_6b6b:
+	INCBIN "data/bank_00a/d_6b6b.bin" ; $6b6b, 10 bytes
+MinigameTargetScript_0a_6b75:
+	INCBIN "data/bank_00a/d_6b75.bin" ; $6b75, 10 bytes
+MinigameTargetScript_0a_6b7f:
+	INCBIN "data/bank_00a/d_6b7f.bin" ; $6b7f, 42 bytes
+MinigameTargetScript_0a_6ba9:
+	INCBIN "data/bank_00a/d_6ba9.bin" ; $6ba9, 10 bytes
+MinigameTargetScript_0a_6bb3:
+	INCBIN "data/bank_00a/d_6bb3.bin" ; $6bb3, 35 bytes
+MinigameTargetScript_0a_6bd6:
+	INCBIN "data/bank_00a/d_6bd6.bin" ; $6bd6, 10 bytes
+MinigameTargetScript_0a_6be0:
+	INCBIN "data/bank_00a/d_6be0.bin" ; $6be0, 10 bytes
+MinigameTargetScript_0a_6bea:
+	INCBIN "data/bank_00a/d_6bea.bin" ; $6bea, 38 bytes
+MinigameTargetScript_0a_6c10:
+	INCBIN "data/bank_00a/d_6c10.bin" ; $6c10, 10 bytes
+MinigameTargetScript_0a_6c1a:
+	INCBIN "data/bank_00a/d_6c1a.bin" ; $6c1a, 10 bytes
+MinigameTargetScript_0a_6c24:
+	INCBIN "data/bank_00a/d_6c24.bin" ; $6c24, 10 bytes
+MinigameTargetScript_0a_6c2e:
+	INCBIN "data/bank_00a/d_6c2e.bin" ; $6c2e, 37 bytes
+MinigameTargetScript_0a_6c53:
+	INCBIN "data/bank_00a/d_6c53.bin" ; $6c53, 10 bytes
+MinigameTargetScript_0a_6c5d:
+	INCBIN "data/bank_00a/d_6c5d.bin" ; $6c5d, 10 bytes
+MinigameTargetScript_0a_6c67:
+	INCBIN "data/bank_00a/d_6c67.bin" ; $6c67, 10 bytes
+MinigameTargetScript_0a_6c71:
+	INCBIN "data/bank_00a/d_6c71.bin" ; $6c71, 10 bytes
 SpawnMinigameTargetFormation:
 	ld a, a ; $6c7b
 	rst Rst00 ; $6c7c
@@ -5656,50 +5967,125 @@ SpawnMinigameTargetFormation:
 	dw SpawnMinigameTargetFormation7 ; $6c8b jumptable
 	dw SpawnMinigameTargetFormation8 ; $6c8d jumptable
 SpawnMinigameTargetFormation0:
-	ld hl, $6c96 ; $6c8f
+	ld hl, MinigameTargetScriptPtrs_0a_6c96 ; $6c8f
 	call SpawnMinigameTargetsFromList ; $6c92
 	ret ; $6c95
-	INCBIN "data/bank_00a/d_6c96.bin" ; $6c96, 10 bytes
+MinigameTargetScriptPtrs_0a_6c96:
+	; $6c96, 10 bytes (records:2)
+	dw MinigameTargetScript_0a_68e1 ; record 0
+	dw MinigameTargetScript_0a_68eb ; record 1
+	dw MinigameTargetScript_0a_68f5 ; record 2
+	dw MinigameTargetScript_0a_68ff ; record 3
+	dw $0000 ; record 4
 SpawnMinigameTargetFormation1:
-	ld hl, $6ca7 ; $6ca0
+	ld hl, MinigameTargetScriptPtrs_0a_6ca7 ; $6ca0
 	call SpawnMinigameTargetsFromList ; $6ca3
 	ret ; $6ca6
-	INCBIN "data/bank_00a/d_6ca7.bin" ; $6ca7, 18 bytes
+MinigameTargetScriptPtrs_0a_6ca7:
+	; $6ca7, 18 bytes (records:2)
+	dw MinigameTargetScript_0a_6920 ; record 0
+	dw MinigameTargetScript_0a_692a ; record 1
+	dw MinigameTargetScript_0a_6934 ; record 2
+	dw MinigameTargetScript_0a_693e ; record 3
+	dw MinigameTargetScript_0a_6948 ; record 4
+	dw MinigameTargetScript_0a_6952 ; record 5
+	dw MinigameTargetScript_0a_695c ; record 6
+	dw MinigameTargetScript_0a_6966 ; record 7
+	dw $0000 ; record 8
 SpawnMinigameTargetFormation2:
-	ld hl, $6cc0 ; $6cb9
+	ld hl, MinigameTargetScriptPtrs_0a_6cc0 ; $6cb9
 	call SpawnMinigameTargetsFromList ; $6cbc
 	ret ; $6cbf
-	INCBIN "data/bank_00a/d_6cc0.bin" ; $6cc0, 18 bytes
+MinigameTargetScriptPtrs_0a_6cc0:
+	; $6cc0, 18 bytes (records:2)
+	dw MinigameTargetScript_0a_6987 ; record 0
+	dw MinigameTargetScript_0a_6991 ; record 1
+	dw MinigameTargetScript_0a_699b ; record 2
+	dw MinigameTargetScript_0a_69a5 ; record 3
+	dw MinigameTargetScript_0a_69af ; record 4
+	dw MinigameTargetScript_0a_69b9 ; record 5
+	dw MinigameTargetScript_0a_69c3 ; record 6
+	dw MinigameTargetScript_0a_69cd ; record 7
+	dw $0000 ; record 8
 SpawnMinigameTargetFormation3:
-	ld hl, $6cd9 ; $6cd2
+	ld hl, MinigameTargetScriptPtrs_0a_6cd9 ; $6cd2
 	call SpawnMinigameTargetsFromList ; $6cd5
 	ret ; $6cd8
-	INCBIN "data/bank_00a/d_6cd9.bin" ; $6cd9, 26 bytes
+MinigameTargetScriptPtrs_0a_6cd9:
+	; $6cd9, 26 bytes (records:2)
+	dw MinigameTargetScript_0a_6a5d ; record 0
+	dw MinigameTargetScript_0a_6a67 ; record 1
+	dw MinigameTargetScript_0a_6a71 ; record 2
+	dw MinigameTargetScript_0a_6a7b ; record 3
+	dw MinigameTargetScript_0a_6a85 ; record 4
+	dw MinigameTargetScript_0a_6a8f ; record 5
+	dw MinigameTargetScript_0a_6a99 ; record 6
+	dw MinigameTargetScript_0a_6aa3 ; record 7
+	dw MinigameTargetScript_0a_6aad ; record 8
+	dw MinigameTargetScript_0a_6ab7 ; record 9
+	dw MinigameTargetScript_0a_6ac1 ; record 10
+	dw MinigameTargetScript_0a_6acb ; record 11
+	dw $0000 ; record 12
 SpawnMinigameTargetFormation4:
-	ld hl, $6cfa ; $6cf3
+	ld hl, MinigameTargetScriptPtrs_0a_6cfa ; $6cf3
 	call SpawnMinigameTargetsFromList ; $6cf6
 	ret ; $6cf9
-	INCBIN "data/bank_00a/d_6cfa.bin" ; $6cfa, 26 bytes
+MinigameTargetScriptPtrs_0a_6cfa:
+	; $6cfa, 26 bytes (records:2)
+	dw MinigameTargetScript_0a_6b11 ; record 0
+	dw MinigameTargetScript_0a_6b1b ; record 1
+	dw MinigameTargetScript_0a_6b25 ; record 2
+	dw MinigameTargetScript_0a_6b2f ; record 3
+	dw MinigameTargetScript_0a_6b39 ; record 4
+	dw MinigameTargetScript_0a_6b43 ; record 5
+	dw MinigameTargetScript_0a_6b4d ; record 6
+	dw MinigameTargetScript_0a_6b57 ; record 7
+	dw MinigameTargetScript_0a_6b61 ; record 8
+	dw MinigameTargetScript_0a_6b6b ; record 9
+	dw MinigameTargetScript_0a_6b75 ; record 10
+	dw MinigameTargetScript_0a_6b7f ; record 11
+	dw $0000 ; record 12
 SpawnMinigameTargetFormation5:
-	ld hl, $6d1b ; $6d14
+	ld hl, MinigameTargetScriptPtrs_0a_6d1b ; $6d14
 	call SpawnMinigameTargetsFromList ; $6d17
 	ret ; $6d1a
-	INCBIN "data/bank_00a/d_6d1b.bin" ; $6d1b, 6 bytes
+MinigameTargetScriptPtrs_0a_6d1b:
+	; $6d1b, 6 bytes (records:2)
+	dw MinigameTargetScript_0a_6ba9 ; record 0
+	dw MinigameTargetScript_0a_6bb3 ; record 1
+	dw $0000 ; record 2
 SpawnMinigameTargetFormation6:
-	ld hl, $6d28 ; $6d21
+	ld hl, MinigameTargetScriptPtrs_0a_6d28 ; $6d21
 	call SpawnMinigameTargetsFromList ; $6d24
 	ret ; $6d27
-	INCBIN "data/bank_00a/d_6d28.bin" ; $6d28, 8 bytes
+MinigameTargetScriptPtrs_0a_6d28:
+	; $6d28, 8 bytes (records:2)
+	dw MinigameTargetScript_0a_6bd6 ; record 0
+	dw MinigameTargetScript_0a_6be0 ; record 1
+	dw MinigameTargetScript_0a_6bea ; record 2
+	dw $0000 ; record 3
 SpawnMinigameTargetFormation7:
-	ld hl, $6d37 ; $6d30
+	ld hl, MinigameTargetScriptPtrs_0a_6d37 ; $6d30
 	call SpawnMinigameTargetsFromList ; $6d33
 	ret ; $6d36
-	INCBIN "data/bank_00a/d_6d37.bin" ; $6d37, 10 bytes
+MinigameTargetScriptPtrs_0a_6d37:
+	; $6d37, 10 bytes (records:2)
+	dw MinigameTargetScript_0a_6c10 ; record 0
+	dw MinigameTargetScript_0a_6c1a ; record 1
+	dw MinigameTargetScript_0a_6c24 ; record 2
+	dw MinigameTargetScript_0a_6c2e ; record 3
+	dw $0000 ; record 4
 SpawnMinigameTargetFormation8:
-	ld hl, $6d48 ; $6d41
+	ld hl, MinigameTargetScriptPtrs_0a_6d48 ; $6d41
 	call SpawnMinigameTargetsFromList ; $6d44
 	ret ; $6d47
-	INCBIN "data/bank_00a/d_6d48.bin" ; $6d48, 10 bytes
+MinigameTargetScriptPtrs_0a_6d48:
+	; $6d48, 10 bytes (records:2)
+	dw MinigameTargetScript_0a_6c53 ; record 0
+	dw MinigameTargetScript_0a_6c5d ; record 1
+	dw MinigameTargetScript_0a_6c67 ; record 2
+	dw MinigameTargetScript_0a_6c71 ; record 3
+	dw $0000 ; record 4
 SpawnMinigameTargetsFromList:
 	ld bc, $dc00 ; $6d52
 Label_0a_6d55:
@@ -5761,7 +6147,11 @@ Label_0a_6d90:
 	ld hl, SpriteTemplate_0a_6dbd ; $6d9e
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
-	INCBIN "data/bank_00a/d_6da5.bin" ; $6da5, 24 bytes
+Table_0a_6da5:
+	; $6da5, 24 bytes (bytes:8)
+	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
+	db $00, $01, $02, $03, $04, $03, $02, $01 ; 0x08
+	db $00, $ff, $fe, $fd, $fc, $fd, $fe, $ff ; 0x10
 SpriteTemplate_0a_6dbd:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5834,7 +6224,34 @@ CheckBallHitsMinigameTargetAlt:
 	set 2, [hl] ; $6e3d
 Label_0a_6e3f:
 	ret ; $6e3f
-	INCBIN "data/bank_00a/d_6e40.bin" ; $6e40, 52 bytes
+TileList_0a_6e40:
+	; $6e40, 44 bytes (records:2)
+	dw $011e ; record 0
+	dw $011f ; record 1
+	dw $0120 ; record 2
+	dw $0121 ; record 3
+	dw $0122 ; record 4
+	dw $0226 ; record 5
+	dw $0123 ; record 6
+	dw $0124 ; record 7
+	dw $0223 ; record 8
+	dw $0125 ; record 9
+	dw $0126 ; record 10
+	dw $0127 ; record 11
+	dw $021e ; record 12
+	dw $0c1b ; record 13
+	dw $0f18 ; record 14
+	dw $0128 ; record 15
+	dw $0129 ; record 16
+	dw $0227 ; record 17
+	dw $0d1b ; record 18
+	dw $0a1d ; record 19
+	dw $011c ; record 20
+	dw $ffff ; record 21
+Palette_0a_6e6c:
+	; $6e6c, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1880, $1880, $10ee, $7fff ; pal 0: #002031 #002031 #733920 #ffffff
 RunEndingCreditsSequence:
 	ld c, $04 ; $6e74
 	call BeginFadeOut ; $6e76
@@ -5842,7 +6259,7 @@ RunEndingCreditsSequence:
 	set_flag $0d, 6 ; $6e7c
 	sound $2c ; $6e7f
 	farcall LoadMenuFontGfx ; $6e81
-	ld hl, $6e6c ; $6e84
+	ld hl, Palette_0a_6e6c ; $6e84
 	ld de, $0001 ; $6e87
 	call LoadPalettesMasterOnly ; $6e8a
 	xor a, a ; $6e8d
@@ -5938,5 +6355,7 @@ Label_0a_6f37:
 	jp nz, Label_0a_6f28 ; $6f3e
 	set_flag $0d, 7 ; $6f41
 	ret ; $6f44
-	INCBIN "data/bank_00a/d_6f45.bin" ; $6f45, 4 bytes
+Unused_0a_6f45:
+	; $6f45, 4 bytes (bytes:4)
+	db $df, $3a, $03, $c9 ; 0x00
 	; $6f49, 4279 bytes fill to bank end (linker-padded)

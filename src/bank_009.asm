@@ -227,7 +227,7 @@ SpawnServeIndicatorObjs:
 	call ClearAllObjSlots ; $4242
 	call SpawnServeIndicatorSideObj ; $4245
 	ld a, [wServingCharCourtPos] ; $4248
-	ld hl, $4298 ; $424b
+	ld hl, ServeIndicatorObjTemplates_09 ; $424b
 	ld bc, $dd80 ; $424e
 	call LoadObjTemplate_09 ; $4251
 	call GetPlayer1ServeIndicatorSprites ; $4254
@@ -236,7 +236,7 @@ SpawnServeIndicatorObjs:
 	cp a, $03 ; $425d
 	jr z, Label_09_4274 ; $425f
 	ld a, [wServingCharCourtPos] ; $4261
-	ld hl, $4298 ; $4264
+	ld hl, ServeIndicatorObjTemplates_09 ; $4264
 	ld bc, $dd90 ; $4267
 	call LoadObjTemplate_09 ; $426a
 	call GetPlayer2ServeIndicatorSprites ; $426d
@@ -253,18 +253,24 @@ Label_09_4274:
 	ret ; $4281
 DismissServeIndicatorObjs:
 	call DismissServeIndicatorSideObj ; $4282
-	ld hl, $4298 ; $4285
+	ld hl, ServeIndicatorObjTemplates_09 ; $4285
 	ld bc, $dd80 ; $4288
 	call StartObjExitAnim ; $428b
-	ld hl, $4298 ; $428e
+	ld hl, ServeIndicatorObjTemplates_09 ; $428e
 	ld bc, $dd90 ; $4291
 	call StartObjExitAnim ; $4294
 	ret ; $4297
-	INCBIN "data/bank_009/d_4298.bin" ; $4298, 64 bytes
+ServeIndicatorObjTemplates_09:
+	; $4298, 64 bytes (records:16)
+; 4 records x 16 bytes
+	dw $0070, $0000, $4764, $0004, $4764, $0006, $0000, $0000 ; record 0
+	dw $7070, $0000, $4764, $0005, $4764, $0007, $0000, $0000 ; record 1
+	dw $0000, $0000, $4764, $0004, $4764, $0006, $0000, $0000 ; record 2
+	dw $7000, $0000, $4764, $0005, $4764, $0007, $0000, $0000 ; record 3
 SpawnWinLoseResultObj:
 	push af ; $42d8
 	ld a, $00 ; $42d9
-	ld hl, $4300 ; $42db
+	ld hl, WinLoseResultObjTemplate_09 ; $42db
 	ld bc, $dd80 ; $42de
 	call LoadObjTemplate_09 ; $42e1
 	pop af ; $42e4
@@ -278,23 +284,32 @@ Label_09_42ef:
 	call SetObjSpriteTemplate ; $42f2
 	ret ; $42f5
 DismissWinLoseResultObj:
-	ld hl, $4300 ; $42f6
+	ld hl, WinLoseResultObjTemplate_09 ; $42f6
 	ld bc, $dd80 ; $42f9
 	call StartObjExitAnim ; $42fc
 	ret ; $42ff
-	INCBIN "data/bank_009/d_4300.bin" ; $4300, 16 bytes
+WinLoseResultObjTemplate_09:
+	; $4300, 16 bytes (records:16)
+; 1 records x 16 bytes
+	dw $4050, $0000, $4764, $0000, $4764, $0002, $0000, $0000 ; record 0
 SpawnServeIndicatorSideObj:
 	ld a, [wServingCharCourtPos] ; $4310
-	ld hl, $4327 ; $4313
+	ld hl, ServeIndicatorSideObjTemplates_09 ; $4313
 	ld bc, $ddc0 ; $4316
 	call LoadObjTemplate_09 ; $4319
 	ret ; $431c
 DismissServeIndicatorSideObj:
-	ld hl, $4327 ; $431d
+	ld hl, ServeIndicatorSideObjTemplates_09 ; $431d
 	ld bc, $ddc0 ; $4320
 	call StartObjExitAnim ; $4323
 	ret ; $4326
-	INCBIN "data/bank_009/d_4327.bin" ; $4327, 64 bytes
+ServeIndicatorSideObjTemplates_09:
+	; $4327, 64 bytes (records:16)
+; 4 records x 16 bytes
+	dw $f4d2, $7098, $4764, $0009, $4764, $000b, $0000, $0001 ; record 0
+	dw $f4d2, $7098, $4764, $0008, $4764, $000a, $0000, $0001 ; record 1
+	dw $f402, $7098, $4764, $0009, $4764, $000b, $0000, $0001 ; record 2
+	dw $f402, $7098, $4764, $0008, $4764, $000a, $0000, $0001 ; record 3
 ShowCourtBanner:
 	push af ; $4367
 	call ClearAllObjSlots ; $4368
@@ -303,16 +318,47 @@ ShowCourtBanner:
 	call LoadTilesetGfx ; $436d
 	pop af ; $4370
 SpawnCourtBannerObj:
-	ld hl, $4385 ; $4371
+	ld hl, CourtBannerObjTemplates_09 ; $4371
 	ld bc, $ddb0 ; $4374
 	call LoadObjTemplate_09 ; $4377
 	ret ; $437a
 HideCourtBanner:
-	ld hl, $4385 ; $437b
+	ld hl, CourtBannerObjTemplates_09 ; $437b
 	ld bc, $ddb0 ; $437e
 	call StartObjExitAnim ; $4381
 	ret ; $4384
-	INCBIN "data/bank_009/d_4385.bin" ; $4385, 464 bytes
+CourtBannerObjTemplates_09:
+	; $4385, 464 bytes (records:16)
+; 29 records x 16 bytes
+	dw $3038, $70a1, $4758, $0000, $475e, $0000, $0078, $0000 ; record 0
+	dw $4440, $7090, $4764, $0000, $4764, $0003, $006a, $0000 ; record 1
+	dw $3440, $7080, $4764, $0000, $4764, $0003, $006a, $0000 ; record 2
+	dw $4440, $7094, $4764, $0000, $4764, $0003, $006c, $0000 ; record 3
+	dw $4440, $7094, $4764, $0000, $4764, $0003, $006c, $0000 ; record 4
+	dw $4440, $7094, $4764, $0000, $4764, $0003, $006c, $0000 ; record 5
+	dw $4440, $708c, $4764, $0000, $4764, $0003, $006c, $0000 ; record 6
+	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 7
+	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 8
+	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 9
+	dw $3440, $7084, $4764, $0001, $4764, $0002, $0068, $0000 ; record 10
+	dw $4040, $7090, $4764, $0001, $4764, $0003, $006b, $0000 ; record 11
+	dw $4040, $7090, $4764, $0001, $4764, $0003, $006b, $0000 ; record 12
+	dw $4040, $7090, $4764, $0001, $4764, $0003, $006b, $0000 ; record 13
+	dw $4040, $7094, $4764, $000e, $4764, $0003, $0000, $0001 ; record 14
+	dw $3038, $70a1, $4764, $0000, $4764, $0003, $0078, $0000 ; record 15
+	dw $4040, $7090, $4764, $0000, $4764, $0003, $0000, $0000 ; record 16
+	dw $4840, $7098, $4764, $0000, $4764, $0003, $0000, $0000 ; record 17
+	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 18
+	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 19
+	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 20
+	dw $3444, $7084, $4764, $0000, $4764, $0003, $0042, $0000 ; record 21
+	dw $3444, $7084, $4764, $0000, $4764, $0003, $0043, $0000 ; record 22
+	dw $3444, $7084, $4764, $0000, $4764, $0003, $0000, $0000 ; record 23
+	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 24
+	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 25
+	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 26
+	dw $4840, $7098, $4764, $0000, $4764, $0003, $0067, $0000 ; record 27
+	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 28
 InitAllObjSlots:
 	wram_bank $04 ; $4555
 	ld bc, $dd80 ; $455b
@@ -408,7 +454,18 @@ SetObjDrawMode:
 	add hl, bc ; $45f5
 	ld [hl], d ; $45f6
 	ret ; $45f7
-	INCBIN "data/bank_009/d_45f8.bin" ; $45f8, 18 bytes
+	ld hl, $000e ; $45f8
+	add hl, bc ; $45fb
+	ld a, [hl] ; $45fc
+	xor a, $02 ; $45fd
+	ld [hl], a ; $45ff
+	ret ; $4600
+	ld hl, $000e ; $4601
+	add hl, bc ; $4604
+	ld a, [hl] ; $4605
+	xor a, $03 ; $4606
+	ld [hl], a ; $4608
+	ret ; $4609
 LoadObjTemplate_09:
 	push hl ; $460a
 	ld hl, $0000 ; $460b
@@ -628,7 +685,8 @@ Label_09_476c:
 	call GetNextMoveCurveValue ; $4771
 	jp z, Label_09_477d ; $4774
 	ret ; $4777
-	INCBIN "data/bank_009/d_4778.bin" ; $4778, 5 bytes
+	ld hl, $ddf1 ; $4778
+	res 0, [hl] ; $477b
 Label_09_477d:
 	ld hl, $ddfc ; $477d
 	inc [hl] ; $4780
@@ -830,7 +888,12 @@ GetPlayer1ServeIndicatorSprites:
 	ld d, [hl] ; $710f
 	ld e, a ; $7110
 	ret ; $7111
-	INCBIN "data/bank_009/d_7112.bin" ; $7112, 8 bytes
+Player1ServeIndicatorSpritePtrs_09:
+	; $7112, 8 bytes (records:2)
+	dw SpriteTemplate_09_7131 ; record 0
+	dw SpriteTemplate_09_7131 ; record 1
+	dw SpriteTemplate_09_7131 ; record 2
+	dw SpriteTemplate_09_714a ; record 3
 GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a, a ; $711d
@@ -843,7 +906,48 @@ GetPlayer2ServeIndicatorSprites:
 	ld d, [hl] ; $7126
 	ld e, a ; $7127
 	ret ; $7128
-	INCBIN "data/bank_009/d_7129.bin" ; $7129, 108 bytes
+Player2ServeIndicatorSpritePtrs_09:
+	; $7129, 8 bytes (records:2)
+	dw SpriteTemplate_09_7163 ; record 0
+	dw SpriteTemplate_09_7163 ; record 1
+	dw SpriteTemplate_09_717c ; record 2
+	dw SpriteTemplate_09_717c ; record 3
+SpriteTemplate_09_7131:
+	; $7131, 25 bytes (sprite_template)
+	oam_sprite $10, $08, $14, $00
+	oam_sprite $10, $10, $04, $04
+	oam_sprite $10, $18, $06, $04
+	oam_sprite $10, $20, $14, $00
+	oam_sprite $10, $28, $78, $01
+	oam_sprite $10, $30, $7a, $01
+	oam_sprite_end
+SpriteTemplate_09_714a:
+	; $714a, 25 bytes (sprite_template)
+	oam_sprite $10, $08, $04, $04
+	oam_sprite $10, $10, $06, $04
+	oam_sprite $10, $18, $14, $06
+	oam_sprite $10, $20, $16, $06
+	oam_sprite $10, $28, $78, $01
+	oam_sprite $10, $30, $7a, $01
+	oam_sprite_end
+SpriteTemplate_09_7163:
+	; $7163, 25 bytes (sprite_template)
+	oam_sprite $20, $08, $14, $00
+	oam_sprite $20, $10, $0c, $05
+	oam_sprite $20, $18, $0e, $05
+	oam_sprite $20, $20, $14, $00
+	oam_sprite $20, $28, $7c, $01
+	oam_sprite $20, $30, $7e, $01
+	oam_sprite_end
+SpriteTemplate_09_717c:
+	; $717c, 25 bytes (sprite_template)
+	oam_sprite $20, $08, $0c, $05
+	oam_sprite $20, $10, $0e, $05
+	oam_sprite $20, $18, $1c, $07
+	oam_sprite $20, $20, $1e, $07
+	oam_sprite $20, $28, $7c, $01
+	oam_sprite $20, $30, $7e, $01
+	oam_sprite_end
 GetPlayer1CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7195
 	add a, a ; $7198
@@ -856,7 +960,12 @@ GetPlayer1CharIconSprites:
 	ld d, [hl] ; $71a1
 	ld e, a ; $71a2
 	ret ; $71a3
-	INCBIN "data/bank_009/d_71a4.bin" ; $71a4, 8 bytes
+Player1CharIconSpritePtrs_09:
+	; $71a4, 8 bytes (records:2)
+	dw SpriteTemplate_09_71c3 ; record 0
+	dw SpriteTemplate_09_71c3 ; record 1
+	dw SpriteTemplate_09_71c3 ; record 2
+	dw SpriteTemplate_09_71cc ; record 3
 GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a, a ; $71af
@@ -869,5 +978,45 @@ GetPlayer2CharIconSprites:
 	ld d, [hl] ; $71b8
 	ld e, a ; $71b9
 	ret ; $71ba
-	INCBIN "data/bank_009/d_71bb.bin" ; $71bb, 93 bytes
+Player2CharIconSpritePtrs_09:
+	; $71bb, 8 bytes (records:2)
+	dw SpriteTemplate_09_71dd ; record 0
+	dw SpriteTemplate_09_71dd ; record 1
+	dw SpriteTemplate_09_71e6 ; record 2
+	dw SpriteTemplate_09_71e6 ; record 3
+SpriteTemplate_09_71c3:
+	; $71c3, 9 bytes (sprite_template)
+	oam_sprite $10, $10, $00, $04
+	oam_sprite $10, $18, $02, $04
+	oam_sprite_end
+SpriteTemplate_09_71cc:
+	; $71cc, 17 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $04
+	oam_sprite $10, $10, $02, $04
+	oam_sprite $10, $18, $10, $06
+	oam_sprite $10, $20, $12, $06
+	oam_sprite_end
+SpriteTemplate_09_71dd:
+	; $71dd, 9 bytes (sprite_template)
+	oam_sprite $10, $10, $08, $05
+	oam_sprite $10, $18, $0a, $05
+	oam_sprite_end
+SpriteTemplate_09_71e6:
+	; $71e6, 17 bytes (sprite_template)
+	oam_sprite $10, $08, $08, $05
+	oam_sprite $10, $10, $0a, $05
+	oam_sprite $10, $18, $18, $07
+	oam_sprite $10, $20, $1a, $07
+	oam_sprite_end
+SpriteTemplate_09_71f7:
+	; $71f7, 33 bytes (sprite_template)
+	oam_sprite $08, $18, $00, $04
+	oam_sprite $08, $20, $02, $04
+	oam_sprite $18, $08, $28, $09
+	oam_sprite $18, $10, $2a, $09
+	oam_sprite $18, $18, $2c, $09
+	oam_sprite $18, $20, $2e, $09
+	oam_sprite $18, $28, $78, $01
+	oam_sprite $18, $30, $7a, $01
+	oam_sprite_end
 	; $7218, 3560 bytes fill to bank end (linker-padded)

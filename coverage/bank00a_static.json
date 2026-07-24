@@ -1,0 +1,19 @@
+{
+ "_comment": "Static code-entry seeds for bank $0a: stranded helpers (a negate-add, an EvalFlagCondition copy) and every handler in the $6809 minigame-target opcode table. Flat = bank*0x4000 + (cpu-0x4000).",
+ "rom": [
+  165697,
+  165712,
+  168866,
+  172699,
+  174107,
+  174109,
+  174118,
+  174131,
+  174144,
+  174157,
+  174185,
+  174241,
+  174250
+ ],
+ "other": []
+}
