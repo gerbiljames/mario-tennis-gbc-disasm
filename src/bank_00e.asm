@@ -3053,14 +3053,14 @@ ExhibitionDeclinedCutscene:
 PlayStarWarpTransition:
 	ldh a, [hWramBank] ; $7150
 	push af ; $7152
-	ld hl, $72ce ; $7153
+	ld hl, StarWarpPalette ; $7153
 	ld de, $0901 ; $7156
 	call LoadPaletteShadow ; $7159
-	ld hl, $72e0 ; $715c
+	ld hl, StarWarpTiles ; $715c
 	ld de, $a000 ; $715f
 	ld c, $18 ; $7162
 	call QueueVRAMCopy ; $7164
-	ld hl, $7460 ; $7167
+	ld hl, StarWarpSparkleTiles ; $7167
 	ld de, $a180 ; $716a
 	ld c, $02 ; $716d
 	call QueueVRAMCopy ; $716f
@@ -3268,7 +3268,52 @@ Label_0e_72c8:
 	dec c ; $72ca
 	jr nz, Label_0e_72a4 ; $72cb
 	ret ; $72cd
-	INCBIN "data/bank_00e/d_72ce.bin" ; $72ce, 808 bytes
+StarWarpPalette:
+	; $72ce, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7e1f, $7fff, $021f, $008d ; pal 0: #ff83ff #ffffff #ff8300 #6a2000
+	; $72d6, 10 bytes (fill)
+	ds 10, $00
+StarWarpTiles:
+	INCBIN "data/bank_00e/d_72e0.bin" ; $72e0, 384 bytes
+StarWarpSparkleTiles:
+	INCBIN "data/bank_00e/d_7460.bin" ; $7460, 32 bytes
+StarWarpFrameSprites:
+	; $7480, 12 bytes (bytes:2)
+	db $00, $02 ; 0x00
+	db $04, $06 ; 0x02
+	db $08, $0a ; 0x04
+	db $0c, $0e ; 0x06
+	db $10, $12 ; 0x08
+	db $14, $16 ; 0x0a
+StarWarpPathY:
+	; $748c, 181 bytes (bytes:16)
+	db $00, $ff, $fd, $fb, $f9, $f7, $f5, $f3, $f0, $ee, $eb, $e9, $e6, $e4, $e1, $de ; 0x00
+	db $db, $d9, $d6, $d3, $d0, $cd, $cb, $c8, $c5, $c3, $c0, $bd, $bb, $b8, $b6, $b3 ; 0x10
+	db $b1, $ae, $ac, $a9, $a7, $a5, $a3, $a1, $9f, $9d, $9b, $99, $98, $96, $95, $94 ; 0x20
+	db $92, $91, $90, $90, $8f, $8f, $8f, $8f, $8f, $8f, $90, $91, $93, $94, $96, $98 ; 0x30
+	db $9b, $9d, $a0, $a2, $a5, $a8, $aa, $ad, $b0, $b3, $b5, $b8, $bb, $bd, $bf, $c1 ; 0x40
+	db $c3, $c4, $c5, $c5, $c6, $c6, $c5, $c5, $c4, $c2, $c1, $bf, $bc, $ba, $b7, $b5 ; 0x50
+	db $b2, $af, $ac, $aa, $a7, $a5, $a3, $a1, $9f, $9d, $9c, $9b, $9a, $99, $98, $97 ; 0x60
+	db $96, $96, $95, $95, $95, $95, $95, $95, $96, $97, $97, $99, $9a, $9c, $9d, $a0 ; 0x70
+	db $a2, $a4, $a7, $a9, $ac, $ae, $b1, $b4, $b7, $b9, $bc, $bf, $c2, $c4, $c7, $ca ; 0x80
+	db $cd, $cf, $d2, $d5, $d8, $da, $dd, $e0, $e2, $e5, $e7, $ea, $ec, $ee, $f1, $f3 ; 0x90
+	db $f5, $f8, $fa, $fc, $fe, $00, $01, $03, $05, $07, $09, $0b, $0d, $0e, $10, $12 ; 0xa0
+	db $13, $15, $17, $18, $1a ; 0xb0
+StarWarpPathX:
+	; $7541, 181 bytes (bytes:16)
+	db $00, $fe, $fc, $fa, $f8, $f6, $f4, $f3, $f1, $f0, $ef, $ee, $ed, $ec, $eb, $eb ; 0x00
+	db $ea, $ea, $ea, $ea, $eb, $eb, $eb, $ec, $ec, $ed, $ee, $ef, $f0, $f1, $f2, $f3 ; 0x10
+	db $f5, $f6, $f7, $f9, $fb, $fc, $fe, $00, $01, $03, $05, $07, $09, $0c, $0e, $11 ; 0x20
+	db $13, $16, $19, $1b, $1e, $21, $23, $26, $29, $2c, $2e, $31, $33, $36, $38, $3a ; 0x30
+	db $3b, $3d, $3e, $3f, $3f, $40, $40, $40, $3f, $3f, $3e, $3d, $3c, $3a, $39, $37 ; 0x40
+	db $34, $32, $2f, $2d, $2a, $27, $24, $22, $1f, $1c, $1a, $18, $17, $15, $14, $14 ; 0x50
+	db $13, $13, $14, $15, $16, $18, $19, $1c, $1e, $20, $22, $25, $27, $2a, $2d, $2f ; 0x60
+	db $32, $35, $38, $3a, $3d, $40, $43, $45, $48, $4b, $4e, $50, $53, $55, $57, $59 ; 0x70
+	db $5b, $5c, $5d, $5e, $5f, $60, $61, $61, $62, $62, $62, $62, $62, $62, $62, $62 ; 0x80
+	db $61, $61, $60, $60, $5f, $5e, $5d, $5c, $5b, $5a, $59, $57, $56, $55, $53, $52 ; 0x90
+	db $50, $4e, $4d, $4b, $49, $47, $45, $43, $41, $3f, $3d, $3b, $39, $37, $35, $32 ; 0xa0
+	db $30, $2e, $2c, $29, $27 ; 0xb0
 SpecialCourtMapScripts_0e:
 	; $75f6, 14 bytes (map_tree)
 	dw SpecialCourtEntryPoints_0e ; slot 0 EntryPoints
@@ -3664,7 +3709,186 @@ MapScriptHideLocationName_0e:
 	xor a, a ; $7c9f
 	ld [wStoryModeShowLocationName], a ; $7ca0
 	ret ; $7ca3
-	INCBIN "data/bank_00e/d_7ca4.bin" ; $7ca4, 438 bytes
+ActorScript_0e_7ca4:
+	; $7ca4, 103 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_0e_7ca4
+	as_anim $00
+	as_wait $3c
+ActorScript_0e_7d0b:
+	; $7d0b, 103 bytes (actor_script)
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_0e_7d0b
+	as_anim $00
+	as_wait $1e
+ActorScript_0e_7d72:
+	; $7d72, 105 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_0e_7d72
+	as_anim $00
+	as_wait $1e
+	as_wait $3c
+ActorScript_0e_7ddb:
+	; $7ddb, 99 bytes (actor_script)
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_0e_7ddb
+ActorScript_0e_7e3e:
+	; $7e3e, 13 bytes (actor_script)
+	as_wait $f0
+	as_anim $03
+	as_wait $50
+	as_anim $03
+	as_wait $3c
+	as_jump ActorScript_0e_7e3e
+ActorScript_0e_7e4b:
+	; $7e4b, 15 bytes (actor_script)
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $03
+	as_jump ActorScript_0e_7e4b
 ComputeTrainingGymProgressIndex:
 	test_flag $05, 7 ; $7e5a
 	jr nz, Label_0e_7e81 ; $7e5d

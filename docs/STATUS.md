@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~155.8K instructions / 394,769 bytes of proven code+structured source
-(18.8% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~156.2K instructions / 397,667 bytes of proven code+structured source
+(19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -11,7 +11,7 @@ data is now *carved into named streams and records* rather than left as
 anonymous blobs. The repo contains no ROM bytes: all data is extracted from a
 user-supplied `baserom.gbc` by `./setup.sh` per `data.manifest`.
 
-(The byte count is down 5,257 from the 2026-07-22 figure of 400,026: bank
+(The byte count is down 2,359 from the 2026-07-22 figure of 400,026: bank
 `$06`'s two LZ payloads used to sit inside `records:2`/`bytes:14` data tables,
 which the metric counted as structured source even though `dw`/`db` rows over
 compressed graphics are not structure. They are now named `INCBIN` streams --
@@ -26,7 +26,59 @@ Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,750 of 19,034 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,771 of 19,055 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Bank $0e's last two blobs carved (2026-07-24)
+
+Bank `$0e` had exactly two anonymous `INCBIN`s left, 1,246 bytes between
+them. Both were identifiable, and 830 of those bytes are now structured
+source; the remaining 416 are named tile streams.
+
+**`d_72ce.bin` (808 bytes) is the star-warp transition's asset bundle.**
+`PlayStarWarpTransition` (`$7150`) consumes the first three pieces directly
+and `UpdateStarWarpSprite` / `OffsetStarWarpPathPoint` read the rest, so the
+808 bytes decompose with nothing left over:
+
+| Address | Size | Label | Read by |
+|---|---|---|---|
+| `$72ce` | 8 | `StarWarpPalette` | `ld de,$0901` + `LoadPaletteShadow` — `e=$01` makes `c = 4` colors, `d=$09` targets shadow slot 9 (`$c148`), an OBJ palette |
+| `$72d6` | 10 | — | `$00` padding up to the tile stream (`fill`) |
+| `$72e0` | 384 | `StarWarpTiles` | `QueueVRAMCopy` with `c=$18` — 24 tiles to `$a000` |
+| `$7460` | 32 | `StarWarpSparkleTiles` | `QueueVRAMCopy` with `c=$02` — 2 tiles to `$a180`, contiguous with the block above |
+| `$7480` | 12 | `StarWarpFrameSprites` | `$7200`: `[$d000] * 2`, and `$d000` cycles 0-5 — six frames, two sprite ids each (`$00,$02` … `$14,$16`) |
+| `$748c` | 181 | `StarWarpPathY` | `OffsetStarWarpPathPoint` `$724a`, indexed `$748c + [$d001]` |
+| `$7541` | 181 | `StarWarpPathX` | `OffsetStarWarpPathPoint` `$725a`, indexed `$7541 + [$d001]` |
+
+The two 181-byte curves are the flight path. `$d001` steps by 2 per frame
+across the 90-frame (`$5a`) countdown in `$d002`, so the live index range is
+0-178 and 181 entries covers it exactly. Both read as smooth signed ramps —
+X sweeps `$00 → $ea → $40 → $13 → $62 → $27`, the looping arc the star
+traces before the fade-out at `$71e2`. The palette decodes to white /
+yellow-white / orange, and the `$7460` pair is a small four-point sparkle,
+which is what `UpdateStarWarpTrailSparkles` queues (`ld c,$18` at `$72bc`,
+the template right after the six frame pairs).
+
+**`d_7ca4.bin` (438 bytes) was actor-script bytecode, not data.** It decodes
+as `as_*` opcodes consuming 438 of 438 bytes and ending flush against
+`ComputeTrainingGymProgressIndex` at `$7e5a`. It is a pool of six
+independent loops, each closed by its own back-edge `as_jump`, now six
+`actor_script` regions: `ActorScript_0e_7ca4`, `_7d0b`, `_7d72`, `_7ddb`,
+`_7e3e`, `_7e4b`.
+
+The first four share one shape — `as_anim $01` → `as_target_rel ±$0400, dy`
+→ `as_wait_move` → `as_set_field $14, <facing>` → `as_anim $05` →
+`as_wait $4b`, six times, then jump back. `$7ca4`/`$7d72` set `FACE_DOWN`
+and `$7d0b`/`$7ddb` set `FACE_UP`, and the X shuttle is ±4 tiles: two pairs
+of actors volleying across a net. `$7e3e` and `$7e4b` are plain animation
+loops (`as_anim $03`/`$04` behind long waits). Three fall-through-only
+fragments (`$7d07`, `$7d6e`, `$7dd5`) do `as_anim $00` plus a wait before
+dropping into the next loop, so they stay inline rather than getting their
+own labels.
+
+**Caveat: nothing in `src/` points at any of the six entry points** — no
+`map_actor`, no `script_set_actor_script`, no `dw` table anywhere in the
+ROM. They are either installed through a runtime-computed pointer or dead
+content; the bytecode decode is what identifies them, not a reference.
 
 ### MinigameConfigTable symbolicated (bank $0d, 2026-07-24)
 
