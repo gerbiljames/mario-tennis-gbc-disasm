@@ -1,7 +1,7 @@
 SECTION "ROM Bank $01", ROMX[$4000], BANK[$01]
 
 	farptr RunDebugTestMenu ; $4000
-	farptr ShowDebugGfxScreenAndHang ; $4002
+	farptr ShowDmgLockoutScreen ; $4002
 	farptr LoadMenuTilesA ; $4004
 	farptr LoadMenuTilesB ; $4006
 	farptr LoadMenuFontPalette ; $4008
@@ -229,17 +229,32 @@ Label_01_4204:
 Label_01_4209:
 	call AdvanceFrame ; $4209
 	jp Label_01_40f9 ; $420c
-MenuTilesA_01:
-	INCBIN "data/bank_001/d_420f.bin" ; $420f, 257 bytes
+	db $00 ; $420f
+MenuWindowTiles_01:
+	INCBIN "data/bank_001/d_4210.bin" ; $4210, 256 bytes
 	ds 256, $00 ; $4310, fill
-MenuTilesB_01:
-	INCBIN "data/bank_001/d_4410.bin" ; $4410, 3136 bytes
+MenuFontTiles_01:
+	INCBIN "data/bank_001/d_4410.bin" ; $4410, 1536 bytes
+MenuFontFillTiles_01:
+	; $4a10, 1536 bytes (pattern)
+	ds 1536, $ff, $00
+MenuFontPalettes_01:
+	; $5010, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7fff, $6bff, $1e58, $0000 ; pal 0: #ffffff #ffffd5 #c59439 #000000
+	dw $0160, $7fff, $3def, $0000 ; pal 1: #005a00 #ffffff #7b7b7b #000000
+	dw $6587, $7fff, $5294, $0000 ; pal 2: #3962cd #ffffff #a4a4a4 #000000
+	dw $4a5f, $5fbf, $28df, $0000 ; pal 3: #ff9494 #ffeebd #ff3152 #000000
+	dw $03f2, $034b, $12c8, $19e0 ; pal 4: #94ff00 #5ad500 #41b420 #007b31
+	dw $0120, $0210, $2318, $53ff ; pal 5: #004a00 #838300 #c5c541 #ffffa4
+	dw $0120, $000f, $2118, $529f ; pal 6: #004a00 #7b0000 #c54141 #ffa4a4
+	dw $0120, $4000, $5184, $7ff4 ; pal 7: #004a00 #000083 #2062a4 #a4ffff
 LoadMenuFontPalette:
 	push af ; $5050
 	push bc ; $5051
 	push de ; $5052
 	push hl ; $5053
-	ld hl, $5010 ; $5054
+	ld hl, MenuFontPalettes_01 ; $5054
 	ld de, $0001 ; $5057
 	call LoadPaletteShadow ; $505a
 	pop hl ; $505d
@@ -252,7 +267,7 @@ LoadMenuTilesA:
 	push bc ; $5063
 	push de ; $5064
 	push hl ; $5065
-	ld hl, $4210 ; $5066
+	ld hl, MenuWindowTiles_01 ; $5066
 	ld de, $9000 ; $5069
 	ld c, $10 ; $506c
 	call QueueVRAMCopy ; $506e
@@ -266,11 +281,11 @@ LoadMenuTilesB:
 	push bc ; $5077
 	push de ; $5078
 	push hl ; $5079
-	ld hl, MenuTilesB_01 ; $507a
+	ld hl, MenuFontTiles_01 ; $507a
 	ld de, $9200 ; $507d
 	ld c, $60 ; $5080
 	call QueueVRAMCopy ; $5082
-	ld hl, $4a10 ; $5085
+	ld hl, MenuFontFillTiles_01 ; $5085
 	ld de, $8800 ; $5088
 	ld c, $60 ; $508b
 	call QueueVRAMCopy ; $508d
@@ -284,7 +299,7 @@ LoadMenuTilesBStaged:
 	push bc ; $5096
 	push de ; $5097
 	push hl ; $5098
-	ld hl, MenuTilesB_01 ; $5099
+	ld hl, MenuFontTiles_01 ; $5099
 	ld de, $9200 ; $509c
 	ld c, $20 ; $509f
 	call QueueVRAMCopy ; $50a1
@@ -299,7 +314,7 @@ LoadMenuTilesBStaged:
 	ld c, $20 ; $50bb
 	call QueueVRAMCopy ; $50bd
 	call AdvanceFrame ; $50c0
-	ld hl, $5010 ; $50c3
+	ld hl, MenuFontPalettes_01 ; $50c3
 	ld de, $8e00 ; $50c6
 	ld c, $20 ; $50c9
 	call QueueVRAMCopy ; $50cb
@@ -383,15 +398,28 @@ LoadDebugMenuPalette:
 	ld e, $01 ; $51a5
 	call LoadPaletteShadow ; $51a7
 	ret ; $51aa
-UnusedTiles_01_51ab:
-	INCBIN "data/bank_001/d_51ab.bin" ; $51ab, 261 bytes
+	; $51ab, 5 bytes (fill)
+	ds 5, $00
+UnusedJpWindowTiles_01:
+	INCBIN "data/bank_001/d_51b0.bin" ; $51b0, 256 bytes
 	ds 256, $00 ; $52b0, fill
-UnusedTiles_01_53b0:
-	INCBIN "data/bank_001/d_53b0.bin" ; $53b0, 3200 bytes
-ShowDebugGfxScreenAndHang:
+UnusedJpFontTiles_01:
+	INCBIN "data/bank_001/d_53b0.bin" ; $53b0, 3136 bytes
+UnusedJpFontPalettes_01:
+	; $5ff0, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0180, $7fff, $3def, $0000 ; pal 0: #006200 #ffffff #7b7b7b #000000
+	dw $1d2f, $7c00, $001f, $0000 ; pal 1: #7b4a39 #0000ff #ff0000 #000000
+	dw $1d2f, $7fff, $001f, $0000 ; pal 2: #7b4a39 #ffffff #ff0000 #000000
+	dw $01e0, $2508, $2508, $2508 ; pal 3: #007b00 #41414a #41414a #41414a
+	dw $01e0, $2508, $2508, $2508 ; pal 4: #007b00 #41414a #41414a #41414a
+	dw $0180, $0210, $235a, $63ff ; pal 5: #006200 #838300 #d5d541 #ffffc5
+	dw $0180, $085f, $39df, $631f ; pal 6: #006200 #ff1010 #ff7373 #ffc5c5
+	dw $0180, $0a82, $43f0, $63f8 ; pal 7: #006200 #10a410 #83ff83 #c5ffc5
+ShowDmgLockoutScreen:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032
-	ld hl, MenuGfxLZ_01 ; $6034
+	ld hl, DmgLockoutTilesLZ_01 ; $6034
 	ld de, $d000 ; $6037
 	call DecompressData ; $603a
 	ld hl, $d000 ; $603d
@@ -402,7 +430,7 @@ ShowDebugGfxScreenAndHang:
 	ld de, $8800 ; $604b
 	ld c, $80 ; $604e
 	call CopyMemoryFast ; $6050
-	ld hl, MenuGfxLZ2_01 ; $6053
+	ld hl, DmgLockoutTilemapLZ_01 ; $6053
 	ld de, $d000 ; $6056
 	call DecompressData ; $6059
 	ld hl, $d000 ; $605c
@@ -421,9 +449,9 @@ ShowDebugGfxScreenAndHang:
 Label_01_6077:
 	call AdvanceFrame ; $6077
 	jr Label_01_6077 ; $607a
-MenuGfxLZ_01:
+DmgLockoutTilesLZ_01:
 	INCBIN "data/bank_001/d_607c.bin" ; $607c, 2183 bytes
-MenuGfxLZ2_01:
+DmgLockoutTilemapLZ_01:
 	INCBIN "data/bank_001/d_6903.bin" ; $6903, 344 bytes
 RunSoundTest:
 	push af ; $6a5b

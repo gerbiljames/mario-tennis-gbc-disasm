@@ -1,9 +1,9 @@
 # path  rom_offset(hex)  length(hex)  [render-spec] — consumed by tools/extract.py
 bank_000/d_0104.bin 000104 30
-bank_001/d_420f.bin 00420f 101
-bank_001/d_4410.bin 004410 c40
-bank_001/d_51ab.bin 0051ab 105
-bank_001/d_53b0.bin 0053b0 c80
+bank_001/d_4210.bin 004210 100
+bank_001/d_4410.bin 004410 600
+bank_001/d_51b0.bin 0051b0 100
+bank_001/d_53b0.bin 0053b0 c40
 bank_001/d_607c.bin 00607c 887
 bank_001/d_6903.bin 006903 158
 bank_003/text_47e9.asm 00c7e9 10

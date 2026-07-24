@@ -6637,7 +6637,7 @@ Label_00_2596:
 	ldh a, [hIsCGB] ; $25a5
 	or a, a ; $25a7
 	jr nz, Label_00_25ad ; $25a8
-	farcall ShowDebugGfxScreenAndHang ; $25aa
+	farcall ShowDmgLockoutScreen ; $25aa
 Label_00_25ad:
 	xor a, a ; $25ad
 	ldh [rVBK], a ; $25ae

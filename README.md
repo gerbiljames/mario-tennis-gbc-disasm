@@ -52,7 +52,8 @@ byte-for-byte.
   colors), `records:N` (fixed N-byte records), `bytes:C` (byte table, C per
   row), `ascii` (a quoted string), `font_glyph` (a `db width, height` glyph
   record, drawn as pixel art in the comments), `cart_header` (the header
-  fields after the Nintendo logo), `fill` (padding, rendered as `ds` runs).
+  fields after the Nintendo logo), `pattern` (a repeated byte pattern, as one
+  `ds count, v1, v2, ...`), `fill` (padding, rendered as `ds` runs).
 - `include/hardware.inc` — standard Game Boy hardware definitions (CC0).
 - `tools/` — the disassembly tooling (see below).
 

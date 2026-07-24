@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~156.2K instructions / 398,447 bytes of proven code+structured source
+**~156.2K instructions / 398,576 bytes of proven code+structured source
 (19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -26,7 +26,58 @@ Everything below is **committed** (HEAD `8818c68`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,789 of 19,073 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,792 of 19,076 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Bank $01: the boot/debug bank's assets identified (2026-07-24)
+
+Bank `$01` holds the debug test menu, the shared menu font/window tileset and
+its loaders, the DMG lockout screen, and the sound test. Its six blobs were
+named but only loosely (`MenuTilesA_01`, `UnusedTiles_01_51ab`); rendering
+them settled what each one is, and two of them turned out to be a duplicate
+asset set.
+
+**`ShowDebugGfxScreenAndHang` is the DMG lockout screen.** Its single caller
+is `$00:$25a5` — `ldh a, [hIsCGB]` / `or a, a` / `jr nz` past the `farcall`.
+Decompressing its two streams confirms it: `$607c` is the Mario Tennis logo
+over "MARIO TENNIS (TM) This game can be played only on Game Boy (R) Color.",
+`$6903` its 32x18 tilemap. It then zeroes `rIE` and spins on `AdvanceFrame`
+forever. Renamed `ShowDmgLockoutScreen`, with
+`DmgLockoutTilesLZ_01` / `DmgLockoutTilemapLZ_01`.
+
+**The menu tileset is ASCII-addressed.** With `rLCDC` = `$c1` the BG uses the
+signed `$8800` base, so the three copies land on contiguous tile ids:
+
+| Source | VRAM | Tiles | Tile ids | Now |
+|---|---|---|---|---|
+| `$4210` | `$9000` | 16 | `$00`-`$0f` | `MenuWindowTiles_01` — box frame, cursor arrow, up/down/left/right triangles |
+| `$4410` | `$9200` | 96 | `$20`-`$7f` | `MenuFontTiles_01` — **tile id = ASCII code**, `$20` space through `$7f` |
+| `$4a10` | `$8800` | 96 | `$80`-`$df` | `MenuFontFillTiles_01` — 96 copies of one solid color-1 tile |
+| `$5010` | — | — | — | `MenuFontPalettes_01`, 8 palettes (`LoadMenuFontPalette` loads slot 0) |
+
+`MenuFontFillTiles_01` is 1,536 bytes of `$ff, $00` repeated, so it is now a
+one-line `ds 1536, $ff, $00` via a new `pattern` data-table kind rather than a
+blob. The old `MenuTilesA_01` label sat one byte early, on the `$00` that
+aligns `$4210` to a tile boundary; `LoadMenuTilesA` always loaded `$4210`.
+
+**`$51ab`-`$602f` is the same asset set with the Japanese font.** Nothing
+references it. It has the identical shape — alignment padding (5 bytes here),
+16 window tiles, 256 bytes of slack, the font block, 64 bytes of palettes —
+and its window tiles are **byte-identical** to `$4210`. The font is not: it
+keeps ASCII `$20`-`$5f` in the same slots and then runs hiragana and katakana
+through tile `$e3`, where the USA set has lowercase and the solid fill.
+Renamed `UnusedJpWindowTiles_01` / `UnusedJpFontTiles_01` /
+`UnusedJpFontPalettes_01`.
+
+**One thing that looks wrong.** `LoadMenuTilesBStaged` (`$5095`) splits
+`LoadMenuTilesB`'s first 96-tile copy into three 32-tile chunks with an
+`AdvanceFrame` between each, then does a fourth chunk from `$5010` to `$8e00`
+— but `$5010` is `MenuFontPalettes_01`, and 32 tiles from there runs 512 bytes
+into the code that follows. The address is exactly one chunk past where a
+four-chunk walk of the `$4a10` block would have ended (`$4a10 + $600` =
+`$5010`, `$8800 + $600` = `$8e00`), so the three chunks that should have
+covered `$8800`-`$8dff` appear to be missing. Whatever was intended, the
+source is not tile data. `LoadMenuFontGfxStaged` is reached from bank `$06`
+(`$6ea0`), so this is live code.
 
 ### Bank $00 carved down to the Nintendo logo (2026-07-24)
 

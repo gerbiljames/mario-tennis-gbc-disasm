@@ -208,6 +208,17 @@ def render_byte_table(data: bytes, cols: int) -> str:
     return "\n".join(out) + "\n"
 
 
+def render_pattern(data: bytes) -> str:
+    """Render a block that is one short byte pattern repeated as a single `ds`
+    -- rgbasm repeats the value list to fill the count. Used for uniform tile
+    runs (e.g. a solid-color tile stamped across a VRAM block)."""
+    for n in range(1, 17):
+        if len(data) % n == 0 and data == data[:n] * (len(data) // n):
+            vals = ", ".join(f"${b:02x}" for b in data[:n])
+            return f"\tds {len(data)}, {vals}\n"
+    return render_byte_table(data, 16)
+
+
 def render_ascii(data: bytes) -> str:
     """Render a raw ASCII run as one `db`, quoting printable stretches."""
     parts, run = [], []
@@ -411,6 +422,8 @@ def render_spec(data: bytes, spec: str) -> str:
         return render_byte_table(data, int(param or 8))
     if kind == "ascii":
         return render_ascii(data)
+    if kind == "pattern":
+        return render_pattern(data)
     if kind == "cart_header":
         return render_cart_header(data)
     if kind == "font_glyph":
