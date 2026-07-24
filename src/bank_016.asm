@@ -66,7 +66,7 @@ DrawWobblingCornerBrackets:
 ApplySpriteWobbleX_16:
 	ldh a, [hVBlankCounter] ; $4069
 	and a, $0f ; $406b
-	ld hl, $4083 ; $406d
+	ld hl, Table_16_4083 ; $406d
 	add a, l ; $4070
 	ld l, a ; $4071
 	jr nc, Label_16_4075 ; $4072
@@ -86,11 +86,13 @@ Label_16_407f:
 	sub a, b ; $4080
 	ld d, a ; $4081
 	ret ; $4082
-	INCBIN "data/bank_016/d_4083.bin" ; $4083, 16 bytes
+Table_16_4083:
+	; $4083, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplySpriteWobbleY_16:
 	ldh a, [hVBlankCounter] ; $4093
 	and a, $0f ; $4095
-	ld hl, $40ad ; $4097
+	ld hl, Table_16_40ad ; $4097
 	add a, l ; $409a
 	ld l, a ; $409b
 	jr nc, Label_16_409f ; $409c
@@ -110,7 +112,10 @@ Label_16_40a9:
 	sub a, b ; $40aa
 	ld e, a ; $40ab
 	ret ; $40ac
-	INCBIN "data/bank_016/d_40ad.bin" ; $40ad, 32 bytes
+Table_16_40ad:
+	; $40ad, 32 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
+	db $d5, $c5, $0e, $00, $06, $09, $cd, $51, $1f, $c1, $d1, $d5, $c5, $78, $82, $57 ; 0x10
 DrawCornerBrackets:
 	INCBIN "data/bank_016/d_40cd.bin" ; $40cd, 59 bytes
 MoveMenuCursorGrid_17:
@@ -380,7 +385,7 @@ InitMatchWinLoseScreen:
 	ldh a, [hWramBank] ; $45bb
 	push af ; $45bd
 	wram_bank $01 ; $45be
-	ld hl, $4608 ; $45c4
+	ld hl, Gfx_16_4608 ; $45c4
 	ld de, $d000 ; $45c7
 	call DecompressData ; $45ca
 	ld hl, $d000 ; $45cd
@@ -405,6 +410,7 @@ InitMatchWinLoseScreen:
 	wram_bank ; $4600
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
+Gfx_16_4608:
 	INCBIN "data/bank_016/d_4608.bin" ; $4608, 110 bytes
 DiagramHighlightPaletteTask:
 	INCBIN "data/bank_016/d_4676.bin" ; $4676, 108 bytes
@@ -911,7 +917,7 @@ GetResultSpriteWobbleOffset:
 	ldh a, [hVBlankCounter] ; $4dde
 	srl a ; $4de0
 	and a, $0f ; $4de2
-	ld hl, $4dee ; $4de4
+	ld hl, Table_16_4dee ; $4de4
 	add a, l ; $4de7
 	ld l, a ; $4de8
 	jr nc, Label_16_4dec ; $4de9
@@ -919,7 +925,9 @@ GetResultSpriteWobbleOffset:
 Label_16_4dec:
 	ld a, [hl] ; $4dec
 	ret ; $4ded
-	INCBIN "data/bank_016/d_4dee.bin" ; $4dee, 16 bytes
+Table_16_4dee:
+	; $4dee, 16 bytes (bytes:16)
+	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 LoadResultScreenTileGraphics:
 	ld de, $d400 ; $4dfe
 	ld b, $14 ; $4e01

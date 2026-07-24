@@ -912,7 +912,9 @@ FollowGuideIntoAcademy:
 	call BeginFadeOut ; $4fbe
 	call WaitFadeEnd ; $4fc1
 	ret ; $4fc4
-	INCBIN "data/bank_011/d_4fc5.bin" ; $4fc5, 10 bytes
+ActorListEnd_11_4fc5:
+	; $4fc5, 10 bytes (bytes:10)
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
 Label_11_4fcf:
 	ldh a, [hRomBank] ; $4fcf
 	ld hl, $537d ; $4fd1
@@ -3417,7 +3419,14 @@ ActorScript_11_7bbd:
 	as_jump .Lb
 MapScriptNop_11:
 	ret ; $7bd1
-	INCBIN "data/bank_011/d_7bd2.bin" ; $7bd2, 13 bytes
+	xor a, a ; $7bd2
+	ld [$c2da], a ; $7bd3
+	ret ; $7bd6
+	sound $a2 ; $7bd7
+	ret ; $7bd9
+	xor a, a ; $7bda
+	ld [wStoryModeShowLocationName], a ; $7bdb
+	ret ; $7bde
 ActorScript_11_7bdf:
 	; $7bdf, 99 bytes (actor_script)
 	as_anim $01

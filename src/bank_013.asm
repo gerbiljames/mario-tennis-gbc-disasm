@@ -578,11 +578,11 @@ LoadTourPointerSpriteGfx_13:
 	ldh a, [hWramBank] ; $4cdc
 	push af ; $4cde
 	wram_bank $01 ; $4cdf
-	ld hl, $4d30 ; $4ce5
+	ld hl, TourPointerTiles_13 ; $4ce5
 	ld de, $a000 ; $4ce8
 	ld c, $04 ; $4ceb
 	call QueueVRAMCopy ; $4ced
-	ld hl, $4d70 ; $4cf0
+	ld hl, TourPointerPalette_13 ; $4cf0
 	ld de, $0801 ; $4cf3
 	call LoadPaletteShadow ; $4cf6
 	pop af ; $4cf9
@@ -612,7 +612,14 @@ SpriteTemplate_13_4d20:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_013/d_4d29.bin" ; $4d29, 79 bytes
+	; $4d29, 7 bytes (fill)
+	ds 7, $00
+TourPointerTiles_13:
+	INCBIN "data/bank_013/d_4d30.bin" ; $4d30, 64 bytes
+TourPointerPalette_13:
+	; $4d70, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7fe0, $0024, $035f, $007b ; pal 0: #00ffff #200800 #ffd500 #de1800
 AnimateDoorOpen_13:
 	sound $71 ; $4d78
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $4d7a
@@ -2329,7 +2336,11 @@ ApplyPartnerCharacterVariant_13:
 	set_flag $1c, 0 ; $62d7
 Label_13_62da:
 	ret ; $62da
-	INCBIN "data/bank_013/d_62db.bin" ; $62db, 36 bytes
+Table_13_62db:
+	; $62db, 36 bytes (bytes:12)
+	db $0d, $12, $80, $ff, $01, $1e, $0d, $12, $60, $ff, $01, $32 ; 0x00
+	db $10, $03, $01, $1e, $10, $01, $10, $03, $01, $5a, $0c, $e9 ; 0x0c
+	db $ff, $10, $02, $01, $5a, $10, $04, $01, $96, $0c, $f7, $ff ; 0x18
 CourtyardEntryWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $62ff
 	cp a, $ff ; $6302
@@ -2378,7 +2389,9 @@ Label_13_6348:
 	farcall MoveActorByAngle ; $6362
 Label_13_6365:
 	ret ; $6365
-	INCBIN "data/bank_013/d_6366.bin" ; $6366, 6 bytes
+Facings_13_6366:
+	; $6366, 6 bytes (enum:FACE:6)
+	db FACE_DOWN, FACE_DOWN, FACE_UP, FACE_UP, FACE_UP, FACE_DOWN ; 0x00
 VarsityCourtTourCutscene:
 	ldh a, [hRomBank] ; $636c
 	ld hl, VarsityCourtTourActors_13 ; $636e
@@ -3576,9 +3589,171 @@ MapScriptNop_13:
 	ret ; $7b52
 	sound $a2 ; $7b53
 	ret ; $7b55
-	INCBIN "data/bank_013/d_7b56.bin" ; $7b56, 415 bytes
+	xor a, a ; $7b56
+	ld [wStoryModeShowLocationName], a ; $7b57
+	ret ; $7b5a
+ActorScript_13_7b5b:
+	; $7b5b, 410 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_13_7b5b
+	as_anim $00
+	as_wait $3c
+.L67:
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L67
+	as_anim $00
+	as_wait $1e
+.Lce:
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump .Lce
+	as_anim $00
+	as_wait $1e
+	as_wait $3c
+.L137:
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L137
 ActorScript_13_7cf5:
-	; $7cf5, 99 bytes (actor_script)
+	; $7cf5, 28 bytes (actor_script)
 	as_wait $f0
 	as_anim $03
 	as_wait $50
@@ -3593,7 +3768,39 @@ ActorScript_13_7cf5:
 	as_wait $8c
 	as_anim $03
 	as_jump .Ld
-	INCBIN "data/bank_013/d_7d11.bin" ; $7d11, 71 bytes (unclassified tail)
+	test_flag $05, 7 ; $7d11
+	jr nz, Label_13_7d38 ; $7d14
+	ld a, $00 ; $7d16
+	test_flag $0a, 3 ; $7d18
+	jr z, Label_13_7d34 ; $7d1b
+	ld a, $02 ; $7d1d
+	test_flag $0a, 7 ; $7d1f
+	jr z, Label_13_7d34 ; $7d22
+	ld a, $04 ; $7d24
+	test_flag $15, 6 ; $7d26
+	jr z, Label_13_7d34 ; $7d29
+	ld a, $06 ; $7d2b
+	test_flag $16, 0 ; $7d2d
+	jr z, Label_13_7d34 ; $7d30
+	ld a, $08 ; $7d32
+Label_13_7d34:
+	ld [$c2b0], a ; $7d34
+	ret ; $7d37
+Label_13_7d38:
+	ld a, $01 ; $7d38
+	test_flag $08, 2 ; $7d3a
+	jr z, Label_13_7d34 ; $7d3d
+	ld a, $03 ; $7d3f
+	test_flag $08, 6 ; $7d41
+	jr z, Label_13_7d34 ; $7d44
+	ld a, $05 ; $7d46
+	test_flag $15, 7 ; $7d48
+	jr z, Label_13_7d34 ; $7d4b
+	ld a, $07 ; $7d4d
+	test_flag $16, 1 ; $7d4f
+	jr z, Label_13_7d34 ; $7d52
+	ld a, $09 ; $7d54
+	jr Label_13_7d34 ; $7d56
 ComputeStoryRankTier_13:
 	ld a, $00 ; $7d58
 	test_flag $0a, 3 ; $7d5a

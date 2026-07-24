@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~160.3K instructions / 411,308 bytes of proven code+structured source
-(19.6% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~160.5K instructions / 414,791 bytes of proven code+structured source
+(19.8% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -26,7 +26,58 @@ Everything below is **committed** (HEAD `7ee4fff`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,152 of 19,990 labels are human-named** (up from 4,816 on 2026-07-23).
+**6,199 of 20,051 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Story banks $0f-$16 cleared with a decode-based blob screen (2026-07-25)
+
+Banks `$0f`-`$16` are the story-mode map/scene family, and their blobs turned
+out to be the same handful of shapes repeated per bank. All eight are now
+free of unlabelled blobs.
+
+**A decode screen made this tractable.** Rather than reading each blob by
+hand, a script tries a linear SM83 decode of every unlabelled region
+(honouring the project's `rst` pseudo-ops, which carry inline operands) and
+asks: does it decode to *exactly* its last byte, ending on a terminal
+instruction? Random data essentially never does, so a full-extent clean
+decode is strong evidence of stranded code. That found the per-bank
+map-script helper stubs — `ret` / `xor a; ld [$c2da], a; ret` /
+`sound $a2` / `xor a; ld [$c2d5], a; ret`, byte-identical across banks —
+sitting between the actor scripts and the data that follows them.
+
+**Behind those stubs were four more actor-script pools.** With the stubs
+seeded, the data starting `10 01 06 00 04 00 02 02 0d 14 40 00` is the same
+bytecode bank `$0e` yielded on 2026-07-24; banks `$11` and `$12` already had
+theirs declared, and `$0f`, `$10`, `$13`, `$14` and `$15` now do too — 558,
+486, 411, 438 and 419 bytes of `as_*` opcodes:
+
+```
+ActorScript_0f_7b8d:
+	; $7b8d, 558 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+```
+
+Each pool is followed by the same 120-byte pair of `test_flag`-driven
+routines; bank `$14`'s copy is byte-identical to bank `$0f`'s, which is what
+justified seeding it.
+
+The rest was routine once the references were followed: `LoadPaletteShadow`
+and `QueueVRAMCopy` call sites split every remaining blob into
+alignment padding + tiles + palettes (bank `$14`'s island and firework
+assets, bank `$13`'s tour pointer, bank `$15`'s water-sprite HUD), a
+`map_actors` table at `$14:$6675` reached through
+`ScriptRespawnLocationActors`, a `mode_hooks` table plus its six handlers at
+`$10:$4bd8`, several `FACE_*` direction tables now rendered as
+`enum:FACE`, and a scattering of text-id `dw` tables.
+
+**One false positive worth recording:** the screen flagged `$14:$6ea1` (79
+bytes) as code, but its only reference is `LoadPaletteShadow` with
+`de = $0904` — four palettes. Palette data decodes as plausible instructions
+more often than you would expect, so a clean decode is evidence, not proof;
+every seed in this pass was cross-checked against how the region is actually
+referenced.
 
 ### Bank $0b: drill definitions unlock 7.7K of hidden code (2026-07-25)
 

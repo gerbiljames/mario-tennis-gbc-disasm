@@ -932,9 +932,9 @@ Test2InitScript_10:
 	ld a, $02 ; $4bb4
 	ld [wOnCourtCharCount], a ; $4bb6
 	ldh a, [hRomBank] ; $4bb9
-	ld de, $4bd8 ; $4bbb
+	ld de, WaterSpriteModeHooks_10 ; $4bbb
 	farcall SetModeHookTable ; $4bbe
-	ld de, $4c13 ; $4bc1
+	ld de, MinigamePointTable_10_4c13 ; $4bc1
 	farcall SetMinigamePointTable ; $4bc4
 	ld a, $1a ; $4bc7
 	ld [wMatchPlayerChar], a ; $4bc9
@@ -943,7 +943,89 @@ Test2InitScript_10:
 	farcall RunN64ExhibData ; $4bd1
 	farcall RunMinigameMatch ; $4bd4
 	ret ; $4bd7
-	INCBIN "data/bank_010/d_4bd8.bin" ; $4bd8, 243 bytes
+WaterSpriteModeHooks_10:
+	; $4bd8, 16 bytes (mode_hooks)
+	dw $4be8 ; record 0
+	dw $4bfc ; record 1
+	dw $4bfd ; record 2
+	dw RetStub ; record 3
+	dw $4beb ; record 4
+	dw $4bea ; record 5
+	dw $4be9 ; record 6
+	dw RetStub ; record 7
+	ret ; $4be8
+	ret ; $4be9
+	ret ; $4bea
+	ld a, [wRallyLength] ; $4beb
+	cp a, $02 ; $4bee
+	jr c, Label_10_4bfb ; $4bf0
+	ld a, $01 ; $4bf2
+	ld [wMatchAbortFlag], a ; $4bf4
+	ld hl, wTotalPointsScoredInCurrentGame ; $4bf7
+	inc [hl] ; $4bfa
+Label_10_4bfb:
+	ret ; $4bfb
+	ret ; $4bfc
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4bfd
+	bit 0, a ; $4c00
+	ret nz ; $4c02
+	ld a, [wCharacter1ServiceAces] ; $4c03
+	ld hl, wCharacter2ServiceAces ; $4c06
+	cp a, [hl] ; $4c09
+	jr nz, Label_10_4c0d ; $4c0a
+	ret ; $4c0c
+Label_10_4c0d:
+	ld a, $80 ; $4c0d
+	ld [wMatchAbortFlag], a ; $4c0f
+	ret ; $4c12
+MinigamePointTable_10_4c13:
+	; $4c13, 184 bytes (bytes:4)
+	db $00, $03, $09, $09 ; 0x00
+	db $00, $01, $09, $09 ; 0x04
+	db $03, $00, $09, $09 ; 0x08
+	db $01, $00, $09, $09 ; 0x0c
+	db $01, $02, $09, $09 ; 0x10
+	db $00, $01, $09, $09 ; 0x14
+	db $02, $01, $09, $09 ; 0x18
+	db $01, $00, $09, $09 ; 0x1c
+	db $03, $00, $09, $09 ; 0x20
+	db $00, $01, $09, $09 ; 0x24
+	db $00, $03, $09, $09 ; 0x28
+	db $01, $00, $09, $09 ; 0x2c
+	db $02, $01, $09, $09 ; 0x30
+	db $00, $01, $09, $09 ; 0x34
+	db $01, $02, $09, $09 ; 0x38
+	db $01, $00, $09, $09 ; 0x3c
+	db $ff, $f0, $94, $e6 ; 0x40
+	db $03, $57, $21, $b4 ; 0x44
+	db $c2, $7e, $b7, $72 ; 0x48
+	db $20, $1d, $7a, $b7 ; 0x4c
+	db $28, $19, $21, $b2 ; 0x50
+	db $c2, $2a, $56, $5f ; 0x54
+	db $13, $21, $b2, $c2 ; 0x58
+	db $7b, $22, $72, $e5 ; 0x5c
+	db $d5, $62, $6b, $11 ; 0x60
+	db $04, $0f, $cd, $ce ; 0x64
+	db $1a, $d1, $e1, $21 ; 0x68
+	db $b0, $c2, $2a, $56 ; 0x6c
+	db $5f, $1b, $7a, $b3 ; 0x70
+	db $28, $0c, $21, $b0 ; 0x74
+	db $c2, $7b, $22, $72 ; 0x78
+	db $3e, $01, $ea, $b5 ; 0x7c
+	db $c2, $c9, $21, $54 ; 0x80
+	db $4c, $cd, $cb, $1b ; 0x84
+	db $af, $ea, $b5, $c2 ; 0x88
+	db $c9, $cf, $74, $11 ; 0x8c
+	db $58, $02, $21, $b0 ; 0x90
+	db $c2, $7b, $22, $72 ; 0x94
+	db $21, $b2, $c2, $af ; 0x98
+	db $22, $22, $22, $22 ; 0x9c
+	db $3e, $01, $21, $54 ; 0xa0
+	db $4c, $cd, $6a, $1b ; 0xa4
+	db $cd, $31, $26, $fa ; 0xa8
+	db $b5, $c2, $b7, $20 ; 0xac
+	db $f7, $cf, $75, $cd ; 0xb0
+	db $25, $27, $78, $c9 ; 0xb4
 DevelopmentMapScripts_10:
 	; $4ccb, 14 bytes (map_tree)
 	dw DevelopmentEntryPoints_10 ; slot 0 EntryPoints
@@ -1008,7 +1090,16 @@ DevelopmentRespawnActorsAlt_10:
 	farcall EndCutsceneScriptMode ; $4d97
 	ret ; $4d9a
 	ret ; $4d9b
-	INCBIN "data/bank_010/d_4d9c.bin" ; $4d9c, 10 bytes
+	ret ; $4d9c
+	ret ; $4d9d
+	ret ; $4d9e
+	ret ; $4d9f
+	ret ; $4da0
+	ret ; $4da1
+	ret ; $4da2
+	ret ; $4da3
+	ret ; $4da4
+	ret ; $4da5
 	ld a, $0e ; $4da6
 	ld [$c294], a ; $4da8
 	ld [wStoryModeExitLocationRequest], a ; $4dab
@@ -2573,7 +2664,13 @@ Label_10_5ce9:
 	script_wait_idle $06 ; $5cf0
 	script_speak $06 ; $5cf5
 	ret ; $5cfa
-	INCBIN "data/bank_010/d_5cfb.bin" ; $5cfb, 10 bytes
+TextIds_10_5cfb:
+	; $5cfb, 10 bytes (records:2)
+	dw $0c26 ; record 0
+	dw $0c4a ; record 1
+	dw $0c77 ; record 2
+	dw $0ca1 ; record 3
+	dw $0cc9 ; record 4
 RestaurantNpc12_10:
 	call TestRestaurantNpc12StageFlag_10 ; $5d05
 	jp nz, Label_10_5db6 ; $5d08
@@ -4585,7 +4682,186 @@ MapScriptClearActiveFlag_10:
 	xor a, a ; $7bfa
 	ld [$c2da], a ; $7bfb
 	ret ; $7bfe
-	INCBIN "data/bank_010/d_7bff.bin" ; $7bff, 446 bytes
+	sound $a2 ; $7bff
+	ret ; $7c01
+	xor a, a ; $7c02
+	ld [wStoryModeShowLocationName], a ; $7c03
+	ret ; $7c06
+ActorScript_10_7c07:
+	; $7c07, 438 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_10_7c07
+	as_anim $00
+	as_wait $3c
+.L67:
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L67
+	as_anim $00
+	as_wait $1e
+.Lce:
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump .Lce
+	as_anim $00
+	as_wait $1e
+	as_wait $3c
+.L137:
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L137
+.L19a:
+	as_wait $f0
+	as_anim $03
+	as_wait $50
+	as_anim $03
+	as_wait $3c
+	as_jump .L19a
+.L1a7:
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $03
+	as_jump .L1a7
 SetStoryDialogueStage_10:
 	test_flag $05, 7 ; $7dbd
 	jr nz, Label_10_7de4 ; $7dc0

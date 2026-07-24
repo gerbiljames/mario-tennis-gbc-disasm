@@ -3218,7 +3218,9 @@ Label_0f_7af8:
 	farcall MoveActorByAngle ; $7b12
 Label_0f_7b15:
 	ret ; $7b15
-	INCBIN "data/bank_00f/d_7b16.bin" ; $7b16, 10 bytes
+Facings_0f_7b16:
+	; $7b16, 10 bytes (enum:FACE:10)
+	db FACE_DOWN, FACE_DOWN, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_UP, FACE_UP, FACE_LEFT, FACE_RIGHT, FACE_DOWN ; 0x00
 SetPlayerAndPartnerObjectDefs:
 	test_flag $05, 7 ; $7b20
 	jp z, Label_0f_7b3e ; $7b23
@@ -3266,12 +3268,254 @@ ActorScript_0f_7b61:
 	as_wait $28
 	as_jump .Lb
 ActorScript_0f_7b75:
-	; $7b75, 582 bytes (actor_script)
+	; $7b75, 10 bytes (actor_script)
 	as_begin_path
 .L1:
 	as_rand_box $01, $01
 	as_wait_move2
 	as_wait $28
 	as_jump .L1
-	INCBIN "data/bank_00f/d_7b7f.bin" ; $7b7f, 572 bytes (unclassified tail)
+	ret ; $7b7f
+	xor a, a ; $7b80
+	ld [$c2da], a ; $7b81
+	ret ; $7b84
+	sound $a2 ; $7b85
+	ret ; $7b87
+	xor a, a ; $7b88
+	ld [wStoryModeShowLocationName], a ; $7b89
+	ret ; $7b8c
+ActorScript_0f_7b8d:
+	; $7b8d, 438 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_0f_7b8d
+	as_anim $00
+	as_wait $3c
+.L67:
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L67
+	as_anim $00
+	as_wait $1e
+.Lce:
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump .Lce
+	as_anim $00
+	as_wait $1e
+	as_wait $3c
+.L137:
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L137
+.L19a:
+	as_wait $f0
+	as_anim $03
+	as_wait $50
+	as_anim $03
+	as_wait $3c
+	as_jump .L19a
+.L1a7:
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $03
+	as_jump .L1a7
+	test_flag $05, 7 ; $7d43
+	jr nz, Label_0f_7d6a ; $7d46
+	ld a, $00 ; $7d48
+	test_flag $0a, 3 ; $7d4a
+	jr z, Label_0f_7d66 ; $7d4d
+	ld a, $02 ; $7d4f
+	test_flag $0a, 7 ; $7d51
+	jr z, Label_0f_7d66 ; $7d54
+	ld a, $04 ; $7d56
+	test_flag $15, 6 ; $7d58
+	jr z, Label_0f_7d66 ; $7d5b
+	ld a, $06 ; $7d5d
+	test_flag $16, 0 ; $7d5f
+	jr z, Label_0f_7d66 ; $7d62
+	ld a, $08 ; $7d64
+Label_0f_7d66:
+	ld [$c2b0], a ; $7d66
+	ret ; $7d69
+Label_0f_7d6a:
+	ld a, $01 ; $7d6a
+	test_flag $08, 2 ; $7d6c
+	jr z, Label_0f_7d66 ; $7d6f
+	ld a, $03 ; $7d71
+	test_flag $08, 6 ; $7d73
+	jr z, Label_0f_7d66 ; $7d76
+	ld a, $05 ; $7d78
+	test_flag $15, 7 ; $7d7a
+	jr z, Label_0f_7d66 ; $7d7d
+	ld a, $07 ; $7d7f
+	test_flag $16, 1 ; $7d81
+	jr z, Label_0f_7d66 ; $7d84
+	ld a, $09 ; $7d86
+	jr Label_0f_7d66 ; $7d88
+	ld a, $00 ; $7d8a
+	test_flag $0a, 3 ; $7d8c
+	jr z, Label_0f_7da9 ; $7d8f
+	inc a ; $7d91
+	test_flag $0a, 7 ; $7d92
+	jr z, Label_0f_7da9 ; $7d95
+	inc a ; $7d97
+	test_flag $05, 7 ; $7d98
+	jr nz, Label_0f_7dad ; $7d9b
+	test_flag $15, 6 ; $7d9d
+	jr z, Label_0f_7da9 ; $7da0
+	inc a ; $7da2
+	test_flag $16, 0 ; $7da3
+	jr z, Label_0f_7da9 ; $7da6
+	inc a ; $7da8
+Label_0f_7da9:
+	ld [$c2b0], a ; $7da9
+	ret ; $7dac
+Label_0f_7dad:
+	test_flag $15, 7 ; $7dad
+	jr z, Label_0f_7da9 ; $7db0
+	inc a ; $7db2
+	test_flag $16, 1 ; $7db3
+	jr z, Label_0f_7da9 ; $7db6
+	inc a ; $7db8
+	jr Label_0f_7da9 ; $7db9
 	; $7dbb, 581 bytes fill to bank end (linker-padded)

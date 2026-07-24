@@ -1591,7 +1591,23 @@ Label_12_5877:
 Label_12_588f:
 	script_speak $05 ; $588f
 	ret ; $5894
-	INCBIN "data/bank_012/d_5895.bin" ; $5895, 30 bytes
+TextIds_12_5895:
+	; $5895, 30 bytes (records:2)
+	dw $100f ; record 0
+	dw $1018 ; record 1
+	dw $101c ; record 2
+	dw $101c ; record 3
+	dw $101d ; record 4
+	dw $1020 ; record 5
+	dw $1057 ; record 6
+	dw $1057 ; record 7
+	dw $1058 ; record 8
+	dw $108e ; record 9
+	dw $1097 ; record 10
+	dw $109f ; record 11
+	dw $10a8 ; record 12
+	dw $10b1 ; record 13
+	dw $10ba ; record 14
 SeniorCourtNpc06_12:
 	ld a, [$c2b1] ; $58b3
 	add a, a ; $58b6
@@ -1625,7 +1641,23 @@ Label_12_58d1:
 Label_12_58f2:
 	script_speak $06 ; $58f2
 	ret ; $58f7
-	INCBIN "data/bank_012/d_58f8.bin" ; $58f8, 30 bytes
+TextIds_12_58f8:
+	; $58f8, 30 bytes (records:2)
+	dw $1010 ; record 0
+	dw $1010 ; record 1
+	dw $1021 ; record 2
+	dw $1022 ; record 3
+	dw $1023 ; record 4
+	dw $1024 ; record 5
+	dw $1059 ; record 6
+	dw $105e ; record 7
+	dw $1060 ; record 8
+	dw $108f ; record 9
+	dw $1098 ; record 10
+	dw $10a0 ; record 11
+	dw $10a9 ; record 12
+	dw $10b2 ; record 13
+	dw $10bb ; record 14
 SeniorCourtNpc07_12:
 	ld a, [$c2b1] ; $5916
 	add a, a ; $5919
@@ -3760,12 +3792,14 @@ ActorScript_12_7a41:
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_12_7a5a:
-	; $7a5a, 14 bytes (actor_script)
+	; $7a5a, 11 bytes (actor_script)
 	as_set_target $0b00, $1900
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-	INCBIN "data/bank_012/d_7a65.bin" ; $7a65, 3 bytes (unclassified tail)
+Unclassified_12_7a65:
+	; $7a65, 3 bytes (bytes:3)
+	db $fa, $4d, $c9 ; 0x00
 PushTextArgFetchedString:
 	ldh a, [hWramBank] ; $7a68
 	push af ; $7a6a
@@ -3809,7 +3843,14 @@ ActorScript_12_7a93:
 	as_jump .L15
 MapScriptNop_12:
 	ret ; $7ab1
-	INCBIN "data/bank_012/d_7ab2.bin" ; $7ab2, 13 bytes
+	xor a, a ; $7ab2
+	ld [$c2da], a ; $7ab3
+	ret ; $7ab6
+	sound $a2 ; $7ab7
+	ret ; $7ab9
+	xor a, a ; $7aba
+	ld [wStoryModeShowLocationName], a ; $7abb
+	ret ; $7abe
 ActorScript_12_7abf:
 	; $7abf, 99 bytes (actor_script)
 	as_anim $01

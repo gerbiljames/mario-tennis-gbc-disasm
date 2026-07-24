@@ -427,7 +427,9 @@ Label_15_4739:
 	farcall MoveActorByAngle ; $4753
 Label_15_4756:
 	ret ; $4756
-	INCBIN "data/bank_015/d_4757.bin" ; $4757, 8 bytes
+Facings_15_4757:
+	; $4757, 8 bytes (enum:FACE:8)
+	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
 SetPlayerPartnerActorSprites:
 	test_flag $05, 7 ; $475f
 	jp z, Label_15_477d ; $4762
@@ -618,7 +620,13 @@ TrainingCourtNpc09_15:
 	farcall InitDialogueTextCursor ; $4a0c
 	script_speak $09 ; $4a0f
 	ret ; $4a14
-	INCBIN "data/bank_015/d_4a15.bin" ; $4a15, 10 bytes
+TextIds_15_4a15:
+	; $4a15, 10 bytes (records:2)
+	dw $1a90 ; record 0
+	dw $1a96 ; record 1
+	dw $1a9a ; record 2
+	dw $1a9a ; record 3
+	dw $1a9a ; record 4
 TrainingCourtNpc0A_15:
 	ld a, [$c2b0] ; $4a1f
 	add a, a ; $4a22
@@ -749,7 +757,13 @@ TrainingCourtNpc10_15:
 Label_15_4b11:
 	script_speak $10 ; $4b11
 	ret ; $4b16
-	INCBIN "data/bank_015/d_4b17.bin" ; $4b17, 10 bytes
+TextIds_15_4b17:
+	; $4b17, 10 bytes (records:2)
+	dw $1a86 ; record 0
+	dw $1a89 ; record 1
+	dw $1a8c ; record 2
+	dw $1a8c ; record 3
+	dw $1a8c ; record 4
 TrainingCourtNpc13_15:
 	script_move_player_to_actor $13 ; $4b21
 	farcall WaitPlayerMoveDone ; $4b28
@@ -898,11 +912,11 @@ WaterSpriteRacketRewardScene:
 	script_set_active $14, $00 ; $4df3
 	script_player_speed $0010 ; $4dfa
 	script_move_player_to_actor $14 ; $4e00
-	ld hl, $5950 ; $4e07
+	ld hl, Palettes_15_5950 ; $4e07
 	ld de, $0206 ; $4e0a
 	call LoadPalettesImmediate ; $4e0d
 	script_wait_frames $1e ; $4e10
-	ld hl, $5990 ; $4e17
+	ld hl, Palettes_15_5990 ; $4e17
 	ld de, $0206 ; $4e1a
 	call LoadPalettesImmediate ; $4e1d
 	sound $8a ; $4e20
@@ -1011,11 +1025,11 @@ Label_15_4f9f:
 	script_set_position $14, $3300, $0b00 ; $4fcf
 	script_speak $14 ; $4fda
 	script_set_position $15, $3f00, $3f00 ; $4fdf
-	ld hl, $5950 ; $4fea
+	ld hl, Palettes_15_5950 ; $4fea
 	ld de, $0206 ; $4fed
 	call LoadPalettesImmediate ; $4ff0
 	script_wait_frames $1e ; $4ff3
-	ld hl, $5910 ; $4ffa
+	ld hl, Palettes_15_5910 ; $4ffa
 	ld de, $0206 ; $4ffd
 	call LoadPalettesImmediate ; $5000
 	script_wait_frames $1e ; $5003
@@ -1703,16 +1717,23 @@ SpriteTemplate_15_57ba:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-	INCBIN "data/bank_015/d_57c7.bin" ; $57c7, 209 bytes
+	; $57c7, 9 bytes (fill)
+	ds 9, $00
+WaterSpriteHudTiles_15:
+	INCBIN "data/bank_015/d_57d0.bin" ; $57d0, 192 bytes
+WaterSpriteHudPalette_15:
+	; $5890, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0000, $0005, $7fff, $0000 ; pal 0: #000000 #290000 #ffffff #000000
 LoadWaterSpriteMinigameHudGfx:
 	ldh a, [hWramBank] ; $5898
 	push af ; $589a
 	wram_bank $01 ; $589b
-	ld hl, $57d0 ; $58a1
+	ld hl, WaterSpriteHudTiles_15 ; $58a1
 	ld de, $a000 ; $58a4
 	ld c, $0c ; $58a7
 	call QueueVRAMCopy ; $58a9
-	ld hl, $5890 ; $58ac
+	ld hl, WaterSpriteHudPalette_15 ; $58ac
 	ld de, $0802 ; $58af
 	call LoadPaletteShadow ; $58b2
 	pop af ; $58b5
@@ -1750,7 +1771,44 @@ InitWaterSpriteMinigameHud:
 	ld hl, QueueWaterSpriteMinigameHudPanels ; $58f3
 	call RegisterFrameTask ; $58f6
 	ret ; $58f9
-	INCBIN "data/bank_015/d_58fa.bin" ; $58fa, 198 bytes
+	; $58fa, 6 bytes (fill)
+	ds 6, $00
+Palettes_15_5900:
+	; $5900, 16 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0080, $5520, $7ea0, $4460 ; pal 0: #002000 #004aac #00acff #00188b
+	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+Palettes_15_5910:
+	; $5910, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $195c, $0330, $7fff, $1006 ; pal 0: #e65231 #83cd00 #ffffff #310020
+	dw $0260, $0330, $7fff, $1006 ; pal 1: #009c00 #83cd00 #ffffff #310020
+	dw $025d, $0330, $0260, $1006 ; pal 2: #ee9400 #83cd00 #009c00 #310020
+	dw $7f60, $0260, $7fff, $1006 ; pal 3: #00deff #009c00 #ffffff #310020
+	dw $025d, $7fff, $3def, $1006 ; pal 4: #ee9400 #ffffff #7b7b7b #310020
+	dw $7e20, $01bf, $0260, $7fff ; pal 5: #008bff #ff6a00 #009c00 #ffffff
+	dw $0080, $5520, $7ea0, $4460 ; pal 6: #002000 #004aac #00acff #00188b
+	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+Palettes_15_5950:
+	; $5950, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
+	dw $0140, $024c, $6739, $1006 ; pal 1: #005200 #629400 #cdcdcd #310020
+	dw $1d38, $024c, $0140, $1006 ; pal 2: #c54a39 #629400 #005200 #310020
+	dw $6e40, $0140, $6f7b, $1006 ; pal 3: #0094de #005200 #dedede #310020
+	dw $1d38, $7fff, $3def, $1006 ; pal 4: #c54a39 #ffffff #7b7b7b #310020
+	dw $6140, $0116, $0140, $7e10 ; pal 5: #0052c5 #b44100 #005200 #8383ff
+	dw $0080, $5520, $7ea0, $4460 ; pal 6: #002000 #004aac #00acff #00188b
+	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+Palettes_15_5990:
+	; $5990, 48 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
+	dw $00c0, $0186, $29ea, $1006 ; pal 1: #003100 #316200 #527b52 #310020
+	dw $00ac, $0186, $00c0, $1006 ; pal 2: #622900 #316200 #003100 #310020
+	dw $65c0, $00c0, $5b39, $1006 ; pal 3: #0073cd #003100 #cdcdb4 #310020
+	dw $1d34, $7ffc, $3def, $1006 ; pal 4: #a44a39 #e6ffff #7b7b7b #310020
+	dw $48a0, $00ac, $00c0, $5dad ; pal 5: #002994 #622900 #003100 #6a6abd
 TrainingCourtIntroTourScene:
 	xor a, a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1
@@ -2904,7 +2962,11 @@ ServeCoachVarsityLessonScene:
 	call WaitFadeEnd ; $6873
 	farcall ShowDrillBriefingScreen ; $6876
 	ret ; $6879
-	INCBIN "data/bank_015/d_687a.bin" ; $687a, 21 bytes
+	script_speak $07 ; $687a
+	script_speak $07 ; $687f
+	script_speak $07 ; $6884
+	script_speak $07 ; $6889
+	ret ; $688e
 VolleyMatchChallengeScene:
 	script_face_toward $11, ACTOR_PARTNER ; $688f
 	script_set_text Text_6e_64 ; $6897
@@ -4254,7 +4316,10 @@ Label_15_7a16:
 	script_speak $0d ; $7a16
 	script_face $0d, FACE_UP ; $7a1b
 	ret ; $7a22
-	INCBIN "data/bank_015/d_7a23.bin" ; $7a23, 34 bytes
+Table_15_7a23:
+	; $7a23, 34 bytes (bytes:17)
+	db $03, $00, $2f, $00, $01, $01, $03, $03, $00, $2f, $00, $07, $01, $03, $0c, $f1, $ff ; 0x00
+	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
 PlaceSwingPracticeKidActor:
 	test_flag $05, 7 ; $7a45
 	jp nz, Label_15_7a66 ; $7a48
@@ -4505,9 +4570,176 @@ ActorScript_15_7d77:
 	as_jump .L15
 MapScriptNop_15:
 	ret ; $7d95
-	INCBIN "data/bank_015/d_7d96.bin" ; $7d96, 423 bytes
+	xor a, a ; $7d96
+	ld [$c2da], a ; $7d97
+	ret ; $7d9a
+	sound $a2 ; $7d9b
+	ret ; $7d9d
+	xor a, a ; $7d9e
+	ld [wStoryModeShowLocationName], a ; $7d9f
+	ret ; $7da2
+ActorScript_15_7da3:
+	; $7da3, 410 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_15_7da3
+	as_anim $00
+	as_wait $3c
+.L67:
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L67
+	as_anim $00
+	as_wait $1e
+.Lce:
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump .Lce
+	as_anim $00
+	as_wait $1e
+	as_wait $3c
+.L137:
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L137
 ActorScript_15_7f3d:
-	; $7f3d, 99 bytes (actor_script)
+	; $7f3d, 28 bytes (actor_script)
 	as_wait $f0
 	as_anim $03
 	as_wait $50
@@ -4522,7 +4754,39 @@ ActorScript_15_7f3d:
 	as_wait $8c
 	as_anim $03
 	as_jump .Ld
-	INCBIN "data/bank_015/d_7f59.bin" ; $7f59, 71 bytes (unclassified tail)
+	test_flag $05, 7 ; $7f59
+	jr nz, Label_15_7f80 ; $7f5c
+	ld a, $00 ; $7f5e
+	test_flag $0a, 3 ; $7f60
+	jr z, Label_15_7f7c ; $7f63
+	ld a, $02 ; $7f65
+	test_flag $0a, 7 ; $7f67
+	jr z, Label_15_7f7c ; $7f6a
+	ld a, $04 ; $7f6c
+	test_flag $15, 6 ; $7f6e
+	jr z, Label_15_7f7c ; $7f71
+	ld a, $06 ; $7f73
+	test_flag $16, 0 ; $7f75
+	jr z, Label_15_7f7c ; $7f78
+	ld a, $08 ; $7f7a
+Label_15_7f7c:
+	ld [$c2b0], a ; $7f7c
+	ret ; $7f7f
+Label_15_7f80:
+	ld a, $01 ; $7f80
+	test_flag $08, 2 ; $7f82
+	jr z, Label_15_7f7c ; $7f85
+	ld a, $03 ; $7f87
+	test_flag $08, 6 ; $7f89
+	jr z, Label_15_7f7c ; $7f8c
+	ld a, $05 ; $7f8e
+	test_flag $15, 7 ; $7f90
+	jr z, Label_15_7f7c ; $7f93
+	ld a, $07 ; $7f95
+	test_flag $16, 1 ; $7f97
+	jr z, Label_15_7f7c ; $7f9a
+	ld a, $09 ; $7f9c
+	jr Label_15_7f7c ; $7f9e
 ComputeTrainingCourtProgressIndex:
 	ld a, $00 ; $7fa0
 	test_flag $0a, 3 ; $7fa2

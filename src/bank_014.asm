@@ -1747,7 +1747,7 @@ Label_14_5603:
 	ld [wStoryModeExitLocationRequest], a ; $5637
 	ret ; $563a
 ActorScript_14_563b:
-	; $563b, 2069 bytes (actor_script)
+	; $563b, 175 bytes (actor_script)
 	as_set_target $0b00, $2900
 	as_wait_move
 	as_set_target $0b00, $2700
@@ -1906,7 +1906,10 @@ ActorScript_14_563b:
 	as_halt
 	as_halt
 	as_halt
-	INCBIN "data/bank_014/d_56ea.bin" ; $56ea, 1894 bytes (unclassified tail)
+Gfx_14_56ea:
+	INCBIN "data/bank_014/d_56ea.bin" ; $56ea, 870 bytes
+IslandObjTiles_14:
+	INCBIN "data/bank_014/d_5a50.bin" ; $5a50, 1024 bytes
 SpriteTemplate_14_5e50:
 	; $5e50, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -1918,7 +1921,10 @@ SpriteTemplate_14_5e50:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-	INCBIN "data/bank_014/d_5e71.bin" ; $5e71, 8 bytes
+IslandObjPalette_14:
+	; $5e71, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $3808, $7ffc, $294a, $001f ; pal 0: #410073 #e6ffff #525252 #ff0000
 LoadPlaneObjGfx_14:
 	ldh a, [hWramBank] ; $5e79
 	push af ; $5e7b
@@ -1927,7 +1933,7 @@ LoadPlaneObjGfx_14:
 	ld de, $a000 ; $5e85
 	ld c, $60 ; $5e88
 	call QueueVRAMCopy ; $5e8a
-	ld hl, $5e71 ; $5e8d
+	ld hl, IslandObjPalette_14 ; $5e8d
 	ld de, $0801 ; $5e90
 	call LoadPaletteShadow ; $5e93
 	pop af ; $5e96
@@ -1959,22 +1965,28 @@ Label_14_5ec4:
 	ld b, $08 ; $5ec8
 	call QueueSpriteTemplate ; $5eca
 	ret ; $5ecd
-	INCBIN "data/bank_014/d_5ece.bin" ; $5ece, 450 bytes
+	; $5ece, 2 bytes (fill)
+	ds 2, $00
+Gfx_14_5ed0:
+	INCBIN "data/bank_014/d_5ed0.bin" ; $5ed0, 448 bytes
 SpriteTemplate_14_6090:
 	; $6090, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_014/d_6099.bin" ; $6099, 8 bytes
+Palette_14_6099:
+	; $6099, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $3808, $7ffc, $294a, $001f ; pal 0: #410073 #e6ffff #525252 #ff0000
 LoadWaterSplashObjGfx_14:
 	ldh a, [hWramBank] ; $60a1
 	push af ; $60a3
 	wram_bank $01 ; $60a4
-	ld hl, $5ed0 ; $60aa
+	ld hl, Gfx_14_5ed0 ; $60aa
 	ld de, $8200 ; $60ad
 	ld c, $1c ; $60b0
 	call QueueVRAMCopy ; $60b2
-	ld hl, $6099 ; $60b5
+	ld hl, Palette_14_6099 ; $60b5
 	ld de, $0901 ; $60b8
 	call LoadPaletteShadow ; $60bb
 	pop af ; $60be
@@ -2182,11 +2194,11 @@ LoadPlaneObjGfx2_14:
 	ldh a, [hWramBank] ; $6238
 	push af ; $623a
 	wram_bank $01 ; $623b
-	ld hl, $5a50 ; $6241
+	ld hl, IslandObjTiles_14 ; $6241
 	ld de, $a000 ; $6244
 	ld c, $60 ; $6247
 	call QueueVRAMCopy ; $6249
-	ld hl, $5e71 ; $624c
+	ld hl, IslandObjPalette_14 ; $624c
 	ld de, $0801 ; $624f
 	call LoadPaletteShadow ; $6252
 	pop af ; $6255
@@ -2376,11 +2388,11 @@ LoadFireworkObjGfx_14:
 	ldh a, [hWramBank] ; $6427
 	push af ; $6429
 	wram_bank $01 ; $642a
-	ld hl, $6680 ; $6430
+	ld hl, FireworkObjTiles_14 ; $6430
 	ld de, $8100 ; $6433
 	ld c, $80 ; $6436
 	call QueueVRAMCopy ; $6438
-	ld hl, $6ea1 ; $643b
+	ld hl, FireworkObjPalettes_14 ; $643b
 	ld de, $0904 ; $643e
 	call LoadPaletteShadow ; $6441
 	pop af ; $6444
@@ -2463,10 +2475,14 @@ Label_14_64cd:
 	sub a, b ; $64d0
 	ld [wWaterSpriteMinigameTimer], a ; $64d1
 	ret ; $64d4
-	INCBIN "data/bank_014/d_64d5.bin" ; $64d5, 12 bytes
+Table_14_64d5:
+	; $64d5, 12 bytes (bytes:4)
+	db $00, $0c, $0e, $10 ; 0x00
+	db $00, $20, $30, $40 ; 0x04
+	db $00, $50, $60, $70 ; 0x08
 Label_14_64e1:
 	ldh a, [hRomBank] ; $64e1
-	ld hl, $6675 ; $64e3
+	ld hl, FireworkMapActors_14 ; $64e3
 	farcall ScriptRespawnLocationActors ; $64e6
 	farcall BeginCutsceneScriptMode ; $64e9
 	call DisableLCDSafely ; $64ec
@@ -2596,7 +2612,12 @@ Label_14_6662:
 	ld [$c294], a ; $666e
 	ld [wStoryModeExitLocationRequest], a ; $6671
 	ret ; $6674
-	INCBIN "data/bank_014/d_6675.bin" ; $6675, 2059 bytes
+FireworkMapActors_14:
+	; $6675, 11 bytes (map_actors)
+	map_actor_end
+	db $00
+FireworkObjTiles_14:
+	INCBIN "data/bank_014/d_6680.bin" ; $6680, 2048 bytes
 SpriteTemplate_14_6e80:
 	; $6e80, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -2608,7 +2629,19 @@ SpriteTemplate_14_6e80:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-	INCBIN "data/bank_014/d_6ea1.bin" ; $6ea1, 79 bytes
+FireworkObjPalettes_14:
+	; $6ea1, 79 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0000, $7fe0, $03ff, $7c1f ; pal 0: #000000 #00ffff #ffff00 #ff00ff
+	dw $0000, $7c1f, $7fe0, $03ff ; pal 1: #000000 #ff00ff #00ffff #ffff00
+	dw $0000, $03ff, $7c1f, $7fe0 ; pal 2: #000000 #ffff00 #ff00ff #00ffff
+	dw $0000, $7c1f, $7fe0, $03ff ; pal 3: #000000 #ff00ff #00ffff #ffff00
+	dw $94f0, $02e6, $2828, $403e ; pal 4: #833929 #31bd00 #410852 #f60883
+	dw $b2ea, $3ec2, $ea30, $c2b4 ; pal 5: #52bd62 #10b47b #838bd5 #a4ac83
+	dw $003e, $b6ea, $3ec2, $ea1e ; pal 6: #f60800 #52bd6a #10b47b #f683d5
+	dw $c2b8, $683e, $b3ea, $3ec2 ; pal 7: #c5ac83 #f608d5 #52ff62 #10b47b
+	dw $ea38, $c2b5, $003e, $b7ea ; pal 8: #c58bd5 #acac83 #f60800 #52ff6a
+	db $c2, $3e, $1e, $ea, $b9, $c2, $c9
 UpdateFirework1_14:
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef0
 	cp a, $04 ; $6ef3
@@ -2891,7 +2924,14 @@ Label_14_7170:
 	ld [$c294], a ; $7184
 	ld [wStoryModeExitLocationRequest], a ; $7187
 	ret ; $718a
-	INCBIN "data/bank_014/d_718b.bin" ; $718b, 486 bytes
+	; $718b, 5 bytes (fill)
+	ds 5, $00
+IslandSkyTilesA_14:
+	INCBIN "data/bank_014/d_7190.bin" ; $7190, 256 bytes
+IslandSkyTilesB_14:
+	INCBIN "data/bank_014/d_7290.bin" ; $7290, 192 bytes
+IslandSkySpriteData_14:
+	INCBIN "data/bank_014/d_7350.bin" ; $7350, 33 bytes
 SpriteTemplate_14_7371:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -2901,20 +2941,26 @@ SpriteTemplate_14_7371:
 	oam_sprite $10, $18, $08, $00
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
-	INCBIN "data/bank_014/d_738a.bin" ; $738a, 32 bytes
+IslandSkyPalettes_14:
+	; $738a, 32 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2008, $201f, $035f, $1306 ; pal 0: #410041 #ff0041 #ffd500 #31c520
+	dw $2008, $035f, $1306, $201f ; pal 1: #410041 #ffd500 #31c520 #ff0041
+	dw $2008, $1306, $201f, $035f ; pal 2: #410041 #31c520 #ff0041 #ffd500
+	dw $2008, $035f, $1306, $201f ; pal 3: #410041 #ffd500 #31c520 #ff0041
 LoadIslandSkyEffectObjGfx_14:
 	ldh a, [hWramBank] ; $73aa
 	push af ; $73ac
 	wram_bank $01 ; $73ad
-	ld hl, $7190 ; $73b3
+	ld hl, IslandSkyTilesA_14 ; $73b3
 	ld de, $8100 ; $73b6
 	ld c, $40 ; $73b9
 	call QueueVRAMCopy ; $73bb
-	ld hl, $7290 ; $73be
+	ld hl, IslandSkyTilesB_14 ; $73be
 	ld de, $8200 ; $73c1
 	ld c, $30 ; $73c4
 	call QueueVRAMCopy ; $73c6
-	ld hl, $738a ; $73c9
+	ld hl, IslandSkyPalettes_14 ; $73c9
 	ld de, $0903 ; $73cc
 	call LoadPaletteShadow ; $73cf
 	pop af ; $73d2
@@ -2932,7 +2978,7 @@ AnimateIslandSkyEffectSprites_14:
 	sub a, b ; $73e4
 	ld e, a ; $73e5
 	ld c, $10 ; $73e6
-	ld hl, $7350 ; $73e8
+	ld hl, IslandSkySpriteData_14 ; $73e8
 	ld a, [$c2be] ; $73eb
 	and a, a ; $73ee
 	jr nz, Label_14_73f8 ; $73ef
@@ -2970,7 +3016,10 @@ Label_14_7408:
 	ld b, a ; $7428
 	call QueueSpriteTemplate ; $7429
 	ret ; $742c
-	INCBIN "data/bank_014/d_742d.bin" ; $742d, 259 bytes
+	; $742d, 3 bytes (fill)
+	ds 3, $00
+Gfx_14_7430:
+	INCBIN "data/bank_014/d_7430.bin" ; $7430, 256 bytes
 SpriteTemplate_14_7530:
 	; $7530, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -2980,11 +3029,11 @@ LoadDistantPlaneObjGfx_14:
 	ldh a, [hWramBank] ; $7539
 	push af ; $753b
 	wram_bank $01 ; $753c
-	ld hl, $7430 ; $7542
+	ld hl, Gfx_14_7430 ; $7542
 	ld de, $a000 ; $7545
 	ld c, $10 ; $7548
 	call QueueVRAMCopy ; $754a
-	ld hl, $5e71 ; $754d
+	ld hl, IslandObjPalette_14 ; $754d
 	ld de, $0801 ; $7550
 	call LoadPaletteShadow ; $7553
 	pop af ; $7556
@@ -3011,16 +3060,23 @@ GetSceneObjectScreenPos_14:
 	sub a, b ; $757b
 	ld e, a ; $757c
 	ret ; $757d
-	INCBIN "data/bank_014/d_757e.bin" ; $757e, 266 bytes
+	; $757e, 2 bytes (fill)
+	ds 2, $00
+Gfx_14_7580:
+	INCBIN "data/bank_014/d_7580.bin" ; $7580, 256 bytes
+Palette_14_7680:
+	; $7680, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0000, $03ff, $7fe0, $001f ; pal 0: #000000 #ffff00 #00ffff #ff0000
 LoadTwinkleObjGfx_14:
 	ldh a, [hWramBank] ; $7688
 	push af ; $768a
 	wram_bank $01 ; $768b
-	ld hl, $7580 ; $7691
+	ld hl, Gfx_14_7580 ; $7691
 	ld de, $a000 ; $7694
 	ld c, $10 ; $7697
 	call QueueVRAMCopy ; $7699
-	ld hl, $7680 ; $769c
+	ld hl, Palette_14_7680 ; $769c
 	ld de, $0801 ; $769f
 	call LoadPaletteShadow ; $76a2
 	pop af ; $76a5
@@ -3273,5 +3329,238 @@ MapScriptHideLocationName_14:
 	xor a, a ; $78e2
 	ld [wStoryModeShowLocationName], a ; $78e3
 	ret ; $78e6
-	INCBIN "data/bank_014/d_78e7.bin" ; $78e7, 558 bytes
+ActorScript_14_78e7:
+	; $78e7, 438 bytes (actor_script)
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump ActorScript_14_78e7
+	as_anim $00
+	as_wait $3c
+.L67:
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L67
+	as_anim $00
+	as_wait $1e
+.Lce:
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0200
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $fe00
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_anim $05
+	as_wait $4b
+	as_jump .Lce
+	as_anim $00
+	as_wait $1e
+	as_wait $3c
+.L137:
+	as_anim $01
+	as_target_rel $fc00, $fe00
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0200
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $fc00, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_anim $01
+	as_target_rel $0400, $0000
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_anim $05
+	as_wait $4b
+	as_jump .L137
+.L19a:
+	as_wait $f0
+	as_anim $03
+	as_wait $50
+	as_anim $03
+	as_wait $3c
+	as_jump .L19a
+.L1a7:
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $04
+	as_wait $8c
+	as_anim $03
+	as_jump .L1a7
+	test_flag $05, 7 ; $7a9d
+	jr nz, Label_14_7ac4 ; $7aa0
+	ld a, $00 ; $7aa2
+	test_flag $0a, 3 ; $7aa4
+	jr z, Label_14_7ac0 ; $7aa7
+	ld a, $02 ; $7aa9
+	test_flag $0a, 7 ; $7aab
+	jr z, Label_14_7ac0 ; $7aae
+	ld a, $04 ; $7ab0
+	test_flag $15, 6 ; $7ab2
+	jr z, Label_14_7ac0 ; $7ab5
+	ld a, $06 ; $7ab7
+	test_flag $16, 0 ; $7ab9
+	jr z, Label_14_7ac0 ; $7abc
+	ld a, $08 ; $7abe
+Label_14_7ac0:
+	ld [$c2b0], a ; $7ac0
+	ret ; $7ac3
+Label_14_7ac4:
+	ld a, $01 ; $7ac4
+	test_flag $08, 2 ; $7ac6
+	jr z, Label_14_7ac0 ; $7ac9
+	ld a, $03 ; $7acb
+	test_flag $08, 6 ; $7acd
+	jr z, Label_14_7ac0 ; $7ad0
+	ld a, $05 ; $7ad2
+	test_flag $15, 7 ; $7ad4
+	jr z, Label_14_7ac0 ; $7ad7
+	ld a, $07 ; $7ad9
+	test_flag $16, 1 ; $7adb
+	jr z, Label_14_7ac0 ; $7ade
+	ld a, $09 ; $7ae0
+	jr Label_14_7ac0 ; $7ae2
+	ld a, $00 ; $7ae4
+	test_flag $0a, 3 ; $7ae6
+	jr z, Label_14_7b03 ; $7ae9
+	inc a ; $7aeb
+	test_flag $0a, 7 ; $7aec
+	jr z, Label_14_7b03 ; $7aef
+	inc a ; $7af1
+	test_flag $05, 7 ; $7af2
+	jr nz, Label_14_7b07 ; $7af5
+	test_flag $15, 6 ; $7af7
+	jr z, Label_14_7b03 ; $7afa
+	inc a ; $7afc
+	test_flag $16, 0 ; $7afd
+	jr z, Label_14_7b03 ; $7b00
+	inc a ; $7b02
+Label_14_7b03:
+	ld [$c2b0], a ; $7b03
+	ret ; $7b06
+Label_14_7b07:
+	test_flag $15, 7 ; $7b07
+	jr z, Label_14_7b03 ; $7b0a
+	inc a ; $7b0c
+	test_flag $16, 1 ; $7b0d
+	jr z, Label_14_7b03 ; $7b10
+	inc a ; $7b12
+	jr Label_14_7b03 ; $7b13
 	; $7b15, 1259 bytes fill to bank end (linker-padded)
