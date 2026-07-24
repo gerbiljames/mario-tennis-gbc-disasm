@@ -26,15 +26,79 @@ Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,385 of 18,747 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,447 of 18,747 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Ball-physics RAM named; the court's world scale (2026-07-24)
+
+The `$c4xx` page is the ball-physics / shot-solver core, and 66 of its
+addresses are now named. The world scale falls out of `$c484`/`$c486`
+(`wCourtLimitX`/`wCourtLimitDepth`), which hold the in-bounds limits
+**negated**: `$fe50` = -`$1b0` singles sideline, `$fdc0` = -`$240` doubles,
+`$fb20` = -`$4e0` baseline, tightened to `$fd60` = -`$2a0` (the service
+line) while a serve is in flight.
+
+That answers what the shot solver's `$0140` and `$0480` constants are —
+a small margin past the net, and a point just inside the baseline, i.e.
+the near and far bounds of the legal landing region. So `$c48a`/`$c48c`
+are `wShotDistMin`/`wShotDistMax`, the distances to those bounds along the
+aim line, and `$c48e`/`$c48f` are the same values `>> 6`: the first and
+last row indices `SeekBallTrajEntry6`/`4` walks between, matching the
+`(de*4)>>8` the `BallTrajEntryPtr*` helpers compute. `$c48c` is
+additionally clamped to the sideline crossing when the aim line would
+leave the court before reaching `$0480` (`$07:$582c`).
+
+`$c488` is `wNetHeight` (`$0060`; zero in netless minigames): `$08:$5830`
+adds it to `wBallHeight` at the net crossing and, when the ball is not
+clear, plays the net sound and negates the depth velocity.
+
+Also named: the spin pair driving `ApplyBallSpin`'s two rotations, the
+previous-frame ball position snapshot, the ball-to-character delta vector,
+the shot aim target and delta, the match camera position/target pairs
+(`wMatchCamera*` — `wCameraX`/`wCameraY` are already the BG scroll
+buffer), the bounce/net/hit event flags, court surface friction and
+restitution, and the pause-menu, rules-page and scoreboard state.
+
+Left numeric on purpose: `$c4c8` (bits mean different things per
+subsystem), `$c4cc` (set at three different set/tiebreak boundaries), the
+write-only addresses, and the `$c400`/`$c420` struct bases whose integer
+parts are already named.
+
+### Bank $1e graphics streams identified (2026-07-24)
+
+All 15 of bank `$1e`'s LZ streams were decompressed and rendered, and each
+of its three screens turned out to have a clean gfx / tilemap / attrmap
+set. The word art reads directly: `ResultsScreenGfx_1e` (176 tiles)
+carries 7x2 plates spelling **SINGLES** and **DOUBLES**, and
+`GameProgressHeaderGfx_1e` spells **CLEAR STATUS** — cross-confirmed by
+the label tilemaps, which are literally those plates' tile indices
+(`$09`-`$0f`/`$19`-`$1f`, `$29`-`$2f`/`$39`-`$3f`, and rows `$02`-`$09` /
+`$12`-`$19`). `ExpDigitSpriteGfx_1e` is a 20-tile 8x16 sprite digit font
+that `GetDigitSpriteTile` (`$5afa`: `sub $30` / `rlca` / `add $6c`)
+indexes for the counting-up EXP total; it loads to `$86c0`, below `$8800`,
+so it can only be OBJ tiles. `PanelFrameGfx_1e` is shared by the results
+and EXP screens — the 8-piece window border whose tiles `$02`-`$09` are
+the corners and edges those screens' panel builders write.
 
 ### Naming sweep: menu, results, story and dictionary banks (2026-07-24)
 
-A twelve-bank naming pass took human-named symbols from 4,816 to 5,385
+A sixteen-bank naming pass took human-named symbols from 4,816 to 5,447
 (+569), split between ROM labels in `labels.json` and 25 RAM addresses in
 `ram_map.json`/`ram_unions.json`. Config-only throughout — no hand edits
 to `src/`, which is fully generated — plus two `data_tables.json` widths;
 byte-perfect at every step.
+
+A later wave covered the tail: banks `$09`/`$11`/`$06`/`$2c` (46) and the
+`$c4xx` physics page (66 RAM addresses, above). Bank `$2c` came almost
+free — banks `$21`-`$24` and `$29`-`$2b` are the same ball-path code
+already named, so its ten functions map instruction-for-instruction onto
+curated siblings. Two more curated misnomers fell out: **actor field
+`+$37` is the OAM attribute byte**, which resolves `Func_11_4d68` as
+`KnockPlayerAirborneFlipped_11` (`xor $40` = hardware bit 6, the Y-flip,
+on a player launched upward in `LateStudentCrashCutscene`); and
+`UpdateGameScoreDisplay` never reads `wPlayer*GamesWon` at all — it and
+its sibling both render the *point* score, differing only in widget
+(`$8780` digits vs the `$8300` panel, where the DEUCE/AD art also goes),
+so they are now `UpdatePointDigitsDisplay` and `UpdateScorePanelDisplay`.
 
 Per bank: `$38` 123 (match-format menu, story character/partner picker,
 exhibition and link character grids, name entry), `$1e` 99 (match results,
