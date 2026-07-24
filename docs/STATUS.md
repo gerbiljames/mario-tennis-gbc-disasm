@@ -82,7 +82,7 @@ the corners and edges those screens' panel builders write.
 ### Naming sweep: menu, results, story and dictionary banks (2026-07-24)
 
 A sixteen-bank naming pass took human-named symbols from 4,816 to 5,447
-(+631), split between ROM labels in `labels.json` and 91 RAM addresses in
+(+631), split between ROM labels in `labels.json` and 93 RAM addresses in
 `ram_map.json`/`ram_unions.json`. Config-only throughout — no hand edits
 to `src/`, which is fully generated — plus two `data_tables.json` widths;
 byte-perfect at every step.
