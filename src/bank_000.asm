@@ -6523,7 +6523,7 @@ Label_00_2596:
 	ldh a, [hIsCGB] ; $25a5
 	or a, a ; $25a7
 	jr nz, Label_00_25ad ; $25a8
-	farcall Func_01_6030 ; $25aa
+	farcall ShowDebugGfxScreenAndHang ; $25aa
 Label_00_25ad:
 	xor a, a ; $25ad
 	ldh [rVBK], a ; $25ae
@@ -6585,7 +6585,7 @@ Label_00_25ad:
 	ld a, $c0 ; $2624
 	ld [wSpriteBufferPage], a ; $2626
 	call InitSerialLink ; $2629
-	farcall Func_01_4018 ; $262c
+	farcall RunDebugTestMenu ; $262c
 	stop ; $262f
 AdvanceFrame:
 	push af ; $2631

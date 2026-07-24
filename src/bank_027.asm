@@ -89,7 +89,7 @@ End17AwardCeremonyInitScript_27:
 Label_27_41c0:
 	script_set_anim $05, $06 ; $41c0
 Label_27_41c7:
-	call Func_27_45be ; $41c7
+	call SetEnd17CeremonyObjectDefs_27 ; $41c7
 	jr Label_27_41cd ; $41ca
 	ret ; $41cc
 Label_27_41cd:
@@ -238,7 +238,7 @@ Label_27_43c2:
 	script_set_position $05, $0c40, $0c60 ; $45af
 	jp Label_27_437b ; $45ba
 	ret ; $45bd
-Func_27_45be:
+SetEnd17CeremonyObjectDefs_27:
 	test_flag $05, 7 ; $45be
 	jp z, Label_27_45f3 ; $45c1
 	ld a, [$c94d] ; $45c4
@@ -310,13 +310,13 @@ End16BeforeFinalsInitScript_27:
 	ldh a, [hRomBank] ; $4702
 	ld hl, End16BeforeFinalsActorsAlt_27 ; $4704
 	farcall ScriptRespawnLocationActors ; $4707
-	call Func_27_490c ; $470a
+	call End16BeforeFinalsCutscene_27 ; $470a
 	ret ; $470d
 Label_27_470e:
 	ldh a, [hRomBank] ; $470e
 	ld hl, End16BeforeFinalsActorsAltB_27 ; $4710
 	farcall ScriptRespawnLocationActors ; $4713
-	call Func_27_490c ; $4716
+	call End16BeforeFinalsCutscene_27 ; $4716
 	ret ; $4719
 End16BeforeFinalsActorsAlt_27:
 	; $471a, 206 bytes (map_actors)
@@ -380,7 +380,7 @@ Label_27_48f0:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_48d9 ; $48fb
 	script_wait_actor_script ACTOR_PLAYER ; $4906
 	ret ; $490b
-Func_27_490c:
+End16BeforeFinalsCutscene_27:
 	script_fade_in $08 ; $490c
 	call WaitFadeEnd ; $4911
 	call End16BeforeFinalsScriptBody_27 ; $4914
@@ -598,7 +598,7 @@ Label_27_4c8c:
 	script_wait_move ACTOR_PARTNER ; $4da2
 	script_wait_frames $05 ; $4da7
 	script_face ACTOR_PLAYER, FACE_UP ; $4dae
-	call Func_27_516b ; $4db5
+	call OpenPrincipalsOfficeDoor_27 ; $4db5
 	script_move_target ACTOR_PLAYER, $2100, $3500 ; $4db8
 	script_move_target ACTOR_PARTNER, $2100, $3b00 ; $4dc3
 	script_wait_move ACTOR_PARTNER ; $4dce
@@ -615,7 +615,7 @@ Label_27_4e13:
 	script_move_target ACTOR_PLAYER, $2100, $3b00 ; $4e13
 	script_wait_move ACTOR_PLAYER ; $4e1e
 	script_face ACTOR_PLAYER, FACE_UP ; $4e23
-	call Func_27_516b ; $4e2a
+	call OpenPrincipalsOfficeDoor_27 ; $4e2a
 	script_move_target ACTOR_PLAYER, $2100, $3500 ; $4e2d
 	script_wait_move ACTOR_PLAYER ; $4e38
 	script_move_target ACTOR_PLAYER, $2000, $3500 ; $4e3d
@@ -623,7 +623,7 @@ Label_27_4e13:
 	script_face ACTOR_PLAYER, FACE_UP ; $4e4d
 	script_delay $01 ; $4e54
 Label_27_4e59:
-	call Func_27_51a1 ; $4e59
+	call ClosePrincipalsOfficeDoor_27 ; $4e59
 	script_set_anim $07, $02 ; $4e5c
 	script_set_anim $08, $02 ; $4e63
 	script_set_anim $09, $02 ; $4e6a
@@ -735,7 +735,7 @@ Label_27_5057:
 	script_move_target ACTOR_PLAYER, $2100, $3700 ; $50c4
 	script_move_target ACTOR_PARTNER, $2100, $3500 ; $50cf
 	script_wait_move ACTOR_PARTNER ; $50da
-	call Func_27_516b ; $50df
+	call OpenPrincipalsOfficeDoor_27 ; $50df
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_51d0 ; $50e2
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_51d0 ; $50ed
 	script_delay $14 ; $50f8
@@ -750,11 +750,11 @@ Label_27_50ff:
 	script_wait_move ACTOR_PLAYER ; $5127
 	script_move_target ACTOR_PLAYER, $2100, $3700 ; $512c
 	script_wait_move ACTOR_PLAYER ; $5137
-	call Func_27_516b ; $513c
+	call OpenPrincipalsOfficeDoor_27 ; $513c
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_51d0 ; $513f
 	script_delay $14 ; $514a
 Label_27_514f:
-	call Func_27_51a1 ; $514f
+	call ClosePrincipalsOfficeDoor_27 ; $514f
 	script_delay $3c ; $5152
 	set_flag $0d, 5 ; $5157
 	ld c, $04 ; $515a
@@ -764,7 +764,7 @@ Label_27_514f:
 	ld [$c294], a ; $5164
 	ld [wStoryModeExitLocationRequest], a ; $5167
 	ret ; $516a
-Func_27_516b:
+OpenPrincipalsOfficeDoor_27:
 	script_wait_frames $0a ; $516b
 	sound $79 ; $5172
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $5174
@@ -772,7 +772,7 @@ Func_27_516b:
 	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $518a
 	script_wait_frames $04 ; $5199
 	ret ; $51a0
-Func_27_51a1:
+ClosePrincipalsOfficeDoor_27:
 	sound $79 ; $51a1
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $51a3
 	script_wait_frames $02 ; $51b2
@@ -1583,7 +1583,7 @@ End7TrainingCtrInitScript_27:
 	cp a, $02 ; $6209
 	jp z, Label_27_6370 ; $620b
 	ret ; $620e
-Func_27_620f:
+ComputeMachineCourtProgress_27:
 	ld a, $00 ; $620f
 	test_flag $1a, 2 ; $6211
 	jp z, Label_27_626c ; $6214
@@ -1618,7 +1618,7 @@ Label_27_6270:
 	ld a, $00 ; $6287
 	farcall CopyScrolledSceneTilemapToVram ; $6289
 	call EnableLCD ; $628c
-	call Func_27_620f ; $628f
+	call ComputeMachineCourtProgress_27 ; $628f
 	farcall WaitPlayerMoveDone ; $6292
 	script_set_position ACTOR_PLAYER, $2900, $3700 ; $6295
 	script_set_position ACTOR_PARTNER, $2900, $3700 ; $62a0
@@ -1733,7 +1733,7 @@ End5ServiceAceExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $22, $01
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, $0e, $01
 	db $ff
-Func_27_656f:
+End5ServiceAceCutscene_27:
 	farcall BeginCutsceneScriptMode ; $656f
 	script_player_speed $0010 ; $6572
 	script_move_player $0f00, $1100 ; $6578
@@ -1768,7 +1768,7 @@ End5ServiceAceFacingScripts_27:
 End5ServiceAceTileTriggers_27:
 	ds 1, $ff ; $661d, fill
 End5ServiceAceInitScript_27:
-	call Func_27_656f ; $661e
+	call End5ServiceAceCutscene_27 ; $661e
 	ret ; $6621
 End4JrCourtMapScripts_27:
 	; $6622, 14 bytes (map_tree)
@@ -1879,7 +1879,7 @@ ActorScript_27_682f:
 	as_wait $f0
 	as_wait $f0
 	as_jump .L8
-Func_27_6866:
+End4JrCourtApproachSingles_27:
 	script_wait_frames $0f ; $6866
 	script_face_toward $07, $03 ; $686d
 	script_wait_frames $0a ; $6875
@@ -1933,10 +1933,10 @@ ActorScript_27_6940:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-Func_27_6951:
+End4JrCourtSceneSingles_27:
 	farcall BeginCutsceneScriptMode ; $6951
 	script_face $03, FACE_DOWN ; $6954
-	call Func_27_6866 ; $695b
+	call End4JrCourtApproachSingles_27 ; $695b
 	script_face ACTOR_PLAYER, FACE_UP ; $695e
 	script_wait_frames $0f ; $6965
 	script_set_anim $03, $02 ; $696c
@@ -1964,7 +1964,7 @@ Label_27_69ee:
 	script_face_toward $03, ACTOR_PLAYER ; $69f1
 	script_wait_frames $1e ; $69f9
 	script_face_toward ACTOR_PLAYER, $03 ; $6a00
-	call Func_27_6a7d ; $6a08
+	call End4JrCourtApproachDoubles_27 ; $6a08
 	script_face ACTOR_PLAYER, FACE_UP ; $6a0b
 	script_wait_frames $0f ; $6a12
 	script_set_anim $03, $02 ; $6a19
@@ -1974,7 +1974,7 @@ Label_27_69ee:
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6a33
 	script_face $07, FACE_RIGHT ; $6a3a
 	script_wait_frames $1e ; $6a41
-	call Func_27_6b21 ; $6a48
+	call End4JrCourtDepartureDoubles_27 ; $6a48
 	ld a, $01 ; $6a4b
 	ld [$c294], a ; $6a4d
 	ld [wStoryModeExitLocationRequest], a ; $6a50
@@ -1986,9 +1986,9 @@ Label_27_6a54:
 	script_wait_move ACTOR_PLAYER ; $6a6e
 	test_flag $05, 7 ; $6a73
 	jp nz, Label_27_69ee ; $6a76
-	call Func_27_6951 ; $6a79
+	call End4JrCourtSceneSingles_27 ; $6a79
 	ret ; $6a7c
-Func_27_6a7d:
+End4JrCourtApproachDoubles_27:
 	script_player_speed $0020 ; $6a7d
 	script_face $03, FACE_RIGHT ; $6a83
 	script_move_player_to_actor $08 ; $6a8a
@@ -2014,7 +2014,7 @@ Func_27_6a7d:
 	script_face $08, FACE_UP ; $6b12
 	script_face $09, FACE_UP ; $6b19
 	ret ; $6b20
-Func_27_6b21:
+End4JrCourtDepartureDoubles_27:
 	script_face $03, FACE_RIGHT ; $6b21
 	script_wait_frames $1e ; $6b28
 	script_null_script ACTOR_PARTNER ; $6b2f
@@ -2087,10 +2087,10 @@ End3DormEntInitScript_27:
 	farcall BeginCutsceneScriptMode ; $6c85
 	ld a, [wStoryModeEntryPoint] ; $6c88
 	cp a, $01 ; $6c8b
-	call z, Func_27_6c94 ; $6c8d
+	call z, End3DormEntCutscene_27 ; $6c8d
 	farcall EndCutsceneScriptMode ; $6c90
 	ret ; $6c93
-Func_27_6c94:
+End3DormEntCutscene_27:
 	test_flag $05, 7 ; $6c94
 	jr z, Label_27_6caf ; $6c97
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_785d ; $6c99
@@ -2215,10 +2215,10 @@ EndRestaurantEntInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6f4c
 	cp a, $01 ; $6f4f
 	jr nz, Label_27_6f56 ; $6f51
-	call Func_27_6f57 ; $6f53
+	call EndRestaurantEntCutscene_27 ; $6f53
 Label_27_6f56:
 	ret ; $6f56
-Func_27_6f57:
+EndRestaurantEntCutscene_27:
 	ldh a, [hRomBank] ; $6f57
 	ld hl, EndRestaurantEntActorsAlt_27 ; $6f59
 	farcall ScriptRespawnLocationActors ; $6f5c
@@ -2250,7 +2250,7 @@ Label_27_6f7d:
 	script_set_anim ACTOR_PLAYER, $03 ; $7020
 	script_wait_idle ACTOR_PLAYER ; $7027
 	script_wait_frames $1e ; $702c
-	call Func_27_716b ; $7033
+	call OpenRestaurantEntDoor_27 ; $7033
 	script_wait_frames $0f ; $7036
 	sound $97 ; $703d
 	script_set_position $03, $1c00, $0b00 ; $703f
@@ -2272,7 +2272,7 @@ Label_27_6f7d:
 	script_set_speed $08, $0010 ; $70c5
 	script_move_target $08, $1500, $0b00 ; $70cd
 	script_wait_move $08 ; $70d8
-	call Func_27_71bf ; $70dd
+	call CloseRestaurantEntDoor_27 ; $70dd
 	script_face $08, FACE_RIGHT ; $70e0
 	script_wait_frames $0f ; $70e7
 	script_set_anim $06, $02 ; $70ee
@@ -2292,7 +2292,7 @@ EndRestaurantEntActorsAlt_27:
 	map_actor $0000, ActorScript_27_785d, $1500, $0d00, FACE_DOWN, $4a, $01, $00
 	map_actor $0000, ActorScript_27_785d, $1300, $0d00, FACE_DOWN, $4b, $01, $00
 	map_actor_end
-Func_27_716b:
+OpenRestaurantEntDoor_27:
 	sound $71 ; $716b
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $716d
 	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $717c
@@ -2302,7 +2302,7 @@ Func_27_716b:
 	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $71a8
 	script_wait_frames $02 ; $71b7
 	ret ; $71be
-Func_27_71bf:
+CloseRestaurantEntDoor_27:
 	sound $71 ; $71bf
 	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $71c1
 	script_wait_frames $01 ; $71d0
@@ -2430,7 +2430,7 @@ Label_27_737e:
 	farcall AttachActorWaypointFollower ; $74d1
 	script_move_target ACTOR_PLAYER, $1800, $1e00 ; $74d4
 	script_wait_frames $14 ; $74df
-	call Func_27_7595 ; $74e6
+	call End1MainBldgKnockdown_27 ; $74e6
 	script_wait_move $06 ; $74e9
 	script_set_anim $06, $02 ; $74ee
 	sound $96 ; $74f5
@@ -2457,7 +2457,7 @@ Label_27_737e:
 	ld [$c294], a ; $758e
 	ld [wStoryModeExitLocationRequest], a ; $7591
 	ret ; $7594
-Func_27_7595:
+End1MainBldgKnockdown_27:
 	sound $70 ; $7595
 	script_null_script ACTOR_PLAYER_SHADOW ; $7597
 	ld a, $03 ; $759c

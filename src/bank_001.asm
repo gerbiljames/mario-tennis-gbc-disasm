@@ -1,18 +1,18 @@
 SECTION "ROM Bank $01", ROMX[$4000], BANK[$01]
 
-	farptr Func_01_4018 ; $4000
-	farptr Func_01_6030 ; $4002
-	farptr Func_01_5062 ; $4004
-	farptr Func_01_5076 ; $4006
-	farptr Func_01_5050 ; $4008
-	farptr Func_01_50e2 ; $400a
-	farptr Func_01_5176 ; $400c
-	farptr Func_01_5188 ; $400e
-	farptr Func_01_519a ; $4010
-	farptr Func_01_50d6 ; $4012
-	farptr Func_01_50ec ; $4014
-	farptr Func_01_6a5b ; $4016
-Func_01_4018:
+	farptr RunDebugTestMenu ; $4000
+	farptr ShowDebugGfxScreenAndHang ; $4002
+	farptr LoadMenuTilesA ; $4004
+	farptr LoadMenuTilesB ; $4006
+	farptr LoadMenuFontPalette ; $4008
+	farptr LoadMenuFontGfx ; $400a
+	farptr LoadMenuBgPalettes3To7 ; $400c
+	farptr LoadMenuObjPalettes3To7 ; $400e
+	farptr LoadDebugMenuPalette ; $4010
+	farptr LoadMenuTilesBChunk2 ; $4012
+	farptr LoadMenuFontGfxStaged ; $4014
+	farptr RunSoundTest ; $4016
+RunDebugTestMenu:
 	call InitSerialLink ; $4018
 	push de ; $401b
 	ld de, $07e0 ; $401c
@@ -47,8 +47,8 @@ Func_01_4018:
 	ld c, $0a ; $407d
 	call ClearMemory16 ; $407f
 	call ClearDebugTextBuffer ; $4082
-	call Func_01_50e2 ; $4085
-	call Func_01_5188 ; $4088
+	call LoadMenuFontGfx ; $4085
+	call LoadMenuObjPalettes3To7 ; $4088
 	farcall ValidateSaveRam ; $408b
 	farcall RepairAllSaveSlots ; $408e
 	farcall ApplyN64RecordsUnlockFlags ; $4091
@@ -113,7 +113,7 @@ Label_01_40f9:
 Label_01_4113:
 	bit 2, a ; $4113
 	jr z, Label_01_411a ; $4115
-	farcall Func_01_6a5b ; $4117
+	farcall RunSoundTest ; $4117
 Label_01_411a:
 	bit 0, a ; $411a
 	jr z, Label_01_4127 ; $411c
@@ -234,7 +234,7 @@ MenuTilesA_01:
 	ds 256, $00 ; $4310, fill
 MenuTilesB_01:
 	INCBIN "data/bank_001/d_4410.bin" ; $4410, 3136 bytes
-Func_01_5050:
+LoadMenuFontPalette:
 	push af ; $5050
 	push bc ; $5051
 	push de ; $5052
@@ -247,7 +247,7 @@ Func_01_5050:
 	pop bc ; $505f
 	pop af ; $5060
 	ret ; $5061
-Func_01_5062:
+LoadMenuTilesA:
 	push af ; $5062
 	push bc ; $5063
 	push de ; $5064
@@ -261,7 +261,7 @@ Func_01_5062:
 	pop bc ; $5073
 	pop af ; $5074
 	ret ; $5075
-Func_01_5076:
+LoadMenuTilesB:
 	push af ; $5076
 	push bc ; $5077
 	push de ; $5078
@@ -279,7 +279,7 @@ Func_01_5076:
 	pop bc ; $5092
 	pop af ; $5093
 	ret ; $5094
-Func_01_5095:
+LoadMenuTilesBStaged:
 	push af ; $5095
 	push bc ; $5096
 	push de ; $5097
@@ -309,21 +309,21 @@ Func_01_5095:
 	pop bc ; $50d3
 	pop af ; $50d4
 	ret ; $50d5
-Func_01_50d6:
+LoadMenuTilesBChunk2:
 	ld hl, $4610 ; $50d6
 	ld de, $9400 ; $50d9
 	ld c, $20 ; $50dc
 	call QueueVRAMCopy ; $50de
 	ret ; $50e1
-Func_01_50e2:
-	call Func_01_5050 ; $50e2
-	call Func_01_5062 ; $50e5
-	call Func_01_5076 ; $50e8
+LoadMenuFontGfx:
+	call LoadMenuFontPalette ; $50e2
+	call LoadMenuTilesA ; $50e5
+	call LoadMenuTilesB ; $50e8
 	ret ; $50eb
-Func_01_50ec:
-	call Func_01_5050 ; $50ec
-	call Func_01_5062 ; $50ef
-	call Func_01_5095 ; $50f2
+LoadMenuFontGfxStaged:
+	call LoadMenuFontPalette ; $50ec
+	call LoadMenuTilesA ; $50ef
+	call LoadMenuTilesBStaged ; $50f2
 	ret ; $50f5
 DebugMenuPalettes_01:
 	; $50f6, 128 bytes (palettes)
@@ -344,7 +344,7 @@ DebugMenuPalettes_01:
 	dw $01ff, $011f, $7fff, $0000 ; pal 13: #ff7b00 #ff4100 #ffffff #000000
 	dw $01ff, $011f, $7fff, $0000 ; pal 14: #ff7b00 #ff4100 #ffffff #000000
 	dw $01ff, $011f, $7fff, $0000 ; pal 15: #ff7b00 #ff4100 #ffffff #000000
-Func_01_5176:
+LoadMenuBgPalettes3To7:
 	push af ; $5176
 	push bc ; $5177
 	push de ; $5178
@@ -357,7 +357,7 @@ Func_01_5176:
 	pop bc ; $5185
 	pop af ; $5186
 	ret ; $5187
-Func_01_5188:
+LoadMenuObjPalettes3To7:
 	push af ; $5188
 	push bc ; $5189
 	push de ; $518a
@@ -370,7 +370,7 @@ Func_01_5188:
 	pop bc ; $5197
 	pop af ; $5198
 	ret ; $5199
-Func_01_519a:
+LoadDebugMenuPalette:
 	ld a, b ; $519a
 	add a, a ; $519b
 	add a, a ; $519c
@@ -388,7 +388,7 @@ UnusedTiles_01_51ab:
 	ds 256, $00 ; $52b0, fill
 UnusedTiles_01_53b0:
 	INCBIN "data/bank_001/d_53b0.bin" ; $53b0, 3200 bytes
-Func_01_6030:
+ShowDebugGfxScreenAndHang:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032
 	ld hl, MenuGfxLZ_01 ; $6034
@@ -425,7 +425,7 @@ MenuGfxLZ_01:
 	INCBIN "data/bank_001/d_607c.bin" ; $607c, 2183 bytes
 MenuGfxLZ2_01:
 	INCBIN "data/bank_001/d_6903.bin" ; $6903, 344 bytes
-Func_01_6a5b:
+RunSoundTest:
 	push af ; $6a5b
 	push bc ; $6a5c
 	push de ; $6a5d

@@ -3234,7 +3234,7 @@ InitCharDataScreenVideo:
 	ld a, $90 ; $5bfa
 	ldh [rWY], a ; $5bfc
 	call ClearSpriteQueue ; $5bfe
-	farcall Func_01_50e2 ; $5c01
+	farcall LoadMenuFontGfx ; $5c01
 	call InitDrillWorkRam ; $5c04
 	call BuildCharDataScreenPages ; $5c07
 	ret ; $5c0a

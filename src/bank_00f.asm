@@ -130,10 +130,10 @@ SmallCharTestInitScript_0f:
 	farcall GetObjectDefCount ; $41a8
 	ld [$c2b1], a ; $41ab
 	ld a, $01 ; $41ae
-	ld hl, Func_0f_41b7 ; $41b0
+	ld hl, SmallCharTestButtonTask_0f ; $41b0
 	call RegisterFrameTask ; $41b3
 	ret ; $41b6
-Func_0f_41b7:
+SmallCharTestButtonTask_0f:
 	ldh a, [hInputRisingEdge] ; $41b7
 	and a, $f0 ; $41b9
 	jr z, Label_0f_41c4 ; $41bb
@@ -378,7 +378,7 @@ AwardsCeremonyTile02_0f:
 	script_wait_move $04 ; $4779
 	ld a, $0a ; $477e
 	call DelayFrames ; $4780
-	call Func_0f_5c96 ; $4783
+	call FaceAwardsCeremonyCrowdUp ; $4783
 	script_set_speed ACTOR_PLAYER, $0020 ; $4786
 	script_set_speed $03, $0020 ; $478e
 	script_set_speed $04, $0020 ; $4796
@@ -398,7 +398,7 @@ AwardsCeremonyTile02_0f:
 	script_player_speed $0006 ; $4808
 	script_move_player $0c00, $1300 ; $480e
 	farcall WaitPlayerMoveDone ; $4818
-	call Func_0f_5ccf ; $481b
+	call AwardsCeremonyChairmanSpeech ; $481b
 	script_move_target $0c, $0e00, $1300 ; $481e
 	script_wait_move $0c ; $4829
 	script_face $0c, FACE_UP ; $482e
@@ -690,7 +690,7 @@ Label_0f_4ea7:
 	ld a, $0a ; $4f0b
 	call DelayFrames ; $4f0d
 	script_null_script $05 ; $4f10
-	call Func_0f_5c96 ; $4f15
+	call FaceAwardsCeremonyCrowdUp ; $4f15
 	script_face $03, FACE_UP ; $4f18
 	script_set_speed ACTOR_PLAYER, $0020 ; $4f1f
 	script_set_speed ACTOR_PARTNER, $0020 ; $4f27
@@ -734,7 +734,7 @@ Label_0f_4ea7:
 	script_player_speed $0006 ; $5040
 	script_move_player $0c00, $1300 ; $5046
 	farcall WaitPlayerMoveDone ; $5050
-	call Func_0f_5ccf ; $5053
+	call AwardsCeremonyChairmanSpeech ; $5053
 	script_move_target $0c, $0a00, $1300 ; $5056
 	script_wait_move $0c ; $5061
 	script_face $0c, FACE_UP ; $5066
@@ -979,7 +979,7 @@ Label_0f_55c3:
 	jp z, Label_0f_56a8 ; $55cb
 	cp a, $0b ; $55ce
 	jp z, Label_0f_5889 ; $55d0
-	call Func_0f_5f7a ; $55d3
+	call CheckAwardsCeremonyRivalSceneDone ; $55d3
 	and a, $01 ; $55d6
 	jr z, Label_0f_5600 ; $55d8
 	script_move_target $08, $0900, $1d00 ; $55da
@@ -1015,7 +1015,7 @@ Label_0f_5627:
 	ret ; $5627
 AwardsCeremonyNpc08_0f:
 	script_set_text Text_25_125 ; $5628
-	call Func_0f_5f7a ; $562e
+	call CheckAwardsCeremonyRivalSceneDone ; $562e
 	and a, $01 ; $5631
 	jr z, Label_0f_563b ; $5633
 	script_set_text Text_25_129 ; $5635
@@ -1066,7 +1066,7 @@ CutsceneStompScreenShake:
 	farcall SetScreenShake ; $56a4
 	ret ; $56a7
 Label_0f_56a8:
-	call Func_0f_5b4d ; $56a8
+	call AwardsCeremonyArrivalIntro ; $56a8
 	script_set_anim $03, $02 ; $56ab
 	script_wait_idle $03 ; $56b2
 	script_face_toward ACTOR_PLAYER, $03 ; $56b7
@@ -1164,17 +1164,17 @@ Label_0f_5889:
 	script_null_script ACTOR_PARTNER ; $5889
 	script_set_position ACTOR_PARTNER, $0b00, $2700 ; $588e
 	script_face ACTOR_PARTNER, FACE_UP ; $5899
-	call Func_0f_5b4d ; $58a0
+	call AwardsCeremonyArrivalIntro ; $58a0
 	script_set_text Text_25_151 ; $58a3
 	script_set_anim ACTOR_PARTNER, $02 ; $58a9
 	script_wait_idle ACTOR_PARTNER ; $58b0
 	script_face ACTOR_PARTNER, FACE_DOWN ; $58b5
-	call Func_0f_5aec ; $58bc
+	call SpeakPartnerVariantLine ; $58bc
 	script_set_anim ACTOR_PLAYER, $03 ; $58bf
 	script_wait_idle ACTOR_PLAYER ; $58c6
 	script_set_anim ACTOR_PARTNER, $03 ; $58cb
 	script_wait_idle ACTOR_PARTNER ; $58d2
-	call Func_0f_5aec ; $58d7
+	call SpeakPartnerVariantLine ; $58d7
 	script_set_anim ACTOR_PLAYER, $03 ; $58da
 	script_wait_idle ACTOR_PLAYER ; $58e1
 	script_face_toward ACTOR_PARTNER, $04 ; $58e6
@@ -1193,7 +1193,7 @@ Label_0f_5889:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $592e
 	script_set_anim ACTOR_PARTNER, $02 ; $5935
 	script_wait_idle ACTOR_PARTNER ; $593c
-	call Func_0f_5aec ; $5941
+	call SpeakPartnerVariantLine ; $5941
 	script_set_anim $04, $02 ; $5944
 	script_wait_idle $04 ; $594b
 	script_speak $04 ; $5950
@@ -1247,7 +1247,7 @@ Label_0f_5889:
 	script_speak $05 ; $5a47
 	script_set_anim ACTOR_PARTNER, $02 ; $5a4c
 	script_wait_idle ACTOR_PARTNER ; $5a53
-	call Func_0f_5aec ; $5a58
+	call SpeakPartnerVariantLine ; $5a58
 	script_set_position $13, $0e80, $2580 ; $5a5b
 	sound $99 ; $5a66
 	ld a, $3c ; $5a68
@@ -1262,15 +1262,15 @@ Label_0f_5889:
 	ld a, $1e ; $5a98
 	call DelayFrames ; $5a9a
 	script_face_pair ACTOR_PLAYER, ACTOR_PARTNER ; $5a9d
-	call Func_0f_5aec ; $5aa5
+	call SpeakPartnerVariantLine ; $5aa5
 	script_set_anim ACTOR_PARTNER, $02 ; $5aa8
 	script_wait_idle ACTOR_PARTNER ; $5aaf
-	call Func_0f_5aec ; $5ab4
+	call SpeakPartnerVariantLine ; $5ab4
 	script_set_anim ACTOR_PLAYER, $02 ; $5ab7
 	script_wait_idle ACTOR_PLAYER ; $5abe
 	script_set_anim ACTOR_PARTNER, $03 ; $5ac3
 	script_wait_idle ACTOR_PARTNER ; $5aca
-	call Func_0f_5aec ; $5acf
+	call SpeakPartnerVariantLine ; $5acf
 	script_set_anim ACTOR_PLAYER, $03 ; $5ad2
 	script_wait_idle ACTOR_PLAYER ; $5ad9
 	script_get_actor_state ACTOR_PARTNER ; $5ade
@@ -1279,7 +1279,7 @@ Label_0f_5889:
 	ld de, $d000 ; $5ae5
 	farcall AttachActorStepMover ; $5ae8
 	ret ; $5aeb
-Func_0f_5aec:
+SpeakPartnerVariantLine:
 	ld a, [$c94d] ; $5aec
 	and a, a ; $5aef
 	jr nz, Label_0f_5afb ; $5af0
@@ -1302,7 +1302,7 @@ AwardsCeremonyScriptsDoubles_0f:
 	map_script $0a, FACEMASK_ANY, $0000, Text_25_131, $03, $00
 	map_script $12, FACEMASK_ANY, $0000, Text_25_176, $03, $00
 	db $ff
-Func_0f_5b4d:
+AwardsCeremonyArrivalIntro:
 	script_player_speed $00ff ; $5b4d
 	script_move_player $0c00, $0b00 ; $5b53
 	farcall WaitPlayerMoveDone ; $5b5d
@@ -1356,7 +1356,7 @@ AnnounceWinnersToPodiums:
 	script_set_text Text_25_133 ; $5c8a
 	script_speak $0b ; $5c90
 	ret ; $5c95
-Func_0f_5c96:
+FaceAwardsCeremonyCrowdUp:
 	script_face $05, FACE_UP ; $5c96
 	script_face $08, FACE_UP ; $5c9d
 	script_face $09, FACE_UP ; $5ca4
@@ -1366,7 +1366,7 @@ Func_0f_5c96:
 	script_face $07, FACE_UP ; $5cc0
 	script_face $11, FACE_UP ; $5cc7
 	ret ; $5cce
-Func_0f_5ccf:
+AwardsCeremonyChairmanSpeech:
 	ld a, $1e ; $5ccf
 	call DelayFrames ; $5cd1
 	script_speak $0b ; $5cd4
@@ -1485,7 +1485,7 @@ SavePlayerActorPosition:
 	ld [hl+], a ; $5f77
 	ld [hl], d ; $5f78
 	ret ; $5f79
-Func_0f_5f7a:
+CheckAwardsCeremonyRivalSceneDone:
 	test_flag $05, 7 ; $5f7a
 	jr z, Label_0f_5f8a ; $5f7d
 	ld a, $00 ; $5f7f
@@ -1637,7 +1637,7 @@ TournamentTile0F_0f:
 	ret ; $620e
 TournamentInitScript_0f:
 	ld a, $01 ; $620f
-	ld hl, Func_0f_6310 ; $6211
+	ld hl, UpdateTournamentActorDrawModes_0f ; $6211
 	call RegisterFrameTask ; $6214
 	ld a, [wStoryModeEntryPoint] ; $6217
 	cp a, $ff ; $621a
@@ -1715,17 +1715,17 @@ Label_0f_62fe:
 Label_0f_6306:
 	call LoadIslandOpenRoundNpcs ; $6306
 	call SetPlayerAndPartnerObjectDefs ; $6309
-	call Func_0f_7aaf ; $630c
+	call WalkActorsInFromEntryPoint_0f ; $630c
 	ret ; $630f
-Func_0f_6310:
+UpdateTournamentActorDrawModes_0f:
 	ld a, $00 ; $6310
-	call Func_0f_631f ; $6312
+	call SetActorDrawModeFromSceneTile_0f ; $6312
 	test_flag $05, 7 ; $6315
 	ret z ; $6318
 	ld a, $02 ; $6319
-	call Func_0f_631f ; $631b
+	call SetActorDrawModeFromSceneTile_0f ; $631b
 	ret ; $631e
-Func_0f_631f:
+SetActorDrawModeFromSceneTile_0f:
 	ld h, a ; $631f
 	ld l, $00 ; $6320
 	push af ; $6322
@@ -1761,7 +1761,7 @@ Func_0f_631f:
 	dec e ; $6354
 Label_0f_6355:
 	push de ; $6355
-	call Func_0f_6408 ; $6356
+	call ReadSceneTilemapTile_0f ; $6356
 	pop de ; $6359
 	and a, $87 ; $635a
 	cp a, $05 ; $635c
@@ -1775,7 +1775,7 @@ Label_0f_6355:
 	ret ; $636e
 Label_0f_636f:
 	inc d ; $636f
-	call Func_0f_6408 ; $6370
+	call ReadSceneTilemapTile_0f ; $6370
 	and a, $07 ; $6373
 	cp a, $05 ; $6375
 	jr nz, Label_0f_6388 ; $6377
@@ -1823,7 +1823,7 @@ Label_0f_6388:
 	dec e ; $63c5
 	dec e ; $63c6
 	push de ; $63c7
-	call Func_0f_6408 ; $63c8
+	call ReadSceneTilemapTile_0f ; $63c8
 	pop de ; $63cb
 	and a, $87 ; $63cc
 	cp a, $05 ; $63ce
@@ -1837,7 +1837,7 @@ Label_0f_6388:
 	ret ; $63e0
 Label_0f_63e1:
 	inc d ; $63e1
-	call Func_0f_6408 ; $63e2
+	call ReadSceneTilemapTile_0f ; $63e2
 	and a, $07 ; $63e5
 	cp a, $05 ; $63e7
 	jr nz, Label_0f_63fa ; $63e9
@@ -1855,7 +1855,7 @@ Label_0f_63fa:
 	ld a, $02 ; $6404
 	ld [hl], a ; $6406
 	ret ; $6407
-Func_0f_6408:
+ReadSceneTilemapTile_0f:
 	wram_bank $02 ; $6408
 	ld h, e ; $640e
 	ld l, $00 ; $640f
@@ -1885,7 +1885,7 @@ IslandOpenArrivalCutscene:
 	ld de, $000c ; $6434
 	farcall WriteStoryStateWord ; $6437
 	farcall BeginCutsceneScriptMode ; $643a
-	call Func_0f_7a17 ; $643d
+	call ReplacePartnerWithStandInActor ; $643d
 	script_player_speed $00ff ; $6440
 	script_move_player $1c00, $2500 ; $6446
 	farcall WaitPlayerMoveDone ; $6450
@@ -2513,7 +2513,7 @@ Label_0f_71bf:
 	ld c, $10 ; $71bf
 	call BeginFadeOut ; $71c1
 	call WaitFadeEnd ; $71c4
-	call Func_0f_7434 ; $71c7
+	call ShowTournamentRankingBoard_0f ; $71c7
 	ld a, $19 ; $71ca
 	ld [wStoryModeCurrentLocation], a ; $71cc
 	ld a, $0a ; $71cf
@@ -2587,7 +2587,7 @@ Label_0f_735f:
 	ld c, $10 ; $735f
 	call BeginFadeOut ; $7361
 	call WaitFadeEnd ; $7364
-	call Func_0f_7434 ; $7367
+	call ShowTournamentRankingBoard_0f ; $7367
 	ld a, $19 ; $736a
 	ld [wStoryModeCurrentLocation], a ; $736c
 	ld a, $0b ; $736f
@@ -2671,7 +2671,7 @@ Label_0f_7430:
 	ld c, a ; $7430
 	ld d, $00 ; $7431
 	ret ; $7433
-Func_0f_7434:
+ShowTournamentRankingBoard_0f:
 	xor a, a ; $7434
 	ldh [hBGColumnBlitPending], a ; $7435
 	ldh [hBGRowBlitPending], a ; $7437
@@ -3109,7 +3109,7 @@ Label_0f_79b1:
 	script_set_position $07, $3f00, $3f00 ; $7a08
 	farcall WaitPlayerMoveDone ; $7a13
 	ret ; $7a16
-Func_0f_7a17:
+ReplacePartnerWithStandInActor:
 	call SetPlayerAndPartnerObjectDefs ; $7a17
 	test_flag $05, 7 ; $7a1a
 	jr z, Label_0f_7a29 ; $7a1d
@@ -3170,7 +3170,7 @@ QueueShortText:
 	pop af ; $7aa9
 	wram_bank ; $7aaa
 	ret ; $7aae
-Func_0f_7aaf:
+WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
 	cp a, $ff ; $7ab2
 	jp z, Label_0f_7b15 ; $7ab4

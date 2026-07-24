@@ -848,7 +848,7 @@ Label_15_4b6e:
 	script_set_position $16, $3480, $0b80 ; $4cf3
 	sound $99 ; $4cfe
 	script_wait_frames $50 ; $4d00
-Func_15_4d07:
+RunWaterSpriteSwingContestAndReward:
 	script_get_actor_state ACTOR_PLAYER ; $4d07
 	ld a, $01 ; $4d0c
 	ld e, l ; $4d0e
@@ -1058,15 +1058,15 @@ TrainingCourtNpcScripts_15:
 TrainingCourtNpc06_15:
 	test_flag $18, 0 ; $50fc
 	jr nz, Label_15_5105 ; $50ff
-	call Func_15_63e1 ; $5101
+	call ServiceAceMatchChallengeScene ; $5101
 	ret ; $5104
 Label_15_5105:
 	test_flag $18, 1 ; $5105
 	jr nz, Label_15_510e ; $5108
-	call Func_15_64a8 ; $510a
+	call CenterLineServeMatchChallengeScene ; $510a
 	ret ; $510d
 Label_15_510e:
-	call Func_15_6586 ; $510e
+	call AcademyRulesServeMatchChallengeScene ; $510e
 	ret ; $5111
 TrainingCourtNpc07FaceDown_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $5112
@@ -1078,7 +1078,7 @@ TrainingCourtNpc07FaceDown_15:
 TrainingCourtNpc07_15:
 	test_flag $18, 3 ; $513f
 	jr nz, Label_15_5148 ; $5142
-	call Func_15_66f5 ; $5144
+	call ServeCoachJuniorLessonScene ; $5144
 	ret ; $5147
 Label_15_5148:
 	test_flag $18, 4 ; $5148
@@ -1087,7 +1087,7 @@ Label_15_5148:
 	jr nz, Label_15_515b ; $5150
 	test_flag $0a, 3 ; $5152
 	jr z, Label_15_515b ; $5155
-	call Func_15_677e ; $5157
+	call ServeCoachSeniorLessonScene ; $5157
 	ret ; $515a
 Label_15_515b:
 	script_set_text Text_37_33 ; $515b
@@ -1104,7 +1104,7 @@ Label_15_5172:
 	jr nz, Label_15_5185 ; $517a
 	test_flag $0a, 7 ; $517c
 	jr z, Label_15_5185 ; $517f
-	call Func_15_67fc ; $5181
+	call ServeCoachVarsityLessonScene ; $5181
 	ret ; $5184
 Label_15_5185:
 	script_set_text Text_37_50 ; $5185
@@ -1121,15 +1121,15 @@ Label_15_519c:
 TrainingCourtNpc11_15:
 	test_flag $18, 6 ; $51a8
 	jr nz, Label_15_51b1 ; $51ab
-	call Func_15_688f ; $51ad
+	call VolleyMatchChallengeScene ; $51ad
 	ret ; $51b0
 Label_15_51b1:
 	test_flag $18, 7 ; $51b1
 	jr nz, Label_15_51ba ; $51b4
-	call Func_15_6963 ; $51b6
+	call SmashMatchChallengeScene ; $51b6
 	ret ; $51b9
 Label_15_51ba:
-	call Func_15_6a2d ; $51ba
+	call DropShotMatchChallengeScene ; $51ba
 	ret ; $51bd
 TrainingCourtNpc12FaceUp_15:
 	script_set_speed ACTOR_PLAYER, $0008 ; $51be
@@ -1257,7 +1257,7 @@ TrainingCourtTile01_15:
 	script_move_target ACTOR_PLAYER, $3300, $0d00 ; $5313
 	script_wait_move ACTOR_PLAYER ; $531e
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5323
-	call Func_15_4d07 ; $532a
+	call RunWaterSpriteSwingContestAndReward ; $532a
 	ret ; $532d
 TrainingCourtInitScript_15:
 	call ComputeTrainingCourtProgressIndex ; $532e
@@ -1471,7 +1471,7 @@ ActorScript_15_55e9:
 	as_anim $08
 	as_wait $3c
 	as_jump ActorScript_15_55e9
-Func_15_55f0:
+WaterSpriteSwingCountTask:
 	ldh a, [hInputRisingEdge] ; $55f0
 	and a, PADF_A | PADF_B ; $55f2
 	ld d, a ; $55f4
@@ -1524,7 +1524,7 @@ Label_15_562d:
 	ld [hl], d ; $563d
 	ret ; $563e
 Label_15_563f:
-	ld hl, Func_15_55f0 ; $563f
+	ld hl, WaterSpriteSwingCountTask ; $563f
 	call UnregisterFrameTask ; $5642
 	xor a, a ; $5645
 	ld [$c2b9], a ; $5646
@@ -1576,7 +1576,7 @@ Label_15_566c:
 	ld a, $01 ; $56a8
 	ld [$c2b9], a ; $56aa
 	ld a, $01 ; $56ad
-	ld hl, Func_15_578d ; $56af
+	ld hl, DrawWaterSpriteMinigameCounters ; $56af
 	call RegisterFrameTask ; $56b2
 	script_wait_frames $32 ; $56b5
 	ld l, $03 ; $56bc
@@ -1593,9 +1593,9 @@ Label_15_56c7:
 	dec l ; $56d5
 	jp nz, Label_15_56c3 ; $56d6
 	sound $75 ; $56d9
-	call Func_15_5777 ; $56db
+	call TogglePlayerSpriteXFlip ; $56db
 	ld a, $01 ; $56de
-	ld hl, Func_15_55f0 ; $56e0
+	ld hl, WaterSpriteSwingCountTask ; $56e0
 	call RegisterFrameTask ; $56e3
 Label_15_56e6:
 	call AdvanceFrame ; $56e6
@@ -1620,8 +1620,8 @@ Label_15_5708:
 	script_set_anim ACTOR_PLAYER, $02 ; $570a
 	script_wait_idle ACTOR_PLAYER ; $5711
 	script_wait_frames $3c ; $5716
-	call Func_15_5777 ; $571d
-	ld hl, Func_15_578d ; $5720
+	call TogglePlayerSpriteXFlip ; $571d
+	ld hl, DrawWaterSpriteMinigameCounters ; $5720
 	call UnregisterFrameTask ; $5723
 	ld b, $30 ; $5726
 	ld e, $10 ; $5728
@@ -1648,7 +1648,7 @@ Label_15_572a:
 	script_wait_frames $01 ; $574d
 	dec b ; $5754
 	jp nz, Label_15_572a ; $5755
-	ld hl, Func_15_58d1 ; $5758
+	ld hl, QueueWaterSpriteMinigameHudPanels ; $5758
 	call UnregisterFrameTask ; $575b
 	call WaitFramesCmd ; $575e
 	db $3c ; $5761 inline arg
@@ -1660,7 +1660,7 @@ Label_15_572a:
 	farcall PushTextArgNumber ; $576e
 	script_speak ACTOR_PLAYER ; $5771
 	ret ; $5776
-Func_15_5777:
+TogglePlayerSpriteXFlip:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5777
 	and a, a ; $577a
 	jr z, Label_15_578c ; $577b
@@ -1674,7 +1674,7 @@ Func_15_5777:
 	ld [hl], a ; $578b
 Label_15_578c:
 	ret ; $578c
-Func_15_578d:
+DrawWaterSpriteMinigameCounters:
 	ld hl, wWaterSpriteMinigameTimer ; $578d
 	ld a, [hl+] ; $5790
 	ld h, [hl] ; $5791
@@ -1730,7 +1730,7 @@ QueueWaterSpriteMinigameCounterPanel:
 	ld b, $08 ; $58cb
 	call QueueSpriteTemplate ; $58cd
 	ret ; $58d0
-Func_15_58d1:
+QueueWaterSpriteMinigameHudPanels:
 	ld a, [wWaterSpriteMinigameFlag] ; $58d1
 	ld d, a ; $58d4
 	ld e, $18 ; $58d5
@@ -1747,7 +1747,7 @@ InitWaterSpriteMinigameHud:
 	ld a, $a0 ; $58ec
 	ld [$c2bb], a ; $58ee
 	ld a, $01 ; $58f1
-	ld hl, Func_15_58d1 ; $58f3
+	ld hl, QueueWaterSpriteMinigameHudPanels ; $58f3
 	call RegisterFrameTask ; $58f6
 	ret ; $58f9
 	INCBIN "data/bank_015/d_58fa.bin" ; $58fa, 198 bytes
@@ -2587,7 +2587,7 @@ Label_15_63b9:
 	ld [hl], d ; $63dc
 	call StrokeChallengerResultScene ; $63dd
 	ret ; $63e0
-Func_15_63e1:
+ServiceAceMatchChallengeScene:
 	script_face_toward $06, ACTOR_PARTNER ; $63e1
 	script_set_text Text_6e_20 ; $63e9
 	ld a, $06 ; $63ef
@@ -2637,7 +2637,7 @@ Func_15_63e1:
 Label_15_64a2:
 	script_speak $06 ; $64a2
 	ret ; $64a7
-Func_15_64a8:
+CenterLineServeMatchChallengeScene:
 	script_face_toward $06, ACTOR_PARTNER ; $64a8
 	script_set_text Text_6e_38 ; $64b0
 	ld a, $06 ; $64b6
@@ -2689,7 +2689,7 @@ Func_15_64a8:
 	ld a, $01 ; $6580
 	farcall RunTrainingDrillByID ; $6582
 	ret ; $6585
-Func_15_6586:
+AcademyRulesServeMatchChallengeScene:
 	script_face_toward $06, ACTOR_PARTNER ; $6586
 	script_set_text Text_6e_52 ; $658e
 	ld a, $06 ; $6594
@@ -2784,7 +2784,7 @@ ActorScript_15_66e4:
 Label_15_66ef:
 	script_speak $07 ; $66ef
 	ret ; $66f4
-Func_15_66f5:
+ServeCoachJuniorLessonScene:
 	script_face_toward $07, ACTOR_PARTNER ; $66f5
 	test_flag $0a, 3 ; $66fd
 	jr nz, Label_15_670a ; $6700
@@ -2810,7 +2810,7 @@ Label_15_6710:
 	jr nz, Label_15_66ef ; $673b
 	farcall AdvanceDialogueTextCursor ; $673d
 	script_speak $07 ; $6740
-	call Func_15_7c62 ; $6745
+	call MovePartyToServeCoachSpot ; $6745
 	script_face $07, FACE_RIGHT ; $6748
 	script_wait_frames $14 ; $674f
 	script_speak $07 ; $6756
@@ -2828,7 +2828,7 @@ Label_15_6710:
 	call WaitFadeEnd ; $6777
 	farcall ShowDrillBriefingScreen ; $677a
 	ret ; $677d
-Func_15_677e:
+ServeCoachSeniorLessonScene:
 	script_face_toward $07, ACTOR_PARTNER ; $677e
 	script_set_text Text_37_36 ; $6786
 	ld a, $07 ; $678c
@@ -2848,7 +2848,7 @@ Func_15_677e:
 	jp nz, Label_15_66ef ; $67b8
 	farcall AdvanceDialogueTextCursor ; $67bb
 	script_speak $07 ; $67be
-	call Func_15_7c62 ; $67c3
+	call MovePartyToServeCoachSpot ; $67c3
 	script_face $07, FACE_RIGHT ; $67c6
 	script_wait_frames $14 ; $67cd
 	script_speak $07 ; $67d4
@@ -2866,7 +2866,7 @@ Func_15_677e:
 	call WaitFadeEnd ; $67f5
 	farcall ShowDrillBriefingScreen ; $67f8
 	ret ; $67fb
-Func_15_67fc:
+ServeCoachVarsityLessonScene:
 	script_face_toward $07, ACTOR_PARTNER ; $67fc
 	script_set_text Text_37_51 ; $6804
 	ld a, $07 ; $680a
@@ -2886,7 +2886,7 @@ Func_15_67fc:
 	jp nz, Label_15_66ef ; $6836
 	farcall AdvanceDialogueTextCursor ; $6839
 	script_speak $07 ; $683c
-	call Func_15_7c62 ; $6841
+	call MovePartyToServeCoachSpot ; $6841
 	script_face $07, FACE_RIGHT ; $6844
 	script_wait_frames $14 ; $684b
 	script_speak $07 ; $6852
@@ -2905,7 +2905,7 @@ Func_15_67fc:
 	farcall ShowDrillBriefingScreen ; $6876
 	ret ; $6879
 	INCBIN "data/bank_015/d_687a.bin" ; $687a, 21 bytes
-Func_15_688f:
+VolleyMatchChallengeScene:
 	script_face_toward $11, ACTOR_PARTNER ; $688f
 	script_set_text Text_6e_64 ; $6897
 	ld a, $11 ; $689d
@@ -2955,14 +2955,14 @@ Label_15_6900:
 	script_set_anim $11, $03 ; $6943
 	script_wait_idle $11 ; $694a
 	script_speak $11 ; $694f
-	call Func_15_6af7 ; $6954
+	call WalkToNetChallengeCourtCutscene ; $6954
 	ld a, $06 ; $6957
 	farcall RunTrainingDrillByID ; $6959
 	ret ; $695c
 Label_15_695d:
 	script_speak $11 ; $695d
 	ret ; $6962
-Func_15_6963:
+SmashMatchChallengeScene:
 	script_face_toward $11, ACTOR_PARTNER ; $6963
 	script_set_text Text_6e_85 ; $696b
 	ld a, $11 ; $6971
@@ -3002,14 +3002,14 @@ Func_15_6963:
 	script_wait_idle $11 ; $6a11
 	farcall AdvanceDialogueTextCursor ; $6a16
 	script_speak $11 ; $6a19
-	call Func_15_6af7 ; $6a1e
+	call WalkToNetChallengeCourtCutscene ; $6a1e
 	ld a, $07 ; $6a21
 	farcall RunTrainingDrillByID ; $6a23
 	ret ; $6a26
 Label_15_6a27:
 	script_speak $11 ; $6a27
 	ret ; $6a2c
-Func_15_6a2d:
+DropShotMatchChallengeScene:
 	script_face_toward $11, ACTOR_PARTNER ; $6a2d
 	script_set_text Text_6e_98 ; $6a35
 	ld a, $11 ; $6a3b
@@ -3049,14 +3049,14 @@ Func_15_6a2d:
 	script_set_anim $11, $03 ; $6ad7
 	script_wait_idle $11 ; $6ade
 	script_speak $11 ; $6ae3
-	call Func_15_6af7 ; $6ae8
+	call WalkToNetChallengeCourtCutscene ; $6ae8
 	ld a, $08 ; $6aeb
 	farcall RunTrainingDrillByID ; $6aed
 	ret ; $6af0
 Label_15_6af1:
 	script_speak $11 ; $6af1
 	ret ; $6af6
-Func_15_6af7:
+WalkToNetChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $6af7
 	script_move_player $2800, $2700 ; $6afc
 	script_set_actor_script $11, ActorScript_15_6b49 ; $6b06
@@ -4426,7 +4426,7 @@ ActorScript_15_7c57:
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-Func_15_7c62:
+MovePartyToServeCoachSpot:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7c62
 	script_set_speed ACTOR_PARTNER, $0010 ; $7c6a
 	script_move_target ACTOR_PLAYER, $1300, $1300 ; $7c72

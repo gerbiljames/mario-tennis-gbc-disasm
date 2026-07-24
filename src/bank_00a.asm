@@ -1577,7 +1577,7 @@ RestoreOverworldAfterMatch:
 	call WaitFadeEnd ; $4996
 	farcall LoadStoryObjPalettes ; $4999
 	call DisableLCDSafely ; $499c
-	farcall Func_01_50e2 ; $499f
+	farcall LoadMenuFontGfx ; $499f
 	call EnableLCD ; $49a2
 	xor a, a ; $49a5
 	ld [$c8f5], a ; $49a6
@@ -1740,7 +1740,7 @@ RunClearStatusSetupMenu:
 	push af ; $4bb1
 	call ClearFrameTasks ; $4bb2
 	call DisableLCDSafely ; $4bb5
-	farcall Func_01_50e2 ; $4bb8
+	farcall LoadMenuFontGfx ; $4bb8
 	call EnableLCD ; $4bbb
 	wram_bank $05 ; $4bbe
 	ld hl, wCharPosX ; $4bc4
@@ -2254,7 +2254,7 @@ Label_0a_4f6f:
 	farcall CopyScrolledSceneTilemapToVram ; $4fa4
 	test_flag $0d, 6 ; $4fa7
 	jr nz, Label_0a_4faf ; $4faa
-	farcall Func_01_50e2 ; $4fac
+	farcall LoadMenuFontGfx ; $4fac
 Label_0a_4faf:
 	call EnableLCD ; $4faf
 	ld a, [$c29c] ; $4fb2
@@ -5841,7 +5841,7 @@ RunEndingCreditsSequence:
 	call WaitFadeEnd ; $6e79
 	set_flag $0d, 6 ; $6e7c
 	sound $2c ; $6e7f
-	farcall Func_01_50e2 ; $6e81
+	farcall LoadMenuFontGfx ; $6e81
 	ld hl, $6e6c ; $6e84
 	ld de, $0001 ; $6e87
 	call LoadPalettesMasterOnly ; $6e8a
@@ -5911,7 +5911,7 @@ Label_0a_6f03:
 	xor a, a ; $6f0e
 	ldh [hScrollX], a ; $6f0f
 	ldh [hScrollY], a ; $6f11
-	farcall Func_01_50e2 ; $6f13
+	farcall LoadMenuFontGfx ; $6f13
 	clear_flag $0d, 6 ; $6f16
 	clear_flag $0d, 7 ; $6f19
 	ret ; $6f1c

@@ -892,7 +892,7 @@ Label_0b_4767:
 	call DisableLCDSafely ; $476c
 	farcall ResetTextWindowState ; $476f
 	call ClearBGForDrillResult ; $4772
-	farcall Func_01_50e2 ; $4775
+	farcall LoadMenuFontGfx ; $4775
 	call EnableLCD ; $4778
 	script_fade_in $08 ; $477b
 	call WaitFadeEnd ; $4780

@@ -190,7 +190,7 @@ Label_3f_40be:
 	ld [$cb33], a ; $4103
 Label_3f_4106:
 	call DisableLCDSafely ; $4106
-	farcall Func_01_5062 ; $4109
+	farcall LoadMenuTilesA ; $4109
 	call EnableLCD ; $410c
 	sound $05 ; $410f
 	call AdvanceFrame ; $4111

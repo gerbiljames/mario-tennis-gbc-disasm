@@ -214,7 +214,7 @@ RunMatch:
 	call WaitFadeEnd ; $41e4
 	call AdvanceFrame ; $41e7
 	farcall RunMatchWinLoseScreen ; $41ea
-	farcall Func_01_50e2 ; $41ed
+	farcall LoadMenuFontGfx ; $41ed
 	call AdvanceFrame ; $41f0
 	farcall ProcessMatchRewards ; $41f3
 	ret ; $41f6
@@ -4964,7 +4964,7 @@ RunMinigameMatch:
 	call BeginFadeOut ; $6582
 	call WaitFadeEnd ; $6585
 	call AdvanceFrame ; $6588
-	farcall Func_01_50e2 ; $658b
+	farcall LoadMenuFontGfx ; $658b
 	call AdvanceFrame ; $658e
 	ret ; $6591
 ShowMatchResultScreens:

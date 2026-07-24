@@ -592,7 +592,7 @@ ShowExpGainScreen:
 	call WaitFadeEnd ; $44eb
 	call ClearFrameTasks ; $44ee
 	farcall InitTextWindows ; $44f1
-	farcall Func_01_50e2 ; $44f4
+	farcall LoadMenuFontGfx ; $44f4
 	call DisableLCDSafely ; $44f7
 	call ClearSpriteQueue ; $44fa
 	xor a, a ; $44fd
@@ -2630,7 +2630,7 @@ RunDebugCharViewer:
 Label_1a_67db:
 	call ClearFrameTasks ; $67db
 	call DisableLCDSafely ; $67de
-	farcall Func_01_50e2 ; $67e1
+	farcall LoadMenuFontGfx ; $67e1
 	xor a, a ; $67e4
 	ldh [hScrollX], a ; $67e5
 	ldh [hScrollY], a ; $67e7
@@ -2675,7 +2675,7 @@ Label_1a_6854:
 	call BeginFadeOut ; $6856
 	call WaitFadeEnd ; $6859
 	call DisableLCDSafely ; $685c
-	farcall Func_01_50e2 ; $685f
+	farcall LoadMenuFontGfx ; $685f
 	call EnableLCD ; $6862
 	call AdvanceFrame ; $6865
 	jp Label_1a_67db ; $6868

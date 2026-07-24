@@ -743,7 +743,7 @@ Label_3e_44b6:
 	ret ; $44b8
 RestoreMenuScreenAndFadeIn:
 	call DisableLCDSafely ; $44b9
-	farcall Func_01_50e2 ; $44bc
+	farcall LoadMenuFontGfx ; $44bc
 	farcall ResetScreenAndTextWindows ; $44bf
 	call EnableLCD ; $44c2
 	script_fade_in $10 ; $44c5
@@ -2555,7 +2555,7 @@ ShowEquipmentStatusScreen:
 	call AdvanceFrame ; $5393
 	call AdvanceFrame ; $5396
 	call DisableLCDSafely ; $5399
-	farcall Func_01_50e2 ; $539c
+	farcall LoadMenuFontGfx ; $539c
 	xor a, a ; $539f
 	ldh [hScrollX], a ; $53a0
 	ldh [hScrollY], a ; $53a2
@@ -4299,7 +4299,7 @@ FadeOutAndResetMenuScreen:
 	call BeginFadeOut ; $6503
 	call WaitFadeEnd ; $6506
 	call DisableLCDSafely ; $6509
-	farcall Func_01_50e2 ; $650c
+	farcall LoadMenuFontGfx ; $650c
 	farcall ResetScreenAndTextWindows ; $650f
 	pop af ; $6512
 	wram_bank ; $6513

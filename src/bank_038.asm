@@ -783,7 +783,7 @@ Label_38_4486:
 	ret ; $4488
 RunMatchTypeMenu:
 	call DisableLCDSafely ; $4489
-	farcall Func_01_50e2 ; $448c
+	farcall LoadMenuFontGfx ; $448c
 	call SetupMatchTypeMenuScreen ; $448f
 	ld a, $01 ; $4492
 	ld hl, DrawMatchTypeOptionBoxes ; $4494
@@ -1237,7 +1237,7 @@ Label_38_48b1:
 	ld hl, rIE ; $48c3
 	set 2, [hl] ; $48c6
 	call DisableLCDSafely ; $48c8
-	farcall Func_01_50e2 ; $48cb
+	farcall LoadMenuFontGfx ; $48cb
 	call EnableLCD ; $48ce
 	pop af ; $48d1
 	ret ; $48d2
@@ -1250,7 +1250,7 @@ Label_38_48d3:
 	ld hl, rIE ; $48e0
 	set 2, [hl] ; $48e3
 	call DisableLCDSafely ; $48e5
-	farcall Func_01_50e2 ; $48e8
+	farcall LoadMenuFontGfx ; $48e8
 	call EnableLCD ; $48eb
 	ld a, $ff ; $48ee
 	ret ; $48f0
@@ -1340,7 +1340,7 @@ SetupCharacterSelectScreen:
 	ld b, $02 ; $49a5
 	ld c, $00 ; $49a7
 	call SetMenuCursorFromLinearIndex ; $49a9
-	farcall Func_01_50e2 ; $49ac
+	farcall LoadMenuFontGfx ; $49ac
 	ld c, $05 ; $49af
 	farcall LoadScreenAssetRecord ; $49b1
 	call LoadCharSelectCharPalettes ; $49b4
@@ -1818,7 +1818,7 @@ RunExhibitionCharSelectScreen:
 	ld a, $02 ; $4e71
 	ld [$df00], a ; $4e73
 	call DisableLCDSafely ; $4e76
-	farcall Func_01_50e2 ; $4e79
+	farcall LoadMenuFontGfx ; $4e79
 	xor a, a ; $4e7c
 	ld [$d81d], a ; $4e7d
 	ld hl, $da00 ; $4e80
@@ -4728,7 +4728,7 @@ Label_38_63fb:
 Label_38_63fd:
 	ld [$d813], a ; $63fd
 	call DisableLCDSafely ; $6400
-	farcall Func_01_50e2 ; $6403
+	farcall LoadMenuFontGfx ; $6403
 	xor a, a ; $6406
 	ld [$d81d], a ; $6407
 	ld a, $ff ; $640a
@@ -6863,7 +6863,7 @@ Label_38_745f:
 	ld c, $00 ; $7462
 	call ExchangeLinkCharSelection ; $7464
 	call DisableLCDSafely ; $7467
-	farcall Func_01_50e2 ; $746a
+	farcall LoadMenuFontGfx ; $746a
 	farcall ResetScreenAndTextWindows ; $746d
 	farcall LoadCourtSelectGraphics ; $7470
 	call EnableLCD ; $7473

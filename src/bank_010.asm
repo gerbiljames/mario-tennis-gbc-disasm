@@ -55,7 +55,7 @@ MatchSelectRunCharacterSelect:
 	call WaitFadeEnd ; $40c5
 	farcall LoadStoryObjPalettes ; $40c8
 	call DisableLCDSafely ; $40cb
-	farcall Func_01_50e2 ; $40ce
+	farcall LoadMenuFontGfx ; $40ce
 	call EnableLCD ; $40d1
 	ld hl, wStoryModePlayersXPosition ; $40d4
 	ld de, wStoryModeSpawnPosition ; $40d7
@@ -1167,7 +1167,7 @@ Label_10_4f3c:
 	ld [wMenuSlideDirection], a ; $4f65
 Label_10_4f68:
 	call DisableLCDSafely ; $4f68
-	farcall Func_01_50e2 ; $4f6b
+	farcall LoadMenuFontGfx ; $4f6b
 	farcall ResetScreenAndTextWindows ; $4f6e
 	call EnableLCD ; $4f71
 	script_fade_in $10 ; $4f74
@@ -1279,7 +1279,7 @@ Label_10_5041:
 	ld a, $00 ; $505a
 	ld [wMenuSlideDirection], a ; $505c
 	call DisableLCDSafely ; $505f
-	farcall Func_01_50e2 ; $5062
+	farcall LoadMenuFontGfx ; $5062
 	farcall ResetScreenAndTextWindows ; $5065
 	call EnableLCD ; $5068
 	script_fade_in $10 ; $506b
@@ -1392,7 +1392,7 @@ Label_10_5159:
 	push af ; $5163
 	call ClearFrameTasks ; $5164
 	call DisableLCDSafely ; $5167
-	farcall Func_01_50e2 ; $516a
+	farcall LoadMenuFontGfx ; $516a
 	farcall ResetScreenAndTextWindows ; $516d
 	xor a, a ; $5170
 	ld [wLinkPartnerCourtMask], a ; $5171
@@ -1456,7 +1456,7 @@ Label_10_51fd:
 	ld a, $01 ; $51fd
 	ld [wMenuSlideDirection], a ; $51ff
 	call DisableLCDSafely ; $5202
-	farcall Func_01_50e2 ; $5205
+	farcall LoadMenuFontGfx ; $5205
 	farcall ResetScreenAndTextWindows ; $5208
 	call EnableLCD ; $520b
 	script_fade_in $10 ; $520e
@@ -1494,7 +1494,7 @@ Label_10_5241:
 	cp a, $ff ; $5252
 	jr nz, Label_10_526e ; $5254
 	call DisableLCDSafely ; $5256
-	farcall Func_01_50e2 ; $5259
+	farcall LoadMenuFontGfx ; $5259
 	farcall ResetScreenAndTextWindows ; $525c
 	call EnableLCD ; $525f
 	script_fade_in $10 ; $5262
@@ -1508,7 +1508,7 @@ Label_10_526e:
 	ld a, $01 ; $5277
 	ld [wMenuSlideDirection], a ; $5279
 	call DisableLCDSafely ; $527c
-	farcall Func_01_50e2 ; $527f
+	farcall LoadMenuFontGfx ; $527f
 	farcall ResetScreenAndTextWindows ; $5282
 	call EnableLCD ; $5285
 	script_fade_in $10 ; $5288
@@ -1533,7 +1533,7 @@ Label_10_526e:
 	ld a, $01 ; $52b8
 	ld [wMenuSlideDirection], a ; $52ba
 	call DisableLCDSafely ; $52bd
-	farcall Func_01_50e2 ; $52c0
+	farcall LoadMenuFontGfx ; $52c0
 	farcall ResetScreenAndTextWindows ; $52c3
 	call EnableLCD ; $52c6
 	script_fade_in $10 ; $52c9
@@ -1558,7 +1558,7 @@ Label_10_52e4:
 	ld a, $00 ; $52f7
 	farcall ShowCharDataScreen ; $52f9
 	call DisableLCDSafely ; $52fc
-	farcall Func_01_50e2 ; $52ff
+	farcall LoadMenuFontGfx ; $52ff
 	farcall ResetScreenAndTextWindows ; $5302
 	call EnableLCD ; $5305
 	script_fade_in $10 ; $5308
@@ -1576,7 +1576,7 @@ Label_10_5315:
 	call BeginFadeOut ; $5326
 	call WaitFadeEnd ; $5329
 	call DisableLCDSafely ; $532c
-	farcall Func_01_50e2 ; $532f
+	farcall LoadMenuFontGfx ; $532f
 	farcall ResetScreenAndTextWindows ; $5332
 	call EnableLCD ; $5335
 	script_fade_in $10 ; $5338
@@ -1591,7 +1591,7 @@ Label_10_5345:
 	call WaitFadeEnd ; $534e
 	farcall RunTrophiesScreen ; $5351
 	call DisableLCDSafely ; $5354
-	farcall Func_01_50e2 ; $5357
+	farcall LoadMenuFontGfx ; $5357
 	farcall ResetScreenAndTextWindows ; $535a
 	call EnableLCD ; $535d
 	script_fade_in $10 ; $5360
@@ -1615,7 +1615,7 @@ Label_10_5380:
 	farcall ShowEquipmentStatusScreen ; $538b
 	farcall SaveStorySlot ; $538e
 	call DisableLCDSafely ; $5391
-	farcall Func_01_50e2 ; $5394
+	farcall LoadMenuFontGfx ; $5394
 	farcall ResetScreenAndTextWindows ; $5397
 	call EnableLCD ; $539a
 	script_fade_in $10 ; $539d
@@ -1630,7 +1630,7 @@ Label_10_53aa:
 	farcall ShowEquipmentStatusScreen ; $53b5
 	farcall SaveStorySlot ; $53b8
 	call DisableLCDSafely ; $53bb
-	farcall Func_01_50e2 ; $53be
+	farcall LoadMenuFontGfx ; $53be
 	farcall ResetScreenAndTextWindows ; $53c1
 	call EnableLCD ; $53c4
 	script_fade_in $10 ; $53c7
@@ -1656,7 +1656,7 @@ Label_10_53e2:
 	call BeginFadeOut ; $53f2
 	call WaitFadeEnd ; $53f5
 	call DisableLCDSafely ; $53f8
-	farcall Func_01_50e2 ; $53fb
+	farcall LoadMenuFontGfx ; $53fb
 	farcall ResetScreenAndTextWindows ; $53fe
 	call EnableLCD ; $5401
 	script_fade_in $10 ; $5404
@@ -1672,7 +1672,7 @@ Label_10_5411:
 	call BeginFadeOut ; $541e
 	call WaitFadeEnd ; $5421
 	call DisableLCDSafely ; $5424
-	farcall Func_01_50e2 ; $5427
+	farcall LoadMenuFontGfx ; $5427
 	farcall ResetScreenAndTextWindows ; $542a
 	call EnableLCD ; $542d
 	script_fade_in $10 ; $5430
@@ -1690,7 +1690,7 @@ Label_10_543d:
 	call WaitFadeEnd ; $544d
 	farcall RunN64TnmtData ; $5450
 	call DisableLCDSafely ; $5453
-	farcall Func_01_50e2 ; $5456
+	farcall LoadMenuFontGfx ; $5456
 	farcall ResetScreenAndTextWindows ; $5459
 	call EnableLCD ; $545c
 	script_fade_in $10 ; $545f
@@ -1705,7 +1705,7 @@ Label_10_546c:
 	call WaitFadeEnd ; $5475
 	farcall RunN64ExhibDataAlias1 ; $5478
 	call DisableLCDSafely ; $547b
-	farcall Func_01_50e2 ; $547e
+	farcall LoadMenuFontGfx ; $547e
 	farcall ResetScreenAndTextWindows ; $5481
 	call EnableLCD ; $5484
 	script_fade_in $10 ; $5487
@@ -1715,7 +1715,7 @@ Label_10_546c:
 Label_10_5494:
 	farcall RunN64RingShotData ; $5494
 	call DisableLCDSafely ; $5497
-	farcall Func_01_50e2 ; $549a
+	farcall LoadMenuFontGfx ; $549a
 	farcall ResetScreenAndTextWindows ; $549d
 	call EnableLCD ; $54a0
 	script_fade_in $10 ; $54a3
@@ -1728,7 +1728,7 @@ Label_10_5494:
 	ld a, $06 ; $54b8
 	farcall TennisDictionaryScreen ; $54ba
 	call DisableLCDSafely ; $54bd
-	farcall Func_01_50e2 ; $54c0
+	farcall LoadMenuFontGfx ; $54c0
 	farcall ResetScreenAndTextWindows ; $54c3
 	call EnableLCD ; $54c6
 	script_fade_in $10 ; $54c9
@@ -1780,7 +1780,7 @@ Label_10_54e8:
 	ld [$cb1b], a ; $551d
 Label_10_5520:
 	call DisableLCDSafely ; $5520
-	farcall Func_01_50e2 ; $5523
+	farcall LoadMenuFontGfx ; $5523
 	farcall ResetScreenAndTextWindows ; $5526
 	call EnableLCD ; $5529
 	script_fade_in $10 ; $552c
@@ -1797,7 +1797,7 @@ Label_10_5520:
 	farcall ClearSaveBlock11 ; $5549
 Label_10_554c:
 	call DisableLCDSafely ; $554c
-	farcall Func_01_50e2 ; $554f
+	farcall LoadMenuFontGfx ; $554f
 	farcall ResetScreenAndTextWindows ; $5552
 	call EnableLCD ; $5555
 	script_fade_in $10 ; $5558
@@ -1812,7 +1812,7 @@ Label_10_554c:
 	or a, a ; $5572
 	jr nz, Label_10_5592 ; $5573
 	call DisableLCDSafely ; $5575
-	farcall Func_01_50e2 ; $5578
+	farcall LoadMenuFontGfx ; $5578
 	farcall ResetScreenAndTextWindows ; $557b
 	call EnableLCD ; $557e
 	script_fade_in $10 ; $5581
@@ -1824,7 +1824,7 @@ Label_10_554c:
 Label_10_5592:
 	farcall ReinitSaveRamPreservingBlock6 ; $5592
 	call DisableLCDSafely ; $5595
-	farcall Func_01_50e2 ; $5598
+	farcall LoadMenuFontGfx ; $5598
 	farcall ResetScreenAndTextWindows ; $559b
 	call EnableLCD ; $559e
 	script_fade_in $10 ; $55a1

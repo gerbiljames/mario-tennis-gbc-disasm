@@ -5151,7 +5151,7 @@ Label_17_7153:
 	ret ; $7156
 LoadRulesScreen:
 	call LoadRulesBorderAnimTiles ; $7157
-	farcall Func_01_50e2 ; $715a
+	farcall LoadMenuFontGfx ; $715a
 	ld c, $44 ; $715d
 	farcall LoadScreenAssetRecord ; $715f
 	ldh a, [hWramBank] ; $7162

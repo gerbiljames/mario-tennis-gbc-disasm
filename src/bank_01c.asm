@@ -92,7 +92,7 @@ Label_1c_40b2:
 	call UnregisterFrameTask ; $40d8
 	sound $00 ; $40db
 	call DisableLCDSafely ; $40dd
-	farcall Func_01_50e2 ; $40e0
+	farcall LoadMenuFontGfx ; $40e0
 	call EnableLCD ; $40e3
 	call AdvanceFrame ; $40e6
 	pop bc ; $40e9

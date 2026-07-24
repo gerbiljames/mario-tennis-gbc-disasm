@@ -1044,7 +1044,7 @@ BuildRankingBoardScreen:
 	ld [wCameraX + 1], a ; $4efa
 	ld [wCameraY], a ; $4efd
 	ld [wCameraY + 1], a ; $4f00
-	farcall Func_01_50e2 ; $4f03
+	farcall LoadMenuFontGfx ; $4f03
 	farcall PrepareGlyphBuffer ; $4f06
 	wram_bank $03 ; $4f09
 	xor a, a ; $4f0f
@@ -3644,7 +3644,7 @@ RunLevelUpStatusTrophiesMenu:
 	push af ; $646c
 	call ClearFrameTasks ; $646d
 	call DisableLCDSafely ; $6470
-	farcall Func_01_50e2 ; $6473
+	farcall LoadMenuFontGfx ; $6473
 	call DisableLCDSafely ; $6476
 	farcall ResetTextWindowState ; $6479
 	call ClearScreenMaps ; $647c
@@ -3679,7 +3679,7 @@ RunDebugSaveDataMenu:
 	push af ; $64be
 	call ClearFrameTasks ; $64bf
 	call DisableLCDSafely ; $64c2
-	farcall Func_01_50e2 ; $64c5
+	farcall LoadMenuFontGfx ; $64c5
 	call EnableLCD ; $64c8
 	farcall ResetTextWindowState ; $64cb
 	call ClearScreenMaps ; $64ce

@@ -65,7 +65,7 @@ Label_1e_4031:
 	call WaitFadeEnd ; $4090
 	ld hl, DrawResultsCharSprites ; $4093
 	call UnregisterFrameTask ; $4096
-	farcall Func_01_50e2 ; $4099
+	farcall LoadMenuFontGfx ; $4099
 	wram_bank $06 ; $409c
 	ld hl, $d005 ; $40a2
 	ld a, [hl+] ; $40a5
@@ -1444,7 +1444,7 @@ ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
 	or a, a ; $543b
 	ret z ; $543c
-	farcall Func_01_50e2 ; $543d
+	farcall LoadMenuFontGfx ; $543d
 	farcall InitTextWindows ; $5440
 	ld hl, wShadowTilemapBank ; $5443
 	ld [hl], $03 ; $5446
@@ -2339,7 +2339,7 @@ ProcessMatchRewards:
 	or a, a ; $653c
 	ret nz ; $653d
 	call DisableLCDSafely ; $653e
-	farcall Func_01_50e2 ; $6541
+	farcall LoadMenuFontGfx ; $6541
 	call EnableLCD ; $6544
 	ld hl, $0000 ; $6547
 	ld a, [wGameMode] ; $654a

@@ -4057,7 +4057,7 @@ Label_3b_5ce0:
 	ret ; $5ce0
 RestoreScreenAfterLinkAttempt:
 	call DisableLCDSafely ; $5ce1
-	farcall Func_01_50e2 ; $5ce4
+	farcall LoadMenuFontGfx ; $5ce4
 	farcall ResetScreenAndTextWindows ; $5ce7
 	call EnableLCD ; $5cea
 	script_fade_in $10 ; $5ced

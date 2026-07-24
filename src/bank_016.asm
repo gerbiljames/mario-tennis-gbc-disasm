@@ -1142,7 +1142,7 @@ Label_16_5c34:
 	ret ; $5c34
 RunMatchStatsScreen:
 	call DisableLCDSafely ; $5c35
-	farcall Func_01_50e2 ; $5c38
+	farcall LoadMenuFontGfx ; $5c38
 	wram_bank $03 ; $5c3b
 	ld a, $01 ; $5c41
 	ld [$d801], a ; $5c43

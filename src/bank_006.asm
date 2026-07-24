@@ -2466,7 +2466,7 @@ RunDebugStatsEditor:
 	ldh a, [hWramBank] ; $6b84
 	push af ; $6b86
 	farcall StepMatchFrame ; $6b87
-	farcall Func_01_50d6 ; $6b8a
+	farcall LoadMenuTilesBChunk2 ; $6b8a
 	wram_bank $04 ; $6b8d
 	ld hl, wCharPosX ; $6b93
 	ld de, $c700 ; $6b96
@@ -2903,7 +2903,7 @@ Label_06_6e94:
 	call RedrawStoryTilemapRows ; $6e97
 	call AdvanceFrame ; $6e9a
 	clear_flag $02, 4 ; $6e9d
-	farcall Func_01_50ec ; $6ea0
+	farcall LoadMenuFontGfxStaged ; $6ea0
 	pop af ; $6ea3
 	ldh [$ffdd], a ; $6ea4
 	farcall InitTextWindows ; $6ea6

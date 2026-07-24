@@ -3870,7 +3870,7 @@ FillMemory16:
 	ret ; $59c4
 RunScrollingTextScreen:
 	call ClearFrameTasks ; $59c5
-	farcall Func_01_50e2 ; $59c8
+	farcall LoadMenuFontGfx ; $59c8
 	call DisableLCDSafely ; $59cb
 	xor a, a ; $59ce
 	ldh [hScrollX], a ; $59cf
@@ -3971,7 +3971,7 @@ Label_03_5a9a:
 	call BeginFadeOut ; $5a9c
 	call WaitFadeEnd ; $5a9f
 	call ClearFrameTasks ; $5aa2
-	farcall Func_01_50e2 ; $5aa5
+	farcall LoadMenuFontGfx ; $5aa5
 	ret ; $5aa8
 InitScrollingTextScreen:
 	wram_bank $06 ; $5aa9

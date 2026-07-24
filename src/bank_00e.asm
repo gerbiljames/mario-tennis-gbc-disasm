@@ -1296,7 +1296,7 @@ PrepareEquipmentSelectScreen:
 	call WaitFadeEnd ; $4ed0
 	call ClearFrameTasks ; $4ed3
 	call DisableLCDSafely ; $4ed6
-	farcall Func_01_50e2 ; $4ed9
+	farcall LoadMenuFontGfx ; $4ed9
 	xor a, a ; $4edc
 	ldh [hBGColumnBlitPending], a ; $4edd
 	ldh [hBGRowBlitPending], a ; $4edf
@@ -1321,7 +1321,7 @@ RepairCounterChangeShoes:
 	jr nz, Label_0e_4f1d ; $4f11
 RestoreScreenAfterEquipSelect:
 	call DisableLCDSafely ; $4f13
-	farcall Func_01_50e2 ; $4f16
+	farcall LoadMenuFontGfx ; $4f16
 	call EnableLCD ; $4f19
 	ret ; $4f1c
 Label_0e_4f1d:
