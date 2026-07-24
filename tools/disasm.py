@@ -2048,6 +2048,11 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
     for target in frame_task_targets(dis, rft):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    ahi = {int(k, 0) for k, n in (overrides or {}).items()
+           if n in ACTOR_HANDLER_INSTALL}
+    for target in actor_handler_targets(dis, ahi):
+        if target in dis.instrs and target not in labels:
+            labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     # Name each carved sprite-template so the `ld hl` load sites resolve to it.
     for src in dis.sprite_templates:
         if src not in labels:
@@ -2121,6 +2126,52 @@ def frame_task_targets(dis, call_targets):
         flat = imm if imm < 0x4000 else (b + imm - 0x4000 if b else None)
         if flat is not None and 0 <= flat < len(rom):
             yield flat
+
+
+# Installers that stash a handler pointer for a dispatcher to call later. The
+# pointer is stored rather than dereferenced at the load site, so the
+# `_pointer_load_used` gate never fires and descent never reaches the handler.
+ACTOR_HANDLER_INSTALL = ("SetMinigameActorHandler",)
+
+
+def actor_handler_targets(dis, call_targets):
+    """Code targets of the handler-install sites (see actor_handler_sites)."""
+    return actor_handler_sites(dis, call_targets).values()
+
+
+def actor_handler_sites(dis, call_targets):
+    """{site_offset: target} for `ld de, n16` shortly before a `call` to a
+    handler installer. The minigame actor engine calls the stored pointer each
+    frame, so it is code; seeding it lets the install site name the handler.
+    The pointer is stored rather than dereferenced locally, so
+    pointer_load_targets' use-gate never fires for these sites."""
+    out = {}
+    if not call_targets:
+        return out
+    rom = dis.rom
+    order = sorted(dis.instrs)
+    idx = {o: i for i, o in enumerate(order)}
+    for o in order:
+        if rom[o] != 0x11 or dis.instrs[o].size != 3:
+            continue  # ld de, n16
+        i, prev_end = idx[o] + 1, o + 3
+        for _ in range(4):  # de is set up a load or two before the call
+            if i >= len(order) or order[i] != prev_end:
+                break
+            no = order[i]
+            if rom[no] == 0xCD and target_to_offset(
+                    rom[no + 1] | (rom[no + 2] << 8), no) in call_targets:
+                imm = rom[o + 1] | (rom[o + 2] << 8)
+                b = (o // BANK_SIZE) * BANK_SIZE
+                flat = imm if imm < 0x4000 else (b + imm - 0x4000 if b else None)
+                if flat is not None and 0 <= flat < len(rom):
+                    out[o] = flat
+                break
+            if rom[no] == 0x11:
+                break  # de reloaded -- this load is not the argument
+            prev_end = no + dis.instrs[no].size
+            i += 1
+    return out
 
 
 # `ld bc/de/hl, n16` opcodes -- a 16-bit immediate load whose value may be a
@@ -4311,6 +4362,9 @@ def main():
         rft = {int(k, 0) for k, n in (overrides or {}).items()
                if n in FRAME_TASK_REGISTER}
         dis.seed(list(frame_task_targets(dis, rft)))
+        ahi = {int(k, 0) for k, n in (overrides or {}).items()
+               if n in ACTOR_HANDLER_INSTALL}
+        dis.seed(list(actor_handler_targets(dis, ahi)))
         dis.descend()
     helpers = {}
     if overrides:
@@ -4342,6 +4396,11 @@ def main():
     if helpers or args.hooks:
         dis.scan_data_slots()
     ptr_sites = pointer_load_targets(dis)
+    # Handler-install sites store the pointer instead of dereferencing it, so
+    # pointer_load_targets' use-gate skips them; resolve them explicitly.
+    ptr_sites.update(actor_handler_sites(dis, {
+        int(k, 0) for k, n in (overrides or {}).items()
+        if n in ACTOR_HANDLER_INSTALL}))
     labels, ptr_data_targets = build_labels(dis, overrides, data_tables, ptr_sites)
     hwregs = load_hwregs(args.hardware_inc)
     unions_by_region, ramscoped = load_ram_unions(args.ram_unions)

@@ -2176,7 +2176,7 @@ ShootingStarHook_BallHit:
 	ret ; $5204
 InitBallTargetActor:
 	call ClearMinigameActors ; $5205
-	ld de, $5231 ; $5208
+	ld de, ShootingStarTargetActorHandler ; $5208
 	ld bc, $dc00 ; $520b
 	call SetMinigameActorHandler ; $520e
 	ld hl, $0000 ; $5211
@@ -2196,6 +2196,7 @@ Label_0d_5228:
 	xor a, a ; $522c
 	ld [$dc02], a ; $522d
 	ret ; $5230
+ShootingStarTargetActorHandler:
 	ld a, [$dc72] ; $5231
 	rst Rst00 ; $5234
 	dw Label_0d_5244 ; $5235 jumptable
@@ -2389,6 +2390,7 @@ DrawTargetReticleSprite:
 	ret z ; $5379
 	farcall QueueMatchSpriteFrameA ; $537a
 	ret ; $537d
+TargetReticleAnimFrames:
 	; $537e, 32 bytes (bytes:8)
 	db $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
 	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x08
@@ -2634,7 +2636,7 @@ BooBlastHook_BallHit:
 	ret ; $5690
 InitMinigameControllerActor:
 	call ClearMinigameActors ; $5691
-	ld de, $5719 ; $5694
+	ld de, BooBlastControllerActorHandler ; $5694
 	ld bc, $dc00 ; $5697
 	call SetMinigameActorHandler ; $569a
 	ld hl, $0000 ; $569d
@@ -2704,6 +2706,7 @@ Label_0d_5710:
 	xor a, a ; $5714
 	ld [$dc02], a ; $5715
 	ret ; $5718
+BooBlastControllerActorHandler:
 	ld a, [$dc72] ; $5719
 	rst Rst00 ; $571c
 	dw Label_0d_572c ; $571d jumptable
@@ -3133,7 +3136,7 @@ TreasureBoxHook_MinigameStart:
 	call StartMinigameMatch ; $5a05
 	ld a, $01 ; $5a08
 	ld [wTargetZoneEnabled], a ; $5a0a
-	ld de, $5acc ; $5a0d
+	ld de, TreasureBoxTargetActorHandler ; $5a0d
 	ld bc, $dc00 ; $5a10
 	call SetMinigameActorHandler ; $5a13
 	ret ; $5a16
@@ -3225,7 +3228,10 @@ Label_0d_5a9c:
 	INCBIN "data/bank_00d/d_5aa5.bin" ; $5aa5, 38 bytes
 StubNop_0d_5acb:
 	ret ; $5acb
-	INCBIN "data/bank_00d/d_5acc.bin" ; $5acc, 542 bytes
+TreasureBoxTargetActorHandler:
+	ld a, [$dc72] ; $5acc
+	rst Rst00 ; $5acf
+	INCBIN "data/bank_00d/d_5ad0.bin" ; $5ad0, 538 bytes
 MinigameConfig_MedallionMatch:
 	INCBIN "data/bank_00d/d_5cea.bin" ; $5cea, 34 bytes
 MinigameHooks_MedallionMatch:
@@ -3318,7 +3324,7 @@ InitMedallionMatchTargetActor:
 	push bc ; $5dbe
 	push de ; $5dbf
 	push hl ; $5dc0
-	ld de, $5dee ; $5dc1
+	ld de, MedallionMatchTargetActorHandler ; $5dc1
 	call SetMinigameActorHandler ; $5dc4
 	pop hl ; $5dc7
 	pop de ; $5dc8
@@ -3342,7 +3348,10 @@ ResetMedallionMatchHitState:
 	ld [$dc42], a ; $5de7
 	ld [$dc52], a ; $5dea
 	ret ; $5ded
-	INCBIN "data/bank_00d/d_5dee.bin" ; $5dee, 324 bytes
+MedallionMatchTargetActorHandler:
+	ld a, [$dc72] ; $5dee
+	rst Rst00 ; $5df1
+	INCBIN "data/bank_00d/d_5df2.bin" ; $5df2, 320 bytes
 MinigameConfig_FruitFantasy:
 	INCBIN "data/bank_00d/d_5f32.bin" ; $5f32, 47 bytes
 MinigameHooks_FruitFantasy:
