@@ -83,7 +83,7 @@ StartMinigameByID:
 	call InitMinigameFromConfig ; $408c
 	ret ; $408f
 MinigameConfigTable:
-	; $4090, 36 bytes (records:2)
+	; $4090, 36 bytes (minigame_configs)
 	dw MinigameConfig_TennisMachine1 ; record 0
 	dw MinigameConfig_TennisMachine2 ; record 1
 	dw MinigameConfig_TennisMachine3 ; record 2
@@ -734,7 +734,9 @@ UpdateMinigameActor:
 	pop af ; $44f8
 	ret ; $44f9
 MinigameConfig_TennisMachine1:
-	INCBIN "data/bank_00d/d_44fa.bin" ; $44fa, 16 bytes
+	; $44fa, 16 bytes (bytes:16)
+	db $15, $0a, $02, $06, $12, $1e, $00, $80, $15, $45, $bd, $40, $0a, $45, $00, $00 ; 0x00
+InitMinigame_TennisMachine1:
 	ld a, $01 ; $450a
 	ld [$c7b8], a ; $450c
 	ld a, $00 ; $450f
@@ -1227,7 +1229,9 @@ SnapCameraTo_0d:
 	ld [wCameraFollowBall], a ; $4955
 	ret ; $4958
 MinigameConfig_TennisMachine2:
-	INCBIN "data/bank_00d/d_4959.bin" ; $4959, 16 bytes
+	; $4959, 16 bytes (bytes:16)
+	db $15, $0a, $02, $06, $13, $1e, $00, $80, $74, $49, $bd, $40, $69, $49, $00, $00 ; 0x00
+InitMinigame_TennisMachine2:
 	ld a, $01 ; $4969
 	ld [$c7b8], a ; $496b
 	ld a, $01 ; $496e
@@ -1290,6 +1294,7 @@ MinigameConfig_TennisMachine3:
 	add a, $49 ; $49c2
 	nop ; $49c4
 	nop ; $49c5
+InitMinigame_TennisMachine3:
 	ld a, $01 ; $49c6
 	ld [$c7b8], a ; $49c8
 	ld a, $02 ; $49cb
@@ -1352,6 +1357,7 @@ MinigameConfig_TennisMachine4:
 	ld c, d ; $4a20
 	nop ; $4a21
 	nop ; $4a22
+InitMinigame_TennisMachine4:
 	ld a, $01 ; $4a23
 	ld [$c7b8], a ; $4a25
 	ld a, $03 ; $4a28
@@ -1415,6 +1421,7 @@ MinigameConfig_WallPractice1:
 	ld c, d ; $4a7d
 	nop ; $4a7e
 	nop ; $4a7f
+InitMinigame_WallPractice1:
 	ld a, $01 ; $4a80
 	ld [$c7b9], a ; $4a82
 	ld a, $00 ; $4a85
@@ -1619,7 +1626,9 @@ DrawMinigameScore:
 	farcall DrawNumberWithSprites ; $4bf4
 	ret ; $4bf7
 MinigameConfig_WallPractice2:
-	INCBIN "data/bank_00d/d_4bf8.bin" ; $4bf8, 16 bytes
+	; $4bf8, 16 bytes (bytes:16)
+	db $00, $0b, $01, $07, $17, $1f, $00, $80, $1b, $4c, $b4, $40, $08, $4c, $00, $00 ; 0x00
+InitMinigame_WallPractice2:
 	ld a, $01 ; $4c08
 	ld [$c7b9], a ; $4c0a
 	ld a, $01 ; $4c0d
@@ -1671,6 +1680,7 @@ MinigameConfig_WallPractice3:
 	ld c, h ; $4c50
 	nop ; $4c51
 	nop ; $4c52
+InitMinigame_WallPractice3:
 	ld a, $01 ; $4c53
 	ld [$c7b9], a ; $4c55
 	ld a, $02 ; $4c58
@@ -1722,6 +1732,7 @@ MinigameConfig_WallPractice4:
 	ld c, h ; $4c9b
 	nop ; $4c9c
 	nop ; $4c9d
+InitMinigame_WallPractice4:
 	ld a, $01 ; $4c9e
 	ld [$c7b9], a ; $4ca0
 	ld a, $03 ; $4ca3
@@ -1759,7 +1770,16 @@ WallPractice4Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4cd5
 	ret ; $4cd8
 MinigameConfig_TennisMachineHighScore:
-	INCBIN "data/bank_00d/d_4cd9.bin" ; $4cd9, 32 bytes
+	; $4cd9, 16 bytes (bytes:16)
+	db $15, $0a, $02, $06, $1a, $1e, $00, $80, $f9, $4c, $bd, $40, $e9, $4c, $00, $00 ; 0x00
+InitMinigame_TennisMachineHighScore:
+	ld a, $01 ; $4ce9
+	ld [$c7b8], a ; $4ceb
+	ld a, $01 ; $4cee
+	ld [$c7bc], a ; $4cf0
+	ld a, $04 ; $4cf3
+	ld [wMinigameLevel], a ; $4cf5
+	ret ; $4cf8
 MinigameHooks_TennisMachineHighScore:
 	; $4cf9, 16 bytes (mode_hooks)
 	dw TennisMachineHighScoreHook_PerFrame ; record 0
@@ -1818,6 +1838,7 @@ MinigameConfig_WallPracticeHighScore:
 	ld c, l ; $4d48
 	nop ; $4d49
 	nop ; $4d4a
+InitMinigame_WallPracticeHighScore:
 	ld a, $01 ; $4d4b
 	ld [$c7bc], a ; $4d4d
 	ld a, $01 ; $4d50
@@ -1871,6 +1892,7 @@ MinigameConfig_TargetShot:
 	ld c, l ; $4d98
 	nop ; $4d99
 	nop ; $4d9a
+InitMinigame_TargetShot:
 	ld a, $01 ; $4d9b
 	ld [$c7b8], a ; $4d9d
 	ld a, [wMinigameLevel] ; $4da0
@@ -2173,7 +2195,9 @@ MinigameTargetZoneBounds:
 	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x28
 	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x30
 MinigameConfig_ShootingStar:
-	INCBIN "data/bank_00d/d_5194.bin" ; $5194, 16 bytes
+	; $5194, 16 bytes (bytes:16)
+	db $15, $10, $02, $08, $1d, $19, $00, $17, $b6, $51, $bd, $40, $a4, $51, $00, $00 ; 0x00
+InitMinigame_ShootingStar:
 	ld a, $01 ; $51a4
 	ld [$c7b8], a ; $51a6
 	ld a, [wMinigameLevel] ; $51a9
@@ -2571,7 +2595,23 @@ MinigameHitBurstParticleOffsets:
 	db $00, $ff, $fe, $fd, $fc, $fb, $fa, $f9, $f8, $f7, $f6, $f5, $f4, $f3, $f2, $f1 ; 0xa0
 	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0xb0
 MinigameConfig_BananaBunch:
-	INCBIN "data/bank_00d/d_54ec.bin" ; $54ec, 47 bytes
+	; $54ec, 16 bytes (bytes:16)
+	db $00, $11, $01, $08, $21, $16, $00, $18, $1b, $55, $b4, $40, $fc, $54, $00, $00 ; 0x00
+InitMinigame_BananaBunch:
+	farcall InitMinigameTargets ; $54fc
+	ld a, $05 ; $54ff
+	farcall SpawnMinigameTargetFormation ; $5501
+	ld a, $01 ; $5504
+	ld [$c7a4], a ; $5506
+	ld a, $01 ; $5509
+	ld [$c7b9], a ; $550b
+	ld a, [wMinigameLevel] ; $550e
+	cp a, $02 ; $5511
+	jr nz, Label_0d_551a ; $5513
+	ld a, $01 ; $5515
+	ld [$c7bc], a ; $5517
+Label_0d_551a:
+	ret ; $551a
 MinigameHooks_BananaBunch:
 	; $551b, 16 bytes (mode_hooks)
 	dw BananaBunchHook_PerFrame ; record 0
@@ -2696,7 +2736,31 @@ Label_0d_55fd:
 	sound $77 ; $5612
 	ret ; $5614
 MinigameConfig_BooBlast:
-	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 61 bytes
+	; $5615, 16 bytes (bytes:16)
+	db $17, $12, $02, $08, $1c, $11, $00, $1a, $58, $56, $c6, $40, $25, $56, $00, $00 ; 0x00
+InitMinigame_BooBlast:
+	ld a, $01 ; $5625
+	ld [$c7ba], a ; $5627
+	ld a, [wMinigameLevel] ; $562a
+	cp a, $02 ; $562d
+	jr nz, Label_0d_5636 ; $562f
+	ld a, $01 ; $5631
+	ld [$c7bc], a ; $5633
+Label_0d_5636:
+	ld hl, BooBlastInitParams ; $5636
+	ld a, [hl+] ; $5639
+	ld [$ca9b], a ; $563a
+	ld a, [hl+] ; $563d
+	ld [$ca9c], a ; $563e
+	ld a, [hl+] ; $5641
+	ld [$ca9d], a ; $5642
+	ld a, [hl+] ; $5645
+	ld [$ca9e], a ; $5646
+	ld a, [hl+] ; $5649
+	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $564a
+	ld a, [hl+] ; $564d
+	ld [$ca8f], a ; $564e
+	ret ; $5651
 BooBlastInitParams:
 	; $5652, 6 bytes (bytes:6)
 	db $00, $00, $00, $dc, $03, $01 ; 0x00
@@ -3029,6 +3093,7 @@ MinigameConfig_PerfectShot:
 	ld e, b ; $587b
 	nop ; $587c
 	nop ; $587d
+InitMinigame_PerfectShot:
 	ld a, $01 ; $587e
 	ld [$c7b9], a ; $5880
 	ld a, [wMinigameLevel] ; $5883
@@ -3200,7 +3265,18 @@ Label_0d_59c8:
 	ld a, $00 ; $59c8
 	ret ; $59ca
 MinigameConfig_TreasureBox:
-	INCBIN "data/bank_00d/d_59cb.bin" ; $59cb, 34 bytes
+	; $59cb, 16 bytes (bytes:16)
+	db $1b, $14, $02, $08, $22, $14, $00, $1e, $ed, $59, $bd, $40, $db, $59, $00, $00 ; 0x00
+InitMinigame_TreasureBox:
+	ld a, $01 ; $59db
+	ld [$c7b8], a ; $59dd
+	ld a, [wMinigameLevel] ; $59e0
+	cp a, $02 ; $59e3
+	jr nz, Label_0d_59ec ; $59e5
+	ld a, $01 ; $59e7
+	ld [$c7bc], a ; $59e9
+Label_0d_59ec:
+	ret ; $59ec
 MinigameHooks_TreasureBox:
 	; $59ed, 16 bytes (mode_hooks)
 	dw TreasureBoxHook_PerFrame ; record 0
@@ -3569,7 +3645,18 @@ Func_0d_5cd7:
 	ld b, $0f ; $5ce7
 	ret ; $5ce9
 MinigameConfig_MedallionMatch:
-	INCBIN "data/bank_00d/d_5cea.bin" ; $5cea, 34 bytes
+	; $5cea, 16 bytes (bytes:16)
+	db $17, $15, $02, $08, $23, $19, $00, $1b, $0c, $5d, $bd, $40, $fa, $5c, $00, $00 ; 0x00
+InitMinigame_MedallionMatch:
+	ld a, $01 ; $5cfa
+	ld [$c7b8], a ; $5cfc
+	ld a, [wMinigameLevel] ; $5cff
+	cp a, $02 ; $5d02
+	jr nz, Label_0d_5d0b ; $5d04
+	ld a, $01 ; $5d06
+	ld [$c7bc], a ; $5d08
+Label_0d_5d0b:
+	ret ; $5d0b
 MinigameHooks_MedallionMatch:
 	; $5d0c, 16 bytes (mode_hooks)
 	dw MedallionMatchHook_PerFrame ; record 0
@@ -3883,7 +3970,23 @@ Func_0d_5f1f:
 	ld b, $0f ; $5f2f
 	ret ; $5f31
 MinigameConfig_FruitFantasy:
-	INCBIN "data/bank_00d/d_5f32.bin" ; $5f32, 47 bytes
+	; $5f32, 16 bytes (bytes:16)
+	db $00, $16, $01, $08, $20, $13, $00, $1c, $61, $5f, $b4, $40, $42, $5f, $00, $00 ; 0x00
+InitMinigame_FruitFantasy:
+	farcall InitMinigameTargets ; $5f42
+	ld a, $06 ; $5f45
+	farcall SpawnMinigameTargetFormation ; $5f47
+	ld a, $01 ; $5f4a
+	ld [$c7a4], a ; $5f4c
+	ld a, $01 ; $5f4f
+	ld [$c7b9], a ; $5f51
+	ld a, [wMinigameLevel] ; $5f54
+	cp a, $02 ; $5f57
+	jr nz, Label_0d_5f60 ; $5f59
+	ld a, $01 ; $5f5b
+	ld [$c7bc], a ; $5f5d
+Label_0d_5f60:
+	ret ; $5f60
 MinigameHooks_FruitFantasy:
 	; $5f61, 16 bytes (mode_hooks)
 	dw FruitFantasyHook_PerFrame ; record 0

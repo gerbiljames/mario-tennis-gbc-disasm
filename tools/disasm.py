@@ -2057,6 +2057,9 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
     for target in map_script_code_targets(dis.rom, data_tables or {}):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    for target in minigame_config_init_targets(dis.rom, data_tables or {}):
+        if target in dis.instrs and target not in labels:
+            labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
     rft = {int(k, 0) for k, n in (overrides or {}).items()
            if n in FRAME_TASK_REGISTER}
     for target in frame_task_targets(dis, rft):
@@ -2298,6 +2301,29 @@ def mode_hook_code_targets(rom, data_tables):
             w = rom[p] | (rom[p + 1] << 8)
             if 0x4000 <= w < 0x8000:
                 yield base + w - 0x4000
+
+
+def minigame_config_init_targets(rom, data_tables):
+    """Yield the `+$0c` init routines of the minigame configs a
+    `minigame_configs` pointer table points at. InitMinigameFromConfig calls
+    the field through JumpToHL, so descent never reaches it and the routine
+    otherwise stays inside the config's own INCBIN blob."""
+    for start, spec in data_tables.items():
+        if spec != "minigame_configs":
+            continue
+        base = (start // BANK_SIZE) * BANK_SIZE
+        end = start
+        while end + 1 < base + BANK_SIZE:
+            w = rom[end] | (rom[end + 1] << 8)
+            if not (0x4000 <= w < 0x8000):
+                break
+            end += 2
+        for p in range(start, end, 2):
+            w = rom[p] | (rom[p + 1] << 8)
+            cfg = base + w - 0x4000
+            init = rom[cfg + 0x0c] | (rom[cfg + 0x0d] << 8)
+            if 0x4000 <= init < 0x8000:
+                yield base + init - 0x4000
 
 
 def wram_bank_seq(dis, rom, off, labels):
@@ -4033,7 +4059,8 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             # records:2 tables are usually pointer tables;
                             # words that hit a labeled offset in the same
                             # bank render symbolically (same bytes at link).
-                            if spec in ("records:2", "mode_hooks") and bank > 0:
+                            if (spec in ("records:2", "mode_hooks",
+                                         "minigame_configs") and bank > 0):
                                 for r in range((j - seg) // 2):
                                     ro = seg + r * 2
                                     w = rom[ro] | (rom[ro + 1] << 8)
@@ -4360,6 +4387,7 @@ def main():
         # Minigame mode-hook handlers are likewise reached only through an
         # indirect dispatch (CallModeHook), so seed each table's 8 slots.
         dis.seed(list(mode_hook_code_targets(rom, data_tables)))
+        dis.seed(list(minigame_config_init_targets(rom, data_tables)))
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()
