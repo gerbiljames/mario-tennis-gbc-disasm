@@ -184,7 +184,8 @@ Label_0d_4139:
 	ld d, [hl] ; $4147
 	ld e, a ; $4148
 	ret ; $4149
-	; $414a, 92 bytes (records:2)
+MinigamePracticeTargetScores:
+	; $414a, 20 bytes (records:2)
 	dw $000f ; record 0
 	dw $001e ; record 1
 	dw $003c ; record 2
@@ -195,42 +196,18 @@ Label_0d_4139:
 	dw $0032 ; record 7
 	dw $270f ; record 8
 	dw $270f ; record 9
-	dw $001e ; record 10
-	dw $003c ; record 11
-	dw $270f ; record 12
-	dw $0000 ; record 13
-	dw $001e ; record 14
-	dw $003c ; record 15
-	dw $270f ; record 16
-	dw $0000 ; record 17
-	dw $0015 ; record 18
-	dw $0015 ; record 19
-	dw $270f ; record 20
-	dw $0000 ; record 21
-	dw $001e ; record 22
-	dw $003c ; record 23
-	dw $270f ; record 24
-	dw $0000 ; record 25
-	dw $0032 ; record 26
-	dw $0064 ; record 27
-	dw $270f ; record 28
-	dw $0000 ; record 29
-	dw $001e ; record 30
-	dw $003c ; record 31
-	dw $270f ; record 32
-	dw $0000 ; record 33
-	dw $00c8 ; record 34
-	dw $012c ; record 35
-	dw $270f ; record 36
-	dw $0000 ; record 37
-	dw $0064 ; record 38
-	dw $012c ; record 39
-	dw $270f ; record 40
-	dw $0000 ; record 41
-	dw $0001 ; record 42
-	dw $0001 ; record 43
-	dw $270f ; record 44
-	dw $0000 ; record 45
+MinigameTargetScores:
+	; $415e, 72 bytes (records:8)
+; 9 records x 8 bytes
+	dw $001e, $003c, $270f, $0000 ; record 0
+	dw $001e, $003c, $270f, $0000 ; record 1
+	dw $0015, $0015, $270f, $0000 ; record 2
+	dw $001e, $003c, $270f, $0000 ; record 3
+	dw $0032, $0064, $270f, $0000 ; record 4
+	dw $001e, $003c, $270f, $0000 ; record 5
+	dw $00c8, $012c, $270f, $0000 ; record 6
+	dw $0064, $012c, $270f, $0000 ; record 7
+	dw $0001, $0001, $270f, $0000 ; record 8
 GetDefaultMinigameRecordValue:
 	add a, a ; $41a6
 	add a, $b5 ; $41a7

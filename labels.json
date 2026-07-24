@@ -1678,6 +1678,8 @@
  "0x340c6": "MinigamePointLayoutBooBlast",
  "0x340cf": "InitMinigameScore",
  "0x34121": "GetMinigameTargetScore",
+ "0x3414a": "MinigamePracticeTargetScores",
+ "0x3415e": "MinigameTargetScores",
  "0x341a6": "GetDefaultMinigameRecordValue",
  "0x341cb": "IncrementCappedCounter",
  "0x341d3": "IsMinigameTargetReached",
