@@ -81,7 +81,7 @@ DataPtr_RulesScreenPalettes:
 ApplySpriteWobbleX_17:
 	ldh a, [hVBlankCounter] ; $4079
 	and a, $0f ; $407b
-	ld hl, $4093 ; $407d
+	ld hl, Data_17_4093 ; $407d
 	add a, l ; $4080
 	ld l, a ; $4081
 	jr nc, Label_17_4085 ; $4082
@@ -101,7 +101,9 @@ Label_17_408f:
 	sub a, b ; $4090
 	ld d, a ; $4091
 	ret ; $4092
-	INCBIN "data/bank_017/d_4093.bin" ; $4093, 16 bytes
+Data_17_4093:
+	; $4093, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplySpriteWobbleY_17:
 	ldh a, [hVBlankCounter] ; $40a3
 	and a, $0f ; $40a5
@@ -647,7 +649,9 @@ Label_17_43b4:
 	add a, b ; $43b6
 	pop bc ; $43b7
 	ret ; $43b8
-	INCBIN "data/bank_017/d_43b9.bin" ; $43b9, 3 bytes
+Data_17_43b9:
+	; $43b9, 3 bytes (bytes:3)
+	db $16, $00, $79 ; 0x00
 Label_17_43bc:
 	cp a, b ; $43bc
 	jr c, Label_17_43c3 ; $43bd
@@ -659,7 +663,9 @@ Label_17_43c3:
 	ld a, d ; $43c6
 	ld [wMenuCursorY], a ; $43c7
 	ret ; $43ca
-	INCBIN "data/bank_017/d_43cb.bin" ; $43cb, 3 bytes
+Data_17_43cb:
+	; $43cb, 3 bytes (bytes:3)
+	db $16, $00, $79 ; 0x00
 Label_17_43ce:
 	cp a, b ; $43ce
 	jr c, Label_17_43d5 ; $43cf
@@ -1158,14 +1164,14 @@ DrawBriefingSwingAnim:
 	push af ; $4790
 	wram_bank $03 ; $4791
 	ld a, [$d822] ; $4797
-	ld hl, $47c3 ; $479a
+	ld hl, Data_17_47c3 ; $479a
 	add a, l ; $479d
 	ld l, a ; $479e
 	jr nc, Label_17_47a2 ; $479f
 	inc h ; $47a1
 Label_17_47a2:
 	ld c, [hl] ; $47a2
-	ld hl, $47e2 ; $47a3
+	ld hl, Data_17_47e2 ; $47a3
 	ld a, [$d822] ; $47a6
 	cp a, $06 ; $47a9
 	jr nc, Label_17_47b0 ; $47ab
@@ -1180,7 +1186,9 @@ Label_17_47b0:
 	pop af ; $47bd
 	wram_bank ; $47be
 	ret ; $47c2
-	INCBIN "data/bank_017/d_47c3.bin" ; $47c3, 10 bytes
+Data_17_47c3:
+	; $47c3, 10 bytes (bytes:10)
+	db $08, $12, $1c, $36, $40, $4a, $26, $2c, $54, $5a ; 0x00
 SpriteTemplate_17_47cd:
 	; $47cd, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -1189,7 +1197,9 @@ SpriteTemplate_17_47cd:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-	INCBIN "data/bank_017/d_47e2.bin" ; $47e2, 13 bytes
+Data_17_47e2:
+	; $47e2, 13 bytes (bytes:13)
+	db $10, $08, $00, $00, $10, $10, $02, $00, $10, $18, $04, $00, $80 ; 0x00
 DrawBriefingPoleSprites:
 	ldh a, [hWramBank] ; $47ef
 	push af ; $47f1
@@ -1259,7 +1269,7 @@ Func_17_4876:
 	ldh a, [hWramBank] ; $4876
 	push af ; $4878
 	wram_bank $03 ; $4879
-	ld hl, $489e ; $487f
+	ld hl, Data_17_489e ; $487f
 	ld a, [$d827] ; $4882
 	add a, l ; $4885
 	ld l, a ; $4886
@@ -1276,7 +1286,9 @@ Label_17_488a:
 	pop af ; $4898
 	wram_bank ; $4899
 	ret ; $489d
-	INCBIN "data/bank_017/d_489e.bin" ; $489e, 4 bytes
+Data_17_489e:
+	; $489e, 4 bytes (bytes:4)
+	db $49, $09, $29, $69 ; 0x00
 DrawBlinkingPrompt:
 	ldh a, [hWramBank] ; $48a2
 	push af ; $48a4
@@ -1286,7 +1298,7 @@ DrawBlinkingPrompt:
 	jr z, Label_17_48bb ; $48af
 	ld c, $72 ; $48b1
 	ld b, $09 ; $48b3
-	ld de, $508c ; $48b5
+	ld de, Data_17_508c ; $48b5
 	call QueueSprite ; $48b8
 Label_17_48bb:
 	pop af ; $48bb
@@ -1472,7 +1484,10 @@ QueueCaptionRowToVRAM:
 	ld c, $0c ; $4a15
 	call QueueVRAMCopy ; $4a17
 	ret ; $4a1a
-	INCBIN "data/bank_017/d_4a1b.bin" ; $4a1b, 23 bytes
+Data_17_4a1b:
+	; $4a1b, 23 bytes (bytes:16)
+	db $0e, $04, $06, $09, $21, $29, $4a, $11, $20, $20, $cd, $9d, $1e, $c9, $10, $08 ; 0x00
+	db $00, $00, $10, $10, $02, $00, $80 ; 0x10
 RestoreDiagramServiceBoxes:
 	push af ; $4a32
 	push bc ; $4a33
@@ -1544,7 +1559,9 @@ Label_17_4a64:
 	jp nc, $d067 ; $4a8e
 	ld b, $02 ; $4a91
 	nop ; $4a93
-	INCBIN "data/bank_017/d_4a94.bin" ; $4a94, 5 bytes
+Data_17_4a94:
+	; $4a94, 5 bytes (bytes:5)
+	db $d3, $e7, $d0, $06, $02 ; 0x00
 DecompressGraphicsList:
 	ld hl, CourtDiagramGraphicsList ; $4a99
 Label_17_4a9c:
@@ -1599,7 +1616,7 @@ CourtDiagramGraphicsList:
 	db $4e, $55, $20, $87 ; 0x4c
 	db $00, $00 ; 0x50
 LoadCourtDiagramObjPalettes:
-	ld hl, $5567 ; $4b0d
+	ld hl, Palette_17_5567 ; $4b0d
 	ld de, $0803 ; $4b10
 	call LoadPaletteShadow ; $4b13
 	ret ; $4b16
@@ -1620,7 +1637,16 @@ CourtDiagramPalettes:
 	dw $035f, $01bf, $0e40, $7fff ; pal 5: #ffd500 #ff6a00 #009418 #ffffff
 	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
-	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 1661 bytes
+Gfx_17_4f02:
+	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 394 bytes
+Data_17_508c:
+	INCBIN "data/bank_017/d_508c.bin" ; $508c, 1243 bytes
+Palette_17_5567:
+	; $5567, 24 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $03e0, $7ee9, $0000, $7fff ; pal 0: #00ff00 #4abdff #000000 #ffffff
+	dw $0012, $4210, $0000, $7fff ; pal 1: #940000 #838383 #000000 #ffffff
+	dw $7c00, $7c1f, $0000, $03fd ; pal 2: #0000ff #ff00ff #000000 #eeff00
 DrillBriefing_ServeToTargets:
 	ld a, $03 ; $557f
 	ld [$d82e], a ; $5581
@@ -5052,7 +5078,7 @@ LoadRulesScreen:
 	wram_bank ; $7179
 	farcall PrepareGlyphBuffer ; $717d
 	call ClearRulesScreenTextArea ; $7180
-	ld hl, $7b39 ; $7183
+	ld hl, Palette_17_7b39 ; $7183
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, $a000 ; $718c
@@ -5173,7 +5199,7 @@ Label_17_726b:
 	ret ; $7292
 LoadRulesBorderAnimTiles:
 	wram_bank $01 ; $7293
-	ld hl, $793c ; $7299
+	ld hl, Lz_17_793c ; $7299
 	ld de, $d000 ; $729c
 	call DecompressData ; $729f
 	ld hl, $d000 ; $72a2
@@ -5200,7 +5226,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a580 ; $72e1
 	ld bc, $0012 ; $72e4
 	call QueueVRAMCopy ; $72e7
-	ld hl, $7a08 ; $72ea
+	ld hl, Lz_17_7a08 ; $72ea
 	ld de, $d000 ; $72ed
 	call DecompressData ; $72f0
 	ld hl, $d000 ; $72f3
@@ -5219,7 +5245,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a5a0 ; $731a
 	ld bc, $0002 ; $731d
 	call QueueVRAMCopy ; $7320
-	ld hl, $7a2f ; $7323
+	ld hl, Lz_17_7a2f ; $7323
 	ld de, $d000 ; $7326
 	call DecompressData ; $7329
 	ld hl, $d020 ; $732c
@@ -5238,7 +5264,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a600 ; $7353
 	ld bc, $0001 ; $7356
 	call QueueVRAMCopy ; $7359
-	ld hl, $7a56 ; $735c
+	ld hl, Lz_17_7a56 ; $735c
 	ld de, $d000 ; $735f
 	call DecompressData ; $7362
 	ld hl, $d000 ; $7365
@@ -5265,7 +5291,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a6a0 ; $73a4
 	ld bc, $0012 ; $73a7
 	call QueueVRAMCopy ; $73aa
-	ld hl, $7af8 ; $73ad
+	ld hl, Lz_17_7af8 ; $73ad
 	ld de, $d000 ; $73b0
 	call DecompressData ; $73b3
 	ld hl, $d000 ; $73b6
@@ -5284,7 +5310,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a6c0 ; $73dd
 	ld bc, $0002 ; $73e0
 	call QueueVRAMCopy ; $73e3
-	ld hl, $7b18 ; $73e6
+	ld hl, Lz_17_7b18 ; $73e6
 	ld de, $d000 ; $73e9
 	call DecompressData ; $73ec
 	ld hl, $d020 ; $73ef
@@ -5409,7 +5435,7 @@ DrawRulesScreenCharacters:
 	push af ; $74dd
 	wram_bank $03 ; $74de
 	ld a, [$dc00] ; $74e4
-	ld hl, $754c ; $74e7
+	ld hl, Data_17_754c ; $74e7
 	add a, l ; $74ea
 	ld l, a ; $74eb
 	jr nc, Label_17_74ef ; $74ec
@@ -5419,7 +5445,7 @@ Label_17_74ef:
 	ld c, a ; $74f0
 	push bc ; $74f1
 	ld a, [$dc00] ; $74f2
-	ld hl, $7552 ; $74f5
+	ld hl, Data_17_7552 ; $74f5
 	add a, l ; $74f8
 	ld l, a ; $74f9
 	jr nc, Label_17_74fd ; $74fa
@@ -5434,7 +5460,7 @@ Label_17_74fd:
 	add a, c ; $750a
 	ld c, a ; $750b
 	ld a, [$dc00] ; $750c
-	ld hl, $7558 ; $750f
+	ld hl, Data_17_7558 ; $750f
 	add a, l ; $7512
 	ld l, a ; $7513
 	jr nc, Label_17_7517 ; $7514
@@ -5459,7 +5485,15 @@ SpriteTemplate_17_7527:
 	oam_sprite $20, $18, $0e, $00
 	oam_sprite $30, $18, $10, $00
 	oam_sprite_end
-	INCBIN "data/bank_017/d_754c.bin" ; $754c, 18 bytes
+Data_17_754c:
+	; $754c, 6 bytes (bytes:6)
+	db $00, $24, $48, $10, $34, $58 ; 0x00
+Data_17_7552:
+	; $7552, 6 bytes (bytes:6)
+	db $01, $01, $01, $09, $09, $09 ; 0x00
+Data_17_7558:
+	; $7558, 6 bytes (bytes:6)
+	db $02, $02, $02, $0a, $0a, $0a ; 0x00
 DrawRulesNextPageArrow:
 	ld de, $7888 ; $755e
 	ld c, $00 ; $7561
@@ -5486,5 +5520,27 @@ RulesScreenPalettes:
 	dw $5eb7, $015f, $0000, $7d59 ; pal 5: #bdacbd #ff5200 #000000 #cd52ff
 	dw $2508, $2508, $2508, $2508 ; pal 6: #41414a #41414a #41414a #41414a
 	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
-	INCBIN "data/bank_017/d_793c.bin" ; $793c, 573 bytes
+Lz_17_793c:
+	INCBIN "data/bank_017/d_793c.bin" ; $793c, 204 bytes
+Lz_17_7a08:
+	INCBIN "data/bank_017/d_7a08.bin" ; $7a08, 39 bytes
+Lz_17_7a2f:
+	INCBIN "data/bank_017/d_7a2f.bin" ; $7a2f, 39 bytes
+Lz_17_7a56:
+	INCBIN "data/bank_017/d_7a56.bin" ; $7a56, 162 bytes
+Lz_17_7af8:
+	INCBIN "data/bank_017/d_7af8.bin" ; $7af8, 32 bytes
+Lz_17_7b18:
+	INCBIN "data/bank_017/d_7b18.bin" ; $7b18, 33 bytes
+Palette_17_7b39:
+	; $7b39, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0224, $3eff, $7fff, $0000 ; pal 0: #208b00 #ffbd7b #ffffff #000000
+	dw $0460, $3214, $7d60, $001f ; pal 1: #001808 #a48362 #005aff #ff0000
+	dw $00fd, $e6ff, $0f0a, $0f0a ; pal 2: #ee3900 #ffbdcd #52c518 #52c518
+	dw $0f00, $f014, $f6e7, $0eeb ; pal 3: #00c518 #a400e6 #39bdee #5abd18
+	dw $e0e2, $e00e, $00f0, $0000 ; pal 4: #1039c5 #7300c5 #833900 #000000
+	dw $5334, $015f, $0000, $1b06 ; pal 5: #a4cda4 #ff5200 #000000 #31c531
+	dw $5299, $015f, $0000, $141f ; pal 6: #cda4a4 #ff5200 #000000 #ff0029
+	dw $5eb7, $015f, $0000, $7d59 ; pal 7: #bdacbd #ff5200 #000000 #cd52ff
 	; $7b79, 1159 bytes fill to bank end (linker-padded)

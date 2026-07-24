@@ -512,7 +512,10 @@ Label_1b_42e7:
 Label_1b_42f5:
 	ld a, $01 ; $42f5
 	ret ; $42f7
-	INCBIN "data/bank_01b/d_42f8.bin" ; $42f8, 21 bytes
+Data_1b_42f8:
+	; $42f8, 21 bytes (bytes:16)
+	db $fa, $06, $cb, $57, $fa, $07, $cb, $5f, $f0, $c2, $fe, $02, $28, $0b, $fe, $01 ; 0x00
+	db $28, $03, $cd, $4b, $28 ; 0x10
 	ldh a, [hLinkRemoteInput] ; $430d
 	jr Label_1b_4313 ; $430f
 	ldh a, [hLinkRemoteInputBuf] ; $4311
@@ -703,7 +706,9 @@ Label_1b_440f:
 	pop af ; $4413
 	wram_bank ; $4414
 	ret ; $4418
-	INCBIN "data/bank_01b/d_4419.bin" ; $4419, 13 bytes
+Data_1b_4419:
+	; $4419, 13 bytes (bytes:13)
+	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0, $70, $3e, $00, $0e, $40 ; 0x00
 Label_1b_4426:
 	ld [hl+], a ; $4426
 	dec c ; $4427
@@ -814,6 +819,7 @@ Label_1b_44ae:
 	inc de ; $44ae
 	pop hl ; $44af
 	ret ; $44b0
+Gfx_1b_44b1:
 	INCBIN "data/bank_01b/d_44b1.bin" ; $44b1, 2107 bytes
 CharMugshotGfxPointers_1b_4cec:
 	; $4cec, 288 bytes (records:4)
@@ -1229,11 +1235,11 @@ RankingBoardAnimState_5077_1b:
 	sound $78 ; $5083
 	ld c, $00 ; $5085
 	call GetRankingMarkerSlot ; $5087
-	ld de, $5ba5 ; $508a
+	ld de, Data_1b_5ba5 ; $508a
 	call StartRankingMarkerAnim2 ; $508d
 	ld c, $01 ; $5090
 	call GetRankingMarkerSlot ; $5092
-	ld de, $5bb2 ; $5095
+	ld de, Data_1b_5bb2 ; $5095
 	call StartRankingMarkerAnim1 ; $5098
 	ld b, $01 ; $509b
 	call HighlightRankingRow ; $509d
@@ -1243,22 +1249,22 @@ RankingBoardAnimState_5077_1b:
 	sound $80 ; $50a7
 	ld c, $03 ; $50a9
 	call GetRankingMarkerSlot ; $50ab
-	ld de, $5b94 ; $50ae
+	ld de, Data_1b_5b94 ; $50ae
 	call StartRankingMarkerAnim0 ; $50b1
 	ld c, $04 ; $50b4
 	call GetRankingMarkerSlot ; $50b6
-	ld de, $5b94 ; $50b9
+	ld de, Data_1b_5b94 ; $50b9
 	call StartRankingMarkerAnim1 ; $50bc
 	call WaitFramesCmd ; $50bf
 	db $5a ; $50c2 inline arg
 	sound $78 ; $50c3
 	ld c, $03 ; $50c5
 	call GetRankingMarkerSlot ; $50c7
-	ld de, $5ba5 ; $50ca
+	ld de, Data_1b_5ba5 ; $50ca
 	call StartRankingMarkerAnim2 ; $50cd
 	ld c, $04 ; $50d0
 	call GetRankingMarkerSlot ; $50d2
-	ld de, $5bb2 ; $50d5
+	ld de, Data_1b_5bb2 ; $50d5
 	call StartRankingMarkerAnim1 ; $50d8
 	ld b, $02 ; $50db
 	call HighlightRankingRow ; $50dd
@@ -1268,22 +1274,22 @@ RankingBoardAnimState_5077_1b:
 	sound $80 ; $50e7
 	ld c, $06 ; $50e9
 	call GetRankingMarkerSlot ; $50eb
-	ld de, $5b9d ; $50ee
+	ld de, Data_1b_5b9d ; $50ee
 	call StartRankingMarkerAnim0 ; $50f1
 	ld c, $07 ; $50f4
 	call GetRankingMarkerSlot ; $50f6
-	ld de, $5b9d ; $50f9
+	ld de, Data_1b_5b9d ; $50f9
 	call StartRankingMarkerAnim1 ; $50fc
 	call WaitFramesCmd ; $50ff
 	db $5a ; $5102 inline arg
 	sound $78 ; $5103
 	ld c, $06 ; $5105
 	call GetRankingMarkerSlot ; $5107
-	ld de, $5ba5 ; $510a
+	ld de, Data_1b_5ba5 ; $510a
 	call StartRankingMarkerAnim2 ; $510d
 	ld c, $07 ; $5110
 	call GetRankingMarkerSlot ; $5112
-	ld de, $5b95 ; $5115
+	ld de, Data_1b_5b95 ; $5115
 	call StartRankingMarkerAnim1 ; $5118
 	ld b, $03 ; $511b
 	call HighlightRankingRow ; $511d
@@ -1293,22 +1299,22 @@ RankingBoardAnimState_5077_1b:
 	sound $80 ; $5127
 	ld c, $09 ; $5129
 	call GetRankingMarkerSlot ; $512b
-	ld de, $5b9d ; $512e
+	ld de, Data_1b_5b9d ; $512e
 	call StartRankingMarkerAnim0 ; $5131
 	ld c, $0a ; $5134
 	call GetRankingMarkerSlot ; $5136
-	ld de, $5b9d ; $5139
+	ld de, Data_1b_5b9d ; $5139
 	call StartRankingMarkerAnim1 ; $513c
 	call WaitFramesCmd ; $513f
 	db $5a ; $5142 inline arg
 	sound $78 ; $5143
 	ld c, $09 ; $5145
 	call GetRankingMarkerSlot ; $5147
-	ld de, $5ba5 ; $514a
+	ld de, Data_1b_5ba5 ; $514a
 	call StartRankingMarkerAnim2 ; $514d
 	ld c, $0a ; $5150
 	call GetRankingMarkerSlot ; $5152
-	ld de, $5b95 ; $5155
+	ld de, Data_1b_5b95 ; $5155
 	call StartRankingMarkerAnim1 ; $5158
 	ld b, $04 ; $515b
 	call HighlightRankingRow ; $515d
@@ -1327,11 +1333,11 @@ RankingBoardAnimState_516f_1b:
 	sound $78 ; $517b
 	ld c, $00 ; $517d
 	call GetRankingMarkerSlot ; $517f
-	ld de, $5bbb ; $5182
+	ld de, Data_1b_5bbb ; $5182
 	call StartRankingMarkerAnim2 ; $5185
 	ld c, $02 ; $5188
 	call GetRankingMarkerSlot ; $518a
-	ld de, $5bcc ; $518d
+	ld de, Data_1b_5bcc ; $518d
 	call StartRankingMarkerAnim1 ; $5190
 	ld b, $05 ; $5193
 	call HighlightRankingRow ; $5195
@@ -1341,24 +1347,24 @@ RankingBoardAnimState_516f_1b:
 	sound $80 ; $519f
 	ld c, $05 ; $51a1
 	call GetRankingMarkerSlot ; $51a3
-	ld de, $5bbb ; $51a6
+	ld de, Data_1b_5bbb ; $51a6
 	call StartRankingMarkerAnim1 ; $51a9
 	call WaitFramesCmd ; $51ac
 	db $04 ; $51af inline arg
 	ld c, $03 ; $51b0
 	call GetRankingMarkerSlot ; $51b2
-	ld de, $5bc3 ; $51b5
+	ld de, Data_1b_5bc3 ; $51b5
 	call StartRankingMarkerAnim0 ; $51b8
 	call WaitFramesCmd ; $51bb
 	db $78 ; $51be inline arg
 	sound $78 ; $51bf
 	ld c, $05 ; $51c1
 	call GetRankingMarkerSlot ; $51c3
-	ld de, $5bcc ; $51c6
+	ld de, Data_1b_5bcc ; $51c6
 	call StartRankingMarkerAnim3 ; $51c9
 	ld c, $03 ; $51cc
 	call GetRankingMarkerSlot ; $51ce
-	ld de, $5bd4 ; $51d1
+	ld de, Data_1b_5bd4 ; $51d1
 	call StartRankingMarkerAnim0 ; $51d4
 	ld b, $06 ; $51d7
 	call HighlightRankingRow ; $51d9
@@ -1368,24 +1374,24 @@ RankingBoardAnimState_516f_1b:
 	sound $80 ; $51e3
 	ld c, $08 ; $51e5
 	call GetRankingMarkerSlot ; $51e7
-	ld de, $5bcd ; $51ea
+	ld de, Data_1b_5bcd ; $51ea
 	call StartRankingMarkerAnim1 ; $51ed
 	call WaitFramesCmd ; $51f0
 	db $04 ; $51f3 inline arg
 	ld c, $06 ; $51f4
 	call GetRankingMarkerSlot ; $51f6
-	ld de, $5bd4 ; $51f9
+	ld de, Data_1b_5bd4 ; $51f9
 	call StartRankingMarkerAnim0 ; $51fc
 	call WaitFramesCmd ; $51ff
 	db $5a ; $5202 inline arg
 	sound $78 ; $5203
 	ld c, $08 ; $5205
 	call GetRankingMarkerSlot ; $5207
-	ld de, $5bcc ; $520a
+	ld de, Data_1b_5bcc ; $520a
 	call StartRankingMarkerAnim3 ; $520d
 	ld c, $06 ; $5210
 	call GetRankingMarkerSlot ; $5212
-	ld de, $5bc3 ; $5215
+	ld de, Data_1b_5bc3 ; $5215
 	call StartRankingMarkerAnim0 ; $5218
 	ld b, $07 ; $521b
 	call HighlightRankingRow ; $521d
@@ -1395,24 +1401,24 @@ RankingBoardAnimState_516f_1b:
 	sound $80 ; $5227
 	ld c, $0b ; $5229
 	call GetRankingMarkerSlot ; $522b
-	ld de, $5bcd ; $522e
+	ld de, Data_1b_5bcd ; $522e
 	call StartRankingMarkerAnim1 ; $5231
 	call WaitFramesCmd ; $5234
 	db $04 ; $5237 inline arg
 	ld c, $09 ; $5238
 	call GetRankingMarkerSlot ; $523a
-	ld de, $5bd4 ; $523d
+	ld de, Data_1b_5bd4 ; $523d
 	call StartRankingMarkerAnim0 ; $5240
 	call WaitFramesCmd ; $5243
 	db $5a ; $5246 inline arg
 	sound $78 ; $5247
 	ld c, $0b ; $5249
 	call GetRankingMarkerSlot ; $524b
-	ld de, $5bbc ; $524e
+	ld de, Data_1b_5bbc ; $524e
 	call StartRankingMarkerAnim1 ; $5251
 	ld c, $09 ; $5254
 	call GetRankingMarkerSlot ; $5256
-	ld de, $5bbb ; $5259
+	ld de, Data_1b_5bbb ; $5259
 	call StartRankingMarkerAnim2 ; $525c
 	ld b, $08 ; $525f
 	call HighlightRankingRow ; $5261
@@ -1431,11 +1437,11 @@ RankingBoardAnimState_5273_1b:
 	sound $78 ; $527f
 	ld c, $00 ; $5281
 	call GetRankingMarkerSlot ; $5283
-	ld de, $5be7 ; $5286
+	ld de, Data_1b_5be7 ; $5286
 	call StartRankingMarkerAnim2 ; $5289
 	ld c, $05 ; $528c
 	call GetRankingMarkerSlot ; $528e
-	ld de, $5bd4 ; $5291
+	ld de, Data_1b_5bd4 ; $5291
 	call StartRankingMarkerAnim0 ; $5294
 	ld b, $09 ; $5297
 	call HighlightRankingRow ; $5299
@@ -1445,22 +1451,22 @@ RankingBoardAnimState_5273_1b:
 	sound $80 ; $52a3
 	ld c, $08 ; $52a5
 	call GetRankingMarkerSlot ; $52a7
-	ld de, $5bd4 ; $52aa
+	ld de, Data_1b_5bd4 ; $52aa
 	call StartRankingMarkerAnim0 ; $52ad
 	ld c, $09 ; $52b0
 	call GetRankingMarkerSlot ; $52b2
-	ld de, $5bd4 ; $52b5
+	ld de, Data_1b_5bd4 ; $52b5
 	call StartRankingMarkerAnim1 ; $52b8
 	call WaitFramesCmd ; $52bb
 	db $5a ; $52be inline arg
 	sound $78 ; $52bf
 	ld c, $08 ; $52c1
 	call GetRankingMarkerSlot ; $52c3
-	ld de, $5b95 ; $52c6
+	ld de, Data_1b_5b95 ; $52c6
 	call StartRankingMarkerAnim0 ; $52c9
 	ld c, $09 ; $52cc
 	call GetRankingMarkerSlot ; $52ce
-	ld de, $5c0c ; $52d1
+	ld de, Data_1b_5c0c ; $52d1
 	call StartRankingMarkerAnim3 ; $52d4
 	ld b, $0a ; $52d7
 	call HighlightRankingRow ; $52d9
@@ -1485,11 +1491,11 @@ RankingBoardAnimState_52ff_1b:
 	sound $80 ; $5303
 	ld c, $00 ; $5305
 	call GetRankingMarkerSlot ; $5307
-	ld de, $5b94 ; $530a
+	ld de, Data_1b_5b94 ; $530a
 	call StartRankingMarkerAnim0 ; $530d
 	ld c, $01 ; $5310
 	call GetRankingMarkerSlot ; $5312
-	ld de, $5b94 ; $5315
+	ld de, Data_1b_5b94 ; $5315
 	call StartRankingMarkerAnim1 ; $5318
 	call WaitFramesCmd ; $531b
 	db $14 ; $531e inline arg
@@ -1500,13 +1506,13 @@ RankingBoardAnimState_5322_1b:
 	sound $80 ; $5326
 	ld c, $02 ; $5328
 	call GetRankingMarkerSlot ; $532a
-	ld de, $5bbb ; $532d
+	ld de, Data_1b_5bbb ; $532d
 	call StartRankingMarkerAnim1 ; $5330
 	call WaitFramesCmd ; $5333
 	db $04 ; $5336 inline arg
 	ld c, $00 ; $5337
 	call GetRankingMarkerSlot ; $5339
-	ld de, $5bc3 ; $533c
+	ld de, Data_1b_5bc3 ; $533c
 	call StartRankingMarkerAnim0 ; $533f
 	call WaitFramesCmd ; $5342
 	db $14 ; $5345 inline arg
@@ -1517,11 +1523,11 @@ RankingBoardAnimState_5349_1b:
 	sound $80 ; $534d
 	ld c, $00 ; $534f
 	call GetRankingMarkerSlot ; $5351
-	ld de, $5b94 ; $5354
+	ld de, Data_1b_5b94 ; $5354
 	call StartRankingMarkerAnim0 ; $5357
 	ld c, $05 ; $535a
 	call GetRankingMarkerSlot ; $535c
-	ld de, $5b94 ; $535f
+	ld de, Data_1b_5b94 ; $535f
 	call StartRankingMarkerAnim1 ; $5362
 	jp RankingBoardAnimNop_1b ; $5365
 RankingBoardAnimState_5368_1b:
@@ -1530,11 +1536,11 @@ RankingBoardAnimState_5368_1b:
 	sound $80 ; $536c
 	ld c, $00 ; $536e
 	call GetRankingMarkerSlot ; $5370
-	ld de, $5bdd ; $5373
+	ld de, Data_1b_5bdd ; $5373
 	call StartRankingMarkerAnim0 ; $5376
 	ld c, $09 ; $5379
 	call GetRankingMarkerSlot ; $537b
-	ld de, $5be2 ; $537e
+	ld de, Data_1b_5be2 ; $537e
 	call StartRankingMarkerAnim1 ; $5381
 	jp RankingBoardAnimNop_1b ; $5384
 RankingBoardAnimState_5387_1b:
@@ -1546,11 +1552,11 @@ RankingBoardAnimState_5387_1b:
 	sound $78 ; $5393
 	ld c, $00 ; $5395
 	call GetRankingMarkerSlot ; $5397
-	ld de, $5bf7 ; $539a
+	ld de, Data_1b_5bf7 ; $539a
 	call StartRankingMarkerAnim2 ; $539d
 	ld c, $01 ; $53a0
 	call GetRankingMarkerSlot ; $53a2
-	ld de, $5bd4 ; $53a5
+	ld de, Data_1b_5bd4 ; $53a5
 	call StartRankingMarkerAnim1 ; $53a8
 	ld b, $01 ; $53ab
 	call HighlightDoublesRankingRow ; $53ad
@@ -1560,22 +1566,22 @@ RankingBoardAnimState_5387_1b:
 	sound $80 ; $53b7
 	ld c, $03 ; $53b9
 	call GetRankingMarkerSlot ; $53bb
-	ld de, $5bd4 ; $53be
+	ld de, Data_1b_5bd4 ; $53be
 	call StartRankingMarkerAnim0 ; $53c1
 	ld c, $04 ; $53c4
 	call GetRankingMarkerSlot ; $53c6
-	ld de, $5b9d ; $53c9
+	ld de, Data_1b_5b9d ; $53c9
 	call StartRankingMarkerAnim1 ; $53cc
 	call WaitFramesCmd ; $53cf
 	db $5a ; $53d2 inline arg
 	sound $78 ; $53d3
 	ld c, $03 ; $53d5
 	call GetRankingMarkerSlot ; $53d7
-	ld de, $5bf7 ; $53da
+	ld de, Data_1b_5bf7 ; $53da
 	call StartRankingMarkerAnim2 ; $53dd
 	ld c, $04 ; $53e0
 	call GetRankingMarkerSlot ; $53e2
-	ld de, $5bc5 ; $53e5
+	ld de, Data_1b_5bc5 ; $53e5
 	call StartRankingMarkerAnim1 ; $53e8
 	ld b, $02 ; $53eb
 	call HighlightDoublesRankingRow ; $53ed
@@ -1592,11 +1598,11 @@ RankingBoardAnimState_53fa_1b:
 	sound $78 ; $5406
 	ld c, $00 ; $5408
 	call GetRankingMarkerSlot ; $540a
-	ld de, $5bef ; $540d
+	ld de, Data_1b_5bef ; $540d
 	call StartRankingMarkerAnim2 ; $5410
 	ld c, $02 ; $5413
 	call GetRankingMarkerSlot ; $5415
-	ld de, $5bcc ; $5418
+	ld de, Data_1b_5bcc ; $5418
 	call StartRankingMarkerAnim1 ; $541b
 	ld b, $03 ; $541e
 	call HighlightDoublesRankingRow ; $5420
@@ -1606,22 +1612,22 @@ RankingBoardAnimState_53fa_1b:
 	sound $80 ; $542a
 	ld c, $03 ; $542c
 	call GetRankingMarkerSlot ; $542e
-	ld de, $5bd4 ; $5431
+	ld de, Data_1b_5bd4 ; $5431
 	call StartRankingMarkerAnim0 ; $5434
 	ld c, $05 ; $5437
 	call GetRankingMarkerSlot ; $5439
-	ld de, $5bcc ; $543c
+	ld de, Data_1b_5bcc ; $543c
 	call StartRankingMarkerAnim1 ; $543f
 	call WaitFramesCmd ; $5442
 	db $8c ; $5445 inline arg
 	sound $78 ; $5446
 	ld c, $03 ; $5448
 	call GetRankingMarkerSlot ; $544a
-	ld de, $5bef ; $544d
+	ld de, Data_1b_5bef ; $544d
 	call StartRankingMarkerAnim2 ; $5450
 	ld c, $05 ; $5453
 	call GetRankingMarkerSlot ; $5455
-	ld de, $5bbb ; $5458
+	ld de, Data_1b_5bbb ; $5458
 	call StartRankingMarkerAnim1 ; $545b
 	ld b, $04 ; $545e
 	call HighlightDoublesRankingRow ; $5460
@@ -1638,11 +1644,11 @@ RankingBoardAnimState_546d_1b:
 	sound $78 ; $5479
 	ld c, $00 ; $547b
 	call GetRankingMarkerSlot ; $547d
-	ld de, $5b98 ; $5480
+	ld de, Data_1b_5b98 ; $5480
 	call StartRankingMarkerAnim0 ; $5483
 	ld c, $03 ; $5486
 	call GetRankingMarkerSlot ; $5488
-	ld de, $5b94 ; $548b
+	ld de, Data_1b_5b94 ; $548b
 	call StartRankingMarkerAnim1 ; $548e
 	ld b, $06 ; $5491
 	call HighlightDoublesRankingRow ; $5493
@@ -1658,11 +1664,11 @@ RankingBoardAnimState_54a3_1b:
 	sound $80 ; $54a7
 	ld c, $00 ; $54a9
 	call GetRankingMarkerSlot ; $54ab
-	ld de, $5b94 ; $54ae
+	ld de, Data_1b_5b94 ; $54ae
 	call StartRankingMarkerAnim0 ; $54b1
 	ld c, $01 ; $54b4
 	call GetRankingMarkerSlot ; $54b6
-	ld de, $5b94 ; $54b9
+	ld de, Data_1b_5b94 ; $54b9
 	call StartRankingMarkerAnim1 ; $54bc
 	jp RankingBoardAnimNop_1b ; $54bf
 RankingBoardAnimState_54c2_1b:
@@ -1671,13 +1677,13 @@ RankingBoardAnimState_54c2_1b:
 	sound $80 ; $54c6
 	ld c, $02 ; $54c8
 	call GetRankingMarkerSlot ; $54ca
-	ld de, $5bbb ; $54cd
+	ld de, Data_1b_5bbb ; $54cd
 	call StartRankingMarkerAnim1 ; $54d0
 	call WaitFramesCmd ; $54d3
 	db $08 ; $54d6 inline arg
 	ld c, $00 ; $54d7
 	call GetRankingMarkerSlot ; $54d9
-	ld de, $5b94 ; $54dc
+	ld de, Data_1b_5b94 ; $54dc
 	call StartRankingMarkerAnim0 ; $54df
 	jp RankingBoardAnimNop_1b ; $54e2
 RankingBoardAnimState_54e5_1b:
@@ -1686,11 +1692,11 @@ RankingBoardAnimState_54e5_1b:
 	sound $80 ; $54e9
 	ld c, $00 ; $54eb
 	call GetRankingMarkerSlot ; $54ed
-	ld de, $5b94 ; $54f0
+	ld de, Data_1b_5b94 ; $54f0
 	call StartRankingMarkerAnim0 ; $54f3
 	ld c, $03 ; $54f6
 	call GetRankingMarkerSlot ; $54f8
-	ld de, $5b9d ; $54fb
+	ld de, Data_1b_5b9d ; $54fb
 	call StartRankingMarkerAnim1 ; $54fe
 	jp RankingBoardAnimNop_1b ; $5501
 RankingBoardAnimState_5504_1b:
@@ -2281,7 +2287,7 @@ RankingBoardAnimTask_1b:
 	ld [$d856], a ; $591a
 Label_1b_591d:
 	ld a, [$d855] ; $591d
-	ld hl, $597b ; $5920
+	ld hl, Data_1b_597b ; $5920
 	add a, l ; $5923
 	ld l, a ; $5924
 	jr nc, Label_1b_5928 ; $5925
@@ -2323,6 +2329,7 @@ SpriteTemplate_1b_595a:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
+Data_1b_597b:
 	INCBIN "data/bank_01b/d_597b.bin" ; $597b, 137 bytes
 RankingCursorBobTask:
 	ld a, [$d855] ; $5a04
@@ -2579,7 +2586,64 @@ Label_1b_5b8c:
 	inc a ; $5b8f
 	ld [$d853], a ; $5b90
 	ret ; $5b93
-	INCBIN "data/bank_01b/d_5b94.bin" ; $5b94, 157 bytes
+Data_1b_5b94:
+	; $5b94, 1 bytes (bytes:1)
+	db $01 ; 0x00
+Data_1b_5b95:
+	; $5b95, 3 bytes (bytes:3)
+	db $01, $01, $01 ; 0x00
+Data_1b_5b98:
+	; $5b98, 5 bytes (bytes:5)
+	db $01, $01, $01, $01, $40 ; 0x00
+Data_1b_5b9d:
+	; $5b9d, 8 bytes (bytes:8)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
+Data_1b_5ba5:
+	; $5ba5, 13 bytes (bytes:13)
+	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $40 ; 0x00
+Data_1b_5bb2:
+	; $5bb2, 9 bytes (bytes:9)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
+Data_1b_5bbb:
+	; $5bbb, 1 bytes (bytes:1)
+	db $01 ; 0x00
+Data_1b_5bbc:
+	; $5bbc, 7 bytes (bytes:7)
+	db $01, $01, $01, $01, $01, $01, $01 ; 0x00
+Data_1b_5bc3:
+	; $5bc3, 2 bytes (bytes:2)
+	db $01, $01 ; 0x00
+Data_1b_5bc5:
+	; $5bc5, 7 bytes (bytes:7)
+	db $01, $01, $01, $01, $01, $01, $40 ; 0x00
+Data_1b_5bcc:
+	ds 1, $ff ; $5bcc, fill
+Data_1b_5bcd:
+	ds 7, $ff ; $5bcd, fill
+Data_1b_5bd4:
+	; $5bd4, 9 bytes (bytes:9)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
+Data_1b_5bdd:
+	; $5bdd, 5 bytes (bytes:5)
+	db $01, $01, $01, $01, $40 ; 0x00
+Data_1b_5be2:
+	; $5be2, 5 bytes (bytes:5)
+	db $ff, $ff, $ff, $ff, $40 ; 0x00
+Data_1b_5be7:
+	; $5be7, 8 bytes (bytes:8)
+	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
+Data_1b_5bef:
+	; $5bef, 8 bytes (bytes:8)
+	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
+Data_1b_5bf7:
+	; $5bf7, 21 bytes (bytes:16)
+	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
+	db $01, $01, $01, $01, $40 ; 0x10
+Data_1b_5c0c:
+	; $5c0c, 37 bytes (bytes:16)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
+	db $ff, $ff, $ff, $ff, $40 ; 0x20
 ClearRankingMarkerSlots:
 	ld hl, $d803 ; $5c31
 	ld bc, $0030 ; $5c34
@@ -3035,7 +3099,15 @@ Label_1b_5f5d:
 	pop af ; $5f79
 	pop hl ; $5f7a
 	ret ; $5f7b
-	INCBIN "data/bank_01b/d_5f7c.bin" ; $5f7c, 70 bytes
+Data_1b_5f7c:
+	; $5f7c, 32 bytes (bytes:16)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff, $00, $01, $02, $03, $ff, $fe, $fd ; 0x00
+	db $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd ; 0x10
+Data_1b_5f9c:
+	; $5f9c, 38 bytes (bytes:16)
+	db $00, $00, $00, $b5, $30, $20, $c4, $00, $01, $00, $00, $b6, $30, $38, $c7, $00 ; 0x00
+	db $02, $00, $00, $b7, $30, $50, $ca, $00, $03, $00, $00, $a8, $30, $68, $cd, $00 ; 0x10
+	db $ff, $00, $00, $b0, $18, $20 ; 0x20
 	ld h, h ; $5fc2
 	nop ; $5fc3
 FindCharSelectRosterEntry:
@@ -3051,19 +3123,19 @@ GetCharSelectRosterField:
 	pop hl ; $5fd2
 	ret ; $5fd3
 LoadCharSelectNavGrid:
-	ld hl, $5f7c ; $5fd4
+	ld hl, Data_1b_5f7c ; $5fd4
 	ld de, $c7a0 ; $5fd7
 	ld bc, $0020 ; $5fda
 	call CopyMemoryBC ; $5fdd
 	ret ; $5fe0
 LoadCharSelectRosterTable:
-	ld hl, $5f9c ; $5fe1
+	ld hl, Data_1b_5f9c ; $5fe1
 	ld de, $ce40 ; $5fe4
 	ld bc, $0080 ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
 LoadCharSelectScreenGfx:
-	ld hl, $5f7c ; $5fee
+	ld hl, Data_1b_5f7c ; $5fee
 	ld de, $d000 ; $5ff1
 	call DecompressData ; $5ff4
 	ld hl, $d000 ; $5ff7
@@ -3074,13 +3146,13 @@ LoadCharSelectScreenGfx:
 	ld de, $a800 ; $6005
 	ld c, $80 ; $6008
 	call QueueVRAMCopy ; $600a
-	ld hl, $5f7c ; $600d
+	ld hl, Data_1b_5f7c ; $600d
 	ld de, $dc00 ; $6010
 	call DecompressData ; $6013
-	ld hl, $5f7c ; $6016
+	ld hl, Data_1b_5f7c ; $6016
 	ld de, $d800 ; $6019
 	call DecompressData ; $601c
-	ld hl, $5f7c ; $601f
+	ld hl, Data_1b_5f7c ; $601f
 	ld de, $0008 ; $6022
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
@@ -3750,7 +3822,12 @@ Label_1b_656a:
 	or a, b ; $656e
 	jr nz, Label_1b_656a ; $656f
 	ret ; $6571
-	INCBIN "data/bank_01b/d_6572.bin" ; $6572, 120 bytes
+Data_1b_6572:
+	; $6572, 32 bytes (bytes:16)
+	db $1a, $1b, $1c, $1d, $1e, $fe, $fd, $ff, $1f, $12, $13, $14, $15, $fe, $fd, $ff ; 0x00
+	db $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff ; 0x10
+Data_1b_6592:
+	INCBIN "data/bank_01b/d_6592.bin" ; $6592, 88 bytes
 FindUnlockDebugRosterEntry:
 	ld hl, $ce40 ; $65ea
 	farcall FindRosterEntry ; $65ed
@@ -3764,7 +3841,7 @@ GetUnlockDebugRosterField:
 	pop hl ; $65f8
 	ret ; $65f9
 LoadUnlockDebugNavGrid:
-	ld hl, $6572 ; $65fa
+	ld hl, Data_1b_6572 ; $65fa
 	ld de, $c7a0 ; $65fd
 	ld bc, $0020 ; $6600
 	call CopyMemoryBC ; $6603
@@ -3772,7 +3849,7 @@ LoadUnlockDebugNavGrid:
 	db $0b ; $6607
 	db $0c ; $6608
 LoadUnlockDebugRosterTable:
-	ld hl, $6592 ; $6609
+	ld hl, Data_1b_6592 ; $6609
 	ld de, $ce40 ; $660c
 	ld bc, $0080 ; $660f
 	call CopyMemoryBC ; $6612
@@ -3788,26 +3865,26 @@ LoadUnlockDebugScreenGfx:
 	ld de, $a800 ; $6626
 	ld c, $80 ; $6629
 	call QueueVRAMCopy ; $662b
-	ld hl, $6572 ; $662e
+	ld hl, Data_1b_6572 ; $662e
 	ld de, $dc00 ; $6631
 	call DecompressData ; $6634
-	ld hl, $6572 ; $6637
+	ld hl, Data_1b_6572 ; $6637
 	ld de, $d800 ; $663a
 	call DecompressData ; $663d
-	ld hl, $6572 ; $6640
+	ld hl, Data_1b_6572 ; $6640
 	ld de, $0008 ; $6643
 	call LoadPaletteShadow ; $6646
 	ret ; $6649
 StubNop_1b_664a:
 	ret ; $664a
-	ld hl, $6572 ; $664b
+	ld hl, Data_1b_6572 ; $664b
 	ld de, $d000 ; $664e
 	call DecompressData ; $6651
 	ld hl, $d000 ; $6654
 	ld de, $8500 ; $6657
 	ld c, $28 ; $665a
 	call QueueVRAMCopy ; $665c
-	ld hl, $6572 ; $665f
+	ld hl, Data_1b_6572 ; $665f
 	ld de, $0801 ; $6662
 	call LoadPaletteShadow ; $6665
 	ld a, $0a ; $6668
@@ -3817,7 +3894,7 @@ StubNop_1b_664a:
 UpdateBobbingDecorSprite:
 	ld de, $2cfa ; $6671
 	farcall ApplySpriteBobOffset_18 ; $6674
-	ld hl, $6572 ; $6677
+	ld hl, Data_1b_6572 ; $6677
 	ld bc, $0050 ; $667a
 	call QueueSpriteTemplate ; $667d
 	ret ; $6680
@@ -4144,7 +4221,7 @@ LoadUnlockDebugCursorGfx:
 	ldh a, [hWramBank] ; $68d6
 	push af ; $68d8
 	wram_bank $01 ; $68d9
-	ld hl, $690a ; $68df
+	ld hl, Lz_1b_690a ; $68df
 	ld de, $d000 ; $68e2
 	call DecompressData ; $68e5
 	ld hl, $d000 ; $68e8
@@ -4153,14 +4230,19 @@ LoadUnlockDebugCursorGfx:
 	call QueueVRAMCopy ; $68f0
 	pop af ; $68f3
 	wram_bank ; $68f4
-	ld hl, $6930 ; $68f8
+	ld hl, Palette_1b_6930 ; $68f8
 	ld de, $0801 ; $68fb
 	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
 	ld hl, DrawUnlockDebugFlagSprites ; $6903
 	call RegisterFrameTask ; $6906
 	ret ; $6909
-	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 46 bytes
+Lz_1b_690a:
+	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 38 bytes
+Palette_1b_6930:
+	; $6930, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7e80, $53df, $0a9f, $0000 ; pal 0: #00a4ff #fff6a4 #ffa410 #000000
 DrawUnlockDebugFlagSprites:
 	ldh a, [hWramBank] ; $6938
 	push af ; $693a
@@ -4174,7 +4256,7 @@ Label_1b_6945:
 	inc hl ; $6949
 	jr z, Label_1b_695c ; $694a
 	push hl ; $694c
-	ld hl, $6968 ; $694d
+	ld hl, Data_1b_6968 ; $694d
 	add a, l ; $6950
 	ld l, a ; $6951
 	jr nc, Label_1b_6955 ; $6952
@@ -4193,7 +4275,9 @@ Label_1b_695c:
 	pop af ; $6962
 	wram_bank ; $6963
 	ret ; $6967
-	INCBIN "data/bank_01b/d_6968.bin" ; $6968, 12 bytes
+Data_1b_6968:
+	; $6968, 12 bytes (bytes:12)
+	db $24, $28, $3c, $28, $54, $28, $6c, $28, $84, $28, $24, $40 ; 0x00
 QueueBobbingFlagSprite:
 	push hl ; $6974
 	farcall ApplySpriteBobOffset_18 ; $6975
@@ -4231,7 +4315,9 @@ RunStoryDataConfirmMenu:
 	call UnregisterFrameTask ; $69c8
 	pop af ; $69cb
 	ret ; $69cc
-	INCBIN "data/bank_01b/d_69cd.bin" ; $69cd, 9 bytes
+Data_1b_69cd:
+	; $69cd, 9 bytes (bytes:9)
+	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00
 Func_1b_69d6:
 	ret ; $69d6
 	ret ; $69d7
@@ -4503,7 +4589,7 @@ Label_1b_6bfa:
 	ld a, c ; $6bfa
 	ld [$d001], a ; $6bfb
 	ld a, [$d001] ; $6bfe
-	ld hl, $6c0e ; $6c01
+	ld hl, Data_1b_6c0e ; $6c01
 	add a, l ; $6c04
 	ld l, a ; $6c05
 	jr nc, Label_1b_6c09 ; $6c06
@@ -4512,7 +4598,9 @@ Label_1b_6c09:
 	ld a, [hl] ; $6c09
 	ld [$d002], a ; $6c0a
 	ret ; $6c0d
-	INCBIN "data/bank_01b/d_6c0e.bin" ; $6c0e, 3 bytes
+Data_1b_6c0e:
+	; $6c0e, 3 bytes (bytes:3)
+	db $02, $02, $03 ; 0x00
 	; $6c11, 72 bytes (records:2)
 	dw $6c23 ; record 0
 	dw $6c29 ; record 1
@@ -4696,7 +4784,7 @@ Label_1b_6d63:
 	ld c, $03 ; $6d69
 	call GetMenuCursorIndex ; $6d6b
 	ld b, a ; $6d6e
-	ld hl, $6d8f ; $6d6f
+	ld hl, Data_1b_6d8f ; $6d6f
 	add a, a ; $6d72
 	add a, l ; $6d73
 	ld l, a ; $6d74
@@ -4718,7 +4806,9 @@ Label_1b_6d84:
 	pop af ; $6d89
 	wram_bank ; $6d8a
 	ret ; $6d8e
-	INCBIN "data/bank_01b/d_6d8f.bin" ; $6d8f, 6 bytes
+Data_1b_6d8f:
+	; $6d8f, 6 bytes (bytes:6)
+	db $01, $d2, $01, $d2, $01, $d2 ; 0x00
 LoadMinigameLevelSelectPalette:
 	ld hl, $6da8 ; $6d95
 	add a, a ; $6d98
@@ -4907,7 +4997,7 @@ Label_1b_6f41:
 	ld h, $0d ; $6f41
 Label_1b_6f43:
 	push hl ; $6f43
-	ld hl, $6f5e ; $6f44
+	ld hl, Data_1b_6f5e ; $6f44
 	ld a, b ; $6f47
 	add a, a ; $6f48
 	add a, l ; $6f49
@@ -4927,13 +5017,15 @@ Label_1b_6f4e:
 	pop bc ; $6f5b
 	pop af ; $6f5c
 	ret ; $6f5d
-	INCBIN "data/bank_01b/d_6f5e.bin" ; $6f5e, 4 bytes
+Data_1b_6f5e:
+	; $6f5e, 4 bytes (bytes:4)
+	db $e3, $d4, $ec, $d4 ; 0x00
 DrawMinigameLevelSelect2Cursor:
 	farcall TickMenuBgScroll ; $6f62
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex ; $6f67
 	push af ; $6f6a
-	ld hl, $6fcf ; $6f6b
+	ld hl, Data_1b_6fcf ; $6f6b
 	add a, l ; $6f6e
 	ld l, a ; $6f6f
 	jr nc, Label_1b_6f73 ; $6f70
@@ -4941,7 +5033,7 @@ DrawMinigameLevelSelect2Cursor:
 Label_1b_6f73:
 	ld c, [hl] ; $6f73
 	pop af ; $6f74
-	ld hl, $6fc9 ; $6f75
+	ld hl, Data_1b_6fc9 ; $6f75
 	add a, a ; $6f78
 	add a, l ; $6f79
 	ld l, a ; $6f7a
@@ -4982,7 +5074,12 @@ SpriteTemplate_1b_6fc0:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_01b/d_6fc9.bin" ; $6fc9, 9 bytes
+Data_1b_6fc9:
+	; $6fc9, 6 bytes (bytes:6)
+	db $50, $0c, $50, $54, $50, $5c ; 0x00
+Data_1b_6fcf:
+	; $6fcf, 3 bytes (bytes:3)
+	db $00, $10, $20 ; 0x00
 RunMinigameLevelSelect3:
 	call ResumeBGM ; $6fd2
 	sound $08 ; $6fd5
@@ -5091,7 +5188,7 @@ Label_1b_70ca:
 	ld h, $0d ; $70ca
 Label_1b_70cc:
 	push hl ; $70cc
-	ld hl, $70e7 ; $70cd
+	ld hl, Data_1b_70e7 ; $70cd
 	ld a, b ; $70d0
 	add a, a ; $70d1
 	add a, l ; $70d2
@@ -5111,13 +5208,15 @@ Label_1b_70d7:
 	pop bc ; $70e4
 	pop af ; $70e5
 	ret ; $70e6
-	INCBIN "data/bank_01b/d_70e7.bin" ; $70e7, 6 bytes
+Data_1b_70e7:
+	; $70e7, 6 bytes (bytes:6)
+	db $e1, $d4, $e7, $d4, $ed, $d4 ; 0x00
 DrawMinigameLevelSelect3Cursor:
 	farcall TickMenuBgScroll ; $70ed
 	ld c, $03 ; $70f0
 	call GetMenuCursorIndex ; $70f2
 	push af ; $70f5
-	ld hl, $715a ; $70f6
+	ld hl, Data_1b_715a ; $70f6
 	add a, l ; $70f9
 	ld l, a ; $70fa
 	jr nc, Label_1b_70fe ; $70fb
@@ -5125,7 +5224,7 @@ DrawMinigameLevelSelect3Cursor:
 Label_1b_70fe:
 	ld c, [hl] ; $70fe
 	pop af ; $70ff
-	ld hl, $7154 ; $7100
+	ld hl, Data_1b_7154 ; $7100
 	add a, a ; $7103
 	add a, l ; $7104
 	ld l, a ; $7105
@@ -5166,7 +5265,12 @@ SpriteTemplate_1b_714b:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_01b/d_7154.bin" ; $7154, 9 bytes
+Data_1b_7154:
+	; $7154, 6 bytes (bytes:6)
+	db $50, $fc, $50, $2c, $50, $5c ; 0x00
+Data_1b_715a:
+	; $715a, 3 bytes (bytes:3)
+	db $00, $10, $20 ; 0x00
 RunSavedDataTypeSelect:
 	sound $03 ; $715d
 	ld hl, rIE ; $715f
@@ -5245,7 +5349,7 @@ LoadSavedDataTypeSelectGfx:
 Label_1b_7215:
 	ld a, c ; $7215
 	add a, a ; $7216
-	ld hl, $729a ; $7217
+	ld hl, Data_1b_729a ; $7217
 	add a, l ; $721a
 	ld l, a ; $721b
 	jr nc, Label_1b_721f ; $721c
@@ -5264,7 +5368,7 @@ Label_1b_721f:
 	pop de ; $722d
 	pop bc ; $722e
 	pop af ; $722f
-	ld hl, $729e ; $7230
+	ld hl, Data_1b_729e ; $7230
 	ld a, c ; $7233
 	add a, a ; $7234
 	add a, l ; $7235
@@ -5319,7 +5423,12 @@ Label_1b_723a:
 	pop af ; $7294
 	wram_bank ; $7295
 	ret ; $7299
-	INCBIN "data/bank_01b/d_729a.bin" ; $729a, 10 bytes
+Data_1b_729a:
+	; $729a, 4 bytes (bytes:4)
+	db $7a, $3c, $58, $3a ; 0x00
+Data_1b_729e:
+	; $729e, 6 bytes (bytes:6)
+	db $00, $a8, $00, $a9, $00, $aa ; 0x00
 Func_1b_72a4:
 	farcall TickMenuBgScroll ; $72a4
 	ret ; $72a7
@@ -5389,7 +5498,9 @@ SpriteTemplate_1b_7340:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_01b/d_7349.bin" ; $7349, 9 bytes
+Data_1b_7349:
+	; $7349, 9 bytes (bytes:9)
+	db $50, $0c, $50, $54, $50, $5c, $00, $10, $20 ; 0x00
 RedrawSavedDataTypeSelect:
 	wram_bank $03 ; $7352
 	ld b, $00 ; $7358
@@ -5420,7 +5531,7 @@ DrawSavedDataTypeDescription:
 	ld c, $03 ; $738c
 	call GetMenuCursorIndex ; $738e
 	ld b, a ; $7391
-	ld hl, $73b2 ; $7392
+	ld hl, Data_1b_73b2 ; $7392
 	add a, a ; $7395
 	add a, l ; $7396
 	ld l, a ; $7397
@@ -5442,7 +5553,9 @@ Label_1b_73a7:
 	pop af ; $73ac
 	wram_bank ; $73ad
 	ret ; $73b1
-	INCBIN "data/bank_01b/d_73b2.bin" ; $73b2, 4 bytes
+Data_1b_73b2:
+	; $73b2, 4 bytes (bytes:4)
+	db $01, $d2, $01, $d2 ; 0x00
 LoadSavedDataTypePalette:
 	ld hl, $73c9 ; $73b6
 	add a, a ; $73b9
@@ -5826,7 +5939,7 @@ DrawMinigameDataMugshot:
 	ret ; $7689
 MapMinigameRowToMugshotSlot:
 	push hl ; $768a
-	ld hl, $7697 ; $768b
+	ld hl, Data_1b_7697 ; $768b
 	ld a, c ; $768e
 	add a, l ; $768f
 	ld l, a ; $7690
@@ -5836,9 +5949,11 @@ Label_1b_7694:
 	ld c, [hl] ; $7694
 	pop hl ; $7695
 	ret ; $7696
-	INCBIN "data/bank_01b/d_7697.bin" ; $7697, 10 bytes
+Data_1b_7697:
+	; $7697, 10 bytes (bytes:10)
+	db $00, $01, $02, $03, $04, $05, $07, $08, $0c, $10 ; 0x00
 GetMinigameRowTilemapDest:
-	ld hl, $76af ; $76a1
+	ld hl, Data_1b_76af ; $76a1
 	ld a, b ; $76a4
 	add a, a ; $76a5
 	add a, l ; $76a6
@@ -5850,7 +5965,9 @@ Label_1b_76ab:
 	ld h, [hl] ; $76ac
 	ld l, a ; $76ad
 	ret ; $76ae
-	INCBIN "data/bank_01b/d_76af.bin" ; $76af, 10 bytes
+Data_1b_76af:
+	; $76af, 10 bytes (bytes:10)
+	db $c3, $d0, $03, $d1, $43, $d1, $83, $d1, $c3, $d1 ; 0x00
 DrawMinigameDataScrollArrows:
 	call CheckMinigameDataScrollable ; $76b9
 	or a, a ; $76bc
@@ -6086,7 +6203,7 @@ DrawMinigameHighScoreNumber:
 	ret z ; $784a
 	ld a, b ; $784b
 	add a, a ; $784c
-	ld hl, $7875 ; $784d
+	ld hl, Data_1b_7875 ; $784d
 	add a, l ; $7850
 	ld l, a ; $7851
 	jr nc, Label_1b_7855 ; $7852
@@ -6118,7 +6235,9 @@ Label_1b_786e:
 	ld l, a ; $7870
 	farcall DrawDecimalNumberSprites_39 ; $7871
 	ret ; $7874
-	INCBIN "data/bank_01b/d_7875.bin" ; $7875, 10 bytes
+Data_1b_7875:
+	; $7875, 10 bytes (bytes:10)
+	db $35, $84, $45, $84, $55, $84, $65, $84, $75, $84 ; 0x00
 CheckMinigameDataScrollable:
 	push bc ; $787f
 	push de ; $7880

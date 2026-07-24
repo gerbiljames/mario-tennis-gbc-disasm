@@ -574,7 +574,18 @@ Label_1a_447d:
 	farcall AddPlayerExp ; $447e
 	pop bc ; $4481
 	ret ; $4482
-	INCBIN "data/bank_01a/d_4483.bin" ; $4483, 85 bytes
+Data_1a_4483:
+	; $4483, 24 bytes (bytes:16)
+	db $01, $01, $01, $7e, $de, $9d, $76, $72, $89, $82, $82, $de, $77, $66, $20, $20 ; 0x00
+	db $20, $20, $20, $20, $20, $20, $20, $00 ; 0x10
+Gfx_1a_449b:
+	INCBIN "data/bank_01a/d_449b.bin" ; $449b, 13 bytes
+Data_1a_44a8:
+	; $44a8, 25 bytes (bytes:16)
+	db $01, $01, $01, $81, $6d, $73, $80, $de, $9d, $c3, $de, $b0, $c0, $76, $de, $20 ; 0x00
+	db $77, $74, $83, $7c, $8f, $72, $8f, $7d, $00 ; 0x10
+Gfx_1a_44c1:
+	INCBIN "data/bank_01a/d_44c1.bin" ; $44c1, 23 bytes
 ShowExpGainScreen:
 	push bc ; $44d8
 	push de ; $44d9
@@ -612,7 +623,8 @@ ShowExpGainScreen:
 	call RegisterFrameTask ; $4518
 	call StubNop_1a_4bb9 ; $451b
 	jp Label_1a_473e ; $451e
-	INCBIN "data/bank_01a/d_4521.bin" ; $4521, 6 bytes
+	call Func_1a_4bba ; $4521
+	jp Label_1a_473e ; $4524
 Label_1a_4527:
 	pop af ; $4527
 	wram_bank ; $4528
@@ -991,7 +1003,12 @@ Label_1a_47ff:
 	pop bc ; $4806
 	pop af ; $4807
 	ret ; $4808
-	INCBIN "data/bank_01a/d_4809.bin" ; $4809, 55 bytes
+Data_1a_4809:
+	; $4809, 55 bytes (bytes:16)
+	db $2c, $7b, $2e, $7b, $2d, $7b, $2e, $79, $2a, $7b, $2f, $7a, $30, $7b, $2e, $7a ; 0x00
+	db $2c, $7b, $30, $7b, $2f, $7b, $2a, $7b, $30, $7a, $2c, $7c, $2a, $7c, $2a, $7b ; 0x10
+	db $2c, $7b, $2c, $7b, $2c, $7b, $2c, $7b, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
+	db $00, $00, $00, $00, $00, $00, $00 ; 0x30
 SpriteTemplate_1a_4840:
 	; $4840, 17 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
@@ -1003,7 +1020,7 @@ SpriteTemplate_1a_4840:
 LoadExpScreenGfx:
 	wram_bank $01 ; $4852
 	push hl ; $4858
-	ld hl, $5530 ; $4859
+	ld hl, Lz_1a_5530 ; $4859
 	ld de, $d000 ; $485c
 	call DecompressData ; $485f
 	ld hl, $d000 ; $4862
@@ -1070,22 +1087,22 @@ Label_1a_48f0:
 	ld c, $14 ; $4911
 	call QueueVRAMCopy ; $4913
 	wram_bank $01 ; $4916
-	ld hl, $5e20 ; $491c
+	ld hl, Gfx_1a_5e20 ; $491c
 	ld de, $d000 ; $491f
 	ld c, $24 ; $4922
 	call CopyMemoryFast ; $4924
-	ld hl, $5be0 ; $4927
+	ld hl, Gfx_1a_5be0 ; $4927
 	ld de, $d400 ; $492a
 	ld c, $24 ; $492d
 	call CopyMemoryFast ; $492f
 	ret ; $4932
 Label_1a_4933:
 	wram_bank $01 ; $4933
-	ld hl, $62a0 ; $4939
+	ld hl, Gfx_1a_62a0 ; $4939
 	ld de, $d000 ; $493c
 	ld c, $24 ; $493f
 	call CopyMemoryFast ; $4941
-	ld hl, $6060 ; $4944
+	ld hl, Gfx_1a_6060 ; $4944
 	ld de, $d400 ; $4947
 	ld c, $24 ; $494a
 	call CopyMemoryFast ; $494c
@@ -1460,6 +1477,7 @@ Label_1a_4bb4:
 	ret ; $4bb8
 StubNop_1a_4bb9:
 	ret ; $4bb9
+Func_1a_4bba:
 	ret ; $4bba
 DrawPositionedStringToTileBuffer:
 	push af ; $4bbb
@@ -1842,9 +1860,9 @@ Label_1a_4da4:
 	ld [$d151], a ; $4dbb
 	call AdvanceFrame ; $4dbe
 	call DrawExpScreenMessageBox ; $4dc1
-	ld hl, $4483 ; $4dc4
+	ld hl, Data_1a_4483 ; $4dc4
 	call DrawPositionedStringToTileBuffer ; $4dc7
-	ld hl, $449b ; $4dca
+	ld hl, Gfx_1a_449b ; $4dca
 	call DrawPositionedStringToTileBuffer ; $4dcd
 	wram_bank $01 ; $4dd0
 	ld hl, $d000 ; $4dd6
@@ -1879,9 +1897,9 @@ Label_1a_4da4:
 	ld [$d151], a ; $4e19
 	call AdvanceFrame ; $4e1c
 	call DrawExpScreenMessageBox ; $4e1f
-	ld hl, $44a8 ; $4e22
+	ld hl, Data_1a_44a8 ; $4e22
 	call DrawPositionedStringToTileBuffer ; $4e25
-	ld hl, $44c1 ; $4e28
+	ld hl, Gfx_1a_44c1 ; $4e28
 	call DrawPositionedStringToTileBuffer ; $4e2b
 	wram_bank $01 ; $4e2e
 	ld hl, $d000 ; $4e34
@@ -2610,7 +2628,19 @@ Label_1a_54cd:
 	and a, $fe ; $551d
 	ld [$d151], a ; $551f
 	ret ; $5522
-	INCBIN "data/bank_01a/d_5523.bin" ; $5523, 3849 bytes
+Padding_1a_5523:
+	; $5523, 13 bytes (fill)
+	ds 13, $00
+Lz_1a_5530:
+	INCBIN "data/bank_01a/d_5530.bin" ; $5530, 1712 bytes
+Gfx_1a_5be0:
+	INCBIN "data/bank_01a/d_5be0.bin" ; $5be0, 576 bytes
+Gfx_1a_5e20:
+	INCBIN "data/bank_01a/d_5e20.bin" ; $5e20, 576 bytes
+Gfx_1a_6060:
+	INCBIN "data/bank_01a/d_6060.bin" ; $6060, 576 bytes
+Gfx_1a_62a0:
+	INCBIN "data/bank_01a/d_62a0.bin" ; $62a0, 396 bytes
 Data_1a_642c:
 	INCBIN "data/bank_01a/d_642c.bin" ; $642c, 16 bytes
 Data_1a_643c:
@@ -2683,14 +2713,14 @@ Label_1a_6854:
 RunCharViewerSelectGrid:
 	wram_bank $06 ; $686c
 	xor a, a ; $6872
-	ld hl, $70d9 ; $6873
+	ld hl, Palette_1a_70d9 ; $6873
 	ld de, $0008 ; $6876
 	call LoadPaletteShadow ; $6879
-	ld hl, $70d9 ; $687c
+	ld hl, Palette_1a_70d9 ; $687c
 	ld de, $0808 ; $687f
 	call LoadPaletteShadow ; $6882
 	wram_bank $01 ; $6885
-	ld hl, $7119 ; $688b
+	ld hl, Lz_1a_7119 ; $688b
 	ld de, $d000 ; $688e
 	call DecompressData ; $6891
 	ld hl, $d000 ; $6894
@@ -2851,14 +2881,14 @@ Label_1a_69e0:
 	ret ; $69ea
 LoadCharViewerGridTilemap:
 	wram_bank $01 ; $69eb
-	ld hl, $78b2 ; $69f1
+	ld hl, Lz_1a_78b2 ; $69f1
 	ld de, $d000 ; $69f4
 	call DecompressData ; $69f7
 	ld hl, $d000 ; $69fa
 	ld bc, $0240 ; $69fd
 	call CopyBank1ToBank3Buffer ; $6a00
 	wram_bank $01 ; $6a03
-	ld hl, $78ec ; $6a09
+	ld hl, Lz_1a_78ec ; $6a09
 	ld de, $d000 ; $6a0c
 	call DecompressData ; $6a0f
 	ld hl, $d000 ; $6a12
@@ -2992,7 +3022,10 @@ Label_1a_6af4:
 	ld c, $88 ; $6b09
 	call QueueSprite ; $6b0b
 	ret ; $6b0e
-	INCBIN "data/bank_01a/d_6b0f.bin" ; $6b0f, 32 bytes
+Data_1a_6b0f:
+	; $6b0f, 32 bytes (bytes:16)
+	db $14, $13, $24, $13, $34, $13, $44, $13, $54, $13, $64, $13, $74, $13, $84, $13 ; 0x00
+	db $14, $53, $24, $53, $34, $53, $44, $53, $54, $53, $64, $53, $74, $53, $84, $53 ; 0x10
 LoadCharViewerScreen:
 	call LoadCharViewerScreenGfx ; $6b2f
 	wram_bank $03 ; $6b32
@@ -3007,11 +3040,11 @@ LoadCharViewerScreen:
 	call QueueVRAMCopy ; $6b51
 	ret ; $6b54
 LoadCharViewerScreenGfx:
-	ld hl, $70d9 ; $6b55
+	ld hl, Palette_1a_70d9 ; $6b55
 	ld de, $0008 ; $6b58
 	call LoadPaletteShadow ; $6b5b
 	wram_bank $01 ; $6b5e
-	ld hl, $7119 ; $6b64
+	ld hl, Lz_1a_7119 ; $6b64
 	ld de, $d000 ; $6b67
 	call DecompressData ; $6b6a
 	ld hl, $d000 ; $6b6d
@@ -3023,14 +3056,14 @@ LoadCharViewerScreenGfx:
 	ld c, $80 ; $6b7e
 	call QueueVRAMCopy ; $6b80
 	wram_bank $01 ; $6b83
-	ld hl, $777d ; $6b89
+	ld hl, Lz_1a_777d ; $6b89
 	ld de, $d000 ; $6b8c
 	call DecompressData ; $6b8f
 	ld hl, $d000 ; $6b92
 	ld bc, $0240 ; $6b95
 	call CopyBank1ToBank3Buffer ; $6b98
 	wram_bank $01 ; $6b9b
-	ld hl, $7831 ; $6ba1
+	ld hl, Lz_1a_7831 ; $6ba1
 	ld de, $d000 ; $6ba4
 	call DecompressData ; $6ba7
 	ld hl, $d000 ; $6baa
@@ -3147,7 +3180,12 @@ Label_1a_6c52:
 	ld c, $82 ; $6c63
 	call QueueSprite ; $6c65
 	ret ; $6c68
-	INCBIN "data/bank_01a/d_6c69.bin" ; $6c69, 54 bytes
+Data_1a_6c69:
+	; $6c69, 54 bytes (bytes:16)
+	db $50, $38, $50, $40, $50, $48, $50, $50, $50, $58, $50, $60, $50, $68, $50, $70 ; 0x00
+	db $50, $78, $50, $80, $50, $88, $58, $38, $58, $40, $58, $48, $58, $50, $58, $58 ; 0x10
+	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88, $78, $38, $78, $40 ; 0x20
+	db $78, $48, $78, $50, $78, $58 ; 0x30
 RunCharViewerInputLoop:
 	call DrawCharViewerCharSprite ; $6c9f
 	wram_bank $06 ; $6ca2
@@ -3293,7 +3331,7 @@ Label_1a_6de4:
 	jr nz, Label_1a_6e12 ; $6df0
 	ld a, [$d001] ; $6df2
 	ld [$d003], a ; $6df5
-	ld hl, $792f ; $6df8
+	ld hl, Data_1a_792f ; $6df8
 	add a, l ; $6dfb
 	ld l, a ; $6dfc
 	jr nc, Label_1a_6e00 ; $6dfd
@@ -3591,7 +3629,9 @@ DrawCharViewerCharSprite:
 	ld hl, wCharSpriteSlot ; $7087
 	farcall DrawCharSprite ; $708a
 	ret ; $708d
-	INCBIN "data/bank_01a/d_708e.bin" ; $708e, 8 bytes
+Data_1a_708e:
+	; $708e, 8 bytes (bytes:8)
+	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 LoadCharViewerMugshot:
 	xor a, a ; $7096
 	ld de, $0701 ; $7097
@@ -3617,25 +3657,49 @@ ApplyCharViewerPalette:
 	ld de, $0f01 ; $70d2
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
-	INCBIN "data/bank_01a/d_70d9.bin" ; $70d9, 2156 bytes
+Palette_1a_70d9:
+	; $70d9, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $1100, $0000, $7fff ; pal 0: #b4b4b4 #004120 #000000 #ffffff
+	dw $5ad6, $1100, $0000, $2529 ; pal 1: #b4b4b4 #004120 #000000 #4a4a4a
+	dw $19d8, $36ff, $0061, $7fff ; pal 2: #c57331 #ffbd6a #081800 #ffffff
+	dw $0061, $7e00, $36ff, $7fff ; pal 3: #081800 #0083ff #ffbd6a #ffffff
+	dw $0061, $7c1f, $36ff, $7fff ; pal 4: #081800 #ff00ff #ffbd6a #ffffff
+	dw $0260, $7e80, $0061, $7fff ; pal 5: #009c00 #00a4ff #081800 #ffffff
+	dw $1100, $19d8, $0061, $7fff ; pal 6: #004120 #c57331 #081800 #ffffff
+	dw $7fff, $03ee, $0340, $0204 ; pal 7: #ffffff #73ff00 #00d500 #208300
+Lz_1a_7119:
+	INCBIN "data/bank_01a/d_7119.bin" ; $7119, 1636 bytes
+Lz_1a_777d:
+	INCBIN "data/bank_01a/d_777d.bin" ; $777d, 180 bytes
+Lz_1a_7831:
+	INCBIN "data/bank_01a/d_7831.bin" ; $7831, 129 bytes
+Lz_1a_78b2:
+	INCBIN "data/bank_01a/d_78b2.bin" ; $78b2, 58 bytes
+Lz_1a_78ec:
+	INCBIN "data/bank_01a/d_78ec.bin" ; $78ec, 67 bytes
+Data_1a_792f:
+	; $792f, 22 bytes (bytes:16)
+	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
+	db $10, $11, $12, $0b, $0c, $0d ; 0x10
 RunCharDataConfirmScreen:
 	farcall InitCharDataScreenVideo ; $7945
 	farcall LoadCharDataScreenTilemaps ; $7948
 	wram_bank $01 ; $794b
-	ld hl, $7e53 ; $7951
+	ld hl, Lz_1a_7e53 ; $7951
 	ld de, $dea0 ; $7954
 	call DecompressData ; $7957
 	ld hl, $dea0 ; $795a
 	ld bc, $002a ; $795d
 	call CopyBank1ToBank3BufferAlt ; $7960
 	wram_bank $01 ; $7963
-	ld hl, $7e75 ; $7969
+	ld hl, Lz_1a_7e75 ; $7969
 	ld de, $dea0 ; $796c
 	call DecompressData ; $796f
 	ld hl, $dea0 ; $7972
 	ld bc, $002a ; $7975
 	call CopyBank1ToBank2BufferAlt ; $7978
-	ld hl, $7e46 ; $797b
+	ld hl, Data_1a_7e46 ; $797b
 	ld bc, $dea0 ; $797e
 	call ApplyTilemapPatchList_1a ; $7981
 	farcall DrawCharDataConfirmPrompt ; $7984
@@ -3909,32 +3973,32 @@ CharDataScreen_BuildStats:
 	farcall RefreshMainCharacterStats ; $7b81
 	ret ; $7b84
 CharDataScreen_LoadGfx:
-	ld hl, $7e7e ; $7b85
+	ld hl, Palette_1a_7e7e ; $7b85
 	ld de, $0c02 ; $7b88
 	call LoadPaletteShadow ; $7b8b
 	wram_bank $01 ; $7b8e
-	ld hl, $7e8e ; $7b94
+	ld hl, Lz_1a_7e8e ; $7b94
 	ld de, $d000 ; $7b97
 	call DecompressData ; $7b9a
 	ld hl, $d000 ; $7b9d
 	ld de, $a780 ; $7ba0
 	ld c, $02 ; $7ba3
 	call QueueVRAMCopy ; $7ba5
-	ld hl, $7e99 ; $7ba8
+	ld hl, Lz_1a_7e99 ; $7ba8
 	ld de, $d000 ; $7bab
 	call DecompressData ; $7bae
 	ld hl, $d000 ; $7bb1
 	ld de, $a7a0 ; $7bb4
 	ld c, $02 ; $7bb7
 	call QueueVRAMCopy ; $7bb9
-	ld hl, $7ea4 ; $7bbc
+	ld hl, Lz_1a_7ea4 ; $7bbc
 	ld de, $d000 ; $7bbf
 	call DecompressData ; $7bc2
 	ld hl, $d000 ; $7bc5
 	ld de, $a7c0 ; $7bc8
 	ld c, $02 ; $7bcb
 	call QueueVRAMCopy ; $7bcd
-	ld hl, $7eaf ; $7bd0
+	ld hl, Lz_1a_7eaf ; $7bd0
 	ld de, $d000 ; $7bd3
 	call DecompressData ; $7bd6
 	ld hl, $d000 ; $7bd9
@@ -4256,7 +4320,9 @@ ComputeStatArrowSpriteX:
 	add a, d ; $7e31
 	ld d, a ; $7e32
 	ret ; $7e33
-	INCBIN "data/bank_01a/d_7e34.bin" ; $7e34, 4 bytes
+Data_1a_7e34:
+	; $7e34, 4 bytes (bytes:4)
+	db $f0, $f8, $00, $08 ; 0x00
 OffsetStatArrowSpriteX:
 	bit 7, a ; $7e38
 	jr nz, Label_1a_7e41 ; $7e3a
@@ -4269,5 +4335,24 @@ Label_1a_7e41:
 	add a, d ; $7e43
 	ld d, a ; $7e44
 	ret ; $7e45
-	INCBIN "data/bank_01a/d_7e46.bin" ; $7e46, 116 bytes
+Data_1a_7e46:
+	; $7e46, 13 bytes (bytes:13)
+	db $00, $00, $00, $0e, $00, $20, $0e, $0e, $00, $40, $1c, $0e, $ff ; 0x00
+Lz_1a_7e53:
+	INCBIN "data/bank_01a/d_7e53.bin" ; $7e53, 34 bytes
+Lz_1a_7e75:
+	INCBIN "data/bank_01a/d_7e75.bin" ; $7e75, 9 bytes
+Palette_1a_7e7e:
+	; $7e7e, 16 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7e00, $7fff, $192c, $63f8 ; pal 0: #0083ff #ffffff #624a31 #c5ffc5
+	dw $7e00, $190a, $0000, $7fff ; pal 1: #0083ff #524131 #000000 #ffffff
+Lz_1a_7e8e:
+	INCBIN "data/bank_01a/d_7e8e.bin" ; $7e8e, 11 bytes
+Lz_1a_7e99:
+	INCBIN "data/bank_01a/d_7e99.bin" ; $7e99, 11 bytes
+Lz_1a_7ea4:
+	INCBIN "data/bank_01a/d_7ea4.bin" ; $7ea4, 11 bytes
+Lz_1a_7eaf:
+	INCBIN "data/bank_01a/d_7eaf.bin" ; $7eaf, 11 bytes
 	; $7eba, 326 bytes fill to bank end (linker-padded)

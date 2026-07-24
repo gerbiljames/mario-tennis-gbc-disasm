@@ -153,7 +153,7 @@ LoadCharDataScreenPageGraphics:
 	ld c, $0a ; $418a
 	call QueueVRAMCopy ; $418c
 	wram_bank $01 ; $418f
-	ld hl, $667f ; $4195
+	ld hl, Lz_1d_667f ; $4195
 	ld de, $d000 ; $4198
 	call DecompressData ; $419b
 	ld hl, $d000 ; $419e
@@ -161,7 +161,7 @@ LoadCharDataScreenPageGraphics:
 	ld c, $0a ; $41a4
 	call QueueVRAMCopy ; $41a6
 	wram_bank $01 ; $41a9
-	ld hl, $6721 ; $41af
+	ld hl, Lz_1d_6721 ; $41af
 	ld de, $d000 ; $41b2
 	call DecompressData ; $41b5
 	ld hl, $d000 ; $41b8
@@ -169,7 +169,7 @@ LoadCharDataScreenPageGraphics:
 	ld c, $08 ; $41be
 	call QueueVRAMCopy ; $41c0
 	wram_bank $01 ; $41c3
-	ld hl, $67ab ; $41c9
+	ld hl, Lz_1d_67ab ; $41c9
 	ld de, $d000 ; $41cc
 	call DecompressData ; $41cf
 	ld hl, $d000 ; $41d2
@@ -1438,7 +1438,7 @@ Label_1d_4c3f:
 	ld b, $0e ; $4c48
 	ld c, $14 ; $4c4a
 	call QueueSpriteTemplate ; $4c4c
-	ld de, $6810 ; $4c4f
+	ld de, SpriteTemplate_1d_6810 ; $4c4f
 	call BobArrowSpriteRight ; $4c52
 	ld hl, SpriteTemplate_1d_670c ; $4c55
 	ld b, $0e ; $4c58
@@ -1483,7 +1483,9 @@ BobArrowSpriteRight:
 	add a, d ; $4c99
 	ld d, a ; $4c9a
 	ret ; $4c9b
-	INCBIN "data/bank_01d/d_4c9c.bin" ; $4c9c, 16 bytes
+Data_1d_4c9c:
+	; $4c9c, 16 bytes (bytes:16)
+	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 RunDrillResultInputLoop:
 	wram_bank $06 ; $4cac
 	ld a, [$d142] ; $4cb2
@@ -3061,7 +3063,10 @@ Label_1d_5a4e:
 	ld a, [hl] ; $5a4e
 	ld [de], a ; $5a4f
 	ret ; $5a50
-	INCBIN "data/bank_01d/d_5a51.bin" ; $5a51, 18 bytes
+Data_1d_5a51:
+	; $5a51, 18 bytes (bytes:16)
+	db $f9, $fa, $e1, $f1, $e2, $f2, $e3, $f3, $e4, $f4, $e5, $f5, $e6, $f6, $e7, $f7 ; 0x00
+	db $e8, $f8 ; 0x10
 PromptCharDataConfirm:
 	push af ; $5a63
 	call ClearFrameTasks ; $5a64
@@ -3129,12 +3134,12 @@ DrawCharDataConfirmCursor:
 	or a, a ; $5b03
 	jr nz, Label_1d_5b10 ; $5b04
 	ld bc, $0fd4 ; $5b06
-	ld de, $7a0c ; $5b09
+	ld de, Data_1d_7a0c ; $5b09
 	call QueueSprite ; $5b0c
 	ret ; $5b0f
 Label_1d_5b10:
 	ld bc, $0fd4 ; $5b10
-	ld de, $7a14 ; $5b13
+	ld de, Data_1d_7a14 ; $5b13
 	call QueueSprite ; $5b16
 	ret ; $5b19
 BuildCharDataConfirmScreen:
@@ -3262,6 +3267,7 @@ SpriteTemplate_1d_666a:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
+Lz_1d_667f:
 	INCBIN "data/bank_01d/d_667f.bin" ; $667f, 141 bytes
 SpriteTemplate_1d_670c:
 	; $670c, 21 bytes (sprite_template)
@@ -3271,6 +3277,7 @@ SpriteTemplate_1d_670c:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
+Lz_1d_6721:
 	INCBIN "data/bank_01d/d_6721.bin" ; $6721, 121 bytes
 SpriteTemplate_1d_679a:
 	; $679a, 17 bytes (sprite_template)
@@ -3279,7 +3286,18 @@ SpriteTemplate_1d_679a:
 	oam_sprite $10, $18, $04, $00
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
-	INCBIN "data/bank_01d/d_67ab.bin" ; $67ab, 112 bytes
+Lz_1d_67ab:
+	INCBIN "data/bank_01d/d_67ab.bin" ; $67ab, 101 bytes
+SpriteTemplate_1d_6810:
+	; $6810, 11 bytes (sprite_template)
+	oam_sprite $7f, $90, $c0, $20
+	oam_sprite_end
+	db $40
+	db $00
+	db $80
+	db $00
+	db $00
+	db $00
 SpriteTemplate_1d_681b:
 	; $681b, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3472,7 +3490,7 @@ BuildExpDistributionScreen:
 	ld c, $02 ; $69d7
 	call QueueVRAMCopy ; $69d9
 	wram_bank $01 ; $69dc
-	ld hl, $79c1 ; $69e2
+	ld hl, Lz_1d_79c1 ; $69e2
 	ld de, $d000 ; $69e5
 	call DecompressData ; $69e8
 	ld hl, $d000 ; $69eb
@@ -3480,7 +3498,7 @@ BuildExpDistributionScreen:
 	ld c, $14 ; $69f1
 	call QueueVRAMCopy ; $69f3
 	wram_bank $01 ; $69f6
-	ld hl, $7a63 ; $69fc
+	ld hl, Lz_1d_7a63 ; $69fc
 	ld de, $d000 ; $69ff
 	call DecompressData ; $6a02
 	ld hl, $d000 ; $6a05
@@ -3488,7 +3506,7 @@ BuildExpDistributionScreen:
 	ld c, $18 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
 	wram_bank $01 ; $6a10
-	ld hl, $7b8a ; $6a16
+	ld hl, Lz_1d_7b8a ; $6a16
 	ld de, $d000 ; $6a19
 	call DecompressData ; $6a1c
 	ld hl, $d000 ; $6a1f
@@ -3507,7 +3525,7 @@ BuildExpDistributionScreen:
 	ld c, $0c ; $6a48
 	call QueueVRAMCopy ; $6a4a
 	wram_bank $01 ; $6a4d
-	ld hl, $7949 ; $6a53
+	ld hl, Lz_1d_7949 ; $6a53
 	ld de, $d000 ; $6a56
 	call DecompressData ; $6a59
 	ld hl, $d000 ; $6a5c
@@ -3515,7 +3533,7 @@ BuildExpDistributionScreen:
 	ld c, $04 ; $6a62
 	call QueueVRAMCopy ; $6a64
 	wram_bank $01 ; $6a67
-	ld hl, $7983 ; $6a6d
+	ld hl, Lz_1d_7983 ; $6a6d
 	ld de, $d000 ; $6a70
 	call DecompressData ; $6a73
 	ld hl, $d000 ; $6a76
@@ -5215,7 +5233,10 @@ DrawExpCharCursorTask:
 	ld bc, $0e00 ; $773f
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
-	INCBIN "data/bank_01d/d_7746.bin" ; $7746, 26 bytes
+Data_1d_7746:
+	; $7746, 26 bytes (bytes:16)
+	db $00, $01, $02, $03, $04, $06, $08, $0a, $0d, $11, $16, $1d, $24, $2b, $32, $37 ; 0x00
+	db $3b, $3e, $40, $42, $44, $45, $46, $47, $48, $00 ; 0x10
 DrawExpBarFillMarkersTask:
 	wram_bank $06 ; $7760
 	ld de, $3801 ; $7766
@@ -5276,12 +5297,14 @@ SpriteTemplate_1d_7930:
 	oam_sprite $10, $18, $08, $00
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
+Lz_1d_7949:
 	INCBIN "data/bank_01d/d_7949.bin" ; $7949, 49 bytes
 SpriteTemplate_1d_797a:
 	; $797a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
+Lz_1d_7983:
 	INCBIN "data/bank_01d/d_7983.bin" ; $7983, 49 bytes
 SpriteTemplate_1d_79b4:
 	; $79b4, 13 bytes (sprite_template)
@@ -5289,7 +5312,15 @@ SpriteTemplate_1d_79b4:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 408 bytes
+Lz_1d_79c1:
+	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 75 bytes
+Data_1d_7a0c:
+	; $7a0c, 8 bytes (bytes:8)
+	db $4c, $4e, $7c, $a0, $f2, $99, $58, $fe ; 0x00
+Data_1d_7a14:
+	INCBIN "data/bank_01d/d_7a14.bin" ; $7a14, 79 bytes
+Lz_1d_7a63:
+	INCBIN "data/bank_01d/d_7a63.bin" ; $7a63, 246 bytes
 SpriteTemplate_1d_7b59:
 	; $7b59, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5305,6 +5336,7 @@ SpriteTemplate_1d_7b59:
 	oam_sprite $10, $30, $14, $00
 	oam_sprite $20, $30, $16, $00
 	oam_sprite_end
+Lz_1d_7b8a:
 	INCBIN "data/bank_01d/d_7b8a.bin" ; $7b8a, 243 bytes
 SpriteTemplate_1d_7c7d:
 	; $7c7d, 49 bytes (sprite_template)

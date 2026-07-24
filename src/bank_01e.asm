@@ -1291,7 +1291,9 @@ Label_1e_4af9:
 	add a, $80 ; $4b20
 	ld [hl+], a ; $4b22
 	ret ; $4b23
-	INCBIN "data/bank_01e/d_4b24.bin" ; $4b24, 8 bytes
+Data_1e_4b24:
+	; $4b24, 8 bytes (bytes:8)
+	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 RunContinuePrompt:
 	call DrawContinuePromptCursor ; $4b2c
 	call AdvanceFrame ; $4b2f
@@ -2015,7 +2017,9 @@ Label_1e_59a8:
 	ld [hl+], a ; $59b0
 	ld [hl], d ; $59b1
 	ret ; $59b2
-	INCBIN "data/bank_01e/d_59b3.bin" ; $59b3, 8 bytes
+Data_1e_59b3:
+	; $59b3, 8 bytes (bytes:8)
+	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawNextExpAwardMessage:
 	wram_bank $06 ; $59bb
 	ld a, [$d024] ; $59c1
@@ -2094,7 +2098,9 @@ Label_1e_5a3f:
 	farcall UploadGlyphBuffer ; $5a3f
 	xor a, a ; $5a42
 	ret ; $5a43
-	INCBIN "data/bank_01e/d_5a44.bin" ; $5a44, 10 bytes
+Data_1e_5a44:
+	; $5a44, 10 bytes (bytes:10)
+	db $c9, $04, $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
 DrawExpTotalDigits:
 	wram_bank $06 ; $5a4e
 	ld hl, $d005 ; $5a54
@@ -2637,7 +2643,10 @@ Label_1e_673a:
 	nop ; $6750
 	nop ; $6751
 	nop ; $6752
-	INCBIN "data/bank_01e/d_6753.bin" ; $6753, 24 bytes
+Data_1e_6753:
+	; $6753, 24 bytes (bytes:16)
+	db $f4, $01, $00, $00, $00, $00, $00, $00, $58, $02, $bc, $02, $20, $03, $00, $00 ; 0x00
+	db $00, $00, $e8, $03, $e8, $03, $e8, $03 ; 0x10
 	ld [hl-], a ; $676b
 	nop ; $676c
 	ld h, h ; $676d
@@ -2682,7 +2691,32 @@ Label_1e_673a:
 	ld bc, $02bc ; $6794
 	inc l ; $6797
 	ld bc, $0190 ; $6798
-	INCBIN "data/bank_01e/d_679b.bin" ; $679b, 108 bytes
+Data_1e_679b:
+	; $679b, 12 bytes (bytes:12)
+	db $f4, $01, $e8, $03, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+Data_1e_67a7:
+	; $67a7, 48 bytes (bytes:16)
+	db $32, $00, $32, $00, $32, $00, $32, $00, $64, $00, $64, $00, $64, $00, $64, $00 ; 0x00
+	db $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00 ; 0x10
+	db $90, $01, $90, $01, $90, $01, $90, $01, $bc, $02, $bc, $02, $bc, $02, $bc, $02 ; 0x20
+Data_1e_67d7:
+	; $67d7, 8 bytes (bytes:8)
+	db $02, $03, $04, $05, $06, $07, $08, $00 ; 0x00
+Data_1e_67df:
+	; $67df, 8 bytes (bytes:8)
+	db $01, $02, $04, $08, $0c, $10, $14, $00 ; 0x00
+Data_1e_67e7:
+	; $67e7, 8 bytes (bytes:8)
+	db $01, $02, $03, $06, $09, $0c, $0f, $00 ; 0x00
+Data_1e_67ef:
+	; $67ef, 8 bytes (bytes:8)
+	db $01, $02, $03, $04, $05, $06, $07, $00 ; 0x00
+Data_1e_67f7:
+	; $67f7, 8 bytes (bytes:8)
+	db $01, $02, $03, $03, $04, $04, $05, $00 ; 0x00
+Data_1e_67ff:
+	; $67ff, 8 bytes (bytes:8)
+	db $01, $02, $03, $03, $04, $04, $05, $00 ; 0x00
 GetScoreBonus:
 	ld de, $0000 ; $6807
 	ld a, [$c7bc] ; $680a
@@ -2740,7 +2774,7 @@ ComputeMatchStatsReward:
 	push hl ; $6857
 	call GetPlayerExpTier ; $6858
 	pop de ; $685b
-	ld hl, $67d7 ; $685c
+	ld hl, Data_1e_67d7 ; $685c
 	ld a, [wTotalGamesWonInMatch] ; $685f
 	call AccumulateStatExp ; $6862
 	ld l, e ; $6865
@@ -2751,34 +2785,34 @@ ComputeMatchStatsReward:
 	push hl ; $686d
 	call GetOpponentExpTier ; $686e
 	pop de ; $6871
-	ld hl, $67df ; $6872
+	ld hl, Data_1e_67df ; $6872
 	ld a, [wCharacter1ServiceAces] ; $6875
 	call AccumulateStatExp ; $6878
-	ld hl, $67df ; $687b
+	ld hl, Data_1e_67df ; $687b
 	ld a, [wCharacter3ServiceAces] ; $687e
 	call AccumulateStatExp ; $6881
-	ld hl, $67e7 ; $6884
+	ld hl, Data_1e_67e7 ; $6884
 	ld a, [wCharacter1ReturnAces] ; $6887
 	call AccumulateStatExp ; $688a
-	ld hl, $67e7 ; $688d
+	ld hl, Data_1e_67e7 ; $688d
 	ld a, [wCharacter3ReturnAces] ; $6890
 	call AccumulateStatExp ; $6893
-	ld hl, $67ef ; $6896
+	ld hl, Data_1e_67ef ; $6896
 	ld a, [wCharacter1SmashAces] ; $6899
 	call AccumulateStatExp ; $689c
-	ld hl, $67ef ; $689f
+	ld hl, Data_1e_67ef ; $689f
 	ld a, [wCharacter3SmashAces] ; $68a2
 	call AccumulateStatExp ; $68a5
-	ld hl, $67f7 ; $68a8
+	ld hl, Data_1e_67f7 ; $68a8
 	ld a, [wCharacter1LobShotWinners] ; $68ab
 	call AccumulateStatExp ; $68ae
-	ld hl, $67f7 ; $68b1
+	ld hl, Data_1e_67f7 ; $68b1
 	ld a, [wCharacter3LobShotWinners] ; $68b4
 	call AccumulateStatExp ; $68b7
-	ld hl, $67ff ; $68ba
+	ld hl, Data_1e_67ff ; $68ba
 	ld a, [wCharacter1DropShotWinners] ; $68bd
 	call AccumulateStatExp ; $68c0
-	ld hl, $67ff ; $68c3
+	ld hl, Data_1e_67ff ; $68c3
 	ld a, [wCharacter3DropShotWinners] ; $68c6
 	call AccumulateStatExp ; $68c9
 	ld l, e ; $68cc
@@ -2878,7 +2912,9 @@ LookupExpTierForChar:
 	ld h, a ; $6958
 	ld c, [hl] ; $6959
 	ret ; $695a
-	INCBIN "data/bank_01e/d_695b.bin" ; $695b, 10 bytes
+Data_1e_695b:
+	; $695b, 10 bytes (bytes:10)
+	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
 Label_1e_6965:
 	dec c ; $6965
 	ret ; $6966
@@ -3611,7 +3647,10 @@ Func_1e_6d82:
 	db $06 ; $6d95
 	nop ; $6d96
 	jr Label_1e_6db9 ; $6d97
-	INCBIN "data/bank_01e/d_6d99.bin" ; $6d99, 32 bytes
+Data_1e_6d99:
+	; $6d99, 32 bytes (bytes:16)
+	db $18, $40, $18, $60, $18, $80, $18, $a0, $18, $c0, $18, $e0, $18, $00, $19, $20 ; 0x00
+	db $19, $40, $19, $60, $19, $80, $19, $a0, $19, $c0, $19, $e0, $19, $00, $1a, $20 ; 0x10
 Label_1e_6db9:
 	ld a, [de] ; $6db9
 	ld b, b ; $6dba
@@ -3660,7 +3699,10 @@ Label_1e_6de5:
 	nop ; $6de9
 	nop ; $6dea
 	jr Label_1e_6e0d ; $6deb
-	INCBIN "data/bank_01e/d_6ded.bin" ; $6ded, 32 bytes
+Data_1e_6ded:
+	; $6ded, 32 bytes (bytes:16)
+	db $18, $00, $00, $60, $18, $80, $18, $00, $00, $c0, $18, $e0, $18, $00, $00, $20 ; 0x00
+	db $19, $40, $19, $00, $00, $80, $19, $a0, $19, $00, $00, $e0, $19, $00, $1a, $00 ; 0x10
 Label_1e_6e0d:
 	nop ; $6e0d
 	ld b, b ; $6e0e
@@ -3682,7 +3724,7 @@ ApplyRewardUnlockFlags:
 	ld a, c ; $6e20
 	add a, a ; $6e21
 	add a, a ; $6e22
-	ld hl, $6e7d ; $6e23
+	ld hl, Data_1e_6e7d ; $6e23
 	add a, l ; $6e26
 	ld l, a ; $6e27
 	jr nc, Label_1e_6e2b ; $6e28
@@ -3718,7 +3760,7 @@ SetRewardUnlockFlag:
 	push hl ; $6e50
 	ld a, c ; $6e51
 	add a, a ; $6e52
-	ld hl, $6e63 ; $6e53
+	ld hl, Data_1e_6e63 ; $6e53
 	add a, l ; $6e56
 	ld l, a ; $6e57
 	jr nc, Label_1e_6e5b ; $6e58
@@ -3730,7 +3772,16 @@ Label_1e_6e5b:
 	call SetGameFlag ; $6e5e
 	pop hl ; $6e61
 	ret ; $6e62
-	INCBIN "data/bank_01e/d_6e63.bin" ; $6e63, 78 bytes
+Data_1e_6e63:
+	; $6e63, 26 bytes (bytes:16)
+	db $00, $14, $20, $14, $40, $14, $60, $14, $80, $14, $a0, $14, $c0, $14, $e0, $14 ; 0x00
+	db $00, $15, $20, $15, $40, $15, $60, $15, $80, $15 ; 0x10
+Data_1e_6e7d:
+	; $6e7d, 52 bytes (bytes:16)
+	db $60, $0a, $40, $08, $60, $0a, $40, $08, $60, $0a, $40, $08, $e0, $0a, $c0, $08 ; 0x00
+	db $e0, $0a, $c0, $08, $00, $09, $00, $00, $e0, $06, $00, $00, $e0, $07, $e0, $06 ; 0x10
+	db $c0, $06, $00, $00, $c0, $07, $c0, $06, $a0, $07, $00, $00, $a0, $06, $00, $00 ; 0x20
+	db $80, $07, $a0, $06 ; 0x30
 SetMinigameRecordSaveFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
 	cp a, $1d ; $6eb4
@@ -3933,7 +3984,7 @@ GetTrophyExpValue:
 	add a, a ; $6fec
 	add a, a ; $6fed
 	add a, b ; $6fee
-	ld hl, $67a7 ; $6fef
+	ld hl, Data_1e_67a7 ; $6fef
 	add a, l ; $6ff2
 	ld l, a ; $6ff3
 	jr nc, Label_1e_6ff7 ; $6ff4
@@ -4119,7 +4170,7 @@ ComputeTrophyExpForGroup:
 	wram_bank $06 ; $7105
 	ld a, c ; $710b
 	ld [$d038], a ; $710c
-	ld hl, $7257 ; $710f
+	ld hl, Data_1e_7257 ; $710f
 	add a, l ; $7112
 	ld l, a ; $7113
 	jr nc, Label_1e_7117 ; $7114
@@ -4127,7 +4178,7 @@ ComputeTrophyExpForGroup:
 Label_1e_7117:
 	ld b, [hl] ; $7117
 	ld a, c ; $7118
-	ld hl, $725d ; $7119
+	ld hl, Data_1e_725d ; $7119
 	add a, l ; $711c
 	ld l, a ; $711d
 	jr nc, Label_1e_7121 ; $711e
@@ -4146,7 +4197,7 @@ Label_1e_7121:
 	add a, a ; $7132
 	add a, a ; $7133
 	add a, a ; $7134
-	ld hl, $7227 ; $7135
+	ld hl, Data_1e_7227 ; $7135
 	add a, l ; $7138
 	ld l, a ; $7139
 	jr nc, Label_1e_713d ; $713a
@@ -4186,7 +4237,7 @@ Label_1e_7163:
 	add a, a ; $716f
 	add a, a ; $7170
 	add a, a ; $7171
-	ld hl, $7229 ; $7172
+	ld hl, Data_1e_7229 ; $7172
 	add a, l ; $7175
 	ld l, a ; $7176
 	jr nc, Label_1e_717a ; $7177
@@ -4225,7 +4276,7 @@ Label_1e_71a0:
 	add a, a ; $71aa
 	add a, a ; $71ab
 	add a, a ; $71ac
-	ld hl, $722b ; $71ad
+	ld hl, Data_1e_722b ; $71ad
 	add a, l ; $71b0
 	ld l, a ; $71b1
 	jr nc, Label_1e_71b5 ; $71b2
@@ -4265,7 +4316,7 @@ Label_1e_71db:
 	add a, a ; $71e7
 	add a, a ; $71e8
 	add a, a ; $71e9
-	ld hl, $722d ; $71ea
+	ld hl, Data_1e_722d ; $71ea
 	add a, l ; $71ed
 	ld l, a ; $71ee
 	jr nc, Label_1e_71f2 ; $71ef
@@ -4306,7 +4357,26 @@ Label_1e_7218:
 	pop de ; $7224
 	pop af ; $7225
 	ret ; $7226
-	INCBIN "data/bank_01e/d_7227.bin" ; $7227, 60 bytes
+Data_1e_7227:
+	; $7227, 2 bytes (bytes:2)
+	db $00, $11 ; 0x00
+Data_1e_7229:
+	; $7229, 2 bytes (bytes:2)
+	db $20, $11 ; 0x00
+Data_1e_722b:
+	; $722b, 2 bytes (bytes:2)
+	db $40, $11 ; 0x00
+Data_1e_722d:
+	; $722d, 42 bytes (bytes:16)
+	db $60, $11, $80, $11, $a0, $11, $c0, $11, $e0, $11, $00, $12, $20, $12, $40, $12 ; 0x00
+	db $60, $12, $80, $12, $a0, $12, $c0, $12, $e0, $12, $00, $13, $20, $13, $40, $13 ; 0x10
+	db $60, $13, $80, $13, $a0, $13, $c0, $13, $e0, $13 ; 0x20
+Data_1e_7257:
+	; $7257, 6 bytes (bytes:6)
+	db $01, $02, $03, $04, $08, $0c ; 0x00
+Data_1e_725d:
+	; $725d, 6 bytes (bytes:6)
+	db $03, $03, $03, $0c, $0c, $0c ; 0x00
 ShowGameProgressScreen:
 	push de ; $7263
 	ld de, $0720 ; $7264
@@ -4598,7 +4668,9 @@ RewardSubHandlersC_1e:
 	jr Label_1e_7487 ; $746a
 	ds 1, $ff ; $746c, fill
 	dec c ; $746d
-	INCBIN "data/bank_01e/d_746e.bin" ; $746e, 6 bytes
+Data_1e_746e:
+	; $746e, 6 bytes (bytes:6)
+	db $10, $13, $16, $19, $1c, $ff ; 0x00
 	add hl, bc ; $7474
 	ld a, [bc] ; $7475
 	rst Rst38 ; $7476

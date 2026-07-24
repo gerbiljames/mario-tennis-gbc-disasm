@@ -249,56 +249,56 @@ CharDataScreen_BuildTilemap:
 CharDataScreen_LoadUIGraphics:
 	call CharDataScreen_LoadScreen ; $4208
 	wram_bank $01 ; $420b
-	ld hl, $682e ; $4211
+	ld hl, Lz_1c_682e ; $4211
 	ld de, $d3e0 ; $4214
 	call DecompressData ; $4217
 	ld hl, $d3e0 ; $421a
 	ld bc, $0021 ; $421d
 	call CopyWram1ToWram3 ; $4220
 	wram_bank $01 ; $4223
-	ld hl, $6848 ; $4229
+	ld hl, Lz_1c_6848 ; $4229
 	ld de, $d3e0 ; $422c
 	call DecompressData ; $422f
 	ld hl, $d3e0 ; $4232
 	ld bc, $0021 ; $4235
 	call CopyWram1ToWram2 ; $4238
 	wram_bank $01 ; $423b
-	ld hl, $684f ; $4241
+	ld hl, Lz_1c_684f ; $4241
 	ld de, $d410 ; $4244
 	call DecompressData ; $4247
 	ld hl, $d410 ; $424a
 	ld bc, $0018 ; $424d
 	call CopyWram1ToWram3 ; $4250
 	wram_bank $01 ; $4253
-	ld hl, $686b ; $4259
+	ld hl, Lz_1c_686b ; $4259
 	ld de, $d410 ; $425c
 	call DecompressData ; $425f
 	ld hl, $d410 ; $4262
 	ld bc, $0018 ; $4265
 	call CopyWram1ToWram2 ; $4268
 	wram_bank $01 ; $426b
-	ld hl, $67fe ; $4271
+	ld hl, Lz_1c_67fe ; $4271
 	ld de, $d3a0 ; $4274
 	call DecompressData ; $4277
 	ld hl, $d3a0 ; $427a
 	ld bc, $0033 ; $427d
 	call CopyWram1ToWram3 ; $4280
 	wram_bank $01 ; $4283
-	ld hl, $6825 ; $4289
+	ld hl, Lz_1c_6825 ; $4289
 	ld de, $d3a0 ; $428c
 	call DecompressData ; $428f
 	ld hl, $d3a0 ; $4292
 	ld bc, $0033 ; $4295
 	call CopyWram1ToWram2 ; $4298
 	wram_bank $01 ; $429b
-	ld hl, $67da ; $42a1
+	ld hl, Lz_1c_67da ; $42a1
 	ld de, $d380 ; $42a4
 	call DecompressData ; $42a7
 	ld hl, $d380 ; $42aa
 	ld bc, $001e ; $42ad
 	call CopyWram1ToWram3 ; $42b0
 	wram_bank $01 ; $42b3
-	ld hl, $67f2 ; $42b9
+	ld hl, Lz_1c_67f2 ; $42b9
 	ld de, $d380 ; $42bc
 	call DecompressData ; $42bf
 	ld hl, $d380 ; $42c2
@@ -787,10 +787,10 @@ Label_1c_468d:
 	or a, a ; $4693
 	jr nz, Label_1c_468d ; $4694
 	call RestoreCharDataScreenRow ; $4696
-	ld hl, $57b6 ; $4699
+	ld hl, Data_1c_57b6 ; $4699
 	ld bc, $d240 ; $469c
 	call BlitTilemapRunsFromTable ; $469f
-	ld hl, $58cb ; $46a2
+	ld hl, Data_1c_58cb ; $46a2
 	ld bc, $d310 ; $46a5
 	call BlitTilemapRunsFromTable ; $46a8
 	wram_bank $06 ; $46ab
@@ -798,16 +798,16 @@ Label_1c_468d:
 	ld [$d026], a ; $46b3
 	call FlushCharDataTilemaps ; $46b6
 	call RestoreCharDataScreenRow ; $46b9
-	ld hl, $571b ; $46bc
+	ld hl, Data_1c_571b ; $46bc
 	ld bc, $d240 ; $46bf
 	call BlitTilemapRunsFromTable ; $46c2
-	ld hl, $57a9 ; $46c5
+	ld hl, Data_1c_57a9 ; $46c5
 	ld bc, $d280 ; $46c8
 	call BlitTilemapRunsFromTable ; $46cb
-	ld hl, $581c ; $46ce
+	ld hl, Data_1c_581c ; $46ce
 	ld bc, $d2d0 ; $46d1
 	call BlitTilemapRunsFromTable ; $46d4
-	ld hl, $58be ; $46d7
+	ld hl, Data_1c_58be ; $46d7
 	ld bc, $d310 ; $46da
 	call BlitTilemapRunsFromTable ; $46dd
 	wram_bank $06 ; $46e0
@@ -815,16 +815,16 @@ Label_1c_468d:
 	ld [$d026], a ; $46e8
 	call FlushCharDataTilemaps ; $46eb
 	call RestoreCharDataScreenRow ; $46ee
-	ld hl, $570e ; $46f1
+	ld hl, Data_1c_570e ; $46f1
 	ld bc, $d240 ; $46f4
 	call BlitTilemapRunsFromTable ; $46f7
-	ld hl, $5794 ; $46fa
+	ld hl, Data_1c_5794 ; $46fa
 	ld bc, $d280 ; $46fd
 	call BlitTilemapRunsFromTable ; $4700
-	ld hl, $580f ; $4703
+	ld hl, Data_1c_580f ; $4703
 	ld bc, $d2d0 ; $4706
 	call BlitTilemapRunsFromTable ; $4709
-	ld hl, $58a9 ; $470c
+	ld hl, Data_1c_58a9 ; $470c
 	ld bc, $d310 ; $470f
 	call BlitTilemapRunsFromTable ; $4712
 	wram_bank $06 ; $4715
@@ -832,16 +832,16 @@ Label_1c_468d:
 	ld [$d026], a ; $471d
 	call FlushCharDataTilemaps ; $4720
 	call RestoreCharDataScreenRow ; $4723
-	ld hl, $56f9 ; $4726
+	ld hl, Data_1c_56f9 ; $4726
 	ld bc, $d240 ; $4729
 	call BlitTilemapRunsFromTable ; $472c
-	ld hl, $5777 ; $472f
+	ld hl, Data_1c_5777 ; $472f
 	ld bc, $d280 ; $4732
 	call BlitTilemapRunsFromTable ; $4735
-	ld hl, $57fa ; $4738
+	ld hl, Data_1c_57fa ; $4738
 	ld bc, $d2d0 ; $473b
 	call BlitTilemapRunsFromTable ; $473e
-	ld hl, $588c ; $4741
+	ld hl, Data_1c_588c ; $4741
 	ld bc, $d310 ; $4744
 	call BlitTilemapRunsFromTable ; $4747
 	wram_bank $06 ; $474a
@@ -849,16 +849,16 @@ Label_1c_468d:
 	ld [$d026], a ; $4752
 	call FlushCharDataTilemaps ; $4755
 	call RestoreCharDataScreenRow ; $4758
-	ld hl, $56e4 ; $475b
+	ld hl, Data_1c_56e4 ; $475b
 	ld bc, $d240 ; $475e
 	call BlitTilemapRunsFromTable ; $4761
-	ld hl, $575a ; $4764
+	ld hl, Data_1c_575a ; $4764
 	ld bc, $d280 ; $4767
 	call BlitTilemapRunsFromTable ; $476a
-	ld hl, $57e5 ; $476d
+	ld hl, Data_1c_57e5 ; $476d
 	ld bc, $d2d0 ; $4770
 	call BlitTilemapRunsFromTable ; $4773
-	ld hl, $586b ; $4776
+	ld hl, Data_1c_586b ; $4776
 	ld bc, $d310 ; $4779
 	call BlitTilemapRunsFromTable ; $477c
 	wram_bank $06 ; $477f
@@ -866,16 +866,16 @@ Label_1c_468d:
 	ld [$d026], a ; $4787
 	call FlushCharDataTilemaps ; $478a
 	call RestoreCharDataScreenRow ; $478d
-	ld hl, $56cf ; $4790
+	ld hl, Data_1c_56cf ; $4790
 	ld bc, $d240 ; $4793
 	call BlitTilemapRunsFromTable ; $4796
-	ld hl, $573d ; $4799
+	ld hl, Data_1c_573d ; $4799
 	ld bc, $d280 ; $479c
 	call BlitTilemapRunsFromTable ; $479f
-	ld hl, $57d0 ; $47a2
+	ld hl, Data_1c_57d0 ; $47a2
 	ld bc, $d2d0 ; $47a5
 	call BlitTilemapRunsFromTable ; $47a8
-	ld hl, $5846 ; $47ab
+	ld hl, Data_1c_5846 ; $47ab
 	ld bc, $d310 ; $47ae
 	call BlitTilemapRunsFromTable ; $47b1
 	wram_bank $06 ; $47b4
@@ -883,16 +883,16 @@ Label_1c_468d:
 	ld [$d026], a ; $47bc
 	call FlushCharDataTilemaps ; $47bf
 	call RestoreCharDataScreenRow ; $47c2
-	ld hl, $56b9 ; $47c5
+	ld hl, Data_1c_56b9 ; $47c5
 	ld bc, $d240 ; $47c8
 	call BlitTilemapRunsFromTable ; $47cb
-	ld hl, $5720 ; $47ce
+	ld hl, Data_1c_5720 ; $47ce
 	ld bc, $d280 ; $47d1
 	call BlitTilemapRunsFromTable ; $47d4
-	ld hl, $57bb ; $47d7
+	ld hl, Data_1c_57bb ; $47d7
 	ld bc, $d2d0 ; $47da
 	call BlitTilemapRunsFromTable ; $47dd
-	ld hl, $5821 ; $47e0
+	ld hl, Data_1c_5821 ; $47e0
 	ld bc, $d310 ; $47e3
 	call BlitTilemapRunsFromTable ; $47e6
 	wram_bank $06 ; $47e9
@@ -903,42 +903,42 @@ Label_1c_468d:
 	call FlushCharDataTilemaps ; $47f7
 	call WaitFramesCmd ; $47fa
 	db $06 ; $47fd inline arg
-	ld hl, $58ea ; $47fe
+	ld hl, Data_1c_58ea ; $47fe
 	ld bc, $d370 ; $4801
 	call BlitTilemapRunsFromTable ; $4804
 	call FlushCharDataTilemaps ; $4807
-	ld hl, $58dd ; $480a
+	ld hl, Data_1c_58dd ; $480a
 	ld bc, $d370 ; $480d
 	call BlitTilemapRunsFromTable ; $4810
 	call FlushCharDataTilemaps ; $4813
-	ld hl, $58d0 ; $4816
+	ld hl, Data_1c_58d0 ; $4816
 	ld bc, $d370 ; $4819
 	call BlitTilemapRunsFromTable ; $481c
 	call FlushCharDataTilemaps ; $481f
-	ld hl, $590d ; $4822
+	ld hl, Data_1c_590d ; $4822
 	ld bc, $d3a0 ; $4825
 	call BlitTilemapRunsFromTable ; $4828
-	ld hl, $5928 ; $482b
+	ld hl, Data_1c_5928 ; $482b
 	ld bc, $d380 ; $482e
 	call BlitTilemapRunsFromTable ; $4831
 	wram_bank $06 ; $4834
 	ld a, $02 ; $483a
 	ld [$d027], a ; $483c
 	call FlushCharDataTilemaps ; $483f
-	ld hl, $5904 ; $4842
+	ld hl, Data_1c_5904 ; $4842
 	ld bc, $d3a0 ; $4845
 	call BlitTilemapRunsFromTable ; $4848
-	ld hl, $591f ; $484b
+	ld hl, Data_1c_591f ; $484b
 	ld bc, $d380 ; $484e
 	call BlitTilemapRunsFromTable ; $4851
 	wram_bank $06 ; $4854
 	ld a, $01 ; $485a
 	ld [$d027], a ; $485c
 	call FlushCharDataTilemaps ; $485f
-	ld hl, $58f7 ; $4862
+	ld hl, Data_1c_58f7 ; $4862
 	ld bc, $d3a0 ; $4865
 	call BlitTilemapRunsFromTable ; $4868
-	ld hl, $5912 ; $486b
+	ld hl, Data_1c_5912 ; $486b
 	ld bc, $d380 ; $486e
 	call BlitTilemapRunsFromTable ; $4871
 	wram_bank $06 ; $4874
@@ -948,28 +948,28 @@ Label_1c_468d:
 	ret ; $4881
 DrawCharStatsAndFlush:
 	call DrawCharStatRows ; $4882
-	ld hl, $58f7 ; $4885
+	ld hl, Data_1c_58f7 ; $4885
 	ld bc, $d3a0 ; $4888
 	call BlitTilemapRunsFromTable ; $488b
-	ld hl, $5912 ; $488e
+	ld hl, Data_1c_5912 ; $488e
 	ld bc, $d380 ; $4891
 	call BlitTilemapRunsFromTable ; $4894
 	call FlushCharDataTilemaps ; $4897
 	ret ; $489a
 DrawCharStatRows:
-	ld hl, $56b9 ; $489b
+	ld hl, Data_1c_56b9 ; $489b
 	ld bc, $d240 ; $489e
 	call BlitTilemapRunsFromTable ; $48a1
-	ld hl, $5720 ; $48a4
+	ld hl, Data_1c_5720 ; $48a4
 	ld bc, $d280 ; $48a7
 	call BlitTilemapRunsFromTable ; $48aa
-	ld hl, $57bb ; $48ad
+	ld hl, Data_1c_57bb ; $48ad
 	ld bc, $d2d0 ; $48b0
 	call BlitTilemapRunsFromTable ; $48b3
-	ld hl, $5821 ; $48b6
+	ld hl, Data_1c_5821 ; $48b6
 	ld bc, $d310 ; $48b9
 	call BlitTilemapRunsFromTable ; $48bc
-	ld hl, $58d0 ; $48bf
+	ld hl, Data_1c_58d0 ; $48bf
 	ld bc, $d370 ; $48c2
 	call BlitTilemapRunsFromTable ; $48c5
 	ret ; $48c8
@@ -1951,7 +1951,7 @@ Label_1c_4f26:
 	sub a, $30 ; $4f4e
 	rlca ; $4f50
 	ld c, a ; $4f51
-	ld de, $5c1c ; $4f52
+	ld de, Data_1c_5c1c ; $4f52
 	ld a, $02 ; $4f55
 	call GetStatDigitSpritePos ; $4f57
 	call QueueSprite ; $4f5a
@@ -1960,7 +1960,7 @@ Label_1c_4f5f:
 	ld a, l ; $4f5f
 	rlca ; $4f60
 	ld c, a ; $4f61
-	ld de, $591c ; $4f62
+	ld de, Data_1c_591c ; $4f62
 	ld a, $02 ; $4f65
 	call GetStatDigitSpritePos ; $4f67
 	call QueueSprite ; $4f6a
@@ -2000,7 +2000,7 @@ Label_1c_4f83:
 	sub a, $30 ; $4fab
 	rlca ; $4fad
 	ld c, a ; $4fae
-	ld de, $5c44 ; $4faf
+	ld de, Data_1c_5c44 ; $4faf
 	ld a, $03 ; $4fb2
 	call GetStatDigitSpritePos ; $4fb4
 	call QueueSprite ; $4fb7
@@ -2009,7 +2009,7 @@ Label_1c_4fbc:
 	ld a, l ; $4fbc
 	rlca ; $4fbd
 	ld c, a ; $4fbe
-	ld de, $5944 ; $4fbf
+	ld de, Data_1c_5944 ; $4fbf
 	ld a, $03 ; $4fc2
 	call GetStatDigitSpritePos ; $4fc4
 	call QueueSprite ; $4fc7
@@ -2040,6 +2040,7 @@ Label_1c_4fe2:
 	add a, e ; $4fe6
 	ld e, a ; $4fe7
 	ret ; $4fe8
+Gfx_1c_4fe9:
 	INCBIN "data/bank_01c/d_4fe9.bin" ; $4fe9, 96 bytes
 DrawRemainingPointsSprite:
 	wram_bank $06 ; $5049
@@ -2114,19 +2115,19 @@ Label_1c_50bd:
 	jr nz, Label_1c_50d8 ; $50d4
 	jr CharDataScreen_InputLoop ; $50d6
 Label_1c_50d8:
-	ld hl, $5665 ; $50d8
+	ld hl, Data_1c_5665 ; $50d8
 	call MoveCharDataScreenSelection ; $50db
 	jr CharDataScreen_InputLoop ; $50de
 Label_1c_50e0:
-	ld hl, $566a ; $50e0
+	ld hl, Data_1c_566a ; $50e0
 	call MoveCharDataScreenSelection ; $50e3
 	jr CharDataScreen_InputLoop ; $50e6
 Label_1c_50e8:
-	ld hl, $566f ; $50e8
+	ld hl, Data_1c_566f ; $50e8
 	call MoveCharDataScreenSelection ; $50eb
 	jr CharDataScreen_InputLoop ; $50ee
 Label_1c_50f0:
-	ld hl, $5674 ; $50f0
+	ld hl, Data_1c_5674 ; $50f0
 	call MoveCharDataScreenSelection ; $50f3
 	jp CharDataScreen_InputLoop ; $50f6
 Label_1c_50f9:
@@ -2217,10 +2218,10 @@ Label_1c_51a3:
 	call CharDataScreen_DrawStats ; $51b9
 	call RestoreCharDataScreenRow ; $51bc
 	call DrawCharStatRows ; $51bf
-	ld hl, $5904 ; $51c2
+	ld hl, Data_1c_5904 ; $51c2
 	ld bc, $d3a0 ; $51c5
 	call BlitTilemapRunsFromTable ; $51c8
-	ld hl, $591f ; $51cb
+	ld hl, Data_1c_591f ; $51cb
 	ld bc, $d380 ; $51ce
 	call BlitTilemapRunsFromTable ; $51d1
 	wram_bank $06 ; $51d4
@@ -2231,10 +2232,10 @@ Label_1c_51a3:
 	call FlushCharDataTilemaps ; $51e5
 	call RestoreCharDataScreenRow ; $51e8
 	call DrawCharStatRows ; $51eb
-	ld hl, $590d ; $51ee
+	ld hl, Data_1c_590d ; $51ee
 	ld bc, $d3a0 ; $51f1
 	call BlitTilemapRunsFromTable ; $51f4
-	ld hl, $5928 ; $51f7
+	ld hl, Data_1c_5928 ; $51f7
 	ld bc, $d380 ; $51fa
 	call BlitTilemapRunsFromTable ; $51fd
 	wram_bank $06 ; $5200
@@ -2251,34 +2252,34 @@ Label_1c_51a3:
 	call FlushCharDataTilemaps ; $5225
 	call RestoreCharDataScreenRow ; $5228
 	call DrawCharStatRows ; $522b
-	ld hl, $597b ; $522e
+	ld hl, Data_1c_597b ; $522e
 	ld bc, $d410 ; $5231
 	call BlitTilemapRunsFromTable ; $5234
 	call FlushCharDataTilemaps ; $5237
 	call RestoreCharDataScreenRow ; $523a
 	call DrawCharStatRows ; $523d
-	ld hl, $5943 ; $5240
+	ld hl, Data_1c_5943 ; $5240
 	ld bc, $d3e0 ; $5243
 	call BlitTilemapRunsFromTable ; $5246
-	ld hl, $596a ; $5249
+	ld hl, Data_1c_596a ; $5249
 	ld bc, $d410 ; $524c
 	call BlitTilemapRunsFromTable ; $524f
 	call FlushCharDataTilemaps ; $5252
 	call RestoreCharDataScreenRow ; $5255
 	call DrawCharStatRows ; $5258
-	ld hl, $593a ; $525b
+	ld hl, Data_1c_593a ; $525b
 	ld bc, $d3e0 ; $525e
 	call BlitTilemapRunsFromTable ; $5261
-	ld hl, $5959 ; $5264
+	ld hl, Data_1c_5959 ; $5264
 	ld bc, $d410 ; $5267
 	call BlitTilemapRunsFromTable ; $526a
 	call FlushCharDataTilemaps ; $526d
 	call RestoreCharDataScreenRow ; $5270
 	call DrawCharStatRows ; $5273
-	ld hl, $592d ; $5276
+	ld hl, Data_1c_592d ; $5276
 	ld bc, $d3e0 ; $5279
 	call BlitTilemapRunsFromTable ; $527c
-	ld hl, $5948 ; $527f
+	ld hl, Data_1c_5948 ; $527f
 	ld bc, $d410 ; $5282
 	call BlitTilemapRunsFromTable ; $5285
 	call FlushCharDataTilemaps ; $5288
@@ -2316,25 +2317,25 @@ Label_1c_52c1:
 	call LoadCharStats ; $52c9
 	call CharDataScreen_DrawStats ; $52cc
 	call DrawCharStatRows ; $52cf
-	ld hl, $593a ; $52d2
+	ld hl, Data_1c_593a ; $52d2
 	ld bc, $d3e0 ; $52d5
 	call BlitTilemapRunsFromTable ; $52d8
-	ld hl, $5959 ; $52db
+	ld hl, Data_1c_5959 ; $52db
 	ld bc, $d410 ; $52de
 	call BlitTilemapRunsFromTable ; $52e1
 	call FlushCharDataTilemaps ; $52e4
 	call RestoreCharDataScreenRow ; $52e7
 	call DrawCharStatRows ; $52ea
-	ld hl, $5943 ; $52ed
+	ld hl, Data_1c_5943 ; $52ed
 	ld bc, $d3e0 ; $52f0
 	call BlitTilemapRunsFromTable ; $52f3
-	ld hl, $596a ; $52f6
+	ld hl, Data_1c_596a ; $52f6
 	ld bc, $d410 ; $52f9
 	call BlitTilemapRunsFromTable ; $52fc
 	call FlushCharDataTilemaps ; $52ff
 	call RestoreCharDataScreenRow ; $5302
 	call DrawCharStatRows ; $5305
-	ld hl, $597b ; $5308
+	ld hl, Data_1c_597b ; $5308
 	ld bc, $d410 ; $530b
 	call BlitTilemapRunsFromTable ; $530e
 	call FlushCharDataTilemaps ; $5311
@@ -2350,10 +2351,10 @@ Label_1c_52c1:
 	call RegisterFrameTask ; $5330
 	call RestoreCharDataScreenRow ; $5333
 	call DrawCharStatRows ; $5336
-	ld hl, $590d ; $5339
+	ld hl, Data_1c_590d ; $5339
 	ld bc, $d3a0 ; $533c
 	call BlitTilemapRunsFromTable ; $533f
-	ld hl, $5928 ; $5342
+	ld hl, Data_1c_5928 ; $5342
 	ld bc, $d380 ; $5345
 	call BlitTilemapRunsFromTable ; $5348
 	wram_bank $06 ; $534b
@@ -2362,10 +2363,10 @@ Label_1c_52c1:
 	call FlushCharDataTilemaps ; $5356
 	call RestoreCharDataScreenRow ; $5359
 	call DrawCharStatRows ; $535c
-	ld hl, $5904 ; $535f
+	ld hl, Data_1c_5904 ; $535f
 	ld bc, $d3a0 ; $5362
 	call BlitTilemapRunsFromTable ; $5365
-	ld hl, $591f ; $5368
+	ld hl, Data_1c_591f ; $5368
 	ld bc, $d380 ; $536b
 	call BlitTilemapRunsFromTable ; $536e
 	wram_bank $06 ; $5371
@@ -2390,12 +2391,12 @@ DrawConfirmSelectionCursor:
 	or a, a ; $53ac
 	jr nz, Label_1c_53b9 ; $53ad
 	ld bc, $0fd4 ; $53af
-	ld de, $7a0c ; $53b2
+	ld de, Data_1c_7a0c ; $53b2
 	call QueueSprite ; $53b5
 	ret ; $53b8
 Label_1c_53b9:
 	ld bc, $0fd4 ; $53b9
-	ld de, $7a14 ; $53bc
+	ld de, Data_1c_7a14 ; $53bc
 	call QueueSprite ; $53bf
 	ret ; $53c2
 MoveCharDataScreenSelection:
@@ -2615,19 +2616,19 @@ Label_1c_556a:
 SetupCharDataScreen:
 	sound $0d ; $5572
 	call BackupCharDataScreenRow ; $5574
-	ld hl, $56b9 ; $5577
+	ld hl, Data_1c_56b9 ; $5577
 	ld bc, $d240 ; $557a
 	call BlitTilemapRunsFromTable ; $557d
-	ld hl, $5720 ; $5580
+	ld hl, Data_1c_5720 ; $5580
 	ld bc, $d280 ; $5583
 	call BlitTilemapRunsFromTable ; $5586
-	ld hl, $57bb ; $5589
+	ld hl, Data_1c_57bb ; $5589
 	ld bc, $d2d0 ; $558c
 	call BlitTilemapRunsFromTable ; $558f
-	ld hl, $5821 ; $5592
+	ld hl, Data_1c_5821 ; $5592
 	ld bc, $d310 ; $5595
 	call BlitTilemapRunsFromTable ; $5598
-	ld hl, $58d0 ; $559b
+	ld hl, Data_1c_58d0 ; $559b
 	ld bc, $d370 ; $559e
 	call BlitTilemapRunsFromTable ; $55a1
 	wram_bank $06 ; $55a4
@@ -2661,39 +2662,226 @@ SetupCharDataScreen:
 	call RegisterFrameTask ; $55fe
 	call RestoreCharDataScreenRow ; $5601
 	call DrawCharStatRows ; $5604
-	ld hl, $597b ; $5607
+	ld hl, Data_1c_597b ; $5607
 	ld bc, $d410 ; $560a
 	call BlitTilemapRunsFromTable ; $560d
 	call FlushCharDataTilemaps ; $5610
 	call RestoreCharDataScreenRow ; $5613
 	call DrawCharStatRows ; $5616
-	ld hl, $5943 ; $5619
+	ld hl, Data_1c_5943 ; $5619
 	ld bc, $d3e0 ; $561c
 	call BlitTilemapRunsFromTable ; $561f
-	ld hl, $596a ; $5622
+	ld hl, Data_1c_596a ; $5622
 	ld bc, $d410 ; $5625
 	call BlitTilemapRunsFromTable ; $5628
 	call FlushCharDataTilemaps ; $562b
 	call RestoreCharDataScreenRow ; $562e
 	call DrawCharStatRows ; $5631
-	ld hl, $593a ; $5634
+	ld hl, Data_1c_593a ; $5634
 	ld bc, $d3e0 ; $5637
 	call BlitTilemapRunsFromTable ; $563a
-	ld hl, $5959 ; $563d
+	ld hl, Data_1c_5959 ; $563d
 	ld bc, $d410 ; $5640
 	call BlitTilemapRunsFromTable ; $5643
 	call FlushCharDataTilemaps ; $5646
 	call RestoreCharDataScreenRow ; $5649
 	call DrawCharStatRows ; $564c
-	ld hl, $592d ; $564f
+	ld hl, Data_1c_592d ; $564f
 	ld bc, $d3e0 ; $5652
 	call BlitTilemapRunsFromTable ; $5655
-	ld hl, $5948 ; $5658
+	ld hl, Data_1c_5948 ; $5658
 	ld bc, $d410 ; $565b
 	call BlitTilemapRunsFromTable ; $565e
 	call FlushCharDataTilemaps ; $5661
 	ret ; $5664
-	INCBIN "data/bank_01c/d_5665.bin" ; $5665, 2845 bytes
+Data_1c_5665:
+	; $5665, 5 bytes (bytes:5)
+	db $ff, $00, $ff, $02, $01 ; 0x00
+Data_1c_566a:
+	; $566a, 5 bytes (bytes:5)
+	db $01, $04, $03, $04, $ff ; 0x00
+Data_1c_566f:
+	; $566f, 5 bytes (bytes:5)
+	db $ff, $ff, $00, $01, $ff ; 0x00
+Data_1c_5674:
+	INCBIN "data/bank_01c/d_5674.bin" ; $5674, 69 bytes
+Data_1c_56b9:
+	; $56b9, 22 bytes (bytes:16)
+	db $00, $60, $00, $0a, $00, $80, $0a, $0a, $00, $a0, $14, $0a, $00, $c0, $1e, $0a ; 0x00
+	db $00, $e0, $28, $0a, $ff, $ff ; 0x10
+Data_1c_56cf:
+	; $56cf, 21 bytes (bytes:16)
+	db $00, $40, $01, $09, $00, $60, $0b, $09, $00, $80, $15, $09, $00, $a0, $1f, $09 ; 0x00
+	db $00, $c0, $29, $09, $ff ; 0x10
+Data_1c_56e4:
+	; $56e4, 21 bytes (bytes:16)
+	db $00, $20, $02, $08, $00, $40, $0c, $08, $00, $60, $16, $08, $00, $80, $20, $08 ; 0x00
+	db $00, $a0, $2a, $08, $ff ; 0x10
+Data_1c_56f9:
+	; $56f9, 21 bytes (bytes:16)
+	db $00, $00, $03, $07, $00, $20, $0d, $07, $00, $40, $17, $07, $00, $60, $21, $07 ; 0x00
+	db $00, $80, $2b, $07, $ff ; 0x10
+Data_1c_570e:
+	; $570e, 13 bytes (bytes:13)
+	db $00, $00, $19, $05, $00, $20, $23, $05, $00, $40, $2d, $05, $ff ; 0x00
+Data_1c_571b:
+	; $571b, 5 bytes (bytes:5)
+	db $00, $00, $2f, $03, $ff ; 0x00
+Data_1c_5720:
+	; $5720, 29 bytes (bytes:16)
+	db $01, $00, $00, $0a, $01, $20, $0a, $0a, $01, $40, $14, $0a, $01, $60, $1e, $0a ; 0x00
+	db $01, $80, $28, $0a, $01, $a0, $32, $0a, $01, $c0, $3c, $0a, $ff ; 0x10
+Data_1c_573d:
+	; $573d, 29 bytes (bytes:16)
+	db $01, $20, $01, $09, $01, $40, $0b, $09, $01, $60, $15, $09, $01, $80, $1f, $09 ; 0x00
+	db $01, $a0, $29, $09, $01, $c0, $33, $09, $01, $e0, $3d, $09, $ff ; 0x10
+Data_1c_575a:
+	; $575a, 29 bytes (bytes:16)
+	db $01, $40, $02, $08, $01, $60, $0c, $08, $01, $80, $16, $08, $01, $a0, $20, $08 ; 0x00
+	db $01, $c0, $2a, $08, $01, $e0, $34, $08, $02, $00, $3e, $08, $ff ; 0x10
+Data_1c_5777:
+	; $5777, 29 bytes (bytes:16)
+	db $01, $60, $03, $07, $01, $80, $0d, $07, $01, $a0, $17, $07, $01, $c0, $21, $07 ; 0x00
+	db $01, $e0, $2b, $07, $02, $00, $35, $07, $02, $20, $3f, $07, $ff ; 0x10
+Data_1c_5794:
+	; $5794, 21 bytes (bytes:16)
+	db $01, $a0, $05, $05, $01, $c0, $0f, $05, $01, $e0, $19, $05, $02, $00, $23, $05 ; 0x00
+	db $02, $20, $2d, $05, $ff ; 0x10
+Data_1c_57a9:
+	; $57a9, 13 bytes (bytes:13)
+	db $01, $e0, $07, $03, $02, $00, $11, $03, $02, $20, $1b, $03, $ff ; 0x00
+Data_1c_57b6:
+	; $57b6, 5 bytes (bytes:5)
+	db $02, $20, $09, $01, $ff ; 0x00
+Data_1c_57bb:
+	; $57bb, 21 bytes (bytes:16)
+	db $00, $6a, $00, $0a, $00, $8a, $0a, $0a, $00, $aa, $14, $0a, $00, $ca, $1e, $0a ; 0x00
+	db $00, $ea, $28, $0a, $ff ; 0x10
+Data_1c_57d0:
+	; $57d0, 21 bytes (bytes:16)
+	db $00, $4b, $00, $09, $00, $6b, $0a, $09, $00, $8b, $14, $09, $00, $ab, $1e, $09 ; 0x00
+	db $00, $cb, $28, $09, $ff ; 0x10
+Data_1c_57e5:
+	; $57e5, 21 bytes (bytes:16)
+	db $00, $2c, $00, $08, $00, $4c, $0a, $08, $00, $6c, $14, $08, $00, $8c, $1e, $08 ; 0x00
+	db $00, $ac, $28, $08, $ff ; 0x10
+Data_1c_57fa:
+	; $57fa, 21 bytes (bytes:16)
+	db $00, $0d, $00, $07, $00, $2d, $0a, $07, $00, $4d, $14, $07, $00, $6d, $1e, $07 ; 0x00
+	db $00, $8d, $28, $07, $ff ; 0x10
+Data_1c_580f:
+	; $580f, 13 bytes (bytes:13)
+	db $00, $0f, $14, $05, $00, $2f, $1e, $05, $00, $4f, $28, $05, $ff ; 0x00
+Data_1c_581c:
+	; $581c, 5 bytes (bytes:5)
+	db $00, $11, $28, $03, $ff ; 0x00
+Data_1c_5821:
+	; $5821, 37 bytes (bytes:16)
+	db $01, $0a, $00, $0a, $01, $2a, $0a, $0a, $01, $4a, $14, $0a, $01, $6a, $1e, $0a ; 0x00
+	db $01, $8a, $28, $0a, $01, $aa, $32, $0a, $01, $ca, $3c, $0a, $01, $ea, $46, $0a ; 0x10
+	db $02, $0a, $50, $0a, $ff ; 0x20
+Data_1c_5846:
+	; $5846, 37 bytes (bytes:16)
+	db $01, $2b, $00, $09, $01, $4b, $0a, $09, $01, $6b, $14, $09, $01, $8b, $1e, $09 ; 0x00
+	db $01, $ab, $28, $09, $01, $cb, $32, $09, $01, $eb, $3c, $09, $02, $0b, $46, $09 ; 0x10
+	db $02, $2b, $50, $09, $ff ; 0x20
+Data_1c_586b:
+	; $586b, 33 bytes (bytes:16)
+	db $01, $4c, $00, $08, $01, $6c, $0a, $08, $01, $8c, $14, $08, $01, $ac, $1e, $08 ; 0x00
+	db $01, $cc, $28, $08, $01, $ec, $32, $08, $02, $0c, $3c, $08, $02, $2c, $46, $08 ; 0x10
+	db $ff ; 0x20
+Data_1c_588c:
+	; $588c, 29 bytes (bytes:16)
+	db $01, $6d, $00, $07, $01, $8d, $0a, $07, $01, $ad, $14, $07, $01, $cd, $1e, $07 ; 0x00
+	db $01, $ed, $28, $07, $02, $0d, $32, $07, $02, $2d, $3c, $07, $ff ; 0x10
+Data_1c_58a9:
+	; $58a9, 21 bytes (bytes:16)
+	db $01, $af, $00, $05, $01, $cf, $0a, $05, $01, $ef, $14, $05, $02, $0f, $1e, $05 ; 0x00
+	db $02, $2f, $28, $05, $ff ; 0x10
+Data_1c_58be:
+	; $58be, 13 bytes (bytes:13)
+	db $01, $f1, $00, $04, $02, $11, $0a, $04, $02, $31, $14, $04, $ff ; 0x00
+Data_1c_58cb:
+	; $58cb, 5 bytes (bytes:5)
+	db $02, $33, $00, $02, $ff ; 0x00
+Data_1c_58d0:
+	; $58d0, 13 bytes (bytes:13)
+	db $00, $00, $00, $03, $00, $20, $03, $03, $00, $40, $06, $03, $ff ; 0x00
+Data_1c_58dd:
+	; $58dd, 13 bytes (bytes:13)
+	db $00, $00, $01, $02, $00, $20, $04, $02, $00, $40, $07, $02, $ff ; 0x00
+Data_1c_58ea:
+	; $58ea, 13 bytes (bytes:13)
+	db $00, $00, $02, $01, $00, $20, $05, $01, $00, $40, $08, $01, $ff ; 0x00
+Data_1c_58f7:
+	; $58f7, 13 bytes (bytes:13)
+	db $00, $03, $00, $11, $00, $23, $11, $11, $00, $43, $22, $11, $ff ; 0x00
+Data_1c_5904:
+	; $5904, 9 bytes (bytes:9)
+	db $00, $03, $11, $11, $00, $23, $22, $11, $ff ; 0x00
+Data_1c_590d:
+	; $590d, 5 bytes (bytes:5)
+	db $00, $03, $22, $11, $ff ; 0x00
+Data_1c_5912:
+	; $5912, 10 bytes (bytes:10)
+	db $01, $e0, $00, $0a, $02, $00, $0a, $0a, $02, $20 ; 0x00
+Data_1c_591c:
+	; $591c, 3 bytes (bytes:3)
+	db $14, $0a, $ff ; 0x00
+Data_1c_591f:
+	; $591f, 9 bytes (bytes:9)
+	db $02, $00, $00, $0a, $02, $20, $0a, $0a, $ff ; 0x00
+Data_1c_5928:
+	; $5928, 5 bytes (bytes:5)
+	db $02, $20, $00, $0a, $ff ; 0x00
+Data_1c_592d:
+	; $592d, 13 bytes (bytes:13)
+	db $00, $03, $00, $0b, $00, $23, $0b, $0b, $00, $43, $16, $0b, $ff ; 0x00
+Data_1c_593a:
+	; $593a, 9 bytes (bytes:9)
+	db $00, $03, $0b, $0b, $00, $23, $16, $0b, $ff ; 0x00
+Data_1c_5943:
+	; $5943, 1 bytes (bytes:1)
+	db $00 ; 0x00
+Data_1c_5944:
+	; $5944, 4 bytes (bytes:4)
+	db $03, $16, $0b, $ff ; 0x00
+Data_1c_5948:
+	; $5948, 17 bytes (bytes:16)
+	db $00, $0e, $00, $06, $00, $2e, $06, $06, $00, $4e, $0c, $06, $00, $6e, $12, $06 ; 0x00
+	db $ff ; 0x10
+Data_1c_5959:
+	; $5959, 17 bytes (bytes:16)
+	db $00, $10, $00, $04, $00, $30, $06, $04, $00, $50, $0c, $04, $00, $70, $12, $04 ; 0x00
+	db $ff ; 0x10
+Data_1c_596a:
+	; $596a, 17 bytes (bytes:16)
+	db $00, $12, $00, $03, $00, $32, $06, $03, $00, $52, $0c, $03, $00, $72, $12, $03 ; 0x00
+	db $ff ; 0x10
+Data_1c_597b:
+	; $597b, 17 bytes (bytes:16)
+	db $00, $14, $00, $01, $00, $34, $06, $01, $00, $54, $0c, $01, $00, $74, $12, $01 ; 0x00
+	db $ff ; 0x10
+Palette_1c_598c:
+	; $598c, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
+	dw $dad6, $6280, $0000, $63ff ; pal 1: #b4b4b4 #00a4c5 #000000 #ffffc5
+	dw $0004, $014a, $1100, $3324 ; pal 2: #200000 #525200 #004120 #20cd62
+	dw $0300, $0240, $0180, $0100 ; pal 3: #00c500 #009400 #006200 #004100
+	dw $0000, $294a, $5294, $7fff ; pal 4: #000000 #525252 #a4a4a4 #ffffff
+	dw $0180, $0100, $0100, $7fff ; pal 5: #006200 #004100 #004100 #ffffff
+	dw $015f, $001f, $0000, $7fff ; pal 6: #ff5200 #ff0000 #000000 #ffffff
+	dw $6280, $7c00, $0000, $63ff ; pal 7: #00a4c5 #0000ff #000000 #ffffc5
+Lz_1c_59cc:
+	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 592 bytes
+Data_1c_5c1c:
+	; $5c1c, 40 bytes (bytes:16)
+	db $bf, $ff, $a8, $ff, $ab, $fc, $4f, $ff, $90, $6f, $ff, $7b, $fc, $45, $fe, $dd ; 0x00
+	db $66, $79, $fe, $ff, $4b, $fc, $d5, $6e, $5d, $e6, $19, $e6, $c6, $e0, $a5, $3f ; 0x10
+	db $c0, $73, $a0, $fe, $e0, $8e, $a0, $01 ; 0x20
+Data_1c_5c44:
+	INCBIN "data/bank_01c/d_5c44.bin" ; $5c44, 1342 bytes
 	rst Rst18 ; $6182
 	and a, a ; $6183
 	rst Rst38 ; $6184
@@ -2701,14 +2889,59 @@ SetupCharDataScreen:
 	rst Rst10 ; $6186
 	ld sp, hl ; $6187
 	adc a, e ; $6188
-	INCBIN "data/bank_01c/d_6189.bin" ; $6189, 3425 bytes
+Gfx_1c_6189:
+	INCBIN "data/bank_01c/d_6189.bin" ; $6189, 637 bytes
+Lz_1c_6406:
+	INCBIN "data/bank_01c/d_6406.bin" ; $6406, 99 bytes
+Lz_1c_6469:
+	INCBIN "data/bank_01c/d_6469.bin" ; $6469, 224 bytes
+Lz_1c_6549:
+	INCBIN "data/bank_01c/d_6549.bin" ; $6549, 54 bytes
+Lz_1c_657f:
+	INCBIN "data/bank_01c/d_657f.bin" ; $657f, 73 bytes
+Lz_1c_65c8:
+	INCBIN "data/bank_01c/d_65c8.bin" ; $65c8, 67 bytes
+Lz_1c_660b:
+	INCBIN "data/bank_01c/d_660b.bin" ; $660b, 93 bytes
+Lz_1c_6668:
+	INCBIN "data/bank_01c/d_6668.bin" ; $6668, 58 bytes
+Lz_1c_66a2:
+	INCBIN "data/bank_01c/d_66a2.bin" ; $66a2, 74 bytes
+Lz_1c_66ec:
+	INCBIN "data/bank_01c/d_66ec.bin" ; $66ec, 72 bytes
+Lz_1c_6734:
+	INCBIN "data/bank_01c/d_6734.bin" ; $6734, 145 bytes
+Lz_1c_67c5:
+	INCBIN "data/bank_01c/d_67c5.bin" ; $67c5, 14 bytes
+Lz_1c_67d3:
+	INCBIN "data/bank_01c/d_67d3.bin" ; $67d3, 7 bytes
+Lz_1c_67da:
+	INCBIN "data/bank_01c/d_67da.bin" ; $67da, 24 bytes
+Lz_1c_67f2:
+	INCBIN "data/bank_01c/d_67f2.bin" ; $67f2, 12 bytes
+Lz_1c_67fe:
+	INCBIN "data/bank_01c/d_67fe.bin" ; $67fe, 39 bytes
+Lz_1c_6825:
+	INCBIN "data/bank_01c/d_6825.bin" ; $6825, 9 bytes
+Lz_1c_682e:
+	INCBIN "data/bank_01c/d_682e.bin" ; $682e, 26 bytes
+Lz_1c_6848:
+	INCBIN "data/bank_01c/d_6848.bin" ; $6848, 7 bytes
+Lz_1c_684f:
+	INCBIN "data/bank_01c/d_684f.bin" ; $684f, 28 bytes
+Lz_1c_686b:
+	INCBIN "data/bank_01c/d_686b.bin" ; $686b, 1663 bytes
 Label_1c_6eea:
 	ld b, b ; $6eea
 	sbc a, b ; $6eeb
 	inc h ; $6eec
 	ret z ; $6eed
 	nop ; $6eee
-	INCBIN "data/bank_01c/d_6eef.bin" ; $6eef, 34 bytes
+Data_1c_6eef:
+	; $6eef, 34 bytes (bytes:16)
+	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
+	db $e7, $00, $d9, $00, $d9, $40, $99, $a0, $19, $49, $30, $00, $f0, $10, $e0, $20 ; 0x10
+	db $c0, $20 ; 0x20
 	sound $10 ; $6f11
 	sound $40 ; $6f13
 	sbc a, a ; $6f15
@@ -2730,16 +2963,19 @@ Label_1c_6eea:
 	add a, b ; $6f26
 	nop ; $6f27
 	jr nz, Label_1c_6eea ; $6f28
-	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 492 bytes
+Gfx_1c_6f2a:
+	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 342 bytes
+Lz_1c_7080:
+	INCBIN "data/bank_01c/d_7080.bin" ; $7080, 150 bytes
 CharDataScreen_LoadScreen:
-	ld hl, $598c ; $7116
+	ld hl, Palette_1c_598c ; $7116
 	ld de, $0008 ; $7119
 	call LoadPaletteShadow ; $711c
-	ld hl, $598c ; $711f
+	ld hl, Palette_1c_598c ; $711f
 	ld de, $0808 ; $7122
 	call LoadPaletteShadow ; $7125
 	wram_bank $01 ; $7128
-	ld hl, $7080 ; $712e
+	ld hl, Lz_1c_7080 ; $712e
 	ld de, $d000 ; $7131
 	call DecompressData ; $7134
 	ld hl, $d000 ; $7137
@@ -2748,7 +2984,7 @@ CharDataScreen_LoadScreen:
 	call QueueVRAMCopy ; $713f
 	farcall CharDataScreen_LoadGfx ; $7142
 	wram_bank $01 ; $7145
-	ld hl, $59cc ; $714b
+	ld hl, Lz_1c_59cc ; $714b
 	ld de, $d000 ; $714e
 	call DecompressData ; $7151
 	ld hl, $d000 ; $7154
@@ -2760,84 +2996,84 @@ CharDataScreen_LoadScreen:
 	ld c, $80 ; $7165
 	call QueueVRAMCopy ; $7167
 	wram_bank $01 ; $716a
-	ld hl, $6406 ; $7170
+	ld hl, Lz_1c_6406 ; $7170
 	ld de, $d000 ; $7173
 	call DecompressData ; $7176
 	ld hl, $d000 ; $7179
 	ld bc, $0240 ; $717c
 	call CopyWram1ToWram3 ; $717f
 	wram_bank $01 ; $7182
-	ld hl, $6469 ; $7188
+	ld hl, Lz_1c_6469 ; $7188
 	ld de, $d000 ; $718b
 	call DecompressData ; $718e
 	ld hl, $d000 ; $7191
 	ld bc, $0240 ; $7194
 	call CopyWram1ToWram2 ; $7197
 	wram_bank $01 ; $719a
-	ld hl, $6549 ; $71a0
+	ld hl, Lz_1c_6549 ; $71a0
 	ld de, $d240 ; $71a3
 	call DecompressData ; $71a6
 	ld hl, $d240 ; $71a9
 	ld bc, $0032 ; $71ac
 	call CopyWram1ToWram3 ; $71af
 	wram_bank $01 ; $71b2
-	ld hl, $657f ; $71b8
+	ld hl, Lz_1c_657f ; $71b8
 	ld de, $d240 ; $71bb
 	call DecompressData ; $71be
 	ld hl, $d240 ; $71c1
 	ld bc, $0032 ; $71c4
 	call CopyWram1ToWram2 ; $71c7
 	wram_bank $01 ; $71ca
-	ld hl, $65c8 ; $71d0
+	ld hl, Lz_1c_65c8 ; $71d0
 	ld de, $d280 ; $71d3
 	call DecompressData ; $71d6
 	ld hl, $d280 ; $71d9
 	ld bc, $0046 ; $71dc
 	call CopyWram1ToWram3 ; $71df
 	wram_bank $01 ; $71e2
-	ld hl, $660b ; $71e8
+	ld hl, Lz_1c_660b ; $71e8
 	ld de, $d280 ; $71eb
 	call DecompressData ; $71ee
 	ld hl, $d280 ; $71f1
 	ld bc, $0046 ; $71f4
 	call CopyWram1ToWram2 ; $71f7
 	wram_bank $01 ; $71fa
-	ld hl, $6668 ; $7200
+	ld hl, Lz_1c_6668 ; $7200
 	ld de, $d2d0 ; $7203
 	call DecompressData ; $7206
 	ld hl, $d2d0 ; $7209
 	ld bc, $0032 ; $720c
 	call CopyWram1ToWram3 ; $720f
 	wram_bank $01 ; $7212
-	ld hl, $66a2 ; $7218
+	ld hl, Lz_1c_66a2 ; $7218
 	ld de, $d2d0 ; $721b
 	call DecompressData ; $721e
 	ld hl, $d2d0 ; $7221
 	ld bc, $0032 ; $7224
 	call CopyWram1ToWram2 ; $7227
 	wram_bank $01 ; $722a
-	ld hl, $66ec ; $7230
+	ld hl, Lz_1c_66ec ; $7230
 	ld de, $d310 ; $7233
 	call DecompressData ; $7236
 	ld hl, $d310 ; $7239
 	ld bc, $005a ; $723c
 	call CopyWram1ToWram3 ; $723f
 	wram_bank $01 ; $7242
-	ld hl, $6734 ; $7248
+	ld hl, Lz_1c_6734 ; $7248
 	ld de, $d310 ; $724b
 	call DecompressData ; $724e
 	ld hl, $d310 ; $7251
 	ld bc, $005a ; $7254
 	call CopyWram1ToWram2 ; $7257
 	wram_bank $01 ; $725a
-	ld hl, $67c5 ; $7260
+	ld hl, Lz_1c_67c5 ; $7260
 	ld de, $d370 ; $7263
 	call DecompressData ; $7266
 	ld hl, $d370 ; $7269
 	ld bc, $0009 ; $726c
 	call CopyWram1ToWram3 ; $726f
 	wram_bank $01 ; $7272
-	ld hl, $67d3 ; $7278
+	ld hl, Lz_1c_67d3 ; $7278
 	ld de, $d370 ; $727b
 	call DecompressData ; $727e
 	ld hl, $d370 ; $7281
@@ -2846,28 +3082,28 @@ CharDataScreen_LoadScreen:
 	ret ; $728a
 LoadCharDataScreenTilemaps:
 	wram_bank $01 ; $728b
-	ld hl, $682e ; $7291
+	ld hl, Lz_1c_682e ; $7291
 	ld de, $d550 ; $7294
 	call DecompressData ; $7297
 	ld hl, $d550 ; $729a
 	ld bc, $0021 ; $729d
 	call CopyWram1ToWram3 ; $72a0
 	wram_bank $01 ; $72a3
-	ld hl, $6848 ; $72a9
+	ld hl, Lz_1c_6848 ; $72a9
 	ld de, $d550 ; $72ac
 	call DecompressData ; $72af
 	ld hl, $d550 ; $72b2
 	ld bc, $0021 ; $72b5
 	call CopyWram1ToWram2 ; $72b8
 	wram_bank $01 ; $72bb
-	ld hl, $684f ; $72c1
+	ld hl, Lz_1c_684f ; $72c1
 	ld de, $d580 ; $72c4
 	call DecompressData ; $72c7
 	ld hl, $d580 ; $72ca
 	ld bc, $0018 ; $72cd
 	call CopyWram1ToWram3 ; $72d0
 	wram_bank $01 ; $72d3
-	ld hl, $686b ; $72d9
+	ld hl, Lz_1c_686b ; $72d9
 	ld de, $d580 ; $72dc
 	call DecompressData ; $72df
 	ld hl, $d580 ; $72e2
@@ -3020,10 +3256,10 @@ LoadCharDataScreenGraphics:
 	call LoadCharDataScreenMugshots ; $73f7
 	ret ; $73fa
 LoadCharDataScreenBgAndPalettes:
-	ld hl, $7541 ; $73fb
+	ld hl, Palette_1c_7541 ; $73fb
 	ld de, $0008 ; $73fe
 	call LoadPaletteShadow ; $7401
-	ld hl, $7541 ; $7404
+	ld hl, Palette_1c_7541 ; $7404
 	ld de, $0808 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank $06 ; $740d
@@ -3040,7 +3276,7 @@ LoadCharDataScreenBgAndPalettes:
 	ld hl, wMasterPalettes + 34 ; $7431
 	farcall GrayscalePaletteColorInPlace ; $7434
 	wram_bank $01 ; $7437
-	ld hl, $7581 ; $743d
+	ld hl, Lz_1c_7581 ; $743d
 	ld de, $d000 ; $7440
 	call DecompressData ; $7443
 	ld hl, $d000 ; $7446
@@ -3052,14 +3288,14 @@ LoadCharDataScreenBgAndPalettes:
 	ld c, $80 ; $7457
 	call QueueVRAMCopy ; $7459
 	wram_bank $01 ; $745c
-	ld hl, $7cdf ; $7462
+	ld hl, Lz_1c_7cdf ; $7462
 	ld de, $d000 ; $7465
 	call DecompressData ; $7468
 	ld hl, $d000 ; $746b
 	ld bc, $0240 ; $746e
 	call CopyWram1ToWram3 ; $7471
 	wram_bank $01 ; $7474
-	ld hl, $7e1f ; $747a
+	ld hl, Lz_1c_7e1f ; $747a
 	ld de, $d000 ; $747d
 	call DecompressData ; $7480
 	ld hl, $d000 ; $7483
@@ -3158,5 +3394,26 @@ Label_1c_750d:
 	ld hl, wMasterPalettes + 22 ; $753a
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
-	INCBIN "data/bank_01c/d_7541.bin" ; $7541, 2486 bytes
+Palette_1c_7541:
+	; $7541, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5816, $0246, $0000, $7fff ; pal 0: #b400b4 #319400 #000000 #ffffff
+	dw $7c00, $03e0, $7fe0, $001f ; pal 1: #0000ff #00ff00 #00ffff #ff0000
+	dw $7c1f, $03ff, $7fff, $4210 ; pal 2: #ff00ff #ffff00 #ffffff #838383
+	dw $7fff, $0180, $0246, $0000 ; pal 3: #ffffff #006200 #319400 #000000
+	dw $7fff, $7e88, $0246, $0000 ; pal 4: #ffffff #41a4ff #319400 #000000
+	dw $7fff, $0092, $0380, $0000 ; pal 5: #ffffff #942000 #00e600 #000000
+	dw $7fff, $0198, $031f, $0000 ; pal 6: #ffffff #c56200 #ffc500 #000000
+	dw $7fff, $195f, $0246, $0000 ; pal 7: #ffffff #ff5231 #319400 #000000
+Lz_1c_7581:
+	INCBIN "data/bank_01c/d_7581.bin" ; $7581, 1163 bytes
+Data_1c_7a0c:
+	; $7a0c, 8 bytes (bytes:8)
+	db $c0, $80, $df, $52, $c0, $e3, $e2, $80 ; 0x00
+Data_1c_7a14:
+	INCBIN "data/bank_01c/d_7a14.bin" ; $7a14, 715 bytes
+Lz_1c_7cdf:
+	INCBIN "data/bank_01c/d_7cdf.bin" ; $7cdf, 320 bytes
+Lz_1c_7e1f:
+	INCBIN "data/bank_01c/d_7e1f.bin" ; $7e1f, 216 bytes
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

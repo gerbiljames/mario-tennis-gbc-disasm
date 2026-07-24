@@ -112,13 +112,34 @@ DataPtr_18_92:
 	dw Lz_18_7521 ; $4092
 DataPtr_18_94:
 	dw Lz_18_7568 ; $4094
-	INCBIN "data/bank_018/d_4096.bin" ; $4096, 658 bytes
+Padding_18_4096:
+	; $4096, 10 bytes (fill)
+	ds 10, $00
+Gfx_18_40a0:
+	INCBIN "data/bank_018/d_40a0.bin" ; $40a0, 512 bytes
+Gfx_18_42a0:
+	INCBIN "data/bank_018/d_42a0.bin" ; $42a0, 64 bytes
+Palette_18_42e0:
+	; $42e0, 32 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0260, $7e80, $0061, $7fff ; pal 0: #009c00 #00a4ff #081800 #ffffff
+	dw $0260, $7c1f, $0061, $7fff ; pal 1: #009c00 #ff00ff #081800 #ffffff
+	dw $0260, $03e0, $0061, $7fff ; pal 2: #009c00 #00ff00 #081800 #ffffff
+	dw $0260, $03ff, $0061, $7fff ; pal 3: #009c00 #ffff00 #081800 #ffffff
+Palette_18_4300:
+	; $4300, 40 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1adc, $6bff, $1e40, $0000 ; pal 0: #e6b431 #ffffd5 #009439 #000000
+	dw $225f, $6bff, $505c, $0000 ; pal 1: #ff9441 #ffffd5 #e610a4 #000000
+	dw $331f, $6bff, $01df, $0000 ; pal 2: #ffc562 #ffffd5 #ff7300 #000000
+	dw $5a9f, $6bff, $001f, $0000 ; pal 3: #ffa4b4 #ffffd5 #ff0000 #000000
+	dw $3acc, $6bff, $7d4a, $0000 ; pal 4: #62b473 #ffffd5 #5252ff #000000
 LoadAllIndexedPalettes_18:
 	push af ; $4328
 	push bc ; $4329
 	push de ; $432a
 	push hl ; $432b
-	ld hl, $4300 ; $432c
+	ld hl, Palette_18_4300 ; $432c
 	ld e, $05 ; $432f
 	call LoadPaletteShadow ; $4331
 	pop hl ; $4334
@@ -169,16 +190,16 @@ Label_18_4377:
 	ret ; $437b
 LoadMenuHandCursorGfx:
 	push hl ; $437c
-	ld hl, $42e0 ; $437d
+	ld hl, Palette_18_42e0 ; $437d
 	call LoadPaletteShadow ; $4380
 	pop de ; $4383
-	ld hl, $42a0 ; $4384
+	ld hl, Gfx_18_42a0 ; $4384
 	ld c, $04 ; $4387
 	call QueueVRAMCopy ; $4389
 	ret ; $438c
 StubLoadFontTiles:
 	ret ; $438d
-	ld hl, $40a0 ; $438e
+	ld hl, Gfx_18_40a0 ; $438e
 	ld de, $9000 ; $4391
 	ld c, $10 ; $4394
 	call QueueVRAMCopy ; $4396
@@ -375,7 +396,9 @@ AddBobbingOffsetY:
 	pop af ; $4488
 	pop hl ; $4489
 	ret ; $448a
-	INCBIN "data/bank_018/d_448b.bin" ; $448b, 16 bytes
+Data_18_448b:
+	; $448b, 16 bytes (bytes:16)
+	db $00, $01, $01, $02, $03, $04, $06, $08, $06, $04, $03, $02, $01, $01, $00, $00 ; 0x00
 AddBobbingOffsetYLarge:
 	push af ; $449b
 	push hl ; $449c
@@ -392,7 +415,12 @@ AddBobbingOffsetYLarge:
 	pop af ; $44ab
 	pop hl ; $44ac
 	ret ; $44ad
-	INCBIN "data/bank_018/d_44ae.bin" ; $44ae, 64 bytes
+Data_18_44ae:
+	; $44ae, 64 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $03, $03, $03, $03 ; 0x00
+	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
+	db $00, $00, $00, $ff, $ff, $ff, $fe, $fe, $fe, $fd, $fd, $fd, $fd, $fd, $fd, $fd ; 0x20
+	db $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fe, $fe, $fe, $ff, $ff, $ff, $00, $00 ; 0x30
 StubNop_18:
 	ret ; $44ee
 FindRosterEntry:
@@ -488,7 +516,7 @@ Label_18_4562:
 Label_18_4564:
 	push hl ; $4564
 	push de ; $4565
-	ld hl, $458a ; $4566
+	ld hl, Data_18_458a ; $4566
 	add a, a ; $4569
 	add a, l ; $456a
 	ld l, a ; $456b
@@ -514,7 +542,12 @@ Label_18_4587:
 	pop de ; $4587
 	pop hl ; $4588
 	ret ; $4589
-	INCBIN "data/bank_018/d_458a.bin" ; $458a, 64 bytes
+Data_18_458a:
+	; $458a, 64 bytes (bytes:16)
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x10
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x30
 MoveGridCursor:
 	bit 5, b ; $45ca
 	jr z, Label_18_45d1 ; $45cc
@@ -648,7 +681,43 @@ Label_18_4669:
 	add hl, bc ; $4677
 	ld [hl], a ; $4678
 	ret ; $4679
-	INCBIN "data/bank_018/d_467a.bin" ; $467a, 3172 bytes
+Lz_18_467a:
+	INCBIN "data/bank_018/d_467a.bin" ; $467a, 2233 bytes
+Palette_18_4f33:
+	; $4f33, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $5ad6, $1100, $0000, $7fff ; pal 0: #b4b4b4 #004120 #000000 #ffffff
+	dw $1806, $7c1f, $7c1f, $7c1f ; pal 1: #310031 #ff00ff #ff00ff #ff00ff
+	dw $19d8, $36ff, $0045, $7fff ; pal 2: #c57331 #ffbd6a #291000 #ffffff
+	dw $0045, $6100, $36ff, $7fff ; pal 3: #291000 #0041c5 #ffbd6a #ffffff
+	dw $0045, $301c, $36ff, $7fff ; pal 4: #291000 #e60062 #ffbd6a #ffffff
+	dw $0045, $01c0, $36ff, $7fff ; pal 5: #291000 #007300 #ffbd6a #ffffff
+	dw $1100, $021f, $0000, $7fff ; pal 6: #004120 #ff8300 #000000 #ffffff
+	dw $5014, $5014, $5014, $5014 ; pal 7: #a400a4 #a400a4 #a400a4 #a400a4
+Lz_18_4f73:
+	INCBIN "data/bank_018/d_4f73.bin" ; $4f73, 347 bytes
+Lz_18_50ce:
+	INCBIN "data/bank_018/d_50ce.bin" ; $50ce, 234 bytes
+Data_18_51b8:
+	; $51b8, 16 bytes (bytes:16)
+	db $8b, $8b, $dd, $de, $df, $8b, $8b, $bd, $be, $bf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
+Data_18_51c8:
+	; $51c8, 16 bytes (bytes:16)
+	db $8b, $8b, $ed, $ee, $ef, $8b, $8b, $cd, $ce, $cf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
+Data_18_51d8:
+	; $51d8, 16 bytes (bytes:16)
+	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
+Data_18_51e8:
+	; $51e8, 16 bytes (bytes:16)
+	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
+Lz_18_51f8:
+	INCBIN "data/bank_018/d_51f8.bin" ; $51f8, 206 bytes
+Palette_18_52c6:
+	; $52c6, 24 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0260, $7e00, $0045, $7fff ; pal 0: #009c00 #0083ff #291000 #ffffff
+	dw $0260, $03e0, $0045, $7fff ; pal 1: #009c00 #00ff00 #291000 #ffffff
+	dw $0260, $7c1f, $0045, $7fff ; pal 2: #009c00 #ff00ff #291000 #ffffff
 Func_18_52de:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
@@ -657,7 +726,7 @@ Func_18_52de:
 	xor a, a ; $52ea
 	ld [$c783], a ; $52eb
 	ld [$c780], a ; $52ee
-	ld hl, $467a ; $52f1
+	ld hl, Lz_18_467a ; $52f1
 	ld de, $d000 ; $52f4
 	call DecompressData ; $52f7
 	ld hl, $d000 ; $52fa
@@ -668,25 +737,25 @@ Func_18_52de:
 	ld de, $a800 ; $5308
 	ld c, $80 ; $530b
 	call QueueVRAMCopy ; $530d
-	ld hl, $4f33 ; $5310
+	ld hl, Palette_18_4f33 ; $5310
 	ld de, $0008 ; $5313
 	call LoadPaletteShadow ; $5316
-	ld hl, $50ce ; $5319
+	ld hl, Lz_18_50ce ; $5319
 	ld de, $dc00 ; $531c
 	call DecompressData ; $531f
-	ld hl, $4f73 ; $5322
+	ld hl, Lz_18_4f73 ; $5322
 	ld de, $d800 ; $5325
 	call DecompressData ; $5328
 	call StubLoadFontTiles ; $532b
 	call Func_18_5365 ; $532e
-	ld hl, $51f8 ; $5331
+	ld hl, Lz_18_51f8 ; $5331
 	ld de, $d000 ; $5334
 	call DecompressData ; $5337
 	ld hl, $d000 ; $533a
 	ld de, $8300 ; $533d
 	ld c, $14 ; $5340
 	call QueueVRAMCopy ; $5342
-	ld hl, $52c6 ; $5345
+	ld hl, Palette_18_52c6 ; $5345
 	ld de, $0903 ; $5348
 	call LoadPaletteShadow ; $534b
 	ld hl, $8500 ; $534e
@@ -863,7 +932,7 @@ Label_18_548d:
 	ld a, b ; $5490
 	and a, a ; $5491
 	jr z, Label_18_5497 ; $5492
-	ld de, $5892 ; $5494
+	ld de, Data_18_5892 ; $5494
 Label_18_5497:
 	call AddBobbingOffsetXY ; $5497
 	push bc ; $549a
@@ -948,18 +1017,19 @@ Label_18_5502:
 	add a, $08 ; $5503
 	ld d, a ; $5505
 	ret ; $5506
+Gfx_18_5507:
 	INCBIN "data/bank_018/d_5507.bin" ; $5507, 90 bytes
 Func_18_5561:
-	ld hl, $51d8 ; $5561
+	ld hl, Data_18_51d8 ; $5561
 	ld de, $dde1 ; $5564
 	call CopyBytes11 ; $5567
-	ld hl, $51e8 ; $556a
+	ld hl, Data_18_51e8 ; $556a
 	ld de, $de01 ; $556d
 	call CopyBytes11 ; $5570
-	ld hl, $51b8 ; $5573
+	ld hl, Data_18_51b8 ; $5573
 	ld de, $d9e1 ; $5576
 	call CopyBytes11 ; $5579
-	ld hl, $51c8 ; $557c
+	ld hl, Data_18_51c8 ; $557c
 	ld de, $da01 ; $557f
 	call CopyBytes11 ; $5582
 	ret ; $5585
@@ -1063,34 +1133,63 @@ ClearTileVramBothBanks:
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
 Func_18_55f8:
-	ld hl, $5633 ; $55f8
+	ld hl, Lz_18_5633 ; $55f8
 	ld de, $d000 ; $55fb
 	call DecompressData ; $55fe
 	ld hl, $d000 ; $5601
 	ld de, $a000 ; $5604
 	ld c, $1c ; $5607
 	call QueueVRAMCopy ; $5609
-	ld hl, $582d ; $560c
+	ld hl, Palette_18_582d ; $560c
 	ld de, $0c03 ; $560f
 	call LoadPalettesImmediate ; $5612
-	ld hl, $5845 ; $5615
+	ld hl, Lz_18_5845 ; $5615
 	ld de, $d000 ; $5618
 	call DecompressData ; $561b
 	ld hl, $d000 ; $561e
 	ld de, $a200 ; $5621
 	ld c, $0c ; $5624
 	call QueueVRAMCopy ; $5626
-	ld hl, $58ad ; $5629
+	ld hl, Palette_18_58ad ; $5629
 	ld de, $0801 ; $562c
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
-	INCBIN "data/bank_018/d_5633.bin" ; $5633, 910 bytes
+Lz_18_5633:
+	INCBIN "data/bank_018/d_5633.bin" ; $5633, 506 bytes
+Palette_18_582d:
+	; $582d, 24 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0008, $0000, $009f, $7fff ; pal 0: #410000 #000000 #ff2000 #ffffff
+	dw $0100, $0000, $02c0, $7fff ; pal 1: #004100 #000000 #00b400 #ffffff
+	dw $2000, $0000, $7d80, $7fff ; pal 2: #000041 #000000 #0062ff #ffffff
+Lz_18_5845:
+	INCBIN "data/bank_018/d_5845.bin" ; $5845, 77 bytes
+Data_18_5892:
+	; $5892, 27 bytes (bytes:16)
+	db $92, $ec, $e1, $10, $6c, $7c, $d5, $e2, $92, $e8, $e7, $00, $de, $e5, $b4, $e3 ; 0x00
+	db $88, $e3, $c8, $e9, $da, $ef, $ff, $eb, $00, $00, $00 ; 0x10
+Palette_18_58ad:
+	; $58ad, 51 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2108, $7fff, $031f, $01df ; pal 0: #414141 #ffffff #ffc500 #ff7300
+	dw $00af, $11d6, $0000, $4e73 ; pal 1: #7b2900 #b47320 #000000 #9c9c9c
+	dw $0000, $3c00, $11d6, $4e73 ; pal 2: #000000 #00007b #b47320 #9c9c9c
+	dw $0000, $0c13, $11d6, $4e73 ; pal 3: #000000 #9c0018 #b47320 #9c9c9c
+	dw $0000, $0040, $11d6, $4e73 ; pal 4: #000000 #001000 #b47320 #9c9c9c
+	dw $0000, $0000, $0000, $0000 ; pal 5: #000000 #000000 #000000 #000000
+	db $00, $00, $00
+Gfx_18_58e0:
+	INCBIN "data/bank_018/d_58e0.bin" ; $58e0, 217 bytes
+Palette_18_59b9:
+	; $59b9, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c1f, $1405, $034c, $7fff ; pal 0: #ff00ff #290029 #62d500 #ffffff
 LoadCharSelectCursorGfx:
-	ld hl, $58e0 ; $59c1
+	ld hl, Gfx_18_58e0 ; $59c1
 	ld de, $8400 ; $59c4
 	ld c, $0c ; $59c7
 	call QueueVRAMCopy ; $59c9
-	ld hl, $59b9 ; $59cc
+	ld hl, Palette_18_59b9 ; $59cc
 	ld de, $0a01 ; $59cf
 	call LoadPaletteShadow ; $59d2
 	ret ; $59d5
@@ -1122,6 +1221,7 @@ Label_18_59de:
 	ld bc, $0240 ; $59f7
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
+Gfx_18_59fe:
 	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 108 bytes
 ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a
@@ -1135,7 +1235,12 @@ ApplySpriteBobOffset_18:
 	add a, e ; $5a76
 	ld e, a ; $5a77
 	ret ; $5a78
-	INCBIN "data/bank_018/d_5a79.bin" ; $5a79, 64 bytes
+Data_18_5a79:
+	; $5a79, 64 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $03, $03, $03, $03 ; 0x00
+	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
+	db $00, $00, $00, $ff, $ff, $ff, $fe, $fe, $fe, $fd, $fd, $fd, $fd, $fd, $fd, $fd ; 0x20
+	db $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fe, $fe, $fe, $ff, $ff, $ff, $00, $00 ; 0x30
 LoadOnCourtCharTilesA:
 	ld h, a ; $5ab9
 	ld l, $00 ; $5aba
@@ -1143,7 +1248,7 @@ LoadOnCourtCharTilesA:
 	rr l ; $5abe
 	srl h ; $5ac0
 	rr l ; $5ac2
-	ld bc, $5af0 ; $5ac4
+	ld bc, Gfx_18_5af0 ; $5ac4
 	add hl, bc ; $5ac7
 	ld c, $04 ; $5ac8
 	call QueueVRAMCopy ; $5aca
@@ -1157,17 +1262,22 @@ LoadOnCourtCharTilesB:
 	rr l ; $5ad7
 	srl h ; $5ad9
 	rr l ; $5adb
-	ld bc, $62f0 ; $5add
+	ld bc, Gfx_18_62f0 ; $5add
 	add hl, bc ; $5ae0
 	ld c, $04 ; $5ae1
 	call QueueVRAMCopy ; $5ae3
 	ret ; $5ae6
 Label_18_5ae7:
-	ld hl, $6af0 ; $5ae7
+	ld hl, Gfx_18_6af0 ; $5ae7
 	ld c, $04 ; $5aea
 	call QueueVRAMCopy ; $5aec
 	ret ; $5aef
-	INCBIN "data/bank_018/d_5af0.bin" ; $5af0, 4160 bytes
+Gfx_18_5af0:
+	INCBIN "data/bank_018/d_5af0.bin" ; $5af0, 2048 bytes
+Gfx_18_62f0:
+	INCBIN "data/bank_018/d_62f0.bin" ; $62f0, 2048 bytes
+Gfx_18_6af0:
+	INCBIN "data/bank_018/d_6af0.bin" ; $6af0, 64 bytes
 Lz_18_6b30:
 	INCBIN "data/bank_018/lz_6b30.bin" ; $6b30, 67 bytes
 Lz_18_6b73:
@@ -1380,7 +1490,7 @@ SetupScreen0Assets:
 	ret ; $772c
 LookupScreen0AssetId:
 	ld a, [$cb6d] ; $772d
-	ld hl, $773a ; $7730
+	ld hl, Data_18_773a ; $7730
 	add a, l ; $7733
 	ld l, a ; $7734
 	jr nc, Label_18_7738 ; $7735
@@ -1388,17 +1498,22 @@ LookupScreen0AssetId:
 Label_18_7738:
 	ld c, [hl] ; $7738
 	ret ; $7739
-	INCBIN "data/bank_018/d_773a.bin" ; $773a, 6 bytes
+Data_18_773a:
+	; $773a, 6 bytes (bytes:6)
+	db $2c, $2d, $2f, $2e, $30, $31 ; 0x00
 LoadScreen0TilesAndPalette:
 	ld b, $06 ; $7740
 	ld c, $28 ; $7742
 	ld de, $8000 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
-	ld hl, $7754 ; $774a
+	ld hl, Palette_18_7754 ; $774a
 	ld de, $0801 ; $774d
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
-	INCBIN "data/bank_018/d_7754.bin" ; $7754, 8 bytes
+Palette_18_7754:
+	; $7754, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7c00, $7f8a, $3dc5, $0000 ; pal 0: #0000ff #52e6ff #29737b #000000
 QueueScreen0Sprites:
 	ld hl, SpriteTemplate_18_776a ; $775c
 	ld de, $283a ; $775f
@@ -1485,7 +1600,7 @@ SetupScreen1Assets:
 	ret ; $7841
 LookupScreen1AssetId:
 	ld a, [$cb6d] ; $7842
-	ld hl, $784f ; $7845
+	ld hl, Data_18_784f ; $7845
 	add a, l ; $7848
 	ld l, a ; $7849
 	jr nc, Label_18_784d ; $784a
@@ -1493,48 +1608,56 @@ LookupScreen1AssetId:
 Label_18_784d:
 	ld c, [hl] ; $784d
 	ret ; $784e
-	INCBIN "data/bank_018/d_784f.bin" ; $784f, 6 bytes
+Data_18_784f:
+	; $784f, 6 bytes (bytes:6)
+	db $32, $33, $35, $34, $36, $37 ; 0x00
 FillAllBgPalettes:
 	call ResetScrollAndCamera ; $7855
 	ld c, $32 ; $7858
 	farcall LoadScreenAssetRecord ; $785a
-	ld hl, $78a9 ; $785d
+	ld hl, Palette_18_78a9 ; $785d
 	ld de, $0001 ; $7860
 	call LoadPaletteShadow ; $7863
-	ld hl, $78a9 ; $7866
+	ld hl, Palette_18_78a9 ; $7866
 	ld de, $0101 ; $7869
 	call LoadPaletteShadow ; $786c
-	ld hl, $78a9 ; $786f
+	ld hl, Palette_18_78a9 ; $786f
 	ld de, $0201 ; $7872
 	call LoadPaletteShadow ; $7875
-	ld hl, $78a9 ; $7878
+	ld hl, Palette_18_78a9 ; $7878
 	ld de, $0301 ; $787b
 	call LoadPaletteShadow ; $787e
-	ld hl, $78a9 ; $7881
+	ld hl, Palette_18_78a9 ; $7881
 	ld de, $0401 ; $7884
 	call LoadPaletteShadow ; $7887
-	ld hl, $78a9 ; $788a
+	ld hl, Palette_18_78a9 ; $788a
 	ld de, $0501 ; $788d
 	call LoadPaletteShadow ; $7890
-	ld hl, $78a9 ; $7893
+	ld hl, Palette_18_78a9 ; $7893
 	ld de, $0601 ; $7896
 	call LoadPaletteShadow ; $7899
-	ld hl, $78a9 ; $789c
+	ld hl, Palette_18_78a9 ; $789c
 	ld de, $0701 ; $789f
 	call LoadPaletteShadow ; $78a2
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
-	INCBIN "data/bank_018/d_78a9.bin" ; $78a9, 8 bytes
+Palette_18_78a9:
+	; $78a9, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0000, $0000, $0000, $0000 ; pal 0: #000000 #000000 #000000 #000000
 LoadScreen1ObjTiles:
 	ld b, $07 ; $78b1
 	ld c, $28 ; $78b3
 	ld de, $8000 ; $78b5
 	farcall LoadCompressedTileBlock ; $78b8
-	ld hl, $78c5 ; $78bb
+	ld hl, Palette_18_78c5 ; $78bb
 	ld de, $0801 ; $78be
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
-	INCBIN "data/bank_018/d_78c5.bin" ; $78c5, 8 bytes
+Palette_18_78c5:
+	; $78c5, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0000, $6bff, $3a52, $0000 ; pal 0: #000000 #ffffd5 #949473 #000000
 QueueScreen1Sprites:
 	ld hl, SpriteTemplate_18_78db ; $78cd
 	ld de, $283a ; $78d0
@@ -1656,7 +1779,7 @@ Label_18_7a03:
 	ret ; $7a06
 LookupScreen2AssetIdA:
 	ld a, [$cb6d] ; $7a07
-	ld hl, $7a14 ; $7a0a
+	ld hl, Data_18_7a14 ; $7a0a
 	add a, l ; $7a0d
 	ld l, a ; $7a0e
 	jr nc, Label_18_7a12 ; $7a0f
@@ -1664,10 +1787,12 @@ LookupScreen2AssetIdA:
 Label_18_7a12:
 	ld c, [hl] ; $7a12
 	ret ; $7a13
-	INCBIN "data/bank_018/d_7a14.bin" ; $7a14, 6 bytes
+Data_18_7a14:
+	; $7a14, 6 bytes (bytes:6)
+	db $38, $39, $3b, $3a, $3c, $3d ; 0x00
 LookupScreen2AssetIdB:
 	ld a, [$cb6d] ; $7a1a
-	ld hl, $7a27 ; $7a1d
+	ld hl, Data_18_7a27 ; $7a1d
 	add a, l ; $7a20
 	ld l, a ; $7a21
 	jr nc, Label_18_7a25 ; $7a22
@@ -1675,17 +1800,22 @@ LookupScreen2AssetIdB:
 Label_18_7a25:
 	ld c, [hl] ; $7a25
 	ret ; $7a26
-	INCBIN "data/bank_018/d_7a27.bin" ; $7a27, 6 bytes
+Data_18_7a27:
+	; $7a27, 6 bytes (bytes:6)
+	db $3e, $3f, $41, $40, $42, $43 ; 0x00
 LoadScreen2ObjTiles:
 	ld b, $08 ; $7a2d
 	ld c, $14 ; $7a2f
 	ld de, $8000 ; $7a31
 	farcall LoadCompressedTileBlock ; $7a34
-	ld hl, $7a41 ; $7a37
+	ld hl, Palette_18_7a41 ; $7a37
 	ld de, $0801 ; $7a3a
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
-	INCBIN "data/bank_018/d_7a41.bin" ; $7a41, 8 bytes
+Palette_18_7a41:
+	; $7a41, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $0280, $77de, $49fe, $201f ; pal 0: #00a400 #f6f6ee #f67b94 #ff0041
 QueueScreen2Sprites:
 	ld hl, SpriteTemplate_18_7a57 ; $7a49
 	ld de, $2840 ; $7a4c
@@ -1805,6 +1935,7 @@ Label_18_7b46:
 	ret ; $7b6d
 TaskUpdateObjects_18:
 	ld c, $00 ; $7b6e
+Label_18_7b70:
 	push bc ; $7b70
 	ld hl, $d800 ; $7b71
 	ld a, c ; $7b74
@@ -1861,7 +1992,20 @@ Label_18_7b7e:
 	ld h, [hl] ; $7bb7
 	ld l, a ; $7bb8
 	jp hl ; $7bb9
-	INCBIN "data/bank_018/d_7bba.bin" ; $7bba, 20 bytes
+	ld hl, $0004 ; $7bba
+	add hl, bc ; $7bbd
+	ld a, [hl] ; $7bbe
+	cp a, $c0 ; $7bbf
+	jr c, Label_18_7bc6 ; $7bc1
+	ld a, $10 ; $7bc3
+	ld [hl], a ; $7bc5
+Label_18_7bc6:
+	pop bc ; $7bc6
+	inc c ; $7bc7
+	ld a, c ; $7bc8
+	cp a, $10 ; $7bc9
+	jr nz, Label_18_7b70 ; $7bcb
+	ret ; $7bcd
 InitObjectSceneA:
 	ldh a, [hWramBank] ; $7bce
 	push af ; $7bd0
@@ -1967,11 +2111,16 @@ LoadObjectSceneBTiles:
 	ld c, $10 ; $7d32
 	ld de, $8200 ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
-	ld hl, $7d44 ; $7d3a
+	ld hl, Palette_18_7d44 ; $7d3a
 	ld de, $0903 ; $7d3d
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
-	INCBIN "data/bank_018/d_7d44.bin" ; $7d44, 24 bytes
+Palette_18_7d44:
+	; $7d44, 24 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $6bff, $5adf, $20ff, $0000 ; pal 0: #ffffd5 #ffb4b4 #ff3941 #000000
+	dw $6bff, $3bb8, $1280, $0000 ; pal 1: #ffffd5 #c5ee73 #00a420 #000000
+	dw $6bff, $53bf, $029f, $0000 ; pal 2: #ffffd5 #ffeea4 #ffa400 #000000
 PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e
