@@ -66,7 +66,11 @@ Things that fell out of the pass and are worth keeping:
   `TileGrid3x3_1d_6f35` is not a 3x3 grid but the 9-entry fill ramp for
   the 8-cell level bar (now `ExpBarFillTiles_1d`, `data_tables.json` width
   3 → 9), and `DrillDisplayData2_1d` is a frame of the EXP-screen confirm
-  window, not drill data (now `ExpPromptWindowFrame_1d`).
+  window, not drill data (now `ExpPromptWindowFrame_1d`). `StoryCmdHandlersC_13`
+  (`$13:$526a`) is not a command-handler table either: the curated
+  `SetRandomDormRoomNpc04Script_13` right above it picks a random index 0-7
+  and reads it through the `add a,$6a` / `adc a,$52` inline-base trick, so
+  it is the dorm NPC's idle-script list (now `DormRoomNpc04IdleScripts_13`).
 
 Deliberately left alone: `Func_38_591b` (three prerendered label strips
 that could not be identified), the bank `$1e` flag-group cluster at
@@ -177,9 +181,6 @@ aim-line distances computed at `$07:$5787`/`$07:$57bc` as
   RetroAchievements-sourced `wWaterSpriteMinigame*` names wrong. Not acted
   on: the sprite assembly was not independently reproduced, and the RAM
   names are external. Worth settling before bank `$14` is finished.
-* **`StoryCmdHandlersC_13`** (`$13:$526a`) is curated but is not a
-  command-handler table; it is the 8-entry random idle-script table for
-  dorm actor `$04`.
 
 ### Pause-menu rules pages carved (bank $06, 2026-07-22)
 

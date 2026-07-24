@@ -995,7 +995,7 @@ SetRandomDormRoomNpc04Script_13:
 	ld a, $04 ; $5264
 	farcall ScriptSetActorScript ; $5266
 	ret ; $5269
-StoryCmdHandlersC_13:
+DormRoomNpc04IdleScripts_13:
 	; $526a, 16 bytes (records:2)
 	dw ActorScript_13_585f ; record 0
 	dw ActorScript_13_5877 ; record 1

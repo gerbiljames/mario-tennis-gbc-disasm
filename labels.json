@@ -2485,7 +2485,7 @@
  "0x4d130": "SetupDormRoomSceneVariant",
  "0x4d1b0": "PlaceDormRoomArrivalActors_13",
  "0x4d24e": "SetRandomDormRoomNpc04Script_13",
- "0x4d26a": "StoryCmdHandlersC_13",
+ "0x4d26a": "DormRoomNpc04IdleScripts_13",
  "0x4d2b0": "DormRoomNpc03_13",
  "0x4d6bb": "RunPlayDoublesTodayPrompt",
  "0x4d85f": "ActorScript_13_585f",
