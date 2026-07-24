@@ -2536,7 +2536,7 @@ QueueMinigameHitBurstFirstFour:
 	call QueueMinigameHitBurstParticle ; $53ef
 	call QueueMinigameHitBurstParticle ; $53f2
 	ret ; $53f5
-Func_0d_53f6:
+QueueMinigameHitBurstFirstTwo:
 	and a, $0f ; $53f6
 	cpl ; $53f8
 	inc a ; $53f9
@@ -3404,7 +3404,7 @@ TreasureBoxTargetActorHandler:
 	dw Label_0d_5b3d ; $5ad4 jumptable
 	dw Label_0d_5b4a ; $5ad6 jumptable
 	dw RetStub ; $5ad8 jumptable
-Func_0d_5ada:
+AdvanceTreasureBoxActorState:
 	ld hl, $dc72 ; $5ada
 	inc [hl] ; $5add
 	ret ; $5ade
@@ -3461,26 +3461,26 @@ Label_0d_5b1f:
 	ld l, c ; $5b27
 	ld h, b ; $5b28
 	call SetMinigameActorWorldPos ; $5b29
-	call Func_0d_5ada ; $5b2c
+	call AdvanceTreasureBoxActorState ; $5b2c
 Label_0d_5b2f:
-	call Func_0d_5c89 ; $5b2f
-	call Func_0d_5bc5 ; $5b32
+	call DrawTreasureBoxSprite ; $5b2f
+	call IsBallInTreasureBoxHitZone ; $5b32
 	and a, a ; $5b35
 	ret z ; $5b36
-	call Func_0d_5c2c ; $5b37
-	jp Func_0d_5ada ; $5b3a
+	call AwardTreasureBoxHitScore ; $5b37
+	jp AdvanceTreasureBoxActorState ; $5b3a
 Label_0d_5b3d:
-	call Func_0d_5ccb ; $5b3d
+	call DrawTreasureBoxHitCountdown ; $5b3d
 	ld hl, $dc73 ; $5b40
 	dec [hl] ; $5b43
 	ld a, [hl] ; $5b44
 	and a, a ; $5b45
 	ret nz ; $5b46
-	jp Func_0d_5ada ; $5b47
+	jp AdvanceTreasureBoxActorState ; $5b47
 Label_0d_5b4a:
 	ret ; $5b4a
 	INCBIN "data/bank_00d/d_5b4b.bin" ; $5b4b, 122 bytes
-Func_0d_5bc5:
+IsBallInTreasureBoxHitZone:
 	ld a, [wLastShotCharIndex] ; $5bc5
 	and a, $01 ; $5bc8
 	jp nz, Label_0d_5c2a ; $5bca
@@ -3557,7 +3557,7 @@ Label_0d_5c21:
 Label_0d_5c2a:
 	xor a, a ; $5c2a
 	ret ; $5c2b
-Func_0d_5c2c:
+AwardTreasureBoxHitScore:
 	ld a, $10 ; $5c2c
 	ld [$dc73], a ; $5c2e
 	ld a, $01 ; $5c31
@@ -3601,9 +3601,17 @@ Func_0d_5c2c:
 	ld a, $01 ; $5c77
 	ld [wPointOutcomeSide], a ; $5c79
 	ret ; $5c7c
-	INCBIN "data/bank_00d/d_5c7d.bin" ; $5c7d, 12 bytes
-Func_0d_5c89:
-	call Func_0d_5cd7 ; $5c89
+TreasureBoxValuesByType:
+	; $5c7d, 4 bytes (bytes:4)
+	db $05, $0a, $32, $64 ; 0x00
+TreasureBoxHitStreakSounds:
+	; $5c81, 4 bytes (bytes:4)
+	db $c0, $be, $bc, $ba ; 0x00
+TreasureBoxHitStreakMultipliers:
+	; $5c85, 4 bytes (bytes:4)
+	db $01, $02, $04, $08 ; 0x00
+DrawTreasureBoxSprite:
+	call ProjectTreasureBoxWorldPosition ; $5c89
 	ld c, $30 ; $5c8c
 	call QueueSprite16 ; $5c8e
 	ld a, [$dc71] ; $5c91
@@ -3622,14 +3630,19 @@ Func_0d_5c89:
 	ret z ; $5ca6
 	farcall Func_28_60a0 ; $5ca7
 	ret ; $5caa
-	INCBIN "data/bank_00d/d_5cab.bin" ; $5cab, 32 bytes
-Func_0d_5ccb:
-	call Func_0d_5cd7 ; $5ccb
+TreasureBoxSpriteAnimFrames:
+	; $5cab, 32 bytes (bytes:8)
+	db $00, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x00
+	db $ff, $ff, $ff, $ff, $ff, $02, $ff, $ff ; 0x08
+	db $ff, $ff, $ff, $ff, $03, $ff, $ff, $ff ; 0x10
+	db $ff, $ff, $04, $ff, $ff, $ff, $ff, $ff ; 0x18
+DrawTreasureBoxHitCountdown:
+	call ProjectTreasureBoxWorldPosition ; $5ccb
 	ld c, $3c ; $5cce
 	ld a, [$dc73] ; $5cd0
 	call QueueMinigameHitBurstFirstFour ; $5cd3
 	ret ; $5cd6
-Func_0d_5cd7:
+ProjectTreasureBoxWorldPosition:
 	ld hl, $dc7a ; $5cd7
 	ld a, [hl+] ; $5cda
 	ld e, a ; $5cdb
@@ -3779,21 +3792,21 @@ MedallionMatchTargetActorHandler:
 	dw Label_0d_5e12 ; $5df6 jumptable
 	dw Label_0d_5e33 ; $5df8 jumptable
 	dw RetStub ; $5dfa jumptable
-Func_0d_5dfc:
+AdvanceMedallionMatchActorState:
 	ld hl, $dc72 ; $5dfc
 	inc [hl] ; $5dff
 	ret ; $5e00
 Label_0d_5e01:
-	call Func_0d_5dfc ; $5e01
+	call AdvanceMedallionMatchActorState ; $5e01
 Label_0d_5e04:
-	call Func_0d_5ef2 ; $5e04
-	call Func_0d_5e37 ; $5e07
+	call DrawMedallionMatchSprite ; $5e04
+	call IsBallInMedallionMatchHitZone ; $5e07
 	and a, a ; $5e0a
 	ret z ; $5e0b
-	call Func_0d_5e9e ; $5e0c
-	jp Func_0d_5dfc ; $5e0f
+	call AwardMedallionMatchHitScore ; $5e0c
+	jp AdvanceMedallionMatchActorState ; $5e0f
 Label_0d_5e12:
-	call Func_0d_5f13 ; $5e12
+	call DrawMedallionMatchHitCountdown ; $5e12
 	ld hl, $dc73 ; $5e15
 	dec [hl] ; $5e18
 	ld a, [hl] ; $5e19
@@ -3810,11 +3823,11 @@ Label_0d_5e12:
 	ld bc, rJOYP ; $5e29
 	add hl, bc ; $5e2c
 	call SetMinigameActorWorldPos ; $5e2d
-	jp Func_0d_5dfc ; $5e30
+	jp AdvanceMedallionMatchActorState ; $5e30
 Label_0d_5e33:
-	call Func_0d_5ef2 ; $5e33
+	call DrawMedallionMatchSprite ; $5e33
 	ret ; $5e36
-Func_0d_5e37:
+IsBallInMedallionMatchHitZone:
 	ld a, [wLastShotCharIndex] ; $5e37
 	and a, $01 ; $5e3a
 	jp nz, Label_0d_5e9c ; $5e3c
@@ -3891,12 +3904,12 @@ Label_0d_5e93:
 Label_0d_5e9c:
 	xor a, a ; $5e9c
 	ret ; $5e9d
-Func_0d_5e9e:
+AwardMedallionMatchHitScore:
 	ld a, $10 ; $5e9e
 	ld [$dc73], a ; $5ea0
 	ld hl, $0001 ; $5ea3
 	ld a, [wCurrentShotType] ; $5ea6
-	cp a, $09 ; $5ea9
+	cp a, SHOTTYPE_SMASH ; $5ea9
 	jr nz, Label_0d_5eb5 ; $5eab
 	ld a, $20 ; $5ead
 	ld [$dc73], a ; $5eaf
@@ -3929,9 +3942,14 @@ Label_0d_5eb5:
 	ld hl, $c789 ; $5edf
 	inc [hl] ; $5ee2
 	ret ; $5ee3
-	INCBIN "data/bank_00d/d_5ee4.bin" ; $5ee4, 14 bytes
-Func_0d_5ef2:
-	call Func_0d_5f1f ; $5ef2
+MedallionMatchHitStreakSounds:
+	; $5ee4, 8 bytes (bytes:8)
+	db $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x00
+MedallionMatchHitStreakMultipliers:
+	; $5eec, 6 bytes (bytes:6)
+	db $01, $05, $1e, $46, $96, $fa ; 0x00
+DrawMedallionMatchSprite:
+	call ProjectMedallionMatchWorldPosition ; $5ef2
 	ldh a, [hVBlankCounter] ; $5ef5
 	ld hl, $dc7a ; $5ef7
 	add a, [hl] ; $5efa
@@ -3947,14 +3965,16 @@ Func_0d_5ef2:
 	ld c, [hl] ; $5f0a
 	call QueueSprite16 ; $5f0b
 	ret ; $5f0e
-	INCBIN "data/bank_00d/d_5f0f.bin" ; $5f0f, 4 bytes
-Func_0d_5f13:
-	call Func_0d_5f1f ; $5f13
+MedallionMatchSpriteAnimFrames:
+	; $5f0f, 4 bytes (bytes:4)
+	db $20, $24, $28, $2c ; 0x00
+DrawMedallionMatchHitCountdown:
+	call ProjectMedallionMatchWorldPosition ; $5f13
 	ld c, $3c ; $5f16
 	ld a, [$dc73] ; $5f18
-	call Func_0d_53f6 ; $5f1b
+	call QueueMinigameHitBurstFirstTwo ; $5f1b
 	ret ; $5f1e
-Func_0d_5f1f:
+ProjectMedallionMatchWorldPosition:
 	ld hl, $dc7a ; $5f1f
 	ld a, [hl+] ; $5f22
 	ld e, a ; $5f23

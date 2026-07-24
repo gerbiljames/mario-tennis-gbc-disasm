@@ -26,7 +26,7 @@ Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,669 of 18,931 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,750 of 19,034 labels are human-named** (up from 4,816 on 2026-07-23).
 
 ### MinigameConfigTable symbolicated (bank $0d, 2026-07-24)
 
@@ -115,6 +115,65 @@ geometry rather than art: the 192-byte table at `$542c` decodes as 12 rows
 `$0f - (timer & $0f)`, x alternating 0..+15 / 0..-15 and y tracing a
 parabola. The scatter is certain; the tile art was not rendered, so the
 name describes the motion, not the sprite.
+
+### Bank $0d fully carved; a jump-table runaway guard (2026-07-24)
+
+A table-by-table pass over bank `$0d` took it from **30 INCBIN blobs to 6**
+and from 37.2% to **49.2% proven code**. The Treasure Box and Medallion
+Match state machines turned out to be near-exact structural clones of the
+Shooting Star one, so every function in them fell out as a twin of an
+already-named routine (`Advance*ActorState`, `IsBallIn*HitZone`,
+`Award*HitScore`, `Draw*Sprite`, `Draw*HitCountdown`,
+`Project*WorldPosition`), and their score tables corroborate it — Treasure
+Box's box values are `05 0a 32 64` with multipliers `01 02 04 08` and an
+`IncrementCappedCounter` cap of exactly 4, matching the table length.
+Carving them also surfaced a `cp a, $09` against `wCurrentShotType` that
+the enum pass had missed because the routine was still a data blob; it is
+now `SHOTTYPE_SMASH`, matching its Shooting Star twin. Three declarations were simply
+wrong and are corrected (see the commit log): `$427f` was two tables (cell
+tiles + cell attrs, proved by the two inline bases
+`DrawMinigameGridCell` builds and the tile-vs-attribute shadow buffers each
+pair is copied into), `$4f06`/`$5000` had a 5-byte stride where
+`CopyTextRect` uses `bc = $0a05` = 10 wide x 5 tall, and `$5941` was 56
+bytes where both readers take exactly `$18`.
+
+`d_4546.bin` (306 bytes) turned out to be **seven** tables, delimited by
+the index expression at `$46f7` (`$c784 = min(shotCount / 10, 25)`, which
+pins the 26-row extent): the shot difficulty ramp, shot interval by tempo,
+the 9x16 aim pools sampled by `rng & $0f`, the spin pool, a 3x3 court
+coordinate grid that renders self-evidently once carved, and the ball
+launch heights and speeds — ending flush at `$4678`.
+
+Two mechanisms were added to `disasm.py`, both mirroring `mode_hooks`:
+
+* **`minigame_configs`** — walks a config pointer table and seeds each
+  config's `+$0c` init routine, which `InitMinigameFromConfig` calls
+  through `JumpToHL`. All 18 were buried inside their config's blob. The
+  configs themselves are now `bytes:16`, so each renders as one readable
+  row rather than an opaque INCBIN.
+* **Actor handlers are seeded *before* the jump-table fixpoint**, not
+  after. A handler's body opens with a `rst Rst00` jumptable, so seeding it
+  afterwards left the dispatch targets undecoded — which is why the
+  Treasure Box and Medallion Match state machines sat in 538- and 320-byte
+  blobs.
+
+That reordering exposed a latent trap worth recording. Both of those
+jumptables **over-run by one entry** into the `ld hl, $dc72 / inc [hl] /
+ret` helper that follows them, reading its `21 72` bytes as a target of
+`$7221` — which lands in the bank's 4,647-byte `$ff` fill. Because `$ff`
+decodes as a valid one-byte `rst $38` that does not end flow, descent from
+there ran to the end of the bank and turned 3,551 filler bytes into
+instructions (`rst Rst38` ROM-wide went 20 -> 3,571) while still building
+byte-perfect. The Shooting Star handler had escaped this only because its
+helper was already proven code, so the walk stopped on a `code_bytes` hit.
+`Disassembly._target_in_fill` now rejects any jump-table entry whose target
+begins a run of 16+ `$ff` bytes; that is never a real handler, and it makes
+the walk's termination independent of what happens to be decoded yet.
+
+**`rst Rst38` in the generated source is a good ROM-wide smell test for
+this class of bug** — an `$ff` data byte decoded as an opcode. It found the
+bank `$17` and bank `$38` problems below, and caught this regression
+immediately.
 
 ### Minigame actor handlers and score tables (bank $0d, 2026-07-24)
 
