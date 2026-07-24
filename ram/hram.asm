@@ -98,7 +98,25 @@ hMathSign:: db
 
 ; [32-bit] Full 32-bit product from MulHLByDE
 hMulResult:: ds 4
-	ds 12
+	ds 4
+
+; HRAM pointer scratch ($ffb0-$ffb3): two 16-bit slots each caller uses for
+; its own purpose, so only proven consumers are named. Sites outside these
+; scopes stay numeric -- note that banks $0f/$10 load $ffb0 as the immediate
+; constant -80, not as an address.
+UNION
+; level-up stat deltas (bank $02)
+; [16-bit] ComputeLevelUpStatDeltas: caller-supplied destination the per-stat deltas are written to (hl on entry, spilled at $02:$4a02)
+hStatDeltaOutPtr:: dw
+; [16-bit] ComputeLevelUpStatDeltas: pointer to the 64-byte stack buffer (add sp, -64 at $02:$4a07) holding the player record copied before LevelUpPlayerRecord, which each stat is then differenced against
+hStatDeltaRecordCopy:: dw
+NEXTU
+; save-slot debug editor (bank $03)
+; [16-bit] SaveSlotDebugEditor: byte offset of the edit cursor into the $d300 save-block buffer, wrapped to $400 by masking the high byte with $03; moved by Func_03_524f, which takes the signed cursor step in c and the value step applied on A in b
+hSaveEditorCursor:: dw
+ENDU
+
+	ds 4
 
 ; [8-bit] Nonzero = row in wBGRowBlitBuffer awaits VBlank blit
 hBGRowBlitPending:: db

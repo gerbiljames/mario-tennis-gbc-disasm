@@ -1178,15 +1178,15 @@ Label_02_49ff:
 ComputeLevelUpStatDeltas:
 	ld e, a ; $4a00
 	ld a, l ; $4a01
-	ldh [$ffb0], a ; $4a02
+	ldh [hStatDeltaOutPtr], a ; $4a02
 	ld a, h ; $4a04
-	ldh [$ffb1], a ; $4a05
+	ldh [hStatDeltaOutPtr + 1], a ; $4a05
 	add sp, -64 ; $4a07
 	ld hl, sp + 0 ; $4a09
 	ld a, l ; $4a0b
-	ldh [$ffb2], a ; $4a0c
+	ldh [hStatDeltaRecordCopy], a ; $4a0c
 	ld a, h ; $4a0e
-	ldh [$ffb3], a ; $4a0f
+	ldh [hStatDeltaRecordCopy + 1], a ; $4a0f
 	ld a, e ; $4a11
 	call GetPlayerRecordPtr ; $4a12
 	push bc ; $4a15
@@ -1201,7 +1201,7 @@ ComputeLevelUpStatDeltas:
 	pop de ; $4a22
 	pop bc ; $4a23
 	call LevelUpPlayerRecord ; $4a24
-	ld hl, $ffb2 ; $4a27
+	ld hl, hStatDeltaRecordCopy ; $4a27
 	ld a, [hl+] ; $4a2a
 	ld h, [hl] ; $4a2b
 	ld l, a ; $4a2c
@@ -1213,17 +1213,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4a36
 	sub a, d ; $4a37
 	ld d, a ; $4a38
-	ld hl, $ffb0 ; $4a39
+	ld hl, hStatDeltaOutPtr ; $4a39
 	ld a, [hl+] ; $4a3c
 	ld h, [hl] ; $4a3d
 	ld l, a ; $4a3e
 	ld [hl], d ; $4a3f
 	inc hl ; $4a40
 	ld a, l ; $4a41
-	ldh [$ffb0], a ; $4a42
+	ldh [hStatDeltaOutPtr], a ; $4a42
 	ld a, h ; $4a44
-	ldh [$ffb1], a ; $4a45
-	ld hl, $ffb2 ; $4a47
+	ldh [hStatDeltaOutPtr + 1], a ; $4a45
+	ld hl, hStatDeltaRecordCopy ; $4a47
 	ld a, [hl+] ; $4a4a
 	ld h, [hl] ; $4a4b
 	ld l, a ; $4a4c
@@ -1235,17 +1235,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4a56
 	sub a, d ; $4a57
 	ld d, a ; $4a58
-	ld hl, $ffb0 ; $4a59
+	ld hl, hStatDeltaOutPtr ; $4a59
 	ld a, [hl+] ; $4a5c
 	ld h, [hl] ; $4a5d
 	ld l, a ; $4a5e
 	ld [hl], d ; $4a5f
 	inc hl ; $4a60
 	ld a, l ; $4a61
-	ldh [$ffb0], a ; $4a62
+	ldh [hStatDeltaOutPtr], a ; $4a62
 	ld a, h ; $4a64
-	ldh [$ffb1], a ; $4a65
-	ld hl, $ffb2 ; $4a67
+	ldh [hStatDeltaOutPtr + 1], a ; $4a65
+	ld hl, hStatDeltaRecordCopy ; $4a67
 	ld a, [hl+] ; $4a6a
 	ld h, [hl] ; $4a6b
 	ld l, a ; $4a6c
@@ -1257,17 +1257,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4a76
 	sub a, d ; $4a77
 	ld d, a ; $4a78
-	ld hl, $ffb0 ; $4a79
+	ld hl, hStatDeltaOutPtr ; $4a79
 	ld a, [hl+] ; $4a7c
 	ld h, [hl] ; $4a7d
 	ld l, a ; $4a7e
 	ld [hl], d ; $4a7f
 	inc hl ; $4a80
 	ld a, l ; $4a81
-	ldh [$ffb0], a ; $4a82
+	ldh [hStatDeltaOutPtr], a ; $4a82
 	ld a, h ; $4a84
-	ldh [$ffb1], a ; $4a85
-	ld hl, $ffb2 ; $4a87
+	ldh [hStatDeltaOutPtr + 1], a ; $4a85
+	ld hl, hStatDeltaRecordCopy ; $4a87
 	ld a, [hl+] ; $4a8a
 	ld h, [hl] ; $4a8b
 	ld l, a ; $4a8c
@@ -1279,17 +1279,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4a96
 	sub a, d ; $4a97
 	ld d, a ; $4a98
-	ld hl, $ffb0 ; $4a99
+	ld hl, hStatDeltaOutPtr ; $4a99
 	ld a, [hl+] ; $4a9c
 	ld h, [hl] ; $4a9d
 	ld l, a ; $4a9e
 	ld [hl], d ; $4a9f
 	inc hl ; $4aa0
 	ld a, l ; $4aa1
-	ldh [$ffb0], a ; $4aa2
+	ldh [hStatDeltaOutPtr], a ; $4aa2
 	ld a, h ; $4aa4
-	ldh [$ffb1], a ; $4aa5
-	ld hl, $ffb2 ; $4aa7
+	ldh [hStatDeltaOutPtr + 1], a ; $4aa5
+	ld hl, hStatDeltaRecordCopy ; $4aa7
 	ld a, [hl+] ; $4aaa
 	ld h, [hl] ; $4aab
 	ld l, a ; $4aac
@@ -1301,17 +1301,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4ab6
 	sub a, d ; $4ab7
 	ld d, a ; $4ab8
-	ld hl, $ffb0 ; $4ab9
+	ld hl, hStatDeltaOutPtr ; $4ab9
 	ld a, [hl+] ; $4abc
 	ld h, [hl] ; $4abd
 	ld l, a ; $4abe
 	ld [hl], d ; $4abf
 	inc hl ; $4ac0
 	ld a, l ; $4ac1
-	ldh [$ffb0], a ; $4ac2
+	ldh [hStatDeltaOutPtr], a ; $4ac2
 	ld a, h ; $4ac4
-	ldh [$ffb1], a ; $4ac5
-	ld hl, $ffb2 ; $4ac7
+	ldh [hStatDeltaOutPtr + 1], a ; $4ac5
+	ld hl, hStatDeltaRecordCopy ; $4ac7
 	ld a, [hl+] ; $4aca
 	ld h, [hl] ; $4acb
 	ld l, a ; $4acc
@@ -1323,17 +1323,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4ad6
 	sub a, d ; $4ad7
 	ld d, a ; $4ad8
-	ld hl, $ffb0 ; $4ad9
+	ld hl, hStatDeltaOutPtr ; $4ad9
 	ld a, [hl+] ; $4adc
 	ld h, [hl] ; $4add
 	ld l, a ; $4ade
 	ld [hl], d ; $4adf
 	inc hl ; $4ae0
 	ld a, l ; $4ae1
-	ldh [$ffb0], a ; $4ae2
+	ldh [hStatDeltaOutPtr], a ; $4ae2
 	ld a, h ; $4ae4
-	ldh [$ffb1], a ; $4ae5
-	ld hl, $ffb2 ; $4ae7
+	ldh [hStatDeltaOutPtr + 1], a ; $4ae5
+	ld hl, hStatDeltaRecordCopy ; $4ae7
 	ld a, [hl+] ; $4aea
 	ld h, [hl] ; $4aeb
 	ld l, a ; $4aec
@@ -1345,17 +1345,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4af6
 	sub a, d ; $4af7
 	ld d, a ; $4af8
-	ld hl, $ffb0 ; $4af9
+	ld hl, hStatDeltaOutPtr ; $4af9
 	ld a, [hl+] ; $4afc
 	ld h, [hl] ; $4afd
 	ld l, a ; $4afe
 	ld [hl], d ; $4aff
 	inc hl ; $4b00
 	ld a, l ; $4b01
-	ldh [$ffb0], a ; $4b02
+	ldh [hStatDeltaOutPtr], a ; $4b02
 	ld a, h ; $4b04
-	ldh [$ffb1], a ; $4b05
-	ld hl, $ffb2 ; $4b07
+	ldh [hStatDeltaOutPtr + 1], a ; $4b05
+	ld hl, hStatDeltaRecordCopy ; $4b07
 	ld a, [hl+] ; $4b0a
 	ld h, [hl] ; $4b0b
 	ld l, a ; $4b0c
@@ -1367,17 +1367,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4b16
 	sub a, d ; $4b17
 	ld d, a ; $4b18
-	ld hl, $ffb0 ; $4b19
+	ld hl, hStatDeltaOutPtr ; $4b19
 	ld a, [hl+] ; $4b1c
 	ld h, [hl] ; $4b1d
 	ld l, a ; $4b1e
 	ld [hl], d ; $4b1f
 	inc hl ; $4b20
 	ld a, l ; $4b21
-	ldh [$ffb0], a ; $4b22
+	ldh [hStatDeltaOutPtr], a ; $4b22
 	ld a, h ; $4b24
-	ldh [$ffb1], a ; $4b25
-	ld hl, $ffb2 ; $4b27
+	ldh [hStatDeltaOutPtr + 1], a ; $4b25
+	ld hl, hStatDeltaRecordCopy ; $4b27
 	ld a, [hl+] ; $4b2a
 	ld h, [hl] ; $4b2b
 	ld l, a ; $4b2c
@@ -1389,17 +1389,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4b36
 	sub a, d ; $4b37
 	ld d, a ; $4b38
-	ld hl, $ffb0 ; $4b39
+	ld hl, hStatDeltaOutPtr ; $4b39
 	ld a, [hl+] ; $4b3c
 	ld h, [hl] ; $4b3d
 	ld l, a ; $4b3e
 	ld [hl], d ; $4b3f
 	inc hl ; $4b40
 	ld a, l ; $4b41
-	ldh [$ffb0], a ; $4b42
+	ldh [hStatDeltaOutPtr], a ; $4b42
 	ld a, h ; $4b44
-	ldh [$ffb1], a ; $4b45
-	ld hl, $ffb2 ; $4b47
+	ldh [hStatDeltaOutPtr + 1], a ; $4b45
+	ld hl, hStatDeltaRecordCopy ; $4b47
 	ld a, [hl+] ; $4b4a
 	ld h, [hl] ; $4b4b
 	ld l, a ; $4b4c
@@ -1411,17 +1411,17 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4b56
 	sub a, d ; $4b57
 	ld d, a ; $4b58
-	ld hl, $ffb0 ; $4b59
+	ld hl, hStatDeltaOutPtr ; $4b59
 	ld a, [hl+] ; $4b5c
 	ld h, [hl] ; $4b5d
 	ld l, a ; $4b5e
 	ld [hl], d ; $4b5f
 	inc hl ; $4b60
 	ld a, l ; $4b61
-	ldh [$ffb0], a ; $4b62
+	ldh [hStatDeltaOutPtr], a ; $4b62
 	ld a, h ; $4b64
-	ldh [$ffb1], a ; $4b65
-	ld hl, $ffb2 ; $4b67
+	ldh [hStatDeltaOutPtr + 1], a ; $4b65
+	ld hl, hStatDeltaRecordCopy ; $4b67
 	ld a, [hl+] ; $4b6a
 	ld h, [hl] ; $4b6b
 	ld l, a ; $4b6c
@@ -1433,18 +1433,18 @@ ComputeLevelUpStatDeltas:
 	ld a, [hl] ; $4b76
 	sub a, d ; $4b77
 	ld d, a ; $4b78
-	ld hl, $ffb0 ; $4b79
+	ld hl, hStatDeltaOutPtr ; $4b79
 	ld a, [hl+] ; $4b7c
 	ld h, [hl] ; $4b7d
 	ld l, a ; $4b7e
 	ld [hl], d ; $4b7f
 	inc hl ; $4b80
 	ld a, l ; $4b81
-	ldh [$ffb0], a ; $4b82
+	ldh [hStatDeltaOutPtr], a ; $4b82
 	ld a, h ; $4b84
-	ldh [$ffb1], a ; $4b85
+	ldh [hStatDeltaOutPtr + 1], a ; $4b85
 	pop bc ; $4b87
-	ld hl, $ffb2 ; $4b88
+	ld hl, hStatDeltaRecordCopy ; $4b88
 	ld a, [hl+] ; $4b8b
 	ld h, [hl] ; $4b8c
 	ld l, a ; $4b8d

@@ -2860,11 +2860,11 @@ WriteStarVictoryGrid:
 	pop de ; $524c
 	pop bc ; $524d
 	ret ; $524e
-Func_03_524f:
+MoveSaveEditorCursor:
 	ldh a, [hPlayerInputFlags] ; $524f
 	bit PADB_A, a ; $5251
 	jr nz, Label_03_5270 ; $5253
-	ld hl, $ffb0 ; $5255
+	ld hl, hSaveEditorCursor ; $5255
 	ld a, [hl+] ; $5258
 	ld h, [hl] ; $5259
 	ld l, a ; $525a
@@ -2874,16 +2874,16 @@ Func_03_524f:
 	add hl, de ; $5260
 	ld a, h ; $5261
 	and a, $03 ; $5262
-	ldh [$ffb1], a ; $5264
+	ldh [hSaveEditorCursor + 1], a ; $5264
 	ld a, l ; $5266
-	ldh [$ffb0], a ; $5267
+	ldh [hSaveEditorCursor], a ; $5267
 	xor a, b ; $5269
 	bit 7, a ; $526a
 	ret ; $526c
 	INCBIN "data/bank_003/d_526d.bin" ; $526d, 3 bytes
 Label_03_5270:
 	sound $5e ; $5270
-	ld hl, $ffb0 ; $5272
+	ld hl, hSaveEditorCursor ; $5272
 	ld a, [hl+] ; $5275
 	ld h, [hl] ; $5276
 	ld l, a ; $5277
@@ -2961,9 +2961,9 @@ SaveSlotDebugEditor:
 	ld [wCurrentStorySlot], a ; $5322
 	ld hl, $0000 ; $5325
 	ld a, l ; $5328
-	ldh [$ffb0], a ; $5329
+	ldh [hSaveEditorCursor], a ; $5329
 	ld a, h ; $532b
-	ldh [$ffb1], a ; $532c
+	ldh [hSaveEditorCursor + 1], a ; $532c
 	farcall InitTextWindows ; $532e
 	call EnableLCD ; $5331
 	ld c, $7f ; $5334
@@ -2991,7 +2991,7 @@ Label_03_5360:
 Label_03_5369:
 	wram_bank $07 ; $5369
 	push de ; $536f
-	ld hl, $ffb0 ; $5370
+	ld hl, hSaveEditorCursor ; $5370
 	ld a, [hl+] ; $5373
 	ld h, [hl] ; $5374
 	ld l, a ; $5375
@@ -3044,7 +3044,7 @@ Label_03_5396:
 	pop de ; $53b0
 Label_03_53b1:
 	push de ; $53b1
-	ld hl, $ffb0 ; $53b2
+	ld hl, hSaveEditorCursor ; $53b2
 	ld a, [hl+] ; $53b5
 	ld h, [hl] ; $53b6
 	ld l, a ; $53b7
@@ -3063,7 +3063,7 @@ Label_03_53c8:
 	jr z, Label_03_53f8 ; $53d2
 Label_03_53d4:
 	push de ; $53d4
-	ldh a, [$ffb0] ; $53d5
+	ldh a, [hSaveEditorCursor] ; $53d5
 	ld e, a ; $53d7
 	and a, $07 ; $53d8
 	swap a ; $53da
@@ -3089,28 +3089,28 @@ Label_03_53f8:
 	bit PADB_UP, a ; $53fd
 	jr z, Label_03_540c ; $53ff
 	ld bc, $f0f8 ; $5401
-	call Func_03_524f ; $5404
+	call MoveSaveEditorCursor ; $5404
 	jr z, Label_03_53b1 ; $5407
 	jp Label_03_5369 ; $5409
 Label_03_540c:
 	bit 5, a ; $540c
 	jr z, Label_03_541b ; $540e
 	ld bc, rIE ; $5410
-	call Func_03_524f ; $5413
+	call MoveSaveEditorCursor ; $5413
 	jr z, Label_03_53b1 ; $5416
 	jp Label_03_5369 ; $5418
 Label_03_541b:
 	bit 4, a ; $541b
 	jr z, Label_03_542a ; $541d
 	ld bc, $0101 ; $541f
-	call Func_03_524f ; $5422
+	call MoveSaveEditorCursor ; $5422
 	jr z, Label_03_53b1 ; $5425
 	jp Label_03_5369 ; $5427
 Label_03_542a:
 	bit 7, a ; $542a
 	jr z, Label_03_543a ; $542c
 	ld bc, $1008 ; $542e
-	call Func_03_524f ; $5431
+	call MoveSaveEditorCursor ; $5431
 	jp z, Label_03_53b1 ; $5434
 	jp Label_03_5369 ; $5437
 Label_03_543a:

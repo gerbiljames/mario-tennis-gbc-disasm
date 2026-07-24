@@ -373,6 +373,7 @@
  "0xd19a": "InitAllMinigameRecordBlocks",
  "0xd229": "ReadStarVictoryGrid",
  "0xd240": "WriteStarVictoryGrid",
+ "0xd24f": "MoveSaveEditorCursor",
  "0xd29d": "GetCurrentSlotBlockId",
  "0xd2b3": "ReadCurrentSlotBlock",
  "0xd2c3": "WriteCurrentSlotBlock",
