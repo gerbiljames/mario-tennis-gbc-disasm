@@ -116,6 +116,7 @@ Label_0b_40b4:
 	; $40bc, 4 bytes (records:2)
 	dw $c2fc ; record 0
 	dw $c2fd ; record 1
+Func_0b_40c0:
 	push bc ; $40c0
 	push hl ; $40c1
 	ld hl, $c2fc ; $40c2
@@ -180,7 +181,37 @@ Label_0b_4110:
 Label_0b_4119:
 	xor a, a ; $4119
 	ret ; $411a
-	INCBIN "data/bank_00b/d_411b.bin" ; $411b, 48 bytes
+Unused_0b_411b:
+	; $411b, 7 bytes (bytes:7)
+	db $df, $2a, $08, $fa, $b1, $c4, $c9 ; 0x00
+	ld hl, wBallDepth ; $4122
+	ld a, [hl+] ; $4125
+	ld d, [hl] ; $4126
+	ld e, a ; $4127
+	ld hl, wBallX ; $4128
+	ld a, [hl+] ; $412b
+	ld h, [hl] ; $412c
+	ld l, a ; $412d
+	ret ; $412e
+	ld h, a ; $412f
+	ld l, $00 ; $4130
+	srl h ; $4132
+	rr l ; $4134
+	ld bc, $d000 ; $4136
+	add hl, bc ; $4139
+	ld b, h ; $413a
+	ld c, l ; $413b
+	ld hl, $0004 ; $413c
+	add hl, bc ; $413f
+	ld a, [hl+] ; $4140
+	ld d, [hl] ; $4141
+	ld e, a ; $4142
+	ld hl, $0001 ; $4143
+	add hl, bc ; $4146
+	ld a, [hl+] ; $4147
+	ld h, [hl] ; $4148
+	ld l, a ; $4149
+	ret ; $414a
 ResetActiveCharState:
 	ldh a, [hWramBank] ; $414b
 	push af ; $414d
@@ -190,6 +221,7 @@ ResetActiveCharState:
 	pop af ; $4159
 	wram_bank ; $415a
 	ret ; $415e
+Func_0b_415f:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $415f
 	add a, a ; $4162
 	add a, a ; $4163
@@ -278,6 +310,7 @@ UpdateDrillAbortCountdown:
 	ld a, $01 ; $41d4
 	ld [wMatchAbortFlag], a ; $41d6
 	ret ; $41d9
+Func_0b_41da:
 	ld a, [wPointOutcome] ; $41da
 	cp a, $04 ; $41dd
 	ret z ; $41df
@@ -308,7 +341,10 @@ Label_0b_41fd:
 	or a, [hl] ; $4204
 	ld [hl], a ; $4205
 	ret ; $4206
-	INCBIN "data/bank_00b/d_4207.bin" ; $4207, 4 bytes
+Table_0b_4207:
+	; $4207, 4 bytes (bytes:4)
+	db $03, $02, $00, $01 ; 0x00
+Func_0b_420b:
 	push bc ; $420b
 	ld a, [$c2e4] ; $420c
 	ld b, a ; $420f
@@ -337,6 +373,7 @@ Label_0b_4226:
 	xor a, $01 ; $422f
 	pop bc ; $4231
 	ret ; $4232
+Func_0b_4233:
 	ld a, [wRallyLength] ; $4233
 	cp a, $01 ; $4236
 	ret nz ; $4238
@@ -360,6 +397,7 @@ Label_0b_424d:
 	or a, [hl] ; $4254
 	ld [hl], a ; $4255
 	ret ; $4256
+Func_0b_4257:
 	push bc ; $4257
 	ld a, [$c2e5] ; $4258
 	ld b, a ; $425b
@@ -372,7 +410,120 @@ Label_0b_425f:
 	jr nz, Label_0b_425f ; $4264
 	pop bc ; $4266
 	ret ; $4267
-	INCBIN "data/bank_00b/d_4268.bin" ; $4268, 318 bytes
+Func_0b_4268:
+	push bc ; $4268
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4269
+	ld c, a ; $426c
+	inc c ; $426d
+	ld a, [$c2e5] ; $426e
+	ld b, a ; $4271
+Label_0b_4272:
+	ld a, $00 ; $4272
+	rr b ; $4274
+	adc a, $00 ; $4276
+	dec c ; $4278
+	jr nz, Label_0b_4272 ; $4279
+	or a, a ; $427b
+	pop bc ; $427c
+	ret ; $427d
+DrillPointTable_0b_427e:
+	; $427e, 64 bytes (bytes:4)
+	db $00, $03, $09, $09 ; 0x00
+	db $00, $01, $09, $09 ; 0x04
+	db $00, $03, $09, $09 ; 0x08
+	db $01, $00, $09, $09 ; 0x0c
+	db $01, $02, $09, $09 ; 0x10
+	db $00, $01, $09, $09 ; 0x14
+	db $01, $02, $09, $09 ; 0x18
+	db $01, $00, $09, $09 ; 0x1c
+	db $03, $00, $09, $09 ; 0x20
+	db $00, $01, $09, $09 ; 0x24
+	db $03, $00, $09, $09 ; 0x28
+	db $01, $00, $09, $09 ; 0x2c
+	db $02, $01, $09, $09 ; 0x30
+	db $00, $01, $09, $09 ; 0x34
+	db $02, $01, $09, $09 ; 0x38
+	db $01, $00, $09, $09 ; 0x3c
+	; $42be, 1 bytes (fill)
+	ds 1, $ff
+DrillPointTable_0b_42bf:
+	; $42bf, 64 bytes (bytes:4)
+	db $00, $03, $09, $09 ; 0x00
+	db $01, $00, $09, $09 ; 0x04
+	db $00, $03, $09, $09 ; 0x08
+	db $00, $01, $09, $09 ; 0x0c
+	db $01, $02, $09, $09 ; 0x10
+	db $01, $00, $09, $09 ; 0x14
+	db $01, $02, $09, $09 ; 0x18
+	db $00, $01, $09, $09 ; 0x1c
+	db $03, $00, $09, $09 ; 0x20
+	db $01, $00, $09, $09 ; 0x24
+	db $03, $00, $09, $09 ; 0x28
+	db $00, $01, $09, $09 ; 0x2c
+	db $02, $01, $09, $09 ; 0x30
+	db $01, $00, $09, $09 ; 0x34
+	db $02, $01, $09, $09 ; 0x38
+	db $00, $01, $09, $09 ; 0x3c
+	; $42ff, 1 bytes (fill)
+	ds 1, $ff
+DrillPointTable_0b_4300:
+	; $4300, 32 bytes (bytes:4)
+	db $00, $03, $09, $09 ; 0x00
+	db $00, $01, $09, $09 ; 0x04
+	db $01, $02, $09, $09 ; 0x08
+	db $00, $01, $09, $09 ; 0x0c
+	db $03, $00, $09, $09 ; 0x10
+	db $00, $01, $09, $09 ; 0x14
+	db $02, $01, $09, $09 ; 0x18
+	db $00, $01, $09, $09 ; 0x1c
+	; $4320, 1 bytes (fill)
+	ds 1, $ff
+DrillPointTable_0b_4321:
+	; $4321, 32 bytes (bytes:4)
+	db $00, $03, $09, $09 ; 0x00
+	db $01, $00, $09, $09 ; 0x04
+	db $01, $02, $09, $09 ; 0x08
+	db $01, $00, $09, $09 ; 0x0c
+	db $03, $00, $09, $09 ; 0x10
+	db $01, $00, $09, $09 ; 0x14
+	db $02, $01, $09, $09 ; 0x18
+	db $01, $00, $09, $09 ; 0x1c
+	; $4341, 1 bytes (fill)
+	ds 1, $ff
+TargetPositions_0b_4342:
+	; $4342, 64 bytes (records:4)
+; 16 records x 4 bytes
+	dw $fe40, $fd40 ; record 0
+	dw $0000, $0000 ; record 1
+	dw $0000, $0000 ; record 2
+	dw $01c0, $02c0 ; record 3
+	dw $0000, $fd40 ; record 4
+	dw $01c0, $0000 ; record 5
+	dw $fe40, $0000 ; record 6
+	dw $0000, $02c0 ; record 7
+	dw $0000, $0000 ; record 8
+	dw $01c0, $02c0 ; record 9
+	dw $fe40, $fd40 ; record 10
+	dw $0000, $0000 ; record 11
+	dw $fe40, $0000 ; record 12
+	dw $0000, $02c0 ; record 13
+	dw $0000, $fd40 ; record 14
+	dw $01c0, $0000 ; record 15
+	; $4382, 2 bytes (fill)
+	ds 2, $ff
+TargetPositions_0b_4384:
+	; $4384, 32 bytes (records:4)
+; 8 records x 4 bytes
+	dw $fe40, $fd40 ; record 0
+	dw $0000, $0000 ; record 1
+	dw $0000, $fd40 ; record 2
+	dw $01c0, $0000 ; record 3
+	dw $0000, $0000 ; record 4
+	dw $01c0, $02c0 ; record 5
+	dw $fe40, $0000 ; record 6
+	dw $0000, $02c0 ; record 7
+	; $43a4, 2 bytes (fill)
+	ds 2, $ff
 PlayDrillPointEndSequence:
 	ld hl, wMatchCameraY ; $43a6
 	ld a, [hl+] ; $43a9
@@ -430,6 +581,7 @@ LoadDrillOpponentChar:
 	pop af ; $4416
 	wram_bank ; $4417
 	ret ; $441b
+Func_0b_441c:
 	ld a, [wCurrentServingPlayer] ; $441c
 	and a, $01 ; $441f
 	add a, l ; $4421
@@ -440,6 +592,7 @@ Label_0b_4426:
 	ld a, [hl] ; $4426
 	call LoadDrillOpponentChar ; $4427
 	ret ; $442a
+Func_0b_442b:
 	ld b, a ; $442b
 	ldh a, [hWramBank] ; $442c
 	push af ; $442e
@@ -450,7 +603,9 @@ Label_0b_4426:
 	pop af ; $443a
 	wram_bank ; $443b
 	ret ; $443f
-	INCBIN "data/bank_00b/d_4440.bin" ; $4440, 7 bytes
+	ld hl, $007a ; $4440
+	call Func_0b_442b ; $4443
+	ret ; $4446
 Func_0b_4447:
 	ld b, a ; $4447
 	ldh a, [hWramBank] ; $4448
@@ -548,6 +703,7 @@ Label_0b_44ec:
 	ld a, $ff ; $44ec
 	ld [$c2e6], a ; $44ee
 	ret ; $44f1
+Func_0b_44f2:
 	ld a, [wPointOutcome] ; $44f2
 	cp a, $01 ; $44f5
 	jr z, Label_0b_452e ; $44f7
@@ -599,6 +755,7 @@ Label_0b_4540:
 Label_0b_4541:
 	ld [$c2e6], a ; $4541
 	ret ; $4544
+Func_0b_4545:
 	cp a, $ff ; $4545
 	jr z, Label_0b_4554 ; $4547
 	ld c, a ; $4549
@@ -612,6 +769,7 @@ Label_0b_4553:
 Label_0b_4554:
 	ld [$c2e6], a ; $4554
 	ret ; $4557
+Func_0b_4558:
 	cp a, $ff ; $4558
 	jr z, Label_0b_4570 ; $455a
 	ld c, a ; $455c
@@ -681,7 +839,7 @@ ShowDrillMessageByIndex:
 	farcall ShowMessageWindow ; $45c0
 	ret ; $45c3
 DrillMessageTextIds_0b:
-	; $45c4, 274 bytes (records:2)
+	; $45c4, 218 bytes (records:2)
 	dw $28c4 ; record 0
 	dw $28c4 ; record 1
 	dw $28c5 ; record 2
@@ -791,34 +949,39 @@ DrillMessageTextIds_0b:
 	dw $2c22 ; record 106
 	dw $2c23 ; record 107
 	dw $2c24 ; record 108
-	dw $0200 ; record 109
-	dw $8bfa ; record 110
-	dw $a7c7 ; record 111
-	dw $01c8 ; record 112
-	dw $0000 ; record 113
-	dw $9a21 ; record 114
-	dw $2ac7 ; record 115
-	dw $5f56 ; record 116
-	dw $9821 ; record 117
-	dw $2ac7 ; record 118
-	dw $6f66 ; record 119
-	dw $44df ; record 120
-	dw $df08 ; record 121
-	dw $0846 ; record 122
-	dw $e821 ; record 123
-	dw $0146 ; record 124
-	dw $0930 ; record 125
-	dw $9dcd ; record 126
-	dw $c91e ; record 127
-	dw $8bfa ; record 128
-	dw $a7c7 ; record 129
-	dw $01c8 ; record 130
-	dw $0000 ; record 131
-	dw $9e21 ; record 132
-	dw $2ac7 ; record 133
-	dw $5f56 ; record 134
-	dw $9c21 ; record 135
-	dw $2ac7 ; record 136
+Unused_0b_469e:
+	; $469e, 2 bytes (bytes:2)
+	db $00, $02 ; 0x00
+Func_0b_46a0:
+	ld a, [$c78b] ; $46a0
+	and a, a ; $46a3
+	ret z ; $46a4
+	ld bc, $0000 ; $46a5
+	ld hl, $c79a ; $46a8
+	ld a, [hl+] ; $46ab
+	ld d, [hl] ; $46ac
+	ld e, a ; $46ad
+	ld hl, $c798 ; $46ae
+	ld a, [hl+] ; $46b1
+	ld h, [hl] ; $46b2
+	ld l, a ; $46b3
+	farcall ProjectWorldToScreen_08 ; $46b4
+	farcall ApplyCameraProjection ; $46b7
+	ld hl, DrillSpriteTemplate_0b ; $46ba
+	ld bc, $0930 ; $46bd
+	call QueueSpriteTemplate ; $46c0
+	ret ; $46c3
+Func_0b_46c4:
+	ld a, [$c78b] ; $46c4
+	and a, a ; $46c7
+	ret z ; $46c8
+	ld bc, $0000 ; $46c9
+	ld hl, $c79e ; $46cc
+	ld a, [hl+] ; $46cf
+	ld d, [hl] ; $46d0
+	ld e, a ; $46d1
+	ld hl, $c79c ; $46d2
+	ld a, [hl+] ; $46d5
 QueueDrillSprite_0b:
 	ld h, [hl] ; $46d6
 	ld l, a ; $46d7
@@ -833,7 +996,12 @@ DrillSpriteTemplate_0b:
 	oam_sprite $f1, $04, $00, $00
 	oam_sprite $01, $04, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_00b/d_46f1.bin" ; $46f1, 20 bytes
+SignedTable_0b_46f1:
+	; $46f1, 10 bytes (bytes:10)
+	db $00, $00, $ff, $00, $ff, $ff, $01, $ff, $ff, $01 ; 0x00
+SignedTable_0b_46fb:
+	; $46fb, 10 bytes (bytes:10)
+	db $00, $00, $01, $00, $01, $01, $ff, $01, $01, $ff ; 0x00
 RunTrainingDrillByID:
 	push af ; $4705
 	farcall InitMinigameMatchSettings ; $4706
@@ -923,24 +1091,24 @@ Label_0b_47ae:
 	jp Label_0b_473f ; $47b1
 Data_0b_47b4:
 	; $47b4, 36 bytes (records:2)
-	dw $482c ; record 0
-	dw $49c7 ; record 1
-	dw $4c13 ; record 2
-	dw $4de2 ; record 3
-	dw $4f69 ; record 4
-	dw $51cd ; record 5
-	dw $53dd ; record 6
-	dw $5644 ; record 7
-	dw $58bf ; record 8
-	dw $5bda ; record 9
-	dw $5e95 ; record 10
-	dw $614e ; record 11
-	dw $6400 ; record 12
-	dw $66db ; record 13
-	dw $6926 ; record 14
-	dw $6b5d ; record 15
-	dw $6dae ; record 16
-	dw $700e ; record 17
+	dw DrillDefinition_0b_00 ; record 0
+	dw DrillDefinition_0b_01 ; record 1
+	dw DrillDefinition_0b_02 ; record 2
+	dw DrillDefinition_0b_03 ; record 3
+	dw DrillDefinition_0b_04 ; record 4
+	dw DrillDefinition_0b_05 ; record 5
+	dw DrillDefinition_0b_06 ; record 6
+	dw DrillDefinition_0b_07 ; record 7
+	dw DrillDefinition_0b_08 ; record 8
+	dw DrillDefinition_0b_09 ; record 9
+	dw DrillDefinition_0b_0a ; record 10
+	dw DrillDefinition_0b_0b ; record 11
+	dw DrillDefinition_0b_0c ; record 12
+	dw DrillDefinition_0b_0d ; record 13
+	dw DrillDefinition_0b_0e ; record 14
+	dw DrillDefinition_0b_0f ; record 15
+	dw DrillDefinition_0b_10 ; record 16
+	dw DrillDefinition_0b_11 ; record 17
 ClearBGForDrillResult:
 	call DisableLCDSafely ; $47d8
 	wram_bank $02 ; $47db
@@ -975,12 +1143,124 @@ Label_0b_4824:
 	or a, b ; $4828
 	jr nz, Label_0b_4824 ; $4829
 	ret ; $482b
-	INCBIN "data/bank_00b/d_482c.bin" ; $482c, 226 bytes
+DrillDefinition_0b_00:
+	; $482c, 16 bytes (drill_definition)
+	db $37, $18, $02, $05, $00, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_00, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_00:
+	; $483c, 16 bytes (mode_hooks)
+	dw $484d ; record 0
+	dw $4851 ; record 1
+	dw $4863 ; record 2
+	dw $484c ; record 3
+	dw $48a2 ; record 4
+	dw $489e ; record 5
+	dw $489a ; record 6
+	dw RetStub ; record 7
+	ret ; $484c
+	call UpdateDrillAbortCountdown ; $484d
+	ret ; $4850
+	xor a, a ; $4851
+	ld [$c2e1], a ; $4852
+	ld a, $0a ; $4855
+	ld [$c2e0], a ; $4857
+	xor a, a ; $485a
+	ld [$c2e6], a ; $485b
+	xor a, a ; $485e
+	ld [$c2ff], a ; $485f
+	ret ; $4862
+	call Func_0b_48fc ; $4863
+	call Func_0b_48a6 ; $4866
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4869
+	bit 0, a ; $486c
+	ret nz ; $486e
+	cp a, $08 ; $486f
+	jr z, Label_0b_4880 ; $4871
+	ld hl, $c2e8 ; $4873
+	ld a, [hl+] ; $4876
+	ld b, [hl] ; $4877
+	cp a, b ; $4878
+	ret z ; $4879
+	ld a, $80 ; $487a
+	ld [wMatchAbortFlag], a ; $487c
+	ret ; $487f
+Label_0b_4880:
+	ld hl, $c2e9 ; $4880
+	ld a, [hl-] ; $4883
+	sub a, [hl] ; $4884
+	jr z, Label_0b_488f ; $4885
+	jr nc, Label_0b_4894 ; $4887
+	ld a, $01 ; $4889
+	ld [wPointWinLoseFlag], a ; $488b
+	ret ; $488e
+Label_0b_488f:
+	xor a, a ; $488f
+	ld [wPointWinLoseFlag], a ; $4890
+	ret ; $4893
+Label_0b_4894:
+	ld a, $ff ; $4894
+	ld [wPointWinLoseFlag], a ; $4896
+	ret ; $4899
+	call Func_0b_4918 ; $489a
+	ret ; $489d
+	call Func_0b_490e ; $489e
+	ret ; $48a1
+	call Func_0b_4905 ; $48a2
+	ret ; $48a5
+Func_0b_48a6:
+	farcall UpdateScorePanelDisplay ; $48a6
+	ld a, [$c2ff] ; $48a9
+	ld b, a ; $48ac
+	ld a, [wTotalPointsScoredInCurrentGame] ; $48ad
+	bit 0, a ; $48b0
+	ld a, b ; $48b2
+	jr z, Label_0b_48b7 ; $48b3
+	cpl ; $48b5
+	inc a ; $48b6
+Label_0b_48b7:
+	ld [wPointWinLoseFlag], a ; $48b7
+	call RecordDrillPointResultBits ; $48ba
+	ld a, $00 ; $48bd
+	call Func_0b_40c0 ; $48bf
+	ld [$c2e8], a ; $48c2
+	ld a, $01 ; $48c5
+	call Func_0b_40c0 ; $48c7
+	ld [$c2e9], a ; $48ca
+	call ShowQueuedDrillMessage ; $48cd
+	farcall UpdatePointStats ; $48d0
+	farcall AwardPoint ; $48d3
+	ld a, [$c2e8] ; $48d6
+	ld [wPlayer1PointsWon], a ; $48d9
+	ld a, [$c2e9] ; $48dc
+	ld [wPlayer2PointsWon], a ; $48df
+	ld a, [wPlayer1PointsWon] ; $48e2
+	ld b, $01 ; $48e5
+	farcall LoadPlayer1PointsDigitGfx ; $48e7
+	ld a, [wPlayer2PointsWon] ; $48ea
+	ld b, $01 ; $48ed
+	farcall LoadPlayer2PointsDigitGfx ; $48ef
+	farcall StepMatchFrame ; $48f2
+	farcall StartPointEndReactions ; $48f5
+	call PlayDrillPointEndSequence ; $48f8
+	ret ; $48fb
+Func_0b_48fc:
+	ld a, $00 ; $48fc
+	call Drill00JudgePoint ; $48fe
+	ld [$c2ff], a ; $4901
+	ret ; $4904
+Func_0b_4905:
+	ld a, $01 ; $4905
+	call Drill00JudgePoint ; $4907
+	ld [$c2ff], a ; $490a
+	ret ; $490d
+Func_0b_490e:
 	ret ; $490e
 	ld a, $02 ; $490f
 	call Drill00JudgePoint ; $4911
 	ld [$c2ff], a ; $4914
 	ret ; $4917
+Func_0b_4918:
 	ret ; $4918
 	ld a, $03 ; $4919
 	call Drill00JudgePoint ; $491b
@@ -1007,7 +1287,7 @@ Label_0b_4932:
 	dw Label_0b_496a ; $493b jumptable
 Label_0b_493d:
 	ld a, [wPointOutcome] ; $493d
-	ld hl, $495c ; $4940
+	ld hl, SignedTable_0b_495c ; $4940
 	add a, l ; $4943
 	ld l, a ; $4944
 	jr nc, Label_0b_4948 ; $4945
@@ -1018,7 +1298,7 @@ Label_0b_4948:
 	ld b, $06 ; $494a
 	call QueueDrillResultMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
-	ld hl, $46f1 ; $4952
+	ld hl, SignedTable_0b_46f1 ; $4952
 	add a, l ; $4955
 	ld l, a ; $4956
 	jr nc, Label_0b_495a ; $4957
@@ -1026,7 +1306,9 @@ Label_0b_4948:
 Label_0b_495a:
 	ld a, [hl] ; $495a
 	ret ; $495b
-	INCBIN "data/bank_00b/d_495c.bin" ; $495c, 10 bytes
+SignedTable_0b_495c:
+	; $495c, 10 bytes (bytes:10)
+	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
 Label_0b_4966:
 	xor a, a ; $4966
 	ret ; $4967
@@ -1046,7 +1328,7 @@ Label_0b_496c:
 	dw Label_0b_49b5 ; $4975 jumptable
 Label_0b_4977:
 	ld a, [wPointOutcome] ; $4977
-	ld hl, $4996 ; $497a
+	ld hl, SignedTable_0b_4996 ; $497a
 	add a, l ; $497d
 	ld l, a ; $497e
 	jr nc, Label_0b_4982 ; $497f
@@ -1057,7 +1339,7 @@ Label_0b_4982:
 	ld b, $06 ; $4984
 	call QueueDrillResultMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
-	ld hl, $46fb ; $498c
+	ld hl, SignedTable_0b_46fb ; $498c
 	add a, l ; $498f
 	ld l, a ; $4990
 	jr nc, Label_0b_4994 ; $4991
@@ -1065,7 +1347,9 @@ Label_0b_4982:
 Label_0b_4994:
 	ld a, [hl] ; $4994
 	ret ; $4995
-	INCBIN "data/bank_00b/d_4996.bin" ; $4996, 10 bytes
+SignedTable_0b_4996:
+	; $4996, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
 Label_0b_49a0:
 	ld a, [wPointOutcome] ; $49a0
 	cp a, $07 ; $49a3
@@ -1092,11 +1376,2562 @@ Label_0b_49bf:
 	ld [wMatchAbortFlag], a ; $49c1
 	ld a, $ff ; $49c4
 	ret ; $49c6
-	INCBIN "data/bank_00b/d_49c7.bin" ; $49c7, 4643 bytes
+DrillDefinition_0b_01:
+	; $49c7, 16 bytes (drill_definition)
+	db $38, $18, $02, $05, $01, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_01, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_01:
+	; $49d7, 16 bytes (mode_hooks)
+	dw $49e7 ; record 0
+	dw $49f2 ; record 1
+	dw $4a27 ; record 2
+	dw RetStub ; record 3
+	dw $4a66 ; record 4
+	dw $4a62 ; record 5
+	dw $4a5e ; record 6
+	dw $49eb ; record 7
+	call UpdateDrillAbortCountdown ; $49e7
+	ret ; $49ea
+	call Func_0b_46a0 ; $49eb
+	call Func_0b_46c4 ; $49ee
+	ret ; $49f1
+	xor a, a ; $49f2
+	ld [$c2e1], a ; $49f3
+	ld [$c2e2], a ; $49f6
+	ld a, $0a ; $49f9
+	ld [$c2e0], a ; $49fb
+	ld a, $01 ; $49fe
+	ld [$c78b], a ; $4a00
+	ld hl, DrillPositions_0b_4a6a ; $4a03
+	call Func_0b_415f ; $4a06
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
+	srl a ; $4a0c
+	ld hl, Table_0b_4a23 ; $4a0e
+	add a, l ; $4a11
+	ld l, a ; $4a12
+	jr nc, Label_0b_4a16 ; $4a13
+	inc h ; $4a15
+Label_0b_4a16:
+	ld a, [hl] ; $4a16
+	ld [$c7b5], a ; $4a17
+	xor a, a ; $4a1a
+	ld [$c2e6], a ; $4a1b
+	xor a, a ; $4a1e
+	ld [$c2ff], a ; $4a1f
+	ret ; $4a22
+Table_0b_4a23:
+	; $4a23, 4 bytes (bytes:4)
+	db $20, $10, $10, $20 ; 0x00
+	call Func_0b_4b2e ; $4a27
+	call Func_0b_4aac ; $4a2a
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4a2d
+	bit 0, a ; $4a30
+	ret nz ; $4a32
+	cp a, $08 ; $4a33
+	jr z, Label_0b_4a44 ; $4a35
+	ld hl, $c2e8 ; $4a37
+	ld a, [hl+] ; $4a3a
+	ld b, [hl] ; $4a3b
+	cp a, b ; $4a3c
+	ret z ; $4a3d
+	ld a, $80 ; $4a3e
+	ld [wMatchAbortFlag], a ; $4a40
+	ret ; $4a43
+Label_0b_4a44:
+	ld hl, $c2e9 ; $4a44
+	ld a, [hl-] ; $4a47
+	sub a, [hl] ; $4a48
+	jr z, Label_0b_4a53 ; $4a49
+	jr nc, Label_0b_4a58 ; $4a4b
+	ld a, $01 ; $4a4d
+	ld [wPointWinLoseFlag], a ; $4a4f
+	ret ; $4a52
+Label_0b_4a53:
+	xor a, a ; $4a53
+	ld [wPointWinLoseFlag], a ; $4a54
+	ret ; $4a57
+Label_0b_4a58:
+	ld a, $ff ; $4a58
+	ld [wPointWinLoseFlag], a ; $4a5a
+	ret ; $4a5d
+	call Func_0b_4b4a ; $4a5e
+	ret ; $4a61
+	call Func_0b_4b40 ; $4a62
+	ret ; $4a65
+	call Func_0b_4b37 ; $4a66
+	ret ; $4a69
+DrillPositions_0b_4a6a:
+	; $4a6a, 66 bytes (records:4)
+; 16 records x 4 bytes
+	dw $0000, $0000 ; record 0
+	dw $01b0, $0000 ; record 1
+	dw $fe50, $0000 ; record 2
+	dw $0000, $0000 ; record 3
+	dw $fe50, $0000 ; record 4
+	dw $0000, $0000 ; record 5
+	dw $0000, $0000 ; record 6
+	dw $01b0, $0000 ; record 7
+	dw $fe50, $0000 ; record 8
+	dw $0000, $0000 ; record 9
+	dw $0000, $0000 ; record 10
+	dw $01b0, $0000 ; record 11
+	dw $0000, $0000 ; record 12
+	dw $01b0, $0000 ; record 13
+	dw $fe50, $0000 ; record 14
+	dw $0000, $0000 ; record 15
+	db $ff, $ff
+Func_0b_4aac:
+	farcall UpdateScorePanelDisplay ; $4aac
+	ld a, [$c2ff] ; $4aaf
+	ld b, a ; $4ab2
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4ab3
+	bit 0, a ; $4ab6
+	ld a, b ; $4ab8
+	jr z, Label_0b_4abd ; $4ab9
+	cpl ; $4abb
+	inc a ; $4abc
+Label_0b_4abd:
+	ld [wPointWinLoseFlag], a ; $4abd
+	call RecordDrillPointResultBits ; $4ac0
+	ld a, $00 ; $4ac3
+	call Func_0b_40c0 ; $4ac5
+	ld [$c2e8], a ; $4ac8
+	ld a, $01 ; $4acb
+	call Func_0b_40c0 ; $4acd
+	ld [$c2e9], a ; $4ad0
+	call ShowQueuedDrillMessage ; $4ad3
+	ld hl, $c2f8 ; $4ad6
+	ld a, [wCurrentServingPlayer] ; $4ad9
+	add a, l ; $4adc
+	ld l, a ; $4add
+	jr nc, Label_0b_4ae1 ; $4ade
+	inc h ; $4ae0
+Label_0b_4ae1:
+	ld a, [hl] ; $4ae1
+	or a, a ; $4ae2
+	jr z, Label_0b_4ae8 ; $4ae3
+	farcall UpdatePointStats ; $4ae5
+Label_0b_4ae8:
+	call Func_0b_4b05 ; $4ae8
+	ld a, [wPlayer1PointsWon] ; $4aeb
+	ld b, $01 ; $4aee
+	farcall LoadPlayer1PointsDigitGfx ; $4af0
+	ld a, [wPlayer2PointsWon] ; $4af3
+	ld b, $01 ; $4af6
+	farcall LoadPlayer2PointsDigitGfx ; $4af8
+	farcall StepMatchFrame ; $4afb
+	farcall StartPointEndReactions ; $4afe
+	call PlayDrillPointEndSequence ; $4b01
+	ret ; $4b04
+Func_0b_4b05:
+	ld a, [wPointWinLoseFlag] ; $4b05
+	or a, a ; $4b08
+	ret z ; $4b09
+	inc a ; $4b0a
+	srl a ; $4b0b
+	ld b, a ; $4b0d
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4b0e
+	and a, $01 ; $4b11
+	xor a, $01 ; $4b13
+	add a, b ; $4b15
+	bit 0, a ; $4b16
+	jr nz, Label_0b_4b25 ; $4b18
+	ld hl, wPlayer2PointsWon ; $4b1a
+	bit 1, a ; $4b1d
+	jr z, Label_0b_4b24 ; $4b1f
+	ld hl, wPlayer1PointsWon ; $4b21
+Label_0b_4b24:
+	inc [hl] ; $4b24
+Label_0b_4b25:
+	xor a, a ; $4b25
+	ld [wServeFaultFlag], a ; $4b26
+	ld hl, wTotalPointsScoredInCurrentGame ; $4b29
+	inc [hl] ; $4b2c
+	ret ; $4b2d
+Func_0b_4b2e:
+	ld a, $00 ; $4b2e
+	call Func_0b_4b53 ; $4b30
+	ld [$c2ff], a ; $4b33
+	ret ; $4b36
+Func_0b_4b37:
+	ld a, $01 ; $4b37
+	call Func_0b_4b53 ; $4b39
+	ld [$c2ff], a ; $4b3c
+	ret ; $4b3f
+Func_0b_4b40:
+	ret ; $4b40
+	ld a, $02 ; $4b41
+	call Func_0b_4b53 ; $4b43
+	ld [$c2ff], a ; $4b46
+	ret ; $4b49
+Func_0b_4b4a:
+	ld a, $03 ; $4b4a
+	call Func_0b_4b53 ; $4b4c
+	ld [$c2ff], a ; $4b4f
+	ret ; $4b52
+Func_0b_4b53:
+	ld b, a ; $4b53
+	ld a, [$c2ff] ; $4b54
+	or a, a ; $4b57
+	ret nz ; $4b58
+	ld a, [wRallyLength] ; $4b59
+	dec a ; $4b5c
+	ld a, a ; $4b5d
+	rst Rst00 ; $4b5e
+	dw Label_0b_4b63 ; $4b5f jumptable
+	dw Label_0b_4bb8 ; $4b61 jumptable
+Label_0b_4b63:
+	ld a, b ; $4b63
+	ld a, a ; $4b64
+	rst Rst00 ; $4b65
+	dw Label_0b_4b6e ; $4b66 jumptable
+	dw Label_0b_4b97 ; $4b68 jumptable
+	dw Label_0b_4b99 ; $4b6a jumptable
+	dw Label_0b_4b9b ; $4b6c jumptable
+Label_0b_4b6e:
+	ld a, [wPointOutcome] ; $4b6e
+	ld hl, DrillShotTable_0b_4b8d ; $4b71
+	add a, l ; $4b74
+	ld l, a ; $4b75
+	jr nc, Label_0b_4b79 ; $4b76
+	inc h ; $4b78
+Label_0b_4b79:
+	ld a, [hl] ; $4b79
+	ld a, a ; $4b7a
+	ld b, $06 ; $4b7b
+	call QueueDrillResultMessage ; $4b7d
+	ld a, [wPointOutcome] ; $4b80
+	ld hl, SignedTable_0b_46f1 ; $4b83
+	add a, l ; $4b86
+	ld l, a ; $4b87
+	jr nc, Label_0b_4b8b ; $4b88
+	inc h ; $4b8a
+Label_0b_4b8b:
+	ld a, [hl] ; $4b8b
+	ret ; $4b8c
+DrillShotTable_0b_4b8d:
+	; $4b8d, 10 bytes (bytes:10)
+	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
+Label_0b_4b97:
+	xor a, a ; $4b97
+	ret ; $4b98
+Label_0b_4b99:
+	xor a, a ; $4b99
+	ret ; $4b9a
+Label_0b_4b9b:
+	ld a, [wBallHasBouncedFlag] ; $4b9b
+	or a, a ; $4b9e
+	ld a, $00 ; $4b9f
+	ret nz ; $4ba1
+	ld a, $03 ; $4ba2
+	ld b, $06 ; $4ba4
+	call QueueDrillResultMessage ; $4ba6
+	farcall DidBallCrossGate ; $4ba9
+	jr z, Label_0b_4c0b ; $4bac
+	xor a, a ; $4bae
+	ld [$c78b], a ; $4baf
+	xor a, a ; $4bb2
+	ld [$c78b], a ; $4bb3
+	xor a, a ; $4bb6
+	ret ; $4bb7
+Label_0b_4bb8:
+	ld a, b ; $4bb8
+	ld a, a ; $4bb9
+	rst Rst00 ; $4bba
+	dw Label_0b_4bc3 ; $4bbb jumptable
+	dw Label_0b_4bec ; $4bbd jumptable
+	dw Label_0b_4bff ; $4bbf jumptable
+	dw Label_0b_4c01 ; $4bc1 jumptable
+Label_0b_4bc3:
+	ld a, [wPointOutcome] ; $4bc3
+	ld hl, DrillShotTable_0b_4be2 ; $4bc6
+	add a, l ; $4bc9
+	ld l, a ; $4bca
+	jr nc, Label_0b_4bce ; $4bcb
+	inc h ; $4bcd
+Label_0b_4bce:
+	ld a, [hl] ; $4bce
+	ld a, a ; $4bcf
+	ld b, $06 ; $4bd0
+	call QueueDrillResultMessage ; $4bd2
+	ld a, [wPointOutcome] ; $4bd5
+	ld hl, SignedTable_0b_46fb ; $4bd8
+	add a, l ; $4bdb
+	ld l, a ; $4bdc
+	jr nc, Label_0b_4be0 ; $4bdd
+	inc h ; $4bdf
+Label_0b_4be0:
+	ld a, [hl] ; $4be0
+	ret ; $4be1
+DrillShotTable_0b_4be2:
+	; $4be2, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
+Label_0b_4bec:
+	ld a, [wPointOutcome] ; $4bec
+	cp a, $07 ; $4bef
+	ld a, $00 ; $4bf1
+	ret z ; $4bf3
+	ld a, $04 ; $4bf4
+	ld b, $06 ; $4bf6
+	call QueueDrillResultMessage ; $4bf8
+	jr Label_0b_4c0b ; $4bfb
+	db $af ; $4bfd
+	ret ; $4bfe
+Label_0b_4bff:
+	xor a, a ; $4bff
+	ret ; $4c00
+Label_0b_4c01:
+	xor a, a ; $4c01
+	ret ; $4c02
+	ld a, $01 ; $4c03
+	ld [wMatchAbortFlag], a ; $4c05
+	ld a, $01 ; $4c08
+	ret ; $4c0a
+Label_0b_4c0b:
+	ld a, $01 ; $4c0b
+	ld [wMatchAbortFlag], a ; $4c0d
+	ld a, $ff ; $4c10
+	ret ; $4c12
+DrillDefinition_0b_02:
+	; $4c13, 16 bytes (drill_definition)
+	db $39, $18, $02, $05, $02, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_02, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_02:
+	; $4c23, 16 bytes (mode_hooks)
+	dw $4c33 ; record 0
+	dw $4c37 ; record 1
+	dw $4c49 ; record 2
+	dw RetStub ; record 3
+	dw $4c94 ; record 4
+	dw $4c90 ; record 5
+	dw $4c8c ; record 6
+	dw RetStub ; record 7
+	call UpdateDrillAbortCountdown ; $4c33
+	ret ; $4c36
+	xor a, a ; $4c37
+	ld [$c2e1], a ; $4c38
+	ld a, $0a ; $4c3b
+	ld [$c2e0], a ; $4c3d
+	xor a, a ; $4c40
+	ld [$c2e6], a ; $4c41
+	xor a, a ; $4c44
+	ld [$c2ff], a ; $4c45
+	ret ; $4c48
+	call Func_0b_4d17 ; $4c49
+	call Func_0b_4c98 ; $4c4c
+	ld a, [wPointWinLoseFlag] ; $4c4f
+	or a, a ; $4c52
+	ret z ; $4c53
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4c54
+	bit 0, a ; $4c57
+	ret nz ; $4c59
+	ld a, [wPlayer1PointsWon] ; $4c5a
+	ld b, a ; $4c5d
+	ld a, [wPlayer2PointsWon] ; $4c5e
+	sub a, b ; $4c61
+	ld b, a ; $4c62
+	bit 7, a ; $4c63
+	jr z, Label_0b_4c69 ; $4c65
+	cpl ; $4c67
+	inc a ; $4c68
+Label_0b_4c69:
+	cp a, $02 ; $4c69
+	jr c, Label_0b_4c80 ; $4c6b
+	xor a, a ; $4c6d
+	rl b ; $4c6e
+	rl a ; $4c70
+	or a, a ; $4c72
+	jr nz, Label_0b_4c77 ; $4c73
+	ld a, $ff ; $4c75
+Label_0b_4c77:
+	ld [wPointWinLoseFlag], a ; $4c77
+	ld a, $80 ; $4c7a
+	ld [wMatchAbortFlag], a ; $4c7c
+	ret ; $4c7f
+Label_0b_4c80:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4c80
+	cp a, $08 ; $4c83
+	ret c ; $4c85
+	ld a, $00 ; $4c86
+	ld [wPointWinLoseFlag], a ; $4c88
+	ret ; $4c8b
+	call Func_0b_4d33 ; $4c8c
+	ret ; $4c8f
+	call Func_0b_4d29 ; $4c90
+	ret ; $4c93
+	call Func_0b_4d20 ; $4c94
+	ret ; $4c97
+Func_0b_4c98:
+	farcall UpdateScorePanelDisplay ; $4c98
+	ld a, [$c2ff] ; $4c9b
+	ld b, a ; $4c9e
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4c9f
+	bit 0, a ; $4ca2
+	ld a, b ; $4ca4
+	jr z, Label_0b_4ca9 ; $4ca5
+	cpl ; $4ca7
+	inc a ; $4ca8
+Label_0b_4ca9:
+	ld [wPointWinLoseFlag], a ; $4ca9
+	call RecordDrillPointResultBits ; $4cac
+	ld a, $00 ; $4caf
+	call Func_0b_40c0 ; $4cb1
+	ld [$c2e8], a ; $4cb4
+	ld a, $01 ; $4cb7
+	call Func_0b_40c0 ; $4cb9
+	ld [$c2e9], a ; $4cbc
+	call ShowQueuedDrillMessage ; $4cbf
+	farcall UpdatePointStats ; $4cc2
+	call Func_0b_4cee ; $4cc5
+	ld a, [$c2e8] ; $4cc8
+	ld [wPlayer1PointsWon], a ; $4ccb
+	ld a, [$c2e9] ; $4cce
+	ld [wPlayer2PointsWon], a ; $4cd1
+	ld a, [wPlayer1PointsWon] ; $4cd4
+	ld b, $01 ; $4cd7
+	farcall LoadPlayer1PointsDigitGfx ; $4cd9
+	ld a, [wPlayer2PointsWon] ; $4cdc
+	ld b, $01 ; $4cdf
+	farcall LoadPlayer2PointsDigitGfx ; $4ce1
+	farcall StepMatchFrame ; $4ce4
+	farcall StartPointEndReactions ; $4ce7
+	call PlayDrillPointEndSequence ; $4cea
+	ret ; $4ced
+Func_0b_4cee:
+	ld a, [wPointWinLoseFlag] ; $4cee
+	or a, a ; $4cf1
+	ret z ; $4cf2
+	inc a ; $4cf3
+	srl a ; $4cf4
+	ld b, a ; $4cf6
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4cf7
+	and a, $01 ; $4cfa
+	xor a, $01 ; $4cfc
+	add a, b ; $4cfe
+	bit 0, a ; $4cff
+	jr nz, Label_0b_4d0e ; $4d01
+	ld hl, wPlayer2PointsWon ; $4d03
+	bit 1, a ; $4d06
+	jr z, Label_0b_4d0d ; $4d08
+	ld hl, wPlayer1PointsWon ; $4d0a
+Label_0b_4d0d:
+	inc [hl] ; $4d0d
+Label_0b_4d0e:
+	xor a, a ; $4d0e
+	ld [wServeFaultFlag], a ; $4d0f
+	ld hl, wTotalPointsScoredInCurrentGame ; $4d12
+	inc [hl] ; $4d15
+	ret ; $4d16
+Func_0b_4d17:
+	ld a, $00 ; $4d17
+	call Func_0b_4d3d ; $4d19
+	ld [$c2ff], a ; $4d1c
+	ret ; $4d1f
+Func_0b_4d20:
+	ld a, $01 ; $4d20
+	call Func_0b_4d3d ; $4d22
+	ld [$c2ff], a ; $4d25
+	ret ; $4d28
+Func_0b_4d29:
+	ret ; $4d29
+	ld a, $02 ; $4d2a
+	call Func_0b_4d3d ; $4d2c
+	ld [$c2ff], a ; $4d2f
+	ret ; $4d32
+Func_0b_4d33:
+	ret ; $4d33
+	ld a, $03 ; $4d34
+	call Func_0b_4d3d ; $4d36
+	ld [$c2ff], a ; $4d39
+	ret ; $4d3c
+Func_0b_4d3d:
+	ld b, a ; $4d3d
+	ld a, [$c2ff] ; $4d3e
+	or a, a ; $4d41
+	ret nz ; $4d42
+	ld a, [wRallyLength] ; $4d43
+	dec a ; $4d46
+	ld a, a ; $4d47
+	rst Rst00 ; $4d48
+	dw Label_0b_4d4d ; $4d49 jumptable
+	dw Label_0b_4d87 ; $4d4b jumptable
+Label_0b_4d4d:
+	ld a, b ; $4d4d
+	ld a, a ; $4d4e
+	rst Rst00 ; $4d4f
+	dw Label_0b_4d58 ; $4d50 jumptable
+	dw Label_0b_4d81 ; $4d52 jumptable
+	dw Label_0b_4d83 ; $4d54 jumptable
+	dw Label_0b_4d85 ; $4d56 jumptable
+Label_0b_4d58:
+	ld a, [wPointOutcome] ; $4d58
+	ld hl, DrillShotTable_0b_4d77 ; $4d5b
+	add a, l ; $4d5e
+	ld l, a ; $4d5f
+	jr nc, Label_0b_4d63 ; $4d60
+	inc h ; $4d62
+Label_0b_4d63:
+	ld a, [hl] ; $4d63
+	ld a, a ; $4d64
+	ld b, $06 ; $4d65
+	call QueueDrillResultMessage ; $4d67
+	ld a, [wPointOutcome] ; $4d6a
+	ld hl, SignedTable_0b_46f1 ; $4d6d
+	add a, l ; $4d70
+	ld l, a ; $4d71
+	jr nc, Label_0b_4d75 ; $4d72
+	inc h ; $4d74
+Label_0b_4d75:
+	ld a, [hl] ; $4d75
+	ret ; $4d76
+DrillShotTable_0b_4d77:
+	; $4d77, 10 bytes (bytes:10)
+	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
+Label_0b_4d81:
+	xor a, a ; $4d81
+	ret ; $4d82
+Label_0b_4d83:
+	xor a, a ; $4d83
+	ret ; $4d84
+Label_0b_4d85:
+	xor a, a ; $4d85
+	ret ; $4d86
+Label_0b_4d87:
+	ld a, b ; $4d87
+	ld a, a ; $4d88
+	rst Rst00 ; $4d89
+	dw Label_0b_4d92 ; $4d8a jumptable
+	dw Label_0b_4dbb ; $4d8c jumptable
+	dw Label_0b_4dce ; $4d8e jumptable
+	dw Label_0b_4dd0 ; $4d90 jumptable
+Label_0b_4d92:
+	ld a, [wPointOutcome] ; $4d92
+	ld hl, DrillShotTable_0b_4db1 ; $4d95
+	add a, l ; $4d98
+	ld l, a ; $4d99
+	jr nc, Label_0b_4d9d ; $4d9a
+	inc h ; $4d9c
+Label_0b_4d9d:
+	ld a, [hl] ; $4d9d
+	ld a, a ; $4d9e
+	ld b, $06 ; $4d9f
+	call QueueDrillResultMessage ; $4da1
+	ld a, [wPointOutcome] ; $4da4
+	ld hl, SignedTable_0b_46fb ; $4da7
+	add a, l ; $4daa
+	ld l, a ; $4dab
+	jr nc, Label_0b_4daf ; $4dac
+	inc h ; $4dae
+Label_0b_4daf:
+	ld a, [hl] ; $4daf
+	ret ; $4db0
+DrillShotTable_0b_4db1:
+	; $4db1, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
+Label_0b_4dbb:
+	ld a, [wPointOutcome] ; $4dbb
+	cp a, $07 ; $4dbe
+	ld a, $00 ; $4dc0
+	ret z ; $4dc2
+	ld a, $04 ; $4dc3
+	ld b, $06 ; $4dc5
+	call QueueDrillResultMessage ; $4dc7
+	jr Label_0b_4dda ; $4dca
+	db $af ; $4dcc
+	ret ; $4dcd
+Label_0b_4dce:
+	xor a, a ; $4dce
+	ret ; $4dcf
+Label_0b_4dd0:
+	xor a, a ; $4dd0
+	ret ; $4dd1
+	ld a, $01 ; $4dd2
+	ld [wMatchAbortFlag], a ; $4dd4
+	ld a, $01 ; $4dd7
+	ret ; $4dd9
+Label_0b_4dda:
+	ld a, $01 ; $4dda
+	ld [wMatchAbortFlag], a ; $4ddc
+	ld a, $ff ; $4ddf
+	ret ; $4de1
+DrillDefinition_0b_03:
+	; $4de2, 16 bytes (drill_definition)
+	db $3a, $09, $02, $05, $03, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_03, DrillPointTable_0b_4300, DrillInit_0b_03 ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_03:
+	ld a, $01 ; $4df2
+	ld [$c7bb], a ; $4df4
+	ret ; $4df7
+DrillModeHooks_0b_03:
+	; $4df8, 16 bytes (mode_hooks)
+	dw $4e08 ; record 0
+	dw $4e0c ; record 1
+	dw $4e25 ; record 2
+	dw RetStub ; record 3
+	dw $4e8e ; record 4
+	dw $4e75 ; record 5
+	dw $4e74 ; record 6
+	dw RetStub ; record 7
+	call UpdateDrillAbortCountdown ; $4e08
+	ret ; $4e0b
+	xor a, a ; $4e0c
+	ld [$c2e1], a ; $4e0d
+	ld a, $0a ; $4e10
+	ld [$c2e0], a ; $4e12
+	xor a, a ; $4e15
+	ld [$c2e6], a ; $4e16
+	ld a, $01 ; $4e19
+	ld [wTargetZoneEnabled], a ; $4e1b
+	ld hl, DrillPositions_0b_4ea0 ; $4e1e
+	call SetDrillTargetZoneForPoint ; $4e21
+	ret ; $4e24
+	call Func_0b_4ec2 ; $4e25
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4e28
+	cp a, $04 ; $4e2b
+	ret c ; $4e2d
+	ld a, [wPointWinLoseFlag] ; $4e2e
+	or a, a ; $4e31
+	ret z ; $4e32
+	call Func_0b_4e3f ; $4e33
+	ld [wPointWinLoseFlag], a ; $4e36
+	ld a, $80 ; $4e39
+	ld [wMatchAbortFlag], a ; $4e3b
+	ret ; $4e3e
+Func_0b_4e3f:
+	ld a, [$c2e7] ; $4e3f
+	ld b, a ; $4e42
+	ld a, $04 ; $4e43
+	sub a, b ; $4e45
+	ld b, a ; $4e46
+	cp a, $04 ; $4e47
+	jr nz, Label_0b_4e52 ; $4e49
+	ld a, $01 ; $4e4b
+	ld [$c2e3], a ; $4e4d
+	jr Label_0b_4e6a ; $4e50
+Label_0b_4e52:
+	ld a, [wCharacter1DoubleFaults] ; $4e52
+	or a, a ; $4e55
+	jr z, Label_0b_4e5f ; $4e56
+	ld a, $02 ; $4e58
+	ld [$c2e3], a ; $4e5a
+	jr Label_0b_4e6a ; $4e5d
+Label_0b_4e5f:
+	ld a, b ; $4e5f
+	or a, a ; $4e60
+	jr z, Label_0b_4e6d ; $4e61
+	ld a, $03 ; $4e63
+	ld [$c2e3], a ; $4e65
+	jr Label_0b_4e6a ; $4e68
+Label_0b_4e6a:
+	ld a, $ff ; $4e6a
+	ret ; $4e6c
+Label_0b_4e6d:
+	xor a, a ; $4e6d
+	ld [$c2e3], a ; $4e6e
+	ld a, $01 ; $4e71
+	ret ; $4e73
+	ret ; $4e74
+	ld a, [wRallyLength] ; $4e75
+	cp a, $01 ; $4e78
+	ret nz ; $4e7a
+	call Func_0b_41da ; $4e7b
+	ret ; $4e7e
+	ld a, [wBallBounceCount] ; $4e7f
+	cp a, $02 ; $4e82
+	ret nz ; $4e84
+	ld a, [wRallyLength] ; $4e85
+	cp a, $01 ; $4e88
+	ret nz ; $4e8a
+	sound $72 ; $4e8b
+	ret ; $4e8d
+	ld a, [wRallyLength] ; $4e8e
+	cp a, $02 ; $4e91
+	jr c, Label_0b_4e9f ; $4e93
+	ld a, $01 ; $4e95
+	ld [$c2e1], a ; $4e97
+	call ResetActiveCharState ; $4e9a
+	sound $5f ; $4e9d
+Label_0b_4e9f:
+	ret ; $4e9f
+DrillPositions_0b_4ea0:
+	; $4ea0, 34 bytes (records:4)
+; 8 records x 4 bytes
+	dw $fe50, $fd60 ; record 0
+	dw $ff28, $feb0 ; record 1
+	dw $00d8, $fd60 ; record 2
+	dw $01b0, $feb0 ; record 3
+	dw $00d8, $0150 ; record 4
+	dw $01b0, $02a0 ; record 5
+	dw $fe50, $0150 ; record 6
+	dw $ff28, $02a0 ; record 7
+	db $ff, $ff
+Func_0b_4ec2:
+	farcall UpdateScorePanelDisplay ; $4ec2
+	call Func_0b_4f22 ; $4ec5
+	ld [wPointWinLoseFlag], a ; $4ec8
+	call RecordDrillPointResultBits ; $4ecb
+	ld a, $00 ; $4ece
+	call Func_0b_40c0 ; $4ed0
+	ld [$c2e8], a ; $4ed3
+	ld a, $01 ; $4ed6
+	call Func_0b_40c0 ; $4ed8
+	ld [$c2e9], a ; $4edb
+	call ShowQueuedDrillMessage ; $4ede
+	farcall UpdatePointStats ; $4ee1
+	farcall AwardPoint ; $4ee4
+	ld a, [$c2e8] ; $4ee7
+	ld [wPlayer1PointsWon], a ; $4eea
+	xor a, a ; $4eed
+	ld [wPlayer2PointsWon], a ; $4eee
+	ld a, [wPlayer1PointsWon] ; $4ef1
+	ld b, $01 ; $4ef4
+	farcall LoadPlayer1PointsDigitGfx ; $4ef6
+	ld a, [wPlayer2PointsWon] ; $4ef9
+	ld b, $01 ; $4efc
+	farcall LoadPlayer2PointsDigitGfx ; $4efe
+	farcall StepMatchFrame ; $4f01
+	ld a, $01 ; $4f04
+	ld hl, SyncPointWinLoseFlagTask ; $4f06
+	call RegisterFrameTask ; $4f09
+	farcall StartPointEndReactions ; $4f0c
+	ld hl, SyncPointWinLoseFlagTask ; $4f0f
+	call UnregisterFrameTask ; $4f12
+	call PlayDrillPointEndSequence ; $4f15
+	ret ; $4f18
+	call CheckDrillTargetZoneMissed ; $4f19
+	add a, a ; $4f1c
+	dec a ; $4f1d
+	ld [$c2f8], a ; $4f1e
+	ret ; $4f21
+Func_0b_4f22:
+	ld a, [wPointOutcome] ; $4f22
+	cp a, $01 ; $4f25
+	jp z, Label_0b_4f62 ; $4f27
+	cp a, $03 ; $4f2a
+	jp z, Label_0b_4f62 ; $4f2c
+	ld a, [wPointOutcome] ; $4f2f
+	cp a, $02 ; $4f32
+	jr z, Label_0b_4f4c ; $4f34
+	ld a, $10 ; $4f36
+	ld b, $00 ; $4f38
+	call QueueDrillResultMessage ; $4f3a
+	call CheckDrillTargetZoneMissed ; $4f3d
+	or a, a ; $4f40
+	jr z, Label_0b_4f5f ; $4f41
+	ld a, $0d ; $4f43
+	ld b, $00 ; $4f45
+	call QueueDrillResultMessage ; $4f47
+	jr Label_0b_4f58 ; $4f4a
+Label_0b_4f4c:
+	ld a, $0e ; $4f4c
+	ld b, $00 ; $4f4e
+	call QueueDrillResultMessage ; $4f50
+	ld a, $ff ; $4f53
+	ret ; $4f55
+	db $18 ; $4f56
+	db $07 ; $4f57
+Label_0b_4f58:
+	ld hl, $c2e7 ; $4f58
+	inc [hl] ; $4f5b
+	ld a, $01 ; $4f5c
+	ret ; $4f5e
+Label_0b_4f5f:
+	ld a, $ff ; $4f5f
+	ret ; $4f61
+Label_0b_4f62:
+	ld a, $ff ; $4f62
+	ld [$c2e6], a ; $4f64
+	xor a, a ; $4f67
+	ret ; $4f68
+DrillDefinition_0b_04:
+	; $4f69, 16 bytes (drill_definition)
+	db $3b, $09, $02, $05, $04, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_04, DrillPointTable_0b_4300, DrillInit_0b_04 ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_04:
+	ld a, $01 ; $4f79
+	ld [$c7bb], a ; $4f7b
+	ret ; $4f7e
+DrillModeHooks_0b_04:
+	; $4f7f, 16 bytes (mode_hooks)
+	dw $4f98 ; record 0
+	dw $4f9c ; record 1
+	dw $4fb5 ; record 2
+	dw $4f8f ; record 3
+	dw $5050 ; record 4
+	dw $5032 ; record 5
+	dw $5031 ; record 6
+	dw RetStub ; record 7
+	ld a, $02 ; $4f8f
+	ld [$c2e8], a ; $4f91
+	ld [$c2e9], a ; $4f94
+	ret ; $4f97
+	call UpdateDrillAbortCountdown ; $4f98
+	ret ; $4f9b
+	xor a, a ; $4f9c
+	ld [$c2e1], a ; $4f9d
+	ld a, $0a ; $4fa0
+	ld [$c2e0], a ; $4fa2
+	ld a, $01 ; $4fa5
+	ld [wTargetZoneEnabled], a ; $4fa7
+	ld hl, DrillPositions_0b_5060 ; $4faa
+	call SetDrillTargetZoneForPoint ; $4fad
+	xor a, a ; $4fb0
+	ld [$c2e6], a ; $4fb1
+	ret ; $4fb4
+	call Func_0b_5082 ; $4fb5
+	ld a, [wTotalPointsScoredInCurrentGame] ; $4fb8
+	cp a, $04 ; $4fbb
+	ret c ; $4fbd
+	ld a, [wPointWinLoseFlag] ; $4fbe
+	or a, a ; $4fc1
+	ret z ; $4fc2
+	call Func_0b_4fcf ; $4fc3
+	ld [wPointWinLoseFlag], a ; $4fc6
+	ld a, $80 ; $4fc9
+	ld [wMatchAbortFlag], a ; $4fcb
+	ret ; $4fce
+Func_0b_4fcf:
+	ld a, [wPlayer1PointsWon] ; $4fcf
+	or a, a ; $4fd2
+	jr nz, Label_0b_4fdc ; $4fd3
+	ld a, $01 ; $4fd5
+	ld [$c2e3], a ; $4fd7
+	jr Label_0b_5027 ; $4fda
+Label_0b_4fdc:
+	ld a, [wCharacter1DoubleFaults] ; $4fdc
+	or a, a ; $4fdf
+	jr z, Label_0b_4fe9 ; $4fe0
+	ld a, $02 ; $4fe2
+	ld [$c2e3], a ; $4fe4
+	jr Label_0b_5027 ; $4fe7
+Label_0b_4fe9:
+	call Func_0b_420b ; $4fe9
+	or a, a ; $4fec
+	jr z, Label_0b_4ff6 ; $4fed
+	ld a, $03 ; $4fef
+	ld [$c2e3], a ; $4ff1
+	jr Label_0b_5027 ; $4ff4
+Label_0b_4ff6:
+	ld a, [$c2e9] ; $4ff6
+	or a, a ; $4ff9
+	jr z, Label_0b_5016 ; $4ffa
+	ld a, [$c2e8] ; $4ffc
+	or a, a ; $4fff
+	jr z, Label_0b_5009 ; $5000
+	ld a, $04 ; $5002
+	ld [$c2e3], a ; $5004
+	jr Label_0b_5027 ; $5007
+Label_0b_5009:
+	ld b, $06 ; $5009
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $500b
+	cpl ; $500e
+	inc a ; $500f
+	add a, b ; $5010
+	ld [$c2e3], a ; $5011
+	jr Label_0b_5027 ; $5014
+Label_0b_5016:
+	ld a, [$c2e8] ; $5016
+	or a, a ; $5019
+	jr z, Label_0b_502a ; $501a
+	ld b, $05 ; $501c
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $501e
+	add a, b ; $5021
+	ld [$c2e3], a ; $5022
+	jr Label_0b_5027 ; $5025
+Label_0b_5027:
+	ld a, $ff ; $5027
+	ret ; $5029
+Label_0b_502a:
+	xor a, a ; $502a
+	ld [$c2e3], a ; $502b
+	ld a, $01 ; $502e
+	ret ; $5030
+	ret ; $5031
+	ld a, [wBallHasBouncedFlag] ; $5032
+	or a, a ; $5035
+	ret nz ; $5036
+	ld a, [wRallyLength] ; $5037
+	cp a, $01 ; $503a
+	ret nz ; $503c
+	call Func_0b_41da ; $503d
+	ret ; $5040
+	ld a, [wBallBounceCount] ; $5041
+	cp a, $02 ; $5044
+	ret nz ; $5046
+	ld a, [wRallyLength] ; $5047
+	cp a, $01 ; $504a
+	ret nz ; $504c
+	sound $72 ; $504d
+	ret ; $504f
+	ld a, [wRallyLength] ; $5050
+	cp a, $02 ; $5053
+	jr c, Label_0b_505f ; $5055
+	ld a, $01 ; $5057
+	ld [$c2e1], a ; $5059
+	call ResetActiveCharState ; $505c
+Label_0b_505f:
+	ret ; $505f
+DrillPositions_0b_5060:
+	; $5060, 34 bytes (records:4)
+; 8 records x 4 bytes
+	dw $fe50, $fd60 ; record 0
+	dw $fee0, $fe40 ; record 1
+	dw $0120, $fd60 ; record 2
+	dw $01b0, $fe40 ; record 3
+	dw $0120, $01c0 ; record 4
+	dw $01b0, $02a0 ; record 5
+	dw $fe50, $01c0 ; record 6
+	dw $fee0, $02a0 ; record 7
+	db $ff, $ff
+Func_0b_5082:
+	call Func_0b_50e5 ; $5082
+	farcall UpdateScorePanelDisplay ; $5085
+	call Func_0b_513f ; $5088
+	ld [wPointWinLoseFlag], a ; $508b
+	call RecordDrillPointResultBits ; $508e
+	ld a, $00 ; $5091
+	call Func_0b_40c0 ; $5093
+	ld [$c2ec], a ; $5096
+	ld a, $01 ; $5099
+	call Func_0b_40c0 ; $509b
+	ld [$c2ed], a ; $509e
+	ld a, [$c2e6] ; $50a1
+	or a, a ; $50a4
+	jr nz, Label_0b_50aa ; $50a5
+	call Func_0b_44f2 ; $50a7
+Label_0b_50aa:
+	call ShowDrillMessageByIndex ; $50aa
+	farcall UpdatePointStats ; $50ad
+	farcall AwardPoint ; $50b0
+	ld a, [$c2ec] ; $50b3
+	ld [wPlayer1PointsWon], a ; $50b6
+	xor a, a ; $50b9
+	ld [wPlayer2PointsWon], a ; $50ba
+	ld a, [wPlayer1PointsWon] ; $50bd
+	ld b, $01 ; $50c0
+	farcall LoadPlayer1PointsDigitGfx ; $50c2
+	ld a, [wPlayer2PointsWon] ; $50c5
+	ld b, $01 ; $50c8
+	farcall LoadPlayer2PointsDigitGfx ; $50ca
+	farcall StepMatchFrame ; $50cd
+	ld a, $01 ; $50d0
+	ld hl, SyncPointWinLoseFlagTask ; $50d2
+	call RegisterFrameTask ; $50d5
+	farcall StartPointEndReactions ; $50d8
+	ld hl, SyncPointWinLoseFlagTask ; $50db
+	call UnregisterFrameTask ; $50de
+	call PlayDrillPointEndSequence ; $50e1
+	ret ; $50e4
+Func_0b_50e5:
+	ld a, [wRallyLength] ; $50e5
+	cp a, $01 ; $50e8
+	ret nz ; $50ea
+	ld a, [wTotalPointsScoredInCurrentGame] ; $50eb
+	cp a, $04 ; $50ee
+	ret nc ; $50f0
+	ld hl, Table_0b_5130 ; $50f1
+	add a, l ; $50f4
+	ld l, a ; $50f5
+	jr nc, Label_0b_50f9 ; $50f6
+	inc h ; $50f8
+Label_0b_50f9:
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $50f9
+	add a, l ; $50fc
+	ld l, a ; $50fd
+	jr nc, Label_0b_5101 ; $50fe
+	inc h ; $5100
+Label_0b_5101:
+	ld b, [hl] ; $5101
+	ld a, [wCurrentShotType] ; $5102
+	ld [$c2ea], a ; $5105
+	cp a, b ; $5108
+	jr nz, Label_0b_5125 ; $5109
+	ld a, [wTotalPointsScoredInCurrentGame] ; $510b
+	add a, a ; $510e
+	ld hl, $5135 ; $510f
+	add a, l ; $5112
+	ld l, a ; $5113
+	jr nc, Label_0b_5117 ; $5114
+	inc h ; $5116
+Label_0b_5117:
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $5117
+	add a, a ; $511a
+	add a, l ; $511b
+	ld l, a ; $511c
+	jr nc, Label_0b_5120 ; $511d
+	inc h ; $511f
+Label_0b_5120:
+	ld a, [hl+] ; $5120
+	ld h, [hl] ; $5121
+	ld l, a ; $5122
+	dec [hl] ; $5123
+	ret ; $5124
+Label_0b_5125:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5125
+	and a, $01 ; $5128
+	add a, $11 ; $512a
+	ld [$c2e6], a ; $512c
+	ret ; $512f
+Table_0b_5130:
+	; $5130, 15 bytes (bytes:15)
+	db $0d, $0c, $0d, $0c, $0d, $e9, $c2, $e8, $c2, $e9, $c2, $e8, $c2, $e9, $c2 ; 0x00
+Func_0b_513f:
+	ld a, [wPointOutcome] ; $513f
+	cp a, $01 ; $5142
+	jp z, Label_0b_51c1 ; $5144
+	cp a, $03 ; $5147
+	jp z, Label_0b_51c1 ; $5149
+	ld a, [wPointOutcome] ; $514c
+	cp a, $02 ; $514f
+	jr nz, Label_0b_515c ; $5151
+	ld a, $0e ; $5153
+	ld b, $00 ; $5155
+	call QueueDrillResultMessage ; $5157
+	jr Label_0b_51be ; $515a
+Label_0b_515c:
+	ld a, $11 ; $515c
+	ld b, $00 ; $515e
+	call QueueDrillResultMessage ; $5160
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $5163
+	and a, $01 ; $5166
+	ld b, a ; $5168
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5169
+	add a, b ; $516c
+	and a, $01 ; $516d
+	xor a, $01 ; $516f
+	ld b, a ; $5171
+	ld a, [$c2e6] ; $5172
+	add a, b ; $5175
+	ld [$c2e6], a ; $5176
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $5179
+	ld hl, DrillShotTable_0b_51c8 ; $517c
+	add a, l ; $517f
+	ld l, a ; $5180
+	jr nc, Label_0b_5184 ; $5181
+	inc h ; $5183
+Label_0b_5184:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5184
+	add a, l ; $5187
+	ld l, a ; $5188
+	jr nc, Label_0b_518c ; $5189
+	inc h ; $518b
+Label_0b_518c:
+	ld b, [hl] ; $518c
+	ld a, [$c2ea] ; $518d
+	cp a, b ; $5190
+	jr nz, Label_0b_51be ; $5191
+	ld a, $10 ; $5193
+	ld b, $00 ; $5195
+	call QueueDrillResultMessage ; $5197
+	call CheckDrillTargetZoneMissed ; $519a
+	or a, a ; $519d
+	jr z, Label_0b_51be ; $519e
+	ld a, $0d ; $51a0
+	ld b, $00 ; $51a2
+	call QueueDrillResultMessage ; $51a4
+	ld a, [wPointOutcome] ; $51a7
+	cp a, $06 ; $51aa
+	jr z, Label_0b_51b7 ; $51ac
+	ld a, $0e ; $51ae
+	ld b, $00 ; $51b0
+	call QueueDrillResultMessage ; $51b2
+	jr Label_0b_51be ; $51b5
+Label_0b_51b7:
+	ld hl, $c2e7 ; $51b7
+	inc [hl] ; $51ba
+	ld a, $01 ; $51bb
+	ret ; $51bd
+Label_0b_51be:
+	ld a, $ff ; $51be
+	ret ; $51c0
+Label_0b_51c1:
+	ld a, $ff ; $51c1
+	ld [$c2e6], a ; $51c3
+	xor a, a ; $51c6
+	ret ; $51c7
+DrillShotTable_0b_51c8:
+	; $51c8, 5 bytes (bytes:5)
+	db $0d, $0c, $0d, $0c, $0d ; 0x00
+DrillDefinition_0b_05:
+	; $51cd, 16 bytes (drill_definition)
+	db $3c, $09, $02, $05, $05, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_05, DrillPointTable_0b_4300, DrillInit_0b_05 ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_05:
+	ld a, $01 ; $51dd
+	ld [$c7bb], a ; $51df
+	ret ; $51e2
+DrillModeHooks_0b_05:
+	; $51e3, 16 bytes (mode_hooks)
+	dw $51fe ; record 0
+	dw $5213 ; record 1
+	dw $5237 ; record 2
+	dw $51f3 ; record 3
+	dw $52b0 ; record 4
+	dw $52a6 ; record 5
+	dw $52a5 ; record 6
+	dw $520c ; record 7
+	ld a, $04 ; $51f3
+	ld [$c2e8], a ; $51f5
+	ld a, $01 ; $51f8
+	ld [$c7bb], a ; $51fa
+	ret ; $51fd
+	call UpdateDrillAbortCountdown ; $51fe
+	ld a, [wRallyLength] ; $5201
+	cp a, $01 ; $5204
+	jr nz, Label_0b_520b ; $5206
+	call Func_0b_4233 ; $5208
+Label_0b_520b:
+	ret ; $520b
+	call Func_0b_46a0 ; $520c
+	call Func_0b_46c4 ; $520f
+	ret ; $5212
+	xor a, a ; $5213
+	ld [$c2e1], a ; $5214
+	ld a, $0a ; $5217
+	ld [$c2e0], a ; $5219
+	ld a, $01 ; $521c
+	ld [wTargetZoneEnabled], a ; $521e
+	ld hl, $5302 ; $5221
+	call SetDrillTargetZoneForPoint ; $5224
+	ld a, $01 ; $5227
+	ld [$c78b], a ; $5229
+	ld hl, DrillPositions_0b_52e0 ; $522c
+	call Func_0b_415f ; $522f
+	xor a, a ; $5232
+	ld [$c2e6], a ; $5233
+	ret ; $5236
+	call Func_0b_5324 ; $5237
+	ld a, [wTotalPointsScoredInCurrentGame] ; $523a
+	cp a, $04 ; $523d
+	ret c ; $523f
+	ld a, [wPointWinLoseFlag] ; $5240
+	or a, a ; $5243
+	ret z ; $5244
+	call Func_0b_5251 ; $5245
+	ld [wPointWinLoseFlag], a ; $5248
+	ld a, $80 ; $524b
+	ld [wMatchAbortFlag], a ; $524d
+	ret ; $5250
+Func_0b_5251:
+	call Func_0b_420b ; $5251
+	ld b, a ; $5254
+	call Func_0b_4257 ; $5255
+	ld c, a ; $5258
+	ld a, [$c2e7] ; $5259
+	or a, a ; $525c
+	jr nz, Label_0b_5266 ; $525d
+	ld a, $01 ; $525f
+	ld [$c2e3], a ; $5261
+	jr Label_0b_529b ; $5264
+Label_0b_5266:
+	ld a, [wCharacter1DoubleFaults] ; $5266
+	or a, a ; $5269
+	jr z, Label_0b_5273 ; $526a
+	ld a, $02 ; $526c
+	ld [$c2e3], a ; $526e
+	jr Label_0b_529b ; $5271
+Label_0b_5273:
+	call Func_0b_420b ; $5273
+	or a, a ; $5276
+	jr z, Label_0b_5280 ; $5277
+	ld a, $03 ; $5279
+	ld [$c2e3], a ; $527b
+	jr Label_0b_529b ; $527e
+Label_0b_5280:
+	ld a, [$c2e8] ; $5280
+	or a, a ; $5283
+	jr z, Label_0b_528d ; $5284
+	ld a, $04 ; $5286
+	ld [$c2e3], a ; $5288
+	jr Label_0b_529b ; $528b
+Label_0b_528d:
+	call Func_0b_4257 ; $528d
+	cp a, $04 ; $5290
+	jr z, Label_0b_529e ; $5292
+	ld a, $05 ; $5294
+	ld [$c2e3], a ; $5296
+	jr Label_0b_529b ; $5299
+Label_0b_529b:
+	ld a, $ff ; $529b
+	ret ; $529d
+Label_0b_529e:
+	xor a, a ; $529e
+	ld [$c2e3], a ; $529f
+	ld a, $01 ; $52a2
+	ret ; $52a4
+	ret ; $52a5
+	ld a, [wRallyLength] ; $52a6
+	cp a, $01 ; $52a9
+	ret nz ; $52ab
+	call Func_0b_41da ; $52ac
+	ret ; $52af
+	call Func_0b_52c3 ; $52b0
+	ld a, [wRallyLength] ; $52b3
+	cp a, $02 ; $52b6
+	jr c, Label_0b_52c2 ; $52b8
+	ld a, $01 ; $52ba
+	ld [$c2e1], a ; $52bc
+	call ResetActiveCharState ; $52bf
+Label_0b_52c2:
+	ret ; $52c2
+Func_0b_52c3:
+	ld a, [wRallyLength] ; $52c3
+	cp a, $01 ; $52c6
+	ret nz ; $52c8
+	ld a, [wTotalPointsScoredInCurrentGame] ; $52c9
+	cp a, $04 ; $52cc
+	ret nc ; $52ce
+	ld a, [wSpecialShotFlag] ; $52cf
+	or a, a ; $52d2
+	jr nz, Label_0b_52db ; $52d3
+	ld a, $13 ; $52d5
+	ld [$c2e6], a ; $52d7
+	ret ; $52da
+Label_0b_52db:
+	ld hl, $c2e8 ; $52db
+	dec [hl] ; $52de
+	ret ; $52df
+DrillPositions_0b_52e0:
+	; $52e0, 68 bytes (records:4)
+; 17 records x 4 bytes
+	dw $0000, $02a0 ; record 0
+	dw $006c, $02a0 ; record 1
+	dw $ff94, $02a0 ; record 2
+	dw $0000, $02a0 ; record 3
+	dw $ff94, $fd60 ; record 4
+	dw $0000, $fd60 ; record 5
+	dw $0000, $fd60 ; record 6
+	dw $006c, $fd60 ; record 7
+	dw $ffff, $ff94 ; record 8
+	dw $fd60, $0000 ; record 9
+	dw $feb0, $0000 ; record 10
+	dw $fd60, $006c ; record 11
+	dw $feb0, $0000 ; record 12
+	dw $0150, $006c ; record 13
+	dw $02a0, $ff94 ; record 14
+	dw $0150, $0000 ; record 15
+	dw $02a0, $ffff ; record 16
+Func_0b_5324:
+	farcall UpdateScorePanelDisplay ; $5324
+	call Func_0b_537b ; $5327
+	ld [wPointWinLoseFlag], a ; $532a
+	call RecordDrillPointResultBits ; $532d
+	ld a, $00 ; $5330
+	call Func_0b_40c0 ; $5332
+	ld [$c2ec], a ; $5335
+	ld a, $01 ; $5338
+	call Func_0b_40c0 ; $533a
+	ld [$c2ed], a ; $533d
+	call ShowQueuedDrillMessage ; $5340
+	farcall UpdatePointStats ; $5343
+	farcall AwardPoint ; $5346
+	ld a, [$c2ec] ; $5349
+	ld [wPlayer1PointsWon], a ; $534c
+	xor a, a ; $534f
+	ld [wPlayer2PointsWon], a ; $5350
+	ld a, [wPlayer1PointsWon] ; $5353
+	ld b, $01 ; $5356
+	farcall LoadPlayer1PointsDigitGfx ; $5358
+	ld a, [wPlayer2PointsWon] ; $535b
+	ld b, $01 ; $535e
+	farcall LoadPlayer2PointsDigitGfx ; $5360
+	farcall StepMatchFrame ; $5363
+	ld a, $01 ; $5366
+	ld hl, SyncPointWinLoseFlagTask ; $5368
+	call RegisterFrameTask ; $536b
+	farcall StartPointEndReactions ; $536e
+	ld hl, SyncPointWinLoseFlagTask ; $5371
+	call UnregisterFrameTask ; $5374
+	call PlayDrillPointEndSequence ; $5377
+	ret ; $537a
+Func_0b_537b:
+	ld a, [wPointOutcome] ; $537b
+	cp a, $01 ; $537e
+	jp z, Label_0b_53d6 ; $5380
+	cp a, $03 ; $5383
+	jp z, Label_0b_53d6 ; $5385
+	ld a, [wPointOutcome] ; $5388
+	cp a, $02 ; $538b
+	jr z, Label_0b_53c3 ; $538d
+	ld a, $13 ; $538f
+	ld b, $00 ; $5391
+	call QueueDrillResultMessage ; $5393
+	ld a, [wSpecialShotFlag] ; $5396
+	or a, a ; $5399
+	jr z, Label_0b_53d3 ; $539a
+	ld a, $0f ; $539c
+	ld b, $00 ; $539e
+	call QueueDrillResultMessage ; $53a0
+	call Func_0b_4268 ; $53a3
+	jr z, Label_0b_53d3 ; $53a6
+	ld a, $10 ; $53a8
+	ld b, $00 ; $53aa
+	call QueueDrillResultMessage ; $53ac
+	call CheckDrillTargetZoneMissed ; $53af
+	or a, a ; $53b2
+	jr z, Label_0b_53d3 ; $53b3
+	ld a, $0d ; $53b5
+	ld b, $00 ; $53b7
+	call QueueDrillResultMessage ; $53b9
+	ld a, [wPointOutcome] ; $53bc
+	cp a, $06 ; $53bf
+	jr z, Label_0b_53cc ; $53c1
+Label_0b_53c3:
+	ld a, $0e ; $53c3
+	ld b, $00 ; $53c5
+	call QueueDrillResultMessage ; $53c7
+	jr Label_0b_53d3 ; $53ca
+Label_0b_53cc:
+	ld hl, $c2e7 ; $53cc
+	inc [hl] ; $53cf
+	ld a, $01 ; $53d0
+	ret ; $53d2
+Label_0b_53d3:
+	ld a, $ff ; $53d3
+	ret ; $53d5
+Label_0b_53d6:
+	ld a, $ff ; $53d6
+	ld [$c2e6], a ; $53d8
+	xor a, a ; $53db
+	ret ; $53dc
+DrillDefinition_0b_06:
+	; $53dd, 16 bytes (drill_definition)
+	db $3d, $18, $02, $05, $06, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_06, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_06:
+	; $53ed, 16 bytes (mode_hooks)
+	dw $53fd ; record 0
+	dw $5401 ; record 1
+	dw $542e ; record 2
+	dw RetStub ; record 3
+	dw $5453 ; record 4
+	dw $544f ; record 5
+	dw $544b ; record 6
+	dw RetStub ; record 7
+	call UpdateDrillAbortCountdown ; $53fd
+	ret ; $5400
+	xor a, a ; $5401
+	ld [$c2e1], a ; $5402
+	ld a, $0a ; $5405
+	ld [$c2e0], a ; $5407
+	ld hl, $542c ; $540a
+	call Func_0b_441c ; $540d
+	xor a, a ; $5410
+	ld [$c2e6], a ; $5411
+	xor a, a ; $5414
+	ld [$c2ff], a ; $5415
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5418
+	bit 0, a ; $541b
+	ret nz ; $541d
+	xor a, a ; $541e
+	ld [$c2e8], a ; $541f
+	ld [$c2e9], a ; $5422
+	ld [$c2ea], a ; $5425
+	ld [$c2eb], a ; $5428
+	ret ; $542b
+	db $3d ; $542c
+	db $54 ; $542d
+	call Func_0b_54d3 ; $542e
+	call Func_0b_5457 ; $5431
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5434
+	bit 0, a ; $5437
+	ret nz ; $5439
+	call Func_0b_54ba ; $543a
+	ld a, [wPlayer2PointsWon] ; $543d
+	ld hl, wPlayer1PointsWon ; $5440
+	sub a, [hl] ; $5443
+	ret z ; $5444
+	ld a, $80 ; $5445
+	ld [wMatchAbortFlag], a ; $5447
+	ret ; $544a
+	call Func_0b_54ef ; $544b
+	ret ; $544e
+	call Func_0b_54e5 ; $544f
+	ret ; $5452
+	call Func_0b_54dc ; $5453
+	ret ; $5456
+Func_0b_5457:
+	farcall UpdateScorePanelDisplay ; $5457
+	ld a, [$c2ff] ; $545a
+	ld b, a ; $545d
+	ld a, [wTotalPointsScoredInCurrentGame] ; $545e
+	bit 0, a ; $5461
+	ld a, b ; $5463
+	jr z, Label_0b_5468 ; $5464
+	cpl ; $5466
+	inc a ; $5467
+Label_0b_5468:
+	ld [wPointWinLoseFlag], a ; $5468
+	call RecordDrillPointResultBits ; $546b
+	call ShowQueuedDrillMessage ; $546e
+	farcall UpdatePointStats ; $5471
+	call Func_0b_5491 ; $5474
+	ld a, [wPlayer1PointsWon] ; $5477
+	ld b, $01 ; $547a
+	farcall LoadPlayer1PointsDigitGfx ; $547c
+	ld a, [wPlayer2PointsWon] ; $547f
+	ld b, $01 ; $5482
+	farcall LoadPlayer2PointsDigitGfx ; $5484
+	farcall StepMatchFrame ; $5487
+	farcall StartPointEndReactions ; $548a
+	call PlayDrillPointEndSequence ; $548d
+	ret ; $5490
+Func_0b_5491:
+	ld a, [wPointWinLoseFlag] ; $5491
+	or a, a ; $5494
+	ret z ; $5495
+	inc a ; $5496
+	srl a ; $5497
+	ld b, a ; $5499
+	ld a, [wTotalPointsScoredInCurrentGame] ; $549a
+	and a, $01 ; $549d
+	xor a, $01 ; $549f
+	add a, b ; $54a1
+	bit 0, a ; $54a2
+	jr nz, Label_0b_54b1 ; $54a4
+	ld hl, wPlayer2PointsWon ; $54a6
+	bit 1, a ; $54a9
+	jr z, Label_0b_54b0 ; $54ab
+	ld hl, wPlayer1PointsWon ; $54ad
+Label_0b_54b0:
+	inc [hl] ; $54b0
+Label_0b_54b1:
+	xor a, a ; $54b1
+	ld [wServeFaultFlag], a ; $54b2
+	ld hl, wTotalPointsScoredInCurrentGame ; $54b5
+	inc [hl] ; $54b8
+	ret ; $54b9
+Func_0b_54ba:
+	ld a, [wPlayer1PointsWon] ; $54ba
+	ld b, a ; $54bd
+	ld a, [wPlayer2PointsWon] ; $54be
+	sub a, b ; $54c1
+	jr nc, Label_0b_54ca ; $54c2
+	ld a, $01 ; $54c4
+	ld [wPointWinLoseFlag], a ; $54c6
+	ret ; $54c9
+Label_0b_54ca:
+	or a, a ; $54ca
+	jr z, Label_0b_54cf ; $54cb
+	ld a, $ff ; $54cd
+Label_0b_54cf:
+	ld [wPointWinLoseFlag], a ; $54cf
+	ret ; $54d2
+Func_0b_54d3:
+	ld a, $00 ; $54d3
+	call Func_0b_54f9 ; $54d5
+	ld [$c2ff], a ; $54d8
+	ret ; $54db
+Func_0b_54dc:
+	ld a, $01 ; $54dc
+	call Func_0b_54f9 ; $54de
+	ld [$c2ff], a ; $54e1
+	ret ; $54e4
+Func_0b_54e5:
+	ret ; $54e5
+	ld a, $02 ; $54e6
+	call Func_0b_54f9 ; $54e8
+	ld [$c2ff], a ; $54eb
+	ret ; $54ee
+Func_0b_54ef:
+	ret ; $54ef
+	ld a, $03 ; $54f0
+	call Func_0b_54f9 ; $54f2
+	ld [$c2ff], a ; $54f5
+	ret ; $54f8
+Func_0b_54f9:
+	ld b, a ; $54f9
+	ld a, [$c2ff] ; $54fa
+	or a, a ; $54fd
+	ret nz ; $54fe
+	ld a, [wRallyLength] ; $54ff
+	dec a ; $5502
+	ld a, a ; $5503
+	rst Rst00 ; $5504
+	dw Label_0b_550f ; $5505 jumptable
+	dw Label_0b_5549 ; $5507 jumptable
+	dw Label_0b_5583 ; $5509 jumptable
+	dw Label_0b_55df ; $550b jumptable
+	dw Label_0b_5619 ; $550d jumptable
+Label_0b_550f:
+	ld a, b ; $550f
+	ld a, a ; $5510
+	rst Rst00 ; $5511
+	dw Label_0b_551a ; $5512 jumptable
+	dw Label_0b_5543 ; $5514 jumptable
+	dw Label_0b_5545 ; $5516 jumptable
+	dw Label_0b_5547 ; $5518 jumptable
+Label_0b_551a:
+	ld a, [wPointOutcome] ; $551a
+	ld hl, DrillShotTable_0b_5539 ; $551d
+	add a, l ; $5520
+	ld l, a ; $5521
+	jr nc, Label_0b_5525 ; $5522
+	inc h ; $5524
+Label_0b_5525:
+	ld a, [hl] ; $5525
+	ld a, a ; $5526
+	ld b, $0d ; $5527
+	call QueueDrillResultMessage ; $5529
+	ld a, [wPointOutcome] ; $552c
+	ld hl, SignedTable_0b_46f1 ; $552f
+	add a, l ; $5532
+	ld l, a ; $5533
+	jr nc, Label_0b_5537 ; $5534
+	inc h ; $5536
+Label_0b_5537:
+	ld a, [hl] ; $5537
+	ret ; $5538
+DrillShotTable_0b_5539:
+	; $5539, 10 bytes (bytes:10)
+	db $ff, $ff, $19, $ff, $ff, $1d, $17, $ff, $ff, $17 ; 0x00
+Label_0b_5543:
+	xor a, a ; $5543
+	ret ; $5544
+Label_0b_5545:
+	xor a, a ; $5545
+	ret ; $5546
+Label_0b_5547:
+	xor a, a ; $5547
+	ret ; $5548
+Label_0b_5549:
+	ld a, b ; $5549
+	ld a, a ; $554a
+	rst Rst00 ; $554b
+	dw Label_0b_5554 ; $554c jumptable
+	dw Label_0b_557d ; $554e jumptable
+	dw Label_0b_557f ; $5550 jumptable
+	dw Label_0b_5581 ; $5552 jumptable
+Label_0b_5554:
+	ld a, [wPointOutcome] ; $5554
+	ld hl, DrillShotTable_0b_5573 ; $5557
+	add a, l ; $555a
+	ld l, a ; $555b
+	jr nc, Label_0b_555f ; $555c
+	inc h ; $555e
+Label_0b_555f:
+	ld a, [hl] ; $555f
+	ld a, a ; $5560
+	ld b, $0d ; $5561
+	call QueueDrillResultMessage ; $5563
+	ld a, [wPointOutcome] ; $5566
+	ld hl, SignedTable_0b_46fb ; $5569
+	add a, l ; $556c
+	ld l, a ; $556d
+	jr nc, Label_0b_5571 ; $556e
+	inc h ; $5570
+Label_0b_5571:
+	ld a, [hl] ; $5571
+	ret ; $5572
+DrillShotTable_0b_5573:
+	; $5573, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $17, $17, $1f, $1e, $1e, $1f ; 0x00
+Label_0b_557d:
+	xor a, a ; $557d
+	ret ; $557e
+Label_0b_557f:
+	xor a, a ; $557f
+	ret ; $5580
+Label_0b_5581:
+	xor a, a ; $5581
+	ret ; $5582
+Label_0b_5583:
+	ld a, b ; $5583
+	ld a, a ; $5584
+	rst Rst00 ; $5585
+	dw Label_0b_558e ; $5586 jumptable
+	dw Label_0b_55b7 ; $5588 jumptable
+	dw Label_0b_55db ; $558a jumptable
+	dw Label_0b_55dd ; $558c jumptable
+Label_0b_558e:
+	ld a, [wPointOutcome] ; $558e
+	ld hl, DrillShotTable_0b_55ad ; $5591
+	add a, l ; $5594
+	ld l, a ; $5595
+	jr nc, Label_0b_5599 ; $5596
+	inc h ; $5598
+Label_0b_5599:
+	ld a, [hl] ; $5599
+	ld a, a ; $559a
+	ld b, $0d ; $559b
+	call QueueDrillResultMessage ; $559d
+	ld a, [wPointOutcome] ; $55a0
+	ld hl, SignedTable_0b_46f1 ; $55a3
+	add a, l ; $55a6
+	ld l, a ; $55a7
+	jr nc, Label_0b_55ab ; $55a8
+	inc h ; $55aa
+Label_0b_55ab:
+	ld a, [hl] ; $55ab
+	ret ; $55ac
+DrillShotTable_0b_55ad:
+	; $55ad, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $1d, $1d, $14, $ff, $ff, $14 ; 0x00
+Label_0b_55b7:
+	ld a, $1b ; $55b7
+	ld b, $0d ; $55b9
+	call QueueDrillResultMessage ; $55bb
+	ld a, [wTotalPointsScoredInCurrentGame] ; $55be
+	and a, $01 ; $55c1
+	call Func_0b_4447 ; $55c3
+	or a, a ; $55c6
+	jp z, Label_0b_563c ; $55c7
+	ld a, $1f ; $55ca
+	ld b, $0d ; $55cc
+	call QueueDrillResultMessage ; $55ce
+	ld a, [$c4a1] ; $55d1
+	cp a, $01 ; $55d4
+	jp nz, Label_0b_563c ; $55d6
+	xor a, a ; $55d9
+	ret ; $55da
+Label_0b_55db:
+	xor a, a ; $55db
+	ret ; $55dc
+Label_0b_55dd:
+	xor a, a ; $55dd
+	ret ; $55de
+Label_0b_55df:
+	ld a, b ; $55df
+	ld a, a ; $55e0
+	rst Rst00 ; $55e1
+	dw Label_0b_55ea ; $55e2 jumptable
+	dw Label_0b_5613 ; $55e4 jumptable
+	dw Label_0b_5615 ; $55e6 jumptable
+	dw Label_0b_5617 ; $55e8 jumptable
+Label_0b_55ea:
+	ld a, [wPointOutcome] ; $55ea
+	ld hl, DrillShotTable_0b_5609 ; $55ed
+	add a, l ; $55f0
+	ld l, a ; $55f1
+	jr nc, Label_0b_55f5 ; $55f2
+	inc h ; $55f4
+Label_0b_55f5:
+	ld a, [hl] ; $55f5
+	ld a, a ; $55f6
+	ld b, $0d ; $55f7
+	call QueueDrillResultMessage ; $55f9
+	ld a, [wPointOutcome] ; $55fc
+	ld hl, SignedTable_0b_46fb ; $55ff
+	add a, l ; $5602
+	ld l, a ; $5603
+	jr nc, Label_0b_5607 ; $5604
+	inc h ; $5606
+Label_0b_5607:
+	ld a, [hl] ; $5607
+	ret ; $5608
+DrillShotTable_0b_5609:
+	; $5609, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $14, $14, $1d, $ff, $ff, $1d ; 0x00
+Label_0b_5613:
+	xor a, a ; $5613
+	ret ; $5614
+Label_0b_5615:
+	xor a, a ; $5615
+	ret ; $5616
+Label_0b_5617:
+	xor a, a ; $5617
+	ret ; $5618
+Label_0b_5619:
+	ld a, b ; $5619
+	ld a, a ; $561a
+	rst Rst00 ; $561b
+	dw Label_0b_5624 ; $561c jumptable
+	dw Label_0b_5626 ; $561e jumptable
+	dw Label_0b_5630 ; $5620 jumptable
+	dw Label_0b_5632 ; $5622 jumptable
+Label_0b_5624:
+	xor a, a ; $5624
+	ret ; $5625
+Label_0b_5626:
+	ld a, $1d ; $5626
+	ld b, $0d ; $5628
+	call QueueDrillResultMessage ; $562a
+	jp Label_0b_563c ; $562d
+Label_0b_5630:
+	xor a, a ; $5630
+	ret ; $5631
+Label_0b_5632:
+	xor a, a ; $5632
+	ret ; $5633
+	ld a, $01 ; $5634
+	ld [wMatchAbortFlag], a ; $5636
+	ld a, $01 ; $5639
+	ret ; $563b
+Label_0b_563c:
+	ld a, $01 ; $563c
+	ld [wMatchAbortFlag], a ; $563e
+	ld a, $ff ; $5641
+	ret ; $5643
+DrillDefinition_0b_07:
+	; $5644, 16 bytes (drill_definition)
+	db $3e, $18, $02, $05, $07, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_07, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_07:
+	; $5654, 16 bytes (mode_hooks)
+	dw $5664 ; record 0
+	dw $5668 ; record 1
+	dw $569b ; record 2
+	dw RetStub ; record 3
+	dw $56e6 ; record 4
+	dw $56e2 ; record 5
+	dw $56de ; record 6
+	dw RetStub ; record 7
+	call UpdateDrillAbortCountdown ; $5664
+	ret ; $5667
+	xor a, a ; $5668
+	ld [$c2e1], a ; $5669
+	ld a, $0a ; $566c
+	ld [$c2e0], a ; $566e
+	ld hl, $5699 ; $5671
+	call Func_0b_441c ; $5674
+	xor a, a ; $5677
+	ld [$c2e6], a ; $5678
+	xor a, a ; $567b
+	ld [$c2ff], a ; $567c
+	ld a, [wTotalPointsScoredInCurrentGame] ; $567f
+	bit 0, a ; $5682
+	ret nz ; $5684
+	xor a, a ; $5685
+	ld [$c2e8], a ; $5686
+	ld [$c2e9], a ; $5689
+	ld [$c2ea], a ; $568c
+	ld [$c2eb], a ; $568f
+	ld [$c2ec], a ; $5692
+	ld [$c2ed], a ; $5695
+	ret ; $5698
+	db $3e ; $5699
+	db $55 ; $569a
+	call Func_0b_574d ; $569b
+	call Func_0b_56ea ; $569e
+	ld a, [wTotalPointsScoredInCurrentGame] ; $56a1
+	bit 0, a ; $56a4
+	ret nz ; $56a6
+	ld a, [wPlayer1PointsWon] ; $56a7
+	ld b, a ; $56aa
+	ld a, [wPlayer2PointsWon] ; $56ab
+	sub a, b ; $56ae
+	ld b, a ; $56af
+	bit 7, a ; $56b0
+	jr z, Label_0b_56b6 ; $56b2
+	cpl ; $56b4
+	inc a ; $56b5
+Label_0b_56b6:
+	cp a, $02 ; $56b6
+	jr c, Label_0b_56cd ; $56b8
+	xor a, a ; $56ba
+	rl b ; $56bb
+	rl a ; $56bd
+	or a, a ; $56bf
+	jr nz, Label_0b_56c4 ; $56c0
+	ld a, $ff ; $56c2
+Label_0b_56c4:
+	ld [wPointWinLoseFlag], a ; $56c4
+	ld a, $80 ; $56c7
+	ld [wMatchAbortFlag], a ; $56c9
+	ret ; $56cc
+Label_0b_56cd:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $56cd
+	cp a, $08 ; $56d0
+	ret nz ; $56d2
+	ld a, $00 ; $56d3
+	ld [wPointWinLoseFlag], a ; $56d5
+	ld a, $80 ; $56d8
+	ld [wMatchAbortFlag], a ; $56da
+	ret ; $56dd
+	call Func_0b_5769 ; $56de
+	ret ; $56e1
+	call Func_0b_575f ; $56e2
+	ret ; $56e5
+	call Func_0b_5756 ; $56e6
+	ret ; $56e9
+Func_0b_56ea:
+	farcall UpdateScorePanelDisplay ; $56ea
+	ld a, [$c2ff] ; $56ed
+	ld b, a ; $56f0
+	ld a, [wTotalPointsScoredInCurrentGame] ; $56f1
+	bit 0, a ; $56f4
+	ld a, b ; $56f6
+	jr z, Label_0b_56fb ; $56f7
+	cpl ; $56f9
+	inc a ; $56fa
+Label_0b_56fb:
+	ld [wPointWinLoseFlag], a ; $56fb
+	call RecordDrillPointResultBits ; $56fe
+	call ShowQueuedDrillMessage ; $5701
+	farcall UpdatePointStats ; $5704
+	call Func_0b_5724 ; $5707
+	ld a, [wPlayer1PointsWon] ; $570a
+	ld b, $01 ; $570d
+	farcall LoadPlayer1PointsDigitGfx ; $570f
+	ld a, [wPlayer2PointsWon] ; $5712
+	ld b, $01 ; $5715
+	farcall LoadPlayer2PointsDigitGfx ; $5717
+	farcall StepMatchFrame ; $571a
+	farcall StartPointEndReactions ; $571d
+	call PlayDrillPointEndSequence ; $5720
+	ret ; $5723
+Func_0b_5724:
+	ld a, [wPointWinLoseFlag] ; $5724
+	or a, a ; $5727
+	ret z ; $5728
+	inc a ; $5729
+	srl a ; $572a
+	ld b, a ; $572c
+	ld a, [wTotalPointsScoredInCurrentGame] ; $572d
+	and a, $01 ; $5730
+	xor a, $01 ; $5732
+	add a, b ; $5734
+	bit 0, a ; $5735
+	jr nz, Label_0b_5744 ; $5737
+	ld hl, wPlayer2PointsWon ; $5739
+	bit 1, a ; $573c
+	jr z, Label_0b_5743 ; $573e
+	ld hl, wPlayer1PointsWon ; $5740
+Label_0b_5743:
+	inc [hl] ; $5743
+Label_0b_5744:
+	xor a, a ; $5744
+	ld [wServeFaultFlag], a ; $5745
+	ld hl, wTotalPointsScoredInCurrentGame ; $5748
+	inc [hl] ; $574b
+	ret ; $574c
+Func_0b_574d:
+	ld a, $00 ; $574d
+	call Func_0b_5773 ; $574f
+	ld [$c2ff], a ; $5752
+	ret ; $5755
+Func_0b_5756:
+	ld a, $01 ; $5756
+	call Func_0b_5773 ; $5758
+	ld [$c2ff], a ; $575b
+	ret ; $575e
+Func_0b_575f:
+	ret ; $575f
+	ld a, $02 ; $5760
+	call Func_0b_5773 ; $5762
+	ld [$c2ff], a ; $5765
+	ret ; $5768
+Func_0b_5769:
+	ret ; $5769
+	ld a, $03 ; $576a
+	call Func_0b_5773 ; $576c
+	ld [$c2ff], a ; $576f
+	ret ; $5772
+Func_0b_5773:
+	ld b, a ; $5773
+	ld a, [$c2ff] ; $5774
+	or a, a ; $5777
+	ret nz ; $5778
+	ld a, [wRallyLength] ; $5779
+	dec a ; $577c
+	ld a, a ; $577d
+	rst Rst00 ; $577e
+	dw Label_0b_5789 ; $577f jumptable
+	dw Label_0b_57c3 ; $5781 jumptable
+	dw Label_0b_5811 ; $5783 jumptable
+	dw Label_0b_585a ; $5785 jumptable
+	dw Label_0b_5894 ; $5787 jumptable
+Label_0b_5789:
+	ld a, b ; $5789
+	ld a, a ; $578a
+	rst Rst00 ; $578b
+	dw Label_0b_5794 ; $578c jumptable
+	dw Label_0b_57bd ; $578e jumptable
+	dw Label_0b_57bf ; $5790 jumptable
+	dw Label_0b_57c1 ; $5792 jumptable
+Label_0b_5794:
+	ld a, [wPointOutcome] ; $5794
+	ld hl, DrillShotTable_0b_57b3 ; $5797
+	add a, l ; $579a
+	ld l, a ; $579b
+	jr nc, Label_0b_579f ; $579c
+	inc h ; $579e
+Label_0b_579f:
+	ld a, [hl] ; $579f
+	ld a, a ; $57a0
+	ld b, $0d ; $57a1
+	call QueueDrillResultMessage ; $57a3
+	ld a, [wPointOutcome] ; $57a6
+	ld hl, SignedTable_0b_46f1 ; $57a9
+	add a, l ; $57ac
+	ld l, a ; $57ad
+	jr nc, Label_0b_57b1 ; $57ae
+	inc h ; $57b0
+Label_0b_57b1:
+	ld a, [hl] ; $57b1
+	ret ; $57b2
+DrillShotTable_0b_57b3:
+	; $57b3, 10 bytes (bytes:10)
+	db $ff, $ff, $19, $ff, $ff, $1d, $18, $ff, $ff, $18 ; 0x00
+Label_0b_57bd:
+	xor a, a ; $57bd
+	ret ; $57be
+Label_0b_57bf:
+	xor a, a ; $57bf
+	ret ; $57c0
+Label_0b_57c1:
+	xor a, a ; $57c1
+	ret ; $57c2
+Label_0b_57c3:
+	ld a, b ; $57c3
+	ld a, a ; $57c4
+	rst Rst00 ; $57c5
+	dw Label_0b_57ce ; $57c6 jumptable
+	dw Label_0b_57f7 ; $57c8 jumptable
+	dw Label_0b_580d ; $57ca jumptable
+	dw Label_0b_580f ; $57cc jumptable
+Label_0b_57ce:
+	ld a, [wPointOutcome] ; $57ce
+	ld hl, DrillShotTable_0b_57ed ; $57d1
+	add a, l ; $57d4
+	ld l, a ; $57d5
+	jr nc, Label_0b_57d9 ; $57d6
+	inc h ; $57d8
+Label_0b_57d9:
+	ld a, [hl] ; $57d9
+	ld a, a ; $57da
+	ld b, $0d ; $57db
+	call QueueDrillResultMessage ; $57dd
+	ld a, [wPointOutcome] ; $57e0
+	ld hl, SignedTable_0b_46fb ; $57e3
+	add a, l ; $57e6
+	ld l, a ; $57e7
+	jr nc, Label_0b_57eb ; $57e8
+	inc h ; $57ea
+Label_0b_57eb:
+	ld a, [hl] ; $57eb
+	ret ; $57ec
+DrillShotTable_0b_57ed:
+	; $57ed, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $17, $17, $1c, $1e, $1e, $1c ; 0x00
+Label_0b_57f7:
+	ld a, [wBallBounceCount] ; $57f7
+	or a, a ; $57fa
+	ret z ; $57fb
+	ld a, $18 ; $57fc
+	ld b, $0d ; $57fe
+	call QueueDrillResultMessage ; $5800
+	ld a, [wCurrentShotType] ; $5803
+	cp a, $0a ; $5806
+	jp nz, Label_0b_58af ; $5808
+	xor a, a ; $580b
+	ret ; $580c
+Label_0b_580d:
+	xor a, a ; $580d
+	ret ; $580e
+Label_0b_580f:
+	xor a, a ; $580f
+	ret ; $5810
+Label_0b_5811:
+	ld a, b ; $5811
+	ld a, a ; $5812
+	rst Rst00 ; $5813
+	dw Label_0b_581c ; $5814 jumptable
+	dw Label_0b_5845 ; $5816 jumptable
+	dw Label_0b_5856 ; $5818 jumptable
+	dw Label_0b_5858 ; $581a jumptable
+Label_0b_581c:
+	ld a, [wPointOutcome] ; $581c
+	ld hl, DrillShotTable_0b_583b ; $581f
+	add a, l ; $5822
+	ld l, a ; $5823
+	jr nc, Label_0b_5827 ; $5824
+	inc h ; $5826
+Label_0b_5827:
+	ld a, [hl] ; $5827
+	ld a, a ; $5828
+	ld b, $0d ; $5829
+	call QueueDrillResultMessage ; $582b
+	ld a, [wPointOutcome] ; $582e
+	ld hl, SignedTable_0b_46f1 ; $5831
+	add a, l ; $5834
+	ld l, a ; $5835
+	jr nc, Label_0b_5839 ; $5836
+	inc h ; $5838
+Label_0b_5839:
+	ld a, [hl] ; $5839
+	ret ; $583a
+DrillShotTable_0b_583b:
+	; $583b, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $1d, $1d, $15, $ff, $ff, $15 ; 0x00
+Label_0b_5845:
+	ld a, $1c ; $5845
+	ld b, $0d ; $5847
+	call QueueDrillResultMessage ; $5849
+	ld a, [$c4a1] ; $584c
+	cp a, $02 ; $584f
+	jp nz, Label_0b_58b7 ; $5851
+	xor a, a ; $5854
+	ret ; $5855
+Label_0b_5856:
+	xor a, a ; $5856
+	ret ; $5857
+Label_0b_5858:
+	xor a, a ; $5858
+	ret ; $5859
+Label_0b_585a:
+	ld a, b ; $585a
+	ld a, a ; $585b
+	rst Rst00 ; $585c
+	dw Label_0b_5865 ; $585d jumptable
+	dw Label_0b_588e ; $585f jumptable
+	dw Label_0b_5890 ; $5861 jumptable
+	dw Label_0b_5892 ; $5863 jumptable
+Label_0b_5865:
+	ld a, [wPointOutcome] ; $5865
+	ld hl, DrillShotTable_0b_5884 ; $5868
+	add a, l ; $586b
+	ld l, a ; $586c
+	jr nc, Label_0b_5870 ; $586d
+	inc h ; $586f
+Label_0b_5870:
+	ld a, [hl] ; $5870
+	ld a, a ; $5871
+	ld b, $0d ; $5872
+	call QueueDrillResultMessage ; $5874
+	ld a, [wPointOutcome] ; $5877
+	ld hl, SignedTable_0b_46fb ; $587a
+	add a, l ; $587d
+	ld l, a ; $587e
+	jr nc, Label_0b_5882 ; $587f
+	inc h ; $5881
+Label_0b_5882:
+	ld a, [hl] ; $5882
+	ret ; $5883
+DrillShotTable_0b_5884:
+	; $5884, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $15, $15, $1d, $ff, $ff, $1d ; 0x00
+Label_0b_588e:
+	xor a, a ; $588e
+	ret ; $588f
+Label_0b_5890:
+	xor a, a ; $5890
+	ret ; $5891
+Label_0b_5892:
+	xor a, a ; $5892
+	ret ; $5893
+Label_0b_5894:
+	ld a, b ; $5894
+	ld a, a ; $5895
+	rst Rst00 ; $5896
+	dw Label_0b_589f ; $5897 jumptable
+	dw Label_0b_58a1 ; $5899 jumptable
+	dw Label_0b_58ab ; $589b jumptable
+	dw Label_0b_58ad ; $589d jumptable
+Label_0b_589f:
+	xor a, a ; $589f
+	ret ; $58a0
+Label_0b_58a1:
+	ld a, $1d ; $58a1
+	ld b, $0d ; $58a3
+	call QueueDrillResultMessage ; $58a5
+	jp Label_0b_58b7 ; $58a8
+Label_0b_58ab:
+	xor a, a ; $58ab
+	ret ; $58ac
+Label_0b_58ad:
+	xor a, a ; $58ad
+	ret ; $58ae
+Label_0b_58af:
+	ld a, $01 ; $58af
+	ld [wMatchAbortFlag], a ; $58b1
+	ld a, $01 ; $58b4
+	ret ; $58b6
+Label_0b_58b7:
+	ld a, $01 ; $58b7
+	ld [wMatchAbortFlag], a ; $58b9
+	ld a, $ff ; $58bc
+	ret ; $58be
+DrillDefinition_0b_08:
+	; $58bf, 16 bytes (drill_definition)
+	db $3f, $18, $02, $05, $08, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_08, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_08:
+	; $58cf, 16 bytes (mode_hooks)
+	dw $58df ; record 0
+	dw $58e3 ; record 1
+	dw $5908 ; record 2
+	dw RetStub ; record 3
+	dw $5956 ; record 4
+	dw $5952 ; record 5
+	dw $594e ; record 6
+	dw RetStub ; record 7
+	call UpdateDrillAbortCountdown ; $58df
+	ret ; $58e2
+	xor a, a ; $58e3
+	ld [$c2e1], a ; $58e4
+	ld a, $0a ; $58e7
+	ld [$c2e0], a ; $58e9
+	xor a, a ; $58ec
+	ld [$c2e6], a ; $58ed
+	xor a, a ; $58f0
+	ld [$c2ff], a ; $58f1
+	ld a, [wTotalPointsScoredInCurrentGame] ; $58f4
+	bit 1, a ; $58f7
+	ret nz ; $58f9
+	xor a, a ; $58fa
+	ld [$c2e8], a ; $58fb
+	ld [$c2e9], a ; $58fe
+	ld [$c2ec], a ; $5901
+	ld [$c2ed], a ; $5904
+	ret ; $5907
+	call Func_0b_5a78 ; $5908
+	call Func_0b_595a ; $590b
+	ld hl, $594c ; $590e
+	call Func_0b_441c ; $5911
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5914
+	bit 0, a ; $5917
+	ret nz ; $5919
+	ld a, [wPlayer1PointsWon] ; $591a
+	ld b, a ; $591d
+	ld a, [wPlayer2PointsWon] ; $591e
+	sub a, b ; $5921
+	ld b, a ; $5922
+	bit 7, a ; $5923
+	jr z, Label_0b_5929 ; $5925
+	cpl ; $5927
+	inc a ; $5928
+Label_0b_5929:
+	cp a, $02 ; $5929
+	jr c, Label_0b_5940 ; $592b
+	xor a, a ; $592d
+	rl b ; $592e
+	rl a ; $5930
+	or a, a ; $5932
+	jr nz, Label_0b_5937 ; $5933
+	ld a, $ff ; $5935
+Label_0b_5937:
+	ld [wPointWinLoseFlag], a ; $5937
+	ld a, $80 ; $593a
+	ld [wMatchAbortFlag], a ; $593c
+	ret ; $593f
+Label_0b_5940:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5940
+	cp a, $08 ; $5943
+	ret c ; $5945
+	ld a, $00 ; $5946
+	ld [wPointWinLoseFlag], a ; $5948
+	ret ; $594b
+	db $3f ; $594c
+	db $56 ; $594d
+	call Func_0b_5a94 ; $594e
+	ret ; $5951
+	call Func_0b_5a8a ; $5952
+	ret ; $5955
+	call Func_0b_5a81 ; $5956
+	ret ; $5959
+Func_0b_595a:
+	farcall UpdateScorePanelDisplay ; $595a
+	ld a, [$c2ff] ; $595d
+	ld b, a ; $5960
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5961
+	bit 0, a ; $5964
+	ld a, b ; $5966
+	jr z, Label_0b_596b ; $5967
+	cpl ; $5969
+	inc a ; $596a
+Label_0b_596b:
+	ld [wPointWinLoseFlag], a ; $596b
+	call RecordDrillPointResultBits ; $596e
+	call ShowQueuedDrillMessage ; $5971
+	farcall UpdatePointStats ; $5974
+	call Func_0b_5a4f ; $5977
+	ld a, [wPlayer1PointsWon] ; $597a
+	ld b, $01 ; $597d
+	farcall LoadPlayer1PointsDigitGfx ; $597f
+	ld a, [wPlayer2PointsWon] ; $5982
+	ld b, $01 ; $5985
+	farcall LoadPlayer2PointsDigitGfx ; $5987
+	farcall StepMatchFrame ; $598a
+	farcall StartPointEndReactions ; $598d
+	call PlayDrillPointEndSequence ; $5990
+	ret ; $5993
+	ld a, [wPointOutcome] ; $5994
+	cp a, $01 ; $5997
+	jp z, Label_0b_5a48 ; $5999
+	cp a, $03 ; $599c
+	jp z, Label_0b_5a48 ; $599e
+	ld a, [wRallyLength] ; $59a1
+	dec a ; $59a4
+	and a, $03 ; $59a5
+	add a, a ; $59a7
+	ld hl, $59b4 ; $59a8
+	add a, l ; $59ab
+	ld l, a ; $59ac
+	jr nc, Label_0b_59b0 ; $59ad
+	inc h ; $59af
+Label_0b_59b0:
+	ld a, [hl+] ; $59b0
+	ld h, [hl] ; $59b1
+	ld l, a ; $59b2
+	jp hl ; $59b3
+	dw Label_0b_59bc ; $59b4 jumptable
+	dw Label_0b_59fc ; $59b6 jumptable
+	dw Label_0b_59d4 ; $59b8 jumptable
+	dw Label_0b_5a20 ; $59ba jumptable
+Label_0b_59bc:
+	ld a, $17 ; $59bc
+	ld b, $0d ; $59be
+	call QueueDrillResultMessage ; $59c0
+	ld a, [wPointOutcome] ; $59c3
+	cp a, $06 ; $59c6
+	jr z, Label_0b_5a36 ; $59c8
+	ld a, $19 ; $59ca
+	ld b, $0d ; $59cc
+	call QueueDrillResultMessage ; $59ce
+	jp Label_0b_5a40 ; $59d1
+Label_0b_59d4:
+	ld a, $1b ; $59d4
+	ld b, $0d ; $59d6
+	call QueueDrillResultMessage ; $59d8
+	ld a, [wTotalPointsScoredInCurrentGame] ; $59db
+	and a, $01 ; $59de
+	ld hl, $c2ec ; $59e0
+	add a, l ; $59e3
+	ld l, a ; $59e4
+	jr nc, Label_0b_59e8 ; $59e5
+	inc h ; $59e7
+Label_0b_59e8:
+	ld a, [hl] ; $59e8
+	or a, a ; $59e9
+	jr z, Label_0b_5a40 ; $59ea
+	ld a, $16 ; $59ec
+	ld b, $0d ; $59ee
+	call QueueDrillResultMessage ; $59f0
+	ld a, [wPointOutcome] ; $59f3
+	cp a, $06 ; $59f6
+	jr z, Label_0b_5a36 ; $59f8
+	jr Label_0b_5a40 ; $59fa
+Label_0b_59fc:
+	ld a, $1d ; $59fc
+	ld b, $0d ; $59fe
+	call QueueDrillResultMessage ; $5a00
+	ld a, [wPointOutcome] ; $5a03
+	cp a, $06 ; $5a06
+	jr z, Label_0b_5a40 ; $5a08
+	push af ; $5a0a
+	ld a, $1e ; $5a0b
+	ld b, $0d ; $5a0d
+	call QueueDrillResultMessage ; $5a0f
+	pop af ; $5a12
+	cp a, $07 ; $5a13
+	jr z, Label_0b_5a36 ; $5a15
+	ld a, $17 ; $5a17
+	ld b, $0d ; $5a19
+	call QueueDrillResultMessage ; $5a1b
+	jr Label_0b_5a36 ; $5a1e
+Label_0b_5a20:
+	ld a, $17 ; $5a20
+	ld b, $0d ; $5a22
+	call QueueDrillResultMessage ; $5a24
+	ld a, [wPointOutcome] ; $5a27
+	or a, a ; $5a2a
+	jr nz, Label_0b_5a36 ; $5a2b
+	ld a, $1d ; $5a2d
+	ld b, $0d ; $5a2f
+	call QueueDrillResultMessage ; $5a31
+	jr Label_0b_5a40 ; $5a34
+Label_0b_5a36:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5a36
+	and a, $01 ; $5a39
+	xor a, $01 ; $5a3b
+	add a, a ; $5a3d
+	dec a ; $5a3e
+	ret ; $5a3f
+Label_0b_5a40:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5a40
+	and a, $01 ; $5a43
+	add a, a ; $5a45
+	dec a ; $5a46
+	ret ; $5a47
+Label_0b_5a48:
+	ld a, $ff ; $5a48
+	ld [$c2e6], a ; $5a4a
+	xor a, a ; $5a4d
+	ret ; $5a4e
+Func_0b_5a4f:
+	ld a, [wPointWinLoseFlag] ; $5a4f
+	or a, a ; $5a52
+	ret z ; $5a53
+	inc a ; $5a54
+	srl a ; $5a55
+	ld b, a ; $5a57
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5a58
+	and a, $01 ; $5a5b
+	xor a, $01 ; $5a5d
+	add a, b ; $5a5f
+	bit 0, a ; $5a60
+	jr nz, Label_0b_5a6f ; $5a62
+	ld hl, wPlayer2PointsWon ; $5a64
+	bit 1, a ; $5a67
+	jr z, Label_0b_5a6e ; $5a69
+	ld hl, wPlayer1PointsWon ; $5a6b
+Label_0b_5a6e:
+	inc [hl] ; $5a6e
+Label_0b_5a6f:
+	xor a, a ; $5a6f
+	ld [wServeFaultFlag], a ; $5a70
+	ld hl, wTotalPointsScoredInCurrentGame ; $5a73
+	inc [hl] ; $5a76
+	ret ; $5a77
+Func_0b_5a78:
+	ld a, $00 ; $5a78
+	call Func_0b_5a9e ; $5a7a
+	ld [$c2ff], a ; $5a7d
+	ret ; $5a80
+Func_0b_5a81:
+	ld a, $01 ; $5a81
+	call Func_0b_5a9e ; $5a83
+	ld [$c2ff], a ; $5a86
+	ret ; $5a89
+Func_0b_5a8a:
+	ret ; $5a8a
+	ld a, $02 ; $5a8b
+	call Func_0b_5a9e ; $5a8d
+	ld [$c2ff], a ; $5a90
+	ret ; $5a93
+Func_0b_5a94:
+	ret ; $5a94
+	ld a, $03 ; $5a95
+	call Func_0b_5a9e ; $5a97
+	ld [$c2ff], a ; $5a9a
+	ret ; $5a9d
+Func_0b_5a9e:
+	ld b, a ; $5a9e
+	ld a, [$c2ff] ; $5a9f
+	or a, a ; $5aa2
+	ret nz ; $5aa3
+	ld a, [wRallyLength] ; $5aa4
+	dec a ; $5aa7
+	ld a, a ; $5aa8
+	rst Rst00 ; $5aa9
+	dw Label_0b_5ab4 ; $5aaa jumptable
+	dw Label_0b_5aee ; $5aac jumptable
+	dw Label_0b_5b28 ; $5aae jumptable
+	dw Label_0b_5b75 ; $5ab0 jumptable
+	dw Label_0b_5baf ; $5ab2 jumptable
+Label_0b_5ab4:
+	ld a, b ; $5ab4
+	ld a, a ; $5ab5
+	rst Rst00 ; $5ab6
+	dw Label_0b_5abf ; $5ab7 jumptable
+	dw Label_0b_5ae8 ; $5ab9 jumptable
+	dw Label_0b_5aea ; $5abb jumptable
+	dw Label_0b_5aec ; $5abd jumptable
+Label_0b_5abf:
+	ld a, [wPointOutcome] ; $5abf
+	ld hl, DrillShotTable_0b_5ade ; $5ac2
+	add a, l ; $5ac5
+	ld l, a ; $5ac6
+	jr nc, Label_0b_5aca ; $5ac7
+	inc h ; $5ac9
+Label_0b_5aca:
+	ld a, [hl] ; $5aca
+	ld a, a ; $5acb
+	ld b, $0d ; $5acc
+	call QueueDrillResultMessage ; $5ace
+	ld a, [wPointOutcome] ; $5ad1
+	ld hl, SignedTable_0b_46f1 ; $5ad4
+	add a, l ; $5ad7
+	ld l, a ; $5ad8
+	jr nc, Label_0b_5adc ; $5ad9
+	inc h ; $5adb
+Label_0b_5adc:
+	ld a, [hl] ; $5adc
+	ret ; $5add
+DrillShotTable_0b_5ade:
+	; $5ade, 10 bytes (bytes:10)
+	db $ff, $ff, $19, $ff, $ff, $1d, $17, $ff, $ff, $17 ; 0x00
+Label_0b_5ae8:
+	xor a, a ; $5ae8
+	ret ; $5ae9
+Label_0b_5aea:
+	xor a, a ; $5aea
+	ret ; $5aeb
+Label_0b_5aec:
+	xor a, a ; $5aec
+	ret ; $5aed
+Label_0b_5aee:
+	ld a, b ; $5aee
+	ld a, a ; $5aef
+	rst Rst00 ; $5af0
+	dw Label_0b_5af9 ; $5af1 jumptable
+	dw Label_0b_5b22 ; $5af3 jumptable
+	dw Label_0b_5b24 ; $5af5 jumptable
+	dw Label_0b_5b26 ; $5af7 jumptable
+Label_0b_5af9:
+	ld a, [wPointOutcome] ; $5af9
+	ld hl, DrillShotTable_0b_5b18 ; $5afc
+	add a, l ; $5aff
+	ld l, a ; $5b00
+	jr nc, Label_0b_5b04 ; $5b01
+	inc h ; $5b03
+Label_0b_5b04:
+	ld a, [hl] ; $5b04
+	ld a, a ; $5b05
+	ld b, $0d ; $5b06
+	call QueueDrillResultMessage ; $5b08
+	ld a, [wPointOutcome] ; $5b0b
+	ld hl, SignedTable_0b_46fb ; $5b0e
+	add a, l ; $5b11
+	ld l, a ; $5b12
+	jr nc, Label_0b_5b16 ; $5b13
+	inc h ; $5b15
+Label_0b_5b16:
+	ld a, [hl] ; $5b16
+	ret ; $5b17
+DrillShotTable_0b_5b18:
+	; $5b18, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $17, $17, $20, $1e, $1e, $20 ; 0x00
+Label_0b_5b22:
+	xor a, a ; $5b22
+	ret ; $5b23
+Label_0b_5b24:
+	xor a, a ; $5b24
+	ret ; $5b25
+Label_0b_5b26:
+	xor a, a ; $5b26
+	ret ; $5b27
+Label_0b_5b28:
+	ld a, b ; $5b28
+	ld a, a ; $5b29
+	rst Rst00 ; $5b2a
+	dw Label_0b_5b33 ; $5b2b jumptable
+	dw Label_0b_5b5c ; $5b2d jumptable
+	dw Label_0b_5b71 ; $5b2f jumptable
+	dw Label_0b_5b73 ; $5b31 jumptable
+Label_0b_5b33:
+	ld a, [wPointOutcome] ; $5b33
+	ld hl, DrillShotTable_0b_5b52 ; $5b36
+	add a, l ; $5b39
+	ld l, a ; $5b3a
+	jr nc, Label_0b_5b3e ; $5b3b
+	inc h ; $5b3d
+Label_0b_5b3e:
+	ld a, [hl] ; $5b3e
+	ld a, a ; $5b3f
+	ld b, $0d ; $5b40
+	call QueueDrillResultMessage ; $5b42
+	ld a, [wPointOutcome] ; $5b45
+	ld hl, SignedTable_0b_46f1 ; $5b48
+	add a, l ; $5b4b
+	ld l, a ; $5b4c
+	jr nc, Label_0b_5b50 ; $5b4d
+	inc h ; $5b4f
+Label_0b_5b50:
+	ld a, [hl] ; $5b50
+	ret ; $5b51
+DrillShotTable_0b_5b52:
+	; $5b52, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $1d, $1d, $16, $ff, $ff, $16 ; 0x00
+Label_0b_5b5c:
+	ld a, $1b ; $5b5c
+	ld b, $0d ; $5b5e
+	call QueueDrillResultMessage ; $5b60
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5b63
+	and a, $01 ; $5b66
+	call Func_0b_4447 ; $5b68
+	or a, a ; $5b6b
+	jp z, Label_0b_5bd2 ; $5b6c
+	xor a, a ; $5b6f
+	ret ; $5b70
+Label_0b_5b71:
+	xor a, a ; $5b71
+	ret ; $5b72
+Label_0b_5b73:
+	xor a, a ; $5b73
+	ret ; $5b74
+Label_0b_5b75:
+	ld a, b ; $5b75
+	ld a, a ; $5b76
+	rst Rst00 ; $5b77
+	dw Label_0b_5b80 ; $5b78 jumptable
+	dw Label_0b_5ba9 ; $5b7a jumptable
+	dw Label_0b_5bab ; $5b7c jumptable
+	dw Label_0b_5bad ; $5b7e jumptable
+Label_0b_5b80:
+	ld a, [wPointOutcome] ; $5b80
+	ld hl, DrillShotTable_0b_5b9f ; $5b83
+	add a, l ; $5b86
+	ld l, a ; $5b87
+	jr nc, Label_0b_5b8b ; $5b88
+	inc h ; $5b8a
+Label_0b_5b8b:
+	ld a, [hl] ; $5b8b
+	ld a, a ; $5b8c
+	ld b, $0d ; $5b8d
+	call QueueDrillResultMessage ; $5b8f
+	ld a, [wPointOutcome] ; $5b92
+	ld hl, SignedTable_0b_46fb ; $5b95
+	add a, l ; $5b98
+	ld l, a ; $5b99
+	jr nc, Label_0b_5b9d ; $5b9a
+	inc h ; $5b9c
+Label_0b_5b9d:
+	ld a, [hl] ; $5b9d
+	ret ; $5b9e
+DrillShotTable_0b_5b9f:
+	; $5b9f, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $16, $16, $1d, $ff, $ff, $1d ; 0x00
+Label_0b_5ba9:
+	xor a, a ; $5ba9
+	ret ; $5baa
+Label_0b_5bab:
+	xor a, a ; $5bab
+	ret ; $5bac
+Label_0b_5bad:
+	xor a, a ; $5bad
+	ret ; $5bae
+Label_0b_5baf:
+	ld a, b ; $5baf
+	ld a, a ; $5bb0
+	rst Rst00 ; $5bb1
+	dw Label_0b_5bba ; $5bb2 jumptable
+	dw Label_0b_5bbc ; $5bb4 jumptable
+	dw Label_0b_5bc6 ; $5bb6 jumptable
+	dw Label_0b_5bc8 ; $5bb8 jumptable
+Label_0b_5bba:
+	xor a, a ; $5bba
+	ret ; $5bbb
+Label_0b_5bbc:
+	ld a, $1d ; $5bbc
+	ld b, $0d ; $5bbe
+	call QueueDrillResultMessage ; $5bc0
+	jp Label_0b_5bd2 ; $5bc3
+Label_0b_5bc6:
+	xor a, a ; $5bc6
+	ret ; $5bc7
+Label_0b_5bc8:
+	xor a, a ; $5bc8
+	ret ; $5bc9
+	ld a, $01 ; $5bca
+	ld [wMatchAbortFlag], a ; $5bcc
+	ld a, $01 ; $5bcf
+	ret ; $5bd1
+Label_0b_5bd2:
+	ld a, $01 ; $5bd2
+	ld [wMatchAbortFlag], a ; $5bd4
+	ld a, $ff ; $5bd7
+	ret ; $5bd9
+DrillDefinition_0b_09:
+	; $5bda, 16 bytes (drill_definition)
+	db $40, $09, $02, $05, $09, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_09, DrillPointTable_0b_4300, DrillInit_0b_09 ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_09:
 	ld a, $01 ; $5bea
 	ld [$c7bb], a ; $5bec
 	ret ; $5bef
-	; $5bf0, 16 bytes (records:2)
+DrillModeHooks_0b_09:
+	; $5bf0, 16 bytes (mode_hooks)
 	dw $5c15 ; record 0
 	dw $5c19 ; record 1
 	dw $5c52 ; record 2
@@ -1104,7 +3939,7 @@ Label_0b_49bf:
 	dw $5cc9 ; record 4
 	dw $5cc5 ; record 5
 	dw $5cc1 ; record 6
-	dw $03ae ; record 7
+	dw RetStub ; record 7
 	xor a, a ; $5c00
 	ld [$c2e9], a ; $5c01
 	ld [$c2ea], a ; $5c04
@@ -1133,7 +3968,7 @@ Label_0b_49bf:
 	xor a, a ; $5c3a
 	ld [$c2ff], a ; $5c3b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5c3e
-	ld hl, $5c4e ; $5c41
+	ld hl, Table_0b_5c4e ; $5c41
 	add a, l ; $5c44
 	ld l, a ; $5c45
 	jr nc, Label_0b_5c49 ; $5c46
@@ -1142,7 +3977,9 @@ Label_0b_5c49:
 	ld a, [hl] ; $5c49
 	ld [$c7b5], a ; $5c4a
 	ret ; $5c4d
-	INCBIN "data/bank_00b/d_5c4e.bin" ; $5c4e, 4 bytes
+Table_0b_5c4e:
+	; $5c4e, 4 bytes (bytes:4)
+	db $20, $10, $10, $20 ; 0x00
 	call Drill09JudgePointMode0 ; $5c52
 	ld a, [wPointOutcome] ; $5c55
 	cp a, $04 ; $5c58
@@ -1281,7 +4118,10 @@ Drill09JudgePointMode2:
 	ret ; $5d62
 StubNop_0b_5d63:
 	ret ; $5d63
-	INCBIN "data/bank_00b/d_5d64.bin" ; $5d64, 9 bytes
+	ld a, $03 ; $5d64
+	call Drill09JudgePoint ; $5d66
+	ld [$c2ff], a ; $5d69
+	ret ; $5d6c
 Drill09JudgePoint:
 	ld b, a ; $5d6d
 	ld a, [$c2ff] ; $5d6e
@@ -1304,7 +4144,7 @@ Label_0b_5d7f:
 	dw Label_0b_5db7 ; $5d88 jumptable
 Label_0b_5d8a:
 	ld a, [wPointOutcome] ; $5d8a
-	ld hl, $5da9 ; $5d8d
+	ld hl, SignedTable_0b_5da9 ; $5d8d
 	add a, l ; $5d90
 	ld l, a ; $5d91
 	jr nc, Label_0b_5d95 ; $5d92
@@ -1315,7 +4155,7 @@ Label_0b_5d95:
 	ld b, $00 ; $5d97
 	call QueueDrillResultMessage ; $5d99
 	ld a, [wPointOutcome] ; $5d9c
-	ld hl, $46f1 ; $5d9f
+	ld hl, SignedTable_0b_46f1 ; $5d9f
 	add a, l ; $5da2
 	ld l, a ; $5da3
 	jr nc, Label_0b_5da7 ; $5da4
@@ -1323,7 +4163,9 @@ Label_0b_5d95:
 Label_0b_5da7:
 	ld a, [hl] ; $5da7
 	ret ; $5da8
-	INCBIN "data/bank_00b/d_5da9.bin" ; $5da9, 10 bytes
+SignedTable_0b_5da9:
+	; $5da9, 10 bytes (bytes:10)
+	db $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31 ; 0x00
 Label_0b_5db3:
 	xor a, a ; $5db3
 	ret ; $5db4
@@ -1343,7 +4185,7 @@ Label_0b_5db9:
 	dw Label_0b_5df1 ; $5dc2 jumptable
 Label_0b_5dc4:
 	ld a, [wPointOutcome] ; $5dc4
-	ld hl, $5de3 ; $5dc7
+	ld hl, SignedTable_0b_5de3 ; $5dc7
 	add a, l ; $5dca
 	ld l, a ; $5dcb
 	jr nc, Label_0b_5dcf ; $5dcc
@@ -1354,7 +4196,7 @@ Label_0b_5dcf:
 	ld b, $00 ; $5dd1
 	call QueueDrillResultMessage ; $5dd3
 	ld a, [wPointOutcome] ; $5dd6
-	ld hl, $46fb ; $5dd9
+	ld hl, SignedTable_0b_46fb ; $5dd9
 	add a, l ; $5ddc
 	ld l, a ; $5ddd
 	jr nc, Label_0b_5de1 ; $5dde
@@ -1362,7 +4204,9 @@ Label_0b_5dcf:
 Label_0b_5de1:
 	ld a, [hl] ; $5de1
 	ret ; $5de2
-	INCBIN "data/bank_00b/d_5de3.bin" ; $5de3, 10 bytes
+SignedTable_0b_5de3:
+	; $5de3, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $31, $31, $3a, $31, $31, $3a ; 0x00
 Label_0b_5ded:
 	xor a, a ; $5ded
 	ret ; $5dee
@@ -1382,7 +4226,7 @@ Label_0b_5df3:
 	dw Label_0b_5e83 ; $5dfc jumptable
 Label_0b_5dfe:
 	ld a, [wPointOutcome] ; $5dfe
-	ld hl, $5e27 ; $5e01
+	ld hl, SignedTable_0b_5e27 ; $5e01
 	add a, l ; $5e04
 	ld l, a ; $5e05
 	jr nc, Label_0b_5e09 ; $5e06
@@ -1393,7 +4237,7 @@ Label_0b_5e09:
 	ld b, $00 ; $5e0b
 	call QueueDrillResultMessage ; $5e0d
 	ld a, [wPointOutcome] ; $5e10
-	ld hl, $5e1d ; $5e13
+	ld hl, SignedTable_0b_5e1d ; $5e13
 	add a, l ; $5e16
 	ld l, a ; $5e17
 	jr nc, Label_0b_5e1b ; $5e18
@@ -1401,7 +4245,12 @@ Label_0b_5e09:
 Label_0b_5e1b:
 	ld a, [hl] ; $5e1b
 	ret ; $5e1c
-	INCBIN "data/bank_00b/d_5e1d.bin" ; $5e1d, 20 bytes
+SignedTable_0b_5e1d:
+	; $5e1d, 10 bytes (bytes:10)
+	db $00, $00, $ff, $00, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
+SignedTable_0b_5e27:
+	; $5e27, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $38, $38, $38, $ff, $ff, $38 ; 0x00
 Label_0b_5e31:
 	ld a, $35 ; $5e31
 	ld b, $00 ; $5e33
@@ -1455,10 +4304,16 @@ Label_0b_5e8d:
 	ld [wMatchAbortFlag], a ; $5e8f
 	ld a, $ff ; $5e92
 	ret ; $5e94
-	INCBIN "data/bank_00b/d_5e95.bin" ; $5e95, 16 bytes
+DrillDefinition_0b_0a:
+	; $5e95, 16 bytes (drill_definition)
+	db $41, $09, $02, $05, $0a, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_0a, DrillPointTable_0b_4300, DrillInit_0b_0a ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_0a:
 	ld a, $01 ; $5ea5
 	ld [$c7bb], a ; $5ea7
 	ret ; $5eaa
+DrillModeHooks_0b_0a:
 	call $d15e ; $5eab
 	ld e, [hl] ; $5eae
 	ld a, [$bb5e] ; $5eaf
@@ -1481,11 +4336,1846 @@ Label_0b_5e8d:
 	ret ; $5ecc
 	call UpdateDrillAbortCountdown ; $5ecd
 	ret ; $5ed0
-	INCBIN "data/bank_00b/d_5ed1.bin" ; $5ed1, 3228 bytes
+	xor a, a ; $5ed1
+	ld [$c2e1], a ; $5ed2
+	ld a, $0a ; $5ed5
+	ld [$c2e0], a ; $5ed7
+	xor a, a ; $5eda
+	ld [$c2e8], a ; $5edb
+	ld [$c2ed], a ; $5ede
+	ld a, $01 ; $5ee1
+	ld [wTargetZoneEnabled], a ; $5ee3
+	ld hl, DrillPositions_0b_5f91 ; $5ee6
+	call SetDrillTargetZoneForPoint ; $5ee9
+	ld a, $41 ; $5eec
+	call LoadDrillOpponentChar ; $5eee
+	xor a, a ; $5ef1
+	ld [$c2e6], a ; $5ef2
+	xor a, a ; $5ef5
+	ld [$c2ff], a ; $5ef6
+	ret ; $5ef9
+	call Func_0b_6002 ; $5efa
+	ld a, [wPointOutcome] ; $5efd
+	cp a, $04 ; $5f00
+	jr z, Label_0b_5f0a ; $5f02
+	cp a, $05 ; $5f04
+	jr z, Label_0b_5f0a ; $5f06
+	jr Label_0b_5f0e ; $5f08
+Label_0b_5f0a:
+	ld hl, $c2ea ; $5f0a
+	inc [hl] ; $5f0d
+Label_0b_5f0e:
+	call Func_0b_5fb3 ; $5f0e
+	ld a, [wTotalPointsScoredInCurrentGame] ; $5f11
+	cp a, $04 ; $5f14
+	ret c ; $5f16
+	call Func_0b_5f1e ; $5f17
+	ld [wPointWinLoseFlag], a ; $5f1a
+	ret ; $5f1d
+Func_0b_5f1e:
+	ld a, [$c2eb] ; $5f1e
+	cp a, $04 ; $5f21
+	jr nz, Label_0b_5f2c ; $5f23
+	xor a, a ; $5f25
+	ld [$c2e3], a ; $5f26
+	ld a, $01 ; $5f29
+	ret ; $5f2b
+Label_0b_5f2c:
+	ld a, [wCharacter1DoubleFaults] ; $5f2c
+	cp a, $04 ; $5f2f
+	jr nz, Label_0b_5f3a ; $5f31
+	ld a, $01 ; $5f33
+	ld [$c2e3], a ; $5f35
+	jr Label_0b_5f78 ; $5f38
+Label_0b_5f3a:
+	or a, a ; $5f3a
+	jr z, Label_0b_5f44 ; $5f3b
+	ld a, $02 ; $5f3d
+	ld [$c2e3], a ; $5f3f
+	jr Label_0b_5f78 ; $5f42
+Label_0b_5f44:
+	ld a, [$c2eb] ; $5f44
+	cp a, $03 ; $5f47
+	jr nz, Label_0b_5f52 ; $5f49
+	ld a, $06 ; $5f4b
+	ld [$c2e3], a ; $5f4d
+	jr Label_0b_5f78 ; $5f50
+Label_0b_5f52:
+	ld a, [$c2ec] ; $5f52
+	or a, a ; $5f55
+	jr nz, Label_0b_5f5f ; $5f56
+	ld a, $05 ; $5f58
+	ld [$c2e3], a ; $5f5a
+	jr Label_0b_5f78 ; $5f5d
+Label_0b_5f5f:
+	ld a, [$c2eb] ; $5f5f
+	cp a, $01 ; $5f62
+	jr c, Label_0b_5f71 ; $5f64
+	cp a, $03 ; $5f66
+	jr nc, Label_0b_5f71 ; $5f68
+	ld a, $04 ; $5f6a
+	ld [$c2e3], a ; $5f6c
+	jr Label_0b_5f78 ; $5f6f
+Label_0b_5f71:
+	ld a, $03 ; $5f71
+	ld [$c2e3], a ; $5f73
+	jr Label_0b_5f78 ; $5f76
+Label_0b_5f78:
+	ld a, $ff ; $5f78
+	ret ; $5f7a
+	call Func_0b_601d ; $5f7b
+	ret ; $5f7e
+	call Func_0b_6014 ; $5f7f
+	ret ; $5f82
+	call Func_0b_600b ; $5f83
+	ld a, [wLastShotCharIndex] ; $5f86
+	cp a, $01 ; $5f89
+	jr nz, Label_0b_5f90 ; $5f8b
+	call ResetActiveCharState ; $5f8d
+Label_0b_5f90:
+	ret ; $5f90
+DrillPositions_0b_5f91:
+	; $5f91, 34 bytes (records:4)
+; 8 records x 4 bytes
+	dw $fe50, $fd60 ; record 0
+	dw $0000, $fe40 ; record 1
+	dw $0000, $fd60 ; record 2
+	dw $01b0, $fe40 ; record 3
+	dw $0000, $01c0 ; record 4
+	dw $01b0, $02a0 ; record 5
+	dw $fe50, $01c0 ; record 6
+	dw $0000, $02a0 ; record 7
+	db $ff, $ff
+Func_0b_5fb3:
+	farcall UpdateScorePanelDisplay ; $5fb3
+	ld a, [$c2ff] ; $5fb6
+	ld [wPointWinLoseFlag], a ; $5fb9
+	cp a, $01 ; $5fbc
+	jr nz, Label_0b_5fc4 ; $5fbe
+	ld hl, $c2eb ; $5fc0
+	inc [hl] ; $5fc3
+Label_0b_5fc4:
+	call RecordDrillPointResultBits ; $5fc4
+	call ShowQueuedDrillMessage ; $5fc7
+	farcall UpdatePointStats ; $5fca
+	farcall AwardPoint ; $5fcd
+	ld a, [$c2eb] ; $5fd0
+	ld [wPlayer1PointsWon], a ; $5fd3
+	xor a, a ; $5fd6
+	ld [wPlayer2PointsWon], a ; $5fd7
+	ld a, [wPlayer1PointsWon] ; $5fda
+	ld b, $01 ; $5fdd
+	farcall LoadPlayer1PointsDigitGfx ; $5fdf
+	ld a, [wPlayer2PointsWon] ; $5fe2
+	ld b, $01 ; $5fe5
+	farcall LoadPlayer2PointsDigitGfx ; $5fe7
+	farcall StepMatchFrame ; $5fea
+	ld a, $01 ; $5fed
+	ld hl, SyncPointWinLoseFlagTask ; $5fef
+	call RegisterFrameTask ; $5ff2
+	farcall StartPointEndReactions ; $5ff5
+	ld hl, SyncPointWinLoseFlagTask ; $5ff8
+	call UnregisterFrameTask ; $5ffb
+	call PlayDrillPointEndSequence ; $5ffe
+	ret ; $6001
+Func_0b_6002:
+	ld a, $00 ; $6002
+	call Func_0b_6027 ; $6004
+	ld [$c2ff], a ; $6007
+	ret ; $600a
+Func_0b_600b:
+	ld a, $01 ; $600b
+	call Func_0b_6027 ; $600d
+	ld [$c2ff], a ; $6010
+	ret ; $6013
+Func_0b_6014:
+	ld a, $02 ; $6014
+	call Func_0b_6027 ; $6016
+	ld [$c2ff], a ; $6019
+	ret ; $601c
+Func_0b_601d:
+	ret ; $601d
+	ld a, $03 ; $601e
+	call Func_0b_6027 ; $6020
+	ld [$c2ff], a ; $6023
+	ret ; $6026
+Func_0b_6027:
+	ld b, a ; $6027
+	ld a, [$c2ff] ; $6028
+	or a, a ; $602b
+	ret nz ; $602c
+	ld a, [wRallyLength] ; $602d
+	dec a ; $6030
+	ld a, a ; $6031
+	rst Rst00 ; $6032
+	dw Label_0b_6039 ; $6033 jumptable
+	dw Label_0b_60a3 ; $6035 jumptable
+	dw Label_0b_60f1 ; $6037 jumptable
+Label_0b_6039:
+	ld a, b ; $6039
+	ld a, a ; $603a
+	rst Rst00 ; $603b
+	dw Label_0b_6044 ; $603c jumptable
+	dw Label_0b_606d ; $603e jumptable
+	dw Label_0b_606f ; $6040 jumptable
+	dw Label_0b_60a1 ; $6042 jumptable
+Label_0b_6044:
+	ld a, [wPointOutcome] ; $6044
+	ld hl, DrillShotTable_0b_6063 ; $6047
+	add a, l ; $604a
+	ld l, a ; $604b
+	jr nc, Label_0b_604f ; $604c
+	inc h ; $604e
+Label_0b_604f:
+	ld a, [hl] ; $604f
+	ld a, a ; $6050
+	ld b, $00 ; $6051
+	call QueueDrillResultMessage ; $6053
+	ld a, [wPointOutcome] ; $6056
+	ld hl, SignedTable_0b_46f1 ; $6059
+	add a, l ; $605c
+	ld l, a ; $605d
+	jr nc, Label_0b_6061 ; $605e
+	inc h ; $6060
+Label_0b_6061:
+	ld a, [hl] ; $6061
+	ret ; $6062
+DrillShotTable_0b_6063:
+	; $6063, 10 bytes (bytes:10)
+	db $ff, $ff, $33, $ff, $ff, $3b, $31, $ff, $ff, $31 ; 0x00
+Label_0b_606d:
+	xor a, a ; $606d
+	ret ; $606e
+Label_0b_606f:
+	ld a, [wBallBounceCount] ; $606f
+	cp a, $01 ; $6072
+	ld a, $00 ; $6074
+	ret nz ; $6076
+	ld a, [wBallHasBouncedFlag] ; $6077
+	or a, a ; $607a
+	ld a, $00 ; $607b
+	ret nz ; $607d
+	ld a, [wPointOutcome] ; $607e
+	cp a, $05 ; $6081
+	ld a, $00 ; $6083
+	ret z ; $6085
+	ld a, [wPointOutcome] ; $6086
+	cp a, $02 ; $6089
+	ld a, $00 ; $608b
+	ret z ; $608d
+	ld a, $3b ; $608e
+	ld b, $00 ; $6090
+	call QueueDrillResultMessage ; $6092
+	call RecordDrillTargetZoneHit ; $6095
+	call CheckDrillTargetZoneMissed ; $6098
+	or a, a ; $609b
+	jp z, Label_0b_6146 ; $609c
+	xor a, a ; $609f
+	ret ; $60a0
+Label_0b_60a1:
+	xor a, a ; $60a1
+	ret ; $60a2
+Label_0b_60a3:
+	ld a, b ; $60a3
+	ld a, a ; $60a4
+	rst Rst00 ; $60a5
+	dw Label_0b_60ae ; $60a6 jumptable
+	dw Label_0b_60d7 ; $60a8 jumptable
+	dw Label_0b_60ed ; $60aa jumptable
+	dw Label_0b_60ef ; $60ac jumptable
+Label_0b_60ae:
+	ld a, [wPointOutcome] ; $60ae
+	ld hl, DrillShotTable_0b_60cd ; $60b1
+	add a, l ; $60b4
+	ld l, a ; $60b5
+	jr nc, Label_0b_60b9 ; $60b6
+	inc h ; $60b8
+Label_0b_60b9:
+	ld a, [hl] ; $60b9
+	ld a, a ; $60ba
+	ld b, $00 ; $60bb
+	call QueueDrillResultMessage ; $60bd
+	ld a, [wPointOutcome] ; $60c0
+	ld hl, SignedTable_0b_46fb ; $60c3
+	add a, l ; $60c6
+	ld l, a ; $60c7
+	jr nc, Label_0b_60cb ; $60c8
+	inc h ; $60ca
+Label_0b_60cb:
+	ld a, [hl] ; $60cb
+	ret ; $60cc
+DrillShotTable_0b_60cd:
+	; $60cd, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $31, $31, $36, $31, $31, $36 ; 0x00
+Label_0b_60d7:
+	ld a, [wBallBounceCount] ; $60d7
+	or a, a ; $60da
+	ret z ; $60db
+	ld a, $32 ; $60dc
+	ld b, $00 ; $60de
+	call QueueDrillResultMessage ; $60e0
+	ld a, [wCurrentShotType] ; $60e3
+	cp a, $0a ; $60e6
+	jp nz, Label_0b_613e ; $60e8
+	xor a, a ; $60eb
+	ret ; $60ec
+Label_0b_60ed:
+	xor a, a ; $60ed
+	ret ; $60ee
+Label_0b_60ef:
+	xor a, a ; $60ef
+	ret ; $60f0
+Label_0b_60f1:
+	ld a, b ; $60f1
+	ld a, a ; $60f2
+	rst Rst00 ; $60f3
+	dw Label_0b_60fc ; $60f4 jumptable
+	dw Label_0b_6125 ; $60f6 jumptable
+	dw Label_0b_613a ; $60f8 jumptable
+	dw Label_0b_613c ; $60fa jumptable
+Label_0b_60fc:
+	ld a, [wPointOutcome] ; $60fc
+	ld hl, DrillShotTable_0b_611b ; $60ff
+	add a, l ; $6102
+	ld l, a ; $6103
+	jr nc, Label_0b_6107 ; $6104
+	inc h ; $6106
+Label_0b_6107:
+	ld a, [hl] ; $6107
+	ld a, a ; $6108
+	ld b, $00 ; $6109
+	call QueueDrillResultMessage ; $610b
+	ld a, [wPointOutcome] ; $610e
+	ld hl, SignedTable_0b_46f1 ; $6111
+	add a, l ; $6114
+	ld l, a ; $6115
+	jr nc, Label_0b_6119 ; $6116
+	inc h ; $6118
+Label_0b_6119:
+	ld a, [hl] ; $6119
+	ret ; $611a
+DrillShotTable_0b_611b:
+	; $611b, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $37, $37, $2f, $ff, $ff, $2f ; 0x00
+Label_0b_6125:
+	ld a, $36 ; $6125
+	ld b, $00 ; $6127
+	call QueueDrillResultMessage ; $6129
+	ld a, [wCurrentShotType] ; $612c
+	cp a, $09 ; $612f
+	jp nz, Label_0b_6146 ; $6131
+	ld hl, $c2ec ; $6134
+	dec [hl] ; $6137
+	xor a, a ; $6138
+	ret ; $6139
+Label_0b_613a:
+	xor a, a ; $613a
+	ret ; $613b
+Label_0b_613c:
+	xor a, a ; $613c
+	ret ; $613d
+Label_0b_613e:
+	ld a, $01 ; $613e
+	ld [wMatchAbortFlag], a ; $6140
+	ld a, $01 ; $6143
+	ret ; $6145
+Label_0b_6146:
+	ld a, $01 ; $6146
+	ld [wMatchAbortFlag], a ; $6148
+	ld a, $ff ; $614b
+	ret ; $614d
+DrillDefinition_0b_0b:
+	; $614e, 16 bytes (drill_definition)
+	db $42, $09, $02, $05, $0b, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_0b, DrillPointTable_0b_4300, DrillInit_0b_0b ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_0b:
+	ld a, $01 ; $615e
+	ld [$c7bb], a ; $6160
+	ret ; $6163
+DrillModeHooks_0b_0b:
+	; $6164, 16 bytes (mode_hooks)
+	dw $6186 ; record 0
+	dw $618a ; record 1
+	dw $61ac ; record 2
+	dw $6174 ; record 3
+	dw $6242 ; record 4
+	dw $623e ; record 5
+	dw $623a ; record 6
+	dw RetStub ; record 7
+	xor a, a ; $6174
+	ld [$c2ea], a ; $6175
+	ld [$c2eb], a ; $6178
+	ld a, $04 ; $617b
+	ld [$c2ec], a ; $617d
+	ld a, $01 ; $6180
+	ld [$c7bb], a ; $6182
+	ret ; $6185
+	call UpdateDrillAbortCountdown ; $6186
+	ret ; $6189
+	xor a, a ; $618a
+	ld [$c2e1], a ; $618b
+	ld a, $0a ; $618e
+	ld [$c2e0], a ; $6190
+	ld a, $01 ; $6193
+	ld [wTargetZoneEnabled], a ; $6195
+	ld hl, DrillPositions_0b_6250 ; $6198
+	call SetDrillTargetZoneForPoint ; $619b
+	ld a, $42 ; $619e
+	call LoadDrillOpponentChar ; $61a0
+	xor a, a ; $61a3
+	ld [$c2e6], a ; $61a4
+	xor a, a ; $61a7
+	ld [$c2ff], a ; $61a8
+	ret ; $61ab
+	call Func_0b_62c1 ; $61ac
+	ld a, [wPointOutcome] ; $61af
+	cp a, $04 ; $61b2
+	jr z, Label_0b_61bc ; $61b4
+	cp a, $05 ; $61b6
+	jr z, Label_0b_61bc ; $61b8
+	jr Label_0b_61c0 ; $61ba
+Label_0b_61bc:
+	ld hl, $c2ea ; $61bc
+	inc [hl] ; $61bf
+Label_0b_61c0:
+	call Func_0b_6272 ; $61c0
+	ld a, [wTotalPointsScoredInCurrentGame] ; $61c3
+	cp a, $04 ; $61c6
+	ret c ; $61c8
+	call Func_0b_61d0 ; $61c9
+	ld [wPointWinLoseFlag], a ; $61cc
+	ret ; $61cf
+Func_0b_61d0:
+	ld a, [$c2eb] ; $61d0
+	cp a, $04 ; $61d3
+	jr nz, Label_0b_61de ; $61d5
+	xor a, a ; $61d7
+	ld [$c2e3], a ; $61d8
+	ld a, $01 ; $61db
+	ret ; $61dd
+Label_0b_61de:
+	ld a, [wCharacter1DoubleFaults] ; $61de
+	cp a, $04 ; $61e1
+	jr nz, Label_0b_61ec ; $61e3
+	ld a, $01 ; $61e5
+	ld [$c2e3], a ; $61e7
+	jr Label_0b_6237 ; $61ea
+Label_0b_61ec:
+	or a, a ; $61ec
+	jr z, Label_0b_61f6 ; $61ed
+	ld a, $02 ; $61ef
+	ld [$c2e3], a ; $61f1
+	jr Label_0b_6237 ; $61f4
+Label_0b_61f6:
+	ld a, [$c2eb] ; $61f6
+	cp a, $03 ; $61f9
+	jr nz, Label_0b_6204 ; $61fb
+	ld a, $07 ; $61fd
+	ld [$c2e3], a ; $61ff
+	jr Label_0b_6237 ; $6202
+Label_0b_6204:
+	call Func_0b_420b ; $6204
+	or a, a ; $6207
+	jr z, Label_0b_6211 ; $6208
+	ld a, $03 ; $620a
+	ld [$c2e3], a ; $620c
+	jr Label_0b_6237 ; $620f
+Label_0b_6211:
+	ld a, [$c2ec] ; $6211
+	or a, a ; $6214
+	jr nz, Label_0b_621e ; $6215
+	ld a, $06 ; $6217
+	ld [$c2e3], a ; $6219
+	jr Label_0b_6237 ; $621c
+Label_0b_621e:
+	ld a, [$c2eb] ; $621e
+	cp a, $01 ; $6221
+	jr c, Label_0b_6230 ; $6223
+	cp a, $03 ; $6225
+	jr nc, Label_0b_6230 ; $6227
+	ld a, $05 ; $6229
+	ld [$c2e3], a ; $622b
+	jr Label_0b_6237 ; $622e
+Label_0b_6230:
+	ld a, $04 ; $6230
+	ld [$c2e3], a ; $6232
+	jr Label_0b_6237 ; $6235
+Label_0b_6237:
+	ld a, $ff ; $6237
+	ret ; $6239
+	call Func_0b_62dc ; $623a
+	ret ; $623d
+	call Func_0b_62d3 ; $623e
+	ret ; $6241
+	call Func_0b_62ca ; $6242
+	ld a, [wLastShotCharIndex] ; $6245
+	cp a, $01 ; $6248
+	jr nz, Label_0b_624f ; $624a
+	call ResetActiveCharState ; $624c
+Label_0b_624f:
+	ret ; $624f
+DrillPositions_0b_6250:
+	; $6250, 34 bytes (records:4)
+; 8 records x 4 bytes
+	dw $fe50, $fd60 ; record 0
+	dw $0000, $fe40 ; record 1
+	dw $0000, $fd60 ; record 2
+	dw $01b0, $fe40 ; record 3
+	dw $0000, $01c0 ; record 4
+	dw $01b0, $02a0 ; record 5
+	dw $fe50, $01c0 ; record 6
+	dw $0000, $02a0 ; record 7
+	db $ff, $ff
+Func_0b_6272:
+	farcall UpdateScorePanelDisplay ; $6272
+	ld a, [$c2ff] ; $6275
+	ld [wPointWinLoseFlag], a ; $6278
+	cp a, $01 ; $627b
+	jr nz, Label_0b_6283 ; $627d
+	ld hl, $c2eb ; $627f
+	inc [hl] ; $6282
+Label_0b_6283:
+	call RecordDrillPointResultBits ; $6283
+	call ShowQueuedDrillMessage ; $6286
+	farcall UpdatePointStats ; $6289
+	farcall AwardPoint ; $628c
+	ld a, [$c2eb] ; $628f
+	ld [wPlayer1PointsWon], a ; $6292
+	xor a, a ; $6295
+	ld [wPlayer2PointsWon], a ; $6296
+	ld a, [wPlayer1PointsWon] ; $6299
+	ld b, $01 ; $629c
+	farcall LoadPlayer1PointsDigitGfx ; $629e
+	ld a, [wPlayer2PointsWon] ; $62a1
+	ld b, $01 ; $62a4
+	farcall LoadPlayer2PointsDigitGfx ; $62a6
+	farcall StepMatchFrame ; $62a9
+	ld a, $01 ; $62ac
+	ld hl, SyncPointWinLoseFlagTask ; $62ae
+	call RegisterFrameTask ; $62b1
+	farcall StartPointEndReactions ; $62b4
+	ld hl, SyncPointWinLoseFlagTask ; $62b7
+	call UnregisterFrameTask ; $62ba
+	call PlayDrillPointEndSequence ; $62bd
+	ret ; $62c0
+Func_0b_62c1:
+	ld a, $00 ; $62c1
+	call Func_0b_62e6 ; $62c3
+	ld [$c2ff], a ; $62c6
+	ret ; $62c9
+Func_0b_62ca:
+	ld a, $01 ; $62ca
+	call Func_0b_62e6 ; $62cc
+	ld [$c2ff], a ; $62cf
+	ret ; $62d2
+Func_0b_62d3:
+	ld a, $02 ; $62d3
+	call Func_0b_62e6 ; $62d5
+	ld [$c2ff], a ; $62d8
+	ret ; $62db
+Func_0b_62dc:
+	ret ; $62dc
+	ld a, $03 ; $62dd
+	call Func_0b_62e6 ; $62df
+	ld [$c2ff], a ; $62e2
+	ret ; $62e5
+Func_0b_62e6:
+	ld b, a ; $62e6
+	ld a, [$c2ff] ; $62e7
+	or a, a ; $62ea
+	ret nz ; $62eb
+	ld a, [wRallyLength] ; $62ec
+	dec a ; $62ef
+	ld a, a ; $62f0
+	rst Rst00 ; $62f1
+	dw Label_0b_62f8 ; $62f2 jumptable
+	dw Label_0b_635a ; $62f4 jumptable
+	dw Label_0b_6394 ; $62f6 jumptable
+Label_0b_62f8:
+	ld a, b ; $62f8
+	ld a, a ; $62f9
+	rst Rst00 ; $62fa
+	dw Label_0b_6303 ; $62fb jumptable
+	dw Label_0b_632c ; $62fd jumptable
+	dw Label_0b_632e ; $62ff jumptable
+	dw Label_0b_6358 ; $6301 jumptable
+Label_0b_6303:
+	ld a, [wPointOutcome] ; $6303
+	ld hl, DrillShotTable_0b_6322 ; $6306
+	add a, l ; $6309
+	ld l, a ; $630a
+	jr nc, Label_0b_630e ; $630b
+	inc h ; $630d
+Label_0b_630e:
+	ld a, [hl] ; $630e
+	ld a, a ; $630f
+	ld b, $00 ; $6310
+	call QueueDrillResultMessage ; $6312
+	ld a, [wPointOutcome] ; $6315
+	ld hl, SignedTable_0b_46f1 ; $6318
+	add a, l ; $631b
+	ld l, a ; $631c
+	jr nc, Label_0b_6320 ; $631d
+	inc h ; $631f
+Label_0b_6320:
+	ld a, [hl] ; $6320
+	ret ; $6321
+DrillShotTable_0b_6322:
+	; $6322, 10 bytes (bytes:10)
+	db $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31 ; 0x00
+Label_0b_632c:
+	xor a, a ; $632c
+	ret ; $632d
+Label_0b_632e:
+	ld a, [wBallBounceCount] ; $632e
+	cp a, $01 ; $6331
+	ld a, $00 ; $6333
+	ret nz ; $6335
+	ld a, [wBallHasBouncedFlag] ; $6336
+	or a, a ; $6339
+	ld a, $00 ; $633a
+	ret nz ; $633c
+	ld a, [wPointOutcome] ; $633d
+	cp a, $05 ; $6340
+	ld a, $00 ; $6342
+	ret z ; $6344
+	ld a, $3b ; $6345
+	ld b, $00 ; $6347
+	call QueueDrillResultMessage ; $6349
+	call RecordDrillTargetZoneHit ; $634c
+	call CheckDrillTargetZoneMissed ; $634f
+	or a, a ; $6352
+	jp z, Label_0b_63f8 ; $6353
+	xor a, a ; $6356
+	ret ; $6357
+Label_0b_6358:
+	xor a, a ; $6358
+	ret ; $6359
+Label_0b_635a:
+	ld a, b ; $635a
+	ld a, a ; $635b
+	rst Rst00 ; $635c
+	dw Label_0b_6365 ; $635d jumptable
+	dw Label_0b_638e ; $635f jumptable
+	dw Label_0b_6390 ; $6361 jumptable
+	dw Label_0b_6392 ; $6363 jumptable
+Label_0b_6365:
+	ld a, [wPointOutcome] ; $6365
+	ld hl, DrillShotTable_0b_6384 ; $6368
+	add a, l ; $636b
+	ld l, a ; $636c
+	jr nc, Label_0b_6370 ; $636d
+	inc h ; $636f
+Label_0b_6370:
+	ld a, [hl] ; $6370
+	ld a, a ; $6371
+	ld b, $00 ; $6372
+	call QueueDrillResultMessage ; $6374
+	ld a, [wPointOutcome] ; $6377
+	ld hl, SignedTable_0b_46fb ; $637a
+	add a, l ; $637d
+	ld l, a ; $637e
+	jr nc, Label_0b_6382 ; $637f
+	inc h ; $6381
+Label_0b_6382:
+	ld a, [hl] ; $6382
+	ret ; $6383
+DrillShotTable_0b_6384:
+	; $6384, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $31, $31, $39, $31, $31, $39 ; 0x00
+Label_0b_638e:
+	xor a, a ; $638e
+	ret ; $638f
+Label_0b_6390:
+	xor a, a ; $6390
+	ret ; $6391
+Label_0b_6392:
+	xor a, a ; $6392
+	ret ; $6393
+Label_0b_6394:
+	ld a, b ; $6394
+	ld a, a ; $6395
+	rst Rst00 ; $6396
+	dw Label_0b_639f ; $6397 jumptable
+	dw Label_0b_63c8 ; $6399 jumptable
+	dw Label_0b_63ec ; $639b jumptable
+	dw Label_0b_63ee ; $639d jumptable
+Label_0b_639f:
+	ld a, [wPointOutcome] ; $639f
+	ld hl, DrillShotTable_0b_63be ; $63a2
+	add a, l ; $63a5
+	ld l, a ; $63a6
+	jr nc, Label_0b_63aa ; $63a7
+	inc h ; $63a9
+Label_0b_63aa:
+	ld a, [hl] ; $63aa
+	ld a, a ; $63ab
+	ld b, $00 ; $63ac
+	call QueueDrillResultMessage ; $63ae
+	ld a, [wPointOutcome] ; $63b1
+	ld hl, SignedTable_0b_46f1 ; $63b4
+	add a, l ; $63b7
+	ld l, a ; $63b8
+	jr nc, Label_0b_63bc ; $63b9
+	inc h ; $63bb
+Label_0b_63bc:
+	ld a, [hl] ; $63bc
+	ret ; $63bd
+DrillShotTable_0b_63be:
+	; $63be, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $3c, $3c, $30, $ff, $ff, $30 ; 0x00
+Label_0b_63c8:
+	ld a, $35 ; $63c8
+	ld b, $00 ; $63ca
+	call QueueDrillResultMessage ; $63cc
+	xor a, a ; $63cf
+	call Func_0b_4447 ; $63d0
+	or a, a ; $63d3
+	jp z, Label_0b_63f8 ; $63d4
+	ld a, $39 ; $63d7
+	ld b, $00 ; $63d9
+	call QueueDrillResultMessage ; $63db
+	ld a, [wCurrentShotType] ; $63de
+	cp a, $0b ; $63e1
+	jp nz, Label_0b_63f8 ; $63e3
+	ld hl, $c2ec ; $63e6
+	dec [hl] ; $63e9
+	xor a, a ; $63ea
+	ret ; $63eb
+Label_0b_63ec:
+	xor a, a ; $63ec
+	ret ; $63ed
+Label_0b_63ee:
+	xor a, a ; $63ee
+	ret ; $63ef
+	ld a, $01 ; $63f0
+	ld [wMatchAbortFlag], a ; $63f2
+	ld a, $01 ; $63f5
+	ret ; $63f7
+Label_0b_63f8:
+	ld a, $01 ; $63f8
+	ld [wMatchAbortFlag], a ; $63fa
+	ld a, $ff ; $63fd
+	ret ; $63ff
+DrillDefinition_0b_0c:
+	; $6400, 16 bytes (drill_definition)
+	db $43, $18, $02, $05, $0c, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_0c, DrillPointTable_0b_42bf, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_0c:
+	; $6410, 16 bytes (mode_hooks)
+	dw $6426 ; record 0
+	dw $642a ; record 1
+	dw $6441 ; record 2
+	dw $6420 ; record 3
+	dw $6485 ; record 4
+	dw $6481 ; record 5
+	dw $647d ; record 6
+	dw RetStub ; record 7
+	ld a, $05 ; $6420
+	ld [wScoreboardLayout], a ; $6422
+	ret ; $6425
+	call UpdateDrillAbortCountdown ; $6426
+	ret ; $6429
+	xor a, a ; $642a
+	ld [$c2e1], a ; $642b
+	ld a, $0a ; $642e
+	ld [$c2e0], a ; $6430
+	xor a, a ; $6433
+	ld [$c2e6], a ; $6434
+	xor a, a ; $6437
+	ld [$c2ff], a ; $6438
+	ld a, $01 ; $643b
+	ld [$c7a8], a ; $643d
+	ret ; $6440
+	call Func_0b_64e0 ; $6441
+	call Func_0b_6489 ; $6444
+	ld a, [wPlayer1PointsWon] ; $6447
+	ld b, a ; $644a
+	ld a, [wPlayer2PointsWon] ; $644b
+	sub a, b ; $644e
+	ld b, a ; $644f
+	bit 7, a ; $6450
+	jr z, Label_0b_6456 ; $6452
+	cpl ; $6454
+	inc a ; $6455
+Label_0b_6456:
+	cp a, $02 ; $6456
+	jr c, Label_0b_646d ; $6458
+	xor a, a ; $645a
+	rl b ; $645b
+	rl a ; $645d
+	or a, a ; $645f
+	jr nz, Label_0b_6464 ; $6460
+	ld a, $ff ; $6462
+Label_0b_6464:
+	ld [wPointWinLoseFlag], a ; $6464
+	ld a, $80 ; $6467
+	ld [wMatchAbortFlag], a ; $6469
+	ret ; $646c
+Label_0b_646d:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $646d
+	cp a, $08 ; $6470
+	ret nz ; $6472
+	xor a, a ; $6473
+	ld [wPointWinLoseFlag], a ; $6474
+	ld a, $80 ; $6477
+	ld [wMatchAbortFlag], a ; $6479
+	ret ; $647c
+	call Func_0b_64fb ; $647d
+	ret ; $6480
+	call Func_0b_64f2 ; $6481
+	ret ; $6484
+	call Func_0b_64e9 ; $6485
+	ret ; $6488
+Func_0b_6489:
+	farcall UpdateScorePanelDisplay ; $6489
+	ld a, [$c2ff] ; $648c
+	ld b, a ; $648f
+	ld a, [wTotalPointsScoredInCurrentGame] ; $6490
+	bit 0, a ; $6493
+	ld a, b ; $6495
+	jr z, Label_0b_649a ; $6496
+	cpl ; $6498
+	inc a ; $6499
+Label_0b_649a:
+	ld [wPointWinLoseFlag], a ; $649a
+	call RecordDrillPointResultBits ; $649d
+	call ShowQueuedDrillMessage ; $64a0
+	farcall UpdatePointStats ; $64a3
+	call Func_0b_64c3 ; $64a6
+	ld a, [wPlayer1PointsWon] ; $64a9
+	ld b, $01 ; $64ac
+	farcall LoadPlayer1PointsDigitGfx ; $64ae
+	ld a, [wPlayer2PointsWon] ; $64b1
+	ld b, $01 ; $64b4
+	farcall LoadPlayer2PointsDigitGfx ; $64b6
+	farcall StepMatchFrame ; $64b9
+	farcall StartPointEndReactions ; $64bc
+	call PlayDrillPointEndSequence ; $64bf
+	ret ; $64c2
+Func_0b_64c3:
+	ld a, [wPointWinLoseFlag] ; $64c3
+	or a, a ; $64c6
+	ret z ; $64c7
+	inc a ; $64c8
+	srl a ; $64c9
+	or a, a ; $64cb
+	jr nz, Label_0b_64d3 ; $64cc
+	ld hl, wPlayer2PointsWon ; $64ce
+	jr Label_0b_64d6 ; $64d1
+Label_0b_64d3:
+	ld hl, wPlayer1PointsWon ; $64d3
+Label_0b_64d6:
+	inc [hl] ; $64d6
+	xor a, a ; $64d7
+	ld [wServeFaultFlag], a ; $64d8
+	ld hl, wTotalPointsScoredInCurrentGame ; $64db
+	inc [hl] ; $64de
+	ret ; $64df
+Func_0b_64e0:
+	ld a, $00 ; $64e0
+	call Func_0b_6505 ; $64e2
+	ld [$c2ff], a ; $64e5
+	ret ; $64e8
+Func_0b_64e9:
+	ld a, $01 ; $64e9
+	call Func_0b_6505 ; $64eb
+	ld [$c2ff], a ; $64ee
+	ret ; $64f1
+Func_0b_64f2:
+	ld a, $02 ; $64f2
+	call Func_0b_6505 ; $64f4
+	ld [$c2ff], a ; $64f7
+	ret ; $64fa
+Func_0b_64fb:
+	ret ; $64fb
+	ld a, $03 ; $64fc
+	call Func_0b_6505 ; $64fe
+	ld [$c2ff], a ; $6501
+	ret ; $6504
+Func_0b_6505:
+	ld b, a ; $6505
+	ld a, [$c2ff] ; $6506
+	or a, a ; $6509
+	ret nz ; $650a
+	ld a, [wRallyLength] ; $650b
+	dec a ; $650e
+	jp z, Label_0b_651f ; $650f
+	cp a, $01 ; $6512
+	jp z, Label_0b_6559 ; $6514
+	and a, $01 ; $6517
+	jp z, Label_0b_65bf ; $6519
+	jp Label_0b_661f ; $651c
+Label_0b_651f:
+	ld a, b ; $651f
+	ld a, a ; $6520
+	rst Rst00 ; $6521
+	dw Label_0b_652a ; $6522 jumptable
+	dw Label_0b_6553 ; $6524 jumptable
+	dw Label_0b_6555 ; $6526 jumptable
+	dw Label_0b_6557 ; $6528 jumptable
+Label_0b_652a:
+	ld a, [wPointOutcome] ; $652a
+	ld hl, DrillShotTable_0b_6549 ; $652d
+	add a, l ; $6530
+	ld l, a ; $6531
+	jr nc, Label_0b_6535 ; $6532
+	inc h ; $6534
+Label_0b_6535:
+	ld a, [hl] ; $6535
+	ld a, a ; $6536
+	ld b, $07 ; $6537
+	call Func_0b_4558 ; $6539
+	call Func_0b_668f ; $653c
+	ld a, [wPointOutcome] ; $653f
+	add a, l ; $6542
+	ld l, a ; $6543
+	jr nc, Label_0b_6547 ; $6544
+	inc h ; $6546
+Label_0b_6547:
+	ld a, [hl] ; $6547
+	ret ; $6548
+DrillShotTable_0b_6549:
+	; $6549, 10 bytes (bytes:10)
+	db $ff, $ff, $63, $ff, $ff, $ff, $60, $ff, $ff, $60 ; 0x00
+Label_0b_6553:
+	xor a, a ; $6553
+	ret ; $6554
+Label_0b_6555:
+	xor a, a ; $6555
+	ret ; $6556
+Label_0b_6557:
+	xor a, a ; $6557
+	ret ; $6558
+Label_0b_6559:
+	ld a, b ; $6559
+	ld a, a ; $655a
+	rst Rst00 ; $655b
+	dw Label_0b_6564 ; $655c jumptable
+	dw Label_0b_658d ; $655e jumptable
+	dw Label_0b_65a5 ; $6560 jumptable
+	dw Label_0b_65bd ; $6562 jumptable
+Label_0b_6564:
+	ld a, [wPointOutcome] ; $6564
+	ld hl, DrillShotTable_0b_6583 ; $6567
+	add a, l ; $656a
+	ld l, a ; $656b
+	jr nc, Label_0b_656f ; $656c
+	inc h ; $656e
+Label_0b_656f:
+	ld a, [hl] ; $656f
+	ld a, a ; $6570
+	ld b, $07 ; $6571
+	call Func_0b_4558 ; $6573
+	call Func_0b_66a2 ; $6576
+	ld a, [wPointOutcome] ; $6579
+	add a, l ; $657c
+	ld l, a ; $657d
+	jr nc, Label_0b_6581 ; $657e
+	inc h ; $6580
+Label_0b_6581:
+	ld a, [hl] ; $6581
+	ret ; $6582
+DrillShotTable_0b_6583:
+	; $6583, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $60, $60, $5e, $64, $64, $60 ; 0x00
+Label_0b_658d:
+	ld a, [wBallBounceCount] ; $658d
+	cp a, $01 ; $6590
+	ret nz ; $6592
+	ld a, $62 ; $6593
+	ld b, $07 ; $6595
+	call Func_0b_4558 ; $6597
+	ld a, [wLastShotCharIndex] ; $659a
+	call Func_0b_4447 ; $659d
+	jp nz, Label_0b_6687 ; $65a0
+	xor a, a ; $65a3
+	ret ; $65a4
+Label_0b_65a5:
+	ld a, [wPointOutcome] ; $65a5
+	cp a, $09 ; $65a8
+	ld a, $00 ; $65aa
+	ret z ; $65ac
+	ld a, $61 ; $65ad
+	ld b, $07 ; $65af
+	call Func_0b_4558 ; $65b1
+	call Func_0b_66b5 ; $65b4
+	or a, a ; $65b7
+	jp z, Label_0b_6687 ; $65b8
+	xor a, a ; $65bb
+	ret ; $65bc
+Label_0b_65bd:
+	xor a, a ; $65bd
+	ret ; $65be
+Label_0b_65bf:
+	ld a, b ; $65bf
+	ld a, a ; $65c0
+	rst Rst00 ; $65c1
+	dw Label_0b_65ca ; $65c2 jumptable
+	dw Label_0b_65f3 ; $65c4 jumptable
+	dw Label_0b_6605 ; $65c6 jumptable
+	dw Label_0b_661d ; $65c8 jumptable
+Label_0b_65ca:
+	ld a, [wPointOutcome] ; $65ca
+	ld hl, DrillShotTable_0b_65e9 ; $65cd
+	add a, l ; $65d0
+	ld l, a ; $65d1
+	jr nc, Label_0b_65d5 ; $65d2
+	inc h ; $65d4
+Label_0b_65d5:
+	ld a, [hl] ; $65d5
+	ld a, a ; $65d6
+	ld b, $07 ; $65d7
+	call Func_0b_4558 ; $65d9
+	call Func_0b_668f ; $65dc
+	ld a, [wPointOutcome] ; $65df
+	add a, l ; $65e2
+	ld l, a ; $65e3
+	jr nc, Label_0b_65e7 ; $65e4
+	inc h ; $65e6
+Label_0b_65e7:
+	ld a, [hl] ; $65e7
+	ret ; $65e8
+DrillShotTable_0b_65e9:
+	; $65e9, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60 ; 0x00
+Label_0b_65f3:
+	ld a, $62 ; $65f3
+	ld b, $07 ; $65f5
+	call Func_0b_4558 ; $65f7
+	ld a, [wLastShotCharIndex] ; $65fa
+	call Func_0b_4447 ; $65fd
+	jp nz, Label_0b_667f ; $6600
+	xor a, a ; $6603
+	ret ; $6604
+Label_0b_6605:
+	ld a, [wPointOutcome] ; $6605
+	cp a, $09 ; $6608
+	ld a, $00 ; $660a
+	ret z ; $660c
+	ld a, $61 ; $660d
+	ld b, $07 ; $660f
+	call Func_0b_4558 ; $6611
+	call Func_0b_66b5 ; $6614
+	or a, a ; $6617
+	jp z, Label_0b_667f ; $6618
+	xor a, a ; $661b
+	ret ; $661c
+Label_0b_661d:
+	xor a, a ; $661d
+	ret ; $661e
+Label_0b_661f:
+	ld a, b ; $661f
+	ld a, a ; $6620
+	rst Rst00 ; $6621
+	dw Label_0b_662a ; $6622 jumptable
+	dw Label_0b_6653 ; $6624 jumptable
+	dw Label_0b_6665 ; $6626 jumptable
+	dw Label_0b_667d ; $6628 jumptable
+Label_0b_662a:
+	ld a, [wPointOutcome] ; $662a
+	ld hl, DrillShotTable_0b_6649 ; $662d
+	add a, l ; $6630
+	ld l, a ; $6631
+	jr nc, Label_0b_6635 ; $6632
+	inc h ; $6634
+Label_0b_6635:
+	ld a, [hl] ; $6635
+	ld a, a ; $6636
+	ld b, $07 ; $6637
+	call Func_0b_4558 ; $6639
+	call Func_0b_66a2 ; $663c
+	ld a, [wPointOutcome] ; $663f
+	add a, l ; $6642
+	ld l, a ; $6643
+	jr nc, Label_0b_6647 ; $6644
+	inc h ; $6646
+Label_0b_6647:
+	ld a, [hl] ; $6647
+	ret ; $6648
+DrillShotTable_0b_6649:
+	; $6649, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60 ; 0x00
+Label_0b_6653:
+	ld a, $62 ; $6653
+	ld b, $07 ; $6655
+	call Func_0b_4558 ; $6657
+	ld a, [wLastShotCharIndex] ; $665a
+	call Func_0b_4447 ; $665d
+	jp nz, Label_0b_6687 ; $6660
+	xor a, a ; $6663
+	ret ; $6664
+Label_0b_6665:
+	ld a, [wPointOutcome] ; $6665
+	cp a, $09 ; $6668
+	ld a, $00 ; $666a
+	ret z ; $666c
+	ld a, $61 ; $666d
+	ld b, $07 ; $666f
+	call Func_0b_4558 ; $6671
+	call Func_0b_66b5 ; $6674
+	or a, a ; $6677
+	jp z, Label_0b_6687 ; $6678
+	xor a, a ; $667b
+	ret ; $667c
+Label_0b_667d:
+	xor a, a ; $667d
+	ret ; $667e
+Label_0b_667f:
+	ld a, $01 ; $667f
+	ld [wMatchAbortFlag], a ; $6681
+	ld a, $01 ; $6684
+	ret ; $6686
+Label_0b_6687:
+	ld a, $01 ; $6687
+	ld [wMatchAbortFlag], a ; $6689
+	ld a, $ff ; $668c
+	ret ; $668e
+Func_0b_668f:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $668f
+	and a, $01 ; $6692
+	ld a, $00 ; $6694
+	or a, a ; $6696
+	jr nz, Label_0b_669e ; $6697
+	ld hl, SignedTable_0b_46fb ; $6699
+	jr Label_0b_66a1 ; $669c
+Label_0b_669e:
+	ld hl, SignedTable_0b_46f1 ; $669e
+Label_0b_66a1:
+	ret ; $66a1
+Func_0b_66a2:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $66a2
+	and a, $01 ; $66a5
+	ld a, $00 ; $66a7
+	or a, a ; $66a9
+	jr nz, Label_0b_66b1 ; $66aa
+	ld hl, SignedTable_0b_46f1 ; $66ac
+	jr Label_0b_66b4 ; $66af
+Label_0b_66b1:
+	ld hl, SignedTable_0b_46fb ; $66b1
+Label_0b_66b4:
+	ret ; $66b4
+Func_0b_66b5:
+	ld a, [wBallBounceCount] ; $66b5
+	cp a, $01 ; $66b8
+	ret nz ; $66ba
+	ld hl, wBallDepth ; $66bb
+	ld a, [hl+] ; $66be
+	ld h, [hl] ; $66bf
+	ld l, a ; $66c0
+	bit 7, h ; $66c1
+	jr z, Label_0b_66cb ; $66c3
+	xor a, a ; $66c5
+	sub a, l ; $66c6
+	ld l, a ; $66c7
+	sbc a, a ; $66c8
+	sub a, h ; $66c9
+	ld h, a ; $66ca
+Label_0b_66cb:
+	ld de, $02a0 ; $66cb
+	ld a, l ; $66ce
+	sub a, e ; $66cf
+	ld l, a ; $66d0
+	ld a, h ; $66d1
+	sbc a, d ; $66d2
+	ld h, a ; $66d3
+	ld a, $01 ; $66d4
+	bit 7, h ; $66d6
+	ret z ; $66d8
+	xor a, a ; $66d9
+	ret ; $66da
+DrillDefinition_0b_0d:
+	; $66db, 16 bytes (drill_definition)
+	db $44, $18, $02, $05, $0d, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_0d, DrillPointTable_0b_42bf, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_0d:
+	; $66eb, 16 bytes (mode_hooks)
+	dw $66fc ; record 0
+	dw $6700 ; record 1
+	dw $6739 ; record 2
+	dw $66fb ; record 3
+	dw $6784 ; record 4
+	dw $6780 ; record 5
+	dw $677c ; record 6
+	dw RetStub ; record 7
+	ret ; $66fb
+	call UpdateDrillAbortCountdown ; $66fc
+	ret ; $66ff
+	xor a, a ; $6700
+	ld [$c2e1], a ; $6701
+	ld a, $0a ; $6704
+	ld [$c2e0], a ; $6706
+	ld hl, $6737 ; $6709
+	call Func_0b_441c ; $670c
+	xor a, a ; $670f
+	ld [$c2e6], a ; $6710
+	xor a, a ; $6713
+	ld [$c2ff], a ; $6714
+	ld a, [wTotalPointsScoredInCurrentGame] ; $6717
+	bit 0, a ; $671a
+	ret nz ; $671c
+	xor a, a ; $671d
+	ld [$c2e8], a ; $671e
+	ld [$c2e9], a ; $6721
+	ld [$c2ea], a ; $6724
+	ld [$c2eb], a ; $6727
+	ld [$c2ec], a ; $672a
+	ld [$c2ed], a ; $672d
+	ld [$c2ee], a ; $6730
+	ld [$c2ef], a ; $6733
+	ret ; $6736
+	db $58 ; $6737
+	db $44 ; $6738
+	call Func_0b_67eb ; $6739
+	call Func_0b_6788 ; $673c
+	ld a, [wTotalPointsScoredInCurrentGame] ; $673f
+	bit 0, a ; $6742
+	ret nz ; $6744
+	ld a, [wPlayer1PointsWon] ; $6745
+	ld b, a ; $6748
+	ld a, [wPlayer2PointsWon] ; $6749
+	sub a, b ; $674c
+	ld b, a ; $674d
+	bit 7, a ; $674e
+	jr z, Label_0b_6754 ; $6750
+	cpl ; $6752
+	inc a ; $6753
+Label_0b_6754:
+	cp a, $02 ; $6754
+	jr c, Label_0b_676b ; $6756
+	xor a, a ; $6758
+	rl b ; $6759
+	rl a ; $675b
+	or a, a ; $675d
+	jr nz, Label_0b_6762 ; $675e
+	ld a, $ff ; $6760
+Label_0b_6762:
+	ld [wPointWinLoseFlag], a ; $6762
+	ld a, $80 ; $6765
+	ld [wMatchAbortFlag], a ; $6767
+	ret ; $676a
+Label_0b_676b:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $676b
+	cp a, $08 ; $676e
+	ret nz ; $6770
+	ld a, $00 ; $6771
+	ld [wPointWinLoseFlag], a ; $6773
+	ld a, $80 ; $6776
+	ld [wMatchAbortFlag], a ; $6778
+	ret ; $677b
+	call Func_0b_6806 ; $677c
+	ret ; $677f
+	call Func_0b_67fd ; $6780
+	ret ; $6783
+	call Func_0b_67f4 ; $6784
+	ret ; $6787
+Func_0b_6788:
+	farcall UpdateScorePanelDisplay ; $6788
+	ld a, [$c2ff] ; $678b
+	ld b, a ; $678e
+	ld a, [wTotalPointsScoredInCurrentGame] ; $678f
+	bit 0, a ; $6792
+	ld a, b ; $6794
+	jr z, Label_0b_6799 ; $6795
+	cpl ; $6797
+	inc a ; $6798
+Label_0b_6799:
+	ld [wPointWinLoseFlag], a ; $6799
+	call RecordDrillPointResultBits ; $679c
+	call ShowQueuedDrillMessage ; $679f
+	farcall UpdatePointStats ; $67a2
+	call Func_0b_67c2 ; $67a5
+	ld a, [wPlayer1PointsWon] ; $67a8
+	ld b, $01 ; $67ab
+	farcall LoadPlayer1PointsDigitGfx ; $67ad
+	ld a, [wPlayer2PointsWon] ; $67b0
+	ld b, $01 ; $67b3
+	farcall LoadPlayer2PointsDigitGfx ; $67b5
+	farcall StepMatchFrame ; $67b8
+	farcall StartPointEndReactions ; $67bb
+	call PlayDrillPointEndSequence ; $67be
+	ret ; $67c1
+Func_0b_67c2:
+	ld a, [wPointWinLoseFlag] ; $67c2
+	or a, a ; $67c5
+	ret z ; $67c6
+	inc a ; $67c7
+	srl a ; $67c8
+	ld b, a ; $67ca
+	ld a, [wTotalPointsScoredInCurrentGame] ; $67cb
+	and a, $01 ; $67ce
+	xor a, $01 ; $67d0
+	add a, b ; $67d2
+	bit 0, a ; $67d3
+	jr nz, Label_0b_67e2 ; $67d5
+	ld hl, wPlayer2PointsWon ; $67d7
+	bit 1, a ; $67da
+	jr z, Label_0b_67e1 ; $67dc
+	ld hl, wPlayer1PointsWon ; $67de
+Label_0b_67e1:
+	inc [hl] ; $67e1
+Label_0b_67e2:
+	xor a, a ; $67e2
+	ld [wServeFaultFlag], a ; $67e3
+	ld hl, wTotalPointsScoredInCurrentGame ; $67e6
+	inc [hl] ; $67e9
+	ret ; $67ea
+Func_0b_67eb:
+	ld a, $00 ; $67eb
+	call Func_0b_6810 ; $67ed
+	ld [$c2ff], a ; $67f0
+	ret ; $67f3
+Func_0b_67f4:
+	ld a, $01 ; $67f4
+	call Func_0b_6810 ; $67f6
+	ld [$c2ff], a ; $67f9
+	ret ; $67fc
+Func_0b_67fd:
+	ld a, $02 ; $67fd
+	call Func_0b_6810 ; $67ff
+	ld [$c2ff], a ; $6802
+	ret ; $6805
+Func_0b_6806:
+	ret ; $6806
+	ld a, $03 ; $6807
+	call Func_0b_6810 ; $6809
+	ld [$c2ff], a ; $680c
+	ret ; $680f
+Func_0b_6810:
+	ld b, a ; $6810
+	ld a, [$c2ff] ; $6811
+	or a, a ; $6814
+	ret nz ; $6815
+	ld a, [wRallyLength] ; $6816
+	dec a ; $6819
+	ld a, a ; $681a
+	rst Rst00 ; $681b
+	dw Label_0b_6824 ; $681c jumptable
+	dw Label_0b_685e ; $681e jumptable
+	dw Label_0b_68ac ; $6820 jumptable
+	dw Label_0b_68fb ; $6822 jumptable
+Label_0b_6824:
+	ld a, b ; $6824
+	ld a, a ; $6825
+	rst Rst00 ; $6826
+	dw Label_0b_682f ; $6827 jumptable
+	dw Label_0b_6858 ; $6829 jumptable
+	dw Label_0b_685a ; $682b jumptable
+	dw Label_0b_685c ; $682d jumptable
+Label_0b_682f:
+	ld a, [wPointOutcome] ; $682f
+	ld hl, DrillShotTable_0b_684e ; $6832
+	add a, l ; $6835
+	ld l, a ; $6836
+	jr nc, Label_0b_683a ; $6837
+	inc h ; $6839
+Label_0b_683a:
+	ld a, [hl] ; $683a
+	ld a, a ; $683b
+	ld b, $0d ; $683c
+	call Func_0b_4545 ; $683e
+	ld a, [wPointOutcome] ; $6841
+	ld hl, SignedTable_0b_46fb ; $6844
+	add a, l ; $6847
+	ld l, a ; $6848
+	jr nc, Label_0b_684c ; $6849
+	inc h ; $684b
+Label_0b_684c:
+	ld a, [hl] ; $684c
+	ret ; $684d
+DrillShotTable_0b_684e:
+	; $684e, 10 bytes (bytes:10)
+	db $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f ; 0x00
+Label_0b_6858:
+	xor a, a ; $6858
+	ret ; $6859
+Label_0b_685a:
+	xor a, a ; $685a
+	ret ; $685b
+Label_0b_685c:
+	xor a, a ; $685c
+	ret ; $685d
+Label_0b_685e:
+	ld a, b ; $685e
+	ld a, a ; $685f
+	rst Rst00 ; $6860
+	dw Label_0b_6869 ; $6861 jumptable
+	dw Label_0b_6892 ; $6863 jumptable
+	dw Label_0b_68a8 ; $6865 jumptable
+	dw Label_0b_68aa ; $6867 jumptable
+Label_0b_6869:
+	ld a, [wPointOutcome] ; $6869
+	ld hl, DrillShotTable_0b_6888 ; $686c
+	add a, l ; $686f
+	ld l, a ; $6870
+	jr nc, Label_0b_6874 ; $6871
+	inc h ; $6873
+Label_0b_6874:
+	ld a, [hl] ; $6874
+	ld a, a ; $6875
+	ld b, $0d ; $6876
+	call Func_0b_4545 ; $6878
+	ld a, [wPointOutcome] ; $687b
+	ld hl, SignedTable_0b_46f1 ; $687e
+	add a, l ; $6881
+	ld l, a ; $6882
+	jr nc, Label_0b_6886 ; $6883
+	inc h ; $6885
+Label_0b_6886:
+	ld a, [hl] ; $6886
+	ret ; $6887
+DrillShotTable_0b_6888:
+	; $6888, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $48, $48, $3d, $47, $47, $3d ; 0x00
+Label_0b_6892:
+	ld a, [wBallBounceCount] ; $6892
+	or a, a ; $6895
+	ret z ; $6896
+	ld a, $40 ; $6897
+	ld b, $0d ; $6899
+	call Func_0b_4545 ; $689b
+	ld a, [wCurrentShotType] ; $689e
+	cp a, $0a ; $68a1
+	jp nz, Label_0b_691e ; $68a3
+	xor a, a ; $68a6
+	ret ; $68a7
+Label_0b_68a8:
+	xor a, a ; $68a8
+	ret ; $68a9
+Label_0b_68aa:
+	xor a, a ; $68aa
+	ret ; $68ab
+Label_0b_68ac:
+	ld a, b ; $68ac
+	ld a, a ; $68ad
+	rst Rst00 ; $68ae
+	dw Label_0b_68b7 ; $68af jumptable
+	dw Label_0b_68e0 ; $68b1 jumptable
+	dw Label_0b_68f7 ; $68b3 jumptable
+	dw Label_0b_68f9 ; $68b5 jumptable
+Label_0b_68b7:
+	ld a, [wPointOutcome] ; $68b7
+	ld hl, DrillShotTable_0b_68d6 ; $68ba
+	add a, l ; $68bd
+	ld l, a ; $68be
+	jr nc, Label_0b_68c2 ; $68bf
+	inc h ; $68c1
+Label_0b_68c2:
+	ld a, [hl] ; $68c2
+	ld a, a ; $68c3
+	ld b, $0d ; $68c4
+	call Func_0b_4545 ; $68c6
+	ld a, [wPointOutcome] ; $68c9
+	ld hl, SignedTable_0b_46fb ; $68cc
+	add a, l ; $68cf
+	ld l, a ; $68d0
+	jr nc, Label_0b_68d4 ; $68d1
+	inc h ; $68d3
+Label_0b_68d4:
+	ld a, [hl] ; $68d4
+	ret ; $68d5
+DrillShotTable_0b_68d6:
+	; $68d6, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $3d, $3d, $43, $ff, $ff, $43 ; 0x00
+Label_0b_68e0:
+	ld a, $46 ; $68e0
+	ld b, $0d ; $68e2
+	call Func_0b_4545 ; $68e4
+	ld a, [wTotalPointsScoredInCurrentGame] ; $68e7
+	and a, $01 ; $68ea
+	xor a, $01 ; $68ec
+	call Func_0b_4447 ; $68ee
+	or a, a ; $68f1
+	jp z, Label_0b_6916 ; $68f2
+	xor a, a ; $68f5
+	ret ; $68f6
+Label_0b_68f7:
+	xor a, a ; $68f7
+	ret ; $68f8
+Label_0b_68f9:
+	xor a, a ; $68f9
+	ret ; $68fa
+Label_0b_68fb:
+	ld a, b ; $68fb
+	ld a, a ; $68fc
+	rst Rst00 ; $68fd
+	dw Label_0b_6906 ; $68fe jumptable
+	dw Label_0b_6908 ; $6900 jumptable
+	dw Label_0b_6912 ; $6902 jumptable
+	dw Label_0b_6914 ; $6904 jumptable
+Label_0b_6906:
+	xor a, a ; $6906
+	ret ; $6907
+Label_0b_6908:
+	ld a, $43 ; $6908
+	ld b, $0d ; $690a
+	call Func_0b_4545 ; $690c
+	jp Label_0b_691e ; $690f
+Label_0b_6912:
+	xor a, a ; $6912
+	ret ; $6913
+Label_0b_6914:
+	xor a, a ; $6914
+	ret ; $6915
+Label_0b_6916:
+	ld a, $01 ; $6916
+	ld [wMatchAbortFlag], a ; $6918
+	ld a, $01 ; $691b
+	ret ; $691d
+Label_0b_691e:
+	ld a, $01 ; $691e
+	ld [wMatchAbortFlag], a ; $6920
+	ld a, $ff ; $6923
+	ret ; $6925
+DrillDefinition_0b_0e:
+	; $6926, 16 bytes (drill_definition)
+	db $45, $18, $02, $05, $0e, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_0e, DrillPointTable_0b_42bf, $0000 ; mode hooks, point table, init
+	db $00, $00
+DrillModeHooks_0b_0e:
+	; $6936, 16 bytes (mode_hooks)
+	dw $6947 ; record 0
+	dw $694b ; record 1
+	dw $6984 ; record 2
+	dw $6946 ; record 3
+	dw $69cf ; record 4
+	dw $69cb ; record 5
+	dw $69c7 ; record 6
+	dw RetStub ; record 7
+	ret ; $6946
+	call UpdateDrillAbortCountdown ; $6947
+	ret ; $694a
+	xor a, a ; $694b
+	ld [$c2e1], a ; $694c
+	ld a, $0a ; $694f
+	ld [$c2e0], a ; $6951
+	ld hl, $6982 ; $6954
+	call Func_0b_441c ; $6957
+	xor a, a ; $695a
+	ld [$c2e6], a ; $695b
+	xor a, a ; $695e
+	ld [$c2ff], a ; $695f
+	ld a, [wTotalPointsScoredInCurrentGame] ; $6962
+	bit 0, a ; $6965
+	ret nz ; $6967
+	xor a, a ; $6968
+	ld [$c2e8], a ; $6969
+	ld [$c2e9], a ; $696c
+	ld [$c2ea], a ; $696f
+	ld [$c2eb], a ; $6972
+	ld [$c2ec], a ; $6975
+	ld [$c2ed], a ; $6978
+	ld [$c2ee], a ; $697b
+	ld [$c2ef], a ; $697e
+	ret ; $6981
+	db $59 ; $6982
+	db $45 ; $6983
+	call Func_0b_6a36 ; $6984
+	call Func_0b_69d3 ; $6987
+	ld a, [wTotalPointsScoredInCurrentGame] ; $698a
+	bit 0, a ; $698d
+	ret nz ; $698f
+	ld a, [wPlayer1PointsWon] ; $6990
+	ld b, a ; $6993
+	ld a, [wPlayer2PointsWon] ; $6994
+	sub a, b ; $6997
+	ld b, a ; $6998
+	bit 7, a ; $6999
+	jr z, Label_0b_699f ; $699b
+	cpl ; $699d
+	inc a ; $699e
+Label_0b_699f:
+	cp a, $02 ; $699f
+	jr c, Label_0b_69b6 ; $69a1
+	xor a, a ; $69a3
+	rl b ; $69a4
+	rl a ; $69a6
+	or a, a ; $69a8
+	jr nz, Label_0b_69ad ; $69a9
+	ld a, $ff ; $69ab
+Label_0b_69ad:
+	ld [wPointWinLoseFlag], a ; $69ad
+	ld a, $80 ; $69b0
+	ld [wMatchAbortFlag], a ; $69b2
+	ret ; $69b5
+Label_0b_69b6:
+	ld a, [wTotalPointsScoredInCurrentGame] ; $69b6
+	cp a, $08 ; $69b9
+	ret nz ; $69bb
+	ld a, $00 ; $69bc
+	ld [wPointWinLoseFlag], a ; $69be
+	ld a, $80 ; $69c1
+	ld [wMatchAbortFlag], a ; $69c3
+	ret ; $69c6
+	call Func_0b_6a51 ; $69c7
+	ret ; $69ca
+	call Func_0b_6a48 ; $69cb
+	ret ; $69ce
+	call Func_0b_6a3f ; $69cf
+	ret ; $69d2
+Func_0b_69d3:
+	farcall UpdateScorePanelDisplay ; $69d3
+	ld a, [$c2ff] ; $69d6
+	ld b, a ; $69d9
+	ld a, [wTotalPointsScoredInCurrentGame] ; $69da
+	bit 0, a ; $69dd
+	ld a, b ; $69df
+	jr z, Label_0b_69e4 ; $69e0
+	cpl ; $69e2
+	inc a ; $69e3
+Label_0b_69e4:
+	ld [wPointWinLoseFlag], a ; $69e4
+	call RecordDrillPointResultBits ; $69e7
+	call ShowQueuedDrillMessage ; $69ea
+	farcall UpdatePointStats ; $69ed
+	call Func_0b_6a0d ; $69f0
+	ld a, [wPlayer1PointsWon] ; $69f3
+	ld b, $01 ; $69f6
+	farcall LoadPlayer1PointsDigitGfx ; $69f8
+	ld a, [wPlayer2PointsWon] ; $69fb
+	ld b, $01 ; $69fe
+	farcall LoadPlayer2PointsDigitGfx ; $6a00
+	farcall StepMatchFrame ; $6a03
+	farcall StartPointEndReactions ; $6a06
+	call PlayDrillPointEndSequence ; $6a09
+	ret ; $6a0c
+Func_0b_6a0d:
+	ld a, [wPointWinLoseFlag] ; $6a0d
+	or a, a ; $6a10
+	ret z ; $6a11
+	inc a ; $6a12
+	srl a ; $6a13
+	ld b, a ; $6a15
+	ld a, [wTotalPointsScoredInCurrentGame] ; $6a16
+	and a, $01 ; $6a19
+	xor a, $01 ; $6a1b
+	add a, b ; $6a1d
+	bit 0, a ; $6a1e
+	jr nz, Label_0b_6a2d ; $6a20
+	ld hl, wPlayer2PointsWon ; $6a22
+	bit 1, a ; $6a25
+	jr z, Label_0b_6a2c ; $6a27
+	ld hl, wPlayer1PointsWon ; $6a29
+Label_0b_6a2c:
+	inc [hl] ; $6a2c
+Label_0b_6a2d:
+	xor a, a ; $6a2d
+	ld [wServeFaultFlag], a ; $6a2e
+	ld hl, wTotalPointsScoredInCurrentGame ; $6a31
+	inc [hl] ; $6a34
+	ret ; $6a35
+Func_0b_6a36:
+	ld a, $00 ; $6a36
+	call Func_0b_6a5b ; $6a38
+	ld [$c2ff], a ; $6a3b
+	ret ; $6a3e
+Func_0b_6a3f:
+	ld a, $01 ; $6a3f
+	call Func_0b_6a5b ; $6a41
+	ld [$c2ff], a ; $6a44
+	ret ; $6a47
+Func_0b_6a48:
+	ld a, $02 ; $6a48
+	call Func_0b_6a5b ; $6a4a
+	ld [$c2ff], a ; $6a4d
+	ret ; $6a50
+Func_0b_6a51:
+	ret ; $6a51
+	ld a, $03 ; $6a52
+	call Func_0b_6a5b ; $6a54
+	ld [$c2ff], a ; $6a57
+	ret ; $6a5a
+Func_0b_6a5b:
+	ld b, a ; $6a5b
+	ld a, [$c2ff] ; $6a5c
+	or a, a ; $6a5f
+	ret nz ; $6a60
+	ld a, [wRallyLength] ; $6a61
+	dec a ; $6a64
+	ld a, a ; $6a65
+	rst Rst00 ; $6a66
+	dw Label_0b_6a6f ; $6a67 jumptable
+	dw Label_0b_6aa9 ; $6a69 jumptable
+	dw Label_0b_6ae3 ; $6a6b jumptable
+	dw Label_0b_6b32 ; $6a6d jumptable
+Label_0b_6a6f:
+	ld a, b ; $6a6f
+	ld a, a ; $6a70
+	rst Rst00 ; $6a71
+	dw Label_0b_6a7a ; $6a72 jumptable
+	dw Label_0b_6aa3 ; $6a74 jumptable
+	dw Label_0b_6aa5 ; $6a76 jumptable
+	dw Label_0b_6aa7 ; $6a78 jumptable
+Label_0b_6a7a:
+	ld a, [wPointOutcome] ; $6a7a
+	ld hl, DrillShotTable_0b_6a99 ; $6a7d
+	add a, l ; $6a80
+	ld l, a ; $6a81
+	jr nc, Label_0b_6a85 ; $6a82
+	inc h ; $6a84
+Label_0b_6a85:
+	ld a, [hl] ; $6a85
+	ld a, a ; $6a86
+	ld b, $0d ; $6a87
+	call Func_0b_4545 ; $6a89
+	ld a, [wPointOutcome] ; $6a8c
+	ld hl, SignedTable_0b_46fb ; $6a8f
+	add a, l ; $6a92
+	ld l, a ; $6a93
+	jr nc, Label_0b_6a97 ; $6a94
+	inc h ; $6a96
+Label_0b_6a97:
+	ld a, [hl] ; $6a97
+	ret ; $6a98
+DrillShotTable_0b_6a99:
+	; $6a99, 10 bytes (bytes:10)
+	db $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f ; 0x00
+Label_0b_6aa3:
+	xor a, a ; $6aa3
+	ret ; $6aa4
+Label_0b_6aa5:
+	xor a, a ; $6aa5
+	ret ; $6aa6
+Label_0b_6aa7:
+	xor a, a ; $6aa7
+	ret ; $6aa8
+Label_0b_6aa9:
+	ld a, b ; $6aa9
+	ld a, a ; $6aaa
+	rst Rst00 ; $6aab
+	dw Label_0b_6ab4 ; $6aac jumptable
+	dw Label_0b_6add ; $6aae jumptable
+	dw Label_0b_6adf ; $6ab0 jumptable
+	dw Label_0b_6ae1 ; $6ab2 jumptable
+Label_0b_6ab4:
+	ld a, [wPointOutcome] ; $6ab4
+	ld hl, DrillShotTable_0b_6ad3 ; $6ab7
+	add a, l ; $6aba
+	ld l, a ; $6abb
+	jr nc, Label_0b_6abf ; $6abc
+	inc h ; $6abe
+Label_0b_6abf:
+	ld a, [hl] ; $6abf
+	ld a, a ; $6ac0
+	ld b, $0d ; $6ac1
+	call Func_0b_4545 ; $6ac3
+	ld a, [wPointOutcome] ; $6ac6
+	ld hl, SignedTable_0b_46f1 ; $6ac9
+	add a, l ; $6acc
+	ld l, a ; $6acd
+	jr nc, Label_0b_6ad1 ; $6ace
+	inc h ; $6ad0
+Label_0b_6ad1:
+	ld a, [hl] ; $6ad1
+	ret ; $6ad2
+DrillShotTable_0b_6ad3:
+	; $6ad3, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $3f, $49, $3e, $47, $47, $3e ; 0x00
+Label_0b_6add:
+	xor a, a ; $6add
+	ret ; $6ade
+Label_0b_6adf:
+	xor a, a ; $6adf
+	ret ; $6ae0
+Label_0b_6ae1:
+	xor a, a ; $6ae1
+	ret ; $6ae2
+Label_0b_6ae3:
+	ld a, b ; $6ae3
+	ld a, a ; $6ae4
+	rst Rst00 ; $6ae5
+	dw Label_0b_6aee ; $6ae6 jumptable
+	dw Label_0b_6b17 ; $6ae8 jumptable
+	dw Label_0b_6b2e ; $6aea jumptable
+	dw Label_0b_6b30 ; $6aec jumptable
+Label_0b_6aee:
+	ld a, [wPointOutcome] ; $6aee
+	ld hl, DrillShotTable_0b_6b0d ; $6af1
+	add a, l ; $6af4
+	ld l, a ; $6af5
+	jr nc, Label_0b_6af9 ; $6af6
+	inc h ; $6af8
+Label_0b_6af9:
+	ld a, [hl] ; $6af9
+	ld a, a ; $6afa
+	ld b, $0d ; $6afb
+	call Func_0b_4545 ; $6afd
+	ld a, [wPointOutcome] ; $6b00
+	ld hl, SignedTable_0b_46fb ; $6b03
+	add a, l ; $6b06
+	ld l, a ; $6b07
+	jr nc, Label_0b_6b0b ; $6b08
+	inc h ; $6b0a
+Label_0b_6b0b:
+	ld a, [hl] ; $6b0b
+	ret ; $6b0c
+DrillShotTable_0b_6b0d:
+	; $6b0d, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $3e, $3e, $43, $ff, $ff, $43 ; 0x00
+Label_0b_6b17:
+	ld a, $46 ; $6b17
+	ld b, $0d ; $6b19
+	call Func_0b_4545 ; $6b1b
+	ld a, [wTotalPointsScoredInCurrentGame] ; $6b1e
+	and a, $01 ; $6b21
+	xor a, $01 ; $6b23
+	call Func_0b_4447 ; $6b25
+	or a, a ; $6b28
+	jp z, Label_0b_6b4d ; $6b29
+	xor a, a ; $6b2c
+	ret ; $6b2d
+Label_0b_6b2e:
+	xor a, a ; $6b2e
+	ret ; $6b2f
+Label_0b_6b30:
+	xor a, a ; $6b30
+	ret ; $6b31
+Label_0b_6b32:
+	ld a, b ; $6b32
+	ld a, a ; $6b33
+	rst Rst00 ; $6b34
+	dw Label_0b_6b3d ; $6b35 jumptable
+	dw Label_0b_6b3f ; $6b37 jumptable
+	dw Label_0b_6b49 ; $6b39 jumptable
+	dw Label_0b_6b4b ; $6b3b jumptable
+Label_0b_6b3d:
+	xor a, a ; $6b3d
+	ret ; $6b3e
+Label_0b_6b3f:
+	ld a, $43 ; $6b3f
+	ld b, $0d ; $6b41
+	call Func_0b_4545 ; $6b43
+	jp Label_0b_6b55 ; $6b46
+Label_0b_6b49:
+	xor a, a ; $6b49
+	ret ; $6b4a
+Label_0b_6b4b:
+	xor a, a ; $6b4b
+	ret ; $6b4c
+Label_0b_6b4d:
+	ld a, $01 ; $6b4d
+	ld [wMatchAbortFlag], a ; $6b4f
+	ld a, $01 ; $6b52
+	ret ; $6b54
+Label_0b_6b55:
+	ld a, $01 ; $6b55
+	ld [wMatchAbortFlag], a ; $6b57
+	ld a, $ff ; $6b5a
+	ret ; $6b5c
+DrillDefinition_0b_0f:
+	; $6b5d, 16 bytes (drill_definition)
+	db $46, $09, $02, $05, $0f, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_0f, DrillPointTable_0b_4321, DrillInit_0b_0f ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_0f:
 	ld a, $01 ; $6b6d
 	ld [$c7bb], a ; $6b6f
 	ret ; $6b72
-	; $6b73, 16 bytes (records:2)
+DrillModeHooks_0b_0f:
+	; $6b73, 16 bytes (mode_hooks)
 	dw $6b90 ; record 0
 	dw $6b94 ; record 1
 	dw $6be1 ; record 2
@@ -1493,7 +6183,7 @@ Label_0b_5e8d:
 	dw $6c52 ; record 4
 	dw $6c4e ; record 5
 	dw $6c4a ; record 6
-	dw $03ae ; record 7
+	dw RetStub ; record 7
 	ld a, $01 ; $6b83
 	ld [$c7bb], a ; $6b85
 	xor a, a ; $6b88
@@ -1520,7 +6210,7 @@ Label_0b_5e8d:
 	ld hl, EnableTargetZoneAfterDelayTask ; $6bb6
 	call RegisterFrameTask ; $6bb9
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bbc
-	ld hl, $6bcc ; $6bbf
+	ld hl, Table_0b_6bcc ; $6bbf
 	add a, l ; $6bc2
 	ld l, a ; $6bc3
 	jr nc, Label_0b_6bc7 ; $6bc4
@@ -1529,7 +6219,9 @@ Label_0b_6bc7:
 	ld a, [hl] ; $6bc7
 	ld [$c7b5], a ; $6bc8
 	ret ; $6bcb
-	INCBIN "data/bank_00b/d_6bcc.bin" ; $6bcc, 4 bytes
+Table_0b_6bcc:
+	; $6bcc, 4 bytes (bytes:4)
+	db $20, $10, $10, $20 ; 0x00
 EnableTargetZoneAfterDelayTask:
 	ld hl, $c2ef ; $6bd0
 	dec [hl] ; $6bd3
@@ -1673,7 +6365,10 @@ Drill15JudgePointMode2:
 	ret ; $6cea
 StubNop_0b_6ceb:
 	ret ; $6ceb
-	INCBIN "data/bank_00b/d_6cec.bin" ; $6cec, 9 bytes
+	ld a, $03 ; $6cec
+	call Drill15JudgePoint ; $6cee
+	ld [$c2ff], a ; $6cf1
+	ret ; $6cf4
 Drill15JudgePoint:
 	ld b, a ; $6cf5
 	ld a, [$c2ff] ; $6cf6
@@ -1695,7 +6390,7 @@ Label_0b_6d05:
 	dw Label_0b_6d3d ; $6d0e jumptable
 Label_0b_6d10:
 	ld a, [wPointOutcome] ; $6d10
-	ld hl, $6d2f ; $6d13
+	ld hl, SignedTable_0b_6d2f ; $6d13
 	add a, l ; $6d16
 	ld l, a ; $6d17
 	jr nc, Label_0b_6d1b ; $6d18
@@ -1706,7 +6401,7 @@ Label_0b_6d1b:
 	ld b, $00 ; $6d1d
 	call QueueDrillResultMessage ; $6d1f
 	ld a, [wPointOutcome] ; $6d22
-	ld hl, $46fb ; $6d25
+	ld hl, SignedTable_0b_46fb ; $6d25
 	add a, l ; $6d28
 	ld l, a ; $6d29
 	jr nc, Label_0b_6d2d ; $6d2a
@@ -1714,7 +6409,9 @@ Label_0b_6d1b:
 Label_0b_6d2d:
 	ld a, [hl] ; $6d2d
 	ret ; $6d2e
-	INCBIN "data/bank_00b/d_6d2f.bin" ; $6d2f, 10 bytes
+SignedTable_0b_6d2f:
+	; $6d2f, 10 bytes (bytes:10)
+	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
 Label_0b_6d39:
 	xor a, a ; $6d39
 	ret ; $6d3a
@@ -1734,7 +6431,7 @@ Label_0b_6d3f:
 	dw Label_0b_6d9c ; $6d48 jumptable
 Label_0b_6d4a:
 	ld a, [wPointOutcome] ; $6d4a
-	ld hl, $6d69 ; $6d4d
+	ld hl, SignedTable_0b_6d69 ; $6d4d
 	add a, l ; $6d50
 	ld l, a ; $6d51
 	jr nc, Label_0b_6d55 ; $6d52
@@ -1745,7 +6442,7 @@ Label_0b_6d55:
 	ld b, $00 ; $6d57
 	call QueueDrillResultMessage ; $6d59
 	ld a, [wPointOutcome] ; $6d5c
-	ld hl, $46f1 ; $6d5f
+	ld hl, SignedTable_0b_46f1 ; $6d5f
 	add a, l ; $6d62
 	ld l, a ; $6d63
 	jr nc, Label_0b_6d67 ; $6d64
@@ -1753,7 +6450,9 @@ Label_0b_6d55:
 Label_0b_6d67:
 	ld a, [hl] ; $6d67
 	ret ; $6d68
-	INCBIN "data/bank_00b/d_6d69.bin" ; $6d69, 10 bytes
+SignedTable_0b_6d69:
+	; $6d69, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
 Label_0b_6d73:
 	xor a, a ; $6d73
 	ret ; $6d74
@@ -1788,10 +6487,16 @@ Label_0b_6da6:
 	ld [wMatchAbortFlag], a ; $6da8
 	ld a, $ff ; $6dab
 	ret ; $6dad
-	INCBIN "data/bank_00b/d_6dae.bin" ; $6dae, 16 bytes
+DrillDefinition_0b_10:
+	; $6dae, 16 bytes (drill_definition)
+	db $47, $09, $02, $05, $10, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_10, DrillPointTable_0b_4321, DrillInit_0b_10 ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_10:
 	ld a, $01 ; $6dbe
 	ld [$c7bb], a ; $6dc0
 	ret ; $6dc3
+DrillModeHooks_0b_10:
 	call c, $e06d ; $6dc4
 	ld l, l ; $6dc7
 	dec l ; $6dc8
@@ -1808,7 +6513,454 @@ Label_0b_6da6:
 	ld [$c2e9], a ; $6dd5
 	ld [$c2ee], a ; $6dd8
 	ret ; $6ddb
-	INCBIN "data/bank_00b/d_6ddc.bin" ; $6ddc, 870 bytes
+	call UpdateDrillAbortCountdown ; $6ddc
+	ret ; $6ddf
+	xor a, a ; $6de0
+	ld [$c2e1], a ; $6de1
+	ld a, $0a ; $6de4
+	ld [$c2e0], a ; $6de6
+	xor a, a ; $6de9
+	ld [wTargetZoneEnabled], a ; $6dea
+	ld hl, DrillPositions_0b_6ea7 ; $6ded
+	call SetDrillTargetZoneForPoint ; $6df0
+	xor a, a ; $6df3
+	ld [$c2e6], a ; $6df4
+	xor a, a ; $6df7
+	ld [$c2ff], a ; $6df8
+	ld a, $5a ; $6dfb
+	ld [$c2ef], a ; $6dfd
+	ld a, $01 ; $6e00
+	ld hl, Func_0b_6e1c ; $6e02
+	call RegisterFrameTask ; $6e05
+	ld a, [wTotalPointsScoredInCurrentGame] ; $6e08
+	ld hl, Table_0b_6e18 ; $6e0b
+	add a, l ; $6e0e
+	ld l, a ; $6e0f
+	jr nc, Label_0b_6e13 ; $6e10
+	inc h ; $6e12
+Label_0b_6e13:
+	ld a, [hl] ; $6e13
+	ld [$c7b5], a ; $6e14
+	ret ; $6e17
+Table_0b_6e18:
+	; $6e18, 4 bytes (bytes:4)
+	db $20, $10, $10, $20 ; 0x00
+Func_0b_6e1c:
+	ld hl, $c2ef ; $6e1c
+	dec [hl] ; $6e1f
+	ret nz ; $6e20
+	ld a, $01 ; $6e21
+	ld [wTargetZoneEnabled], a ; $6e23
+	ld hl, Func_0b_6e1c ; $6e26
+	call UnregisterFrameTask ; $6e29
+	ret ; $6e2c
+	call Func_0b_6f18 ; $6e2d
+	call Func_0b_6ec9 ; $6e30
+	ld a, [wTotalPointsScoredInCurrentGame] ; $6e33
+	cp a, $04 ; $6e36
+	ret c ; $6e38
+	call Func_0b_6e40 ; $6e39
+	ld [wPointWinLoseFlag], a ; $6e3c
+	ret ; $6e3f
+Func_0b_6e40:
+	ld a, [$c2ee] ; $6e40
+	cp a, $04 ; $6e43
+	jr nz, Label_0b_6e4e ; $6e45
+	xor a, a ; $6e47
+	ld [$c2e3], a ; $6e48
+	ld a, $01 ; $6e4b
+	ret ; $6e4d
+Label_0b_6e4e:
+	ld a, [$c2ee] ; $6e4e
+	cp a, $03 ; $6e51
+	jr c, Label_0b_6e5c ; $6e53
+	ld a, $05 ; $6e55
+	ld [$c2e3], a ; $6e57
+	jr Label_0b_6e8f ; $6e5a
+Label_0b_6e5c:
+	ld a, [$c2e9] ; $6e5c
+	cp a, $04 ; $6e5f
+	jr nc, Label_0b_6e6a ; $6e61
+	ld a, $01 ; $6e63
+	ld [$c2e3], a ; $6e65
+	jr Label_0b_6e8f ; $6e68
+Label_0b_6e6a:
+	ld a, [wRallyLength] ; $6e6a
+	cp a, $03 ; $6e6d
+	jr nc, Label_0b_6e8a ; $6e6f
+	ld a, [$c4a1] ; $6e71
+	cp a, $01 ; $6e74
+	jr nz, Label_0b_6e7f ; $6e76
+	ld a, $02 ; $6e78
+	ld [$c2e3], a ; $6e7a
+	jr Label_0b_6e8f ; $6e7d
+Label_0b_6e7f:
+	cp a, $02 ; $6e7f
+	jr nz, Label_0b_6e8a ; $6e81
+	ld a, $03 ; $6e83
+	ld [$c2e3], a ; $6e85
+	jr Label_0b_6e8f ; $6e88
+Label_0b_6e8a:
+	ld a, $04 ; $6e8a
+	ld [$c2e3], a ; $6e8c
+Label_0b_6e8f:
+	ld a, $ff ; $6e8f
+	ret ; $6e91
+	call Func_0b_6f33 ; $6e92
+	ld a, [wRallyLength] ; $6e95
+	cp a, $02 ; $6e98
+	ret nz ; $6e9a
+	call ResetActiveCharState ; $6e9b
+	ret ; $6e9e
+	call Func_0b_6f2a ; $6e9f
+	ret ; $6ea2
+	call Func_0b_6f21 ; $6ea3
+	ret ; $6ea6
+DrillPositions_0b_6ea7:
+	; $6ea7, 34 bytes (records:4)
+; 8 records x 4 bytes
+	dw $fe50, $fb20 ; record 0
+	dw $0000, $fd60 ; record 1
+	dw $0000, $fb20 ; record 2
+	dw $01b0, $fd60 ; record 3
+	dw $0000, $02a0 ; record 4
+	dw $01b0, $04e0 ; record 5
+	dw $fe50, $02a0 ; record 6
+	dw $0000, $04e0 ; record 7
+	db $ff, $ff
+Func_0b_6ec9:
+	farcall UpdateScorePanelDisplay ; $6ec9
+	ld a, [$c2ff] ; $6ecc
+	ld [wPointWinLoseFlag], a ; $6ecf
+	cp a, $01 ; $6ed2
+	jr nz, Label_0b_6eda ; $6ed4
+	ld hl, $c2ee ; $6ed6
+	inc [hl] ; $6ed9
+Label_0b_6eda:
+	call RecordDrillPointResultBits ; $6eda
+	call ShowQueuedDrillMessage ; $6edd
+	farcall UpdatePointStats ; $6ee0
+	farcall AwardPoint ; $6ee3
+	ld a, [$c2ee] ; $6ee6
+	ld [wPlayer1PointsWon], a ; $6ee9
+	xor a, a ; $6eec
+	ld [wPlayer2PointsWon], a ; $6eed
+	ld a, [wPlayer1PointsWon] ; $6ef0
+	ld b, $01 ; $6ef3
+	farcall LoadPlayer1PointsDigitGfx ; $6ef5
+	ld a, [wPlayer2PointsWon] ; $6ef8
+	ld b, $01 ; $6efb
+	farcall LoadPlayer2PointsDigitGfx ; $6efd
+	farcall StepMatchFrame ; $6f00
+	ld a, $01 ; $6f03
+	ld hl, SyncPointWinLoseFlagTask ; $6f05
+	call RegisterFrameTask ; $6f08
+	farcall StartPointEndReactions ; $6f0b
+	ld hl, SyncPointWinLoseFlagTask ; $6f0e
+	call UnregisterFrameTask ; $6f11
+	call PlayDrillPointEndSequence ; $6f14
+	ret ; $6f17
+Func_0b_6f18:
+	ld a, $00 ; $6f18
+	call Func_0b_6f3d ; $6f1a
+	ld [$c2ff], a ; $6f1d
+	ret ; $6f20
+Func_0b_6f21:
+	ld a, $01 ; $6f21
+	call Func_0b_6f3d ; $6f23
+	ld [$c2ff], a ; $6f26
+	ret ; $6f29
+Func_0b_6f2a:
+	ld a, $02 ; $6f2a
+	call Func_0b_6f3d ; $6f2c
+	ld [$c2ff], a ; $6f2f
+	ret ; $6f32
+Func_0b_6f33:
+	ret ; $6f33
+	ld a, $03 ; $6f34
+	call Func_0b_6f3d ; $6f36
+	ld [$c2ff], a ; $6f39
+	ret ; $6f3c
+Func_0b_6f3d:
+	ld b, a ; $6f3d
+	ld a, [$c2ff] ; $6f3e
+	or a, a ; $6f41
+	ret nz ; $6f42
+	ld a, [wRallyLength] ; $6f43
+	dec a ; $6f46
+	ld a, a ; $6f47
+	rst Rst00 ; $6f48
+	dw Label_0b_6f4d ; $6f49 jumptable
+	dw Label_0b_6f87 ; $6f4b jumptable
+Label_0b_6f4d:
+	ld a, b ; $6f4d
+	ld a, a ; $6f4e
+	rst Rst00 ; $6f4f
+	dw Label_0b_6f58 ; $6f50 jumptable
+	dw Label_0b_6f81 ; $6f52 jumptable
+	dw Label_0b_6f83 ; $6f54 jumptable
+	dw Label_0b_6f85 ; $6f56 jumptable
+Label_0b_6f58:
+	ld a, [wPointOutcome] ; $6f58
+	ld hl, DrillShotTable_0b_6f77 ; $6f5b
+	add a, l ; $6f5e
+	ld l, a ; $6f5f
+	jr nc, Label_0b_6f63 ; $6f60
+	inc h ; $6f62
+Label_0b_6f63:
+	ld a, [hl] ; $6f63
+	ld a, a ; $6f64
+	ld b, $00 ; $6f65
+	call QueueDrillResultMessage ; $6f67
+	ld a, [wPointOutcome] ; $6f6a
+	ld hl, SignedTable_0b_46fb ; $6f6d
+	add a, l ; $6f70
+	ld l, a ; $6f71
+	jr nc, Label_0b_6f75 ; $6f72
+	inc h ; $6f74
+Label_0b_6f75:
+	ld a, [hl] ; $6f75
+	ret ; $6f76
+DrillShotTable_0b_6f77:
+	; $6f77, 10 bytes (bytes:10)
+	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
+Label_0b_6f81:
+	xor a, a ; $6f81
+	ret ; $6f82
+Label_0b_6f83:
+	xor a, a ; $6f83
+	ret ; $6f84
+Label_0b_6f85:
+	xor a, a ; $6f85
+	ret ; $6f86
+Label_0b_6f87:
+	ld a, b ; $6f87
+	ld a, a ; $6f88
+	rst Rst00 ; $6f89
+	dw Label_0b_6f92 ; $6f8a jumptable
+	dw Label_0b_6fbb ; $6f8c jumptable
+	dw Label_0b_6fd5 ; $6f8e jumptable
+	dw Label_0b_6ffc ; $6f90 jumptable
+Label_0b_6f92:
+	ld a, [wPointOutcome] ; $6f92
+	ld hl, DrillShotTable_0b_6fb1 ; $6f95
+	add a, l ; $6f98
+	ld l, a ; $6f99
+	jr nc, Label_0b_6f9d ; $6f9a
+	inc h ; $6f9c
+Label_0b_6f9d:
+	ld a, [hl] ; $6f9d
+	ld a, a ; $6f9e
+	ld b, $00 ; $6f9f
+	call QueueDrillResultMessage ; $6fa1
+	ld a, [wPointOutcome] ; $6fa4
+	ld hl, SignedTable_0b_46f1 ; $6fa7
+	add a, l ; $6faa
+	ld l, a ; $6fab
+	jr nc, Label_0b_6faf ; $6fac
+	inc h ; $6fae
+Label_0b_6faf:
+	ld a, [hl] ; $6faf
+	ret ; $6fb0
+DrillShotTable_0b_6fb1:
+	; $6fb1, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
+Label_0b_6fbb:
+	ld a, [wBallBounceCount] ; $6fbb
+	or a, a ; $6fbe
+	ret z ; $6fbf
+	ld a, $5b ; $6fc0
+	ld b, $00 ; $6fc2
+	call QueueDrillResultMessage ; $6fc4
+	ld a, [wCurrentShotType] ; $6fc7
+	cp a, $0a ; $6fca
+	jp nz, Label_0b_7006 ; $6fcc
+	ld hl, $c2e9 ; $6fcf
+	inc [hl] ; $6fd2
+	xor a, a ; $6fd3
+	ret ; $6fd4
+Label_0b_6fd5:
+	ld a, [wBallBounceCount] ; $6fd5
+	cp a, $01 ; $6fd8
+	ld a, $00 ; $6fda
+	ret nz ; $6fdc
+	ld a, $58 ; $6fdd
+	ld b, $00 ; $6fdf
+	call QueueDrillResultMessage ; $6fe1
+	call RecordDrillTargetZoneHit ; $6fe4
+	call CheckDrillTargetZoneMissed ; $6fe7
+	or a, a ; $6fea
+	jp nz, Label_0b_6ffe ; $6feb
+	ld a, $5a ; $6fee
+	ld b, $00 ; $6ff0
+	call QueueDrillResultMessage ; $6ff2
+	ld hl, $c2ea ; $6ff5
+	inc [hl] ; $6ff8
+	jp Label_0b_7006 ; $6ff9
+Label_0b_6ffc:
+	xor a, a ; $6ffc
+	ret ; $6ffd
+Label_0b_6ffe:
+	ld a, $01 ; $6ffe
+	ld [wMatchAbortFlag], a ; $7000
+	ld a, $01 ; $7003
+	ret ; $7005
+Label_0b_7006:
+	ld a, $01 ; $7006
+	ld [wMatchAbortFlag], a ; $7008
+	ld a, $ff ; $700b
+	ret ; $700d
+DrillDefinition_0b_11:
+	; $700e, 16 bytes (drill_definition)
+	db $48, $09, $02, $05, $11, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_11, DrillPointTable_0b_4321, DrillInit_0b_11 ; mode hooks, point table, init
+	db $00, $00
+DrillInit_0b_11:
+	ld a, $01 ; $701e
+	ld [$c7bb], a ; $7020
+	ret ; $7023
+DrillModeHooks_0b_11:
+	; $7024, 16 bytes (mode_hooks)
+	dw $7041 ; record 0
+	dw $7045 ; record 1
+	dw $7092 ; record 2
+	dw $7034 ; record 3
+	dw $70ff ; record 4
+	dw $70fb ; record 5
+	dw $70ee ; record 6
+	dw RetStub ; record 7
+	ld a, $01 ; $7034
+	ld [$c7bb], a ; $7036
+	xor a, a ; $7039
+	ld [$c2e9], a ; $703a
+	ld [$c2e8], a ; $703d
+	ret ; $7040
+	call UpdateDrillAbortCountdown ; $7041
+	ret ; $7044
+	xor a, a ; $7045
+	ld [$c2e1], a ; $7046
+	ld a, $0a ; $7049
+	ld [$c2e0], a ; $704b
+	xor a, a ; $704e
+	ld [wTargetZoneEnabled], a ; $704f
+	ld hl, DrillPositions_0b_7109 ; $7052
+	call SetDrillTargetZoneForPoint ; $7055
+	xor a, a ; $7058
+	ld [$c2e6], a ; $7059
+	xor a, a ; $705c
+	ld [$c2ff], a ; $705d
+	ld a, $5a ; $7060
+	ld [$c2ef], a ; $7062
+	ld a, $01 ; $7065
+	ld hl, Func_0b_7081 ; $7067
+	call RegisterFrameTask ; $706a
+	ld a, [wTotalPointsScoredInCurrentGame] ; $706d
+	ld hl, Table_0b_707d ; $7070
+	add a, l ; $7073
+	ld l, a ; $7074
+	jr nc, Label_0b_7078 ; $7075
+	inc h ; $7077
+Label_0b_7078:
+	ld a, [hl] ; $7078
+	ld [$c7b5], a ; $7079
+	ret ; $707c
+Table_0b_707d:
+	; $707d, 4 bytes (bytes:4)
+	db $00, $00, $00, $00 ; 0x00
+Func_0b_7081:
+	ld hl, $c2ef ; $7081
+	dec [hl] ; $7084
+	ret nz ; $7085
+	ld a, $01 ; $7086
+	ld [wTargetZoneEnabled], a ; $7088
+	ld hl, Func_0b_7081 ; $708b
+	call UnregisterFrameTask ; $708e
+	ret ; $7091
+	call Func_0b_717a ; $7092
+	call Func_0b_712b ; $7095
+	ld a, [wTotalPointsScoredInCurrentGame] ; $7098
+	cp a, $04 ; $709b
+	ret c ; $709d
+	call Func_0b_70a5 ; $709e
+	ld [wPointWinLoseFlag], a ; $70a1
+	ret ; $70a4
+Func_0b_70a5:
+	ld a, [$c2e9] ; $70a5
+	cp a, $04 ; $70a8
+	jr nz, Label_0b_70b3 ; $70aa
+	xor a, a ; $70ac
+	ld [$c2e3], a ; $70ad
+	ld a, $01 ; $70b0
+	ret ; $70b2
+Label_0b_70b3:
+	ld a, [$c2e8] ; $70b3
+	cp a, $04 ; $70b6
+	jr c, Label_0b_70c1 ; $70b8
+	ld a, $01 ; $70ba
+	ld [$c2e3], a ; $70bc
+	jr Label_0b_70eb ; $70bf
+Label_0b_70c1:
+	cp a, $02 ; $70c1
+	jr c, Label_0b_70cc ; $70c3
+	ld a, $02 ; $70c5
+	ld [$c2e3], a ; $70c7
+	jr Label_0b_70eb ; $70ca
+Label_0b_70cc:
+	ld a, [$c2e9] ; $70cc
+	or a, a ; $70cf
+	jr nz, Label_0b_70d9 ; $70d0
+	ld a, $03 ; $70d2
+	ld [$c2e3], a ; $70d4
+	jr Label_0b_70eb ; $70d7
+Label_0b_70d9:
+	cp a, $03 ; $70d9
+	jr nz, Label_0b_70e4 ; $70db
+	ld a, $05 ; $70dd
+	ld [$c2e3], a ; $70df
+	jr Label_0b_70eb ; $70e2
+Label_0b_70e4:
+	ld a, $04 ; $70e4
+	ld [$c2e3], a ; $70e6
+	jr Label_0b_70eb ; $70e9
+Label_0b_70eb:
+	ld a, $ff ; $70eb
+	ret ; $70ed
+	call Func_0b_7195 ; $70ee
+	ld a, [wRallyLength] ; $70f1
+	cp a, $02 ; $70f4
+	ret nz ; $70f6
+	call ResetActiveCharState ; $70f7
+	ret ; $70fa
+	call Func_0b_718c ; $70fb
+	ret ; $70fe
+	call Func_0b_7183 ; $70ff
+	ld a, [wRallyLength] ; $7102
+	cp a, $01 ; $7105
+	ret nz ; $7107
+	ret ; $7108
+DrillPositions_0b_7109:
+	; $7109, 34 bytes (records:4)
+; 8 records x 4 bytes
+	dw $0120, $fb20 ; record 0
+	dw $01b0, $fd60 ; record 1
+	dw $fe50, $fb20 ; record 2
+	dw $fee0, $fd60 ; record 3
+	dw $fe50, $02a0 ; record 4
+	dw $fee0, $04e0 ; record 5
+	dw $0120, $02a0 ; record 6
+	dw $01b0, $04e0 ; record 7
+	db $ff, $ff
+Func_0b_712b:
+	farcall UpdateScorePanelDisplay ; $712b
+	ld a, [$c2ff] ; $712e
+	ld [wPointWinLoseFlag], a ; $7131
+	cp a, $01 ; $7134
+	jr nz, Label_0b_713c ; $7136
+	ld hl, $c2e9 ; $7138
+	inc [hl] ; $713b
+Label_0b_713c:
+	call RecordDrillPointResultBits ; $713c
+	call ShowQueuedDrillMessage ; $713f
 	farcall UpdatePointStats ; $7142
 	farcall AwardPoint ; $7145
 	ld a, [$c2e9] ; $7148
@@ -1830,19 +6982,27 @@ Label_0b_6da6:
 	call UnregisterFrameTask ; $7173
 	call PlayDrillPointEndSequence ; $7176
 	ret ; $7179
+Func_0b_717a:
 	ld a, $00 ; $717a
 	call Drill17JudgePoint ; $717c
 	ld [$c2ff], a ; $717f
 	ret ; $7182
+Func_0b_7183:
 	ld a, $01 ; $7183
 	call Drill17JudgePoint ; $7185
 	ld [$c2ff], a ; $7188
 	ret ; $718b
+Func_0b_718c:
 	ld a, $02 ; $718c
 	call Drill17JudgePoint ; $718e
 	ld [$c2ff], a ; $7191
 	ret ; $7194
-	INCBIN "data/bank_00b/d_7195.bin" ; $7195, 10 bytes
+Func_0b_7195:
+	ret ; $7195
+	ld a, $03 ; $7196
+	call Drill17JudgePoint ; $7198
+	ld [$c2ff], a ; $719b
+	ret ; $719e
 Drill17JudgePoint:
 	ld b, a ; $719f
 	ld a, [$c2ff] ; $71a0
@@ -1864,7 +7024,7 @@ Label_0b_71af:
 	dw Label_0b_71e7 ; $71b8 jumptable
 Label_0b_71ba:
 	ld a, [wPointOutcome] ; $71ba
-	ld hl, $71d9 ; $71bd
+	ld hl, DrillShotTable_0b_71d9 ; $71bd
 	add a, l ; $71c0
 	ld l, a ; $71c1
 	jr nc, Label_0b_71c5 ; $71c2
@@ -1875,7 +7035,7 @@ Label_0b_71c5:
 	ld b, $00 ; $71c7
 	call QueueDrillResultMessage ; $71c9
 	ld a, [wPointOutcome] ; $71cc
-	ld hl, $46fb ; $71cf
+	ld hl, SignedTable_0b_46fb ; $71cf
 	add a, l ; $71d2
 	ld l, a ; $71d3
 	jr nc, Label_0b_71d7 ; $71d4
@@ -1883,7 +7043,9 @@ Label_0b_71c5:
 Label_0b_71d7:
 	ld a, [hl] ; $71d7
 	ret ; $71d8
-	INCBIN "data/bank_00b/d_71d9.bin" ; $71d9, 10 bytes
+DrillShotTable_0b_71d9:
+	; $71d9, 10 bytes (bytes:10)
+	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
 Label_0b_71e3:
 	xor a, a ; $71e3
 	ret ; $71e4
@@ -1903,7 +7065,7 @@ Label_0b_71e9:
 	dw Label_0b_7246 ; $71f2 jumptable
 Label_0b_71f4:
 	ld a, [wPointOutcome] ; $71f4
-	ld hl, $7213 ; $71f7
+	ld hl, DrillShotTable_0b_7213 ; $71f7
 	add a, l ; $71fa
 	ld l, a ; $71fb
 	jr nc, Label_0b_71ff ; $71fc
@@ -1914,7 +7076,7 @@ Label_0b_71ff:
 	ld b, $00 ; $7201
 	call QueueDrillResultMessage ; $7203
 	ld a, [wPointOutcome] ; $7206
-	ld hl, $46f1 ; $7209
+	ld hl, SignedTable_0b_46f1 ; $7209
 	add a, l ; $720c
 	ld l, a ; $720d
 	jr nc, Label_0b_7211 ; $720e
@@ -1922,7 +7084,9 @@ Label_0b_71ff:
 Label_0b_7211:
 	ld a, [hl] ; $7211
 	ret ; $7212
-	INCBIN "data/bank_00b/d_7213.bin" ; $7213, 10 bytes
+DrillShotTable_0b_7213:
+	; $7213, 10 bytes (bytes:10)
+	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
 Label_0b_721d:
 	xor a, a ; $721d
 	ret ; $721e

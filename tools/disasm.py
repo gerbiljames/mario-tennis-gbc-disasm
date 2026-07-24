@@ -3383,6 +3383,31 @@ def render_actor_script(rom, start, end, bank, labels):
     return out, consumed
 
 
+def render_drill_definition(rom, seg, end, bank, labels):
+    """A training-drill definition for `StartDrillFromDefinition` ($0b:$4002):
+    8 setup bytes then three same-bank pointers (mode hooks, point table, and
+    an optional init routine run through JumpToHL), padded to 16."""
+    out = []
+    for r in range(0, end - seg, 16):
+        b = rom[seg + r:seg + r + 16]
+        if len(b) < 14:
+            out.append("\tdb " + ", ".join(f"${x:02x}" for x in b))
+            break
+        out.append("\tdb " + ", ".join(f"${x:02x}" for x in b[:8])
+                   + " ; opponent, court, chars, mode, story, bgm, -, player")
+        refs = []
+        for k in (8, 10, 12):
+            w = b[k] | (b[k + 1] << 8)
+            tgt = (bank * 0x4000 + w - 0x4000 if 0x4000 <= w < 0x8000
+                   else None)
+            refs.append(labels.get(tgt) or f"${w:04x}")
+        out.append(f"\tdw {refs[0]}, {refs[1]}, {refs[2]}"
+                   " ; mode hooks, point table, init")
+        if len(b) > 14:
+            out.append("\tdb " + ", ".join(f"${x:02x}" for x in b[14:]))
+    return out
+
+
 def render_actor_list(rom, seg, end, bank, labels):
     """A spawn list for `SpawnActorFromTemplate` ($04:$4c60): 14-byte records
     of {flag condition, script, x, y, facing, -, obj def, anim, extra, -}.
@@ -4208,6 +4233,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 if tail:
                                     lines.append("\tdb " + ", ".join(
                                         f"${x:02x}" for x in rom[j - tail:j]))
+                            elif spec == "drill_definition":
+                                lines.extend(render_drill_definition(
+                                    rom, seg, j, bank, labels))
                             elif spec == "actor_list":
                                 lines.extend(render_actor_list(
                                     rom, seg, j, bank, labels))

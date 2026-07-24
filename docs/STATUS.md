@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~156.2K instructions / 401,784 bytes of proven code+structured source
-(19.2% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~160.3K instructions / 411,308 bytes of proven code+structured source
+(19.6% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -26,7 +26,44 @@ Everything below is **committed** (HEAD `00224ca`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,037 of 19,326 labels are human-named** (up from 4,816 on 2026-07-23).
+**6,152 of 19,990 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Bank $0b: drill definitions unlock 7.7K of hidden code (2026-07-25)
+
+Bank `$0b` (training drills) had 25 unlabelled blobs, 9,532 bytes — and
+carving it added **3,836 instructions / 7,723 bytes of proven code**, the
+largest single jump in a while. It has zero blobs left.
+
+The key is `Data_0b_47b4`, 18 words that `RunTrainingDrillByID` indexes for
+drill ids `$00`-`$11`. Each points at a 16-byte **drill definition**, whose
+layout falls straight out of `StartDrillFromDefinition` (`$4002`): eight
+setup bytes (opponent, court, character count, game mode, story-match slot,
+BGM, -, player) then three same-bank pointers — a mode-hook table, a point
+table, and an optional init routine invoked through `JumpToHL`. A new
+`drill_definition` data-table kind renders them with all three resolved:
+
+```
+DrillDefinition_0b_00:
+	; $482c, 16 bytes (drill_definition)
+	db $37, $18, $02, $05, $00, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
+	dw DrillModeHooks_0b_00, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	db $00, $00
+```
+
+Those 18 definitions yield 18 `mode_hooks` tables and 9 init routines, and
+**the init routines were the unlock**: nothing statically references them, so
+descent had never entered them, and seeding the 9 pulled in thousands of
+instructions of per-drill logic that had been sitting inside the two big
+blobs. A second sweep over what was left classified 25 more stranded
+fragments as code by shape (`ld a, n` / `call` / `ld [nn], a` ending in
+`ret`) and named the rest: 36 ten-byte shot tables, six `records:4` target
+position lists ending `$ff $ff`, and the four `$ff`-terminated drill point
+tables shared across the 18 drills.
+
+One extent bug fell out too: `DrillMessageTextIds_0b` was declared 274 bytes
+and had swallowed 56 bytes of code past its real end at `$469e` — the
+give-away was records 110+ rendering as `dw $8bfa` / `dw $a7c7` where every
+real entry is `$28xx`/`$2cxx`.
 
 ### Banks $09 and $0a: every blob now named (2026-07-25)
 
