@@ -2849,34 +2849,12 @@ DrawBooBlastTargetSprite:
 	ret z ; $5817
 	farcall QueueMatchSpriteFrameB ; $5818
 	ret ; $581b
-	nop ; $581c
-	rst Rst38 ; $581d
-	rst Rst38 ; $581e
-	rst Rst38 ; $581f
-	rst Rst38 ; $5820
-	rst Rst38 ; $5821
-	rst Rst38 ; $5822
-	rst Rst38 ; $5823
-	ld bc, rIE ; $5824
-	rst Rst38 ; $5827
-	rst Rst38 ; $5828
-	rst Rst38 ; $5829
-	rst Rst38 ; $582a
-	rst Rst38 ; $582b
-	ld [bc], a ; $582c
-	rst Rst38 ; $582d
-	rst Rst38 ; $582e
-	rst Rst38 ; $582f
-	rst Rst38 ; $5830
-	rst Rst38 ; $5831
-	rst Rst38 ; $5832
-	rst Rst38 ; $5833
-	ld bc, rIE ; $5834
-	rst Rst38 ; $5837
-	rst Rst38 ; $5838
-	rst Rst38 ; $5839
-	rst Rst38 ; $583a
-	rst Rst38 ; $583b
+BooBlastTargetAnimFrames:
+	; $581c, 32 bytes (bytes:8)
+	db $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
+	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x08
+	db $02, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
+	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x18
 DrawBooBlastHitBurst:
 	call ProjectBallSprite ; $583c
 	ld c, $3c ; $583f

@@ -1885,6 +1885,7 @@
  "0x3575f": "IsBallWithinTargetZone",
  "0x357be": "ScoreBallHit",
  "0x357fd": "DrawBooBlastTargetSprite",
+ "0x3581c": "BooBlastTargetAnimFrames",
  "0x3583c": "DrawBooBlastHitBurst",
  "0x35848": "ProjectBallSprite",
  "0x3586e": "MinigameConfig_PerfectShot",
