@@ -26,7 +26,7 @@ Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,662 of 18,924 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,669 of 18,931 labels are human-named** (up from 4,816 on 2026-07-23).
 
 ### MinigameConfigTable symbolicated (bank $0d, 2026-07-24)
 
@@ -115,6 +115,39 @@ geometry rather than art: the 192-byte table at `$542c` decodes as 12 rows
 `$0f - (timer & $0f)`, x alternating 0..+15 / 0..-15 and y tracing a
 parabola. The scatter is certain; the tile art was not rendered, so the
 name describes the motion, not the sprite.
+
+### Minigame actor handlers and score tables (bank $0d, 2026-07-24)
+
+`SetMinigameActorHandler` stores its `de` argument for the actor engine to
+call each frame, so the pointer is never dereferenced at the load site and
+`pointer_load_targets`' use-gate skipped it — four `ld de, $xxxx` installs
+stayed numeric and two of their handlers sat inside data blobs.
+`ACTOR_HANDLER_INSTALL` + `actor_handler_sites`/`_targets` in `disasm.py`
+now mirror the `RegisterFrameTask` treatment: the sites are seeded as code,
+labelled, and merged into `ptr_sites` so the install renders symbolically.
+Each target is a minigame's actor state machine, dispatching on the actor
+state byte `$dc72` through an `rst Rst00` jumptable —
+`ShootingStarTargetActorHandler`, `BooBlastControllerActorHandler`,
+`TreasureBoxTargetActorHandler` and `MedallionMatchTargetActorHandler`.
+
+`$537e` is `TargetReticleAnimFrames`: 32 entries indexed by
+`hVBlankCounter & $1f`, which `DrawTargetReticleSprite` uses to upload a
+new reticle tile frame on phases 0/8/16/24 (frames 0, 1, 2, 1; `$ff`
+elsewhere means "no upload this frame", and the tiles persist in VRAM in
+between). So it is a four-step ping-pong at 8 frames per step, not a blink.
+Note the upload goes through `QueueMatchSpriteFrameA` (`$28:$606c`), which
+is a VRAM tile copy, not an OAM queue.
+
+The 92-byte blob at `$414a` is **two** target-score tables, picked between
+by id in `GetMinigameTargetScore`:
+`MinigamePracticeTargetScores` (`$414a`, 10 words, ids `$12`-`$1b`) —
+Tennis Machine 1-4 escalate 15/30/60/100, Wall Practice 1-4 are all 50,
+and the two High Score modes are `$270f`; and `MinigameTargetScores`
+(`$415e`), indexed `(id - $1c) * 4 + wMinigameLevel`, rendering as 9 rows
+of 4 words, one per minigame. `InitMinigameScore` stores the result in
+`wMinigamesTargetScore`. `$270f` is the score *ceiling* rather than a real
+target — `AddToMinigameScore` clamps there on overflow, and it is what both
+endless High Score modes use.
 
 ### Actor-script `as_set_pos` / `as_set_target` were swapped (2026-07-24)
 
