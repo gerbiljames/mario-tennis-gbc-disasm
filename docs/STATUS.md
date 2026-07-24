@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~156.2K instructions / 397,667 bytes of proven code+structured source
+**~156.2K instructions / 398,447 bytes of proven code+structured source
 (19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -26,7 +26,91 @@ Everything below is **committed** (HEAD `e7221b8`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,771 of 19,055 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,789 of 19,073 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Bank $00 carved down to the Nintendo logo (2026-07-24)
+
+Bank `$00` had nine anonymous `INCBIN`s left, 828 bytes between them. All
+nine were identifiable and eight are now structured source; the ninth is the
+Nintendo logo, which stays an `INCBIN` on purpose. Bank `$00` is now 98.1%
+proven code+structure, with 48 bytes of blob and 268 bytes of fill.
+
+| Address | Size | Now | What it is |
+|---|---|---|---|
+| `$0104` | 48 | `NintendoLogo` (INCBIN) | the boot logo — ROM content, so it stays extracted |
+| `$0134` | 28 | `cart_header` | title `"CGBTENNIS "`, code `BM8E`, CGB-only, MBC5+RAM+BATTERY, 2 MiB / 32 KiB SRAM, checksums |
+| `$0153` | 11 | `BuildStamp` | `db "10011171737"` — printed by bank `$01` |
+| `$0ab4` | 17 | `ArcTanTable` | `tan(i * 5.625°) * 16`, i = 0-16, `$ff` sentinel |
+| `$1ff7` | 186 | `NumberFontGlyph_0`-`_9`, `_0a` + `NumberFontGlyphPtrs` | a 6x8 2bpp digit font |
+| `$2113` | 8 | `PixelMaskTable` | `$80 >> i` |
+| `$2497` | 8 | `FlagMaskTable` | `$80 >> i`, for the game-flag API |
+| `$2fe0` | 6 | `JingleSoundIds` | |
+| `$3836` | 16 | `NoiseNoteTable` | NR43 polynomial-counter bytes |
+| `$3dd4` | 500 | `WavePatternTable` + `WavePatterns`, `SoundEnvelopeTable` + `SoundEnvelopes` | two tables, not one |
+
+**The `$1ff7` font.** 11 records of 14 bytes (`db width, height` then 12
+bytes of bitmap) followed by a 16-entry pointer table at `$2091`.
+`RenderGlyphToTiles` (`$211b`) reads the two size bytes into `$c0f8`/`$c0f9`
+and then consumes **2 bits per pixel, MSB first, with no byte alignment
+between rows** — first bit to the low bitplane (`ld [hl+]`), second to the
+high (`ld [hl-]`). At width 6 that is 12 bits per row, so 3 bytes cover
+exactly 2 rows, which is how the new `font_glyph` renderer groups them:
+
+```
+NumberFontGlyph_8:
+	; $2067, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $3f, $cd, $a7 ; .####. #+oo+#
+	db $ef, $bd, $a7 ; #o##o# #+oo+#
+	db $ef, $be, $fb ; #o##o# #o##o#
+	db $da, $73, $fc ; #+oo+# .####.
+```
+
+`RenderTextToTiles` (`$20e5`) indexes the pointer table with
+`(char - $30) & $1f`, so records 0-9 are `'0'`-`'9'` and all six trailing
+slots alias record 10 — the out-of-range fallback. Record 10 sits where
+`':'` would be but does not decode as a colon (a digit-like top over a small
+hollow box), so it keeps the neutral name `NumberFontGlyph_0a`. Characters
+below `'0'` skip the lookup entirely and just advance x by 6, which confirms
+the 6-pixel advance.
+
+**`$3dd4` was two tables.** The label covered 500 bytes, but the sound engine
+reaches them through two separate one-entry pointer tables:
+
+- `$3dd4` `WavePatternTable`: `dw WavePatterns`, indexed by the *high* nibble
+  of `hSndInstrument` (`$3538`, `$367c`, `$3d4f`)
+- `$3dd6` `WavePatterns`: 16 patterns x 16 bytes, indexed by `waveId << 4`.
+  Entry 0 is a sine, 1 a triangle, 2 a square.
+- `$3ed6` `SoundEnvelopeTable`: `dw SoundEnvelopes`, indexed by the *low*
+  nibble of `hSndInstrument` (`ld de, $3ed6` at `$3a7d`)
+- `$3ed8` `SoundEnvelopes`: 15 envelopes x 16 steps. The reader computes
+  `hl = ptr - $10 + idx`, so `idx` runs `$10`-`$ff` and the last step lands on
+  the final byte at `$3fc7`. Each byte is volume in the high nibble, control
+  flags in the low (`bit 2` is tested at `$3aa2`).
+
+Both pointer tables holding a single entry that points at the bytes right
+after them reads as a generic multi-instrument-bank driver shipping with one
+bank populated.
+
+**`$2497`'s indexing.** `TestGameFlag`/`SetGameFlag`/`ClearGameFlag` do
+`ld a, e` + `rlca` x3 (confirmed `07 07 07` in the ROM, not `rrca`) before
+indexing an 8-byte table, which looks out of range until you read
+`TestGameFlagByNumber` (`$24ef`): it shifts `de` left by 5 first, so `e`'s
+top 3 bits hold the bit number and `d` the byte offset. The three rotates
+land the bit number in the low 3 bits with everything else zero. Flag bit 0
+is the MSB of its byte.
+
+**Tooling.** Three new `data_tables.json` kinds — `ascii`, `cart_header`,
+`font_glyph` — plus `records:2` now resolving symbolically in bank `$00`
+(it was gated to `bank > 0` because the ROMX word-to-flat mapping is wrong
+for bank 0; ROM0 words now map 1:1). That last change exposed a trap:
+`render_operand` used to inline *any* ROM0 label into *any* bank's
+`ld r16, imm`, and the new bank-`$00` labels sit exactly where banked code
+keeps text ids (`$2000`-`$2100`) and packed y/x pairs (`$0104`), so bank
+`$05`/`$15`/`$3b` sprouted five bogus pointer names. ROM0 immediates loaded
+from ROMX now stay numeric unless the offset is listed in
+`disasm.py`'s `ROM0_FAR_POINTERS`; `$0153` is the only genuine one, and no
+pre-existing label was affected.
 
 ### Bank-end $ff padding is now automatic (2026-07-24)
 

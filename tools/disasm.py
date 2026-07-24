@@ -33,6 +33,11 @@ BANK_SIZE = 0x4000
 # between code) render as inline `db` instead of a standalone blob file.
 INLINE_DB_MAX = 2
 
+# ROM0 data a banked caller loads by address. A word below $4000 loaded from
+# ROMX is far more often a text id or a packed y/x pair than a pointer into
+# bank $00, so those loads stay numeric unless listed here.
+ROM0_FAR_POINTERS = {0x0153}
+
 # Backtracking classification for the register-setup scan at data-helper
 # call sites: `ld r16, imm` opcodes we can harvest, opcodes that clobber a
 # pair (making an earlier constant unreliable), and opcodes that touch none
@@ -2610,7 +2615,8 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
             base = (off // BANK_SIZE) * BANK_SIZE
             flat = None
             if imm < 0x4000:
-                flat = imm
+                if not base or imm in ROM0_FAR_POINTERS:
+                    flat = imm
             elif base and imm < 0x8000:
                 flat = base + (imm - 0x4000)
             if flat in data_labels:
@@ -4075,17 +4081,19 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             # records:2 tables are usually pointer tables;
                             # words that hit a labeled offset in the same
                             # bank render symbolically (same bytes at link).
-                            if (spec in ("records:2", "mode_hooks",
-                                         "minigame_configs") and bank > 0):
+                            if spec in ("records:2", "mode_hooks",
+                                        "minigame_configs"):
                                 for r in range((j - seg) // 2):
                                     ro = seg + r * 2
                                     w = rom[ro] | (rom[ro + 1] << 8)
                                     tgt = (bank * 0x4000 + w - 0x4000
-                                           if 0x4000 <= w < 0x8000 else None)
+                                           if bank and 0x4000 <= w < 0x8000
+                                           else None)
                                     # Every mode_hooks slot is a code pointer, so
                                     # a ROM0 word is the always-mapped bank 0 (the
                                     # shared do-nothing `ret`), not a stray value.
-                                    if tgt is None and spec == "mode_hooks" and w < 0x4000:
+                                    if tgt is None and w < 0x4000 \
+                                            and (not bank or spec == "mode_hooks"):
                                         tgt = w
                                     ref = labels.get(tgt) if tgt else None
                                     lines.append(f"\tdw {ref or f'${w:04x}'}"

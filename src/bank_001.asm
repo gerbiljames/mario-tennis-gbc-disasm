@@ -64,7 +64,7 @@ Label_01_40a5:
 	ld [hl], $0a ; $40ad
 	farcall RunStoryModeOverworld ; $40af
 Label_01_40b2:
-	ld hl, $0153 ; $40b2
+	ld hl, BuildStamp ; $40b2
 	ld de, $0511 ; $40b5
 	call PrintString ; $40b8
 	ld a, $03 ; $40bb
@@ -93,7 +93,7 @@ Label_01_40d8:
 	farcall RunStoryModeOverworld ; $40e6
 	jp Label_01_40b2 ; $40e9
 Unused_01_MenuRedraw:
-	ld hl, $0153 ; $40ec
+	ld hl, BuildStamp ; $40ec
 	ld de, $0511 ; $40ef
 	call PrintString ; $40f2
 	ld a, $03 ; $40f5

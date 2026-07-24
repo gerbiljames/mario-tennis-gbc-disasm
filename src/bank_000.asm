@@ -48,10 +48,27 @@ JoypadInterrupt:
 EntryPoint:
 	nop ; $0100
 	jp Label_00_0150 ; $0101
-	INCBIN "data/bank_000/d_0104.bin" ; $0104, 76 bytes
+NintendoLogo:
+	INCBIN "data/bank_000/d_0104.bin" ; $0104, 48 bytes
+	; $0134, 28 bytes (cart_header)
+	db "CGBTENNIS ", $00 ; $0134 title
+	db "BM8E"            ; $013f manufacturer code
+	db $c0               ; $0143 CGB flag: CGB only
+	db "01"              ; $0144 new licensee
+	db $00               ; $0146 SGB flag
+	db $1b               ; $0147 cart type: MBC5+RAM+BATTERY
+	db $06               ; $0148 ROM size: 2048 KiB, 128 banks
+	db $03               ; $0149 RAM size: 32 KiB, 4 banks
+	db $01               ; $014a destination: non-Japanese
+	db $33               ; $014b old licensee
+	db $00               ; $014c mask ROM version
+	db $a5               ; $014d header checksum
+	db $64, $e3          ; $014e global checksum
 Label_00_0150:
 	jp Start ; $0150
-	INCBIN "data/bank_000/d_0153.bin" ; $0153, 11 bytes
+BuildStamp:
+	; $0153, 11 bytes (ascii)
+	db "10011171737"
 CallHLInBankA:
 	push hl ; $015e
 	push hl ; $015f
@@ -1865,7 +1882,8 @@ Label_00_0ab2:
 	pop bc ; $0ab2
 	ret ; $0ab3
 ArcTanTable:
-	INCBIN "data/bank_000/d_0ab4.bin" ; $0ab4, 17 bytes
+	; $0ab4, 17 bytes (bytes:17)
+	db $00, $01, $03, $04, $06, $08, $0a, $0d, $10, $13, $18, $1e, $26, $35, $51, $a5, $ff ; 0x00
 VectorFromLengthAndAngle:
 	sra h ; $0ac5
 	rr l ; $0ac7
@@ -3660,7 +3678,6 @@ Label_00_1564:
 	ret ; $1564
 TangentTable:
 	; $1565, 514 bytes (records:2)
-; 257 records x 2 bytes
 	dw $0000 ; record 0
 	dw $0001 ; record 1
 	dw $0003 ; record 2
@@ -3701,12 +3718,12 @@ TangentTable:
 	dw $003b ; record 37
 	dw $003c ; record 38
 	dw $003e ; record 39
-	dw $0040 ; record 40
+	dw VBlankInterrupt ; record 40
 	dw $0041 ; record 41
 	dw $0043 ; record 42
 	dw $0045 ; record 43
 	dw $0046 ; record 44
-	dw $0048 ; record 45
+	dw LCDStatInterrupt ; record 45
 	dw $004a ; record 46
 	dw $004c ; record 47
 	dw $004d ; record 48
@@ -3715,7 +3732,7 @@ TangentTable:
 	dw $0052 ; record 51
 	dw $0054 ; record 52
 	dw $0056 ; record 53
-	dw $0058 ; record 54
+	dw SerialInterrupt ; record 54
 	dw $0059 ; record 55
 	dw $005b ; record 56
 	dw $005d ; record 57
@@ -3789,7 +3806,7 @@ TangentTable:
 	dw $00f7 ; record 125
 	dw $00fa ; record 126
 	dw $00fd ; record 127
-	dw $0100 ; record 128
+	dw EntryPoint ; record 128
 	dw $0103 ; record 129
 	dw $0106 ; record 130
 	dw $010a ; record 131
@@ -3814,7 +3831,7 @@ TangentTable:
 	dw $0151 ; record 150
 	dw $0155 ; record 151
 	dw $015a ; record 152
-	dw $015e ; record 153
+	dw CallHLInBankA ; record 153
 	dw $0163 ; record 154
 	dw $0167 ; record 155
 	dw $016c ; record 156
@@ -3890,7 +3907,7 @@ TangentTable:
 	dw $056d ; record 226
 	dw $059f ; record 227
 	dw $05d4 ; record 228
-	dw $060d ; record 229
+	dw ApplyPendingPaletteUpdates ; record 229
 	dw $064b ; record 230
 	dw $068d ; record 231
 	dw $06d5 ; record 232
@@ -3904,12 +3921,12 @@ TangentTable:
 	dw $0a5e ; record 240
 	dw $0b14 ; record 241
 	dw $0be5 ; record 242
-	dw $0cd7 ; record 243
+	dw Label_00_0cd7 ; record 243
 	dw $0df3 ; record 244
 	dw $0f43 ; record 245
 	dw $10d9 ; record 246
 	dw $12cd ; record 247
-	dw $1544 ; record 248
+	dw Label_00_1544 ; record 248
 	dw $1878 ; record 249
 	dw $1cce ; record 250
 	dw $2302 ; record 251
@@ -5641,7 +5658,101 @@ Label_00_1ff1:
 	pop bc ; $1ff4
 	pop af ; $1ff5
 	ret ; $1ff6
-	INCBIN "data/bank_000/d_1ff7.bin" ; $1ff7, 186 bytes
+NumberFontGlyph_0:
+	; $1ff7, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $3f, $cd, $a7 ; .####. #+oo+#
+	db $ef, $be, $fb ; #o##o# #o##o#
+	db $ef, $be, $fb ; #o##o# #o##o#
+	db $da, $73, $fc ; #+oo+# .####.
+NumberFontGlyph_1:
+	; $2005, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $0f, $c3, $6c ; ..###. .#+o#.
+	db $3a, $c3, $ec ; .#oo#. .##o#.
+	db $0e, $c3, $ef ; ..#o#. .##o##
+	db $3a, $b3, $ff ; .#ooo# .#####
+NumberFontGlyph_2:
+	; $2013, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $3f, $cd, $a7 ; .####. #+oo+#
+	db $ef, $bf, $db ; #o##o# ###+o#
+	db $da, $7e, $7f ; #+oo+# #o+###
+	db $ea, $bf, $ff ; #oooo# ######
+NumberFontGlyph_3:
+	; $2021, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $ff, $ce, $a7 ; #####. #ooo+#
+	db $ff, $b3, $a7 ; ####o# .#oo+#
+	db $3f, $bf, $fb ; .###o# ####o#
+	db $ea, $7f, $fc ; #ooo+# #####.
+NumberFontGlyph_4:
+	; $202f, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $0f, $c3, $6c ; ..###. .#+o#.
+	db $da, $ce, $ec ; #+oo#. #o#o#.
+	db $ee, $fe, $ab ; #o#o## #oooo#
+	db $fe, $f0, $fc ; ###o## ..###.
+NumberFontGlyph_5:
+	; $203d, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $ff, $fe, $ab ; ###### #oooo#
+	db $ef, $fe, $a7 ; #o#### #ooo+#
+	db $ff, $be, $fb ; ####o# #o##o#
+	db $da, $73, $fc ; #+oo+# .####.
+NumberFontGlyph_6:
+	; $204b, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $3f, $cd, $a7 ; .####. #+oo+#
+	db $ef, $fe, $a7 ; #o#### #ooo+#
+	db $ef, $be, $fb ; #o##o# #o##o#
+	db $da, $73, $fc ; #+oo+# .####.
+NumberFontGlyph_7:
+	; $2059, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $ff, $fe, $ab ; ###### #oooo#
+	db $fd, $b3, $67 ; ###+o# .#+o+#
+	db $39, $c3, $b0 ; .#o+#. .#o#..
+	db $3b, $03, $f0 ; .#o#.. .###..
+NumberFontGlyph_8:
+	; $2067, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $3f, $cd, $a7 ; .####. #+oo+#
+	db $ef, $bd, $a7 ; #o##o# #+oo+#
+	db $ef, $be, $fb ; #o##o# #o##o#
+	db $da, $73, $fc ; #+oo+# .####.
+NumberFontGlyph_9:
+	; $2075, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $3f, $cd, $a7 ; .####. #+oo+#
+	db $ef, $be, $fb ; #o##o# #o##o#
+	db $da, $bf, $fb ; #+ooo# ####o#
+	db $da, $73, $fc ; #+oo+# .####.
+NumberFontGlyph_0a:
+	; $2083, 14 bytes (font_glyph)
+	db $06, $08 ; 6 x 8, 2bpp
+	db $3f, $cd, $a7 ; .####. #+oo+#
+	db $ef, $bf, $fb ; #o##o# ####o#
+	db $0e, $70, $fc ; ..#o+# ..###.
+	db $0e, $c0, $fc ; ..#o#. ..###.
+NumberFontGlyphPtrs:
+	; $2091, 32 bytes (records:2)
+	dw NumberFontGlyph_0 ; record 0
+	dw NumberFontGlyph_1 ; record 1
+	dw NumberFontGlyph_2 ; record 2
+	dw NumberFontGlyph_3 ; record 3
+	dw NumberFontGlyph_4 ; record 4
+	dw NumberFontGlyph_5 ; record 5
+	dw NumberFontGlyph_6 ; record 6
+	dw NumberFontGlyph_7 ; record 7
+	dw NumberFontGlyph_8 ; record 8
+	dw NumberFontGlyph_9 ; record 9
+	dw NumberFontGlyph_0a ; record 10
+	dw NumberFontGlyph_0a ; record 11
+	dw NumberFontGlyph_0a ; record 12
+	dw NumberFontGlyph_0a ; record 13
+	dw NumberFontGlyph_0a ; record 14
+	dw NumberFontGlyph_0a ; record 15
 	push af ; $20b1
 	push bc ; $20b2
 	push de ; $20b3
@@ -5720,7 +5831,8 @@ Label_00_210e:
 	pop af ; $2111
 	ret ; $2112
 PixelMaskTable:
-	INCBIN "data/bank_000/d_2113.bin" ; $2113, 8 bytes
+	; $2113, 8 bytes (bytes:8)
+	db $80, $40, $20, $10, $08, $04, $02, $01 ; 0x00
 RenderGlyphToTiles:
 	push af ; $211b
 	push bc ; $211c
@@ -6330,7 +6442,9 @@ ResetGameTimer:
 	pop hl ; $2494
 	pop af ; $2495
 	ret ; $2496
-	INCBIN "data/bank_000/d_2497.bin" ; $2497, 8 bytes
+FlagMaskTable:
+	; $2497, 8 bytes (bytes:8)
+	db $80, $40, $20, $10, $08, $04, $02, $01 ; 0x00
 TestGameFlag:
 	push hl ; $249f
 	push bc ; $24a0
@@ -8333,7 +8447,8 @@ Label_00_2fdd:
 	ld a, [hl] ; $2fdd
 	jr Label_00_2ffa ; $2fde
 JingleSoundIds:
-	INCBIN "data/bank_000/d_2fe0.bin" ; $2fe0, 6 bytes
+	; $2fe0, 6 bytes (bytes:6)
+	db $00, $2e, $2f, $30, $31, $32 ; 0x00
 Label_00_2fe6:
 	ld d, a ; $2fe6
 	ldh a, [hActiveJingle] ; $2fe7
@@ -9615,7 +9730,8 @@ Label_00_3832:
 	inc hl ; $3832
 	jp Label_00_3566 ; $3833
 NoiseNoteTable:
-	INCBIN "data/bank_000/d_3836.bin" ; $3836, 16 bytes
+	; $3836, 16 bytes (bytes:16)
+	db $00, $01, $11, $12, $14, $23, $07, $15, $17, $32, $33, $60, $61, $45, $53, $62 ; 0x00
 Label_00_3846:
 	xor a, a ; $3846
 	ldh [hSndRestFlag], a ; $3847
@@ -9978,7 +10094,7 @@ Label_00_3a65:
 	push de ; $3a78
 	ldh a, [hSndInstrument] ; $3a79
 	and a, $0f ; $3a7b
-	ld de, $3ed6 ; $3a7d
+	ld de, SoundEnvelopeTable ; $3a7d
 	sla a ; $3a80
 	add a, e ; $3a82
 	ld e, a ; $3a83
@@ -10086,7 +10202,6 @@ AbortIfChannelTriggered:
 	ret ; $3b1c
 NotePeriodTable:
 	; $3b1d, 48 bytes (records:2)
-; 24 records x 2 bytes
 	dw $07d4 ; record 0
 	dw $0764 ; record 1
 	dw $06f9 ; record 2
@@ -10097,7 +10212,7 @@ NotePeriodTable:
 	dw $053a ; record 7
 	dw $04f0 ; record 8
 	dw $04a8 ; record 9
-	dw $0465 ; record 10
+	dw ClearVRAMCopyQueue ; record 10
 	dw $0426 ; record 11
 	dw $079c ; record 12
 	dw $072e ; record 13
@@ -10255,5 +10370,44 @@ Label_00_3dbc:
 	pop de ; $3dd2
 	ret ; $3dd3
 WavePatternTable:
-	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 500 bytes
+	; $3dd4, 2 bytes (records:2)
+	dw WavePatterns ; record 0
+WavePatterns:
+	; $3dd6, 256 bytes (bytes:16)
+	db $00, $01, $12, $35, $8a, $cd, $ee, $ff, $ff, $fe, $ed, $ca, $85, $32, $11, $00 ; 0x00
+	db $01, $23, $45, $67, $89, $ab, $cd, $ef, $fe, $dc, $ba, $98, $76, $54, $32, $10 ; 0x10
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
+	db $ff, $ee, $dd, $cc, $bb, $aa, $99, $88, $77, $66, $55, $44, $33, $22, $11, $00 ; 0x30
+	db $ff, $ff, $de, $bd, $24, $12, $00, $00, $00, $00, $21, $42, $db, $ed, $ff, $ff ; 0x40
+	db $ff, $ff, $ee, $ca, $53, $11, $00, $00, $00, $00, $11, $35, $ac, $ee, $ff, $ff ; 0x50
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00, $00, $00, $00, $00, $00, $00, $ff, $00 ; 0x60
+	db $00, $00, $66, $aa, $bb, $dd, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x70
+	db $ff, $ff, $ee, $ed, $dd, $cc, $cb, $ba, $a9, $98, $87, $65, $54, $43, $31, $10 ; 0x80
+	db $ff, $ff, $ff, $ff, $ff, $ff, $00, $00, $00, $aa, $bb, $cc, $dd, $ee, $ff, $ff ; 0x90
+	db $00, $00, $00, $00, $aa, $aa, $bb, $cc, $dd, $dd, $ff, $ff, $ff, $ff, $00, $ff ; 0xa0
+	db $00, $00, $00, $00, $aa, $aa, $bb, $cc, $dd, $dd, $ff, $ff, $ff, $ff, $aa, $ff ; 0xb0
+	db $01, $12, $22, $33, $35, $55, $77, $99, $55, $99, $aa, $bb, $cc, $dd, $ee, $ff ; 0xc0
+	db $fc, $dc, $ba, $90, $70, $50, $30, $15, $15, $15, $15, $22, $55, $77, $aa, $cc ; 0xd0
+	db $ee, $ee, $cd, $ac, $35, $23, $11, $11, $11, $11, $32, $53, $ca, $dc, $ee, $ee ; 0xe0
+	db $dd, $dd, $dd, $dd, $dd, $dd, $dd, $dd, $22, $22, $22, $22, $22, $22, $22, $22 ; 0xf0
+SoundEnvelopeTable:
+	; $3ed6, 2 bytes (records:2)
+	dw SoundEnvelopes ; record 0
+SoundEnvelopes:
+	; $3ed8, 240 bytes (bytes:16)
+	db $f5, $e5, $d5, $c5, $c5, $c5, $c5, $c5, $b5, $b5, $b5, $b5, $b5, $b5, $b5, $b5 ; 0x00
+	db $f3, $d0, $b0, $90, $70, $50, $30, $10, $51, $40, $30, $20, $15, $15, $15, $15 ; 0x10
+	db $89, $98, $a8, $b8, $c8, $d8, $e8, $f5, $f5, $f5, $f5, $f5, $f5, $f5, $f5, $f5 ; 0x20
+	db $b9, $c8, $d8, $e8, $f1, $d0, $b0, $90, $70, $50, $30, $15, $15, $15, $15, $15 ; 0x30
+	db $99, $a8, $b8, $c8, $d8, $e8, $f4, $f4, $f0, $e0, $d0, $b0, $90, $70, $50, $35 ; 0x40
+	db $db, $f3, $d0, $b0, $90, $81, $70, $60, $50, $40, $30, $20, $15, $15, $15, $15 ; 0x50
+	db $f1, $e0, $d0, $c0, $b0, $a0, $90, $80, $70, $60, $50, $40, $30, $20, $10, $05 ; 0x60
+	db $f1, $70, $50, $30, $20, $15, $15, $15, $15, $05, $05, $05, $05, $05, $05, $05 ; 0x70
+	db $f1, $b0, $70, $50, $30, $20, $20, $15, $15, $15, $15, $15, $15, $15, $15, $05 ; 0x80
+	db $f1, $b0, $70, $50, $30, $10, $51, $40, $30, $20, $15, $15, $15, $15, $15, $05 ; 0x90
+	db $f3, $d0, $b0, $90, $70, $50, $30, $10, $51, $40, $30, $20, $15, $15, $15, $05 ; 0xa0
+	db $09, $18, $28, $38, $48, $58, $68, $78, $88, $98, $a8, $b8, $c8, $d8, $e8, $f5 ; 0xb0
+	db $c1, $d0, $e0, $d0, $c0, $a0, $80, $40, $b8, $c8, $d8, $e8, $f8, $88, $48, $05 ; 0xc0
+	db $f1, $e0, $d0, $c0, $b0, $a0, $90, $80, $70, $60, $50, $40, $30, $20, $10, $05 ; 0xd0
+	db $29, $28, $28, $38, $38, $48, $48, $58, $68, $78, $88, $a8, $c8, $d8, $e8, $f5 ; 0xe0
 	; $3fc8, 56 bytes fill to bank end (linker-padded)
