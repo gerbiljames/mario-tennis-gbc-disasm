@@ -3,7 +3,7 @@ SECTION "ROM Bank $1e", ROMX[$4000], BANK[$1e]
 	farptr ShowMatchResultsScreen ; $4000
 	farptr StubNop_1e ; $4002
 	farptr ProcessMatchRewards ; $4004
-	farptr Func_1e_6afd ; $4006
+	farptr ApplyPendingExpAwards ; $4006
 	farptr ShowGameProgressScreen ; $4008
 	farptr FetchAndDrawDialogueText ; $400a
 	farptr WriteTextToTilemap ; $400c
@@ -24,7 +24,7 @@ Label_1e_402a:
 	ld a, c ; $402a
 	or a, a ; $402b
 	jr z, Label_1e_4031 ; $402c
-	jp Label_1e_5438 ; $402e
+	jp ShowExpAwardScreen ; $402e
 Label_1e_4031:
 	ld c, $10 ; $4031
 	call BeginFadeOut ; $4033
@@ -49,21 +49,21 @@ Label_1e_4031:
 	call ClearSpriteQueue ; $4062
 	farcall InitActorEngine ; $4065
 	pop bc ; $4068
-	call Func_1e_40ac ; $4069
-	call Func_1e_40be ; $406c
+	call InitResultsPromptState ; $4069
+	call BuildResultsScreenTilemap ; $406c
 	call InitResultsScreenCharacters ; $406f
 	call EnableLCD ; $4072
 	call AdvanceFrame ; $4075
 	ld a, $01 ; $4078
-	ld hl, Func_1e_4a76 ; $407a
+	ld hl, DrawResultsCharSprites ; $407a
 	call RegisterFrameTask ; $407d
 	script_fade_in $10 ; $4080
 	call WaitFadeEnd ; $4085
-	call Func_1e_4b2c ; $4088
+	call RunContinuePrompt ; $4088
 	ld c, $10 ; $408b
 	call BeginFadeOut ; $408d
 	call WaitFadeEnd ; $4090
-	ld hl, Func_1e_4a76 ; $4093
+	ld hl, DrawResultsCharSprites ; $4093
 	call UnregisterFrameTask ; $4096
 	farcall Func_01_50e2 ; $4099
 	wram_bank $06 ; $409c
@@ -73,7 +73,7 @@ Label_1e_4031:
 	ld l, a ; $40a7
 	ld a, [$d003] ; $40a8
 	ret ; $40ab
-Func_1e_40ac:
+InitResultsPromptState:
 	wram_bank $06 ; $40ac
 	ld a, c ; $40b2
 	ld [$d000], a ; $40b3
@@ -81,18 +81,18 @@ Func_1e_40ac:
 	ld [$d001], a ; $40b7
 	ld [$d002], a ; $40ba
 	ret ; $40bd
-Func_1e_40be:
+BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
 	ld hl, $04d2 ; $40c1
 	ld de, $d041 ; $40c4
 	ld bc, $0020 ; $40c7
-	call Func_1e_4563 ; $40ca
+	call DrawProportionalTextLine ; $40ca
 	ld hl, $04d3 ; $40cd
-	call Func_1e_4563 ; $40d0
+	call DrawProportionalTextLine ; $40d0
 	ld hl, $04d4 ; $40d3
-	call Func_1e_4563 ; $40d6
-	call Func_1e_41b1 ; $40d9
-	call Func_1e_489b ; $40dc
+	call DrawProportionalTextLine ; $40d6
+	call BuildResultsScreenPanels ; $40d9
+	call DrawPlayerNameAndLevel ; $40dc
 	wram_bank $03 ; $40df
 	ld hl, $d000 ; $40e5
 	ld de, $9800 ; $40e8
@@ -130,14 +130,14 @@ LoadResultsScreenGraphics:
 	call DecompressData ; $4148
 	ld hl, $d000 ; $414b
 	ld bc, $0240 ; $414e
-	call Func_1e_4187 ; $4151
+	call ResultsCopyToTilemap ; $4151
 	wram_bank $01 ; $4154
 	ld hl, Lz_1e_52ec ; $415a
 	ld de, $d000 ; $415d
 	call DecompressData ; $4160
 	ld hl, $d000 ; $4163
 	ld bc, $0240 ; $4166
-	call Func_1e_419c ; $4169
+	call ResultsCopyToAttrmap ; $4169
 	wram_bank $01 ; $416c
 	ld hl, Lz_1e_5343 ; $4172
 	ld de, $d000 ; $4175
@@ -147,7 +147,7 @@ LoadResultsScreenGraphics:
 	ld c, $10 ; $4181
 	call QueueVRAMCopy ; $4183
 	ret ; $4186
-Func_1e_4187:
+ResultsCopyToTilemap:
 	wram_bank $01 ; $4187
 	ld d, [hl] ; $418d
 	wram_bank $03 ; $418e
@@ -156,9 +156,9 @@ Func_1e_4187:
 	dec bc ; $4196
 	ld a, b ; $4197
 	or a, c ; $4198
-	jr nz, Func_1e_4187 ; $4199
+	jr nz, ResultsCopyToTilemap ; $4199
 	ret ; $419b
-Func_1e_419c:
+ResultsCopyToAttrmap:
 	wram_bank $01 ; $419c
 	ld d, [hl] ; $41a2
 	wram_bank $02 ; $41a3
@@ -167,9 +167,9 @@ Func_1e_419c:
 	dec bc ; $41ab
 	ld a, b ; $41ac
 	or a, c ; $41ad
-	jr nz, Func_1e_419c ; $41ae
+	jr nz, ResultsCopyToAttrmap ; $41ae
 	ret ; $41b0
-Func_1e_41b1:
+BuildResultsScreenPanels:
 	wram_bank $03 ; $41b1
 	ld a, $02 ; $41b7
 	ld [$d000], a ; $41b9
@@ -211,7 +211,7 @@ Func_1e_41b1:
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
 	ld hl, $d041 ; $421e
-	call Func_1e_4572 ; $4221
+	call DrawContinuePromptText ; $4221
 	wram_bank $03 ; $4224
 	ld a, $02 ; $422a
 	ld [$d1a0], a ; $422c
@@ -320,28 +320,28 @@ Func_1e_41b1:
 	cp a, $0a ; $4334
 	jp z, Label_1e_44d3 ; $4336
 	ret ; $4339
-Func_1e_433a:
+LoadSinglesLabelTiles:
 	wram_bank $01 ; $433a
 	ld hl, Lz_1e_53df ; $4340
 	ld de, $d000 ; $4343
 	call DecompressData ; $4346
 	ret ; $4349
-Func_1e_434a:
+LoadDoublesLabelTiles:
 	wram_bank $01 ; $434a
 	ld hl, Lz_1e_53f2 ; $4350
 	ld de, $d000 ; $4353
 	call DecompressData ; $4356
 	ret ; $4359
-Func_1e_435a:
+DrawResultsNameLabelRows:
 	or a, a ; $435a
 	jr nz, Label_1e_4396 ; $435b
 	ld hl, $d000 ; $435d
 	ld de, $d160 ; $4360
 	ld c, $07 ; $4363
-	call Func_1e_440d ; $4365
+	call CopyLabelTilesToTilemap ; $4365
 	ld de, $d180 ; $4368
 	ld c, $07 ; $436b
-	call Func_1e_440d ; $436d
+	call CopyLabelTilesToTilemap ; $436d
 	wram_bank $03 ; $4370
 	ld a, $20 ; $4376
 	ld hl, $d1a1 ; $4378
@@ -359,10 +359,10 @@ Label_1e_4396:
 	ld hl, $d000 ; $4396
 	ld de, $d120 ; $4399
 	ld c, $07 ; $439c
-	call Func_1e_440d ; $439e
+	call CopyLabelTilesToTilemap ; $439e
 	ld de, $d140 ; $43a1
 	ld c, $07 ; $43a4
-	call Func_1e_440d ; $43a6
+	call CopyLabelTilesToTilemap ; $43a6
 	wram_bank $03 ; $43a9
 	ld a, $20 ; $43af
 	ld hl, $d181 ; $43b1
@@ -400,7 +400,7 @@ Label_1e_4396:
 	ld a, $08 ; $4407
 	ld [$d166], a ; $4409
 	ret ; $440c
-Func_1e_440d:
+CopyLabelTilesToTilemap:
 	wram_bank $01 ; $440d
 	ld b, [hl] ; $4413
 	wram_bank $03 ; $4414
@@ -412,7 +412,7 @@ Func_1e_440d:
 	inc hl ; $4425
 	inc de ; $4426
 	dec c ; $4427
-	jr nz, Func_1e_440d ; $4428
+	jr nz, CopyLabelTilesToTilemap ; $4428
 	ret ; $442a
 	wram_bank $03 ; $442b
 	ld a, $20 ; $4431
@@ -445,13 +445,13 @@ Label_1e_4466:
 	ld hl, $04d8 ; $4472
 	ld de, $d1c3 ; $4475
 	ld bc, $0020 ; $4478
-	call Func_1e_4563 ; $447b
+	call DrawProportionalTextLine ; $447b
 	jr Label_1e_448c ; $447e
 Label_1e_4480:
 	ld hl, $04d9 ; $4480
 	ld de, $d1c2 ; $4483
 	ld bc, $0020 ; $4486
-	call Func_1e_4563 ; $4489
+	call DrawProportionalTextLine ; $4489
 Label_1e_448c:
 	ld a, [$c8a9] ; $448c
 	add a, $79 ; $448f
@@ -461,7 +461,7 @@ Label_1e_448c:
 	ld h, a ; $4495
 	ld de, $d204 ; $4496
 	ld bc, $0020 ; $4499
-	call Func_1e_4563 ; $449c
+	call DrawProportionalTextLine ; $449c
 	ret ; $449f
 Label_1e_44a0:
 	add a, $79 ; $44a0
@@ -471,93 +471,93 @@ Label_1e_44a0:
 	ld h, a ; $44a6
 	ld de, $d1e7 ; $44a7
 	ld bc, $0020 ; $44aa
-	call Func_1e_4563 ; $44ad
+	call DrawProportionalTextLine ; $44ad
 	ret ; $44b0
 Label_1e_44b1:
 	test_flag $1f, 7 ; $44b1
 	jr nz, Label_1e_44c4 ; $44b4
-	call Func_1e_433a ; $44b6
+	call LoadSinglesLabelTiles ; $44b6
 	xor a, a ; $44b9
-	call Func_1e_435a ; $44ba
-	call Func_1e_4606 ; $44bd
+	call DrawResultsNameLabelRows ; $44ba
+	call DrawSinglesPlayerNames ; $44bd
 	call DrawSetsGamesScore ; $44c0
 	ret ; $44c3
 Label_1e_44c4:
-	call Func_1e_434a ; $44c4
+	call LoadDoublesLabelTiles ; $44c4
 	ld a, $01 ; $44c7
-	call Func_1e_435a ; $44c9
-	call Func_1e_4634 ; $44cc
+	call DrawResultsNameLabelRows ; $44c9
+	call DrawDoublesPlayerNames ; $44cc
 	call DrawSetsGamesScore ; $44cf
 	ret ; $44d2
 Label_1e_44d3:
 	test_flag $1f, 7 ; $44d3
 	jr nz, Label_1e_44e6 ; $44d6
-	call Func_1e_433a ; $44d8
+	call LoadSinglesLabelTiles ; $44d8
 	xor a, a ; $44db
-	call Func_1e_435a ; $44dc
-	call Func_1e_488e ; $44df
+	call DrawResultsNameLabelRows ; $44dc
+	call DrawMarioExhibitionLabel ; $44df
 	call DrawSetsGamesScore ; $44e2
 	ret ; $44e5
 Label_1e_44e6:
-	call Func_1e_434a ; $44e6
+	call LoadDoublesLabelTiles ; $44e6
 	xor a, a ; $44e9
-	call Func_1e_435a ; $44ea
-	call Func_1e_488e ; $44ed
+	call DrawResultsNameLabelRows ; $44ea
+	call DrawMarioExhibitionLabel ; $44ed
 	call DrawSetsGamesScore ; $44f0
 	ret ; $44f3
 Label_1e_44f4:
 	test_flag $1f, 7 ; $44f4
 	jr nz, Label_1e_450a ; $44f7
-	call Func_1e_433a ; $44f9
+	call LoadSinglesLabelTiles ; $44f9
 	xor a, a ; $44fc
-	call Func_1e_435a ; $44fd
-	call Func_1e_4717 ; $4500
-	call Func_1e_4749 ; $4503
+	call DrawResultsNameLabelRows ; $44fd
+	call DrawClassNameLabel ; $4500
+	call DrawRankMatchLabel ; $4503
 	call DrawSetsGamesScore ; $4506
 	ret ; $4509
 Label_1e_450a:
-	call Func_1e_434a ; $450a
+	call LoadDoublesLabelTiles ; $450a
 	xor a, a ; $450d
-	call Func_1e_435a ; $450e
-	call Func_1e_4717 ; $4511
-	call Func_1e_4749 ; $4514
+	call DrawResultsNameLabelRows ; $450e
+	call DrawClassNameLabel ; $4511
+	call DrawRankMatchLabel ; $4514
 	call DrawSetsGamesScore ; $4517
 	ret ; $451a
 Label_1e_451b:
 	test_flag $1f, 7 ; $451b
 	jr nz, Label_1e_452e ; $451e
-	call Func_1e_433a ; $4520
+	call LoadSinglesLabelTiles ; $4520
 	xor a, a ; $4523
-	call Func_1e_435a ; $4524
-	call Func_1e_47f4 ; $4527
+	call DrawResultsNameLabelRows ; $4524
+	call DrawTournamentRoundLabel ; $4527
 	call DrawSetsGamesScore ; $452a
 	ret ; $452d
 Label_1e_452e:
-	call Func_1e_434a ; $452e
+	call LoadDoublesLabelTiles ; $452e
 	xor a, a ; $4531
-	call Func_1e_435a ; $4532
-	call Func_1e_47f4 ; $4535
+	call DrawResultsNameLabelRows ; $4532
+	call DrawTournamentRoundLabel ; $4535
 	call DrawSetsGamesScore ; $4538
 	ret ; $453b
 Label_1e_453c:
 	test_flag $1f, 7 ; $453c
 	jr nz, Label_1e_4552 ; $453f
-	call Func_1e_433a ; $4541
+	call LoadSinglesLabelTiles ; $4541
 	xor a, a ; $4544
-	call Func_1e_435a ; $4545
-	call Func_1e_4717 ; $4548
-	call Func_1e_4881 ; $454b
+	call DrawResultsNameLabelRows ; $4545
+	call DrawClassNameLabel ; $4548
+	call DrawPracticeMatchLabel ; $454b
 	call DrawSetsGamesScore ; $454e
 	ret ; $4551
 Label_1e_4552:
-	call Func_1e_434a ; $4552
+	call LoadDoublesLabelTiles ; $4552
 	xor a, a ; $4555
-	call Func_1e_435a ; $4556
-	call Func_1e_4717 ; $4559
-	call Func_1e_4881 ; $455c
+	call DrawResultsNameLabelRows ; $4556
+	call DrawClassNameLabel ; $4559
+	call DrawPracticeMatchLabel ; $455c
 	call DrawSetsGamesScore ; $455f
 	ret ; $4562
-Func_1e_4563:
+DrawProportionalTextLine:
 	ldh a, [hWramBank] ; $4563
 	push af ; $4565
 	ld bc, $0012 ; $4566
@@ -565,7 +565,7 @@ Func_1e_4563:
 	pop af ; $456c
 	wram_bank ; $456d
 	ret ; $4571
-Func_1e_4572:
+DrawContinuePromptText:
 	ldh a, [hWramBank] ; $4572
 	push af ; $4574
 	wram_bank $03 ; $4575
@@ -581,7 +581,7 @@ Label_1e_4586:
 	pop af ; $4586
 	wram_bank ; $4587
 	ret ; $458b
-Func_1e_458c:
+DrawSaveWarningTextLine1:
 	ldh a, [hWramBank] ; $458c
 	push af ; $458e
 	wram_bank $03 ; $458f
@@ -597,7 +597,7 @@ Label_1e_45a0:
 	pop af ; $45a0
 	wram_bank ; $45a1
 	ret ; $45a5
-Func_1e_45a6:
+DrawSaveWarningTextLine2:
 	ldh a, [hWramBank] ; $45a6
 	push af ; $45a8
 	wram_bank $03 ; $45a9
@@ -658,11 +658,11 @@ Label_1e_45f9:
 	pop bc ; $4602
 	pop de ; $4603
 	jr Label_1e_45cc ; $4604
-Func_1e_4606:
+DrawSinglesPlayerNames:
 	ld hl, $ca00 ; $4606
 	call CopyStringToTextBuffer ; $4609
 	ld de, $d1c3 ; $460c
-	call Func_1e_4683 ; $460f
+	call ShiftDestForLongName ; $460f
 	ld bc, $0020 ; $4612
 	call WriteTextToTilemap ; $4615
 	ld hl, $04d7 ; $4618
@@ -675,17 +675,17 @@ Func_1e_4606:
 	ld bc, $0020 ; $462d
 	call WriteTextToTilemap ; $4630
 	ret ; $4633
-Func_1e_4634:
+DrawDoublesPlayerNames:
 	ld hl, $ca00 ; $4634
 	call CopyStringToTextBuffer ; $4637
 	ld de, $d183 ; $463a
-	call Func_1e_4683 ; $463d
+	call ShiftDestForLongName ; $463d
 	ld bc, $0020 ; $4640
 	call WriteTextToTilemap ; $4643
 	ld hl, $ca40 ; $4646
 	call CopyStringToTextBuffer ; $4649
 	ld de, $d1c3 ; $464c
-	call Func_1e_4683 ; $464f
+	call ShiftDestForLongName ; $464f
 	ld bc, $0020 ; $4652
 	call WriteTextToTilemap ; $4655
 	ld hl, $04d7 ; $4658
@@ -703,7 +703,7 @@ Func_1e_4634:
 	ld bc, $0020 ; $467c
 	call WriteTextToTilemap ; $467f
 	ret ; $4682
-Func_1e_4683:
+ShiftDestForLongName:
 	ld c, $00 ; $4683
 	ld hl, wTextBuffer ; $4685
 Label_1e_4688:
@@ -778,7 +778,7 @@ Label_1e_4710:
 	ret z ; $4713
 	inc de ; $4714
 	jr Label_1e_4710 ; $4715
-Func_1e_4717:
+DrawClassNameLabel:
 	test_flag $1f, 7 ; $4717
 	jr nz, Label_1e_4728 ; $471a
 	test_flag $0a, 7 ; $471c
@@ -802,9 +802,9 @@ Label_1e_473c:
 Label_1e_473f:
 	ld de, $d1c1 ; $473f
 	ld bc, $0020 ; $4742
-	call Func_1e_4563 ; $4745
+	call DrawProportionalTextLine ; $4745
 	ret ; $4748
-Func_1e_4749:
+DrawRankMatchLabel:
 	ld hl, wTextBuffer ; $4749
 	test_flag $1f, 7 ; $474c
 	jr nz, Label_1e_4790 ; $474f
@@ -875,7 +875,7 @@ Label_1e_47c1:
 	ld hl, $04dd ; $47ca
 	ld de, $d1ca ; $47cd
 	ld bc, $0020 ; $47d0
-	call Func_1e_4563 ; $47d3
+	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
 Label_1e_47d7:
 	ldh a, [hWramBank] ; $47d7
@@ -895,11 +895,11 @@ Label_1e_47d7:
 	pop af ; $47ee
 	wram_bank ; $47ef
 	ret ; $47f3
-Func_1e_47f4:
+DrawTournamentRoundLabel:
 	ld hl, $04de ; $47f4
 	ld de, $d1c1 ; $47f7
 	ld bc, $0020 ; $47fa
-	call Func_1e_4563 ; $47fd
+	call DrawProportionalTextLine ; $47fd
 	ld hl, wTextBuffer ; $4800
 	ld a, $31 ; $4803
 	ld [hl], a ; $4805
@@ -933,23 +933,23 @@ Label_1e_4831:
 	ld hl, $04df ; $483a
 	ld de, $d1ca ; $483d
 	ld bc, $0020 ; $4840
-	call Func_1e_4563 ; $4843
+	call DrawProportionalTextLine ; $4843
 	ret ; $4846
 Label_1e_4847:
-	call Func_1e_4867 ; $4847
+	call ClearRoundLabelRow ; $4847
 	ld hl, $04e6 ; $484a
 	ld de, $d1c9 ; $484d
 	ld bc, $0020 ; $4850
-	call Func_1e_4563 ; $4853
+	call DrawProportionalTextLine ; $4853
 	ret ; $4856
 Label_1e_4857:
-	call Func_1e_4867 ; $4857
+	call ClearRoundLabelRow ; $4857
 	ld hl, $04e5 ; $485a
 	ld de, $d1ca ; $485d
 	ld bc, $0020 ; $4860
-	call Func_1e_4563 ; $4863
+	call DrawProportionalTextLine ; $4863
 	ret ; $4866
-Func_1e_4867:
+ClearRoundLabelRow:
 	wram_bank $03 ; $4867
 	ld a, $03 ; $486d
 	ld [$d1aa], a ; $486f
@@ -965,19 +965,19 @@ Func_1e_4867:
 	ld [hl+], a ; $487e
 	ld [hl], a ; $487f
 	ret ; $4880
-Func_1e_4881:
+DrawPracticeMatchLabel:
 	ld hl, $04e0 ; $4881
 	ld de, $d1cb ; $4884
 	ld bc, $0020 ; $4887
-	call Func_1e_4563 ; $488a
+	call DrawProportionalTextLine ; $488a
 	ret ; $488d
-Func_1e_488e:
+DrawMarioExhibitionLabel:
 	ld hl, $04ea ; $488e
 	ld de, $d1c1 ; $4891
 	ld bc, $0020 ; $4894
-	call Func_1e_4563 ; $4897
+	call DrawProportionalTextLine ; $4897
 	ret ; $489a
-Func_1e_489b:
+DrawPlayerNameAndLevel:
 	ld a, [wGameMode] ; $489b
 	cp a, $04 ; $489e
 	ret z ; $48a0
@@ -991,19 +991,19 @@ Func_1e_489b:
 	ld hl, $d000 ; $48b9
 	ld de, $d0a0 ; $48bc
 	ld c, $08 ; $48bf
-	call Func_1e_4962 ; $48c1
+	call CopyTilesAndAttrsRun ; $48c1
 	ld de, $d0c0 ; $48c4
 	ld c, $08 ; $48c7
-	call Func_1e_4962 ; $48c9
+	call CopyTilesAndAttrsRun ; $48c9
 	ld de, $d0e0 ; $48cc
 	ld c, $08 ; $48cf
-	call Func_1e_4962 ; $48d1
+	call CopyTilesAndAttrsRun ; $48d1
 	ld de, $d100 ; $48d4
 	ld c, $08 ; $48d7
-	call Func_1e_4962 ; $48d9
+	call CopyTilesAndAttrsRun ; $48d9
 	ld de, $d120 ; $48dc
 	ld c, $08 ; $48df
-	call Func_1e_4962 ; $48e1
+	call CopyTilesAndAttrsRun ; $48e1
 	wram_bank $03 ; $48e4
 	ld a, $20 ; $48ea
 	ld hl, $d0a0 ; $48ec
@@ -1053,7 +1053,7 @@ Fill7Bytes:
 	ld [hl+], a ; $495f
 	ld [hl], a ; $4960
 	ret ; $4961
-Func_1e_4962:
+CopyTilesAndAttrsRun:
 	wram_bank $01 ; $4962
 	ld b, [hl] ; $4968
 	wram_bank $03 ; $4969
@@ -1075,7 +1075,7 @@ Label_1e_497f:
 	inc hl ; $4989
 	inc de ; $498a
 	dec c ; $498b
-	jr nz, Func_1e_4962 ; $498c
+	jr nz, CopyTilesAndAttrsRun ; $498c
 	ret ; $498e
 InitResultsScreenCharacters:
 	ld a, [$c8b9] ; $498f
@@ -1188,10 +1188,10 @@ Label_1e_4a43:
 	farcall LoadIndexedPaletteThunk ; $4a6c
 	wram_bank $04 ; $4a6f
 	ret ; $4a75
-Func_1e_4a76:
+DrawResultsCharSprites:
 	wram_bank $04 ; $4a76
 	xor a, a ; $4a7c
-	call Func_1e_4aa8 ; $4a7d
+	call UpdateResultsCharSprite ; $4a7d
 	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
 	wram_bank $04 ; $4a86
@@ -1199,12 +1199,12 @@ Func_1e_4a76:
 	ret z ; $4a8f
 	wram_bank $06 ; $4a90
 	ld a, $01 ; $4a96
-	call Func_1e_4aa8 ; $4a98
+	call UpdateResultsCharSprite ; $4a98
 	ld hl, wCharSpriteSlot ; $4a9b
 	farcall DrawCharSprite ; $4a9e
 	wram_bank $04 ; $4aa1
 	ret ; $4aa7
-Func_1e_4aa8:
+UpdateResultsCharSprite:
 	push af ; $4aa8
 	ld hl, $df00 ; $4aa9
 	ld b, h ; $4aac
@@ -1292,8 +1292,8 @@ Label_1e_4af9:
 	ld [hl+], a ; $4b22
 	ret ; $4b23
 	INCBIN "data/bank_01e/d_4b24.bin" ; $4b24, 8 bytes
-Func_1e_4b2c:
-	call Func_1e_4b46 ; $4b2c
+RunContinuePrompt:
+	call DrawContinuePromptCursor ; $4b2c
 	call AdvanceFrame ; $4b2f
 	ldh a, [hInputRisingEdge] ; $4b32
 	bit PADB_UP, a ; $4b34
@@ -1304,8 +1304,8 @@ Func_1e_4b2c:
 	jr nz, Label_1e_4b73 ; $4b3e
 	bit 1, a ; $4b40
 	jr nz, Label_1e_4baf ; $4b42
-	jr Func_1e_4b2c ; $4b44
-Func_1e_4b46:
+	jr RunContinuePrompt ; $4b44
+DrawContinuePromptCursor:
 	wram_bank $06 ; $4b46
 	ld a, [$d001] ; $4b4c
 	or a, a ; $4b4f
@@ -1324,7 +1324,7 @@ Label_1e_4b61:
 	ld a, [$d001] ; $4b69
 	xor a, $01 ; $4b6c
 	ld [$d001], a ; $4b6e
-	jr Func_1e_4b2c ; $4b71
+	jr RunContinuePrompt ; $4b71
 Label_1e_4b73:
 	sound $5f ; $4b73
 	wram_bank $06 ; $4b75
@@ -1336,8 +1336,8 @@ Label_1e_4b73:
 	jr z, Label_1e_4ba0 ; $4b85
 	ld a, $01 ; $4b87
 	ld [$d002], a ; $4b89
-	call Func_1e_4bca ; $4b8c
-	jr Func_1e_4b2c ; $4b8f
+	call RefreshContinuePromptText ; $4b8c
+	jr RunContinuePrompt ; $4b8f
 Label_1e_4b91:
 	ld a, [$d001] ; $4b91
 	or a, a ; $4b94
@@ -1345,8 +1345,8 @@ Label_1e_4b91:
 Label_1e_4b97:
 	xor a, a ; $4b97
 	ld [$d002], a ; $4b98
-	call Func_1e_4bca ; $4b9b
-	jr Func_1e_4b2c ; $4b9e
+	call RefreshContinuePromptText ; $4b9b
+	jr RunContinuePrompt ; $4b9e
 Label_1e_4ba0:
 	ld a, $01 ; $4ba0
 	ld [$d003], a ; $4ba2
@@ -1369,15 +1369,15 @@ Label_1e_4baf:
 	ret ; $4bc7
 Label_1e_4bc8:
 	jr Label_1e_4b97 ; $4bc8
-Func_1e_4bca:
+RefreshContinuePromptText:
 	ld a, [$d002] ; $4bca
 	or a, a ; $4bcd
 	jr nz, Label_1e_4bef ; $4bce
 	xor a, a ; $4bd0
 	ld [$d001], a ; $4bd1
-	call Func_1e_4c15 ; $4bd4
+	call ClearContinuePromptRows ; $4bd4
 	ld hl, $d041 ; $4bd7
-	call Func_1e_4572 ; $4bda
+	call DrawContinuePromptText ; $4bda
 	ld hl, $d000 ; $4bdd
 	ld de, $9800 ; $4be0
 	ld c, $08 ; $4be3
@@ -1387,18 +1387,18 @@ Func_1e_4bca:
 Label_1e_4bef:
 	ld a, $01 ; $4bef
 	ld [$d001], a ; $4bf1
-	call Func_1e_4c15 ; $4bf4
+	call ClearContinuePromptRows ; $4bf4
 	ld hl, $d021 ; $4bf7
-	call Func_1e_458c ; $4bfa
+	call DrawSaveWarningTextLine1 ; $4bfa
 	ld hl, $d061 ; $4bfd
-	call Func_1e_45a6 ; $4c00
+	call DrawSaveWarningTextLine2 ; $4c00
 	ld hl, $d000 ; $4c03
 	ld de, $9800 ; $4c06
 	ld c, $08 ; $4c09
 	call QueueVRAMCopy ; $4c0b
 	wram_bank $06 ; $4c0e
 	ret ; $4c14
-Func_1e_4c15:
+ClearContinuePromptRows:
 	wram_bank $03 ; $4c15
 	ld a, $03 ; $4c1b
 	ld hl, $d001 ; $4c1d
@@ -1440,8 +1440,8 @@ Lz_1e_5405:
 	INCBIN "data/bank_01e/d_5405.bin" ; $5405, 28 bytes
 Lz_1e_5421:
 	INCBIN "data/bank_01e/d_5421.bin" ; $5421, 23 bytes
-Label_1e_5438:
-	call Func_1e_5bbb ; $5438
+ShowExpAwardScreen:
+	call HasPendingExpAwards ; $5438
 	or a, a ; $543b
 	ret z ; $543c
 	farcall Func_01_50e2 ; $543d
@@ -1462,28 +1462,28 @@ Label_1e_5438:
 	ldh [rWY], a ; $5464
 	call ClearSpriteQueue ; $5466
 	farcall InitActorEngine ; $5469
-	call Func_1e_54bb ; $546c
-	call Func_1e_54f5 ; $546f
+	call InitExpAwardScreenState ; $546c
+	call BuildExpAwardScreenTilemap ; $546f
 	call InitResultsScreenCharacters ; $5472
 	call EnableLCD ; $5475
 	call AdvanceFrame ; $5478
 	ld a, $01 ; $547b
-	ld hl, Func_1e_5914 ; $547d
+	ld hl, DrawExpScreenCharSprites ; $547d
 	call RegisterFrameTask ; $5480
 	ld a, $01 ; $5483
-	ld hl, Func_1e_5a4e ; $5485
+	ld hl, DrawExpTotalDigits ; $5485
 	call RegisterFrameTask ; $5488
 	script_fade_in $10 ; $548b
 	call WaitFadeEnd ; $5490
 	call WaitFramesCmd ; $5493
 	db $14 ; $5496 inline arg
-	call Func_1e_5b03 ; $5497
+	call RunExpAwardSequence ; $5497
 	ld c, $10 ; $549a
 	call BeginFadeOut ; $549c
 	call WaitFadeEnd ; $549f
-	ld hl, Func_1e_5914 ; $54a2
+	ld hl, DrawExpScreenCharSprites ; $54a2
 	call UnregisterFrameTask ; $54a5
-	ld hl, Func_1e_5a4e ; $54a8
+	ld hl, DrawExpTotalDigits ; $54a8
 	call UnregisterFrameTask ; $54ab
 	wram_bank $06 ; $54ae
 	ld hl, $d005 ; $54b4
@@ -1491,7 +1491,7 @@ Label_1e_5438:
 	ld h, [hl] ; $54b8
 	ld l, a ; $54b9
 	ret ; $54ba
-Func_1e_54bb:
+InitExpAwardScreenState:
 	wram_bank $06 ; $54bb
 	xor a, a ; $54c1
 	ld hl, $d004 ; $54c2
@@ -1521,9 +1521,9 @@ FillMemoryD:
 	dec d ; $54f1
 	jr nz, FillMemoryD ; $54f2
 	ret ; $54f4
-Func_1e_54f5:
-	call Func_1e_551e ; $54f5
-	call Func_1e_55e4 ; $54f8
+BuildExpAwardScreenTilemap:
+	call LoadExpAwardScreenGraphics ; $54f5
+	call DrawExpAwardScreenPanels ; $54f8
 	wram_bank $03 ; $54fb
 	ld hl, $d000 ; $5501
 	ld de, $9800 ; $5504
@@ -1535,7 +1535,7 @@ Func_1e_54f5:
 	ld c, $24 ; $5518
 	call QueueVRAMCopy ; $551a
 	ret ; $551d
-Func_1e_551e:
+LoadExpAwardScreenGraphics:
 	ld hl, Palettes_1e_5be1 ; $551e
 	ld de, $0003 ; $5521
 	call LoadPaletteShadow ; $5524
@@ -1557,14 +1557,14 @@ Func_1e_551e:
 	call DecompressData ; $5558
 	ld hl, $d000 ; $555b
 	ld bc, $0240 ; $555e
-	call Func_1e_55ba ; $5561
+	call ExpScreenCopyToTilemap ; $5561
 	wram_bank $01 ; $5564
 	ld hl, Lz_1e_644f ; $556a
 	ld de, $d000 ; $556d
 	call DecompressData ; $5570
 	ld hl, $d000 ; $5573
 	ld bc, $0240 ; $5576
-	call Func_1e_55cf ; $5579
+	call ExpScreenCopyToAttrmap ; $5579
 	wram_bank $01 ; $557c
 	ld hl, Lz_1e_5343 ; $5582
 	ld de, $d000 ; $5585
@@ -1585,7 +1585,7 @@ Func_1e_551e:
 	ld c, $14 ; $55b4
 	call QueueVRAMCopy ; $55b6
 	ret ; $55b9
-Func_1e_55ba:
+ExpScreenCopyToTilemap:
 	wram_bank $01 ; $55ba
 	ld d, [hl] ; $55c0
 	wram_bank $03 ; $55c1
@@ -1594,9 +1594,9 @@ Func_1e_55ba:
 	dec bc ; $55c9
 	ld a, b ; $55ca
 	or a, c ; $55cb
-	jr nz, Func_1e_55ba ; $55cc
+	jr nz, ExpScreenCopyToTilemap ; $55cc
 	ret ; $55ce
-Func_1e_55cf:
+ExpScreenCopyToAttrmap:
 	wram_bank $01 ; $55cf
 	ld d, [hl] ; $55d5
 	wram_bank $02 ; $55d6
@@ -1605,21 +1605,21 @@ Func_1e_55cf:
 	dec bc ; $55de
 	ld a, b ; $55df
 	or a, c ; $55e0
-	jr nz, Func_1e_55cf ; $55e1
+	jr nz, ExpScreenCopyToAttrmap ; $55e1
 	ret ; $55e3
-Func_1e_55e4:
-	call Func_1e_5896 ; $55e4
-	call Func_1e_59bb ; $55e7
-	call Func_1e_5814 ; $55ea
+DrawExpAwardScreenPanels:
+	call DrawExpMessageWindow ; $55e4
+	call DrawNextExpAwardMessage ; $55e7
+	call DrawExpTotalPanel ; $55ea
 	test_flag $1f, 7 ; $55ed
 	jr nz, Label_1e_55f6 ; $55f0
-	call Func_1e_55fd ; $55f2
+	call DrawExpSinglesPlayerPanel ; $55f2
 	ret ; $55f5
 Label_1e_55f6:
-	call Func_1e_5693 ; $55f6
-	call Func_1e_5758 ; $55f9
+	call DrawExpDoublesPlayerPanel ; $55f6
+	call DrawExpDoublesPartnerPanel ; $55f9
 	ret ; $55fc
-Func_1e_55fd:
+DrawExpSinglesPlayerPanel:
 	ld hl, $d0a3 ; $55fd
 	ld b, $02 ; $5600
 	ld c, $01 ; $5602
@@ -1683,7 +1683,7 @@ Label_1e_5658:
 	ld de, $d0ce ; $568c
 	call WriteTextToTilemap ; $568f
 	ret ; $5692
-Func_1e_5693:
+DrawExpDoublesPlayerPanel:
 	ld hl, $d0a0 ; $5693
 	ld bc, $0201 ; $5696
 	call FillTilemapRun ; $5699
@@ -1759,7 +1759,7 @@ Label_1e_571a:
 	ld bc, $0020 ; $5751
 	call WriteTextToTilemap ; $5754
 	ret ; $5757
-Func_1e_5758:
+DrawExpDoublesPartnerPanel:
 	ld hl, $d0ab ; $5758
 	ld bc, $0201 ; $575b
 	call FillTilemapRun ; $575e
@@ -1832,7 +1832,7 @@ Label_1e_57d9:
 	ld de, $d10f ; $580d
 	call WriteTextToTilemap ; $5810
 	ret ; $5813
-Func_1e_5814:
+DrawExpTotalPanel:
 	ld hl, $d1c2 ; $5814
 	ld bc, $0201 ; $5817
 	call FillTilemapRun ; $581a
@@ -1877,7 +1877,7 @@ Func_1e_5814:
 	ld bc, $0020 ; $588f
 	call FetchAndDrawDialogueText ; $5892
 	ret ; $5895
-Func_1e_5896:
+DrawExpMessageWindow:
 	ld hl, $d000 ; $5896
 	ld bc, $0201 ; $5899
 	call FillTilemapRun ; $589c
@@ -1923,7 +1923,7 @@ FillTilemapRun:
 	dec c ; $5910
 	jr nz, FillTilemapRun ; $5911
 	ret ; $5913
-Func_1e_5914:
+DrawExpScreenCharSprites:
 	ld b, $04 ; $5914
 	ld a, [$c8b9] ; $5916
 	or a, a ; $5919
@@ -1936,7 +1936,7 @@ Label_1e_5920:
 	ld a, b ; $5921
 	wram_bank ; $5922
 	xor a, a ; $5926
-	call Func_1e_5954 ; $5927
+	call UpdateExpScreenCharSprite ; $5927
 	ld hl, $df80 ; $592a
 	farcall DrawCharSprite ; $592d
 	wram_bank $04 ; $5930
@@ -1948,12 +1948,12 @@ Label_1e_5920:
 	ld a, b ; $593d
 	wram_bank ; $593e
 	ld a, $01 ; $5942
-	call Func_1e_5954 ; $5944
+	call UpdateExpScreenCharSprite ; $5944
 	ld hl, $df80 ; $5947
 	farcall DrawCharSprite ; $594a
 	wram_bank $04 ; $594d
 	ret ; $5953
-Func_1e_5954:
+UpdateExpScreenCharSprite:
 	push af ; $5954
 	ld hl, $df00 ; $5955
 	ld b, h ; $5958
@@ -2016,7 +2016,7 @@ Label_1e_59a8:
 	ld [hl], d ; $59b1
 	ret ; $59b2
 	INCBIN "data/bank_01e/d_59b3.bin" ; $59b3, 8 bytes
-Func_1e_59bb:
+DrawNextExpAwardMessage:
 	wram_bank $06 ; $59bb
 	ld a, [$d024] ; $59c1
 	cp a, $05 ; $59c4
@@ -2059,7 +2059,7 @@ Func_1e_59bb:
 	inc h ; $59f7
 Label_1e_59f8:
 	push hl ; $59f8
-	call Func_1e_5896 ; $59f9
+	call DrawExpMessageWindow ; $59f9
 	wram_bank $06 ; $59fc
 	ld hl, $d005 ; $5a02
 	ld a, [hl+] ; $5a05
@@ -2069,18 +2069,18 @@ Label_1e_59f8:
 	ld hl, $04c8 ; $5a0a
 	ld de, $d022 ; $5a0d
 	ld bc, $0020 ; $5a10
-	call Func_1e_4563 ; $5a13
+	call DrawProportionalTextLine ; $5a13
 	jr Label_1e_5a24 ; $5a16
 Label_1e_5a18:
 	ld hl, $04c7 ; $5a18
 	ld de, $d022 ; $5a1b
 	ld bc, $0020 ; $5a1e
-	call Func_1e_4563 ; $5a21
+	call DrawProportionalTextLine ; $5a21
 Label_1e_5a24:
 	pop hl ; $5a24
 	ld bc, $0020 ; $5a25
 	ld de, $d062 ; $5a28
-	call Func_1e_4563 ; $5a2b
+	call DrawProportionalTextLine ; $5a2b
 	pop bc ; $5a2e
 	farcall UploadGlyphBuffer ; $5a2f
 	ld a, $01 ; $5a32
@@ -2089,13 +2089,13 @@ Label_1e_5a35:
 	ld a, [$d024] ; $5a35
 	inc a ; $5a38
 	ld [$d024], a ; $5a39
-	jp Func_1e_59bb ; $5a3c
+	jp DrawNextExpAwardMessage ; $5a3c
 Label_1e_5a3f:
 	farcall UploadGlyphBuffer ; $5a3f
 	xor a, a ; $5a42
 	ret ; $5a43
 	INCBIN "data/bank_01e/d_5a44.bin" ; $5a44, 10 bytes
-Func_1e_5a4e:
+DrawExpTotalDigits:
 	wram_bank $06 ; $5a4e
 	ld hl, $d005 ; $5a54
 	ld a, [hl+] ; $5a57
@@ -2110,28 +2110,28 @@ Func_1e_5a4e:
 	ld a, [wTextBuffer] ; $5a68
 	cp a, $20 ; $5a6b
 	jr z, Label_1e_5a78 ; $5a6d
-	call Func_1e_5afa ; $5a6f
+	call GetDigitSpriteTile ; $5a6f
 	ld de, $6b77 ; $5a72
 	call QueueSprite ; $5a75
 Label_1e_5a78:
 	ld a, [$c601] ; $5a78
 	cp a, $20 ; $5a7b
 	jr z, Label_1e_5a88 ; $5a7d
-	call Func_1e_5afa ; $5a7f
+	call GetDigitSpriteTile ; $5a7f
 	ld de, $7377 ; $5a82
 	call QueueSprite ; $5a85
 Label_1e_5a88:
 	ld a, [$c602] ; $5a88
 	cp a, $20 ; $5a8b
 	jr z, Label_1e_5a98 ; $5a8d
-	call Func_1e_5afa ; $5a8f
+	call GetDigitSpriteTile ; $5a8f
 	ld de, $7b77 ; $5a92
 	call QueueSprite ; $5a95
 Label_1e_5a98:
 	ld a, [$c603] ; $5a98
 	cp a, $20 ; $5a9b
 	jr z, Label_1e_5aa8 ; $5a9d
-	call Func_1e_5afa ; $5a9f
+	call GetDigitSpriteTile ; $5a9f
 	ld de, $8377 ; $5aa2
 	call QueueSprite ; $5aa5
 Label_1e_5aa8:
@@ -2140,57 +2140,57 @@ Label_1e_5aa9:
 	ld a, [wTextBuffer] ; $5aa9
 	cp a, $20 ; $5aac
 	jr z, Label_1e_5ab9 ; $5aae
-	call Func_1e_5afa ; $5ab0
+	call GetDigitSpriteTile ; $5ab0
 	ld de, $6777 ; $5ab3
 	call QueueSprite ; $5ab6
 Label_1e_5ab9:
 	ld a, [$c601] ; $5ab9
 	cp a, $20 ; $5abc
 	jr z, Label_1e_5ac9 ; $5abe
-	call Func_1e_5afa ; $5ac0
+	call GetDigitSpriteTile ; $5ac0
 	ld de, $6f77 ; $5ac3
 	call QueueSprite ; $5ac6
 Label_1e_5ac9:
 	ld a, [$c602] ; $5ac9
 	cp a, $20 ; $5acc
 	jr z, Label_1e_5ad9 ; $5ace
-	call Func_1e_5afa ; $5ad0
+	call GetDigitSpriteTile ; $5ad0
 	ld de, $7777 ; $5ad3
 	call QueueSprite ; $5ad6
 Label_1e_5ad9:
 	ld a, [$c603] ; $5ad9
 	cp a, $20 ; $5adc
 	jr z, Label_1e_5ae9 ; $5ade
-	call Func_1e_5afa ; $5ae0
+	call GetDigitSpriteTile ; $5ae0
 	ld de, $7f77 ; $5ae3
 	call QueueSprite ; $5ae6
 Label_1e_5ae9:
 	ld a, [$c604] ; $5ae9
 	cp a, $20 ; $5aec
 	jr z, Label_1e_5af9 ; $5aee
-	call Func_1e_5afa ; $5af0
+	call GetDigitSpriteTile ; $5af0
 	ld de, $8777 ; $5af3
 	call QueueSprite ; $5af6
 Label_1e_5af9:
 	ret ; $5af9
-Func_1e_5afa:
+GetDigitSpriteTile:
 	sub a, $30 ; $5afa
 	rlca ; $5afc
 	add a, $6c ; $5afd
 	ld c, a ; $5aff
 	ld b, $08 ; $5b00
 	ret ; $5b02
-Func_1e_5b03:
+RunExpAwardSequence:
 	wram_bank $06 ; $5b03
 	call AdvanceFrame ; $5b09
-	call Func_1e_5b19 ; $5b0c
+	call BeginNextExpAward ; $5b0c
 	or a, a ; $5b0f
 	ret z ; $5b10
-	call Func_1e_5b66 ; $5b11
-	call Func_1e_5bad ; $5b14
-	jr Func_1e_5b03 ; $5b17
-Func_1e_5b19:
-	call Func_1e_59bb ; $5b19
+	call CountUpExpTotal ; $5b11
+	call WaitForConfirmOrTimeout ; $5b14
+	jr RunExpAwardSequence ; $5b17
+BeginNextExpAward:
+	call DrawNextExpAwardMessage ; $5b19
 	or a, a ; $5b1c
 	jp z, Label_1e_5b60 ; $5b1d
 	sound $00 ; $5b20
@@ -2222,7 +2222,7 @@ Label_1e_5b60:
 	db $0a ; $5b63 inline arg
 	xor a, a ; $5b64
 	ret ; $5b65
-Func_1e_5b66:
+CountUpExpTotal:
 	wram_bank $06 ; $5b66
 	ld hl, $d007 ; $5b6c
 	ld a, [hl+] ; $5b6f
@@ -2254,7 +2254,7 @@ Func_1e_5b66:
 	ld [hl+], a ; $5b95
 	ld [hl], d ; $5b96
 	sound $5e ; $5b97
-	jr Func_1e_5b66 ; $5b99
+	jr CountUpExpTotal ; $5b99
 Label_1e_5b9b:
 	ld hl, $d005 ; $5b9b
 	ld a, [hl+] ; $5b9e
@@ -2269,7 +2269,7 @@ Label_1e_5b9b:
 	ld [hl], d ; $5ba9
 	sound $5f ; $5baa
 	ret ; $5bac
-Func_1e_5bad:
+WaitForConfirmOrTimeout:
 	ld c, $b4 ; $5bad
 Label_1e_5baf:
 	call AdvanceFrame ; $5baf
@@ -2279,7 +2279,7 @@ Label_1e_5baf:
 	dec c ; $5bb7
 	jr nz, Label_1e_5baf ; $5bb8
 	ret ; $5bba
-Func_1e_5bbb:
+HasPendingExpAwards:
 	ld hl, $d152 ; $5bbb
 	ld a, [hl+] ; $5bbe
 	ld d, [hl] ; $5bbf
@@ -2359,8 +2359,8 @@ ProcessMatchRewards:
 	ld a, [wPointWinLoseFlag] ; $656e
 	cp a, $01 ; $6571
 	jp nz, Label_1e_6695 ; $6573
-	call Func_1e_66d2 ; $6576
-	call Func_1e_6a13 ; $6579
+	call GetFirstClearRewardExp ; $6576
+	call ShowExpAwardForMinigame ; $6579
 	ld h, d ; $657c
 	ld l, e ; $657d
 	call SetRewardGameFlag ; $657e
@@ -2391,7 +2391,7 @@ Label_1e_659d:
 	add hl, de ; $65aa
 	ld a, [$ca3c] ; $65ab
 	ld d, a ; $65ae
-	call Func_1e_68dc ; $65af
+	call ApplyMatchSettingsExpBonus ; $65af
 	ld a, [wPointWinLoseFlag] ; $65b2
 	cp a, $01 ; $65b5
 	jp nz, Label_1e_65ed ; $65b7
@@ -2424,7 +2424,7 @@ Label_1e_65cf:
 	pop hl ; $65e3
 	jr nz, Label_1e_65ed ; $65e4
 Label_1e_65e6:
-	call Func_1e_66d2 ; $65e6
+	call GetFirstClearRewardExp ; $65e6
 	add hl, de ; $65e9
 	call SetRewardGameFlag ; $65ea
 Label_1e_65ed:
@@ -2432,40 +2432,40 @@ Label_1e_65ed:
 	add hl, de ; $65f0
 	ld d, h ; $65f1
 	ld e, l ; $65f2
-	call Func_1e_6a13 ; $65f3
+	call ShowExpAwardForMinigame ; $65f3
 	jp Label_1e_6695 ; $65f6
 Label_1e_65f9:
 	wram_bank $04 ; $65f9
 	call ComputeMatchStatsReward ; $65ff
 	ld a, [$ca3c] ; $6602
 	ld d, a ; $6605
-	call Func_1e_68dc ; $6606
+	call ApplyMatchSettingsExpBonus ; $6606
 	ld de, $0000 ; $6609
 	ld a, [wMatchWinLoseFlag] ; $660c
 	cp a, $01 ; $660f
 	jr nz, Label_1e_6616 ; $6611
-	call Func_1e_66d2 ; $6613
+	call GetFirstClearRewardExp ; $6613
 Label_1e_6616:
 	add hl, de ; $6616
 	ld d, h ; $6617
 	ld e, l ; $6618
-	call Func_1e_6a36 ; $6619
+	call ShowExpAwardForMatch ; $6619
 	ld a, [wMatchWinLoseFlag] ; $661c
 	cp a, $01 ; $661f
 	jr nz, Label_1e_6695 ; $6621
 	call SetRewardGameFlag ; $6623
 	push hl ; $6626
-	call Func_1e_6e1c ; $6627
+	call ApplyRewardUnlockFlags ; $6627
 	pop hl ; $662a
-	call Func_1e_6ca0 ; $662b
+	call ApplyClassProgressFlags ; $662b
 	jr Label_1e_6695 ; $662e
 Label_1e_6630:
 	wram_bank $04 ; $6630
 	call ComputeMatchStatsReward ; $6636
 	ld a, [$ca3c] ; $6639
 	ld d, a ; $663c
-	call Func_1e_68dc ; $663d
-	call Func_1e_6967 ; $6640
+	call ApplyMatchSettingsExpBonus ; $663d
+	call AwardExhibitionMatchExp ; $6640
 	ret ; $6643
 Label_1e_6644:
 	ld a, [$c8b9] ; $6644
@@ -2475,7 +2475,7 @@ Label_1e_6644:
 	call ComputeMatchStatsReward ; $6651
 	ld a, [$ca3c] ; $6654
 	ld d, a ; $6657
-	call Func_1e_68dc ; $6658
+	call ApplyMatchSettingsExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
 	cp a, $01 ; $665e
 	jr z, Label_1e_667d ; $6660
@@ -2485,7 +2485,7 @@ Label_1e_6664:
 	call ComputeMatchStatsReward ; $666a
 	ld a, [$cabc] ; $666d
 	ld d, a ; $6670
-	call Func_1e_68dc ; $6671
+	call ApplyMatchSettingsExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
 	cp a, $ff ; $6677
 	jr z, Label_1e_667d ; $6679
@@ -2497,7 +2497,7 @@ Label_1e_667d:
 	rr e ; $6681
 	add hl, de ; $6683
 Label_1e_6684:
-	call Func_1e_69b4 ; $6684
+	call AwardLinkedPlayMatchExp ; $6684
 	ret ; $6687
 Label_1e_6688:
 	call UpdateMinigameBestScore ; $6688
@@ -2517,7 +2517,7 @@ Label_1e_6695:
 	farcall CharDataScreen_Show ; $66a3
 	call Func_1e_6c62 ; $66a6
 Label_1e_66a9:
-	call Func_1e_6fb2 ; $66a9
+	call ShowIslandOpenRankingBoard ; $66a9
 	ld a, $00 ; $66ac
 	ld [wGameMode], a ; $66ae
 	test_flag $07, 3 ; $66b1
@@ -2534,10 +2534,10 @@ Label_1e_66be:
 	farcall SetSaveFlag ; $66c7
 	pop de ; $66ca
 Label_1e_66cb:
-	call Func_1e_6f8d ; $66cb
+	call CheckAllProgressComplete ; $66cb
 	farcall SaveStorySlotWithTimer ; $66ce
 	ret ; $66d1
-Func_1e_66d2:
+GetFirstClearRewardExp:
 	call TestRewardGameFlag ; $66d2
 	ld de, $0000 ; $66d5
 	ret nz ; $66d8
@@ -2553,7 +2553,7 @@ Label_1e_66e6:
 	ld a, [hl+] ; $66e6
 	ld h, [hl] ; $66e7
 	ld l, a ; $66e8
-	call Func_1e_6cf6 ; $66e9
+	call GetRewardTableIndex ; $66e9
 	add a, a ; $66ec
 	add a, l ; $66ed
 	ld l, a ; $66ee
@@ -2738,53 +2738,53 @@ ComputeMatchStatsReward:
 	cp a, $04 ; $6854
 	ret nc ; $6856
 	push hl ; $6857
-	call Func_1e_6932 ; $6858
+	call GetPlayerExpTier ; $6858
 	pop de ; $685b
 	ld hl, $67d7 ; $685c
 	ld a, [wTotalGamesWonInMatch] ; $685f
-	call Func_1e_68cf ; $6862
+	call AccumulateStatExp ; $6862
 	ld l, e ; $6865
 	ld h, d ; $6866
 	ld a, [wGameMode] ; $6867
 	cp a, $09 ; $686a
 	ret z ; $686c
 	push hl ; $686d
-	call Func_1e_6901 ; $686e
+	call GetOpponentExpTier ; $686e
 	pop de ; $6871
 	ld hl, $67df ; $6872
 	ld a, [wCharacter1ServiceAces] ; $6875
-	call Func_1e_68cf ; $6878
+	call AccumulateStatExp ; $6878
 	ld hl, $67df ; $687b
 	ld a, [wCharacter3ServiceAces] ; $687e
-	call Func_1e_68cf ; $6881
+	call AccumulateStatExp ; $6881
 	ld hl, $67e7 ; $6884
 	ld a, [wCharacter1ReturnAces] ; $6887
-	call Func_1e_68cf ; $688a
+	call AccumulateStatExp ; $688a
 	ld hl, $67e7 ; $688d
 	ld a, [wCharacter3ReturnAces] ; $6890
-	call Func_1e_68cf ; $6893
+	call AccumulateStatExp ; $6893
 	ld hl, $67ef ; $6896
 	ld a, [wCharacter1SmashAces] ; $6899
-	call Func_1e_68cf ; $689c
+	call AccumulateStatExp ; $689c
 	ld hl, $67ef ; $689f
 	ld a, [wCharacter3SmashAces] ; $68a2
-	call Func_1e_68cf ; $68a5
+	call AccumulateStatExp ; $68a5
 	ld hl, $67f7 ; $68a8
 	ld a, [wCharacter1LobShotWinners] ; $68ab
-	call Func_1e_68cf ; $68ae
+	call AccumulateStatExp ; $68ae
 	ld hl, $67f7 ; $68b1
 	ld a, [wCharacter3LobShotWinners] ; $68b4
-	call Func_1e_68cf ; $68b7
+	call AccumulateStatExp ; $68b7
 	ld hl, $67ff ; $68ba
 	ld a, [wCharacter1DropShotWinners] ; $68bd
-	call Func_1e_68cf ; $68c0
+	call AccumulateStatExp ; $68c0
 	ld hl, $67ff ; $68c3
 	ld a, [wCharacter3DropShotWinners] ; $68c6
-	call Func_1e_68cf ; $68c9
+	call AccumulateStatExp ; $68c9
 	ld l, e ; $68cc
 	ld h, d ; $68cd
 	ret ; $68ce
-Func_1e_68cf:
+AccumulateStatExp:
 	ld b, $00 ; $68cf
 	add hl, bc ; $68d1
 	ld l, [hl] ; $68d2
@@ -2794,7 +2794,7 @@ Func_1e_68cf:
 	ld e, l ; $68d9
 	ld d, h ; $68da
 	ret ; $68db
-Func_1e_68dc:
+ApplyMatchSettingsExpBonus:
 	ld b, $00 ; $68dc
 	ld a, d ; $68de
 	and a, $0f ; $68df
@@ -2823,17 +2823,17 @@ Label_1e_68f0:
 Label_1e_68ff:
 	add hl, hl ; $68ff
 	ret ; $6900
-Func_1e_6901:
+GetOpponentExpTier:
 	ldh a, [hWramBank] ; $6901
 	push af ; $6903
 	wram_bank $05 ; $6904
-	call Func_1e_693e ; $690a
+	call LookupExpTierForChar ; $690a
 	ld a, [wMatchIsDoubles] ; $690d
 	and a, a ; $6910
 	jr z, Label_1e_6924 ; $6911
 	push bc ; $6913
 	wram_bank $07 ; $6914
-	call Func_1e_693e ; $691a
+	call LookupExpTierForChar ; $691a
 	ld a, c ; $691d
 	pop bc ; $691e
 	add a, c ; $691f
@@ -2850,8 +2850,8 @@ Label_1e_692b:
 	pop af ; $692c
 	wram_bank ; $692d
 	ret ; $6931
-Func_1e_6932:
-	call Func_1e_693e ; $6932
+GetPlayerExpTier:
+	call LookupExpTierForChar ; $6932
 	ld a, c ; $6935
 	cp a, $06 ; $6936
 	jr c, Label_1e_693c ; $6938
@@ -2859,7 +2859,7 @@ Func_1e_6932:
 Label_1e_693c:
 	ld c, a ; $693c
 	ret ; $693d
-Func_1e_693e:
+LookupExpTierForChar:
 	ld a, [$df95] ; $693e
 	ld c, a ; $6941
 	ld a, [$df78] ; $6942
@@ -2882,7 +2882,7 @@ Func_1e_693e:
 Label_1e_6965:
 	dec c ; $6965
 	ret ; $6966
-Func_1e_6967:
+AwardExhibitionMatchExp:
 	ld d, h ; $6967
 	ld e, l ; $6968
 	ld hl, $c8b1 ; $6969
@@ -2892,7 +2892,7 @@ Func_1e_6967:
 	ld a, [$c8b5] ; $696f
 	bit 7, a ; $6972
 	jr z, Label_1e_69ad ; $6974
-	call Func_1e_6a6e ; $6976
+	call ShowExpAwardForExhibition ; $6976
 	ld a, [wCurrentStorySlot] ; $6979
 	push af ; $697c
 	ld hl, $c8b1 ; $697d
@@ -2927,7 +2927,7 @@ Label_1e_69ad:
 	farcall RecordExhibitionVictory ; $69ad
 	farcall ReadExhibitionSaveBlock ; $69b0
 	ret ; $69b3
-Func_1e_69b4:
+AwardLinkedPlayMatchExp:
 	ld d, h ; $69b4
 	ld e, l ; $69b5
 	ld hl, $c8b3 ; $69b6
@@ -2948,7 +2948,7 @@ Label_1e_69cb:
 	jr z, Label_1e_6a12 ; $69ce
 	cp a, $ff ; $69d0
 	jr z, Label_1e_6a12 ; $69d2
-	call Func_1e_6aa4 ; $69d4
+	call ShowExpAwardForLinkedPlay ; $69d4
 	ld a, [wCurrentStorySlot] ; $69d7
 	push af ; $69da
 	ld hl, $c8b5 ; $69db
@@ -2985,7 +2985,7 @@ Label_1e_6a03:
 	ld [wCurrentStorySlot], a ; $6a0f
 Label_1e_6a12:
 	ret ; $6a12
-Func_1e_6a13:
+ShowExpAwardForMinigame:
 	ld a, e ; $6a13
 	or a, d ; $6a14
 	ret z ; $6a15
@@ -3008,7 +3008,7 @@ Func_1e_6a13:
 	pop bc ; $6a33
 	pop af ; $6a34
 	ret ; $6a35
-Func_1e_6a36:
+ShowExpAwardForMatch:
 	ld a, e ; $6a36
 	or a, d ; $6a37
 	ret z ; $6a38
@@ -3044,7 +3044,7 @@ Label_1e_6a5c:
 	pop bc ; $6a6b
 	pop af ; $6a6c
 	ret ; $6a6d
-Func_1e_6a6e:
+ShowExpAwardForExhibition:
 	ld a, e ; $6a6e
 	or a, d ; $6a6f
 	ret z ; $6a70
@@ -3079,7 +3079,7 @@ Label_1e_6a9a:
 	pop bc ; $6aa1
 	pop af ; $6aa2
 	ret ; $6aa3
-Func_1e_6aa4:
+ShowExpAwardForLinkedPlay:
 	ld a, e ; $6aa4
 	or a, d ; $6aa5
 	ret z ; $6aa6
@@ -3136,7 +3136,7 @@ Label_1e_6ad0:
 	pop bc ; $6afa
 	pop af ; $6afb
 	ret ; $6afc
-Func_1e_6afd:
+ApplyPendingExpAwards:
 	push af ; $6afd
 	push bc ; $6afe
 	push de ; $6aff
@@ -3159,8 +3159,8 @@ Func_1e_6afd:
 	jr c, Label_1e_6b3d ; $6b1a
 	ld d, h ; $6b1c
 	ld e, l ; $6b1d
-	call Func_1e_6c09 ; $6b1e
-	call Func_1e_6ffb ; $6b21
+	call ScaleExpByPlayerLevel ; $6b1e
+	call ComputeTrophyExpAwards ; $6b21
 	add hl, de ; $6b24
 	jr c, Label_1e_6b3d ; $6b25
 	ld d, h ; $6b27
@@ -3201,7 +3201,7 @@ Label_1e_6b40:
 	jr nc, Label_1e_6b5d ; $6b58
 	ld de, rIE ; $6b5a
 Label_1e_6b5d:
-	call Func_1e_6c09 ; $6b5d
+	call ScaleExpByPlayerLevel ; $6b5d
 	jr nc, Label_1e_6b65 ; $6b60
 	ld de, rIE ; $6b62
 Label_1e_6b65:
@@ -3302,7 +3302,7 @@ Label_1e_6bfa:
 	pop af ; $6c06
 	xor a, a ; $6c07
 	ret ; $6c08
-Func_1e_6c09:
+ScaleExpByPlayerLevel:
 	ld a, [$c918] ; $6c09
 	ld b, a ; $6c0c
 	ld a, [$c958] ; $6c0d
@@ -3415,7 +3415,7 @@ Label_1e_6c99:
 	set_flag $0c, 3 ; $6c99
 	set_flag $0c, 7 ; $6c9c
 	ret ; $6c9f
-Func_1e_6ca0:
+ApplyClassProgressFlags:
 	call Func_1e_6c7c ; $6ca0
 	call Func_1e_6c86 ; $6ca3
 	call Func_1e_6c93 ; $6ca6
@@ -3436,7 +3436,7 @@ Label_1e_6cba:
 	ld a, [hl+] ; $6cba
 	ld h, [hl] ; $6cbb
 	ld l, a ; $6cbc
-	call Func_1e_6cf6 ; $6cbd
+	call GetRewardTableIndex ; $6cbd
 	add a, a ; $6cc0
 	add a, l ; $6cc1
 	ld l, a ; $6cc2
@@ -3467,7 +3467,7 @@ Label_1e_6ce0:
 	ld a, [hl+] ; $6ce0
 	ld h, [hl] ; $6ce1
 	ld l, a ; $6ce2
-	call Func_1e_6cf6 ; $6ce3
+	call GetRewardTableIndex ; $6ce3
 	add a, a ; $6ce6
 	add a, l ; $6ce7
 	ld l, a ; $6ce8
@@ -3482,7 +3482,7 @@ Label_1e_6cec:
 	pop de ; $6cf3
 	pop bc ; $6cf4
 	ret ; $6cf5
-Func_1e_6cf6:
+GetRewardTableIndex:
 	ld a, [wCurrentMinigameStoryMatch] ; $6cf6
 	cp a, $02 ; $6cf9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6cfb
@@ -3676,7 +3676,7 @@ Label_1e_6e0d:
 	ldh [rAUD3ENA], a ; $6e18
 	nop ; $6e1a
 	dec de ; $6e1b
-Func_1e_6e1c:
+ApplyRewardUnlockFlags:
 	ld c, $00 ; $6e1c
 	ld b, $0d ; $6e1e
 	ld a, c ; $6e20
@@ -3697,7 +3697,7 @@ Label_1e_6e2b:
 	jr z, Label_1e_6e3b ; $6e31
 	call TestGameFlag ; $6e33
 	jr z, Label_1e_6e3b ; $6e36
-	call Func_1e_6e50 ; $6e38
+	call SetRewardUnlockFlag ; $6e38
 Label_1e_6e3b:
 	ld a, [hl+] ; $6e3b
 	ld d, [hl] ; $6e3c
@@ -3708,13 +3708,13 @@ Label_1e_6e3b:
 	jr z, Label_1e_6e4b ; $6e41
 	call TestGameFlag ; $6e43
 	jr z, Label_1e_6e4b ; $6e46
-	call Func_1e_6e50 ; $6e48
+	call SetRewardUnlockFlag ; $6e48
 Label_1e_6e4b:
 	inc c ; $6e4b
 	dec b ; $6e4c
 	jr nz, Label_1e_6e2b ; $6e4d
 	ret ; $6e4f
-Func_1e_6e50:
+SetRewardUnlockFlag:
 	push hl ; $6e50
 	ld a, c ; $6e51
 	add a, a ; $6e52
@@ -3731,7 +3731,7 @@ Label_1e_6e5b:
 	pop hl ; $6e61
 	ret ; $6e62
 	INCBIN "data/bank_01e/d_6e63.bin" ; $6e63, 78 bytes
-Func_1e_6eb1:
+SetMinigameRecordSaveFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
 	cp a, $1d ; $6eb4
 	jr nz, Label_1e_6ec1 ; $6eb6
@@ -3860,12 +3860,12 @@ UpdateMinigameBestScore:
 	inc a ; $6f7f
 	inc a ; $6f80
 	farcall UpdateMinigameRecord ; $6f81
-	call Func_1e_6eb1 ; $6f84
+	call SetMinigameRecordSaveFlag ; $6f84
 Label_1e_6f87:
 	pop af ; $6f87
 	wram_bank ; $6f88
 	ret ; $6f8c
-Func_1e_6f8d:
+CheckAllProgressComplete:
 	push af ; $6f8d
 	push bc ; $6f8e
 	push de ; $6f8f
@@ -3894,14 +3894,14 @@ Label_1e_6fad:
 	pop bc ; $6faf
 	pop af ; $6fb0
 	ret ; $6fb1
-Func_1e_6fb2:
+ShowIslandOpenRankingBoard:
 	ld a, [wGameMode] ; $6fb2
 	cp a, $02 ; $6fb5
 	ret nz ; $6fb7
-	call Func_1e_6fbf ; $6fb8
+	call SetupRankingBoardArgs ; $6fb8
 	farcall ShowRankingBoard ; $6fbb
 	ret ; $6fbe
-Func_1e_6fbf:
+SetupRankingBoardArgs:
 	ld a, [wCurrentMinigameStoryMatch] ; $6fbf
 	and a, $01 ; $6fc2
 	ld b, a ; $6fc4
@@ -3928,7 +3928,7 @@ Label_1e_6fde:
 Label_1e_6fe8:
 	ld d, $02 ; $6fe8
 	ret ; $6fea
-Func_1e_6feb:
+GetTrophyExpValue:
 	add a, a ; $6feb
 	add a, a ; $6fec
 	add a, a ; $6fed
@@ -3943,7 +3943,7 @@ Label_1e_6ff7:
 	ld b, [hl] ; $6ff8
 	ld c, a ; $6ff9
 	ret ; $6ffa
-Func_1e_6ffb:
+ComputeTrophyExpAwards:
 	push af ; $6ffb
 	push bc ; $6ffc
 	push de ; $6ffd
@@ -3951,7 +3951,7 @@ Func_1e_6ffb:
 	push af ; $7000
 	wram_bank $06 ; $7001
 	ld hl, $0000 ; $7007
-	call Func_1e_70da ; $700a
+	call ComputeTrophyExpGroup0 ; $700a
 	push hl ; $700d
 	ld hl, $d028 ; $700e
 	ld a, c ; $7011
@@ -3959,7 +3959,7 @@ Func_1e_6ffb:
 	ld [hl], b ; $7013
 	pop hl ; $7014
 	add hl, bc ; $7015
-	call Func_1e_70e0 ; $7016
+	call ComputeTrophyExpGroup1 ; $7016
 	push hl ; $7019
 	ld hl, $d02a ; $701a
 	ld a, c ; $701d
@@ -3967,7 +3967,7 @@ Func_1e_6ffb:
 	ld [hl], b ; $701f
 	pop hl ; $7020
 	add hl, bc ; $7021
-	call Func_1e_70e6 ; $7022
+	call ComputeTrophyExpGroup2 ; $7022
 	push hl ; $7025
 	ld hl, $d02c ; $7026
 	ld a, c ; $7029
@@ -3975,7 +3975,7 @@ Func_1e_6ffb:
 	ld [hl], b ; $702b
 	pop hl ; $702c
 	add hl, bc ; $702d
-	call Func_1e_70ec ; $702e
+	call ComputeTrophyExpGroup3 ; $702e
 	push hl ; $7031
 	ld hl, $d02e ; $7032
 	ld a, c ; $7035
@@ -3983,7 +3983,7 @@ Func_1e_6ffb:
 	ld [hl], b ; $7037
 	pop hl ; $7038
 	add hl, bc ; $7039
-	call Func_1e_70f2 ; $703a
+	call ComputeTrophyExpGroup4 ; $703a
 	push hl ; $703d
 	ld hl, $d030 ; $703e
 	ld a, c ; $7041
@@ -3991,7 +3991,7 @@ Func_1e_6ffb:
 	ld [hl], b ; $7043
 	pop hl ; $7044
 	add hl, bc ; $7045
-	call Func_1e_70f8 ; $7046
+	call ComputeTrophyExpGroup5 ; $7046
 	push hl ; $7049
 	ld hl, $d032 ; $704a
 	ld a, c ; $704d
@@ -4085,31 +4085,31 @@ Label_1e_70d4:
 	pop af ; $70d4
 	wram_bank ; $70d5
 	ret ; $70d9
-Func_1e_70da:
+ComputeTrophyExpGroup0:
 	ld a, $00 ; $70da
-	call Func_1e_70fe ; $70dc
+	call ComputeTrophyExpForGroup ; $70dc
 	ret ; $70df
-Func_1e_70e0:
+ComputeTrophyExpGroup1:
 	ld a, $01 ; $70e0
-	call Func_1e_70fe ; $70e2
+	call ComputeTrophyExpForGroup ; $70e2
 	ret ; $70e5
-Func_1e_70e6:
+ComputeTrophyExpGroup2:
 	ld a, $02 ; $70e6
-	call Func_1e_70fe ; $70e8
+	call ComputeTrophyExpForGroup ; $70e8
 	ret ; $70eb
-Func_1e_70ec:
+ComputeTrophyExpGroup3:
 	ld a, $03 ; $70ec
-	call Func_1e_70fe ; $70ee
+	call ComputeTrophyExpForGroup ; $70ee
 	ret ; $70f1
-Func_1e_70f2:
+ComputeTrophyExpGroup4:
 	ld a, $04 ; $70f2
-	call Func_1e_70fe ; $70f4
+	call ComputeTrophyExpForGroup ; $70f4
 	ret ; $70f7
-Func_1e_70f8:
+ComputeTrophyExpGroup5:
 	ld a, $05 ; $70f8
-	call Func_1e_70fe ; $70fa
+	call ComputeTrophyExpForGroup ; $70fa
 	ret ; $70fd
-Func_1e_70fe:
+ComputeTrophyExpForGroup:
 	push af ; $70fe
 	push de ; $70ff
 	push hl ; $7100
@@ -4163,7 +4163,7 @@ Label_1e_713d:
 	push bc ; $714a
 	ld b, $00 ; $714b
 	ld a, [$d038] ; $714d
-	call Func_1e_6feb ; $7150
+	call GetTrophyExpValue ; $7150
 	ld hl, $d034 ; $7153
 	ld a, [hl+] ; $7156
 	ld h, [hl] ; $7157
@@ -4203,7 +4203,7 @@ Label_1e_717a:
 	push bc ; $7187
 	ld b, $04 ; $7188
 	ld a, [$d038] ; $718a
-	call Func_1e_6feb ; $718d
+	call GetTrophyExpValue ; $718d
 	ld hl, $d034 ; $7190
 	ld a, [hl+] ; $7193
 	ld h, [hl] ; $7194
@@ -4242,7 +4242,7 @@ Label_1e_71b5:
 	push bc ; $71c2
 	ld b, $02 ; $71c3
 	ld a, [$d038] ; $71c5
-	call Func_1e_6feb ; $71c8
+	call GetTrophyExpValue ; $71c8
 	ld hl, $d034 ; $71cb
 	ld a, [hl+] ; $71ce
 	ld h, [hl] ; $71cf
@@ -4282,7 +4282,7 @@ Label_1e_71f2:
 	push bc ; $71ff
 	ld b, $06 ; $7200
 	ld a, [$d038] ; $7202
-	call Func_1e_6feb ; $7205
+	call GetTrophyExpValue ; $7205
 	ld hl, $d034 ; $7208
 	ld a, [hl+] ; $720b
 	ld h, [hl] ; $720c
@@ -4393,28 +4393,28 @@ Label_1e_7305:
 	ld a, $04 ; $7305
 	call RunRewardCategoryList ; $7307
 Label_1e_730a:
-	call Func_1e_7499 ; $730a
-	call Func_1e_747c ; $730d
-	call Func_1e_73e3 ; $7310
+	call BuildProgressEntryEarnedTable ; $730a
+	call BuildVisibleProgressEntryList ; $730d
+	call CreateProgressListWindow ; $7310
 	ld [wCharPosX + 1], a ; $7313
 	ld a, [wCharPosX + 1] ; $7316
 	set_flag $04, 3 ; $7319
 	farcall DrawTextWindowFrame ; $731c
 	clear_flag $04, 3 ; $731f
-	call Func_1e_74b6 ; $7322
+	call DrawProgressListRows ; $7322
 	farcall RedrawWindowRows ; $7325
-	call Func_1e_7504 ; $7328
-	call Func_1e_7b4c ; $732b
+	call LoadGameProgressScreenTiles ; $7328
+	call LoadProgressScreenIconTiles ; $732b
 	call EnableLCD ; $732e
 	ld a, $01 ; $7331
 	ld [$cb0b], a ; $7333
 	ld a, $03 ; $7336
 	ld [$cb0c], a ; $7338
 	ld a, $01 ; $733b
-	ld hl, Func_1e_737e ; $733d
+	ld hl, UpdateProgressScreenAnimatedTiles ; $733d
 	call RegisterFrameTask ; $7340
 	ld a, $01 ; $7343
-	ld hl, Func_1e_7a8d ; $7345
+	ld hl, DrawProgressScreenSprites ; $7345
 	call RegisterFrameTask ; $7348
 	script_fade_in $10 ; $734b
 	call WaitFadeEnd ; $7350
@@ -4423,9 +4423,9 @@ Label_1e_7353:
 	wram_bank $05 ; $7356
 	ldh a, [hInputPressed] ; $735c
 	bit PADB_UP, a ; $735e
-	call nz, Func_1e_73b0 ; $7360
+	call nz, ScrollProgressListUp ; $7360
 	bit 7, a ; $7363
-	call nz, Func_1e_7382 ; $7365
+	call nz, ScrollProgressListDown ; $7365
 	bit 0, a ; $7368
 	jr nz, Label_1e_7376 ; $736a
 	bit 1, a ; $736c
@@ -4440,10 +4440,10 @@ Label_1e_7378:
 	pop af ; $7378
 	wram_bank ; $7379
 	ret ; $737d
-Func_1e_737e:
+UpdateProgressScreenAnimatedTiles:
 	farcall UpdateAnimatedTiles ; $737e
 	ret ; $7381
-Func_1e_7382:
+ScrollProgressListDown:
 	push af ; $7382
 	farcall ResetGlyphStream ; $7383
 	wram_bank $05 ; $7386
@@ -4462,11 +4462,11 @@ Func_1e_7382:
 	set_flag $04, 3 ; $73a2
 	farcall DrawTextWindowFrame ; $73a5
 	clear_flag $04, 3 ; $73a8
-	call Func_1e_74b6 ; $73ab
+	call DrawProgressListRows ; $73ab
 Label_1e_73ae:
 	pop af ; $73ae
 	ret ; $73af
-Func_1e_73b0:
+ScrollProgressListUp:
 	push af ; $73b0
 	farcall ResetGlyphStream ; $73b1
 	wram_bank $05 ; $73b4
@@ -4481,7 +4481,7 @@ Func_1e_73b0:
 	set_flag $04, 3 ; $73c9
 	farcall DrawTextWindowFrame ; $73cc
 	clear_flag $04, 3 ; $73cf
-	call Func_1e_74b6 ; $73d2
+	call DrawProgressListRows ; $73d2
 Label_1e_73d5:
 	pop af ; $73d5
 	ret ; $73d6
@@ -4491,14 +4491,14 @@ Label_1e_73d5:
 	ld c, $03 ; $73dd
 	farcall CreateWindowFromScreenRect ; $73df
 	ret ; $73e2
-Func_1e_73e3:
+CreateProgressListWindow:
 	ld d, $01 ; $73e3
 	ld e, $03 ; $73e5
 	ld b, $12 ; $73e7
 	ld c, $0f ; $73e9
 	farcall CreateWindowFromScreenRect ; $73eb
 	ret ; $73ee
-Func_1e_73ef:
+TestProgressEntryFlag:
 	push hl ; $73ef
 	push de ; $73f0
 	ld hl, $6d80 ; $73f1
@@ -4605,7 +4605,7 @@ RewardSubHandlersC_1e:
 	ld bc, rSC ; $7477
 	nop ; $747a
 	rst Rst38 ; $747b
-Func_1e_747c:
+BuildVisibleProgressEntryList:
 	ld c, $00 ; $747c
 	ld b, $00 ; $747e
 	ld hl, $df10 ; $7480
@@ -4628,20 +4628,20 @@ Label_1e_748e:
 	ld a, b ; $7494
 	ld [wCharPosDepth], a ; $7495
 	ret ; $7498
-Func_1e_7499:
+BuildProgressEntryEarnedTable:
 	ld hl, wCharVelX ; $7499
 	ld c, $25 ; $749c
 	xor a, a ; $749e
 Label_1e_749f:
 	push af ; $749f
-	call Func_1e_73ef ; $74a0
+	call TestProgressEntryFlag ; $74a0
 	ld [hl+], a ; $74a3
 	pop af ; $74a4
 	inc a ; $74a5
 	dec c ; $74a6
 	jr nz, Label_1e_749f ; $74a7
 	ret ; $74a9
-Func_1e_74aa:
+GetProgressEntryEarned:
 	push hl ; $74aa
 	ld hl, $df40 ; $74ab
 	add a, l ; $74ae
@@ -4652,7 +4652,7 @@ Label_1e_74b3:
 	ld a, [hl] ; $74b3
 	pop hl ; $74b4
 	ret ; $74b5
-Func_1e_74b6:
+DrawProgressListRows:
 	farcall PrepareGlyphBuffer ; $74b6
 	ld hl, wShadowTilemapPtr ; $74b9
 	ld a, [hl+] ; $74bc
@@ -4699,10 +4699,10 @@ Label_1e_74f1:
 	ret ; $74f9
 LoadGameProgressScreenAssets:
 	farcall LoadMenuFontTiles ; $74fa
-	call Func_1e_79e8 ; $74fd
-	call Func_1e_7a14 ; $7500
+	call FillProgressListRowTiles ; $74fd
+	call FillProgressListRowAttrs ; $7500
 	ret ; $7503
-Func_1e_7504:
+LoadGameProgressScreenTiles:
 	ldh a, [hWramBank] ; $7504
 	push af ; $7506
 	wram_bank $01 ; $7507
@@ -4878,7 +4878,7 @@ Palettes_1e_79e0:
 	; $79e0, 8 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $59a8, $7e85, $7fff, $0000 ; pal 0: #416ab4 #29a4ff #ffffff #000000
-Func_1e_79e8:
+FillProgressListRowTiles:
 	ld hl, wShadowTilemapPtr ; $79e8
 	ld a, [hl+] ; $79eb
 	ld h, [hl] ; $79ec
@@ -4910,7 +4910,7 @@ Label_1e_7a06:
 	dec e ; $7a10
 	jr nz, Label_1e_79f0 ; $7a11
 	ret ; $7a13
-Func_1e_7a14:
+FillProgressListRowAttrs:
 	ld hl, wShadowTilemapPtr ; $7a14
 	ld a, [hl+] ; $7a17
 	ld h, [hl] ; $7a18
@@ -4935,7 +4935,7 @@ Label_1e_7a24:
 	ld c, $1e ; $7a36
 	call QueueVRAMCopy ; $7a38
 	ret ; $7a3b
-Func_1e_7a3c:
+DrawProgressEntryDefaultIcon:
 	push af ; $7a3c
 	push bc ; $7a3d
 	push de ; $7a3e
@@ -4968,7 +4968,7 @@ Func_1e_7a3c:
 	pop bc ; $7a65
 	pop af ; $7a66
 	ret ; $7a67
-Func_1e_7a68:
+DrawProgressEntryTrophyIcon:
 	push af ; $7a68
 	push bc ; $7a69
 	push de ; $7a6a
@@ -4997,7 +4997,7 @@ Func_1e_7a68:
 	pop bc ; $7a8a
 	pop af ; $7a8b
 	ret ; $7a8c
-Func_1e_7a8d:
+DrawProgressScreenSprites:
 	xor a, a ; $7a8d
 	ld [$df07], a ; $7a8e
 	ld [$df08], a ; $7a91
@@ -5052,7 +5052,7 @@ Label_1e_7aea:
 	cp a, $ff ; $7aeb
 	jr z, Label_1e_7b47 ; $7aed
 	ld d, a ; $7aef
-	call Func_1e_74aa ; $7af0
+	call GetProgressEntryEarned ; $7af0
 	or a, a ; $7af3
 	jr z, Label_1e_7b47 ; $7af4
 	ld a, d ; $7af6
@@ -5073,36 +5073,36 @@ Label_1e_7aea:
 	cp a, $04 ; $7b11
 	jr z, Label_1e_7b3e ; $7b13
 Label_1e_7b15:
-	call Func_1e_7a3c ; $7b15
+	call DrawProgressEntryDefaultIcon ; $7b15
 	jr Label_1e_7b47 ; $7b18
 Label_1e_7b1a:
 	push bc ; $7b1a
 	ld c, $00 ; $7b1b
-	call Func_1e_7a68 ; $7b1d
+	call DrawProgressEntryTrophyIcon ; $7b1d
 	pop bc ; $7b20
 	jr Label_1e_7b47 ; $7b21
 Label_1e_7b23:
 	push bc ; $7b23
 	ld c, $01 ; $7b24
-	call Func_1e_7a68 ; $7b26
+	call DrawProgressEntryTrophyIcon ; $7b26
 	pop bc ; $7b29
 	jr Label_1e_7b47 ; $7b2a
 Label_1e_7b2c:
 	push bc ; $7b2c
 	ld c, $02 ; $7b2d
-	call Func_1e_7a68 ; $7b2f
+	call DrawProgressEntryTrophyIcon ; $7b2f
 	pop bc ; $7b32
 	jr Label_1e_7b47 ; $7b33
 Label_1e_7b35:
 	push bc ; $7b35
 	ld c, $03 ; $7b36
-	call Func_1e_7a68 ; $7b38
+	call DrawProgressEntryTrophyIcon ; $7b38
 	pop bc ; $7b3b
 	jr Label_1e_7b47 ; $7b3c
 Label_1e_7b3e:
 	push bc ; $7b3e
 	ld c, $04 ; $7b3f
-	call Func_1e_7a68 ; $7b41
+	call DrawProgressEntryTrophyIcon ; $7b41
 	pop bc ; $7b44
 	jr Label_1e_7b47 ; $7b45
 Label_1e_7b47:
@@ -5110,7 +5110,7 @@ Label_1e_7b47:
 	dec c ; $7b48
 	jr nz, Label_1e_7aea ; $7b49
 	ret ; $7b4b
-Func_1e_7b4c:
+LoadProgressScreenIconTiles:
 	ld de, $8200 ; $7b4c
 	farcall Func_39_4a16 ; $7b4f
 	ld b, $08 ; $7b52

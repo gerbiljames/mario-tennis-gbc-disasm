@@ -1226,7 +1226,7 @@ MatchSelectHandlersB_10:
 	farcall CheckStorySlot ; $4fe2
 	cp a, $fe ; $4fe5
 	jr z, Label_10_5041 ; $4fe7
-	farcall Func_1e_6afd ; $4fe9
+	farcall ApplyPendingExpAwards ; $4fe9
 	or a, a ; $4fec
 	jr z, Label_10_5006 ; $4fed
 	call DisableLCDSafely ; $4fef
@@ -1387,7 +1387,7 @@ Label_10_5149:
 Label_10_5159:
 	ld a, [wMatchFormatDoubles] ; $5159
 	ld b, a ; $515c
-	farcall Func_38_4e65 ; $515d
+	farcall RunExhibitionCharSelectScreen ; $515d
 	call Func_10_56fc ; $5160
 	push af ; $5163
 	call ClearFrameTasks ; $5164

@@ -4,9 +4,9 @@ SECTION "ROM Bank $38", ROMX[$4000], BANK[$38]
 	farptr RunMatchTypeMenu ; $4002
 	farptr RunLinkMatchSequence ; $4004
 	farptr RunNameEntryScreen ; $4006
-	farptr Func_38_4e65 ; $4008
+	farptr RunExhibitionCharSelectScreen ; $4008
 	farptr UpdateMenuCursorFromLinkInput ; $400a
-	farptr Func_38_63bd ; $400c
+	farptr RunLinkCharSelectScreen ; $400c
 	farptr RunMatchTypeMenuLink ; $400e
 	farptr RunLinkMatchSequenceAlias1, RunLinkMatchSequence ; $4010
 	farptr ApplySpriteBobOffsetX ; $4012
@@ -261,7 +261,7 @@ Label_38_4177:
 Label_38_4185:
 	ld a, $01 ; $4185
 	ret ; $4187
-Func_38_4188:
+MoveMenuCursorBoxLink:
 	ld a, [wMenuCursorX] ; $4188
 	ld d, a ; $418b
 	ld a, [wMenuCursorY] ; $418c
@@ -677,7 +677,7 @@ Label_38_43fe:
 	pop af ; $4402
 	wram_bank ; $4403
 	ret ; $4407
-Func_38_4408:
+UpdateAnimatedTilesTask_38:
 	farcall UpdateAnimatedTiles ; $4408
 	ret ; $440b
 CopyStringToTilemap:
@@ -750,21 +750,21 @@ DrawDecimalNumber:
 	ld h, b ; $445a
 	pop de ; $445b
 	pop bc ; $445c
-	call Func_38_4466 ; $445d
+	call CopyDecimalStringToTilemap ; $445d
 	add sp, 10 ; $4460
 	pop hl ; $4462
 	pop bc ; $4463
 	pop af ; $4464
 	ret ; $4465
-Func_38_4466:
+CopyDecimalStringToTilemap:
 	ld a, [hl+] ; $4466
 	and a, a ; $4467
 	jr z, Label_38_446f ; $4468
-	call Func_38_4470 ; $446a
-	jr Func_38_4466 ; $446d
+	call WriteDecimalDigitTile ; $446a
+	jr CopyDecimalStringToTilemap ; $446d
 Label_38_446f:
 	ret ; $446f
-Func_38_4470:
+WriteDecimalDigitTile:
 	push hl ; $4470
 	ld hl, $d240 ; $4471
 	sub a, $30 ; $4474
@@ -784,12 +784,12 @@ Label_38_4486:
 RunMatchTypeMenu:
 	call DisableLCDSafely ; $4489
 	farcall Func_01_50e2 ; $448c
-	call Func_38_460f ; $448f
+	call SetupMatchTypeMenuScreen ; $448f
 	ld a, $01 ; $4492
-	ld hl, Func_38_458d ; $4494
+	ld hl, DrawMatchTypeOptionBoxes ; $4494
 	call RegisterFrameTask ; $4497
 	ld a, $01 ; $449a
-	ld hl, Func_38_4408 ; $449c
+	ld hl, UpdateAnimatedTilesTask_38 ; $449c
 	call RegisterFrameTask ; $449f
 	call EnableLCD ; $44a2
 	script_fade_in $10 ; $44a5
@@ -803,7 +803,7 @@ Label_38_44ad:
 	call MoveMenuCursorBox ; $44b9
 	or a, a ; $44bc
 	jr z, Label_38_44c2 ; $44bd
-	call Func_38_4666 ; $44bf
+	call RefreshMatchTypeLabelRow ; $44bf
 Label_38_44c2:
 	call AdvanceFrame ; $44c2
 	ld a, [wMenuInputPressed] ; $44c5
@@ -833,12 +833,12 @@ RunMatchTypeMenuLink:
 	ldh [$ffd8], a ; $44f2
 	call ResetSerialState ; $44f4
 	call DisableLCDSafely ; $44f7
-	call Func_38_460f ; $44fa
+	call SetupMatchTypeMenuScreen ; $44fa
 	ld a, $01 ; $44fd
-	ld hl, Func_38_458d ; $44ff
+	ld hl, DrawMatchTypeOptionBoxes ; $44ff
 	call RegisterFrameTask ; $4502
 	ld a, $01 ; $4505
-	ld hl, Func_38_4408 ; $4507
+	ld hl, UpdateAnimatedTilesTask_38 ; $4507
 	call RegisterFrameTask ; $450a
 	call EnableLCD ; $450d
 	farcall ResyncLinkSession ; $4510
@@ -859,10 +859,10 @@ Label_38_4529:
 	call AdjustMatchTypeSetting ; $452e
 	ld b, $01 ; $4531
 	ld c, $03 ; $4533
-	call Func_38_4188 ; $4535
+	call MoveMenuCursorBoxLink ; $4535
 	or a, a ; $4538
 	jr z, Label_38_453e ; $4539
-	call Func_38_4666 ; $453b
+	call RefreshMatchTypeLabelRow ; $453b
 Label_38_453e:
 	push af ; $453e
 	farcall RunLinkInputFrame ; $453f
@@ -905,7 +905,7 @@ Label_38_456e:
 	call ClearFrameTasks ; $4587
 	ld a, $ff ; $458a
 	ret ; $458c
-Func_38_458d:
+DrawMatchTypeOptionBoxes:
 	ld a, [wMatchFormatDoubles] ; $458d
 	add a, a ; $4590
 	ld hl, $45ff ; $4591
@@ -974,7 +974,7 @@ Label_38_45f8:
 Label_38_45fe:
 	ret ; $45fe
 	INCBIN "data/bank_038/d_45ff.bin" ; $45ff, 16 bytes
-Func_38_460f:
+SetupMatchTypeMenuScreen:
 	ld b, $01 ; $460f
 	ld a, [$cb1b] ; $4611
 	ld c, a ; $4614
@@ -998,7 +998,7 @@ Func_38_460f:
 	farcall CreateWindowFromScreenRect ; $4642
 	farcall DrawTextWindowFrame ; $4645
 	farcall RedrawWindowRows ; $4648
-	call Func_38_4722 ; $464b
+	call DrawMatchTypeOptionLabel ; $464b
 	farcall QueueWram3MapToVRAM ; $464e
 	ld de, $a000 ; $4651
 	farcall LoadFixedTileBlockAndPalette ; $4654
@@ -1009,7 +1009,7 @@ Func_38_460f:
 	ld c, $0e ; $4660
 	farcall LoadIndexedPalette ; $4662
 	ret ; $4665
-Func_38_4666:
+RefreshMatchTypeLabelRow:
 	sound $5e ; $4666
 	wram_bank $03 ; $4668
 	ld de, $d1e1 ; $466e
@@ -1022,14 +1022,14 @@ Func_38_4666:
 	ld c, $01 ; $467f
 	ld h, $20 ; $4681
 	farcall FillTilemapRect ; $4683
-	call Func_38_4722 ; $4686
+	call DrawMatchTypeOptionLabel ; $4686
 	ld hl, $d1e0 ; $4689
 	ld de, $99e0 ; $468c
 	ld c, $04 ; $468f
 	call QueueVRAMCopy ; $4691
 	ret ; $4694
 	INCBIN "data/bank_038/d_4695.bin" ; $4695, 141 bytes
-Func_38_4722:
+DrawMatchTypeOptionLabel:
 	wram_bank $03 ; $4722
 	ld c, $01 ; $4728
 	call GetMenuCursorLinearIndex ; $472a
@@ -1157,16 +1157,16 @@ RunCharacterSelectScreen:
 	ld [$cb51], a ; $4818
 	call DisableLCDSafely ; $481b
 	call ClearFrameTasks ; $481e
-	call Func_38_4975 ; $4821
-	call Func_38_4bac ; $4824
+	call SetupCharacterSelectScreen ; $4821
+	call DrawCharacterSelectChars ; $4824
 	ld a, $01 ; $4827
-	ld hl, Func_38_4408 ; $4829
+	ld hl, UpdateAnimatedTilesTask_38 ; $4829
 	call RegisterFrameTask ; $482c
 	ld a, $01 ; $482f
-	ld hl, Func_38_4bac ; $4831
+	ld hl, DrawCharacterSelectChars ; $4831
 	call RegisterFrameTask ; $4834
 	ld a, $01 ; $4837
-	ld hl, Func_38_4e23 ; $4839
+	ld hl, DrawCharacterSelectCursor ; $4839
 	call RegisterFrameTask ; $483c
 	call EnableLCD ; $483f
 	script_fade_in $08 ; $4842
@@ -1174,7 +1174,7 @@ RunCharacterSelectScreen:
 	ld hl, rIE ; $484a
 	res 2, [hl] ; $484d
 	ld a, $01 ; $484f
-	ld hl, Func_38_4e52 ; $4851
+	ld hl, TickMenuBgScrollTask_38 ; $4851
 	call RegisterFrameTask ; $4854
 Label_38_4857:
 	ldh a, [hInputPressed] ; $4857
@@ -1184,7 +1184,7 @@ Label_38_4857:
 	call MoveMenuCursorBox ; $4860
 	or a, a ; $4863
 	jr z, Label_38_4869 ; $4864
-	call Func_38_4aae ; $4866
+	call RefreshCharacterSelectHighlight ; $4866
 Label_38_4869:
 	call AdvanceFrame ; $4869
 	ldh a, [hInputPressed] ; $486c
@@ -1281,7 +1281,7 @@ Label_38_491a:
 	call DrawSelectedOptionBox ; $4920
 	ret ; $4923
 	INCBIN "data/bank_038/d_4924.bin" ; $4924, 8 bytes
-Func_38_492c:
+LoadCharSelectCharPalettes:
 	ld b, $04 ; $492c
 	ld c, $0b ; $492e
 	farcall LoadIndexedPalette ; $4930
@@ -1295,7 +1295,7 @@ Func_38_492c:
 	ld c, $0b ; $4943
 	farcall LoadIndexedPalette ; $4945
 	ret ; $4948
-Func_38_4949:
+LoadHighlightedCharPalette:
 	ld c, $02 ; $4949
 	call GetMenuCursorLinearIndex ; $494b
 	ld b, a ; $494e
@@ -1318,7 +1318,7 @@ Func_38_4949:
 	farcall LoadIndexedPalette_18 ; $496d
 	ret ; $4970
 	INCBIN "data/bank_038/d_4971.bin" ; $4971, 4 bytes
-Func_38_4975:
+SetupCharacterSelectScreen:
 	xor a, a ; $4975
 	ldh [hScrollX], a ; $4976
 	ldh [hScrollY], a ; $4978
@@ -1343,7 +1343,7 @@ Func_38_4975:
 	farcall Func_01_50e2 ; $49ac
 	ld c, $05 ; $49af
 	farcall LoadScreenAssetRecord ; $49b1
-	call Func_38_492c ; $49b4
+	call LoadCharSelectCharPalettes ; $49b4
 	farcall ResetTextWindowState ; $49b7
 	ld b, $11 ; $49ba
 	ld c, $10 ; $49bc
@@ -1369,11 +1369,11 @@ Func_38_4975:
 	farcall DrawTextWindowFrame ; $49f0
 	farcall RedrawWindowRows ; $49f3
 	farcall PrepareGlyphBuffer ; $49f6
-	call Func_38_4b21 ; $49f9
-	call Func_38_4d66 ; $49fc
-	call Func_38_4949 ; $49ff
-	call Func_38_4d14 ; $4a02
-	call Func_38_4acf ; $4a05
+	call InitCharacterSelectChars ; $49f9
+	call ReloadSelectedCharGfx ; $49fc
+	call LoadHighlightedCharPalette ; $49ff
+	call SetCharSelectAnimations ; $4a02
+	call DrawCharacterSelectPrompt ; $4a05
 	farcall UploadGlyphBuffer ; $4a08
 	ld a, $00 ; $4a0b
 	farcall LoadCharMugshotToBuffer ; $4a0d
@@ -1431,17 +1431,17 @@ Label_38_4a61:
 	ld c, $14 ; $4a99
 	ld de, $8100 ; $4a9b
 	farcall LoadCompressedTileBlock ; $4a9e
-	call Func_38_492c ; $4aa1
-	call Func_38_4949 ; $4aa4
-	call Func_38_4d14 ; $4aa7
-	call Func_38_4d66 ; $4aaa
+	call LoadCharSelectCharPalettes ; $4aa1
+	call LoadHighlightedCharPalette ; $4aa4
+	call SetCharSelectAnimations ; $4aa7
+	call ReloadSelectedCharGfx ; $4aaa
 	ret ; $4aad
-Func_38_4aae:
+RefreshCharacterSelectHighlight:
 	sound $5e ; $4aae
-	call Func_38_492c ; $4ab0
-	call Func_38_4949 ; $4ab3
-	call Func_38_4d14 ; $4ab6
-	call Func_38_4d66 ; $4ab9
+	call LoadCharSelectCharPalettes ; $4ab0
+	call LoadHighlightedCharPalette ; $4ab3
+	call SetCharSelectAnimations ; $4ab6
+	call ReloadSelectedCharGfx ; $4ab9
 	ldh a, [hWramBank] ; $4abc
 	push af ; $4abe
 	wram_bank $02 ; $4abf
@@ -1450,7 +1450,7 @@ Func_38_4aae:
 	pop af ; $4ac9
 	wram_bank ; $4aca
 	ret ; $4ace
-Func_38_4acf:
+DrawCharacterSelectPrompt:
 	push af ; $4acf
 	push bc ; $4ad0
 	push de ; $4ad1
@@ -1486,7 +1486,7 @@ Label_38_4b06:
 	pop bc ; $4b1e
 	pop af ; $4b1f
 	ret ; $4b20
-Func_38_4b21:
+InitCharacterSelectChars:
 	wram_bank $07 ; $4b21
 	ld hl, wCharPosX ; $4b27
 	ld c, $10 ; $4b2a
@@ -1533,31 +1533,31 @@ Func_38_4b21:
 	farcall InitChar ; $4ba2
 	wram_bank $04 ; $4ba5
 	ret ; $4bab
-Func_38_4bac:
+DrawCharacterSelectChars:
 	wram_bank $04 ; $4bac
 	ld hl, wCharPosX ; $4bb2
-	call Func_38_4ce2 ; $4bb5
+	call UpdateCharSelectCharSprite ; $4bb5
 	ld a, $58 ; $4bb8
 	ld [wCharSpriteSlot + 2], a ; $4bba
 	ld a, $20 ; $4bbd
 	ld [wCharSpriteSlot + 3], a ; $4bbf
 	wram_bank $05 ; $4bc2
 	ld hl, wCharPosX ; $4bc8
-	call Func_38_4ce2 ; $4bcb
+	call UpdateCharSelectCharSprite ; $4bcb
 	ld a, $58 ; $4bce
 	ld [wCharSpriteSlot + 2], a ; $4bd0
 	ld a, $61 ; $4bd3
 	ld [wCharSpriteSlot + 3], a ; $4bd5
 	wram_bank $06 ; $4bd8
 	ld hl, wCharPosX ; $4bde
-	call Func_38_4ce2 ; $4be1
+	call UpdateCharSelectCharSprite ; $4be1
 	ld a, $c8 ; $4be4
 	ld [wCharSpriteSlot + 2], a ; $4be6
 	ld a, $c8 ; $4be9
 	ld [wCharSpriteSlot + 3], a ; $4beb
 	wram_bank $07 ; $4bee
 	ld hl, wCharPosX ; $4bf4
-	call Func_38_4ce2 ; $4bf7
+	call UpdateCharSelectCharSprite ; $4bf7
 	ld a, $c8 ; $4bfa
 	ld [wCharSpriteSlot + 2], a ; $4bfc
 	ld a, $c8 ; $4bff
@@ -1631,9 +1631,9 @@ Label_38_4ca8:
 	ld hl, wCharSpriteSlot ; $4cd2
 	farcall DrawCharSprite ; $4cd5
 	wram_bank $04 ; $4cd8
-	call Func_38_4d9b ; $4cde
+	call TickCharSelectIdleAnim ; $4cde
 	ret ; $4ce1
-Func_38_4ce2:
+UpdateCharSelectCharSprite:
 	ld c, l ; $4ce2
 	ld b, h ; $4ce3
 	ld hl, $0022 ; $4ce4
@@ -1661,7 +1661,7 @@ Func_38_4ce2:
 	ld c, $06 ; $4d0e
 	call CopyMemoryFast ; $4d10
 	ret ; $4d13
-Func_38_4d14:
+SetCharSelectAnimations:
 	wram_bank $04 ; $4d14
 	ld d, $00 ; $4d1a
 	farcall SetCharAnimation ; $4d1c
@@ -1674,7 +1674,7 @@ Func_38_4d14:
 	wram_bank $07 ; $4d35
 	ld d, $00 ; $4d3b
 	farcall SetCharAnimation ; $4d3d
-	call Func_38_4dfa ; $4d40
+	call GetSelectedCharWramBank ; $4d40
 	ld a, b ; $4d43
 	wram_bank ; $4d44
 	ld d, $05 ; $4d48
@@ -1688,7 +1688,7 @@ Func_38_4d14:
 	pop af ; $4d60
 	wram_bank ; $4d61
 	ret ; $4d65
-Func_38_4d66:
+ReloadSelectedCharGfx:
 	ld b, $0b ; $4d66
 	ld c, $0b ; $4d68
 	farcall LoadIndexedPalette ; $4d6a
@@ -1704,14 +1704,14 @@ Func_38_4d66:
 	ld b, $0f ; $4d82
 	ld c, $0b ; $4d84
 	farcall LoadIndexedPalette ; $4d86
-	call Func_38_4dfa ; $4d89
+	call GetSelectedCharWramBank ; $4d89
 	ld a, b ; $4d8c
 	wram_bank ; $4d8d
 	farcall ReloadCharFrameGfx ; $4d91
 	wram_bank $04 ; $4d94
 	ret ; $4d9a
-Func_38_4d9b:
-	call Func_38_4dfa ; $4d9b
+TickCharSelectIdleAnim:
+	call GetSelectedCharWramBank ; $4d9b
 	ld a, b ; $4d9e
 	wram_bank ; $4d9f
 	ld bc, $df00 ; $4da3
@@ -1744,7 +1744,7 @@ Func_38_4d9b:
 	jr nz, Label_38_4df4 ; $4de1
 	xor a, a ; $4de3
 	ld [$cb51], a ; $4de4
-	call Func_38_4dfa ; $4de7
+	call GetSelectedCharWramBank ; $4de7
 	ld a, b ; $4dea
 	wram_bank ; $4deb
 	ld d, $07 ; $4def
@@ -1754,7 +1754,7 @@ Label_38_4df4:
 	wram_bank ; $4df5
 Label_38_4df9:
 	ret ; $4df9
-Func_38_4dfa:
+GetSelectedCharWramBank:
 	ld c, $02 ; $4dfa
 	call GetMenuCursorLinearIndex ; $4dfc
 	ld b, a ; $4dff
@@ -1777,7 +1777,7 @@ Label_38_4e1d:
 	ld b, [hl] ; $4e1d
 	ret ; $4e1e
 	INCBIN "data/bank_038/d_4e1f.bin" ; $4e1f, 4 bytes
-Func_38_4e23:
+DrawCharacterSelectCursor:
 	ld c, $02 ; $4e23
 	call GetMenuCursorLinearIndex ; $4e25
 	add a, a ; $4e28
@@ -1801,7 +1801,7 @@ Label_38_4e44:
 	call QueueSprite ; $4e46
 	ret ; $4e49
 	INCBIN "data/bank_038/d_4e4a.bin" ; $4e4a, 8 bytes
-Func_38_4e52:
+TickMenuBgScrollTask_38:
 	farcall TickMenuBgScroll ; $4e52
 	ret ; $4e55
 	ldh a, [hWramBank] ; $4e56
@@ -1810,7 +1810,7 @@ Func_38_4e52:
 	pop af ; $4e5f
 	wram_bank ; $4e60
 	ret ; $4e64
-Func_38_4e65:
+RunExhibitionCharSelectScreen:
 	sound $03 ; $4e65
 	wram_bank $03 ; $4e67
 	ld a, b ; $4e6d
@@ -1824,17 +1824,17 @@ Func_38_4e65:
 	ld hl, $da00 ; $4e80
 	ld bc, $0080 ; $4e83
 	call ClearBytes ; $4e86
-	call Func_38_5a82 ; $4e89
-	call Func_38_4f6f ; $4e8c
+	call BuildCharUnlockFlags ; $4e89
+	call SetupCharGridScreen ; $4e8c
 	call EnableLCD ; $4e8f
 	script_fade_in $10 ; $4e92
 	call WaitFadeEnd ; $4e97
 	ld hl, rIE ; $4e9a
 	res 2, [hl] ; $4e9d
 	ld a, $01 ; $4e9f
-	ld hl, Func_38_4e52 ; $4ea1
+	ld hl, TickMenuBgScrollTask_38 ; $4ea1
 	call RegisterFrameTask ; $4ea4
-	call Func_38_575e ; $4ea7
+	call RefreshCharInfoPanel ; $4ea7
 Label_38_4eaa:
 	call AdvanceFrame ; $4eaa
 	ldh a, [hInputPressed] ; $4ead
@@ -1851,14 +1851,14 @@ Label_38_4eaa:
 	ld a, [$d824] ; $4ec6
 	or a, a ; $4ec9
 	jr z, Label_38_4ed7 ; $4eca
-	call Func_38_5545 ; $4ecc
-	call Func_38_6216 ; $4ecf
+	call DrawCharGridCharSprites ; $4ecc
+	call RunCpuDifficultySubmenu ; $4ecf
 	ldh a, [hWramBank] ; $4ed2
 	push af ; $4ed4
 	jr Label_38_4f01 ; $4ed5
 Label_38_4ed7:
-	call Func_38_5195 ; $4ed7
-	call Func_38_52b9 ; $4eda
+	call HandleCharGridDpad ; $4ed7
+	call HandleCharGridButtons ; $4eda
 	xor a, a ; $4edd
 	ld [wMenuInputPressed], a ; $4ede
 	ldh [hInputPressed], a ; $4ee1
@@ -1868,12 +1868,12 @@ Label_38_4ed7:
 	ld a, [$d814] ; $4eec
 	cp a, $04 ; $4eef
 	jr z, Label_38_4efe ; $4ef1
-	call Func_38_4f4b ; $4ef3
-	call Func_38_5545 ; $4ef6
-	call Func_38_54cc ; $4ef9
+	call DrawCharGridCursorBox ; $4ef3
+	call DrawCharGridCharSprites ; $4ef6
+	call DrawCharGridScrollArrows ; $4ef9
 	jr Label_38_4f01 ; $4efc
 Label_38_4efe:
-	call Func_38_549a ; $4efe
+	call DrawCharGridWaitBanner ; $4efe
 Label_38_4f01:
 	ld a, [$d815] ; $4f01
 	ld b, a ; $4f04
@@ -1889,10 +1889,10 @@ Label_38_4f15:
 	ld c, $08 ; $4f15
 	call BeginFadeOut ; $4f17
 	call WaitFadeEnd ; $4f1a
-	call Func_38_5e6e ; $4f1d
-	call Func_38_5ea6 ; $4f20
-	call Func_38_601c ; $4f23
-	call Func_38_5f4c ; $4f26
+	call ResolveSelectedCharIds ; $4f1d
+	call InitMatchCharsFromSelection ; $4f20
+	call ApplyStarFlagsToCharRecords ; $4f23
+	call ApplyCpuDifficultyToCharRecords ; $4f26
 	farcall InitDefaultMatchSettings ; $4f29
 	call ClearFrameTasks ; $4f2c
 	ld hl, rIE ; $4f2f
@@ -1909,7 +1909,7 @@ Label_38_4f36:
 	set 2, [hl] ; $4f46
 	ld a, $ff ; $4f48
 	ret ; $4f4a
-Func_38_4f4b:
+DrawCharGridCursorBox:
 	ld c, $03 ; $4f4b
 	call GetMenuCursorLinearIndex ; $4f4d
 	add a, a ; $4f50
@@ -1926,7 +1926,7 @@ Label_38_4f59:
 	call DrawSelectedOptionBox ; $4f5f
 	ret ; $4f62
 	INCBIN "data/bank_038/d_4f63.bin" ; $4f63, 12 bytes
-Func_38_4f6f:
+SetupCharGridScreen:
 	xor a, a ; $4f6f
 	ldh [hScrollX], a ; $4f70
 	ldh [hScrollY], a ; $4f72
@@ -1934,7 +1934,7 @@ Func_38_4f6f:
 	ld [wCameraX + 1], a ; $4f77
 	ld [wCameraY], a ; $4f7a
 	ld [wCameraY + 1], a ; $4f7d
-	call Func_38_5d83 ; $4f80
+	call BuildCreatedCharRecords ; $4f80
 	ld b, $03 ; $4f83
 	ld c, $00 ; $4f85
 	call SetMenuCursorFromLinearIndex ; $4f87
@@ -1996,12 +1996,12 @@ Func_38_4f6f:
 	ld de, $a640 ; $5023
 	farcall LoadCompressedTileBlock ; $5026
 	ld de, $8000 ; $5029
-	call Func_38_5746 ; $502c
+	call LoadAllCharPortraitTiles ; $502c
 	ld de, $a800 ; $502f
-	call Func_38_5746 ; $5032
-	call Func_38_5a1b ; $5035
-	call Func_38_5424 ; $5038
-	call Func_38_598b ; $503b
+	call LoadAllCharPortraitTiles ; $5032
+	call InitCharGridState ; $5035
+	call DrawCharGridSlotPrompt ; $5038
+	call DrawCharGridSlotIcons ; $503b
 	farcall QueueWram3MapToVRAM ; $503e
 	ld de, $a000 ; $5041
 	farcall LoadFixedTileBlockAndPalette ; $5044
@@ -2028,7 +2028,7 @@ Func_38_4f6f:
 	farcall InitDefaultMatchSettings ; $507b
 	ret ; $507e
 	INCBIN "data/bank_038/d_507f.bin" ; $507f, 278 bytes
-Func_38_5195:
+HandleCharGridDpad:
 	ldh a, [hWramBank] ; $5195
 	push af ; $5197
 	wram_bank $03 ; $5198
@@ -2052,29 +2052,29 @@ Label_38_51bc:
 	ld [$de00], a ; $51c0
 	ld a, $02 ; $51c3
 	ld [$df00], a ; $51c5
-	call Func_38_525e ; $51c8
+	call MoveCharGridCursorRight ; $51c8
 	xor a, a ; $51cb
 	ld [wMenuInputPressed], a ; $51cc
 	jp Label_38_51ee ; $51cf
 Label_38_51d2:
 	ld a, $02 ; $51d2
 	ld [$df00], a ; $51d4
-	call Func_38_528b ; $51d7
+	call MoveCharGridCursorLeft ; $51d7
 	jr Label_38_51ee ; $51da
 Label_38_51dc:
 	ld a, $02 ; $51dc
 	ld [$df00], a ; $51de
-	call Func_38_51f4 ; $51e1
+	call MoveCharGridCursorUp ; $51e1
 	jr Label_38_51ee ; $51e4
 Label_38_51e6:
 	ld a, $02 ; $51e6
 	ld [$df00], a ; $51e8
-	call Func_38_521c ; $51eb
+	call MoveCharGridCursorDown ; $51eb
 Label_38_51ee:
 	pop af ; $51ee
 	wram_bank ; $51ef
 	ret ; $51f3
-Func_38_51f4:
+MoveCharGridCursorUp:
 	ld a, [wMenuCursorY] ; $51f4
 	or a, a ; $51f7
 	jr z, Label_38_5202 ; $51f8
@@ -2095,11 +2095,11 @@ Label_38_5210:
 	sound $5e ; $5210
 Label_38_5212:
 	ld [$d811], a ; $5212
-	call Func_38_5ce5 ; $5215
+	call BuildVisiblePageSpriteList ; $5215
 Label_38_5218:
-	call Func_38_575e ; $5218
+	call RefreshCharInfoPanel ; $5218
 	ret ; $521b
-Func_38_521c:
+MoveCharGridCursorDown:
 	ld a, [wMenuCursorY] ; $521c
 	inc a ; $521f
 	cp a, $02 ; $5220
@@ -2135,11 +2135,11 @@ Label_38_5252:
 	sound $5e ; $5252
 Label_38_5254:
 	ld [$d811], a ; $5254
-	call Func_38_5ce5 ; $5257
+	call BuildVisiblePageSpriteList ; $5257
 Label_38_525a:
-	call Func_38_575e ; $525a
+	call RefreshCharInfoPanel ; $525a
 	ret ; $525d
-Func_38_525e:
+MoveCharGridCursorRight:
 	ld a, [wMenuCursorX] ; $525e
 	inc a ; $5261
 	cp a, $03 ; $5262
@@ -2159,11 +2159,11 @@ Label_38_527e:
 	xor a, a ; $527e
 Label_38_527f:
 	ld [wMenuCursorX], a ; $527f
-	call Func_38_5ce5 ; $5282
-	call Func_38_575e ; $5285
+	call BuildVisiblePageSpriteList ; $5282
+	call RefreshCharInfoPanel ; $5285
 	sound $5e ; $5288
 	ret ; $528a
-Func_38_528b:
+MoveCharGridCursorLeft:
 	ld a, [wMenuCursorX] ; $528b
 	dec a ; $528e
 	cp a, $ff ; $528f
@@ -2180,14 +2180,14 @@ Label_38_52a6:
 	ld a, $03 ; $52a6
 	ld [$d811], a ; $52a8
 Label_38_52ab:
-	call Func_38_5ce5 ; $52ab
+	call BuildVisiblePageSpriteList ; $52ab
 	ld a, $02 ; $52ae
 Label_38_52b0:
 	ld [wMenuCursorX], a ; $52b0
-	call Func_38_575e ; $52b3
+	call RefreshCharInfoPanel ; $52b3
 	sound $5e ; $52b6
 	ret ; $52b8
-Func_38_52b9:
+HandleCharGridButtons:
 	ld a, [wMenuInputPressed] ; $52b9
 	bit PADB_A, a ; $52bc
 	jr nz, Label_38_52c9 ; $52be
@@ -2197,10 +2197,10 @@ Func_38_52b9:
 	jr nz, Label_38_52d1 ; $52c6
 	ret ; $52c8
 Label_38_52c9:
-	call Func_38_5302 ; $52c9
+	call ConfirmCharGridSelection ; $52c9
 	ret ; $52cc
 Label_38_52cd:
-	call Func_38_53b0 ; $52cd
+	call CancelCharGridSelection ; $52cd
 	ret ; $52d0
 Label_38_52d1:
 	call GetGridSlotFromCursor ; $52d1
@@ -2224,15 +2224,15 @@ Label_38_52df:
 	jr z, Label_38_52f9 ; $52ee
 	xor a, $01 ; $52f0
 	ld [$df00], a ; $52f2
-	call Func_38_575e ; $52f5
+	call RefreshCharInfoPanel ; $52f5
 	ret ; $52f8
 Label_38_52f9:
 	ld a, $01 ; $52f9
 	ld [$df00], a ; $52fb
-	call Func_38_575e ; $52fe
+	call RefreshCharInfoPanel ; $52fe
 Label_38_5301:
 	ret ; $5301
-Func_38_5302:
+ConfirmCharGridSelection:
 	ldh a, [hWramBank] ; $5302
 	push af ; $5304
 	wram_bank $03 ; $5305
@@ -2243,7 +2243,7 @@ Func_38_5302:
 	ld d, a ; $5315
 	ld a, [wMenuCursorY] ; $5316
 	ld e, a ; $5319
-	call Func_38_5d42 ; $531a
+	call TestAndSetGridEntryTaken ; $531a
 	or a, a ; $531d
 	jr nz, Label_38_5368 ; $531e
 	call GetGridSlotFromCursor ; $5320
@@ -2288,7 +2288,7 @@ Label_38_535a:
 Label_38_535d:
 	call GetGridSlotFromCursor ; $535d
 	ld b, a ; $5360
-	call Func_38_5612 ; $5361
+	call DrawPlayerSlotPortrait ; $5361
 	sound $5f ; $5364
 	jr Label_38_5370 ; $5366
 Label_38_5368:
@@ -2297,7 +2297,7 @@ Label_38_5368:
 	wram_bank ; $536b
 	ret ; $536f
 Label_38_5370:
-	call Func_38_5ce5 ; $5370
+	call BuildVisiblePageSpriteList ; $5370
 	call GetGridSlotFromCursor ; $5373
 	ld b, a ; $5376
 	ld hl, $da00 ; $5377
@@ -2310,20 +2310,20 @@ Label_38_5370:
 Label_38_5381:
 	ld a, [hl] ; $5381
 	ld c, a ; $5382
-	call Func_38_61f7 ; $5383
+	call NeedsCpuDifficultyPrompt ; $5383
 	or a, a ; $5386
 	jr z, Label_38_5390 ; $5387
 	ld a, $01 ; $5389
 	ld [$d824], a ; $538b
 	jr Label_38_539c ; $538e
 Label_38_5390:
-	call Func_38_5c47 ; $5390
+	call AdvanceToNextPlayerSlot ; $5390
 	cp a, $ff ; $5393
 	jr nz, Label_38_539c ; $5395
 	ld a, $01 ; $5397
 	ld [$d815], a ; $5399
 Label_38_539c:
-	call Func_38_5424 ; $539c
+	call DrawCharGridSlotPrompt ; $539c
 	ld hl, $d040 ; $539f
 	ld de, $9840 ; $53a2
 	ld c, $04 ; $53a5
@@ -2331,11 +2331,11 @@ Label_38_539c:
 	pop af ; $53aa
 	wram_bank ; $53ab
 	ret ; $53af
-Func_38_53b0:
+CancelCharGridSelection:
 	ldh a, [hWramBank] ; $53b0
 	push af ; $53b2
 	wram_bank $03 ; $53b3
-	call Func_38_5c63 ; $53b9
+	call RetreatToPreviousPlayerSlot ; $53b9
 	cp a, $ff ; $53bc
 	jr nz, Label_38_53cb ; $53be
 	ld a, $02 ; $53c0
@@ -2386,9 +2386,9 @@ Label_38_53fb:
 Label_38_5408:
 	xor a, a ; $5408
 	ld [hl], a ; $5409
-	call Func_38_55ab ; $540a
-	call Func_38_5ce5 ; $540d
-	call Func_38_5424 ; $5410
+	call ClearPlayerSlotPortrait ; $540a
+	call BuildVisiblePageSpriteList ; $540d
+	call DrawCharGridSlotPrompt ; $5410
 	ld hl, $d040 ; $5413
 	ld de, $9840 ; $5416
 	ld c, $04 ; $5419
@@ -2396,7 +2396,7 @@ Label_38_5408:
 	pop af ; $541e
 	wram_bank ; $541f
 	ret ; $5423
-Func_38_5424:
+DrawCharGridSlotPrompt:
 	wram_bank $03 ; $5424
 	ld a, [$d814] ; $542a
 	cp a, $ff ; $542d
@@ -2444,7 +2444,7 @@ Label_38_547a:
 	farcall RenderTextToBuffer64 ; $5482
 	ret ; $5485
 	INCBIN "data/bank_038/d_5486.bin" ; $5486, 20 bytes
-Func_38_549a:
+DrawCharGridWaitBanner:
 	ld c, $20 ; $549a
 	ld b, $0f ; $549c
 	ld de, $0840 ; $549e
@@ -2463,7 +2463,7 @@ SpriteTemplate_38_54ab:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-Func_38_54cc:
+DrawCharGridScrollArrows:
 	ldh a, [hWramBank] ; $54cc
 	push af ; $54ce
 	wram_bank $03 ; $54cf
@@ -2520,7 +2520,7 @@ Label_38_553f:
 	pop af ; $553f
 	wram_bank ; $5540
 	ret ; $5544
-Func_38_5545:
+DrawCharGridCharSprites:
 	ldh a, [hWramBank] ; $5545
 	push af ; $5547
 	wram_bank $03 ; $5548
@@ -2548,7 +2548,7 @@ Label_38_555e:
 	ld a, b ; $5567
 	cp a, $ff ; $5568
 	jr z, Label_38_556f ; $556a
-	call Func_38_5589 ; $556c
+	call QueueCharGridCharSprite ; $556c
 Label_38_556f:
 	pop bc ; $556f
 	ld a, c ; $5570
@@ -2560,7 +2560,7 @@ Label_38_556f:
 	wram_bank ; $5578
 	ret ; $557c
 	INCBIN "data/bank_038/d_557d.bin" ; $557d, 12 bytes
-Func_38_5589:
+QueueCharGridCharSprite:
 	push af ; $5589
 	push bc ; $558a
 	push de ; $558b
@@ -2588,8 +2588,8 @@ Func_38_5589:
 	pop bc ; $55a8
 	pop af ; $55a9
 	ret ; $55aa
-Func_38_55ab:
-	call Func_38_56ad ; $55ab
+ClearPlayerSlotPortrait:
+	call GetPlayerSlotBoxAddress ; $55ab
 	ld d, b ; $55ae
 	ld e, c ; $55af
 	ld b, $02 ; $55b0
@@ -2606,7 +2606,7 @@ Func_38_55ab:
 	ld e, l ; $55c4
 	ld h, $08 ; $55c5
 	farcall FillTilemapRect ; $55c7
-	call Func_38_56ad ; $55ca
+	call GetPlayerSlotBoxAddress ; $55ca
 	ld hl, $001e ; $55cd
 	add hl, bc ; $55d0
 	xor a, a ; $55d1
@@ -2636,7 +2636,7 @@ Label_38_55f3:
 Label_38_5609:
 	ret ; $5609
 	INCBIN "data/bank_038/d_560a.bin" ; $560a, 8 bytes
-Func_38_5612:
+DrawPlayerSlotPortrait:
 	ld hl, $da00 ; $5612
 	ld a, b ; $5615
 	add a, a ; $5616
@@ -2654,7 +2654,7 @@ Label_38_561d:
 	ld hl, $0001 ; $5624
 	add hl, bc ; $5627
 	ld e, [hl] ; $5628
-	call Func_38_56ad ; $5629
+	call GetPlayerSlotBoxAddress ; $5629
 	ld h, b ; $562c
 	ld l, c ; $562d
 	ld b, d ; $562e
@@ -2662,9 +2662,9 @@ Label_38_561d:
 	ld d, h ; $5630
 	ld e, l ; $5631
 	dec c ; $5632
-	call Func_38_5712 ; $5633
-	call Func_38_567a ; $5636
-	call Func_38_5693 ; $5639
+	call WriteCharPortraitTiles ; $5633
+	call DrawPlayerSlotStarMark ; $5636
+	call DrawPlayerSlotDifficultyMark ; $5639
 	ld a, [$d814] ; $563c
 	cp a, $02 ; $563f
 	jr nc, Label_38_565b ; $5641
@@ -2689,7 +2689,7 @@ Label_38_565b:
 Label_38_5671:
 	ret ; $5671
 	INCBIN "data/bank_038/d_5672.bin" ; $5672, 8 bytes
-Func_38_567a:
+DrawPlayerSlotStarMark:
 	ld a, [$d814] ; $567a
 	ld hl, $d834 ; $567d
 	add a, l ; $5680
@@ -2700,13 +2700,13 @@ Label_38_5685:
 	ld a, [hl] ; $5685
 	or a, a ; $5686
 	ret z ; $5687
-	call Func_38_56ad ; $5688
+	call GetPlayerSlotBoxAddress ; $5688
 	ld hl, $001f ; $568b
 	add hl, bc ; $568e
 	ld a, $32 ; $568f
 	ld [hl], a ; $5691
 	ret ; $5692
-Func_38_5693:
+DrawPlayerSlotDifficultyMark:
 	ld hl, $d830 ; $5693
 	ld a, [$d814] ; $5696
 	add a, l ; $5699
@@ -2718,14 +2718,14 @@ Label_38_569e:
 	ld c, $33 ; $569f
 	add a, c ; $56a1
 	push af ; $56a2
-	call Func_38_56ad ; $56a3
+	call GetPlayerSlotBoxAddress ; $56a3
 	ld hl, $001e ; $56a6
 	add hl, bc ; $56a9
 	pop af ; $56aa
 	ld [hl], a ; $56ab
 Label_38_56ac:
 	ret ; $56ac
-Func_38_56ad:
+GetPlayerSlotBoxAddress:
 	ld a, [$d813] ; $56ad
 	add a, a ; $56b0
 	ld hl, SubHandlers_38_56c9 ; $56b1
@@ -2808,7 +2808,7 @@ Label_38_56ca:
 	ld sp, $00d1 ; $570d
 	nop ; $5710
 	ret ; $5711
-Func_38_5712:
+WriteCharPortraitTiles:
 	ld a, b ; $5712
 	add a, a ; $5713
 	add a, a ; $5714
@@ -2850,7 +2850,7 @@ Func_38_5712:
 	ld c, $02 ; $5740
 	farcall FillTilemapRect ; $5742
 	ret ; $5745
-Func_38_5746:
+LoadAllCharPortraitTiles:
 	xor a, a ; $5746
 Label_38_5747:
 	push af ; $5747
@@ -2870,7 +2870,7 @@ Label_38_5747:
 	cp a, $20 ; $5759
 	jr nz, Label_38_5747 ; $575b
 	ret ; $575d
-Func_38_575e:
+RefreshCharInfoPanel:
 	push af ; $575e
 	push bc ; $575f
 	push de ; $5760
@@ -2912,14 +2912,14 @@ Label_38_579b:
 	inc hl ; $57a2
 	ld a, [hl] ; $57a3
 	ld c, a ; $57a4
-	call Func_38_57dd ; $57a5
+	call DrawCreatedCharStats ; $57a5
 	jr Label_38_57b7 ; $57a8
 Label_38_57aa:
 	cp a, $ff ; $57aa
 	jr z, Label_38_57b7 ; $57ac
 	ld c, a ; $57ae
 	push bc ; $57af
-	call Func_38_58cd ; $57b0
+	call DrawCharNameAndType ; $57b0
 	pop bc ; $57b3
 	call Func_38_591b ; $57b4
 Label_38_57b7:
@@ -2939,7 +2939,7 @@ Label_38_57b7:
 	pop af ; $57d5
 	ret ; $57d6
 	INCBIN "data/bank_038/d_57d7.bin" ; $57d7, 6 bytes
-Func_38_57dd:
+DrawCreatedCharStats:
 	push af ; $57dd
 	push bc ; $57de
 	push de ; $57df
@@ -3058,7 +3058,7 @@ Label_38_58b7:
 	pop bc ; $58ca
 	pop af ; $58cb
 	ret ; $58cc
-Func_38_58cd:
+DrawCharNameAndType:
 	push bc ; $58cd
 	ld a, c ; $58ce
 	ld hl, $001b ; $58cf
@@ -3140,7 +3140,7 @@ Label_38_597e:
 	ld c, $01 ; $5985
 	farcall FillTilemapRect ; $5987
 	ret ; $598a
-Func_38_598b:
+DrawCharGridSlotIcons:
 	ldh a, [hWramBank] ; $598b
 	push af ; $598d
 	wram_bank $03 ; $598e
@@ -3167,7 +3167,7 @@ Label_38_59a3:
 	ld d, [hl] ; $59ac
 	ld e, a ; $59ad
 	inc hl ; $59ae
-	call Func_38_59fa ; $59af
+	call WriteSlotIconTiles ; $59af
 	jr Label_38_59a3 ; $59b2
 Label_38_59b4:
 	pop af ; $59b4
@@ -3213,7 +3213,7 @@ SubHandlers_38_59ba:
 	inc b ; $59f5
 	ld bc, $d12f ; $59f6
 	nop ; $59f9
-Func_38_59fa:
+WriteSlotIconTiles:
 	push af ; $59fa
 	push bc ; $59fb
 	push de ; $59fc
@@ -3236,7 +3236,7 @@ Func_38_59fa:
 	pop bc ; $5a18
 	pop af ; $5a19
 	ret ; $5a1a
-Func_38_5a1b:
+InitCharGridState:
 	ldh a, [hWramBank] ; $5a1b
 	push af ; $5a1d
 	wram_bank $03 ; $5a1e
@@ -3267,18 +3267,18 @@ Label_38_5a5c:
 Label_38_5a5e:
 	ld [$d814], a ; $5a5e
 	ld hl, $d840 ; $5a61
-	call Func_38_5b43 ; $5a64
-	call Func_38_5bb7 ; $5a67
-	call Func_38_5bd9 ; $5a6a
-	call Func_38_60ec ; $5a6d
-	call Func_38_6146 ; $5a70
-	call Func_38_6192 ; $5a73
-	call Func_38_61cb ; $5a76
-	call Func_38_5ce5 ; $5a79
+	call BuildCharGridFromUnlockFlags ; $5a64
+	call FillCharGridPaletteIndices ; $5a67
+	call AddCreatedCharsToCharGrid ; $5a6a
+	call CompactRosterGridEntries ; $5a6d
+	call CompactStarGridEntries ; $5a70
+	call CountCharGridEntries ; $5a73
+	call SetCharGridPageCount ; $5a76
+	call BuildVisiblePageSpriteList ; $5a79
 	pop af ; $5a7c
 	wram_bank ; $5a7d
 	ret ; $5a81
-Func_38_5a82:
+BuildCharUnlockFlags:
 	ldh a, [hWramBank] ; $5a82
 	push af ; $5a84
 	wram_bank $03 ; $5a85
@@ -3379,7 +3379,7 @@ Label_38_5afe:
 	wram_bank ; $5b12
 	ret ; $5b16
 	INCBIN "data/bank_038/d_5b17.bin" ; $5b17, 44 bytes
-Func_38_5b43:
+BuildCharGridFromUnlockFlags:
 	ld a, $01 ; $5b43
 	ld [$d81c], a ; $5b45
 	ld de, $da00 ; $5b48
@@ -3415,7 +3415,7 @@ Label_38_5b63:
 	jr nz, Label_38_5b4d ; $5b6c
 	ret ; $5b6e
 	INCBIN "data/bank_038/d_5b6f.bin" ; $5b6f, 72 bytes
-Func_38_5bb7:
+FillCharGridPaletteIndices:
 	ld hl, $da00 ; $5bb7
 	ld c, $00 ; $5bba
 	ld b, $00 ; $5bbc
@@ -3442,7 +3442,7 @@ Label_38_5bd1:
 	cp a, $20 ; $5bd4
 	jr nz, Label_38_5bbe ; $5bd6
 	ret ; $5bd8
-Func_38_5bd9:
+AddCreatedCharsToCharGrid:
 	ldh a, [hWramBank] ; $5bd9
 	push af ; $5bdb
 	wram_bank $03 ; $5bdc
@@ -3527,7 +3527,7 @@ Label_38_5c3a:
 	pop af ; $5c41
 	wram_bank ; $5c42
 	ret ; $5c46
-Func_38_5c47:
+AdvanceToNextPlayerSlot:
 	ld a, [$d813] ; $5c47
 	ld hl, SubHandlers_38_5c8f ; $5c4a
 	add a, a ; $5c4d
@@ -3548,7 +3548,7 @@ Label_38_5c5a:
 	ld a, [hl] ; $5c5e
 	ld [$d814], a ; $5c5f
 	ret ; $5c62
-Func_38_5c63:
+RetreatToPreviousPlayerSlot:
 	ld a, [$d813] ; $5c63
 	ld hl, SubHandlers_38_5c8f ; $5c66
 	add a, a ; $5c69
@@ -3645,7 +3645,7 @@ Label_38_5cde:
 	wram_bank ; $5cdf
 	ld a, b ; $5ce3
 	ret ; $5ce4
-Func_38_5ce5:
+BuildVisiblePageSpriteList:
 	push af ; $5ce5
 	push bc ; $5ce6
 	push de ; $5ce7
@@ -3697,7 +3697,7 @@ Label_38_5d12:
 	ldh a, [hWramBank] ; $5d28
 	push af ; $5d2a
 	wram_bank $03 ; $5d2b
-	call Func_38_5d60 ; $5d31
+	call GetGridEntryTakenPtr ; $5d31
 	ld a, [hl] ; $5d34
 	ld b, a ; $5d35
 	xor a, a ; $5d36
@@ -3709,14 +3709,14 @@ Label_38_5d12:
 	pop de ; $5d3f
 	pop bc ; $5d40
 	ret ; $5d41
-Func_38_5d42:
+TestAndSetGridEntryTaken:
 	push bc ; $5d42
 	push de ; $5d43
 	push hl ; $5d44
 	ldh a, [hWramBank] ; $5d45
 	push af ; $5d47
 	wram_bank $03 ; $5d48
-	call Func_38_5d60 ; $5d4e
+	call GetGridEntryTakenPtr ; $5d4e
 	ld a, [hl] ; $5d51
 	ld b, a ; $5d52
 	ld a, $01 ; $5d53
@@ -3728,7 +3728,7 @@ Func_38_5d42:
 	pop de ; $5d5d
 	pop bc ; $5d5e
 	ret ; $5d5f
-Func_38_5d60:
+GetGridEntryTakenPtr:
 	ld hl, $da00 ; $5d60
 	ld a, c ; $5d63
 	ld bc, $000c ; $5d64
@@ -3759,7 +3759,7 @@ Label_38_5d7b:
 	inc h ; $5d81
 Label_38_5d82:
 	ret ; $5d82
-Func_38_5d83:
+BuildCreatedCharRecords:
 	push af ; $5d83
 	push bc ; $5d84
 	push de ; $5d85
@@ -3887,7 +3887,7 @@ Label_38_5e5d:
 	pop bc ; $5e6b
 	pop af ; $5e6c
 	ret ; $5e6d
-Func_38_5e6e:
+ResolveSelectedCharIds:
 	ldh a, [hWramBank] ; $5e6e
 	push af ; $5e70
 	wram_bank $03 ; $5e71
@@ -3926,11 +3926,11 @@ Label_38_5e98:
 	pop af ; $5ea0
 	wram_bank ; $5ea1
 	ret ; $5ea5
-Func_38_5ea6:
+InitMatchCharsFromSelection:
 	ldh a, [hWramBank] ; $5ea6
 	push af ; $5ea8
 	wram_bank $03 ; $5ea9
-	call Func_38_605b ; $5eaf
+	call CacheStorySlotNames ; $5eaf
 	ld a, [$d816] ; $5eb2
 	cp a, $ff ; $5eb5
 	jr z, Label_38_5ed7 ; $5eb7
@@ -3941,7 +3941,7 @@ Func_38_5ea6:
 	srl a ; $5ec0
 	ld b, a ; $5ec2
 	ld a, c ; $5ec3
-	call Func_38_60b9 ; $5ec4
+	call LoadCachedStorySlotName ; $5ec4
 	and a, $81 ; $5ec7
 	ld b, a ; $5ec9
 	ld c, $00 ; $5eca
@@ -3962,7 +3962,7 @@ Label_38_5ed7:
 	srl a ; $5ee5
 	ld b, a ; $5ee7
 	ld a, c ; $5ee8
-	call Func_38_60b9 ; $5ee9
+	call LoadCachedStorySlotName ; $5ee9
 	and a, $81 ; $5eec
 	ld b, a ; $5eee
 	ld c, $01 ; $5eef
@@ -3983,7 +3983,7 @@ Label_38_5efc:
 	srl a ; $5f0a
 	ld b, a ; $5f0c
 	ld a, c ; $5f0d
-	call Func_38_60b9 ; $5f0e
+	call LoadCachedStorySlotName ; $5f0e
 	and a, $81 ; $5f11
 	ld b, a ; $5f13
 	ld c, $02 ; $5f14
@@ -4004,7 +4004,7 @@ Label_38_5f21:
 	srl a ; $5f2f
 	ld b, a ; $5f31
 	ld a, c ; $5f32
-	call Func_38_60b9 ; $5f33
+	call LoadCachedStorySlotName ; $5f33
 	and a, $81 ; $5f36
 	ld b, a ; $5f38
 	ld c, $03 ; $5f39
@@ -4018,7 +4018,7 @@ Label_38_5f46:
 	pop af ; $5f46
 	wram_bank ; $5f47
 	ret ; $5f4b
-Func_38_5f4c:
+ApplyCpuDifficultyToCharRecords:
 	ldh a, [hWramBank] ; $5f4c
 	push af ; $5f4e
 	wram_bank $03 ; $5f4f
@@ -4044,7 +4044,7 @@ Label_38_5f61:
 	ld a, [hl+] ; $5f74
 	ld [wExhibitionModePlayerPartnerCharacterDifficulty], a ; $5f75
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $5f78
-	call Func_38_6013 ; $5f7b
+	call IsCreatedCharId ; $5f7b
 	or a, a ; $5f7e
 	jr nz, Label_38_5f85 ; $5f7f
 	ld a, [hl+] ; $5f81
@@ -4072,7 +4072,7 @@ Label_38_5f91:
 	ld a, [hl+] ; $5fa4
 	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $5fa5
 	ld a, [wPlayer2CurrentMainCharacter] ; $5fa8
-	call Func_38_6013 ; $5fab
+	call IsCreatedCharId ; $5fab
 	or a, a ; $5fae
 	jr nz, Label_38_5fb5 ; $5faf
 	ld a, [hl+] ; $5fb1
@@ -4100,7 +4100,7 @@ Label_38_5fc1:
 	ld a, [hl+] ; $5fd4
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $5fd5
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $5fd8
-	call Func_38_6013 ; $5fdb
+	call IsCreatedCharId ; $5fdb
 	or a, a ; $5fde
 	jr nz, Label_38_5fe5 ; $5fdf
 	ld a, [hl+] ; $5fe1
@@ -4142,7 +4142,7 @@ Label_38_600a:
 	nop ; $600f
 	and a, $03 ; $6010
 	rlca ; $6012
-Func_38_6013:
+IsCreatedCharId:
 	cp a, $04 ; $6013
 	jr nc, Label_38_601a ; $6015
 	ld a, $01 ; $6017
@@ -4150,7 +4150,7 @@ Func_38_6013:
 Label_38_601a:
 	xor a, a ; $601a
 	ret ; $601b
-Func_38_601c:
+ApplyStarFlagsToCharRecords:
 	ldh a, [hWramBank] ; $601c
 	push af ; $601e
 	wram_bank $03 ; $601f
@@ -4181,7 +4181,7 @@ Label_38_6055:
 	pop af ; $6055
 	wram_bank ; $6056
 	ret ; $605a
-Func_38_605b:
+CacheStorySlotNames:
 	push af ; $605b
 	push bc ; $605c
 	push de ; $605d
@@ -4221,7 +4221,7 @@ Func_38_605b:
 	farcall InitStoryModeState ; $60b2
 	farcall InitDefaultMatchSettings ; $60b5
 	ret ; $60b8
-Func_38_60b9:
+LoadCachedStorySlotName:
 	push af ; $60b9
 	push bc ; $60ba
 	push de ; $60bb
@@ -4251,7 +4251,7 @@ Label_38_60d0:
 	pop af ; $60e4
 	ret ; $60e5
 	INCBIN "data/bank_038/d_60e6.bin" ; $60e6, 6 bytes
-Func_38_60ec:
+CompactRosterGridEntries:
 	ld hl, $da24 ; $60ec
 	ld c, $00 ; $60ef
 Label_38_60f1:
@@ -4332,7 +4332,7 @@ Label_38_6130:
 	ld [hl+], a ; $6143
 	ld [hl+], a ; $6144
 	ret ; $6145
-Func_38_6146:
+CompactStarGridEntries:
 	ld hl, $da00 ; $6146
 	ld c, $00 ; $6149
 Label_38_614b:
@@ -4400,7 +4400,7 @@ Label_38_618a:
 	cp a, $08 ; $618d
 	jr nz, Label_38_614b ; $618f
 	ret ; $6191
-Func_38_6192:
+CountCharGridEntries:
 	ld hl, $da24 ; $6192
 	ld c, $00 ; $6195
 	ld b, $00 ; $6197
@@ -4442,7 +4442,7 @@ Label_38_61bb:
 	ld a, b ; $61c6
 	ld [$d823], a ; $61c7
 	ret ; $61ca
-Func_38_61cb:
+SetCharGridPageCount:
 	ld a, [$d81a] ; $61cb
 	ld hl, $61db ; $61ce
 	add a, l ; $61d1
@@ -4454,7 +4454,7 @@ Label_38_61d6:
 	ld [$d812], a ; $61d7
 	ret ; $61da
 	INCBIN "data/bank_038/d_61db.bin" ; $61db, 28 bytes
-Func_38_61f7:
+NeedsCpuDifficultyPrompt:
 	call IsStarCharacter ; $61f7
 	or a, a ; $61fa
 	jr z, Label_38_6206 ; $61fb
@@ -4477,20 +4477,20 @@ IsStarCharacter:
 Label_38_6214:
 	xor a, a ; $6214
 	ret ; $6215
-Func_38_6216:
+RunCpuDifficultySubmenu:
 	ldh a, [hWramBank] ; $6216
 	push af ; $6218
 	wram_bank $03 ; $6219
 	ld a, [$d825] ; $621f
 	or a, a ; $6222
 	jr nz, Label_38_6230 ; $6223
-	call Func_38_636d ; $6225
-	call Func_38_6396 ; $6228
+	call OpenCpuDifficultyPanel ; $6225
+	call QueueCpuDifficultyPanelToVram ; $6228
 	ld a, $01 ; $622b
 	ld [$d825], a ; $622d
 Label_38_6230:
-	call Func_38_630f ; $6230
-	call Func_38_633b ; $6233
+	call HandleCpuDifficultyInput ; $6230
+	call DrawCpuDifficultyCursorBox ; $6233
 	ld a, [wMenuInputPressed] ; $6236
 	bit PADB_A, a ; $6239
 	jr nz, Label_38_628d ; $623b
@@ -4498,7 +4498,7 @@ Label_38_6230:
 	jr nz, Label_38_6243 ; $623f
 	jr Label_38_62c2 ; $6241
 Label_38_6243:
-	call Func_38_62c8 ; $6243
+	call CloseCpuDifficultyPanel ; $6243
 	sound $62 ; $6246
 	wram_bank $03 ; $6248
 	ld hl, $d830 ; $624e
@@ -4541,12 +4541,12 @@ Label_38_6281:
 	inc hl ; $6282
 	xor a, a ; $6283
 	ld [hl], a ; $6284
-	call Func_38_55ab ; $6285
-	call Func_38_5ce5 ; $6288
+	call ClearPlayerSlotPortrait ; $6285
+	call BuildVisiblePageSpriteList ; $6288
 	jr Label_38_62b4 ; $628b
 Label_38_628d:
 	sound $5f ; $628d
-	call Func_38_62c8 ; $628f
+	call CloseCpuDifficultyPanel ; $628f
 	ld hl, $d830 ; $6292
 	ld a, [$d814] ; $6295
 	add a, l ; $6298
@@ -4558,14 +4558,14 @@ Label_38_629d:
 	inc a ; $62a0
 	ld [hl], a ; $62a1
 	call GetGridSlotFromCursor ; $62a2
-	call Func_38_5612 ; $62a5
-	call Func_38_5c47 ; $62a8
+	call DrawPlayerSlotPortrait ; $62a5
+	call AdvanceToNextPlayerSlot ; $62a8
 	cp a, $ff ; $62ab
 	jr nz, Label_38_62b4 ; $62ad
 	ld a, $01 ; $62af
 	ld [$d815], a ; $62b1
 Label_38_62b4:
-	call Func_38_5424 ; $62b4
+	call DrawCharGridSlotPrompt ; $62b4
 	ld hl, $d040 ; $62b7
 	ld de, $9840 ; $62ba
 	ld c, $04 ; $62bd
@@ -4574,7 +4574,7 @@ Label_38_62c2:
 	pop af ; $62c2
 	wram_bank ; $62c3
 	ret ; $62c7
-Func_38_62c8:
+CloseCpuDifficultyPanel:
 	xor a, a ; $62c8
 	ld [$d825], a ; $62c9
 	ld [$d824], a ; $62cc
@@ -4593,7 +4593,7 @@ Func_38_62c8:
 	ld c, $03 ; $62ee
 	ld h, $00 ; $62f0
 	farcall FillTilemapRect ; $62f2
-	call Func_38_575e ; $62f5
+	call RefreshCharInfoPanel ; $62f5
 	ld hl, $d220 ; $62f8
 	ld de, $9a20 ; $62fb
 	ld c, $02 ; $62fe
@@ -4603,7 +4603,7 @@ Func_38_62c8:
 	ld c, $08 ; $6309
 	call QueueVRAMCopy ; $630b
 	ret ; $630e
-Func_38_630f:
+HandleCpuDifficultyInput:
 	ld a, [wMenuInputPressed] ; $630f
 	bit PADB_LEFT, a ; $6312
 	jr nz, Label_38_631b ; $6314
@@ -4633,7 +4633,7 @@ Label_38_6331:
 Label_38_6337:
 	ld [$d826], a ; $6337
 	ret ; $633a
-Func_38_633b:
+DrawCpuDifficultyCursorBox:
 	ld a, [$d826] ; $633b
 	add a, a ; $633e
 	ld hl, $635d ; $633f
@@ -4659,7 +4659,7 @@ Label_38_6356:
 	call DrawSelectedOptionBox ; $6359
 	ret ; $635c
 	INCBIN "data/bank_038/d_635d.bin" ; $635d, 16 bytes
-Func_38_636d:
+OpenCpuDifficultyPanel:
 	ldh a, [hWramBank] ; $636d
 	push af ; $636f
 	wram_bank $03 ; $6370
@@ -4676,7 +4676,7 @@ Func_38_636d:
 	pop af ; $6390
 	wram_bank ; $6391
 	ret ; $6395
-Func_38_6396:
+QueueCpuDifficultyPanelToVram:
 	ldh a, [hWramBank] ; $6396
 	push af ; $6398
 	wram_bank $03 ; $6399
@@ -4693,7 +4693,7 @@ Func_38_6396:
 	ret ; $63ba
 	ret ; $63bb
 	ret ; $63bc
-Func_38_63bd:
+RunLinkCharSelectScreen:
 	xor a, a ; $63bd
 	ldh [$ffd8], a ; $63be
 	ldh [$ffe4], a ; $63c0
@@ -4740,7 +4740,7 @@ Label_38_63fd:
 	ld a, [wMatchTypeNumberOfGames] ; $6417
 	push af ; $641a
 	push bc ; $641b
-	call Func_38_4f6f ; $641c
+	call SetupCharGridScreen ; $641c
 	pop bc ; $641f
 	pop af ; $6420
 	ld [wMatchTypeNumberOfGames], a ; $6421
@@ -4759,7 +4759,7 @@ Label_38_63fd:
 	pop af ; $6440
 	xor a, a ; $6441
 	ldh [$ffe2], a ; $6442
-	call Func_38_5a1b ; $6444
+	call InitCharGridState ; $6444
 	xor a, a ; $6447
 	ldh [$ffe4], a ; $6448
 	ld [wMenuCursor2X], a ; $644a
@@ -4771,10 +4771,10 @@ Label_38_63fd:
 	ld [$d838], a ; $6457
 	ld [$cb72], a ; $645a
 	ld a, $01 ; $645d
-	ld hl, Func_38_4e52 ; $645f
+	ld hl, TickMenuBgScrollTask_38 ; $645f
 	call RegisterFrameTask ; $6462
 	wram_bank $03 ; $6465
-	call Func_38_575e ; $646b
+	call RefreshCharInfoPanel ; $646b
 Label_38_646e:
 	push af ; $646e
 	farcall RunLinkCommandFrame ; $646f
@@ -4786,27 +4786,27 @@ Label_38_646e:
 	jr nz, Label_38_6482 ; $647d
 	call JumpSoftReset ; $647f
 Label_38_6482:
-	call Func_38_6e04 ; $6482
+	call WaitLinkSelectStartupFrames ; $6482
 	or a, a ; $6485
 	jr z, Label_38_646e ; $6486
 	ld b, $03 ; $6488
 	ld c, $02 ; $648a
-	call Func_38_5195 ; $648c
-	call Func_38_6720 ; $648f
-	call Func_38_6528 ; $6492
+	call HandleCharGridDpad ; $648c
+	call HandleLinkGridButtons ; $648f
+	call ProcessLinkSelectCommand ; $6492
 	ldh a, [hWramBank] ; $6495
 	push af ; $6497
 	wram_bank $03 ; $6498
-	call Func_38_66e9 ; $649e
+	call CheckLinkSelectionComplete ; $649e
 	ld a, [$d814] ; $64a1
 	cp a, $04 ; $64a4
 	jr z, Label_38_64b3 ; $64a6
-	call Func_38_4f4b ; $64a8
-	call Func_38_5545 ; $64ab
-	call Func_38_54cc ; $64ae
+	call DrawCharGridCursorBox ; $64a8
+	call DrawCharGridCharSprites ; $64ab
+	call DrawCharGridScrollArrows ; $64ae
 	jr Label_38_64b6 ; $64b1
 Label_38_64b3:
-	call Func_38_549a ; $64b3
+	call DrawCharGridWaitBanner ; $64b3
 Label_38_64b6:
 	ld a, [$d815] ; $64b6
 	ld b, a ; $64b9
@@ -4820,7 +4820,7 @@ Label_38_64b6:
 	jp Label_38_646e ; $64c8
 Label_38_64cb:
 	call ClearFrameTasks ; $64cb
-	call Func_38_6528 ; $64ce
+	call ProcessLinkSelectCommand ; $64ce
 	sound $5f ; $64d1
 	push af ; $64d3
 	farcall SyncLinkFrame ; $64d4
@@ -4829,10 +4829,10 @@ Label_38_64cb:
 	ldh [$ffd8], a ; $64d9
 	call ResetSerialState ; $64db
 	call EnableTimerInterrupt ; $64de
-	call Func_38_5e6e ; $64e1
-	call Func_38_6a7f ; $64e4
-	call Func_38_601c ; $64e7
-	call Func_38_5f4c ; $64ea
+	call ResolveSelectedCharIds ; $64e1
+	call InitLinkMatchCharsFromSelection ; $64e4
+	call ApplyStarFlagsToCharRecords ; $64e7
+	call ApplyCpuDifficultyToCharRecords ; $64ea
 	ldh a, [hLinkState] ; $64ed
 	cp a, $01 ; $64ef
 	jr nz, Label_38_64f6 ; $64f1
@@ -4862,7 +4862,7 @@ Label_38_6505:
 	set 2, [hl] ; $6523
 	ld a, $ff ; $6525
 	ret ; $6527
-Func_38_6528:
+ProcessLinkSelectCommand:
 	ldh a, [hLinkRemoteInput] ; $6528
 	cp a, $20 ; $652a
 	jr nz, Label_38_6534 ; $652c
@@ -4878,12 +4878,12 @@ Label_38_6534:
 	cp a, $22 ; $6543
 	jp z, Label_38_6608 ; $6545
 	ld c, a ; $6548
-	call Func_38_661e ; $6549
+	call ApplyRemoteCharSelection ; $6549
 	jp Label_38_6608 ; $654c
 Label_38_654f:
 	cp a, $23 ; $654f
 	jr nz, Label_38_6559 ; $6551
-	call Func_38_6655 ; $6553
+	call ApplyRemoteCharCancel ; $6553
 	jp Label_38_6608 ; $6556
 Label_38_6559:
 	cp a, $28 ; $6559
@@ -4925,7 +4925,7 @@ Label_38_659c:
 Label_38_659e:
 	ld a, [$d821] ; $659e
 	ld c, a ; $65a1
-	call Func_38_661e ; $65a2
+	call ApplyRemoteCharSelection ; $65a2
 	jr Label_38_6608 ; $65a5
 Label_38_65a7:
 	cp a, $29 ; $65a7
@@ -4935,10 +4935,10 @@ Label_38_65ad:
 	cp a, $24 ; $65ad
 	jr nz, Label_38_65c3 ; $65af
 	ld c, $01 ; $65b1
-	call Func_38_6609 ; $65b3
+	call StoreRemoteCpuDifficulty ; $65b3
 	ld a, [$d820] ; $65b6
 	ld c, a ; $65b9
-	call Func_38_688d ; $65ba
+	call DrawRemoteSlotPortrait ; $65ba
 	xor a, a ; $65bd
 	ld [$d838], a ; $65be
 	jr Label_38_6608 ; $65c1
@@ -4946,10 +4946,10 @@ Label_38_65c3:
 	cp a, $25 ; $65c3
 	jr nz, Label_38_65d9 ; $65c5
 	ld c, $02 ; $65c7
-	call Func_38_6609 ; $65c9
+	call StoreRemoteCpuDifficulty ; $65c9
 	ld a, [$d820] ; $65cc
 	ld c, a ; $65cf
-	call Func_38_688d ; $65d0
+	call DrawRemoteSlotPortrait ; $65d0
 	xor a, a ; $65d3
 	ld [$d838], a ; $65d4
 	jr Label_38_6608 ; $65d7
@@ -4957,10 +4957,10 @@ Label_38_65d9:
 	cp a, $26 ; $65d9
 	jr nz, Label_38_65ef ; $65db
 	ld c, $03 ; $65dd
-	call Func_38_6609 ; $65df
+	call StoreRemoteCpuDifficulty ; $65df
 	ld a, [$d820] ; $65e2
 	ld c, a ; $65e5
-	call Func_38_688d ; $65e6
+	call DrawRemoteSlotPortrait ; $65e6
 	xor a, a ; $65e9
 	ld [$d838], a ; $65ea
 	jr Label_38_6608 ; $65ed
@@ -4968,10 +4968,10 @@ Label_38_65ef:
 	cp a, $27 ; $65ef
 	jr nz, Label_38_6605 ; $65f1
 	ld c, $04 ; $65f3
-	call Func_38_6609 ; $65f5
+	call StoreRemoteCpuDifficulty ; $65f5
 	ld a, [$d820] ; $65f8
 	ld c, a ; $65fb
-	call Func_38_688d ; $65fc
+	call DrawRemoteSlotPortrait ; $65fc
 	xor a, a ; $65ff
 	ld [$d838], a ; $6600
 	jr Label_38_6608 ; $6603
@@ -4979,7 +4979,7 @@ Label_38_6605:
 	ld [$d821], a ; $6605
 Label_38_6608:
 	ret ; $6608
-Func_38_6609:
+StoreRemoteCpuDifficulty:
 	ld a, [$d813] ; $6609
 	cp a, $03 ; $660c
 	jr z, Label_38_6619 ; $660e
@@ -4992,20 +4992,20 @@ Label_38_6619:
 	ld a, c ; $6619
 	ld [$d831], a ; $661a
 	ret ; $661d
-Func_38_661e:
+ApplyRemoteCharSelection:
 	ldh a, [hWramBank] ; $661e
 	push af ; $6620
 	wram_bank $03 ; $6621
 	push bc ; $6627
 	ld d, c ; $6628
 	ld e, $01 ; $6629
-	call Func_38_6a4b ; $662b
+	call SetGridEntryTakenByCharId ; $662b
 	pop bc ; $662e
 	cp a, $ff ; $662f
 	jr z, Label_38_664f ; $6631
 	push bc ; $6633
-	call Func_38_688d ; $6634
-	call Func_38_5ce5 ; $6637
+	call DrawRemoteSlotPortrait ; $6634
+	call BuildVisiblePageSpriteList ; $6637
 	pop bc ; $663a
 	ld a, [$d81d] ; $663b
 	cp a, $00 ; $663e
@@ -5017,14 +5017,14 @@ Label_38_6648:
 	ld a, c ; $6648
 	ld [$d820], a ; $6649
 Label_38_664c:
-	call Func_38_69ed ; $664c
+	call AdvanceRemotePlayerSlot ; $664c
 Label_38_664f:
 	pop af ; $664f
 	wram_bank ; $6650
 	ret ; $6654
-Func_38_6655:
+ApplyRemoteCharCancel:
 	push bc ; $6655
-	call Func_38_6a09 ; $6656
+	call RetreatRemotePlayerSlot ; $6656
 	pop bc ; $6659
 	cp a, $ff ; $665a
 	jr z, Label_38_66c2 ; $665c
@@ -5040,7 +5040,7 @@ Label_38_666b:
 Label_38_666f:
 	ld d, c ; $666f
 	ld e, $00 ; $6670
-	call Func_38_6a4b ; $6672
+	call SetGridEntryTakenByCharId ; $6672
 	wram_bank $03 ; $6675
 	ld a, [$d813] ; $667b
 	cp a, $03 ; $667e
@@ -5086,8 +5086,8 @@ Label_38_66ba:
 	xor a, a ; $66ba
 	ld [hl], a ; $66bb
 Label_38_66bc:
-	call Func_38_6942 ; $66bc
-	call Func_38_5ce5 ; $66bf
+	call ClearRemoteSlotPortrait ; $66bc
+	call BuildVisiblePageSpriteList ; $66bf
 Label_38_66c2:
 	ret ; $66c2
 	ld a, [$d813] ; $66c3
@@ -5107,7 +5107,7 @@ Label_38_66dc:
 	ld [$d817], a ; $66e5
 Label_38_66e8:
 	ret ; $66e8
-Func_38_66e9:
+CheckLinkSelectionComplete:
 	ldh a, [hWramBank] ; $66e9
 	push af ; $66eb
 	wram_bank $03 ; $66ec
@@ -5134,7 +5134,7 @@ Label_38_671a:
 	pop af ; $671a
 	wram_bank ; $671b
 	ret ; $671f
-Func_38_6720:
+HandleLinkGridButtons:
 	ld a, [wMenuInputPressed] ; $6720
 	and a, $f0 ; $6723
 	ret nz ; $6725
@@ -5147,10 +5147,10 @@ Func_38_6720:
 	jr nz, Label_38_673e ; $6733
 	ret ; $6735
 Label_38_6736:
-	call Func_38_676f ; $6736
+	call ConfirmLinkGridSelection ; $6736
 	ret ; $6739
 Label_38_673a:
-	call Func_38_6805 ; $673a
+	call CancelLinkGridSelection ; $673a
 	ret ; $673d
 Label_38_673e:
 	call GetGridSlotFromCursor ; $673e
@@ -5174,15 +5174,15 @@ Label_38_674c:
 	jr z, Label_38_6766 ; $675b
 	xor a, $01 ; $675d
 	ld [$df00], a ; $675f
-	call Func_38_575e ; $6762
+	call RefreshCharInfoPanel ; $6762
 	ret ; $6765
 Label_38_6766:
 	ld a, $01 ; $6766
 	ld [$df00], a ; $6768
-	call Func_38_575e ; $676b
+	call RefreshCharInfoPanel ; $676b
 Label_38_676e:
 	ret ; $676e
-Func_38_676f:
+ConfirmLinkGridSelection:
 	ldh a, [hWramBank] ; $676f
 	push af ; $6771
 	wram_bank $03 ; $6772
@@ -5202,7 +5202,7 @@ Label_38_678b:
 	ld d, a ; $6792
 	ld a, [wMenuCursorY] ; $6793
 	ld e, a ; $6796
-	call Func_38_5d42 ; $6797
+	call TestAndSetGridEntryTaken ; $6797
 	or a, a ; $679a
 	jr nz, Label_38_67df ; $679b
 	sound $5f ; $679d
@@ -5244,7 +5244,7 @@ Label_38_67ce:
 	inc h ; $67d8
 Label_38_67d9:
 	ld [hl], b ; $67d9
-	call Func_38_5612 ; $67da
+	call DrawPlayerSlotPortrait ; $67da
 	jr Label_38_67e7 ; $67dd
 Label_38_67df:
 	sound $62 ; $67df
@@ -5252,12 +5252,12 @@ Label_38_67df:
 	wram_bank ; $67e2
 	ret ; $67e6
 Label_38_67e7:
-	call Func_38_5ce5 ; $67e7
-	call Func_38_5c47 ; $67ea
+	call BuildVisiblePageSpriteList ; $67e7
+	call AdvanceToNextPlayerSlot ; $67ea
 	cp a, $04 ; $67ed
 	jr nz, Label_38_67f1 ; $67ef
 Label_38_67f1:
-	call Func_38_5424 ; $67f1
+	call DrawCharGridSlotPrompt ; $67f1
 	ld hl, $d040 ; $67f4
 	ld de, $9840 ; $67f7
 	ld c, $04 ; $67fa
@@ -5265,11 +5265,11 @@ Label_38_67f1:
 	pop af ; $67ff
 	wram_bank ; $6800
 	ret ; $6804
-Func_38_6805:
+CancelLinkGridSelection:
 	ldh a, [hWramBank] ; $6805
 	push af ; $6807
 	wram_bank $03 ; $6808
-	call Func_38_5c63 ; $680e
+	call RetreatToPreviousPlayerSlot ; $680e
 	cp a, $ff ; $6811
 	jr nz, Label_38_681b ; $6813
 	pop af ; $6815
@@ -5285,7 +5285,7 @@ Label_38_681b:
 	ld [wMenuCursor2Y], a ; $6829
 	ld [$d811], a ; $682c
 	ldh [$ffe3], a ; $682f
-	call Func_38_575e ; $6831
+	call RefreshCharInfoPanel ; $6831
 Label_38_6834:
 	sound $62 ; $6834
 	ld hl, $d816 ; $6836
@@ -5329,9 +5329,9 @@ Label_38_6864:
 Label_38_6871:
 	xor a, a ; $6871
 	ld [hl], a ; $6872
-	call Func_38_55ab ; $6873
-	call Func_38_5ce5 ; $6876
-	call Func_38_5424 ; $6879
+	call ClearPlayerSlotPortrait ; $6873
+	call BuildVisiblePageSpriteList ; $6876
+	call DrawCharGridSlotPrompt ; $6879
 	ld hl, $d040 ; $687c
 	ld de, $9840 ; $687f
 	ld c, $04 ; $6882
@@ -5339,7 +5339,7 @@ Label_38_6871:
 	pop af ; $6887
 	wram_bank ; $6888
 	ret ; $688c
-Func_38_688d:
+DrawRemoteSlotPortrait:
 	ldh a, [hWramBank] ; $688d
 	push af ; $688f
 	wram_bank $03 ; $6890
@@ -5349,15 +5349,15 @@ Func_38_688d:
 	pop bc ; $689b
 	ld d, a ; $689c
 	ld e, c ; $689d
-	call Func_38_69a5 ; $689e
+	call GetRemoteSlotBoxAddress ; $689e
 	ld h, d ; $68a1
 	ld l, e ; $68a2
 	ld d, b ; $68a3
 	ld e, c ; $68a4
 	ld b, l ; $68a5
 	ld c, h ; $68a6
-	call Func_38_5712 ; $68a7
-	call Func_38_68ec ; $68aa
+	call WriteCharPortraitTiles ; $68a7
+	call DrawRemoteSlotStarMark ; $68aa
 	ld a, [$d813] ; $68ad
 	cp a, $03 ; $68b0
 	jr z, Label_38_68d0 ; $68b2
@@ -5385,7 +5385,7 @@ Label_38_68e6:
 	pop af ; $68e6
 	wram_bank ; $68e7
 	ret ; $68eb
-Func_38_68ec:
+DrawRemoteSlotStarMark:
 	ld a, [$d813] ; $68ec
 	cp a, $03 ; $68ef
 	jr z, Label_38_6907 ; $68f1
@@ -5414,7 +5414,7 @@ Label_38_6912:
 	or a, a ; $6913
 	ret z ; $6914
 Label_38_6915:
-	call Func_38_69a5 ; $6915
+	call GetRemoteSlotBoxAddress ; $6915
 	ld hl, $001f ; $6918
 	add hl, bc ; $691b
 	ld a, $32 ; $691c
@@ -5439,8 +5439,8 @@ Label_38_6937:
 	ld [hl], a ; $6940
 Label_38_6941:
 	ret ; $6941
-Func_38_6942:
-	call Func_38_69a5 ; $6942
+ClearRemoteSlotPortrait:
+	call GetRemoteSlotBoxAddress ; $6942
 	ld d, b ; $6945
 	ld e, c ; $6946
 	ld b, $02 ; $6947
@@ -5457,7 +5457,7 @@ Func_38_6942:
 	ld e, l ; $695b
 	ld h, $08 ; $695c
 	farcall FillTilemapRect ; $695e
-	call Func_38_69a5 ; $6961
+	call GetRemoteSlotBoxAddress ; $6961
 	ld hl, $001e ; $6964
 	add hl, bc ; $6967
 	xor a, a ; $6968
@@ -5488,7 +5488,7 @@ Label_38_698e:
 	call QueueVRAMCopy ; $69a1
 Label_38_69a4:
 	ret ; $69a4
-Func_38_69a5:
+GetRemoteSlotBoxAddress:
 	ld a, [$d813] ; $69a5
 	add a, a ; $69a8
 	db $21 ; $69a9
@@ -5549,7 +5549,7 @@ SubHandlers_38_69c1:
 	pop de ; $69e8
 	ld sp, $00d1 ; $69e9
 	nop ; $69ec
-Func_38_69ed:
+AdvanceRemotePlayerSlot:
 	ld a, [$d813] ; $69ed
 	ld hl, $6a27 ; $69f0
 	add a, a ; $69f3
@@ -5570,7 +5570,7 @@ Label_38_6a00:
 	ld a, [hl] ; $6a04
 	ld [$d81d], a ; $6a05
 	ret ; $6a08
-Func_38_6a09:
+RetreatRemotePlayerSlot:
 	ld a, [$d813] ; $6a09
 	ld hl, $6a27 ; $6a0c
 	add a, a ; $6a0f
@@ -5623,7 +5623,7 @@ Label_38_6a1c:
 Label_38_6a49:
 	ld a, [hl] ; $6a49
 	ret ; $6a4a
-Func_38_6a4b:
+SetGridEntryTakenByCharId:
 	ld a, d ; $6a4b
 	cp a, $04 ; $6a4c
 	jr nc, Label_38_6a52 ; $6a4e
@@ -5667,11 +5667,11 @@ Label_38_6a79:
 Label_38_6a7c:
 	ld a, $ff ; $6a7c
 	ret ; $6a7e
-Func_38_6a7f:
+InitLinkMatchCharsFromSelection:
 	ldh a, [hWramBank] ; $6a7f
 	push af ; $6a81
 	wram_bank $03 ; $6a82
-	call Func_38_605b ; $6a88
+	call CacheStorySlotNames ; $6a88
 	ld a, [$d813] ; $6a8b
 	cp a, $03 ; $6a8e
 	jr z, Label_38_6ae2 ; $6a90
@@ -5687,7 +5687,7 @@ Func_38_6a7f:
 	srl a ; $6aa4
 	ld b, a ; $6aa6
 	ld a, c ; $6aa7
-	call Func_38_60b9 ; $6aa8
+	call LoadCachedStorySlotName ; $6aa8
 	and a, $81 ; $6aab
 	ld b, a ; $6aad
 	ld c, $00 ; $6aae
@@ -5708,7 +5708,7 @@ Label_38_6abb:
 	srl a ; $6ac9
 	ld b, a ; $6acb
 	ld a, c ; $6acc
-	call Func_38_60b9 ; $6acd
+	call LoadCachedStorySlotName ; $6acd
 	and a, $81 ; $6ad0
 	ld b, a ; $6ad2
 	ld c, $01 ; $6ad3
@@ -5731,7 +5731,7 @@ Label_38_6ae2:
 	srl a ; $6af0
 	ld b, a ; $6af2
 	ld a, c ; $6af3
-	call Func_38_60b9 ; $6af4
+	call LoadCachedStorySlotName ; $6af4
 	and a, $81 ; $6af7
 	ld b, a ; $6af9
 	ld c, $02 ; $6afa
@@ -5752,7 +5752,7 @@ Label_38_6b07:
 	srl a ; $6b15
 	ld b, a ; $6b17
 	ld a, c ; $6b18
-	call Func_38_60b9 ; $6b19
+	call LoadCachedStorySlotName ; $6b19
 	and a, $81 ; $6b1c
 	ld b, a ; $6b1e
 	ld c, $03 ; $6b1f
@@ -5799,11 +5799,11 @@ Label_38_6b56:
 	call PrintDecimalByte ; $6b6b
 	pop af ; $6b6e
 	pop de ; $6b6f
-	call Func_38_6bd7 ; $6b70
-	call Func_38_6b79 ; $6b73
+	call RunLinkCpuDifficultySubmenu ; $6b70
+	call HandleLinkCpuDifficultyInput ; $6b73
 	jr Label_38_6b42 ; $6b76
 	ret ; $6b78
-Func_38_6b79:
+HandleLinkCpuDifficultyInput:
 	ldh a, [hLinkRemoteInput] ; $6b79
 	bit 5, a ; $6b7b
 	jr nz, Label_38_6b8c ; $6b7d
@@ -5847,32 +5847,32 @@ Label_38_6bb4:
 	ld [$d839], a ; $6bb4
 	ret ; $6bb7
 Label_38_6bb8:
-	call Func_38_6bc0 ; $6bb8
+	call StubNop_38_6bc0 ; $6bb8
 	ret ; $6bbb
 Label_38_6bbc:
-	call Func_38_6bc1 ; $6bbc
+	call StubNop_38_6bc1 ; $6bbc
 	ret ; $6bbf
-Func_38_6bc0:
+StubNop_38_6bc0:
 	ret ; $6bc0
-Func_38_6bc1:
+StubNop_38_6bc1:
 	ret ; $6bc1
 	INCBIN "data/bank_038/d_6bc2.bin" ; $6bc2, 19 bytes
 	xor a, a ; $6bd5
 	ret ; $6bd6
-Func_38_6bd7:
+RunLinkCpuDifficultySubmenu:
 	ldh a, [hWramBank] ; $6bd7
 	push af ; $6bd9
 	wram_bank $03 ; $6bda
 	ld a, [$d825] ; $6be0
 	or a, a ; $6be3
 	jr nz, Label_38_6bf1 ; $6be4
-	call Func_38_636d ; $6be6
-	call Func_38_6396 ; $6be9
+	call OpenCpuDifficultyPanel ; $6be6
+	call QueueCpuDifficultyPanelToVram ; $6be9
 	ld a, $01 ; $6bec
 	ld [$d825], a ; $6bee
 Label_38_6bf1:
-	call Func_38_630f ; $6bf1
-	call Func_38_633b ; $6bf4
+	call HandleCpuDifficultyInput ; $6bf1
+	call DrawCpuDifficultyCursorBox ; $6bf4
 	ld a, [wMenuInputPressed] ; $6bf7
 	bit PADB_A, a ; $6bfa
 	jr nz, Label_38_6c17 ; $6bfc
@@ -5880,19 +5880,19 @@ Label_38_6bf1:
 	jr nz, Label_38_6c04 ; $6c00
 	jr Label_38_6c31 ; $6c02
 Label_38_6c04:
-	call Func_38_62c8 ; $6c04
+	call CloseCpuDifficultyPanel ; $6c04
 	sound $62 ; $6c07
 	wram_bank $03 ; $6c09
-	call Func_38_55ab ; $6c0f
-	call Func_38_5ce5 ; $6c12
+	call ClearPlayerSlotPortrait ; $6c0f
+	call BuildVisiblePageSpriteList ; $6c12
 	jr Label_38_6c23 ; $6c15
 Label_38_6c17:
 	ld hl, $d830 ; $6c17
 	ld a, [$d826] ; $6c1a
 	call GetGridSlotFromCursor ; $6c1d
-	call Func_38_5612 ; $6c20
+	call DrawPlayerSlotPortrait ; $6c20
 Label_38_6c23:
-	call Func_38_5424 ; $6c23
+	call DrawCharGridSlotPrompt ; $6c23
 	ld hl, $d040 ; $6c26
 	ld de, $9840 ; $6c29
 	ld c, $04 ; $6c2c
@@ -5901,7 +5901,7 @@ Label_38_6c31:
 	pop af ; $6c31
 	wram_bank ; $6c32
 	ret ; $6c36
-Func_38_6c37:
+GetGridSlotFromLinkCursor:
 	ldh a, [hWramBank] ; $6c37
 	push af ; $6c39
 	wram_bank $03 ; $6c3a
@@ -5932,8 +5932,8 @@ Label_38_6c5d:
 	wram_bank ; $6c5e
 	ld a, b ; $6c62
 	ret ; $6c63
-Func_38_6c64:
-	call Func_38_6c37 ; $6c64
+GetLinkCursorSelectionCode:
+	call GetGridSlotFromLinkCursor ; $6c64
 	ld hl, $da00 ; $6c67
 	add a, a ; $6c6a
 	add a, a ; $6c6b
@@ -6001,25 +6001,25 @@ Label_38_6cbf:
 Label_38_6cc7:
 	bit 4, a ; $6cc7
 	jr z, Label_38_6cd1 ; $6cc9
-	call Func_38_6d58 ; $6ccb
+	call MoveLinkCursorRight ; $6ccb
 	jp Label_38_6cec ; $6cce
 Label_38_6cd1:
 	bit 5, a ; $6cd1
 	jr z, Label_38_6cda ; $6cd3
-	call Func_38_6d77 ; $6cd5
+	call MoveLinkCursorLeft ; $6cd5
 	jr Label_38_6cec ; $6cd8
 Label_38_6cda:
 	bit 6, a ; $6cda
 	jr z, Label_38_6ce3 ; $6cdc
-	call Func_38_6d0b ; $6cde
+	call MoveLinkCursorUp ; $6cde
 	jr Label_38_6cec ; $6ce1
 Label_38_6ce3:
 	bit 7, a ; $6ce3
 	jr z, Label_38_6cec ; $6ce5
-	call Func_38_6d25 ; $6ce7
+	call MoveLinkCursorDown ; $6ce7
 	jr Label_38_6cec ; $6cea
 Label_38_6cec:
-	call Func_38_6c64 ; $6cec
+	call GetLinkCursorSelectionCode ; $6cec
 	ld b, a ; $6cef
 	ld a, [wMenuCursor2X] ; $6cf0
 	cp a, d ; $6cf3
@@ -6037,7 +6037,7 @@ Label_38_6d03:
 	wram_bank ; $6d04
 	ld a, $01 ; $6d08
 	ret ; $6d0a
-Func_38_6d0b:
+MoveLinkCursorUp:
 	ld a, [wMenuCursor2Y] ; $6d0b
 	or a, a ; $6d0e
 	jr z, Label_38_6d17 ; $6d0f
@@ -6056,7 +6056,7 @@ Label_38_6d22:
 	ldh [$ffe3], a ; $6d22
 Label_38_6d24:
 	ret ; $6d24
-Func_38_6d25:
+MoveLinkCursorDown:
 	ld a, [wMenuCursor2Y] ; $6d25
 	inc a ; $6d28
 	cp a, $02 ; $6d29
@@ -6090,7 +6090,7 @@ Label_38_6d55:
 	ldh [$ffe3], a ; $6d55
 Label_38_6d57:
 	ret ; $6d57
-Func_38_6d58:
+MoveLinkCursorRight:
 	ld a, [wMenuCursor2X] ; $6d58
 	inc a ; $6d5b
 	cp a, $03 ; $6d5c
@@ -6111,7 +6111,7 @@ Label_38_6d72:
 Label_38_6d73:
 	ld [wMenuCursor2X], a ; $6d73
 	ret ; $6d76
-Func_38_6d77:
+MoveLinkCursorLeft:
 	ld a, [wMenuCursor2X] ; $6d77
 	dec a ; $6d7a
 	cp a, $ff ; $6d7b
@@ -6132,7 +6132,7 @@ Label_38_6d91:
 Label_38_6d93:
 	ld [wMenuCursor2X], a ; $6d93
 	ret ; $6d96
-	call Func_38_5c63 ; $6d97
+	call RetreatToPreviousPlayerSlot ; $6d97
 	cp a, $ff ; $6d9a
 	jr nz, Label_38_6d9f ; $6d9c
 	ret ; $6d9e
@@ -6170,7 +6170,7 @@ Label_38_6dba:
 	ld d, a ; $6dce
 	ld a, [wMenuCursor2Y] ; $6dcf
 	ld e, a ; $6dd2
-	call Func_38_5d42 ; $6dd3
+	call TestAndSetGridEntryTaken ; $6dd3
 	or a, a ; $6dd6
 	jr nz, Label_38_6dff ; $6dd7
 	call GetGridSlotFromCursor ; $6dd9
@@ -6203,7 +6203,7 @@ Label_38_6dff:
 Label_38_6e01:
 	ld a, $01 ; $6e01
 	ret ; $6e03
-Func_38_6e04:
+WaitLinkSelectStartupFrames:
 	ld a, [$cb72] ; $6e04
 	cp a, $03 ; $6e07
 	jr z, Label_38_6e11 ; $6e09
@@ -6222,15 +6222,15 @@ RunNameEntryScreen:
 	ld [$d001], a ; $6e1f
 	call DisableLCDSafely ; $6e22
 	call ClearFrameTasks ; $6e25
-	call Func_38_6f6e ; $6e28
+	call SetupNameEntryScreen ; $6e28
 	ld a, $01 ; $6e2b
-	ld hl, Func_38_4408 ; $6e2d
+	ld hl, UpdateAnimatedTilesTask_38 ; $6e2d
 	call RegisterFrameTask ; $6e30
 	ld a, $01 ; $6e33
-	ld hl, Func_38_7090 ; $6e35
+	ld hl, DrawNameEntryCursor ; $6e35
 	call RegisterFrameTask ; $6e38
 	ld a, $01 ; $6e3b
-	ld hl, Func_38_7385 ; $6e3d
+	ld hl, DrawNameEntryUnderlineSprites ; $6e3d
 	call RegisterFrameTask ; $6e40
 	call EnableLCD ; $6e43
 	script_fade_in $10 ; $6e46
@@ -6238,7 +6238,7 @@ RunNameEntryScreen:
 	ld hl, rIE ; $6e4e
 	res 2, [hl] ; $6e51
 	ld a, $01 ; $6e53
-	ld hl, Func_38_4e52 ; $6e55
+	ld hl, TickMenuBgScrollTask_38 ; $6e55
 	call RegisterFrameTask ; $6e58
 Label_38_6e5b:
 	ld a, [wMenuCursorX] ; $6e5b
@@ -6256,7 +6256,7 @@ Label_38_6e5b:
 	call MoveMenuCursorBox ; $6e72
 	or a, a ; $6e75
 	jr z, Label_38_6e7b ; $6e76
-	call Func_38_7072 ; $6e78
+	call HandleNameEntryCursorMove ; $6e78
 Label_38_6e7b:
 	call AdvanceFrame ; $6e7b
 	ld a, [wMenuInputPressed] ; $6e7e
@@ -6274,7 +6274,7 @@ Label_38_6e8f:
 	call AppendCharToName ; $6e96
 	jr Label_38_6e5b ; $6e99
 Label_38_6e9b:
-	call Func_38_7220 ; $6e9b
+	call GetNameEntryBottomRowAction ; $6e9b
 	or a, a ; $6e9e
 	jr z, Label_38_6ea7 ; $6e9f
 	cp a, $01 ; $6ea1
@@ -6367,7 +6367,7 @@ Label_38_6f26:
 	set 2, [hl] ; $6f69
 	ld a, $00 ; $6f6b
 	ret ; $6f6d
-Func_38_6f6e:
+SetupNameEntryScreen:
 	ld b, $12 ; $6f6e
 	ld c, $02 ; $6f70
 	ld de, $a100 ; $6f72
@@ -6411,8 +6411,8 @@ Func_38_6f6e:
 	farcall CreateWindowFromScreenRect ; $6fd4
 	farcall DrawTextWindowFrame ; $6fd7
 	farcall RedrawWindowRows ; $6fda
-	ld hl, $71b6 ; $6fdd
-	call Func_38_717c ; $6fe0
+	ld hl, NameEntryCharset_38 ; $6fdd
+	call DrawNameEntryCharGrid ; $6fe0
 	call DrawEnterNameLabel ; $6fe3
 	ld b, $0a ; $6fe6
 	ld c, $0c ; $6fe8
@@ -6462,7 +6462,7 @@ Func_38_6f6e:
 	farcall QueueWram3MapToVRAM ; $705f
 	ret ; $7062
 	INCBIN "data/bank_038/d_7063.bin" ; $7063, 15 bytes
-Func_38_7072:
+HandleNameEntryCursorMove:
 	sound $5e ; $7072
 	ld a, [wMenuCursorY] ; $7074
 	cp a, $05 ; $7077
@@ -6474,13 +6474,13 @@ Func_38_7072:
 	jr nz, Label_38_708c ; $7083
 	jr Label_38_708f ; $7085
 Label_38_7087:
-	call Func_38_723c ; $7087
+	call SnapNameEntryCursorRight ; $7087
 	jr Label_38_708f ; $708a
 Label_38_708c:
-	call Func_38_725b ; $708c
+	call SnapNameEntryCursorLeft ; $708c
 Label_38_708f:
 	ret ; $708f
-Func_38_7090:
+DrawNameEntryCursor:
 	ld c, $0f ; $7090
 	call GetMenuCursorLinearIndex ; $7092
 	add a, a ; $7095
@@ -6493,7 +6493,7 @@ Label_38_709e:
 	ld a, [hl+] ; $709e
 	ld d, [hl] ; $709f
 	ld e, a ; $70a0
-	call Func_38_727a ; $70a1
+	call QueueNameEntryCursorSprites ; $70a1
 	ret ; $70a4
 	INCBIN "data/bank_038/d_70a5.bin" ; $70a5, 180 bytes
 DrawEnterNameLabel:
@@ -6508,7 +6508,7 @@ DrawEnterNameLabel:
 	ret ; $7170
 EnterNameText_38:
 	INCLUDE "data/bank_038/text_7171.asm" ; $7171, 11 bytes
-Func_38_717c:
+DrawNameEntryCharGrid:
 	ldh a, [hWramBank] ; $717c
 	push af ; $717e
 	wram_bank $03 ; $717f
@@ -6548,9 +6548,9 @@ Label_38_71b0:
 	pop af ; $71b0
 	wram_bank ; $71b1
 	ret ; $71b5
-Text_38_71b6:
+NameEntryCharset_38:
 	INCLUDE "data/bank_038/text_71b6.asm" ; $71b6, 106 bytes
-Func_38_7220:
+GetNameEntryBottomRowAction:
 	ld hl, $722d ; $7220
 	ld a, [wMenuCursorX] ; $7223
 	add a, l ; $7226
@@ -6561,7 +6561,7 @@ Label_38_722b:
 	ld a, [hl] ; $722b
 	ret ; $722c
 	INCBIN "data/bank_038/d_722d.bin" ; $722d, 15 bytes
-Func_38_723c:
+SnapNameEntryCursorRight:
 	ld hl, $724c ; $723c
 	ld a, [wMenuCursorX] ; $723f
 	add a, l ; $7242
@@ -6573,7 +6573,7 @@ Label_38_7247:
 	ld [wMenuCursorX], a ; $7248
 	ret ; $724b
 	INCBIN "data/bank_038/d_724c.bin" ; $724c, 15 bytes
-Func_38_725b:
+SnapNameEntryCursorLeft:
 	ld hl, $726b ; $725b
 	ld a, [wMenuCursorX] ; $725e
 	add a, l ; $7261
@@ -6585,7 +6585,7 @@ Label_38_7266:
 	ld [wMenuCursorX], a ; $7267
 	ret ; $726a
 	INCBIN "data/bank_038/d_726b.bin" ; $726b, 15 bytes
-Func_38_727a:
+QueueNameEntryCursorSprites:
 	ld c, $00 ; $727a
 	ld b, $08 ; $727c
 	push de ; $727e
@@ -6633,12 +6633,12 @@ Label_38_72c7:
 	ld c, $0f ; $72c8
 	call GetMenuCursorLinearIndex ; $72ca
 	ld d, a ; $72cd
-	ld hl, $71b6 ; $72ce
+	ld hl, NameEntryCharset_38 ; $72ce
 	wram_bank $02 ; $72d1
 	ld a, [$d000] ; $72d7
 	or a, a ; $72da
 	jr z, Label_38_72e0 ; $72db
-	ld hl, $71b6 ; $72dd
+	ld hl, NameEntryCharset_38 ; $72dd
 Label_38_72e0:
 	ld a, d ; $72e0
 	add a, l ; $72e1
@@ -6734,7 +6734,7 @@ IsNameBufferFull:
 Label_38_7383:
 	xor a, a ; $7383
 	ret ; $7384
-Func_38_7385:
+DrawNameEntryUnderlineSprites:
 	ld c, $00 ; $7385
 	ld de, $3c38 ; $7387
 	call GetEnteredNameLength ; $738a
@@ -6838,19 +6838,19 @@ Label_38_741b:
 	ld hl, $da00 ; $7424
 	ld bc, $0080 ; $7427
 	call ClearBytes ; $742a
-	call Func_38_5a82 ; $742d
-	call Func_38_7686 ; $7430
-	call Func_38_7603 ; $7433
-	call Func_38_7773 ; $7436
-	call Func_38_76fa ; $7439
+	call BuildCharUnlockFlags ; $742d
+	call PackUnlockFlagsForLink ; $7430
+	call ExchangeLinkUnlockFlags ; $7433
+	call MergeLinkUnlockFlags ; $7436
+	call UnpackUnlockFlagsFromLink ; $7439
 	pop af ; $743c
 	wram_bank ; $743d
 	call ApplyMatchTypeSettingsLink ; $7441
-	farcall Func_38_63bd ; $7444
+	farcall RunLinkCharSelectScreen ; $7444
 	push af ; $7447
 	ld a, $09 ; $7448
 	ld [wGameMode], a ; $744a
-	call Func_38_7646 ; $744d
+	call StoreLinkMatchCharInfo ; $744d
 	pop af ; $7450
 	cp a, $ff ; $7451
 	jr nz, Label_38_745f ; $7453
@@ -6861,7 +6861,7 @@ Label_38_741b:
 Label_38_745f:
 	farcall ComputeUnlockedCourtFlags ; $745f
 	ld c, $00 ; $7462
-	call Func_38_7522 ; $7464
+	call ExchangeLinkCharSelection ; $7464
 	call DisableLCDSafely ; $7467
 	farcall Func_01_50e2 ; $746a
 	farcall ResetScreenAndTextWindows ; $746d
@@ -6901,7 +6901,7 @@ Label_38_74a4:
 	or a, a ; $74bc
 	jr z, Label_38_74c4 ; $74bd
 	ld c, $40 ; $74bf
-	call Func_38_7522 ; $74c1
+	call ExchangeLinkCharSelection ; $74c1
 Label_38_74c4:
 	call ClearFrameTasks ; $74c4
 	xor a, a ; $74c7
@@ -6954,7 +6954,7 @@ Label_38_7514:
 Label_38_751c:
 	ret ; $751c
 	INCBIN "data/bank_038/d_751d.bin" ; $751d, 5 bytes
-Func_38_7522:
+ExchangeLinkCharSelection:
 	push bc ; $7522
 	call ClearFrameTasks ; $7523
 	xor a, a ; $7526
@@ -7095,7 +7095,7 @@ Label_38_75fa:
 Label_38_7601:
 	pop bc ; $7601
 	ret ; $7602
-Func_38_7603:
+ExchangeLinkUnlockFlags:
 	push af ; $7603
 	push bc ; $7604
 	push de ; $7605
@@ -7133,7 +7133,7 @@ Label_38_7630:
 	pop bc ; $7643
 	pop af ; $7644
 	ret ; $7645
-Func_38_7646:
+StoreLinkMatchCharInfo:
 	push af ; $7646
 	ldh a, [hWramBank] ; $7647
 	push af ; $7649
@@ -7173,7 +7173,7 @@ Label_38_767f:
 	wram_bank ; $7680
 	pop af ; $7684
 	ret ; $7685
-Func_38_7686:
+PackUnlockFlagsForLink:
 	ld hl, $cb59 ; $7686
 	ld bc, $0004 ; $7689
 	call ClearBytes ; $768c
@@ -7246,7 +7246,7 @@ Label_38_76ed:
 	ld hl, $cb5c ; $76f5
 	ld [hl], d ; $76f8
 	ret ; $76f9
-Func_38_76fa:
+UnpackUnlockFlagsFromLink:
 	ld hl, $d840 ; $76fa
 	ld bc, $0028 ; $76fd
 	call ClearBytes ; $7700
@@ -7330,7 +7330,7 @@ Label_38_776a:
 	cp a, $08 ; $776e
 	jr nz, Label_38_7758 ; $7770
 	ret ; $7772
-Func_38_7773:
+MergeLinkUnlockFlags:
 	ld hl, $cb59 ; $7773
 	ld de, $cb55 ; $7776
 	ld c, $00 ; $7779
