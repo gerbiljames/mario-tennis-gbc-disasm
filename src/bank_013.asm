@@ -301,11 +301,11 @@ AcademyCourtsTourCutscene:
 	ld a, $48 ; $4599
 	ld [$c2b1], a ; $459b
 	ld a, $01 ; $459e
-	ld hl, Func_13_4d0a ; $45a0
+	ld hl, AnimateTourPointerSprite_13 ; $45a0
 	call RegisterFrameTask ; $45a3
 	script_set_text Text_31_48 ; $45a6
 	script_speak $06 ; $45ac
-	ld hl, Func_13_4d0a ; $45b1
+	ld hl, AnimateTourPointerSprite_13 ; $45b1
 	call UnregisterFrameTask ; $45b4
 	script_move_player $3200, $1300 ; $45b7
 	farcall WaitPlayerMoveDone ; $45c1
@@ -327,10 +327,10 @@ AcademyCourtsTourCutscene:
 	ld a, $48 ; $4620
 	ld [$c2b1], a ; $4622
 	ld a, $01 ; $4625
-	ld hl, Func_13_4d0a ; $4627
+	ld hl, AnimateTourPointerSprite_13 ; $4627
 	call RegisterFrameTask ; $462a
 	script_speak $06 ; $462d
-	ld hl, Func_13_4d0a ; $4632
+	ld hl, AnimateTourPointerSprite_13 ; $4632
 	call UnregisterFrameTask ; $4635
 	script_move_player $3200, $0d00 ; $4638
 	farcall WaitPlayerMoveDone ; $4642
@@ -594,7 +594,7 @@ QueueTourPointerSprite_13:
 	ld b, $08 ; $4d04
 	call QueueSpriteTemplate ; $4d06
 	ret ; $4d09
-Func_13_4d0a:
+AnimateTourPointerSprite_13:
 	ld a, [$c2b0] ; $4d0a
 	ld d, a ; $4d0d
 	ldh a, [hVBlankCounter] ; $4d0e
@@ -704,8 +704,8 @@ DormRoomTile0F_13:
 Label_13_4f0c:
 	script_jump_velocity $03, $ff80 ; $4f0c
 	ld a, $03 ; $4f14
-	call Func_13_5bfb ; $4f16
-	call Func_13_5c27 ; $4f19
+	call ComputeEmoteActorPosition_13 ; $4f16
+	call PlaceEmoteActorAtComputedPosition_13 ; $4f19
 	sound $97 ; $4f1c
 	script_wait_frames $46 ; $4f1e
 	script_set_position $05, $3f00, $3f00 ; $4f25
@@ -775,9 +775,9 @@ DormRoomInitScript_13:
 	cp a, $08 ; $503b
 	jp z, Label_13_5aae ; $503d
 	call ComputeStoryRankTier_13 ; $5040
-	call Func_13_5130 ; $5043
-	call Func_13_51b0 ; $5046
-	call Func_13_5067 ; $5049
+	call SetupDormRoomSceneVariant ; $5043
+	call PlaceDormRoomArrivalActors_13 ; $5046
+	call SetDormRoomEventTriggerCells_13 ; $5049
 	ld a, [wStoryModeEntryPoint] ; $504c
 	cp a, $0f ; $504f
 	jp z, Label_13_53a1 ; $5051
@@ -789,7 +789,7 @@ DormRoomInitScript_13:
 	jp z, Label_13_5593 ; $5060
 	farcall EndCutsceneScriptMode ; $5063
 	ret ; $5066
-Func_13_5067:
+SetDormRoomEventTriggerCells_13:
 	test_flag $05, 7 ; $5067
 	jr nz, Label_13_507c ; $506a
 	test_flag $0b, 0 ; $506c
@@ -887,7 +887,7 @@ Label_13_50de:
 	ld e, $12 ; $512a
 	farcall WriteBehaviorMapCell ; $512c
 	ret ; $512f
-Func_13_5130:
+SetupDormRoomSceneVariant:
 	ld a, [$c94d] ; $5130
 	or a, a ; $5133
 	jr nz, Label_13_51ac ; $5134
@@ -926,9 +926,9 @@ Func_13_5130:
 	call EnableLCD ; $51a8
 	ret ; $51ab
 Label_13_51ac:
-	call Func_13_524e ; $51ac
+	call SetRandomDormRoomNpc04Script_13 ; $51ac
 	ret ; $51af
-Func_13_51b0:
+PlaceDormRoomArrivalActors_13:
 	ld a, [wStoryModeEntryPoint] ; $51b0
 	cp a, $ff ; $51b3
 	jr z, Label_13_521b ; $51b5
@@ -962,7 +962,7 @@ Label_13_521b:
 	jr z, Label_13_5208 ; $521e
 	script_null_script ACTOR_PARTNER ; $5220
 	script_set_position ACTOR_PARTNER, $0100, $0100 ; $5225
-	call Func_13_5c39 ; $5230
+	call PlaceRoommateAtPlayerTarget_13 ; $5230
 	script_get_actor_state $03 ; $5233
 	ld c, l ; $5238
 	ld b, h ; $5239
@@ -975,7 +975,7 @@ Label_13_521b:
 	add hl, bc ; $524a
 	set 4, [hl] ; $524b
 	ret ; $524d
-Func_13_524e:
+SetRandomDormRoomNpc04Script_13:
 	call AdvanceRandomSeed ; $524e
 	ld a, l ; $5251
 	and a, $07 ; $5252
@@ -1035,7 +1035,7 @@ Label_13_52e3:
 	call RunPlayDoublesTodayPrompt ; $52e3
 	ret ; $52e6
 Label_13_52e7:
-	call Func_13_5aca ; $52e7
+	call GetDormRoomStoryStage_13 ; $52e7
 	cp a, $01 ; $52ea
 	jp z, Label_13_5aee ; $52ec
 	test_flag $1c, 0 ; $52ef
@@ -1237,7 +1237,7 @@ Label_13_55bd:
 	script_set_anim $03, $03 ; $55eb
 	script_wait_idle $03 ; $55f2
 	script_speak $03 ; $55f7
-	call Func_13_5aca ; $55fc
+	call GetDormRoomStoryStage_13 ; $55fc
 	and a, a ; $55ff
 	jp z, Label_13_560d ; $5600
 	ld hl, $c2b2 ; $5603
@@ -1339,7 +1339,7 @@ Label_13_56d4:
 	and a, a ; $56e6
 	jr nz, Label_13_574c ; $56e7
 	set_flag $05, 7 ; $56e9
-	call Func_13_5bdf ; $56ec
+	call SetRoommateDoublesYesReplyText_13 ; $56ec
 	script_speak $03 ; $56ef
 	script_set_anim ACTOR_PLAYER, $03 ; $56f4
 	script_wait_idle ACTOR_PLAYER ; $56fb
@@ -1348,7 +1348,7 @@ Label_13_56d4:
 	wram_bank $04 ; $570e
 	ld a, $01 ; $5714
 	ld [wMatchIsDoubles], a ; $5716
-	call Func_13_5067 ; $5719
+	call SetDormRoomEventTriggerCells_13 ; $5719
 	script_wait_frames $05 ; $571c
 	script_get_actor_state $03 ; $5723
 	ld c, l ; $5728
@@ -1365,7 +1365,7 @@ Label_13_56d4:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5744
 	ret ; $574b
 Label_13_574c:
-	call Func_13_5b8b ; $574c
+	call SetRoommateDoublesNoReplyText_13 ; $574c
 	farcall AdvanceDialogueTextCursor ; $574f
 	script_speak $03 ; $5752
 	clear_flag $05, 7 ; $5757
@@ -1379,7 +1379,7 @@ Label_13_574c:
 	ld hl, $0005 ; $5771
 	add hl, bc ; $5774
 	set 3, [hl] ; $5775
-	call Func_13_5067 ; $5777
+	call SetDormRoomEventTriggerCells_13 ; $5777
 	script_face $03, FACE_DOWN ; $577a
 	ret ; $5781
 Label_13_5782:
@@ -1397,7 +1397,7 @@ Label_13_5795:
 	script_wait_frames $05 ; $57a0
 	and a, a ; $57a7
 	jr nz, Label_13_5807 ; $57a8
-	call Func_13_5bc3 ; $57aa
+	call SetRoommateSinglesYesReplyText_13 ; $57aa
 	script_speak $03 ; $57ad
 	script_null_script $03 ; $57b2
 	clear_flag $05, 7 ; $57b7
@@ -1415,12 +1415,12 @@ Label_13_5795:
 	ld hl, $0005 ; $57f1
 	add hl, bc ; $57f4
 	set 3, [hl] ; $57f5
-	call Func_13_5067 ; $57f7
+	call SetDormRoomEventTriggerCells_13 ; $57f7
 	script_null_script $03 ; $57fa
 	script_face $03, FACE_DOWN ; $57ff
 	ret ; $5806
 Label_13_5807:
-	call Func_13_5ba7 ; $5807
+	call SetRoommateSinglesNoReplyText_13 ; $5807
 	farcall AdvanceDialogueTextCursor ; $580a
 	script_speak $03 ; $580d
 	script_set_anim ACTOR_PLAYER, $03 ; $5812
@@ -1431,7 +1431,7 @@ Label_13_5807:
 	ld a, $01 ; $5832
 	ld [wMatchIsDoubles], a ; $5834
 	set_flag $05, 7 ; $5837
-	call Func_13_5067 ; $583a
+	call SetDormRoomEventTriggerCells_13 ; $583a
 	script_get_actor_state $03 ; $583d
 	ld c, l ; $5842
 	ld b, h ; $5843
@@ -1749,7 +1749,7 @@ Label_13_5aae:
 	ld [$c294], a ; $5ac3
 	ld [wStoryModeExitLocationRequest], a ; $5ac6
 	ret ; $5ac9
-Func_13_5aca:
+GetDormRoomStoryStage_13:
 	test_flag $05, 7 ; $5aca
 	jr nz, Label_13_5ae2 ; $5acd
 	test_flag $16, 0 ; $5acf
@@ -1812,8 +1812,8 @@ Label_13_5b79:
 	script_set_anim ACTOR_PLAYER, $03 ; $5b7e
 	script_wait_idle ACTOR_PLAYER ; $5b85
 	ret ; $5b8a
-Func_13_5b8b:
-	call Func_13_5aca ; $5b8b
+SetRoommateDoublesNoReplyText_13:
+	call GetDormRoomStoryStage_13 ; $5b8b
 	cp a, $01 ; $5b8e
 	jp nz, Label_13_5ba6 ; $5b90
 	test_flag $1c, 0 ; $5b93
@@ -1824,8 +1824,8 @@ Label_13_5ba0:
 	script_set_text Text_31_270 ; $5ba0
 Label_13_5ba6:
 	ret ; $5ba6
-Func_13_5ba7:
-	call Func_13_5aca ; $5ba7
+SetRoommateSinglesNoReplyText_13:
+	call GetDormRoomStoryStage_13 ; $5ba7
 	cp a, $01 ; $5baa
 	jp nz, Label_13_5bc2 ; $5bac
 	test_flag $1c, 0 ; $5baf
@@ -1836,8 +1836,8 @@ Label_13_5bbc:
 	script_set_text Text_31_271 ; $5bbc
 Label_13_5bc2:
 	ret ; $5bc2
-Func_13_5bc3:
-	call Func_13_5aca ; $5bc3
+SetRoommateSinglesYesReplyText_13:
+	call GetDormRoomStoryStage_13 ; $5bc3
 	cp a, $01 ; $5bc6
 	jp nz, Label_13_5bde ; $5bc8
 	test_flag $1c, 0 ; $5bcb
@@ -1848,8 +1848,8 @@ Label_13_5bd8:
 	script_set_text Text_31_271 ; $5bd8
 Label_13_5bde:
 	ret ; $5bde
-Func_13_5bdf:
-	call Func_13_5aca ; $5bdf
+SetRoommateDoublesYesReplyText_13:
+	call GetDormRoomStoryStage_13 ; $5bdf
 	cp a, $01 ; $5be2
 	jp nz, Label_13_5bfa ; $5be4
 	test_flag $1c, 0 ; $5be7
@@ -1860,7 +1860,7 @@ Label_13_5bf4:
 	script_set_text Text_31_272 ; $5bf4
 Label_13_5bfa:
 	ret ; $5bfa
-Func_13_5bfb:
+ComputeEmoteActorPosition_13:
 	farcall GetActorStateAddr ; $5bfb
 	ld c, l ; $5bfe
 	ld b, h ; $5bff
@@ -1891,7 +1891,7 @@ Func_13_5bfb:
 	ld [hl+], a ; $5c24
 	ld [hl], d ; $5c25
 	ret ; $5c26
-Func_13_5c27:
+PlaceEmoteActorAtComputedPosition_13:
 	ld hl, $c2b8 ; $5c27
 	ld a, [hl+] ; $5c2a
 	ld b, [hl] ; $5c2b
@@ -1903,7 +1903,7 @@ Func_13_5c27:
 	ld a, $05 ; $5c33
 	farcall ScriptSetActorPosition ; $5c35
 	ret ; $5c38
-Func_13_5c39:
+PlaceRoommateAtPlayerTarget_13:
 	script_get_actor_state ACTOR_PLAYER ; $5c39
 	ld c, l ; $5c3e
 	ld b, h ; $5c3f
@@ -2116,7 +2116,7 @@ Label_13_5ffd:
 	ld [wStoryModeEntryPoint], a ; $6013
 	ld [$c294], a ; $6016
 	ld [wStoryModeExitLocationRequest], a ; $6019
-	call Func_13_6a89 ; $601c
+	call SetupVarsityCourtDoublesMatch_13 ; $601c
 	ret ; $601f
 VarsityCourtNpcScriptsB_13:
 	; $6020, 57 bytes (map_scripts)
@@ -2191,7 +2191,7 @@ CourtyardFacingScripts_13:
 	map_script $01, FACEMASK_ANY, $0000, CourtyardFacing01_13, $00, $00
 	db $ff
 CourtyardFacing01_13:
-	call Func_13_7ae0 ; $616d
+	call ShowStoryTournamentBracket_13 ; $616d
 	ld hl, wStoryModePlayersXPosition ; $6170
 	ld de, wStoryModeSpawnPosition ; $6173
 	ld bc, $0005 ; $6176
@@ -2212,14 +2212,14 @@ CourtyardInitScript_13:
 Label_13_6196:
 	cp a, $0d ; $6196
 	jr nz, Label_13_619e ; $6198
-	call Func_13_7995 ; $619a
+	call RunTravelingTeamBracketIfWon_13 ; $619a
 	ret ; $619d
 Label_13_619e:
 	cp a, $0e ; $619e
 	jr nz, Label_13_61a5 ; $61a0
-	jp Label_13_7988 ; $61a2
+	jp RunTravelingTeamVictoryCutscene_13 ; $61a2
 Label_13_61a5:
-	call Func_13_62ff ; $61a5
+	call CourtyardEntryWalkIn_13 ; $61a5
 	ret ; $61a8
 SetupVarsityCourtSceneVariant:
 	test_flag $05, 7 ; $61a9
@@ -2320,7 +2320,7 @@ Label_13_62a7:
 	farcall WriteStoryStateWord ; $62ba
 Label_13_62bd:
 	ret ; $62bd
-Func_13_62be:
+ApplyPartnerCharacterVariant_13:
 	ld a, [$c94d] ; $62be
 	or a, a ; $62c1
 	jr nz, Label_13_62da ; $62c2
@@ -2330,7 +2330,7 @@ Func_13_62be:
 Label_13_62da:
 	ret ; $62da
 	INCBIN "data/bank_013/d_62db.bin" ; $62db, 36 bytes
-Func_13_62ff:
+CourtyardEntryWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $62ff
 	cp a, $ff ; $6302
 	jp z, Label_13_6365 ; $6304
@@ -2626,7 +2626,7 @@ SetupStoryMinigameMatch0:
 	farcall RunStoryMatch ; $6a82
 	farcall RestoreOverworldAfterMatch ; $6a85
 	ret ; $6a88
-Func_13_6a89:
+SetupVarsityCourtDoublesMatch_13:
 	script_null_script $05 ; $6a89
 	script_null_script $07 ; $6a8e
 	script_set_speed $07, $0018 ; $6a93
@@ -2868,7 +2868,7 @@ Label_13_6dfb:
 	ret ; $6e16
 Label_13_6e17:
 	script_speak $03 ; $6e17
-	call Func_13_70c9 ; $6e1c
+	call ReturnVarsityCourtANpc04ToSpawn_13 ; $6e1c
 	ret ; $6e1f
 VarsityCourtBNpc03FaceUp_13:
 	script_set_speed ACTOR_PLAYER, $0008 ; $6e20
@@ -2990,7 +2990,7 @@ Label_13_7090:
 	ret ; $70ab
 Label_13_70ac:
 	script_speak $03 ; $70ac
-	call Func_13_70d5 ; $70b1
+	call ReturnVarsityCourtBNpcsToSpawn_13 ; $70b1
 	script_wait_frames $3c ; $70b4
 	script_get_actor_state ACTOR_PARTNER ; $70bb
 	ld c, l ; $70c0
@@ -2998,10 +2998,10 @@ Label_13_70ac:
 	ld de, $d000 ; $70c2
 	farcall AttachActorStepMover ; $70c5
 	ret ; $70c8
-Func_13_70c9:
+ReturnVarsityCourtANpc04ToSpawn_13:
 	script_set_actor_script $04, ActorScript_13_6bf2 ; $70c9
 	ret ; $70d4
-Func_13_70d5:
+ReturnVarsityCourtBNpcsToSpawn_13:
 	script_set_actor_script $04, ActorScript_13_6bfd ; $70d5
 	script_set_actor_script $09, ActorScript_13_6c08 ; $70e0
 	ret ; $70eb
@@ -3017,7 +3017,7 @@ SinglesTravelingTeamVictoryCutscene:
 	farcall ScriptRespawnLocationActors ; $7106
 	script_null_script ACTOR_PLAYER_SHADOW ; $7109
 	script_player_speed $0040 ; $710e
-	call Func_13_62be ; $7114
+	call ApplyPartnerCharacterVariant_13 ; $7114
 	script_set_position ACTOR_PLAYER, $0b00, $1d00 ; $7117
 	script_set_position ACTOR_PARTNER, $0d00, $2300 ; $7122
 	script_face ACTOR_PLAYER, FACE_UP ; $712d
@@ -3157,7 +3157,7 @@ DoublesTravelingTeamVictoryCutscene:
 	ld hl, DoublesTravelingTeamActors_13 ; $7457
 	farcall ScriptRespawnLocationActors ; $745a
 	farcall BeginCutsceneScriptMode ; $745d
-	call Func_13_62be ; $7460
+	call ApplyPartnerCharacterVariant_13 ; $7460
 	script_null_script ACTOR_PARTNER ; $7463
 	script_null_script ACTOR_PLAYER_SHADOW ; $7468
 	script_player_speed $0040 ; $746d
@@ -3339,7 +3339,7 @@ Label_13_7861:
 	ld c, $02 ; $78a6
 	call BeginFadeOut ; $78a8
 	call WaitFadeEnd ; $78ab
-	call Func_13_78c4 ; $78ae
+	call PlayDoublesTravelingTeamScreenSequence_13 ; $78ae
 	ld a, $00 ; $78b1
 	ld [wStoryModeCurrentLocation], a ; $78b3
 	ld a, $0a ; $78b6
@@ -3348,7 +3348,7 @@ Label_13_7861:
 	ld [$c294], a ; $78bd
 	ld [wStoryModeExitLocationRequest], a ; $78c0
 	ret ; $78c3
-Func_13_78c4:
+PlayDoublesTravelingTeamScreenSequence_13:
 	ld b, $00 ; $78c4
 	ld a, [$c90d] ; $78c6
 	ld d, a ; $78c9
@@ -3380,7 +3380,7 @@ DoublesTravelingTeamInitScript_13:
 	set_flag $08, 2 ; $7981
 	set_flag $08, 6 ; $7984
 	ret ; $7987
-Label_13_7988:
+RunTravelingTeamVictoryCutscene_13:
 	test_flag $05, 7 ; $7988
 	jr z, Label_13_7991 ; $798b
 	call DoublesTravelingTeamVictoryCutscene ; $798d
@@ -3388,7 +3388,7 @@ Label_13_7988:
 Label_13_7991:
 	call SinglesTravelingTeamVictoryCutscene ; $7991
 	ret ; $7994
-Func_13_7995:
+RunTravelingTeamBracketIfWon_13:
 	wram_bank $04 ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
 	cp a, $01 ; $799e
@@ -3413,14 +3413,14 @@ Label_13_79a4:
 	script_player_speed $0018 ; $79ce
 	script_move_player $0900, $1300 ; $79d4
 	farcall WaitPlayerMoveDone ; $79de
-	call Func_13_7ae0 ; $79e1
+	call ShowStoryTournamentBracket_13 ; $79e1
 	ret ; $79e4
 Label_13_79e5:
 	ldh a, [hRomBank] ; $79e5
 	ld hl, DoublesTravelingTeamActors_13 ; $79e7
 	farcall ScriptRespawnLocationActors ; $79ea
 	farcall BeginCutsceneScriptMode ; $79ed
-	call Func_13_62be ; $79f0
+	call ApplyPartnerCharacterVariant_13 ; $79f0
 	script_null_script ACTOR_PARTNER ; $79f3
 	script_null_script ACTOR_PLAYER_SHADOW ; $79f8
 	script_player_speed $0040 ; $79fd
@@ -3432,7 +3432,7 @@ Label_13_79e5:
 	call WaitFadeEnd ; $7a2c
 	script_move_player $0900, $1300 ; $7a2f
 	farcall WaitPlayerMoveDone ; $7a39
-	call Func_13_7ae0 ; $7a3c
+	call ShowStoryTournamentBracket_13 ; $7a3c
 	ret ; $7a3f
 ActorScript_13_7a40:
 	; $7a40, 3 bytes (actor_script)
@@ -3504,7 +3504,7 @@ ActorScript_13_7ac9:
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-Func_13_7ae0:
+ShowStoryTournamentBracket_13:
 	ld c, $08 ; $7ae0
 	call BeginFadeOut ; $7ae2
 	call WaitFadeEnd ; $7ae5
