@@ -259,7 +259,7 @@ class Disassembly:
     # ($488a table -> $4900-$60ff tiles, copied by Func_09_4873): trace
     # data-reads during the copy, not execution -- they split the one blob
     # into three and decode graphics bytes as rst/inc.
-    BAD_SEEDS = {0x19617F, 0x67682, 0x24F99, 0x252B5}
+    BAD_SEEDS = {0x19617F, 0x67682, 0x24F99, 0x252B5, 0xE619}
 
     # ROM0 helpers that consume one inline byte after the `call` (they read
     # the byte at the return address and step the return past it). The byte

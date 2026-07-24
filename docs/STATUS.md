@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~156.2K instructions / 398,576 bytes of proven code+structured source
+**~156.2K instructions / 398,824 bytes of proven code+structured source
 (19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -26,7 +26,54 @@ Everything below is **committed** (HEAD `285165f`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,792 of 19,076 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,865 of 19,149 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Bank $03: 54 cutscene frames carved out of a mis-seeded blob (2026-07-24)
+
+Bank `$03` (save engine + the scrolling-text cutscene) had 13 blobs,
+3,048 bytes. All of it resolved; what is left binary is one 2-tile cursor
+graphic and 54 exactly-sized compressed frames.
+
+**The big one was `$6633`, 2,114 bytes.** 51 sites do `ld hl, $XXXX` /
+`ld de, $d000` / `call DecompressData`, and running the LZ codec from each
+start shows the streams **tile the region with no gaps**: 54 streams from
+`$65d0` to `$6e74`, the last ending flush against `SpriteTemplate_03_6e75`.
+The handler chain `LoadCutsceneAnimFrameGfx_00_08` … `_2D_35` dispatches on a
+frame counter at `$06:$d000` that runs `$00`-`$35` (`sub a, $36` /
+`jp nc` caps it), and the frame-to-stream mapping is one-to-one in address
+order, so they are now `CutsceneAnimFrameLZ_00` … `_35`. Frames `$00`-`$1a`
+decompress to 64 bytes (4 tiles), `$1b`-`$35` to 32 bytes (2 tiles).
+
+Three of those streams (`$65d0`, `$65fa`, `$6628`) were not even in the blob:
+they were being **disassembled as code**. A single stray coverage sample at
+flat `0xe619` in `story6_restaurant_traingame.json` seeded a descent that
+decoded 27 bytes of compressed graphics as instructions (`or a, b` / `nop` /
+`rst Rst38` / `ld a, [$31e7]`), and the `palettes` run before it had been
+stretched to 93 bytes to reach it. `0xE619` is now in `BAD_SEEDS`; the real
+palette block is two 8-byte OBJ palettes at `$65bc`/`$65c4`
+(`SetupSceneAnimationPalettes` loads them into shadow slots `$0a`/`$0b`) plus
+4 bytes aligning `$65d0` to a tile boundary.
+
+The rest of the bank:
+
+| Address | Size | Now |
+|---|---|---|
+| `$4d5c`, `$4fe2` | 8 each | stranded code — `pop af` / `wram_bank` / `ld a, $ff` / `ret`, the restore-bank-and-fail epilogue, twice |
+| `$4d7e` | 8 | `SaveFlagMaskTable_03` — `$80 >> i`, the bank's own copy |
+| `$526d` | 3 | stranded code — `xor a` / `dec a` / `ret`, returns `$ff` |
+| `$52af` | 4 | `StorySlotBlockIds_03` — `GetCurrentSlotBlockId` indexes it by `wCurrentStorySlot & 3` |
+| `$52e3` | 13 | padding aligning the next block |
+| `$52f0` | 32 | `SaveEditorCursorTiles_03` — 2 tiles, an underline cursor |
+| `$54b0` | 93 | five UI strings (`"FAILED"`, `"LOADED"`, `"SAVED"`, `"DELETED"`, blank), a `$01`-`$0d` ramp, and `MarioGolfSignature_03` = `"MARIO GOLF GB CH"` |
+| `$5957` | 30 | `TestCartIdString_03` — `"TESTCARTID"` three times, unreferenced |
+| `$5b20` | 8 | `ScrollTextPalette_03` |
+| `$708e`-`$729f` | 530 | 2 bytes padding, `WindowSolidTile_03` (`ds 16, $ff`), `WindowAttrMap_03` (`ds 256, $80`), `WindowTileMap_03` (`ds 256, $20`) |
+| `$7301` | 50 | `WindowSlideStepTable_03` — 25 `{scroll delta, window delta}` pairs |
+| `$7370` | 147 | `TextPageDescriptors_03` — 21 7-byte records: a count plus up to three `{text-id offset, line count}` pairs |
+
+`$54b0`'s strings would otherwise have been auto-detected as game text and
+emitted as generated `text_*.asm` includes; declaring them `ascii` keeps them
+inline as `db "FAILED     ", $00`, which is what a five-string UI pool wants.
 
 ### Bank $01: the boot/debug bank's assets identified (2026-07-24)
 

@@ -2046,7 +2046,10 @@ Label_03_4d19:
 	call UpdateUnlockablesSaveBlock ; $4d57
 	xor a, a ; $4d5a
 	ret ; $4d5b
-	INCBIN "data/bank_003/d_4d5c.bin" ; $4d5c, 8 bytes
+	pop af ; $4d5c
+	wram_bank ; $4d5d
+	ld a, $ff ; $4d61
+	ret ; $4d63
 CheckStorySlot:
 	push bc ; $4d64
 	push de ; $4d65
@@ -2066,7 +2069,9 @@ Label_03_4d7a:
 	pop de ; $4d7b
 	pop bc ; $4d7c
 	ret ; $4d7d
-	INCBIN "data/bank_003/d_4d7e.bin" ; $4d7e, 8 bytes
+SaveFlagMaskTable_03:
+	; $4d7e, 8 bytes (bytes:8)
+	db $80, $40, $20, $10, $08, $04, $02, $01 ; 0x00
 TestSaveFlag:
 	push hl ; $4d86
 	push de ; $4d87
@@ -2077,7 +2082,7 @@ TestSaveFlag:
 	ld a, $00 ; $4d8f
 	ldh [hSramBank], a ; $4d91
 	ld [$4000], a ; $4d93
-	ld hl, $4d7e ; $4d96
+	ld hl, SaveFlagMaskTable_03 ; $4d96
 	ld a, e ; $4d99
 	rlca ; $4d9a
 	rlca ; $4d9b
@@ -2110,7 +2115,7 @@ SetSaveFlag:
 	ld a, $00 ; $4dbd
 	ldh [hSramBank], a ; $4dbf
 	ld [$4000], a ; $4dc1
-	ld hl, $4d7e ; $4dc4
+	ld hl, SaveFlagMaskTable_03 ; $4dc4
 	ld a, e ; $4dc7
 	rlca ; $4dc8
 	rlca ; $4dc9
@@ -2141,7 +2146,7 @@ ClearSaveFlag:
 	ld a, $00 ; $4deb
 	ldh [hSramBank], a ; $4ded
 	ld [$4000], a ; $4def
-	ld hl, $4d7e ; $4df2
+	ld hl, SaveFlagMaskTable_03 ; $4df2
 	ld a, e ; $4df5
 	rlca ; $4df6
 	rlca ; $4df7
@@ -2471,7 +2476,10 @@ WriteExhibitionSaveBlock:
 	ret nz ; $4fdf
 	xor a, a ; $4fe0
 	ret ; $4fe1
-	INCBIN "data/bank_003/d_4fe2.bin" ; $4fe2, 8 bytes
+	pop af ; $4fe2
+	wram_bank ; $4fe3
+	ld a, $ff ; $4fe7
+	ret ; $4fe9
 ReadExhibitionSaveBlock:
 	push bc ; $4fea
 	push de ; $4feb
@@ -2880,7 +2888,9 @@ MoveSaveEditorCursor:
 	xor a, b ; $5269
 	bit 7, a ; $526a
 	ret ; $526c
-	INCBIN "data/bank_003/d_526d.bin" ; $526d, 3 bytes
+	xor a, a ; $526d
+	dec a ; $526e
+	ret ; $526f
 Label_03_5270:
 	sound $5e ; $5270
 	ld hl, hSaveEditorCursor ; $5272
@@ -2929,7 +2939,9 @@ GetCurrentSlotBlockId:
 	pop hl ; $52ac
 	pop af ; $52ad
 	ret ; $52ae
-	INCBIN "data/bank_003/d_52af.bin" ; $52af, 4 bytes
+StorySlotBlockIds_03:
+	; $52af, 4 bytes (bytes:4)
+	db $00, $02, $04, $0b ; 0x00
 ReadCurrentSlotBlock:
 	wram_bank $07 ; $52b3
 	call GetCurrentSlotBlockId ; $52b9
@@ -2948,9 +2960,12 @@ InvalidateCurrentSlotBlock:
 	ld hl, $d500 ; $52dc
 	call InvalidateStorySlot ; $52df
 	ret ; $52e2
-	INCBIN "data/bank_003/d_52e3.bin" ; $52e3, 45 bytes
+	; $52e3, 13 bytes (fill)
+	ds 13, $00
+SaveEditorCursorTiles_03:
+	INCBIN "data/bank_003/d_52f0.bin" ; $52f0, 32 bytes
 SaveSlotDebugEditor:
-	ld hl, $52f0 ; $5310
+	ld hl, SaveEditorCursorTiles_03 ; $5310
 	ld de, $8000 ; $5313
 	ld c, $02 ; $5316
 	call QueueVRAMCopy ; $5318
@@ -2976,7 +2991,7 @@ Label_03_5344:
 	or a, a ; $5347
 	jr z, Label_03_5360 ; $5348
 	push de ; $534a
-	ld hl, $54b0 ; $534b
+	ld hl, SaveResultFailedString_03 ; $534b
 	ld de, $0511 ; $534e
 	call PrintString ; $5351
 	pop de ; $5354
@@ -2985,7 +3000,7 @@ Label_03_5344:
 	call ClearMemory16 ; $535a
 	jp Label_03_5369 ; $535d
 Label_03_5360:
-	ld hl, $54bc ; $5360
+	ld hl, SaveResultLoadedString_03 ; $5360
 	ld de, $0511 ; $5363
 	call PrintString ; $5366
 Label_03_5369:
@@ -3160,7 +3175,7 @@ Label_03_547f:
 	bit PADB_A, a ; $5487
 	jr nz, Label_03_549c ; $5489
 	push de ; $548b
-	ld hl, $54c8 ; $548c
+	ld hl, SaveResultSavedString_03 ; $548c
 	ld de, $0511 ; $548f
 	call PrintString ; $5492
 	call WriteCurrentSlotBlock ; $5495
@@ -3168,7 +3183,7 @@ Label_03_547f:
 	jp Label_03_53b1 ; $5499
 Label_03_549c:
 	push de ; $549c
-	ld hl, $54d4 ; $549d
+	ld hl, SaveResultDeletedString_03 ; $549d
 	ld de, $0511 ; $54a0
 	call PrintString ; $54a3
 	call InvalidateCurrentSlotBlock ; $54a6
@@ -3176,7 +3191,29 @@ Label_03_549c:
 	db $d1 ; $54ac
 Label_03_54ad:
 	jp Label_03_53c8 ; $54ad
-	INCBIN "data/bank_003/d_54b0.bin" ; $54b0, 93 bytes
+SaveResultFailedString_03:
+	; $54b0, 12 bytes (ascii)
+	db "FAILED     ", $00
+SaveResultLoadedString_03:
+	; $54bc, 12 bytes (ascii)
+	db "LOADED     ", $00
+SaveResultSavedString_03:
+	; $54c8, 12 bytes (ascii)
+	db "SAVED      ", $00
+SaveResultDeletedString_03:
+	; $54d4, 12 bytes (ascii)
+	db "DELETED    ", $00
+SaveResultBlankString_03:
+	; $54e0, 8 bytes (ascii)
+	db "      ", $00, $00
+UnusedByteRamp_03:
+	; $54e8, 13 bytes (bytes:13)
+	db $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d ; 0x00
+	; $54f5, 8 bytes (fill)
+	ds 8, $00
+MarioGolfSignature_03:
+	; $54fd, 16 bytes (ascii)
+	db "MARIO GOLF GB CH"
 RestoreStoryBlockFromBackup:
 	ld hl, $d000 ; $550d
 	call ReadSaveBlock ; $5510
@@ -3813,7 +3850,9 @@ ReadBlock10:
 	pop de ; $5954
 	pop bc ; $5955
 	ret ; $5956
-	INCBIN "data/bank_003/d_5957.bin" ; $5957, 30 bytes
+TestCartIdString_03:
+	; $5957, 30 bytes (ascii)
+	db "TESTCARTIDTESTCARTIDTESTCARTID"
 DebugTestMinigameRecords:
 	push af ; $5975
 	push bc ; $5976
@@ -3882,7 +3921,7 @@ RunScrollingTextScreen:
 	ld a, $90 ; $59df
 	ldh [rWY], a ; $59e1
 	call ClearSpriteQueue ; $59e3
-	ld hl, $5b20 ; $59e6
+	ld hl, ScrollTextPalette_03 ; $59e6
 	ld de, $0001 ; $59e9
 	call LoadPaletteShadow ; $59ec
 	call InitScrollingTextScreen ; $59ef
@@ -4033,17 +4072,20 @@ TestTextEndMarker:
 	ld a, [$d000] ; $5b1a
 	sub a, $23 ; $5b1d
 	ret ; $5b1f
-	INCBIN "data/bank_003/d_5b20.bin" ; $5b20, 8 bytes
+ScrollTextPalette_03:
+	; $5b20, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1880, $1880, $10ee, $7fff ; pal 0: #002031 #002031 #733920 #ffffff
 SetupSceneAnimationPalettes:
 	ldh a, [hWramBank] ; $5b28
 	push af ; $5b2a
 	wram_bank $06 ; $5b2b
 	xor a, a ; $5b31
 	ld [$d000], a ; $5b32
-	ld hl, $65bc ; $5b35
+	ld hl, SceneAnimObjPalette0_03 ; $5b35
 	ld de, $0a01 ; $5b38
 	call LoadPaletteShadow ; $5b3b
-	ld hl, $65c4 ; $5b3e
+	ld hl, SceneAnimObjPalette1_03 ; $5b3e
 	ld de, $0b01 ; $5b41
 	call LoadPaletteShadow ; $5b44
 	pop af ; $5b47
@@ -4098,7 +4140,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	jp Label_03_5d2a ; $5bbf
 Label_03_5bc2:
 	wram_bank $01 ; $5bc2
-	ld hl, $65d0 ; $5bc8
+	ld hl, CutsceneAnimFrameLZ_00 ; $5bc8
 	ld de, $d000 ; $5bcb
 	call DecompressData ; $5bce
 	ld hl, $d000 ; $5bd1
@@ -4113,7 +4155,7 @@ Label_03_5bc2:
 	ret ; $5be9
 Label_03_5bea:
 	wram_bank $01 ; $5bea
-	ld hl, $65fa ; $5bf0
+	ld hl, CutsceneAnimFrameLZ_01 ; $5bf0
 	ld de, $d000 ; $5bf3
 	call DecompressData ; $5bf6
 	ld hl, $d000 ; $5bf9
@@ -4128,7 +4170,7 @@ Label_03_5bea:
 	ret ; $5c11
 Label_03_5c12:
 	wram_bank $01 ; $5c12
-	ld hl, $6628 ; $5c18
+	ld hl, CutsceneAnimFrameLZ_02 ; $5c18
 	ld de, $d000 ; $5c1b
 	call DecompressData ; $5c1e
 	ld hl, $d000 ; $5c21
@@ -4143,7 +4185,7 @@ Label_03_5c12:
 	ret ; $5c39
 Label_03_5c3a:
 	wram_bank $01 ; $5c3a
-	ld hl, $6658 ; $5c40
+	ld hl, CutsceneAnimFrameLZ_03 ; $5c40
 	ld de, $d000 ; $5c43
 	call DecompressData ; $5c46
 	ld hl, $d000 ; $5c49
@@ -4158,7 +4200,7 @@ Label_03_5c3a:
 	ret ; $5c61
 Label_03_5c62:
 	wram_bank $01 ; $5c62
-	ld hl, $6699 ; $5c68
+	ld hl, CutsceneAnimFrameLZ_04 ; $5c68
 	ld de, $d000 ; $5c6b
 	call DecompressData ; $5c6e
 	ld hl, $d000 ; $5c71
@@ -4173,7 +4215,7 @@ Label_03_5c62:
 	ret ; $5c89
 Label_03_5c8a:
 	wram_bank $01 ; $5c8a
-	ld hl, $66db ; $5c90
+	ld hl, CutsceneAnimFrameLZ_05 ; $5c90
 	ld de, $d000 ; $5c93
 	call DecompressData ; $5c96
 	ld hl, $d000 ; $5c99
@@ -4188,7 +4230,7 @@ Label_03_5c8a:
 	ret ; $5cb1
 Label_03_5cb2:
 	wram_bank $01 ; $5cb2
-	ld hl, $6723 ; $5cb8
+	ld hl, CutsceneAnimFrameLZ_06 ; $5cb8
 	ld de, $d000 ; $5cbb
 	call DecompressData ; $5cbe
 	ld hl, $d000 ; $5cc1
@@ -4203,7 +4245,7 @@ Label_03_5cb2:
 	ret ; $5cd9
 Label_03_5cda:
 	wram_bank $01 ; $5cda
-	ld hl, $676c ; $5ce0
+	ld hl, CutsceneAnimFrameLZ_07 ; $5ce0
 	ld de, $d000 ; $5ce3
 	call DecompressData ; $5ce6
 	ld hl, $d000 ; $5ce9
@@ -4218,7 +4260,7 @@ Label_03_5cda:
 	ret ; $5d01
 Label_03_5d02:
 	wram_bank $01 ; $5d02
-	ld hl, $67b5 ; $5d08
+	ld hl, CutsceneAnimFrameLZ_08 ; $5d08
 	ld de, $d000 ; $5d0b
 	call DecompressData ; $5d0e
 	ld hl, $d000 ; $5d11
@@ -4266,7 +4308,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	jp Label_03_5ede ; $5d73
 Label_03_5d76:
 	wram_bank $01 ; $5d76
-	ld hl, $67fc ; $5d7c
+	ld hl, CutsceneAnimFrameLZ_09 ; $5d7c
 	ld de, $d040 ; $5d7f
 	call DecompressData ; $5d82
 	ld hl, $d040 ; $5d85
@@ -4281,7 +4323,7 @@ Label_03_5d76:
 	ret ; $5d9d
 Label_03_5d9e:
 	wram_bank $01 ; $5d9e
-	ld hl, $6822 ; $5da4
+	ld hl, CutsceneAnimFrameLZ_0a ; $5da4
 	ld de, $d040 ; $5da7
 	call DecompressData ; $5daa
 	ld hl, $d040 ; $5dad
@@ -4296,7 +4338,7 @@ Label_03_5d9e:
 	ret ; $5dc5
 Label_03_5dc6:
 	wram_bank $01 ; $5dc6
-	ld hl, $6850 ; $5dcc
+	ld hl, CutsceneAnimFrameLZ_0b ; $5dcc
 	ld de, $d040 ; $5dcf
 	call DecompressData ; $5dd2
 	ld hl, $d040 ; $5dd5
@@ -4311,7 +4353,7 @@ Label_03_5dc6:
 	ret ; $5ded
 Label_03_5dee:
 	wram_bank $01 ; $5dee
-	ld hl, $687e ; $5df4
+	ld hl, CutsceneAnimFrameLZ_0c ; $5df4
 	ld de, $d040 ; $5df7
 	call DecompressData ; $5dfa
 	ld hl, $d040 ; $5dfd
@@ -4326,7 +4368,7 @@ Label_03_5dee:
 	ret ; $5e15
 Label_03_5e16:
 	wram_bank $01 ; $5e16
-	ld hl, $68c1 ; $5e1c
+	ld hl, CutsceneAnimFrameLZ_0d ; $5e1c
 	ld de, $d040 ; $5e1f
 	call DecompressData ; $5e22
 	ld hl, $d040 ; $5e25
@@ -4341,7 +4383,7 @@ Label_03_5e16:
 	ret ; $5e3d
 Label_03_5e3e:
 	wram_bank $01 ; $5e3e
-	ld hl, $690c ; $5e44
+	ld hl, CutsceneAnimFrameLZ_0e ; $5e44
 	ld de, $d040 ; $5e47
 	call DecompressData ; $5e4a
 	ld hl, $d040 ; $5e4d
@@ -4356,7 +4398,7 @@ Label_03_5e3e:
 	ret ; $5e65
 Label_03_5e66:
 	wram_bank $01 ; $5e66
-	ld hl, $6957 ; $5e6c
+	ld hl, CutsceneAnimFrameLZ_0f ; $5e6c
 	ld de, $d040 ; $5e6f
 	call DecompressData ; $5e72
 	ld hl, $d040 ; $5e75
@@ -4371,7 +4413,7 @@ Label_03_5e66:
 	ret ; $5e8d
 Label_03_5e8e:
 	wram_bank $01 ; $5e8e
-	ld hl, $69a2 ; $5e94
+	ld hl, CutsceneAnimFrameLZ_10 ; $5e94
 	ld de, $d040 ; $5e97
 	call DecompressData ; $5e9a
 	ld hl, $d040 ; $5e9d
@@ -4386,7 +4428,7 @@ Label_03_5e8e:
 	ret ; $5eb5
 Label_03_5eb6:
 	wram_bank $01 ; $5eb6
-	ld hl, $69ec ; $5ebc
+	ld hl, CutsceneAnimFrameLZ_11 ; $5ebc
 	ld de, $d040 ; $5ebf
 	call DecompressData ; $5ec2
 	ld hl, $d040 ; $5ec5
@@ -4434,7 +4476,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	jp Label_03_6092 ; $5f27
 Label_03_5f2a:
 	wram_bank $01 ; $5f2a
-	ld hl, $6a35 ; $5f30
+	ld hl, CutsceneAnimFrameLZ_12 ; $5f30
 	ld de, $d080 ; $5f33
 	call DecompressData ; $5f36
 	ld hl, $d080 ; $5f39
@@ -4449,7 +4491,7 @@ Label_03_5f2a:
 	ret ; $5f51
 Label_03_5f52:
 	wram_bank $01 ; $5f52
-	ld hl, $6a5c ; $5f58
+	ld hl, CutsceneAnimFrameLZ_13 ; $5f58
 	ld de, $d080 ; $5f5b
 	call DecompressData ; $5f5e
 	ld hl, $d080 ; $5f61
@@ -4464,7 +4506,7 @@ Label_03_5f52:
 	ret ; $5f79
 Label_03_5f7a:
 	wram_bank $01 ; $5f7a
-	ld hl, $6a8d ; $5f80
+	ld hl, CutsceneAnimFrameLZ_14 ; $5f80
 	ld de, $d080 ; $5f83
 	call DecompressData ; $5f86
 	ld hl, $d080 ; $5f89
@@ -4479,7 +4521,7 @@ Label_03_5f7a:
 	ret ; $5fa1
 Label_03_5fa2:
 	wram_bank $01 ; $5fa2
-	ld hl, $6ac2 ; $5fa8
+	ld hl, CutsceneAnimFrameLZ_15 ; $5fa8
 	ld de, $d080 ; $5fab
 	call DecompressData ; $5fae
 	ld hl, $d080 ; $5fb1
@@ -4494,7 +4536,7 @@ Label_03_5fa2:
 	ret ; $5fc9
 Label_03_5fca:
 	wram_bank $01 ; $5fca
-	ld hl, $6b04 ; $5fd0
+	ld hl, CutsceneAnimFrameLZ_16 ; $5fd0
 	ld de, $d080 ; $5fd3
 	call DecompressData ; $5fd6
 	ld hl, $d080 ; $5fd9
@@ -4509,7 +4551,7 @@ Label_03_5fca:
 	ret ; $5ff1
 Label_03_5ff2:
 	wram_bank $01 ; $5ff2
-	ld hl, $6b49 ; $5ff8
+	ld hl, CutsceneAnimFrameLZ_17 ; $5ff8
 	ld de, $d080 ; $5ffb
 	call DecompressData ; $5ffe
 	ld hl, $d080 ; $6001
@@ -4524,7 +4566,7 @@ Label_03_5ff2:
 	ret ; $6019
 Label_03_601a:
 	wram_bank $01 ; $601a
-	ld hl, $6b92 ; $6020
+	ld hl, CutsceneAnimFrameLZ_18 ; $6020
 	ld de, $d080 ; $6023
 	call DecompressData ; $6026
 	ld hl, $d080 ; $6029
@@ -4539,7 +4581,7 @@ Label_03_601a:
 	ret ; $6041
 Label_03_6042:
 	wram_bank $01 ; $6042
-	ld hl, $6bdc ; $6048
+	ld hl, CutsceneAnimFrameLZ_19 ; $6048
 	ld de, $d080 ; $604b
 	call DecompressData ; $604e
 	ld hl, $d080 ; $6051
@@ -4554,7 +4596,7 @@ Label_03_6042:
 	ret ; $6069
 Label_03_606a:
 	wram_bank $01 ; $606a
-	ld hl, $6c26 ; $6070
+	ld hl, CutsceneAnimFrameLZ_1a ; $6070
 	ld de, $d080 ; $6073
 	call DecompressData ; $6076
 	ld hl, $d080 ; $6079
@@ -4602,7 +4644,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	jp Label_03_6246 ; $60db
 Label_03_60de:
 	wram_bank $01 ; $60de
-	ld hl, $6c6b ; $60e4
+	ld hl, CutsceneAnimFrameLZ_1b ; $60e4
 	ld de, $d0c0 ; $60e7
 	call DecompressData ; $60ea
 	ld hl, $d0c0 ; $60ed
@@ -4617,7 +4659,7 @@ Label_03_60de:
 	ret ; $6105
 Label_03_6106:
 	wram_bank $01 ; $6106
-	ld hl, $6c7a ; $610c
+	ld hl, CutsceneAnimFrameLZ_1c ; $610c
 	ld de, $d0c0 ; $610f
 	call DecompressData ; $6112
 	ld hl, $d0c0 ; $6115
@@ -4632,7 +4674,7 @@ Label_03_6106:
 	ret ; $612d
 Label_03_612e:
 	wram_bank $01 ; $612e
-	ld hl, $6c89 ; $6134
+	ld hl, CutsceneAnimFrameLZ_1d ; $6134
 	ld de, $d0c0 ; $6137
 	call DecompressData ; $613a
 	ld hl, $d0c0 ; $613d
@@ -4647,7 +4689,7 @@ Label_03_612e:
 	ret ; $6155
 Label_03_6156:
 	wram_bank $01 ; $6156
-	ld hl, $6c98 ; $615c
+	ld hl, CutsceneAnimFrameLZ_1e ; $615c
 	ld de, $d0c0 ; $615f
 	call DecompressData ; $6162
 	ld hl, $d0c0 ; $6165
@@ -4662,7 +4704,7 @@ Label_03_6156:
 	ret ; $617d
 Label_03_617e:
 	wram_bank $01 ; $617e
-	ld hl, $6cab ; $6184
+	ld hl, CutsceneAnimFrameLZ_1f ; $6184
 	ld de, $d0c0 ; $6187
 	call DecompressData ; $618a
 	ld hl, $d0c0 ; $618d
@@ -4677,7 +4719,7 @@ Label_03_617e:
 	ret ; $61a5
 Label_03_61a6:
 	wram_bank $01 ; $61a6
-	ld hl, $6cc1 ; $61ac
+	ld hl, CutsceneAnimFrameLZ_20 ; $61ac
 	ld de, $d0c0 ; $61af
 	call DecompressData ; $61b2
 	ld hl, $d0c0 ; $61b5
@@ -4692,7 +4734,7 @@ Label_03_61a6:
 	ret ; $61cd
 Label_03_61ce:
 	wram_bank $01 ; $61ce
-	ld hl, $6cd7 ; $61d4
+	ld hl, CutsceneAnimFrameLZ_21 ; $61d4
 	ld de, $d0c0 ; $61d7
 	call DecompressData ; $61da
 	ld hl, $d0c0 ; $61dd
@@ -4707,7 +4749,7 @@ Label_03_61ce:
 	ret ; $61f5
 Label_03_61f6:
 	wram_bank $01 ; $61f6
-	ld hl, $6ced ; $61fc
+	ld hl, CutsceneAnimFrameLZ_22 ; $61fc
 	ld de, $d0c0 ; $61ff
 	call DecompressData ; $6202
 	ld hl, $d0c0 ; $6205
@@ -4722,7 +4764,7 @@ Label_03_61f6:
 	ret ; $621d
 Label_03_621e:
 	wram_bank $01 ; $621e
-	ld hl, $6d03 ; $6224
+	ld hl, CutsceneAnimFrameLZ_23 ; $6224
 	ld de, $d0c0 ; $6227
 	call DecompressData ; $622a
 	ld hl, $d0c0 ; $622d
@@ -4770,7 +4812,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	jp Label_03_63fa ; $628f
 Label_03_6292:
 	wram_bank $01 ; $6292
-	ld hl, $6d19 ; $6298
+	ld hl, CutsceneAnimFrameLZ_24 ; $6298
 	ld de, $d0e0 ; $629b
 	call DecompressData ; $629e
 	ld hl, $d0e0 ; $62a1
@@ -4785,7 +4827,7 @@ Label_03_6292:
 	ret ; $62b9
 Label_03_62ba:
 	wram_bank $01 ; $62ba
-	ld hl, $6d28 ; $62c0
+	ld hl, CutsceneAnimFrameLZ_25 ; $62c0
 	ld de, $d0e0 ; $62c3
 	call DecompressData ; $62c6
 	ld hl, $d0e0 ; $62c9
@@ -4800,7 +4842,7 @@ Label_03_62ba:
 	ret ; $62e1
 Label_03_62e2:
 	wram_bank $01 ; $62e2
-	ld hl, $6d37 ; $62e8
+	ld hl, CutsceneAnimFrameLZ_26 ; $62e8
 	ld de, $d0e0 ; $62eb
 	call DecompressData ; $62ee
 	ld hl, $d0e0 ; $62f1
@@ -4815,7 +4857,7 @@ Label_03_62e2:
 	ret ; $6309
 Label_03_630a:
 	wram_bank $01 ; $630a
-	ld hl, $6d46 ; $6310
+	ld hl, CutsceneAnimFrameLZ_27 ; $6310
 	ld de, $d0e0 ; $6313
 	call DecompressData ; $6316
 	ld hl, $d0e0 ; $6319
@@ -4830,7 +4872,7 @@ Label_03_630a:
 	ret ; $6331
 Label_03_6332:
 	wram_bank $01 ; $6332
-	ld hl, $6d5a ; $6338
+	ld hl, CutsceneAnimFrameLZ_28 ; $6338
 	ld de, $d0e0 ; $633b
 	call DecompressData ; $633e
 	ld hl, $d0e0 ; $6341
@@ -4845,7 +4887,7 @@ Label_03_6332:
 	ret ; $6359
 Label_03_635a:
 	wram_bank $01 ; $635a
-	ld hl, $6d6f ; $6360
+	ld hl, CutsceneAnimFrameLZ_29 ; $6360
 	ld de, $d0e0 ; $6363
 	call DecompressData ; $6366
 	ld hl, $d0e0 ; $6369
@@ -4860,7 +4902,7 @@ Label_03_635a:
 	ret ; $6381
 Label_03_6382:
 	wram_bank $01 ; $6382
-	ld hl, $6d85 ; $6388
+	ld hl, CutsceneAnimFrameLZ_2a ; $6388
 	ld de, $d0e0 ; $638b
 	call DecompressData ; $638e
 	ld hl, $d0e0 ; $6391
@@ -4875,7 +4917,7 @@ Label_03_6382:
 	ret ; $63a9
 Label_03_63aa:
 	wram_bank $01 ; $63aa
-	ld hl, $6d9b ; $63b0
+	ld hl, CutsceneAnimFrameLZ_2b ; $63b0
 	ld de, $d0e0 ; $63b3
 	call DecompressData ; $63b6
 	ld hl, $d0e0 ; $63b9
@@ -4890,7 +4932,7 @@ Label_03_63aa:
 	ret ; $63d1
 Label_03_63d2:
 	wram_bank $01 ; $63d2
-	ld hl, $6db1 ; $63d8
+	ld hl, CutsceneAnimFrameLZ_2c ; $63d8
 	ld de, $d0e0 ; $63db
 	call DecompressData ; $63de
 	ld hl, $d0e0 ; $63e1
@@ -4938,7 +4980,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	jp Label_03_65ae ; $6443
 Label_03_6446:
 	wram_bank $01 ; $6446
-	ld hl, $6dc7 ; $644c
+	ld hl, CutsceneAnimFrameLZ_2d ; $644c
 	ld de, $d100 ; $644f
 	call DecompressData ; $6452
 	ld hl, $d100 ; $6455
@@ -4953,7 +4995,7 @@ Label_03_6446:
 	ret ; $646d
 Label_03_646e:
 	wram_bank $01 ; $646e
-	ld hl, $6dd6 ; $6474
+	ld hl, CutsceneAnimFrameLZ_2e ; $6474
 	ld de, $d100 ; $6477
 	call DecompressData ; $647a
 	ld hl, $d100 ; $647d
@@ -4968,7 +5010,7 @@ Label_03_646e:
 	ret ; $6495
 Label_03_6496:
 	wram_bank $01 ; $6496
-	ld hl, $6de5 ; $649c
+	ld hl, CutsceneAnimFrameLZ_2f ; $649c
 	ld de, $d100 ; $649f
 	call DecompressData ; $64a2
 	ld hl, $d100 ; $64a5
@@ -4983,7 +5025,7 @@ Label_03_6496:
 	ret ; $64bd
 Label_03_64be:
 	wram_bank $01 ; $64be
-	ld hl, $6df4 ; $64c4
+	ld hl, CutsceneAnimFrameLZ_30 ; $64c4
 	ld de, $d100 ; $64c7
 	call DecompressData ; $64ca
 	ld hl, $d100 ; $64cd
@@ -4998,7 +5040,7 @@ Label_03_64be:
 	ret ; $64e5
 Label_03_64e6:
 	wram_bank $01 ; $64e6
-	ld hl, $6e07 ; $64ec
+	ld hl, CutsceneAnimFrameLZ_31 ; $64ec
 	ld de, $d100 ; $64ef
 	call DecompressData ; $64f2
 	ld hl, $d100 ; $64f5
@@ -5013,7 +5055,7 @@ Label_03_64e6:
 	ret ; $650d
 Label_03_650e:
 	wram_bank $01 ; $650e
-	ld hl, $6e1d ; $6514
+	ld hl, CutsceneAnimFrameLZ_32 ; $6514
 	ld de, $d100 ; $6517
 	call DecompressData ; $651a
 	ld hl, $d100 ; $651d
@@ -5028,7 +5070,7 @@ Label_03_650e:
 	ret ; $6535
 Label_03_6536:
 	wram_bank $01 ; $6536
-	ld hl, $6e33 ; $653c
+	ld hl, CutsceneAnimFrameLZ_33 ; $653c
 	ld de, $d100 ; $653f
 	call DecompressData ; $6542
 	ld hl, $d100 ; $6545
@@ -5043,7 +5085,7 @@ Label_03_6536:
 	ret ; $655d
 Label_03_655e:
 	wram_bank $01 ; $655e
-	ld hl, $6e49 ; $6564
+	ld hl, CutsceneAnimFrameLZ_34 ; $6564
 	ld de, $d100 ; $6567
 	call DecompressData ; $656a
 	ld hl, $d100 ; $656d
@@ -5058,7 +5100,7 @@ Label_03_655e:
 	ret ; $6585
 Label_03_6586:
 	wram_bank $01 ; $6586
-	ld hl, $6e5f ; $658c
+	ld hl, CutsceneAnimFrameLZ_35 ; $658c
 	ld de, $d100 ; $658f
 	call DecompressData ; $6592
 	ld hl, $d100 ; $6595
@@ -5078,42 +5120,124 @@ Label_03_65ae:
 	ld bc, $0310 ; $65b5
 	call QueueSpriteTemplate ; $65b8
 	ret ; $65bb
-	; $65bc, 93 bytes (palettes)
+SceneAnimObjPalette0_03:
+	; $65bc, 8 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $7fff, $03fe, $01dd, $0046 ; pal 0: #ffffff #f6ff00 #ee7300 #311000
-	dw $7fff, $0200, $03e6, $0046 ; pal 1: #ffffff #008300 #31ff00 #311000
-	dw $0000, $0000, $0467, $0004 ; pal 2: #000000 #000000 #391808 #200000
-	dw $e1ff, $e8fa, $2420, $e1ee ; pal 3: #ff7bc5 #d539d5 #00084a #737bc5
-	dw $243b, $e820, $00e2, $9292 ; pal 4: #de084a #0008d5 #103900 #94a420
-	dw $e2fa, $e2db, $105b, $d480 ; pal 5: #d5bdc5 #deb4c5 #de1020 #0020ac
-	dw $90e1, $ce90, $02e1, $e2e8 ; pal 6: #083920 #83a49c #08bd00 #41bdc5
-	dw $9003, $0090, $0000, $05d7 ; pal 7: #180020 #832000 #000000 #bd7308
-	dw $0005, $e1ff, $fa0d, $21e7 ; pal 8: #290000 #ff7bc5 #6a83f6 #397b41
-	dw $f62c, $e1ee, $212c, $e1e8 ; pal 9: #628bee #737bc5 #624a41 #417bc5
-	dw $0101, $b6b6, $e0dc, $fbe1 ; pal 10: #084100 #b4ac6a #e631c5 #08fff6
-	db $e2, $00, $10, $a0, $d4
-	pop hl ; $6619
-	or a, h ; $661a
-	or a, h ; $661b
-	ld [hl], $ce ; $661c
-	pop hl ; $661e
-	ld b, $b2 ; $661f
-	ret z ; $6621
-	pop hl ; $6622
-	or a, b ; $6623
-	or a, b ; $6624
-	nop ; $6625
-	nop ; $6626
-	nop ; $6627
-	or a, a ; $6628
-	rlca ; $6629
-	rlca ; $662a
-	nop ; $662b
-	rst Rst38 ; $662c
-	ldh [rAUD1SWEEP], a ; $662d
-	rra ; $662f
-	ld a, [$31e7] ; $6630
-	INCBIN "data/bank_003/d_6633.bin" ; $6633, 2114 bytes
+SceneAnimObjPalette1_03:
+	; $65c4, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7fff, $0200, $03e6, $0046 ; pal 0: #ffffff #008300 #31ff00 #311000
+	; $65cc, 4 bytes (fill)
+	ds 4, $00
+CutsceneAnimFrameLZ_00:
+	INCBIN "data/bank_003/d_65d0.bin" ; $65d0, 42 bytes
+CutsceneAnimFrameLZ_01:
+	INCBIN "data/bank_003/d_65fa.bin" ; $65fa, 46 bytes
+CutsceneAnimFrameLZ_02:
+	INCBIN "data/bank_003/d_6628.bin" ; $6628, 48 bytes
+CutsceneAnimFrameLZ_03:
+	INCBIN "data/bank_003/d_6658.bin" ; $6658, 65 bytes
+CutsceneAnimFrameLZ_04:
+	INCBIN "data/bank_003/d_6699.bin" ; $6699, 66 bytes
+CutsceneAnimFrameLZ_05:
+	INCBIN "data/bank_003/d_66db.bin" ; $66db, 72 bytes
+CutsceneAnimFrameLZ_06:
+	INCBIN "data/bank_003/d_6723.bin" ; $6723, 73 bytes
+CutsceneAnimFrameLZ_07:
+	INCBIN "data/bank_003/d_676c.bin" ; $676c, 73 bytes
+CutsceneAnimFrameLZ_08:
+	INCBIN "data/bank_003/d_67b5.bin" ; $67b5, 71 bytes
+CutsceneAnimFrameLZ_09:
+	INCBIN "data/bank_003/d_67fc.bin" ; $67fc, 38 bytes
+CutsceneAnimFrameLZ_0a:
+	INCBIN "data/bank_003/d_6822.bin" ; $6822, 46 bytes
+CutsceneAnimFrameLZ_0b:
+	INCBIN "data/bank_003/d_6850.bin" ; $6850, 46 bytes
+CutsceneAnimFrameLZ_0c:
+	INCBIN "data/bank_003/d_687e.bin" ; $687e, 67 bytes
+CutsceneAnimFrameLZ_0d:
+	INCBIN "data/bank_003/d_68c1.bin" ; $68c1, 75 bytes
+CutsceneAnimFrameLZ_0e:
+	INCBIN "data/bank_003/d_690c.bin" ; $690c, 75 bytes
+CutsceneAnimFrameLZ_0f:
+	INCBIN "data/bank_003/d_6957.bin" ; $6957, 75 bytes
+CutsceneAnimFrameLZ_10:
+	INCBIN "data/bank_003/d_69a2.bin" ; $69a2, 74 bytes
+CutsceneAnimFrameLZ_11:
+	INCBIN "data/bank_003/d_69ec.bin" ; $69ec, 73 bytes
+CutsceneAnimFrameLZ_12:
+	INCBIN "data/bank_003/d_6a35.bin" ; $6a35, 39 bytes
+CutsceneAnimFrameLZ_13:
+	INCBIN "data/bank_003/d_6a5c.bin" ; $6a5c, 49 bytes
+CutsceneAnimFrameLZ_14:
+	INCBIN "data/bank_003/d_6a8d.bin" ; $6a8d, 53 bytes
+CutsceneAnimFrameLZ_15:
+	INCBIN "data/bank_003/d_6ac2.bin" ; $6ac2, 66 bytes
+CutsceneAnimFrameLZ_16:
+	INCBIN "data/bank_003/d_6b04.bin" ; $6b04, 69 bytes
+CutsceneAnimFrameLZ_17:
+	INCBIN "data/bank_003/d_6b49.bin" ; $6b49, 73 bytes
+CutsceneAnimFrameLZ_18:
+	INCBIN "data/bank_003/d_6b92.bin" ; $6b92, 74 bytes
+CutsceneAnimFrameLZ_19:
+	INCBIN "data/bank_003/d_6bdc.bin" ; $6bdc, 74 bytes
+CutsceneAnimFrameLZ_1a:
+	INCBIN "data/bank_003/d_6c26.bin" ; $6c26, 69 bytes
+CutsceneAnimFrameLZ_1b:
+	INCBIN "data/bank_003/d_6c6b.bin" ; $6c6b, 15 bytes
+CutsceneAnimFrameLZ_1c:
+	INCBIN "data/bank_003/d_6c7a.bin" ; $6c7a, 15 bytes
+CutsceneAnimFrameLZ_1d:
+	INCBIN "data/bank_003/d_6c89.bin" ; $6c89, 15 bytes
+CutsceneAnimFrameLZ_1e:
+	INCBIN "data/bank_003/d_6c98.bin" ; $6c98, 19 bytes
+CutsceneAnimFrameLZ_1f:
+	INCBIN "data/bank_003/d_6cab.bin" ; $6cab, 22 bytes
+CutsceneAnimFrameLZ_20:
+	INCBIN "data/bank_003/d_6cc1.bin" ; $6cc1, 22 bytes
+CutsceneAnimFrameLZ_21:
+	INCBIN "data/bank_003/d_6cd7.bin" ; $6cd7, 22 bytes
+CutsceneAnimFrameLZ_22:
+	INCBIN "data/bank_003/d_6ced.bin" ; $6ced, 22 bytes
+CutsceneAnimFrameLZ_23:
+	INCBIN "data/bank_003/d_6d03.bin" ; $6d03, 22 bytes
+CutsceneAnimFrameLZ_24:
+	INCBIN "data/bank_003/d_6d19.bin" ; $6d19, 15 bytes
+CutsceneAnimFrameLZ_25:
+	INCBIN "data/bank_003/d_6d28.bin" ; $6d28, 15 bytes
+CutsceneAnimFrameLZ_26:
+	INCBIN "data/bank_003/d_6d37.bin" ; $6d37, 15 bytes
+CutsceneAnimFrameLZ_27:
+	INCBIN "data/bank_003/d_6d46.bin" ; $6d46, 20 bytes
+CutsceneAnimFrameLZ_28:
+	INCBIN "data/bank_003/d_6d5a.bin" ; $6d5a, 21 bytes
+CutsceneAnimFrameLZ_29:
+	INCBIN "data/bank_003/d_6d6f.bin" ; $6d6f, 22 bytes
+CutsceneAnimFrameLZ_2a:
+	INCBIN "data/bank_003/d_6d85.bin" ; $6d85, 22 bytes
+CutsceneAnimFrameLZ_2b:
+	INCBIN "data/bank_003/d_6d9b.bin" ; $6d9b, 22 bytes
+CutsceneAnimFrameLZ_2c:
+	INCBIN "data/bank_003/d_6db1.bin" ; $6db1, 22 bytes
+CutsceneAnimFrameLZ_2d:
+	INCBIN "data/bank_003/d_6dc7.bin" ; $6dc7, 15 bytes
+CutsceneAnimFrameLZ_2e:
+	INCBIN "data/bank_003/d_6dd6.bin" ; $6dd6, 15 bytes
+CutsceneAnimFrameLZ_2f:
+	INCBIN "data/bank_003/d_6de5.bin" ; $6de5, 15 bytes
+CutsceneAnimFrameLZ_30:
+	INCBIN "data/bank_003/d_6df4.bin" ; $6df4, 19 bytes
+CutsceneAnimFrameLZ_31:
+	INCBIN "data/bank_003/d_6e07.bin" ; $6e07, 22 bytes
+CutsceneAnimFrameLZ_32:
+	INCBIN "data/bank_003/d_6e1d.bin" ; $6e1d, 22 bytes
+CutsceneAnimFrameLZ_33:
+	INCBIN "data/bank_003/d_6e33.bin" ; $6e33, 22 bytes
+CutsceneAnimFrameLZ_34:
+	INCBIN "data/bank_003/d_6e49.bin" ; $6e49, 22 bytes
+CutsceneAnimFrameLZ_35:
+	INCBIN "data/bank_003/d_6e5f.bin" ; $6e5f, 22 bytes
 SpriteTemplate_03_6e75:
 	; $6e75, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5375,15 +5499,15 @@ PlayScrollingStoryCutscene:
 	push af ; $6ffe
 	ld a, b ; $6fff
 	push af ; $7000
-	ld hl, $7090 ; $7001
+	ld hl, WindowSolidTile_03 ; $7001
 	ld de, $8ff0 ; $7004
 	ld c, $01 ; $7007
 	call QueueVRAMCopy ; $7009
-	ld hl, $70a0 ; $700c
+	ld hl, WindowAttrMap_03 ; $700c
 	ld de, $bc00 ; $700f
 	ld c, $10 ; $7012
 	call QueueVRAMCopy ; $7014
-	ld hl, $71a0 ; $7017
+	ld hl, WindowTileMap_03 ; $7017
 	ld de, $9c00 ; $701a
 	ld c, $10 ; $701d
 	call QueueVRAMCopy ; $701f
@@ -5433,14 +5557,23 @@ Label_03_7051:
 	pop bc ; $708b
 	pop af ; $708c
 	ret ; $708d
-	INCBIN "data/bank_003/d_708e.bin" ; $708e, 530 bytes
+	; $708e, 2 bytes (fill)
+	ds 2, $00
+WindowSolidTile_03:
+	ds 16, $ff ; $7090, fill
+WindowAttrMap_03:
+	; $70a0, 256 bytes (pattern)
+	ds 256, $80
+WindowTileMap_03:
+	; $71a0, 256 bytes (pattern)
+	ds 256, $20
 AnimateWindowSlideUpTask:
 	ldh a, [hWramBank] ; $72a0
 	push af ; $72a2
 	wram_bank $06 ; $72a3
 	ld a, [$d1fe] ; $72a9
 	ld b, a ; $72ac
-	ld hl, $7301 ; $72ad
+	ld hl, WindowSlideStepTable_03 ; $72ad
 	ld a, b ; $72b0
 	add a, a ; $72b1
 	add a, l ; $72b2
@@ -5490,7 +5623,33 @@ Label_03_72db:
 	ld [$d000], a ; $72fd
 Label_03_7300:
 	ret ; $7300
-	INCBIN "data/bank_003/d_7301.bin" ; $7301, 50 bytes
+WindowSlideStepTable_03:
+	; $7301, 50 bytes (bytes:2)
+	db $01, $20 ; 0x00
+	db $01, $20 ; 0x02
+	db $01, $20 ; 0x04
+	db $02, $40 ; 0x06
+	db $01, $20 ; 0x08
+	db $01, $20 ; 0x0a
+	db $01, $20 ; 0x0c
+	db $01, $20 ; 0x0e
+	db $01, $20 ; 0x10
+	db $01, $20 ; 0x12
+	db $01, $20 ; 0x14
+	db $00, $00 ; 0x16
+	db $00, $00 ; 0x18
+	db $01, $20 ; 0x1a
+	db $01, $20 ; 0x1c
+	db $00, $00 ; 0x1e
+	db $01, $20 ; 0x20
+	db $01, $20 ; 0x22
+	db $01, $20 ; 0x24
+	db $01, $20 ; 0x26
+	db $01, $20 ; 0x28
+	db $01, $20 ; 0x2a
+	db $01, $20 ; 0x2c
+	db $01, $20 ; 0x2e
+	db $02, $20 ; 0x30
 Func_03_7333:
 	push af ; $7333
 	push bc ; $7334
@@ -5506,7 +5665,7 @@ Func_03_7333:
 	add a, c ; $7340
 	add a, a ; $7341
 	add a, c ; $7342
-	ld hl, $7370 ; $7343
+	ld hl, TextPageDescriptors_03 ; $7343
 	add a, l ; $7346
 	ld l, a ; $7347
 	jr nc, Label_03_734b ; $7348
@@ -5534,7 +5693,30 @@ Label_03_7359:
 	pop bc ; $736d
 	pop af ; $736e
 	ret ; $736f
-	INCBIN "data/bank_003/d_7370.bin" ; $7370, 147 bytes
+TextPageDescriptors_03:
+	; $7370, 147 bytes (records:7)
+; 21 records x 7 bytes
+	db $02, $00, $04, $04, $06, $00, $00 ; record 0
+	db $01, $0a, $04, $00, $00, $00, $00 ; record 1
+	db $01, $0e, $04, $00, $00, $00, $00 ; record 2
+	db $01, $12, $04, $00, $00, $00, $00 ; record 3
+	db $01, $16, $04, $00, $00, $00, $00 ; record 4
+	db $01, $1a, $04, $00, $00, $00, $00 ; record 5
+	db $01, $1e, $06, $00, $00, $00, $00 ; record 6
+	db $02, $24, $06, $2a, $06, $00, $00 ; record 7
+	db $01, $30, $06, $00, $00, $00, $00 ; record 8
+	db $02, $36, $06, $3c, $06, $00, $00 ; record 9
+	db $01, $42, $06, $00, $00, $00, $00 ; record 10
+	db $01, $48, $05, $00, $00, $00, $00 ; record 11
+	db $01, $4d, $05, $00, $00, $00, $00 ; record 12
+	db $01, $52, $07, $00, $00, $00, $00 ; record 13
+	db $02, $59, $05, $5e, $07, $00, $00 ; record 14
+	db $01, $65, $05, $00, $00, $00, $00 ; record 15
+	db $03, $6a, $06, $70, $06, $76, $05 ; record 16
+	db $02, $7b, $07, $82, $07, $00, $00 ; record 17
+	db $02, $7b, $07, $82, $07, $00, $00 ; record 18
+	db $01, $89, $06, $00, $00, $00, $00 ; record 19
+	db $01, $8f, $04, $00, $00, $00, $00 ; record 20
 Func_03_7403:
 	push af ; $7403
 	push bc ; $7404
