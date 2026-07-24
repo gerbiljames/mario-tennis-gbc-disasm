@@ -151,7 +151,9 @@ InitMinigameScore:
 	pop af ; $4110
 	wram_bank ; $4111
 	ret ; $4115
-	INCBIN "data/bank_00d/d_4116.bin" ; $4116, 11 bytes
+MinigameRecordSlotIds:
+	; $4116, 11 bytes (bytes:11)
+	db $01, $00, $02, $03, $04, $05, $06, $07, $08, $09, $0a ; 0x00
 GetMinigameTargetScore:
 	ld de, $0000 ; $4121
 	cp a, $12 ; $4124
@@ -222,7 +224,19 @@ GetDefaultMinigameRecordValue:
 	ld d, [hl] ; $41b2
 	ld e, a ; $41b3
 	ret ; $41b4
-	INCBIN "data/bank_00d/d_41b5.bin" ; $41b5, 22 bytes
+MinigameDefaultRecordValuePointers:
+	; $41b5, 22 bytes (records:2)
+	dw $4158 ; record 0
+	dw $4150 ; record 1
+	dw $4160 ; record 2
+	dw $4168 ; record 3
+	dw $4170 ; record 4
+	dw $4178 ; record 5
+	dw $4180 ; record 6
+	dw $4188 ; record 7
+	dw $4190 ; record 8
+	dw $4198 ; record 9
+	dw $41a0 ; record 10
 IncrementCappedCounter:
 	ld hl, $c789 ; $41cb
 	ld a, [hl] ; $41ce
@@ -493,7 +507,32 @@ DrawMinigameGridCell:
 	call CopyTextRect ; $436e
 	pop de ; $4371
 	ret ; $4372
-	INCBIN "data/bank_00d/d_4373.bin" ; $4373, 48 bytes
+MinigameGridCellTilemapOffsets:
+	; $4373, 48 bytes (records:2)
+	dw $0109 ; record 0
+	dw $010b ; record 1
+	dw $010d ; record 2
+	dw $010f ; record 3
+	dw $0111 ; record 4
+	dw $0113 ; record 5
+	dw $0115 ; record 6
+	dw $0117 ; record 7
+	dw $0149 ; record 8
+	dw $014b ; record 9
+	dw $014d ; record 10
+	dw $014f ; record 11
+	dw $0151 ; record 12
+	dw $0153 ; record 13
+	dw $0155 ; record 14
+	dw $0157 ; record 15
+	dw $0189 ; record 16
+	dw $018b ; record 17
+	dw $018d ; record 18
+	dw $018f ; record 19
+	dw $0191 ; record 20
+	dw $0193 ; record 21
+	dw $0195 ; record 22
+	dw $0197 ; record 23
 QueueMinigameHudVRAMCopy:
 	ld hl, $d120 ; $43a3
 	ld de, $9920 ; $43a6
@@ -734,7 +773,70 @@ TennisMachine1Hook_Bounce:
 TennisMachine1Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4542
 	ret ; $4545
-	INCBIN "data/bank_00d/d_4546.bin" ; $4546, 306 bytes
+MinigameShotDifficultyRamp:
+	; $4546, 104 bytes (bytes:4)
+	db $01, $01, $01, $01 ; 0x00
+	db $02, $01, $01, $01 ; 0x04
+	db $03, $01, $02, $01 ; 0x08
+	db $03, $01, $02, $01 ; 0x0c
+	db $03, $02, $03, $01 ; 0x10
+	db $04, $02, $03, $01 ; 0x14
+	db $04, $02, $04, $01 ; 0x18
+	db $04, $03, $04, $01 ; 0x1c
+	db $05, $03, $05, $01 ; 0x20
+	db $05, $03, $05, $01 ; 0x24
+	db $05, $04, $06, $01 ; 0x28
+	db $05, $04, $06, $01 ; 0x2c
+	db $05, $04, $07, $01 ; 0x30
+	db $05, $04, $07, $01 ; 0x34
+	db $05, $04, $08, $01 ; 0x38
+	db $05, $04, $08, $01 ; 0x3c
+	db $05, $04, $09, $01 ; 0x40
+	db $05, $04, $09, $01 ; 0x44
+	db $05, $04, $0a, $01 ; 0x48
+	db $05, $04, $0a, $01 ; 0x4c
+	db $05, $04, $0a, $01 ; 0x50
+	db $05, $04, $0a, $01 ; 0x54
+	db $05, $04, $0a, $01 ; 0x58
+	db $05, $04, $0a, $01 ; 0x5c
+	db $05, $04, $0a, $01 ; 0x60
+	db $05, $04, $0a, $01 ; 0x64
+MinigameShotIntervalByTempo:
+	; $45ae, 5 bytes (bytes:5)
+	db $28, $28, $1e, $14, $0a ; 0x00
+MinigameShotAimPools:
+	; $45b3, 144 bytes (bytes:16)
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $10, $10, $10, $10, $10, $10, $10, $10, $20, $20, $20, $20, $20, $20, $20, $20 ; 0x10
+	db $11, $11, $11, $11, $11, $11, $11, $11, $22, $22, $22, $22, $22, $22, $22, $22 ; 0x20
+	db $10, $10, $10, $10, $10, $10, $12, $12, $20, $20, $20, $20, $20, $20, $21, $21 ; 0x30
+	db $10, $10, $10, $10, $30, $30, $12, $12, $20, $20, $20, $20, $30, $30, $21, $21 ; 0x40
+	db $11, $11, $11, $11, $30, $30, $12, $12, $22, $22, $22, $22, $30, $30, $21, $21 ; 0x50
+	db $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12 ; 0x60
+	db $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21 ; 0x70
+	db $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30 ; 0x80
+MinigameShotSpinPool:
+	; $4643, 8 bytes (bytes:8)
+	db $00, $00, $ff, $ff, $ff, $01, $01, $01 ; 0x00
+MinigameCharCoordsTable:
+	; $464b, 36 bytes (bytes:4)
+	db $a0, $fe, $00, $fc ; 0x00
+	db $00, $00, $00, $fc ; 0x04
+	db $60, $01, $00, $fc ; 0x08
+	db $a0, $fe, $40, $fd ; 0x0c
+	db $00, $00, $40, $fd ; 0x10
+	db $60, $01, $40, $fd ; 0x14
+	db $a0, $fe, $c0, $fe ; 0x18
+	db $00, $00, $c0, $fe ; 0x1c
+	db $60, $01, $c0, $fe ; 0x20
+MinigameBallLaunchHeights:
+	; $466f, 6 bytes (records:2)
+	dw $ffa0 ; record 0
+	dw $ff80 ; record 1
+	dw $ff60 ; record 2
+MinigameBallLaunchSpeeds:
+	; $4675, 3 bytes (bytes:3)
+	db $ef, $c1, $93 ; 0x00
 StartMinigameMatch:
 	call InitMinigameScore ; $4678
 	ld hl, $0000 ; $467b
@@ -1876,7 +1978,17 @@ Label_0d_4e41:
 	pop af ; $4e54
 	wram_bank ; $4e55
 	ret ; $4e59
-	INCBIN "data/bank_00d/d_4e5a.bin" ; $4e5a, 38 bytes
+TargetShotZonePoolsByLevel:
+	; $4e5a, 6 bytes (records:2)
+	dw TargetShotZonePool0 ; record 0
+	dw TargetShotZonePool1 ; record 1
+	dw TargetShotZonePool1 ; record 2
+TargetShotZonePool0:
+	; $4e60, 16 bytes (bytes:16)
+	db $00, $00, $00, $00, $01, $01, $01, $01, $05, $05, $05, $06, $06, $06, $04, $04 ; 0x00
+TargetShotZonePool1:
+	; $4e70, 16 bytes (bytes:16)
+	db $00, $00, $00, $00, $01, $01, $01, $01, $02, $02, $02, $03, $03, $03, $04, $04 ; 0x00
 CheckBallLandedOut:
 	ld a, [wLastShotCharIndex] ; $4e80
 	and a, $01 ; $4e83
@@ -2029,7 +2141,15 @@ LoadMatchUiCourtTilemap:
 	ld bc, $0a05 ; $5133
 	call CopyTextRect ; $5136
 	ret ; $5139
-	INCBIN "data/bank_00d/d_513a.bin" ; $513a, 14 bytes
+TargetShotZoneOverlayOffsets:
+	; $513a, 14 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0032 ; record 1
+	dw $0064 ; record 2
+	dw $0096 ; record 3
+	dw $00c8 ; record 4
+	dw $0064 ; record 5
+	dw $0096 ; record 6
 LoadTargetZoneConfig:
 	add a, a ; $5148
 	add a, a ; $5149
@@ -2043,7 +2163,15 @@ LoadTargetZoneConfig:
 	ld bc, $0008 ; $5155
 	call CopyMemoryBC ; $5158
 	ret ; $515b
-	INCBIN "data/bank_00d/d_515c.bin" ; $515c, 56 bytes
+MinigameTargetZoneBounds:
+	; $515c, 56 bytes (bytes:8)
+	db $50, $fe, $20, $fb, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $20, $fb, $b0, $01, $00, $00 ; 0x08
+	db $50, $fe, $60, $fd, $b0, $01, $00, $00 ; 0x10
+	db $50, $fe, $20, $fb, $b0, $01, $60, $fd ; 0x18
+	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x20
+	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x28
+	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x30
 MinigameConfig_ShootingStar:
 	INCBIN "data/bank_00d/d_5194.bin" ; $5194, 16 bytes
 	ld a, $01 ; $51a4
@@ -2301,7 +2429,12 @@ Label_0d_5310:
 	ld a, $01 ; $5349
 	ld [wPointOutcomeSide], a ; $534b
 	ret ; $534e
-	INCBIN "data/bank_00d/d_534f.bin" ; $534f, 16 bytes
+MinigameHitStreakSounds:
+	; $534f, 8 bytes (bytes:8)
+	db $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x00
+MinigameHitStreakMultipliers:
+	; $5357, 8 bytes (bytes:8)
+	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 DrawTargetReticleSprite:
 	call ProjectMinigameWorldPosition ; $535f
 	ld c, $30 ; $5362
@@ -2353,7 +2486,9 @@ ProjectMinigameWorldPosition:
 	ld h, a ; $53c3
 	ld b, [hl] ; $53c4
 	ret ; $53c5
-	INCBIN "data/bank_00d/d_53c6.bin" ; $53c6, 8 bytes
+MinigameTargetSpriteOamAttrByHitStreak:
+	; $53c6, 8 bytes (bytes:8)
+	db $0f, $0e, $0e, $0e, $0e, $0e, $0e, $0d ; 0x00
 QueueMinigameHitBurst:
 	call QueueMinigameHitBurstFirstFour ; $53ce
 	call QueueMinigameHitBurstParticle ; $53d1
@@ -2421,7 +2556,20 @@ Label_0d_5421:
 	dec e ; $5429
 	dec e ; $542a
 	ret ; $542b
-	INCBIN "data/bank_00d/d_542c.bin" ; $542c, 192 bytes
+MinigameHitBurstParticleOffsets:
+	; $542c, 192 bytes (bytes:16)
+	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
+	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0x10
+	db $00, $ff, $fe, $fd, $fc, $fb, $fa, $f9, $f8, $f7, $f6, $f5, $f4, $f3, $f2, $f1 ; 0x20
+	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0x30
+	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x40
+	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0x50
+	db $00, $ff, $fe, $fd, $fc, $fb, $fa, $f9, $f8, $f7, $f6, $f5, $f4, $f3, $f2, $f1 ; 0x60
+	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0x70
+	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x80
+	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0x90
+	db $00, $ff, $fe, $fd, $fc, $fb, $fa, $f9, $f8, $f7, $f6, $f5, $f4, $f3, $f2, $f1 ; 0xa0
+	db $ff, $fe, $fd, $fc, $fb, $fb, $fa, $fa, $f9, $f9, $f9, $fa, $fa, $fb, $fb, $fc ; 0xb0
 MinigameConfig_BananaBunch:
 	INCBIN "data/bank_00d/d_54ec.bin" ; $54ec, 47 bytes
 MinigameHooks_BananaBunch:
@@ -2454,7 +2602,26 @@ BananaBunchHook_PointStart:
 	ld l, a ; $5543
 	call CopyMinigameTilemapBlock ; $5544
 	ret ; $5547
-	INCBIN "data/bank_00d/d_5548.bin" ; $5548, 78 bytes
+BananaBunchGridLayoutsByLevel:
+	; $5548, 6 bytes (records:2)
+	dw BananaBunchGridLayout0 ; record 0
+	dw BananaBunchGridLayout1 ; record 1
+	dw BananaBunchGridLayout2 ; record 2
+BananaBunchGridLayout0:
+	; $554e, 24 bytes (bytes:8)
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x08
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x10
+BananaBunchGridLayout1:
+	; $5566, 24 bytes (bytes:8)
+	db $00, $00, $07, $00, $07, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $07, $00, $00, $00, $00 ; 0x08
+	db $00, $00, $07, $00, $07, $00, $00, $00 ; 0x10
+BananaBunchGridLayout2:
+	; $557e, 24 bytes (bytes:8)
+	db $07, $07, $00, $00, $05, $00, $05, $00 ; 0x00
+	db $07, $00, $07, $00, $05, $05, $00, $00 ; 0x08
+	db $07, $07, $00, $00, $05, $00, $05, $00 ; 0x10
 BananaBunchHook_PointEnd:
 	call HandleMinigamePointEnd ; $5596
 	ret ; $5599
@@ -2509,7 +2676,9 @@ ScoreMinigameTargetHitOrDeflectBall:
 	ld a, $0b ; $55f3
 	ld [wPointOutcome], a ; $55f5
 	ret ; $55f8
-	INCBIN "data/bank_00d/d_55f9.bin" ; $55f9, 4 bytes
+MinigameTargetTypeScores:
+	; $55f9, 4 bytes (bytes:4)
+	db $01, $03, $05, $03 ; 0x00
 Label_0d_55fd:
 	ld a, [$c7bf] ; $55fd
 	cp a, $ff ; $5600
@@ -2527,7 +2696,10 @@ Label_0d_55fd:
 	sound $77 ; $5612
 	ret ; $5614
 MinigameConfig_BooBlast:
-	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 67 bytes
+	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 61 bytes
+BooBlastInitParams:
+	; $5652, 6 bytes (bytes:6)
+	db $00, $00, $00, $dc, $03, $01 ; 0x00
 MinigameHooks_BooBlast:
 	; $5658, 16 bytes (mode_hooks)
 	dw BooBlastHook_PerFrame ; record 0
@@ -3135,7 +3307,17 @@ Label_0d_5a9c:
 	xor a, a ; $5aa0
 	ld [$dc02], a ; $5aa1
 	ret ; $5aa4
-	INCBIN "data/bank_00d/d_5aa5.bin" ; $5aa5, 38 bytes
+TreasureBoxZonePoolsByLevel:
+	; $5aa5, 6 bytes (records:2)
+	dw TreasureBoxZonePool0 ; record 0
+	dw TreasureBoxZonePool1 ; record 1
+	dw TreasureBoxZonePool1 ; record 2
+TreasureBoxZonePool0:
+	; $5aab, 16 bytes (bytes:16)
+	db $00, $00, $00, $00, $01, $01, $01, $01, $04, $04, $04, $04, $00, $00, $01, $01 ; 0x00
+TreasureBoxZonePool1:
+	; $5abb, 16 bytes (bytes:16)
+	db $00, $00, $00, $00, $01, $01, $01, $01, $04, $04, $04, $04, $02, $02, $03, $03 ; 0x00
 StubNop_0d_5acb:
 	ret ; $5acb
 TreasureBoxTargetActorHandler:
@@ -3732,7 +3914,26 @@ FruitFantasyHook_PointStart:
 	ld l, a ; $5f89
 	call CopyMinigameTilemapBlock ; $5f8a
 	ret ; $5f8d
-	INCBIN "data/bank_00d/d_5f8e.bin" ; $5f8e, 78 bytes
+FruitFantasyGridLayoutsByLevel:
+	; $5f8e, 6 bytes (records:2)
+	dw FruitFantasyGridLayout0 ; record 0
+	dw FruitFantasyGridLayout1 ; record 1
+	dw FruitFantasyGridLayout2 ; record 2
+FruitFantasyGridLayout0:
+	; $5f94, 24 bytes (bytes:8)
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x08
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x10
+FruitFantasyGridLayout1:
+	; $5fac, 24 bytes (bytes:8)
+	db $00, $00, $05, $05, $00, $06, $00, $00 ; 0x00
+	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x08
+	db $00, $04, $00, $07, $07, $00, $00, $00 ; 0x10
+FruitFantasyGridLayout2:
+	; $5fc4, 24 bytes (bytes:8)
+	db $00, $04, $04, $00, $06, $06, $00, $00 ; 0x00
+	db $07, $00, $00, $05, $00, $00, $07, $00 ; 0x08
+	db $00, $07, $07, $00, $07, $07, $00, $00 ; 0x10
 FruitFantasyHook_PointEnd:
 	call HandleMinigamePointEnd ; $5fdc
 	ret ; $5fdf
