@@ -261,6 +261,16 @@ class Disassembly:
     # is data; without this the decoder would treat it as the next opcode.
     INLINE_ARG_CALLS = {0x2725}
 
+    def _target_in_fill(self, t, run=16):
+        """True if a candidate jump-table target lands in a run of $ff filler.
+        Real handlers never do; an over-running table walk that reads the
+        following code's bytes as a pointer usually does, and because $ff
+        decodes as a valid one-byte `rst $38` that does not end flow, descent
+        from there runs to the end of the bank."""
+        if t + run > len(self.rom):
+            return False
+        return all(b == 0xFF for b in self.rom[t:t + run])
+
     def seed(self, seeds):
         bad = 0
         seeds = set(seeds) - self.BAD_SEEDS
@@ -470,6 +480,8 @@ class Disassembly:
                     break
                 if not sm83.decode(self.rom, t, offset_to_cpu(t)).valid:
                     break
+                if self._target_in_fill(t):
+                    break
                 entries.append((pos, t))
                 if t > off and (min_fwd is None or t < min_fwd):
                     min_fwd = t
@@ -509,6 +521,8 @@ class Disassembly:
                 if t is None or t + 1 >= len(self.rom):
                     break
                 if not sm83.decode(self.rom, t, offset_to_cpu(t)).valid:
+                    break
+                if self._target_in_fill(t):
                     break
                 entries.append((pos, t))
                 if t > tbl and (min_fwd is None or t < min_fwd):
@@ -4349,6 +4363,12 @@ def main():
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()
+        # An installed actor handler's body opens with a `rst Rst00` jumptable,
+        # so seed the handlers before the fixpoint rather than after it.
+        ahi = {int(k, 0) for k, n in (overrides or {}).items()
+               if n in ACTOR_HANDLER_INSTALL}
+        dis.seed(list(actor_handler_targets(dis, ahi)))
+        dis.descend()
         # jump tables and descent feed each other; iterate to a fixed point
         for _ in range(8):
             if not dis.parse_jumptables():
@@ -4362,9 +4382,6 @@ def main():
         rft = {int(k, 0) for k, n in (overrides or {}).items()
                if n in FRAME_TASK_REGISTER}
         dis.seed(list(frame_task_targets(dis, rft)))
-        ahi = {int(k, 0) for k, n in (overrides or {}).items()
-               if n in ACTOR_HANDLER_INSTALL}
-        dis.seed(list(actor_handler_targets(dis, ahi)))
         dis.descend()
     helpers = {}
     if overrides:

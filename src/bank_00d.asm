@@ -2377,6 +2377,7 @@ QueueMinigameHitBurstFirstFour:
 	call QueueMinigameHitBurstParticle ; $53ef
 	call QueueMinigameHitBurstParticle ; $53f2
 	ret ; $53f5
+Func_0d_53f6:
 	and a, $0f ; $53f6
 	cpl ; $53f8
 	inc a ; $53f9
@@ -3140,7 +3141,251 @@ StubNop_0d_5acb:
 TreasureBoxTargetActorHandler:
 	ld a, [$dc72] ; $5acc
 	rst Rst00 ; $5acf
-	INCBIN "data/bank_00d/d_5ad0.bin" ; $5ad0, 538 bytes
+	dw Label_0d_5adf ; $5ad0 jumptable
+	dw Label_0d_5b2f ; $5ad2 jumptable
+	dw Label_0d_5b3d ; $5ad4 jumptable
+	dw Label_0d_5b4a ; $5ad6 jumptable
+	dw RetStub ; $5ad8 jumptable
+Func_0d_5ada:
+	ld hl, $dc72 ; $5ada
+	inc [hl] ; $5add
+	ret ; $5ade
+Label_0d_5adf:
+	xor a, a ; $5adf
+	ld [$c78a], a ; $5ae0
+	ld hl, $c780 ; $5ae3
+	ld a, [hl+] ; $5ae6
+	ld h, [hl] ; $5ae7
+	ld l, a ; $5ae8
+	ld de, $fff5 ; $5ae9
+	add hl, de ; $5aec
+	bit 7, h ; $5aed
+	ld hl, $5b4b ; $5aef
+	jr z, Label_0d_5af7 ; $5af2
+	ld hl, $5b5b ; $5af4
+Label_0d_5af7:
+	farcall AdvanceMatchRng ; $5af7
+	and a, $0f ; $5afa
+	add a, l ; $5afc
+	ld l, a ; $5afd
+	jr nc, Label_0d_5b01 ; $5afe
+	inc h ; $5b00
+Label_0d_5b01:
+	ld a, [hl] ; $5b01
+	ld [$dc71], a ; $5b02
+	ld a, [$c7a5] ; $5b05
+	add a, a ; $5b08
+	add a, $6b ; $5b09
+	ld l, a ; $5b0b
+	adc a, $5b ; $5b0c
+	sub a, l ; $5b0e
+	ld h, a ; $5b0f
+	ld a, [hl+] ; $5b10
+	ld h, [hl] ; $5b11
+	ld l, a ; $5b12
+	farcall AdvanceMatchRng ; $5b13
+	and a, $03 ; $5b16
+	add a, a ; $5b18
+	add a, a ; $5b19
+	add a, l ; $5b1a
+	ld l, a ; $5b1b
+	jr nc, Label_0d_5b1f ; $5b1c
+	inc h ; $5b1e
+Label_0d_5b1f:
+	ld a, [hl+] ; $5b1f
+	ld c, a ; $5b20
+	ld a, [hl+] ; $5b21
+	ld b, a ; $5b22
+	ld a, [hl+] ; $5b23
+	ld e, a ; $5b24
+	ld a, [hl+] ; $5b25
+	ld d, a ; $5b26
+	ld l, c ; $5b27
+	ld h, b ; $5b28
+	call SetMinigameActorWorldPos ; $5b29
+	call Func_0d_5ada ; $5b2c
+Label_0d_5b2f:
+	call Func_0d_5c89 ; $5b2f
+	call Func_0d_5bc5 ; $5b32
+	and a, a ; $5b35
+	ret z ; $5b36
+	call Func_0d_5c2c ; $5b37
+	jp Func_0d_5ada ; $5b3a
+Label_0d_5b3d:
+	call Func_0d_5ccb ; $5b3d
+	ld hl, $dc73 ; $5b40
+	dec [hl] ; $5b43
+	ld a, [hl] ; $5b44
+	and a, a ; $5b45
+	ret nz ; $5b46
+	jp Func_0d_5ada ; $5b47
+Label_0d_5b4a:
+	ret ; $5b4a
+	INCBIN "data/bank_00d/d_5b4b.bin" ; $5b4b, 122 bytes
+Func_0d_5bc5:
+	ld a, [wLastShotCharIndex] ; $5bc5
+	and a, $01 ; $5bc8
+	jp nz, Label_0d_5c2a ; $5bca
+	ld hl, $dc76 ; $5bcd
+	ld a, [hl+] ; $5bd0
+	ld d, [hl] ; $5bd1
+	ld e, a ; $5bd2
+	ld hl, wBallX ; $5bd3
+	ld a, [hl+] ; $5bd6
+	ld h, [hl] ; $5bd7
+	ld l, a ; $5bd8
+	ld a, l ; $5bd9
+	sub a, e ; $5bda
+	ld l, a ; $5bdb
+	ld a, h ; $5bdc
+	sbc a, d ; $5bdd
+	ld h, a ; $5bde
+	bit 7, h ; $5bdf
+	jr z, Label_0d_5be9 ; $5be1
+	xor a, a ; $5be3
+	sub a, l ; $5be4
+	ld l, a ; $5be5
+	sbc a, a ; $5be6
+	sub a, h ; $5be7
+	ld h, a ; $5be8
+Label_0d_5be9:
+	ld de, hPeakLY ; $5be9
+	add hl, de ; $5bec
+	jr c, Label_0d_5c2a ; $5bed
+	ld hl, $dc78 ; $5bef
+	ld a, [hl+] ; $5bf2
+	ld d, [hl] ; $5bf3
+	ld e, a ; $5bf4
+	ld hl, wBallDepth ; $5bf5
+	ld a, [hl+] ; $5bf8
+	ld h, [hl] ; $5bf9
+	ld l, a ; $5bfa
+	ld a, l ; $5bfb
+	sub a, e ; $5bfc
+	ld l, a ; $5bfd
+	ld a, h ; $5bfe
+	sbc a, d ; $5bff
+	ld h, a ; $5c00
+	bit 7, h ; $5c01
+	jr z, Label_0d_5c0b ; $5c03
+	xor a, a ; $5c05
+	sub a, l ; $5c06
+	ld l, a ; $5c07
+	sbc a, a ; $5c08
+	sub a, h ; $5c09
+	ld h, a ; $5c0a
+Label_0d_5c0b:
+	ld de, $ff80 ; $5c0b
+	add hl, de ; $5c0e
+	jr c, Label_0d_5c2a ; $5c0f
+	ld hl, wBallHeight ; $5c11
+	ld a, [hl+] ; $5c14
+	ld h, [hl] ; $5c15
+	ld l, a ; $5c16
+	bit 7, h ; $5c17
+	jr z, Label_0d_5c21 ; $5c19
+	xor a, a ; $5c1b
+	sub a, l ; $5c1c
+	ld l, a ; $5c1d
+	sbc a, a ; $5c1e
+	sub a, h ; $5c1f
+	ld h, a ; $5c20
+Label_0d_5c21:
+	ld de, rLCDC ; $5c21
+	add hl, de ; $5c24
+	jr c, Label_0d_5c2a ; $5c25
+	ld a, $01 ; $5c27
+	ret ; $5c29
+Label_0d_5c2a:
+	xor a, a ; $5c2a
+	ret ; $5c2b
+Func_0d_5c2c:
+	ld a, $10 ; $5c2c
+	ld [$dc73], a ; $5c2e
+	ld a, $01 ; $5c31
+	ld [$c788], a ; $5c33
+	ld a, [$c789] ; $5c36
+	add a, $81 ; $5c39
+	ld e, a ; $5c3b
+	adc a, $5c ; $5c3c
+	sub a, e ; $5c3e
+	ld d, a ; $5c3f
+	ld a, [de] ; $5c40
+	call PlaySoundManaged ; $5c41
+	ld a, [$dc71] ; $5c44
+	add a, $7d ; $5c47
+	ld l, a ; $5c49
+	adc a, $5c ; $5c4a
+	sub a, l ; $5c4c
+	ld h, a ; $5c4d
+	ld l, [hl] ; $5c4e
+	ld h, $00 ; $5c4f
+	ld a, [$c789] ; $5c51
+	add a, $85 ; $5c54
+	ld e, a ; $5c56
+	adc a, $5c ; $5c57
+	sub a, e ; $5c59
+	ld d, a ; $5c5a
+	ld a, [de] ; $5c5b
+	call MulHLByA ; $5c5c
+	ld e, l ; $5c5f
+	ld d, h ; $5c60
+	ld hl, $c782 ; $5c61
+	ld a, e ; $5c64
+	ld [hl+], a ; $5c65
+	ld [hl], d ; $5c66
+	call AddToMinigameScore ; $5c67
+	call StartScorePopup ; $5c6a
+	ld b, $03 ; $5c6d
+	call IncrementCappedCounter ; $5c6f
+	ld a, $06 ; $5c72
+	ld [wPointOutcome], a ; $5c74
+	ld a, $01 ; $5c77
+	ld [wPointOutcomeSide], a ; $5c79
+	ret ; $5c7c
+	INCBIN "data/bank_00d/d_5c7d.bin" ; $5c7d, 12 bytes
+Func_0d_5c89:
+	call Func_0d_5cd7 ; $5c89
+	ld c, $30 ; $5c8c
+	call QueueSprite16 ; $5c8e
+	ld a, [$dc71] ; $5c91
+	ld b, a ; $5c94
+	ld hl, $c78a ; $5c95
+	ld a, [hl] ; $5c98
+	inc [hl] ; $5c99
+	and a, $1f ; $5c9a
+	add a, $ab ; $5c9c
+	ld l, a ; $5c9e
+	adc a, $5c ; $5c9f
+	sub a, l ; $5ca1
+	ld h, a ; $5ca2
+	ld a, [hl] ; $5ca3
+	cp a, $ff ; $5ca4
+	ret z ; $5ca6
+	farcall Func_28_60a0 ; $5ca7
+	ret ; $5caa
+	INCBIN "data/bank_00d/d_5cab.bin" ; $5cab, 32 bytes
+Func_0d_5ccb:
+	call Func_0d_5cd7 ; $5ccb
+	ld c, $3c ; $5cce
+	ld a, [$dc73] ; $5cd0
+	call QueueMinigameHitBurstFirstFour ; $5cd3
+	ret ; $5cd6
+Func_0d_5cd7:
+	ld hl, $dc7a ; $5cd7
+	ld a, [hl+] ; $5cda
+	ld e, a ; $5cdb
+	ld a, [hl+] ; $5cdc
+	ld d, a ; $5cdd
+	ld a, [hl+] ; $5cde
+	ld c, a ; $5cdf
+	ld a, [hl+] ; $5ce0
+	ld b, a ; $5ce1
+	ld l, e ; $5ce2
+	ld h, d ; $5ce3
+	farcall ApplyCameraProjection ; $5ce4
+	ld b, $0f ; $5ce7
+	ret ; $5ce9
 MinigameConfig_MedallionMatch:
 	INCBIN "data/bank_00d/d_5cea.bin" ; $5cea, 34 bytes
 MinigameHooks_MedallionMatch:
@@ -3260,7 +3505,201 @@ ResetMedallionMatchHitState:
 MedallionMatchTargetActorHandler:
 	ld a, [$dc72] ; $5dee
 	rst Rst00 ; $5df1
-	INCBIN "data/bank_00d/d_5df2.bin" ; $5df2, 320 bytes
+	dw Label_0d_5e01 ; $5df2 jumptable
+	dw Label_0d_5e04 ; $5df4 jumptable
+	dw Label_0d_5e12 ; $5df6 jumptable
+	dw Label_0d_5e33 ; $5df8 jumptable
+	dw RetStub ; $5dfa jumptable
+Func_0d_5dfc:
+	ld hl, $dc72 ; $5dfc
+	inc [hl] ; $5dff
+	ret ; $5e00
+Label_0d_5e01:
+	call Func_0d_5dfc ; $5e01
+Label_0d_5e04:
+	call Func_0d_5ef2 ; $5e04
+	call Func_0d_5e37 ; $5e07
+	and a, a ; $5e0a
+	ret z ; $5e0b
+	call Func_0d_5e9e ; $5e0c
+	jp Func_0d_5dfc ; $5e0f
+Label_0d_5e12:
+	call Func_0d_5f13 ; $5e12
+	ld hl, $dc73 ; $5e15
+	dec [hl] ; $5e18
+	ld a, [hl] ; $5e19
+	and a, a ; $5e1a
+	ret nz ; $5e1b
+	ld hl, $dc78 ; $5e1c
+	ld a, [hl+] ; $5e1f
+	ld d, [hl] ; $5e20
+	ld e, a ; $5e21
+	farcall AdvanceMatchRng ; $5e22
+	ld h, $00 ; $5e25
+	ld l, a ; $5e27
+	add hl, hl ; $5e28
+	ld bc, rJOYP ; $5e29
+	add hl, bc ; $5e2c
+	call SetMinigameActorWorldPos ; $5e2d
+	jp Func_0d_5dfc ; $5e30
+Label_0d_5e33:
+	call Func_0d_5ef2 ; $5e33
+	ret ; $5e36
+Func_0d_5e37:
+	ld a, [wLastShotCharIndex] ; $5e37
+	and a, $01 ; $5e3a
+	jp nz, Label_0d_5e9c ; $5e3c
+	ld hl, $dc76 ; $5e3f
+	ld a, [hl+] ; $5e42
+	ld d, [hl] ; $5e43
+	ld e, a ; $5e44
+	ld hl, wBallX ; $5e45
+	ld a, [hl+] ; $5e48
+	ld h, [hl] ; $5e49
+	ld l, a ; $5e4a
+	ld a, l ; $5e4b
+	sub a, e ; $5e4c
+	ld l, a ; $5e4d
+	ld a, h ; $5e4e
+	sbc a, d ; $5e4f
+	ld h, a ; $5e50
+	bit 7, h ; $5e51
+	jr z, Label_0d_5e5b ; $5e53
+	xor a, a ; $5e55
+	sub a, l ; $5e56
+	ld l, a ; $5e57
+	sbc a, a ; $5e58
+	sub a, h ; $5e59
+	ld h, a ; $5e5a
+Label_0d_5e5b:
+	ld de, hPeakLY ; $5e5b
+	add hl, de ; $5e5e
+	jr c, Label_0d_5e9c ; $5e5f
+	ld hl, $dc78 ; $5e61
+	ld a, [hl+] ; $5e64
+	ld d, [hl] ; $5e65
+	ld e, a ; $5e66
+	ld hl, wBallDepth ; $5e67
+	ld a, [hl+] ; $5e6a
+	ld h, [hl] ; $5e6b
+	ld l, a ; $5e6c
+	ld a, l ; $5e6d
+	sub a, e ; $5e6e
+	ld l, a ; $5e6f
+	ld a, h ; $5e70
+	sbc a, d ; $5e71
+	ld h, a ; $5e72
+	bit 7, h ; $5e73
+	jr z, Label_0d_5e7d ; $5e75
+	xor a, a ; $5e77
+	sub a, l ; $5e78
+	ld l, a ; $5e79
+	sbc a, a ; $5e7a
+	sub a, h ; $5e7b
+	ld h, a ; $5e7c
+Label_0d_5e7d:
+	ld de, $ff80 ; $5e7d
+	add hl, de ; $5e80
+	jr c, Label_0d_5e9c ; $5e81
+	ld hl, wBallHeight ; $5e83
+	ld a, [hl+] ; $5e86
+	ld h, [hl] ; $5e87
+	ld l, a ; $5e88
+	bit 7, h ; $5e89
+	jr z, Label_0d_5e93 ; $5e8b
+	xor a, a ; $5e8d
+	sub a, l ; $5e8e
+	ld l, a ; $5e8f
+	sbc a, a ; $5e90
+	sub a, h ; $5e91
+	ld h, a ; $5e92
+Label_0d_5e93:
+	ld de, rLCDC ; $5e93
+	add hl, de ; $5e96
+	jr c, Label_0d_5e9c ; $5e97
+	ld a, $01 ; $5e99
+	ret ; $5e9b
+Label_0d_5e9c:
+	xor a, a ; $5e9c
+	ret ; $5e9d
+Func_0d_5e9e:
+	ld a, $10 ; $5e9e
+	ld [$dc73], a ; $5ea0
+	ld hl, $0001 ; $5ea3
+	ld a, [wCurrentShotType] ; $5ea6
+	cp a, $09 ; $5ea9
+	jr nz, Label_0d_5eb5 ; $5eab
+	ld a, $20 ; $5ead
+	ld [$dc73], a ; $5eaf
+	ld hl, $0002 ; $5eb2
+Label_0d_5eb5:
+	ld a, [$c789] ; $5eb5
+	add a, $e4 ; $5eb8
+	ld e, a ; $5eba
+	adc a, $5e ; $5ebb
+	sub a, e ; $5ebd
+	ld d, a ; $5ebe
+	ld a, [de] ; $5ebf
+	call PlaySoundManaged ; $5ec0
+	ld a, [$c789] ; $5ec3
+	add a, $ec ; $5ec6
+	ld e, a ; $5ec8
+	adc a, $5e ; $5ec9
+	sub a, e ; $5ecb
+	ld d, a ; $5ecc
+	ld a, [de] ; $5ecd
+	call MulHLByA ; $5ece
+	ld e, l ; $5ed1
+	ld d, h ; $5ed2
+	ld hl, $c782 ; $5ed3
+	ld a, e ; $5ed6
+	ld [hl+], a ; $5ed7
+	ld [hl], d ; $5ed8
+	call AddToMinigameScore ; $5ed9
+	call StartScorePopup ; $5edc
+	ld hl, $c789 ; $5edf
+	inc [hl] ; $5ee2
+	ret ; $5ee3
+	INCBIN "data/bank_00d/d_5ee4.bin" ; $5ee4, 14 bytes
+Func_0d_5ef2:
+	call Func_0d_5f1f ; $5ef2
+	ldh a, [hVBlankCounter] ; $5ef5
+	ld hl, $dc7a ; $5ef7
+	add a, [hl] ; $5efa
+	srl a ; $5efb
+	srl a ; $5efd
+	srl a ; $5eff
+	and a, $03 ; $5f01
+	add a, $0f ; $5f03
+	ld l, a ; $5f05
+	adc a, $5f ; $5f06
+	sub a, l ; $5f08
+	ld h, a ; $5f09
+	ld c, [hl] ; $5f0a
+	call QueueSprite16 ; $5f0b
+	ret ; $5f0e
+	INCBIN "data/bank_00d/d_5f0f.bin" ; $5f0f, 4 bytes
+Func_0d_5f13:
+	call Func_0d_5f1f ; $5f13
+	ld c, $3c ; $5f16
+	ld a, [$dc73] ; $5f18
+	call Func_0d_53f6 ; $5f1b
+	ret ; $5f1e
+Func_0d_5f1f:
+	ld hl, $dc7a ; $5f1f
+	ld a, [hl+] ; $5f22
+	ld e, a ; $5f23
+	ld a, [hl+] ; $5f24
+	ld d, a ; $5f25
+	ld a, [hl+] ; $5f26
+	ld c, a ; $5f27
+	ld a, [hl+] ; $5f28
+	ld b, a ; $5f29
+	ld l, e ; $5f2a
+	ld h, d ; $5f2b
+	farcall ApplyCameraProjection ; $5f2c
+	ld b, $0f ; $5f2f
+	ret ; $5f31
 MinigameConfig_FruitFantasy:
 	INCBIN "data/bank_00d/d_5f32.bin" ; $5f32, 47 bytes
 MinigameHooks_FruitFantasy:
