@@ -1488,7 +1488,7 @@ IslandSkyInitScript_14:
 Label_14_5303:
 	set_flag $09, 7 ; $5303
 	call DisableLCDSafely ; $5306
-	call LoadWaterSpriteObjGfx ; $5309
+	call LoadPlaneObjGfx_14 ; $5309
 	call LoadWaterSplashObjGfx_14 ; $530c
 	call EnableLCD ; $530f
 	ld a, $50 ; $5312
@@ -1546,7 +1546,7 @@ Label_14_539c:
 	ld h, $08 ; $53bc
 Label_14_53be:
 	script_wait_frames $06 ; $53be
-	call PlayWaterSpriteMoveSfx ; $53c5
+	call PlayPlaneMoveSfx_14 ; $53c5
 	ld a, [$c2b1] ; $53c8
 	inc a ; $53cb
 	ld [$c2b1], a ; $53cc
@@ -1555,7 +1555,7 @@ Label_14_53be:
 	ld h, $08 ; $53d2
 Label_14_53d4:
 	script_wait_frames $05 ; $53d4
-	call PlayWaterSpriteMoveSfx ; $53db
+	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
 	and a, $01 ; $53df
 	jr z, Label_14_53ea ; $53e1
@@ -1571,7 +1571,7 @@ Label_14_53ea:
 	ld h, $08 ; $53f4
 Label_14_53f6:
 	script_wait_frames $04 ; $53f6
-	call PlayWaterSpriteMoveSfx ; $53fd
+	call PlayPlaneMoveSfx_14 ; $53fd
 	ld a, [$c2b0] ; $5400
 	dec a ; $5403
 	ld [$c2b0], a ; $5404
@@ -1585,7 +1585,7 @@ Label_14_53f6:
 	ld h, $1c ; $541e
 Label_14_5420:
 	script_wait_frames $03 ; $5420
-	call PlayWaterSpriteMoveSfx ; $5427
+	call PlayPlaneMoveSfx_14 ; $5427
 	ld a, h ; $542a
 	and a, $01 ; $542b
 	jr z, Label_14_5436 ; $542d
@@ -1603,7 +1603,7 @@ Label_14_5440:
 Label_14_5442:
 	script_wait_frames $03 ; $5442
 	inc h ; $5449
-	call PlayWaterSpriteMoveSfx ; $544a
+	call PlayPlaneMoveSfx_14 ; $544a
 	ld a, [$c2b1] ; $544d
 	inc a ; $5450
 	ld [$c2b1], a ; $5451
@@ -1620,7 +1620,7 @@ Label_14_5461:
 	ld h, $08 ; $5468
 Label_14_546a:
 	script_wait_frames $04 ; $546a
-	call PlayWaterSpriteMoveSfx ; $5471
+	call PlayPlaneMoveSfx_14 ; $5471
 	ld a, [$c2b1] ; $5474
 	inc a ; $5477
 	ld [$c2b1], a ; $5478
@@ -1919,7 +1919,7 @@ SpriteTemplate_14_5e50:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 	INCBIN "data/bank_014/d_5e71.bin" ; $5e71, 8 bytes
-LoadWaterSpriteObjGfx:
+LoadPlaneObjGfx_14:
 	ldh a, [hWramBank] ; $5e79
 	push af ; $5e7b
 	wram_bank $01 ; $5e7c
@@ -1934,7 +1934,7 @@ LoadWaterSpriteObjGfx:
 	wram_bank ; $5e97
 	ret ; $5e9b
 QueuePlaneSpriteByHeight_14:
-	call GetWaterSpriteScreenPos ; $5e9c
+	call GetSceneObjectScreenPos_14 ; $5e9c
 	ld b, $00 ; $5e9f
 	ld a, [$c2b1] ; $5ea1
 	sub a, $88 ; $5ea4
@@ -2178,7 +2178,7 @@ AdvanceWaterSplash1Rise_14:
 	ld [wWaterSpriteMinigameTimer + 1], a ; $6234
 Label_14_6237:
 	ret ; $6237
-LoadWaterSpriteObjGfx2:
+LoadPlaneObjGfx2_14:
 	ldh a, [hWramBank] ; $6238
 	push af ; $623a
 	wram_bank $01 ; $623b
@@ -2193,7 +2193,7 @@ LoadWaterSpriteObjGfx2:
 	wram_bank ; $6256
 	ret ; $625a
 QueuePlaneSpriteByFrameCounter_14:
-	call GetWaterSpriteScreenPos ; $625b
+	call GetSceneObjectScreenPos_14 ; $625b
 	ld b, $10 ; $625e
 	ld a, [$c2b2] ; $6260
 	cp a, $14 ; $6263
@@ -2220,7 +2220,7 @@ Label_14_6281:
 Label_14_628b:
 	clear_flag $09, 7 ; $628b
 	call DisableLCDSafely ; $628e
-	call LoadWaterSpriteObjGfx2 ; $6291
+	call LoadPlaneObjGfx2_14 ; $6291
 	call EnableLCD ; $6294
 	ld a, $20 ; $6297
 	ld [$c2b0], a ; $6299
@@ -2248,7 +2248,7 @@ Label_14_62d2:
 	ld h, $08 ; $62f2
 Label_14_62f4:
 	script_wait_frames $06 ; $62f4
-	call PlayWaterSpriteMoveSfx ; $62fb
+	call PlayPlaneMoveSfx_14 ; $62fb
 	ld a, [$c2b1] ; $62fe
 	dec a ; $6301
 	ld [$c2b1], a ; $6302
@@ -2258,7 +2258,7 @@ Label_14_62f4:
 	ld h, $08 ; $630b
 Label_14_630d:
 	script_wait_frames $05 ; $630d
-	call PlayWaterSpriteMoveSfx ; $6314
+	call PlayPlaneMoveSfx_14 ; $6314
 	ld a, h ; $6317
 	and a, $01 ; $6318
 	jr z, Label_14_6323 ; $631a
@@ -2275,7 +2275,7 @@ Label_14_6323:
 	ld h, $08 ; $6330
 Label_14_6332:
 	script_wait_frames $04 ; $6332
-	call PlayWaterSpriteMoveSfx ; $6339
+	call PlayPlaneMoveSfx_14 ; $6339
 	ld a, [$c2b0] ; $633c
 	inc a ; $633f
 	ld [$c2b0], a ; $6340
@@ -2290,7 +2290,7 @@ Label_14_6332:
 	ld h, $1c ; $635d
 Label_14_635f:
 	script_wait_frames $03 ; $635f
-	call PlayWaterSpriteMoveSfx ; $6366
+	call PlayPlaneMoveSfx_14 ; $6366
 	ld a, h ; $6369
 	and a, $01 ; $636a
 	jr z, Label_14_6375 ; $636c
@@ -2308,7 +2308,7 @@ Label_14_6375:
 Label_14_6384:
 	script_wait_frames $03 ; $6384
 	inc h ; $638b
-	call PlayWaterSpriteMoveSfx ; $638c
+	call PlayPlaneMoveSfx_14 ; $638c
 	ld a, [$c2b1] ; $638f
 	dec a ; $6392
 	ld [$c2b1], a ; $6393
@@ -2326,7 +2326,7 @@ Label_14_63a3:
 	ld h, $08 ; $63ad
 Label_14_63af:
 	script_wait_frames $04 ; $63af
-	call PlayWaterSpriteMoveSfx ; $63b6
+	call PlayPlaneMoveSfx_14 ; $63b6
 	ld a, [$c2b1] ; $63b9
 	dec a ; $63bc
 	ld [$c2b1], a ; $63bd
@@ -2336,7 +2336,7 @@ Label_14_63af:
 	ld h, $08 ; $63c6
 Label_14_63c8:
 	script_wait_frames $06 ; $63c8
-	call PlayWaterSpriteMoveSfx ; $63cf
+	call PlayPlaneMoveSfx_14 ; $63cf
 	ld a, [$c2b1] ; $63d2
 	dec a ; $63d5
 	ld [$c2b1], a ; $63d6
@@ -2346,7 +2346,7 @@ Label_14_63c8:
 	ld h, $08 ; $63df
 Label_14_63e1:
 	script_wait_frames $08 ; $63e1
-	call PlayWaterSpriteMoveSfx ; $63e8
+	call PlayPlaneMoveSfx_14 ; $63e8
 	ld a, [$c2b1] ; $63eb
 	dec a ; $63ee
 	ld [$c2b1], a ; $63ef
@@ -2688,7 +2688,7 @@ Label_14_6f73:
 	ret ; $6f7a
 Label_14_6f7b:
 	call DisableLCDSafely ; $6f7b
-	call LoadWaterSpriteObjGfx ; $6f7e
+	call LoadPlaneObjGfx_14 ; $6f7e
 	call LoadIslandSkyEffectObjGfx_14 ; $6f81
 	call EnableLCD ; $6f84
 	ld a, $50 ; $6f87
@@ -2720,7 +2720,7 @@ Label_14_6fcd:
 	ld h, $08 ; $6fe2
 Label_14_6fe4:
 	script_wait_frames $06 ; $6fe4
-	call PlayWaterSpriteMoveSfx ; $6feb
+	call PlayPlaneMoveSfx_14 ; $6feb
 	ld a, [$c2b1] ; $6fee
 	inc a ; $6ff1
 	ld [$c2b1], a ; $6ff2
@@ -2729,7 +2729,7 @@ Label_14_6fe4:
 	ld h, $08 ; $6ff8
 Label_14_6ffa:
 	script_wait_frames $04 ; $6ffa
-	call PlayWaterSpriteMoveSfx ; $7001
+	call PlayPlaneMoveSfx_14 ; $7001
 	ld a, [$c2b1] ; $7004
 	inc a ; $7007
 	ld [$c2b1], a ; $7008
@@ -2743,7 +2743,7 @@ Label_14_6ffa:
 	ld h, $18 ; $7018
 Label_14_701a:
 	script_wait_frames $03 ; $701a
-	call PlayWaterSpriteMoveSfx ; $7021
+	call PlayPlaneMoveSfx_14 ; $7021
 	ld a, [$c2b1] ; $7024
 	inc a ; $7027
 	ld [$c2b1], a ; $7028
@@ -2757,7 +2757,7 @@ Label_14_701a:
 	ld h, $18 ; $7045
 Label_14_7047:
 	script_wait_frames $02 ; $7047
-	call PlayWaterSpriteMoveSfx ; $704e
+	call PlayPlaneMoveSfx_14 ; $704e
 	ld a, [$c2b0] ; $7051
 	inc a ; $7054
 	ld [$c2b0], a ; $7055
@@ -2771,7 +2771,7 @@ Label_14_7047:
 	ld h, $20 ; $7065
 Label_14_7067:
 	script_wait_frames $02 ; $7067
-	call PlayWaterSpriteMoveSfx ; $706e
+	call PlayPlaneMoveSfx_14 ; $706e
 	ld a, [$c2b0] ; $7071
 	inc a ; $7074
 	ld [$c2b0], a ; $7075
@@ -2789,7 +2789,7 @@ Label_14_7085:
 	ld h, $1e ; $708e
 Label_14_7090:
 	script_wait_frames $02 ; $7090
-	call PlayWaterSpriteMoveSfx ; $7097
+	call PlayPlaneMoveSfx_14 ; $7097
 	dec h ; $709a
 	jr nz, Label_14_7090 ; $709b
 	script_move_player $0b00, $0d00 ; $709d
@@ -2804,7 +2804,7 @@ Label_14_7090:
 	ld h, $50 ; $70bc
 Label_14_70be:
 	script_wait_frames $02 ; $70be
-	call PlayWaterSpriteMoveSfx ; $70c5
+	call PlayPlaneMoveSfx_14 ; $70c5
 	ld a, [$c2b1] ; $70c8
 	dec a ; $70cb
 	ld [$c2b1], a ; $70cc
@@ -2991,7 +2991,7 @@ LoadDistantPlaneObjGfx_14:
 	wram_bank ; $7557
 	ret ; $755b
 QueueDistantPlaneSprite_14:
-	call GetWaterSpriteScreenPos ; $755c
+	call GetSceneObjectScreenPos_14 ; $755c
 	ld a, [wWaterSpriteMinigameSwingCount] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
@@ -2999,7 +2999,7 @@ QueueDistantPlaneSprite_14:
 	ld b, $08 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
-GetWaterSpriteScreenPos:
+GetSceneObjectScreenPos_14:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
 	ld a, [$c2b0] ; $7570
@@ -3080,7 +3080,7 @@ Label_14_7703:
 	ld h, $4b ; $773a
 Label_14_773c:
 	script_wait_frames $02 ; $773c
-	call PlayWaterSpriteMoveSfx ; $7743
+	call PlayPlaneMoveSfx_14 ; $7743
 	ld a, [$c2b1] ; $7746
 	inc a ; $7749
 	ld [$c2b1], a ; $774a
@@ -3102,10 +3102,10 @@ Label_14_775e:
 	ld h, $3c ; $7777
 Label_14_7779:
 	script_wait_frames $02 ; $7779
-	call PlayWaterSpriteMoveSfx ; $7780
+	call PlayPlaneMoveSfx_14 ; $7780
 	dec h ; $7783
 	jr nz, Label_14_7779 ; $7784
-	call LoadWaterSpriteObjGfx2 ; $7786
+	call LoadPlaneObjGfx2_14 ; $7786
 	ld a, $a4 ; $7789
 	ld [$c2b0], a ; $778b
 	ld a, $c6 ; $778e
@@ -3118,7 +3118,7 @@ Label_14_7779:
 	ld h, $20 ; $77a0
 Label_14_77a2:
 	script_wait_frames $02 ; $77a2
-	call PlayWaterSpriteMoveSfx ; $77a9
+	call PlayPlaneMoveSfx_14 ; $77a9
 	ld a, [$c2b0] ; $77ac
 	dec a ; $77af
 	ld [$c2b0], a ; $77b0
@@ -3135,7 +3135,7 @@ Label_14_77c0:
 	ld h, $18 ; $77c6
 Label_14_77c8:
 	script_wait_frames $02 ; $77c8
-	call PlayWaterSpriteMoveSfx ; $77cf
+	call PlayPlaneMoveSfx_14 ; $77cf
 	ld a, [$c2b0] ; $77d2
 	dec a ; $77d5
 	ld [$c2b0], a ; $77d6
@@ -3151,7 +3151,7 @@ Label_14_77c8:
 	ld h, $18 ; $77f3
 Label_14_77f5:
 	script_wait_frames $03 ; $77f5
-	call PlayWaterSpriteMoveSfx ; $77fc
+	call PlayPlaneMoveSfx_14 ; $77fc
 	ld a, [$c2b1] ; $77ff
 	dec a ; $7802
 	ld [$c2b1], a ; $7803
@@ -3164,7 +3164,7 @@ Label_14_77f5:
 	ld h, $08 ; $7813
 Label_14_7815:
 	script_wait_frames $04 ; $7815
-	call PlayWaterSpriteMoveSfx ; $781c
+	call PlayPlaneMoveSfx_14 ; $781c
 	ld a, [$c2b1] ; $781f
 	dec a ; $7822
 	ld [$c2b1], a ; $7823
@@ -3179,7 +3179,7 @@ Label_14_7815:
 	ld h, $0c ; $7836
 Label_14_7838:
 	script_wait_frames $06 ; $7838
-	call PlayWaterSpriteMoveSfx ; $783f
+	call PlayPlaneMoveSfx_14 ; $783f
 	ld a, [$c2b1] ; $7842
 	dec a ; $7845
 	ld [$c2b1], a ; $7846
@@ -3223,7 +3223,7 @@ Label_14_788e:
 	ld hl, QueueTwinkleSprite_14 ; $78a0
 	call UnregisterFrameTask ; $78a3
 	ret ; $78a6
-PlayWaterSpriteMoveSfx:
+PlayPlaneMoveSfx_14:
 	ld a, h ; $78a7
 	srl a ; $78a8
 	and a, $01 ; $78aa

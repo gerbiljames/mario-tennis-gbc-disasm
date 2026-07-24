@@ -173,14 +173,23 @@ aim-line distances computed at `$07:$5787`/`$07:$57bc` as
 * **What are the 28 bytes of `Unused_02_441f`?** Nothing references them
   and they match no attribute I could find. Labelled unused rather than
   guessed at.
-* **`WaterSprite` may be a misnomer.** A decode of `$14:$5650` assembled
-  through `SpriteTemplate_14_5e50` reads as a four-scale-step *aircraft*
-  (fuselage, full-width wing, tail fin) — the Island Sky story plane —
-  rather than anything aquatic, which would make `LoadWaterSpriteObjGfx`,
-  `GetWaterSpriteScreenPos`, `PlayWaterSpriteMoveSfx` and the
-  RetroAchievements-sourced `wWaterSpriteMinigame*` names wrong. Not acted
-  on: the sprite assembly was not independently reproduced, and the RAM
-  names are external. Worth settling before bank `$14` is finished.
+* **The `$14` "WaterSprite" object is a plane** (settled 2026-07-24).
+  `SpriteTemplate_14_5e50` is a 4-column x 2-row block of 8x16 sprites — a
+  32x32 image in four scale steps whose tile base (`$00`/`$10`/`$20`/`$30`)
+  `QueuePlaneSpriteByHeight_14` picks from altitude, stepping up and back
+  down as the object approaches and recedes. Assembling both tilesets that
+  way renders an unmistakable aircraft from two view angles: fuselage,
+  full-span wing, tail fin and engine nacelles. So the four labels tied to
+  those graphics are renamed `LoadPlaneObjGfx_14`, `LoadPlaneObjGfx2_14`,
+  `GetSceneObjectScreenPos_14` and `PlayPlaneMoveSfx_14`.
+
+  Still open: the *other* `WaterSprite*` cluster in the same bank
+  (`RunWaterSpriteSwingContestAndReward`, `WaterSpriteSwingCountTask`,
+  `DrawWaterSpriteMinigameCounters`, ...) is a separate swing-count
+  subsystem that nothing here disproves, and it is tied to the
+  RetroAchievements-sourced `wWaterSpriteMinigame*` RAM names — which
+  STATUS already flags as mis-scoped into the `$c2b0-$c2ff` story-script
+  scratch pool. Left alone pending its own pass.
 
 ### Pause-menu rules pages carved (bank $06, 2026-07-22)
 
