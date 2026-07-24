@@ -26,7 +26,7 @@ Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,641 of 18,924 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,662 of 18,924 labels are human-named** (up from 4,816 on 2026-07-23).
 
 ### MinigameConfigTable symbolicated (bank $0d, 2026-07-24)
 
@@ -97,7 +97,24 @@ table at `$58a3` (read as `[$58a3 + wMinigameLevel]` at `$0d:$5892`, now
 straddled the PerfectShot hook table's first word, which is why that table
 had no label at all.
 
-Bank `$0d` goes from 166 labels / 70 named to 345 / 242.
+Carving the handlers surfaced 21 further functions (their callees), which
+are named too, so **bank `$0d` now has no auto-named functions left at
+all** — 166 labels / 70 named before the pass, 345 / 263 after. Highlights:
+`FreezeMinigameOpponentOnReturn` is the BallHit hook of all nine
+2-character minigames and writes `$28` into the WRAM-bank-`$05` hold timer
+`UpdateCharStateMachine` honours, freezing the opponent for 40 frames after
+the player's first return; `HideLandingMarkerAndExtendSoloCourt` is the
+solo equivalent, pushing `wCourtLimitDepth` back out to `$fb20` on the
+serve stroke (`ResetPointState` leaves it at the `$fd60` service line);
+and `UpdateBooBlastHitStreak` is pinned by the multiplier table at `$57f5`
+being `01 02 04 08 10 20 40 80`.
+
+The `$53ce`/`$53d8`/`$540a` trio is named `QueueMinigameHitBurst*` from
+geometry rather than art: the 192-byte table at `$542c` decodes as 12 rows
+= 6 sprite (x, y) offset pairs with the column being the animation phase
+`$0f - (timer & $0f)`, x alternating 0..+15 / 0..-15 and y tracing a
+parabola. The scatter is certain; the tile art was not rendered, so the
+name describes the motion, not the sprite.
 
 ### Actor-script `as_set_pos` / `as_set_target` were swapped (2026-07-24)
 

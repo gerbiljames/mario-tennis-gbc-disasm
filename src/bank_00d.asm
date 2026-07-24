@@ -752,7 +752,7 @@ TennisMachine1Hook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $453e
 	ret ; $4541
 TennisMachine1Hook_BallHit:
-	call Func_0d_47e2 ; $4542
+	call FreezeMinigameOpponentOnReturn ; $4542
 	ret ; $4545
 	INCBIN "data/bank_00d/d_4546.bin" ; $4546, 306 bytes
 StartMinigameMatch:
@@ -931,7 +931,7 @@ CheckMinigameStartBannerTrigger:
 	ld [wPointOutcomeSide], a ; $47de
 Label_0d_47e1:
 	ret ; $47e1
-Func_0d_47e2:
+FreezeMinigameOpponentOnReturn:
 	ld a, [wRallyLength] ; $47e2
 	cp a, $03 ; $47e5
 	jr nz, Label_0d_47fc ; $47e7
@@ -1192,7 +1192,7 @@ TennisMachine2Hook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $49ae
 	ret ; $49b1
 TennisMachine2Hook_BallHit:
-	call Func_0d_47e2 ; $49b2
+	call FreezeMinigameOpponentOnReturn ; $49b2
 	ret ; $49b5
 MinigameConfig_TennisMachine3:
 	dec d ; $49b6
@@ -1254,7 +1254,7 @@ TennisMachine3Hook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $4a0b
 	ret ; $4a0e
 TennisMachine3Hook_BallHit:
-	call Func_0d_47e2 ; $4a0f
+	call FreezeMinigameOpponentOnReturn ; $4a0f
 	ret ; $4a12
 MinigameConfig_TennisMachine4:
 	dec d ; $4a13
@@ -1316,7 +1316,7 @@ TennisMachine4Hook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $4a68
 	ret ; $4a6b
 TennisMachine4Hook_BallHit:
-	call Func_0d_47e2 ; $4a6c
+	call FreezeMinigameOpponentOnReturn ; $4a6c
 	ret ; $4a6f
 MinigameConfig_WallPractice1:
 	nop ; $4a70
@@ -1367,7 +1367,7 @@ WallPractice1Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4ab3
 	ret ; $4ab6
 WallPractice1Hook_BallHit:
-	call Func_0d_4bc8 ; $4ab7
+	call HideLandingMarkerAndExtendSoloCourt ; $4ab7
 	ret ; $4aba
 UpdateMinigameHudAndBallTrail:
 	ld a, [wPointWinLoseFlag] ; $4abb
@@ -1508,7 +1508,7 @@ ReflectBallVelocity:
 	ret ; $4bc6
 StubNop_0d_4bc7:
 	ret ; $4bc7
-Func_0d_4bc8:
+HideLandingMarkerAndExtendSoloCourt:
 	xor a, a ; $4bc8
 	ld [wLandingMarkerActive], a ; $4bc9
 	ld a, [wRallyLength] ; $4bcc
@@ -1572,7 +1572,7 @@ WallPractice2Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4c3b
 	ret ; $4c3e
 WallPractice2Hook_BallHit:
-	call Func_0d_4bc8 ; $4c3f
+	call HideLandingMarkerAndExtendSoloCourt ; $4c3f
 	ret ; $4c42
 MinigameConfig_WallPractice3:
 	nop ; $4c43
@@ -1623,7 +1623,7 @@ WallPractice3Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4c86
 	ret ; $4c89
 WallPractice3Hook_BallHit:
-	call Func_0d_4bc8 ; $4c8a
+	call HideLandingMarkerAndExtendSoloCourt ; $4c8a
 	ret ; $4c8d
 MinigameConfig_WallPractice4:
 	nop ; $4c8e
@@ -1674,7 +1674,7 @@ WallPractice4Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4cd1
 	ret ; $4cd4
 WallPractice4Hook_BallHit:
-	call Func_0d_4bc8 ; $4cd5
+	call HideLandingMarkerAndExtendSoloCourt ; $4cd5
 	ret ; $4cd8
 MinigameConfig_TennisMachineHighScore:
 	INCBIN "data/bank_00d/d_4cd9.bin" ; $4cd9, 32 bytes
@@ -1719,7 +1719,7 @@ TennisMachineHighScoreHook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $4d33
 	ret ; $4d36
 TennisMachineHighScoreHook_BallHit:
-	call Func_0d_47e2 ; $4d37
+	call FreezeMinigameOpponentOnReturn ; $4d37
 	ret ; $4d3a
 MinigameConfig_WallPracticeHighScore:
 	nop ; $4d3b
@@ -1772,7 +1772,7 @@ WallPracticeHighScoreHook_Bounce:
 	call StubNop_0d_4bc7 ; $4d83
 	ret ; $4d86
 WallPracticeHighScoreHook_BallHit:
-	call Func_0d_4bc8 ; $4d87
+	call HideLandingMarkerAndExtendSoloCourt ; $4d87
 	ret ; $4d8a
 MinigameConfig_TargetShot:
 	dec d ; $4d8b
@@ -1817,7 +1817,7 @@ TargetShotHook_MinigameStart:
 	ret ; $4dca
 TargetShotHook_PerFrame:
 	call DrawMinigameScoreHud ; $4dcb
-	call Func_0d_4e1c ; $4dce
+	call UpdateTargetShotScorePopup ; $4dce
 	ret ; $4dd1
 TargetShotHook_PointStart:
 	call SelectRandomMinigameShot ; $4dd2
@@ -1860,9 +1860,9 @@ TargetShotHook_Bounce:
 	sound $97 ; $4e15
 	ret ; $4e17
 TargetShotHook_BallHit:
-	call Func_0d_47e2 ; $4e18
+	call FreezeMinigameOpponentOnReturn ; $4e18
 	ret ; $4e1b
-Func_0d_4e1c:
+UpdateTargetShotScorePopup:
 	call UpdateScorePopup ; $4e1c
 	ret ; $4e1f
 SelectRandomMinigameShot:
@@ -2172,7 +2172,7 @@ ShootingStarHook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $51fd
 	ret ; $5200
 ShootingStarHook_BallHit:
-	call Func_0d_47e2 ; $5201
+	call FreezeMinigameOpponentOnReturn ; $5201
 	ret ; $5204
 InitBallTargetActor:
 	call ClearMinigameActors ; $5205
@@ -2398,7 +2398,7 @@ DrawTargetHitCountdown:
 	call ProjectMinigameWorldPosition ; $539e
 	ld c, $3c ; $53a1
 	ld a, [$dc73] ; $53a3
-	call Func_0d_53ce ; $53a6
+	call QueueMinigameHitBurst ; $53a6
 	ret ; $53a9
 ProjectMinigameWorldPosition:
 	ld hl, $dc7a ; $53aa
@@ -2422,12 +2422,12 @@ ProjectMinigameWorldPosition:
 	ld b, [hl] ; $53c4
 	ret ; $53c5
 	INCBIN "data/bank_00d/d_53c6.bin" ; $53c6, 8 bytes
-Func_0d_53ce:
-	call Func_0d_53d8 ; $53ce
-	call Func_0d_540a ; $53d1
-	call Func_0d_540a ; $53d4
+QueueMinigameHitBurst:
+	call QueueMinigameHitBurstFirstFour ; $53ce
+	call QueueMinigameHitBurstParticle ; $53d1
+	call QueueMinigameHitBurstParticle ; $53d4
 	ret ; $53d7
-Func_0d_53d8:
+QueueMinigameHitBurstFirstFour:
 	and a, $0f ; $53d8
 	cpl ; $53da
 	inc a ; $53db
@@ -2440,10 +2440,10 @@ Func_0d_53d8:
 	ld a, e ; $53e5
 	add a, $f8 ; $53e6
 	ld e, a ; $53e8
-	call Func_0d_540a ; $53e9
-	call Func_0d_540a ; $53ec
-	call Func_0d_540a ; $53ef
-	call Func_0d_540a ; $53f2
+	call QueueMinigameHitBurstParticle ; $53e9
+	call QueueMinigameHitBurstParticle ; $53ec
+	call QueueMinigameHitBurstParticle ; $53ef
+	call QueueMinigameHitBurstParticle ; $53f2
 	ret ; $53f5
 	and a, $0f ; $53f6
 	cpl ; $53f8
@@ -2454,10 +2454,10 @@ Func_0d_53d8:
 	adc a, $54 ; $53ff
 	sub a, l ; $5401
 	ld h, a ; $5402
-	call Func_0d_540a ; $5403
-	call Func_0d_540a ; $5406
+	call QueueMinigameHitBurstParticle ; $5403
+	call QueueMinigameHitBurstParticle ; $5406
 	ret ; $5409
-Func_0d_540a:
+QueueMinigameHitBurstParticle:
 	push de ; $540a
 	ld a, [hl] ; $540b
 	add a, a ; $540c
@@ -2505,7 +2505,7 @@ BananaBunchHook_MinigameStart:
 	ret ; $552b
 BananaBunchHook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $552c
-	call Func_0d_55a6 ; $552f
+	call UpdateBananaBunchTargetHits ; $552f
 	ret ; $5532
 BananaBunchHook_PointStart:
 	call StartMinigameSoloPoint ; $5533
@@ -2526,18 +2526,18 @@ BananaBunchHook_PointEnd:
 	call HandleMinigamePointEnd ; $5596
 	ret ; $5599
 BananaBunchHook_RallyTick:
-	call Func_0d_55aa ; $559a
+	call BananaBunchReflectBallAndRecordCell ; $559a
 	ret ; $559d
 BananaBunchHook_Bounce:
 	call StubNop_0d_4bc7 ; $559e
 	ret ; $55a1
 BananaBunchHook_BallHit:
-	call Func_0d_4bc8 ; $55a2
+	call HideLandingMarkerAndExtendSoloCourt ; $55a2
 	ret ; $55a5
-Func_0d_55a6:
-	call Func_0d_55ca ; $55a6
+UpdateBananaBunchTargetHits:
+	call ScoreMinigameTargetHitOrDeflectBall ; $55a6
 	ret ; $55a9
-Func_0d_55aa:
+BananaBunchReflectBallAndRecordCell:
 	call ReflectBallVelocity ; $55aa
 	call GetMinigameGridCellIndex ; $55ad
 	ld [$c7bf], a ; $55b0
@@ -2550,7 +2550,7 @@ CopyMinigameTilemapBlock:
 	call DrawMinigameGrid ; $55c3
 	farcall FlushTilemapToVram ; $55c6
 	ret ; $55c9
-Func_0d_55ca:
+ScoreMinigameTargetHitOrDeflectBall:
 	ld hl, $c78e ; $55ca
 	ld a, [hl] ; $55cd
 	and a, a ; $55ce
@@ -2607,7 +2607,7 @@ MinigameHooks_BooBlast:
 	dw BooBlastHook_Draw ; record 7
 BooBlastHook_MinigameStart:
 	call InitMinigameControllerActor ; $5668
-	call Func_0d_56b0 ; $566b
+	call InitBooBlastScore ; $566b
 	ret ; $566e
 BooBlastHook_PerFrame:
 	call DrawMinigameScoreAtDefaultPos ; $566f
@@ -2630,7 +2630,7 @@ BooBlastHook_Bounce:
 	call StubNop_0d_56ef ; $5689
 	ret ; $568c
 BooBlastHook_BallHit:
-	call Func_0d_56f0 ; $568d
+	call UpdateBooBlastHitStreak ; $568d
 	ret ; $5690
 InitMinigameControllerActor:
 	call ClearMinigameActors ; $5691
@@ -2646,7 +2646,7 @@ DisableMinigameControllerActor:
 	ld hl, $dc00 ; $56aa
 	res 0, [hl] ; $56ad
 	ret ; $56af
-Func_0d_56b0:
+InitBooBlastScore:
 	call InitMinigameScore ; $56b0
 	ret ; $56b3
 DrawMinigameScoreAtDefaultPos:
@@ -2680,7 +2680,7 @@ StubNop_0d_56ee:
 	ret ; $56ee
 StubNop_0d_56ef:
 	ret ; $56ef
-Func_0d_56f0:
+UpdateBooBlastHitStreak:
 	ld a, [wLastShotCharIndex] ; $56f0
 	and a, $01 ; $56f3
 	jr nz, Label_0d_56ff ; $56f5
@@ -2718,14 +2718,14 @@ AdvanceMinigameScriptState:
 Label_0d_572c:
 	call AdvanceMinigameScriptState ; $572c
 Label_0d_572f:
-	call Func_0d_57fd ; $572f
+	call DrawBooBlastTargetSprite ; $572f
 	call IsBallWithinTargetZone ; $5732
 	and a, a ; $5735
 	ret z ; $5736
 	call ScoreBallHit ; $5737
 	jp AdvanceMinigameScriptState ; $573a
 Label_0d_573d:
-	call Func_0d_583c ; $573d
+	call DrawBooBlastHitBurst ; $573d
 	ld hl, $dc73 ; $5740
 	dec [hl] ; $5743
 	ld a, [hl] ; $5744
@@ -2741,7 +2741,7 @@ Label_0d_573d:
 	call SetMinigameActorWorldPos ; $5755
 	jp AdvanceMinigameScriptState ; $5758
 Label_0d_575b:
-	call Func_0d_57fd ; $575b
+	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
 IsBallWithinTargetZone:
 	ld hl, $dc76 ; $575f
@@ -2851,7 +2851,7 @@ Label_0d_57f4:
 	ld [$2010], sp ; $57f8
 	ld b, b ; $57fb
 	add a, b ; $57fc
-Func_0d_57fd:
+DrawBooBlastTargetSprite:
 	call ProjectBallSprite ; $57fd
 	ld c, $30 ; $5800
 	ld h, $fc ; $5802
@@ -2897,11 +2897,11 @@ Func_0d_57fd:
 	rst Rst38 ; $5839
 	rst Rst38 ; $583a
 	rst Rst38 ; $583b
-Func_0d_583c:
+DrawBooBlastHitBurst:
 	call ProjectBallSprite ; $583c
 	ld c, $3c ; $583f
 	ld a, [$dc73] ; $5841
-	call Func_0d_53ce ; $5844
+	call QueueMinigameHitBurst ; $5844
 	ret ; $5847
 ProjectBallSprite:
 	ld hl, $dc7a ; $5848
@@ -2995,7 +2995,7 @@ PerfectShotHook_Bounce:
 	call StubNop_0d_4bc7 ; $58c9
 	ret ; $58cc
 PerfectShotHook_BallHit:
-	call Func_0d_4bc8 ; $58cd
+	call HideLandingMarkerAndExtendSoloCourt ; $58cd
 	ret ; $58d0
 ProcessTargetTileHit:
 	call ReflectBallVelocity ; $58d1
@@ -3139,13 +3139,13 @@ TreasureBoxHook_MinigameStart:
 	ret ; $5a16
 TreasureBoxHook_PerFrame:
 	call DrawMinigameScoreHud ; $5a17
-	call Func_0d_5a6c ; $5a1a
+	call UpdateTreasureBoxScorePopup ; $5a1a
 	ret ; $5a1d
 TreasureBoxHook_Draw:
 	call UpdateMinigameActors ; $5a1e
 	ret ; $5a21
 TreasureBoxHook_PointStart:
-	call Func_0d_5a70 ; $5a22
+	call SelectRandomTreasureBoxTargetZone ; $5a22
 	farcall AdvanceMatchRng ; $5a25
 	and a, $01 ; $5a28
 	inc a ; $5a2a
@@ -3159,7 +3159,7 @@ Label_0d_5a35:
 	call LaunchMinigameServe ; $5a36
 	ret ; $5a39
 TreasureBoxHook_PointEnd:
-	call Func_0d_5acb ; $5a3a
+	call StubNop_0d_5acb ; $5a3a
 	call EndMinigamePoint ; $5a3d
 	ret ; $5a40
 TreasureBoxHook_RallyTick:
@@ -3184,12 +3184,12 @@ TreasureBoxHook_Bounce:
 	sound $97 ; $5a65
 	ret ; $5a67
 TreasureBoxHook_BallHit:
-	call Func_0d_47e2 ; $5a68
+	call FreezeMinigameOpponentOnReturn ; $5a68
 	ret ; $5a6b
-Func_0d_5a6c:
+UpdateTreasureBoxScorePopup:
 	call UpdateScorePopup ; $5a6c
 	ret ; $5a6f
-Func_0d_5a70:
+SelectRandomTreasureBoxTargetZone:
 	ld a, [wMinigameLevel] ; $5a70
 	add a, a ; $5a73
 	add a, $a5 ; $5a74
@@ -3223,7 +3223,7 @@ Label_0d_5a9c:
 	ld [$dc02], a ; $5aa1
 	ret ; $5aa4
 	INCBIN "data/bank_00d/d_5aa5.bin" ; $5aa5, 38 bytes
-Func_0d_5acb:
+StubNop_0d_5acb:
 	ret ; $5acb
 	INCBIN "data/bank_00d/d_5acc.bin" ; $5acc, 542 bytes
 MinigameConfig_MedallionMatch:
@@ -3239,7 +3239,7 @@ MinigameHooks_MedallionMatch:
 	dw MedallionMatchHook_RallyTick ; record 6
 	dw MedallionMatchHook_Draw ; record 7
 MedallionMatchHook_MinigameStart:
-	call Func_0d_5d65 ; $5d1c
+	call SpawnMedallionMatchTargets ; $5d1c
 	ld a, $01 ; $5d1f
 	ld [$c785], a ; $5d21
 	call StartMinigameMatch ; $5d24
@@ -3266,7 +3266,7 @@ MedallionMatchHook_PointStart:
 Label_0d_5d4d:
 	ld [hl], a ; $5d4d
 	call LaunchMinigameServe ; $5d4e
-	call Func_0d_5dd6 ; $5d51
+	call ResetMedallionMatchHitState ; $5d51
 	ret ; $5d54
 MedallionMatchHook_PointEnd:
 	call EndMinigamePoint ; $5d55
@@ -3278,42 +3278,42 @@ MedallionMatchHook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $5d5d
 	ret ; $5d60
 MedallionMatchHook_BallHit:
-	call Func_0d_47e2 ; $5d61
+	call FreezeMinigameOpponentOnReturn ; $5d61
 	ret ; $5d64
-Func_0d_5d65:
+SpawnMedallionMatchTargets:
 	call ClearMinigameActors ; $5d65
 	ld hl, $0040 ; $5d68
 	ld de, rJOYP ; $5d6b
 	ld bc, $dc00 ; $5d6e
 	ld a, $00 ; $5d71
-	call Func_0d_5dbd ; $5d73
+	call InitMedallionMatchTargetActor ; $5d73
 	ld hl, $0080 ; $5d76
 	ld de, $fe40 ; $5d79
 	ld bc, $dc10 ; $5d7c
 	ld a, $01 ; $5d7f
-	call Func_0d_5dbd ; $5d81
+	call InitMedallionMatchTargetActor ; $5d81
 	ld hl, $00c0 ; $5d84
 	ld de, $fd80 ; $5d87
 	ld bc, $dc20 ; $5d8a
 	ld a, $02 ; $5d8d
-	call Func_0d_5dbd ; $5d8f
+	call InitMedallionMatchTargetActor ; $5d8f
 	ld hl, hLinkRxByte ; $5d92
 	ld de, rJOYP ; $5d95
 	ld bc, $dc30 ; $5d98
 	ld a, $03 ; $5d9b
-	call Func_0d_5dbd ; $5d9d
+	call InitMedallionMatchTargetActor ; $5d9d
 	ld hl, $ff80 ; $5da0
 	ld de, $fe40 ; $5da3
 	ld bc, $dc40 ; $5da6
 	ld a, $04 ; $5da9
-	call Func_0d_5dbd ; $5dab
+	call InitMedallionMatchTargetActor ; $5dab
 	ld hl, rLCDC ; $5dae
 	ld de, $fd80 ; $5db1
 	ld bc, $dc50 ; $5db4
 	ld a, $05 ; $5db7
-	call Func_0d_5dbd ; $5db9
+	call InitMedallionMatchTargetActor ; $5db9
 	ret ; $5dbc
-Func_0d_5dbd:
+InitMedallionMatchTargetActor:
 	push af ; $5dbd
 	push bc ; $5dbe
 	push de ; $5dbf
@@ -3331,7 +3331,7 @@ Func_0d_5dbd:
 	pop hl ; $5dd1
 	call SetMinigameActorPosition ; $5dd2
 	ret ; $5dd5
-Func_0d_5dd6:
+ResetMedallionMatchHitState:
 	xor a, a ; $5dd6
 	ld [$c789], a ; $5dd7
 	xor a, a ; $5dda
@@ -3359,7 +3359,7 @@ FruitFantasyHook_MinigameStart:
 	ret ; $5f71
 FruitFantasyHook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $5f72
-	call Func_0d_5fec ; $5f75
+	call UpdateFruitFantasyTargetHits ; $5f75
 	ret ; $5f78
 FruitFantasyHook_PointStart:
 	call StartMinigameSoloPoint ; $5f79
@@ -3380,18 +3380,18 @@ FruitFantasyHook_PointEnd:
 	call HandleMinigamePointEnd ; $5fdc
 	ret ; $5fdf
 FruitFantasyHook_RallyTick:
-	call Func_0d_5ff0 ; $5fe0
+	call FruitFantasyReflectBallAndRecordCell ; $5fe0
 	ret ; $5fe3
 FruitFantasyHook_Bounce:
 	call StubNop_0d_4bc7 ; $5fe4
 	ret ; $5fe7
 FruitFantasyHook_BallHit:
-	call Func_0d_4bc8 ; $5fe8
+	call HideLandingMarkerAndExtendSoloCourt ; $5fe8
 	ret ; $5feb
-Func_0d_5fec:
-	call Func_0d_55ca ; $5fec
+UpdateFruitFantasyTargetHits:
+	call ScoreMinigameTargetHitOrDeflectBall ; $5fec
 	ret ; $5fef
-Func_0d_5ff0:
+FruitFantasyReflectBallAndRecordCell:
 	call ReflectBallVelocity ; $5ff0
 	call GetMinigameGridCellIndex ; $5ff3
 	ld [$c7bf], a ; $5ff6
