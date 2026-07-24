@@ -2608,7 +2608,16 @@ ApplyShotRecoil:
 	ld [hl], d ; $54c8
 Label_07_54c9:
 	ret ; $54c9
-	INCBIN "data/bank_007/d_54ca.bin" ; $54ca, 20 bytes
+ShotRecoilVarPtrs_07:
+	; $54ca, 10 bytes (records:2)
+	dw $df6b ; record 0
+	dw $df6d ; record 1
+	dw $df6c ; record 2
+	dw $df6b ; record 3
+	dw $df6c ; record 4
+ShotRecoilTable_07:
+	; $54d4, 10 bytes (bytes:10)
+	db $58, $50, $48, $40, $38, $30, $28, $20, $18, $10 ; 0x00
 WeakenShotByCharge:
 	ld a, [wShotChargeLevel] ; $54de
 	ld l, a ; $54e1
@@ -2753,9 +2762,26 @@ ApplyShotTypePresets:
 	ld b, [hl] ; $559b
 	ld c, a ; $559c
 	ret ; $559d
-	INCBIN "data/bank_007/d_559e.bin" ; $559e, 75 bytes
+ShotTypePresets_07:
+	; $559e, 75 bytes (records:5)
+; 15 records x 5 bytes
+	db $51, $00, $00, $80, $02 ; record 0
+	db $51, $00, $01, $c0, $03 ; record 1
+	db $57, $00, $00, $80, $02 ; record 2
+	db $57, $00, $02, $c0, $03 ; record 3
+	db $51, $00, $00, $c0, $03 ; record 4
+	db $51, $01, $00, $c0, $03 ; record 5
+	db $51, $01, $00, $80, $04 ; record 6
+	db $51, $01, $00, $80, $03 ; record 7
+	db $51, $01, $00, $c0, $03 ; record 8
+	db $57, $02, $03, $40, $04 ; record 9
+	db $53, $03, $00, $00, $02 ; record 10
+	db $52, $03, $00, $00, $02 ; record 11
+	db $54, $04, $01, $a0, $02 ; record 12
+	db $54, $04, $02, $a0, $02 ; record 13
+	db $54, $04, $03, $a0, $02 ; record 14
 Label_07_55e9:
-	ld hl, $563e ; $55e9
+	ld hl, CourtSideOffsets_07_563e ; $55e9
 	ld a, [$c7b9] ; $55ec
 	and a, a ; $55ef
 	jr nz, Label_07_5601 ; $55f0
@@ -2803,7 +2829,24 @@ Label_07_560b:
 	ld e, l ; $562b
 	ld d, h ; $562c
 	ret ; $562d
-	INCBIN "data/bank_007/d_562e.bin" ; $562e, 24 bytes
+CourtSideOffsets_07_562e:
+	; $562e, 8 bytes (records:2)
+	dw $fe60 ; record 0
+	dw $ff20 ; record 1
+	dw $ffdc ; record 2
+	dw $0000 ; record 3
+CourtSideOffsets_07_5636:
+	; $5636, 8 bytes (records:2)
+	dw $0024 ; record 0
+	dw $00e0 ; record 1
+	dw $01a0 ; record 2
+	dw $0000 ; record 3
+CourtSideOffsets_07_563e:
+	; $563e, 8 bytes (records:2)
+	dw $ff20 ; record 0
+	dw $0000 ; record 1
+	dw $00e0 ; record 2
+	dw $0000 ; record 3
 ComputeShotTargetX:
 	ld a, [wRallyLength] ; $5646
 	and a, a ; $5649
@@ -3434,7 +3477,10 @@ Func_07_5a01:
 	ld [wSpecialShotFlag], a ; $5a1c
 	ld [$c4a6], a ; $5a1f
 	ret ; $5a22
-	INCBIN "data/bank_007/d_5a23.bin" ; $5a23, 32 bytes
+SpecialShotFlagTable_07:
+	; $5a23, 32 bytes (bytes:16)
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
 LookupCharSpriteSet:
 	push hl ; $5a43
 	and a, $3f ; $5a44
@@ -3447,7 +3493,9 @@ LookupCharSpriteSet:
 	pop hl ; $5a4e
 	ret ; $5a4f
 CharSpriteSetTable:
-	INCBIN "data/bank_007/d_5a50.bin" ; $5a50, 32 bytes
+	; $5a50, 32 bytes (bytes:16)
+	db $00, $01, $03, $02, $0c, $16, $0d, $17, $0f, $18, $19, $0e, $05, $07, $06, $09 ; 0x00
+	db $08, $04, $0b, $0a, $0a, $1a, $0c, $1b, $1c, $1d, $10, $11, $12, $13, $15, $14 ; 0x10
 SetupCharacterSprite:
 	push de ; $5a70
 	farcall SetupCharSpriteFromObjectDef ; $5a71
@@ -3481,7 +3529,14 @@ SetupCharacterSprite:
 	ld [hl], d ; $5aa2
 	farcall ReloadCharFrameGfx ; $5aa3
 	ret ; $5aa6
-	INCBIN "data/bank_007/d_5aa7.bin" ; $5aa7, 12 bytes
+CharFrameGfxDest_07:
+	; $5aa7, 12 bytes (records:2)
+	dw $a000 ; record 0
+	dw $a100 ; record 1
+	dw $a200 ; record 2
+	dw $a300 ; record 3
+	dw $1000 ; record 4
+	dw $3020 ; record 5
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
 	add a, a ; $5ab6
@@ -3732,7 +3787,64 @@ Label_07_5c32:
 	ld a, [wCharIndex] ; $5c3b
 	call OverrideCharStatsForDebug ; $5c3e
 	ret ; $5c41
-	INCBIN "data/bank_007/d_5c42.bin" ; $5c42, 178 bytes
+CharAttrStructPtrs_07:
+	; $5c42, 8 bytes (records:2)
+	dw $ca00 ; record 0
+	dw $ca80 ; record 1
+	dw $ca40 ; record 2
+	dw $cac0 ; record 3
+CharStatTable_07_5c4a:
+	; $5c4a, 20 bytes (records:2)
+	dw $0a00 ; record 0
+	dw $0a80 ; record 1
+	dw $0b00 ; record 2
+	dw $0b80 ; record 3
+	dw $0c00 ; record 4
+	dw $0c80 ; record 5
+	dw $0d00 ; record 6
+	dw $0d80 ; record 7
+	dw $0e00 ; record 8
+	dw $0e80 ; record 9
+CharStatTable_07_5c5e:
+	; $5c5e, 20 bytes (records:2)
+	dw $0030 ; record 0
+	dw $003c ; record 1
+	dw $0048 ; record 2
+	dw $0054 ; record 3
+	dw $0060 ; record 4
+	dw $006c ; record 5
+	dw $0078 ; record 6
+	dw $0084 ; record 7
+	dw $0090 ; record 8
+	dw $009c ; record 9
+CharStatTable_07_5c72:
+	; $5c72, 20 bytes (records:2)
+	dw $0040 ; record 0
+	dw $0060 ; record 1
+	dw $0080 ; record 2
+	dw $00a0 ; record 3
+	dw $00c0 ; record 4
+	dw $00e0 ; record 5
+	dw $0100 ; record 6
+	dw $0120 ; record 7
+	dw $0140 ; record 8
+	dw $0160 ; record 9
+CharStatTable_07_5c86:
+	; $5c86, 10 bytes (bytes:10)
+	db $06, $07, $08, $09, $0a, $0b, $0c, $0e, $10, $18 ; 0x00
+CharStatTable_07_5c90:
+	; $5c90, 10 bytes (bytes:10)
+	db $75, $84, $93, $a3, $b2, $c1, $d1, $e0, $ef, $ff ; 0x00
+CharStatTable_07_5c9a:
+	; $5c9a, 10 bytes (bytes:10)
+	db $0c, $0b, $0a, $09, $08, $07, $06, $05, $04, $03 ; 0x00
+CharStatPresets_07:
+	; $5ca4, 80 bytes (bytes:16)
+	db $01, $01, $01, $01, $01, $05, $09, $09, $09, $09, $09, $09, $00, $00, $00, $00 ; 0x00
+	db $09, $09, $00, $00, $09, $05, $00, $09, $09, $00, $04, $09, $00, $00, $00, $00 ; 0x10
+	db $07, $07, $07, $04, $04, $04, $00, $00, $01, $00, $04, $04, $00, $00, $00, $00 ; 0x20
+	db $05, $05, $09, $04, $09, $05, $05, $00, $02, $00, $04, $09, $00, $00, $00, $00 ; 0x30
+	db $05, $00, $07, $04, $04, $04, $00, $00, $03, $00, $04, $04, $00, $00, $00, $00 ; 0x40
 OverrideCharStatsForDebug:
 	push af ; $5cf4
 	ld a, $04 ; $5cf5
@@ -3997,7 +4109,7 @@ RunDebugTestMatch:
 	ldh a, [hRomBank] ; $5eae
 	ld de, ModeHookTable_07 ; $5eb0
 	farcall SetModeHookTable ; $5eb3
-	ld de, $5ff6 ; $5eb6
+	ld de, MinigamePointTable_07_5ff6 ; $5eb6
 	farcall SetMinigamePointTable ; $5eb9
 	ld a, $01 ; $5ebc
 	ld [wTargetZoneEnabled], a ; $5ebe
@@ -4027,7 +4139,17 @@ ResolveTargetModePoint:
 	farcall ResolvePointOutcome ; $5ef8
 	ret ; $5efb
 ModeHookTable_07:
-	INCBIN "data/bank_007/d_5efc.bin" ; $5efc, 17 bytes
+	; $5efc, 16 bytes (mode_hooks)
+	dw ModeHookNop_07 ; record 0
+	dw $5f4d ; record 1
+	dw $5f75 ; record 2
+	dw RetStub ; record 3
+	dw $5f49 ; record 4
+	dw $5f25 ; record 5
+	dw $5f24 ; record 6
+	dw RetStub ; record 7
+ModeHookNop_07:
+	ret ; $5f0c
 	test_flag $0c, 4 ; $5f0d
 	ret z ; $5f10
 	ld a, $01 ; $5f11
@@ -4093,5 +4215,54 @@ Label_07_5f8e:
 	ld a, $ff ; $5f8e
 	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
-	INCBIN "data/bank_007/d_5f94.bin" ; $5f94, 162 bytes
+MinigamePointTable_07_5f94:
+	; $5f94, 32 bytes (bytes:4)
+	db $00, $09, $09, $09 ; 0x00
+	db $00, $09, $09, $09 ; 0x04
+	db $01, $09, $09, $09 ; 0x08
+	db $00, $09, $09, $09 ; 0x0c
+	db $03, $09, $09, $09 ; 0x10
+	db $00, $09, $09, $09 ; 0x14
+	db $02, $09, $09, $09 ; 0x18
+	db $00, $09, $09, $09 ; 0x1c
+	; $5fb4, 1 bytes (fill)
+	ds 1, $ff
+MinigamePointTable_07_5fb5:
+	; $5fb5, 64 bytes (bytes:4)
+	db $00, $03, $09, $09 ; 0x00
+	db $00, $01, $09, $09 ; 0x04
+	db $03, $00, $09, $09 ; 0x08
+	db $01, $00, $09, $09 ; 0x0c
+	db $01, $02, $09, $09 ; 0x10
+	db $00, $01, $09, $09 ; 0x14
+	db $02, $01, $09, $09 ; 0x18
+	db $01, $00, $09, $09 ; 0x1c
+	db $03, $00, $09, $09 ; 0x20
+	db $00, $01, $09, $09 ; 0x24
+	db $00, $03, $09, $09 ; 0x28
+	db $01, $00, $09, $09 ; 0x2c
+	db $02, $01, $09, $09 ; 0x30
+	db $00, $01, $09, $09 ; 0x34
+	db $01, $02, $09, $09 ; 0x38
+	db $01, $00, $09, $09 ; 0x3c
+	; $5ff5, 1 bytes (fill)
+	ds 1, $ff
+MinigamePointTable_07_5ff6:
+	; $5ff6, 64 bytes (bytes:4)
+	db $00, $03, $09, $09 ; 0x00
+	db $00, $01, $09, $09 ; 0x04
+	db $01, $02, $09, $09 ; 0x08
+	db $01, $00, $09, $09 ; 0x0c
+	db $00, $03, $09, $09 ; 0x10
+	db $01, $00, $09, $09 ; 0x14
+	db $01, $02, $09, $09 ; 0x18
+	db $00, $01, $09, $09 ; 0x1c
+	db $03, $00, $09, $09 ; 0x20
+	db $00, $01, $09, $09 ; 0x24
+	db $02, $01, $09, $09 ; 0x28
+	db $01, $00, $09, $09 ; 0x2c
+	db $03, $00, $09, $09 ; 0x30
+	db $01, $00, $09, $09 ; 0x34
+	db $02, $01, $09, $09 ; 0x38
+	db $00, $01, $09, $09 ; 0x3c
 	; $6036, 8138 bytes fill to bank end (linker-padded)

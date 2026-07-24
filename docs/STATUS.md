@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~156.2K instructions / 399,505 bytes of proven code+structured source
-(19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~156.2K instructions / 400,260 bytes of proven code+structured source
+(19.1% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -26,7 +26,54 @@ Everything below is **committed** (HEAD `285165f`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,900 of 19,184 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,931 of 19,215 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Banks $05 and $07 carved; $06 was already clean (2026-07-25)
+
+**Bank $05** (debug menus + the proportional font) went from 7 blobs to 2,
+both of them imagery: `FontGlyphs` (102 glyphs x 16 bytes, already labelled)
+and 12 palette-editor cursor tiles. What came out of the rest:
+
+| Address | Size | Now |
+|---|---|---|
+| `$53a2` | 12 | `PowersOfTen_05` is 5 words (1, 10, 100, 1000, 10000) plus two stray `ret`s |
+| `$5f94` | 42 | `TextControlCodeHandlers_05` — 16 words for codes `$00`-`$0f`, plus two handlers reached only through it |
+| `$6582` | 32 | the debug editor's two hex-digit header rows, `"0 1 2 3 4 5 6 7"` / `"8 9 A B C D E F"` |
+| `$67b7`, `$69bb` | 13, 10 | `"- ENTER NO -"` and `"--R--G--B"` |
+| `$6886` | 202 | 10 bytes of padding then 12 cursor tiles |
+| `$7f80` | 96 | `GlyphWidths_05`, the table `GetGlyphWidthByIndex` reads (4-7 pixels per glyph) |
+
+The two stranded handlers are the text engine's own: code `$01` emits `$0d`
+and continues (`TextCodeLineBreak_05`), the default emits the character
+literally (`TextCodeLiteral_05`), and codes `$00`/`$03` share
+`TextCodeEnd_05` — which matches the `$03`/`$00` terminators the string
+dumper already assumes.
+
+**Bank $06** needed nothing: all 41 blobs are LZ menu-item graphics that were
+already carved and named in the 2026-07-22 pass.
+
+**Bank $07** (link cable + shot physics) went from 25 blobs to 16; the 16 are
+character graphics streams already named. The nine that resolved are all
+lookup tables found by grepping for their index arithmetic
+(`add a, $xx` / `adc a, $5c`), which split the 178-byte `$5c42` blob into
+eight sub-tables that account for every byte:
+
+| Address | Size | Now |
+|---|---|---|
+| `$54ca`/`$54d4` | 10/10 | `ShotRecoilVarPtrs_07` (5 `$dfxx` words) and the recoil magnitudes it selects |
+| `$559e` | 75 | `ShotTypePresets_07` — 15 5-byte records {sound, recoil index, trail color, c, b} |
+| `$562e`/`$5636`/`$563e` | 8 each | `CourtSideOffsets_07_*`, picked by `wCharCourtPos & 1` |
+| `$5a23` | 32 | `SpecialShotFlagTable_07` |
+| `$5aa7` | 12 | `CharFrameGfxDest_07` |
+| `$5c42` | 8 | `CharAttrStructPtrs_07` — `$ca00`/`$ca80`/`$ca40`/`$cac0`, the four on-court character structs |
+| `$5c4a`-`$5c9a` | 20/20/20/10/10/10 | six 10-entry stat tables indexed by character-struct fields `+$27`/`+$28`/`+$2a` |
+| `$5ca4` | 80 | `CharStatPresets_07` — 5 records of 16, indexed `a * 16`, whose bytes index the tables above |
+| `$5efc` | 17 | `ModeHookTable_07` is a `mode_hooks` table; hook 0 points at the `ret` byte immediately after it, now `ModeHookNop_07` |
+| `$5f94` | 162 | three `MinigamePointTable_07_*` blocks of 4-byte records, `$ff`-terminated |
+
+The six stat tables keep address-suffixed names: their shapes are certain
+(10 entries, indexed by a character-struct field) but which stat each one
+holds is not yet pinned down.
 
 ### Bank $04 is blob-free; the actor-script dispatch table is symbolic (2026-07-24)
 

@@ -3123,7 +3123,15 @@ Label_05_538f:
 	pop hl ; $53a0
 	ret ; $53a1
 PowersOfTen_05:
-	INCBIN "data/bank_005/d_53a2.bin" ; $53a2, 12 bytes
+	; $53a2, 10 bytes (records:2)
+	dw $0001 ; record 0
+	dw $000a ; record 1
+	dw $0064 ; record 2
+	dw $03e8 ; record 3
+	dw $2710 ; record 4
+Unused_05_53ac:
+	ret ; $53ac
+	ret ; $53ad
 Func_05_53ae:
 	push af ; $53ae
 	push bc ; $53af
@@ -4977,7 +4985,7 @@ Label_05_5f7f:
 	push hl ; $5f84
 	push af ; $5f85
 	add a, a ; $5f86
-	ld hl, $5f94 ; $5f87
+	ld hl, TextControlCodeHandlers_05 ; $5f87
 	add a, l ; $5f8a
 	ld l, a ; $5f8b
 	jr nc, Label_05_5f8f ; $5f8c
@@ -4988,7 +4996,32 @@ Label_05_5f8f:
 	ld l, a ; $5f91
 	pop af ; $5f92
 	jp hl ; $5f93
-	INCBIN "data/bank_005/d_5f94.bin" ; $5f94, 42 bytes
+TextControlCodeHandlers_05:
+	; $5f94, 32 bytes (records:2)
+	dw TextCodeEnd_05 ; record 0
+	dw TextCodeLineBreak_05 ; record 1
+	dw TextCodeLiteral_05 ; record 2
+	dw TextCodeEnd_05 ; record 3
+	dw TextCodeLiteral_05 ; record 4
+	dw TextCodeLiteral_05 ; record 5
+	dw TextCodeLiteral_05 ; record 6
+	dw TextCodeLiteral_05 ; record 7
+	dw TextCodeLiteral_05 ; record 8
+	dw TextCodeLiteral_05 ; record 9
+	dw TextCodeLiteral_05 ; record 10
+	dw TextCodeLiteral_05 ; record 11
+	dw TextCodeLiteral_05 ; record 12
+	dw TextCodeLiteral_05 ; record 13
+	dw TextCodeLiteral_05 ; record 14
+	dw TextCodeLiteral_05 ; record 15
+TextCodeLineBreak_05:
+	pop hl ; $5fb4
+	ld a, $0d ; $5fb5
+	call DispatchControlCode ; $5fb7
+	inc hl ; $5fba
+	jr Label_05_5f7f ; $5fbb
+TextCodeLiteral_05:
+	pop hl ; $5fbd
 Label_05_5fbe:
 	ld [de], a ; $5fbe
 	inc hl ; $5fbf
@@ -5026,6 +5059,7 @@ Label_05_5fdb:
 	ld e, l ; $5fe7
 	pop hl ; $5fe8
 	jp Label_05_5f7f ; $5fe9
+TextCodeEnd_05:
 	pop hl ; $5fec
 	pop hl ; $5fed
 	pop de ; $5fee
@@ -5884,7 +5918,12 @@ Label_05_6570:
 	ret ; $6580
 StubNop_05_6581:
 	ret ; $6581
-	INCBIN "data/bank_005/d_6582.bin" ; $6582, 32 bytes
+HexDigitHeaderRow0_05:
+	; $6582, 16 bytes (ascii)
+	db "0 1 2 3 4 5 6 7", $00
+HexDigitHeaderRow1_05:
+	; $6592, 16 bytes (ascii)
+	db "8 9 A B C D E F", $00
 RunDebugFlagEditor:
 	push af ; $65a2
 	push bc ; $65a3
@@ -5903,10 +5942,10 @@ Label_05_65b8:
 	call CreateWindow ; $65be
 	ld [$c717], a ; $65c1
 	call DrawTextWindowFrame ; $65c4
-	ld hl, $6582 ; $65c7
+	ld hl, HexDigitHeaderRow0_05 ; $65c7
 	ld de, $0401 ; $65ca
 	call WriteStringToWindow ; $65cd
-	ld hl, $6592 ; $65d0
+	ld hl, HexDigitHeaderRow1_05 ; $65d0
 	ld de, $0402 ; $65d3
 	call WriteStringToWindow ; $65d6
 	ld de, $0004 ; $65d9
@@ -6082,7 +6121,7 @@ Label_05_674a:
 	ld de, $0102 ; $674a
 	ld a, [$c701] ; $674d
 	call WriteDialogueToWindow ; $6750
-	ld hl, $67b7 ; $6753
+	ld hl, EnterNumberPrompt_05 ; $6753
 	ld de, $c720 ; $6756
 	ld c, $01 ; $6759
 	call CopyMemoryFast ; $675b
@@ -6121,7 +6160,9 @@ Label_05_674a:
 	ld a, [$c701] ; $67b0
 	call RedrawWindowRows ; $67b3
 	ret ; $67b6
-	INCBIN "data/bank_005/d_67b7.bin" ; $67b7, 13 bytes
+EnterNumberPrompt_05:
+	; $67b7, 13 bytes (ascii)
+	db "- ENTER NO -", $00
 RunDebugWarpMenu:
 	push af ; $67c4
 	push bc ; $67c5
@@ -6232,7 +6273,10 @@ Label_05_687f:
 Label_05_6884:
 	pop bc ; $6884
 	ret ; $6885
-	INCBIN "data/bank_005/d_6886.bin" ; $6886, 202 bytes
+	; $6886, 10 bytes (fill)
+	ds 10, $00
+PaletteEditorCursorTiles_05:
+	INCBIN "data/bank_005/d_6890.bin" ; $6890, 192 bytes
 GetSelectedBGPaletteColorPtr:
 	ld hl, $c713 ; $6950
 	ld a, [hl] ; $6953
@@ -6297,7 +6341,9 @@ DebugDrawColorComponents:
 	pop bc ; $69b8
 	pop af ; $69b9
 	ret ; $69ba
-	INCBIN "data/bank_005/d_69bb.bin" ; $69bb, 10 bytes
+ColorEditorHeader_05:
+	; $69bb, 10 bytes (ascii)
+	db "--R--G--B", $00
 RunDebugColorEditor:
 	ld de, $0700 ; $69c5
 	ld bc, $0b04 ; $69c8
@@ -6305,7 +6351,7 @@ RunDebugColorEditor:
 	ld [$c711], a ; $69ce
 	call DrawTextWindowFrame ; $69d1
 	call RedrawWindowRows ; $69d4
-	ld hl, $69bb ; $69d7
+	ld hl, ColorEditorHeader_05 ; $69d7
 	ld de, $0101 ; $69da
 	ld a, [$c711] ; $69dd
 	call WriteStringToWindow ; $69e0
@@ -6547,7 +6593,7 @@ Label_05_6b3e:
 	jr nz, Label_05_6b3e ; $6b69
 	ret ; $6b6b
 StartDebugPaletteEditor:
-	ld hl, $6890 ; $6b6c
+	ld hl, PaletteEditorCursorTiles_05 ; $6b6c
 	ld de, $8600 ; $6b6f
 	ld c, $0c ; $6b72
 	call QueueVRAMCopy ; $6b74
@@ -7958,7 +8004,7 @@ GetGlyphWidth:
 	pop af ; $736e
 	ret ; $736f
 GetGlyphWidthByIndex:
-	ld hl, $7f80 ; $7370
+	ld hl, GlyphWidths_05 ; $7370
 	add a, l ; $7373
 	ld l, a ; $7374
 	jr nc, Label_05_7378 ; $7375
@@ -8896,5 +8942,13 @@ Label_05_7911:
 	; $7916, 10 bytes (fill)
 	ds 10, $00
 FontGlyphs:
-	INCBIN "data/bank_005/d_7920.bin" ; $7920, 1728 bytes
+	INCBIN "data/bank_005/d_7920.bin" ; $7920, 1632 bytes
+GlyphWidths_05:
+	; $7f80, 96 bytes (bytes:16)
+	db $05, $04, $06, $06, $06, $06, $07, $04, $04, $04, $06, $06, $04, $06, $04, $06 ; 0x00
+	db $06, $04, $06, $06, $06, $06, $06, $06, $06, $06, $04, $04, $05, $06, $05, $06 ; 0x10
+	db $08, $06, $06, $06, $06, $06, $06, $06, $06, $04, $05, $06, $06, $08, $06, $07 ; 0x20
+	db $06, $07, $06, $06, $06, $06, $06, $08, $06, $06, $06, $04, $06, $04, $06, $06 ; 0x30
+	db $05, $07, $06, $06, $06, $06, $04, $06, $06, $03, $04, $06, $04, $08, $06, $06 ; 0x40
+	db $06, $06, $05, $06, $04, $06, $06, $08, $06, $06, $06, $05, $05, $05, $05, $05 ; 0x50
 	; $7fe0, 32 bytes fill to bank end (linker-padded)
