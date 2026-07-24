@@ -1409,7 +1409,7 @@ Label_14_51e9:
 LoadCourtPlayerPartnerObjDefs_14:
 	test_flag $05, 7 ; $51ea
 	jp z, Label_14_5208 ; $51ed
-	ld a, [$c94d] ; $51f0
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $51f0
 	ld d, $58 ; $51f3
 	add a, d ; $51f5
 	ld d, a ; $51f6
@@ -1419,7 +1419,7 @@ LoadCourtPlayerPartnerObjDefs_14:
 	farcall LoadActorObjectDefIfValid ; $51fe
 	script_set_anim ACTOR_PARTNER, $01 ; $5201
 Label_14_5208:
-	ld a, [$c90d] ; $5208
+	ld a, [wStoryModeGenderOfMainCharacter] ; $5208
 	ld d, $56 ; $520b
 	add a, d ; $520d
 	ld d, a ; $520e
@@ -1502,7 +1502,7 @@ Label_14_5303:
 	jp z, Label_14_5352 ; $5327
 	script_null_script ACTOR_PARTNER ; $532a
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $532f
-	ld a, [$c94d] ; $533a
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $533a
 	ld d, $58 ; $533d
 	add a, d ; $533f
 	ld d, a ; $5340
@@ -1512,7 +1512,7 @@ Label_14_5303:
 	farcall LoadActorObjectDefIfValid ; $5348
 	script_set_anim $05, $01 ; $534b
 Label_14_5352:
-	ld a, [$c90d] ; $5352
+	ld a, [wStoryModeGenderOfMainCharacter] ; $5352
 	ld d, $56 ; $5355
 	add a, d ; $5357
 	ld d, a ; $5358

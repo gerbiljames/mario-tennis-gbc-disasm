@@ -1,4 +1,4 @@
-# Project status — 2026-07-23
+# Project status — 2026-07-24
 
 ## Where things stand
 
@@ -22,10 +22,164 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `1cf0f0c`); the whole history rebuilds
+Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
+**5,385 of 18,747 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Naming sweep: menu, results, story and dictionary banks (2026-07-24)
+
+A twelve-bank naming pass took human-named symbols from 4,816 to 5,385
+(+569), split between ROM labels in `labels.json` and 25 RAM addresses in
+`ram_map.json`/`ram_unions.json`. Config-only throughout — no hand edits
+to `src/`, which is fully generated — plus two `data_tables.json` widths;
+byte-perfect at every step.
+
+Per bank: `$38` 123 (match-format menu, story character/partner picker,
+exhibition and link character grids, name entry), `$1e` 99 (match results,
+EXP award, game-progress checklist), `$1d` 74 (character-data carousel,
+post-match EXP distribution), `$10` 69 (match-select handler tree, 35
+`load_match_settings` launcher stubs, Restaurant/Academy maps), `$1a` 58
+(minigame pause menu, debug EXP editor, EXP-gain screen, debug character
+viewer), `$3f` 23 (Tennis Dictionary), `$13`/`$14` 44 (dorm and courtyard
+scenes, Island Sky fireworks), `$15`/`$27`/`$0f`/`$01` 56, `$17` 13
+(rules/briefing diagrams), `$0d` 8 (minigame hook tables).
+
+Things that fell out of the pass and are worth keeping:
+
+* **Minigame mode hooks.** Each bank `$0d` minigame config's `+$08`
+  pointer is an 8-slot `CallModeHook` table: 0 per-frame, 1 point start,
+  2 point end, 3 minigame start, 4 ball hit, 5 bounce, 6 rally tick,
+  7 draw.
+* **Tile-trigger encoding.** The behavior byte a story scene writes to arm
+  a tile trigger is `(trigger_id << 4) | 1`, cross-checked across banks
+  `$13`, `$11` and `$0f`.
+* **Actor field `+$37` is the OAM attribute byte** — bit 5 X-flip, bit 6
+  Y-flip, low bits the palette taken from
+  `wStoryModeMainCharacterOverworldSpriteColor`.
+* **Match-select bug.** Singles menu slot 8 ("Varsity-S Rank 4")
+  dispatches to a duplicate of the Junior #3 launcher (`$0002`) instead
+  of `$000b`, so that handler is named `LoadMatchSinglesJunior3Alias`
+  rather than after its caption.
+* Two curated labels were **misidentified and corrected**:
+  `TileGrid3x3_1d_6f35` is not a 3x3 grid but the 9-entry fill ramp for
+  the 8-cell level bar (now `ExpBarFillTiles_1d`, `data_tables.json` width
+  3 → 9), and `DrillDisplayData2_1d` is a frame of the EXP-screen confirm
+  window, not drill data (now `ExpPromptWindowFrame_1d`).
+
+Deliberately left alone: `Func_38_591b` (three prerendered label strips
+that could not be identified), the bank `$1e` flag-group cluster at
+`$6c62`-`$6c93`, and `Func_1e_6d82` — that one is the *body* of the
+progress-entry flag-id table starting at `$6d80`, so it wants a carving
+fix rather than a rename.
+
+### Story character record fields + scoped HRAM scratch (2026-07-24)
+
+`$cb00` is `wStoryCharacterSlot`: which of the two story character records
+the character-select, name-entry and character-data screens act on
+(0 = main, 1 = partner). Every consumer uses it as a `$40`-stride index
+into the `wStoryModeMainCharacter*`/`wStoryModePartnerCharacter*` pair, and
+`GetActiveStoryNameBuffer` (`$38:$73fa`) returns
+`wStoryModeNameOfMainCharacter` or `...OfPartnerCharacter` straight off it.
+184 sites across banks `$0a`, `$18`, `$1a`, `$1b`, `$1c`, `$1d`, `$38`.
+
+That in turn opened up the story character record layout. Offset **`+$0e`
+is a left-handed flag** (`$c90e`/`$c94e`, now
+`wStoryMode*CharacterLeftHanded`), proven three ways: character select
+writes `wCharSelectHandedness` there (`$38:$48ba`); the bank `$02`
+new-game path sets it from bit 2 of the character id (`$02:$51c5`, which
+is why the id is masked `and a,$07` then `res 2,d`); and bank `$17` reads
+it to swap the spin-serve briefing between `$36:696` ("So serve to the
+right with topspin and to the left with slice.") and `$36:697`, its exact
+mirror. `wCharSelectHandedness` (`$cb50`) is itself pinned by text
+`$30:118` "START: Change Hands", by START being its only writer
+(`xor $01` at `$38:$48fc`), and by its only effect being OAM bit 5
+(X-flip) on the four character sprites.
+
+Offset **`+$0d` is the character's gender** (`$00` male, `$01` female):
+`$c90d` is `wStoryModeGenderOfMainCharacter`, `$c94d` is
+`wStoryModeGenderOfPartnerCharacter`. `InitPlayerRecordFromTemplate`
+copies it out of `StoryCharGenderTable` (`$02:$441b`), and it is read-only
+thereafter — 24 + 28 absolute reads, no writes, persisting through the
+save. Two text pairs prove it, each selected by advancing the dialogue
+cursor one entry on the flag:
+
+```
+$10:$7844   30:433  This is .\nTake good care\nof him, OK?     gender 0
+            30:434  This is .\nTake good care\nof her, OK?     gender 1
+$13:$49b8   31:60   He's , the\nAcademy's newest\nstudent.     gender 0
+            31:61   She's , the\nAcademy's newest\nstudent.    gender 1
+```
+
+Everything else lines up: banks `$0f`/`$11`/`$14`/`$15`/`$27` use it as
+`objdef $56 + gender` (player), `$58 + gender` (partner) and
+`$26 + gender` (NPC) to pick male/female overworld sprites,
+`SpawnCompanionActor` (`$04:$4f10`) picks between two actor blobs on it,
+`$12:$4158` sends you to a different dorm on it, and `$13:$78c4` builds
+`(main << 1) | (main XOR partner)` — a four-way M/M, M/F, F/M, F/F scene
+key.
+
+The table itself was over-run: only entries 0-3 are reachable (the id is
+masked `and a,$03` at `$43a5`, and `GetPlayerRecordPtr` only ever selects
+the main/partner records), and they read `$00, $01, $00, $01` for
+Alex/Nina/Harry/Kate. The 28 bytes that followed were swept into the same
+blob only because the next label is 32 bytes away; nothing in the ROM
+references them and their values contradict gender for the wider roster
+(Curt, Sean, Luigi, Mario and Bowser are 1; Allie, Pam, Fay, Sammi, Emily
+and Peach are 0). They are now split off as `Unused_02_441f`.
+
+`$ffb0-$ffb3` is a pair of 16-bit HRAM slots each caller repurposes, so it
+is modeled as a `ram_unions.json` overlay rather than named globally:
+bank `$02` uses it in `ComputeLevelUpStatDeltas` (`hStatDeltaOutPtr`, the
+caller-supplied output pointer, and `hStatDeltaRecordCopy`, pointing at
+the 64-byte stack copy of the player record taken before
+`LevelUpPlayerRecord`), and bank `$03` keeps `hSaveEditorCursor` there —
+`SaveSlotDebugEditor`'s cursor offset into the `$d300` block, wrapped to
+`$400` by masking the high byte with `$03`. `Func_03_524f` is that
+editor's cursor helper (`MoveSaveEditorCursor`); its four D-pad branches
+pass `bc` = (value step, cursor step): up `$f0f8`, left `$ffff`, right
+`$0101`, down `$1008`. Scoping matters here — banks `$0f` and `$10` load
+`$ffb0` as the immediate constant −80, not as an address, and correctly
+stay numeric.
+
+The `$cbxx` page turned out to be several disjoint tenants rather than one
+subsystem, so the rest could be named globally: the animated-tile task
+inputs (`$cb0b`/`$cb0c`), the bank `$1a` menu-window handle and
+`RunMenuSelectionShared`'s per-row masks (`$cb26`-`$cb29`), the Study
+Vocabulary scroll model (`$cb2d`-`$cb37`), the intro-cutscene scroll
+position (`$cb4a`, 16-bit), the court unlock masks (`$cb53`/`$cb54`), the
+character-select handedness and partner-pick flags (`$cb50`/`$cb52`), and
+the debug character viewer's page/index (`$cb62`/`$cb63`).
+
+Left unnamed on purpose, for the same reason `$c2b0-$c2ff` is:
+**`$cb2a`** mixes a menu LEFT/RIGHT adjust direction (low nibble) with a
+debug-HUD enable (bit 5), and **`$cb44`-`$cb47`** is intro-cutscene
+per-state scratch whose meaning changes between states of the same state
+machine (`$cb44` is a sprite X in states 01-05 but is copied to
+`hScrollY` in states 17-18). The **`$c4xx` page is the ball-physics /
+shot-solver core** and wants its own pass: `$c48a`+`$c48c` are 16-bit
+aim-line distances computed at `$07:$5787`/`$07:$57bc` as
+`(|wBallDepth| + $0140 or $0480) / sin(wShotAimAngle)`, with
+`$c48e`/`$c48f` holding the same values ÷64 — the row index the per-court
+`BallTrajEntryPtr*` helpers derive.
+
+### Open questions from the 2026-07-24 pass
+
+* **What are the 28 bytes of `Unused_02_441f`?** Nothing references them
+  and they match no attribute I could find. Labelled unused rather than
+  guessed at.
+* **`WaterSprite` may be a misnomer.** A decode of `$14:$5650` assembled
+  through `SpriteTemplate_14_5e50` reads as a four-scale-step *aircraft*
+  (fuselage, full-width wing, tail fin) — the Island Sky story plane —
+  rather than anything aquatic, which would make `LoadWaterSpriteObjGfx`,
+  `GetWaterSpriteScreenPos`, `PlayWaterSpriteMoveSfx` and the
+  RetroAchievements-sourced `wWaterSpriteMinigame*` names wrong. Not acted
+  on: the sprite assembly was not independently reproduced, and the RAM
+  names are external. Worth settling before bank `$14` is finished.
+* **`StoryCmdHandlersC_13`** (`$13:$526a`) is curated but is not a
+  command-handler table; it is the 8-entry random idle-script table for
+  dorm actor `$04`.
 
 ### Pause-menu rules pages carved (bank $06, 2026-07-22)
 

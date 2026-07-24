@@ -85,7 +85,7 @@ DormEntranceTile01_12:
 	call BeginFadeOut ; $414f
 	farcall WaitPlayerMoveDone ; $4152
 	call WaitFadeEnd ; $4155
-	ld a, [$c90d] ; $4158
+	ld a, [wStoryModeGenderOfMainCharacter] ; $4158
 	or a, a ; $415b
 	jr nz, Label_12_4167 ; $415c
 	ld a, $01 ; $415e
@@ -179,7 +179,7 @@ DormEntranceEntry0FScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $4383
 	script_set_active $03, $02 ; $438a
 	script_set_position $03, $1500, $0b00 ; $4391
-	ld a, [$c94d] ; $439c
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $439c
 	or a, a ; $439f
 	jr nz, Label_12_43bb ; $43a0
 	script_set_text Text_31_92 ; $43a2
@@ -1392,7 +1392,7 @@ Label_12_55b5:
 	ld h, [hl] ; $55c3
 	ld l, a ; $55c4
 	farcall InitDialogueTextCursor ; $55c5
-	ld a, [$c90d] ; $55c8
+	ld a, [wStoryModeGenderOfMainCharacter] ; $55c8
 	ld hl, $001d ; $55cb
 	add a, l ; $55ce
 	ld l, a ; $55cf
@@ -1500,7 +1500,7 @@ Label_12_5747:
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_34_7 ; $578c
 	set_flag $0e, 4 ; $5792
-	ld a, [$c94d] ; $5795
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5795
 	or a, a ; $5798
 	jr nz, Label_12_57a1 ; $5799
 	script_set_text Text_34_11 ; $579b
@@ -1618,7 +1618,7 @@ Label_12_58d1:
 	and a, a ; $58e3
 	jr z, Label_12_58f2 ; $58e4
 	farcall AdvanceDialogueTextCursor ; $58e6
-	ld a, [$c94d] ; $58e9
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $58e9
 	or a, a ; $58ec
 	jr nz, Label_12_58f2 ; $58ed
 	farcall AdvanceDialogueTextCursor ; $58ef
@@ -1875,7 +1875,7 @@ SeniorCourtNpc0B_12:
 	jr c, Label_12_5bb9 ; $5ba9
 	test_flag $05, 7 ; $5bab
 	jr z, Label_12_5bb9 ; $5bae
-	ld a, [$c94d] ; $5bb0
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bb0
 	and a, a ; $5bb3
 	jr nz, Label_12_5bb9 ; $5bb4
 	farcall AdvanceDialogueTextCursor ; $5bb6
@@ -1899,7 +1899,7 @@ Label_12_5bb9:
 	dw $10b7 ; record 13
 	dw $10ae ; record 14
 SeniorCourtNpc0C_12:
-	ld a, [$c94d] ; $5bdd
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bdd
 	or a, a ; $5be0
 	jr nz, Label_12_5bfa ; $5be1
 	ld a, [$c2b1] ; $5be3
@@ -2111,7 +2111,7 @@ Label_12_5e73:
 	script_set_position $05, $3f00, $3f00 ; $5e85
 	ret ; $5e90
 Func_12_5e91:
-	ld a, [$c94d] ; $5e91
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5e91
 	or a, a ; $5e94
 	jr nz, Label_12_5eaa ; $5e95
 	script_get_actor_state $0c ; $5e97

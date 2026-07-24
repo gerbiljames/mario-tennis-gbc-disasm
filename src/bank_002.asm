@@ -568,10 +568,13 @@ Label_02_4405:
 	ld c, $08 ; $4415
 	call CopyMemoryFast ; $4417
 	ret ; $441a
-Table_02_441b:
-	; $441b, 32 bytes (bytes:16)
-	db $00, $01, $00, $01, $00, $01, $00, $00, $00, $01, $00, $01, $00, $01, $00, $00 ; 0x00
-	db $00, $00, $00, $01, $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10
+StoryCharGenderTable:
+	; $441b, 4 bytes (bytes:4)
+	db $00, $01, $00, $01 ; 0x00
+Unused_02_441f:
+	; $441f, 28 bytes (bytes:16)
+	db $00, $01, $00, $00, $00, $01, $00, $01, $00, $01, $00, $00, $00, $00, $00, $01 ; 0x00
+	db $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10
 LoadMainCharacterFromRoster:
 	push de ; $443b
 	ld hl, wStoryModeNameOfMainCharacter ; $443c

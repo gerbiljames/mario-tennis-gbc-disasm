@@ -919,6 +919,11 @@
   "note": "[8-bit] Story Mode - Main Character Overworld Sprite Color\n\n0x00 - Green\n0x01 - Pink\n0x02 - Yellow\n0x03 - Red\n0x04 - Blue\nAll other values result in glitched sprite",
   "size": 1
  },
+ "0xc90d": {
+  "name": "wStoryModeGenderOfMainCharacter",
+  "note": "[8-bit] Story Mode - main character's gender: $00 = male, $01 = female. Copied from StoryCharGenderTable by InitPlayerRecordFromTemplate ($02:$43db) and read-only thereafter. Proven by the dialogue pairs it selects via AdvanceDialogueTextCursor: $30:433 \"Take good care of him, OK?\" vs $30:434 \"...of her, OK?\" ($10:$7844), and $31:60 \"He's , the Academy's newest student.\" vs $31:61 \"She's ...\" ($13:$49b8). Also picks the gendered overworld object defs ($56 + gender).",
+  "size": 1
+ },
  "0xc90e": {
   "name": "wStoryModeMainCharacterLeftHanded",
   "note": "[8-bit] Story Mode - nonzero when the main character plays left-handed. Written from wCharSelectHandedness at $38:$48ba (record offset +$0e) and, on the bank $02 new-game path, from bit 2 of the character id ($02:$51c5). Bank $17 uses it to swap the spin-serve briefing text between $36:696 (\"serve to the right with topspin and to the left with slice\") and $36:697, its mirror image.",
@@ -941,6 +946,11 @@
  "0xc94c": {
   "name": "wStoryModePartnerCharacterOverworldSpriteColor",
   "note": "[8-bit] Story Mode - Partner Character Overworld Sprite Color; for values see 0x00c90c",
+  "size": 1
+ },
+ "0xc94d": {
+  "name": "wStoryModeGenderOfPartnerCharacter",
+  "note": "[8-bit] Story Mode - doubles partner's gender ($00 male, $01 female), the partner record's copy of the field at the $40 stride. Selects the partner object def ($58 + gender) and, with the main character's gender, the four-way scene key (main << 1) | (main XOR partner) that $13:$78c4 passes to RunStorySceneByMode.",
   "size": 1
  },
  "0xc94e": {

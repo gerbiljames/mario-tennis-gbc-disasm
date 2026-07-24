@@ -3599,18 +3599,18 @@ Label_0e_7c37:
 	test_flag $05, 7 ; $7c37
 	jr nz, Label_0e_7c49 ; $7c3a
 	ld b, $02 ; $7c3c
-	ld a, [$c90d] ; $7c3e
+	ld a, [wStoryModeGenderOfMainCharacter] ; $7c3e
 	add a, $04 ; $7c41
 	ld c, a ; $7c43
 	farcall RunStorySceneByMode ; $7c44
 	jr Label_0e_7c5b ; $7c47
 Label_0e_7c49:
 	ld b, $02 ; $7c49
-	ld a, [$c90d] ; $7c4b
+	ld a, [wStoryModeGenderOfMainCharacter] ; $7c4b
 	ld d, a ; $7c4e
 	sla a ; $7c4f
 	ld c, a ; $7c51
-	ld a, [$c94d] ; $7c52
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7c52
 	xor a, d ; $7c55
 	or a, c ; $7c56
 	ld c, a ; $7c57

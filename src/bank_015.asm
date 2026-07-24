@@ -360,7 +360,7 @@ SetupTournamentSitePartnerActor:
 	call SetPlayerPartnerActorSprites ; $46b7
 	test_flag $05, 7 ; $46ba
 	jr z, Label_15_46c9 ; $46bd
-	ld a, [$c94d] ; $46bf
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $46bf
 	or a, a ; $46c2
 	jr nz, Label_15_46ca ; $46c3
 	ld d, $58 ; $46c5
@@ -431,7 +431,7 @@ Label_15_4756:
 SetPlayerPartnerActorSprites:
 	test_flag $05, 7 ; $475f
 	jp z, Label_15_477d ; $4762
-	ld a, [$c94d] ; $4765
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4765
 	ld d, $58 ; $4768
 	add a, d ; $476a
 	ld d, a ; $476b
@@ -441,7 +441,7 @@ SetPlayerPartnerActorSprites:
 	farcall LoadActorObjectDefIfValid ; $4773
 	script_set_anim ACTOR_PARTNER, $01 ; $4776
 Label_15_477d:
-	ld a, [$c90d] ; $477d
+	ld a, [wStoryModeGenderOfMainCharacter] ; $477d
 	ld d, $56 ; $4780
 	add a, d ; $4782
 	ld d, a ; $4783

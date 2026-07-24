@@ -4261,13 +4261,13 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_wait_frames $32 ; $782e
 	script_face_toward $04, $03 ; $7835
 	script_wait_frames $1e ; $783d
-	ld a, [$c90d] ; $7844
+	ld a, [wStoryModeGenderOfMainCharacter] ; $7844
 	or a, a ; $7847
 	jr z, Label_10_784d ; $7848
 	farcall AdvanceDialogueTextCursor ; $784a
 Label_10_784d:
 	script_speak $03 ; $784d
-	ld a, [$c90d] ; $7852
+	ld a, [wStoryModeGenderOfMainCharacter] ; $7852
 	or a, a ; $7855
 	jr nz, Label_10_785b ; $7856
 	farcall AdvanceDialogueTextCursor ; $7858

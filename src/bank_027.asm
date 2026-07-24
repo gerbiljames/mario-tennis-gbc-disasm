@@ -150,7 +150,7 @@ Label_27_41cd:
 	script_delay $3c ; $436b
 	script_set_position $05, $0b40, $0c40 ; $4370
 Label_27_437b:
-	ld a, [$c90d] ; $437b
+	ld a, [wStoryModeGenderOfMainCharacter] ; $437b
 	ld d, $26 ; $437e
 	add a, d ; $4380
 	ld d, a ; $4381
@@ -241,7 +241,7 @@ Label_27_43c2:
 SetEnd17CeremonyObjectDefs_27:
 	test_flag $05, 7 ; $45be
 	jp z, Label_27_45f3 ; $45c1
-	ld a, [$c94d] ; $45c4
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $45c4
 	ld d, $58 ; $45c7
 	add a, d ; $45c9
 	ld d, a ; $45ca
@@ -254,7 +254,7 @@ SetEnd17CeremonyObjectDefs_27:
 	script_set_position ACTOR_PARTNER, $0f00, $0d60 ; $45e1
 	script_face ACTOR_PARTNER, FACE_DOWN ; $45ec
 Label_27_45f3:
-	ld a, [$c90d] ; $45f3
+	ld a, [wStoryModeGenderOfMainCharacter] ; $45f3
 	ld d, $56 ; $45f6
 	add a, d ; $45f8
 	ld d, a ; $45f9
@@ -1029,7 +1029,7 @@ End10VarsityCourtInitScript_27:
 	jp z, Label_27_5643 ; $5622
 	ret ; $5625
 Func_27_5626:
-	ld a, [$c94d] ; $5626
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5626
 	or a, a ; $5629
 	jr nz, Label_27_5642 ; $562a
 	script_set_objdef $28, $0d ; $562c
@@ -2152,7 +2152,7 @@ Label_27_6caf:
 	script_face ACTOR_PLAYER, FACE_UP ; $6e36
 	script_set_active $03, $02 ; $6e3d
 	script_set_position $03, $1500, $0b00 ; $6e44
-	ld a, [$c94d] ; $6e4f
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $6e4f
 	or a, a ; $6e52
 	jr nz, Label_27_6e68 ; $6e53
 	script_set_objdef $28, $04 ; $6e55
@@ -2494,7 +2494,7 @@ Label_27_760e:
 	jp z, Label_27_7659 ; $761c
 	script_null_script ACTOR_PARTNER ; $761f
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $7624
-	ld a, [$c94d] ; $762f
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $762f
 	ld d, $58 ; $7632
 	add a, d ; $7634
 	ld d, a ; $7635
@@ -2506,7 +2506,7 @@ Label_27_760e:
 	script_set_position $0c, $1a00, $1100 ; $7647
 	script_face $0c, FACE_DOWN ; $7652
 Label_27_7659:
-	ld a, [$c90d] ; $7659
+	ld a, [wStoryModeGenderOfMainCharacter] ; $7659
 	ld d, $56 ; $765c
 	add a, d ; $765e
 	ld d, a ; $765f

@@ -252,7 +252,7 @@ Label_11_4342:
 Func_11_4343:
 	test_flag $05, 7 ; $4343
 	jp z, Label_11_4361 ; $4346
-	ld a, [$c94d] ; $4349
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4349
 	ld d, $58 ; $434c
 	add a, d ; $434e
 	ld d, a ; $434f
@@ -262,7 +262,7 @@ Func_11_4343:
 	farcall LoadActorObjectDefIfValid ; $4357
 	script_set_anim ACTOR_PARTNER, $01 ; $435a
 Label_11_4361:
-	ld a, [$c90d] ; $4361
+	ld a, [wStoryModeGenderOfMainCharacter] ; $4361
 	ld d, $56 ; $4364
 	add a, d ; $4366
 	ld d, a ; $4367
@@ -803,7 +803,7 @@ AcademyArrivalGreetingScene:
 	script_wait_frames $78 ; $4dd5
 	script_set_position $12, $1800, $0f00 ; $4ddc
 	script_wait_move ACTOR_PLAYER ; $4de7
-	ld a, [$c90d] ; $4dec
+	ld a, [wStoryModeGenderOfMainCharacter] ; $4dec
 	or a, a ; $4def
 	jr z, Label_11_4df5 ; $4df0
 	farcall AdvanceDialogueTextCursor ; $4df2
@@ -922,7 +922,7 @@ Label_11_4fcf:
 	jp z, Label_11_501a ; $4fdd
 	script_null_script ACTOR_PARTNER ; $4fe0
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $4fe5
-	ld a, [$c94d] ; $4ff0
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4ff0
 	ld d, $58 ; $4ff3
 	add a, d ; $4ff5
 	ld d, a ; $4ff6
@@ -934,7 +934,7 @@ Label_11_4fcf:
 	script_set_position $07, $1a00, $1100 ; $5008
 	script_face $07, FACE_DOWN ; $5013
 Label_11_501a:
-	ld a, [$c90d] ; $501a
+	ld a, [wStoryModeGenderOfMainCharacter] ; $501a
 	ld d, $56 ; $501d
 	add a, d ; $501f
 	ld d, a ; $5020

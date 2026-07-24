@@ -462,7 +462,7 @@ ServiceAceCoachIntroCutscene:
 	script_face_toward ACTOR_PLAYER, $06 ; $49a1
 	script_wait_frames $32 ; $49a9
 	script_face_toward $07, $06 ; $49b0
-	ld a, [$c90d] ; $49b8
+	ld a, [wStoryModeGenderOfMainCharacter] ; $49b8
 	or a, a ; $49bb
 	jr z, Label_13_49c1 ; $49bc
 	farcall AdvanceDialogueTextCursor ; $49be
@@ -888,7 +888,7 @@ Label_13_50de:
 	farcall WriteBehaviorMapCell ; $512c
 	ret ; $512f
 SetupDormRoomSceneVariant:
-	ld a, [$c94d] ; $5130
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5130
 	or a, a ; $5133
 	jr nz, Label_13_51ac ; $5134
 	farcall WaitPlayerMoveDone ; $5136
@@ -2321,7 +2321,7 @@ Label_13_62a7:
 Label_13_62bd:
 	ret ; $62bd
 ApplyPartnerCharacterVariant_13:
-	ld a, [$c94d] ; $62be
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $62be
 	or a, a ; $62c1
 	jr nz, Label_13_62da ; $62c2
 	script_set_objdef $28, $0d ; $62c4
@@ -3119,7 +3119,7 @@ Label_13_7340:
 	call BeginFadeOut ; $7378
 	call WaitFadeEnd ; $737b
 	ld b, $00 ; $737e
-	ld a, [$c90d] ; $7380
+	ld a, [wStoryModeGenderOfMainCharacter] ; $7380
 	add a, $04 ; $7383
 	ld c, a ; $7385
 	farcall RunStorySceneByMode ; $7386
@@ -3350,11 +3350,11 @@ Label_13_7861:
 	ret ; $78c3
 PlayDoublesTravelingTeamScreenSequence_13:
 	ld b, $00 ; $78c4
-	ld a, [$c90d] ; $78c6
+	ld a, [wStoryModeGenderOfMainCharacter] ; $78c6
 	ld d, a ; $78c9
 	sla a ; $78ca
 	ld c, a ; $78cc
-	ld a, [$c94d] ; $78cd
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $78cd
 	xor a, d ; $78d0
 	or a, c ; $78d1
 	ld c, a ; $78d2

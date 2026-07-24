@@ -2233,7 +2233,7 @@ SpawnCompanionActor:
 	push de ; $4f12
 	push hl ; $4f13
 	wram_bank $04 ; $4f14
-	ld a, [$c94d] ; $4f1a
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f1a
 	or a, a ; $4f1d
 	jr nz, Label_04_4f2c ; $4f1e
 	ld hl, $4ec8 ; $4f20

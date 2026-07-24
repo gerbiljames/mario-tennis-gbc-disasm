@@ -259,7 +259,7 @@ AwardsCeremonyTile01_0f:
 	script_wait_move ACTOR_PLAYER ; $4502
 	call ReplacePlayerWithStandInActor ; $4507
 	script_set_position $16, $0b00, $1b00 ; $450a
-	ld a, [$c94d] ; $4515
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4515
 	ld d, $58 ; $4518
 	add a, d ; $451a
 	ld d, a ; $451b
@@ -633,7 +633,7 @@ AwardsCeremonyTile02_0f:
 	script_face $12, FACE_RIGHT ; $4e32
 	ld a, $3c ; $4e39
 	call DelayFrames ; $4e3b
-	ld a, [$c90d] ; $4e3e
+	ld a, [wStoryModeGenderOfMainCharacter] ; $4e3e
 	ld d, $26 ; $4e41
 	add a, d ; $4e43
 	ld d, a ; $4e44
@@ -653,7 +653,7 @@ AwardsCeremonyTile02_0f:
 	call BeginFadeOut ; $4e83
 	call WaitFadeEnd ; $4e86
 	ld b, $01 ; $4e89
-	ld a, [$c90d] ; $4e8b
+	ld a, [wStoryModeGenderOfMainCharacter] ; $4e8b
 	add a, $04 ; $4e8e
 	ld c, a ; $4e90
 	farcall RunStorySceneByMode ; $4e91
@@ -704,7 +704,7 @@ Label_0f_4ea7:
 	call DelayFrames ; $4f6d
 	call ReplacePlayerWithStandInActor ; $4f70
 	script_set_position $16, $0d00, $0d60 ; $4f73
-	ld a, [$c94d] ; $4f7e
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f7e
 	ld d, $58 ; $4f81
 	add a, d ; $4f83
 	ld d, a ; $4f84
@@ -918,7 +918,7 @@ Label_0f_4ea7:
 	script_face $15, FACE_RIGHT ; $5505
 	ld a, $3c ; $550c
 	call DelayFrames ; $550e
-	ld a, [$c90d] ; $5511
+	ld a, [wStoryModeGenderOfMainCharacter] ; $5511
 	ld d, $26 ; $5514
 	add a, d ; $5516
 	ld d, a ; $5517
@@ -938,11 +938,11 @@ Label_0f_4ea7:
 	call BeginFadeOut ; $5556
 	call WaitFadeEnd ; $5559
 	ld b, $01 ; $555c
-	ld a, [$c90d] ; $555e
+	ld a, [wStoryModeGenderOfMainCharacter] ; $555e
 	ld d, a ; $5561
 	sla a ; $5562
 	ld c, a ; $5564
-	ld a, [$c94d] ; $5565
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5565
 	xor a, d ; $5568
 	or a, c ; $5569
 	ld c, a ; $556a
@@ -1023,7 +1023,7 @@ Label_0f_563b:
 	script_speak $08 ; $563b
 	ret ; $5640
 ReplacePlayerWithStandInActor:
-	ld a, [$c90d] ; $5641
+	ld a, [wStoryModeGenderOfMainCharacter] ; $5641
 	ld d, $56 ; $5644
 	add a, d ; $5646
 	ld d, a ; $5647
@@ -1280,7 +1280,7 @@ Label_0f_5889:
 	farcall AttachActorStepMover ; $5ae8
 	ret ; $5aeb
 SpeakPartnerVariantLine:
-	ld a, [$c94d] ; $5aec
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5aec
 	and a, a ; $5aef
 	jr nz, Label_0f_5afb ; $5af0
 	script_speak ACTOR_PARTNER ; $5af2
@@ -2932,7 +2932,7 @@ Label_0f_76f6:
 	ld h, [hl] ; $774f
 	ld l, a ; $7750
 	farcall InitDialogueTextCursor ; $7751
-	ld a, [$c94d] ; $7754
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7754
 	or a, a ; $7757
 	jr nz, Label_0f_7763 ; $7758
 	farcall AdvanceDialogueTextCursor ; $775a
@@ -3113,7 +3113,7 @@ ReplacePartnerWithStandInActor:
 	call SetPlayerAndPartnerObjectDefs ; $7a17
 	test_flag $05, 7 ; $7a1a
 	jr z, Label_0f_7a29 ; $7a1d
-	ld a, [$c94d] ; $7a1f
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7a1f
 	or a, a ; $7a22
 	jr nz, Label_0f_7a2a ; $7a23
 	ld d, $58 ; $7a25
@@ -3222,7 +3222,7 @@ Label_0f_7b15:
 SetPlayerAndPartnerObjectDefs:
 	test_flag $05, 7 ; $7b20
 	jp z, Label_0f_7b3e ; $7b23
-	ld a, [$c94d] ; $7b26
+	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7b26
 	ld d, $58 ; $7b29
 	add a, d ; $7b2b
 	ld d, a ; $7b2c
@@ -3232,7 +3232,7 @@ SetPlayerAndPartnerObjectDefs:
 	farcall LoadActorObjectDefIfValid ; $7b34
 	script_set_anim ACTOR_PARTNER, $01 ; $7b37
 Label_0f_7b3e:
-	ld a, [$c90d] ; $7b3e
+	ld a, [wStoryModeGenderOfMainCharacter] ; $7b3e
 	ld d, $56 ; $7b41
 	add a, d ; $7b43
 	ld d, a ; $7b44

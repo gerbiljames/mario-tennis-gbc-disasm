@@ -854,7 +854,9 @@ wStoryModeMainCharacterOverworldSprite:: db
 ; 0x04 - Blue
 ; All other values result in glitched sprite
 wStoryModeMainCharacterOverworldSpriteColor:: db
-	ds 1
+
+; [8-bit] Story Mode - main character's gender: $00 = male, $01 = female. Copied from StoryCharGenderTable by InitPlayerRecordFromTemplate ($02:$43db) and read-only thereafter. Proven by the dialogue pairs it selects via AdvanceDialogueTextCursor: $30:433 "Take good care of him, OK?" vs $30:434 "...of her, OK?" ($10:$7844), and $31:60 "He's , the Academy's newest student." vs $31:61 "She's ..." ($13:$49b8). Also picks the gendered overworld object defs ($56 + gender).
+wStoryModeGenderOfMainCharacter:: db
 
 ; [8-bit] Story Mode - nonzero when the main character plays left-handed. Written from wCharSelectHandedness at $38:$48ba (record offset +$0e) and, on the bank $02 new-game path, from bit 2 of the character id ($02:$51c5). Bank $17 uses it to swap the spin-serve briefing text between $36:696 ("serve to the right with topspin and to the left with slice") and $36:697, its mirror image.
 wStoryModeMainCharacterLeftHanded:: db
@@ -887,7 +889,9 @@ wStoryModePartnerCharacterOverworldSprite:: db
 
 ; [8-bit] Story Mode - Partner Character Overworld Sprite Color; for values see 0x00c90c
 wStoryModePartnerCharacterOverworldSpriteColor:: db
-	ds 1
+
+; [8-bit] Story Mode - doubles partner's gender ($00 male, $01 female), the partner record's copy of the field at the $40 stride. Selects the partner object def ($58 + gender) and, with the main character's gender, the four-way scene key (main << 1) | (main XOR partner) that $13:$78c4 passes to RunStorySceneByMode.
+wStoryModeGenderOfPartnerCharacter:: db
 
 ; [8-bit] Story Mode - the partner record's copy of the left-handed flag (record offset +$0e at the $40 stride); written by the same character-select path as wStoryModeMainCharacterLeftHanded.
 wStoryModePartnerCharacterLeftHanded:: db
