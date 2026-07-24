@@ -8897,4 +8897,4 @@ Label_05_7911:
 	ds 10, $00
 FontGlyphs:
 	INCBIN "data/bank_005/d_7920.bin" ; $7920, 1728 bytes
-	ds 32, $ff ; $7fe0, fill
+	; $7fe0, 32 bytes fill to bank end (linker-padded)

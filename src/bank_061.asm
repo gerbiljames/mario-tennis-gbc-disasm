@@ -149,4 +149,4 @@ YoshiCourtSceneConfig:
 YoshiCourtSceneConfigB:
 	INCBIN "data/bank_061/d_7a6f.bin" ; $7a6f, 40 bytes
 Data_61_7a97:
-	ds 1385, $ff ; $7a97, fill
+	; $7a97, 1385 bytes fill to bank end (linker-padded)

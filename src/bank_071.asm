@@ -471,4 +471,4 @@ Data_71_7df0:
 Data_71_7df3:
 	INCBIN "data/bank_071/d_7df3.bin" ; $7df3, 6 bytes
 Data_71_7df9:
-	ds 519, $ff ; $7df9, fill
+	; $7df9, 519 bytes fill to bank end (linker-padded)

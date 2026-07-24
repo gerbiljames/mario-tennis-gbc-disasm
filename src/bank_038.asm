@@ -7340,4 +7340,4 @@ Label_38_777b:
 	cp a, $04 ; $7783
 	jr nz, Label_38_777b ; $7785
 	ret ; $7787
-	ds 2168, $ff ; $7788, fill
+	; $7788, 2168 bytes fill to bank end (linker-padded)

@@ -61,4 +61,4 @@ Label_32_7aee:
 	pop de ; $7aef
 	pop bc ; $7af0
 	ret ; $7af1
-	ds 1294, $ff ; $7af2, fill
+	; $7af2, 1294 bytes fill to bank end (linker-padded)

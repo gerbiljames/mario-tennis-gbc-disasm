@@ -5390,4 +5390,4 @@ DrillSubHandlers_1d:
 	ld [hl+], a ; $7d17
 	ld [hl], d ; $7d18
 	ret ; $7d19
-	ds 742, $ff ; $7d1a, fill
+	; $7d1a, 742 bytes fill to bank end (linker-padded)

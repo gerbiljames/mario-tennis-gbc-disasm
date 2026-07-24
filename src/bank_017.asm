@@ -5487,4 +5487,4 @@ RulesScreenPalettes:
 	dw $2508, $2508, $2508, $2508 ; pal 6: #41414a #41414a #41414a #41414a
 	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
 	INCBIN "data/bank_017/d_793c.bin" ; $793c, 573 bytes
-	ds 1159, $ff ; $7b79, fill
+	; $7b79, 1159 bytes fill to bank end (linker-padded)

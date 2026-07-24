@@ -10256,4 +10256,4 @@ Label_00_3dbc:
 	ret ; $3dd3
 WavePatternTable:
 	INCBIN "data/bank_000/d_3dd4.bin" ; $3dd4, 500 bytes
-	ds 56, $ff ; $3fc8, fill
+	; $3fc8, 56 bytes fill to bank end (linker-padded)

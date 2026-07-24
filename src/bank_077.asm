@@ -465,4 +465,4 @@ Data_77_75b1:
 	INCBIN "data/bank_077/d_75b1.bin" ; $75b1, 3 bytes
 Data_77_75b4:
 	INCBIN "data/bank_077/d_75b4.bin" ; $75b4, 6 bytes
-	ds 2630, $ff ; $75ba, fill
+	; $75ba, 2630 bytes fill to bank end (linker-padded)

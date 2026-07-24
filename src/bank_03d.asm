@@ -257,4 +257,4 @@ TournamentBracketDoublesTilemap:
 	INCBIN "data/bank_03d/lz_7b0e.bin" ; $7b0e, 331 bytes
 TournamentBracketDoublesAttrmap:
 	INCBIN "data/bank_03d/lz_7c59.bin" ; $7c59, 102 bytes
-	ds 833, $ff ; $7cbf, fill
+	; $7cbf, 833 bytes fill to bank end (linker-padded)

@@ -303,4 +303,4 @@ Lz_6d_7970:
 	INCBIN "data/bank_06d/lz_7970.bin" ; $7970, 232 bytes
 MarioMiniGamesTiles:
 	INCBIN "data/bank_06d/lz_7a58.bin" ; $7a58, 757 bytes
-	ds 691, $ff ; $7d4d, fill
+	; $7d4d, 691 bytes fill to bank end (linker-padded)

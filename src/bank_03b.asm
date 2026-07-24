@@ -8417,4 +8417,4 @@ Label_3b_7e9f:
 	cp a, $06 ; $7eb1
 	jr nz, Label_3b_7e9f ; $7eb3
 	ret ; $7eb5
-	ds 330, $ff ; $7eb6, fill
+	; $7eb6, 330 bytes fill to bank end (linker-padded)

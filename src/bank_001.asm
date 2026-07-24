@@ -619,4 +619,4 @@ SoundTestSoundsB_01:
 	db $a0, $a1, $a2, $a3, $a4, $a5, $a6, $a7, $a8, $a9, $aa, $ab, $ac, $ad, $ae, $af ; 0x50
 	db $b0, $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf ; 0x60
 	db $c0, $c1 ; 0x70
-	ds 5082, $ff ; $6c26, fill
+	; $6c26, 5082 bytes fill to bank end (linker-padded)

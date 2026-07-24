@@ -553,4 +553,4 @@ ShotPlacementOffsets2_2c:
 	dw $1080 ; record 29
 	dw $1080 ; record 30
 	dw $1080 ; record 31
-	ds 3209, $ff ; $7377, fill
+	; $7377, 3209 bytes fill to bank end (linker-padded)

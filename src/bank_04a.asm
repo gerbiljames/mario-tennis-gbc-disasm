@@ -328,4 +328,4 @@ Data_4a_7fa3:
 	INCBIN "data/bank_04a/d_7fa3.bin" ; $7fa3, 12 bytes
 Data_4a_7faf:
 	INCBIN "data/bank_04a/d_7faf.bin" ; $7faf, 8 bytes
-	ds 73, $ff ; $7fb7, fill
+	; $7fb7, 73 bytes fill to bank end (linker-padded)

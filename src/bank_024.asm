@@ -749,4 +749,4 @@ ShotBallPathReach:
 	ret ; $7718
 BallPosHeightOffsetsReach_24:
 	INCBIN "data/bank_024/d_7719.bin" ; $7719, 64 bytes
-	ds 2215, $ff ; $7759, fill
+	; $7759, 2215 bytes fill to bank end (linker-padded)

@@ -2536,4 +2536,4 @@ Label_02_5eef:
 Label_02_5ef8:
 	ld a, $01 ; $5ef8
 	ret ; $5efa
-	ds 8453, $ff ; $5efb, fill
+	; $5efb, 8453 bytes fill to bank end (linker-padded)

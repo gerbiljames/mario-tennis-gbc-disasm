@@ -4874,4 +4874,4 @@ Lz_3e_769b:
 	INCBIN "data/bank_03e/lz_769b.bin" ; $769b, 183 bytes
 Lz_3e_7752:
 	INCBIN "data/bank_03e/lz_7752.bin" ; $7752, 179 bytes
-	ds 2043, $ff ; $7805, fill
+	; $7805, 2043 bytes fill to bank end (linker-padded)

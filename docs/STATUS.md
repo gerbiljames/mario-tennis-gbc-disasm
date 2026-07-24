@@ -28,6 +28,29 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 **5,771 of 19,055 labels are human-named** (up from 4,816 on 2026-07-23).
 
+### Bank-end $ff padding is now automatic (2026-07-24)
+
+Every bank used to end with an explicit `ds <count>, $ff ; $xxxx, fill`
+directive, so carving anything near a bank end meant restating a byte count
+that had to be exactly right or the ROM shifted. That count is now the
+linker's job: `rgblink -p 0xff` pads every byte no section covers, and a
+bank's section simply stops after its last real byte. `tools/disasm.py`
+(`bank_end_fill`) leaves a comment in its place —
+
+```
+	INCBIN "data/bank_07f/d_44f6.bin" ; $44f6, 12 bytes
+	; $4502, 15102 bytes fill to bank end (linker-padded)
+```
+
+— so the unused tail stays visible in the source, and `tools/progress.py`
+counts it alongside real `ds` runs (the progress table is unchanged). Where a
+`dw` slot names the trailing fill (banks `$60`-`$67`), the label is still
+emitted; it resolves to the section end, i.e. the same address as before.
+Interior fills — the `$00` runs in bank `$01`, the inter-vector gaps in bank
+`$00`, mid-bank `$ff` runs — are still assembled as `ds`; only the run that
+reaches `$8000` is dropped. 124 bank files lost their fill directive and
+`make compare` is still OK.
+
 ### Bank $0e's last two blobs carved (2026-07-24)
 
 Bank `$0e` had exactly two anonymous `INCBIN`s left, 1,246 bytes between

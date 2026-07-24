@@ -38,10 +38,15 @@ def main():
         data_bytes[bank] = data_bytes.get(bank, 0) + int(len_s, 16)
 
     fill_re = re.compile(r"^\tds (\d+), \$", re.M)
+    # Trailing fill is linker-padded, not assembled: only a comment records it.
+    pad_re = re.compile(r"^\t; \$[0-9a-f]{4}, (\d+) bytes fill to bank end",
+                        re.M)
     fill_bytes = {}
     for p in Path("src").glob("bank_*.asm"):
         bank = int(p.stem.split("_")[1], 16)
-        fill_bytes[bank] = sum(int(n) for n in fill_re.findall(p.read_text()))
+        text = p.read_text()
+        fill_bytes[bank] = sum(int(n) for n in fill_re.findall(text)) \
+            + sum(int(n) for n in pad_re.findall(text))
 
     nbanks = len(list(Path("src").glob("bank_*.asm"))) or (max(data_bytes) + 1)
 

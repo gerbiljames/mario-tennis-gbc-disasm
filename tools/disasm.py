@@ -3636,6 +3636,17 @@ def resolve_pointer_loads(lines, base, ptr_sites):
             lines[i] = f"{m.group(1)}{emitted[target]}{m.group(2)}"
 
 
+def bank_end_fill(cpu, length):
+    """Note the trailing $ff mastering fill a bank's section stops short of.
+
+    Nothing is assembled: `rgblink -p 0xff` pads every byte no section covers,
+    so carving at the end of a bank never has to restate a fill count. The
+    comment keeps the unused tail visible in the source (and countable by
+    tools/progress.py).
+    """
+    return f"\t; ${cpu:04x}, {length} bytes fill to bank end (linker-padded)"
+
+
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
          curated=None, ramscoped=None, constants=None, const_defs=None,
          ptr_sites=None, ptr_data_targets=None):
@@ -3959,8 +3970,13 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                         continue
                     if all(b == 0xFF for b in rom[run_start:run_start + length]):
                         # Pointer-targeted but pure mastering fill (unused
-                        # trailing $4000-table slots in the scene banks).
-                        lines.append(f"\tds {length}, $ff ; ${cpu:04x}, fill")
+                        # trailing $4000-table slots in the scene banks). The
+                        # label still has to resolve, but fill that runs to the
+                        # bank end is left to the linker's $ff padding.
+                        if run_start + length < end:
+                            lines.append(f"\tds {length}, $ff ; ${cpu:04x}, fill")
+                        else:
+                            lines.append(bank_end_fill(cpu, length))
                         continue
                     blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
                     manifest.append((blob, run_start, length, None))
@@ -4300,6 +4316,13 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             manifest.append((blob, seg, n, None))
                     else:
                         dscpu = offset_to_cpu(seg)
+                        # Mastering fill that runs to the bank end needs no
+                        # directive: rgblink pads every byte no section covers
+                        # with $ff (`-p 0xff`).
+                        if b == 0xFF and j == end and seg not in labels \
+                                and seg not in ptr_data_targets:
+                            lines.append(bank_end_fill(dscpu, j - seg))
+                            break
                         if seg in labels and lines[-1] != f"{labels[seg]}:":
                             lines.append(f"{labels[seg]}:")
                         elif seg in ptr_data_targets \

@@ -6171,4 +6171,4 @@ Lz_1b_7d2e:
 	INCBIN "data/bank_01b/lz_7d2e.bin" ; $7d2e, 321 bytes
 Lz_1b_7e6f:
 	INCBIN "data/bank_01b/lz_7e6f.bin" ; $7e6f, 323 bytes
-	ds 78, $ff ; $7fb2, fill
+	; $7fb2, 78 bytes fill to bank end (linker-padded)

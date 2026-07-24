@@ -5117,4 +5117,4 @@ LoadProgressScreenIconTiles:
 	ld c, $0f ; $7b54
 	farcall LoadIndexedPalette ; $7b56
 	ret ; $7b59
-	ds 1190, $ff ; $7b5a, fill
+	; $7b5a, 1190 bytes fill to bank end (linker-padded)

@@ -122,4 +122,4 @@ CourtComplexAuxTilemap:
 CourtComplexAuxAttrmap:
 	INCBIN "data/bank_067/lz_7c52.bin" ; $7c52, 76 bytes
 Data_67_7c9e:
-	ds 866, $ff ; $7c9e, fill
+	; $7c9e, 866 bytes fill to bank end (linker-padded)

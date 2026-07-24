@@ -3949,4 +3949,4 @@ Label_0e_7ec4:
 	jr z, Label_0e_7ec0 ; $7ecd
 	inc a ; $7ecf
 	jr Label_0e_7ec0 ; $7ed0
-	ds 302, $ff ; $7ed2, fill
+	; $7ed2, 302 bytes fill to bank end (linker-padded)

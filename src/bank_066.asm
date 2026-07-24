@@ -157,4 +157,4 @@ GardenPavilionAuxTilemap:
 GardenPavilionAuxAttrmap:
 	INCBIN "data/bank_066/lz_7be2.bin" ; $7be2, 75 bytes
 Data_66_7c2d:
-	ds 979, $ff ; $7c2d, fill
+	; $7c2d, 979 bytes fill to bank end (linker-padded)

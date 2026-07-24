@@ -552,4 +552,4 @@ BallPosHeightOffsets_2b:
 	dw $0042 ; record 29
 	dw $0042 ; record 30
 	dw $0042 ; record 31
-	ds 8411, $ff ; $5f25, fill
+	; $5f25, 8411 bytes fill to bank end (linker-padded)

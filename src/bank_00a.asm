@@ -5939,4 +5939,4 @@ Label_0a_6f37:
 	set_flag $0d, 7 ; $6f41
 	ret ; $6f44
 	INCBIN "data/bank_00a/d_6f45.bin" ; $6f45, 4 bytes
-	ds 4279, $ff ; $6f49, fill
+	; $6f49, 4279 bytes fill to bank end (linker-padded)

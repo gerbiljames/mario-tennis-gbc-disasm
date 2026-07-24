@@ -279,4 +279,4 @@ Lz_3c_77ec:
 	INCBIN "data/bank_03c/lz_77ec.bin" ; $77ec, 227 bytes
 Lz_3c_78cf:
 	INCBIN "data/bank_03c/lz_78cf.bin" ; $78cf, 253 bytes
-	ds 1588, $ff ; $79cc, fill
+	; $79cc, 1588 bytes fill to bank end (linker-padded)

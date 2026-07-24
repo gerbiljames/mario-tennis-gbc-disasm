@@ -3159,4 +3159,4 @@ Label_1c_750d:
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 	INCBIN "data/bank_01c/d_7541.bin" ; $7541, 2486 bytes
-	ds 265, $ff ; $7ef7, fill
+	; $7ef7, 265 bytes fill to bank end (linker-padded)

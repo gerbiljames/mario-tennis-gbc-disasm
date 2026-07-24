@@ -490,4 +490,4 @@ Data_6f_7483:
 	INCBIN "data/bank_06f/d_7483.bin" ; $7483, 3 bytes
 Data_6f_7486:
 	INCBIN "data/bank_06f/d_7486.bin" ; $7486, 11 bytes
-	ds 2927, $ff ; $7491, fill
+	; $7491, 2927 bytes fill to bank end (linker-padded)

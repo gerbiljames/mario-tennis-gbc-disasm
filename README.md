@@ -32,7 +32,9 @@ byte-for-byte.
   is disassembled; everything else is an `INCBIN` of a blob in `data/`,
   except long constant-byte padding runs (`$ff`, and `$00` past 256 bytes),
   which are emitted as `ds` fill directives — unused ROM space, visible as
-  such in the source. Pointer tables (`FarPtr`/`DataPtr`/jump tables) and the
+  such in the source. Trailing `$ff` fill is the exception: a bank's section
+  simply stops at its last real byte and `rgblink -p 0xff` pads the rest, so
+  carving at the end of a bank needs no fill-count bookkeeping. Pointer tables (`FarPtr`/`DataPtr`/jump tables) and the
   sprite/object records of the `$6a`/`$6f`/`$70`-`$77` banks — the 16-byte
   headers (`db` count/flags + `dw` body pointers), their inline `.frames`
   pointer arrays, and the `OamPtrs` arrays they reach — render as in-source

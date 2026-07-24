@@ -4053,4 +4053,4 @@ Label_12_7cdf:
 	jr z, Label_12_7cdb ; $7ce8
 	inc a ; $7cea
 	jr Label_12_7cdb ; $7ceb
-	ds 787, $ff ; $7ced, fill
+	; $7ced, 787 bytes fill to bank end (linker-padded)

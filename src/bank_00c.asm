@@ -145,4 +145,4 @@ Data_0c_7e5c:
 	INCBIN "data/bank_00c/d_7e5c.bin" ; $7e5c, 18 bytes
 Data_0c_7e6e:
 	INCBIN "data/bank_00c/d_7e6e.bin" ; $7e6e, 22 bytes
-	ds 380, $ff ; $7e84, fill
+	; $7e84, 380 bytes fill to bank end (linker-padded)

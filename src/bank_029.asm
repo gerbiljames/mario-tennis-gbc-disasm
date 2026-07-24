@@ -347,4 +347,4 @@ ShotBallPathServeTopspin:
 	dw $0042 ; record 49
 	dw $0042 ; record 50
 	dw $0042 ; record 51
-	ds 8409, $ff ; $5f27, fill
+	; $5f27, 8409 bytes fill to bank end (linker-padded)

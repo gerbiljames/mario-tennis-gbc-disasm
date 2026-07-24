@@ -153,4 +153,4 @@ DormInteriorAuxTilemap:
 DormInteriorAuxAttrmap:
 	INCBIN "data/bank_063/d_7aa3.bin" ; $7aa3, 94 bytes
 Data_63_7b01:
-	ds 1279, $ff ; $7b01, fill
+	; $7b01, 1279 bytes fill to bank end (linker-padded)

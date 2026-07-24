@@ -61,4 +61,4 @@ Label_30_7dc9:
 	pop de ; $7dca
 	pop bc ; $7dcb
 	ret ; $7dcc
-	ds 563, $ff ; $7dcd, fill
+	; $7dcd, 563 bytes fill to bank end (linker-padded)

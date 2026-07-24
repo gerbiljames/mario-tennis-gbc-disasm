@@ -179,4 +179,4 @@ ChampionMedalTilemap4:
 	INCBIN "data/bank_019/lz_7c34.bin" ; $7c34, 275 bytes
 ChampionMedalAttrmap4:
 	INCBIN "data/bank_019/lz_7d47.bin" ; $7d47, 144 bytes
-	ds 553, $ff ; $7dd7, fill
+	; $7dd7, 553 bytes fill to bank end (linker-padded)

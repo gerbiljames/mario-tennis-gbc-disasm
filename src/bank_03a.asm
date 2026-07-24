@@ -210,4 +210,4 @@ LinkErrorPalettes:
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
 Lz_3a_7dfa:
 	INCBIN "data/bank_03a/lz_7dfa.bin" ; $7dfa, 227 bytes
-	ds 291, $ff ; $7edd, fill
+	; $7edd, 291 bytes fill to bank end (linker-padded)

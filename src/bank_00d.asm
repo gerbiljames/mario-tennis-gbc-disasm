@@ -4123,4 +4123,4 @@ FruitFantasyReflectBallAndRecordCell:
 	call GetMinigameGridCellIndex ; $5ff3
 	ld [$c7bf], a ; $5ff6
 	ret ; $5ff9
-	ds 8198, $ff ; $5ffa, fill
+	; $5ffa, 8198 bytes fill to bank end (linker-padded)

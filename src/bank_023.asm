@@ -539,4 +539,4 @@ BallPosBlockOffsets_23:
 	dw $0a80 ; record 7
 	dw $0c00 ; record 8
 	dw $0d80 ; record 9
-	ds 276, $ff ; $7eec, fill
+	; $7eec, 276 bytes fill to bank end (linker-padded)

@@ -4270,4 +4270,4 @@ Label_1a_7e41:
 	ld d, a ; $7e44
 	ret ; $7e45
 	INCBIN "data/bank_01a/d_7e46.bin" ; $7e46, 116 bytes
-	ds 326, $ff ; $7eba, fill
+	; $7eba, 326 bytes fill to bank end (linker-padded)

@@ -1841,4 +1841,4 @@ Lz_16_7a14:
 	INCBIN "data/bank_016/lz_7a14.bin" ; $7a14, 162 bytes
 Lz_16_7ab6:
 	INCBIN "data/bank_016/lz_7ab6.bin" ; $7ab6, 153 bytes
-	ds 1201, $ff ; $7b4f, fill
+	; $7b4f, 1201 bytes fill to bank end (linker-padded)

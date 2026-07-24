@@ -328,4 +328,4 @@ Data_40_7fbb:
 	INCBIN "data/bank_040/d_7fbb.bin" ; $7fbb, 12 bytes
 Data_40_7fc7:
 	INCBIN "data/bank_040/d_7fc7.bin" ; $7fc7, 8 bytes
-	ds 49, $ff ; $7fcf, fill
+	; $7fcf, 49 bytes fill to bank end (linker-padded)

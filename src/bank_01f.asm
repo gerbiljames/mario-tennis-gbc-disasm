@@ -61,4 +61,4 @@ Label_1f_7ad2:
 	pop de ; $7ad3
 	pop bc ; $7ad4
 	ret ; $7ad5
-	ds 1322, $ff ; $7ad6, fill
+	; $7ad6, 1322 bytes fill to bank end (linker-padded)

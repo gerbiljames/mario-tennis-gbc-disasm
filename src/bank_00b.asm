@@ -2040,4 +2040,4 @@ RunDoublesDrillMatch:
 	dw $0a0e ; record 11
 	dw $b402 ; record 12
 	db $03
-	ds 3333, $ff ; $72fb, fill
+	; $72fb, 3333 bytes fill to bank end (linker-padded)

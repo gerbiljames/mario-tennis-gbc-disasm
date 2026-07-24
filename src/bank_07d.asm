@@ -125,4 +125,4 @@ Data_7d_7f9c:
 	INCBIN "data/bank_07d/d_7f9c.bin" ; $7f9c, 76 bytes
 Data_7d_7fe8:
 	INCBIN "data/bank_07d/d_7fe8.bin" ; $7fe8, 10 bytes
-	ds 14, $ff ; $7ff2, fill
+	; $7ff2, 14 bytes fill to bank end (linker-padded)

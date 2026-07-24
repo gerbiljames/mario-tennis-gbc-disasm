@@ -4094,4 +4094,4 @@ Label_07_5f8e:
 	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
 	INCBIN "data/bank_007/d_5f94.bin" ; $5f94, 162 bytes
-	ds 8138, $ff ; $6036, fill
+	; $6036, 8138 bytes fill to bank end (linker-padded)

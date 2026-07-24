@@ -4550,4 +4550,4 @@ Label_15_7fc3:
 	jr z, Label_15_7fbf ; $7fcc
 	inc a ; $7fce
 	jr Label_15_7fbf ; $7fcf
-	ds 47, $ff ; $7fd1, fill
+	; $7fd1, 47 bytes fill to bank end (linker-padded)

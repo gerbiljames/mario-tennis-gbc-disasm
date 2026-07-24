@@ -3605,4 +3605,4 @@ Label_04_5767:
 	pop bc ; $5767
 	pop af ; $5768
 	ret ; $5769
-	ds 10390, $ff ; $576a, fill
+	; $576a, 10390 bytes fill to bank end (linker-padded)

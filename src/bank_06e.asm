@@ -61,4 +61,4 @@ Label_6e_7b4f:
 	pop de ; $7b50
 	pop bc ; $7b51
 	ret ; $7b52
-	ds 1197, $ff ; $7b53, fill
+	; $7b53, 1197 bytes fill to bank end (linker-padded)

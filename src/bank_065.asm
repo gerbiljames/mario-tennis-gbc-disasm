@@ -117,4 +117,4 @@ ClayCourtGroundsAuxTilemap:
 ClayCourtGroundsAuxAttrmap:
 	INCBIN "data/bank_065/lz_7d05.bin" ; $7d05, 81 bytes
 Data_65_7d56:
-	ds 682, $ff ; $7d56, fill
+	; $7d56, 682 bytes fill to bank end (linker-padded)

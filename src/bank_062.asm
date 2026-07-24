@@ -149,4 +149,4 @@ PeachCourtSceneConfig:
 PeachCourtSceneConfigB:
 	INCBIN "data/bank_062/d_6f56.bin" ; $6f56, 40 bytes
 Data_62_6f7e:
-	ds 4226, $ff ; $6f7e, fill
+	; $6f7e, 4226 bytes fill to bank end (linker-padded)

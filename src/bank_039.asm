@@ -3431,4 +3431,4 @@ FillIncrementingBytes:
 	or a, a ; $745f
 	jr nz, FillIncrementingBytes ; $7460
 	ret ; $7462
-	ds 2973, $ff ; $7463, fill
+	; $7463, 2973 bytes fill to bank end (linker-padded)

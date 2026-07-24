@@ -75,4 +75,4 @@ Data_5f_5904:
 Data_5f_592c:
 	INCBIN "data/bank_05f/d_592c.bin" ; $592c, 40 bytes
 Data_5f_5954:
-	ds 9900, $ff ; $5954, fill
+	; $5954, 9900 bytes fill to bank end (linker-padded)

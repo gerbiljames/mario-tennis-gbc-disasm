@@ -6216,4 +6216,4 @@ AdvanceToPaletteEntry:
 Label_03_7833:
 	dec b ; $7833
 	jr AdvanceToPaletteEntry ; $7834
-	ds 1994, $ff ; $7836, fill
+	; $7836, 1994 bytes fill to bank end (linker-padded)

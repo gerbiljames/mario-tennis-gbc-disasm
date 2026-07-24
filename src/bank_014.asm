@@ -3274,4 +3274,4 @@ MapScriptHideLocationName_14:
 	ld [wStoryModeShowLocationName], a ; $78e3
 	ret ; $78e6
 	INCBIN "data/bank_014/d_78e7.bin" ; $78e7, 558 bytes
-	ds 1259, $ff ; $7b15, fill
+	; $7b15, 1259 bytes fill to bank end (linker-padded)

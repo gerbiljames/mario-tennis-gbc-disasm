@@ -3709,4 +3709,4 @@ Label_06_78d3:
 	dec c ; $78d3
 	jr nz, CopyTileRectToShadowAttrmap ; $78d4
 	ret ; $78d6
-	ds 1833, $ff ; $78d7, fill
+	; $78d7, 1833 bytes fill to bank end (linker-padded)

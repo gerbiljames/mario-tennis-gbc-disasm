@@ -2481,4 +2481,4 @@ AwardCeremonyTilemap4:
 	INCBIN "data/bank_06b/lz_7e2f.bin" ; $7e2f, 296 bytes
 AwardCeremonyAttrmap4:
 	INCBIN "data/bank_06b/lz_7f57.bin" ; $7f57, 129 bytes
-	ds 40, $ff ; $7fd8, fill
+	; $7fd8, 40 bytes fill to bank end (linker-padded)

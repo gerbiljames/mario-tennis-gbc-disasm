@@ -1918,4 +1918,4 @@ Lz_3f_7af7:
 	INCBIN "data/bank_03f/lz_7af7.bin" ; $7af7, 153 bytes
 Lz_3f_7b90:
 	INCBIN "data/bank_03f/lz_7b90.bin" ; $7b90, 185 bytes
-	ds 951, $ff ; $7c49, fill
+	; $7c49, 951 bytes fill to bank end (linker-padded)

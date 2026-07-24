@@ -14,7 +14,7 @@ BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 all: $(ROM)
 
 $(ROM): $(OBJS)
-	$(RGBLINK) -o $@ -m build/$(ROM:.gbc=.map) -n build/$(ROM:.gbc=.sym) $(OBJS)
+	$(RGBLINK) -p 0xff -o $@ -m build/$(ROM:.gbc=.map) -n build/$(ROM:.gbc=.sym) $(OBJS)
 
 # hardware.inc + macros.inc are preincluded for every bank via -P instead of a
 # repeated INCLUDE at the top of each source file.

@@ -2812,4 +2812,4 @@ ActorScript_27_79c4:
 	as_anim $03
 	as_jump .L76
 	INCBIN "data/bank_027/d_7a49.bin" ; $7a49, 120 bytes (unclassified tail)
-	ds 1343, $ff ; $7ac1, fill
+	; $7ac1, 1343 bytes fill to bank end (linker-padded)

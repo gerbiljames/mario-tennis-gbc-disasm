@@ -61,4 +61,4 @@ Label_5e_6ed6:
 	pop de ; $6ed7
 	pop bc ; $6ed8
 	ret ; $6ed9
-	ds 4390, $ff ; $6eda, fill
+	; $6eda, 4390 bytes fill to bank end (linker-padded)

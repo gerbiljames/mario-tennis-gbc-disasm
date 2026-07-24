@@ -2006,4 +2006,4 @@ Label_18_7d81:
 	ret ; $7d87
 ObjectSpawnTable_18_7d88:
 	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 365 bytes
-	ds 267, $ff ; $7ef5, fill
+	; $7ef5, 267 bytes fill to bank end (linker-padded)

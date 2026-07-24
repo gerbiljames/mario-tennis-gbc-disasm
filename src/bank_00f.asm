@@ -3274,4 +3274,4 @@ ActorScript_0f_7b75:
 	as_wait $28
 	as_jump .L1
 	INCBIN "data/bank_00f/d_7b7f.bin" ; $7b7f, 572 bytes (unclassified tail)
-	ds 581, $ff ; $7dbb, fill
+	; $7dbb, 581 bytes fill to bank end (linker-padded)

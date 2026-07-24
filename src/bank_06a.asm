@@ -306,4 +306,4 @@ Data_6a_60d3:
 	INCBIN "data/bank_06a/d_60d3.bin" ; $60d3, 3 bytes
 Data_6a_60d6:
 	INCBIN "data/bank_06a/d_60d6.bin" ; $60d6, 11 bytes
-	ds 7967, $ff ; $60e1, fill
+	; $60e1, 7967 bytes fill to bank end (linker-padded)

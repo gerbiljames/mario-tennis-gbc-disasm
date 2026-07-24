@@ -395,4 +395,4 @@ MatchGfxPalettesC_28:
 	dw $7f18, $7f18, $7f18, $7f18 ; pal 6: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
 	dw $0600, $9e40, $0000, $7fff ; pal 7: #008308 #009439 #000000 #ffffff
 	dw $a7ff, $015f, $0000, $7fff ; pal 8: #ffff4a #ff5200 #000000 #ffffff
-	ds 4764, $ff ; $6d64, fill
+	; $6d64, 4764 bytes fill to bank end (linker-padded)

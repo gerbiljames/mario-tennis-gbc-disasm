@@ -4646,4 +4646,4 @@ Label_10_7e27:
 	jr z, Label_10_7e23 ; $7e30
 	inc a ; $7e32
 	jr Label_10_7e23 ; $7e33
-	ds 459, $ff ; $7e35, fill
+	; $7e35, 459 bytes fill to bank end (linker-padded)

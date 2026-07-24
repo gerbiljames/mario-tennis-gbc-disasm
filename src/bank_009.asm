@@ -870,4 +870,4 @@ GetPlayer2CharIconSprites:
 	ld e, a ; $71b9
 	ret ; $71ba
 	INCBIN "data/bank_009/d_71bb.bin" ; $71bb, 93 bytes
-	ds 3560, $ff ; $7218, fill
+	; $7218, 3560 bytes fill to bank end (linker-padded)

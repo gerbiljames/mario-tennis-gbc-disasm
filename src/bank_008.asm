@@ -8937,4 +8937,4 @@ Label_08_7fbc:
 	ld c, d ; $7fbc
 	call AiAimAwayFromChar ; $7fbd
 	jp AiAdvancePhase ; $7fc0
-	ds 61, $ff ; $7fc3, fill
+	; $7fc3, 61 bytes fill to bank end (linker-padded)
