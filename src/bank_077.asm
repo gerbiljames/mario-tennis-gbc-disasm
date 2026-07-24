@@ -24,7 +24,9 @@ Data_77_4010:
 	dw Data_77_4640 ; $402e
 	dw Data_77_4640 ; $4030
 	dw Data_77_4740 ; $4032
-	INCBIN "data/bank_077/d_4034.bin" ; $4034, 12 bytes
+Padding_77_4034:
+	; $4034, 12 bytes (fill)
+	ds 12, $00
 Data_77_4040:
 	INCBIN "data/bank_077/d_4040.bin" ; $4040, 256 bytes
 Data_77_4140:
@@ -80,7 +82,9 @@ Data_77_4895:
 	dw Data_77_4ec0 ; $48b3
 	dw Data_77_4ec0 ; $48b5
 	dw Data_77_4fc0 ; $48b7
-	INCBIN "data/bank_077/d_48b9.bin" ; $48b9, 7 bytes
+Padding_77_48b9:
+	; $48b9, 7 bytes (fill)
+	ds 7, $00
 Data_77_48c0:
 	INCBIN "data/bank_077/d_48c0.bin" ; $48c0, 256 bytes
 Data_77_49c0:
@@ -136,7 +140,9 @@ Data_77_5115:
 	dw Data_77_5740 ; $5133
 	dw Data_77_5740 ; $5135
 	dw Data_77_5840 ; $5137
-	INCBIN "data/bank_077/d_5139.bin" ; $5139, 7 bytes
+Padding_77_5139:
+	; $5139, 7 bytes (fill)
+	ds 7, $00
 Data_77_5140:
 	INCBIN "data/bank_077/d_5140.bin" ; $5140, 256 bytes
 Data_77_5240:
@@ -189,7 +195,9 @@ Data_77_5995:
 	dw Data_77_5cc0 ; $59ad
 	dw Data_77_5dc0 ; $59af
 	dw Data_77_5ec0 ; $59b1
-	INCBIN "data/bank_077/d_59b3.bin" ; $59b3, 13 bytes
+Padding_77_59b3:
+	; $59b3, 13 bytes (fill)
+	ds 13, $00
 Data_77_59c0:
 	INCBIN "data/bank_077/d_59c0.bin" ; $59c0, 256 bytes
 Data_77_5ac0:
@@ -432,7 +440,9 @@ Data_77_73e1:
 	dw Data_77_7510 ; $73ff
 	dw Data_77_7510 ; $7401
 	dw Data_77_7550 ; $7403
-	INCBIN "data/bank_077/d_7405.bin" ; $7405, 11 bytes
+Padding_77_7405:
+	; $7405, 11 bytes (fill)
+	ds 11, $00
 Data_77_7410:
 	INCBIN "data/bank_077/d_7410.bin" ; $7410, 64 bytes
 Data_77_7450:

@@ -52,7 +52,9 @@ Data_73_4028:
 	dw Data_73_4350 ; $4040
 	dw Data_73_4450 ; $4042
 	dw Data_73_4550 ; $4044
-	INCBIN "data/bank_073/d_4046.bin" ; $4046, 10 bytes
+Padding_73_4046:
+	; $4046, 10 bytes (fill)
+	ds 10, $00
 Data_73_4050:
 	INCBIN "data/bank_073/d_4050.bin" ; $4050, 256 bytes
 Data_73_4150:
@@ -98,7 +100,9 @@ Data_73_469d:
 	dw Data_73_49c0 ; $46b5
 	dw Data_73_4ac0 ; $46b7
 	dw Data_73_4bc0 ; $46b9
-	INCBIN "data/bank_073/d_46bb.bin" ; $46bb, 5 bytes
+Padding_73_46bb:
+	; $46bb, 5 bytes (fill)
+	ds 5, $00
 Data_73_46c0:
 	INCBIN "data/bank_073/d_46c0.bin" ; $46c0, 256 bytes
 Data_73_47c0:
@@ -144,7 +148,9 @@ Data_73_4d0d:
 	dw Data_73_4df0 ; $4d25
 	dw Data_73_4e30 ; $4d27
 	dw Data_73_4e70 ; $4d29
-	INCBIN "data/bank_073/d_4d2b.bin" ; $4d2b, 5 bytes
+Padding_73_4d2b:
+	; $4d2b, 5 bytes (fill)
+	ds 5, $00
 Data_73_4d30:
 	INCBIN "data/bank_073/d_4d30.bin" ; $4d30, 64 bytes
 Data_73_4d70:
@@ -190,7 +196,9 @@ Data_73_4efd:
 	dw Data_73_4fe0 ; $4f15
 	dw Data_73_5020 ; $4f17
 	dw Data_73_5060 ; $4f19
-	INCBIN "data/bank_073/d_4f1b.bin" ; $4f1b, 5 bytes
+Padding_73_4f1b:
+	; $4f1b, 5 bytes (fill)
+	ds 5, $00
 Data_73_4f20:
 	INCBIN "data/bank_073/d_4f20.bin" ; $4f20, 64 bytes
 Data_73_4f60:
@@ -236,7 +244,9 @@ Data_73_50ed:
 	dw Data_73_51d0 ; $5105
 	dw Data_73_5210 ; $5107
 	dw Data_73_5250 ; $5109
-	INCBIN "data/bank_073/d_510b.bin" ; $510b, 5 bytes
+Padding_73_510b:
+	; $510b, 5 bytes (fill)
+	ds 5, $00
 Data_73_5110:
 	INCBIN "data/bank_073/d_5110.bin" ; $5110, 64 bytes
 Data_73_5150:
@@ -282,7 +292,9 @@ Data_73_52dd:
 	dw Data_73_53c0 ; $52f5
 	dw Data_73_5400 ; $52f7
 	dw Data_73_5440 ; $52f9
-	INCBIN "data/bank_073/d_52fb.bin" ; $52fb, 5 bytes
+Padding_73_52fb:
+	; $52fb, 5 bytes (fill)
+	ds 5, $00
 Data_73_5300:
 	INCBIN "data/bank_073/d_5300.bin" ; $5300, 64 bytes
 Data_73_5340:
@@ -329,7 +341,9 @@ Data_73_54cd:
 	dw Data_73_55f0 ; $54e7
 	dw Data_73_5630 ; $54e9
 	dw Data_73_5670 ; $54eb
-	INCBIN "data/bank_073/d_54ed.bin" ; $54ed, 3 bytes
+Padding_73_54ed:
+	; $54ed, 3 bytes (fill)
+	ds 3, $00
 Data_73_54f0:
 	INCBIN "data/bank_073/d_54f0.bin" ; $54f0, 64 bytes
 Data_73_5530:
@@ -378,7 +392,9 @@ Data_73_5701:
 	dw Data_73_5830 ; $571b
 	dw Data_73_5870 ; $571d
 	dw Data_73_58b0 ; $571f
-	INCBIN "data/bank_073/d_5721.bin" ; $5721, 15 bytes
+Padding_73_5721:
+	; $5721, 15 bytes (fill)
+	ds 15, $00
 Data_73_5730:
 	INCBIN "data/bank_073/d_5730.bin" ; $5730, 64 bytes
 Data_73_5770:
@@ -424,7 +440,9 @@ Data_73_593f:
 	dw Data_73_5c60 ; $5957
 	dw Data_73_5d60 ; $5959
 	dw Data_73_5e60 ; $595b
-	INCBIN "data/bank_073/d_595d.bin" ; $595d, 3 bytes
+Padding_73_595d:
+	; $595d, 3 bytes (fill)
+	ds 3, $00
 Data_73_5960:
 	INCBIN "data/bank_073/d_5960.bin" ; $5960, 256 bytes
 Data_73_5a60:
@@ -473,7 +491,9 @@ Data_73_5fad:
 	dw Data_73_65e0 ; $5fcb
 	dw Data_73_65e0 ; $5fcd
 	dw Data_73_66e0 ; $5fcf
-	INCBIN "data/bank_073/d_5fd1.bin" ; $5fd1, 15 bytes
+Padding_73_5fd1:
+	; $5fd1, 15 bytes (fill)
+	ds 15, $00
 Data_73_5fe0:
 	INCBIN "data/bank_073/d_5fe0.bin" ; $5fe0, 256 bytes
 Data_73_60e0:
@@ -526,7 +546,9 @@ Data_73_6835:
 	dw Data_73_6b60 ; $684d
 	dw Data_73_6c60 ; $684f
 	dw Data_73_6d60 ; $6851
-	INCBIN "data/bank_073/d_6853.bin" ; $6853, 13 bytes
+Padding_73_6853:
+	; $6853, 13 bytes (fill)
+	ds 13, $00
 Data_73_6860:
 	INCBIN "data/bank_073/d_6860.bin" ; $6860, 256 bytes
 Data_73_6960:
@@ -572,7 +594,9 @@ Data_73_6ead:
 	dw Data_73_71d0 ; $6ec5
 	dw Data_73_72d0 ; $6ec7
 	dw Data_73_73d0 ; $6ec9
-	INCBIN "data/bank_073/d_6ecb.bin" ; $6ecb, 5 bytes
+Padding_73_6ecb:
+	; $6ecb, 5 bytes (fill)
+	ds 5, $00
 Data_73_6ed0:
 	INCBIN "data/bank_073/d_6ed0.bin" ; $6ed0, 256 bytes
 Data_73_6fd0:
@@ -611,7 +635,9 @@ Data_73_751d:
 	dw .frames, OamPtrs_73_75b0, .frames ; frame array, OAM array, frame array
 .frames:
 	dw Data_73_7530, Data_73_7570, $0000 ; frame pointers (continue in body)
-	INCBIN "data/bank_073/d_752d.bin" ; $752d, 3 bytes
+Padding_73_752d:
+	; $752d, 3 bytes (fill)
+	ds 3, $00
 Data_73_7530:
 	INCBIN "data/bank_073/d_7530.bin" ; $7530, 64 bytes
 Data_73_7570:
@@ -628,7 +654,9 @@ Data_73_75bd:
 	dw .frames, OamPtrs_73_7650, .frames ; frame array, OAM array, frame array
 .frames:
 	dw Data_73_75d0, Data_73_7610, $0000 ; frame pointers (continue in body)
-	INCBIN "data/bank_073/d_75cd.bin" ; $75cd, 3 bytes
+Padding_73_75cd:
+	; $75cd, 3 bytes (fill)
+	ds 3, $00
 Data_73_75d0:
 	INCBIN "data/bank_073/d_75d0.bin" ; $75d0, 64 bytes
 Data_73_7610:
@@ -652,7 +680,9 @@ Data_73_765d:
 	dw Data_73_7740 ; $7675
 	dw Data_73_7780 ; $7677
 	dw Data_73_77c0 ; $7679
-	INCBIN "data/bank_073/d_767b.bin" ; $767b, 5 bytes
+Padding_73_767b:
+	; $767b, 5 bytes (fill)
+	ds 5, $00
 Data_73_7680:
 	INCBIN "data/bank_073/d_7680.bin" ; $7680, 64 bytes
 Data_73_76c0:
@@ -691,7 +721,9 @@ Data_73_784d:
 	dw .frames, OamPtrs_73_78e0, .frames ; frame array, OAM array, frame array
 .frames:
 	dw Data_73_7860, Data_73_78a0, $0000 ; frame pointers (continue in body)
-	INCBIN "data/bank_073/d_785d.bin" ; $785d, 3 bytes
+Padding_73_785d:
+	; $785d, 3 bytes (fill)
+	ds 3, $00
 Data_73_7860:
 	INCBIN "data/bank_073/d_7860.bin" ; $7860, 64 bytes
 Data_73_78a0:
@@ -708,7 +740,9 @@ Data_73_78ed:
 	dw .frames, OamPtrs_73_7980, .frames ; frame array, OAM array, frame array
 .frames:
 	dw Data_73_7900, Data_73_7940, $0000 ; frame pointers (continue in body)
-	INCBIN "data/bank_073/d_78fd.bin" ; $78fd, 3 bytes
+Padding_73_78fd:
+	; $78fd, 3 bytes (fill)
+	ds 3, $00
 Data_73_7900:
 	INCBIN "data/bank_073/d_7900.bin" ; $7900, 64 bytes
 Data_73_7940:
@@ -725,7 +759,9 @@ Data_73_798d:
 	dw .frames, OamPtrs_73_7a20, .frames ; frame array, OAM array, frame array
 .frames:
 	dw Data_73_79a0, Data_73_79e0, $0000 ; frame pointers (continue in body)
-	INCBIN "data/bank_073/d_799d.bin" ; $799d, 3 bytes
+Padding_73_799d:
+	; $799d, 3 bytes (fill)
+	ds 3, $00
 Data_73_79a0:
 	INCBIN "data/bank_073/d_79a0.bin" ; $79a0, 64 bytes
 Data_73_79e0:
@@ -742,7 +778,9 @@ Data_73_7a2d:
 	dw .frames, OamPtrs_73_7ac0, .frames ; frame array, OAM array, frame array
 .frames:
 	dw Data_73_7a40, Data_73_7a80, $0000 ; frame pointers (continue in body)
-	INCBIN "data/bank_073/d_7a3d.bin" ; $7a3d, 3 bytes
+Padding_73_7a3d:
+	; $7a3d, 3 bytes (fill)
+	ds 3, $00
 Data_73_7a40:
 	INCBIN "data/bank_073/d_7a40.bin" ; $7a40, 64 bytes
 Data_73_7a80:
@@ -759,7 +797,9 @@ Data_73_7acd:
 	dw .frames, OamPtrs_73_7b60, .frames ; frame array, OAM array, frame array
 .frames:
 	dw Data_73_7ae0, Data_73_7b20, $0000 ; frame pointers (continue in body)
-	INCBIN "data/bank_073/d_7add.bin" ; $7add, 3 bytes
+Padding_73_7add:
+	; $7add, 3 bytes (fill)
+	ds 3, $00
 Data_73_7ae0:
 	INCBIN "data/bank_073/d_7ae0.bin" ; $7ae0, 64 bytes
 Data_73_7b20:

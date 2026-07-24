@@ -110,7 +110,7 @@ DrawSelectionBoxCorners:
 ApplySelectionBoxWobbleX:
 	ldh a, [hVBlankCounter] ; $40ab
 	and a, $0f ; $40ad
-	ld hl, $40c5 ; $40af
+	ld hl, Data_3e_40c5 ; $40af
 	add a, l ; $40b2
 	ld l, a ; $40b3
 	jr nc, Label_3e_40b7 ; $40b4
@@ -130,11 +130,13 @@ Label_3e_40c1:
 	sub a, b ; $40c2
 	ld d, a ; $40c3
 	ret ; $40c4
-	INCBIN "data/bank_03e/d_40c5.bin" ; $40c5, 16 bytes
+Data_3e_40c5:
+	; $40c5, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplySelectionBoxWobbleY:
 	ldh a, [hVBlankCounter] ; $40d5
 	and a, $0f ; $40d7
-	ld hl, $40ef ; $40d9
+	ld hl, Data_3e_40ef ; $40d9
 	add a, l ; $40dc
 	ld l, a ; $40dd
 	jr nc, Label_3e_40e1 ; $40de
@@ -154,6 +156,7 @@ Label_3e_40eb:
 	sub a, b ; $40ec
 	ld e, a ; $40ed
 	ret ; $40ee
+Data_3e_40ef:
 	INCBIN "data/bank_03e/d_40ef.bin" ; $40ef, 75 bytes
 MoveMenuCursorGrid_3e:
 	ld a, [wMenuCursorX] ; $413a
@@ -610,7 +613,9 @@ Label_3e_43d5:
 	ld a, [wMenuCursorX] ; $43d6
 	add a, b ; $43d9
 	ret ; $43da
-	INCBIN "data/bank_03e/d_43db.bin" ; $43db, 16 bytes
+Data_3e_43db:
+	; $43db, 16 bytes (bytes:16)
+	db $c5, $3a, $47, $af, $04, $05, $28, $03, $81, $18, $fa, $47, $7e, $80, $c1, $c9 ; 0x00
 SetMenuCursorFromIndex_3e:
 	ld d, $00 ; $43eb
 	ld a, c ; $43ed
@@ -638,7 +643,11 @@ Label_3e_4407:
 	ld a, d ; $4408
 	ld [hl], a ; $4409
 	ret ; $440a
-	INCBIN "data/bank_03e/d_440b.bin" ; $440b, 45 bytes
+Data_3e_440b:
+	; $440b, 45 bytes (bytes:16)
+	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0, $70, $af, $0e, $40, $22, $0d, $20, $fc ; 0x00
+	db $f1, $e0, $96, $e0, $70, $c9, $f0, $96, $f5, $3e, $03, $e0, $96, $e0, $70, $3e ; 0x10
+	db $00, $0e, $40, $22, $0d, $20, $fc, $f1, $e0, $96, $e0, $70, $c9 ; 0x20
 UpdateAnimatedTiles_3e:
 	farcall UpdateAnimatedTiles ; $4438
 	ret ; $443b
@@ -1216,7 +1225,7 @@ SetMatchRuleOptionAttrRect:
 	ldh a, [hWramBank] ; $486e
 	push af ; $4870
 	wram_bank $03 ; $4871
-	ld hl, $48a6 ; $4877
+	ld hl, Data_3e_48a6 ; $4877
 	ld a, b ; $487a
 	add a, a ; $487b
 	add a, l ; $487c
@@ -1232,7 +1241,7 @@ Label_3e_4881:
 	or a, a ; $4887
 	jr z, Label_3e_4895 ; $4888
 	ld a, b ; $488a
-	ld hl, $48b4 ; $488b
+	ld hl, Data_3e_48b4 ; $488b
 	add a, l ; $488e
 	ld l, a ; $488f
 	jr nc, Label_3e_4893 ; $4890
@@ -1251,7 +1260,12 @@ Label_3e_4895:
 	pop bc ; $48a3
 	pop af ; $48a4
 	ret ; $48a5
-	INCBIN "data/bank_03e/d_48a6.bin" ; $48a6, 21 bytes
+Data_3e_48a6:
+	; $48a6, 14 bytes (bytes:14)
+	db $63, $d4, $6c, $d4, $e3, $d4, $ec, $d4, $61, $d5, $67, $d5, $6d, $d5 ; 0x00
+Data_3e_48b4:
+	; $48b4, 7 bytes (bytes:7)
+	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
 FlushMatchRuleRowAttrs:
 	push af ; $48bb
 	push bc ; $48bc
@@ -1302,7 +1316,7 @@ Label_3e_4909:
 	add a, $04 ; $490c
 Label_3e_490e:
 	push af ; $490e
-	ld hl, $497b ; $490f
+	ld hl, Data_3e_497b ; $490f
 	add a, l ; $4912
 	ld l, a ; $4913
 	jr nc, Label_3e_4917 ; $4914
@@ -1310,7 +1324,7 @@ Label_3e_490e:
 Label_3e_4917:
 	ld c, [hl] ; $4917
 	pop af ; $4918
-	ld hl, $496d ; $4919
+	ld hl, Data_3e_496d ; $4919
 	add a, a ; $491c
 	add a, l ; $491d
 	ld l, a ; $491e
@@ -1351,7 +1365,12 @@ SpriteTemplate_3e_4964:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03e/d_496d.bin" ; $496d, 21 bytes
+Data_3e_496d:
+	; $496d, 14 bytes (bytes:14)
+	db $2d, $0a, $2d, $54, $4f, $0c, $4f, $54, $6a, $00, $6a, $2c, $6a, $5d ; 0x00
+Data_3e_497b:
+	; $497b, 7 bytes (bytes:7)
+	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchRulesCaption:
 	wram_bank $03 ; $4982
 	ld de, $d1e0 ; $4988
@@ -1380,7 +1399,7 @@ DrawMatchRulesCaptionText:
 	call GetMenuCursorIndex_3e ; $49c1
 	ld b, a ; $49c4
 	add a, a ; $49c5
-	ld hl, $49e0 ; $49c6
+	ld hl, Data_3e_49e0 ; $49c6
 	add a, l ; $49c9
 	ld l, a ; $49ca
 	jr nc, Label_3e_49ce ; $49cb
@@ -1399,7 +1418,9 @@ Label_3e_49da:
 	ld c, $20 ; $49da
 	farcall RenderTextToBuffer64 ; $49dc
 	ret ; $49df
-	INCBIN "data/bank_03e/d_49e0.bin" ; $49e0, 6 bytes
+Data_3e_49e0:
+	; $49e0, 6 bytes (bytes:6)
+	db $01, $d2, $01, $d2, $01, $d2 ; 0x00
 ShowLinkMessageScreen:
 	push af ; $49e6
 	push bc ; $49e7
@@ -1549,7 +1570,7 @@ AnimateLinkErrorPalette:
 	ldh a, [hWramBank] ; $4b37
 	push af ; $4b39
 	wram_bank $03 ; $4b3a
-	ld hl, $4b83 ; $4b40
+	ld hl, Data_3e_4b83 ; $4b40
 	ld de, $d800 ; $4b43
 	ld bc, $0008 ; $4b46
 	call CopyMemoryBC ; $4b49
@@ -1569,7 +1590,7 @@ Label_3e_4b5c:
 	xor a, a ; $4b61
 Label_3e_4b62:
 	add a, a ; $4b62
-	ld hl, $4b8b ; $4b63
+	ld hl, Data_3e_4b8b ; $4b63
 	add a, l ; $4b66
 	ld l, a ; $4b67
 	jr nc, Label_3e_4b6b ; $4b68
@@ -1588,7 +1609,13 @@ Label_3e_4b6b:
 	pop af ; $4b7d
 	wram_bank ; $4b7e
 	ret ; $4b82
-	INCBIN "data/bank_03e/d_4b83.bin" ; $4b83, 32 bytes
+Data_3e_4b83:
+	; $4b83, 8 bytes (bytes:8)
+	db $9f, $33, $1f, $00, $07, $50, $00, $00 ; 0x00
+Data_3e_4b8b:
+	; $4b8b, 24 bytes (bytes:16)
+	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00
+	db $bf, $02, $ff, $01, $df, $00, $1f, $00 ; 0x10
 ShowLinkStatusMessage:
 	push bc ; $4ba3
 	wram_bank $03 ; $4ba4
@@ -1870,7 +1897,7 @@ AnimateEraseConfirmPalette:
 	ldh a, [hWramBank] ; $4e34
 	push af ; $4e36
 	wram_bank $03 ; $4e37
-	ld hl, $4e80 ; $4e3d
+	ld hl, Data_3e_4e80 ; $4e3d
 	ld de, $d810 ; $4e40
 	ld bc, $0008 ; $4e43
 	call CopyMemoryBC ; $4e46
@@ -1890,7 +1917,7 @@ Label_3e_4e59:
 	xor a, a ; $4e5e
 Label_3e_4e5f:
 	add a, a ; $4e5f
-	ld hl, $4e88 ; $4e60
+	ld hl, Data_3e_4e88 ; $4e60
 	add a, l ; $4e63
 	ld l, a ; $4e64
 	jr nc, Label_3e_4e68 ; $4e65
@@ -1909,7 +1936,13 @@ Label_3e_4e68:
 	pop af ; $4e7a
 	wram_bank ; $4e7b
 	ret ; $4e7f
-	INCBIN "data/bank_03e/d_4e80.bin" ; $4e80, 32 bytes
+Data_3e_4e80:
+	; $4e80, 8 bytes (bytes:8)
+	db $48, $00, $13, $3e, $ff, $7f, $bf, $01 ; 0x00
+Data_3e_4e88:
+	; $4e88, 24 bytes (bytes:16)
+	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00
+	db $bf, $02, $ff, $01, $df, $00, $1f, $00 ; 0x10
 RunRacketShoesChoiceMenu:
 	sound $03 ; $4ea0
 	ld hl, rIE ; $4ea2
@@ -1982,7 +2015,7 @@ LoadRacketShoesChoiceGraphics:
 Label_3e_4f3e:
 	ld a, c ; $4f3e
 	add a, a ; $4f3f
-	ld hl, $4fc3 ; $4f40
+	ld hl, Data_3e_4fc3 ; $4f40
 	add a, l ; $4f43
 	ld l, a ; $4f44
 	jr nc, Label_3e_4f48 ; $4f45
@@ -2001,7 +2034,7 @@ Label_3e_4f48:
 	pop de ; $4f56
 	pop bc ; $4f57
 	pop af ; $4f58
-	ld hl, $4fc9 ; $4f59
+	ld hl, Data_3e_4fc9 ; $4f59
 	ld a, c ; $4f5c
 	add a, a ; $4f5d
 	add a, l ; $4f5e
@@ -2056,7 +2089,12 @@ Label_3e_4f63:
 	pop af ; $4fbd
 	wram_bank ; $4fbe
 	ret ; $4fc2
-	INCBIN "data/bank_03e/d_4fc3.bin" ; $4fc3, 12 bytes
+Data_3e_4fc3:
+	; $4fc3, 6 bytes (bytes:6)
+	db $54, $3d, $56, $3d, $04, $3d ; 0x00
+Data_3e_4fc9:
+	; $4fc9, 6 bytes (bytes:6)
+	db $00, $a8, $00, $a9, $00, $aa ; 0x00
 RedrawRacketShoesChoiceMenu:
 	wram_bank $03 ; $4fcf
 	ld b, $00 ; $4fd5
@@ -2214,7 +2252,7 @@ ChoiceTabCursorSpriteTask:
 	ld c, $02 ; $50f8
 	call GetMenuCursorIndex_3e ; $50fa
 	push af ; $50fd
-	ld hl, $5162 ; $50fe
+	ld hl, Data_3e_5162 ; $50fe
 	add a, l ; $5101
 	ld l, a ; $5102
 	jr nc, Label_3e_5106 ; $5103
@@ -2222,7 +2260,7 @@ ChoiceTabCursorSpriteTask:
 Label_3e_5106:
 	ld c, [hl] ; $5106
 	pop af ; $5107
-	ld hl, $515c ; $5108
+	ld hl, Data_3e_515c ; $5108
 	add a, a ; $510b
 	add a, l ; $510c
 	ld l, a ; $510d
@@ -2263,7 +2301,12 @@ SpriteTemplate_3e_5153:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03e/d_515c.bin" ; $515c, 9 bytes
+Data_3e_515c:
+	; $515c, 6 bytes (bytes:6)
+	db $50, $0c, $50, $54, $50, $5c ; 0x00
+Data_3e_5162:
+	; $5162, 3 bytes (bytes:3)
+	db $00, $10, $20 ; 0x00
 SetChoiceTabAttrRect:
 	push af ; $5165
 	push bc ; $5166
@@ -2278,7 +2321,7 @@ Label_3e_5171:
 	ld h, $0d ; $5171
 Label_3e_5173:
 	push hl ; $5173
-	ld hl, $518e ; $5174
+	ld hl, Data_3e_518e ; $5174
 	ld a, b ; $5177
 	add a, a ; $5178
 	add a, l ; $5179
@@ -2298,7 +2341,9 @@ Label_3e_517e:
 	pop bc ; $518b
 	pop af ; $518c
 	ret ; $518d
-	INCBIN "data/bank_03e/d_518e.bin" ; $518e, 4 bytes
+Data_3e_518e:
+	; $518e, 4 bytes (bytes:4)
+	db $e3, $d4, $ec, $d4 ; 0x00
 RunPlayAlonePartnerMenu:
 	sound $03 ; $5192
 	ld hl, rIE ; $5194
@@ -2375,7 +2420,7 @@ LoadPlayAlonePartnerGraphics:
 Label_3e_5234:
 	ld a, c ; $5234
 	add a, a ; $5235
-	ld hl, $52af ; $5236
+	ld hl, Data_3e_52af ; $5236
 	add a, l ; $5239
 	ld l, a ; $523a
 	jr nc, Label_3e_523e ; $523b
@@ -2394,7 +2439,7 @@ Label_3e_523e:
 	pop de ; $524c
 	pop bc ; $524d
 	pop af ; $524e
-	ld hl, $52b3 ; $524f
+	ld hl, Data_3e_52b3 ; $524f
 	ld a, c ; $5252
 	add a, a ; $5253
 	add a, l ; $5254
@@ -2445,7 +2490,12 @@ Label_3e_5259:
 	pop af ; $52a9
 	wram_bank ; $52aa
 	ret ; $52ae
-	INCBIN "data/bank_03e/d_52af.bin" ; $52af, 8 bytes
+Data_3e_52af:
+	; $52af, 4 bytes (bytes:4)
+	db $62, $3c, $64, $3c ; 0x00
+Data_3e_52b3:
+	; $52b3, 4 bytes (bytes:4)
+	db $00, $a8, $00, $a9 ; 0x00
 RedrawPlayAlonePartnerMenu:
 	wram_bank $03 ; $52b7
 	ld b, $00 ; $52bd
@@ -2524,7 +2574,7 @@ DrawPlayAlonePartnerCaption:
 	ld c, $02 ; $535e
 	call GetMenuCursorIndex_3e ; $5360
 	ld b, a ; $5363
-	ld hl, $5384 ; $5364
+	ld hl, Data_3e_5384 ; $5364
 	add a, a ; $5367
 	add a, l ; $5368
 	ld l, a ; $5369
@@ -2546,7 +2596,9 @@ Label_3e_5379:
 	pop af ; $537e
 	wram_bank ; $537f
 	ret ; $5383
-	INCBIN "data/bank_03e/d_5384.bin" ; $5384, 4 bytes
+Data_3e_5384:
+	; $5384, 4 bytes (bytes:4)
+	db $01, $d2, $01, $d2 ; 0x00
 ShowEquipmentStatusScreen:
 	call ClearFrameTasks ; $5388
 	ld c, $10 ; $538b
@@ -2736,12 +2788,15 @@ LoadRacketSelectScreen:
 	ld c, $02 ; $5546
 	ld de, $a200 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
-	ld hl, $555b ; $554e
+	ld hl, Palette_3e_555b ; $554e
 	ld de, $0901 ; $5551
 	call LoadPaletteShadow ; $5554
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
-	INCBIN "data/bank_03e/d_555b.bin" ; $555b, 8 bytes
+Palette_3e_555b:
+	; $555b, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $01df, $1bbf, $0298, $0421 ; pal 0: #ff7300 #ffee31 #c5a400 #080808
 DrawOwnedItemIcons:
 	ld hl, $d800 ; $5563
 	ld a, [$d810] ; $5566
@@ -2951,7 +3006,7 @@ LoadShoesSelectScreen:
 	ld c, $02 ; $56ef
 	ld de, $a200 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
-	ld hl, $555b ; $56f7
+	ld hl, Palette_3e_555b ; $56f7
 	ld de, $0901 ; $56fa
 	call LoadPaletteShadow ; $56fd
 	farcall QueueWram3MapToVRAM ; $5700
@@ -3015,7 +3070,7 @@ MarkOwnedRackets:
 Label_3e_576b:
 	ld a, c ; $576b
 	push hl ; $576c
-	ld hl, $57a2 ; $576d
+	ld hl, Data_3e_57a2 ; $576d
 	add a, l ; $5770
 	ld l, a ; $5771
 	jr nc, Label_3e_5775 ; $5772
@@ -3046,7 +3101,12 @@ Label_3e_5796:
 	ld a, $02 ; $5796
 	ld [hl], a ; $5798
 	ret ; $5799
-	INCBIN "data/bank_03e/d_579a.bin" ; $579a, 14 bytes
+Data_3e_579a:
+	; $579a, 8 bytes (bytes:8)
+	db $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+Data_3e_57a2:
+	; $57a2, 6 bytes (bytes:6)
+	db $61, $62, $63, $65, $64, $66 ; 0x00
 MarkOwnedShoes:
 	ld hl, $d808 ; $57a8
 	ld bc, $0008 ; $57ab
@@ -3058,7 +3118,7 @@ MarkOwnedShoes:
 Label_3e_57b9:
 	ld a, c ; $57b9
 	push hl ; $57ba
-	ld hl, $57f2 ; $57bb
+	ld hl, Data_3e_57f2 ; $57bb
 	add a, l ; $57be
 	ld l, a ; $57bf
 	jr nc, Label_3e_57c3 ; $57c0
@@ -3090,7 +3150,12 @@ Label_3e_57e6:
 	ld a, $02 ; $57e6
 	ld [hl], a ; $57e8
 	ret ; $57e9
-	INCBIN "data/bank_03e/d_57ea.bin" ; $57ea, 10 bytes
+Data_3e_57ea:
+	; $57ea, 8 bytes (bytes:8)
+	db $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+Data_3e_57f2:
+	; $57f2, 2 bytes (bytes:2)
+	db $67, $68 ; 0x00
 LoadEquipSelectCommon:
 	farcall ResetTextWindowState ; $57f4
 	ld b, $11 ; $57f7
@@ -3177,11 +3242,11 @@ FlushEquipSelectTextRows:
 	ret ; $58ba
 	push af ; $58bb
 	push bc ; $58bc
-	ld hl, $58d6 ; $58bd
+	ld hl, Data_3e_58d6 ; $58bd
 	ld a, [$d813] ; $58c0
 	or a, a ; $58c3
 	jr z, Label_3e_58c9 ; $58c4
-	ld hl, $58e4 ; $58c6
+	ld hl, Data_3e_58e4 ; $58c6
 Label_3e_58c9:
 	ld a, b ; $58c9
 	add a, a ; $58ca
@@ -3196,7 +3261,11 @@ Label_3e_58d0:
 	pop bc ; $58d3
 	pop af ; $58d4
 	ret ; $58d5
-	INCBIN "data/bank_03e/d_58d6.bin" ; $58d6, 116 bytes
+Data_3e_58d6:
+	; $58d6, 14 bytes (bytes:14)
+	db $ea, $58, $f2, $58, $fe, $58, $0a, $59, $22, $59, $16, $59, $2c, $59 ; 0x00
+Data_3e_58e4:
+	INCBIN "data/bank_03e/d_58e4.bin" ; $58e4, 102 bytes
 GetHoveredItemId:
 	push bc ; $594a
 	push hl ; $594b
@@ -3289,7 +3358,7 @@ Label_3e_59c7:
 EquipListCursorSpriteTask:
 	ld c, $07 ; $59cd
 	call GetMenuCursorIndex_3e ; $59cf
-	ld hl, $59e5 ; $59d2
+	ld hl, Data_3e_59e5 ; $59d2
 	add a, l ; $59d5
 	ld l, a ; $59d6
 	jr nc, Label_3e_59da ; $59d7
@@ -3301,13 +3370,15 @@ Label_3e_59da:
 	ld c, $0e ; $59df
 	call DrawSelectionBoxCorners ; $59e1
 	ret ; $59e4
-	INCBIN "data/bank_03e/d_59e5.bin" ; $59e5, 6 bytes
+Data_3e_59e5:
+	; $59e5, 6 bytes (bytes:6)
+	db $38, $48, $58, $68, $78, $88 ; 0x00
 EquippedItemMarkerSpriteTask:
 	ldh a, [hWramBank] ; $59eb
 	push af ; $59ed
 	wram_bank $03 ; $59ee
 	ld a, [$d811] ; $59f4
-	ld hl, $5a0f ; $59f7
+	ld hl, Data_3e_5a0f ; $59f7
 	add a, l ; $59fa
 	ld l, a ; $59fb
 	jr nc, Label_3e_59ff ; $59fc
@@ -3321,7 +3392,9 @@ Label_3e_59ff:
 	pop af ; $5a09
 	wram_bank ; $5a0a
 	ret ; $5a0e
-	INCBIN "data/bank_03e/d_5a0f.bin" ; $5a0f, 6 bytes
+Data_3e_5a0f:
+	; $5a0f, 6 bytes (bytes:6)
+	db $41, $51, $61, $71, $81, $91 ; 0x00
 DrawItemStatModList:
 	ld b, a ; $5a15
 	call GetItemStatModListPtr ; $5a16
@@ -3420,7 +3493,7 @@ DrawStatModLabel:
 GetStatModLabelTile:
 	push hl ; $5ae2
 	ld a, d ; $5ae3
-	ld hl, $5aef ; $5ae4
+	ld hl, Data_3e_5aef ; $5ae4
 	add a, l ; $5ae7
 	ld l, a ; $5ae8
 	jr nc, Label_3e_5aec ; $5ae9
@@ -3429,11 +3502,13 @@ Label_3e_5aec:
 	ld b, [hl] ; $5aec
 	pop hl ; $5aed
 	ret ; $5aee
-	INCBIN "data/bank_03e/d_5aef.bin" ; $5aef, 13 bytes
+Data_3e_5aef:
+	; $5aef, 13 bytes (bytes:13)
+	db $70, $75, $7a, $7f, $84, $d6, $89, $8e, $93, $99, $a2, $b3, $c5 ; 0x00
 GetStatModLabelLen:
 	push hl ; $5afc
 	ld a, d ; $5afd
-	ld hl, $5b09 ; $5afe
+	ld hl, Data_3e_5b09 ; $5afe
 	add a, l ; $5b01
 	ld l, a ; $5b02
 	jr nc, Label_3e_5b06 ; $5b03
@@ -3442,7 +3517,9 @@ Label_3e_5b06:
 	ld a, [hl] ; $5b06
 	pop hl ; $5b07
 	ret ; $5b08
-	INCBIN "data/bank_03e/d_5b09.bin" ; $5b09, 13 bytes
+Data_3e_5b09:
+	; $5b09, 13 bytes (bytes:13)
+	db $05, $05, $05, $05, $05, $05, $05, $05, $06, $04, $11, $12, $04 ; 0x00
 DrawStatModValue:
 	push af ; $5b16
 	push bc ; $5b17
@@ -3681,7 +3758,7 @@ Label_3e_5cd9:
 	ld a, $ff ; $5cfb
 	ret ; $5cfd
 CourtSelectIndexToCourtId:
-	ld hl, $5d08 ; $5cfe
+	ld hl, Data_3e_5d08 ; $5cfe
 	add a, l ; $5d01
 	ld l, a ; $5d02
 	jr nc, Label_3e_5d06 ; $5d03
@@ -3689,7 +3766,9 @@ CourtSelectIndexToCourtId:
 Label_3e_5d06:
 	ld a, [hl] ; $5d06
 	ret ; $5d07
-	INCBIN "data/bank_03e/d_5d08.bin" ; $5d08, 9 bytes
+Data_3e_5d08:
+	; $5d08, 9 bytes (bytes:9)
+	db $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00
 LoadCourtSelectGraphics:
 	ldh a, [hWramBank] ; $5d11
 	push af ; $5d13
@@ -3911,7 +3990,7 @@ CourtSelect4CursorSpriteTask:
 	ld c, $02 ; $5e96
 	call GetMenuCursorIndex_3e ; $5e98
 	push af ; $5e9b
-	ld hl, $5f49 ; $5e9c
+	ld hl, Data_3e_5f49 ; $5e9c
 	add a, l ; $5e9f
 	ld l, a ; $5ea0
 	jr nc, Label_3e_5ea4 ; $5ea1
@@ -3920,7 +3999,7 @@ Label_3e_5ea4:
 	ld c, [hl] ; $5ea4
 	pop af ; $5ea5
 	push af ; $5ea6
-	ld hl, $5f41 ; $5ea7
+	ld hl, Data_3e_5f41 ; $5ea7
 	add a, a ; $5eaa
 	add a, l ; $5eab
 	ld l, a ; $5eac
@@ -3949,7 +4028,7 @@ Label_3e_5ec1:
 	pop de ; $5eca
 	ld c, $02 ; $5ecb
 	call GetMenuCursorIndex_3e ; $5ecd
-	ld hl, $5f4d ; $5ed0
+	ld hl, Data_3e_5f4d ; $5ed0
 	add a, l ; $5ed3
 	ld l, a ; $5ed4
 	jr nc, Label_3e_5ed8 ; $5ed5
@@ -3986,7 +4065,15 @@ SpriteTemplate_3e_5f38:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03e/d_5f41.bin" ; $5f41, 16 bytes
+Data_3e_5f41:
+	; $5f41, 8 bytes (bytes:8)
+	db $38, $14, $38, $4c, $60, $14, $60, $48 ; 0x00
+Data_3e_5f49:
+	; $5f49, 4 bytes (bytes:4)
+	db $00, $10, $20, $30 ; 0x00
+Data_3e_5f4d:
+	; $5f4d, 4 bytes (bytes:4)
+	db $17, $17, $17, $1b ; 0x00
 RedrawCourtSelect4Menu:
 	wram_bank $03 ; $5f51
 	ld b, $00 ; $5f57
@@ -4044,7 +4131,7 @@ Label_3e_5fb9:
 	ld h, $0d ; $5fb9
 Label_3e_5fbb:
 	push hl ; $5fbb
-	ld hl, $5fd6 ; $5fbc
+	ld hl, Data_3e_5fd6 ; $5fbc
 	ld a, b ; $5fbf
 	add a, a ; $5fc0
 	add a, l ; $5fc1
@@ -4064,7 +4151,9 @@ Label_3e_5fc6:
 	pop bc ; $5fd3
 	pop af ; $5fd4
 	ret ; $5fd5
-	INCBIN "data/bank_03e/d_5fd6.bin" ; $5fd6, 8 bytes
+Data_3e_5fd6:
+	; $5fd6, 8 bytes (bytes:8)
+	db $84, $d4, $8b, $d4, $24, $d5, $2b, $d5 ; 0x00
 SetCourtSelect4Palette:
 	ld hl, $5ff1 ; $5fde
 	add a, a ; $5fe1
@@ -4120,7 +4209,7 @@ Label_3e_5fe7:
 	db $13, $14 ; 0xd8
 SetCourtSelectBGM:
 	ld a, c ; $60dd
-	ld hl, $60eb ; $60de
+	ld hl, Data_3e_60eb ; $60de
 	add a, l ; $60e1
 	ld l, a ; $60e2
 	jr nc, Label_3e_60e6 ; $60e3
@@ -4129,10 +4218,12 @@ Label_3e_60e6:
 	ld a, [hl] ; $60e6
 	ld [wMatchBGM], a ; $60e7
 	ret ; $60ea
-	INCBIN "data/bank_03e/d_60eb.bin" ; $60eb, 9 bytes
+Data_3e_60eb:
+	; $60eb, 9 bytes (bytes:9)
+	db $06, $06, $06, $06, $11, $12, $13, $16, $14 ; 0x00
 SetCourtSelectBGMLink:
 	ld a, c ; $60f4
-	ld hl, $6102 ; $60f5
+	ld hl, Data_3e_6102 ; $60f5
 	add a, l ; $60f8
 	ld l, a ; $60f9
 	jr nc, Label_3e_60fd ; $60fa
@@ -4141,7 +4232,9 @@ Label_3e_60fd:
 	ld a, [hl] ; $60fd
 	ld [wMatchBGM], a ; $60fe
 	ret ; $6101
-	INCBIN "data/bank_03e/d_6102.bin" ; $6102, 9 bytes
+Data_3e_6102:
+	; $6102, 9 bytes (bytes:9)
+	db $07, $07, $07, $07, $11, $12, $13, $16, $14 ; 0x00
 LoadCourtSelectHeader:
 	call LoadCourtSelectTitleGfx ; $610b
 	call DrawCourtSelectTitleRow ; $610e
@@ -4205,7 +4298,7 @@ LoadCourtSelectTitleGfx:
 	wram_bank ; $618d
 	ret ; $6191
 LoadCourtSelectTitleTiles:
-	ld hl, $61d4 ; $6192
+	ld hl, Lz_3e_61d4 ; $6192
 	ld de, $d000 ; $6195
 	call DecompressData ; $6198
 	ld hl, $d000 ; $619b
@@ -4214,7 +4307,7 @@ LoadCourtSelectTitleTiles:
 	call QueueVRAMCopy ; $61a4
 	ret ; $61a7
 LoadCourtSelectTitleTiles2:
-	ld hl, $6273 ; $61a8
+	ld hl, Lz_3e_6273 ; $61a8
 	ld de, $d100 ; $61ab
 	call DecompressData ; $61ae
 	ld hl, $d100 ; $61b1
@@ -4223,7 +4316,7 @@ LoadCourtSelectTitleTiles2:
 	call QueueVRAMCopy ; $61ba
 	ret ; $61bd
 LoadCourtSelectPanelTiles:
-	ld hl, $62c6 ; $61be
+	ld hl, Lz_3e_62c6 ; $61be
 	ld de, $d200 ; $61c1
 	call DecompressData ; $61c4
 	ld hl, $d200 ; $61c7
@@ -4231,7 +4324,12 @@ LoadCourtSelectPanelTiles:
 	ld bc, $0037 ; $61cd
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
-	INCBIN "data/bank_03e/d_61d4.bin" ; $61d4, 699 bytes
+Lz_3e_61d4:
+	INCBIN "data/bank_03e/d_61d4.bin" ; $61d4, 159 bytes
+Lz_3e_6273:
+	INCBIN "data/bank_03e/d_6273.bin" ; $6273, 83 bytes
+Lz_3e_62c6:
+	INCBIN "data/bank_03e/d_62c6.bin" ; $62c6, 457 bytes
 DrawCourtNameTiles:
 	ldh a, [hWramBank] ; $648f
 	push af ; $6491
@@ -4250,7 +4348,7 @@ DrawCourtNameLeft:
 	ld b, $ac ; $64ab
 	jr Label_3e_64bd ; $64ad
 Label_3e_64af:
-	ld hl, $64c6 ; $64af
+	ld hl, Data_3e_64c6 ; $64af
 	ld a, b ; $64b2
 	add a, l ; $64b3
 	ld l, a ; $64b4
@@ -4266,7 +4364,9 @@ Label_3e_64bd:
 	ld c, $05 ; $64c0
 	farcall FillIncrementingBytes ; $64c2
 	ret ; $64c5
-	INCBIN "data/bank_03e/d_64c6.bin" ; $64c6, 9 bytes
+Data_3e_64c6:
+	; $64c6, 9 bytes (bytes:9)
+	db $0b, $00, $16, $21, $16, $0b, $21, $16, $00 ; 0x00
 DrawCourtNameRight:
 	ld a, b ; $64cf
 	cp a, $ff ; $64d0
@@ -4274,7 +4374,7 @@ DrawCourtNameRight:
 	ld b, $b1 ; $64d4
 	jr Label_3e_64e6 ; $64d6
 Label_3e_64d8:
-	ld hl, $64ef ; $64d8
+	ld hl, Data_3e_64ef ; $64d8
 	ld a, b ; $64db
 	add a, l ; $64dc
 	ld l, a ; $64dd
@@ -4290,7 +4390,9 @@ Label_3e_64e6:
 	ld c, $06 ; $64e9
 	farcall FillIncrementingBytes ; $64eb
 	ret ; $64ee
-	INCBIN "data/bank_03e/d_64ef.bin" ; $64ef, 9 bytes
+Data_3e_64ef:
+	; $64ef, 9 bytes (bytes:9)
+	db $1b, $05, $05, $10, $1b, $10, $05, $26, $1b ; 0x00
 FadeOutAndResetMenuScreen:
 	ldh a, [hWramBank] ; $64f8
 	push af ; $64fa
@@ -4562,7 +4664,7 @@ CourtSelect9CursorSpriteTask:
 	ld c, $03 ; $6717
 	call GetMenuCursorIndex_3e ; $6719
 	push af ; $671c
-	ld hl, $67ee ; $671d
+	ld hl, Data_3e_67ee ; $671d
 	add a, l ; $6720
 	ld l, a ; $6721
 	jr nc, Label_3e_6725 ; $6722
@@ -4571,7 +4673,7 @@ Label_3e_6725:
 	ld c, [hl] ; $6725
 	pop af ; $6726
 	push af ; $6727
-	ld hl, $67dc ; $6728
+	ld hl, Data_3e_67dc ; $6728
 	add a, a ; $672b
 	add a, l ; $672c
 	ld l, a ; $672d
@@ -4585,7 +4687,7 @@ Label_3e_6731:
 	push bc ; $6737
 	ld c, $03 ; $6738
 	call GetMenuCursorIndex_3e ; $673a
-	ld hl, $67f8 ; $673d
+	ld hl, Data_3e_67f8 ; $673d
 	add a, l ; $6740
 	ld l, a ; $6741
 	jr nc, Label_3e_6745 ; $6742
@@ -4595,7 +4697,7 @@ Label_3e_6745:
 	ld b, [hl] ; $6746
 	pop af ; $6747
 	add a, a ; $6748
-	ld hl, $677b ; $6749
+	ld hl, Data_3e_677b ; $6749
 	add a, l ; $674c
 	ld l, a ; $674d
 	jr nc, Label_3e_6751 ; $674e
@@ -4610,7 +4712,7 @@ Label_3e_6751:
 	pop de ; $675b
 	ld c, $03 ; $675c
 	call GetMenuCursorIndex_3e ; $675e
-	ld hl, $6802 ; $6761
+	ld hl, Data_3e_6802 ; $6761
 	add a, l ; $6764
 	ld l, a ; $6765
 	jr nc, Label_3e_6769 ; $6766
@@ -4627,13 +4729,26 @@ Label_3e_6769:
 	ld c, $72 ; $6775
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
+Data_3e_677b:
 	INCBIN "data/bank_03e/d_677b.bin" ; $677b, 88 bytes
 SpriteTemplate_3e_67d3:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03e/d_67dc.bin" ; $67dc, 48 bytes
+Data_3e_67dc:
+	; $67dc, 18 bytes (bytes:16)
+	db $30, $fc, $30, $2c, $30, $5c, $50, $fe, $50, $2c, $50, $5c, $6c, $fc, $6c, $2c ; 0x00
+	db $6c, $5c ; 0x10
+Data_3e_67ee:
+	; $67ee, 10 bytes (bytes:10)
+	db $00, $10, $20, $30, $42, $52, $62, $20, $30, $00 ; 0x00
+Data_3e_67f8:
+	; $67f8, 10 bytes (bytes:10)
+	db $08, $08, $08, $08, $08, $08, $08, $00, $00, $00 ; 0x00
+Data_3e_6802:
+	; $6802, 10 bytes (bytes:10)
+	db $17, $17, $17, $1b, $17, $17, $17, $17, $17, $17 ; 0x00
 AdjustCursorForLockedCourt:
 	push bc ; $680c
 	push hl ; $680d
@@ -4713,7 +4828,7 @@ Label_3e_6897:
 	ld h, $0d ; $6897
 Label_3e_6899:
 	push hl ; $6899
-	ld hl, $68b4 ; $689a
+	ld hl, Data_3e_68b4 ; $689a
 	ld a, b ; $689d
 	add a, a ; $689e
 	add a, l ; $689f
@@ -4733,7 +4848,10 @@ Label_3e_68a4:
 	pop bc ; $68b1
 	pop af ; $68b2
 	ret ; $68b3
-	INCBIN "data/bank_03e/d_68b4.bin" ; $68b4, 18 bytes
+Data_3e_68b4:
+	; $68b4, 18 bytes (bytes:16)
+	db $61, $d4, $67, $d4, $6d, $d4, $e1, $d4, $e7, $d4, $ed, $d4, $61, $d5, $67, $d5 ; 0x00
+	db $6d, $d5 ; 0x10
 SetCourtSelect9Palette:
 	ld hl, $68d9 ; $68c6
 	add a, a ; $68c9
@@ -4822,7 +4940,7 @@ ComputeUnlockedCourtFlags:
 Label_3e_69a4:
 	ld a, c ; $69a4
 	add a, a ; $69a5
-	ld hl, $69ca ; $69a6
+	ld hl, Data_3e_69ca ; $69a6
 	add a, l ; $69a9
 	ld l, a ; $69aa
 	jr nc, Label_3e_69ae ; $69ab
@@ -4848,7 +4966,9 @@ Label_3e_69c5:
 	ld a, b ; $69c5
 	ld [wUnlockedCourtMask], a ; $69c6
 	ret ; $69c9
-	INCBIN "data/bank_03e/d_69ca.bin" ; $69ca, 10 bytes
+Data_3e_69ca:
+	; $69ca, 10 bytes (bytes:10)
+	db $a0, $07, $80, $07, $60, $07, $40, $07, $20, $07 ; 0x00
 StubNop_3e:
 	ret ; $69d4
 AwardCeremonyTiles:

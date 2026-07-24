@@ -359,7 +359,7 @@ IntroCutsceneState01Init_6b:
 	wram_bank ; $425b
 	farcall QueueWram3MapToVRAM ; $425f
 	wram_bank $01 ; $4262
-	ld hl, $6c2a ; $4268 -> DataPtr_IntroSwingTiles
+	ld hl, Lz_6b_6c2a ; $4268 -> DataPtr_IntroSwingTiles
 	ld de, $d000 ; $426b
 	call DecompressDataFromBank ; $426e
 	ld hl, $d000 ; $4271
@@ -371,10 +371,10 @@ IntroCutsceneState01Init_6b:
 	ld c, $80 ; $4282
 	call QueueVRAMCopy ; $4284
 	wram_bank $03 ; $4287
-	ld hl, $6c2c ; $428d -> DataPtr_IntroSwingTilemap
+	ld hl, Lz_6b_6c2c ; $428d -> DataPtr_IntroSwingTilemap
 	ld de, $d800 ; $4290
 	call DecompressDataFromBank ; $4293
-	ld hl, $6c2e ; $4296 -> DataPtr_IntroSwingAttrmap
+	ld hl, Lz_6b_6c2e ; $4296 -> DataPtr_IntroSwingAttrmap
 	ld de, $dc00 ; $4299
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
@@ -441,11 +441,21 @@ IntroCutsceneState02Init_6b:
 	call QueueVRAMCopy ; $435b
 	pop af ; $435e
 	wram_bank ; $435f
-	ld hl, $436f ; $4363
+	ld hl, Palette_6b_436f ; $4363
 	ld de, $0008 ; $4366
 	call LoadPalettesImmediate ; $4369
 	jp Label_6b_407c ; $436c
-	INCBIN "data/bank_06b/d_436f.bin" ; $436f, 64 bytes
+Palette_6b_436f:
+	; $436f, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2108, $294a, $294a, $294a ; pal 0: #414141 #525252 #525252 #525252
+	dw $3a96, $73ff, $115f, $0000 ; pal 1: #b4a473 #ffffe6 #ff5220 #000000
+	dw $294a, $294a, $294a, $0000 ; pal 2: #525252 #525252 #525252 #000000
+	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 4: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
+	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 IntroCutsceneState02Exit_6b:
 	ld c, $06 ; $43af
 	call BeginFadeOut ; $43b1
@@ -478,7 +488,7 @@ IntroCutsceneState03Init_6b:
 	wram_bank ; $43ed
 	farcall QueueWram3MapToVRAM ; $43f1
 	wram_bank $01 ; $43f4
-	ld hl, $6c32 ; $43fa -> DataPtr_IntroCloseupTiles
+	ld hl, Lz_6b_6c32 ; $43fa -> DataPtr_IntroCloseupTiles
 	ld de, $d000 ; $43fd
 	call DecompressDataFromBank ; $4400
 	ld hl, $d000 ; $4403
@@ -490,10 +500,10 @@ IntroCutsceneState03Init_6b:
 	ld c, $80 ; $4414
 	call QueueVRAMCopy ; $4416
 	wram_bank $03 ; $4419
-	ld hl, $6c34 ; $441f -> DataPtr_IntroCloseupTilemap
+	ld hl, Lz_6b_6c34 ; $441f -> DataPtr_IntroCloseupTilemap
 	ld de, $d800 ; $4422
 	call DecompressDataFromBank ; $4425
-	ld hl, $6c36 ; $4428 -> DataPtr_IntroCloseupAttrmap
+	ld hl, Lz_6b_6c36 ; $4428 -> DataPtr_IntroCloseupAttrmap
 	ld de, $dc00 ; $442b
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
@@ -948,7 +958,7 @@ IntroCutsceneState11Exit_6b:
 	ldh [hShowDebugConsole], a ; $48cc
 	ld hl, rLCDC ; $48ce
 	res 3, [hl] ; $48d1
-	ld hl, $5d25 ; $48d3
+	ld hl, Palette_6b_5d25 ; $48d3
 	ld de, $0008 ; $48d6
 	call LoadPaletteShadow ; $48d9
 	xor a, a ; $48dc
@@ -1021,7 +1031,7 @@ IntroCutsceneState16Init_6b:
 	ld hl, rLCDC ; $496d
 	set 3, [hl] ; $4970
 	wram_bank $01 ; $4972
-	ld hl, $6d12 ; $4978 -> DataPtr_IntroGreatestPlayerTiles
+	ld hl, Lz_6b_6d12 ; $4978 -> DataPtr_IntroGreatestPlayerTiles
 	ld de, $d000 ; $497b
 	call DecompressDataFromBank ; $497e
 	ld hl, $d000 ; $4981
@@ -1032,10 +1042,10 @@ IntroCutsceneState16Init_6b:
 	ld de, $8800 ; $498f
 	ld c, $80 ; $4992
 	call QueueVRAMCopy ; $4994
-	ld hl, $6d14 ; $4997 -> DataPtr_IntroGreatestPlayerTilemap
+	ld hl, Lz_6b_6d14 ; $4997 -> DataPtr_IntroGreatestPlayerTilemap
 	ld de, $d000 ; $499a
 	call DecompressDataFromBank ; $499d
-	ld hl, $6d16 ; $49a0 -> DataPtr_IntroGreatestPlayerAttrmap
+	ld hl, Lz_6b_6d16 ; $49a0 -> DataPtr_IntroGreatestPlayerAttrmap
 	ld de, $d400 ; $49a3
 	call DecompressDataFromBank ; $49a6
 	ld hl, $d000 ; $49a9
@@ -1050,7 +1060,7 @@ IntroCutsceneState16Init_6b:
 	ld de, $0008 ; $49c2
 	call LoadPaletteShadow ; $49c5
 	wram_bank $01 ; $49c8
-	ld hl, $6d1a ; $49ce -> DataPtr_IntroCharactersTiles
+	ld hl, Lz_6b_6d1a ; $49ce -> DataPtr_IntroCharactersTiles
 	ld de, $d000 ; $49d1
 	call DecompressDataFromBank ; $49d4
 	ld hl, $d000 ; $49d7
@@ -1062,21 +1072,21 @@ IntroCutsceneState16Init_6b:
 	ld c, $80 ; $49e8
 	call QueueVRAMCopy ; $49ea
 	wram_bank $04 ; $49ed
-	ld hl, $6d1c ; $49f3 -> DataPtr_IntroCharactersTilemap
+	ld hl, Lz_6b_6d1c ; $49f3 -> DataPtr_IntroCharactersTilemap
 	ld de, $d800 ; $49f6
 	call DecompressDataFromBank ; $49f9
-	ld hl, $6d1e ; $49fc -> DataPtr_6d_1e
+	ld hl, Lz_6b_6d1e ; $49fc -> DataPtr_6d_1e
 	ld de, $dc00 ; $49ff
 	call DecompressDataFromBank ; $4a02
 	wram_bank $05 ; $4a05
-	ld hl, $6d22 ; $4a0b -> DataPtr_IntroCharactersTilemap2
+	ld hl, Lz_6b_6d22 ; $4a0b -> DataPtr_IntroCharactersTilemap2
 	ld de, $d000 ; $4a0e
 	call DecompressDataFromBank ; $4a11
-	ld hl, $6d24 ; $4a14 -> DataPtr_6d_24
+	ld hl, Lz_6b_6d24 ; $4a14 -> DataPtr_6d_24
 	ld de, $d400 ; $4a17
 	call DecompressDataFromBank ; $4a1a
 	wram_bank $01 ; $4a1d
-	ld hl, $551d ; $4a23
+	ld hl, Lz_6b_551d ; $4a23
 	ld de, $d000 ; $4a26
 	call DecompressData ; $4a29
 	xor a, a ; $4a2c
@@ -1255,7 +1265,7 @@ Palettes_6b_4c00:
 	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 IntroCutsceneState19Init_6b:
-	ld hl, $5d25 ; $4c38
+	ld hl, Palette_6b_5d25 ; $4c38
 	ld de, $0008 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
 	xor a, a ; $4c41
@@ -1302,7 +1312,7 @@ Label_6b_4c8c:
 	jp Label_6b_407c ; $4c9b
 UpdateCutsceneScrollX:
 	ld a, [wCutsceneStepTimer] ; $4c9e
-	ld hl, $4cc1 ; $4ca1
+	ld hl, Data_6b_4cc1 ; $4ca1
 	add a, l ; $4ca4
 	ld l, a ; $4ca5
 	jr nc, Label_6b_4ca9 ; $4ca6
@@ -1325,10 +1335,11 @@ Label_6b_4ca9:
 	ld a, l ; $4cbc
 	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
+Data_6b_4cc1:
 	INCBIN "data/bank_06b/d_4cc1.bin" ; $4cc1, 160 bytes
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
-	ld hl, $4d84 ; $4d64
+	ld hl, Data_6b_4d84 ; $4d64
 	add a, l ; $4d67
 	ld l, a ; $4d68
 	jr nc, Label_6b_4d6c ; $4d69
@@ -1351,6 +1362,7 @@ Label_6b_4d6c:
 	ld a, l ; $4d7f
 	ld [$cb48], a ; $4d80
 	ret ; $4d83
+Data_6b_4d84:
 	INCBIN "data/bank_06b/d_4d84.bin" ; $4d84, 169 bytes
 QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e2d
@@ -1359,7 +1371,7 @@ QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e33
 	sub a, $20 ; $4e36
 	add a, a ; $4e38
-	ld hl, $506d ; $4e39
+	ld hl, Data_6b_506d ; $4e39
 	add a, l ; $4e3c
 	ld l, a ; $4e3d
 	jr nc, Label_6b_4e41 ; $4e3e
@@ -1376,7 +1388,7 @@ Label_6b_4e41:
 	ld a, [wCutsceneStepTimer] ; $4e51
 	sub a, $20 ; $4e54
 	add a, a ; $4e56
-	ld hl, $4f95 ; $4e57
+	ld hl, Data_6b_4f95 ; $4e57
 	add a, l ; $4e5a
 	ld l, a ; $4e5b
 	jr nc, Label_6b_4e5f ; $4e5c
@@ -1393,7 +1405,7 @@ Label_6b_4e5f:
 	ld a, [wCutsceneStepTimer] ; $4e6f
 	sub a, $20 ; $4e72
 	add a, a ; $4e74
-	ld hl, $4ea5 ; $4e75
+	ld hl, Data_6b_4ea5 ; $4e75
 	add a, l ; $4e78
 	ld l, a ; $4e79
 	jr nc, Label_6b_4e7d ; $4e7a
@@ -1422,7 +1434,12 @@ SpriteTemplate_6b_4ea0:
 	; $4ea0, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-	INCBIN "data/bank_06b/d_4ea5.bin" ; $4ea5, 744 bytes
+Data_6b_4ea5:
+	INCBIN "data/bank_06b/d_4ea5.bin" ; $4ea5, 240 bytes
+Data_6b_4f95:
+	INCBIN "data/bank_06b/d_4f95.bin" ; $4f95, 216 bytes
+Data_6b_506d:
+	INCBIN "data/bank_06b/d_506d.bin" ; $506d, 288 bytes
 ApplyCutsceneScrollToSpriteX:
 	push bc ; $518d
 	push hl ; $518e
@@ -1685,7 +1702,7 @@ ApplyCutsceneBobOffset:
 	push hl ; $53b8
 	ld a, [wCutsceneStepTimer] ; $53b9
 	and a, $0f ; $53bc
-	ld hl, $53cb ; $53be
+	ld hl, Data_6b_53cb ; $53be
 	add a, l ; $53c1
 	ld l, a ; $53c2
 	jr nc, Label_6b_53c6 ; $53c3
@@ -1696,7 +1713,9 @@ Label_6b_53c6:
 	ld e, a ; $53c8
 	pop hl ; $53c9
 	ret ; $53ca
-	INCBIN "data/bank_06b/d_53cb.bin" ; $53cb, 16 bytes
+Data_6b_53cb:
+	; $53cb, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $02, $03, $03, $04, $04, $04, $03, $03, $02, $01, $00, $00 ; 0x00
 UpdateCutsceneScroll:
 	ld a, [wCutsceneScrollX] ; $53db
 	add a, $03 ; $53de
@@ -1719,7 +1738,7 @@ InitCutsceneSceneA:
 	farcall InitSceneScroll ; $53ff
 	farcall InitTextWindows ; $5402
 	wram_bank $01 ; $5405
-	ld hl, $551d ; $540b
+	ld hl, Lz_6b_551d ; $540b
 	ld de, $d000 ; $540e
 	call DecompressData ; $5411
 	ld hl, $d000 ; $5414
@@ -1731,11 +1750,11 @@ InitCutsceneSceneA:
 	ld c, $80 ; $5425
 	call QueueVRAMCopy ; $5427
 	wram_bank $02 ; $542a
-	ld hl, $5d65 ; $5430
+	ld hl, Lz_6b_5d65 ; $5430
 	ld de, $d000 ; $5433
 	call DecompressData ; $5436
 	wram_bank $03 ; $5439
-	ld hl, $5ea8 ; $543f
+	ld hl, Lz_6b_5ea8 ; $543f
 	ld de, $d000 ; $5442
 	call DecompressData ; $5445
 	xor a, a ; $5448
@@ -1753,7 +1772,7 @@ InitCutsceneSceneB:
 	farcall InitSceneScroll ; $5461
 	farcall InitTextWindows ; $5464
 	wram_bank $01 ; $5467
-	ld hl, $551d ; $546d
+	ld hl, Lz_6b_551d ; $546d
 	ld de, $d000 ; $5470
 	call DecompressData ; $5473
 	ld hl, $d000 ; $5476
@@ -1765,11 +1784,11 @@ InitCutsceneSceneB:
 	ld c, $80 ; $5487
 	call QueueVRAMCopy ; $5489
 	wram_bank $02 ; $548c
-	ld hl, $5bd7 ; $5492
+	ld hl, Lz_6b_5bd7 ; $5492
 	ld de, $d000 ; $5495
 	call DecompressData ; $5498
 	wram_bank $03 ; $549b
-	ld hl, $59d7 ; $54a1
+	ld hl, Lz_6b_59d7 ; $54a1
 	ld de, $d000 ; $54a4
 	call DecompressData ; $54a7
 	xor a, a ; $54aa
@@ -1784,7 +1803,7 @@ InitCutsceneSceneC:
 	farcall InitSceneScroll ; $54bc
 	farcall InitTextWindows ; $54bf
 	wram_bank $01 ; $54c2
-	ld hl, $551d ; $54c8
+	ld hl, Lz_6b_551d ; $54c8
 	ld de, $d000 ; $54cb
 	call DecompressData ; $54ce
 	ld hl, $d000 ; $54d1
@@ -1796,14 +1815,14 @@ InitCutsceneSceneC:
 	ld c, $80 ; $54e2
 	call QueueVRAMCopy ; $54e4
 	wram_bank $02 ; $54e7
-	ld hl, $5bd7 ; $54ed
+	ld hl, Lz_6b_5bd7 ; $54ed
 	ld de, $d000 ; $54f0
 	call DecompressData ; $54f3
 	wram_bank $03 ; $54f6
-	ld hl, $59d7 ; $54fc
+	ld hl, Lz_6b_59d7 ; $54fc
 	ld de, $d000 ; $54ff
 	call DecompressData ; $5502
-	ld hl, $5d25 ; $5505
+	ld hl, Palette_6b_5d25 ; $5505
 	ld de, $0008 ; $5508
 	call LoadPaletteShadow ; $550b
 	xor a, a ; $550e
@@ -1813,7 +1832,27 @@ InitCutsceneSceneC:
 	ld a, $01 ; $5517
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
-	INCBIN "data/bank_06b/d_551d.bin" ; $551d, 2904 bytes
+Lz_6b_551d:
+	INCBIN "data/bank_06b/d_551d.bin" ; $551d, 1210 bytes
+Lz_6b_59d7:
+	INCBIN "data/bank_06b/d_59d7.bin" ; $59d7, 512 bytes
+Lz_6b_5bd7:
+	INCBIN "data/bank_06b/d_5bd7.bin" ; $5bd7, 334 bytes
+Palette_6b_5d25:
+	; $5d25, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $294a, $0000, $0000, $0000 ; pal 0: #525252 #000000 #000000 #000000
+	dw $7dc0, $7dc0, $7de1, $7e02 ; pal 1: #0073ff #0073ff #087bff #1083ff
+	dw $7e23, $7e44, $7e45, $7e66 ; pal 2: #188bff #2094ff #2994ff #319cff
+	dw $7e87, $7ea8, $7ec9, $7eca ; pal 3: #39a4ff #41acff #4ab4ff #52b4ff
+	dw $7eeb, $7f0c, $7f2d, $7f4e ; pal 4: #5abdff #62c5ff #6acdff #73d5ff
+	dw $7dc0, $32df, $0000, $0db9 ; pal 5: #0073ff #ffb462 #000000 #cd6a18
+	dw $7dc0, $7fff, $6294, $0000 ; pal 6: #0073ff #ffffff #a4a4c5 #000000
+	dw $7f4e, $7f73, $7fb9, $7fff ; pal 7: #73d5ff #9cdeff #cdeeff #ffffff
+Lz_6b_5d65:
+	INCBIN "data/bank_06b/d_5d65.bin" ; $5d65, 323 bytes
+Lz_6b_5ea8:
+	INCBIN "data/bank_06b/d_5ea8.bin" ; $5ea8, 461 bytes
 LoadIntroTilesAndPalette:
 	ld b, $54 ; $6075
 	ld c, $10 ; $6077
@@ -1930,13 +1969,16 @@ SpriteTemplate_6b_613d:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-	INCBIN "data/bank_06b/d_615e.bin" ; $615e, 30 bytes
+Data_6b_615e:
+	; $615e, 30 bytes (bytes:16)
+	db $fa, $40, $cb, $fe, $14, $38, $16, $fa, $23, $c3, $b7, $28, $10, $fa, $23, $c3 ; 0x00
+	db $67, $fa, $22, $c3, $6f, $7c, $ea, $23, $c3, $7d, $ea, $22, $c3, $c9 ; 0x10
 InitTitleSceneGraphics:
 	call DisableLCDSafely ; $617c
 	farcall InitSceneScroll ; $617f
 	farcall InitTextWindows ; $6182
 	wram_bank $01 ; $6185
-	ld hl, $61e6 ; $618b
+	ld hl, Lz_6b_61e6 ; $618b
 	ld de, $d000 ; $618e
 	call DecompressData ; $6191
 	ld hl, $d000 ; $6194
@@ -1948,14 +1990,14 @@ InitTitleSceneGraphics:
 	ld c, $80 ; $61a5
 	call QueueVRAMCopy ; $61a7
 	wram_bank $02 ; $61aa
-	ld hl, $6f0f ; $61b0
+	ld hl, Lz_6b_6f0f ; $61b0
 	ld de, $d000 ; $61b3
 	call DecompressData ; $61b6
 	wram_bank $03 ; $61b9
-	ld hl, $6cbc ; $61bf
+	ld hl, Lz_6b_6cbc ; $61bf
 	ld de, $d000 ; $61c2
 	call DecompressData ; $61c5
-	ld hl, $7043 ; $61c8
+	ld hl, Palette_6b_7043 ; $61c8
 	ld de, $0008 ; $61cb
 	call LoadPaletteShadow ; $61ce
 	ld a, $20 ; $61d1
@@ -1967,7 +2009,63 @@ InitTitleSceneGraphics:
 	ld a, $01 ; $61e0
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
-	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 3741 bytes
+Lz_6b_61e6:
+	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 2628 bytes
+Lz_6b_6c2a:
+	db $c0 ; $6c2a
+	db $cd ; $6c2b
+Lz_6b_6c2c:
+	db $ff ; $6c2c
+	db $f8 ; $6c2d
+Lz_6b_6c2e:
+	INCBIN "data/bank_06b/d_6c2e.bin" ; $6c2e, 4 bytes
+Lz_6b_6c32:
+	db $0c ; $6c32
+	db $ff ; $6c33
+Lz_6b_6c34:
+	db $12 ; $6c34
+	db $d0 ; $6c35
+Lz_6b_6c36:
+	INCBIN "data/bank_06b/d_6c36.bin" ; $6c36, 134 bytes
+Lz_6b_6cbc:
+	INCBIN "data/bank_06b/d_6cbc.bin" ; $6cbc, 84 bytes
+Lz_6b_6d10:
+	db $0f ; $6d10
+	db $10 ; $6d11
+Lz_6b_6d12:
+	db $00 ; $6d12
+	db $11 ; $6d13
+Lz_6b_6d14:
+	db $00 ; $6d14
+	db $00 ; $6d15
+Lz_6b_6d16:
+	INCBIN "data/bank_06b/d_6d16.bin" ; $6d16, 4 bytes
+Lz_6b_6d1a:
+	db $b7 ; $6d1a
+	db $b8 ; $6d1b
+Lz_6b_6d1c:
+	db $b9 ; $6d1c
+	db $ba ; $6d1d
+Lz_6b_6d1e:
+	INCBIN "data/bank_06b/d_6d1e.bin" ; $6d1e, 4 bytes
+Lz_6b_6d22:
+	db $5f ; $6d22
+	db $60 ; $6d23
+Lz_6b_6d24:
+	INCBIN "data/bank_06b/d_6d24.bin" ; $6d24, 491 bytes
+Lz_6b_6f0f:
+	INCBIN "data/bank_06b/d_6f0f.bin" ; $6f0f, 308 bytes
+Palette_6b_7043:
+	; $7043, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $7f00, $7f60, $7fe0, $0000 ; pal 0: #00c5ff #00deff #00ffff #000000
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 1: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 2: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 3: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 4: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 5: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 6: #00c5ff #00c5ff #00c5ff #00c5ff
+	dw $7f00, $7f00, $7f00, $7f00 ; pal 7: #00c5ff #00c5ff #00c5ff #00c5ff
 IntroSequenceTimerTask:
 	ld a, [$cb44] ; $7083
 	inc a ; $7086
@@ -2177,7 +2275,7 @@ ScrollCutsceneXRightTask:
 	ld a, [wCutsceneStepTimer] ; $7366
 	cp a, $10 ; $7369
 	jr nc, Label_6b_7380 ; $736b
-	ld hl, $7381 ; $736d
+	ld hl, Data_6b_7381 ; $736d
 	add a, l ; $7370
 	ld l, a ; $7371
 	jr nc, Label_6b_7375 ; $7372
@@ -2191,12 +2289,15 @@ Label_6b_7375:
 	ldh [hScrollX], a ; $737e
 Label_6b_7380:
 	ret ; $7380
-	INCBIN "data/bank_06b/d_7381.bin" ; $7381, 20 bytes
+Data_6b_7381:
+	; $7381, 20 bytes (bytes:16)
+	db $0a, $0a, $0a, $0a, $0a, $0a, $01, $01, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00 ; 0x10
 ScrollCutsceneXLeftTask:
 	ld a, [wCutsceneStepTimer] ; $7395
 	cp a, $10 ; $7398
 	jr nc, Label_6b_73af ; $739a
-	ld hl, $73b0 ; $739c
+	ld hl, Data_6b_73b0 ; $739c
 	add a, l ; $739f
 	ld l, a ; $73a0
 	jr nc, Label_6b_73a4 ; $73a1
@@ -2210,12 +2311,15 @@ Label_6b_73a4:
 	ldh [hScrollX], a ; $73ad
 Label_6b_73af:
 	ret ; $73af
-	INCBIN "data/bank_06b/d_73b0.bin" ; $73b0, 20 bytes
+Data_6b_73b0:
+	; $73b0, 20 bytes (bytes:16)
+	db $0a, $0a, $0a, $0a, $0a, $0a, $08, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00, $00 ; 0x10
 Func_6b_73c4:
 	ld a, [wCutsceneStepTimer] ; $73c4
 	cp a, $10 ; $73c7
 	jr nc, Label_6b_73de ; $73c9
-	ld hl, $73df ; $73cb
+	ld hl, Data_6b_73df ; $73cb
 	add a, l ; $73ce
 	ld l, a ; $73cf
 	jr nc, Label_6b_73d3 ; $73d0
@@ -2229,12 +2333,15 @@ Label_6b_73d3:
 	ldh [hScrollX], a ; $73dc
 Label_6b_73de:
 	ret ; $73de
-	INCBIN "data/bank_06b/d_73df.bin" ; $73df, 19 bytes
+Data_6b_73df:
+	; $73df, 19 bytes (bytes:16)
+	db $0a, $0a, $0a, $0a, $0a, $0a, $0a, $02, $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	db $00, $00, $00 ; 0x10
 DecompressIntroTitleTiles:
 	ldh a, [hWramBank] ; $73f2
 	push af ; $73f4
 	wram_bank $01 ; $73f5
-	ld hl, $6d10 ; $73fb -> DataPtr_IntroAwesomeTiles
+	ld hl, Lz_6b_6d10 ; $73fb -> DataPtr_IntroAwesomeTiles
 	ld de, $d000 ; $73fe
 	call DecompressDataFromBank ; $7401
 	ld hl, $d000 ; $7404
@@ -2246,16 +2353,19 @@ DecompressIntroTitleTiles:
 	ld c, $80 ; $7415
 	call QueueVRAMCopy ; $7417
 	wram_bank $05 ; $741a
-	ld hl, $7438 ; $7420
+	ld hl, Lz_6b_7438 ; $7420
 	ld de, $d000 ; $7423
 	call DecompressData ; $7426
-	ld hl, $7515 ; $7429
+	ld hl, Lz_6b_7515 ; $7429
 	ld de, $d400 ; $742c
 	call DecompressData ; $742f
 	pop af ; $7432
 	wram_bank ; $7433
 	ret ; $7437
-	INCBIN "data/bank_06b/d_7438.bin" ; $7438, 305 bytes
+Lz_6b_7438:
+	INCBIN "data/bank_06b/d_7438.bin" ; $7438, 221 bytes
+Lz_6b_7515:
+	INCBIN "data/bank_06b/d_7515.bin" ; $7515, 84 bytes
 ApplyScrollYFromWram:
 	ld a, [$cb44] ; $7569
 	ldh [hScrollY], a ; $756c
@@ -2384,7 +2494,7 @@ QueueTitleSprite:
 	push af ; $76b8
 	wram_bank $03 ; $76b9
 	ld a, [$d801] ; $76bf
-	ld hl, $76e6 ; $76c2
+	ld hl, Data_6b_76e6 ; $76c2
 	add a, l ; $76c5
 	ld l, a ; $76c6
 	jr nc, Label_6b_76ca ; $76c7
@@ -2392,7 +2502,7 @@ QueueTitleSprite:
 Label_6b_76ca:
 	ld c, [hl] ; $76ca
 	ld a, [$d801] ; $76cb
-	ld hl, $76ee ; $76ce
+	ld hl, Data_6b_76ee ; $76ce
 	add a, l ; $76d1
 	ld l, a ; $76d2
 	jr nc, Label_6b_76d6 ; $76d3
@@ -2405,7 +2515,12 @@ Label_6b_76d6:
 	pop af ; $76e0
 	wram_bank ; $76e1
 	ret ; $76e5
-	INCBIN "data/bank_06b/d_76e6.bin" ; $76e6, 16 bytes
+Data_6b_76e6:
+	; $76e6, 8 bytes (bytes:8)
+	db $00, $20, $40, $60, $00, $20, $40, $60 ; 0x00
+Data_6b_76ee:
+	; $76ee, 8 bytes (bytes:8)
+	db $08, $08, $08, $08, $00, $00, $00, $00 ; 0x00
 SpriteTemplate_6b_76f6:
 	; $76f6, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

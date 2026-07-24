@@ -79,7 +79,9 @@ Data_74_4785:
 	dw Data_74_4ab0 ; $479d
 	dw Data_74_4bb0 ; $479f
 	dw Data_74_4cb0 ; $47a1
-	INCBIN "data/bank_074/d_47a3.bin" ; $47a3, 13 bytes
+Padding_74_47a3:
+	; $47a3, 13 bytes (fill)
+	ds 13, $00
 Data_74_47b0:
 	INCBIN "data/bank_074/d_47b0.bin" ; $47b0, 256 bytes
 Data_74_48b0:
@@ -125,7 +127,9 @@ Data_74_4dfd:
 	dw Data_74_5120 ; $4e15
 	dw Data_74_5220 ; $4e17
 	dw Data_74_5320 ; $4e19
-	INCBIN "data/bank_074/d_4e1b.bin" ; $4e1b, 5 bytes
+Padding_74_4e1b:
+	; $4e1b, 5 bytes (fill)
+	ds 5, $00
 Data_74_4e20:
 	INCBIN "data/bank_074/d_4e20.bin" ; $4e20, 256 bytes
 Data_74_4f20:
@@ -171,7 +175,9 @@ Data_74_546d:
 	dw Data_74_5790 ; $5485
 	dw Data_74_5890 ; $5487
 	dw Data_74_5990 ; $5489
-	INCBIN "data/bank_074/d_548b.bin" ; $548b, 5 bytes
+Padding_74_548b:
+	; $548b, 5 bytes (fill)
+	ds 5, $00
 Data_74_5490:
 	INCBIN "data/bank_074/d_5490.bin" ; $5490, 256 bytes
 Data_74_5590:
@@ -217,7 +223,9 @@ Data_74_5add:
 	dw Data_74_5e00 ; $5af5
 	dw Data_74_5f00 ; $5af7
 	dw Data_74_6000 ; $5af9
-	INCBIN "data/bank_074/d_5afb.bin" ; $5afb, 5 bytes
+Padding_74_5afb:
+	; $5afb, 5 bytes (fill)
+	ds 5, $00
 Data_74_5b00:
 	INCBIN "data/bank_074/d_5b00.bin" ; $5b00, 256 bytes
 Data_74_5c00:
@@ -263,7 +271,9 @@ Data_74_614d:
 	dw Data_74_6470 ; $6165
 	dw Data_74_6570 ; $6167
 	dw Data_74_6670 ; $6169
-	INCBIN "data/bank_074/d_616b.bin" ; $616b, 5 bytes
+Padding_74_616b:
+	; $616b, 5 bytes (fill)
+	ds 5, $00
 Data_74_6170:
 	INCBIN "data/bank_074/d_6170.bin" ; $6170, 256 bytes
 Data_74_6270:
@@ -309,7 +319,9 @@ Data_74_67bd:
 	dw Data_74_6ae0 ; $67d5
 	dw Data_74_6be0 ; $67d7
 	dw Data_74_6ce0 ; $67d9
-	INCBIN "data/bank_074/d_67db.bin" ; $67db, 5 bytes
+Padding_74_67db:
+	; $67db, 5 bytes (fill)
+	ds 5, $00
 Data_74_67e0:
 	INCBIN "data/bank_074/d_67e0.bin" ; $67e0, 256 bytes
 Data_74_68e0:
@@ -355,7 +367,9 @@ Data_74_6e2d:
 	dw Data_74_7150 ; $6e45
 	dw Data_74_7250 ; $6e47
 	dw Data_74_7350 ; $6e49
-	INCBIN "data/bank_074/d_6e4b.bin" ; $6e4b, 5 bytes
+Padding_74_6e4b:
+	; $6e4b, 5 bytes (fill)
+	ds 5, $00
 Data_74_6e50:
 	INCBIN "data/bank_074/d_6e50.bin" ; $6e50, 256 bytes
 Data_74_6f50:
@@ -401,7 +415,9 @@ Data_74_749d:
 	dw Data_74_77c0 ; $74b5
 	dw Data_74_78c0 ; $74b7
 	dw Data_74_79c0 ; $74b9
-	INCBIN "data/bank_074/d_74bb.bin" ; $74bb, 5 bytes
+Padding_74_74bb:
+	; $74bb, 5 bytes (fill)
+	ds 5, $00
 Data_74_74c0:
 	INCBIN "data/bank_074/d_74c0.bin" ; $74c0, 256 bytes
 Data_74_75c0:

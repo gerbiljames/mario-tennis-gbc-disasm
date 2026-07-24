@@ -31,7 +31,9 @@ Data_70_400e:
 	dw Data_70_4940 ; $4030
 	dw Data_70_4a40 ; $4032
 	dw Data_70_4b40 ; $4034
-	INCBIN "data/bank_070/d_4036.bin" ; $4036, 10 bytes
+Padding_70_4036:
+	; $4036, 10 bytes (fill)
+	ds 10, $00
 Data_70_4040:
 	INCBIN "data/bank_070/d_4040.bin" ; $4040, 256 bytes
 Data_70_4140:
@@ -108,7 +110,9 @@ Data_70_4cb1:
 	dw Data_70_55e0 ; $4cd3
 	dw Data_70_56e0 ; $4cd5
 	dw Data_70_57e0 ; $4cd7
-	INCBIN "data/bank_070/d_4cd9.bin" ; $4cd9, 7 bytes
+Padding_70_4cd9:
+	; $4cd9, 7 bytes (fill)
+	ds 7, $00
 Data_70_4ce0:
 	INCBIN "data/bank_070/d_4ce0.bin" ; $4ce0, 256 bytes
 Data_70_4de0:
@@ -183,7 +187,9 @@ Data_70_5951:
 	dw Data_70_5f80 ; $596f
 	dw Data_70_5f80 ; $5971
 	dw Data_70_6080 ; $5973
-	INCBIN "data/bank_070/d_5975.bin" ; $5975, 11 bytes
+Padding_70_5975:
+	; $5975, 11 bytes (fill)
+	ds 11, $00
 Data_70_5980:
 	INCBIN "data/bank_070/d_5980.bin" ; $5980, 256 bytes
 Data_70_5a80:
@@ -239,7 +245,9 @@ Data_70_61d5:
 	dw Data_70_6800 ; $61f3
 	dw Data_70_6800 ; $61f5
 	dw Data_70_6900 ; $61f7
-	INCBIN "data/bank_070/d_61f9.bin" ; $61f9, 7 bytes
+Padding_70_61f9:
+	; $61f9, 7 bytes (fill)
+	ds 7, $00
 Data_70_6200:
 	INCBIN "data/bank_070/d_6200.bin" ; $6200, 256 bytes
 Data_70_6300:
@@ -292,7 +300,9 @@ Data_70_6a55:
 	dw Data_70_6d80 ; $6a6d
 	dw Data_70_6e80 ; $6a6f
 	dw Data_70_6f80 ; $6a71
-	INCBIN "data/bank_070/d_6a73.bin" ; $6a73, 13 bytes
+Padding_70_6a73:
+	; $6a73, 13 bytes (fill)
+	ds 13, $00
 Data_70_6a80:
 	INCBIN "data/bank_070/d_6a80.bin" ; $6a80, 256 bytes
 Data_70_6b80:
@@ -338,7 +348,9 @@ Data_70_70cd:
 	dw Data_70_73f0 ; $70e5
 	dw Data_70_74f0 ; $70e7
 	dw Data_70_75f0 ; $70e9
-	INCBIN "data/bank_070/d_70eb.bin" ; $70eb, 5 bytes
+Padding_70_70eb:
+	; $70eb, 5 bytes (fill)
+	ds 5, $00
 Data_70_70f0:
 	INCBIN "data/bank_070/d_70f0.bin" ; $70f0, 256 bytes
 Data_70_71f0:
@@ -384,7 +396,9 @@ Data_70_773d:
 	dw Data_70_7a60 ; $7755
 	dw Data_70_7b60 ; $7757
 	dw Data_70_7c60 ; $7759
-	INCBIN "data/bank_070/d_775b.bin" ; $775b, 5 bytes
+Padding_70_775b:
+	; $775b, 5 bytes (fill)
+	ds 5, $00
 Data_70_7760:
 	INCBIN "data/bank_070/d_7760.bin" ; $7760, 256 bytes
 Data_70_7860:

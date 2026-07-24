@@ -220,6 +220,7 @@ Label_24_40fc:
 	ld [hl+], a ; $410b
 	ld [hl], d ; $410c
 	ret ; $410d
+Gfx_24_410e:
 	INCBIN "data/bank_024/d_410e.bin" ; $410e, 91 bytes
 ApplyBallTrajectoryCapped_24:
 	push hl ; $4169
@@ -554,6 +555,7 @@ Label_24_4d1f:
 	call z, $80f1 ; $4d42
 	add hl, bc ; $4d45
 	sub a, b ; $4d46
+Gfx_24_4d47:
 	INCBIN "data/bank_024/d_4d47.bin" ; $4d47, 1113 bytes
 ShotBallPathDrop:
 	farcall ComputeShotPlacement ; $51a0

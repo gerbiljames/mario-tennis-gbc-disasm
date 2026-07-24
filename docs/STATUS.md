@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~160.5K instructions / 414,791 bytes of proven code+structured source
-(19.8% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~160.5K instructions / 420,087 bytes of proven code+structured source
+(20.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -26,7 +26,49 @@ Everything below is **committed** (HEAD `aa1d1b8`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,199 of 20,051 labels are human-named** (up from 4,816 on 2026-07-23).
+**6,332 of 20,575 labels are human-named** (see the caveat in the
+auto-split section below) (up from 4,816 on 2026-07-23).
+
+### Every blob in the ROM is now named (2026-07-25)
+
+**All 4,938 remaining `INCBIN`s carry a label.** The pass that finished it
+covered banks `$17`-`$1e`, `$24`-`$3f`, `$6a`/`$6b` and the `$70`-`$77`
+sprite banks — 324 unlabelled blobs when the sweep started, zero now.
+
+These are asset banks, so the blobs were always going to stay binary; the
+value is **exact extents and names derived from how each region is used**.
+A script does both: for every same-bank `ld hl/de, $XXXX` that lands inside
+an unlabelled blob it looks ahead a few lines for the consumer call and
+splits the blob there, naming the piece after what reads it —
+
+| Consumer | Name | Spec |
+|---|---|---|
+| `LoadPaletteShadow` / `LoadPalettesImmediate` | `Palette_*` | `palettes` |
+| `QueueVRAMCopy` / `CopyMemoryFast` | `Gfx_*` | — |
+| `DecompressData` | `Lz_*` | — |
+| `SetModeHookTable` | `ModeHooks_*` | `mode_hooks` |
+| `SetMinigamePointTable` | `PointTable_*` | `bytes:4` |
+| `QueueSpriteTemplate` / `SetObjSpriteTemplate` | `SpriteTemplate_*` | `sprite_template` |
+| `PrintString` / `WriteStringToWindow` | `String_*` | `ascii` |
+
+A leading run before the first reference becomes `Padding_*` + `fill` when
+it is one repeated byte, otherwise `Data_*` (with a `bytes:N` rendering under
+64 bytes) or `Gfx_*`. That turned e.g. bank `$18`'s 41 pieces and bank
+`$1c`'s 83 out of six blobs, and every `palettes` split re-renders as
+readable `dw` colors.
+
+**Caveat on the naming metric.** `progress.py`'s human-named count jumped
+from 6,199 to 6,332 in this pass, but the new entries are *usage-derived
+placeholders* (`Palette_18_42e0`, `Gfx_1c_7541`), not semantic names. They
+say what reads the data, not what it is. Treat that part of the count
+accordingly — the underlying win is that nothing is anonymous any more, so
+naming a region now means editing one `labels.json` entry rather than first
+working out where it starts and ends.
+
+Two more stranded functions fell out of the decode screen on the way:
+`$18:$7bba`, a jump-table target reached through `jp hl`, and `$1a:$4521`,
+a stranded `call`/`jp` pair. The screen also flagged `$1b:$5f7c`, but that
+is signed ramp data whose `$ff` bytes decode as `rst $38` — left as data.
 
 ### Story banks $0f-$16 cleared with a decode-based blob screen (2026-07-25)
 

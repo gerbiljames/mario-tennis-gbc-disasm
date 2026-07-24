@@ -9,7 +9,11 @@ SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 	farptr QueueMatchSpriteFrameA ; $400c
 	farptr Func_28_60a0 ; $400e
 	farptr QueueMatchSpriteFrameB ; $4010
-	INCBIN "data/bank_028/d_4012.bin" ; $4012, 1486 bytes
+Padding_28_4012:
+	; $4012, 14 bytes (fill)
+	ds 14, $00
+Gfx_28_4020:
+	INCBIN "data/bank_028/d_4020.bin" ; $4020, 1472 bytes
 MatchGfxTilesA_28:
 	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
 MatchGfxPalettesA_28:
@@ -54,7 +58,7 @@ LoadMatchGraphics:
 	ld hl, $4be0 ; $5ebf
 	ld de, $0002 ; $5ec2
 	call LoadPaletteShadow ; $5ec5
-	ld hl, $4020 ; $5ec8
+	ld hl, Gfx_28_4020 ; $5ec8
 	ld de, $a400 ; $5ecb
 	ld c, $40 ; $5ece
 	call QueueVRAMCopy ; $5ed0
@@ -261,7 +265,9 @@ QueueMatchSpriteFrameA:
 	ld c, $0c ; $607a
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
-	INCBIN "data/bank_028/d_6080.bin" ; $6080, 6 bytes
+Data_28_6080:
+	; $6080, 6 bytes (bytes:6)
+	db $30, $52, $f0, $52, $b0, $53 ; 0x00
 QueueMatchSpriteFrameB:
 	add a, a ; $6086
 	add a, $9a ; $6087
@@ -276,7 +282,9 @@ QueueMatchSpriteFrameB:
 	ld c, $0c ; $6094
 	call QueueVRAMCopy ; $6096
 	ret ; $6099
-	INCBIN "data/bank_028/d_609a.bin" ; $609a, 6 bytes
+Data_28_609a:
+	; $609a, 6 bytes (bytes:6)
+	db $f0, $5b, $b0, $5c, $70, $5d ; 0x00
 Func_28_60a0:
 	ld h, $00 ; $60a0
 	ld l, a ; $60a2
@@ -303,7 +311,9 @@ Func_28_60a0:
 	ld c, $04 ; $60bb
 	call QueueVRAMCopy ; $60bd
 	ret ; $60c0
-	INCBIN "data/bank_028/d_60c1.bin" ; $60c1, 8 bytes
+Data_28_60c1:
+	; $60c1, 8 bytes (bytes:8)
+	db $d0, $56, $10, $58, $50, $59, $90, $5a ; 0x00
 LoadMatchStoryGfx:
 	wram_bank $01 ; $60c9
 	ld hl, MatchGfxPalettesC_28 ; $60cf
@@ -380,7 +390,9 @@ Label_28_6141:
 Label_28_616f:
 	pop af ; $616f
 	ret ; $6170
-	INCBIN "data/bank_028/d_6171.bin" ; $6171, 15 bytes
+Padding_28_6171:
+	; $6171, 15 bytes (fill)
+	ds 15, $00
 MatchGfxTilesB_28:
 	INCBIN "data/bank_028/d_6180.bin" ; $6180, 2972 bytes
 MatchGfxPalettesC_28:

@@ -3477,14 +3477,14 @@ MainMenuCursorSpriteTask:
 	ld c, $03 ; $5866
 	call GetMenuCursorCellIndex ; $5868
 	push af ; $586b
-	ld hl, $592d ; $586c
+	ld hl, Data_3b_592d ; $586c
 	add a, l ; $586f
 	ld l, a ; $5870
 	jr nc, Label_3b_5874 ; $5871
 	inc h ; $5873
 Label_3b_5874:
 	ld c, [hl] ; $5874
-	ld hl, $591b ; $5875
+	ld hl, Data_3b_591b ; $5875
 	pop af ; $5878
 	add a, a ; $5879
 	push af ; $587a
@@ -3512,7 +3512,7 @@ Label_3b_588f:
 	call QueueSpriteTemplate ; $5895
 	ld c, $03 ; $5898
 	call GetMenuCursorCellIndex ; $589a
-	ld hl, $5936 ; $589d
+	ld hl, Data_3b_5936 ; $589d
 	add a, l ; $58a0
 	ld l, a ; $58a1
 	jr nc, Label_3b_58a5 ; $58a2
@@ -3565,7 +3565,19 @@ SpriteTemplate_3b_5912:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03b/d_591b.bin" ; $591b, 77 bytes
+Data_3b_591b:
+	; $591b, 18 bytes (bytes:16)
+	db $2e, $fc, $2e, $26, $2e, $5c, $52, $fe, $52, $2c, $52, $5e, $68, $fc, $68, $2c ; 0x00
+	db $68, $5e ; 0x10
+Data_3b_592d:
+	; $592d, 9 bytes (bytes:9)
+	db $10, $20, $32, $00, $00, $00, $42, $52, $62 ; 0x00
+Data_3b_5936:
+	; $5936, 50 bytes (bytes:16)
+	db $00, $04, $00, $00, $00, $00, $00, $00, $00, $10, $08, $00, $00, $10, $10, $02 ; 0x00
+	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
+	db $00, $10, $38, $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12 ; 0x20
+	db $00, $80 ; 0x30
 DrawMainMenuSelection:
 	wram_bank $03 ; $5968
 	ld b, $00 ; $596e
@@ -4590,7 +4602,7 @@ Label_3b_60eb:
 	add a, $04 ; $60ee
 Label_3b_60f0:
 	push af ; $60f0
-	ld hl, $615d ; $60f1
+	ld hl, Data_3b_615d ; $60f1
 	add a, l ; $60f4
 	ld l, a ; $60f5
 	jr nc, Label_3b_60f9 ; $60f6
@@ -4598,7 +4610,7 @@ Label_3b_60f0:
 Label_3b_60f9:
 	ld c, [hl] ; $60f9
 	pop af ; $60fa
-	ld hl, $614f ; $60fb
+	ld hl, Data_3b_614f ; $60fb
 	add a, a ; $60fe
 	add a, l ; $60ff
 	ld l, a ; $6100
@@ -4639,7 +4651,12 @@ SpriteTemplate_3b_6146:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03b/d_614f.bin" ; $614f, 21 bytes
+Data_3b_614f:
+	; $614f, 14 bytes (bytes:14)
+	db $2d, $0a, $2d, $54, $4f, $0c, $4f, $54, $6a, $00, $6a, $2c, $6a, $5d ; 0x00
+Data_3b_615d:
+	; $615d, 7 bytes (bytes:7)
+	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchFormatCaption:
 	wram_bank $03 ; $6164
 	ld de, $d1e0 ; $616a
@@ -5025,7 +5042,7 @@ MinigameSelectCursorSpriteTask:
 	ld c, $03 ; $6470
 	call GetMenuCursorCellIndex ; $6472
 	push af ; $6475
-	ld hl, $651b ; $6476
+	ld hl, Data_3b_651b ; $6476
 	add a, l ; $6479
 	ld l, a ; $647a
 	jr nc, Label_3b_647e ; $647b
@@ -5046,7 +5063,7 @@ Label_3b_648a:
 	ld e, a ; $648c
 	farcall ApplySpriteBobOffset ; $648d
 	pop af ; $6490
-	ld hl, $64f4 ; $6491
+	ld hl, Data_3b_64f4 ; $6491
 	add a, l ; $6494
 	ld l, a ; $6495
 	jr nc, Label_3b_6499 ; $6496
@@ -5073,10 +5090,10 @@ GetMinigameCursorPosTable:
 	push af ; $64b8
 	call CheckMinigameGridExpanded ; $64b9
 	jr nz, Label_3b_64c3 ; $64bc
-	ld hl, $650f ; $64be
+	ld hl, Data_3b_650f ; $64be
 	jr Label_3b_64c6 ; $64c1
 Label_3b_64c3:
-	ld hl, $64fd ; $64c3
+	ld hl, Data_3b_64fd ; $64c3
 Label_3b_64c6:
 	pop af ; $64c6
 	pop bc ; $64c7
@@ -5098,7 +5115,22 @@ SpriteTemplate_3b_64eb:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03b/d_64f4.bin" ; $64f4, 89 bytes
+Data_3b_64f4:
+	; $64f4, 9 bytes (bytes:9)
+	db $08, $00, $08, $00, $08, $00, $08, $08, $08 ; 0x00
+Data_3b_64fd:
+	; $64fd, 18 bytes (bytes:16)
+	db $30, $fc, $30, $2c, $30, $5c, $50, $fc, $50, $2c, $50, $5e, $6c, $fc, $6c, $2c ; 0x00
+	db $6c, $5e ; 0x10
+Data_3b_650f:
+	; $650f, 12 bytes (bytes:12)
+	db $38, $fc, $38, $2c, $38, $5c, $60, $14, $60, $44, $60, $44 ; 0x00
+Data_3b_651b:
+	; $651b, 50 bytes (bytes:16)
+	db $00, $30, $50, $40, $20, $20, $40, $10, $30, $10, $08, $00, $00, $10, $10, $02 ; 0x00
+	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
+	db $00, $10, $38, $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12 ; 0x20
+	db $00, $80 ; 0x30
 OverrideMinigameCursorIfLocked:
 	push bc ; $654d
 	push hl ; $654e
@@ -5717,7 +5749,7 @@ SavedDataSourceCursorSpriteTask:
 	ld c, $03 ; $69df
 	call GetMenuCursorCellIndex ; $69e1
 	push af ; $69e4
-	ld hl, $6a4f ; $69e5
+	ld hl, Data_3b_6a4f ; $69e5
 	add a, l ; $69e8
 	ld l, a ; $69e9
 	jr nc, Label_3b_69ed ; $69ea
@@ -5725,7 +5757,7 @@ SavedDataSourceCursorSpriteTask:
 Label_3b_69ed:
 	ld c, [hl] ; $69ed
 	pop af ; $69ee
-	ld hl, $6a43 ; $69ef
+	ld hl, Data_3b_6a43 ; $69ef
 	add a, a ; $69f2
 	add a, l ; $69f3
 	ld l, a ; $69f4
@@ -5766,7 +5798,14 @@ SpriteTemplate_3b_6a3a:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03b/d_6a43.bin" ; $6a43, 59 bytes
+Data_3b_6a43:
+	; $6a43, 12 bytes (bytes:12)
+	db $38, $fc, $38, $2c, $38, $5c, $60, $0c, $60, $4d, $60, $3e ; 0x00
+Data_3b_6a4f:
+	; $6a4f, 47 bytes (bytes:16)
+	db $00, $10, $20, $40, $30, $40, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
+	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
+	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
 DrawSavedDataSourceGrid:
 	wram_bank $03 ; $6a7e
 	ld b, $00 ; $6a84
@@ -6410,7 +6449,7 @@ EraseSavedDataCursorSpriteTask:
 	ld c, $03 ; $6f5e
 	call GetMenuCursorCellIndex ; $6f60
 	push af ; $6f63
-	ld hl, $6fcc ; $6f64
+	ld hl, Data_3b_6fcc ; $6f64
 	add a, l ; $6f67
 	ld l, a ; $6f68
 	jr nc, Label_3b_6f6c ; $6f69
@@ -6418,7 +6457,7 @@ EraseSavedDataCursorSpriteTask:
 Label_3b_6f6c:
 	ld c, [hl] ; $6f6c
 	pop af ; $6f6d
-	ld hl, $6fc2 ; $6f6e
+	ld hl, Data_3b_6fc2 ; $6f6e
 	add a, a ; $6f71
 	add a, l ; $6f72
 	ld l, a ; $6f73
@@ -6459,7 +6498,14 @@ SpriteTemplate_3b_6fb9:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03b/d_6fc2.bin" ; $6fc2, 57 bytes
+Data_3b_6fc2:
+	; $6fc2, 10 bytes (bytes:10)
+	db $3a, $fe, $3a, $2c, $3a, $5c, $60, $0c, $60, $4c ; 0x00
+Data_3b_6fcc:
+	; $6fcc, 47 bytes (bytes:16)
+	db $00, $10, $20, $30, $40, $30, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
+	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
+	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
 DrawEraseSavedDataGrid:
 	wram_bank $03 ; $6ffb
 	ld b, $00 ; $7001
@@ -6928,7 +6974,7 @@ N64RecordTypeCursorSpriteTask:
 	ld c, $03 ; $7352
 	call GetMenuCursorCellIndex ; $7354
 	push af ; $7357
-	ld hl, $73bc ; $7358
+	ld hl, Data_3b_73bc ; $7358
 	add a, l ; $735b
 	ld l, a ; $735c
 	jr nc, Label_3b_7360 ; $735d
@@ -6936,7 +6982,7 @@ N64RecordTypeCursorSpriteTask:
 Label_3b_7360:
 	ld c, [hl] ; $7360
 	pop af ; $7361
-	ld hl, $73b6 ; $7362
+	ld hl, Data_3b_73b6 ; $7362
 	add a, a ; $7365
 	add a, l ; $7366
 	ld l, a ; $7367
@@ -6977,7 +7023,12 @@ SpriteTemplate_3b_73ad:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03b/d_73b6.bin" ; $73b6, 9 bytes
+Data_3b_73b6:
+	; $73b6, 6 bytes (bytes:6)
+	db $50, $fc, $50, $2c, $50, $5c ; 0x00
+Data_3b_73bc:
+	; $73bc, 3 bytes (bytes:3)
+	db $00, $10, $20 ; 0x00
 DrawN64RecordTypeGrid:
 	wram_bank $03 ; $73bf
 	ld b, $00 ; $73c5
@@ -7376,7 +7427,7 @@ N64TransferItemCursorSpriteTask:
 	ld c, $02 ; $76ed
 	call GetMenuCursorCellIndex ; $76ef
 	push af ; $76f2
-	ld hl, $7759 ; $76f3
+	ld hl, Data_3b_7759 ; $76f3
 	add a, l ; $76f6
 	ld l, a ; $76f7
 	jr nc, Label_3b_76fb ; $76f8
@@ -7384,7 +7435,7 @@ N64TransferItemCursorSpriteTask:
 Label_3b_76fb:
 	ld c, [hl] ; $76fb
 	pop af ; $76fc
-	ld hl, $7751 ; $76fd
+	ld hl, Data_3b_7751 ; $76fd
 	add a, a ; $7700
 	add a, l ; $7701
 	ld l, a ; $7702
@@ -7425,7 +7476,12 @@ SpriteTemplate_3b_7748:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-	INCBIN "data/bank_03b/d_7751.bin" ; $7751, 12 bytes
+Data_3b_7751:
+	; $7751, 8 bytes (bytes:8)
+	db $38, $14, $38, $4c, $60, $14, $60, $4a ; 0x00
+Data_3b_7759:
+	; $7759, 4 bytes (bytes:4)
+	db $00, $10, $20, $30 ; 0x00
 ShowTournamentBracket:
 	wram_bank $03 ; $775d
 	ld a, b ; $7763

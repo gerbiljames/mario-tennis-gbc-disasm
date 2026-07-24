@@ -17,7 +17,9 @@ BallTrajEntryPtr6_29:
 	pop de ; $400f
 	add hl, de ; $4010
 	ret ; $4011
-	INCBIN "data/bank_029/d_4012.bin" ; $4012, 13 bytes
+Data_29_4012:
+	; $4012, 13 bytes (bytes:13)
+	db $e5, $6b, $62, $29, $29, $6c, $26, $00, $29, $29, $d1, $19, $c9 ; 0x00
 SeekBallTrajEntry6_29:
 	ld a, [wShotTrajRowMin] ; $401f
 	ld d, a ; $4022
@@ -44,7 +46,10 @@ Label_29_403b:
 	jr Label_29_4027 ; $403b
 Label_29_403d:
 	ret ; $403d
-	INCBIN "data/bank_029/d_403e.bin" ; $403e, 31 bytes
+Data_29_403e:
+	; $403e, 31 bytes (bytes:16)
+	db $fa, $8e, $c4, $57, $fa, $8f, $c4, $5f, $e5, $2a, $66, $6f, $09, $e1, $38, $0e ; 0x00
+	db $7a, $bb, $30, $0a, $14, $3e, $04, $85, $6f, $30, $01, $24, $18, $ea, $c9 ; 0x10
 SetBallVelocityFromEntry6_29:
 	ld a, [hl+] ; $405d
 	ld c, a ; $405e
@@ -79,7 +84,10 @@ Label_29_4076:
 	pop hl ; $407f
 	farcall SetBallVelocityPolar ; $4080
 	ret ; $4083
-	INCBIN "data/bank_029/d_4084.bin" ; $4084, 20 bytes
+Data_29_4084:
+	; $4084, 20 bytes (bytes:16)
+	db $2a, $4f, $2a, $47, $c5, $2a, $4f, $2a, $47, $21, $3a, $c4, $2a, $56, $5f, $e1 ; 0x00
+	db $df, $26, $08, $c9 ; 0x10
 SetBallTargetByPrediction_29:
 	ld a, [hl+] ; $4098
 	ld c, a ; $4099
@@ -195,6 +203,7 @@ Label_29_40f0:
 	rr l ; $412f
 	call SetBallTargetFromAim_29 ; $4131
 	ret ; $4134
+Gfx_29_4135:
 	INCBIN "data/bank_029/d_4135.bin" ; $4135, 188 bytes
 Label_29_41f1:
 	farcall ApplyFallbackBallTrajectory_24 ; $41f1
@@ -230,7 +239,11 @@ SetBallTargetFromAim_29:
 	ld [hl+], a ; $421e
 	ld [hl], d ; $421f
 	ret ; $4220
-	INCBIN "data/bank_029/d_4221.bin" ; $4221, 43 bytes
+Data_29_4221:
+	; $4221, 43 bytes (bytes:16)
+	db $e5, $c5, $21, $3a, $c4, $2a, $46, $4f, $21, $06, $c4, $2a, $56, $5f, $21, $02 ; 0x00
+	db $c4, $2a, $66, $6f, $cd, $8f, $13, $29, $7c, $e6, $1f, $ea, $72, $c4, $87, $e1 ; 0x10
+	db $d1, $85, $6f, $30, $01, $24, $2a, $66, $6f, $19, $c9 ; 0x20
 LookupBallPosByHeight_29:
 	ld e, l ; $424c
 	ld d, h ; $424d

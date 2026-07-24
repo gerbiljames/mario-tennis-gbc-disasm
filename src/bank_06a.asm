@@ -18,7 +18,9 @@ Data_6a_400a:
 	dw Data_6a_4330 ; $4022
 	dw Data_6a_4430 ; $4024
 	dw Data_6a_4530 ; $4026
-	INCBIN "data/bank_06a/d_4028.bin" ; $4028, 8 bytes
+Padding_6a_4028:
+	; $4028, 8 bytes (fill)
+	ds 8, $00
 Data_6a_4030:
 	INCBIN "data/bank_06a/d_4030.bin" ; $4030, 256 bytes
 Data_6a_4130:

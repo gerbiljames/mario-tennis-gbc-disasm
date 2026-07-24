@@ -26,7 +26,9 @@ Data_76_400e:
 	dw Data_76_4330 ; $4026
 	dw Data_76_4430 ; $4028
 	dw Data_76_4530 ; $402a
-	INCBIN "data/bank_076/d_402c.bin" ; $402c, 4 bytes
+Padding_76_402c:
+	; $402c, 4 bytes (fill)
+	ds 4, $00
 Data_76_4030:
 	INCBIN "data/bank_076/d_4030.bin" ; $4030, 256 bytes
 Data_76_4130:
@@ -72,7 +74,9 @@ Data_76_467d:
 	dw Data_76_49a0 ; $4695
 	dw Data_76_4aa0 ; $4697
 	dw Data_76_4ba0 ; $4699
-	INCBIN "data/bank_076/d_469b.bin" ; $469b, 5 bytes
+Padding_76_469b:
+	; $469b, 5 bytes (fill)
+	ds 5, $00
 Data_76_46a0:
 	INCBIN "data/bank_076/d_46a0.bin" ; $46a0, 256 bytes
 Data_76_47a0:
@@ -118,7 +122,9 @@ Data_76_4ced:
 	dw Data_76_5410 ; $4d05
 	dw Data_76_5510 ; $4d07
 	dw Data_76_5610 ; $4d09
-	INCBIN "data/bank_076/d_4d0b.bin" ; $4d0b, 5 bytes
+Padding_76_4d0b:
+	; $4d0b, 5 bytes (fill)
+	ds 5, $00
 Data_76_4d10:
 	INCBIN "data/bank_076/d_4d10.bin" ; $4d10, 256 bytes
 Data_76_4e10:
@@ -179,7 +185,9 @@ Data_76_5774:
 	dw Data_76_5aa0 ; $578c
 	dw Data_76_5ba0 ; $578e
 	dw Data_76_5ca0 ; $5790
-	INCBIN "data/bank_076/d_5792.bin" ; $5792, 14 bytes
+Padding_76_5792:
+	; $5792, 14 bytes (fill)
+	ds 14, $00
 Data_76_57a0:
 	INCBIN "data/bank_076/d_57a0.bin" ; $57a0, 256 bytes
 Data_76_58a0:
@@ -225,7 +233,9 @@ Data_76_5ded:
 	dw Data_76_6510 ; $5e05
 	dw Data_76_6610 ; $5e07
 	dw Data_76_6710 ; $5e09
-	INCBIN "data/bank_076/d_5e0b.bin" ; $5e0b, 5 bytes
+Padding_76_5e0b:
+	; $5e0b, 5 bytes (fill)
+	ds 5, $00
 Data_76_5e10:
 	INCBIN "data/bank_076/d_5e10.bin" ; $5e10, 256 bytes
 Data_76_5f10:
@@ -283,7 +293,9 @@ Data_76_686a:
 	dw Data_76_6f90 ; $6882
 	dw Data_76_7090 ; $6884
 	dw Data_76_7190 ; $6886
-	INCBIN "data/bank_076/d_6888.bin" ; $6888, 8 bytes
+Padding_76_6888:
+	; $6888, 8 bytes (fill)
+	ds 8, $00
 Data_76_6890:
 	INCBIN "data/bank_076/d_6890.bin" ; $6890, 256 bytes
 Data_76_6990:
@@ -341,7 +353,9 @@ Data_76_72ea:
 	dw Data_76_73d0 ; $7302
 	dw Data_76_7410 ; $7304
 	dw Data_76_7450 ; $7306
-	INCBIN "data/bank_076/d_7308.bin" ; $7308, 8 bytes
+Padding_76_7308:
+	; $7308, 8 bytes (fill)
+	ds 8, $00
 Data_76_7310:
 	INCBIN "data/bank_076/d_7310.bin" ; $7310, 64 bytes
 Data_76_7350:

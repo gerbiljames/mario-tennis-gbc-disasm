@@ -460,24 +460,32 @@ Label_39_43f9:
 LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank $01 ; $44d4
-	ld hl, $44f6 ; $44da
+	ld hl, Lz_39_44f6 ; $44da
 	ld de, $d000 ; $44dd
 	call DecompressData ; $44e0
 	ld hl, $d000 ; $44e3
 	pop de ; $44e6
 	ld c, $04 ; $44e7
 	call QueueVRAMCopy ; $44e9
-	ld hl, $4516 ; $44ec
+	ld hl, Palette_39_4516 ; $44ec
 	ld de, $0801 ; $44ef
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
-	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 40 bytes
+Lz_39_44f6:
+	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 32 bytes
+Palette_39_4516:
+	; $4516, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $2bff, $518a, $5f2a, $0000 ; pal 0: #ffff52 #5262a4 #52cdbd #000000
 LoadFixedBgPalette0:
 	ld de, $0001 ; $451e
-	ld hl, $4528 ; $4521
+	ld hl, Palette_39_4528 ; $4521
 	call LoadPaletteShadow ; $4524
 	ret ; $4527
-	INCBIN "data/bank_039/d_4528.bin" ; $4528, 8 bytes
+Palette_39_4528:
+	; $4528, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $739c, $739c, $39cf, $0000 ; pal 0: #e6e6e6 #e6e6e6 #7b7373 #000000
 CopyTilemapRect:
 	push af ; $4530
 	push bc ; $4531
@@ -848,7 +856,12 @@ ApplySpriteWaveOffset:
 	add a, e ; $4a81
 	ld e, a ; $4a82
 	ret ; $4a83
-	INCBIN "data/bank_039/d_4a84.bin" ; $4a84, 64 bytes
+Data_39_4a84:
+	; $4a84, 64 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $03, $03, $03, $03 ; 0x00
+	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
+	db $00, $00, $00, $ff, $ff, $ff, $fe, $fe, $fe, $fd, $fd, $fd, $fd, $fd, $fd, $fd ; 0x20
+	db $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fd, $fe, $fe, $fe, $ff, $ff, $ff, $00, $00 ; 0x30
 ApplySpriteBobOffset:
 	ldh a, [hVBlankCounter] ; $4ac4
 	and a, $3f ; $4ac6
@@ -861,7 +874,12 @@ ApplySpriteBobOffset:
 	add a, e ; $4ad0
 	ld e, a ; $4ad1
 	ret ; $4ad2
-	INCBIN "data/bank_039/d_4ad3.bin" ; $4ad3, 64 bytes
+Data_39_4ad3:
+	; $4ad3, 64 bytes (bytes:16)
+	db $00, $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $02, $02, $02, $02 ; 0x00
+	db $02, $02, $02, $02, $02, $02, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x10
+	db $00, $00, $00, $00, $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fe, $fe, $fe ; 0x20
+	db $fe, $fe, $fe, $fe, $fe, $fe, $ff, $ff, $ff, $ff, $ff, $00, $00, $00, $00, $00 ; 0x30
 InitMenuBgScroll:
 	ld a, $01 ; $4b13
 	ld [$cb17], a ; $4b15
@@ -3140,7 +3158,7 @@ Label_39_6e42:
 	jr Label_39_6eb9 ; $6e47
 Label_39_6e49:
 	ld a, [wMenuCursorX] ; $6e49
-	ld hl, $6eba ; $6e4c
+	ld hl, Data_39_6eba ; $6e4c
 	add a, l ; $6e4f
 	ld l, a ; $6e50
 	jr nc, Label_39_6e54 ; $6e51
@@ -3191,7 +3209,7 @@ Label_39_6e97:
 	jr Label_39_6eb9 ; $6e9c
 Label_39_6e9e:
 	ld a, [wMenuCursorX] ; $6e9e
-	ld hl, $6ebd ; $6ea1
+	ld hl, Data_39_6ebd ; $6ea1
 	add a, l ; $6ea4
 	ld l, a ; $6ea5
 	jr nc, Label_39_6ea9 ; $6ea6
@@ -3206,7 +3224,12 @@ Label_39_6ea9:
 	jr Label_39_6eb9 ; $6eb7
 Label_39_6eb9:
 	ret ; $6eb9
-	INCBIN "data/bank_039/d_6eba.bin" ; $6eba, 6 bytes
+Data_39_6eba:
+	; $6eba, 3 bytes (bytes:3)
+	db $00, $02, $02 ; 0x00
+Data_39_6ebd:
+	; $6ebd, 3 bytes (bytes:3)
+	db $00, $02, $02 ; 0x00
 InitNumberSpriteGfx:
 	push af ; $6ec0
 	push bc ; $6ec1
@@ -3234,7 +3257,7 @@ InitNumberSpriteGfx:
 	ld c, $14 ; $6ee9
 	farcall LoadCompressedTileBlock ; $6eeb
 	pop bc ; $6eee
-	ld hl, $6f08 ; $6eef
+	ld hl, Palette_39_6f08 ; $6eef
 	ld d, b ; $6ef2
 	ld e, $01 ; $6ef3
 	call LoadPaletteShadow ; $6ef5
@@ -3248,7 +3271,10 @@ Label_39_6ef9:
 	ld c, $0c ; $6f02
 	farcall LoadIndexedPalette ; $6f04
 	ret ; $6f07
-	INCBIN "data/bank_039/d_6f08.bin" ; $6f08, 8 bytes
+Palette_39_6f08:
+	; $6f08, 8 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $6280, $0000, $001f, $02df ; pal 0: #00a4c5 #000000 #ff0000 #ffb400
 DrawDecimalNumberSprites_39:
 	push af ; $6f10
 	push bc ; $6f11
@@ -3332,7 +3358,7 @@ Label_39_6f7e:
 Label_39_6f87:
 	ld d, [hl] ; $6f87
 	ld a, c ; $6f88
-	ld hl, $6fc6 ; $6f89
+	ld hl, Data_39_6fc6 ; $6f89
 	add a, l ; $6f8c
 	ld l, a ; $6f8d
 	jr nc, Label_39_6f91 ; $6f8e
@@ -3370,7 +3396,11 @@ Label_39_6fc0:
 	pop af ; $6fc0
 	wram_bank ; $6fc1
 	ret ; $6fc5
-	INCBIN "data/bank_039/d_6fc6.bin" ; $6fc6, 33 bytes
+Data_39_6fc6:
+	; $6fc6, 33 bytes (bytes:16)
+	db $80, $80, $10, $10, $40, $40, $20, $04, $04, $04, $10, $80, $80, $20, $20, $40 ; 0x00
+	db $40, $10, $04, $20, $80, $80, $10, $10, $40, $40, $20, $04, $04, $00, $00, $00 ; 0x10
+	db $00 ; 0x20
 ResetCheatCodeBuffer:
 	ldh a, [hWramBank] ; $6fe7
 	push af ; $6fe9

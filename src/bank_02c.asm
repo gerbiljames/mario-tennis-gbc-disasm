@@ -217,7 +217,12 @@ Label_2c_40f4:
 	ld [hl+], a ; $4103
 	ld [hl], d ; $4104
 	ret ; $4105
-	INCBIN "data/bank_02c/d_4106.bin" ; $4106, 51 bytes
+Data_2c_4106:
+	; $4106, 51 bytes (bytes:16)
+	db $af, $91, $4f, $9f, $90, $47, $fa, $8a, $c4, $5f, $fa, $8b, $c4, $57, $cd, $06 ; 0x00
+	db $40, $e5, $2a, $66, $6f, $09, $5d, $54, $e1, $da, $f5, $41, $cd, $23, $40, $d5 ; 0x10
+	db $cd, $61, $40, $d1, $62, $2e, $00, $cb, $2c, $cb, $1d, $cb, $2c, $cb, $1d, $cd ; 0x20
+	db $f9, $41, $c9 ; 0x30
 ApplyBallTrajectory6_2c:
 	xor a, a ; $4139
 	sub a, c ; $413a
@@ -281,7 +286,12 @@ Label_2c_418d:
 	pop hl ; $4195
 	call SetBallTargetFromAim_2c ; $4196
 	ret ; $4199
-	INCBIN "data/bank_02c/d_419a.bin" ; $419a, 51 bytes
+Data_2c_419a:
+	; $419a, 51 bytes (bytes:16)
+	db $af, $91, $4f, $9f, $90, $47, $fa, $8a, $c4, $5f, $fa, $8b, $c4, $57, $cd, $16 ; 0x00
+	db $40, $e5, $2a, $66, $6f, $09, $5d, $54, $e1, $da, $f5, $41, $cd, $42, $40, $d5 ; 0x10
+	db $cd, $88, $40, $d1, $62, $2e, $00, $cb, $2c, $cb, $1d, $cb, $2c, $cb, $1d, $cd ; 0x20
+	db $f9, $41, $c9 ; 0x30
 ApplyBallTrajectory4_2c:
 	xor a, a ; $41cd
 	sub a, c ; $41ce

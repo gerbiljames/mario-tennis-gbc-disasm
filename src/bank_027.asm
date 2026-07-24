@@ -465,7 +465,11 @@ Label_27_4a88:
 	ld [$c294], a ; $4b3a
 	ld [wStoryModeExitLocationRequest], a ; $4b3d
 	ret ; $4b40
-	INCBIN "data/bank_027/d_4b41.bin" ; $4b41, 38 bytes
+Data_27_4b41:
+	; $4b41, 38 bytes (bytes:16)
+	db $04, $00, $13, $00, $15, $02, $04, $00, $13, $00, $0b, $02, $04, $00, $01, $00 ; 0x00
+	db $0b, $02, $00, $04, $00, $13, $00, $13, $02, $04, $00, $13, $00, $0b, $02, $04 ; 0x10
+	db $00, $01, $00, $0b, $02, $00 ; 0x20
 ActorScript_27_4b67:
 	; $4b67, 25 bytes (actor_script)
 	as_set_target $1300, $1500
@@ -882,11 +886,11 @@ Label_27_52ae:
 	script_set_active $03, $00 ; $5352
 	script_player_speed $0010 ; $5359
 	script_move_player_to_actor $03 ; $535f
-	ld hl, $5580 ; $5366
+	ld hl, Palette_27_5580 ; $5366
 	ld de, $0206 ; $5369
 	call LoadPalettesImmediate ; $536c
 	script_delay $1e ; $536f
-	ld hl, $55c0 ; $5374
+	ld hl, Palette_27_55c0 ; $5374
 	ld de, $0206 ; $5377
 	call LoadPalettesImmediate ; $537a
 	ld a, $10 ; $537d
@@ -981,7 +985,7 @@ ActorScript_27_5557:
 	as_wait $3c
 	as_jump ActorScript_27_5557
 ActorScript_27_555e:
-	; $555e, 146 bytes (actor_script)
+	; $555e, 18 bytes (actor_script)
 	as_set_field $18, $0006
 	as_anim $06
 	as_halt
@@ -996,7 +1000,29 @@ ActorScript_27_555e:
 	as_halt
 	as_halt
 	as_halt
-	INCBIN "data/bank_027/d_5570.bin" ; $5570, 128 bytes (unclassified tail)
+Data_27_5570:
+	; $5570, 16 bytes (bytes:16)
+	db $80, $00, $20, $55, $a0, $7e, $60, $44, $08, $25, $08, $25, $08, $25, $08, $25 ; 0x00
+Palette_27_5580:
+	; $5580, 64 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
+	dw $0140, $024c, $6739, $1006 ; pal 1: #005200 #629400 #cdcdcd #310020
+	dw $1d38, $024c, $0140, $1006 ; pal 2: #c54a39 #629400 #005200 #310020
+	dw $6e40, $0140, $6f7b, $1006 ; pal 3: #0094de #005200 #dedede #310020
+	dw $1d38, $7fff, $3def, $1006 ; pal 4: #c54a39 #ffffff #7b7b7b #310020
+	dw $6140, $0116, $0140, $7e10 ; pal 5: #0052c5 #b44100 #005200 #8383ff
+	dw $0080, $5520, $7ea0, $4460 ; pal 6: #002000 #004aac #00acff #00188b
+	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+Palette_27_55c0:
+	; $55c0, 48 bytes (palettes)
+; GBC palettes (BGR555), 4 colors each
+	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
+	dw $00c0, $0186, $29ea, $1006 ; pal 1: #003100 #316200 #527b52 #310020
+	dw $00ac, $0186, $00c0, $1006 ; pal 2: #622900 #316200 #003100 #310020
+	dw $65c0, $00c0, $5b39, $1006 ; pal 3: #0073cd #003100 #cdcdb4 #310020
+	dw $1d34, $7ffc, $3def, $1006 ; pal 4: #a44a39 #e6ffff #7b7b7b #310020
+	dw $48a0, $00ac, $00c0, $5dad ; pal 5: #002994 #622900 #003100 #6a6abd
 End10VarsityCourtMapScripts_27:
 	; $55f0, 14 bytes (map_tree)
 	dw End10VarsityCourtEntryPoints_27 ; slot 0 EntryPoints
@@ -2032,6 +2058,7 @@ End4JrCourtDepartureDoubles_27:
 	ld [$c294], a ; $6b8d
 	ld [wStoryModeExitLocationRequest], a ; $6b90
 	ret ; $6b93
+Gfx_27_6b94:
 	INCBIN "data/bank_027/d_6b94.bin" ; $6b94, 92 bytes
 ActorScript_27_6bf0:
 	; $6bf0, 20 bytes (actor_script)
@@ -2629,7 +2656,9 @@ ActorScript_27_787b:
 	as_jump .L1
 MapScriptNop_27:
 	ret ; $7885
-	INCBIN "data/bank_027/d_7886.bin" ; $7886, 13 bytes
+Data_27_7886:
+	; $7886, 13 bytes (bytes:13)
+	db $af, $ea, $da, $c2, $c9, $cf, $a2, $c9, $af, $ea, $d5, $c2, $c9 ; 0x00
 ActorScript_27_7893:
 	; $7893, 99 bytes (actor_script)
 	as_anim $01
@@ -2754,7 +2783,7 @@ ActorScript_27_795d:
 	as_wait $4b
 	as_jump .L4
 ActorScript_27_79c4:
-	; $79c4, 253 bytes (actor_script)
+	; $79c4, 133 bytes (actor_script)
 	as_anim $00
 	as_wait $1e
 	as_wait $3c
@@ -2811,5 +2840,6 @@ ActorScript_27_79c4:
 	as_wait $8c
 	as_anim $03
 	as_jump .L76
-	INCBIN "data/bank_027/d_7a49.bin" ; $7a49, 120 bytes (unclassified tail)
+Gfx_27_7a49:
+	INCBIN "data/bank_027/d_7a49.bin" ; $7a49, 120 bytes
 	; $7ac1, 1343 bytes fill to bank end (linker-padded)
