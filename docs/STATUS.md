@@ -28,6 +28,27 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 **5,447 of 18,747 labels are human-named** (up from 4,816 on 2026-07-23).
 
+### Actor-script `as_set_pos` / `as_set_target` were swapped (2026-07-24)
+
+Actor-script opcodes `$03` and `$04` had their macro names the wrong way
+round, in `include/macros.inc`, `disasm.py`'s `ACTOR_SCRIPT_OPS` and
+`docs/actor_script.md` alike. Their two handlers are byte-identical apart
+from two bytes:
+
+```
+$04:$4556 (op $03)  ... c6 0c ...  cb be ...   add a,$0c / res 7,[hl]
+$04:$457b (op $04)  ... c6 08 ...  cb fe ...   add a,$08 / set 7,[hl]
+```
+
+The raw setters settle which field is which: `SetActorPositionRaw`
+(`$0a:$43d8`) writes `+$0c` and `SetActorMoveTargetRaw` (`$0a:$441f`)
+writes `+$08`. So op `$03` writes the *current position* and clears the
+`+$05` bit7 move flag (a teleport), while op `$04` writes the *move
+target* and sets that flag (starts a move) — the opposite of what the
+names said. Swapped in all three places; 582 call sites re-render and the
+build stays byte-perfect. The `as_set_target` / `as_wait_move` patrol
+idiom now reads correctly.
+
 ### Ball-physics RAM named; the court's world scale (2026-07-24)
 
 The `$c4xx` page is the ball-physics / shot-solver core, and 66 of its
@@ -1023,7 +1044,7 @@ scripts**: a 1-byte-opcode bytecode run each frame by `StepActorScript`
 Derived the full opcode set (operand widths confirmed by round-tripping every
 blob through `rgbasm`) and documented it in `docs/actor_script.md`. New `as_*`
 opcode macros + a `render_actor_script`/`actor_script` spec in `disasm.py` turn
-the blobs into readable listings (e.g. a patrol loop of `as_set_pos`/
+the blobs into readable listings (e.g. a patrol loop of `as_set_target`/
 `as_wait_move`/`as_wait`/`as_jump`) with local labels at jump targets; the
 relative `as_jump` back-edge assembles as `dw target - @`. Renamed
 `ActorObjDef_*` → `ActorScript_*` (supersedes the "Label map_actor objdef

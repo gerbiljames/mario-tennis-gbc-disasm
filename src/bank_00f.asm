@@ -1036,11 +1036,11 @@ ReplacePlayerWithStandInActor:
 	ret ; $5664
 ActorScript_0f_5665:
 	; $5665, 19 bytes (actor_script)
-	as_set_pos $0c00, $1300
+	as_set_target $0c00, $1300
 	as_wait_move
-	as_set_pos $1100, $1300
+	as_set_target $1100, $1300
 	as_wait_move
-	as_set_pos $1100, $0f00
+	as_set_target $1100, $0f00
 	as_wait_move
 	as_halt
 DelayFrames:
@@ -1618,13 +1618,13 @@ TournamentTile0E_0f:
 	ret ; $61df
 ActorScript_0f_61e0:
 	; $61e0, 11 bytes (actor_script)
-	as_set_pos $1100, $1500
+	as_set_target $1100, $1500
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_0f_61eb:
 	; $61eb, 11 bytes (actor_script)
-	as_set_pos $0f00, $1500
+	as_set_target $0f00, $1500
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
@@ -2613,42 +2613,42 @@ Label_0f_73b7:
 	ret ; $73bd
 ActorScript_0f_73be:
 	; $73be, 19 bytes (actor_script)
-	as_set_pos $1300, $1500
+	as_set_target $1300, $1500
 	as_wait_move
-	as_set_pos $1300, $0b00
+	as_set_target $1300, $0b00
 	as_wait_move
-	as_set_pos $0100, $0b00
+	as_set_target $0100, $0b00
 	as_wait_move
 	as_halt
 ActorScript_0f_73d1:
 	; $73d1, 19 bytes (actor_script)
-	as_set_pos $1300, $1300
+	as_set_target $1300, $1300
 	as_wait_move
-	as_set_pos $1300, $0b00
+	as_set_target $1300, $0b00
 	as_wait_move
-	as_set_pos $0100, $0b00
+	as_set_target $0100, $0b00
 	as_wait_move
 	as_halt
 ActorScript_0f_73e4:
 	; $73e4, 25 bytes (actor_script)
-	as_set_pos $1300, $1500
+	as_set_target $1300, $1500
 	as_wait_move
-	as_set_pos $1300, $0b00
+	as_set_target $1300, $0b00
 	as_wait_move
-	as_set_pos $0e00, $0b00
+	as_set_target $0e00, $0b00
 	as_wait_move
-	as_set_pos $0e00, $0700
+	as_set_target $0e00, $0700
 	as_wait_move
 	as_halt
 ActorScript_0f_73fd:
 	; $73fd, 25 bytes (actor_script)
-	as_set_pos $1300, $1300
+	as_set_target $1300, $1300
 	as_wait_move
-	as_set_pos $1300, $0b00
+	as_set_target $1300, $0b00
 	as_wait_move
-	as_set_pos $0e00, $0b00
+	as_set_target $0e00, $0b00
 	as_wait_move
-	as_set_pos $0e00, $0700
+	as_set_target $0e00, $0700
 	as_wait_move
 	as_halt
 GetIslandOpenRoundParams:
@@ -3151,10 +3151,10 @@ ActorScript_0f_7a73:
 	as_flag $01, $05, $02
 	as_set_field $06, $0006
 .L8:
-	as_set_pos $2700, $1300
+	as_set_target $2700, $1300
 	as_wait_move
 	as_wait $4b
-	as_set_pos $2900, $1300
+	as_set_target $2900, $1300
 	as_wait_move
 	as_wait $78
 	as_jump .L8

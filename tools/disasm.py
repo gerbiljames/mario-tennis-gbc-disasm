@@ -2691,11 +2691,11 @@ ENDM
 MACRO as_wait_move   ; $02 yield until the current move finishes (+$05 bit7)
 	db $02
 ENDM
-MACRO as_set_target  ; $03 set move target position -> state +$0c/+$0e
+MACRO as_set_pos     ; $03 teleport: set current position -> state +$0c/+$0e, clears the +$05 bit7 move flag
 	db $03
 	dw \\1, \\2
 ENDM
-MACRO as_set_pos     ; $04 set current position -> state +$08/+$0a
+MACRO as_set_target  ; $04 set move target -> state +$08/+$0a, sets the +$05 bit7 move flag
 	db $04
 	dw \\1, \\2
 ENDM
@@ -3169,8 +3169,8 @@ STORY_LOCATION_NAMES = (
 # the comments; see MACROS_INC / docs/actor_script.md.
 ACTOR_SCRIPT_OPS = {
     0x00: ("as_halt", []),          0x01: ("as_wait", ["b"]),
-    0x02: ("as_wait_move", []),     0x03: ("as_set_target", ["w", "w"]),
-    0x04: ("as_set_pos", ["w", "w"]), 0x05: ("as_halt5", []),
+    0x02: ("as_wait_move", []),     0x03: ("as_set_pos", ["w", "w"]),
+    0x04: ("as_set_target", ["w", "w"]), 0x05: ("as_halt5", []),
     0x06: ("as_target_rel", ["w", "w"]), 0x07: ("as_move", ["b", "w"]),
     0x08: ("as_move_rel", ["b", "w"]), 0x09: ("as_rand_box", ["b", "b"]),
     0x0a: ("as_step", []),          0x0b: ("as_follow_wp", []),

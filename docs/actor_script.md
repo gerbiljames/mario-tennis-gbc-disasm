@@ -50,8 +50,8 @@ frame, *cont* runs the next opcode immediately, *cond* depends on state.
 | `$00` | `as_halt` | 1 | yield* | `$460a` | Inert — yields without advancing the pointer (idles forever) |
 | `$01` | `as_wait n` | 2 | yield | `$460c` | Set the wait counter `+$03 = n-1`, then yield |
 | `$02` | `as_wait_move` | 1 | cond | `$45f8` | Yield until the current move finishes (`+$05` bit7 clear) |
-| `$03` | `as_set_target x, y` | 5 | cont | `$4556` | Set the move-target position → `+$0c/+$0e` |
-| `$04` | `as_set_pos x, y` | 5 | cont | `$457b` | Set the current position → `+$08/+$0a` |
+| `$03` | `as_set_pos x, y` | 5 | cont | `$4556` | Teleport: set the current position → `+$0c/+$0e`, and clear the `+$05` bit7 move flag |
+| `$04` | `as_set_target x, y` | 5 | cont | `$457b` | Set the move target → `+$08/+$0a`, and set the `+$05` bit7 move flag (starts a move) |
 | `$05` | `as_halt5` | 1 | yield* | `$460a` | Inert (handler alias of `$00`) |
 | `$06` | `as_target_rel dx, dy` | 5 | cont | `$45a0` | Offset the move target by (dx, dy), both signed words |
 | `$07` | `as_move angle, dist` | 4 | cont | `$44df` | Move by angle (byte) + distance (word), absolute angle |
@@ -73,8 +73,8 @@ frame, *cont* runs the next opcode immediately, *cond* depends on state.
 \* `$00`/`$05`/`$0f` return `a = 0` **without** advancing the pointer, so the
 actor re-reads the same opcode every frame — a permanent idle.
 
-Coordinates are 16-bit fixed-point map units, little-endian (`as_set_pos $2700,
-$1300`). `as_jump`'s operand is `target - operand_address`; the macro emits
+Coordinates are 16-bit fixed-point map units, little-endian (`as_set_target
+$2700, $1300`). `as_jump`'s operand is `target - operand_address`; the macro emits
 `dw target - @`.
 
 ## Example
@@ -86,10 +86,10 @@ ActorScript_0f_7a73:
 	as_flag $01, $05, $02
 	as_set_field $06, $0006
 .L8:
-	as_set_pos $2700, $1300
+	as_set_target $2700, $1300
 	as_wait_move
 	as_wait $4b
-	as_set_pos $2900, $1300
+	as_set_target $2900, $1300
 	as_wait_move
 	as_wait $78
 	as_jump .L8

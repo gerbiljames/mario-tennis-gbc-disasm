@@ -150,11 +150,11 @@ ENDM
 MACRO as_wait_move   ; $02 yield until the current move finishes (+$05 bit7)
 	db $02
 ENDM
-MACRO as_set_target  ; $03 set move target position -> state +$0c/+$0e
+MACRO as_set_pos     ; $03 teleport: set current position -> state +$0c/+$0e, clears the +$05 bit7 move flag
 	db $03
 	dw \1, \2
 ENDM
-MACRO as_set_pos     ; $04 set current position -> state +$08/+$0a
+MACRO as_set_target  ; $04 set move target -> state +$08/+$0a, sets the +$05 bit7 move flag
 	db $04
 	dw \1, \2
 ENDM

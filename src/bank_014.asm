@@ -677,7 +677,7 @@ Label_14_4801:
 	ret ; $4807
 ActorScript_14_4808:
 	; $4808, 11 bytes (actor_script)
-	as_set_pos $2900, $2b00
+	as_set_target $2900, $2b00
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
@@ -1748,11 +1748,11 @@ Label_14_5603:
 	ret ; $563a
 ActorScript_14_563b:
 	; $563b, 2069 bytes (actor_script)
-	as_set_pos $0b00, $2900
+	as_set_target $0b00, $2900
 	as_wait_move
-	as_set_pos $0b00, $2700
+	as_set_target $0b00, $2700
 	as_wait_move
-	as_set_target $0100, $0100
+	as_set_pos $0100, $0100
 	as_halt
 	as_halt
 	as_halt

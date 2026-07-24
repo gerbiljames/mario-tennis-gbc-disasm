@@ -1460,28 +1460,28 @@ ActorScript_13_585f:
 	as_jump .L1
 ActorScript_13_5877:
 	; $5877, 10 bytes (actor_script)
-	as_set_target $0f40, $0ee0
+	as_set_pos $0f40, $0ee0
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_13_5881:
 	; $5881, 10 bytes (actor_script)
-	as_set_target $1100, $0380
+	as_set_pos $1100, $0380
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_13_588b:
 	; $588b, 51 bytes (actor_script)
-	as_set_target $0300, $0700
+	as_set_pos $0300, $0700
 	as_set_field $14, FACE_UP
 	as_begin_path
 .La:
 	as_set_field $14, FACE_DOWN
 	as_wait $b4
-	as_set_pos $0300, $0800
+	as_set_target $0300, $0800
 	as_wait_move2
 	as_wait $50
 	as_set_field $14, FACE_RIGHT
 	as_wait $12
-	as_set_pos $0300, $0700
+	as_set_target $0300, $0700
 	as_wait_move2
 	as_set_field $14, FACE_UP
 	as_wait $f0
@@ -2649,122 +2649,122 @@ SetupVarsityCourtDoublesMatch_13:
 	ret ; $6b18
 ActorScript_13_6b19:
 	; $6b19, 11 bytes (actor_script)
-	as_set_pos $1100, $1d00
+	as_set_target $1100, $1d00
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_13_6b24:
 	; $6b24, 13 bytes (actor_script)
 	as_anim $01
-	as_set_pos $1300, $2100
+	as_set_target $1300, $2100
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_13_6b31:
 	; $6b31, 11 bytes (actor_script)
-	as_set_pos $1300, $1500
+	as_set_target $1300, $1500
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_13_6b3c:
 	; $6b3c, 11 bytes (actor_script)
-	as_set_pos $1300, $2300
+	as_set_target $1300, $2300
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_13_6b47:
 	; $6b47, 17 bytes (actor_script)
-	as_set_pos $1100, $1800
+	as_set_target $1100, $1800
 	as_wait_move
-	as_set_pos $1300, $1700
+	as_set_target $1300, $1700
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_13_6b58:
 	; $6b58, 17 bytes (actor_script)
-	as_set_pos $1100, $1300
+	as_set_target $1100, $1300
 	as_wait_move
-	as_set_pos $1300, $1700
+	as_set_target $1300, $1700
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_13_6b69:
 	; $6b69, 23 bytes (actor_script)
-	as_set_pos $0700, $2300
+	as_set_target $0700, $2300
 	as_wait_move
-	as_set_pos $0700, $1300
+	as_set_target $0700, $1300
 	as_wait_move
-	as_set_pos $0b00, $1300
+	as_set_target $0b00, $1300
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_13_6b80:
 	; $6b80, 23 bytes (actor_script)
-	as_set_pos $0700, $2300
+	as_set_target $0700, $2300
 	as_wait_move
-	as_set_pos $0700, $1700
+	as_set_target $0700, $1700
 	as_wait_move
-	as_set_pos $0d00, $1700
+	as_set_target $0d00, $1700
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_13_6b97:
 	; $6b97, 23 bytes (actor_script)
-	as_set_pos $0700, $1d00
+	as_set_target $0700, $1d00
 	as_wait_move
-	as_set_pos $0700, $1300
+	as_set_target $0700, $1300
 	as_wait_move
-	as_set_pos $0b00, $1300
+	as_set_target $0b00, $1300
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_13_6bae:
 	; $6bae, 23 bytes (actor_script)
-	as_set_pos $0700, $2100
+	as_set_target $0700, $2100
 	as_wait_move
-	as_set_pos $0700, $1700
+	as_set_target $0700, $1700
 	as_wait_move
-	as_set_pos $0d00, $1700
+	as_set_target $0d00, $1700
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_13_6bc5:
 	; $6bc5, 23 bytes (actor_script)
-	as_set_pos $0700, $1f00
+	as_set_target $0700, $1f00
 	as_wait_move
-	as_set_pos $0700, $1300
+	as_set_target $0700, $1300
 	as_wait_move
-	as_set_pos $0b00, $1300
+	as_set_target $0b00, $1300
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_13_6bdc:
 	; $6bdc, 11 bytes (actor_script)
-	as_set_pos $0b00, $1f00
+	as_set_target $0b00, $1f00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_13_6be7:
 	; $6be7, 11 bytes (actor_script)
-	as_set_pos $0d00, $2300
+	as_set_target $0d00, $2300
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_13_6bf2:
 	; $6bf2, 11 bytes (actor_script)
-	as_set_pos $0500, $1d00
+	as_set_target $0500, $1d00
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
 ActorScript_13_6bfd:
 	; $6bfd, 11 bytes (actor_script)
-	as_set_pos $0500, $2300
+	as_set_target $0500, $2300
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_13_6c08:
 	; $6c08, 11 bytes (actor_script)
-	as_set_pos $0500, $2100
+	as_set_target $0500, $2100
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
@@ -3440,67 +3440,67 @@ ActorScript_13_7a40:
 	as_halt
 ActorScript_13_7a43:
 	; $7a43, 29 bytes (actor_script)
-	as_set_pos $1100, $1d00
+	as_set_target $1100, $1d00
 	as_wait_move
-	as_set_pos $1100, $2300
+	as_set_target $1100, $2300
 	as_wait_move
-	as_set_pos $0a00, $2300
+	as_set_target $0a00, $2300
 	as_wait_move
-	as_set_pos $0a00, $2100
+	as_set_target $0a00, $2100
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_13_7a60:
 	; $7a60, 29 bytes (actor_script)
-	as_set_pos $1100, $1d00
+	as_set_target $1100, $1d00
 	as_wait_move
-	as_set_pos $1100, $2300
+	as_set_target $1100, $2300
 	as_wait_move
-	as_set_pos $0c00, $2300
+	as_set_target $0c00, $2300
 	as_wait_move
-	as_set_pos $0c00, $2100
+	as_set_target $0c00, $2100
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_13_7a7d:
 	; $7a7d, 35 bytes (actor_script)
-	as_set_pos $1900, $1d00
+	as_set_target $1900, $1d00
 	as_wait_move
-	as_set_pos $1100, $1d00
+	as_set_target $1100, $1d00
 	as_wait_move
-	as_set_pos $1100, $2300
+	as_set_target $1100, $2300
 	as_wait_move
-	as_set_pos $0c00, $2300
+	as_set_target $0c00, $2300
 	as_wait_move
-	as_set_pos $0c00, $2100
+	as_set_target $0c00, $2100
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_13_7aa0:
 	; $7aa0, 7 bytes (actor_script)
-	as_set_pos $0d00, $1d00
+	as_set_target $0d00, $1d00
 	as_wait_move
 	as_halt
 ActorScript_13_7aa7:
 	; $7aa7, 34 bytes (actor_script)
-	as_set_pos $1100, $1d00
+	as_set_target $1100, $1d00
 	as_wait_move
-	as_set_pos $1100, $2300
+	as_set_target $1100, $2300
 	as_wait_move
-	as_set_pos $0700, $2300
+	as_set_target $0700, $2300
 	as_wait_move
-	as_set_pos $0700, $1d00
-	as_set_pos $0900, $1d00
+	as_set_target $0700, $1d00
+	as_set_target $0900, $1d00
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
 ActorScript_13_7ac9:
 	; $7ac9, 23 bytes (actor_script)
-	as_set_pos $0700, $1700
+	as_set_target $0700, $1700
 	as_wait_move
-	as_set_pos $0700, $1d00
+	as_set_target $0700, $1d00
 	as_wait_move
-	as_set_pos $0900, $1d00
+	as_set_target $0900, $1d00
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt

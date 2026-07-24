@@ -525,445 +525,445 @@ Label_0e_46e9:
 	ret ; $4711
 ActorScript_0e_4712:
 	; $4712, 439 bytes (actor_script)
-	as_set_pos $2100, $0d00
+	as_set_target $2100, $0d00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $0e00
+	as_set_target $2100, $0e00
 	as_call $4c37
 	as_wait_move
 	as_flag $01, $05, $02
-	as_set_pos $2100, $0f00
+	as_set_target $2100, $0f00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1000
+	as_set_target $2100, $1000
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1100
+	as_set_target $2100, $1100
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1200
+	as_set_target $2100, $1200
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1300
+	as_set_target $2100, $1300
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1400
+	as_set_target $2100, $1400
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1500
+	as_set_target $2100, $1500
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1600
+	as_set_target $2100, $1600
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $1700
+	as_set_target $2100, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2200, $1700
+	as_set_target $2200, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2300, $1700
+	as_set_target $2300, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2400, $1700
+	as_set_target $2400, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2500, $1700
+	as_set_target $2500, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2600, $1700
+	as_set_target $2600, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2700, $1700
+	as_set_target $2700, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2800, $1700
+	as_set_target $2800, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2900, $1700
+	as_set_target $2900, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2a00, $1700
+	as_set_target $2a00, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2b00, $1700
+	as_set_target $2b00, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2c00, $1700
+	as_set_target $2c00, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1700
+	as_set_target $2d60, $1700
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1600
+	as_set_target $2d60, $1600
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1500
+	as_set_target $2d60, $1500
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1400
+	as_set_target $2d60, $1400
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1300
+	as_set_target $2d60, $1300
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1200
+	as_set_target $2d60, $1200
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1100
+	as_set_target $2d60, $1100
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $1000
+	as_set_target $2d60, $1000
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $0f00
+	as_set_target $2d60, $0f00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $0e00
+	as_set_target $2d60, $0e00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $0d00
+	as_set_target $2d60, $0d00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $0c00
+	as_set_target $2d60, $0c00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2d60, $0b00
+	as_set_target $2d60, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2c00, $0b00
+	as_set_target $2c00, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2b00, $0b00
+	as_set_target $2b00, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2a00, $0b00
+	as_set_target $2a00, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2900, $0b00
+	as_set_target $2900, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2800, $0b00
+	as_set_target $2800, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2700, $0b00
+	as_set_target $2700, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2600, $0b00
+	as_set_target $2600, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2500, $0b00
+	as_set_target $2500, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2400, $0b00
+	as_set_target $2400, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2300, $0b00
+	as_set_target $2300, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2200, $0b00
+	as_set_target $2200, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $0b00
+	as_set_target $2100, $0b00
 	as_call $4c37
 	as_wait_move
-	as_set_pos $2100, $0c00
+	as_set_target $2100, $0c00
 	as_call $4c37
 	as_wait_move
 	as_jump ActorScript_0e_4712
 ActorScript_0e_48c9:
 	; $48c9, 439 bytes (actor_script)
-	as_set_pos $2b00, $0b00
+	as_set_target $2b00, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2a00, $0b00
+	as_set_target $2a00, $0b00
 	as_call $4c8e
 	as_wait_move
 	as_flag $01, $05, $02
-	as_set_pos $2900, $0b00
+	as_set_target $2900, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2800, $0b00
+	as_set_target $2800, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2700, $0b00
+	as_set_target $2700, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2600, $0b00
+	as_set_target $2600, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2500, $0b00
+	as_set_target $2500, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2400, $0b00
+	as_set_target $2400, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2300, $0b00
+	as_set_target $2300, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2200, $0b00
+	as_set_target $2200, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $0b00
+	as_set_target $2100, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $0c00
+	as_set_target $2100, $0c00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $0d00
+	as_set_target $2100, $0d00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $0e00
+	as_set_target $2100, $0e00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $0f00
+	as_set_target $2100, $0f00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1000
+	as_set_target $2100, $1000
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1100
+	as_set_target $2100, $1100
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1200
+	as_set_target $2100, $1200
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1300
+	as_set_target $2100, $1300
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1400
+	as_set_target $2100, $1400
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1500
+	as_set_target $2100, $1500
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1600
+	as_set_target $2100, $1600
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2100, $1700
+	as_set_target $2100, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2200, $1700
+	as_set_target $2200, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2300, $1700
+	as_set_target $2300, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2400, $1700
+	as_set_target $2400, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2500, $1700
+	as_set_target $2500, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2600, $1700
+	as_set_target $2600, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2700, $1700
+	as_set_target $2700, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2800, $1700
+	as_set_target $2800, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2900, $1700
+	as_set_target $2900, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2a00, $1700
+	as_set_target $2a00, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2b00, $1700
+	as_set_target $2b00, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2c00, $1700
+	as_set_target $2c00, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1700
+	as_set_target $2d60, $1700
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1600
+	as_set_target $2d60, $1600
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1500
+	as_set_target $2d60, $1500
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1400
+	as_set_target $2d60, $1400
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1300
+	as_set_target $2d60, $1300
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1200
+	as_set_target $2d60, $1200
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1100
+	as_set_target $2d60, $1100
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $1000
+	as_set_target $2d60, $1000
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $0f00
+	as_set_target $2d60, $0f00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $0e00
+	as_set_target $2d60, $0e00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $0d00
+	as_set_target $2d60, $0d00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $0c00
+	as_set_target $2d60, $0c00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2d60, $0b00
+	as_set_target $2d60, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_set_pos $2c00, $0b00
+	as_set_target $2c00, $0b00
 	as_call $4c8e
 	as_wait_move
 	as_jump ActorScript_0e_48c9
 ActorScript_0e_4a80:
 	; $4a80, 439 bytes (actor_script)
-	as_set_pos $2d60, $1600
+	as_set_target $2d60, $1600
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $1500
+	as_set_target $2d60, $1500
 	as_call $4ce5
 	as_wait_move
 	as_flag $01, $05, $02
-	as_set_pos $2d60, $1400
+	as_set_target $2d60, $1400
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $1300
+	as_set_target $2d60, $1300
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $1200
+	as_set_target $2d60, $1200
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $1100
+	as_set_target $2d60, $1100
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $1000
+	as_set_target $2d60, $1000
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $0f00
+	as_set_target $2d60, $0f00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $0e00
+	as_set_target $2d60, $0e00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $0d00
+	as_set_target $2d60, $0d00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $0c00
+	as_set_target $2d60, $0c00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $0b00
+	as_set_target $2d60, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2c00, $0b00
+	as_set_target $2c00, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2b00, $0b00
+	as_set_target $2b00, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2a00, $0b00
+	as_set_target $2a00, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2900, $0b00
+	as_set_target $2900, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2800, $0b00
+	as_set_target $2800, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2700, $0b00
+	as_set_target $2700, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2600, $0b00
+	as_set_target $2600, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2500, $0b00
+	as_set_target $2500, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2400, $0b00
+	as_set_target $2400, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2300, $0b00
+	as_set_target $2300, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2200, $0b00
+	as_set_target $2200, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $0b00
+	as_set_target $2100, $0b00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $0c00
+	as_set_target $2100, $0c00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $0d00
+	as_set_target $2100, $0d00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $0e00
+	as_set_target $2100, $0e00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $0f00
+	as_set_target $2100, $0f00
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1000
+	as_set_target $2100, $1000
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1100
+	as_set_target $2100, $1100
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1200
+	as_set_target $2100, $1200
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1300
+	as_set_target $2100, $1300
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1400
+	as_set_target $2100, $1400
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1500
+	as_set_target $2100, $1500
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1600
+	as_set_target $2100, $1600
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2100, $1700
+	as_set_target $2100, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2200, $1700
+	as_set_target $2200, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2300, $1700
+	as_set_target $2300, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2400, $1700
+	as_set_target $2400, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2500, $1700
+	as_set_target $2500, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2600, $1700
+	as_set_target $2600, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2700, $1700
+	as_set_target $2700, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2800, $1700
+	as_set_target $2800, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2900, $1700
+	as_set_target $2900, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2a00, $1700
+	as_set_target $2a00, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2b00, $1700
+	as_set_target $2b00, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2c00, $1700
+	as_set_target $2c00, $1700
 	as_call $4ce5
 	as_wait_move
-	as_set_pos $2d60, $1700
+	as_set_target $2d60, $1700
 	as_call $4ce5
 	as_wait_move
 	as_jump ActorScript_0e_4a80
@@ -1812,23 +1812,23 @@ Label_0e_5529:
 	ret ; $552c
 ActorScript_0e_552d:
 	; $552d, 24 bytes (actor_script)
-	as_set_pos $1900, $0b00
+	as_set_target $1900, $0b00
 	as_wait_move
-	as_set_pos $1b00, $0b00
+	as_set_target $1b00, $0b00
 	as_wait_move
-	as_set_pos $1b40, $0a00
+	as_set_target $1b40, $0a00
 	as_wait_move
-	as_set_target $1500, $3d00
+	as_set_pos $1500, $3d00
 	as_halt
 ActorScript_0e_5545:
 	; $5545, 24 bytes (actor_script)
-	as_set_pos $1700, $0b00
+	as_set_target $1700, $0b00
 	as_wait_move
-	as_set_pos $1b00, $0b00
+	as_set_target $1b00, $0b00
 	as_wait_move
-	as_set_pos $1b40, $0a00
+	as_set_target $1b40, $0a00
 	as_wait_move
-	as_set_target $1500, $3d00
+	as_set_pos $1500, $3d00
 	as_halt
 ComputeMarioWorldProgressIndex:
 	test_flag $05, 7 ; $555d
@@ -2373,22 +2373,22 @@ ExhibitionAcceptedDoubles:
 	ret ; $630a
 ActorScript_0e_630b:
 	; $630b, 25 bytes (actor_script)
-	as_set_pos $1000, $0900
+	as_set_target $1000, $0900
 	as_wait_move
-	as_set_pos $1000, $0d00
+	as_set_target $1000, $0d00
 	as_wait_move
-	as_set_pos $1100, $0d00
+	as_set_target $1100, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_6324:
 	; $6324, 25 bytes (actor_script)
-	as_set_pos $1000, $0900
+	as_set_target $1000, $0900
 	as_wait_move
-	as_set_pos $1000, $0d00
+	as_set_target $1000, $0d00
 	as_wait_move
-	as_set_pos $1300, $0d00
+	as_set_target $1300, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
@@ -2420,14 +2420,14 @@ Label_0e_639b:
 	jp PromptExhibitionMatch ; $63d7
 ActorScript_0e_63da:
 	; $63da, 13 bytes (actor_script)
-	as_set_pos $1100, $0d00
+	as_set_target $1100, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_63e7:
 	; $63e7, 13 bytes (actor_script)
-	as_set_pos $1300, $0d00
+	as_set_target $1300, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
@@ -2457,18 +2457,18 @@ Label_0e_643f:
 	jp PromptExhibitionMatch ; $647b
 ActorScript_0e_647e:
 	; $647e, 19 bytes (actor_script)
-	as_set_pos $1000, $0d00
+	as_set_target $1000, $0d00
 	as_wait_move
-	as_set_pos $1100, $0d00
+	as_set_target $1100, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_6491:
 	; $6491, 19 bytes (actor_script)
-	as_set_pos $1000, $0d00
+	as_set_target $1000, $0d00
 	as_wait_move
-	as_set_pos $1300, $0d00
+	as_set_target $1300, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
@@ -2497,18 +2497,18 @@ Label_0e_64ea:
 	jp PromptExhibitionMatch ; $6526
 ActorScript_0e_6529:
 	; $6529, 19 bytes (actor_script)
-	as_set_pos $1400, $0d00
+	as_set_target $1400, $0d00
 	as_wait_move
-	as_set_pos $1100, $0d00
+	as_set_target $1100, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
 ActorScript_0e_653c:
 	; $653c, 19 bytes (actor_script)
-	as_set_pos $1400, $0d00
+	as_set_target $1400, $0d00
 	as_wait_move
-	as_set_pos $1300, $0d00
+	as_set_target $1300, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
@@ -3478,52 +3478,52 @@ Label_0e_7a66:
 	ret ; $7b10
 ActorScript_0e_7b11:
 	; $7b11, 19 bytes (actor_script)
-	as_set_pos $0500, $1f00
+	as_set_target $0500, $1f00
 	as_wait_move
-	as_set_pos $0d00, $1f00
+	as_set_target $0d00, $1f00
 	as_wait_move
-	as_set_pos $0d00, $1b00
+	as_set_target $0d00, $1b00
 	as_wait_move
 	as_halt
 ActorScript_0e_7b24:
 	; $7b24, 11 bytes (actor_script)
-	as_set_pos $1300, $1700
+	as_set_target $1300, $1700
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
 ActorScript_0e_7b2f:
 	; $7b2f, 23 bytes (actor_script)
-	as_set_pos $0900, $1700
+	as_set_target $0900, $1700
 	as_wait_move
-	as_set_pos $0900, $0d00
+	as_set_target $0900, $0d00
 	as_wait_move
-	as_set_pos $0d00, $0d00
+	as_set_target $0d00, $0d00
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_0e_7b46:
 	; $7b46, 23 bytes (actor_script)
-	as_set_pos $0900, $1700
+	as_set_target $0900, $1700
 	as_wait_move
-	as_set_pos $0900, $1100
+	as_set_target $0900, $1100
 	as_wait_move
-	as_set_pos $0f00, $1100
+	as_set_target $0f00, $1100
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
 ActorScript_0e_7b5d:
 	; $7b5d, 17 bytes (actor_script)
-	as_set_pos $0d00, $1d00
+	as_set_target $0d00, $1d00
 	as_wait_move
-	as_set_pos $0f00, $1d00
+	as_set_target $0f00, $1d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
 ActorScript_0e_7b6e:
 	; $7b6e, 17 bytes (actor_script)
-	as_set_pos $0f00, $1900
+	as_set_target $0f00, $1900
 	as_wait_move
-	as_set_pos $0d00, $1900
+	as_set_target $0d00, $1900
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt

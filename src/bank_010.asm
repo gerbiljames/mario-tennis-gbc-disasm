@@ -3936,9 +3936,9 @@ Label_10_7413:
 	ret ; $741b
 ActorScript_10_741c:
 	; $741c, 13 bytes (actor_script)
-	as_set_pos $2100, $3b00
+	as_set_target $2100, $3b00
 	as_wait_move
-	as_set_pos $3500, $3b00
+	as_set_target $3500, $3b00
 	as_wait_move
 	as_halt
 AcademyWingInstallDoorTriggers_10:
@@ -4521,16 +4521,16 @@ ActorScript_10_7b8b:
 	as_set_field $06, $0018
 	as_flag $01, $05, $02
 .L8:
-	as_set_pos $1b00, $1720
+	as_set_target $1b00, $1720
 	as_wait_move2
 	as_wait $05
-	as_set_pos $1d00, $1720
+	as_set_target $1d00, $1720
 	as_wait_move2
 	as_wait $0a
-	as_set_pos $1d00, $1600
+	as_set_target $1d00, $1600
 	as_wait_move2
 	as_wait $0a
-	as_set_pos $1d00, $1720
+	as_set_target $1d00, $1720
 	as_wait_move2
 	as_wait $05
 	as_jump .L8
