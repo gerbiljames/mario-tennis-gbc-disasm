@@ -3614,7 +3614,7 @@ Label_1b_6408:
 	farcall RecordDrillResult ; $6430
 	ld c, $01 ; $6433
 	farcall ShowMatchResultsScreen ; $6435
-	farcall Func_1d_682c ; $6438
+	farcall RunExpDistributionFlow ; $6438
 	pop hl ; $643b
 	pop de ; $643c
 	pop bc ; $643d

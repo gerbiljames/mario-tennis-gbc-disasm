@@ -3638,7 +3638,7 @@ Func_1a_7945:
 	ld hl, $7e46 ; $797b
 	ld bc, $dea0 ; $797e
 	call Func_1a_7a67 ; $7981
-	farcall Func_1d_5c0b ; $7984
+	farcall DrawCharDataConfirmPrompt ; $7984
 	wram_bank $03 ; $7987
 	ld hl, $d000 ; $798d
 	ld de, $9800 ; $7990

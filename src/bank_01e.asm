@@ -2510,7 +2510,7 @@ Label_1e_6695:
 	ld a, h ; $6695
 	or a, l ; $6696
 	jr z, Label_1e_66a9 ; $6697
-	farcall Func_1d_682c ; $6699
+	farcall RunExpDistributionFlow ; $6699
 	ld c, $00 ; $669c
 	farcall CharDataScreen_Show ; $669e
 	ld c, $01 ; $66a1
@@ -3261,7 +3261,7 @@ Label_1e_6bb1:
 	clear_flag $05, 7 ; $6bbe
 Label_1e_6bc1:
 	pop hl ; $6bc1
-	farcall Func_1d_682c ; $6bc2
+	farcall RunExpDistributionFlow ; $6bc2
 	ld c, $00 ; $6bc5
 	farcall CharDataScreen_Show ; $6bc7
 	ld c, $01 ; $6bca
