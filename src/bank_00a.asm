@@ -5846,10 +5846,10 @@ RunEndingCreditsSequence:
 	ld de, $0001 ; $6e87
 	call LoadPalettesMasterOnly ; $6e8a
 	xor a, a ; $6e8d
-	ld [$cb00], a ; $6e8e
+	ld [wStoryCharacterSlot], a ; $6e8e
 Label_0a_6e91:
 	call ClearFrameTasks ; $6e91
-	ld a, [$cb00] ; $6e94
+	ld a, [wStoryCharacterSlot] ; $6e94
 	add a, a ; $6e97
 	add a, $40 ; $6e98
 	ld l, a ; $6e9a
@@ -5884,7 +5884,7 @@ Label_0a_6eac:
 	ld d, $1e ; $6ed5
 	farcall SetupPaletteFadeMask ; $6ed7
 	farcall AnimatePaletteFadeToTarget ; $6eda
-	ld a, [$cb00] ; $6edd
+	ld a, [wStoryCharacterSlot] ; $6edd
 	farcall PlayScrollingStoryCutscene ; $6ee0
 Label_0a_6ee3:
 	clear_flag $0d, 5 ; $6ee3
@@ -5893,7 +5893,7 @@ Label_0a_6ee3:
 	call WaitFadeEnd ; $6eeb
 	ld a, $90 ; $6eee
 	ldh [rWY], a ; $6ef0
-	ld hl, $cb00 ; $6ef2
+	ld hl, wStoryCharacterSlot ; $6ef2
 	inc [hl] ; $6ef5
 	ldh a, [hDebugStepMode] ; $6ef6
 	or a, a ; $6ef8

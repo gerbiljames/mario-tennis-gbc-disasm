@@ -3107,7 +3107,7 @@ DrawCharSelectPrompt:
 	ld bc, $1403 ; $6056
 	farcall DrawBox ; $6059
 	ld hl, $0470 ; $605c
-	ld a, [$cb00] ; $605f
+	ld a, [wStoryCharacterSlot] ; $605f
 	or a, a ; $6062
 	jr z, Label_1b_6068 ; $6063
 	ld hl, $047b ; $6065
@@ -3298,10 +3298,10 @@ Label_1b_61d8:
 	inc a ; $61e5
 	cp a, $04 ; $61e6
 	jr nz, Label_1b_61d8 ; $61e8
-	ld a, [$cb00] ; $61ea
+	ld a, [wStoryCharacterSlot] ; $61ea
 	push af ; $61ed
 	xor a, a ; $61ee
-	ld [$cb00], a ; $61ef
+	ld [wStoryCharacterSlot], a ; $61ef
 Label_1b_61f2:
 	ld a, [$c7be] ; $61f2
 	ld d, a ; $61f5
@@ -3316,7 +3316,7 @@ Label_1b_61f2:
 	cp a, $ff ; $6207
 	jr nz, Label_1b_6214 ; $6209
 	pop af ; $620b
-	ld [$cb00], a ; $620c
+	ld [wStoryCharacterSlot], a ; $620c
 	ld a, $ff ; $620f
 	jp Label_1b_62ef ; $6211
 Label_1b_6214:
@@ -3334,10 +3334,10 @@ Label_1b_621a:
 	farcall RollStoryRandomByte ; $6229
 Label_1b_622c:
 	xor a, a ; $622c
-	ld [$cb00], a ; $622d
+	ld [wStoryCharacterSlot], a ; $622d
 	push af ; $6230
 	ld hl, wStoryModeNameOfMainCharacter ; $6231
-	ld a, [$cb00] ; $6234
+	ld a, [wStoryCharacterSlot] ; $6234
 	or a, a ; $6237
 	jr z, Label_1b_623c ; $6238
 	ld l, $40 ; $623a
@@ -3355,11 +3355,11 @@ Label_1b_623c:
 	and a, a ; $624b
 	jr nz, Label_1b_621a ; $624c
 	pop af ; $624e
-	ld [$cb00], a ; $624f
-	ld a, [$cb00] ; $6252
+	ld [wStoryCharacterSlot], a ; $624f
+	ld a, [wStoryCharacterSlot] ; $6252
 	push af ; $6255
 	ld a, $01 ; $6256
-	ld [$cb00], a ; $6258
+	ld [wStoryCharacterSlot], a ; $6258
 	ld de, $0120 ; $625b
 	farcall TestSaveFlag ; $625e
 	jr nz, Label_1b_6293 ; $6261
@@ -3368,11 +3368,11 @@ Label_1b_623c:
 	inc a ; $6267
 	inc a ; $6268
 	ld d, a ; $6269
-	ld a, [$cb00] ; $626a
+	ld a, [wStoryCharacterSlot] ; $626a
 	farcall InitPlayerRecordFromTemplate ; $626d
 	push af ; $6270
 	ld hl, wStoryModeNameOfMainCharacter ; $6271
-	ld a, [$cb00] ; $6274
+	ld a, [wStoryCharacterSlot] ; $6274
 	or a, a ; $6277
 	jr z, Label_1b_627c ; $6278
 	ld l, $40 ; $627a
@@ -3407,7 +3407,7 @@ Label_1b_6293:
 	cp a, $ff ; $62a8
 	jr nz, Label_1b_62b3 ; $62aa
 	pop af ; $62ac
-	ld [$cb00], a ; $62ad
+	ld [wStoryCharacterSlot], a ; $62ad
 	jp RunNewGameSetup ; $62b0
 Label_1b_62b3:
 	cp a, $fe ; $62b3
@@ -3420,7 +3420,7 @@ Label_1b_62b9:
 	jr nz, Label_1b_6293 ; $62bf
 	push af ; $62c1
 	ld hl, wStoryModeNameOfMainCharacter ; $62c2
-	ld a, [$cb00] ; $62c5
+	ld a, [wStoryCharacterSlot] ; $62c5
 	or a, a ; $62c8
 	jr z, Label_1b_62cd ; $62c9
 	ld l, $40 ; $62cb
@@ -3439,7 +3439,7 @@ Label_1b_62cd:
 	jr nz, Label_1b_62b9 ; $62dd
 Label_1b_62df:
 	pop af ; $62df
-	ld [$cb00], a ; $62e0
+	ld [wStoryCharacterSlot], a ; $62e0
 	ld hl, wStoryModeNameOfMainCharacter ; $62e3
 	ld de, wStorySlotData ; $62e6
 	ld c, $08 ; $62e9

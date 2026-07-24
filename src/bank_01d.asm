@@ -290,10 +290,10 @@ Func_1d_4175:
 	ld bc, $001e ; $4355
 	call Func_1d_4438 ; $4358
 	xor a, a ; $435b
-	ld [$cb00], a ; $435c
+	ld [wStoryCharacterSlot], a ; $435c
 	push af ; $435f
 	ld hl, wStoryModeNameOfMainCharacter ; $4360
-	ld a, [$cb00] ; $4363
+	ld a, [wStoryCharacterSlot] ; $4363
 	or a, a ; $4366
 	jr z, Label_1d_436b ; $4367
 	ld l, $40 ; $4369
@@ -311,7 +311,7 @@ Label_1d_436b:
 	wram_bank $01 ; $437b
 	push af ; $4381
 	ld hl, wStoryModeNameOfMainCharacter ; $4382
-	ld a, [$cb00] ; $4385
+	ld a, [wStoryCharacterSlot] ; $4385
 	or a, a ; $4388
 	jr z, Label_1d_438d ; $4389
 	ld l, $40 ; $438b
@@ -339,10 +339,10 @@ Label_1d_438d:
 	ld c, $03 ; $43b9
 	call QueueVRAMCopy ; $43bb
 	ld a, $01 ; $43be
-	ld [$cb00], a ; $43c0
+	ld [wStoryCharacterSlot], a ; $43c0
 	push af ; $43c3
 	ld hl, wStoryModeNameOfMainCharacter ; $43c4
-	ld a, [$cb00] ; $43c7
+	ld a, [wStoryCharacterSlot] ; $43c7
 	or a, a ; $43ca
 	jr z, Label_1d_43cf ; $43cb
 	ld l, $40 ; $43cd
@@ -360,7 +360,7 @@ Label_1d_43cf:
 	wram_bank $01 ; $43df
 	push af ; $43e5
 	ld hl, wStoryModeNameOfMainCharacter ; $43e6
-	ld a, [$cb00] ; $43e9
+	ld a, [wStoryCharacterSlot] ; $43e9
 	or a, a ; $43ec
 	jr z, Label_1d_43f1 ; $43ed
 	ld l, $40 ; $43ef
@@ -412,10 +412,10 @@ Func_1d_4438:
 	ret ; $444c
 Func_1d_444d:
 	xor a, a ; $444d
-	ld [$cb00], a ; $444e
+	ld [wStoryCharacterSlot], a ; $444e
 	push af ; $4451
 	ld hl, wStoryModeNameOfMainCharacter ; $4452
-	ld a, [$cb00] ; $4455
+	ld a, [wStoryCharacterSlot] ; $4455
 	or a, a ; $4458
 	jr z, Label_1d_445d ; $4459
 	ld l, $40 ; $445b
@@ -436,7 +436,7 @@ Label_1d_445d:
 	call Func_1d_4771 ; $4476
 	push af ; $4479
 	ld hl, wStoryModeNameOfMainCharacter ; $447a
-	ld a, [$cb00] ; $447d
+	ld a, [wStoryCharacterSlot] ; $447d
 	or a, a ; $4480
 	jr z, Label_1d_4485 ; $4481
 	ld l, $40 ; $4483
@@ -454,7 +454,7 @@ Label_1d_4485:
 	wram_bank $06 ; $4495
 	push af ; $449b
 	ld hl, wStoryModeNameOfMainCharacter ; $449c
-	ld a, [$cb00] ; $449f
+	ld a, [wStoryCharacterSlot] ; $449f
 	or a, a ; $44a2
 	jr z, Label_1d_44a7 ; $44a3
 	ld l, $40 ; $44a5
@@ -477,7 +477,7 @@ Label_1d_44a7:
 	wram_bank $06 ; $44c2
 	push af ; $44c8
 	ld hl, wStoryModeNameOfMainCharacter ; $44c9
-	ld a, [$cb00] ; $44cc
+	ld a, [wStoryCharacterSlot] ; $44cc
 	or a, a ; $44cf
 	jr z, Label_1d_44d4 ; $44d0
 	ld l, $40 ; $44d2
@@ -500,7 +500,7 @@ Label_1d_44d4:
 	wram_bank $06 ; $44ef
 	push af ; $44f5
 	ld hl, wStoryModeNameOfMainCharacter ; $44f6
-	ld a, [$cb00] ; $44f9
+	ld a, [wStoryCharacterSlot] ; $44f9
 	or a, a ; $44fc
 	jr z, Label_1d_4501 ; $44fd
 	ld l, $40 ; $44ff
@@ -523,7 +523,7 @@ Label_1d_4501:
 	wram_bank $06 ; $451c
 	push af ; $4522
 	ld hl, wStoryModeNameOfMainCharacter ; $4523
-	ld a, [$cb00] ; $4526
+	ld a, [wStoryCharacterSlot] ; $4526
 	or a, a ; $4529
 	jr z, Label_1d_452e ; $452a
 	ld l, $40 ; $452c
@@ -546,7 +546,7 @@ Label_1d_452e:
 	wram_bank $06 ; $4549
 	push af ; $454f
 	ld hl, wStoryModeNameOfMainCharacter ; $4550
-	ld a, [$cb00] ; $4553
+	ld a, [wStoryCharacterSlot] ; $4553
 	or a, a ; $4556
 	jr z, Label_1d_455b ; $4557
 	ld l, $40 ; $4559
@@ -588,7 +588,7 @@ Label_1d_455b:
 	wram_bank $06 ; $459f
 	push af ; $45a5
 	ld hl, wStoryModeNameOfMainCharacter ; $45a6
-	ld a, [$cb00] ; $45a9
+	ld a, [wStoryCharacterSlot] ; $45a9
 	or a, a ; $45ac
 	jr z, Label_1d_45b1 ; $45ad
 	ld l, $40 ; $45af
@@ -622,10 +622,10 @@ Label_1d_45cf:
 	ld [hl], a ; $45da
 Label_1d_45db:
 	ld a, $01 ; $45db
-	ld [$cb00], a ; $45dd
+	ld [wStoryCharacterSlot], a ; $45dd
 	push af ; $45e0
 	ld hl, wStoryModeNameOfMainCharacter ; $45e1
-	ld a, [$cb00] ; $45e4
+	ld a, [wStoryCharacterSlot] ; $45e4
 	or a, a ; $45e7
 	jr z, Label_1d_45ec ; $45e8
 	ld l, $40 ; $45ea
@@ -647,7 +647,7 @@ Label_1d_45ec:
 	call Func_1d_4771 ; $460b
 	push af ; $460e
 	ld hl, wStoryModeNameOfMainCharacter ; $460f
-	ld a, [$cb00] ; $4612
+	ld a, [wStoryCharacterSlot] ; $4612
 	or a, a ; $4615
 	jr z, Label_1d_461a ; $4616
 	ld l, $40 ; $4618
@@ -665,7 +665,7 @@ Label_1d_461a:
 	wram_bank $06 ; $462a
 	push af ; $4630
 	ld hl, wStoryModeNameOfMainCharacter ; $4631
-	ld a, [$cb00] ; $4634
+	ld a, [wStoryCharacterSlot] ; $4634
 	or a, a ; $4637
 	jr z, Label_1d_463c ; $4638
 	ld l, $40 ; $463a
@@ -688,7 +688,7 @@ Label_1d_463c:
 	wram_bank $06 ; $4657
 	push af ; $465d
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
-	ld a, [$cb00] ; $4661
+	ld a, [wStoryCharacterSlot] ; $4661
 	or a, a ; $4664
 	jr z, Label_1d_4669 ; $4665
 	ld l, $40 ; $4667
@@ -711,7 +711,7 @@ Label_1d_4669:
 	wram_bank $06 ; $4684
 	push af ; $468a
 	ld hl, wStoryModeNameOfMainCharacter ; $468b
-	ld a, [$cb00] ; $468e
+	ld a, [wStoryCharacterSlot] ; $468e
 	or a, a ; $4691
 	jr z, Label_1d_4696 ; $4692
 	ld l, $40 ; $4694
@@ -734,7 +734,7 @@ Label_1d_4696:
 	wram_bank $06 ; $46b1
 	push af ; $46b7
 	ld hl, wStoryModeNameOfMainCharacter ; $46b8
-	ld a, [$cb00] ; $46bb
+	ld a, [wStoryCharacterSlot] ; $46bb
 	or a, a ; $46be
 	jr z, Label_1d_46c3 ; $46bf
 	ld l, $40 ; $46c1
@@ -757,7 +757,7 @@ Label_1d_46c3:
 	wram_bank $06 ; $46de
 	push af ; $46e4
 	ld hl, wStoryModeNameOfMainCharacter ; $46e5
-	ld a, [$cb00] ; $46e8
+	ld a, [wStoryCharacterSlot] ; $46e8
 	or a, a ; $46eb
 	jr z, Label_1d_46f0 ; $46ec
 	ld l, $40 ; $46ee
@@ -799,7 +799,7 @@ Label_1d_46f0:
 	wram_bank $06 ; $4735
 	push af ; $473b
 	ld hl, wStoryModeNameOfMainCharacter ; $473c
-	ld a, [$cb00] ; $473f
+	ld a, [wStoryCharacterSlot] ; $473f
 	or a, a ; $4742
 	jr z, Label_1d_4747 ; $4743
 	ld l, $40 ; $4745
@@ -1281,7 +1281,7 @@ Func_1d_4acc:
 	ret ; $4aea
 Func_1d_4aeb:
 	xor a, a ; $4aeb
-	ld [$cb00], a ; $4aec
+	ld [wStoryCharacterSlot], a ; $4aec
 	call BuildCharStatDisplay ; $4aef
 	wram_bank $06 ; $4af2
 	ld a, [$d00a] ; $4af8
@@ -1316,7 +1316,7 @@ Func_1d_4aeb:
 	ret ; $4b4f
 Func_1d_4b50:
 	ld a, $01 ; $4b50
-	ld [$cb00], a ; $4b52
+	ld [wStoryCharacterSlot], a ; $4b52
 	call BuildCharStatDisplay ; $4b55
 	wram_bank $06 ; $4b58
 	ld a, [$d00a] ; $4b5e
@@ -1684,7 +1684,7 @@ BuildCharStatDisplay:
 	wram_bank $06 ; $4e8d
 	push af ; $4e93
 	ld hl, wStoryModeNameOfMainCharacter ; $4e94
-	ld a, [$cb00] ; $4e97
+	ld a, [wStoryCharacterSlot] ; $4e97
 	or a, a ; $4e9a
 	jr z, Label_1d_4e9f ; $4e9b
 	ld l, $40 ; $4e9d
@@ -1700,7 +1700,7 @@ Label_1d_4e9f:
 	ld [$d00a], a ; $4ea9
 	push af ; $4eac
 	ld hl, wStoryModeNameOfMainCharacter ; $4ead
-	ld a, [$cb00] ; $4eb0
+	ld a, [wStoryCharacterSlot] ; $4eb0
 	or a, a ; $4eb3
 	jr z, Label_1d_4eb8 ; $4eb4
 	ld l, $40 ; $4eb6
@@ -1717,7 +1717,7 @@ Label_1d_4eb8:
 	ld [$d00e], a ; $4ec3
 	push af ; $4ec6
 	ld hl, wStoryModeNameOfMainCharacter ; $4ec7
-	ld a, [$cb00] ; $4eca
+	ld a, [wStoryCharacterSlot] ; $4eca
 	or a, a ; $4ecd
 	jr z, Label_1d_4ed2 ; $4ece
 	ld l, $40 ; $4ed0
@@ -1734,7 +1734,7 @@ Label_1d_4ed2:
 	ld [$d00f], a ; $4edd
 	push af ; $4ee0
 	ld hl, wStoryModeNameOfMainCharacter ; $4ee1
-	ld a, [$cb00] ; $4ee4
+	ld a, [wStoryCharacterSlot] ; $4ee4
 	or a, a ; $4ee7
 	jr z, Label_1d_4eec ; $4ee8
 	ld l, $40 ; $4eea
@@ -1750,7 +1750,7 @@ Label_1d_4eec:
 	ld [$d00b], a ; $4ef6
 	push af ; $4ef9
 	ld hl, wStoryModeNameOfMainCharacter ; $4efa
-	ld a, [$cb00] ; $4efd
+	ld a, [wStoryCharacterSlot] ; $4efd
 	or a, a ; $4f00
 	jr z, Label_1d_4f05 ; $4f01
 	ld l, $40 ; $4f03
@@ -1767,7 +1767,7 @@ Label_1d_4f05:
 	ld [$d010], a ; $4f10
 	push af ; $4f13
 	ld hl, wStoryModeNameOfMainCharacter ; $4f14
-	ld a, [$cb00] ; $4f17
+	ld a, [wStoryCharacterSlot] ; $4f17
 	or a, a ; $4f1a
 	jr z, Label_1d_4f1f ; $4f1b
 	ld l, $40 ; $4f1d
@@ -1784,7 +1784,7 @@ Label_1d_4f1f:
 	ld [$d011], a ; $4f2a
 	push af ; $4f2d
 	ld hl, wStoryModeNameOfMainCharacter ; $4f2e
-	ld a, [$cb00] ; $4f31
+	ld a, [wStoryCharacterSlot] ; $4f31
 	or a, a ; $4f34
 	jr z, Label_1d_4f39 ; $4f35
 	ld l, $40 ; $4f37
@@ -1801,7 +1801,7 @@ Label_1d_4f39:
 	ld [$d012], a ; $4f44
 	push af ; $4f47
 	ld hl, wStoryModeNameOfMainCharacter ; $4f48
-	ld a, [$cb00] ; $4f4b
+	ld a, [wStoryCharacterSlot] ; $4f4b
 	or a, a ; $4f4e
 	jr z, Label_1d_4f53 ; $4f4f
 	ld l, $40 ; $4f51
@@ -1817,7 +1817,7 @@ Label_1d_4f53:
 	ld [$d00c], a ; $4f5d
 	push af ; $4f60
 	ld hl, wStoryModeNameOfMainCharacter ; $4f61
-	ld a, [$cb00] ; $4f64
+	ld a, [wStoryCharacterSlot] ; $4f64
 	or a, a ; $4f67
 	jr z, Label_1d_4f6c ; $4f68
 	ld l, $40 ; $4f6a
@@ -1834,7 +1834,7 @@ Label_1d_4f6c:
 	ld [$d013], a ; $4f77
 	push af ; $4f7a
 	ld hl, wStoryModeNameOfMainCharacter ; $4f7b
-	ld a, [$cb00] ; $4f7e
+	ld a, [wStoryCharacterSlot] ; $4f7e
 	or a, a ; $4f81
 	jr z, Label_1d_4f86 ; $4f82
 	ld l, $40 ; $4f84
@@ -1851,7 +1851,7 @@ Label_1d_4f86:
 	ld [$d014], a ; $4f91
 	push af ; $4f94
 	ld hl, wStoryModeNameOfMainCharacter ; $4f95
-	ld a, [$cb00] ; $4f98
+	ld a, [wStoryCharacterSlot] ; $4f98
 	or a, a ; $4f9b
 	jr z, Label_1d_4fa0 ; $4f9c
 	ld l, $40 ; $4f9e
@@ -1867,7 +1867,7 @@ Label_1d_4fa0:
 	ld [$d00d], a ; $4faa
 	push af ; $4fad
 	ld hl, wStoryModeNameOfMainCharacter ; $4fae
-	ld a, [$cb00] ; $4fb1
+	ld a, [wStoryCharacterSlot] ; $4fb1
 	or a, a ; $4fb4
 	jr z, Label_1d_4fb9 ; $4fb5
 	ld l, $40 ; $4fb7
@@ -1884,7 +1884,7 @@ Label_1d_4fb9:
 	ld [$d015], a ; $4fc4
 	push af ; $4fc7
 	ld hl, wStoryModeNameOfMainCharacter ; $4fc8
-	ld a, [$cb00] ; $4fcb
+	ld a, [wStoryCharacterSlot] ; $4fcb
 	or a, a ; $4fce
 	jr z, Label_1d_4fd3 ; $4fcf
 	ld l, $40 ; $4fd1
@@ -1901,7 +1901,7 @@ Label_1d_4fd3:
 	ld [$d016], a ; $4fde
 	push af ; $4fe1
 	ld hl, wStoryModeNameOfMainCharacter ; $4fe2
-	ld a, [$cb00] ; $4fe5
+	ld a, [wStoryCharacterSlot] ; $4fe5
 	or a, a ; $4fe8
 	jr z, Label_1d_4fed ; $4fe9
 	ld l, $40 ; $4feb
@@ -1918,7 +1918,7 @@ Label_1d_4fed:
 	ld [$d017], a ; $4ff8
 	push af ; $4ffb
 	ld hl, wStoryModeNameOfMainCharacter ; $4ffc
-	ld a, [$cb00] ; $4fff
+	ld a, [wStoryCharacterSlot] ; $4fff
 	or a, a ; $5002
 	jr z, Label_1d_5007 ; $5003
 	ld l, $40 ; $5005
@@ -1973,7 +1973,7 @@ Label_1d_5007:
 	ld [hl], a ; $5050
 	push af ; $5051
 	ld hl, wStoryModeNameOfMainCharacter ; $5052
-	ld a, [$cb00] ; $5055
+	ld a, [wStoryCharacterSlot] ; $5055
 	or a, a ; $5058
 	jr z, Label_1d_505d ; $5059
 	ld l, $40 ; $505b
@@ -1991,7 +1991,7 @@ Label_1d_505d:
 	wram_bank $06 ; $506e
 	push af ; $5074
 	ld hl, wStoryModeNameOfMainCharacter ; $5075
-	ld a, [$cb00] ; $5078
+	ld a, [wStoryCharacterSlot] ; $5078
 	or a, a ; $507b
 	jr z, Label_1d_5080 ; $507c
 	ld l, $40 ; $507e
@@ -2950,13 +2950,13 @@ Func_1d_59b5:
 	ld b, $08 ; $59bb
 	ret ; $59bd
 ComputeExpProgressBar:
-	ld a, [$cb00] ; $59be
+	ld a, [wStoryCharacterSlot] ; $59be
 	farcall GetExpRemainingToNextLevel ; $59c1
 	ld a, h ; $59c4
 	or a, l ; $59c5
 	jp z, Label_1d_59da ; $59c6
 	push hl ; $59c9
-	ld a, [$cb00] ; $59ca
+	ld a, [wStoryCharacterSlot] ; $59ca
 	farcall GetExpProgressInCurrentLevel ; $59cd
 	pop de ; $59d0
 	push hl ; $59d1
@@ -3142,10 +3142,10 @@ Func_1d_5b1a:
 	farcall CharDataScreen_LoadScreen ; $5b1b
 	farcall LoadCharDataScreenTilemaps ; $5b1e
 	pop af ; $5b21
-	ld [$cb00], a ; $5b22
+	ld [wStoryCharacterSlot], a ; $5b22
 	push af ; $5b25
 	ld hl, wStoryModeNameOfMainCharacter ; $5b26
-	ld a, [$cb00] ; $5b29
+	ld a, [wStoryCharacterSlot] ; $5b29
 	or a, a ; $5b2c
 	jr z, Label_1d_5b31 ; $5b2d
 	ld l, $40 ; $5b2f
@@ -3163,7 +3163,7 @@ Label_1d_5b31:
 	wram_bank $01 ; $5b41
 	push af ; $5b47
 	ld hl, wStoryModeNameOfMainCharacter ; $5b48
-	ld a, [$cb00] ; $5b4b
+	ld a, [wStoryCharacterSlot] ; $5b4b
 	or a, a ; $5b4e
 	jr z, Label_1d_5b53 ; $5b4f
 	ld l, $40 ; $5b51
@@ -3388,12 +3388,12 @@ Func_1d_68a3:
 	ld hl, Func_1d_765e ; $68ee
 	call RegisterFrameTask ; $68f1
 	xor a, a ; $68f4
-	ld [$cb00], a ; $68f5
+	ld [wStoryCharacterSlot], a ; $68f5
 	script_fade_in $10 ; $68f8
 	call WaitFadeEnd ; $68fd
 	wram_bank $06 ; $6900
 	xor a, a ; $6906
-	ld [$cb00], a ; $6907
+	ld [wStoryCharacterSlot], a ; $6907
 	call Func_1d_7189 ; $690a
 	call AdvanceFrame ; $690d
 	call Func_1d_6f3e ; $6910
@@ -3442,11 +3442,11 @@ Func_1d_6977:
 	call Func_1d_6ace ; $6977
 	call Func_1d_6b7b ; $697a
 	xor a, a ; $697d
-	ld [$cb00], a ; $697e
+	ld [wStoryCharacterSlot], a ; $697e
 	call Func_1d_6de7 ; $6981
 	call Func_1d_6ea2 ; $6984
 	ld a, $01 ; $6987
-	ld [$cb00], a ; $6989
+	ld [wStoryCharacterSlot], a ; $6989
 	call Func_1d_6de7 ; $698c
 	call Func_1d_6ea2 ; $698f
 	wram_bank $01 ; $6992
@@ -3669,10 +3669,10 @@ Func_1d_6b7b:
 	or a, a ; $6b84
 	jp nz, Label_1d_6ccc ; $6b85
 	xor a, a ; $6b88
-	ld [$cb00], a ; $6b89
+	ld [wStoryCharacterSlot], a ; $6b89
 	push af ; $6b8c
 	ld hl, wStoryModeNameOfMainCharacter ; $6b8d
-	ld a, [$cb00] ; $6b90
+	ld a, [wStoryCharacterSlot] ; $6b90
 	or a, a ; $6b93
 	jr z, Label_1d_6b98 ; $6b94
 	ld l, $40 ; $6b96
@@ -3690,7 +3690,7 @@ Label_1d_6b98:
 	wram_bank $06 ; $6ba9
 	push af ; $6baf
 	ld hl, wStoryModeNameOfMainCharacter ; $6bb0
-	ld a, [$cb00] ; $6bb3
+	ld a, [wStoryCharacterSlot] ; $6bb3
 	or a, a ; $6bb6
 	jr z, Label_1d_6bbb ; $6bb7
 	ld l, $40 ; $6bb9
@@ -3736,7 +3736,7 @@ Label_1d_6bbb:
 	ld [$d16a], a ; $6c04
 	push af ; $6c07
 	ld hl, wStoryModeNameOfMainCharacter ; $6c08
-	ld a, [$cb00] ; $6c0b
+	ld a, [wStoryCharacterSlot] ; $6c0b
 	or a, a ; $6c0e
 	jr z, Label_1d_6c13 ; $6c0f
 	ld l, $40 ; $6c11
@@ -3755,10 +3755,10 @@ Label_1d_6c13:
 	ld a, [hl] ; $6c24
 	ld [$d16f], a ; $6c25
 	ld a, $01 ; $6c28
-	ld [$cb00], a ; $6c2a
+	ld [wStoryCharacterSlot], a ; $6c2a
 	push af ; $6c2d
 	ld hl, wStoryModeNameOfMainCharacter ; $6c2e
-	ld a, [$cb00] ; $6c31
+	ld a, [wStoryCharacterSlot] ; $6c31
 	or a, a ; $6c34
 	jr z, Label_1d_6c39 ; $6c35
 	ld l, $40 ; $6c37
@@ -3776,7 +3776,7 @@ Label_1d_6c39:
 	wram_bank $06 ; $6c4a
 	push af ; $6c50
 	ld hl, wStoryModeNameOfMainCharacter ; $6c51
-	ld a, [$cb00] ; $6c54
+	ld a, [wStoryCharacterSlot] ; $6c54
 	or a, a ; $6c57
 	jr z, Label_1d_6c5c ; $6c58
 	ld l, $40 ; $6c5a
@@ -3822,7 +3822,7 @@ Label_1d_6c5c:
 	ld [$d179], a ; $6ca7
 	push af ; $6caa
 	ld hl, wStoryModeNameOfMainCharacter ; $6cab
-	ld a, [$cb00] ; $6cae
+	ld a, [wStoryCharacterSlot] ; $6cae
 	or a, a ; $6cb1
 	jr z, Label_1d_6cb6 ; $6cb2
 	ld l, $40 ; $6cb4
@@ -3843,10 +3843,10 @@ Label_1d_6cb6:
 	ret ; $6ccb
 Label_1d_6ccc:
 	xor a, a ; $6ccc
-	ld [$cb00], a ; $6ccd
+	ld [wStoryCharacterSlot], a ; $6ccd
 	push af ; $6cd0
 	ld hl, wStoryModeNameOfMainCharacter ; $6cd1
-	ld a, [$cb00] ; $6cd4
+	ld a, [wStoryCharacterSlot] ; $6cd4
 	or a, a ; $6cd7
 	jr z, Label_1d_6cdc ; $6cd8
 	ld l, $40 ; $6cda
@@ -3864,7 +3864,7 @@ Label_1d_6cdc:
 	wram_bank $06 ; $6ced
 	push af ; $6cf3
 	ld hl, wStoryModeNameOfMainCharacter ; $6cf4
-	ld a, [$cb00] ; $6cf7
+	ld a, [wStoryCharacterSlot] ; $6cf7
 	or a, a ; $6cfa
 	jr z, Label_1d_6cff ; $6cfb
 	ld l, $40 ; $6cfd
@@ -3885,10 +3885,10 @@ Label_1d_6cff:
 	ld de, $d06b ; $6d14
 	farcall CharDataScreen_WriteStatNumber ; $6d17
 	ld a, $01 ; $6d1a
-	ld [$cb00], a ; $6d1c
+	ld [wStoryCharacterSlot], a ; $6d1c
 	push af ; $6d1f
 	ld hl, wStoryModeNameOfMainCharacter ; $6d20
-	ld a, [$cb00] ; $6d23
+	ld a, [wStoryCharacterSlot] ; $6d23
 	or a, a ; $6d26
 	jr z, Label_1d_6d2b ; $6d27
 	ld l, $40 ; $6d29
@@ -3906,7 +3906,7 @@ Label_1d_6d2b:
 	wram_bank $06 ; $6d3c
 	push af ; $6d42
 	ld hl, wStoryModeNameOfMainCharacter ; $6d43
-	ld a, [$cb00] ; $6d46
+	ld a, [wStoryCharacterSlot] ; $6d46
 	or a, a ; $6d49
 	jr z, Label_1d_6d4e ; $6d4a
 	ld l, $40 ; $6d4c
@@ -3961,7 +3961,7 @@ Label_1d_6da4:
 	sub a, $7e ; $6da6
 	ld b, a ; $6da8
 	ld c, $0f ; $6da9
-	ld a, [$cb00] ; $6dab
+	ld a, [wStoryCharacterSlot] ; $6dab
 	or a, a ; $6dae
 	jr z, Label_1d_6dc5 ; $6daf
 	inc b ; $6db1
@@ -4004,7 +4004,7 @@ Label_1d_6de6:
 	ret ; $6de6
 Func_1d_6de7:
 	wram_bank $06 ; $6de7
-	ld a, [$cb00] ; $6ded
+	ld a, [wStoryCharacterSlot] ; $6ded
 	or a, a ; $6df0
 	jr nz, Label_1d_6dfb ; $6df1
 	ld a, [$d161] ; $6df3
@@ -4121,7 +4121,7 @@ Label_1d_6e90:
 	ret ; $6ea1
 Func_1d_6ea2:
 	wram_bank $06 ; $6ea2
-	ld a, [$cb00] ; $6ea8
+	ld a, [wStoryCharacterSlot] ; $6ea8
 	or a, a ; $6eab
 	jr nz, Label_1d_6ed7 ; $6eac
 	ld a, [$d161] ; $6eae
@@ -4275,12 +4275,12 @@ Label_1d_6f92:
 	jp Func_1d_6f3e ; $6fc4
 Label_1d_6fc7:
 	wram_bank $06 ; $6fc7
-	ld a, [$cb00] ; $6fcd
+	ld a, [wStoryCharacterSlot] ; $6fcd
 	or a, a ; $6fd0
 	jp z, Func_1d_6f3e ; $6fd1
 	sound $5e ; $6fd4
 	xor a, a ; $6fd6
-	ld [$cb00], a ; $6fd7
+	ld [wStoryCharacterSlot], a ; $6fd7
 	call Func_1d_7189 ; $6fda
 	ld hl, Func_1d_70e6 ; $6fdd
 	call UnregisterFrameTask ; $6fe0
@@ -4292,12 +4292,12 @@ Label_1d_6fc7:
 	jp Func_1d_6f3e ; $6ff0
 Label_1d_6ff3:
 	wram_bank $06 ; $6ff3
-	ld a, [$cb00] ; $6ff9
+	ld a, [wStoryCharacterSlot] ; $6ff9
 	or a, a ; $6ffc
 	jp nz, Func_1d_6f3e ; $6ffd
 	sound $5e ; $7000
 	ld a, $01 ; $7002
-	ld [$cb00], a ; $7004
+	ld [wStoryCharacterSlot], a ; $7004
 	call Func_1d_7189 ; $7007
 	ld hl, Func_1d_70cc ; $700a
 	call UnregisterFrameTask ; $700d
@@ -4416,7 +4416,7 @@ Func_1d_7102:
 	ld [$d181], a ; $711b
 	ret ; $711e
 Label_1d_711f:
-	ld a, [$cb00] ; $711f
+	ld a, [wStoryCharacterSlot] ; $711f
 	or a, a ; $7122
 	jr nz, Label_1d_712a ; $7123
 	ld a, [$d164] ; $7125
@@ -4436,7 +4436,7 @@ Func_1d_7133:
 	add a, b ; $7143
 	ld [$d181], a ; $7144
 	ld b, a ; $7147
-	ld a, [$cb00] ; $7148
+	ld a, [wStoryCharacterSlot] ; $7148
 	or a, a ; $714b
 	jr nz, Label_1d_7153 ; $714c
 	ld a, [$d164] ; $714e
@@ -4458,7 +4458,7 @@ Label_1d_7162:
 	ret ; $7167
 Func_1d_7168:
 	wram_bank $06 ; $7168
-	ld a, [$cb00] ; $716e
+	ld a, [wStoryCharacterSlot] ; $716e
 	or a, a ; $7171
 	jr nz, Label_1d_7179 ; $7172
 	ld a, [$d164] ; $7174
@@ -4490,7 +4490,7 @@ Func_1d_7189:
 	ld [wBGPalettes + 34], a ; $71b0
 	ld a, [$d17b] ; $71b3
 	ld [wBGPalettes + 35], a ; $71b6
-	ld a, [$cb00] ; $71b9
+	ld a, [wStoryCharacterSlot] ; $71b9
 	or a, a ; $71bc
 	jr nz, Label_1d_71e2 ; $71bd
 	ld hl, wBGPalettes + 16 ; $71bf
@@ -4604,7 +4604,7 @@ Func_1d_726d:
 	ld a, e ; $7286
 	ld [hl+], a ; $7287
 	ld [hl], d ; $7288
-	ld a, [$cb00] ; $7289
+	ld a, [wStoryCharacterSlot] ; $7289
 	or a, a ; $728c
 	jr nz, Label_1d_72b6 ; $728d
 	ld hl, $d167 ; $728f
@@ -4670,7 +4670,7 @@ Label_1d_72b6:
 	ret ; $72dc
 Func_1d_72dd:
 	wram_bank $06 ; $72dd
-	ld a, [$cb00] ; $72e3
+	ld a, [wStoryCharacterSlot] ; $72e3
 	or a, a ; $72e6
 	jr nz, Label_1d_7313 ; $72e7
 	ld hl, $d167 ; $72e9
@@ -4774,7 +4774,7 @@ Func_1d_7373:
 	ret ; $737c
 Func_1d_737d:
 	wram_bank $06 ; $737d
-	ld a, [$cb00] ; $7383
+	ld a, [wStoryCharacterSlot] ; $7383
 	or a, a ; $7386
 	jr nz, Label_1d_73b8 ; $7387
 	ld hl, $d169 ; $7389
@@ -4828,7 +4828,7 @@ Label_1d_73b8:
 	ret ; $73e6
 Func_1d_73e7:
 	wram_bank $06 ; $73e7
-	ld a, [$cb00] ; $73ed
+	ld a, [wStoryCharacterSlot] ; $73ed
 	or a, a ; $73f0
 	jr nz, Label_1d_7423 ; $73f1
 	ld hl, $d165 ; $73f3
@@ -5122,7 +5122,7 @@ Func_1d_765e:
 	ld a, [$d0b6] ; $766d
 	or a, a ; $7670
 	ret nz ; $7671
-	ld a, [$cb00] ; $7672
+	ld a, [wStoryCharacterSlot] ; $7672
 	or a, a ; $7675
 	jr nz, Label_1d_76cb ; $7676
 	wram_bank $06 ; $7678
@@ -5237,7 +5237,7 @@ Func_1d_7760:
 	ret ; $7788
 Func_1d_7789:
 	ld e, $01 ; $7789
-	ld a, [$cb00] ; $778b
+	ld a, [wStoryCharacterSlot] ; $778b
 	or a, a ; $778e
 	jr z, Label_1d_7793 ; $778f
 	ld e, $49 ; $7791

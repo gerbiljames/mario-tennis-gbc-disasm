@@ -1213,11 +1213,11 @@ Label_38_487c:
 	add a, c ; $489c
 	push af ; $489d
 	ld d, a ; $489e
-	ld a, [$cb00] ; $489f
+	ld a, [wStoryCharacterSlot] ; $489f
 	farcall InitPlayerRecordFromTemplate ; $48a2
 	push af ; $48a5
 	ld hl, wStoryModeNameOfMainCharacter ; $48a6
-	ld a, [$cb00] ; $48a9
+	ld a, [wStoryCharacterSlot] ; $48a9
 	or a, a ; $48ac
 	jr z, Label_38_48b1 ; $48ad
 	ld l, $40 ; $48af
@@ -3186,7 +3186,7 @@ SubHandlers_38_59ba:
 	ld [bc], a ; $59ca
 	ld bc, $d12c ; $59cb
 	nop ; $59ce
-	ld bc, $cb00 ; $59cf
+	ld bc, wStoryCharacterSlot ; $59cf
 	ret nc ; $59d2
 	inc bc ; $59d3
 	ld bc, $d0cf ; $59d4
@@ -3202,7 +3202,7 @@ SubHandlers_38_59ba:
 	inc l ; $59e6
 	pop de ; $59e7
 	nop ; $59e8
-	ld bc, $cb00 ; $59e9
+	ld bc, wStoryCharacterSlot ; $59e9
 	ret nc ; $59ec
 	inc bc ; $59ed
 	ld bc, $d0cf ; $59ee
@@ -6216,7 +6216,7 @@ Label_38_6e11:
 	ret ; $6e13
 RunNameEntryScreen:
 	ld a, b ; $6e14
-	ld [$cb00], a ; $6e15
+	ld [wStoryCharacterSlot], a ; $6e15
 	wram_bank $02 ; $6e18
 	ld a, c ; $6e1e
 	ld [$d001], a ; $6e1f
@@ -6812,7 +6812,7 @@ Label_38_73ef:
 	pop bc ; $73f8
 	ret ; $73f9
 GetActiveStoryNameBuffer:
-	ld a, [$cb00] ; $73fa
+	ld a, [wStoryCharacterSlot] ; $73fa
 	or a, a ; $73fd
 	jr nz, Label_38_7404 ; $73fe
 	ld bc, wStoryModeNameOfMainCharacter ; $7400

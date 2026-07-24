@@ -630,7 +630,7 @@ Label_18_4652:
 	ld e, l ; $465c
 	push af ; $465d
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
-	ld a, [$cb00] ; $4661
+	ld a, [wStoryCharacterSlot] ; $4661
 	or a, a ; $4664
 	jr z, Label_18_4669 ; $4665
 	ld l, $40 ; $4667

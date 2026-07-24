@@ -581,7 +581,7 @@ ShowExpGainScreen:
 	push hl ; $44da
 	push af ; $44db
 	ld a, l ; $44dc
-	ld [$cb00], a ; $44dd
+	ld [wStoryCharacterSlot], a ; $44dd
 	pop af ; $44e0
 	ld h, a ; $44e1
 	ldh a, [hWramBank] ; $44e2
@@ -628,7 +628,7 @@ Label_1a_4527:
 	wram_bank $06 ; $4538
 	push af ; $453e
 	ld hl, wStoryModeNameOfMainCharacter ; $453f
-	ld a, [$cb00] ; $4542
+	ld a, [wStoryCharacterSlot] ; $4542
 	or a, a ; $4545
 	jr z, Label_1a_454a ; $4546
 	ld l, $40 ; $4548
@@ -1361,7 +1361,7 @@ Func_1a_4b1f:
 	wram_bank $01 ; $4b26
 	push af ; $4b2c
 	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
-	ld a, [$cb00] ; $4b30
+	ld a, [wStoryCharacterSlot] ; $4b30
 	or a, a ; $4b33
 	jr z, Label_1a_4b38 ; $4b34
 	ld l, $40 ; $4b36
@@ -1377,7 +1377,7 @@ Label_1a_4b38:
 	call Func_1a_4b73 ; $4b44
 	push af ; $4b47
 	ld hl, wStoryModeNameOfMainCharacter ; $4b48
-	ld a, [$cb00] ; $4b4b
+	ld a, [wStoryCharacterSlot] ; $4b4b
 	or a, a ; $4b4e
 	jr z, Label_1a_4b53 ; $4b4f
 	ld l, $40 ; $4b51
@@ -1923,7 +1923,7 @@ Func_1a_4e65:
 	wram_bank $06 ; $4e87
 	push af ; $4e8d
 	ld hl, wStoryModeNameOfMainCharacter ; $4e8e
-	ld a, [$cb00] ; $4e91
+	ld a, [wStoryCharacterSlot] ; $4e91
 	or a, a ; $4e94
 	jr z, Label_1a_4e99 ; $4e95
 	ld l, $40 ; $4e97
@@ -3785,7 +3785,7 @@ Label_1a_7a99:
 	inc hl ; $7ab2
 	jr Func_1a_7a67 ; $7ab3
 CharDataScreen_BuildStats:
-	ld a, [$cb00] ; $7ab5
+	ld a, [wStoryCharacterSlot] ; $7ab5
 	or a, a ; $7ab8
 	ret nz ; $7ab9
 	wram_bank $06 ; $7aba

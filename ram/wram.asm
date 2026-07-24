@@ -1068,7 +1068,11 @@ wPlayer2CurrentPartnerCharacter:: db
 
 ; [8-bit] Exhibition Mode - CPU Partner Character Difficulty; for values see 0x00ca5f
 wExhibitionModeCPUPartnerCharacterDifficulty:: db
-	ds 36
+	ds 32
+
+; [8-bit] Story Mode - which of the two story character records the character-select / name-entry / char-data screens are acting on: 0 = main character, 1 = partner. Used as a $40-stride index into the wStoryModeMainCharacter*/wStoryModePartnerCharacter* pair (GetActiveStoryNameBuffer at $38:$73fa returns wStoryModeNameOfMainCharacter or ...OfPartnerCharacter straight off it).
+wStoryCharacterSlot:: db
+	ds 3
 
 ; [8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b
 wMenuCursorX:: db

@@ -110,7 +110,7 @@ Label_1c_40f1:
 CharDataScreen_InitState:
 	wram_bank $06 ; $40fb
 	ld a, c ; $4101
-	ld [$cb00], a ; $4102
+	ld [wStoryCharacterSlot], a ; $4102
 	xor a, a ; $4105
 	ld [$d000], a ; $4106
 	ld [$d001], a ; $4109
@@ -136,7 +136,7 @@ CharDataScreen_InitState:
 	ld [$d003], a ; $4136
 	push af ; $4139
 	ld hl, wStoryModeNameOfMainCharacter ; $413a
-	ld a, [$cb00] ; $413d
+	ld a, [wStoryCharacterSlot] ; $413d
 	or a, a ; $4140
 	jr z, Label_1c_4145 ; $4141
 	ld l, $40 ; $4143
@@ -152,7 +152,7 @@ Label_1c_4145:
 	ld [$d004], a ; $414f
 	push af ; $4152
 	ld hl, wStoryModeNameOfMainCharacter ; $4153
-	ld a, [$cb00] ; $4156
+	ld a, [wStoryCharacterSlot] ; $4156
 	or a, a ; $4159
 	jr z, Label_1c_415e ; $415a
 	ld l, $40 ; $415c
@@ -169,7 +169,7 @@ Label_1c_415e:
 	ld [$d00a], a ; $416b
 	push af ; $416e
 	ld hl, wStoryModeNameOfMainCharacter ; $416f
-	ld a, [$cb00] ; $4172
+	ld a, [wStoryCharacterSlot] ; $4172
 	or a, a ; $4175
 	jr z, Label_1c_417a ; $4176
 	ld l, $40 ; $4178
@@ -186,7 +186,7 @@ Label_1c_417a:
 	ld [$d00b], a ; $4187
 	push af ; $418a
 	ld hl, wStoryModeNameOfMainCharacter ; $418b
-	ld a, [$cb00] ; $418e
+	ld a, [wStoryCharacterSlot] ; $418e
 	or a, a ; $4191
 	jr z, Label_1c_4196 ; $4192
 	ld l, $40 ; $4194
@@ -203,7 +203,7 @@ Label_1c_4196:
 	ld [$d00c], a ; $41a3
 	push af ; $41a6
 	ld hl, wStoryModeNameOfMainCharacter ; $41a7
-	ld a, [$cb00] ; $41aa
+	ld a, [wStoryCharacterSlot] ; $41aa
 	or a, a ; $41ad
 	jr z, Label_1c_41b2 ; $41ae
 	ld l, $40 ; $41b0
@@ -219,10 +219,10 @@ Label_1c_41b2:
 	ld [$d008], a ; $41bc
 	ld [$d00d], a ; $41bf
 Label_1c_41c2:
-	ld a, [$cb00] ; $41c2
+	ld a, [wStoryCharacterSlot] ; $41c2
 	farcall HasReachedNextLevelExp ; $41c5
 	jr nz, Label_1c_41d8 ; $41c8
-	ld a, [$cb00] ; $41ca
+	ld a, [wStoryCharacterSlot] ; $41ca
 	ld d, $00 ; $41cd
 	farcall LevelUpPlayer ; $41cf
 	ld hl, $d003 ; $41d2
@@ -652,7 +652,7 @@ Label_1c_4521:
 CharDataScreen_DrawPortrait:
 	push af ; $459a
 	ld hl, wStoryModeNameOfMainCharacter ; $459b
-	ld a, [$cb00] ; $459e
+	ld a, [wStoryCharacterSlot] ; $459e
 	or a, a ; $45a1
 	jr z, Label_1c_45a6 ; $45a2
 	ld l, $40 ; $45a4
@@ -670,7 +670,7 @@ Label_1c_45a6:
 	wram_bank $01 ; $45b6
 	push af ; $45bc
 	ld hl, wStoryModeNameOfMainCharacter ; $45bd
-	ld a, [$cb00] ; $45c0
+	ld a, [wStoryCharacterSlot] ; $45c0
 	or a, a ; $45c3
 	jr z, Label_1c_45c8 ; $45c4
 	ld l, $40 ; $45c6
@@ -1110,7 +1110,7 @@ WriteCharStatsToDisplayBuffer:
 	ld [$d009], a ; $49f4
 	push af ; $49f7
 	ld hl, wStoryModeNameOfMainCharacter ; $49f8
-	ld a, [$cb00] ; $49fb
+	ld a, [wStoryCharacterSlot] ; $49fb
 	or a, a ; $49fe
 	jr z, Label_1c_4a03 ; $49ff
 	ld l, $40 ; $4a01
@@ -1126,7 +1126,7 @@ Label_1c_4a03:
 	ld [hl], a ; $4a0f
 	push af ; $4a10
 	ld hl, wStoryModeNameOfMainCharacter ; $4a11
-	ld a, [$cb00] ; $4a14
+	ld a, [wStoryCharacterSlot] ; $4a14
 	or a, a ; $4a17
 	jr z, Label_1c_4a1c ; $4a18
 	ld l, $40 ; $4a1a
@@ -1143,7 +1143,7 @@ Label_1c_4a1c:
 	ld [$d00a], a ; $4a29
 	push af ; $4a2c
 	ld hl, wStoryModeNameOfMainCharacter ; $4a2d
-	ld a, [$cb00] ; $4a30
+	ld a, [wStoryCharacterSlot] ; $4a30
 	or a, a ; $4a33
 	jr z, Label_1c_4a38 ; $4a34
 	ld l, $40 ; $4a36
@@ -1160,7 +1160,7 @@ Label_1c_4a38:
 	ld [$d00b], a ; $4a45
 	push af ; $4a48
 	ld hl, wStoryModeNameOfMainCharacter ; $4a49
-	ld a, [$cb00] ; $4a4c
+	ld a, [wStoryCharacterSlot] ; $4a4c
 	or a, a ; $4a4f
 	jr z, Label_1c_4a54 ; $4a50
 	ld l, $40 ; $4a52
@@ -1177,7 +1177,7 @@ Label_1c_4a54:
 	ld [$d00c], a ; $4a61
 	push af ; $4a64
 	ld hl, wStoryModeNameOfMainCharacter ; $4a65
-	ld a, [$cb00] ; $4a68
+	ld a, [wStoryCharacterSlot] ; $4a68
 	or a, a ; $4a6b
 	jr z, Label_1c_4a70 ; $4a6c
 	ld l, $40 ; $4a6e
@@ -1200,7 +1200,7 @@ Label_1c_4a86:
 	dec b ; $4a87
 	jr nz, Label_1c_4a86 ; $4a88
 	ld [$d029], a ; $4a8a
-	ld a, [$cb00] ; $4a8d
+	ld a, [wStoryCharacterSlot] ; $4a8d
 	farcall RefreshPlayerStatsAndGetPtr ; $4a90
 	ret ; $4a93
 LoadCharStatsWithLevelUpDeltas:
@@ -1210,7 +1210,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ret nz ; $4a9e
 	push af ; $4a9f
 	ld hl, wStoryModeNameOfMainCharacter ; $4aa0
-	ld a, [$cb00] ; $4aa3
+	ld a, [wStoryCharacterSlot] ; $4aa3
 	or a, a ; $4aa6
 	jr z, Label_1c_4aab ; $4aa7
 	ld l, $40 ; $4aa9
@@ -1226,7 +1226,7 @@ Label_1c_4aab:
 	ld [$d00a], a ; $4ab5
 	push af ; $4ab8
 	ld hl, wStoryModeNameOfMainCharacter ; $4ab9
-	ld a, [$cb00] ; $4abc
+	ld a, [wStoryCharacterSlot] ; $4abc
 	or a, a ; $4abf
 	jr z, Label_1c_4ac4 ; $4ac0
 	ld l, $40 ; $4ac2
@@ -1243,7 +1243,7 @@ Label_1c_4ac4:
 	ld [$d00e], a ; $4acf
 	push af ; $4ad2
 	ld hl, wStoryModeNameOfMainCharacter ; $4ad3
-	ld a, [$cb00] ; $4ad6
+	ld a, [wStoryCharacterSlot] ; $4ad6
 	or a, a ; $4ad9
 	jr z, Label_1c_4ade ; $4ada
 	ld l, $40 ; $4adc
@@ -1260,7 +1260,7 @@ Label_1c_4ade:
 	ld [$d00f], a ; $4ae9
 	push af ; $4aec
 	ld hl, wStoryModeNameOfMainCharacter ; $4aed
-	ld a, [$cb00] ; $4af0
+	ld a, [wStoryCharacterSlot] ; $4af0
 	or a, a ; $4af3
 	jr z, Label_1c_4af8 ; $4af4
 	ld l, $40 ; $4af6
@@ -1276,7 +1276,7 @@ Label_1c_4af8:
 	ld [$d00b], a ; $4b02
 	push af ; $4b05
 	ld hl, wStoryModeNameOfMainCharacter ; $4b06
-	ld a, [$cb00] ; $4b09
+	ld a, [wStoryCharacterSlot] ; $4b09
 	or a, a ; $4b0c
 	jr z, Label_1c_4b11 ; $4b0d
 	ld l, $40 ; $4b0f
@@ -1293,7 +1293,7 @@ Label_1c_4b11:
 	ld [$d010], a ; $4b1c
 	push af ; $4b1f
 	ld hl, wStoryModeNameOfMainCharacter ; $4b20
-	ld a, [$cb00] ; $4b23
+	ld a, [wStoryCharacterSlot] ; $4b23
 	or a, a ; $4b26
 	jr z, Label_1c_4b2b ; $4b27
 	ld l, $40 ; $4b29
@@ -1310,7 +1310,7 @@ Label_1c_4b2b:
 	ld [$d011], a ; $4b36
 	push af ; $4b39
 	ld hl, wStoryModeNameOfMainCharacter ; $4b3a
-	ld a, [$cb00] ; $4b3d
+	ld a, [wStoryCharacterSlot] ; $4b3d
 	or a, a ; $4b40
 	jr z, Label_1c_4b45 ; $4b41
 	ld l, $40 ; $4b43
@@ -1327,7 +1327,7 @@ Label_1c_4b45:
 	ld [$d012], a ; $4b50
 	push af ; $4b53
 	ld hl, wStoryModeNameOfMainCharacter ; $4b54
-	ld a, [$cb00] ; $4b57
+	ld a, [wStoryCharacterSlot] ; $4b57
 	or a, a ; $4b5a
 	jr z, Label_1c_4b5f ; $4b5b
 	ld l, $40 ; $4b5d
@@ -1343,7 +1343,7 @@ Label_1c_4b5f:
 	ld [$d00c], a ; $4b69
 	push af ; $4b6c
 	ld hl, wStoryModeNameOfMainCharacter ; $4b6d
-	ld a, [$cb00] ; $4b70
+	ld a, [wStoryCharacterSlot] ; $4b70
 	or a, a ; $4b73
 	jr z, Label_1c_4b78 ; $4b74
 	ld l, $40 ; $4b76
@@ -1360,7 +1360,7 @@ Label_1c_4b78:
 	ld [$d013], a ; $4b83
 	push af ; $4b86
 	ld hl, wStoryModeNameOfMainCharacter ; $4b87
-	ld a, [$cb00] ; $4b8a
+	ld a, [wStoryCharacterSlot] ; $4b8a
 	or a, a ; $4b8d
 	jr z, Label_1c_4b92 ; $4b8e
 	ld l, $40 ; $4b90
@@ -1377,7 +1377,7 @@ Label_1c_4b92:
 	ld [$d014], a ; $4b9d
 	push af ; $4ba0
 	ld hl, wStoryModeNameOfMainCharacter ; $4ba1
-	ld a, [$cb00] ; $4ba4
+	ld a, [wStoryCharacterSlot] ; $4ba4
 	or a, a ; $4ba7
 	jr z, Label_1c_4bac ; $4ba8
 	ld l, $40 ; $4baa
@@ -1393,7 +1393,7 @@ Label_1c_4bac:
 	ld [$d00d], a ; $4bb6
 	push af ; $4bb9
 	ld hl, wStoryModeNameOfMainCharacter ; $4bba
-	ld a, [$cb00] ; $4bbd
+	ld a, [wStoryCharacterSlot] ; $4bbd
 	or a, a ; $4bc0
 	jr z, Label_1c_4bc5 ; $4bc1
 	ld l, $40 ; $4bc3
@@ -1410,7 +1410,7 @@ Label_1c_4bc5:
 	ld [$d015], a ; $4bd0
 	push af ; $4bd3
 	ld hl, wStoryModeNameOfMainCharacter ; $4bd4
-	ld a, [$cb00] ; $4bd7
+	ld a, [wStoryCharacterSlot] ; $4bd7
 	or a, a ; $4bda
 	jr z, Label_1c_4bdf ; $4bdb
 	ld l, $40 ; $4bdd
@@ -1427,7 +1427,7 @@ Label_1c_4bdf:
 	ld [$d016], a ; $4bea
 	push af ; $4bed
 	ld hl, wStoryModeNameOfMainCharacter ; $4bee
-	ld a, [$cb00] ; $4bf1
+	ld a, [wStoryCharacterSlot] ; $4bf1
 	or a, a ; $4bf4
 	jr z, Label_1c_4bf9 ; $4bf5
 	ld l, $40 ; $4bf7
@@ -1444,7 +1444,7 @@ Label_1c_4bf9:
 	ld [$d017], a ; $4c04
 	push af ; $4c07
 	ld hl, wStoryModeNameOfMainCharacter ; $4c08
-	ld a, [$cb00] ; $4c0b
+	ld a, [wStoryCharacterSlot] ; $4c0b
 	or a, a ; $4c0e
 	jr z, Label_1c_4c13 ; $4c0f
 	ld l, $40 ; $4c11
@@ -1464,7 +1464,7 @@ Label_1c_4c13:
 	jr z, Label_1c_4c33 ; $4c26
 	ld d, a ; $4c28
 	ld hl, $d019 ; $4c29
-	ld a, [$cb00] ; $4c2c
+	ld a, [wStoryCharacterSlot] ; $4c2c
 	farcall ComputeLevelUpStatDeltas ; $4c2f
 	ret ; $4c32
 Label_1c_4c33:
@@ -1486,7 +1486,7 @@ LoadCharStats:
 	wram_bank $06 ; $4c43
 	push af ; $4c49
 	ld hl, wStoryModeNameOfMainCharacter ; $4c4a
-	ld a, [$cb00] ; $4c4d
+	ld a, [wStoryCharacterSlot] ; $4c4d
 	or a, a ; $4c50
 	jr z, Label_1c_4c55 ; $4c51
 	ld l, $40 ; $4c53
@@ -1502,7 +1502,7 @@ Label_1c_4c55:
 	ld [$d00a], a ; $4c5f
 	push af ; $4c62
 	ld hl, wStoryModeNameOfMainCharacter ; $4c63
-	ld a, [$cb00] ; $4c66
+	ld a, [wStoryCharacterSlot] ; $4c66
 	or a, a ; $4c69
 	jr z, Label_1c_4c6e ; $4c6a
 	ld l, $40 ; $4c6c
@@ -1519,7 +1519,7 @@ Label_1c_4c6e:
 	ld [$d00e], a ; $4c79
 	push af ; $4c7c
 	ld hl, wStoryModeNameOfMainCharacter ; $4c7d
-	ld a, [$cb00] ; $4c80
+	ld a, [wStoryCharacterSlot] ; $4c80
 	or a, a ; $4c83
 	jr z, Label_1c_4c88 ; $4c84
 	ld l, $40 ; $4c86
@@ -1536,7 +1536,7 @@ Label_1c_4c88:
 	ld [$d00f], a ; $4c93
 	push af ; $4c96
 	ld hl, wStoryModeNameOfMainCharacter ; $4c97
-	ld a, [$cb00] ; $4c9a
+	ld a, [wStoryCharacterSlot] ; $4c9a
 	or a, a ; $4c9d
 	jr z, Label_1c_4ca2 ; $4c9e
 	ld l, $40 ; $4ca0
@@ -1552,7 +1552,7 @@ Label_1c_4ca2:
 	ld [$d00b], a ; $4cac
 	push af ; $4caf
 	ld hl, wStoryModeNameOfMainCharacter ; $4cb0
-	ld a, [$cb00] ; $4cb3
+	ld a, [wStoryCharacterSlot] ; $4cb3
 	or a, a ; $4cb6
 	jr z, Label_1c_4cbb ; $4cb7
 	ld l, $40 ; $4cb9
@@ -1569,7 +1569,7 @@ Label_1c_4cbb:
 	ld [$d010], a ; $4cc6
 	push af ; $4cc9
 	ld hl, wStoryModeNameOfMainCharacter ; $4cca
-	ld a, [$cb00] ; $4ccd
+	ld a, [wStoryCharacterSlot] ; $4ccd
 	or a, a ; $4cd0
 	jr z, Label_1c_4cd5 ; $4cd1
 	ld l, $40 ; $4cd3
@@ -1586,7 +1586,7 @@ Label_1c_4cd5:
 	ld [$d011], a ; $4ce0
 	push af ; $4ce3
 	ld hl, wStoryModeNameOfMainCharacter ; $4ce4
-	ld a, [$cb00] ; $4ce7
+	ld a, [wStoryCharacterSlot] ; $4ce7
 	or a, a ; $4cea
 	jr z, Label_1c_4cef ; $4ceb
 	ld l, $40 ; $4ced
@@ -1603,7 +1603,7 @@ Label_1c_4cef:
 	ld [$d012], a ; $4cfa
 	push af ; $4cfd
 	ld hl, wStoryModeNameOfMainCharacter ; $4cfe
-	ld a, [$cb00] ; $4d01
+	ld a, [wStoryCharacterSlot] ; $4d01
 	or a, a ; $4d04
 	jr z, Label_1c_4d09 ; $4d05
 	ld l, $40 ; $4d07
@@ -1619,7 +1619,7 @@ Label_1c_4d09:
 	ld [$d00c], a ; $4d13
 	push af ; $4d16
 	ld hl, wStoryModeNameOfMainCharacter ; $4d17
-	ld a, [$cb00] ; $4d1a
+	ld a, [wStoryCharacterSlot] ; $4d1a
 	or a, a ; $4d1d
 	jr z, Label_1c_4d22 ; $4d1e
 	ld l, $40 ; $4d20
@@ -1636,7 +1636,7 @@ Label_1c_4d22:
 	ld [$d013], a ; $4d2d
 	push af ; $4d30
 	ld hl, wStoryModeNameOfMainCharacter ; $4d31
-	ld a, [$cb00] ; $4d34
+	ld a, [wStoryCharacterSlot] ; $4d34
 	or a, a ; $4d37
 	jr z, Label_1c_4d3c ; $4d38
 	ld l, $40 ; $4d3a
@@ -1653,7 +1653,7 @@ Label_1c_4d3c:
 	ld [$d014], a ; $4d47
 	push af ; $4d4a
 	ld hl, wStoryModeNameOfMainCharacter ; $4d4b
-	ld a, [$cb00] ; $4d4e
+	ld a, [wStoryCharacterSlot] ; $4d4e
 	or a, a ; $4d51
 	jr z, Label_1c_4d56 ; $4d52
 	ld l, $40 ; $4d54
@@ -1669,7 +1669,7 @@ Label_1c_4d56:
 	ld [$d00d], a ; $4d60
 	push af ; $4d63
 	ld hl, wStoryModeNameOfMainCharacter ; $4d64
-	ld a, [$cb00] ; $4d67
+	ld a, [wStoryCharacterSlot] ; $4d67
 	or a, a ; $4d6a
 	jr z, Label_1c_4d6f ; $4d6b
 	ld l, $40 ; $4d6d
@@ -1686,7 +1686,7 @@ Label_1c_4d6f:
 	ld [$d015], a ; $4d7a
 	push af ; $4d7d
 	ld hl, wStoryModeNameOfMainCharacter ; $4d7e
-	ld a, [$cb00] ; $4d81
+	ld a, [wStoryCharacterSlot] ; $4d81
 	or a, a ; $4d84
 	jr z, Label_1c_4d89 ; $4d85
 	ld l, $40 ; $4d87
@@ -1703,7 +1703,7 @@ Label_1c_4d89:
 	ld [$d016], a ; $4d94
 	push af ; $4d97
 	ld hl, wStoryModeNameOfMainCharacter ; $4d98
-	ld a, [$cb00] ; $4d9b
+	ld a, [wStoryCharacterSlot] ; $4d9b
 	or a, a ; $4d9e
 	jr z, Label_1c_4da3 ; $4d9f
 	ld l, $40 ; $4da1
@@ -1720,7 +1720,7 @@ Label_1c_4da3:
 	ld [$d017], a ; $4dae
 	push af ; $4db1
 	ld hl, wStoryModeNameOfMainCharacter ; $4db2
-	ld a, [$cb00] ; $4db5
+	ld a, [wStoryCharacterSlot] ; $4db5
 	or a, a ; $4db8
 	jr z, Label_1c_4dbd ; $4db9
 	ld l, $40 ; $4dbb
@@ -2156,7 +2156,7 @@ Label_1c_512a:
 	jp z, CharDataScreen_InputLoop ; $5135
 	sound $5f ; $5138
 	ld d, a ; $513a
-	ld a, [$cb00] ; $513b
+	ld a, [wStoryCharacterSlot] ; $513b
 	farcall LevelUpPlayer ; $513e
 	wram_bank $06 ; $5141
 	ld hl, $d009 ; $5147
@@ -2175,15 +2175,15 @@ Label_1c_512a:
 	ld [$d024], a ; $515f
 	test_flag $03, 4 ; $5162
 	jr nz, Label_1c_5171 ; $5165
-	ld a, [$cb00] ; $5167
+	ld a, [wStoryCharacterSlot] ; $5167
 	farcall HasReachedNextLevelExp ; $516a
 	jr nz, Label_1c_51a3 ; $516d
 	jr Label_1c_518e ; $516f
 Label_1c_5171:
-	ld a, [$cb00] ; $5171
+	ld a, [wStoryCharacterSlot] ; $5171
 	push af ; $5174
 	ld hl, wStoryModeNameOfMainCharacter ; $5175
-	ld a, [$cb00] ; $5178
+	ld a, [wStoryCharacterSlot] ; $5178
 	or a, a ; $517b
 	jr z, Label_1c_5180 ; $517c
 	ld l, $40 ; $517e
@@ -2438,7 +2438,7 @@ ApplyCharStatLevelUp:
 	inc [hl] ; $5414
 	push af ; $5415
 	ld hl, wStoryModeNameOfMainCharacter ; $5416
-	ld a, [$cb00] ; $5419
+	ld a, [wStoryCharacterSlot] ; $5419
 	or a, a ; $541c
 	jr z, Label_1c_5421 ; $541d
 	ld l, $40 ; $541f
@@ -2454,7 +2454,7 @@ Label_1c_5421:
 	ld [hl], a ; $542d
 	push af ; $542e
 	ld hl, wStoryModeNameOfMainCharacter ; $542f
-	ld a, [$cb00] ; $5432
+	ld a, [wStoryCharacterSlot] ; $5432
 	or a, a ; $5435
 	jr z, Label_1c_543a ; $5436
 	ld l, $40 ; $5438
@@ -2471,7 +2471,7 @@ Label_1c_543a:
 	ld [$d00a], a ; $5447
 	push af ; $544a
 	ld hl, wStoryModeNameOfMainCharacter ; $544b
-	ld a, [$cb00] ; $544e
+	ld a, [wStoryCharacterSlot] ; $544e
 	or a, a ; $5451
 	jr z, Label_1c_5456 ; $5452
 	ld l, $40 ; $5454
@@ -2488,7 +2488,7 @@ Label_1c_5456:
 	ld [$d00b], a ; $5463
 	push af ; $5466
 	ld hl, wStoryModeNameOfMainCharacter ; $5467
-	ld a, [$cb00] ; $546a
+	ld a, [wStoryCharacterSlot] ; $546a
 	or a, a ; $546d
 	jr z, Label_1c_5472 ; $546e
 	ld l, $40 ; $5470
@@ -2505,7 +2505,7 @@ Label_1c_5472:
 	ld [$d00c], a ; $547f
 	push af ; $5482
 	ld hl, wStoryModeNameOfMainCharacter ; $5483
-	ld a, [$cb00] ; $5486
+	ld a, [wStoryCharacterSlot] ; $5486
 	or a, a ; $5489
 	jr z, Label_1c_548e ; $548a
 	ld l, $40 ; $548c
@@ -2520,7 +2520,7 @@ Label_1c_548e:
 	ld a, [$d008] ; $5497
 	ld [hl], a ; $549a
 	ld [$d00d], a ; $549b
-	ld a, [$cb00] ; $549e
+	ld a, [wStoryCharacterSlot] ; $549e
 	farcall RefreshPlayerStatsAndGetPtr ; $54a1
 	ld a, [$d029] ; $54a4
 	ld c, a ; $54a7
@@ -2537,7 +2537,7 @@ Label_1c_54aa:
 	ld h, a ; $54b5
 	ld a, [hl] ; $54b6
 	ld d, a ; $54b7
-	ld a, [$cb00] ; $54b8
+	ld a, [wStoryCharacterSlot] ; $54b8
 	farcall LevelUpPlayer ; $54bb
 	pop bc ; $54be
 	inc b ; $54bf
@@ -2910,12 +2910,12 @@ RestoreCharData:
 	ld a, $01 ; $733d
 	ld [$d0b6], a ; $733f
 	xor a, a ; $7342
-	ld [$cb00], a ; $7343
+	ld [wStoryCharacterSlot], a ; $7343
 	ld a, [$d003] ; $7346
 	ld [$d009], a ; $7349
 	push af ; $734c
 	ld hl, wStoryModeNameOfMainCharacter ; $734d
-	ld a, [$cb00] ; $7350
+	ld a, [wStoryCharacterSlot] ; $7350
 	or a, a ; $7353
 	jr z, Label_1c_7358 ; $7354
 	ld l, $40 ; $7356
@@ -2931,7 +2931,7 @@ Label_1c_7358:
 	ld [hl], a ; $7364
 	push af ; $7365
 	ld hl, wStoryModeNameOfMainCharacter ; $7366
-	ld a, [$cb00] ; $7369
+	ld a, [wStoryCharacterSlot] ; $7369
 	or a, a ; $736c
 	jr z, Label_1c_7371 ; $736d
 	ld l, $40 ; $736f
@@ -2948,7 +2948,7 @@ Label_1c_7371:
 	ld [$d00a], a ; $737e
 	push af ; $7381
 	ld hl, wStoryModeNameOfMainCharacter ; $7382
-	ld a, [$cb00] ; $7385
+	ld a, [wStoryCharacterSlot] ; $7385
 	or a, a ; $7388
 	jr z, Label_1c_738d ; $7389
 	ld l, $40 ; $738b
@@ -2965,7 +2965,7 @@ Label_1c_738d:
 	ld [$d00b], a ; $739a
 	push af ; $739d
 	ld hl, wStoryModeNameOfMainCharacter ; $739e
-	ld a, [$cb00] ; $73a1
+	ld a, [wStoryCharacterSlot] ; $73a1
 	or a, a ; $73a4
 	jr z, Label_1c_73a9 ; $73a5
 	ld l, $40 ; $73a7
@@ -2982,7 +2982,7 @@ Label_1c_73a9:
 	ld [$d00c], a ; $73b6
 	push af ; $73b9
 	ld hl, wStoryModeNameOfMainCharacter ; $73ba
-	ld a, [$cb00] ; $73bd
+	ld a, [wStoryCharacterSlot] ; $73bd
 	or a, a ; $73c0
 	jr z, Label_1c_73c5 ; $73c1
 	ld l, $40 ; $73c3
@@ -3068,10 +3068,10 @@ LoadCharDataScreenBgAndPalettes:
 	ret ; $748c
 LoadCharDataScreenMugshots:
 	xor a, a ; $748d
-	ld [$cb00], a ; $748e
+	ld [wStoryCharacterSlot], a ; $748e
 	push af ; $7491
 	ld hl, wStoryModeNameOfMainCharacter ; $7492
-	ld a, [$cb00] ; $7495
+	ld a, [wStoryCharacterSlot] ; $7495
 	or a, a ; $7498
 	jr z, Label_1c_749d ; $7499
 	ld l, $40 ; $749b
@@ -3089,7 +3089,7 @@ Label_1c_749d:
 	wram_bank $01 ; $74ad
 	push af ; $74b3
 	ld hl, wStoryModeNameOfMainCharacter ; $74b4
-	ld a, [$cb00] ; $74b7
+	ld a, [wStoryCharacterSlot] ; $74b7
 	or a, a ; $74ba
 	jr z, Label_1c_74bf ; $74bb
 	ld l, $40 ; $74bd
@@ -3109,10 +3109,10 @@ Label_1c_74bf:
 	ld c, $09 ; $74d5
 	call QueueVRAMCopy ; $74d7
 	ld a, $01 ; $74da
-	ld [$cb00], a ; $74dc
+	ld [wStoryCharacterSlot], a ; $74dc
 	push af ; $74df
 	ld hl, wStoryModeNameOfMainCharacter ; $74e0
-	ld a, [$cb00] ; $74e3
+	ld a, [wStoryCharacterSlot] ; $74e3
 	or a, a ; $74e6
 	jr z, Label_1c_74eb ; $74e7
 	ld l, $40 ; $74e9
@@ -3130,7 +3130,7 @@ Label_1c_74eb:
 	wram_bank $01 ; $74fb
 	push af ; $7501
 	ld hl, wStoryModeNameOfMainCharacter ; $7502
-	ld a, [$cb00] ; $7505
+	ld a, [wStoryCharacterSlot] ; $7505
 	or a, a ; $7508
 	jr z, Label_1c_750d ; $7509
 	ld l, $40 ; $750b
