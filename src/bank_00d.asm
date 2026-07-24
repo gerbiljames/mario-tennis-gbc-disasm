@@ -83,39 +83,34 @@ StartMinigameByID:
 	call InitMinigameFromConfig ; $408c
 	ret ; $408f
 MinigameConfigTable:
-	; $4090, 63 bytes (records:2)
-	dw $44fa ; record 0
-	dw $4959 ; record 1
-	dw $49b6 ; record 2
-	dw $4a13 ; record 3
-	dw $4a70 ; record 4
-	dw $4bf8 ; record 5
-	dw $4c43 ; record 6
-	dw $4c8e ; record 7
-	dw $4cd9 ; record 8
-	dw $4d3b ; record 9
-	dw $5615 ; record 10
-	dw $5194 ; record 11
-	dw $586e ; record 12
-	dw $4d8b ; record 13
-	dw $5f32 ; record 14
-	dw $54ec ; record 15
-	dw $59cb ; record 16
-	dw $5cea ; record 17
-	dw $0900 ; record 18
-	dw $0909 ; record 19
-	dw $0900 ; record 20
-	dw $0909 ; record 21
-	dw $00ff ; record 22
-	dw $0903 ; record 23
-	dw $0109 ; record 24
-	dw $0900 ; record 25
-	dw $ff09 ; record 26
-	dw $0300 ; record 27
-	dw $0909 ; record 28
-	dw $0100 ; record 29
-	dw $0909 ; record 30
-	db $ff
+	; $4090, 36 bytes (records:2)
+	dw MinigameConfig_TennisMachine1 ; record 0
+	dw MinigameConfig_TennisMachine2 ; record 1
+	dw MinigameConfig_TennisMachine3 ; record 2
+	dw MinigameConfig_TennisMachine4 ; record 3
+	dw MinigameConfig_WallPractice1 ; record 4
+	dw MinigameConfig_WallPractice2 ; record 5
+	dw MinigameConfig_WallPractice3 ; record 6
+	dw MinigameConfig_WallPractice4 ; record 7
+	dw MinigameConfig_TennisMachineHighScore ; record 8
+	dw MinigameConfig_WallPracticeHighScore ; record 9
+	dw MinigameConfig_BooBlast ; record 10
+	dw MinigameConfig_ShootingStar ; record 11
+	dw MinigameConfig_PerfectShot ; record 12
+	dw MinigameConfig_TargetShot ; record 13
+	dw MinigameConfig_FruitFantasy ; record 14
+	dw MinigameConfig_BananaBunch ; record 15
+	dw MinigameConfig_TreasureBox ; record 16
+	dw MinigameConfig_MedallionMatch ; record 17
+MinigamePointLayoutSolo:
+	; $40b4, 9 bytes (bytes:9)
+	db $00, $09, $09, $09, $00, $09, $09, $09, $ff ; 0x00
+MinigamePointLayoutDuo:
+	; $40bd, 9 bytes (bytes:9)
+	db $00, $03, $09, $09, $01, $00, $09, $09, $ff ; 0x00
+MinigamePointLayoutBooBlast:
+	; $40c6, 9 bytes (bytes:9)
+	db $00, $03, $09, $09, $00, $01, $09, $09, $ff ; 0x00
 InitMinigameScore:
 	xor a, a ; $40cf
 	ld hl, wMinigamesCurrentScore ; $40d0
@@ -719,6 +714,7 @@ UpdateMinigameActor:
 	pop bc ; $44f7
 	pop af ; $44f8
 	ret ; $44f9
+MinigameConfig_TennisMachine1:
 	INCBIN "data/bank_00d/d_44fa.bin" ; $44fa, 16 bytes
 	ld a, $01 ; $450a
 	ld [$c7b8], a ; $450c
@@ -1132,6 +1128,7 @@ SnapCameraTo_0d:
 	xor a, a ; $4954
 	ld [wCameraFollowBall], a ; $4955
 	ret ; $4958
+MinigameConfig_TennisMachine2:
 	INCBIN "data/bank_00d/d_4959.bin" ; $4959, 16 bytes
 	ld a, $01 ; $4969
 	ld [$c7b8], a ; $496b
@@ -1180,6 +1177,7 @@ Label_0d_49a1:
 	ret ; $49b1
 	call Func_0d_47e2 ; $49b2
 	ret ; $49b5
+MinigameConfig_TennisMachine3:
 	dec d ; $49b6
 	ld a, [bc] ; $49b7
 	ld [bc], a ; $49b8
@@ -1238,6 +1236,7 @@ Label_0d_49fe:
 	ret ; $4a0e
 	call Func_0d_47e2 ; $4a0f
 	ret ; $4a12
+MinigameConfig_TennisMachine4:
 	dec d ; $4a13
 	ld a, [bc] ; $4a14
 	ld [bc], a ; $4a15
@@ -1297,6 +1296,7 @@ Label_0d_4a5b:
 	ret ; $4a6b
 	call Func_0d_47e2 ; $4a6c
 	ret ; $4a6f
+MinigameConfig_WallPractice1:
 	nop ; $4a70
 	dec bc ; $4a71
 	ld bc, $1607 ; $4a72
@@ -1499,6 +1499,7 @@ DrawMinigameScore:
 	ld a, $04 ; $4bf2
 	farcall DrawNumberWithSprites ; $4bf4
 	ret ; $4bf7
+MinigameConfig_WallPractice2:
 	INCBIN "data/bank_00d/d_4bf8.bin" ; $4bf8, 16 bytes
 	ld a, $01 ; $4c08
 	ld [$c7b9], a ; $4c0a
@@ -1536,6 +1537,7 @@ DrawMinigameScore:
 	ret ; $4c3e
 	call Func_0d_4bc8 ; $4c3f
 	ret ; $4c42
+MinigameConfig_WallPractice3:
 	nop ; $4c43
 	dec bc ; $4c44
 	ld bc, $1807 ; $4c45
@@ -1586,6 +1588,7 @@ DrawMinigameScore:
 	ret ; $4c89
 	call Func_0d_4bc8 ; $4c8a
 	ret ; $4c8d
+MinigameConfig_WallPractice4:
 	nop ; $4c8e
 	dec bc ; $4c8f
 	ld bc, $1907 ; $4c90
@@ -1634,6 +1637,7 @@ DrawMinigameScore:
 	ret ; $4cd4
 	call Func_0d_4bc8 ; $4cd5
 	ret ; $4cd8
+MinigameConfig_TennisMachineHighScore:
 	INCBIN "data/bank_00d/d_4cd9.bin" ; $4cd9, 32 bytes
 	ld [de], a ; $4cf9
 	ld c, l ; $4cfa
@@ -1676,6 +1680,7 @@ Label_0d_4d26:
 	ret ; $4d36
 	call Func_0d_47e2 ; $4d37
 	ret ; $4d3a
+MinigameConfig_WallPracticeHighScore:
 	nop ; $4d3b
 	dec bc ; $4d3c
 	ld bc, $1b07 ; $4d3d
@@ -1728,6 +1733,7 @@ Label_0d_4d26:
 	ret ; $4d86
 	call Func_0d_4bc8 ; $4d87
 	ret ; $4d8a
+MinigameConfig_TargetShot:
 	dec d ; $4d8b
 	rrca ; $4d8c
 	ld [bc], a ; $4d8d
@@ -2058,7 +2064,9 @@ LoadTargetZoneConfig:
 	ld bc, $0008 ; $5155
 	call CopyMemoryBC ; $5158
 	ret ; $515b
-	INCBIN "data/bank_00d/d_515c.bin" ; $515c, 72 bytes
+	INCBIN "data/bank_00d/d_515c.bin" ; $515c, 56 bytes
+MinigameConfig_ShootingStar:
+	INCBIN "data/bank_00d/d_5194.bin" ; $5194, 16 bytes
 	ld a, $01 ; $51a4
 	ld [$c7b8], a ; $51a6
 	ld a, [wMinigameLevel] ; $51a9
@@ -2422,7 +2430,9 @@ Label_0d_5421:
 	dec e ; $5429
 	dec e ; $542a
 	ret ; $542b
-	INCBIN "data/bank_00d/d_542c.bin" ; $542c, 392 bytes
+	INCBIN "data/bank_00d/d_542c.bin" ; $542c, 192 bytes
+MinigameConfig_BananaBunch:
+	INCBIN "data/bank_00d/d_54ec.bin" ; $54ec, 200 bytes
 CopyMinigameTilemapBlock:
 	wram_bank $02 ; $55b4
 	ld de, $c7c0 ; $55ba
@@ -2473,6 +2483,7 @@ Label_0d_55fd:
 	farcall DeflectBallOffMinigameTarget ; $560f
 	sound $77 ; $5612
 	ret ; $5614
+MinigameConfig_BooBlast:
 	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 67 bytes
 	ld l, a ; $5658
 	ld d, [hl] ; $5659
@@ -2807,6 +2818,7 @@ ProjectBallSprite:
 	ld c, $0e ; $5869
 	ld c, $0e ; $586b
 	dec c ; $586d
+MinigameConfig_PerfectShot:
 	nop ; $586e
 	inc de ; $586f
 	ld bc, $1e08 ; $5870
@@ -2986,8 +2998,11 @@ Label_0d_59bd:
 Label_0d_59c8:
 	ld a, $00 ; $59c8
 	ret ; $59ca
-	INCBIN "data/bank_00d/d_59cb.bin" ; $59cb, 935 bytes
-	; $5d72, 648 bytes (bytes:14)
+MinigameConfig_TreasureBox:
+	INCBIN "data/bank_00d/d_59cb.bin" ; $59cb, 799 bytes
+MinigameConfig_MedallionMatch:
+	INCBIN "data/bank_00d/d_5cea.bin" ; $5cea, 136 bytes
+	; $5d72, 448 bytes (bytes:14)
 	db $00, $cd, $bd, $5d, $21, $80, $00, $11, $40, $fe, $01, $10, $dc, $3e ; 0x00
 	db $01, $cd, $bd, $5d, $21, $c0, $00, $11, $80, $fd, $01, $20, $dc, $3e ; 0x0e
 	db $02, $cd, $bd, $5d, $21, $c0, $ff, $11, $00, $ff, $01, $30, $dc, $3e ; 0x1c
@@ -3020,19 +3035,6 @@ Label_0d_59c8:
 	db $95, $67, $4e, $cd, $55, $1e, $c9, $20, $24, $28, $2c, $cd, $1f, $5f ; 0x196
 	db $0e, $3c, $fa, $73, $dc, $cd, $f6, $53, $c9, $21, $7a, $dc, $2a, $5f ; 0x1a4
 	db $2a, $57, $2a, $4f, $2a, $47, $6b, $62, $df, $46, $08, $06, $0f, $c9 ; 0x1b2
-	db $00, $16, $01, $08, $20, $13, $00, $1c, $61, $5f, $b4, $40, $42, $5f ; 0x1c0
-	db $00, $00, $df, $96, $0a, $3e, $06, $df, $9a, $0a, $3e, $01, $ea, $a4 ; 0x1ce
-	db $c7, $3e, $01, $ea, $b9, $c7, $fa, $76, $c3, $fe, $02, $20, $05, $3e ; 0x1dc
-	db $01, $ea, $bc, $c7, $c9, $72, $5f, $79, $5f, $dc, $5f, $71, $5f, $e8 ; 0x1ea
-	db $5f, $e4, $5f, $e0, $5f, $ae, $03, $c9, $cd, $bb, $4a, $cd, $ec, $5f ; 0x1f8
-	db $c9, $cd, $01, $4b, $fa, $76, $c3, $87, $c6, $8e, $6f, $ce, $5f, $95 ; 0x206
-	db $67, $2a, $66, $6f, $cd, $b4, $55, $c9, $94, $5f, $ac, $5f, $c4, $5f ; 0x214
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x222
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $05, $05 ; 0x230
-	db $00, $06, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $04 ; 0x23e
-	db $00, $07, $07, $00, $00, $00, $00, $04, $04, $00, $06, $06, $00, $00 ; 0x24c
-	db $07, $00, $00, $05, $00, $00, $07, $00, $00, $07, $07, $00, $07, $07 ; 0x25a
-	db $00, $00, $cd, $29, $4b, $c9, $cd, $f0, $5f, $c9, $cd, $c7, $4b, $c9 ; 0x268
-	db $cd, $c8, $4b, $c9, $cd, $ca, $55, $c9, $cd, $70, $4b, $cd, $bf, $42 ; 0x276
-	db $ea, $bf, $c7, $c9 ; 0x284
+MinigameConfig_FruitFantasy:
+	INCBIN "data/bank_00d/d_5f32.bin" ; $5f32, 200 bytes
 	ds 8198, $ff ; $5ffa, fill

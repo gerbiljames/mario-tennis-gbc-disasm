@@ -28,6 +28,47 @@ byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 **5,476 of 18,745 labels are human-named** (up from 4,816 on 2026-07-23).
 
+### MinigameConfigTable symbolicated (bank $0d, 2026-07-24)
+
+`MinigameConfigTable` (`$0d:$4090`) rendered as 63 bytes of raw `dw`s over
+an over-run extent. It is really **18 words plus three 9-byte tables**, and
+the 63 bytes now decompose exactly (36 + 9 + 9 + 9), ending flush against
+`InitMinigameScore` at `$40cf`.
+
+`StartMinigameByID` indexes it as `id - $12` (ids below `$12` are drills,
+routed through bank `$0b`'s directory instead; id `$24` is special-cased by
+the caller, which is why the table stops at 18). Each entry is a 14-byte
+config that `InitMinigameFromConfig` unpacks: `+$00` opponent char, `+$01`
+court, `+$02` on-court character count, `+$03` game mode, `+$04` the low
+byte of `wCurrentMinigameStoryMatch` (high byte always `$02`), `+$05` BGM,
+`+$07` player char, `+$08` mode-hook table, `+$0a` point-layout table,
+`+$0c` an optional init routine called through `JumpToHL`.
+
+That `+$04` byte names every entry outright against the
+`wCurrentMinigameStoryMatch` id list: `$12`-`$15` are Tennis Machine 1-4,
+`$16`-`$19` Wall Practice 1-4, `$1a`/`$1b` the two high-score variants, and
+`$1c`-`$23` Boo Blast, Shooting Star, Perfect Shot, Target Shot, Fruit
+Fantasy, Banana Bunch, Treasure Box and Medallion Match. The other fields
+corroborate: the Tennis Machine entries all carry opponent `$15`, court
+`$0a` and 2 on-court characters, the Wall Practice ones opponent `$00`,
+court `$0b` and 1 character, and each real minigame has its own court and
+BGM.
+
+The three tail tables are the `+$0a` point layouts, read by
+`LoadMinigamePointLayout` (`$08:$6662`) as an 8-byte row indexed by
+`wTotalPointsScoredInCurrentGame * 8`, with `$ff` at row 1 ending the
+sequence. They split cleanly by on-court character count, which is how they
+are named: `MinigamePointLayoutSolo` (`$40b4`) is used by every 1-character
+config, `MinigamePointLayoutDuo` (`$40bd`) by every 2-character one, and
+`MinigamePointLayoutBooBlast` (`$40c6`) only by Boo Blast.
+
+Not done yet: each config's `+$08` mode-hook table is 8 slots
+(`CallModeHook` indexes `d` 0-7 — per-frame, point start, point end,
+minigame start, ball hit, bounce, rally tick, draw), and empty slots point
+at `$00:$03ae`, a bare `ret` in ROM0. Carving those 18 tables and their
+~144 handlers is the obvious follow-on and would make the whole minigame
+subsystem symbolic.
+
 ### Actor-script `as_set_pos` / `as_set_target` were swapped (2026-07-24)
 
 Actor-script opcodes `$03` and `$04` had their macro names the wrong way
