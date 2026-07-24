@@ -3529,7 +3529,7 @@ Label_38_5c3a:
 	ret ; $5c46
 AdvanceToNextPlayerSlot:
 	ld a, [$d813] ; $5c47
-	ld hl, SubHandlers_38_5c8f ; $5c4a
+	ld hl, CharSelectSlotRingTable ; $5c4a
 	add a, a ; $5c4d
 	add a, l ; $5c4e
 	ld l, a ; $5c4f
@@ -3550,7 +3550,7 @@ Label_38_5c5a:
 	ret ; $5c62
 RetreatToPreviousPlayerSlot:
 	ld a, [$d813] ; $5c63
-	ld hl, SubHandlers_38_5c8f ; $5c66
+	ld hl, CharSelectSlotRingTable ; $5c66
 	add a, a ; $5c69
 	add a, l ; $5c6a
 	ld l, a ; $5c6b
@@ -3582,38 +3582,32 @@ Label_38_5c8c:
 	ld a, $fe ; $5c8c
 Label_38_5c8e:
 	ret ; $5c8e
-SubHandlers_38_5c8f:
+CharSelectSlotRingTable:
 	; $5c8f, 12 bytes (records:2)
-	dw $5c9b ; record 0
-	dw $5c9f ; record 1
-	dw $5ca5 ; record 2
-	dw $5ca9 ; record 3
-	dw $5cad ; record 4
-	dw $5cb2 ; record 5
-	rst Rst38 ; $5c9b
-	nop ; $5c9c
-	ld [bc], a ; $5c9d
-	rst Rst38 ; $5c9e
-	rst Rst38 ; $5c9f
-	nop ; $5ca0
-	ld bc, $0302 ; $5ca1
-	rst Rst38 ; $5ca4
-	rst Rst38 ; $5ca5
-	nop ; $5ca6
-	inc b ; $5ca7
-	rst Rst38 ; $5ca8
-	rst Rst38 ; $5ca9
-	ld [bc], a ; $5caa
-	inc b ; $5cab
-	rst Rst38 ; $5cac
-	rst Rst38 ; $5cad
-	nop ; $5cae
-	ld bc, rDIV ; $5caf
-	rst Rst38 ; $5cb2
-	ld [bc], a ; $5cb3
-	inc bc ; $5cb4
-	inc b ; $5cb5
-	rst Rst38 ; $5cb6
+	dw CharSelectSlotRing0 ; record 0
+	dw CharSelectSlotRing1 ; record 1
+	dw CharSelectSlotRing2 ; record 2
+	dw CharSelectSlotRing3 ; record 3
+	dw CharSelectSlotRing4 ; record 4
+	dw CharSelectSlotRing5 ; record 5
+CharSelectSlotRing0:
+	; $5c9b, 4 bytes (bytes:4)
+	db $ff, $00, $02, $ff ; 0x00
+CharSelectSlotRing1:
+	; $5c9f, 6 bytes (bytes:6)
+	db $ff, $00, $01, $02, $03, $ff ; 0x00
+CharSelectSlotRing2:
+	; $5ca5, 4 bytes (bytes:4)
+	db $ff, $00, $04, $ff ; 0x00
+CharSelectSlotRing3:
+	; $5ca9, 4 bytes (bytes:4)
+	db $ff, $02, $04, $ff ; 0x00
+CharSelectSlotRing4:
+	; $5cad, 5 bytes (bytes:5)
+	db $ff, $00, $01, $04, $ff ; 0x00
+CharSelectSlotRing5:
+	; $5cb2, 5 bytes (bytes:5)
+	db $ff, $02, $03, $04, $ff ; 0x00
 GetGridSlotFromCursor:
 	ldh a, [hWramBank] ; $5cb7
 	push af ; $5cb9
