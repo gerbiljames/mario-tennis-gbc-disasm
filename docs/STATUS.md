@@ -127,6 +127,15 @@ already-named routine (`Advance*ActorState`, `IsBallIn*HitZone`,
 `Project*WorldPosition`), and their score tables corroborate it — Treasure
 Box's box values are `05 0a 32 64` with multipliers `01 02 04 08` and an
 `IncrementCappedCounter` cap of exactly 4, matching the table length.
+The last real blob, `d_5b4b.bin` (122 bytes), is the Treasure Box spawn
+data, and the state-0 handler at `$5adf` reads all of it: two 16-entry
+**box-type pools** picked by testing `[$c780] - 11`'s sign, so the
+100-point box (type 3, per `TreasureBoxValuesByType` = 5/10/50/100) only
+enters the pool after 11 shots; then a 5-word table indexed by the
+target-zone id `[$c7a5]`, each pointing at four (X, depth) **spawn points**
+one of which `AdvanceMatchRng & $03` selects. The five 16-byte blocks fill
+exactly up to `IsBallInTreasureBoxHitZone`.
+
 Carving them also surfaced a `cp a, $09` against `wCurrentShotType` that
 the enum pass had missed because the routine was still a data blob; it is
 now `SHOTTYPE_SMASH`, matching its Shooting Star twin. Three declarations were simply

@@ -3418,9 +3418,9 @@ Label_0d_5adf:
 	ld de, $fff5 ; $5ae9
 	add hl, de ; $5aec
 	bit 7, h ; $5aed
-	ld hl, $5b4b ; $5aef
+	ld hl, TreasureBoxTypePoolLate ; $5aef
 	jr z, Label_0d_5af7 ; $5af2
-	ld hl, $5b5b ; $5af4
+	ld hl, TreasureBoxTypePoolEarly ; $5af4
 Label_0d_5af7:
 	farcall AdvanceMatchRng ; $5af7
 	and a, $0f ; $5afa
@@ -3479,7 +3479,49 @@ Label_0d_5b3d:
 	jp AdvanceTreasureBoxActorState ; $5b47
 Label_0d_5b4a:
 	ret ; $5b4a
-	INCBIN "data/bank_00d/d_5b4b.bin" ; $5b4b, 122 bytes
+TreasureBoxTypePoolLate:
+	; $5b4b, 16 bytes (bytes:16)
+	db $00, $00, $00, $00, $00, $00, $03, $03, $01, $01, $01, $01, $01, $02, $02, $02 ; 0x00
+TreasureBoxTypePoolEarly:
+	; $5b5b, 16 bytes (bytes:16)
+	db $00, $00, $00, $00, $00, $00, $01, $00, $01, $01, $01, $01, $01, $02, $02, $02 ; 0x00
+TreasureBoxSpawnPointsByZone:
+	; $5b6b, 10 bytes (records:2)
+	dw TreasureBoxSpawnPoints0 ; record 0
+	dw TreasureBoxSpawnPoints1 ; record 1
+	dw TreasureBoxSpawnPoints2 ; record 2
+	dw TreasureBoxSpawnPoints3 ; record 3
+	dw TreasureBoxSpawnPoints4 ; record 4
+TreasureBoxSpawnPoints0:
+	; $5b75, 16 bytes (bytes:4)
+	db $80, $ff, $80, $fe ; 0x00
+	db $00, $ff, $00, $fe ; 0x04
+	db $60, $ff, $80, $fd ; 0x08
+	db $e0, $fe, $00, $fd ; 0x0c
+TreasureBoxSpawnPoints1:
+	; $5b85, 16 bytes (bytes:4)
+	db $80, $00, $80, $fe ; 0x00
+	db $00, $01, $00, $fe ; 0x04
+	db $a0, $00, $80, $fd ; 0x08
+	db $20, $01, $00, $fd ; 0x0c
+TreasureBoxSpawnPoints2:
+	; $5b95, 16 bytes (bytes:4)
+	db $a0, $00, $00, $fe ; 0x00
+	db $20, $00, $00, $fe ; 0x04
+	db $e0, $ff, $00, $fe ; 0x08
+	db $60, $ff, $00, $fe ; 0x0c
+TreasureBoxSpawnPoints3:
+	; $5ba5, 16 bytes (bytes:4)
+	db $c0, $00, $00, $fd ; 0x00
+	db $40, $00, $00, $fd ; 0x04
+	db $c0, $ff, $00, $fd ; 0x08
+	db $40, $ff, $00, $fd ; 0x0c
+TreasureBoxSpawnPoints4:
+	; $5bb5, 16 bytes (bytes:4)
+	db $00, $00, $00, $fd ; 0x00
+	db $00, $00, $80, $fe ; 0x04
+	db $00, $01, $c0, $fd ; 0x08
+	db $00, $ff, $c0, $fd ; 0x0c
 IsBallInTreasureBoxHitZone:
 	ld a, [wLastShotCharIndex] ; $5bc5
 	and a, $01 ; $5bc8
