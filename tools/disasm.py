@@ -3383,6 +3383,32 @@ def render_actor_script(rom, start, end, bank, labels):
     return out, consumed
 
 
+def render_actor_list(rom, seg, end, bank, labels):
+    """A spawn list for `SpawnActorFromTemplate` ($04:$4c60): 14-byte records
+    of {flag condition, script, x, y, facing, -, obj def, anim, extra, -}.
+    `SpawnActorsFromList` copies 14 bytes per step and stops on a record whose
+    byte 9 is $ff, so the stored terminator is only the 10 bytes up to it."""
+    out, p, n = [], seg, 0
+    while p < end:
+        if end - p < 14 or rom[p + 9] == 0xFF:
+            out.append("\tdb " + ", ".join(f"${b:02x}" for b in rom[p:end])
+                       + " ; list end")
+            break
+        w = [rom[p + i] | (rom[p + i + 1] << 8) for i in (0, 2, 4, 6)]
+        tgt = (bank * 0x4000 + w[1] - 0x4000 if 0x4000 <= w[1] < 0x8000
+               else None)
+        out.append(f"\tdw ${w[0]:04x}, {labels.get(tgt) or f'${w[1]:04x}'}, "
+                   f"${w[2]:04x}, ${w[3]:04x}"
+                   f" ; actor {n}: cond, script, x, y")
+        b = rom[p + 8:p + 14]
+        face = ACTOR_FACING_NAMES.get(b[0], f"${b[0]:02x}")
+        out.append(f"\tdb {face}, " + ", ".join(f"${x:02x}" for x in b[1:])
+                   + " ; facing, -, obj def, anim, extra, -")
+        p += 14
+        n += 1
+    return out
+
+
 def render_map_table(spec, rom, seg, end, bank, labels):
     """Render a story-mode map-script sub-table (map_actor/map_entry/
     map_script) as macro calls. Pointer fields (actor object defs, entry
@@ -4182,6 +4208,9 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                                 if tail:
                                     lines.append("\tdb " + ", ".join(
                                         f"${x:02x}" for x in rom[j - tail:j]))
+                            elif spec == "actor_list":
+                                lines.extend(render_actor_list(
+                                    rom, seg, j, bank, labels))
                             elif spec == "rect_ptrs":
                                 for r in range((j - seg) // 4):
                                     b = rom[seg + r * 4:seg + r * 4 + 4]

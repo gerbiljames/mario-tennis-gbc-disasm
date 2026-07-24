@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~156.2K instructions / 398,824 bytes of proven code+structured source
+**~156.2K instructions / 399,505 bytes of proven code+structured source
 (19.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -26,7 +26,47 @@ Everything below is **committed** (HEAD `285165f`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,865 of 19,149 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,900 of 19,184 labels are human-named** (up from 4,816 on 2026-07-23).
+
+### Bank $04 is blob-free; the actor-script dispatch table is symbolic (2026-07-24)
+
+The actor engine's 10 blobs (681 bytes) are all gone. The keystone was
+`$447d`, a 44-byte blob that is the **actor-script opcode dispatch table** —
+22 words, one per `as_*` opcode, in the exact order of `ACTOR_SCRIPT_OPS`.
+Seeding all 20 distinct targets as code turned four of the other blobs into
+the opcode handlers they always were, and every entry now reads
+`dw ActorScriptOp_SetPos`. Opcodes `$00`/`$05`/`$0f` (`as_halt`/`as_halt5`/
+`as_halt15`) share one handler, which is consistent with them being aliases.
+
+| Address | Size | Now |
+|---|---|---|
+| `$40f4` | 84 | two stranded helpers (`inc b` / `dec b` / `ret z` guard, then `wram_bank $04` and a write to actor `+$08`/`+$0a`) |
+| `$447d` | 44 | `ActorScriptOpHandlers_04` |
+| `$44eb`, `$4556` | 21, 37 | the `as_move_rel` and `as_set_pos` handlers, stranded |
+| `$47fd` | 39 | `ActorFieldTypeTable_04` (35 entries: `$01` = byte field, `$02` = word) plus the tail of the `as_anim` handler at `$4820` |
+| `$4a1f` | 8 | `BitMaskTable_04` — `1 << i`, the LSB-first counterpart to bank `$00`'s `$80 >> i` |
+| `$4d63`, `$4ec8` | 264, 72 | ten actor spawn lists |
+| `$5072` | 96 | `ActorMoveVectors_04` — 3 speed tiers x 8 compass directions of `{dx, dy}`; radii `$0120`/`$0140`/`$0110` with the diagonals at `$00cb` (288 x cos 45 = 203.6) |
+| `$56b3` | 16 | `DirectionToFacing_04` — 16 directions to `FACE_*`, now `enum:FACE:8` |
+
+**Actor spawn lists get their own renderer.** `SpawnActorsFromList`
+(`$4cf7`) copies 14 bytes per step to `$dac0` and stops when byte 9 of the
+record is `$ff`, and `SpawnActorFromTemplate` (`$4c60`) walks those 14 bytes
+as `{flag condition, script, x, y, facing, -, obj def, anim, extra, -}` —
+note x is written to both the position (`+$08`) and target (`+$0c`) fields.
+Because the copy always reads 14 bytes but only byte 9 is tested, the stored
+terminator is just the 10 bytes up to the `$ff`, which is why single-entry
+lists are 24 bytes and not 28. A new `actor_list` data-table kind renders
+them with the script pointer and facing resolved:
+
+```
+ActorList_04_4d63:
+	; $4d63, 66 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $01, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	...
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+```
 
 ### Bank $03: 54 cutscene frames carved out of a mis-seeded blob (2026-07-24)
 

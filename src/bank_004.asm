@@ -156,7 +156,68 @@ SetActorPosition:
 	pop de ; $40f1
 	pop af ; $40f2
 	ret ; $40f3
-	INCBIN "data/bank_004/d_40f4.bin" ; $40f4, 84 bytes
+	inc b ; $40f4
+	dec b ; $40f5
+	ret z ; $40f6
+	push af ; $40f7
+	push de ; $40f8
+	push hl ; $40f9
+	wram_bank $04 ; $40fa
+	push hl ; $4100
+	ld hl, $000a ; $4101
+	add hl, bc ; $4104
+	ld a, e ; $4105
+	ld [hl+], a ; $4106
+	ld [hl], d ; $4107
+	pop de ; $4108
+	ld hl, $0008 ; $4109
+	add hl, bc ; $410c
+	ld a, e ; $410d
+	ld [hl+], a ; $410e
+	ld [hl], d ; $410f
+	pop af ; $4110
+	pop hl ; $4111
+	pop de ; $4112
+	ret ; $4113
+	inc b ; $4114
+	dec b ; $4115
+	ret z ; $4116
+	push af ; $4117
+	push de ; $4118
+	push hl ; $4119
+	wram_bank $04 ; $411a
+	push hl ; $4120
+	ld hl, $000e ; $4121
+	add hl, bc ; $4124
+	ld a, [hl+] ; $4125
+	ld h, [hl] ; $4126
+	ld l, a ; $4127
+	add hl, de ; $4128
+	ld e, l ; $4129
+	ld d, h ; $412a
+	ld hl, $000a ; $412b
+	add hl, bc ; $412e
+	ld a, e ; $412f
+	ld [hl+], a ; $4130
+	ld [hl], d ; $4131
+	pop de ; $4132
+	ld hl, $000c ; $4133
+	add hl, bc ; $4136
+	ld a, [hl+] ; $4137
+	ld h, [hl] ; $4138
+	ld l, a ; $4139
+	add hl, de ; $413a
+	ld e, l ; $413b
+	ld d, h ; $413c
+	ld hl, $0008 ; $413d
+	add hl, bc ; $4140
+	ld a, e ; $4141
+	ld [hl+], a ; $4142
+	ld [hl], d ; $4143
+	pop af ; $4144
+	pop hl ; $4145
+	pop de ; $4146
+	ret ; $4147
 SetActorMode:
 	inc b ; $4148
 	dec b ; $4149
@@ -744,7 +805,31 @@ Label_04_446f:
 	pop de ; $447a
 	pop af ; $447b
 	ret ; $447c
-	INCBIN "data/bank_004/d_447d.bin" ; $447d, 44 bytes
+ActorScriptOpHandlers_04:
+	; $447d, 44 bytes (records:2)
+	dw ActorScriptOp_Halt ; record 0
+	dw ActorScriptOp_Wait ; record 1
+	dw ActorScriptOp_WaitMove ; record 2
+	dw ActorScriptOp_SetPos ; record 3
+	dw ActorScriptOp_SetTarget ; record 4
+	dw ActorScriptOp_Halt ; record 5
+	dw ActorScriptOp_TargetRel ; record 6
+	dw ActorScriptOp_Move ; record 7
+	dw ActorScriptOp_MoveRel ; record 8
+	dw ActorScriptOp_RandBox ; record 9
+	dw ActorScriptOp_Step ; record 10
+	dw ActorScriptOp_FollowWaypoint ; record 11
+	dw ActorScriptOp_Jump ; record 12
+	dw ActorScriptOp_SetField ; record 13
+	dw ActorScriptOp_AddField ; record 14
+	dw ActorScriptOp_Halt ; record 15
+	dw ActorScriptOp_Anim ; record 16
+	dw ActorScriptOp_Sound ; record 17
+	dw ActorScriptOp_Call ; record 18
+	dw ActorScriptOp_BeginPath ; record 19
+	dw ActorScriptOp_WaitMove2 ; record 20
+	dw ActorScriptOp_Flag ; record 21
+ActorScriptOp_Call:
 	inc de ; $44a9
 	push de ; $44aa
 	ld l, e ; $44ab
@@ -772,6 +857,7 @@ Label_04_44cd:
 	inc de ; $44cd
 	inc de ; $44ce
 	ret ; $44cf
+ActorScriptOp_Jump:
 	inc de ; $44d0
 	ld a, [$daf7] ; $44d1
 	ld l, e ; $44d4
@@ -782,6 +868,7 @@ Label_04_44cd:
 	ld d, h ; $44db
 	ld a, $01 ; $44dc
 	ret ; $44de
+ActorScriptOp_Move:
 	inc de ; $44df
 	ld a, [$daf7] ; $44e0
 	ld l, e ; $44e3
@@ -789,7 +876,21 @@ Label_04_44cd:
 	call FarReadByte ; $44e5
 	inc de ; $44e8
 	jr Label_04_4500 ; $44e9
-	INCBIN "data/bank_004/d_44eb.bin" ; $44eb, 21 bytes
+ActorScriptOp_MoveRel:
+	inc de ; $44eb
+	ld a, [$daf7] ; $44ec
+	ld l, e ; $44ef
+	ld h, d ; $44f0
+	call FarReadByte ; $44f1
+	inc de ; $44f4
+	push af ; $44f5
+	ld hl, hActorPtr ; $44f6
+	ld a, [hl+] ; $44f9
+	ld h, [hl] ; $44fa
+	add a, $14 ; $44fb
+	ld l, a ; $44fd
+	pop af ; $44fe
+	add a, [hl] ; $44ff
 Label_04_4500:
 	push af ; $4500
 	ld a, [$daf7] ; $4501
@@ -854,7 +955,31 @@ Label_04_4500:
 	set 7, [hl] ; $4551
 	ld a, $01 ; $4553
 	ret ; $4555
-	INCBIN "data/bank_004/d_4556.bin" ; $4556, 37 bytes
+ActorScriptOp_SetPos:
+	inc de ; $4556
+	push de ; $4557
+	ld hl, hActorPtr ; $4558
+	ld a, [hl+] ; $455b
+	ld h, [hl] ; $455c
+	add a, $0c ; $455d
+	ld l, a ; $455f
+	ld e, l ; $4560
+	ld d, h ; $4561
+	pop hl ; $4562
+	ld a, [$daf7] ; $4563
+	ld bc, $0004 ; $4566
+	call FarCopyBytes ; $4569
+	ld e, l ; $456c
+	ld d, h ; $456d
+	ld hl, hActorPtr ; $456e
+	ld a, [hl+] ; $4571
+	ld h, [hl] ; $4572
+	add a, $05 ; $4573
+	ld l, a ; $4575
+	res 7, [hl] ; $4576
+	ld a, $01 ; $4578
+	ret ; $457a
+ActorScriptOp_SetTarget:
 	inc de ; $457b
 	push de ; $457c
 	ld hl, hActorPtr ; $457d
@@ -878,6 +1003,7 @@ Label_04_4500:
 	set 7, [hl] ; $459b
 	ld a, $01 ; $459d
 	ret ; $459f
+ActorScriptOp_TargetRel:
 	inc de ; $45a0
 	ld a, [$daf7] ; $45a1
 	ld l, e ; $45a4
@@ -941,6 +1067,7 @@ Label_04_4500:
 	set 7, [hl] ; $45f3
 	ld a, $01 ; $45f5
 	ret ; $45f7
+ActorScriptOp_WaitMove:
 	ld hl, hActorPtr ; $45f8
 	ld a, [hl+] ; $45fb
 	ld h, [hl] ; $45fc
@@ -954,8 +1081,10 @@ Label_04_4500:
 Label_04_4608:
 	xor a, a ; $4608
 	ret ; $4609
+ActorScriptOp_Halt:
 	xor a, a ; $460a
 	ret ; $460b
+ActorScriptOp_Wait:
 	inc de ; $460c
 	ld a, [$daf7] ; $460d
 	ld l, e ; $4610
@@ -972,6 +1101,7 @@ Label_04_4608:
 	inc de ; $4620
 	xor a, a ; $4621
 	ret ; $4622
+ActorScriptOp_FollowWaypoint:
 	inc de ; $4623
 	push de ; $4624
 	ld hl, hActorPtr ; $4625
@@ -1067,6 +1197,7 @@ Label_04_46ad:
 	pop de ; $46ad
 	xor a, a ; $46ae
 	ret ; $46af
+ActorScriptOp_Step:
 	inc de ; $46b0
 	push de ; $46b1
 	ld hl, hActorPtr ; $46b2
@@ -1221,6 +1352,7 @@ Label_04_477b:
 	ld a, $01 ; $477b
 	or a, a ; $477d
 	ret ; $477e
+ActorScriptOp_SetField:
 	inc de ; $477f
 	ld l, e ; $4780
 	ld h, d ; $4781
@@ -1263,6 +1395,7 @@ Label_04_47b2:
 Label_04_47b7:
 	ld a, $01 ; $47b7
 	ret ; $47b9
+ActorScriptOp_AddField:
 	inc de ; $47ba
 	ld l, e ; $47bb
 	ld h, d ; $47bc
@@ -1313,7 +1446,11 @@ Label_04_47f3:
 Label_04_47fa:
 	ld a, $01 ; $47fa
 	ret ; $47fc
-	INCBIN "data/bank_004/d_47fd.bin" ; $47fd, 39 bytes
+ActorFieldTypeTable_04:
+	; $47fd, 39 bytes (bytes:35)
+	db $02, $00, $01, $01, $01, $01, $02, $00, $02, $00, $02, $00, $02, $00, $02, $00, $02, $00, $02, $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
+	db $13, $3e, $01, $c9 ; 0x23
+ActorScriptOp_Anim:
 	inc de ; $4824
 	ld a, [$daf7] ; $4825
 	ld l, e ; $4828
@@ -1330,6 +1467,7 @@ Label_04_47fa:
 	pop de ; $4839
 	ld a, $01 ; $483a
 	ret ; $483c
+ActorScriptOp_Sound:
 	inc de ; $483d
 	ld a, [$daf7] ; $483e
 	ld l, e ; $4841
@@ -1340,6 +1478,7 @@ Label_04_47fa:
 	call PlaySoundManaged ; $4848
 	ld a, $01 ; $484b
 	ret ; $484d
+ActorScriptOp_BeginPath:
 	ld hl, hActorPtr ; $484e
 	ld a, [hl+] ; $4851
 	ld h, [hl] ; $4852
@@ -1377,6 +1516,7 @@ Label_04_47fa:
 	inc de ; $4882
 	ld a, $00 ; $4883
 	ret ; $4885
+ActorScriptOp_RandBox:
 	ld hl, hActorPtr ; $4886
 	ld a, [hl+] ; $4889
 	ld h, [hl] ; $488a
@@ -1493,6 +1633,7 @@ Label_04_4946:
 Label_04_4947:
 	pop bc ; $4947
 	ret ; $4948
+ActorScriptOp_WaitMove2:
 	ld hl, hActorPtr ; $4949
 	ld a, [hl+] ; $494c
 	ld h, [hl] ; $494d
@@ -1595,6 +1736,7 @@ Label_04_4979:
 	set 7, [hl] ; $49d9
 	ld a, $01 ; $49db
 	ret ; $49dd
+ActorScriptOp_Flag:
 	push bc ; $49de
 	inc de ; $49df
 	ld a, [$daf7] ; $49e0
@@ -1641,7 +1783,9 @@ Label_04_4a1a:
 	pop bc ; $4a1b
 	ld a, $01 ; $4a1c
 	ret ; $4a1e
-	INCBIN "data/bank_004/d_4a1f.bin" ; $4a1f, 8 bytes
+BitMaskTable_04:
+	; $4a1f, 8 bytes (bytes:8)
+	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 ComputeSpriteScrollOffset:
 	ld hl, wCameraX ; $4a27
 	ld a, [hl+] ; $4a2a
@@ -2154,7 +2298,7 @@ Label_04_4d21:
 	ret ; $4d2b
 SpawnScriptedActorScene:
 	ldh a, [hRomBank] ; $4d2c
-	ld hl, $4da5 ; $4d2e
+	ld hl, ActorList_04_4da5 ; $4d2e
 	call SpawnActorFromTemplate ; $4d31
 	call AttachActorControllerScript ; $4d34
 	ldh a, [hRomBank] ; $4d37
@@ -2166,14 +2310,68 @@ SpawnScriptedActorScene:
 	ld de, $d000 ; $4d48
 	call AttachActorWaypointFollower ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
-	ld hl, $4e05 ; $4d50
+	ld hl, ActorList_04_4e05 ; $4d50
 	call SpawnActorFromTemplate ; $4d53
 	ld de, $d000 ; $4d56
 	call AttachActorStepMover ; $4d59
-	ld hl, $4e1d ; $4d5c
+	ld hl, ActorList_04_4e1d ; $4d5c
 	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
-	INCBIN "data/bank_004/d_4d63.bin" ; $4d63, 264 bytes
+ActorList_04_4d63:
+	; $4d63, 66 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $01, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	dw $0000, ActorScript_Idle, $1700, $1d00 ; actor 1: cond, script, x, y
+	db FACE_DOWN, $00, $00, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	dw $0000, ActorScript_Idle, $0e00, $1900 ; actor 2: cond, script, x, y
+	db FACE_RIGHT, $00, $00, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	dw $0000, ActorScript_Idle, $2200, $1900 ; actor 3: cond, script, x, y
+	db FACE_LEFT, $00, $00, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+ActorList_04_4da5:
+	; $4da5, 24 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $26, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+ActorList_04_4dbd:
+	; $4dbd, 24 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $27, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+ActorList_04_4dd5:
+	; $4dd5, 24 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $28, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+ActorList_04_4ded:
+	; $4ded, 24 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $29, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+ActorList_04_4e05:
+	; $4e05, 24 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $1d00, $2900 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+ActorList_04_4e1d:
+	; $4e1d, 66 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $1700, $1500 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	dw $0000, ActorScript_Idle, $1700, $1900 ; actor 1: cond, script, x, y
+	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	dw $0000, ActorScript_Idle, $1700, $1d00 ; actor 2: cond, script, x, y
+	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	dw $0000, ActorScript_Idle, $1700, $2100 ; actor 3: cond, script, x, y
+	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+ScriptedActorListPtrs_04:
+	; $4e5f, 8 bytes (records:2)
+	dw ActorList_04_4da5 ; record 0
+	dw ActorList_04_4dbd ; record 1
+	dw ActorList_04_4dd5 ; record 2
+	dw ActorList_04_4ded ; record 3
+	; $4e67, 4 bytes (bytes:4)
+	db $0b, $0c, $fe, $ff ; 0x00
 SpawnMainCharacterActor:
 	push af ; $4e6b
 	push bc ; $4e6c
@@ -2226,7 +2424,21 @@ SpawnMainCharacterActor:
 	pop bc ; $4ec5
 	pop af ; $4ec6
 	ret ; $4ec7
-	INCBIN "data/bank_004/d_4ec8.bin" ; $4ec8, 72 bytes
+PartnerActorList_04_4ec8:
+	; $4ec8, 24 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $28, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+PartnerActorList_04_4ee0:
+	; $4ee0, 24 bytes (actor_list)
+	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $29, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
+PartnerActorList_04_4ef8:
+	; $4ef8, 24 bytes (actor_list)
+	dw $01e0, ActorScript_Deactivate, $0100, $0100 ; actor 0: cond, script, x, y
+	db FACE_DOWN, $00, $2f, $01, $00, $00 ; facing, -, obj def, anim, extra, -
+	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
 SpawnCompanionActor:
 	push af ; $4f10
 	push bc ; $4f11
@@ -2236,18 +2448,18 @@ SpawnCompanionActor:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f1a
 	or a, a ; $4f1d
 	jr nz, Label_04_4f2c ; $4f1e
-	ld hl, $4ec8 ; $4f20
+	ld hl, PartnerActorList_04_4ec8 ; $4f20
 	ld a, $02 ; $4f23
 	test_flag $05, 7 ; $4f25
 	jr nz, Label_04_4f3b ; $4f28
 	jr Label_04_4f36 ; $4f2a
 Label_04_4f2c:
-	ld hl, $4ee0 ; $4f2c
+	ld hl, PartnerActorList_04_4ee0 ; $4f2c
 	ld a, $03 ; $4f2f
 	test_flag $05, 7 ; $4f31
 	jr nz, Label_04_4f3b ; $4f34
 Label_04_4f36:
-	ld hl, $4ef8 ; $4f36
+	ld hl, PartnerActorList_04_4ef8 ; $4f36
 	ld a, $ff ; $4f39
 Label_04_4f3b:
 	ld [$cb5e], a ; $4f3b
@@ -2418,8 +2630,33 @@ SetActorMoveTarget:
 	ld [hl+], a ; $506f
 	ld [hl], d ; $5070
 	ret ; $5071
-ActorHeadingOffsetTable:
-	INCBIN "data/bank_004/d_5072.bin" ; $5072, 96 bytes
+ActorMoveVectors_04:
+	; $5072, 96 bytes (records:4)
+; 24 records x 4 bytes
+	dw $0120, $0000 ; record 0
+	dw $00cb, $00cb ; record 1
+	dw $0000, $0120 ; record 2
+	dw $ff35, $00cb ; record 3
+	dw $fee0, $0000 ; record 4
+	dw $ff35, $ff35 ; record 5
+	dw $0000, $fee0 ; record 6
+	dw $00cb, $ff35 ; record 7
+	dw $0140, $0000 ; record 8
+	dw $00e2, $00e2 ; record 9
+	dw $0000, $0140 ; record 10
+	dw $ff1e, $00e2 ; record 11
+	dw $fec0, $0000 ; record 12
+	dw $ff1e, $ff1e ; record 13
+	dw $0000, $fec0 ; record 14
+	dw $00e2, $ff1e ; record 15
+	dw $0110, $0000 ; record 16
+	dw $00c0, $00c0 ; record 17
+	dw $0000, $0110 ; record 18
+	dw $ff40, $00c0 ; record 19
+	dw $fef0, $0000 ; record 20
+	dw $ff40, $ff40 ; record 21
+	dw $0000, $fef0 ; record 22
+	dw $00c0, $ff40 ; record 23
 GetPointAheadOfActorFixed:
 	rrca ; $50d2
 	rrca ; $50d3
@@ -3480,7 +3717,10 @@ Label_04_56a3:
 	set 6, [hl] ; $56b0
 Label_04_56b2:
 	ret ; $56b2
-	INCBIN "data/bank_004/d_56b3.bin" ; $56b3, 16 bytes
+DirectionToFacing_04:
+	; $56b3, 16 bytes (enum:FACE:8)
+	db FACE_RIGHT, FACE_RIGHT, FACE_DOWN, FACE_DOWN, FACE_DOWN, FACE_DOWN, FACE_DOWN, FACE_LEFT ; 0x00
+	db FACE_LEFT, FACE_LEFT, FACE_UP, FACE_UP, FACE_UP, FACE_UP, FACE_UP, FACE_RIGHT ; 0x08
 QueueActorFrameTileCopy:
 	test_flag $0d, 7 ; $56c3
 	ret nz ; $56c6
