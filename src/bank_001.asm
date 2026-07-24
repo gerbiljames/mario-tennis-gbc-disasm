@@ -163,7 +163,7 @@ Label_01_4138:
 	ld a, $1a ; $417d
 	ld [wPlayer2CurrentPartnerCharacter], a ; $417f
 	ld a, $03 ; $4182
-	ld [$cb0c], a ; $4184
+	ld [wAnimatedTilePeriod], a ; $4184
 	ld de, $002f ; $4187
 	call SetGameFlagByNumber ; $418a
 	ld a, $00 ; $418d
@@ -187,7 +187,7 @@ Unused_01_MatchSetup:
 	farcall RunRacketSelectScreen ; $41b8
 	ld a, $01 ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
-	farcall Func_1a_67d4 ; $41bf
+	farcall RunDebugCharViewer ; $41bf
 Label_01_41c2:
 	bit 7, a ; $41c2
 	jr z, Label_01_41db ; $41c4
@@ -220,7 +220,7 @@ Label_01_41f5:
 	jr z, Label_01_4209 ; $41f7
 	ld a, $01 ; $41f9
 	ldh [hDebugStepMode], a ; $41fb
-	farcall Func_1a_67d4 ; $41fd
+	farcall RunDebugCharViewer ; $41fd
 	ld a, $00 ; $4200
 	ldh [hDebugStepMode], a ; $4202
 Label_01_4204:

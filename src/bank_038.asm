@@ -1132,7 +1132,7 @@ RunCharacterSelectScreen:
 	sound $03 ; $47c7
 	wram_bank $02 ; $47c9
 	ld a, b ; $47cf
-	ld [$cb52], a ; $47d0
+	ld [wCharSelectIsPartner], a ; $47d0
 	wram_bank $07 ; $47d3
 	ld hl, wCharPosX ; $47d9
 	ld c, $10 ; $47dc
@@ -1153,7 +1153,7 @@ RunCharacterSelectScreen:
 	call ClearFrameTasks ; $480e
 	xor a, a ; $4811
 	ld [$cb4f], a ; $4812
-	ld [$cb50], a ; $4815
+	ld [wCharSelectHandedness], a ; $4815
 	ld [$cb51], a ; $4818
 	call DisableLCDSafely ; $481b
 	call ClearFrameTasks ; $481e
@@ -1204,9 +1204,9 @@ Label_38_487c:
 	call GetMenuCursorLinearIndex ; $4888
 	push af ; $488b
 	wram_bank $02 ; $488c
-	ld a, [$cb50] ; $4892
+	ld a, [wCharSelectHandedness] ; $4892
 	ld b, a ; $4895
-	ld a, [$cb52] ; $4896
+	ld a, [wCharSelectIsPartner] ; $4896
 	add a, a ; $4899
 	ld c, a ; $489a
 	pop af ; $489b
@@ -1229,7 +1229,7 @@ Label_38_48b1:
 	adc a, $00 ; $48b6
 	ld h, a ; $48b8
 	pop af ; $48b9
-	ld a, [$cb50] ; $48ba
+	ld a, [wCharSelectHandedness] ; $48ba
 	ld [hl], a ; $48bd
 	pop af ; $48be
 	push af ; $48bf
@@ -1259,9 +1259,9 @@ Label_38_48f1:
 	ldh a, [hWramBank] ; $48f3
 	push af ; $48f5
 	wram_bank $02 ; $48f6
-	ld a, [$cb50] ; $48fc
+	ld a, [wCharSelectHandedness] ; $48fc
 	xor a, $01 ; $48ff
-	ld [$cb50], a ; $4901
+	ld [wCharSelectHandedness], a ; $4901
 	pop af ; $4904
 	wram_bank ; $4905
 	jp Label_38_4857 ; $4909
@@ -1302,7 +1302,7 @@ LoadHighlightedCharPalette:
 	ldh a, [hWramBank] ; $494f
 	push af ; $4951
 	wram_bank $02 ; $4952
-	ld a, [$cb52] ; $4958
+	ld a, [wCharSelectIsPartner] ; $4958
 	ld c, a ; $495b
 	pop af ; $495c
 	wram_bank ; $495d
@@ -1325,7 +1325,7 @@ SetupCharacterSelectScreen:
 	wram_bank $02 ; $497a
 	xor a, a ; $4980
 	ld [$cb4f], a ; $4981
-	ld [$cb50], a ; $4984
+	ld [wCharSelectHandedness], a ; $4984
 	ld [$cb51], a ; $4987
 	ld [wCameraX], a ; $498a
 	ld [wCameraX + 1], a ; $498d
@@ -1384,7 +1384,7 @@ SetupCharacterSelectScreen:
 	ld de, $b300 ; $4a1b
 	farcall CopyMugshotBufferToVram ; $4a1e
 	wram_bank $02 ; $4a21
-	ld a, [$cb52] ; $4a27
+	ld a, [wCharSelectIsPartner] ; $4a27
 	or a, a ; $4a2a
 	jr z, Label_38_4a61 ; $4a2b
 	ld a, $02 ; $4a2d
@@ -1419,7 +1419,7 @@ Label_38_4a61:
 	xor a, a ; $4a7b
 	ld [$cb4f], a ; $4a7c
 	ld [$cb51], a ; $4a7f
-	ld [$cb50], a ; $4a82
+	ld [wCharSelectHandedness], a ; $4a82
 	farcall InitMenuBgScroll ; $4a85
 	ld b, $01 ; $4a88
 	ld c, $01 ; $4a8a
@@ -1458,7 +1458,7 @@ DrawCharacterSelectPrompt:
 	ldh a, [hWramBank] ; $4ad3
 	push af ; $4ad5
 	wram_bank $02 ; $4ad6
-	ld a, [$cb52] ; $4adc
+	ld a, [wCharSelectIsPartner] ; $4adc
 	or a, a ; $4adf
 	jr nz, Label_38_4af5 ; $4ae0
 	wram_bank $03 ; $4ae2
@@ -1566,7 +1566,7 @@ DrawCharacterSelectChars:
 	ldh a, [hWramBank] ; $4c0a
 	push af ; $4c0c
 	wram_bank $02 ; $4c0d
-	ld a, [$cb52] ; $4c13
+	ld a, [wCharSelectIsPartner] ; $4c13
 	ld b, a ; $4c16
 	pop af ; $4c17
 	wram_bank ; $4c18
@@ -1598,7 +1598,7 @@ Label_38_4c66:
 	ldh a, [hWramBank] ; $4c66
 	push af ; $4c68
 	wram_bank $02 ; $4c69
-	ld a, [$cb50] ; $4c6f
+	ld a, [wCharSelectHandedness] ; $4c6f
 	ld c, a ; $4c72
 	pop af ; $4c73
 	wram_bank ; $4c74
@@ -1761,7 +1761,7 @@ GetSelectedCharWramBank:
 	ldh a, [hWramBank] ; $4e00
 	push af ; $4e02
 	wram_bank $02 ; $4e03
-	ld a, [$cb52] ; $4e09
+	ld a, [wCharSelectIsPartner] ; $4e09
 	ld c, a ; $4e0c
 	pop af ; $4e0d
 	wram_bank ; $4e0e
@@ -1792,7 +1792,7 @@ Label_38_4e31:
 	ld e, a ; $4e33
 	wram_bank $02 ; $4e34
 	ld c, $00 ; $4e3a
-	ld a, [$cb50] ; $4e3c
+	ld a, [wCharSelectHandedness] ; $4e3c
 	or a, a ; $4e3f
 	jr nz, Label_38_4e44 ; $4e40
 	ld c, $02 ; $4e42
@@ -6874,9 +6874,9 @@ Label_38_745f:
 	ld a, $01 ; $7481
 	ld [wMenuSlideDirection], a ; $7483
 	call ApplyMatchTypeSettingsLink ; $7486
-	ld a, [$cb54] ; $7489
+	ld a, [wUnlockedCourtMask] ; $7489
 	ld d, a ; $748c
-	ld a, [$cb53] ; $748d
+	ld a, [wLinkPartnerCourtMask] ; $748d
 	or a, d ; $7490
 	jr nz, Label_38_749c ; $7491
 	farcall RunLinkCourtSelect4Menu ; $7493
@@ -7027,7 +7027,7 @@ Label_38_7574:
 	pop de ; $7599
 	pop bc ; $759a
 	pop af ; $759b
-	ld a, [$cb54] ; $759c
+	ld a, [wUnlockedCourtMask] ; $759c
 	ld [de], a ; $759f
 	ld b, $26 ; $75a0
 	jr Label_38_75c8 ; $75a2
@@ -7083,11 +7083,11 @@ Label_38_75d4:
 	call LinkErrorReset ; $75e9
 Label_38_75ec:
 	ld a, [$ca8a] ; $75ec
-	ld [$cb53], a ; $75ef
+	ld [wLinkPartnerCourtMask], a ; $75ef
 	jr Label_38_75fa ; $75f2
 Label_38_75f4:
 	ld a, [$ca0a] ; $75f4
-	ld [$cb53], a ; $75f7
+	ld [wLinkPartnerCourtMask], a ; $75f7
 Label_38_75fa:
 	xor a, a ; $75fa
 	ld [$ca0a], a ; $75fb

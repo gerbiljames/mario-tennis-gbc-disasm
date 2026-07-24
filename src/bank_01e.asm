@@ -4407,9 +4407,9 @@ Label_1e_730a:
 	call LoadProgressScreenIconTiles ; $732b
 	call EnableLCD ; $732e
 	ld a, $01 ; $7331
-	ld [$cb0b], a ; $7333
+	ld [wAnimatedTileSet], a ; $7333
 	ld a, $03 ; $7336
-	ld [$cb0c], a ; $7338
+	ld [wAnimatedTilePeriod], a ; $7338
 	ld a, $01 ; $733b
 	ld hl, UpdateProgressScreenAnimatedTiles ; $733d
 	call RegisterFrameTask ; $7340

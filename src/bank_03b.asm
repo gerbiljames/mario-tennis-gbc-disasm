@@ -821,7 +821,7 @@ RunN64ExhibData:
 	call DisableLCDSafely ; $44ac
 	call BuildN64ExhibDataScreen ; $44af
 	xor a, a ; $44b2
-	ld [$cb0b], a ; $44b3
+	ld [wAnimatedTileSet], a ; $44b3
 	ld a, $01 ; $44b6
 	ld hl, Func_3b_4428 ; $44b8
 	call RegisterFrameTask ; $44bb
@@ -1513,7 +1513,7 @@ RunTrophiesScreen:
 	call DisableLCDSafely ; $4965
 	call BuildTrophiesScreen ; $4968
 	ld a, $00 ; $496b
-	ld [$cb0b], a ; $496d
+	ld [wAnimatedTileSet], a ; $496d
 	ld a, $01 ; $4970
 	ld hl, Func_3b_4428 ; $4972
 	call RegisterFrameTask ; $4975
@@ -1940,7 +1940,7 @@ RunN64TnmtData:
 	call DisableLCDSafely ; $4cfc
 	call BuildN64TnmtDataScreen ; $4cff
 	xor a, a ; $4d02
-	ld [$cb0b], a ; $4d03
+	ld [wAnimatedTileSet], a ; $4d03
 	ld a, $01 ; $4d06
 	ld hl, Func_3b_4428 ; $4d08
 	call RegisterFrameTask ; $4d0b
@@ -2533,7 +2533,7 @@ RunN64RingShotData:
 	sound $04 ; $514b
 	call BuildN64RingShotScreen ; $514d
 	xor a, a ; $5150
-	ld [$cb0b], a ; $5151
+	ld [wAnimatedTileSet], a ; $5151
 	ld a, $01 ; $5154
 	ld hl, Func_3b_4428 ; $5156
 	call RegisterFrameTask ; $5159
@@ -7776,9 +7776,9 @@ RunStarCharExhibResults:
 	call DisableLCDSafely ; $79fb
 	call BuildStarCharExhibScreen ; $79fe
 	ld a, $01 ; $7a01
-	ld [$cb0b], a ; $7a03
+	ld [wAnimatedTileSet], a ; $7a03
 	ld a, $03 ; $7a06
-	ld [$cb0c], a ; $7a08
+	ld [wAnimatedTilePeriod], a ; $7a08
 	ld a, $01 ; $7a0b
 	ld hl, Func_3b_4428 ; $7a0d
 	call RegisterFrameTask ; $7a10

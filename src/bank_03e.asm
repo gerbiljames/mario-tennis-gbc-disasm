@@ -1411,9 +1411,9 @@ ShowLinkMessageScreen:
 	call ClearFrameTasks ; $49f0
 	call LoadLinkMessageScreen ; $49f3
 	xor a, a ; $49f6
-	ld [$cb0b], a ; $49f7
+	ld [wAnimatedTileSet], a ; $49f7
 	ld a, $03 ; $49fa
-	ld [$cb0c], a ; $49fc
+	ld [wAnimatedTilePeriod], a ; $49fc
 	call EnableLCD ; $49ff
 	script_fade_in $08 ; $4a02
 	call WaitFadeEnd ; $4a07
@@ -1498,9 +1498,9 @@ ShowLinkErrorScreen:
 	ldh [hScrollY], a ; $4ab6
 	call LoadLinkErrorScreen ; $4ab8
 	xor a, a ; $4abb
-	ld [$cb0b], a ; $4abc
+	ld [wAnimatedTileSet], a ; $4abc
 	ld a, $05 ; $4abf
-	ld [$cb0c], a ; $4ac1
+	ld [wAnimatedTilePeriod], a ; $4ac1
 	call EnableLCD ; $4ac4
 	script_fade_in $08 ; $4ac7
 	call WaitFadeEnd ; $4acc
@@ -1651,7 +1651,7 @@ RunEraseDataConfirmMenu:
 	call ClearFrameTasks ; $4c24
 	call LoadEraseDataConfirmScreen ; $4c27
 	xor a, a ; $4c2a
-	ld [$cb0b], a ; $4c2b
+	ld [wAnimatedTileSet], a ; $4c2b
 	ld a, $01 ; $4c2e
 	ld hl, UpdateAnimatedTiles_3e ; $4c30
 	call RegisterFrameTask ; $4c33
@@ -3693,9 +3693,9 @@ Label_3e_5d06:
 LoadCourtSelectGraphics:
 	ldh a, [hWramBank] ; $5d11
 	push af ; $5d13
-	ld a, [$cb54] ; $5d14
+	ld a, [wUnlockedCourtMask] ; $5d14
 	ld b, a ; $5d17
-	ld a, [$cb53] ; $5d18
+	ld a, [wLinkPartnerCourtMask] ; $5d18
 	or a, b ; $5d1b
 	ld b, a ; $5d1c
 	call StoreCourtUnlockBits ; $5d1d
@@ -4305,7 +4305,7 @@ FadeOutAndResetMenuScreen:
 	wram_bank ; $6513
 	ret ; $6517
 RunCourtSelect9Menu:
-	ld a, [$cb54] ; $6518
+	ld a, [wUnlockedCourtMask] ; $6518
 	ld b, a ; $651b
 	call StoreCourtUnlockBits ; $651c
 	sound $03 ; $651f
@@ -4392,9 +4392,9 @@ RunLinkCourtSelect9Menu:
 	call ClearFrameTasks ; $65cf
 	call EnableTimerInterrupt ; $65d2
 	sound $03 ; $65d5
-	ld a, [$cb54] ; $65d7
+	ld a, [wUnlockedCourtMask] ; $65d7
 	ld b, a ; $65da
-	ld a, [$cb53] ; $65db
+	ld a, [wLinkPartnerCourtMask] ; $65db
 	or a, b ; $65de
 	ld b, a ; $65df
 	call StoreCourtUnlockBits ; $65e0
@@ -4846,7 +4846,7 @@ Label_3e_69ba:
 	jr Label_3e_69a4 ; $69c3
 Label_3e_69c5:
 	ld a, b ; $69c5
-	ld [$cb54], a ; $69c6
+	ld [wUnlockedCourtMask], a ; $69c6
 	ret ; $69c9
 	INCBIN "data/bank_03e/d_69ca.bin" ; $69ca, 10 bytes
 StubNop_3e:

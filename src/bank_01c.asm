@@ -2014,7 +2014,7 @@ Label_1c_4fbc:
 	call GetStatDigitSpritePos ; $4fc4
 	call QueueSprite ; $4fc7
 Label_1c_4fca:
-	farcall Func_1a_7be5 ; $4fca
+	farcall DrawStatChangeArrows ; $4fca
 	ret ; $4fcd
 GetStatDigitSpritePos:
 	rlca ; $4fce

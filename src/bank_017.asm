@@ -695,7 +695,7 @@ Label_17_43fc:
 	pop af ; $4400
 	wram_bank ; $4401
 	ret ; $4405
-Func_17_4406:
+UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
 	push af ; $440a
@@ -811,12 +811,12 @@ ShowDrillBriefingScreen:
 	farcall PrepareGlyphBuffer ; $449f
 	call EnableLCD ; $44a2
 	xor a, a ; $44a5
-	ld [$cb0b], a ; $44a6
+	ld [wAnimatedTileSet], a ; $44a6
 	ld a, $01 ; $44a9
-	ld hl, Func_17_4406 ; $44ab
+	ld hl, UpdateAnimatedTilesTask_17 ; $44ab
 	call RegisterFrameTask ; $44ae
 	ld a, $03 ; $44b1
-	ld [$cb0c], a ; $44b3
+	ld [wAnimatedTilePeriod], a ; $44b3
 	script_fade_in $10 ; $44b6
 	call WaitFadeEnd ; $44bb
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $44be
@@ -849,12 +849,12 @@ ShowCourtDiagramTestScreen:
 	call LoadCourtDiagramScreen ; $44ee
 	call EnableLCD ; $44f1
 	xor a, a ; $44f4
-	ld [$cb0b], a ; $44f5
+	ld [wAnimatedTileSet], a ; $44f5
 	ld a, $01 ; $44f8
-	ld hl, Func_17_4406 ; $44fa
+	ld hl, UpdateAnimatedTilesTask_17 ; $44fa
 	call RegisterFrameTask ; $44fd
 	ld a, $03 ; $4500
-	ld [$cb0c], a ; $4502
+	ld [wAnimatedTilePeriod], a ; $4502
 	script_fade_in $10 ; $4505
 	call WaitFadeEnd ; $450a
 	ld a, $50 ; $450d
@@ -862,21 +862,21 @@ ShowCourtDiagramTestScreen:
 	ld a, $40 ; $4512
 	ld [$d811], a ; $4514
 	ld a, $01 ; $4517
-	ld hl, Func_17_46e2 ; $4519
+	ld hl, DrawBriefingPlayerSprite ; $4519
 	call RegisterFrameTask ; $451c
 	ld a, $30 ; $451f
 	ld [$d812], a ; $4521
 	ld a, $20 ; $4524
 	ld [$d813], a ; $4526
 	ld a, $01 ; $4529
-	ld hl, Func_17_470c ; $452b
+	ld hl, DrawBriefingOpponentSprite ; $452b
 	call RegisterFrameTask ; $452e
 	ld a, $60 ; $4531
 	ld [$d81e], a ; $4533
 	ld a, $30 ; $4536
 	ld [$d81f], a ; $4538
 	ld a, $01 ; $453b
-	ld hl, Func_17_4736 ; $453d
+	ld hl, DrawBriefingBallSprite ; $453d
 	call RegisterFrameTask ; $4540
 	ld a, $01 ; $4543
 	ld [$d82d], a ; $4545
@@ -892,7 +892,7 @@ ShowCourtDiagramTestScreen:
 	call WaitForInputBlinking ; $4560
 	call ClearFrameTasks ; $4563
 	ld a, $01 ; $4566
-	ld hl, Func_17_4406 ; $4568
+	ld hl, UpdateAnimatedTilesTask_17 ; $4568
 	call RegisterFrameTask ; $456b
 	ld a, $09 ; $456e
 	ld [$d822], a ; $4570
@@ -901,7 +901,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $32 ; $4578
 	ld [$d815], a ; $457a
 	ld a, $01 ; $457d
-	ld hl, Func_17_478e ; $457f
+	ld hl, DrawBriefingSwingAnim ; $457f
 	call RegisterFrameTask ; $4582
 	ld a, $40 ; $4585
 	ld [$d81a], a ; $4587
@@ -912,7 +912,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $20 ; $4594
 	ld [$d821], a ; $4596
 	ld a, $01 ; $4599
-	ld hl, Func_17_47ef ; $459b
+	ld hl, DrawBriefingPoleSprites ; $459b
 	call RegisterFrameTask ; $459e
 	ld a, $01 ; $45a1
 	ld [$d825], a ; $45a3
@@ -930,7 +930,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $40 ; $45c2
 	ld [$d817], a ; $45c4
 	ld a, $01 ; $45c7
-	ld hl, Func_17_4843 ; $45c9
+	ld hl, DrawSpinServeBriefingMarker ; $45c9
 	call RegisterFrameTask ; $45cc
 	ld a, $03 ; $45cf
 	ld [$d827], a ; $45d1
@@ -950,19 +950,19 @@ ShowCourtDiagramTestScreen:
 	ld a, $40 ; $45f5
 	ld [$d829], a ; $45f7
 	ld a, $01 ; $45fa
-	ld hl, Func_17_48c1 ; $45fc
+	ld hl, DrawBriefingTargetBrackets ; $45fc
 	call RegisterFrameTask ; $45ff
 	ld hl, $0135 ; $4602
 	call DrawBriefingCaption ; $4605
 	ld b, $02 ; $4608
 	call DrawDiagramTargetOverlay ; $460a
 	ld a, $01 ; $460d
-	ld hl, Func_17_4676 ; $460f
+	ld hl, CycleDiagramTargetPalette ; $460f
 	call RegisterFrameTask ; $4612
 	call WaitForInputBlinking ; $4615
 	call ClearFrameTasks ; $4618
 	ld a, $01 ; $461b
-	ld hl, Func_17_4406 ; $461d
+	ld hl, UpdateAnimatedTilesTask_17 ; $461d
 	call RegisterFrameTask ; $4620
 	ld b, $00 ; $4623
 	call DrawDiagramTargetOverlay ; $4625
@@ -978,7 +978,7 @@ ShowCourtDiagramTestScreen:
 	ld b, $05 ; $4640
 	call DrawDiagramTargetOverlay ; $4642
 	ld a, $01 ; $4645
-	ld hl, Func_17_4676 ; $4647
+	ld hl, CycleDiagramTargetPalette ; $4647
 	call RegisterFrameTask ; $464a
 	call WaitForInputBlinking ; $464d
 	call ClearFrameTasks ; $4650
@@ -998,7 +998,7 @@ DrawDiagramTargetOverlay:
 	call DrawDiagramTargetPatch ; $466f
 	call QueueDiagramServiceBoxesToVRAM ; $4672
 	ret ; $4675
-Func_17_4676:
+CycleDiagramTargetPalette:
 	ldh a, [hWramBank] ; $4676
 	push af ; $4678
 	wram_bank $03 ; $4679
@@ -1069,7 +1069,7 @@ Label_17_46aa:
 	ld bc, $00df ; $46dd
 	rra ; $46e0
 	nop ; $46e1
-Func_17_46e2:
+DrawBriefingPlayerSprite:
 	ldh a, [hWramBank] ; $46e2
 	push af ; $46e4
 	wram_bank $03 ; $46e5
@@ -1089,7 +1089,7 @@ SpriteTemplate_17_4703:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Func_17_470c:
+DrawBriefingOpponentSprite:
 	ldh a, [hWramBank] ; $470c
 	push af ; $470e
 	wram_bank $03 ; $470f
@@ -1109,7 +1109,7 @@ SpriteTemplate_17_472d:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Func_17_4736:
+DrawBriefingBallSprite:
 	ldh a, [hWramBank] ; $4736
 	push af ; $4738
 	wram_bank $03 ; $4739
@@ -1153,7 +1153,7 @@ SpriteTemplate_17_4785:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Func_17_478e:
+DrawBriefingSwingAnim:
 	ldh a, [hWramBank] ; $478e
 	push af ; $4790
 	wram_bank $03 ; $4791
@@ -1190,7 +1190,7 @@ SpriteTemplate_17_47cd:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 	INCBIN "data/bank_017/d_47e2.bin" ; $47e2, 13 bytes
-Func_17_47ef:
+DrawBriefingPoleSprites:
 	ldh a, [hWramBank] ; $47ef
 	push af ; $47f1
 	wram_bank $03 ; $47f2
@@ -1230,7 +1230,7 @@ Label_17_4832:
 	pop af ; $483d
 	wram_bank ; $483e
 	ret ; $4842
-Func_17_4843:
+DrawSpinServeBriefingMarker:
 	ldh a, [hWramBank] ; $4843
 	push af ; $4845
 	wram_bank $03 ; $4846
@@ -1292,7 +1292,7 @@ Label_17_48bb:
 	pop af ; $48bb
 	wram_bank ; $48bc
 	ret ; $48c0
-Func_17_48c1:
+DrawBriefingTargetBrackets:
 	ldh a, [hWramBank] ; $48c1
 	push af ; $48c3
 	wram_bank $03 ; $48c4
@@ -1546,7 +1546,7 @@ Label_17_4a64:
 	nop ; $4a93
 	INCBIN "data/bank_017/d_4a94.bin" ; $4a94, 5 bytes
 DecompressGraphicsList:
-	ld hl, Data_17_4abb ; $4a99
+	ld hl, CourtDiagramGraphicsList ; $4a99
 Label_17_4a9c:
 	ld a, [hl+] ; $4a9c
 	ld b, [hl] ; $4a9d
@@ -1575,7 +1575,7 @@ Label_17_4ab8:
 	jr Label_17_4a9c ; $4ab8
 Label_17_4aba:
 	ret ; $4aba
-Data_17_4abb:
+CourtDiagramGraphicsList:
 	; $4abb, 82 bytes (bytes:4)
 	db $02, $4f, $00, $80 ; 0x00
 	db $3d, $4f, $40, $80 ; 0x04
@@ -1626,10 +1626,10 @@ DrillBriefing_ServeToTargets:
 	ld [$d82e], a ; $5581
 	call ServeToTargetsBriefing_AdvanceAnim ; $5584
 	ld a, $01 ; $5587
-	ld hl, Func_17_46e2 ; $5589
+	ld hl, DrawBriefingPlayerSprite ; $5589
 	call RegisterFrameTask ; $558c
 	ld a, $01 ; $558f
-	ld hl, Func_17_4736 ; $5591
+	ld hl, DrawBriefingBallSprite ; $5591
 	call RegisterFrameTask ; $5594
 	ld a, $01 ; $5597
 	ld hl, Func_17_4754 ; $5599
@@ -1638,7 +1638,7 @@ DrillBriefing_ServeToTargets:
 	ld hl, Func_17_4876 ; $55a1
 	call RegisterFrameTask ; $55a4
 	ld a, $01 ; $55a7
-	ld hl, Func_17_4676 ; $55a9
+	ld hl, CycleDiagramTargetPalette ; $55a9
 	call RegisterFrameTask ; $55ac
 	ld hl, $1ab0 ; $55af
 	call DrawBriefingCaption ; $55b2
@@ -1653,26 +1653,26 @@ Label_17_55bc:
 	jp z, Label_17_55bc ; $55c5
 	call ClearFrameTasks ; $55c8
 	ld a, $01 ; $55cb
-	ld hl, Func_17_4406 ; $55cd
+	ld hl, UpdateAnimatedTilesTask_17 ; $55cd
 	call RegisterFrameTask ; $55d0
 	ld a, $03 ; $55d3
 	ld [$d82e], a ; $55d5
 	call ServeToTargetsBriefing_AdvanceAnim ; $55d8
 	ld a, $01 ; $55db
-	ld hl, Func_17_46e2 ; $55dd
+	ld hl, DrawBriefingPlayerSprite ; $55dd
 	call RegisterFrameTask ; $55e0
 	ld a, $01 ; $55e3
 	ld hl, Func_17_4754 ; $55e5
 	call RegisterFrameTask ; $55e8
 	ld a, $01 ; $55eb
-	ld hl, Func_17_4676 ; $55ed
+	ld hl, CycleDiagramTargetPalette ; $55ed
 	call RegisterFrameTask ; $55f0
 	ld a, $00 ; $55f3
 	ld [$d82a], a ; $55f5
 	ld a, $00 ; $55f8
 	ld [$d82b], a ; $55fa
 	ld a, $01 ; $55fd
-	ld hl, Func_17_48c1 ; $55ff
+	ld hl, DrawBriefingTargetBrackets ; $55ff
 	call RegisterFrameTask ; $5602
 	ld hl, $1ab1 ; $5605
 	call DrawBriefingCaption ; $5608
@@ -1687,21 +1687,21 @@ Label_17_5612:
 	jp z, Label_17_5612 ; $561b
 	call ClearFrameTasks ; $561e
 	ld a, $01 ; $5621
-	ld hl, Func_17_4406 ; $5623
+	ld hl, UpdateAnimatedTilesTask_17 ; $5623
 	call RegisterFrameTask ; $5626
 	ld a, $54 ; $5629
 	ld [$d810], a ; $562b
 	ld a, $44 ; $562e
 	ld [$d811], a ; $5630
 	ld a, $01 ; $5633
-	ld hl, Func_17_46e2 ; $5635
+	ld hl, DrawBriefingPlayerSprite ; $5635
 	call RegisterFrameTask ; $5638
 	ld a, $4e ; $563b
 	ld [$d81e], a ; $563d
 	ld a, $38 ; $5640
 	ld [$d81f], a ; $5642
 	ld a, $01 ; $5645
-	ld hl, Func_17_4736 ; $5647
+	ld hl, DrawBriefingBallSprite ; $5647
 	call RegisterFrameTask ; $564a
 	ld a, $00 ; $564d
 	ld [$d82d], a ; $564f
@@ -1724,7 +1724,7 @@ Label_17_5612:
 	ld b, $04 ; $567b
 	call DrawDiagramTargetOverlay ; $567d
 	ld a, $01 ; $5680
-	ld hl, Func_17_4676 ; $5682
+	ld hl, CycleDiagramTargetPalette ; $5682
 	call RegisterFrameTask ; $5685
 	ld a, $00 ; $5688
 	ld [$d82a], a ; $568a
@@ -1735,36 +1735,36 @@ Label_17_5612:
 	ld a, $24 ; $5697
 	ld [$d829], a ; $5699
 	ld a, $01 ; $569c
-	ld hl, Func_17_48c1 ; $569e
+	ld hl, DrawBriefingTargetBrackets ; $569e
 	call RegisterFrameTask ; $56a1
 	ld hl, $1ab2 ; $56a4
 	call DrawBriefingCaption ; $56a7
 	call WaitForInputBlinking ; $56aa
 	call ClearFrameTasks ; $56ad
 	ld a, $01 ; $56b0
-	ld hl, Func_17_4406 ; $56b2
+	ld hl, UpdateAnimatedTilesTask_17 ; $56b2
 	call RegisterFrameTask ; $56b5
 	ld a, $03 ; $56b8
 	ld [$d82e], a ; $56ba
 	call ServeToTargetsBriefing_AdvanceAnim ; $56bd
 	ld a, $01 ; $56c0
-	ld hl, Func_17_46e2 ; $56c2
+	ld hl, DrawBriefingPlayerSprite ; $56c2
 	call RegisterFrameTask ; $56c5
 	ld a, $01 ; $56c8
-	ld hl, Func_17_4736 ; $56ca
+	ld hl, DrawBriefingBallSprite ; $56ca
 	call RegisterFrameTask ; $56cd
 	ld a, $01 ; $56d0
 	ld hl, Func_17_4876 ; $56d2
 	call RegisterFrameTask ; $56d5
 	ld a, $01 ; $56d8
-	ld hl, Func_17_4676 ; $56da
+	ld hl, CycleDiagramTargetPalette ; $56da
 	call RegisterFrameTask ; $56dd
 	ld a, $00 ; $56e0
 	ld [$d82a], a ; $56e2
 	ld a, $00 ; $56e5
 	ld [$d82b], a ; $56e7
 	ld a, $01 ; $56ea
-	ld hl, Func_17_48c1 ; $56ec
+	ld hl, DrawBriefingTargetBrackets ; $56ec
 	call RegisterFrameTask ; $56ef
 	ld hl, $1ab3 ; $56f2
 	call DrawBriefingCaption ; $56f5
@@ -1942,10 +1942,10 @@ DrillBriefing_SpinServe:
 	ld [$d82e], a ; $5819
 	call SpinServeBriefing_AdvanceAnim ; $581c
 	ld a, $01 ; $581f
-	ld hl, Func_17_46e2 ; $5821
+	ld hl, DrawBriefingPlayerSprite ; $5821
 	call RegisterFrameTask ; $5824
 	ld a, $01 ; $5827
-	ld hl, Func_17_4736 ; $5829
+	ld hl, DrawBriefingBallSprite ; $5829
 	call RegisterFrameTask ; $582c
 	ld a, $01 ; $582f
 	ld hl, Func_17_4754 ; $5831
@@ -1954,7 +1954,7 @@ DrillBriefing_SpinServe:
 	ld hl, Func_17_4876 ; $5839
 	call RegisterFrameTask ; $583c
 	ld a, $01 ; $583f
-	ld hl, Func_17_4676 ; $5841
+	ld hl, CycleDiagramTargetPalette ; $5841
 	call RegisterFrameTask ; $5844
 	ld hl, $1ab4 ; $5847
 	call DrawBriefingCaption ; $584a
@@ -1969,26 +1969,26 @@ Label_17_5854:
 	jp z, Label_17_5854 ; $585d
 	call ClearFrameTasks ; $5860
 	ld a, $01 ; $5863
-	ld hl, Func_17_4406 ; $5865
+	ld hl, UpdateAnimatedTilesTask_17 ; $5865
 	call RegisterFrameTask ; $5868
 	ld a, $03 ; $586b
 	ld [$d82e], a ; $586d
 	call SpinServeBriefing_AdvanceAnim ; $5870
 	ld a, $01 ; $5873
-	ld hl, Func_17_46e2 ; $5875
+	ld hl, DrawBriefingPlayerSprite ; $5875
 	call RegisterFrameTask ; $5878
 	ld a, $01 ; $587b
 	ld hl, Func_17_4754 ; $587d
 	call RegisterFrameTask ; $5880
 	ld a, $01 ; $5883
-	ld hl, Func_17_4676 ; $5885
+	ld hl, CycleDiagramTargetPalette ; $5885
 	call RegisterFrameTask ; $5888
 	ld a, $00 ; $588b
 	ld [$d82a], a ; $588d
 	ld a, $00 ; $5890
 	ld [$d82b], a ; $5892
 	ld a, $01 ; $5895
-	ld hl, Func_17_48c1 ; $5897
+	ld hl, DrawBriefingTargetBrackets ; $5897
 	call RegisterFrameTask ; $589a
 	ld hl, $1ab5 ; $589d
 	call DrawBriefingCaption ; $58a0
@@ -2003,21 +2003,21 @@ Label_17_58aa:
 	jp z, Label_17_58aa ; $58b3
 	call ClearFrameTasks ; $58b6
 	ld a, $01 ; $58b9
-	ld hl, Func_17_4406 ; $58bb
+	ld hl, UpdateAnimatedTilesTask_17 ; $58bb
 	call RegisterFrameTask ; $58be
 	ld a, $52 ; $58c1
 	ld [$d810], a ; $58c3
 	ld a, $44 ; $58c6
 	ld [$d811], a ; $58c8
 	ld a, $01 ; $58cb
-	ld hl, Func_17_46e2 ; $58cd
+	ld hl, DrawBriefingPlayerSprite ; $58cd
 	call RegisterFrameTask ; $58d0
 	ld a, $4e ; $58d3
 	ld [$d81e], a ; $58d5
 	ld a, $38 ; $58d8
 	ld [$d81f], a ; $58da
 	ld a, $01 ; $58dd
-	ld hl, Func_17_4736 ; $58df
+	ld hl, DrawBriefingBallSprite ; $58df
 	call RegisterFrameTask ; $58e2
 	ld a, $00 ; $58e5
 	ld [$d82d], a ; $58e7
@@ -2040,7 +2040,7 @@ Label_17_58aa:
 	ld b, $04 ; $5913
 	call DrawDiagramTargetOverlay ; $5915
 	ld a, $01 ; $5918
-	ld hl, Func_17_4676 ; $591a
+	ld hl, CycleDiagramTargetPalette ; $591a
 	call RegisterFrameTask ; $591d
 	ld a, $00 ; $5920
 	ld [$d82a], a ; $5922
@@ -2051,28 +2051,28 @@ Label_17_58aa:
 	ld a, $24 ; $592f
 	ld [$d829], a ; $5931
 	ld a, $01 ; $5934
-	ld hl, Func_17_48c1 ; $5936
+	ld hl, DrawBriefingTargetBrackets ; $5936
 	call RegisterFrameTask ; $5939
 	ld hl, $1ab6 ; $593c
 	call DrawBriefingCaption ; $593f
 	call WaitForInputBlinking ; $5942
 	call ClearFrameTasks ; $5945
 	ld a, $01 ; $5948
-	ld hl, Func_17_4406 ; $594a
+	ld hl, UpdateAnimatedTilesTask_17 ; $594a
 	call RegisterFrameTask ; $594d
 	ld a, $52 ; $5950
 	ld [$d810], a ; $5952
 	ld a, $44 ; $5955
 	ld [$d811], a ; $5957
 	ld a, $01 ; $595a
-	ld hl, Func_17_46e2 ; $595c
+	ld hl, DrawBriefingPlayerSprite ; $595c
 	call RegisterFrameTask ; $595f
 	ld a, $46 ; $5962
 	ld [$d81e], a ; $5964
 	ld a, $28 ; $5967
 	ld [$d81f], a ; $5969
 	ld a, $01 ; $596c
-	ld hl, Func_17_4736 ; $596e
+	ld hl, DrawBriefingBallSprite ; $596e
 	call RegisterFrameTask ; $5971
 	ld a, $03 ; $5974
 	ld [$d827], a ; $5976
@@ -2090,43 +2090,43 @@ Label_17_58aa:
 	ld a, $22 ; $5995
 	ld [$d817], a ; $5997
 	ld a, $01 ; $599a
-	ld hl, Func_17_4843 ; $599c
+	ld hl, DrawSpinServeBriefingMarker ; $599c
 	call RegisterFrameTask ; $599f
 	ld b, $04 ; $59a2
 	call DrawDiagramTargetOverlay ; $59a4
 	ld a, $01 ; $59a7
-	ld hl, Func_17_4676 ; $59a9
+	ld hl, CycleDiagramTargetPalette ; $59a9
 	call RegisterFrameTask ; $59ac
 	ld hl, $1ab7 ; $59af
 	call DrawBriefingCaption ; $59b2
 	call WaitForInputBlinking ; $59b5
 	call ClearFrameTasks ; $59b8
 	ld a, $01 ; $59bb
-	ld hl, Func_17_4406 ; $59bd
+	ld hl, UpdateAnimatedTilesTask_17 ; $59bd
 	call RegisterFrameTask ; $59c0
 	ld a, $00 ; $59c3
 	ld [$d82e], a ; $59c5
 	call SpinServeBriefing_AdvanceAnim2 ; $59c8
 	ld a, $01 ; $59cb
-	ld hl, Func_17_46e2 ; $59cd
+	ld hl, DrawBriefingPlayerSprite ; $59cd
 	call RegisterFrameTask ; $59d0
 	ld a, $01 ; $59d3
-	ld hl, Func_17_4736 ; $59d5
+	ld hl, DrawBriefingBallSprite ; $59d5
 	call RegisterFrameTask ; $59d8
 	ld a, $01 ; $59db
 	ld hl, Func_17_4876 ; $59dd
 	call RegisterFrameTask ; $59e0
 	ld a, $01 ; $59e3
-	ld hl, Func_17_4843 ; $59e5
+	ld hl, DrawSpinServeBriefingMarker ; $59e5
 	call RegisterFrameTask ; $59e8
 	ld a, $01 ; $59eb
-	ld hl, Func_17_478e ; $59ed
+	ld hl, DrawBriefingSwingAnim ; $59ed
 	call RegisterFrameTask ; $59f0
 	ld a, $01 ; $59f3
-	ld hl, Func_17_4676 ; $59f5
+	ld hl, CycleDiagramTargetPalette ; $59f5
 	call RegisterFrameTask ; $59f8
 	ld hl, $1ab8 ; $59fb
-	ld a, [$c90e] ; $59fe
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $59fe
 	and a, a ; $5a01
 	jr z, Label_17_5a07 ; $5a02
 	ld hl, $1ab9 ; $5a04
@@ -2143,25 +2143,25 @@ Label_17_5a11:
 	jp z, Label_17_5a11 ; $5a1a
 	call ClearFrameTasks ; $5a1d
 	ld a, $01 ; $5a20
-	ld hl, Func_17_4406 ; $5a22
+	ld hl, UpdateAnimatedTilesTask_17 ; $5a22
 	call RegisterFrameTask ; $5a25
 	ld a, $03 ; $5a28
 	ld [$d82e], a ; $5a2a
 	call SpinServeBriefing_AdvanceAnim ; $5a2d
 	ld a, $01 ; $5a30
-	ld hl, Func_17_46e2 ; $5a32
+	ld hl, DrawBriefingPlayerSprite ; $5a32
 	call RegisterFrameTask ; $5a35
 	ld a, $01 ; $5a38
-	ld hl, Func_17_4736 ; $5a3a
+	ld hl, DrawBriefingBallSprite ; $5a3a
 	call RegisterFrameTask ; $5a3d
 	ld a, $01 ; $5a40
 	ld hl, Func_17_4876 ; $5a42
 	call RegisterFrameTask ; $5a45
 	ld a, $01 ; $5a48
-	ld hl, Func_17_4676 ; $5a4a
+	ld hl, CycleDiagramTargetPalette ; $5a4a
 	call RegisterFrameTask ; $5a4d
 	ld a, $01 ; $5a50
-	ld hl, Func_17_48c1 ; $5a52
+	ld hl, DrawBriefingTargetBrackets ; $5a52
 	call RegisterFrameTask ; $5a55
 	ld hl, $1aba ; $5a58
 	call DrawBriefingCaption ; $5a5b
@@ -2375,7 +2375,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ba5
 	ld [$d817], a ; $5ba6
 	ld b, $00 ; $5ba9
-	ld a, [$c90e] ; $5bab
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $5bab
 	and a, a ; $5bae
 	jr z, Label_17_5bb3 ; $5baf
 	ld b, $02 ; $5bb1
@@ -2483,10 +2483,10 @@ DrillBriefing_ServeThroughPoles:
 	ld [$d82e], a ; $5c69
 	call PoleServeBriefing_AdvanceAnim ; $5c6c
 	ld a, $01 ; $5c6f
-	ld hl, Func_17_46e2 ; $5c71
+	ld hl, DrawBriefingPlayerSprite ; $5c71
 	call RegisterFrameTask ; $5c74
 	ld a, $01 ; $5c77
-	ld hl, Func_17_4736 ; $5c79
+	ld hl, DrawBriefingBallSprite ; $5c79
 	call RegisterFrameTask ; $5c7c
 	ld a, $01 ; $5c7f
 	ld hl, Func_17_4754 ; $5c81
@@ -2495,7 +2495,7 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, Func_17_4876 ; $5c89
 	call RegisterFrameTask ; $5c8c
 	ld a, $01 ; $5c8f
-	ld hl, Func_17_4676 ; $5c91
+	ld hl, CycleDiagramTargetPalette ; $5c91
 	call RegisterFrameTask ; $5c94
 	ld hl, $1abb ; $5c97
 	call DrawBriefingCaption ; $5c9a
@@ -2510,26 +2510,26 @@ Label_17_5ca4:
 	jp z, Label_17_5ca4 ; $5cad
 	call ClearFrameTasks ; $5cb0
 	ld a, $01 ; $5cb3
-	ld hl, Func_17_4406 ; $5cb5
+	ld hl, UpdateAnimatedTilesTask_17 ; $5cb5
 	call RegisterFrameTask ; $5cb8
 	ld a, $03 ; $5cbb
 	ld [$d82e], a ; $5cbd
 	call PoleServeBriefing_AdvanceAnim2 ; $5cc0
 	ld a, $01 ; $5cc3
-	ld hl, Func_17_46e2 ; $5cc5
+	ld hl, DrawBriefingPlayerSprite ; $5cc5
 	call RegisterFrameTask ; $5cc8
 	ld a, $01 ; $5ccb
 	ld hl, Func_17_4754 ; $5ccd
 	call RegisterFrameTask ; $5cd0
 	ld a, $01 ; $5cd3
-	ld hl, Func_17_4676 ; $5cd5
+	ld hl, CycleDiagramTargetPalette ; $5cd5
 	call RegisterFrameTask ; $5cd8
 	ld a, $00 ; $5cdb
 	ld [$d82a], a ; $5cdd
 	ld a, $00 ; $5ce0
 	ld [$d82b], a ; $5ce2
 	ld a, $01 ; $5ce5
-	ld hl, Func_17_48c1 ; $5ce7
+	ld hl, DrawBriefingTargetBrackets ; $5ce7
 	call RegisterFrameTask ; $5cea
 	ld hl, $1abc ; $5ced
 	call DrawBriefingCaption ; $5cf0
@@ -2560,13 +2560,13 @@ Label_17_5cfa:
 	jp z, Label_17_5cfa ; $5d1d
 	call ClearFrameTasks ; $5d20
 	ld a, $01 ; $5d23
-	ld hl, Func_17_4406 ; $5d25
+	ld hl, UpdateAnimatedTilesTask_17 ; $5d25
 	call RegisterFrameTask ; $5d28
 	ld a, $03 ; $5d2b
 	ld [$d82e], a ; $5d2d
 	call PoleServeBriefing_AdvanceAnim2 ; $5d30
 	ld a, $01 ; $5d33
-	ld hl, Func_17_46e2 ; $5d35
+	ld hl, DrawBriefingPlayerSprite ; $5d35
 	call RegisterFrameTask ; $5d38
 	ld a, $00 ; $5d3b
 	ld [$d82d], a ; $5d3d
@@ -2578,43 +2578,43 @@ Label_17_5cfa:
 	ld hl, Func_17_4754 ; $5d4c
 	call RegisterFrameTask ; $5d4f
 	ld a, $01 ; $5d52
-	ld hl, Func_17_47ef ; $5d54
+	ld hl, DrawBriefingPoleSprites ; $5d54
 	call RegisterFrameTask ; $5d57
 	ld a, $01 ; $5d5a
-	ld hl, Func_17_4676 ; $5d5c
+	ld hl, CycleDiagramTargetPalette ; $5d5c
 	call RegisterFrameTask ; $5d5f
 	ld a, $00 ; $5d62
 	ld [$d82a], a ; $5d64
 	ld a, $00 ; $5d67
 	ld [$d82b], a ; $5d69
 	ld a, $01 ; $5d6c
-	ld hl, Func_17_48c1 ; $5d6e
+	ld hl, DrawBriefingTargetBrackets ; $5d6e
 	call RegisterFrameTask ; $5d71
 	ld hl, $1abd ; $5d74
 	call DrawBriefingCaption ; $5d77
 	call WaitForInputBlinking ; $5d7a
 	call ClearFrameTasks ; $5d7d
 	ld a, $01 ; $5d80
-	ld hl, Func_17_4406 ; $5d82
+	ld hl, UpdateAnimatedTilesTask_17 ; $5d82
 	call RegisterFrameTask ; $5d85
 	ld a, $03 ; $5d88
 	ld [$d82e], a ; $5d8a
 	call PoleServeBriefing_AdvanceAnim2 ; $5d8d
 	ld a, $01 ; $5d90
-	ld hl, Func_17_46e2 ; $5d92
+	ld hl, DrawBriefingPlayerSprite ; $5d92
 	call RegisterFrameTask ; $5d95
 	ld a, $01 ; $5d98
-	ld hl, Func_17_47ef ; $5d9a
+	ld hl, DrawBriefingPoleSprites ; $5d9a
 	call RegisterFrameTask ; $5d9d
 	ld a, $01 ; $5da0
-	ld hl, Func_17_4676 ; $5da2
+	ld hl, CycleDiagramTargetPalette ; $5da2
 	call RegisterFrameTask ; $5da5
 	ld a, $00 ; $5da8
 	ld [$d82a], a ; $5daa
 	ld a, $00 ; $5dad
 	ld [$d82b], a ; $5daf
 	ld a, $01 ; $5db2
-	ld hl, Func_17_48c1 ; $5db4
+	ld hl, DrawBriefingTargetBrackets ; $5db4
 	call RegisterFrameTask ; $5db7
 	ld hl, $1abe ; $5dba
 	call DrawBriefingCaption ; $5dbd
@@ -2900,21 +2900,21 @@ DrillBriefing_ServeAndVolley:
 	ld a, $44 ; $5f97
 	ld [$d811], a ; $5f99
 	ld a, $01 ; $5f9c
-	ld hl, Func_17_46e2 ; $5f9e
+	ld hl, DrawBriefingPlayerSprite ; $5f9e
 	call RegisterFrameTask ; $5fa1
 	ld a, $34 ; $5fa4
 	ld [$d812], a ; $5fa6
 	ld a, $06 ; $5fa9
 	ld [$d813], a ; $5fab
 	ld a, $01 ; $5fae
-	ld hl, Func_17_470c ; $5fb0
+	ld hl, DrawBriefingOpponentSprite ; $5fb0
 	call RegisterFrameTask ; $5fb3
 	ld a, $4e ; $5fb6
 	ld [$d81e], a ; $5fb8
 	ld a, $38 ; $5fbb
 	ld [$d81f], a ; $5fbd
 	ld a, $01 ; $5fc0
-	ld hl, Func_17_4736 ; $5fc2
+	ld hl, DrawBriefingBallSprite ; $5fc2
 	call RegisterFrameTask ; $5fc5
 	ld a, $00 ; $5fc8
 	ld [$d82d], a ; $5fca
@@ -2937,27 +2937,27 @@ DrillBriefing_ServeAndVolley:
 	ld b, $06 ; $5ff6
 	call DrawDiagramTargetOverlay ; $5ff8
 	ld a, $01 ; $5ffb
-	ld hl, Func_17_4676 ; $5ffd
+	ld hl, CycleDiagramTargetPalette ; $5ffd
 	call RegisterFrameTask ; $6000
 	ld hl, $1abf ; $6003
 	call DrawBriefingCaption ; $6006
 	call WaitForInputBlinking ; $6009
 	call ClearFrameTasks ; $600c
 	ld a, $01 ; $600f
-	ld hl, Func_17_4406 ; $6011
+	ld hl, UpdateAnimatedTilesTask_17 ; $6011
 	call RegisterFrameTask ; $6014
 	call DrawDiagramTargetOverlay ; $6017
 	ld a, $03 ; $601a
 	ld [$d82e], a ; $601c
 	call ServeAndVolleyBriefing_AdvanceAnim ; $601f
 	ld a, $01 ; $6022
-	ld hl, Func_17_46e2 ; $6024
+	ld hl, DrawBriefingPlayerSprite ; $6024
 	call RegisterFrameTask ; $6027
 	ld a, $01 ; $602a
-	ld hl, Func_17_470c ; $602c
+	ld hl, DrawBriefingOpponentSprite ; $602c
 	call RegisterFrameTask ; $602f
 	ld a, $01 ; $6032
-	ld hl, Func_17_4736 ; $6034
+	ld hl, DrawBriefingBallSprite ; $6034
 	call RegisterFrameTask ; $6037
 	ld a, $01 ; $603a
 	ld hl, Func_17_4754 ; $603c
@@ -2973,26 +2973,26 @@ DrillBriefing_ServeAndVolley:
 	ld a, $0f ; $6057
 	ld [$d82b], a ; $6059
 	ld a, $01 ; $605c
-	ld hl, Func_17_48c1 ; $605e
+	ld hl, DrawBriefingTargetBrackets ; $605e
 	call RegisterFrameTask ; $6061
 	ld hl, $1ac0 ; $6064
 	call DrawBriefingCaption ; $6067
 	call WaitForInputBlinking ; $606a
 	call ClearFrameTasks ; $606d
 	ld a, $01 ; $6070
-	ld hl, Func_17_4406 ; $6072
+	ld hl, UpdateAnimatedTilesTask_17 ; $6072
 	call RegisterFrameTask ; $6075
 	ld a, $03 ; $6078
 	ld [$d82e], a ; $607a
 	call ServeAndVolleyBriefing_AdvanceAnim ; $607d
 	ld a, $01 ; $6080
-	ld hl, Func_17_46e2 ; $6082
+	ld hl, DrawBriefingPlayerSprite ; $6082
 	call RegisterFrameTask ; $6085
 	ld a, $01 ; $6088
-	ld hl, Func_17_470c ; $608a
+	ld hl, DrawBriefingOpponentSprite ; $608a
 	call RegisterFrameTask ; $608d
 	ld a, $01 ; $6090
-	ld hl, Func_17_4736 ; $6092
+	ld hl, DrawBriefingBallSprite ; $6092
 	call RegisterFrameTask ; $6095
 	ld a, $01 ; $6098
 	ld hl, Func_17_4754 ; $609a
@@ -3008,7 +3008,7 @@ DrillBriefing_ServeAndVolley:
 	ld a, $0f ; $60b5
 	ld [$d82b], a ; $60b7
 	ld a, $01 ; $60ba
-	ld hl, Func_17_48c1 ; $60bc
+	ld hl, DrawBriefingTargetBrackets ; $60bc
 	call RegisterFrameTask ; $60bf
 	ld hl, $1ac1 ; $60c2
 	call DrawBriefingCaption ; $60c5
@@ -3231,21 +3231,21 @@ DrillBriefing_ServeAndSmash:
 	ld a, $44 ; $6235
 	ld [$d811], a ; $6237
 	ld a, $01 ; $623a
-	ld hl, Func_17_46e2 ; $623c
+	ld hl, DrawBriefingPlayerSprite ; $623c
 	call RegisterFrameTask ; $623f
 	ld a, $34 ; $6242
 	ld [$d812], a ; $6244
 	ld a, $06 ; $6247
 	ld [$d813], a ; $6249
 	ld a, $01 ; $624c
-	ld hl, Func_17_470c ; $624e
+	ld hl, DrawBriefingOpponentSprite ; $624e
 	call RegisterFrameTask ; $6251
 	ld a, $4e ; $6254
 	ld [$d81e], a ; $6256
 	ld a, $38 ; $6259
 	ld [$d81f], a ; $625b
 	ld a, $01 ; $625e
-	ld hl, Func_17_4736 ; $6260
+	ld hl, DrawBriefingBallSprite ; $6260
 	call RegisterFrameTask ; $6263
 	ld a, $00 ; $6266
 	ld [$d82d], a ; $6268
@@ -3274,28 +3274,28 @@ DrillBriefing_ServeAndSmash:
 	ld a, $22 ; $62a3
 	ld [$d829], a ; $62a5
 	ld a, $01 ; $62a8
-	ld hl, Func_17_48c1 ; $62aa
+	ld hl, DrawBriefingTargetBrackets ; $62aa
 	call RegisterFrameTask ; $62ad
 	ld hl, $1ac2 ; $62b0
 	call DrawBriefingCaption ; $62b3
 	call WaitForInputBlinking ; $62b6
 	call ClearFrameTasks ; $62b9
 	ld a, $01 ; $62bc
-	ld hl, Func_17_4406 ; $62be
+	ld hl, UpdateAnimatedTilesTask_17 ; $62be
 	call RegisterFrameTask ; $62c1
 	ld a, $55 ; $62c4
 	ld [$d810], a ; $62c6
 	ld a, $44 ; $62c9
 	ld [$d811], a ; $62cb
 	ld a, $01 ; $62ce
-	ld hl, Func_17_46e2 ; $62d0
+	ld hl, DrawBriefingPlayerSprite ; $62d0
 	call RegisterFrameTask ; $62d3
 	ld a, $34 ; $62d6
 	ld [$d812], a ; $62d8
 	ld a, $06 ; $62db
 	ld [$d813], a ; $62dd
 	ld a, $01 ; $62e0
-	ld hl, Func_17_470c ; $62e2
+	ld hl, DrawBriefingOpponentSprite ; $62e2
 	call RegisterFrameTask ; $62e5
 	ld a, $00 ; $62e8
 	ld [$d82d], a ; $62ea
@@ -3309,14 +3309,14 @@ DrillBriefing_ServeAndSmash:
 	ld b, $06 ; $62ff
 	call DrawDiagramTargetOverlay ; $6301
 	ld a, $01 ; $6304
-	ld hl, Func_17_4676 ; $6306
+	ld hl, CycleDiagramTargetPalette ; $6306
 	call RegisterFrameTask ; $6309
 	ld hl, $1ac3 ; $630c
 	call DrawBriefingCaption ; $630f
 	call WaitForInputBlinking ; $6312
 	call ClearFrameTasks ; $6315
 	ld a, $01 ; $6318
-	ld hl, Func_17_4406 ; $631a
+	ld hl, UpdateAnimatedTilesTask_17 ; $631a
 	call RegisterFrameTask ; $631d
 	call DrawDiagramTargetOverlay ; $6320
 	ld a, $52 ; $6323
@@ -3324,21 +3324,21 @@ DrillBriefing_ServeAndSmash:
 	ld a, $30 ; $6328
 	ld [$d811], a ; $632a
 	ld a, $01 ; $632d
-	ld hl, Func_17_46e2 ; $632f
+	ld hl, DrawBriefingPlayerSprite ; $632f
 	call RegisterFrameTask ; $6332
 	ld a, $34 ; $6335
 	ld [$d812], a ; $6337
 	ld a, $06 ; $633a
 	ld [$d813], a ; $633c
 	ld a, $01 ; $633f
-	ld hl, Func_17_470c ; $6341
+	ld hl, DrawBriefingOpponentSprite ; $6341
 	call RegisterFrameTask ; $6344
 	ld a, $5d ; $6347
 	ld [$d81e], a ; $6349
 	ld a, $1b ; $634c
 	ld [$d81f], a ; $634e
 	ld a, $01 ; $6351
-	ld hl, Func_17_4736 ; $6353
+	ld hl, DrawBriefingBallSprite ; $6353
 	call RegisterFrameTask ; $6356
 	ld a, $01 ; $6359
 	ld [$d827], a ; $635b
@@ -3365,35 +3365,35 @@ DrillBriefing_ServeAndSmash:
 	ld a, $30 ; $6391
 	ld [$d815], a ; $6393
 	ld a, $01 ; $6396
-	ld hl, Func_17_478e ; $6398
+	ld hl, DrawBriefingSwingAnim ; $6398
 	call RegisterFrameTask ; $639b
 	ld hl, $1ac4 ; $639e
 	call DrawBriefingCaption ; $63a1
 	call WaitForInputBlinking ; $63a4
 	call ClearFrameTasks ; $63a7
 	ld a, $01 ; $63aa
-	ld hl, Func_17_4406 ; $63ac
+	ld hl, UpdateAnimatedTilesTask_17 ; $63ac
 	call RegisterFrameTask ; $63af
 	ld a, $55 ; $63b2
 	ld [$d810], a ; $63b4
 	ld a, $44 ; $63b7
 	ld [$d811], a ; $63b9
 	ld a, $01 ; $63bc
-	ld hl, Func_17_46e2 ; $63be
+	ld hl, DrawBriefingPlayerSprite ; $63be
 	call RegisterFrameTask ; $63c1
 	ld a, $34 ; $63c4
 	ld [$d812], a ; $63c6
 	ld a, $06 ; $63c9
 	ld [$d813], a ; $63cb
 	ld a, $01 ; $63ce
-	ld hl, Func_17_470c ; $63d0
+	ld hl, DrawBriefingOpponentSprite ; $63d0
 	call RegisterFrameTask ; $63d3
 	ld a, $50 ; $63d6
 	ld [$d81e], a ; $63d8
 	ld a, $37 ; $63db
 	ld [$d81f], a ; $63dd
 	ld a, $01 ; $63e0
-	ld hl, Func_17_4736 ; $63e2
+	ld hl, DrawBriefingBallSprite ; $63e2
 	call RegisterFrameTask ; $63e5
 	ld a, $03 ; $63e8
 	ld [$d827], a ; $63ea
@@ -3413,7 +3413,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $22 ; $640e
 	ld [$d829], a ; $6410
 	ld a, $01 ; $6413
-	ld hl, Func_17_48c1 ; $6415
+	ld hl, DrawBriefingTargetBrackets ; $6415
 	call RegisterFrameTask ; $6418
 	ld hl, $1ac5 ; $641b
 	call DrawBriefingCaption ; $641e
@@ -3585,21 +3585,21 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $44 ; $653e
 	ld [$d811], a ; $6540
 	ld a, $01 ; $6543
-	ld hl, Func_17_46e2 ; $6545
+	ld hl, DrawBriefingPlayerSprite ; $6545
 	call RegisterFrameTask ; $6548
 	ld a, $34 ; $654b
 	ld [$d812], a ; $654d
 	ld a, $06 ; $6550
 	ld [$d813], a ; $6552
 	ld a, $01 ; $6555
-	ld hl, Func_17_470c ; $6557
+	ld hl, DrawBriefingOpponentSprite ; $6557
 	call RegisterFrameTask ; $655a
 	ld a, $4e ; $655d
 	ld [$d81e], a ; $655f
 	ld a, $38 ; $6562
 	ld [$d81f], a ; $6564
 	ld a, $01 ; $6567
-	ld hl, Func_17_4736 ; $6569
+	ld hl, DrawBriefingBallSprite ; $6569
 	call RegisterFrameTask ; $656c
 	ld a, $00 ; $656f
 	ld [$d82d], a ; $6571
@@ -3628,28 +3628,28 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $22 ; $65ac
 	ld [$d829], a ; $65ae
 	ld a, $01 ; $65b1
-	ld hl, Func_17_48c1 ; $65b3
+	ld hl, DrawBriefingTargetBrackets ; $65b3
 	call RegisterFrameTask ; $65b6
 	ld hl, $1ac6 ; $65b9
 	call DrawBriefingCaption ; $65bc
 	call WaitForInputBlinking ; $65bf
 	call ClearFrameTasks ; $65c2
 	ld a, $01 ; $65c5
-	ld hl, Func_17_4406 ; $65c7
+	ld hl, UpdateAnimatedTilesTask_17 ; $65c7
 	call RegisterFrameTask ; $65ca
 	ld a, $55 ; $65cd
 	ld [$d810], a ; $65cf
 	ld a, $44 ; $65d2
 	ld [$d811], a ; $65d4
 	ld a, $01 ; $65d7
-	ld hl, Func_17_46e2 ; $65d9
+	ld hl, DrawBriefingPlayerSprite ; $65d9
 	call RegisterFrameTask ; $65dc
 	ld a, $34 ; $65df
 	ld [$d812], a ; $65e1
 	ld a, $06 ; $65e4
 	ld [$d813], a ; $65e6
 	ld a, $01 ; $65e9
-	ld hl, Func_17_470c ; $65eb
+	ld hl, DrawBriefingOpponentSprite ; $65eb
 	call RegisterFrameTask ; $65ee
 	ld a, $00 ; $65f1
 	ld [$d82d], a ; $65f3
@@ -3663,14 +3663,14 @@ DrillBriefing_ServeAndSmash2:
 	ld b, $06 ; $6608
 	call DrawDiagramTargetOverlay ; $660a
 	ld a, $01 ; $660d
-	ld hl, Func_17_4676 ; $660f
+	ld hl, CycleDiagramTargetPalette ; $660f
 	call RegisterFrameTask ; $6612
 	ld hl, $1ac7 ; $6615
 	call DrawBriefingCaption ; $6618
 	call WaitForInputBlinking ; $661b
 	call ClearFrameTasks ; $661e
 	ld a, $01 ; $6621
-	ld hl, Func_17_4406 ; $6623
+	ld hl, UpdateAnimatedTilesTask_17 ; $6623
 	call RegisterFrameTask ; $6626
 	call DrawDiagramTargetOverlay ; $6629
 	ld a, $52 ; $662c
@@ -3678,21 +3678,21 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $30 ; $6631
 	ld [$d811], a ; $6633
 	ld a, $01 ; $6636
-	ld hl, Func_17_46e2 ; $6638
+	ld hl, DrawBriefingPlayerSprite ; $6638
 	call RegisterFrameTask ; $663b
 	ld a, $34 ; $663e
 	ld [$d812], a ; $6640
 	ld a, $06 ; $6643
 	ld [$d813], a ; $6645
 	ld a, $01 ; $6648
-	ld hl, Func_17_470c ; $664a
+	ld hl, DrawBriefingOpponentSprite ; $664a
 	call RegisterFrameTask ; $664d
 	ld a, $5d ; $6650
 	ld [$d81e], a ; $6652
 	ld a, $1b ; $6655
 	ld [$d81f], a ; $6657
 	ld a, $01 ; $665a
-	ld hl, Func_17_4736 ; $665c
+	ld hl, DrawBriefingBallSprite ; $665c
 	call RegisterFrameTask ; $665f
 	ld a, $01 ; $6662
 	ld [$d827], a ; $6664
@@ -3719,35 +3719,35 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $30 ; $669a
 	ld [$d815], a ; $669c
 	ld a, $01 ; $669f
-	ld hl, Func_17_478e ; $66a1
+	ld hl, DrawBriefingSwingAnim ; $66a1
 	call RegisterFrameTask ; $66a4
 	ld hl, $1ac8 ; $66a7
 	call DrawBriefingCaption ; $66aa
 	call WaitForInputBlinking ; $66ad
 	call ClearFrameTasks ; $66b0
 	ld a, $01 ; $66b3
-	ld hl, Func_17_4406 ; $66b5
+	ld hl, UpdateAnimatedTilesTask_17 ; $66b5
 	call RegisterFrameTask ; $66b8
 	ld a, $55 ; $66bb
 	ld [$d810], a ; $66bd
 	ld a, $44 ; $66c0
 	ld [$d811], a ; $66c2
 	ld a, $01 ; $66c5
-	ld hl, Func_17_46e2 ; $66c7
+	ld hl, DrawBriefingPlayerSprite ; $66c7
 	call RegisterFrameTask ; $66ca
 	ld a, $34 ; $66cd
 	ld [$d812], a ; $66cf
 	ld a, $06 ; $66d2
 	ld [$d813], a ; $66d4
 	ld a, $01 ; $66d7
-	ld hl, Func_17_470c ; $66d9
+	ld hl, DrawBriefingOpponentSprite ; $66d9
 	call RegisterFrameTask ; $66dc
 	ld a, $50 ; $66df
 	ld [$d81e], a ; $66e1
 	ld a, $37 ; $66e4
 	ld [$d81f], a ; $66e6
 	ld a, $01 ; $66e9
-	ld hl, Func_17_4736 ; $66eb
+	ld hl, DrawBriefingBallSprite ; $66eb
 	call RegisterFrameTask ; $66ee
 	ld a, $03 ; $66f1
 	ld [$d827], a ; $66f3
@@ -3767,7 +3767,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $22 ; $6717
 	ld [$d829], a ; $6719
 	ld a, $01 ; $671c
-	ld hl, Func_17_48c1 ; $671e
+	ld hl, DrawBriefingTargetBrackets ; $671e
 	call RegisterFrameTask ; $6721
 	ld hl, $1ac9 ; $6724
 	call DrawBriefingCaption ; $6727
@@ -3939,21 +3939,21 @@ DrillBriefing_ReturnToTarget:
 	ld a, $44 ; $6847
 	ld [$d811], a ; $6849
 	ld a, $01 ; $684c
-	ld hl, Func_17_46e2 ; $684e
+	ld hl, DrawBriefingPlayerSprite ; $684e
 	call RegisterFrameTask ; $6851
 	ld a, $3a ; $6854
 	ld [$d812], a ; $6856
 	ld a, $03 ; $6859
 	ld [$d813], a ; $685b
 	ld a, $01 ; $685e
-	ld hl, Func_17_470c ; $6860
+	ld hl, DrawBriefingOpponentSprite ; $6860
 	call RegisterFrameTask ; $6863
 	ld a, $54 ; $6866
 	ld [$d81e], a ; $6868
 	ld a, $28 ; $686b
 	ld [$d81f], a ; $686d
 	ld a, $01 ; $6870
-	ld hl, Func_17_4736 ; $6872
+	ld hl, DrawBriefingBallSprite ; $6872
 	call RegisterFrameTask ; $6875
 	ld a, $01 ; $6878
 	ld [$d827], a ; $687a
@@ -3969,19 +3969,19 @@ DrillBriefing_ReturnToTarget:
 	call WaitForInputBlinking ; $6895
 	call ClearFrameTasks ; $6898
 	ld a, $01 ; $689b
-	ld hl, Func_17_4406 ; $689d
+	ld hl, UpdateAnimatedTilesTask_17 ; $689d
 	call RegisterFrameTask ; $68a0
 	ld a, $03 ; $68a3
 	ld [$d82e], a ; $68a5
 	call ReturnToTargetBriefing_AdvanceAnim ; $68a8
 	ld a, $01 ; $68ab
-	ld hl, Func_17_46e2 ; $68ad
+	ld hl, DrawBriefingPlayerSprite ; $68ad
 	call RegisterFrameTask ; $68b0
 	ld a, $01 ; $68b3
-	ld hl, Func_17_470c ; $68b5
+	ld hl, DrawBriefingOpponentSprite ; $68b5
 	call RegisterFrameTask ; $68b8
 	ld a, $01 ; $68bb
-	ld hl, Func_17_4736 ; $68bd
+	ld hl, DrawBriefingBallSprite ; $68bd
 	call RegisterFrameTask ; $68c0
 	ld a, $01 ; $68c3
 	ld hl, Func_17_4754 ; $68c5
@@ -3994,26 +3994,26 @@ DrillBriefing_ReturnToTarget:
 	ld a, $09 ; $68d8
 	ld [$d82b], a ; $68da
 	ld a, $01 ; $68dd
-	ld hl, Func_17_48c1 ; $68df
+	ld hl, DrawBriefingTargetBrackets ; $68df
 	call RegisterFrameTask ; $68e2
 	ld hl, $1c04 ; $68e5
 	call DrawBriefingCaption ; $68e8
 	call WaitForInputBlinking ; $68eb
 	call ClearFrameTasks ; $68ee
 	ld a, $01 ; $68f1
-	ld hl, Func_17_4406 ; $68f3
+	ld hl, UpdateAnimatedTilesTask_17 ; $68f3
 	call RegisterFrameTask ; $68f6
 	ld a, $03 ; $68f9
 	ld [$d82e], a ; $68fb
 	call ReturnToTargetBriefing_AdvanceAnim ; $68fe
 	ld a, $01 ; $6901
-	ld hl, Func_17_46e2 ; $6903
+	ld hl, DrawBriefingPlayerSprite ; $6903
 	call RegisterFrameTask ; $6906
 	ld a, $01 ; $6909
-	ld hl, Func_17_470c ; $690b
+	ld hl, DrawBriefingOpponentSprite ; $690b
 	call RegisterFrameTask ; $690e
 	ld a, $01 ; $6911
-	ld hl, Func_17_4736 ; $6913
+	ld hl, DrawBriefingBallSprite ; $6913
 	call RegisterFrameTask ; $6916
 	ld a, $01 ; $6919
 	ld hl, Func_17_4754 ; $691b
@@ -4026,7 +4026,7 @@ DrillBriefing_ReturnToTarget:
 	ld a, $09 ; $692e
 	ld [$d82b], a ; $6930
 	ld a, $01 ; $6933
-	ld hl, Func_17_48c1 ; $6935
+	ld hl, DrawBriefingTargetBrackets ; $6935
 	call RegisterFrameTask ; $6938
 	ld hl, $1c05 ; $693b
 	call DrawBriefingCaption ; $693e
@@ -4217,21 +4217,21 @@ DrillBriefing_ReturnLob:
 	ld a, $44 ; $6a78
 	ld [$d811], a ; $6a7a
 	ld a, $01 ; $6a7d
-	ld hl, Func_17_46e2 ; $6a7f
+	ld hl, DrawBriefingPlayerSprite ; $6a7f
 	call RegisterFrameTask ; $6a82
 	ld a, $3a ; $6a85
 	ld [$d812], a ; $6a87
 	ld a, $03 ; $6a8a
 	ld [$d813], a ; $6a8c
 	ld a, $01 ; $6a8f
-	ld hl, Func_17_470c ; $6a91
+	ld hl, DrawBriefingOpponentSprite ; $6a91
 	call RegisterFrameTask ; $6a94
 	ld a, $56 ; $6a97
 	ld [$d81e], a ; $6a99
 	ld a, $28 ; $6a9c
 	ld [$d81f], a ; $6a9e
 	ld a, $01 ; $6aa1
-	ld hl, Func_17_4736 ; $6aa3
+	ld hl, DrawBriefingBallSprite ; $6aa3
 	call RegisterFrameTask ; $6aa6
 	ld a, $01 ; $6aa9
 	ld [$d827], a ; $6aab
@@ -4247,19 +4247,19 @@ DrillBriefing_ReturnLob:
 	call WaitForInputBlinking ; $6ac6
 	call ClearFrameTasks ; $6ac9
 	ld a, $01 ; $6acc
-	ld hl, Func_17_4406 ; $6ace
+	ld hl, UpdateAnimatedTilesTask_17 ; $6ace
 	call RegisterFrameTask ; $6ad1
 	ld a, $03 ; $6ad4
 	ld [$d82e], a ; $6ad6
 	call ReturnLobBriefing_AdvanceAnim ; $6ad9
 	ld a, $01 ; $6adc
-	ld hl, Func_17_46e2 ; $6ade
+	ld hl, DrawBriefingPlayerSprite ; $6ade
 	call RegisterFrameTask ; $6ae1
 	ld a, $01 ; $6ae4
-	ld hl, Func_17_470c ; $6ae6
+	ld hl, DrawBriefingOpponentSprite ; $6ae6
 	call RegisterFrameTask ; $6ae9
 	ld a, $01 ; $6aec
-	ld hl, Func_17_4736 ; $6aee
+	ld hl, DrawBriefingBallSprite ; $6aee
 	call RegisterFrameTask ; $6af1
 	ld a, $01 ; $6af4
 	ld hl, Func_17_4754 ; $6af6
@@ -4268,33 +4268,33 @@ DrillBriefing_ReturnLob:
 	ld hl, Func_17_4876 ; $6afe
 	call RegisterFrameTask ; $6b01
 	ld a, $01 ; $6b04
-	ld hl, Func_17_478e ; $6b06
+	ld hl, DrawBriefingSwingAnim ; $6b06
 	call RegisterFrameTask ; $6b09
 	ld a, $0d ; $6b0c
 	ld [$d82a], a ; $6b0e
 	ld a, $09 ; $6b11
 	ld [$d82b], a ; $6b13
 	ld a, $01 ; $6b16
-	ld hl, Func_17_48c1 ; $6b18
+	ld hl, DrawBriefingTargetBrackets ; $6b18
 	call RegisterFrameTask ; $6b1b
 	ld hl, $1c07 ; $6b1e
 	call DrawBriefingCaption ; $6b21
 	call WaitForInputBlinking ; $6b24
 	call ClearFrameTasks ; $6b27
 	ld a, $01 ; $6b2a
-	ld hl, Func_17_4406 ; $6b2c
+	ld hl, UpdateAnimatedTilesTask_17 ; $6b2c
 	call RegisterFrameTask ; $6b2f
 	ld a, $03 ; $6b32
 	ld [$d82e], a ; $6b34
 	call ReturnLobBriefing_AdvanceAnim ; $6b37
 	ld a, $01 ; $6b3a
-	ld hl, Func_17_46e2 ; $6b3c
+	ld hl, DrawBriefingPlayerSprite ; $6b3c
 	call RegisterFrameTask ; $6b3f
 	ld a, $01 ; $6b42
-	ld hl, Func_17_470c ; $6b44
+	ld hl, DrawBriefingOpponentSprite ; $6b44
 	call RegisterFrameTask ; $6b47
 	ld a, $01 ; $6b4a
-	ld hl, Func_17_4736 ; $6b4c
+	ld hl, DrawBriefingBallSprite ; $6b4c
 	call RegisterFrameTask ; $6b4f
 	ld a, $01 ; $6b52
 	ld hl, Func_17_4754 ; $6b54
@@ -4303,14 +4303,14 @@ DrillBriefing_ReturnLob:
 	ld hl, Func_17_4876 ; $6b5c
 	call RegisterFrameTask ; $6b5f
 	ld a, $01 ; $6b62
-	ld hl, Func_17_478e ; $6b64
+	ld hl, DrawBriefingSwingAnim ; $6b64
 	call RegisterFrameTask ; $6b67
 	ld a, $0d ; $6b6a
 	ld [$d82a], a ; $6b6c
 	ld a, $09 ; $6b6f
 	ld [$d82b], a ; $6b71
 	ld a, $01 ; $6b74
-	ld hl, Func_17_48c1 ; $6b76
+	ld hl, DrawBriefingTargetBrackets ; $6b76
 	call RegisterFrameTask ; $6b79
 	ld hl, $1c08 ; $6b7c
 	call DrawBriefingCaption ; $6b7f
@@ -4533,21 +4533,21 @@ DrillBriefing_ReturnDownLine:
 	ld a, $44 ; $6cef
 	ld [$d811], a ; $6cf1
 	ld a, $01 ; $6cf4
-	ld hl, Func_17_46e2 ; $6cf6
+	ld hl, DrawBriefingPlayerSprite ; $6cf6
 	call RegisterFrameTask ; $6cf9
 	ld a, $3a ; $6cfc
 	ld [$d812], a ; $6cfe
 	ld a, $03 ; $6d01
 	ld [$d813], a ; $6d03
 	ld a, $01 ; $6d06
-	ld hl, Func_17_470c ; $6d08
+	ld hl, DrawBriefingOpponentSprite ; $6d08
 	call RegisterFrameTask ; $6d0b
 	ld a, $54 ; $6d0e
 	ld [$d81e], a ; $6d10
 	ld a, $28 ; $6d13
 	ld [$d81f], a ; $6d15
 	ld a, $01 ; $6d18
-	ld hl, Func_17_4736 ; $6d1a
+	ld hl, DrawBriefingBallSprite ; $6d1a
 	call RegisterFrameTask ; $6d1d
 	ld a, $01 ; $6d20
 	ld [$d827], a ; $6d22
@@ -4563,19 +4563,19 @@ DrillBriefing_ReturnDownLine:
 	call WaitForInputBlinking ; $6d3d
 	call ClearFrameTasks ; $6d40
 	ld a, $01 ; $6d43
-	ld hl, Func_17_4406 ; $6d45
+	ld hl, UpdateAnimatedTilesTask_17 ; $6d45
 	call RegisterFrameTask ; $6d48
 	ld a, $03 ; $6d4b
 	ld [$d82e], a ; $6d4d
 	call ReturnDownLineBriefing_AdvanceAnim ; $6d50
 	ld a, $01 ; $6d53
-	ld hl, Func_17_46e2 ; $6d55
+	ld hl, DrawBriefingPlayerSprite ; $6d55
 	call RegisterFrameTask ; $6d58
 	ld a, $01 ; $6d5b
-	ld hl, Func_17_470c ; $6d5d
+	ld hl, DrawBriefingOpponentSprite ; $6d5d
 	call RegisterFrameTask ; $6d60
 	ld a, $01 ; $6d63
-	ld hl, Func_17_4736 ; $6d65
+	ld hl, DrawBriefingBallSprite ; $6d65
 	call RegisterFrameTask ; $6d68
 	ld a, $01 ; $6d6b
 	ld hl, Func_17_4754 ; $6d6d
@@ -4588,26 +4588,26 @@ DrillBriefing_ReturnDownLine:
 	ld a, $09 ; $6d80
 	ld [$d82b], a ; $6d82
 	ld a, $01 ; $6d85
-	ld hl, Func_17_48c1 ; $6d87
+	ld hl, DrawBriefingTargetBrackets ; $6d87
 	call RegisterFrameTask ; $6d8a
 	ld hl, $1c0a ; $6d8d
 	call DrawBriefingCaption ; $6d90
 	call WaitForInputBlinking ; $6d93
 	call ClearFrameTasks ; $6d96
 	ld a, $01 ; $6d99
-	ld hl, Func_17_4406 ; $6d9b
+	ld hl, UpdateAnimatedTilesTask_17 ; $6d9b
 	call RegisterFrameTask ; $6d9e
 	ld a, $03 ; $6da1
 	ld [$d82e], a ; $6da3
 	call ReturnDownLineBriefing_AdvanceAnim ; $6da6
 	ld a, $01 ; $6da9
-	ld hl, Func_17_46e2 ; $6dab
+	ld hl, DrawBriefingPlayerSprite ; $6dab
 	call RegisterFrameTask ; $6dae
 	ld a, $01 ; $6db1
-	ld hl, Func_17_470c ; $6db3
+	ld hl, DrawBriefingOpponentSprite ; $6db3
 	call RegisterFrameTask ; $6db6
 	ld a, $01 ; $6db9
-	ld hl, Func_17_4736 ; $6dbb
+	ld hl, DrawBriefingBallSprite ; $6dbb
 	call RegisterFrameTask ; $6dbe
 	ld a, $01 ; $6dc1
 	ld hl, Func_17_4754 ; $6dc3
@@ -4620,7 +4620,7 @@ DrillBriefing_ReturnDownLine:
 	ld a, $09 ; $6dd6
 	ld [$d82b], a ; $6dd8
 	ld a, $01 ; $6ddb
-	ld hl, Func_17_48c1 ; $6ddd
+	ld hl, DrawBriefingTargetBrackets ; $6ddd
 	call RegisterFrameTask ; $6de0
 	ld hl, $1c0b ; $6de3
 	call DrawBriefingCaption ; $6de6
@@ -4824,18 +4824,18 @@ ShowRulesScreen:
 	call DisableLCDSafely ; $6f44
 	call LoadRulesScreen ; $6f47
 	ld a, $01 ; $6f4a
-	ld [$cb0b], a ; $6f4c
+	ld [wAnimatedTileSet], a ; $6f4c
 	ld a, $03 ; $6f4f
-	ld [$cb0c], a ; $6f51
+	ld [wAnimatedTilePeriod], a ; $6f51
 	ld a, $01 ; $6f54
-	ld hl, Func_17_4406 ; $6f56
+	ld hl, UpdateAnimatedTilesTask_17 ; $6f56
 	call RegisterFrameTask ; $6f59
 	call EnableLCD ; $6f5c
 	script_fade_in $20 ; $6f5f
 	call WaitFadeEnd ; $6f64
 	wram_bank $03 ; $6f67
 	ld a, $01 ; $6f6d
-	ld hl, Func_17_7420 ; $6f6f
+	ld hl, AdvanceRulesScreenAnimFrame ; $6f6f
 	call RegisterFrameTask ; $6f72
 	ld a, $01 ; $6f75
 	ld [$dc03], a ; $6f77
@@ -5087,7 +5087,7 @@ Label_17_70d3:
 	cp a, $ff ; $70d9
 	jr z, Label_17_70e5 ; $70db
 	ld a, $01 ; $70dd
-	ld hl, Func_17_755e ; $70df
+	ld hl, DrawRulesNextPageArrow ; $70df
 	call RegisterFrameTask ; $70e2
 Label_17_70e5:
 	call PrepareRulesPageTilemap ; $70e5
@@ -5122,7 +5122,7 @@ Label_17_7107:
 	jr Label_17_7107 ; $711c
 Label_17_711e:
 	sound $5f ; $711e
-	ld hl, Func_17_755e ; $7120
+	ld hl, DrawRulesNextPageArrow ; $7120
 	call UnregisterFrameTask ; $7123
 	ld hl, RulesScreenTiles ; $7126
 	call UnregisterFrameTask ; $7129
@@ -5135,7 +5135,7 @@ Label_17_711e:
 	jp Label_17_70a4 ; $7139
 Label_17_713c:
 	sound $62 ; $713c
-	ld hl, Func_17_755e ; $713e
+	ld hl, DrawRulesNextPageArrow ; $713e
 	call UnregisterFrameTask ; $7141
 	ld hl, RulesScreenTiles ; $7144
 	call UnregisterFrameTask ; $7147
@@ -5186,7 +5186,7 @@ LoadRulesScreen:
 	ld [hl+], a ; $71af
 	ld [hl], d ; $71b0
 	ld a, $01 ; $71b1
-	ld hl, Func_17_74db ; $71b3
+	ld hl, DrawRulesScreenCharacters ; $71b3
 	call RegisterFrameTask ; $71b6
 	farcall QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
@@ -5418,7 +5418,7 @@ LoadRulesBorderAnimTiles:
 	ld bc, $0001 ; $7419
 	call QueueVRAMCopy ; $741c
 	ret ; $741f
-Func_17_7420:
+AdvanceRulesScreenAnimFrame:
 	ldh a, [hWramBank] ; $7420
 	push af ; $7422
 	wram_bank $03 ; $7423
@@ -5518,7 +5518,7 @@ Label_17_7479:
 	dw $0202 ; record 43
 	dw $0302 ; record 44
 	dw $0402 ; record 45
-Func_17_74db:
+DrawRulesScreenCharacters:
 	ldh a, [hWramBank] ; $74db
 	push af ; $74dd
 	wram_bank $03 ; $74de
@@ -5574,7 +5574,7 @@ SpriteTemplate_17_7527:
 	oam_sprite $30, $18, $10, $00
 	oam_sprite_end
 	INCBIN "data/bank_017/d_754c.bin" ; $754c, 18 bytes
-Func_17_755e:
+DrawRulesNextPageArrow:
 	ld de, $7888 ; $755e
 	ld c, $00 ; $7561
 	call ApplySpriteWobbleY_17 ; $7563

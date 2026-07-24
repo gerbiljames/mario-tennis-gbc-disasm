@@ -1,45 +1,45 @@
 SECTION "ROM Bank $1a", ROMX[$4000], BANK[$1a]
 
 	farptr RunMinigameModePauseMenu ; $4000
-	farptr Func_1a_413c ; $4002
+	farptr QueueWindowTileWrite ; $4002
 	farptr ResetCharDataScreenAnim ; $4004
-	farptr Func_1a_4399 ; $4006
-	farptr Func_1a_67d4 ; $4008
+	farptr CheckDebugExpEditorHotkey ; $4006
+	farptr RunDebugCharViewer ; $4008
 	farptr ShowExpGainScreen ; $400a
-	farptr Func_1a_7945 ; $400c
+	farptr RunCharDataConfirmScreen ; $400c
 	farptr CharDataScreen_BuildStats ; $400e
 	farptr CharDataScreen_LoadGfx ; $4010
-	farptr Func_1a_7be5 ; $4012
+	farptr DrawStatChangeArrows ; $4012
 RunMinigameModePauseMenu:
 	ldh a, [hWramBank] ; $4014
 	push af ; $4016
 	call ForceInstantMessageSpeed ; $4017
 	call BuildMinigameModePauseMenu ; $401a
-	call Func_1a_402c ; $401d
+	call RunPauseMenuWindow ; $401d
 	call RestoreMessageSpeed ; $4020
 	pop af ; $4023
 	wram_bank ; $4024
 	ld a, [$cb2b] ; $4028
 	ret ; $402b
-Func_1a_402c:
+RunPauseMenuWindow:
 	xor a, a ; $402c
 	ld [$cb2b], a ; $402d
 	wram_bank $05 ; $4030
 	farcall CreateMenuWindowFromText ; $4036
 	set_flag $03, 0 ; $4039
-	ld [$cb26], a ; $403c
+	ld [wPauseMenuWindowId], a ; $403c
 	farcall RestoreShadowTilemap ; $403f
 	farcall RenderMenuWindowText ; $4042
 	clear_flag $03, 0 ; $4045
 Label_1a_4048:
-	call Func_1a_40a0 ; $4048
-	ld a, [$cb26] ; $404b
+	call DrawPauseMenuSettingValues ; $4048
+	ld a, [wPauseMenuWindowId] ; $404b
 	farcall RunMenuSelectionShared ; $404e
 	push af ; $4051
 	push bc ; $4052
 	cp a, $ff ; $4053
 	jr z, Label_1a_4070 ; $4055
-	ld a, [$cb29] ; $4057
+	ld a, [wMenuKeepOpenRowMask] ; $4057
 	bit 7, a ; $405a
 	jr z, Label_1a_4070 ; $405c
 	and a, $7f ; $405e
@@ -54,7 +54,7 @@ Label_1a_4065:
 	bit 0, b ; $406c
 	jr nz, Label_1a_407c ; $406e
 Label_1a_4070:
-	ld a, [$cb26] ; $4070
+	ld a, [wPauseMenuWindowId] ; $4070
 	set_flag $03, 0 ; $4073
 	farcall CloseWindow ; $4076
 	clear_flag $03, 0 ; $4079
@@ -76,16 +76,16 @@ Label_1a_4088:
 	ld l, a ; $408c
 	jp hl ; $408d
 Label_1a_408e:
-	call Func_1a_4092 ; $408e
+	call ResetPauseMenuState ; $408e
 	ret ; $4091
-Func_1a_4092:
+ResetPauseMenuState:
 	xor a, a ; $4092
-	ld [$cb27], a ; $4093
-	ld [$cb28], a ; $4096
+	ld [wMenuInitialRow], a ; $4093
+	ld [wMenuAdjustRowMask], a ; $4096
 	ld [$cb2a], a ; $4099
-	ld [$cb29], a ; $409c
+	ld [wMenuKeepOpenRowMask], a ; $409c
 	ret ; $409f
-Func_1a_40a0:
+DrawPauseMenuSettingValues:
 	push af ; $40a0
 	push bc ; $40a1
 	push de ; $40a2
@@ -106,35 +106,35 @@ Label_1a_40b0:
 	jr z, Label_1a_40d4 ; $40b8
 	ld l, $75 ; $40ba
 	ld de, $0a05 ; $40bc
-	call Func_1a_413c ; $40bf
+	call QueueWindowTileWrite ; $40bf
 	ld l, $7f ; $40c2
 	ld de, $0b05 ; $40c4
-	call Func_1a_413c ; $40c7
+	call QueueWindowTileWrite ; $40c7
 	ld l, $72 ; $40ca
 	ld de, $0c05 ; $40cc
-	call Func_1a_413c ; $40cf
+	call QueueWindowTileWrite ; $40cf
 	jr Label_1a_4108 ; $40d2
 Label_1a_40d4:
 	ld l, $8c ; $40d4
 	ld de, $0a05 ; $40d6
-	call Func_1a_413c ; $40d9
+	call QueueWindowTileWrite ; $40d9
 	ld l, $82 ; $40dc
 	ld de, $0b05 ; $40de
-	call Func_1a_413c ; $40e1
+	call QueueWindowTileWrite ; $40e1
 	ld l, $73 ; $40e4
 	ld de, $0c05 ; $40e6
-	call Func_1a_413c ; $40e9
+	call QueueWindowTileWrite ; $40e9
 	jr Label_1a_4108 ; $40ec
 Label_1a_40ee:
 	ld l, $8a ; $40ee
 	ld de, $0a05 ; $40f0
-	call Func_1a_413c ; $40f3
+	call QueueWindowTileWrite ; $40f3
 	ld l, $94 ; $40f6
 	ld de, $0b05 ; $40f8
-	call Func_1a_413c ; $40fb
+	call QueueWindowTileWrite ; $40fb
 	ld l, $72 ; $40fe
 	ld de, $0c05 ; $4100
-	call Func_1a_413c ; $4103
+	call QueueWindowTileWrite ; $4103
 	jr Label_1a_4108 ; $4106
 Label_1a_4108:
 	ldh a, [hMusic] ; $4108
@@ -155,19 +155,19 @@ Label_1a_4108:
 	jr nz, Label_1a_412f ; $4123
 	ld l, $dd ; $4125
 	ld de, $0b07 ; $4127
-	call Func_1a_413c ; $412a
+	call QueueWindowTileWrite ; $412a
 	jr Label_1a_4137 ; $412d
 Label_1a_412f:
 	ld l, $cc ; $412f
 	ld de, $0b07 ; $4131
-	call Func_1a_413c ; $4134
+	call QueueWindowTileWrite ; $4134
 Label_1a_4137:
 	pop hl ; $4137
 	pop de ; $4138
 	pop bc ; $4139
 	pop af ; $413a
 	ret ; $413b
-Func_1a_413c:
+QueueWindowTileWrite:
 	ld h, $80 ; $413c
 	call GetTilemapBufferCellDest ; $413e
 	call QueueBGTileWrite ; $4141
@@ -177,7 +177,7 @@ GetTilemapBufferCellDest:
 	push bc ; $4146
 	push hl ; $4147
 	push de ; $4148
-	ld a, [$cb26] ; $4149
+	ld a, [wPauseMenuWindowId] ; $4149
 	farcall GetWindowStructPtr ; $414c
 	ld d, [hl] ; $414f
 	inc hl ; $4150
@@ -229,17 +229,17 @@ GetTilemapBufferCellDest:
 	ld [$c294], a ; $41a9
 	ld [wStoryModeExitLocationRequest], a ; $41ac
 	jp Label_1a_408e ; $41af
-	call Func_1a_426b ; $41b2
+	call AdjustMessageSpeedSetting ; $41b2
 	ld a, [$d830] ; $41b5
-	ld [$cb27], a ; $41b8
+	ld [wMenuInitialRow], a ; $41b8
 	ld bc, $416c ; $41bb
-	ld a, [$cb26] ; $41be
+	ld a, [wPauseMenuWindowId] ; $41be
 	jp Label_1a_4048 ; $41c1
-	call Func_1a_42a9 ; $41c4
+	call ToggleMusicSetting ; $41c4
 	ld a, [$d830] ; $41c7
-	ld [$cb27], a ; $41ca
+	ld [wMenuInitialRow], a ; $41ca
 	ld bc, $416c ; $41cd
-	ld a, [$cb26] ; $41d0
+	ld a, [wPauseMenuWindowId] ; $41d0
 	jp Label_1a_4048 ; $41d3
 	xor a, a ; $41d6
 	ld [$cb2c], a ; $41d7
@@ -264,9 +264,9 @@ Label_1a_41f8:
 	or a, $c0 ; $41fb
 	ld [$cb2a], a ; $41fd
 	ld a, [$d830] ; $4200
-	ld [$cb27], a ; $4203
+	ld [wMenuInitialRow], a ; $4203
 	ld bc, $41dd ; $4206
-	ld a, [$cb26] ; $4209
+	ld a, [wPauseMenuWindowId] ; $4209
 	jp Label_1a_4048 ; $420c
 	ld a, [$cb2a] ; $420f
 	and a, $0f ; $4212
@@ -286,28 +286,28 @@ Label_1a_4227:
 	or a, $c0 ; $422a
 	ld [$cb2a], a ; $422c
 	ld a, [$d830] ; $422f
-	ld [$cb27], a ; $4232
+	ld [wMenuInitialRow], a ; $4232
 	ld bc, $41dd ; $4235
-	ld a, [$cb26] ; $4238
+	ld a, [wPauseMenuWindowId] ; $4238
 	jp Label_1a_4048 ; $423b
-	call Func_1a_4092 ; $423e
+	call ResetPauseMenuState ; $423e
 	ld a, $c0 ; $4241
 	ld [$cb2a], a ; $4243
-	ld hl, $cb28 ; $4246
+	ld hl, wMenuAdjustRowMask ; $4246
 	ld [hl], $83 ; $4249
-	ld hl, $cb29 ; $424b
+	ld hl, wMenuKeepOpenRowMask ; $424b
 	ld [hl], $83 ; $424e
 	ld hl, $049b ; $4250
 	ld bc, $41dd ; $4253
 	ld de, $0305 ; $4256
 	set_flag $06, 0 ; $4259
-	call Func_1a_402c ; $425c
-	call Func_1a_4092 ; $425f
+	call RunPauseMenuWindow ; $425c
+	call ResetPauseMenuState ; $425f
 	ld hl, $cb2a ; $4262
 	set 7, [hl] ; $4265
 	clear_flag $06, 0 ; $4267
 	ret ; $426a
-Func_1a_426b:
+AdjustMessageSpeedSetting:
 	ld a, [$cb2a] ; $426b
 	and a, $0f ; $426e
 	cp a, $02 ; $4270
@@ -348,7 +348,7 @@ Label_1a_42a5:
 	ld [hl], a ; $42a7
 Label_1a_42a8:
 	ret ; $42a8
-Func_1a_42a9:
+ToggleMusicSetting:
 	sound $5e ; $42a9
 	ld a, [$c8a3] ; $42ab
 	ld b, a ; $42ae
@@ -401,20 +401,20 @@ Label_1a_4317:
 	jr nz, Label_1a_4331 ; $4319
 	call BuildMinigameModePauseMenu ; $431b
 	ld a, $03 ; $431e
-	ld [$cb27], a ; $4320
+	ld [wMenuInitialRow], a ; $4320
 	ld a, [$cb2c] ; $4323
 	and a, a ; $4326
 	jr nz, Label_1a_432e ; $4327
 	set_flag $06, 1 ; $4329
 	jr Label_1a_432e ; $432c
 Label_1a_432e:
-	jp Func_1a_402c ; $432e
+	jp RunPauseMenuWindow ; $432e
 Label_1a_4331:
 	script_set_text Text_31_157 ; $4331
 	ld a, $80 ; $4337
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4339
 	ld a, $01 ; $433c
-	ld [$cb27], a ; $433e
+	ld [wMenuInitialRow], a ; $433e
 	farcall RunDialogueYesNoPrompt ; $4341
 	farcall ScriptCloseDialogueWindow ; $4344
 	script_wait_frames $05 ; $4347
@@ -431,27 +431,27 @@ Label_1a_4331:
 Label_1a_4366:
 	call BuildMinigameModePauseMenu ; $4366
 	ld a, $03 ; $4369
-	ld [$cb27], a ; $436b
+	ld [wMenuInitialRow], a ; $436b
 	ld a, [$cb2c] ; $436e
 	and a, a ; $4371
 	jr nz, Label_1a_4379 ; $4372
 	set_flag $06, 1 ; $4374
 	jr Label_1a_4379 ; $4377
 Label_1a_4379:
-	jp Func_1a_402c ; $4379
+	jp RunPauseMenuWindow ; $4379
 BuildMinigameModePauseMenu:
-	call Func_1a_4092 ; $437c
+	call ResetPauseMenuState ; $437c
 	ld a, $a0 ; $437f
 	ld [$cb2a], a ; $4381
 	ld a, $8c ; $4384
-	ld [$cb28], a ; $4386
-	ld [$cb29], a ; $4389
+	ld [wMenuAdjustRowMask], a ; $4386
+	ld [wMenuKeepOpenRowMask], a ; $4389
 	ld hl, $049a ; $438c
 	ld bc, $416c ; $438f
 	ld de, $0304 ; $4392
 	set_flag $06, 1 ; $4395
 	ret ; $4398
-Func_1a_4399:
+CheckDebugExpEditorHotkey:
 	push af ; $4399
 	ldh a, [hDebugStepMode] ; $439a
 	or a, a ; $439c
@@ -459,11 +459,11 @@ Func_1a_4399:
 	ldh a, [hPlayerInputFlags] ; $439f
 	bit PADB_SELECT, a ; $43a1
 	jr z, Label_1a_43a8 ; $43a3
-	call Func_1a_43aa ; $43a5
+	call RunDebugExpEditor ; $43a5
 Label_1a_43a8:
 	pop af ; $43a8
 	ret ; $43a9
-Func_1a_43aa:
+RunDebugExpEditor:
 	push af ; $43aa
 	push bc ; $43ab
 	push de ; $43ac
@@ -474,7 +474,7 @@ Func_1a_43aa:
 	ld de, $0000 ; $43b7
 	ld bc, $1404 ; $43ba
 	farcall CreateWindow ; $43bd
-	ld [$cb26], a ; $43c0
+	ld [wPauseMenuWindowId], a ; $43c0
 	farcall RestoreShadowTilemap ; $43c3
 	farcall StubNop_05_4626 ; $43c6
 	ld c, $00 ; $43c9
@@ -488,7 +488,7 @@ Label_1a_43cb:
 	call FormatDecimalNumber ; $43d6
 	ld hl, $d000 ; $43d9
 	ld de, $0801 ; $43dc
-	ld a, [$cb26] ; $43df
+	ld a, [wPauseMenuWindowId] ; $43df
 	farcall WriteStringToWindow ; $43e2
 	ld hl, $c96c ; $43e5
 	ld a, [hl+] ; $43e8
@@ -499,7 +499,7 @@ Label_1a_43cb:
 	call FormatDecimalNumber ; $43f0
 	ld hl, $d000 ; $43f3
 	ld de, $0802 ; $43f6
-	ld a, [$cb26] ; $43f9
+	ld a, [wPauseMenuWindowId] ; $43f9
 	farcall WriteStringToWindow ; $43fc
 	farcall RestoreShadowTilemap ; $43ff
 	farcall StubNop_05_4626 ; $4402
@@ -509,7 +509,7 @@ Label_1a_43cb:
 	jr z, Label_1a_4418 ; $440c
 	sound $5f ; $440e
 	ld de, $0064 ; $4410
-	call Func_1a_4473 ; $4413
+	call DebugAddExp ; $4413
 	jr Label_1a_43cb ; $4416
 Label_1a_4418:
 	ldh a, [hPlayerInputFlags] ; $4418
@@ -517,7 +517,7 @@ Label_1a_4418:
 	jr z, Label_1a_4428 ; $441c
 	sound $5e ; $441e
 	ld de, $000a ; $4420
-	call Func_1a_4473 ; $4423
+	call DebugAddExp ; $4423
 	jr Label_1a_43cb ; $4426
 Label_1a_4428:
 	ldh a, [hPlayerInputFlags] ; $4428
@@ -525,7 +525,7 @@ Label_1a_4428:
 	jr z, Label_1a_4438 ; $442c
 	sound $5e ; $442e
 	ld de, $0001 ; $4430
-	call Func_1a_4473 ; $4433
+	call DebugAddExp ; $4433
 	jr Label_1a_43cb ; $4436
 Label_1a_4438:
 	ldh a, [hPlayerInputFlags] ; $4438
@@ -540,7 +540,7 @@ Label_1a_4446:
 	ldh a, [hPlayerInputFlags] ; $4446
 	and a, PADF_B ; $4448
 	jp z, Label_1a_43cb ; $444a
-	ld a, [$cb26] ; $444d
+	ld a, [wPauseMenuWindowId] ; $444d
 	farcall CloseWindow ; $4450
 	ld hl, $c92c ; $4453
 	ld a, [hl+] ; $4456
@@ -561,7 +561,7 @@ Label_1a_4446:
 	pop bc ; $4470
 	pop af ; $4471
 	ret ; $4472
-Func_1a_4473:
+DebugAddExp:
 	ld a, c ; $4473
 	or a, a ; $4474
 	jr nz, Label_1a_447d ; $4475
@@ -600,17 +600,17 @@ ShowExpGainScreen:
 	ldh [hScrollX], a ; $4500
 	pop hl ; $4502
 	push hl ; $4503
-	call Func_1a_4852 ; $4504
-	call Func_1a_4b1f ; $4507
+	call LoadExpScreenGfx ; $4504
+	call DrawExpScreenNameAndLevel ; $4507
 	pop hl ; $450a
 	ld a, h ; $450b
 	cp a, $00 ; $450c
 	jr nz, Label_1a_4527 ; $450e
-	call Func_1a_4a7d ; $4510
+	call DrawExpScreenYesNoBox ; $4510
 	ld a, $0e ; $4513
-	ld hl, Func_1a_4779 ; $4515
+	ld hl, StubNop_1a_4779 ; $4515
 	call RegisterFrameTask ; $4518
-	call Func_1a_4bb9 ; $451b
+	call StubNop_1a_4bb9 ; $451b
 	jp Label_1a_473e ; $451e
 	INCBIN "data/bank_01a/d_4521.bin" ; $4521, 6 bytes
 Label_1a_4527:
@@ -624,7 +624,7 @@ Label_1a_4527:
 	push hl ; $4532
 	push de ; $4533
 	ld a, b ; $4534
-	call Func_1a_4fab ; $4535
+	call DrawExpScreenCaption ; $4535
 	wram_bank $06 ; $4538
 	push af ; $453e
 	ld hl, wStoryModeNameOfMainCharacter ; $453f
@@ -644,11 +644,11 @@ Label_1a_454a:
 	cp a, $63 ; $4554
 	jr z, Label_1a_455f ; $4556
 	ld a, $02 ; $4558
-	call Func_1a_4fab ; $455a
+	call DrawExpScreenCaption ; $455a
 	jr Label_1a_4564 ; $455d
 Label_1a_455f:
 	ld a, $05 ; $455f
-	call Func_1a_4fab ; $4561
+	call DrawExpScreenCaption ; $4561
 Label_1a_4564:
 	pop de ; $4564
 	push de ; $4565
@@ -714,13 +714,13 @@ Label_1a_4564:
 	call QueueVRAMCopy ; $45d1
 	call CopyMapToScrollBuffers ; $45d4
 	ld a, $0f ; $45d7
-	ld hl, Func_1a_477a ; $45d9
+	ld hl, ExpScreenDrawTask ; $45d9
 	call RegisterFrameTask ; $45dc
 	call EnableLCD ; $45df
 	script_fade_in $10 ; $45e2
 	call WaitFadeEnd ; $45e7
 	ld a, $0f ; $45ea
-	ld hl, Func_1a_4e65 ; $45ec
+	ld hl, ExpScreenNumberTask ; $45ec
 	call RegisterFrameTask ; $45ef
 	wram_bank $06 ; $45f2
 	pop de ; $45f8
@@ -822,7 +822,7 @@ Label_1a_46a4:
 	jr z, Label_1a_469b ; $46ad
 Label_1a_46af:
 	pop af ; $46af
-	call Func_1a_50d3 ; $46b0
+	call DrawExpBonusMessage ; $46b0
 	sound $5f ; $46b3
 	call WaitFramesCmd ; $46b5
 	db $14 ; $46b8 inline arg
@@ -876,9 +876,9 @@ Label_1a_4709:
 	ld c, $10 ; $4709
 	call BeginFadeOut ; $470b
 	call WaitFadeEnd ; $470e
-	ld hl, Func_1a_477a ; $4711
+	ld hl, ExpScreenDrawTask ; $4711
 	call UnregisterFrameTask ; $4714
-	ld hl, Func_1a_4e65 ; $4717
+	ld hl, ExpScreenNumberTask ; $4717
 	call UnregisterFrameTask ; $471a
 	call AdvanceFrame ; $471d
 	pop de ; $4720
@@ -909,7 +909,7 @@ Label_1a_473e:
 	call QueueVRAMCopy ; $4757
 	call CopyMapToScrollBuffers ; $475a
 	ld a, $0f ; $475d
-	ld hl, Func_1a_477a ; $475f
+	ld hl, ExpScreenDrawTask ; $475f
 	call RegisterFrameTask ; $4762
 	call EnableLCD ; $4765
 	script_fade_in $10 ; $4768
@@ -920,9 +920,9 @@ Label_1a_473e:
 	pop de ; $4776
 	pop bc ; $4777
 	ret ; $4778
-Func_1a_4779:
+StubNop_1a_4779:
 	ret ; $4779
-Func_1a_477a:
+ExpScreenDrawTask:
 	push af ; $477a
 	push bc ; $477b
 	push de ; $477c
@@ -974,7 +974,7 @@ Label_1a_47dd:
 	dec b ; $47de
 	jr nz, Label_1a_47dd ; $47df
 	ld a, $03 ; $47e1
-	call Func_1a_4fab ; $47e3
+	call DrawExpScreenCaption ; $47e3
 	ld hl, $d800 ; $47e6
 	ld de, $99e0 ; $47e9
 	ld c, $04 ; $47ec
@@ -1000,7 +1000,7 @@ SpriteTemplate_1a_4840:
 	oam_sprite $10, $08, $06, $00
 	oam_sprite_end
 	db $00 ; $4851
-Func_1a_4852:
+LoadExpScreenGfx:
 	wram_bank $01 ; $4852
 	push hl ; $4858
 	ld hl, $5530 ; $4859
@@ -1090,7 +1090,7 @@ Label_1a_4933:
 	ld c, $24 ; $494a
 	call CopyMemoryFast ; $494c
 	ret ; $494f
-Data_1a_4950:
+ExpScreenMessageBoxTilemap:
 	; $4950, 200 bytes (records:2)
 	dw $0b00 ; record 0
 	dw $0b01 ; record 1
@@ -1192,13 +1192,13 @@ Data_1a_4950:
 	dw $0b21 ; record 97
 	dw $0b21 ; record 98
 	dw $0b22 ; record 99
-Func_1a_4a18:
+DrawExpScreenMessageBox:
 	push af ; $4a18
 	push bc ; $4a19
 	push de ; $4a1a
 	push hl ; $4a1b
 	ld c, $00 ; $4a1c
-	ld hl, Data_1a_4950 ; $4a1e
+	ld hl, ExpScreenMessageBoxTilemap ; $4a1e
 Label_1a_4a21:
 	ld a, c ; $4a21
 	cp a, $05 ; $4a22
@@ -1226,7 +1226,7 @@ Label_1a_4a3c:
 	pop bc ; $4a3e
 	pop af ; $4a3f
 	ret ; $4a40
-Data_1a_4a41:
+ExpScreenYesNoBoxTilemap:
 	; $4a41, 60 bytes (records:2)
 	dw $0b00 ; record 0
 	dw $0b01 ; record 1
@@ -1258,14 +1258,14 @@ Data_1a_4a41:
 	dw $0b21 ; record 27
 	dw $0b21 ; record 28
 	dw $0b22 ; record 29
-Func_1a_4a7d:
+DrawExpScreenYesNoBox:
 	push af ; $4a7d
 	push bc ; $4a7e
 	push de ; $4a7f
 	push hl ; $4a80
 	ld bc, $0005 ; $4a81
 	ld a, $00 ; $4a84
-	ld hl, Data_1a_4a41 ; $4a86
+	ld hl, ExpScreenYesNoBoxTilemap ; $4a86
 Label_1a_4a89:
 	ld a, c ; $4a89
 	cp a, $0a ; $4a8a
@@ -1352,12 +1352,12 @@ Label_1a_4aa4:
 	dw $d1e1 ; record 51
 	dw $f1c1 ; record 52
 	db $c9
-Func_1a_4b1f:
+DrawExpScreenNameAndLevel:
 	push af ; $4b1f
 	push bc ; $4b20
 	push de ; $4b21
 	push hl ; $4b22
-	call Func_1a_4b96 ; $4b23
+	call ClearExpScreenNameBox ; $4b23
 	wram_bank $01 ; $4b26
 	push af ; $4b2c
 	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
@@ -1374,7 +1374,7 @@ Label_1a_4b38:
 	ld h, a ; $4b3f
 	pop af ; $4b40
 	ld de, $d4c7 ; $4b41
-	call Func_1a_4b73 ; $4b44
+	call CopyNameToTileBuffer ; $4b44
 	push af ; $4b47
 	ld hl, wStoryModeNameOfMainCharacter ; $4b48
 	ld a, [wStoryCharacterSlot] ; $4b4b
@@ -1402,7 +1402,7 @@ Label_1a_4b53:
 	pop bc ; $4b70
 	pop af ; $4b71
 	ret ; $4b72
-Func_1a_4b73:
+CopyNameToTileBuffer:
 	ld a, [hl+] ; $4b73
 	or a, a ; $4b74
 	ret z ; $4b75
@@ -1412,9 +1412,9 @@ Func_1a_4b73:
 	jr z, Label_1a_4b82 ; $4b7c
 	ld [de], a ; $4b7e
 	inc de ; $4b7f
-	jr Func_1a_4b73 ; $4b80
+	jr CopyNameToTileBuffer ; $4b80
 Label_1a_4b82:
-	call Func_1a_4b8f ; $4b82
+	call MoveTileBufferDestUpRow ; $4b82
 	ld [de], a ; $4b85
 	ld a, $21 ; $4b86
 	add a, e ; $4b88
@@ -1422,15 +1422,15 @@ Label_1a_4b82:
 	jr nc, Label_1a_4b8d ; $4b8a
 	inc d ; $4b8c
 Label_1a_4b8d:
-	jr Func_1a_4b73 ; $4b8d
-Func_1a_4b8f:
+	jr CopyNameToTileBuffer ; $4b8d
+MoveTileBufferDestUpRow:
 	ld b, $21 ; $4b8f
 Label_1a_4b91:
 	dec de ; $4b91
 	dec b ; $4b92
 	jr nz, Label_1a_4b91 ; $4b93
 	ret ; $4b95
-Func_1a_4b96:
+ClearExpScreenNameBox:
 	push af ; $4b96
 	push bc ; $4b97
 	push de ; $4b98
@@ -1458,10 +1458,10 @@ Label_1a_4bb4:
 	pop bc ; $4bb6
 	pop af ; $4bb7
 	ret ; $4bb8
-Func_1a_4bb9:
+StubNop_1a_4bb9:
 	ret ; $4bb9
 	ret ; $4bba
-Func_1a_4bbb:
+DrawPositionedStringToTileBuffer:
 	push af ; $4bbb
 	push bc ; $4bbc
 	push de ; $4bbd
@@ -1587,11 +1587,11 @@ WriteTileBufferCell:
 	ld d, a ; $4c60
 	push bc ; $4c61
 	push de ; $4c62
-	call Func_1a_4d86 ; $4c63
+	call SignExtendModifierByte ; $4c63
 	push hl ; $4c66
 	pop bc ; $4c67
 	ld de, $0000 ; $4c68
-	call Func_1a_4cea ; $4c6b
+	call CompareBCToDE ; $4c6b
 	cp a, $00 ; $4c6e
 	jr z, Label_1a_4c7e ; $4c70
 	bit 7, h ; $4c72
@@ -1617,7 +1617,7 @@ Label_1a_4c80:
 	jr z, Label_1a_4cbb ; $4c8e
 	push bc ; $4c90
 	push de ; $4c91
-	call Func_1a_4d86 ; $4c92
+	call SignExtendModifierByte ; $4c92
 	bit 7, h ; $4c95
 	jr z, Label_1a_4ca4 ; $4c97
 	push hl ; $4c99
@@ -1645,7 +1645,7 @@ Label_1a_4ca4:
 	inc b ; $4cba
 Label_1a_4cbb:
 	ld a, d ; $4cbb
-	call Func_1a_4d11 ; $4cbc
+	call GetModifierTensDigit ; $4cbc
 	cp a, $00 ; $4cbf
 	jr nz, Label_1a_4ccc ; $4cc1
 	ld a, d ; $4cc3
@@ -1663,7 +1663,7 @@ Label_1a_4ccc:
 	inc b ; $4cd6
 Label_1a_4cd7:
 	ld a, d ; $4cd7
-	call Func_1a_4d44 ; $4cd8
+	call GetModifierOnesDigit ; $4cd8
 	add a, $30 ; $4cdb
 	push de ; $4cdd
 	ld d, a ; $4cde
@@ -1675,7 +1675,7 @@ Label_1a_4cd7:
 	pop bc ; $4ce7
 	pop af ; $4ce8
 	ret ; $4ce9
-Func_1a_4cea:
+CompareBCToDE:
 	push bc ; $4cea
 	push de ; $4ceb
 	push hl ; $4cec
@@ -1707,11 +1707,11 @@ Label_1a_4d0d:
 	pop de ; $4d0e
 	pop bc ; $4d0f
 	ret ; $4d10
-Func_1a_4d11:
+GetModifierTensDigit:
 	push bc ; $4d11
 	push de ; $4d12
 	push hl ; $4d13
-	call Func_1a_4d86 ; $4d14
+	call SignExtendModifierByte ; $4d14
 	bit 7, h ; $4d17
 	jr z, Label_1a_4d26 ; $4d19
 	push hl ; $4d1b
@@ -1747,11 +1747,11 @@ Label_1a_4d37:
 	pop de ; $4d41
 	pop bc ; $4d42
 	ret ; $4d43
-Func_1a_4d44:
+GetModifierOnesDigit:
 	push bc ; $4d44
 	push de ; $4d45
 	push hl ; $4d46
-	call Func_1a_4d86 ; $4d47
+	call SignExtendModifierByte ; $4d47
 	bit 7, h ; $4d4a
 	jr z, Label_1a_4d59 ; $4d4c
 	push hl ; $4d4e
@@ -1799,7 +1799,7 @@ Label_1a_4d6a:
 	pop de ; $4d83
 	pop bc ; $4d84
 	ret ; $4d85
-Func_1a_4d86:
+SignExtendModifierByte:
 	push af ; $4d86
 	push bc ; $4d87
 	push de ; $4d88
@@ -1841,11 +1841,11 @@ Label_1a_4da4:
 	or a, $01 ; $4db9
 	ld [$d151], a ; $4dbb
 	call AdvanceFrame ; $4dbe
-	call Func_1a_4a18 ; $4dc1
+	call DrawExpScreenMessageBox ; $4dc1
 	ld hl, $4483 ; $4dc4
-	call Func_1a_4bbb ; $4dc7
+	call DrawPositionedStringToTileBuffer ; $4dc7
 	ld hl, $449b ; $4dca
-	call Func_1a_4bbb ; $4dcd
+	call DrawPositionedStringToTileBuffer ; $4dcd
 	wram_bank $01 ; $4dd0
 	ld hl, $d000 ; $4dd6
 	ld de, $b800 ; $4dd9
@@ -1878,11 +1878,11 @@ Label_1a_4da4:
 	or a, $01 ; $4e17
 	ld [$d151], a ; $4e19
 	call AdvanceFrame ; $4e1c
-	call Func_1a_4a18 ; $4e1f
+	call DrawExpScreenMessageBox ; $4e1f
 	ld hl, $44a8 ; $4e22
-	call Func_1a_4bbb ; $4e25
+	call DrawPositionedStringToTileBuffer ; $4e25
 	ld hl, $44c1 ; $4e28
-	call Func_1a_4bbb ; $4e2b
+	call DrawPositionedStringToTileBuffer ; $4e2b
 	wram_bank $01 ; $4e2e
 	ld hl, $d000 ; $4e34
 	ld de, $b800 ; $4e37
@@ -1904,7 +1904,7 @@ Label_1a_4da4:
 	pop bc ; $4e62
 	pop af ; $4e63
 	ret ; $4e64
-Func_1a_4e65:
+ExpScreenNumberTask:
 	wram_bank $06 ; $4e65
 	ld hl, $d232 ; $4e6b
 	ld a, [hl+] ; $4e6e
@@ -1919,7 +1919,7 @@ Func_1a_4e65:
 	ld e, [hl] ; $4e7e
 	ld hl, $d24e ; $4e7f
 	ld a, $05 ; $4e82
-	call Func_1a_4f02 ; $4e84
+	call QueueNumberSpritesShifted ; $4e84
 	wram_bank $06 ; $4e87
 	push af ; $4e8d
 	ld hl, wStoryModeNameOfMainCharacter ; $4e8e
@@ -1960,7 +1960,7 @@ Label_1a_4e99:
 	ld e, [hl] ; $4ec9
 	ld hl, $d244 ; $4eca
 	ld a, $05 ; $4ecd
-	call Func_1a_4f82 ; $4ecf
+	call QueueNumberSprites ; $4ecf
 	ret ; $4ed2
 Label_1a_4ed3:
 	ld a, [$d23b] ; $4ed3
@@ -1985,9 +1985,9 @@ Label_1a_4ee5:
 	ld e, [hl] ; $4ef8
 	ld hl, $d244 ; $4ef9
 	ld a, $05 ; $4efc
-	call Func_1a_4f82 ; $4efe
+	call QueueNumberSprites ; $4efe
 	ret ; $4f01
-Func_1a_4f02:
+QueueNumberSpritesShifted:
 	push af ; $4f02
 	push de ; $4f03
 	ld a, [$d23a] ; $4f04
@@ -2020,7 +2020,7 @@ Label_1a_4f22:
 	ld d, a ; $4f2a
 	pop af ; $4f2b
 	dec a ; $4f2c
-	jr nz, Func_1a_4f02 ; $4f2d
+	jr nz, QueueNumberSpritesShifted ; $4f2d
 	ret ; $4f2f
 AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
@@ -2081,7 +2081,7 @@ Label_1a_4f7b:
 	ld [hl+], a ; $4f7f
 	ld [hl+], a ; $4f80
 	ret ; $4f81
-Func_1a_4f82:
+QueueNumberSprites:
 	push af ; $4f82
 	push de ; $4f83
 	push hl ; $4f84
@@ -2111,9 +2111,9 @@ Label_1a_4f9d:
 	ld d, a ; $4fa5
 	pop af ; $4fa6
 	dec a ; $4fa7
-	jr nz, Func_1a_4f82 ; $4fa8
+	jr nz, QueueNumberSprites ; $4fa8
 	ret ; $4faa
-Func_1a_4fab:
+DrawExpScreenCaption:
 	and a, a ; $4fab
 	jr z, Label_1a_4fbf ; $4fac
 	dec a ; $4fae
@@ -2246,9 +2246,9 @@ Label_1a_50c9:
 	pop bc ; $50d0
 	pop af ; $50d1
 	ret ; $50d2
-Func_1a_50d3:
+DrawExpBonusMessage:
 	push af ; $50d3
-	call Func_1a_4a18 ; $50d4
+	call DrawExpScreenMessageBox ; $50d4
 	pop af ; $50d7
 	cp a, $01 ; $50d8
 	jp z, Label_1a_5121 ; $50da
@@ -2623,10 +2623,10 @@ Data_1a_6474:
 	INCBIN "data/bank_01a/d_6474.bin" ; $6474, 16 bytes
 Data_1a_6484:
 	INCBIN "data/bank_01a/d_6484.bin" ; $6484, 848 bytes
-Func_1a_67d4:
+RunDebugCharViewer:
 	xor a, a ; $67d4
-	ld [$cb62], a ; $67d5
-	ld [$cb63], a ; $67d8
+	ld [wDebugCharViewerPage], a ; $67d5
+	ld [wDebugCharViewerIndex], a ; $67d8
 Label_1a_67db:
 	call ClearFrameTasks ; $67db
 	call DisableLCDSafely ; $67de
@@ -2643,22 +2643,22 @@ Label_1a_67db:
 	call ClearSpriteQueue ; $67f9
 	farcall InitActorEngine ; $67fc
 	farcall ResetTextWindowState ; $67ff
-	call Func_1a_686c ; $6802
+	call RunCharViewerSelectGrid ; $6802
 	cp a, $ff ; $6805
 	jr z, Label_1a_6854 ; $6807
 	ld c, $40 ; $6809
 	call BeginFadeOut ; $680b
 	call WaitFadeEnd ; $680e
 	call DisableLCDSafely ; $6811
-	call Func_1a_6c0b ; $6814
-	call Func_1a_6b2f ; $6817
-	call Func_1a_6f3d ; $681a
+	call InitCharViewerState ; $6814
+	call LoadCharViewerScreen ; $6817
+	call SetupCharViewerScene ; $681a
 	call EnableLCD ; $681d
 	ld a, $01 ; $6820
-	ld hl, Func_1a_6c28 ; $6822
+	ld hl, DrawCharViewerCursorSprite ; $6822
 	call RegisterFrameTask ; $6825
-	call Func_1a_70c0 ; $6828
-	call Func_1a_6e41 ; $682b
+	call ApplyCharViewerPalette ; $6828
+	call RefreshCharViewerSelection ; $682b
 	call AdvanceFrame ; $682e
 	wram_bank $06 ; $6831
 	ld a, [$d002] ; $6837
@@ -2667,8 +2667,8 @@ Label_1a_67db:
 	call AdvanceFrame ; $6840
 	script_fade_in $10 ; $6843
 	call WaitFadeEnd ; $6848
-	call Func_1a_6c9f ; $684b
-	ld hl, Func_1a_6c28 ; $684e
+	call RunCharViewerInputLoop ; $684b
+	ld hl, DrawCharViewerCursorSprite ; $684e
 	call UnregisterFrameTask ; $6851
 Label_1a_6854:
 	ld c, $10 ; $6854
@@ -2680,7 +2680,7 @@ Label_1a_6854:
 	call AdvanceFrame ; $6865
 	jp Label_1a_67db ; $6868
 	ret ; $686b
-Func_1a_686c:
+RunCharViewerSelectGrid:
 	wram_bank $06 ; $686c
 	xor a, a ; $6872
 	ld hl, $70d9 ; $6873
@@ -2701,9 +2701,9 @@ Func_1a_686c:
 	ld de, $a800 ; $68a2
 	ld c, $80 ; $68a5
 	call QueueVRAMCopy ; $68a7
-	call Func_1a_69eb ; $68aa
-	ld a, [$cb62] ; $68ad
-	call Func_1a_6a3a ; $68b0
+	call LoadCharViewerGridTilemap ; $68aa
+	ld a, [wDebugCharViewerPage] ; $68ad
+	call DrawCharViewerPageNames ; $68b0
 	wram_bank $03 ; $68b3
 	ld hl, $d000 ; $68b9
 	ld de, $9800 ; $68bc
@@ -2716,7 +2716,7 @@ Func_1a_686c:
 	call QueueVRAMCopy ; $68d2
 	call EnableLCD ; $68d5
 	ld a, $01 ; $68d8
-	ld hl, Func_1a_6ab3 ; $68da
+	ld hl, DrawCharViewerGridCursor ; $68da
 	call RegisterFrameTask ; $68dd
 	script_fade_in $10 ; $68e0
 	call WaitFadeEnd ; $68e5
@@ -2743,7 +2743,7 @@ Label_1a_68e8:
 	call DisableLCDSafely ; $6917
 	ret ; $691a
 Label_1a_691b:
-	ld a, [$cb63] ; $691b
+	ld a, [wDebugCharViewerIndex] ; $691b
 	dec a ; $691e
 	cp a, $ff ; $691f
 	jr z, Label_1a_692b ; $6921
@@ -2754,11 +2754,11 @@ Label_1a_691b:
 Label_1a_692b:
 	ld a, $07 ; $692b
 Label_1a_692d:
-	ld [$cb63], a ; $692d
+	ld [wDebugCharViewerIndex], a ; $692d
 	sound $5e ; $6930
 	jr Label_1a_68e8 ; $6932
 Label_1a_6934:
-	ld a, [$cb63] ; $6934
+	ld a, [wDebugCharViewerIndex] ; $6934
 	inc a ; $6937
 	cp a, $08 ; $6938
 	jr z, Label_1a_6944 ; $693a
@@ -2769,59 +2769,59 @@ Label_1a_6934:
 Label_1a_6944:
 	xor a, a ; $6944
 Label_1a_6945:
-	ld [$cb63], a ; $6945
+	ld [wDebugCharViewerIndex], a ; $6945
 	sound $5e ; $6948
 	jr Label_1a_68e8 ; $694a
 Label_1a_694c:
-	ld a, [$cb63] ; $694c
+	ld a, [wDebugCharViewerIndex] ; $694c
 	sub a, $08 ; $694f
 	jr nc, Label_1a_6966 ; $6951
 	add a, $10 ; $6953
-	ld [$cb63], a ; $6955
-	ld a, [$cb62] ; $6958
+	ld [wDebugCharViewerIndex], a ; $6955
+	ld a, [wDebugCharViewerPage] ; $6958
 	or a, a ; $695b
 	jr z, Label_1a_696e ; $695c
 	dec a ; $695e
-	ld [$cb62], a ; $695f
+	ld [wDebugCharViewerPage], a ; $695f
 	sound $5e ; $6962
 	jr Label_1a_69a9 ; $6964
 Label_1a_6966:
-	ld [$cb63], a ; $6966
+	ld [wDebugCharViewerIndex], a ; $6966
 	sound $5e ; $6969
 	jp Label_1a_68e8 ; $696b
 Label_1a_696e:
-	ld a, [$cb63] ; $696e
+	ld a, [wDebugCharViewerIndex] ; $696e
 	sub a, $08 ; $6971
-	ld [$cb63], a ; $6973
+	ld [wDebugCharViewerIndex], a ; $6973
 	jp Label_1a_68e8 ; $6976
 Label_1a_6979:
-	ld a, [$cb63] ; $6979
+	ld a, [wDebugCharViewerIndex] ; $6979
 	add a, $08 ; $697c
 	cp a, $10 ; $697e
 	jr c, Label_1a_6996 ; $6980
 	sub a, $10 ; $6982
-	ld [$cb63], a ; $6984
-	ld a, [$cb62] ; $6987
+	ld [wDebugCharViewerIndex], a ; $6984
+	ld a, [wDebugCharViewerPage] ; $6987
 	cp a, $01 ; $698a
 	jr z, Label_1a_699e ; $698c
 	inc a ; $698e
-	ld [$cb62], a ; $698f
+	ld [wDebugCharViewerPage], a ; $698f
 	sound $5e ; $6992
 	jr Label_1a_69a9 ; $6994
 Label_1a_6996:
-	ld [$cb63], a ; $6996
+	ld [wDebugCharViewerIndex], a ; $6996
 	sound $5e ; $6999
 	jp Label_1a_68e8 ; $699b
 Label_1a_699e:
-	ld a, [$cb63] ; $699e
+	ld a, [wDebugCharViewerIndex] ; $699e
 	add a, $08 ; $69a1
-	ld [$cb63], a ; $69a3
+	ld [wDebugCharViewerIndex], a ; $69a3
 	jp Label_1a_68e8 ; $69a6
 Label_1a_69a9:
 	push af ; $69a9
-	call Func_1a_69eb ; $69aa
+	call LoadCharViewerGridTilemap ; $69aa
 	pop af ; $69ad
-	call Func_1a_6a3a ; $69ae
+	call DrawCharViewerPageNames ; $69ae
 	wram_bank $03 ; $69b1
 	ld hl, $d020 ; $69b7
 	ld de, $9820 ; $69ba
@@ -2830,26 +2830,26 @@ Label_1a_69a9:
 	call AdvanceFrame ; $69c2
 	jp Label_1a_68e8 ; $69c5
 Label_1a_69c8:
-	ld hl, Func_1a_6ab3 ; $69c8
+	ld hl, DrawCharViewerGridCursor ; $69c8
 	call UnregisterFrameTask ; $69cb
 	sound $5f ; $69ce
-	ld a, [$cb62] ; $69d0
+	ld a, [wDebugCharViewerPage] ; $69d0
 	rlca ; $69d3
 	rlca ; $69d4
 	rlca ; $69d5
 	rlca ; $69d6
 	ld b, a ; $69d7
-	ld a, [$cb63] ; $69d8
+	ld a, [wDebugCharViewerIndex] ; $69d8
 	add a, b ; $69db
 	ld [$d002], a ; $69dc
 	ret ; $69df
 Label_1a_69e0:
-	ld hl, Func_1a_6ab3 ; $69e0
+	ld hl, DrawCharViewerGridCursor ; $69e0
 	call UnregisterFrameTask ; $69e3
 	sound $62 ; $69e6
 	ld a, $ff ; $69e8
 	ret ; $69ea
-Func_1a_69eb:
+LoadCharViewerGridTilemap:
 	wram_bank $01 ; $69eb
 	ld hl, $78b2 ; $69f1
 	ld de, $d000 ; $69f4
@@ -2885,7 +2885,7 @@ Label_1a_6a36:
 	dec c ; $6a36
 	jr nz, Label_1a_6a26 ; $6a37
 	ret ; $6a39
-Func_1a_6a3a:
+DrawCharViewerPageNames:
 	or a, a ; $6a3a
 	jr z, Label_1a_6a44 ; $6a3b
 	dec a ; $6a3d
@@ -2898,35 +2898,35 @@ Label_1a_6a44:
 	ld hl, $001b ; $6a4a
 	ld de, $d043 ; $6a4d
 	ld c, $08 ; $6a50
-	call Func_1a_6a9b ; $6a52
+	call RenderTextColumnToBuffer64 ; $6a52
 	ld hl, $0023 ; $6a55
 	ld de, $d04b ; $6a58
 	ld c, $08 ; $6a5b
-	call Func_1a_6a9b ; $6a5d
+	call RenderTextColumnToBuffer64 ; $6a5d
 	ret ; $6a60
 Label_1a_6a61:
 	wram_bank $03 ; $6a61
 	ld hl, $002b ; $6a67
 	ld de, $d043 ; $6a6a
 	ld c, $08 ; $6a6d
-	call Func_1a_6a9b ; $6a6f
+	call RenderTextColumnToBuffer64 ; $6a6f
 	ld hl, $0033 ; $6a72
 	ld de, $d04b ; $6a75
 	ld c, $08 ; $6a78
-	call Func_1a_6a9b ; $6a7a
+	call RenderTextColumnToBuffer64 ; $6a7a
 	ret ; $6a7d
 Label_1a_6a7e:
 	wram_bank $03 ; $6a7e
 	ld hl, $003b ; $6a84
 	ld de, $d043 ; $6a87
 	ld c, $08 ; $6a8a
-	call Func_1a_6a9b ; $6a8c
+	call RenderTextColumnToBuffer64 ; $6a8c
 	ld hl, $0043 ; $6a8f
 	ld de, $d04b ; $6a92
 	ld c, $08 ; $6a95
-	call Func_1a_6a9b ; $6a97
+	call RenderTextColumnToBuffer64 ; $6a97
 	ret ; $6a9a
-Func_1a_6a9b:
+RenderTextColumnToBuffer64:
 	push bc ; $6a9b
 	push de ; $6a9c
 	push hl ; $6a9d
@@ -2944,13 +2944,13 @@ Func_1a_6a9b:
 	ld d, h ; $6aae
 	ld e, l ; $6aaf
 	pop hl ; $6ab0
-	jr Func_1a_6a9b ; $6ab1
-Func_1a_6ab3:
+	jr RenderTextColumnToBuffer64 ; $6ab1
+DrawCharViewerGridCursor:
 	wram_bank $06 ; $6ab3
 	ldh a, [hVBlankCounter] ; $6ab9
 	and a, $1c ; $6abb
 	jr z, Label_1a_6af4 ; $6abd
-	ld a, [$cb62] ; $6abf
+	ld a, [wDebugCharViewerPage] ; $6abf
 	dec a ; $6ac2
 	jr z, Label_1a_6aea ; $6ac3
 	dec a ; $6ac5
@@ -2978,7 +2978,7 @@ Label_1a_6af4:
 	ldh a, [hVBlankCounter] ; $6af4
 	and a, $2a ; $6af6
 	ret z ; $6af8
-	ld a, [$cb63] ; $6af9
+	ld a, [wDebugCharViewerIndex] ; $6af9
 	rlca ; $6afc
 	add a, $0f ; $6afd
 	ld l, a ; $6aff
@@ -2993,8 +2993,8 @@ Label_1a_6af4:
 	call QueueSprite ; $6b0b
 	ret ; $6b0e
 	INCBIN "data/bank_01a/d_6b0f.bin" ; $6b0f, 32 bytes
-Func_1a_6b2f:
-	call Func_1a_6b55 ; $6b2f
+LoadCharViewerScreen:
+	call LoadCharViewerScreenGfx ; $6b2f
 	wram_bank $03 ; $6b32
 	ld hl, $d000 ; $6b38
 	ld de, $9800 ; $6b3b
@@ -3006,7 +3006,7 @@ Func_1a_6b2f:
 	ld c, $24 ; $6b4f
 	call QueueVRAMCopy ; $6b51
 	ret ; $6b54
-Func_1a_6b55:
+LoadCharViewerScreenGfx:
 	ld hl, $70d9 ; $6b55
 	ld de, $0008 ; $6b58
 	call LoadPaletteShadow ; $6b5b
@@ -3095,7 +3095,7 @@ CopyBank1ToBank2Buffer:
 	or a, c ; $6c07
 	jr nz, CopyBank1ToBank2Buffer ; $6c08
 	ret ; $6c0a
-Func_1a_6c0b:
+InitCharViewerState:
 	wram_bank $06 ; $6c0b
 	xor a, a ; $6c11
 	ld [$d001], a ; $6c12
@@ -3106,7 +3106,7 @@ Func_1a_6c0b:
 	farcall GetCharPaletteIndex ; $6c21
 	ld [$d004], a ; $6c24
 	ret ; $6c27
-Func_1a_6c28:
+DrawCharViewerCursorSprite:
 	wram_bank $06 ; $6c28
 	ld a, [$d000] ; $6c2e
 	or a, a ; $6c31
@@ -3148,8 +3148,8 @@ Label_1a_6c52:
 	call QueueSprite ; $6c65
 	ret ; $6c68
 	INCBIN "data/bank_01a/d_6c69.bin" ; $6c69, 54 bytes
-Func_1a_6c9f:
-	call Func_1a_7012 ; $6c9f
+RunCharViewerInputLoop:
+	call DrawCharViewerCharSprite ; $6c9f
 	wram_bank $06 ; $6ca2
 	call AdvanceFrame ; $6ca8
 	ldh a, [hInputPressed] ; $6cab
@@ -3169,7 +3169,7 @@ Func_1a_6c9f:
 	jp nz, Label_1a_6e29 ; $6ccb
 	bit 2, a ; $6cce
 	jp nz, Label_1a_6e35 ; $6cd0
-	jr Func_1a_6c9f ; $6cd3
+	jr RunCharViewerInputLoop ; $6cd3
 Label_1a_6cd5:
 	sound $5e ; $6cd5
 	wram_bank $06 ; $6cd7
@@ -3307,28 +3307,28 @@ Label_1a_6e00:
 Label_1a_6e12:
 	ld a, [$d001] ; $6e12
 	ld [$d004], a ; $6e15
-	call Func_1a_70c0 ; $6e18
+	call ApplyCharViewerPalette ; $6e18
 	jr Label_1a_6e20 ; $6e1b
 Label_1a_6e1d:
 	sound $62 ; $6e1d
 	ret ; $6e1f
 Label_1a_6e20:
-	call Func_1a_6e41 ; $6e20
+	call RefreshCharViewerSelection ; $6e20
 	call AdvanceFrame ; $6e23
-	jp Func_1a_6c9f ; $6e26
+	jp RunCharViewerInputLoop ; $6e26
 Label_1a_6e29:
 	ld a, [$d005] ; $6e29
 	dec a ; $6e2c
 	and a, $07 ; $6e2d
 	ld [$d005], a ; $6e2f
-	jp Func_1a_6c9f ; $6e32
+	jp RunCharViewerInputLoop ; $6e32
 Label_1a_6e35:
 	ld a, [$d005] ; $6e35
 	inc a ; $6e38
 	and a, $07 ; $6e39
 	ld [$d005], a ; $6e3b
-	jp Func_1a_6c9f ; $6e3e
-Func_1a_6e41:
+	jp RunCharViewerInputLoop ; $6e3e
+RefreshCharViewerSelection:
 	wram_bank $02 ; $6e41
 	ld a, $09 ; $6e47
 	ld hl, $d128 ; $6e49
@@ -3465,8 +3465,8 @@ Label_1a_6f2b:
 	ld c, $04 ; $6f37
 	call QueueVRAMCopy ; $6f39
 	ret ; $6f3c
-Func_1a_6f3d:
-	call Func_1a_7096 ; $6f3d
+SetupCharViewerScene:
+	call LoadCharViewerMugshot ; $6f3d
 	wram_bank $06 ; $6f40
 	ld a, [$d002] ; $6f46
 	farcall LookupTileId ; $6f49
@@ -3524,7 +3524,7 @@ Func_1a_6f3d:
 	map_actor $0000, $7011, $1180, $0680, FACE_RIGHT, $26, $01, $00
 	map_actor_end
 	db $00
-Func_1a_7012:
+DrawCharViewerCharSprite:
 	ld bc, $0770 ; $7012
 	ld de, $4615 ; $7015
 	call QueueSprite ; $7018
@@ -3592,7 +3592,7 @@ Func_1a_7012:
 	farcall DrawCharSprite ; $708a
 	ret ; $708d
 	INCBIN "data/bank_01a/d_708e.bin" ; $708e, 8 bytes
-Func_1a_7096:
+LoadCharViewerMugshot:
 	xor a, a ; $7096
 	ld de, $0701 ; $7097
 	farcall LoadIndexedPaletteThunk ; $709a
@@ -3608,7 +3608,7 @@ Func_1a_7096:
 	ld c, $09 ; $70ba
 	call QueueVRAMCopy ; $70bc
 	ret ; $70bf
-Func_1a_70c0:
+ApplyCharViewerPalette:
 	wram_bank $06 ; $70c0
 	ld a, [$d004] ; $70c6
 	ld de, $0701 ; $70c9
@@ -3618,7 +3618,7 @@ Func_1a_70c0:
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
 	INCBIN "data/bank_01a/d_70d9.bin" ; $70d9, 2156 bytes
-Func_1a_7945:
+RunCharDataConfirmScreen:
 	farcall InitCharDataScreenVideo ; $7945
 	farcall LoadCharDataScreenTilemaps ; $7948
 	wram_bank $01 ; $794b
@@ -3627,17 +3627,17 @@ Func_1a_7945:
 	call DecompressData ; $7957
 	ld hl, $dea0 ; $795a
 	ld bc, $002a ; $795d
-	call Func_1a_7a3d ; $7960
+	call CopyBank1ToBank3BufferAlt ; $7960
 	wram_bank $01 ; $7963
 	ld hl, $7e75 ; $7969
 	ld de, $dea0 ; $796c
 	call DecompressData ; $796f
 	ld hl, $dea0 ; $7972
 	ld bc, $002a ; $7975
-	call Func_1a_7a52 ; $7978
+	call CopyBank1ToBank2BufferAlt ; $7978
 	ld hl, $7e46 ; $797b
 	ld bc, $dea0 ; $797e
-	call Func_1a_7a67 ; $7981
+	call ApplyTilemapPatchList_1a ; $7981
 	farcall DrawCharDataConfirmPrompt ; $7984
 	wram_bank $03 ; $7987
 	ld hl, $d000 ; $798d
@@ -3659,7 +3659,7 @@ Func_1a_7945:
 	ld a, $01 ; $79c3
 	ld [$d025], a ; $79c5
 Label_1a_79c8:
-	call Func_1a_7a1d ; $79c8
+	call DrawCharDataPromptCursor ; $79c8
 	call AdvanceFrame ; $79cb
 	ldh a, [hInputRisingEdge] ; $79ce
 	bit PADB_A, a ; $79d0
@@ -3694,7 +3694,7 @@ Label_1a_7a05:
 	wram_bank $06 ; $7a13
 	ld a, [$d025] ; $7a19
 	ret ; $7a1c
-Func_1a_7a1d:
+DrawCharDataPromptCursor:
 	wram_bank $06 ; $7a1d
 	ld a, [$d025] ; $7a23
 	or a, a ; $7a26
@@ -3708,7 +3708,7 @@ Label_1a_7a33:
 	ld de, $7a14 ; $7a36
 	call QueueSprite ; $7a39
 	ret ; $7a3c
-Func_1a_7a3d:
+CopyBank1ToBank3BufferAlt:
 	wram_bank $01 ; $7a3d
 	ld d, [hl] ; $7a43
 	wram_bank $03 ; $7a44
@@ -3717,9 +3717,9 @@ Func_1a_7a3d:
 	dec bc ; $7a4c
 	ld a, b ; $7a4d
 	or a, c ; $7a4e
-	jr nz, Func_1a_7a3d ; $7a4f
+	jr nz, CopyBank1ToBank3BufferAlt ; $7a4f
 	ret ; $7a51
-Func_1a_7a52:
+CopyBank1ToBank2BufferAlt:
 	wram_bank $01 ; $7a52
 	ld d, [hl] ; $7a58
 	wram_bank $02 ; $7a59
@@ -3728,9 +3728,9 @@ Func_1a_7a52:
 	dec bc ; $7a61
 	ld a, b ; $7a62
 	or a, c ; $7a63
-	jr nz, Func_1a_7a52 ; $7a64
+	jr nz, CopyBank1ToBank2BufferAlt ; $7a64
 	ret ; $7a66
-Func_1a_7a67:
+ApplyTilemapPatchList_1a:
 	ld a, [hl] ; $7a67
 	cp a, $ff ; $7a68
 	ret z ; $7a6a
@@ -3783,7 +3783,7 @@ Label_1a_7a99:
 	inc hl ; $7ab0
 	inc hl ; $7ab1
 	inc hl ; $7ab2
-	jr Func_1a_7a67 ; $7ab3
+	jr ApplyTilemapPatchList_1a ; $7ab3
 CharDataScreen_BuildStats:
 	ld a, [wStoryCharacterSlot] ; $7ab5
 	or a, a ; $7ab8
@@ -3942,7 +3942,7 @@ CharDataScreen_LoadGfx:
 	ld c, $02 ; $7bdf
 	call QueueVRAMCopy ; $7be1
 	ret ; $7be4
-Func_1a_7be5:
+DrawStatChangeArrows:
 	wram_bank $06 ; $7be5
 	ld a, [$d142] ; $7beb
 	dec a ; $7bee
@@ -3960,253 +3960,253 @@ Func_1a_7be5:
 	ld a, [$d0ab] ; $7bfe
 	or a, a ; $7c01
 	jr z, Label_1a_7c2b ; $7c02
-	call Func_1a_7dee ; $7c04
-	call Func_1a_7df5 ; $7c07
+	call GetStatArrowSpriteAttr ; $7c04
+	call GetStatArrowTile ; $7c07
 	push af ; $7c0a
 	ld a, [$d0a0] ; $7c0b
 	ld l, a ; $7c0e
 	ld a, [$d019] ; $7c0f
 	add a, l ; $7c12
 	ld de, $142c ; $7c13
-	call Func_1a_7e23 ; $7c16
+	call ComputeStatArrowSpriteX ; $7c16
 	push de ; $7c19
 	call QueueSprite ; $7c1a
 	pop de ; $7c1d
 	pop af ; $7c1e
 	or a, a ; $7c1f
 	jr z, Label_1a_7c2b ; $7c20
-	call Func_1a_7e15 ; $7c22
-	call Func_1a_7e38 ; $7c25
+	call GetStatArrowExtraTile ; $7c22
+	call OffsetStatArrowSpriteX ; $7c25
 	call QueueSprite ; $7c28
 Label_1a_7c2b:
 	ld a, [$d0ac] ; $7c2b
 	or a, a ; $7c2e
 	jr z, Label_1a_7c58 ; $7c2f
-	call Func_1a_7dee ; $7c31
-	call Func_1a_7df5 ; $7c34
+	call GetStatArrowSpriteAttr ; $7c31
+	call GetStatArrowTile ; $7c34
 	push af ; $7c37
 	ld a, [$d0a1] ; $7c38
 	ld l, a ; $7c3b
 	ld a, [$d01a] ; $7c3c
 	add a, l ; $7c3f
 	ld de, $143c ; $7c40
-	call Func_1a_7e23 ; $7c43
+	call ComputeStatArrowSpriteX ; $7c43
 	push de ; $7c46
 	call QueueSprite ; $7c47
 	pop de ; $7c4a
 	pop af ; $7c4b
 	or a, a ; $7c4c
 	jr z, Label_1a_7c58 ; $7c4d
-	call Func_1a_7e15 ; $7c4f
-	call Func_1a_7e38 ; $7c52
+	call GetStatArrowExtraTile ; $7c4f
+	call OffsetStatArrowSpriteX ; $7c52
 	call QueueSprite ; $7c55
 Label_1a_7c58:
 	ld a, [$d0ad] ; $7c58
 	or a, a ; $7c5b
 	jr z, Label_1a_7c85 ; $7c5c
-	call Func_1a_7dee ; $7c5e
-	call Func_1a_7df5 ; $7c61
+	call GetStatArrowSpriteAttr ; $7c5e
+	call GetStatArrowTile ; $7c61
 	push af ; $7c64
 	ld a, [$d0a2] ; $7c65
 	ld l, a ; $7c68
 	ld a, [$d01b] ; $7c69
 	add a, l ; $7c6c
 	ld de, $1454 ; $7c6d
-	call Func_1a_7e23 ; $7c70
+	call ComputeStatArrowSpriteX ; $7c70
 	push de ; $7c73
 	call QueueSprite ; $7c74
 	pop de ; $7c77
 	pop af ; $7c78
 	or a, a ; $7c79
 	jr z, Label_1a_7c85 ; $7c7a
-	call Func_1a_7e15 ; $7c7c
-	call Func_1a_7e38 ; $7c7f
+	call GetStatArrowExtraTile ; $7c7c
+	call OffsetStatArrowSpriteX ; $7c7f
 	call QueueSprite ; $7c82
 Label_1a_7c85:
 	ld a, [$d0ae] ; $7c85
 	or a, a ; $7c88
 	jr z, Label_1a_7cb2 ; $7c89
-	call Func_1a_7dee ; $7c8b
-	call Func_1a_7df5 ; $7c8e
+	call GetStatArrowSpriteAttr ; $7c8b
+	call GetStatArrowTile ; $7c8e
 	push af ; $7c91
 	ld a, [$d0a3] ; $7c92
 	ld l, a ; $7c95
 	ld a, [$d01c] ; $7c96
 	add a, l ; $7c99
 	ld de, $1464 ; $7c9a
-	call Func_1a_7e23 ; $7c9d
+	call ComputeStatArrowSpriteX ; $7c9d
 	push de ; $7ca0
 	call QueueSprite ; $7ca1
 	pop de ; $7ca4
 	pop af ; $7ca5
 	or a, a ; $7ca6
 	jr z, Label_1a_7cb2 ; $7ca7
-	call Func_1a_7e15 ; $7ca9
-	call Func_1a_7e38 ; $7cac
+	call GetStatArrowExtraTile ; $7ca9
+	call OffsetStatArrowSpriteX ; $7cac
 	call QueueSprite ; $7caf
 Label_1a_7cb2:
 	ld a, [$d0af] ; $7cb2
 	or a, a ; $7cb5
 	jr z, Label_1a_7cdf ; $7cb6
-	call Func_1a_7dee ; $7cb8
-	call Func_1a_7df5 ; $7cbb
+	call GetStatArrowSpriteAttr ; $7cb8
+	call GetStatArrowTile ; $7cbb
 	push af ; $7cbe
 	ld a, [$d0a4] ; $7cbf
 	ld l, a ; $7cc2
 	ld a, [$d01d] ; $7cc3
 	add a, l ; $7cc6
 	ld de, $1474 ; $7cc7
-	call Func_1a_7e23 ; $7cca
+	call ComputeStatArrowSpriteX ; $7cca
 	push de ; $7ccd
 	call QueueSprite ; $7cce
 	pop de ; $7cd1
 	pop af ; $7cd2
 	or a, a ; $7cd3
 	jr z, Label_1a_7cdf ; $7cd4
-	call Func_1a_7e15 ; $7cd6
-	call Func_1a_7e38 ; $7cd9
+	call GetStatArrowExtraTile ; $7cd6
+	call OffsetStatArrowSpriteX ; $7cd9
 	call QueueSprite ; $7cdc
 Label_1a_7cdf:
 	ld a, [$d0b0] ; $7cdf
 	or a, a ; $7ce2
 	jr z, Label_1a_7d0c ; $7ce3
-	call Func_1a_7dee ; $7ce5
-	call Func_1a_7df5 ; $7ce8
+	call GetStatArrowSpriteAttr ; $7ce5
+	call GetStatArrowTile ; $7ce8
 	push af ; $7ceb
 	ld a, [$d0a5] ; $7cec
 	ld l, a ; $7cef
 	ld a, [$d01e] ; $7cf0
 	add a, l ; $7cf3
 	ld de, Data_1a_642c ; $7cf4
-	call Func_1a_7e23 ; $7cf7
+	call ComputeStatArrowSpriteX ; $7cf7
 	push de ; $7cfa
 	call QueueSprite ; $7cfb
 	pop de ; $7cfe
 	pop af ; $7cff
 	or a, a ; $7d00
 	jr z, Label_1a_7d0c ; $7d01
-	call Func_1a_7e15 ; $7d03
-	call Func_1a_7e38 ; $7d06
+	call GetStatArrowExtraTile ; $7d03
+	call OffsetStatArrowSpriteX ; $7d06
 	call QueueSprite ; $7d09
 Label_1a_7d0c:
 	ld a, [$d0b1] ; $7d0c
 	or a, a ; $7d0f
 	jr z, Label_1a_7d39 ; $7d10
-	call Func_1a_7dee ; $7d12
-	call Func_1a_7df5 ; $7d15
+	call GetStatArrowSpriteAttr ; $7d12
+	call GetStatArrowTile ; $7d15
 	push af ; $7d18
 	ld a, [$d0a6] ; $7d19
 	ld l, a ; $7d1c
 	ld a, [$d01f] ; $7d1d
 	add a, l ; $7d20
 	ld de, Data_1a_643c ; $7d21
-	call Func_1a_7e23 ; $7d24
+	call ComputeStatArrowSpriteX ; $7d24
 	push de ; $7d27
 	call QueueSprite ; $7d28
 	pop de ; $7d2b
 	pop af ; $7d2c
 	or a, a ; $7d2d
 	jr z, Label_1a_7d39 ; $7d2e
-	call Func_1a_7e15 ; $7d30
-	call Func_1a_7e38 ; $7d33
+	call GetStatArrowExtraTile ; $7d30
+	call OffsetStatArrowSpriteX ; $7d33
 	call QueueSprite ; $7d36
 Label_1a_7d39:
 	ld a, [$d0b2] ; $7d39
 	or a, a ; $7d3c
 	jr z, Label_1a_7d66 ; $7d3d
-	call Func_1a_7dee ; $7d3f
-	call Func_1a_7df5 ; $7d42
+	call GetStatArrowSpriteAttr ; $7d3f
+	call GetStatArrowTile ; $7d42
 	push af ; $7d45
 	ld a, [$d0a7] ; $7d46
 	ld l, a ; $7d49
 	ld a, [$d020] ; $7d4a
 	add a, l ; $7d4d
 	ld de, Data_1a_6454 ; $7d4e
-	call Func_1a_7e23 ; $7d51
+	call ComputeStatArrowSpriteX ; $7d51
 	push de ; $7d54
 	call QueueSprite ; $7d55
 	pop de ; $7d58
 	pop af ; $7d59
 	or a, a ; $7d5a
 	jr z, Label_1a_7d66 ; $7d5b
-	call Func_1a_7e15 ; $7d5d
-	call Func_1a_7e38 ; $7d60
+	call GetStatArrowExtraTile ; $7d5d
+	call OffsetStatArrowSpriteX ; $7d60
 	call QueueSprite ; $7d63
 Label_1a_7d66:
 	ld a, [$d0b3] ; $7d66
 	or a, a ; $7d69
 	jr z, Label_1a_7d93 ; $7d6a
-	call Func_1a_7dee ; $7d6c
-	call Func_1a_7df5 ; $7d6f
+	call GetStatArrowSpriteAttr ; $7d6c
+	call GetStatArrowTile ; $7d6f
 	push af ; $7d72
 	ld a, [$d0a8] ; $7d73
 	ld l, a ; $7d76
 	ld a, [$d021] ; $7d77
 	add a, l ; $7d7a
 	ld de, Data_1a_6464 ; $7d7b
-	call Func_1a_7e23 ; $7d7e
+	call ComputeStatArrowSpriteX ; $7d7e
 	push de ; $7d81
 	call QueueSprite ; $7d82
 	pop de ; $7d85
 	pop af ; $7d86
 	or a, a ; $7d87
 	jr z, Label_1a_7d93 ; $7d88
-	call Func_1a_7e15 ; $7d8a
-	call Func_1a_7e38 ; $7d8d
+	call GetStatArrowExtraTile ; $7d8a
+	call OffsetStatArrowSpriteX ; $7d8d
 	call QueueSprite ; $7d90
 Label_1a_7d93:
 	ld a, [$d0b4] ; $7d93
 	or a, a ; $7d96
 	jr z, Label_1a_7dc0 ; $7d97
-	call Func_1a_7dee ; $7d99
-	call Func_1a_7df5 ; $7d9c
+	call GetStatArrowSpriteAttr ; $7d99
+	call GetStatArrowTile ; $7d9c
 	push af ; $7d9f
 	ld a, [$d0a9] ; $7da0
 	ld l, a ; $7da3
 	ld a, [$d022] ; $7da4
 	add a, l ; $7da7
 	ld de, Data_1a_6474 ; $7da8
-	call Func_1a_7e23 ; $7dab
+	call ComputeStatArrowSpriteX ; $7dab
 	push de ; $7dae
 	call QueueSprite ; $7daf
 	pop de ; $7db2
 	pop af ; $7db3
 	or a, a ; $7db4
 	jr z, Label_1a_7dc0 ; $7db5
-	call Func_1a_7e15 ; $7db7
-	call Func_1a_7e38 ; $7dba
+	call GetStatArrowExtraTile ; $7db7
+	call OffsetStatArrowSpriteX ; $7dba
 	call QueueSprite ; $7dbd
 Label_1a_7dc0:
 	ld a, [$d0b5] ; $7dc0
 	or a, a ; $7dc3
 	jr z, Label_1a_7ded ; $7dc4
-	call Func_1a_7dee ; $7dc6
-	call Func_1a_7df5 ; $7dc9
+	call GetStatArrowSpriteAttr ; $7dc6
+	call GetStatArrowTile ; $7dc9
 	push af ; $7dcc
 	ld a, [$d0aa] ; $7dcd
 	ld l, a ; $7dd0
 	ld a, [$d023] ; $7dd1
 	add a, l ; $7dd4
 	ld de, Data_1a_6484 ; $7dd5
-	call Func_1a_7e23 ; $7dd8
+	call ComputeStatArrowSpriteX ; $7dd8
 	push de ; $7ddb
 	call QueueSprite ; $7ddc
 	pop de ; $7ddf
 	pop af ; $7de0
 	or a, a ; $7de1
 	jr z, Label_1a_7ded ; $7de2
-	call Func_1a_7e15 ; $7de4
-	call Func_1a_7e38 ; $7de7
+	call GetStatArrowExtraTile ; $7de4
+	call OffsetStatArrowSpriteX ; $7de7
 	call QueueSprite ; $7dea
 Label_1a_7ded:
 	ret ; $7ded
-Func_1a_7dee:
+GetStatArrowSpriteAttr:
 	ld b, $0c ; $7dee
 	bit 7, a ; $7df0
 	ret z ; $7df2
 	inc b ; $7df3
 	ret ; $7df4
-Func_1a_7df5:
+GetStatArrowTile:
 	bit 7, a ; $7df5
 	jr nz, Label_1a_7e07 ; $7df7
 	dec a ; $7df9
@@ -4230,7 +4230,7 @@ Label_1a_7e10:
 	ld c, $78 ; $7e10
 	ld h, $01 ; $7e12
 	ret ; $7e14
-Func_1a_7e15:
+GetStatArrowExtraTile:
 	bit 7, a ; $7e15
 	jr nz, Label_1a_7e1e ; $7e17
 	ld c, $7c ; $7e19
@@ -4240,7 +4240,7 @@ Label_1a_7e1e:
 	ld c, $78 ; $7e1e
 	ld h, $00 ; $7e20
 	ret ; $7e22
-Func_1a_7e23:
+ComputeStatArrowSpriteX:
 	inc a ; $7e23
 	rlca ; $7e24
 	rlca ; $7e25
@@ -4257,7 +4257,7 @@ Func_1a_7e23:
 	ld d, a ; $7e32
 	ret ; $7e33
 	INCBIN "data/bank_01a/d_7e34.bin" ; $7e34, 4 bytes
-Func_1a_7e38:
+OffsetStatArrowSpriteX:
 	bit 7, a ; $7e38
 	jr nz, Label_1a_7e41 ; $7e3a
 	ld a, $08 ; $7e3c

@@ -1661,7 +1661,7 @@ Label_15_572a:
 	script_speak ACTOR_PLAYER ; $5771
 	ret ; $5776
 Func_15_5777:
-	ld a, [$c90e] ; $5777
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $5777
 	and a, a ; $577a
 	jr z, Label_15_578c ; $577b
 	script_get_actor_state ACTOR_PLAYER ; $577d

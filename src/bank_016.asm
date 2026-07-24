@@ -320,7 +320,7 @@ Label_16_451d:
 	ld hl, rIE ; $452a
 	res 1, [hl] ; $452d
 	ld a, $03 ; $452f
-	ld [$cb0c], a ; $4531
+	ld [wAnimatedTilePeriod], a ; $4531
 	ld a, [$cb73] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
@@ -345,7 +345,7 @@ Label_16_453b:
 	ld hl, rIE ; $4566
 	res 1, [hl] ; $4569
 	ld a, $03 ; $456b
-	ld [$cb0c], a ; $456d
+	ld [wAnimatedTilePeriod], a ; $456d
 	ret ; $4570
 InitMatchWinLoseScreen:
 	call ClearFrameTasks ; $4571
@@ -546,7 +546,7 @@ LoadMatchResultPalettes:
 	cp a, $ff ; $4a12
 	jr z, Label_16_4a2e ; $4a14
 	ld a, $02 ; $4a16
-	ld [$cb0b], a ; $4a18
+	ld [wAnimatedTileSet], a ; $4a18
 	ld hl, $4a4e ; $4a1b
 	ld de, $0101 ; $4a1e
 	call LoadPaletteShadow ; $4a21
@@ -556,7 +556,7 @@ LoadMatchResultPalettes:
 	ret ; $4a2d
 Label_16_4a2e:
 	ld a, $03 ; $4a2e
-	ld [$cb0b], a ; $4a30
+	ld [wAnimatedTileSet], a ; $4a30
 	ld hl, $4a4e ; $4a33
 	ld de, $0201 ; $4a36
 	call LoadPaletteShadow ; $4a39
@@ -578,7 +578,7 @@ AdjustResultTilemapForLoss:
 	ld c, $02 ; $4a65
 	farcall CopyTilemapRect ; $4a67
 	ld a, $06 ; $4a6a
-	ld [$cb0c], a ; $4a6c
+	ld [wAnimatedTilePeriod], a ; $4a6c
 Label_16_4a6f:
 	ret ; $4a6f
 	ret ; $4a70

@@ -2236,7 +2236,7 @@ Label_02_51a2:
 	bit 2, d ; $51be
 	jp z, Label_02_502a ; $51c0
 	ld a, $01 ; $51c3
-	ld [$c90e], a ; $51c5
+	ld [wStoryModeMainCharacterLeftHanded], a ; $51c5
 	jp Label_02_502a ; $51c8
 Label_02_51cb:
 	bit 2, a ; $51cb

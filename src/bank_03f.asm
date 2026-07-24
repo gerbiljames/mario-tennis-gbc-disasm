@@ -125,7 +125,7 @@ TennisDictionaryScreen:
 	push af ; $407a
 	wram_bank $06 ; $407b
 	pop af ; $4081
-	ld [$cb34], a ; $4082
+	ld [wTennisDictMode], a ; $4082
 	cp a, $00 ; $4085
 	jr z, Label_3f_40a1 ; $4087
 	cp a, $01 ; $4089
@@ -161,12 +161,12 @@ Label_3f_40b5:
 	ld a, $1f ; $40ba
 	jr Label_3f_40be ; $40bc
 Label_3f_40be:
-	ld [$cb32], a ; $40be
+	ld [wTennisDictCategoryMask], a ; $40be
 	xor a, a ; $40c1
 	ld [$cb3a], a ; $40c2
-	ld [$cb37], a ; $40c5
-	ld [$cb2d], a ; $40c8
-	ld [$cb2e], a ; $40cb
+	ld [wTennisDictFlags], a ; $40c5
+	ld [wTennisDictScrollTop], a ; $40c8
+	ld [wTennisDictCursorRow], a ; $40cb
 	ld [$cb3e], a ; $40ce
 	ld a, $08 ; $40d1
 	ld [$cb39], a ; $40d3
@@ -178,12 +178,12 @@ Label_3f_40be:
 	wram_bank $06 ; $40e3
 	xor a, a ; $40e9
 	ld [$cb33], a ; $40ea
-	ld a, [$cb34] ; $40ed
+	ld a, [wTennisDictMode] ; $40ed
 	cp a, $06 ; $40f0
 	jr z, Label_3f_4106 ; $40f2
 	call AdvanceFrame ; $40f4
-	call Func_3f_5261 ; $40f7
-	ld a, [$cb34] ; $40fa
+	call DrawTennisDictionaryList ; $40f7
+	ld a, [wTennisDictMode] ; $40fa
 	cp a, $05 ; $40fd
 	jr nz, Label_3f_4106 ; $40ff
 	ld a, $01 ; $4101
@@ -197,25 +197,25 @@ Label_3f_4106:
 	script_fade_in $10 ; $4114
 	call WaitFadeEnd ; $4119
 	ld a, $1d ; $411c
-	ld hl, Func_3f_4e8d ; $411e
+	ld hl, UpdateTennisDictionarySprites ; $411e
 	call RegisterFrameTask ; $4121
 	wram_bank $06 ; $4124
-	ld a, [$cb34] ; $412a
+	ld a, [wTennisDictMode] ; $412a
 	cp a, $06 ; $412d
 	jr nz, Label_3f_414a ; $412f
 	wram_bank $06 ; $4131
-	ld a, [$cb37] ; $4137
+	ld a, [wTennisDictFlags] ; $4137
 	res 0, a ; $413a
-	ld [$cb37], a ; $413c
-	call Func_3f_4e69 ; $413f
+	ld [wTennisDictFlags], a ; $413c
+	call EndTennisDictionaryAnim ; $413f
 	call WaitFramesCmd ; $4142
 	db $01 ; $4145 inline arg
 	ld a, $02 ; $4146
 	jr Label_3f_4154 ; $4148
 Label_3f_414a:
-	ld a, [$cb37] ; $414a
+	ld a, [wTennisDictFlags] ; $414a
 	set 1, a ; $414d
-	ld [$cb37], a ; $414f
+	ld [wTennisDictFlags], a ; $414f
 	ld a, $08 ; $4152
 Label_3f_4154:
 	call AdvanceFrame ; $4154
@@ -225,10 +225,10 @@ Label_3f_4154:
 	jp z, Label_3f_4175 ; $415e
 	cp a, $08 ; $4161
 	jp z, Label_3f_416b ; $4163
-	call Func_3f_5588 ; $4166
+	call HandleTennisDictionaryIndexInput ; $4166
 	jr Label_3f_4178 ; $4169
 Label_3f_416b:
-	call Func_3f_55ff ; $416b
+	call HandleTennisDictionaryListInput ; $416b
 	jr Label_3f_4178 ; $416e
 Label_3f_4170:
 	call ShowTennisDictionaryPageDefault ; $4170
@@ -245,7 +245,7 @@ Label_3f_4178:
 	call WaitFadeEnd ; $4186
 	pop af ; $4189
 	call ResetTennisDictionaryScroll ; $418a
-	ld hl, Func_3f_4e8d ; $418d
+	ld hl, UpdateTennisDictionarySprites ; $418d
 	call UnregisterFrameTask ; $4190
 	ret ; $4193
 ShowTennisDictionaryPageDefault:
@@ -257,10 +257,10 @@ ShowTennisDictionaryPageDefault:
 	xor a, a ; $41a1
 	ld [wCameraX], a ; $41a2
 	wram_bank $06 ; $41a5
-	ld a, [$cb2e] ; $41ab
+	ld a, [wTennisDictCursorRow] ; $41ab
 	ld b, a ; $41ae
 	xor a, a ; $41af
-	call Func_3f_54c8 ; $41b0
+	call DrawTennisDictionaryIndexCursor ; $41b0
 	farcall UpdateSceneScroll ; $41b3
 	call AdvanceFrame ; $41b6
 	call DisableLCDSafely ; $41b9
@@ -268,11 +268,11 @@ ShowTennisDictionaryPageDefault:
 	ld a, $01 ; $41bf
 	farcall CopyScrolledSceneTilemapToVram ; $41c1
 	call EnableLCD ; $41c4
-	call Func_3f_5417 ; $41c7
-	call Func_3f_5261 ; $41ca
-	ld a, [$cb37] ; $41cd
+	call SetTennisDictionaryListFromIndexRow ; $41c7
+	call DrawTennisDictionaryList ; $41ca
+	ld a, [wTennisDictFlags] ; $41cd
 	set 1, a ; $41d0
-	ld [$cb37], a ; $41d2
+	ld [wTennisDictFlags], a ; $41d2
 	script_fade_in $10 ; $41d5
 	call WaitFadeEnd ; $41da
 	ld a, $08 ; $41dd
@@ -285,11 +285,11 @@ ShowTennisDictionaryPageChar6:
 	ld [wCameraX + 1], a ; $41ea
 	xor a, a ; $41ed
 	ld [wCameraX], a ; $41ee
-	call Func_3f_5468 ; $41f1
-	ld a, [$cb2e] ; $41f4
+	call SetTennisDictionaryIndexRowFromList ; $41f1
+	ld a, [wTennisDictCursorRow] ; $41f4
 	ld b, a ; $41f7
 	ld a, $01 ; $41f8
-	call Func_3f_54c8 ; $41fa
+	call DrawTennisDictionaryIndexCursor ; $41fa
 	farcall UpdateSceneScroll ; $41fd
 	call AdvanceFrame ; $4200
 	call DisableLCDSafely ; $4203
@@ -298,9 +298,9 @@ ShowTennisDictionaryPageChar6:
 	farcall CopyScrolledSceneTilemapToVram ; $420b
 	call EnableLCD ; $420e
 	wram_bank $06 ; $4211
-	ld a, [$cb37] ; $4217
+	ld a, [wTennisDictFlags] ; $4217
 	res 1, a ; $421a
-	ld [$cb37], a ; $421c
+	ld [wTennisDictFlags], a ; $421c
 	script_fade_in $10 ; $421f
 	call WaitFadeEnd ; $4224
 	ld a, $02 ; $4227
@@ -403,7 +403,7 @@ Label_3f_42e9:
 	ret ; $42fd
 LoadTennisDictionaryScreen:
 	wram_bank $06 ; $42fe
-	ld a, [$cb34] ; $4304
+	ld a, [wTennisDictMode] ; $4304
 	cp a, $06 ; $4307
 	jr nz, Label_3f_430f ; $4309
 	ld a, $21 ; $430b
@@ -423,8 +423,8 @@ Label_3f_4311:
 	ldh [hBGRowBlitPending], a ; $4323
 	call DisableLCDSafely ; $4325
 	call ClearFrameTasks ; $4328
-	call Func_3f_50f7 ; $432b
-	call Func_3f_511a ; $432e
+	call CountTennisDictionaryEntries ; $432b
+	call FindTennisDictionaryListEnd ; $432e
 	wram_bank $01 ; $4331
 	ld hl, TennisDictionaryTiles8000 ; $4337
 	ld de, $d000 ; $433a
@@ -472,7 +472,7 @@ Label_3f_4311:
 	ld de, $0808 ; $43b2
 	call LoadPalettesMasterOnly ; $43b5
 	wram_bank $06 ; $43b8
-	ld a, [$cb34] ; $43be
+	ld a, [wTennisDictMode] ; $43be
 	cp a, $06 ; $43c1
 	jr nz, Label_3f_43ca ; $43c3
 	call LoadTennisDictionaryAssetsChar6 ; $43c5
@@ -501,13 +501,13 @@ Label_3f_43e7:
 	ld h, d ; $43f1
 	ld l, e ; $43f2
 	ld a, $20 ; $43f3
-	call Func_3f_50ea ; $43f5
+	call FillBytes_3f ; $43f5
 	pop hl ; $43f8
 	pop bc ; $43f9
 	dec c ; $43fa
 	jr nz, Label_3f_43e7 ; $43fb
 	wram_bank $06 ; $43fd
-	ld a, [$cb34] ; $4403
+	ld a, [wTennisDictMode] ; $4403
 	ld c, a ; $4406
 	wram_bank $03 ; $4407
 	inc c ; $440d
@@ -627,7 +627,7 @@ TennisDictionaryPalettes:
 	dw $7fe0, $6bff, $7ece, $0000 ; pal 3: #00ffff #ffffd5 #73b4ff #000000
 	dw $7fe0, $00ff, $67ff, $0000 ; pal 4: #00ffff #ff3900 #ffffcd #000000
 	dw $7fe0, $165f, $03ff, $0000 ; pal 5: #00ffff #ff9429 #ffff00 #000000
-Func_3f_4e69:
+EndTennisDictionaryAnim:
 	ld a, [$cb38] ; $4e69
 	cp a, $03 ; $4e6c
 	jr nc, Label_3f_4e7a ; $4e6e
@@ -637,7 +637,7 @@ Func_3f_4e69:
 	ld [$cb3d], a ; $4e77
 Label_3f_4e7a:
 	ret ; $4e7a
-Func_3f_4e7b:
+StartTennisDictionaryAnim:
 	ld a, $b4 ; $4e7b
 	ld [$cb3d], a ; $4e7d
 	ldh a, [hVBlankCounter] ; $4e80
@@ -648,7 +648,7 @@ Func_3f_4e7b:
 Label_3f_4e89:
 	ld [$cb38], a ; $4e89
 	ret ; $4e8c
-Func_3f_4e8d:
+UpdateTennisDictionarySprites:
 	ldh a, [hWramBank] ; $4e8d
 	push af ; $4e8f
 	push af ; $4e90
@@ -659,7 +659,7 @@ Func_3f_4e8d:
 	test_flag $03, 1 ; $4e9a
 	jr z, Label_3f_4ea4 ; $4e9d
 	sound $5f ; $4e9f
-	call Func_3f_4e7b ; $4ea1
+	call StartTennisDictionaryAnim ; $4ea1
 Label_3f_4ea4:
 	ld a, [$cb38] ; $4ea4
 	cp a, $04 ; $4ea7
@@ -685,7 +685,7 @@ Label_3f_4ec1:
 	ld a, $ff ; $4ecf
 	ld [$cb3d], a ; $4ed1
 Label_3f_4ed4:
-	ld a, [$cb34] ; $4ed4
+	ld a, [wTennisDictMode] ; $4ed4
 	cp a, $06 ; $4ed7
 	jp nz, Label_3f_4f85 ; $4ed9
 	ld a, [$cb39] ; $4edc
@@ -735,7 +735,7 @@ Label_3f_4f1b:
 	ld c, a ; $4f1c
 	ld a, [hl+] ; $4f1d
 	ld b, a ; $4f1e
-	ld a, [$cb37] ; $4f1f
+	ld a, [wTennisDictFlags] ; $4f1f
 	bit 1, a ; $4f22
 	jr z, Label_3f_4f2b ; $4f24
 	ld de, $907d ; $4f26
@@ -751,7 +751,7 @@ Label_3f_4f2e:
 	ld c, a ; $4f37
 	ld a, [hl+] ; $4f38
 	ld b, a ; $4f39
-	ld a, [$cb37] ; $4f3a
+	ld a, [wTennisDictFlags] ; $4f3a
 	bit 1, a ; $4f3d
 	jr z, Label_3f_4f46 ; $4f3f
 	ld de, $886d ; $4f41
@@ -767,7 +767,7 @@ Label_3f_4f49:
 	ld c, a ; $4f52
 	ld a, [hl+] ; $4f53
 	ld b, a ; $4f54
-	ld a, [$cb37] ; $4f55
+	ld a, [wTennisDictFlags] ; $4f55
 	bit 1, a ; $4f58
 	jr z, Label_3f_4f61 ; $4f5a
 	ld de, $887d ; $4f5c
@@ -783,7 +783,7 @@ Label_3f_4f64:
 	ld c, a ; $4f6d
 	ld a, [hl+] ; $4f6e
 	ld b, a ; $4f6f
-	ld a, [$cb37] ; $4f70
+	ld a, [wTennisDictFlags] ; $4f70
 	bit 1, a ; $4f73
 	jr z, Label_3f_4f7c ; $4f75
 	ld de, $888d ; $4f77
@@ -794,17 +794,17 @@ Label_3f_4f7f:
 	ld hl, SpriteTemplate_3f_50d9 ; $4f7f
 	call QueueSpriteTemplate ; $4f82
 Label_3f_4f85:
-	ld a, [$cb37] ; $4f85
+	ld a, [wTennisDictFlags] ; $4f85
 	bit 1, a ; $4f88
 	jr z, Label_3f_4fec ; $4f8a
-	ld a, [$cb37] ; $4f8c
+	ld a, [wTennisDictFlags] ; $4f8c
 	bit 0, a ; $4f8f
 	jr nz, Label_3f_4f9a ; $4f91
 	ld a, [$cb3e] ; $4f93
 	inc a ; $4f96
 	ld [$cb3e], a ; $4f97
 Label_3f_4f9a:
-	ld a, [$cb2e] ; $4f9a
+	ld a, [wTennisDictCursorRow] ; $4f9a
 	ld b, a ; $4f9d
 	inc b ; $4f9e
 	ld a, $14 ; $4f9f
@@ -831,7 +831,7 @@ Label_3f_4fb9:
 	ld hl, SpriteTemplate_3f_501f ; $4fbd
 	ld bc, $0b28 ; $4fc0
 	call QueueSpriteTemplate ; $4fc3
-	ld a, [$cb37] ; $4fc6
+	ld a, [wTennisDictFlags] ; $4fc6
 	bit 2, a ; $4fc9
 	jr z, Label_3f_4fd9 ; $4fcb
 	ld hl, SpriteTemplate_3f_5006 ; $4fcd
@@ -839,7 +839,7 @@ Label_3f_4fb9:
 	ld bc, $0d34 ; $4fd3
 	call QueueSpriteTemplate ; $4fd6
 Label_3f_4fd9:
-	ld a, [$cb37] ; $4fd9
+	ld a, [wTennisDictFlags] ; $4fd9
 	bit 3, a ; $4fdc
 	jr z, Label_3f_4fec ; $4fde
 	ld hl, SpriteTemplate_3f_5006 ; $4fe0
@@ -882,7 +882,7 @@ SpriteTemplate_3f_50d9:
 	oam_sprite $00, $10, $04, $00
 	oam_sprite $00, $18, $06, $00
 	oam_sprite_end
-Func_3f_50ea:
+FillBytes_3f:
 	push af ; $50ea
 	push bc ; $50eb
 	push de ; $50ec
@@ -896,11 +896,11 @@ Label_3f_50ee:
 	pop bc ; $50f4
 	pop af ; $50f5
 	ret ; $50f6
-Func_3f_50f7:
+CountTennisDictionaryEntries:
 	wram_bank $06 ; $50f7
 	ld hl, SelectionMaskGrid_3f_539e ; $50fd
 	ld c, $00 ; $5100
-	ld a, [$cb32] ; $5102
+	ld a, [wTennisDictCategoryMask] ; $5102
 	ld d, a ; $5105
 Label_3f_5106:
 	ld a, [hl+] ; $5106
@@ -914,9 +914,9 @@ Label_3f_5106:
 	jr Label_3f_5106 ; $5113
 Label_3f_5115:
 	ld a, c ; $5115
-	ld [$cb2f], a ; $5116
+	ld [wTennisDictEntryCount], a ; $5116
 	ret ; $5119
-Func_3f_511a:
+FindTennisDictionaryListEnd:
 	wram_bank $06 ; $511a
 	ld hl, SelectionMaskGrid_3f_539e ; $5120
 	ld c, $00 ; $5123
@@ -930,7 +930,7 @@ Label_3f_5125:
 	ld a, l ; $512f
 	ld [$cb31], a ; $5130
 	ret ; $5133
-Func_3f_5134:
+GetTennisDictionaryEntryIndex:
 	ld d, $00 ; $5134
 	ld c, a ; $5136
 	inc c ; $5137
@@ -947,7 +947,7 @@ Label_3f_513b:
 	dec d ; $5147
 	ld a, d ; $5148
 	ret ; $5149
-Func_3f_514a:
+GetTennisDictionaryEntryCategory:
 	ld d, $00 ; $514a
 	ld c, a ; $514c
 	inc c ; $514d
@@ -983,34 +983,34 @@ Label_3f_5175:
 Label_3f_5178:
 	ld a, $03 ; $5178
 	ret ; $517a
-Func_3f_517b:
+GetTennisDictionarySelectedIndex:
 	wram_bank $06 ; $517b
-	ld a, [$cb2f] ; $5181
+	ld a, [wTennisDictEntryCount] ; $5181
 	ld d, a ; $5184
-	ld a, [$cb2e] ; $5185
+	ld a, [wTennisDictCursorRow] ; $5185
 	ld c, a ; $5188
-	ld a, [$cb2d] ; $5189
+	ld a, [wTennisDictScrollTop] ; $5189
 	add a, c ; $518c
 	cp a, d ; $518d
 	jr c, Label_3f_5191 ; $518e
 	sub a, d ; $5190
 Label_3f_5191:
 	ret ; $5191
-Func_3f_5192:
+ScrollTennisDictionaryToPrevLetter:
 	wram_bank $06 ; $5192
 	ld hl, SelectionMaskGrid_3f_539e ; $5198
-	call Func_3f_517b ; $519b
+	call GetTennisDictionarySelectedIndex ; $519b
 	ld b, a ; $519e
 	ld c, a ; $519f
 	inc b ; $51a0
 	xor a, a ; $51a1
-	ld [$cb2e], a ; $51a2
-	ld a, [$cb32] ; $51a5
+	ld [wTennisDictCursorRow], a ; $51a2
+	ld a, [wTennisDictCategoryMask] ; $51a5
 	ld e, a ; $51a8
 	jr Label_3f_51bc ; $51a9
-Func_3f_51ab:
+WrapTennisDictionaryScanToEnd:
 	push af ; $51ab
-	ld a, [$cb2f] ; $51ac
+	ld a, [wTennisDictEntryCount] ; $51ac
 	dec a ; $51af
 	ld c, a ; $51b0
 	ld a, [$cb30] ; $51b1
@@ -1041,12 +1041,12 @@ Label_3f_51ca:
 	jr nz, Label_3f_51c4 ; $51d1
 	jr Label_3f_51d8 ; $51d3
 Label_3f_51d5:
-	call Func_3f_51ab ; $51d5
+	call WrapTennisDictionaryScanToEnd ; $51d5
 Label_3f_51d8:
 	ld a, [hl-] ; $51d8
 	cp a, $40 ; $51d9
 	jr nz, Label_3f_51e0 ; $51db
-	call Func_3f_51ab ; $51dd
+	call WrapTennisDictionaryScanToEnd ; $51dd
 Label_3f_51e0:
 	and a, e ; $51e0
 	jr z, Label_3f_51d8 ; $51e1
@@ -1067,7 +1067,7 @@ Label_3f_51ea:
 	inc c ; $51f4
 	jr Label_3f_51fb ; $51f5
 Label_3f_51f7:
-	call Func_3f_51ab ; $51f7
+	call WrapTennisDictionaryScanToEnd ; $51f7
 	inc hl ; $51fa
 Label_3f_51fb:
 	ld a, [hl+] ; $51fb
@@ -1080,16 +1080,16 @@ Label_3f_5207:
 	and a, e ; $5207
 	jr z, Label_3f_51fb ; $5208
 	ld a, c ; $520a
-	ld [$cb2d], a ; $520b
+	ld [wTennisDictScrollTop], a ; $520b
 	ret ; $520e
-Func_3f_520f:
+ScrollTennisDictionaryToNextLetter:
 	wram_bank $06 ; $520f
 	ld hl, SelectionMaskGrid_3f_539e ; $5215
-	ld a, [$cb2f] ; $5218
+	ld a, [wTennisDictEntryCount] ; $5218
 	ld b, a ; $521b
-	ld a, [$cb2e] ; $521c
+	ld a, [wTennisDictCursorRow] ; $521c
 	ld c, a ; $521f
-	ld a, [$cb2d] ; $5220
+	ld a, [wTennisDictScrollTop] ; $5220
 	add a, c ; $5223
 	cp a, b ; $5224
 	jr c, Label_3f_5228 ; $5225
@@ -1099,8 +1099,8 @@ Label_3f_5228:
 	ld d, a ; $5229
 	inc b ; $522a
 	xor a, a ; $522b
-	ld [$cb2e], a ; $522c
-	ld a, [$cb32] ; $522f
+	ld [wTennisDictCursorRow], a ; $522c
+	ld a, [wTennisDictCategoryMask] ; $522f
 	ld e, a ; $5232
 Label_3f_5233:
 	ld a, [hl+] ; $5233
@@ -1134,9 +1134,9 @@ Label_3f_5259:
 	and a, e ; $5259
 	jr z, Label_3f_524f ; $525a
 	ld a, d ; $525c
-	ld [$cb2d], a ; $525d
+	ld [wTennisDictScrollTop], a ; $525d
 	ret ; $5260
-Func_3f_5261:
+DrawTennisDictionaryList:
 	farcall PrepareGlyphBuffer ; $5261
 	wram_bank $03 ; $5264
 	ld c, $0e ; $526a
@@ -1155,18 +1155,18 @@ Label_3f_526f:
 	ld h, d ; $5279
 	ld l, e ; $527a
 	ld a, $20 ; $527b
-	call Func_3f_50ea ; $527d
+	call FillBytes_3f ; $527d
 	pop hl ; $5280
 	pop bc ; $5281
 	dec c ; $5282
 	jr nz, Label_3f_526f ; $5283
 	wram_bank $06 ; $5285
 	ld c, $00 ; $528b
-	ld a, [$cb2d] ; $528d
+	ld a, [wTennisDictScrollTop] ; $528d
 	ld b, a ; $5290
 	inc b ; $5291
 	ld hl, SelectionMaskGrid_3f_539e ; $5292
-	ld a, [$cb32] ; $5295
+	ld a, [wTennisDictCategoryMask] ; $5295
 	ld e, a ; $5298
 Label_3f_5299:
 	inc c ; $5299
@@ -1264,16 +1264,16 @@ Label_3f_5302:
 	cp a, $06 ; $531d
 	jr nz, Label_3f_52d5 ; $531f
 	farcall RestoreShadowTilemap ; $5321
-	call Func_3f_5334 ; $5324
-	call Func_3f_5749 ; $5327
-	call Func_3f_578f ; $532a
+	call DrawTennisDictionaryLetterLabels ; $5324
+	call QueueTennisDictionaryGlyphTiles ; $5327
+	call QueueTennisDictionaryListRows ; $532a
 	wram_bank $06 ; $532d
 	ret ; $5333
-Func_3f_5334:
-	call Func_3f_517b ; $5334
+DrawTennisDictionaryLetterLabels:
+	call GetTennisDictionarySelectedIndex ; $5334
 	ld b, a ; $5337
 	inc b ; $5338
-	ld a, [$cb32] ; $5339
+	ld a, [wTennisDictCategoryMask] ; $5339
 	ld e, a ; $533c
 	ld hl, SelectionMaskGrid_3f_539e ; $533d
 	ld d, $00 ; $5340
@@ -1335,14 +1335,14 @@ Label_3f_539d:
 	ret ; $539d
 SelectionMaskGrid_3f_539e:
 	INCBIN "data/bank_03f/d_539e.bin" ; $539e, 121 bytes
-Func_3f_5417:
+SetTennisDictionaryListFromIndexRow:
 	wram_bank $06 ; $5417
 	ld c, $00 ; $541d
 	ld hl, SelectionMaskGrid_3f_539e ; $541f
-	ld a, [$cb32] ; $5422
+	ld a, [wTennisDictCategoryMask] ; $5422
 	ld e, a ; $5425
-	ld a, [$cb2e] ; $5426
-	call Func_3f_5453 ; $5429
+	ld a, [wTennisDictCursorRow] ; $5426
+	call GetTennisDictionaryRowFirstLetter ; $5429
 	ld b, a ; $542c
 	or a, a ; $542d
 	jr z, Label_3f_5442 ; $542e
@@ -1361,16 +1361,16 @@ Label_3f_5435:
 	jr Label_3f_544a ; $5440
 Label_3f_5442:
 	xor a, a ; $5442
-	ld [$cb2e], a ; $5443
-	ld [$cb2d], a ; $5446
+	ld [wTennisDictCursorRow], a ; $5443
+	ld [wTennisDictScrollTop], a ; $5446
 	ret ; $5449
 Label_3f_544a:
 	xor a, a ; $544a
-	ld [$cb2e], a ; $544b
+	ld [wTennisDictCursorRow], a ; $544b
 	ld a, c ; $544e
-	ld [$cb2d], a ; $544f
+	ld [wTennisDictScrollTop], a ; $544f
 	ret ; $5452
-Func_3f_5453:
+GetTennisDictionaryRowFirstLetter:
 	push hl ; $5453
 	ld hl, $545f ; $5454
 	add a, l ; $5457
@@ -1382,16 +1382,16 @@ Label_3f_545c:
 	pop hl ; $545d
 	ret ; $545e
 	INCBIN "data/bank_03f/d_545f.bin" ; $545f, 9 bytes
-Func_3f_5468:
+SetTennisDictionaryIndexRowFromList:
 	wram_bank $06 ; $5468
-	ld a, [$cb32] ; $546e
+	ld a, [wTennisDictCategoryMask] ; $546e
 	ld b, a ; $5471
-	call Func_3f_517b ; $5472
+	call GetTennisDictionarySelectedIndex ; $5472
 	ld b, a ; $5475
 	inc b ; $5476
 	ld c, $00 ; $5477
 	ld hl, SelectionMaskGrid_3f_539e ; $5479
-	ld a, [$cb32] ; $547c
+	ld a, [wTennisDictCategoryMask] ; $547c
 	ld e, a ; $547f
 Label_3f_5480:
 	ld a, [hl+] ; $5480
@@ -1409,14 +1409,14 @@ Label_3f_5489:
 	jr Label_3f_5480 ; $5492
 Label_3f_5494:
 	xor a, a ; $5494
-	ld [$cb2e], a ; $5495
+	ld [wTennisDictCursorRow], a ; $5495
 	ret ; $5498
 Label_3f_5499:
 	ld a, c ; $5499
-	call Func_3f_54a1 ; $549a
-	ld [$cb2e], a ; $549d
+	call GetTennisDictionaryLetterRow ; $549a
+	ld [wTennisDictCursorRow], a ; $549d
 	ret ; $54a0
-Func_3f_54a1:
+GetTennisDictionaryLetterRow:
 	push hl ; $54a1
 	ld hl, $54ad ; $54a2
 	add a, l ; $54a5
@@ -1428,7 +1428,7 @@ Label_3f_54aa:
 	pop hl ; $54ab
 	ret ; $54ac
 	INCBIN "data/bank_03f/d_54ad.bin" ; $54ad, 27 bytes
-Func_3f_54c8:
+DrawTennisDictionaryIndexCursor:
 	or a, a ; $54c8
 	jr z, Label_3f_54d0 ; $54c9
 	ld hl, $5540 ; $54cb
@@ -1518,7 +1518,7 @@ Label_3f_5534:
 	wram_bank $06 ; $5539
 	ret ; $553f
 	INCBIN "data/bank_03f/d_5540.bin" ; $5540, 72 bytes
-Func_3f_5588:
+HandleTennisDictionaryIndexInput:
 	push bc ; $5588
 	push af ; $5589
 	wram_bank $06 ; $558a
@@ -1542,41 +1542,41 @@ Label_3f_55aa:
 	ldh a, [hInputPressed] ; $55aa
 	bit PADB_UP, a ; $55ac
 	jr z, Label_3f_55d1 ; $55ae
-	ld a, [$cb2e] ; $55b0
+	ld a, [wTennisDictCursorRow] ; $55b0
 	ld b, a ; $55b3
 	dec a ; $55b4
 	cp a, $ff ; $55b5
 	jr z, Label_3f_55fc ; $55b7
-	ld [$cb2e], a ; $55b9
+	ld [wTennisDictCursorRow], a ; $55b9
 	push af ; $55bc
 	xor a, a ; $55bd
-	call Func_3f_54c8 ; $55be
+	call DrawTennisDictionaryIndexCursor ; $55be
 	pop af ; $55c1
 	sound $5e ; $55c2
-	ld a, [$cb2e] ; $55c4
+	ld a, [wTennisDictCursorRow] ; $55c4
 	ld b, a ; $55c7
 	ld a, $01 ; $55c8
-	call Func_3f_54c8 ; $55ca
+	call DrawTennisDictionaryIndexCursor ; $55ca
 	ld a, $01 ; $55cd
 	jr Label_3f_55fc ; $55cf
 Label_3f_55d1:
 	bit 7, a ; $55d1
 	jr z, Label_3f_55f6 ; $55d3
-	ld a, [$cb2e] ; $55d5
+	ld a, [wTennisDictCursorRow] ; $55d5
 	ld b, a ; $55d8
 	inc a ; $55d9
 	cp a, $09 ; $55da
 	jr z, Label_3f_55fc ; $55dc
-	ld [$cb2e], a ; $55de
+	ld [wTennisDictCursorRow], a ; $55de
 	push af ; $55e1
 	xor a, a ; $55e2
-	call Func_3f_54c8 ; $55e3
+	call DrawTennisDictionaryIndexCursor ; $55e3
 	pop af ; $55e6
 	sound $5e ; $55e7
-	ld a, [$cb2e] ; $55e9
+	ld a, [wTennisDictCursorRow] ; $55e9
 	ld b, a ; $55ec
 	ld a, $01 ; $55ed
-	call Func_3f_54c8 ; $55ef
+	call DrawTennisDictionaryIndexCursor ; $55ef
 	ld a, $01 ; $55f2
 	jr Label_3f_55fc ; $55f4
 Label_3f_55f6:
@@ -1587,29 +1587,29 @@ Label_3f_55fc:
 	pop af ; $55fc
 	pop bc ; $55fd
 	ret ; $55fe
-Func_3f_55ff:
+HandleTennisDictionaryListInput:
 	push bc ; $55ff
 	push af ; $5600
 	wram_bank $06 ; $5601
-	ld a, [$cb37] ; $5607
+	ld a, [wTennisDictFlags] ; $5607
 	res 2, a ; $560a
 	res 3, a ; $560c
-	ld [$cb37], a ; $560e
+	ld [wTennisDictFlags], a ; $560e
 	ldh a, [hInputRisingEdge] ; $5611
 	bit PADB_A, a ; $5613
 	jp z, Label_3f_56a4 ; $5615
 	sound $5f ; $5618
-	call Func_3f_4e7b ; $561a
-	ld a, [$cb37] ; $561d
+	call StartTennisDictionaryAnim ; $561a
+	ld a, [wTennisDictFlags] ; $561d
 	set 0, a ; $5620
-	ld [$cb37], a ; $5622
-	ld a, [$cb32] ; $5625
+	ld [wTennisDictFlags], a ; $5622
+	ld a, [wTennisDictCategoryMask] ; $5625
 	ld b, a ; $5628
 	ld a, [$cb33] ; $5629
 	cp a, $01 ; $562c
 	jr z, Label_3f_5640 ; $562e
-	call Func_3f_517b ; $5630
-	call Func_3f_5134 ; $5633
+	call GetTennisDictionarySelectedIndex ; $5630
+	call GetTennisDictionaryEntryIndex ; $5633
 	ld hl, $1430 ; $5636
 	add a, l ; $5639
 	ld l, a ; $563a
@@ -1618,8 +1618,8 @@ Func_3f_55ff:
 Label_3f_563e:
 	jr Label_3f_564e ; $563e
 Label_3f_5640:
-	call Func_3f_517b ; $5640
-	call Func_3f_514a ; $5643
+	call GetTennisDictionarySelectedIndex ; $5640
+	call GetTennisDictionaryEntryCategory ; $5643
 	ld hl, $14a9 ; $5646
 	add a, l ; $5649
 	ld l, a ; $564a
@@ -1658,17 +1658,17 @@ Label_3f_564e:
 	farcall RedrawWindowRowsSafe ; $568a
 	farcall CloseWindowAlt ; $568d
 	wram_bank $06 ; $5690
-	ld a, [$cb37] ; $5696
+	ld a, [wTennisDictFlags] ; $5696
 	res 0, a ; $5699
-	ld [$cb37], a ; $569b
-	call Func_3f_4e69 ; $569e
+	ld [wTennisDictFlags], a ; $569b
+	call EndTennisDictionaryAnim ; $569e
 	jp Label_3f_5746 ; $56a1
 Label_3f_56a4:
 	bit 1, a ; $56a4
 	jr z, Label_3f_56be ; $56a6
 	pop af ; $56a8
 	sound $62 ; $56a9
-	ld a, [$cb34] ; $56ab
+	ld a, [wTennisDictMode] ; $56ab
 	cp a, $06 ; $56ae
 	jr z, Label_3f_56b8 ; $56b0
 	ld a, $01 ; $56b2
@@ -1683,74 +1683,74 @@ Label_3f_56be:
 	bit PADB_UP, a ; $56c0
 	jr z, Label_3f_56ea ; $56c2
 	sound $5e ; $56c4
-	ld a, [$cb2e] ; $56c6
+	ld a, [wTennisDictCursorRow] ; $56c6
 	dec a ; $56c9
 	cp a, $ff ; $56ca
 	jr z, Label_3f_56d6 ; $56cc
-	ld [$cb2e], a ; $56ce
-	call Func_3f_5334 ; $56d1
+	ld [wTennisDictCursorRow], a ; $56ce
+	call DrawTennisDictionaryLetterLabels ; $56d1
 	jr Label_3f_5746 ; $56d4
 Label_3f_56d6:
-	ld a, [$cb2d] ; $56d6
+	ld a, [wTennisDictScrollTop] ; $56d6
 	dec a ; $56d9
 	cp a, $ff ; $56da
 	jr nz, Label_3f_56e2 ; $56dc
-	ld a, [$cb2f] ; $56de
+	ld a, [wTennisDictEntryCount] ; $56de
 	dec a ; $56e1
 Label_3f_56e2:
-	ld [$cb2d], a ; $56e2
-	call Func_3f_5261 ; $56e5
+	ld [wTennisDictScrollTop], a ; $56e2
+	call DrawTennisDictionaryList ; $56e5
 	jr Label_3f_5746 ; $56e8
 Label_3f_56ea:
 	bit 7, a ; $56ea
 	jr z, Label_3f_5714 ; $56ec
 	sound $5e ; $56ee
-	ld a, [$cb2e] ; $56f0
+	ld a, [wTennisDictCursorRow] ; $56f0
 	inc a ; $56f3
 	cp a, $06 ; $56f4
 	jr nc, Label_3f_5700 ; $56f6
-	ld [$cb2e], a ; $56f8
-	call Func_3f_5334 ; $56fb
+	ld [wTennisDictCursorRow], a ; $56f8
+	call DrawTennisDictionaryLetterLabels ; $56fb
 	jr Label_3f_5746 ; $56fe
 Label_3f_5700:
-	ld a, [$cb2f] ; $5700
+	ld a, [wTennisDictEntryCount] ; $5700
 	ld b, a ; $5703
-	ld a, [$cb2d] ; $5704
+	ld a, [wTennisDictScrollTop] ; $5704
 	inc a ; $5707
 	cp a, b ; $5708
 	jr nz, Label_3f_570c ; $5709
 	xor a, a ; $570b
 Label_3f_570c:
-	ld [$cb2d], a ; $570c
-	call Func_3f_5261 ; $570f
+	ld [wTennisDictScrollTop], a ; $570c
+	call DrawTennisDictionaryList ; $570f
 	jr Label_3f_5746 ; $5712
 Label_3f_5714:
 	bit 5, a ; $5714
 	jr z, Label_3f_572d ; $5716
-	ld a, [$cb37] ; $5718
+	ld a, [wTennisDictFlags] ; $5718
 	set 2, a ; $571b
-	ld [$cb37], a ; $571d
+	ld [wTennisDictFlags], a ; $571d
 	sound $5e ; $5720
 	call AdvanceFrame ; $5722
-	call Func_3f_5192 ; $5725
-	call Func_3f_5261 ; $5728
+	call ScrollTennisDictionaryToPrevLetter ; $5725
+	call DrawTennisDictionaryList ; $5728
 	jr Label_3f_5746 ; $572b
 Label_3f_572d:
 	bit 4, a ; $572d
 	jr z, Label_3f_5746 ; $572f
-	ld a, [$cb37] ; $5731
+	ld a, [wTennisDictFlags] ; $5731
 	set 3, a ; $5734
-	ld [$cb37], a ; $5736
+	ld [wTennisDictFlags], a ; $5736
 	sound $5e ; $5739
 	call AdvanceFrame ; $573b
-	call Func_3f_520f ; $573e
-	call Func_3f_5261 ; $5741
+	call ScrollTennisDictionaryToNextLetter ; $573e
+	call DrawTennisDictionaryList ; $5741
 	jr Label_3f_5746 ; $5744
 Label_3f_5746:
 	pop af ; $5746
 	pop bc ; $5747
 	ret ; $5748
-Func_3f_5749:
+QueueTennisDictionaryGlyphTiles:
 	ldh a, [hWramBank] ; $5749
 	push af ; $574b
 	wram_bank $07 ; $574c
@@ -1783,7 +1783,7 @@ Label_3f_577d:
 	pop af ; $5789
 	wram_bank ; $578a
 	ret ; $578e
-Func_3f_578f:
+QueueTennisDictionaryListRows:
 	ldh a, [hWramBank] ; $578f
 	push af ; $5791
 	wram_bank $05 ; $5792

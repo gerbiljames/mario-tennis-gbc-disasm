@@ -5468,7 +5468,7 @@ ShowMinigameDataScreen:
 	call DisableLCDSafely ; $73df
 	call BuildMinigameDataScreen ; $73e2
 	ld a, $01 ; $73e5
-	ld [$cb0b], a ; $73e7
+	ld [wAnimatedTileSet], a ; $73e7
 	ld a, $01 ; $73ea
 	ld hl, UpdateAnimatedTilesTask ; $73ec
 	call RegisterFrameTask ; $73ef

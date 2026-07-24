@@ -75,14 +75,14 @@ StartMinigameByID:
 	ld l, a ; $4081
 	ld h, $00 ; $4082
 	add hl, hl ; $4084
-	ld de, Data_0d_4090 ; $4085
+	ld de, MinigameConfigTable ; $4085
 	add hl, de ; $4088
 	ld a, [hl+] ; $4089
 	ld b, [hl] ; $408a
 	ld c, a ; $408b
 	call InitMinigameFromConfig ; $408c
 	ret ; $408f
-Data_0d_4090:
+MinigameConfigTable:
 	; $4090, 63 bytes (records:2)
 	dw $44fa ; record 0
 	dw $4959 ; record 1
@@ -740,14 +740,14 @@ UpdateMinigameActor:
 	inc bc ; $4524
 	ld a, $01 ; $4525
 	ld [$c785], a ; $4527
-	call Func_0d_4678 ; $452a
+	call StartMinigameMatch ; $452a
 	ret ; $452d
 	INCBIN "data/bank_00d/d_452e.bin" ; $452e, 330 bytes
-Func_0d_4678:
+StartMinigameMatch:
 	call InitMinigameScore ; $4678
 	ld hl, $0000 ; $467b
 	ld de, $fe00 ; $467e
-	call Func_0d_493a ; $4681
+	call SnapCameraTo_0d ; $4681
 	ld de, $fb20 ; $4684
 	ld hl, $c486 ; $4687
 	ld a, e ; $468a
@@ -899,7 +899,7 @@ Label_0d_479b:
 	pop de ; $47b9
 	call ShowMinigamePointResult ; $47ba
 	ret ; $47bd
-Func_0d_47be:
+KeepMinigameCameraFixed:
 	xor a, a ; $47be
 	ld [$c4c9], a ; $47bf
 	ret ; $47c2
@@ -1110,7 +1110,7 @@ GetMinigameCharCoordsEntry:
 	ld l, c ; $4937
 	ld h, b ; $4938
 	ret ; $4939
-Func_0d_493a:
+SnapCameraTo_0d:
 	ld c, l ; $493a
 	ld b, h ; $493b
 	ld hl, $c440 ; $493c
@@ -1156,7 +1156,7 @@ Func_0d_493a:
 	inc bc ; $4983
 	ld a, $01 ; $4984
 	ld [$c785], a ; $4986
-	call Func_0d_4678 ; $4989
+	call StartMinigameMatch ; $4989
 	ret ; $498c
 	call DrawMinigameScoreHud ; $498d
 	ret ; $4990
@@ -1174,7 +1174,7 @@ Label_0d_49a1:
 	ret ; $49a5
 	call AwardMinigamePointAndEnd ; $49a6
 	ret ; $49a9
-	call Func_0d_47be ; $49aa
+	call KeepMinigameCameraFixed ; $49aa
 	ret ; $49ad
 	call CheckMinigameStartBannerTrigger ; $49ae
 	ret ; $49b1
@@ -1214,7 +1214,7 @@ Label_0d_49a1:
 	inc bc ; $49e0
 	ld a, $04 ; $49e1
 	ld [$c785], a ; $49e3
-	call Func_0d_4678 ; $49e6
+	call StartMinigameMatch ; $49e6
 	ret ; $49e9
 	call DrawMinigameScoreHud ; $49ea
 	ret ; $49ed
@@ -1232,7 +1232,7 @@ Label_0d_49fe:
 	ret ; $4a02
 	call AwardMinigamePointAndEnd ; $4a03
 	ret ; $4a06
-	call Func_0d_47be ; $4a07
+	call KeepMinigameCameraFixed ; $4a07
 	ret ; $4a0a
 	call CheckMinigameStartBannerTrigger ; $4a0b
 	ret ; $4a0e
@@ -1273,7 +1273,7 @@ Label_0d_49fe:
 	inc bc ; $4a3d
 	ld a, $04 ; $4a3e
 	ld [$c785], a ; $4a40
-	call Func_0d_4678 ; $4a43
+	call StartMinigameMatch ; $4a43
 	ret ; $4a46
 	call DrawMinigameScoreHud ; $4a47
 	ret ; $4a4a
@@ -1291,7 +1291,7 @@ Label_0d_4a5b:
 	ret ; $4a5f
 	call AwardMinigamePointAndEnd ; $4a60
 	ret ; $4a63
-	call Func_0d_47be ; $4a64
+	call KeepMinigameCameraFixed ; $4a64
 	ret ; $4a67
 	call CheckMinigameStartBannerTrigger ; $4a68
 	ret ; $4a6b
@@ -1320,19 +1320,19 @@ Label_0d_4a5b:
 	farcall SpawnMinigameTargetFormation ; $4a8f
 	ret ; $4a92
 	INCBIN "data/bank_00d/d_4a93.bin" ; $4a93, 16 bytes
-	call Func_0d_4abb ; $4aa3
+	call UpdateMinigameHudAndBallTrail ; $4aa3
 	ret ; $4aa6
-	call Func_0d_4b01 ; $4aa7
+	call StartMinigameSoloPoint ; $4aa7
 	ret ; $4aaa
 	call HandleMinigamePointEnd ; $4aab
 	ret ; $4aae
-	call Func_0d_4b59 ; $4aaf
+	call AwardMinigamePointAndReflectBall ; $4aaf
 	ret ; $4ab2
 	call StubNop_0d_4bc7 ; $4ab3
 	ret ; $4ab6
 	call Func_0d_4bc8 ; $4ab7
 	ret ; $4aba
-Func_0d_4abb:
+UpdateMinigameHudAndBallTrail:
 	ld a, [wPointWinLoseFlag] ; $4abb
 	and a, a ; $4abe
 	jr nz, Label_0d_4ac7 ; $4abf
@@ -1367,7 +1367,7 @@ MarkMinigameObjectOffscreen:
 	ld a, $ff ; $4afd
 	ld [de], a ; $4aff
 	ret ; $4b00
-Func_0d_4b01:
+StartMinigameSoloPoint:
 	call InitMinigameScore ; $4b01
 	xor a, a ; $4b04
 	ld [wStandingShadowsEnabled], a ; $4b05
@@ -1405,7 +1405,7 @@ HandleMinigamePointEnd:
 	pop de ; $4b54
 	call ShowMinigamePointResult ; $4b55
 	ret ; $4b58
-Func_0d_4b59:
+AwardMinigamePointAndReflectBall:
 	ld a, [wPointOutcome] ; $4b59
 	and a, a ; $4b5c
 	jr nz, ReflectBallVelocity ; $4b5d
@@ -1524,13 +1524,13 @@ DrawMinigameScore:
 	ld c, h ; $4c28
 	xor a, [hl] ; $4c29
 	inc bc ; $4c2a
-	call Func_0d_4abb ; $4c2b
+	call UpdateMinigameHudAndBallTrail ; $4c2b
 	ret ; $4c2e
-	call Func_0d_4b01 ; $4c2f
+	call StartMinigameSoloPoint ; $4c2f
 	ret ; $4c32
 	call HandleMinigamePointEnd ; $4c33
 	ret ; $4c36
-	call Func_0d_4b59 ; $4c37
+	call AwardMinigamePointAndReflectBall ; $4c37
 	ret ; $4c3a
 	call StubNop_0d_4bc7 ; $4c3b
 	ret ; $4c3e
@@ -1574,13 +1574,13 @@ DrawMinigameScore:
 	ld c, h ; $4c73
 	xor a, [hl] ; $4c74
 	inc bc ; $4c75
-	call Func_0d_4abb ; $4c76
+	call UpdateMinigameHudAndBallTrail ; $4c76
 	ret ; $4c79
-	call Func_0d_4b01 ; $4c7a
+	call StartMinigameSoloPoint ; $4c7a
 	ret ; $4c7d
 	call HandleMinigamePointEnd ; $4c7e
 	ret ; $4c81
-	call Func_0d_4b59 ; $4c82
+	call AwardMinigamePointAndReflectBall ; $4c82
 	ret ; $4c85
 	call StubNop_0d_4bc7 ; $4c86
 	ret ; $4c89
@@ -1622,13 +1622,13 @@ DrawMinigameScore:
 	ld c, h ; $4cbc
 	call $ae4c ; $4cbd
 	inc bc ; $4cc0
-	call Func_0d_4abb ; $4cc1
+	call UpdateMinigameHudAndBallTrail ; $4cc1
 	ret ; $4cc4
-	call Func_0d_4b01 ; $4cc5
+	call StartMinigameSoloPoint ; $4cc5
 	ret ; $4cc8
 	call HandleMinigamePointEnd ; $4cc9
 	ret ; $4ccc
-	call Func_0d_4b59 ; $4ccd
+	call AwardMinigamePointAndReflectBall ; $4ccd
 	ret ; $4cd0
 	call StubNop_0d_4bc7 ; $4cd1
 	ret ; $4cd4
@@ -1652,7 +1652,7 @@ DrawMinigameScore:
 	inc bc ; $4d08
 	ld a, $04 ; $4d09
 	ld [$c785], a ; $4d0b
-	call Func_0d_4678 ; $4d0e
+	call StartMinigameMatch ; $4d0e
 	ret ; $4d11
 	call DrawMinigameScoreHud ; $4d12
 	ret ; $4d15
@@ -1670,7 +1670,7 @@ Label_0d_4d26:
 	ret ; $4d2a
 	call AwardMinigamePointAndEnd ; $4d2b
 	ret ; $4d2e
-	call Func_0d_47be ; $4d2f
+	call KeepMinigameCameraFixed ; $4d2f
 	ret ; $4d32
 	call CheckMinigameStartBannerTrigger ; $4d33
 	ret ; $4d36
@@ -1716,13 +1716,13 @@ Label_0d_4d26:
 	ld c, l ; $4d70
 	xor a, [hl] ; $4d71
 	inc bc ; $4d72
-	call Func_0d_4abb ; $4d73
+	call UpdateMinigameHudAndBallTrail ; $4d73
 	ret ; $4d76
-	call Func_0d_4b01 ; $4d77
+	call StartMinigameSoloPoint ; $4d77
 	ret ; $4d7a
 	call HandleMinigamePointEnd ; $4d7b
 	ret ; $4d7e
-	call Func_0d_4b59 ; $4d7f
+	call AwardMinigamePointAndReflectBall ; $4d7f
 	ret ; $4d82
 	call StubNop_0d_4bc7 ; $4d83
 	ret ; $4d86
@@ -1762,7 +1762,7 @@ Label_0d_4dac:
 	dw $03ae ; record 7
 	ld a, $01 ; $4dbd
 	ld [$c785], a ; $4dbf
-	call Func_0d_4678 ; $4dc2
+	call StartMinigameMatch ; $4dc2
 	ld a, $01 ; $4dc5
 	ld [wTargetZoneEnabled], a ; $4dc7
 	ret ; $4dca
@@ -1784,7 +1784,7 @@ Label_0d_4de5:
 	ret ; $4de9
 	call EndMinigamePoint ; $4dea
 	ret ; $4ded
-	call Func_0d_47be ; $4dee
+	call KeepMinigameCameraFixed ; $4dee
 	ret ; $4df1
 	ld a, [wPointOutcome] ; $4df2
 	and a, a ; $4df5
@@ -2080,7 +2080,7 @@ Label_0d_51b5:
 	call InitBallTargetActor ; $51c6
 	ld a, $01 ; $51c9
 	ld [$c785], a ; $51cb
-	call Func_0d_4678 ; $51ce
+	call StartMinigameMatch ; $51ce
 	ret ; $51d1
 	call DrawMinigameScoreHud ; $51d2
 	call UpdateScorePopup ; $51d5
@@ -2102,7 +2102,7 @@ Label_0d_51f0:
 	ret ; $51f4
 	call EndMinigamePoint ; $51f5
 	ret ; $51f8
-	call Func_0d_47be ; $51f9
+	call KeepMinigameCameraFixed ; $51f9
 	ret ; $51fc
 	call CheckMinigameStartBannerTrigger ; $51fd
 	ret ; $5200
@@ -2500,7 +2500,7 @@ Label_0d_55fd:
 	ret ; $5679
 	call DisableOffscreenArrows ; $567a
 	ret ; $567d
-	call Func_0d_56aa ; $567e
+	call DisableMinigameControllerActor ; $567e
 	call ResolveAndShowMinigamePoint ; $5681
 	ret ; $5684
 	call StubNop_0d_56ee ; $5685
@@ -2519,7 +2519,7 @@ InitMinigameControllerActor:
 	ld bc, $dc00 ; $56a3
 	call SetMinigameActorPosition ; $56a6
 	ret ; $56a9
-Func_0d_56aa:
+DisableMinigameControllerActor:
 	ld hl, $dc00 ; $56aa
 	res 0, [hl] ; $56ad
 	ret ; $56af
@@ -2856,9 +2856,9 @@ Label_0d_588f:
 	ld e, b ; $58b3
 	xor a, [hl] ; $58b4
 	inc bc ; $58b5
-	call Func_0d_4abb ; $58b6
+	call UpdateMinigameHudAndBallTrail ; $58b6
 	ret ; $58b9
-	call Func_0d_4b01 ; $58ba
+	call StartMinigameSoloPoint ; $58ba
 	call ResetTargetGrid ; $58bd
 	ret ; $58c0
 	call HandleMinigamePointEnd ; $58c1

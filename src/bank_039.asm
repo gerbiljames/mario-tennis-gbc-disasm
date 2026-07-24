@@ -244,7 +244,7 @@ UpdateAnimatedTiles:
 	ld a, [$cb0a] ; $4349
 	inc a ; $434c
 	ld c, a ; $434d
-	ld a, [$cb0c] ; $434e
+	ld a, [wAnimatedTilePeriod] ; $434e
 	ld b, a ; $4351
 	ld a, c ; $4352
 	add a, a ; $4353
@@ -268,7 +268,7 @@ Label_39_435f:
 	and a, $0f ; $4373
 	rlca ; $4375
 	push af ; $4376
-	ld a, [$cb0b] ; $4377
+	ld a, [wAnimatedTileSet] ; $4377
 	and a, $03 ; $437a
 	add a, a ; $437c
 	ld hl, $4403 ; $437d
@@ -307,7 +307,7 @@ Label_39_4396:
 	ld c, $02 ; $43b6
 	call QueueVRAMCopy ; $43b8
 Label_39_43bb:
-	ld a, [$cb0b] ; $43bb
+	ld a, [wAnimatedTileSet] ; $43bb
 	and a, $03 ; $43be
 	add a, a ; $43c0
 	ld hl, $440b ; $43c1

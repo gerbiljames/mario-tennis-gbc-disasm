@@ -291,7 +291,7 @@ IntroCutsceneState00Init_6b:
 	ld [hl+], a ; $41ba
 	ld [hl], d ; $41bb
 	ld de, $0120 ; $41bc
-	ld hl, $cb4a ; $41bf
+	ld hl, wIntroCutsceneScrollY ; $41bf
 	ld a, e ; $41c2
 	ld [hl+], a ; $41c3
 	ld [hl], d ; $41c4
@@ -978,7 +978,7 @@ IntroCutsceneState12Init_6b:
 	ld [hl+], a ; $4911
 	ld [hl], d ; $4912
 	ld de, $0120 ; $4913
-	ld hl, $cb4a ; $4916
+	ld hl, wIntroCutsceneScrollY ; $4916
 	ld a, e ; $4919
 	ld [hl+], a ; $491a
 	ld [hl], d ; $491b
@@ -1274,7 +1274,7 @@ IntroCutsceneState19Init_6b:
 	ld [hl+], a ; $4c60
 	ld [hl], d ; $4c61
 	ld de, $0120 ; $4c62
-	ld hl, $cb4a ; $4c65
+	ld hl, wIntroCutsceneScrollY ; $4c65
 	ld a, e ; $4c68
 	ld [hl+], a ; $4c69
 	ld [hl], d ; $4c6a
@@ -1309,7 +1309,7 @@ UpdateCutsceneScrollX:
 	inc h ; $4ca8
 Label_6b_4ca9:
 	ld e, [hl] ; $4ca9
-	ld hl, $cb4a ; $4caa
+	ld hl, wIntroCutsceneScrollY ; $4caa
 	ld a, [hl+] ; $4cad
 	ld h, [hl] ; $4cae
 	ld l, a ; $4caf
@@ -1321,9 +1321,9 @@ Label_6b_4ca9:
 	sbc a, d ; $4cb6
 	ld h, a ; $4cb7
 	ld a, h ; $4cb8
-	ld [$cb4b], a ; $4cb9
+	ld [wIntroCutsceneScrollY + 1], a ; $4cb9
 	ld a, l ; $4cbc
-	ld [$cb4a], a ; $4cbd
+	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
 	INCBIN "data/bank_06b/d_4cc1.bin" ; $4cc1, 160 bytes
 UpdateCutsceneScrollY:
@@ -1428,7 +1428,7 @@ ApplyCutsceneScrollToSpriteX:
 	push hl ; $518e
 	ld c, d ; $518f
 	ld b, e ; $5190
-	ld hl, $cb4a ; $5191
+	ld hl, wIntroCutsceneScrollY ; $5191
 	ld a, [hl+] ; $5194
 	ld d, [hl] ; $5195
 	ld e, a ; $5196
@@ -1853,7 +1853,7 @@ Palettes_6b_60c5:
 	dw $7c1f, $033f, $01af, $0000 ; pal 0: #ff00ff #ffcd00 #7b6a00 #000000
 	dw $7f4e, $7f73, $7fb9, $7fff ; pal 1: #73d5ff #9cdeff #cdeeff #ffffff
 SetCameraYFromScrollPos:
-	ld hl, $cb4a ; $60d5
+	ld hl, wIntroCutsceneScrollY ; $60d5
 	ld a, [hl+] ; $60d8
 	ld d, [hl] ; $60d9
 	ld e, a ; $60da
@@ -1873,7 +1873,7 @@ SetCameraYFromScrollPos:
 	ld [wCameraY + 1], a ; $60f4
 	ret ; $60f7
 QueueScrollingSprite:
-	ld hl, $cb4a ; $60f8
+	ld hl, wIntroCutsceneScrollY ; $60f8
 	ld a, [hl+] ; $60fb
 	ld d, [hl] ; $60fc
 	ld e, a ; $60fd

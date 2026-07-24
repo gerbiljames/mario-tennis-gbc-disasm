@@ -1759,10 +1759,10 @@ RunMenuSelectionShared:
 	push bc ; $4ace
 	push de ; $4acf
 	push hl ; $4ad0
-	ld a, [$cb27] ; $4ad1
+	ld a, [wMenuInitialRow] ; $4ad1
 	ld [$d830], a ; $4ad4
 	xor a, a ; $4ad7
-	ld [$cb27], a ; $4ad8
+	ld [wMenuInitialRow], a ; $4ad8
 	ld a, [$d830] ; $4adb
 	sla a ; $4ade
 	add a, e ; $4ae0
@@ -2009,7 +2009,7 @@ Label_05_4c6b:
 	ret ; $4c75
 Func_05_4c76:
 	push bc ; $4c76
-	ld a, [$cb28] ; $4c77
+	ld a, [wMenuAdjustRowMask] ; $4c77
 	bit 7, a ; $4c7a
 	jr z, Label_05_4c9a ; $4c7c
 	and a, $7f ; $4c7e
@@ -2035,7 +2035,7 @@ Label_05_4c9a:
 	ret ; $4c9c
 AnimateMenuScrollArrowsTask:
 	wram_bank $05 ; $4c9d
-	ld a, [$cb28] ; $4ca3
+	ld a, [wMenuAdjustRowMask] ; $4ca3
 	bit 7, a ; $4ca6
 	jr z, Label_05_4cc8 ; $4ca8
 	and a, $7f ; $4caa
@@ -2062,18 +2062,18 @@ Label_05_4cc8:
 Label_05_4cd6:
 	ld l, $20 ; $4cd6
 	ld de, $0b01 ; $4cd8
-	farcall Func_1a_413c ; $4cdb
+	farcall QueueWindowTileWrite ; $4cdb
 	ld l, $20 ; $4cde
 	ld de, $0b03 ; $4ce0
-	farcall Func_1a_413c ; $4ce3
+	farcall QueueWindowTileWrite ; $4ce3
 	jr Label_05_4cfa ; $4ce6
 Label_05_4ce8:
 	ld l, $20 ; $4ce8
 	ld de, $0d05 ; $4cea
-	farcall Func_1a_413c ; $4ced
+	farcall QueueWindowTileWrite ; $4ced
 	ld l, $20 ; $4cf0
 	ld de, $0d07 ; $4cf2
-	farcall Func_1a_413c ; $4cf5
+	farcall QueueWindowTileWrite ; $4cf5
 	jr Label_05_4cfa ; $4cf8
 Label_05_4cfa:
 	ld hl, wTextArrowBlinkCounter ; $4cfa
@@ -2144,10 +2144,10 @@ Label_05_4d56:
 Label_05_4d6d:
 	ld l, $20 ; $4d6d
 	ld de, $0b01 ; $4d6f
-	farcall Func_1a_413c ; $4d72
+	farcall QueueWindowTileWrite ; $4d72
 	ld l, $20 ; $4d75
 	ld de, $0b03 ; $4d77
-	farcall Func_1a_413c ; $4d7a
+	farcall QueueWindowTileWrite ; $4d7a
 	ld a, [$d830] ; $4d7d
 	and a, a ; $4d80
 	jr nz, Label_05_4da0 ; $4d81
@@ -2157,10 +2157,10 @@ Label_05_4d6d:
 	jp z, Label_05_4e0a ; $4d8a
 	ld l, $0c ; $4d8d
 	ld de, $0101 ; $4d8f
-	farcall Func_1a_413c ; $4d92
+	farcall QueueWindowTileWrite ; $4d92
 	ld l, $0d ; $4d95
 	ld de, $0b01 ; $4d97
-	farcall Func_1a_413c ; $4d9a
+	farcall QueueWindowTileWrite ; $4d9a
 	jp Label_05_4e0f ; $4d9d
 Label_05_4da0:
 	call GetMenuCursorBlinkPhase ; $4da0
@@ -2169,18 +2169,18 @@ Label_05_4da0:
 	jp z, Label_05_4e0a ; $4da7
 	ld l, $0c ; $4daa
 	ld de, $0103 ; $4dac
-	farcall Func_1a_413c ; $4daf
+	farcall QueueWindowTileWrite ; $4daf
 	ld l, $0d ; $4db2
 	ld de, $0b03 ; $4db4
-	farcall Func_1a_413c ; $4db7
+	farcall QueueWindowTileWrite ; $4db7
 	jp Label_05_4e0f ; $4dba
 Label_05_4dbd:
 	ld l, $20 ; $4dbd
 	ld de, $0d05 ; $4dbf
-	farcall Func_1a_413c ; $4dc2
+	farcall QueueWindowTileWrite ; $4dc2
 	ld l, $20 ; $4dc5
 	ld de, $0d07 ; $4dc7
-	farcall Func_1a_413c ; $4dca
+	farcall QueueWindowTileWrite ; $4dca
 	ld a, [$d830] ; $4dcd
 	cp a, $03 ; $4dd0
 	jr z, Label_05_4def ; $4dd2
@@ -2190,10 +2190,10 @@ Label_05_4dbd:
 	jr z, Label_05_4e0a ; $4ddb
 	ld l, $0c ; $4ddd
 	ld de, $0105 ; $4ddf
-	farcall Func_1a_413c ; $4de2
+	farcall QueueWindowTileWrite ; $4de2
 	ld l, $0d ; $4de5
 	ld de, $0d05 ; $4de7
-	farcall Func_1a_413c ; $4dea
+	farcall QueueWindowTileWrite ; $4dea
 	jr Label_05_4e0f ; $4ded
 Label_05_4def:
 	call GetMenuCursorBlinkPhase ; $4def
@@ -2202,14 +2202,14 @@ Label_05_4def:
 	jr z, Label_05_4e0a ; $4df6
 	ld l, $0c ; $4df8
 	ld de, $0107 ; $4dfa
-	farcall Func_1a_413c ; $4dfd
+	farcall QueueWindowTileWrite ; $4dfd
 	ld l, $0d ; $4e00
 	ld de, $0d07 ; $4e02
-	farcall Func_1a_413c ; $4e05
+	farcall QueueWindowTileWrite ; $4e05
 	jr Label_05_4e0f ; $4e08
 Label_05_4e0a:
 	ld l, $20 ; $4e0a
-	farcall Func_1a_413c ; $4e0c
+	farcall QueueWindowTileWrite ; $4e0c
 Label_05_4e0f:
 	ret ; $4e0f
 GetMenuCursorBlinkPhase:

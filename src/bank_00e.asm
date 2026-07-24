@@ -1599,7 +1599,7 @@ ActorScript_0e_51e4:
 	as_wait $01
 	as_jump ActorScript_0e_51e4
 Func_0e_520f:
-	ld a, [$c90e] ; $520f
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $520f
 	and a, a ; $5212
 	jr z, Label_0e_5224 ; $5213
 	script_get_actor_state ACTOR_PLAYER ; $5215

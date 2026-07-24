@@ -835,7 +835,7 @@ Label_27_527e:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_785d ; $5283
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $528e
 Label_27_5299:
-	ld a, [$c90e] ; $5299
+	ld a, [wStoryModeMainCharacterLeftHanded] ; $5299
 	and a, a ; $529c
 	jr z, Label_27_52ae ; $529d
 	script_get_actor_state ACTOR_PLAYER ; $529f

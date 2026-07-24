@@ -2918,7 +2918,7 @@ Label_1d_5981:
 	ld hl, $d145 ; $598a
 	call ApplySlideOffsetToSpriteX ; $598d
 	call QueueSprite ; $5990
-	farcall Func_1a_7be5 ; $5993
+	farcall DrawStatChangeArrows ; $5993
 	ret ; $5996
 ApplySlideOffsetToSpriteX:
 	push bc ; $5997

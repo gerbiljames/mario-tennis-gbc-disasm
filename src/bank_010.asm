@@ -43,7 +43,7 @@ MatchSelectEntryPoints_10:
 	db $ff
 MatchSelectExitTriggers_10:
 	ds 1, $ff ; $40af, fill
-Func_10_40b0:
+MatchSelectRunCharacterSelect:
 	farcall BeginCutsceneScriptMode ; $40b0
 	ld c, $10 ; $40b3
 	call BeginFadeOut ; $40b5
@@ -67,7 +67,7 @@ Func_10_40b0:
 	ld [wStoryModeExitLocationRequest], a ; $40e8
 	farcall EndCutsceneScriptMode ; $40eb
 	ret ; $40ee
-Func_10_40ef:
+MatchSelectPlayEpilogueScene:
 	farcall BeginCutsceneScriptMode ; $40ef
 	farcall RunScrollingTextScreen ; $40f2
 	call WaitFramesCmd ; $40f5
@@ -78,7 +78,7 @@ Func_10_40ef:
 	call WaitFadeEnd ; $4104
 	sound $14 ; $4107
 	ld a, $01 ; $4109
-	ld hl, Func_10_4141 ; $410b
+	ld hl, SceneAnimationFrameTask_10 ; $410b
 	call RegisterFrameTask ; $410e
 	call WaitFramesCmd ; $4111
 	db $78 ; $4114 inline arg
@@ -94,29 +94,29 @@ Func_10_40ef:
 	db $ff ; $4128 inline arg
 	call WaitFramesCmd ; $4129
 	db $ff ; $412c inline arg
-	ld hl, Func_10_4141 ; $412d
+	ld hl, SceneAnimationFrameTask_10 ; $412d
 	call UnregisterFrameTask ; $4130
 	farcall EndCutsceneScriptMode ; $4133
 	ret ; $4136
-Func_10_4137:
+MatchSelectRunEndingCredits:
 	farcall BeginCutsceneScriptMode ; $4137
 	farcall RunEndingCreditsSequence ; $413a
 	farcall EndCutsceneScriptMode ; $413d
 	ret ; $4140
-Func_10_4141:
+SceneAnimationFrameTask_10:
 	farcall UpdateSceneAnimation ; $4141
 	ret ; $4144
 MatchSelectHandlerTable_10:
 	; $4145, 73 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Func_10_40b0, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, MatchSelectRunCharacterSelect, $00, $00
 	map_script $04, FACEMASK_ANY, $0000, RunSinglesMatchListMenu, $00, $00
 	map_script $05, FACEMASK_ANY, $0000, RunDoublesMatchListMenu, $00, $00
 	map_script $06, FACEMASK_ANY, $0000, RunDrillMatchListMenu, $00, $00
-	map_script $07, FACEMASK_ANY, $0000, Func_10_448d, $00, $00
+	map_script $07, FACEMASK_ANY, $0000, MatchSelectCharDataOptionDisabled, $00, $00
 	map_script $08, FACEMASK_ANY, $0000, RunLessonSelectMenu, $00, $00
 	map_script $09, FACEMASK_ANY, $0000, RunMinigameSelectMenu, $00, $00
-	map_script $0a, FACEMASK_ANY, $0000, Func_10_40ef, $00, $00
-	map_script $0b, FACEMASK_ANY, $0000, Func_10_4137, $00, $00
+	map_script $0a, FACEMASK_ANY, $0000, MatchSelectPlayEpilogueScene, $00, $00
+	map_script $0b, FACEMASK_ANY, $0000, MatchSelectRunEndingCredits, $00, $00
 	db $ff
 MatchSelectFacingScripts_10:
 	ds 1, $ff ; $418e, fill
@@ -190,144 +190,144 @@ RunDoublesMatchListMenu:
 	ret ; $421e
 Label_10_421f:
 	ret ; $421f
-	dw Func_10_4354 ; $4220
-	dw Func_10_4346 ; $4222
-	dw Func_10_4338 ; $4224
-	dw Func_10_432a ; $4226
-	dw Func_10_438c ; $4228
-	dw Func_10_437e ; $422a
-	dw Func_10_4370 ; $422c
-	dw Func_10_4362 ; $422e
-	dw Func_10_43a8 ; $4230
-	dw Func_10_431c ; $4232
-	dw Func_10_439a ; $4234
-	dw Func_10_43b6 ; $4236
-	dw Func_10_42ba ; $4238
-	dw Func_10_42c8 ; $423a
-	dw Func_10_42d6 ; $423c
-	dw Func_10_42e4 ; $423e
-	dw Func_10_4266 ; $4240
-	dw Func_10_4274 ; $4242
-	dw Func_10_4282 ; $4244
-	dw Func_10_43d2 ; $4246
-	dw Func_10_43e0 ; $4248
-	dw Func_10_43ee ; $424a
-	dw Func_10_43c4 ; $424c
-	dw Func_10_440a ; $424e
-	dw Func_10_4418 ; $4250
-	dw Func_10_4426 ; $4252
-	dw Func_10_43fc ; $4254
-	dw Func_10_4434 ; $4256
-	dw Func_10_4442 ; $4258
-	dw Func_10_42f2 ; $425a
-	dw Func_10_4300 ; $425c
-	dw Func_10_430e ; $425e
-	dw Func_10_4290 ; $4260
-	dw Func_10_429e ; $4262
-	dw Func_10_42ac ; $4264
-Func_10_4266:
+	dw LoadMatchSinglesJunior4 ; $4220
+	dw LoadMatchSinglesJunior3 ; $4222
+	dw LoadMatchSinglesJunior2 ; $4224
+	dw LoadMatchSinglesJunior1 ; $4226
+	dw LoadMatchSinglesSenior4 ; $4228
+	dw LoadMatchSinglesSenior3 ; $422a
+	dw LoadMatchSinglesSenior2 ; $422c
+	dw LoadMatchSinglesSenior1 ; $422e
+	dw LoadMatchSinglesJunior3Alias ; $4230
+	dw LoadMatchSinglesJuniorPractice ; $4232
+	dw LoadMatchSinglesSeniorPractice ; $4234
+	dw LoadMatchSinglesVarsityPractice ; $4236
+	dw LoadMatchSinglesOpenRound1 ; $4238
+	dw LoadMatchSinglesOpenRound2 ; $423a
+	dw LoadMatchSinglesOpenSemifinals ; $423c
+	dw LoadMatchSinglesOpenFinals ; $423e
+	dw LoadMatchSinglesDreamHard ; $4240
+	dw LoadMatchSinglesDreamIntense ; $4242
+	dw LoadMatchSinglesDreamMax ; $4244
+	dw LoadMatchDoublesJunior3 ; $4246
+	dw LoadMatchDoublesJunior2 ; $4248
+	dw LoadMatchDoublesJunior1 ; $424a
+	dw LoadMatchDoublesJuniorPractice ; $424c
+	dw LoadMatchDoublesSenior3 ; $424e
+	dw LoadMatchDoublesSenior2 ; $4250
+	dw LoadMatchDoublesSenior1 ; $4252
+	dw LoadMatchDoublesSeniorPractice ; $4254
+	dw LoadMatchDoublesVarsity2 ; $4256
+	dw LoadMatchDoublesVarsityPractice ; $4258
+	dw LoadMatchDoublesOpenRound1 ; $425a
+	dw LoadMatchDoublesOpenSemifinals ; $425c
+	dw LoadMatchDoublesOpenFinals ; $425e
+	dw LoadMatchDoublesDreamHard ; $4260
+	dw LoadMatchDoublesDreamIntense ; $4262
+	dw LoadMatchDoublesDreamMax ; $4264
+LoadMatchSinglesDreamHard:
 	load_match_settings $0018 ; $4266
 	ret ; $4273
-Func_10_4274:
+LoadMatchSinglesDreamIntense:
 	load_match_settings $0017 ; $4274
 	ret ; $4281
-Func_10_4282:
+LoadMatchSinglesDreamMax:
 	load_match_settings $0016 ; $4282
 	ret ; $428f
-Func_10_4290:
+LoadMatchDoublesDreamHard:
 	load_match_settings $0118 ; $4290
 	ret ; $429d
-Func_10_429e:
+LoadMatchDoublesDreamIntense:
 	load_match_settings $0117 ; $429e
 	ret ; $42ab
-Func_10_42ac:
+LoadMatchDoublesDreamMax:
 	load_match_settings $0116 ; $42ac
 	ret ; $42b9
-Func_10_42ba:
+LoadMatchSinglesOpenRound1:
 	load_match_settings $0010 ; $42ba
 	ret ; $42c7
-Func_10_42c8:
+LoadMatchSinglesOpenRound2:
 	load_match_settings $0011 ; $42c8
 	ret ; $42d5
-Func_10_42d6:
+LoadMatchSinglesOpenSemifinals:
 	load_match_settings $0012 ; $42d6
 	ret ; $42e3
-Func_10_42e4:
+LoadMatchSinglesOpenFinals:
 	load_match_settings $0013 ; $42e4
 	ret ; $42f1
-Func_10_42f2:
+LoadMatchDoublesOpenRound1:
 	load_match_settings $0111 ; $42f2
 	ret ; $42ff
-Func_10_4300:
+LoadMatchDoublesOpenSemifinals:
 	load_match_settings $0112 ; $4300
 	ret ; $430d
-Func_10_430e:
+LoadMatchDoublesOpenFinals:
 	load_match_settings $0113 ; $430e
 	ret ; $431b
-Func_10_431c:
+LoadMatchSinglesJuniorPractice:
 	load_match_settings $0000 ; $431c
 	ret ; $4329
-Func_10_432a:
+LoadMatchSinglesJunior1:
 	load_match_settings $0004 ; $432a
 	ret ; $4337
-Func_10_4338:
+LoadMatchSinglesJunior2:
 	load_match_settings $0003 ; $4338
 	ret ; $4345
-Func_10_4346:
+LoadMatchSinglesJunior3:
 	load_match_settings $0002 ; $4346
 	ret ; $4353
-Func_10_4354:
+LoadMatchSinglesJunior4:
 	load_match_settings $0001 ; $4354
 	ret ; $4361
-Func_10_4362:
+LoadMatchSinglesSenior1:
 	load_match_settings $0009 ; $4362
 	ret ; $436f
-Func_10_4370:
+LoadMatchSinglesSenior2:
 	load_match_settings $0008 ; $4370
 	ret ; $437d
-Func_10_437e:
+LoadMatchSinglesSenior3:
 	load_match_settings $0007 ; $437e
 	ret ; $438b
-Func_10_438c:
+LoadMatchSinglesSenior4:
 	load_match_settings $0006 ; $438c
 	ret ; $4399
-Func_10_439a:
+LoadMatchSinglesSeniorPractice:
 	load_match_settings $0005 ; $439a
 	ret ; $43a7
-Func_10_43a8:
+LoadMatchSinglesJunior3Alias:
 	load_match_settings $0002 ; $43a8
 	ret ; $43b5
-Func_10_43b6:
+LoadMatchSinglesVarsityPractice:
 	load_match_settings $000a ; $43b6
 	ret ; $43c3
-Func_10_43c4:
+LoadMatchDoublesJuniorPractice:
 	load_match_settings $0100 ; $43c4
 	ret ; $43d1
-Func_10_43d2:
+LoadMatchDoublesJunior3:
 	load_match_settings $0102 ; $43d2
 	ret ; $43df
-Func_10_43e0:
+LoadMatchDoublesJunior2:
 	load_match_settings $0103 ; $43e0
 	ret ; $43ed
-Func_10_43ee:
+LoadMatchDoublesJunior1:
 	load_match_settings $0104 ; $43ee
 	ret ; $43fb
-Func_10_43fc:
+LoadMatchDoublesSeniorPractice:
 	load_match_settings $0105 ; $43fc
 	ret ; $4409
-Func_10_440a:
+LoadMatchDoublesSenior3:
 	load_match_settings $0107 ; $440a
 	ret ; $4417
-Func_10_4418:
+LoadMatchDoublesSenior2:
 	load_match_settings $0108 ; $4418
 	ret ; $4425
-Func_10_4426:
+LoadMatchDoublesSenior1:
 	load_match_settings $0109 ; $4426
 	ret ; $4433
-Func_10_4434:
+LoadMatchDoublesVarsity2:
 	load_match_settings $010d ; $4434
 	ret ; $4441
-Func_10_4442:
+LoadMatchDoublesVarsityPractice:
 	load_match_settings $010a ; $4442
 	ret ; $444f
 RunDrillMatchListMenu:
@@ -355,7 +355,7 @@ RunDrillMatchListMenu:
 	ld [wCurrentStorySlot], a ; $4486
 	farcall SaveStorySlotWithTimer ; $4489
 	ret ; $448c
-Func_10_448d:
+MatchSelectCharDataOptionDisabled:
 	script_set_text Text_25_164 ; $448d
 	script_speak $80 ; $4493
 	ret ; $4498
@@ -421,7 +421,7 @@ RunLessonSelectMenu:
 	dw RunServiceLessonMenu ; $451c jumptable
 	dw RunNetLessonMenu ; $451e jumptable
 	dw RunStrokeLessonMenu ; $4520 jumptable
-	dw Label_10_45cc ; $4522 jumptable
+	dw ShowRankingBoardSamples ; $4522 jumptable
 RunServiceLessonMenu:
 	ld hl, $1c0d ; $4524
 	ld de, $0101 ; $4527
@@ -488,7 +488,7 @@ RunStrokeLessonMenu:
 	call WaitFadeEnd ; $45c5
 	farcall ShowDrillBriefingScreen ; $45c8
 	ret ; $45cb
-Label_10_45cc:
+ShowRankingBoardSamples:
 	ld hl, wStoryModePlayersXPosition ; $45cc
 	ld de, wStoryModeSpawnPosition ; $45cf
 	ld bc, $0005 ; $45d2
@@ -1087,7 +1087,7 @@ MainMenuTileTriggers_10:
 	ds 1, $ff ; $4eb8, fill
 MainMenuInitScript_10:
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $4eb9
-	call Func_10_4f0d ; $4ec4
+	call RunTitleAndMainMenuLoop ; $4ec4
 	farcall TestStorySlotFlagA ; $4ec7
 	call SetMusicMuted ; $4eca
 	ret ; $4ecd
@@ -1126,7 +1126,7 @@ Label_10_4f07:
 	ret ; $4f07
 	; $4f08, 5 bytes (bytes:16)
 	db $01, $03, $05, $02, $06 ; 0x00
-Func_10_4f0d:
+RunTitleAndMainMenuLoop:
 	call ClearFrameTasks ; $4f0d
 	sound $00 ; $4f10
 	call ResumeBGM ; $4f12
@@ -1181,7 +1181,7 @@ Label_10_4f7c:
 	ld [wMatchFormatDoubles], a ; $4f89
 	ld [wMatchFormatGames], a ; $4f8c
 	ld [wMatchFormatSets], a ; $4f8f
-	ld [$cb0b], a ; $4f92
+	ld [wAnimatedTileSet], a ; $4f92
 	ldh [hScrollX], a ; $4f95
 	ldh [hScrollY], a ; $4f97
 	ld [wCameraX], a ; $4f99
@@ -1189,7 +1189,7 @@ Label_10_4f7c:
 	ld [wCameraY], a ; $4f9f
 	ld [wCameraY + 1], a ; $4fa2
 	ld a, $03 ; $4fa5
-	ld [$cb0c], a ; $4fa7
+	ld [wAnimatedTilePeriod], a ; $4fa7
 	call ResumeBGM ; $4faa
 	call InitSerialLink ; $4fad
 	farcall RunMainMenu ; $4fb0
@@ -1213,11 +1213,11 @@ MatchSelectHandlersB_10:
 	dw $4fd8 ; record 1
 	dw $4fd8 ; record 2
 	dw $50fe ; record 3
-	dw Label_10_5216 ; record 4
+	dw RunMinigameModeFlow ; record 4
 	dw $52a0 ; record 5
-	dw Label_10_52d1 ; record 6
+	dw RunSavedDataMenuFlow ; record 6
 	dw $54b0 ; record 7
-	dw Label_10_54d6 ; record 8
+	dw RunEraseSavedDataFlow ; record 8
 	ld a, e ; $4fd8
 	cp a, $ff ; $4fd9
 	jr z, Label_10_5041 ; $4fdb
@@ -1267,7 +1267,7 @@ Label_10_5030:
 	ret ; $5040
 Label_10_5041:
 	ld a, $03 ; $5041
-	ld [$cb0c], a ; $5043
+	ld [wAnimatedTilePeriod], a ; $5043
 	ld c, $10 ; $5046
 	call BeginFadeOut ; $5048
 	call WaitFadeEnd ; $504b
@@ -1311,7 +1311,7 @@ Label_10_50a4:
 	ld [wKeepMatchStatsFlag], a ; $50a8
 	call RestoreGameTimer ; $50ab
 	farcall SaveStorySlotWithTimer ; $50ae
-	call Func_10_5752 ; $50b1
+	call GetStoryContinueDestination ; $50b1
 	ld [$cb74], a ; $50b4
 	cp a, $04 ; $50b7
 	jr z, Label_10_50ca ; $50b9
@@ -1322,7 +1322,7 @@ Label_10_50a4:
 	ld [wMenuSlideDirection], a ; $50c4
 	jp Label_10_4f7c ; $50c7
 Label_10_50ca:
-	call Func_10_5752 ; $50ca
+	call GetStoryContinueDestination ; $50ca
 	ld [$cb74], a ; $50cd
 	call RestoreGameTimer ; $50d0
 	ld a, $00 ; $50d3
@@ -1388,15 +1388,15 @@ Label_10_5159:
 	ld a, [wMatchFormatDoubles] ; $5159
 	ld b, a ; $515c
 	farcall RunExhibitionCharSelectScreen ; $515d
-	call Func_10_56fc ; $5160
+	call CopyExhibitionCharSlotIds ; $5160
 	push af ; $5163
 	call ClearFrameTasks ; $5164
 	call DisableLCDSafely ; $5167
 	farcall Func_01_50e2 ; $516a
 	farcall ResetScreenAndTextWindows ; $516d
 	xor a, a ; $5170
-	ld [$cb53], a ; $5171
-	ld [$cb54], a ; $5174
+	ld [wLinkPartnerCourtMask], a ; $5171
+	ld [wUnlockedCourtMask], a ; $5174
 	farcall ComputeUnlockedCourtFlags ; $5177
 	farcall LoadCourtSelectGraphics ; $517a
 	pop af ; $517d
@@ -1411,7 +1411,7 @@ Label_10_5191:
 	ld a, $01 ; $5191
 	ld [wMenuSlideDirection], a ; $5193
 	farcall StubNop_3e ; $5196
-	ld a, [$cb54] ; $5199
+	ld a, [wUnlockedCourtMask] ; $5199
 	or a, a ; $519c
 	jr z, Label_10_51b6 ; $519d
 	call EnableLCD ; $519f
@@ -1461,7 +1461,7 @@ Label_10_51fd:
 	call EnableLCD ; $520b
 	script_fade_in $10 ; $520e
 	jp Label_10_4f7c ; $5213
-Label_10_5216:
+RunMinigameModeFlow:
 	xor a, a ; $5216
 	ld [wKeepMatchStatsFlag], a ; $5217
 	farcall RunMinigameSelect ; $521a
@@ -1480,7 +1480,7 @@ Label_10_5229:
 	jr nz, Label_10_5241 ; $5237
 	ld a, $00 ; $5239
 	ld [wMenuSlideDirection], a ; $523b
-	jp Label_10_5216 ; $523e
+	jp RunMinigameModeFlow ; $523e
 Label_10_5241:
 	ld [wMinigameLevel], a ; $5241
 	ld a, [$cb20] ; $5244
@@ -1503,7 +1503,7 @@ Label_10_5241:
 	jr Label_10_5229 ; $526c
 Label_10_526e:
 	ld a, [$cb20] ; $526e
-	call Func_10_56e9 ; $5271
+	call GetMinigameDrillId ; $5271
 	farcall RunTrainingDrillByID ; $5274
 	ld a, $01 ; $5277
 	ld [wMenuSlideDirection], a ; $5279
@@ -1538,7 +1538,7 @@ Label_10_526e:
 	call EnableLCD ; $52c6
 	script_fade_in $10 ; $52c9
 	jp Label_10_4f7c ; $52ce
-Label_10_52d1:
+RunSavedDataMenuFlow:
 	farcall RunSavedDataSourceSelect ; $52d1
 	cp a, $ff ; $52d4
 	jp z, Label_10_4f7c ; $52d6
@@ -1549,7 +1549,7 @@ Label_10_52d1:
 Label_10_52e4:
 	farcall RunN64TransferItemSelect ; $52e4
 	cp a, $ff ; $52e7
-	jp z, Label_10_52d1 ; $52e9
+	jp z, RunSavedDataMenuFlow ; $52e9
 	or a, a ; $52ec
 	jr nz, Label_10_5315 ; $52ed
 	ld c, $10 ; $52ef
@@ -1644,7 +1644,7 @@ Label_10_53d8:
 	farcall RunSavedDataTypeSelect ; $53d8
 	cp a, $ff ; $53db
 	jr nz, Label_10_53e2 ; $53dd
-	jp Label_10_52d1 ; $53df
+	jp RunSavedDataMenuFlow ; $53df
 Label_10_53e2:
 	or a, a ; $53e2
 	jr nz, Label_10_5411 ; $53e3
@@ -1682,7 +1682,7 @@ Label_10_5411:
 Label_10_543d:
 	farcall RunN64RecordTypeSelect ; $543d
 	cp a, $ff ; $5440
-	jp z, Label_10_52d1 ; $5442
+	jp z, RunSavedDataMenuFlow ; $5442
 	or a, a ; $5445
 	jr nz, Label_10_546c ; $5446
 	ld c, $10 ; $5448
@@ -1735,7 +1735,7 @@ Label_10_5494:
 	ld a, $00 ; $54ce
 	ld [wMenuSlideDirection], a ; $54d0
 	jp Label_10_4f7c ; $54d3
-Label_10_54d6:
+RunEraseSavedDataFlow:
 	farcall RunEraseSavedDataSelect ; $54d6
 	cp a, $ff ; $54d9
 	jp z, Label_10_4f7c ; $54db
@@ -1765,11 +1765,11 @@ Label_10_54e8:
 	ld c, $10 ; $54fe
 	call BeginFadeOut ; $5500
 	call WaitFadeEnd ; $5503
-	farcall Func_1a_7945 ; $5506
+	farcall RunCharDataConfirmScreen ; $5506
 	pop bc ; $5509
 	or a, a ; $550a
 	jr nz, Label_10_5520 ; $550b
-	call Func_10_578a ; $550d
+	call ConfirmDiscardSuspendedExhibMatch ; $550d
 	or a, a ; $5510
 	jr nz, Label_10_5520 ; $5511
 	ld a, b ; $5513
@@ -1786,7 +1786,7 @@ Label_10_5520:
 	script_fade_in $10 ; $552c
 	ld a, $00 ; $5531
 	ld [wMenuSlideDirection], a ; $5533
-	jp Label_10_54d6 ; $5536
+	jp RunEraseSavedDataFlow ; $5536
 	ld c, $10 ; $5539
 	call BeginFadeOut ; $553b
 	call WaitFadeEnd ; $553e
@@ -1803,7 +1803,7 @@ Label_10_554c:
 	script_fade_in $10 ; $5558
 	ld a, $00 ; $555d
 	ld [wMenuSlideDirection], a ; $555f
-	jp Label_10_54d6 ; $5562
+	jp RunEraseSavedDataFlow ; $5562
 	ld c, $10 ; $5565
 	call BeginFadeOut ; $5567
 	call WaitFadeEnd ; $556a
@@ -1820,7 +1820,7 @@ Label_10_554c:
 	ld [wMenuSlideDirection], a ; $5588
 	xor a, a ; $558b
 	ld [$cb1b], a ; $558c
-	jp Label_10_54d6 ; $558f
+	jp RunEraseSavedDataFlow ; $558f
 Label_10_5592:
 	farcall ReinitSaveRamPreservingBlock6 ; $5592
 	call DisableLCDSafely ; $5595
@@ -1833,7 +1833,7 @@ Label_10_5592:
 	xor a, a ; $55ab
 	ld [$cb1b], a ; $55ac
 	ld [$cb20], a ; $55af
-	jp Label_10_54d6 ; $55b2
+	jp RunEraseSavedDataFlow ; $55b2
 	ret ; $55b5
 Label_10_55b6:
 	farcall RunMatch ; $55b6
@@ -1979,7 +1979,7 @@ Label_10_56d6:
 	ld [$c294], a ; $56e2
 	ld [wStoryModeExitLocationRequest], a ; $56e5
 	ret ; $56e8
-Func_10_56e9:
+GetMinigameDrillId:
 	ld hl, $56f3 ; $56e9
 	add a, l ; $56ec
 	ld l, a ; $56ed
@@ -1990,7 +1990,7 @@ Label_10_56f1:
 	ret ; $56f2
 	; $56f3, 9 bytes (bytes:16)
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
-Func_10_56fc:
+CopyExhibitionCharSlotIds:
 	push af ; $56fc
 	ldh a, [hWramBank] ; $56fd
 	push af ; $56ff
@@ -2038,7 +2038,7 @@ Label_10_574b:
 	ld [wCurrentStorySlot], a ; $574c
 	ld a, $01 ; $574f
 	ret ; $5751
-Func_10_5752:
+GetStoryContinueDestination:
 	test_flag $05, 7 ; $5752
 	jr nz, Label_10_5770 ; $5755
 	test_flag $07, 4 ; $5757
@@ -2066,7 +2066,7 @@ Label_10_5770:
 	jr Label_10_5789 ; $5787
 Label_10_5789:
 	ret ; $5789
-Func_10_578a:
+ConfirmDiscardSuspendedExhibMatch:
 	push af ; $578a
 	push bc ; $578b
 	farcall ReadExhibitionSaveBlock ; $578c
@@ -2157,7 +2157,7 @@ CafeteriaEntryPoints_10:
 	db $ff
 CafeteriaExitTriggers_10:
 	; $5879, 9 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, Func_10_7b1f, $0d, $02
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, $0d, $02
 	db $ff
 CafeteriaNpc03_10:
 	ld a, [$c2b0] ; $5882
@@ -2386,7 +2386,7 @@ CafeteriaFacingScripts_10:
 CafeteriaTileTriggers_10:
 	ds 1, $ff ; $5a51, fill
 CafeteriaInitScript_10:
-	call Func_10_7dbd ; $5a52
+	call SetStoryDialogueStage_10 ; $5a52
 	ld a, [$c2b0] ; $5a55
 	sra a ; $5a58
 	ld [$c2b1], a ; $5a5a
@@ -2457,7 +2457,7 @@ Label_10_5bdc:
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, $08, $02
-	map_script $02, FACEMASK_ANY, $0000, Func_10_7ae6, $0e, $01
+	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, $0e, $01
 	db $ff
 RestaurantExit01_10:
 	clear_flag $0f, 3 ; $5bee
@@ -2567,7 +2567,7 @@ Label_10_5cda:
 	ld a, [$c2b1] ; $5cdf
 	cp a, $00 ; $5ce2
 	jr nz, Label_10_5ce9 ; $5ce4
-	call Func_10_615a ; $5ce6
+	call RestaurantShowActor11NearPlayer_10 ; $5ce6
 Label_10_5ce9:
 	script_set_anim $06, $03 ; $5ce9
 	script_wait_idle $06 ; $5cf0
@@ -2575,7 +2575,7 @@ Label_10_5ce9:
 	ret ; $5cfa
 	INCBIN "data/bank_010/d_5cfb.bin" ; $5cfb, 10 bytes
 RestaurantNpc12_10:
-	call Func_10_612c ; $5d05
+	call TestRestaurantNpc12StageFlag_10 ; $5d05
 	jp nz, Label_10_5db6 ; $5d08
 	script_set_anim $12, $03 ; $5d0b
 	script_wait_idle $12 ; $5d12
@@ -2602,7 +2602,7 @@ RestaurantNpc12_10:
 	script_wait_frames $14 ; $5d67
 	script_facing_lock $12, $01 ; $5d6e
 	script_move_angle $12, FACE_UP, $0100 ; $5d75
-	call Func_10_613e ; $5d7f
+	call SetRestaurantNpc12StageFlag_10 ; $5d7f
 	script_face_toward ACTOR_PLAYER, $12 ; $5d82
 	ld a, [$c2b1] ; $5d8a
 	add a, a ; $5d8d
@@ -2986,27 +2986,27 @@ RestaurantFacingScripts_10:
 RestaurantTileTriggers_10:
 	ds 1, $ff ; $60f0, fill
 RestaurantInitScript_10:
-	call Func_10_7dbd ; $60f1
+	call SetStoryDialogueStage_10 ; $60f1
 	ld a, [$c2b0] ; $60f4
 	sra a ; $60f7
 	ld [$c2b1], a ; $60f9
-	call Func_10_611b ; $60fc
-	call Func_10_6103 ; $60ff
+	call RestaurantRestoreNpc12Position_10 ; $60fc
+	call RestaurantRestoreNpc08Position_10 ; $60ff
 	ret ; $6102
-Func_10_6103:
+RestaurantRestoreNpc08Position_10:
 	test_flag $0f, 3 ; $6103
 	jr z, Label_10_611a ; $6106
 	script_set_position $08, $2140, $0f00 ; $6108
 	script_face $08, FACE_RIGHT ; $6113
 Label_10_611a:
 	ret ; $611a
-Func_10_611b:
-	call Func_10_612c ; $611b
+RestaurantRestoreNpc12Position_10:
+	call TestRestaurantNpc12StageFlag_10 ; $611b
 	jr z, Label_10_612b ; $611e
 	script_set_position $12, $1b00, $1100 ; $6120
 Label_10_612b:
 	ret ; $612b
-Func_10_612c:
+TestRestaurantNpc12StageFlag_10:
 	ld a, [$c2b1] ; $612c
 	add a, a ; $612f
 	add a, $50 ; $6130
@@ -3019,7 +3019,7 @@ Func_10_612c:
 	ld e, a ; $6139
 	call TestGameFlagByNumber ; $613a
 	ret ; $613d
-Func_10_613e:
+SetRestaurantNpc12StageFlag_10:
 	ld a, [$c2b1] ; $613e
 	add a, a ; $6141
 	add a, $50 ; $6142
@@ -3042,7 +3042,7 @@ Func_10_613e:
 	nop ; $6157
 	ld a, d ; $6158
 	nop ; $6159
-Func_10_615a:
+RestaurantShowActor11NearPlayer_10:
 	wram_bank $04 ; $615a
 	script_get_actor_state ACTOR_PLAYER ; $6160
 	ld c, l ; $6165
@@ -3111,8 +3111,8 @@ AcademyWingExitTriggers_10:
 	; $6212, 41 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, $14, $01
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $03
-	map_script $03, FACEMASK_ANY, $0000, Func_10_7ae6, $05, $04
-	map_script $04, FACEMASK_ANY, $0000, Func_10_7b1f, $05, $03
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, $05, $04
+	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, $05, $03
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $0f
 	db $ff
 AcademyWingNpc03_10:
@@ -3198,7 +3198,7 @@ AcademyWingTileTriggers_10:
 AcademyWingTile01_10:
 	script_set_speed ACTOR_PLAYER, $0014 ; $6372
 	script_face ACTOR_PLAYER, FACE_UP ; $637a
-	call Func_10_7339 ; $6381
+	call AcademyWingOpenDoor_10 ; $6381
 	test_flag $05, 7 ; $6384
 	jr z, Label_10_6399 ; $6387
 	script_move_target ACTOR_PARTNER, $2100, $3d00 ; $6389
@@ -3213,12 +3213,12 @@ Label_10_6399:
 	script_wait_move ACTOR_PLAYER ; $63c9
 	script_wait_frames $0a ; $63ce
 	script_face ACTOR_PLAYER, FACE_UP ; $63d5
-	call Func_10_736f ; $63dc
+	call AcademyWingCloseDoor_10 ; $63dc
 	ret ; $63df
 AcademyWingTile02_10:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $63e0
 	script_set_speed ACTOR_PLAYER, $0010 ; $63e7
-	call Func_10_7339 ; $63ef
+	call AcademyWingOpenDoor_10 ; $63ef
 	script_move_target ACTOR_PARTNER, $2100, $3500 ; $63f2
 	test_flag $05, 7 ; $63fd
 	jr z, Label_10_6402 ; $6400
@@ -3230,7 +3230,7 @@ Label_10_6402:
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $6421
 	script_wait_move ACTOR_PLAYER ; $642b
 	script_wait_frames $05 ; $6430
-	call Func_10_736f ; $6437
+	call AcademyWingCloseDoor_10 ; $6437
 	ret ; $643a
 AcademyWingInitScript_10:
 	script_set_anim $05, $06 ; $643b
@@ -3242,7 +3242,7 @@ Label_10_6452:
 	jr nz, Label_10_6462 ; $6455
 	script_set_position $06, $0100, $0100 ; $6457
 Label_10_6462:
-	call Func_10_7472 ; $6462
+	call SetAcademyWingDialogueStage_10 ; $6462
 	ld a, [$c2b0] ; $6465
 	cp a, $03 ; $6468
 	jr nz, Label_10_649e ; $646a
@@ -3258,7 +3258,7 @@ Label_10_6462:
 	ld l, $02 ; $6481
 	farcall CopyBehaviorMapRect ; $6483
 	call MapArrivalWalkPair_10 ; $6486
-	call Func_10_7443 ; $6489
+	call AcademyWingHideActorByProgressFlag_10 ; $6489
 	script_set_position $03, $1d00, $3000 ; $648c
 	script_face $03, FACE_UP ; $6497
 Label_10_649e:
@@ -3284,7 +3284,7 @@ Label_10_64b0:
 	jp z, Label_10_64e0 ; $64d4
 	cp a, $0f ; $64d7
 	jp z, Label_10_6fcd ; $64d9
-	call Func_10_7429 ; $64dc
+	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
 Label_10_64e0:
 	ldh a, [hRomBank] ; $64e0
@@ -3460,7 +3460,7 @@ Label_10_66c6:
 	script_wait_move ACTOR_PARTNER ; $694d
 	script_wait_frames $05 ; $6952
 	script_face ACTOR_PLAYER, FACE_UP ; $6959
-	call Func_10_7339 ; $6960
+	call AcademyWingOpenDoor_10 ; $6960
 	script_move_target ACTOR_PLAYER, $2100, $3500 ; $6963
 	script_move_target ACTOR_PARTNER, $2100, $3b00 ; $696e
 	script_wait_move ACTOR_PARTNER ; $6979
@@ -3477,7 +3477,7 @@ Label_10_69c0:
 	script_move_target ACTOR_PLAYER, $2100, $3b00 ; $69c0
 	script_wait_move ACTOR_PLAYER ; $69cb
 	script_face ACTOR_PLAYER, FACE_UP ; $69d0
-	call Func_10_7339 ; $69d7
+	call AcademyWingOpenDoor_10 ; $69d7
 	script_move_target ACTOR_PLAYER, $2100, $3500 ; $69da
 	script_wait_move ACTOR_PLAYER ; $69e5
 	script_move_target ACTOR_PLAYER, $2000, $3500 ; $69ea
@@ -3485,7 +3485,7 @@ Label_10_69c0:
 	script_face ACTOR_PLAYER, FACE_UP ; $69fa
 	script_wait_frames $01 ; $6a01
 Label_10_6a08:
-	call Func_10_736f ; $6a08
+	call AcademyWingCloseDoor_10 ; $6a08
 	script_set_position $03, $3f00, $3f00 ; $6a0b
 	script_set_position $05, $3f00, $3f00 ; $6a16
 	script_wait_frames $0a ; $6a21
@@ -3748,14 +3748,14 @@ Label_10_7029:
 	call WaitFadeEnd ; $7039
 	script_wait_frames $3c ; $703c
 	script_set_text Text_30_498 ; $7043
-	call Func_10_73ee ; $7049
+	call SpeakNpc03SinglesOrDoublesLine_10 ; $7049
 	test_flag $05, 7 ; $704c
 	jp z, Label_10_7059 ; $704f
 	script_set_anim ACTOR_PARTNER, $02 ; $7052
 Label_10_7059:
 	script_set_anim ACTOR_PLAYER, $02 ; $7059
 	script_wait_idle ACTOR_PLAYER ; $7060
-	call Func_10_7405 ; $7065
+	call ShowNpc03SinglesOrDoublesPrompt_10 ; $7065
 	farcall RunDialogueYesNoPrompt ; $7068
 	farcall ScriptCloseDialogueWindow ; $706b
 	script_wait_frames $05 ; $706e
@@ -3776,7 +3776,7 @@ Label_10_7095:
 	script_face $03, FACE_UP ; $70ad
 	script_wait_frames $50 ; $70b4
 	script_set_text Text_30_504 ; $70bb
-	call Func_10_73ee ; $70c1
+	call SpeakNpc03SinglesOrDoublesLine_10 ; $70c1
 	test_flag $05, 7 ; $70c4
 	jp z, Label_10_7101 ; $70c7
 	script_set_position $06, $2080, $3200 ; $70ca
@@ -3794,7 +3794,7 @@ Label_10_7101:
 Label_10_7120:
 	script_face $03, FACE_DOWN ; $7120
 	script_wait_frames $01 ; $7127
-	call Func_10_73ee ; $712e
+	call SpeakNpc03SinglesOrDoublesLine_10 ; $712e
 	script_wait_frames $1e ; $7131
 	script_set_anim $03, $03 ; $7138
 	script_wait_idle $03 ; $713f
@@ -3854,7 +3854,7 @@ Label_10_71f0:
 	script_move_target ACTOR_PLAYER, $2100, $3700 ; $726c
 	script_move_target ACTOR_PARTNER, $2100, $3500 ; $7277
 	script_wait_move ACTOR_PARTNER ; $7282
-	call Func_10_7339 ; $7287
+	call AcademyWingOpenDoor_10 ; $7287
 	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $728a
 	script_set_actor_script ACTOR_PARTNER, ActorScript_10_741c ; $7295
 	script_wait_frames $28 ; $72a0
@@ -3873,11 +3873,11 @@ Label_10_72a9:
 	script_wait_move ACTOR_PLAYER ; $72ea
 	script_move_target ACTOR_PLAYER, $2100, $3700 ; $72ef
 	script_wait_move ACTOR_PLAYER ; $72fa
-	call Func_10_7339 ; $72ff
+	call AcademyWingOpenDoor_10 ; $72ff
 	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $7302
 	script_wait_frames $14 ; $730d
 Label_10_7314:
-	call Func_10_736f ; $7314
+	call AcademyWingCloseDoor_10 ; $7314
 	script_wait_frames $3c ; $7317
 	ld c, $02 ; $731e
 	call BeginFadeOut ; $7320
@@ -3890,7 +3890,7 @@ Label_10_7314:
 	ld [$c294], a ; $7332
 	ld [wStoryModeExitLocationRequest], a ; $7335
 	ret ; $7338
-Func_10_7339:
+AcademyWingOpenDoor_10:
 	script_wait_frames $0a ; $7339
 	sound $79 ; $7340
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7342
@@ -3898,7 +3898,7 @@ Func_10_7339:
 	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $7358
 	script_wait_frames $04 ; $7367
 	ret ; $736e
-Func_10_736f:
+AcademyWingCloseDoor_10:
 	sound $79 ; $736f
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7371
 	script_wait_frames $02 ; $7380
@@ -3912,7 +3912,7 @@ Func_10_736f:
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
 	map_actor_end
-Func_10_73ee:
+SpeakNpc03SinglesOrDoublesLine_10:
 	test_flag $05, 7 ; $73ee
 	jr z, Label_10_73fc ; $73f1
 	farcall AdvanceDialogueTextCursor ; $73f3
@@ -3922,7 +3922,7 @@ Label_10_73fc:
 	script_speak $03 ; $73fc
 	farcall AdvanceDialogueTextCursor ; $7401
 	ret ; $7404
-Func_10_7405:
+ShowNpc03SinglesOrDoublesPrompt_10:
 	test_flag $05, 7 ; $7405
 	jr z, Label_10_7413 ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
@@ -3941,7 +3941,7 @@ ActorScript_10_741c:
 	as_set_pos $3500, $3b00
 	as_wait_move
 	as_halt
-Func_10_7429:
+AcademyWingInstallDoorTriggers_10:
 	ld a, [$c2b0] ; $7429
 	cp a, $03 ; $742c
 	jr nz, Label_10_7442 ; $742e
@@ -3955,7 +3955,7 @@ Func_10_7429:
 	farcall WriteBehaviorMapCell ; $743f
 Label_10_7442:
 	ret ; $7442
-Func_10_7443:
+AcademyWingHideActorByProgressFlag_10:
 	script_set_anim $04, $06 ; $7443
 	test_flag $05, 7 ; $744a
 	jr z, Label_10_7461 ; $744d
@@ -3969,7 +3969,7 @@ Label_10_7461:
 	script_set_position $05, $0100, $0100 ; $7466
 Label_10_7471:
 	ret ; $7471
-Func_10_7472:
+SetAcademyWingDialogueStage_10:
 	ld a, $00 ; $7472
 	test_flag $05, 7 ; $7474
 	jr z, Label_10_7490 ; $7477
@@ -4058,8 +4058,8 @@ AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, $14, $01
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $03
-	map_script $03, FACEMASK_ANY, $0000, Func_10_7ae6, $06, $01
-	map_script $04, FACEMASK_ANY, $0000, Func_10_7b1f, $05, $03
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, $06, $01
+	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, $05, $03
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $0f
 	db $ff
 AcademyMainBldgNpc03_10:
@@ -4154,7 +4154,7 @@ Label_10_76a2:
 	script_set_text Text_30_469 ; $76a2
 	script_wait_frames $14 ; $76a8
 	script_speak $05 ; $76af
-	call Func_10_7bb6 ; $76b4
+	call GetDoublesProgressStage_10 ; $76b4
 	add a, a ; $76b7
 	add a, $c7 ; $76b8
 	ld l, a ; $76ba
@@ -4205,7 +4205,7 @@ AcademyMainBldgFacingScripts_10:
 AcademyMainBldgTileTriggers_10:
 	ds 1, $ff ; $7716, fill
 AcademyMainBldgInitScript_10:
-	call Func_10_7dbd ; $7717
+	call SetStoryDialogueStage_10 ; $7717
 	ld a, [$c2b0] ; $771a
 	sra a ; $771d
 	cp a, $02 ; $771f
@@ -4213,15 +4213,15 @@ AcademyMainBldgInitScript_10:
 	script_set_actor_script $03, ActorScript_10_7b8b ; $7723
 Label_10_772e:
 	ld a, $01 ; $772e
-	ld hl, Func_10_79d0 ; $7730
+	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
 	call RegisterFrameTask ; $7733
 	ld a, [wStoryModeEntryPoint] ; $7736
 	cp a, $0f ; $7739
 	jr nz, Label_10_7740 ; $773b
-	call Func_10_7741 ; $773d
+	call AcademyMainBldgNewStudentCutscene_10 ; $773d
 Label_10_7740:
 	ret ; $7740
-Func_10_7741:
+AcademyMainBldgNewStudentCutscene_10:
 	ldh a, [hRomBank] ; $7741
 	ld hl, $7980 ; $7743
 	farcall ScriptRespawnLocationActors ; $7746
@@ -4325,15 +4325,15 @@ Label_10_785b:
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4d, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4f, $01, $00
 	map_actor_end
-Func_10_79d0:
+UpdatePlayerPairTileAnimState_10:
 	ld a, $00 ; $79d0
-	call Func_10_79df ; $79d2
+	call UpdateActorTileAnimState_10 ; $79d2
 	test_flag $05, 7 ; $79d5
 	ret z ; $79d8
 	ld a, $02 ; $79d9
-	call Func_10_79df ; $79db
+	call UpdateActorTileAnimState_10 ; $79db
 	ret ; $79de
-Func_10_79df:
+UpdateActorTileAnimState_10:
 	ld h, a ; $79df
 	ld l, $00 ; $79e0
 	push af ; $79e2
@@ -4369,7 +4369,7 @@ Func_10_79df:
 	dec e ; $7a14
 Label_10_7a15:
 	push de ; $7a15
-	call Func_10_7ac8 ; $7a16
+	call ReadSceneTilemapCell_10 ; $7a16
 	pop de ; $7a19
 	and a, $87 ; $7a1a
 	cp a, $06 ; $7a1c
@@ -4383,7 +4383,7 @@ Label_10_7a15:
 	ret ; $7a2e
 Label_10_7a2f:
 	inc d ; $7a2f
-	call Func_10_7ac8 ; $7a30
+	call ReadSceneTilemapCell_10 ; $7a30
 	and a, $07 ; $7a33
 	cp a, $06 ; $7a35
 	jr nz, Label_10_7a48 ; $7a37
@@ -4431,7 +4431,7 @@ Label_10_7a48:
 	dec e ; $7a85
 	dec e ; $7a86
 	push de ; $7a87
-	call Func_10_7ac8 ; $7a88
+	call ReadSceneTilemapCell_10 ; $7a88
 	pop de ; $7a8b
 	and a, $87 ; $7a8c
 	cp a, $06 ; $7a8e
@@ -4445,7 +4445,7 @@ Label_10_7a48:
 	ret ; $7aa0
 Label_10_7aa1:
 	inc d ; $7aa1
-	call Func_10_7ac8 ; $7aa2
+	call ReadSceneTilemapCell_10 ; $7aa2
 	and a, $07 ; $7aa5
 	cp a, $06 ; $7aa7
 	jr nz, Label_10_7aba ; $7aa9
@@ -4463,7 +4463,7 @@ Label_10_7aba:
 	ld a, $02 ; $7ac4
 	ld [hl], a ; $7ac6
 	ret ; $7ac7
-Func_10_7ac8:
+ReadSceneTilemapCell_10:
 	wram_bank $02 ; $7ac8
 	ld h, e ; $7ace
 	ld l, $00 ; $7acf
@@ -4484,7 +4484,7 @@ Label_10_7adf:
 	add hl, de ; $7ae3
 	ld a, [hl] ; $7ae4
 	ret ; $7ae5
-Func_10_7ae6:
+MapExitWalkCurveRight_10:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7ae6
 	script_set_speed ACTOR_PARTNER, $0010 ; $7aee
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0100 ; $7af6
@@ -4493,7 +4493,7 @@ Func_10_7ae6:
 	script_wait_move ACTOR_PLAYER ; $7b0f
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $00c0 ; $7b14
 	ret ; $7b1e
-Func_10_7b1f:
+MapExitWalkCurveLeft_10:
 	ld a, [wStoryModeEntryPoint] ; $7b1f
 	cp a, $ff ; $7b22
 	jr z, Label_10_7b5e ; $7b24
@@ -4534,7 +4534,7 @@ ActorScript_10_7b8b:
 	as_wait_move2
 	as_wait $05
 	as_jump .L8
-Func_10_7bb6:
+GetDoublesProgressStage_10:
 	ld a, $00 ; $7bb6
 	test_flag $08, 2 ; $7bb8
 	jr z, Label_10_7bd0 ; $7bbb
@@ -4586,7 +4586,7 @@ MapScriptClearActiveFlag_10:
 	ld [$c2da], a ; $7bfb
 	ret ; $7bfe
 	INCBIN "data/bank_010/d_7bff.bin" ; $7bff, 446 bytes
-Func_10_7dbd:
+SetStoryDialogueStage_10:
 	test_flag $05, 7 ; $7dbd
 	jr nz, Label_10_7de4 ; $7dc0
 	ld a, $00 ; $7dc2
