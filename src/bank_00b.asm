@@ -116,7 +116,7 @@ Label_0b_40b4:
 	; $40bc, 4 bytes (records:2)
 	dw $c2fc ; record 0
 	dw $c2fd ; record 1
-Func_0b_40c0:
+CountDrillShotSuccesses:
 	push bc ; $40c0
 	push hl ; $40c1
 	ld hl, $c2fc ; $40c2
@@ -221,7 +221,7 @@ ResetActiveCharState:
 	pop af ; $4159
 	wram_bank ; $415a
 	ret ; $415e
-Func_0b_415f:
+IndexDrillTableByPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $415f
 	add a, a ; $4162
 	add a, a ; $4163
@@ -310,7 +310,7 @@ UpdateDrillAbortCountdown:
 	ld a, $01 ; $41d4
 	ld [wMatchAbortFlag], a ; $41d6
 	ret ; $41d9
-Func_0b_41da:
+RecordDrillTargetZoneHitIfInPlay:
 	ld a, [wPointOutcome] ; $41da
 	cp a, $04 ; $41dd
 	ret z ; $41df
@@ -344,7 +344,7 @@ Label_0b_41fd:
 Table_0b_4207:
 	; $4207, 4 bytes (bytes:4)
 	db $03, $02, $00, $01 ; 0x00
-Func_0b_420b:
+CountDrillResultBitsSet:
 	push bc ; $420b
 	ld a, [$c2e4] ; $420c
 	ld b, a ; $420f
@@ -373,7 +373,7 @@ Label_0b_4226:
 	xor a, $01 ; $422f
 	pop bc ; $4231
 	ret ; $4232
-Func_0b_4233:
+RecordGateCrossOnServe:
 	ld a, [wRallyLength] ; $4233
 	cp a, $01 ; $4236
 	ret nz ; $4238
@@ -397,7 +397,7 @@ Label_0b_424d:
 	or a, [hl] ; $4254
 	ld [hl], a ; $4255
 	ret ; $4256
-Func_0b_4257:
+CountDrillResultBitsSetAlt:
 	push bc ; $4257
 	ld a, [$c2e5] ; $4258
 	ld b, a ; $425b
@@ -410,7 +410,7 @@ Label_0b_425f:
 	jr nz, Label_0b_425f ; $4264
 	pop bc ; $4266
 	ret ; $4267
-Func_0b_4268:
+CountDrillResultBitsThisGame:
 	push bc ; $4268
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4269
 	ld c, a ; $426c
@@ -581,7 +581,7 @@ LoadDrillOpponentChar:
 	pop af ; $4416
 	wram_bank ; $4417
 	ret ; $441b
-Func_0b_441c:
+LoadDrillOpponentBySide:
 	ld a, [wCurrentServingPlayer] ; $441c
 	and a, $01 ; $441f
 	add a, l ; $4421
@@ -592,7 +592,7 @@ Label_0b_4426:
 	ld a, [hl] ; $4426
 	call LoadDrillOpponentChar ; $4427
 	ret ; $442a
-Func_0b_442b:
+WriteCharStructByte:
 	ld b, a ; $442b
 	ldh a, [hWramBank] ; $442c
 	push af ; $442e
@@ -604,9 +604,9 @@ Func_0b_442b:
 	wram_bank ; $443b
 	ret ; $443f
 	ld hl, $007a ; $4440
-	call Func_0b_442b ; $4443
+	call WriteCharStructByte ; $4443
 	ret ; $4446
-Func_0b_4447:
+TestCharStateBit4:
 	ld b, a ; $4447
 	ldh a, [hWramBank] ; $4448
 	push af ; $444a
@@ -703,7 +703,7 @@ Label_0b_44ec:
 	ld a, $ff ; $44ec
 	ld [$c2e6], a ; $44ee
 	ret ; $44f1
-Func_0b_44f2:
+QueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $44f2
 	cp a, $01 ; $44f5
 	jr z, Label_0b_452e ; $44f7
@@ -755,7 +755,7 @@ Label_0b_4540:
 Label_0b_4541:
 	ld [$c2e6], a ; $4541
 	ret ; $4544
-Func_0b_4545:
+SetDrillMessageByServer:
 	cp a, $ff ; $4545
 	jr z, Label_0b_4554 ; $4547
 	ld c, a ; $4549
@@ -769,7 +769,7 @@ Label_0b_4553:
 Label_0b_4554:
 	ld [$c2e6], a ; $4554
 	ret ; $4557
-Func_0b_4558:
+SetDrillMessageByRallyParity:
 	cp a, $ff ; $4558
 	jr z, Label_0b_4570 ; $455a
 	ld c, a ; $455c
@@ -952,7 +952,7 @@ DrillMessageTextIds_0b:
 Unused_0b_469e:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00
-Func_0b_46a0:
+QueueDrillMarker1_0b:
 	ld a, [$c78b] ; $46a0
 	and a, a ; $46a3
 	ret z ; $46a4
@@ -971,7 +971,7 @@ Func_0b_46a0:
 	ld bc, $0930 ; $46bd
 	call QueueSpriteTemplate ; $46c0
 	ret ; $46c3
-Func_0b_46c4:
+QueueDrillMarker2_0b:
 	ld a, [$c78b] ; $46c4
 	and a, a ; $46c7
 	ret z ; $46c8
@@ -1174,8 +1174,8 @@ ServiceMatch1Hook_PointStart:
 	ld [$c2ff], a ; $485f
 	ret ; $4862
 ServiceMatch1Hook_PointEnd:
-	call Func_0b_48fc ; $4863
-	call Func_0b_48a6 ; $4866
+	call ServiceMatch1JudgeShot0 ; $4863
+	call ServiceMatch1HandlePointEnd ; $4866
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4869
 	bit 0, a ; $486c
 	ret nz ; $486e
@@ -1207,15 +1207,15 @@ Label_0b_4894:
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
 ServiceMatch1Hook_RallyTick:
-	call Func_0b_4918 ; $489a
+	call ServiceMatch1JudgeShot3 ; $489a
 	ret ; $489d
 ServiceMatch1Hook_Bounce:
-	call Func_0b_490e ; $489e
+	call ServiceMatch1JudgeShot2 ; $489e
 	ret ; $48a1
 ServiceMatch1Hook_BallHit:
-	call Func_0b_4905 ; $48a2
+	call ServiceMatch1JudgeShot1 ; $48a2
 	ret ; $48a5
-Func_0b_48a6:
+ServiceMatch1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $48a6
 	ld a, [$c2ff] ; $48a9
 	ld b, a ; $48ac
@@ -1229,10 +1229,10 @@ Label_0b_48b7:
 	ld [wPointWinLoseFlag], a ; $48b7
 	call RecordDrillPointResultBits ; $48ba
 	ld a, $00 ; $48bd
-	call Func_0b_40c0 ; $48bf
+	call CountDrillShotSuccesses ; $48bf
 	ld [$c2e8], a ; $48c2
 	ld a, $01 ; $48c5
-	call Func_0b_40c0 ; $48c7
+	call CountDrillShotSuccesses ; $48c7
 	ld [$c2e9], a ; $48ca
 	call ShowQueuedDrillMessage ; $48cd
 	farcall UpdatePointStats ; $48d0
@@ -1251,29 +1251,29 @@ Label_0b_48b7:
 	farcall StartPointEndReactions ; $48f5
 	call PlayDrillPointEndSequence ; $48f8
 	ret ; $48fb
-Func_0b_48fc:
+ServiceMatch1JudgeShot0:
 	ld a, $00 ; $48fc
-	call Drill00JudgePoint ; $48fe
+	call ServiceMatch1JudgePoint ; $48fe
 	ld [$c2ff], a ; $4901
 	ret ; $4904
-Func_0b_4905:
+ServiceMatch1JudgeShot1:
 	ld a, $01 ; $4905
-	call Drill00JudgePoint ; $4907
+	call ServiceMatch1JudgePoint ; $4907
 	ld [$c2ff], a ; $490a
 	ret ; $490d
-Func_0b_490e:
+ServiceMatch1JudgeShot2:
 	ret ; $490e
 	ld a, $02 ; $490f
-	call Drill00JudgePoint ; $4911
+	call ServiceMatch1JudgePoint ; $4911
 	ld [$c2ff], a ; $4914
 	ret ; $4917
-Func_0b_4918:
+ServiceMatch1JudgeShot3:
 	ret ; $4918
 	ld a, $03 ; $4919
-	call Drill00JudgePoint ; $491b
+	call ServiceMatch1JudgePoint ; $491b
 	ld [$c2ff], a ; $491e
 	ret ; $4921
-Drill00JudgePoint:
+ServiceMatch1JudgePoint:
 	ld b, a ; $4922
 	ld a, [$c2ff] ; $4923
 	or a, a ; $4926
@@ -1402,8 +1402,8 @@ ServiceMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $49e7
 	ret ; $49ea
 ServiceMatch2Hook_Draw:
-	call Func_0b_46a0 ; $49eb
-	call Func_0b_46c4 ; $49ee
+	call QueueDrillMarker1_0b ; $49eb
+	call QueueDrillMarker2_0b ; $49ee
 	ret ; $49f1
 ServiceMatch2Hook_PointStart:
 	xor a, a ; $49f2
@@ -1414,7 +1414,7 @@ ServiceMatch2Hook_PointStart:
 	ld a, $01 ; $49fe
 	ld [$c78b], a ; $4a00
 	ld hl, DrillPositions_0b_4a6a ; $4a03
-	call Func_0b_415f ; $4a06
+	call IndexDrillTableByPoint ; $4a06
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
 	srl a ; $4a0c
 	ld hl, Table_0b_4a23 ; $4a0e
@@ -1434,8 +1434,8 @@ Table_0b_4a23:
 	; $4a23, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
 ServiceMatch2Hook_PointEnd:
-	call Func_0b_4b2e ; $4a27
-	call Func_0b_4aac ; $4a2a
+	call ServiceMatch2JudgeShot0 ; $4a27
+	call ServiceMatch2HandlePointEnd ; $4a2a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a2d
 	bit 0, a ; $4a30
 	ret nz ; $4a32
@@ -1467,13 +1467,13 @@ Label_0b_4a58:
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
 ServiceMatch2Hook_RallyTick:
-	call Func_0b_4b4a ; $4a5e
+	call ServiceMatch2JudgeShot3 ; $4a5e
 	ret ; $4a61
 ServiceMatch2Hook_Bounce:
-	call Func_0b_4b40 ; $4a62
+	call ServiceMatch2JudgeShot2 ; $4a62
 	ret ; $4a65
 ServiceMatch2Hook_BallHit:
-	call Func_0b_4b37 ; $4a66
+	call ServiceMatch2JudgeShot1 ; $4a66
 	ret ; $4a69
 DrillPositions_0b_4a6a:
 	; $4a6a, 66 bytes (records:4)
@@ -1495,7 +1495,7 @@ DrillPositions_0b_4a6a:
 	dw $fe50, $0000 ; record 14
 	dw $0000, $0000 ; record 15
 	db $ff, $ff
-Func_0b_4aac:
+ServiceMatch2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $4aac
 	ld a, [$c2ff] ; $4aaf
 	ld b, a ; $4ab2
@@ -1509,10 +1509,10 @@ Label_0b_4abd:
 	ld [wPointWinLoseFlag], a ; $4abd
 	call RecordDrillPointResultBits ; $4ac0
 	ld a, $00 ; $4ac3
-	call Func_0b_40c0 ; $4ac5
+	call CountDrillShotSuccesses ; $4ac5
 	ld [$c2e8], a ; $4ac8
 	ld a, $01 ; $4acb
-	call Func_0b_40c0 ; $4acd
+	call CountDrillShotSuccesses ; $4acd
 	ld [$c2e9], a ; $4ad0
 	call ShowQueuedDrillMessage ; $4ad3
 	ld hl, $c2f8 ; $4ad6
@@ -1527,7 +1527,7 @@ Label_0b_4ae1:
 	jr z, Label_0b_4ae8 ; $4ae3
 	farcall UpdatePointStats ; $4ae5
 Label_0b_4ae8:
-	call Func_0b_4b05 ; $4ae8
+	call ServiceMatch2AwardPointToSide ; $4ae8
 	ld a, [wPlayer1PointsWon] ; $4aeb
 	ld b, $01 ; $4aee
 	farcall LoadPlayer1PointsDigitGfx ; $4af0
@@ -1538,7 +1538,7 @@ Label_0b_4ae8:
 	farcall StartPointEndReactions ; $4afe
 	call PlayDrillPointEndSequence ; $4b01
 	ret ; $4b04
-Func_0b_4b05:
+ServiceMatch2AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $4b05
 	or a, a ; $4b08
 	ret z ; $4b09
@@ -1563,28 +1563,28 @@ Label_0b_4b25:
 	ld hl, wTotalPointsScoredInCurrentGame ; $4b29
 	inc [hl] ; $4b2c
 	ret ; $4b2d
-Func_0b_4b2e:
+ServiceMatch2JudgeShot0:
 	ld a, $00 ; $4b2e
-	call Func_0b_4b53 ; $4b30
+	call ServiceMatch2JudgePoint ; $4b30
 	ld [$c2ff], a ; $4b33
 	ret ; $4b36
-Func_0b_4b37:
+ServiceMatch2JudgeShot1:
 	ld a, $01 ; $4b37
-	call Func_0b_4b53 ; $4b39
+	call ServiceMatch2JudgePoint ; $4b39
 	ld [$c2ff], a ; $4b3c
 	ret ; $4b3f
-Func_0b_4b40:
+ServiceMatch2JudgeShot2:
 	ret ; $4b40
 	ld a, $02 ; $4b41
-	call Func_0b_4b53 ; $4b43
+	call ServiceMatch2JudgePoint ; $4b43
 	ld [$c2ff], a ; $4b46
 	ret ; $4b49
-Func_0b_4b4a:
+ServiceMatch2JudgeShot3:
 	ld a, $03 ; $4b4a
-	call Func_0b_4b53 ; $4b4c
+	call ServiceMatch2JudgePoint ; $4b4c
 	ld [$c2ff], a ; $4b4f
 	ret ; $4b52
-Func_0b_4b53:
+ServiceMatch2JudgePoint:
 	ld b, a ; $4b53
 	ld a, [$c2ff] ; $4b54
 	or a, a ; $4b57
@@ -1736,8 +1736,8 @@ ServiceMatch3Hook_PointStart:
 	ld [$c2ff], a ; $4c45
 	ret ; $4c48
 ServiceMatch3Hook_PointEnd:
-	call Func_0b_4d17 ; $4c49
-	call Func_0b_4c98 ; $4c4c
+	call ServiceMatch3JudgeShot0 ; $4c49
+	call ServiceMatch3HandlePointEnd ; $4c4c
 	ld a, [wPointWinLoseFlag] ; $4c4f
 	or a, a ; $4c52
 	ret z ; $4c53
@@ -1775,15 +1775,15 @@ Label_0b_4c80:
 	ld [wPointWinLoseFlag], a ; $4c88
 	ret ; $4c8b
 ServiceMatch3Hook_RallyTick:
-	call Func_0b_4d33 ; $4c8c
+	call ServiceMatch3JudgeShot3 ; $4c8c
 	ret ; $4c8f
 ServiceMatch3Hook_Bounce:
-	call Func_0b_4d29 ; $4c90
+	call ServiceMatch3JudgeShot2 ; $4c90
 	ret ; $4c93
 ServiceMatch3Hook_BallHit:
-	call Func_0b_4d20 ; $4c94
+	call ServiceMatch3JudgeShot1 ; $4c94
 	ret ; $4c97
-Func_0b_4c98:
+ServiceMatch3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $4c98
 	ld a, [$c2ff] ; $4c9b
 	ld b, a ; $4c9e
@@ -1797,14 +1797,14 @@ Label_0b_4ca9:
 	ld [wPointWinLoseFlag], a ; $4ca9
 	call RecordDrillPointResultBits ; $4cac
 	ld a, $00 ; $4caf
-	call Func_0b_40c0 ; $4cb1
+	call CountDrillShotSuccesses ; $4cb1
 	ld [$c2e8], a ; $4cb4
 	ld a, $01 ; $4cb7
-	call Func_0b_40c0 ; $4cb9
+	call CountDrillShotSuccesses ; $4cb9
 	ld [$c2e9], a ; $4cbc
 	call ShowQueuedDrillMessage ; $4cbf
 	farcall UpdatePointStats ; $4cc2
-	call Func_0b_4cee ; $4cc5
+	call ServiceMatch3AwardPointToSide ; $4cc5
 	ld a, [$c2e8] ; $4cc8
 	ld [wPlayer1PointsWon], a ; $4ccb
 	ld a, [$c2e9] ; $4cce
@@ -1819,7 +1819,7 @@ Label_0b_4ca9:
 	farcall StartPointEndReactions ; $4ce7
 	call PlayDrillPointEndSequence ; $4cea
 	ret ; $4ced
-Func_0b_4cee:
+ServiceMatch3AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $4cee
 	or a, a ; $4cf1
 	ret z ; $4cf2
@@ -1844,29 +1844,29 @@ Label_0b_4d0e:
 	ld hl, wTotalPointsScoredInCurrentGame ; $4d12
 	inc [hl] ; $4d15
 	ret ; $4d16
-Func_0b_4d17:
+ServiceMatch3JudgeShot0:
 	ld a, $00 ; $4d17
-	call Func_0b_4d3d ; $4d19
+	call ServiceMatch3JudgePoint ; $4d19
 	ld [$c2ff], a ; $4d1c
 	ret ; $4d1f
-Func_0b_4d20:
+ServiceMatch3JudgeShot1:
 	ld a, $01 ; $4d20
-	call Func_0b_4d3d ; $4d22
+	call ServiceMatch3JudgePoint ; $4d22
 	ld [$c2ff], a ; $4d25
 	ret ; $4d28
-Func_0b_4d29:
+ServiceMatch3JudgeShot2:
 	ret ; $4d29
 	ld a, $02 ; $4d2a
-	call Func_0b_4d3d ; $4d2c
+	call ServiceMatch3JudgePoint ; $4d2c
 	ld [$c2ff], a ; $4d2f
 	ret ; $4d32
-Func_0b_4d33:
+ServiceMatch3JudgeShot3:
 	ret ; $4d33
 	ld a, $03 ; $4d34
-	call Func_0b_4d3d ; $4d36
+	call ServiceMatch3JudgePoint ; $4d36
 	ld [$c2ff], a ; $4d39
 	ret ; $4d3c
-Func_0b_4d3d:
+ServiceMatch3JudgePoint:
 	ld b, a ; $4d3d
 	ld a, [$c2ff] ; $4d3e
 	or a, a ; $4d41
@@ -2011,19 +2011,19 @@ ServicePractice1Hook_PointStart:
 	call SetDrillTargetZoneForPoint ; $4e21
 	ret ; $4e24
 ServicePractice1Hook_PointEnd:
-	call Func_0b_4ec2 ; $4e25
+	call ServicePractice1HandlePointEnd ; $4e25
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4e28
 	cp a, $04 ; $4e2b
 	ret c ; $4e2d
 	ld a, [wPointWinLoseFlag] ; $4e2e
 	or a, a ; $4e31
 	ret z ; $4e32
-	call Func_0b_4e3f ; $4e33
+	call ServicePractice1EvaluateResult ; $4e33
 	ld [wPointWinLoseFlag], a ; $4e36
 	ld a, $80 ; $4e39
 	ld [wMatchAbortFlag], a ; $4e3b
 	ret ; $4e3e
-Func_0b_4e3f:
+ServicePractice1EvaluateResult:
 	ld a, [$c2e7] ; $4e3f
 	ld b, a ; $4e42
 	ld a, $04 ; $4e43
@@ -2062,7 +2062,7 @@ ServicePractice1Hook_Bounce:
 	ld a, [wRallyLength] ; $4e75
 	cp a, $01 ; $4e78
 	ret nz ; $4e7a
-	call Func_0b_41da ; $4e7b
+	call RecordDrillTargetZoneHitIfInPlay ; $4e7b
 	ret ; $4e7e
 	ld a, [wBallBounceCount] ; $4e7f
 	cp a, $02 ; $4e82
@@ -2094,16 +2094,16 @@ DrillPositions_0b_4ea0:
 	dw $fe50, $0150 ; record 6
 	dw $ff28, $02a0 ; record 7
 	db $ff, $ff
-Func_0b_4ec2:
+ServicePractice1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $4ec2
-	call Func_0b_4f22 ; $4ec5
+	call ServicePractice1QueueOutcomeMessage ; $4ec5
 	ld [wPointWinLoseFlag], a ; $4ec8
 	call RecordDrillPointResultBits ; $4ecb
 	ld a, $00 ; $4ece
-	call Func_0b_40c0 ; $4ed0
+	call CountDrillShotSuccesses ; $4ed0
 	ld [$c2e8], a ; $4ed3
 	ld a, $01 ; $4ed6
-	call Func_0b_40c0 ; $4ed8
+	call CountDrillShotSuccesses ; $4ed8
 	ld [$c2e9], a ; $4edb
 	call ShowQueuedDrillMessage ; $4ede
 	farcall UpdatePointStats ; $4ee1
@@ -2132,7 +2132,7 @@ Func_0b_4ec2:
 	dec a ; $4f1d
 	ld [$c2f8], a ; $4f1e
 	ret ; $4f21
-Func_0b_4f22:
+ServicePractice1QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $4f22
 	cp a, $01 ; $4f25
 	jp z, Label_0b_4f62 ; $4f27
@@ -2212,19 +2212,19 @@ ServicePractice2Hook_PointStart:
 	ld [$c2e6], a ; $4fb1
 	ret ; $4fb4
 ServicePractice2Hook_PointEnd:
-	call Func_0b_5082 ; $4fb5
+	call ServicePractice2HandlePointEnd ; $4fb5
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4fb8
 	cp a, $04 ; $4fbb
 	ret c ; $4fbd
 	ld a, [wPointWinLoseFlag] ; $4fbe
 	or a, a ; $4fc1
 	ret z ; $4fc2
-	call Func_0b_4fcf ; $4fc3
+	call ServicePractice2EvaluateResult ; $4fc3
 	ld [wPointWinLoseFlag], a ; $4fc6
 	ld a, $80 ; $4fc9
 	ld [wMatchAbortFlag], a ; $4fcb
 	ret ; $4fce
-Func_0b_4fcf:
+ServicePractice2EvaluateResult:
 	ld a, [wPlayer1PointsWon] ; $4fcf
 	or a, a ; $4fd2
 	jr nz, Label_0b_4fdc ; $4fd3
@@ -2239,7 +2239,7 @@ Label_0b_4fdc:
 	ld [$c2e3], a ; $4fe4
 	jr Label_0b_5027 ; $4fe7
 Label_0b_4fe9:
-	call Func_0b_420b ; $4fe9
+	call CountDrillResultBitsSet ; $4fe9
 	or a, a ; $4fec
 	jr z, Label_0b_4ff6 ; $4fed
 	ld a, $03 ; $4fef
@@ -2289,7 +2289,7 @@ ServicePractice2Hook_Bounce:
 	ld a, [wRallyLength] ; $5037
 	cp a, $01 ; $503a
 	ret nz ; $503c
-	call Func_0b_41da ; $503d
+	call RecordDrillTargetZoneHitIfInPlay ; $503d
 	ret ; $5040
 	ld a, [wBallBounceCount] ; $5041
 	cp a, $02 ; $5044
@@ -2320,22 +2320,22 @@ DrillPositions_0b_5060:
 	dw $fe50, $01c0 ; record 6
 	dw $fee0, $02a0 ; record 7
 	db $ff, $ff
-Func_0b_5082:
-	call Func_0b_50e5 ; $5082
+ServicePractice2HandlePointEnd:
+	call ServicePractice2SetupShotTarget ; $5082
 	farcall UpdateScorePanelDisplay ; $5085
-	call Func_0b_513f ; $5088
+	call ServicePractice2QueueOutcomeMessage ; $5088
 	ld [wPointWinLoseFlag], a ; $508b
 	call RecordDrillPointResultBits ; $508e
 	ld a, $00 ; $5091
-	call Func_0b_40c0 ; $5093
+	call CountDrillShotSuccesses ; $5093
 	ld [$c2ec], a ; $5096
 	ld a, $01 ; $5099
-	call Func_0b_40c0 ; $509b
+	call CountDrillShotSuccesses ; $509b
 	ld [$c2ed], a ; $509e
 	ld a, [$c2e6] ; $50a1
 	or a, a ; $50a4
 	jr nz, Label_0b_50aa ; $50a5
-	call Func_0b_44f2 ; $50a7
+	call QueueDrillOutcomeMessage ; $50a7
 Label_0b_50aa:
 	call ShowDrillMessageByIndex ; $50aa
 	farcall UpdatePointStats ; $50ad
@@ -2359,7 +2359,7 @@ Label_0b_50aa:
 	call UnregisterFrameTask ; $50de
 	call PlayDrillPointEndSequence ; $50e1
 	ret ; $50e4
-Func_0b_50e5:
+ServicePractice2SetupShotTarget:
 	ld a, [wRallyLength] ; $50e5
 	cp a, $01 ; $50e8
 	ret nz ; $50ea
@@ -2412,7 +2412,7 @@ Label_0b_5125:
 Table_0b_5130:
 	; $5130, 15 bytes (bytes:15)
 	db $0d, $0c, $0d, $0c, $0d, $e9, $c2, $e8, $c2, $e9, $c2, $e8, $c2, $e9, $c2 ; 0x00
-Func_0b_513f:
+ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $513f
 	cp a, $01 ; $5142
 	jp z, Label_0b_51c1 ; $5144
@@ -2519,12 +2519,12 @@ ServicePractice3Hook_PerFrame:
 	ld a, [wRallyLength] ; $5201
 	cp a, $01 ; $5204
 	jr nz, Label_0b_520b ; $5206
-	call Func_0b_4233 ; $5208
+	call RecordGateCrossOnServe ; $5208
 Label_0b_520b:
 	ret ; $520b
 ServicePractice3Hook_Draw:
-	call Func_0b_46a0 ; $520c
-	call Func_0b_46c4 ; $520f
+	call QueueDrillMarker1_0b ; $520c
+	call QueueDrillMarker2_0b ; $520f
 	ret ; $5212
 ServicePractice3Hook_PointStart:
 	xor a, a ; $5213
@@ -2538,27 +2538,27 @@ ServicePractice3Hook_PointStart:
 	ld a, $01 ; $5227
 	ld [$c78b], a ; $5229
 	ld hl, DrillPositions_0b_52e0 ; $522c
-	call Func_0b_415f ; $522f
+	call IndexDrillTableByPoint ; $522f
 	xor a, a ; $5232
 	ld [$c2e6], a ; $5233
 	ret ; $5236
 ServicePractice3Hook_PointEnd:
-	call Func_0b_5324 ; $5237
+	call ServicePractice3HandlePointEnd ; $5237
 	ld a, [wTotalPointsScoredInCurrentGame] ; $523a
 	cp a, $04 ; $523d
 	ret c ; $523f
 	ld a, [wPointWinLoseFlag] ; $5240
 	or a, a ; $5243
 	ret z ; $5244
-	call Func_0b_5251 ; $5245
+	call ServicePractice3EvaluateResult ; $5245
 	ld [wPointWinLoseFlag], a ; $5248
 	ld a, $80 ; $524b
 	ld [wMatchAbortFlag], a ; $524d
 	ret ; $5250
-Func_0b_5251:
-	call Func_0b_420b ; $5251
+ServicePractice3EvaluateResult:
+	call CountDrillResultBitsSet ; $5251
 	ld b, a ; $5254
-	call Func_0b_4257 ; $5255
+	call CountDrillResultBitsSetAlt ; $5255
 	ld c, a ; $5258
 	ld a, [$c2e7] ; $5259
 	or a, a ; $525c
@@ -2574,7 +2574,7 @@ Label_0b_5266:
 	ld [$c2e3], a ; $526e
 	jr Label_0b_529b ; $5271
 Label_0b_5273:
-	call Func_0b_420b ; $5273
+	call CountDrillResultBitsSet ; $5273
 	or a, a ; $5276
 	jr z, Label_0b_5280 ; $5277
 	ld a, $03 ; $5279
@@ -2588,7 +2588,7 @@ Label_0b_5280:
 	ld [$c2e3], a ; $5288
 	jr Label_0b_529b ; $528b
 Label_0b_528d:
-	call Func_0b_4257 ; $528d
+	call CountDrillResultBitsSetAlt ; $528d
 	cp a, $04 ; $5290
 	jr z, Label_0b_529e ; $5292
 	ld a, $05 ; $5294
@@ -2608,10 +2608,10 @@ ServicePractice3Hook_Bounce:
 	ld a, [wRallyLength] ; $52a6
 	cp a, $01 ; $52a9
 	ret nz ; $52ab
-	call Func_0b_41da ; $52ac
+	call RecordDrillTargetZoneHitIfInPlay ; $52ac
 	ret ; $52af
 ServicePractice3Hook_BallHit:
-	call Func_0b_52c3 ; $52b0
+	call ServicePractice3SetupShotTarget ; $52b0
 	ld a, [wRallyLength] ; $52b3
 	cp a, $02 ; $52b6
 	jr c, Label_0b_52c2 ; $52b8
@@ -2620,7 +2620,7 @@ ServicePractice3Hook_BallHit:
 	call ResetActiveCharState ; $52bf
 Label_0b_52c2:
 	ret ; $52c2
-Func_0b_52c3:
+ServicePractice3SetupShotTarget:
 	ld a, [wRallyLength] ; $52c3
 	cp a, $01 ; $52c6
 	ret nz ; $52c8
@@ -2657,16 +2657,16 @@ DrillPositions_0b_52e0:
 	dw $02a0, $ff94 ; record 14
 	dw $0150, $0000 ; record 15
 	dw $02a0, $ffff ; record 16
-Func_0b_5324:
+ServicePractice3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5324
-	call Func_0b_537b ; $5327
+	call ServicePractice3QueueOutcomeMessage ; $5327
 	ld [wPointWinLoseFlag], a ; $532a
 	call RecordDrillPointResultBits ; $532d
 	ld a, $00 ; $5330
-	call Func_0b_40c0 ; $5332
+	call CountDrillShotSuccesses ; $5332
 	ld [$c2ec], a ; $5335
 	ld a, $01 ; $5338
-	call Func_0b_40c0 ; $533a
+	call CountDrillShotSuccesses ; $533a
 	ld [$c2ed], a ; $533d
 	call ShowQueuedDrillMessage ; $5340
 	farcall UpdatePointStats ; $5343
@@ -2690,7 +2690,7 @@ Func_0b_5324:
 	call UnregisterFrameTask ; $5374
 	call PlayDrillPointEndSequence ; $5377
 	ret ; $537a
-Func_0b_537b:
+ServicePractice3QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $537b
 	cp a, $01 ; $537e
 	jp z, Label_0b_53d6 ; $5380
@@ -2708,7 +2708,7 @@ Func_0b_537b:
 	ld a, $0f ; $539c
 	ld b, $00 ; $539e
 	call QueueDrillResultMessage ; $53a0
-	call Func_0b_4268 ; $53a3
+	call CountDrillResultBitsThisGame ; $53a3
 	jr z, Label_0b_53d3 ; $53a6
 	ld a, $10 ; $53a8
 	ld b, $00 ; $53aa
@@ -2764,7 +2764,7 @@ NetGameMatch1Hook_PointStart:
 	ld a, $0a ; $5405
 	ld [$c2e0], a ; $5407
 	ld hl, $542c ; $540a
-	call Func_0b_441c ; $540d
+	call LoadDrillOpponentBySide ; $540d
 	xor a, a ; $5410
 	ld [$c2e6], a ; $5411
 	xor a, a ; $5414
@@ -2781,12 +2781,12 @@ NetGameMatch1Hook_PointStart:
 	db $3d ; $542c
 	db $54 ; $542d
 NetGameMatch1Hook_PointEnd:
-	call Func_0b_54d3 ; $542e
-	call Func_0b_5457 ; $5431
+	call NetGameMatch1JudgeShot0 ; $542e
+	call NetGameMatch1HandlePointEnd ; $5431
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5434
 	bit 0, a ; $5437
 	ret nz ; $5439
-	call Func_0b_54ba ; $543a
+	call NetGameMatch1DecideWinner ; $543a
 	ld a, [wPlayer2PointsWon] ; $543d
 	ld hl, wPlayer1PointsWon ; $5440
 	sub a, [hl] ; $5443
@@ -2795,15 +2795,15 @@ NetGameMatch1Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $5447
 	ret ; $544a
 NetGameMatch1Hook_RallyTick:
-	call Func_0b_54ef ; $544b
+	call NetGameMatch1JudgeShot3 ; $544b
 	ret ; $544e
 NetGameMatch1Hook_Bounce:
-	call Func_0b_54e5 ; $544f
+	call NetGameMatch1JudgeShot2 ; $544f
 	ret ; $5452
 NetGameMatch1Hook_BallHit:
-	call Func_0b_54dc ; $5453
+	call NetGameMatch1JudgeShot1 ; $5453
 	ret ; $5456
-Func_0b_5457:
+NetGameMatch1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5457
 	ld a, [$c2ff] ; $545a
 	ld b, a ; $545d
@@ -2818,7 +2818,7 @@ Label_0b_5468:
 	call RecordDrillPointResultBits ; $546b
 	call ShowQueuedDrillMessage ; $546e
 	farcall UpdatePointStats ; $5471
-	call Func_0b_5491 ; $5474
+	call NetGameMatch1AwardPointToSide ; $5474
 	ld a, [wPlayer1PointsWon] ; $5477
 	ld b, $01 ; $547a
 	farcall LoadPlayer1PointsDigitGfx ; $547c
@@ -2829,7 +2829,7 @@ Label_0b_5468:
 	farcall StartPointEndReactions ; $548a
 	call PlayDrillPointEndSequence ; $548d
 	ret ; $5490
-Func_0b_5491:
+NetGameMatch1AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $5491
 	or a, a ; $5494
 	ret z ; $5495
@@ -2854,7 +2854,7 @@ Label_0b_54b1:
 	ld hl, wTotalPointsScoredInCurrentGame ; $54b5
 	inc [hl] ; $54b8
 	ret ; $54b9
-Func_0b_54ba:
+NetGameMatch1DecideWinner:
 	ld a, [wPlayer1PointsWon] ; $54ba
 	ld b, a ; $54bd
 	ld a, [wPlayer2PointsWon] ; $54be
@@ -2870,29 +2870,29 @@ Label_0b_54ca:
 Label_0b_54cf:
 	ld [wPointWinLoseFlag], a ; $54cf
 	ret ; $54d2
-Func_0b_54d3:
+NetGameMatch1JudgeShot0:
 	ld a, $00 ; $54d3
-	call Func_0b_54f9 ; $54d5
+	call NetGameMatch1JudgePoint ; $54d5
 	ld [$c2ff], a ; $54d8
 	ret ; $54db
-Func_0b_54dc:
+NetGameMatch1JudgeShot1:
 	ld a, $01 ; $54dc
-	call Func_0b_54f9 ; $54de
+	call NetGameMatch1JudgePoint ; $54de
 	ld [$c2ff], a ; $54e1
 	ret ; $54e4
-Func_0b_54e5:
+NetGameMatch1JudgeShot2:
 	ret ; $54e5
 	ld a, $02 ; $54e6
-	call Func_0b_54f9 ; $54e8
+	call NetGameMatch1JudgePoint ; $54e8
 	ld [$c2ff], a ; $54eb
 	ret ; $54ee
-Func_0b_54ef:
+NetGameMatch1JudgeShot3:
 	ret ; $54ef
 	ld a, $03 ; $54f0
-	call Func_0b_54f9 ; $54f2
+	call NetGameMatch1JudgePoint ; $54f2
 	ld [$c2ff], a ; $54f5
 	ret ; $54f8
-Func_0b_54f9:
+NetGameMatch1JudgePoint:
 	ld b, a ; $54f9
 	ld a, [$c2ff] ; $54fa
 	or a, a ; $54fd
@@ -3026,7 +3026,7 @@ Label_0b_55b7:
 	call QueueDrillResultMessage ; $55bb
 	ld a, [wTotalPointsScoredInCurrentGame] ; $55be
 	and a, $01 ; $55c1
-	call Func_0b_4447 ; $55c3
+	call TestCharStateBit4 ; $55c3
 	or a, a ; $55c6
 	jp z, Label_0b_563c ; $55c7
 	ld a, $1f ; $55ca
@@ -3139,7 +3139,7 @@ NetGameMatch2Hook_PointStart:
 	ld a, $0a ; $566c
 	ld [$c2e0], a ; $566e
 	ld hl, $5699 ; $5671
-	call Func_0b_441c ; $5674
+	call LoadDrillOpponentBySide ; $5674
 	xor a, a ; $5677
 	ld [$c2e6], a ; $5678
 	xor a, a ; $567b
@@ -3158,8 +3158,8 @@ NetGameMatch2Hook_PointStart:
 	db $3e ; $5699
 	db $55 ; $569a
 NetGameMatch2Hook_PointEnd:
-	call Func_0b_574d ; $569b
-	call Func_0b_56ea ; $569e
+	call NetGameMatch2JudgeShot0 ; $569b
+	call NetGameMatch2HandlePointEnd ; $569e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $56a1
 	bit 0, a ; $56a4
 	ret nz ; $56a6
@@ -3196,15 +3196,15 @@ Label_0b_56cd:
 	ld [wMatchAbortFlag], a ; $56da
 	ret ; $56dd
 NetGameMatch2Hook_RallyTick:
-	call Func_0b_5769 ; $56de
+	call NetGameMatch2JudgeShot3 ; $56de
 	ret ; $56e1
 NetGameMatch2Hook_Bounce:
-	call Func_0b_575f ; $56e2
+	call NetGameMatch2JudgeShot2 ; $56e2
 	ret ; $56e5
 NetGameMatch2Hook_BallHit:
-	call Func_0b_5756 ; $56e6
+	call NetGameMatch2JudgeShot1 ; $56e6
 	ret ; $56e9
-Func_0b_56ea:
+NetGameMatch2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $56ea
 	ld a, [$c2ff] ; $56ed
 	ld b, a ; $56f0
@@ -3219,7 +3219,7 @@ Label_0b_56fb:
 	call RecordDrillPointResultBits ; $56fe
 	call ShowQueuedDrillMessage ; $5701
 	farcall UpdatePointStats ; $5704
-	call Func_0b_5724 ; $5707
+	call NetGameMatch2AwardPointToSide ; $5707
 	ld a, [wPlayer1PointsWon] ; $570a
 	ld b, $01 ; $570d
 	farcall LoadPlayer1PointsDigitGfx ; $570f
@@ -3230,7 +3230,7 @@ Label_0b_56fb:
 	farcall StartPointEndReactions ; $571d
 	call PlayDrillPointEndSequence ; $5720
 	ret ; $5723
-Func_0b_5724:
+NetGameMatch2AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $5724
 	or a, a ; $5727
 	ret z ; $5728
@@ -3255,29 +3255,29 @@ Label_0b_5744:
 	ld hl, wTotalPointsScoredInCurrentGame ; $5748
 	inc [hl] ; $574b
 	ret ; $574c
-Func_0b_574d:
+NetGameMatch2JudgeShot0:
 	ld a, $00 ; $574d
-	call Func_0b_5773 ; $574f
+	call NetGameMatch2JudgePoint ; $574f
 	ld [$c2ff], a ; $5752
 	ret ; $5755
-Func_0b_5756:
+NetGameMatch2JudgeShot1:
 	ld a, $01 ; $5756
-	call Func_0b_5773 ; $5758
+	call NetGameMatch2JudgePoint ; $5758
 	ld [$c2ff], a ; $575b
 	ret ; $575e
-Func_0b_575f:
+NetGameMatch2JudgeShot2:
 	ret ; $575f
 	ld a, $02 ; $5760
-	call Func_0b_5773 ; $5762
+	call NetGameMatch2JudgePoint ; $5762
 	ld [$c2ff], a ; $5765
 	ret ; $5768
-Func_0b_5769:
+NetGameMatch2JudgeShot3:
 	ret ; $5769
 	ld a, $03 ; $576a
-	call Func_0b_5773 ; $576c
+	call NetGameMatch2JudgePoint ; $576c
 	ld [$c2ff], a ; $576f
 	ret ; $5772
-Func_0b_5773:
+NetGameMatch2JudgePoint:
 	ld b, a ; $5773
 	ld a, [$c2ff] ; $5774
 	or a, a ; $5777
@@ -3539,10 +3539,10 @@ NetGameMatch3Hook_PointStart:
 	ld [$c2ed], a ; $5904
 	ret ; $5907
 NetGameMatch3Hook_PointEnd:
-	call Func_0b_5a78 ; $5908
-	call Func_0b_595a ; $590b
+	call NetGameMatch3JudgeShot0 ; $5908
+	call NetGameMatch3HandlePointEnd ; $590b
 	ld hl, $594c ; $590e
-	call Func_0b_441c ; $5911
+	call LoadDrillOpponentBySide ; $5911
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5914
 	bit 0, a ; $5917
 	ret nz ; $5919
@@ -3579,15 +3579,15 @@ Label_0b_5940:
 	db $3f ; $594c
 	db $56 ; $594d
 NetGameMatch3Hook_RallyTick:
-	call Func_0b_5a94 ; $594e
+	call NetGameMatch3JudgeShot3 ; $594e
 	ret ; $5951
 NetGameMatch3Hook_Bounce:
-	call Func_0b_5a8a ; $5952
+	call NetGameMatch3JudgeShot2 ; $5952
 	ret ; $5955
 NetGameMatch3Hook_BallHit:
-	call Func_0b_5a81 ; $5956
+	call NetGameMatch3JudgeShot1 ; $5956
 	ret ; $5959
-Func_0b_595a:
+NetGameMatch3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $595a
 	ld a, [$c2ff] ; $595d
 	ld b, a ; $5960
@@ -3602,7 +3602,7 @@ Label_0b_596b:
 	call RecordDrillPointResultBits ; $596e
 	call ShowQueuedDrillMessage ; $5971
 	farcall UpdatePointStats ; $5974
-	call Func_0b_5a4f ; $5977
+	call NetGameMatch3AwardPointToSide ; $5977
 	ld a, [wPlayer1PointsWon] ; $597a
 	ld b, $01 ; $597d
 	farcall LoadPlayer1PointsDigitGfx ; $597f
@@ -3716,7 +3716,7 @@ Label_0b_5a48:
 	ld [$c2e6], a ; $5a4a
 	xor a, a ; $5a4d
 	ret ; $5a4e
-Func_0b_5a4f:
+NetGameMatch3AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $5a4f
 	or a, a ; $5a52
 	ret z ; $5a53
@@ -3741,29 +3741,29 @@ Label_0b_5a6f:
 	ld hl, wTotalPointsScoredInCurrentGame ; $5a73
 	inc [hl] ; $5a76
 	ret ; $5a77
-Func_0b_5a78:
+NetGameMatch3JudgeShot0:
 	ld a, $00 ; $5a78
-	call Func_0b_5a9e ; $5a7a
+	call NetGameMatch3JudgePoint ; $5a7a
 	ld [$c2ff], a ; $5a7d
 	ret ; $5a80
-Func_0b_5a81:
+NetGameMatch3JudgeShot1:
 	ld a, $01 ; $5a81
-	call Func_0b_5a9e ; $5a83
+	call NetGameMatch3JudgePoint ; $5a83
 	ld [$c2ff], a ; $5a86
 	ret ; $5a89
-Func_0b_5a8a:
+NetGameMatch3JudgeShot2:
 	ret ; $5a8a
 	ld a, $02 ; $5a8b
-	call Func_0b_5a9e ; $5a8d
+	call NetGameMatch3JudgePoint ; $5a8d
 	ld [$c2ff], a ; $5a90
 	ret ; $5a93
-Func_0b_5a94:
+NetGameMatch3JudgeShot3:
 	ret ; $5a94
 	ld a, $03 ; $5a95
-	call Func_0b_5a9e ; $5a97
+	call NetGameMatch3JudgePoint ; $5a97
 	ld [$c2ff], a ; $5a9a
 	ret ; $5a9d
-Func_0b_5a9e:
+NetGameMatch3JudgePoint:
 	ld b, a ; $5a9e
 	ld a, [$c2ff] ; $5a9f
 	or a, a ; $5aa2
@@ -3897,7 +3897,7 @@ Label_0b_5b5c:
 	call QueueDrillResultMessage ; $5b60
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5b63
 	and a, $01 ; $5b66
-	call Func_0b_4447 ; $5b68
+	call TestCharStateBit4 ; $5b68
 	or a, a ; $5b6b
 	jp z, Label_0b_5bd2 ; $5b6c
 	xor a, a ; $5b6f
@@ -4054,14 +4054,14 @@ Label_0b_5c62:
 	ld hl, $c2e9 ; $5c62
 	inc [hl] ; $5c65
 Label_0b_5c66:
-	call Drill09HandlePointEnd ; $5c66
+	call NetGamePractice1HandlePointEnd ; $5c66
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5c69
 	cp a, $04 ; $5c6c
 	ret c ; $5c6e
-	call Drill09EvaluateResult ; $5c6f
+	call NetGamePractice1EvaluateResult ; $5c6f
 	ld [wPointWinLoseFlag], a ; $5c72
 	ret ; $5c75
-Drill09EvaluateResult:
+NetGamePractice1EvaluateResult:
 	ld a, [$c2eb] ; $5c76
 	cp a, $04 ; $5c79
 	jr nz, Label_0b_5c84 ; $5c7b
@@ -4135,7 +4135,7 @@ Label_0b_5cd6:
 	dw $01b0 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
-Drill09HandlePointEnd:
+NetGamePractice1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5cf9
 	ld a, [$c2ff] ; $5cfc
 	ld [wPointWinLoseFlag], a ; $5cff
@@ -4169,26 +4169,26 @@ Label_0b_5d0a:
 	ret ; $5d47
 Drill09JudgePointMode0:
 	ld a, $00 ; $5d48
-	call Drill09JudgePoint ; $5d4a
+	call NetGamePractice1JudgePoint ; $5d4a
 	ld [$c2ff], a ; $5d4d
 	ret ; $5d50
 Drill09JudgePointMode1:
 	ld a, $01 ; $5d51
-	call Drill09JudgePoint ; $5d53
+	call NetGamePractice1JudgePoint ; $5d53
 	ld [$c2ff], a ; $5d56
 	ret ; $5d59
 Drill09JudgePointMode2:
 	ld a, $02 ; $5d5a
-	call Drill09JudgePoint ; $5d5c
+	call NetGamePractice1JudgePoint ; $5d5c
 	ld [$c2ff], a ; $5d5f
 	ret ; $5d62
 StubNop_0b_5d63:
 	ret ; $5d63
 	ld a, $03 ; $5d64
-	call Drill09JudgePoint ; $5d66
+	call NetGamePractice1JudgePoint ; $5d66
 	ld [$c2ff], a ; $5d69
 	ret ; $5d6c
-Drill09JudgePoint:
+NetGamePractice1JudgePoint:
 	ld b, a ; $5d6d
 	ld a, [$c2ff] ; $5d6e
 	or a, a ; $5d71
@@ -4322,7 +4322,7 @@ Label_0b_5e31:
 	ld b, $00 ; $5e33
 	call QueueDrillResultMessage ; $5e35
 	xor a, a ; $5e38
-	call Func_0b_4447 ; $5e39
+	call TestCharStateBit4 ; $5e39
 	or a, a ; $5e3c
 	jp z, Label_0b_5e8d ; $5e3d
 	ld a, $3a ; $5e40
@@ -4424,7 +4424,7 @@ NetGamePractice2Hook_PointStart:
 	ld [$c2ff], a ; $5ef6
 	ret ; $5ef9
 NetGamePractice2Hook_PointEnd:
-	call Func_0b_6002 ; $5efa
+	call NetGamePractice2JudgeShot0 ; $5efa
 	ld a, [wPointOutcome] ; $5efd
 	cp a, $04 ; $5f00
 	jr z, Label_0b_5f0a ; $5f02
@@ -4435,14 +4435,14 @@ Label_0b_5f0a:
 	ld hl, $c2ea ; $5f0a
 	inc [hl] ; $5f0d
 Label_0b_5f0e:
-	call Func_0b_5fb3 ; $5f0e
+	call NetGamePractice2HandlePointEnd ; $5f0e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5f11
 	cp a, $04 ; $5f14
 	ret c ; $5f16
-	call Func_0b_5f1e ; $5f17
+	call NetGamePractice2EvaluateResult ; $5f17
 	ld [wPointWinLoseFlag], a ; $5f1a
 	ret ; $5f1d
-Func_0b_5f1e:
+NetGamePractice2EvaluateResult:
 	ld a, [$c2eb] ; $5f1e
 	cp a, $04 ; $5f21
 	jr nz, Label_0b_5f2c ; $5f23
@@ -4494,13 +4494,13 @@ Label_0b_5f78:
 	ld a, $ff ; $5f78
 	ret ; $5f7a
 NetGamePractice2Hook_RallyTick:
-	call Func_0b_601d ; $5f7b
+	call NetGamePractice2JudgeShot3 ; $5f7b
 	ret ; $5f7e
 NetGamePractice2Hook_Bounce:
-	call Func_0b_6014 ; $5f7f
+	call NetGamePractice2JudgeShot2 ; $5f7f
 	ret ; $5f82
 NetGamePractice2Hook_BallHit:
-	call Func_0b_600b ; $5f83
+	call NetGamePractice2JudgeShot1 ; $5f83
 	ld a, [wLastShotCharIndex] ; $5f86
 	cp a, $01 ; $5f89
 	jr nz, Label_0b_5f90 ; $5f8b
@@ -4519,7 +4519,7 @@ DrillPositions_0b_5f91:
 	dw $fe50, $01c0 ; record 6
 	dw $0000, $02a0 ; record 7
 	db $ff, $ff
-Func_0b_5fb3:
+NetGamePractice2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5fb3
 	ld a, [$c2ff] ; $5fb6
 	ld [wPointWinLoseFlag], a ; $5fb9
@@ -4551,28 +4551,28 @@ Label_0b_5fc4:
 	call UnregisterFrameTask ; $5ffb
 	call PlayDrillPointEndSequence ; $5ffe
 	ret ; $6001
-Func_0b_6002:
+NetGamePractice2JudgeShot0:
 	ld a, $00 ; $6002
-	call Func_0b_6027 ; $6004
+	call NetGamePractice2JudgePoint ; $6004
 	ld [$c2ff], a ; $6007
 	ret ; $600a
-Func_0b_600b:
+NetGamePractice2JudgeShot1:
 	ld a, $01 ; $600b
-	call Func_0b_6027 ; $600d
+	call NetGamePractice2JudgePoint ; $600d
 	ld [$c2ff], a ; $6010
 	ret ; $6013
-Func_0b_6014:
+NetGamePractice2JudgeShot2:
 	ld a, $02 ; $6014
-	call Func_0b_6027 ; $6016
+	call NetGamePractice2JudgePoint ; $6016
 	ld [$c2ff], a ; $6019
 	ret ; $601c
-Func_0b_601d:
+NetGamePractice2JudgeShot3:
 	ret ; $601d
 	ld a, $03 ; $601e
-	call Func_0b_6027 ; $6020
+	call NetGamePractice2JudgePoint ; $6020
 	ld [$c2ff], a ; $6023
 	ret ; $6026
-Func_0b_6027:
+NetGamePractice2JudgePoint:
 	ld b, a ; $6027
 	ld a, [$c2ff] ; $6028
 	or a, a ; $602b
@@ -4805,7 +4805,7 @@ NetGamePractice3Hook_PointStart:
 	ld [$c2ff], a ; $61a8
 	ret ; $61ab
 NetGamePractice3Hook_PointEnd:
-	call Func_0b_62c1 ; $61ac
+	call NetGamePractice3JudgeShot0 ; $61ac
 	ld a, [wPointOutcome] ; $61af
 	cp a, $04 ; $61b2
 	jr z, Label_0b_61bc ; $61b4
@@ -4816,14 +4816,14 @@ Label_0b_61bc:
 	ld hl, $c2ea ; $61bc
 	inc [hl] ; $61bf
 Label_0b_61c0:
-	call Func_0b_6272 ; $61c0
+	call NetGamePractice3HandlePointEnd ; $61c0
 	ld a, [wTotalPointsScoredInCurrentGame] ; $61c3
 	cp a, $04 ; $61c6
 	ret c ; $61c8
-	call Func_0b_61d0 ; $61c9
+	call NetGamePractice3EvaluateResult ; $61c9
 	ld [wPointWinLoseFlag], a ; $61cc
 	ret ; $61cf
-Func_0b_61d0:
+NetGamePractice3EvaluateResult:
 	ld a, [$c2eb] ; $61d0
 	cp a, $04 ; $61d3
 	jr nz, Label_0b_61de ; $61d5
@@ -4852,7 +4852,7 @@ Label_0b_61f6:
 	ld [$c2e3], a ; $61ff
 	jr Label_0b_6237 ; $6202
 Label_0b_6204:
-	call Func_0b_420b ; $6204
+	call CountDrillResultBitsSet ; $6204
 	or a, a ; $6207
 	jr z, Label_0b_6211 ; $6208
 	ld a, $03 ; $620a
@@ -4882,13 +4882,13 @@ Label_0b_6237:
 	ld a, $ff ; $6237
 	ret ; $6239
 NetGamePractice3Hook_RallyTick:
-	call Func_0b_62dc ; $623a
+	call NetGamePractice3JudgeShot3 ; $623a
 	ret ; $623d
 NetGamePractice3Hook_Bounce:
-	call Func_0b_62d3 ; $623e
+	call NetGamePractice3JudgeShot2 ; $623e
 	ret ; $6241
 NetGamePractice3Hook_BallHit:
-	call Func_0b_62ca ; $6242
+	call NetGamePractice3JudgeShot1 ; $6242
 	ld a, [wLastShotCharIndex] ; $6245
 	cp a, $01 ; $6248
 	jr nz, Label_0b_624f ; $624a
@@ -4907,7 +4907,7 @@ DrillPositions_0b_6250:
 	dw $fe50, $01c0 ; record 6
 	dw $0000, $02a0 ; record 7
 	db $ff, $ff
-Func_0b_6272:
+NetGamePractice3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6272
 	ld a, [$c2ff] ; $6275
 	ld [wPointWinLoseFlag], a ; $6278
@@ -4939,28 +4939,28 @@ Label_0b_6283:
 	call UnregisterFrameTask ; $62ba
 	call PlayDrillPointEndSequence ; $62bd
 	ret ; $62c0
-Func_0b_62c1:
+NetGamePractice3JudgeShot0:
 	ld a, $00 ; $62c1
-	call Func_0b_62e6 ; $62c3
+	call NetGamePractice3JudgePoint ; $62c3
 	ld [$c2ff], a ; $62c6
 	ret ; $62c9
-Func_0b_62ca:
+NetGamePractice3JudgeShot1:
 	ld a, $01 ; $62ca
-	call Func_0b_62e6 ; $62cc
+	call NetGamePractice3JudgePoint ; $62cc
 	ld [$c2ff], a ; $62cf
 	ret ; $62d2
-Func_0b_62d3:
+NetGamePractice3JudgeShot2:
 	ld a, $02 ; $62d3
-	call Func_0b_62e6 ; $62d5
+	call NetGamePractice3JudgePoint ; $62d5
 	ld [$c2ff], a ; $62d8
 	ret ; $62db
-Func_0b_62dc:
+NetGamePractice3JudgeShot3:
 	ret ; $62dc
 	ld a, $03 ; $62dd
-	call Func_0b_62e6 ; $62df
+	call NetGamePractice3JudgePoint ; $62df
 	ld [$c2ff], a ; $62e2
 	ret ; $62e5
-Func_0b_62e6:
+NetGamePractice3JudgePoint:
 	ld b, a ; $62e6
 	ld a, [$c2ff] ; $62e7
 	or a, a ; $62ea
@@ -5110,7 +5110,7 @@ Label_0b_63c8:
 	ld b, $00 ; $63ca
 	call QueueDrillResultMessage ; $63cc
 	xor a, a ; $63cf
-	call Func_0b_4447 ; $63d0
+	call TestCharStateBit4 ; $63d0
 	or a, a ; $63d3
 	jp z, Label_0b_63f8 ; $63d4
 	ld a, $39 ; $63d7
@@ -5173,8 +5173,8 @@ StrokeMatch1Hook_PointStart:
 	ld [$c7a8], a ; $643d
 	ret ; $6440
 StrokeMatch1Hook_PointEnd:
-	call Func_0b_64e0 ; $6441
-	call Func_0b_6489 ; $6444
+	call StrokeMatch1JudgeShot0 ; $6441
+	call StrokeMatch1HandlePointEnd ; $6444
 	ld a, [wPlayer1PointsWon] ; $6447
 	ld b, a ; $644a
 	ld a, [wPlayer2PointsWon] ; $644b
@@ -5208,15 +5208,15 @@ Label_0b_646d:
 	ld [wMatchAbortFlag], a ; $6479
 	ret ; $647c
 StrokeMatch1Hook_RallyTick:
-	call Func_0b_64fb ; $647d
+	call StrokeMatch1JudgeShot3 ; $647d
 	ret ; $6480
 StrokeMatch1Hook_Bounce:
-	call Func_0b_64f2 ; $6481
+	call StrokeMatch1JudgeShot2 ; $6481
 	ret ; $6484
 StrokeMatch1Hook_BallHit:
-	call Func_0b_64e9 ; $6485
+	call StrokeMatch1JudgeShot1 ; $6485
 	ret ; $6488
-Func_0b_6489:
+StrokeMatch1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6489
 	ld a, [$c2ff] ; $648c
 	ld b, a ; $648f
@@ -5231,7 +5231,7 @@ Label_0b_649a:
 	call RecordDrillPointResultBits ; $649d
 	call ShowQueuedDrillMessage ; $64a0
 	farcall UpdatePointStats ; $64a3
-	call Func_0b_64c3 ; $64a6
+	call StrokeMatch1AwardPointToSide ; $64a6
 	ld a, [wPlayer1PointsWon] ; $64a9
 	ld b, $01 ; $64ac
 	farcall LoadPlayer1PointsDigitGfx ; $64ae
@@ -5242,7 +5242,7 @@ Label_0b_649a:
 	farcall StartPointEndReactions ; $64bc
 	call PlayDrillPointEndSequence ; $64bf
 	ret ; $64c2
-Func_0b_64c3:
+StrokeMatch1AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $64c3
 	or a, a ; $64c6
 	ret z ; $64c7
@@ -5261,28 +5261,28 @@ Label_0b_64d6:
 	ld hl, wTotalPointsScoredInCurrentGame ; $64db
 	inc [hl] ; $64de
 	ret ; $64df
-Func_0b_64e0:
+StrokeMatch1JudgeShot0:
 	ld a, $00 ; $64e0
-	call Func_0b_6505 ; $64e2
+	call StrokeMatch1JudgePoint ; $64e2
 	ld [$c2ff], a ; $64e5
 	ret ; $64e8
-Func_0b_64e9:
+StrokeMatch1JudgeShot1:
 	ld a, $01 ; $64e9
-	call Func_0b_6505 ; $64eb
+	call StrokeMatch1JudgePoint ; $64eb
 	ld [$c2ff], a ; $64ee
 	ret ; $64f1
-Func_0b_64f2:
+StrokeMatch1JudgeShot2:
 	ld a, $02 ; $64f2
-	call Func_0b_6505 ; $64f4
+	call StrokeMatch1JudgePoint ; $64f4
 	ld [$c2ff], a ; $64f7
 	ret ; $64fa
-Func_0b_64fb:
+StrokeMatch1JudgeShot3:
 	ret ; $64fb
 	ld a, $03 ; $64fc
-	call Func_0b_6505 ; $64fe
+	call StrokeMatch1JudgePoint ; $64fe
 	ld [$c2ff], a ; $6501
 	ret ; $6504
-Func_0b_6505:
+StrokeMatch1JudgePoint:
 	ld b, a ; $6505
 	ld a, [$c2ff] ; $6506
 	or a, a ; $6509
@@ -5314,8 +5314,8 @@ Label_0b_6535:
 	ld a, [hl] ; $6535
 	ld a, a ; $6536
 	ld b, $07 ; $6537
-	call Func_0b_4558 ; $6539
-	call Func_0b_668f ; $653c
+	call SetDrillMessageByRallyParity ; $6539
+	call SelectStrokeTargetTableByPoint ; $653c
 	ld a, [wPointOutcome] ; $653f
 	add a, l ; $6542
 	ld l, a ; $6543
@@ -5355,8 +5355,8 @@ Label_0b_656f:
 	ld a, [hl] ; $656f
 	ld a, a ; $6570
 	ld b, $07 ; $6571
-	call Func_0b_4558 ; $6573
-	call Func_0b_66a2 ; $6576
+	call SetDrillMessageByRallyParity ; $6573
+	call SelectStrokeTargetTableByPointAlt ; $6576
 	ld a, [wPointOutcome] ; $6579
 	add a, l ; $657c
 	ld l, a ; $657d
@@ -5374,9 +5374,9 @@ Label_0b_658d:
 	ret nz ; $6592
 	ld a, $62 ; $6593
 	ld b, $07 ; $6595
-	call Func_0b_4558 ; $6597
+	call SetDrillMessageByRallyParity ; $6597
 	ld a, [wLastShotCharIndex] ; $659a
-	call Func_0b_4447 ; $659d
+	call TestCharStateBit4 ; $659d
 	jp nz, Label_0b_6687 ; $65a0
 	xor a, a ; $65a3
 	ret ; $65a4
@@ -5387,8 +5387,8 @@ Label_0b_65a5:
 	ret z ; $65ac
 	ld a, $61 ; $65ad
 	ld b, $07 ; $65af
-	call Func_0b_4558 ; $65b1
-	call Func_0b_66b5 ; $65b4
+	call SetDrillMessageByRallyParity ; $65b1
+	call TestBallBounceDepth ; $65b4
 	or a, a ; $65b7
 	jp z, Label_0b_6687 ; $65b8
 	xor a, a ; $65bb
@@ -5415,8 +5415,8 @@ Label_0b_65d5:
 	ld a, [hl] ; $65d5
 	ld a, a ; $65d6
 	ld b, $07 ; $65d7
-	call Func_0b_4558 ; $65d9
-	call Func_0b_668f ; $65dc
+	call SetDrillMessageByRallyParity ; $65d9
+	call SelectStrokeTargetTableByPoint ; $65dc
 	ld a, [wPointOutcome] ; $65df
 	add a, l ; $65e2
 	ld l, a ; $65e3
@@ -5431,9 +5431,9 @@ DrillShotTable_0b_65e9:
 Label_0b_65f3:
 	ld a, $62 ; $65f3
 	ld b, $07 ; $65f5
-	call Func_0b_4558 ; $65f7
+	call SetDrillMessageByRallyParity ; $65f7
 	ld a, [wLastShotCharIndex] ; $65fa
-	call Func_0b_4447 ; $65fd
+	call TestCharStateBit4 ; $65fd
 	jp nz, Label_0b_667f ; $6600
 	xor a, a ; $6603
 	ret ; $6604
@@ -5444,8 +5444,8 @@ Label_0b_6605:
 	ret z ; $660c
 	ld a, $61 ; $660d
 	ld b, $07 ; $660f
-	call Func_0b_4558 ; $6611
-	call Func_0b_66b5 ; $6614
+	call SetDrillMessageByRallyParity ; $6611
+	call TestBallBounceDepth ; $6614
 	or a, a ; $6617
 	jp z, Label_0b_667f ; $6618
 	xor a, a ; $661b
@@ -5472,8 +5472,8 @@ Label_0b_6635:
 	ld a, [hl] ; $6635
 	ld a, a ; $6636
 	ld b, $07 ; $6637
-	call Func_0b_4558 ; $6639
-	call Func_0b_66a2 ; $663c
+	call SetDrillMessageByRallyParity ; $6639
+	call SelectStrokeTargetTableByPointAlt ; $663c
 	ld a, [wPointOutcome] ; $663f
 	add a, l ; $6642
 	ld l, a ; $6643
@@ -5488,9 +5488,9 @@ DrillShotTable_0b_6649:
 Label_0b_6653:
 	ld a, $62 ; $6653
 	ld b, $07 ; $6655
-	call Func_0b_4558 ; $6657
+	call SetDrillMessageByRallyParity ; $6657
 	ld a, [wLastShotCharIndex] ; $665a
-	call Func_0b_4447 ; $665d
+	call TestCharStateBit4 ; $665d
 	jp nz, Label_0b_6687 ; $6660
 	xor a, a ; $6663
 	ret ; $6664
@@ -5501,8 +5501,8 @@ Label_0b_6665:
 	ret z ; $666c
 	ld a, $61 ; $666d
 	ld b, $07 ; $666f
-	call Func_0b_4558 ; $6671
-	call Func_0b_66b5 ; $6674
+	call SetDrillMessageByRallyParity ; $6671
+	call TestBallBounceDepth ; $6674
 	or a, a ; $6677
 	jp z, Label_0b_6687 ; $6678
 	xor a, a ; $667b
@@ -5520,7 +5520,7 @@ Label_0b_6687:
 	ld [wMatchAbortFlag], a ; $6689
 	ld a, $ff ; $668c
 	ret ; $668e
-Func_0b_668f:
+SelectStrokeTargetTableByPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $668f
 	and a, $01 ; $6692
 	ld a, $00 ; $6694
@@ -5532,7 +5532,7 @@ Label_0b_669e:
 	ld hl, SignedTable_0b_46f1 ; $669e
 Label_0b_66a1:
 	ret ; $66a1
-Func_0b_66a2:
+SelectStrokeTargetTableByPointAlt:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $66a2
 	and a, $01 ; $66a5
 	ld a, $00 ; $66a7
@@ -5544,7 +5544,7 @@ Label_0b_66b1:
 	ld hl, SignedTable_0b_46fb ; $66b1
 Label_0b_66b4:
 	ret ; $66b4
-Func_0b_66b5:
+TestBallBounceDepth:
 	ld a, [wBallBounceCount] ; $66b5
 	cp a, $01 ; $66b8
 	ret nz ; $66ba
@@ -5599,7 +5599,7 @@ StrokeMatch2Hook_PointStart:
 	ld a, $0a ; $6704
 	ld [$c2e0], a ; $6706
 	ld hl, $6737 ; $6709
-	call Func_0b_441c ; $670c
+	call LoadDrillOpponentBySide ; $670c
 	xor a, a ; $670f
 	ld [$c2e6], a ; $6710
 	xor a, a ; $6713
@@ -5620,8 +5620,8 @@ StrokeMatch2Hook_PointStart:
 	db $58 ; $6737
 	db $44 ; $6738
 StrokeMatch2Hook_PointEnd:
-	call Func_0b_67eb ; $6739
-	call Func_0b_6788 ; $673c
+	call StrokeMatch2JudgeShot0 ; $6739
+	call StrokeMatch2HandlePointEnd ; $673c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $673f
 	bit 0, a ; $6742
 	ret nz ; $6744
@@ -5658,15 +5658,15 @@ Label_0b_676b:
 	ld [wMatchAbortFlag], a ; $6778
 	ret ; $677b
 StrokeMatch2Hook_RallyTick:
-	call Func_0b_6806 ; $677c
+	call StrokeMatch2JudgeShot3 ; $677c
 	ret ; $677f
 StrokeMatch2Hook_Bounce:
-	call Func_0b_67fd ; $6780
+	call StrokeMatch2JudgeShot2 ; $6780
 	ret ; $6783
 StrokeMatch2Hook_BallHit:
-	call Func_0b_67f4 ; $6784
+	call StrokeMatch2JudgeShot1 ; $6784
 	ret ; $6787
-Func_0b_6788:
+StrokeMatch2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6788
 	ld a, [$c2ff] ; $678b
 	ld b, a ; $678e
@@ -5681,7 +5681,7 @@ Label_0b_6799:
 	call RecordDrillPointResultBits ; $679c
 	call ShowQueuedDrillMessage ; $679f
 	farcall UpdatePointStats ; $67a2
-	call Func_0b_67c2 ; $67a5
+	call StrokeMatch2AwardPointToSide ; $67a5
 	ld a, [wPlayer1PointsWon] ; $67a8
 	ld b, $01 ; $67ab
 	farcall LoadPlayer1PointsDigitGfx ; $67ad
@@ -5692,7 +5692,7 @@ Label_0b_6799:
 	farcall StartPointEndReactions ; $67bb
 	call PlayDrillPointEndSequence ; $67be
 	ret ; $67c1
-Func_0b_67c2:
+StrokeMatch2AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $67c2
 	or a, a ; $67c5
 	ret z ; $67c6
@@ -5717,28 +5717,28 @@ Label_0b_67e2:
 	ld hl, wTotalPointsScoredInCurrentGame ; $67e6
 	inc [hl] ; $67e9
 	ret ; $67ea
-Func_0b_67eb:
+StrokeMatch2JudgeShot0:
 	ld a, $00 ; $67eb
-	call Func_0b_6810 ; $67ed
+	call StrokeMatch2JudgePoint ; $67ed
 	ld [$c2ff], a ; $67f0
 	ret ; $67f3
-Func_0b_67f4:
+StrokeMatch2JudgeShot1:
 	ld a, $01 ; $67f4
-	call Func_0b_6810 ; $67f6
+	call StrokeMatch2JudgePoint ; $67f6
 	ld [$c2ff], a ; $67f9
 	ret ; $67fc
-Func_0b_67fd:
+StrokeMatch2JudgeShot2:
 	ld a, $02 ; $67fd
-	call Func_0b_6810 ; $67ff
+	call StrokeMatch2JudgePoint ; $67ff
 	ld [$c2ff], a ; $6802
 	ret ; $6805
-Func_0b_6806:
+StrokeMatch2JudgeShot3:
 	ret ; $6806
 	ld a, $03 ; $6807
-	call Func_0b_6810 ; $6809
+	call StrokeMatch2JudgePoint ; $6809
 	ld [$c2ff], a ; $680c
 	ret ; $680f
-Func_0b_6810:
+StrokeMatch2JudgePoint:
 	ld b, a ; $6810
 	ld a, [$c2ff] ; $6811
 	or a, a ; $6814
@@ -5770,7 +5770,7 @@ Label_0b_683a:
 	ld a, [hl] ; $683a
 	ld a, a ; $683b
 	ld b, $0d ; $683c
-	call Func_0b_4545 ; $683e
+	call SetDrillMessageByServer ; $683e
 	ld a, [wPointOutcome] ; $6841
 	ld hl, SignedTable_0b_46fb ; $6844
 	add a, l ; $6847
@@ -5811,7 +5811,7 @@ Label_0b_6874:
 	ld a, [hl] ; $6874
 	ld a, a ; $6875
 	ld b, $0d ; $6876
-	call Func_0b_4545 ; $6878
+	call SetDrillMessageByServer ; $6878
 	ld a, [wPointOutcome] ; $687b
 	ld hl, SignedTable_0b_46f1 ; $687e
 	add a, l ; $6881
@@ -5830,7 +5830,7 @@ Label_0b_6892:
 	ret z ; $6896
 	ld a, $40 ; $6897
 	ld b, $0d ; $6899
-	call Func_0b_4545 ; $689b
+	call SetDrillMessageByServer ; $689b
 	ld a, [wCurrentShotType] ; $689e
 	cp a, $0a ; $68a1
 	jp nz, Label_0b_691e ; $68a3
@@ -5861,7 +5861,7 @@ Label_0b_68c2:
 	ld a, [hl] ; $68c2
 	ld a, a ; $68c3
 	ld b, $0d ; $68c4
-	call Func_0b_4545 ; $68c6
+	call SetDrillMessageByServer ; $68c6
 	ld a, [wPointOutcome] ; $68c9
 	ld hl, SignedTable_0b_46fb ; $68cc
 	add a, l ; $68cf
@@ -5877,11 +5877,11 @@ DrillShotTable_0b_68d6:
 Label_0b_68e0:
 	ld a, $46 ; $68e0
 	ld b, $0d ; $68e2
-	call Func_0b_4545 ; $68e4
+	call SetDrillMessageByServer ; $68e4
 	ld a, [wTotalPointsScoredInCurrentGame] ; $68e7
 	and a, $01 ; $68ea
 	xor a, $01 ; $68ec
-	call Func_0b_4447 ; $68ee
+	call TestCharStateBit4 ; $68ee
 	or a, a ; $68f1
 	jp z, Label_0b_6916 ; $68f2
 	xor a, a ; $68f5
@@ -5906,7 +5906,7 @@ Label_0b_6906:
 Label_0b_6908:
 	ld a, $43 ; $6908
 	ld b, $0d ; $690a
-	call Func_0b_4545 ; $690c
+	call SetDrillMessageByServer ; $690c
 	jp Label_0b_691e ; $690f
 Label_0b_6912:
 	xor a, a ; $6912
@@ -5950,7 +5950,7 @@ StrokeMatch3Hook_PointStart:
 	ld a, $0a ; $694f
 	ld [$c2e0], a ; $6951
 	ld hl, $6982 ; $6954
-	call Func_0b_441c ; $6957
+	call LoadDrillOpponentBySide ; $6957
 	xor a, a ; $695a
 	ld [$c2e6], a ; $695b
 	xor a, a ; $695e
@@ -5971,8 +5971,8 @@ StrokeMatch3Hook_PointStart:
 	db $59 ; $6982
 	db $45 ; $6983
 StrokeMatch3Hook_PointEnd:
-	call Func_0b_6a36 ; $6984
-	call Func_0b_69d3 ; $6987
+	call StrokeMatch3JudgeShot0 ; $6984
+	call StrokeMatch3HandlePointEnd ; $6987
 	ld a, [wTotalPointsScoredInCurrentGame] ; $698a
 	bit 0, a ; $698d
 	ret nz ; $698f
@@ -6009,15 +6009,15 @@ Label_0b_69b6:
 	ld [wMatchAbortFlag], a ; $69c3
 	ret ; $69c6
 StrokeMatch3Hook_RallyTick:
-	call Func_0b_6a51 ; $69c7
+	call StrokeMatch3JudgeShot3 ; $69c7
 	ret ; $69ca
 StrokeMatch3Hook_Bounce:
-	call Func_0b_6a48 ; $69cb
+	call StrokeMatch3JudgeShot2 ; $69cb
 	ret ; $69ce
 StrokeMatch3Hook_BallHit:
-	call Func_0b_6a3f ; $69cf
+	call StrokeMatch3JudgeShot1 ; $69cf
 	ret ; $69d2
-Func_0b_69d3:
+StrokeMatch3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $69d3
 	ld a, [$c2ff] ; $69d6
 	ld b, a ; $69d9
@@ -6032,7 +6032,7 @@ Label_0b_69e4:
 	call RecordDrillPointResultBits ; $69e7
 	call ShowQueuedDrillMessage ; $69ea
 	farcall UpdatePointStats ; $69ed
-	call Func_0b_6a0d ; $69f0
+	call StrokeMatch3AwardPointToSide ; $69f0
 	ld a, [wPlayer1PointsWon] ; $69f3
 	ld b, $01 ; $69f6
 	farcall LoadPlayer1PointsDigitGfx ; $69f8
@@ -6043,7 +6043,7 @@ Label_0b_69e4:
 	farcall StartPointEndReactions ; $6a06
 	call PlayDrillPointEndSequence ; $6a09
 	ret ; $6a0c
-Func_0b_6a0d:
+StrokeMatch3AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $6a0d
 	or a, a ; $6a10
 	ret z ; $6a11
@@ -6068,28 +6068,28 @@ Label_0b_6a2d:
 	ld hl, wTotalPointsScoredInCurrentGame ; $6a31
 	inc [hl] ; $6a34
 	ret ; $6a35
-Func_0b_6a36:
+StrokeMatch3JudgeShot0:
 	ld a, $00 ; $6a36
-	call Func_0b_6a5b ; $6a38
+	call StrokeMatch3JudgePoint ; $6a38
 	ld [$c2ff], a ; $6a3b
 	ret ; $6a3e
-Func_0b_6a3f:
+StrokeMatch3JudgeShot1:
 	ld a, $01 ; $6a3f
-	call Func_0b_6a5b ; $6a41
+	call StrokeMatch3JudgePoint ; $6a41
 	ld [$c2ff], a ; $6a44
 	ret ; $6a47
-Func_0b_6a48:
+StrokeMatch3JudgeShot2:
 	ld a, $02 ; $6a48
-	call Func_0b_6a5b ; $6a4a
+	call StrokeMatch3JudgePoint ; $6a4a
 	ld [$c2ff], a ; $6a4d
 	ret ; $6a50
-Func_0b_6a51:
+StrokeMatch3JudgeShot3:
 	ret ; $6a51
 	ld a, $03 ; $6a52
-	call Func_0b_6a5b ; $6a54
+	call StrokeMatch3JudgePoint ; $6a54
 	ld [$c2ff], a ; $6a57
 	ret ; $6a5a
-Func_0b_6a5b:
+StrokeMatch3JudgePoint:
 	ld b, a ; $6a5b
 	ld a, [$c2ff] ; $6a5c
 	or a, a ; $6a5f
@@ -6121,7 +6121,7 @@ Label_0b_6a85:
 	ld a, [hl] ; $6a85
 	ld a, a ; $6a86
 	ld b, $0d ; $6a87
-	call Func_0b_4545 ; $6a89
+	call SetDrillMessageByServer ; $6a89
 	ld a, [wPointOutcome] ; $6a8c
 	ld hl, SignedTable_0b_46fb ; $6a8f
 	add a, l ; $6a92
@@ -6162,7 +6162,7 @@ Label_0b_6abf:
 	ld a, [hl] ; $6abf
 	ld a, a ; $6ac0
 	ld b, $0d ; $6ac1
-	call Func_0b_4545 ; $6ac3
+	call SetDrillMessageByServer ; $6ac3
 	ld a, [wPointOutcome] ; $6ac6
 	ld hl, SignedTable_0b_46f1 ; $6ac9
 	add a, l ; $6acc
@@ -6203,7 +6203,7 @@ Label_0b_6af9:
 	ld a, [hl] ; $6af9
 	ld a, a ; $6afa
 	ld b, $0d ; $6afb
-	call Func_0b_4545 ; $6afd
+	call SetDrillMessageByServer ; $6afd
 	ld a, [wPointOutcome] ; $6b00
 	ld hl, SignedTable_0b_46fb ; $6b03
 	add a, l ; $6b06
@@ -6219,11 +6219,11 @@ DrillShotTable_0b_6b0d:
 Label_0b_6b17:
 	ld a, $46 ; $6b17
 	ld b, $0d ; $6b19
-	call Func_0b_4545 ; $6b1b
+	call SetDrillMessageByServer ; $6b1b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6b1e
 	and a, $01 ; $6b21
 	xor a, $01 ; $6b23
-	call Func_0b_4447 ; $6b25
+	call TestCharStateBit4 ; $6b25
 	or a, a ; $6b28
 	jp z, Label_0b_6b4d ; $6b29
 	xor a, a ; $6b2c
@@ -6248,7 +6248,7 @@ Label_0b_6b3d:
 Label_0b_6b3f:
 	ld a, $43 ; $6b3f
 	ld b, $0d ; $6b41
-	call Func_0b_4545 ; $6b43
+	call SetDrillMessageByServer ; $6b43
 	jp Label_0b_6b55 ; $6b46
 Label_0b_6b49:
 	xor a, a ; $6b49
@@ -6345,14 +6345,14 @@ Label_0b_6bed:
 	ld hl, $c2e8 ; $6bed
 	inc [hl] ; $6bf0
 Label_0b_6bf1:
-	call Drill15HandlePointEnd ; $6bf1
+	call StrokePractice1HandlePointEnd ; $6bf1
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bf4
 	cp a, $04 ; $6bf7
 	ret c ; $6bf9
-	call Drill15EvaluateResult ; $6bfa
+	call StrokePractice1EvaluateResult ; $6bfa
 	ld [wPointWinLoseFlag], a ; $6bfd
 	ret ; $6c00
-Drill15EvaluateResult:
+StrokePractice1EvaluateResult:
 	ld a, [$c2e9] ; $6c01
 	cp a, $04 ; $6c04
 	jr nz, Label_0b_6c0f ; $6c06
@@ -6424,7 +6424,7 @@ StrokePractice1Hook_BallHit:
 	dw $0000 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
-Drill15HandlePointEnd:
+StrokePractice1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6c81
 	ld a, [$c2ff] ; $6c84
 	ld [wPointWinLoseFlag], a ; $6c87
@@ -6458,26 +6458,26 @@ Label_0b_6c92:
 	ret ; $6ccf
 Drill15JudgePointMode0:
 	ld a, $00 ; $6cd0
-	call Drill15JudgePoint ; $6cd2
+	call StrokePractice1JudgePoint ; $6cd2
 	ld [$c2ff], a ; $6cd5
 	ret ; $6cd8
 Drill15JudgePointMode1:
 	ld a, $01 ; $6cd9
-	call Drill15JudgePoint ; $6cdb
+	call StrokePractice1JudgePoint ; $6cdb
 	ld [$c2ff], a ; $6cde
 	ret ; $6ce1
 Drill15JudgePointMode2:
 	ld a, $02 ; $6ce2
-	call Drill15JudgePoint ; $6ce4
+	call StrokePractice1JudgePoint ; $6ce4
 	ld [$c2ff], a ; $6ce7
 	ret ; $6cea
 StubNop_0b_6ceb:
 	ret ; $6ceb
 	ld a, $03 ; $6cec
-	call Drill15JudgePoint ; $6cee
+	call StrokePractice1JudgePoint ; $6cee
 	ld [$c2ff], a ; $6cf1
 	ret ; $6cf4
-Drill15JudgePoint:
+StrokePractice1JudgePoint:
 	ld b, a ; $6cf5
 	ld a, [$c2ff] ; $6cf6
 	or a, a ; $6cf9
@@ -6641,7 +6641,7 @@ StrokePractice2Hook_PointStart:
 	ld a, $5a ; $6dfb
 	ld [$c2ef], a ; $6dfd
 	ld a, $01 ; $6e00
-	ld hl, Func_0b_6e1c ; $6e02
+	ld hl, StrokePractice2TargetZoneDelayTask ; $6e02
 	call RegisterFrameTask ; $6e05
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e08
 	ld hl, Table_0b_6e18 ; $6e0b
@@ -6656,25 +6656,25 @@ Label_0b_6e13:
 Table_0b_6e18:
 	; $6e18, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
-Func_0b_6e1c:
+StrokePractice2TargetZoneDelayTask:
 	ld hl, $c2ef ; $6e1c
 	dec [hl] ; $6e1f
 	ret nz ; $6e20
 	ld a, $01 ; $6e21
 	ld [wTargetZoneEnabled], a ; $6e23
-	ld hl, Func_0b_6e1c ; $6e26
+	ld hl, StrokePractice2TargetZoneDelayTask ; $6e26
 	call UnregisterFrameTask ; $6e29
 	ret ; $6e2c
 StrokePractice2Hook_PointEnd:
-	call Func_0b_6f18 ; $6e2d
-	call Func_0b_6ec9 ; $6e30
+	call StrokePractice2JudgeShot0 ; $6e2d
+	call StrokePractice2HandlePointEnd ; $6e30
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e33
 	cp a, $04 ; $6e36
 	ret c ; $6e38
-	call Func_0b_6e40 ; $6e39
+	call StrokePractice2EvaluateResult ; $6e39
 	ld [wPointWinLoseFlag], a ; $6e3c
 	ret ; $6e3f
-Func_0b_6e40:
+StrokePractice2EvaluateResult:
 	ld a, [$c2ee] ; $6e40
 	cp a, $04 ; $6e43
 	jr nz, Label_0b_6e4e ; $6e45
@@ -6719,17 +6719,17 @@ Label_0b_6e8f:
 	ld a, $ff ; $6e8f
 	ret ; $6e91
 StrokePractice2Hook_RallyTick:
-	call Func_0b_6f33 ; $6e92
+	call StrokePractice2JudgeShot3 ; $6e92
 	ld a, [wRallyLength] ; $6e95
 	cp a, $02 ; $6e98
 	ret nz ; $6e9a
 	call ResetActiveCharState ; $6e9b
 	ret ; $6e9e
 StrokePractice2Hook_Bounce:
-	call Func_0b_6f2a ; $6e9f
+	call StrokePractice2JudgeShot2 ; $6e9f
 	ret ; $6ea2
 StrokePractice2Hook_BallHit:
-	call Func_0b_6f21 ; $6ea3
+	call StrokePractice2JudgeShot1 ; $6ea3
 	ret ; $6ea6
 DrillPositions_0b_6ea7:
 	; $6ea7, 34 bytes (records:4)
@@ -6743,7 +6743,7 @@ DrillPositions_0b_6ea7:
 	dw $fe50, $02a0 ; record 6
 	dw $0000, $04e0 ; record 7
 	db $ff, $ff
-Func_0b_6ec9:
+StrokePractice2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6ec9
 	ld a, [$c2ff] ; $6ecc
 	ld [wPointWinLoseFlag], a ; $6ecf
@@ -6775,28 +6775,28 @@ Label_0b_6eda:
 	call UnregisterFrameTask ; $6f11
 	call PlayDrillPointEndSequence ; $6f14
 	ret ; $6f17
-Func_0b_6f18:
+StrokePractice2JudgeShot0:
 	ld a, $00 ; $6f18
-	call Func_0b_6f3d ; $6f1a
+	call StrokePractice2JudgePoint ; $6f1a
 	ld [$c2ff], a ; $6f1d
 	ret ; $6f20
-Func_0b_6f21:
+StrokePractice2JudgeShot1:
 	ld a, $01 ; $6f21
-	call Func_0b_6f3d ; $6f23
+	call StrokePractice2JudgePoint ; $6f23
 	ld [$c2ff], a ; $6f26
 	ret ; $6f29
-Func_0b_6f2a:
+StrokePractice2JudgeShot2:
 	ld a, $02 ; $6f2a
-	call Func_0b_6f3d ; $6f2c
+	call StrokePractice2JudgePoint ; $6f2c
 	ld [$c2ff], a ; $6f2f
 	ret ; $6f32
-Func_0b_6f33:
+StrokePractice2JudgeShot3:
 	ret ; $6f33
 	ld a, $03 ; $6f34
-	call Func_0b_6f3d ; $6f36
+	call StrokePractice2JudgePoint ; $6f36
 	ld [$c2ff], a ; $6f39
 	ret ; $6f3c
-Func_0b_6f3d:
+StrokePractice2JudgePoint:
 	ld b, a ; $6f3d
 	ld a, [$c2ff] ; $6f3e
 	or a, a ; $6f41
@@ -6970,7 +6970,7 @@ StrokePractice3Hook_PointStart:
 	ld a, $5a ; $7060
 	ld [$c2ef], a ; $7062
 	ld a, $01 ; $7065
-	ld hl, Func_0b_7081 ; $7067
+	ld hl, StrokePractice3TargetZoneDelayTask ; $7067
 	call RegisterFrameTask ; $706a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $706d
 	ld hl, Table_0b_707d ; $7070
@@ -6985,25 +6985,25 @@ Label_0b_7078:
 Table_0b_707d:
 	; $707d, 4 bytes (bytes:4)
 	db $00, $00, $00, $00 ; 0x00
-Func_0b_7081:
+StrokePractice3TargetZoneDelayTask:
 	ld hl, $c2ef ; $7081
 	dec [hl] ; $7084
 	ret nz ; $7085
 	ld a, $01 ; $7086
 	ld [wTargetZoneEnabled], a ; $7088
-	ld hl, Func_0b_7081 ; $708b
+	ld hl, StrokePractice3TargetZoneDelayTask ; $708b
 	call UnregisterFrameTask ; $708e
 	ret ; $7091
 StrokePractice3Hook_PointEnd:
-	call Func_0b_717a ; $7092
-	call Func_0b_712b ; $7095
+	call StrokePractice3JudgeShot0 ; $7092
+	call StrokePractice3HandlePointEnd ; $7095
 	ld a, [wTotalPointsScoredInCurrentGame] ; $7098
 	cp a, $04 ; $709b
 	ret c ; $709d
-	call Func_0b_70a5 ; $709e
+	call StrokePractice3EvaluateResult ; $709e
 	ld [wPointWinLoseFlag], a ; $70a1
 	ret ; $70a4
-Func_0b_70a5:
+StrokePractice3EvaluateResult:
 	ld a, [$c2e9] ; $70a5
 	cp a, $04 ; $70a8
 	jr nz, Label_0b_70b3 ; $70aa
@@ -7045,17 +7045,17 @@ Label_0b_70eb:
 	ld a, $ff ; $70eb
 	ret ; $70ed
 StrokePractice3Hook_RallyTick:
-	call Func_0b_7195 ; $70ee
+	call StrokePractice3JudgeShot3 ; $70ee
 	ld a, [wRallyLength] ; $70f1
 	cp a, $02 ; $70f4
 	ret nz ; $70f6
 	call ResetActiveCharState ; $70f7
 	ret ; $70fa
 StrokePractice3Hook_Bounce:
-	call Func_0b_718c ; $70fb
+	call StrokePractice3JudgeShot2 ; $70fb
 	ret ; $70fe
 StrokePractice3Hook_BallHit:
-	call Func_0b_7183 ; $70ff
+	call StrokePractice3JudgeShot1 ; $70ff
 	ld a, [wRallyLength] ; $7102
 	cp a, $01 ; $7105
 	ret nz ; $7107
@@ -7072,7 +7072,7 @@ DrillPositions_0b_7109:
 	dw $0120, $02a0 ; record 6
 	dw $01b0, $04e0 ; record 7
 	db $ff, $ff
-Func_0b_712b:
+StrokePractice3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $712b
 	ld a, [$c2ff] ; $712e
 	ld [wPointWinLoseFlag], a ; $7131
@@ -7104,28 +7104,28 @@ Label_0b_713c:
 	call UnregisterFrameTask ; $7173
 	call PlayDrillPointEndSequence ; $7176
 	ret ; $7179
-Func_0b_717a:
+StrokePractice3JudgeShot0:
 	ld a, $00 ; $717a
-	call Drill17JudgePoint ; $717c
+	call StrokePractice3JudgePoint ; $717c
 	ld [$c2ff], a ; $717f
 	ret ; $7182
-Func_0b_7183:
+StrokePractice3JudgeShot1:
 	ld a, $01 ; $7183
-	call Drill17JudgePoint ; $7185
+	call StrokePractice3JudgePoint ; $7185
 	ld [$c2ff], a ; $7188
 	ret ; $718b
-Func_0b_718c:
+StrokePractice3JudgeShot2:
 	ld a, $02 ; $718c
-	call Drill17JudgePoint ; $718e
+	call StrokePractice3JudgePoint ; $718e
 	ld [$c2ff], a ; $7191
 	ret ; $7194
-Func_0b_7195:
+StrokePractice3JudgeShot3:
 	ret ; $7195
 	ld a, $03 ; $7196
-	call Drill17JudgePoint ; $7198
+	call StrokePractice3JudgePoint ; $7198
 	ld [$c2ff], a ; $719b
 	ret ; $719e
-Drill17JudgePoint:
+StrokePractice3JudgePoint:
 	ld b, a ; $719f
 	ld a, [$c2ff] ; $71a0
 	or a, a ; $71a3

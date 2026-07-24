@@ -26,8 +26,54 @@ Everything below is **committed** (HEAD `4ea1725`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,455 of 20,697 labels are human-named** (see the caveat in the
+**6,575 of 20,697 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
+
+### Bank $0b's 120 unnamed functions named from the call graph (2026-07-25)
+
+With the drills named, bank `$0b` had **120 `Func_0b_*` labels and now has
+zero** — the per-drill logic the init seeds unlocked. Naming it was a call-graph
+walk plus shape matching, not 120 individual reads.
+
+**Attribution first.** Walking calls out from each drill's eight named hooks
+and its init routine assigns an owner to every function: **104 of 120 are
+reachable from exactly one drill**, 7 are shared, and 9 sit below `$482c`
+(where the first drill definition starts) and are bank-wide helpers.
+
+**Then shape.** The per-drill functions repeat a small set of forms, and the
+role names come from the four labels a previous session had already placed
+(`Drill09JudgePoint`, `Drill09HandlePointEnd`, `Drill09EvaluateResult`,
+`Drill15*`):
+
+| Shape | Role |
+|---|---|
+| `ld a, $N` / `call X` / `ld [$c2ff], a` / `ret` | `<Drill>JudgeShot<N>`, and X is `<Drill>JudgePoint` |
+| `ld b, a` / `ld a, [$c2ff]` / `or a, a` / `ret nz` + `rst Rst00` on `wRallyLength` | `<Drill>JudgePoint` |
+| opens `farcall UpdateScorePanelDisplay` | `<Drill>HandlePointEnd` |
+| writes `$c2e3` | `<Drill>EvaluateResult` |
+| opens `ld a, [wPointWinLoseFlag]` | `<Drill>AwardPointToSide` |
+| opens `ld a, [wPointOutcome]` | `<Drill>QueueOutcomeMessage` |
+| opens `ld a, [wRallyLength]` | `<Drill>SetupShotTarget` |
+
+The eight legacy `Drill<NN>*` labels were renamed onto the drill-name
+convention (`Drill09JudgePoint` → `NetGamePractice1JudgePoint`) so the bank
+reads consistently.
+
+The bank-wide helpers got semantic names where the code says what they do —
+`SetDrillMessageByServer` and `SetDrillMessageByRallyParity` (the pair at
+`$4545`/`$4558` that pick a message id by who is serving vs. rally parity),
+`CountDrillResultBitsSet` (a `rr`/`adc` popcount over `$c2e4`),
+`LoadDrillOpponentBySide`, `QueueDrillMarker1_0b`/`2_0b` (both project a
+world position and queue `DrillSpriteTemplate_0b`), and the two
+`StrokePractice*TargetZoneDelayTask` frame tasks that re-enable
+`wTargetZoneEnabled` and then unregister themselves.
+
+**One name is mechanism-only:** `TestCharStateBit4` (`$4447`) switches to
+WRAM bank `$04 + slot`, reads `[$df50]` and returns bit 4. Nine drills use it
+to decide pass/fail, but which condition that bit represents is not pinned
+down, so the name describes what it reads rather than guessing.
+
+Bank `$0b` is now 79.6% proven code with 395 of 972 labels named.
 
 ### The 18 training drills named end to end (2026-07-25)
 
