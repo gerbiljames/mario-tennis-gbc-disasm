@@ -426,7 +426,7 @@ Label_0b_4272:
 	or a, a ; $427b
 	pop bc ; $427c
 	ret ; $427d
-DrillPointTable_0b_427e:
+MatchDrillPointTable:
 	; $427e, 64 bytes (bytes:4)
 	db $00, $03, $09, $09 ; 0x00
 	db $00, $01, $09, $09 ; 0x04
@@ -446,7 +446,7 @@ DrillPointTable_0b_427e:
 	db $01, $00, $09, $09 ; 0x3c
 	; $42be, 1 bytes (fill)
 	ds 1, $ff
-DrillPointTable_0b_42bf:
+StrokeMatchPointTable:
 	; $42bf, 64 bytes (bytes:4)
 	db $00, $03, $09, $09 ; 0x00
 	db $01, $00, $09, $09 ; 0x04
@@ -466,7 +466,7 @@ DrillPointTable_0b_42bf:
 	db $00, $01, $09, $09 ; 0x3c
 	; $42ff, 1 bytes (fill)
 	ds 1, $ff
-DrillPointTable_0b_4300:
+PracticeDrillPointTable:
 	; $4300, 32 bytes (bytes:4)
 	db $00, $03, $09, $09 ; 0x00
 	db $00, $01, $09, $09 ; 0x04
@@ -478,7 +478,7 @@ DrillPointTable_0b_4300:
 	db $00, $01, $09, $09 ; 0x1c
 	; $4320, 1 bytes (fill)
 	ds 1, $ff
-DrillPointTable_0b_4321:
+StrokePracticePointTable:
 	; $4321, 32 bytes (bytes:4)
 	db $00, $03, $09, $09 ; 0x00
 	db $01, $00, $09, $09 ; 0x04
@@ -1013,7 +1013,7 @@ RunTrainingDrillByID:
 	ld l, a ; $4713
 	ld h, $00 ; $4714
 	add hl, hl ; $4716
-	ld de, Data_0b_47b4 ; $4717
+	ld de, DrillDefinitionPtrs ; $4717
 	add hl, de ; $471a
 	ld a, [hl+] ; $471b
 	ld b, [hl] ; $471c
@@ -1089,26 +1089,26 @@ Label_0b_47a7:
 Label_0b_47ae:
 	call RunDoublesDrillMatch ; $47ae
 	jp Label_0b_473f ; $47b1
-Data_0b_47b4:
+DrillDefinitionPtrs:
 	; $47b4, 36 bytes (records:2)
-	dw DrillDefinition_0b_00 ; record 0
-	dw DrillDefinition_0b_01 ; record 1
-	dw DrillDefinition_0b_02 ; record 2
-	dw DrillDefinition_0b_03 ; record 3
-	dw DrillDefinition_0b_04 ; record 4
-	dw DrillDefinition_0b_05 ; record 5
-	dw DrillDefinition_0b_06 ; record 6
-	dw DrillDefinition_0b_07 ; record 7
-	dw DrillDefinition_0b_08 ; record 8
-	dw DrillDefinition_0b_09 ; record 9
-	dw DrillDefinition_0b_0a ; record 10
-	dw DrillDefinition_0b_0b ; record 11
-	dw DrillDefinition_0b_0c ; record 12
-	dw DrillDefinition_0b_0d ; record 13
-	dw DrillDefinition_0b_0e ; record 14
-	dw DrillDefinition_0b_0f ; record 15
-	dw DrillDefinition_0b_10 ; record 16
-	dw DrillDefinition_0b_11 ; record 17
+	dw ServiceMatch1Drill ; record 0
+	dw ServiceMatch2Drill ; record 1
+	dw ServiceMatch3Drill ; record 2
+	dw ServicePractice1Drill ; record 3
+	dw ServicePractice2Drill ; record 4
+	dw ServicePractice3Drill ; record 5
+	dw NetGameMatch1Drill ; record 6
+	dw NetGameMatch2Drill ; record 7
+	dw NetGameMatch3Drill ; record 8
+	dw NetGamePractice1Drill ; record 9
+	dw NetGamePractice2Drill ; record 10
+	dw NetGamePractice3Drill ; record 11
+	dw StrokeMatch1Drill ; record 12
+	dw StrokeMatch2Drill ; record 13
+	dw StrokeMatch3Drill ; record 14
+	dw StrokePractice1Drill ; record 15
+	dw StrokePractice2Drill ; record 16
+	dw StrokePractice3Drill ; record 17
 ClearBGForDrillResult:
 	call DisableLCDSafely ; $47d8
 	wram_bank $02 ; $47db
@@ -1143,24 +1143,27 @@ Label_0b_4824:
 	or a, b ; $4828
 	jr nz, Label_0b_4824 ; $4829
 	ret ; $482b
-DrillDefinition_0b_00:
+ServiceMatch1Drill:
 	; $482c, 16 bytes (drill_definition)
 	db $37, $18, $02, $05, $00, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_00, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	dw ServiceMatch1Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_00:
+ServiceMatch1Hooks:
 	; $483c, 16 bytes (mode_hooks)
-	dw $484d ; record 0
-	dw $4851 ; record 1
-	dw $4863 ; record 2
-	dw $484c ; record 3
-	dw $48a2 ; record 4
-	dw $489e ; record 5
-	dw $489a ; record 6
+	dw ServiceMatch1Hook_PerFrame ; record 0
+	dw ServiceMatch1Hook_PointStart ; record 1
+	dw ServiceMatch1Hook_PointEnd ; record 2
+	dw ServiceMatch1Hook_MinigameStart ; record 3
+	dw ServiceMatch1Hook_BallHit ; record 4
+	dw ServiceMatch1Hook_Bounce ; record 5
+	dw ServiceMatch1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+ServiceMatch1Hook_MinigameStart:
 	ret ; $484c
+ServiceMatch1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $484d
 	ret ; $4850
+ServiceMatch1Hook_PointStart:
 	xor a, a ; $4851
 	ld [$c2e1], a ; $4852
 	ld a, $0a ; $4855
@@ -1170,6 +1173,7 @@ DrillModeHooks_0b_00:
 	xor a, a ; $485e
 	ld [$c2ff], a ; $485f
 	ret ; $4862
+ServiceMatch1Hook_PointEnd:
 	call Func_0b_48fc ; $4863
 	call Func_0b_48a6 ; $4866
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4869
@@ -1202,10 +1206,13 @@ Label_0b_4894:
 	ld a, $ff ; $4894
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
+ServiceMatch1Hook_RallyTick:
 	call Func_0b_4918 ; $489a
 	ret ; $489d
+ServiceMatch1Hook_Bounce:
 	call Func_0b_490e ; $489e
 	ret ; $48a1
+ServiceMatch1Hook_BallHit:
 	call Func_0b_4905 ; $48a2
 	ret ; $48a5
 Func_0b_48a6:
@@ -1376,26 +1383,29 @@ Label_0b_49bf:
 	ld [wMatchAbortFlag], a ; $49c1
 	ld a, $ff ; $49c4
 	ret ; $49c6
-DrillDefinition_0b_01:
+ServiceMatch2Drill:
 	; $49c7, 16 bytes (drill_definition)
 	db $38, $18, $02, $05, $01, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_01, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	dw ServiceMatch2Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_01:
+ServiceMatch2Hooks:
 	; $49d7, 16 bytes (mode_hooks)
-	dw $49e7 ; record 0
-	dw $49f2 ; record 1
-	dw $4a27 ; record 2
+	dw ServiceMatch2Hook_PerFrame ; record 0
+	dw ServiceMatch2Hook_PointStart ; record 1
+	dw ServiceMatch2Hook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw $4a66 ; record 4
-	dw $4a62 ; record 5
-	dw $4a5e ; record 6
-	dw $49eb ; record 7
+	dw ServiceMatch2Hook_BallHit ; record 4
+	dw ServiceMatch2Hook_Bounce ; record 5
+	dw ServiceMatch2Hook_RallyTick ; record 6
+	dw ServiceMatch2Hook_Draw ; record 7
+ServiceMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $49e7
 	ret ; $49ea
+ServiceMatch2Hook_Draw:
 	call Func_0b_46a0 ; $49eb
 	call Func_0b_46c4 ; $49ee
 	ret ; $49f1
+ServiceMatch2Hook_PointStart:
 	xor a, a ; $49f2
 	ld [$c2e1], a ; $49f3
 	ld [$c2e2], a ; $49f6
@@ -1423,6 +1433,7 @@ Label_0b_4a16:
 Table_0b_4a23:
 	; $4a23, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
+ServiceMatch2Hook_PointEnd:
 	call Func_0b_4b2e ; $4a27
 	call Func_0b_4aac ; $4a2a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a2d
@@ -1455,10 +1466,13 @@ Label_0b_4a58:
 	ld a, $ff ; $4a58
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
+ServiceMatch2Hook_RallyTick:
 	call Func_0b_4b4a ; $4a5e
 	ret ; $4a61
+ServiceMatch2Hook_Bounce:
 	call Func_0b_4b40 ; $4a62
 	ret ; $4a65
+ServiceMatch2Hook_BallHit:
 	call Func_0b_4b37 ; $4a66
 	ret ; $4a69
 DrillPositions_0b_4a6a:
@@ -1693,23 +1707,25 @@ Label_0b_4c0b:
 	ld [wMatchAbortFlag], a ; $4c0d
 	ld a, $ff ; $4c10
 	ret ; $4c12
-DrillDefinition_0b_02:
+ServiceMatch3Drill:
 	; $4c13, 16 bytes (drill_definition)
 	db $39, $18, $02, $05, $02, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_02, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	dw ServiceMatch3Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_02:
+ServiceMatch3Hooks:
 	; $4c23, 16 bytes (mode_hooks)
-	dw $4c33 ; record 0
-	dw $4c37 ; record 1
-	dw $4c49 ; record 2
+	dw ServiceMatch3Hook_PerFrame ; record 0
+	dw ServiceMatch3Hook_PointStart ; record 1
+	dw ServiceMatch3Hook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw $4c94 ; record 4
-	dw $4c90 ; record 5
-	dw $4c8c ; record 6
+	dw ServiceMatch3Hook_BallHit ; record 4
+	dw ServiceMatch3Hook_Bounce ; record 5
+	dw ServiceMatch3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+ServiceMatch3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4c33
 	ret ; $4c36
+ServiceMatch3Hook_PointStart:
 	xor a, a ; $4c37
 	ld [$c2e1], a ; $4c38
 	ld a, $0a ; $4c3b
@@ -1719,6 +1735,7 @@ DrillModeHooks_0b_02:
 	xor a, a ; $4c44
 	ld [$c2ff], a ; $4c45
 	ret ; $4c48
+ServiceMatch3Hook_PointEnd:
 	call Func_0b_4d17 ; $4c49
 	call Func_0b_4c98 ; $4c4c
 	ld a, [wPointWinLoseFlag] ; $4c4f
@@ -1757,10 +1774,13 @@ Label_0b_4c80:
 	ld a, $00 ; $4c86
 	ld [wPointWinLoseFlag], a ; $4c88
 	ret ; $4c8b
+ServiceMatch3Hook_RallyTick:
 	call Func_0b_4d33 ; $4c8c
 	ret ; $4c8f
+ServiceMatch3Hook_Bounce:
 	call Func_0b_4d29 ; $4c90
 	ret ; $4c93
+ServiceMatch3Hook_BallHit:
 	call Func_0b_4d20 ; $4c94
 	ret ; $4c97
 Func_0b_4c98:
@@ -1956,27 +1976,29 @@ Label_0b_4dda:
 	ld [wMatchAbortFlag], a ; $4ddc
 	ld a, $ff ; $4ddf
 	ret ; $4de1
-DrillDefinition_0b_03:
+ServicePractice1Drill:
 	; $4de2, 16 bytes (drill_definition)
 	db $3a, $09, $02, $05, $03, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_03, DrillPointTable_0b_4300, DrillInit_0b_03 ; mode hooks, point table, init
+	dw ServicePractice1Hooks, PracticeDrillPointTable, ServicePractice1DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_03:
+ServicePractice1DrillInit:
 	ld a, $01 ; $4df2
 	ld [$c7bb], a ; $4df4
 	ret ; $4df7
-DrillModeHooks_0b_03:
+ServicePractice1Hooks:
 	; $4df8, 16 bytes (mode_hooks)
-	dw $4e08 ; record 0
-	dw $4e0c ; record 1
-	dw $4e25 ; record 2
+	dw ServicePractice1Hook_PerFrame ; record 0
+	dw ServicePractice1Hook_PointStart ; record 1
+	dw ServicePractice1Hook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw $4e8e ; record 4
-	dw $4e75 ; record 5
-	dw $4e74 ; record 6
+	dw ServicePractice1Hook_BallHit ; record 4
+	dw ServicePractice1Hook_Bounce ; record 5
+	dw ServicePractice1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+ServicePractice1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4e08
 	ret ; $4e0b
+ServicePractice1Hook_PointStart:
 	xor a, a ; $4e0c
 	ld [$c2e1], a ; $4e0d
 	ld a, $0a ; $4e10
@@ -1988,6 +2010,7 @@ DrillModeHooks_0b_03:
 	ld hl, DrillPositions_0b_4ea0 ; $4e1e
 	call SetDrillTargetZoneForPoint ; $4e21
 	ret ; $4e24
+ServicePractice1Hook_PointEnd:
 	call Func_0b_4ec2 ; $4e25
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4e28
 	cp a, $04 ; $4e2b
@@ -2033,7 +2056,9 @@ Label_0b_4e6d:
 	ld [$c2e3], a ; $4e6e
 	ld a, $01 ; $4e71
 	ret ; $4e73
+ServicePractice1Hook_RallyTick:
 	ret ; $4e74
+ServicePractice1Hook_Bounce:
 	ld a, [wRallyLength] ; $4e75
 	cp a, $01 ; $4e78
 	ret nz ; $4e7a
@@ -2047,6 +2072,7 @@ Label_0b_4e6d:
 	ret nz ; $4e8a
 	sound $72 ; $4e8b
 	ret ; $4e8d
+ServicePractice1Hook_BallHit:
 	ld a, [wRallyLength] ; $4e8e
 	cp a, $02 ; $4e91
 	jr c, Label_0b_4e9f ; $4e93
@@ -2146,31 +2172,34 @@ Label_0b_4f62:
 	ld [$c2e6], a ; $4f64
 	xor a, a ; $4f67
 	ret ; $4f68
-DrillDefinition_0b_04:
+ServicePractice2Drill:
 	; $4f69, 16 bytes (drill_definition)
 	db $3b, $09, $02, $05, $04, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_04, DrillPointTable_0b_4300, DrillInit_0b_04 ; mode hooks, point table, init
+	dw ServicePractice2Hooks, PracticeDrillPointTable, ServicePractice2DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_04:
+ServicePractice2DrillInit:
 	ld a, $01 ; $4f79
 	ld [$c7bb], a ; $4f7b
 	ret ; $4f7e
-DrillModeHooks_0b_04:
+ServicePractice2Hooks:
 	; $4f7f, 16 bytes (mode_hooks)
-	dw $4f98 ; record 0
-	dw $4f9c ; record 1
-	dw $4fb5 ; record 2
-	dw $4f8f ; record 3
-	dw $5050 ; record 4
-	dw $5032 ; record 5
-	dw $5031 ; record 6
+	dw ServicePractice2Hook_PerFrame ; record 0
+	dw ServicePractice2Hook_PointStart ; record 1
+	dw ServicePractice2Hook_PointEnd ; record 2
+	dw ServicePractice2Hook_MinigameStart ; record 3
+	dw ServicePractice2Hook_BallHit ; record 4
+	dw ServicePractice2Hook_Bounce ; record 5
+	dw ServicePractice2Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+ServicePractice2Hook_MinigameStart:
 	ld a, $02 ; $4f8f
 	ld [$c2e8], a ; $4f91
 	ld [$c2e9], a ; $4f94
 	ret ; $4f97
+ServicePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4f98
 	ret ; $4f9b
+ServicePractice2Hook_PointStart:
 	xor a, a ; $4f9c
 	ld [$c2e1], a ; $4f9d
 	ld a, $0a ; $4fa0
@@ -2182,6 +2211,7 @@ DrillModeHooks_0b_04:
 	xor a, a ; $4fb0
 	ld [$c2e6], a ; $4fb1
 	ret ; $4fb4
+ServicePractice2Hook_PointEnd:
 	call Func_0b_5082 ; $4fb5
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4fb8
 	cp a, $04 ; $4fbb
@@ -2250,7 +2280,9 @@ Label_0b_502a:
 	ld [$c2e3], a ; $502b
 	ld a, $01 ; $502e
 	ret ; $5030
+ServicePractice2Hook_RallyTick:
 	ret ; $5031
+ServicePractice2Hook_Bounce:
 	ld a, [wBallHasBouncedFlag] ; $5032
 	or a, a ; $5035
 	ret nz ; $5036
@@ -2267,6 +2299,7 @@ Label_0b_502a:
 	ret nz ; $504c
 	sound $72 ; $504d
 	ret ; $504f
+ServicePractice2Hook_BallHit:
 	ld a, [wRallyLength] ; $5050
 	cp a, $02 ; $5053
 	jr c, Label_0b_505f ; $5055
@@ -2456,30 +2489,32 @@ Label_0b_51c1:
 DrillShotTable_0b_51c8:
 	; $51c8, 5 bytes (bytes:5)
 	db $0d, $0c, $0d, $0c, $0d ; 0x00
-DrillDefinition_0b_05:
+ServicePractice3Drill:
 	; $51cd, 16 bytes (drill_definition)
 	db $3c, $09, $02, $05, $05, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_05, DrillPointTable_0b_4300, DrillInit_0b_05 ; mode hooks, point table, init
+	dw ServicePractice3Hooks, PracticeDrillPointTable, ServicePractice3DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_05:
+ServicePractice3DrillInit:
 	ld a, $01 ; $51dd
 	ld [$c7bb], a ; $51df
 	ret ; $51e2
-DrillModeHooks_0b_05:
+ServicePractice3Hooks:
 	; $51e3, 16 bytes (mode_hooks)
-	dw $51fe ; record 0
-	dw $5213 ; record 1
-	dw $5237 ; record 2
-	dw $51f3 ; record 3
-	dw $52b0 ; record 4
-	dw $52a6 ; record 5
-	dw $52a5 ; record 6
-	dw $520c ; record 7
+	dw ServicePractice3Hook_PerFrame ; record 0
+	dw ServicePractice3Hook_PointStart ; record 1
+	dw ServicePractice3Hook_PointEnd ; record 2
+	dw ServicePractice3Hook_MinigameStart ; record 3
+	dw ServicePractice3Hook_BallHit ; record 4
+	dw ServicePractice3Hook_Bounce ; record 5
+	dw ServicePractice3Hook_RallyTick ; record 6
+	dw ServicePractice3Hook_Draw ; record 7
+ServicePractice3Hook_MinigameStart:
 	ld a, $04 ; $51f3
 	ld [$c2e8], a ; $51f5
 	ld a, $01 ; $51f8
 	ld [$c7bb], a ; $51fa
 	ret ; $51fd
+ServicePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $51fe
 	ld a, [wRallyLength] ; $5201
 	cp a, $01 ; $5204
@@ -2487,9 +2522,11 @@ DrillModeHooks_0b_05:
 	call Func_0b_4233 ; $5208
 Label_0b_520b:
 	ret ; $520b
+ServicePractice3Hook_Draw:
 	call Func_0b_46a0 ; $520c
 	call Func_0b_46c4 ; $520f
 	ret ; $5212
+ServicePractice3Hook_PointStart:
 	xor a, a ; $5213
 	ld [$c2e1], a ; $5214
 	ld a, $0a ; $5217
@@ -2505,6 +2542,7 @@ Label_0b_520b:
 	xor a, a ; $5232
 	ld [$c2e6], a ; $5233
 	ret ; $5236
+ServicePractice3Hook_PointEnd:
 	call Func_0b_5324 ; $5237
 	ld a, [wTotalPointsScoredInCurrentGame] ; $523a
 	cp a, $04 ; $523d
@@ -2564,12 +2602,15 @@ Label_0b_529e:
 	ld [$c2e3], a ; $529f
 	ld a, $01 ; $52a2
 	ret ; $52a4
+ServicePractice3Hook_RallyTick:
 	ret ; $52a5
+ServicePractice3Hook_Bounce:
 	ld a, [wRallyLength] ; $52a6
 	cp a, $01 ; $52a9
 	ret nz ; $52ab
 	call Func_0b_41da ; $52ac
 	ret ; $52af
+ServicePractice3Hook_BallHit:
 	call Func_0b_52c3 ; $52b0
 	ld a, [wRallyLength] ; $52b3
 	cp a, $02 ; $52b6
@@ -2699,23 +2740,25 @@ Label_0b_53d6:
 	ld [$c2e6], a ; $53d8
 	xor a, a ; $53db
 	ret ; $53dc
-DrillDefinition_0b_06:
+NetGameMatch1Drill:
 	; $53dd, 16 bytes (drill_definition)
 	db $3d, $18, $02, $05, $06, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_06, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	dw NetGameMatch1Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_06:
+NetGameMatch1Hooks:
 	; $53ed, 16 bytes (mode_hooks)
-	dw $53fd ; record 0
-	dw $5401 ; record 1
-	dw $542e ; record 2
+	dw NetGameMatch1Hook_PerFrame ; record 0
+	dw NetGameMatch1Hook_PointStart ; record 1
+	dw NetGameMatch1Hook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw $5453 ; record 4
-	dw $544f ; record 5
-	dw $544b ; record 6
+	dw NetGameMatch1Hook_BallHit ; record 4
+	dw NetGameMatch1Hook_Bounce ; record 5
+	dw NetGameMatch1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+NetGameMatch1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $53fd
 	ret ; $5400
+NetGameMatch1Hook_PointStart:
 	xor a, a ; $5401
 	ld [$c2e1], a ; $5402
 	ld a, $0a ; $5405
@@ -2737,6 +2780,7 @@ DrillModeHooks_0b_06:
 	ret ; $542b
 	db $3d ; $542c
 	db $54 ; $542d
+NetGameMatch1Hook_PointEnd:
 	call Func_0b_54d3 ; $542e
 	call Func_0b_5457 ; $5431
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5434
@@ -2750,10 +2794,13 @@ DrillModeHooks_0b_06:
 	ld a, $80 ; $5445
 	ld [wMatchAbortFlag], a ; $5447
 	ret ; $544a
+NetGameMatch1Hook_RallyTick:
 	call Func_0b_54ef ; $544b
 	ret ; $544e
+NetGameMatch1Hook_Bounce:
 	call Func_0b_54e5 ; $544f
 	ret ; $5452
+NetGameMatch1Hook_BallHit:
 	call Func_0b_54dc ; $5453
 	ret ; $5456
 Func_0b_5457:
@@ -3068,23 +3115,25 @@ Label_0b_563c:
 	ld [wMatchAbortFlag], a ; $563e
 	ld a, $ff ; $5641
 	ret ; $5643
-DrillDefinition_0b_07:
+NetGameMatch2Drill:
 	; $5644, 16 bytes (drill_definition)
 	db $3e, $18, $02, $05, $07, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_07, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	dw NetGameMatch2Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_07:
+NetGameMatch2Hooks:
 	; $5654, 16 bytes (mode_hooks)
-	dw $5664 ; record 0
-	dw $5668 ; record 1
-	dw $569b ; record 2
+	dw NetGameMatch2Hook_PerFrame ; record 0
+	dw NetGameMatch2Hook_PointStart ; record 1
+	dw NetGameMatch2Hook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw $56e6 ; record 4
-	dw $56e2 ; record 5
-	dw $56de ; record 6
+	dw NetGameMatch2Hook_BallHit ; record 4
+	dw NetGameMatch2Hook_Bounce ; record 5
+	dw NetGameMatch2Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+NetGameMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $5664
 	ret ; $5667
+NetGameMatch2Hook_PointStart:
 	xor a, a ; $5668
 	ld [$c2e1], a ; $5669
 	ld a, $0a ; $566c
@@ -3108,6 +3157,7 @@ DrillModeHooks_0b_07:
 	ret ; $5698
 	db $3e ; $5699
 	db $55 ; $569a
+NetGameMatch2Hook_PointEnd:
 	call Func_0b_574d ; $569b
 	call Func_0b_56ea ; $569e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $56a1
@@ -3145,10 +3195,13 @@ Label_0b_56cd:
 	ld a, $80 ; $56d8
 	ld [wMatchAbortFlag], a ; $56da
 	ret ; $56dd
+NetGameMatch2Hook_RallyTick:
 	call Func_0b_5769 ; $56de
 	ret ; $56e1
+NetGameMatch2Hook_Bounce:
 	call Func_0b_575f ; $56e2
 	ret ; $56e5
+NetGameMatch2Hook_BallHit:
 	call Func_0b_5756 ; $56e6
 	ret ; $56e9
 Func_0b_56ea:
@@ -3449,23 +3502,25 @@ Label_0b_58b7:
 	ld [wMatchAbortFlag], a ; $58b9
 	ld a, $ff ; $58bc
 	ret ; $58be
-DrillDefinition_0b_08:
+NetGameMatch3Drill:
 	; $58bf, 16 bytes (drill_definition)
 	db $3f, $18, $02, $05, $08, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_08, DrillPointTable_0b_427e, $0000 ; mode hooks, point table, init
+	dw NetGameMatch3Hooks, MatchDrillPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_08:
+NetGameMatch3Hooks:
 	; $58cf, 16 bytes (mode_hooks)
-	dw $58df ; record 0
-	dw $58e3 ; record 1
-	dw $5908 ; record 2
+	dw NetGameMatch3Hook_PerFrame ; record 0
+	dw NetGameMatch3Hook_PointStart ; record 1
+	dw NetGameMatch3Hook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw $5956 ; record 4
-	dw $5952 ; record 5
-	dw $594e ; record 6
+	dw NetGameMatch3Hook_BallHit ; record 4
+	dw NetGameMatch3Hook_Bounce ; record 5
+	dw NetGameMatch3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+NetGameMatch3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $58df
 	ret ; $58e2
+NetGameMatch3Hook_PointStart:
 	xor a, a ; $58e3
 	ld [$c2e1], a ; $58e4
 	ld a, $0a ; $58e7
@@ -3483,6 +3538,7 @@ DrillModeHooks_0b_08:
 	ld [$c2ec], a ; $5901
 	ld [$c2ed], a ; $5904
 	ret ; $5907
+NetGameMatch3Hook_PointEnd:
 	call Func_0b_5a78 ; $5908
 	call Func_0b_595a ; $590b
 	ld hl, $594c ; $590e
@@ -3522,10 +3578,13 @@ Label_0b_5940:
 	ret ; $594b
 	db $3f ; $594c
 	db $56 ; $594d
+NetGameMatch3Hook_RallyTick:
 	call Func_0b_5a94 ; $594e
 	ret ; $5951
+NetGameMatch3Hook_Bounce:
 	call Func_0b_5a8a ; $5952
 	ret ; $5955
+NetGameMatch3Hook_BallHit:
 	call Func_0b_5a81 ; $5956
 	ret ; $5959
 Func_0b_595a:
@@ -3921,25 +3980,26 @@ Label_0b_5bd2:
 	ld [wMatchAbortFlag], a ; $5bd4
 	ld a, $ff ; $5bd7
 	ret ; $5bd9
-DrillDefinition_0b_09:
+NetGamePractice1Drill:
 	; $5bda, 16 bytes (drill_definition)
 	db $40, $09, $02, $05, $09, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_09, DrillPointTable_0b_4300, DrillInit_0b_09 ; mode hooks, point table, init
+	dw NetGamePractice1Hooks, PracticeDrillPointTable, NetGamePractice1DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_09:
+NetGamePractice1DrillInit:
 	ld a, $01 ; $5bea
 	ld [$c7bb], a ; $5bec
 	ret ; $5bef
-DrillModeHooks_0b_09:
+NetGamePractice1Hooks:
 	; $5bf0, 16 bytes (mode_hooks)
-	dw $5c15 ; record 0
-	dw $5c19 ; record 1
-	dw $5c52 ; record 2
-	dw $5c00 ; record 3
-	dw $5cc9 ; record 4
-	dw $5cc5 ; record 5
-	dw $5cc1 ; record 6
+	dw NetGamePractice1Hook_PerFrame ; record 0
+	dw NetGamePractice1Hook_PointStart ; record 1
+	dw NetGamePractice1Hook_PointEnd ; record 2
+	dw NetGamePractice1Hook_MinigameStart ; record 3
+	dw NetGamePractice1Hook_BallHit ; record 4
+	dw NetGamePractice1Hook_Bounce ; record 5
+	dw NetGamePractice1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+NetGamePractice1Hook_MinigameStart:
 	xor a, a ; $5c00
 	ld [$c2e9], a ; $5c01
 	ld [$c2ea], a ; $5c04
@@ -3949,8 +4009,10 @@ DrillModeHooks_0b_09:
 	ld a, $01 ; $5c0f
 	ld [$c7bb], a ; $5c11
 	ret ; $5c14
+NetGamePractice1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $5c15
 	ret ; $5c18
+NetGamePractice1Hook_PointStart:
 	xor a, a ; $5c19
 	ld [$c2e1], a ; $5c1a
 	ld a, $0a ; $5c1d
@@ -3980,6 +4042,7 @@ Label_0b_5c49:
 Table_0b_5c4e:
 	; $5c4e, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
+NetGamePractice1Hook_PointEnd:
 	call Drill09JudgePointMode0 ; $5c52
 	ld a, [wPointOutcome] ; $5c55
 	cp a, $04 ; $5c58
@@ -4040,10 +4103,13 @@ Label_0b_5cb7:
 Label_0b_5cbe:
 	ld a, $ff ; $5cbe
 	ret ; $5cc0
+NetGamePractice1Hook_RallyTick:
 	call StubNop_0b_5d63 ; $5cc1
 	ret ; $5cc4
+NetGamePractice1Hook_Bounce:
 	call Drill09JudgePointMode2 ; $5cc5
 	ret ; $5cc8
+NetGamePractice1Hook_BallHit:
 	call Drill09JudgePointMode1 ; $5cc9
 	ld a, [wLastShotCharIndex] ; $5ccc
 	cp a, $01 ; $5ccf
@@ -4304,16 +4370,16 @@ Label_0b_5e8d:
 	ld [wMatchAbortFlag], a ; $5e8f
 	ld a, $ff ; $5e92
 	ret ; $5e94
-DrillDefinition_0b_0a:
+NetGamePractice2Drill:
 	; $5e95, 16 bytes (drill_definition)
 	db $41, $09, $02, $05, $0a, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_0a, DrillPointTable_0b_4300, DrillInit_0b_0a ; mode hooks, point table, init
+	dw NetGamePractice2Hooks, PracticeDrillPointTable, NetGamePractice2DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_0a:
+NetGamePractice2DrillInit:
 	ld a, $01 ; $5ea5
 	ld [$c7bb], a ; $5ea7
 	ret ; $5eaa
-DrillModeHooks_0b_0a:
+NetGamePractice2Hooks:
 	call $d15e ; $5eab
 	ld e, [hl] ; $5eae
 	ld a, [$bb5e] ; $5eaf
@@ -4326,6 +4392,7 @@ DrillModeHooks_0b_0a:
 	ld e, a ; $5eb8
 	xor a, [hl] ; $5eb9
 	inc bc ; $5eba
+NetGamePractice2Hook_MinigameStart:
 	xor a, a ; $5ebb
 	ld [$c2ea], a ; $5ebc
 	ld [$c2eb], a ; $5ebf
@@ -4334,8 +4401,10 @@ DrillModeHooks_0b_0a:
 	ld a, $01 ; $5ec7
 	ld [$c7bb], a ; $5ec9
 	ret ; $5ecc
+NetGamePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $5ecd
 	ret ; $5ed0
+NetGamePractice2Hook_PointStart:
 	xor a, a ; $5ed1
 	ld [$c2e1], a ; $5ed2
 	ld a, $0a ; $5ed5
@@ -4354,6 +4423,7 @@ DrillModeHooks_0b_0a:
 	xor a, a ; $5ef5
 	ld [$c2ff], a ; $5ef6
 	ret ; $5ef9
+NetGamePractice2Hook_PointEnd:
 	call Func_0b_6002 ; $5efa
 	ld a, [wPointOutcome] ; $5efd
 	cp a, $04 ; $5f00
@@ -4423,10 +4493,13 @@ Label_0b_5f71:
 Label_0b_5f78:
 	ld a, $ff ; $5f78
 	ret ; $5f7a
+NetGamePractice2Hook_RallyTick:
 	call Func_0b_601d ; $5f7b
 	ret ; $5f7e
+NetGamePractice2Hook_Bounce:
 	call Func_0b_6014 ; $5f7f
 	ret ; $5f82
+NetGamePractice2Hook_BallHit:
 	call Func_0b_600b ; $5f83
 	ld a, [wLastShotCharIndex] ; $5f86
 	cp a, $01 ; $5f89
@@ -4684,25 +4757,26 @@ Label_0b_6146:
 	ld [wMatchAbortFlag], a ; $6148
 	ld a, $ff ; $614b
 	ret ; $614d
-DrillDefinition_0b_0b:
+NetGamePractice3Drill:
 	; $614e, 16 bytes (drill_definition)
 	db $42, $09, $02, $05, $0b, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_0b, DrillPointTable_0b_4300, DrillInit_0b_0b ; mode hooks, point table, init
+	dw NetGamePractice3Hooks, PracticeDrillPointTable, NetGamePractice3DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_0b:
+NetGamePractice3DrillInit:
 	ld a, $01 ; $615e
 	ld [$c7bb], a ; $6160
 	ret ; $6163
-DrillModeHooks_0b_0b:
+NetGamePractice3Hooks:
 	; $6164, 16 bytes (mode_hooks)
-	dw $6186 ; record 0
-	dw $618a ; record 1
-	dw $61ac ; record 2
-	dw $6174 ; record 3
-	dw $6242 ; record 4
-	dw $623e ; record 5
-	dw $623a ; record 6
+	dw NetGamePractice3Hook_PerFrame ; record 0
+	dw NetGamePractice3Hook_PointStart ; record 1
+	dw NetGamePractice3Hook_PointEnd ; record 2
+	dw NetGamePractice3Hook_MinigameStart ; record 3
+	dw NetGamePractice3Hook_BallHit ; record 4
+	dw NetGamePractice3Hook_Bounce ; record 5
+	dw NetGamePractice3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+NetGamePractice3Hook_MinigameStart:
 	xor a, a ; $6174
 	ld [$c2ea], a ; $6175
 	ld [$c2eb], a ; $6178
@@ -4711,8 +4785,10 @@ DrillModeHooks_0b_0b:
 	ld a, $01 ; $6180
 	ld [$c7bb], a ; $6182
 	ret ; $6185
+NetGamePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6186
 	ret ; $6189
+NetGamePractice3Hook_PointStart:
 	xor a, a ; $618a
 	ld [$c2e1], a ; $618b
 	ld a, $0a ; $618e
@@ -4728,6 +4804,7 @@ DrillModeHooks_0b_0b:
 	xor a, a ; $61a7
 	ld [$c2ff], a ; $61a8
 	ret ; $61ab
+NetGamePractice3Hook_PointEnd:
 	call Func_0b_62c1 ; $61ac
 	ld a, [wPointOutcome] ; $61af
 	cp a, $04 ; $61b2
@@ -4804,10 +4881,13 @@ Label_0b_6230:
 Label_0b_6237:
 	ld a, $ff ; $6237
 	ret ; $6239
+NetGamePractice3Hook_RallyTick:
 	call Func_0b_62dc ; $623a
 	ret ; $623d
+NetGamePractice3Hook_Bounce:
 	call Func_0b_62d3 ; $623e
 	ret ; $6241
+NetGamePractice3Hook_BallHit:
 	call Func_0b_62ca ; $6242
 	ld a, [wLastShotCharIndex] ; $6245
 	cp a, $01 ; $6248
@@ -5058,26 +5138,29 @@ Label_0b_63f8:
 	ld [wMatchAbortFlag], a ; $63fa
 	ld a, $ff ; $63fd
 	ret ; $63ff
-DrillDefinition_0b_0c:
+StrokeMatch1Drill:
 	; $6400, 16 bytes (drill_definition)
 	db $43, $18, $02, $05, $0c, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_0c, DrillPointTable_0b_42bf, $0000 ; mode hooks, point table, init
+	dw StrokeMatch1Hooks, StrokeMatchPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_0c:
+StrokeMatch1Hooks:
 	; $6410, 16 bytes (mode_hooks)
-	dw $6426 ; record 0
-	dw $642a ; record 1
-	dw $6441 ; record 2
-	dw $6420 ; record 3
-	dw $6485 ; record 4
-	dw $6481 ; record 5
-	dw $647d ; record 6
+	dw StrokeMatch1Hook_PerFrame ; record 0
+	dw StrokeMatch1Hook_PointStart ; record 1
+	dw StrokeMatch1Hook_PointEnd ; record 2
+	dw StrokeMatch1Hook_MinigameStart ; record 3
+	dw StrokeMatch1Hook_BallHit ; record 4
+	dw StrokeMatch1Hook_Bounce ; record 5
+	dw StrokeMatch1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+StrokeMatch1Hook_MinigameStart:
 	ld a, $05 ; $6420
 	ld [wScoreboardLayout], a ; $6422
 	ret ; $6425
+StrokeMatch1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6426
 	ret ; $6429
+StrokeMatch1Hook_PointStart:
 	xor a, a ; $642a
 	ld [$c2e1], a ; $642b
 	ld a, $0a ; $642e
@@ -5089,6 +5172,7 @@ DrillModeHooks_0b_0c:
 	ld a, $01 ; $643b
 	ld [$c7a8], a ; $643d
 	ret ; $6440
+StrokeMatch1Hook_PointEnd:
 	call Func_0b_64e0 ; $6441
 	call Func_0b_6489 ; $6444
 	ld a, [wPlayer1PointsWon] ; $6447
@@ -5123,10 +5207,13 @@ Label_0b_646d:
 	ld a, $80 ; $6477
 	ld [wMatchAbortFlag], a ; $6479
 	ret ; $647c
+StrokeMatch1Hook_RallyTick:
 	call Func_0b_64fb ; $647d
 	ret ; $6480
+StrokeMatch1Hook_Bounce:
 	call Func_0b_64f2 ; $6481
 	ret ; $6484
+StrokeMatch1Hook_BallHit:
 	call Func_0b_64e9 ; $6485
 	ret ; $6488
 Func_0b_6489:
@@ -5486,24 +5573,27 @@ Label_0b_66cb:
 	ret z ; $66d8
 	xor a, a ; $66d9
 	ret ; $66da
-DrillDefinition_0b_0d:
+StrokeMatch2Drill:
 	; $66db, 16 bytes (drill_definition)
 	db $44, $18, $02, $05, $0d, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_0d, DrillPointTable_0b_42bf, $0000 ; mode hooks, point table, init
+	dw StrokeMatch2Hooks, StrokeMatchPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_0d:
+StrokeMatch2Hooks:
 	; $66eb, 16 bytes (mode_hooks)
-	dw $66fc ; record 0
-	dw $6700 ; record 1
-	dw $6739 ; record 2
-	dw $66fb ; record 3
-	dw $6784 ; record 4
-	dw $6780 ; record 5
-	dw $677c ; record 6
+	dw StrokeMatch2Hook_PerFrame ; record 0
+	dw StrokeMatch2Hook_PointStart ; record 1
+	dw StrokeMatch2Hook_PointEnd ; record 2
+	dw StrokeMatch2Hook_MinigameStart ; record 3
+	dw StrokeMatch2Hook_BallHit ; record 4
+	dw StrokeMatch2Hook_Bounce ; record 5
+	dw StrokeMatch2Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+StrokeMatch2Hook_MinigameStart:
 	ret ; $66fb
+StrokeMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $66fc
 	ret ; $66ff
+StrokeMatch2Hook_PointStart:
 	xor a, a ; $6700
 	ld [$c2e1], a ; $6701
 	ld a, $0a ; $6704
@@ -5529,6 +5619,7 @@ DrillModeHooks_0b_0d:
 	ret ; $6736
 	db $58 ; $6737
 	db $44 ; $6738
+StrokeMatch2Hook_PointEnd:
 	call Func_0b_67eb ; $6739
 	call Func_0b_6788 ; $673c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $673f
@@ -5566,10 +5657,13 @@ Label_0b_676b:
 	ld a, $80 ; $6776
 	ld [wMatchAbortFlag], a ; $6778
 	ret ; $677b
+StrokeMatch2Hook_RallyTick:
 	call Func_0b_6806 ; $677c
 	ret ; $677f
+StrokeMatch2Hook_Bounce:
 	call Func_0b_67fd ; $6780
 	ret ; $6783
+StrokeMatch2Hook_BallHit:
 	call Func_0b_67f4 ; $6784
 	ret ; $6787
 Func_0b_6788:
@@ -5830,24 +5924,27 @@ Label_0b_691e:
 	ld [wMatchAbortFlag], a ; $6920
 	ld a, $ff ; $6923
 	ret ; $6925
-DrillDefinition_0b_0e:
+StrokeMatch3Drill:
 	; $6926, 16 bytes (drill_definition)
 	db $45, $18, $02, $05, $0e, $24, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_0e, DrillPointTable_0b_42bf, $0000 ; mode hooks, point table, init
+	dw StrokeMatch3Hooks, StrokeMatchPointTable, $0000 ; mode hooks, point table, init
 	db $00, $00
-DrillModeHooks_0b_0e:
+StrokeMatch3Hooks:
 	; $6936, 16 bytes (mode_hooks)
-	dw $6947 ; record 0
-	dw $694b ; record 1
-	dw $6984 ; record 2
-	dw $6946 ; record 3
-	dw $69cf ; record 4
-	dw $69cb ; record 5
-	dw $69c7 ; record 6
+	dw StrokeMatch3Hook_PerFrame ; record 0
+	dw StrokeMatch3Hook_PointStart ; record 1
+	dw StrokeMatch3Hook_PointEnd ; record 2
+	dw StrokeMatch3Hook_MinigameStart ; record 3
+	dw StrokeMatch3Hook_BallHit ; record 4
+	dw StrokeMatch3Hook_Bounce ; record 5
+	dw StrokeMatch3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+StrokeMatch3Hook_MinigameStart:
 	ret ; $6946
+StrokeMatch3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6947
 	ret ; $694a
+StrokeMatch3Hook_PointStart:
 	xor a, a ; $694b
 	ld [$c2e1], a ; $694c
 	ld a, $0a ; $694f
@@ -5873,6 +5970,7 @@ DrillModeHooks_0b_0e:
 	ret ; $6981
 	db $59 ; $6982
 	db $45 ; $6983
+StrokeMatch3Hook_PointEnd:
 	call Func_0b_6a36 ; $6984
 	call Func_0b_69d3 ; $6987
 	ld a, [wTotalPointsScoredInCurrentGame] ; $698a
@@ -5910,10 +6008,13 @@ Label_0b_69b6:
 	ld a, $80 ; $69c1
 	ld [wMatchAbortFlag], a ; $69c3
 	ret ; $69c6
+StrokeMatch3Hook_RallyTick:
 	call Func_0b_6a51 ; $69c7
 	ret ; $69ca
+StrokeMatch3Hook_Bounce:
 	call Func_0b_6a48 ; $69cb
 	ret ; $69ce
+StrokeMatch3Hook_BallHit:
 	call Func_0b_6a3f ; $69cf
 	ret ; $69d2
 Func_0b_69d3:
@@ -6165,33 +6266,36 @@ Label_0b_6b55:
 	ld [wMatchAbortFlag], a ; $6b57
 	ld a, $ff ; $6b5a
 	ret ; $6b5c
-DrillDefinition_0b_0f:
+StrokePractice1Drill:
 	; $6b5d, 16 bytes (drill_definition)
 	db $46, $09, $02, $05, $0f, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_0f, DrillPointTable_0b_4321, DrillInit_0b_0f ; mode hooks, point table, init
+	dw StrokePractice1Hooks, StrokePracticePointTable, StrokePractice1DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_0f:
+StrokePractice1DrillInit:
 	ld a, $01 ; $6b6d
 	ld [$c7bb], a ; $6b6f
 	ret ; $6b72
-DrillModeHooks_0b_0f:
+StrokePractice1Hooks:
 	; $6b73, 16 bytes (mode_hooks)
-	dw $6b90 ; record 0
-	dw $6b94 ; record 1
-	dw $6be1 ; record 2
-	dw $6b83 ; record 3
-	dw $6c52 ; record 4
-	dw $6c4e ; record 5
-	dw $6c4a ; record 6
+	dw StrokePractice1Hook_PerFrame ; record 0
+	dw StrokePractice1Hook_PointStart ; record 1
+	dw StrokePractice1Hook_PointEnd ; record 2
+	dw StrokePractice1Hook_MinigameStart ; record 3
+	dw StrokePractice1Hook_BallHit ; record 4
+	dw StrokePractice1Hook_Bounce ; record 5
+	dw StrokePractice1Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+StrokePractice1Hook_MinigameStart:
 	ld a, $01 ; $6b83
 	ld [$c7bb], a ; $6b85
 	xor a, a ; $6b88
 	ld [$c2e9], a ; $6b89
 	ld [$c2e8], a ; $6b8c
 	ret ; $6b8f
+StrokePractice1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6b90
 	ret ; $6b93
+StrokePractice1Hook_PointStart:
 	xor a, a ; $6b94
 	ld [$c2e1], a ; $6b95
 	ld a, $0a ; $6b98
@@ -6231,6 +6335,7 @@ EnableTargetZoneAfterDelayTask:
 	ld hl, EnableTargetZoneAfterDelayTask ; $6bda
 	call UnregisterFrameTask ; $6bdd
 	ret ; $6be0
+StrokePractice1Hook_PointEnd:
 	call Drill15JudgePointMode0 ; $6be1
 	ld a, [wPointOutcome] ; $6be4
 	cp a, $05 ; $6be7
@@ -6288,10 +6393,13 @@ Label_0b_6c40:
 Label_0b_6c47:
 	ld a, $ff ; $6c47
 	ret ; $6c49
+StrokePractice1Hook_RallyTick:
 	call StubNop_0b_6ceb ; $6c4a
 	ret ; $6c4d
+StrokePractice1Hook_Bounce:
 	call Drill15JudgePointMode2 ; $6c4e
 	ret ; $6c51
+StrokePractice1Hook_BallHit:
 	call Drill15JudgePointMode1 ; $6c52
 	ld a, [wRallyLength] ; $6c55
 	cp a, $01 ; $6c58
@@ -6487,16 +6595,16 @@ Label_0b_6da6:
 	ld [wMatchAbortFlag], a ; $6da8
 	ld a, $ff ; $6dab
 	ret ; $6dad
-DrillDefinition_0b_10:
+StrokePractice2Drill:
 	; $6dae, 16 bytes (drill_definition)
 	db $47, $09, $02, $05, $10, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_10, DrillPointTable_0b_4321, DrillInit_0b_10 ; mode hooks, point table, init
+	dw StrokePractice2Hooks, StrokePracticePointTable, StrokePractice2DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_10:
+StrokePractice2DrillInit:
 	ld a, $01 ; $6dbe
 	ld [$c7bb], a ; $6dc0
 	ret ; $6dc3
-DrillModeHooks_0b_10:
+StrokePractice2Hooks:
 	call c, $e06d ; $6dc4
 	ld l, l ; $6dc7
 	dec l ; $6dc8
@@ -6509,12 +6617,15 @@ DrillModeHooks_0b_10:
 	ld l, [hl] ; $6dd1
 	xor a, [hl] ; $6dd2
 	inc bc ; $6dd3
+StrokePractice2Hook_MinigameStart:
 	xor a, a ; $6dd4
 	ld [$c2e9], a ; $6dd5
 	ld [$c2ee], a ; $6dd8
 	ret ; $6ddb
+StrokePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6ddc
 	ret ; $6ddf
+StrokePractice2Hook_PointStart:
 	xor a, a ; $6de0
 	ld [$c2e1], a ; $6de1
 	ld a, $0a ; $6de4
@@ -6554,6 +6665,7 @@ Func_0b_6e1c:
 	ld hl, Func_0b_6e1c ; $6e26
 	call UnregisterFrameTask ; $6e29
 	ret ; $6e2c
+StrokePractice2Hook_PointEnd:
 	call Func_0b_6f18 ; $6e2d
 	call Func_0b_6ec9 ; $6e30
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e33
@@ -6606,14 +6718,17 @@ Label_0b_6e8a:
 Label_0b_6e8f:
 	ld a, $ff ; $6e8f
 	ret ; $6e91
+StrokePractice2Hook_RallyTick:
 	call Func_0b_6f33 ; $6e92
 	ld a, [wRallyLength] ; $6e95
 	cp a, $02 ; $6e98
 	ret nz ; $6e9a
 	call ResetActiveCharState ; $6e9b
 	ret ; $6e9e
+StrokePractice2Hook_Bounce:
 	call Func_0b_6f2a ; $6e9f
 	ret ; $6ea2
+StrokePractice2Hook_BallHit:
 	call Func_0b_6f21 ; $6ea3
 	ret ; $6ea6
 DrillPositions_0b_6ea7:
@@ -6810,33 +6925,36 @@ Label_0b_7006:
 	ld [wMatchAbortFlag], a ; $7008
 	ld a, $ff ; $700b
 	ret ; $700d
-DrillDefinition_0b_11:
+StrokePractice3Drill:
 	; $700e, 16 bytes (drill_definition)
 	db $48, $09, $02, $05, $11, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
-	dw DrillModeHooks_0b_11, DrillPointTable_0b_4321, DrillInit_0b_11 ; mode hooks, point table, init
+	dw StrokePractice3Hooks, StrokePracticePointTable, StrokePractice3DrillInit ; mode hooks, point table, init
 	db $00, $00
-DrillInit_0b_11:
+StrokePractice3DrillInit:
 	ld a, $01 ; $701e
 	ld [$c7bb], a ; $7020
 	ret ; $7023
-DrillModeHooks_0b_11:
+StrokePractice3Hooks:
 	; $7024, 16 bytes (mode_hooks)
-	dw $7041 ; record 0
-	dw $7045 ; record 1
-	dw $7092 ; record 2
-	dw $7034 ; record 3
-	dw $70ff ; record 4
-	dw $70fb ; record 5
-	dw $70ee ; record 6
+	dw StrokePractice3Hook_PerFrame ; record 0
+	dw StrokePractice3Hook_PointStart ; record 1
+	dw StrokePractice3Hook_PointEnd ; record 2
+	dw StrokePractice3Hook_MinigameStart ; record 3
+	dw StrokePractice3Hook_BallHit ; record 4
+	dw StrokePractice3Hook_Bounce ; record 5
+	dw StrokePractice3Hook_RallyTick ; record 6
 	dw RetStub ; record 7
+StrokePractice3Hook_MinigameStart:
 	ld a, $01 ; $7034
 	ld [$c7bb], a ; $7036
 	xor a, a ; $7039
 	ld [$c2e9], a ; $703a
 	ld [$c2e8], a ; $703d
 	ret ; $7040
+StrokePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $7041
 	ret ; $7044
+StrokePractice3Hook_PointStart:
 	xor a, a ; $7045
 	ld [$c2e1], a ; $7046
 	ld a, $0a ; $7049
@@ -6876,6 +6994,7 @@ Func_0b_7081:
 	ld hl, Func_0b_7081 ; $708b
 	call UnregisterFrameTask ; $708e
 	ret ; $7091
+StrokePractice3Hook_PointEnd:
 	call Func_0b_717a ; $7092
 	call Func_0b_712b ; $7095
 	ld a, [wTotalPointsScoredInCurrentGame] ; $7098
@@ -6925,14 +7044,17 @@ Label_0b_70e4:
 Label_0b_70eb:
 	ld a, $ff ; $70eb
 	ret ; $70ed
+StrokePractice3Hook_RallyTick:
 	call Func_0b_7195 ; $70ee
 	ld a, [wRallyLength] ; $70f1
 	cp a, $02 ; $70f4
 	ret nz ; $70f6
 	call ResetActiveCharState ; $70f7
 	ret ; $70fa
+StrokePractice3Hook_Bounce:
 	call Func_0b_718c ; $70fb
 	ret ; $70fe
+StrokePractice3Hook_BallHit:
 	call Func_0b_7183 ; $70ff
 	ld a, [wRallyLength] ; $7102
 	cp a, $01 ; $7105

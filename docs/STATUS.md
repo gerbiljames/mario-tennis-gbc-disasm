@@ -26,8 +26,59 @@ Everything below is **committed** (HEAD `d021ab5`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,332 of 20,575 labels are human-named** (see the caveat in the
+**6,455 of 20,697 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
+
+### The 18 training drills named end to end (2026-07-25)
+
+Carving bank `$0b` left 122 mode-hook handlers as bare addresses — the
+tables rendered `dw $4e08` because nothing had a label. They are now all
+named, along with the definitions, hook tables, init routines and point
+tables: **172 labels**, and the drill list is identified by name.
+
+**Where the names come from.** `RunDrillMatchListMenu` (`$10:$4450`) calls
+`RunPagedTextMenu` with `hl = $048d`, `a = $09` — nine text ids at
+`31:141`-`31:149`, four menu lines each, 34 items total. That count is
+exactly 18 drills + 4 machine levels + 4 wall levels + 2 master levels +
+6 "64 Mini" levels, and item order pins each drill id:
+
+| id | Drill | id | Drill | id | Drill |
+|---|---|---|---|---|---|
+| 0-2 | Service Match 1-3 | 6-8 | Net Game Match 1-3 | 12-14 | Stroke Match 1-3 |
+| 3-5 | Service Practice 1-3 | 9-11 | Net Game Practice 1-3 | 15-17 | Stroke Practice 1-3 |
+
+Three independent things agree with that mapping:
+
+- **Court and point table split on it exactly.** Every Match drill runs on
+  court `$18`, every Practice drill on court `$09`; ids 0-2/6-8 share
+  `MatchDrillPointTable`, 3-5/9-11 share `PracticeDrillPointTable`, and the
+  Stroke pair get their own two.
+- **The story scenes already carried the names.** `$15` passes drill 0 from
+  `ServiceAceMatchChallengeScene`, 1 from `CenterLineServeMatchChallengeScene`,
+  7 from `SmashMatchChallengeScene`, 8 from `DropShotMatchChallengeScene`,
+  12-14 from `Stroke`/`Lob`/`ReturnMatchChallengeScene` — all landing in the
+  right family.
+- **The non-drill tail checks out too.** Bank `$12` passes ids 22-25 from
+  `WallPracticeRoomTile03`-`06_12` (menu items "Wall Lvl 1-4") and id 27 from
+  `RelaunchWallPracticeMasterLevel` ("Wall Master Lvl").
+
+One oddity recorded rather than smoothed over: menu item 3 reads
+`"Service Match 1"` in the ROM where items 4 and 5 read `"Service Practice 2"`
+and `"Service Practice 3"`. Everything else about drill 3 (court `$09`,
+`PracticeDrillPointTable`) says it is Service Practice 1, so the label is
+`ServicePractice1Drill` and the menu string looks like a ROM typo.
+
+Hook slot names follow the convention bank `$0d` already uses
+(`CallModeHook`'s event slots), so the tables now read:
+
+```
+ServicePractice1Hooks:
+	; $4df8, 16 bytes (mode_hooks)
+	dw ServicePractice1Hook_PerFrame ; record 0
+	dw ServicePractice1Hook_PointStart ; record 1
+	dw ServicePractice1Hook_PointEnd ; record 2
+	dw RetStub ; record 3
+```
 
 ### Every blob in the ROM is now named (2026-07-25)
 
