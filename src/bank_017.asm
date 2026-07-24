@@ -4865,7 +4865,7 @@ RunMinigameRulesPages:
 	wram_bank $03 ; $6fae
 	farcall PushTextArgNumber ; $6fb4
 	ld a, [$cb20] ; $6fb7
-	ld hl, $6fdb ; $6fba
+	ld hl, MinigameRulesTextIdBases_17 ; $6fba
 	add a, a ; $6fbd
 	add a, l ; $6fbe
 	ld l, a ; $6fbf
@@ -4875,173 +4875,59 @@ Label_17_6fc3:
 	ld a, [hl+] ; $6fc3
 	ld d, [hl] ; $6fc4
 	ld e, a ; $6fc5
-	ld hl, $cb6e ; $6fc6
+	ld hl, wRulesPageTextIdBase ; $6fc6
 	ld a, e ; $6fc9
 	ld [hl+], a ; $6fca
 	ld [hl], d ; $6fcb
-	ld hl, $6fed ; $6fcc
+	ld hl, MinigameRulesPageLists_17 ; $6fcc
 	ld a, [$dc01] ; $6fcf
 	call MinigameRulesPageLoop ; $6fd2
 	pop af ; $6fd5
 	wram_bank ; $6fd6
 	ret ; $6fda
-	add a, $2c ; $6fdb
-	ret nc ; $6fdd
-	inc l ; $6fde
-	jp c, $e22c ; $6fdf
-	inc l ; $6fe2
-	rst Rst28 ; $6fe3
-	inc l ; $6fe4
-	or a, $2c ; $6fe5
-	rlca ; $6fe7
-	jr nc, Label_17_7001 ; $6fe8
-	jr nc, Label_17_7012 ; $6fea
-	jr nc, Label_17_6fee ; $6fec
-Label_17_6fee:
-	ld bc, rSC ; $6fee
-	rst Rst38 ; $6ff1
-	rst Rst38 ; $6ff2
-	inc bc ; $6ff3
-	inc b ; $6ff4
-	dec b ; $6ff5
-	rst Rst38 ; $6ff6
-	rst Rst38 ; $6ff7
-	rst Rst38 ; $6ff8
-	ld b, $07 ; $6ff9
-	adc a, b ; $6ffb
-	rst Rst38 ; $6ffc
-	rst Rst38 ; $6ffd
-	rst Rst38 ; $6ffe
-	nop ; $6fff
-	db $01 ; $7000
-Label_17_7001:
-	ld [bc], a ; $7001
-	rst Rst38 ; $7002
-	rst Rst38 ; $7003
-	rst Rst38 ; $7004
-	inc bc ; $7005
-	inc b ; $7006
-	dec b ; $7007
-	rst Rst38 ; $7008
-	rst Rst38 ; $7009
-	rst Rst38 ; $700a
-	ld b, $07 ; $700b
-	adc a, b ; $700d
-	rst Rst38 ; $700e
-	rst Rst38 ; $700f
-	rst Rst38 ; $7010
-	nop ; $7011
-Label_17_7012:
-	ld bc, rIE ; $7012
-	rst Rst38 ; $7015
-	rst Rst38 ; $7016
-	ld [bc], a ; $7017
-	inc bc ; $7018
-	rst Rst38 ; $7019
-	rst Rst38 ; $701a
-	rst Rst38 ; $701b
-	rst Rst38 ; $701c
-	inc b ; $701d
-	dec b ; $701e
-	add a, [hl] ; $701f
-	rst Rst38 ; $7020
-	rst Rst38 ; $7021
-	rst Rst38 ; $7022
-	nop ; $7023
-	ld bc, $0302 ; $7024
-	rst Rst38 ; $7027
-	rst Rst38 ; $7028
-	inc b ; $7029
-	dec b ; $702a
-	ld b, $07 ; $702b
-	rst Rst38 ; $702d
-	rst Rst38 ; $702e
-	ld [$0a09], sp ; $702f
-	adc a, e ; $7032
-	rst Rst38 ; $7033
-	rst Rst38 ; $7034
-	nop ; $7035
-	ld bc, rIE ; $7036
-	rst Rst38 ; $7039
-	rst Rst38 ; $703a
-	ld [bc], a ; $703b
-	inc bc ; $703c
-	rst Rst38 ; $703d
-	rst Rst38 ; $703e
-	rst Rst38 ; $703f
-	rst Rst38 ; $7040
-	inc b ; $7041
-	add a, l ; $7042
-	rst Rst38 ; $7043
-	rst Rst38 ; $7044
-	rst Rst38 ; $7045
-	rst Rst38 ; $7046
-	nop ; $7047
-	ld bc, rSC ; $7048
-	rst Rst38 ; $704b
-	rst Rst38 ; $704c
-	inc bc ; $704d
-	inc b ; $704e
-	dec b ; $704f
-	rst Rst38 ; $7050
-	rst Rst38 ; $7051
-	rst Rst38 ; $7052
-	ld b, $07 ; $7053
-	adc a, b ; $7055
-	rst Rst38 ; $7056
-	rst Rst38 ; $7057
-	rst Rst38 ; $7058
-	nop ; $7059
-	ld bc, $0302 ; $705a
-	inc b ; $705d
-	rst Rst38 ; $705e
-	dec b ; $705f
-	ld b, $07 ; $7060
-	ld [$ff09], sp ; $7062
-	ld a, [bc] ; $7065
-	dec bc ; $7066
-	inc c ; $7067
-	dec c ; $7068
-	adc a, [hl] ; $7069
-	rst Rst38 ; $706a
-	nop ; $706b
-	ld bc, $0302 ; $706c
-	inc b ; $706f
-	rst Rst38 ; $7070
-	dec b ; $7071
-	ld b, $07 ; $7072
-	ld [$ff09], sp ; $7074
-	ld a, [bc] ; $7077
-	dec bc ; $7078
-	inc c ; $7079
-	adc a, l ; $707a
-	rst Rst38 ; $707b
-	rst Rst38 ; $707c
-	nop ; $707d
-	ld bc, $0302 ; $707e
-	rst Rst38 ; $7081
-	rst Rst38 ; $7082
-	inc b ; $7083
-	dec b ; $7084
-	ld b, $07 ; $7085
-	rst Rst38 ; $7087
-	rst Rst38 ; $7088
-	ld [$0a09], sp ; $7089
-	dec bc ; $708c
-	rst Rst38 ; $708d
-	rst Rst38 ; $708e
-	dec de ; $708f
-	rst Rst38 ; $7090
-	rst Rst38 ; $7091
-	rst Rst38 ; $7092
-	rst Rst38 ; $7093
-	rst Rst38 ; $7094
-	inc e ; $7095
-	rst Rst38 ; $7096
-	rst Rst38 ; $7097
-	rst Rst38 ; $7098
-	rst Rst38 ; $7099
-	rst Rst38 ; $709a
+MinigameRulesTextIdBases_17:
+	; $6fdb, 18 bytes (records:2)
+	dw $2cc6 ; record 0
+	dw $2cd0 ; record 1
+	dw $2cda ; record 2
+	dw $2ce2 ; record 3
+	dw $2cef ; record 4
+	dw $2cf6 ; record 5
+	dw $3007 ; record 6
+	dw $3017 ; record 7
+	dw $3026 ; record 8
+MinigameRulesPageLists_17:
+	; $6fed, 174 bytes (rules_pages:6)
+	rules_pages_stride 6
+	rules_pages $00, $01, $02 ; list 0
+	rules_pages $03, $04, $05 ; list 1
+	rules_pages $06, $07, $88 ; list 2
+	rules_pages $00, $01, $02 ; list 3
+	rules_pages $03, $04, $05 ; list 4
+	rules_pages $06, $07, $88 ; list 5
+	rules_pages $00, $01 ; list 6
+	rules_pages $02, $03 ; list 7
+	rules_pages $04, $05, $86 ; list 8
+	rules_pages $00, $01, $02, $03 ; list 9
+	rules_pages $04, $05, $06, $07 ; list 10
+	rules_pages $08, $09, $0a, $8b ; list 11
+	rules_pages $00, $01 ; list 12
+	rules_pages $02, $03 ; list 13
+	rules_pages $04, $85 ; list 14
+	rules_pages $00, $01, $02 ; list 15
+	rules_pages $03, $04, $05 ; list 16
+	rules_pages $06, $07, $88 ; list 17
+	rules_pages $00, $01, $02, $03, $04 ; list 18
+	rules_pages $05, $06, $07, $08, $09 ; list 19
+	rules_pages $0a, $0b, $0c, $0d, $8e ; list 20
+	rules_pages $00, $01, $02, $03, $04 ; list 21
+	rules_pages $05, $06, $07, $08, $09 ; list 22
+	rules_pages $0a, $0b, $0c, $8d ; list 23
+	rules_pages $00, $01, $02, $03 ; list 24
+	rules_pages $04, $05, $06, $07 ; list 25
+	rules_pages $08, $09, $0a, $0b ; list 26
+	rules_pages $1b ; list 27
+	rules_pages $1c ; list 28
 MinigameRulesPageLoop:
 	add a, a ; $709b
 	ld b, a ; $709c
@@ -5091,7 +4977,7 @@ Label_17_70d3:
 	call RegisterFrameTask ; $70e2
 Label_17_70e5:
 	call PrepareRulesPageTilemap ; $70e5
-	ld hl, $cb6e ; $70e8
+	ld hl, wRulesPageTextIdBase ; $70e8
 	ld a, [hl+] ; $70eb
 	ld h, [hl] ; $70ec
 	ld l, a ; $70ed

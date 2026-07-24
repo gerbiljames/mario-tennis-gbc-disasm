@@ -3248,6 +3248,8 @@
  "0x5ee0d": "ReturnDownLineBriefing_AdvanceAnim",
  "0x5ef1b": "ShowRulesScreen",
  "0x5ef91": "RunMinigameRulesPages",
+ "0x5efdb": "MinigameRulesTextIdBases_17",
+ "0x5efed": "MinigameRulesPageLists_17",
  "0x5f09b": "MinigameRulesPageLoop",
  "0x5f157": "LoadRulesScreen",
  "0x5f1bd": "ClearRulesScreenTextArea",

@@ -1401,7 +1401,11 @@ wDebugCharViewerPage:: db
 
 ; [8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9).
 wDebugCharViewerIndex:: db
-	ds 18
+	ds 10
+
+; [16-bit] Rules/briefing screens: base text id of the minigame's rules pages, taken from MinigameRulesTextIdBases_17 ($17:$6fdb) at $17:$6fc6. Each page offset from the minigame's MinigameRulesPageLists_17 row is added to it ($17:$70ef) and the result rendered through PrepareGlyphBuffer / RenderProportionalTextAt.
+wRulesPageTextIdBase:: dw
+	ds 6
 
 ; VRAM tile-data write pointer for the proportional-glyph renderer (bank $05 text engine)
 wGlyphTileWritePtr:: dw

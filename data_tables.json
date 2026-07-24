@@ -255,6 +255,8 @@
  "0x351b6": "mode_hooks",
  "0x3537e": "bytes:8",
  "0x3581c": "bytes:8",
+ "0x5efdb": "records:2",
+ "0x5efed": "rules_pages:6",
  "0x35941": "bytes:8",
  "0x35d72": "bytes:14",
  "0x38006": "map_tree",

@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $17 (serve-volley drill / menu bank): 5 stranded code blobs + $478e (code after a 9-byte OAM header at $4785). Function starts + internal flow targets. The uniform position/animation record arrays and LZ graphics are data. Flat = 0x17*0x4000 + (cpu-0x4000). Second pass: 10 more cursor/menu handler blobs ($4016-$4443).",
+ "_comment": "Static code-entry seeds for bank $17 (serve-volley drill / menu bank): 5 stranded code blobs + $478e (code after a 9-byte OAM header at $4785). Function starts + internal flow targets. The uniform position/animation record arrays and LZ graphics are data. Flat = 0x17*0x4000 + (cpu-0x4000). Second pass: 10 more cursor/menu handler blobs ($4016-$4443). NOTE: $6fdb/$6fee/$7001/$7012 were removed 2026-07-24 -- they followed a garbage decode of the rules-page data at $6fdb-$709a (MinigameRulesTextIdBases_17 + MinigameRulesPageLists_17).",
  "rom": [
   376854,
   376953,
@@ -103,11 +103,7 @@
   377988,
   378562,
   378766,
-  379509,
-  389083,
-  389102,
-  389121,
-  389138
+  379509
  ],
  "other": []
 }
