@@ -3730,7 +3730,11 @@ MedallionMatchHook_MinigameStart:
 	xor a, a ; $5d27
 	ld [wStandingShadowsEnabled], a ; $5d28
 	ret ; $5d2b
-	INCBIN "data/bank_00d/d_5d2c.bin" ; $5d2c, 6 bytes
+Unused_0d_5d2c:
+	; $5d2c, 6 bytes (records:2)
+	dw $0064 ; record 0
+	dw $012c ; record 1
+	dw $270f ; record 2
 MedallionMatchHook_PerFrame:
 	call DrawMinigameScoreHud ; $5d32
 	call UpdateScorePopup ; $5d35

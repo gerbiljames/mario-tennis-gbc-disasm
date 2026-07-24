@@ -127,6 +127,17 @@ already-named routine (`Advance*ActorState`, `IsBallIn*HitZone`,
 `Project*WorldPosition`), and their score tables corroborate it — Treasure
 Box's box values are `05 0a 32 64` with multipliers `01 02 04 08` and an
 `IncrementCappedCounter` cap of exactly 4, matching the table length.
+`d_5d2c` (6 bytes) is an **orphan**: `$0064, $012c, $270f` is byte-identical
+to the first three words of `MinigameTargetScores` row 7 — the Medallion
+Match row (100 / 300 / 9999) — and nothing in the ROM references it. No
+inline base computes it, no register load names it, and the `ret` at
+`$5d2b` in front of it means nothing falls through either. It sits in the
+gap between two hook handlers, so it looks like a leftover from a layout
+where each minigame's targets lived beside its own code before they were
+consolidated into the central table. Declared `records:2` as
+`Unused_0d_5d2c` so the source states that rather than leaving a mystery
+blob; **bank `$0d` now has no INCBIN blobs at all.**
+
 The last real blob, `d_5b4b.bin` (122 bytes), is the Treasure Box spawn
 data, and the state-0 handler at `$5adf` reads all of it: two 16-entry
 **box-type pools** picked by testing `[$c780] - 11`'s sign, so the

@@ -1985,6 +1985,7 @@
  "0x35cfa": "InitMinigame_MedallionMatch",
  "0x35d0c": "MinigameHooks_MedallionMatch",
  "0x35d1c": "MedallionMatchHook_MinigameStart",
+ "0x35d2c": "Unused_0d_5d2c",
  "0x35d32": "MedallionMatchHook_PerFrame",
  "0x35d39": "MedallionMatchHook_Draw",
  "0x35d3d": "MedallionMatchHook_PointStart",

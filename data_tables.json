@@ -314,6 +314,7 @@
  "0x35cab": "bytes:8",
  "0x35cea": "bytes:16",
  "0x35d0c": "mode_hooks",
+ "0x35d2c": "records:2",
  "0x35ee4": "bytes:8",
  "0x35eec": "bytes:6",
  "0x35f0f": "bytes:4",
