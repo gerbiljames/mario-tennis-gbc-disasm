@@ -26,7 +26,7 @@ Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,447 of 18,747 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,476 of 18,745 labels are human-named** (up from 4,816 on 2026-07-23).
 
 ### Actor-script `as_set_pos` / `as_set_target` were swapped (2026-07-24)
 
@@ -102,13 +102,19 @@ the corners and edges those screens' panel builders write.
 
 ### Naming sweep: menu, results, story and dictionary banks (2026-07-24)
 
-A sixteen-bank naming pass took human-named symbols from 4,816 to 5,447
-(+631), split between ROM labels in `labels.json` and 93 RAM addresses in
+A twenty-bank naming pass took human-named symbols from 4,816 to 5,476
+(+660), split between ROM labels in `labels.json` and 93 RAM addresses in
 `ram_map.json`/`ram_unions.json`. Config-only throughout — no hand edits
 to `src/`, which is fully generated — plus two `data_tables.json` widths;
 byte-perfect at every step.
 
-A later wave covered the tail: banks `$09`/`$11`/`$06`/`$2c` (46) and the
+After this pass only about 55 auto-named functions remain ROM-wide, the
+worst bank holding 10 — down from 123 in bank `$38` alone.
+
+A later wave covered the tail: banks `$09`/`$11`/`$06`/`$2c` (46), banks
+`$04`/`$0e`/`$0a`/`$18`/`$05` (31, including bank `$04`'s complete
+per-frame actor pipeline and bank `$0e`'s star-warp transition to Peach's
+court), bank `$1e`'s 15 graphics streams, and the
 `$c4xx` physics page (66 RAM addresses, above). Bank `$2c` came almost
 free — banks `$21`-`$24` and `$29`-`$2b` are the same ball-path code
 already named, so its ten functions map instruction-for-instruction onto
