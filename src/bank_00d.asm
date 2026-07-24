@@ -347,7 +347,8 @@ Label_0d_4278:
 	ld [hl+], a ; $427c
 	ld [hl], d ; $427d
 	ret ; $427e
-	; $427f, 64 bytes (bytes:4)
+MinigameGridCellTiles:
+	; $427f, 32 bytes (bytes:4)
 	db $08, $08, $08, $08 ; 0x00
 	db $0a, $0b, $1a, $1b ; 0x04
 	db $0d, $0e, $1d, $1e ; 0x08
@@ -356,14 +357,16 @@ Label_0d_4278:
 	db $9c, $9d, $aa, $a9 ; 0x14
 	db $b3, $b4, $aa, $b6 ; 0x18
 	db $b3, $9b, $b7, $b8 ; 0x1c
-	db $08, $08, $08, $08 ; 0x20
-	db $0c, $0c, $0c, $0c ; 0x24
-	db $0e, $0e, $0e, $0e ; 0x28
-	db $0d, $0d, $0d, $0d ; 0x2c
-	db $0c, $0c, $0c, $0c ; 0x30
-	db $0c, $0c, $0c, $0c ; 0x34
-	db $0c, $0c, $0c, $0c ; 0x38
-	db $0c, $0c, $0c, $0c ; 0x3c
+MinigameGridCellAttrs:
+	; $429f, 32 bytes (bytes:4)
+	db $08, $08, $08, $08 ; 0x00
+	db $0c, $0c, $0c, $0c ; 0x04
+	db $0e, $0e, $0e, $0e ; 0x08
+	db $0d, $0d, $0d, $0d ; 0x0c
+	db $0c, $0c, $0c, $0c ; 0x10
+	db $0c, $0c, $0c, $0c ; 0x14
+	db $0c, $0c, $0c, $0c ; 0x18
+	db $0c, $0c, $0c, $0c ; 0x1c
 GetMinigameGridCellIndex:
 	ldh a, [hWramBank] ; $42bf
 	push af ; $42c1
@@ -1887,7 +1890,7 @@ CheckBallLandedOut:
 	ld [wPointOutcomeSide], a ; $4e92
 	ret ; $4e95
 LookupMinigameShotResult:
-	ld hl, StateLookupTable_0d_4ec1 ; $4e96
+	ld hl, TargetShotScoreRules ; $4e96
 Label_0d_4e99:
 	ld a, [hl+] ; $4e99
 	cp a, $ff ; $4e9a
@@ -1917,7 +1920,7 @@ Label_0d_4ebc:
 Label_0d_4ebe:
 	ld a, $01 ; $4ebe
 	ret ; $4ec0
-StateLookupTable_0d_4ec1:
+TargetShotScoreRules:
 	; $4ec1, 69 bytes (bytes:4)
 	db $00, $11, $01, $03 ; 0x00
 	db $00, $11, $06, $03 ; 0x04
@@ -1937,110 +1940,60 @@ StateLookupTable_0d_4ec1:
 	db $06, $12, $0a, $05 ; 0x3c
 	db $06, $12, $ff, $05 ; 0x40
 	db $ff ; 0x44
-MatchUiTilemapTiles_0d_4f06:
-	; $4f06, 250 bytes (bytes:5)
-	db $14, $14, $14, $14, $14 ; 0x00
-	db $15, $14, $14, $14, $14 ; 0x05
-	db $28, $29, $29, $28, $14 ; 0x0a
-	db $14, $14, $14, $14, $14 ; 0x0f
-	db $36, $37, $38, $36, $14 ; 0x14
-	db $14, $14, $14, $14, $14 ; 0x19
-	db $45, $46, $47, $45, $42 ; 0x1e
-	db $41, $42, $42, $42, $42 ; 0x23
-	db $51, $52, $52, $51, $00 ; 0x28
-	db $4d, $00, $00, $00, $00 ; 0x2d
-	db $14, $14, $14, $14, $14 ; 0x32
-	db $15, $14, $14, $14, $14 ; 0x37
-	db $14, $14, $14, $14, $14 ; 0x3c
-	db $14, $28, $29, $29, $28 ; 0x41
-	db $14, $14, $14, $14, $14 ; 0x46
-	db $14, $2a, $2b, $48, $49 ; 0x4b
-	db $42, $42, $42, $42, $42 ; 0x50
-	db $41, $39, $3a, $53, $54 ; 0x55
-	db $00, $00, $00, $00, $00 ; 0x5a
-	db $4d, $51, $52, $52, $51 ; 0x5f
-	db $14, $14, $14, $14, $14 ; 0x64
-	db $15, $14, $14, $14, $14 ; 0x69
-	db $14, $14, $14, $14, $14 ; 0x6e
-	db $14, $14, $14, $14, $14 ; 0x73
-	db $14, $14, $14, $14, $14 ; 0x78
-	db $14, $14, $14, $14, $14 ; 0x7d
-	db $7e, $7f, $95, $96, $97 ; 0x82
-	db $98, $99, $9a, $7f, $7e ; 0x87
-	db $8a, $8b, $a3, $a4, $a5 ; 0x8c
-	db $a6, $a7, $a8, $8b, $8a ; 0x91
-	db $80, $81, $60, $61, $62 ; 0x96
-	db $63, $64, $65, $81, $80 ; 0x9b
-	db $28, $8c, $6f, $70, $71 ; 0xa0
-	db $72, $73, $74, $8c, $28 ; 0xa5
-	db $14, $14, $14, $14, $14 ; 0xaa
-	db $14, $14, $14, $14, $14 ; 0xaf
-	db $42, $42, $42, $42, $42 ; 0xb4
-	db $41, $42, $42, $42, $42 ; 0xb9
-	db $00, $00, $00, $00, $00 ; 0xbe
-	db $4d, $00, $00, $00, $00 ; 0xc3
-	db $14, $14, $14, $14, $14 ; 0xc8
-	db $15, $14, $14, $14, $14 ; 0xcd
-	db $14, $14, $af, $b0, $b1 ; 0xd2
-	db $b1, $b0, $af, $14, $14 ; 0xd7
-	db $80, $b7, $b8, $b9, $ba ; 0xdc
-	db $bb, $bc, $bd, $b7, $80 ; 0xe1
-	db $8a, $c5, $c6, $c7, $c8 ; 0xe6
-	db $c9, $ca, $cb, $c5, $8a ; 0xeb
-	db $00, $00, $d4, $d5, $52 ; 0xf0
-	db $52, $d5, $d4, $00, $00 ; 0xf5
-MatchUiTilemapAttrs_0d_5000:
-	; $5000, 250 bytes (bytes:5)
-	db $2f, $2f, $2f, $2f, $2f ; 0x00
-	db $0f, $2f, $2f, $2f, $2f ; 0x05
-	db $0e, $0e, $2e, $2e, $2f ; 0x0a
-	db $2f, $2f, $2f, $2f, $2f ; 0x0f
-	db $0e, $0e, $0e, $2e, $2f ; 0x14
-	db $2f, $2f, $2f, $2f, $2f ; 0x19
-	db $0e, $0e, $0e, $2e, $0f ; 0x1e
-	db $0f, $0f, $0f, $0f, $0f ; 0x23
-	db $0e, $0e, $2e, $2e, $2f ; 0x28
-	db $0f, $2f, $2f, $2f, $2f ; 0x2d
-	db $2f, $2f, $2f, $2f, $2f ; 0x32
-	db $0f, $2f, $2f, $2f, $2f ; 0x37
-	db $2f, $2f, $2f, $2f, $2f ; 0x3c
-	db $2f, $0e, $0e, $2e, $2e ; 0x41
-	db $2f, $2f, $2f, $2f, $2f ; 0x46
-	db $2f, $0e, $0e, $0e, $0e ; 0x4b
-	db $0f, $0f, $0f, $0f, $0f ; 0x50
-	db $0f, $0e, $0e, $0e, $0e ; 0x55
-	db $2f, $2f, $2f, $2f, $2f ; 0x5a
-	db $0f, $0e, $0e, $2e, $2e ; 0x5f
-	db $2f, $2f, $2f, $2f, $2f ; 0x64
-	db $0f, $2f, $2f, $2f, $2f ; 0x69
-	db $2f, $2f, $2f, $2f, $2f ; 0x6e
-	db $2f, $2f, $2f, $2f, $2f ; 0x73
-	db $2f, $2f, $2f, $2f, $2f ; 0x78
-	db $2f, $2f, $2f, $2f, $2f ; 0x7d
-	db $0e, $0e, $0e, $0e, $0e ; 0x82
-	db $0e, $0e, $0e, $2e, $2e ; 0x87
-	db $0e, $0e, $0e, $0e, $0e ; 0x8c
-	db $0e, $0e, $0e, $2e, $2e ; 0x91
-	db $0e, $0e, $0e, $0e, $0e ; 0x96
-	db $0e, $0e, $0e, $2e, $2e ; 0x9b
-	db $4e, $0e, $0e, $0e, $0e ; 0xa0
-	db $0e, $0e, $0e, $2e, $6e ; 0xa5
-	db $2f, $2f, $2f, $2f, $2f ; 0xaa
-	db $2f, $2f, $2f, $2f, $2f ; 0xaf
-	db $0f, $0f, $0f, $0f, $0f ; 0xb4
-	db $0f, $0f, $0f, $0f, $0f ; 0xb9
-	db $2f, $2f, $2f, $2f, $2f ; 0xbe
-	db $0f, $2f, $2f, $2f, $2f ; 0xc3
-	db $2f, $2f, $2f, $2f, $2f ; 0xc8
-	db $0f, $2f, $2f, $2f, $2f ; 0xcd
-	db $2f, $2f, $0e, $0e, $0e ; 0xd2
-	db $2e, $2e, $2e, $2f, $2f ; 0xd7
-	db $0e, $0e, $0e, $0e, $0e ; 0xdc
-	db $0e, $0e, $0e, $2e, $2e ; 0xe1
-	db $0e, $0e, $0e, $0e, $0e ; 0xe6
-	db $0e, $0e, $0e, $2e, $2e ; 0xeb
-	db $2f, $2f, $0e, $0e, $0e ; 0xf0
-	db $2e, $2e, $2e, $2f, $0f ; 0xf5
+TargetShotZoneOverlayTiles:
+	; $4f06, 250 bytes (bytes:10)
+	db $14, $14, $14, $14, $14, $15, $14, $14, $14, $14 ; 0x00
+	db $28, $29, $29, $28, $14, $14, $14, $14, $14, $14 ; 0x0a
+	db $36, $37, $38, $36, $14, $14, $14, $14, $14, $14 ; 0x14
+	db $45, $46, $47, $45, $42, $41, $42, $42, $42, $42 ; 0x1e
+	db $51, $52, $52, $51, $00, $4d, $00, $00, $00, $00 ; 0x28
+	db $14, $14, $14, $14, $14, $15, $14, $14, $14, $14 ; 0x32
+	db $14, $14, $14, $14, $14, $14, $28, $29, $29, $28 ; 0x3c
+	db $14, $14, $14, $14, $14, $14, $2a, $2b, $48, $49 ; 0x46
+	db $42, $42, $42, $42, $42, $41, $39, $3a, $53, $54 ; 0x50
+	db $00, $00, $00, $00, $00, $4d, $51, $52, $52, $51 ; 0x5a
+	db $14, $14, $14, $14, $14, $15, $14, $14, $14, $14 ; 0x64
+	db $14, $14, $14, $14, $14, $14, $14, $14, $14, $14 ; 0x6e
+	db $14, $14, $14, $14, $14, $14, $14, $14, $14, $14 ; 0x78
+	db $7e, $7f, $95, $96, $97, $98, $99, $9a, $7f, $7e ; 0x82
+	db $8a, $8b, $a3, $a4, $a5, $a6, $a7, $a8, $8b, $8a ; 0x8c
+	db $80, $81, $60, $61, $62, $63, $64, $65, $81, $80 ; 0x96
+	db $28, $8c, $6f, $70, $71, $72, $73, $74, $8c, $28 ; 0xa0
+	db $14, $14, $14, $14, $14, $14, $14, $14, $14, $14 ; 0xaa
+	db $42, $42, $42, $42, $42, $41, $42, $42, $42, $42 ; 0xb4
+	db $00, $00, $00, $00, $00, $4d, $00, $00, $00, $00 ; 0xbe
+	db $14, $14, $14, $14, $14, $15, $14, $14, $14, $14 ; 0xc8
+	db $14, $14, $af, $b0, $b1, $b1, $b0, $af, $14, $14 ; 0xd2
+	db $80, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $b7, $80 ; 0xdc
+	db $8a, $c5, $c6, $c7, $c8, $c9, $ca, $cb, $c5, $8a ; 0xe6
+	db $00, $00, $d4, $d5, $52, $52, $d5, $d4, $00, $00 ; 0xf0
+TargetShotZoneOverlayAttrs:
+	; $5000, 250 bytes (bytes:10)
+	db $2f, $2f, $2f, $2f, $2f, $0f, $2f, $2f, $2f, $2f ; 0x00
+	db $0e, $0e, $2e, $2e, $2f, $2f, $2f, $2f, $2f, $2f ; 0x0a
+	db $0e, $0e, $0e, $2e, $2f, $2f, $2f, $2f, $2f, $2f ; 0x14
+	db $0e, $0e, $0e, $2e, $0f, $0f, $0f, $0f, $0f, $0f ; 0x1e
+	db $0e, $0e, $2e, $2e, $2f, $0f, $2f, $2f, $2f, $2f ; 0x28
+	db $2f, $2f, $2f, $2f, $2f, $0f, $2f, $2f, $2f, $2f ; 0x32
+	db $2f, $2f, $2f, $2f, $2f, $2f, $0e, $0e, $2e, $2e ; 0x3c
+	db $2f, $2f, $2f, $2f, $2f, $2f, $0e, $0e, $0e, $0e ; 0x46
+	db $0f, $0f, $0f, $0f, $0f, $0f, $0e, $0e, $0e, $0e ; 0x50
+	db $2f, $2f, $2f, $2f, $2f, $0f, $0e, $0e, $2e, $2e ; 0x5a
+	db $2f, $2f, $2f, $2f, $2f, $0f, $2f, $2f, $2f, $2f ; 0x64
+	db $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f ; 0x6e
+	db $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f ; 0x78
+	db $0e, $0e, $0e, $0e, $0e, $0e, $0e, $0e, $2e, $2e ; 0x82
+	db $0e, $0e, $0e, $0e, $0e, $0e, $0e, $0e, $2e, $2e ; 0x8c
+	db $0e, $0e, $0e, $0e, $0e, $0e, $0e, $0e, $2e, $2e ; 0x96
+	db $4e, $0e, $0e, $0e, $0e, $0e, $0e, $0e, $2e, $6e ; 0xa0
+	db $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f, $2f ; 0xaa
+	db $0f, $0f, $0f, $0f, $0f, $0f, $0f, $0f, $0f, $0f ; 0xb4
+	db $2f, $2f, $2f, $2f, $2f, $0f, $2f, $2f, $2f, $2f ; 0xbe
+	db $2f, $2f, $2f, $2f, $2f, $0f, $2f, $2f, $2f, $2f ; 0xc8
+	db $2f, $2f, $0e, $0e, $0e, $2e, $2e, $2e, $2f, $2f ; 0xd2
+	db $0e, $0e, $0e, $0e, $0e, $0e, $0e, $0e, $2e, $2e ; 0xdc
+	db $0e, $0e, $0e, $0e, $0e, $0e, $0e, $0e, $2e, $2e ; 0xe6
+	db $2f, $2f, $0e, $0e, $0e, $2e, $2e, $2e, $2f, $0f ; 0xf0
 LoadMatchUiCourtTilemap:
 	add a, a ; $50fa
 	add a, $3a ; $50fb
@@ -2051,11 +2004,11 @@ LoadMatchUiCourtTilemap:
 	ld a, [hl+] ; $5102
 	ld b, [hl] ; $5103
 	ld c, a ; $5104
-	ld hl, MatchUiTilemapAttrs_0d_5000 ; $5105
+	ld hl, TargetShotZoneOverlayAttrs ; $5105
 	add hl, bc ; $5108
 	push hl ; $5109
 	push hl ; $510a
-	ld hl, MatchUiTilemapTiles_0d_4f06 ; $510b
+	ld hl, TargetShotZoneOverlayTiles ; $510b
 	add hl, bc ; $510e
 	push hl ; $510f
 	push hl ; $5110
@@ -3013,17 +2966,18 @@ Label_0d_5926:
 	pop af ; $593b
 	wram_bank ; $593c
 	ret ; $5940
-TileRowPattern_0d_5941:
-	; $5941, 56 bytes (bytes:8)
+PerfectShotTargetGridLayout:
+	; $5941, 24 bytes (bytes:8)
 	db $02, $02, $02, $02, $02, $02, $02, $00 ; 0x00
 	db $02, $02, $02, $02, $02, $02, $02, $00 ; 0x08
 	db $03, $03, $03, $03, $03, $03, $03, $00 ; 0x10
-	db $01, $01, $01, $01, $01, $01, $01, $00 ; 0x18
-	db $01, $01, $01, $01, $01, $01, $01, $00 ; 0x20
-	db $01, $01, $01, $03, $01, $01, $01, $00 ; 0x28
-	db $03, $03, $03, $03, $03, $03, $03, $00 ; 0x30
+	; $5959, 32 bytes (bytes:8)
+	db $01, $01, $01, $01, $01, $01, $01, $00 ; 0x00
+	db $01, $01, $01, $01, $01, $01, $01, $00 ; 0x08
+	db $01, $01, $01, $03, $01, $01, $01, $00 ; 0x10
+	db $03, $03, $03, $03, $03, $03, $03, $00 ; 0x18
 ResetTargetGrid:
-	ld hl, TileRowPattern_0d_5941 ; $5979
+	ld hl, PerfectShotTargetGridLayout ; $5979
 	call CopyMinigameTilemapBlock ; $597c
 	ld a, $01 ; $597f
 	ld [$c7c7], a ; $5981
@@ -3033,7 +2987,7 @@ ResetTargetGrid:
 AnimateTargetGridClear:
 	ld a, $02 ; $598b
 	farcall StepMatchFrames ; $598d
-	ld hl, TileRowPattern_0d_5941 ; $5990
+	ld hl, PerfectShotTargetGridLayout ; $5990
 	ld b, $18 ; $5993
 	ld c, $00 ; $5995
 Label_0d_5997:
