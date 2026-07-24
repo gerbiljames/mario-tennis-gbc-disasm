@@ -113,7 +113,7 @@ LoadResultsScreenGraphics:
 	ld de, $0801 ; $4111
 	call LoadPaletteShadow ; $4114
 	wram_bank $01 ; $4117
-	ld hl, Lz_1e_4c70 ; $411d
+	ld hl, ResultsScreenGfx_1e ; $411d
 	ld de, $d000 ; $4120
 	call DecompressData ; $4123
 	ld hl, $d000 ; $4126
@@ -125,21 +125,21 @@ LoadResultsScreenGraphics:
 	ld c, $80 ; $4137
 	call QueueVRAMCopy ; $4139
 	wram_bank $01 ; $413c
-	ld hl, Lz_1e_521f ; $4142
+	ld hl, ResultsScreenTilemap_1e ; $4142
 	ld de, $d000 ; $4145
 	call DecompressData ; $4148
 	ld hl, $d000 ; $414b
 	ld bc, $0240 ; $414e
 	call ResultsCopyToTilemap ; $4151
 	wram_bank $01 ; $4154
-	ld hl, Lz_1e_52ec ; $415a
+	ld hl, ResultsScreenAttrmap_1e ; $415a
 	ld de, $d000 ; $415d
 	call DecompressData ; $4160
 	ld hl, $d000 ; $4163
 	ld bc, $0240 ; $4166
 	call ResultsCopyToAttrmap ; $4169
 	wram_bank $01 ; $416c
-	ld hl, Lz_1e_5343 ; $4172
+	ld hl, PanelFrameGfx_1e ; $4172
 	ld de, $d000 ; $4175
 	call DecompressData ; $4178
 	ld hl, $d000 ; $417b
@@ -322,13 +322,13 @@ BuildResultsScreenPanels:
 	ret ; $4339
 LoadSinglesLabelTiles:
 	wram_bank $01 ; $433a
-	ld hl, Lz_1e_53df ; $4340
+	ld hl, ResultsSinglesLabelTilemap_1e ; $4340
 	ld de, $d000 ; $4343
 	call DecompressData ; $4346
 	ret ; $4349
 LoadDoublesLabelTiles:
 	wram_bank $01 ; $434a
-	ld hl, Lz_1e_53f2 ; $4350
+	ld hl, ResultsDoublesLabelTilemap_1e ; $4350
 	ld de, $d000 ; $4353
 	call DecompressData ; $4356
 	ret ; $4359
@@ -982,10 +982,10 @@ DrawPlayerNameAndLevel:
 	cp a, $04 ; $489e
 	ret z ; $48a0
 	wram_bank $01 ; $48a1
-	ld hl, Lz_1e_5405 ; $48a7
+	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
 	ld de, $d000 ; $48aa
 	call DecompressData ; $48ad
-	ld hl, Lz_1e_5421 ; $48b0
+	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
 	ld de, $d0c8 ; $48b3
 	call DecompressData ; $48b6
 	ld hl, $d000 ; $48b9
@@ -1424,21 +1424,21 @@ Palettes_1e_4c40:
 	dw $7fff, $460c, $2504, $6714 ; pal 3: #ffffff #62838b #20414a #a4c5cd
 	dw $7fff, $7fff, $4254, $0000 ; pal 4: #ffffff #ffffff #a49483 #000000
 	dw $7f00, $7fff, $7c1f, $7c00 ; pal 5: #00c5ff #ffffff #ff00ff #0000ff
-Lz_1e_4c70:
+ResultsScreenGfx_1e:
 	INCBIN "data/bank_01e/d_4c70.bin" ; $4c70, 1455 bytes
-Lz_1e_521f:
+ResultsScreenTilemap_1e:
 	INCBIN "data/bank_01e/d_521f.bin" ; $521f, 205 bytes
-Lz_1e_52ec:
+ResultsScreenAttrmap_1e:
 	INCBIN "data/bank_01e/d_52ec.bin" ; $52ec, 87 bytes
-Lz_1e_5343:
+PanelFrameGfx_1e:
 	INCBIN "data/bank_01e/d_5343.bin" ; $5343, 156 bytes
-Lz_1e_53df:
+ResultsSinglesLabelTilemap_1e:
 	INCBIN "data/bank_01e/d_53df.bin" ; $53df, 19 bytes
-Lz_1e_53f2:
+ResultsDoublesLabelTilemap_1e:
 	INCBIN "data/bank_01e/d_53f2.bin" ; $53f2, 19 bytes
-Lz_1e_5405:
+ResultsPlayerPanelTilemap_1e:
 	INCBIN "data/bank_01e/d_5405.bin" ; $5405, 28 bytes
-Lz_1e_5421:
+ResultsPlayerPanelAttrmap_1e:
 	INCBIN "data/bank_01e/d_5421.bin" ; $5421, 23 bytes
 ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
@@ -1540,7 +1540,7 @@ LoadExpAwardScreenGraphics:
 	ld de, $0003 ; $5521
 	call LoadPaletteShadow ; $5524
 	wram_bank $01 ; $5527
-	ld hl, Lz_1e_5bf9 ; $552d
+	ld hl, ExpAwardScreenGfx_1e ; $552d
 	ld de, $d000 ; $5530
 	call DecompressData ; $5533
 	ld hl, $d000 ; $5536
@@ -1552,21 +1552,21 @@ LoadExpAwardScreenGraphics:
 	ld c, $80 ; $5547
 	call QueueVRAMCopy ; $5549
 	wram_bank $01 ; $554c
-	ld hl, Lz_1e_62ca ; $5552
+	ld hl, ExpAwardScreenTilemap_1e ; $5552
 	ld de, $d000 ; $5555
 	call DecompressData ; $5558
 	ld hl, $d000 ; $555b
 	ld bc, $0240 ; $555e
 	call ExpScreenCopyToTilemap ; $5561
 	wram_bank $01 ; $5564
-	ld hl, Lz_1e_644f ; $556a
+	ld hl, ExpAwardScreenAttrmap_1e ; $556a
 	ld de, $d000 ; $556d
 	call DecompressData ; $5570
 	ld hl, $d000 ; $5573
 	ld bc, $0240 ; $5576
 	call ExpScreenCopyToAttrmap ; $5579
 	wram_bank $01 ; $557c
-	ld hl, Lz_1e_5343 ; $5582
+	ld hl, PanelFrameGfx_1e ; $5582
 	ld de, $d000 ; $5585
 	call DecompressData ; $5588
 	ld hl, $d000 ; $558b
@@ -1577,7 +1577,7 @@ LoadExpAwardScreenGraphics:
 	ld de, $0801 ; $5599
 	call LoadPaletteShadow ; $559c
 	wram_bank $01 ; $559f
-	ld hl, Lz_1e_649d ; $55a5
+	ld hl, ExpDigitSpriteGfx_1e ; $55a5
 	ld de, $d000 ; $55a8
 	call DecompressData ; $55ab
 	ld hl, $d000 ; $55ae
@@ -2317,17 +2317,17 @@ Palettes_1e_5be1:
 	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
 	dw $73a8, $7fff, $3184, $3279 ; pal 1: #41eee6 #ffffff #206262 #cd9c62
 	dw $021a, $33ec, $0b22, $0220 ; pal 2: #d58300 #62ff62 #10cd10 #008b00
-Lz_1e_5bf9:
+ExpAwardScreenGfx_1e:
 	INCBIN "data/bank_01e/d_5bf9.bin" ; $5bf9, 1745 bytes
-Lz_1e_62ca:
+ExpAwardScreenTilemap_1e:
 	INCBIN "data/bank_01e/d_62ca.bin" ; $62ca, 389 bytes
-Lz_1e_644f:
+ExpAwardScreenAttrmap_1e:
 	INCBIN "data/bank_01e/d_644f.bin" ; $644f, 70 bytes
 Palettes_1e_6495:
 	; $6495, 8 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $7c1f, $0000, $0000, $7fff ; pal 0: #ff00ff #000000 #000000 #ffffff
-Lz_1e_649d:
+ExpDigitSpriteGfx_1e:
 	INCBIN "data/bank_01e/d_649d.bin" ; $649d, 150 bytes
 StubNop_1e:
 	ret ; $6533
@@ -4706,21 +4706,21 @@ LoadGameProgressScreenTiles:
 	ldh a, [hWramBank] ; $7504
 	push af ; $7506
 	wram_bank $01 ; $7507
-	ld hl, Lz_1e_75a6 ; $750d
+	ld hl, GameProgressHeaderGfx_1e ; $750d
 	ld de, $d000 ; $7510
 	call DecompressData ; $7513
 	ld hl, $d000 ; $7516
 	ld de, $b000 ; $7519
 	ld c, $20 ; $751c
 	call QueueVRAMCopy ; $751e
-	ld hl, Lz_1e_7692 ; $7521
+	ld hl, GameProgressHeaderTilemap_1e ; $7521
 	ld de, $d000 ; $7524
 	call DecompressData ; $7527
 	ld hl, $d000 ; $752a
 	ld de, $9800 ; $752d
 	ld c, $06 ; $7530
 	call QueueVRAMCopy ; $7532
-	ld hl, Lz_1e_76e2 ; $7535
+	ld hl, GameProgressHeaderAttrmap_1e ; $7535
 	ld de, $d000 ; $7538
 	call DecompressData ; $753b
 	ld hl, $d000 ; $753e
@@ -4770,11 +4770,11 @@ Label_1e_7545:
 	ld de, $0901 ; $759f
 	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
-Lz_1e_75a6:
+GameProgressHeaderGfx_1e:
 	INCBIN "data/bank_01e/d_75a6.bin" ; $75a6, 236 bytes
-Lz_1e_7692:
+GameProgressHeaderTilemap_1e:
 	INCBIN "data/bank_01e/d_7692.bin" ; $7692, 80 bytes
-Lz_1e_76e2:
+GameProgressHeaderAttrmap_1e:
 	INCBIN "data/bank_01e/d_76e2.bin" ; $76e2, 30 bytes
 Palettes_1e_7700:
 	; $7700, 272 bytes (palettes)

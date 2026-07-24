@@ -638,7 +638,7 @@ LateStudentCrashCutscene:
 	script_set_anim $11, $02 ; $4a42
 	script_wait_idle $11 ; $4a49
 	script_speak $11 ; $4a4e
-	call Func_11_4d68 ; $4a53
+	call KnockPlayerAirborneFlipped_11 ; $4a53
 	script_facing_lock $11, $01 ; $4a56
 	script_set_anim $11, $05 ; $4a5d
 	script_wait_frames $14 ; $4a64
@@ -773,7 +773,7 @@ LateStudentCrashImpact:
 	script_wait_frames $1e ; $4d55
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_4d8d ; $4d5c
 	ret ; $4d67
-Func_11_4d68:
+KnockPlayerAirborneFlipped_11:
 	script_null_script ACTOR_PLAYER ; $4d68
 	script_set_speed ACTOR_PLAYER, $0010 ; $4d6d
 	script_jump_velocity ACTOR_PLAYER, $ff80 ; $4d75
