@@ -286,7 +286,7 @@ UpdateDrillAbortCountdown:
 	cp a, $03 ; $41e3
 	ret z ; $41e5
 RecordDrillTargetZoneHit:
-	ld a, [$c4b2] ; $41e6
+	ld a, [wBallBounceCount] ; $41e6
 	cp a, $02 ; $41e9
 	ret nc ; $41eb
 	farcall IsBallInTargetZone ; $41ec
@@ -374,11 +374,11 @@ Label_0b_425f:
 	ret ; $4267
 	INCBIN "data/bank_00b/d_4268.bin" ; $4268, 318 bytes
 PlayDrillPointEndSequence:
-	ld hl, $c442 ; $43a6
+	ld hl, wMatchCameraY ; $43a6
 	ld a, [hl+] ; $43a9
 	ld d, [hl] ; $43aa
 	ld e, a ; $43ab
-	ld hl, $c440 ; $43ac
+	ld hl, wMatchCameraX ; $43ac
 	ld a, [hl+] ; $43af
 	ld h, [hl] ; $43b0
 	ld l, a ; $43b1
@@ -1208,7 +1208,7 @@ Label_0b_5cbe:
 	call Drill09JudgePointMode2 ; $5cc5
 	ret ; $5cc8
 	call Drill09JudgePointMode1 ; $5cc9
-	ld a, [$c4b8] ; $5ccc
+	ld a, [wLastShotCharIndex] ; $5ccc
 	cp a, $01 ; $5ccf
 	jr nz, Label_0b_5cd6 ; $5cd1
 	call ResetActiveCharState ; $5cd3
@@ -1421,7 +1421,7 @@ Label_0b_5e31:
 	xor a, a ; $5e53
 	ret ; $5e54
 Label_0b_5e55:
-	ld a, [$c4b2] ; $5e55
+	ld a, [wBallBounceCount] ; $5e55
 	cp a, $01 ; $5e58
 	ld a, $00 ; $5e5a
 	ret nz ; $5e5c
@@ -1758,7 +1758,7 @@ Label_0b_6d73:
 	xor a, a ; $6d73
 	ret ; $6d74
 Label_0b_6d75:
-	ld a, [$c4b2] ; $6d75
+	ld a, [wBallBounceCount] ; $6d75
 	cp a, $01 ; $6d78
 	ld a, $00 ; $6d7a
 	ret nz ; $6d7c
@@ -1927,7 +1927,7 @@ Label_0b_721d:
 	xor a, a ; $721d
 	ret ; $721e
 Label_0b_721f:
-	ld a, [$c4b2] ; $721f
+	ld a, [wBallBounceCount] ; $721f
 	cp a, $01 ; $7222
 	ld a, $00 ; $7224
 	ret nz ; $7226

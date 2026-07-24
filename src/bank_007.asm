@@ -2272,13 +2272,13 @@ LoadShotPlacementEntry:
 	inc h ; $52a9
 Label_07_52aa:
 	ld a, [hl+] ; $52aa
-	ld [$c41c], a ; $52ab
+	ld [wBallTopspin], a ; $52ab
 	ld a, [hl+] ; $52ae
-	ld [$c41d], a ; $52af
+	ld [wBallTopspin + 1], a ; $52af
 	ld a, [hl+] ; $52b2
 	ld b, [hl] ; $52b3
 	ld c, a ; $52b4
-	ld a, [$c4a7] ; $52b5
+	ld a, [wShotAimMirror] ; $52b5
 	and a, a ; $52b8
 	jr z, Label_07_52c1 ; $52b9
 	xor a, a ; $52bb
@@ -2288,7 +2288,7 @@ Label_07_52aa:
 	sub a, b ; $52bf
 	ld b, a ; $52c0
 Label_07_52c1:
-	ld hl, $c41e ; $52c1
+	ld hl, wBallSideSpin ; $52c1
 	ld a, c ; $52c4
 	ld [hl+], a ; $52c5
 	ld [hl], b ; $52c6
@@ -2379,7 +2379,7 @@ Label_07_5339:
 	ld b, h ; $5343
 	ret ; $5344
 AddChargeSpeedBonus:
-	ld a, [$c4a2] ; $5345
+	ld a, [wShotChargeLevel] ; $5345
 	ld l, a ; $5348
 	ld h, $00 ; $5349
 	ld de, $ffe0 ; $534b
@@ -2392,7 +2392,7 @@ Label_07_5357:
 	call MulHLByASignedFull ; $5357
 	jr Label_07_5373 ; $535a
 AddChargeSpeedBonusHalf:
-	ld a, [$c4a2] ; $535c
+	ld a, [wShotChargeLevel] ; $535c
 	ld l, a ; $535f
 	ld h, $00 ; $5360
 	ld de, $ffe0 ; $5362
@@ -2449,16 +2449,16 @@ Func_07_53a2:
 Label_07_53af:
 	ret ; $53af
 ExecuteShot:
-	ld hl, $c4b7 ; $53b0
+	ld hl, wBallHitEvent ; $53b0
 	ld a, [hl] ; $53b3
 	and a, a ; $53b4
 	ret nz ; $53b5
 	ld a, $01 ; $53b6
-	ld [$c4b7], a ; $53b8
+	ld [wBallHitEvent], a ; $53b8
 	ld a, [wCharIndex] ; $53bb
-	ld [$c4b8], a ; $53be
+	ld [wLastShotCharIndex], a ; $53be
 	ld a, [wCharServeRole] ; $53c1
-	ld [$c4b9], a ; $53c4
+	ld [wLastShotServeRole], a ; $53c4
 	ld a, [$df4a] ; $53c7
 	ld [$c4a4], a ; $53ca
 	ld a, [$df14] ; $53cd
@@ -2468,12 +2468,12 @@ ExecuteShot:
 	ld hl, $df17 ; $53d8
 	or a, [hl] ; $53db
 	ld [$c490], a ; $53dc
-	ld a, [$c4b0] ; $53df
-	ld [$c4be], a ; $53e2
+	ld a, [wBallCourtQuadrant] ; $53df
+	ld [wBallQuadrantAtHit], a ; $53e2
 	xor a, a ; $53e5
-	ld [$c4a5], a ; $53e6
+	ld [wSpecialShotFlag], a ; $53e6
 	ld [$c4a6], a ; $53e9
-	ld [$c4c6], a ; $53ec
+	ld [wFallbackTrajectoryFlag], a ; $53ec
 	ld b, $00 ; $53ef
 	ld a, [$df15] ; $53f1
 	cp a, $06 ; $53f4
@@ -2496,13 +2496,13 @@ Label_07_5405:
 Label_07_540d:
 	ld a, b ; $540d
 	and a, $01 ; $540e
-	ld [$c4a7], a ; $5410
+	ld [wShotAimMirror], a ; $5410
 	ld a, [$df4b] ; $5413
 	cp a, $3f ; $5416
 	jr c, Label_07_541c ; $5418
 	ld a, $3f ; $541a
 Label_07_541c:
-	ld [$c4a2], a ; $541c
+	ld [wShotChargeLevel], a ; $541c
 	ld a, [$df4c] ; $541f
 	ld [$c4a3], a ; $5422
 	ld hl, wBallVelocityX ; $5425
@@ -2610,7 +2610,7 @@ Label_07_54c9:
 	ret ; $54c9
 	INCBIN "data/bank_007/d_54ca.bin" ; $54ca, 20 bytes
 WeakenShotByCharge:
-	ld a, [$c4a2] ; $54de
+	ld a, [wShotChargeLevel] ; $54de
 	ld l, a ; $54e1
 	ld h, $00 ; $54e2
 	add hl, hl ; $54e4
@@ -2623,7 +2623,7 @@ WeakenShotByCharge:
 	ld b, a ; $54eb
 	ret ; $54ec
 BoostShotByCharge:
-	ld a, [$c4a2] ; $54ed
+	ld a, [wShotChargeLevel] ; $54ed
 	ld l, a ; $54f0
 	ld h, $00 ; $54f1
 	add hl, hl ; $54f3
@@ -2885,7 +2885,7 @@ Label_07_56ad:
 Label_07_56b6:
 	ret ; $56b6
 ComputeAimBaseOffset:
-	ld hl, $c43e ; $56b7
+	ld hl, wAimSpreadBase ; $56b7
 	ld a, [hl+] ; $56ba
 	ld d, [hl] ; $56bb
 	ld e, a ; $56bc
@@ -2915,7 +2915,7 @@ Label_07_56cd:
 	ld d, h ; $56e1
 	ret ; $56e2
 ClampShotTargetX:
-	ld hl, $c484 ; $56e3
+	ld hl, wCourtLimitX ; $56e3
 	ld a, [hl+] ; $56e6
 	ld h, [hl] ; $56e7
 	ld l, a ; $56e8
@@ -2972,7 +2972,7 @@ ComputeShotTrajectory:
 	sub a, b ; $5729
 	ld b, a ; $572a
 Label_07_572b:
-	ld hl, $c432 ; $572b
+	ld hl, wShotAimTargetDepth ; $572b
 	ld a, c ; $572e
 	ld [hl+], a ; $572f
 	ld [hl], b ; $5730
@@ -2986,12 +2986,12 @@ Label_07_572b:
 	ld a, b ; $573a
 	sbc a, h ; $573b
 	ld b, a ; $573c
-	ld hl, $c436 ; $573d
+	ld hl, wShotAimDeltaDepth ; $573d
 	ld a, c ; $5740
 	ld [hl+], a ; $5741
 	ld [hl], b ; $5742
 	call ComputeShotTargetX ; $5743
-	ld hl, $c430 ; $5746
+	ld hl, wShotAimTargetX ; $5746
 	ld a, e ; $5749
 	ld [hl+], a ; $574a
 	ld [hl], d ; $574b
@@ -3005,11 +3005,11 @@ Label_07_572b:
 	ld a, d ; $5755
 	sbc a, h ; $5756
 	ld d, a ; $5757
-	ld hl, $c434 ; $5758
+	ld hl, wShotAimDeltaX ; $5758
 	ld a, e ; $575b
 	ld [hl+], a ; $575c
 	ld [hl], d ; $575d
-	ld hl, $c436 ; $575e
+	ld hl, wShotAimDeltaDepth ; $575e
 	ld a, [hl+] ; $5761
 	ld h, [hl] ; $5762
 	ld l, a ; $5763
@@ -3052,8 +3052,8 @@ Label_07_5794:
 	add hl, hl ; $5796
 	add hl, hl ; $5797
 	ld a, h ; $5798
-	ld [$c48e], a ; $5799
-	ld hl, $c48a ; $579c
+	ld [wShotTrajRowMin], a ; $5799
+	ld hl, wShotDistMin ; $579c
 	ld a, e ; $579f
 	ld [hl+], a ; $57a0
 	ld [hl], d ; $57a1
@@ -3091,8 +3091,8 @@ Label_07_57c9:
 	add hl, hl ; $57cb
 	add hl, hl ; $57cc
 	ld a, h ; $57cd
-	ld [$c48f], a ; $57ce
-	ld hl, $c48c ; $57d1
+	ld [wShotTrajRowMax], a ; $57ce
+	ld hl, wShotDistMax ; $57d1
 	ld a, e ; $57d4
 	ld [hl+], a ; $57d5
 	ld [hl], d ; $57d6
@@ -3117,7 +3117,7 @@ Label_07_57ec:
 	ld hl, $ffe0 ; $57ee
 	add hl, bc ; $57f1
 	jr nc, Label_07_5851 ; $57f2
-	ld hl, $c484 ; $57f4
+	ld hl, wCourtLimitX ; $57f4
 	ld a, [hl+] ; $57f7
 	ld h, [hl] ; $57f8
 	ld l, a ; $57f9
@@ -3162,9 +3162,9 @@ Label_07_5820:
 	jr z, Label_07_5851 ; $582a
 	push de ; $582c
 	ld l, $00 ; $582d
-	ld a, [$c48c] ; $582f
+	ld a, [wShotDistMax] ; $582f
 	ld h, a ; $5832
-	ld a, [$c48d] ; $5833
+	ld a, [wShotDistMax + 1] ; $5833
 	ld e, c ; $5836
 	ld d, b ; $5837
 	call DivAHLByDESigned ; $5838
@@ -3178,8 +3178,8 @@ Label_07_5820:
 	add hl, hl ; $5845
 	add hl, hl ; $5846
 	ld a, h ; $5847
-	ld [$c48f], a ; $5848
-	ld hl, $c48c ; $584b
+	ld [wShotTrajRowMax], a ; $5848
+	ld hl, wShotDistMax ; $584b
 	ld a, e ; $584e
 	ld [hl+], a ; $584f
 	ld [hl], d ; $5850
@@ -3198,7 +3198,7 @@ Label_07_5851:
 	ld a, e ; $5860
 	ld [hl+], a ; $5861
 	ld [hl], d ; $5862
-	ld hl, $c430 ; $5863
+	ld hl, wShotAimTargetX ; $5863
 	ld de, wBallTargetX ; $5866
 	ld a, [hl+] ; $5869
 	ld [de], a ; $586a
@@ -3404,7 +3404,7 @@ ExecuteShotServeFlat:
 	add hl, de ; $59f5
 	jr c, Label_07_5a00 ; $59f6
 	ld a, $01 ; $59f8
-	ld [$c4a5], a ; $59fa
+	ld [wSpecialShotFlag], a ; $59fa
 	ld [$c4a6], a ; $59fd
 Label_07_5a00:
 	ret ; $5a00
@@ -3431,7 +3431,7 @@ Func_07_5a01:
 	sub a, l ; $5a19
 	ld h, a ; $5a1a
 	ld a, [hl] ; $5a1b
-	ld [$c4a5], a ; $5a1c
+	ld [wSpecialShotFlag], a ; $5a1c
 	ld [$c4a6], a ; $5a1f
 	ret ; $5a22
 	INCBIN "data/bank_007/d_5a23.bin" ; $5a23, 32 bytes
@@ -3726,7 +3726,7 @@ Label_07_5c24:
 	ld a, $01 ; $5c30
 Label_07_5c32:
 	ld [wDropPlacementIndex], a ; $5c32
-	ld a, [$c4ee] ; $5c35
+	ld a, [wDebugMatchFlags] ; $5c35
 	bit 1, a ; $5c38
 	ret z ; $5c3a
 	ld a, [wCharIndex] ; $5c3b
@@ -3986,7 +3986,7 @@ RunDebugTestMatch:
 	ld a, $01 ; $5e93
 	farcall SetStorySlotFlagA ; $5e95
 	ld a, $fe ; $5e98
-	ld [$c4ee], a ; $5e9a
+	ld [wDebugMatchFlags], a ; $5e9a
 	farcall RunMatch ; $5e9d
 	ret ; $5ea0
 	farcall InitMinigameMatchSettings ; $5ea1

@@ -33,9 +33,9 @@ Func_2c_4016:
 	add hl, de ; $4021
 	ret ; $4022
 Func_2c_4023:
-	ld a, [$c48e] ; $4023
+	ld a, [wShotTrajRowMin] ; $4023
 	ld d, a ; $4026
-	ld a, [$c48f] ; $4027
+	ld a, [wShotTrajRowMax] ; $4027
 	ld e, a ; $402a
 Label_2c_402b:
 	push hl ; $402b
@@ -59,9 +59,9 @@ Label_2c_403f:
 Label_2c_4041:
 	ret ; $4041
 Func_2c_4042:
-	ld a, [$c48e] ; $4042
+	ld a, [wShotTrajRowMin] ; $4042
 	ld d, a ; $4045
-	ld a, [$c48f] ; $4046
+	ld a, [wShotTrajRowMax] ; $4046
 	ld e, a ; $4049
 Label_2c_404a:
 	push hl ; $404a
@@ -98,7 +98,7 @@ Func_2c_4061:
 	ld e, a ; $406b
 	ld a, [hl+] ; $406c
 	ld d, a ; $406d
-	ld a, [$c4a7] ; $406e
+	ld a, [wShotAimMirror] ; $406e
 	and a, a ; $4071
 	jr z, Label_2c_407a ; $4072
 	xor a, a ; $4074
@@ -144,7 +144,7 @@ Func_2c_4088:
 	ld a, c ; $40a4
 	ld [hl+], a ; $40a5
 	ld [hl], b ; $40a6
-	ld hl, $c434 ; $40a7
+	ld hl, wShotAimDeltaX ; $40a7
 	ld a, [hl+] ; $40aa
 	ld h, [hl] ; $40ab
 	ld l, a ; $40ac
@@ -175,7 +175,7 @@ Label_2c_40b7:
 	ld e, a ; $40c8
 	ld a, [hl+] ; $40c9
 	ld d, a ; $40ca
-	ld a, [$c4a7] ; $40cb
+	ld a, [wShotAimMirror] ; $40cb
 	and a, a ; $40ce
 	jr z, Label_2c_40d7 ; $40cf
 	xor a, a ; $40d1
@@ -225,9 +225,9 @@ Func_2c_4139:
 	sbc a, a ; $413c
 	sub a, b ; $413d
 	ld b, a ; $413e
-	ld a, [$c48a] ; $413f
+	ld a, [wShotDistMin] ; $413f
 	ld e, a ; $4142
-	ld a, [$c48b] ; $4143
+	ld a, [wShotDistMin + 1] ; $4143
 	ld d, a ; $4146
 	call Func_2c_4006 ; $4147
 	call Func_2c_4023 ; $414a
@@ -247,18 +247,18 @@ Func_2c_4139:
 	ld a, [hl+] ; $4165
 	ld b, [hl] ; $4166
 	ld c, a ; $4167
-	ld hl, $c436 ; $4168
+	ld hl, wShotAimDeltaDepth ; $4168
 	ld a, [hl+] ; $416b
 	ld d, [hl] ; $416c
 	ld e, a ; $416d
-	ld hl, $c434 ; $416e
+	ld hl, wShotAimDeltaX ; $416e
 	ld a, [hl+] ; $4171
 	ld h, [hl] ; $4172
 	ld l, a ; $4173
 	call VectorLengthFromAngle ; $4174
 	ld e, l ; $4177
 	ld d, h ; $4178
-	ld hl, $c48c ; $4179
+	ld hl, wShotDistMax ; $4179
 	ld a, [hl+] ; $417c
 	ld h, [hl] ; $417d
 	ld l, a ; $417e
@@ -269,7 +269,7 @@ Func_2c_4139:
 	sbc a, d ; $4183
 	ld h, a ; $4184
 	jr nc, Label_2c_418d ; $4185
-	ld hl, $c48c ; $4187
+	ld hl, wShotDistMax ; $4187
 	ld a, [hl+] ; $418a
 	ld d, [hl] ; $418b
 	ld e, a ; $418c
@@ -289,9 +289,9 @@ Func_2c_41cd:
 	sbc a, a ; $41d0
 	sub a, b ; $41d1
 	ld b, a ; $41d2
-	ld a, [$c48a] ; $41d3
+	ld a, [wShotDistMin] ; $41d3
 	ld e, a ; $41d6
-	ld a, [$c48b] ; $41d7
+	ld a, [wShotDistMin + 1] ; $41d7
 	ld d, a ; $41da
 	call Func_2c_4016 ; $41db
 	call Func_2c_4042 ; $41de

@@ -5354,7 +5354,7 @@ HandleMinigameTargetHit:
 	call DeflectBallOffMinigameTarget ; $6729
 	ret ; $672c
 CheckBallHitsMinigameTarget:
-	ld a, [$c4b4] ; $672d
+	ld a, [wBallCrossedNetFlag] ; $672d
 	and a, a ; $6730
 	ret z ; $6731
 	ld hl, wBallHistory + 30 ; $6732
@@ -5785,7 +5785,7 @@ HandleMinigameTargetHitAlt:
 	ld [$c78d], a ; $6df0
 	ret ; $6df3
 CheckBallHitsMinigameTargetAlt:
-	ld a, [$c4b4] ; $6df4
+	ld a, [wBallCrossedNetFlag] ; $6df4
 	and a, a ; $6df7
 	ret z ; $6df8
 	ld a, $01 ; $6df9

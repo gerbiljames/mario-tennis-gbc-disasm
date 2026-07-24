@@ -98,7 +98,7 @@ Label_08_40c7:
 	ld a, $ff ; $40cb
 	ld [wMatchSimFrozen], a ; $40cd
 	ld a, $01 ; $40d0
-	ld [$c4c2], a ; $40d2
+	ld [wPauseDisabled], a ; $40d2
 	xor a, a ; $40d5
 	ld [wPlayer1PointsWon], a ; $40d6
 	ld [wPlayer2PointsWon], a ; $40d9
@@ -106,17 +106,17 @@ Label_08_40c7:
 	ld [wServeFaultFlag], a ; $40df
 	ld [wDeuceIndicator], a ; $40e2
 	ld de, $fe50 ; $40e5
-	ld hl, $c484 ; $40e8
+	ld hl, wCourtLimitX ; $40e8
 	ld a, e ; $40eb
 	ld [hl+], a ; $40ec
 	ld [hl], d ; $40ed
 	ld de, $fb20 ; $40ee
-	ld hl, $c486 ; $40f1
+	ld hl, wCourtLimitDepth ; $40f1
 	ld a, e ; $40f4
 	ld [hl+], a ; $40f5
 	ld [hl], d ; $40f6
 	ld de, $0060 ; $40f7
-	ld hl, $c488 ; $40fa
+	ld hl, wNetHeight ; $40fa
 	ld a, e ; $40fd
 	ld [hl+], a ; $40fe
 	ld [hl], d ; $40ff
@@ -126,7 +126,7 @@ Label_08_40c7:
 	jr z, Label_08_410c ; $4107
 	ld bc, $0320 ; $4109
 Label_08_410c:
-	ld hl, $c43e ; $410c
+	ld hl, wAimSpreadBase ; $410c
 	ld a, c ; $410f
 	ld [hl+], a ; $4110
 	ld [hl], b ; $4111
@@ -136,12 +136,12 @@ Label_08_410c:
 	ld [wOnCourtCharCountMinus1], a ; $4118
 	ld a, [wMatchTypeNumberOfSets] ; $411b
 	srl a ; $411e
-	ld [$c4db], a ; $4120
+	ld [wRulesSetsIndex], a ; $4120
 	ld a, [wMatchTypeNumberOfGames] ; $4123
 	rrca ; $4126
 	rrca ; $4127
 	and a, $01 ; $4128
-	ld [$c4dc], a ; $412a
+	ld [wRulesGamesIndex], a ; $412a
 	call Func_08_454b ; $412d
 	ld a, [wGameMode] ; $4130
 	cp a, $09 ; $4133
@@ -173,7 +173,7 @@ InitMatchScene:
 	call ClearSpriteSlots ; $4170
 	call AssignCourtPositions ; $4173
 	xor a, a ; $4176
-	ld [$c4cd], a ; $4177
+	ld [wChangeEndsPending], a ; $4177
 	farcall UpdatePointScoreDisplay ; $417a
 	call RefreshCourtScoreboard ; $417d
 	call UploadCourtTilemap ; $4180
@@ -253,7 +253,7 @@ Label_08_4238:
 Label_08_4241:
 	ret ; $4241
 TickRallyTimers:
-	ld a, [$c4b4] ; $4242
+	ld a, [wBallCrossedNetFlag] ; $4242
 	and a, a ; $4245
 	ret z ; $4246
 	ld hl, $c4b5 ; $4247
@@ -269,9 +269,9 @@ Label_08_4250:
 	and a, a ; $425a
 	jr nz, Label_08_4262 ; $425b
 	ld a, $01 ; $425d
-	ld [$c4c9], a ; $425f
+	ld [wCameraFollowBall], a ; $425f
 Label_08_4262:
-	ld a, [$c4bf] ; $4262
+	ld a, [wBallHasBouncedFlag] ; $4262
 	and a, a ; $4265
 	jr z, Label_08_426e ; $4266
 	ld hl, $4274 ; $4268
@@ -284,7 +284,7 @@ Label_08_426e:
 	call SetCharState ; $4276
 	ret ; $4279
 HandleBallHitEvent:
-	ld a, [$c4b7] ; $427a
+	ld a, [wBallHitEvent] ; $427a
 	and a, a ; $427d
 	ret z ; $427e
 	ld hl, wRallyLength ; $427f
@@ -294,9 +294,9 @@ HandleBallHitEvent:
 	inc [hl] ; $4287
 Label_08_4288:
 	xor a, a ; $4288
-	ld [$c4b7], a ; $4289
-	ld [$c4bf], a ; $428c
-	ld [$c4da], a ; $428f
+	ld [wBallHitEvent], a ; $4289
+	ld [wBallHasBouncedFlag], a ; $428c
+	ld [wLandingMarkerActive], a ; $428f
 	call StartLandingMarker ; $4292
 	call StartHitEffect ; $4295
 	wram_bank $07 ; $4298
@@ -311,7 +311,7 @@ Label_08_4288:
 	ld d, $04 ; $42bf
 	call CallModeHook ; $42c1
 	xor a, a ; $42c4
-	ld [$c4b2], a ; $42c5
+	ld [wBallBounceCount], a ; $42c5
 	ld a, [wRallyLength] ; $42c8
 	cp a, $01 ; $42cb
 	jr z, Label_08_42d4 ; $42cd
@@ -319,12 +319,12 @@ Label_08_4288:
 	jr z, Label_08_42f3 ; $42d1
 	ret ; $42d3
 Label_08_42d4:
-	ld a, [$c4a5] ; $42d4
+	ld a, [wSpecialShotFlag] ; $42d4
 	and a, a ; $42d7
 	jr z, Label_08_42f2 ; $42d8
 	ld a, $0e ; $42da
 	farcall ShowCourtBanner ; $42dc
-	ld a, [$c4d4] ; $42df
+	ld a, [wServingCharCourtPos] ; $42df
 	and a, $02 ; $42e2
 	ld de, $f0d8 ; $42e4
 	jr z, Label_08_42ec ; $42e7
@@ -336,7 +336,7 @@ Label_08_42f2:
 	ret ; $42f2
 Label_08_42f3:
 	ld de, $fb20 ; $42f3
-	ld hl, $c486 ; $42f6
+	ld hl, wCourtLimitDepth ; $42f6
 	ld a, e ; $42f9
 	ld [hl+], a ; $42fa
 	ld [hl], d ; $42fb
@@ -346,7 +346,7 @@ Label_08_42f3:
 	jr z, Label_08_4308 ; $4303
 	ld de, $fdc0 ; $4305
 Label_08_4308:
-	ld hl, $c484 ; $4308
+	ld hl, wCourtLimitX ; $4308
 	ld a, e ; $430b
 	ld [hl+], a ; $430c
 	ld [hl], d ; $430d
@@ -372,12 +372,12 @@ Func_08_4326:
 	jr nz, Label_08_4348 ; $4331
 	ld b, $08 ; $4333
 	ld c, $ff ; $4335
-	ld a, [$c4b9] ; $4337
+	ld a, [wLastShotServeRole] ; $4337
 	cp a, $01 ; $433a
 	jr nz, Label_08_4349 ; $433c
 	ld b, $07 ; $433e
 	ld c, $ff ; $4340
-	ld a, [$c4b2] ; $4342
+	ld a, [wBallBounceCount] ; $4342
 	and a, a ; $4345
 	jr z, Label_08_4349 ; $4346
 Label_08_4348:
@@ -389,22 +389,22 @@ Label_08_4349:
 	ld [wPointOutcomeSide], a ; $434e
 	ret ; $4351
 HandleBallBounceEvent:
-	ld a, [$c4b3] ; $4352
+	ld a, [wBallBounceEvent] ; $4352
 	and a, a ; $4355
 	ret z ; $4356
-	ld a, [$c4b2] ; $4357
+	ld a, [wBallBounceCount] ; $4357
 	cp a, $02 ; $435a
 	jr nc, Label_08_4360 ; $435c
 	sound $5b ; $435e
 Label_08_4360:
-	ld hl, $c4b2 ; $4360
+	ld hl, wBallBounceCount ; $4360
 	ld a, [hl] ; $4363
 	cp a, $0a ; $4364
 	jr nc, Label_08_4369 ; $4366
 	inc [hl] ; $4368
 Label_08_4369:
 	xor a, a ; $4369
-	ld [$c4da], a ; $436a
+	ld [wLandingMarkerActive], a ; $436a
 	call StartBounceEffect ; $436d
 	call EvaluateBounceOutcome ; $4370
 	ld d, $05 ; $4373
@@ -419,13 +419,13 @@ EvaluateBounceOutcome:
 	jr nz, Label_08_43c9 ; $4383
 	ld b, $06 ; $4385
 	ld c, $01 ; $4387
-	ld a, [$c4b2] ; $4389
+	ld a, [wBallBounceCount] ; $4389
 	cp a, $01 ; $438c
 	jr nz, Label_08_43ca ; $438e
 	ld b, $04 ; $4390
 	ld c, $ff ; $4392
-	ld hl, $c4be ; $4394
-	ld a, [$c4b0] ; $4397
+	ld hl, wBallQuadrantAtHit ; $4394
+	ld a, [wBallCourtQuadrant] ; $4397
 	xor a, [hl] ; $439a
 	and a, $02 ; $439b
 	jr z, Label_08_43ca ; $439d
@@ -439,14 +439,14 @@ EvaluateBounceOutcome:
 	jr nz, Label_08_43c9 ; $43ae
 	ld b, $05 ; $43b0
 	ld c, $ff ; $43b2
-	ld hl, $c4be ; $43b4
-	ld a, [$c4b0] ; $43b7
+	ld hl, wBallQuadrantAtHit ; $43b4
+	ld a, [wBallCourtQuadrant] ; $43b7
 	xor a, [hl] ; $43ba
 	and a, $01 ; $43bb
 	jr z, Label_08_43ca ; $43bd
 	ld b, $03 ; $43bf
 	ld c, $00 ; $43c1
-	ld a, [$c4bf] ; $43c3
+	ld a, [wBallHasBouncedFlag] ; $43c3
 	and a, a ; $43c6
 	jr nz, Label_08_43ca ; $43c7
 Label_08_43c9:
@@ -458,11 +458,11 @@ Label_08_43ca:
 	ld [wPointOutcomeSide], a ; $43cf
 	ret ; $43d2
 HandleBallTouchCharEvent:
-	ld a, [$c4ae] ; $43d3
+	ld a, [wBallTouchCharFlag] ; $43d3
 	and a, a ; $43d6
 	ret z ; $43d7
 	xor a, a ; $43d8
-	ld [$c4ae], a ; $43d9
+	ld [wBallTouchCharFlag], a ; $43d9
 	sound $77 ; $43dc
 	call StartBallTouchCharEffect ; $43de
 	call ApplyBallTouchOutcome ; $43e1
@@ -532,7 +532,7 @@ Label_08_4437:
 	call ReadMatchInputHeld ; $4440
 	and a, $03 ; $4443
 	jr nz, Label_08_4451 ; $4445
-	ld a, [$c4ee] ; $4447
+	ld a, [wDebugMatchFlags] ; $4447
 	bit 0, a ; $444a
 	jr nz, Label_08_4437 ; $444c
 	dec b ; $444e
@@ -585,7 +585,7 @@ HandlePauseMenu:
 	call ReadMatchInputPressed ; $4496
 	and a, $08 ; $4499
 	ret z ; $449b
-	ld a, [$c4c2] ; $449c
+	ld a, [wPauseDisabled] ; $449c
 	and a, a ; $449f
 	ret nz ; $44a0
 	ld a, [wMatchWinLoseFlag] ; $44a1
@@ -605,7 +605,7 @@ ReinitPointAfterPause:
 	and a, a ; $44c0
 	ret nz ; $44c1
 	call AssignCourtPositions ; $44c2
-	ld a, [$c4ce] ; $44c5
+	ld a, [wCourtViewFlipChanged] ; $44c5
 	and a, a ; $44c8
 	ret z ; $44c9
 	call RefreshCourtAfterEndChange ; $44ca
@@ -614,7 +614,7 @@ ReinitPointAfterPause:
 	ld hl, $4cb2 ; $44d3
 	call ForEachCharBank ; $44d6
 	farcall LoadServeGfx ; $44d9
-	ld a, [$c4d2] ; $44dc
+	ld a, [wServingCharWramBank] ; $44dc
 	wram_bank ; $44df
 	ld a, $03 ; $44e3
 	call SetCharState ; $44e5
@@ -647,13 +647,13 @@ InitViewFlipPreference:
 	cp a, $08 ; $451f
 	jr z, Label_08_452e ; $4521
 	farcall TestStorySlotFlagB ; $4523
-	ld [$c4dd], a ; $4526
+	ld [wCourtViewOption], a ; $4526
 	xor a, a ; $4529
 	ld [$c4c8], a ; $452a
 	ret ; $452d
 Label_08_452e:
 	ld a, $00 ; $452e
-	ld [$c4dd], a ; $4530
+	ld [wCourtViewOption], a ; $4530
 	ld a, $01 ; $4533
 	ld [$c4c8], a ; $4535
 	ret ; $4538
@@ -674,7 +674,7 @@ Func_08_454b:
 	ld a, [wOnCourtCharCount] ; $4552
 	sub a, $02 ; $4555
 	and a, $03 ; $4557
-	ld [$c494], a ; $4559
+	ld [wScoreboardLayout], a ; $4559
 	ret ; $455c
 Label_08_455d:
 	ld b, $03 ; $455d
@@ -698,7 +698,7 @@ Label_08_455d:
 	ld b, $04 ; $4581
 Label_08_4583:
 	ld a, b ; $4583
-	ld [$c494], a ; $4584
+	ld [wScoreboardLayout], a ; $4584
 	ret ; $4587
 	jp TickTimer ; $4588
 SetBallPosition:
@@ -761,11 +761,11 @@ SetBallVelocityPolar:
 	ld [hl], d ; $45d6
 	ret ; $45d7
 SetBallSpinComponents:
-	ld hl, $c41e ; $45d8
+	ld hl, wBallSideSpin ; $45d8
 	ld a, e ; $45db
 	ld [hl+], a ; $45dc
 	ld [hl], d ; $45dd
-	ld hl, $c41c ; $45de
+	ld hl, wBallTopspin ; $45de
 	ld a, c ; $45e1
 	ld [hl+], a ; $45e2
 	ld [hl], b ; $45e3
@@ -780,7 +780,7 @@ UpdateBallAnglesAndSpeed:
 	ld h, [hl] ; $45ef
 	ld l, a ; $45f0
 	call AngleFromVector16 ; $45f1
-	ld hl, $c40e ; $45f4
+	ld hl, wBallHeadingAngle ; $45f4
 	ld a, c ; $45f7
 	ld [hl+], a ; $45f8
 	ld [hl], b ; $45f9
@@ -814,7 +814,7 @@ UpdateBallAnglesAndSpeed:
 	ld a, [hl+] ; $4625
 	ld d, [hl] ; $4626
 	ld e, a ; $4627
-	ld hl, $c42a ; $4628
+	ld hl, wBallSpeedHorizontal ; $4628
 	ld a, [hl+] ; $462b
 	ld h, [hl] ; $462c
 	ld l, a ; $462d
@@ -828,7 +828,7 @@ UpdateBallAnglesAndSpeed:
 	ret ; $4639
 CheckBallOutOfBounds:
 	ld d, $00 ; $463a
-	ld hl, $c484 ; $463c
+	ld hl, wCourtLimitX ; $463c
 	ld a, [hl+] ; $463f
 	ld b, [hl] ; $4640
 	ld c, a ; $4641
@@ -849,7 +849,7 @@ Label_08_4652:
 	jr nc, Label_08_4657 ; $4653
 	set 0, d ; $4655
 Label_08_4657:
-	ld hl, $c486 ; $4657
+	ld hl, wCourtLimitDepth ; $4657
 	ld a, [hl+] ; $465a
 	ld b, [hl] ; $465b
 	ld c, a ; $465c
@@ -919,7 +919,7 @@ Label_08_46a0:
 	ret ; $46af
 ApplyCourtBounceDamping:
 	ld hl, $c420 ; $46b0
-	ld a, [$c4ac] ; $46b3
+	ld a, [wCourtSurfaceFriction] ; $46b3
 	ld b, a ; $46b6
 	call MulMem24ByFrac ; $46b7
 	ld hl, $c420 ; $46ba
@@ -929,7 +929,7 @@ ApplyCourtBounceDamping:
 	ld a, d ; $46c0
 	ld [hl+], a ; $46c1
 	ld hl, $c423 ; $46c2
-	ld a, [$c4ac] ; $46c5
+	ld a, [wCourtSurfaceFriction] ; $46c5
 	ld b, a ; $46c8
 	call MulMem24ByFrac ; $46c9
 	ld hl, $c423 ; $46cc
@@ -939,7 +939,7 @@ ApplyCourtBounceDamping:
 	ld a, d ; $46d2
 	ld [hl+], a ; $46d3
 	ld hl, $c426 ; $46d4
-	ld a, [$c4ad] ; $46d7
+	ld a, [wCourtSurfaceBounce] ; $46d7
 	ld b, a ; $46da
 	call MulMem24ByFrac ; $46db
 	ld hl, $c426 ; $46de
@@ -1369,12 +1369,12 @@ CheckServerEndChanged:
 	and a, $02 ; $4c29
 	jr z, Label_08_4c32 ; $4c2b
 	ld a, $01 ; $4c2d
-	ld [$c4cd], a ; $4c2f
+	ld [wChangeEndsPending], a ; $4c2f
 Label_08_4c32:
 	ret ; $4c32
 UpdateViewFlipState:
 	ld c, $00 ; $4c33
-	ld a, [$c4dd] ; $4c35
+	ld a, [wCourtViewOption] ; $4c35
 	and a, a ; $4c38
 	jr z, Label_08_4c44 ; $4c39
 	ld a, [$c8cf] ; $4c3b
@@ -1382,14 +1382,14 @@ UpdateViewFlipState:
 	jr z, Label_08_4c44 ; $4c40
 	ld c, $01 ; $4c42
 Label_08_4c44:
-	ld hl, $c4cb ; $4c44
+	ld hl, wCourtViewFlipped ; $4c44
 	ld a, [hl] ; $4c47
 	ld [hl], c ; $4c48
 	sub a, c ; $4c49
-	ld [$c4ce], a ; $4c4a
+	ld [wCourtViewFlipChanged], a ; $4c4a
 	ret ; $4c4d
 FlipAllCharPositions:
-	ld a, [$c4cb] ; $4c4e
+	ld a, [wCourtViewFlipped] ; $4c4e
 	and a, a ; $4c51
 	ret z ; $4c52
 	ld b, $03 ; $4c53
@@ -1407,11 +1407,11 @@ IdentifyServingPlayer:
 	ld a, b ; $4c7d
 	wram_bank ; $4c7e
 	ld a, b ; $4c82
-	ld [$c4d2], a ; $4c83
+	ld [wServingCharWramBank], a ; $4c83
 	ld a, [wCharIndex] ; $4c86
 	ld [wCurrentServingPlayer], a ; $4c89
 	ld a, [wCharCourtPos] ; $4c8c
-	ld [$c4d4], a ; $4c8f
+	ld [wServingCharCourtPos], a ; $4c8f
 	wram_bank $04 ; $4c92
 	ret ; $4c98
 	ld a, [wCharCourtPos] ; $4c99
@@ -1433,20 +1433,20 @@ IdentifyServingPlayer:
 ResetPointState:
 	xor a, a ; $4cb9
 	ld [$c4b5], a ; $4cba
-	ld [$c4b2], a ; $4cbd
+	ld [wBallBounceCount], a ; $4cbd
 	ld [wRallyLength], a ; $4cc0
-	ld [$c4b7], a ; $4cc3
-	ld [$c4ae], a ; $4cc6
-	ld [$c4bf], a ; $4cc9
+	ld [wBallHitEvent], a ; $4cc3
+	ld [wBallTouchCharFlag], a ; $4cc6
+	ld [wBallHasBouncedFlag], a ; $4cc9
 	ld [wServiceAceFlag], a ; $4ccc
 	ld [wReturnAceFlag], a ; $4ccf
-	ld [$c4da], a ; $4cd2
+	ld [wLandingMarkerActive], a ; $4cd2
 	ld [wPointWinnerShotType], a ; $4cd5
 	ld [wMatchAbortFlag], a ; $4cd8
 	ld [wPointOutcomeSide], a ; $4cdb
 	ld [wPointOutcome], a ; $4cde
 	ldh [$ffdd], a ; $4ce1
-	ld [$c4c2], a ; $4ce3
+	ld [wPauseDisabled], a ; $4ce3
 	ld a, $01 ; $4ce6
 	ld [wOffscreenArrowsEnabled], a ; $4ce8
 	call ResetBallState ; $4ceb
@@ -1455,12 +1455,12 @@ ResetPointState:
 	ret nz ; $4cf2
 	call ResetCameraForServe ; $4cf3
 	ld de, $fe50 ; $4cf6
-	ld hl, $c484 ; $4cf9
+	ld hl, wCourtLimitX ; $4cf9
 	ld a, e ; $4cfc
 	ld [hl+], a ; $4cfd
 	ld [hl], d ; $4cfe
 	ld de, $fd60 ; $4cff
-	ld hl, $c486 ; $4d02
+	ld hl, wCourtLimitDepth ; $4d02
 	ld a, e ; $4d05
 	ld [hl+], a ; $4d06
 	ld [hl], d ; $4d07
@@ -1580,11 +1580,11 @@ Label_08_4ddb:
 Label_08_4df3:
 	ret ; $4df3
 ResolvePointOutcome:
-	ld hl, $c442 ; $4df4
+	ld hl, wMatchCameraY ; $4df4
 	ld a, [hl+] ; $4df7
 	ld d, [hl] ; $4df8
 	ld e, a ; $4df9
-	ld hl, $c440 ; $4dfa
+	ld hl, wMatchCameraX ; $4dfa
 	ld a, [hl+] ; $4dfd
 	ld h, [hl] ; $4dfe
 	ld l, a ; $4dff
@@ -1792,7 +1792,7 @@ EndPointBallEffects:
 	xor a, a ; $4fa8
 	call SetBallTrailColor ; $4fa9
 	xor a, a ; $4fac
-	ld [$c4da], a ; $4fad
+	ld [wLandingMarkerActive], a ; $4fad
 	ld hl, wMatchAbortFlag ; $4fb0
 	ld a, [hl] ; $4fb3
 	and a, $fe ; $4fb4
@@ -2012,12 +2012,12 @@ ResetBallState:
 	ld [hl+], a ; $513f
 	ld [hl+], a ; $5140
 	ld [hl+], a ; $5141
-	ld hl, $c41c ; $5142
+	ld hl, wBallTopspin ; $5142
 	ld [hl+], a ; $5145
 	ld [hl+], a ; $5146
 	ld [hl+], a ; $5147
 	ld [hl+], a ; $5148
-	ld hl, $c430 ; $5149
+	ld hl, wShotAimTargetX ; $5149
 	ld [hl+], a ; $514c
 	ld [hl+], a ; $514d
 	xor a, a ; $514e
@@ -2187,11 +2187,11 @@ BuildBallShadowSlot:
 	call ProjectWorldToScreen_08 ; $5262
 	ld e, l ; $5265
 	ld d, h ; $5266
-	ld hl, $c46c ; $5267
+	ld hl, wBallGroundProjX ; $5267
 	ld a, e ; $526a
 	ld [hl+], a ; $526b
 	ld [hl], d ; $526c
-	ld hl, $c46e ; $526d
+	ld hl, wBallGroundProjY ; $526d
 	ld a, c ; $5270
 	ld [hl+], a ; $5271
 	ld [hl], b ; $5272
@@ -2269,7 +2269,7 @@ StartLandingMarker:
 	ld a, [wCurrentShotType] ; $52da
 	cp a, SHOTTYPE_LOB ; $52dd
 	jr z, Label_08_52e8 ; $52df
-	ld a, [$c4c6] ; $52e1
+	ld a, [wFallbackTrajectoryFlag] ; $52e1
 	and a, a ; $52e4
 	jr nz, Label_08_52e8 ; $52e5
 	ret ; $52e7
@@ -2329,11 +2329,11 @@ Label_08_5326:
 	ld [hl+], a ; $5338
 	ld [hl], b ; $5339
 	ld a, $01 ; $533a
-	ld [$c4da], a ; $533c
+	ld [wLandingMarkerActive], a ; $533c
 	sound $6d ; $533f
 	ret ; $5341
 DrawLandingMarker:
-	ld a, [$c4da] ; $5342
+	ld a, [wLandingMarkerActive] ; $5342
 	and a, a ; $5345
 	ret z ; $5346
 	ld hl, wLandingMarkerY ; $5347
@@ -2438,10 +2438,10 @@ StartHitEffect:
 	ld a, c ; $53f0
 	ld [hl+], a ; $53f1
 	ld [hl], b ; $53f2
-	ld a, [$c4a5] ; $53f3
+	ld a, [wSpecialShotFlag] ; $53f3
 	and a, a ; $53f6
 	jr nz, Label_08_5406 ; $53f7
-	ld a, [$c4a2] ; $53f9
+	ld a, [wShotChargeLevel] ; $53f9
 	cp a, $3f ; $53fc
 	jr z, Label_08_5406 ; $53fe
 	ld a, $10 ; $5400
@@ -2515,13 +2515,13 @@ DrawSpecialHitEffect:
 	db $ff, $ff, $ff, $00 ; 0x0c
 StartBallTouchCharEffect:
 	ld a, $28 ; $547c
-	ld [$c4ab], a ; $547e
+	ld [wBallTouchCharTimer], a ; $547e
 	ret ; $5481
 DrawBallTouchCharEffect:
-	ld a, [$c4ab] ; $5482
+	ld a, [wBallTouchCharTimer] ; $5482
 	and a, a ; $5485
 	ret z ; $5486
-	ld a, [$c4af] ; $5487
+	ld a, [wBallTouchCharIndex] ; $5487
 	call CharIndexToWramBank ; $548a
 	ld a, a ; $548d
 	wram_bank ; $548e
@@ -2534,9 +2534,9 @@ DrawBallTouchCharEffect:
 	wram_bank $04 ; $549e
 	ld bc, $0a78 ; $54a4
 	call QueueSprite16 ; $54a7
-	ld hl, $c4ab ; $54aa
+	ld hl, wBallTouchCharTimer ; $54aa
 	call TickTimer ; $54ad
-	ld a, [$c4ab] ; $54b0
+	ld a, [wBallTouchCharTimer] ; $54b0
 	add a, $c2 ; $54b3
 	ld l, a ; $54b5
 	adc a, $54 ; $54b6
@@ -2554,11 +2554,11 @@ DrawBallTouchCharEffect:
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x18
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x20
 	ld bc, $0000 ; $54ea
-	ld hl, $c432 ; $54ed
+	ld hl, wShotAimTargetDepth ; $54ed
 	ld a, [hl+] ; $54f0
 	ld d, [hl] ; $54f1
 	ld e, a ; $54f2
-	ld hl, $c430 ; $54f3
+	ld hl, wShotAimTargetX ; $54f3
 	ld a, [hl+] ; $54f6
 	ld h, [hl] ; $54f7
 	ld l, a ; $54f8
@@ -2714,7 +2714,7 @@ Label_08_55bd:
 	call Add24ToMem24 ; $560f
 	ret ; $5612
 ApplyBallSpin:
-	ld hl, $c41e ; $5613
+	ld hl, wBallSideSpin ; $5613
 	ld a, [hl+] ; $5616
 	or a, [hl] ; $5617
 	jp z, Label_08_56a9 ; $5618
@@ -2722,7 +2722,7 @@ ApplyBallSpin:
 	ld a, [hl+] ; $561e
 	ld d, [hl] ; $561f
 	ld e, a ; $5620
-	ld hl, $c41e ; $5621
+	ld hl, wBallSideSpin ; $5621
 	ld a, [hl+] ; $5624
 	ld h, [hl] ; $5625
 	ld l, a ; $5626
@@ -2753,7 +2753,7 @@ Label_08_564c:
 	ld a, [hl+] ; $5651
 	ld d, [hl] ; $5652
 	ld e, a ; $5653
-	ld hl, $c41e ; $5654
+	ld hl, wBallSideSpin ; $5654
 	ld a, [hl+] ; $5657
 	ld h, [hl] ; $5658
 	ld l, a ; $5659
@@ -2784,7 +2784,7 @@ Label_08_567f:
 	pop af ; $5686
 	ld hl, $c420 ; $5687
 	call Add24ToMem24 ; $568a
-	ld hl, $c41e ; $568d
+	ld hl, wBallSideSpin ; $568d
 	ld a, [hl+] ; $5690
 	ld h, [hl] ; $5691
 	ld l, a ; $5692
@@ -2803,11 +2803,11 @@ Label_08_567f:
 	add hl, de ; $569f
 	add hl, de ; $56a0
 	ld a, l ; $56a1
-	ld [$c41e], a ; $56a2
+	ld [wBallSideSpin], a ; $56a2
 	ld a, h ; $56a5
-	ld [$c41f], a ; $56a6
+	ld [wBallSideSpin + 1], a ; $56a6
 Label_08_56a9:
-	ld hl, $c41c ; $56a9
+	ld hl, wBallTopspin ; $56a9
 	ld a, [hl+] ; $56ac
 	or a, [hl] ; $56ad
 	jp z, Label_08_5766 ; $56ae
@@ -2815,7 +2815,7 @@ Label_08_56a9:
 	ld a, [hl+] ; $56b4
 	ld d, [hl] ; $56b5
 	ld e, a ; $56b6
-	ld hl, $c41c ; $56b7
+	ld hl, wBallTopspin ; $56b7
 	ld a, [hl+] ; $56ba
 	ld h, [hl] ; $56bb
 	ld l, a ; $56bc
@@ -2851,11 +2851,11 @@ Label_08_56a9:
 	ld d, a ; $56eb
 Label_08_56ec:
 	push de ; $56ec
-	ld hl, $c42a ; $56ed
+	ld hl, wBallSpeedHorizontal ; $56ed
 	ld a, [hl+] ; $56f0
 	ld d, [hl] ; $56f1
 	ld e, a ; $56f2
-	ld hl, $c41c ; $56f3
+	ld hl, wBallTopspin ; $56f3
 	ld a, [hl+] ; $56f6
 	ld h, [hl] ; $56f7
 	ld l, a ; $56f8
@@ -2882,7 +2882,7 @@ Label_08_56ec:
 Label_08_571e:
 	ld hl, $c426 ; $571e
 	call Add24ToMem24 ; $5721
-	ld hl, $c40e ; $5724
+	ld hl, wBallHeadingAngle ; $5724
 	ld a, [hl+] ; $5727
 	ld b, [hl] ; $5728
 	ld c, a ; $5729
@@ -2908,7 +2908,7 @@ Label_08_571e:
 	ld a, l ; $5743
 	ld hl, $c420 ; $5744
 	call Add24ToMem24 ; $5747
-	ld hl, $c41c ; $574a
+	ld hl, wBallTopspin ; $574a
 	ld a, [hl+] ; $574d
 	ld h, [hl] ; $574e
 	ld l, a ; $574f
@@ -2927,14 +2927,14 @@ Label_08_571e:
 	add hl, de ; $575c
 	add hl, de ; $575d
 	ld a, l ; $575e
-	ld [$c41c], a ; $575f
+	ld [wBallTopspin], a ; $575f
 	ld a, h ; $5762
-	ld [$c41d], a ; $5763
+	ld [wBallTopspin + 1], a ; $5763
 Label_08_5766:
 	ret ; $5766
 StepBallPhysics:
 	xor a, a ; $5767
-	ld [$c4b3], a ; $5768
+	ld [wBallBounceEvent], a ; $5768
 	ld hl, $c400 ; $576b
 	ld de, $c410 ; $576e
 	ld bc, $000c ; $5771
@@ -2957,7 +2957,7 @@ StepBallPhysics:
 	ld a, [wBallX + 1] ; $57a0
 	add a, a ; $57a3
 	rl b ; $57a4
-	ld hl, $c4b0 ; $57a6
+	ld hl, wBallCourtQuadrant ; $57a6
 	ld [hl], b ; $57a9
 	call UpdateBallAnglesAndSpeed ; $57aa
 	call ApplyBallAirDrag ; $57ad
@@ -2994,7 +2994,7 @@ Label_08_57c6:
 	and a, a ; $57e3
 	jr z, Label_08_5813 ; $57e4
 	ld a, $01 ; $57e6
-	ld [$c4b3], a ; $57e8
+	ld [wBallBounceEvent], a ; $57e8
 	ld hl, $c426 ; $57eb
 	ld a, [hl] ; $57ee
 	cpl ; $57ef
@@ -3027,19 +3027,19 @@ Label_08_5813:
 	ret ; $5813
 HandleBallNetCrossing:
 	xor a, a ; $5814
-	ld [$c4b4], a ; $5815
+	ld [wBallCrossedNetFlag], a ; $5815
 	ld hl, wBallDepth + 1 ; $5818
 	ld a, [hl] ; $581b
-	ld hl, $c417 ; $581c
+	ld hl, wBallPrevDepth + 1 ; $581c
 	xor a, [hl] ; $581f
 	bit 7, a ; $5820
 	jp z, Label_08_58a2 ; $5822
 	ld a, $01 ; $5825
-	ld [$c4b4], a ; $5827
+	ld [wBallCrossedNetFlag], a ; $5827
 	ld a, [$c7b9] ; $582a
 	and a, a ; $582d
 	jr nz, Label_08_58a2 ; $582e
-	ld hl, $c488 ; $5830
+	ld hl, wNetHeight ; $5830
 	ld a, [hl+] ; $5833
 	ld d, [hl] ; $5834
 	ld e, a ; $5835
@@ -3053,7 +3053,7 @@ HandleBallNetCrossing:
 	sound $5a ; $5841
 	call StartBounceEffect ; $5843
 	ld a, $01 ; $5846
-	ld [$c4bf], a ; $5848
+	ld [wBallHasBouncedFlag], a ; $5848
 	ld hl, $c404 ; $584b
 	ld a, [hl] ; $584e
 	cpl ; $584f
@@ -3263,7 +3263,7 @@ Label_08_5961:
 	call ApplyCourtBounceDamping ; $5976
 	call ApplyCourtBounceDamping ; $5979
 	ld a, $02 ; $597c
-	ld [$c4b3], a ; $597e
+	ld [wBallBounceEvent], a ; $597e
 Label_08_5981:
 	ld hl, wBallX ; $5981
 	ld a, [hl+] ; $5984
@@ -3297,7 +3297,7 @@ Label_08_5991:
 	call ApplyCourtBounceDamping ; $59ac
 	call ApplyCourtBounceDamping ; $59af
 	ld a, $02 ; $59b2
-	ld [$c4b3], a ; $59b4
+	ld [wBallBounceEvent], a ; $59b4
 Label_08_59b7:
 	ret ; $59b7
 ProjectWorldToScreen_08:
@@ -3786,7 +3786,7 @@ RecordDropShotWinnerStat:
 	ld hl, wCharacter1DropShotWinners ; $5cac
 	jp Label_08_5cb2 ; $5caf
 Label_08_5cb2:
-	ld a, [$c4b8] ; $5cb2
+	ld a, [wLastShotCharIndex] ; $5cb2
 	add a, a ; $5cb5
 	add a, a ; $5cb6
 	add a, a ; $5cb7
@@ -3944,7 +3944,7 @@ ResolvePointWinner:
 	jr z, Label_08_5dba ; $5da3
 	cp a, $09 ; $5da5
 	jr z, Label_08_5dbc ; $5da7
-	ld a, [$c4b8] ; $5da9
+	ld a, [wLastShotCharIndex] ; $5da9
 	and a, $01 ; $5dac
 	jr z, Label_08_5db6 ; $5dae
 	ld a, [wPointOutcomeSide] ; $5db0
@@ -3958,7 +3958,7 @@ Label_08_5dba:
 	xor a, a ; $5dba
 	ret ; $5dbb
 Label_08_5dbc:
-	ld a, [$c4af] ; $5dbc
+	ld a, [wBallTouchCharIndex] ; $5dbc
 	and a, $01 ; $5dbf
 	add a, a ; $5dc1
 	dec a ; $5dc2
@@ -4005,9 +4005,9 @@ LoadCourtSceneData:
 	sub a, l ; $5e3b
 	ld h, a ; $5e3c
 	ld a, [hl+] ; $5e3d
-	ld [$c4ac], a ; $5e3e
+	ld [wCourtSurfaceFriction], a ; $5e3e
 	ld a, [hl+] ; $5e41
-	ld [$c4ad], a ; $5e42
+	ld [wCourtSurfaceBounce], a ; $5e42
 	ld a, [hl+] ; $5e45
 	farcall LoadCourtSceneGraphics ; $5e46
 	call SnapshotCourtTilemaps ; $5e49
@@ -4043,7 +4043,7 @@ RefreshCourtScoreboard:
 	ld a, [$c4c8] ; $5e93
 	and a, $01 ; $5e96
 	ret nz ; $5e98
-	ld a, [$c4cb] ; $5e99
+	ld a, [wCourtViewFlipped] ; $5e99
 	and a, a ; $5e9c
 	jr nz, Label_08_5ec7 ; $5e9d
 	ld hl, $de94 ; $5e9f
@@ -4140,7 +4140,7 @@ Label_08_5f3c:
 	inc de ; $5f41
 	ret ; $5f42
 RefreshCourtAfterEndChange:
-	ld a, [$c4ce] ; $5f43
+	ld a, [wCourtViewFlipChanged] ; $5f43
 	and a, a ; $5f46
 	ret z ; $5f47
 	ld a, [wMatchSimFrozen] ; $5f48
@@ -4170,11 +4170,11 @@ RefreshCourtAfterEndChange:
 	ret ; $5f8b
 RunChangeoverSequence:
 	ld a, $01 ; $5f8c
-	ld [$c4c2], a ; $5f8e
+	ld [wPauseDisabled], a ; $5f8e
 	ld a, [$c4cc] ; $5f91
 	and a, a ; $5f94
 	jr nz, Label_08_5fa8 ; $5f95
-	ld a, [$c4cd] ; $5f97
+	ld a, [wChangeEndsPending] ; $5f97
 	and a, a ; $5f9a
 	jr z, Label_08_5fb4 ; $5f9b
 	call StepMatchFrame ; $5f9d
@@ -4189,7 +4189,7 @@ Label_08_5fa8:
 Label_08_5fb4:
 	xor a, a ; $5fb4
 	ld [$c4cc], a ; $5fb5
-	ld [$c4cd], a ; $5fb8
+	ld [wChangeEndsPending], a ; $5fb8
 	ret ; $5fbb
 WalkCharsToNewEnds:
 	xor a, a ; $5fbc
@@ -4229,7 +4229,7 @@ Label_08_5fde:
 	ret ; $600f
 WalkCharsOffCourt:
 	ld a, $01 ; $6010
-	ld [$c4c2], a ; $6012
+	ld [wPauseDisabled], a ; $6012
 	xor a, a ; $6015
 	ld [wOffscreenArrowsEnabled], a ; $6016
 	call GetServeCameraTarget ; $6019
@@ -4365,7 +4365,7 @@ GetCharChangeoverPosition:
 	sub a, d ; $60f8
 	ld d, a ; $60f9
 Label_08_60fa:
-	ld a, [$c4cb] ; $60fa
+	ld a, [wCourtViewFlipped] ; $60fa
 	and a, a ; $60fd
 	jr z, Label_08_6106 ; $60fe
 	xor a, a ; $6100
@@ -4453,7 +4453,7 @@ ResetCameraForServe:
 	call SnapCameraTo ; $6195
 	ret ; $6198
 GetServeCameraTarget:
-	ld a, [$c4d4] ; $6199
+	ld a, [wServingCharCourtPos] ; $6199
 	and a, $02 ; $619c
 	ld de, $fe80 ; $619e
 	jr z, Label_08_61a6 ; $61a1
@@ -4464,45 +4464,45 @@ Label_08_61a6:
 SnapCameraTo:
 	ld c, l ; $61aa
 	ld b, h ; $61ab
-	ld hl, $c440 ; $61ac
+	ld hl, wMatchCameraX ; $61ac
 	ld a, c ; $61af
 	ld [hl+], a ; $61b0
 	ld [hl], b ; $61b1
-	ld hl, $c444 ; $61b2
+	ld hl, wMatchCameraTargetX ; $61b2
 	ld a, c ; $61b5
 	ld [hl+], a ; $61b6
 	ld [hl], b ; $61b7
-	ld hl, $c442 ; $61b8
+	ld hl, wMatchCameraY ; $61b8
 	ld a, e ; $61bb
 	ld [hl+], a ; $61bc
 	ld [hl], d ; $61bd
-	ld hl, $c446 ; $61be
+	ld hl, wMatchCameraTargetY ; $61be
 	ld a, e ; $61c1
 	ld [hl+], a ; $61c2
 	ld [hl], d ; $61c3
 	xor a, a ; $61c4
-	ld [$c4c9], a ; $61c5
+	ld [wCameraFollowBall], a ; $61c5
 	ret ; $61c8
 SetCameraTarget:
 	ld c, l ; $61c9
 	ld b, h ; $61ca
-	ld hl, $c444 ; $61cb
+	ld hl, wMatchCameraTargetX ; $61cb
 	ld a, c ; $61ce
 	ld [hl+], a ; $61cf
 	ld [hl], b ; $61d0
-	ld hl, $c446 ; $61d1
+	ld hl, wMatchCameraTargetY ; $61d1
 	ld a, e ; $61d4
 	ld [hl+], a ; $61d5
 	ld [hl], d ; $61d6
 	xor a, a ; $61d7
-	ld [$c4c9], a ; $61d8
+	ld [wCameraFollowBall], a ; $61d8
 	ret ; $61db
 UpdateMatchCamera:
-	ld a, [$c4c9] ; $61dc
+	ld a, [wCameraFollowBall] ; $61dc
 	and a, a ; $61df
 	jr z, Label_08_61f4 ; $61e0
-	ld hl, $c46c ; $61e2
-	ld de, $c444 ; $61e5
+	ld hl, wBallGroundProjX ; $61e2
+	ld de, wMatchCameraTargetX ; $61e5
 	ld a, [hl+] ; $61e8
 	ld [de], a ; $61e9
 	inc de ; $61ea
@@ -4516,11 +4516,11 @@ UpdateMatchCamera:
 	ld [de], a ; $61f2
 	inc de ; $61f3
 Label_08_61f4:
-	ld hl, $c440 ; $61f4
+	ld hl, wMatchCameraX ; $61f4
 	ld a, [hl+] ; $61f7
 	ld b, [hl] ; $61f8
 	ld c, a ; $61f9
-	ld hl, $c444 ; $61fa
+	ld hl, wMatchCameraTargetX ; $61fa
 	ld a, [hl+] ; $61fd
 	ld h, [hl] ; $61fe
 	ld l, a ; $61ff
@@ -4532,11 +4532,11 @@ Label_08_61f4:
 	ld h, a ; $6205
 	ld e, l ; $6206
 	ld d, h ; $6207
-	ld hl, $c442 ; $6208
+	ld hl, wMatchCameraY ; $6208
 	ld a, [hl+] ; $620b
 	ld b, [hl] ; $620c
 	ld c, a ; $620d
-	ld hl, $c446 ; $620e
+	ld hl, wMatchCameraTargetY ; $620e
 	ld a, [hl+] ; $6211
 	ld h, [hl] ; $6212
 	ld l, a ; $6213
@@ -4553,25 +4553,25 @@ Label_08_61f4:
 	call VectorFromLengthAndAngleRaw ; $6222
 	ld c, l ; $6225
 	ld b, h ; $6226
-	ld hl, $c440 ; $6227
+	ld hl, wMatchCameraX ; $6227
 	ld a, [hl] ; $622a
 	add a, c ; $622b
 	ld [hl+], a ; $622c
 	ld a, [hl] ; $622d
 	adc a, b ; $622e
 	ld [hl+], a ; $622f
-	ld hl, $c442 ; $6230
+	ld hl, wMatchCameraY ; $6230
 	ld a, [hl] ; $6233
 	add a, e ; $6234
 	ld [hl+], a ; $6235
 	ld a, [hl] ; $6236
 	adc a, d ; $6237
 	ld [hl+], a ; $6238
-	ld hl, $c440 ; $6239
+	ld hl, wMatchCameraX ; $6239
 	ld a, [hl+] ; $623c
 	ld b, [hl] ; $623d
 	ld c, a ; $623e
-	ld hl, $c444 ; $623f
+	ld hl, wMatchCameraTargetX ; $623f
 	ld a, [hl+] ; $6242
 	ld h, [hl] ; $6243
 	ld l, a ; $6244
@@ -4585,20 +4585,20 @@ Label_08_61f4:
 	xor a, h ; $624c
 	bit 7, a ; $624d
 	jr z, Label_08_625d ; $624f
-	ld hl, $c444 ; $6251
+	ld hl, wMatchCameraTargetX ; $6251
 	ld a, [hl+] ; $6254
 	ld d, [hl] ; $6255
 	ld e, a ; $6256
-	ld hl, $c440 ; $6257
+	ld hl, wMatchCameraX ; $6257
 	ld a, e ; $625a
 	ld [hl+], a ; $625b
 	ld [hl], d ; $625c
 Label_08_625d:
-	ld hl, $c442 ; $625d
+	ld hl, wMatchCameraY ; $625d
 	ld a, [hl+] ; $6260
 	ld b, [hl] ; $6261
 	ld c, a ; $6262
-	ld hl, $c446 ; $6263
+	ld hl, wMatchCameraTargetY ; $6263
 	ld a, [hl+] ; $6266
 	ld h, [hl] ; $6267
 	ld l, a ; $6268
@@ -4612,16 +4612,16 @@ Label_08_625d:
 	xor a, h ; $6270
 	bit 7, a ; $6271
 	jr z, Label_08_6281 ; $6273
-	ld hl, $c446 ; $6275
+	ld hl, wMatchCameraTargetY ; $6275
 	ld a, [hl+] ; $6278
 	ld d, [hl] ; $6279
 	ld e, a ; $627a
-	ld hl, $c442 ; $627b
+	ld hl, wMatchCameraY ; $627b
 	ld a, e ; $627e
 	ld [hl+], a ; $627f
 	ld [hl], d ; $6280
 Label_08_6281:
-	ld hl, $c440 ; $6281
+	ld hl, wMatchCameraX ; $6281
 	ld a, [hl+] ; $6284
 	ld h, [hl] ; $6285
 	ld l, a ; $6286
@@ -4667,7 +4667,7 @@ Label_08_62a5:
 	ld a, e ; $62c1
 	ld [hl+], a ; $62c2
 	ld [hl], d ; $62c3
-	ld hl, $c442 ; $62c4
+	ld hl, wMatchCameraY ; $62c4
 	ld a, [hl+] ; $62c7
 	ld h, [hl] ; $62c8
 	ld l, a ; $62c9
@@ -5237,7 +5237,7 @@ DidBallCrossGate:
 	ld a, [hl+] ; $6770
 	ld b, [hl] ; $6771
 	ld c, a ; $6772
-	ld hl, $c416 ; $6773
+	ld hl, wBallPrevDepth ; $6773
 	ld a, [hl+] ; $6776
 	ld d, [hl] ; $6777
 	ld e, a ; $6778
@@ -6225,7 +6225,7 @@ Label_08_6e5e:
 UpdateCharBallGeometry:
 	ld de, wBallX ; $6e64
 	ld hl, wCharPosX + 1 ; $6e67
-	ld bc, $c448 ; $6e6a
+	ld bc, wBallRelCharX ; $6e6a
 	ld a, [de] ; $6e6d
 	sub a, [hl] ; $6e6e
 	ld [bc], a ; $6e6f
@@ -6298,7 +6298,7 @@ CheckCharBallContact:
 	ld a, [wPointOutcome] ; $6ed0
 	and a, a ; $6ed3
 	ret nz ; $6ed4
-	ld hl, $c44a ; $6ed5
+	ld hl, wBallRelCharDepth ; $6ed5
 	ld a, [hl+] ; $6ed8
 	ld h, [hl] ; $6ed9
 	ld l, a ; $6eda
@@ -6320,7 +6320,7 @@ Label_08_6ee5:
 	ld l, a ; $6eef
 	ld e, l ; $6ef0
 	ld d, h ; $6ef1
-	ld hl, $c448 ; $6ef2
+	ld hl, wBallRelCharX ; $6ef2
 	ld a, [hl+] ; $6ef5
 	ld h, [hl] ; $6ef6
 	ld l, a ; $6ef7
@@ -6347,7 +6347,7 @@ Label_08_6f02:
 	ld l, a ; $6f0f
 	ld e, l ; $6f10
 	ld d, h ; $6f11
-	ld hl, $c44c ; $6f12
+	ld hl, wBallRelCharHeight ; $6f12
 	ld a, [hl+] ; $6f15
 	ld h, [hl] ; $6f16
 	ld l, a ; $6f17
@@ -6370,9 +6370,9 @@ Label_08_6f22:
 	ld hl, $df50 ; $6f29
 	set 2, [hl] ; $6f2c
 	ld a, $01 ; $6f2e
-	ld [$c4ae], a ; $6f30
+	ld [wBallTouchCharFlag], a ; $6f30
 	ld a, [wCharIndex] ; $6f33
-	ld [$c4af], a ; $6f36
+	ld [wBallTouchCharIndex], a ; $6f36
 	ld hl, wCharFlags ; $6f39
 	set 0, [hl] ; $6f3c
 	res 5, [hl] ; $6f3e
@@ -6439,7 +6439,7 @@ Label_08_6f22:
 	ld [hl], d ; $6fa5
 	ret ; $6fa6
 CheckBallContactWindow:
-	ld hl, $c44a ; $6fa7
+	ld hl, wBallRelCharDepth ; $6fa7
 	ld a, [hl+] ; $6faa
 	ld h, [hl] ; $6fab
 	ld l, a ; $6fac
@@ -6485,7 +6485,7 @@ Label_08_6fda:
 	cp a, $0a ; $6fe9
 	jr z, Label_08_6fed ; $6feb
 Label_08_6fed:
-	ld hl, $c448 ; $6fed
+	ld hl, wBallRelCharX ; $6fed
 	ld a, [hl+] ; $6ff0
 	ld h, [hl] ; $6ff1
 	ld l, a ; $6ff2
@@ -6512,7 +6512,7 @@ Label_08_6ffd:
 	add hl, hl ; $700a
 	ld e, l ; $700b
 	ld d, h ; $700c
-	ld hl, $c44c ; $700d
+	ld hl, wBallRelCharHeight ; $700d
 	ld a, [hl+] ; $7010
 	ld h, [hl] ; $7011
 	ld l, a ; $7012
@@ -6536,7 +6536,7 @@ Label_08_701d:
 	set 1, [hl] ; $7027
 	ret ; $7029
 CheckBallInSwingRange:
-	ld hl, $c44a ; $702a
+	ld hl, wBallRelCharDepth ; $702a
 	ld a, [hl+] ; $702d
 	ld h, [hl] ; $702e
 	ld l, a ; $702f
@@ -6563,7 +6563,7 @@ Label_08_703a:
 	add hl, de ; $704b
 	ld e, l ; $704c
 	ld d, h ; $704d
-	ld hl, $c448 ; $704e
+	ld hl, wBallRelCharX ; $704e
 	ld a, [hl+] ; $7051
 	ld h, [hl] ; $7052
 	ld l, a ; $7053
@@ -6638,23 +6638,23 @@ ComputeBallEtaToChar:
 	ld a, [hl+] ; $70c7
 	ld d, [hl] ; $70c8
 	ld e, a ; $70c9
-	ld hl, $c44b ; $70ca
+	ld hl, wBallRelCharDepth + 1 ; $70ca
 	bit 7, [hl] ; $70cd
 	jr nz, Label_08_70e0 ; $70cf
 	ld l, $00 ; $70d1
-	ld a, [$c44a] ; $70d3
+	ld a, [wBallRelCharDepth] ; $70d3
 	ld h, a ; $70d6
-	ld a, [$c44b] ; $70d7
+	ld a, [wBallRelCharDepth + 1] ; $70d7
 	call DivAHLByDE ; $70da
 	ld e, l ; $70dd
 	ld d, h ; $70de
 	ret ; $70df
 Label_08_70e0:
 	ld l, $ff ; $70e0
-	ld a, [$c44a] ; $70e2
+	ld a, [wBallRelCharDepth] ; $70e2
 	cpl ; $70e5
 	ld h, a ; $70e6
-	ld a, [$c44b] ; $70e7
+	ld a, [wBallRelCharDepth + 1] ; $70e7
 	cpl ; $70ea
 	call DivAHLByDE ; $70eb
 	ld e, l ; $70ee
@@ -6663,11 +6663,11 @@ Label_08_70e0:
 	call ComputeBallEtaToChar ; $70f1
 	ret ; $70f4
 PredictBallLateralOffset:
-	ld hl, $c40e ; $70f5
+	ld hl, wBallHeadingAngle ; $70f5
 	ld a, [hl+] ; $70f8
 	ld b, [hl] ; $70f9
 	ld c, a ; $70fa
-	ld hl, $c44a ; $70fb
+	ld hl, wBallRelCharDepth ; $70fb
 	ld a, [hl+] ; $70fe
 	ld h, [hl] ; $70ff
 	ld l, a ; $7100
@@ -6678,7 +6678,7 @@ PredictBallLateralOffset:
 	sub a, h ; $7105
 	ld h, a ; $7106
 	call MulHLByTangent ; $7107
-	ld hl, $c448 ; $710a
+	ld hl, wBallRelCharX ; $710a
 	ld a, [hl+] ; $710d
 	ld h, [hl] ; $710e
 	ld l, a ; $710f
@@ -7994,11 +7994,11 @@ AiSteerTowardTarget:
 	ld [$df1f], a ; $7940
 	ret ; $7943
 AiSteerTowardBall:
-	ld hl, $c448 ; $7944
+	ld hl, wBallRelCharX ; $7944
 	ld a, [hl+] ; $7947
 	ld d, [hl] ; $7948
 	ld e, a ; $7949
-	ld hl, $c44a ; $794a
+	ld hl, wBallRelCharDepth ; $794a
 	ld a, [hl+] ; $794d
 	ld h, [hl] ; $794e
 	ld l, a ; $794f
@@ -8084,7 +8084,7 @@ AiIsIncomingLobShot:
 	ld a, [wCurrentShotType] ; $79e0
 	cp a, SHOTTYPE_LOB ; $79e3
 	jr z, Label_08_79ef ; $79e5
-	ld a, [$c4c6] ; $79e7
+	ld a, [wFallbackTrajectoryFlag] ; $79e7
 	and a, a ; $79ea
 	jr nz, Label_08_79ef ; $79eb
 	xor a, a ; $79ed
@@ -8317,7 +8317,7 @@ AiPickServeButtons:
 	; $7b73, 8 bytes (bytes:8)
 	db $10, $10, $10, $20, $20, $30, $30, $30 ; 0x00
 AiPickShotButtons:
-	ld a, [$c4da] ; $7b7b
+	ld a, [wLandingMarkerActive] ; $7b7b
 	and a, a ; $7b7e
 	jr z, Label_08_7b92 ; $7b7f
 	ld b, $30 ; $7b81
@@ -8332,7 +8332,7 @@ Label_08_7b92:
 	call AdvanceMatchRng ; $7b92
 	and a, $01 ; $7b95
 	jr nz, Label_08_7c00 ; $7b97
-	ld hl, $c44a ; $7b99
+	ld hl, wBallRelCharDepth ; $7b99
 	ld a, [hl+] ; $7b9c
 	ld h, [hl] ; $7b9d
 	ld l, a ; $7b9e
@@ -8623,9 +8623,9 @@ Label_08_7d69:
 	jp nz, AiRushToBallLanding ; $7d6d
 	jp AiMoveBehindBallLanding ; $7d70
 AiTrackBallPhase:
-	ld a, [$c4bf] ; $7d73
+	ld a, [wBallHasBouncedFlag] ; $7d73
 	ld b, a ; $7d76
-	ld a, [$c4b4] ; $7d77
+	ld a, [wBallCrossedNetFlag] ; $7d77
 	and a, b ; $7d7a
 	jr nz, Label_08_7d93 ; $7d7b
 	ld a, [$df5a] ; $7d7d

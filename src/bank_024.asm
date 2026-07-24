@@ -36,9 +36,9 @@ BallTrajEntryPtr4_24:
 	pop de ; $4028
 	add hl, de ; $4029
 	ret ; $402a
-	ld a, [$c48e] ; $402b
+	ld a, [wShotTrajRowMin] ; $402b
 	ld d, a ; $402e
-	ld a, [$c48f] ; $402f
+	ld a, [wShotTrajRowMax] ; $402f
 	ld e, a ; $4032
 Label_24_4033:
 	push hl ; $4033
@@ -62,9 +62,9 @@ Label_24_4047:
 Label_24_4049:
 	ret ; $4049
 SeekBallTrajEntry4_24:
-	ld a, [$c48e] ; $404a
+	ld a, [wShotTrajRowMin] ; $404a
 	ld d, a ; $404d
-	ld a, [$c48f] ; $404e
+	ld a, [wShotTrajRowMax] ; $404e
 	ld e, a ; $4051
 Label_24_4052:
 	push hl ; $4052
@@ -101,7 +101,7 @@ SetBallVelocityFromEntry6_24:
 	ld e, a ; $4073
 	ld a, [hl+] ; $4074
 	ld d, a ; $4075
-	ld a, [$c4a7] ; $4076
+	ld a, [wShotAimMirror] ; $4076
 	and a, a ; $4079
 	jr z, Label_24_4082 ; $407a
 	xor a, a ; $407c
@@ -147,7 +147,7 @@ SetBallVelocityFromEntry4_24:
 	ld a, c ; $40ac
 	ld [hl+], a ; $40ad
 	ld [hl], b ; $40ae
-	ld hl, $c434 ; $40af
+	ld hl, wShotAimDeltaX ; $40af
 	ld a, [hl+] ; $40b2
 	ld h, [hl] ; $40b3
 	ld l, a ; $40b4
@@ -178,7 +178,7 @@ Label_24_40bf:
 	ld e, a ; $40d0
 	ld a, [hl+] ; $40d1
 	ld d, a ; $40d2
-	ld a, [$c4a7] ; $40d3
+	ld a, [wShotAimMirror] ; $40d3
 	and a, a ; $40d6
 	jr z, Label_24_40df ; $40d7
 	xor a, a ; $40d9
@@ -227,18 +227,18 @@ ApplyBallTrajectoryCapped_24:
 	ld a, [hl+] ; $416d
 	ld b, [hl] ; $416e
 	ld c, a ; $416f
-	ld hl, $c436 ; $4170
+	ld hl, wShotAimDeltaDepth ; $4170
 	ld a, [hl+] ; $4173
 	ld d, [hl] ; $4174
 	ld e, a ; $4175
-	ld hl, $c434 ; $4176
+	ld hl, wShotAimDeltaX ; $4176
 	ld a, [hl+] ; $4179
 	ld h, [hl] ; $417a
 	ld l, a ; $417b
 	call VectorLengthFromAngle ; $417c
 	ld e, l ; $417f
 	ld d, h ; $4180
-	ld hl, $c48c ; $4181
+	ld hl, wShotDistMax ; $4181
 	ld a, [hl+] ; $4184
 	ld h, [hl] ; $4185
 	ld l, a ; $4186
@@ -249,7 +249,7 @@ ApplyBallTrajectoryCapped_24:
 	sbc a, d ; $418b
 	ld h, a ; $418c
 	jr nc, Label_24_4195 ; $418d
-	ld hl, $c48c ; $418f
+	ld hl, wShotDistMax ; $418f
 	ld a, [hl+] ; $4192
 	ld d, [hl] ; $4193
 	ld e, a ; $4194
@@ -268,9 +268,9 @@ ApplyBallTrajectory_24:
 	sbc a, a ; $41a5
 	sub a, b ; $41a6
 	ld b, a ; $41a7
-	ld a, [$c48a] ; $41a8
+	ld a, [wShotDistMin] ; $41a8
 	ld e, a ; $41ab
-	ld a, [$c48b] ; $41ac
+	ld a, [wShotDistMin + 1] ; $41ac
 	ld d, a ; $41af
 	call BallTrajEntryPtr4_24 ; $41b0
 	push hl ; $41b3
@@ -300,9 +300,9 @@ ApplyBallTrajectory_24:
 	sbc a, a ; $41d8
 	sub a, b ; $41d9
 	ld b, a ; $41da
-	ld a, [$c48a] ; $41db
+	ld a, [wShotDistMin] ; $41db
 	ld e, a ; $41de
-	ld a, [$c48b] ; $41df
+	ld a, [wShotDistMin + 1] ; $41df
 	ld d, a ; $41e2
 	call BallTrajEntryPtr4_24 ; $41e3
 	call SeekBallTrajEntry4_24 ; $41e6
@@ -573,11 +573,11 @@ BallPosDataFallback_24:
 	INCBIN "data/bank_024/d_51fd.bin" ; $51fd, 1536 bytes
 ApplyFallbackBallTrajectory_24:
 	ld a, $01 ; $57fd
-	ld [$c4c6], a ; $57ff
+	ld [wFallbackTrajectoryFlag], a ; $57ff
 	xor a, a ; $5802
 	ld [wBallTrailColor], a ; $5803
 	xor a, a ; $5806
-	ld hl, $c41c ; $5807
+	ld hl, wBallTopspin ; $5807
 	ld [hl+], a ; $580a
 	ld [hl+], a ; $580b
 	ld [hl+], a ; $580c
@@ -659,7 +659,7 @@ BallPosHeightOffsetsNeutral_24:
 ShotBallPathSmash:
 	farcall ComputeShotPlacement ; $6696
 	push bc ; $6699
-	ld hl, $c48c ; $669a
+	ld hl, wShotDistMax ; $669a
 	ld a, [hl+] ; $669d
 	ld d, [hl] ; $669e
 	ld e, a ; $669f
@@ -714,7 +714,7 @@ Label_24_66b0:
 	ld e, a ; $66df
 	pop hl ; $66e0
 	farcall SetBallVelocityPolar ; $66e1
-	ld hl, $c48c ; $66e4
+	ld hl, wShotDistMax ; $66e4
 	ld a, [hl+] ; $66e7
 	ld d, [hl] ; $66e8
 	ld e, a ; $66e9

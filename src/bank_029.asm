@@ -19,9 +19,9 @@ BallTrajEntryPtr6_29:
 	ret ; $4011
 	INCBIN "data/bank_029/d_4012.bin" ; $4012, 13 bytes
 SeekBallTrajEntry6_29:
-	ld a, [$c48e] ; $401f
+	ld a, [wShotTrajRowMin] ; $401f
 	ld d, a ; $4022
-	ld a, [$c48f] ; $4023
+	ld a, [wShotTrajRowMax] ; $4023
 	ld e, a ; $4026
 Label_29_4027:
 	push hl ; $4027
@@ -59,7 +59,7 @@ SetBallVelocityFromEntry6_29:
 	ld e, a ; $4067
 	ld a, [hl+] ; $4068
 	ld d, a ; $4069
-	ld a, [$c4a7] ; $406a
+	ld a, [wShotAimMirror] ; $406a
 	and a, a ; $406d
 	jr z, Label_29_4076 ; $406e
 	xor a, a ; $4070
@@ -90,7 +90,7 @@ SetBallTargetByPrediction_29:
 	ld a, c ; $40a0
 	ld [hl+], a ; $40a1
 	ld [hl], b ; $40a2
-	ld hl, $c434 ; $40a3
+	ld hl, wShotAimDeltaX ; $40a3
 	ld a, [hl+] ; $40a6
 	ld h, [hl] ; $40a7
 	ld l, a ; $40a8
@@ -121,7 +121,7 @@ Label_29_40b3:
 	ld e, a ; $40c4
 	ld a, [hl+] ; $40c5
 	ld d, a ; $40c6
-	ld a, [$c4a7] ; $40c7
+	ld a, [wShotAimMirror] ; $40c7
 	and a, a ; $40ca
 	jr z, Label_29_40d3 ; $40cb
 	xor a, a ; $40cd
@@ -169,9 +169,9 @@ Label_29_40f0:
 	sbc a, a ; $4105
 	sub a, b ; $4106
 	ld b, a ; $4107
-	ld a, [$c48a] ; $4108
+	ld a, [wShotDistMin] ; $4108
 	ld e, a ; $410b
-	ld a, [$c48b] ; $410c
+	ld a, [wShotDistMin + 1] ; $410c
 	ld d, a ; $410f
 	call BallTrajEntryPtr6_29 ; $4110
 	push hl ; $4113

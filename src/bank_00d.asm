@@ -146,7 +146,7 @@ InitMinigameScore:
 	push af ; $40fd
 	wram_bank $07 ; $40fe
 	ld hl, $de00 ; $4104
-	ld de, $c4ec ; $4107
+	ld de, wMinigameHighScore ; $4107
 	ld a, [hl+] ; $410a
 	ld [de], a ; $410b
 	inc de ; $410c
@@ -290,7 +290,7 @@ IsMinigameScoreLimitReached:
 	ld a, h ; $41f8
 	or a, l ; $41f9
 	jr z, Label_0d_420e ; $41fa
-	ld hl, $c4ec ; $41fc
+	ld hl, wMinigameHighScore ; $41fc
 	ld a, [hl+] ; $41ff
 	ld h, [hl] ; $4200
 	ld l, a ; $4201
@@ -749,12 +749,12 @@ StartMinigameMatch:
 	ld de, $fe00 ; $467e
 	call SnapCameraTo_0d ; $4681
 	ld de, $fb20 ; $4684
-	ld hl, $c486 ; $4687
+	ld hl, wCourtLimitDepth ; $4687
 	ld a, e ; $468a
 	ld [hl+], a ; $468b
 	ld [hl], d ; $468c
 	ld de, $fe50 ; $468d
-	ld hl, $c484 ; $4690
+	ld hl, wCourtLimitX ; $4690
 	ld a, e ; $4693
 	ld [hl+], a ; $4694
 	ld [hl], d ; $4695
@@ -901,7 +901,7 @@ Label_0d_479b:
 	ret ; $47bd
 KeepMinigameCameraFixed:
 	xor a, a ; $47be
-	ld [$c4c9], a ; $47bf
+	ld [wCameraFollowBall], a ; $47bf
 	ret ; $47c2
 CheckMinigameStartBannerTrigger:
 	ld a, [wPointOutcome] ; $47c3
@@ -910,7 +910,7 @@ CheckMinigameStartBannerTrigger:
 	ld a, [wRallyLength] ; $47c9
 	cp a, $04 ; $47cc
 	jr nz, Label_0d_47e1 ; $47ce
-	ld a, [$c4b2] ; $47d0
+	ld a, [wBallBounceCount] ; $47d0
 	cp a, $01 ; $47d3
 	jr nz, Label_0d_47e1 ; $47d5
 	ld a, $06 ; $47d7
@@ -940,7 +940,7 @@ LaunchBall:
 	ld a, $02 ; $4808
 	ld [wRallyLength], a ; $480a
 	ld a, $02 ; $480d
-	ld [$c4b0], a ; $480f
+	ld [wBallCourtQuadrant], a ; $480f
 	ldh a, [hWramBank] ; $4812
 	push af ; $4814
 	wram_bank $05 ; $4815
@@ -1048,7 +1048,7 @@ ApplyMinigameCharTargetFromTable:
 PlayMinigameCountdown:
 	wram_bank $04 ; $48ce
 	xor a, a ; $48d4
-	ld [$c4c2], a ; $48d5
+	ld [wPauseDisabled], a ; $48d5
 	ld a, [wCurrentBGM] ; $48d8
 	push af ; $48db
 	sound $00 ; $48dc
@@ -1113,24 +1113,24 @@ GetMinigameCharCoordsEntry:
 SnapCameraTo_0d:
 	ld c, l ; $493a
 	ld b, h ; $493b
-	ld hl, $c440 ; $493c
+	ld hl, wMatchCameraX ; $493c
 	ld a, c ; $493f
 	ld [hl+], a ; $4940
 	ld [hl], b ; $4941
-	ld hl, $c444 ; $4942
+	ld hl, wMatchCameraTargetX ; $4942
 	ld a, c ; $4945
 	ld [hl+], a ; $4946
 	ld [hl], b ; $4947
-	ld hl, $c442 ; $4948
+	ld hl, wMatchCameraY ; $4948
 	ld a, e ; $494b
 	ld [hl+], a ; $494c
 	ld [hl], d ; $494d
-	ld hl, $c446 ; $494e
+	ld hl, wMatchCameraTargetY ; $494e
 	ld a, e ; $4951
 	ld [hl+], a ; $4952
 	ld [hl], d ; $4953
 	xor a, a ; $4954
-	ld [$c4c9], a ; $4955
+	ld [wCameraFollowBall], a ; $4955
 	ret ; $4958
 	INCBIN "data/bank_00d/d_4959.bin" ; $4959, 16 bytes
 	ld a, $01 ; $4969
@@ -1372,7 +1372,7 @@ StartMinigameSoloPoint:
 	xor a, a ; $4b04
 	ld [wStandingShadowsEnabled], a ; $4b05
 	ld de, $0000 ; $4b08
-	ld hl, $c488 ; $4b0b
+	ld hl, wNetHeight ; $4b0b
 	ld a, e ; $4b0e
 	ld [hl+], a ; $4b0f
 	ld [hl], d ; $4b10
@@ -1418,11 +1418,11 @@ AwardMinigamePointAndReflectBall:
 	ld [wPointOutcome], a ; $4b6d
 ReflectBallVelocity:
 	ld a, $01 ; $4b70
-	ld [$c4c9], a ; $4b72
+	ld [wCameraFollowBall], a ; $4b72
 	farcall StartBounceEffect ; $4b75
 	xor a, a ; $4b78
-	ld [$c4b2], a ; $4b79
-	ld hl, $c4be ; $4b7c
+	ld [wBallBounceCount], a ; $4b79
+	ld hl, wBallQuadrantAtHit ; $4b7c
 	ld a, [hl] ; $4b7f
 	xor a, $02 ; $4b80
 	ld [hl], a ; $4b82
@@ -1473,17 +1473,17 @@ StubNop_0d_4bc7:
 	ret ; $4bc7
 Func_0d_4bc8:
 	xor a, a ; $4bc8
-	ld [$c4da], a ; $4bc9
+	ld [wLandingMarkerActive], a ; $4bc9
 	ld a, [wRallyLength] ; $4bcc
 	cp a, $01 ; $4bcf
 	ret nz ; $4bd1
 	ld de, $fb20 ; $4bd2
-	ld hl, $c486 ; $4bd5
+	ld hl, wCourtLimitDepth ; $4bd5
 	ld a, e ; $4bd8
 	ld [hl+], a ; $4bd9
 	ld [hl], d ; $4bda
 	ld de, $fe50 ; $4bdb
-	ld hl, $c484 ; $4bde
+	ld hl, wCourtLimitX ; $4bde
 	ld a, e ; $4be1
 	ld [hl+], a ; $4be2
 	ld [hl], d ; $4be3
@@ -1843,7 +1843,7 @@ Label_0d_4e41:
 	ret ; $4e59
 	INCBIN "data/bank_00d/d_4e5a.bin" ; $4e5a, 38 bytes
 CheckBallLandedOut:
-	ld a, [$c4b8] ; $4e80
+	ld a, [wLastShotCharIndex] ; $4e80
 	and a, $01 ; $4e83
 	ret nz ; $4e85
 	farcall IsBallInTargetZone ; $4e86
@@ -2184,7 +2184,7 @@ Label_0d_528e:
 	call DrawTargetReticleSprite ; $528e
 	ret ; $5291
 IsBallInHitZone:
-	ld a, [$c4b8] ; $5292
+	ld a, [wLastShotCharIndex] ; $5292
 	and a, $01 ; $5295
 	jp nz, Label_0d_52f7 ; $5297
 	ld hl, $dc76 ; $529a
@@ -2558,7 +2558,7 @@ StubNop_0d_56ee:
 StubNop_0d_56ef:
 	ret ; $56ef
 Func_0d_56f0:
-	ld a, [$c4b8] ; $56f0
+	ld a, [wLastShotCharIndex] ; $56f0
 	and a, $01 ; $56f3
 	jr nz, Label_0d_56ff ; $56f5
 	ld a, [$c788] ; $56f7

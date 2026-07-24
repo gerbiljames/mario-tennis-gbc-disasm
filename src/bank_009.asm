@@ -144,7 +144,7 @@ Label_09_4111:
 Func_09_412a:
 	wram_bank $04 ; $412a
 	call ClearAllObjSlots ; $4130
-	ld a, [$c494] ; $4133
+	ld a, [wScoreboardLayout] ; $4133
 	cp a, $03 ; $4136
 	jr z, Label_09_4184 ; $4138
 	ld a, [wCurrentServingPlayer] ; $413a
@@ -226,16 +226,16 @@ DismissGameResultObj:
 SpawnServeIndicatorObjs:
 	call ClearAllObjSlots ; $4242
 	call SpawnServeIndicatorSideObj ; $4245
-	ld a, [$c4d4] ; $4248
+	ld a, [wServingCharCourtPos] ; $4248
 	ld hl, $4298 ; $424b
 	ld bc, $dd80 ; $424e
 	call LoadObjTemplate_09 ; $4251
 	call Func_09_7103 ; $4254
 	call Func_09_45bc ; $4257
-	ld a, [$c494] ; $425a
+	ld a, [wScoreboardLayout] ; $425a
 	cp a, $03 ; $425d
 	jr z, Label_09_4274 ; $425f
-	ld a, [$c4d4] ; $4261
+	ld a, [wServingCharCourtPos] ; $4261
 	ld hl, $4298 ; $4264
 	ld bc, $dd90 ; $4267
 	call LoadObjTemplate_09 ; $426a
@@ -243,7 +243,7 @@ SpawnServeIndicatorObjs:
 	call Func_09_45bc ; $4270
 	ret ; $4273
 Label_09_4274:
-	ld a, [$c4d4] ; $4274
+	ld a, [wServingCharCourtPos] ; $4274
 	and a, $02 ; $4277
 	ret nz ; $4279
 	ld hl, $dd87 ; $427a
@@ -284,7 +284,7 @@ DismissWinLoseResultObj:
 	ret ; $42ff
 	INCBIN "data/bank_009/d_4300.bin" ; $4300, 16 bytes
 SpawnServeIndicatorSideObj:
-	ld a, [$c4d4] ; $4310
+	ld a, [wServingCharCourtPos] ; $4310
 	ld hl, $4327 ; $4313
 	ld bc, $ddc0 ; $4316
 	call LoadObjTemplate_09 ; $4319
@@ -802,7 +802,7 @@ LoadServeGfx:
 	ld a, [wServeFaultFlag] ; $6c4e
 	and a, $01 ; $6c51
 	ld b, a ; $6c53
-	ld a, [$c4d4] ; $6c54
+	ld a, [wServingCharCourtPos] ; $6c54
 	and a, $02 ; $6c57
 	or a, b ; $6c59
 	add a, a ; $6c5a

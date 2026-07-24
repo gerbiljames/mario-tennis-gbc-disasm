@@ -31,9 +31,9 @@ BallTrajEntryPtr4_2a:
 	add hl, de ; $401d
 	ret ; $401e
 SeekBallTrajEntry6_2a:
-	ld a, [$c48e] ; $401f
+	ld a, [wShotTrajRowMin] ; $401f
 	ld d, a ; $4022
-	ld a, [$c48f] ; $4023
+	ld a, [wShotTrajRowMax] ; $4023
 	ld e, a ; $4026
 Label_2a_4027:
 	push hl ; $4027
@@ -57,9 +57,9 @@ Label_2a_403b:
 Label_2a_403d:
 	ret ; $403d
 SeekBallTrajEntry4_2a:
-	ld a, [$c48e] ; $403e
+	ld a, [wShotTrajRowMin] ; $403e
 	ld d, a ; $4041
-	ld a, [$c48f] ; $4042
+	ld a, [wShotTrajRowMax] ; $4042
 	ld e, a ; $4045
 Label_2a_4046:
 	push hl ; $4046
@@ -96,7 +96,7 @@ SetBallVelocityFromEntry6_2a:
 	ld e, a ; $4067
 	ld a, [hl+] ; $4068
 	ld d, a ; $4069
-	ld a, [$c4a7] ; $406a
+	ld a, [wShotAimMirror] ; $406a
 	and a, a ; $406d
 	jr z, Label_2a_4076 ; $406e
 	xor a, a ; $4070
@@ -143,7 +143,7 @@ SetBallTargetByPrediction_2a:
 	ld a, c ; $40a0
 	ld [hl+], a ; $40a1
 	ld [hl], b ; $40a2
-	ld hl, $c434 ; $40a3
+	ld hl, wShotAimDeltaX ; $40a3
 	ld a, [hl+] ; $40a6
 	ld h, [hl] ; $40a7
 	ld l, a ; $40a8
@@ -174,7 +174,7 @@ Label_2a_40b3:
 	ld e, a ; $40c4
 	ld a, [hl+] ; $40c5
 	ld d, a ; $40c6
-	ld a, [$c4a7] ; $40c7
+	ld a, [wShotAimMirror] ; $40c7
 	and a, a ; $40ca
 	jr z, Label_2a_40d3 ; $40cb
 	xor a, a ; $40cd
@@ -222,9 +222,9 @@ Label_2a_40f0:
 	sbc a, a ; $4105
 	sub a, b ; $4106
 	ld b, a ; $4107
-	ld a, [$c48a] ; $4108
+	ld a, [wShotDistMin] ; $4108
 	ld e, a ; $410b
-	ld a, [$c48b] ; $410c
+	ld a, [wShotDistMin + 1] ; $410c
 	ld d, a ; $410f
 	call BallTrajEntryPtr6_2a ; $4110
 	push hl ; $4113
@@ -254,9 +254,9 @@ Label_2a_40f0:
 	sbc a, a ; $4138
 	sub a, b ; $4139
 	ld b, a ; $413a
-	ld a, [$c48a] ; $413b
+	ld a, [wShotDistMin] ; $413b
 	ld e, a ; $413e
-	ld a, [$c48b] ; $413f
+	ld a, [wShotDistMin + 1] ; $413f
 	ld d, a ; $4142
 	call BallTrajEntryPtr6_2a ; $4143
 	call SeekBallTrajEntry6_2a ; $4146
@@ -276,18 +276,18 @@ Label_2a_40f0:
 	ld a, [hl+] ; $4161
 	ld b, [hl] ; $4162
 	ld c, a ; $4163
-	ld hl, $c436 ; $4164
+	ld hl, wShotAimDeltaDepth ; $4164
 	ld a, [hl+] ; $4167
 	ld d, [hl] ; $4168
 	ld e, a ; $4169
-	ld hl, $c434 ; $416a
+	ld hl, wShotAimDeltaX ; $416a
 	ld a, [hl+] ; $416d
 	ld h, [hl] ; $416e
 	ld l, a ; $416f
 	call VectorLengthFromAngle ; $4170
 	ld e, l ; $4173
 	ld d, h ; $4174
-	ld hl, $c48c ; $4175
+	ld hl, wShotDistMax ; $4175
 	ld a, [hl+] ; $4178
 	ld h, [hl] ; $4179
 	ld l, a ; $417a
@@ -298,7 +298,7 @@ Label_2a_40f0:
 	sbc a, d ; $417f
 	ld h, a ; $4180
 	jr nc, Label_2a_4189 ; $4181
-	ld hl, $c48c ; $4183
+	ld hl, wShotDistMax ; $4183
 	ld a, [hl+] ; $4186
 	ld d, [hl] ; $4187
 	ld e, a ; $4188
@@ -316,9 +316,9 @@ Label_2a_4189:
 	sbc a, a ; $4199
 	sub a, b ; $419a
 	ld b, a ; $419b
-	ld a, [$c48a] ; $419c
+	ld a, [wShotDistMin] ; $419c
 	ld e, a ; $419f
-	ld a, [$c48b] ; $41a0
+	ld a, [wShotDistMin + 1] ; $41a0
 	ld d, a ; $41a3
 	call BallTrajEntryPtr4_2a ; $41a4
 	push hl ; $41a7
@@ -348,9 +348,9 @@ Label_2a_4189:
 	sbc a, a ; $41cc
 	sub a, b ; $41cd
 	ld b, a ; $41ce
-	ld a, [$c48a] ; $41cf
+	ld a, [wShotDistMin] ; $41cf
 	ld e, a ; $41d2
-	ld a, [$c48b] ; $41d3
+	ld a, [wShotDistMin + 1] ; $41d3
 	ld d, a ; $41d6
 	call BallTrajEntryPtr4_2a ; $41d7
 	call SeekBallTrajEntry4_2a ; $41da
