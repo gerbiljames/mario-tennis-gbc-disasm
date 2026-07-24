@@ -403,17 +403,17 @@ Label_0b_43cf:
 	ld a, $0f ; $43d7
 	farcall StepMatchFrames ; $43d9
 Label_0b_43dc:
-	farcall Func_09_412a ; $43dc
+	farcall SpawnGameScoreDisplayObjs ; $43dc
 	ld a, $0a ; $43df
 	farcall StepMatchFrames ; $43e1
 	ld a, $0a ; $43e4
 	farcall StepMatchFramesSkippable ; $43e6
-	farcall UpdateGameScoreDisplay ; $43e9
+	farcall UpdateScorePanelDisplay ; $43e9
 	ld a, $0a ; $43ec
 	farcall StepMatchFrames ; $43ee
 	ld a, $1e ; $43f1
 	farcall StepMatchFramesSkippable ; $43f3
-	farcall Func_09_4190 ; $43f6
+	farcall DismissGameScoreDisplayObjs ; $43f6
 	ld a, $46 ; $43f9
 	farcall StepMatchFramesSkippable ; $43fb
 	ld a, $08 ; $43fe
@@ -1233,7 +1233,7 @@ Label_0b_5cd6:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 Drill09HandlePointEnd:
-	farcall UpdateGameScoreDisplay ; $5cf9
+	farcall UpdateScorePanelDisplay ; $5cf9
 	ld a, [$c2ff] ; $5cfc
 	ld [wPointWinLoseFlag], a ; $5cff
 	cp a, $01 ; $5d02
@@ -1625,7 +1625,7 @@ Label_0b_6c47:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 Drill15HandlePointEnd:
-	farcall UpdateGameScoreDisplay ; $6c81
+	farcall UpdateScorePanelDisplay ; $6c81
 	ld a, [$c2ff] ; $6c84
 	ld [wPointWinLoseFlag], a ; $6c87
 	cp a, $01 ; $6c8a

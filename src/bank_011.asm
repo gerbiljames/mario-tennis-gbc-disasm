@@ -161,14 +161,14 @@ CenterCourtTileTriggers_11:
 CenterCourtTile01_11:
 	ret ; $41a3
 CenterCourtInitScript_11:
-	call Func_11_41b6 ; $41a4
-	call Func_11_4343 ; $41a7
+	call SetupCenterCourtSceneVariant ; $41a4
+	call SetPlayerAndPartnerObjectDefs_11 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
 	cp a, $0f ; $41ad
 	jp z, Label_11_437a ; $41af
 	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
-Func_11_41b6:
+SetupCenterCourtSceneVariant:
 	ld a, $00 ; $41b6
 	ld [$c2b0], a ; $41b8
 	test_flag $05, 7 ; $41bb
@@ -249,7 +249,7 @@ Label_11_4330:
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $4338
 Label_11_4342:
 	ret ; $4342
-Func_11_4343:
+SetPlayerAndPartnerObjectDefs_11:
 	test_flag $05, 7 ; $4343
 	jp z, Label_11_4361 ; $4346
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4349
@@ -494,12 +494,12 @@ AcademyArrivalTileTriggers_11:
 	map_script $0f, FACEMASK_ANY, $0000, AcademyArrivalTile0F_11, $00, $00
 	db $ff
 AcademyArrivalTile0F_11:
-	call Func_11_4f40 ; $46ad
+	call ResumeAcademyGuideTour ; $46ad
 	ret ; $46b0
 AcademyArrivalInitScript_11:
 	call ComputeRankingProgressIndex ; $46b1
-	call Func_11_5482 ; $46b4
-	call Func_11_54a6 ; $46b7
+	call EnableAcademyCampusExit ; $46b4
+	call MoveCampusGateGuardAside ; $46b7
 	ld a, [wStoryModeEntryPoint] ; $46ba
 	cp a, $0a ; $46bd
 	jp z, Label_11_4fcf ; $46bf
@@ -860,14 +860,14 @@ Label_11_4ee1:
 	script_set_text Text_30_427 ; $4efa
 	script_speak $12 ; $4f00
 	set_flag $05, 6 ; $4f05
-	call Func_11_4f1b ; $4f08
+	call ArmAcademyEntranceTileTrigger ; $4f08
 	ret ; $4f0b
 Label_11_4f0c:
 	script_set_text Text_30_426 ; $4f0c
 	script_speak $12 ; $4f12
 	call FollowGuideIntoAcademy ; $4f17
 	ret ; $4f1a
-Func_11_4f1b:
+ArmAcademyEntranceTileTrigger:
 	ld a, $f1 ; $4f1b
 	ld d, $16 ; $4f1d
 	ld e, $10 ; $4f1f
@@ -885,7 +885,7 @@ Func_11_4f1b:
 	ld e, $12 ; $4f3a
 	farcall WriteBehaviorMapCell ; $4f3c
 	ret ; $4f3f
-Func_11_4f40:
+ResumeAcademyGuideTour:
 	script_set_anim $12, $02 ; $4f40
 	script_wait_idle $12 ; $4f47
 	script_move_target ACTOR_PLAYER, $1800, $1300 ; $4f4c
@@ -1114,7 +1114,7 @@ Label_11_5415:
 	; $546a, 24 bytes (map_actors)
 	map_actor $0000, ActorScript_11_7ba9, $1500, $2f00, FACE_RIGHT, $30, $01, $03
 	map_actor_end
-Func_11_5482:
+EnableAcademyCampusExit:
 	test_flag $05, 7 ; $5482
 	jr nz, Label_11_548d ; $5485
 	test_flag $16, 0 ; $5487
@@ -1134,7 +1134,7 @@ Label_11_5493:
 	ld e, $34 ; $54a0
 	farcall WriteBehaviorMapCell ; $54a2
 	ret ; $54a5
-Func_11_54a6:
+MoveCampusGateGuardAside:
 	ld a, [$c2b0] ; $54a6
 	cp a, $06 ; $54a9
 	jr c, Label_11_54bf ; $54ab
@@ -1842,7 +1842,7 @@ Label_11_5db7:
 	ret ; $5ebf
 Label_11_5ec0:
 	set_flag $08, 1 ; $5ec0
-	call Func_11_7af7 ; $5ec3
+	call ParkLeftCourtPracticePairLeftSide ; $5ec3
 	script_player_speed $0040 ; $5ec6
 	script_move_player $0b00, $0f00 ; $5ecc
 	script_set_position $07, $0b00, $0d00 ; $5ed6
@@ -1871,7 +1871,7 @@ Label_11_5ec0:
 	script_set_actor_script $05, ActorScript_11_5c5f ; $5f71
 	script_move_target ACTOR_PLAYER, $1300, $1700 ; $5f7c
 	script_move_target ACTOR_PARTNER, $1300, $1500 ; $5f87
-	call Func_11_7b6b ; $5f92
+	call ResumeLeftCourtPractice ; $5f92
 	script_face $03, FACE_DOWN ; $5f95
 	script_wait_frames $3c ; $5f9c
 	script_wait_move ACTOR_PLAYER ; $5fa3
@@ -2695,7 +2695,7 @@ Label_11_6e9e:
 	dw Label_11_6fdd ; $6ead jumptable
 	dw Label_11_7076 ; $6eaf jumptable
 Label_11_6eb1:
-	call Func_11_7a76 ; $6eb1
+	call ParkMiddleCourtPracticePair ; $6eb1
 	script_player_speed $0040 ; $6eb4
 	script_set_position $07, $1a00, $0900 ; $6eba
 	script_set_position ACTOR_PLAYER, $1a00, $1400 ; $6ec5
@@ -2716,11 +2716,11 @@ Label_11_6eb1:
 	script_move_target ACTOR_PLAYER, $1300, $1500 ; $6f22
 	script_wait_move ACTOR_PLAYER ; $6f2d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6f32
-	call Func_11_7b2d ; $6f39
+	call ResumeMiddleCourtPractice ; $6f39
 	script_face $03, FACE_DOWN ; $6f3c
 	ret ; $6f43
 Label_11_6f44:
-	call Func_11_7ab3 ; $6f44
+	call ParkLeftCourtPracticePairRightSide ; $6f44
 	script_player_speed $0040 ; $6f47
 	script_set_position $06, $0900, $0900 ; $6f4d
 	script_set_position ACTOR_PLAYER, $0b00, $1400 ; $6f58
@@ -2742,11 +2742,11 @@ Label_11_6f44:
 	script_move_target ACTOR_PLAYER, $1300, $1500 ; $6fbb
 	script_wait_move ACTOR_PLAYER ; $6fc6
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6fcb
-	call Func_11_7b6b ; $6fd2
+	call ResumeLeftCourtPractice ; $6fd2
 	script_face $03, FACE_DOWN ; $6fd5
 	ret ; $6fdc
 Label_11_6fdd:
-	call Func_11_7ab3 ; $6fdd
+	call ParkLeftCourtPracticePairRightSide ; $6fdd
 	script_player_speed $0040 ; $6fe0
 	script_set_position $05, $0900, $0900 ; $6fe6
 	script_set_position ACTOR_PLAYER, $0b00, $1400 ; $6ff1
@@ -2768,7 +2768,7 @@ Label_11_6fdd:
 	script_move_target ACTOR_PLAYER, $1300, $1500 ; $7054
 	script_wait_move ACTOR_PLAYER ; $705f
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7064
-	call Func_11_7b6b ; $706b
+	call ResumeLeftCourtPractice ; $706b
 	script_face $03, FACE_DOWN ; $706e
 	ret ; $7075
 Label_11_7076:
@@ -2781,7 +2781,7 @@ Label_11_7076:
 	script_face ACTOR_PLAYER, FACE_UP ; $70aa
 	script_face $04, FACE_DOWN ; $70b1
 	script_face $03, FACE_UP ; $70b8
-	call Func_11_7a76 ; $70bf
+	call ParkMiddleCourtPracticePair ; $70bf
 	script_fade_in $04 ; $70c2
 	call WaitFadeEnd ; $70c7
 	script_wait_frames $3c ; $70ca
@@ -3336,7 +3336,7 @@ Label_11_79e8:
 	farcall RunStoryMatch ; $7a6f
 	farcall RestoreOverworldAfterMatch ; $7a72
 	ret ; $7a75
-Func_11_7a76:
+ParkMiddleCourtPracticePair:
 	script_null_script $0e ; $7a76
 	script_null_script $0f ; $7a7b
 	script_set_anim $0e, $01 ; $7a80
@@ -3346,7 +3346,7 @@ Func_11_7a76:
 	script_face $0e, FACE_LEFT ; $7aa4
 	script_face $0f, FACE_LEFT ; $7aab
 	ret ; $7ab2
-Func_11_7ab3:
+ParkLeftCourtPracticePairRightSide:
 	script_null_script $0c ; $7ab3
 	script_null_script $0d ; $7ab8
 	script_set_anim $0c, $01 ; $7abd
@@ -3357,7 +3357,7 @@ Func_11_7ab3:
 	script_face $0d, FACE_LEFT ; $7ae8
 	script_wait_frames $14 ; $7aef
 	ret ; $7af6
-Func_11_7af7:
+ParkLeftCourtPracticePairLeftSide:
 	script_null_script $0c ; $7af7
 	script_null_script $0d ; $7afc
 	script_set_position $0c, $0500, $0b00 ; $7b01
@@ -3366,7 +3366,7 @@ Func_11_7af7:
 	script_face $0d, FACE_RIGHT ; $7b1e
 	script_wait_frames $14 ; $7b25
 	ret ; $7b2c
-Func_11_7b2d:
+ResumeMiddleCourtPractice:
 	script_move_target $0e, $1800, $0b00 ; $7b2d
 	script_move_target $0f, $1c00, $1700 ; $7b38
 	script_wait_move $0f ; $7b43
@@ -3375,7 +3375,7 @@ Func_11_7b2d:
 	script_set_actor_script $0e, ActorScript_11_7bdf ; $7b54
 	script_set_actor_script $0f, ActorScript_11_7c42 ; $7b5f
 	ret ; $7b6a
-Func_11_7b6b:
+ResumeLeftCourtPractice:
 	script_move_target $0c, $0800, $0b00 ; $7b6b
 	script_move_target $0d, $0c00, $1700 ; $7b76
 	script_wait_move $0d ; $7b81

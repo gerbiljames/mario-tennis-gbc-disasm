@@ -3,7 +3,7 @@ SECTION "ROM Bank $2c", ROMX[$4000], BANK[$2c]
 	farptr ProjectShotPlacement0 ; $4000
 	farptr ProjectShotPlacement1 ; $4002
 	farptr ProjectShotPlacement2 ; $4004
-Func_2c_4006:
+BallTrajEntryPtr6_2c:
 	push hl ; $4006
 	ld l, e ; $4007
 	ld h, d ; $4008
@@ -19,7 +19,7 @@ Func_2c_4006:
 	pop de ; $4013
 	add hl, de ; $4014
 	ret ; $4015
-Func_2c_4016:
+BallTrajEntryPtr4_2c:
 	push hl ; $4016
 	ld l, e ; $4017
 	ld h, d ; $4018
@@ -32,7 +32,7 @@ Func_2c_4016:
 	pop de ; $4020
 	add hl, de ; $4021
 	ret ; $4022
-Func_2c_4023:
+SeekBallTrajEntry6_2c:
 	ld a, [wShotTrajRowMin] ; $4023
 	ld d, a ; $4026
 	ld a, [wShotTrajRowMax] ; $4027
@@ -58,7 +58,7 @@ Label_2c_403f:
 	jr Label_2c_402b ; $403f
 Label_2c_4041:
 	ret ; $4041
-Func_2c_4042:
+SeekBallTrajEntry4_2c:
 	ld a, [wShotTrajRowMin] ; $4042
 	ld d, a ; $4045
 	ld a, [wShotTrajRowMax] ; $4046
@@ -84,7 +84,7 @@ Label_2c_405e:
 	jr Label_2c_404a ; $405e
 Label_2c_4060:
 	ret ; $4060
-Func_2c_4061:
+SetBallVelocityFromEntry6_2c:
 	ld a, [hl+] ; $4061
 	ld c, a ; $4062
 	ld a, [hl+] ; $4063
@@ -118,7 +118,7 @@ Label_2c_407a:
 	pop hl ; $4083
 	farcall SetBallVelocityPolar ; $4084
 	ret ; $4087
-Func_2c_4088:
+SetBallVelocityFromEntry4_2c:
 	ld a, [hl+] ; $4088
 	ld c, a ; $4089
 	ld a, [hl+] ; $408a
@@ -218,7 +218,7 @@ Label_2c_40f4:
 	ld [hl], d ; $4104
 	ret ; $4105
 	INCBIN "data/bank_02c/d_4106.bin" ; $4106, 51 bytes
-Func_2c_4139:
+ApplyBallTrajectory6_2c:
 	xor a, a ; $4139
 	sub a, c ; $413a
 	ld c, a ; $413b
@@ -229,10 +229,10 @@ Func_2c_4139:
 	ld e, a ; $4142
 	ld a, [wShotDistMin + 1] ; $4143
 	ld d, a ; $4146
-	call Func_2c_4006 ; $4147
-	call Func_2c_4023 ; $414a
+	call BallTrajEntryPtr6_2c ; $4147
+	call SeekBallTrajEntry6_2c ; $414a
 	push de ; $414d
-	call Func_2c_4061 ; $414e
+	call SetBallVelocityFromEntry6_2c ; $414e
 	pop de ; $4151
 	ld h, d ; $4152
 	ld l, $00 ; $4153
@@ -240,7 +240,7 @@ Func_2c_4139:
 	rr l ; $4157
 	sra h ; $4159
 	rr l ; $415b
-	call Func_2c_41f9 ; $415d
+	call SetBallTargetFromAim_2c ; $415d
 	ret ; $4160
 	push hl ; $4161
 	ld hl, wShotAimAngle ; $4162
@@ -276,13 +276,13 @@ Func_2c_4139:
 Label_2c_418d:
 	pop hl ; $418d
 	push de ; $418e
-	call Func_2c_4006 ; $418f
-	call Func_2c_4061 ; $4192
+	call BallTrajEntryPtr6_2c ; $418f
+	call SetBallVelocityFromEntry6_2c ; $4192
 	pop hl ; $4195
-	call Func_2c_41f9 ; $4196
+	call SetBallTargetFromAim_2c ; $4196
 	ret ; $4199
 	INCBIN "data/bank_02c/d_419a.bin" ; $419a, 51 bytes
-Func_2c_41cd:
+ApplyBallTrajectory4_2c:
 	xor a, a ; $41cd
 	sub a, c ; $41ce
 	ld c, a ; $41cf
@@ -293,10 +293,10 @@ Func_2c_41cd:
 	ld e, a ; $41d6
 	ld a, [wShotDistMin + 1] ; $41d7
 	ld d, a ; $41da
-	call Func_2c_4016 ; $41db
-	call Func_2c_4042 ; $41de
+	call BallTrajEntryPtr4_2c ; $41db
+	call SeekBallTrajEntry4_2c ; $41de
 	push de ; $41e1
-	call Func_2c_4088 ; $41e2
+	call SetBallVelocityFromEntry4_2c ; $41e2
 	pop de ; $41e5
 	ld h, d ; $41e6
 	ld l, $00 ; $41e7
@@ -304,11 +304,11 @@ Func_2c_41cd:
 	rr l ; $41eb
 	sra h ; $41ed
 	rr l ; $41ef
-	call Func_2c_41f9 ; $41f1
+	call SetBallTargetFromAim_2c ; $41f1
 	ret ; $41f4
 	farcall ApplyFallbackBallTrajectory_24 ; $41f5
 	ret ; $41f8
-Func_2c_41f9:
+SetBallTargetFromAim_2c:
 	ld a, [wShotAimAngle] ; $41f9
 	ld c, a ; $41fc
 	ld a, [wShotAimAngle + 1] ; $41fd
@@ -371,7 +371,7 @@ Label_2c_424b:
 	ld l, a ; $424d
 	add hl, de ; $424e
 	ret ; $424f
-Func_2c_4250:
+LookupBallPosByHeight_2c:
 	ld e, l ; $4250
 	ld d, h ; $4251
 	ld hl, wBallHeight ; $4252
@@ -429,9 +429,9 @@ ProjectShotPlacement0:
 	push bc ; $7284
 	ld hl, ShotPlacementData0_2c ; $7285
 	ld bc, ShotPlacementOffsets0_2c ; $7288
-	call Func_2c_4250 ; $728b
+	call LookupBallPosByHeight_2c ; $728b
 	pop bc ; $728e
-	call Func_2c_41cd ; $728f
+	call ApplyBallTrajectory4_2c ; $728f
 	ret ; $7292
 ShotPlacementOffsets0_2c:
 	; $7293, 64 bytes (records:2)
@@ -472,9 +472,9 @@ ProjectShotPlacement1:
 	push bc ; $72d6
 	ld hl, ShotPlacementData1_2c ; $72d7
 	ld bc, ShotPlacementOffsets1_2c ; $72da
-	call Func_2c_4250 ; $72dd
+	call LookupBallPosByHeight_2c ; $72dd
 	pop bc ; $72e0
-	call Func_2c_4139 ; $72e1
+	call ApplyBallTrajectory6_2c ; $72e1
 	ret ; $72e4
 ShotPlacementOffsets1_2c:
 	; $72e5, 64 bytes (records:2)
@@ -515,9 +515,9 @@ ProjectShotPlacement2:
 	push bc ; $7328
 	ld hl, ShotPlacementData2_2c ; $7329
 	ld bc, ShotPlacementOffsets2_2c ; $732c
-	call Func_2c_4250 ; $732f
+	call LookupBallPosByHeight_2c ; $732f
 	pop bc ; $7332
-	call Func_2c_4139 ; $7333
+	call ApplyBallTrajectory6_2c ; $7333
 	ret ; $7336
 ShotPlacementOffsets2_2c:
 	; $7337, 64 bytes (records:2)

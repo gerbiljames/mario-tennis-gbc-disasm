@@ -4011,7 +4011,7 @@ RunDebugTestMatch:
 Func_07_5ed2:
 	ret ; $5ed2
 ResolveTargetModePoint:
-	farcall UpdateGameScoreDisplay ; $5ed3
+	farcall UpdateScorePanelDisplay ; $5ed3
 	farcall ResolvePointWinner ; $5ed6
 	ld [wPointWinLoseFlag], a ; $5ed9
 	farcall UpdatePointStats ; $5edc

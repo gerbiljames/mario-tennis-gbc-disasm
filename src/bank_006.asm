@@ -23,10 +23,10 @@ RunMinigameEndMenu:
 	ld b, $00 ; $4031
 	call DrawScoreboard ; $4033
 	ld a, $0a ; $4036
-	ld hl, Func_06_506a ; $4038
+	ld hl, DrawScoreboardSprites ; $4038
 	call RegisterFrameTask ; $403b
 	ld a, $0a ; $403e
-	ld hl, Func_06_69c8 ; $4040
+	ld hl, DrawScoreboardModeTitle ; $4040
 	call RegisterFrameTask ; $4043
 Label_06_4046:
 	xor a, a ; $4046
@@ -37,9 +37,9 @@ Label_06_4046:
 	ld a, [wMatchMenuSelection] ; $4052
 	cp a, $ff ; $4055
 	jr z, Label_06_4046 ; $4057
-	ld hl, Func_06_506a ; $4059
+	ld hl, DrawScoreboardSprites ; $4059
 	call UnregisterFrameTask ; $405c
-	ld hl, Func_06_69c8 ; $405f
+	ld hl, DrawScoreboardModeTitle ; $405f
 	call UnregisterFrameTask ; $4062
 	call RestoreBgTilemap ; $4065
 	call FlushTilemapToVram ; $4068
@@ -72,10 +72,10 @@ Label_06_40a7:
 	ld b, $00 ; $40a7
 	call DrawScoreboard ; $40a9
 	ld a, $0a ; $40ac
-	ld hl, Func_06_506a ; $40ae
+	ld hl, DrawScoreboardSprites ; $40ae
 	call RegisterFrameTask ; $40b1
 	ld a, $0a ; $40b4
-	ld hl, Func_06_69c8 ; $40b6
+	ld hl, DrawScoreboardModeTitle ; $40b6
 	call RegisterFrameTask ; $40b9
 	ld b, $00 ; $40bc
 	ld a, [$c4c8] ; $40be
@@ -90,7 +90,7 @@ Label_06_40c6:
 	cp a, $ff ; $40d0
 	jr z, Label_06_40ef ; $40d2
 	push af ; $40d4
-	ld hl, Func_06_40e5 ; $40d5
+	ld hl, MatchPauseMenu_AfterItem ; $40d5
 	push hl ; $40d8
 	ld a, [wMatchMenuSelection] ; $40d9
 	rst Rst00 ; $40dc
@@ -98,16 +98,16 @@ Label_06_40c6:
 	dw MatchPauseMenu_ReviewControls ; $40df jumptable
 	dw MatchPauseMenu_ChangeOptions ; $40e1 jumptable
 	dw MatchPauseMenu_SaveQuit ; $40e3 jumptable
-Func_06_40e5:
+MatchPauseMenu_AfterItem:
 	pop af ; $40e5
 	ld [wMatchMenuSelection], a ; $40e6
 	ld a, [wMatchAbortFlag] ; $40e9
 	and a, a ; $40ec
 	jr z, Label_06_40a7 ; $40ed
 Label_06_40ef:
-	ld hl, Func_06_506a ; $40ef
+	ld hl, DrawScoreboardSprites ; $40ef
 	call UnregisterFrameTask ; $40f2
-	ld hl, Func_06_69c8 ; $40f5
+	ld hl, DrawScoreboardModeTitle ; $40f5
 	call UnregisterFrameTask ; $40f8
 	call RestoreBgTilemap ; $40fb
 	call FlushTilemapToVram ; $40fe
@@ -119,10 +119,10 @@ Label_06_40ef:
 	wram_bank ; $410b
 	ret ; $410f
 MatchPauseMenu_CheckRules:
-	ld hl, Func_06_506a ; $4110
+	ld hl, DrawScoreboardSprites ; $4110
 	call UnregisterFrameTask ; $4113
 	call RestoreBgTilemap ; $4116
-	ld hl, Func_06_412f ; $4119
+	ld hl, MatchPauseMenu_AfterRules ; $4119
 	push hl ; $411c
 	ld a, [wGameMode] ; $411d
 	cp a, $08 ; $4120
@@ -131,7 +131,7 @@ MatchPauseMenu_CheckRules:
 	cp a, $02 ; $4128
 	jp z, ShowTrainingRulesPages ; $412a
 	jr ShowMatchRulesPages ; $412d
-Func_06_412f:
+MatchPauseMenu_AfterRules:
 	call RestoreBgTilemap ; $412f
 	ret ; $4132
 ShowMatchRulesPages:
@@ -330,7 +330,7 @@ ShowRulesPageSequence:
 	cp a, $ff ; $431e
 	jr z, Label_06_432a ; $4320
 	ld a, $01 ; $4322
-	ld hl, Func_06_4373 ; $4324
+	ld hl, DrawRulesNextPageArrow_06 ; $4324
 	call RegisterFrameTask ; $4327
 Label_06_432a:
 	farcall PrepareGlyphBuffer ; $432a
@@ -364,20 +364,20 @@ Label_06_435d:
 	and a, $03 ; $4363
 	jr z, Label_06_435d ; $4365
 	sound $5f ; $4367
-	ld hl, Func_06_4373 ; $4369
+	ld hl, DrawRulesNextPageArrow_06 ; $4369
 	call UnregisterFrameTask ; $436c
 	pop hl ; $436f
 	jr ShowRulesPageSequence ; $4370
 Label_06_4372:
 	ret ; $4372
-Func_06_4373:
+DrawRulesNextPageArrow_06:
 	ld de, $9080 ; $4373
 	farcall AddBobbingOffsetY ; $4376
 	ld bc, $0a70 ; $4379
 	call QueueSprite16 ; $437c
 	ret ; $437f
 MatchPauseMenu_ReviewControls:
-	ld hl, Func_06_506a ; $4380
+	ld hl, DrawScoreboardSprites ; $4380
 	call UnregisterFrameTask ; $4383
 	call RestoreBgTilemap ; $4386
 	ld de, $0002 ; $4389
@@ -438,13 +438,13 @@ Label_06_43fb:
 	cp a, $ff ; $4406
 	jr z, Label_06_441d ; $4408
 	push af ; $440a
-	ld hl, Func_06_4417 ; $440b
+	ld hl, MatchOptionsMenu_AfterItem ; $440b
 	push hl ; $440e
 	ld a, [wMatchMenuSelection] ; $440f
 	rst Rst00 ; $4412
 	dw MatchPauseMenu_CameraSelect ; $4413 jumptable
 	dw MatchPauseMenu_MusicToggle ; $4415 jumptable
-Func_06_4417:
+MatchOptionsMenu_AfterItem:
 	pop af ; $4417
 	ld [wMatchMenuSelection], a ; $4418
 	jr Label_06_43fb ; $441b
@@ -1120,10 +1120,10 @@ ShowMatchScoreboardScreen:
 	call DrawScoreboardCaption ; $48c9
 	farcall UploadGlyphBuffer ; $48cc
 	ld a, $0a ; $48cf
-	ld hl, Func_06_506a ; $48d1
+	ld hl, DrawScoreboardSprites ; $48d1
 	call RegisterFrameTask ; $48d4
 	ld a, $0a ; $48d7
-	ld hl, Func_06_69c8 ; $48d9
+	ld hl, DrawScoreboardModeTitle ; $48d9
 	call RegisterFrameTask ; $48dc
 	farcall StepMatchFrame ; $48df
 	call FlushTilemapToVram ; $48e2
@@ -1136,9 +1136,9 @@ Label_06_48ee:
 	farcall StepMatchFrame ; $48f5
 	jr Label_06_48ee ; $48f8
 Label_06_48fa:
-	ld hl, Func_06_506a ; $48fa
+	ld hl, DrawScoreboardSprites ; $48fa
 	call UnregisterFrameTask ; $48fd
-	ld hl, Func_06_69c8 ; $4900
+	ld hl, DrawScoreboardModeTitle ; $4900
 	call UnregisterFrameTask ; $4903
 	call RestoreBgTilemap ; $4906
 	call FlushTilemapToVram ; $4909
@@ -1274,7 +1274,7 @@ DrawScoreboardPackedPips:
 Label_06_4a1c:
 	push bc ; $4a1c
 	push de ; $4a1d
-	ld hl, Func_06_4a2f ; $4a1e
+	ld hl, DrawScoreboardPackedPipsNext ; $4a1e
 	push hl ; $4a21
 	ld a, c ; $4a22
 	and a, $03 ; $4a23
@@ -1284,7 +1284,7 @@ Label_06_4a1c:
 	dw DrawScoreboardPipFilled ; $4a29 jumptable
 	dw DrawScoreboardPipAlt ; $4a2b jumptable
 	dw DrawScoreboardPipAlt ; $4a2d jumptable
-Func_06_4a2f:
+DrawScoreboardPackedPipsNext:
 	pop de ; $4a2f
 	pop bc ; $4a30
 	inc d ; $4a31
@@ -1582,7 +1582,7 @@ CopyTextRectPair:
 	ld l, a ; $5065
 	call CopyTextRect ; $5066
 	ret ; $5069
-Func_06_506a:
+DrawScoreboardSprites:
 	ld a, [wScoreboardOrigin + 1] ; $506a
 	ld h, a ; $506d
 	ld a, [wScoreboardOrigin] ; $506e
@@ -2261,7 +2261,7 @@ QueueMatchMenuCursorSprite:
 	ld bc, $0000 ; $69c1
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
-Func_06_69c8:
+DrawScoreboardModeTitle:
 	ld h, $05 ; $69c8
 	ld a, [wScoreboardOrigin] ; $69ca
 	ld l, a ; $69cd
@@ -2875,7 +2875,7 @@ Label_06_6e52:
 	cp a, $ff ; $6e68
 	jr z, Label_06_6e94 ; $6e6a
 	push af ; $6e6c
-	ld hl, Func_06_6e7d ; $6e6d
+	ld hl, StoryPauseMenu_AfterItem ; $6e6d
 	push hl ; $6e70
 	ld a, [wMatchMenuSelection] ; $6e71
 	rst Rst00 ; $6e74
@@ -2883,7 +2883,7 @@ Label_06_6e52:
 	dw StoryPauseMenu_GameProgress ; $6e77 jumptable
 	dw StoryPauseMenu_Options ; $6e79 jumptable
 	dw StoryPauseMenu_SaveQuit ; $6e7b jumptable
-Func_06_6e7d:
+StoryPauseMenu_AfterItem:
 	ld b, a ; $6e7d
 	pop af ; $6e7e
 	ld [wMatchMenuSelection], a ; $6e7f
@@ -2922,7 +2922,7 @@ Label_06_6eb2:
 	pop af ; $6ec1
 	wram_bank ; $6ec2
 	ret ; $6ec6
-	call Func_06_7863 ; $6ec7
+	call DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
 	ld de, $8640 ; $6ecd
 	ld c, $04 ; $6ed0
@@ -3056,13 +3056,13 @@ Label_06_6fc7:
 	cp a, $ff ; $6fd2
 	jr z, Label_06_6fe9 ; $6fd4
 	push af ; $6fd6
-	ld hl, Func_06_6fe3 ; $6fd7
+	ld hl, StoryOptionsMenu_AfterItem ; $6fd7
 	push hl ; $6fda
 	ld a, [wMatchMenuSelection] ; $6fdb
 	rst Rst00 ; $6fde
 	dw StoryPauseMenu_MessageSpeed ; $6fdf jumptable
 	dw StoryPauseMenu_MusicToggle ; $6fe1 jumptable
-Func_06_6fe3:
+StoryOptionsMenu_AfterItem:
 	pop af ; $6fe3
 	ld [wMatchMenuSelection], a ; $6fe4
 	jr Label_06_6fc7 ; $6fe7
@@ -3623,7 +3623,7 @@ TextRect_06_784b:
 	tilemap_row $49, $4a, $4b, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c ; row 0
 	tilemap_row $59, $5a, $5b, $24, $25, $26, $27, $28, $29, $2a, $2b, $2c ; row 1
 	tilemap_end
-Func_06_7863:
+DrawStoryMenuItemRow:
 	ld de, $030a ; $7863
 	call GetShadowTilemapAddr ; $7866
 	ld hl, TextRect_06_784b ; $7869

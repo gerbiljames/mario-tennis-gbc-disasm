@@ -174,7 +174,7 @@ InitMatchScene:
 	call AssignCourtPositions ; $4173
 	xor a, a ; $4176
 	ld [wChangeEndsPending], a ; $4177
-	farcall UpdatePointScoreDisplay ; $417a
+	farcall UpdatePointDigitsDisplay ; $417a
 	call RefreshCourtScoreboard ; $417d
 	call UploadCourtTilemap ; $4180
 	call UploadCourtAttrmap ; $4183
@@ -331,7 +331,7 @@ Label_08_42d4:
 	ld de, $f000 ; $42e9
 Label_08_42ec:
 	ld bc, $ddb0 ; $42ec
-	farcall Func_09_45c4 ; $42ef
+	farcall SetObjPosition ; $42ef
 Label_08_42f2:
 	ret ; $42f2
 Label_08_42f3:
@@ -1491,10 +1491,10 @@ Label_08_4d26:
 	call StepMatchFrames ; $4d3f
 Label_08_4d42:
 	call EndPointBallEffects ; $4d42
-	farcall UpdateGameScoreDisplay ; $4d45
+	farcall UpdateScorePanelDisplay ; $4d45
 	call ScorePoint ; $4d48
 	call StepMatchFrame ; $4d4b
-	farcall UpdatePointScoreDisplay ; $4d4e
+	farcall UpdatePointDigitsDisplay ; $4d4e
 	call StepMatchFrame ; $4d51
 	call StartPointEndReactions ; $4d54
 	call ResolvePointOutcome ; $4d57
@@ -1569,7 +1569,7 @@ Label_08_4dbb:
 	ld de, $3420 ; $4dd8
 Label_08_4ddb:
 	ld bc, $ddb0 ; $4ddb
-	farcall Func_09_45c4 ; $4dde
+	farcall SetObjPosition ; $4dde
 	ld a, $0a ; $4de1
 	call StepMatchFrames ; $4de3
 	ld a, $1e ; $4de6
@@ -1668,7 +1668,7 @@ Label_08_4ea3:
 	ld a, [wPointWinLoseFlag] ; $4ea3
 	and a, a ; $4ea6
 	ret z ; $4ea7
-	farcall Func_09_412a ; $4ea8
+	farcall SpawnGameScoreDisplayObjs ; $4ea8
 	ld a, $0a ; $4eab
 	call StepMatchFrames ; $4ead
 	ld a, $0a ; $4eb0
@@ -1679,12 +1679,12 @@ Label_08_4ea3:
 	sound $69 ; $4ebb
 	call StepMatchFrame ; $4ebd
 Label_08_4ec0:
-	farcall UpdateGameScoreDisplay ; $4ec0
+	farcall UpdateScorePanelDisplay ; $4ec0
 	ld a, $0a ; $4ec3
 	call StepMatchFrames ; $4ec5
 	ld a, $1e ; $4ec8
 	call StepMatchFramesSkippable ; $4eca
-	farcall Func_09_4190 ; $4ecd
+	farcall DismissGameScoreDisplayObjs ; $4ecd
 	ret ; $4ed0
 Label_08_4ed1:
 	ld a, [wGameMode] ; $4ed1

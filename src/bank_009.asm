@@ -2,11 +2,11 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 
 	farptr InitAllObjSlots ; $4000
 	farptr UpdateAllObjSprites ; $4002
-	farptr UpdatePointScoreDisplay ; $4004
+	farptr UpdatePointDigitsDisplay ; $4004
 	farptr LoadOnCourtCharacterGfx ; $4006
 	farptr LoadServeGfx ; $4008
-	farptr Func_09_412a ; $400a
-	farptr Func_09_4190 ; $400c
+	farptr SpawnGameScoreDisplayObjs ; $400a
+	farptr DismissGameScoreDisplayObjs ; $400c
 	farptr SpawnServeIndicatorObjs ; $400e
 	farptr DismissServeIndicatorObjs ; $4010
 	farptr ShowCourtBanner ; $4012
@@ -18,8 +18,8 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 	farptr DismissWinLoseResultObj ; $401e
 	farptr InitAllObjSlotsAlias1, InitAllObjSlots ; $4020
 	farptr InitAllObjSlotsAlias2, InitAllObjSlots ; $4022
-	farptr Func_09_45c4 ; $4024
-	farptr UpdateGameScoreDisplay ; $4026
+	farptr SetObjPosition ; $4024
+	farptr UpdateScorePanelDisplay ; $4026
 	farptr LoadScoreDigitGfx ; $4028
 	farptr LoadPlayer1PointsDigitGfx ; $402a
 	farptr LoadPlayer2PointsDigitGfx ; $402c
@@ -27,7 +27,7 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 	farptr LoadPlayer2ScoreDigitGfx ; $4030
 	farptr SpawnGameResultObj ; $4032
 	farptr DismissGameResultObj ; $4034
-UpdatePointScoreDisplay:
+UpdatePointDigitsDisplay:
 	ld a, [wTiebreakerIndicator] ; $4036
 	and a, a ; $4039
 	jr nz, Label_09_405f ; $403a
@@ -80,7 +80,7 @@ GetPointScoreForDisplay:
 Label_09_4094:
 	ld a, [wDeuceIndicator] ; $4094
 	ret ; $4097
-UpdateGameScoreDisplay:
+UpdateScorePanelDisplay:
 	call GetPointScoreForDisplay ; $4098
 	and a, a ; $409b
 	jr nz, Label_09_40b1 ; $409c
@@ -141,7 +141,7 @@ Label_09_4111:
 	ld de, $8040 ; $4123
 	farcall LoadOnCourtCharTilesB ; $4126
 	ret ; $4129
-Func_09_412a:
+SpawnGameScoreDisplayObjs:
 	wram_bank $04 ; $412a
 	call ClearAllObjSlots ; $4130
 	ld a, [wScoreboardLayout] ; $4133
@@ -162,16 +162,16 @@ Func_09_412a:
 	ld hl, ObjTemplates_09_41bc ; $4156
 	ld bc, $dd80 ; $4159
 	call LoadObjTemplate_09 ; $415c
-	call Func_09_7195 ; $415f
-	call Func_09_45bc ; $4162
+	call GetPlayer1CharIconSprites ; $415f
+	call SetObjSpriteTemplate ; $4162
 	pop bc ; $4165
 	ld a, b ; $4166
 	xor a, $03 ; $4167
 	ld hl, ObjTemplates_09_41bc ; $4169
 	ld bc, $dd90 ; $416c
 	call LoadObjTemplate_09 ; $416f
-	call Func_09_71ac ; $4172
-	call Func_09_45bc ; $4175
+	call GetPlayer2CharIconSprites ; $4172
+	call SetObjSpriteTemplate ; $4175
 	ld a, $00 ; $4178
 	ld hl, $420c ; $417a
 	ld bc, $dda0 ; $417d
@@ -183,7 +183,7 @@ Label_09_4184:
 	ld bc, $dd80 ; $4189
 	call LoadObjTemplate_09 ; $418c
 	ret ; $418f
-Func_09_4190:
+DismissGameScoreDisplayObjs:
 	ld a, [$c7bb] ; $4190
 	and a, a ; $4193
 	jr nz, Label_09_41b2 ; $4194
@@ -230,8 +230,8 @@ SpawnServeIndicatorObjs:
 	ld hl, $4298 ; $424b
 	ld bc, $dd80 ; $424e
 	call LoadObjTemplate_09 ; $4251
-	call Func_09_7103 ; $4254
-	call Func_09_45bc ; $4257
+	call GetPlayer1ServeIndicatorSprites ; $4254
+	call SetObjSpriteTemplate ; $4257
 	ld a, [wScoreboardLayout] ; $425a
 	cp a, $03 ; $425d
 	jr z, Label_09_4274 ; $425f
@@ -239,8 +239,8 @@ SpawnServeIndicatorObjs:
 	ld hl, $4298 ; $4264
 	ld bc, $dd90 ; $4267
 	call LoadObjTemplate_09 ; $426a
-	call Func_09_711a ; $426d
-	call Func_09_45bc ; $4270
+	call GetPlayer2ServeIndicatorSprites ; $426d
+	call SetObjSpriteTemplate ; $4270
 	ret ; $4273
 Label_09_4274:
 	ld a, [wServingCharCourtPos] ; $4274
@@ -270,12 +270,12 @@ SpawnWinLoseResultObj:
 	pop af ; $42e4
 	add a, a ; $42e5
 	jr c, Label_09_42ef ; $42e6
-	call Func_09_7195 ; $42e8
-	call Func_09_45bc ; $42eb
+	call GetPlayer1CharIconSprites ; $42e8
+	call SetObjSpriteTemplate ; $42eb
 	ret ; $42ee
 Label_09_42ef:
-	call Func_09_71ac ; $42ef
-	call Func_09_45bc ; $42f2
+	call GetPlayer2CharIconSprites ; $42ef
+	call SetObjSpriteTemplate ; $42f2
 	ret ; $42f5
 DismissWinLoseResultObj:
 	ld hl, $4300 ; $42f6
@@ -326,21 +326,21 @@ InitAllObjSlots:
 	ld bc, $dda0 ; $4567
 	call InitObjSlot ; $456a
 	ld d, $01 ; $456d
-	call Func_09_45d2 ; $456f
+	call SetObjSpriteAttr ; $456f
 	ld d, $30 ; $4572
-	call Func_09_45cc ; $4574
+	call SetObjTileOffset ; $4574
 	ld bc, $ddb0 ; $4577
 	call InitObjSlot ; $457a
 	ld d, $01 ; $457d
-	call Func_09_45d2 ; $457f
+	call SetObjSpriteAttr ; $457f
 	ld d, $20 ; $4582
-	call Func_09_45cc ; $4584
+	call SetObjTileOffset ; $4584
 	ld bc, $ddc0 ; $4587
 	call InitObjSlot ; $458a
 	ld d, $01 ; $458d
-	call Func_09_45d2 ; $458f
+	call SetObjSpriteAttr ; $458f
 	ld d, $38 ; $4592
-	call Func_09_45cc ; $4594
+	call SetObjTileOffset ; $4594
 	ret ; $4597
 InitObjSlot:
 	push bc ; $4598
@@ -365,31 +365,31 @@ InitObjSlot:
 	add hl, bc ; $45b8
 	ld [hl], $ff ; $45b9
 	ret ; $45bb
-Func_09_45bc:
+SetObjSpriteTemplate:
 	ld hl, $0002 ; $45bc
 	add hl, bc ; $45bf
 	ld a, e ; $45c0
 	ld [hl+], a ; $45c1
 	ld [hl], d ; $45c2
 	ret ; $45c3
-Func_09_45c4:
+SetObjPosition:
 	ld hl, $0006 ; $45c4
 	add hl, bc ; $45c7
 	ld [hl], d ; $45c8
 	inc hl ; $45c9
 	ld [hl], e ; $45ca
 	ret ; $45cb
-Func_09_45cc:
+SetObjTileOffset:
 	ld hl, $0005 ; $45cc
 	add hl, bc ; $45cf
 	ld [hl], d ; $45d0
 	ret ; $45d1
-Func_09_45d2:
+SetObjSpriteAttr:
 	ld hl, $0004 ; $45d2
 	add hl, bc ; $45d5
 	ld [hl], d ; $45d6
 	ret ; $45d7
-Func_09_45d8:
+SetObjUpdateRoutine:
 	ld hl, $0008 ; $45d8
 	add hl, bc ; $45db
 	ld a, e ; $45dc
@@ -402,12 +402,12 @@ Func_09_45d8:
 	add hl, bc ; $45e8
 	ld [hl], $00 ; $45e9
 	ret ; $45eb
-Func_09_45ec:
+SetObjMoveCurve:
 	ld hl, $000e ; $45ec
 	add hl, bc ; $45ef
 	ld [hl], d ; $45f0
 	ret ; $45f1
-Func_09_45f2:
+SetObjDrawMode:
 	ld hl, $000f ; $45f2
 	add hl, bc ; $45f5
 	ld [hl], d ; $45f6
@@ -432,24 +432,24 @@ LoadObjTemplate_09:
 	ld a, [hl+] ; $461c
 	ld d, a ; $461d
 	push hl ; $461e
-	call Func_09_45c4 ; $461f
+	call SetObjPosition ; $461f
 	pop hl ; $4622
 	ld a, [hl+] ; $4623
 	ld e, a ; $4624
 	ld a, [hl+] ; $4625
 	ld d, a ; $4626
 	push hl ; $4627
-	call Func_09_45bc ; $4628
+	call SetObjSpriteTemplate ; $4628
 	pop hl ; $462b
 	ld a, [hl+] ; $462c
 	ld e, a ; $462d
 	ld a, [hl+] ; $462e
 	ld d, a ; $462f
 	push hl ; $4630
-	call Func_09_45d8 ; $4631
+	call SetObjUpdateRoutine ; $4631
 	pop hl ; $4634
 	ld d, [hl] ; $4635
-	call Func_09_45ec ; $4636
+	call SetObjMoveCurve ; $4636
 	pop hl ; $4639
 	ld de, $000c ; $463a
 	add hl, de ; $463d
@@ -460,7 +460,7 @@ LoadObjTemplate_09:
 	call PlaySoundManaged ; $4643
 Label_09_4646:
 	ld d, [hl] ; $4646
-	call Func_09_45f2 ; $4647
+	call SetObjDrawMode ; $4647
 	xor a, a ; $464a
 	ld hl, $000a ; $464b
 	add hl, bc ; $464e
@@ -500,10 +500,10 @@ Label_09_4675:
 	ld a, [hl+] ; $4677
 	ld d, a ; $4678
 	push hl ; $4679
-	call Func_09_45d8 ; $467a
+	call SetObjUpdateRoutine ; $467a
 	pop hl ; $467d
 	ld d, [hl] ; $467e
-	call Func_09_45ec ; $467f
+	call SetObjMoveCurve ; $467f
 	ret ; $4682
 ClearAllObjSlots:
 	ld a, $ff ; $4683
@@ -538,22 +538,22 @@ ProcessObjSlot:
 	ld de, $ddf0 ; $46c0
 	ld c, $01 ; $46c3
 	call CopyMemoryFast ; $46c5
-	ld hl, Func_09_46d3 ; $46c8
+	ld hl, DrawObjSlot ; $46c8
 	push hl ; $46cb
 	ld hl, $ddf8 ; $46cc
 	ld a, [hl+] ; $46cf
 	ld h, [hl] ; $46d0
 	ld l, a ; $46d1
 	jp hl ; $46d2
-Func_09_46d3:
-	ld hl, Func_09_46e1 ; $46d3
+DrawObjSlot:
+	ld hl, FinishObjSlotUpdate ; $46d3
 	push hl ; $46d6
 	ld a, [$ddff] ; $46d7
 	and a, a ; $46da
 	jr z, Label_09_46f0 ; $46db
 	cp a, $01 ; $46dd
 	jr z, Label_09_4718 ; $46df
-Func_09_46e1:
+FinishObjSlotUpdate:
 	ld hl, $ddfd ; $46e1
 	ld a, [hl] ; $46e4
 	inc [hl] ; $46e5
@@ -822,7 +822,7 @@ Label_09_6c65:
 	ret ; $6c6d
 ServeGfxPtrTable_09:
 	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1173 bytes
-Func_09_7103:
+GetPlayer1ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7103
 	add a, a ; $7106
 	add a, $12 ; $7107
@@ -835,7 +835,7 @@ Func_09_7103:
 	ld e, a ; $7110
 	ret ; $7111
 	INCBIN "data/bank_009/d_7112.bin" ; $7112, 8 bytes
-Func_09_711a:
+GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a, a ; $711d
 	add a, $29 ; $711e
@@ -848,7 +848,7 @@ Func_09_711a:
 	ld e, a ; $7127
 	ret ; $7128
 	INCBIN "data/bank_009/d_7129.bin" ; $7129, 108 bytes
-Func_09_7195:
+GetPlayer1CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7195
 	add a, a ; $7198
 	add a, $a4 ; $7199
@@ -861,7 +861,7 @@ Func_09_7195:
 	ld e, a ; $71a2
 	ret ; $71a3
 	INCBIN "data/bank_009/d_71a4.bin" ; $71a4, 8 bytes
-Func_09_71ac:
+GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a, a ; $71af
 	add a, $bb ; $71b0
