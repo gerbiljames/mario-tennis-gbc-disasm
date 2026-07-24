@@ -721,24 +721,40 @@ MinigameConfig_TennisMachine1:
 	ld a, $00 ; $450f
 	ld [wMinigameLevel], a ; $4511
 	ret ; $4514
-	ld l, $45 ; $4515
-	ld [hl-], a ; $4517
-	ld b, l ; $4518
-	ld [hl], $45 ; $4519
-	dec h ; $451b
-	ld b, l ; $451c
-	ld b, d ; $451d
-	ld b, l ; $451e
-	ld a, $45 ; $451f
-	ld a, [hl-] ; $4521
-	ld b, l ; $4522
-	xor a, [hl] ; $4523
-	inc bc ; $4524
+MinigameHooks_TennisMachine1:
+	; $4515, 16 bytes (mode_hooks)
+	dw TennisMachine1Hook_PerFrame ; record 0
+	dw TennisMachine1Hook_PointStart ; record 1
+	dw TennisMachine1Hook_PointEnd ; record 2
+	dw TennisMachine1Hook_MinigameStart ; record 3
+	dw TennisMachine1Hook_BallHit ; record 4
+	dw TennisMachine1Hook_Bounce ; record 5
+	dw TennisMachine1Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+TennisMachine1Hook_MinigameStart:
 	ld a, $01 ; $4525
 	ld [$c785], a ; $4527
 	call StartMinigameMatch ; $452a
 	ret ; $452d
-	INCBIN "data/bank_00d/d_452e.bin" ; $452e, 330 bytes
+TennisMachine1Hook_PerFrame:
+	call DrawMinigameScoreHud ; $452e
+	ret ; $4531
+TennisMachine1Hook_PointStart:
+	call LaunchMinigameServe ; $4532
+	ret ; $4535
+TennisMachine1Hook_PointEnd:
+	call AwardMinigamePointAndEnd ; $4536
+	ret ; $4539
+TennisMachine1Hook_RallyTick:
+	call KeepMinigameCameraFixed ; $453a
+	ret ; $453d
+TennisMachine1Hook_Bounce:
+	call CheckMinigameStartBannerTrigger ; $453e
+	ret ; $4541
+TennisMachine1Hook_BallHit:
+	call Func_0d_47e2 ; $4542
+	ret ; $4545
+	INCBIN "data/bank_00d/d_4546.bin" ; $4546, 306 bytes
 StartMinigameMatch:
 	call InitMinigameScore ; $4678
 	ld hl, $0000 ; $467b
@@ -1135,28 +1151,25 @@ MinigameConfig_TennisMachine2:
 	ld a, $01 ; $496e
 	ld [wMinigameLevel], a ; $4970
 	ret ; $4973
-	adc a, l ; $4974
-	ld c, c ; $4975
-	sub a, c ; $4976
-	ld c, c ; $4977
-	and a, [hl] ; $4978
-	ld c, c ; $4979
-	add a, h ; $497a
-	ld c, c ; $497b
-	or a, d ; $497c
-	ld c, c ; $497d
-	xor a, [hl] ; $497e
-	ld c, c ; $497f
-	xor a, d ; $4980
-	ld c, c ; $4981
-	xor a, [hl] ; $4982
-	inc bc ; $4983
+MinigameHooks_TennisMachine2:
+	; $4974, 16 bytes (mode_hooks)
+	dw TennisMachine2Hook_PerFrame ; record 0
+	dw TennisMachine2Hook_PointStart ; record 1
+	dw TennisMachine2Hook_PointEnd ; record 2
+	dw TennisMachine2Hook_MinigameStart ; record 3
+	dw TennisMachine2Hook_BallHit ; record 4
+	dw TennisMachine2Hook_Bounce ; record 5
+	dw TennisMachine2Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+TennisMachine2Hook_MinigameStart:
 	ld a, $01 ; $4984
 	ld [$c785], a ; $4986
 	call StartMinigameMatch ; $4989
 	ret ; $498c
+TennisMachine2Hook_PerFrame:
 	call DrawMinigameScoreHud ; $498d
 	ret ; $4990
+TennisMachine2Hook_PointStart:
 	farcall AdvanceMatchRng ; $4991
 	and a, $01 ; $4994
 	inc a ; $4996
@@ -1169,12 +1182,16 @@ Label_0d_49a1:
 	ld [hl], a ; $49a1
 	call LaunchMinigameServe ; $49a2
 	ret ; $49a5
+TennisMachine2Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $49a6
 	ret ; $49a9
+TennisMachine2Hook_RallyTick:
 	call KeepMinigameCameraFixed ; $49aa
 	ret ; $49ad
+TennisMachine2Hook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $49ae
 	ret ; $49b1
+TennisMachine2Hook_BallHit:
 	call Func_0d_47e2 ; $49b2
 	ret ; $49b5
 MinigameConfig_TennisMachine3:
@@ -1196,26 +1213,25 @@ MinigameConfig_TennisMachine3:
 	ld a, $02 ; $49cb
 	ld [wMinigameLevel], a ; $49cd
 	ret ; $49d0
-	ld [$ee49], a ; $49d1
-	ld c, c ; $49d4
-	inc bc ; $49d5
-	ld c, d ; $49d6
-	pop hl ; $49d7
-	ld c, c ; $49d8
-	rrca ; $49d9
-	ld c, d ; $49da
-	dec bc ; $49db
-	ld c, d ; $49dc
-	rlca ; $49dd
-	ld c, d ; $49de
-	xor a, [hl] ; $49df
-	inc bc ; $49e0
+MinigameHooks_TennisMachine3:
+	; $49d1, 16 bytes (mode_hooks)
+	dw TennisMachine3Hook_PerFrame ; record 0
+	dw TennisMachine3Hook_PointStart ; record 1
+	dw TennisMachine3Hook_PointEnd ; record 2
+	dw TennisMachine3Hook_MinigameStart ; record 3
+	dw TennisMachine3Hook_BallHit ; record 4
+	dw TennisMachine3Hook_Bounce ; record 5
+	dw TennisMachine3Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+TennisMachine3Hook_MinigameStart:
 	ld a, $04 ; $49e1
 	ld [$c785], a ; $49e3
 	call StartMinigameMatch ; $49e6
 	ret ; $49e9
+TennisMachine3Hook_PerFrame:
 	call DrawMinigameScoreHud ; $49ea
 	ret ; $49ed
+TennisMachine3Hook_PointStart:
 	farcall AdvanceMatchRng ; $49ee
 	and a, $03 ; $49f1
 	inc a ; $49f3
@@ -1228,12 +1244,16 @@ Label_0d_49fe:
 	ld [hl], a ; $49fe
 	call LaunchMinigameServe ; $49ff
 	ret ; $4a02
+TennisMachine3Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a03
 	ret ; $4a06
+TennisMachine3Hook_RallyTick:
 	call KeepMinigameCameraFixed ; $4a07
 	ret ; $4a0a
+TennisMachine3Hook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $4a0b
 	ret ; $4a0e
+TennisMachine3Hook_BallHit:
 	call Func_0d_47e2 ; $4a0f
 	ret ; $4a12
 MinigameConfig_TennisMachine4:
@@ -1255,27 +1275,25 @@ MinigameConfig_TennisMachine4:
 	ld a, $03 ; $4a28
 	ld [wMinigameLevel], a ; $4a2a
 	ret ; $4a2d
-	ld b, a ; $4a2e
-	ld c, d ; $4a2f
-	ld c, e ; $4a30
-	ld c, d ; $4a31
-	ld h, b ; $4a32
-	ld c, d ; $4a33
-	ld a, $4a ; $4a34
-	ld l, h ; $4a36
-	ld c, d ; $4a37
-	ld l, b ; $4a38
-	ld c, d ; $4a39
-	ld h, h ; $4a3a
-	ld c, d ; $4a3b
-	xor a, [hl] ; $4a3c
-	inc bc ; $4a3d
+MinigameHooks_TennisMachine4:
+	; $4a2e, 16 bytes (mode_hooks)
+	dw TennisMachine4Hook_PerFrame ; record 0
+	dw TennisMachine4Hook_PointStart ; record 1
+	dw TennisMachine4Hook_PointEnd ; record 2
+	dw TennisMachine4Hook_MinigameStart ; record 3
+	dw TennisMachine4Hook_BallHit ; record 4
+	dw TennisMachine4Hook_Bounce ; record 5
+	dw TennisMachine4Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+TennisMachine4Hook_MinigameStart:
 	ld a, $04 ; $4a3e
 	ld [$c785], a ; $4a40
 	call StartMinigameMatch ; $4a43
 	ret ; $4a46
+TennisMachine4Hook_PerFrame:
 	call DrawMinigameScoreHud ; $4a47
 	ret ; $4a4a
+TennisMachine4Hook_PointStart:
 	farcall AdvanceMatchRng ; $4a4b
 	and a, $07 ; $4a4e
 	inc a ; $4a50
@@ -1288,12 +1306,16 @@ Label_0d_4a5b:
 	ld [hl], a ; $4a5b
 	call LaunchMinigameServe ; $4a5c
 	ret ; $4a5f
+TennisMachine4Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a60
 	ret ; $4a63
+TennisMachine4Hook_RallyTick:
 	call KeepMinigameCameraFixed ; $4a64
 	ret ; $4a67
+TennisMachine4Hook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $4a68
 	ret ; $4a6b
+TennisMachine4Hook_BallHit:
 	call Func_0d_47e2 ; $4a6c
 	ret ; $4a6f
 MinigameConfig_WallPractice1:
@@ -1319,17 +1341,32 @@ MinigameConfig_WallPractice1:
 	ld a, $00 ; $4a8d
 	farcall SpawnMinigameTargetFormation ; $4a8f
 	ret ; $4a92
-	INCBIN "data/bank_00d/d_4a93.bin" ; $4a93, 16 bytes
+MinigameHooks_WallPractice1:
+	; $4a93, 16 bytes (mode_hooks)
+	dw WallPractice1Hook_PerFrame ; record 0
+	dw WallPractice1Hook_PointStart ; record 1
+	dw WallPractice1Hook_PointEnd ; record 2
+	dw RetStub ; record 3
+	dw WallPractice1Hook_BallHit ; record 4
+	dw WallPractice1Hook_Bounce ; record 5
+	dw WallPractice1Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+WallPractice1Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4aa3
 	ret ; $4aa6
+WallPractice1Hook_PointStart:
 	call StartMinigameSoloPoint ; $4aa7
 	ret ; $4aaa
+WallPractice1Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4aab
 	ret ; $4aae
+WallPractice1Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4aaf
 	ret ; $4ab2
+WallPractice1Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4ab3
 	ret ; $4ab6
+WallPractice1Hook_BallHit:
 	call Func_0d_4bc8 ; $4ab7
 	ret ; $4aba
 UpdateMinigameHudAndBallTrail:
@@ -1509,32 +1546,32 @@ MinigameConfig_WallPractice2:
 	ld a, $01 ; $4c15
 	farcall SpawnMinigameTargetFormation ; $4c17
 	ret ; $4c1a
-	dec hl ; $4c1b
-	ld c, h ; $4c1c
-	cpl ; $4c1d
-	ld c, h ; $4c1e
-	inc sp ; $4c1f
-	ld c, h ; $4c20
-	xor a, [hl] ; $4c21
-	inc bc ; $4c22
-	ccf ; $4c23
-	ld c, h ; $4c24
-	dec sp ; $4c25
-	ld c, h ; $4c26
-	scf ; $4c27
-	ld c, h ; $4c28
-	xor a, [hl] ; $4c29
-	inc bc ; $4c2a
+MinigameHooks_WallPractice2:
+	; $4c1b, 16 bytes (mode_hooks)
+	dw WallPractice2Hook_PerFrame ; record 0
+	dw WallPractice2Hook_PointStart ; record 1
+	dw WallPractice2Hook_PointEnd ; record 2
+	dw RetStub ; record 3
+	dw WallPractice2Hook_BallHit ; record 4
+	dw WallPractice2Hook_Bounce ; record 5
+	dw WallPractice2Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+WallPractice2Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4c2b
 	ret ; $4c2e
+WallPractice2Hook_PointStart:
 	call StartMinigameSoloPoint ; $4c2f
 	ret ; $4c32
+WallPractice2Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4c33
 	ret ; $4c36
+WallPractice2Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4c37
 	ret ; $4c3a
+WallPractice2Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4c3b
 	ret ; $4c3e
+WallPractice2Hook_BallHit:
 	call Func_0d_4bc8 ; $4c3f
 	ret ; $4c42
 MinigameConfig_WallPractice3:
@@ -1560,32 +1597,32 @@ MinigameConfig_WallPractice3:
 	ld a, $02 ; $4c60
 	farcall SpawnMinigameTargetFormation ; $4c62
 	ret ; $4c65
-	halt ; $4c66
-	ld c, h ; $4c67
-	ld a, d ; $4c68
-	ld c, h ; $4c69
-	ld a, [hl] ; $4c6a
-	ld c, h ; $4c6b
-	xor a, [hl] ; $4c6c
-	inc bc ; $4c6d
-	adc a, d ; $4c6e
-	ld c, h ; $4c6f
-	add a, [hl] ; $4c70
-	ld c, h ; $4c71
-	add a, d ; $4c72
-	ld c, h ; $4c73
-	xor a, [hl] ; $4c74
-	inc bc ; $4c75
+MinigameHooks_WallPractice3:
+	; $4c66, 16 bytes (mode_hooks)
+	dw WallPractice3Hook_PerFrame ; record 0
+	dw WallPractice3Hook_PointStart ; record 1
+	dw WallPractice3Hook_PointEnd ; record 2
+	dw RetStub ; record 3
+	dw WallPractice3Hook_BallHit ; record 4
+	dw WallPractice3Hook_Bounce ; record 5
+	dw WallPractice3Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+WallPractice3Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4c76
 	ret ; $4c79
+WallPractice3Hook_PointStart:
 	call StartMinigameSoloPoint ; $4c7a
 	ret ; $4c7d
+WallPractice3Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4c7e
 	ret ; $4c81
+WallPractice3Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4c82
 	ret ; $4c85
+WallPractice3Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4c86
 	ret ; $4c89
+WallPractice3Hook_BallHit:
 	call Func_0d_4bc8 ; $4c8a
 	ret ; $4c8d
 MinigameConfig_WallPractice4:
@@ -1611,55 +1648,55 @@ MinigameConfig_WallPractice4:
 	ld a, $03 ; $4cab
 	farcall SpawnMinigameTargetFormation ; $4cad
 	ret ; $4cb0
-	pop bc ; $4cb1
-	ld c, h ; $4cb2
-	push bc ; $4cb3
-	ld c, h ; $4cb4
-	ret ; $4cb5
-	ld c, h ; $4cb6
-	xor a, [hl] ; $4cb7
-	inc bc ; $4cb8
-	push de ; $4cb9
-	ld c, h ; $4cba
-	pop de ; $4cbb
-	ld c, h ; $4cbc
-	call $ae4c ; $4cbd
-	inc bc ; $4cc0
+MinigameHooks_WallPractice4:
+	; $4cb1, 16 bytes (mode_hooks)
+	dw WallPractice4Hook_PerFrame ; record 0
+	dw WallPractice4Hook_PointStart ; record 1
+	dw WallPractice4Hook_PointEnd ; record 2
+	dw RetStub ; record 3
+	dw WallPractice4Hook_BallHit ; record 4
+	dw WallPractice4Hook_Bounce ; record 5
+	dw WallPractice4Hook_RallyTick ; record 6
+	dw RetStub ; record 7
+WallPractice4Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4cc1
 	ret ; $4cc4
+WallPractice4Hook_PointStart:
 	call StartMinigameSoloPoint ; $4cc5
 	ret ; $4cc8
+WallPractice4Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4cc9
 	ret ; $4ccc
+WallPractice4Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4ccd
 	ret ; $4cd0
+WallPractice4Hook_Bounce:
 	call StubNop_0d_4bc7 ; $4cd1
 	ret ; $4cd4
+WallPractice4Hook_BallHit:
 	call Func_0d_4bc8 ; $4cd5
 	ret ; $4cd8
 MinigameConfig_TennisMachineHighScore:
 	INCBIN "data/bank_00d/d_4cd9.bin" ; $4cd9, 32 bytes
-	ld [de], a ; $4cf9
-	ld c, l ; $4cfa
-	ld d, $4d ; $4cfb
-	dec hl ; $4cfd
-	ld c, l ; $4cfe
-	add hl, bc ; $4cff
-	ld c, l ; $4d00
-	scf ; $4d01
-	ld c, l ; $4d02
-	inc sp ; $4d03
-	ld c, l ; $4d04
-	cpl ; $4d05
-	ld c, l ; $4d06
-	xor a, [hl] ; $4d07
-	inc bc ; $4d08
+MinigameHooks_TennisMachineHighScore:
+	; $4cf9, 16 bytes (mode_hooks)
+	dw TennisMachineHighScoreHook_PerFrame ; record 0
+	dw TennisMachineHighScoreHook_PointStart ; record 1
+	dw TennisMachineHighScoreHook_PointEnd ; record 2
+	dw TennisMachineHighScoreHook_MinigameStart ; record 3
+	dw TennisMachineHighScoreHook_BallHit ; record 4
+	dw TennisMachineHighScoreHook_Bounce ; record 5
+	dw TennisMachineHighScoreHook_RallyTick ; record 6
+	dw RetStub ; record 7
+TennisMachineHighScoreHook_MinigameStart:
 	ld a, $04 ; $4d09
 	ld [$c785], a ; $4d0b
 	call StartMinigameMatch ; $4d0e
 	ret ; $4d11
+TennisMachineHighScoreHook_PerFrame:
 	call DrawMinigameScoreHud ; $4d12
 	ret ; $4d15
+TennisMachineHighScoreHook_PointStart:
 	farcall AdvanceMatchRng ; $4d16
 	and a, $07 ; $4d19
 	inc a ; $4d1b
@@ -1672,12 +1709,16 @@ Label_0d_4d26:
 	ld [hl], a ; $4d26
 	call LaunchMinigameServe ; $4d27
 	ret ; $4d2a
+TennisMachineHighScoreHook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4d2b
 	ret ; $4d2e
+TennisMachineHighScoreHook_RallyTick:
 	call KeepMinigameCameraFixed ; $4d2f
 	ret ; $4d32
+TennisMachineHighScoreHook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $4d33
 	ret ; $4d36
+TennisMachineHighScoreHook_BallHit:
 	call Func_0d_47e2 ; $4d37
 	ret ; $4d3a
 MinigameConfig_WallPracticeHighScore:
@@ -1705,32 +1746,32 @@ MinigameConfig_WallPracticeHighScore:
 	ld a, $04 ; $4d5d
 	farcall SpawnMinigameTargetFormation ; $4d5f
 	ret ; $4d62
-	ld [hl], e ; $4d63
-	ld c, l ; $4d64
-	ld [hl], a ; $4d65
-	ld c, l ; $4d66
-	ld a, e ; $4d67
-	ld c, l ; $4d68
-	xor a, [hl] ; $4d69
-	inc bc ; $4d6a
-	add a, a ; $4d6b
-	ld c, l ; $4d6c
-	add a, e ; $4d6d
-	ld c, l ; $4d6e
-	ld a, a ; $4d6f
-	ld c, l ; $4d70
-	xor a, [hl] ; $4d71
-	inc bc ; $4d72
+MinigameHooks_WallPracticeHighScore:
+	; $4d63, 16 bytes (mode_hooks)
+	dw WallPracticeHighScoreHook_PerFrame ; record 0
+	dw WallPracticeHighScoreHook_PointStart ; record 1
+	dw WallPracticeHighScoreHook_PointEnd ; record 2
+	dw RetStub ; record 3
+	dw WallPracticeHighScoreHook_BallHit ; record 4
+	dw WallPracticeHighScoreHook_Bounce ; record 5
+	dw WallPracticeHighScoreHook_RallyTick ; record 6
+	dw RetStub ; record 7
+WallPracticeHighScoreHook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4d73
 	ret ; $4d76
+WallPracticeHighScoreHook_PointStart:
 	call StartMinigameSoloPoint ; $4d77
 	ret ; $4d7a
+WallPracticeHighScoreHook_PointEnd:
 	call HandleMinigamePointEnd ; $4d7b
 	ret ; $4d7e
+WallPracticeHighScoreHook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4d7f
 	ret ; $4d82
+WallPracticeHighScoreHook_Bounce:
 	call StubNop_0d_4bc7 ; $4d83
 	ret ; $4d86
+WallPracticeHighScoreHook_BallHit:
 	call Func_0d_4bc8 ; $4d87
 	ret ; $4d8a
 MinigameConfig_TargetShot:
@@ -1757,24 +1798,28 @@ MinigameConfig_TargetShot:
 	ld [$c7bc], a ; $4da9
 Label_0d_4dac:
 	ret ; $4dac
-	; $4dad, 16 bytes (records:2)
-	dw $4dcb ; record 0
-	dw $4dd2 ; record 1
-	dw $4dea ; record 2
-	dw $4dbd ; record 3
-	dw $4e18 ; record 4
-	dw $4df2 ; record 5
-	dw $4dee ; record 6
-	dw $03ae ; record 7
+MinigameHooks_TargetShot:
+	; $4dad, 16 bytes (mode_hooks)
+	dw TargetShotHook_PerFrame ; record 0
+	dw TargetShotHook_PointStart ; record 1
+	dw TargetShotHook_PointEnd ; record 2
+	dw TargetShotHook_MinigameStart ; record 3
+	dw TargetShotHook_BallHit ; record 4
+	dw TargetShotHook_Bounce ; record 5
+	dw TargetShotHook_RallyTick ; record 6
+	dw RetStub ; record 7
+TargetShotHook_MinigameStart:
 	ld a, $01 ; $4dbd
 	ld [$c785], a ; $4dbf
 	call StartMinigameMatch ; $4dc2
 	ld a, $01 ; $4dc5
 	ld [wTargetZoneEnabled], a ; $4dc7
 	ret ; $4dca
+TargetShotHook_PerFrame:
 	call DrawMinigameScoreHud ; $4dcb
 	call Func_0d_4e1c ; $4dce
 	ret ; $4dd1
+TargetShotHook_PointStart:
 	call SelectRandomMinigameShot ; $4dd2
 	farcall AdvanceMatchRng ; $4dd5
 	and a, $01 ; $4dd8
@@ -1788,10 +1833,13 @@ Label_0d_4de5:
 	ld [hl], a ; $4de5
 	call LaunchMinigameServe ; $4de6
 	ret ; $4de9
+TargetShotHook_PointEnd:
 	call EndMinigamePoint ; $4dea
 	ret ; $4ded
+TargetShotHook_RallyTick:
 	call KeepMinigameCameraFixed ; $4dee
 	ret ; $4df1
+TargetShotHook_Bounce:
 	ld a, [wPointOutcome] ; $4df2
 	and a, a ; $4df5
 	ret nz ; $4df6
@@ -1811,6 +1859,7 @@ Label_0d_4de5:
 	call StartScorePopup ; $4e12
 	sound $97 ; $4e15
 	ret ; $4e17
+TargetShotHook_BallHit:
 	call Func_0d_47e2 ; $4e18
 	ret ; $4e1b
 Func_0d_4e1c:
@@ -2076,25 +2125,30 @@ MinigameConfig_ShootingStar:
 	ld [$c7bc], a ; $51b2
 Label_0d_51b5:
 	ret ; $51b5
-	; $51b6, 16 bytes (records:2)
-	dw $51d2 ; record 0
-	dw $51dd ; record 1
-	dw $51f5 ; record 2
-	dw $51c6 ; record 3
-	dw $5201 ; record 4
-	dw $51fd ; record 5
-	dw $51f9 ; record 6
-	dw $51d9 ; record 7
+MinigameHooks_ShootingStar:
+	; $51b6, 16 bytes (mode_hooks)
+	dw ShootingStarHook_PerFrame ; record 0
+	dw ShootingStarHook_PointStart ; record 1
+	dw ShootingStarHook_PointEnd ; record 2
+	dw ShootingStarHook_MinigameStart ; record 3
+	dw ShootingStarHook_BallHit ; record 4
+	dw ShootingStarHook_Bounce ; record 5
+	dw ShootingStarHook_RallyTick ; record 6
+	dw ShootingStarHook_Draw ; record 7
+ShootingStarHook_MinigameStart:
 	call InitBallTargetActor ; $51c6
 	ld a, $01 ; $51c9
 	ld [$c785], a ; $51cb
 	call StartMinigameMatch ; $51ce
 	ret ; $51d1
+ShootingStarHook_PerFrame:
 	call DrawMinigameScoreHud ; $51d2
 	call UpdateScorePopup ; $51d5
 	ret ; $51d8
+ShootingStarHook_Draw:
 	call UpdateMinigameActors ; $51d9
 	ret ; $51dc
+ShootingStarHook_PointStart:
 	call ResetTargetHitState ; $51dd
 	farcall AdvanceMatchRng ; $51e0
 	and a, $01 ; $51e3
@@ -2108,12 +2162,16 @@ Label_0d_51f0:
 	ld [hl], a ; $51f0
 	call LaunchMinigameServe ; $51f1
 	ret ; $51f4
+ShootingStarHook_PointEnd:
 	call EndMinigamePoint ; $51f5
 	ret ; $51f8
+ShootingStarHook_RallyTick:
 	call KeepMinigameCameraFixed ; $51f9
 	ret ; $51fc
+ShootingStarHook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $51fd
 	ret ; $5200
+ShootingStarHook_BallHit:
 	call Func_0d_47e2 ; $5201
 	ret ; $5204
 InitBallTargetActor:
@@ -2144,7 +2202,7 @@ Label_0d_5228:
 	dw Label_0d_5262 ; $5237 jumptable
 	dw Label_0d_5270 ; $5239 jumptable
 	dw Label_0d_528e ; $523b jumptable
-	dw Label_00_03ae ; $523d jumptable
+	dw RetStub ; $523d jumptable
 AdvanceTargetActorState:
 	ld hl, $dc72 ; $523f
 	inc [hl] ; $5242
@@ -2432,7 +2490,58 @@ Label_0d_5421:
 	ret ; $542b
 	INCBIN "data/bank_00d/d_542c.bin" ; $542c, 192 bytes
 MinigameConfig_BananaBunch:
-	INCBIN "data/bank_00d/d_54ec.bin" ; $54ec, 200 bytes
+	INCBIN "data/bank_00d/d_54ec.bin" ; $54ec, 47 bytes
+MinigameHooks_BananaBunch:
+	; $551b, 16 bytes (mode_hooks)
+	dw BananaBunchHook_PerFrame ; record 0
+	dw BananaBunchHook_PointStart ; record 1
+	dw BananaBunchHook_PointEnd ; record 2
+	dw BananaBunchHook_MinigameStart ; record 3
+	dw BananaBunchHook_BallHit ; record 4
+	dw BananaBunchHook_Bounce ; record 5
+	dw BananaBunchHook_RallyTick ; record 6
+	dw RetStub ; record 7
+BananaBunchHook_MinigameStart:
+	ret ; $552b
+BananaBunchHook_PerFrame:
+	call UpdateMinigameHudAndBallTrail ; $552c
+	call Func_0d_55a6 ; $552f
+	ret ; $5532
+BananaBunchHook_PointStart:
+	call StartMinigameSoloPoint ; $5533
+	ld a, [wMinigameLevel] ; $5536
+	add a, a ; $5539
+	add a, $48 ; $553a
+	ld l, a ; $553c
+	adc a, $55 ; $553d
+	sub a, l ; $553f
+	ld h, a ; $5540
+	ld a, [hl+] ; $5541
+	ld h, [hl] ; $5542
+	ld l, a ; $5543
+	call CopyMinigameTilemapBlock ; $5544
+	ret ; $5547
+	INCBIN "data/bank_00d/d_5548.bin" ; $5548, 78 bytes
+BananaBunchHook_PointEnd:
+	call HandleMinigamePointEnd ; $5596
+	ret ; $5599
+BananaBunchHook_RallyTick:
+	call Func_0d_55aa ; $559a
+	ret ; $559d
+BananaBunchHook_Bounce:
+	call StubNop_0d_4bc7 ; $559e
+	ret ; $55a1
+BananaBunchHook_BallHit:
+	call Func_0d_4bc8 ; $55a2
+	ret ; $55a5
+Func_0d_55a6:
+	call Func_0d_55ca ; $55a6
+	ret ; $55a9
+Func_0d_55aa:
+	call ReflectBallVelocity ; $55aa
+	call GetMinigameGridCellIndex ; $55ad
+	ld [$c7bf], a ; $55b0
+	ret ; $55b3
 CopyMinigameTilemapBlock:
 	wram_bank $02 ; $55b4
 	ld de, $c7c0 ; $55ba
@@ -2441,6 +2550,7 @@ CopyMinigameTilemapBlock:
 	call DrawMinigameGrid ; $55c3
 	farcall FlushTilemapToVram ; $55c6
 	ret ; $55c9
+Func_0d_55ca:
 	ld hl, $c78e ; $55ca
 	ld a, [hl] ; $55cd
 	and a, a ; $55ce
@@ -2485,39 +2595,41 @@ Label_0d_55fd:
 	ret ; $5614
 MinigameConfig_BooBlast:
 	INCBIN "data/bank_00d/d_5615.bin" ; $5615, 67 bytes
-	ld l, a ; $5658
-	ld d, [hl] ; $5659
-	ld a, d ; $565a
-	ld d, [hl] ; $565b
-	ld a, [hl] ; $565c
-	ld d, [hl] ; $565d
-	ld l, b ; $565e
-	ld d, [hl] ; $565f
-	adc a, l ; $5660
-	ld d, [hl] ; $5661
-	adc a, c ; $5662
-	ld d, [hl] ; $5663
-	add a, l ; $5664
-	ld d, [hl] ; $5665
-	halt ; $5666
-	ld d, [hl] ; $5667
+MinigameHooks_BooBlast:
+	; $5658, 16 bytes (mode_hooks)
+	dw BooBlastHook_PerFrame ; record 0
+	dw BooBlastHook_PointStart ; record 1
+	dw BooBlastHook_PointEnd ; record 2
+	dw BooBlastHook_MinigameStart ; record 3
+	dw BooBlastHook_BallHit ; record 4
+	dw BooBlastHook_Bounce ; record 5
+	dw BooBlastHook_RallyTick ; record 6
+	dw BooBlastHook_Draw ; record 7
+BooBlastHook_MinigameStart:
 	call InitMinigameControllerActor ; $5668
 	call Func_0d_56b0 ; $566b
 	ret ; $566e
+BooBlastHook_PerFrame:
 	call DrawMinigameScoreAtDefaultPos ; $566f
 	call UpdateScorePopup ; $5672
 	ret ; $5675
+BooBlastHook_Draw:
 	call UpdateMinigameActors ; $5676
 	ret ; $5679
+BooBlastHook_PointStart:
 	call DisableOffscreenArrows ; $567a
 	ret ; $567d
+BooBlastHook_PointEnd:
 	call DisableMinigameControllerActor ; $567e
 	call ResolveAndShowMinigamePoint ; $5681
 	ret ; $5684
+BooBlastHook_RallyTick:
 	call StubNop_0d_56ee ; $5685
 	ret ; $5688
+BooBlastHook_Bounce:
 	call StubNop_0d_56ef ; $5689
 	ret ; $568c
+BooBlastHook_BallHit:
 	call Func_0d_56f0 ; $568d
 	ret ; $5690
 InitMinigameControllerActor:
@@ -2598,7 +2710,7 @@ Label_0d_5710:
 	dw Label_0d_572f ; $571f jumptable
 	dw Label_0d_573d ; $5721 jumptable
 	dw Label_0d_575b ; $5723 jumptable
-	dw Label_00_03ae ; $5725 jumptable
+	dw RetStub ; $5725 jumptable
 AdvanceMinigameScriptState:
 	ld hl, $dc72 ; $5727
 	inc [hl] ; $572a
@@ -2853,32 +2965,36 @@ Label_0d_588f:
 	ret z ; $589e
 	farcall SpawnMinigameTargetFormation ; $589f
 	ret ; $58a2
-	nop ; $58a3
-	rlca ; $58a4
-	ld [$58b6], sp ; $58a5
-	cp a, d ; $58a8
-	ld e, b ; $58a9
-	pop bc ; $58aa
-	ld e, b ; $58ab
-	xor a, [hl] ; $58ac
-	inc bc ; $58ad
-	call $c958 ; $58ae
-	ld e, b ; $58b1
-	push bc ; $58b2
-	ld e, b ; $58b3
-	xor a, [hl] ; $58b4
-	inc bc ; $58b5
+PerfectShotLevelHasTargets:
+	; $58a3, 3 bytes (bytes:3)
+	db $00, $07, $08 ; 0x00
+MinigameHooks_PerfectShot:
+	; $58a6, 16 bytes (mode_hooks)
+	dw PerfectShotHook_PerFrame ; record 0
+	dw PerfectShotHook_PointStart ; record 1
+	dw PerfectShotHook_PointEnd ; record 2
+	dw RetStub ; record 3
+	dw PerfectShotHook_BallHit ; record 4
+	dw PerfectShotHook_Bounce ; record 5
+	dw PerfectShotHook_RallyTick ; record 6
+	dw RetStub ; record 7
+PerfectShotHook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $58b6
 	ret ; $58b9
+PerfectShotHook_PointStart:
 	call StartMinigameSoloPoint ; $58ba
 	call ResetTargetGrid ; $58bd
 	ret ; $58c0
+PerfectShotHook_PointEnd:
 	call HandleMinigamePointEnd ; $58c1
 	ret ; $58c4
+PerfectShotHook_RallyTick:
 	call ProcessTargetTileHit ; $58c5
 	ret ; $58c8
+PerfectShotHook_Bounce:
 	call StubNop_0d_4bc7 ; $58c9
 	ret ; $58cc
+PerfectShotHook_BallHit:
 	call Func_0d_4bc8 ; $58cd
 	ret ; $58d0
 ProcessTargetTileHit:
@@ -2999,42 +3115,285 @@ Label_0d_59c8:
 	ld a, $00 ; $59c8
 	ret ; $59ca
 MinigameConfig_TreasureBox:
-	INCBIN "data/bank_00d/d_59cb.bin" ; $59cb, 799 bytes
+	INCBIN "data/bank_00d/d_59cb.bin" ; $59cb, 34 bytes
+MinigameHooks_TreasureBox:
+	; $59ed, 16 bytes (mode_hooks)
+	dw TreasureBoxHook_PerFrame ; record 0
+	dw TreasureBoxHook_PointStart ; record 1
+	dw TreasureBoxHook_PointEnd ; record 2
+	dw TreasureBoxHook_MinigameStart ; record 3
+	dw TreasureBoxHook_BallHit ; record 4
+	dw TreasureBoxHook_Bounce ; record 5
+	dw TreasureBoxHook_RallyTick ; record 6
+	dw TreasureBoxHook_Draw ; record 7
+TreasureBoxHook_MinigameStart:
+	call ClearMinigameActors ; $59fd
+	ld a, $01 ; $5a00
+	ld [$c785], a ; $5a02
+	call StartMinigameMatch ; $5a05
+	ld a, $01 ; $5a08
+	ld [wTargetZoneEnabled], a ; $5a0a
+	ld de, $5acc ; $5a0d
+	ld bc, $dc00 ; $5a10
+	call SetMinigameActorHandler ; $5a13
+	ret ; $5a16
+TreasureBoxHook_PerFrame:
+	call DrawMinigameScoreHud ; $5a17
+	call Func_0d_5a6c ; $5a1a
+	ret ; $5a1d
+TreasureBoxHook_Draw:
+	call UpdateMinigameActors ; $5a1e
+	ret ; $5a21
+TreasureBoxHook_PointStart:
+	call Func_0d_5a70 ; $5a22
+	farcall AdvanceMatchRng ; $5a25
+	and a, $01 ; $5a28
+	inc a ; $5a2a
+	ld hl, $c785 ; $5a2b
+	add a, [hl] ; $5a2e
+	cp a, $03 ; $5a2f
+	jr c, Label_0d_5a35 ; $5a31
+	sub a, $03 ; $5a33
+Label_0d_5a35:
+	ld [hl], a ; $5a35
+	call LaunchMinigameServe ; $5a36
+	ret ; $5a39
+TreasureBoxHook_PointEnd:
+	call Func_0d_5acb ; $5a3a
+	call EndMinigamePoint ; $5a3d
+	ret ; $5a40
+TreasureBoxHook_RallyTick:
+	call KeepMinigameCameraFixed ; $5a41
+	ret ; $5a44
+TreasureBoxHook_Bounce:
+	ld a, [wPointOutcome] ; $5a45
+	and a, a ; $5a48
+	ret nz ; $5a49
+	call CheckMinigameStartBannerTrigger ; $5a4a
+	call CheckBallLandedOut ; $5a4d
+	ld a, [wPointOutcome] ; $5a50
+	cp a, $06 ; $5a53
+	ret nz ; $5a55
+	ld de, $0001 ; $5a56
+	ld hl, $c782 ; $5a59
+	ld a, e ; $5a5c
+	ld [hl+], a ; $5a5d
+	ld [hl], d ; $5a5e
+	call AddToMinigameScore ; $5a5f
+	call StartScorePopup ; $5a62
+	sound $97 ; $5a65
+	ret ; $5a67
+TreasureBoxHook_BallHit:
+	call Func_0d_47e2 ; $5a68
+	ret ; $5a6b
+Func_0d_5a6c:
+	call UpdateScorePopup ; $5a6c
+	ret ; $5a6f
+Func_0d_5a70:
+	ld a, [wMinigameLevel] ; $5a70
+	add a, a ; $5a73
+	add a, $a5 ; $5a74
+	ld l, a ; $5a76
+	adc a, $5a ; $5a77
+	sub a, l ; $5a79
+	ld h, a ; $5a7a
+	ld a, [hl+] ; $5a7b
+	ld h, [hl] ; $5a7c
+	ld l, a ; $5a7d
+	farcall AdvanceMatchRng ; $5a7e
+	and a, $0f ; $5a81
+	add a, l ; $5a83
+	ld l, a ; $5a84
+	jr nc, Label_0d_5a88 ; $5a85
+	inc h ; $5a87
+Label_0d_5a88:
+	ld a, [hl] ; $5a88
+	ld [$c7a5], a ; $5a89
+	ld a, [$c7a5] ; $5a8c
+	call LoadTargetZoneConfig ; $5a8f
+	ld a, [$c788] ; $5a92
+	and a, a ; $5a95
+	jr nz, Label_0d_5a9c ; $5a96
+	xor a, a ; $5a98
+	ld [$c789], a ; $5a99
+Label_0d_5a9c:
+	xor a, a ; $5a9c
+	ld [$c788], a ; $5a9d
+	xor a, a ; $5aa0
+	ld [$dc02], a ; $5aa1
+	ret ; $5aa4
+	INCBIN "data/bank_00d/d_5aa5.bin" ; $5aa5, 38 bytes
+Func_0d_5acb:
+	ret ; $5acb
+	INCBIN "data/bank_00d/d_5acc.bin" ; $5acc, 542 bytes
 MinigameConfig_MedallionMatch:
-	INCBIN "data/bank_00d/d_5cea.bin" ; $5cea, 136 bytes
-	; $5d72, 448 bytes (bytes:14)
-	db $00, $cd, $bd, $5d, $21, $80, $00, $11, $40, $fe, $01, $10, $dc, $3e ; 0x00
-	db $01, $cd, $bd, $5d, $21, $c0, $00, $11, $80, $fd, $01, $20, $dc, $3e ; 0x0e
-	db $02, $cd, $bd, $5d, $21, $c0, $ff, $11, $00, $ff, $01, $30, $dc, $3e ; 0x1c
-	db $03, $cd, $bd, $5d, $21, $80, $ff, $11, $40, $fe, $01, $40, $dc, $3e ; 0x2a
-	db $04, $cd, $bd, $5d, $21, $40, $ff, $11, $80, $fd, $01, $50, $dc, $3e ; 0x38
-	db $05, $cd, $bd, $5d, $c9, $f5, $c5, $d5, $e5, $11, $ee, $5d, $cd, $4f ; 0x46
-	db $44, $e1, $d1, $c1, $f1, $e5, $21, $01, $00, $09, $77, $e1, $cd, $65 ; 0x54
-	db $44, $c9, $af, $ea, $89, $c7, $af, $ea, $02, $dc, $ea, $12, $dc, $ea ; 0x62
-	db $22, $dc, $ea, $32, $dc, $ea, $42, $dc, $ea, $52, $dc, $c9, $fa, $72 ; 0x70
-	db $dc, $c7, $01, $5e, $04, $5e, $12, $5e, $33, $5e, $ae, $03, $21, $72 ; 0x7e
-	db $dc, $34, $c9, $cd, $fc, $5d, $cd, $f2, $5e, $cd, $37, $5e, $a7, $c8 ; 0x8c
-	db $cd, $9e, $5e, $c3, $fc, $5d, $cd, $13, $5f, $21, $73, $dc, $35, $7e ; 0x9a
-	db $a7, $c0, $21, $78, $dc, $2a, $56, $5f, $df, $36, $08, $26, $00, $6f ; 0xa8
-	db $29, $01, $00, $ff, $09, $cd, $9a, $44, $c3, $fc, $5d, $cd, $f2, $5e ; 0xb6
-	db $c9, $fa, $b8, $c4, $e6, $01, $c2, $9c, $5e, $21, $76, $dc, $2a, $56 ; 0xc4
-	db $5f, $21, $02, $c4, $2a, $66, $6f, $7d, $93, $6f, $7c, $9a, $67, $cb ; 0xd2
-	db $7c, $28, $06, $af, $95, $6f, $9f, $94, $67, $11, $a0, $ff, $19, $38 ; 0xe0
-	db $3b, $21, $78, $dc, $2a, $56, $5f, $21, $06, $c4, $2a, $66, $6f, $7d ; 0xee
-	db $93, $6f, $7c, $9a, $67, $cb, $7c, $28, $06, $af, $95, $6f, $9f, $94 ; 0xfc
-	db $67, $11, $80, $ff, $19, $38, $19, $21, $0a, $c4, $2a, $66, $6f, $cb ; 0x10a
-	db $7c, $28, $06, $af, $95, $6f, $9f, $94, $67, $11, $40, $ff, $19, $38 ; 0x118
-	db $03, $3e, $01, $c9, $af, $c9, $3e, $10, $ea, $73, $dc, $21, $01, $00 ; 0x126
-	db $fa, $a0, $c4, $fe, $09, $20, $08, $3e, $20, $ea, $73, $dc, $21, $02 ; 0x134
-	db $00, $fa, $89, $c7, $c6, $e4, $5f, $ce, $5e, $93, $57, $1a, $cd, $24 ; 0x142
-	db $30, $fa, $89, $c7, $c6, $ec, $5f, $ce, $5e, $93, $57, $1a, $cd, $26 ; 0x150
-	db $09, $5d, $54, $21, $82, $c7, $7b, $22, $72, $cd, $66, $42, $cd, $11 ; 0x15e
-	db $42, $21, $89, $c7, $34, $c9, $c0, $bf, $be, $bd, $bc, $bb, $ba, $ba ; 0x16c
-	db $01, $05, $1e, $46, $96, $fa, $cd, $1f, $5f, $f0, $8c, $21, $7a, $dc ; 0x17a
-	db $86, $cb, $3f, $cb, $3f, $cb, $3f, $e6, $03, $c6, $0f, $6f, $ce, $5f ; 0x188
-	db $95, $67, $4e, $cd, $55, $1e, $c9, $20, $24, $28, $2c, $cd, $1f, $5f ; 0x196
-	db $0e, $3c, $fa, $73, $dc, $cd, $f6, $53, $c9, $21, $7a, $dc, $2a, $5f ; 0x1a4
-	db $2a, $57, $2a, $4f, $2a, $47, $6b, $62, $df, $46, $08, $06, $0f, $c9 ; 0x1b2
+	INCBIN "data/bank_00d/d_5cea.bin" ; $5cea, 34 bytes
+MinigameHooks_MedallionMatch:
+	; $5d0c, 16 bytes (mode_hooks)
+	dw MedallionMatchHook_PerFrame ; record 0
+	dw MedallionMatchHook_PointStart ; record 1
+	dw MedallionMatchHook_PointEnd ; record 2
+	dw MedallionMatchHook_MinigameStart ; record 3
+	dw MedallionMatchHook_BallHit ; record 4
+	dw MedallionMatchHook_Bounce ; record 5
+	dw MedallionMatchHook_RallyTick ; record 6
+	dw MedallionMatchHook_Draw ; record 7
+MedallionMatchHook_MinigameStart:
+	call Func_0d_5d65 ; $5d1c
+	ld a, $01 ; $5d1f
+	ld [$c785], a ; $5d21
+	call StartMinigameMatch ; $5d24
+	xor a, a ; $5d27
+	ld [wStandingShadowsEnabled], a ; $5d28
+	ret ; $5d2b
+	INCBIN "data/bank_00d/d_5d2c.bin" ; $5d2c, 6 bytes
+MedallionMatchHook_PerFrame:
+	call DrawMinigameScoreHud ; $5d32
+	call UpdateScorePopup ; $5d35
+	ret ; $5d38
+MedallionMatchHook_Draw:
+	call UpdateMinigameActors ; $5d39
+	ret ; $5d3c
+MedallionMatchHook_PointStart:
+	farcall AdvanceMatchRng ; $5d3d
+	and a, $01 ; $5d40
+	inc a ; $5d42
+	ld hl, $c785 ; $5d43
+	add a, [hl] ; $5d46
+	cp a, $03 ; $5d47
+	jr c, Label_0d_5d4d ; $5d49
+	sub a, $03 ; $5d4b
+Label_0d_5d4d:
+	ld [hl], a ; $5d4d
+	call LaunchMinigameServe ; $5d4e
+	call Func_0d_5dd6 ; $5d51
+	ret ; $5d54
+MedallionMatchHook_PointEnd:
+	call EndMinigamePoint ; $5d55
+	ret ; $5d58
+MedallionMatchHook_RallyTick:
+	call KeepMinigameCameraFixed ; $5d59
+	ret ; $5d5c
+MedallionMatchHook_Bounce:
+	call CheckMinigameStartBannerTrigger ; $5d5d
+	ret ; $5d60
+MedallionMatchHook_BallHit:
+	call Func_0d_47e2 ; $5d61
+	ret ; $5d64
+Func_0d_5d65:
+	call ClearMinigameActors ; $5d65
+	ld hl, $0040 ; $5d68
+	ld de, rJOYP ; $5d6b
+	ld bc, $dc00 ; $5d6e
+	ld a, $00 ; $5d71
+	call Func_0d_5dbd ; $5d73
+	ld hl, $0080 ; $5d76
+	ld de, $fe40 ; $5d79
+	ld bc, $dc10 ; $5d7c
+	ld a, $01 ; $5d7f
+	call Func_0d_5dbd ; $5d81
+	ld hl, $00c0 ; $5d84
+	ld de, $fd80 ; $5d87
+	ld bc, $dc20 ; $5d8a
+	ld a, $02 ; $5d8d
+	call Func_0d_5dbd ; $5d8f
+	ld hl, hLinkRxByte ; $5d92
+	ld de, rJOYP ; $5d95
+	ld bc, $dc30 ; $5d98
+	ld a, $03 ; $5d9b
+	call Func_0d_5dbd ; $5d9d
+	ld hl, $ff80 ; $5da0
+	ld de, $fe40 ; $5da3
+	ld bc, $dc40 ; $5da6
+	ld a, $04 ; $5da9
+	call Func_0d_5dbd ; $5dab
+	ld hl, rLCDC ; $5dae
+	ld de, $fd80 ; $5db1
+	ld bc, $dc50 ; $5db4
+	ld a, $05 ; $5db7
+	call Func_0d_5dbd ; $5db9
+	ret ; $5dbc
+Func_0d_5dbd:
+	push af ; $5dbd
+	push bc ; $5dbe
+	push de ; $5dbf
+	push hl ; $5dc0
+	ld de, $5dee ; $5dc1
+	call SetMinigameActorHandler ; $5dc4
+	pop hl ; $5dc7
+	pop de ; $5dc8
+	pop bc ; $5dc9
+	pop af ; $5dca
+	push hl ; $5dcb
+	ld hl, $0001 ; $5dcc
+	add hl, bc ; $5dcf
+	ld [hl], a ; $5dd0
+	pop hl ; $5dd1
+	call SetMinigameActorPosition ; $5dd2
+	ret ; $5dd5
+Func_0d_5dd6:
+	xor a, a ; $5dd6
+	ld [$c789], a ; $5dd7
+	xor a, a ; $5dda
+	ld [$dc02], a ; $5ddb
+	ld [$dc12], a ; $5dde
+	ld [$dc22], a ; $5de1
+	ld [$dc32], a ; $5de4
+	ld [$dc42], a ; $5de7
+	ld [$dc52], a ; $5dea
+	ret ; $5ded
+	INCBIN "data/bank_00d/d_5dee.bin" ; $5dee, 324 bytes
 MinigameConfig_FruitFantasy:
-	INCBIN "data/bank_00d/d_5f32.bin" ; $5f32, 200 bytes
+	INCBIN "data/bank_00d/d_5f32.bin" ; $5f32, 47 bytes
+MinigameHooks_FruitFantasy:
+	; $5f61, 16 bytes (mode_hooks)
+	dw FruitFantasyHook_PerFrame ; record 0
+	dw FruitFantasyHook_PointStart ; record 1
+	dw FruitFantasyHook_PointEnd ; record 2
+	dw FruitFantasyHook_MinigameStart ; record 3
+	dw FruitFantasyHook_BallHit ; record 4
+	dw FruitFantasyHook_Bounce ; record 5
+	dw FruitFantasyHook_RallyTick ; record 6
+	dw RetStub ; record 7
+FruitFantasyHook_MinigameStart:
+	ret ; $5f71
+FruitFantasyHook_PerFrame:
+	call UpdateMinigameHudAndBallTrail ; $5f72
+	call Func_0d_5fec ; $5f75
+	ret ; $5f78
+FruitFantasyHook_PointStart:
+	call StartMinigameSoloPoint ; $5f79
+	ld a, [wMinigameLevel] ; $5f7c
+	add a, a ; $5f7f
+	add a, $8e ; $5f80
+	ld l, a ; $5f82
+	adc a, $5f ; $5f83
+	sub a, l ; $5f85
+	ld h, a ; $5f86
+	ld a, [hl+] ; $5f87
+	ld h, [hl] ; $5f88
+	ld l, a ; $5f89
+	call CopyMinigameTilemapBlock ; $5f8a
+	ret ; $5f8d
+	INCBIN "data/bank_00d/d_5f8e.bin" ; $5f8e, 78 bytes
+FruitFantasyHook_PointEnd:
+	call HandleMinigamePointEnd ; $5fdc
+	ret ; $5fdf
+FruitFantasyHook_RallyTick:
+	call Func_0d_5ff0 ; $5fe0
+	ret ; $5fe3
+FruitFantasyHook_Bounce:
+	call StubNop_0d_4bc7 ; $5fe4
+	ret ; $5fe7
+FruitFantasyHook_BallHit:
+	call Func_0d_4bc8 ; $5fe8
+	ret ; $5feb
+Func_0d_5fec:
+	call Func_0d_55ca ; $5fec
+	ret ; $5fef
+Func_0d_5ff0:
+	call ReflectBallVelocity ; $5ff0
+	call GetMinigameGridCellIndex ; $5ff3
+	ld [$c7bf], a ; $5ff6
+	ret ; $5ff9
 	ds 8198, $ff ; $5ffa, fill

@@ -456,7 +456,7 @@ ClearBytes:
 	ld a, c ; $03aa
 	or a, b ; $03ab
 	jr nz, ClearBytes ; $03ac
-Label_00_03ae:
+RetStub:
 	ret ; $03ae
 ClearMemory16:
 	xor a, a ; $03af

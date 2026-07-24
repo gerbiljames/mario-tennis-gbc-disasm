@@ -1225,14 +1225,14 @@ DrawScoreboard:
 	pop bc ; $49bf
 	ld a, [wScoreboardLayout] ; $49c0
 	rst Rst00 ; $49c3
-	dw Label_00_03ae ; $49c4 jumptable
-	dw Label_00_03ae ; $49c6 jumptable
-	dw Label_00_03ae ; $49c8 jumptable
+	dw RetStub ; $49c4 jumptable
+	dw RetStub ; $49c6 jumptable
+	dw RetStub ; $49c8 jumptable
 	dw DrawScoreboardDrillResultRow ; $49ca jumptable
 	dw DrawScoreboardDrillResultRows ; $49cc jumptable
 	dw DrawScoreboardPointPips ; $49ce jumptable
-	dw Label_00_03ae ; $49d0 jumptable
-	dw Label_00_03ae ; $49d2 jumptable
+	dw RetStub ; $49d0 jumptable
+	dw RetStub ; $49d2 jumptable
 	ret ; $49d4
 DrawScoreboardDrillResultRows:
 	ld de, $0504 ; $49d5
@@ -1280,7 +1280,7 @@ Label_06_4a1c:
 	and a, $03 ; $4a23
 	ld a, a ; $4a25
 	rst Rst00 ; $4a26
-	dw Label_00_03ae ; $4a27 jumptable
+	dw RetStub ; $4a27 jumptable
 	dw DrawScoreboardPipFilled ; $4a29 jumptable
 	dw DrawScoreboardPipAlt ; $4a2b jumptable
 	dw DrawScoreboardPipAlt ; $4a2d jumptable

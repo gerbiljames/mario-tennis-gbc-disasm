@@ -1594,7 +1594,7 @@ ResolvePointOutcome:
 	push hl ; $4e09
 	ld a, [wPointOutcome] ; $4e0a
 	rst Rst00 ; $4e0d
-	dw Label_00_03ae ; $4e0e jumptable
+	dw RetStub ; $4e0e jumptable
 	dw Label_08_4e8d ; $4e10 jumptable
 	dw Label_08_4e8d ; $4e12 jumptable
 	dw Label_08_4e8d ; $4e14 jumptable
@@ -1603,7 +1603,7 @@ ResolvePointOutcome:
 	dw Label_08_4e6d ; $4e1a jumptable
 	dw Label_08_4e49 ; $4e1c jumptable
 	dw Label_08_4e5b ; $4e1e jumptable
-	dw Label_00_03ae ; $4e20 jumptable
+	dw RetStub ; $4e20 jumptable
 ResolvePointResultSequence:
 	ld hl, DelayAfterPointResolution ; $4e22
 	push hl ; $4e25
@@ -1837,8 +1837,8 @@ Label_08_4fd3:
 SpreadTeammateTargets:
 	ld a, [wOnCourtCharCountMinus1] ; $4ff5
 	rst Rst00 ; $4ff8
-	dw Label_00_03ae ; $4ff9 jumptable
-	dw Label_00_03ae ; $4ffb jumptable
+	dw RetStub ; $4ff9 jumptable
+	dw RetStub ; $4ffb jumptable
 	dw SpreadFarTeamPair ; $4ffd jumptable
 	dw SpreadBothTeamPairs ; $4fff jumptable
 SpreadBothTeamPairs:

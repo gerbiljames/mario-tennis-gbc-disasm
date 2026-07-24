@@ -2216,6 +2216,25 @@ def map_script_code_targets(rom, data_tables):
             p += 8
 
 
+def mode_hook_code_targets(rom, data_tables):
+    """Yield the in-bank code pointers held by mode_hooks tables. A minigame
+    config's +$08 field points at one of these: 8 words indexed by CallModeHook
+    ($08:$66f1) with d = the event slot (0 per-frame, 1 point start, 2 point
+    end, 3 minigame start, 4 ball hit, 5 bounce, 6 rally tick, 7 draw). The
+    handlers run only through that indirect dispatch, so descent never reaches
+    them; seeding makes them code and lets the table name each one. Unused
+    slots point at $00:$03ae, a bare `ret` in ROM0, and are skipped."""
+    for start, spec in data_tables.items():
+        if spec != "mode_hooks":
+            continue
+        base = (start // BANK_SIZE) * BANK_SIZE
+        for r in range(8):
+            p = start + r * 2
+            w = rom[p] | (rom[p + 1] << 8)
+            if 0x4000 <= w < 0x8000:
+                yield base + w - 0x4000
+
+
 def wram_bank_seq(dis, rom, off, labels):
     """Collapse the WRAM bank-switch idiom into the wram_bank macro:
     ldh [$ff96],a + ldh [rWBK],a, optionally preceded by ld a,imm. Only
@@ -3949,12 +3968,17 @@ def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
                             # records:2 tables are usually pointer tables;
                             # words that hit a labeled offset in the same
                             # bank render symbolically (same bytes at link).
-                            if spec == "records:2" and bank > 0:
+                            if spec in ("records:2", "mode_hooks") and bank > 0:
                                 for r in range((j - seg) // 2):
                                     ro = seg + r * 2
                                     w = rom[ro] | (rom[ro + 1] << 8)
                                     tgt = (bank * 0x4000 + w - 0x4000
                                            if 0x4000 <= w < 0x8000 else None)
+                                    # Every mode_hooks slot is a code pointer, so
+                                    # a ROM0 word is the always-mapped bank 0 (the
+                                    # shared do-nothing `ret`), not a stray value.
+                                    if tgt is None and spec == "mode_hooks" and w < 0x4000:
+                                        tgt = w
                                     ref = labels.get(tgt) if tgt else None
                                     lines.append(f"\tdw {ref or f'${w:04x}'}"
                                                  f" ; record {r}")
@@ -4268,6 +4292,9 @@ def main():
         # the pointers the tables embed so the code is decoded and the records
         # reference each handler by name.
         dis.seed(list(map_script_code_targets(rom, data_tables)))
+        # Minigame mode-hook handlers are likewise reached only through an
+        # indirect dispatch (CallModeHook), so seed each table's 8 slots.
+        dis.seed(list(mode_hook_code_targets(rom, data_tables)))
         dis.descend()
         if dis.infer_twin_tables():
             dis.descend()

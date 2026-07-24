@@ -26,7 +26,7 @@ Everything below is **committed** (HEAD `51a738b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**5,476 of 18,745 labels are human-named** (up from 4,816 on 2026-07-23).
+**5,641 of 18,924 labels are human-named** (up from 4,816 on 2026-07-23).
 
 ### MinigameConfigTable symbolicated (bank $0d, 2026-07-24)
 
@@ -62,12 +62,42 @@ are named: `MinigamePointLayoutSolo` (`$40b4`) is used by every 1-character
 config, `MinigamePointLayoutDuo` (`$40bd`) by every 2-character one, and
 `MinigamePointLayoutBooBlast` (`$40c6`) only by Boo Blast.
 
-Not done yet: each config's `+$08` mode-hook table is 8 slots
-(`CallModeHook` indexes `d` 0-7 — per-frame, point start, point end,
-minigame start, ball hit, bounce, rally tick, draw), and empty slots point
-at `$00:$03ae`, a bare `ret` in ROM0. Carving those 18 tables and their
-~144 handlers is the obvious follow-on and would make the whole minigame
-subsystem symbolic.
+### Minigame mode-hook tables and handlers carved (bank $0d, 2026-07-24)
+
+Each config's `+$08` field points at an 8-slot mode-hook table, and all 18
+are now carved with every slot symbolic. The slot roles are read off the
+`CallModeHook` (`$08:$66f1`) call sites rather than guessed: `d` = 0
+per-frame (`UpdateMatchFrame`), 1 point start and 2 point end (either side
+of `PlayMinigamePoint` in `RunMinigamePointLoop`), 3 minigame start (top of
+that loop), 4 ball hit (after `StartHitEffect`/`SetCharStateOnBallHit`), 5
+bounce (after the bounce sound and `wBallBounceCount`), 6 rally tick (the
+tail of `TickRallyTimers`, which returns early unless the ball crossed the
+net), and 7 draw (`DrawBallAndEffects`). Handlers are named
+`<Minigame>Hook_<Role>`.
+
+New `mode_hooks` data-table spec in `disasm.py`: it renders like
+`records:2` and its 8 slots are seeded as code, since the handlers run only
+through that indirect dispatch and recursive descent never reaches them.
+124 distinct handlers were carved out of what had been data blobs — all of
+them decode as code, and most are one- or two-call thunks over the shared
+minigame routines (`StartMinigameMatch`, `DrawMinigameScoreHud`,
+`LaunchMinigameServe`, `AwardMinigamePointAndEnd`, ...). The remaining 20
+slots point at `$00:$03ae`, a bare `ret` in ROM0 now named `RetStub`; the
+`mode_hooks` renderer resolves ROM0 words too, because every slot in this
+table is known to be a code pointer.
+
+Two pre-existing mis-decodes fell out and are fixed. Eleven **static seeds
+across `coverage/bank00d_static2.json` and `coverage/bank_misc_static.json`
+pointed into the hook tables themselves** — an earlier pass had read them
+as "object-template behavior entries ... named by the 16-byte headers", so
+16 of the 18 tables were being disassembled as instructions. Those seeds
+are removed and the file comment corrected. Separately, a 3-byte level
+table at `$58a3` (read as `[$58a3 + wMinigameLevel]` at `$0d:$5892`, now
+`PerfectShotLevelHasTargets`) was also seeded as code, and its decode
+straddled the PerfectShot hook table's first word, which is why that table
+had no label at all.
+
+Bank `$0d` goes from 166 labels / 70 named to 345 / 242.
 
 ### Actor-script `as_set_pos` / `as_set_target` were swapped (2026-07-24)
 
