@@ -139,10 +139,20 @@ Game: Mario Tennis (Game Boy Color). Addresses are real GBC CPU addresses: cartr
 ## Project-identified addresses (not in the RA notes)
 
 Addresses named by this project from disassembly evidence; also in
-`ram_map.json` so `disasm.py` renders them symbolically.
+`ram_map.json` so `disasm.py` renders them symbolically. This table is a
+straight rendering of every `ram_map.json` entry not in the RA table above —
+`ram_map.json` is the source of truth, so add names there and refresh this
+table rather than editing rows here.
 
 | Address | Region | Name | Note |
 |---|---|---|---|
+| `0xc0a0` | WRAM | `wVRAMCopyQueue` | [80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries [rom bank, wram bank, size hi, size lo, vbk, dest hi, dest lo, src?]; processed by ProcessVRAMCopyQueues |
+| `0xc0f0` | WRAM | `wGameTimer` | [4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99) |
+| `0xc100` | WRAM | `wBGPalettes` | [64 bytes] Live BG palette buffer, uploaded in VBlank when hPaletteDirtyFlags bit 0 set |
+| `0xc140` | WRAM | `wOBJPalettes` | [64 bytes] Live OBJ palette buffer, uploaded in VBlank when hPaletteDirtyFlags bit 1 set |
+| `0xc180` | WRAM | `wTileWriteQueue` | [64 bytes] VBlank single-tile write queue: 16 x 4-byte entries [addr hi, addr lo, tile (VBK0), attr (VBK1)] |
+| `0xc1c0` | WRAM | `wFrameTasks` | [64 bytes] Frame task list: 4-byte records [id, ptr lo, ptr hi, rom bank] of banked callbacks run each frame (RegisterFrameTask / ClearFrameTasks) |
+| `0xc200` | WRAM | `wMasterPalettes` | [128 bytes] Master palette copy (BG+OBJ); fades scale this into wBGPalettes/wOBJPalettes |
 | `0xc295` | WRAM | `wStoryModeEntryPoint` | [8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it |
 | `0xc296` | WRAM | `wStoryModeSpawnPosition` | [5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode |
 | `0xc2a0` | WRAM | `wStoryModeTriggerScript` | [8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript |
@@ -151,10 +161,16 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc2a5` | WRAM | `wStoryModeMenuRequest` | [8-bit] Story Mode - set to 1 on a Start-press in the overworld; opens the story-mode menu (RunStoryModeMenu) |
 | `0xc2d5` | WRAM | `wStoryModeShowLocationName` | [8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7) |
 | `0xc2d6` | WRAM | `wStoryModeLocationNameTextId` | [16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set |
+| `0xc320` | WRAM | `wCameraX` | [16-bit] BG scroll-buffer camera X (tiles<<3?) |
+| `0xc322` | WRAM | `wCameraY` | [16-bit] BG scroll-buffer camera Y |
+| `0xc326` | WRAM | `wBGRowBlitDest` | [16-bit] Tilemap address for the queued BG row blit |
+| `0xc328` | WRAM | `wBGColumnBlitX` | [8-bit] Tilemap column for the queued BG column blit |
 | `0xc32e` | WRAM | `wCurrentScene` | [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations |
 | `0xc36c` | WRAM | `wCurrentStorySlot` | [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on |
+| `0xc3a7` | WRAM | `wSpriteBufferPage` | [8-bit] High byte of current OAM shadow buffer ($c0/$c5); toggled each frame, OAM DMA source |
 | `0xc3b0` | WRAM | `wMatchPlayerChar` | [8-bit] Character id (see 0xca0b values) assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites |
 | `0xc3b1` | WRAM | `wMatchOpponentChar` | [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set via SetStoryMatchOpponent |
+| `0xc3b2` | WRAM | `wWindowFrameAttr` | [8-bit] BG attribute written for window-frame cells ($80 = BG priority) |
 | `0xc3b3` | WRAM | `wShadowTilemapBank` | [8-bit] WRAM bank of the shadow (off-screen) tilemap buffer; paired with wShadowTilemapPtr |
 | `0xc3b4` | WRAM | `wShadowTilemapPtr` | [16-bit] Base pointer of the shadow tilemap buffer (in bank wShadowTilemapBank); tiles at base, attributes at base+$0400 |
 | `0xc3b6` | WRAM | `wWindowTileAttr` | [8-bit] CGB BG attribute byte applied to window/glyph tiles when drawing (default $80 = BG priority) |
@@ -176,8 +192,9 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc47a` | WRAM | `wCameraOffsetY` | [16-bit] Camera Y offset added before the <<3 screen projection |
 | `0xc480` | WRAM | `wLandingMarkerX` | [16-bit] Projected X of the lob landing marker |
 | `0xc482` | WRAM | `wLandingMarkerY` | [16-bit] Projected Y of the lob landing marker |
+| `0xc491` | WRAM | `wPointWinnerShotType` | [8-bit] Winning-shot type for the point just won: 0=none, 1=service ace, 2=return ace, 3=smash ace, 4=lob winner, 5=drop-shot winner. Reset to 0 in the per-point state clear ($08:$4cd5); set by the Record*Stat functions ($08:$5c5f+) which also credit the matching wCharacterN stat. The on-court winner banner is ShowCourtBanner(value+$17) at $08:$4e75, i.e. banner ids 24-28 (SERVICE/RETURN/SMASH ACE, LOB, DROP SHOT) - confirmed in-game. |
 | `0xc492` | WRAM | `wMatchFramesAbort` | [8-bit] Companion abort flag to wMatchAbortFlag ($ff set by every quit-menu action): makes StepMatchFrames return immediately and suppresses result jingles |
-| `0xc4a0` | WRAM | `wCurrentShotType` | [8-bit] Shot-type code of the shot in flight. Selected from the A/B button sequence by `SelectRallyShotType`/`SelectServeShotType` (`$08`) and dispatched via the rst00 jumptable at `$07:$5445`. Codes: $00 topspin (A), $01 power topspin (A->A), $02 slice (B), $03 power slice (B->B), $04 neutral, $05-$08 reach/smash-range variants, $09 smash (A+B), $0a lob (A->B), $0b drop (B->A), $0c-$0e serves (topspin/slice/flat by first button). See `SHOTTYPE_*` in `include/constants.inc`. |
+| `0xc4a0` | WRAM | `wCurrentShotType` | [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot) |
 | `0xc4a8` | WRAM | `wBounceEffectTimer` | [8-bit] Frames left of the ball-bounce dust effect (starts at $14) |
 | `0xc4a9` | WRAM | `wHitSparkTimer` | [8-bit] Frames left of the normal swing-hit spark (starts at $10) |
 | `0xc4aa` | WRAM | `wSpecialHitTimer` | [8-bit] Frames left of the special-shot hit flash (starts at $10; drives the bank $28 screen effect) |
@@ -185,11 +202,13 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc4bb` | WRAM | `wBallShadowEnabled` | [8-bit] Nonzero draws the ball ground-shadow slot |
 | `0xc4bc` | WRAM | `wBallTrailEnabled` | [8-bit] Nonzero draws the ball trail afterimages from the position history ring |
 | `0xc4bd` | WRAM | `wBallTrailColor` | [8-bit] Trail palette index into BallTrailPalettes; nonzero also extends the trail from 2 to 5 ghosts |
+| `0xc4c0` | WRAM | `wMatchSimFrozen` | [8-bit] Nonzero freezes the per-frame match simulation: UpdateMatchFrame skips ClearSpriteSlots/UpdateMatchCamera/UpdateAllChars/ball events/UpdateBallVisuals/timers and the mode hook. Set $ff during match setup and while the pause menu is open, cleared before the play loop |
+| `0xc4c1` | WRAM | `wMatchDrawFrozen` | [8-bit] Nonzero freezes actor drawing: UpdateMatchFrame skips DrawActorsByDepth. Set $ff alongside wMatchSimFrozen while the pause menu is open |
 | `0xc4c3` | WRAM | `wMatchAbortFlag` | [8-bit] $ff = abort the match (bit 7 breaks the point/game/set/match loops); set by every pause/quit-menu action, cleared per point by ResetPointState |
 | `0xc4c4` | WRAM | `wOffscreenArrowsEnabled` | [8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally) |
 | `0xc4c7` | WRAM | `wMatchExitRequest` | [8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it |
 | `0xc4ca` | WRAM | `wStandingShadowsEnabled` | [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters |
-| `0xc4cf` | WRAM | `wOnCourtCharCountMinus1` | [8-bit] `wOnCourtCharCount` - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches (e.g. `$4ff5`, `$6063` in bank $08) |
+| `0xc4cf` | WRAM | `wOnCourtCharCountMinus1` | [8-bit] wOnCourtCharCount - 1 (0x00-0x03); jumptable index for the match engine's per-character-count dispatches |
 | `0xc4d0` | WRAM | `wServiceAceFlag` | [8-bit] Set when the point ended as a service ace (point outcome 6 with rally length 1); credited to the winner's ServiceAces stat |
 | `0xc4d1` | WRAM | `wReturnAceFlag` | [8-bit] Set when the point ended as a return ace (point outcome 6 with rally length 2); credited to the winner's ReturnAces stat |
 | `0xc4d5` | WRAM | `wMatchPointFlag` | [8-bit] Match-point indicator: $01/$ff = P1/P2 side wins the match by taking the next point, 0 = none (EvaluatePointSituation simulates the next point) |
@@ -200,6 +219,8 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc4de` | WRAM | `wMatchRetryRequest` | [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID) |
 | `0xc4df` | WRAM | `wMatchSelectNewLevelRequest` | [8-bit] Set to 1 by MatchQuitMenu_SelectNewLevel; returns to the level-select screen after the match teardown |
 | `0xc4e0` | WRAM | `wMatchMenuSelection` | [8-bit] Pause/quit menu selection (rst00 jumptable index: check rules / review controls / change options / save-quit); $ff = cancelled |
+| `0xc600` | WRAM | `wTextBuffer` | Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0 |
+| `0xc6c0` | WRAM | `wInlineTextBuffer` | 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString |
 | `0xc78c` | WRAM | `wTargetZoneEnabled` | [8-bit] Nonzero draws the 4-corner court target zone (training drills) |
 | `0xc790` | WRAM | `wTargetZoneX1` | [16-bit] Target zone X bound 1 (world units) |
 | `0xc792` | WRAM | `wTargetZoneDepth1` | [16-bit] Target zone depth bound 1 (world units) |
@@ -207,29 +228,102 @@ Addresses named by this project from disassembly evidence; also in
 | `0xc796` | WRAM | `wTargetZoneDepth2` | [16-bit] Target zone depth bound 2 (world units) |
 | `0xc7b2` | WRAM | `wModeHookTable` | [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook) |
 | `0xc7b4` | WRAM | `wModeHookBank` | [8-bit] ROM bank of the mode callback table (0 = no hooks registered) |
-| `0xc800` | WRAM | `wStorySlotData` | [buffer] Base of the story-slot state image (WRAM `$c800-$caff`): the live region holding the `wStoryModeMainCharacter*`/`wGameMode`/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) |
+| `0xc800` | WRAM | `wStorySlotData` | [buffer] Base of the story-slot state image (WRAM $c800-$caff): the live region holding the wStoryModeMainCharacter*/wGameMode/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) and reloaded from it on slot load |
 | `0xc8a7` | WRAM | `wKeepMatchStatsFlag` | [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use |
 | `0xc8df` | WRAM | `wMatchRngState` | [8-bit] Match RNG state: seeded from hVBlankCounter at match start, stirred by AdvanceMatchRng (+$73 plus ball position bytes) |
 | `0xc8ee` | WRAM | `wServeFaultFlag` | [8-bit] 1 after a first-serve fault (the next fault becomes a double fault, point outcome 2); cleared on double fault and at match reset |
-| `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound ($0320 vs $0220 at `$4104` in bank $08) and 4 on-court characters |
-| `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court: 2 singles, 4 doubles, 3 in Two-On-One; defaults to 2, set by each mode's setup code before entering the match engine |
+| `0xc8f2` | WRAM | `wMatchIsDoubles` | [8-bit] Nonzero when the current match is doubles; selects the wider court bound and 4 on-court characters |
+| `0xc8f3` | WRAM | `wOnCourtCharCount` | [8-bit] Number of characters on court (2 singles, 4 doubles, 3 in Two-On-One); one banked WRAM struct each in banks 4-7 |
 | `0xc8f8` | WRAM | `wMatchBGM` | [8-bit] BGM id (see wCurrentBGM values) played for the current match/court; tiebreak overrides it with $0e |
+| `0xc90d` | WRAM | `wStoryModeGenderOfMainCharacter` | [8-bit] Story Mode - main character's gender: $00 = male, $01 = female. Copied from StoryCharGenderTable by InitPlayerRecordFromTemplate ($02:$43db) and read-only thereafter. Proven by the dialogue pairs it selects via AdvanceDialogueTextCursor: $30:433 "Take good care of him, OK?" vs $30:434 "...of her, OK?" ($10:$7844), and $31:60 "He's , the Academy's newest student." vs $31:61 "She's ..." ($13:$49b8). Also picks the gendered overworld object defs ($56 + gender). |
+| `0xc90e` | WRAM | `wStoryModeMainCharacterLeftHanded` | [8-bit] Story Mode - nonzero when the main character plays left-handed. Written from wCharSelectHandedness at $38:$48ba (record offset +$0e) and, on the bank $02 new-game path, from bit 2 of the character id ($02:$51c5). Bank $17 uses it to swap the spin-serve briefing text between $36:696 ("serve to the right with topspin and to the left with slice") and $36:697, its mirror image. |
+| `0xc94d` | WRAM | `wStoryModeGenderOfPartnerCharacter` | [8-bit] Story Mode - doubles partner's gender ($00 male, $01 female), the partner record's copy of the field at the $40 stride. Selects the partner object def ($58 + gender) and, with the main character's gender, the four-way scene key (main << 1) \| (main XOR partner) that $13:$78c4 passes to RunStorySceneByMode. |
+| `0xc94e` | WRAM | `wStoryModePartnerCharacterLeftHanded` | [8-bit] Story Mode - the partner record's copy of the left-handed flag (record offset +$0e at the $40 stride); written by the same character-select path as wStoryModeMainCharacterLeftHanded. |
+| `0xc9c0` | WRAM | `wGameFlags` | Event flag bit-array; rst $20/$28/$30 set/clear/test wGameFlags[byte] with mask $80 >> bit |
+| `0xcb00` | WRAM | `wStoryCharacterSlot` | [8-bit] Story Mode - which of the two story character records the character-select / name-entry / char-data screens are acting on: 0 = main character, 1 = partner. Used as a $40-stride index into the wStoryModeMainCharacter*/wStoryModePartnerCharacter* pair (GetActiveStoryNameBuffer at $38:$73fa returns wStoryModeNameOfMainCharacter or ...OfPartnerCharacter straight off it). |
+| `0xcb04` | WRAM | `wMenuCursorX` | [8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b |
+| `0xcb05` | WRAM | `wMenuCursorY` | [8-bit] Menu cursor row; MoveMenuCursor wraps it at the row count in c |
 | `0xcb06` | WRAM | `wMenuCursor2X` | [8-bit] Secondary menu cursor column (parallel to wMenuCursorX; second selection region of the shared menu-input handler) |
 | `0xcb07` | WRAM | `wMenuCursor2Y` | [8-bit] Secondary menu cursor row (parallel to wMenuCursorY) |
 | `0xcb08` | WRAM | `wMenuCursorLockFlags` | [8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler |
+| `0xcb0b` | WRAM | `wAnimatedTileSet` | [8-bit] Which animated-tile set the shared UpdateAnimatedTiles frame task ($39:$4342) cycles: masked with $03 and used as the index into the two pointer tables at $39:$4403 and $39:$440b. Written (values $00-$03 only) by the screen setup routines that install the task: $10:$4f92 (main menu, 0), $17:$44a6/$44f5 (court diagram, 0), $17:$6f4c (1), $1b:$73e7 (1), $1e:$7333 (1), $3b:$44b3/$496d/$4d03/$5151 (0), $3b:$7a03 (star-chart results, 1), $3e:$49f7/$4abc/$4c2b (link screens, 0), $16:$4a18/$4a30 (match result: 2 on win, 3 on lose, alongside the matching palette load). |
+| `0xcb0c` | WRAM | `wAnimatedTilePeriod` | [8-bit] Frame period of the animated-tile task: $cb0a counts 0,1,..,period-1 and the animation only steps on the frame it wraps to 0 ($39:$434e-$4363). Written with $03 by almost every caller, $05 at $3e:$4ac1, $06 at $16:$4a6c. |
+| `0xcb0d` | WRAM | `wMenuInputPressed` | [8-bit] Menu loop's copy of hInputPressed (same bit layout as hPlayerInputFlags) |
 | `0xcb0e` | WRAM | `wMatchFormatDoubles` | [8-bit] Match-format menu: singles (0) / doubles (1) selection; copied to wMatchIsDoubles |
 | `0xcb0f` | WRAM | `wMatchFormatGames` | [8-bit] Match-format menu: games-per-set selection index; table-mapped to wMatchTypeNumberOfGames |
 | `0xcb10` | WRAM | `wMatchFormatSets` | [8-bit] Match-format menu: number-of-sets selection index (0-2); table-mapped to wMatchTypeNumberOfSets |
 | `0xcb11` | WRAM | `wMenuSlideDirection` | [8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions |
+| `0xcb26` | WRAM | `wPauseMenuWindowId` | [8-bit] Window handle owned by bank $1a's menu code. Stored from the return value of CreateMenuWindowFromText ($1a:$403c) and CreateWindow ($1a:$43c0), then passed in a to RunMenuSelectionShared ($1a:$404b), CloseWindow ($1a:$4070, $1a:$444d), WriteStringToWindow ($1a:$43df/$43f9) and GetWindowStructPtr ($1a:$4149). |
+| `0xcb27` | WRAM | `wMenuInitialRow` | [8-bit] Preset cursor row for the next RunMenuSelectionShared ($05:$4aa8) call: at menu open it is copied into the live row variable ($d830, WRAM bank $05) and then cleared to 0 ($05:$4ad1-$4ad8), so it defaults to row 0. Bank $1a writes the last selected row here ($1a:$41b8/$41ca/$4203/$4232) before rebuilding the pause menu so re-entry restores the cursor; $1a:$4093 clears it when the menu closes for good. |
+| `0xcb28` | WRAM | `wMenuAdjustRowMask` | [8-bit] Per-row mask of menu rows on which LEFT/RIGHT act as a value adjust: bit 7 = mask present, bits 0-6 = one bit per row (tested by rotating right ($d830)+1 times, $05:$4c77-$4c8e and $05:$4ca3-$4cba). Gates the LEFT/RIGHT branch of the menu driver (Func_05_4c76, called at $05:$4bd5) and makes AnimateMenuScrollArrowsTask draw the left/right arrows on that row. Set by bank $1a: $83 (rows 0-1) for the pause menu at $1a:$4249, $8c (rows 2-3) for the minigame pause menu at $1a:$4386; cleared at $1a:$4096. |
+| `0xcb29` | WRAM | `wMenuKeepOpenRowMask` | [8-bit] Per-row mask (same bit7-present + rotate-by-row encoding as $cb28) of menu rows that must NOT close the menu window when chosen: after RunMenuSelectionShared returns, $1a:$4057-$406e tests the bit for the chosen row and jumps past the CloseWindow call at $1a:$4070 when set. Written with the same values as $cb28 ($83 at $1a:$424e, $8c at $1a:$4389); cleared at $1a:$409c. |
+| `0xcb2d` | WRAM | `wTennisDictScrollTop` | [8-bit] Study Vocabulary / Tennis Dictionary screen (bank $3f): index of the first entry shown in the 6-row scrolling term list. Absolute entry = ($cb2d + $cb2e) mod $cb2f (Func_3f_517b, $3f:$5181). Advanced/wrapped against $cb2f when the cursor runs off the top/bottom ($3f:$56d6-$56e2, $3f:$5700-$570c), recomputed by the page-jump helpers Func_3f_5192/Func_3f_520f, and used as the render start in Func_3f_5261 ($3f:$528d). Cleared on screen entry at $3f:$40c8. |
+| `0xcb2e` | WRAM | `wTennisDictCursorRow` | [8-bit] Study Vocabulary screen (bank $3f): cursor row within the visible page. On the scrolling term list it is clamped to 0-5 ($3f:$56c6-$56f8) and scrolls $cb2d past those limits; on the 9-cell category index page it is clamped to 0-8 ($3f:$55b0-$55de). Drives the highlight row (stride $80 = 4 tilemap rows, Func_3f_54c8) and the hand-cursor sprite Y (stride $10 px, $3f:$4f9a-$4fab). Cleared at $3f:$40cb and reset to 0 by the page-jump helpers ($3f:$51a2, $3f:$522c, $3f:$5495). |
+| `0xcb2f` | WRAM | `wTennisDictEntryCount` | [8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f_539e that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac). |
+| `0xcb32` | WRAM | `wTennisDictCategoryMask` | [8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f_539e to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625). |
+| `0xcb34` | WRAM | `wTennisDictMode` | [8-bit] Study Vocabulary screen (bank $3f): the mode argument passed in a to TennisDictionaryScreen, stored at $3f:$4082. Modes 0-5 pick the category mask in $cb32 and open the term list directly; mode 6 (the only value used in the retail flow, $10:$54b8) opens the 9-cell category index page instead - checked at $3f:$40f0, $3f:$412a, $3f:$4ed4 (index-page sprite animation) and $3f:$56ab (B-button return code $10 vs $01). |
+| `0xcb37` | WRAM | `wTennisDictFlags` | [8-bit] Study Vocabulary screen (bank $3f) display flags, cleared at $3f:$40c5. bit 0 = a description window is open: set at $3f:$5620 before CreateDialogueWindow, cleared at $3f:$5699/$413a, and freezes the hand-cursor animation counter $cb3e ($3f:$4f8c). bit 1 = the scrolling term list is on screen (set $3f:$414d/$41d0, cleared $3f:$421a for the index page); gates drawing of the cursor sprites ($3f:$4f85) and shifts the index-page sprites by $10 px ($3f:$4f1f/$4f3a/$4f55/$4f70). bit 2 / bit 3 = flash the left / right page arrow this frame - set on LEFT ($3f:$571b) and RIGHT ($3f:$5731), drawn from SpriteTemplate_3f_5006 at X $18 / $88 ($3f:$4fc9/$4fdc), and both cleared at the top of every input tick ($3f:$560a). |
 | `0xcb3f` | WRAM | `wCutsceneStep` | [8-bit] Bank $6b cutscene driver (intro/title/award ceremony): current step index, dispatched through the per-scene jumptable |
 | `0xcb40` | WRAM | `wCutsceneStepTimer` | [8-bit] Bank $6b cutscene driver: frame counter for the current step; incremented per frame and compared against per-step thresholds to advance wCutsceneStep |
 | `0xcb42` | WRAM | `wCutsceneScrollX` | [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame |
-| `0xff96` | HRAM | `hWramBank` | [8-bit] Shadow of the current WRAM bank (last value written to `rSVBK`); always written together with `rSVBK` |
+| `0xcb4a` | WRAM | `wIntroCutsceneScrollY` | [16-bit] Intro cutscene (bank $6b): world-space vertical scroll/camera position, little-endian. Initialised to $0120 at the start of scenes 00/12/19 ($6b:$41bf, $6b:$4916, $6b:$4c65) and decremented every frame by the per-frame delta table at $6b:$4cc1 indexed by wCutsceneStepTimer ($6b:$4caa-$4cbd). Consumers: ApplyCutsceneScrollToSpriteX ($6b:$5191) subtracts it from the sprite base coordinate that QueueSpriteTemplate treats as Y (the sp+0 slot, $00:$1ebf - so despite the existing label it is the Y axis), and SetCameraYFromScrollPos ($6b:$60d5) shifts it left 5 into wCameraY. $6b:$60fe uses ($cb48 - $cb4a) as the on-screen Y of the object drawn by QueueIntroSpriteBlock. |
+| `0xcb50` | WRAM | `wCharSelectHandedness` | [8-bit] Story-mode character-select screen (bank $38): handedness toggle, 0 = default, 1 = mirrored (left-handed). Cleared on entry ($38:$4815, $38:$4984, $38:$4a82) and flipped by START ($38:$48fc `xor $01`) - the on-screen prompt for that row is text 30:118 'START: Change Hands' ($38:$4b0c). When non-zero, Func_38_4bac sets bit 5 (OAM X-flip) in wCharSpriteSlot+1 for all four displayed characters ($38:$4c6f-$4ca6), and Func_38_4e23 draws the marker sprite with tile base $00 instead of $02 ($38:$4e3c). The chosen value is written into the story character record at +$0e ($38:$48ba). |
+| `0xcb52` | WRAM | `wCharSelectIsPartner` | [8-bit] Story-mode character-select screen (bank $38): which pick is in progress - 0 = main character, 1 = partner. Stored from the b argument of RunCharacterSelectScreen ($38:$47d0; callers pass 0 at $10:$40bb and $1b:$61fa, 1 at $1b:$629b). Selects the prompt text (0 -> text 30:117 'Pick a Character' at $38:$4ae8, 1 -> text 30:119 'Choose Partner' at $38:$4afb), swaps in mugshots 2/3 and repositions the two character sprites ($38:$4a27, $38:$4c13), and is doubled into the character id: id = 2*$cb52 + cursor ($38:$4896, $38:$4958, $38:$4e09). |
+| `0xcb53` | WRAM | `wLinkPartnerCourtMask` | [8-bit] Court-select: the link partner's bonus-court unlock mask, received over the cable. Cleared at $10:$5171 for local play; set at $38:$75ef/$75f7 from the received link block ($ca8a or $ca0a depending on hLinkState) right after the block-$26 exchange that sends our own $cb54 ($38:$759c). ORed with $cb54 before StoreCourtUnlockBits ($3e:$5d18, $3e:$65db) and before choosing the 9-court vs 4-court menu ($38:$748d). |
+| `0xcb54` | WRAM | `wUnlockedCourtMask` | [8-bit] Bitmask of the five unlockable bonus courts (court ids 4-8; courts 0-3 are always available per IsCourtUnlocked $3e:$697b). Built from the save flags by ComputeUnlockedCourtFlags ($3e:$69a0-$69c9, one bit per row of the 5-entry table at $3e:$69ca) and cleared at $10:$5174. Passed in b to StoreCourtUnlockBits ($3e:$695a), which explodes it into the five per-court bytes at $d000 in WRAM bank $02; also decides whether the 9-court or the 4-court select menu runs ($10:$5199, $38:$7489) and is the payload of link block $26 ($38:$759c). |
+| `0xcb61` | WRAM | `wBgMapShadowDirty` | Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it). |
+| `0xcb62` | WRAM | `wDebugCharViewerPage` | [8-bit] Debug character viewer (Func_1a_67d4, reachable only from the unused debug path at $01:$41bf/$41fd with hDebugStepMode set): page of the 2x16 character grid, 0 or 1. Cleared at $1a:$67d5, incremented/decremented when the cursor wraps off the bottom/top row ($1a:$695f, $1a:$698f), and combined into the selected character id as ($cb62 << 4) + $cb63 -> $d002 ($1a:$69d0-$69dc), which is then fed to LoadOnCourtCharTilesA ($1a:$6837). |
+| `0xcb63` | WRAM | `wDebugCharViewerIndex` | [8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9). |
+| `0xcb76` | WRAM | `wGlyphTileWritePtr` | VRAM tile-data write pointer for the proportional-glyph renderer (bank $05 text engine) |
+| `0xcc00` | WRAM | `wDebugTextBuffer` | [576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active |
+| `0xd841` | WRAM | `wTextArrowBlinkCounter` | WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile) |
+| `0xd847` | WRAM | `wTextArgStringWriteIndex` | WRAM5: write index into wTextArgStringQueue (max 16) |
+| `0xd849` | WRAM | `wTextArgShortTextWriteIndex` | WRAM5: write index for the short-text-id arg queue |
+| `0xd84a` | WRAM | `wTextArgStringCount` | WRAM5: count of queued arg strings (mirrors wTextArgStringWriteIndex) |
+| `0xd850` | WRAM | `wTextPageBreakRequest` | WRAM5: set by TextCmdWaitButtonPage; TextInterpreterLoop saves resume offset to $d84e/f and returns |
+| `0xd864` | WRAM | `wGlyphVramDest` | WRAM5: current VRAM destination address for glyph tiles (lo/hi) |
+| `0xd869` | WRAM | `wTextStreamPtr` | WRAM5: current read pointer into the text byte stream |
+| `0xd880` | WRAM | `wShortTextBuffer` | Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0 |
+| `0xd8b0` | WRAM | `wTextArgStringQueue` | WRAM5: 16 x 2-byte string pointers queued by PushTextArgString (hi nibble = WRAM bank tag) |
+| `0xd8d0` | WRAM | `wTextArgNumberQueue` | WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber |
+| `0xff8a` | HRAM | `hScrollY` | [8-bit] SCY shadow, applied in VBlank |
+| `0xff8b` | HRAM | `hScrollX` | [8-bit] SCX shadow, applied in VBlank |
+| `0xff8c` | HRAM | `hVBlankCounter` | [8-bit] Increments every VBlank |
+| `0xff8d` | HRAM | `hVBlankOccurred` | [8-bit] Set at end of VBlank handler; AdvanceFrame waits on it |
+| `0xff8e` | HRAM | `hDebugTextDirty` | [8-bit] Nonzero = wDebugTextBuffer needs re-upload |
+| `0xff8f` | HRAM | `hFrameTasksReady` | [8-bit] Nonzero when wFrameTasks is consistent; cleared while the list is mutated so the frame hook skips it |
+| `0xff91` | HRAM | `hInputPressed` | [8-bit] Buttons newly pressed this frame (same bit layout as hPlayerInputFlags) |
+| `0xff92` | HRAM | `hInputRepeatButtons` | [8-bit] Buttons held for key-repeat tracking |
+| `0xff93` | HRAM | `hInputRepeatTimer` | [8-bit] Frames until next key-repeat fire |
+| `0xff94` | HRAM | `hInputRisingEdge` | [8-bit] Buttons newly pressed this frame (raw, before repeat processing) |
+| `0xff95` | HRAM | `hRomBank` | [8-bit] Shadow of the current ROM bank (written together with the MBC register at $2000) |
+| `0xff96` | HRAM | `hWramBank` | [8-bit] Shadow of the current WRAM bank (last value written to rSVBK); match engine swaps banks 4-7 for per-character data |
 | `0xff97` | HRAM | `hSramBank` | [8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000) |
+| `0xff98` | HRAM | `hShowDebugConsole` | [8-bit] 1 = VBlank switches BG map to the debug console view |
+| `0xff99` | HRAM | `hVRAMQueueDirty` | [8-bit] Nonzero = VRAM copy / tile-write queues have pending entries |
+| `0xff9b` | HRAM | `hSpriteQueueIndex` | [8-bit] Write offset into the OAM shadow buffer (max $a0) |
+| `0xff9c` | HRAM | `hSpriteQueueBase` | [8-bit] OAM shadow offset where per-frame sprites start (entries below persist) |
+| `0xff9d` | HRAM | `hPaletteDirtyFlags` | [8-bit] Bit 0 = BG palettes dirty, bit 1 = OBJ palettes dirty |
+| `0xff9e` | HRAM | `hDebugStepMode` | [8-bit] Debug pause/frame-step mode (0 = off, 1-3) |
+| `0xffa0` | HRAM | `hPeakLY` | [8-bit] Peak LY at end-of-frame (frame time meter shown on debug console) |
+| `0xffa1` | HRAM | `hPeakLYFrames` | [8-bit] Frames until hPeakLY decays |
+| `0xffa2` | HRAM | `hFadeState` | [8-bit] Bit 0 = fading out, bit 1 = fading in, bit 7 = fade to white |
+| `0xffa3` | HRAM | `hFadeSpeed` | [8-bit] Fade step per frame |
+| `0xffa4` | HRAM | `hFadeCounter` | [8-bit] Fade progress counter (starts at $7c) |
+| `0xffa6` | HRAM | `hInputRepeatDelay` | [8-bit] Key-repeat interval reload value |
+| `0xffa7` | HRAM | `hMathSign` | [8-bit] Sign scratch for signed multiply/divide wrappers |
+| `0xffa8` | HRAM | `hMulResult` | [32-bit] Full 32-bit product from MulHLByDE |
+| `0xffb8` | HRAM | `hBGRowBlitPending` | [8-bit] Nonzero = row in wBGRowBlitBuffer awaits VBlank blit |
+| `0xffb9` | HRAM | `hBGColumnBlitPending` | [8-bit] Nonzero = column in wBGColumnBlitBuffer awaits VBlank blit |
+| `0xffba` | HRAM | `hBGColumnBlitDone` | [8-bit] Set when the slow column blit ran this VBlank (skips VRAM queue) |
+| `0xffbc` | HRAM | `hFadedOut` | [8-bit] Nonzero = screen currently faded out |
 | `0xffc0` | HRAM | `hLinkRxByte` | [8-bit] Last byte received over the serial link (captured from rSB in the serial interrupt) |
 | `0xffc1` | HRAM | `hLinkTxByte` | [8-bit] Next byte to transmit over the serial link (copied to rSB) |
 | `0xffc2` | HRAM | `hLinkState` | [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths |
 | `0xffc8` | HRAM | `hLinkCounter` | [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8 |
+| `0xffcd` | HRAM | `hActiveJingle` | [8-bit] Jingle sound id currently overriding BGM (0 = none) |
+| `0xfffc` | HRAM | `hRandomSeed` | [16-bit] RNG state (x*5 + $3573 per VBlank) |
+| `0xfffe` | HRAM | `hIsCGB` | [8-bit] 1 = running on Game Boy Color hardware |
 
 ## Union overlays (`ram_unions.json`)
 
