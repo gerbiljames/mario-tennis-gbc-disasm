@@ -283,9 +283,9 @@ Label_04_41f2:
 	ld c, l ; $41ff
 	ld b, h ; $4200
 	call StepActorScript ; $4201
-	call Func_04_426e ; $4204
-	call Func_04_42ae ; $4207
-	call Func_04_4402 ; $420a
+	call UpdateActorJumpPhysics ; $4204
+	call AdvanceActorTowardTarget ; $4207
+	call UpdateCameraIfActorIsCameraTarget ; $420a
 	pop hl ; $420d
 	pop bc ; $420e
 Label_04_420f:
@@ -328,7 +328,7 @@ Label_04_4247:
 	ld l, e ; $424b
 	ld h, d ; $424c
 	call FarReadByte ; $424d
-	ld hl, Func_04_4260 ; $4250
+	ld hl, ActorScriptOpcodeReturn ; $4250
 	push hl ; $4253
 	add a, a ; $4254
 	add a, $7d ; $4255
@@ -340,7 +340,7 @@ Label_04_4247:
 	ld h, [hl] ; $425d
 	ld l, a ; $425e
 	jp hl ; $425f
-Func_04_4260:
+ActorScriptOpcodeReturn:
 	pop bc ; $4260
 	ld hl, $0000 ; $4261
 	add hl, bc ; $4264
@@ -352,7 +352,7 @@ Func_04_4260:
 	jr nz, Label_04_4247 ; $426a
 	pop bc ; $426c
 	ret ; $426d
-Func_04_426e:
+UpdateActorJumpPhysics:
 	ld hl, $0012 ; $426e
 	add hl, bc ; $4271
 	ld a, [hl+] ; $4272
@@ -401,7 +401,7 @@ Label_04_429d:
 	ld [hl], d ; $42ac
 Label_04_42ad:
 	ret ; $42ad
-Func_04_42ae:
+AdvanceActorTowardTarget:
 	ld hl, $0005 ; $42ae
 	add hl, bc ; $42b1
 	res 6, [hl] ; $42b2
@@ -665,7 +665,7 @@ Label_04_43dc:
 Label_04_4400:
 	pop bc ; $4400
 	ret ; $4401
-Func_04_4402:
+UpdateCameraIfActorIsCameraTarget:
 	ld hl, $0020 ; $4402
 	add hl, bc ; $4405
 	ld a, [hl] ; $4406
@@ -1394,16 +1394,16 @@ Label_04_47fa:
 	ld [$daf5], a ; $489d
 	ld a, b ; $48a0
 	ld [$daf6], a ; $48a1
-	call Func_04_48c3 ; $48a4
+	call TryPickRandomReachableTarget ; $48a4
 	and a, a ; $48a7
 	jr nz, Label_04_48be ; $48a8
-	call Func_04_48c3 ; $48aa
+	call TryPickRandomReachableTarget ; $48aa
 	and a, a ; $48ad
 	jr nz, Label_04_48be ; $48ae
-	call Func_04_48c3 ; $48b0
+	call TryPickRandomReachableTarget ; $48b0
 	and a, a ; $48b3
 	jr nz, Label_04_48be ; $48b4
-	call Func_04_48c3 ; $48b6
+	call TryPickRandomReachableTarget ; $48b6
 	and a, a ; $48b9
 	jr nz, Label_04_48be ; $48ba
 	jr Label_04_48be ; $48bc
@@ -1414,7 +1414,7 @@ Label_04_48bf:
 	inc de ; $48c0
 	inc de ; $48c1
 	ret ; $48c2
-Func_04_48c3:
+TryPickRandomReachableTarget:
 	push bc ; $48c3
 	ld hl, hActorPtr ; $48c4
 	ld a, [hl+] ; $48c7
@@ -1448,7 +1448,7 @@ Func_04_48c3:
 	push hl ; $48f5
 	ld a, [$daf4] ; $48f6
 	ld bc, $00e0 ; $48f9
-	call Func_04_512f ; $48fc
+	call OffsetPointByPolarVector ; $48fc
 	call IsTerrainBlockedAtPoint ; $48ff
 	pop hl ; $4902
 	pop de ; $4903
@@ -1459,7 +1459,7 @@ Func_04_48c3:
 	ld a, [$daf4] ; $4909
 	add a, $20 ; $490c
 	ld bc, $00e0 ; $490e
-	call Func_04_512f ; $4911
+	call OffsetPointByPolarVector ; $4911
 	call IsTerrainBlockedAtPoint ; $4914
 	pop hl ; $4917
 	pop de ; $4918
@@ -1470,7 +1470,7 @@ Func_04_48c3:
 	ld a, [$daf4] ; $491e
 	add a, $e0 ; $4921
 	ld bc, $00e0 ; $4923
-	call Func_04_512f ; $4926
+	call OffsetPointByPolarVector ; $4926
 	call IsTerrainBlockedAtPoint ; $4929
 	pop hl ; $492c
 	pop de ; $492d
@@ -1742,7 +1742,7 @@ Label_04_4aa5:
 	add hl, bc ; $4ab1
 	ld a, [hl] ; $4ab2
 	cp a, $02 ; $4ab3
-	call z, Func_04_5526 ; $4ab5
+	call z, DrawAndAnimateActor ; $4ab5
 	pop de ; $4ab8
 Label_04_4ab9:
 	ld hl, $0040 ; $4ab9
@@ -2499,7 +2499,7 @@ ProjectPointFromActor:
 	add hl, de ; $512c
 	pop de ; $512d
 	ret ; $512e
-Func_04_512f:
+OffsetPointByPolarVector:
 	push de ; $512f
 	push hl ; $5130
 	ld l, c ; $5131
@@ -3027,7 +3027,7 @@ Label_04_5435:
 	pop hl ; $5447
 	ld l, c ; $5448
 	ld h, b ; $5449
-	call Func_04_5514 ; $544a
+	call ActorSlotPtrToIndex ; $544a
 	jr Label_04_5452 ; $544d
 Label_04_544f:
 	pop hl ; $544f
@@ -3185,7 +3185,7 @@ Label_04_5501:
 	pop bc ; $5511
 	pop af ; $5512
 	ret ; $5513
-Func_04_5514:
+ActorSlotPtrToIndex:
 	push de ; $5514
 	push hl ; $5515
 	ld a, $ff ; $5516
@@ -3201,7 +3201,7 @@ Label_04_5523:
 	pop hl ; $5523
 	pop de ; $5524
 	ret ; $5525
-Func_04_5526:
+DrawAndAnimateActor:
 	call DrawActorSprite ; $5526
 	ld hl, $0030 ; $5529
 	add hl, bc ; $552c
@@ -3213,8 +3213,8 @@ Func_04_5526:
 	ret ; $5537
 Label_04_5538:
 	call AdvanceActorAnimation ; $5538
-	call Func_04_5673 ; $553b
-	call Func_04_56c3 ; $553e
+	call UpdateActorFacingFromHeading ; $553b
+	call QueueActorFrameTileCopy ; $553e
 	ret ; $5541
 DrawActorSprite:
 	ld hl, $0030 ; $5542
@@ -3438,7 +3438,7 @@ Label_04_565d:
 	set 6, [hl] ; $5670
 Label_04_5672:
 	ret ; $5672
-Func_04_5673:
+UpdateActorFacingFromHeading:
 	ld hl, $0030 ; $5673
 	add hl, bc ; $5676
 	bit 0, [hl] ; $5677
@@ -3481,7 +3481,7 @@ Label_04_56a3:
 Label_04_56b2:
 	ret ; $56b2
 	INCBIN "data/bank_004/d_56b3.bin" ; $56b3, 16 bytes
-Func_04_56c3:
+QueueActorFrameTileCopy:
 	test_flag $0d, 7 ; $56c3
 	ret nz ; $56c6
 	ld hl, $0030 ; $56c7

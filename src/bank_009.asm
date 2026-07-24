@@ -312,11 +312,7 @@ HideCourtBanner:
 	ld bc, $ddb0 ; $437e
 	call StartObjExitAnim ; $4381
 	ret ; $4384
-	INCBIN "data/bank_009/d_4385.bin" ; $4385, 83 bytes
-SetActorPositionRaw:
-	INCBIN "data/bank_009/d_43d8.bin" ; $43d8, 71 bytes
-SetActorMoveTargetRaw:
-	INCBIN "data/bank_009/d_441f.bin" ; $441f, 310 bytes
+	INCBIN "data/bank_009/d_4385.bin" ; $4385, 464 bytes
 InitAllObjSlots:
 	wram_bank $04 ; $4555
 	ld bc, $dd80 ; $455b

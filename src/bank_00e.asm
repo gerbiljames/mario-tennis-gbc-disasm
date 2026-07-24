@@ -1552,7 +1552,7 @@ Label_0e_515e:
 	ld a, [$c2bc] ; $5164
 	and a, a ; $5167
 	jr nz, Label_0e_51a3 ; $5168
-	call Func_0e_520f ; $516a
+	call MirrorPlayerSpriteIfLeftHanded ; $516a
 	script_set_anim ACTOR_PLAYER, $09 ; $516d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5174
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_51d7 ; $517b
@@ -1560,7 +1560,7 @@ Label_0e_515e:
 	script_null_script ACTOR_PLAYER ; $518b
 	script_set_anim ACTOR_PLAYER, $01 ; $5190
 	script_face_toward $0e, ACTOR_PLAYER ; $5197
-	call Func_0e_520f ; $519f
+	call MirrorPlayerSpriteIfLeftHanded ; $519f
 	ret ; $51a2
 Label_0e_51a3:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $51a3
@@ -1598,7 +1598,7 @@ ActorScript_0e_51e4:
 	as_anim $01
 	as_wait $01
 	as_jump ActorScript_0e_51e4
-Func_0e_520f:
+MirrorPlayerSpriteIfLeftHanded:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $520f
 	and a, a ; $5212
 	jr z, Label_0e_5224 ; $5213
@@ -1859,7 +1859,7 @@ Label_0e_558a:
 	script_fade_in $04 ; $5595
 	call WaitFadeEnd ; $559a
 	script_wait_frames $28 ; $559d
-	call Func_0e_6a51 ; $55a4
+	call MarioWorldArrivalIntroCutscene ; $55a4
 	script_set_position ACTOR_PLAYER, $1200, $2500 ; $55a7
 	script_set_speed ACTOR_PLAYER, $0010 ; $55b2
 	script_move_target ACTOR_PLAYER, $1200, $2080 ; $55ba
@@ -1907,7 +1907,7 @@ Label_0e_562f:
 	ld [wStoryModeExitLocationRequest], a ; $56bc
 	ret ; $56bf
 Label_0e_56c0:
-	call Func_0e_6ad4 ; $56c0
+	call MarioWorldWelcomeCutscene ; $56c0
 	script_set_speed $0f, $0020 ; $56c3
 	script_set_speed $07, $0020 ; $56cb
 	script_wait_frames $28 ; $56d3
@@ -1960,7 +1960,7 @@ Label_0e_56c0:
 	script_wait_move $0e ; $582f
 	script_face $0e, FACE_UP ; $5834
 	script_wait_frames $0a ; $583b
-	call Func_0e_6db7 ; $5842
+	call MarioWorldLuigiDefendsChampCutscene ; $5842
 	sound $96 ; $5845
 	script_set_position $04, $1380, $0f80 ; $5847
 	script_wait_frames $14 ; $5852
@@ -1980,7 +1980,7 @@ Label_0e_56c0:
 	script_set_position $04, $3f00, $3f00 ; $58b5
 	script_speak $08 ; $58c0
 	script_wait_frames $0a ; $58c5
-	call Func_0e_6f2b ; $58cc
+	call MarioWorldExhibitionDemandCutscene ; $58cc
 	script_move_target $0f, $1300, $0f00 ; $58cf
 	script_move_target $10, $1100, $0f00 ; $58da
 	script_move_target $0e, $1400, $1100 ; $58e5
@@ -2082,7 +2082,7 @@ ExhibitionAcceptedSingles:
 	script_wait_frames $3c ; $5b8e
 	script_move_player $1500, $0d00 ; $5b95
 	script_wait_actor_script ACTOR_PLAYER ; $5b9f
-	call Func_0e_7150 ; $5ba4
+	call PlayStarWarpTransition ; $5ba4
 	ld a, $1c ; $5ba7
 	ld [wStoryModeCurrentLocation], a ; $5ba9
 	ld a, $01 ; $5bac
@@ -2103,7 +2103,7 @@ Label_0e_5bc5:
 	script_fade_in $04 ; $5be6
 	call WaitFadeEnd ; $5beb
 	script_wait_frames $28 ; $5bee
-	call Func_0e_6a51 ; $5bf5
+	call MarioWorldArrivalIntroCutscene ; $5bf5
 	script_set_position ACTOR_PLAYER, $1100, $2500 ; $5bf8
 	script_set_position ACTOR_PARTNER, $1300, $2500 ; $5c03
 	script_set_speed ACTOR_PLAYER, $0010 ; $5c0e
@@ -2157,7 +2157,7 @@ Label_0e_5c9e:
 	ld [wStoryModeExitLocationRequest], a ; $5d45
 	ret ; $5d48
 Label_0e_5d49:
-	call Func_0e_6ad4 ; $5d49
+	call MarioWorldWelcomeCutscene ; $5d49
 	script_set_position $07, $3f00, $3f00 ; $5d4c
 	script_face $0f, FACE_LEFT ; $5d57
 	script_wait_frames $28 ; $5d5e
@@ -2222,7 +2222,7 @@ Label_0e_5d49:
 	script_wait_move $0e ; $5f08
 	script_face $0e, FACE_UP ; $5f0d
 	script_wait_frames $0a ; $5f14
-	call Func_0e_6db7 ; $5f1b
+	call MarioWorldLuigiDefendsChampCutscene ; $5f1b
 	sound $96 ; $5f1e
 	script_set_position $04, $1180, $0f80 ; $5f20
 	script_set_position $05, $1380, $0f80 ; $5f2b
@@ -2248,7 +2248,7 @@ Label_0e_5d49:
 	script_face $11, FACE_DOWN ; $5fc4
 	script_face $12, FACE_DOWN ; $5fcb
 	script_speak $08 ; $5fd2
-	call Func_0e_6f2b ; $5fd7
+	call MarioWorldExhibitionDemandCutscene ; $5fd7
 	script_move_target $0f, $1300, $0f00 ; $5fda
 	script_move_target $10, $1100, $0f00 ; $5fe5
 	script_move_target $0e, $1500, $0f00 ; $5ff0
@@ -2362,7 +2362,7 @@ ExhibitionAcceptedDoubles:
 	script_wait_frames $3c ; $62df
 	script_move_player $1500, $0d00 ; $62e6
 	script_wait_actor_script ACTOR_PARTNER ; $62f0
-	call Func_0e_7150 ; $62f5
+	call PlayStarWarpTransition ; $62f5
 	ld a, $1c ; $62f8
 	ld [wStoryModeCurrentLocation], a ; $62fa
 	ld a, $04 ; $62fd
@@ -2719,7 +2719,7 @@ Label_0e_691e:
 Label_0e_695e:
 	script_move_player $1500, $0d00 ; $695e
 	script_wait_actor_script ACTOR_PLAYER ; $6968
-	call Func_0e_7150 ; $696d
+	call PlayStarWarpTransition ; $696d
 	ld a, $1c ; $6970
 	ld [wStoryModeCurrentLocation], a ; $6972
 	ld a, [wWaterSpriteMinigameTimer] ; $6975
@@ -2780,7 +2780,7 @@ Label_0e_69fb:
 	script_set_position $13, $0d00, $1300 ; $6a3e
 	script_face $13, FACE_RIGHT ; $6a49
 	ret ; $6a50
-Func_0e_6a51:
+MarioWorldArrivalIntroCutscene:
 	script_player_speed $0020 ; $6a51
 	script_move_player $1200, $0f00 ; $6a57
 	farcall WaitPlayerMoveDone ; $6a61
@@ -2803,7 +2803,7 @@ Func_0e_6a51:
 	script_wait_move $13 ; $6ac7
 	script_face $13, FACE_DOWN ; $6acc
 	ret ; $6ad3
-Func_0e_6ad4:
+MarioWorldWelcomeCutscene:
 	script_wait_frames $0a ; $6ad4
 	script_face $08, FACE_DOWN ; $6adb
 	script_wait_frames $04 ; $6ae2
@@ -2913,7 +2913,7 @@ Func_0e_6ad4:
 	script_wait_frames $14 ; $6daa
 	script_speak $0f ; $6db1
 	ret ; $6db6
-Func_0e_6db7:
+MarioWorldLuigiDefendsChampCutscene:
 	script_jump_velocity $0b, $ff80 ; $6db7
 	script_wait_frames $14 ; $6dbf
 	script_speak $0b ; $6dc6
@@ -2965,7 +2965,7 @@ Func_0e_6db7:
 	script_face $0b, FACE_LEFT ; $6f1c
 	script_facing_lock $0b, FACE_RIGHT ; $6f23
 	ret ; $6f2a
-Func_0e_6f2b:
+MarioWorldExhibitionDemandCutscene:
 	script_face $10, FACE_UP ; $6f2b
 	script_wait_frames $0a ; $6f32
 	script_speak $10 ; $6f39
@@ -3050,7 +3050,7 @@ ExhibitionDeclinedCutscene:
 	script_face $0e, FACE_RIGHT ; $7141
 	script_face $0f, FACE_RIGHT ; $7148
 	ret ; $714f
-Func_0e_7150:
+PlayStarWarpTransition:
 	ldh a, [hWramBank] ; $7150
 	push af ; $7152
 	ld hl, $72ce ; $7153
@@ -3093,7 +3093,7 @@ Func_0e_7150:
 	script_copy_scene_rect $0a, $2b, $1a, $12, $06, $02 ; $71b0
 	sound $09 ; $71bf
 	ld a, $01 ; $71c1
-	ld hl, Func_0e_71e9 ; $71c3
+	ld hl, UpdateStarWarpSprite ; $71c3
 	call RegisterFrameTask ; $71c6
 	wram_bank $06 ; $71c9
 Label_0e_71cf:
@@ -3110,7 +3110,7 @@ Label_0e_71e2:
 	ld c, $03 ; $71e2
 	call BeginFadeOut ; $71e4
 	jr Label_0e_71cf ; $71e7
-Func_0e_71e9:
+UpdateStarWarpSprite:
 	wram_bank $06 ; $71e9
 	ldh a, [hVBlankCounter] ; $71ef
 	and a, $01 ; $71f1
@@ -3135,14 +3135,14 @@ Label_0e_7200:
 	ld c, [hl] ; $720c
 	ld b, $09 ; $720d
 	ld de, $8026 ; $720f
-	call Func_0e_724a ; $7212
+	call OffsetStarWarpPathPoint ; $7212
 	call QueueSprite ; $7215
 	pop hl ; $7218
 	inc hl ; $7219
 	ld c, [hl] ; $721a
 	ld b, $09 ; $721b
 	ld de, $8826 ; $721d
-	call Func_0e_724a ; $7220
+	call OffsetStarWarpPathPoint ; $7220
 	push de ; $7223
 	call QueueSprite ; $7224
 	pop de ; $7227
@@ -3153,7 +3153,7 @@ Label_0e_7200:
 	ld a, e ; $722f
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231
-	call Func_0e_7265 ; $7232
+	call UpdateStarWarpTrailSparkles ; $7232
 	ld hl, $d001 ; $7235
 	ld a, [hl] ; $7238
 	inc a ; $7239
@@ -3164,10 +3164,10 @@ Label_0e_7200:
 	dec a ; $7240
 	ld [hl], a ; $7241
 	ret nz ; $7242
-	ld hl, Func_0e_71e9 ; $7243
+	ld hl, UpdateStarWarpSprite ; $7243
 	call UnregisterFrameTask ; $7246
 	ret ; $7249
-Func_0e_724a:
+OffsetStarWarpPathPoint:
 	ld a, [$d001] ; $724a
 	add a, $8c ; $724d
 	ld l, a ; $724f
@@ -3187,7 +3187,7 @@ Func_0e_724a:
 	add a, e ; $7262
 	ld e, a ; $7263
 	ret ; $7264
-Func_0e_7265:
+UpdateStarWarpTrailSparkles:
 	ld c, $00 ; $7265
 	ld hl, $d003 ; $7267
 	ld b, $10 ; $726a

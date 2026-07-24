@@ -896,7 +896,7 @@ Func_1b_4e0d:
 	ld a, $ff ; $4e0d
 	ld [$c780], a ; $4e0f
 	ld d, $03 ; $4e12
-	farcall Func_18_4328 ; $4e14
+	farcall LoadAllIndexedPalettes_18 ; $4e14
 	ret ; $4e17
 SetMugshotAttrs:
 	push af ; $4e18

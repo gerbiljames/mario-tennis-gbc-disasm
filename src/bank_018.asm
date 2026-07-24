@@ -1,9 +1,9 @@
 SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 
-	farptr Func_18_4328 ; $4000
+	farptr LoadAllIndexedPalettes_18 ; $4000
 	farptr LoadIndexedPalette_18 ; $4002
 	farptr RenderProportionalTextAt32 ; $4004
-	farptr Func_18_437c ; $4006
+	farptr LoadMenuHandCursorGfx ; $4006
 	farptr StubLoadFontTiles ; $4008
 	farptr DrawBox ; $400a
 	farptr FlushBgMapShadowToVram ; $400c
@@ -113,7 +113,7 @@ DataPtr_18_92:
 DataPtr_18_94:
 	dw Lz_18_7568 ; $4094
 	INCBIN "data/bank_018/d_4096.bin" ; $4096, 658 bytes
-Func_18_4328:
+LoadAllIndexedPalettes_18:
 	push af ; $4328
 	push bc ; $4329
 	push de ; $432a
@@ -167,7 +167,7 @@ Label_18_4377:
 	xor a, a ; $4377
 	ld [wBgMapShadowDirty], a ; $4378
 	ret ; $437b
-Func_18_437c:
+LoadMenuHandCursorGfx:
 	push hl ; $437c
 	ld hl, $42e0 ; $437d
 	call LoadPaletteShadow ; $4380
@@ -691,7 +691,7 @@ Func_18_52de:
 	call LoadPaletteShadow ; $534b
 	ld hl, $8500 ; $534e
 	ld de, $0e01 ; $5351
-	call Func_18_437c ; $5354
+	call LoadMenuHandCursorGfx ; $5354
 	call Func_18_55f8 ; $5357
 	call SetupScoreboardDisplay ; $535a
 	ld hl, $c7bc ; $535d

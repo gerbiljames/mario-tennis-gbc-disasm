@@ -6374,7 +6374,7 @@ SetupNameEntryScreen:
 	farcall LoadCompressedTileBlock ; $6f75
 	ld hl, $a000 ; $6f78
 	ld de, $0801 ; $6f7b
-	farcall Func_18_437c ; $6f7e
+	farcall LoadMenuHandCursorGfx ; $6f7e
 	ld b, $0f ; $6f81
 	ld c, $00 ; $6f83
 	call SetMenuCursorFromLinearIndex ; $6f85

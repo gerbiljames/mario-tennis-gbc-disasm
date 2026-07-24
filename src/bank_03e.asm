@@ -1714,7 +1714,7 @@ LoadEraseDataConfirmScreen:
 	call SetMenuCursorFromIndex_3e ; $4cb3
 	ld hl, $a000 ; $4cb6
 	ld de, $0801 ; $4cb9
-	farcall Func_18_437c ; $4cbc
+	farcall LoadMenuHandCursorGfx ; $4cbc
 	ld a, $0a ; $4cbf
 	ld [$cb6c], a ; $4cc1
 	ld a, $10 ; $4cc4

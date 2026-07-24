@@ -82,7 +82,7 @@ SECTION "ROM Bank $0a", ROMX[$4000], BANK[$0a]
 	farptr DeflectBallOffMinigameTarget ; $409e
 	farptr StopSceneScrollTask ; $40a0
 	farptr RunEndingCreditsSequence ; $40a2
-Func_0a_40a4:
+ToggleCutsceneFastForward:
 	push af ; $40a4
 	push bc ; $40a5
 	push de ; $40a6
@@ -129,7 +129,7 @@ BeginCutsceneScriptMode:
 	or a, a ; $40f5
 	jr z, Label_0a_4100 ; $40f6
 	ld a, $01 ; $40f8
-	ld hl, Func_0a_40a4 ; $40fa
+	ld hl, ToggleCutsceneFastForward ; $40fa
 	call RegisterFrameTask ; $40fd
 Label_0a_4100:
 	pop hl ; $4100
@@ -148,7 +148,7 @@ EndCutsceneScriptMode:
 	ld bc, $d040 ; $4110
 	ld de, $d000 ; $4113
 	farcall AttachActorWaypointFollower ; $4116
-	ld hl, Func_0a_40a4 ; $4119
+	ld hl, ToggleCutsceneFastForward ; $4119
 	call UnregisterFrameTask ; $411c
 	clear_flag $02, 6 ; $411f
 	ldh a, [hWramBank] ; $4122
@@ -575,11 +575,11 @@ ScriptSetActorPosition:
 	ld a, h ; $43c9
 	ldh [hActorPtr + 1], a ; $43ca
 	wram_bank $04 ; $43cc
-	call Func_0a_43d8 ; $43d2
+	call SetActorPositionRaw ; $43d2
 Label_0a_43d5:
 	add sp, 4 ; $43d5
 	ret ; $43d7
-Func_0a_43d8:
+SetActorPositionRaw:
 	push bc ; $43d8
 	push af ; $43d9
 	ld hl, hActorPtr ; $43da
@@ -622,11 +622,11 @@ ScriptSetActorMoveTarget:
 	ld a, h ; $4410
 	ldh [hActorPtr + 1], a ; $4411
 	wram_bank $04 ; $4413
-	call Func_0a_441f ; $4419
+	call SetActorMoveTargetRaw ; $4419
 Label_0a_441c:
 	add sp, 4 ; $441c
 	ret ; $441e
-Func_0a_441f:
+SetActorMoveTargetRaw:
 	push bc ; $441f
 	push af ; $4420
 	ld hl, hActorPtr ; $4421
@@ -1308,7 +1308,7 @@ MovePlayerToPosition:
 	ld a, d ; $47d7
 	or a, a ; $47d8
 	jr nz, Label_0a_47e0 ; $47d9
-	call Func_0a_441f ; $47db
+	call SetActorMoveTargetRaw ; $47db
 	jr Label_0a_480c ; $47de
 Label_0a_47e0:
 	push af ; $47e0
@@ -1326,7 +1326,7 @@ Label_0a_47e0:
 	ldh [hActorPtr], a ; $47f1
 	ld a, h ; $47f3
 	ldh [hActorPtr + 1], a ; $47f4
-	call Func_0a_43d8 ; $47f6
+	call SetActorPositionRaw ; $47f6
 	call AdvanceFrame ; $47f9
 	farcall RestoreShadowTilemap ; $47fc
 	ld b, $05 ; $47ff
@@ -1390,7 +1390,7 @@ MovePlayerToActor:
 	ld a, d ; $4856
 	or a, a ; $4857
 	jr nz, Label_0a_485f ; $4858
-	call Func_0a_441f ; $485a
+	call SetActorMoveTargetRaw ; $485a
 	jr Label_0a_488b ; $485d
 Label_0a_485f:
 	push af ; $485f
@@ -1408,7 +1408,7 @@ Label_0a_485f:
 	ldh [hActorPtr], a ; $4870
 	ld a, h ; $4872
 	ldh [hActorPtr + 1], a ; $4873
-	call Func_0a_43d8 ; $4875
+	call SetActorPositionRaw ; $4875
 	call AdvanceFrame ; $4878
 	farcall RestoreShadowTilemap ; $487b
 	ld b, $05 ; $487e
@@ -1468,7 +1468,7 @@ SetScreenShake:
 	inc a ; $48d0
 	jr nz, Label_0a_48db ; $48d1
 	ld a, $01 ; $48d3
-	ld hl, Func_0a_4908 ; $48d5
+	ld hl, UpdateScreenShake ; $48d5
 	call RegisterFrameTask ; $48d8
 Label_0a_48db:
 	pop af ; $48db
@@ -1484,7 +1484,7 @@ Label_0a_48e4:
 	xor a, a ; $48ec
 	ld [$c368], a ; $48ed
 	ld [$c369], a ; $48f0
-	ld hl, Func_0a_4908 ; $48f3
+	ld hl, UpdateScreenShake ; $48f3
 	call UnregisterFrameTask ; $48f6
 	ld a, $ff ; $48f9
 Label_0a_48fb:
@@ -1496,7 +1496,7 @@ Label_0a_48fb:
 	pop bc ; $4905
 	pop af ; $4906
 	ret ; $4907
-Func_0a_4908:
+UpdateScreenShake:
 	push af ; $4908
 	push bc ; $4909
 	push de ; $490a
@@ -2168,7 +2168,7 @@ Label_0a_4ee9:
 ClearStatusSetupMenuEntry:
 	call RunClearStatusSetupMenu ; $4ef8
 	ret ; $4efb
-Func_0a_4efc:
+DrawPlayerPositionDebugOverlay:
 	test_flag $04, 0 ; $4efc
 	jr z, Label_0a_4f2b ; $4eff
 	wram_bank $04 ; $4f01
@@ -2204,7 +2204,7 @@ RunStoryModeOverworld:
 Label_0a_4f30:
 	call ClearFrameTasks ; $4f30
 	ld a, $01 ; $4f33
-	ld hl, Func_0a_4efc ; $4f35
+	ld hl, DrawPlayerPositionDebugOverlay ; $4f35
 	call RegisterFrameTask ; $4f38
 	call RunStoryLocation ; $4f3b
 	jr Label_0a_4f30 ; $4f3e
@@ -4334,7 +4334,7 @@ Label_0a_6054:
 	ldh [hBGRowBlitPending], a ; $6057
 	farcall InitTextWindows ; $6059
 	ld a, $01 ; $605c
-	ld hl, Func_0a_60c1 ; $605e
+	ld hl, StubNop_0a_60c1 ; $605e
 	call RegisterFrameTask ; $6061
 	ld a, [wCurrentScene] ; $6064
 	call InitSceneTileAnimations ; $6067
@@ -4343,7 +4343,7 @@ Label_0a_6054:
 	pop bc ; $606c
 	pop af ; $606d
 	ret ; $606e
-	ld hl, Func_0a_60c1 ; $606f
+	ld hl, StubNop_0a_60c1 ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
 InitSceneViewerDefault:
@@ -4388,7 +4388,7 @@ Label_0a_60b6:
 	call SceneViewerSelectScene ; $60b9
 	call AdvanceFrame ; $60bc
 	jr Label_0a_60b6 ; $60bf
-Func_0a_60c1:
+StubNop_0a_60c1:
 	ret ; $60c1
 UpdateSceneViewerScroll:
 	ld a, [wCameraX + 1] ; $60c2
@@ -4875,7 +4875,7 @@ Label_0a_6430:
 	ld [de], a ; $6441
 Label_0a_6442:
 	ld a, $01 ; $6442
-	ld hl, Func_0a_6465 ; $6444
+	ld hl, UpdateSceneTileAnimations ; $6444
 	call RegisterFrameTask ; $6447
 	add sp, 2 ; $644a
 Label_0a_644c:
@@ -4891,14 +4891,14 @@ StopSceneTileAnimations:
 	push bc ; $6457
 	push de ; $6458
 	push hl ; $6459
-	ld hl, Func_0a_6465 ; $645a
+	ld hl, UpdateSceneTileAnimations ; $645a
 	call UnregisterFrameTask ; $645d
 	pop hl ; $6460
 	pop de ; $6461
 	pop bc ; $6462
 	pop af ; $6463
 	ret ; $6464
-Func_0a_6465:
+UpdateSceneTileAnimations:
 	test_flag $03, 0 ; $6465
 	ret nz ; $6468
 	test_flag $03, 2 ; $6469
@@ -5621,7 +5621,7 @@ Label_0a_68c0:
 	ld d, [hl] ; $68c4
 	ld e, a ; $68c5
 Label_0a_68c6:
-	ld hl, Func_0a_68d7 ; $68c6
+	ld hl, MinigameTargetScriptOpReturn ; $68c6
 	push hl ; $68c9
 	ld a, [de] ; $68ca
 	add a, a ; $68cb
@@ -5634,7 +5634,7 @@ Label_0a_68c6:
 	ld h, [hl] ; $68d4
 	ld l, a ; $68d5
 	jp hl ; $68d6
-Func_0a_68d7:
+MinigameTargetScriptOpReturn:
 	ld hl, $dcf4 ; $68d7
 	ld [hl], e ; $68da
 	inc hl ; $68db

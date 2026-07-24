@@ -1619,7 +1619,7 @@ Label_05_49cc:
 	pop de ; $49d9
 	pop bc ; $49da
 	ret ; $49db
-Func_05_49dc:
+StubNop_05_49dc:
 	push af ; $49dc
 	push bc ; $49dd
 	push de ; $49de
@@ -1657,7 +1657,7 @@ RunPagedTextMenuAutoSize:
 	xor a, a ; $4a17
 	ld [$d846], a ; $4a18
 	ld a, $01 ; $4a1b
-	ld hl, Func_05_49dc ; $4a1d
+	ld hl, StubNop_05_49dc ; $4a1d
 	call RegisterFrameTask ; $4a20
 Label_05_4a23:
 	call FetchDialogueText ; $4a23
@@ -1723,7 +1723,7 @@ Label_05_4a90:
 	ld [$d830], a ; $4a90
 	add sp, 3 ; $4a93
 	push af ; $4a95
-	ld hl, Func_05_49dc ; $4a96
+	ld hl, StubNop_05_49dc ; $4a96
 	call UnregisterFrameTask ; $4a99
 	pop af ; $4a9c
 	ld b, a ; $4a9d
@@ -1861,7 +1861,7 @@ LoadOverworldSpriteDef:
 	ld [$d830], a ; $4b6d
 	jr Label_05_4ba5 ; $4b70
 Label_05_4b72:
-	call Func_05_4c76 ; $4b72
+	call IsCursorOnAdjustRow ; $4b72
 	or a, a ; $4b75
 	jr nz, Label_05_4afd ; $4b76
 	sound $5f ; $4b78
@@ -1913,7 +1913,7 @@ Label_05_4bd1:
 	push bc ; $4bd2
 	push de ; $4bd3
 	push hl ; $4bd4
-	call Func_05_4c76 ; $4bd5
+	call IsCursorOnAdjustRow ; $4bd5
 	or a, a ; $4bd8
 	jr z, Label_05_4c00 ; $4bd9
 	ldh a, [hInputPressed] ; $4bdb
@@ -2007,7 +2007,7 @@ Label_05_4c6b:
 	pop de ; $4c73
 	pop bc ; $4c74
 	ret ; $4c75
-Func_05_4c76:
+IsCursorOnAdjustRow:
 	push bc ; $4c76
 	ld a, [wMenuAdjustRowMask] ; $4c77
 	bit 7, a ; $4c7a
