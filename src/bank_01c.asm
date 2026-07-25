@@ -787,10 +787,10 @@ Label_1c_468d:
 	or a, a ; $4693
 	jr nz, Label_1c_468d ; $4694
 	call RestoreCharDataScreenRow ; $4696
-	ld hl, Data_1c_57b6 ; $4699
+	ld hl, CharDataBand0RunsStep1_1c ; $4699
 	ld bc, $d240 ; $469c
 	call BlitTilemapRunsFromTable ; $469f
-	ld hl, Data_1c_58cb ; $46a2
+	ld hl, CharDataBand3RunsStep1_1c ; $46a2
 	ld bc, $d310 ; $46a5
 	call BlitTilemapRunsFromTable ; $46a8
 	wram_bank $06 ; $46ab
@@ -798,16 +798,16 @@ Label_1c_468d:
 	ld [$d026], a ; $46b3
 	call FlushCharDataTilemaps ; $46b6
 	call RestoreCharDataScreenRow ; $46b9
-	ld hl, Data_1c_571b ; $46bc
+	ld hl, CharDataBand0RunsStep2_1c ; $46bc
 	ld bc, $d240 ; $46bf
 	call BlitTilemapRunsFromTable ; $46c2
-	ld hl, Data_1c_57a9 ; $46c5
+	ld hl, CharDataBand1RunsStep1_1c ; $46c5
 	ld bc, $d280 ; $46c8
 	call BlitTilemapRunsFromTable ; $46cb
-	ld hl, Data_1c_581c ; $46ce
+	ld hl, CharDataBand2RunsStep1_1c ; $46ce
 	ld bc, $d2d0 ; $46d1
 	call BlitTilemapRunsFromTable ; $46d4
-	ld hl, Data_1c_58be ; $46d7
+	ld hl, CharDataBand3RunsStep2_1c ; $46d7
 	ld bc, $d310 ; $46da
 	call BlitTilemapRunsFromTable ; $46dd
 	wram_bank $06 ; $46e0
@@ -815,16 +815,16 @@ Label_1c_468d:
 	ld [$d026], a ; $46e8
 	call FlushCharDataTilemaps ; $46eb
 	call RestoreCharDataScreenRow ; $46ee
-	ld hl, Data_1c_570e ; $46f1
+	ld hl, CharDataBand0RunsStep3_1c ; $46f1
 	ld bc, $d240 ; $46f4
 	call BlitTilemapRunsFromTable ; $46f7
-	ld hl, Data_1c_5794 ; $46fa
+	ld hl, CharDataBand1RunsStep2_1c ; $46fa
 	ld bc, $d280 ; $46fd
 	call BlitTilemapRunsFromTable ; $4700
-	ld hl, Data_1c_580f ; $4703
+	ld hl, CharDataBand2RunsStep2_1c ; $4703
 	ld bc, $d2d0 ; $4706
 	call BlitTilemapRunsFromTable ; $4709
-	ld hl, Data_1c_58a9 ; $470c
+	ld hl, CharDataBand3RunsStep3_1c ; $470c
 	ld bc, $d310 ; $470f
 	call BlitTilemapRunsFromTable ; $4712
 	wram_bank $06 ; $4715
@@ -832,16 +832,16 @@ Label_1c_468d:
 	ld [$d026], a ; $471d
 	call FlushCharDataTilemaps ; $4720
 	call RestoreCharDataScreenRow ; $4723
-	ld hl, Data_1c_56f9 ; $4726
+	ld hl, CharDataBand0RunsStep4_1c ; $4726
 	ld bc, $d240 ; $4729
 	call BlitTilemapRunsFromTable ; $472c
-	ld hl, Data_1c_5777 ; $472f
+	ld hl, CharDataBand1RunsStep3_1c ; $472f
 	ld bc, $d280 ; $4732
 	call BlitTilemapRunsFromTable ; $4735
-	ld hl, Data_1c_57fa ; $4738
+	ld hl, CharDataBand2RunsStep3_1c ; $4738
 	ld bc, $d2d0 ; $473b
 	call BlitTilemapRunsFromTable ; $473e
-	ld hl, Data_1c_588c ; $4741
+	ld hl, CharDataBand3RunsStep4_1c ; $4741
 	ld bc, $d310 ; $4744
 	call BlitTilemapRunsFromTable ; $4747
 	wram_bank $06 ; $474a
@@ -849,16 +849,16 @@ Label_1c_468d:
 	ld [$d026], a ; $4752
 	call FlushCharDataTilemaps ; $4755
 	call RestoreCharDataScreenRow ; $4758
-	ld hl, Data_1c_56e4 ; $475b
+	ld hl, CharDataBand0RunsStep5_1c ; $475b
 	ld bc, $d240 ; $475e
 	call BlitTilemapRunsFromTable ; $4761
-	ld hl, Data_1c_575a ; $4764
+	ld hl, CharDataBand1RunsStep4_1c ; $4764
 	ld bc, $d280 ; $4767
 	call BlitTilemapRunsFromTable ; $476a
-	ld hl, Data_1c_57e5 ; $476d
+	ld hl, CharDataBand2RunsStep4_1c ; $476d
 	ld bc, $d2d0 ; $4770
 	call BlitTilemapRunsFromTable ; $4773
-	ld hl, Data_1c_586b ; $4776
+	ld hl, CharDataBand3RunsStep5_1c ; $4776
 	ld bc, $d310 ; $4779
 	call BlitTilemapRunsFromTable ; $477c
 	wram_bank $06 ; $477f
@@ -866,16 +866,16 @@ Label_1c_468d:
 	ld [$d026], a ; $4787
 	call FlushCharDataTilemaps ; $478a
 	call RestoreCharDataScreenRow ; $478d
-	ld hl, Data_1c_56cf ; $4790
+	ld hl, CharDataBand0RunsStep6_1c ; $4790
 	ld bc, $d240 ; $4793
 	call BlitTilemapRunsFromTable ; $4796
-	ld hl, Data_1c_573d ; $4799
+	ld hl, CharDataBand1RunsStep5_1c ; $4799
 	ld bc, $d280 ; $479c
 	call BlitTilemapRunsFromTable ; $479f
-	ld hl, Data_1c_57d0 ; $47a2
+	ld hl, CharDataBand2RunsStep5_1c ; $47a2
 	ld bc, $d2d0 ; $47a5
 	call BlitTilemapRunsFromTable ; $47a8
-	ld hl, Data_1c_5846 ; $47ab
+	ld hl, CharDataBand3RunsStep6_1c ; $47ab
 	ld bc, $d310 ; $47ae
 	call BlitTilemapRunsFromTable ; $47b1
 	wram_bank $06 ; $47b4
@@ -883,16 +883,16 @@ Label_1c_468d:
 	ld [$d026], a ; $47bc
 	call FlushCharDataTilemaps ; $47bf
 	call RestoreCharDataScreenRow ; $47c2
-	ld hl, Data_1c_56b9 ; $47c5
+	ld hl, CharDataBand0RunsStep7_1c ; $47c5
 	ld bc, $d240 ; $47c8
 	call BlitTilemapRunsFromTable ; $47cb
-	ld hl, Data_1c_5720 ; $47ce
+	ld hl, CharDataBand1RunsStep6_1c ; $47ce
 	ld bc, $d280 ; $47d1
 	call BlitTilemapRunsFromTable ; $47d4
-	ld hl, Data_1c_57bb ; $47d7
+	ld hl, CharDataBand2RunsStep6_1c ; $47d7
 	ld bc, $d2d0 ; $47da
 	call BlitTilemapRunsFromTable ; $47dd
-	ld hl, Data_1c_5821 ; $47e0
+	ld hl, CharDataBand3RunsStep7_1c ; $47e0
 	ld bc, $d310 ; $47e3
 	call BlitTilemapRunsFromTable ; $47e6
 	wram_bank $06 ; $47e9
@@ -903,42 +903,42 @@ Label_1c_468d:
 	call FlushCharDataTilemaps ; $47f7
 	call WaitFramesCmd ; $47fa
 	db $06 ; $47fd inline arg
-	ld hl, Data_1c_58ea ; $47fe
+	ld hl, CharDataBand4RunsStep1_1c ; $47fe
 	ld bc, $d370 ; $4801
 	call BlitTilemapRunsFromTable ; $4804
 	call FlushCharDataTilemaps ; $4807
-	ld hl, Data_1c_58dd ; $480a
+	ld hl, CharDataBand4RunsStep2_1c ; $480a
 	ld bc, $d370 ; $480d
 	call BlitTilemapRunsFromTable ; $4810
 	call FlushCharDataTilemaps ; $4813
-	ld hl, Data_1c_58d0 ; $4816
+	ld hl, CharDataBand4RunsStep3_1c ; $4816
 	ld bc, $d370 ; $4819
 	call BlitTilemapRunsFromTable ; $481c
 	call FlushCharDataTilemaps ; $481f
-	ld hl, Data_1c_590d ; $4822
+	ld hl, CharDataBand6RunsStep1_1c ; $4822
 	ld bc, $d3a0 ; $4825
 	call BlitTilemapRunsFromTable ; $4828
-	ld hl, Data_1c_5928 ; $482b
+	ld hl, CharDataBand5RunsStep1_1c ; $482b
 	ld bc, $d380 ; $482e
 	call BlitTilemapRunsFromTable ; $4831
 	wram_bank $06 ; $4834
 	ld a, $02 ; $483a
 	ld [$d027], a ; $483c
 	call FlushCharDataTilemaps ; $483f
-	ld hl, Data_1c_5904 ; $4842
+	ld hl, CharDataBand6RunsStep2_1c ; $4842
 	ld bc, $d3a0 ; $4845
 	call BlitTilemapRunsFromTable ; $4848
-	ld hl, Data_1c_591f ; $484b
+	ld hl, CharDataBand5RunsStep2_1c ; $484b
 	ld bc, $d380 ; $484e
 	call BlitTilemapRunsFromTable ; $4851
 	wram_bank $06 ; $4854
 	ld a, $01 ; $485a
 	ld [$d027], a ; $485c
 	call FlushCharDataTilemaps ; $485f
-	ld hl, Data_1c_58f7 ; $4862
+	ld hl, CharDataBand6RunsStep3_1c ; $4862
 	ld bc, $d3a0 ; $4865
 	call BlitTilemapRunsFromTable ; $4868
-	ld hl, Data_1c_5912 ; $486b
+	ld hl, CharDataBand5RunsStep3_1c ; $486b
 	ld bc, $d380 ; $486e
 	call BlitTilemapRunsFromTable ; $4871
 	wram_bank $06 ; $4874
@@ -948,28 +948,28 @@ Label_1c_468d:
 	ret ; $4881
 DrawCharStatsAndFlush:
 	call DrawCharStatRows ; $4882
-	ld hl, Data_1c_58f7 ; $4885
+	ld hl, CharDataBand6RunsStep3_1c ; $4885
 	ld bc, $d3a0 ; $4888
 	call BlitTilemapRunsFromTable ; $488b
-	ld hl, Data_1c_5912 ; $488e
+	ld hl, CharDataBand5RunsStep3_1c ; $488e
 	ld bc, $d380 ; $4891
 	call BlitTilemapRunsFromTable ; $4894
 	call FlushCharDataTilemaps ; $4897
 	ret ; $489a
 DrawCharStatRows:
-	ld hl, Data_1c_56b9 ; $489b
+	ld hl, CharDataBand0RunsStep7_1c ; $489b
 	ld bc, $d240 ; $489e
 	call BlitTilemapRunsFromTable ; $48a1
-	ld hl, Data_1c_5720 ; $48a4
+	ld hl, CharDataBand1RunsStep6_1c ; $48a4
 	ld bc, $d280 ; $48a7
 	call BlitTilemapRunsFromTable ; $48aa
-	ld hl, Data_1c_57bb ; $48ad
+	ld hl, CharDataBand2RunsStep6_1c ; $48ad
 	ld bc, $d2d0 ; $48b0
 	call BlitTilemapRunsFromTable ; $48b3
-	ld hl, Data_1c_5821 ; $48b6
+	ld hl, CharDataBand3RunsStep7_1c ; $48b6
 	ld bc, $d310 ; $48b9
 	call BlitTilemapRunsFromTable ; $48bc
-	ld hl, Data_1c_58d0 ; $48bf
+	ld hl, CharDataBand4RunsStep3_1c ; $48bf
 	ld bc, $d370 ; $48c2
 	call BlitTilemapRunsFromTable ; $48c5
 	ret ; $48c8
@@ -1951,7 +1951,7 @@ Label_1c_4f26:
 	sub a, $30 ; $4f4e
 	rlca ; $4f50
 	ld c, a ; $4f51
-	ld de, Data_1c_5c1c ; $4f52
+	ld de, $5c1c ; $4f52
 	ld a, $02 ; $4f55
 	call GetStatDigitSpritePos ; $4f57
 	call QueueSprite ; $4f5a
@@ -1960,7 +1960,7 @@ Label_1c_4f5f:
 	ld a, l ; $4f5f
 	rlca ; $4f60
 	ld c, a ; $4f61
-	ld de, Data_1c_591c ; $4f62
+	ld de, $591c ; $4f62
 	ld a, $02 ; $4f65
 	call GetStatDigitSpritePos ; $4f67
 	call QueueSprite ; $4f6a
@@ -2000,7 +2000,7 @@ Label_1c_4f83:
 	sub a, $30 ; $4fab
 	rlca ; $4fad
 	ld c, a ; $4fae
-	ld de, Data_1c_5c44 ; $4faf
+	ld de, $5c44 ; $4faf
 	ld a, $03 ; $4fb2
 	call GetStatDigitSpritePos ; $4fb4
 	call QueueSprite ; $4fb7
@@ -2009,7 +2009,7 @@ Label_1c_4fbc:
 	ld a, l ; $4fbc
 	rlca ; $4fbd
 	ld c, a ; $4fbe
-	ld de, Data_1c_5944 ; $4fbf
+	ld de, $5944 ; $4fbf
 	ld a, $03 ; $4fc2
 	call GetStatDigitSpritePos ; $4fc4
 	call QueueSprite ; $4fc7
@@ -2115,19 +2115,19 @@ Label_1c_50bd:
 	jr nz, Label_1c_50d8 ; $50d4
 	jr CharDataScreen_InputLoop ; $50d6
 Label_1c_50d8:
-	ld hl, Data_1c_5665 ; $50d8
+	ld hl, CharDataPageUpTargets_1c ; $50d8
 	call MoveCharDataScreenSelection ; $50db
 	jr CharDataScreen_InputLoop ; $50de
 Label_1c_50e0:
-	ld hl, Data_1c_566a ; $50e0
+	ld hl, CharDataPageDownTargets_1c ; $50e0
 	call MoveCharDataScreenSelection ; $50e3
 	jr CharDataScreen_InputLoop ; $50e6
 Label_1c_50e8:
-	ld hl, Data_1c_566f ; $50e8
+	ld hl, CharDataPageLeftTargets_1c ; $50e8
 	call MoveCharDataScreenSelection ; $50eb
 	jr CharDataScreen_InputLoop ; $50ee
 Label_1c_50f0:
-	ld hl, Data_1c_5674 ; $50f0
+	ld hl, CharDataPageRightTargets_1c ; $50f0
 	call MoveCharDataScreenSelection ; $50f3
 	jp CharDataScreen_InputLoop ; $50f6
 Label_1c_50f9:
@@ -2218,10 +2218,10 @@ Label_1c_51a3:
 	call CharDataScreen_DrawStats ; $51b9
 	call RestoreCharDataScreenRow ; $51bc
 	call DrawCharStatRows ; $51bf
-	ld hl, Data_1c_5904 ; $51c2
+	ld hl, CharDataBand6RunsStep2_1c ; $51c2
 	ld bc, $d3a0 ; $51c5
 	call BlitTilemapRunsFromTable ; $51c8
-	ld hl, Data_1c_591f ; $51cb
+	ld hl, CharDataBand5RunsStep2_1c ; $51cb
 	ld bc, $d380 ; $51ce
 	call BlitTilemapRunsFromTable ; $51d1
 	wram_bank $06 ; $51d4
@@ -2232,10 +2232,10 @@ Label_1c_51a3:
 	call FlushCharDataTilemaps ; $51e5
 	call RestoreCharDataScreenRow ; $51e8
 	call DrawCharStatRows ; $51eb
-	ld hl, Data_1c_590d ; $51ee
+	ld hl, CharDataBand6RunsStep1_1c ; $51ee
 	ld bc, $d3a0 ; $51f1
 	call BlitTilemapRunsFromTable ; $51f4
-	ld hl, Data_1c_5928 ; $51f7
+	ld hl, CharDataBand5RunsStep1_1c ; $51f7
 	ld bc, $d380 ; $51fa
 	call BlitTilemapRunsFromTable ; $51fd
 	wram_bank $06 ; $5200
@@ -2252,34 +2252,34 @@ Label_1c_51a3:
 	call FlushCharDataTilemaps ; $5225
 	call RestoreCharDataScreenRow ; $5228
 	call DrawCharStatRows ; $522b
-	ld hl, Data_1c_597b ; $522e
+	ld hl, CharDataBand8RunsStep1_1c ; $522e
 	ld bc, $d410 ; $5231
 	call BlitTilemapRunsFromTable ; $5234
 	call FlushCharDataTilemaps ; $5237
 	call RestoreCharDataScreenRow ; $523a
 	call DrawCharStatRows ; $523d
-	ld hl, Data_1c_5943 ; $5240
+	ld hl, CharDataBand7RunsStep1_1c ; $5240
 	ld bc, $d3e0 ; $5243
 	call BlitTilemapRunsFromTable ; $5246
-	ld hl, Data_1c_596a ; $5249
+	ld hl, CharDataBand8RunsStep2_1c ; $5249
 	ld bc, $d410 ; $524c
 	call BlitTilemapRunsFromTable ; $524f
 	call FlushCharDataTilemaps ; $5252
 	call RestoreCharDataScreenRow ; $5255
 	call DrawCharStatRows ; $5258
-	ld hl, Data_1c_593a ; $525b
+	ld hl, CharDataBand7RunsStep2_1c ; $525b
 	ld bc, $d3e0 ; $525e
 	call BlitTilemapRunsFromTable ; $5261
-	ld hl, Data_1c_5959 ; $5264
+	ld hl, CharDataBand8RunsStep3_1c ; $5264
 	ld bc, $d410 ; $5267
 	call BlitTilemapRunsFromTable ; $526a
 	call FlushCharDataTilemaps ; $526d
 	call RestoreCharDataScreenRow ; $5270
 	call DrawCharStatRows ; $5273
-	ld hl, Data_1c_592d ; $5276
+	ld hl, CharDataBand7RunsStep3_1c ; $5276
 	ld bc, $d3e0 ; $5279
 	call BlitTilemapRunsFromTable ; $527c
-	ld hl, Data_1c_5948 ; $527f
+	ld hl, CharDataBand8RunsStep4_1c ; $527f
 	ld bc, $d410 ; $5282
 	call BlitTilemapRunsFromTable ; $5285
 	call FlushCharDataTilemaps ; $5288
@@ -2317,25 +2317,25 @@ Label_1c_52c1:
 	call LoadCharStats ; $52c9
 	call CharDataScreen_DrawStats ; $52cc
 	call DrawCharStatRows ; $52cf
-	ld hl, Data_1c_593a ; $52d2
+	ld hl, CharDataBand7RunsStep2_1c ; $52d2
 	ld bc, $d3e0 ; $52d5
 	call BlitTilemapRunsFromTable ; $52d8
-	ld hl, Data_1c_5959 ; $52db
+	ld hl, CharDataBand8RunsStep3_1c ; $52db
 	ld bc, $d410 ; $52de
 	call BlitTilemapRunsFromTable ; $52e1
 	call FlushCharDataTilemaps ; $52e4
 	call RestoreCharDataScreenRow ; $52e7
 	call DrawCharStatRows ; $52ea
-	ld hl, Data_1c_5943 ; $52ed
+	ld hl, CharDataBand7RunsStep1_1c ; $52ed
 	ld bc, $d3e0 ; $52f0
 	call BlitTilemapRunsFromTable ; $52f3
-	ld hl, Data_1c_596a ; $52f6
+	ld hl, CharDataBand8RunsStep2_1c ; $52f6
 	ld bc, $d410 ; $52f9
 	call BlitTilemapRunsFromTable ; $52fc
 	call FlushCharDataTilemaps ; $52ff
 	call RestoreCharDataScreenRow ; $5302
 	call DrawCharStatRows ; $5305
-	ld hl, Data_1c_597b ; $5308
+	ld hl, CharDataBand8RunsStep1_1c ; $5308
 	ld bc, $d410 ; $530b
 	call BlitTilemapRunsFromTable ; $530e
 	call FlushCharDataTilemaps ; $5311
@@ -2351,10 +2351,10 @@ Label_1c_52c1:
 	call RegisterFrameTask ; $5330
 	call RestoreCharDataScreenRow ; $5333
 	call DrawCharStatRows ; $5336
-	ld hl, Data_1c_590d ; $5339
+	ld hl, CharDataBand6RunsStep1_1c ; $5339
 	ld bc, $d3a0 ; $533c
 	call BlitTilemapRunsFromTable ; $533f
-	ld hl, Data_1c_5928 ; $5342
+	ld hl, CharDataBand5RunsStep1_1c ; $5342
 	ld bc, $d380 ; $5345
 	call BlitTilemapRunsFromTable ; $5348
 	wram_bank $06 ; $534b
@@ -2363,10 +2363,10 @@ Label_1c_52c1:
 	call FlushCharDataTilemaps ; $5356
 	call RestoreCharDataScreenRow ; $5359
 	call DrawCharStatRows ; $535c
-	ld hl, Data_1c_5904 ; $535f
+	ld hl, CharDataBand6RunsStep2_1c ; $535f
 	ld bc, $d3a0 ; $5362
 	call BlitTilemapRunsFromTable ; $5365
-	ld hl, Data_1c_591f ; $5368
+	ld hl, CharDataBand5RunsStep2_1c ; $5368
 	ld bc, $d380 ; $536b
 	call BlitTilemapRunsFromTable ; $536e
 	wram_bank $06 ; $5371
@@ -2391,12 +2391,12 @@ DrawConfirmSelectionCursor:
 	or a, a ; $53ac
 	jr nz, Label_1c_53b9 ; $53ad
 	ld bc, $0fd4 ; $53af
-	ld de, Data_1c_7a0c ; $53b2
+	ld de, $7a0c ; $53b2
 	call QueueSprite ; $53b5
 	ret ; $53b8
 Label_1c_53b9:
 	ld bc, $0fd4 ; $53b9
-	ld de, Data_1c_7a14 ; $53bc
+	ld de, $7a14 ; $53bc
 	call QueueSprite ; $53bf
 	ret ; $53c2
 MoveCharDataScreenSelection:
@@ -2616,19 +2616,19 @@ Label_1c_556a:
 SetupCharDataScreen:
 	sound $0d ; $5572
 	call BackupCharDataScreenRow ; $5574
-	ld hl, Data_1c_56b9 ; $5577
+	ld hl, CharDataBand0RunsStep7_1c ; $5577
 	ld bc, $d240 ; $557a
 	call BlitTilemapRunsFromTable ; $557d
-	ld hl, Data_1c_5720 ; $5580
+	ld hl, CharDataBand1RunsStep6_1c ; $5580
 	ld bc, $d280 ; $5583
 	call BlitTilemapRunsFromTable ; $5586
-	ld hl, Data_1c_57bb ; $5589
+	ld hl, CharDataBand2RunsStep6_1c ; $5589
 	ld bc, $d2d0 ; $558c
 	call BlitTilemapRunsFromTable ; $558f
-	ld hl, Data_1c_5821 ; $5592
+	ld hl, CharDataBand3RunsStep7_1c ; $5592
 	ld bc, $d310 ; $5595
 	call BlitTilemapRunsFromTable ; $5598
-	ld hl, Data_1c_58d0 ; $559b
+	ld hl, CharDataBand4RunsStep3_1c ; $559b
 	ld bc, $d370 ; $559e
 	call BlitTilemapRunsFromTable ; $55a1
 	wram_bank $06 ; $55a4
@@ -2662,203 +2662,236 @@ SetupCharDataScreen:
 	call RegisterFrameTask ; $55fe
 	call RestoreCharDataScreenRow ; $5601
 	call DrawCharStatRows ; $5604
-	ld hl, Data_1c_597b ; $5607
+	ld hl, CharDataBand8RunsStep1_1c ; $5607
 	ld bc, $d410 ; $560a
 	call BlitTilemapRunsFromTable ; $560d
 	call FlushCharDataTilemaps ; $5610
 	call RestoreCharDataScreenRow ; $5613
 	call DrawCharStatRows ; $5616
-	ld hl, Data_1c_5943 ; $5619
+	ld hl, CharDataBand7RunsStep1_1c ; $5619
 	ld bc, $d3e0 ; $561c
 	call BlitTilemapRunsFromTable ; $561f
-	ld hl, Data_1c_596a ; $5622
+	ld hl, CharDataBand8RunsStep2_1c ; $5622
 	ld bc, $d410 ; $5625
 	call BlitTilemapRunsFromTable ; $5628
 	call FlushCharDataTilemaps ; $562b
 	call RestoreCharDataScreenRow ; $562e
 	call DrawCharStatRows ; $5631
-	ld hl, Data_1c_593a ; $5634
+	ld hl, CharDataBand7RunsStep2_1c ; $5634
 	ld bc, $d3e0 ; $5637
 	call BlitTilemapRunsFromTable ; $563a
-	ld hl, Data_1c_5959 ; $563d
+	ld hl, CharDataBand8RunsStep3_1c ; $563d
 	ld bc, $d410 ; $5640
 	call BlitTilemapRunsFromTable ; $5643
 	call FlushCharDataTilemaps ; $5646
 	call RestoreCharDataScreenRow ; $5649
 	call DrawCharStatRows ; $564c
-	ld hl, Data_1c_592d ; $564f
+	ld hl, CharDataBand7RunsStep3_1c ; $564f
 	ld bc, $d3e0 ; $5652
 	call BlitTilemapRunsFromTable ; $5655
-	ld hl, Data_1c_5948 ; $5658
+	ld hl, CharDataBand8RunsStep4_1c ; $5658
 	ld bc, $d410 ; $565b
 	call BlitTilemapRunsFromTable ; $565e
 	call FlushCharDataTilemaps ; $5661
 	ret ; $5664
-Data_1c_5665:
+CharDataPageUpTargets_1c:
 	; $5665, 5 bytes (bytes:5)
 	db $ff, $00, $ff, $02, $01 ; 0x00
-Data_1c_566a:
+CharDataPageDownTargets_1c:
 	; $566a, 5 bytes (bytes:5)
 	db $01, $04, $03, $04, $ff ; 0x00
-Data_1c_566f:
+CharDataPageLeftTargets_1c:
 	; $566f, 5 bytes (bytes:5)
 	db $ff, $ff, $00, $01, $ff ; 0x00
-Data_1c_5674:
-	INCBIN "data/bank_01c/d_5674.bin" ; $5674, 69 bytes
-Data_1c_56b9:
+CharDataPageRightTargets_1c:
+	INCBIN "data/bank_01c/d_5674.bin" ; $5674, 5 bytes
+Unused_1c_5679:
+	; $5679, 64 bytes (records:2)
+	dw $6880 ; record 0
+	dw $68c0 ; record 1
+	dw $6900 ; record 2
+	dw $6940 ; record 3
+	dw $6980 ; record 4
+	dw $69c0 ; record 5
+	dw $6a00 ; record 6
+	dw $6a40 ; record 7
+	dw $6a80 ; record 8
+	dw $6ac0 ; record 9
+	dw $6b00 ; record 10
+	dw $6b40 ; record 11
+	dw $6b80 ; record 12
+	dw $6bc0 ; record 13
+	dw $6c00 ; record 14
+	dw $6c40 ; record 15
+	dw $6c80 ; record 16
+	dw $6cc0 ; record 17
+	dw $6d00 ; record 18
+	dw $6d40 ; record 19
+	dw $6d80 ; record 20
+	dw $6dc0 ; record 21
+	dw $6e00 ; record 22
+	dw $6e40 ; record 23
+	dw $6e80 ; record 24
+	dw $6ec0 ; record 25
+	dw $6f00 ; record 26
+	dw $6f40 ; record 27
+	dw $6f80 ; record 28
+	dw $6fc0 ; record 29
+	dw $7000 ; record 30
+	dw $7040 ; record 31
+CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (bytes:16)
 	db $00, $60, $00, $0a, $00, $80, $0a, $0a, $00, $a0, $14, $0a, $00, $c0, $1e, $0a ; 0x00
 	db $00, $e0, $28, $0a, $ff, $ff ; 0x10
-Data_1c_56cf:
+CharDataBand0RunsStep6_1c:
 	; $56cf, 21 bytes (bytes:16)
 	db $00, $40, $01, $09, $00, $60, $0b, $09, $00, $80, $15, $09, $00, $a0, $1f, $09 ; 0x00
 	db $00, $c0, $29, $09, $ff ; 0x10
-Data_1c_56e4:
+CharDataBand0RunsStep5_1c:
 	; $56e4, 21 bytes (bytes:16)
 	db $00, $20, $02, $08, $00, $40, $0c, $08, $00, $60, $16, $08, $00, $80, $20, $08 ; 0x00
 	db $00, $a0, $2a, $08, $ff ; 0x10
-Data_1c_56f9:
+CharDataBand0RunsStep4_1c:
 	; $56f9, 21 bytes (bytes:16)
 	db $00, $00, $03, $07, $00, $20, $0d, $07, $00, $40, $17, $07, $00, $60, $21, $07 ; 0x00
 	db $00, $80, $2b, $07, $ff ; 0x10
-Data_1c_570e:
+CharDataBand0RunsStep3_1c:
 	; $570e, 13 bytes (bytes:13)
 	db $00, $00, $19, $05, $00, $20, $23, $05, $00, $40, $2d, $05, $ff ; 0x00
-Data_1c_571b:
+CharDataBand0RunsStep2_1c:
 	; $571b, 5 bytes (bytes:5)
 	db $00, $00, $2f, $03, $ff ; 0x00
-Data_1c_5720:
+CharDataBand1RunsStep6_1c:
 	; $5720, 29 bytes (bytes:16)
 	db $01, $00, $00, $0a, $01, $20, $0a, $0a, $01, $40, $14, $0a, $01, $60, $1e, $0a ; 0x00
 	db $01, $80, $28, $0a, $01, $a0, $32, $0a, $01, $c0, $3c, $0a, $ff ; 0x10
-Data_1c_573d:
+CharDataBand1RunsStep5_1c:
 	; $573d, 29 bytes (bytes:16)
 	db $01, $20, $01, $09, $01, $40, $0b, $09, $01, $60, $15, $09, $01, $80, $1f, $09 ; 0x00
 	db $01, $a0, $29, $09, $01, $c0, $33, $09, $01, $e0, $3d, $09, $ff ; 0x10
-Data_1c_575a:
+CharDataBand1RunsStep4_1c:
 	; $575a, 29 bytes (bytes:16)
 	db $01, $40, $02, $08, $01, $60, $0c, $08, $01, $80, $16, $08, $01, $a0, $20, $08 ; 0x00
 	db $01, $c0, $2a, $08, $01, $e0, $34, $08, $02, $00, $3e, $08, $ff ; 0x10
-Data_1c_5777:
+CharDataBand1RunsStep3_1c:
 	; $5777, 29 bytes (bytes:16)
 	db $01, $60, $03, $07, $01, $80, $0d, $07, $01, $a0, $17, $07, $01, $c0, $21, $07 ; 0x00
 	db $01, $e0, $2b, $07, $02, $00, $35, $07, $02, $20, $3f, $07, $ff ; 0x10
-Data_1c_5794:
+CharDataBand1RunsStep2_1c:
 	; $5794, 21 bytes (bytes:16)
 	db $01, $a0, $05, $05, $01, $c0, $0f, $05, $01, $e0, $19, $05, $02, $00, $23, $05 ; 0x00
 	db $02, $20, $2d, $05, $ff ; 0x10
-Data_1c_57a9:
+CharDataBand1RunsStep1_1c:
 	; $57a9, 13 bytes (bytes:13)
 	db $01, $e0, $07, $03, $02, $00, $11, $03, $02, $20, $1b, $03, $ff ; 0x00
-Data_1c_57b6:
+CharDataBand0RunsStep1_1c:
 	; $57b6, 5 bytes (bytes:5)
 	db $02, $20, $09, $01, $ff ; 0x00
-Data_1c_57bb:
+CharDataBand2RunsStep6_1c:
 	; $57bb, 21 bytes (bytes:16)
 	db $00, $6a, $00, $0a, $00, $8a, $0a, $0a, $00, $aa, $14, $0a, $00, $ca, $1e, $0a ; 0x00
 	db $00, $ea, $28, $0a, $ff ; 0x10
-Data_1c_57d0:
+CharDataBand2RunsStep5_1c:
 	; $57d0, 21 bytes (bytes:16)
 	db $00, $4b, $00, $09, $00, $6b, $0a, $09, $00, $8b, $14, $09, $00, $ab, $1e, $09 ; 0x00
 	db $00, $cb, $28, $09, $ff ; 0x10
-Data_1c_57e5:
+CharDataBand2RunsStep4_1c:
 	; $57e5, 21 bytes (bytes:16)
 	db $00, $2c, $00, $08, $00, $4c, $0a, $08, $00, $6c, $14, $08, $00, $8c, $1e, $08 ; 0x00
 	db $00, $ac, $28, $08, $ff ; 0x10
-Data_1c_57fa:
+CharDataBand2RunsStep3_1c:
 	; $57fa, 21 bytes (bytes:16)
 	db $00, $0d, $00, $07, $00, $2d, $0a, $07, $00, $4d, $14, $07, $00, $6d, $1e, $07 ; 0x00
 	db $00, $8d, $28, $07, $ff ; 0x10
-Data_1c_580f:
+CharDataBand2RunsStep2_1c:
 	; $580f, 13 bytes (bytes:13)
 	db $00, $0f, $14, $05, $00, $2f, $1e, $05, $00, $4f, $28, $05, $ff ; 0x00
-Data_1c_581c:
+CharDataBand2RunsStep1_1c:
 	; $581c, 5 bytes (bytes:5)
 	db $00, $11, $28, $03, $ff ; 0x00
-Data_1c_5821:
+CharDataBand3RunsStep7_1c:
 	; $5821, 37 bytes (bytes:16)
 	db $01, $0a, $00, $0a, $01, $2a, $0a, $0a, $01, $4a, $14, $0a, $01, $6a, $1e, $0a ; 0x00
 	db $01, $8a, $28, $0a, $01, $aa, $32, $0a, $01, $ca, $3c, $0a, $01, $ea, $46, $0a ; 0x10
 	db $02, $0a, $50, $0a, $ff ; 0x20
-Data_1c_5846:
+CharDataBand3RunsStep6_1c:
 	; $5846, 37 bytes (bytes:16)
 	db $01, $2b, $00, $09, $01, $4b, $0a, $09, $01, $6b, $14, $09, $01, $8b, $1e, $09 ; 0x00
 	db $01, $ab, $28, $09, $01, $cb, $32, $09, $01, $eb, $3c, $09, $02, $0b, $46, $09 ; 0x10
 	db $02, $2b, $50, $09, $ff ; 0x20
-Data_1c_586b:
+CharDataBand3RunsStep5_1c:
 	; $586b, 33 bytes (bytes:16)
 	db $01, $4c, $00, $08, $01, $6c, $0a, $08, $01, $8c, $14, $08, $01, $ac, $1e, $08 ; 0x00
 	db $01, $cc, $28, $08, $01, $ec, $32, $08, $02, $0c, $3c, $08, $02, $2c, $46, $08 ; 0x10
 	db $ff ; 0x20
-Data_1c_588c:
+CharDataBand3RunsStep4_1c:
 	; $588c, 29 bytes (bytes:16)
 	db $01, $6d, $00, $07, $01, $8d, $0a, $07, $01, $ad, $14, $07, $01, $cd, $1e, $07 ; 0x00
 	db $01, $ed, $28, $07, $02, $0d, $32, $07, $02, $2d, $3c, $07, $ff ; 0x10
-Data_1c_58a9:
+CharDataBand3RunsStep3_1c:
 	; $58a9, 21 bytes (bytes:16)
 	db $01, $af, $00, $05, $01, $cf, $0a, $05, $01, $ef, $14, $05, $02, $0f, $1e, $05 ; 0x00
 	db $02, $2f, $28, $05, $ff ; 0x10
-Data_1c_58be:
+CharDataBand3RunsStep2_1c:
 	; $58be, 13 bytes (bytes:13)
 	db $01, $f1, $00, $04, $02, $11, $0a, $04, $02, $31, $14, $04, $ff ; 0x00
-Data_1c_58cb:
+CharDataBand3RunsStep1_1c:
 	; $58cb, 5 bytes (bytes:5)
 	db $02, $33, $00, $02, $ff ; 0x00
-Data_1c_58d0:
+CharDataBand4RunsStep3_1c:
 	; $58d0, 13 bytes (bytes:13)
 	db $00, $00, $00, $03, $00, $20, $03, $03, $00, $40, $06, $03, $ff ; 0x00
-Data_1c_58dd:
+CharDataBand4RunsStep2_1c:
 	; $58dd, 13 bytes (bytes:13)
 	db $00, $00, $01, $02, $00, $20, $04, $02, $00, $40, $07, $02, $ff ; 0x00
-Data_1c_58ea:
+CharDataBand4RunsStep1_1c:
 	; $58ea, 13 bytes (bytes:13)
 	db $00, $00, $02, $01, $00, $20, $05, $01, $00, $40, $08, $01, $ff ; 0x00
-Data_1c_58f7:
+CharDataBand6RunsStep3_1c:
 	; $58f7, 13 bytes (bytes:13)
 	db $00, $03, $00, $11, $00, $23, $11, $11, $00, $43, $22, $11, $ff ; 0x00
-Data_1c_5904:
+CharDataBand6RunsStep2_1c:
 	; $5904, 9 bytes (bytes:9)
 	db $00, $03, $11, $11, $00, $23, $22, $11, $ff ; 0x00
-Data_1c_590d:
+CharDataBand6RunsStep1_1c:
 	; $590d, 5 bytes (bytes:5)
 	db $00, $03, $22, $11, $ff ; 0x00
-Data_1c_5912:
-	; $5912, 10 bytes (bytes:10)
+CharDataBand5RunsStep3_1c:
+	; $5912, 13 bytes (bytes:10)
 	db $01, $e0, $00, $0a, $02, $00, $0a, $0a, $02, $20 ; 0x00
-Data_1c_591c:
-	; $591c, 3 bytes (bytes:3)
-	db $14, $0a, $ff ; 0x00
-Data_1c_591f:
+	db $14, $0a, $ff ; 0x0a
+CharDataBand5RunsStep2_1c:
 	; $591f, 9 bytes (bytes:9)
 	db $02, $00, $00, $0a, $02, $20, $0a, $0a, $ff ; 0x00
-Data_1c_5928:
+CharDataBand5RunsStep1_1c:
 	; $5928, 5 bytes (bytes:5)
 	db $02, $20, $00, $0a, $ff ; 0x00
-Data_1c_592d:
+CharDataBand7RunsStep3_1c:
 	; $592d, 13 bytes (bytes:13)
 	db $00, $03, $00, $0b, $00, $23, $0b, $0b, $00, $43, $16, $0b, $ff ; 0x00
-Data_1c_593a:
+CharDataBand7RunsStep2_1c:
 	; $593a, 9 bytes (bytes:9)
 	db $00, $03, $0b, $0b, $00, $23, $16, $0b, $ff ; 0x00
-Data_1c_5943:
-	; $5943, 1 bytes (bytes:1)
+CharDataBand7RunsStep1_1c:
+	; $5943, 5 bytes (bytes:1)
 	db $00 ; 0x00
-Data_1c_5944:
-	; $5944, 4 bytes (bytes:4)
-	db $03, $16, $0b, $ff ; 0x00
-Data_1c_5948:
+	db $03 ; 0x01
+	db $16 ; 0x02
+	db $0b ; 0x03
+	db $ff ; 0x04
+CharDataBand8RunsStep4_1c:
 	; $5948, 17 bytes (bytes:16)
 	db $00, $0e, $00, $06, $00, $2e, $06, $06, $00, $4e, $0c, $06, $00, $6e, $12, $06 ; 0x00
 	db $ff ; 0x10
-Data_1c_5959:
+CharDataBand8RunsStep3_1c:
 	; $5959, 17 bytes (bytes:16)
 	db $00, $10, $00, $04, $00, $30, $06, $04, $00, $50, $0c, $04, $00, $70, $12, $04 ; 0x00
 	db $ff ; 0x10
-Data_1c_596a:
+CharDataBand8RunsStep2_1c:
 	; $596a, 17 bytes (bytes:16)
 	db $00, $12, $00, $03, $00, $32, $06, $03, $00, $52, $0c, $03, $00, $72, $12, $03 ; 0x00
 	db $ff ; 0x10
-Data_1c_597b:
+CharDataBand8RunsStep1_1c:
 	; $597b, 17 bytes (bytes:16)
 	db $00, $14, $00, $01, $00, $34, $06, $01, $00, $54, $0c, $01, $00, $74, $12, $01 ; 0x00
 	db $ff ; 0x10
@@ -2874,14 +2907,7 @@ Palette_1c_598c:
 	dw $015f, $001f, $0000, $7fff ; pal 6: #ff5200 #ff0000 #000000 #ffffff
 	dw $6280, $7c00, $0000, $63ff ; pal 7: #00a4c5 #0000ff #000000 #ffffc5
 Lz_1c_59cc:
-	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 592 bytes
-Data_1c_5c1c:
-	; $5c1c, 40 bytes (bytes:16)
-	db $bf, $ff, $a8, $ff, $ab, $fc, $4f, $ff, $90, $6f, $ff, $7b, $fc, $45, $fe, $dd ; 0x00
-	db $66, $79, $fe, $ff, $4b, $fc, $d5, $6e, $5d, $e6, $19, $e6, $c6, $e0, $a5, $3f ; 0x10
-	db $c0, $73, $a0, $fe, $e0, $8e, $a0, $01 ; 0x20
-Data_1c_5c44:
-	INCBIN "data/bank_01c/d_5c44.bin" ; $5c44, 1342 bytes
+	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 1974 bytes
 	rst Rst18 ; $6182
 	and a, a ; $6183
 	rst Rst38 ; $6184
@@ -2937,7 +2963,7 @@ Label_1c_6eea:
 	inc h ; $6eec
 	ret z ; $6eed
 	nop ; $6eee
-Data_1c_6eef:
+Unused_1c_6eef:
 	; $6eef, 34 bytes (bytes:16)
 	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
 	db $e7, $00, $d9, $00, $d9, $40, $99, $a0, $19, $49, $30, $00, $f0, $10, $e0, $20 ; 0x10
@@ -3406,12 +3432,7 @@ Palette_1c_7541:
 	dw $7fff, $0198, $031f, $0000 ; pal 6: #ffffff #c56200 #ffc500 #000000
 	dw $7fff, $195f, $0246, $0000 ; pal 7: #ffffff #ff5231 #319400 #000000
 Lz_1c_7581:
-	INCBIN "data/bank_01c/d_7581.bin" ; $7581, 1163 bytes
-Data_1c_7a0c:
-	; $7a0c, 8 bytes (bytes:8)
-	db $c0, $80, $df, $52, $c0, $e3, $e2, $80 ; 0x00
-Data_1c_7a14:
-	INCBIN "data/bank_01c/d_7a14.bin" ; $7a14, 715 bytes
+	INCBIN "data/bank_01c/d_7581.bin" ; $7581, 1886 bytes
 Lz_1c_7cdf:
 	INCBIN "data/bank_01c/d_7cdf.bin" ; $7cdf, 320 bytes
 Lz_1c_7e1f:

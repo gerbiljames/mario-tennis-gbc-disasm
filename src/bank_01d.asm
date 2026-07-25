@@ -3134,12 +3134,12 @@ DrawCharDataConfirmCursor:
 	or a, a ; $5b03
 	jr nz, Label_1d_5b10 ; $5b04
 	ld bc, $0fd4 ; $5b06
-	ld de, Data_1d_7a0c ; $5b09
+	ld de, $7a0c ; $5b09
 	call QueueSprite ; $5b0c
 	ret ; $5b0f
 Label_1d_5b10:
 	ld bc, $0fd4 ; $5b10
-	ld de, Data_1d_7a14 ; $5b13
+	ld de, $7a14 ; $5b13
 	call QueueSprite ; $5b16
 	ret ; $5b19
 BuildCharDataConfirmScreen:
@@ -5313,12 +5313,7 @@ SpriteTemplate_1d_79b4:
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
 Lz_1d_79c1:
-	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 75 bytes
-Data_1d_7a0c:
-	; $7a0c, 8 bytes (bytes:8)
-	db $4c, $4e, $7c, $a0, $f2, $99, $58, $fe ; 0x00
-Data_1d_7a14:
-	INCBIN "data/bank_01d/d_7a14.bin" ; $7a14, 79 bytes
+	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 162 bytes
 Lz_1d_7a63:
 	INCBIN "data/bank_01d/d_7a63.bin" ; $7a63, 246 bytes
 SpriteTemplate_1d_7b59:

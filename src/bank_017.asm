@@ -1298,7 +1298,7 @@ DrawBlinkingPrompt:
 	jr z, Label_17_48bb ; $48af
 	ld c, $72 ; $48b1
 	ld b, $09 ; $48b3
-	ld de, Data_17_508c ; $48b5
+	ld de, $508c ; $48b5
 	call QueueSprite ; $48b8
 Label_17_48bb:
 	pop af ; $48bb
@@ -1638,9 +1638,7 @@ CourtDiagramPalettes:
 	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
 Gfx_17_4f02:
-	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 394 bytes
-Data_17_508c:
-	INCBIN "data/bank_017/d_508c.bin" ; $508c, 1243 bytes
+	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 1637 bytes
 Palette_17_5567:
 	; $5567, 24 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
