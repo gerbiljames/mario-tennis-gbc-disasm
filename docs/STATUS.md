@@ -22,7 +22,7 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `816df7c`); the whole history rebuilds
+Everything below is **committed** (HEAD `bfe39ab`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -190,6 +190,73 @@ references the `$3e` copies, so descent never reached them and they sat as
 `coverage/bank03e_static2.json` (which already carried seven neighbouring
 stranded heads) and named; byte-identity with an already-named routine is what
 makes that seed safe, per the caution in the bank `$1e` section above.
+
+### Story flags named, pokecrystal-style (2026-07-25)
+
+`wGameFlags` (`$c9c0`) is the game's event-flag array and it was one line in
+the RAM map. It is **32 bytes / 256 flags**, saved as the story slot's `+$1c0`
+block, and the three rst vectors address a bit as `d` = byte, `e` = bit `<< 5`
+(mask `$80 >> bit`). The `*GameFlagByNumber` wrappers (`$00:$24ef`) shift a
+flat **flag number** (`byte * 8 + bit`) into that pair -- which is exactly
+pokecrystal's `wEventFlags` / `EVENT_*` numbering, so the same shape works
+here:
+
+| pokecrystal | here |
+| --- | --- |
+| `constants/event_flags.asm` (`const_def` + `const EVENT_*`) | `flags.json` -> generated `include/flag_constants.inc` (`def FLAG_* equ <number>`) |
+| `wEventFlags:: flag_array NUM_EVENTS` | `wGameFlags` + `wGameFlagsTemp`, documented as one 32-byte array |
+| `checkevent EVENT_FOO` | `test_flag FLAG_FOO` |
+| first 8 events reset on map reload | flags `$e0-$ff` (bytes `$1c-$1f`) zeroed by `ClearTemporaryStoryFlags` on every location load |
+
+`set_flag`/`clear_flag`/`test_flag` now take **either** form -- `test_flag
+FLAG_DOUBLES` where the flag has a name, or the old `test_flag $05, 7` where it
+does not (`IF _NARG == 1` in the macro reassembles the same two operand bytes),
+and a new `flag_id` macro does the same for the bank `$1e` flag-list tables.
+**820 of the 984 rst sites now read symbolically**; the 164 left are the
+engine-internal bits (text/VRAM/window state in bytes `$01-$04`) that want
+their own pass.
+
+**86 flags named**, and the interesting part is that two independent
+derivations agreed. Working only from the code:
+
+* The three bank `$1e` reward lists are indexed by `GetRewardTableIndex`, so
+  list entry *k* is "the flag for story match/drill *k*" -- that alone orders
+  the class ladders (`$08`-`$0b`), the Island Open rounds (`$06`/`$07`) and the
+  30 training-drill clears (`$18`-`$1b`).
+* The drill ids were already pinned by the 2026-07-25 drill pass, and
+  **flag number = 192 + drill id** falls straight out: `SetupWallPracticeLevelSigns`
+  tests flags `$d6`-`$d9` = ids 22-25 = "Wall Lvl 1-4", `ComputeMachineCourtProgress`
+  tests `$d2`-`$d5` = ids 18-21, and bank `$15`'s three practice coaches test
+  exactly the contiguous triples of their own drill family.
+
+Then the RetroAchievements notes already sitting in `ram_map.json` for the same
+bytes (`wStoryModeMinigameCompletionFlags1-4`, `...MatchCompletionFlags1-6`,
+`...EquipmentFlags1-2`) turned out to describe **the same bits**, in the
+opposite bit convention (their "Bit N" is mask `1 << N`, i.e. this engine's bit
+`7 - N`). Every drill flag matched; the ranks and equipment corrected my
+first-pass guesses:
+
+* The rank ladders count **down**: `$0a,0` is Junior Rank 4 (the first
+  opponent) and `$0a,3` Junior Rank 1 (the champion). Singles has 4 ranks per
+  class, doubles 3 -- which is why the doubles reward list starts one entry
+  later than the singles one.
+* Bytes `$0c`/`$0d` are **equipment owned**, not progress:
+  `FLAG_HAVE_LARGE_RACKET` ... `FLAG_HAVE_LIGHT_SHOES`. That explains the
+  cluster nothing ever `test_flag`s: `RunRepairCounterDialogue` and
+  `ApplyClassProgressRule1/2/3` hand out rackets and shoes on each class
+  clear. It also settles the swing contest -- bank `$15` checks
+  `FLAG_HAVE_SILVER_RACKET`/`FLAG_HAVE_GOLD_RACKET`, skips the reward if you
+  own either, and otherwise needs 100 swings.
+* `$06,4`/`$07,3` are the **Dream Match** (the Mario-cast final), not another
+  Island Open round.
+
+Two things recorded rather than smoothed over: bank `$07`'s `ModeHookTable_07`
+slot 4 sets `FLAG_HAVE_SILVER_RACKET` on a ball-hit event, which reads like a
+borrowed scratch bit (the fragment at `$5f0d` that tests and clears it is
+stranded code no table slot points at); and the training-court coach flags
+`$bd`/`$be`/`$bf` are named for the drill family the NPC that reads them
+checks, which puts the existing `InitServeCoachScene`/`InitNetCoachScene`
+labels one family out of step -- the labels look wrong, not the flags.
 
 ### The generator split into `tools/disasmlib/` (2026-07-25)
 
@@ -3527,5 +3594,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `816df7c`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `bfe39ab`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
