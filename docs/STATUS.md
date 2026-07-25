@@ -22,7 +22,7 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `928e4ec`); the whole history rebuilds
+Everything below is **committed** (HEAD `67bd0bf`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -3642,5 +3642,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `928e4ec`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `67bd0bf`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
