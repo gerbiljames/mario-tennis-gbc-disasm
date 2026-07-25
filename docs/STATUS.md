@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~160.2K instructions / 420,088 bytes of proven code+structured source
+**~160.2K instructions / 420,096 bytes of proven code+structured source
 (20.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -22,11 +22,11 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `6677043`); the whole history rebuilds
+Everything below is **committed** (HEAD `79463c0`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,693 of 20,711 labels are human-named** (see the caveat in the
+**6,741 of 20,703 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
 
 ### No `Func_*` label is left in the ROM (2026-07-25)
@@ -126,6 +126,43 @@ is one entry ahead of `AllProgressFlagList_1e` (`$6d82`, the 36 flags
 `CheckAllProgressComplete` requires), and that 36-entry span runs on through
 `RewardFlagListMode2_1e`. The labels mark each entry point; the overlap is
 recorded here rather than in a comment the generator would overwrite.
+
+### Bank $1c's character-data screen tables (2026-07-25)
+
+With no `Func_*` left, `Data_*` is the frontier -- 4,287 labels, but 3,600 of
+them are the OAM/frame arrays of the sprite and object banks. The interesting
+ones live in the UI banks, and bank `$1c` (the character-data screen) is now
+done: **48 labels**, and no `Data_1c_*` is left in the bank.
+
+They are all one shape. `BlitTilemapRunsFromTable` walks 4-byte records
+(`dest offset hi, lo, source index, length`, `$ff`-terminated) and copies runs
+into a tilemap band; the screen has **nine bands** and each is revealed a step
+at a time, so the tables form a band x step grid:
+
+| band | dest | steps | drawn by |
+| --- | --- | --- | --- |
+| 0-3 | `$d240`/`$d280`/`$d2d0`/`$d310` | 6-7 | `AnimateCharDataStatsReveal`, and the last step by `SetupCharDataScreen`/`DrawCharStatRows` |
+| 4-6 | `$d370`/`$d380`/`$d3a0` | 3 | the reveal's second phase |
+| 7-8 | `$d3e0`/`$d410` | 3-4 | `CharDataScreen_InputLoop`, forwards to open the confirm prompt and backwards to close it |
+
+Hence `CharDataBand<N>RunsStep<M>_1c`, with the step number in animation order
+(step 1 is the smallest run list, the last step is the full band). The four
+D-pad tables `MoveCharDataScreenSelection` indexes by the current page are
+`CharDataPage{Up,Down,Left,Right}Targets_1c` (`$ff` = no move).
+
+**Nine labels in banks `$17`/`$1c`/`$1d` were not pointers at all.** They came
+from `ld de, imm` sites feeding `QueueSprite`, whose `de` is a *screen
+position* (`d` = x, `e` = y) -- so `ld de, $7a0c` was rendered
+`ld de, Data_1d_7a0c` and the label split a graphics blob at a meaningless
+offset. Dropping the nine merges three blobs back together (bank `$17`'s
+`d_4f02`/`d_508c` into one 1,637-byte stream, bank `$1c`'s `d_59cc`/`d_5c44`
+likewise) and the operands read as the coordinates they are. The generator's
+own pointer-load gate still accepts a `push de` after such a load as evidence
+(six labels in bank `$1a`), which is the remaining instance of this shape.
+
+One table came out of the wash: `CharDataPageRightTargets_1c` is 5 bytes, not
+the 69 the blob boundary implied. The 64 bytes after it are 26 words stepping
+by `$40` (`$6880`-`$7040`) that nothing in the ROM reads, now `Unused_1c_5679`.
 
 ### The generator split into `tools/disasmlib/` (2026-07-25)
 
@@ -2744,7 +2781,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 6,693 of 20,711 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 6,741 of 20,703 labels** (`tools/progress.py`; the rest
 are auto-generated `Label_/Data_/FarPtr_` names — no `Func_` is left). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -3463,5 +3500,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `6677043`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `79463c0`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
