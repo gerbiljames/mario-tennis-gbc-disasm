@@ -113,6 +113,13 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
   table extents are accepted when their pointer decodes as a valid LZ stream
   overlapping no code. Proven blobs get `Data_`/`Lz_` labels and exact-extent
   INCBINs (stream length for LZ, `bc` for copies).
+- `tools/disasmlib/` — the generator itself; `disasm.py` is only its command
+  line. Three stages, in `pipeline.py` order: **analysis** (`core.py` decoding
+  and descent, `slots.py` data-slot proving, `carve.py` structure carving, all
+  composed onto one object in `disassembly.py`), **naming** (`labels.py`,
+  `ram.py`, `config.py`), and **emission** (`emit.py`, with the renderers in
+  `operands.py`, `idioms.py`, `datatables.py`, `macros.py`). The package
+  docstring has the full module map.
 - `tools/lz.py` — codec for the game's LZ format (used by `DecompressData`,
   `$1797`); also a CLI to decompress a stream from the ROM for inspection.
 - `tools/strings.py` — dumps the game text (ASCII; `$01` line break, `$02`

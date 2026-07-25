@@ -819,83 +819,109 @@ Label_1b_44ae:
 	inc de ; $44ae
 	pop hl ; $44af
 	ret ; $44b0
-Gfx_1b_44b1:
-	INCBIN "data/bank_01b/d_44b1.bin" ; $44b1, 2107 bytes
+MugshotGfxAlex_1b:
+	INCBIN "data/bank_01b/lz_44b1.bin" ; $44b1, 158 bytes
+MugshotGfxNina_1b:
+	INCBIN "data/bank_01b/lz_454f.bin" ; $454f, 163 bytes
+MugshotGfxHarry_1b:
+	INCBIN "data/bank_01b/lz_45f2.bin" ; $45f2, 146 bytes
+MugshotGfxKate_1b:
+	INCBIN "data/bank_01b/lz_4684.bin" ; $4684, 165 bytes
+MugshotGfxMario_1b:
+	INCBIN "data/bank_01b/lz_4729.bin" ; $4729, 162 bytes
+MugshotGfxWaluigi_1b:
+	INCBIN "data/bank_01b/lz_47cb.bin" ; $47cb, 158 bytes
+MugshotGfxYoshi_1b:
+	INCBIN "data/bank_01b/lz_4869.bin" ; $4869, 139 bytes
+MugshotGfxBowser_1b:
+	INCBIN "data/bank_01b/lz_48f4.bin" ; $48f4, 165 bytes
+MugshotGfxWario_1b:
+	INCBIN "data/bank_01b/lz_4999.bin" ; $4999, 162 bytes
+MugshotGfxPeach_1b:
+	INCBIN "data/bank_01b/lz_4a3b.bin" ; $4a3b, 153 bytes
+MugshotGfxStorySlot1_1b:
+	INCBIN "data/bank_01b/lz_4ad4.bin" ; $4ad4, 110 bytes
+MugshotGfxStorySlot2_1b:
+	INCBIN "data/bank_01b/lz_4b42.bin" ; $4b42, 147 bytes
+MugshotGfxStorySlot3_1b:
+	INCBIN "data/bank_01b/lz_4bd5.bin" ; $4bd5, 153 bytes
+MugshotGfxUnknown_1b:
+	INCBIN "data/bank_01b/lz_4c6e.bin" ; $4c6e, 126 bytes
 CharMugshotGfxPointers_1b_4cec:
-	; $4cec, 288 bytes (records:4)
-; 72 records x 4 bytes
-	dw $44b1, $4df8 ; record 0
-	dw $454f, $4df8 ; record 1
-	dw $45f2, $4df8 ; record 2
-	dw $4684, $4df8 ; record 3
-	dw $4c6e, $4df8 ; record 4
-	dw $4c6e, $4df8 ; record 5
-	dw $4c6e, $4df8 ; record 6
-	dw $4c6e, $4df8 ; record 7
-	dw $4c6e, $4df8 ; record 8
-	dw $4c6e, $4df8 ; record 9
-	dw $4c6e, $4df8 ; record 10
-	dw $4c6e, $4df8 ; record 11
-	dw $4c6e, $4df8 ; record 12
-	dw $4c6e, $4df8 ; record 13
-	dw $4c6e, $4df8 ; record 14
-	dw $4c6e, $4df8 ; record 15
-	dw $4c6e, $4df8 ; record 16
-	dw $4c6e, $4df8 ; record 17
-	dw $4c6e, $4df8 ; record 18
-	dw $4c6e, $4df8 ; record 19
-	dw $4c6e, $4df8 ; record 20
-	dw $4c6e, $4df8 ; record 21
-	dw $4c6e, $4df8 ; record 22
-	dw $4c6e, $4df8 ; record 23
-	dw $4c6e, $4df8 ; record 24
-	dw $4c6e, $4df8 ; record 25
-	dw $4729, $4df8 ; record 26
-	dw $47cb, $4df8 ; record 27
-	dw $4869, $4df8 ; record 28
-	dw $48f4, $4df8 ; record 29
-	dw $4999, $4df8 ; record 30
-	dw $4a3b, $4df8 ; record 31
-	dw $4c6e, $4df8 ; record 32
-	dw $4c6e, $4df8 ; record 33
-	dw $4c6e, $4df8 ; record 34
-	dw $4c6e, $4df8 ; record 35
-	dw $4c6e, $4df8 ; record 36
-	dw $4c6e, $4df8 ; record 37
-	dw $4c6e, $4df8 ; record 38
-	dw $4c6e, $4df8 ; record 39
-	dw $4c6e, $4df8 ; record 40
-	dw $4c6e, $4df8 ; record 41
-	dw $4c6e, $4df8 ; record 42
-	dw $4c6e, $4df8 ; record 43
-	dw $4c6e, $4df8 ; record 44
-	dw $4c6e, $4df8 ; record 45
-	dw $4c6e, $4df8 ; record 46
-	dw $4c6e, $4df8 ; record 47
-	dw $4c6e, $4df8 ; record 48
-	dw $4c6e, $4df8 ; record 49
-	dw $4c6e, $4df8 ; record 50
-	dw $4c6e, $4df8 ; record 51
-	dw $4c6e, $4df8 ; record 52
-	dw $4c6e, $4df8 ; record 53
-	dw $4c6e, $4df8 ; record 54
-	dw $4c6e, $4df8 ; record 55
-	dw $4c6e, $4df8 ; record 56
-	dw $4c6e, $4df8 ; record 57
-	dw $4c6e, $4df8 ; record 58
-	dw $4c6e, $4df8 ; record 59
-	dw $4c6e, $4df8 ; record 60
-	dw $4c6e, $4df8 ; record 61
-	dw $4c6e, $4df8 ; record 62
-	dw $4c6e, $4df8 ; record 63
-	dw $4ad4, $4dfc ; record 64
-	dw $4b42, $4dfc ; record 65
-	dw $4bd5, $4dfc ; record 66
-	dw $6400, $00ff ; record 67
-	dw $6400, $00ff ; record 68
-	dw $d600, $d690 ; record 69
-	dw $d720, $0000 ; record 70
-	dw $0090, $0120 ; record 71
+	; $4cec, 288 bytes (mugshot_ptr_table)
+	dw MugshotGfxAlex_1b, .unused ; $00 Alex
+	dw MugshotGfxNina_1b, .unused ; $01 Nina
+	dw MugshotGfxHarry_1b, .unused ; $02 Harry
+	dw MugshotGfxKate_1b, .unused ; $03 Kate
+	dw MugshotGfxUnknown_1b, .unused ; $04 Allie
+	dw MugshotGfxUnknown_1b, .unused ; $05 Joy
+	dw MugshotGfxUnknown_1b, .unused ; $06 Brian
+	dw MugshotGfxUnknown_1b, .unused ; $07 Pam
+	dw MugshotGfxUnknown_1b, .unused ; $08 Bob
+	dw MugshotGfxUnknown_1b, .unused ; $09 Beth
+	dw MugshotGfxUnknown_1b, .unused ; $0a Fay
+	dw MugshotGfxUnknown_1b, .unused ; $0b Curt
+	dw MugshotGfxUnknown_1b, .unused ; $0c Mark
+	dw MugshotGfxUnknown_1b, .unused ; $0d Sean
+	dw MugshotGfxUnknown_1b, .unused ; $0e Sammi
+	dw MugshotGfxUnknown_1b, .unused ; $0f Elden
+	dw MugshotGfxUnknown_1b, .unused ; $10 Spike
+	dw MugshotGfxUnknown_1b, .unused ; $11 Emily
+	dw MugshotGfxUnknown_1b, .unused ; $12 B. Coz
+	dw MugshotGfxUnknown_1b, .unused ; $13 A. Coz
+	dw MugshotGfxUnknown_1b, .unused ; $14 Kevin
+	dw MugshotGfxUnknown_1b, .unused ; $15 Not used
+	dw MugshotGfxUnknown_1b, .unused ; $16 Not used
+	dw MugshotGfxUnknown_1b, .unused ; $17 Luigi
+	dw MugshotGfxUnknown_1b, .unused ; $18 DK
+	dw MugshotGfxUnknown_1b, .unused ; $19 Baby M.
+	dw MugshotGfxMario_1b, .unused ; $1a Mario
+	dw MugshotGfxWaluigi_1b, .unused ; $1b Waluigi
+	dw MugshotGfxYoshi_1b, .unused ; $1c Yoshi
+	dw MugshotGfxBowser_1b, .unused ; $1d Bowser
+	dw MugshotGfxWario_1b, .unused ; $1e Wario
+	dw MugshotGfxPeach_1b, .unused ; $1f Peach
+	dw MugshotGfxUnknown_1b, .unused ; $20 no character
+	dw MugshotGfxUnknown_1b, .unused ; $21 no character
+	dw MugshotGfxUnknown_1b, .unused ; $22 no character
+	dw MugshotGfxUnknown_1b, .unused ; $23 no character
+	dw MugshotGfxUnknown_1b, .unused ; $24 no character
+	dw MugshotGfxUnknown_1b, .unused ; $25 no character
+	dw MugshotGfxUnknown_1b, .unused ; $26 no character
+	dw MugshotGfxUnknown_1b, .unused ; $27 no character
+	dw MugshotGfxUnknown_1b, .unused ; $28 no character
+	dw MugshotGfxUnknown_1b, .unused ; $29 no character
+	dw MugshotGfxUnknown_1b, .unused ; $2a no character
+	dw MugshotGfxUnknown_1b, .unused ; $2b no character
+	dw MugshotGfxUnknown_1b, .unused ; $2c no character
+	dw MugshotGfxUnknown_1b, .unused ; $2d no character
+	dw MugshotGfxUnknown_1b, .unused ; $2e no character
+	dw MugshotGfxUnknown_1b, .unused ; $2f no character
+	dw MugshotGfxUnknown_1b, .unused ; $30 no character
+	dw MugshotGfxUnknown_1b, .unused ; $31 no character
+	dw MugshotGfxUnknown_1b, .unused ; $32 no character
+	dw MugshotGfxUnknown_1b, .unused ; $33 no character
+	dw MugshotGfxUnknown_1b, .unused ; $34 no character
+	dw MugshotGfxUnknown_1b, .unused ; $35 no character
+	dw MugshotGfxUnknown_1b, .unused ; $36 no character
+	dw MugshotGfxUnknown_1b, .unused ; $37 no character
+	dw MugshotGfxUnknown_1b, .unused ; $38 no character
+	dw MugshotGfxUnknown_1b, .unused ; $39 no character
+	dw MugshotGfxUnknown_1b, .unused ; $3a no character
+	dw MugshotGfxUnknown_1b, .unused ; $3b no character
+	dw MugshotGfxUnknown_1b, .unused ; $3c no character
+	dw MugshotGfxUnknown_1b, .unused ; $3d no character
+	dw MugshotGfxUnknown_1b, .unused ; $3e no character
+	dw MugshotGfxUnknown_1b, .unused ; $3f story hero (remapped to $40 + save slot)
+	dw MugshotGfxStorySlot1_1b, .unusedAlt ; $40 story hero, save slot 1
+	dw MugshotGfxStorySlot2_1b, .unusedAlt ; $41 story hero, save slot 2
+	dw MugshotGfxStorySlot3_1b, .unusedAlt ; $42 story hero, save slot 3
+.unused:
+	dw $6400, $00ff
+.unusedAlt:
+	dw $6400, $00ff
+.trailer: ; unreferenced
+	dw $d600, $d690, $d720, $0000, $0090, $0120
 StubNop_1b_4e0c:
 	ret ; $4e0c
 Func_1b_4e0d:

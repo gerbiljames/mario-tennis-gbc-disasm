@@ -1,4 +1,4 @@
-# Project status — 2026-07-24
+# Project status — 2026-07-25
 
 ## Where things stand
 
@@ -22,12 +22,85 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `24fd9a1`); the whole history rebuilds
-byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
+Everything below is **committed** (HEAD `24fd9a1`) except the mugshot-table
+section immediately following; the whole history rebuilds byte-perfect.
+Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,575 of 20,697 labels are human-named** (see the caveat in the
+**6,618 of 20,710 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
+
+### The generator split into `tools/disasmlib/` (2026-07-25)
+
+`tools/disasm.py` had grown to 4,668 lines around one 1,500-line `Disassembly`
+class and one 740-line `emit()`. It is now a 71-line command line over a
+package, with no change to its behaviour: regeneration produces
+**byte-identical** `src/` and `data.manifest`, and `make compare` still passes.
+
+The split follows the three stages the tool already ran in:
+
+| stage | modules |
+| --- | --- |
+| analysis | `core.py` (decode, seed, descend, farcall/jump-table inference), `slots.py` ($4000 data-slot proving), `carve.py` (structure carving + stub-shape code recovery), composed in `disassembly.py`, ordered by `pipeline.py` |
+| naming | `labels.py`, `ram.py`, `config.py`, `seeds.py` |
+| emission | `emit.py`, with `operands.py`, `idioms.py`, `datatables.py`, `macros.py`, `constants.py`, `textids.py` |
+
+`emit()` became an `Emitter` whose construction resolves the output-global
+facts (which offsets are table slots, which blobs anchor labels, what each is
+named) and whose `run()` renders bank by bank through one `_emit_*` method per
+kind of offset. Its two duplicated data-table dispatch chains collapsed into
+`_render_table_spec` (specs valid anywhere) and `_render_record_spec` (specs
+that only apply to a table declared in an unclassified run — a proven blob of
+the same shape keeps `extract.py`'s plain rendering, which is why the two
+chains differed in the first place). Eight record renderers moved to
+`datatables.py` beside their siblings, and the pass ordering that was buried in
+`main()` is now `pipeline.prove_code`/`prove_data`, comments intact.
+
+### The menu mugshot table symbolicated (2026-07-25)
+
+`CharMugshotGfxPointers_1b_4cec` rendered as 72 rows of raw `dw $44b1, $4df8`
+over one 2,107-byte `Gfx_1b_44b1` blob. It is now a `mugshot_ptr_table`: 67
+records whose word 0 names its portrait stream and whose row comment names the
+character, over 14 separately labeled LZ streams.
+
+**What indexes it.** `DecompressCharMugshot` (`$1b:$4e5c`) does
+`hl = table + id*4`, follows word 0 and calls `DecompressData`; the id is the
+character record's byte `+$0b`, written by `InitCa00RecordFromCharId`
+(`$02:$40e5`) from `RemapExtendedCharId`. The same byte drives the name fetch
+two instructions later as text id `$001b + id`, so **character id = bank `$30`
+string index - 27** — the same id space `CharSpriteSetTable` (`$07:$5a50`)
+uses. That gives the roster outright: `$00`-`$03` are Alex/Nina/Harry/Kate,
+`$04`-`$14` the story cast, `$15`/`$16` "Not used", `$17`-`$1f` are
+Luigi/DK/Baby M./Mario/Waluigi/Yoshi/Bowser/Wario/Peach.
+
+**What it holds.** Only 13 of the 67 rows have their own graphics — the four
+kids and the six characters unlocked by play (`$1a`-`$1f`), plus three numeral
+badges at `$40`-`$42`. Every other row shares one "?" stream. The badges are
+reached only through the loader's remap: id `$3f` (the story hero, who has no
+face) becomes `$3f + wCurrentStorySlot + 1`, so the hero's portrait is the
+save slot's numeral — which is what the file-select screen at `$3b:$5719`
+draws for slots 0/1/2.
+
+**Identification** was by decompressing each stream (144 bytes = 3x3 tiles,
+matching `SetMugshotAttrs`' 3x3 attribute write) and rendering it. The names
+are confirmed independently: bank `$16`'s `CharacterPortraitTable_16` (`$6968`)
+is the *full* 32-entry version of the same table (`DecompressCharacterPortrait`
+masks the id with `and a, $1f`), and its streams for ids `$00`-`$03`/`$1a`-`$1f`
+are **byte-identical** to bank `$1b`'s.
+
+**Bank `$16` named from the same roster.** All 30 of its `Lz_16_*` portrait
+blobs are now `PortraitGfx<Name>_16`, and the table renders under a new
+`char_lz_ptr_table` spec (`lz_ptr_table` plus roster row comments): every
+character has a portrait there *except* Kevin (`$14`), who shares the "?"
+stream with the two "Not used" slots. The sibling `WinLosePortraitVariantTable_16`
+(`$60f1`) is left alone -- its 8 entries are win/lose variants, not char ids.
+
+**Word 1 of every record is dead.** It points at one of two 4-byte constants
+(`dw $6400, $00ff`, twice) sitting just past the last record; no code in the
+ROM reads it, and the 12 bytes after those (`$d600, $d690, $d720, $0000`,
+`$0090, $0120` — the mugshot buffer addresses and sizes) are unreferenced too.
+Both render as local labels (`.unused`, `.unusedAlt`, `.trailer`) so the table
+self-delimits rather than over-running into them. Byte-perfect.
 
 ### Bank $0b's 120 unnamed functions named from the call graph (2026-07-25)
 

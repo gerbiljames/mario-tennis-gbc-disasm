@@ -1750,103 +1750,103 @@ Label_16_6961:
 	call DecompressData ; $6964
 	ret ; $6967
 CharacterPortraitTable_16:
-	; $6968, 64 bytes (lz_ptr_table)
-	dw Lz_16_69a8 ; 0
-	dw Lz_16_6a46 ; 1
-	dw Lz_16_6ae9 ; 2
-	dw Lz_16_6b7b ; 3
-	dw Lz_16_6c20 ; 4
-	dw Lz_16_6ca6 ; 5
-	dw Lz_16_6d3a ; 6
-	dw Lz_16_6dca ; 7
-	dw Lz_16_6e53 ; 8
-	dw Lz_16_6ee0 ; 9
-	dw Lz_16_6f73 ; 10
-	dw Lz_16_7006 ; 11
-	dw Lz_16_70a7 ; 12
-	dw Lz_16_7148 ; 13
-	dw Lz_16_71e5 ; 14
-	dw Lz_16_727b ; 15
-	dw Lz_16_7310 ; 16
-	dw Lz_16_73b2 ; 17
-	dw Lz_16_7449 ; 18
-	dw Lz_16_74dc ; 19
-	dw Lz_16_7555 ; 20
-	dw Lz_16_7555 ; 21
-	dw Lz_16_7555 ; 22
-	dw Lz_16_75d3 ; 23
-	dw Lz_16_766d ; 24
-	dw Lz_16_7709 ; 25
-	dw Lz_16_77a4 ; 26
-	dw Lz_16_7846 ; 27
-	dw Lz_16_78e4 ; 28
-	dw Lz_16_796f ; 29
-	dw Lz_16_7a14 ; 30
-	dw Lz_16_7ab6 ; 31
-Lz_16_69a8:
+	; $6968, 64 bytes (char_lz_ptr_table)
+	dw PortraitGfxAlex_16 ; $00 Alex
+	dw PortraitGfxNina_16 ; $01 Nina
+	dw PortraitGfxHarry_16 ; $02 Harry
+	dw PortraitGfxKate_16 ; $03 Kate
+	dw PortraitGfxAllie_16 ; $04 Allie
+	dw PortraitGfxJoy_16 ; $05 Joy
+	dw PortraitGfxBrian_16 ; $06 Brian
+	dw PortraitGfxPam_16 ; $07 Pam
+	dw PortraitGfxBob_16 ; $08 Bob
+	dw PortraitGfxBeth_16 ; $09 Beth
+	dw PortraitGfxFay_16 ; $0a Fay
+	dw PortraitGfxCurt_16 ; $0b Curt
+	dw PortraitGfxMark_16 ; $0c Mark
+	dw PortraitGfxSean_16 ; $0d Sean
+	dw PortraitGfxSammi_16 ; $0e Sammi
+	dw PortraitGfxElden_16 ; $0f Elden
+	dw PortraitGfxSpike_16 ; $10 Spike
+	dw PortraitGfxEmily_16 ; $11 Emily
+	dw PortraitGfxBCoz_16 ; $12 B. Coz
+	dw PortraitGfxACoz_16 ; $13 A. Coz
+	dw PortraitGfxUnknown_16 ; $14 Kevin
+	dw PortraitGfxUnknown_16 ; $15 Not used
+	dw PortraitGfxUnknown_16 ; $16 Not used
+	dw PortraitGfxLuigi_16 ; $17 Luigi
+	dw PortraitGfxDK_16 ; $18 DK
+	dw PortraitGfxBabyMario_16 ; $19 Baby M.
+	dw PortraitGfxMario_16 ; $1a Mario
+	dw PortraitGfxWaluigi_16 ; $1b Waluigi
+	dw PortraitGfxYoshi_16 ; $1c Yoshi
+	dw PortraitGfxBowser_16 ; $1d Bowser
+	dw PortraitGfxWario_16 ; $1e Wario
+	dw PortraitGfxPeach_16 ; $1f Peach
+PortraitGfxAlex_16:
 	INCBIN "data/bank_016/lz_69a8.bin" ; $69a8, 158 bytes
-Lz_16_6a46:
+PortraitGfxNina_16:
 	INCBIN "data/bank_016/lz_6a46.bin" ; $6a46, 163 bytes
-Lz_16_6ae9:
+PortraitGfxHarry_16:
 	INCBIN "data/bank_016/lz_6ae9.bin" ; $6ae9, 146 bytes
-Lz_16_6b7b:
+PortraitGfxKate_16:
 	INCBIN "data/bank_016/lz_6b7b.bin" ; $6b7b, 165 bytes
-Lz_16_6c20:
+PortraitGfxAllie_16:
 	INCBIN "data/bank_016/lz_6c20.bin" ; $6c20, 134 bytes
-Lz_16_6ca6:
+PortraitGfxJoy_16:
 	INCBIN "data/bank_016/lz_6ca6.bin" ; $6ca6, 148 bytes
-Lz_16_6d3a:
+PortraitGfxBrian_16:
 	INCBIN "data/bank_016/lz_6d3a.bin" ; $6d3a, 144 bytes
-Lz_16_6dca:
+PortraitGfxPam_16:
 	INCBIN "data/bank_016/lz_6dca.bin" ; $6dca, 137 bytes
-Lz_16_6e53:
+PortraitGfxBob_16:
 	INCBIN "data/bank_016/lz_6e53.bin" ; $6e53, 141 bytes
-Lz_16_6ee0:
+PortraitGfxBeth_16:
 	INCBIN "data/bank_016/lz_6ee0.bin" ; $6ee0, 147 bytes
-Lz_16_6f73:
+PortraitGfxFay_16:
 	INCBIN "data/bank_016/lz_6f73.bin" ; $6f73, 147 bytes
-Lz_16_7006:
+PortraitGfxCurt_16:
 	INCBIN "data/bank_016/lz_7006.bin" ; $7006, 161 bytes
-Lz_16_70a7:
+PortraitGfxMark_16:
 	INCBIN "data/bank_016/lz_70a7.bin" ; $70a7, 161 bytes
-Lz_16_7148:
+PortraitGfxSean_16:
 	INCBIN "data/bank_016/lz_7148.bin" ; $7148, 157 bytes
-Lz_16_71e5:
+PortraitGfxSammi_16:
 	INCBIN "data/bank_016/lz_71e5.bin" ; $71e5, 150 bytes
-Lz_16_727b:
+PortraitGfxElden_16:
 	INCBIN "data/bank_016/lz_727b.bin" ; $727b, 149 bytes
-Lz_16_7310:
+PortraitGfxSpike_16:
 	INCBIN "data/bank_016/lz_7310.bin" ; $7310, 162 bytes
-Lz_16_73b2:
+PortraitGfxEmily_16:
 	INCBIN "data/bank_016/lz_73b2.bin" ; $73b2, 110 bytes
 RulesBorderAnimTask:
 	INCBIN "data/bank_016/d_7420.bin" ; $7420, 41 bytes
-Lz_16_7449:
+PortraitGfxBCoz_16:
 	INCBIN "data/bank_016/lz_7449.bin" ; $7449, 146 bytes
 RulesSpinningBallSpriteTask:
 	db $00 ; $74db
-Lz_16_74dc:
+PortraitGfxACoz_16:
 	INCBIN "data/bank_016/lz_74dc.bin" ; $74dc, 121 bytes
-Lz_16_7555:
+PortraitGfxUnknown_16:
 	INCBIN "data/bank_016/lz_7555.bin" ; $7555, 9 bytes
 RulesScrollArrowSpriteTask:
 	INCBIN "data/bank_016/d_755e.bin" ; $755e, 117 bytes
-Lz_16_75d3:
+PortraitGfxLuigi_16:
 	INCBIN "data/bank_016/lz_75d3.bin" ; $75d3, 154 bytes
-Lz_16_766d:
+PortraitGfxDK_16:
 	INCBIN "data/bank_016/lz_766d.bin" ; $766d, 156 bytes
-Lz_16_7709:
+PortraitGfxBabyMario_16:
 	INCBIN "data/bank_016/lz_7709.bin" ; $7709, 155 bytes
-Lz_16_77a4:
+PortraitGfxMario_16:
 	INCBIN "data/bank_016/lz_77a4.bin" ; $77a4, 162 bytes
-Lz_16_7846:
+PortraitGfxWaluigi_16:
 	INCBIN "data/bank_016/lz_7846.bin" ; $7846, 158 bytes
-Lz_16_78e4:
+PortraitGfxYoshi_16:
 	INCBIN "data/bank_016/lz_78e4.bin" ; $78e4, 139 bytes
-Lz_16_796f:
+PortraitGfxBowser_16:
 	INCBIN "data/bank_016/lz_796f.bin" ; $796f, 165 bytes
-Lz_16_7a14:
+PortraitGfxWario_16:
 	INCBIN "data/bank_016/lz_7a14.bin" ; $7a14, 162 bytes
-Lz_16_7ab6:
+PortraitGfxPeach_16:
 	INCBIN "data/bank_016/lz_7ab6.bin" ; $7ab6, 153 bytes
 	; $7b4f, 1201 bytes fill to bank end (linker-padded)

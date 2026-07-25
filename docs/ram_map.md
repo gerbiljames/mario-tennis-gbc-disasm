@@ -398,7 +398,7 @@ time. These are modeled as RGBDS `UNION`/`NEXTU` overlays in the generated
 `ram/*.asm`, driven by `ram_unions.json`: each variant carries its own symbols
 plus the code *scopes* where it applies. A scope is `{bank[, start, end]}`
 (the referencing code's ROM location) and/or `{wram_bank: N}` (the WRAM bank
-provably selected at the site, inferred by `disasm.py`'s `compute_wram_bank`
+provably selected at the site, inferred by `tools/disasmlib/ram.py`'s `compute_wram_bank`
 CFG dataflow). Constraints within one scope AND; scopes within a variant OR.
 `disasm.py` substitutes a variant's names only where a scope matches; a variant
 marked `default` applies everywhere outside every scoped variant's ROM ranges.
