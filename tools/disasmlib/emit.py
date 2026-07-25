@@ -91,13 +91,18 @@ def resolve_pointer_loads(lines, base, ptr_sites):
             lines[i] = f"{m.group(1)}{emitted[target]}{m.group(2)}"
 
 
-def resolve_flag_names(lines, flag_names):
+def resolve_flag_names(lines, flag_names, raw_sites=(), base=0):
     """Post-pass: rewrite `set_flag $0a, 3` to `set_flag FLAG_NAME` for every
     flag flags.json names. The macro's one-argument form reassembles the same
-    two operand bytes from the flag number (byte * 8 + bit)."""
+    two operand bytes from the flag number (byte * 8 + bit). Sites listed in
+    flags.json's `_raw_sites` keep the numeric form -- code that borrows a bit
+    as scratch should not claim the name's meaning."""
     for i, line in enumerate(lines):
         m = _FLAG_OP_RE.match(line)
         if not m:
+            continue
+        cpu = _CPU_COMMENT_RE.search(m.group(4) or "")
+        if cpu and base + (int(cpu.group(1), 16) - 0x4000) in raw_sites:
             continue
         name = flag_names.get(int(m.group(2), 16) * 8 + int(m.group(3)))
         if name:
@@ -117,11 +122,12 @@ def bank_end_fill(cpu, length):
 
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
          curated=None, ramscoped=None, constants=None, const_defs=None,
-         ptr_sites=None, ptr_data_targets=None, flag_names=None):
+         ptr_sites=None, ptr_data_targets=None, flag_names=None,
+         flag_raw_sites=None):
     """Write srcdir/bank_*.asm, the generated include/*.inc, and the manifest."""
     Emitter(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables,
             curated, ramscoped, constants, const_defs, ptr_sites,
-            ptr_data_targets, flag_names).run()
+            ptr_data_targets, flag_names, flag_raw_sites).run()
 
 
 class Emitter:
@@ -135,7 +141,8 @@ class Emitter:
     def __init__(self, dis, labels, hwregs, ramnames, srcdir, manifest_path,
                  data_tables=None, curated=None, ramscoped=None,
                  constants=None, const_defs=None, ptr_sites=None,
-                 ptr_data_targets=None, flag_names=None):
+                 ptr_data_targets=None, flag_names=None,
+                 flag_raw_sites=None):
         self.dis = dis
         self.rom = dis.rom
         self.labels = labels
@@ -151,6 +158,7 @@ class Emitter:
         self.ptr_sites = ptr_sites
         self.ptr_data_targets = ptr_data_targets or set()
         self.flag_names = flag_names or {}
+        self.flag_raw_sites = flag_raw_sites or set()
         self.manifest = []   # (blob path, rom offset, length, render spec)
         self.lines = []      # source lines of the bank being rendered
 
@@ -333,7 +341,8 @@ class Emitter:
         if self.ptr_sites:
             resolve_pointer_loads(lines, base, self.ptr_sites)
         if self.flag_names:
-            resolve_flag_names(lines, self.flag_names)
+            resolve_flag_names(lines, self.flag_names, self.flag_raw_sites,
+                               base)
         Path(self.srcdir, f"bank_{bank:03x}.asm").write_text("\n".join(lines))
 
     # ---- structured words -----------------------------------------------

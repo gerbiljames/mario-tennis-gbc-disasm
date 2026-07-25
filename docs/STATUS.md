@@ -22,7 +22,7 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `1fd928e`); the whole history rebuilds
+Everything below is **committed** (HEAD `928e4ec`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -250,10 +250,37 @@ first-pass guesses:
 * `$06,4`/`$07,3` are the **Dream Match** (the Mario-cast final), not another
   Island Open round.
 
-One thing recorded rather than smoothed over: bank `$07`'s `ModeHookTable_07`
-slot 4 sets `FLAG_HAVE_SILVER_RACKET` on a ball-hit event, which reads like a
-borrowed scratch bit (the fragment at `$5f0d` that tests and clears it is
-stranded code no table slot points at).
+**The one odd flag site turned out to be dead code (resolved 2026-07-26).**
+Bank `$07`'s `ModeHookTable_07` slot 4 set `FLAG_HAVE_SILVER_RACKET` on a
+ball-hit event, which made no sense next to bank `$15` handing the racket out
+for the swing contest. The table belongs to a **self-contained target-zone test
+mode** at `$5ea1`, now `RunTargetZoneTestMode_07`, and nothing in the game
+reaches it:
+
+* no word `$5ea1` exists anywhere in bank `$07`, so no table dispatches to it;
+* no `$4000` farptr slot points at it, which is the only way another bank could
+  farcall in;
+* no execution trace ever entered `$5ea1-$5f93` -- the traces stop at `$5e9d`,
+  the `farcall RunMatch` in its neighbour `RunDebugTestMatch` (itself reachable
+  only from bank `$01`'s debug menu). The region is in the source at all only
+  because `coverage/bank007_static_code.json` seeds it.
+
+It is plainly test scaffolding: it forces court 2, two on-court characters,
+Mario (`$1a`) against Yoshi (`$1c`), enables `wTargetZoneEnabled`, and calls
+`RunN64ExhibData` -- a *menu screen* -- in the middle of the match setup. Its
+hooks are a small target-practice loop: point-start places the ball gate and
+the first target zone, the bounce hook re-rolls the zone through
+`AdvanceMatchRng` whenever the ball lands inside it, point-end shows a message
+window and aborts once the two ace counters diverge, and the ball-hit hook
+raises a **hit-stop request** that the routine now called
+`TargetZoneHitStopHook_07` consumes by freezing `wMatchSimFrozen` for 20 frames
+-- except the table's per-frame slot points at the bare `ret` in front of it
+(`ModeHookNop_07`), so even in the dead mode the effect is switched off.
+
+So the bit is genuinely the Silver Racket flag; this mode just borrows the
+storage. Rather than let the name assert a meaning that is wrong there,
+`flags.json` grew a `_raw_sites` list: the three sites keep the numeric
+`test_flag $0c, 4` form while every real story site stays symbolic.
 
 **Correction (2026-07-26):** this section first claimed the training-court
 coach labels `InitServeCoachScene`/`InitNetCoachScene` were "one family out of
@@ -3615,5 +3642,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `1fd928e`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `928e4ec`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.

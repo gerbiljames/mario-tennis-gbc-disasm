@@ -41,14 +41,18 @@ def load_offset_map(path):
 
 
 def load_flag_names(path):
-    """flags.json as {flag number: FLAG_NAME}. A flag number is
-    `byte * 8 + bit` -- the numbering the *GameFlagByNumber helpers take, and
-    the operand the one-argument set_flag/test_flag macro form assembles."""
+    """flags.json -> ({flag number: FLAG_NAME}, {flat offset opt-outs}).
+
+    A flag number is `byte * 8 + bit` -- the numbering the *GameFlagByNumber
+    helpers take, and the operand the one-argument set_flag/test_flag macro
+    form assembles. `_raw_sites` lists the flag-op sites that must keep the
+    numeric `$byte, bit` form because the code there is using the bit as
+    scratch rather than for the meaning the name asserts."""
     if not Path(path).exists():
-        return {}
-    return {int(k, 0): v
-            for k, v in json.loads(Path(path).read_text()).items()
-            if not k.startswith("_")}
+        return {}, set()
+    raw = json.loads(Path(path).read_text())
+    return ({int(k, 0): v for k, v in raw.items() if not k.startswith("_")},
+            {int(o, 0) for o in raw.get("_raw_sites", {})})
 
 
 def load_label_overrides(path):

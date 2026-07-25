@@ -57,6 +57,7 @@ def main(argv=None):
     labels, ptr_sites, ptr_data_targets = pipeline.resolve_labels(
         dis, overrides, data_tables)
 
+    flag_names, flag_raw_sites = load_flag_names(args.flags)
     unions_by_region, ramscoped = load_ram_unions(args.ram_unions)
     ramscoped.bank_at = compute_wram_bank(dis)
     ramnames = load_ram_map(args.ram_map, unions_by_region)
@@ -65,7 +66,7 @@ def main(argv=None):
     emit(dis, labels, load_hwregs(args.hardware_inc), ramnames, args.srcdir,
          args.manifest, data_tables, set(overrides.values()), ramscoped,
          load_offset_map(args.constants), load_const_defs(args.constants_inc),
-         ptr_sites, ptr_data_targets, load_flag_names(args.flags))
+         ptr_sites, ptr_data_targets, flag_names, flag_raw_sites)
 
 
 if __name__ == "__main__":

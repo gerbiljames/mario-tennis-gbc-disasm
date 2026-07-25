@@ -1,5 +1,10 @@
 {
  "_comment": "wGameFlags (per-story-slot progress bits) names, keyed by flag number = byte * 8 + bit, the numbering *GameFlagByNumber ($00:$24ef) takes. Consumed by tools/disasm.py: it renders set_flag/clear_flag/test_flag and flag_ids rows symbolically and generates include/flag_constants.inc. Rank/equipment/minigame names follow the RetroAchievements notes recorded in ram_map.json for the same bytes (their 'Bit N' is mask 1 << N, i.e. this engine's bit 7 - N).",
+ "_raw_sites": {
+  "0x1df0d": "$07:$5f0d - dead target-zone test mode: borrows the $0c,4 bit as a hit-stop request, not the Silver Racket",
+  "0x1df20": "$07:$5f20 - same routine clearing it",
+  "0x1df49": "$07:$5f49 - its ball-hit hook setting it"
+ },
  "0x16": "FLAG_CUTSCENE_FAST_FORWARD",
  "0x1f": "FLAG_DEBUG_FLAG_EDITOR_OPEN",
  "0x2f": "FLAG_DOUBLES",

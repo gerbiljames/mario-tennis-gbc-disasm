@@ -4101,6 +4101,7 @@ RunDebugTestMatch:
 	ld [wDebugMatchFlags], a ; $5e9a
 	farcall RunMatch ; $5e9d
 	ret ; $5ea0
+RunTargetZoneTestMode_07:
 	farcall InitMinigameMatchSettings ; $5ea1
 	ld a, $02 ; $5ea4
 	ld [wCurrentlyUsedCourt], a ; $5ea6
@@ -4141,16 +4142,17 @@ ResolveTargetModePoint:
 ModeHookTable_07:
 	; $5efc, 16 bytes (mode_hooks)
 	dw ModeHookNop_07 ; record 0
-	dw $5f4d ; record 1
-	dw $5f75 ; record 2
+	dw TargetZonePointStartHook_07 ; record 1
+	dw TargetZonePointEndHook_07 ; record 2
 	dw RetStub ; record 3
-	dw $5f49 ; record 4
-	dw $5f25 ; record 5
-	dw $5f24 ; record 6
+	dw TargetZoneBallHitHook_07 ; record 4
+	dw TargetZoneBounceHook_07 ; record 5
+	dw StubNop_07_5f24 ; record 6
 	dw RetStub ; record 7
 ModeHookNop_07:
 	ret ; $5f0c
-	test_flag FLAG_HAVE_SILVER_RACKET ; $5f0d
+TargetZoneHitStopHook_07:
+	test_flag $0c, 4 ; $5f0d
 	ret z ; $5f10
 	ld a, $01 ; $5f11
 	ld [wMatchSimFrozen], a ; $5f13
@@ -4158,9 +4160,11 @@ ModeHookNop_07:
 	farcall StepMatchFrames ; $5f18
 	ld a, $00 ; $5f1b
 	ld [wMatchSimFrozen], a ; $5f1d
-	clear_flag FLAG_HAVE_SILVER_RACKET ; $5f20
+	clear_flag $0c, 4 ; $5f20
 	ret ; $5f23
+StubNop_07_5f24:
 	ret ; $5f24
+TargetZoneBounceHook_07:
 	farcall IsBallInTargetZone ; $5f25
 	jr z, Label_07_5f48 ; $5f28
 	farcall AdvanceMatchRng ; $5f2a
@@ -4185,8 +4189,10 @@ ModeHookNop_07:
 	farcall SetTargetZoneCorner2 ; $5f45
 Label_07_5f48:
 	ret ; $5f48
-	set_flag FLAG_HAVE_SILVER_RACKET ; $5f49
+TargetZoneBallHitHook_07:
+	set_flag $0c, 4 ; $5f49
 	ret ; $5f4c
+TargetZonePointStartHook_07:
 	ld hl, $fdc0 ; $5f4d
 	ld de, $fd80 ; $5f50
 	farcall SetBallGatePoint1 ; $5f53
@@ -4201,6 +4207,7 @@ Label_07_5f48:
 	farcall SetTargetZoneCorner2 ; $5f6e
 	call StubNop_07_5ed2 ; $5f71
 	ret ; $5f74
+TargetZonePointEndHook_07:
 	ld hl, $013f ; $5f75
 	ld de, $000b ; $5f78
 	ld bc, $1305 ; $5f7b
