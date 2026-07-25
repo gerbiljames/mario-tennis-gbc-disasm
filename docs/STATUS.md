@@ -22,7 +22,7 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `67bd0bf`); the whole history rebuilds
+Everything below is **committed** (HEAD `e55e97e`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -305,6 +305,66 @@ branch -- are now `ServeCoachIntroDialogue_15`, `NetCoachIntroDialogue_15` and
 `ReturnCoachIntroDialogue_15` rather than bare `Label_15_*`. The lesson for the
 next flag pass: attribute a `set_flag` to the fragment that *reaches* it, not
 to the nearest label above it.
+
+### The rest of the flags, and the save-flag array (2026-07-26)
+
+**Game flags: 120 named, 979 of the 984 rst sites symbolic.** The engine bits
+in bytes `$01`-`$06` fell out once `RunDebugFlagEditor` (`$05:$65a2`) was read
+properly: it is a full **256-bit editor** -- three windows of hex, a D-pad
+cursor, A to toggle, START to page through four pages of 64 -- and
+`DebugToggleSelectedFlag` feeds `page * 64 + row * 8 + col` straight to
+`Set/Clear/TestGameFlagByNumber`. So **a flag with no writer anywhere in the
+ROM is a developer switch**, not dead storage, and each one's single test site
+says what it does:
+
+| flag | effect when set |
+| --- | --- |
+| `FLAG_DEBUG_NOCLIP` (`$02,0`) | `UpdatePlayerControl` jumps past every `IsPointBlocked` probe -- wall collision, the ±$20/$40 slide checks and the blocked-tile event trigger |
+| `FLAG_DEBUG_SHOW_PLAYER_POS` (`$04,0`) | `DrawPlayerPositionDebugOverlay` draws instead of returning |
+| `FLAG_DEBUG_KEEP_MATCH_SETTINGS` (`$04,1`) | `LoadMatchSettingsFromTable` skips the table read |
+| `FLAG_DEBUG_SKIP_LOCATION_EXIT` (`$02,5`) | the bank `$10` story flows save but never request the location exit |
+| `FLAG_DEBUG_FREEZE_TILE_ANIM` (`$03,2`) | second inhibit gate in `UpdateSceneTileAnimations` |
+| `FLAG_DEBUG_STATIC_TEXT_WINDOW` (`$03,3`) | suppresses the text-window redraw and moves the continue arrow |
+
+The rest are ordinary engine state -- `FLAG_VRAM_UPDATE_BUSY` (`$03,0`, set
+around every bulk tilemap write, and the reason tile animation pauses),
+`FLAG_TEXT_RENDER_ACTIVE`, `FLAG_PROPORTIONAL_TEXT_MODE`,
+`FLAG_PLAYER_RUNNING` (B held), `FLAG_HIDE_OVERWORLD_ACTORS` -- plus a run of
+per-location scene bits. Two of those turned out to be **singles/doubles pairs
+selected by `FLAG_DOUBLES`**, the same shape as the rank ladders: the awards
+ceremony (`$10,3`/`$10,4`), the tournament courtyard NPC (`$0e,6`/`$0e,7`) and
+the Court 2 spectators (`$0f,0`/`$0f,1`) each have one flag per match format.
+
+Only `$01,6`/`$01,7` are left raw: `InitStoryModeState` clears one and sets the
+other, and nothing in the ROM ever reads either -- not through the rst vectors,
+not by number, and not as a byte.
+
+**Save flags: the global array is now symbolic too.** SRAM `$a040-$a05f` is a
+second 256-bit array with the same `d` = byte / `e` = bit `<< 5` addressing,
+reached through `Test/Set/ClearSaveFlag` (bank `$03`). 47 `SAVEFLAG_*`
+constants now cover it, all 53 immediate call sites render by name, and the
+three id tables render under a new `save_flag_ids` spec.
+
+`MinigameClearFlagTable_1e` settles the layout: `SetMinigameClearFlag` indexes
+it by `(minigame id - $1c) * 3 + level`, and its 27 entries run from flag 20
+upward, **skipping byte `$04`** -- which is exactly where the per-slot story
+flags live (`EraseStorySlotSaveData` clears `$04,0`/`$04,4` for slot 0,
+`$04,1`/`$04,5` for slot 1, `$04,2`/`$04,6` for slot 2). Laid against the
+RetroAchievements notes for the same bytes, all 27 match bit for bit: Boo
+Blast, Shooting Star, Perfect Shot, Target Shot, Fruit Fantasy, Banana Bunch,
+Treasure Box, Medallion Match, Two-On-One, three levels each.
+
+The nicest part is what that collides with. `CheckCharacterUnlocked`
+(`$18:$452a`) returns "unlocked" for character ids 0-3 and otherwise tests
+**save flag number = character id**. Numbers 0-31 are therefore *both* the
+minigame-clear flags and the character-unlock bits -- clearing Shooting Star
+Lvl 1 does not merely unlock Luigi, it *is* Luigi's unlock bit (id `$17` = 23).
+The whole roster falls out of the overlap: Shooting Star 1/2/3 -> Luigi /
+Donkey Kong / Baby Mario, Perfect Shot -> Mario / Waluigi / Yoshi, Target Shot
+-> Bowser / Wario / Peach, and the N64 transfer records (`ApplyN64RecordsUnlockFlags`)
+grant flags 10-13 = Fay, Curt, Mark and Sean. It also explains
+`ApplyUnlockEverythingCheat`: it sets levels 1 and 2 of every minigame and
+skips level 3, so the level-3 characters stay locked.
 
 ### The generator split into `tools/disasmlib/` (2026-07-25)
 
@@ -3642,5 +3702,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `67bd0bf`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `e55e97e`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
