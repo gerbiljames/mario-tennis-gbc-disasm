@@ -906,7 +906,7 @@ IntroCutsceneState10Init_6b:
 	xor a, a ; $4848
 	ld [wCutsceneStepTimer], a ; $4849
 	ld a, $01 ; $484c
-	ld hl, Func_6b_73c4 ; $484e
+	ld hl, ScrollCutsceneLeftTask ; $484e
 	call RegisterFrameTask ; $4851
 	call EnableLCD ; $4854
 	script_fade_in $10 ; $4857
@@ -916,7 +916,7 @@ IntroCutsceneState10Exit_6b:
 	ld c, $0a ; $4862
 	call BeginFadeOut ; $4864
 	call WaitFadeEnd ; $4867
-	ld hl, Func_6b_73c4 ; $486a
+	ld hl, ScrollCutsceneLeftTask ; $486a
 	call UnregisterFrameTask ; $486d
 	xor a, a ; $4870
 	ldh [hScrollX], a ; $4871
@@ -2315,7 +2315,7 @@ Data_6b_73b0:
 	; $73b0, 20 bytes (bytes:16)
 	db $0a, $0a, $0a, $0a, $0a, $0a, $08, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $00, $00, $00, $00 ; 0x10
-Func_6b_73c4:
+ScrollCutsceneLeftTask:
 	ld a, [wCutsceneStepTimer] ; $73c4
 	cp a, $10 ; $73c7
 	jr nc, Label_6b_73de ; $73c9

@@ -2309,7 +2309,7 @@ Label_07_52d3:
 	ret ; $52d6
 FinalizeShotSpeed:
 	call AddPlayerMomentumToShot ; $52d7
-	call Func_07_53a2 ; $52da
+	call ApplyCharFlagShotSpeedPenalty ; $52da
 	ld hl, rJOYP ; $52dd
 	add hl, bc ; $52e0
 	bit 7, h ; $52e1
@@ -2438,7 +2438,7 @@ Label_07_5396:
 	ld c, l ; $539f
 	ld b, h ; $53a0
 	ret ; $53a1
-Func_07_53a2:
+ApplyCharFlagShotSpeedPenalty:
 	ld hl, wCharFlags ; $53a2
 	bit 1, [hl] ; $53a5
 	jr z, Label_07_53af ; $53a7
@@ -2521,7 +2521,7 @@ Label_07_541c:
 	ld a, e ; $543a
 	ld [hl+], a ; $543b
 	ld [hl], d ; $543c
-	ld hl, Func_07_5463 ; $543d
+	ld hl, ShotRecoilFrameTask ; $543d
 	push hl ; $5440
 	ld a, [wCurrentShotType] ; $5441
 	rst Rst00 ; $5444
@@ -2540,7 +2540,7 @@ Label_07_541c:
 	dw ExecuteShotServeTopspin ; $545d jumptable
 	dw ExecuteShotServeSlice ; $545f jumptable
 	dw ExecuteShotServeFlat ; $5461 jumptable
-Func_07_5463:
+ShotRecoilFrameTask:
 	call ApplyShotRecoil ; $5463
 	xor a, a ; $5466
 	ld [$df4b], a ; $5467
@@ -3425,19 +3425,19 @@ ExecuteShotServeTopspin:
 	call ApplyShotTypePresets ; $59c5
 	call ComputeShotTrajectory ; $59c8
 	farcall ShotBallPathServeTopspin ; $59cb
-	call Func_07_5a01 ; $59ce
+	call SetSpecialShotFlagFromBallHeight ; $59ce
 	ret ; $59d1
 ExecuteShotServeSlice:
 	call ApplyShotTypePresets ; $59d2
 	call ComputeShotTrajectory ; $59d5
 	farcall ShotBallPathServeSlice ; $59d8
-	call Func_07_5a01 ; $59db
+	call SetSpecialShotFlagFromBallHeight ; $59db
 	ret ; $59de
 ExecuteShotServeFlat:
 	call ApplyShotTypePresets ; $59df
 	call ComputeShotTrajectory ; $59e2
 	farcall ShotBallPathServeFlat ; $59e5
-	call Func_07_5a01 ; $59e8
+	call SetSpecialShotFlagFromBallHeight ; $59e8
 	ret ; $59eb
 	ld hl, wBallHeight ; $59ec
 	ld a, [hl+] ; $59ef
@@ -3451,7 +3451,7 @@ ExecuteShotServeFlat:
 	ld [$c4a6], a ; $59fd
 Label_07_5a00:
 	ret ; $5a00
-Func_07_5a01:
+SetSpecialShotFlagFromBallHeight:
 	ld hl, wBallHeight ; $5a01
 	ld a, [hl+] ; $5a04
 	ld h, [hl] ; $5a05
@@ -4120,7 +4120,7 @@ RunDebugTestMatch:
 	farcall RunN64ExhibData ; $5ecb
 	farcall RunMinigameMatch ; $5ece
 	ret ; $5ed1
-Func_07_5ed2:
+StubNop_07_5ed2:
 	ret ; $5ed2
 ResolveTargetModePoint:
 	farcall UpdateScorePanelDisplay ; $5ed3
@@ -4199,7 +4199,7 @@ Label_07_5f48:
 	ld hl, $0000 ; $5f68
 	ld de, rJOYP ; $5f6b
 	farcall SetTargetZoneCorner2 ; $5f6e
-	call Func_07_5ed2 ; $5f71
+	call StubNop_07_5ed2 ; $5f71
 	ret ; $5f74
 	ld hl, $013f ; $5f75
 	ld de, $000b ; $5f78

@@ -37,7 +37,7 @@ ShowCharDataScreen:
 	farcall InitMenuBgScroll ; $4057
 	ld b, $05 ; $405a
 	ld c, $05 ; $405c
-	farcall Func_39_4b3a ; $405e
+	farcall LoadMenuSpritePalettePair ; $405e
 	ld a, $0d ; $4061
 	ld [$cb17], a ; $4063
 	ld a, $0d ; $4066
@@ -2032,7 +2032,7 @@ SlideToMainCharStatPage:
 	ld hl, DrillDisplayData_1d ; $50c3
 	ld bc, $d390 ; $50c6
 	call ApplyTilemapPatchList ; $50c9
-	farcall Func_1c_72fc ; $50cc
+	farcall FlushCharDataTilemapsFar ; $50cc
 	wram_bank $06 ; $50cf
 	ld hl, $d147 ; $50d5
 	ld de, $0020 ; $50d8
@@ -2052,7 +2052,7 @@ SlideToMainCharStatPage:
 	ld hl, $5c2e ; $50fc
 	ld bc, $d390 ; $50ff
 	call ApplyTilemapPatchList ; $5102
-	farcall Func_1c_72fc ; $5105
+	farcall FlushCharDataTilemapsFar ; $5105
 	wram_bank $06 ; $5108
 	ld hl, $d145 ; $510e
 	ld de, $ff60 ; $5111
@@ -2083,7 +2083,7 @@ SlideToMainCharStatPage:
 	ld hl, $6193 ; $5150
 	ld bc, $dc20 ; $5153
 	call ApplyTilemapPatchList ; $5156
-	farcall Func_1c_72fc ; $5159
+	farcall FlushCharDataTilemapsFar ; $5159
 	wram_bank $06 ; $515c
 	ld hl, $d145 ; $5162
 	ld de, $ff80 ; $5165
@@ -2114,7 +2114,7 @@ SlideToMainCharStatPage:
 	ld hl, $6158 ; $51a4
 	ld bc, $dc20 ; $51a7
 	call ApplyTilemapPatchList ; $51aa
-	farcall Func_1c_72fc ; $51ad
+	farcall FlushCharDataTilemapsFar ; $51ad
 	wram_bank $06 ; $51b0
 	ld hl, $d145 ; $51b6
 	ld de, hPeakLY ; $51b9
@@ -2136,7 +2136,7 @@ SlideToMainCharStatPage:
 	ld hl, $610d ; $51dd
 	ld bc, $dc20 ; $51e0
 	call ApplyTilemapPatchList ; $51e3
-	farcall Func_1c_72fc ; $51e6
+	farcall FlushCharDataTilemapsFar ; $51e6
 	wram_bank $06 ; $51e9
 	ld hl, $d145 ; $51ef
 	ld de, hLinkRxByte ; $51f2
@@ -2158,7 +2158,7 @@ SlideToMainCharStatPage:
 	ld hl, $60c2 ; $5216
 	ld bc, $dc20 ; $5219
 	call ApplyTilemapPatchList ; $521c
-	farcall Func_1c_72fc ; $521f
+	farcall FlushCharDataTilemapsFar ; $521f
 	wram_bank $06 ; $5222
 	ld hl, $d145 ; $5228
 	ld de, $ffe0 ; $522b
@@ -2180,7 +2180,7 @@ SlideToMainCharStatPage:
 	ld hl, $6077 ; $524f
 	ld bc, $dc20 ; $5252
 	call ApplyTilemapPatchList ; $5255
-	farcall Func_1c_72fc ; $5258
+	farcall FlushCharDataTilemapsFar ; $5258
 	wram_bank $06 ; $525b
 	ld hl, $d145 ; $5261
 	xor a, a ; $5264
@@ -2208,7 +2208,7 @@ SlideFromMainCharStatPage:
 	ld hl, $60c2 ; $5295
 	ld bc, $dc20 ; $5298
 	call ApplyTilemapPatchList ; $529b
-	farcall Func_1c_72fc ; $529e
+	farcall FlushCharDataTilemapsFar ; $529e
 	wram_bank $06 ; $52a1
 	ld hl, $d145 ; $52a7
 	ld de, hLinkRxByte ; $52aa
@@ -2230,7 +2230,7 @@ SlideFromMainCharStatPage:
 	ld hl, $610d ; $52ce
 	ld bc, $dc20 ; $52d1
 	call ApplyTilemapPatchList ; $52d4
-	farcall Func_1c_72fc ; $52d7
+	farcall FlushCharDataTilemapsFar ; $52d7
 	wram_bank $06 ; $52da
 	ld hl, $d145 ; $52e0
 	ld de, hPeakLY ; $52e3
@@ -2261,7 +2261,7 @@ SlideFromMainCharStatPage:
 	ld hl, $6158 ; $5322
 	ld bc, $dc20 ; $5325
 	call ApplyTilemapPatchList ; $5328
-	farcall Func_1c_72fc ; $532b
+	farcall FlushCharDataTilemapsFar ; $532b
 	wram_bank $06 ; $532e
 	ld hl, $d145 ; $5334
 	ld de, $ff80 ; $5337
@@ -2292,7 +2292,7 @@ SlideFromMainCharStatPage:
 	ld hl, $6193 ; $5376
 	ld bc, $dc20 ; $5379
 	call ApplyTilemapPatchList ; $537c
-	farcall Func_1c_72fc ; $537f
+	farcall FlushCharDataTilemapsFar ; $537f
 	wram_bank $06 ; $5382
 	ld hl, $d145 ; $5388
 	ld de, $ff60 ; $538b
@@ -2317,7 +2317,7 @@ SlideFromMainCharStatPage:
 	ld hl, $5c2e ; $53b8
 	ld bc, $d390 ; $53bb
 	call ApplyTilemapPatchList ; $53be
-	farcall Func_1c_72fc ; $53c1
+	farcall FlushCharDataTilemapsFar ; $53c1
 	wram_bank $06 ; $53c4
 	ld hl, $d145 ; $53ca
 	ld de, $00a8 ; $53cd
@@ -2342,7 +2342,7 @@ SlideFromMainCharStatPage:
 	ld hl, DrillDisplayData_1d ; $53fa
 	ld bc, $d390 ; $53fd
 	call ApplyTilemapPatchList ; $5400
-	farcall Func_1c_72fc ; $5403
+	farcall FlushCharDataTilemapsFar ; $5403
 	wram_bank $06 ; $5406
 	ld hl, $d147 ; $540c
 	xor a, a ; $540f
@@ -2361,7 +2361,7 @@ SlideFromMainCharStatPage:
 	ld hl, DrillDisplayData_1d ; $5430
 	ld bc, $d390 ; $5433
 	call ApplyTilemapPatchList ; $5436
-	farcall Func_1c_72fc ; $5439
+	farcall FlushCharDataTilemapsFar ; $5439
 	ret ; $543c
 SlideToPartnerStatPage:
 	call AdvanceFrame ; $543d
@@ -2387,7 +2387,7 @@ SlideToPartnerStatPage:
 	ld hl, DrillDisplayData_1d ; $5473
 	ld bc, $d390 ; $5476
 	call ApplyTilemapPatchList ; $5479
-	farcall Func_1c_72fc ; $547c
+	farcall FlushCharDataTilemapsFar ; $547c
 	wram_bank $06 ; $547f
 	ld hl, $d145 ; $5485
 	ld de, $00a0 ; $5488
@@ -2421,7 +2421,7 @@ SlideToPartnerStatPage:
 	ld hl, $5c2e ; $54d0
 	ld bc, $d390 ; $54d3
 	call ApplyTilemapPatchList ; $54d6
-	farcall Func_1c_72fc ; $54d9
+	farcall FlushCharDataTilemapsFar ; $54d9
 	wram_bank $06 ; $54dc
 	ld hl, $d145 ; $54e2
 	ld de, $0080 ; $54e5
@@ -2452,7 +2452,7 @@ SlideToPartnerStatPage:
 	ld hl, $62bb ; $5524
 	ld bc, $de60 ; $5527
 	call ApplyTilemapPatchList ; $552a
-	farcall Func_1c_72fc ; $552d
+	farcall FlushCharDataTilemapsFar ; $552d
 	wram_bank $06 ; $5530
 	ld hl, $d145 ; $5536
 	ld de, $0060 ; $5539
@@ -2483,7 +2483,7 @@ SlideToPartnerStatPage:
 	ld hl, $6270 ; $5578
 	ld bc, $de60 ; $557b
 	call ApplyTilemapPatchList ; $557e
-	farcall Func_1c_72fc ; $5581
+	farcall FlushCharDataTilemapsFar ; $5581
 	wram_bank $06 ; $5584
 	ld hl, $d145 ; $558a
 	ld de, $0040 ; $558d
@@ -2505,7 +2505,7 @@ SlideToPartnerStatPage:
 	ld hl, $6225 ; $55b1
 	ld bc, $de60 ; $55b4
 	call ApplyTilemapPatchList ; $55b7
-	farcall Func_1c_72fc ; $55ba
+	farcall FlushCharDataTilemapsFar ; $55ba
 	wram_bank $06 ; $55bd
 	ld hl, $d145 ; $55c3
 	ld de, $0020 ; $55c6
@@ -2527,7 +2527,7 @@ SlideToPartnerStatPage:
 	ld hl, $61da ; $55ea
 	ld bc, $de60 ; $55ed
 	call ApplyTilemapPatchList ; $55f0
-	farcall Func_1c_72fc ; $55f3
+	farcall FlushCharDataTilemapsFar ; $55f3
 	wram_bank $06 ; $55f6
 	ld hl, $d145 ; $55fc
 	xor a, a ; $55ff
@@ -2555,7 +2555,7 @@ SlideFromPartnerStatPage:
 	ld hl, $6225 ; $5630
 	ld bc, $de60 ; $5633
 	call ApplyTilemapPatchList ; $5636
-	farcall Func_1c_72fc ; $5639
+	farcall FlushCharDataTilemapsFar ; $5639
 	wram_bank $06 ; $563c
 	ld hl, $d147 ; $5642
 	ld de, $ff60 ; $5645
@@ -2586,7 +2586,7 @@ SlideFromPartnerStatPage:
 	ld hl, $6270 ; $5684
 	ld bc, $de60 ; $5687
 	call ApplyTilemapPatchList ; $568a
-	farcall Func_1c_72fc ; $568d
+	farcall FlushCharDataTilemapsFar ; $568d
 	wram_bank $06 ; $5690
 	ld hl, $d147 ; $5696
 	ld de, $ff80 ; $5699
@@ -2617,7 +2617,7 @@ SlideFromPartnerStatPage:
 	ld hl, $62bb ; $56d8
 	ld bc, $de60 ; $56db
 	call ApplyTilemapPatchList ; $56de
-	farcall Func_1c_72fc ; $56e1
+	farcall FlushCharDataTilemapsFar ; $56e1
 	wram_bank $06 ; $56e4
 	ld hl, $d147 ; $56ea
 	ld de, hPeakLY ; $56ed
@@ -2651,7 +2651,7 @@ SlideFromPartnerStatPage:
 	ld hl, $5c2e ; $5735
 	ld bc, $d390 ; $5738
 	call ApplyTilemapPatchList ; $573b
-	farcall Func_1c_72fc ; $573e
+	farcall FlushCharDataTilemapsFar ; $573e
 	wram_bank $06 ; $5741
 	ld hl, $d147 ; $5747
 	ld de, hLinkRxByte ; $574a
@@ -2676,7 +2676,7 @@ SlideFromPartnerStatPage:
 	ld hl, DrillDisplayData_1d ; $5777
 	ld bc, $d390 ; $577a
 	call ApplyTilemapPatchList ; $577d
-	farcall Func_1c_72fc ; $5780
+	farcall FlushCharDataTilemapsFar ; $5780
 	wram_bank $06 ; $5783
 	ld hl, $d147 ; $5789
 	ld de, $ffe0 ; $578c
@@ -2701,7 +2701,7 @@ SlideFromPartnerStatPage:
 	ld hl, DrillDisplayData_1d ; $57b9
 	ld bc, $d390 ; $57bc
 	call ApplyTilemapPatchList ; $57bf
-	farcall Func_1c_72fc ; $57c2
+	farcall FlushCharDataTilemapsFar ; $57c2
 	wram_bank $06 ; $57c5
 	ld hl, $d147 ; $57cb
 	xor a, a ; $57ce

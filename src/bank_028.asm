@@ -7,7 +7,7 @@ SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 	farptr LoadBallTouchCharEffectTilesB ; $4008
 	farptr LoadMatchStoryGfx ; $400a
 	farptr QueueMatchSpriteFrameA ; $400c
-	farptr Func_28_60a0 ; $400e
+	farptr LoadEffectFrameTiles_28 ; $400e
 	farptr QueueMatchSpriteFrameB ; $4010
 Padding_28_4012:
 	; $4012, 14 bytes (fill)
@@ -109,7 +109,7 @@ Label_28_5f2a:
 	call QueueVRAMCopy ; $5f32
 	ret ; $5f35
 Label_28_5f36:
-	call Func_28_6024 ; $5f36
+	call LoadMatchSharedTiles_28 ; $5f36
 	ret ; $5f39
 Label_28_5f3a:
 	ld hl, MatchGfxPalettesB_28 ; $5f3a
@@ -122,14 +122,14 @@ Label_28_5f3a:
 	ld de, $a100 ; $5f4f
 	ld c, $10 ; $5f52
 	call QueueVRAMCopy ; $5f54
-	call Func_28_6024 ; $5f57
+	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
 Label_28_5f5b:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
 	ld de, $a200 ; $5f5e
 	ld c, $08 ; $5f61
 	call QueueVRAMCopy ; $5f63
-	call Func_28_6024 ; $5f66
+	call LoadMatchSharedTiles_28 ; $5f66
 	ret ; $5f69
 Label_28_5f6a:
 	ld hl, $5ea0 ; $5f6a
@@ -139,7 +139,7 @@ Label_28_5f6a:
 	ld de, $a3c0 ; $5f76
 	ld c, $02 ; $5f79
 	call QueueVRAMCopy ; $5f7b
-	call Func_28_6024 ; $5f7e
+	call LoadMatchSharedTiles_28 ; $5f7e
 	ret ; $5f81
 Label_28_5f82:
 	ld hl, $5e68 ; $5f82
@@ -149,7 +149,7 @@ Label_28_5f82:
 	ld de, $a3c0 ; $5f8e
 	ld c, $02 ; $5f91
 	call QueueVRAMCopy ; $5f93
-	call Func_28_6024 ; $5f96
+	call LoadMatchSharedTiles_28 ; $5f96
 	ret ; $5f99
 Label_28_5f9a:
 	ld hl, $5e78 ; $5f9a
@@ -163,7 +163,7 @@ Label_28_5f9a:
 	ld de, $a3c0 ; $5fb1
 	ld c, $02 ; $5fb4
 	call QueueVRAMCopy ; $5fb6
-	call Func_28_6024 ; $5fb9
+	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
 Label_28_5fbd:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
@@ -180,7 +180,7 @@ Label_28_5fbd:
 	ld de, $a3c0 ; $5fdd
 	ld c, $02 ; $5fe0
 	call QueueVRAMCopy ; $5fe2
-	call Func_28_6024 ; $5fe5
+	call LoadMatchSharedTiles_28 ; $5fe5
 	ret ; $5fe8
 Label_28_5fe9:
 	ld hl, $5e50 ; $5fe9
@@ -194,7 +194,7 @@ Label_28_5fe9:
 	ld de, $a200 ; $6000
 	ld c, $10 ; $6003
 	call QueueVRAMCopy ; $6005
-	call Func_28_6024 ; $6008
+	call LoadMatchSharedTiles_28 ; $6008
 	ret ; $600b
 Label_28_600c:
 	ld hl, $5e50 ; $600c
@@ -204,9 +204,9 @@ Label_28_600c:
 	ld de, $a100 ; $6018
 	ld c, $30 ; $601b
 	call QueueVRAMCopy ; $601d
-	call Func_28_6024 ; $6020
+	call LoadMatchSharedTiles_28 ; $6020
 	ret ; $6023
-Func_28_6024:
+LoadMatchSharedTiles_28:
 	ld hl, $5590 ; $6024
 	ld de, $8080 ; $6027
 	ld c, $14 ; $602a
@@ -285,7 +285,7 @@ QueueMatchSpriteFrameB:
 Data_28_609a:
 	; $609a, 6 bytes (bytes:6)
 	db $f0, $5b, $b0, $5c, $70, $5d ; 0x00
-Func_28_60a0:
+LoadEffectFrameTiles_28:
 	ld h, $00 ; $60a0
 	ld l, a ; $60a2
 	add hl, hl ; $60a3

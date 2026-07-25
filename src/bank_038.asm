@@ -1447,7 +1447,7 @@ Label_38_4a61:
 	farcall InitMenuBgScroll ; $4a85
 	ld b, $01 ; $4a88
 	ld c, $01 ; $4a8a
-	farcall Func_39_4b3a ; $4a8c
+	farcall LoadMenuSpritePalettePair ; $4a8c
 	ld a, $10 ; $4a8f
 	ld [$cb15], a ; $4a91
 	ld [$cb16], a ; $4a94
@@ -2044,7 +2044,7 @@ SetupCharGridScreen:
 	farcall InitMenuBgScroll ; $5057
 	ld b, $01 ; $505a
 	ld c, $01 ; $505c
-	farcall Func_39_4b3a ; $505e
+	farcall LoadMenuSpritePalettePair ; $505e
 	ld a, $30 ; $5061
 	ld [$cb15], a ; $5063
 	ld [$cb16], a ; $5066
@@ -2974,7 +2974,7 @@ Label_38_57aa:
 	push bc ; $57af
 	call DrawCharNameAndType ; $57b0
 	pop bc ; $57b3
-	call Func_38_591b ; $57b4
+	call DrawCharSelectSlotLabel ; $57b4
 Label_38_57b7:
 	ld hl, $d180 ; $57b7
 	ld de, $9980 ; $57ba
@@ -3148,7 +3148,7 @@ Data_38_58fb:
 	; $58fb, 32 bytes (bytes:16)
 	db $00, $00, $00, $00, $04, $01, $02, $02, $00, $04, $00, $03, $02, $02, $01, $04 ; 0x00
 	db $02, $04, $00, $03, $05, $05, $05, $02, $00, $04, $02, $01, $04, $00, $00, $01 ; 0x10
-Func_38_591b:
+DrawCharSelectSlotLabel:
 	ld a, [$d811] ; $591b
 	cp a, $02 ; $591e
 	jr nc, Label_38_597e ; $5920
@@ -6519,7 +6519,7 @@ SetupNameEntryScreen:
 	farcall InitMenuBgScroll ; $701a
 	ld b, $01 ; $701d
 	ld c, $01 ; $701f
-	farcall Func_39_4b3a ; $7021
+	farcall LoadMenuSpritePalettePair ; $7021
 	ld a, $10 ; $7024
 	ld [$cb15], a ; $7026
 	ld [$cb16], a ; $7029

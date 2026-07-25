@@ -2234,7 +2234,7 @@ TextRectAttrs_06_6973:
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 1
 	tilemap_end
-Func_06_698b:
+Unused_06_DrawMusicMenuRow:
 	ld de, $030a ; $698b
 	call GetShadowTilemapAddr ; $698e
 	ld hl, TextRect_06_695b ; $6991

@@ -623,7 +623,7 @@ ShowExpGainScreen:
 	call RegisterFrameTask ; $4518
 	call StubNop_1a_4bb9 ; $451b
 	jp Label_1a_473e ; $451e
-	call Func_1a_4bba ; $4521
+	call StubNop_1a_4bba ; $4521
 	jp Label_1a_473e ; $4524
 Label_1a_4527:
 	pop af ; $4527
@@ -1477,7 +1477,7 @@ Label_1a_4bb4:
 	ret ; $4bb8
 StubNop_1a_4bb9:
 	ret ; $4bb9
-Func_1a_4bba:
+StubNop_1a_4bba:
 	ret ; $4bba
 DrawPositionedStringToTileBuffer:
 	push af ; $4bbb

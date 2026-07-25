@@ -2521,7 +2521,7 @@ Label_1e_6695:
 	farcall CharDataScreen_Show ; $669e
 	ld c, $01 ; $66a1
 	farcall CharDataScreen_Show ; $66a3
-	call Func_1e_6c62 ; $66a6
+	call ApplyStatGapProgressFlag ; $66a6
 Label_1e_66a9:
 	call ShowIslandOpenRankingBoard ; $66a9
 	ld a, $00 ; $66ac
@@ -2549,7 +2549,7 @@ GetFirstClearRewardExp:
 	ret nz ; $66d8
 	push hl ; $66d9
 	ld a, [wCurrentMinigameStoryMatch] ; $66da
-	ld hl, RewardSubHandlersA_1e ; $66dd
+	ld hl, FirstClearExpTablePtrs_1e ; $66dd
 	add a, a ; $66e0
 	add a, l ; $66e1
 	ld l, a ; $66e2
@@ -2571,129 +2571,102 @@ Label_1e_66f2:
 	ld e, a ; $66f4
 	pop hl ; $66f5
 	ret ; $66f6
-RewardSubHandlersA_1e:
+FirstClearExpTablePtrs_1e:
 	; $66f7, 16 bytes (records:2)
-	dw $6707 ; record 0
-	dw $6739 ; record 1
-	dw $676b ; record 2
+	dw FirstClearExpTableMode0_1e ; record 0
+	dw FirstClearExpTableMode1_1e ; record 1
+	dw FirstClearExpTableMode2_1e ; record 2
 	dw $0000 ; record 3
 	dw $0000 ; record 4
 	dw $0000 ; record 5
 	dw $0000 ; record 6
 	dw $0000 ; record 7
-	nop ; $6707
-	nop ; $6708
-	ld b, [hl] ; $6709
-	nop ; $670a
-	ld d, b ; $670b
-	nop ; $670c
-	ld e, d ; $670d
-	nop ; $670e
-	ld h, h ; $670f
-	nop ; $6710
-	nop ; $6711
-	nop ; $6712
-	ld a, b ; $6713
-	nop ; $6714
-	sub a, [hl] ; $6715
-	nop ; $6716
-	ret z ; $6717
-	nop ; $6718
-	ld a, [$0000] ; $6719
-	nop ; $671c
-	inc l ; $671d
-	ld bc, $0000 ; $671e
-	nop ; $6721
-	nop ; $6722
-	nop ; $6723
-	nop ; $6724
-	nop ; $6725
-	nop ; $6726
-	ld e, [hl] ; $6727
-	ld bc, $0190 ; $6728
-	jp nz, $f401 ; $672b
-	ld bc, $0000 ; $672e
-	nop ; $6731
-	nop ; $6732
-	jr nz, Label_1e_6738 ; $6733
-	jr nz, Label_1e_673a ; $6735
-	db $20 ; $6737
-Label_1e_6738:
-	inc bc ; $6738
-	nop ; $6739
-Label_1e_673a:
-	nop ; $673a
-	nop ; $673b
-	nop ; $673c
-	ld a, b ; $673d
-	nop ; $673e
-	sub a, [hl] ; $673f
-	nop ; $6740
-	ret z ; $6741
-	nop ; $6742
-	nop ; $6743
-	nop ; $6744
-	nop ; $6745
-	nop ; $6746
-	ld a, [$2c00] ; $6747
-	ld bc, $015e ; $674a
-	nop ; $674d
-	nop ; $674e
-	nop ; $674f
-	nop ; $6750
-	nop ; $6751
-	nop ; $6752
-Data_1e_6753:
-	; $6753, 24 bytes (bytes:16)
-	db $f4, $01, $00, $00, $00, $00, $00, $00, $58, $02, $bc, $02, $20, $03, $00, $00 ; 0x00
-	db $00, $00, $e8, $03, $e8, $03, $e8, $03 ; 0x10
-	ld [hl-], a ; $676b
-	nop ; $676c
-	ld h, h ; $676d
-	nop ; $676e
-	ret z ; $676f
-	nop ; $6770
-	ld [hl-], a ; $6771
-	nop ; $6772
-	ld h, h ; $6773
-	nop ; $6774
-	ret z ; $6775
-	nop ; $6776
-	ld [hl-], a ; $6777
-	nop ; $6778
-	ld h, h ; $6779
-	nop ; $677a
-	ret z ; $677b
-	nop ; $677c
-	ld [hl-], a ; $677d
-	nop ; $677e
-	ld h, h ; $677f
-	nop ; $6780
-	ret z ; $6781
-	nop ; $6782
-	ld [hl-], a ; $6783
-	nop ; $6784
-	ld h, h ; $6785
-	nop ; $6786
-	ret z ; $6787
-	nop ; $6788
-	ld [hl-], a ; $6789
-	nop ; $678a
-	ld h, h ; $678b
-	nop ; $678c
-	ret z ; $678d
-	nop ; $678e
-	ld h, h ; $678f
-	nop ; $6790
-	ret z ; $6791
-	nop ; $6792
-	sub a, b ; $6793
-	ld bc, $02bc ; $6794
-	inc l ; $6797
-	ld bc, $0190 ; $6798
-Data_1e_679b:
-	; $679b, 12 bytes (bytes:12)
-	db $f4, $01, $e8, $03, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+FirstClearExpTableMode0_1e:
+	; $6707, 50 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0046 ; record 1
+	dw $0050 ; record 2
+	dw $005a ; record 3
+	dw $0064 ; record 4
+	dw $0000 ; record 5
+	dw $0078 ; record 6
+	dw $0096 ; record 7
+	dw $00c8 ; record 8
+	dw $00fa ; record 9
+	dw $0000 ; record 10
+	dw $012c ; record 11
+	dw $0000 ; record 12
+	dw $0000 ; record 13
+	dw $0000 ; record 14
+	dw $0000 ; record 15
+	dw $015e ; record 16
+	dw $0190 ; record 17
+	dw $01c2 ; record 18
+	dw $01f4 ; record 19
+	dw $0000 ; record 20
+	dw $0000 ; record 21
+	dw $0320 ; record 22
+	dw $0320 ; record 23
+	dw $0320 ; record 24
+FirstClearExpTableMode1_1e:
+	; $6739, 50 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $0078 ; record 2
+	dw $0096 ; record 3
+	dw $00c8 ; record 4
+	dw $0000 ; record 5
+	dw $0000 ; record 6
+	dw $00fa ; record 7
+	dw $012c ; record 8
+	dw $015e ; record 9
+	dw $0000 ; record 10
+	dw $0000 ; record 11
+	dw $0000 ; record 12
+	dw $01f4 ; record 13
+	dw $0000 ; record 14
+	dw $0000 ; record 15
+	dw $0000 ; record 16
+	dw $0258 ; record 17
+	dw $02bc ; record 18
+	dw $0320 ; record 19
+	dw $0000 ; record 20
+	dw $0000 ; record 21
+	dw $03e8 ; record 22
+	dw $03e8 ; record 23
+	dw $03e8 ; record 24
+FirstClearExpTableMode2_1e:
+	; $676b, 60 bytes (records:2)
+	dw $0032 ; record 0
+	dw $0064 ; record 1
+	dw $00c8 ; record 2
+	dw $0032 ; record 3
+	dw $0064 ; record 4
+	dw $00c8 ; record 5
+	dw $0032 ; record 6
+	dw $0064 ; record 7
+	dw $00c8 ; record 8
+	dw $0032 ; record 9
+	dw $0064 ; record 10
+	dw $00c8 ; record 11
+	dw $0032 ; record 12
+	dw $0064 ; record 13
+	dw $00c8 ; record 14
+	dw $0032 ; record 15
+	dw $0064 ; record 16
+	dw $00c8 ; record 17
+	dw $0064 ; record 18
+	dw $00c8 ; record 19
+	dw $0190 ; record 20
+	dw $02bc ; record 21
+	dw $012c ; record 22
+	dw $0190 ; record 23
+	dw $01f4 ; record 24
+	dw $03e8 ; record 25
+	dw $0000 ; record 26
+	dw $0000 ; record 27
+	dw $0000 ; record 28
+	dw $0000 ; record 29
 Data_1e_67a7:
 	; $67a7, 48 bytes (bytes:16)
 	db $32, $00, $32, $00, $32, $00, $32, $00, $64, $00, $64, $00, $64, $00, $64, $00 ; 0x00
@@ -3302,7 +3275,7 @@ Label_1e_6bc1:
 	farcall CharDataScreen_Show ; $6bc7
 	ld c, $01 ; $6bca
 	farcall CharDataScreen_Show ; $6bcc
-	call Func_1e_6c62 ; $6bcf
+	call ApplyStatGapProgressFlag ; $6bcf
 	xor a, a ; $6bd2
 	ld hl, $c9b0 ; $6bd3
 	ld [hl+], a ; $6bd6
@@ -3411,7 +3384,7 @@ Label_1e_6c5b:
 	ld d, h ; $6c5f
 	ld e, l ; $6c60
 	ret ; $6c61
-Func_1e_6c62:
+ApplyStatGapProgressFlag:
 	test_flag $0a, 7 ; $6c62
 	jr nz, Label_1e_6c68 ; $6c65
 	ret ; $6c67
@@ -3428,14 +3401,14 @@ Label_1e_6c68:
 Label_1e_6c78:
 	set_flag $0c, 6 ; $6c78
 	ret ; $6c7b
-Func_1e_6c7c:
+ApplyClassProgressRule1:
 	test_flag $0a, 3 ; $6c7c
 	jr nz, Label_1e_6c82 ; $6c7f
 	ret ; $6c81
 Label_1e_6c82:
 	set_flag $0c, 1 ; $6c82
 	ret ; $6c85
-Func_1e_6c86:
+ApplyClassProgressRule2:
 	test_flag $0a, 7 ; $6c86
 	jr nz, Label_1e_6c8c ; $6c89
 	ret ; $6c8b
@@ -3443,7 +3416,7 @@ Label_1e_6c8c:
 	set_flag $0c, 2 ; $6c8c
 	set_flag $0d, 0 ; $6c8f
 	ret ; $6c92
-Func_1e_6c93:
+ApplyClassProgressRule3:
 	test_flag $0b, 0 ; $6c93
 	jr nz, Label_1e_6c99 ; $6c96
 	ret ; $6c98
@@ -3452,9 +3425,9 @@ Label_1e_6c99:
 	set_flag $0c, 7 ; $6c9c
 	ret ; $6c9f
 ApplyClassProgressFlags:
-	call Func_1e_6c7c ; $6ca0
-	call Func_1e_6c86 ; $6ca3
-	call Func_1e_6c93 ; $6ca6
+	call ApplyClassProgressRule1 ; $6ca0
+	call ApplyClassProgressRule2 ; $6ca3
+	call ApplyClassProgressRule3 ; $6ca6
 	ret ; $6ca9
 SetRewardGameFlag:
 	push af ; $6caa
@@ -3463,7 +3436,7 @@ SetRewardGameFlag:
 	push hl ; $6cad
 	ld a, [wCurrentMinigameStoryMatch] ; $6cae
 	add a, a ; $6cb1
-	ld hl, RewardSubHandlersB_1e ; $6cb2
+	ld hl, RewardFlagListPtrs_1e ; $6cb2
 	add a, l ; $6cb5
 	ld l, a ; $6cb6
 	jr nc, Label_1e_6cba ; $6cb7
@@ -3494,7 +3467,7 @@ TestRewardGameFlag:
 	push hl ; $6cd3
 	ld a, [wCurrentMinigameStoryMatch] ; $6cd4
 	add a, a ; $6cd7
-	ld hl, RewardSubHandlersB_1e ; $6cd8
+	ld hl, RewardFlagListPtrs_1e ; $6cd8
 	add a, l ; $6cdb
 	ld l, a ; $6cdc
 	jr nc, Label_1e_6ce0 ; $6cdd
@@ -3537,187 +3510,152 @@ Label_1e_6d0c:
 	add a, $02 ; $6d11
 Label_1e_6d13:
 	ret ; $6d13
-RewardSubHandlersB_1e:
+RewardFlagListPtrs_1e:
 	; $6d14, 8 bytes (records:2)
-	dw $6d1c ; record 0
-	dw $6d4e ; record 1
-	dw $6d96 ; record 2
+	dw RewardFlagListMode0_1e ; record 0
+	dw RewardFlagListMode1_1e ; record 1
+	dw RewardFlagListMode2_1e ; record 2
 	dw $0000 ; record 3
-	nop ; $6d1c
-	nop ; $6d1d
-	nop ; $6d1e
-	ld a, [bc] ; $6d1f
-	jr nz, Label_1e_6d2c ; $6d20
-	ld b, b ; $6d22
-	ld a, [bc] ; $6d23
-	ld h, b ; $6d24
-	ld a, [bc] ; $6d25
-	nop ; $6d26
-	nop ; $6d27
-	add a, b ; $6d28
-	ld a, [bc] ; $6d29
-	and a, b ; $6d2a
-	ld a, [bc] ; $6d2b
-Label_1e_6d2c:
-	ret nz ; $6d2c
-	ld a, [bc] ; $6d2d
-	ldh [$ff0a], a ; $6d2e
-	nop ; $6d30
-	nop ; $6d31
-	nop ; $6d32
-	dec bc ; $6d33
-	nop ; $6d34
-	nop ; $6d35
-	nop ; $6d36
-	nop ; $6d37
-	nop ; $6d38
-	nop ; $6d39
-	nop ; $6d3a
-	nop ; $6d3b
-	ldh [rTAC], a ; $6d3c
-	ret nz ; $6d3e
-	rlca ; $6d3f
-	and a, b ; $6d40
-	rlca ; $6d41
-	add a, b ; $6d42
-	rlca ; $6d43
-	nop ; $6d44
-	nop ; $6d45
-	nop ; $6d46
-	nop ; $6d47
-	ld h, b ; $6d48
-	rlca ; $6d49
-	ld h, b ; $6d4a
-	rlca ; $6d4b
-	ld h, b ; $6d4c
-	rlca ; $6d4d
-	nop ; $6d4e
-	nop ; $6d4f
-	nop ; $6d50
-	nop ; $6d51
-	nop ; $6d52
-	ld [$0820], sp ; $6d53
-	ld b, b ; $6d56
-	ld [$0000], sp ; $6d57
-	nop ; $6d5a
-	nop ; $6d5b
-	add a, b ; $6d5c
-	ld [$08a0], sp ; $6d5d
-	ret nz ; $6d60
-	ld [$0000], sp ; $6d61
-	nop ; $6d64
-	nop ; $6d65
-	nop ; $6d66
-	nop ; $6d67
-	nop ; $6d68
-	add hl, bc ; $6d69
-	nop ; $6d6a
-	nop ; $6d6b
-	nop ; $6d6c
-	nop ; $6d6d
-	nop ; $6d6e
-	nop ; $6d6f
-	ldh [rTMA], a ; $6d70
-	ret nz ; $6d72
-	ld b, $a0 ; $6d73
-	ld b, $00 ; $6d75
-	nop ; $6d77
-	nop ; $6d78
-	nop ; $6d79
-	add a, b ; $6d7a
-	ld b, $80 ; $6d7b
-	ld b, $80 ; $6d7d
-	ld b, $c0 ; $6d7f
-	rra ; $6d81
-Func_1e_6d82:
-	ld h, b ; $6d82
-	rlca ; $6d83
-	add a, b ; $6d84
-	ld b, $60 ; $6d85
-	ld a, [bc] ; $6d87
-	ld b, b ; $6d88
-	ld [$0ae0], sp ; $6d89
-	ret nz ; $6d8c
-	ld [$0b00], sp ; $6d8d
-	nop ; $6d90
-	add hl, bc ; $6d91
-	add a, b ; $6d92
-	rlca ; $6d93
-	and a, b ; $6d94
-	db $06 ; $6d95
-	nop ; $6d96
-	jr Label_1e_6db9 ; $6d97
-Data_1e_6d99:
-	; $6d99, 32 bytes (bytes:16)
-	db $18, $40, $18, $60, $18, $80, $18, $a0, $18, $c0, $18, $e0, $18, $00, $19, $20 ; 0x00
-	db $19, $40, $19, $60, $19, $80, $19, $a0, $19, $c0, $19, $e0, $19, $00, $1a, $20 ; 0x10
-Label_1e_6db9:
-	ld a, [de] ; $6db9
-	ld b, b ; $6dba
-	ld a, [de] ; $6dbb
-	ld h, b ; $6dbc
-	ld a, [de] ; $6dbd
-	add a, b ; $6dbe
-	ld a, [de] ; $6dbf
-	and a, b ; $6dc0
-	ld a, [de] ; $6dc1
-	ret nz ; $6dc2
-	ld a, [de] ; $6dc3
-	ldh [rAUD3ENA], a ; $6dc4
-	nop ; $6dc6
-	dec de ; $6dc7
-	jr nz, Label_1e_6de5 ; $6dc8
-	ld b, b ; $6dca
-	dec de ; $6dcb
-	ld h, b ; $6dcc
-	dec de ; $6dcd
-	add a, b ; $6dce
-	dec de ; $6dcf
-	and a, b ; $6dd0
-	dec de ; $6dd1
-	ret nz ; $6dd2
-	rra ; $6dd3
-	add a, b ; $6dd4
-	rlca ; $6dd5
-	and a, b ; $6dd6
-	ld b, $00 ; $6dd7
-	nop ; $6dd9
-	nop ; $6dda
-	nop ; $6ddb
-	ld h, b ; $6ddc
-	ld a, [bc] ; $6ddd
-	ld b, b ; $6dde
-	ld [$0ae0], sp ; $6ddf
-	ret nz ; $6de2
-	db $08 ; $6de3
-	db $00 ; $6de4
-Label_1e_6de5:
-	dec bc ; $6de5
-	nop ; $6de6
-	add hl, bc ; $6de7
-	nop ; $6de8
-	nop ; $6de9
-	nop ; $6dea
-	jr Label_1e_6e0d ; $6deb
-Data_1e_6ded:
-	; $6ded, 32 bytes (bytes:16)
-	db $18, $00, $00, $60, $18, $80, $18, $00, $00, $c0, $18, $e0, $18, $00, $00, $20 ; 0x00
-	db $19, $40, $19, $00, $00, $80, $19, $a0, $19, $00, $00, $e0, $19, $00, $1a, $00 ; 0x10
-Label_1e_6e0d:
-	nop ; $6e0d
-	ld b, b ; $6e0e
-	ld a, [de] ; $6e0f
-	ld h, b ; $6e10
-	ld a, [de] ; $6e11
-	add a, b ; $6e12
-	ld a, [de] ; $6e13
-	nop ; $6e14
-	nop ; $6e15
-	ret nz ; $6e16
-	ld a, [de] ; $6e17
-	ldh [rAUD3ENA], a ; $6e18
-	nop ; $6e1a
-	dec de ; $6e1b
+RewardFlagListMode0_1e:
+	; $6d1c, 50 bytes (flag_ids)
+	dw $0000 ; 0: none
+	dw $0a00 ; 1: flag $0a, 0
+	dw $0a20 ; 2: flag $0a, 1
+	dw $0a40 ; 3: flag $0a, 2
+	dw $0a60 ; 4: flag $0a, 3
+	dw $0000 ; 5: none
+	dw $0a80 ; 6: flag $0a, 4
+	dw $0aa0 ; 7: flag $0a, 5
+	dw $0ac0 ; 8: flag $0a, 6
+	dw $0ae0 ; 9: flag $0a, 7
+	dw $0000 ; 10: none
+	dw $0b00 ; 11: flag $0b, 0
+	dw $0000 ; 12: none
+	dw $0000 ; 13: none
+	dw $0000 ; 14: none
+	dw $0000 ; 15: none
+	dw $07e0 ; 16: flag $07, 7
+	dw $07c0 ; 17: flag $07, 6
+	dw $07a0 ; 18: flag $07, 5
+	dw $0780 ; 19: flag $07, 4
+	dw $0000 ; 20: none
+	dw $0000 ; 21: none
+	dw $0760 ; 22: flag $07, 3
+	dw $0760 ; 23: flag $07, 3
+	dw $0760 ; 24: flag $07, 3
+RewardFlagListMode1_1e:
+	; $6d4e, 50 bytes (flag_ids)
+	dw $0000 ; 0: none
+	dw $0000 ; 1: none
+	dw $0800 ; 2: flag $08, 0
+	dw $0820 ; 3: flag $08, 1
+	dw $0840 ; 4: flag $08, 2
+	dw $0000 ; 5: none
+	dw $0000 ; 6: none
+	dw $0880 ; 7: flag $08, 4
+	dw $08a0 ; 8: flag $08, 5
+	dw $08c0 ; 9: flag $08, 6
+	dw $0000 ; 10: none
+	dw $0000 ; 11: none
+	dw $0000 ; 12: none
+	dw $0900 ; 13: flag $09, 0
+	dw $0000 ; 14: none
+	dw $0000 ; 15: none
+	dw $0000 ; 16: none
+	dw $06e0 ; 17: flag $06, 7
+	dw $06c0 ; 18: flag $06, 6
+	dw $06a0 ; 19: flag $06, 5
+	dw $0000 ; 20: none
+	dw $0000 ; 21: none
+	dw $0680 ; 22: flag $06, 4
+	dw $0680 ; 23: flag $06, 4
+	dw $0680 ; 24: flag $06, 4
+ProgressEntryFlagList_1e:
+	; $6d80, 2 bytes (flag_ids)
+	dw $1fc0 ; 0: flag $1f, 6
+AllProgressFlagList_1e:
+	; $6d82, 20 bytes (flag_ids)
+	dw $0760 ; 0: flag $07, 3
+	dw $0680 ; 1: flag $06, 4
+	dw $0a60 ; 2: flag $0a, 3
+	dw $0840 ; 3: flag $08, 2
+	dw $0ae0 ; 4: flag $0a, 7
+	dw $08c0 ; 5: flag $08, 6
+	dw $0b00 ; 6: flag $0b, 0
+	dw $0900 ; 7: flag $09, 0
+	dw $0780 ; 8: flag $07, 4
+	dw $06a0 ; 9: flag $06, 5
+RewardFlagListMode2_1e:
+	; $6d96, 60 bytes (flag_ids)
+	dw $1800 ; 0: flag $18, 0
+	dw $1820 ; 1: flag $18, 1
+	dw $1840 ; 2: flag $18, 2
+	dw $1860 ; 3: flag $18, 3
+	dw $1880 ; 4: flag $18, 4
+	dw $18a0 ; 5: flag $18, 5
+	dw $18c0 ; 6: flag $18, 6
+	dw $18e0 ; 7: flag $18, 7
+	dw $1900 ; 8: flag $19, 0
+	dw $1920 ; 9: flag $19, 1
+	dw $1940 ; 10: flag $19, 2
+	dw $1960 ; 11: flag $19, 3
+	dw $1980 ; 12: flag $19, 4
+	dw $19a0 ; 13: flag $19, 5
+	dw $19c0 ; 14: flag $19, 6
+	dw $19e0 ; 15: flag $19, 7
+	dw $1a00 ; 16: flag $1a, 0
+	dw $1a20 ; 17: flag $1a, 1
+	dw $1a40 ; 18: flag $1a, 2
+	dw $1a60 ; 19: flag $1a, 3
+	dw $1a80 ; 20: flag $1a, 4
+	dw $1aa0 ; 21: flag $1a, 5
+	dw $1ac0 ; 22: flag $1a, 6
+	dw $1ae0 ; 23: flag $1a, 7
+	dw $1b00 ; 24: flag $1b, 0
+	dw $1b20 ; 25: flag $1b, 1
+	dw $1b40 ; 26: flag $1b, 2
+	dw $1b60 ; 27: flag $1b, 3
+	dw $1b80 ; 28: flag $1b, 4
+	dw $1ba0 ; 29: flag $1b, 5
+RewardCategoryFlagTable_1e:
+	; $6dd2, 74 bytes (flag_ids)
+	dw $1fc0 ; 0: flag $1f, 6
+	dw $0780 ; 1: flag $07, 4
+	dw $06a0 ; 2: flag $06, 5
+	dw $0000 ; 3: none
+	dw $0000 ; 4: none
+	dw $0a60 ; 5: flag $0a, 3
+	dw $0840 ; 6: flag $08, 2
+	dw $0ae0 ; 7: flag $0a, 7
+	dw $08c0 ; 8: flag $08, 6
+	dw $0b00 ; 9: flag $0b, 0
+	dw $0900 ; 10: flag $09, 0
+	dw $0000 ; 11: none
+	dw $1800 ; 12: flag $18, 0
+	dw $1820 ; 13: flag $18, 1
+	dw $0000 ; 14: none
+	dw $1860 ; 15: flag $18, 3
+	dw $1880 ; 16: flag $18, 4
+	dw $0000 ; 17: none
+	dw $18c0 ; 18: flag $18, 6
+	dw $18e0 ; 19: flag $18, 7
+	dw $0000 ; 20: none
+	dw $1920 ; 21: flag $19, 1
+	dw $1940 ; 22: flag $19, 2
+	dw $0000 ; 23: none
+	dw $1980 ; 24: flag $19, 4
+	dw $19a0 ; 25: flag $19, 5
+	dw $0000 ; 26: none
+	dw $19e0 ; 27: flag $19, 7
+	dw $1a00 ; 28: flag $1a, 0
+	dw $0000 ; 29: none
+	dw $1a40 ; 30: flag $1a, 2
+	dw $1a60 ; 31: flag $1a, 3
+	dw $1a80 ; 32: flag $1a, 4
+	dw $0000 ; 33: none
+	dw $1ac0 ; 34: flag $1a, 6
+	dw $1ae0 ; 35: flag $1a, 7
+	dw $1b00 ; 36: flag $1b, 0
 ApplyRewardUnlockFlags:
 	ld c, $00 ; $6e1c
 	ld b, $0d ; $6e1e
@@ -3922,7 +3860,7 @@ CheckAllProgressComplete:
 	push de ; $6f8f
 	push hl ; $6f90
 	ld c, $24 ; $6f91
-	ld hl, Func_1e_6d82 ; $6f93
+	ld hl, AllProgressFlagList_1e ; $6f93
 Label_1e_6f96:
 	push hl ; $6f96
 	ld a, [hl+] ; $6f97
@@ -4571,7 +4509,7 @@ CreateProgressListWindow:
 TestProgressEntryFlag:
 	push hl ; $73ef
 	push de ; $73f0
-	ld hl, $6d80 ; $73f1
+	ld hl, ProgressEntryFlagList_1e ; $73f1
 	add a, a ; $73f4
 	add a, l ; $73f5
 	ld l, a ; $73f6
@@ -4590,7 +4528,7 @@ Label_1e_7405:
 	pop hl ; $7406
 	ret ; $7407
 RunRewardCategoryList:
-	ld hl, RewardSubHandlersC_1e ; $7408
+	ld hl, RewardCategoryEntryListPtrs_1e ; $7408
 	add a, a ; $740b
 	add a, l ; $740c
 	ld l, a ; $740d
@@ -4606,7 +4544,7 @@ Label_1e_7414:
 	jr z, Label_1e_7444 ; $7417
 	push de ; $7419
 	push af ; $741a
-	ld hl, $6dd2 ; $741b
+	ld hl, RewardCategoryFlagTable_1e ; $741b
 	add a, a ; $741e
 	add a, l ; $741f
 	ld l, a ; $7420
@@ -4639,53 +4577,40 @@ Label_1e_743f:
 	jr Label_1e_7414 ; $7442
 Label_1e_7444:
 	ret ; $7444
-RewardSubHandlersC_1e:
+RewardCategoryEntryListPtrs_1e:
 	; $7445, 12 bytes (records:2)
-	dw $7451 ; record 0
-	dw $7466 ; record 1
-	dw $746d ; record 2
-	dw $7474 ; record 3
-	dw $7477 ; record 4
-	dw $747a ; record 5
-	inc bc ; $7451
-	inc b ; $7452
-	dec b ; $7453
-	ld b, $07 ; $7454
-	ld [$0e0b], sp ; $7456
-	ld de, $1714 ; $7459
-	ld a, [de] ; $745c
-	dec e ; $745d
-	ld e, $1f ; $745e
-	jr nz, Label_1e_7483 ; $7460
-	ld [hl+], a ; $7462
-	inc hl ; $7463
-	inc h ; $7464
-	rst Rst38 ; $7465
-	inc c ; $7466
-	rrca ; $7467
-	ld [de], a ; $7468
-	dec d ; $7469
-	jr Label_1e_7487 ; $746a
-	ds 1, $ff ; $746c, fill
-	dec c ; $746d
-Data_1e_746e:
-	; $746e, 6 bytes (bytes:6)
-	db $10, $13, $16, $19, $1c, $ff ; 0x00
-	add hl, bc ; $7474
-	ld a, [bc] ; $7475
-	rst Rst38 ; $7476
-	ld bc, rSC ; $7477
-	nop ; $747a
-	rst Rst38 ; $747b
+	dw RewardCategoryEntryList0_1e ; record 0
+	dw RewardCategoryEntryList1_1e ; record 1
+	dw RewardCategoryEntryList2_1e ; record 2
+	dw RewardCategoryEntryList3_1e ; record 3
+	dw RewardCategoryEntryList4_1e ; record 4
+	dw RewardCategoryEntryList5_1e ; record 5
+RewardCategoryEntryList0_1e:
+	; $7451, 21 bytes (bytes:16)
+	db $03, $04, $05, $06, $07, $08, $0b, $0e, $11, $14, $17, $1a, $1d, $1e, $1f, $20 ; 0x00
+	db $21, $22, $23, $24, $ff ; 0x10
+RewardCategoryEntryList1_1e:
+	; $7466, 7 bytes (bytes:16)
+	db $0c, $0f, $12, $15, $18, $1b, $ff ; 0x00
+RewardCategoryEntryList2_1e:
+	; $746d, 7 bytes (bytes:16)
+	db $0d, $10, $13, $16, $19, $1c, $ff ; 0x00
+RewardCategoryEntryList3_1e:
+	; $7474, 3 bytes (bytes:16)
+	db $09, $0a, $ff ; 0x00
+RewardCategoryEntryList4_1e:
+	; $7477, 3 bytes (bytes:16)
+	db $01, $02, $ff ; 0x00
+RewardCategoryEntryList5_1e:
+	; $747a, 2 bytes (bytes:16)
+	db $00, $ff ; 0x00
 BuildVisibleProgressEntryList:
 	ld c, $00 ; $747c
 	ld b, $00 ; $747e
 	ld hl, $df10 ; $7480
-Label_1e_7483:
 	ld de, $df70 ; $7483
 Label_1e_7486:
 	ld a, [hl+] ; $7486
-Label_1e_7487:
 	or a, a ; $7487
 	jr z, Label_1e_748e ; $7488
 	inc b ; $748a
@@ -5184,7 +5109,7 @@ Label_1e_7b47:
 	ret ; $7b4b
 LoadProgressScreenIconTiles:
 	ld de, $8200 ; $7b4c
-	farcall Func_39_4a16 ; $7b4f
+	farcall LoadMenuArrowSpriteTiles ; $7b4f
 	ld b, $08 ; $7b52
 	ld c, $0f ; $7b54
 	farcall LoadIndexedPalette ; $7b56

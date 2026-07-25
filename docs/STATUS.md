@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~160.5K instructions / 420,087 bytes of proven code+structured source
+**~160.2K instructions / 420,088 bytes of proven code+structured source
 (20.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -22,12 +22,111 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `31f3024`); the whole history rebuilds
-byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
+Everything below is **committed** (HEAD `31f3024`) except the two sections
+immediately following; the whole history rebuilds byte-perfect. Per-bank
+progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,618 of 20,710 labels are human-named** (see the caveat in the
+**6,693 of 20,711 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
+
+### No `Func_*` label is left in the ROM (2026-07-25)
+
+Every function in the disassembly now has a curated name: the last **61
+`Func_bb_aaaa` labels** across 24 banks were named from their call sites, and
+the count is **zero ROM-wide** (`grep -c '^Func_' src/*.asm`). What remains
+auto-named is `Label_*` (7,804 local jump targets, not worth naming) and
+`Data_*` (4,287 data runs) -- the latter is now the biggest naming frontier.
+
+The pass was one read per function plus its callers. Some highlights, since
+each name is only as good as its evidence:
+
+* **Bank `$02`'s stat pipeline.** `RecomputeCharacterStats` runs each raw stat
+  through `ScaleStatForBarLevel` (`stat * 5 - (record[$18] - 1)`, clamped to
+  ±$7f) and then `LookupStatBarLevel`, which walks 9 signed thresholds and
+  returns how many the value clears -- the 0-9 bar level stored at record
+  `+$20`/`+$21`/`+$22`. `CheckStorySignatureCollision` (`$42d6`) is the
+  uniqueness test behind `GenerateUniqueStorySaveSignature`: it returns `$ff`
+  when the candidate 4-byte signature is all-zero or already matches one of
+  the three save slots' signatures at `$d400`/`$d404`/`$d408`.
+* **Bank `$03`'s scrolling cutscene text.** `PlayScrollingStoryCutscene` gets
+  its four helpers: `DrawCutsceneTextPage` (looks the page up in
+  `TextPageDescriptors_03`), `DrawCutsceneTextLines`, `ScrollCutsceneTextWindow`
+  and `BlitCutsceneTextWindow` (copies the visible 20x8 window out of the tall
+  WRAM-bank-1 text buffer and queues it to the window map at `$9c00`).
+* **The win/lose screen's four marker queuers** (`$16:$4d96`-`$4dc7`). Read
+  together with `QueueResultPortraitTop`/`Bottom` they decode cleanly: tile
+  block `$00` is the *player's* portrait (it always blinks, palette 0↔2 on
+  `hVBlankCounter` bit 4), `$20` the opponent's, and the winner is always drawn
+  top-left. The single-sprite markers pair with them by position -- tile `$40`
+  beside the top-left portrait, `$42` beside the bottom-right -- so the four
+  are `QueueWinnerMarkerForPlayer`, `QueueLoserMarkerForPlayer`,
+  `QueueWinnerMarkerForOpponent` and `QueueLoserMarkerForOpponent`.
+* **Bank `$18`'s confirm screen.** `InitConfirmScreen` builds the box, font,
+  cursor and score panel; `DrawYesNoLabels` writes the two 3x2 tile words
+  (`$dd,$de,$df` over `$ed,$ee,$ef`, and `$bd,$be,$bf` over `$cd,$ce,$cf`) into
+  rows `$d9e1`/`$da01` with their attribute rows. Its caller renders text ids
+  `$046a`/`$046b`/`$046d`/`$0471` = `31:106`/`107`/`109`/`113` = "Erase?",
+  "Erase it? Really?", "Continue?", "Is this correct?".
+* **Bank `$39`'s two shared menu helpers.** `LoadMenuArrowSpriteTiles` loads
+  tile blocks `$17`-`$1a` (4 tiles each) into consecutive VRAM destinations --
+  the four arrow directions bank `$3b`'s scroll-arrow task queues with
+  `h = $00`-`$03`; `LoadMenuSpritePalettePair` points two OBJ palette slots at
+  the same 4-colour palette.
+* **Mechanism-only names where the meaning isn't pinned.** Bank `$17`'s three
+  briefing-diagram sprites are `DrawBriefingMarkerHFlip` / `VFlip` / `Rotated`
+  (they differ only in which OAM flip bits a state byte selects), and three
+  routines with no reader or no caller are marked as such:
+  `Unused_02_CharIdRemapLookup` (+ its table), `Unused_05_SetTextVar` (writes
+  `$d85d`, which nothing reads) and `Unused_06_DrawMusicMenuRow`.
+
+Stubs follow the existing convention (`StubNop_<bank>_<addr>`): five more bare
+`ret`s picked one up (`$07`, `$1a`, `$1b`, `$24`, `$3b`).
+
+### Bank $1e's reward tables were data all along (2026-07-25)
+
+The 61st "function", `Func_1e_6d82`, was not code: `CheckAllProgressComplete`
+reads it as **36 two-byte game-flag ids**. Pulling that thread found three
+pointer tables in bank `$1e` -- named `RewardSubHandlers{A,B,C}_1e` by an
+earlier pass -- whose targets are all data, plus a
+`coverage/bank01e_static_code.json` entry that had seeded **12 of those data
+addresses as static code entries**. 250-odd bytes of the bank were decoding as
+nonsense instructions (`ld [$0ae0], sp`, stray `nop` runs) with two blobs
+(`Data_1e_6d99`, `Data_1e_6ded`) carved out of the middle of them.
+
+What the three tables actually hold, from the code that reads them:
+
+| table (was) | now | targets |
+| --- | --- | --- |
+| `RewardSubHandlersA_1e` `$66f7` | `FirstClearExpTablePtrs_1e` | 3 x 25-entry `dw` EXP tables (`GetFirstClearRewardExp` returns the word in `de`) |
+| `RewardSubHandlersB_1e` `$6d14` | `RewardFlagListPtrs_1e` | 3 flag-id lists (`SetRewardGameFlag`/`TestRewardGameFlag` pass the word to `SetGameFlag`/`TestGameFlag`) |
+| `RewardSubHandlersC_1e` `$7445` | `RewardCategoryEntryListPtrs_1e` | 6 `$ff`-terminated entry-id lists (`RunRewardCategoryList` walks them into `$df10`) |
+
+All three are selected by `wCurrentMinigameStoryMatch` byte 0 (the mode) and
+indexed by `GetRewardTableIndex`, so the flag lists and the EXP tables are
+`Mode0`/`Mode1`/`Mode2` siblings of each other.
+
+**A new `flag_ids` data-table spec** renders the lists the way the rst
+`set_flag`/`test_flag` pseudo-ops print their operands -- low byte = bit << 5,
+high byte = flag byte index:
+
+```
+RewardFlagListMode2_1e:
+	; $6d96, 60 bytes (flag_ids)
+	dw $1800 ; 0: flag $18, 0
+	dw $1820 ; 1: flag $18, 1
+```
+
+Mode 2's list is exactly flags `$18` bit 0 through `$1b` bit 5 in order --
+30 sequential unlock bits, which is what makes the mis-decode obvious in
+hindsight.
+
+**Two views deliberately share storage**, which the source can only segment one
+way: `ProgressEntryFlagList_1e` (`$6d80`, what `TestProgressEntryFlag` indexes)
+is one entry ahead of `AllProgressFlagList_1e` (`$6d82`, the 36 flags
+`CheckAllProgressComplete` requires), and that 36-entry span runs on through
+`RewardFlagListMode2_1e`. The labels mark each entry point; the overlap is
+recorded here rather than in a comment the generator would overwrite.
 
 ### The generator split into `tools/disasmlib/` (2026-07-25)
 
@@ -2646,8 +2745,8 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 2,898 of 16,870 labels** (`tools/progress.py`; the rest
-are auto-generated `Func_/Label_/FarPtr_` names). Bank 0: 56 named routines
+**Human-named symbols: 6,693 of 20,711 labels** (`tools/progress.py`; the rest
+are auto-generated `Label_/Data_/FarPtr_` names — no `Func_` is left). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
 handlers. Bank 3: save engine (23 named, docs/save_format.md). RAM:

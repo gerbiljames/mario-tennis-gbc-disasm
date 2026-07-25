@@ -142,7 +142,7 @@ Label_08_410c:
 	rrca ; $4127
 	and a, $01 ; $4128
 	ld [wRulesGamesIndex], a ; $412a
-	call Func_08_454b ; $412d
+	call SelectScoreboardLayout ; $412d
 	ld a, [wGameMode] ; $4130
 	cp a, $09 ; $4133
 	ldh a, [hVBlankCounter] ; $4135
@@ -307,7 +307,7 @@ Label_08_4288:
 	call SetCharStateOnBallHit ; $42b0
 	wram_bank $04 ; $42b3
 	call SetCharStateOnBallHit ; $42b9
-	call Func_08_4326 ; $42bc
+	call DetectServeAceOutcome ; $42bc
 	ld d, $04 ; $42bf
 	call CallModeHook ; $42c1
 	xor a, a ; $42c4
@@ -363,7 +363,7 @@ SetCharStateOnBallHit:
 	ret ; $431d
 	; $431e, 8 bytes (bytes:8)
 	db $00, $02, $01, $02, $02, $01, $06, $07 ; 0x00
-Func_08_4326:
+DetectServeAceOutcome:
 	ld a, [wRallyLength] ; $4326
 	cp a, $02 ; $4329
 	jr nz, Label_08_4348 ; $432b
@@ -667,7 +667,7 @@ ApplyMatchBgmPreference:
 Label_08_4547:
 	call ResumeBGM ; $4547
 	ret ; $454a
-Func_08_454b:
+SelectScoreboardLayout:
 	ld a, [$c8f5] ; $454b
 	cp a, $02 ; $454e
 	jr z, Label_08_455d ; $4550

@@ -128,7 +128,7 @@ Label_01_4127:
 	ld a, $01 ; $412b
 	ldh [hDebugStepMode], a ; $412d
 Label_01_412f:
-	farcall Func_3b_44a9 ; $412f
+	farcall StubNop_3b_44a9 ; $412f
 	farcall RunMatch ; $4132
 	jp Label_01_412f ; $4135
 Label_01_4138:

@@ -891,7 +891,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $40 ; $454d
 	ld [$d81d], a ; $454f
 	ld a, $01 ; $4552
-	ld hl, Func_17_4754 ; $4554
+	ld hl, DrawBriefingMarkerHFlip ; $4554
 	call RegisterFrameTask ; $4557
 	ld hl, $00e4 ; $455a
 	call DrawBriefingCaption ; $455d
@@ -927,7 +927,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $20 ; $45ab
 	ld [$d824], a ; $45ad
 	ld a, $01 ; $45b0
-	ld hl, Func_17_481c ; $45b2
+	ld hl, DrawBriefingMarkerVFlip ; $45b2
 	call RegisterFrameTask ; $45b5
 	ld a, $01 ; $45b8
 	ld [$d826], a ; $45ba
@@ -945,7 +945,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $10 ; $45d9
 	ld [$d819], a ; $45db
 	ld a, $01 ; $45de
-	ld hl, Func_17_4876 ; $45e0
+	ld hl, DrawBriefingMarkerRotated ; $45e0
 	call RegisterFrameTask ; $45e3
 	ld a, $18 ; $45e6
 	ld [$d82a], a ; $45e8
@@ -979,7 +979,7 @@ ShowCourtDiagramTestScreen:
 	ld a, $20 ; $4633
 	ld [$d81d], a ; $4635
 	ld a, $01 ; $4638
-	ld hl, Func_17_4754 ; $463a
+	ld hl, DrawBriefingMarkerHFlip ; $463a
 	call RegisterFrameTask ; $463d
 	ld b, $05 ; $4640
 	call DrawDiagramTargetOverlay ; $4642
@@ -1129,7 +1129,7 @@ DrawBriefingBallSprite:
 	pop af ; $474e
 	wram_bank ; $474f
 	ret ; $4753
-Func_17_4754:
+DrawBriefingMarkerHFlip:
 	ldh a, [hWramBank] ; $4754
 	push af ; $4756
 	wram_bank $03 ; $4757
@@ -1221,7 +1221,7 @@ DrawBriefingPoleSprites:
 	pop af ; $4816
 	wram_bank ; $4817
 	ret ; $481b
-Func_17_481c:
+DrawBriefingMarkerVFlip:
 	ldh a, [hWramBank] ; $481c
 	push af ; $481e
 	wram_bank $03 ; $481f
@@ -1265,7 +1265,7 @@ SpriteTemplate_17_486d:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Func_17_4876:
+DrawBriefingMarkerRotated:
 	ldh a, [hWramBank] ; $4876
 	push af ; $4878
 	wram_bank $03 ; $4879
@@ -1658,10 +1658,10 @@ DrillBriefing_ServeToTargets:
 	ld hl, DrawBriefingBallSprite ; $5591
 	call RegisterFrameTask ; $5594
 	ld a, $01 ; $5597
-	ld hl, Func_17_4754 ; $5599
+	ld hl, DrawBriefingMarkerHFlip ; $5599
 	call RegisterFrameTask ; $559c
 	ld a, $01 ; $559f
-	ld hl, Func_17_4876 ; $55a1
+	ld hl, DrawBriefingMarkerRotated ; $55a1
 	call RegisterFrameTask ; $55a4
 	ld a, $01 ; $55a7
 	ld hl, CycleDiagramTargetPalette ; $55a9
@@ -1688,7 +1688,7 @@ Label_17_55bc:
 	ld hl, DrawBriefingPlayerSprite ; $55dd
 	call RegisterFrameTask ; $55e0
 	ld a, $01 ; $55e3
-	ld hl, Func_17_4754 ; $55e5
+	ld hl, DrawBriefingMarkerHFlip ; $55e5
 	call RegisterFrameTask ; $55e8
 	ld a, $01 ; $55eb
 	ld hl, CycleDiagramTargetPalette ; $55ed
@@ -1736,7 +1736,7 @@ Label_17_5612:
 	ld a, $24 ; $5657
 	ld [$d81d], a ; $5659
 	ld a, $01 ; $565c
-	ld hl, Func_17_4754 ; $565e
+	ld hl, DrawBriefingMarkerHFlip ; $565e
 	call RegisterFrameTask ; $5661
 	ld a, $03 ; $5664
 	ld [$d827], a ; $5666
@@ -1745,7 +1745,7 @@ Label_17_5612:
 	ld a, $40 ; $566e
 	ld [$d819], a ; $5670
 	ld a, $01 ; $5673
-	ld hl, Func_17_4876 ; $5675
+	ld hl, DrawBriefingMarkerRotated ; $5675
 	call RegisterFrameTask ; $5678
 	ld b, $04 ; $567b
 	call DrawDiagramTargetOverlay ; $567d
@@ -1780,7 +1780,7 @@ Label_17_5612:
 	ld hl, DrawBriefingBallSprite ; $56ca
 	call RegisterFrameTask ; $56cd
 	ld a, $01 ; $56d0
-	ld hl, Func_17_4876 ; $56d2
+	ld hl, DrawBriefingMarkerRotated ; $56d2
 	call RegisterFrameTask ; $56d5
 	ld a, $01 ; $56d8
 	ld hl, CycleDiagramTargetPalette ; $56da
@@ -1974,10 +1974,10 @@ DrillBriefing_SpinServe:
 	ld hl, DrawBriefingBallSprite ; $5829
 	call RegisterFrameTask ; $582c
 	ld a, $01 ; $582f
-	ld hl, Func_17_4754 ; $5831
+	ld hl, DrawBriefingMarkerHFlip ; $5831
 	call RegisterFrameTask ; $5834
 	ld a, $01 ; $5837
-	ld hl, Func_17_4876 ; $5839
+	ld hl, DrawBriefingMarkerRotated ; $5839
 	call RegisterFrameTask ; $583c
 	ld a, $01 ; $583f
 	ld hl, CycleDiagramTargetPalette ; $5841
@@ -2004,7 +2004,7 @@ Label_17_5854:
 	ld hl, DrawBriefingPlayerSprite ; $5875
 	call RegisterFrameTask ; $5878
 	ld a, $01 ; $587b
-	ld hl, Func_17_4754 ; $587d
+	ld hl, DrawBriefingMarkerHFlip ; $587d
 	call RegisterFrameTask ; $5880
 	ld a, $01 ; $5883
 	ld hl, CycleDiagramTargetPalette ; $5885
@@ -2052,7 +2052,7 @@ Label_17_58aa:
 	ld a, $24 ; $58ef
 	ld [$d81d], a ; $58f1
 	ld a, $01 ; $58f4
-	ld hl, Func_17_4754 ; $58f6
+	ld hl, DrawBriefingMarkerHFlip ; $58f6
 	call RegisterFrameTask ; $58f9
 	ld a, $03 ; $58fc
 	ld [$d827], a ; $58fe
@@ -2061,7 +2061,7 @@ Label_17_58aa:
 	ld a, $40 ; $5906
 	ld [$d819], a ; $5908
 	ld a, $01 ; $590b
-	ld hl, Func_17_4876 ; $590d
+	ld hl, DrawBriefingMarkerRotated ; $590d
 	call RegisterFrameTask ; $5910
 	ld b, $04 ; $5913
 	call DrawDiagramTargetOverlay ; $5915
@@ -2107,7 +2107,7 @@ Label_17_58aa:
 	ld a, $2f ; $597e
 	ld [$d819], a ; $5980
 	ld a, $01 ; $5983
-	ld hl, Func_17_4876 ; $5985
+	ld hl, DrawBriefingMarkerRotated ; $5985
 	call RegisterFrameTask ; $5988
 	ld a, $01 ; $598b
 	ld [$d826], a ; $598d
@@ -2140,7 +2140,7 @@ Label_17_58aa:
 	ld hl, DrawBriefingBallSprite ; $59d5
 	call RegisterFrameTask ; $59d8
 	ld a, $01 ; $59db
-	ld hl, Func_17_4876 ; $59dd
+	ld hl, DrawBriefingMarkerRotated ; $59dd
 	call RegisterFrameTask ; $59e0
 	ld a, $01 ; $59e3
 	ld hl, DrawSpinServeBriefingMarker ; $59e5
@@ -2181,7 +2181,7 @@ Label_17_5a11:
 	ld hl, DrawBriefingBallSprite ; $5a3a
 	call RegisterFrameTask ; $5a3d
 	ld a, $01 ; $5a40
-	ld hl, Func_17_4876 ; $5a42
+	ld hl, DrawBriefingMarkerRotated ; $5a42
 	call RegisterFrameTask ; $5a45
 	ld a, $01 ; $5a48
 	ld hl, CycleDiagramTargetPalette ; $5a4a
@@ -2515,10 +2515,10 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, DrawBriefingBallSprite ; $5c79
 	call RegisterFrameTask ; $5c7c
 	ld a, $01 ; $5c7f
-	ld hl, Func_17_4754 ; $5c81
+	ld hl, DrawBriefingMarkerHFlip ; $5c81
 	call RegisterFrameTask ; $5c84
 	ld a, $01 ; $5c87
-	ld hl, Func_17_4876 ; $5c89
+	ld hl, DrawBriefingMarkerRotated ; $5c89
 	call RegisterFrameTask ; $5c8c
 	ld a, $01 ; $5c8f
 	ld hl, CycleDiagramTargetPalette ; $5c91
@@ -2545,7 +2545,7 @@ Label_17_5ca4:
 	ld hl, DrawBriefingPlayerSprite ; $5cc5
 	call RegisterFrameTask ; $5cc8
 	ld a, $01 ; $5ccb
-	ld hl, Func_17_4754 ; $5ccd
+	ld hl, DrawBriefingMarkerHFlip ; $5ccd
 	call RegisterFrameTask ; $5cd0
 	ld a, $01 ; $5cd3
 	ld hl, CycleDiagramTargetPalette ; $5cd5
@@ -2601,7 +2601,7 @@ Label_17_5cfa:
 	ld a, $36 ; $5d45
 	ld [$d81d], a ; $5d47
 	ld a, $01 ; $5d4a
-	ld hl, Func_17_4754 ; $5d4c
+	ld hl, DrawBriefingMarkerHFlip ; $5d4c
 	call RegisterFrameTask ; $5d4f
 	ld a, $01 ; $5d52
 	ld hl, DrawBriefingPoleSprites ; $5d54
@@ -2949,7 +2949,7 @@ DrillBriefing_ServeAndVolley:
 	ld a, $3c ; $5fd2
 	ld [$d81d], a ; $5fd4
 	ld a, $01 ; $5fd7
-	ld hl, Func_17_4754 ; $5fd9
+	ld hl, DrawBriefingMarkerHFlip ; $5fd9
 	call RegisterFrameTask ; $5fdc
 	ld a, $03 ; $5fdf
 	ld [$d827], a ; $5fe1
@@ -2958,7 +2958,7 @@ DrillBriefing_ServeAndVolley:
 	ld a, $40 ; $5fe9
 	ld [$d819], a ; $5feb
 	ld a, $01 ; $5fee
-	ld hl, Func_17_4876 ; $5ff0
+	ld hl, DrawBriefingMarkerRotated ; $5ff0
 	call RegisterFrameTask ; $5ff3
 	ld b, $06 ; $5ff6
 	call DrawDiagramTargetOverlay ; $5ff8
@@ -2986,13 +2986,13 @@ DrillBriefing_ServeAndVolley:
 	ld hl, DrawBriefingBallSprite ; $6034
 	call RegisterFrameTask ; $6037
 	ld a, $01 ; $603a
-	ld hl, Func_17_4754 ; $603c
+	ld hl, DrawBriefingMarkerHFlip ; $603c
 	call RegisterFrameTask ; $603f
 	ld a, $01 ; $6042
-	ld hl, Func_17_4876 ; $6044
+	ld hl, DrawBriefingMarkerRotated ; $6044
 	call RegisterFrameTask ; $6047
 	ld a, $01 ; $604a
-	ld hl, Func_17_481c ; $604c
+	ld hl, DrawBriefingMarkerVFlip ; $604c
 	call RegisterFrameTask ; $604f
 	ld a, $0d ; $6052
 	ld [$d82a], a ; $6054
@@ -3021,13 +3021,13 @@ DrillBriefing_ServeAndVolley:
 	ld hl, DrawBriefingBallSprite ; $6092
 	call RegisterFrameTask ; $6095
 	ld a, $01 ; $6098
-	ld hl, Func_17_4754 ; $609a
+	ld hl, DrawBriefingMarkerHFlip ; $609a
 	call RegisterFrameTask ; $609d
 	ld a, $01 ; $60a0
-	ld hl, Func_17_4876 ; $60a2
+	ld hl, DrawBriefingMarkerRotated ; $60a2
 	call RegisterFrameTask ; $60a5
 	ld a, $01 ; $60a8
-	ld hl, Func_17_481c ; $60aa
+	ld hl, DrawBriefingMarkerVFlip ; $60aa
 	call RegisterFrameTask ; $60ad
 	ld a, $0d ; $60b0
 	ld [$d82a], a ; $60b2
@@ -3280,7 +3280,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $20 ; $6270
 	ld [$d81d], a ; $6272
 	ld a, $01 ; $6275
-	ld hl, Func_17_4754 ; $6277
+	ld hl, DrawBriefingMarkerHFlip ; $6277
 	call RegisterFrameTask ; $627a
 	ld a, $03 ; $627d
 	ld [$d827], a ; $627f
@@ -3289,7 +3289,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $40 ; $6287
 	ld [$d819], a ; $6289
 	ld a, $01 ; $628c
-	ld hl, Func_17_4876 ; $628e
+	ld hl, DrawBriefingMarkerRotated ; $628e
 	call RegisterFrameTask ; $6291
 	ld a, $0d ; $6294
 	ld [$d82a], a ; $6296
@@ -3330,7 +3330,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $3c ; $62f2
 	ld [$d81d], a ; $62f4
 	ld a, $01 ; $62f7
-	ld hl, Func_17_4754 ; $62f9
+	ld hl, DrawBriefingMarkerHFlip ; $62f9
 	call RegisterFrameTask ; $62fc
 	ld b, $06 ; $62ff
 	call DrawDiagramTargetOverlay ; $6301
@@ -3373,7 +3373,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $16 ; $6363
 	ld [$d819], a ; $6365
 	ld a, $01 ; $6368
-	ld hl, Func_17_4876 ; $636a
+	ld hl, DrawBriefingMarkerRotated ; $636a
 	call RegisterFrameTask ; $636d
 	ld a, $00 ; $6370
 	ld [$d825], a ; $6372
@@ -3382,7 +3382,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $21 ; $637a
 	ld [$d824], a ; $637c
 	ld a, $01 ; $637f
-	ld hl, Func_17_481c ; $6381
+	ld hl, DrawBriefingMarkerVFlip ; $6381
 	call RegisterFrameTask ; $6384
 	ld a, $04 ; $6387
 	ld [$d822], a ; $6389
@@ -3428,7 +3428,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, $3d ; $63f2
 	ld [$d819], a ; $63f4
 	ld a, $01 ; $63f7
-	ld hl, Func_17_4876 ; $63f9
+	ld hl, DrawBriefingMarkerRotated ; $63f9
 	call RegisterFrameTask ; $63fc
 	ld a, $0d ; $63ff
 	ld [$d82a], a ; $6401
@@ -3634,7 +3634,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $20 ; $6579
 	ld [$d81d], a ; $657b
 	ld a, $01 ; $657e
-	ld hl, Func_17_4754 ; $6580
+	ld hl, DrawBriefingMarkerHFlip ; $6580
 	call RegisterFrameTask ; $6583
 	ld a, $03 ; $6586
 	ld [$d827], a ; $6588
@@ -3643,7 +3643,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $40 ; $6590
 	ld [$d819], a ; $6592
 	ld a, $01 ; $6595
-	ld hl, Func_17_4876 ; $6597
+	ld hl, DrawBriefingMarkerRotated ; $6597
 	call RegisterFrameTask ; $659a
 	ld a, $0d ; $659d
 	ld [$d82a], a ; $659f
@@ -3684,7 +3684,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $3c ; $65fb
 	ld [$d81d], a ; $65fd
 	ld a, $01 ; $6600
-	ld hl, Func_17_4754 ; $6602
+	ld hl, DrawBriefingMarkerHFlip ; $6602
 	call RegisterFrameTask ; $6605
 	ld b, $06 ; $6608
 	call DrawDiagramTargetOverlay ; $660a
@@ -3727,7 +3727,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $16 ; $666c
 	ld [$d819], a ; $666e
 	ld a, $01 ; $6671
-	ld hl, Func_17_4876 ; $6673
+	ld hl, DrawBriefingMarkerRotated ; $6673
 	call RegisterFrameTask ; $6676
 	ld a, $00 ; $6679
 	ld [$d825], a ; $667b
@@ -3736,7 +3736,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $21 ; $6683
 	ld [$d824], a ; $6685
 	ld a, $01 ; $6688
-	ld hl, Func_17_481c ; $668a
+	ld hl, DrawBriefingMarkerVFlip ; $668a
 	call RegisterFrameTask ; $668d
 	ld a, $05 ; $6690
 	ld [$d822], a ; $6692
@@ -3782,7 +3782,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, $3d ; $66fb
 	ld [$d819], a ; $66fd
 	ld a, $01 ; $6700
-	ld hl, Func_17_4876 ; $6702
+	ld hl, DrawBriefingMarkerRotated ; $6702
 	call RegisterFrameTask ; $6705
 	ld a, $0d ; $6708
 	ld [$d82a], a ; $670a
@@ -3988,7 +3988,7 @@ DrillBriefing_ReturnToTarget:
 	ld a, $16 ; $6882
 	ld [$d819], a ; $6884
 	ld a, $01 ; $6887
-	ld hl, Func_17_4876 ; $6889
+	ld hl, DrawBriefingMarkerRotated ; $6889
 	call RegisterFrameTask ; $688c
 	ld hl, $1c03 ; $688f
 	call DrawBriefingCaption ; $6892
@@ -4010,10 +4010,10 @@ DrillBriefing_ReturnToTarget:
 	ld hl, DrawBriefingBallSprite ; $68bd
 	call RegisterFrameTask ; $68c0
 	ld a, $01 ; $68c3
-	ld hl, Func_17_4754 ; $68c5
+	ld hl, DrawBriefingMarkerHFlip ; $68c5
 	call RegisterFrameTask ; $68c8
 	ld a, $01 ; $68cb
-	ld hl, Func_17_4876 ; $68cd
+	ld hl, DrawBriefingMarkerRotated ; $68cd
 	call RegisterFrameTask ; $68d0
 	ld a, $0d ; $68d3
 	ld [$d82a], a ; $68d5
@@ -4042,10 +4042,10 @@ DrillBriefing_ReturnToTarget:
 	ld hl, DrawBriefingBallSprite ; $6913
 	call RegisterFrameTask ; $6916
 	ld a, $01 ; $6919
-	ld hl, Func_17_4754 ; $691b
+	ld hl, DrawBriefingMarkerHFlip ; $691b
 	call RegisterFrameTask ; $691e
 	ld a, $01 ; $6921
-	ld hl, Func_17_4876 ; $6923
+	ld hl, DrawBriefingMarkerRotated ; $6923
 	call RegisterFrameTask ; $6926
 	ld a, $0d ; $6929
 	ld [$d82a], a ; $692b
@@ -4266,7 +4266,7 @@ DrillBriefing_ReturnLob:
 	ld a, $16 ; $6ab3
 	ld [$d819], a ; $6ab5
 	ld a, $01 ; $6ab8
-	ld hl, Func_17_4876 ; $6aba
+	ld hl, DrawBriefingMarkerRotated ; $6aba
 	call RegisterFrameTask ; $6abd
 	ld hl, $1c06 ; $6ac0
 	call DrawBriefingCaption ; $6ac3
@@ -4288,10 +4288,10 @@ DrillBriefing_ReturnLob:
 	ld hl, DrawBriefingBallSprite ; $6aee
 	call RegisterFrameTask ; $6af1
 	ld a, $01 ; $6af4
-	ld hl, Func_17_4754 ; $6af6
+	ld hl, DrawBriefingMarkerHFlip ; $6af6
 	call RegisterFrameTask ; $6af9
 	ld a, $01 ; $6afc
-	ld hl, Func_17_4876 ; $6afe
+	ld hl, DrawBriefingMarkerRotated ; $6afe
 	call RegisterFrameTask ; $6b01
 	ld a, $01 ; $6b04
 	ld hl, DrawBriefingSwingAnim ; $6b06
@@ -4323,10 +4323,10 @@ DrillBriefing_ReturnLob:
 	ld hl, DrawBriefingBallSprite ; $6b4c
 	call RegisterFrameTask ; $6b4f
 	ld a, $01 ; $6b52
-	ld hl, Func_17_4754 ; $6b54
+	ld hl, DrawBriefingMarkerHFlip ; $6b54
 	call RegisterFrameTask ; $6b57
 	ld a, $01 ; $6b5a
-	ld hl, Func_17_4876 ; $6b5c
+	ld hl, DrawBriefingMarkerRotated ; $6b5c
 	call RegisterFrameTask ; $6b5f
 	ld a, $01 ; $6b62
 	ld hl, DrawBriefingSwingAnim ; $6b64
@@ -4582,7 +4582,7 @@ DrillBriefing_ReturnDownLine:
 	ld a, $16 ; $6d2a
 	ld [$d819], a ; $6d2c
 	ld a, $01 ; $6d2f
-	ld hl, Func_17_4876 ; $6d31
+	ld hl, DrawBriefingMarkerRotated ; $6d31
 	call RegisterFrameTask ; $6d34
 	ld hl, $1c09 ; $6d37
 	call DrawBriefingCaption ; $6d3a
@@ -4604,10 +4604,10 @@ DrillBriefing_ReturnDownLine:
 	ld hl, DrawBriefingBallSprite ; $6d65
 	call RegisterFrameTask ; $6d68
 	ld a, $01 ; $6d6b
-	ld hl, Func_17_4754 ; $6d6d
+	ld hl, DrawBriefingMarkerHFlip ; $6d6d
 	call RegisterFrameTask ; $6d70
 	ld a, $01 ; $6d73
-	ld hl, Func_17_481c ; $6d75
+	ld hl, DrawBriefingMarkerVFlip ; $6d75
 	call RegisterFrameTask ; $6d78
 	ld a, $00 ; $6d7b
 	ld [$d82a], a ; $6d7d
@@ -4636,10 +4636,10 @@ DrillBriefing_ReturnDownLine:
 	ld hl, DrawBriefingBallSprite ; $6dbb
 	call RegisterFrameTask ; $6dbe
 	ld a, $01 ; $6dc1
-	ld hl, Func_17_4754 ; $6dc3
+	ld hl, DrawBriefingMarkerHFlip ; $6dc3
 	call RegisterFrameTask ; $6dc6
 	ld a, $01 ; $6dc9
-	ld hl, Func_17_481c ; $6dcb
+	ld hl, DrawBriefingMarkerVFlip ; $6dcb
 	call RegisterFrameTask ; $6dce
 	ld a, $00 ; $6dd1
 	ld [$d82a], a ; $6dd3
@@ -5082,7 +5082,7 @@ LoadRulesScreen:
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, $a000 ; $718c
-	farcall Func_39_4a16 ; $718f
+	farcall LoadMenuArrowSpriteTiles ; $718f
 	ld b, $08 ; $7192
 	ld c, $0f ; $7194
 	farcall LoadIndexedPalette ; $7196

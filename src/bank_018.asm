@@ -24,15 +24,15 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 	farptr MoveGridCursor ; $402a
 	farptr InitPlayerRecordForCharacter ; $402c
 	farptr ForceFlushBgMapToVram ; $402e
-	farptr Func_18_5365 ; $4030
+	farptr DrawConfirmScreenBox ; $4030
 	farptr RunTwoOptionSelect ; $4032
 	farptr RunTwoOptionSelectB ; $4034
-	farptr Func_18_52de ; $4036
+	farptr InitConfirmScreen ; $4036
 	farptr SetupScoreboardDisplay ; $4038
-	farptr Func_18_5372 ; $403a
+	farptr LoadScorePanelValue ; $403a
 	farptr StubNop_18_5379 ; $403c
 	farptr DrawDecimalNumberSprites ; $403e
-	farptr Func_18_5561 ; $4040
+	farptr DrawYesNoLabels ; $4040
 	farptr DrawTileBlock6x2ToTilemap ; $4042
 	farptr LoadOnCourtCharTilesA ; $4044
 	farptr LoadOnCourtCharTilesB ; $4046
@@ -718,11 +718,11 @@ Palette_18_52c6:
 	dw $0260, $7e00, $0045, $7fff ; pal 0: #009c00 #0083ff #291000 #ffffff
 	dw $0260, $03e0, $0045, $7fff ; pal 1: #009c00 #00ff00 #291000 #ffffff
 	dw $0260, $7c1f, $0045, $7fff ; pal 2: #009c00 #ff00ff #291000 #ffffff
-Func_18_52de:
+InitConfirmScreen:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
 	call ClearTileVramBothBanks ; $52e4
-	call Func_18_5372 ; $52e7
+	call LoadScorePanelValue ; $52e7
 	xor a, a ; $52ea
 	ld [$c783], a ; $52eb
 	ld [$c780], a ; $52ee
@@ -747,7 +747,7 @@ Func_18_52de:
 	ld de, $d800 ; $5325
 	call DecompressData ; $5328
 	call StubLoadFontTiles ; $532b
-	call Func_18_5365 ; $532e
+	call DrawConfirmScreenBox ; $532e
 	ld hl, Lz_18_51f8 ; $5331
 	ld de, $d000 ; $5334
 	call DecompressData ; $5337
@@ -761,19 +761,19 @@ Func_18_52de:
 	ld hl, $8500 ; $534e
 	ld de, $0e01 ; $5351
 	call LoadMenuHandCursorGfx ; $5354
-	call Func_18_55f8 ; $5357
+	call LoadConfirmScreenSpriteGfx ; $5357
 	call SetupScoreboardDisplay ; $535a
 	ld hl, $c7bc ; $535d
 	ld b, [hl] ; $5360
 	call StubNop_18_5379 ; $5361
 	ret ; $5364
-Func_18_5365:
+DrawConfirmScreenBox:
 	ld hl, $d9a0 ; $5365
 	ld de, $dda0 ; $5368
 	ld bc, $0e05 ; $536b
 	call DrawBox ; $536e
 	ret ; $5371
-Func_18_5372:
+LoadScorePanelValue:
 	ld a, [$c918] ; $5372
 	ld [$c78a], a ; $5375
 	ret ; $5378
@@ -1019,7 +1019,7 @@ Label_18_5502:
 	ret ; $5506
 Gfx_18_5507:
 	INCBIN "data/bank_018/d_5507.bin" ; $5507, 90 bytes
-Func_18_5561:
+DrawYesNoLabels:
 	ld hl, Data_18_51d8 ; $5561
 	ld de, $dde1 ; $5564
 	call CopyBytes11 ; $5567
@@ -1132,7 +1132,7 @@ ClearTileVramBothBanks:
 	xor a, $01 ; $55f3
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
-Func_18_55f8:
+LoadConfirmScreenSpriteGfx:
 	ld hl, Lz_18_5633 ; $55f8
 	ld de, $d000 ; $55fb
 	call DecompressData ; $55fe

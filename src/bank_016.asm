@@ -788,21 +788,21 @@ QueueResultScreenSprites:
 	ld de, $0824 ; $4cb8
 	call QueueResultPortraitTop ; $4cbb
 	ld de, $502c ; $4cbe
-	call Func_16_4d96 ; $4cc1
+	call QueueWinnerMarkerForPlayer ; $4cc1
 	ld de, $5060 ; $4cc4
 	call QueueResultPortraitBottom ; $4cc7
 	ld de, $4e68 ; $4cca
-	call Func_16_4dad ; $4ccd
+	call QueueLoserMarkerForOpponent ; $4ccd
 	ret ; $4cd0
 Label_16_4cd1:
 	ld de, $5860 ; $4cd1
 	call QueueResultPortraitTop ; $4cd4
 	ld de, $5068 ; $4cd7
-	call Func_16_4dc7 ; $4cda
+	call QueueLoserMarkerForPlayer ; $4cda
 	ld de, $0024 ; $4cdd
 	call QueueResultPortraitBottom ; $4ce0
 	ld de, $482c ; $4ce3
-	call Func_16_4dba ; $4ce6
+	call QueueWinnerMarkerForOpponent ; $4ce6
 	ret ; $4ce9
 QueueResultPortraitTop:
 	call GetResultSpriteWobbleOffset ; $4cea
@@ -867,7 +867,7 @@ ResultSpriteTemplateRight_16:
 	oam_sprite $10, $40, $1c, $00
 	oam_sprite $20, $40, $1e, $00
 	oam_sprite_end
-Func_16_4d96:
+QueueWinnerMarkerForPlayer:
 	call GetResultSpriteWobbleOffset ; $4d96
 	ld b, a ; $4d99
 	ld a, d ; $4d9a
@@ -882,7 +882,7 @@ Func_16_4d96:
 Label_16_4da9:
 	call QueueSprite ; $4da9
 	ret ; $4dac
-Func_16_4dad:
+QueueLoserMarkerForOpponent:
 	call GetResultSpriteWobbleOffset ; $4dad
 	add a, d ; $4db0
 	ld d, a ; $4db1
@@ -890,7 +890,7 @@ Func_16_4dad:
 	ld b, $09 ; $4db4
 	call QueueSprite ; $4db6
 	ret ; $4db9
-Func_16_4dba:
+QueueWinnerMarkerForOpponent:
 	call GetResultSpriteWobbleOffset ; $4dba
 	add a, d ; $4dbd
 	ld d, a ; $4dbe
@@ -898,7 +898,7 @@ Func_16_4dba:
 	ld b, $09 ; $4dc1
 	call QueueSprite ; $4dc3
 	ret ; $4dc6
-Func_16_4dc7:
+QueueLoserMarkerForPlayer:
 	call GetResultSpriteWobbleOffset ; $4dc7
 	ld b, a ; $4dca
 	ld a, d ; $4dcb
@@ -1205,7 +1205,7 @@ InitMatchStatsScreen:
 	ld d, $07 ; $5cb0
 	farcall LoadIndexedPalette_18 ; $5cb2
 	wram_bank $03 ; $5cb5
-	call Func_16_5f92 ; $5cbb
+	call CopyMatchStatsHeaderRects ; $5cbb
 	call LoadResultScreenTileGraphics ; $5cbe
 	ld de, $d600 ; $5cc1
 	ld b, $14 ; $5cc4
@@ -1509,7 +1509,7 @@ ClearMatchStatsNumberArea:
 	ld h, $20 ; $5f8c
 	farcall FillTilemapRect ; $5f8e
 	ret ; $5f91
-Func_16_5f92:
+CopyMatchStatsHeaderRects:
 	ld de, $002f ; $5f92
 	call TestGameFlagByNumber ; $5f95
 	ret nz ; $5f98

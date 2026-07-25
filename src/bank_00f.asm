@@ -412,7 +412,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position $0f, $1180, $1600 ; $4861
 	ld a, $14 ; $486c
 	call DelayFrames ; $486e
-	call Func_0f_5e4a ; $4871
+	call AwardsCeremonySwapActors_0f ; $4871
 	script_set_objdef $5c, $11 ; $4874
 	script_set_anim $11, $01 ; $4880
 	script_set_position $03, $3f00, $3f00 ; $4887
@@ -1429,7 +1429,7 @@ AwardsCeremonyChairmanSpeech:
 	script_move_target $0c, $0c00, $1300 ; $5e39
 	script_wait_move $0c ; $5e44
 	ret ; $5e49
-Func_0f_5e4a:
+AwardsCeremonySwapActors_0f:
 	script_set_objdef $74, $10 ; $5e4a
 	script_set_anim $10, $01 ; $5e56
 	script_set_objdef $25, $0f ; $5e5d
@@ -2417,7 +2417,7 @@ Label_0f_6f7c:
 	farcall InitDialogueTextCursor ; $6f7c
 	script_speak $04 ; $6f7f
 	ret ; $6f84
-Func_0f_6f85:
+MovePartnerForRoundCall_0f:
 	test_flag $05, 7 ; $6f85
 	jr z, Label_0f_6fc2 ; $6f88
 	test_flag $06, 6 ; $6f8a
@@ -2444,7 +2444,7 @@ IslandOpenRoundCallCutscene:
 	script_wait_idle $05 ; $7004
 	call QueueUpcomingRoundNameText ; $7009
 	script_speak $05 ; $700c
-	call Func_0f_6f85 ; $7011
+	call MovePartnerForRoundCall_0f ; $7011
 	script_face $04, FACE_UP ; $7014
 	script_set_anim $04, $03 ; $701b
 	script_wait_idle $04 ; $7022

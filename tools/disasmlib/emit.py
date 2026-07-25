@@ -22,6 +22,7 @@ from extract import render_spec
 from .constants import CHAR_ROSTER
 from .datatables import (render_actor_list, render_actor_script,
                          render_drill_definition, render_enum_table,
+                         render_flag_ids,
                          render_gfx_ptr_table, render_lz_ptr_table,
                          render_map_table, render_menu_def,
                          render_mugshot_ptr_table, render_object_header,
@@ -663,6 +664,8 @@ class Emitter:
             return render_map_table(spec, self.rom, start, end, bank, self.labels)
         if spec == "tilemap_scripts":
             return render_tilemap_scripts(self.rom, start, end)
+        if spec == "flag_ids":
+            return render_flag_ids(self.rom, start, end)
         if spec == "tilemap_dispatch":
             return render_tilemap_dispatch(self.rom, start, end)
         if spec == "gfx_ptr_table":

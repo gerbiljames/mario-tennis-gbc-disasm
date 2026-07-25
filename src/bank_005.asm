@@ -21,7 +21,7 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr ApplyMessageSpeed ; $4024
 	farptr MeasureDialogueWidthTiles ; $4026
 	farptr ResetWindowState ; $4028
-	farptr Func_05_44f9 ; $402a
+	farptr SetFixedMenuWindowTextId ; $402a
 	farptr RunFixedTextMenu ; $402c
 	farptr RenderTextString ; $402e
 	farptr RenderActiveWindowText ; $4030
@@ -38,7 +38,7 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr PushTextArgString ; $4046
 	farptr PushTextArgNumber ; $4048
 	farptr PushTextArgShortTextId ; $404a
-	farptr Func_05_53ae ; $404c
+	farptr Unused_05_SetTextVar ; $404c
 	farptr FetchShortTextToBuffer ; $404e
 	farptr RunDebugFlagEditor ; $4050
 	farptr RunDebugMenu ; $4052
@@ -761,7 +761,7 @@ Label_05_448a:
 	ld bc, $0002 ; $449c
 	call CopyMemoryFast ; $449f
 	ret ; $44a2
-Func_05_44a3:
+RefreshShadowTilemapFromMapBuffer:
 	push af ; $44a3
 	push bc ; $44a4
 	push de ; $44a5
@@ -817,7 +817,7 @@ Label_05_44e9:
 	ld a, [wCameraY + 1] ; $44f3
 	and a, $3f ; $44f6
 	ret ; $44f8
-Func_05_44f9:
+SetFixedMenuWindowTextId:
 	push bc ; $44f9
 	push de ; $44fa
 	push hl ; $44fb
@@ -3132,7 +3132,7 @@ PowersOfTen_05:
 Unused_05_53ac:
 	ret ; $53ac
 	ret ; $53ad
-Func_05_53ae:
+Unused_05_SetTextVar:
 	push af ; $53ae
 	push bc ; $53af
 	push de ; $53b0
@@ -3363,9 +3363,9 @@ Label_05_54f3:
 	call UploadLastGlyphTiles ; $5500
 	jr Label_05_5511 ; $5503
 Label_05_5505:
-	call Func_05_5f0d ; $5505
+	call StampGlyphTileAtPen ; $5505
 	call DrawInlineGlyph ; $5508
-	call Func_05_5f0d ; $550b
+	call StampGlyphTileAtPen ; $550b
 	call UploadLastGlyphTiles ; $550e
 Label_05_5511:
 	inc hl ; $5511
@@ -4117,7 +4117,7 @@ Label_05_59de:
 	cp a, $ff ; $59e8
 	jr nz, Label_05_59f2 ; $59ea
 	call OpenDialogueWindowCentered ; $59ec
-	call Func_05_44a3 ; $59ef
+	call RefreshShadowTilemapFromMapBuffer ; $59ef
 Label_05_59f2:
 	xor a, a ; $59f2
 	ld [$c3bb], a ; $59f3
@@ -4824,9 +4824,9 @@ Label_05_5e83:
 	ld a, [wShadowTilemapBank] ; $5e84
 	wram_bank ; $5e87
 	pop af ; $5e8b
-	call Func_05_5f0d ; $5e8c
+	call StampGlyphTileAtPen ; $5e8c
 	call DrawInlineGlyph ; $5e8f
-	call Func_05_5f0d ; $5e92
+	call StampGlyphTileAtPen ; $5e92
 	inc hl ; $5e95
 	ld a, [hl] ; $5e96
 	cp a, $de ; $5e97
@@ -4894,14 +4894,14 @@ Label_05_5ebc:
 	ld [$c3bb], a ; $5efd
 	pop de ; $5f00
 	pop bc ; $5f01
-	call Func_05_7774 ; $5f02
+	call SaveGlyphPenColumns ; $5f02
 	clear_flag $04, 4 ; $5f05
 	pop hl ; $5f08
 	pop de ; $5f09
 	pop bc ; $5f0a
 	pop af ; $5f0b
 	ret ; $5f0c
-Func_05_5f0d:
+StampGlyphTileAtPen:
 	push af ; $5f0d
 	push bc ; $5f0e
 	push de ; $5f0f
@@ -8664,7 +8664,7 @@ Label_05_774f:
 	pop bc ; $7771
 	pop af ; $7772
 	ret ; $7773
-Func_05_7774:
+SaveGlyphPenColumns:
 	push af ; $7774
 	push bc ; $7775
 	push hl ; $7776

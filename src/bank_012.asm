@@ -2062,7 +2062,7 @@ Label_12_5d7b:
 	farcall ScriptRespawnLocationActors ; $5d8a
 Label_12_5d8d:
 	call SeniorCourtPositionActorsByProgressA ; $5d8d
-	call Func_12_5e91 ; $5d90
+	call SetPartnerObjDefByGender_12 ; $5d90
 	ld a, [wStoryModeEntryPoint] ; $5d93
 	cp a, $0f ; $5d96
 	jp z, SeniorCourtPostMatchReturn ; $5d98
@@ -2142,7 +2142,7 @@ Label_12_5e73:
 	script_set_position $04, $3f00, $3f00 ; $5e7a
 	script_set_position $05, $3f00, $3f00 ; $5e85
 	ret ; $5e90
-Func_12_5e91:
+SetPartnerObjDefByGender_12:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5e91
 	or a, a ; $5e94
 	jr nz, Label_12_5eaa ; $5e95

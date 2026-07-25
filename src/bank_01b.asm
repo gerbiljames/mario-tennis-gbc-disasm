@@ -6,7 +6,7 @@ SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 	farptr StubNop_1b_4e80 ; $4006
 	farptr StubNop_1b_4e80Alias1, StubNop_1b_4e80 ; $4008
 	farptr StubNop_1b_4e57 ; $400a
-	farptr Func_1b_4e0d ; $400c
+	farptr ResetMugshotPalettes_1b ; $400c
 	farptr SetMugshotAttrs ; $400e
 	farptr LoadCharMugshotToBuffer ; $4010
 	farptr StubNop_1b_4e43 ; $4012
@@ -924,7 +924,7 @@ CharMugshotGfxPointers_1b_4cec:
 	dw $d600, $d690, $d720, $0000, $0090, $0120
 StubNop_1b_4e0c:
 	ret ; $4e0c
-Func_1b_4e0d:
+ResetMugshotPalettes_1b:
 	ld a, $ff ; $4e0d
 	ld [$c780], a ; $4e0f
 	ld d, $03 ; $4e12
@@ -3214,7 +3214,7 @@ Label_1b_6068:
 	farcall RenderProportionalTextAt32 ; $606b
 	ret ; $606e
 DrawCharSelectMugshots:
-	farcall Func_1b_4e0d ; $606f
+	farcall ResetMugshotPalettes_1b ; $606f
 	ld hl, $ce40 ; $6072
 Label_1b_6075:
 	ld a, [hl] ; $6075
@@ -3600,7 +3600,7 @@ Label_1b_634c:
 	jr Label_1b_632d ; $635d
 Label_1b_635f:
 	push bc ; $635f
-	call Func_1b_69d6 ; $6360
+	call StubNop_1b_69d6 ; $6360
 	pop bc ; $6363
 	or a, a ; $6364
 	jr nz, Label_1b_632d ; $6365
@@ -3970,7 +3970,7 @@ UpdateUnlockDebugStatOnChange:
 Label_1b_66d6:
 	ret ; $66d6
 DrawUnlockDebugMugshots:
-	farcall Func_1b_4e0d ; $66d7
+	farcall ResetMugshotPalettes_1b ; $66d7
 	ld hl, $ce40 ; $66da
 Label_1b_66dd:
 	ld a, [hl] ; $66dd
@@ -4332,19 +4332,19 @@ RunStoryDataConfirmMenu:
 	ld a, $0c ; $69b2
 	ld [$db27], a ; $69b4
 	ld a, $01 ; $69b7
-	ld hl, Func_1b_69d6 ; $69b9
+	ld hl, StubNop_1b_69d6 ; $69b9
 	call RegisterFrameTask ; $69bc
 	ld b, $01 ; $69bf
 	farcall RunTwoOptionSelectB ; $69c1
 	push af ; $69c4
-	ld hl, Func_1b_69d6 ; $69c5
+	ld hl, StubNop_1b_69d6 ; $69c5
 	call UnregisterFrameTask ; $69c8
 	pop af ; $69cb
 	ret ; $69cc
 Data_1b_69cd:
 	; $69cd, 9 bytes (bytes:9)
 	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00
-Func_1b_69d6:
+StubNop_1b_69d6:
 	ret ; $69d6
 	ret ; $69d7
 	ret ; $69d8
@@ -4355,7 +4355,7 @@ Func_1b_69d6:
 	call BeginFadeOut ; $69e6
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
-	farcall Func_18_52de ; $69ef
+	farcall InitConfirmScreen ; $69ef
 	call StubNop_1b_6aad ; $69f2
 	farcall ForceFlushBgMapToVram ; $69f5
 	call EnableLCD ; $69f8
@@ -4374,22 +4374,22 @@ Label_1b_6a03:
 	call CopyMainCharNameWithDiacritics ; $6a18
 	ld hl, $046a ; $6a1b
 	farcall RenderProportionalTextAt32 ; $6a1e
-	farcall Func_18_5561 ; $6a21
+	farcall DrawYesNoLabels ; $6a21
 	ret ; $6a24
 	ld hl, $046d ; $6a25
 	ld de, $d9c1 ; $6a28
 	farcall RenderProportionalTextAt32 ; $6a2b
-	farcall Func_18_5561 ; $6a2e
+	farcall DrawYesNoLabels ; $6a2e
 	ret ; $6a31
 	ld hl, $046b ; $6a32
 	ld de, $d9c1 ; $6a35
 	farcall RenderProportionalTextAt32 ; $6a38
-	farcall Func_18_5561 ; $6a3b
+	farcall DrawYesNoLabels ; $6a3b
 	ret ; $6a3e
 	ld hl, $0471 ; $6a3f
 	ld de, $d9c1 ; $6a42
 	farcall RenderProportionalTextAt32 ; $6a45
-	farcall Func_18_5561 ; $6a48
+	farcall DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 	ld hl, $0162 ; $6a4c
 	ld de, $d9c1 ; $6a4f
@@ -4916,7 +4916,7 @@ RunMinigameLevelSelect2:
 	farcall InitMenuBgScroll ; $6e48
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
-	farcall Func_39_4b3a ; $6e4f
+	farcall LoadMenuSpritePalettePair ; $6e4f
 	wram_bank $02 ; $6e52
 	ld a, [$d001] ; $6e58
 	ld c, a ; $6e5b
@@ -5118,7 +5118,7 @@ RunMinigameLevelSelect3:
 	farcall InitMenuBgScroll ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
-	farcall Func_39_4b3a ; $6ff0
+	farcall LoadMenuSpritePalettePair ; $6ff0
 	wram_bank $02 ; $6ff3
 	ld a, [$d001] ; $6ff9
 	ld c, a ; $6ffc
@@ -5309,13 +5309,13 @@ RunSavedDataTypeSelect:
 	farcall InitMenuBgScroll ; $7174
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
-	farcall Func_39_4b3a ; $717b
+	farcall LoadMenuSpritePalettePair ; $717b
 	ld a, [$cb25] ; $717e
 	ld c, a ; $7181
 	ld b, $02 ; $7182
 	call SetMenuCursorFromIndex ; $7184
 	ld a, $01 ; $7187
-	ld hl, Func_1b_72a4 ; $7189
+	ld hl, TickMenuBgScrollTask_1b ; $7189
 	call RegisterFrameTask ; $718c
 	ld a, $01 ; $718f
 	ld hl, DrawSavedDataTypeSelectCursor ; $7191
@@ -5455,7 +5455,7 @@ Data_1b_729a:
 Data_1b_729e:
 	; $729e, 6 bytes (bytes:6)
 	db $00, $a8, $00, $a9, $00, $aa ; 0x00
-Func_1b_72a4:
+TickMenuBgScrollTask_1b:
 	farcall TickMenuBgScroll ; $72a4
 	ret ; $72a7
 DrawSavedDataTypeSelectCursor:
@@ -5658,7 +5658,7 @@ BuildMinigameDataScreen:
 	ld de, $aac0 ; $745e
 	farcall LoadChartWindowTiles ; $7461
 	ld de, $a000 ; $7464
-	farcall Func_39_4a16 ; $7467
+	farcall LoadMenuArrowSpriteTiles ; $7467
 	ld b, $08 ; $746a
 	ld c, $0f ; $746c
 	farcall LoadIndexedPalette ; $746e

@@ -1,14 +1,8 @@
 {
- "_comment": "Static code-entry seeds for bank $1e (reward/EXP flow) stranded handlers: bank-swap/VRAM copiers ($442b/$7065/$7a30), farcall stub ($73d7), $6ada, and the handler targets of three jump tables ($66f7/$6d14/$7445). Function starts + jump-table targets only. Flat = 0x1e*0x4000 + (cpu-0x4000).",
+ "_comment": "Static code-entry seeds for bank $1e (reward/EXP flow) stranded handlers: bank-swap/VRAM copiers ($442b/$7065/$7a30), farcall stub ($73d7) and $6ada. Function starts only. Flat = 0x1e*0x4000 + (cpu-0x4000). The targets of the three $4000-style tables at $66f7/$6d14/$7445 were seeded here as handlers and are NOT code: $66f7 points at 25-entry EXP word tables, $6d14 at game-flag-id lists, $7445 at $ff-terminated entry-id lists (see SetRewardGameFlag/GetFirstClearRewardExp/RunRewardCategoryList, which read them as data); they are declared in data_tables.json instead.",
  "rom": [
   492587,
-  501511,
-  501561,
-  501611,
   502490,
-  503068,
-  503118,
-  503190,
   503909,
   503935,
   503952,
@@ -17,12 +11,6 @@
   504003,
   504020,
   504791,
-  504913,
-  504934,
-  504941,
-  504948,
-  504951,
-  504954,
   506416
  ],
  "other": []

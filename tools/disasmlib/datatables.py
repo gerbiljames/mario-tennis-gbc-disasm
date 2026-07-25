@@ -464,6 +464,21 @@ def render_object_header(rom, off, data_labels, ptr_labels):
             f"\tdw {lbl(w[3])}, {lbl(w[4])}, {lbl(w[5])} ; frame pointers (continue in body)"]
 
 
+def render_flag_ids(rom, start, end):
+    """A list of wGameFlags ids in the same encoding the rst $20/$28/$30
+    pseudo-ops take: low byte = bit << 5, high byte = flag byte index. The
+    comment names each id the way `set_flag`/`test_flag` prints it."""
+    out = []
+    for r in range((end - start) // 2):
+        ro = start + r * 2
+        lo, hi = rom[ro], rom[ro + 1]
+        note = "none" if lo == 0 and hi == 0 else f"flag ${hi:02x}, {lo >> 5}"
+        out.append(f"\tdw ${lo | (hi << 8):04x} ; {r}: {note}")
+    if (end - start) % 2:
+        out.append(f"\tdb ${rom[end - 1]:02x}")
+    return out
+
+
 def render_pointer_words(rom, start, end, bank, labels, spec):
     """A dw table of same-bank pointers (records:2 tables are usually pointer
     tables; mode_hooks and minigame_configs always are). Words that hit a

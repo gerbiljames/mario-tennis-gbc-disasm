@@ -25,7 +25,7 @@ SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 	farptr GetExpRemainingToNextLevel ; $402c
 	farptr GetExpProgressInCurrentLevel ; $402e
 	farptr GetExpRequiredForLevel ; $4030
-	farptr Func_02_4128 ; $4032
+	farptr Unused_02_CharIdRemapLookup ; $4032
 	farptr GetCharPaletteIndex ; $4034
 	farptr RemapExtendedCharId ; $4036
 	farptr GetCharGroupEntry ; $4038
@@ -188,7 +188,7 @@ Label_02_4103:
 	pop af ; $4122
 	wram_bank ; $4123
 	ret ; $4127
-Func_02_4128:
+Unused_02_CharIdRemapLookup:
 	push hl ; $4128
 	add a, $33 ; $4129
 	ld l, a ; $412b
@@ -198,7 +198,7 @@ Func_02_4128:
 	ld a, [hl] ; $4130
 	pop hl ; $4131
 	ret ; $4132
-Table_02_4133:
+Unused_02_CharIdRemapTable:
 	; $4133, 64 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 	db $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c, $1d, $1e, $1f ; 0x10
@@ -364,7 +364,7 @@ Copy4Bytes:
 	ld [de], a ; $42d3
 	inc de ; $42d4
 	ret ; $42d5
-Func_02_42d6:
+CheckStorySignatureCollision:
 	push de ; $42d6
 	push hl ; $42d7
 	ldh a, [hWramBank] ; $42d8
@@ -464,7 +464,7 @@ GenerateUniqueStorySaveSignature:
 	ld [de], a ; $4378
 	inc de ; $4379
 Label_02_437a:
-	call Func_02_42d6 ; $437a
+	call CheckStorySignatureCollision ; $437a
 	or a, a ; $437d
 	jr z, Label_02_439e ; $437e
 	call AdvanceRandomSeed ; $4380
@@ -587,7 +587,7 @@ LoadMainCharacterFromRoster:
 	ld b, a ; $4449
 	call GetStoryCharacterRecordPtr ; $444a
 	ld de, wStoryModeNameOfMainCharacter ; $444d
-	call Func_02_447a ; $4450
+	call Copy64Bytes ; $4450
 	ld hl, $000b ; $4453
 	add hl, de ; $4456
 	ld [hl], b ; $4457
@@ -612,7 +612,7 @@ Label_02_4471:
 	pop af ; $4474
 	wram_bank ; $4475
 	ret ; $4479
-Func_02_447a:
+Copy64Bytes:
 	push de ; $447a
 	ld c, $40 ; $447b
 Label_02_447d:
@@ -631,7 +631,7 @@ RefreshPlayerStatsAndGetPtr:
 	ld hl, $0018 ; $448f
 	add hl, bc ; $4492
 	ret ; $4493
-Func_02_4494:
+LookupStatBarLevel:
 	ld e, $00 ; $4494
 	ld d, $09 ; $4496
 Label_02_4498:
@@ -660,7 +660,7 @@ Label_02_4498:
 	dec d ; $44b3
 	jr nz, Label_02_4498 ; $44b4
 	ret ; $44b6
-Func_02_44b7:
+ScaleStatForBarLevel:
 	ld l, [hl] ; $44b7
 	ld h, $00 ; $44b8
 	call MulHLByA ; $44ba
@@ -718,11 +718,11 @@ RecomputeCharacterStats:
 	ld hl, $0038 ; $44ff
 	add hl, bc ; $4502
 	ld a, $05 ; $4503
-	call Func_02_44b7 ; $4505
+	call ScaleStatForBarLevel ; $4505
 	pop de ; $4508
 	ld hl, $000d ; $4509
 	add hl, de ; $450c
-	call Func_02_4494 ; $450d
+	call LookupStatBarLevel ; $450d
 	pop bc ; $4510
 	ld hl, $0020 ; $4511
 	add hl, bc ; $4514
@@ -734,11 +734,11 @@ RecomputeCharacterStats:
 	ld hl, $0038 ; $451a
 	add hl, bc ; $451d
 	ld a, $05 ; $451e
-	call Func_02_44b7 ; $4520
+	call ScaleStatForBarLevel ; $4520
 	pop de ; $4523
 	ld hl, $0016 ; $4524
 	add hl, de ; $4527
-	call Func_02_4494 ; $4528
+	call LookupStatBarLevel ; $4528
 	pop bc ; $452b
 	ld hl, $0021 ; $452c
 	add hl, bc ; $452f
@@ -750,11 +750,11 @@ RecomputeCharacterStats:
 	ld hl, $0039 ; $4535
 	add hl, bc ; $4538
 	ld a, $05 ; $4539
-	call Func_02_44b7 ; $453b
+	call ScaleStatForBarLevel ; $453b
 	pop de ; $453e
 	ld hl, $001f ; $453f
 	add hl, de ; $4542
-	call Func_02_4494 ; $4543
+	call LookupStatBarLevel ; $4543
 	pop bc ; $4546
 	ld hl, $0022 ; $4547
 	add hl, bc ; $454a
@@ -766,11 +766,11 @@ RecomputeCharacterStats:
 	ld hl, $0039 ; $4550
 	add hl, bc ; $4553
 	ld a, $05 ; $4554
-	call Func_02_44b7 ; $4556
+	call ScaleStatForBarLevel ; $4556
 	pop de ; $4559
 	ld hl, $0028 ; $455a
 	add hl, de ; $455d
-	call Func_02_4494 ; $455e
+	call LookupStatBarLevel ; $455e
 	pop bc ; $4561
 	ld hl, $0023 ; $4562
 	add hl, bc ; $4565
@@ -782,11 +782,11 @@ RecomputeCharacterStats:
 	ld hl, $0039 ; $456b
 	add hl, bc ; $456e
 	ld a, $05 ; $456f
-	call Func_02_44b7 ; $4571
+	call ScaleStatForBarLevel ; $4571
 	pop de ; $4574
 	ld hl, $0031 ; $4575
 	add hl, de ; $4578
-	call Func_02_4494 ; $4579
+	call LookupStatBarLevel ; $4579
 	pop bc ; $457c
 	ld hl, $0024 ; $457d
 	add hl, bc ; $4580
@@ -798,11 +798,11 @@ RecomputeCharacterStats:
 	ld hl, $003a ; $4586
 	add hl, bc ; $4589
 	ld a, $05 ; $458a
-	call Func_02_44b7 ; $458c
+	call ScaleStatForBarLevel ; $458c
 	pop de ; $458f
 	ld hl, $003a ; $4590
 	add hl, de ; $4593
-	call Func_02_4494 ; $4594
+	call LookupStatBarLevel ; $4594
 	pop bc ; $4597
 	ld hl, $0025 ; $4598
 	add hl, bc ; $459b
@@ -814,11 +814,11 @@ RecomputeCharacterStats:
 	ld hl, $003a ; $45a1
 	add hl, bc ; $45a4
 	ld a, $05 ; $45a5
-	call Func_02_44b7 ; $45a7
+	call ScaleStatForBarLevel ; $45a7
 	pop de ; $45aa
 	ld hl, $0043 ; $45ab
 	add hl, de ; $45ae
-	call Func_02_4494 ; $45af
+	call LookupStatBarLevel ; $45af
 	pop bc ; $45b2
 	ld hl, $0026 ; $45b3
 	add hl, bc ; $45b6
@@ -830,11 +830,11 @@ RecomputeCharacterStats:
 	ld hl, $003b ; $45bc
 	add hl, bc ; $45bf
 	ld a, $05 ; $45c0
-	call Func_02_44b7 ; $45c2
+	call ScaleStatForBarLevel ; $45c2
 	pop de ; $45c5
 	ld hl, $004c ; $45c6
 	add hl, de ; $45c9
-	call Func_02_4494 ; $45ca
+	call LookupStatBarLevel ; $45ca
 	pop bc ; $45cd
 	ld hl, $0027 ; $45ce
 	add hl, bc ; $45d1
@@ -846,11 +846,11 @@ RecomputeCharacterStats:
 	ld hl, $003b ; $45d7
 	add hl, bc ; $45da
 	ld a, $05 ; $45db
-	call Func_02_44b7 ; $45dd
+	call ScaleStatForBarLevel ; $45dd
 	pop de ; $45e0
 	ld hl, $0055 ; $45e1
 	add hl, de ; $45e4
-	call Func_02_4494 ; $45e5
+	call LookupStatBarLevel ; $45e5
 	pop bc ; $45e8
 	ld hl, $0028 ; $45e9
 	add hl, bc ; $45ec
@@ -862,11 +862,11 @@ RecomputeCharacterStats:
 	ld hl, $003b ; $45f2
 	add hl, bc ; $45f5
 	ld a, $05 ; $45f6
-	call Func_02_44b7 ; $45f8
+	call ScaleStatForBarLevel ; $45f8
 	pop de ; $45fb
 	ld hl, $005e ; $45fc
 	add hl, de ; $45ff
-	call Func_02_4494 ; $4600
+	call LookupStatBarLevel ; $4600
 	pop bc ; $4603
 	ld hl, $0029 ; $4604
 	add hl, bc ; $4607
@@ -878,11 +878,11 @@ RecomputeCharacterStats:
 	ld hl, $003b ; $460d
 	add hl, bc ; $4610
 	ld a, $05 ; $4611
-	call Func_02_44b7 ; $4613
+	call ScaleStatForBarLevel ; $4613
 	pop de ; $4616
 	ld hl, $0067 ; $4617
 	add hl, de ; $461a
-	call Func_02_4494 ; $461b
+	call LookupStatBarLevel ; $461b
 	pop bc ; $461e
 	ld hl, $002a ; $461f
 	add hl, bc ; $4622

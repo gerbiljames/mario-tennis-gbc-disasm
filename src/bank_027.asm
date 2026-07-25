@@ -1054,7 +1054,7 @@ End10VarsityCourtInitScript_27:
 	cp a, $01 ; $5620
 	jp z, Label_27_5643 ; $5622
 	ret ; $5625
-Func_27_5626:
+SetPartnerObjDefByGender_27:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5626
 	or a, a ; $5629
 	jr nz, Label_27_5642 ; $562a
@@ -1074,7 +1074,7 @@ Label_27_564b:
 	farcall ScriptRespawnLocationActors ; $5656
 	script_null_script ACTOR_PLAYER_SHADOW ; $5659
 	script_player_speed $00f0 ; $565e
-	call Func_27_5626 ; $5664
+	call SetPartnerObjDefByGender_27 ; $5664
 	script_set_position ACTOR_PLAYER, $0b00, $1d00 ; $5667
 	script_set_position ACTOR_PARTNER, $0d00, $2300 ; $5672
 	script_face ACTOR_PLAYER, FACE_UP ; $567d
@@ -1151,7 +1151,7 @@ Label_27_582c:
 	ld hl, End10VarsityCourtActorsAltB_27 ; $582e
 	farcall ScriptRespawnLocationActors ; $5831
 	farcall BeginCutsceneScriptMode ; $5834
-	call Func_27_5626 ; $5837
+	call SetPartnerObjDefByGender_27 ; $5837
 	script_null_script ACTOR_PARTNER ; $583a
 	script_null_script ACTOR_PLAYER_SHADOW ; $583f
 	script_player_speed $00f0 ; $5844

@@ -3670,7 +3670,7 @@ DrawTreasureBoxSprite:
 	ld a, [hl] ; $5ca3
 	cp a, $ff ; $5ca4
 	ret z ; $5ca6
-	farcall Func_28_60a0 ; $5ca7
+	farcall LoadEffectFrameTiles_28 ; $5ca7
 	ret ; $5caa
 TreasureBoxSpriteAnimFrames:
 	; $5cab, 32 bytes (bytes:8)

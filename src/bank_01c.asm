@@ -11,7 +11,7 @@ SECTION "ROM Bank $1c", ROMX[$4000], BANK[$1c]
 	farptr LoadCharDataScreenTilemaps ; $4010
 	farptr StartCharDataScreenAnimTask ; $4012
 	farptr StopCharDataScreenAnimTask ; $4014
-	farptr Func_1c_72fc ; $4016
+	farptr FlushCharDataTilemapsFar ; $4016
 	farptr LoadCharDataScreenGraphics ; $4018
 CharDataScreen_Show:
 	ldh a, [hWramBank] ; $401a
@@ -66,7 +66,7 @@ Label_1c_4038:
 	wram_bank $06 ; $4095
 	xor a, a ; $409b
 	ld [$d028], a ; $409c
-	call Func_1c_4dd6 ; $409f
+	call CharDataScreen_DrawPageColumns ; $409f
 	call FlushCharDataTilemaps ; $40a2
 	ld a, $01 ; $40a5
 	ld hl, DrawStatArrowIndicators ; $40a7
@@ -1743,7 +1743,7 @@ Label_1c_4dd1:
 	dec b ; $4dd2
 	jr nz, Label_1c_4dd1 ; $4dd3
 	ret ; $4dd5
-Func_1c_4dd6:
+CharDataScreen_DrawPageColumns:
 	wram_bank $06 ; $4dd6
 	ld a, [$d024] ; $4ddc
 	rlca ; $4ddf
@@ -2147,7 +2147,7 @@ Label_1c_5110:
 	call LoadCharStats ; $5118
 	call CharDataScreen_DrawStats ; $511b
 	call DrawCharStatsAndFlush ; $511e
-	call Func_1c_4dd6 ; $5121
+	call CharDataScreen_DrawPageColumns ; $5121
 	call FlushCharDataTilemaps ; $5124
 	jp nz, CharDataScreen_InputLoop ; $5127
 Label_1c_512a:
@@ -2204,7 +2204,7 @@ Label_1c_518e:
 	call LoadCharStats ; $5191
 	call CharDataScreen_DrawStats ; $5194
 	call DrawCharStatsAndFlush ; $5197
-	call Func_1c_4dd6 ; $519a
+	call CharDataScreen_DrawPageColumns ; $519a
 	call FlushCharDataTilemaps ; $519d
 	jp CharDataScreen_InputLoop ; $51a0
 Label_1c_51a3:
@@ -2379,7 +2379,7 @@ Label_1c_52c1:
 	ld [$d027], a ; $5389
 	call RestoreCharDataScreenRow ; $538c
 	call DrawCharStatsAndFlush ; $538f
-	call Func_1c_4dd6 ; $5392
+	call CharDataScreen_DrawPageColumns ; $5392
 	call FlushCharDataTilemaps ; $5395
 	ld a, $01 ; $5398
 	ld hl, DrawStatArrowIndicators ; $539a
@@ -2418,7 +2418,7 @@ Label_1c_53d1:
 	call LoadCharStatsWithLevelUpDeltas ; $53e1
 	call CharDataScreen_DrawStats ; $53e4
 	call DrawCharStatsAndFlush ; $53e7
-	call Func_1c_4dd6 ; $53ea
+	call CharDataScreen_DrawPageColumns ; $53ea
 	call FlushCharDataTilemaps ; $53ed
 	ret ; $53f0
 Label_1c_53f1:
@@ -2426,7 +2426,7 @@ Label_1c_53f1:
 	call LoadCharStats ; $53f4
 	call CharDataScreen_DrawStats ; $53f7
 	call DrawCharStatsAndFlush ; $53fa
-	call Func_1c_4dd6 ; $53fd
+	call CharDataScreen_DrawPageColumns ; $53fd
 	call FlushCharDataTilemaps ; $5400
 	ret ; $5403
 ApplyCharStatLevelUp:
@@ -2553,7 +2553,7 @@ Label_1c_54c2:
 	call LoadCharStats ; $54d1
 	call CharDataScreen_DrawStats ; $54d4
 	call DrawCharStatsAndFlush ; $54d7
-	call Func_1c_4dd6 ; $54da
+	call CharDataScreen_DrawPageColumns ; $54da
 	call FlushCharDataTilemaps ; $54dd
 	ld a, $01 ; $54e0
 	ret ; $54e2
@@ -3119,7 +3119,7 @@ StopCharDataScreenAnimTask:
 	ld hl, CharDataScreenAnimTask ; $72f5
 	call UnregisterFrameTask ; $72f8
 	ret ; $72fb
-Func_1c_72fc:
+FlushCharDataTilemapsFar:
 	call FlushCharDataTilemaps ; $72fc
 	ret ; $72ff
 BackupCharData:

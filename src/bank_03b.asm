@@ -1,6 +1,6 @@
 SECTION "ROM Bank $3b", ROMX[$4000], BANK[$3b]
 
-	farptr Func_3b_44a9 ; $4000
+	farptr StubNop_3b_44a9 ; $4000
 	farptr RunN64ExhibData ; $4002
 	farptr RunN64ExhibDataAlias1, RunN64ExhibData ; $4004
 	farptr RunTrophiesScreen ; $4006
@@ -710,7 +710,7 @@ Label_3b_441e:
 	pop af ; $4422
 	wram_bank ; $4423
 	ret ; $4427
-Func_3b_4428:
+UpdateAnimatedTilesTask_3b:
 	farcall UpdateAnimatedTiles ; $4428
 	ret ; $442b
 DrawNameWithDiacritics_3b:
@@ -814,7 +814,7 @@ Label_3b_44a6:
 	inc de ; $44a6
 	pop hl ; $44a7
 	ret ; $44a8
-Func_3b_44a9:
+StubNop_3b_44a9:
 	ret ; $44a9
 RunN64ExhibData:
 	sound $04 ; $44aa
@@ -823,7 +823,7 @@ RunN64ExhibData:
 	xor a, a ; $44b2
 	ld [wAnimatedTileSet], a ; $44b3
 	ld a, $01 ; $44b6
-	ld hl, Func_3b_4428 ; $44b8
+	ld hl, UpdateAnimatedTilesTask_3b ; $44b8
 	call RegisterFrameTask ; $44bb
 	ld a, $01 ; $44be
 	ld hl, N64ExhibScrollArrowsTask ; $44c0
@@ -966,7 +966,7 @@ BuildN64ExhibDataScreen:
 	ld de, $aac0 ; $45e6
 	call LoadChartWindowTiles ; $45e9
 	ld de, $a000 ; $45ec
-	farcall Func_39_4a16 ; $45ef
+	farcall LoadMenuArrowSpriteTiles ; $45ef
 	ld b, $08 ; $45f2
 	ld c, $0f ; $45f4
 	farcall LoadIndexedPalette ; $45f6
@@ -1515,7 +1515,7 @@ RunTrophiesScreen:
 	ld a, $00 ; $496b
 	ld [wAnimatedTileSet], a ; $496d
 	ld a, $01 ; $4970
-	ld hl, Func_3b_4428 ; $4972
+	ld hl, UpdateAnimatedTilesTask_3b ; $4972
 	call RegisterFrameTask ; $4975
 	xor a, a ; $4978
 	ld [$d901], a ; $4979
@@ -1942,7 +1942,7 @@ RunN64TnmtData:
 	xor a, a ; $4d02
 	ld [wAnimatedTileSet], a ; $4d03
 	ld a, $01 ; $4d06
-	ld hl, Func_3b_4428 ; $4d08
+	ld hl, UpdateAnimatedTilesTask_3b ; $4d08
 	call RegisterFrameTask ; $4d0b
 	ld a, $01 ; $4d0e
 	ld hl, N64TnmtScrollArrowsTask ; $4d10
@@ -2042,7 +2042,7 @@ BuildN64TnmtDataScreen:
 	ld de, $aac0 ; $4ddf
 	call LoadChartWindowTiles ; $4de2
 	ld de, $a000 ; $4de5
-	farcall Func_39_4a16 ; $4de8
+	farcall LoadMenuArrowSpriteTiles ; $4de8
 	ld b, $08 ; $4deb
 	ld c, $0f ; $4ded
 	farcall LoadIndexedPalette ; $4def
@@ -2535,7 +2535,7 @@ RunN64RingShotData:
 	xor a, a ; $5150
 	ld [wAnimatedTileSet], a ; $5151
 	ld a, $01 ; $5154
-	ld hl, Func_3b_4428 ; $5156
+	ld hl, UpdateAnimatedTilesTask_3b ; $5156
 	call RegisterFrameTask ; $5159
 	ld a, $01 ; $515c
 	ld hl, RingShotScrollArrowsTask ; $515e
@@ -2585,7 +2585,7 @@ BuildN64RingShotScreen:
 	ld de, $aac0 ; $51ce
 	call LoadChartWindowTiles ; $51d1
 	ld de, $a000 ; $51d4
-	farcall Func_39_4a16 ; $51d7
+	farcall LoadMenuArrowSpriteTiles ; $51d7
 	ld b, $08 ; $51da
 	ld c, $0f ; $51dc
 	farcall LoadIndexedPalette ; $51de
@@ -3164,7 +3164,7 @@ RunMainMenu:
 	farcall InitMenuBgScroll ; $55e5
 	ld b, $01 ; $55e8
 	ld c, $01 ; $55ea
-	farcall Func_39_4b3a ; $55ec
+	farcall LoadMenuSpritePalettePair ; $55ec
 	ld b, $03 ; $55ef
 	ld a, [$cb1b] ; $55f1
 	ld c, a ; $55f4
@@ -4086,7 +4086,7 @@ RunMatchFormatSelect:
 	farcall InitMenuBgScroll ; $5d0a
 	ld b, $01 ; $5d0d
 	ld c, $01 ; $5d0f
-	farcall Func_39_4b3a ; $5d11
+	farcall LoadMenuSpritePalettePair ; $5d11
 	call InitMatchFormatOptions ; $5d14
 	ld a, $01 ; $5d17
 	ld hl, MatchFormatCursorSpriteTask ; $5d19
@@ -4751,7 +4751,7 @@ Label_3b_621d:
 	farcall InitMenuBgScroll ; $621d
 	ld b, $01 ; $6220
 	ld c, $01 ; $6222
-	farcall Func_39_4b3a ; $6224
+	farcall LoadMenuSpritePalettePair ; $6224
 	ld a, [$cb20] ; $6227
 	ld c, a ; $622a
 	ld b, $03 ; $622b
@@ -5494,7 +5494,7 @@ RunSavedDataSourceSelect:
 	farcall InitMenuBgScroll ; $67ae
 	ld b, $01 ; $67b1
 	ld c, $01 ; $67b3
-	farcall Func_39_4b3a ; $67b5
+	farcall LoadMenuSpritePalettePair ; $67b5
 	call LoadN64RecordsToWram2 ; $67b8
 	wram_bank $03 ; $67bb
 	ld a, [wMenuSlideDirection] ; $67c1
@@ -6095,7 +6095,7 @@ RunEraseSavedDataSelect:
 	farcall InitMenuBgScroll ; $6c99
 	ld b, $01 ; $6c9c
 	ld c, $01 ; $6c9e
-	farcall Func_39_4b3a ; $6ca0
+	farcall LoadMenuSpritePalettePair ; $6ca0
 	ld c, $00 ; $6ca3
 	ld b, $03 ; $6ca5
 	call SetMenuCursorFromCellIndex ; $6ca7
@@ -6757,7 +6757,7 @@ RunN64RecordTypeSelect:
 	farcall InitMenuBgScroll ; $71ba
 	ld b, $01 ; $71bd
 	ld c, $01 ; $71bf
-	farcall Func_39_4b3a ; $71c1
+	farcall LoadMenuSpritePalettePair ; $71c1
 	wram_bank $03 ; $71c4
 	ld a, [wMenuSlideDirection] ; $71ca
 	ld b, a ; $71cd
@@ -7173,7 +7173,7 @@ RunN64TransferItemSelect:
 	farcall InitMenuBgScroll ; $74d6
 	ld b, $01 ; $74d9
 	ld c, $01 ; $74db
-	farcall Func_39_4b3a ; $74dd
+	farcall LoadMenuSpritePalettePair ; $74dd
 	ld a, [$cb1d] ; $74e0
 	ld c, a ; $74e3
 	ld b, $02 ; $74e4
@@ -7836,7 +7836,7 @@ RunStarCharExhibResults:
 	ld a, $03 ; $7a06
 	ld [wAnimatedTilePeriod], a ; $7a08
 	ld a, $01 ; $7a0b
-	ld hl, Func_3b_4428 ; $7a0d
+	ld hl, UpdateAnimatedTilesTask_3b ; $7a0d
 	call RegisterFrameTask ; $7a10
 	ld a, $01 ; $7a13
 	ld hl, StarChartScrollArrowsTask ; $7a15
@@ -7966,7 +7966,7 @@ BuildStarCharExhibScreen:
 	ld de, $aac0 ; $7b23
 	call LoadChartWindowTiles ; $7b26
 	ld de, $a000 ; $7b29
-	farcall Func_39_4a16 ; $7b2c
+	farcall LoadMenuArrowSpriteTiles ; $7b2c
 	ld b, $08 ; $7b2f
 	ld c, $0f ; $7b31
 	farcall LoadIndexedPalette ; $7b33

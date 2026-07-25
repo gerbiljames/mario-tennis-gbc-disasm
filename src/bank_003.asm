@@ -5548,8 +5548,8 @@ Label_03_7051:
 	call FillMemoryDE ; $7077
 	call AdvanceFrame ; $707a
 	pop af ; $707d
-	call Func_03_7333 ; $707e
-	call Func_03_7452 ; $7081
+	call DrawCutsceneTextPage ; $707e
+	call ScrollCutsceneTextWindow ; $7081
 	pop af ; $7084
 	wram_bank ; $7085
 	pop hl ; $7089
@@ -5650,7 +5650,7 @@ WindowSlideStepTable_03:
 	db $01, $20 ; 0x2c
 	db $01, $20 ; 0x2e
 	db $02, $20 ; 0x30
-Func_03_7333:
+DrawCutsceneTextPage:
 	push af ; $7333
 	push bc ; $7334
 	push de ; $7335
@@ -5678,7 +5678,7 @@ Label_03_734b:
 	inc hl ; $7356
 	ld c, $00 ; $7357
 Label_03_7359:
-	call Func_03_7403 ; $7359
+	call DrawCutsceneTextLines ; $7359
 	call AdvanceFrame ; $735c
 	inc hl ; $735f
 	inc hl ; $7360
@@ -5717,7 +5717,7 @@ TextPageDescriptors_03:
 	db $02, $7b, $07, $82, $07, $00, $00 ; record 18
 	db $01, $89, $06, $00, $00, $00, $00 ; record 19
 	db $01, $8f, $04, $00, $00, $00, $00 ; record 20
-Func_03_7403:
+DrawCutsceneTextLines:
 	push af ; $7403
 	push bc ; $7404
 	push de ; $7405
@@ -5772,7 +5772,7 @@ Label_03_7444:
 	pop bc ; $744f
 	pop af ; $7450
 	ret ; $7451
-Func_03_7452:
+ScrollCutsceneTextWindow:
 	push af ; $7452
 	push bc ; $7453
 	push de ; $7454
@@ -5792,7 +5792,7 @@ Label_03_746d:
 	call AdvanceFrame ; $746d
 	ld e, $14 ; $7470
 Label_03_7472:
-	call Func_03_7490 ; $7472
+	call BlitCutsceneTextWindow ; $7472
 	inc c ; $7475
 	dec e ; $7476
 	jr nz, Label_03_7472 ; $7477
@@ -5812,7 +5812,7 @@ Label_03_747b:
 	pop bc ; $748d
 	pop af ; $748e
 	ret ; $748f
-Func_03_7490:
+BlitCutsceneTextWindow:
 	push af ; $7490
 	push bc ; $7491
 	push de ; $7492

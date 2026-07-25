@@ -2260,7 +2260,7 @@ RunStoryLocation:
 	push hl ; $4f43
 	ld c, $0c ; $4f44
 	call BeginFadeOut ; $4f46
-	call Func_0a_50e4 ; $4f49
+	call ClearStoryLocationScratch ; $4f49
 	call ClearStoryEventRequests ; $4f4c
 	call LoadStoryLocationHeader ; $4f4f
 	call LoadStoryEntryPointRecord ; $4f52
@@ -2455,7 +2455,7 @@ Label_0a_50df:
 	pop bc ; $50e1
 	pop af ; $50e2
 	ret ; $50e3
-Func_0a_50e4:
+ClearStoryLocationScratch:
 	push af ; $50e4
 	push hl ; $50e5
 	ld hl, $c9dc ; $50e6
