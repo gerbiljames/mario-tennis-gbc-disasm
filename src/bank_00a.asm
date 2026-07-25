@@ -1693,7 +1693,7 @@ Label_0a_4a7c:
 	ld [wMatchOpponentChar], a ; $4a82
 	ld a, [hl+] ; $4a85
 	ld [wCurrentlyUsedCourt], a ; $4a86
-	test_flag $04, 1 ; $4a89
+	test_flag FLAG_DEBUG_KEEP_MATCH_SETTINGS ; $4a89
 	jr nz, Label_0a_4aa2 ; $4a8c
 	ld a, [hl+] ; $4a8e
 	ld e, a ; $4a8f
@@ -2214,7 +2214,7 @@ ClearStatusSetupMenuEntry:
 	call RunClearStatusSetupMenu ; $4ef8
 	ret ; $4efb
 DrawPlayerPositionDebugOverlay:
-	test_flag $04, 0 ; $4efc
+	test_flag FLAG_DEBUG_SHOW_PLAYER_POS ; $4efc
 	jr z, Label_0a_4f2b ; $4eff
 	wram_bank $04 ; $4f01
 	ld hl, wStoryModePlayersXPosition ; $4f07
@@ -2286,9 +2286,9 @@ Label_0a_4f6f:
 	ld de, $0018 ; $4f81
 	add hl, de ; $4f84
 	ld [hl], $01 ; $4f85
-	set_flag $02, 4 ; $4f87
+	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $4f87
 	call WaitFadeEnd ; $4f8a
-	clear_flag $02, 4 ; $4f8d
+	clear_flag FLAG_HIDE_OVERWORLD_ACTORS ; $4f8d
 	farcall LoadStoryObjPalettes ; $4f90
 	call DisableLCDSafely ; $4f93
 	farcall ResetTextWindowState ; $4f96
@@ -2369,7 +2369,7 @@ Label_0a_5031:
 	jr z, Label_0a_5048 ; $5036
 	ld [hl], $00 ; $5038
 	call WaitPlayerMoveDone ; $503a
-	test_flag $05, 6 ; $503d
+	test_flag FLAG_STORY_MENU_LOCKED ; $503d
 	jr nz, Label_0a_5048 ; $5040
 	farcall RunStoryModeMenu ; $5042
 	jp Label_0a_4ff5 ; $5045
@@ -5047,9 +5047,9 @@ StopSceneTileAnimations:
 	pop af ; $6463
 	ret ; $6464
 UpdateSceneTileAnimations:
-	test_flag $03, 0 ; $6465
+	test_flag FLAG_VRAM_UPDATE_BUSY ; $6465
 	ret nz ; $6468
-	test_flag $03, 2 ; $6469
+	test_flag FLAG_DEBUG_FREEZE_TILE_ANIM ; $6469
 	ret nz ; $646c
 	push af ; $646d
 	push bc ; $646e
@@ -6285,7 +6285,7 @@ Label_0a_6eac:
 	ld [wStoryModeCurrentLocation], a ; $6eac
 	ld a, [hl+] ; $6eaf
 	ld [wStoryModeEntryPoint], a ; $6eb0
-	clear_flag $03, 0 ; $6eb3
+	clear_flag FLAG_VRAM_UPDATE_BUSY ; $6eb3
 	clear_flag FLAG_ACTORS_FROZEN ; $6eb6
 	xor a, a ; $6eb9
 	ld [$cb02], a ; $6eba
@@ -6293,7 +6293,7 @@ Label_0a_6eac:
 	call RunStoryLocation ; $6ec0
 	test_flag FLAG_ENDING_CREDITS_PENDING ; $6ec3
 	jr nz, Label_0a_6ee3 ; $6ec6
-	set_flag $03, 0 ; $6ec8
+	set_flag FLAG_VRAM_UPDATE_BUSY ; $6ec8
 	call FreezeAllActors ; $6ecb
 	farcall InitGrayscalePaletteFade ; $6ece
 	ld b, $3f ; $6ed1

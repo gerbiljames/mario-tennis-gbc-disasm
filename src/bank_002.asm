@@ -1608,12 +1608,12 @@ SetStorySlotFlagB:
 Label_02_4cc8:
 	farcall SetSaveFlag ; $4cc8
 	ret ; $4ccb
-SaveFlagPtrs_02_4ccc:
-	; $4ccc, 8 bytes (records:2)
-	dw $0480 ; record 0
-	dw $04a0 ; record 1
-	dw $04c0 ; record 2
-	dw $04e0 ; record 3
+StorySlotFlagBIds_02:
+	; $4ccc, 8 bytes (save_flag_ids)
+	dw SAVEFLAG_STORY_SLOT0_B ; 0
+	dw SAVEFLAG_STORY_SLOT1_B ; 1
+	dw SAVEFLAG_STORY_SLOT2_B ; 2
+	dw $04e0 ; 3: flag $04, 7
 TestStorySlotFlagB:
 	ld a, [wCurrentStorySlot] ; $4cd4
 	add a, a ; $4cd7
@@ -1652,12 +1652,12 @@ SetStorySlotFlagA:
 Label_02_4d04:
 	farcall SetSaveFlag ; $4d04
 	ret ; $4d07
-SaveFlagPtrs_02_4d08:
-	; $4d08, 8 bytes (records:2)
-	dw $0400 ; record 0
-	dw $0420 ; record 1
-	dw $0440 ; record 2
-	dw $0460 ; record 3
+StorySlotFlagAIds_02:
+	; $4d08, 8 bytes (save_flag_ids)
+	dw SAVEFLAG_STORY_SLOT0_A ; 0
+	dw SAVEFLAG_STORY_SLOT1_A ; 1
+	dw SAVEFLAG_STORY_SLOT2_A ; 2
+	dw $0460 ; 3: flag $04, 3
 TestStorySlotFlagA:
 	ld a, [wCurrentStorySlot] ; $4d10
 	add a, a ; $4d13

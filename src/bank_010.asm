@@ -349,7 +349,7 @@ RunDrillMatchListMenu:
 	ld [wCurrentStorySlot], a ; $4477
 	farcall CheckStorySlot ; $447a
 	pop af ; $447d
-	set_flag $03, 6 ; $447e
+	set_flag FLAG_DRILL_FROM_MENU ; $447e
 	farcall RunTrainingDrillByID ; $4481
 	ld a, $00 ; $4484
 	ld [wCurrentStorySlot], a ; $4486
@@ -370,10 +370,10 @@ MatchSelectCharDataOptionDisabled:
 	ld a, $00 ; $44b0
 	ld [wCurrentStorySlot], a ; $44b2
 	farcall CheckStorySlot ; $44b5
-	set_flag $03, 4 ; $44b8
+	set_flag FLAG_CHAR_DATA_START_EXITS ; $44b8
 	ld c, $00 ; $44bb
 	farcall CharDataScreen_Show ; $44bd
-	clear_flag $03, 4 ; $44c0
+	clear_flag FLAG_CHAR_DATA_START_EXITS ; $44c0
 	ld a, $00 ; $44c3
 	ld [wCurrentStorySlot], a ; $44c5
 	farcall SaveStorySlotWithTimer ; $44c8
@@ -557,7 +557,7 @@ Label_10_4655:
 	jp z, RunMinigameSelectMenu ; $465f
 	ld [wMinigameLevel], a ; $4662
 	ld a, [de] ; $4665
-	set_flag $03, 6 ; $4666
+	set_flag FLAG_DRILL_FROM_MENU ; $4666
 	farcall RunTrainingDrillByID ; $4669
 	ld hl, wStoryModePlayersXPosition ; $466c
 	ld de, wStoryModeSpawnPosition ; $466f
@@ -621,7 +621,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $47dd
 	ld [$c294], a ; $47e0
 	ld [wStoryModeExitLocationRequest], a ; $47e3
-	set_flag $03, 6 ; $47e6
+	set_flag FLAG_DRILL_FROM_MENU ; $47e6
 	ld hl, $0001 ; $47e9
 	farcall PushTextArgNumber ; $47ec
 	script_set_text Text_30_353 ; $47ef
@@ -637,7 +637,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $480e
 	ld [$c294], a ; $4811
 	ld [wStoryModeExitLocationRequest], a ; $4814
-	set_flag $03, 6 ; $4817
+	set_flag FLAG_DRILL_FROM_MENU ; $4817
 	ld hl, $0002 ; $481a
 	farcall PushTextArgNumber ; $481d
 	script_set_text Text_30_353 ; $4820
@@ -653,7 +653,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $483f
 	ld [$c294], a ; $4842
 	ld [wStoryModeExitLocationRequest], a ; $4845
-	set_flag $03, 6 ; $4848
+	set_flag FLAG_DRILL_FROM_MENU ; $4848
 	ld hl, $0003 ; $484b
 	farcall PushTextArgNumber ; $484e
 	script_set_text Text_30_353 ; $4851
@@ -669,7 +669,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $4870
 	ld [$c294], a ; $4873
 	ld [wStoryModeExitLocationRequest], a ; $4876
-	set_flag $03, 6 ; $4879
+	set_flag FLAG_DRILL_FROM_MENU ; $4879
 	ld hl, $0004 ; $487c
 	farcall PushTextArgNumber ; $487f
 	script_set_text Text_30_353 ; $4882
@@ -685,7 +685,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $48a1
 	ld [$c294], a ; $48a4
 	ld [wStoryModeExitLocationRequest], a ; $48a7
-	set_flag $03, 6 ; $48aa
+	set_flag FLAG_DRILL_FROM_MENU ; $48aa
 	ld hl, $0005 ; $48ad
 	farcall PushTextArgNumber ; $48b0
 	script_set_text Text_30_353 ; $48b3
@@ -701,7 +701,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $48d2
 	ld [$c294], a ; $48d5
 	ld [wStoryModeExitLocationRequest], a ; $48d8
-	set_flag $03, 6 ; $48db
+	set_flag FLAG_DRILL_FROM_MENU ; $48db
 	ld hl, $0006 ; $48de
 	farcall PushTextArgNumber ; $48e1
 	script_set_text Text_30_353 ; $48e4
@@ -717,7 +717,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $4903
 	ld [$c294], a ; $4906
 	ld [wStoryModeExitLocationRequest], a ; $4909
-	set_flag $03, 6 ; $490c
+	set_flag FLAG_DRILL_FROM_MENU ; $490c
 	ld hl, $0007 ; $490f
 	farcall PushTextArgNumber ; $4912
 	script_set_text Text_30_353 ; $4915
@@ -733,7 +733,7 @@ Test2ExitTriggers_10:
 	ld [wStoryModeEntryPoint], a ; $4934
 	ld [$c294], a ; $4937
 	ld [wStoryModeExitLocationRequest], a ; $493a
-	set_flag $03, 6 ; $493d
+	set_flag FLAG_DRILL_FROM_MENU ; $493d
 	ld hl, $0008 ; $4940
 	farcall PushTextArgNumber ; $4943
 	script_set_text Text_30_353 ; $4946
@@ -750,7 +750,7 @@ Test2Npc0B_10:
 	ld [wStoryModeEntryPoint], a ; $4965
 	ld [$c294], a ; $4968
 	ld [wStoryModeExitLocationRequest], a ; $496b
-	set_flag $03, 6 ; $496e
+	set_flag FLAG_DRILL_FROM_MENU ; $496e
 	ld hl, $0009 ; $4971
 	farcall PushTextArgNumber ; $4974
 	script_set_text Text_30_353 ; $4977
@@ -767,7 +767,7 @@ Test2Npc0C_10:
 	ld [wStoryModeEntryPoint], a ; $4996
 	ld [$c294], a ; $4999
 	ld [wStoryModeExitLocationRequest], a ; $499c
-	set_flag $03, 6 ; $499f
+	set_flag FLAG_DRILL_FROM_MENU ; $499f
 	ld hl, $000a ; $49a2
 	farcall PushTextArgNumber ; $49a5
 	script_set_text Text_30_353 ; $49a8
@@ -784,7 +784,7 @@ Test2Npc0D_10:
 	ld [wStoryModeEntryPoint], a ; $49c7
 	ld [$c294], a ; $49ca
 	ld [wStoryModeExitLocationRequest], a ; $49cd
-	set_flag $03, 6 ; $49d0
+	set_flag FLAG_DRILL_FROM_MENU ; $49d0
 	ld hl, $000b ; $49d3
 	farcall PushTextArgNumber ; $49d6
 	script_set_text Text_30_353 ; $49d9
@@ -801,7 +801,7 @@ Test2Npc0E_10:
 	ld [wStoryModeEntryPoint], a ; $49f8
 	ld [$c294], a ; $49fb
 	ld [wStoryModeExitLocationRequest], a ; $49fe
-	set_flag $03, 6 ; $4a01
+	set_flag FLAG_DRILL_FROM_MENU ; $4a01
 	ld hl, $000c ; $4a04
 	farcall PushTextArgNumber ; $4a07
 	script_set_text Text_30_353 ; $4a0a
@@ -818,7 +818,7 @@ Test2Npc0F_10:
 	ld [wStoryModeEntryPoint], a ; $4a29
 	ld [$c294], a ; $4a2c
 	ld [wStoryModeExitLocationRequest], a ; $4a2f
-	set_flag $03, 6 ; $4a32
+	set_flag FLAG_DRILL_FROM_MENU ; $4a32
 	ld hl, $000d ; $4a35
 	farcall PushTextArgNumber ; $4a38
 	script_set_text Text_30_353 ; $4a3b
@@ -835,7 +835,7 @@ Test2Npc10_10:
 	ld [wStoryModeEntryPoint], a ; $4a5a
 	ld [$c294], a ; $4a5d
 	ld [wStoryModeExitLocationRequest], a ; $4a60
-	set_flag $03, 6 ; $4a63
+	set_flag FLAG_DRILL_FROM_MENU ; $4a63
 	ld hl, $000e ; $4a66
 	farcall PushTextArgNumber ; $4a69
 	script_set_text Text_30_353 ; $4a6c
@@ -852,7 +852,7 @@ Test2Npc11_10:
 	ld [wStoryModeEntryPoint], a ; $4a8b
 	ld [$c294], a ; $4a8e
 	ld [wStoryModeExitLocationRequest], a ; $4a91
-	set_flag $03, 6 ; $4a94
+	set_flag FLAG_DRILL_FROM_MENU ; $4a94
 	ld hl, $000f ; $4a97
 	farcall PushTextArgNumber ; $4a9a
 	script_set_text Text_30_353 ; $4a9d
@@ -869,7 +869,7 @@ Test2Npc12_10:
 	ld [wStoryModeEntryPoint], a ; $4abc
 	ld [$c294], a ; $4abf
 	ld [wStoryModeExitLocationRequest], a ; $4ac2
-	set_flag $03, 6 ; $4ac5
+	set_flag FLAG_DRILL_FROM_MENU ; $4ac5
 	ld hl, $0010 ; $4ac8
 	farcall PushTextArgNumber ; $4acb
 	script_set_text Text_30_353 ; $4ace
@@ -1379,7 +1379,7 @@ Label_10_5073:
 	call ResetGameTimer ; $5073
 	farcall GenerateUniqueStorySaveSignature ; $5076
 	farcall SaveStorySlotWithTimer ; $5079
-	test_flag $02, 5 ; $507c
+	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $507c
 	jr nz, Label_10_508a ; $507f
 	ld a, $01 ; $5081
 	ld [$c294], a ; $5083
@@ -1418,12 +1418,12 @@ Label_10_50ca:
 	call RestoreGameTimer ; $50d0
 	ld a, $00 ; $50d3
 	ld [wGameMode], a ; $50d5
-	clear_flag $09, 7 ; $50d8
+	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $50d8
 	ld b, $0a ; $50db
 	ld c, $01 ; $50dd
 	farcall SaveStoryReturnPoint ; $50df
 	farcall SaveStorySlotWithTimer ; $50e2
-	test_flag $02, 5 ; $50e5
+	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $50e5
 	jr nz, Label_10_50f5 ; $50e8
 	ld a, [$cb74] ; $50ea
 	ld a, a ; $50ed
@@ -1944,14 +1944,14 @@ Label_10_55d5:
 	ld a, [wGameMode] ; $55d5
 	cp a, $04 ; $55d8
 	jr nz, Label_10_5604 ; $55da
-	clear_flag $09, 7 ; $55dc
+	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $55dc
 	xor a, a ; $55df
 	ld [wKeepMatchStatsFlag], a ; $55e0
 	ld b, $00 ; $55e3
 	ld c, $01 ; $55e5
 	farcall SaveStoryReturnPoint ; $55e7
 	farcall SaveStorySlotWithTimer ; $55ea
-	test_flag $02, 5 ; $55ed
+	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $55ed
 	jr nz, Label_10_55fb ; $55f0
 	ld a, $02 ; $55f2
 	ld [$c294], a ; $55f4
@@ -2551,7 +2551,7 @@ RestaurantExitTriggers_10:
 	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, $0e, $01
 	db $ff
 RestaurantExit01_10:
-	clear_flag $0f, 3 ; $5bee
+	clear_flag FLAG_RESTAURANT_NPC08_MOVED ; $5bee
 	ret ; $5bf1
 RestaurantNpc03_10:
 	ld a, [$c2b1] ; $5bf2
@@ -2752,7 +2752,7 @@ Label_10_5dd3:
 RestaurantNpc08FaceDown_10:
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $5de6
 RestaurantNpc08_10:
-	test_flag $0f, 3 ; $5de9
+	test_flag FLAG_RESTAURANT_NPC08_MOVED ; $5de9
 	jr nz, Label_10_5e5c ; $5dec
 	ld a, [$c2b1] ; $5dee
 	add a, a ; $5df1
@@ -2779,7 +2779,7 @@ Label_10_5e30:
 	script_wait_frames $0a ; $5e40
 	script_set_anim $08, $02 ; $5e47
 	script_face $08, FACE_RIGHT ; $5e4e
-	set_flag $0f, 3 ; $5e55
+	set_flag FLAG_RESTAURANT_NPC08_MOVED ; $5e55
 	clear_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e58
 	ret ; $5e5b
 Label_10_5e5c:
@@ -3091,7 +3091,7 @@ RestaurantInitScript_10:
 	call RestaurantRestoreNpc08Position_10 ; $60ff
 	ret ; $6102
 RestaurantRestoreNpc08Position_10:
-	test_flag $0f, 3 ; $6103
+	test_flag FLAG_RESTAURANT_NPC08_MOVED ; $6103
 	jr z, Label_10_611a ; $6106
 	script_set_position $08, $2140, $0f00 ; $6108
 	script_face $08, FACE_RIGHT ; $6113

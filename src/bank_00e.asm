@@ -1195,25 +1195,25 @@ RunRepairCounterDialogue:
 Label_0e_4da5:
 	test_flag FLAG_DOUBLES ; $4da5
 	jr nz, Label_0e_4dcd ; $4da8
-	test_flag $0f, 6 ; $4daa
+	test_flag FLAG_REPAIR_COUNTER_GREETED ; $4daa
 	jr z, Label_0e_4db7 ; $4dad
 	script_set_text Text_6e_228 ; $4daf
 	jr Label_0e_4dc0 ; $4db5
 Label_0e_4db7:
 	script_set_text Text_6e_227 ; $4db7
-	set_flag $0f, 6 ; $4dbd
+	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4dbd
 Label_0e_4dc0:
 	script_speak $0e ; $4dc0
 	script_face $0e, FACE_RIGHT ; $4dc5
 	ret ; $4dcc
 Label_0e_4dcd:
-	test_flag $0f, 6 ; $4dcd
+	test_flag FLAG_REPAIR_COUNTER_GREETED ; $4dcd
 	jr z, Label_0e_4dda ; $4dd0
 	script_set_text Text_6e_230 ; $4dd2
 	jr Label_0e_4dc0 ; $4dd8
 Label_0e_4dda:
 	script_set_text Text_6e_229 ; $4dda
-	set_flag $0f, 6 ; $4de0
+	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4de0
 	jr Label_0e_4dc0 ; $4de3
 Label_0e_4de5:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4de5
@@ -1230,13 +1230,13 @@ Label_0e_4de5:
 	jr Label_0e_4e26 ; $4e0b
 Label_0e_4e0d:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4e0d
-	test_flag $0f, 7 ; $4e10
+	test_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e10
 	jr z, Label_0e_4e1d ; $4e13
 	script_set_text Text_6e_233 ; $4e15
 	jr Label_0e_4e26 ; $4e1b
 Label_0e_4e1d:
 	script_set_text Text_6e_231 ; $4e1d
-	set_flag $0f, 7 ; $4e23
+	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e23
 Label_0e_4e26:
 	script_face_toward ACTOR_PLAYER, $0e ; $4e26
 	ld a, $0e ; $4e2e
@@ -1473,7 +1473,7 @@ Label_0e_5056:
 	call InitEquipmentHandoutDialogue ; $505c
 	script_speak $0e ; $505f
 	call ShowEquipChangeConfirmation ; $5064
-	set_flag $0f, 7 ; $5067
+	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $5067
 	script_face_toward ACTOR_PLAYER, $0e ; $506a
 	script_set_text Text_6e_241 ; $5072
 	call PushEquipmentNameTextArg ; $5078
@@ -1510,7 +1510,7 @@ RepairCounterReopenServiceMenu:
 	script_set_text Text_6e_239 ; $50e1
 	ld hl, $00e6 ; $50e7
 	call FetchAndPushShortTextArg ; $50ea
-	set_flag $0f, 7 ; $50ed
+	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
 	script_face_toward ACTOR_PLAYER, $0e ; $50f0
 	script_fade_in $08 ; $50f8
 	call WaitFadeEnd ; $50fd

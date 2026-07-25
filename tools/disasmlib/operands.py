@@ -31,6 +31,11 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
         mb = re.match(r"(bit|res|set) \d+, (.*)$", text)
         if mb:
             return f"{mb.group(1)} {name}, {mb.group(2)}"
+        # `ld rr, n16` -- the save-flag ids passed to Test/Set/ClearSaveFlag are
+        # 16-bit (byte << 8 | bit << 5), so they need the wide form.
+        m16 = LDIMM_RE.match(text)
+        if m16:
+            return f"ld {m16.group(1)}, {name}"
         m = IMM8_RE.search(text)
         if m:
             return text[:m.start()] + name

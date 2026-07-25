@@ -1755,63 +1755,63 @@ Label_3b_4b2e:
 	xor a, a ; $4b31
 	ret ; $4b32
 ApplyUnlockEverythingCheat:
-	ld de, $0720 ; $4b33
+	ld de, SAVEFLAG_COURT_STAR ; $4b33
 	farcall SetSaveFlag ; $4b36
-	ld de, $0740 ; $4b39
+	ld de, SAVEFLAG_COURT_CASTLE ; $4b39
 	farcall SetSaveFlag ; $4b3c
-	ld de, $0760 ; $4b3f
+	ld de, SAVEFLAG_COURT_TROPICS ; $4b3f
 	farcall SetSaveFlag ; $4b42
-	ld de, $0780 ; $4b45
+	ld de, SAVEFLAG_COURT_JUNGLE ; $4b45
 	farcall SetSaveFlag ; $4b48
-	ld de, $07a0 ; $4b4b
+	ld de, SAVEFLAG_COURT_WAREHOUSE ; $4b4b
 	farcall SetSaveFlag ; $4b4e
-	ld de, $0140 ; $4b51
+	ld de, SAVEFLAG_UNLOCKED_FAY ; $4b51
 	farcall SetSaveFlag ; $4b54
-	ld de, $0160 ; $4b57
+	ld de, SAVEFLAG_UNLOCKED_CURT ; $4b57
 	farcall SetSaveFlag ; $4b5a
-	ld de, $0180 ; $4b5d
+	ld de, SAVEFLAG_UNLOCKED_MARK ; $4b5d
 	farcall SetSaveFlag ; $4b60
-	ld de, $01a0 ; $4b63
+	ld de, SAVEFLAG_UNLOCKED_SEAN ; $4b63
 	farcall SetSaveFlag ; $4b66
-	ld de, $01c0 ; $4b69
+	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $4b69
 	farcall SetSaveFlag ; $4b6c
-	ld de, $01e0 ; $4b6f
+	ld de, SAVEFLAG_UNLOCKED_ELDEN ; $4b6f
 	farcall SetSaveFlag ; $4b72
-	ld de, $0280 ; $4b75
+	ld de, SAVEFLAG_CLEARED_BOO_BLAST_1 ; $4b75
 	farcall SetSaveFlag ; $4b78
-	ld de, $02a0 ; $4b7b
+	ld de, SAVEFLAG_CLEARED_BOO_BLAST_2 ; $4b7b
 	farcall SetSaveFlag ; $4b7e
-	ld de, $02e0 ; $4b81
+	ld de, SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; $4b81
 	farcall SetSaveFlag ; $4b84
-	ld de, $0300 ; $4b87
+	ld de, SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; $4b87
 	farcall SetSaveFlag ; $4b8a
-	ld de, $0340 ; $4b8d
+	ld de, SAVEFLAG_CLEARED_PERFECT_SHOT_1 ; $4b8d
 	farcall SetSaveFlag ; $4b90
-	ld de, $0360 ; $4b93
+	ld de, SAVEFLAG_CLEARED_PERFECT_SHOT_2 ; $4b93
 	farcall SetSaveFlag ; $4b96
-	ld de, $03a0 ; $4b99
+	ld de, SAVEFLAG_CLEARED_TARGET_SHOT_1 ; $4b99
 	farcall SetSaveFlag ; $4b9c
-	ld de, $03c0 ; $4b9f
+	ld de, SAVEFLAG_CLEARED_TARGET_SHOT_2 ; $4b9f
 	farcall SetSaveFlag ; $4ba2
-	ld de, $0500 ; $4ba5
+	ld de, SAVEFLAG_CLEARED_FRUIT_FANTASY_1 ; $4ba5
 	farcall SetSaveFlag ; $4ba8
-	ld de, $0520 ; $4bab
+	ld de, SAVEFLAG_CLEARED_FRUIT_FANTASY_2 ; $4bab
 	farcall SetSaveFlag ; $4bae
-	ld de, $0560 ; $4bb1
+	ld de, SAVEFLAG_CLEARED_BANANA_BUNCH_1 ; $4bb1
 	farcall SetSaveFlag ; $4bb4
-	ld de, $0580 ; $4bb7
+	ld de, SAVEFLAG_CLEARED_BANANA_BUNCH_2 ; $4bb7
 	farcall SetSaveFlag ; $4bba
-	ld de, $05c0 ; $4bbd
+	ld de, SAVEFLAG_CLEARED_TREASURE_BOX_1 ; $4bbd
 	farcall SetSaveFlag ; $4bc0
-	ld de, $05e0 ; $4bc3
+	ld de, SAVEFLAG_CLEARED_TREASURE_BOX_2 ; $4bc3
 	farcall SetSaveFlag ; $4bc6
-	ld de, $0620 ; $4bc9
+	ld de, SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; $4bc9
 	farcall SetSaveFlag ; $4bcc
-	ld de, $0640 ; $4bcf
+	ld de, SAVEFLAG_CLEARED_MEDALLION_MATCH_2 ; $4bcf
 	farcall SetSaveFlag ; $4bd2
-	ld de, $0680 ; $4bd5
+	ld de, SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; $4bd5
 	farcall SetSaveFlag ; $4bd8
-	ld de, $06a0 ; $4bdb
+	ld de, SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; $4bdb
 	farcall SetSaveFlag ; $4bde
 	ld a, [wCurrentStorySlot] ; $4be1
 	push af ; $4be4
@@ -8380,7 +8380,7 @@ Label_3b_7e0f:
 	ld a, b ; $7e11
 	cp a, $09 ; $7e12
 	jr nz, Label_3b_7e07 ; $7e14
-	ld de, $07a0 ; $7e16
+	ld de, SAVEFLAG_COURT_WAREHOUSE ; $7e16
 	farcall SetSaveFlag ; $7e19
 	jr Label_3b_7e24 ; $7e1c
 Label_3b_7e1e:

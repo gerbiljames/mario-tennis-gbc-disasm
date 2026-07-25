@@ -484,6 +484,22 @@ def render_flag_ids(rom, start, end, flag_names=None):
     return out
 
 
+def render_save_flag_ids(rom, start, end, save_flag_names=None):
+    """A list of *save*-flag ids (the words Test/Set/ClearSaveFlag take in de:
+    high byte = array byte, low byte = bit << 5). Renders each as its
+    SAVEFLAG_* constant where constants.inc names one."""
+    out = []
+    for r in range((end - start) // 2):
+        ro = start + r * 2
+        w = rom[ro] | (rom[ro + 1] << 8)
+        name = (save_flag_names or {}).get(w)
+        note = f"{r}" if name else f"{r}: flag ${w >> 8:02x}, {(w & 0xff) >> 5}"
+        out.append(f"\tdw {name or f'${w:04x}'} ; {note}")
+    if (end - start) % 2:
+        out.append(f"\tdb ${rom[end - 1]:02x}")
+    return out
+
+
 def render_pointer_words(rom, start, end, bank, labels, spec):
     """A dw table of same-bank pointers (records:2 tables are usually pointer
     tables; mode_hooks and minigame_configs always are). Words that hit a

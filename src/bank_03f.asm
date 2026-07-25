@@ -656,7 +656,7 @@ UpdateTennisDictionarySprites:
 	push de ; $4e92
 	push hl ; $4e93
 	wram_bank $06 ; $4e94
-	test_flag $03, 1 ; $4e9a
+	test_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4e9a
 	jr z, Label_3f_4ea4 ; $4e9d
 	sound $5f ; $4e9f
 	call StartTennisDictionaryAnim ; $4ea1
@@ -1667,9 +1667,9 @@ Label_3f_564e:
 	ld a, $80 ; $5673
 	ld [wMessageSpeed], a ; $5675
 	xor a, a ; $5678
-	set_flag $04, 3 ; $5679
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5679
 	farcall RedrawWindowText ; $567c
-	clear_flag $04, 3 ; $567f
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $567f
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a, a ; $5686

@@ -1055,7 +1055,7 @@ Label_0b_473f:
 	ld a, $ff ; $4762
 	ld [wPointWinLoseFlag], a ; $4764
 Label_0b_4767:
-	test_flag $03, 6 ; $4767
+	test_flag FLAG_DRILL_FROM_MENU ; $4767
 	jr z, Label_0b_47a7 ; $476a
 	call DisableLCDSafely ; $476c
 	farcall ResetTextWindowState ; $476f
@@ -1083,7 +1083,7 @@ Label_0b_479a:
 	call BeginFadeOut ; $47a1
 	call WaitFadeEnd ; $47a4
 Label_0b_47a7:
-	clear_flag $03, 6 ; $47a7
+	clear_flag FLAG_DRILL_FROM_MENU ; $47a7
 	farcall ProcessMatchRewards ; $47aa
 	ret ; $47ad
 Label_0b_47ae:

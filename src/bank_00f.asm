@@ -250,7 +250,7 @@ AwardsCeremonyTile01_0f:
 	script_speak $08 ; $44ce
 	test_flag FLAG_DOUBLES ; $44d3
 	jp z, Label_0f_45b6 ; $44d6
-	set_flag $10, 4 ; $44d9
+	set_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $44d9
 	script_set_text Text_25_180 ; $44dc
 	script_null_script ACTOR_PARTNER ; $44e2
 	script_move_target ACTOR_PARTNER, $0d00, $1b00 ; $44e7
@@ -289,7 +289,7 @@ AwardsCeremonyTile01_0f:
 	script_set_position $14, $3f00, $3f00 ; $45a8
 	jp Label_0f_4661 ; $45b3
 Label_0f_45b6:
-	set_flag $10, 3 ; $45b6
+	set_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $45b6
 	script_null_script $03 ; $45b9
 	script_move_target ACTOR_PLAYER, $0b80, $1b00 ; $45be
 	script_wait_move ACTOR_PLAYER ; $45c9
@@ -1489,13 +1489,13 @@ CheckAwardsCeremonyRivalSceneDone:
 	test_flag FLAG_DOUBLES ; $5f7a
 	jr z, Label_0f_5f8a ; $5f7d
 	ld a, $00 ; $5f7f
-	test_flag $10, 4 ; $5f81
+	test_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $5f81
 	jr z, Label_0f_5f93 ; $5f84
 	ld a, $01 ; $5f86
 	jr Label_0f_5f93 ; $5f88
 Label_0f_5f8a:
 	ld a, $00 ; $5f8a
-	test_flag $10, 3 ; $5f8c
+	test_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $5f8c
 	jr z, Label_0f_5f93 ; $5f8f
 	ld a, $01 ; $5f91
 Label_0f_5f93:
@@ -1546,7 +1546,7 @@ TournamentExitTriggers_0f:
 	map_script $05, FACEMASK_ANY, $0000, TournamentExit_0f, $15, $03
 	db $ff
 TournamentExit_0f:
-	clear_flag $17, 1 ; $60da
+	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $60da
 	ret ; $60dd
 TournamentNpc0A_0f:
 	script_set_text Text_1f_163 ; $60de
@@ -1642,9 +1642,9 @@ TournamentInitScript_0f:
 	ld a, [wStoryModeEntryPoint] ; $6217
 	cp a, $ff ; $621a
 	jr z, Label_0f_6221 ; $621c
-	clear_flag $17, 1 ; $621e
+	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $621e
 Label_0f_6221:
-	test_flag $17, 1 ; $6221
+	test_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6221
 	jp z, Label_0f_62eb ; $6224
 	call ComputeIslandOpenRound ; $6227
 	ld a, [$c2b0] ; $622a
@@ -1877,7 +1877,7 @@ Label_0f_641f:
 	ld a, [hl] ; $6424
 	ret ; $6425
 IslandOpenArrivalCutscene:
-	set_flag $17, 1 ; $6426
+	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6426
 	ldh a, [hRomBank] ; $6429
 	ld hl, IslandOpenRoundActors_0f ; $642b
 	farcall ScriptRespawnLocationActors ; $642e
@@ -2729,8 +2729,8 @@ Label_0f_749c:
 	call SetPlayerAndPartnerObjectDefs ; $749f
 	ret ; $74a2
 Label_0f_74a3:
-	clear_flag $0e, 6 ; $74a3
-	clear_flag $0f, 0 ; $74a6
+	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $74a3
+	clear_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $74a6
 	call CheckIslandOpenVictoryTransition ; $74a9
 	and a, a ; $74ac
 	jr z, Label_0f_74b0 ; $74ad
@@ -2802,7 +2802,7 @@ Label_0f_7571:
 	script_wait_frames $0a ; $759e
 	script_wait_frames $0a ; $75a5
 	script_face $04, FACE_LEFT ; $75ac
-	set_flag $17, 1 ; $75b3
+	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $75b3
 	ret ; $75b6
 IslandOpenRoundActorsSingles_0f:
 	; $75b7, 94 bytes (map_actors)
@@ -2896,7 +2896,7 @@ Label_0f_76b8:
 	ret ; $76e8
 	db $ef ; $76e9
 	ldh [$ff0e], a ; $76ea
-	clear_flag $0f, 1 ; $76ec
+	clear_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $76ec
 	call CheckIslandOpenVictoryTransition ; $76ef
 	and a, a ; $76f2
 	jr z, Label_0f_76f6 ; $76f3
@@ -2982,7 +2982,7 @@ Label_0f_7811:
 	script_face_toward $04, ACTOR_PLAYER ; $7814
 	script_face_toward $04, ACTOR_PARTNER ; $781c
 	script_speak $03 ; $7824
-	set_flag $17, 1 ; $7829
+	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $7829
 	script_get_actor_state ACTOR_PARTNER ; $782c
 	ld c, l ; $7831
 	ld b, h ; $7832

@@ -2205,31 +2205,31 @@ EraseStorySlotSaveData:
 	cp a, $01 ; $4e4f
 	jr z, Label_03_4e77 ; $4e51
 	push de ; $4e53
-	ld de, $0440 ; $4e54
+	ld de, SAVEFLAG_STORY_SLOT2_A ; $4e54
 	farcall ClearSaveFlag ; $4e57
 	pop de ; $4e5a
 	push de ; $4e5b
-	ld de, $04c0 ; $4e5c
+	ld de, SAVEFLAG_STORY_SLOT2_B ; $4e5c
 	farcall ClearSaveFlag ; $4e5f
 	pop de ; $4e62
 	jr Label_03_4e87 ; $4e63
 Label_03_4e65:
 	push de ; $4e65
-	ld de, $0400 ; $4e66
+	ld de, SAVEFLAG_STORY_SLOT0_A ; $4e66
 	farcall ClearSaveFlag ; $4e69
 	pop de ; $4e6c
 	push de ; $4e6d
-	ld de, $0480 ; $4e6e
+	ld de, SAVEFLAG_STORY_SLOT0_B ; $4e6e
 	farcall ClearSaveFlag ; $4e71
 	pop de ; $4e74
 	jr Label_03_4e87 ; $4e75
 Label_03_4e77:
 	push de ; $4e77
-	ld de, $0420 ; $4e78
+	ld de, SAVEFLAG_STORY_SLOT1_A ; $4e78
 	farcall ClearSaveFlag ; $4e7b
 	pop de ; $4e7e
 	push de ; $4e7f
-	ld de, $04a0 ; $4e80
+	ld de, SAVEFLAG_STORY_SLOT1_B ; $4e80
 	farcall ClearSaveFlag ; $4e83
 	pop de ; $4e86
 Label_03_4e87:
@@ -3436,23 +3436,23 @@ ApplyN64RecordsUnlockFlags:
 	or a, a ; $56c6
 	jr z, Label_03_56f1 ; $56c7
 	push de ; $56c9
-	ld de, $07c0 ; $56ca
+	ld de, SAVEFLAG_N64_RECORDS_PRESENT ; $56ca
 	farcall SetSaveFlag ; $56cd
 	pop de ; $56d0
 	push de ; $56d1
-	ld de, $0140 ; $56d2
+	ld de, SAVEFLAG_UNLOCKED_FAY ; $56d2
 	farcall SetSaveFlag ; $56d5
 	pop de ; $56d8
 	push de ; $56d9
-	ld de, $0160 ; $56da
+	ld de, SAVEFLAG_UNLOCKED_CURT ; $56da
 	farcall SetSaveFlag ; $56dd
 	pop de ; $56e0
 	push de ; $56e1
-	ld de, $0180 ; $56e2
+	ld de, SAVEFLAG_UNLOCKED_MARK ; $56e2
 	farcall SetSaveFlag ; $56e5
 	pop de ; $56e8
 	push de ; $56e9
-	ld de, $01a0 ; $56ea
+	ld de, SAVEFLAG_UNLOCKED_SEAN ; $56ea
 	farcall SetSaveFlag ; $56ed
 	pop de ; $56f0
 Label_03_56f1:

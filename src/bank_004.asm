@@ -1857,7 +1857,7 @@ Label_04_4a6d:
 	ld [hl], b ; $4a80
 	ret ; $4a81
 DrawActors:
-	test_flag $02, 4 ; $4a82
+	test_flag FLAG_HIDE_OVERWORLD_ACTORS ; $4a82
 	ret nz ; $4a85
 	wram_bank $04 ; $4a86
 	call ComputeSpriteScrollOffset ; $4a8c
@@ -2811,7 +2811,7 @@ Label_04_519d:
 	ldh a, [hPlayerInputFlags] ; $519d
 	bit PADB_B, a ; $519f
 	jr z, Label_04_51a6 ; $51a1
-	set_flag $02, 1 ; $51a3
+	set_flag FLAG_PLAYER_RUNNING ; $51a3
 Label_04_51a6:
 	ld d, $01 ; $51a6
 	ldh a, [hPlayerInputFlags] ; $51a8
@@ -2856,7 +2856,7 @@ Label_04_51dd:
 	ld hl, $0015 ; $51ef
 	add hl, bc ; $51f2
 	ld [hl], $40 ; $51f3
-	test_flag $02, 1 ; $51f5
+	test_flag FLAG_PLAYER_RUNNING ; $51f5
 	jr z, Label_04_520b ; $51f8
 	ld a, $01 ; $51fa
 	ld [$daef], a ; $51fc
@@ -2898,7 +2898,7 @@ Label_04_5231:
 	ld [hl+], a ; $523d
 	ld [hl], d ; $523e
 Label_04_523f:
-	test_flag $02, 0 ; $523f
+	test_flag FLAG_DEBUG_NOCLIP ; $523f
 	ld d, $00 ; $5242
 	jp nz, Label_04_52b5 ; $5244
 	ld a, [$daea] ; $5247
@@ -2977,7 +2977,7 @@ Label_04_52d5:
 	jr nz, Label_04_52e1 ; $52dd
 	ld [hl], $00 ; $52df
 Label_04_52e1:
-	clear_flag $02, 1 ; $52e1
+	clear_flag FLAG_PLAYER_RUNNING ; $52e1
 	pop bc ; $52e4
 	xor a, a ; $52e5
 	ret ; $52e6

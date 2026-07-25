@@ -22,7 +22,7 @@ from extract import render_spec
 from .constants import CHAR_ROSTER
 from .datatables import (render_actor_list, render_actor_script,
                          render_drill_definition, render_enum_table,
-                         render_flag_ids,
+                         render_flag_ids, render_save_flag_ids,
                          render_gfx_ptr_table, render_lz_ptr_table,
                          render_map_table, render_menu_def,
                          render_mugshot_ptr_table, render_object_header,
@@ -703,6 +703,9 @@ class Emitter:
             return render_tilemap_scripts(self.rom, start, end)
         if spec == "flag_ids":
             return render_flag_ids(self.rom, start, end, self.flag_names)
+        if spec == "save_flag_ids":
+            return render_save_flag_ids(self.rom, start, end,
+                                        self._save_flag_names())
         if spec == "tilemap_dispatch":
             return render_tilemap_dispatch(self.rom, start, end)
         if spec == "gfx_ptr_table":
@@ -804,6 +807,11 @@ class Emitter:
                   for idv, name in sorted(TEXT_IDS_USED.items())]
         lines.append("")
         self._write_include("text_ids.inc", "\n".join(lines))
+
+    def _save_flag_names(self):
+        """{id word: SAVEFLAG_* name} inverted from constants.inc."""
+        return {v: k for k, v in self.const_defs.items()
+                if k.startswith("SAVEFLAG_")}
 
     def _write_flag_constants(self):
         """wGameFlags bit names from flags.json. Value = the flag number

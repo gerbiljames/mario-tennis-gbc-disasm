@@ -4,12 +4,31 @@
 ; mask $80 >> bit to wGameFlags[byte]. Pass it to `set_flag`/`clear_flag`/
 ; `test_flag`/`flag_id` (one-argument form) or to *GameFlagByNumber.
 
+def FLAG_DEBUG_NOCLIP equ 16 ; wGameFlags byte $02 bit 0
+def FLAG_PLAYER_RUNNING equ 17 ; wGameFlags byte $02 bit 1
+def FLAG_HIDE_OVERWORLD_ACTORS equ 20 ; wGameFlags byte $02 bit 4
+def FLAG_DEBUG_SKIP_LOCATION_EXIT equ 21 ; wGameFlags byte $02 bit 5
 def FLAG_CUTSCENE_FAST_FORWARD equ 22 ; wGameFlags byte $02 bit 6
 
+def FLAG_VRAM_UPDATE_BUSY equ 24 ; wGameFlags byte $03 bit 0
+def FLAG_TEXT_WAITING_FOR_BUTTON equ 25 ; wGameFlags byte $03 bit 1
+def FLAG_DEBUG_FREEZE_TILE_ANIM equ 26 ; wGameFlags byte $03 bit 2
+def FLAG_DEBUG_STATIC_TEXT_WINDOW equ 27 ; wGameFlags byte $03 bit 3
+def FLAG_CHAR_DATA_START_EXITS equ 28 ; wGameFlags byte $03 bit 4
+def FLAG_DRILL_FROM_MENU equ 30 ; wGameFlags byte $03 bit 6
 def FLAG_DEBUG_FLAG_EDITOR_OPEN equ 31 ; wGameFlags byte $03 bit 7
 
+def FLAG_DEBUG_SHOW_PLAYER_POS equ 32 ; wGameFlags byte $04 bit 0
+def FLAG_DEBUG_KEEP_MATCH_SETTINGS equ 33 ; wGameFlags byte $04 bit 1
+def FLAG_DEBUG_SHORT_GLYPH_UPLOAD equ 34 ; wGameFlags byte $04 bit 2
+def FLAG_TEXT_RENDER_ACTIVE equ 35 ; wGameFlags byte $04 bit 3
+def FLAG_PROPORTIONAL_TEXT_MODE equ 36 ; wGameFlags byte $04 bit 4
+
+def FLAG_STORY_MENU_LOCKED equ 46 ; wGameFlags byte $05 bit 6
 def FLAG_DOUBLES equ 47 ; wGameFlags byte $05 bit 7
 
+def FLAG_PAUSE_OPTIONS_MENU_OPEN equ 48 ; wGameFlags byte $06 bit 0
+def FLAG_MINIGAME_PAUSE_MENU_OPEN equ 49 ; wGameFlags byte $06 bit 1
 def FLAG_WON_DREAM_MATCH_DOUBLES equ 52 ; wGameFlags byte $06 bit 4
 def FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL equ 53 ; wGameFlags byte $06 bit 5
 def FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL equ 54 ; wGameFlags byte $06 bit 6
@@ -29,6 +48,7 @@ def FLAG_WON_SENIOR_DOUBLES_RANK_2 equ 69 ; wGameFlags byte $08 bit 5
 def FLAG_WON_SENIOR_DOUBLES_RANK_1 equ 70 ; wGameFlags byte $08 bit 6
 
 def FLAG_WON_VARSITY_DOUBLES_RANK_2 equ 72 ; wGameFlags byte $09 bit 0
+def FLAG_ISLAND_SKY_SCENE_ACTIVE equ 79 ; wGameFlags byte $09 bit 7
 
 def FLAG_WON_JUNIOR_SINGLES_RANK_4 equ 80 ; wGameFlags byte $0a bit 0
 def FLAG_WON_JUNIOR_SINGLES_RANK_3 equ 81 ; wGameFlags byte $0a bit 1
@@ -54,6 +74,23 @@ def FLAG_ENDING_CREDITS_PENDING equ 109 ; wGameFlags byte $0d bit 5
 def FLAG_ENDING_CREDITS_RUNNING equ 110 ; wGameFlags byte $0d bit 6
 def FLAG_ACTORS_FROZEN equ 111 ; wGameFlags byte $0d bit 7
 
+def FLAG_SENIOR_COURT_NPC03_TURNED equ 116 ; wGameFlags byte $0e bit 4
+def FLAG_TOURNAMENT_NPC05_TALKED_SINGLES equ 118 ; wGameFlags byte $0e bit 6
+def FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES equ 119 ; wGameFlags byte $0e bit 7
+
+def FLAG_COURT2_SPECTATORS_TALKED_SINGLES equ 120 ; wGameFlags byte $0f bit 0
+def FLAG_COURT2_SPECTATORS_TALKED_DOUBLES equ 121 ; wGameFlags byte $0f bit 1
+def FLAG_RESTAURANT_NPC08_MOVED equ 123 ; wGameFlags byte $0f bit 3
+def FLAG_SENIOR_COURT_TILE01_TRIGGERED equ 124 ; wGameFlags byte $0f bit 4
+def FLAG_PRACTICE_ROOM_SESSION_ACTIVE equ 125 ; wGameFlags byte $0f bit 5
+def FLAG_REPAIR_COUNTER_GREETED equ 126 ; wGameFlags byte $0f bit 6
+def FLAG_REPAIR_COUNTER_EQUIP_CHANGED equ 127 ; wGameFlags byte $0f bit 7
+
+def FLAG_SWING_PRACTICE_KID_PLACED equ 128 ; wGameFlags byte $10 bit 0
+def FLAG_JUNIOR_COURT_NPC0A_TALKED equ 130 ; wGameFlags byte $10 bit 2
+def FLAG_AWARDS_CEREMONY_SEEN_SINGLES equ 131 ; wGameFlags byte $10 bit 3
+def FLAG_AWARDS_CEREMONY_SEEN_DOUBLES equ 132 ; wGameFlags byte $10 bit 4
+
 def FLAG_REACHED_ISLAND_OPEN_SINGLES equ 174 ; wGameFlags byte $15 bit 6
 def FLAG_REACHED_ISLAND_OPEN_DOUBLES equ 175 ; wGameFlags byte $15 bit 7
 
@@ -62,6 +99,7 @@ def FLAG_STORY_COMPLETE_DOUBLES equ 177 ; wGameFlags byte $16 bit 1
 def FLAG_REACHED_MARIO_WORLD_SINGLES equ 178 ; wGameFlags byte $16 bit 2
 def FLAG_REACHED_MARIO_WORLD_DOUBLES equ 179 ; wGameFlags byte $16 bit 3
 
+def FLAG_ISLAND_OPEN_IN_PROGRESS equ 185 ; wGameFlags byte $17 bit 1
 def FLAG_SERVE_CHALLENGER_DEFEATED equ 186 ; wGameFlags byte $17 bit 2
 def FLAG_NET_CHALLENGER_DEFEATED equ 187 ; wGameFlags byte $17 bit 3
 def FLAG_STROKE_CHALLENGER_DEFEATED equ 188 ; wGameFlags byte $17 bit 4

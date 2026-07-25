@@ -15,7 +15,7 @@ SECTION "ROM Bank $01", ROMX[$4000], BANK[$01]
 RunDebugTestMenu:
 	call InitSerialLink ; $4018
 	push de ; $401b
-	ld de, $07e0 ; $401c
+	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $401c
 	farcall ClearSaveFlag ; $401f
 	pop de ; $4022
 	call DisableLCDSafely ; $4023
@@ -74,7 +74,7 @@ Label_01_40bf:
 	bit PADB_A, a ; $40c1
 	jr z, Label_01_40cf ; $40c3
 	push de ; $40c5
-	ld de, $07e0 ; $40c6
+	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $40c6
 	farcall SetSaveFlag ; $40c9
 	pop de ; $40cc
 	jr Label_01_40d8 ; $40cd

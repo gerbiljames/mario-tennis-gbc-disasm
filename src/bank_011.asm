@@ -859,7 +859,7 @@ Label_11_4ee1:
 	ld [wStoryModeShowLocationName], a ; $4ef7
 	script_set_text Text_30_427 ; $4efa
 	script_speak $12 ; $4f00
-	set_flag $05, 6 ; $4f05
+	set_flag FLAG_STORY_MENU_LOCKED ; $4f05
 	call ArmAcademyEntranceTileTrigger ; $4f08
 	ret ; $4f0b
 Label_11_4f0c:
@@ -901,7 +901,7 @@ ResumeAcademyGuideTour:
 FollowGuideIntoAcademy:
 	script_set_speed ACTOR_PLAYER, $0018 ; $4f84
 	script_set_speed $12, $0018 ; $4f8c
-	clear_flag $05, 6 ; $4f94
+	clear_flag FLAG_STORY_MENU_LOCKED ; $4f94
 	script_move_target $12, $1800, $0e00 ; $4f97
 	script_move_target ACTOR_PLAYER, $1800, $0e00 ; $4fa2
 	script_wait_frames $1e ; $4fad
@@ -1418,7 +1418,7 @@ Label_11_598a:
 JuniorClassCourtDoublesCNpc0A_11:
 	script_set_text Text_32_191 ; $5990
 	script_speak $0a ; $5996
-	set_flag $10, 2 ; $599b
+	set_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $599b
 	ret ; $599e
 JuniorClassCourtDoublesNpcScriptsD_11:
 	; $599f, 73 bytes (map_scripts)
@@ -1433,7 +1433,7 @@ JuniorClassCourtDoublesNpcScriptsD_11:
 	map_script $0b, FACEMASK_ANY, $0000, Text_33_29, $03, $00
 	db $ff
 JuniorClassCourtDoublesDNpc0A_11:
-	test_flag $10, 2 ; $59e8
+	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $59e8
 	jr nz, Label_11_59f9 ; $59eb
 	script_set_text Text_33_15 ; $59ed
 	script_speak $0a ; $59f3
@@ -2510,7 +2510,7 @@ JuniorClassCourtSinglesNpcScriptsD_11:
 	map_script $0b, FACEMASK_ANY, $0000, Text_33_19, $13, $00
 	db $ff
 JuniorClassCourtSinglesDNpc0A_11:
-	test_flag $10, 2 ; $6ca9
+	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $6ca9
 	jr nz, Label_11_6cba ; $6cac
 	script_set_text Text_33_15 ; $6cae
 	script_speak $0a ; $6cb4

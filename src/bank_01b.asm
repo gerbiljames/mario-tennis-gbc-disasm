@@ -3458,7 +3458,7 @@ Label_1b_623c:
 	push af ; $6255
 	ld a, $01 ; $6256
 	ld [wStoryCharacterSlot], a ; $6258
-	ld de, $0120 ; $625b
+	ld de, SAVEFLAG_OPENING_SEEN ; $625b
 	farcall TestSaveFlag ; $625e
 	jr nz, Label_1b_6293 ; $6261
 	push af ; $6263
@@ -3717,14 +3717,14 @@ Label_1b_6408:
 	pop de ; $643c
 	pop bc ; $643d
 	pop af ; $643e
-	set_flag $03, 4 ; $643f
+	set_flag FLAG_CHAR_DATA_START_EXITS ; $643f
 	ld c, $00 ; $6442
 	farcall CharDataScreen_Show ; $6444
-	clear_flag $03, 4 ; $6447
-	set_flag $03, 4 ; $644a
+	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6447
+	set_flag FLAG_CHAR_DATA_START_EXITS ; $644a
 	ld c, $01 ; $644d
 	farcall CharDataScreen_Show ; $644f
-	clear_flag $03, 4 ; $6452
+	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6452
 	farcall SaveStorySlotWithTimer ; $6455
 	jr Label_1b_6408 ; $6458
 Label_1b_645a:
@@ -5810,7 +5810,7 @@ LoadMinigameHighScores:
 	ld hl, $d81b ; $7563
 	ld bc, $0012 ; $7566
 	call ClearBytes ; $7569
-	ld de, $06c0 ; $756c
+	ld de, SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; $756c
 	farcall TestSaveFlag ; $756f
 	jr z, Label_1b_757b ; $7572
 	ld a, $01 ; $7574

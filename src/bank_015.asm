@@ -56,14 +56,14 @@ TournamentCourtyardNpc05_15:
 	farcall InitDialogueTextCursor ; $410e
 	test_flag FLAG_DOUBLES ; $4111
 	jr z, Label_15_4120 ; $4114
-	test_flag $0e, 7 ; $4116
+	test_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $4116
 	jr nz, Label_15_413f ; $4119
-	set_flag $0e, 7 ; $411b
+	set_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $411b
 	jr Label_15_4128 ; $411e
 Label_15_4120:
-	test_flag $0e, 6 ; $4120
+	test_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4120
 	jr nz, Label_15_413f ; $4123
-	set_flag $0e, 6 ; $4125
+	set_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4125
 Label_15_4128:
 	script_speak $05 ; $4128
 	script_set_anim $05, $02 ; $412d
@@ -788,7 +788,7 @@ TrainingCourtNpc13_15:
 	script_wait_frames $0a ; $4b66
 	ret ; $4b6d
 Label_15_4b6e:
-	set_flag $10, 0 ; $4b6e
+	set_flag FLAG_SWING_PRACTICE_KID_PLACED ; $4b6e
 	script_set_anim ACTOR_PLAYER, $04 ; $4b71
 	script_wait_idle ACTOR_PLAYER ; $4b78
 	script_set_anim $13, $01 ; $4b7d
@@ -4327,7 +4327,7 @@ PlaceSwingPracticeKidActor:
 	and a, $0f ; $7a4e
 	cp a, $03 ; $7a50
 	jp nz, Label_15_7a66 ; $7a52
-	test_flag $10, 0 ; $7a55
+	test_flag FLAG_SWING_PRACTICE_KID_PLACED ; $7a55
 	jp nz, Label_15_7a66 ; $7a58
 	script_set_position $13, $3500, $0f00 ; $7a5b
 Label_15_7a66:

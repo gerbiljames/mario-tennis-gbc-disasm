@@ -26,11 +26,11 @@ RunPauseMenuWindow:
 	ld [$cb2b], a ; $402d
 	wram_bank $05 ; $4030
 	farcall CreateMenuWindowFromText ; $4036
-	set_flag $03, 0 ; $4039
+	set_flag FLAG_VRAM_UPDATE_BUSY ; $4039
 	ld [wPauseMenuWindowId], a ; $403c
 	farcall RestoreShadowTilemap ; $403f
 	farcall RenderMenuWindowText ; $4042
-	clear_flag $03, 0 ; $4045
+	clear_flag FLAG_VRAM_UPDATE_BUSY ; $4045
 Label_1a_4048:
 	call DrawPauseMenuSettingValues ; $4048
 	ld a, [wPauseMenuWindowId] ; $404b
@@ -55,9 +55,9 @@ Label_1a_4065:
 	jr nz, Label_1a_407c ; $406e
 Label_1a_4070:
 	ld a, [wPauseMenuWindowId] ; $4070
-	set_flag $03, 0 ; $4073
+	set_flag FLAG_VRAM_UPDATE_BUSY ; $4073
 	farcall CloseWindow ; $4076
-	clear_flag $03, 0 ; $4079
+	clear_flag FLAG_VRAM_UPDATE_BUSY ; $4079
 Label_1a_407c:
 	pop bc ; $407c
 	pop af ; $407d
@@ -300,12 +300,12 @@ Label_1a_4227:
 	ld hl, $049b ; $4250
 	ld bc, $41dd ; $4253
 	ld de, $0305 ; $4256
-	set_flag $06, 0 ; $4259
+	set_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4259
 	call RunPauseMenuWindow ; $425c
 	call ResetPauseMenuState ; $425f
 	ld hl, $cb2a ; $4262
 	set 7, [hl] ; $4265
-	clear_flag $06, 0 ; $4267
+	clear_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4267
 	ret ; $426a
 AdjustMessageSpeedSetting:
 	ld a, [$cb2a] ; $426b
@@ -371,7 +371,7 @@ RestoreMessageSpeed:
 	ld [wMessageSpeed], a ; $42ca
 	ret ; $42cd
 Label_1a_42ce:
-	clear_flag $06, 1 ; $42ce
+	clear_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $42ce
 	script_set_text Text_31_156 ; $42d1
 	ld a, $80 ; $42d7
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $42d9
@@ -405,7 +405,7 @@ Label_1a_4317:
 	ld a, [$cb2c] ; $4323
 	and a, a ; $4326
 	jr nz, Label_1a_432e ; $4327
-	set_flag $06, 1 ; $4329
+	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4329
 	jr Label_1a_432e ; $432c
 Label_1a_432e:
 	jp RunPauseMenuWindow ; $432e
@@ -435,7 +435,7 @@ Label_1a_4366:
 	ld a, [$cb2c] ; $436e
 	and a, a ; $4371
 	jr nz, Label_1a_4379 ; $4372
-	set_flag $06, 1 ; $4374
+	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4374
 	jr Label_1a_4379 ; $4377
 Label_1a_4379:
 	jp RunPauseMenuWindow ; $4379
@@ -449,7 +449,7 @@ BuildMinigameModePauseMenu:
 	ld hl, $049a ; $438c
 	ld bc, $416c ; $438f
 	ld de, $0304 ; $4392
-	set_flag $06, 1 ; $4395
+	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4395
 	ret ; $4398
 CheckDebugExpEditorHotkey:
 	push af ; $4399

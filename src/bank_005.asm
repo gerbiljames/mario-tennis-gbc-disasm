@@ -470,7 +470,7 @@ RedrawWindowRowsThunk:
 	call RedrawWindowRows ; $42ed
 	ret ; $42f0
 RedrawActiveTextWindow:
-	test_flag $03, 3 ; $42f1
+	test_flag FLAG_DEBUG_STATIC_TEXT_WINDOW ; $42f1
 	ret nz ; $42f4
 	push af ; $42f5
 	push bc ; $42f6
@@ -2049,14 +2049,14 @@ Label_05_4cb1:
 	rlc b ; $4cb6
 	bit 0, b ; $4cb8
 	jr z, Label_05_4cc8 ; $4cba
-	test_flag $06, 0 ; $4cbc
+	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4cbc
 	jp nz, Label_05_4d3f ; $4cbf
-	test_flag $06, 1 ; $4cc2
+	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4cc2
 	jp nz, Label_05_4d3f ; $4cc5
 Label_05_4cc8:
-	test_flag $06, 0 ; $4cc8
+	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4cc8
 	jr nz, Label_05_4cd6 ; $4ccb
-	test_flag $06, 1 ; $4ccd
+	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4ccd
 	jp nz, Label_05_4ce8 ; $4cd0
 	jp Label_05_4cfa ; $4cd3
 Label_05_4cd6:
@@ -2136,9 +2136,9 @@ Label_05_4d56:
 	wram_bank $05 ; $4d56
 	ld hl, wTextArrowBlinkCounter ; $4d5c
 	inc [hl] ; $4d5f
-	test_flag $06, 0 ; $4d60
+	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4d60
 	jr nz, Label_05_4d6d ; $4d63
-	test_flag $06, 1 ; $4d65
+	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4d65
 	jr nz, Label_05_4dbd ; $4d68
 	jp Label_05_4e0f ; $4d6a
 Label_05_4d6d:
@@ -2276,7 +2276,7 @@ Label_05_4e6d:
 	ld b, a ; $4e77
 	or a, a ; $4e78
 	jr nz, Label_05_4e85 ; $4e79
-	test_flag $04, 3 ; $4e7b
+	test_flag FLAG_TEXT_RENDER_ACTIVE ; $4e7b
 	jr nz, Label_05_4e83 ; $4e7e
 	call FlushGlyphRow ; $4e80
 Label_05_4e83:
@@ -2463,9 +2463,9 @@ TextCmdWaitButtonPage:
 	call AdvanceFrame ; $4fa1
 	ld hl, TextContinueArrowBlinkTask ; $4fa4
 	call UnregisterFrameTask ; $4fa7
-	set_flag $03, 1 ; $4faa
+	set_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4faa
 	call AdvanceFrame ; $4fad
-	clear_flag $03, 1 ; $4fb0
+	clear_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4fb0
 	pop hl ; $4fb3
 	pop de ; $4fb4
 	pop bc ; $4fb5
@@ -2476,7 +2476,7 @@ TextCmdWaitButtonPage:
 	pop af ; $4fbd
 	ret ; $4fbe
 GetTextContinueArrowCell:
-	test_flag $03, 3 ; $4fbf
+	test_flag FLAG_DEBUG_STATIC_TEXT_WINDOW ; $4fbf
 	jr z, Label_05_4fc9 ; $4fc2
 	ld d, $0a ; $4fc4
 	ld e, $11 ; $4fc6
@@ -3357,7 +3357,7 @@ Label_05_54f3:
 	ld a, [hl] ; $54f3
 	cp a, $00 ; $54f4
 	jr z, Label_05_5553 ; $54f6
-	test_flag $04, 4 ; $54f8
+	test_flag FLAG_PROPORTIONAL_TEXT_MODE ; $54f8
 	jr nz, Label_05_5505 ; $54fb
 	call DrawInlineGlyph ; $54fd
 	call UploadLastGlyphTiles ; $5500
@@ -3973,9 +3973,9 @@ Label_05_5888:
 	wram_bank ; $589f
 	call SetActiveWindowTextId ; $58a3
 	ld a, [$d824] ; $58a6
-	set_flag $04, 3 ; $58a9
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $58a9
 	call DrawTextWindowFrame ; $58ac
-	clear_flag $04, 3 ; $58af
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $58af
 	call RedrawWindowRowsPadded ; $58b2
 	call RenderActiveWindowText ; $58b5
 	ld a, [wTextPageBreakRequest] ; $58b8
@@ -4063,9 +4063,9 @@ Label_05_5956:
 	call SetActiveWindowTextId ; $5971
 	call RestoreShadowTilemap ; $5974
 	ld a, [$d824] ; $5977
-	set_flag $04, 3 ; $597a
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $597a
 	call DrawTextWindowFrame ; $597d
-	clear_flag $04, 3 ; $5980
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5980
 	call RedrawWindowRowsPadded ; $5983
 	call RenderActiveWindowText ; $5986
 	ld a, [wTextPageBreakRequest] ; $5989
@@ -4131,9 +4131,9 @@ Label_05_59f2:
 	wram_bank ; $5a09
 	call SetActiveWindowTextId ; $5a0d
 	ld a, [$d824] ; $5a10
-	set_flag $04, 3 ; $5a13
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5a13
 	call DrawTextWindowFrame ; $5a16
-	clear_flag $04, 3 ; $5a19
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5a19
 	call RedrawWindowRowsPadded ; $5a1c
 	call RenderActiveWindowText ; $5a1f
 	ld a, [wTextPageBreakRequest] ; $5a22
@@ -4696,7 +4696,7 @@ RenderProportionalTextAt:
 	push bc ; $5db4
 	push de ; $5db5
 	push hl ; $5db6
-	set_flag $04, 4 ; $5db7
+	set_flag FLAG_PROPORTIONAL_TEXT_MODE ; $5db7
 	push bc ; $5dba
 	push de ; $5dbb
 	push hl ; $5dbc
@@ -4895,7 +4895,7 @@ Label_05_5ebc:
 	pop de ; $5f00
 	pop bc ; $5f01
 	call SaveGlyphPenColumns ; $5f02
-	clear_flag $04, 4 ; $5f05
+	clear_flag FLAG_PROPORTIONAL_TEXT_MODE ; $5f05
 	pop hl ; $5f08
 	pop de ; $5f09
 	pop bc ; $5f0a
@@ -6087,12 +6087,12 @@ TextSubcmdHandlers_05:
 	ld [wStoryModeEntryPoint], a ; $6701
 	ld [$c294], a ; $6704
 	ld [wStoryModeExitLocationRequest], a ; $6707
-	set_flag $03, 4 ; $670a
+	set_flag FLAG_CHAR_DATA_START_EXITS ; $670a
 	ld c, $00 ; $670d
 	farcall CharDataScreen_Show ; $670f
 	ld c, $01 ; $6712
 	farcall CharDataScreen_Show ; $6714
-	clear_flag $03, 4 ; $6717
+	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6717
 	farcall SaveStorySlotWithTimer ; $671a
 	pop hl ; $671d
 	pop de ; $671e
@@ -7361,7 +7361,7 @@ Label_05_6feb:
 	jr z, Label_05_7011 ; $6ff5
 	ld a, [$cb75] ; $6ff7
 Label_05_6ffa:
-	test_flag $04, 3 ; $6ffa
+	test_flag FLAG_TEXT_RENDER_ACTIVE ; $6ffa
 	jr z, Label_05_7002 ; $6ffd
 	ld [hl+], a ; $6fff
 	jr Label_05_7005 ; $7000
@@ -7581,7 +7581,7 @@ FlushDirtyRowsPerFrame:
 	push de ; $711c
 	push hl ; $711d
 	call BuildDirtyRowRuns ; $711e
-	set_flag $03, 0 ; $7121
+	set_flag FLAG_VRAM_UPDATE_BUSY ; $7121
 	ld hl, $dc60 ; $7124
 Label_05_7127:
 	ld a, [hl] ; $7127
@@ -7601,7 +7601,7 @@ Label_05_713d:
 	pop af ; $713d
 	jr Label_05_7127 ; $713e
 Label_05_7140:
-	clear_flag $03, 0 ; $7140
+	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7140
 	pop hl ; $7143
 	pop de ; $7144
 	pop bc ; $7145
@@ -7613,7 +7613,7 @@ FlushDirtyRowsNow:
 	push de ; $714a
 	push hl ; $714b
 	call BuildDirtyRowRuns ; $714c
-	set_flag $03, 0 ; $714f
+	set_flag FLAG_VRAM_UPDATE_BUSY ; $714f
 	ld hl, $dc60 ; $7152
 Label_05_7155:
 	ld a, [hl] ; $7155
@@ -7626,7 +7626,7 @@ Label_05_7155:
 	call CopyDirtyRowSpanToVRAM ; $715e
 	jr Label_05_7155 ; $7161
 Label_05_7163:
-	clear_flag $03, 0 ; $7163
+	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7163
 	push af ; $7166
 	ldh a, [rLCDC] ; $7167
 	bit 7, a ; $7169
@@ -7794,10 +7794,10 @@ RenderMenuWindowText:
 	jr nz, Label_05_723f ; $723a
 	call PrepareGlyphBuffer ; $723c
 Label_05_723f:
-	set_flag $04, 3 ; $723f
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $723f
 	ld a, [$d82f] ; $7242
 	call DrawTextWindowFrame ; $7245
-	clear_flag $04, 3 ; $7248
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $7248
 	farcall GetWindowStructPtr ; $724b
 	ld b, h ; $724e
 	ld c, l ; $724f
@@ -8146,7 +8146,7 @@ UploadGlyphBufferFull:
 	push hl ; $742f
 	ldh a, [hWramBank] ; $7430
 	push af ; $7432
-	set_flag $03, 0 ; $7433
+	set_flag FLAG_VRAM_UPDATE_BUSY ; $7433
 	push af ; $7436
 	ldh a, [rLCDC] ; $7437
 	bit 7, a ; $7439
@@ -8217,7 +8217,7 @@ Label_05_74a1:
 Label_05_74b5:
 	pop af ; $74b5
 	ld c, $10 ; $74b6
-	test_flag $04, 2 ; $74b8
+	test_flag FLAG_DEBUG_SHORT_GLYPH_UPLOAD ; $74b8
 	jr z, Label_05_74bf ; $74bb
 	ld c, $07 ; $74bd
 Label_05_74bf:
@@ -8231,7 +8231,7 @@ Label_05_74bf:
 	call AdvanceFrame ; $74cd
 Label_05_74d0:
 	pop af ; $74d0
-	clear_flag $03, 0 ; $74d1
+	clear_flag FLAG_VRAM_UPDATE_BUSY ; $74d1
 	pop af ; $74d4
 	wram_bank ; $74d5
 	pop hl ; $74d9
@@ -8743,7 +8743,7 @@ UploadGlyphBufferQueued:
 	push hl ; $77e0
 	ldh a, [hWramBank] ; $77e1
 	push af ; $77e3
-	set_flag $03, 0 ; $77e4
+	set_flag FLAG_VRAM_UPDATE_BUSY ; $77e4
 	wram_bank $07 ; $77e7
 	ld a, [wKeepMatchStatsFlag] ; $77ed
 	or a, a ; $77f0
@@ -8814,7 +8814,7 @@ Label_05_7853:
 Label_05_7856:
 	dec b ; $7856
 	jr nz, Label_05_7838 ; $7857
-	clear_flag $03, 0 ; $7859
+	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7859
 	pop af ; $785c
 	wram_bank ; $785d
 	pop hl ; $7861

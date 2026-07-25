@@ -437,7 +437,7 @@ FillMemoryC:
 	jr nz, FillMemoryC ; $4463
 	ret ; $4465
 Label_1e_4466:
-	test_flag $09, 7 ; $4466
+	test_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $4466
 	jr nz, Label_1e_4480 ; $4469
 	ld a, [$c8a9] ; $446b
 	cp a, $1d ; $446e
@@ -2529,14 +2529,14 @@ Label_1e_66a9:
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $66b1
 	jr z, Label_1e_66be ; $66b4
 	push de ; $66b6
-	ld de, $01c0 ; $66b7
+	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $66b7
 	farcall SetSaveFlag ; $66ba
 	pop de ; $66bd
 Label_1e_66be:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $66be
 	jr z, Label_1e_66cb ; $66c1
 	push de ; $66c3
-	ld de, $01e0 ; $66c4
+	ld de, SAVEFLAG_UNLOCKED_ELDEN ; $66c4
 	farcall SetSaveFlag ; $66c7
 	pop de ; $66ca
 Label_1e_66cb:
@@ -3725,7 +3725,7 @@ SetMinigameRecordSaveFlag:
 	cp a, $1d ; $6eb4
 	jr nz, Label_1e_6ec1 ; $6eb6
 	push de ; $6eb8
-	ld de, $0740 ; $6eb9
+	ld de, SAVEFLAG_COURT_CASTLE ; $6eb9
 	farcall SetSaveFlag ; $6ebc
 	pop de ; $6ebf
 	ret ; $6ec0
@@ -3733,7 +3733,7 @@ Label_1e_6ec1:
 	cp a, $1f ; $6ec1
 	jr nz, Label_1e_6ece ; $6ec3
 	push de ; $6ec5
-	ld de, $0760 ; $6ec6
+	ld de, SAVEFLAG_COURT_TROPICS ; $6ec6
 	farcall SetSaveFlag ; $6ec9
 	pop de ; $6ecc
 	ret ; $6ecd
@@ -3741,7 +3741,7 @@ Label_1e_6ece:
 	cp a, $21 ; $6ece
 	jr nz, Label_1e_6edb ; $6ed0
 	push de ; $6ed2
-	ld de, $0780 ; $6ed3
+	ld de, SAVEFLAG_COURT_JUNGLE ; $6ed3
 	farcall SetSaveFlag ; $6ed6
 	pop de ; $6ed9
 	ret ; $6eda
@@ -3776,34 +3776,34 @@ Label_1e_6ef7:
 	farcall SetSaveFlag ; $6efe
 	ret ; $6f01
 MinigameClearFlagTable_1e:
-	; $6f02, 54 bytes (records:2)
-	dw $0280 ; record 0
-	dw $02a0 ; record 1
-	dw $02c0 ; record 2
-	dw $02e0 ; record 3
-	dw $0300 ; record 4
-	dw $0320 ; record 5
-	dw $0340 ; record 6
-	dw $0360 ; record 7
-	dw $0380 ; record 8
-	dw $03a0 ; record 9
-	dw $03c0 ; record 10
-	dw $03e0 ; record 11
-	dw $0500 ; record 12
-	dw $0520 ; record 13
-	dw $0540 ; record 14
-	dw $0560 ; record 15
-	dw $0580 ; record 16
-	dw $05a0 ; record 17
-	dw $05c0 ; record 18
-	dw $05e0 ; record 19
-	dw $0600 ; record 20
-	dw $0620 ; record 21
-	dw $0640 ; record 22
-	dw $0660 ; record 23
-	dw $0680 ; record 24
-	dw $06a0 ; record 25
-	dw $06c0 ; record 26
+	; $6f02, 54 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_BOO_BLAST_1 ; 0
+	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; 1
+	dw SAVEFLAG_CLEARED_BOO_BLAST_3 ; 2
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; 3
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; 4
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_3 ; 5
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_1 ; 6
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_2 ; 7
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_3 ; 8
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_1 ; 9
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_2 ; 10
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_3 ; 11
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_1 ; 12
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_2 ; 13
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_3 ; 14
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_1 ; 15
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_2 ; 16
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_3 ; 17
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_1 ; 18
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_2 ; 19
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_3 ; 20
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; 21
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_2 ; 22
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_3 ; 23
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; 24
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 25
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; 26
 UpdateMinigameBestScore:
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
@@ -3874,7 +3874,7 @@ Label_1e_6f96:
 	dec c ; $6fa2
 	jr nz, Label_1e_6f96 ; $6fa3
 	push de ; $6fa5
-	ld de, $0720 ; $6fa6
+	ld de, SAVEFLAG_COURT_STAR ; $6fa6
 	farcall SetSaveFlag ; $6fa9
 	pop de ; $6fac
 Label_1e_6fad:
@@ -4317,7 +4317,7 @@ Data_1e_725d:
 	db $03, $03, $03, $0c, $0c, $0c ; 0x00
 ShowGameProgressScreen:
 	push de ; $7263
-	ld de, $0720 ; $7264
+	ld de, SAVEFLAG_COURT_STAR ; $7264
 	farcall TestSaveFlag ; $7267
 	pop de ; $726a
 	jr z, Label_1e_7270 ; $726b
@@ -4406,9 +4406,9 @@ Label_1e_730a:
 	call CreateProgressListWindow ; $7310
 	ld [wCharPosX + 1], a ; $7313
 	ld a, [wCharPosX + 1] ; $7316
-	set_flag $04, 3 ; $7319
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $7319
 	farcall DrawTextWindowFrame ; $731c
-	clear_flag $04, 3 ; $731f
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $731f
 	call DrawProgressListRows ; $7322
 	farcall RedrawWindowRows ; $7325
 	call LoadGameProgressScreenTiles ; $7328
@@ -4467,9 +4467,9 @@ ScrollProgressListDown:
 	ld [hl], a ; $739c
 	sound $5e ; $739d
 	ld a, [wCharPosX + 1] ; $739f
-	set_flag $04, 3 ; $73a2
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73a2
 	farcall DrawTextWindowFrame ; $73a5
-	clear_flag $04, 3 ; $73a8
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73a8
 	call DrawProgressListRows ; $73ab
 Label_1e_73ae:
 	pop af ; $73ae
@@ -4486,9 +4486,9 @@ ScrollProgressListUp:
 	ld [hl], a ; $73c3
 	sound $5e ; $73c4
 	ld a, [wCharPosX + 1] ; $73c6
-	set_flag $04, 3 ; $73c9
+	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73c9
 	farcall DrawTextWindowFrame ; $73cc
-	clear_flag $04, 3 ; $73cf
+	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73cf
 	call DrawProgressListRows ; $73d2
 Label_1e_73d5:
 	pop af ; $73d5

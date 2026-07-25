@@ -2853,7 +2853,7 @@ RunStoryModeMenu:
 	farcall InitTextWindows ; $6e2d
 	ld a, $81 ; $6e30
 	ld [wWindowTileAttr], a ; $6e32
-	set_flag $02, 4 ; $6e35
+	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6e35
 	farcall LoadMatchStoryGfx ; $6e38
 	call RestoreStoryTilemapNoPriority ; $6e3b
 	ld d, $00 ; $6e3e
@@ -2902,7 +2902,7 @@ Label_06_6e94:
 	call RestoreStoryShadowTilemap ; $6e94
 	call RedrawStoryTilemapRows ; $6e97
 	call AdvanceFrame ; $6e9a
-	clear_flag $02, 4 ; $6e9d
+	clear_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6e9d
 	farcall LoadMenuFontGfxStaged ; $6ea0
 	pop af ; $6ea3
 	ldh [$ffdd], a ; $6ea4
@@ -2917,7 +2917,7 @@ Label_06_6eb2:
 	jp z, Label_06_6e52 ; $6eb5
 	pop af ; $6eb8
 	ldh [$ffdd], a ; $6eb9
-	clear_flag $02, 4 ; $6ebb
+	clear_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6ebb
 	farcall InitSceneTileAnimations ; $6ebe
 	pop af ; $6ec1
 	wram_bank ; $6ec2

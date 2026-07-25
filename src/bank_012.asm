@@ -333,7 +333,7 @@ WallPracticeRoomArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $46f3
 	cp a, $ff ; $46f6
 	jp z, Label_12_4715 ; $46f8
-	clear_flag $0f, 5 ; $46fb
+	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $46fb
 	test_flag FLAG_DOUBLES ; $46fe
 	jr z, Label_12_4715 ; $4701
 	script_set_position ACTOR_PARTNER, $0f00, $3b00 ; $4703
@@ -849,7 +849,7 @@ WallPracticeRoomTile02_12:
 	script_wait_move $07 ; $4d04
 	script_face $07, FACE_DOWN ; $4d09
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $4d10
-	clear_flag $0f, 5 ; $4d13
+	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4d13
 	test_flag FLAG_DOUBLES ; $4d16
 	jr z, Label_12_4d28 ; $4d19
 	script_get_actor_state ACTOR_PARTNER ; $4d1b
@@ -1212,7 +1212,7 @@ Label_12_5192:
 	script_move_target ACTOR_PLAYER, $0500, $3500 ; $519a
 	script_wait_move ACTOR_PLAYER ; $51a5
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $51aa
-	set_flag $0f, 5 ; $51ad
+	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $51ad
 	ret ; $51b0
 Label_12_51b1:
 	farcall AdvanceDialogueTextCursor ; $51b1
@@ -1289,7 +1289,7 @@ LaunchWallPracticeMinigame:
 	; $52b9, 7 bytes (bytes:16)
 	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
 RestoreWallPracticeRoomActors:
-	test_flag $0f, 5 ; $52c0
+	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $52c0
 	jr z, Label_12_52f6 ; $52c3
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $52c5
 	script_set_position $07, $0300, $3700 ; $52c8
@@ -1372,7 +1372,7 @@ SeniorCourtExitTriggers_12:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, $10, $0f
 	db $ff
 SeniorCourtExit01_12:
-	clear_flag $0f, 4 ; $5591
+	clear_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5591
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $5594
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $559e
 	ld c, $10 ; $55a8
@@ -1443,7 +1443,7 @@ Label_12_562a:
 SeniorCourtNpc03FaceRight_12:
 	test_flag FLAG_DOUBLES ; $5630
 	jr z, SeniorCourtNpc03_12 ; $5633
-	test_flag $0e, 4 ; $5635
+	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5635
 	jp nz, Label_12_57f4 ; $5638
 	script_set_speed ACTOR_PLAYER, $0010 ; $563b
 	script_set_speed ACTOR_PARTNER, $0010 ; $5643
@@ -1461,7 +1461,7 @@ SeniorCourtNpc03FaceRight_12:
 SeniorCourtNpc03FaceUpFlag0840_12:
 	test_flag FLAG_DOUBLES ; $569b
 	jp z, SeniorCourtNpc03FaceUpFlag0000_12 ; $569e
-	test_flag $0e, 4 ; $56a1
+	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $56a1
 	jp nz, Label_12_57f4 ; $56a4
 	script_set_speed ACTOR_PARTNER, $0010 ; $56a7
 	script_set_speed ACTOR_PLAYER, $0008 ; $56af
@@ -1477,7 +1477,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_wait_move ACTOR_PLAYER ; $56fd
 	jr Label_12_5747 ; $5702
 Label_12_5704:
-	test_flag $0e, 4 ; $5704
+	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5704
 	jp nz, Label_12_57f4 ; $5707
 	script_set_speed ACTOR_PLAYER, $0010 ; $570a
 	script_set_speed ACTOR_PARTNER, $0010 ; $5712
@@ -1499,7 +1499,7 @@ Label_12_5747:
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $577e
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_34_7 ; $578c
-	set_flag $0e, 4 ; $5792
+	set_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5792
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5795
 	or a, a ; $5798
 	jr nz, Label_12_57a1 ; $5799
@@ -2017,7 +2017,7 @@ SeniorCourtTileTriggers_12:
 	map_script $01, FACEMASK_ANY, $0f80, SeniorCourtTile01_12, $00, $00
 	db $ff
 SeniorCourtTile01_12:
-	set_flag $0f, 4 ; $5cd0
+	set_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5cd0
 	script_null_script $0a ; $5cd3
 	script_null_script $0b ; $5cd8
 	script_set_anim $0a, $01 ; $5cdd
@@ -2042,7 +2042,7 @@ SeniorCourtInitScript_12:
 	ld h, $08 ; $5d31
 	ld l, $0e ; $5d33
 	farcall CopyBehaviorMapRect ; $5d35
-	test_flag $0f, 4 ; $5d38
+	test_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5d38
 	jr z, Label_12_5d7b ; $5d3b
 	script_null_script $0a ; $5d3d
 	script_null_script $0b ; $5d42

@@ -21,7 +21,7 @@ CharDataScreen_Show:
 	ld a, [$d0b6] ; $4024
 	or a, a ; $4027
 	jr nz, Label_1c_4038 ; $4028
-	test_flag $03, 4 ; $402a
+	test_flag FLAG_CHAR_DATA_START_EXITS ; $402a
 	jr nz, Label_1c_4038 ; $402d
 	push bc ; $402f
 	ld a, c ; $4030
@@ -2093,7 +2093,7 @@ CharDataScreen_InputLoop:
 	call AdvanceFrame ; $50aa
 	ldh a, [hInputRisingEdge] ; $50ad
 	push af ; $50af
-	test_flag $03, 4 ; $50b0
+	test_flag FLAG_CHAR_DATA_START_EXITS ; $50b0
 	jr z, Label_1c_50bd ; $50b3
 	bit 3, a ; $50b5
 	jr z, Label_1c_50bd ; $50b7
@@ -2174,7 +2174,7 @@ Label_1c_512a:
 	inc [hl] ; $515c
 	ld a, $04 ; $515d
 	ld [$d024], a ; $515f
-	test_flag $03, 4 ; $5162
+	test_flag FLAG_CHAR_DATA_START_EXITS ; $5162
 	jr nz, Label_1c_5171 ; $5165
 	ld a, [wStoryCharacterSlot] ; $5167
 	farcall HasReachedNextLevelExp ; $516a

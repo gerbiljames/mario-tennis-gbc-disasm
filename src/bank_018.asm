@@ -1763,7 +1763,7 @@ Label_18_79de:
 	ldh a, [hInputPressed] ; $79e1
 	and a, PADF_A | PADF_B ; $79e3
 	jr z, Label_18_79de ; $79e5
-	ld de, $0120 ; $79e7
+	ld de, SAVEFLAG_OPENING_SEEN ; $79e7
 	farcall SetSaveFlag ; $79ea
 	ld de, $05e0 ; $79ed
 	call TestGameFlag ; $79f0

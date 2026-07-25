@@ -33,7 +33,7 @@ TennisMachineRoomArrival01_14:
 	ld a, [wStoryModeEntryPoint] ; $4063
 	cp a, $ff ; $4066
 	jp z, Label_14_4085 ; $4068
-	clear_flag $0f, 5 ; $406b
+	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $406b
 	test_flag FLAG_DOUBLES ; $406e
 	jr z, Label_14_4085 ; $4071
 	script_set_position ACTOR_PARTNER, $2b00, $3b00 ; $4073
@@ -218,7 +218,7 @@ TennisMachineRoomTile06_14:
 	jp MachinePracticeLevelPrompt ; $4224
 TennisMachineRoomTile01_14:
 	clear_flag FLAG_TEMP_SCENE_VARIANT_B ; $4227
-	clear_flag $0f, 5 ; $422a
+	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $422a
 	script_move_target ACTOR_PLAYER, $2ac0, $2b00 ; $422d
 	script_wait_move ACTOR_PLAYER ; $4238
 	script_move_target $05, $2d00, $2b00 ; $423d
@@ -497,7 +497,7 @@ Label_14_45a6:
 	script_move_target ACTOR_PLAYER, $3100, $2b00 ; $45dd
 	script_wait_move ACTOR_PLAYER ; $45e8
 	script_face ACTOR_PLAYER, FACE_DOWN ; $45ed
-	set_flag $0f, 5 ; $45f4
+	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $45f4
 	ret ; $45f7
 	; $45f8, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $c9 ; 0x00
@@ -889,7 +889,7 @@ MachineCourtWalkToAttendantCutscene:
 	script_face $05, FACE_LEFT ; $49f8
 	ret ; $49ff
 Label_14_4a00:
-	test_flag $0f, 5 ; $4a00
+	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4a00
 	jr z, Label_14_4a38 ; $4a03
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $4a05
 	script_set_position $05, $2d00, $2900 ; $4a08
@@ -1012,14 +1012,14 @@ Court2Npc06_14:
 Court2SpectatorChat_14:
 	test_flag FLAG_DOUBLES ; $4bdc
 	jr z, Label_14_4bec ; $4bdf
-	test_flag $0f, 1 ; $4be1
+	test_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $4be1
 	jp nz, Court2SpectatorsRepeatChat ; $4be4
-	set_flag $0f, 1 ; $4be7
+	set_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $4be7
 	jr Label_14_4bf5 ; $4bea
 Label_14_4bec:
-	test_flag $0f, 0 ; $4bec
+	test_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $4bec
 	jp nz, Court2SpectatorsRepeatChat ; $4bef
-	set_flag $0f, 0 ; $4bf2
+	set_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $4bf2
 Label_14_4bf5:
 	ld a, [$c2b0] ; $4bf5
 	add a, a ; $4bf8
@@ -1486,7 +1486,7 @@ IslandSkyInitScript_14:
 	jp Label_14_5303 ; $52ff
 	ret ; $5302
 Label_14_5303:
-	set_flag $09, 7 ; $5303
+	set_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $5303
 	call DisableLCDSafely ; $5306
 	call LoadPlaneObjGfx_14 ; $5309
 	call LoadWaterSplashObjGfx_14 ; $530c
@@ -2230,7 +2230,7 @@ Label_14_6281:
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
 Label_14_628b:
-	clear_flag $09, 7 ; $628b
+	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $628b
 	call DisableLCDSafely ; $628e
 	call LoadPlaneObjGfx2_14 ; $6291
 	call EnableLCD ; $6294
