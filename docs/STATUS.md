@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~160.2K instructions / 420,096 bytes of proven code+structured source
+**~160.3K instructions / 420,096 bytes of proven code+structured source
 (20.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -22,11 +22,11 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `79463c0`); the whole history rebuilds
+Everything below is **committed** (HEAD `816df7c`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,741 of 20,703 labels are human-named** (see the caveat in the
+**6,789 of 20,708 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
 
 ### No `Func_*` label is left in the ROM (2026-07-25)
@@ -163,6 +163,33 @@ own pointer-load gate still accepts a `push de` after such a load as evidence
 One table came out of the wash: `CharDataPageRightTargets_1c` is 5 bytes, not
 the 69 the blob boundary implied. The 64 bytes after it are 26 words stepping
 by `$40` (`$6880`-`$7040`) that nothing in the ROM reads, now `Unused_1c_5679`.
+
+### Bank $3e's menu tables, and two helpers hiding in them (2026-07-25)
+
+Bank `$3e` (court select, match rules, racket/shoe choice, equipment) is the
+second `Data_*` bank cleared: **45 tables named**, and the naming falls out of
+the routine that indexes each one, because every menu in the bank is built the
+same way. A cursor task reads three parallel tables by cursor index --
+`<Menu>CursorPositions` (y,x pairs), `<Menu>CursorTiles` (the `c` argument to
+`QueueSpriteTemplate`) and `<Menu>CursorAttrs` (the `b` argument) -- while the
+tab highlighter reads a list of shadow-attrmap addresses
+(`<Menu>TabAttrAddrs`). The two court-select variants (4 courts and 9) each
+have a full set, plus a `<Menu>LabelYOffsets` table whose byte becomes
+`hl = value << 8 | $f8` added to the cursor position -- the offset to the
+court-name sprite drawn beside it.
+
+`ComputeUnlockedCourtFlags`' table is five game-flag ids (`$07` bits 5 down to
+1), so it renders under the `flag_ids` spec added for bank `$1e`.
+
+**Two of the 47 were not tables.** `$43db` and `$440b`/`$4421` are
+*byte-identical* relocated copies of bank `$3b`'s `GetCellIndexFromCursorPtr`
+(`$43cb`) and `ClearWram3Row64` (`$43fb`) with its `ld a, $00` twin -- the two
+menu banks share a helper prologue, shifted `$10` in `$3e`. Nothing in the ROM
+references the `$3e` copies, so descent never reached them and they sat as
+`Data_` blobs decoding as garbage. They are seeded in
+`coverage/bank03e_static2.json` (which already carried seven neighbouring
+stranded heads) and named; byte-identity with an already-named routine is what
+makes that seed safe, per the caution in the bank `$1e` section above.
 
 ### The generator split into `tools/disasmlib/` (2026-07-25)
 
@@ -2781,7 +2808,7 @@ zero-filled farcall targets are now filtered. Build stays byte-perfect.
 
 ## Annotation state
 
-**Human-named symbols: 6,741 of 20,703 labels** (`tools/progress.py`; the rest
+**Human-named symbols: 6,789 of 20,708 labels** (`tools/progress.py`; the rest
 are auto-generated `Label_/Data_/FarPtr_` names — no `Func_` is left). Bank 0: 56 named routines
 (docs/bank0_notes.md) — FarCall trampoline, OAM DMA stub, joypad, LZ
 decompressor, sound engine entries, OAM sprite queuers, SoftReset, interrupt
@@ -3500,5 +3527,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `79463c0`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `816df7c`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
