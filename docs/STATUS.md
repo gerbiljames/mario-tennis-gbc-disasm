@@ -22,7 +22,7 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `bfe39ab`); the whole history rebuilds
+Everything below is **committed** (HEAD `13728ab`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -250,13 +250,34 @@ first-pass guesses:
 * `$06,4`/`$07,3` are the **Dream Match** (the Mario-cast final), not another
   Island Open round.
 
-Two things recorded rather than smoothed over: bank `$07`'s `ModeHookTable_07`
+One thing recorded rather than smoothed over: bank `$07`'s `ModeHookTable_07`
 slot 4 sets `FLAG_HAVE_SILVER_RACKET` on a ball-hit event, which reads like a
 borrowed scratch bit (the fragment at `$5f0d` that tests and clears it is
-stranded code no table slot points at); and the training-court coach flags
-`$bd`/`$be`/`$bf` are named for the drill family the NPC that reads them
-checks, which puts the existing `InitServeCoachScene`/`InitNetCoachScene`
-labels one family out of step -- the labels look wrong, not the flags.
+stranded code no table slot points at).
+
+**Correction (2026-07-26):** this section first claimed the training-court
+coach labels `InitServeCoachScene`/`InitNetCoachScene` were "one family out of
+step" with flags `$bd`/`$be`/`$bf`. They are not -- the labels are right and
+the claim was an artefact of the flag-inventory script, which attributed each
+`set_flag` to the nearest preceding *top-level* label. The three flags are set
+inside `rst $00` jumptable-target fragments that happen to sit after the
+previous coach's `Init` routine, so each setter was credited to the wrong
+function. Each fragment in fact opens with `call Init<X>CoachScene`, and the
+whole chain agrees per actor:
+
+| actor | init scene | lessons | flag | NPC script |
+| --- | --- | --- | --- | --- |
+| `$07` | `InitServeCoachScene` | `ServeCoach{Junior,Senior,Varsity}LessonScene` | `FLAG_SERVE_COACH_GREETED` | `TrainingCourtNpc07_15`, which branches on Service Practice 1-3 |
+| `$12` | `InitNetCoachScene` | `NetCoach{Volley,Smash,DropShot}LessonScene` | `FLAG_NET_COACH_GREETED` | `TrainingCourtNpc12_15`, Net Game Practice 1-3 |
+| `$0d` | `InitReturnCoachScene` | `ReturnCoach{Return,Lob,PassingShot}LessonScene` | `FLAG_RETURN_COACH_GREETED` | `TrainingCourtNpc0D_15`, Stroke Practice 1-3 |
+
+The flags are renamed onto the bank's own Serve/Net/Return coach vocabulary
+(they had been named after the drill family instead), and the three fragments
+that set them -- entry 0 of each coach's result-dispatch table, the first-visit
+branch -- are now `ServeCoachIntroDialogue_15`, `NetCoachIntroDialogue_15` and
+`ReturnCoachIntroDialogue_15` rather than bare `Label_15_*`. The lesson for the
+next flag pass: attribute a `set_flag` to the fragment that *reaches* it, not
+to the nearest label above it.
 
 ### The generator split into `tools/disasmlib/` (2026-07-25)
 
@@ -3594,5 +3615,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `bfe39ab`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `13728ab`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.

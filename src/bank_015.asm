@@ -520,11 +520,11 @@ TrainingCourtExitTriggers_15:
 	db $ff
 ClearTrainingCourtNpcFlags:
 	clear_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $4967
-	clear_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $496a
+	clear_flag FLAG_SERVE_COACH_GREETED ; $496a
 	clear_flag FLAG_NET_CHALLENGER_DEFEATED ; $496d
-	clear_flag FLAG_NET_PRACTICE_COACH_GREETED ; $4970
+	clear_flag FLAG_NET_COACH_GREETED ; $4970
 	clear_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $4973
-	clear_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $4976
+	clear_flag FLAG_RETURN_COACH_GREETED ; $4976
 	ret ; $4979
 TrainingCourtNpc03_15:
 	ld a, [$c2b0] ; $497a
@@ -1097,7 +1097,7 @@ TrainingCourtNpc07_15:
 Label_15_5148:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_2 ; $5148
 	jr nz, Label_15_5172 ; $514b
-	test_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $514d
+	test_flag FLAG_SERVE_COACH_GREETED ; $514d
 	jr nz, Label_15_515b ; $5150
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5152
 	jr z, Label_15_515b ; $5155
@@ -1114,7 +1114,7 @@ Label_15_516c:
 Label_15_5172:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_3 ; $5172
 	jr nz, Label_15_519c ; $5175
-	test_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $5177
+	test_flag FLAG_SERVE_COACH_GREETED ; $5177
 	jr nz, Label_15_5185 ; $517a
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $517c
 	jr z, Label_15_5185 ; $517f
@@ -1160,7 +1160,7 @@ TrainingCourtNpc12_15:
 Label_15_51f4:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_2 ; $51f4
 	jr nz, Label_15_521e ; $51f7
-	test_flag FLAG_NET_PRACTICE_COACH_GREETED ; $51f9
+	test_flag FLAG_NET_COACH_GREETED ; $51f9
 	jr nz, Label_15_5207 ; $51fc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $51fe
 	jr z, Label_15_5207 ; $5201
@@ -1177,7 +1177,7 @@ Label_15_5218:
 Label_15_521e:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_3 ; $521e
 	jr nz, Label_15_5248 ; $5221
-	test_flag FLAG_NET_PRACTICE_COACH_GREETED ; $5223
+	test_flag FLAG_NET_COACH_GREETED ; $5223
 	jr nz, Label_15_5231 ; $5226
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5228
 	jr z, Label_15_5231 ; $522b
@@ -1223,7 +1223,7 @@ TrainingCourtNpc0D_15:
 Label_15_52a0:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_2 ; $52a0
 	jr nz, Label_15_52d5 ; $52a3
-	test_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $52a5
+	test_flag FLAG_RETURN_COACH_GREETED ; $52a5
 	jr nz, Label_15_52b3 ; $52a8
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52aa
 	jr z, Label_15_52b3 ; $52ad
@@ -1243,7 +1243,7 @@ Label_15_52cf:
 Label_15_52d5:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_3 ; $52d5
 	jr nz, Label_15_52f4 ; $52d8
-	test_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $52da
+	test_flag FLAG_RETURN_COACH_GREETED ; $52da
 	jr nz, Label_15_52e8 ; $52dd
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52df
 	jr z, Label_15_52e8 ; $52e2
@@ -3733,7 +3733,7 @@ Label_15_7290:
 	ld a, [$c2e3] ; $7290
 	ld a, a ; $7293
 	rst Rst00 ; $7294
-	dw Label_15_72c7 ; $7295 jumptable
+	dw ServeCoachIntroDialogue_15 ; $7295 jumptable
 	dw Label_15_73f0 ; $7297 jumptable
 	dw Label_15_73fd ; $7299 jumptable
 	dw Label_15_740a ; $729b jumptable
@@ -3761,7 +3761,7 @@ Label_15_72b4:
 	dw Label_15_744b ; $72c1 jumptable
 	dw Label_15_7458 ; $72c3 jumptable
 	dw Label_15_73f0 ; $72c5 jumptable
-Label_15_72c7:
+ServeCoachIntroDialogue_15:
 	call InitServeCoachScene ; $72c7
 	script_set_text Text_37_28 ; $72ca
 	script_speak $07 ; $72d0
@@ -3786,7 +3786,7 @@ Label_15_72dd:
 Label_15_7326:
 	script_speak $07 ; $7326
 	script_face $07, FACE_LEFT ; $732b
-	set_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $7332
+	set_flag FLAG_SERVE_COACH_GREETED ; $7332
 	ret ; $7335
 Label_15_7336:
 	call InitServeCoachScene ; $7336
@@ -3808,7 +3808,7 @@ Label_15_734a:
 	script_speak $07 ; $7385
 	script_face $07, FACE_LEFT ; $738a
 	script_wait_frames $05 ; $7391
-	set_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $7398
+	set_flag FLAG_SERVE_COACH_GREETED ; $7398
 	ret ; $739b
 Label_15_739c:
 	call InitServeCoachScene ; $739c
@@ -3825,7 +3825,7 @@ Label_15_739c:
 	script_wait_idle $07 ; $73db
 	script_speak $07 ; $73e0
 	script_face $07, FACE_LEFT ; $73e5
-	set_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $73ec
+	set_flag FLAG_SERVE_COACH_GREETED ; $73ec
 	ret ; $73ef
 Label_15_73f0:
 	call InitServeCoachScene ; $73f0
@@ -3937,7 +3937,7 @@ Label_15_7539:
 	ld a, [$c2e3] ; $7539
 	ld a, a ; $753c
 	rst Rst00 ; $753d
-	dw Label_15_757a ; $753e jumptable
+	dw NetCoachIntroDialogue_15 ; $753e jumptable
 	dw Label_15_768c ; $7540 jumptable
 	dw Label_15_7699 ; $7542 jumptable
 	dw Label_15_76a6 ; $7544 jumptable
@@ -3970,7 +3970,7 @@ Label_15_7563:
 	dw Label_15_7701 ; $7574 jumptable
 	dw Label_15_76c0 ; $7576 jumptable
 	dw Label_15_768c ; $7578 jumptable
-Label_15_757a:
+NetCoachIntroDialogue_15:
 	script_set_text Text_37_126 ; $757a
 	call InitNetCoachScene ; $7580
 	script_speak $12 ; $7583
@@ -3989,7 +3989,7 @@ Label_15_759b:
 	script_wait_idle $12 ; $75c4
 	script_speak $12 ; $75c9
 	script_face $12, FACE_RIGHT ; $75ce
-	set_flag FLAG_NET_PRACTICE_COACH_GREETED ; $75d5
+	set_flag FLAG_NET_COACH_GREETED ; $75d5
 	ret ; $75d8
 Label_15_75d9:
 	call InitNetCoachScene ; $75d9
@@ -4010,7 +4010,7 @@ Label_15_7606:
 	script_wait_idle $12 ; $7623
 	script_speak $12 ; $7628
 	script_face $12, FACE_RIGHT ; $762d
-	set_flag FLAG_NET_PRACTICE_COACH_GREETED ; $7634
+	set_flag FLAG_NET_COACH_GREETED ; $7634
 	ret ; $7637
 Label_15_7638:
 	call InitNetCoachScene ; $7638
@@ -4027,7 +4027,7 @@ Label_15_7638:
 	script_wait_idle $12 ; $7677
 	script_speak $12 ; $767c
 	script_face $12, FACE_RIGHT ; $7681
-	set_flag FLAG_NET_PRACTICE_COACH_GREETED ; $7688
+	set_flag FLAG_NET_COACH_GREETED ; $7688
 	ret ; $768b
 Label_15_768c:
 	call InitNetCoachScene ; $768c
@@ -4127,7 +4127,7 @@ Label_15_77aa:
 	ld a, [$c2e3] ; $77aa
 	ld a, a ; $77ad
 	rst Rst00 ; $77ae
-	dw Label_15_77e3 ; $77af jumptable
+	dw ReturnCoachIntroDialogue_15 ; $77af jumptable
 	dw Label_15_78f5 ; $77b1 jumptable
 	dw Label_15_7902 ; $77b3 jumptable
 	dw Label_15_790f ; $77b5 jumptable
@@ -4156,7 +4156,7 @@ Label_15_77d0:
 	dw Label_15_7991 ; $77dd jumptable
 	dw Label_15_7929 ; $77df jumptable
 	dw Label_15_78f5 ; $77e1 jumptable
-Label_15_77e3:
+ReturnCoachIntroDialogue_15:
 	call InitReturnCoachScene ; $77e3
 	script_set_text Text_37_221 ; $77e6
 	script_speak $0d ; $77ec
@@ -4180,7 +4180,7 @@ Label_15_781e:
 Label_15_783d:
 	script_speak $0d ; $783d
 	script_face $0d, FACE_UP ; $7842
-	set_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $7849
+	set_flag FLAG_RETURN_COACH_GREETED ; $7849
 	ret ; $784c
 Label_15_784d:
 	call InitReturnCoachScene ; $784d
@@ -4197,7 +4197,7 @@ Label_15_784d:
 	script_wait_idle $0d ; $788c
 	script_speak $0d ; $7891
 	script_face $0d, FACE_UP ; $7896
-	set_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $789d
+	set_flag FLAG_RETURN_COACH_GREETED ; $789d
 	ret ; $78a0
 Label_15_78a1:
 	call InitReturnCoachScene ; $78a1
@@ -4214,7 +4214,7 @@ Label_15_78a1:
 	script_wait_idle $0d ; $78e0
 	script_speak $0d ; $78e5
 	script_face $0d, FACE_UP ; $78ea
-	set_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $78f1
+	set_flag FLAG_RETURN_COACH_GREETED ; $78f1
 	ret ; $78f4
 Label_15_78f5:
 	call InitReturnCoachScene ; $78f5

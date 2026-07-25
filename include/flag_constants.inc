@@ -65,9 +65,9 @@ def FLAG_REACHED_MARIO_WORLD_DOUBLES equ 179 ; wGameFlags byte $16 bit 3
 def FLAG_SERVE_CHALLENGER_DEFEATED equ 186 ; wGameFlags byte $17 bit 2
 def FLAG_NET_CHALLENGER_DEFEATED equ 187 ; wGameFlags byte $17 bit 3
 def FLAG_STROKE_CHALLENGER_DEFEATED equ 188 ; wGameFlags byte $17 bit 4
-def FLAG_SERVE_PRACTICE_COACH_GREETED equ 189 ; wGameFlags byte $17 bit 5
-def FLAG_NET_PRACTICE_COACH_GREETED equ 190 ; wGameFlags byte $17 bit 6
-def FLAG_STROKE_PRACTICE_COACH_GREETED equ 191 ; wGameFlags byte $17 bit 7
+def FLAG_SERVE_COACH_GREETED equ 189 ; wGameFlags byte $17 bit 5
+def FLAG_NET_COACH_GREETED equ 190 ; wGameFlags byte $17 bit 6
+def FLAG_RETURN_COACH_GREETED equ 191 ; wGameFlags byte $17 bit 7
 
 def FLAG_CLEARED_SERVICE_MATCH_1 equ 192 ; wGameFlags byte $18 bit 0
 def FLAG_CLEARED_SERVICE_MATCH_2 equ 193 ; wGameFlags byte $18 bit 1
