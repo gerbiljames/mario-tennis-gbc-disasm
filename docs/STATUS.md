@@ -22,9 +22,8 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `24fd9a1`) except the mugshot-table
-section immediately following; the whole history rebuilds byte-perfect.
-Per-bank progress at any time: `python3 tools/progress.py`
+Everything below is **committed** (HEAD `31f3024`); the whole history rebuilds
+byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
 **6,618 of 20,710 labels are human-named** (see the caveat in the
