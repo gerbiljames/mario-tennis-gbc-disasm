@@ -2554,7 +2554,7 @@ WaitTextAdvanceInput:
 	ld [$d829], a ; $502e
 Label_05_5031:
 	call RedrawActiveTextWindow ; $5031
-	test_flag $02, 6 ; $5034
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $5034
 	jr nz, Label_05_5061 ; $5037
 	call FlushGlyphRow ; $5039
 	ldh a, [hPlayerInputFlags] ; $503c
@@ -2569,7 +2569,7 @@ Label_05_5044:
 	dec b ; $504d
 	jr nz, Label_05_5044 ; $504e
 Label_05_5050:
-	test_flag $02, 6 ; $5050
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $5050
 	jr nz, Label_05_5061 ; $5053
 	call AdvanceRandomSeed ; $5055
 	call AdvanceFrame ; $5058
@@ -5929,9 +5929,9 @@ RunDebugFlagEditor:
 	push bc ; $65a3
 	push de ; $65a4
 	push hl ; $65a5
-	test_flag $03, 7 ; $65a6
+	test_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65a6
 	jr z, Label_05_65b8 ; $65a9
-	set_flag $03, 7 ; $65ab
+	set_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65ab
 	xor a, a ; $65ae
 	ld [$c715], a ; $65af
 	ld [$c716], a ; $65b2
@@ -8633,7 +8633,7 @@ InitGlyphStreamAt:
 	ld a, [$d820] ; $7741
 	cp a, b ; $7744
 	jr nz, Label_05_774f ; $7745
-	test_flag $1f, 5 ; $7747
+	test_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7747
 	jr nz, Label_05_774f ; $774a
 	inc d ; $774c
 	ld e, c ; $774d

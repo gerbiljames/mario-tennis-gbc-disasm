@@ -1820,7 +1820,7 @@ Label_04_4a39:
 	ld a, [hl+] ; $4a50
 	ld d, [hl] ; $4a51
 	ld e, a ; $4a52
-	test_flag $0d, 6 ; $4a53
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4a53
 	jr z, Label_04_4a61 ; $4a56
 	ld hl, $cb02 ; $4a58
 	ld a, [hl+] ; $4a5b
@@ -2450,13 +2450,13 @@ SpawnCompanionActor:
 	jr nz, Label_04_4f2c ; $4f1e
 	ld hl, PartnerActorList_04_4ec8 ; $4f20
 	ld a, $02 ; $4f23
-	test_flag $05, 7 ; $4f25
+	test_flag FLAG_DOUBLES ; $4f25
 	jr nz, Label_04_4f3b ; $4f28
 	jr Label_04_4f36 ; $4f2a
 Label_04_4f2c:
 	ld hl, PartnerActorList_04_4ee0 ; $4f2c
 	ld a, $03 ; $4f2f
-	test_flag $05, 7 ; $4f31
+	test_flag FLAG_DOUBLES ; $4f31
 	jr nz, Label_04_4f3b ; $4f34
 Label_04_4f36:
 	ld hl, PartnerActorList_04_4ef8 ; $4f36
@@ -3722,7 +3722,7 @@ DirectionToFacing_04:
 	db FACE_RIGHT, FACE_RIGHT, FACE_DOWN, FACE_DOWN, FACE_DOWN, FACE_DOWN, FACE_DOWN, FACE_LEFT ; 0x00
 	db FACE_LEFT, FACE_LEFT, FACE_UP, FACE_UP, FACE_UP, FACE_UP, FACE_UP, FACE_RIGHT ; 0x08
 QueueActorFrameTileCopy:
-	test_flag $0d, 7 ; $56c3
+	test_flag FLAG_ACTORS_FROZEN ; $56c3
 	ret nz ; $56c6
 	ld hl, $0030 ; $56c7
 	add hl, bc ; $56ca

@@ -34,7 +34,7 @@ TennisMachineRoomArrival01_14:
 	cp a, $ff ; $4066
 	jp z, Label_14_4085 ; $4068
 	clear_flag $0f, 5 ; $406b
-	test_flag $05, 7 ; $406e
+	test_flag FLAG_DOUBLES ; $406e
 	jr z, Label_14_4085 ; $4071
 	script_set_position ACTOR_PARTNER, $2b00, $3b00 ; $4073
 	script_face ACTOR_PARTNER, FACE_UP ; $407e
@@ -217,7 +217,7 @@ TennisMachineRoomTile06_14:
 	ld a, $03 ; $4222
 	jp MachinePracticeLevelPrompt ; $4224
 TennisMachineRoomTile01_14:
-	clear_flag $1c, 1 ; $4227
+	clear_flag FLAG_TEMP_SCENE_VARIANT_B ; $4227
 	clear_flag $0f, 5 ; $422a
 	script_move_target ACTOR_PLAYER, $2ac0, $2b00 ; $422d
 	script_wait_move ACTOR_PLAYER ; $4238
@@ -258,7 +258,7 @@ TennisMachineRoomInitScript_14:
 	jp z, Label_14_4a00 ; $42ac
 	ret ; $42af
 MachineCourtResultScene:
-	test_flag $05, 7 ; $42b0
+	test_flag FLAG_DOUBLES ; $42b0
 	jr z, Label_14_42d3 ; $42b3
 	script_null_script ACTOR_PARTNER ; $42b5
 	script_wait_frames $0a ; $42ba
@@ -271,7 +271,7 @@ Label_14_42d3:
 	call WaitFadeEnd ; $42ea
 	script_wait_frames $28 ; $42ed
 	script_set_speed ACTOR_PLAYER, $0020 ; $42f4
-	test_flag $05, 7 ; $42fc
+	test_flag FLAG_DOUBLES ; $42fc
 	jr z, Label_14_4301 ; $42ff
 Label_14_4301:
 	xor a, a ; $4301
@@ -325,19 +325,19 @@ MachineCourtGameOverExitScene:
 	ret ; $43a3
 ComputeMachineCourtProgress:
 	ld a, $00 ; $43a4
-	test_flag $1a, 2 ; $43a6
+	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $43a6
 	jp z, Label_14_4429 ; $43a9
 	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $43ac
 	ld a, $01 ; $43bb
-	test_flag $1a, 3 ; $43bd
+	test_flag FLAG_CLEARED_MACHINE_LEVEL_2 ; $43bd
 	jp z, Label_14_4429 ; $43c0
 	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $43c3
 	ld a, $02 ; $43d2
-	test_flag $1a, 4 ; $43d4
+	test_flag FLAG_CLEARED_MACHINE_LEVEL_3 ; $43d4
 	jr z, Label_14_4429 ; $43d7
 	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $43d9
 	ld a, $03 ; $43e8
-	test_flag $1a, 5 ; $43ea
+	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $43ea
 	jr z, Label_14_4429 ; $43ed
 	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $43ef
 	ld a, $04 ; $43fe
@@ -354,17 +354,17 @@ ComputeMachineCourtProgress:
 	pop af ; $4415
 	wram_bank ; $4416
 	ld a, b ; $441a
-	test_flag $1b, 2 ; $441b
+	test_flag FLAG_CLEARED_MACHINE_MASTER ; $441b
 	jr z, Label_14_4429 ; $441e
 	ld a, $05 ; $4420
-	test_flag $1b, 4 ; $4422
+	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4422
 	jr z, Label_14_4429 ; $4425
 	ld a, $06 ; $4427
 Label_14_4429:
 	ld [$c2b0], a ; $4429
 	ret ; $442c
 TennisMachineRoomNpc05_14:
-	test_flag $1c, 0 ; $442d
+	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $442d
 	jp nz, MachineCourtStartLevelScene ; $4430
 	ld a, [$c2b0] ; $4433
 	add a, a ; $4436
@@ -402,7 +402,7 @@ Label_14_4467:
 	script_wait_frames $05 ; $4480
 	and a, a ; $4487
 	jr nz, Label_14_44a9 ; $4488
-	set_flag $1c, 0 ; $448a
+	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $448a
 	farcall AdvanceDialogueTextCursor ; $448d
 	ld a, [$c2b0] ; $4490
 	and a, a ; $4493
@@ -413,7 +413,7 @@ Label_14_449b:
 	script_wait_idle $05 ; $44a2
 	jr nz, MachineCourtStartLevelScene ; $44a7
 Label_14_44a9:
-	test_flag $1a, 2 ; $44a9
+	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $44a9
 	jr z, Label_14_44ca ; $44ac
 	script_set_text Text_6e_222 ; $44ae
 	ld a, $05 ; $44b4
@@ -443,7 +443,7 @@ MachineCourtStartLevelScene:
 	script_move_target $05, $2d00, $2900 ; $44e9
 	script_wait_move $05 ; $44f4
 	script_face $05, FACE_DOWN ; $44f9
-	test_flag $05, 7 ; $4500
+	test_flag FLAG_DOUBLES ; $4500
 	jr z, Label_14_4515 ; $4503
 	script_null_script ACTOR_PARTNER ; $4505
 	script_set_actor_script ACTOR_PARTNER, ActorScript_14_4808 ; $450a
@@ -467,7 +467,7 @@ Label_14_4577:
 	ld c, $06 ; $4577
 	call BeginFadeOut ; $4579
 	call WaitFadeEnd ; $457c
-	clear_flag $1c, 0 ; $457f
+	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $457f
 	ld a, $12 ; $4582
 	ld [wStoryModeCurrentLocation], a ; $4584
 	ld a, $05 ; $4587
@@ -487,7 +487,7 @@ Label_14_4577:
 	ret ; $45a5
 Label_14_45a6:
 	script_speak $05 ; $45a6
-	set_flag $1c, 1 ; $45ab
+	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $45ab
 	script_move_target $05, $2d00, $2900 ; $45ae
 	script_wait_move $05 ; $45b9
 	script_face $05, FACE_DOWN ; $45be
@@ -585,8 +585,8 @@ TestMachineLevelClearedFlag:
 MachinePracticeResultScene:
 	xor a, a ; $46c5
 	ld [wStoryModeShowLocationName], a ; $46c6
-	set_flag $1c, 1 ; $46c9
-	test_flag $05, 7 ; $46cc
+	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $46c9
+	test_flag FLAG_DOUBLES ; $46cc
 	jr z, Label_14_46ef ; $46cf
 	script_null_script ACTOR_PARTNER ; $46d1
 	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $46d6
@@ -702,7 +702,7 @@ ActorScript_14_4808:
 	ld [wStoryModeExitLocationRequest], a ; $483e
 	ret ; $4841
 MachineExpertResultScene:
-	test_flag $1b, 4 ; $4842
+	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4842
 	jr z, Label_14_484f ; $4845
 	ld a, [wPointWinLoseFlag] ; $4847
 	cp a, $01 ; $484a
@@ -891,7 +891,7 @@ MachineCourtWalkToAttendantCutscene:
 Label_14_4a00:
 	test_flag $0f, 5 ; $4a00
 	jr z, Label_14_4a38 ; $4a03
-	set_flag $1c, 1 ; $4a05
+	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $4a05
 	script_set_position $05, $2d00, $2900 ; $4a08
 	script_face $05, FACE_DOWN ; $4a13
 	script_null_script ACTOR_PARTNER ; $4a1a
@@ -1010,7 +1010,7 @@ Court2Npc06_14:
 	dw $249c ; record 5
 	dw $249e ; record 6
 Court2SpectatorChat_14:
-	test_flag $05, 7 ; $4bdc
+	test_flag FLAG_DOUBLES ; $4bdc
 	jr z, Label_14_4bec ; $4bdf
 	test_flag $0f, 1 ; $4be1
 	jp nz, Court2SpectatorsRepeatChat ; $4be4
@@ -1110,7 +1110,7 @@ Court2SpectatorsRepeatChat:
 	ret ; $4dcb
 Court2Npc0A_14:
 	script_set_text Text_1f_106 ; $4dcc
-	test_flag $05, 7 ; $4dd2
+	test_flag FLAG_DOUBLES ; $4dd2
 	jr nz, Label_14_4de6 ; $4dd5
 	ld a, [$c2b0] ; $4dd7
 	cp a, $03 ; $4dda
@@ -1157,9 +1157,9 @@ Court2InitScript_14:
 InitCourt2SceneVariant:
 	ld a, $00 ; $4e60
 	ld [$c2b0], a ; $4e62
-	test_flag $05, 7 ; $4e65
+	test_flag FLAG_DOUBLES ; $4e65
 	jr nz, Label_14_4e92 ; $4e68
-	test_flag $07, 5 ; $4e6a
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4e6a
 	jr z, Label_14_4e7e ; $4e6d
 	ldh a, [hRomBank] ; $4e6f
 	ld hl, Court2ActorsAlt_14 ; $4e71
@@ -1168,12 +1168,12 @@ InitCourt2SceneVariant:
 	ld a, $03 ; $4e7a
 	jr Label_14_4e8e ; $4e7c
 Label_14_4e7e:
-	test_flag $07, 6 ; $4e7e
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4e7e
 	jr z, Label_14_4e87 ; $4e81
 	ld a, $02 ; $4e83
 	jr Label_14_4e8e ; $4e85
 Label_14_4e87:
-	test_flag $07, 7 ; $4e87
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $4e87
 	jr z, Label_14_4e91 ; $4e8a
 	ld a, $01 ; $4e8c
 Label_14_4e8e:
@@ -1181,7 +1181,7 @@ Label_14_4e8e:
 Label_14_4e91:
 	ret ; $4e91
 Label_14_4e92:
-	test_flag $06, 6 ; $4e92
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4e92
 	jr z, Label_14_4ea6 ; $4e95
 	ldh a, [hRomBank] ; $4e97
 	ld hl, Court2ActorsAlt_14 ; $4e99
@@ -1190,7 +1190,7 @@ Label_14_4e92:
 	ld a, $06 ; $4ea2
 	jr Label_14_4e8e ; $4ea4
 Label_14_4ea6:
-	test_flag $06, 7 ; $4ea6
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4ea6
 	jr z, Label_14_4eaf ; $4ea9
 	ld a, $05 ; $4eab
 	jr Label_14_4e8e ; $4ead
@@ -1217,7 +1217,7 @@ Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
 	cp a, $ff ; $4f69
 	jp z, Label_14_4fab ; $4f6b
-	test_flag $05, 7 ; $4f6e
+	test_flag FLAG_DOUBLES ; $4f6e
 	jr z, Label_14_4f99 ; $4f71
 	script_set_speed ACTOR_PARTNER, $00ff ; $4f73
 	script_move_angle ACTOR_PARTNER, FACE_RIGHT, $0200 ; $4f7b
@@ -1339,9 +1339,9 @@ Court1InitScript_14:
 InitCourt1SceneVariant:
 	ld a, $00 ; $5105
 	ld [$c2b0], a ; $5107
-	test_flag $05, 7 ; $510a
+	test_flag FLAG_DOUBLES ; $510a
 	jr nz, Label_14_513b ; $510d
-	test_flag $07, 5 ; $510f
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $510f
 	jr z, Label_14_5125 ; $5112
 	ld a, $03 ; $5114
 	ld [$c2b0], a ; $5116
@@ -1351,20 +1351,20 @@ InitCourt1SceneVariant:
 	farcall BeginCutsceneScriptMode ; $5121
 	ret ; $5124
 Label_14_5125:
-	test_flag $07, 6 ; $5125
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $5125
 	jr z, Label_14_5130 ; $5128
 	ld a, $02 ; $512a
 	ld [$c2b0], a ; $512c
 	ret ; $512f
 Label_14_5130:
-	test_flag $07, 7 ; $5130
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $5130
 	jr z, Label_14_513a ; $5133
 	ld a, $01 ; $5135
 	ld [$c2b0], a ; $5137
 Label_14_513a:
 	ret ; $513a
 Label_14_513b:
-	test_flag $06, 6 ; $513b
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $513b
 	jr z, Label_14_5151 ; $513e
 	ld a, $06 ; $5140
 	ld [$c2b0], a ; $5142
@@ -1374,7 +1374,7 @@ Label_14_513b:
 	farcall BeginCutsceneScriptMode ; $514d
 	ret ; $5150
 Label_14_5151:
-	test_flag $06, 7 ; $5151
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
 	jr z, Label_14_515c ; $5154
 	ld a, $05 ; $5156
 	ld [$c2b0], a ; $5158
@@ -1394,7 +1394,7 @@ Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
 	cp a, $ff ; $51a7
 	jp z, Label_14_51e9 ; $51a9
-	test_flag $05, 7 ; $51ac
+	test_flag FLAG_DOUBLES ; $51ac
 	jr z, Label_14_51d7 ; $51af
 	script_set_speed ACTOR_PARTNER, $00ff ; $51b1
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $51b9
@@ -1407,7 +1407,7 @@ Label_14_51d7:
 Label_14_51e9:
 	ret ; $51e9
 LoadCourtPlayerPartnerObjDefs_14:
-	test_flag $05, 7 ; $51ea
+	test_flag FLAG_DOUBLES ; $51ea
 	jp z, Label_14_5208 ; $51ed
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $51f0
 	ld d, $58 ; $51f3
@@ -1498,7 +1498,7 @@ Label_14_5303:
 	ld a, $01 ; $531c
 	ld hl, QueuePlaneSpriteByHeight_14 ; $531e
 	call RegisterFrameTask ; $5321
-	test_flag $05, 7 ; $5324
+	test_flag FLAG_DOUBLES ; $5324
 	jp z, Label_14_5352 ; $5327
 	script_null_script ACTOR_PARTNER ; $532a
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $532f
@@ -1647,13 +1647,13 @@ Label_14_5497:
 	ld a, [wStoryModeEntryPoint] ; $54a8
 	cp a, $0c ; $54ab
 	jr z, Label_14_54df ; $54ad
-	test_flag $05, 7 ; $54af
+	test_flag FLAG_DOUBLES ; $54af
 	jr z, Label_14_54bc ; $54b2
-	test_flag $15, 7 ; $54b4
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $54b4
 	jp z, Label_14_54df ; $54b7
 	jr Label_14_54c1 ; $54ba
 Label_14_54bc:
-	test_flag $15, 6 ; $54bc
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $54bc
 	jr z, Label_14_54df ; $54bf
 Label_14_54c1:
 	ld c, $04 ; $54c1
@@ -2245,7 +2245,7 @@ Label_14_628b:
 	call RegisterFrameTask ; $62ab
 	script_set_active ACTOR_PLAYER, $00 ; $62ae
 	script_set_active $03, $00 ; $62b5
-	test_flag $05, 7 ; $62bc
+	test_flag FLAG_DOUBLES ; $62bc
 	jp z, Label_14_62d2 ; $62bf
 	script_null_script ACTOR_PARTNER ; $62c2
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $62c7
@@ -2488,7 +2488,7 @@ Label_14_64e1:
 	call DisableLCDSafely ; $64ec
 	call LoadFireworkObjGfx_14 ; $64ef
 	call EnableLCD ; $64f2
-	test_flag $05, 7 ; $64f5
+	test_flag FLAG_DOUBLES ; $64f5
 	jp z, Label_14_650b ; $64f8
 	script_null_script ACTOR_PARTNER ; $64fb
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6500
@@ -2593,7 +2593,7 @@ Label_14_650b:
 	call BeginFadeOut ; $6641
 	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
-	test_flag $05, 7 ; $664a
+	test_flag FLAG_DOUBLES ; $664a
 	jr z, Label_14_6662 ; $664d
 	ld a, $1a ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
@@ -2739,7 +2739,7 @@ Label_14_6f7b:
 	ld hl, AnimateIslandSkyEffectSprites_14 ; $6fa6
 	call RegisterFrameTask ; $6fa9
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $6fac
-	test_flag $05, 7 ; $6fb7
+	test_flag FLAG_DOUBLES ; $6fb7
 	jp z, Label_14_6fcd ; $6fba
 	script_null_script ACTOR_PARTNER ; $6fbd
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6fc2
@@ -2867,16 +2867,16 @@ Label_14_70e0:
 	ld [wStoryModeExitLocationRequest], a ; $7108
 	ret ; $710b
 Label_14_710c:
-	test_flag $05, 7 ; $710c
+	test_flag FLAG_DOUBLES ; $710c
 	jp z, Label_14_711c ; $710f
-	test_flag $16, 1 ; $7112
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7112
 	jr nz, Label_14_7149 ; $7115
-	set_flag $16, 1 ; $7117
+	set_flag FLAG_STORY_COMPLETE_DOUBLES ; $7117
 	jr Label_14_7124 ; $711a
 Label_14_711c:
-	test_flag $16, 0 ; $711c
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $711c
 	jr nz, Label_14_7150 ; $711f
-	set_flag $16, 0 ; $7121
+	set_flag FLAG_STORY_COMPLETE_SINGLES ; $7121
 Label_14_7124:
 	ld b, $1d ; $7124
 	ld c, $0f ; $7126
@@ -2894,11 +2894,11 @@ Label_14_7124:
 	ld [wStoryModeExitLocationRequest], a ; $7145
 	ret ; $7148
 Label_14_7149:
-	test_flag $16, 3 ; $7149
+	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $7149
 	jr z, Label_14_7170 ; $714c
 	jr Label_14_7155 ; $714e
 Label_14_7150:
-	test_flag $16, 2 ; $7150
+	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $7150
 	jr z, Label_14_7170 ; $7153
 Label_14_7155:
 	ld c, $04 ; $7155
@@ -3111,7 +3111,7 @@ Label_14_76c6:
 	ld hl, AnimateIslandSkyEffectSprites_14 ; $76dc
 	call RegisterFrameTask ; $76df
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $76e2
-	test_flag $05, 7 ; $76ed
+	test_flag FLAG_DOUBLES ; $76ed
 	jp z, Label_14_7703 ; $76f0
 	script_null_script ACTOR_PARTNER ; $76f3
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $76f8
@@ -3504,19 +3504,19 @@ ActorScript_14_78e7:
 	as_wait $8c
 	as_anim $03
 	as_jump .L1a7
-	test_flag $05, 7 ; $7a9d
+	test_flag FLAG_DOUBLES ; $7a9d
 	jr nz, Label_14_7ac4 ; $7aa0
 	ld a, $00 ; $7aa2
-	test_flag $0a, 3 ; $7aa4
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7aa4
 	jr z, Label_14_7ac0 ; $7aa7
 	ld a, $02 ; $7aa9
-	test_flag $0a, 7 ; $7aab
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aab
 	jr z, Label_14_7ac0 ; $7aae
 	ld a, $04 ; $7ab0
-	test_flag $15, 6 ; $7ab2
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7ab2
 	jr z, Label_14_7ac0 ; $7ab5
 	ld a, $06 ; $7ab7
-	test_flag $16, 0 ; $7ab9
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7ab9
 	jr z, Label_14_7ac0 ; $7abc
 	ld a, $08 ; $7abe
 Label_14_7ac0:
@@ -3524,42 +3524,42 @@ Label_14_7ac0:
 	ret ; $7ac3
 Label_14_7ac4:
 	ld a, $01 ; $7ac4
-	test_flag $08, 2 ; $7ac6
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7ac6
 	jr z, Label_14_7ac0 ; $7ac9
 	ld a, $03 ; $7acb
-	test_flag $08, 6 ; $7acd
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7acd
 	jr z, Label_14_7ac0 ; $7ad0
 	ld a, $05 ; $7ad2
-	test_flag $15, 7 ; $7ad4
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ad4
 	jr z, Label_14_7ac0 ; $7ad7
 	ld a, $07 ; $7ad9
-	test_flag $16, 1 ; $7adb
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7adb
 	jr z, Label_14_7ac0 ; $7ade
 	ld a, $09 ; $7ae0
 	jr Label_14_7ac0 ; $7ae2
 	ld a, $00 ; $7ae4
-	test_flag $0a, 3 ; $7ae6
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6
 	jr z, Label_14_7b03 ; $7ae9
 	inc a ; $7aeb
-	test_flag $0a, 7 ; $7aec
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aec
 	jr z, Label_14_7b03 ; $7aef
 	inc a ; $7af1
-	test_flag $05, 7 ; $7af2
+	test_flag FLAG_DOUBLES ; $7af2
 	jr nz, Label_14_7b07 ; $7af5
-	test_flag $15, 6 ; $7af7
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7af7
 	jr z, Label_14_7b03 ; $7afa
 	inc a ; $7afc
-	test_flag $16, 0 ; $7afd
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7afd
 	jr z, Label_14_7b03 ; $7b00
 	inc a ; $7b02
 Label_14_7b03:
 	ld [$c2b0], a ; $7b03
 	ret ; $7b06
 Label_14_7b07:
-	test_flag $15, 7 ; $7b07
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7b07
 	jr z, Label_14_7b03 ; $7b0a
 	inc a ; $7b0c
-	test_flag $16, 1 ; $7b0d
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7b0d
 	jr z, Label_14_7b03 ; $7b10
 	inc a ; $7b12
 	jr Label_14_7b03 ; $7b13

@@ -32,7 +32,7 @@ DormEntranceArrival02_12:
 	ld a, [wStoryModeEntryPoint] ; $406f
 	cp a, $ff ; $4072
 	jp z, Label_12_40b4 ; $4074
-	test_flag $05, 7 ; $4077
+	test_flag FLAG_DOUBLES ; $4077
 	jr z, Label_12_40a2 ; $407a
 	script_set_speed ACTOR_PARTNER, $00ff ; $407c
 	script_move_angle ACTOR_PARTNER, FACE_UP, $0200 ; $4084
@@ -48,7 +48,7 @@ DormEntranceArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $40b5
 	cp a, $ff ; $40b8
 	jp z, Label_12_40fa ; $40ba
-	test_flag $05, 7 ; $40bd
+	test_flag FLAG_DOUBLES ; $40bd
 	jr z, Label_12_40e8 ; $40c0
 	script_set_speed ACTOR_PARTNER, $00ff ; $40c2
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $40ca
@@ -334,7 +334,7 @@ WallPracticeRoomArrival01_12:
 	cp a, $ff ; $46f6
 	jp z, Label_12_4715 ; $46f8
 	clear_flag $0f, 5 ; $46fb
-	test_flag $05, 7 ; $46fe
+	test_flag FLAG_DOUBLES ; $46fe
 	jr z, Label_12_4715 ; $4701
 	script_set_position ACTOR_PARTNER, $0f00, $3b00 ; $4703
 	script_face ACTOR_PARTNER, FACE_UP ; $470e
@@ -480,7 +480,7 @@ WallPracticeMasterResultScript:
 	call WaitFadeEnd ; $4846
 	xor a, a ; $4849
 	ld [wStoryModeShowLocationName], a ; $484a
-	test_flag $1b, 5 ; $484d
+	test_flag FLAG_CLEARED_WALL_EXPERT ; $484d
 	jr z, WallPracticeScoreRetryPrompt ; $4850
 	ld a, [wPointWinLoseFlag] ; $4852
 	cp a, $01 ; $4855
@@ -666,7 +666,7 @@ Label_12_49e5:
 	script_wait_idle $07 ; $4a62
 	script_speak $07 ; $4a67
 Label_12_4a6c:
-	test_flag $05, 7 ; $4a6c
+	test_flag FLAG_DOUBLES ; $4a6c
 	jr z, Label_12_4aae ; $4a6f
 	script_wait_frames $28 ; $4a71
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a78
@@ -748,7 +748,7 @@ WallPracticeExitCourtScript:
 	script_move_target $07, $0500, $3700 ; $4b6b
 	script_wait_move $07 ; $4b76
 	script_face $07, FACE_DOWN ; $4b7b
-	test_flag $05, 7 ; $4b82
+	test_flag FLAG_DOUBLES ; $4b82
 	jr z, Label_12_4b94 ; $4b85
 	script_get_actor_state ACTOR_PARTNER ; $4b87
 	ld c, l ; $4b8c
@@ -806,7 +806,7 @@ Label_12_4bfc:
 	script_move_target $07, $0500, $3700 ; $4c3f
 	script_wait_move $07 ; $4c4a
 	script_face $07, FACE_DOWN ; $4c4f
-	test_flag $05, 7 ; $4c56
+	test_flag FLAG_DOUBLES ; $4c56
 	jr z, Label_12_4c98 ; $4c59
 	script_wait_frames $1e ; $4c5b
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4c62
@@ -848,9 +848,9 @@ WallPracticeRoomTile02_12:
 	script_move_target $07, $0500, $3700 ; $4cf9
 	script_wait_move $07 ; $4d04
 	script_face $07, FACE_DOWN ; $4d09
-	clear_flag $1c, 0 ; $4d10
+	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $4d10
 	clear_flag $0f, 5 ; $4d13
-	test_flag $05, 7 ; $4d16
+	test_flag FLAG_DOUBLES ; $4d16
 	jr z, Label_12_4d28 ; $4d19
 	script_get_actor_state ACTOR_PARTNER ; $4d1b
 	ld c, l ; $4d20
@@ -890,7 +890,7 @@ WallPracticeRoomTile03_12:
 Label_12_4d97:
 	ret ; $4d97
 WallPracticeRoomTile04_12:
-	test_flag $1a, 7 ; $4d98
+	test_flag FLAG_CLEARED_WALL_LEVEL_2 ; $4d98
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text Text_36_49 ; $4d9e
 	ld a, $07 ; $4da4
@@ -922,7 +922,7 @@ WallPracticeRoomTile04_12:
 Label_12_4e0c:
 	ret ; $4e0c
 WallPracticeRoomTile05_12:
-	test_flag $1b, 0 ; $4e0d
+	test_flag FLAG_CLEARED_WALL_LEVEL_3 ; $4e0d
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text Text_36_50 ; $4e13
 	ld a, $07 ; $4e19
@@ -954,7 +954,7 @@ WallPracticeRoomTile05_12:
 Label_12_4e81:
 	ret ; $4e81
 WallPracticeRoomTile06_12:
-	test_flag $1b, 1 ; $4e82
+	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $4e82
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text Text_36_51 ; $4e88
 	ld a, $07 ; $4e8e
@@ -1012,7 +1012,7 @@ WallPracticeRoomInitScript_12:
 	call RestoreWallPracticeRoomActors ; $4f35
 	ret ; $4f38
 Label_12_4f39:
-	test_flag $05, 7 ; $4f39
+	test_flag FLAG_DOUBLES ; $4f39
 	jr z, Label_12_4f55 ; $4f3c
 	script_null_script ACTOR_PARTNER ; $4f3e
 	script_set_position ACTOR_PARTNER, $0700, $3900 ; $4f43
@@ -1035,13 +1035,13 @@ Label_12_4f7e:
 	jp WallPracticeLevelResultScript ; $4f86
 	ret ; $4f89
 Label_12_4f8a:
-	test_flag $05, 7 ; $4f8a
+	test_flag FLAG_DOUBLES ; $4f8a
 	jr z, Label_12_4fa6 ; $4f8d
 	script_null_script ACTOR_PARTNER ; $4f8f
 	script_set_position ACTOR_PARTNER, $0700, $3900 ; $4f94
 	script_face ACTOR_PARTNER, FACE_UP ; $4f9f
 Label_12_4fa6:
-	set_flag $1c, 0 ; $4fa6
+	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $4fa6
 	script_set_position $07, $0300, $3700 ; $4fa9
 	script_face $07, FACE_RIGHT ; $4fb4
 	script_fade_in $06 ; $4fbb
@@ -1110,33 +1110,33 @@ Label_12_505e:
 	ret ; $505e
 SetupWallPracticeLevelSigns:
 	ld a, $00 ; $505f
-	test_flag $1a, 6 ; $5061
+	test_flag FLAG_CLEARED_WALL_LEVEL_1 ; $5061
 	jp z, Label_12_50c8 ; $5064
 	script_copy_scene_rect $1e, $2c, $02, $2c, $02, $02 ; $5067
 	ld a, $01 ; $5076
-	test_flag $1a, 7 ; $5078
+	test_flag FLAG_CLEARED_WALL_LEVEL_2 ; $5078
 	jr z, Label_12_50c8 ; $507b
 	script_copy_scene_rect $1e, $30, $06, $2c, $02, $02 ; $507d
 	ld a, $02 ; $508c
-	test_flag $1b, 0 ; $508e
+	test_flag FLAG_CLEARED_WALL_LEVEL_3 ; $508e
 	jr z, Label_12_50c8 ; $5091
 	script_copy_scene_rect $1e, $34, $10, $2c, $02, $02 ; $5093
 	ld a, $03 ; $50a2
-	test_flag $1b, 1 ; $50a4
+	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $50a4
 	jr z, Label_12_50c8 ; $50a7
 	script_copy_scene_rect $1e, $38, $14, $2c, $02, $02 ; $50a9
 	ld a, $04 ; $50b8
-	test_flag $1b, 3 ; $50ba
+	test_flag FLAG_CLEARED_WALL_MASTER ; $50ba
 	jr z, Label_12_50c8 ; $50bd
 	ld a, $05 ; $50bf
-	test_flag $1b, 5 ; $50c1
+	test_flag FLAG_CLEARED_WALL_EXPERT ; $50c1
 	jr z, Label_12_50c8 ; $50c4
 	ld a, $06 ; $50c6
 Label_12_50c8:
 	ld [$c2b0], a ; $50c8
 	ret ; $50cb
 WallPracticeRoomNpc07_12:
-	test_flag $1c, 0 ; $50cc
+	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $50cc
 	jr z, Label_12_50dd ; $50cf
 	script_set_text Text_35_264 ; $50d1
 	script_speak $07 ; $50d7
@@ -1201,7 +1201,7 @@ Label_12_5111:
 	script_wait_move $07 ; $5160
 	script_face $07, FACE_RIGHT ; $5165
 	script_speak $07 ; $516c
-	test_flag $05, 7 ; $5171
+	test_flag FLAG_DOUBLES ; $5171
 	jr z, Label_12_5192 ; $5174
 	script_null_script ACTOR_PARTNER ; $5176
 	script_move_target ACTOR_PARTNER, $0700, $3900 ; $517b
@@ -1211,7 +1211,7 @@ Label_12_5192:
 	script_set_speed ACTOR_PLAYER, $0020 ; $5192
 	script_move_target ACTOR_PLAYER, $0500, $3500 ; $519a
 	script_wait_move ACTOR_PLAYER ; $51a5
-	set_flag $1c, 0 ; $51aa
+	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $51aa
 	set_flag $0f, 5 ; $51ad
 	ret ; $51b0
 Label_12_51b1:
@@ -1226,7 +1226,7 @@ Label_12_51ba:
 	script_move_target $07, $0300, $3700 ; $51cb
 	script_wait_move $07 ; $51d6
 	script_face $07, FACE_RIGHT ; $51db
-	test_flag $05, 7 ; $51e2
+	test_flag FLAG_DOUBLES ; $51e2
 	jr z, Label_12_522c ; $51e5
 	script_wait_frames $14 ; $51e7
 	script_null_script ACTOR_PARTNER ; $51ee
@@ -1291,10 +1291,10 @@ LaunchWallPracticeMinigame:
 RestoreWallPracticeRoomActors:
 	test_flag $0f, 5 ; $52c0
 	jr z, Label_12_52f6 ; $52c3
-	set_flag $1c, 0 ; $52c5
+	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $52c5
 	script_set_position $07, $0300, $3700 ; $52c8
 	script_face $07, FACE_RIGHT ; $52d3
-	test_flag $05, 7 ; $52da
+	test_flag FLAG_DOUBLES ; $52da
 	jr z, Label_12_52f6 ; $52dd
 	script_null_script ACTOR_PARTNER ; $52df
 	script_set_position ACTOR_PARTNER, $0700, $3900 ; $52e4
@@ -1426,7 +1426,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	call SeniorRankOfferScenePrepFacingUp ; $5602
 	ret ; $5605
 Label_12_5606:
-	test_flag $05, 7 ; $5606
+	test_flag FLAG_DOUBLES ; $5606
 	jp nz, Label_12_5704 ; $5609
 	script_set_text Text_34_4 ; $560c
 	ld a, $03 ; $5612
@@ -1441,7 +1441,7 @@ Label_12_562a:
 	script_speak $03 ; $562a
 	ret ; $562f
 SeniorCourtNpc03FaceRight_12:
-	test_flag $05, 7 ; $5630
+	test_flag FLAG_DOUBLES ; $5630
 	jr z, SeniorCourtNpc03_12 ; $5633
 	test_flag $0e, 4 ; $5635
 	jp nz, Label_12_57f4 ; $5638
@@ -1459,7 +1459,7 @@ SeniorCourtNpc03FaceRight_12:
 	script_wait_move ACTOR_PLAYER ; $5693
 	jp Label_12_5747 ; $5698
 SeniorCourtNpc03FaceUpFlag0840_12:
-	test_flag $05, 7 ; $569b
+	test_flag FLAG_DOUBLES ; $569b
 	jp z, SeniorCourtNpc03FaceUpFlag0000_12 ; $569e
 	test_flag $0e, 4 ; $56a1
 	jp nz, Label_12_57f4 ; $56a4
@@ -1905,7 +1905,7 @@ SeniorCourtNpc0B_12:
 	ld a, [$c2b1] ; $5ba4
 	cp a, $0c ; $5ba7
 	jr c, Label_12_5bb9 ; $5ba9
-	test_flag $05, 7 ; $5bab
+	test_flag FLAG_DOUBLES ; $5bab
 	jr z, Label_12_5bb9 ; $5bae
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bb0
 	and a, a ; $5bb3
@@ -2053,9 +2053,9 @@ SeniorCourtInitScript_12:
 	script_face_toward ACTOR_PLAYER, $0a ; $5d6b
 	script_face_toward ACTOR_PLAYER, $0b ; $5d73
 Label_12_5d7b:
-	test_flag $05, 7 ; $5d7b
+	test_flag FLAG_DOUBLES ; $5d7b
 	jr nz, Label_12_5daf ; $5d7e
-	test_flag $0a, 3 ; $5d80
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5d80
 	jr z, Label_12_5d8d ; $5d83
 	ldh a, [hRomBank] ; $5d85
 	ld hl, SeniorCourtActorsA_12 ; $5d87
@@ -2075,7 +2075,7 @@ Label_12_5d8d:
 	call SeniorCourtWalkPlayersOntoCourt ; $5dab
 	ret ; $5dae
 Label_12_5daf:
-	test_flag $08, 2 ; $5daf
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5daf
 	jr z, Label_12_5d8d ; $5db2
 	ldh a, [hRomBank] ; $5db4
 	ld hl, SeniorCourtActorsB_12 ; $5db6
@@ -2094,7 +2094,7 @@ SeniorCourtPositionActorsByProgressB:
 	farcall LoadActorObjectDefIfValid ; $5dd2
 	script_set_anim $03, $01 ; $5dd5
 Label_12_5ddc:
-	test_flag $05, 7 ; $5ddc
+	test_flag FLAG_DOUBLES ; $5ddc
 	jr nz, Label_12_5df4 ; $5ddf
 	ld a, [$c2b1] ; $5de1
 	cp a, $09 ; $5de4
@@ -2110,7 +2110,7 @@ Label_12_5df4:
 	script_set_position $05, $3f00, $3f00 ; $5e06
 	ret ; $5e11
 SeniorCourtPositionActorsByProgressA:
-	test_flag $05, 7 ; $5e12
+	test_flag FLAG_DOUBLES ; $5e12
 	jr nz, Label_12_5e38 ; $5e15
 	ld a, [$c2b1] ; $5e17
 	cp a, $03 ; $5e1a
@@ -2158,7 +2158,7 @@ SeniorCourtWalkPlayersOntoCourt:
 	ld a, [wStoryModeEntryPoint] ; $5eab
 	cp a, $01 ; $5eae
 	jp nz, Label_12_5ef0 ; $5eb0
-	test_flag $05, 7 ; $5eb3
+	test_flag FLAG_DOUBLES ; $5eb3
 	jr z, Label_12_5ede ; $5eb6
 	script_set_speed ACTOR_PARTNER, $00ff ; $5eb8
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $5ec0
@@ -2172,7 +2172,7 @@ Label_12_5ef0:
 	ret ; $5ef0
 SeniorRankOfferScenePrep:
 	script_set_speed ACTOR_PLAYER, $0010 ; $5ef1
-	test_flag $05, 7 ; $5ef9
+	test_flag FLAG_DOUBLES ; $5ef9
 	jp z, SeniorSinglesRankOfferScene ; $5efc
 	call SeniorDoublesRankOfferScene ; $5eff
 	ret ; $5f02
@@ -2180,7 +2180,7 @@ SeniorRankOfferScenePrepFacingUp:
 	script_set_speed ACTOR_PLAYER, $0008 ; $5f03
 	script_face ACTOR_PLAYER, FACE_UP ; $5f0b
 	script_facing_lock ACTOR_PLAYER, $01 ; $5f12
-	test_flag $05, 7 ; $5f19
+	test_flag FLAG_DOUBLES ; $5f19
 	jr z, SeniorSinglesRankOfferScene ; $5f1c
 	call SeniorDoublesRankOfferScene ; $5f1e
 	ret ; $5f21
@@ -2192,7 +2192,7 @@ SeniorSinglesRankOfferScene:
 	script_face_toward $03, ACTOR_PLAYER ; $5f40
 	script_face_toward ACTOR_PLAYER, $03 ; $5f48
 	script_set_text Text_34_60 ; $5f50
-	test_flag $0a, 4 ; $5f56
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f56
 	jr z, Label_12_5f5e ; $5f59
 	farcall AdvanceDialogueTextCursor ; $5f5b
 Label_12_5f5e:
@@ -2204,13 +2204,13 @@ Label_12_5f5e:
 	and a, a ; $5f70
 	jp nz, Label_12_5fb8 ; $5f71
 	script_set_text Text_34_64 ; $5f74
-	test_flag $0a, 4 ; $5f7a
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f7a
 	jr z, Label_12_5f92 ; $5f7d
 	farcall AdvanceDialogueTextCursor ; $5f7f
-	test_flag $0a, 5 ; $5f82
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $5f82
 	jr z, Label_12_5f92 ; $5f85
 	farcall AdvanceDialogueTextCursor ; $5f87
-	test_flag $0a, 6 ; $5f8a
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $5f8a
 	jr z, Label_12_5f92 ; $5f8d
 	farcall AdvanceDialogueTextCursor ; $5f8f
 Label_12_5f92:
@@ -2241,7 +2241,7 @@ SeniorDoublesRankOfferScene:
 	script_wait_frames $1e ; $6011
 	script_face_toward ACTOR_PLAYER, $03 ; $6018
 	script_set_text Text_34_110 ; $6020
-	test_flag $08, 4 ; $6026
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $6026
 	jr z, Label_12_602e ; $6029
 	farcall AdvanceDialogueTextCursor ; $602b
 Label_12_602e:
@@ -2253,10 +2253,10 @@ Label_12_602e:
 	and a, a ; $6040
 	jp nz, Label_12_6087 ; $6041
 	script_set_text Text_34_113 ; $6044
-	test_flag $08, 4 ; $604a
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $604a
 	jr z, Label_12_605a ; $604d
 	farcall AdvanceDialogueTextCursor ; $604f
-	test_flag $08, 5 ; $6052
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $6052
 	jr z, Label_12_605a ; $6055
 	farcall AdvanceDialogueTextCursor ; $6057
 Label_12_605a:
@@ -2764,7 +2764,7 @@ ResumeSeniorOpponentScripts:
 	ret ; $6ae7
 SeniorSinglesMatchConfirm:
 	script_set_text Text_34_68 ; $6ae8
-	test_flag $0a, 4 ; $6aee
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $6aee
 	jr z, Label_12_6af6 ; $6af1
 	farcall AdvanceDialogueTextCursor ; $6af3
 Label_12_6af6:
@@ -2787,7 +2787,7 @@ Label_12_6b18:
 	ret ; $6b35
 Label_12_6b36:
 	script_set_text Text_34_72 ; $6b36
-	test_flag $0a, 4 ; $6b3c
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $6b3c
 	jr z, Label_12_6b44 ; $6b3f
 	farcall AdvanceDialogueTextCursor ; $6b41
 Label_12_6b44:
@@ -2809,7 +2809,7 @@ Label_12_6b57:
 	ret ; $6b75
 SeniorDoublesMatchConfirm:
 	script_set_text Text_34_116 ; $6b76
-	test_flag $08, 5 ; $6b7c
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $6b7c
 	jr z, Label_12_6b84 ; $6b7f
 	farcall AdvanceDialogueTextCursor ; $6b81
 Label_12_6b84:
@@ -3333,7 +3333,7 @@ SeniorMatchVictorySceneDispatch:
 	script_wait_frames $01 ; $743e
 	farcall EndCutsceneScriptMode ; $7445
 	ret ; $7448
-	set_flag $0a, 5 ; $7449
+	set_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $7449
 	script_set_position $06, $3300, $0f00 ; $744c
 	script_face $06, FACE_DOWN ; $7457
 	call FadeInSeniorCourtNearPairB ; $745e
@@ -3352,7 +3352,7 @@ SeniorMatchVictorySceneDispatch:
 	call StartSeniorCourtPairBRally ; $74b1
 	farcall EndCutsceneScriptMode ; $74b4
 	ret ; $74b7
-	set_flag $0a, 6 ; $74b8
+	set_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $74b8
 	call PlaceSeniorCourtPairB ; $74bb
 	script_set_position $05, $3300, $0f00 ; $74be
 	script_face $05, FACE_DOWN ; $74c9
@@ -3463,28 +3463,28 @@ SeniorMatchVictorySceneDispatch:
 	farcall EndCutsceneScriptMode ; $7752
 	ret ; $7755
 ComputeSeniorCourtStage:
-	test_flag $05, 7 ; $7756
+	test_flag FLAG_DOUBLES ; $7756
 	jp nz, Label_12_7793 ; $7759
 	ld a, $00 ; $775c
-	test_flag $0a, 3 ; $775e
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $775e
 	jr z, Label_12_778f ; $7761
 	ld a, $02 ; $7763
-	test_flag $0a, 4 ; $7765
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $7765
 	jr z, Label_12_778f ; $7768
 	ld a, $03 ; $776a
-	test_flag $0a, 5 ; $776c
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $776c
 	jr z, Label_12_778f ; $776f
 	ld a, $04 ; $7771
-	test_flag $0a, 6 ; $7773
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $7773
 	jr z, Label_12_778f ; $7776
 	ld a, $05 ; $7778
-	test_flag $0a, 7 ; $777a
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $777a
 	jr z, Label_12_778f ; $777d
 	ld a, $09 ; $777f
-	test_flag $15, 6 ; $7781
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7781
 	jr z, Label_12_778f ; $7784
 	ld a, $0b ; $7786
-	test_flag $16, 0 ; $7788
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7788
 	jr z, Label_12_778f ; $778b
 	ld a, $0d ; $778d
 Label_12_778f:
@@ -3492,22 +3492,22 @@ Label_12_778f:
 	ret ; $7792
 Label_12_7793:
 	ld a, $01 ; $7793
-	test_flag $08, 2 ; $7795
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7795
 	jr z, Label_12_778f ; $7798
 	ld a, $06 ; $779a
-	test_flag $08, 4 ; $779c
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $779c
 	jr z, Label_12_778f ; $779f
 	ld a, $07 ; $77a1
-	test_flag $08, 5 ; $77a3
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $77a3
 	jr z, Label_12_778f ; $77a6
 	ld a, $08 ; $77a8
-	test_flag $08, 6 ; $77aa
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $77aa
 	jr z, Label_12_778f ; $77ad
 	ld a, $0a ; $77af
-	test_flag $15, 7 ; $77b1
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $77b1
 	jr z, Label_12_778f ; $77b4
 	ld a, $0c ; $77b6
-	test_flag $16, 1 ; $77b8
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $77b8
 	jr z, Label_12_778f ; $77bb
 	ld a, $0e ; $77bd
 	jr Label_12_778f ; $77bf
@@ -4035,19 +4035,19 @@ ActorScript_12_7c66:
 	as_anim $03
 	as_jump ActorScript_12_7c66
 ComputeSeniorCourtStageB:
-	test_flag $05, 7 ; $7c75
+	test_flag FLAG_DOUBLES ; $7c75
 	jr nz, Label_12_7c9c ; $7c78
 	ld a, $00 ; $7c7a
-	test_flag $0a, 3 ; $7c7c
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7c7c
 	jr z, Label_12_7c98 ; $7c7f
 	ld a, $02 ; $7c81
-	test_flag $0a, 7 ; $7c83
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7c83
 	jr z, Label_12_7c98 ; $7c86
 	ld a, $04 ; $7c88
-	test_flag $15, 6 ; $7c8a
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7c8a
 	jr z, Label_12_7c98 ; $7c8d
 	ld a, $06 ; $7c8f
-	test_flag $16, 0 ; $7c91
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7c91
 	jr z, Label_12_7c98 ; $7c94
 	ld a, $08 ; $7c96
 Label_12_7c98:
@@ -4055,42 +4055,42 @@ Label_12_7c98:
 	ret ; $7c9b
 Label_12_7c9c:
 	ld a, $01 ; $7c9c
-	test_flag $08, 2 ; $7c9e
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7c9e
 	jr z, Label_12_7c98 ; $7ca1
 	ld a, $03 ; $7ca3
-	test_flag $08, 6 ; $7ca5
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7ca5
 	jr z, Label_12_7c98 ; $7ca8
 	ld a, $05 ; $7caa
-	test_flag $15, 7 ; $7cac
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7cac
 	jr z, Label_12_7c98 ; $7caf
 	ld a, $07 ; $7cb1
-	test_flag $16, 1 ; $7cb3
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7cb3
 	jr z, Label_12_7c98 ; $7cb6
 	ld a, $09 ; $7cb8
 	jr Label_12_7c98 ; $7cba
 	ld a, $00 ; $7cbc
-	test_flag $0a, 3 ; $7cbe
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7cbe
 	jr z, Label_12_7cdb ; $7cc1
 	inc a ; $7cc3
-	test_flag $0a, 7 ; $7cc4
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7cc4
 	jr z, Label_12_7cdb ; $7cc7
 	inc a ; $7cc9
-	test_flag $05, 7 ; $7cca
+	test_flag FLAG_DOUBLES ; $7cca
 	jr nz, Label_12_7cdf ; $7ccd
-	test_flag $15, 6 ; $7ccf
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7ccf
 	jr z, Label_12_7cdb ; $7cd2
 	inc a ; $7cd4
-	test_flag $16, 0 ; $7cd5
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7cd5
 	jr z, Label_12_7cdb ; $7cd8
 	inc a ; $7cda
 Label_12_7cdb:
 	ld [$c2b0], a ; $7cdb
 	ret ; $7cde
 Label_12_7cdf:
-	test_flag $15, 7 ; $7cdf
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7cdf
 	jr z, Label_12_7cdb ; $7ce2
 	inc a ; $7ce4
-	test_flag $16, 1 ; $7ce5
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7ce5
 	jr z, Label_12_7cdb ; $7ce8
 	inc a ; $7cea
 	jr Label_12_7cdb ; $7ceb

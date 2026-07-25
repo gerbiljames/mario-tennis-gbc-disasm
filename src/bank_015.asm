@@ -54,7 +54,7 @@ TournamentCourtyardNpc05_15:
 	ld h, [hl] ; $410c
 	ld l, a ; $410d
 	farcall InitDialogueTextCursor ; $410e
-	test_flag $05, 7 ; $4111
+	test_flag FLAG_DOUBLES ; $4111
 	jr z, Label_15_4120 ; $4114
 	test_flag $0e, 7 ; $4116
 	jr nz, Label_15_413f ; $4119
@@ -140,13 +140,13 @@ TournamentSiteRespawnActors_15:
 InitTournamentSiteSceneVariant:
 	ld a, $00 ; $4271
 	ld [$c2b0], a ; $4273
-	test_flag $05, 7 ; $4276
+	test_flag FLAG_DOUBLES ; $4276
 	jr nz, Label_15_42c0 ; $4279
 	ld a, $f1 ; $427b
 	ld d, $0e ; $427d
 	ld e, $14 ; $427f
 	farcall WriteBehaviorMapCell ; $4281
-	test_flag $07, 5 ; $4284
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4284
 	jr z, Label_15_4298 ; $4287
 	ld hl, TournamentSiteScripts3_15 ; $4289
 	ld de, $000c ; $428c
@@ -155,7 +155,7 @@ InitTournamentSiteSceneVariant:
 	ld [$c2b0], a ; $4294
 	ret ; $4297
 Label_15_4298:
-	test_flag $07, 6 ; $4298
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4298
 	jr z, Label_15_42ac ; $429b
 	ld hl, TournamentSiteScripts2_15 ; $429d
 	ld de, $000c ; $42a0
@@ -164,7 +164,7 @@ Label_15_4298:
 	ld [$c2b0], a ; $42a8
 	ret ; $42ab
 Label_15_42ac:
-	test_flag $07, 7 ; $42ac
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $42ac
 	jr z, Label_15_42bf ; $42af
 	ld hl, TournamentSiteScripts1_15 ; $42b1
 	ld de, $000c ; $42b4
@@ -174,7 +174,7 @@ Label_15_42ac:
 Label_15_42bf:
 	ret ; $42bf
 Label_15_42c0:
-	test_flag $06, 6 ; $42c0
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $42c0
 	jr z, Label_15_42d4 ; $42c3
 	ld hl, TournamentSiteScripts6_15 ; $42c5
 	ld de, $000c ; $42c8
@@ -183,7 +183,7 @@ Label_15_42c0:
 	ld [$c2b0], a ; $42d0
 	ret ; $42d3
 Label_15_42d4:
-	test_flag $06, 7 ; $42d4
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $42d4
 	jr z, Label_15_42e8 ; $42d7
 	ld hl, TournamentSiteScripts5_15 ; $42d9
 	ld de, $000c ; $42dc
@@ -358,7 +358,7 @@ TournamentSiteArrivalScene:
 	ret ; $46b6
 SetupTournamentSitePartnerActor:
 	call SetPlayerPartnerActorSprites ; $46b7
-	test_flag $05, 7 ; $46ba
+	test_flag FLAG_DOUBLES ; $46ba
 	jr z, Label_15_46c9 ; $46bd
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $46bf
 	or a, a ; $46c2
@@ -383,7 +383,7 @@ TournamentSiteEntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $46f0
 	cp a, $ff ; $46f3
 	jp z, Label_15_4756 ; $46f5
-	test_flag $05, 7 ; $46f8
+	test_flag FLAG_DOUBLES ; $46f8
 	jr z, Label_15_4739 ; $46fb
 	script_set_speed ACTOR_PARTNER, $00ff ; $46fd
 	ld a, [wStoryModeEntryPoint] ; $4705
@@ -431,7 +431,7 @@ Facings_15_4757:
 	; $4757, 8 bytes (enum:FACE:8)
 	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
 SetPlayerPartnerActorSprites:
-	test_flag $05, 7 ; $475f
+	test_flag FLAG_DOUBLES ; $475f
 	jp z, Label_15_477d ; $4762
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4765
 	ld d, $58 ; $4768
@@ -501,7 +501,7 @@ TrainingCourtArrival01_15:
 	cp a, $ff ; $4910
 	jp z, Label_15_4955 ; $4912
 	call ClearTrainingCourtNpcFlags ; $4915
-	test_flag $05, 7 ; $4918
+	test_flag FLAG_DOUBLES ; $4918
 	jr z, Label_15_4943 ; $491b
 	script_set_speed ACTOR_PARTNER, $00ff ; $491d
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $4925
@@ -519,12 +519,12 @@ TrainingCourtExitTriggers_15:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_15, $08, $0e
 	db $ff
 ClearTrainingCourtNpcFlags:
-	clear_flag $17, 2 ; $4967
-	clear_flag $17, 5 ; $496a
-	clear_flag $17, 3 ; $496d
-	clear_flag $17, 6 ; $4970
-	clear_flag $17, 4 ; $4973
-	clear_flag $17, 7 ; $4976
+	clear_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $4967
+	clear_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $496a
+	clear_flag FLAG_NET_CHALLENGER_DEFEATED ; $496d
+	clear_flag FLAG_NET_PRACTICE_COACH_GREETED ; $4970
+	clear_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $4973
+	clear_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $4976
 	ret ; $4979
 TrainingCourtNpc03_15:
 	ld a, [$c2b0] ; $497a
@@ -878,9 +878,9 @@ RunWaterSpriteSwingContestAndReward:
 	script_speak ACTOR_PLAYER ; $4d32
 	script_set_position $16, $3f00, $3f00 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
-	test_flag $0c, 4 ; $4d45
+	test_flag FLAG_HAVE_SILVER_RACKET ; $4d45
 	jp nz, Label_15_4d5c ; $4d48
-	test_flag $0c, 5 ; $4d4b
+	test_flag FLAG_HAVE_GOLD_RACKET ; $4d4b
 	jp nz, Label_15_4d5c ; $4d4e
 	ld a, [wWaterSpriteMinigameSwingCount] ; $4d51
 	cp a, $64 ; $4d54
@@ -966,12 +966,12 @@ Label_15_4e24:
 	and a, $f8 ; $4ee1
 	or a, $07 ; $4ee3
 	ld [hl], a ; $4ee5
-	set_flag $0c, 4 ; $4ee6
+	set_flag FLAG_HAVE_SILVER_RACKET ; $4ee6
 	ld a, $05 ; $4ee9
 	ld b, a ; $4eeb
 	jp Label_15_4ef5 ; $4eec
 Label_15_4eef:
-	set_flag $0c, 5 ; $4eef
+	set_flag FLAG_HAVE_GOLD_RACKET ; $4eef
 	ld a, $04 ; $4ef2
 	ld b, a ; $4ef4
 Label_15_4ef5:
@@ -1070,12 +1070,12 @@ TrainingCourtNpcScripts_15:
 	map_script $13, FACEMASK_ANY, $0000, TrainingCourtNpc13_15, $00, $00
 	db $ff
 TrainingCourtNpc06_15:
-	test_flag $18, 0 ; $50fc
+	test_flag FLAG_CLEARED_SERVICE_MATCH_1 ; $50fc
 	jr nz, Label_15_5105 ; $50ff
 	call ServiceAceMatchChallengeScene ; $5101
 	ret ; $5104
 Label_15_5105:
-	test_flag $18, 1 ; $5105
+	test_flag FLAG_CLEARED_SERVICE_MATCH_2 ; $5105
 	jr nz, Label_15_510e ; $5108
 	call CenterLineServeMatchChallengeScene ; $510a
 	ret ; $510d
@@ -1090,39 +1090,39 @@ TrainingCourtNpc07FaceDown_15:
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5131
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5138
 TrainingCourtNpc07_15:
-	test_flag $18, 3 ; $513f
+	test_flag FLAG_CLEARED_SERVICE_PRACTICE_1 ; $513f
 	jr nz, Label_15_5148 ; $5142
 	call ServeCoachJuniorLessonScene ; $5144
 	ret ; $5147
 Label_15_5148:
-	test_flag $18, 4 ; $5148
+	test_flag FLAG_CLEARED_SERVICE_PRACTICE_2 ; $5148
 	jr nz, Label_15_5172 ; $514b
-	test_flag $17, 5 ; $514d
+	test_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $514d
 	jr nz, Label_15_515b ; $5150
-	test_flag $0a, 3 ; $5152
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5152
 	jr z, Label_15_515b ; $5155
 	call ServeCoachSeniorLessonScene ; $5157
 	ret ; $515a
 Label_15_515b:
 	script_set_text Text_37_33 ; $515b
-	test_flag $0a, 3 ; $5161
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5161
 	jr z, Label_15_516c ; $5164
 	script_set_text Text_37_34 ; $5166
 Label_15_516c:
 	script_speak $07 ; $516c
 	ret ; $5171
 Label_15_5172:
-	test_flag $18, 5 ; $5172
+	test_flag FLAG_CLEARED_SERVICE_PRACTICE_3 ; $5172
 	jr nz, Label_15_519c ; $5175
-	test_flag $17, 5 ; $5177
+	test_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $5177
 	jr nz, Label_15_5185 ; $517a
-	test_flag $0a, 7 ; $517c
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $517c
 	jr z, Label_15_5185 ; $517f
 	call ServeCoachVarsityLessonScene ; $5181
 	ret ; $5184
 Label_15_5185:
 	script_set_text Text_37_50 ; $5185
-	test_flag $0a, 7 ; $518b
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $518b
 	jr z, Label_15_5196 ; $518e
 	script_set_text Text_37_34 ; $5190
 Label_15_5196:
@@ -1133,12 +1133,12 @@ Label_15_519c:
 	script_speak $07 ; $51a2
 	ret ; $51a7
 TrainingCourtNpc11_15:
-	test_flag $18, 6 ; $51a8
+	test_flag FLAG_CLEARED_NET_GAME_MATCH_1 ; $51a8
 	jr nz, Label_15_51b1 ; $51ab
 	call VolleyMatchChallengeScene ; $51ad
 	ret ; $51b0
 Label_15_51b1:
-	test_flag $18, 7 ; $51b1
+	test_flag FLAG_CLEARED_NET_GAME_MATCH_2 ; $51b1
 	jr nz, Label_15_51ba ; $51b4
 	call SmashMatchChallengeScene ; $51b6
 	ret ; $51b9
@@ -1153,39 +1153,39 @@ TrainingCourtNpc12FaceUp_15:
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $51dd
 	script_face ACTOR_PLAYER, FACE_UP ; $51e4
 TrainingCourtNpc12_15:
-	test_flag $19, 1 ; $51eb
+	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_1 ; $51eb
 	jr nz, Label_15_51f4 ; $51ee
 	call NetCoachVolleyLessonScene ; $51f0
 	ret ; $51f3
 Label_15_51f4:
-	test_flag $19, 2 ; $51f4
+	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_2 ; $51f4
 	jr nz, Label_15_521e ; $51f7
-	test_flag $17, 6 ; $51f9
+	test_flag FLAG_NET_PRACTICE_COACH_GREETED ; $51f9
 	jr nz, Label_15_5207 ; $51fc
-	test_flag $0a, 3 ; $51fe
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $51fe
 	jr z, Label_15_5207 ; $5201
 	call NetCoachSmashLessonScene ; $5203
 	ret ; $5206
 Label_15_5207:
 	script_set_text Text_37_128 ; $5207
-	test_flag $0a, 7 ; $520d
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $520d
 	jr z, Label_15_5218 ; $5210
 	script_set_text Text_37_131 ; $5212
 Label_15_5218:
 	script_speak $12 ; $5218
 	ret ; $521d
 Label_15_521e:
-	test_flag $19, 3 ; $521e
+	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_3 ; $521e
 	jr nz, Label_15_5248 ; $5221
-	test_flag $17, 6 ; $5223
+	test_flag FLAG_NET_PRACTICE_COACH_GREETED ; $5223
 	jr nz, Label_15_5231 ; $5226
-	test_flag $0a, 7 ; $5228
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5228
 	jr z, Label_15_5231 ; $522b
 	call NetCoachDropShotLessonScene ; $522d
 	ret ; $5230
 Label_15_5231:
 	script_set_text Text_37_158 ; $5231
-	test_flag $0a, 7 ; $5237
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5237
 	jr z, Label_15_5242 ; $523a
 	script_set_text Text_37_156 ; $523c
 Label_15_5242:
@@ -1196,12 +1196,12 @@ Label_15_5248:
 	script_speak $12 ; $524e
 	ret ; $5253
 TrainingCourtNpc0C_15:
-	test_flag $19, 4 ; $5254
+	test_flag FLAG_CLEARED_STROKE_MATCH_1 ; $5254
 	jr nz, Label_15_525d ; $5257
 	call StrokeMatchChallengeScene ; $5259
 	ret ; $525c
 Label_15_525d:
-	test_flag $19, 5 ; $525d
+	test_flag FLAG_CLEARED_STROKE_MATCH_2 ; $525d
 	jr nz, Label_15_5266 ; $5260
 	call LobMatchChallengeScene ; $5262
 	ret ; $5265
@@ -1216,36 +1216,36 @@ TrainingCourtNpc0DFaceUp_15:
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5289
 	script_face ACTOR_PLAYER, FACE_UP ; $5290
 TrainingCourtNpc0D_15:
-	test_flag $19, 7 ; $5297
+	test_flag FLAG_CLEARED_STROKE_PRACTICE_1 ; $5297
 	jr nz, Label_15_52a0 ; $529a
 	call ReturnCoachReturnLessonScene ; $529c
 	ret ; $529f
 Label_15_52a0:
-	test_flag $1a, 0 ; $52a0
+	test_flag FLAG_CLEARED_STROKE_PRACTICE_2 ; $52a0
 	jr nz, Label_15_52d5 ; $52a3
-	test_flag $17, 7 ; $52a5
+	test_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $52a5
 	jr nz, Label_15_52b3 ; $52a8
-	test_flag $0a, 3 ; $52aa
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52aa
 	jr z, Label_15_52b3 ; $52ad
 	call ReturnCoachLobLessonScene ; $52af
 	ret ; $52b2
 Label_15_52b3:
 	script_set_text Text_37_225 ; $52b3
-	test_flag $0a, 3 ; $52b9
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52b9
 	jr z, Label_15_52cf ; $52bc
 	script_set_text Text_37_226 ; $52be
-	test_flag $0a, 7 ; $52c4
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52c4
 	jr z, Label_15_52cf ; $52c7
 	script_set_text Text_37_226 ; $52c9
 Label_15_52cf:
 	script_speak $0d ; $52cf
 	ret ; $52d4
 Label_15_52d5:
-	test_flag $1a, 1 ; $52d5
+	test_flag FLAG_CLEARED_STROKE_PRACTICE_3 ; $52d5
 	jr nz, Label_15_52f4 ; $52d8
-	test_flag $17, 7 ; $52da
+	test_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $52da
 	jr nz, Label_15_52e8 ; $52dd
-	test_flag $0a, 7 ; $52df
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52df
 	jr z, Label_15_52e8 ; $52e2
 	call ReturnCoachPassingShotLessonScene ; $52e4
 	ret ; $52e7
@@ -2064,7 +2064,7 @@ Label_15_5e85:
 	ld [hl+], a ; $5e95
 	ld [hl], d ; $5e96
 	ld hl, wWaterSpriteMinigameSwingCount ; $5e97
-	test_flag $0a, 3 ; $5e9a
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5e9a
 	jr z, Label_15_5ea4 ; $5e9d
 	ld de, $2023 ; $5e9f
 	jr Label_15_5ea7 ; $5ea2
@@ -2293,7 +2293,7 @@ Label_15_6056:
 	farcall ScriptSetActorMoveTarget ; $60a2
 	ld a, [$c2b1] ; $60a5
 	farcall ScriptWaitActorMoveDone ; $60a8
-	set_flag $17, 2 ; $60ab
+	set_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $60ab
 	ret ; $60ae
 Label_15_60af:
 	ld a, [$c2b1] ; $60af
@@ -2320,7 +2320,7 @@ Label_15_60af:
 	farcall ScriptSetActorMoveTarget ; $60e9
 	ld a, [$c2b1] ; $60ec
 	farcall ScriptWaitActorMoveDone ; $60ef
-	set_flag $17, 3 ; $60f2
+	set_flag FLAG_NET_CHALLENGER_DEFEATED ; $60f2
 	ret ; $60f5
 Label_15_60f6:
 	ld a, [$c2b1] ; $60f6
@@ -2368,7 +2368,7 @@ Label_15_60f6:
 	farcall ScriptSetActorMoveTarget ; $616c
 	ld a, [$c2b1] ; $616f
 	farcall ScriptWaitActorMoveDone ; $6172
-	set_flag $17, 4 ; $6175
+	set_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $6175
 	ret ; $6178
 WalkChallengerOntoCourt:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6179
@@ -2488,7 +2488,7 @@ Label_15_62bf:
 	ld a, e ; $62ce
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
-	test_flag $0a, 3 ; $62d1
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $62d1
 	jr z, Label_15_62ea ; $62d4
 	ld hl, wWaterSpriteMinigameSwingCount ; $62d6
 	ld de, $2050 ; $62d9
@@ -2572,7 +2572,7 @@ Label_15_6350:
 	ld a, e ; $635f
 	ld [hl+], a ; $6360
 	ld [hl], d ; $6361
-	test_flag $0a, 3 ; $6362
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6362
 	jr z, Label_15_637b ; $6365
 	ld hl, wWaterSpriteMinigameSwingCount ; $6367
 	ld de, $207e ; $636a
@@ -2795,7 +2795,7 @@ AcademyRulesServeMatchChallengeScene:
 	farcall RunTrainingDrillByID ; $6643
 	ret ; $6646
 PlayerPartnerGestureCutscene:
-	test_flag $05, 7 ; $6647
+	test_flag FLAG_DOUBLES ; $6647
 	jr z, Label_15_667b ; $664a
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $664c
 	script_set_anim ACTOR_PLAYER, $03 ; $6654
@@ -2844,7 +2844,7 @@ Label_15_66ef:
 	ret ; $66f4
 ServeCoachJuniorLessonScene:
 	script_face_toward $07, ACTOR_PARTNER ; $66f5
-	test_flag $0a, 3 ; $66fd
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $66fd
 	jr nz, Label_15_670a ; $6700
 	script_set_text Text_37_16 ; $6702
 	jr Label_15_6710 ; $6708
@@ -3296,7 +3296,7 @@ Label_15_6dae:
 	ret ; $6db3
 ReturnCoachReturnLessonScene:
 	script_set_text Text_37_196 ; $6db4
-	test_flag $0a, 3 ; $6dba
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6dba
 	jr z, Label_15_6dc2 ; $6dbd
 	farcall AdvanceDialogueTextCursor ; $6dbf
 Label_15_6dc2:
@@ -3459,7 +3459,7 @@ ActorScript_15_6fbe:
 	as_halt
 NetCoachVolleyLessonScene:
 	script_face_toward $12, ACTOR_PARTNER ; $6fcf
-	test_flag $0a, 3 ; $6fd7
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6fd7
 	jr nz, Label_15_6fe4 ; $6fda
 	script_set_text Text_37_93 ; $6fdc
 	jr Label_15_6fea ; $6fe2
@@ -3607,7 +3607,7 @@ NetCoachDropShotLessonScene:
 	farcall ShowDrillBriefingScreen ; $71ba
 	ret ; $71bd
 HideServeChallengerActor:
-	test_flag $17, 2 ; $71be
+	test_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $71be
 	jr nz, Label_15_71c8 ; $71c1
 	call TestServeChallengerGameFlag ; $71c3
 	jr z, Label_15_71d3 ; $71c6
@@ -3648,7 +3648,7 @@ TestServeChallengerGameFlag:
 	dw $00c2 ; record 4
 	dw $00c2 ; record 5
 HideNetChallengerActor:
-	test_flag $17, 3 ; $7204
+	test_flag FLAG_NET_CHALLENGER_DEFEATED ; $7204
 	jr nz, Label_15_720e ; $7207
 	call TestNetChallengerGameFlag ; $7209
 	jr z, Label_15_7219 ; $720c
@@ -3689,7 +3689,7 @@ TestNetChallengerGameFlag:
 	dw $00c8 ; record 4
 	dw $00c8 ; record 5
 HideStrokeChallengerActor:
-	test_flag $17, 4 ; $724a
+	test_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $724a
 	jr nz, Label_15_7254 ; $724d
 	call TestStrokeChallengerGameFlag ; $724f
 	jr z, Label_15_725f ; $7252
@@ -3765,7 +3765,7 @@ Label_15_72c7:
 	call InitServeCoachScene ; $72c7
 	script_set_text Text_37_28 ; $72ca
 	script_speak $07 ; $72d0
-	test_flag $0a, 3 ; $72d5
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72d5
 	jr z, Label_15_72dd ; $72d8
 	farcall AdvanceDialogueTextCursor ; $72da
 Label_15_72dd:
@@ -3780,18 +3780,18 @@ Label_15_72dd:
 	script_set_anim $07, $04 ; $730d
 	script_wait_idle $07 ; $7314
 	script_speak $07 ; $7319
-	test_flag $0a, 3 ; $731e
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $731e
 	jr z, Label_15_7326 ; $7321
 	farcall AdvanceDialogueTextCursor ; $7323
 Label_15_7326:
 	script_speak $07 ; $7326
 	script_face $07, FACE_LEFT ; $732b
-	set_flag $17, 5 ; $7332
+	set_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $7332
 	ret ; $7335
 Label_15_7336:
 	call InitServeCoachScene ; $7336
 	script_set_text Text_37_42 ; $7339
-	test_flag $0a, 7 ; $733f
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $733f
 	jr z, Label_15_734a ; $7342
 	script_set_text Text_37_46 ; $7344
 Label_15_734a:
@@ -3808,7 +3808,7 @@ Label_15_734a:
 	script_speak $07 ; $7385
 	script_face $07, FACE_LEFT ; $738a
 	script_wait_frames $05 ; $7391
-	set_flag $17, 5 ; $7398
+	set_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $7398
 	ret ; $739b
 Label_15_739c:
 	call InitServeCoachScene ; $739c
@@ -3825,7 +3825,7 @@ Label_15_739c:
 	script_wait_idle $07 ; $73db
 	script_speak $07 ; $73e0
 	script_face $07, FACE_LEFT ; $73e5
-	set_flag $17, 5 ; $73ec
+	set_flag FLAG_SERVE_PRACTICE_COACH_GREETED ; $73ec
 	ret ; $73ef
 Label_15_73f0:
 	call InitServeCoachScene ; $73f0
@@ -3975,7 +3975,7 @@ Label_15_757a:
 	call InitNetCoachScene ; $7580
 	script_speak $12 ; $7583
 	script_face_toward ACTOR_PLAYER, $12 ; $7588
-	test_flag $0a, 3 ; $7590
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7590
 	jr z, Label_15_759b ; $7593
 	script_set_text Text_37_130 ; $7595
 Label_15_759b:
@@ -3989,7 +3989,7 @@ Label_15_759b:
 	script_wait_idle $12 ; $75c4
 	script_speak $12 ; $75c9
 	script_face $12, FACE_RIGHT ; $75ce
-	set_flag $17, 6 ; $75d5
+	set_flag FLAG_NET_PRACTICE_COACH_GREETED ; $75d5
 	ret ; $75d8
 Label_15_75d9:
 	call InitNetCoachScene ; $75d9
@@ -3998,7 +3998,7 @@ Label_15_75d9:
 	script_face_toward ACTOR_PLAYER, $12 ; $75e7
 	script_set_anim $12, $03 ; $75ef
 	script_wait_idle $12 ; $75f6
-	test_flag $0a, 7 ; $75fb
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $75fb
 	jr z, Label_15_7606 ; $75fe
 	script_set_text Text_37_155 ; $7600
 Label_15_7606:
@@ -4010,7 +4010,7 @@ Label_15_7606:
 	script_wait_idle $12 ; $7623
 	script_speak $12 ; $7628
 	script_face $12, FACE_RIGHT ; $762d
-	set_flag $17, 6 ; $7634
+	set_flag FLAG_NET_PRACTICE_COACH_GREETED ; $7634
 	ret ; $7637
 Label_15_7638:
 	call InitNetCoachScene ; $7638
@@ -4027,7 +4027,7 @@ Label_15_7638:
 	script_wait_idle $12 ; $7677
 	script_speak $12 ; $767c
 	script_face $12, FACE_RIGHT ; $7681
-	set_flag $17, 6 ; $7688
+	set_flag FLAG_NET_PRACTICE_COACH_GREETED ; $7688
 	ret ; $768b
 Label_15_768c:
 	call InitNetCoachScene ; $768c
@@ -4166,7 +4166,7 @@ Label_15_77e3:
 	script_speak $0d ; $7805
 	script_set_anim $0d, $02 ; $780a
 	script_wait_idle $0d ; $7811
-	test_flag $0a, 3 ; $7816
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7816
 	jr z, Label_15_781e ; $7819
 	farcall AdvanceDialogueTextCursor ; $781b
 Label_15_781e:
@@ -4174,13 +4174,13 @@ Label_15_781e:
 	script_set_text Text_37_225 ; $7823
 	script_set_anim $0d, $04 ; $7829
 	script_wait_idle $0d ; $7830
-	test_flag $0a, 3 ; $7835
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7835
 	jr z, Label_15_783d ; $7838
 	farcall AdvanceDialogueTextCursor ; $783a
 Label_15_783d:
 	script_speak $0d ; $783d
 	script_face $0d, FACE_UP ; $7842
-	set_flag $17, 7 ; $7849
+	set_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $7849
 	ret ; $784c
 Label_15_784d:
 	call InitReturnCoachScene ; $784d
@@ -4197,7 +4197,7 @@ Label_15_784d:
 	script_wait_idle $0d ; $788c
 	script_speak $0d ; $7891
 	script_face $0d, FACE_UP ; $7896
-	set_flag $17, 7 ; $789d
+	set_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $789d
 	ret ; $78a0
 Label_15_78a1:
 	call InitReturnCoachScene ; $78a1
@@ -4214,7 +4214,7 @@ Label_15_78a1:
 	script_wait_idle $0d ; $78e0
 	script_speak $0d ; $78e5
 	script_face $0d, FACE_UP ; $78ea
-	set_flag $17, 7 ; $78f1
+	set_flag FLAG_STROKE_PRACTICE_COACH_GREETED ; $78f1
 	ret ; $78f4
 Label_15_78f5:
 	call InitReturnCoachScene ; $78f5
@@ -4321,7 +4321,7 @@ Table_15_7a23:
 	db $03, $00, $2f, $00, $01, $01, $03, $03, $00, $2f, $00, $07, $01, $03, $0c, $f1, $ff ; 0x00
 	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
 PlaceSwingPracticeKidActor:
-	test_flag $05, 7 ; $7a45
+	test_flag FLAG_DOUBLES ; $7a45
 	jp nz, Label_15_7a66 ; $7a48
 	ld a, [wEquippedRacket] ; $7a4b
 	and a, $0f ; $7a4e
@@ -4495,7 +4495,7 @@ MovePartyToServeCoachSpot:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7c62
 	script_set_speed ACTOR_PARTNER, $0010 ; $7c6a
 	script_move_target ACTOR_PLAYER, $1300, $1300 ; $7c72
-	test_flag $05, 7 ; $7c7d
+	test_flag FLAG_DOUBLES ; $7c7d
 	jr z, Label_15_7c97 ; $7c80
 	script_null_script ACTOR_PARTNER ; $7c82
 	script_move_target ACTOR_PARTNER, $1300, $1100 ; $7c87
@@ -4511,7 +4511,7 @@ MovePartyToNetCoachSpot:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7cbb
 	script_set_speed ACTOR_PARTNER, $0010 ; $7cc3
 	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $7ccb
-	test_flag $05, 7 ; $7cd6
+	test_flag FLAG_DOUBLES ; $7cd6
 	jr z, Label_15_7cf0 ; $7cd9
 	script_null_script ACTOR_PARTNER ; $7cdb
 	script_move_target ACTOR_PARTNER, $2f00, $2b00 ; $7ce0
@@ -4527,7 +4527,7 @@ MovePartyToReturnCoachSpot:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7d14
 	script_set_speed ACTOR_PARTNER, $0010 ; $7d1c
 	script_move_target ACTOR_PLAYER, $1300, $2b00 ; $7d24
-	test_flag $05, 7 ; $7d2f
+	test_flag FLAG_DOUBLES ; $7d2f
 	jr z, Label_15_7d49 ; $7d32
 	script_null_script ACTOR_PARTNER ; $7d34
 	script_move_target ACTOR_PARTNER, $1100, $2b00 ; $7d39
@@ -4754,19 +4754,19 @@ ActorScript_15_7f3d:
 	as_wait $8c
 	as_anim $03
 	as_jump .Ld
-	test_flag $05, 7 ; $7f59
+	test_flag FLAG_DOUBLES ; $7f59
 	jr nz, Label_15_7f80 ; $7f5c
 	ld a, $00 ; $7f5e
-	test_flag $0a, 3 ; $7f60
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7f60
 	jr z, Label_15_7f7c ; $7f63
 	ld a, $02 ; $7f65
-	test_flag $0a, 7 ; $7f67
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7f67
 	jr z, Label_15_7f7c ; $7f6a
 	ld a, $04 ; $7f6c
-	test_flag $15, 6 ; $7f6e
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7f6e
 	jr z, Label_15_7f7c ; $7f71
 	ld a, $06 ; $7f73
-	test_flag $16, 0 ; $7f75
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7f75
 	jr z, Label_15_7f7c ; $7f78
 	ld a, $08 ; $7f7a
 Label_15_7f7c:
@@ -4774,43 +4774,43 @@ Label_15_7f7c:
 	ret ; $7f7f
 Label_15_7f80:
 	ld a, $01 ; $7f80
-	test_flag $08, 2 ; $7f82
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7f82
 	jr z, Label_15_7f7c ; $7f85
 	ld a, $03 ; $7f87
-	test_flag $08, 6 ; $7f89
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7f89
 	jr z, Label_15_7f7c ; $7f8c
 	ld a, $05 ; $7f8e
-	test_flag $15, 7 ; $7f90
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7f90
 	jr z, Label_15_7f7c ; $7f93
 	ld a, $07 ; $7f95
-	test_flag $16, 1 ; $7f97
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7f97
 	jr z, Label_15_7f7c ; $7f9a
 	ld a, $09 ; $7f9c
 	jr Label_15_7f7c ; $7f9e
 ComputeTrainingCourtProgressIndex:
 	ld a, $00 ; $7fa0
-	test_flag $0a, 3 ; $7fa2
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7fa2
 	jr z, Label_15_7fbf ; $7fa5
 	inc a ; $7fa7
-	test_flag $0a, 7 ; $7fa8
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7fa8
 	jr z, Label_15_7fbf ; $7fab
 	inc a ; $7fad
-	test_flag $05, 7 ; $7fae
+	test_flag FLAG_DOUBLES ; $7fae
 	jr nz, Label_15_7fc3 ; $7fb1
-	test_flag $15, 6 ; $7fb3
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7fb3
 	jr z, Label_15_7fbf ; $7fb6
 	inc a ; $7fb8
-	test_flag $16, 0 ; $7fb9
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7fb9
 	jr z, Label_15_7fbf ; $7fbc
 	inc a ; $7fbe
 Label_15_7fbf:
 	ld [$c2b0], a ; $7fbf
 	ret ; $7fc2
 Label_15_7fc3:
-	test_flag $15, 7 ; $7fc3
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7fc3
 	jr z, Label_15_7fbf ; $7fc6
 	inc a ; $7fc8
-	test_flag $16, 1 ; $7fc9
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7fc9
 	jr z, Label_15_7fbf ; $7fcc
 	inc a ; $7fce
 	jr Label_15_7fbf ; $7fcf

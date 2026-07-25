@@ -3608,11 +3608,11 @@ CheckUnlockCondition:
 	jr nc, Label_03_5804 ; $57f1
 	or a, a ; $57f3
 	jr nz, Label_03_57fd ; $57f4
-	test_flag $1b, 1 ; $57f6
+	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $57f6
 	jr z, Label_03_5838 ; $57f9
 	jr Label_03_581e ; $57fb
 Label_03_57fd:
-	test_flag $1a, 5 ; $57fd
+	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $57fd
 	jr z, Label_03_5838 ; $5800
 	jr Label_03_581e ; $5802
 Label_03_5804:

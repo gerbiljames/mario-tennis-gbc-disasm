@@ -1207,12 +1207,12 @@ Label_10_4ee8:
 	jr z, Label_10_4eff ; $4ef3
 	ld a, $04 ; $4ef5
 	ld [wOnCourtCharCount], a ; $4ef7
-	set_flag $05, 7 ; $4efa
+	set_flag FLAG_DOUBLES ; $4efa
 	jr Label_10_4f07 ; $4efd
 Label_10_4eff:
 	ld a, $02 ; $4eff
 	ld [wOnCourtCharCount], a ; $4f01
-	clear_flag $05, 7 ; $4f04
+	clear_flag FLAG_DOUBLES ; $4f04
 Label_10_4f07:
 	ret ; $4f07
 	; $4f08, 5 bytes (bytes:16)
@@ -1977,7 +1977,7 @@ Label_10_5604:
 Label_10_561e:
 	cp a, $0f ; $561e
 	jr c, Label_10_564d ; $5620
-	test_flag $05, 7 ; $5622
+	test_flag FLAG_DOUBLES ; $5622
 	jr nz, Label_10_563a ; $5625
 	ld a, $19 ; $5627
 	ld [wStoryModeCurrentLocation], a ; $5629
@@ -2029,7 +2029,7 @@ Label_10_567d:
 	ld [wStoryModeExitLocationRequest], a ; $568c
 	ret ; $568f
 Label_10_5690:
-	test_flag $05, 7 ; $5690
+	test_flag FLAG_DOUBLES ; $5690
 	jr nz, Label_10_56bf ; $5693
 	cp a, $00 ; $5695
 	jr z, Label_10_56ac ; $5697
@@ -2130,27 +2130,27 @@ Label_10_574b:
 	ld a, $01 ; $574f
 	ret ; $5751
 GetStoryContinueDestination:
-	test_flag $05, 7 ; $5752
+	test_flag FLAG_DOUBLES ; $5752
 	jr nz, Label_10_5770 ; $5755
-	test_flag $07, 4 ; $5757
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5757
 	ld a, $02 ; $575a
 	jr z, Label_10_5789 ; $575c
-	test_flag $16, 0 ; $575e
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $575e
 	ld a, $04 ; $5761
 	jr z, Label_10_5789 ; $5763
-	test_flag $16, 2 ; $5765
+	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5765
 	ld a, $05 ; $5768
 	jr z, Label_10_5789 ; $576a
 	ld a, $02 ; $576c
 	jr Label_10_5789 ; $576e
 Label_10_5770:
-	test_flag $06, 5 ; $5770
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5770
 	ld a, $02 ; $5773
 	jr z, Label_10_5789 ; $5775
-	test_flag $16, 1 ; $5777
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5777
 	ld a, $04 ; $577a
 	jr z, Label_10_5789 ; $577c
-	test_flag $16, 3 ; $577e
+	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $577e
 	ld a, $05 ; $5781
 	jr z, Label_10_5789 ; $5783
 	ld a, $02 ; $5785
@@ -2533,7 +2533,7 @@ RestaurantArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $5b97
 	cp a, $ff ; $5b9a
 	jp z, Label_10_5bdc ; $5b9c
-	test_flag $05, 7 ; $5b9f
+	test_flag FLAG_DOUBLES ; $5b9f
 	jr z, Label_10_5bca ; $5ba2
 	script_set_speed ACTOR_PARTNER, $00ff ; $5ba4
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $5bac
@@ -2750,7 +2750,7 @@ Label_10_5dd3:
 	dw $0ca3 ; record 3
 	dw $0ccb ; record 4
 RestaurantNpc08FaceDown_10:
-	set_flag $1c, 1 ; $5de6
+	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $5de6
 RestaurantNpc08_10:
 	test_flag $0f, 3 ; $5de9
 	jr nz, Label_10_5e5c ; $5dec
@@ -2767,7 +2767,7 @@ RestaurantNpc08_10:
 	farcall InitDialogueTextCursor ; $5dfc
 	script_speak $08 ; $5dff
 	script_set_speed $08, $0010 ; $5e04
-	test_flag $1c, 1 ; $5e0c
+	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e0c
 	jr z, Label_10_5e30 ; $5e0f
 	script_jump_velocity ACTOR_PLAYER, $ff80 ; $5e11
 	script_move_target ACTOR_PLAYER, $1f00, $0f00 ; $5e19
@@ -2780,7 +2780,7 @@ Label_10_5e30:
 	script_set_anim $08, $02 ; $5e47
 	script_face $08, FACE_RIGHT ; $5e4e
 	set_flag $0f, 3 ; $5e55
-	clear_flag $1c, 1 ; $5e58
+	clear_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e58
 	ret ; $5e5b
 Label_10_5e5c:
 	ld a, [$c2b1] ; $5e5c
@@ -2835,7 +2835,7 @@ Label_10_5ea9:
 	and a, a ; $5ebb
 	jr nz, Label_10_5ed2 ; $5ebc
 	script_set_text Text_33_169 ; $5ebe
-	test_flag $05, 7 ; $5ec4
+	test_flag FLAG_DOUBLES ; $5ec4
 	jr z, Label_10_5ecc ; $5ec7
 	farcall AdvanceDialogueTextCursor ; $5ec9
 Label_10_5ecc:
@@ -3214,7 +3214,7 @@ AcademyWingExitTriggers_10:
 	db $ff
 AcademyWingNpc03_10:
 	script_face_toward ACTOR_PLAYER, $03 ; $623b
-	test_flag $1c, 0 ; $6243
+	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $6243
 	jr z, Label_10_6250 ; $6246
 	script_set_text Text_30_517 ; $6248
 	jr Label_10_62b0 ; $624e
@@ -3232,7 +3232,7 @@ Label_10_6250:
 	script_wait_frames $3c ; $626c
 	script_set_position $06, $0100, $0100 ; $6273
 	script_set_text Text_30_513 ; $627e
-	test_flag $05, 7 ; $6284
+	test_flag FLAG_DOUBLES ; $6284
 	jr z, Label_10_628c ; $6287
 	farcall AdvanceDialogueTextCursor ; $6289
 Label_10_628c:
@@ -3245,7 +3245,7 @@ Label_10_628c:
 	and a, a ; $62a4
 	jr nz, Label_10_62b0 ; $62a5
 	script_set_text Text_30_516 ; $62a7
-	set_flag $1c, 0 ; $62ad
+	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62ad
 Label_10_62b0:
 	script_speak $03 ; $62b0
 	ret ; $62b5
@@ -3296,7 +3296,7 @@ AcademyWingTile01_10:
 	script_set_speed ACTOR_PLAYER, $0014 ; $6372
 	script_face ACTOR_PLAYER, FACE_UP ; $637a
 	call AcademyWingOpenDoor_10 ; $6381
-	test_flag $05, 7 ; $6384
+	test_flag FLAG_DOUBLES ; $6384
 	jr z, Label_10_6399 ; $6387
 	script_move_target ACTOR_PARTNER, $2100, $3d00 ; $6389
 	script_wait_move ACTOR_PARTNER ; $6394
@@ -3317,7 +3317,7 @@ AcademyWingTile02_10:
 	script_set_speed ACTOR_PLAYER, $0010 ; $63e7
 	call AcademyWingOpenDoor_10 ; $63ef
 	script_move_target ACTOR_PARTNER, $2100, $3500 ; $63f2
-	test_flag $05, 7 ; $63fd
+	test_flag FLAG_DOUBLES ; $63fd
 	jr z, Label_10_6402 ; $6400
 Label_10_6402:
 	script_move_target ACTOR_PLAYER, $2100, $3900 ; $6402
@@ -3331,11 +3331,11 @@ Label_10_6402:
 	ret ; $643a
 AcademyWingInitScript_10:
 	script_set_anim $05, $06 ; $643b
-	test_flag $07, 4 ; $6442
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $6442
 	jr nz, Label_10_6452 ; $6445
 	script_set_position $05, $0100, $0100 ; $6447
 Label_10_6452:
-	test_flag $06, 5 ; $6452
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6452
 	jr nz, Label_10_6462 ; $6455
 	script_set_position $06, $0100, $0100 ; $6457
 Label_10_6462:
@@ -3389,11 +3389,11 @@ Label_10_64e0:
 	farcall ScriptRespawnLocationActors ; $64e5
 	farcall BeginCutsceneScriptMode ; $64e8
 	script_set_anim $0a, $06 ; $64eb
-	test_flag $07, 4 ; $64f2
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $64f2
 	jr nz, Label_10_6502 ; $64f5
 	script_set_position $0a, $0100, $0100 ; $64f7
 Label_10_6502:
-	test_flag $06, 5 ; $6502
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6502
 	jr nz, Label_10_6512 ; $6505
 	script_set_position $0b, $0100, $0100 ; $6507
 Label_10_6512:
@@ -3427,7 +3427,7 @@ Label_10_6512:
 	script_set_anim $06, $03 ; $65c0
 	script_wait_idle $06 ; $65c7
 	script_speak $06 ; $65cc
-	test_flag $05, 7 ; $65d1
+	test_flag FLAG_DOUBLES ; $65d1
 	jp z, Label_10_66a2 ; $65d4
 	script_set_position $03, $2180, $3100 ; $65d7
 	sound $99 ; $65e2
@@ -3548,7 +3548,7 @@ Label_10_66c6:
 	script_set_position $03, $1f80, $3100 ; $690d
 	sound $96 ; $6918
 	script_wait_frames $3c ; $691a
-	test_flag $05, 7 ; $6921
+	test_flag FLAG_DOUBLES ; $6921
 	jp z, Label_10_69c0 ; $6924
 	script_null_script ACTOR_PARTNER ; $6927
 	script_set_position ACTOR_PARTNER, $2d00, $3b00 ; $692c
@@ -3607,7 +3607,7 @@ Label_10_6a08:
 	script_face $08, FACE_LEFT ; $6ab4
 	script_face $07, FACE_LEFT ; $6abb
 	script_wait_frames $0a ; $6ac2
-	test_flag $05, 7 ; $6ac9
+	test_flag FLAG_DOUBLES ; $6ac9
 	jp z, Label_10_6b73 ; $6acc
 	script_wait_frames $3c ; $6acf
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $6ad6
@@ -3667,11 +3667,11 @@ Label_10_6c02:
 	script_wait_idle $06 ; $6c4b
 	ld h, $00 ; $6c50
 	ld l, $02 ; $6c52
-	test_flag $15, 6 ; $6c54
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6c54
 	jr z, Label_10_6c5a ; $6c57
 	inc l ; $6c59
 Label_10_6c5a:
-	test_flag $15, 7 ; $6c5a
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $6c5a
 	jr z, Label_10_6c60 ; $6c5d
 	inc l ; $6c5f
 Label_10_6c60:
@@ -3727,7 +3727,7 @@ Label_10_6c60:
 	script_set_anim $06, $02 ; $6d96
 	script_wait_idle $06 ; $6d9d
 	script_speak $06 ; $6da2
-	test_flag $05, 7 ; $6da7
+	test_flag FLAG_DOUBLES ; $6da7
 	jp z, Label_10_6e27 ; $6daa
 	script_move_target $08, $2000, $3400 ; $6dad
 	script_wait_move $08 ; $6db8
@@ -3778,7 +3778,7 @@ Label_10_6eae:
 	script_face $08, FACE_UP ; $6ec1
 	script_face $09, FACE_UP ; $6ec8
 	script_face ACTOR_PLAYER, FACE_UP ; $6ecf
-	test_flag $05, 7 ; $6ed6
+	test_flag FLAG_DOUBLES ; $6ed6
 	jp z, Label_10_6ee3 ; $6ed9
 	script_face ACTOR_PARTNER, FACE_UP ; $6edc
 Label_10_6ee3:
@@ -3786,7 +3786,7 @@ Label_10_6ee3:
 	script_set_anim $07, $03 ; $6eea
 	script_set_anim $08, $03 ; $6ef1
 	script_set_anim $09, $03 ; $6ef8
-	test_flag $05, 7 ; $6eff
+	test_flag FLAG_DOUBLES ; $6eff
 	jp z, Label_10_6f0c ; $6f02
 	script_set_anim ACTOR_PARTNER, $03 ; $6f05
 Label_10_6f0c:
@@ -3823,18 +3823,18 @@ Label_10_6fcd:
 	farcall ScriptRespawnLocationActors ; $6fd2
 	farcall BeginCutsceneScriptMode ; $6fd5
 	script_set_anim $04, $06 ; $6fd8
-	test_flag $05, 7 ; $6fdf
+	test_flag FLAG_DOUBLES ; $6fdf
 	jp z, Label_10_7019 ; $6fe2
 	script_null_script ACTOR_PARTNER ; $6fe5
 	script_set_position ACTOR_PLAYER, $1f00, $3400 ; $6fea
 	script_set_position ACTOR_PARTNER, $2100, $3400 ; $6ff5
 	script_face ACTOR_PARTNER, FACE_UP ; $7000
-	test_flag $07, 4 ; $7007
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7007
 	jr nz, Label_10_7029 ; $700a
 	script_set_position $04, $3f00, $3f00 ; $700c
 	jr Label_10_7029 ; $7017
 Label_10_7019:
-	test_flag $06, 5 ; $7019
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7019
 	jr nz, Label_10_7029 ; $701c
 	script_set_position $05, $3f00, $3f00 ; $701e
 Label_10_7029:
@@ -3846,7 +3846,7 @@ Label_10_7029:
 	script_wait_frames $3c ; $703c
 	script_set_text Text_30_498 ; $7043
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $7049
-	test_flag $05, 7 ; $704c
+	test_flag FLAG_DOUBLES ; $704c
 	jp z, Label_10_7059 ; $704f
 	script_set_anim ACTOR_PARTNER, $02 ; $7052
 Label_10_7059:
@@ -3874,7 +3874,7 @@ Label_10_7095:
 	script_wait_frames $50 ; $70b4
 	script_set_text Text_30_504 ; $70bb
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $70c1
-	test_flag $05, 7 ; $70c4
+	test_flag FLAG_DOUBLES ; $70c4
 	jp z, Label_10_7101 ; $70c7
 	script_set_position $06, $2080, $3200 ; $70ca
 	script_set_position $07, $2280, $3200 ; $70d5
@@ -3928,7 +3928,7 @@ Label_10_71bb:
 	script_set_text Text_30_511 ; $71e8
 	jr Label_10_71bb ; $71ee
 Label_10_71f0:
-	test_flag $05, 7 ; $71f0
+	test_flag FLAG_DOUBLES ; $71f0
 	jp z, Label_10_72a9 ; $71f3
 	script_set_anim ACTOR_PLAYER, $03 ; $71f6
 	script_wait_idle ACTOR_PLAYER ; $71fd
@@ -4010,7 +4010,7 @@ AcademyWingCloseDoor_10:
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
 	map_actor_end
 SpeakNpc03SinglesOrDoublesLine_10:
-	test_flag $05, 7 ; $73ee
+	test_flag FLAG_DOUBLES ; $73ee
 	jr z, Label_10_73fc ; $73f1
 	farcall AdvanceDialogueTextCursor ; $73f3
 	script_speak $03 ; $73f6
@@ -4020,7 +4020,7 @@ Label_10_73fc:
 	farcall AdvanceDialogueTextCursor ; $7401
 	ret ; $7404
 ShowNpc03SinglesOrDoublesPrompt_10:
-	test_flag $05, 7 ; $7405
+	test_flag FLAG_DOUBLES ; $7405
 	jr z, Label_10_7413 ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
 	ld a, $03 ; $740d
@@ -4054,40 +4054,40 @@ Label_10_7442:
 	ret ; $7442
 AcademyWingHideActorByProgressFlag_10:
 	script_set_anim $04, $06 ; $7443
-	test_flag $05, 7 ; $744a
+	test_flag FLAG_DOUBLES ; $744a
 	jr z, Label_10_7461 ; $744d
-	test_flag $07, 4 ; $744f
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $744f
 	jr nz, Label_10_7471 ; $7452
 	script_set_position $04, $0100, $0100 ; $7454
 	jr Label_10_7471 ; $745f
 Label_10_7461:
-	test_flag $06, 5 ; $7461
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7461
 	jr nz, Label_10_7471 ; $7464
 	script_set_position $05, $0100, $0100 ; $7466
 Label_10_7471:
 	ret ; $7471
 SetAcademyWingDialogueStage_10:
 	ld a, $00 ; $7472
-	test_flag $05, 7 ; $7474
+	test_flag FLAG_DOUBLES ; $7474
 	jr z, Label_10_7490 ; $7477
-	test_flag $08, 6 ; $7479
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7479
 	jr z, Label_10_74a5 ; $747c
 	ld a, $01 ; $747e
-	test_flag $15, 7 ; $7480
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7480
 	jr z, Label_10_74a5 ; $7483
 	ld a, $02 ; $7485
-	test_flag $16, 1 ; $7487
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7487
 	jr z, Label_10_74a5 ; $748a
 	ld a, $03 ; $748c
 	jr Label_10_74a5 ; $748e
 Label_10_7490:
-	test_flag $0a, 7 ; $7490
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7490
 	jr z, Label_10_74a5 ; $7493
 	ld a, $01 ; $7495
-	test_flag $15, 6 ; $7497
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7497
 	jr z, Label_10_74a5 ; $749a
 	ld a, $02 ; $749c
-	test_flag $16, 0 ; $749e
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $749e
 	jr z, Label_10_74a5 ; $74a1
 	ld a, $03 ; $74a3
 Label_10_74a5:
@@ -4123,7 +4123,7 @@ AcademyMainBldgArrival02_10:
 	ld a, [wStoryModeEntryPoint] ; $7532
 	cp a, $ff ; $7535
 	jp z, Label_10_7577 ; $7537
-	test_flag $05, 7 ; $753a
+	test_flag FLAG_DOUBLES ; $753a
 	jr z, Label_10_7565 ; $753d
 	script_set_speed ACTOR_PARTNER, $00ff ; $753f
 	script_move_angle ACTOR_PARTNER, FACE_UP, $0200 ; $7547
@@ -4139,7 +4139,7 @@ AcademyMainBldgArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $7578
 	cp a, $ff ; $757b
 	jp z, Label_10_75bd ; $757d
-	test_flag $05, 7 ; $7580
+	test_flag FLAG_DOUBLES ; $7580
 	jr z, Label_10_75ab ; $7583
 	script_set_speed ACTOR_PARTNER, $00ff ; $7585
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $758d
@@ -4221,7 +4221,7 @@ AcademyMainBldgNpc05_10:
 	script_set_text Text_30_462 ; $7654
 	script_speak $05 ; $765a
 	script_face $05, FACE_DOWN ; $765f
-	test_flag $05, 7 ; $7666
+	test_flag FLAG_DOUBLES ; $7666
 	jr nz, Label_10_76a2 ; $7669
 	script_speak $05 ; $766b
 	ld a, [$c2b0] ; $7670
@@ -4425,7 +4425,7 @@ Label_10_785b:
 UpdatePlayerPairTileAnimState_10:
 	ld a, $00 ; $79d0
 	call UpdateActorTileAnimState_10 ; $79d2
-	test_flag $05, 7 ; $79d5
+	test_flag FLAG_DOUBLES ; $79d5
 	ret z ; $79d8
 	ld a, $02 ; $79d9
 	call UpdateActorTileAnimState_10 ; $79db
@@ -4633,16 +4633,16 @@ ActorScript_10_7b8b:
 	as_jump .L8
 GetDoublesProgressStage_10:
 	ld a, $00 ; $7bb6
-	test_flag $08, 2 ; $7bb8
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7bb8
 	jr z, Label_10_7bd0 ; $7bbb
 	inc a ; $7bbd
-	test_flag $08, 6 ; $7bbe
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7bbe
 	jr z, Label_10_7bd0 ; $7bc1
 	inc a ; $7bc3
-	test_flag $09, 0 ; $7bc4
+	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2 ; $7bc4
 	jr z, Label_10_7bd0 ; $7bc7
 	inc a ; $7bc9
-	test_flag $16, 1 ; $7bca
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7bca
 	jr z, Label_10_7bd0 ; $7bcd
 	inc a ; $7bcf
 Label_10_7bd0:
@@ -4863,19 +4863,19 @@ ActorScript_10_7c07:
 	as_anim $03
 	as_jump .L1a7
 SetStoryDialogueStage_10:
-	test_flag $05, 7 ; $7dbd
+	test_flag FLAG_DOUBLES ; $7dbd
 	jr nz, Label_10_7de4 ; $7dc0
 	ld a, $00 ; $7dc2
-	test_flag $0a, 3 ; $7dc4
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dc4
 	jr z, Label_10_7de0 ; $7dc7
 	ld a, $02 ; $7dc9
-	test_flag $0a, 7 ; $7dcb
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7dcb
 	jr z, Label_10_7de0 ; $7dce
 	ld a, $04 ; $7dd0
-	test_flag $15, 6 ; $7dd2
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7dd2
 	jr z, Label_10_7de0 ; $7dd5
 	ld a, $06 ; $7dd7
-	test_flag $16, 0 ; $7dd9
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7dd9
 	jr z, Label_10_7de0 ; $7ddc
 	ld a, $08 ; $7dde
 Label_10_7de0:
@@ -4883,42 +4883,42 @@ Label_10_7de0:
 	ret ; $7de3
 Label_10_7de4:
 	ld a, $01 ; $7de4
-	test_flag $08, 2 ; $7de6
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7de6
 	jr z, Label_10_7de0 ; $7de9
 	ld a, $03 ; $7deb
-	test_flag $08, 6 ; $7ded
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7ded
 	jr z, Label_10_7de0 ; $7df0
 	ld a, $05 ; $7df2
-	test_flag $15, 7 ; $7df4
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7df4
 	jr z, Label_10_7de0 ; $7df7
 	ld a, $07 ; $7df9
-	test_flag $16, 1 ; $7dfb
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7dfb
 	jr z, Label_10_7de0 ; $7dfe
 	ld a, $09 ; $7e00
 	jr Label_10_7de0 ; $7e02
 	ld a, $00 ; $7e04
-	test_flag $0a, 3 ; $7e06
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e06
 	jr z, Label_10_7e23 ; $7e09
 	inc a ; $7e0b
-	test_flag $0a, 7 ; $7e0c
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7e0c
 	jr z, Label_10_7e23 ; $7e0f
 	inc a ; $7e11
-	test_flag $05, 7 ; $7e12
+	test_flag FLAG_DOUBLES ; $7e12
 	jr nz, Label_10_7e27 ; $7e15
-	test_flag $15, 6 ; $7e17
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7e17
 	jr z, Label_10_7e23 ; $7e1a
 	inc a ; $7e1c
-	test_flag $16, 0 ; $7e1d
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7e1d
 	jr z, Label_10_7e23 ; $7e20
 	inc a ; $7e22
 Label_10_7e23:
 	ld [$c2b0], a ; $7e23
 	ret ; $7e26
 Label_10_7e27:
-	test_flag $15, 7 ; $7e27
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7e27
 	jr z, Label_10_7e23 ; $7e2a
 	inc a ; $7e2c
-	test_flag $16, 1 ; $7e2d
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7e2d
 	jr z, Label_10_7e23 ; $7e30
 	inc a ; $7e32
 	jr Label_10_7e23 ; $7e33

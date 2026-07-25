@@ -248,7 +248,7 @@ AwardsCeremonyTile01_0f:
 	call CutsceneStompScreenShake ; $44c5
 	script_set_text Text_25_126 ; $44c8
 	script_speak $08 ; $44ce
-	test_flag $05, 7 ; $44d3
+	test_flag FLAG_DOUBLES ; $44d3
 	jp z, Label_0f_45b6 ; $44d6
 	set_flag $10, 4 ; $44d9
 	script_set_text Text_25_180 ; $44dc
@@ -328,7 +328,7 @@ Label_0f_4661:
 	ld a, $01 ; $4689
 	call DelayFrames ; $468b
 	script_set_position $16, $3f00, $3f00 ; $468e
-	test_flag $05, 7 ; $4699
+	test_flag FLAG_DOUBLES ; $4699
 	jp z, Label_0f_4700 ; $469c
 	script_set_position $15, $3f00, $3f00 ; $469f
 	script_set_objdef $4d, $15 ; $46aa
@@ -360,7 +360,7 @@ Label_0f_4700:
 	farcall AttachActorStepMover ; $4721
 	ret ; $4724
 AwardsCeremonyTile02_0f:
-	test_flag $05, 7 ; $4725
+	test_flag FLAG_DOUBLES ; $4725
 	jp nz, Label_0f_4ea7 ; $4728
 	script_null_script $03 ; $472b
 	script_move_target ACTOR_PLAYER, $0c00, $1900 ; $4730
@@ -956,7 +956,7 @@ Label_0f_4ea7:
 	ld [wStoryModeExitLocationRequest], a ; $557d
 	ret ; $5580
 AwardsCeremonyInitScript_0f:
-	test_flag $05, 7 ; $5581
+	test_flag FLAG_DOUBLES ; $5581
 	jr z, Label_0f_55a9 ; $5584
 	ldh a, [hRomBank] ; $5586
 	ld hl, AwardsCeremonyActorsDoubles_0f ; $5588
@@ -969,7 +969,7 @@ AwardsCeremonyInitScript_0f:
 Label_0f_55a9:
 	script_set_anim $0e, $08 ; $55a9
 	script_set_anim $0f, $08 ; $55b0
-	test_flag $05, 7 ; $55b7
+	test_flag FLAG_DOUBLES ; $55b7
 	jr nz, Label_0f_55c3 ; $55ba
 	script_set_anim $0d, $06 ; $55bc
 Label_0f_55c3:
@@ -993,7 +993,7 @@ Label_0f_55c3:
 	ld l, $02 ; $55fb
 	farcall CopyBehaviorMapRect ; $55fd
 Label_0f_5600:
-	test_flag $05, 7 ; $5600
+	test_flag FLAG_DOUBLES ; $5600
 	jp nz, Label_0f_5627 ; $5603
 	call SavePlayerActorPosition ; $5606
 	ld hl, $c2b2 ; $5609
@@ -1486,7 +1486,7 @@ SavePlayerActorPosition:
 	ld [hl], d ; $5f78
 	ret ; $5f79
 CheckAwardsCeremonyRivalSceneDone:
-	test_flag $05, 7 ; $5f7a
+	test_flag FLAG_DOUBLES ; $5f7a
 	jr z, Label_0f_5f8a ; $5f7d
 	ld a, $00 ; $5f7f
 	test_flag $10, 4 ; $5f81
@@ -1663,14 +1663,14 @@ Label_0f_6221:
 	script_face $03, FACE_DOWN ; $6265
 	script_face $04, FACE_DOWN ; $626c
 	script_face $05, FACE_LEFT ; $6273
-	test_flag $05, 7 ; $627a
+	test_flag FLAG_DOUBLES ; $627a
 	jr z, Label_0f_628a ; $627d
 	script_set_position $05, $3f00, $3f00 ; $627f
 Label_0f_628a:
 	call SetPlayerAndPartnerObjectDefs ; $628a
 	ret ; $628d
 Label_0f_628e:
-	test_flag $05, 7 ; $628e
+	test_flag FLAG_DOUBLES ; $628e
 	jr nz, Label_0f_62c4 ; $6291
 	ldh a, [hRomBank] ; $6293
 	ld hl, IslandOpenRoundActorsSingles_0f ; $6295
@@ -1720,7 +1720,7 @@ Label_0f_6306:
 UpdateTournamentActorDrawModes_0f:
 	ld a, $00 ; $6310
 	call SetActorDrawModeFromSceneTile_0f ; $6312
-	test_flag $05, 7 ; $6315
+	test_flag FLAG_DOUBLES ; $6315
 	ret z ; $6318
 	ld a, $02 ; $6319
 	call SetActorDrawModeFromSceneTile_0f ; $631b
@@ -1929,12 +1929,12 @@ IslandOpenArrivalCutscene:
 	script_speak $03 ; $6555
 	script_set_anim ACTOR_PLAYER, $02 ; $655a
 	script_wait_idle ACTOR_PLAYER ; $6561
-	test_flag $05, 7 ; $6566
+	test_flag FLAG_DOUBLES ; $6566
 	jr nz, Label_0f_6582 ; $6569
 	script_set_anim $05, $03 ; $656b
 	script_wait_idle $05 ; $6572
 	script_speak $05 ; $6577
-	set_flag $15, 6 ; $657c
+	set_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $657c
 	jr Label_0f_65a6 ; $657f
 	ret ; $6581
 Label_0f_6582:
@@ -1947,7 +1947,7 @@ Label_0f_6582:
 	ld b, h ; $659c
 	ld de, $d000 ; $659d
 	farcall AttachActorStepMover ; $65a0
-	set_flag $15, 7 ; $65a3
+	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $65a3
 Label_0f_65a6:
 	script_player_speed $0018 ; $65a6
 	script_move_player $1c00, $1d00 ; $65ac
@@ -1969,21 +1969,21 @@ IslandOpenRoundScripts_0f:
 	map_script $05, FACEMASK_ANY, $0000, Text_1f_27, $03, $00
 	db $ff
 ComputeIslandOpenRound:
-	test_flag $05, 7 ; $660f
+	test_flag FLAG_DOUBLES ; $660f
 	jr nz, Label_0f_663b ; $6612
-	test_flag $07, 5 ; $6614
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6614
 	jr z, Label_0f_661f ; $6617
 	ld a, $03 ; $6619
 	ld [$c2b0], a ; $661b
 	ret ; $661e
 Label_0f_661f:
-	test_flag $07, 6 ; $661f
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $661f
 	jr z, Label_0f_662a ; $6622
 	ld a, $02 ; $6624
 	ld [$c2b0], a ; $6626
 	ret ; $6629
 Label_0f_662a:
-	test_flag $07, 7 ; $662a
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $662a
 	jr z, Label_0f_6635 ; $662d
 	ld a, $01 ; $662f
 	ld [$c2b0], a ; $6631
@@ -1993,13 +1993,13 @@ Label_0f_6635:
 	ld [$c2b0], a ; $6637
 	ret ; $663a
 Label_0f_663b:
-	test_flag $06, 6 ; $663b
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $663b
 	jr z, Label_0f_6646 ; $663e
 	ld a, $03 ; $6640
 	ld [$c2b0], a ; $6642
 	ret ; $6645
 Label_0f_6646:
-	test_flag $06, 7 ; $6646
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $6646
 	jr z, Label_0f_6635 ; $6649
 	ld a, $02 ; $664b
 	ld [$c2b0], a ; $664d
@@ -2007,13 +2007,13 @@ Label_0f_6646:
 LoadIslandOpenRoundNpcs:
 	ld a, $00 ; $6651
 	ld [$c2b0], a ; $6653
-	test_flag $05, 7 ; $6656
+	test_flag FLAG_DOUBLES ; $6656
 	jr nz, Label_0f_66b8 ; $6659
 	ld a, $f1 ; $665b
 	ld d, $0e ; $665d
 	ld e, $14 ; $665f
 	farcall WriteBehaviorMapCell ; $6661
-	test_flag $07, 5 ; $6664
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6664
 	jr z, Label_0f_6680 ; $6667
 	ldh a, [hRomBank] ; $6669
 	ld hl, IslandOpenRound3Actors_0f ; $666b
@@ -2025,7 +2025,7 @@ LoadIslandOpenRoundNpcs:
 	ld [$c2b0], a ; $667c
 	ret ; $667f
 Label_0f_6680:
-	test_flag $07, 6 ; $6680
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $6680
 	jr z, Label_0f_669c ; $6683
 	ldh a, [hRomBank] ; $6685
 	ld hl, IslandOpenRound2Actors_0f ; $6687
@@ -2037,7 +2037,7 @@ Label_0f_6680:
 	ld [$c2b0], a ; $6698
 	ret ; $669b
 Label_0f_669c:
-	test_flag $07, 7 ; $669c
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $669c
 	jr z, Label_0f_66b7 ; $669f
 	ldh a, [hRomBank] ; $66a1
 	ld hl, IslandOpenRound1Actors_0f ; $66a3
@@ -2058,7 +2058,7 @@ Label_0f_66b8:
 	ld d, $10 ; $66c3
 	ld e, $14 ; $66c5
 	farcall WriteBehaviorMapCell ; $66c7
-	test_flag $06, 6 ; $66ca
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $66ca
 	jr z, Label_0f_66e6 ; $66cd
 	ldh a, [hRomBank] ; $66cf
 	ld hl, IslandOpenRound3ActorsDoubles_0f ; $66d1
@@ -2070,7 +2070,7 @@ Label_0f_66b8:
 	ld [$c2b0], a ; $66e2
 	ret ; $66e5
 Label_0f_66e6:
-	test_flag $06, 7 ; $66e6
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $66e6
 	jr z, Label_0f_6702 ; $66e9
 	ldh a, [hRomBank] ; $66eb
 	ld hl, IslandOpenRound2ActorsDoubles_0f ; $66ed
@@ -2418,9 +2418,9 @@ Label_0f_6f7c:
 	script_speak $04 ; $6f7f
 	ret ; $6f84
 MovePartnerForRoundCall_0f:
-	test_flag $05, 7 ; $6f85
+	test_flag FLAG_DOUBLES ; $6f85
 	jr z, Label_0f_6fc2 ; $6f88
-	test_flag $06, 6 ; $6f8a
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $6f8a
 	jr nz, Label_0f_6fc2 ; $6f8d
 	script_null_script $0d ; $6f8f
 	script_move_target $0d, $1900, $1100 ; $6f94
@@ -2474,7 +2474,7 @@ Label_0f_70bb:
 	script_wait_move $05 ; $70bb
 	script_face $05, FACE_UP ; $70c0
 	script_speak $04 ; $70c7
-	test_flag $05, 7 ; $70cc
+	test_flag FLAG_DOUBLES ; $70cc
 	jp nz, Label_0f_722f ; $70cf
 	script_set_speed ACTOR_PLAYER, $0020 ; $70d2
 	script_face_pair $0a, ACTOR_PLAYER ; $70da
@@ -2484,7 +2484,7 @@ Label_0f_70bb:
 	script_set_anim $0a, $03 ; $70f7
 	script_set_anim ACTOR_PLAYER, $03 ; $70fe
 	script_wait_idle ACTOR_PLAYER ; $7105
-	test_flag $07, 5 ; $710a
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $710a
 	jr z, Label_0f_716c ; $710d
 	script_move_target $05, $1300, $1700 ; $710f
 	script_wait_move $05 ; $711a
@@ -2522,17 +2522,17 @@ Label_0f_71bf:
 	ld [$c294], a ; $71d6
 	ld [wStoryModeExitLocationRequest], a ; $71d9
 	farcall InitStoryMatchSettings ; $71dc
-	test_flag $07, 5 ; $71df
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $71df
 	jr z, Label_0f_71f3 ; $71e2
 	load_match_settings $0013 ; $71e4
 	jr Label_0f_7228 ; $71f1
 Label_0f_71f3:
-	test_flag $07, 6 ; $71f3
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $71f3
 	jr z, Label_0f_7207 ; $71f6
 	load_match_settings $0012 ; $71f8
 	jr Label_0f_7228 ; $7205
 Label_0f_7207:
-	test_flag $07, 7 ; $7207
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $7207
 	jr z, Label_0f_721b ; $720a
 	load_match_settings $0011 ; $720c
 	jr Label_0f_7228 ; $7219
@@ -2552,7 +2552,7 @@ Label_0f_722f:
 	script_wait_idle ACTOR_PLAYER ; $725c
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7261
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7268
-	test_flag $06, 6 ; $726f
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $726f
 	jp z, Label_0f_72e8 ; $7272
 	script_move_target $05, $1300, $1700 ; $7275
 	script_wait_move $05 ; $7280
@@ -2596,12 +2596,12 @@ Label_0f_735f:
 	ld [$c294], a ; $7376
 	ld [wStoryModeExitLocationRequest], a ; $7379
 	farcall InitStoryMatchSettings ; $737c
-	test_flag $06, 6 ; $737f
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $737f
 	jp z, Label_0f_7394 ; $7382
 	load_match_settings $0113 ; $7385
 	jr Label_0f_73b7 ; $7392
 Label_0f_7394:
-	test_flag $06, 7 ; $7394
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $7394
 	jp z, Label_0f_73aa ; $7397
 	load_match_settings $0112 ; $739a
 	jp Label_0f_73b7 ; $73a7
@@ -2652,7 +2652,7 @@ ActorScript_0f_73fd:
 	as_wait_move
 	as_halt
 GetIslandOpenRoundParams:
-	test_flag $05, 7 ; $7416
+	test_flag FLAG_DOUBLES ; $7416
 	jr nz, Label_0f_7425 ; $7419
 	ld b, $00 ; $741b
 	ld a, [$c2b0] ; $741d
@@ -2694,13 +2694,13 @@ Label_0f_7458:
 	call QueueShortText ; $7458
 	ret ; $745b
 CheckIslandOpenVictoryTransition:
-	test_flag $05, 7 ; $745c
+	test_flag FLAG_DOUBLES ; $745c
 	jr nz, Label_0f_7468 ; $745f
-	test_flag $07, 4 ; $7461
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7461
 	jr nz, Label_0f_746f ; $7464
 	jr Label_0f_7484 ; $7466
 Label_0f_7468:
-	test_flag $06, 5 ; $7468
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7468
 	jr nz, Label_0f_746f ; $746b
 	jr Label_0f_7484 ; $746d
 Label_0f_746f:
@@ -3042,7 +3042,7 @@ IslandOpenRoundDoublesNpc03_0f:
 	dw $2859 ; record 2
 	dw $284f ; record 3
 QueueFinishedRoundNameText:
-	test_flag $05, 7 ; $78ec
+	test_flag FLAG_DOUBLES ; $78ec
 	jr nz, Label_0f_7901 ; $78ef
 	ld a, [$c2b0] ; $78f1
 	dec a ; $78f4
@@ -3111,7 +3111,7 @@ Label_0f_79b1:
 	ret ; $7a16
 ReplacePartnerWithStandInActor:
 	call SetPlayerAndPartnerObjectDefs ; $7a17
-	test_flag $05, 7 ; $7a1a
+	test_flag FLAG_DOUBLES ; $7a1a
 	jr z, Label_0f_7a29 ; $7a1d
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7a1f
 	or a, a ; $7a22
@@ -3174,7 +3174,7 @@ WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
 	cp a, $ff ; $7ab2
 	jp z, Label_0f_7b15 ; $7ab4
-	test_flag $05, 7 ; $7ab7
+	test_flag FLAG_DOUBLES ; $7ab7
 	jr z, Label_0f_7af8 ; $7aba
 	script_set_speed ACTOR_PARTNER, $00ff ; $7abc
 	ld a, [wStoryModeEntryPoint] ; $7ac4
@@ -3222,7 +3222,7 @@ Facings_0f_7b16:
 	; $7b16, 10 bytes (enum:FACE:10)
 	db FACE_DOWN, FACE_DOWN, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_UP, FACE_UP, FACE_LEFT, FACE_RIGHT, FACE_DOWN ; 0x00
 SetPlayerAndPartnerObjectDefs:
-	test_flag $05, 7 ; $7b20
+	test_flag FLAG_DOUBLES ; $7b20
 	jp z, Label_0f_7b3e ; $7b23
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7b26
 	ld d, $58 ; $7b29
@@ -3459,19 +3459,19 @@ ActorScript_0f_7b8d:
 	as_wait $8c
 	as_anim $03
 	as_jump .L1a7
-	test_flag $05, 7 ; $7d43
+	test_flag FLAG_DOUBLES ; $7d43
 	jr nz, Label_0f_7d6a ; $7d46
 	ld a, $00 ; $7d48
-	test_flag $0a, 3 ; $7d4a
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d4a
 	jr z, Label_0f_7d66 ; $7d4d
 	ld a, $02 ; $7d4f
-	test_flag $0a, 7 ; $7d51
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d51
 	jr z, Label_0f_7d66 ; $7d54
 	ld a, $04 ; $7d56
-	test_flag $15, 6 ; $7d58
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d58
 	jr z, Label_0f_7d66 ; $7d5b
 	ld a, $06 ; $7d5d
-	test_flag $16, 0 ; $7d5f
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7d5f
 	jr z, Label_0f_7d66 ; $7d62
 	ld a, $08 ; $7d64
 Label_0f_7d66:
@@ -3479,42 +3479,42 @@ Label_0f_7d66:
 	ret ; $7d69
 Label_0f_7d6a:
 	ld a, $01 ; $7d6a
-	test_flag $08, 2 ; $7d6c
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7d6c
 	jr z, Label_0f_7d66 ; $7d6f
 	ld a, $03 ; $7d71
-	test_flag $08, 6 ; $7d73
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7d73
 	jr z, Label_0f_7d66 ; $7d76
 	ld a, $05 ; $7d78
-	test_flag $15, 7 ; $7d7a
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7d7a
 	jr z, Label_0f_7d66 ; $7d7d
 	ld a, $07 ; $7d7f
-	test_flag $16, 1 ; $7d81
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7d81
 	jr z, Label_0f_7d66 ; $7d84
 	ld a, $09 ; $7d86
 	jr Label_0f_7d66 ; $7d88
 	ld a, $00 ; $7d8a
-	test_flag $0a, 3 ; $7d8c
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
 	jr z, Label_0f_7da9 ; $7d8f
 	inc a ; $7d91
-	test_flag $0a, 7 ; $7d92
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d92
 	jr z, Label_0f_7da9 ; $7d95
 	inc a ; $7d97
-	test_flag $05, 7 ; $7d98
+	test_flag FLAG_DOUBLES ; $7d98
 	jr nz, Label_0f_7dad ; $7d9b
-	test_flag $15, 6 ; $7d9d
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d9d
 	jr z, Label_0f_7da9 ; $7da0
 	inc a ; $7da2
-	test_flag $16, 0 ; $7da3
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7da3
 	jr z, Label_0f_7da9 ; $7da6
 	inc a ; $7da8
 Label_0f_7da9:
 	ld [$c2b0], a ; $7da9
 	ret ; $7dac
 Label_0f_7dad:
-	test_flag $15, 7 ; $7dad
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dad
 	jr z, Label_0f_7da9 ; $7db0
 	inc a ; $7db2
-	test_flag $16, 1 ; $7db3
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7db3
 	jr z, Label_0f_7da9 ; $7db6
 	inc a ; $7db8
 	jr Label_0f_7da9 ; $7db9

@@ -90,15 +90,15 @@ ToggleCutsceneFastForward:
 	ldh a, [hInputRisingEdge] ; $40a8
 	and a, PADF_START ; $40aa
 	jr z, Label_0a_40cb ; $40ac
-	test_flag $02, 6 ; $40ae
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $40ae
 	jr z, Label_0a_40c0 ; $40b1
-	clear_flag $02, 6 ; $40b3
+	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $40b3
 	ld a, [wMessageSpeed] ; $40b6
 	or a, $80 ; $40b9
 	ld [wMessageSpeed], a ; $40bb
 	jr Label_0a_40cb ; $40be
 Label_0a_40c0:
-	set_flag $02, 6 ; $40c0
+	set_flag FLAG_CUTSCENE_FAST_FORWARD ; $40c0
 	ld a, [wMessageSpeed] ; $40c3
 	and a, $7f ; $40c6
 	ld [wMessageSpeed], a ; $40c8
@@ -150,7 +150,7 @@ EndCutsceneScriptMode:
 	farcall AttachActorWaypointFollower ; $4116
 	ld hl, ToggleCutsceneFastForward ; $4119
 	call UnregisterFrameTask ; $411c
-	clear_flag $02, 6 ; $411f
+	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $411f
 	ldh a, [hWramBank] ; $4122
 	push af ; $4124
 	wram_bank $04 ; $4125
@@ -169,7 +169,7 @@ Unused_0a_413b:
 WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140
-	test_flag $02, 6 ; $4141
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $4141
 	jr z, Label_0a_4148 ; $4144
 	ld a, $02 ; $4146
 Label_0a_4148:
@@ -232,7 +232,7 @@ ScriptShowSpeakerDialogue:
 	ld a, [hl+] ; $41a4
 	ld h, [hl] ; $41a5
 	ld l, a ; $41a6
-	test_flag $02, 6 ; $41a7
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41a7
 	jr nz, Label_0a_41b0 ; $41aa
 	ld a, b ; $41ac
 	farcall ShowSpeakerDialogue ; $41ad
@@ -259,7 +259,7 @@ ScriptShowSpeakerDialogueRestoreBG:
 	ld l, a ; $41d3
 	ld a, [$d853] ; $41d4
 	ld h, a ; $41d7
-	test_flag $02, 6 ; $41d8
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41d8
 	jr nz, Label_0a_41e1 ; $41db
 	ld a, b ; $41dd
 	farcall ShowSpeakerDialogueRestoreBG ; $41de
@@ -437,7 +437,7 @@ ScriptSkipSpeakerDialogue:
 	ld l, a ; $42f7
 	ld a, [$d853] ; $42f8
 	ld h, a ; $42fb
-	test_flag $02, 6 ; $42fc
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $42fc
 	jr nz, Label_0a_4301 ; $42ff
 Label_0a_4301:
 	inc hl ; $4301
@@ -1192,7 +1192,7 @@ ScriptSetActorAnimation:
 	farcall SetActorAnimationChecked ; $4707
 	ret ; $470a
 ScriptWaitActorIdle:
-	test_flag $02, 6 ; $470b
+	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $470b
 	jr nz, Label_0a_4718 ; $470e
 	call GetActorStateAddr ; $4710
 	ld c, l ; $4713
@@ -1828,7 +1828,7 @@ Label_0a_4c31:
 	ld [wCharPosHeight], a ; $4c37
 	jp Label_0a_4d1e ; $4c3a
 Label_0a_4c3d:
-	test_flag $05, 7 ; $4c3d
+	test_flag FLAG_DOUBLES ; $4c3d
 	jr nz, Label_0a_4c45 ; $4c40
 	xor a, a ; $4c42
 	jr Label_0a_4c47 ; $4c43
@@ -1971,11 +1971,11 @@ ApplyClearStatusFlags:
 	ld a, [wCharPosX] ; $4d80
 	or a, a ; $4d83
 	ret nz ; $4d84
-	clear_flag $05, 7 ; $4d85
+	clear_flag FLAG_DOUBLES ; $4d85
 	ld a, [wCharPosX + 1] ; $4d88
 	or a, a ; $4d8b
 	jr z, Label_0a_4d91 ; $4d8c
-	set_flag $05, 7 ; $4d8e
+	set_flag FLAG_DOUBLES ; $4d8e
 Label_0a_4d91:
 	call SetRankingMatchClearFlags ; $4d91
 	ld a, [wCharPosX + 1] ; $4d94
@@ -2260,14 +2260,14 @@ RunStoryLocation:
 	push hl ; $4f43
 	ld c, $0c ; $4f44
 	call BeginFadeOut ; $4f46
-	call ClearStoryLocationScratch ; $4f49
+	call ClearTemporaryStoryFlags ; $4f49
 	call ClearStoryEventRequests ; $4f4c
 	call LoadStoryLocationHeader ; $4f4f
 	call LoadStoryEntryPointRecord ; $4f52
 	ld a, $00 ; $4f55
 	ld [wGameMode], a ; $4f57
 	call AdvanceFrame ; $4f5a
-	test_flag $0d, 6 ; $4f5d
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4f5d
 	jr nz, Label_0a_4f6f ; $4f60
 	ld a, [$c284] ; $4f62
 	cp a, $ff ; $4f65
@@ -2297,7 +2297,7 @@ Label_0a_4f6f:
 	farcall LoadStorySceneGraphics ; $4f9f
 	ld a, $00 ; $4fa2
 	farcall CopyScrolledSceneTilemapToVram ; $4fa4
-	test_flag $0d, 6 ; $4fa7
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4fa7
 	jr nz, Label_0a_4faf ; $4faa
 	farcall LoadMenuFontGfx ; $4fac
 Label_0a_4faf:
@@ -2455,10 +2455,10 @@ Label_0a_50df:
 	pop bc ; $50e1
 	pop af ; $50e2
 	ret ; $50e3
-ClearStoryLocationScratch:
+ClearTemporaryStoryFlags:
 	push af ; $50e4
 	push hl ; $50e5
-	ld hl, $c9dc ; $50e6
+	ld hl, wGameFlagsTemp ; $50e6
 	xor a, a ; $50e9
 	ld [hl+], a ; $50ea
 	ld [hl+], a ; $50eb
@@ -6256,7 +6256,7 @@ RunEndingCreditsSequence:
 	ld c, $04 ; $6e74
 	call BeginFadeOut ; $6e76
 	call WaitFadeEnd ; $6e79
-	set_flag $0d, 6 ; $6e7c
+	set_flag FLAG_ENDING_CREDITS_RUNNING ; $6e7c
 	sound $2c ; $6e7f
 	farcall LoadMenuFontGfx ; $6e81
 	ld hl, Palette_0a_6e6c ; $6e84
@@ -6286,12 +6286,12 @@ Label_0a_6eac:
 	ld a, [hl+] ; $6eaf
 	ld [wStoryModeEntryPoint], a ; $6eb0
 	clear_flag $03, 0 ; $6eb3
-	clear_flag $0d, 7 ; $6eb6
+	clear_flag FLAG_ACTORS_FROZEN ; $6eb6
 	xor a, a ; $6eb9
 	ld [$cb02], a ; $6eba
 	ld [$cb03], a ; $6ebd
 	call RunStoryLocation ; $6ec0
-	test_flag $0d, 5 ; $6ec3
+	test_flag FLAG_ENDING_CREDITS_PENDING ; $6ec3
 	jr nz, Label_0a_6ee3 ; $6ec6
 	set_flag $03, 0 ; $6ec8
 	call FreezeAllActors ; $6ecb
@@ -6304,7 +6304,7 @@ Label_0a_6eac:
 	ld a, [wStoryCharacterSlot] ; $6edd
 	farcall PlayScrollingStoryCutscene ; $6ee0
 Label_0a_6ee3:
-	clear_flag $0d, 5 ; $6ee3
+	clear_flag FLAG_ENDING_CREDITS_PENDING ; $6ee3
 	ld c, $04 ; $6ee6
 	call BeginFadeOut ; $6ee8
 	call WaitFadeEnd ; $6eeb
@@ -6329,8 +6329,8 @@ Label_0a_6f03:
 	ldh [hScrollX], a ; $6f0f
 	ldh [hScrollY], a ; $6f11
 	farcall LoadMenuFontGfx ; $6f13
-	clear_flag $0d, 6 ; $6f16
-	clear_flag $0d, 7 ; $6f19
+	clear_flag FLAG_ENDING_CREDITS_RUNNING ; $6f16
+	clear_flag FLAG_ACTORS_FROZEN ; $6f19
 	ret ; $6f1c
 FreezeAllActors:
 	wram_bank $04 ; $6f1d
@@ -6353,7 +6353,7 @@ Label_0a_6f37:
 	ld d, h ; $6f3c
 	dec c ; $6f3d
 	jp nz, Label_0a_6f28 ; $6f3e
-	set_flag $0d, 7 ; $6f41
+	set_flag FLAG_ACTORS_FROZEN ; $6f41
 	ret ; $6f44
 Unused_0a_6f45:
 	; $6f45, 4 bytes (bytes:4)

@@ -4150,7 +4150,7 @@ ModeHookTable_07:
 	dw RetStub ; record 7
 ModeHookNop_07:
 	ret ; $5f0c
-	test_flag $0c, 4 ; $5f0d
+	test_flag FLAG_HAVE_SILVER_RACKET ; $5f0d
 	ret z ; $5f10
 	ld a, $01 ; $5f11
 	ld [wMatchSimFrozen], a ; $5f13
@@ -4158,7 +4158,7 @@ ModeHookNop_07:
 	farcall StepMatchFrames ; $5f18
 	ld a, $00 ; $5f1b
 	ld [wMatchSimFrozen], a ; $5f1d
-	clear_flag $0c, 4 ; $5f20
+	clear_flag FLAG_HAVE_SILVER_RACKET ; $5f20
 	ret ; $5f23
 	ret ; $5f24
 	farcall IsBallInTargetZone ; $5f25
@@ -4185,7 +4185,7 @@ ModeHookNop_07:
 	farcall SetTargetZoneCorner2 ; $5f45
 Label_07_5f48:
 	ret ; $5f48
-	set_flag $0c, 4 ; $5f49
+	set_flag FLAG_HAVE_SILVER_RACKET ; $5f49
 	ret ; $5f4c
 	ld hl, $fdc0 ; $5f4d
 	ld de, $fd80 ; $5f50

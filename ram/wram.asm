@@ -1100,9 +1100,8 @@ wStoryModeGenderOfPartnerCharacter:: db
 wStoryModePartnerCharacterLeftHanded:: db
 	ds 113
 
-; Event flag bit-array; rst $20/$28/$30 set/clear/test wGameFlags[byte] with mask $80 >> bit
-wGameFlags:: db
-	ds 4
+; [32 bytes] Per-story-slot progress flags, $c9c0-$c9df, saved as the story slot's +$1c0 block. rst $20/$28/$30 (SetGameFlag/ClearGameFlag/TestGameFlag, $00:$24ba/$24d4/$249f) take d = byte index, e = bit << 5 and apply mask $80 >> bit to wGameFlags[d]; the *GameFlagByNumber wrappers ($00:$24ef) take the flat flag number byte * 8 + bit instead, which is what the FLAG_* constants in include/flag_constants.inc hold (see flags.json). Nothing reads the array as bytes, so the wSinglesDoublesIndicator / wStoryMode*Flags* entries below are the same storage under the RetroAchievements names: byte $05 = doubles, $06/$07 = Island Open + Dream Match, $08-$0b = class rank wins, $0c/$0d = equipment owned, $18-$1b = training-drill clears. Bytes $1c-$1f are scratch: ClearTemporaryStoryFlags ($0a:$50e4) zeroes them on every story-location load, the way pokecrystal's first eight event flags reset on map reload.
+wGameFlags:: ds 5
 
 ; [8-bit] Singles/Doubles Indicator (Story & Exhibition Mode)
 ;
@@ -1217,7 +1216,10 @@ wStoryModeMinigameCompletionFlags3:: db
 ; Bit 7 - Wall Level 3
 ; Bit 6 - Wall Level 4
 wStoryModeMinigameCompletionFlags4:: db
-	ds 47
+
+; [4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff): the temporary end of the array. ClearTemporaryStoryFlags ($0a:$50e4) zeroes all four at the top of RunStoryLocation, so anything stored here lasts only until the next location load - per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear around themselves ($1f).
+wGameFlagsTemp:: ds 4
+	ds 43
 
 ; [8-bit] Player 1 Current Main Character
 ;

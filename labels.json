@@ -1744,7 +1744,7 @@
  "0x28efc": "DrawPlayerPositionDebugOverlay",
  "0x28f2c": "RunStoryModeOverworld",
  "0x28f40": "RunStoryLocation",
- "0x290e4": "ClearStoryLocationScratch",
+ "0x290e4": "ClearTemporaryStoryFlags",
  "0x290f1": "ClearStoryEventRequests",
  "0x29104": "CheckStoryEventRequests",
  "0x29114": "LoadStoryLocationHeader",

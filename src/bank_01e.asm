@@ -8,7 +8,7 @@ SECTION "ROM Bank $1e", ROMX[$4000], BANK[$1e]
 	farptr FetchAndDrawDialogueText ; $400a
 	farptr WriteTextToTilemap ; $400c
 ShowMatchResultsScreen:
-	clear_flag $1f, 7 ; $400e
+	clear_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $400e
 	ld a, [wGameMode] ; $4011
 	cp a, $05 ; $4014
 	jr z, Label_1e_402a ; $4016
@@ -17,9 +17,9 @@ ShowMatchResultsScreen:
 	cp a, $07 ; $401c
 	jr z, Label_1e_402a ; $401e
 	cp a, $08 ; $4020
-	test_flag $05, 7 ; $4022
+	test_flag FLAG_DOUBLES ; $4022
 	jr z, Label_1e_402a ; $4025
-	set_flag $1f, 7 ; $4027
+	set_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4027
 Label_1e_402a:
 	ld a, c ; $402a
 	or a, a ; $402b
@@ -474,7 +474,7 @@ Label_1e_44a0:
 	call DrawProportionalTextLine ; $44ad
 	ret ; $44b0
 Label_1e_44b1:
-	test_flag $1f, 7 ; $44b1
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44b1
 	jr nz, Label_1e_44c4 ; $44b4
 	call LoadSinglesLabelTiles ; $44b6
 	xor a, a ; $44b9
@@ -490,7 +490,7 @@ Label_1e_44c4:
 	call DrawSetsGamesScore ; $44cf
 	ret ; $44d2
 Label_1e_44d3:
-	test_flag $1f, 7 ; $44d3
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44d3
 	jr nz, Label_1e_44e6 ; $44d6
 	call LoadSinglesLabelTiles ; $44d8
 	xor a, a ; $44db
@@ -506,7 +506,7 @@ Label_1e_44e6:
 	call DrawSetsGamesScore ; $44f0
 	ret ; $44f3
 Label_1e_44f4:
-	test_flag $1f, 7 ; $44f4
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44f4
 	jr nz, Label_1e_450a ; $44f7
 	call LoadSinglesLabelTiles ; $44f9
 	xor a, a ; $44fc
@@ -524,7 +524,7 @@ Label_1e_450a:
 	call DrawSetsGamesScore ; $4517
 	ret ; $451a
 Label_1e_451b:
-	test_flag $1f, 7 ; $451b
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $451b
 	jr nz, Label_1e_452e ; $451e
 	call LoadSinglesLabelTiles ; $4520
 	xor a, a ; $4523
@@ -540,7 +540,7 @@ Label_1e_452e:
 	call DrawSetsGamesScore ; $4538
 	ret ; $453b
 Label_1e_453c:
-	test_flag $1f, 7 ; $453c
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $453c
 	jr nz, Label_1e_4552 ; $453f
 	call LoadSinglesLabelTiles ; $4541
 	xor a, a ; $4544
@@ -779,17 +779,17 @@ Label_1e_4710:
 	inc de ; $4714
 	jr Label_1e_4710 ; $4715
 DrawClassNameLabel:
-	test_flag $1f, 7 ; $4717
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4717
 	jr nz, Label_1e_4728 ; $471a
-	test_flag $0a, 7 ; $471c
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $471c
 	jr nz, Label_1e_473c ; $471f
-	test_flag $0a, 3 ; $4721
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4721
 	jr nz, Label_1e_4737 ; $4724
 	jr Label_1e_4732 ; $4726
 Label_1e_4728:
-	test_flag $08, 6 ; $4728
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4728
 	jr nz, Label_1e_473c ; $472b
-	test_flag $08, 2 ; $472d
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $472d
 	jr nz, Label_1e_4737 ; $4730
 Label_1e_4732:
 	ld hl, $04da ; $4732
@@ -806,63 +806,63 @@ Label_1e_473f:
 	ret ; $4748
 DrawRankMatchLabel:
 	ld hl, wTextBuffer ; $4749
-	test_flag $1f, 7 ; $474c
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $474c
 	jr nz, Label_1e_4790 ; $474f
 	ld a, $34 ; $4751
 	ld [hl], a ; $4753
-	test_flag $0a, 7 ; $4754
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4754
 	jr nz, Label_1e_47d7 ; $4757
-	test_flag $0a, 3 ; $4759
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4759
 	jr nz, Label_1e_4778 ; $475c
-	test_flag $0a, 0 ; $475e
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $475e
 	jp z, Label_1e_47c1 ; $4761
 	dec [hl] ; $4764
-	test_flag $0a, 1 ; $4765
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $4765
 	jp z, Label_1e_47c1 ; $4768
 	dec [hl] ; $476b
-	test_flag $0a, 2 ; $476c
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $476c
 	jr z, Label_1e_47c1 ; $476f
 	dec [hl] ; $4771
-	test_flag $0a, 3 ; $4772
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4772
 	jr z, Label_1e_47c1 ; $4775
 	ret ; $4777
 Label_1e_4778:
-	test_flag $0a, 4 ; $4778
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $4778
 	jr z, Label_1e_47c1 ; $477b
 	dec [hl] ; $477d
-	test_flag $0a, 5 ; $477e
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $477e
 	jr z, Label_1e_47c1 ; $4781
 	dec [hl] ; $4783
-	test_flag $0a, 6 ; $4784
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $4784
 	jr z, Label_1e_47c1 ; $4787
 	dec [hl] ; $4789
-	test_flag $0a, 7 ; $478a
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $478a
 	jr z, Label_1e_47c1 ; $478d
 	ret ; $478f
 Label_1e_4790:
 	ld a, $33 ; $4790
 	ld [hl], a ; $4792
-	test_flag $08, 6 ; $4793
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4793
 	jr nz, Label_1e_47d7 ; $4796
-	test_flag $08, 2 ; $4798
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $4798
 	jr nz, Label_1e_47af ; $479b
-	test_flag $08, 0 ; $479d
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $479d
 	jr z, Label_1e_47c1 ; $47a0
 	dec [hl] ; $47a2
-	test_flag $08, 1 ; $47a3
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $47a3
 	jr z, Label_1e_47c1 ; $47a6
 	dec [hl] ; $47a8
-	test_flag $08, 2 ; $47a9
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $47a9
 	jr z, Label_1e_47c1 ; $47ac
 	ret ; $47ae
 Label_1e_47af:
-	test_flag $08, 4 ; $47af
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $47af
 	jr z, Label_1e_47c1 ; $47b2
 	dec [hl] ; $47b4
-	test_flag $08, 5 ; $47b5
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $47b5
 	jr z, Label_1e_47c1 ; $47b8
 	dec [hl] ; $47ba
-	test_flag $08, 6 ; $47bb
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $47bb
 	jr z, Label_1e_47c1 ; $47be
 	ret ; $47c0
 Label_1e_47c1:
@@ -903,24 +903,24 @@ DrawTournamentRoundLabel:
 	ld hl, wTextBuffer ; $4800
 	ld a, $31 ; $4803
 	ld [hl], a ; $4805
-	test_flag $1f, 7 ; $4806
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4806
 	jr nz, Label_1e_4821 ; $4809
-	test_flag $07, 7 ; $480b
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $480b
 	jr z, Label_1e_4831 ; $480e
 	inc [hl] ; $4810
-	test_flag $07, 6 ; $4811
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4811
 	jr z, Label_1e_4831 ; $4814
-	test_flag $07, 5 ; $4816
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4816
 	jr z, Label_1e_4847 ; $4819
-	test_flag $07, 4 ; $481b
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $481b
 	jr z, Label_1e_4857 ; $481e
 	ret ; $4820
 Label_1e_4821:
-	test_flag $06, 7 ; $4821
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4821
 	jr z, Label_1e_4831 ; $4824
-	test_flag $06, 6 ; $4826
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4826
 	jr z, Label_1e_4847 ; $4829
-	test_flag $06, 5 ; $482b
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $482b
 	jr z, Label_1e_4857 ; $482e
 	ret ; $4830
 Label_1e_4831:
@@ -1133,7 +1133,7 @@ Label_1e_49c8:
 	or a, a ; $49fd
 	jr nz, Label_1e_4a0a ; $49fe
 	wram_bank $04 ; $4a00
-	test_flag $1f, 7 ; $4a06
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a06
 	ret z ; $4a09
 Label_1e_4a0a:
 	ld a, [$c8b9] ; $4a0a
@@ -1195,7 +1195,7 @@ DrawResultsCharSprites:
 	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
 	wram_bank $04 ; $4a86
-	test_flag $1f, 7 ; $4a8c
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a8c
 	ret z ; $4a8f
 	wram_bank $06 ; $4a90
 	ld a, $01 ; $4a96
@@ -1248,7 +1248,7 @@ Label_1e_4ad5:
 	push de ; $4ae0
 	or a, a ; $4ae1
 	jr nz, Label_1e_4af5 ; $4ae2
-	test_flag $1f, 7 ; $4ae4
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4ae4
 	jr z, Label_1e_4aef ; $4ae7
 	ld d, $48 ; $4ae9
 	ld e, $56 ; $4aeb
@@ -1613,7 +1613,7 @@ DrawExpAwardScreenPanels:
 	call DrawExpMessageWindow ; $55e4
 	call DrawNextExpAwardMessage ; $55e7
 	call DrawExpTotalPanel ; $55ea
-	test_flag $1f, 7 ; $55ed
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $55ed
 	jr nz, Label_1e_55f6 ; $55f0
 	call DrawExpSinglesPlayerPanel ; $55f2
 	ret ; $55f5
@@ -1943,7 +1943,7 @@ Label_1e_5920:
 	farcall DrawCharSprite ; $592d
 	wram_bank $04 ; $5930
 	pop bc ; $5936
-	test_flag $1f, 7 ; $5937
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5937
 	ret z ; $593a
 	inc b ; $593b
 	inc b ; $593c
@@ -1995,7 +1995,7 @@ Label_1e_598b:
 	pop af ; $598f
 	or a, a ; $5990
 	jr nz, Label_1e_59a4 ; $5991
-	test_flag $1f, 7 ; $5993
+	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5993
 	jr z, Label_1e_599e ; $5996
 	ld d, $44 ; $5998
 	ld e, $66 ; $599a
@@ -2407,10 +2407,10 @@ Label_1e_659d:
 	ld a, [wGameMode] ; $65c0
 	cp a, $06 ; $65c3
 	jr nz, Label_1e_65cc ; $65c5
-	test_flag $1b, 2 ; $65c7
+	test_flag FLAG_CLEARED_MACHINE_MASTER ; $65c7
 	jr Label_1e_65cf ; $65ca
 Label_1e_65cc:
-	test_flag $1b, 3 ; $65cc
+	test_flag FLAG_CLEARED_WALL_MASTER ; $65cc
 Label_1e_65cf:
 	jr z, Label_1e_65e6 ; $65cf
 	push hl ; $65d1
@@ -2526,14 +2526,14 @@ Label_1e_66a9:
 	call ShowIslandOpenRankingBoard ; $66a9
 	ld a, $00 ; $66ac
 	ld [wGameMode], a ; $66ae
-	test_flag $07, 3 ; $66b1
+	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $66b1
 	jr z, Label_1e_66be ; $66b4
 	push de ; $66b6
 	ld de, $01c0 ; $66b7
 	farcall SetSaveFlag ; $66ba
 	pop de ; $66bd
 Label_1e_66be:
-	test_flag $06, 4 ; $66be
+	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $66be
 	jr z, Label_1e_66cb ; $66c1
 	push de ; $66c3
 	ld de, $01e0 ; $66c4
@@ -3068,18 +3068,18 @@ ShowExpAwardForExhibition:
 	ld c, $00 ; $6a7d
 	farcall RecordDrillResult ; $6a7f
 	xor a, a ; $6a82
-	test_flag $05, 7 ; $6a83
+	test_flag FLAG_DOUBLES ; $6a83
 	jr z, Label_1e_6a8a ; $6a86
 	ld a, $01 ; $6a88
 Label_1e_6a8a:
 	push af ; $6a8a
-	clear_flag $05, 7 ; $6a8b
+	clear_flag FLAG_DOUBLES ; $6a8b
 	ld c, $01 ; $6a8e
 	call ShowMatchResultsScreen ; $6a90
 	pop af ; $6a93
 	or a, a ; $6a94
 	jr z, Label_1e_6a9a ; $6a95
-	set_flag $05, 7 ; $6a97
+	set_flag FLAG_DOUBLES ; $6a97
 Label_1e_6a9a:
 	pop af ; $6a9a
 	wram_bank ; $6a9b
@@ -3103,18 +3103,18 @@ ShowExpAwardForLinkedPlay:
 	ld c, $00 ; $6ab3
 	farcall RecordDrillResult ; $6ab5
 	xor a, a ; $6ab8
-	test_flag $05, 7 ; $6ab9
+	test_flag FLAG_DOUBLES ; $6ab9
 	jr z, Label_1e_6ac0 ; $6abc
 	ld a, $01 ; $6abe
 Label_1e_6ac0:
 	push af ; $6ac0
-	clear_flag $05, 7 ; $6ac1
+	clear_flag FLAG_DOUBLES ; $6ac1
 	ld c, $01 ; $6ac4
 	call ShowMatchResultsScreen ; $6ac6
 	pop af ; $6ac9
 	or a, a ; $6aca
 	jr z, Label_1e_6ad0 ; $6acb
-	set_flag $05, 7 ; $6acd
+	set_flag FLAG_DOUBLES ; $6acd
 Label_1e_6ad0:
 	pop af ; $6ad0
 	wram_bank ; $6ad1
@@ -3256,18 +3256,18 @@ Label_1e_6b92:
 	farcall RecordDrillResult ; $6ba6
 Label_1e_6ba9:
 	xor a, a ; $6ba9
-	test_flag $05, 7 ; $6baa
+	test_flag FLAG_DOUBLES ; $6baa
 	jr nz, Label_1e_6bb1 ; $6bad
 	ld a, $01 ; $6baf
 Label_1e_6bb1:
 	push af ; $6bb1
-	set_flag $05, 7 ; $6bb2
+	set_flag FLAG_DOUBLES ; $6bb2
 	ld c, $01 ; $6bb5
 	call ShowMatchResultsScreen ; $6bb7
 	pop af ; $6bba
 	or a, a ; $6bbb
 	jr z, Label_1e_6bc1 ; $6bbc
-	clear_flag $05, 7 ; $6bbe
+	clear_flag FLAG_DOUBLES ; $6bbe
 Label_1e_6bc1:
 	pop hl ; $6bc1
 	farcall RunExpDistributionFlow ; $6bc2
@@ -3385,7 +3385,7 @@ Label_1e_6c5b:
 	ld e, l ; $6c60
 	ret ; $6c61
 ApplyStatGapProgressFlag:
-	test_flag $0a, 7 ; $6c62
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c62
 	jr nz, Label_1e_6c68 ; $6c65
 	ret ; $6c67
 Label_1e_6c68:
@@ -3399,30 +3399,30 @@ Label_1e_6c68:
 	jr nc, Label_1e_6c78 ; $6c75
 	ret ; $6c77
 Label_1e_6c78:
-	set_flag $0c, 6 ; $6c78
+	set_flag FLAG_HAVE_DRIVE_RACKET ; $6c78
 	ret ; $6c7b
 ApplyClassProgressRule1:
-	test_flag $0a, 3 ; $6c7c
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6c7c
 	jr nz, Label_1e_6c82 ; $6c7f
 	ret ; $6c81
 Label_1e_6c82:
-	set_flag $0c, 1 ; $6c82
+	set_flag FLAG_HAVE_LARGE_RACKET ; $6c82
 	ret ; $6c85
 ApplyClassProgressRule2:
-	test_flag $0a, 7 ; $6c86
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c86
 	jr nz, Label_1e_6c8c ; $6c89
 	ret ; $6c8b
 Label_1e_6c8c:
-	set_flag $0c, 2 ; $6c8c
-	set_flag $0d, 0 ; $6c8f
+	set_flag FLAG_HAVE_SMALL_RACKET ; $6c8c
+	set_flag FLAG_HAVE_LIGHT_SHOES ; $6c8f
 	ret ; $6c92
 ApplyClassProgressRule3:
-	test_flag $0b, 0 ; $6c93
+	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $6c93
 	jr nz, Label_1e_6c99 ; $6c96
 	ret ; $6c98
 Label_1e_6c99:
-	set_flag $0c, 3 ; $6c99
-	set_flag $0c, 7 ; $6c9c
+	set_flag FLAG_HAVE_IRON_RACKET ; $6c99
+	set_flag FLAG_HAVE_IRON_SHOES ; $6c9c
 	ret ; $6c9f
 ApplyClassProgressFlags:
 	call ApplyClassProgressRule1 ; $6ca0
@@ -3499,13 +3499,13 @@ GetRewardTableIndex:
 	cp a, $1a ; $6cff
 	ret c ; $6d01
 	jr nz, Label_1e_6d0c ; $6d02
-	test_flag $1b, 2 ; $6d04
+	test_flag FLAG_CLEARED_MACHINE_MASTER ; $6d04
 	jr z, Label_1e_6d0b ; $6d07
 	add a, $02 ; $6d09
 Label_1e_6d0b:
 	ret ; $6d0b
 Label_1e_6d0c:
-	test_flag $1b, 3 ; $6d0c
+	test_flag FLAG_CLEARED_WALL_MASTER ; $6d0c
 	jr z, Label_1e_6d13 ; $6d0f
 	add a, $02 ; $6d11
 Label_1e_6d13:
@@ -3519,143 +3519,143 @@ RewardFlagListPtrs_1e:
 RewardFlagListMode0_1e:
 	; $6d1c, 50 bytes (flag_ids)
 	dw $0000 ; 0: none
-	dw $0a00 ; 1: flag $0a, 0
-	dw $0a20 ; 2: flag $0a, 1
-	dw $0a40 ; 3: flag $0a, 2
-	dw $0a60 ; 4: flag $0a, 3
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_4 ; 1
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_3 ; 2
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_2 ; 3
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1 ; 4
 	dw $0000 ; 5: none
-	dw $0a80 ; 6: flag $0a, 4
-	dw $0aa0 ; 7: flag $0a, 5
-	dw $0ac0 ; 8: flag $0a, 6
-	dw $0ae0 ; 9: flag $0a, 7
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_4 ; 6
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_3 ; 7
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_2 ; 8
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_1 ; 9
 	dw $0000 ; 10: none
-	dw $0b00 ; 11: flag $0b, 0
+	flag_id FLAG_WON_VARSITY_SINGLES_RANK_4 ; 11
 	dw $0000 ; 12: none
 	dw $0000 ; 13: none
 	dw $0000 ; 14: none
 	dw $0000 ; 15: none
-	dw $07e0 ; 16: flag $07, 7
-	dw $07c0 ; 17: flag $07, 6
-	dw $07a0 ; 18: flag $07, 5
-	dw $0780 ; 19: flag $07, 4
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; 16
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; 17
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; 18
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 19
 	dw $0000 ; 20: none
 	dw $0000 ; 21: none
-	dw $0760 ; 22: flag $07, 3
-	dw $0760 ; 23: flag $07, 3
-	dw $0760 ; 24: flag $07, 3
+	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 22
+	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 23
+	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 24
 RewardFlagListMode1_1e:
 	; $6d4e, 50 bytes (flag_ids)
 	dw $0000 ; 0: none
 	dw $0000 ; 1: none
-	dw $0800 ; 2: flag $08, 0
-	dw $0820 ; 3: flag $08, 1
-	dw $0840 ; 4: flag $08, 2
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; 2
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; 3
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; 4
 	dw $0000 ; 5: none
 	dw $0000 ; 6: none
-	dw $0880 ; 7: flag $08, 4
-	dw $08a0 ; 8: flag $08, 5
-	dw $08c0 ; 9: flag $08, 6
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_3 ; 7
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_2 ; 8
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_1 ; 9
 	dw $0000 ; 10: none
 	dw $0000 ; 11: none
 	dw $0000 ; 12: none
-	dw $0900 ; 13: flag $09, 0
+	flag_id FLAG_WON_VARSITY_DOUBLES_RANK_2 ; 13
 	dw $0000 ; 14: none
 	dw $0000 ; 15: none
 	dw $0000 ; 16: none
-	dw $06e0 ; 17: flag $06, 7
-	dw $06c0 ; 18: flag $06, 6
-	dw $06a0 ; 19: flag $06, 5
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; 17
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; 18
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; 19
 	dw $0000 ; 20: none
 	dw $0000 ; 21: none
-	dw $0680 ; 22: flag $06, 4
-	dw $0680 ; 23: flag $06, 4
-	dw $0680 ; 24: flag $06, 4
+	flag_id FLAG_WON_DREAM_MATCH_DOUBLES ; 22
+	flag_id FLAG_WON_DREAM_MATCH_DOUBLES ; 23
+	flag_id FLAG_WON_DREAM_MATCH_DOUBLES ; 24
 ProgressEntryFlagList_1e:
 	; $6d80, 2 bytes (flag_ids)
-	dw $1fc0 ; 0: flag $1f, 6
+	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
 AllProgressFlagList_1e:
 	; $6d82, 20 bytes (flag_ids)
-	dw $0760 ; 0: flag $07, 3
-	dw $0680 ; 1: flag $06, 4
-	dw $0a60 ; 2: flag $0a, 3
-	dw $0840 ; 3: flag $08, 2
-	dw $0ae0 ; 4: flag $0a, 7
-	dw $08c0 ; 5: flag $08, 6
-	dw $0b00 ; 6: flag $0b, 0
-	dw $0900 ; 7: flag $09, 0
-	dw $0780 ; 8: flag $07, 4
-	dw $06a0 ; 9: flag $06, 5
+	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 0
+	flag_id FLAG_WON_DREAM_MATCH_DOUBLES ; 1
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1 ; 2
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; 3
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_1 ; 4
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_1 ; 5
+	flag_id FLAG_WON_VARSITY_SINGLES_RANK_4 ; 6
+	flag_id FLAG_WON_VARSITY_DOUBLES_RANK_2 ; 7
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 8
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; 9
 RewardFlagListMode2_1e:
 	; $6d96, 60 bytes (flag_ids)
-	dw $1800 ; 0: flag $18, 0
-	dw $1820 ; 1: flag $18, 1
-	dw $1840 ; 2: flag $18, 2
-	dw $1860 ; 3: flag $18, 3
-	dw $1880 ; 4: flag $18, 4
-	dw $18a0 ; 5: flag $18, 5
-	dw $18c0 ; 6: flag $18, 6
-	dw $18e0 ; 7: flag $18, 7
-	dw $1900 ; 8: flag $19, 0
-	dw $1920 ; 9: flag $19, 1
-	dw $1940 ; 10: flag $19, 2
-	dw $1960 ; 11: flag $19, 3
-	dw $1980 ; 12: flag $19, 4
-	dw $19a0 ; 13: flag $19, 5
-	dw $19c0 ; 14: flag $19, 6
-	dw $19e0 ; 15: flag $19, 7
-	dw $1a00 ; 16: flag $1a, 0
-	dw $1a20 ; 17: flag $1a, 1
-	dw $1a40 ; 18: flag $1a, 2
-	dw $1a60 ; 19: flag $1a, 3
-	dw $1a80 ; 20: flag $1a, 4
-	dw $1aa0 ; 21: flag $1a, 5
-	dw $1ac0 ; 22: flag $1a, 6
-	dw $1ae0 ; 23: flag $1a, 7
-	dw $1b00 ; 24: flag $1b, 0
-	dw $1b20 ; 25: flag $1b, 1
-	dw $1b40 ; 26: flag $1b, 2
-	dw $1b60 ; 27: flag $1b, 3
-	dw $1b80 ; 28: flag $1b, 4
-	dw $1ba0 ; 29: flag $1b, 5
+	flag_id FLAG_CLEARED_SERVICE_MATCH_1 ; 0
+	flag_id FLAG_CLEARED_SERVICE_MATCH_2 ; 1
+	flag_id FLAG_CLEARED_SERVICE_MATCH_3 ; 2
+	flag_id FLAG_CLEARED_SERVICE_PRACTICE_1 ; 3
+	flag_id FLAG_CLEARED_SERVICE_PRACTICE_2 ; 4
+	flag_id FLAG_CLEARED_SERVICE_PRACTICE_3 ; 5
+	flag_id FLAG_CLEARED_NET_GAME_MATCH_1 ; 6
+	flag_id FLAG_CLEARED_NET_GAME_MATCH_2 ; 7
+	flag_id FLAG_CLEARED_NET_GAME_MATCH_3 ; 8
+	flag_id FLAG_CLEARED_NET_GAME_PRACTICE_1 ; 9
+	flag_id FLAG_CLEARED_NET_GAME_PRACTICE_2 ; 10
+	flag_id FLAG_CLEARED_NET_GAME_PRACTICE_3 ; 11
+	flag_id FLAG_CLEARED_STROKE_MATCH_1 ; 12
+	flag_id FLAG_CLEARED_STROKE_MATCH_2 ; 13
+	flag_id FLAG_CLEARED_STROKE_MATCH_3 ; 14
+	flag_id FLAG_CLEARED_STROKE_PRACTICE_1 ; 15
+	flag_id FLAG_CLEARED_STROKE_PRACTICE_2 ; 16
+	flag_id FLAG_CLEARED_STROKE_PRACTICE_3 ; 17
+	flag_id FLAG_CLEARED_MACHINE_LEVEL_1 ; 18
+	flag_id FLAG_CLEARED_MACHINE_LEVEL_2 ; 19
+	flag_id FLAG_CLEARED_MACHINE_LEVEL_3 ; 20
+	flag_id FLAG_CLEARED_MACHINE_LEVEL_4 ; 21
+	flag_id FLAG_CLEARED_WALL_LEVEL_1 ; 22
+	flag_id FLAG_CLEARED_WALL_LEVEL_2 ; 23
+	flag_id FLAG_CLEARED_WALL_LEVEL_3 ; 24
+	flag_id FLAG_CLEARED_WALL_LEVEL_4 ; 25
+	flag_id FLAG_CLEARED_MACHINE_MASTER ; 26
+	flag_id FLAG_CLEARED_WALL_MASTER ; 27
+	flag_id FLAG_CLEARED_MACHINE_EXPERT ; 28
+	flag_id FLAG_CLEARED_WALL_EXPERT ; 29
 RewardCategoryFlagTable_1e:
 	; $6dd2, 74 bytes (flag_ids)
-	dw $1fc0 ; 0: flag $1f, 6
-	dw $0780 ; 1: flag $07, 4
-	dw $06a0 ; 2: flag $06, 5
+	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 1
+	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; 2
 	dw $0000 ; 3: none
 	dw $0000 ; 4: none
-	dw $0a60 ; 5: flag $0a, 3
-	dw $0840 ; 6: flag $08, 2
-	dw $0ae0 ; 7: flag $0a, 7
-	dw $08c0 ; 8: flag $08, 6
-	dw $0b00 ; 9: flag $0b, 0
-	dw $0900 ; 10: flag $09, 0
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1 ; 5
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; 6
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_1 ; 7
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_1 ; 8
+	flag_id FLAG_WON_VARSITY_SINGLES_RANK_4 ; 9
+	flag_id FLAG_WON_VARSITY_DOUBLES_RANK_2 ; 10
 	dw $0000 ; 11: none
-	dw $1800 ; 12: flag $18, 0
-	dw $1820 ; 13: flag $18, 1
+	flag_id FLAG_CLEARED_SERVICE_MATCH_1 ; 12
+	flag_id FLAG_CLEARED_SERVICE_MATCH_2 ; 13
 	dw $0000 ; 14: none
-	dw $1860 ; 15: flag $18, 3
-	dw $1880 ; 16: flag $18, 4
+	flag_id FLAG_CLEARED_SERVICE_PRACTICE_1 ; 15
+	flag_id FLAG_CLEARED_SERVICE_PRACTICE_2 ; 16
 	dw $0000 ; 17: none
-	dw $18c0 ; 18: flag $18, 6
-	dw $18e0 ; 19: flag $18, 7
+	flag_id FLAG_CLEARED_NET_GAME_MATCH_1 ; 18
+	flag_id FLAG_CLEARED_NET_GAME_MATCH_2 ; 19
 	dw $0000 ; 20: none
-	dw $1920 ; 21: flag $19, 1
-	dw $1940 ; 22: flag $19, 2
+	flag_id FLAG_CLEARED_NET_GAME_PRACTICE_1 ; 21
+	flag_id FLAG_CLEARED_NET_GAME_PRACTICE_2 ; 22
 	dw $0000 ; 23: none
-	dw $1980 ; 24: flag $19, 4
-	dw $19a0 ; 25: flag $19, 5
+	flag_id FLAG_CLEARED_STROKE_MATCH_1 ; 24
+	flag_id FLAG_CLEARED_STROKE_MATCH_2 ; 25
 	dw $0000 ; 26: none
-	dw $19e0 ; 27: flag $19, 7
-	dw $1a00 ; 28: flag $1a, 0
+	flag_id FLAG_CLEARED_STROKE_PRACTICE_1 ; 27
+	flag_id FLAG_CLEARED_STROKE_PRACTICE_2 ; 28
 	dw $0000 ; 29: none
-	dw $1a40 ; 30: flag $1a, 2
-	dw $1a60 ; 31: flag $1a, 3
-	dw $1a80 ; 32: flag $1a, 4
+	flag_id FLAG_CLEARED_MACHINE_LEVEL_1 ; 30
+	flag_id FLAG_CLEARED_MACHINE_LEVEL_2 ; 31
+	flag_id FLAG_CLEARED_MACHINE_LEVEL_3 ; 32
 	dw $0000 ; 33: none
-	dw $1ac0 ; 34: flag $1a, 6
-	dw $1ae0 ; 35: flag $1a, 7
-	dw $1b00 ; 36: flag $1b, 0
+	flag_id FLAG_CLEARED_WALL_LEVEL_1 ; 34
+	flag_id FLAG_CLEARED_WALL_LEVEL_2 ; 35
+	flag_id FLAG_CLEARED_WALL_LEVEL_3 ; 36
 ApplyRewardUnlockFlags:
 	ld c, $00 ; $6e1c
 	ld b, $0d ; $6e1e
@@ -4321,11 +4321,11 @@ ShowGameProgressScreen:
 	farcall TestSaveFlag ; $7267
 	pop de ; $726a
 	jr z, Label_1e_7270 ; $726b
-	set_flag $1f, 6 ; $726d
+	set_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $726d
 Label_1e_7270:
-	set_flag $1f, 5 ; $7270
+	set_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7270
 	call BuildGameProgressScreen ; $7273
-	clear_flag $1f, 5 ; $7276
+	clear_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7276
 	call ClearFrameTasks ; $7279
 	ret ; $727c
 InitGameProgressScreen:
@@ -4364,7 +4364,7 @@ BuildGameProgressScreen:
 	call DisableLCDSafely ; $72c0
 	call InitGameProgressScreen ; $72c3
 	call LoadGameProgressScreenAssets ; $72c6
-	test_flag $1f, 6 ; $72c9
+	test_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $72c9
 	jr nz, Label_1e_72d0 ; $72cc
 	jr Label_1e_72d5 ; $72ce
 Label_1e_72d0:
@@ -4373,28 +4373,28 @@ Label_1e_72d0:
 Label_1e_72d5:
 	ld a, $00 ; $72d5
 	call RunRewardCategoryList ; $72d7
-	test_flag $0a, 3 ; $72da
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72da
 	jr nz, Label_1e_72e1 ; $72dd
 	jr Label_1e_72e6 ; $72df
 Label_1e_72e1:
 	ld a, $01 ; $72e1
 	call RunRewardCategoryList ; $72e3
 Label_1e_72e6:
-	test_flag $0a, 7 ; $72e6
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $72e6
 	jr nz, Label_1e_72ed ; $72e9
 	jr Label_1e_72f2 ; $72eb
 Label_1e_72ed:
 	ld a, $02 ; $72ed
 	call RunRewardCategoryList ; $72ef
 Label_1e_72f2:
-	test_flag $0b, 0 ; $72f2
+	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $72f2
 	jr nz, Label_1e_72f9 ; $72f5
 	jr Label_1e_72fe ; $72f7
 Label_1e_72f9:
 	ld a, $03 ; $72f9
 	call RunRewardCategoryList ; $72fb
 Label_1e_72fe:
-	test_flag $07, 4 ; $72fe
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $72fe
 	jr nz, Label_1e_7305 ; $7301
 	jr Label_1e_730a ; $7303
 Label_1e_7305:

@@ -44,7 +44,7 @@ TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
 	cp a, $ff ; $4102
 	jp z, Label_0e_4144 ; $4104
-	test_flag $05, 7 ; $4107
+	test_flag FLAG_DOUBLES ; $4107
 	jr z, Label_0e_4132 ; $410a
 	script_set_speed ACTOR_PARTNER, $00ff ; $410c
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $4114
@@ -1185,15 +1185,15 @@ Label_0e_4d83:
 	ret ; $4d87
 RunRepairCounterDialogue:
 	script_face_toward ACTOR_PLAYER, $0e ; $4d88
-	test_flag $0a, 3 ; $4d90
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4d90
 	jp z, Label_0e_4da5 ; $4d93
-	test_flag $0a, 7 ; $4d96
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4d96
 	jp z, Label_0e_4e0d ; $4d99
-	test_flag $0b, 0 ; $4d9c
+	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $4d9c
 	jp z, Label_0e_4de5 ; $4d9f
 	jp Label_0e_4de5 ; $4da2
 Label_0e_4da5:
-	test_flag $05, 7 ; $4da5
+	test_flag FLAG_DOUBLES ; $4da5
 	jr nz, Label_0e_4dcd ; $4da8
 	test_flag $0f, 6 ; $4daa
 	jr z, Label_0e_4db7 ; $4dad
@@ -1216,20 +1216,20 @@ Label_0e_4dda:
 	set_flag $0f, 6 ; $4de0
 	jr Label_0e_4dc0 ; $4de3
 Label_0e_4de5:
-	set_flag $0c, 1 ; $4de5
-	set_flag $0c, 2 ; $4de8
-	set_flag $0d, 0 ; $4deb
+	set_flag FLAG_HAVE_LARGE_RACKET ; $4de5
+	set_flag FLAG_HAVE_SMALL_RACKET ; $4de8
+	set_flag FLAG_HAVE_LIGHT_SHOES ; $4deb
 	script_set_text Text_6e_233 ; $4dee
 	jr Label_0e_4e26 ; $4df4
-	set_flag $0c, 1 ; $4df6
-	set_flag $0c, 2 ; $4df9
-	set_flag $0d, 0 ; $4dfc
-	set_flag $0c, 3 ; $4dff
-	set_flag $0c, 7 ; $4e02
+	set_flag FLAG_HAVE_LARGE_RACKET ; $4df6
+	set_flag FLAG_HAVE_SMALL_RACKET ; $4df9
+	set_flag FLAG_HAVE_LIGHT_SHOES ; $4dfc
+	set_flag FLAG_HAVE_IRON_RACKET ; $4dff
+	set_flag FLAG_HAVE_IRON_SHOES ; $4e02
 	script_set_text Text_6e_233 ; $4e05
 	jr Label_0e_4e26 ; $4e0b
 Label_0e_4e0d:
-	set_flag $0c, 1 ; $4e0d
+	set_flag FLAG_HAVE_LARGE_RACKET ; $4e0d
 	test_flag $0f, 7 ; $4e10
 	jr z, Label_0e_4e1d ; $4e13
 	script_set_text Text_6e_233 ; $4e15
@@ -1266,7 +1266,7 @@ Label_0e_4e6a:
 	jp z, RepairCounterFarewell ; $4e74
 	cp a, $00 ; $4e77
 	jp z, RepairCounterChangeRackets ; $4e79
-	test_flag $0a, 7 ; $4e7c
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4e7c
 	jp nz, RepairCounterChangeShoes ; $4e7f
 	script_set_text Text_6e_232 ; $4e82
 	script_speak $0e ; $4e88
@@ -1524,7 +1524,7 @@ RepairCounterReopenServiceMenu:
 	jp z, RepairCounterFarewell ; $5113
 	cp a, $00 ; $5116
 	jp z, RepairCounterChangeRackets ; $5118
-	test_flag $0a, 7 ; $511b
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $511b
 	jp nz, RepairCounterChangeShoes ; $511e
 	script_set_text Text_6e_232 ; $5121
 	script_speak $0e ; $5127
@@ -1788,9 +1788,9 @@ MarioWorldInitScript_0e:
 	jp z, Label_0e_69ad ; $54df
 	cp a, $0f ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
-	test_flag $05, 7 ; $54e7
+	test_flag FLAG_DOUBLES ; $54e7
 	jr nz, Label_0e_550c ; $54ea
-	test_flag $16, 2 ; $54ec
+	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $54ec
 	ret z ; $54ef
 	ld a, [wStoryModeEntryPoint] ; $54f0
 	inc a ; $54f3
@@ -1800,7 +1800,7 @@ MarioWorldInitScript_0e:
 Label_0e_5509:
 	jp Label_0e_69fb ; $5509
 Label_0e_550c:
-	test_flag $16, 3 ; $550c
+	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $550c
 	ret z ; $550f
 	ld a, [wStoryModeEntryPoint] ; $5510
 	inc a ; $5513
@@ -1831,10 +1831,10 @@ ActorScript_0e_5545:
 	as_set_pos $1500, $3d00
 	as_halt
 ComputeMarioWorldProgressIndex:
-	test_flag $05, 7 ; $555d
+	test_flag FLAG_DOUBLES ; $555d
 	jr nz, Label_0e_556e ; $5560
 	ld a, $00 ; $5562
-	test_flag $07, 3 ; $5564
+	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $5564
 	jr z, Label_0e_556a ; $5567
 	inc a ; $5569
 Label_0e_556a:
@@ -1842,17 +1842,17 @@ Label_0e_556a:
 	ret ; $556d
 Label_0e_556e:
 	ld a, $02 ; $556e
-	test_flag $06, 4 ; $5570
+	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $5570
 	jr z, Label_0e_556a ; $5573
 	inc a ; $5575
 	jr Label_0e_556a ; $5576
 	ret ; $5578
 MarioWorldArrivalSingles:
-	test_flag $05, 7 ; $5579
+	test_flag FLAG_DOUBLES ; $5579
 	jp nz, MarioWorldArrivalDoubles ; $557c
-	test_flag $0d, 6 ; $557f
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $557f
 	jr nz, Label_0e_558a ; $5582
-	test_flag $16, 2 ; $5584
+	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5584
 	jp nz, Label_0e_69b3 ; $5587
 Label_0e_558a:
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $558a
@@ -1868,7 +1868,7 @@ Label_0e_558a:
 	script_wait_frames $50 ; $55d5
 	script_face $13, FACE_UP ; $55dc
 	script_wait_frames $0a ; $55e3
-	test_flag $0d, 6 ; $55ea
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $55ea
 	jr nz, Label_0e_55ff ; $55ed
 	script_set_text Text_5e_75 ; $55ef
 	script_speak $13 ; $55f5
@@ -1880,7 +1880,7 @@ Label_0e_55ff:
 	script_wait_frames $0a ; $5612
 	script_set_anim $08, $03 ; $5619
 	script_wait_idle $08 ; $5620
-	test_flag $0d, 6 ; $5625
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5625
 	jr nz, Label_0e_562f ; $5628
 	script_speak $08 ; $562a
 Label_0e_562f:
@@ -1898,7 +1898,7 @@ Label_0e_562f:
 	script_wait_move $13 ; $568f
 	script_move_target $13, $0d00, $1300 ; $5694
 	script_wait_move $08 ; $569f
-	test_flag $0d, 6 ; $56a4
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $56a4
 	jr z, Label_0e_56c0 ; $56a7
 	script_face $08, FACE_DOWN ; $56a9
 	script_wait_frames $14 ; $56b0
@@ -1989,7 +1989,7 @@ Label_0e_56c0:
 	script_wait_move $0e ; $5900
 	script_face $0e, FACE_UP ; $5905
 	script_wait_frames $28 ; $590c
-	set_flag $16, 2 ; $5913
+	set_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5913
 	farcall SaveStorySlotWithTimer ; $5916
 	ld a, $08 ; $5919
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $591b
@@ -2092,9 +2092,9 @@ ExhibitionAcceptedSingles:
 	ld [wStoryModeExitLocationRequest], a ; $5bb6
 	ret ; $5bb9
 MarioWorldArrivalDoubles:
-	test_flag $0d, 6 ; $5bba
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5bba
 	jr nz, Label_0e_5bc5 ; $5bbd
-	test_flag $16, 3 ; $5bbf
+	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $5bbf
 	jp nz, Label_0e_69c5 ; $5bc2
 Label_0e_5bc5:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $5bc5
@@ -2115,7 +2115,7 @@ Label_0e_5bc5:
 	script_wait_frames $50 ; $5c44
 	script_face $13, FACE_UP ; $5c4b
 	script_wait_frames $0a ; $5c52
-	test_flag $0d, 6 ; $5c59
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5c59
 	jr nz, Label_0e_5c6e ; $5c5c
 	script_set_text Text_5e_102 ; $5c5e
 	script_speak $13 ; $5c64
@@ -2127,7 +2127,7 @@ Label_0e_5c6e:
 	script_wait_frames $0a ; $5c81
 	script_set_anim $08, $03 ; $5c88
 	script_wait_idle $08 ; $5c8f
-	test_flag $0d, 6 ; $5c94
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5c94
 	jr nz, Label_0e_5c9e ; $5c97
 	script_speak $08 ; $5c99
 Label_0e_5c9e:
@@ -2148,7 +2148,7 @@ Label_0e_5c9e:
 	script_wait_move $13 ; $5d18
 	script_move_target $13, $0d00, $1300 ; $5d1d
 	script_wait_move $08 ; $5d28
-	test_flag $0d, 6 ; $5d2d
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5d2d
 	jr z, Label_0e_5d49 ; $5d30
 	script_face $08, FACE_DOWN ; $5d32
 	script_wait_frames $14 ; $5d39
@@ -2259,7 +2259,7 @@ Label_0e_5d49:
 	script_wait_move $0e ; $601b
 	script_face $0e, FACE_UP ; $6020
 	script_wait_frames $28 ; $6027
-	set_flag $16, 3 ; $602e
+	set_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $602e
 	farcall SaveStorySlotWithTimer ; $6031
 	ld a, $08 ; $6034
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6036
@@ -2396,7 +2396,7 @@ ActorScript_0e_6324:
 MarioWorldNpc08FaceDown_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $633d
 	script_set_speed ACTOR_PARTNER, $0018 ; $6345
-	test_flag $05, 7 ; $634d
+	test_flag FLAG_DOUBLES ; $634d
 	jr nz, Label_0e_639b ; $6350
 	script_move_target ACTOR_PLAYER, $1000, $0900 ; $6352
 	script_wait_move ACTOR_PLAYER ; $635d
@@ -2435,7 +2435,7 @@ ActorScript_0e_63e7:
 MarioWorldNpc08FaceUp_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $63f4
 	script_set_speed ACTOR_PARTNER, $0018 ; $63fc
-	test_flag $05, 7 ; $6404
+	test_flag FLAG_DOUBLES ; $6404
 	jr nz, Label_0e_643f ; $6407
 	script_facing_lock ACTOR_PLAYER, $01 ; $6409
 	script_move_target ACTOR_PLAYER, $1200, $0d00 ; $6410
@@ -2476,7 +2476,7 @@ ActorScript_0e_6491:
 MarioWorldNpc08FaceRight_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $64a4
 	script_set_speed ACTOR_PARTNER, $0018 ; $64ac
-	test_flag $05, 7 ; $64b4
+	test_flag FLAG_DOUBLES ; $64b4
 	jr nz, Label_0e_64ea ; $64b7
 	script_move_target ACTOR_PLAYER, $1000, $0d00 ; $64b9
 	script_wait_move ACTOR_PLAYER ; $64c4
@@ -2516,7 +2516,7 @@ ActorScript_0e_653c:
 MarioWorldNpc08FaceLeft_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $654f
 	script_set_speed ACTOR_PARTNER, $0018 ; $6557
-	test_flag $05, 7 ; $655f
+	test_flag FLAG_DOUBLES ; $655f
 	jr nz, Label_0e_6595 ; $6562
 	script_move_target ACTOR_PLAYER, $1400, $0d00 ; $6564
 	script_wait_move ACTOR_PLAYER ; $656f
@@ -2547,7 +2547,7 @@ PromptExhibitionMatch:
 	ld a, e ; $65f5
 	ld [hl+], a ; $65f6
 	ld [hl], d ; $65f7
-	test_flag $05, 7 ; $65f8
+	test_flag FLAG_DOUBLES ; $65f8
 	jr z, Label_0e_660b ; $65fb
 	ld a, $05 ; $65fd
 	ld [wWaterSpriteMinigameTimer], a ; $65ff
@@ -2570,7 +2570,7 @@ Label_0e_660b:
 	and a, a ; $6626
 	jr z, Label_0e_6644 ; $6627
 	script_speak $08 ; $6629
-	test_flag $05, 7 ; $662e
+	test_flag FLAG_DOUBLES ; $662e
 	jr z, Label_0e_6640 ; $6631
 	script_get_actor_state ACTOR_PARTNER ; $6633
 	ld c, l ; $6638
@@ -2593,7 +2593,7 @@ Label_0e_6644:
 	cp a, $ff ; $665e
 	jp z, Label_0e_660b ; $6660
 	inc a ; $6663
-	test_flag $05, 7 ; $6664
+	test_flag FLAG_DOUBLES ; $6664
 	jr z, Label_0e_666b ; $6667
 	add a, $03 ; $6669
 Label_0e_666b:
@@ -2661,7 +2661,7 @@ Label_0e_667b:
 	script_wait_frames $14 ; $67e1
 	script_set_actor_script $11, ActorScript_0e_552d ; $67e8
 	script_wait_frames $64 ; $67f3
-	test_flag $05, 7 ; $67fa
+	test_flag FLAG_DOUBLES ; $67fa
 	jr nz, Label_0e_680c ; $67fd
 	script_move_target ACTOR_PLAYER, $1200, $0900 ; $67ff
 	jr Label_0e_682a ; $680a
@@ -2677,7 +2677,7 @@ Label_0e_682a:
 	script_set_actor_script $0d, ActorScript_0e_552d ; $6856
 	script_wait_frames $1e ; $6861
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6868
-	test_flag $05, 7 ; $686f
+	test_flag FLAG_DOUBLES ; $686f
 	jr z, Label_0e_687b ; $6872
 	script_face ACTOR_PARTNER, FACE_DOWN ; $6874
 Label_0e_687b:
@@ -2688,7 +2688,7 @@ Label_0e_687b:
 	script_set_actor_script $0e, ActorScript_0e_552d ; $689f
 	script_wait_actor_script $0e ; $68aa
 	script_move_player $1200, $0d00 ; $68af
-	test_flag $05, 7 ; $68b9
+	test_flag FLAG_DOUBLES ; $68b9
 	jr nz, Label_0e_68cb ; $68bc
 	script_move_target ACTOR_PLAYER, $1200, $0b00 ; $68be
 	jr Label_0e_68e1 ; $68c9
@@ -2703,7 +2703,7 @@ Label_0e_68e1:
 	script_speak $13 ; $68ff
 	script_wait_frames $0a ; $6904
 	script_set_anim ACTOR_PLAYER, $03 ; $690b
-	test_flag $05, 7 ; $6912
+	test_flag FLAG_DOUBLES ; $6912
 	jr z, Label_0e_691e ; $6915
 	script_set_anim ACTOR_PARTNER, $03 ; $6917
 Label_0e_691e:
@@ -2712,7 +2712,7 @@ Label_0e_691e:
 	script_set_actor_script $13, ActorScript_0e_5545 ; $692a
 	script_wait_frames $14 ; $6935
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_5545 ; $693c
-	test_flag $05, 7 ; $6947
+	test_flag FLAG_DOUBLES ; $6947
 	jr z, Label_0e_695e ; $694a
 	script_wait_frames $28 ; $694c
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_5545 ; $6953
@@ -2749,15 +2749,15 @@ MoveDoublesPartnerToPlayer:
 	script_wait_move ACTOR_PARTNER ; $69a7
 	ret ; $69ac
 Label_0e_69ad:
-	test_flag $05, 7 ; $69ad
+	test_flag FLAG_DOUBLES ; $69ad
 	jp nz, Label_0e_69c5 ; $69b0
 Label_0e_69b3:
-	test_flag $16, 2 ; $69b3
+	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $69b3
 	ret z ; $69b6
 	script_set_position ACTOR_PLAYER, $1200, $0f00 ; $69b7
 	jp Label_0e_69fb ; $69c2
 Label_0e_69c5:
-	test_flag $16, 3 ; $69c5
+	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $69c5
 	ret z ; $69c8
 	farcall BeginCutsceneScriptMode ; $69c9
 	script_player_speed $0010 ; $69cc
@@ -3373,7 +3373,7 @@ ExhibitionMatchIntroCutscene:
 	ld a, [wStoryModeEntryPoint] ; $76ff
 	dec a ; $7702
 	ld [wWaterSpriteMinigameTimer], a ; $7703
-	test_flag $05, 7 ; $7706
+	test_flag FLAG_DOUBLES ; $7706
 	jp nz, Label_0e_7927 ; $7709
 	script_set_speed $0e, $0014 ; $770c
 	script_set_speed ACTOR_PLAYER, $0014 ; $7714
@@ -3403,7 +3403,7 @@ ExhibitionMatchIntroCutscene:
 	script_set_anim ACTOR_PLAYER, $03 ; $77dd
 	script_wait_idle ACTOR_PLAYER ; $77e4
 	script_wait_frames $14 ; $77e9
-	test_flag $0d, 6 ; $77f0
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $77f0
 	jr z, Label_0e_77fe ; $77f3
 	ld a, $01 ; $77f5
 	ld [$c294], a ; $77f7
@@ -3490,7 +3490,7 @@ Label_0e_7927:
 	script_set_anim $03, $03 ; $7a45
 	script_wait_idle $03 ; $7a4c
 	script_wait_frames $14 ; $7a51
-	test_flag $0d, 6 ; $7a58
+	test_flag FLAG_ENDING_CREDITS_RUNNING ; $7a58
 	jr z, Label_0e_7a66 ; $7a5b
 	ld a, $01 ; $7a5d
 	ld [$c294], a ; $7a5f
@@ -3623,13 +3623,13 @@ HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c
 	cp a, $01 ; $7c0f
 	jr nz, Label_0e_7c24 ; $7c11
-	test_flag $05, 7 ; $7c13
+	test_flag FLAG_DOUBLES ; $7c13
 	jr nz, Label_0e_7c1f ; $7c16
-	test_flag $07, 3 ; $7c18
+	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $7c18
 	jr nz, Label_0e_7c37 ; $7c1b
 	jr Label_0e_7c24 ; $7c1d
 Label_0e_7c1f:
-	test_flag $06, 4 ; $7c1f
+	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $7c1f
 	jr nz, Label_0e_7c37 ; $7c22
 Label_0e_7c24:
 	ld a, $1d ; $7c24
@@ -3641,7 +3641,7 @@ Label_0e_7c24:
 	ld [wStoryModeExitLocationRequest], a ; $7c33
 	ret ; $7c36
 Label_0e_7c37:
-	test_flag $05, 7 ; $7c37
+	test_flag FLAG_DOUBLES ; $7c37
 	jr nz, Label_0e_7c49 ; $7c3a
 	ld b, $02 ; $7c3c
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7c3e
@@ -3890,19 +3890,19 @@ ActorScript_0e_7e4b:
 	as_anim $03
 	as_jump ActorScript_0e_7e4b
 ComputeTrainingGymProgressIndex:
-	test_flag $05, 7 ; $7e5a
+	test_flag FLAG_DOUBLES ; $7e5a
 	jr nz, Label_0e_7e81 ; $7e5d
 	ld a, $00 ; $7e5f
-	test_flag $0a, 3 ; $7e61
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e61
 	jr z, Label_0e_7e7d ; $7e64
 	ld a, $02 ; $7e66
-	test_flag $0a, 7 ; $7e68
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7e68
 	jr z, Label_0e_7e7d ; $7e6b
 	ld a, $04 ; $7e6d
-	test_flag $15, 6 ; $7e6f
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7e6f
 	jr z, Label_0e_7e7d ; $7e72
 	ld a, $06 ; $7e74
-	test_flag $16, 0 ; $7e76
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7e76
 	jr z, Label_0e_7e7d ; $7e79
 	ld a, $08 ; $7e7b
 Label_0e_7e7d:
@@ -3910,42 +3910,42 @@ Label_0e_7e7d:
 	ret ; $7e80
 Label_0e_7e81:
 	ld a, $01 ; $7e81
-	test_flag $08, 2 ; $7e83
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7e83
 	jr z, Label_0e_7e7d ; $7e86
 	ld a, $03 ; $7e88
-	test_flag $08, 6 ; $7e8a
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7e8a
 	jr z, Label_0e_7e7d ; $7e8d
 	ld a, $05 ; $7e8f
-	test_flag $15, 7 ; $7e91
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7e91
 	jr z, Label_0e_7e7d ; $7e94
 	ld a, $07 ; $7e96
-	test_flag $16, 1 ; $7e98
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7e98
 	jr z, Label_0e_7e7d ; $7e9b
 	ld a, $09 ; $7e9d
 	jr Label_0e_7e7d ; $7e9f
 	ld a, $00 ; $7ea1
-	test_flag $0a, 3 ; $7ea3
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3
 	jr z, Label_0e_7ec0 ; $7ea6
 	inc a ; $7ea8
-	test_flag $0a, 7 ; $7ea9
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7ea9
 	jr z, Label_0e_7ec0 ; $7eac
 	inc a ; $7eae
-	test_flag $05, 7 ; $7eaf
+	test_flag FLAG_DOUBLES ; $7eaf
 	jr nz, Label_0e_7ec4 ; $7eb2
-	test_flag $15, 6 ; $7eb4
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7eb4
 	jr z, Label_0e_7ec0 ; $7eb7
 	inc a ; $7eb9
-	test_flag $16, 0 ; $7eba
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7eba
 	jr z, Label_0e_7ec0 ; $7ebd
 	inc a ; $7ebf
 Label_0e_7ec0:
 	ld [$c2b0], a ; $7ec0
 	ret ; $7ec3
 Label_0e_7ec4:
-	test_flag $15, 7 ; $7ec4
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ec4
 	jr z, Label_0e_7ec0 ; $7ec7
 	inc a ; $7ec9
-	test_flag $16, 1 ; $7eca
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7eca
 	jr z, Label_0e_7ec0 ; $7ecd
 	inc a ; $7ecf
 	jr Label_0e_7ec0 ; $7ed0

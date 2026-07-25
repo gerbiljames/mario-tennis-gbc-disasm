@@ -7037,12 +7037,12 @@ Label_38_74fd:
 	jr z, Label_38_7514 ; $7508
 	ld a, $04 ; $750a
 	ld [wOnCourtCharCount], a ; $750c
-	set_flag $05, 7 ; $750f
+	set_flag FLAG_DOUBLES ; $750f
 	jr Label_38_751c ; $7512
 Label_38_7514:
 	ld a, $02 ; $7514
 	ld [wOnCourtCharCount], a ; $7516
-	clear_flag $05, 7 ; $7519
+	clear_flag FLAG_DOUBLES ; $7519
 Label_38_751c:
 	ret ; $751c
 Data_38_751d:

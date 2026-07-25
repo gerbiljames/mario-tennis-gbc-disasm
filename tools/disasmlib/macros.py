@@ -67,20 +67,45 @@ ENDM
 ; wGameFlags array ($c9c0+). Two inline operand bytes: the bit selector in
 ; the top 3 bits of the first (the handlers apply mask $80 >> bit to
 ; wGameFlags[byte]), the flag byte index in the second.
-; Usage: set_flag byte_index, bit
+; Usage: `set_flag FLAG_NAME` (flag number, flag_constants.inc) or
+; `set_flag byte_index, bit` where the flag has no name yet. A flag number
+; is byte * 8 + bit, the same numbering *GameFlagByNumber ($24ef) takes.
 MACRO set_flag
 	rst Rst20
+IF _NARG == 1
+	db ((\\1) % 8) << 5, (\\1) / 8
+ELSE
 	db (\\2) << 5, \\1
+ENDC
 ENDM
 
 MACRO clear_flag
 	rst Rst28
+IF _NARG == 1
+	db ((\\1) % 8) << 5, (\\1) / 8
+ELSE
 	db (\\2) << 5, \\1
+ENDC
 ENDM
 
 MACRO test_flag
 	rst Rst30
+IF _NARG == 1
+	db ((\\1) % 8) << 5, (\\1) / 8
+ELSE
 	db (\\2) << 5, \\1
+ENDC
+ENDM
+
+; One entry of a flag-id list (the `flag_ids` data spec): the same two bytes
+; a set_flag/test_flag operand carries, as a word.
+; Usage: `flag_id FLAG_NAME` or `flag_id byte_index, bit`.
+MACRO flag_id
+IF _NARG == 1
+	dw (((\\1) / 8) << 8) | (((\\1) % 8) << 5)
+ELSE
+	dw ((\\1) << 8) | ((\\2) << 5)
+ENDC
 ENDM
 
 ; Sound/music index entry (PlaySound, $3297): selects one sound. The first

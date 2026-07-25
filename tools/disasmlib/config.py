@@ -40,6 +40,17 @@ def load_offset_map(path):
             for k, v in json.loads(Path(path).read_text()).items()}
 
 
+def load_flag_names(path):
+    """flags.json as {flag number: FLAG_NAME}. A flag number is
+    `byte * 8 + bit` -- the numbering the *GameFlagByNumber helpers take, and
+    the operand the one-argument set_flag/test_flag macro form assembles."""
+    if not Path(path).exists():
+        return {}
+    return {int(k, 0): v
+            for k, v in json.loads(Path(path).read_text()).items()
+            if not k.startswith("_")}
+
+
 def load_label_overrides(path):
     """labels.json verbatim ({"0x1234": "Name"}, string keys); {} if absent.
 

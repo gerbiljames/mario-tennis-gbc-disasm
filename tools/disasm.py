@@ -20,7 +20,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from disasmlib import pipeline
-from disasmlib.config import (load_const_defs, load_hwregs,
+from disasmlib.config import (load_const_defs, load_flag_names, load_hwregs,
                               load_label_overrides, load_offset_map)
 from disasmlib.emit import emit
 from disasmlib.ram import compute_wram_bank, load_ram_map, load_ram_unions
@@ -35,6 +35,7 @@ def parse_args(argv=None):
     ap.add_argument("--labels", default="labels.json")
     ap.add_argument("--data-tables", default="data_tables.json")
     ap.add_argument("--constants", default="constants.json")
+    ap.add_argument("--flags", default="flags.json")
     ap.add_argument("--hardware-inc", default="include/hardware.inc")
     ap.add_argument("--constants-inc", default="include/constants.inc")
     ap.add_argument("--ram-map", default="ram_map.json")
@@ -64,7 +65,7 @@ def main(argv=None):
     emit(dis, labels, load_hwregs(args.hardware_inc), ramnames, args.srcdir,
          args.manifest, data_tables, set(overrides.values()), ramscoped,
          load_offset_map(args.constants), load_const_defs(args.constants_inc),
-         ptr_sites, ptr_data_targets)
+         ptr_sites, ptr_data_targets, load_flag_names(args.flags))
 
 
 if __name__ == "__main__":

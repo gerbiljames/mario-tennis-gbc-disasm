@@ -2430,10 +2430,10 @@ Label_3e_51ef:
 	ld [wMenuSlideDirection], a ; $5200
 	ld c, $02 ; $5203
 	call GetMenuCursorIndex_3e ; $5205
-	clear_flag $05, 7 ; $5208
+	clear_flag FLAG_DOUBLES ; $5208
 	or a, a ; $520b
 	jr z, Label_3e_5211 ; $520c
-	set_flag $05, 7 ; $520e
+	set_flag FLAG_DOUBLES ; $520e
 Label_3e_5211:
 	ret ; $5211
 Label_3e_5212:
@@ -5003,9 +5003,9 @@ Label_3e_69c5:
 	ret ; $69c9
 CourtUnlockFlagIds_3e:
 	; $69ca, 10 bytes (flag_ids)
-	dw $07a0 ; 0: flag $07, 5
-	dw $0780 ; 1: flag $07, 4
-	dw $0760 ; 2: flag $07, 3
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; 0
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 1
+	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 2
 	dw $0740 ; 3: flag $07, 2
 	dw $0720 ; 4: flag $07, 1
 StubNop_3e:
