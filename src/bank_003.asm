@@ -1227,7 +1227,7 @@ ClearSaveFlagsArea:
 	ldh [hSramBank], a ; $4826
 	ld [$4000], a ; $4828
 	ld c, $02 ; $482b
-	ld hl, $a040 ; $482d
+	ld hl, sSaveFlags ; $482d
 Label_03_4830:
 	ld [hl+], a ; $4830
 	ld [hl+], a ; $4831
@@ -2093,7 +2093,7 @@ TestSaveFlag:
 	inc h ; $4da1
 Label_03_4da2:
 	ld a, [hl] ; $4da2
-	ld hl, $a040 ; $4da3
+	ld hl, sSaveFlags ; $4da3
 	ld e, d ; $4da6
 	ld d, $00 ; $4da7
 	add hl, de ; $4da9
@@ -2126,7 +2126,7 @@ SetSaveFlag:
 	inc h ; $4dcf
 Label_03_4dd0:
 	ld a, [hl] ; $4dd0
-	ld hl, $a040 ; $4dd1
+	ld hl, sSaveFlags ; $4dd1
 	ld e, d ; $4dd4
 	ld d, $00 ; $4dd5
 	add hl, de ; $4dd7
@@ -2157,7 +2157,7 @@ ClearSaveFlag:
 	inc h ; $4dfd
 Label_03_4dfe:
 	ld a, [hl] ; $4dfe
-	ld hl, $a040 ; $4dff
+	ld hl, sSaveFlags ; $4dff
 	ld e, d ; $4e02
 	ld d, $00 ; $4e03
 	add hl, de ; $4e05

@@ -22,16 +22,41 @@ Accessed by `TestSaveFlag` / set / clear (bank 3, `FarPtr_03_1c/1e/20`).
 A flag is addressed by two registers: `d` = byte index (0-0x1f into the
 array), `e` = bit selector = `bit << 5` (so `$0720` means byte 7, bit 1).
 The mask is `0x80 >> bit` (table 03:4d7e = `80 40 20 10 08 04 02 01`), and
-the referenced byte is `$a040 + d`. These are *global* flags (not
-per-story-slot): character-roster and mini-game unlocks live here, so
-setting the whole array to `0xFF` unlocks every playable character and
-every mini-game. `Func_3b_4b33` is the engine's own batch-unlock routine
-(it sets a fixed subset of these plus per-slot game flags). Verified
-in-emulator: with the array forced to `0xFF` and the master checksum +
-bank-1 mirror fixed, the ROM boots clean and the Mario cast and all
-mini-games are selectable. `tools/savetool.py unlock` does exactly this.
-Per-story-slot progress is separate (the `wGameFlags` block at slot
-+0x1c0) and is left untouched.
+the referenced byte is `$a040 + d` (`sSaveFlags`). A flag's *number* is
+`byte * 8 + bit`; the `SAVEFLAG_*` constants in `include/constants.inc` hold
+the `de` id for each one, and every immediate call site renders by name.
+
+**Only bytes `$00`-`$07` are ever used** — 64 of the 256 bits. The rest
+(`sSaveFlagsUnused`, `$a048-$a05f`) is zeroed by `ClearSaveFlagsArea` and
+never read: every immediate id in the ROM is `$01xx`-`$07xx`, and the three
+computed callers are bounded (character ids stop at `$1f`,
+`MinigameClearFlagTable_1e` at #54, `UnlockConditionFlagRows_03` at #54).
+
+| byte | flags | contents |
+|---|---|---|
+| `$00`-`$03` | 0-31 | **character unlocks**, one bit per character id — `CheckCharacterUnlocked` (18:452a) tests flag number = char id (ids 0-3 always unlocked) |
+| `$01` | 9-15 | within that: #9 opening seen, #10-13 Fay/Curt/Mark/Sean (granted by N64 transfer records), #14/#15 Sammi/Elden (singles/doubles Dream Match) |
+| `$02`-`$03` | 20-31 | also the first 12 **minigame-clear** flags (Boo Blast → Target Shot, 3 levels each) — the same bit, which is why clearing a minigame level unlocks a character |
+| `$04` | 32-38 | per-story-slot: `SetStorySlotFlagA` #32-34, `SetStorySlotFlagB` #36-38; `EraseStorySlotSaveData` clears the erased slot's pair |
+| `$05`-`$06` | 40-54 | the remaining minigame clears (Fruit Fantasy → Two-On-One) |
+| `$07` | 57-63 | court unlocks (#57 Star, #58 Castle, #59 Tropics, #60 Jungle, #61 Warehouse), #62 "N64 records present", #63 the bank `$01` debug-menu toggle |
+
+`MinigameClearFlagTable_1e` is the authority for the minigame run:
+`SetMinigameClearFlag` indexes it by `(minigame id - $1c) * 3 + level`, and its
+27 entries run from flag 20 upward, skipping byte `$04`. The RetroAchievements
+Code Notes for `$a042`/`$a043`/`$a045`/`$a046`/`$a047` describe the same bits
+with the opposite bit numbering (their "Bit N" is mask `1 << N`, i.e. this
+engine's bit `7 - N`) and agree entry for entry.
+
+These are *global* flags (not per-story-slot), so setting the whole array to
+`0xFF` unlocks every playable character and every mini-game.
+`ApplyUnlockEverythingCheat` (`$3b:$4b33`) is the engine's own batch unlock: it
+sets levels 1 and 2 of every minigame and skips level 3, so the level-3
+characters (Baby Mario, Yoshi, Peach) stay locked. Verified in-emulator: with
+the array forced to `0xFF` and the master checksum + bank-1 mirror fixed, the
+ROM boots clean and the Mario cast and all mini-games are selectable.
+`tools/savetool.py unlock` does exactly this. Per-story-slot progress is
+separate (the `wGameFlags` block at slot +0x1c0) and is left untouched.
 
 The whole header region `$a000-$a7ff` is mirrored verbatim into SRAM
 bank 1 by `MirrorSaveHeaderToBank1` after every write. On boot

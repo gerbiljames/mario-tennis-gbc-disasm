@@ -22,7 +22,7 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `e55e97e`); the whole history rebuilds
+Everything below is **committed** (HEAD `a9afd3b`); the whole history rebuilds
 byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
 (proven-code bytes, fill runs, label counts, human-named counts) and
 `tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
@@ -365,6 +365,34 @@ Donkey Kong / Baby Mario, Perfect Shot -> Mario / Waluigi / Yoshi, Target Shot
 grant flags 10-13 = Fay, Curt, Mark and Sean. It also explains
 `ApplyUnlockEverythingCheat`: it sets levels 1 and 2 of every minigame and
 skips level 3, so the level-3 characters stay locked.
+
+
+**SRAM naming followed from it.** The array had no symbol at all: `$a040` was a
+bare literal at its four bank `$03` sites, and the five RetroAchievements byte
+names sat in `ram_map.json` at *global* scope -- the hazard the SRAM header and
+block directory are already scoped against, since a dozen banks use `$a0xx` as
+VRAM-bank-1 copy destinations. It is now one scoped union (bank `$03`):
+`sSaveFlags` (`$a040`, 8 bytes) carrying the byte-by-byte layout, and
+`sSaveFlagsUnused` (`$a048`, 24 bytes) -- **only 64 of the 256 bits exist**.
+Every immediate id in the ROM is `$01xx`-`$07xx` and the three computed callers
+are bounded (character ids stop at `$1f`, `MinigameClearFlagTable_1e` and
+`UnlockConditionFlagRows_03` both at #54), while `ClearSaveFlagsArea` zeroes all
+32 bytes. `docs/save_format.md` now carries the full table.
+
+`UnlockConditionFlagRows_03` deserves its own line: its nine bytes are
+`$16 $19 $1c $1f $2a $2d $30 $33 $36` = flags 22, 25, 28, 31, 42, 45, 48, 51,
+54 -- the **level-3 flag of each of the nine minigames**, in table order, which
+is a third independent confirmation of the run. Bank `$18`'s sibling
+`CheckUnlockFlag` reads a 32-entry table that would pick per-entry between the
+game-flag and save-flag arrays (bit 0 of the id selects), but the table
+(`UnlockFlagIds_18`, `$18:$458a`) is **all zeros** in the retail ROM, so it
+always reports "no condition".
+
+One process note: the byte-perfect compare caught the union's `end` field being
+off by one (it is exclusive, and the extra byte pushed `sSaveBlockDirectory` to
+`$a061`, changing 126 assembled bytes in `InitSaveHeader`). RAM metadata is not
+supposed to be able to break the build, and it did -- worth remembering that
+symbol *addresses* feed real operands.
 
 ### The generator split into `tools/disasmlib/` (2026-07-25)
 
@@ -3702,5 +3730,5 @@ enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
 
 ## Repo state
 
-All work is committed (HEAD `e55e97e`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `a9afd3b`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.

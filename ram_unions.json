@@ -1,18 +1,483 @@
 {
  "unions": [
   {
+   "start": "0xa020",
+   "end": "0xa03f",
+   "comment": "Battery-save header fields (SRAM bank 0), owned by the bank $03 save\nengine; scoped so unrelated $a0xx literals in other banks stay numeric",
+   "variants": [
+    {
+     "context": "save engine (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xa020": {
+       "name": "sSaveSignature",
+       "note": "[16 bytes] \"CAMELOTGBTENNIS\\0\" signature (ROM copy at SaveSignature, 03:47e9)",
+       "size": 16
+      },
+      "0xa030": {
+       "name": "sSaveMasterChecksum",
+       "note": "[16-bit LE] byte-sum of $a038-$a76f (version byte + block directory)",
+       "size": 2
+      },
+      "0xa038": {
+       "name": "sSaveFormatVersion",
+       "note": "[8-bit] save layout version byte, always $71; first byte covered by the master checksum"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xa040",
+   "end": "0xa060",
+   "comment": "Global save-flag array (SRAM bank 0), owned by the bank $03 save\nengine; scoped so unrelated $a0xx literals in other banks (VRAM-bank-1\ncopy destinations) stay numeric",
+   "variants": [
+    {
+     "context": "save engine (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xa040": {
+       "name": "sSaveFlags",
+       "note": "[8 bytes] The 64 global save flags the game actually uses. Test/Set/ClearSaveFlag ($03:$4d8f/$4dbd/$4deb) index this base with d (byte) and mask $80 >> bit, where e = bit << 5; flag number = byte * 8 + bit, and the SAVEFLAG_* constants in constants.inc hold the (byte << 8 | bit << 5) id each call site passes. Layout: bytes $00-$03 are the character-unlock bits, one per character id (CheckCharacterUnlocked $18:$452a tests flag number = char id; ids 0-3 are always unlocked). Byte $01 also carries #9 opening-seen and the unlocks granted by outside events - #10-#13 (Fay, Curt, Mark, Sean) from N64 transfer records, #14/#15 (Sammi, Elden) from the singles/doubles Dream Match. Bytes $02/$03 double as the first twelve minigame-clear flags (#20-#31, Boo Blast through Target Shot), which is why clearing a minigame level unlocks a character: it is the same bit. Byte $04 is per-story-slot (SetStorySlotFlagA #32-#34, SetStorySlotFlagB #36-#38; EraseStorySlotSaveData clears the pair for the erased slot). Bytes $05/$06 continue the minigame-clear run (#40-#54, Fruit Fantasy through Two-On-One; MinigameClearFlagTable_1e lists all 27 in order). Byte $07 is court unlocks (#57 Star, #58 Castle, #59 Tropics, #60 Jungle, #61 Warehouse) plus #62 'N64 records present' and #63, the bank $01 debug-menu toggle. The RetroAchievements Code Notes for $a042/$a043/$a045/$a046/$a047 describe the same bits with their own bit numbering (their 'Bit N' is mask 1 << N, i.e. this engine's bit 7 - N); those names now live on the SAVEFLAG_* constants.",
+       "size": 8
+      },
+      "0xa048": {
+       "name": "sSaveFlagsUnused",
+       "note": "[24 bytes] Flags #64-#255. ClearSaveFlagsArea ($03:$4825) zeroes all 32 bytes of the array, but nothing ever sets or tests a flag with a byte index above $07: every immediate id in the ROM is $01xx-$07xx, the computed callers are bounded (character ids stop at $1f, MinigameClearFlagTable_1e stops at #54, UnlockConditionFlagRows_03 at #54), so this half is dead storage.",
+       "size": 24
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xa060",
+   "end": "0xa76f",
+   "comment": "Save block directory: 113 16-byte entries (see docs/save_format.md);\nentry = valid, SRAM bank, offset, length, checksum, tag",
+   "variants": [
+    {
+     "context": "save engine (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xa060": {
+       "name": "sSaveBlockDirectory",
+       "note": "[113 x 16 bytes] block directory; +0 valid, +1 SRAM bank, +2 offset word, +4 length word, +6 checksum word, +8 tag (hi,lo)",
+       "size": 1808
+      }
+     }
+    }
+   ]
+  },
+  {
    "start": "0xc780",
    "end": "0xc785",
    "comment": "Mode-local scratch ($c780-$c78f is reused by each game mode;\nonly proven consumers are named, sites in other modes stay numeric)",
    "variants": [
     {
      "context": "character select (bank $1b)",
-     "scopes": [{"bank": "0x1b"}],
+     "scopes": [
+      {
+       "bank": "0x1b"
+      }
+     ],
      "symbols": {
-      "0xc781": {"name": "wCharSelectChar", "note": "[8-bit] Character id under the char-select cursor, looked up from the roster grid at $c7a0 by UpdateCharSelectSelection"},
-      "0xc782": {"name": "wCharSelectPrevChar", "note": "[8-bit] Character id selected on the previous frame (change detection)"},
-      "0xc783": {"name": "wCharSelectCol", "note": "[8-bit] Char-select cursor column in the roster grid"},
-      "0xc784": {"name": "wCharSelectRow", "note": "[8-bit] Char-select cursor row in the roster grid"}
+      "0xc781": {
+       "name": "wCharSelectChar",
+       "note": "[8-bit] Character id under the char-select cursor, looked up from the roster grid at $c7a0 by UpdateCharSelectSelection"
+      },
+      "0xc782": {
+       "name": "wCharSelectPrevChar",
+       "note": "[8-bit] Character id selected on the previous frame (change detection)"
+      },
+      "0xc783": {
+       "name": "wCharSelectCol",
+       "note": "[8-bit] Char-select cursor column in the roster grid"
+      },
+      "0xc784": {
+       "name": "wCharSelectRow",
+       "note": "[8-bit] Char-select cursor row in the roster grid"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd100",
+   "end": "0xd21a",
+   "comment": "Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;\nscoped to the driver's code range so the same $d1xx/$d2xx offsets\nin other WRAM banks keep their numeric address.",
+   "variants": [
+    {
+     "context": "sound engine (bank 0)",
+     "scopes": [
+      {
+       "wram_bank": "0x07"
+      },
+      {
+       "bank": "0x00",
+       "start": "0x2f00",
+       "end": "0x3de0"
+      }
+     ],
+     "symbols": {
+      "0xd100": {
+       "name": "wSndChannels",
+       "note": "[192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)"
+      },
+      "0xd1c0": {
+       "name": "wSndLoopSlots",
+       "note": "[72 bytes] Per-channel loop bookkeeping (counter + return pointer per loop level); base resolved by GetChannelLoopSlot"
+      },
+      "0xd208": {
+       "name": "wSndActiveMask",
+       "note": "[8-bit] Bitmask of channels already serviced/keyed this update pass (AbortIfChannelTriggered tests it; folded into rAUDTERM at the end)"
+      },
+      "0xd209": {
+       "name": "wSndPanShadow",
+       "note": "[8-bit] Shadow of rAUDTERM: per-channel left/right output enable bits accumulated across channels"
+      },
+      "0xd20a": {
+       "name": "wSndChannelType",
+       "note": "[8-bit] Current channel type (0=square1/sweep, 1=square2, 2=wave, 3=noise)"
+      },
+      "0xd20b": {
+       "name": "wSndChannelBits",
+       "note": "[8-bit] Current channel's stereo output bit-pair (ch1=$11 .. ch4=$88), used for active-channel tracking"
+      },
+      "0xd20c": {
+       "name": "wSndChannelPanMask",
+       "note": "[8-bit] Same bit-pair as wSndChannelBits, masked against hSndPanMask to build wSndPanShadow"
+      },
+      "0xd20d": {
+       "name": "wSndRegBase",
+       "note": "[8-bit] Current channel's APU register offset (type*5); WriteChannelReg forms rAUD via $ff10+this+reg"
+      },
+      "0xd20e": {
+       "name": "wSndFrameCounter",
+       "note": "[8-bit] Free-running update counter; low nibble supplies the vibrato phase in TickVibrato"
+      },
+      "0xd20f": {
+       "name": "wSndChannelIndex",
+       "note": "[8-bit] Index (0-5) of the channel currently being updated"
+      },
+      "0xd212": {
+       "name": "wSndUpdateReqMask",
+       "note": "[8-bit] Pending channel-update request: mask of channels to reconfigure (SetChannelUpdateRequest)"
+      },
+      "0xd213": {
+       "name": "wSndUpdateReqData",
+       "note": "[8-bit] Value applied by the pending channel-update request (low nibble)"
+      },
+      "0xd214": {
+       "name": "wSndUpdateReqAck",
+       "note": "[8-bit] Accumulator of channels that have acknowledged the pending update request"
+      },
+      "0xd215": {
+       "name": "wSndFirstChannel",
+       "note": "[8-bit] Channel index the update pass starts from (normally 0)"
+      },
+      "0xd217": {
+       "name": "wSndLoadedWaveId",
+       "note": "[8-bit] Wave-pattern id currently loaded into wave RAM (change detection for the wave channel)"
+      },
+      "0xd218": {
+       "name": "wSndTranspose",
+       "note": "[8-bit] Global transpose added to note ids (cmd $a9 $fe/$f2/$f3)"
+      },
+      "0xd219": {
+       "name": "wSndWaveReloadPending",
+       "note": "[8-bit] Non-zero to force the wave channel to reload its pattern on the next note"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdd00",
+   "end": "0xdd24",
+   "comment": "Match ball-visuals history ring (WRAM bank 4 only); shared renderer\nstate, so scoped by the selected WRAM bank plus the bank-$08 renderer.",
+   "variants": [
+    {
+     "context": "match ball history ring (WRAM bank 4)",
+     "scopes": [
+      {
+       "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x08"
+      }
+     ],
+     "symbols": {
+      "0xdd00": {
+       "name": "wBallHistory",
+       "note": "[36 bytes] Ball position-history ring (WRAM bank 4): six 6-byte records [projX word, projY word, tile+8, attr]; UpdateBallVisuals ($5153) shifts it down one record per frame and BuildBallSlot writes the newest at +$1e"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xde00",
+   "end": "0xde20",
+   "comment": "Match ball sprite slots (WRAM bank 4 only), alongside the per-character\n$df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.",
+   "variants": [
+    {
+     "context": "match ball sprite slots (WRAM bank 4)",
+     "scopes": [
+      {
+       "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x08"
+      }
+     ],
+     "symbols": {
+      "0xde00": {
+       "name": "wNetBallSlot",
+       "note": "[4 bytes] Match sprite-slot record [tile, attr, screenY, screenX] (WRAM bank 4): ball-at-net marker (tile $4e), drawn after the point resolves when the ball rests within $1e0 of the net (BuildNetBallSlot)"
+      },
+      "0xde04": {
+       "name": "wBallSlot",
+       "note": "[4 bytes] Match sprite-slot record (WRAM bank 4): the ball, tile picked by height band / off-screen state ($40/$42/$44), gated by wBallSpriteEnabled (BuildBallSlot)"
+      },
+      "0xde08": {
+       "name": "wBallShadowSlot",
+       "note": "[4 bytes] Match sprite-slot record (WRAM bank 4): ball ground shadow (tile $46) at the ball's height-0 projection, gated by wBallShadowEnabled (BuildBallShadowSlot)"
+      },
+      "0xde0c": {
+       "name": "wBallTrailSlots",
+       "note": "[20 bytes] Five match sprite-slot records (WRAM bank 4): ball-trail afterimages (tile = ball tile + 8) fed from the history ring; slots 3-5 only when wBallTrailColor is nonzero (BuildBallTrailSlots)"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdf00",
+   "end": "0xdf97",
+   "comment": "Match-engine per-character struct, replicated across WRAM banks 4-7\n(bank = character: 4 near-P1, 5 far-P1, 6 near-partner, 7 far-partner).\nSame field, different character per bank -- one name each. Scoped by the\nprovably-selected WRAM bank, plus the match banks $07/$08 whose\ncallback-reached (jp hl) accesses the dataflow can't prove. Only the\nnamed field offsets render; other $dfxx bytes stay numeric.",
+   "variants": [
+    {
+     "context": "text-arg fetch buffer (menu banks reuse the idle char struct)",
+     "scopes": [
+      {
+       "bank": "0x0e"
+      },
+      {
+       "bank": "0x0f"
+      },
+      {
+       "bank": "0x12"
+      }
+     ],
+     "symbols": {
+      "0xdf00": {
+       "name": "wTextArgFetchBuffer",
+       "note": "[bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00"
+      }
+     }
+    },
+    {
+     "context": "match character struct (WRAM banks 4-7)",
+     "scopes": [
+      {
+       "wram_bank": "0x04"
+      },
+      {
+       "wram_bank": "0x05"
+      },
+      {
+       "wram_bank": "0x06"
+      },
+      {
+       "wram_bank": "0x07"
+      },
+      {
+       "bank": "0x07"
+      },
+      {
+       "bank": "0x08"
+      }
+     ],
+     "symbols": {
+      "0xdf00": {
+       "name": "wCharPosX",
+       "note": "[3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)"
+      },
+      "0xdf03": {
+       "name": "wCharPosDepth",
+       "note": "[3 bytes] Per-character banked struct (WRAM4-7): depth position (toward/away from net), same 24-bit fixed-point format; the two court sides carry opposite signs"
+      },
+      "0xdf06": {
+       "name": "wCharPosHeight",
+       "note": "[3 bytes] Per-character banked struct (WRAM4-7): height above court, same 24-bit fixed-point format (zeroed by SetCharPosAndTarget)"
+      },
+      "0xdf09": {
+       "name": "wCharServeRole",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): serve/side role code (court-position record byte 4-7); XORed with 2 on the per-point side swap, mapped through the $4fa0 table at point start"
+      },
+      "0xdf0a": {
+       "name": "wCharCourtPos",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): court position code (court-position record byte 0-3; XORed with 3 on the tiebreak side-swap)"
+      },
+      "0xdf0b": {
+       "name": "wCharIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): character index 0-3 (== WRAM bank - 4); bit 0 set = far side (used by CharPointEndReaction and the edge-arrow sprite)"
+      },
+      "0xdf0d": {
+       "name": "wCharFacingDesired",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): desired facing direction, eased toward by wCharFacingShown"
+      },
+      "0xdf0e": {
+       "name": "wCharFacingShown",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): displayed facing, eased toward wCharFacingDesired by at most wCharFacingEaseRate per frame ($75c0)"
+      },
+      "0xdf0f": {
+       "name": "wCharFlags",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): state flags; bit 2 = airborne (set on jump $6dd5, cleared on landing; selects the shadow slot drawn)"
+      },
+      "0xdf18": {
+       "name": "wCharState",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): state-machine index (RST00 jumptable at $6a77; set via SetCharState)"
+      },
+      "0xdf1b": {
+       "name": "wCharSpriteFrame",
+       "note": "[3 bytes] Per-character banked struct (WRAM4-7): current sprite frame pointer (hi/lo) + h-flip flag, consumed by DrawCharSprite ($650a)"
+      },
+      "0xdf22": {
+       "name": "wCharActive",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): active flag (UpdateChar exits when 0)"
+      },
+      "0xdf40": {
+       "name": "wCharVelX",
+       "note": "[16-bit] Per-character banked struct (WRAM4-7): X velocity (zeroed on placement and at point end)"
+      },
+      "0xdf42": {
+       "name": "wCharVelDepth",
+       "note": "[16-bit] Per-character banked struct (WRAM4-7): depth velocity"
+      },
+      "0xdf44": {
+       "name": "wCharVelHeight",
+       "note": "[16-bit] Per-character banked struct (WRAM4-7): height velocity"
+      },
+      "0xdf46": {
+       "name": "wCharWalkTargetX",
+       "note": "[16-bit] Per-character banked struct (WRAM4-7): walk-target X (integer part)"
+      },
+      "0xdf48": {
+       "name": "wCharWalkTargetDepth",
+       "note": "[16-bit] Per-character banked struct (WRAM4-7): walk-target depth; MoveCharTowardTarget ($7541) walks toward it, snapping when both deltas < $18 (CheckCharNearTarget $78be)"
+      },
+      "0xdf53": {
+       "name": "wCharScreenX",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)"
+      },
+      "0xdf54": {
+       "name": "wCharScreenY",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): last projected screen Y"
+      },
+      "0xdf57": {
+       "name": "wCharPointResult",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)"
+      },
+      "0xdf68": {
+       "name": "wCharFacingEaseRate",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired"
+      },
+      "0xdf6b": {
+       "name": "wGroundStrokeSpeedIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry"
+      },
+      "0xdf6c": {
+       "name": "wSmashServeSpeedIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves"
+      },
+      "0xdf6d": {
+       "name": "wReachSpeedIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the reach (smash-range) shot variants"
+      },
+      "0xdf6e": {
+       "name": "wTopspinPlacementIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for topspin and serve-topspin; selects bytes 0-3 -> target offsets in LoadShotPlacementEntry"
+      },
+      "0xdf6f": {
+       "name": "wSlicePlacementIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for slice and serve-slice"
+      },
+      "0xdf80": {
+       "name": "wCharSpriteSlot",
+       "note": "[4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite"
+      },
+      "0xdf88": {
+       "name": "wCharAirShadowSlot",
+       "note": "[4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)"
+      },
+      "0xdf8c": {
+       "name": "wCharGroundShadowSlot",
+       "note": "[4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)"
+      },
+      "0xdf92": {
+       "name": "wLobPlacementIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataLob (set from df91 bit 0)"
+      },
+      "0xdf93": {
+       "name": "wDropPlacementIndex",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataDrop (set from df91 bit 1)"
+      },
+      "0xdf96": {
+       "name": "wCharDepthKey",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): draw-order depth key ((depth*8)>>8 + $80); DrawActorsByDepth paints teammates back-to-front"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xffb0",
+   "end": "0xffb4",
+   "comment": "HRAM pointer scratch ($ffb0-$ffb3): two 16-bit slots each caller uses for\nits own purpose, so only proven consumers are named. Sites outside these\nscopes stay numeric -- note that banks $0f/$10 load $ffb0 as the immediate\nconstant -80, not as an address.",
+   "variants": [
+    {
+     "context": "level-up stat deltas (bank $02)",
+     "scopes": [
+      {
+       "bank": "0x02"
+      }
+     ],
+     "symbols": {
+      "0xffb0": {
+       "name": "hStatDeltaOutPtr",
+       "note": "[16-bit] ComputeLevelUpStatDeltas: caller-supplied destination the per-stat deltas are written to (hl on entry, spilled at $02:$4a02)"
+      },
+      "0xffb2": {
+       "name": "hStatDeltaRecordCopy",
+       "note": "[16-bit] ComputeLevelUpStatDeltas: pointer to the 64-byte stack buffer (add sp, -64 at $02:$4a07) holding the player record copied before LevelUpPlayerRecord, which each stat is then differenced against"
+      }
+     }
+    },
+    {
+     "context": "save-slot debug editor (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xffb0": {
+       "name": "hSaveEditorCursor",
+       "note": "[16-bit] SaveSlotDebugEditor: byte offset of the edit cursor into the $d300 save-block buffer, wrapped to $400 by masking the high byte with $03; moved by Func_03_524f, which takes the signed cursor step in c and the value step applied on A in b"
+      }
      }
     }
    ]
@@ -26,224 +491,186 @@
      "context": "serial-link input slots (default: link-aware match/menu code in many banks)",
      "default": true,
      "symbols": {
-      "0xffd3": {"name": "hLinkInput", "note": "[8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters"},
-      "0xffd4": {"name": "hLinkRemoteInput", "note": "[8-bit] Input byte decoded from the last received link frame"},
-      "0xffd5": {"name": "hLinkRemoteInputBuf", "note": "[8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)"}
+      "0xffd3": {
+       "name": "hLinkInput",
+       "note": "[8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters"
+      },
+      "0xffd4": {
+       "name": "hLinkRemoteInput",
+       "note": "[8-bit] Input byte decoded from the last received link frame"
+      },
+      "0xffd5": {
+       "name": "hLinkRemoteInputBuf",
+       "note": "[8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)"
+      }
      }
     },
     {
      "context": "sound driver (bank 0, $3373-$3ddf)",
-     "scopes": [{"bank": "0x00", "start": "0x3373", "end": "0x3de0"}],
+     "scopes": [
+      {
+       "bank": "0x00",
+       "start": "0x3373",
+       "end": "0x3de0"
+      }
+     ],
      "symbols": {
-      "0xffd0": {"name": "hSndScriptPtr", "note": "[16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)"},
-      "0xffd2": {"name": "hSndChannelType", "note": "[8-bit] Channel type in the low 2 bits (0=square1/sweep, 1=square2, 2=wave, 3=noise); high nibble carries the vibrato depth / note-length index"},
-      "0xffd3": {"name": "hSndDataPtr", "note": "[16-bit] Pointer to the current channel's note/command data"},
-      "0xffd5": {"name": "hSndDataBank", "note": "[8-bit] ROM bank of the current channel's data (loaded into hRomBank/$2000)"},
-      "0xffd6": {"name": "hSndToneCtrl", "note": "[8-bit] Tone control: bits 6-7 duty, bit 4 flag, low nibble = note-length increment paired with hSndLengthAccum"},
-      "0xffd7": {"name": "hSndLengthAccum", "note": "[8-bit] Fractional note-length accumulator; hSndToneCtrl's low nibble is added each update and carries a step at $10"},
-      "0xffd8": {"name": "hSndVolume", "note": "[8-bit] Current channel volume/envelope value (high nibble = level; envelope steps by $10)"},
-      "0xffd9": {"name": "hSndPortamentoTimer", "note": "[8-bit] Portamento/glide countdown; while non-zero the channel slides toward the target note instead of advancing the script (cmd $a7)"},
-      "0xffda": {"name": "hSndWaveId", "note": "[8-bit] Wave-pattern id for the wave channel (compared with wSndLoadedWaveId); reused as a note/instrument byte on the other channels"},
-      "0xffdb": {"name": "hSndNoteOffset", "note": "[8-bit] Signed note offset/detune applied when a note is triggered (bit 7 = active); set by cmd $a4"},
-      "0xffdc": {"name": "hSndTranspose", "note": "[8-bit] Per-channel transpose added to note ids (cmd $a9 $f0/$f1/$ff)"},
-      "0xffdd": {"name": "hSndEnvRate", "note": "[8-bit] Instrument-envelope sweep speed (high nibble); set with hSndEnvLength by cmd $c0-$cf and consumed by TickInstrumentEnvelope"},
-      "0xffde": {"name": "hSndEnvLength", "note": "[8-bit] Instrument-envelope sweep length/target; on the wave channel it doubles as a note-length byte"},
-      "0xffdf": {"name": "hSndEnvPos", "note": "[8-bit] Current instrument-envelope position, advanced toward hSndEnvLength each update"},
-      "0xffe0": {"name": "hSndVolSlide", "note": "[8-bit] Volume-slide state (bit 7 direction, remaining steps in the low bits); set by cmd $b0-$df, ticked by TickVolumeSlide"},
-      "0xffe1": {"name": "hSndVolSlideReload", "note": "[8-bit] Volume-slide period reload value"},
-      "0xffe2": {"name": "hSndVolSlideTimer", "note": "[8-bit] Volume-slide countdown to the next step"},
-      "0xffe3": {"name": "hSndPeriodLo", "note": "[8-bit] Base period low byte of the current note, saved as the vibrato centre (TickVibrato offsets from it)"},
-      "0xffe4": {"name": "hSndPeriodHi", "note": "[8-bit] Shadow of NRx4 (period high + control); bit 5 ($20) is a software note-on marker used to tell whether a note is sounding"},
-      "0xffe5": {"name": "hSndEcho", "note": "[8-bit] Echo state: low nibble echo depth (ScaleEchoVolume), high nibble saved volume level; set by cmd $aa"},
-      "0xffe6": {"name": "hSndPanMask", "note": "[8-bit] This channel's rAUDTERM left/right output bits, merged into wSndPanShadow; set/swapped by cmd $a5"},
-      "0xffe7": {"name": "hSndNoteLenReload", "note": "[8-bit] Note-length reload value (cmd $a3)"},
-      "0xffe8": {"name": "hSndNoteLenTimer", "note": "[8-bit] Note-length countdown; suppresses vibrato/effects until it reaches 0"},
-      "0xffe9": {"name": "hSndInstrument", "note": "[8-bit] Instrument selector: high nibble picks the wave pattern / envelope-pointer table, low nibble the envelope sequence; set by cmd $a8"},
-      "0xffea": {"name": "hSndEchoTimer", "note": "[8-bit] Echo repeat counter (cmd $aa); note this HRAM byte is hActorPtr under the story-actor variant"},
-      "0xffeb": {"name": "hSndEchoCtrl", "note": "[8-bit] Echo control: high nibble enable/count, low nibble note offset"},
-      "0xffec": {"name": "hSndLoopCount", "note": "[8-bit] Script loop counter (cmd $ac)"},
-      "0xffed": {"name": "hSndLoopReturnPtr", "note": "[16-bit] Saved script pointer for the active loop (cmd $ac/$ad)"},
-      "0xffef": {"name": "hSndRestFlag", "note": "[8-bit] Non-zero when the current step is a rest/tie; suppresses the volume envelope in ApplyChannelEnvelope"}
+      "0xffd0": {
+       "name": "hSndScriptPtr",
+       "note": "[16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)"
+      },
+      "0xffd2": {
+       "name": "hSndChannelType",
+       "note": "[8-bit] Channel type in the low 2 bits (0=square1/sweep, 1=square2, 2=wave, 3=noise); high nibble carries the vibrato depth / note-length index"
+      },
+      "0xffd3": {
+       "name": "hSndDataPtr",
+       "note": "[16-bit] Pointer to the current channel's note/command data"
+      },
+      "0xffd5": {
+       "name": "hSndDataBank",
+       "note": "[8-bit] ROM bank of the current channel's data (loaded into hRomBank/$2000)"
+      },
+      "0xffd6": {
+       "name": "hSndToneCtrl",
+       "note": "[8-bit] Tone control: bits 6-7 duty, bit 4 flag, low nibble = note-length increment paired with hSndLengthAccum"
+      },
+      "0xffd7": {
+       "name": "hSndLengthAccum",
+       "note": "[8-bit] Fractional note-length accumulator; hSndToneCtrl's low nibble is added each update and carries a step at $10"
+      },
+      "0xffd8": {
+       "name": "hSndVolume",
+       "note": "[8-bit] Current channel volume/envelope value (high nibble = level; envelope steps by $10)"
+      },
+      "0xffd9": {
+       "name": "hSndPortamentoTimer",
+       "note": "[8-bit] Portamento/glide countdown; while non-zero the channel slides toward the target note instead of advancing the script (cmd $a7)"
+      },
+      "0xffda": {
+       "name": "hSndWaveId",
+       "note": "[8-bit] Wave-pattern id for the wave channel (compared with wSndLoadedWaveId); reused as a note/instrument byte on the other channels"
+      },
+      "0xffdb": {
+       "name": "hSndNoteOffset",
+       "note": "[8-bit] Signed note offset/detune applied when a note is triggered (bit 7 = active); set by cmd $a4"
+      },
+      "0xffdc": {
+       "name": "hSndTranspose",
+       "note": "[8-bit] Per-channel transpose added to note ids (cmd $a9 $f0/$f1/$ff)"
+      },
+      "0xffdd": {
+       "name": "hSndEnvRate",
+       "note": "[8-bit] Instrument-envelope sweep speed (high nibble); set with hSndEnvLength by cmd $c0-$cf and consumed by TickInstrumentEnvelope"
+      },
+      "0xffde": {
+       "name": "hSndEnvLength",
+       "note": "[8-bit] Instrument-envelope sweep length/target; on the wave channel it doubles as a note-length byte"
+      },
+      "0xffdf": {
+       "name": "hSndEnvPos",
+       "note": "[8-bit] Current instrument-envelope position, advanced toward hSndEnvLength each update"
+      },
+      "0xffe0": {
+       "name": "hSndVolSlide",
+       "note": "[8-bit] Volume-slide state (bit 7 direction, remaining steps in the low bits); set by cmd $b0-$df, ticked by TickVolumeSlide"
+      },
+      "0xffe1": {
+       "name": "hSndVolSlideReload",
+       "note": "[8-bit] Volume-slide period reload value"
+      },
+      "0xffe2": {
+       "name": "hSndVolSlideTimer",
+       "note": "[8-bit] Volume-slide countdown to the next step"
+      },
+      "0xffe3": {
+       "name": "hSndPeriodLo",
+       "note": "[8-bit] Base period low byte of the current note, saved as the vibrato centre (TickVibrato offsets from it)"
+      },
+      "0xffe4": {
+       "name": "hSndPeriodHi",
+       "note": "[8-bit] Shadow of NRx4 (period high + control); bit 5 ($20) is a software note-on marker used to tell whether a note is sounding"
+      },
+      "0xffe5": {
+       "name": "hSndEcho",
+       "note": "[8-bit] Echo state: low nibble echo depth (ScaleEchoVolume), high nibble saved volume level; set by cmd $aa"
+      },
+      "0xffe6": {
+       "name": "hSndPanMask",
+       "note": "[8-bit] This channel's rAUDTERM left/right output bits, merged into wSndPanShadow; set/swapped by cmd $a5"
+      },
+      "0xffe7": {
+       "name": "hSndNoteLenReload",
+       "note": "[8-bit] Note-length reload value (cmd $a3)"
+      },
+      "0xffe8": {
+       "name": "hSndNoteLenTimer",
+       "note": "[8-bit] Note-length countdown; suppresses vibrato/effects until it reaches 0"
+      },
+      "0xffe9": {
+       "name": "hSndInstrument",
+       "note": "[8-bit] Instrument selector: high nibble picks the wave pattern / envelope-pointer table, low nibble the envelope sequence; set by cmd $a8"
+      },
+      "0xffea": {
+       "name": "hSndEchoTimer",
+       "note": "[8-bit] Echo repeat counter (cmd $aa); note this HRAM byte is hActorPtr under the story-actor variant"
+      },
+      "0xffeb": {
+       "name": "hSndEchoCtrl",
+       "note": "[8-bit] Echo control: high nibble enable/count, low nibble note offset"
+      },
+      "0xffec": {
+       "name": "hSndLoopCount",
+       "note": "[8-bit] Script loop counter (cmd $ac)"
+      },
+      "0xffed": {
+       "name": "hSndLoopReturnPtr",
+       "note": "[16-bit] Saved script pointer for the active loop (cmd $ac/$ad)"
+      },
+      "0xffef": {
+       "name": "hSndRestFlag",
+       "note": "[8-bit] Non-zero when the current step is a rest/tie; suppresses the volume envelope in ApplyChannelEnvelope"
+      }
      }
     },
     {
      "context": "sprite queue (bank 0, $2ced-$2d9f)",
-     "scopes": [{"bank": "0x00", "start": "0x2ced", "end": "0x2da0"}],
+     "scopes": [
+      {
+       "bank": "0x00",
+       "start": "0x2ced",
+       "end": "0x2da0"
+      }
+     ],
      "symbols": {
-      "0xffd0": {"name": "hSpriteBlitY", "note": "[8-bit] Screen Y origin of the multi-sprite block being queued (QueueSprite32x32)"},
-      "0xffd1": {"name": "hSpriteBlitX", "note": "[8-bit] Screen X origin of the multi-sprite block being queued"}
+      "0xffd0": {
+       "name": "hSpriteBlitY",
+       "note": "[8-bit] Screen Y origin of the multi-sprite block being queued (QueueSprite32x32)"
+      },
+      "0xffd1": {
+       "name": "hSpriteBlitX",
+       "note": "[8-bit] Screen X origin of the multi-sprite block being queued"
+      }
      }
     },
     {
      "context": "story actor engine (banks $04/$05/$0a)",
-     "scopes": [{"bank": "0x04"}, {"bank": "0x05"}, {"bank": "0x0a"}],
+     "scopes": [
+      {
+       "bank": "0x04"
+      },
+      {
+       "bank": "0x05"
+      },
+      {
+       "bank": "0x0a"
+      }
+     ],
      "symbols": {
-      "0xffea": {"name": "hActorPtr", "note": "[16-bit] Pointer to the actor struct currently being processed (stashed around GetActorStateAddr / StepActorScript)"}
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xa020",
-   "end": "0xa03f",
-   "comment": "Battery-save header fields (SRAM bank 0), owned by the bank $03 save\nengine; scoped so unrelated $a0xx literals in other banks stay numeric",
-   "variants": [
-    {
-     "context": "save engine (bank $03)",
-     "scopes": [{"bank": "0x03"}],
-     "symbols": {
-      "0xa020": {"name": "sSaveSignature", "note": "[16 bytes] \"CAMELOTGBTENNIS\\0\" signature (ROM copy at SaveSignature, 03:47e9)", "size": 16},
-      "0xa030": {"name": "sSaveMasterChecksum", "note": "[16-bit LE] byte-sum of $a038-$a76f (version byte + block directory)", "size": 2},
-      "0xa038": {"name": "sSaveFormatVersion", "note": "[8-bit] save layout version byte, always $71; first byte covered by the master checksum"}
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xa060",
-   "end": "0xa76f",
-   "comment": "Save block directory: 113 16-byte entries (see docs/save_format.md);\nentry = valid, SRAM bank, offset, length, checksum, tag",
-   "variants": [
-    {
-     "context": "save engine (bank $03)",
-     "scopes": [{"bank": "0x03"}],
-     "symbols": {
-      "0xa060": {"name": "sSaveBlockDirectory", "note": "[113 x 16 bytes] block directory; +0 valid, +1 SRAM bank, +2 offset word, +4 length word, +6 checksum word, +8 tag (hi,lo)", "size": 1808}
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xd100",
-   "end": "0xd21a",
-   "comment": "Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;\nscoped to the driver's code range so the same $d1xx/$d2xx offsets\nin other WRAM banks keep their numeric address.",
-   "variants": [
-    {
-     "context": "sound engine (bank 0)",
-     "scopes": [{"wram_bank": "0x07"}, {"bank": "0x00", "start": "0x2f00", "end": "0x3de0"}],
-     "symbols": {
-      "0xd100": {"name": "wSndChannels", "note": "[192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)"},
-      "0xd1c0": {"name": "wSndLoopSlots", "note": "[72 bytes] Per-channel loop bookkeeping (counter + return pointer per loop level); base resolved by GetChannelLoopSlot"},
-      "0xd208": {"name": "wSndActiveMask", "note": "[8-bit] Bitmask of channels already serviced/keyed this update pass (AbortIfChannelTriggered tests it; folded into rAUDTERM at the end)"},
-      "0xd209": {"name": "wSndPanShadow", "note": "[8-bit] Shadow of rAUDTERM: per-channel left/right output enable bits accumulated across channels"},
-      "0xd20a": {"name": "wSndChannelType", "note": "[8-bit] Current channel type (0=square1/sweep, 1=square2, 2=wave, 3=noise)"},
-      "0xd20b": {"name": "wSndChannelBits", "note": "[8-bit] Current channel's stereo output bit-pair (ch1=$11 .. ch4=$88), used for active-channel tracking"},
-      "0xd20c": {"name": "wSndChannelPanMask", "note": "[8-bit] Same bit-pair as wSndChannelBits, masked against hSndPanMask to build wSndPanShadow"},
-      "0xd20d": {"name": "wSndRegBase", "note": "[8-bit] Current channel's APU register offset (type*5); WriteChannelReg forms rAUD via $ff10+this+reg"},
-      "0xd20e": {"name": "wSndFrameCounter", "note": "[8-bit] Free-running update counter; low nibble supplies the vibrato phase in TickVibrato"},
-      "0xd20f": {"name": "wSndChannelIndex", "note": "[8-bit] Index (0-5) of the channel currently being updated"},
-      "0xd212": {"name": "wSndUpdateReqMask", "note": "[8-bit] Pending channel-update request: mask of channels to reconfigure (SetChannelUpdateRequest)"},
-      "0xd213": {"name": "wSndUpdateReqData", "note": "[8-bit] Value applied by the pending channel-update request (low nibble)"},
-      "0xd214": {"name": "wSndUpdateReqAck", "note": "[8-bit] Accumulator of channels that have acknowledged the pending update request"},
-      "0xd215": {"name": "wSndFirstChannel", "note": "[8-bit] Channel index the update pass starts from (normally 0)"},
-      "0xd217": {"name": "wSndLoadedWaveId", "note": "[8-bit] Wave-pattern id currently loaded into wave RAM (change detection for the wave channel)"},
-      "0xd218": {"name": "wSndTranspose", "note": "[8-bit] Global transpose added to note ids (cmd $a9 $fe/$f2/$f3)"},
-      "0xd219": {"name": "wSndWaveReloadPending", "note": "[8-bit] Non-zero to force the wave channel to reload its pattern on the next note"}
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xdf00",
-   "end": "0xdf97",
-   "comment": "Match-engine per-character struct, replicated across WRAM banks 4-7\n(bank = character: 4 near-P1, 5 far-P1, 6 near-partner, 7 far-partner).\nSame field, different character per bank -- one name each. Scoped by the\nprovably-selected WRAM bank, plus the match banks $07/$08 whose\ncallback-reached (jp hl) accesses the dataflow can't prove. Only the\nnamed field offsets render; other $dfxx bytes stay numeric.",
-   "variants": [
-    {
-     "context": "text-arg fetch buffer (menu banks reuse the idle char struct)",
-     "scopes": [{"bank": "0x0e"}, {"bank": "0x0f"}, {"bank": "0x12"}],
-     "symbols": {
-      "0xdf00": {"name": "wTextArgFetchBuffer", "note": "[bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00"}
-     }
-    },
-    {
-     "context": "match character struct (WRAM banks 4-7)",
-     "scopes": [{"wram_bank": "0x04"}, {"wram_bank": "0x05"}, {"wram_bank": "0x06"}, {"wram_bank": "0x07"}, {"bank": "0x07"}, {"bank": "0x08"}],
-     "symbols": {
-      "0xdf00": {"name": "wCharPosX", "note": "[3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)"},
-      "0xdf03": {"name": "wCharPosDepth", "note": "[3 bytes] Per-character banked struct (WRAM4-7): depth position (toward/away from net), same 24-bit fixed-point format; the two court sides carry opposite signs"},
-      "0xdf06": {"name": "wCharPosHeight", "note": "[3 bytes] Per-character banked struct (WRAM4-7): height above court, same 24-bit fixed-point format (zeroed by SetCharPosAndTarget)"},
-      "0xdf09": {"name": "wCharServeRole", "note": "[8-bit] Per-character banked struct (WRAM4-7): serve/side role code (court-position record byte 4-7); XORed with 2 on the per-point side swap, mapped through the $4fa0 table at point start"},
-      "0xdf0a": {"name": "wCharCourtPos", "note": "[8-bit] Per-character banked struct (WRAM4-7): court position code (court-position record byte 0-3; XORed with 3 on the tiebreak side-swap)"},
-      "0xdf0b": {"name": "wCharIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): character index 0-3 (== WRAM bank - 4); bit 0 set = far side (used by CharPointEndReaction and the edge-arrow sprite)"},
-      "0xdf0d": {"name": "wCharFacingDesired", "note": "[8-bit] Per-character banked struct (WRAM4-7): desired facing direction, eased toward by wCharFacingShown"},
-      "0xdf0e": {"name": "wCharFacingShown", "note": "[8-bit] Per-character banked struct (WRAM4-7): displayed facing, eased toward wCharFacingDesired by at most wCharFacingEaseRate per frame ($75c0)"},
-      "0xdf0f": {"name": "wCharFlags", "note": "[8-bit] Per-character banked struct (WRAM4-7): state flags; bit 2 = airborne (set on jump $6dd5, cleared on landing; selects the shadow slot drawn)"},
-      "0xdf18": {"name": "wCharState", "note": "[8-bit] Per-character banked struct (WRAM4-7): state-machine index (RST00 jumptable at $6a77; set via SetCharState)"},
-      "0xdf1b": {"name": "wCharSpriteFrame", "note": "[3 bytes] Per-character banked struct (WRAM4-7): current sprite frame pointer (hi/lo) + h-flip flag, consumed by DrawCharSprite ($650a)"},
-      "0xdf22": {"name": "wCharActive", "note": "[8-bit] Per-character banked struct (WRAM4-7): active flag (UpdateChar exits when 0)"},
-      "0xdf40": {"name": "wCharVelX", "note": "[16-bit] Per-character banked struct (WRAM4-7): X velocity (zeroed on placement and at point end)"},
-      "0xdf42": {"name": "wCharVelDepth", "note": "[16-bit] Per-character banked struct (WRAM4-7): depth velocity"},
-      "0xdf44": {"name": "wCharVelHeight", "note": "[16-bit] Per-character banked struct (WRAM4-7): height velocity"},
-      "0xdf46": {"name": "wCharWalkTargetX", "note": "[16-bit] Per-character banked struct (WRAM4-7): walk-target X (integer part)"},
-      "0xdf48": {"name": "wCharWalkTargetDepth", "note": "[16-bit] Per-character banked struct (WRAM4-7): walk-target depth; MoveCharTowardTarget ($7541) walks toward it, snapping when both deltas < $18 (CheckCharNearTarget $78be)"},
-      "0xdf53": {"name": "wCharScreenX", "note": "[8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)"},
-      "0xdf54": {"name": "wCharScreenY", "note": "[8-bit] Per-character banked struct (WRAM4-7): last projected screen Y"},
-      "0xdf57": {"name": "wCharPointResult", "note": "[8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)"},
-      "0xdf68": {"name": "wCharFacingEaseRate", "note": "[8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired"},
-      "0xdf6b": {"name": "wGroundStrokeSpeedIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry"},
-      "0xdf6c": {"name": "wSmashServeSpeedIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves"},
-      "0xdf6d": {"name": "wReachSpeedIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the reach (smash-range) shot variants"},
-      "0xdf6e": {"name": "wTopspinPlacementIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for topspin and serve-topspin; selects bytes 0-3 -> target offsets in LoadShotPlacementEntry"},
-      "0xdf6f": {"name": "wSlicePlacementIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for slice and serve-slice"},
-      "0xdf80": {"name": "wCharSpriteSlot", "note": "[4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite"},
-      "0xdf88": {"name": "wCharAirShadowSlot", "note": "[4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)"},
-      "0xdf8c": {"name": "wCharGroundShadowSlot", "note": "[4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)"},
-      "0xdf92": {"name": "wLobPlacementIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataLob (set from df91 bit 0)"},
-      "0xdf93": {"name": "wDropPlacementIndex", "note": "[8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataDrop (set from df91 bit 1)"},
-      "0xdf96": {"name": "wCharDepthKey", "note": "[8-bit] Per-character banked struct (WRAM4-7): draw-order depth key ((depth*8)>>8 + $80); DrawActorsByDepth paints teammates back-to-front"}
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xdd00",
-   "end": "0xdd24",
-   "comment": "Match ball-visuals history ring (WRAM bank 4 only); shared renderer\nstate, so scoped by the selected WRAM bank plus the bank-$08 renderer.",
-   "variants": [
-    {
-     "context": "match ball history ring (WRAM bank 4)",
-     "scopes": [{"wram_bank": "0x04"}, {"bank": "0x08"}],
-     "symbols": {
-      "0xdd00": {"name": "wBallHistory", "note": "[36 bytes] Ball position-history ring (WRAM bank 4): six 6-byte records [projX word, projY word, tile+8, attr]; UpdateBallVisuals ($5153) shifts it down one record per frame and BuildBallSlot writes the newest at +$1e"}
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xde00",
-   "end": "0xde20",
-   "comment": "Match ball sprite slots (WRAM bank 4 only), alongside the per-character\n$df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.",
-   "variants": [
-    {
-     "context": "match ball sprite slots (WRAM bank 4)",
-     "scopes": [{"wram_bank": "0x04"}, {"bank": "0x08"}],
-     "symbols": {
-      "0xde00": {"name": "wNetBallSlot", "note": "[4 bytes] Match sprite-slot record [tile, attr, screenY, screenX] (WRAM bank 4): ball-at-net marker (tile $4e), drawn after the point resolves when the ball rests within $1e0 of the net (BuildNetBallSlot)"},
-      "0xde04": {"name": "wBallSlot", "note": "[4 bytes] Match sprite-slot record (WRAM bank 4): the ball, tile picked by height band / off-screen state ($40/$42/$44), gated by wBallSpriteEnabled (BuildBallSlot)"},
-      "0xde08": {"name": "wBallShadowSlot", "note": "[4 bytes] Match sprite-slot record (WRAM bank 4): ball ground shadow (tile $46) at the ball's height-0 projection, gated by wBallShadowEnabled (BuildBallShadowSlot)"},
-      "0xde0c": {"name": "wBallTrailSlots", "note": "[20 bytes] Five match sprite-slot records (WRAM bank 4): ball-trail afterimages (tile = ball tile + 8) fed from the history ring; slots 3-5 only when wBallTrailColor is nonzero (BuildBallTrailSlots)"}
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xffb0",
-   "end": "0xffb4",
-   "comment": "HRAM pointer scratch ($ffb0-$ffb3): two 16-bit slots each caller uses for\nits own purpose, so only proven consumers are named. Sites outside these\nscopes stay numeric -- note that banks $0f/$10 load $ffb0 as the immediate\nconstant -80, not as an address.",
-   "variants": [
-    {
-     "context": "level-up stat deltas (bank $02)",
-     "scopes": [{"bank": "0x02"}],
-     "symbols": {
-      "0xffb0": {"name": "hStatDeltaOutPtr", "note": "[16-bit] ComputeLevelUpStatDeltas: caller-supplied destination the per-stat deltas are written to (hl on entry, spilled at $02:$4a02)"},
-      "0xffb2": {"name": "hStatDeltaRecordCopy", "note": "[16-bit] ComputeLevelUpStatDeltas: pointer to the 64-byte stack buffer (add sp, -64 at $02:$4a07) holding the player record copied before LevelUpPlayerRecord, which each stat is then differenced against"}
-     }
-    },
-    {
-     "context": "save-slot debug editor (bank $03)",
-     "scopes": [{"bank": "0x03"}],
-     "symbols": {
-      "0xffb0": {"name": "hSaveEditorCursor", "note": "[16-bit] SaveSlotDebugEditor: byte offset of the edit cursor into the $d300 save-block buffer, wrapped to $400 by masking the high byte with $03; moved by Func_03_524f, which takes the signed cursor step in c and the value step applied on A in b"}
+      "0xffea": {
+       "name": "hActorPtr",
+       "note": "[16-bit] Pointer to the actor struct currently being processed (stashed around GetActorStateAddr / StepActorScript)"
+      }
      }
     }
    ]

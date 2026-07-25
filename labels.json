@@ -4148,7 +4148,7 @@
  "0x60507": "LoadCharacterRecordToBuffer",
  "0x6052a": "CheckCharacterUnlocked",
  "0x60557": "CheckUnlockFlag",
- "0x6058a": "Data_18_458a",
+ "0x6058a": "UnlockFlagIds_18",
  "0x605ca": "MoveGridCursor",
  "0x6063b": "InitPlayerRecordForCharacter",
  "0x6067a": "Lz_18_467a",
