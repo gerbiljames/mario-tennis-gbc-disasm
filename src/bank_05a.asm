@@ -7,7 +7,7 @@ BallMachineSpriteDesc:
 	dw BallMachineSpriteFrames ; $4006 frame table
 	dw BallMachineSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_5a_7ce0 ; $400c per-slot OAM data
+	dw BallMachineSpriteOam ; $400c per-slot OAM data
 BallMachineSpriteFrames:
 	dw BallMachineSpriteFrame00 ; $400e
 	dw BallMachineSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ BallMachineSpriteFrame54:
 	INCBIN "data/bank_05a/d_7470.bin" ; $7470, 240 bytes
 BallMachineSpriteFrame55:
 	INCBIN "data/bank_05a/d_7560.bin" ; $7560, 240 bytes
-Data_5a_7650:
+BallMachineSpriteFramesUnused:
 	INCBIN "data/bank_05a/d_7650.bin" ; $7650, 1680 bytes
-Data_5a_7ce0:
+BallMachineSpriteOam:
 	INCBIN "data/bank_05a/d_7ce0.bin" ; $7ce0, 580 bytes
 BallMachineSpriteAnims:
 	dw BallMachineSpriteAnim00 ; $7f24

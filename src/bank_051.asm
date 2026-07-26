@@ -7,7 +7,7 @@ WaluigiSpriteDesc:
 	dw WaluigiSpriteFrames ; $4006 frame table
 	dw WaluigiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_51_7ce0 ; $400c per-slot OAM data
+	dw WaluigiSpriteOam ; $400c per-slot OAM data
 WaluigiSpriteFrames:
 	dw WaluigiSpriteFrame00 ; $400e
 	dw WaluigiSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ WaluigiSpriteFrame54:
 	INCBIN "data/bank_051/d_7470.bin" ; $7470, 240 bytes
 WaluigiSpriteFrame55:
 	INCBIN "data/bank_051/d_7560.bin" ; $7560, 240 bytes
-Data_51_7650:
+WaluigiSpriteFramesUnused:
 	INCBIN "data/bank_051/d_7650.bin" ; $7650, 1680 bytes
-Data_51_7ce0:
+WaluigiSpriteOam:
 	INCBIN "data/bank_051/d_7ce0.bin" ; $7ce0, 580 bytes
 WaluigiSpriteAnims:
 	dw WaluigiSpriteAnim00 ; $7f24

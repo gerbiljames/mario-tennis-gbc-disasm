@@ -7,7 +7,7 @@ BrianSpriteDesc:
 	dw BrianSpriteFrames ; $4006 frame table
 	dw BrianSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_4d_7ce0 ; $400c per-slot OAM data
+	dw BrianSpriteOam ; $400c per-slot OAM data
 BrianSpriteFrames:
 	dw BrianSpriteFrame00 ; $400e
 	dw BrianSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ BrianSpriteFrame54:
 	INCBIN "data/bank_04d/d_7470.bin" ; $7470, 240 bytes
 BrianSpriteFrame55:
 	INCBIN "data/bank_04d/d_7560.bin" ; $7560, 240 bytes
-Data_4d_7650:
+BrianSpriteFramesUnused:
 	INCBIN "data/bank_04d/d_7650.bin" ; $7650, 1680 bytes
-Data_4d_7ce0:
+BrianSpriteOam:
 	INCBIN "data/bank_04d/d_7ce0.bin" ; $7ce0, 580 bytes
 BrianSpriteAnims:
 	dw BrianSpriteAnim00 ; $7f24

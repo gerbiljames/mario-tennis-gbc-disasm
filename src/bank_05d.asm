@@ -7,7 +7,7 @@ BabyMarioSpriteDesc:
 	dw BabyMarioSpriteFrames ; $4006 frame table
 	dw BabyMarioSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_5d_7ce0 ; $400c per-slot OAM data
+	dw BabyMarioSpriteOam ; $400c per-slot OAM data
 BabyMarioSpriteFrames:
 	dw BabyMarioSpriteFrame00 ; $400e
 	dw BabyMarioSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ BabyMarioSpriteFrame54:
 	INCBIN "data/bank_05d/d_7470.bin" ; $7470, 240 bytes
 BabyMarioSpriteFrame55:
 	INCBIN "data/bank_05d/d_7560.bin" ; $7560, 240 bytes
-Data_5d_7650:
+BabyMarioSpriteFramesUnused:
 	INCBIN "data/bank_05d/d_7650.bin" ; $7650, 1680 bytes
-Data_5d_7ce0:
+BabyMarioSpriteOam:
 	INCBIN "data/bank_05d/d_7ce0.bin" ; $7ce0, 580 bytes
 BabyMarioSpriteAnims:
 	dw BabyMarioSpriteAnim00 ; $7f24

@@ -7,7 +7,7 @@ SpikeSpriteDesc:
 	dw SpikeSpriteFrames ; $4006 frame table
 	dw SpikeSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_48_7ce0 ; $400c per-slot OAM data
+	dw SpikeSpriteOam ; $400c per-slot OAM data
 SpikeSpriteFrames:
 	dw SpikeSpriteFrame00 ; $400e
 	dw SpikeSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ SpikeSpriteFrame54:
 	INCBIN "data/bank_048/d_7470.bin" ; $7470, 240 bytes
 SpikeSpriteFrame55:
 	INCBIN "data/bank_048/d_7560.bin" ; $7560, 240 bytes
-Data_48_7650:
+SpikeSpriteFramesUnused:
 	INCBIN "data/bank_048/d_7650.bin" ; $7650, 1680 bytes
-Data_48_7ce0:
+SpikeSpriteOam:
 	INCBIN "data/bank_048/d_7ce0.bin" ; $7ce0, 580 bytes
 SpikeSpriteAnims:
 	dw SpikeSpriteAnim00 ; $7f24

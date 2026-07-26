@@ -7,7 +7,7 @@ BobSpriteDesc:
 	dw BobSpriteFrames ; $4006 frame table
 	dw BobSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_4f_7ce0 ; $400c per-slot OAM data
+	dw BobSpriteOam ; $400c per-slot OAM data
 BobSpriteFrames:
 	dw BobSpriteFrame00 ; $400e
 	dw BobSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ BobSpriteFrame54:
 	INCBIN "data/bank_04f/d_7470.bin" ; $7470, 240 bytes
 BobSpriteFrame55:
 	INCBIN "data/bank_04f/d_7560.bin" ; $7560, 240 bytes
-Data_4f_7650:
+BobSpriteFramesUnused:
 	INCBIN "data/bank_04f/d_7650.bin" ; $7650, 1680 bytes
-Data_4f_7ce0:
+BobSpriteOam:
 	INCBIN "data/bank_04f/d_7ce0.bin" ; $7ce0, 580 bytes
 BobSpriteAnims:
 	dw BobSpriteAnim00 ; $7f24

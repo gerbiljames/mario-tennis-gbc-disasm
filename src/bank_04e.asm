@@ -7,7 +7,7 @@ CurtSpriteDesc:
 	dw CurtSpriteFrames ; $4006 frame table
 	dw CurtSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_4e_7ce0 ; $400c per-slot OAM data
+	dw CurtSpriteOam ; $400c per-slot OAM data
 CurtSpriteFrames:
 	dw CurtSpriteFrame00 ; $400e
 	dw CurtSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ CurtSpriteFrame54:
 	INCBIN "data/bank_04e/d_7470.bin" ; $7470, 240 bytes
 CurtSpriteFrame55:
 	INCBIN "data/bank_04e/d_7560.bin" ; $7560, 240 bytes
-Data_4e_7650:
+CurtSpriteFramesUnused:
 	INCBIN "data/bank_04e/d_7650.bin" ; $7650, 1680 bytes
-Data_4e_7ce0:
+CurtSpriteOam:
 	INCBIN "data/bank_04e/d_7ce0.bin" ; $7ce0, 580 bytes
 CurtSpriteAnims:
 	dw CurtSpriteAnim00 ; $7f24

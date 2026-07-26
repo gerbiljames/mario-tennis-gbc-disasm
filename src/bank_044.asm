@@ -7,7 +7,7 @@ EmilySpriteDesc:
 	dw EmilySpriteFrames ; $4006 frame table
 	dw EmilySpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_44_7ce0 ; $400c per-slot OAM data
+	dw EmilySpriteOam ; $400c per-slot OAM data
 EmilySpriteFrames:
 	dw EmilySpriteFrame00 ; $400e
 	dw EmilySpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ EmilySpriteFrame54:
 	INCBIN "data/bank_044/d_7470.bin" ; $7470, 240 bytes
 EmilySpriteFrame55:
 	INCBIN "data/bank_044/d_7560.bin" ; $7560, 240 bytes
-Data_44_7650:
+EmilySpriteFramesUnused:
 	INCBIN "data/bank_044/d_7650.bin" ; $7650, 1680 bytes
-Data_44_7ce0:
+EmilySpriteOam:
 	INCBIN "data/bank_044/d_7ce0.bin" ; $7ce0, 580 bytes
 EmilySpriteAnims:
 	dw EmilySpriteAnim00 ; $7f24

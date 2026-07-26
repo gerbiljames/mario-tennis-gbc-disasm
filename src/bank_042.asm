@@ -7,7 +7,7 @@ KateSpriteDesc:
 	dw KateSpriteFrames ; $4006 frame table
 	dw KateSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_42_7ce0 ; $400c per-slot OAM data
+	dw KateSpriteOam ; $400c per-slot OAM data
 KateSpriteFrames:
 	dw KateSpriteFrame00 ; $400e
 	dw KateSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ KateSpriteFrame54:
 	INCBIN "data/bank_042/d_7470.bin" ; $7470, 240 bytes
 KateSpriteFrame55:
 	INCBIN "data/bank_042/d_7560.bin" ; $7560, 240 bytes
-Data_42_7650:
+KateSpriteFramesUnused:
 	INCBIN "data/bank_042/d_7650.bin" ; $7650, 1680 bytes
-Data_42_7ce0:
+KateSpriteOam:
 	INCBIN "data/bank_042/d_7ce0.bin" ; $7ce0, 580 bytes
 KateSpriteAnims:
 	dw KateSpriteAnim00 ; $7f24

@@ -7,7 +7,7 @@ AlexSpriteDesc:
 	dw AlexSpriteFrames ; $4006 frame table
 	dw AlexSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_40_7ce0 ; $400c per-slot OAM data
+	dw AlexSpriteOam ; $400c per-slot OAM data
 AlexSpriteFrames:
 	dw AlexSpriteFrame00 ; $400e
 	dw AlexSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ AlexSpriteFrame54:
 	INCBIN "data/bank_040/d_7470.bin" ; $7470, 240 bytes
 AlexSpriteFrame55:
 	INCBIN "data/bank_040/d_7560.bin" ; $7560, 240 bytes
-Data_40_7650:
+AlexSpriteFramesUnused:
 	INCBIN "data/bank_040/d_7650.bin" ; $7650, 1680 bytes
-Data_40_7ce0:
+AlexSpriteOam:
 	INCBIN "data/bank_040/d_7ce0.bin" ; $7ce0, 580 bytes
 AlexSpriteAnims:
 	dw AlexSpriteAnim00 ; $7f24

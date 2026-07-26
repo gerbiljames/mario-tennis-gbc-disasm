@@ -7,7 +7,7 @@ LuigiSpriteDesc:
 	dw LuigiSpriteFrames ; $4006 frame table
 	dw LuigiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_5b_7ce0 ; $400c per-slot OAM data
+	dw LuigiSpriteOam ; $400c per-slot OAM data
 LuigiSpriteFrames:
 	dw LuigiSpriteFrame00 ; $400e
 	dw LuigiSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ LuigiSpriteFrame54:
 	INCBIN "data/bank_05b/d_7470.bin" ; $7470, 240 bytes
 LuigiSpriteFrame55:
 	INCBIN "data/bank_05b/d_7560.bin" ; $7560, 240 bytes
-Data_5b_7650:
+LuigiSpriteFramesUnused:
 	INCBIN "data/bank_05b/d_7650.bin" ; $7650, 1680 bytes
-Data_5b_7ce0:
+LuigiSpriteOam:
 	INCBIN "data/bank_05b/d_7ce0.bin" ; $7ce0, 580 bytes
 LuigiSpriteAnims:
 	dw LuigiSpriteAnim00 ; $7f24

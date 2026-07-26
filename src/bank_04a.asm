@@ -7,7 +7,7 @@ ACozSpriteDesc:
 	dw ACozSpriteFrames ; $4006 frame table
 	dw ACozSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_4a_7ce0 ; $400c per-slot OAM data
+	dw ACozSpriteOam ; $400c per-slot OAM data
 ACozSpriteFrames:
 	dw ACozSpriteFrame00 ; $400e
 	dw ACozSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ ACozSpriteFrame54:
 	INCBIN "data/bank_04a/d_7470.bin" ; $7470, 240 bytes
 ACozSpriteFrame55:
 	INCBIN "data/bank_04a/d_7560.bin" ; $7560, 240 bytes
-Data_4a_7650:
+ACozSpriteFramesUnused:
 	INCBIN "data/bank_04a/d_7650.bin" ; $7650, 1680 bytes
-Data_4a_7ce0:
+ACozSpriteOam:
 	INCBIN "data/bank_04a/d_7ce0.bin" ; $7ce0, 580 bytes
 ACozSpriteAnims:
 	dw ACozSpriteAnim00 ; $7f24

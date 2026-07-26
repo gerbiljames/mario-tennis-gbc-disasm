@@ -7,7 +7,7 @@ BethSpriteDesc:
 	dw BethSpriteFrames ; $4006 frame table
 	dw BethSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_58_7ce0 ; $400c per-slot OAM data
+	dw BethSpriteOam ; $400c per-slot OAM data
 BethSpriteFrames:
 	dw BethSpriteFrame00 ; $400e
 	dw BethSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ BethSpriteFrame54:
 	INCBIN "data/bank_058/d_7470.bin" ; $7470, 240 bytes
 BethSpriteFrame55:
 	INCBIN "data/bank_058/d_7560.bin" ; $7560, 240 bytes
-Data_58_7650:
+BethSpriteFramesUnused:
 	INCBIN "data/bank_058/d_7650.bin" ; $7650, 1680 bytes
-Data_58_7ce0:
+BethSpriteOam:
 	INCBIN "data/bank_058/d_7ce0.bin" ; $7ce0, 580 bytes
 BethSpriteAnims:
 	dw BethSpriteAnim00 ; $7f24

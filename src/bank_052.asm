@@ -7,7 +7,7 @@ YoshiSpriteDesc:
 	dw YoshiSpriteFrames ; $4006 frame table
 	dw YoshiSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_52_7ce0 ; $400c per-slot OAM data
+	dw YoshiSpriteOam ; $400c per-slot OAM data
 YoshiSpriteFrames:
 	dw YoshiSpriteFrame00 ; $400e
 	dw YoshiSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ YoshiSpriteFrame54:
 	INCBIN "data/bank_052/d_7470.bin" ; $7470, 240 bytes
 YoshiSpriteFrame55:
 	INCBIN "data/bank_052/d_7560.bin" ; $7560, 240 bytes
-Data_52_7650:
+YoshiSpriteFramesUnused:
 	INCBIN "data/bank_052/d_7650.bin" ; $7650, 1680 bytes
-Data_52_7ce0:
+YoshiSpriteOam:
 	INCBIN "data/bank_052/d_7ce0.bin" ; $7ce0, 580 bytes
 YoshiSpriteAnims:
 	dw YoshiSpriteAnim00 ; $7f24

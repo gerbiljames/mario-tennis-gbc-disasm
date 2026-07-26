@@ -7,7 +7,7 @@ MarioSpriteDesc:
 	dw MarioSpriteFrames ; $4006 frame table
 	dw MarioSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_50_7ce0 ; $400c per-slot OAM data
+	dw MarioSpriteOam ; $400c per-slot OAM data
 MarioSpriteFrames:
 	dw MarioSpriteFrame00 ; $400e
 	dw MarioSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ MarioSpriteFrame54:
 	INCBIN "data/bank_050/d_7470.bin" ; $7470, 240 bytes
 MarioSpriteFrame55:
 	INCBIN "data/bank_050/d_7560.bin" ; $7560, 240 bytes
-Data_50_7650:
+MarioSpriteFramesUnused:
 	INCBIN "data/bank_050/d_7650.bin" ; $7650, 1680 bytes
-Data_50_7ce0:
+MarioSpriteOam:
 	INCBIN "data/bank_050/d_7ce0.bin" ; $7ce0, 580 bytes
 MarioSpriteAnims:
 	dw MarioSpriteAnim00 ; $7f24

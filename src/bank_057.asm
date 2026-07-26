@@ -7,7 +7,7 @@ PamSpriteDesc:
 	dw PamSpriteFrames ; $4006 frame table
 	dw PamSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_57_7ce0 ; $400c per-slot OAM data
+	dw PamSpriteOam ; $400c per-slot OAM data
 PamSpriteFrames:
 	dw PamSpriteFrame00 ; $400e
 	dw PamSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ PamSpriteFrame54:
 	INCBIN "data/bank_057/d_7470.bin" ; $7470, 240 bytes
 PamSpriteFrame55:
 	INCBIN "data/bank_057/d_7560.bin" ; $7560, 240 bytes
-Data_57_7650:
+PamSpriteFramesUnused:
 	INCBIN "data/bank_057/d_7650.bin" ; $7650, 1680 bytes
-Data_57_7ce0:
+PamSpriteOam:
 	INCBIN "data/bank_057/d_7ce0.bin" ; $7ce0, 580 bytes
 PamSpriteAnims:
 	dw PamSpriteAnim00 ; $7f24

@@ -7,7 +7,7 @@ AllieSpriteDesc:
 	dw AllieSpriteFrames ; $4006 frame table
 	dw AllieSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_4c_7ce0 ; $400c per-slot OAM data
+	dw AllieSpriteOam ; $400c per-slot OAM data
 AllieSpriteFrames:
 	dw AllieSpriteFrame00 ; $400e
 	dw AllieSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ AllieSpriteFrame54:
 	INCBIN "data/bank_04c/d_7470.bin" ; $7470, 240 bytes
 AllieSpriteFrame55:
 	INCBIN "data/bank_04c/d_7560.bin" ; $7560, 240 bytes
-Data_4c_7650:
+AllieSpriteFramesUnused:
 	INCBIN "data/bank_04c/d_7650.bin" ; $7650, 1680 bytes
-Data_4c_7ce0:
+AllieSpriteOam:
 	INCBIN "data/bank_04c/d_7ce0.bin" ; $7ce0, 580 bytes
 AllieSpriteAnims:
 	dw AllieSpriteAnim00 ; $7f24

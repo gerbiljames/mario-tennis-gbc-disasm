@@ -7,7 +7,7 @@ EldenSpriteDesc:
 	dw EldenSpriteFrames ; $4006 frame table
 	dw EldenSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_49_7ce0 ; $400c per-slot OAM data
+	dw EldenSpriteOam ; $400c per-slot OAM data
 EldenSpriteFrames:
 	dw EldenSpriteFrame00 ; $400e
 	dw EldenSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ EldenSpriteFrame54:
 	INCBIN "data/bank_049/d_7470.bin" ; $7470, 240 bytes
 EldenSpriteFrame55:
 	INCBIN "data/bank_049/d_7560.bin" ; $7560, 240 bytes
-Data_49_7650:
+EldenSpriteFramesUnused:
 	INCBIN "data/bank_049/d_7650.bin" ; $7650, 1680 bytes
-Data_49_7ce0:
+EldenSpriteOam:
 	INCBIN "data/bank_049/d_7ce0.bin" ; $7ce0, 580 bytes
 EldenSpriteAnims:
 	dw EldenSpriteAnim00 ; $7f24

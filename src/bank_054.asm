@@ -7,7 +7,7 @@ PeachSpriteDesc:
 	dw PeachSpriteFrames ; $4006 frame table
 	dw PeachSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_54_7ce0 ; $400c per-slot OAM data
+	dw PeachSpriteOam ; $400c per-slot OAM data
 PeachSpriteFrames:
 	dw PeachSpriteFrame00 ; $400e
 	dw PeachSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ PeachSpriteFrame54:
 	INCBIN "data/bank_054/d_7470.bin" ; $7470, 240 bytes
 PeachSpriteFrame55:
 	INCBIN "data/bank_054/d_7560.bin" ; $7560, 240 bytes
-Data_54_7650:
+PeachSpriteFramesUnused:
 	INCBIN "data/bank_054/d_7650.bin" ; $7650, 1680 bytes
-Data_54_7ce0:
+PeachSpriteOam:
 	INCBIN "data/bank_054/d_7ce0.bin" ; $7ce0, 580 bytes
 PeachSpriteAnims:
 	dw PeachSpriteAnim00 ; $7f24

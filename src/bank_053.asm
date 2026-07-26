@@ -7,7 +7,7 @@ BowserSpriteDesc:
 	dw BowserSpriteFrames ; $4006 frame table
 	dw BowserSpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_53_7ce0 ; $400c per-slot OAM data
+	dw BowserSpriteOam ; $400c per-slot OAM data
 BowserSpriteFrames:
 	dw BowserSpriteFrame00 ; $400e
 	dw BowserSpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ BowserSpriteFrame54:
 	INCBIN "data/bank_053/d_7470.bin" ; $7470, 240 bytes
 BowserSpriteFrame55:
 	INCBIN "data/bank_053/d_7560.bin" ; $7560, 240 bytes
-Data_53_7650:
+BowserSpriteFramesUnused:
 	INCBIN "data/bank_053/d_7650.bin" ; $7650, 1680 bytes
-Data_53_7ce0:
+BowserSpriteOam:
 	INCBIN "data/bank_053/d_7ce0.bin" ; $7ce0, 580 bytes
 BowserSpriteAnims:
 	dw BowserSpriteAnim00 ; $7f24

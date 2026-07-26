@@ -7,7 +7,7 @@ JoySpriteDesc:
 	dw JoySpriteFrames ; $4006 frame table
 	dw JoySpriteAnims ; $4008 animation scripts
 	dw $0000 ; $400a
-	dw Data_56_7ce0 ; $400c per-slot OAM data
+	dw JoySpriteOam ; $400c per-slot OAM data
 JoySpriteFrames:
 	dw JoySpriteFrame00 ; $400e
 	dw JoySpriteFrame01 ; $4010
@@ -266,9 +266,9 @@ JoySpriteFrame54:
 	INCBIN "data/bank_056/d_7470.bin" ; $7470, 240 bytes
 JoySpriteFrame55:
 	INCBIN "data/bank_056/d_7560.bin" ; $7560, 240 bytes
-Data_56_7650:
+JoySpriteFramesUnused:
 	INCBIN "data/bank_056/d_7650.bin" ; $7650, 1680 bytes
-Data_56_7ce0:
+JoySpriteOam:
 	INCBIN "data/bank_056/d_7ce0.bin" ; $7ce0, 580 bytes
 JoySpriteAnims:
 	dw JoySpriteAnim00 ; $7f24
