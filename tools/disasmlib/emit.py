@@ -167,6 +167,7 @@ class Emitter:
         self.flag_raw_sites = flag_raw_sites or set()
         self.manifest = []   # (blob path, rom offset, length, render spec)
         self.lines = []      # source lines of the bank being rendered
+        self.emitted_labels = set()   # every label name actually written
 
         self._classify_entries()
         self._mark_data_blobs()
@@ -307,11 +308,26 @@ class Emitter:
 
     # ---- driver ---------------------------------------------------------
 
+    def _check_local_scopes(self):
+        """Every local label's owning global has to be a label the emitter
+        actually wrote. A curated name at an offset that never emits (a wrong
+        bank in labels.json, say) would otherwise leave `Parent.local`
+        references pointing at a symbol rgbasm never sees."""
+        emitted = self.emitted_labels
+        for off, owner in sorted(self.scopes.parent.items()):
+            name = self.def_labels[owner]
+            if name not in emitted:
+                raise SystemExit(
+                    f"error: local {self.def_labels[off]} at ${off:06x} is "
+                    f"scoped to {name} (${owner:06x}), which is never emitted "
+                    f"-- check that offset in labels.json")
+
     def run(self):
         self._write_include("macros.inc", MACROS_INC)
         nbanks = len(self.rom) // BANK_SIZE
         for bank in range(nbanks):
             self._emit_bank(bank)
+        self._check_local_scopes()
         self._write_text_ids()
         self._write_flag_constants()
         self._write_manifest()
@@ -350,6 +366,8 @@ class Emitter:
         if self.flag_names:
             resolve_flag_names(lines, self.flag_names, self.flag_raw_sites,
                                base)
+        self.emitted_labels.update(
+            m.group(1) for l in lines if (m := _LABEL_LINE_RE.match(l)))
         Path(self.srcdir, f"bank_{bank:03x}.asm").write_text("\n".join(lines))
 
     # ---- structured words -----------------------------------------------

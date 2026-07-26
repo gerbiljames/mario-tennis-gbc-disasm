@@ -144,9 +144,9 @@ WriteTileToShadowMapCell:
 	pop af ; $4105
 	call GetTilemapCellAddress ; $4106
 	or a, a ; $4109
-	jr z, Label_05_410d ; $410a
+	jr z, .restore ; $410a
 	ld [de], a ; $410c
-Label_05_410d:
+.restore:
 	pop bc ; $410d
 	pop de ; $410e
 	pop af ; $410f
@@ -220,8 +220,8 @@ CopyVisibleTilemapToVRAM:
 	ld bc, $0026 ; $4169
 	add a, $12 ; $416c
 	sub a, $20 ; $416e
-	jr c, Label_05_418a ; $4170
-	jr z, Label_05_418a ; $4172
+	jr c, .queueVRAMCopy ; $4170
+	jr z, .queueVRAMCopy ; $4172
 	sla a ; $4174
 	push af ; $4176
 	ld b, a ; $4177
@@ -235,7 +235,7 @@ CopyVisibleTilemapToVRAM:
 	ld de, $9800 ; $4184
 	ld c, a ; $4187
 	ld b, $00 ; $4188
-Label_05_418a:
+.queueVRAMCopy:
 	call QueueVRAMCopy ; $418a
 	pop bc ; $418d
 	ld hl, $b800 ; $418e
@@ -249,8 +249,8 @@ Label_05_418a:
 	ld bc, $0026 ; $419d
 	add a, $12 ; $41a0
 	sub a, $20 ; $41a2
-	jr c, Label_05_41be ; $41a4
-	jr z, Label_05_41be ; $41a6
+	jr c, .queueVRAMCopy2 ; $41a4
+	jr z, .queueVRAMCopy2 ; $41a6
 	sla a ; $41a8
 	push af ; $41aa
 	ld b, a ; $41ab
@@ -264,7 +264,7 @@ Label_05_418a:
 	ld de, $b800 ; $41b8
 	ld c, a ; $41bb
 	ld b, $00 ; $41bc
-Label_05_41be:
+.queueVRAMCopy2:
 	call QueueVRAMCopy ; $41be
 	pop hl ; $41c1
 	pop de ; $41c2
@@ -343,7 +343,7 @@ CopyTilemapRowsToVRAM:
 	ld d, a ; $4239
 	ld a, c ; $423a
 	or a, a ; $423b
-	jr z, Label_05_4283 ; $423c
+	jr z, .done ; $423c
 	ld a, b ; $423e
 	wram_bank ; $423f
 	ld b, d ; $4243
@@ -386,7 +386,7 @@ CopyTilemapRowsToVRAM:
 	ld c, a ; $427e
 	call QueueVRAMCopy ; $427f
 	pop de ; $4282
-Label_05_4283:
+.done:
 	ret ; $4283
 CopyTilemapRowsAnimated:
 	push af ; $4284
@@ -396,25 +396,25 @@ CopyTilemapRowsAnimated:
 	ld d, a ; $4288
 	ld a, c ; $4289
 	sub a, $07 ; $428a
-	jr c, Label_05_4298 ; $428c
-	jr z, Label_05_4298 ; $428e
+	jr c, .step ; $428c
+	jr z, .step ; $428e
 	sub a, $07 ; $4290
-	jr c, Label_05_4298 ; $4292
-	jr z, Label_05_4298 ; $4294
-	jr Label_05_429a ; $4296
-Label_05_4298:
+	jr c, .step ; $4292
+	jr z, .step ; $4294
+	jr .step2 ; $4296
+.step:
 	add a, $07 ; $4298
-Label_05_429a:
+.step2:
 	ld e, a ; $429a
 	ld a, c ; $429b
 	ld c, $00 ; $429c
-Label_05_429e:
+.loop:
 	inc c ; $429e
 	sub a, $07 ; $429f
-	jr c, Label_05_42a7 ; $42a1
-	jr z, Label_05_42a7 ; $42a3
-	jr Label_05_429e ; $42a5
-Label_05_42a7:
+	jr c, .loopB ; $42a1
+	jr z, .loopB ; $42a3
+	jr .loop ; $42a5
+.loopB:
 	push af ; $42a7
 	push bc ; $42a8
 	push de ; $42a9
@@ -423,16 +423,16 @@ Label_05_42a7:
 	ld b, c ; $42ac
 	ld c, e ; $42ad
 	cp a, $01 ; $42ae
-	jr z, Label_05_42b4 ; $42b0
+	jr z, .step3 ; $42b0
 	ld c, $07 ; $42b2
-Label_05_42b4:
+.step3:
 	ld a, d ; $42b4
 	cp a, $20 ; $42b5
-	jr nc, Label_05_42cf ; $42b7
+	jr nc, .step4 ; $42b7
 	push af ; $42b9
 	add a, c ; $42ba
 	cp a, $20 ; $42bb
-	jr c, Label_05_42ce ; $42bd
+	jr c, .restore ; $42bd
 	sub a, $20 ; $42bf
 	ld b, a ; $42c1
 	push bc ; $42c2
@@ -444,9 +444,9 @@ Label_05_42b4:
 	ld a, c ; $42cb
 	sub a, b ; $42cc
 	ld c, a ; $42cd
-Label_05_42ce:
+.restore:
 	pop af ; $42ce
-Label_05_42cf:
+.step4:
 	and a, $1f ; $42cf
 	ld b, $05 ; $42d1
 	call CopyTilemapRowsToVRAM ; $42d3
@@ -459,7 +459,7 @@ Label_05_42cf:
 	add a, $07 ; $42de
 	ld d, a ; $42e0
 	dec c ; $42e1
-	jr nz, Label_05_42a7 ; $42e2
+	jr nz, .loopB ; $42e2
 	pop hl ; $42e4
 	pop de ; $42e5
 	pop bc ; $42e6
@@ -500,9 +500,9 @@ GetWindowCellOffset:
 	ld a, d ; $4314
 	add a, l ; $4315
 	ld l, a ; $4316
-	jr nc, Label_05_431a ; $4317
+	jr nc, .step ; $4317
 	inc h ; $4319
-Label_05_431a:
+.step:
 	ld d, h ; $431a
 	ld e, l ; $431b
 	ret ; $431c
@@ -579,9 +579,9 @@ RestoreAllShadowTilemapRows:
 	ld a, [wCameraY + 1] ; $4383
 	and a, $3f ; $4386
 	ld c, $04 ; $4388
-Label_05_438a:
+.loop:
 	ld b, $05 ; $438a
-Label_05_438c:
+.loopB:
 	push af ; $438c
 	push bc ; $438d
 	call RestoreShadowTilemapRow ; $438e
@@ -590,16 +590,16 @@ Label_05_438c:
 	inc a ; $4393
 	and a, $3f ; $4394
 	dec b ; $4396
-	jr nz, Label_05_438c ; $4397
+	jr nz, .loopB ; $4397
 	push af ; $4399
 	ldh a, [rLCDC] ; $439a
 	bit 7, a ; $439c
-	jr z, Label_05_43a3 ; $439e
+	jr z, .restore ; $439e
 	call AdvanceFrame ; $43a0
-Label_05_43a3:
+.restore:
 	pop af ; $43a3
 	dec c ; $43a4
-	jr nz, Label_05_438a ; $43a5
+	jr nz, .loop ; $43a5
 	ret ; $43a7
 RestoreTilemapUnderWindow:
 	push af ; $43a8
@@ -643,15 +643,15 @@ RestoreShadowTilemapRow:
 	ld a, $06 ; $43d8
 	ld bc, $0040 ; $43da
 	ld d, e ; $43dd
-Label_05_43de:
+.loop:
 	rr d ; $43de
-	jr nc, Label_05_43e3 ; $43e0
+	jr nc, .step ; $43e0
 	add hl, bc ; $43e2
-Label_05_43e3:
+.step:
 	sla c ; $43e3
 	rl b ; $43e5
 	dec a ; $43e7
-	jr nz, Label_05_43de ; $43e8
+	jr nz, .loop ; $43e8
 	ld a, [wCameraX + 1] ; $43ea
 	and a, $3f ; $43ed
 	ld d, a ; $43ef
@@ -667,43 +667,43 @@ Label_05_43e3:
 	and a, $1f ; $4401
 	add a, l ; $4403
 	ld l, a ; $4404
-	jr nc, Label_05_4408 ; $4405
+	jr nc, .step2 ; $4405
 	inc h ; $4407
-Label_05_4408:
+.step2:
 	ld d, $20 ; $4408
-Label_05_440a:
+.loopB:
 	ld a, [bc] ; $440a
 	ld [hl+], a ; $440b
 	inc bc ; $440c
 	ld a, c ; $440d
 	and a, $1f ; $440e
-	jr nz, Label_05_441f ; $4410
+	jr nz, .step3 ; $4410
 	ld hl, $c6a0 ; $4412
 	ld a, c ; $4415
 	and a, $3f ; $4416
-	jr nz, Label_05_441f ; $4418
+	jr nz, .step3 ; $4418
 	dec bc ; $441a
 	ld a, c ; $441b
 	and a, $c0 ; $441c
 	ld c, a ; $441e
-Label_05_441f:
+.step3:
 	dec d ; $441f
-	jr nz, Label_05_440a ; $4420
+	jr nz, .loopB ; $4420
 	ld hl, $d000 ; $4422
 	ld a, e ; $4425
 	and a, $1f ; $4426
 	ld d, a ; $4428
 	ld a, $05 ; $4429
 	ld bc, $0020 ; $442b
-Label_05_442e:
+.loopBB:
 	rr d ; $442e
-	jr nc, Label_05_4433 ; $4430
+	jr nc, .step4 ; $4430
 	add hl, bc ; $4432
-Label_05_4433:
+.step4:
 	sla c ; $4433
 	rl b ; $4435
 	dec a ; $4437
-	jr nz, Label_05_442e ; $4438
+	jr nz, .loopBB ; $4438
 	push de ; $443a
 	ld d, h ; $443b
 	ld e, l ; $443c
@@ -719,43 +719,43 @@ Label_05_4433:
 	and a, $1f ; $4458
 	add a, l ; $445a
 	ld l, a ; $445b
-	jr nc, Label_05_445f ; $445c
+	jr nc, .step5 ; $445c
 	inc h ; $445e
-Label_05_445f:
+.step5:
 	ld d, $20 ; $445f
-Label_05_4461:
+.loopBBB:
 	ld a, [bc] ; $4461
 	ld [hl+], a ; $4462
 	inc bc ; $4463
 	ld a, c ; $4464
 	and a, $1f ; $4465
-	jr nz, Label_05_4476 ; $4467
+	jr nz, .step6 ; $4467
 	ld hl, $c6a0 ; $4469
 	ld a, c ; $446c
 	and a, $3f ; $446d
-	jr nz, Label_05_4476 ; $446f
+	jr nz, .step6 ; $446f
 	dec bc ; $4471
 	ld a, c ; $4472
 	and a, $c0 ; $4473
 	ld c, a ; $4475
-Label_05_4476:
+.step6:
 	dec d ; $4476
-	jr nz, Label_05_4461 ; $4477
+	jr nz, .loopBBB ; $4477
 	ld hl, $d400 ; $4479
 	ld a, e ; $447c
 	and a, $1f ; $447d
 	ld d, a ; $447f
 	ld a, $05 ; $4480
 	ld bc, $0020 ; $4482
-Label_05_4485:
+.loopBBBB:
 	rr d ; $4485
-	jr nc, Label_05_448a ; $4487
+	jr nc, .step7 ; $4487
 	add hl, bc ; $4489
-Label_05_448a:
+.step7:
 	sla c ; $448a
 	rl b ; $448c
 	dec a ; $448e
-	jr nz, Label_05_4485 ; $448f
+	jr nz, .loopBBBB ; $448f
 	ld d, h ; $4491
 	ld e, l ; $4492
 	ld hl, $c6a0 ; $4493
@@ -797,18 +797,18 @@ RefreshShadowTilemapFromMapBuffer:
 	pop hl ; $44d3
 	add hl, bc ; $44d4
 	ld b, $15 ; $44d5
-Label_05_44d7:
+.loop:
 	ld c, $02 ; $44d7
 	call CopyMemoryFast ; $44d9
 	ld a, h ; $44dc
 	cp a, $e0 ; $44dd
-	jr nc, Label_05_44e9 ; $44df
+	jr nc, .restore ; $44df
 	ld a, d ; $44e1
 	cp a, $e0 ; $44e2
-	jr nc, Label_05_44e9 ; $44e4
+	jr nc, .restore ; $44e4
 	dec b ; $44e6
-	jr nz, Label_05_44d7 ; $44e7
-Label_05_44e9:
+	jr nz, .loop ; $44e7
+.restore:
 	pop af ; $44e9
 	wram_bank ; $44ea
 	pop hl ; $44ee
@@ -893,11 +893,11 @@ DrawTileAttrRect:
 	ld c, [hl] ; $455d
 	inc hl ; $455e
 	push af ; $455f
-Label_05_4560:
+.loop:
 	push de ; $4560
 	push bc ; $4561
 	call GetTilemapCellAddress ; $4562
-Label_05_4565:
+.loopB:
 	ld a, [hl] ; $4565
 	inc hl ; $4566
 	ld [de], a ; $4567
@@ -910,23 +910,23 @@ Label_05_4565:
 	ld a, e ; $4570
 	and a, $1f ; $4571
 	cp a, $1f ; $4573
-	jr nz, Label_05_457d ; $4575
+	jr nz, .step ; $4575
 	ld hl, $ffe0 ; $4577
 	add hl, de ; $457a
 	ld d, h ; $457b
 	ld e, l ; $457c
-Label_05_457d:
+.step:
 	inc de ; $457d
 	pop hl ; $457e
 	dec b ; $457f
-	jr nz, Label_05_4565 ; $4580
+	jr nz, .loopB ; $4580
 	ld a, c ; $4582
 	pop bc ; $4583
 	ld c, a ; $4584
 	pop de ; $4585
 	inc e ; $4586
 	dec c ; $4587
-	jr nz, Label_05_4560 ; $4588
+	jr nz, .loop ; $4588
 	pop af ; $458a
 	pop hl ; $458b
 	pop de ; $458c
@@ -945,20 +945,20 @@ Label_05_457d:
 	inc hl ; $4599
 	ld c, [hl] ; $459a
 	inc hl ; $459b
-Label_05_459c:
+.loopBB:
 	push de ; $459c
 	push bc ; $459d
-Label_05_459e:
+.loopBBB:
 	ld a, $00 ; $459e
 	push de ; $45a0
 	call GetTilemapCellAddress ; $45a1
 	ld [de], a ; $45a4
 	pop de ; $45a5
 	dec b ; $45a6
-	jr z, Label_05_45ac ; $45a7
+	jr z, .step2 ; $45a7
 	inc d ; $45a9
-	jr Label_05_459e ; $45aa
-Label_05_45ac:
+	jr .loopBBB ; $45aa
+.step2:
 	ld a, c ; $45ac
 	pop bc ; $45ad
 	ld c, a ; $45ae
@@ -967,7 +967,7 @@ Label_05_45ac:
 	ld e, a ; $45b1
 	inc e ; $45b2
 	dec c ; $45b3
-	jr nz, Label_05_459c ; $45b4
+	jr nz, .loopBB ; $45b4
 	pop de ; $45b6
 	pop bc ; $45b7
 	pop af ; $45b8
@@ -979,15 +979,15 @@ Label_05_45ac:
 	ld b, a ; $45be
 	call FreeWindow ; $45bf
 	cp a, $ff ; $45c2
-	jr z, Label_05_4621 ; $45c4
+	jr z, .restore ; $45c4
 	ld a, b ; $45c6
 	call FreeWindow ; $45c7
 	ld a, $04 ; $45ca
 	add a, l ; $45cc
 	ld l, a ; $45cd
-	jr nc, Label_05_45d1 ; $45ce
+	jr nc, .step3 ; $45ce
 	inc h ; $45d0
-Label_05_45d1:
+.step3:
 	ld d, h ; $45d1
 	ld e, l ; $45d2
 	ld a, [$d822] ; $45d3
@@ -995,10 +995,10 @@ Label_05_45d1:
 	ld [$d822], a ; $45d7
 	ld a, [de] ; $45da
 	and a, $02 ; $45db
-	jr z, Label_05_4621 ; $45dd
+	jr z, .restore ; $45dd
 	ld a, [$d83e] ; $45df
 	or a, a ; $45e2
-	jr z, Label_05_45f5 ; $45e3
+	jr z, .step4 ; $45e3
 	dec a ; $45e5
 	ld hl, $d832 ; $45e6
 	sla a ; $45e9
@@ -1008,12 +1008,12 @@ Label_05_45d1:
 	ld a, [hl] ; $45ef
 	and a, $0f ; $45f0
 	ld [$d830], a ; $45f2
-Label_05_45f5:
+.step4:
 	ld a, [$d83e] ; $45f5
 	dec a ; $45f8
 	ld [$d83e], a ; $45f9
 	cp a, $ff ; $45fc
-	jr z, Label_05_4621 ; $45fe
+	jr z, .restore ; $45fe
 	ld a, [$d83e] ; $4600
 	ld hl, $d832 ; $4603
 	sla a ; $4606
@@ -1031,7 +1031,7 @@ Label_05_45f5:
 	ld a, [hl] ; $461b
 	and a, $0f ; $461c
 	ld [$d82f], a ; $461e
-Label_05_4621:
+.restore:
 	pop af ; $4621
 	pop de ; $4622
 	pop bc ; $4623
@@ -1231,9 +1231,9 @@ ResetWindowState:
 	ld a, $04 ; $475b
 	add a, l ; $475d
 	ld l, a ; $475e
-	jr nc, Label_05_4762 ; $475f
+	jr nc, .store ; $475f
 	inc h ; $4761
-Label_05_4762:
+.store:
 	ld [hl], $ff ; $4762
 	pop af ; $4764
 	ret ; $4765
@@ -1244,9 +1244,9 @@ SetWindowState:
 	ld a, $04 ; $476a
 	add a, l ; $476c
 	ld l, a ; $476d
-	jr nc, Label_05_4771 ; $476e
+	jr nc, .store ; $476e
 	inc h ; $4770
-Label_05_4771:
+.store:
 	ld [hl], b ; $4771
 	ret ; $4772
 GetWindowState:
@@ -1254,9 +1254,9 @@ GetWindowState:
 	ld a, $04 ; $4776
 	add a, l ; $4778
 	ld l, a ; $4779
-	jr nc, Label_05_477d ; $477a
+	jr nc, .read ; $477a
 	inc h ; $477c
-Label_05_477d:
+.read:
 	ld a, [hl] ; $477d
 	ret ; $477e
 RunMenuSelection:
@@ -1492,12 +1492,12 @@ AnimateTextArrowTask:
 	ld a, [hl+] ; $48fe
 	and a, $10 ; $48ff
 	or a, a ; $4901
-	jr z, Label_05_4908 ; $4902
+	jr z, .step ; $4902
 	ld a, $20 ; $4904
-	jr Label_05_490a ; $4906
-Label_05_4908:
+	jr .read ; $4906
+.step:
 	ld a, $0d ; $4908
-Label_05_490a:
+.read:
 	ld e, [hl] ; $490a
 	inc hl ; $490b
 	ld d, [hl] ; $490c
@@ -1519,7 +1519,7 @@ Label_05_490a:
 	ld [wTextArrowBlinkCounter], a ; $4925
 	ld a, [$d844] ; $4928
 	or a, a ; $492b
-	jr z, Label_05_493f ; $492c
+	jr z, .restore ; $492c
 	ld e, a ; $492e
 	ld a, [$d845] ; $492f
 	ld d, a ; $4932
@@ -1529,7 +1529,7 @@ Label_05_490a:
 	call QueueBGTileWrite ; $4938
 	xor a, a ; $493b
 	ld [$d844], a ; $493c
-Label_05_493f:
+.restore:
 	pop hl ; $493f
 	pop de ; $4940
 	pop bc ; $4941
@@ -1662,7 +1662,7 @@ RunPagedTextMenuAutoSize:
 	ld a, $01 ; $4a1b
 	ld hl, StubNop_05_49dc ; $4a1d
 	call RegisterFrameTask ; $4a20
-Label_05_4a23:
+.loop:
 	call FetchDialogueText ; $4a23
 	call MeasureTextDimensions ; $4a26
 	ld a, $01 ; $4a29
@@ -1689,40 +1689,40 @@ Label_05_4a23:
 	ld [$d82f], a ; $4a53
 	pop af ; $4a56
 	cp a, $7f ; $4a57
-	jr nc, Label_05_4a66 ; $4a59
+	jr nc, .compare ; $4a59
 	ld b, a ; $4a5b
 	ld a, [$d846] ; $4a5c
 	sla a ; $4a5f
 	sla a ; $4a61
 	add a, b ; $4a63
-	jr Label_05_4a90 ; $4a64
-Label_05_4a66:
+	jr .store3 ; $4a64
+.compare:
 	cp a, $ff ; $4a66
-	jr z, Label_05_4a90 ; $4a68
+	jr z, .store3 ; $4a68
 	cp a, $fe ; $4a6a
-	jr nz, Label_05_4a7f ; $4a6c
+	jr nz, .step ; $4a6c
 	ld a, [$d846] ; $4a6e
 	dec a ; $4a71
 	cp a, $ff ; $4a72
-	jr nz, Label_05_4a7a ; $4a74
+	jr nz, .store ; $4a74
 	ld hl, sp + 2 ; $4a76
 	ld a, [hl] ; $4a78
 	dec a ; $4a79
-Label_05_4a7a:
+.store:
 	ld [$d846], a ; $4a7a
-	jr Label_05_4a23 ; $4a7d
-Label_05_4a7f:
+	jr .loop ; $4a7d
+.step:
 	ld a, [$d846] ; $4a7f
 	inc a ; $4a82
 	ld hl, sp + 2 ; $4a83
 	ld b, [hl] ; $4a85
 	cp a, b ; $4a86
-	jr c, Label_05_4a8a ; $4a87
+	jr c, .store2 ; $4a87
 	xor a, a ; $4a89
-Label_05_4a8a:
+.store2:
 	ld [$d846], a ; $4a8a
-	jp Label_05_4a23 ; $4a8d
-Label_05_4a90:
+	jp .loop ; $4a8d
+.store3:
 	ld [$d830], a ; $4a90
 	add sp, 3 ; $4a93
 	push af ; $4a95
@@ -1786,32 +1786,32 @@ RunMenuSelectionShared:
 	pop af ; $4af8
 	ld a, [$d830] ; $4af9
 	ld b, a ; $4afc
-Label_05_4afd:
+.loop:
 	call AdvanceFrame ; $4afd
 	ldh a, [hInputPressed] ; $4b00
 	bit PADB_A, a ; $4b02
-	jp nz, Label_05_4b72 ; $4b04
+	jp nz, LoadOverworldSpriteDef.isCursorOnAdjustRow ; $4b04
 	bit 6, a ; $4b07
-	jr z, Label_05_4b17 ; $4b09
+	jr z, .step ; $4b09
 	dec b ; $4b0b
 	bit 7, b ; $4b0c
-	jr z, Label_05_4b29 ; $4b0e
+	jr z, .playSfx ; $4b0e
 	ld a, [$d831] ; $4b10
 	dec a ; $4b13
 	ld b, a ; $4b14
-	jr Label_05_4b29 ; $4b15
-Label_05_4b17:
+	jr .playSfx ; $4b15
+.step:
 	ldh a, [hInputPressed] ; $4b17
 	and a, PADF_DOWN ; $4b19
-	jp z, Label_05_4ba5 ; $4b1b
+	jp z, LoadOverworldSpriteDef.step ; $4b1b
 	ld a, [$d831] ; $4b1e
 	ld c, a ; $4b21
 	inc b ; $4b22
 	ld a, b ; $4b23
 	cp a, c ; $4b24
-	jr c, Label_05_4b29 ; $4b25
+	jr c, .playSfx ; $4b25
 	ld b, $00 ; $4b27
-Label_05_4b29:
+.playSfx:
 	sound $5e ; $4b29
 	push de ; $4b2b
 	xor a, a ; $4b2c
@@ -1862,11 +1862,11 @@ LoadOverworldSpriteDef:
 	pop de ; $4b6b
 	ld a, b ; $4b6c
 	ld [$d830], a ; $4b6d
-	jr Label_05_4ba5 ; $4b70
-Label_05_4b72:
+	jr .step ; $4b70
+.isCursorOnAdjustRow:
 	call IsCursorOnAdjustRow ; $4b72
 	or a, a ; $4b75
-	jr nz, Label_05_4afd ; $4b76
+	jr nz, RunMenuSelectionShared.loop ; $4b76
 	sound $5f ; $4b78
 	ld a, b ; $4b7a
 	ld [$d830], a ; $4b7b
@@ -1890,85 +1890,85 @@ Label_05_4b72:
 	pop de ; $4b9f
 	pop bc ; $4ba0
 	pop af ; $4ba1
-	jp Label_05_4c6b ; $4ba2
-Label_05_4ba5:
+	jp .step7 ; $4ba2
+.step:
 	ldh a, [hInputRisingEdge] ; $4ba5
 	and a, PADF_START ; $4ba7
-	jp z, Label_05_4bbb ; $4ba9
+	jp z, .step2 ; $4ba9
 	sound $62 ; $4bac
 	ld a, [$cb2a] ; $4bae
 	and a, $f0 ; $4bb1
 	ld [$cb2a], a ; $4bb3
 	ld a, $ff ; $4bb6
-	jp Label_05_4c2b ; $4bb8
-Label_05_4bbb:
+	jp .store ; $4bb8
+.step2:
 	ldh a, [hInputPressed] ; $4bbb
 	and a, PADF_B ; $4bbd
-	jp z, Label_05_4bd1 ; $4bbf
+	jp z, .step3 ; $4bbf
 	sound $62 ; $4bc2
 	ld a, [$cb2a] ; $4bc4
 	and a, $f0 ; $4bc7
 	ld [$cb2a], a ; $4bc9
 	ld a, $ff ; $4bcc
-	jp Label_05_4c2b ; $4bce
-Label_05_4bd1:
+	jp .store ; $4bce
+.step3:
 	push af ; $4bd1
 	push bc ; $4bd2
 	push de ; $4bd3
 	push hl ; $4bd4
 	call IsCursorOnAdjustRow ; $4bd5
 	or a, a ; $4bd8
-	jr z, Label_05_4c00 ; $4bd9
+	jr z, .restore ; $4bd9
 	ldh a, [hInputPressed] ; $4bdb
 	and a, PADF_LEFT ; $4bdd
-	jp z, Label_05_4bee ; $4bdf
+	jp z, .step4 ; $4bdf
 	ld a, [$cb2a] ; $4be2
 	and a, $f0 ; $4be5
 	or a, $01 ; $4be7
 	ld [$cb2a], a ; $4be9
-	jr Label_05_4c30 ; $4bec
-Label_05_4bee:
+	jr .restore2 ; $4bec
+.step4:
 	ldh a, [hInputPressed] ; $4bee
 	and a, PADF_RIGHT ; $4bf0
-	jr z, Label_05_4c00 ; $4bf2
+	jr z, .restore ; $4bf2
 	ld a, [$cb2a] ; $4bf4
 	and a, $f0 ; $4bf7
 	or a, $02 ; $4bf9
 	ld [$cb2a], a ; $4bfb
-	jr Label_05_4c30 ; $4bfe
-Label_05_4c00:
+	jr .restore2 ; $4bfe
+.restore:
 	pop hl ; $4c00
 	pop de ; $4c01
 	pop bc ; $4c02
 	pop af ; $4c03
 	call GetWindowState ; $4c04
 	cp a, $03 ; $4c07
-	jp nz, Label_05_4afd ; $4c09
+	jp nz, RunMenuSelectionShared.loop ; $4c09
 	ld a, [$c32d] ; $4c0c
 	dec a ; $4c0f
 	sra a ; $4c10
 	sra a ; $4c12
-	jp z, Label_05_4afd ; $4c14
+	jp z, RunMenuSelectionShared.loop ; $4c14
 	ldh a, [hInputPressed] ; $4c17
 	and a, PADF_LEFT ; $4c19
-	jp z, Label_05_4c22 ; $4c1b
+	jp z, .step5 ; $4c1b
 	ld a, $fe ; $4c1e
-	jr Label_05_4c2b ; $4c20
-Label_05_4c22:
+	jr .store ; $4c20
+.step5:
 	ldh a, [hInputPressed] ; $4c22
 	and a, PADF_RIGHT ; $4c24
-	jp z, Label_05_4afd ; $4c26
+	jp z, RunMenuSelectionShared.loop ; $4c26
 	ld a, $fd ; $4c29
-Label_05_4c2b:
+.store:
 	ld [$d830], a ; $4c2b
-	jr Label_05_4c37 ; $4c2e
-Label_05_4c30:
+	jr .step6 ; $4c2e
+.restore2:
 	pop hl ; $4c30
 	pop de ; $4c31
 	pop bc ; $4c32
 	pop af ; $4c33
 	ld a, [$d830] ; $4c34
-Label_05_4c37:
+.step6:
 	push af ; $4c37
 	push bc ; $4c38
 	push de ; $4c39
@@ -1978,7 +1978,7 @@ Label_05_4c37:
 	call AdvanceFrame ; $4c41
 	ld a, [$d83e] ; $4c44
 	or a, a ; $4c47
-	jr z, Label_05_4c67 ; $4c48
+	jr z, .restore3 ; $4c48
 	dec a ; $4c4a
 	ld hl, $d832 ; $4c4b
 	sla a ; $4c4e
@@ -1996,12 +1996,12 @@ Label_05_4c37:
 	ld c, $20 ; $4c60
 	ld b, $80 ; $4c62
 	call WriteWindowCellTileAttr ; $4c64
-Label_05_4c67:
+.restore3:
 	pop hl ; $4c67
 	pop de ; $4c68
 	pop bc ; $4c69
 	pop af ; $4c6a
-Label_05_4c6b:
+.step7:
 	ld b, a ; $4c6b
 	pop af ; $4c6c
 	wram_bank ; $4c6d
@@ -2014,25 +2014,25 @@ IsCursorOnAdjustRow:
 	push bc ; $4c76
 	ld a, [wMenuAdjustRowMask] ; $4c77
 	bit 7, a ; $4c7a
-	jr z, Label_05_4c9a ; $4c7c
+	jr z, .restore ; $4c7c
 	and a, $7f ; $4c7e
 	ld b, a ; $4c80
 	ld a, [$d830] ; $4c81
 	inc a ; $4c84
-Label_05_4c85:
+.loop:
 	rrc b ; $4c85
 	dec a ; $4c87
-	jr nz, Label_05_4c85 ; $4c88
+	jr nz, .loop ; $4c88
 	rlc b ; $4c8a
 	bit 0, b ; $4c8c
-	jr z, Label_05_4c9a ; $4c8e
+	jr z, .restore ; $4c8e
 	ldh a, [hInputPressed] ; $4c90
 	and a, PADF_UP | PADF_DOWN ; $4c92
-	jr nz, Label_05_4c9a ; $4c94
+	jr nz, .restore ; $4c94
 	pop bc ; $4c96
 	ld a, $01 ; $4c97
 	ret ; $4c99
-Label_05_4c9a:
+.restore:
 	pop bc ; $4c9a
 	xor a, a ; $4c9b
 	ret ; $4c9c
@@ -2040,55 +2040,55 @@ AnimateMenuScrollArrowsTask:
 	wram_bank $05 ; $4c9d
 	ld a, [wMenuAdjustRowMask] ; $4ca3
 	bit 7, a ; $4ca6
-	jr z, Label_05_4cc8 ; $4ca8
+	jr z, .checkFlag ; $4ca8
 	and a, $7f ; $4caa
 	ld b, a ; $4cac
 	ld a, [$d830] ; $4cad
 	inc a ; $4cb0
-Label_05_4cb1:
+.loop:
 	rrc b ; $4cb1
 	dec a ; $4cb3
-	jr nz, Label_05_4cb1 ; $4cb4
+	jr nz, .loop ; $4cb4
 	rlc b ; $4cb6
 	bit 0, b ; $4cb8
-	jr z, Label_05_4cc8 ; $4cba
+	jr z, .checkFlag ; $4cba
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4cbc
-	jp nz, Label_05_4d3f ; $4cbf
+	jp nz, .step5 ; $4cbf
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4cc2
-	jp nz, Label_05_4d3f ; $4cc5
-Label_05_4cc8:
+	jp nz, .step5 ; $4cc5
+.checkFlag:
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4cc8
-	jr nz, Label_05_4cd6 ; $4ccb
+	jr nz, .step ; $4ccb
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4ccd
-	jp nz, Label_05_4ce8 ; $4cd0
-	jp Label_05_4cfa ; $4cd3
-Label_05_4cd6:
+	jp nz, .step2 ; $4cd0
+	jp .step3 ; $4cd3
+.step:
 	ld l, $20 ; $4cd6
 	ld de, $0b01 ; $4cd8
 	farcall QueueWindowTileWrite ; $4cdb
 	ld l, $20 ; $4cde
 	ld de, $0b03 ; $4ce0
 	farcall QueueWindowTileWrite ; $4ce3
-	jr Label_05_4cfa ; $4ce6
-Label_05_4ce8:
+	jr .step3 ; $4ce6
+.step2:
 	ld l, $20 ; $4ce8
 	ld de, $0d05 ; $4cea
 	farcall QueueWindowTileWrite ; $4ced
 	ld l, $20 ; $4cf0
 	ld de, $0d07 ; $4cf2
 	farcall QueueWindowTileWrite ; $4cf5
-	jr Label_05_4cfa ; $4cf8
-Label_05_4cfa:
+	jr .step3 ; $4cf8
+.step3:
 	ld hl, wTextArrowBlinkCounter ; $4cfa
 	ld a, [hl+] ; $4cfd
 	and a, $10 ; $4cfe
 	or a, a ; $4d00
-	jr z, Label_05_4d07 ; $4d01
+	jr z, .step4 ; $4d01
 	ld a, $20 ; $4d03
-	jr Label_05_4d09 ; $4d05
-Label_05_4d07:
+	jr .read ; $4d05
+.step4:
 	ld a, $0d ; $4d07
-Label_05_4d09:
+.read:
 	ld e, [hl] ; $4d09
 	inc hl ; $4d0a
 	ld d, [hl] ; $4d0b
@@ -2110,7 +2110,7 @@ Label_05_4d09:
 	ld [wTextArrowBlinkCounter], a ; $4d24
 	ld a, [$d845] ; $4d27
 	or a, a ; $4d2a
-	jr z, Label_05_4d3e ; $4d2b
+	jr z, .done ; $4d2b
 	ld d, a ; $4d2d
 	ld a, [$d844] ; $4d2e
 	ld e, a ; $4d31
@@ -2120,12 +2120,12 @@ Label_05_4d09:
 	call QueueBGTileWrite ; $4d37
 	xor a, a ; $4d3a
 	ld [$d845], a ; $4d3b
-Label_05_4d3e:
+.done:
 	ret ; $4d3e
-Label_05_4d3f:
+.step5:
 	ld a, [$d845] ; $4d3f
 	or a, a ; $4d42
-	jr z, Label_05_4d56 ; $4d43
+	jr z, .step6 ; $4d43
 	ld d, a ; $4d45
 	ld a, [$d844] ; $4d46
 	ld e, a ; $4d49
@@ -2135,16 +2135,16 @@ Label_05_4d3f:
 	call QueueBGTileWrite ; $4d4f
 	xor a, a ; $4d52
 	ld [$d845], a ; $4d53
-Label_05_4d56:
+.step6:
 	wram_bank $05 ; $4d56
 	ld hl, wTextArrowBlinkCounter ; $4d5c
 	inc [hl] ; $4d5f
 	test_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4d60
-	jr nz, Label_05_4d6d ; $4d63
+	jr nz, .step7 ; $4d63
 	test_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4d65
-	jr nz, Label_05_4dbd ; $4d68
-	jp Label_05_4e0f ; $4d6a
-Label_05_4d6d:
+	jr nz, .step8 ; $4d68
+	jp .doneB ; $4d6a
+.step7:
 	ld l, $20 ; $4d6d
 	ld de, $0b01 ; $4d6f
 	farcall QueueWindowTileWrite ; $4d72
@@ -2153,31 +2153,31 @@ Label_05_4d6d:
 	farcall QueueWindowTileWrite ; $4d7a
 	ld a, [$d830] ; $4d7d
 	and a, a ; $4d80
-	jr nz, Label_05_4da0 ; $4d81
+	jr nz, .getMenuCursorBlinkPhase ; $4d81
 	call GetMenuCursorBlinkPhase ; $4d83
 	and a, a ; $4d86
 	ld de, $0101 ; $4d87
-	jp z, Label_05_4e0a ; $4d8a
+	jp z, .step9 ; $4d8a
 	ld l, $0c ; $4d8d
 	ld de, $0101 ; $4d8f
 	farcall QueueWindowTileWrite ; $4d92
 	ld l, $0d ; $4d95
 	ld de, $0b01 ; $4d97
 	farcall QueueWindowTileWrite ; $4d9a
-	jp Label_05_4e0f ; $4d9d
-Label_05_4da0:
+	jp .doneB ; $4d9d
+.getMenuCursorBlinkPhase:
 	call GetMenuCursorBlinkPhase ; $4da0
 	and a, a ; $4da3
 	ld de, $0103 ; $4da4
-	jp z, Label_05_4e0a ; $4da7
+	jp z, .step9 ; $4da7
 	ld l, $0c ; $4daa
 	ld de, $0103 ; $4dac
 	farcall QueueWindowTileWrite ; $4daf
 	ld l, $0d ; $4db2
 	ld de, $0b03 ; $4db4
 	farcall QueueWindowTileWrite ; $4db7
-	jp Label_05_4e0f ; $4dba
-Label_05_4dbd:
+	jp .doneB ; $4dba
+.step8:
 	ld l, $20 ; $4dbd
 	ld de, $0d05 ; $4dbf
 	farcall QueueWindowTileWrite ; $4dc2
@@ -2186,34 +2186,34 @@ Label_05_4dbd:
 	farcall QueueWindowTileWrite ; $4dca
 	ld a, [$d830] ; $4dcd
 	cp a, $03 ; $4dd0
-	jr z, Label_05_4def ; $4dd2
+	jr z, .getMenuCursorBlinkPhase2 ; $4dd2
 	call GetMenuCursorBlinkPhase ; $4dd4
 	or a, a ; $4dd7
 	ld de, $0105 ; $4dd8
-	jr z, Label_05_4e0a ; $4ddb
+	jr z, .step9 ; $4ddb
 	ld l, $0c ; $4ddd
 	ld de, $0105 ; $4ddf
 	farcall QueueWindowTileWrite ; $4de2
 	ld l, $0d ; $4de5
 	ld de, $0d05 ; $4de7
 	farcall QueueWindowTileWrite ; $4dea
-	jr Label_05_4e0f ; $4ded
-Label_05_4def:
+	jr .doneB ; $4ded
+.getMenuCursorBlinkPhase2:
 	call GetMenuCursorBlinkPhase ; $4def
 	or a, a ; $4df2
 	ld de, $0107 ; $4df3
-	jr z, Label_05_4e0a ; $4df6
+	jr z, .step9 ; $4df6
 	ld l, $0c ; $4df8
 	ld de, $0107 ; $4dfa
 	farcall QueueWindowTileWrite ; $4dfd
 	ld l, $0d ; $4e00
 	ld de, $0d07 ; $4e02
 	farcall QueueWindowTileWrite ; $4e05
-	jr Label_05_4e0f ; $4e08
-Label_05_4e0a:
+	jr .doneB ; $4e08
+.step9:
 	ld l, $20 ; $4e0a
 	farcall QueueWindowTileWrite ; $4e0c
-Label_05_4e0f:
+.doneB:
 	ret ; $4e0f
 GetMenuCursorBlinkPhase:
 	wram_bank $05 ; $4e10
@@ -2230,7 +2230,7 @@ RenderTextString:
 	push bc ; $4e23
 	ld a, [$d84f] ; $4e24
 	or a, a ; $4e27
-	jr z, Label_05_4e3b ; $4e28
+	jr z, .step ; $4e28
 	ld bc, $3a00 ; $4e2a
 	add hl, bc ; $4e2d
 	ld b, h ; $4e2e
@@ -2242,14 +2242,14 @@ RenderTextString:
 	add hl, bc ; $4e36
 	xor a, a ; $4e37
 	ld [$d84f], a ; $4e38
-Label_05_4e3b:
+.step:
 	ld a, [$d821] ; $4e3b
 	or a, a ; $4e3e
-	jr nz, Label_05_4e48 ; $4e3f
+	jr nz, .initGlyphStreamForWindow ; $4e3f
 	xor a, a ; $4e41
 	ld [$c3bb], a ; $4e42
 	ld [$c3bc], a ; $4e45
-Label_05_4e48:
+.initGlyphStreamForWindow:
 	call InitGlyphStreamForWindow ; $4e48
 	call RedrawActiveTextWindow ; $4e4b
 	ld a, d ; $4e4e
@@ -2262,14 +2262,14 @@ Label_05_4e48:
 TextInterpreterLoop:
 	ld a, [wTextPageBreakRequest] ; $4e5d
 	or a, a ; $4e60
-	jr z, Label_05_4e6d ; $4e61
+	jr z, .step ; $4e61
 	ld a, l ; $4e63
 	ld [$d84e], a ; $4e64
 	ld a, h ; $4e67
 	ld [$d84f], a ; $4e68
 	pop bc ; $4e6b
 	ret ; $4e6c
-Label_05_4e6d:
+.step:
 	ld a, l ; $4e6d
 	ld [wTextStreamPtr], a ; $4e6e
 	ld a, h ; $4e71
@@ -2278,39 +2278,39 @@ Label_05_4e6d:
 	inc hl ; $4e76
 	ld b, a ; $4e77
 	or a, a ; $4e78
-	jr nz, Label_05_4e85 ; $4e79
+	jr nz, .compare ; $4e79
 	test_flag FLAG_TEXT_RENDER_ACTIVE ; $4e7b
-	jr nz, Label_05_4e83 ; $4e7e
+	jr nz, .restore ; $4e7e
 	call FlushGlyphRow ; $4e80
-Label_05_4e83:
+.restore:
 	pop bc ; $4e83
 	ret ; $4e84
-Label_05_4e85:
+.compare:
 	cp a, $de ; $4e85
-	jr z, Label_05_4e97 ; $4e87
+	jr z, .step2 ; $4e87
 	cp a, $df ; $4e89
-	jr z, Label_05_4e9b ; $4e8b
+	jr z, .step3 ; $4e8b
 	cp a, $0e ; $4e8d
-	jr z, Label_05_4e9f ; $4e8f
+	jr z, .step4 ; $4e8f
 	cp a, $20 ; $4e91
-	jr nc, Label_05_4ead ; $4e93
-	jr Label_05_4ea5 ; $4e95
-Label_05_4e97:
+	jr nc, .step5 ; $4e93
+	jr .dispatchControlCode ; $4e95
+.step2:
 	ld a, $1e ; $4e97
-	jr Label_05_4ea5 ; $4e99
-Label_05_4e9b:
+	jr .dispatchControlCode ; $4e99
+.step3:
 	ld a, $1f ; $4e9b
-	jr Label_05_4ea5 ; $4e9d
-Label_05_4e9f:
+	jr .dispatchControlCode ; $4e9d
+.step4:
 	push af ; $4e9f
 	ld a, [hl+] ; $4ea0
 	ld [$c361], a ; $4ea1
 	pop af ; $4ea4
-Label_05_4ea5:
+.dispatchControlCode:
 	call DispatchControlCode ; $4ea5
 	call RedrawActiveTextWindow ; $4ea8
 	jr TextInterpreterLoop ; $4eab
-Label_05_4ead:
+.step5:
 	ld a, b ; $4ead
 	call WrapTextCellPointer ; $4eae
 	call DrawStreamGlyph ; $4eb1
@@ -2358,9 +2358,9 @@ TextCmdNextGlyphStreamRow:
 	ld a, $40 ; $4ef2
 	add a, l ; $4ef4
 	ld l, a ; $4ef5
-	jr nc, Label_05_4ef9 ; $4ef6
+	jr nc, .step ; $4ef6
 	inc h ; $4ef8
-Label_05_4ef9:
+.step:
 	ld b, h ; $4ef9
 	ld c, l ; $4efa
 	ld hl, wGlyphTileWritePtr ; $4efb
@@ -2381,9 +2381,9 @@ Label_05_4ef9:
 	sla a ; $4f18
 	add a, l ; $4f1a
 	ld l, a ; $4f1b
-	jr nc, Label_05_4f1f ; $4f1c
+	jr nc, .step2 ; $4f1c
 	inc h ; $4f1e
-Label_05_4f1f:
+.step2:
 	ld a, l ; $4f1f
 	ld [wGlyphVramDest], a ; $4f20
 	ld a, h ; $4f23
@@ -2400,18 +2400,18 @@ TextCmdDelay30:
 	push af ; $4f32
 	ld a, [$d829] ; $4f33
 	or a, a ; $4f36
-	jr nz, Label_05_4f45 ; $4f37
+	jr nz, .step ; $4f37
 	ld a, $01 ; $4f39
 	ld [$d829], a ; $4f3b
 	call RedrawActiveTextWindow ; $4f3e
 	xor a, a ; $4f41
 	ld [$d829], a ; $4f42
-Label_05_4f45:
+.step:
 	ld a, $1e ; $4f45
-Label_05_4f47:
+.loop:
 	call AdvanceFrame ; $4f47
 	dec a ; $4f4a
-	jr nz, Label_05_4f47 ; $4f4b
+	jr nz, .loop ; $4f4b
 	pop af ; $4f4d
 	ret ; $4f4e
 TextCmdDelay15Skippable:
@@ -2419,22 +2419,22 @@ TextCmdDelay15Skippable:
 	push bc ; $4f50
 	ld a, [$d829] ; $4f51
 	or a, a ; $4f54
-	jr nz, Label_05_4f63 ; $4f55
+	jr nz, .step ; $4f55
 	ld a, $01 ; $4f57
 	ld [$d829], a ; $4f59
 	call RedrawActiveTextWindow ; $4f5c
 	xor a, a ; $4f5f
 	ld [$d829], a ; $4f60
-Label_05_4f63:
+.step:
 	ld b, $0f ; $4f63
-Label_05_4f65:
+.loop:
 	call AdvanceFrame ; $4f65
 	ldh a, [hInputPressed] ; $4f68
 	and a, $f3 ; $4f6a
-	jr nz, Label_05_4f71 ; $4f6c
+	jr nz, .restore ; $4f6c
 	dec b ; $4f6e
-	jr nz, Label_05_4f65 ; $4f6f
-Label_05_4f71:
+	jr nz, .loop ; $4f6f
+.restore:
 	pop bc ; $4f71
 	pop af ; $4f72
 	ret ; $4f73
@@ -2480,11 +2480,11 @@ TextCmdWaitButtonPage:
 	ret ; $4fbe
 GetTextContinueArrowCell:
 	test_flag FLAG_DEBUG_STATIC_TEXT_WINDOW ; $4fbf
-	jr z, Label_05_4fc9 ; $4fc2
+	jr z, .step ; $4fc2
 	ld d, $0a ; $4fc4
 	ld e, $11 ; $4fc6
 	ret ; $4fc8
-Label_05_4fc9:
+.step:
 	push af ; $4fc9
 	push bc ; $4fca
 	push hl ; $4fcb
@@ -2516,12 +2516,12 @@ TextContinueArrowBlinkTask:
 	ld a, [hl+] ; $4ff0
 	and a, $10 ; $4ff1
 	or a, a ; $4ff3
-	jr z, Label_05_4ffa ; $4ff4
+	jr z, .step ; $4ff4
 	ld a, $08 ; $4ff6
-	jr Label_05_4ffc ; $4ff8
-Label_05_4ffa:
+	jr .read ; $4ff8
+.step:
 	ld a, $01 ; $4ffa
-Label_05_4ffc:
+.read:
 	ld e, [hl] ; $4ffc
 	inc hl ; $4ffd
 	ld d, [hl] ; $4ffe
@@ -2549,37 +2549,37 @@ WaitTextAdvanceInput:
 	push bc ; $501e
 	ld a, [$d829] ; $501f
 	or a, a ; $5022
-	jr nz, Label_05_5031 ; $5023
+	jr nz, .redrawActiveTextWindow ; $5023
 	ld a, $01 ; $5025
 	ld [$d829], a ; $5027
 	call RedrawActiveTextWindow ; $502a
 	xor a, a ; $502d
 	ld [$d829], a ; $502e
-Label_05_5031:
+.redrawActiveTextWindow:
 	call RedrawActiveTextWindow ; $5031
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $5034
-	jr nz, Label_05_5061 ; $5037
+	jr nz, .restore ; $5037
 	call FlushGlyphRow ; $5039
 	ldh a, [hPlayerInputFlags] ; $503c
 	and a, $f3 ; $503e
-	jr z, Label_05_5050 ; $5040
+	jr z, .loopB ; $5040
 	ld b, $1e ; $5042
-Label_05_5044:
+.loop:
 	call AdvanceFrame ; $5044
 	ldh a, [hPlayerInputFlags] ; $5047
 	and a, $f3 ; $5049
-	jr z, Label_05_5050 ; $504b
+	jr z, .loopB ; $504b
 	dec b ; $504d
-	jr nz, Label_05_5044 ; $504e
-Label_05_5050:
+	jr nz, .loop ; $504e
+.loopB:
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $5050
-	jr nz, Label_05_5061 ; $5053
+	jr nz, .restore ; $5053
 	call AdvanceRandomSeed ; $5055
 	call AdvanceFrame ; $5058
 	ldh a, [hInputPressed] ; $505b
 	and a, $f3 ; $505d
-	jr z, Label_05_5050 ; $505f
-Label_05_5061:
+	jr z, .loopB ; $505f
+.restore:
 	pop bc ; $5061
 	pop af ; $5062
 	ret ; $5063
@@ -2588,22 +2588,22 @@ TextCmdDelay150Skippable:
 	push bc ; $5065
 	ld a, [$d829] ; $5066
 	or a, a ; $5069
-	jr nz, Label_05_5078 ; $506a
+	jr nz, .step ; $506a
 	ld a, $01 ; $506c
 	ld [$d829], a ; $506e
 	call RedrawActiveTextWindow ; $5071
 	xor a, a ; $5074
 	ld [$d829], a ; $5075
-Label_05_5078:
+.step:
 	ld b, $96 ; $5078
-Label_05_507a:
+.loop:
 	call AdvanceFrame ; $507a
 	ldh a, [hInputPressed] ; $507d
 	and a, $f3 ; $507f
-	jr nz, Label_05_5086 ; $5081
+	jr nz, .restore ; $5081
 	dec b ; $5083
-	jr nz, Label_05_507a ; $5084
-Label_05_5086:
+	jr nz, .loop ; $5084
+.restore:
 	pop bc ; $5086
 	pop af ; $5087
 	ret ; $5088
@@ -2618,7 +2618,7 @@ TextCmdPrintArgString:
 	ld b, a ; $509a
 	ld a, [wTextArgStringWriteIndex] ; $509b
 	cp a, b ; $509e
-	jr z, Label_05_50ef ; $509f
+	jr z, .restore ; $509f
 	ld c, a ; $50a1
 	sla c ; $50a2
 	inc a ; $50a4
@@ -2633,7 +2633,7 @@ TextCmdPrintArgString:
 	ld l, a ; $50b0
 	ld a, h ; $50b1
 	or a, a ; $50b2
-	jr z, Label_05_50ef ; $50b3
+	jr z, .restore ; $50b3
 	xor a, a ; $50b5
 	ld [bc], a ; $50b6
 	ld a, h ; $50b7
@@ -2642,7 +2642,7 @@ TextCmdPrintArgString:
 	sra a ; $50bc
 	sra a ; $50be
 	or a, a ; $50c0
-	jr z, Label_05_50d1 ; $50c1
+	jr z, .step ; $50c1
 	ld b, a ; $50c3
 	ld a, h ; $50c4
 	and a, $0f ; $50c5
@@ -2650,14 +2650,14 @@ TextCmdPrintArgString:
 	ld h, a ; $50c9
 	ld a, b ; $50ca
 	wram_bank ; $50cb
-	jr Label_05_50d8 ; $50cf
-Label_05_50d1:
+	jr .step2 ; $50cf
+.step:
 	ld b, a ; $50d1
 	ld a, h ; $50d2
 	and a, $0f ; $50d3
 	or a, $c0 ; $50d5
 	ld h, a ; $50d7
-Label_05_50d8:
+.step2:
 	push de ; $50d8
 	ld de, wInlineTextBuffer ; $50d9
 	ld bc, $0020 ; $50dc
@@ -2666,7 +2666,7 @@ Label_05_50d8:
 	wram_bank $05 ; $50e3
 	ld hl, wInlineTextBuffer ; $50e9
 	call RenderInlineString ; $50ec
-Label_05_50ef:
+.restore:
 	pop af ; $50ef
 	wram_bank ; $50f0
 	pop bc ; $50f4
@@ -2767,7 +2767,7 @@ PushTextArgShortTextId:
 	wram_bank $05 ; $5182
 	ld a, [wTextArgShortTextWriteIndex] ; $5188
 	cp a, $10 ; $518b
-	jr z, Label_05_519e ; $518d
+	jr z, .restore ; $518d
 	ld b, $00 ; $518f
 	ld c, a ; $5191
 	inc a ; $5192
@@ -2776,7 +2776,7 @@ PushTextArgShortTextId:
 	ld hl, $d8f0 ; $5199
 	add hl, bc ; $519c
 	ld [hl], d ; $519d
-Label_05_519e:
+.restore:
 	pop af ; $519e
 	wram_bank ; $519f
 	pop hl ; $51a3
@@ -2795,12 +2795,12 @@ TextCmdApplyDakuten:
 	call WrapTextCellPointerPrevRow ; $51b1
 	ld a, [de] ; $51b4
 	cp a, $03 ; $51b5
-	jr nz, Label_05_51bd ; $51b7
+	jr nz, .step ; $51b7
 	ld a, $0e ; $51b9
-	jr Label_05_51bf ; $51bb
-Label_05_51bd:
+	jr .store ; $51bb
+.step:
 	ld a, $de ; $51bd
-Label_05_51bf:
+.store:
 	ld [de], a ; $51bf
 	pop de ; $51c0
 	call RedrawActiveTextWindow ; $51c1
@@ -2817,12 +2817,12 @@ TextCmdApplyHandakuten:
 	call WrapTextCellPointerPrevRow ; $51d1
 	ld a, [de] ; $51d4
 	cp a, $03 ; $51d5
-	jr nz, Label_05_51dd ; $51d7
+	jr nz, .step ; $51d7
 	ld a, $0f ; $51d9
-	jr Label_05_51df ; $51db
-Label_05_51dd:
+	jr .store ; $51db
+.step:
 	ld a, $df ; $51dd
-Label_05_51df:
+.store:
 	ld [de], a ; $51df
 	pop de ; $51e0
 	call RedrawActiveTextWindow ; $51e1
@@ -2866,7 +2866,7 @@ MeasureNextArgStringWidth:
 	sra a ; $5220
 	sra a ; $5222
 	or a, a ; $5224
-	jr z, Label_05_5235 ; $5225
+	jr z, .step ; $5225
 	ld b, a ; $5227
 	ld a, h ; $5228
 	and a, $0f ; $5229
@@ -2874,8 +2874,8 @@ MeasureNextArgStringWidth:
 	ld h, a ; $522d
 	ld a, b ; $522e
 	wram_bank ; $522f
-	jr Label_05_5241 ; $5233
-Label_05_5235:
+	jr .step2 ; $5233
+.step:
 	ld b, a ; $5235
 	ld a, h ; $5236
 	and a, $0f ; $5237
@@ -2883,7 +2883,7 @@ Label_05_5235:
 	ld h, a ; $523b
 	ld a, b ; $523c
 	wram_bank ; $523d
-Label_05_5241:
+.step2:
 	push de ; $5241
 	ld de, wInlineTextBuffer ; $5242
 	ld bc, $0020 ; $5245
@@ -2892,16 +2892,16 @@ Label_05_5241:
 	wram_bank $05 ; $524c
 	ld hl, wInlineTextBuffer ; $5252
 	ld b, $00 ; $5255
-Label_05_5257:
+.loop:
 	ld a, [hl+] ; $5257
 	or a, a ; $5258
-	jr z, Label_05_5263 ; $5259
+	jr z, .step3 ; $5259
 	call GetGlyphWidth ; $525b
 	ld a, c ; $525e
 	add a, b ; $525f
 	ld b, a ; $5260
-	jr Label_05_5257 ; $5261
-Label_05_5263:
+	jr .loop ; $5261
+.step3:
 	ld a, b ; $5263
 	pop hl ; $5264
 	pop bc ; $5265
@@ -2911,16 +2911,16 @@ MeasureMainCharacterNameWidth:
 	push hl ; $5268
 	ld hl, wStoryModeNameOfMainCharacter ; $5269
 	ld b, $00 ; $526c
-Label_05_526e:
+.loop:
 	ld a, [hl+] ; $526e
 	cp a, $00 ; $526f
-	jr z, Label_05_527b ; $5271
+	jr z, .step ; $5271
 	call GetGlyphWidth ; $5273
 	ld a, c ; $5276
 	add a, b ; $5277
 	ld b, a ; $5278
-	jr Label_05_526e ; $5279
-Label_05_527b:
+	jr .loop ; $5279
+.step:
 	ld a, b ; $527b
 	pop hl ; $527c
 	pop bc ; $527d
@@ -2930,16 +2930,16 @@ MeasurePartnerCharacterNameWidth:
 	push hl ; $5280
 	ld hl, wStoryModeNameOfPartnerCharacter ; $5281
 	ld b, $00 ; $5284
-Label_05_5286:
+.loop:
 	ld a, [hl+] ; $5286
 	cp a, $00 ; $5287
-	jr z, Label_05_5293 ; $5289
+	jr z, .step ; $5289
 	call GetGlyphWidth ; $528b
 	ld a, c ; $528e
 	add a, b ; $528f
 	ld b, a ; $5290
-	jr Label_05_5286 ; $5291
-Label_05_5293:
+	jr .loop ; $5291
+.step:
 	ld a, b ; $5293
 	pop hl ; $5294
 	pop bc ; $5295
@@ -2966,17 +2966,17 @@ GetNextArgShortTextLength:
 	call FetchShortText ; $52b2
 	ld hl, wShortTextBuffer ; $52b5
 	ld b, $00 ; $52b8
-Label_05_52ba:
+.loop:
 	ld a, [hl+] ; $52ba
 	cp a, $00 ; $52bb
-	jr z, Label_05_52ca ; $52bd
+	jr z, .step ; $52bd
 	cp a, $de ; $52bf
-	jr z, Label_05_52ba ; $52c1
+	jr z, .loop ; $52c1
 	cp a, $df ; $52c3
-	jr z, Label_05_52ba ; $52c5
+	jr z, .loop ; $52c5
 	inc b ; $52c7
-	jr Label_05_52ba ; $52c8
-Label_05_52ca:
+	jr .loop ; $52c8
+.step:
 	ld a, b ; $52ca
 	pop hl ; $52cb
 	pop bc ; $52cc
@@ -2990,7 +2990,7 @@ TextCmdPrintArgNumber:
 	ld b, a ; $52db
 	ld a, [$d848] ; $52dc
 	cp a, b ; $52df
-	jr z, Label_05_52fe ; $52e0
+	jr z, .restore ; $52e0
 	ld b, $00 ; $52e2
 	ld c, a ; $52e4
 	sla c ; $52e5
@@ -3006,11 +3006,11 @@ TextCmdPrintArgNumber:
 	ld h, b ; $52f7
 	ld l, c ; $52f8
 	call RenderInlineNumber ; $52f9
-	jr Label_05_5303 ; $52fc
-Label_05_52fe:
+	jr .restore2 ; $52fc
+.restore:
 	pop af ; $52fe
 	wram_bank ; $52ff
-Label_05_5303:
+.restore2:
 	pop bc ; $5303
 	ret ; $5304
 MeasureNextArgNumberWidth:
@@ -3035,24 +3035,24 @@ MeasureNextArgNumberWidth:
 	add hl, bc ; $5323
 	ld a, $05 ; $5324
 	bit 7, h ; $5326
-	jr z, Label_05_536f ; $5328
+	jr z, IsTileBlockedAt.step ; $5328
 	add hl, de ; $532a
-Label_05_532b:
+.loop:
 	add hl, bc ; $532b
 	bit 7, h ; $532c
-	jr z, Label_05_532b ; $532e
+	jr z, .loop ; $532e
 	add hl, de ; $5330
 	ld bc, $fc18 ; $5331
 	ld de, $03e8 ; $5334
 	add hl, bc ; $5337
 	ld a, $04 ; $5338
 	bit 7, h ; $533a
-	jr z, Label_05_536f ; $533c
+	jr z, IsTileBlockedAt.step ; $533c
 	add hl, de ; $533e
-Label_05_533f:
+.loopB:
 	add hl, bc ; $533f
 	bit 7, h ; $5340
-	jr z, Label_05_533f ; $5342
+	jr z, .loopB ; $5342
 	add hl, de ; $5344
 	ld bc, hSpriteQueueBase ; $5345
 	ld de, $0064 ; $5348
@@ -3060,29 +3060,29 @@ IsTileBlockedAt:
 	add hl, bc ; $534b
 	ld a, $03 ; $534c
 	bit 7, h ; $534e
-	jr z, Label_05_536f ; $5350
+	jr z, .step ; $5350
 	add hl, de ; $5352
-Label_05_5353:
+.loop:
 	add hl, bc ; $5353
 	bit 7, h ; $5354
-	jr z, Label_05_5353 ; $5356
+	jr z, .loop ; $5356
 	add hl, de ; $5358
 	ld bc, $fff6 ; $5359
 	ld de, $000a ; $535c
 	add hl, bc ; $535f
 	ld a, $02 ; $5360
 	bit 7, h ; $5362
-	jr z, Label_05_536f ; $5364
+	jr z, .step ; $5364
 	add hl, de ; $5366
-Label_05_5367:
+.loopB:
 	add hl, bc ; $5367
 	bit 7, h ; $5368
-	jr z, Label_05_5367 ; $536a
+	jr z, .loopB ; $536a
 	add hl, de ; $536c
 	ld a, $01 ; $536d
-Label_05_536f:
+.step:
 	ld b, $00 ; $536f
-Label_05_5371:
+.loopBB:
 	push af ; $5371
 	push hl ; $5372
 	dec a ; $5373
@@ -3090,15 +3090,15 @@ Label_05_5371:
 	ld hl, PowersOfTen_05 ; $5375
 	add a, l ; $5378
 	ld l, a ; $5379
-	jr nc, Label_05_537d ; $537a
+	jr nc, .read ; $537a
 	inc h ; $537c
-Label_05_537d:
+.read:
 	ld a, [hl+] ; $537d
 	ld d, [hl] ; $537e
 	ld e, a ; $537f
 	pop hl ; $5380
 	xor a, a ; $5381
-Label_05_5382:
+.loopBBB:
 	ld a, l ; $5382
 	sub a, e ; $5383
 	ld l, a ; $5384
@@ -3106,10 +3106,10 @@ Label_05_5382:
 	sbc a, d ; $5386
 	ld h, a ; $5387
 	bit 7, h ; $5388
-	jr nz, Label_05_538f ; $538a
+	jr nz, .offset ; $538a
 	inc a ; $538c
-	jr Label_05_5382 ; $538d
-Label_05_538f:
+	jr .loopBBB ; $538d
+.offset:
 	add hl, de ; $538f
 	ld c, $30 ; $5390
 	add a, c ; $5392
@@ -3119,7 +3119,7 @@ Label_05_538f:
 	ld b, a ; $5398
 	pop af ; $5399
 	dec a ; $539a
-	jr nz, Label_05_5371 ; $539b
+	jr nz, .loopBB ; $539b
 	ld a, b ; $539d
 	pop de ; $539e
 	pop bc ; $539f
@@ -3161,9 +3161,9 @@ TextCmdPrintShortText:
 	ld hl, $001b ; $53d0
 	add a, l ; $53d3
 	ld l, a ; $53d4
-	jr nc, Label_05_53d8 ; $53d5
+	jr nc, .step ; $53d5
 	inc h ; $53d7
-Label_05_53d8:
+.step:
 	ld de, wInlineTextBuffer ; $53d8
 	call FetchShortTextToBuffer ; $53db
 	pop de ; $53de
@@ -3180,23 +3180,23 @@ MeasureIndexedShortTextWidth:
 	ld hl, $001b ; $53ee
 	add a, l ; $53f1
 	ld l, a ; $53f2
-	jr nc, Label_05_53f6 ; $53f3
+	jr nc, .step ; $53f3
 	inc h ; $53f5
-Label_05_53f6:
+.step:
 	ld de, wInlineTextBuffer ; $53f6
 	farcall FetchShortTextToBuffer ; $53f9
 	ld hl, wInlineTextBuffer ; $53fc
 	ld b, $00 ; $53ff
-Label_05_5401:
+.loop:
 	ld a, [hl+] ; $5401
 	cp a, $00 ; $5402
-	jr z, Label_05_540e ; $5404
+	jr z, .step2 ; $5404
 	call GetGlyphWidth ; $5406
 	ld a, c ; $5409
 	add a, b ; $540a
 	ld b, a ; $540b
-	jr Label_05_5401 ; $540c
-Label_05_540e:
+	jr .loop ; $540c
+.step2:
 	ld a, b ; $540e
 	pop hl ; $540f
 	pop de ; $5410
@@ -3216,14 +3216,14 @@ WrapTextCellPointer:
 	sra l ; $5423
 	ld a, [$d82b] ; $5425
 	cp a, l ; $5428
-	jr z, Label_05_5433 ; $5429
+	jr z, .step ; $5429
 	ld a, e ; $542b
 	sub a, $20 ; $542c
 	ld e, a ; $542e
-	jr nc, Label_05_5433 ; $542f
+	jr nc, .step ; $542f
 	ld e, a ; $5431
 	dec d ; $5432
-Label_05_5433:
+.step:
 	ld a, d ; $5433
 	and a, $03 ; $5434
 	ld h, a ; $5436
@@ -3248,15 +3248,15 @@ WrapTextCellPointerPrevRow:
 	dec a ; $5452
 	and a, $1f ; $5453
 	cp a, l ; $5455
-	jr z, Label_05_5462 ; $5456
+	jr z, .step ; $5456
 	ld a, e ; $5458
 	sub a, $20 ; $5459
 	ld e, a ; $545b
-	jr nc, Label_05_5462 ; $545c
+	jr nc, .step ; $545c
 	and a, $3f ; $545e
 	ld e, a ; $5460
 	dec d ; $5461
-Label_05_5462:
+.step:
 	ld a, d ; $5462
 	and a, $03 ; $5463
 	ld h, a ; $5465
@@ -3436,7 +3436,7 @@ RenderInlineString:
 	ld h, $00 ; $5561
 	ld l, a ; $5563
 	call FormatHexWord ; $5564
-	jp Label_05_55c9 ; $5567
+	jp RenderInlineNumber.step ; $5567
 	push af ; $556a
 	push bc ; $556b
 	push hl ; $556c
@@ -3452,7 +3452,7 @@ RenderInlineString:
 	ld b, d ; $5578
 	ld c, e ; $5579
 	call FormatHexWord ; $557a
-	jp Label_05_55c9 ; $557d
+	jp RenderInlineNumber.step ; $557d
 	push af ; $5580
 	push bc ; $5581
 	push hl ; $5582
@@ -3467,7 +3467,7 @@ RenderInlineString:
 	ld l, a ; $558e
 	ld a, $04 ; $558f
 	call FormatDecimalNumber ; $5591
-	jp Label_05_55c9 ; $5594
+	jp RenderInlineNumber.step ; $5594
 RenderInlineNumber:
 	push af ; $5597
 	push bc ; $5598
@@ -3487,19 +3487,19 @@ RenderInlineNumber:
 	call FormatDecimalNumber ; $55a9
 	ld a, [$c360] ; $55ac
 	or a, a ; $55af
-	jr z, Label_05_55c9 ; $55b0
+	jr z, .step ; $55b0
 	push bc ; $55b2
 	ld h, b ; $55b3
 	ld l, c ; $55b4
 	ld d, $00 ; $55b5
 	ld e, $05 ; $55b7
-Label_05_55b9:
+.loop:
 	ld a, [hl+] ; $55b9
 	or a, a ; $55ba
-	jr z, Label_05_55c0 ; $55bb
+	jr z, .restore ; $55bb
 	dec e ; $55bd
-	jr nz, Label_05_55b9 ; $55be
-Label_05_55c0:
+	jr nz, .loop ; $55be
+.restore:
 	pop bc ; $55c0
 	pop hl ; $55c1
 	add hl, de ; $55c2
@@ -3507,12 +3507,12 @@ Label_05_55c0:
 	ld e, l ; $55c4
 	ld h, b ; $55c5
 	ld l, c ; $55c6
-	jr Label_05_55cc ; $55c7
-Label_05_55c9:
+	jr .renderInlineString ; $55c7
+.step:
 	ld h, b ; $55c9
 	ld l, c ; $55ca
 	pop de ; $55cb
-Label_05_55cc:
+.renderInlineString:
 	call RenderInlineString ; $55cc
 	add sp, 10 ; $55cf
 	pop hl ; $55d1
@@ -3558,9 +3558,9 @@ RenderWindowText:
 	ld a, $06 ; $5601
 	add a, l ; $5603
 	ld l, a ; $5604
-	jr nc, Label_05_5608 ; $5605
+	jr nc, .read ; $5605
 	inc h ; $5607
-Label_05_5608:
+.read:
 	ld a, [hl+] ; $5608
 	ld b, [hl] ; $5609
 	ld c, a ; $560a
@@ -3570,15 +3570,15 @@ Label_05_5608:
 	ld b, a ; $560f
 	ld a, [wTextPageBreakRequest] ; $5610
 	or a, a ; $5613
-	jr z, Label_05_561a ; $5614
+	jr z, .step ; $5614
 	xor a, a ; $5616
 	ld [wTextPageBreakRequest], a ; $5617
-Label_05_561a:
+.step:
 	ld a, b ; $561a
 	cp a, $03 ; $561b
 	ld a, $01 ; $561d
 	ld [$d85f], a ; $561f
-	jr z, Label_05_5643 ; $5622
+	jr z, .restore ; $5622
 	xor a, a ; $5624
 	ld [$d85f], a ; $5625
 	ld h, d ; $5628
@@ -3600,7 +3600,7 @@ Label_05_561a:
 	pop hl ; $563c
 	ld hl, wTextBuffer ; $563d
 	call RenderTextString ; $5640
-Label_05_5643:
+.restore:
 	pop hl ; $5643
 	pop de ; $5644
 	pop bc ; $5645
@@ -3781,51 +3781,51 @@ MeasureTextDimensions:
 	ld b, a ; $574c
 	ld d, a ; $574d
 	ld e, a ; $574e
-Label_05_574f:
+.loop:
 	ld a, [hl+] ; $574f
 	cp a, $00 ; $5750
-	jr z, Label_05_5789 ; $5752
+	jr z, .step ; $5752
 	cp a, $01 ; $5754
-	jr nz, Label_05_5763 ; $5756
+	jr nz, .compare ; $5756
 	inc e ; $5758
 	ld a, d ; $5759
 	cp a, b ; $575a
 	ld a, b ; $575b
 	ld b, $00 ; $575c
-	jr nc, Label_05_574f ; $575e
+	jr nc, .loop ; $575e
 	ld d, a ; $5760
-	jr Label_05_574f ; $5761
-Label_05_5763:
+	jr .loop ; $5761
+.compare:
 	cp a, $08 ; $5763
-	jr nz, Label_05_576e ; $5765
+	jr nz, .compare2 ; $5765
 	call GetNextArgShortTextLength ; $5767
 	add a, b ; $576a
 	ld b, a ; $576b
-	jr Label_05_574f ; $576c
-Label_05_576e:
+	jr .loop ; $576c
+.compare2:
 	cp a, $09 ; $576e
-	jr nz, Label_05_5779 ; $5770
+	jr nz, .compare3 ; $5770
 	call MeasureNextArgNumberWidth ; $5772
 	add a, b ; $5775
 	ld b, a ; $5776
-	jr Label_05_574f ; $5777
-Label_05_5779:
+	jr .loop ; $5777
+.compare3:
 	cp a, $20 ; $5779
-	jr c, Label_05_574f ; $577b
+	jr c, .loop ; $577b
 	cp a, $7b ; $577d
-	jr nc, Label_05_574f ; $577f
+	jr nc, .loop ; $577f
 	call GetGlyphWidth ; $5781
 	ld a, c ; $5784
 	add a, b ; $5785
 	ld b, a ; $5786
-	jr Label_05_574f ; $5787
-Label_05_5789:
+	jr .loop ; $5787
+.step:
 	inc e ; $5789
 	ld a, d ; $578a
 	cp a, b ; $578b
-	jr nc, Label_05_578f ; $578c
+	jr nc, .step2 ; $578c
 	ld d, b ; $578e
-Label_05_578f:
+.step2:
 	inc d ; $578f
 	inc d ; $5790
 	inc d ; $5791
@@ -3849,7 +3849,7 @@ DelayTextCharacter:
 	ld a, [$d829] ; $57a9
 	or a, a ; $57ac
 	ld b, a ; $57ad
-	jr z, Label_05_57dd ; $57ae
+	jr z, .restore ; $57ae
 	ld a, c ; $57b0
 	cp a, $20 ; $57b1
 	jr nz, .checkSpeed ; $57b3
@@ -3874,10 +3874,10 @@ DelayTextCharacter:
 	call AdvanceFrame ; $57d1
 	ldh a, [hPlayerInputFlags] ; $57d4
 	and a, $f3 ; $57d6
-	jr nz, Label_05_57dd ; $57d8
+	jr nz, .restore ; $57d8
 	dec b ; $57da
 	jr nz, .waitFrame ; $57db
-Label_05_57dd:
+.restore:
 	pop af ; $57dd
 	wram_bank ; $57de
 	pop hl ; $57e2
@@ -3934,22 +3934,22 @@ ShowSpeakerDialogue:
 	call AddTextIdOffset ; $583f
 	ld a, b ; $5842
 	cp a, $ff ; $5843
-	jr nz, Label_05_5849 ; $5845
+	jr nz, .store ; $5845
 	ld a, $00 ; $5847
-Label_05_5849:
+.store:
 	ld [$d851], a ; $5849
 	call ApplyMessageSpeed ; $584c
 	bit 7, a ; $584f
 	ld b, $08 ; $5851
-	jr nz, Label_05_5859 ; $5853
+	jr nz, .step ; $5853
 	call GetSpeakerVoice ; $5855
 	ld b, a ; $5858
-Label_05_5859:
+.step:
 	ld a, b ; $5859
 	ld [$d862], a ; $585a
 	ld a, [$d824] ; $585d
 	cp a, $ff ; $5860
-	jr nz, Label_05_5888 ; $5862
+	jr nz, .loop ; $5862
 	xor a, a ; $5864
 	ld [$c3bb], a ; $5865
 	ld [$c3bc], a ; $5868
@@ -3963,7 +3963,7 @@ Label_05_5859:
 	ld a, [$d851] ; $587f
 	call OpenSpeechBubble ; $5882
 	call RestoreShadowTilemap ; $5885
-Label_05_5888:
+.loop:
 	xor a, a ; $5888
 	ld [$c3bb], a ; $5889
 	ld [$c3bc], a ; $588c
@@ -3983,12 +3983,12 @@ Label_05_5888:
 	call RenderActiveWindowText ; $58b5
 	ld a, [wTextPageBreakRequest] ; $58b8
 	or a, a ; $58bb
-	jr z, Label_05_58c9 ; $58bc
+	jr z, .step2 ; $58bc
 	ld a, [$d824] ; $58be
 	call RestoreTilemapUnderWindow ; $58c1
 	call FitWindowToText ; $58c4
-	jr Label_05_5888 ; $58c7
-Label_05_58c9:
+	jr .loop ; $58c7
+.step2:
 	ld a, [$d824] ; $58c9
 	call CloseWindow ; $58cc
 	ld a, $ff ; $58cf
@@ -4024,22 +4024,22 @@ ShowSpeakerDialogueRestoreBG:
 	call AddTextIdOffset ; $5910
 	ld a, b ; $5913
 	cp a, $ff ; $5914
-	jr nz, Label_05_591a ; $5916
+	jr nz, .store ; $5916
 	ld a, $00 ; $5918
-Label_05_591a:
+.store:
 	ld [$d851], a ; $591a
 	call ApplyMessageSpeed ; $591d
 	bit 7, a ; $5920
 	ld b, $08 ; $5922
-	jr nz, Label_05_592a ; $5924
+	jr nz, .step ; $5924
 	call GetSpeakerVoice ; $5926
 	ld b, a ; $5929
-Label_05_592a:
+.step:
 	ld a, b ; $592a
 	ld [$d862], a ; $592b
 	ld a, [$d824] ; $592e
 	cp a, $ff ; $5931
-	jr nz, Label_05_5956 ; $5933
+	jr nz, .loop ; $5933
 	xor a, a ; $5935
 	ld [$c3bb], a ; $5936
 	ld [$c3bc], a ; $5939
@@ -4052,7 +4052,7 @@ Label_05_592a:
 	wram_bank ; $594c
 	ld a, [$d851] ; $5950
 	call OpenSpeechBubble ; $5953
-Label_05_5956:
+.loop:
 	xor a, a ; $5956
 	ld [$c3bb], a ; $5957
 	ld [$c3bc], a ; $595a
@@ -4073,10 +4073,10 @@ Label_05_5956:
 	call RenderActiveWindowText ; $5986
 	ld a, [wTextPageBreakRequest] ; $5989
 	or a, a ; $598c
-	jr z, Label_05_5994 ; $598d
+	jr z, .clearTextArgStringWriteIndex ; $598d
 	call FitWindowToText ; $598f
-	jr Label_05_5956 ; $5992
-Label_05_5994:
+	jr .loop ; $5992
+.clearTextArgStringWriteIndex:
 	xor a, a ; $5994
 	ld [wTextArgStringWriteIndex], a ; $5995
 	ld [$d866], a ; $5998
@@ -4109,19 +4109,19 @@ ShowDialogueAtPosition:
 	ld a, b ; $59d3
 	bit 7, a ; $59d4
 	ld b, $08 ; $59d6
-	jr nz, Label_05_59de ; $59d8
+	jr nz, .step ; $59d8
 	call GetSpeakerVoice ; $59da
 	ld b, a ; $59dd
-Label_05_59de:
+.step:
 	ld a, b ; $59de
 	ld [$d862], a ; $59df
 	call ApplyMessageSpeed ; $59e2
 	ld a, [$d824] ; $59e5
 	cp a, $ff ; $59e8
-	jr nz, Label_05_59f2 ; $59ea
+	jr nz, .loop ; $59ea
 	call OpenDialogueWindowCentered ; $59ec
 	call RefreshShadowTilemapFromMapBuffer ; $59ef
-Label_05_59f2:
+.loop:
 	xor a, a ; $59f2
 	ld [$c3bb], a ; $59f3
 	ld [$c3bc], a ; $59f6
@@ -4141,7 +4141,7 @@ Label_05_59f2:
 	call RenderActiveWindowText ; $5a1f
 	ld a, [wTextPageBreakRequest] ; $5a22
 	or a, a ; $5a25
-	jr nz, Label_05_59f2 ; $5a26
+	jr nz, .loop ; $5a26
 	ld a, [$d824] ; $5a28
 	call CloseWindow ; $5a2b
 	ld a, $ff ; $5a2e
@@ -4176,21 +4176,21 @@ DrawDialogueAtPosition:
 	ld a, b ; $5a64
 	bit 7, a ; $5a65
 	ld a, $08 ; $5a67
-	jr nz, Label_05_5a6e ; $5a69
+	jr nz, .store ; $5a69
 	call GetSpeakerVoice ; $5a6b
-Label_05_5a6e:
+.store:
 	ld [$d862], a ; $5a6e
 	ld a, [$d824] ; $5a71
 	cp a, $ff ; $5a74
-	jr nz, Label_05_5a7b ; $5a76
+	jr nz, .loop ; $5a76
 	call OpenDialogueWindowCentered ; $5a78
-Label_05_5a7b:
+.loop:
 	call SetActiveWindowTextId ; $5a7b
 	call RestoreShadowTilemap ; $5a7e
 	call StubNop_05_4626 ; $5a81
 	ld a, [wTextPageBreakRequest] ; $5a84
 	or a, a ; $5a87
-	jr nz, Label_05_5a7b ; $5a88
+	jr nz, .loop ; $5a88
 	pop af ; $5a8a
 	wram_bank ; $5a8b
 	pop de ; $5a8f
@@ -4223,9 +4223,9 @@ OpenSpeechBubble:
 	and a, $3f ; $5ab9
 	ld e, a ; $5abb
 	rl b ; $5abc
-	jr nc, Label_05_5ac2 ; $5abe
-	jr Label_05_5aee ; $5ac0
-Label_05_5ac2:
+	jr nc, .getObjectSlotPointer ; $5abe
+	jr .step2 ; $5ac0
+.getObjectSlotPointer:
 	call GetObjectSlotPointer ; $5ac2
 	ld a, [wCameraY + 1] ; $5ac5
 	ld b, a ; $5ac8
@@ -4243,14 +4243,14 @@ Label_05_5ac2:
 	ld a, [hl] ; $5ade
 	sub a, b ; $5adf
 	cp a, $0a ; $5ae0
-	jr c, Label_05_5aea ; $5ae2
+	jr c, .step ; $5ae2
 	ld e, $00 ; $5ae4
 	ld b, $00 ; $5ae6
-	jr Label_05_5aee ; $5ae8
-Label_05_5aea:
+	jr .step2 ; $5ae8
+.step:
 	ld e, $0a ; $5aea
 	ld b, $01 ; $5aec
-Label_05_5aee:
+.step2:
 	wram_bank $05 ; $5aee
 	ld a, b ; $5af4
 	ld [$d85c], a ; $5af5
@@ -4284,9 +4284,9 @@ Label_05_5aee:
 	inc hl ; $5b37
 	ld a, [hl] ; $5b38
 	rr a ; $5b39
-	jr c, Label_05_5b3e ; $5b3b
+	jr c, .step3 ; $5b3b
 	inc b ; $5b3d
-Label_05_5b3e:
+.step3:
 	dec hl ; $5b3e
 	dec hl ; $5b3f
 	call RestoreShadowTilemap ; $5b40
@@ -4294,7 +4294,7 @@ Label_05_5b3e:
 	ld a, [$d820] ; $5b44
 	call SaveWindowStruct ; $5b47
 	pop af ; $5b4a
-Label_05_5b4b:
+.loop:
 	push af ; $5b4b
 	ld a, [$d820] ; $5b4c
 	call GetWindowStructPtr ; $5b4f
@@ -4306,47 +4306,47 @@ Label_05_5b4b:
 	call RedrawWindowRowsPadded ; $5b61
 	ld a, d ; $5b64
 	cp a, [hl] ; $5b65
-	jr z, Label_05_5b6c ; $5b66
+	jr z, .step4 ; $5b66
 	dec a ; $5b68
 	and a, $1f ; $5b69
 	ld d, a ; $5b6b
-Label_05_5b6c:
-	jr Label_05_5b75 ; $5b6c
+.step4:
+	jr .step5 ; $5b6c
 	dec d ; $5b6e
 	bit 7, d ; $5b6f
-	jr z, Label_05_5b75 ; $5b71
+	jr z, .step5 ; $5b71
 	ld d, $00 ; $5b73
-Label_05_5b75:
+.step5:
 	inc hl ; $5b75
 	dec e ; $5b76
 	ld a, e ; $5b77
 	sub a, [hl] ; $5b78
 	bit 7, a ; $5b79
-	jr z, Label_05_5b7f ; $5b7b
+	jr z, .step6 ; $5b7b
 	ld a, [hl] ; $5b7d
 	ld e, a ; $5b7e
-Label_05_5b7f:
+.step6:
 	inc hl ; $5b7f
 	inc b ; $5b80
 	inc b ; $5b81
 	ld a, [hl] ; $5b82
 	cp a, b ; $5b83
-	jr nc, Label_05_5b87 ; $5b84
+	jr nc, .step7 ; $5b84
 	ld b, a ; $5b86
-Label_05_5b87:
+.step7:
 	inc hl ; $5b87
 	inc c ; $5b88
 	ld a, [hl] ; $5b89
 	cp a, c ; $5b8a
-	jr nc, Label_05_5b8e ; $5b8b
+	jr nc, .step8 ; $5b8b
 	ld c, a ; $5b8d
-Label_05_5b8e:
+.step8:
 	dec hl ; $5b8e
 	dec hl ; $5b8f
 	dec hl ; $5b90
 	pop af ; $5b91
 	dec a ; $5b92
-	jr nz, Label_05_5b4b ; $5b93
+	jr nz, .loop ; $5b93
 	ld a, [$d824] ; $5b95
 	call RestoreWindowStruct ; $5b98
 	pop hl ; $5b9b
@@ -4534,9 +4534,9 @@ FetchShortText:
 	add a, a ; $5cbd
 	add a, l ; $5cbe
 	ld l, a ; $5cbf
-	jr nc, Label_05_5cc3 ; $5cc0
+	jr nc, .read ; $5cc0
 	inc h ; $5cc2
-Label_05_5cc3:
+.read:
 	ld a, [hl+] ; $5cc3
 	ld h, [hl] ; $5cc4
 	ld l, a ; $5cc5
@@ -4560,31 +4560,31 @@ ShortTextFetchers_05:
 	dw $5ce7 ; record 14
 	dw $5ce7 ; record 15
 	farcall FetchShortText_30 ; $5ce7
-	jr Label_05_5d26 ; $5cea
+	jr .restore ; $5cea
 	farcall FetchShortText_31 ; $5cec
-	jr Label_05_5d26 ; $5cef
+	jr .restore ; $5cef
 	farcall FetchShortText_32 ; $5cf1
-	jr Label_05_5d26 ; $5cf4
+	jr .restore ; $5cf4
 	farcall FetchShortText_33 ; $5cf6
-	jr Label_05_5d26 ; $5cf9
+	jr .restore ; $5cf9
 	farcall FetchShortText_34 ; $5cfb
-	jr Label_05_5d26 ; $5cfe
+	jr .restore ; $5cfe
 	farcall FetchShortText_35 ; $5d00
-	jr Label_05_5d26 ; $5d03
+	jr .restore ; $5d03
 	farcall FetchShortText_36 ; $5d05
-	jr Label_05_5d26 ; $5d08
+	jr .restore ; $5d08
 	farcall FetchShortText_37 ; $5d0a
-	jr Label_05_5d26 ; $5d0d
+	jr .restore ; $5d0d
 	farcall FetchShortText_6e ; $5d0f
-	jr Label_05_5d26 ; $5d12
+	jr .restore ; $5d12
 	farcall FetchShortText_1f ; $5d14
-	jr Label_05_5d26 ; $5d17
+	jr .restore ; $5d17
 	farcall FetchShortText_25 ; $5d19
-	jr Label_05_5d26 ; $5d1c
+	jr .restore ; $5d1c
 	farcall FetchShortText_26 ; $5d1e
-	jr Label_05_5d26 ; $5d21
+	jr .restore ; $5d21
 	farcall FetchShortText_5e ; $5d23
-Label_05_5d26:
+.restore:
 	pop hl ; $5d26
 	pop de ; $5d27
 	pop bc ; $5d28
@@ -4911,7 +4911,7 @@ StampGlyphTileAtPen:
 	push hl ; $5f10
 	ld a, [$cb78] ; $5f11
 	or a, a ; $5f14
-	jr z, Label_05_5f4d ; $5f15
+	jr z, .restore ; $5f15
 	ld hl, wGlyphTileWritePtr ; $5f17
 	ld a, [hl+] ; $5f1a
 	ld d, [hl] ; $5f1b
@@ -4947,11 +4947,11 @@ StampGlyphTileAtPen:
 .checkCell:
 	ld a, [de] ; $5f44
 	cp a, $06 ; $5f45
-	jr z, Label_05_5f4d ; $5f47
+	jr z, .restore ; $5f47
 	ld a, c ; $5f49
 	add a, $80 ; $5f4a
 	ld [de], a ; $5f4c
-Label_05_5f4d:
+.restore:
 	pop hl ; $5f4d
 	pop de ; $5f4e
 	pop bc ; $5f4f
@@ -4984,7 +4984,7 @@ RenderTextToBuffer64:
 .charLoop:
 	ld a, [hl] ; $5f7f
 	cp a, $20 ; $5f80
-	jr nc, Label_05_5fbe ; $5f82
+	jr nc, TextCodeLiteral_05.store ; $5f82
 	push hl ; $5f84
 	push af ; $5f85
 	add a, a ; $5f86
@@ -5025,15 +5025,15 @@ TextCodeLineBreak_05:
 	jr RenderTextToBuffer64.charLoop ; $5fbb
 TextCodeLiteral_05:
 	pop hl ; $5fbd
-Label_05_5fbe:
+.store:
 	ld [de], a ; $5fbe
 	inc hl ; $5fbf
 	ld a, [hl] ; $5fc0
 	cp a, $de ; $5fc1
-	jr z, Label_05_5fc9 ; $5fc3
+	jr z, .step ; $5fc3
 	cp a, $df ; $5fc5
-	jr nz, Label_05_5fdb ; $5fc7
-Label_05_5fc9:
+	jr nz, .step2 ; $5fc7
+.step:
 	push hl ; $5fc9
 	ld h, d ; $5fca
 	ld l, e ; $5fcb
@@ -5043,13 +5043,13 @@ Label_05_5fc9:
 	cp a, $03 ; $5fcf
 	ld a, b ; $5fd1
 	ld b, $ff ; $5fd2
-	jr nz, Label_05_5fd8 ; $5fd4
+	jr nz, .store2 ; $5fd4
 	sub a, $d0 ; $5fd6
-Label_05_5fd8:
+.store2:
 	ld [hl], a ; $5fd8
 	pop hl ; $5fd9
 	inc hl ; $5fda
-Label_05_5fdb:
+.step2:
 	inc de ; $5fdb
 	ld a, e ; $5fdc
 	and a, $3f ; $5fdd
@@ -5075,7 +5075,7 @@ GetObjectSlotPointer:
 	ret z ; $5ff7
 	ld hl, $d000 ; $5ff8
 	cp a, $18 ; $5ffb
-	jr nc, Label_05_600d ; $5ffd
+	jr nc, .done ; $5ffd
 	push bc ; $5fff
 	ld c, $00 ; $6000
 	ld b, a ; $6002
@@ -5085,7 +5085,7 @@ GetObjectSlotPointer:
 	rr c ; $6009
 	add hl, bc ; $600b
 	pop bc ; $600c
-Label_05_600d:
+.done:
 	ret ; $600d
 WriteStringToWindow:
 	push af ; $600e
@@ -5321,10 +5321,10 @@ CreateWindowWithTextId:
 	wram_bank $05 ; $6185
 	call CreateWindow ; $618b
 	bit 7, h ; $618e
-	jr nz, Label_05_6196 ; $6190
+	jr nz, .step ; $6190
 	ld b, a ; $6192
 	call SetWindowTextId ; $6193
-Label_05_6196:
+.step:
 	ld a, [$d820] ; $6196
 	ld b, a ; $6199
 	pop af ; $619a
@@ -5343,9 +5343,9 @@ RedrawWindowText:
 	wram_bank $05 ; $61aa
 	ld a, [$d824] ; $61b0
 	cp a, b ; $61b3
-	jr nz, Label_05_61fa ; $61b4
+	jr nz, .step ; $61b4
 	ld [$d821], a ; $61b6
-Label_05_61b9:
+.loop:
 	xor a, a ; $61b9
 	ld [$c3bb], a ; $61ba
 	ld [$c3bc], a ; $61bd
@@ -5372,9 +5372,9 @@ Label_05_61b9:
 	call RestoreTilemapUnderWindow ; $61ef
 	ld a, [wTextPageBreakRequest] ; $61f2
 	or a, a ; $61f5
-	jr nz, Label_05_61b9 ; $61f6
-	jr Label_05_6224 ; $61f8
-Label_05_61fa:
+	jr nz, .loop ; $61f6
+	jr .restore ; $61f8
+.step:
 	ld a, b ; $61fa
 	call GetWindowStructPtr ; $61fb
 	ld b, h ; $61fe
@@ -5388,9 +5388,9 @@ Label_05_61fa:
 	add hl, bc ; $6208
 	ld a, [hl] ; $6209
 	and a, $02 ; $620a
-	jr z, Label_05_620f ; $620c
+	jr z, .step2 ; $620c
 	inc d ; $620e
-Label_05_620f:
+.step2:
 	ld hl, $0006 ; $620f
 	add hl, bc ; $6212
 	ld a, [hl+] ; $6213
@@ -5398,11 +5398,11 @@ Label_05_620f:
 	ld l, a ; $6215
 	ld a, h ; $6216
 	cp a, $ff ; $6217
-	jr z, Label_05_6224 ; $6219
+	jr z, .restore ; $6219
 	call FetchDialogueText ; $621b
 	ld hl, wTextBuffer ; $621e
 	call RenderTextString ; $6221
-Label_05_6224:
+.restore:
 	pop af ; $6224
 	wram_bank ; $6225
 	pop hl ; $6229
@@ -5421,9 +5421,9 @@ UploadGlyphTilesPartial:
 	push af ; $6242
 	ldh a, [rLCDC] ; $6243
 	bit 7, a ; $6245
-	jr z, Label_05_624c ; $6247
+	jr z, .restore ; $6247
 	call AdvanceFrame ; $6249
-Label_05_624c:
+.restore:
 	pop af ; $624c
 	ld hl, $d4b0 ; $624d
 	ld de, $89b0 ; $6250
@@ -5432,9 +5432,9 @@ Label_05_624c:
 	push af ; $6258
 	ldh a, [rLCDC] ; $6259
 	bit 7, a ; $625b
-	jr z, Label_05_6262 ; $625d
+	jr z, .restore2 ; $625d
 	call AdvanceFrame ; $625f
-Label_05_6262:
+.restore2:
 	pop af ; $6262
 	pop af ; $6263
 	wram_bank ; $6264
@@ -5450,17 +5450,17 @@ RenderWindowTextToCompletion:
 	wram_bank $05 ; $6271
 	ld a, [$d824] ; $6277
 	cp a, b ; $627a
-	jr nz, Label_05_6291 ; $627b
+	jr nz, .step ; $627b
 	ld [$d821], a ; $627d
-Label_05_6280:
+.loop:
 	ld a, [$d824] ; $6280
 	call DrawTextWindowFrame ; $6283
 	call RenderActiveWindowText ; $6286
 	ld a, [wTextPageBreakRequest] ; $6289
 	or a, a ; $628c
-	jr nz, Label_05_6280 ; $628d
-	jr Label_05_62b2 ; $628f
-Label_05_6291:
+	jr nz, .loop ; $628d
+	jr .restore ; $628f
+.step:
 	ld a, b ; $6291
 	call GetWindowStructPtr ; $6292
 	ld b, h ; $6295
@@ -5474,9 +5474,9 @@ Label_05_6291:
 	add hl, bc ; $629f
 	ld a, [hl] ; $62a0
 	and a, $02 ; $62a1
-	jr z, Label_05_62a6 ; $62a3
+	jr z, .step2 ; $62a3
 	inc d ; $62a5
-Label_05_62a6:
+.step2:
 	ld hl, $0006 ; $62a6
 	add hl, bc ; $62a9
 	ld a, [hl+] ; $62aa
@@ -5484,8 +5484,8 @@ Label_05_62a6:
 	ld l, a ; $62ac
 	ld a, h ; $62ad
 	cp a, $ff ; $62ae
-	jr z, Label_05_62b2 ; $62b0
-Label_05_62b2:
+	jr z, .restore ; $62b0
+.restore:
 	pop af ; $62b2
 	wram_bank ; $62b3
 	pop hl ; $62b7
@@ -5537,16 +5537,16 @@ ShowDialogueCentered:
 	call ApplyMessageSpeed ; $6309
 	ld a, [$d824] ; $630c
 	cp a, $ff ; $630f
-	jr nz, Label_05_6316 ; $6311
+	jr nz, .loop ; $6311
 	call OpenCenteredDialogueWindow ; $6313
-Label_05_6316:
+.loop:
 	call SetActiveWindowTextId ; $6316
 	ld a, [$d824] ; $6319
 	call RedrawWindowText ; $631c
 	call RedrawWindowRowsThunk ; $631f
 	ld a, [wTextPageBreakRequest] ; $6322
 	or a, a ; $6325
-	jr nz, Label_05_6316 ; $6326
+	jr nz, .loop ; $6326
 	ld a, [$d824] ; $6328
 	call CloseWindowAlt ; $632b
 	ld a, $ff ; $632e
@@ -5614,7 +5614,7 @@ OpenCenteredDialogueWindow:
 	and a, $3f ; $6390
 	ld e, a ; $6392
 	rl b ; $6393
-	jr c, Label_05_63c3 ; $6395
+	jr c, .step2 ; $6395
 	call GetObjectSlotPointer ; $6397
 	ld a, [wCameraY + 1] ; $639a
 	ld b, a ; $639d
@@ -5632,14 +5632,14 @@ OpenCenteredDialogueWindow:
 	ld a, [hl] ; $63b3
 	sub a, b ; $63b4
 	cp a, $0a ; $63b5
-	jr c, Label_05_63bf ; $63b7
+	jr c, .step ; $63b7
 	ld e, $00 ; $63b9
 	ld b, $00 ; $63bb
-	jr Label_05_63c3 ; $63bd
-Label_05_63bf:
+	jr .step2 ; $63bd
+.step:
 	ld e, $0b ; $63bf
 	ld b, $01 ; $63c1
-Label_05_63c3:
+.step2:
 	wram_bank $05 ; $63c3
 	ld a, b ; $63c9
 	ld [$d85c], a ; $63ca
@@ -5674,12 +5674,12 @@ DebugToggleSelectedFlag:
 	ld e, a ; $63f2
 	ld d, $00 ; $63f3
 	call TestGameFlagByNumber ; $63f5
-	jr z, Label_05_63ff ; $63f8
+	jr z, .setGameFlagByNumber ; $63f8
 	call ClearGameFlagByNumber ; $63fa
-	jr Label_05_6402 ; $63fd
-Label_05_63ff:
+	jr .restore ; $63fd
+.setGameFlagByNumber:
 	call SetGameFlagByNumber ; $63ff
-Label_05_6402:
+.restore:
 	pop hl ; $6402
 	pop de ; $6403
 	pop bc ; $6404
@@ -5827,16 +5827,16 @@ DebugDrawFlagCursor:
 	and a, $03 ; $64f1
 	add a, $01 ; $64f3
 	cp a, $03 ; $64f5
-	jr c, Label_05_64fa ; $64f7
+	jr c, .step ; $64f7
 	inc a ; $64f9
-Label_05_64fa:
+.step:
 	ld e, a ; $64fa
 	ld hl, $c718 ; $64fb
 	ld a, [$c716] ; $64fe
 	bit 2, a ; $6501
-	jr z, Label_05_6508 ; $6503
+	jr z, .read ; $6503
 	ld hl, $c719 ; $6505
-Label_05_6508:
+.read:
 	ld a, [hl] ; $6508
 	ld bc, $800d ; $6509
 	call WriteWindowCellTileAttr ; $650c
@@ -5858,16 +5858,16 @@ DebugEraseFlagCursor:
 	and a, $03 ; $6522
 	add a, $01 ; $6524
 	cp a, $03 ; $6526
-	jr c, Label_05_652b ; $6528
+	jr c, .step ; $6528
 	inc a ; $652a
-Label_05_652b:
+.step:
 	ld e, a ; $652b
 	ld hl, $c718 ; $652c
 	ld a, [$c716] ; $652f
 	bit 2, a ; $6532
-	jr z, Label_05_6539 ; $6534
+	jr z, .read ; $6534
 	ld hl, $c719 ; $6536
-Label_05_6539:
+.read:
 	ld a, [hl] ; $6539
 	ld b, $80 ; $653a
 	ld c, $20 ; $653c
@@ -5888,26 +5888,26 @@ DebugMoveFlagCursor:
 	ld e, a ; $6551
 	ldh a, [hPlayerInputFlags] ; $6552
 	bit PADB_LEFT, a ; $6554
-	jr nz, Label_05_6566 ; $6556
+	jr nz, .step ; $6556
 	bit 4, a ; $6558
-	jr nz, Label_05_6569 ; $655a
+	jr nz, .step2 ; $655a
 	bit 6, a ; $655c
-	jr nz, Label_05_656c ; $655e
+	jr nz, .step3 ; $655e
 	bit 7, a ; $6560
-	jr nz, Label_05_656f ; $6562
-	jr Label_05_6570 ; $6564
-Label_05_6566:
+	jr nz, .step4 ; $6562
+	jr .step5 ; $6564
+.step:
 	dec d ; $6566
-	jr Label_05_6570 ; $6567
-Label_05_6569:
+	jr .step5 ; $6567
+.step2:
 	inc d ; $6569
-	jr Label_05_6570 ; $656a
-Label_05_656c:
+	jr .step5 ; $656a
+.step3:
 	dec e ; $656c
-	jr Label_05_6570 ; $656d
-Label_05_656f:
+	jr .step5 ; $656d
+.step4:
 	inc e ; $656f
-Label_05_6570:
+.step5:
 	ld a, d ; $6570
 	and a, $07 ; $6571
 	ld [$c715], a ; $6573
@@ -5933,13 +5933,13 @@ RunDebugFlagEditor:
 	push de ; $65a4
 	push hl ; $65a5
 	test_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65a6
-	jr z, Label_05_65b8 ; $65a9
+	jr z, .step ; $65a9
 	set_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65ab
 	xor a, a ; $65ae
 	ld [$c715], a ; $65af
 	ld [$c716], a ; $65b2
 	ld [$c714], a ; $65b5
-Label_05_65b8:
+.step:
 	ld de, $0000 ; $65b8
 	ld bc, $1404 ; $65bb
 	call CreateWindow ; $65be
@@ -5973,13 +5973,13 @@ Label_05_65b8:
 	ld a, $0f ; $6612
 	ld hl, StubNop_05_6581 ; $6614
 	call RegisterFrameTask ; $6617
-Label_05_661a:
+.loop:
 	ldh a, [hInputRisingEdge] ; $661a
 	bit PADB_B, a ; $661c
-	jr nz, Label_05_6683 ; $661e
+	jr nz, .step4 ; $661e
 	ldh a, [hInputRisingEdge] ; $6620
 	bit PADB_A, a ; $6622
-	jr z, Label_05_663b ; $6624
+	jr z, .step2 ; $6624
 	call DebugToggleSelectedFlag ; $6626
 	call DebugDrawFlagsWindow1 ; $6629
 	call DebugDrawFlagsWindow2 ; $662c
@@ -5987,10 +5987,10 @@ Label_05_661a:
 	call RedrawWindowRows ; $6632
 	ld a, [$c719] ; $6635
 	call RedrawWindowRows ; $6638
-Label_05_663b:
+.step2:
 	ldh a, [hInputRisingEdge] ; $663b
 	bit PADB_START, a ; $663d
-	jr z, Label_05_665c ; $663f
+	jr z, .step3 ; $663f
 	ld a, [$c714] ; $6641
 	inc a ; $6644
 	and a, $03 ; $6645
@@ -6001,10 +6001,10 @@ Label_05_663b:
 	call RedrawWindowRows ; $6653
 	ld a, [$c719] ; $6656
 	call RedrawWindowRows ; $6659
-Label_05_665c:
+.step3:
 	ldh a, [hPlayerInputFlags] ; $665c
 	and a, $f0 ; $665e
-	jr z, Label_05_667d ; $6660
+	jr z, .advanceFrame ; $6660
 	call DebugEraseFlagCursor ; $6662
 	call DebugMoveFlagCursor ; $6665
 	call DebugDrawFlagCursor ; $6668
@@ -6014,10 +6014,10 @@ Label_05_665c:
 	call RedrawWindowRows ; $6674
 	ld a, [$c719] ; $6677
 	call RedrawWindowRows ; $667a
-Label_05_667d:
+.advanceFrame:
 	call AdvanceFrame ; $667d
-	jp Label_05_661a ; $6680
-Label_05_6683:
+	jp .loop ; $6680
+.step4:
 	ld a, [$c717] ; $6683
 	call CloseWindow ; $6686
 	ld a, [$c718] ; $6689
@@ -6039,7 +6039,7 @@ RunDebugMenu:
 	push bc ; $66a5
 	push de ; $66a6
 	push hl ; $66a7
-Label_05_66a8:
+.loop:
 	ld hl, $0137 ; $66a8
 	ld de, $0a01 ; $66ab
 	call CreateMenuWindowFromText ; $66ae
@@ -6053,19 +6053,19 @@ Label_05_66a8:
 	call CloseWindow ; $66c4
 	pop af ; $66c7
 	cp a, $ff ; $66c8
-	jr z, Label_05_66d9 ; $66ca
+	jr z, .restore ; $66ca
 	ld hl, TextSubcmdHandlers_05 ; $66cc
 	add a, a ; $66cf
 	add a, l ; $66d0
 	ld l, a ; $66d1
-	jr nc, Label_05_66d5 ; $66d2
+	jr nc, .read ; $66d2
 	inc h ; $66d4
-Label_05_66d5:
+.read:
 	ld a, [hl+] ; $66d5
 	ld h, [hl] ; $66d6
 	ld l, a ; $66d7
 	jp hl ; $66d8
-Label_05_66d9:
+.restore:
 	pop hl ; $66d9
 	pop de ; $66da
 	pop bc ; $66db
@@ -6078,7 +6078,7 @@ TextSubcmdHandlers_05:
 	dw $6722 ; record 2
 	dw $6727 ; record 3
 	call RunDebugWarpMenu ; $66e6
-	jr Label_05_66a8 ; $66e9
+	jr RunDebugMenu.loop ; $66e9
 	ld c, $10 ; $66eb
 	call BeginFadeOut ; $66ed
 	call WaitFadeEnd ; $66f0
@@ -6103,9 +6103,9 @@ TextSubcmdHandlers_05:
 	pop af ; $6720
 	ret ; $6721
 	call StartDebugPaletteEditor ; $6722
-	jr Label_05_66a8 ; $6725
+	jr RunDebugMenu.loop ; $6725
 	call RunDebugFlagEditor ; $6727
-	jp Label_05_66a8 ; $672a
+	jp RunDebugMenu.loop ; $672a
 DebugDrawWarpMenu:
 	ld a, [$c701] ; $672d
 	call DrawTextWindowFrameSaveRegs ; $6730
@@ -6185,13 +6185,13 @@ RunDebugWarpMenu:
 	ld [$c701], a ; $67ea
 	call DebugDrawWarpMenu ; $67ed
 	call AdvanceFrame ; $67f0
-Label_05_67f3:
+.loop:
 	ldh a, [hInputRisingEdge] ; $67f3
 	and a, PADF_B ; $67f5
-	jr nz, Label_05_6857 ; $67f7
+	jr nz, .step4 ; $67f7
 	ldh a, [hInputRisingEdge] ; $67f9
 	and a, PADF_A ; $67fb
-	jr z, Label_05_6815 ; $67fd
+	jr z, .step ; $67fd
 	ld a, [$c700] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [$c704] ; $6805
@@ -6199,44 +6199,44 @@ Label_05_67f3:
 	ld a, $ff ; $680b
 	ld [$c294], a ; $680d
 	ld [wStoryModeExitLocationRequest], a ; $6810
-	jr Label_05_6857 ; $6813
-Label_05_6815:
+	jr .step4 ; $6813
+.step:
 	ldh a, [hInputPressed] ; $6815
 	and a, PADF_UP | PADF_DOWN ; $6817
-	jr z, Label_05_6825 ; $6819
+	jr z, .step2 ; $6819
 	ld hl, $c703 ; $681b
 	ld a, [hl] ; $681e
 	xor a, $01 ; $681f
 	ld [hl], a ; $6821
 	call DebugDrawWarpMenu ; $6822
-Label_05_6825:
+.step2:
 	ld a, [$c703] ; $6825
 	cp a, $01 ; $6828
-	jr z, Label_05_6840 ; $682a
+	jr z, .step3 ; $682a
 	ld a, [$c702] ; $682c
 	ld d, a ; $682f
 	ld hl, $c700 ; $6830
 	ld a, [hl] ; $6833
 	call DebugStepValueWithDpad ; $6834
 	cp a, [hl] ; $6837
-	jr z, Label_05_6852 ; $6838
+	jr z, .advanceFrame ; $6838
 	ld [hl], a ; $683a
 	call DebugDrawWarpMenu ; $683b
-	jr Label_05_6852 ; $683e
-Label_05_6840:
+	jr .advanceFrame ; $683e
+.step3:
 	ld d, $10 ; $6840
 	ld hl, $c704 ; $6842
 	ld a, [hl] ; $6845
 	call DebugStepValueWithDpad ; $6846
 	cp a, [hl] ; $6849
-	jr z, Label_05_6852 ; $684a
+	jr z, .advanceFrame ; $684a
 	ld [hl], a ; $684c
 	call DebugDrawWarpMenu ; $684d
-	jr Label_05_6852 ; $6850
-Label_05_6852:
+	jr .advanceFrame ; $6850
+.advanceFrame:
 	call AdvanceFrame ; $6852
-	jr Label_05_67f3 ; $6855
-Label_05_6857:
+	jr .loop ; $6855
+.step4:
 	ld a, [$c701] ; $6857
 	call CloseWindow ; $685a
 	pop hl ; $685d
@@ -6249,31 +6249,31 @@ DebugStepValueWithDpad:
 	ld b, a ; $6863
 	ldh a, [hInputPressed] ; $6864
 	bit PADB_RIGHT, a ; $6866
-	jr nz, Label_05_6871 ; $6868
+	jr nz, .step ; $6868
 	bit 5, a ; $686a
-	jr nz, Label_05_6874 ; $686c
+	jr nz, .step2 ; $686c
 	ld a, b ; $686e
 	pop bc ; $686f
 	ret ; $6870
-Label_05_6871:
+.step:
 	inc b ; $6871
-	jr Label_05_6877 ; $6872
-Label_05_6874:
+	jr .step3 ; $6872
+.step2:
 	dec b ; $6874
-	jr Label_05_6877 ; $6875
-Label_05_6877:
+	jr .step3 ; $6875
+.step3:
 	ld a, b ; $6877
 	add a, a ; $6878
-	jr nc, Label_05_687f ; $6879
+	jr nc, .step4 ; $6879
 	ld a, d ; $687b
 	dec a ; $687c
-	jr Label_05_6884 ; $687d
-Label_05_687f:
+	jr .restore ; $687d
+.step4:
 	rra ; $687f
 	cp a, d ; $6880
-	jr c, Label_05_6884 ; $6881
+	jr c, .restore ; $6881
 	xor a, a ; $6883
-Label_05_6884:
+.restore:
 	pop bc ; $6884
 	ret ; $6885
 	; $6886, 10 bytes (fill)
@@ -6291,9 +6291,9 @@ GetSelectedBGPaletteColorPtr:
 	ld hl, wBGPalettes ; $695b
 	add a, l ; $695e
 	ld l, a ; $695f
-	jr nc, Label_05_6963 ; $6960
+	jr nc, .done ; $6960
 	inc h ; $6962
-Label_05_6963:
+.done:
 	ret ; $6963
 DebugDrawColorComponents:
 	push af ; $6964
@@ -6360,46 +6360,46 @@ RunDebugColorEditor:
 	call WriteStringToWindow ; $69e0
 	ld e, $00 ; $69e3
 	call DebugDrawColorComponents ; $69e5
-Label_05_69e8:
+.loop:
 	ldh a, [hInputRisingEdge] ; $69e8
 	and a, PADF_A | PADF_B ; $69ea
-	jr nz, Label_05_6a4d ; $69ec
+	jr nz, .step8 ; $69ec
 	ldh a, [hPlayerInputFlags] ; $69ee
 	bit PADB_LEFT, a ; $69f0
-	jr z, Label_05_69f7 ; $69f2
+	jr z, .step ; $69f2
 	dec e ; $69f4
-	jr Label_05_6a13 ; $69f5
-Label_05_69f7:
+	jr .step4 ; $69f5
+.step:
 	bit 4, a ; $69f7
-	jr z, Label_05_69fe ; $69f9
+	jr z, .step2 ; $69f9
 	inc e ; $69fb
-	jr Label_05_6a13 ; $69fc
-Label_05_69fe:
+	jr .step4 ; $69fc
+.step2:
 	bit 6, a ; $69fe
-	jr z, Label_05_6a06 ; $6a00
+	jr z, .step3 ; $6a00
 	ld d, $01 ; $6a02
-	jr Label_05_6a25 ; $6a04
-Label_05_6a06:
+	jr .getSelectedBGPaletteColorPtr ; $6a04
+.step3:
 	bit 7, a ; $6a06
-	jr z, Label_05_6a0e ; $6a08
+	jr z, .advanceFrame ; $6a08
 	ld d, $ff ; $6a0a
-	jr Label_05_6a25 ; $6a0c
-Label_05_6a0e:
+	jr .getSelectedBGPaletteColorPtr ; $6a0c
+.advanceFrame:
 	call AdvanceFrame ; $6a0e
-	jr Label_05_69e8 ; $6a11
-Label_05_6a13:
+	jr .loop ; $6a11
+.step4:
 	ld a, e ; $6a13
 	cp a, $ff ; $6a14
-	jr nz, Label_05_6a1a ; $6a16
+	jr nz, .compare ; $6a16
 	ld e, $02 ; $6a18
-Label_05_6a1a:
+.compare:
 	cp a, $03 ; $6a1a
-	jr nz, Label_05_6a20 ; $6a1c
+	jr nz, .debugDrawColorComponents ; $6a1c
 	ld e, $00 ; $6a1e
-Label_05_6a20:
+.debugDrawColorComponents:
 	call DebugDrawColorComponents ; $6a20
-	jr Label_05_69e8 ; $6a23
-Label_05_6a25:
+	jr .loop ; $6a23
+.getSelectedBGPaletteColorPtr:
 	call GetSelectedBGPaletteColorPtr ; $6a25
 	ld a, [hl+] ; $6a28
 	ld c, a ; $6a29
@@ -6407,17 +6407,17 @@ Label_05_6a25:
 	ld b, a ; $6a2b
 	ld a, e ; $6a2c
 	and a, $03 ; $6a2d
-	jr nz, Label_05_6a34 ; $6a2f
+	jr nz, .step5 ; $6a2f
 	call AdjustColorRed ; $6a31
-Label_05_6a34:
+.step5:
 	dec a ; $6a34
-	jr nz, Label_05_6a3a ; $6a35
+	jr nz, .step6 ; $6a35
 	call AdjustColorGreen ; $6a37
-Label_05_6a3a:
+.step6:
 	dec a ; $6a3a
-	jr nz, Label_05_6a40 ; $6a3b
+	jr nz, .step7 ; $6a3b
 	call AdjustColorBlue ; $6a3d
-Label_05_6a40:
+.step7:
 	ld a, c ; $6a40
 	ld [hl+], a ; $6a41
 	ld a, b ; $6a42
@@ -6425,8 +6425,8 @@ Label_05_6a40:
 	ld a, $03 ; $6a44
 	ldh [hPaletteDirtyFlags], a ; $6a46
 	call DebugDrawColorComponents ; $6a48
-	jr Label_05_69e8 ; $6a4b
-Label_05_6a4d:
+	jr .loop ; $6a4b
+.step8:
 	ld a, [$c711] ; $6a4d
 	call CloseWindow ; $6a50
 	ret ; $6a53
@@ -6442,17 +6442,17 @@ RunDebugPaletteViewer:
 	ld h, $10 ; $6a6e
 	ld de, $0101 ; $6a70
 	ld bc, $0030 ; $6a73
-Label_05_6a76:
+.loop:
 	call WriteWindowCellTileAttr ; $6a76
 	inc e ; $6a79
 	inc c ; $6a7a
 	res 3, c ; $6a7b
 	dec h ; $6a7d
-	jr nz, Label_05_6a76 ; $6a7e
+	jr nz, .loop ; $6a7e
 	ld h, $08 ; $6a80
 	ld e, $01 ; $6a82
 	ld b, $00 ; $6a84
-Label_05_6a86:
+.loopB:
 	ld d, $02 ; $6a86
 	ld c, $a0 ; $6a88
 	call WriteWindowCellTileAttr ; $6a8a
@@ -6468,45 +6468,45 @@ Label_05_6a86:
 	inc e ; $6a9f
 	inc b ; $6aa0
 	dec h ; $6aa1
-	jr nz, Label_05_6a86 ; $6aa2
+	jr nz, .loopB ; $6aa2
 	ld a, [$c710] ; $6aa4
 	call RedrawWindowRows ; $6aa7
 	ld a, $0f ; $6aaa
 	ld hl, DrawPaletteCursorSprites ; $6aac
 	call RegisterFrameTask ; $6aaf
-Label_05_6ab2:
+.loopBB:
 	ldh a, [hInputRisingEdge] ; $6ab2
 	bit PADB_B, a ; $6ab4
-	jr nz, Label_05_6af6 ; $6ab6
+	jr nz, .step6 ; $6ab6
 	bit 0, a ; $6ab8
-	jr z, Label_05_6abf ; $6aba
+	jr z, .step ; $6aba
 	call RunDebugColorEditor ; $6abc
-Label_05_6abf:
+.step:
 	ld a, [$c712] ; $6abf
 	ld d, a ; $6ac2
 	ld a, [$c713] ; $6ac3
 	ld e, a ; $6ac6
 	ldh a, [hInputPressed] ; $6ac7
 	bit PADB_LEFT, a ; $6ac9
-	jr z, Label_05_6ad0 ; $6acb
+	jr z, .step2 ; $6acb
 	dec d ; $6acd
-	jr Label_05_6ae5 ; $6ace
-Label_05_6ad0:
+	jr .step5 ; $6ace
+.step2:
 	bit 4, a ; $6ad0
-	jr z, Label_05_6ad7 ; $6ad2
+	jr z, .step3 ; $6ad2
 	inc d ; $6ad4
-	jr Label_05_6ae5 ; $6ad5
-Label_05_6ad7:
+	jr .step5 ; $6ad5
+.step3:
 	bit 6, a ; $6ad7
-	jr z, Label_05_6ade ; $6ad9
+	jr z, .step4 ; $6ad9
 	dec e ; $6adb
-	jr Label_05_6ae5 ; $6adc
-Label_05_6ade:
+	jr .step5 ; $6adc
+.step4:
 	bit 7, a ; $6ade
-	jr z, Label_05_6ae5 ; $6ae0
+	jr z, .step5 ; $6ae0
 	inc e ; $6ae2
-	jr Label_05_6ae5 ; $6ae3
-Label_05_6ae5:
+	jr .step5 ; $6ae3
+.step5:
 	ld a, d ; $6ae5
 	and a, $03 ; $6ae6
 	ld [$c712], a ; $6ae8
@@ -6514,8 +6514,8 @@ Label_05_6ae5:
 	and a, $0f ; $6aec
 	ld [$c713], a ; $6aee
 	call AdvanceFrame ; $6af1
-	jr Label_05_6ab2 ; $6af4
-Label_05_6af6:
+	jr .loopBB ; $6af4
+.step6:
 	ld a, [$c710] ; $6af6
 	call CloseWindow ; $6af9
 	ld hl, DrawPaletteCursorSprites ; $6afc
@@ -6560,7 +6560,7 @@ DrawPaletteCursorSprites:
 	ld e, a ; $6b39
 	ld b, $00 ; $6b3a
 	ld a, $08 ; $6b3c
-Label_05_6b3e:
+.loop:
 	push af ; $6b3e
 	push hl ; $6b3f
 	ld a, $20 ; $6b40
@@ -6593,7 +6593,7 @@ Label_05_6b3e:
 	pop hl ; $6b66
 	pop af ; $6b67
 	dec a ; $6b68
-	jr nz, Label_05_6b3e ; $6b69
+	jr nz, .loop ; $6b69
 	ret ; $6b6b
 StartDebugPaletteEditor:
 	ld hl, PaletteEditorCursorTiles_05 ; $6b6c
@@ -6607,18 +6607,18 @@ StartDebugPaletteEditor:
 	ret ; $6b81
 WriteStringToTilemap:
 	push af ; $6b82
-Label_05_6b83:
+.loop:
 	ld a, [hl] ; $6b83
 	cp a, $00 ; $6b84
-	jr z, Label_05_6bb7 ; $6b86
+	jr z, .restore ; $6b86
 	ld [de], a ; $6b88
 	inc hl ; $6b89
 	ld a, [hl] ; $6b8a
 	cp a, $de ; $6b8b
-	jr z, Label_05_6b93 ; $6b8d
+	jr z, .step ; $6b8d
 	cp a, $df ; $6b8f
-	jr nz, Label_05_6ba8 ; $6b91
-Label_05_6b93:
+	jr nz, .step2 ; $6b91
+.step:
 	push hl ; $6b93
 	push bc ; $6b94
 	ld h, d ; $6b95
@@ -6629,18 +6629,18 @@ Label_05_6b93:
 	ld a, [hl] ; $6b9c
 	cp a, $03 ; $6b9d
 	ld a, b ; $6b9f
-	jr nz, Label_05_6ba4 ; $6ba0
+	jr nz, .store ; $6ba0
 	sub a, $d0 ; $6ba2
-Label_05_6ba4:
+.store:
 	ld [hl], a ; $6ba4
 	pop bc ; $6ba5
 	pop hl ; $6ba6
 	inc hl ; $6ba7
-Label_05_6ba8:
+.step2:
 	inc de ; $6ba8
 	ld a, e ; $6ba9
 	and a, $1f ; $6baa
-	jr nz, Label_05_6b83 ; $6bac
+	jr nz, .loop ; $6bac
 	push hl ; $6bae
 	ld h, d ; $6baf
 	ld l, e ; $6bb0
@@ -6648,24 +6648,24 @@ Label_05_6ba8:
 	ld d, h ; $6bb2
 	ld e, l ; $6bb3
 	pop hl ; $6bb4
-	jr Label_05_6b83 ; $6bb5
-Label_05_6bb7:
+	jr .loop ; $6bb5
+.restore:
 	pop af ; $6bb7
 	ret ; $6bb8
 WriteStringToTilemapAlt:
 	push af ; $6bb9
-Label_05_6bba:
+.loop:
 	ld a, [hl] ; $6bba
 	cp a, $00 ; $6bbb
-	jr z, Label_05_6bee ; $6bbd
+	jr z, .restore ; $6bbd
 	ld [de], a ; $6bbf
 	inc hl ; $6bc0
 	ld a, [hl] ; $6bc1
 	cp a, $de ; $6bc2
-	jr z, Label_05_6bca ; $6bc4
+	jr z, .step ; $6bc4
 	cp a, $df ; $6bc6
-	jr nz, Label_05_6bdf ; $6bc8
-Label_05_6bca:
+	jr nz, .step2 ; $6bc8
+.step:
 	push hl ; $6bca
 	push bc ; $6bcb
 	ld h, d ; $6bcc
@@ -6676,18 +6676,18 @@ Label_05_6bca:
 	ld a, [hl] ; $6bd3
 	cp a, $0e ; $6bd4
 	ld a, b ; $6bd6
-	jr nz, Label_05_6bdb ; $6bd7
+	jr nz, .store ; $6bd7
 	sub a, $82 ; $6bd9
-Label_05_6bdb:
+.store:
 	ld [hl], a ; $6bdb
 	pop bc ; $6bdc
 	pop hl ; $6bdd
 	inc hl ; $6bde
-Label_05_6bdf:
+.step2:
 	inc de ; $6bdf
 	ld a, e ; $6be0
 	and a, $1f ; $6be1
-	jr nz, Label_05_6bba ; $6be3
+	jr nz, .loop ; $6be3
 	push hl ; $6be5
 	ld h, d ; $6be6
 	ld l, e ; $6be7
@@ -6695,8 +6695,8 @@ Label_05_6bdf:
 	ld d, h ; $6be9
 	ld e, l ; $6bea
 	pop hl ; $6beb
-	jr Label_05_6bba ; $6bec
-Label_05_6bee:
+	jr .loop ; $6bec
+.restore:
 	pop af ; $6bee
 	ret ; $6bef
 WriteStringToTilemapStreamed:
@@ -6707,12 +6707,12 @@ WriteStringToTilemapStreamed:
 	ld [$dc06], a ; $6bf6
 	xor a, a ; $6bf9
 	ld [$dc09], a ; $6bfa
-Label_05_6bfd:
+.loop:
 	ld a, [hl] ; $6bfd
 	cp a, $00 ; $6bfe
-	jr z, Label_05_6c77 ; $6c00
+	jr z, .restore ; $6c00
 	cp a, $01 ; $6c02
-	jr nz, Label_05_6c25 ; $6c04
+	jr nz, .step ; $6c04
 	ld c, a ; $6c06
 	ld a, [$dc05] ; $6c07
 	ld d, a ; $6c0a
@@ -6734,10 +6734,10 @@ Label_05_6bfd:
 	ld a, c ; $6c22
 	inc hl ; $6c23
 	ld a, [hl] ; $6c24
-Label_05_6c25:
+.step:
 	ld c, $00 ; $6c25
 	cp a, $02 ; $6c27
-	jr nz, Label_05_6c3b ; $6c29
+	jr nz, .step2 ; $6c29
 	ld a, $01 ; $6c2b
 	ld [$dc09], a ; $6c2d
 	inc hl ; $6c30
@@ -6745,23 +6745,23 @@ Label_05_6c25:
 	ld [$dc07], a ; $6c32
 	ld a, l ; $6c35
 	ld [$dc08], a ; $6c36
-	jr Label_05_6c77 ; $6c39
-Label_05_6c3b:
+	jr .restore ; $6c39
+.step2:
 	ld c, $01 ; $6c3b
 	cp a, $03 ; $6c3d
-	jr nz, Label_05_6c48 ; $6c3f
+	jr nz, .store ; $6c3f
 	ld a, $01 ; $6c41
 	ld [$dc0a], a ; $6c43
-	jr Label_05_6c77 ; $6c46
-Label_05_6c48:
+	jr .restore ; $6c46
+.store:
 	ld [de], a ; $6c48
 	inc hl ; $6c49
 	ld a, [hl] ; $6c4a
 	cp a, $de ; $6c4b
-	jr z, Label_05_6c53 ; $6c4d
+	jr z, .step3 ; $6c4d
 	cp a, $df ; $6c4f
-	jr nz, Label_05_6c68 ; $6c51
-Label_05_6c53:
+	jr nz, .step4 ; $6c51
+.step3:
 	push hl ; $6c53
 	push bc ; $6c54
 	ld h, d ; $6c55
@@ -6772,18 +6772,18 @@ Label_05_6c53:
 	ld a, [hl] ; $6c5c
 	cp a, $0e ; $6c5d
 	ld a, b ; $6c5f
-	jr nz, Label_05_6c64 ; $6c60
+	jr nz, .store2 ; $6c60
 	sub a, $82 ; $6c62
-Label_05_6c64:
+.store2:
 	ld [hl], a ; $6c64
 	pop bc ; $6c65
 	pop hl ; $6c66
 	inc hl ; $6c67
-Label_05_6c68:
+.step4:
 	inc de ; $6c68
 	ld a, e ; $6c69
 	and a, $1f ; $6c6a
-	jr nz, Label_05_6bfd ; $6c6c
+	jr nz, .loop ; $6c6c
 	push hl ; $6c6e
 	ld h, d ; $6c6f
 	ld l, e ; $6c70
@@ -6791,8 +6791,8 @@ Label_05_6c68:
 	ld d, h ; $6c72
 	ld e, l ; $6c73
 	pop hl ; $6c74
-	jr Label_05_6bfd ; $6c75
-Label_05_6c77:
+	jr .loop ; $6c75
+.restore:
 	pop af ; $6c77
 	ret ; $6c78
 	push af ; $6c79
@@ -6825,34 +6825,34 @@ Label_05_6c77:
 	ld hl, wTextBuffer ; $6cb1
 	pop af ; $6cb4
 	wram_bank ; $6cb5
-Label_05_6cb9:
+.loopB:
 	ld a, [hl] ; $6cb9
 	or a, a ; $6cba
-	jr z, Label_05_6d02 ; $6cbb
+	jr z, .step7 ; $6cbb
 	cp a, $03 ; $6cbd
-	jr z, Label_05_6d02 ; $6cbf
+	jr z, .step7 ; $6cbf
 	inc hl ; $6cc1
 	push af ; $6cc2
 	ld a, [hl] ; $6cc3
 	ld [$c361], a ; $6cc4
 	pop af ; $6cc7
-	jr Label_05_6cd0 ; $6cc8
+	jr .dispatchControlCode ; $6cc8
 	cp a, $01 ; $6cca
-	jr nz, Label_05_6cd6 ; $6ccc
+	jr nz, .store3 ; $6ccc
 	ld a, $0d ; $6cce
-Label_05_6cd0:
+.dispatchControlCode:
 	call DispatchControlCode ; $6cd0
 	inc hl ; $6cd3
-	jr Label_05_6cb9 ; $6cd4
-Label_05_6cd6:
+	jr .loopB ; $6cd4
+.store3:
 	ld [de], a ; $6cd6
 	inc hl ; $6cd7
 	ld a, [hl] ; $6cd8
 	cp a, $de ; $6cd9
-	jr z, Label_05_6ce1 ; $6cdb
+	jr z, .step5 ; $6cdb
 	cp a, $df ; $6cdd
-	jr nz, Label_05_6cf3 ; $6cdf
-Label_05_6ce1:
+	jr nz, .step6 ; $6cdf
+.step5:
 	push hl ; $6ce1
 	ld h, d ; $6ce2
 	ld l, e ; $6ce3
@@ -6862,17 +6862,17 @@ Label_05_6ce1:
 	cp a, $0e ; $6ce7
 	ld a, b ; $6ce9
 	ld b, $ff ; $6cea
-	jr nz, Label_05_6cf0 ; $6cec
+	jr nz, .store4 ; $6cec
 	sub a, $82 ; $6cee
-Label_05_6cf0:
+.store4:
 	ld [hl], a ; $6cf0
 	pop hl ; $6cf1
 	inc hl ; $6cf2
-Label_05_6cf3:
+.step6:
 	inc de ; $6cf3
 	ld a, e ; $6cf4
 	and a, $3f ; $6cf5
-	jr nz, Label_05_6cb9 ; $6cf7
+	jr nz, .loopB ; $6cf7
 	push hl ; $6cf9
 	ld h, d ; $6cfa
 	ld l, e ; $6cfb
@@ -6880,8 +6880,8 @@ Label_05_6cf3:
 	ld d, h ; $6cfd
 	ld e, l ; $6cfe
 	pop hl ; $6cff
-	jr Label_05_6cb9 ; $6d00
-Label_05_6d02:
+	jr .loopB ; $6d00
+.step7:
 	ldh a, [hWramBank] ; $6d02
 	push af ; $6d04
 	wram_bank $05 ; $6d05
@@ -6925,14 +6925,14 @@ FetchSRAMText:
 	ld hl, $a800 ; $6d49
 	add hl, de ; $6d4c
 	or a, a ; $6d4d
-	jr nz, Label_05_6d58 ; $6d4e
+	jr nz, .step ; $6d4e
 	ld de, wTextBuffer ; $6d50
 	ld bc, $0180 ; $6d53
-	jr Label_05_6d5e ; $6d56
-Label_05_6d58:
+	jr .copyMemoryBC ; $6d56
+.step:
 	ld de, wShortTextBuffer ; $6d58
 	ld bc, $0020 ; $6d5b
-Label_05_6d5e:
+.copyMemoryBC:
 	call CopyMemoryBC ; $6d5e
 	pop hl ; $6d61
 	pop de ; $6d62
@@ -6997,30 +6997,30 @@ RunDebugWindowDemo:
 	pop af ; $6ddc
 	wram_bank ; $6ddd
 	sound $72 ; $6de1
-Label_05_6de3:
+.loop:
 	ldh a, [hPlayerInputFlags] ; $6de3
 	ld hl, hScrollX ; $6de5
 	bit PADB_RIGHT, a ; $6de8
-	jr z, Label_05_6def ; $6dea
+	jr z, .step ; $6dea
 	inc [hl] ; $6dec
-	jr Label_05_6df4 ; $6ded
-Label_05_6def:
+	jr .step2 ; $6ded
+.step:
 	bit 5, a ; $6def
-	jr z, Label_05_6df4 ; $6df1
+	jr z, .step2 ; $6df1
 	dec [hl] ; $6df3
-Label_05_6df4:
+.step2:
 	ld hl, hScrollY ; $6df4
 	bit 6, a ; $6df7
-	jr z, Label_05_6dfe ; $6df9
+	jr z, .step3 ; $6df9
 	dec [hl] ; $6dfb
-	jr Label_05_6e03 ; $6dfc
-Label_05_6dfe:
+	jr .advanceFrame ; $6dfc
+.step3:
 	bit 7, a ; $6dfe
-	jr z, Label_05_6e03 ; $6e00
+	jr z, .advanceFrame ; $6e00
 	inc [hl] ; $6e02
-Label_05_6e03:
+.advanceFrame:
 	call AdvanceFrame ; $6e03
-	jr Label_05_6de3 ; $6e06
+	jr .loop ; $6e06
 	ret ; $6e08
 ResetTextWindowState:
 	push af ; $6e09
@@ -7084,7 +7084,7 @@ AllocWindowStruct:
 	wram_bank $05 ; $6e70
 	call AllocWindowId ; $6e76
 	cp a, $ff ; $6e79
-	jr z, Label_05_6e92 ; $6e7b
+	jr z, .restore ; $6e7b
 	ld [$d820], a ; $6e7d
 	add a, a ; $6e80
 	add a, a ; $6e81
@@ -7092,9 +7092,9 @@ AllocWindowStruct:
 	ld hl, $dc00 ; $6e83
 	add a, l ; $6e86
 	ld l, a ; $6e87
-	jr nc, Label_05_6e8b ; $6e88
+	jr nc, .store ; $6e88
 	inc h ; $6e8a
-Label_05_6e8b:
+.store:
 	ld [hl], d ; $6e8b
 	inc hl ; $6e8c
 	ld [hl], e ; $6e8d
@@ -7102,7 +7102,7 @@ Label_05_6e8b:
 	ld [hl], b ; $6e8f
 	inc hl ; $6e90
 	ld [hl], c ; $6e91
-Label_05_6e92:
+.restore:
 	pop hl ; $6e92
 	pop bc ; $6e93
 	pop de ; $6e94
@@ -7114,21 +7114,21 @@ AllocWindowId:
 	ld b, $07 ; $6e99
 	ld a, [$dc70] ; $6e9b
 	ld c, $01 ; $6e9e
-Label_05_6ea0:
+.loop:
 	rrca ; $6ea0
-	jr nc, Label_05_6eac ; $6ea1
+	jr nc, .step ; $6ea1
 	sla c ; $6ea3
 	dec b ; $6ea5
-	jr nz, Label_05_6ea0 ; $6ea6
+	jr nz, .loop ; $6ea6
 	ld a, $ff ; $6ea8
-	jr Label_05_6eb6 ; $6eaa
-Label_05_6eac:
+	jr .restore ; $6eaa
+.step:
 	ld a, [$dc70] ; $6eac
 	or a, c ; $6eaf
 	ld [$dc70], a ; $6eb0
 	ld a, $07 ; $6eb3
 	sub a, b ; $6eb5
-Label_05_6eb6:
+.restore:
 	pop de ; $6eb6
 	pop bc ; $6eb7
 	pop hl ; $6eb8
@@ -7157,7 +7157,7 @@ FreeWindow:
 	ld a, [$dc70] ; $6ed3
 	and a, b ; $6ed6
 	ld a, $ff ; $6ed7
-	jr z, Label_05_6ee7 ; $6ed9
+	jr z, .restore ; $6ed9
 	ld a, b ; $6edb
 	xor a, $ff ; $6edc
 	ld b, a ; $6ede
@@ -7165,7 +7165,7 @@ FreeWindow:
 	and a, b ; $6ee2
 	ld [$dc70], a ; $6ee3
 	ld a, d ; $6ee6
-Label_05_6ee7:
+.restore:
 	pop de ; $6ee7
 	pop bc ; $6ee8
 	ret ; $6ee9
@@ -7191,12 +7191,12 @@ SaveWindowStruct:
 	call GetWindowStructPtr ; $6efe
 	ld de, $dc78 ; $6f01
 	ld c, $08 ; $6f04
-Label_05_6f06:
+.loop:
 	ld a, [hl+] ; $6f06
 	ld [de], a ; $6f07
 	inc de ; $6f08
 	dec c ; $6f09
-	jr nz, Label_05_6f06 ; $6f0a
+	jr nz, .loop ; $6f0a
 	pop hl ; $6f0c
 	pop de ; $6f0d
 	pop bc ; $6f0e
@@ -7212,12 +7212,12 @@ RestoreWindowStruct:
 	ld e, l ; $6f19
 	ld hl, $dc78 ; $6f1a
 	ld c, $08 ; $6f1d
-Label_05_6f1f:
+.loop:
 	ld a, [hl+] ; $6f1f
 	ld [de], a ; $6f20
 	inc de ; $6f21
 	dec c ; $6f22
-	jr nz, Label_05_6f1f ; $6f23
+	jr nz, .loop ; $6f23
 	pop hl ; $6f25
 	pop de ; $6f26
 	pop bc ; $6f27
@@ -7243,10 +7243,10 @@ ClampCellPtrToShadowMap:
 	ld a, [wShadowTilemapPtr + 1] ; $6f42
 	add a, $03 ; $6f45
 	cp a, h ; $6f47
-	jr nc, Label_05_6f4d ; $6f48
+	jr nc, .restore ; $6f48
 	sub a, $03 ; $6f4a
 	ld h, a ; $6f4c
-Label_05_6f4d:
+.restore:
 	pop af ; $6f4d
 	wram_bank ; $6f4e
 	pop af ; $6f52
@@ -7259,10 +7259,10 @@ ClampCellPtrToAttrMap:
 	ld a, [wShadowTilemapPtr + 1] ; $6f5e
 	add a, $07 ; $6f61
 	cp a, h ; $6f63
-	jr nc, Label_05_6f69 ; $6f64
+	jr nc, .restore ; $6f64
 	sub a, $03 ; $6f66
 	ld h, a ; $6f68
-Label_05_6f69:
+.restore:
 	pop af ; $6f69
 	wram_bank ; $6f6a
 	pop af ; $6f6e
@@ -7497,30 +7497,30 @@ SetRowDirtyFlags:
 	ld hl, $dc40 ; $70aa
 	ld c, $20 ; $70ad
 	xor a, a ; $70af
-Label_05_70b0:
+.loop:
 	ld [hl+], a ; $70b0
 	dec c ; $70b1
-	jr nz, Label_05_70b0 ; $70b2
+	jr nz, .loop ; $70b2
 	ld hl, $dc40 ; $70b4
 	ld a, d ; $70b7
 	and a, $1f ; $70b8
 	ld d, a ; $70ba
 	add a, l ; $70bb
 	ld l, a ; $70bc
-	jr nc, Label_05_70c0 ; $70bd
+	jr nc, .step ; $70bd
 	inc h ; $70bf
-Label_05_70c0:
+.step:
 	ld a, $01 ; $70c0
-Label_05_70c2:
+.loopB:
 	ld [hl+], a ; $70c2
 	inc d ; $70c3
 	bit 5, d ; $70c4
-	jr z, Label_05_70cd ; $70c6
+	jr z, .step2 ; $70c6
 	res 5, d ; $70c8
 	ld hl, $dc40 ; $70ca
-Label_05_70cd:
+.step2:
 	dec e ; $70cd
-	jr nz, Label_05_70c2 ; $70ce
+	jr nz, .loopB ; $70ce
 	ret ; $70d0
 MarkWindowRowsDirtyMin7:
 	push af ; $70d1
@@ -7535,7 +7535,7 @@ MarkWindowRowsDirtyMin7:
 	ld e, [hl] ; $70dc
 	ld a, e ; $70dd
 	cp a, $07 ; $70de
-	jr nc, Label_05_70ef ; $70e0
+	jr nc, .step ; $70e0
 	ld a, $07 ; $70e2
 	sub a, e ; $70e4
 	srl a ; $70e5
@@ -7545,34 +7545,34 @@ MarkWindowRowsDirtyMin7:
 	and a, $1f ; $70ea
 	ld d, a ; $70ec
 	ld e, $07 ; $70ed
-Label_05_70ef:
+.step:
 	ld hl, $dc40 ; $70ef
 	ld c, $20 ; $70f2
 	xor a, a ; $70f4
-Label_05_70f5:
+.loop:
 	ld [hl+], a ; $70f5
 	dec c ; $70f6
-	jr nz, Label_05_70f5 ; $70f7
+	jr nz, .loop ; $70f7
 	ld hl, $dc40 ; $70f9
 	ld a, d ; $70fc
 	and a, $1f ; $70fd
 	ld d, a ; $70ff
 	add a, l ; $7100
 	ld l, a ; $7101
-	jr nc, Label_05_7105 ; $7102
+	jr nc, .step2 ; $7102
 	inc h ; $7104
-Label_05_7105:
+.step2:
 	ld a, $01 ; $7105
-Label_05_7107:
+.loopB:
 	ld [hl+], a ; $7107
 	inc d ; $7108
 	bit 5, d ; $7109
-	jr z, Label_05_7112 ; $710b
+	jr z, .step3 ; $710b
 	res 5, d ; $710d
 	ld hl, $dc40 ; $710f
-Label_05_7112:
+.step3:
 	dec e ; $7112
-	jr nz, Label_05_7107 ; $7113
+	jr nz, .loopB ; $7113
 	pop hl ; $7115
 	pop de ; $7116
 	pop bc ; $7117
@@ -7586,10 +7586,10 @@ FlushDirtyRowsPerFrame:
 	call BuildDirtyRowRuns ; $711e
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $7121
 	ld hl, $dc60 ; $7124
-Label_05_7127:
+.loop:
 	ld a, [hl] ; $7127
 	cp a, $ff ; $7128
-	jr z, Label_05_7140 ; $712a
+	jr z, .step ; $712a
 	ld c, [hl] ; $712c
 	inc hl ; $712d
 	ld b, [hl] ; $712e
@@ -7598,12 +7598,12 @@ Label_05_7127:
 	push af ; $7133
 	ldh a, [rLCDC] ; $7134
 	bit 7, a ; $7136
-	jr z, Label_05_713d ; $7138
+	jr z, .restore ; $7138
 	call AdvanceFrame ; $713a
-Label_05_713d:
+.restore:
 	pop af ; $713d
-	jr Label_05_7127 ; $713e
-Label_05_7140:
+	jr .loop ; $713e
+.step:
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7140
 	pop hl ; $7143
 	pop de ; $7144
@@ -7618,24 +7618,24 @@ FlushDirtyRowsNow:
 	call BuildDirtyRowRuns ; $714c
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $714f
 	ld hl, $dc60 ; $7152
-Label_05_7155:
+.loop:
 	ld a, [hl] ; $7155
 	cp a, $ff ; $7156
-	jr z, Label_05_7163 ; $7158
+	jr z, .step ; $7158
 	ld c, [hl] ; $715a
 	inc hl ; $715b
 	ld b, [hl] ; $715c
 	inc hl ; $715d
 	call CopyDirtyRowSpanToVRAM ; $715e
-	jr Label_05_7155 ; $7161
-Label_05_7163:
+	jr .loop ; $7161
+.step:
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7163
 	push af ; $7166
 	ldh a, [rLCDC] ; $7167
 	bit 7, a ; $7169
-	jr z, Label_05_7170 ; $716b
+	jr z, .restore ; $716b
 	call AdvanceFrame ; $716d
-Label_05_7170:
+.restore:
 	pop af ; $7170
 	pop hl ; $7171
 	pop de ; $7172
@@ -7702,17 +7702,17 @@ BuildDirtyRowRuns:
 	ld c, $00 ; $71c4
 	ld hl, $dc40 ; $71c6
 	ld de, $dc60 ; $71c9
-Label_05_71cc:
+.loop:
 	ld a, c ; $71cc
 	cp a, $20 ; $71cd
-	jr nc, Label_05_7200 ; $71cf
+	jr nc, .step3 ; $71cf
 	ld a, [hl] ; $71d1
 	or a, a ; $71d2
-	jr nz, Label_05_71d9 ; $71d3
+	jr nz, .step ; $71d3
 	inc hl ; $71d5
 	inc c ; $71d6
-	jr Label_05_71cc ; $71d7
-Label_05_71d9:
+	jr .loop ; $71d7
+.step:
 	push hl ; $71d9
 	ld h, d ; $71da
 	ld l, e ; $71db
@@ -7722,21 +7722,21 @@ Label_05_71d9:
 	ld e, l ; $71df
 	pop hl ; $71e0
 	ld b, $00 ; $71e1
-Label_05_71e3:
+.loopB:
 	ld a, c ; $71e3
 	cp a, $20 ; $71e4
-	jr nc, Label_05_71f6 ; $71e6
+	jr nc, .step2 ; $71e6
 	ld a, [hl] ; $71e8
 	or a, a ; $71e9
-	jr z, Label_05_71f6 ; $71ea
+	jr z, .step2 ; $71ea
 	inc hl ; $71ec
 	inc c ; $71ed
 	inc b ; $71ee
 	ld a, b ; $71ef
 	cp a, $07 ; $71f0
-	jr nc, Label_05_71f6 ; $71f2
-	jr Label_05_71e3 ; $71f4
-Label_05_71f6:
+	jr nc, .step2 ; $71f2
+	jr .loopB ; $71f4
+.step2:
 	push hl ; $71f6
 	ld h, d ; $71f7
 	ld l, e ; $71f8
@@ -7745,8 +7745,8 @@ Label_05_71f6:
 	ld d, h ; $71fb
 	ld e, l ; $71fc
 	pop hl ; $71fd
-	jr Label_05_71cc ; $71fe
-Label_05_7200:
+	jr .loop ; $71fe
+.step3:
 	ld h, d ; $7200
 	ld l, e ; $7201
 	ld [hl], $ff ; $7202
@@ -7833,9 +7833,9 @@ RenderTextAtWindowCell:
 	ld a, d ; $726e
 	add a, l ; $726f
 	ld l, a ; $7270
-	jr nc, Label_05_7274 ; $7271
+	jr nc, .step ; $7271
 	inc h ; $7273
-Label_05_7274:
+.step:
 	ld d, h ; $7274
 	ld e, l ; $7275
 	ld hl, wShadowTilemapPtr ; $7276
@@ -7861,9 +7861,9 @@ Label_05_7274:
 	ld a, $02 ; $729b
 	add a, l ; $729d
 	ld l, a ; $729e
-	jr nc, Label_05_72a2 ; $729f
+	jr nc, .read ; $729f
 	inc h ; $72a1
-Label_05_72a2:
+.read:
 	ld c, [hl] ; $72a2
 	dec c ; $72a3
 	dec c ; $72a4
@@ -8010,9 +8010,9 @@ GetGlyphWidthByIndex:
 	ld hl, GlyphWidths_05 ; $7370
 	add a, l ; $7373
 	ld l, a ; $7374
-	jr nc, Label_05_7378 ; $7375
+	jr nc, .read ; $7375
 	inc h ; $7377
-Label_05_7378:
+.read:
 	ld c, [hl] ; $7378
 	ret ; $7379
 PlotGlyphRow:
@@ -8028,13 +8028,13 @@ PlotGlyphRow:
 	push bc ; $7386
 	or a, a ; $7387
 	ld a, b ; $7388
-	jr z, Label_05_7392 ; $7389
-Label_05_738b:
+	jr z, .restore ; $7389
+.loop:
 	srl a ; $738b
 	srl e ; $738d
 	dec c ; $738f
-	jr nz, Label_05_738b ; $7390
-Label_05_7392:
+	jr nz, .loop ; $7390
+.restore:
 	pop bc ; $7392
 	ld h, a ; $7393
 	ld a, $08 ; $7394
@@ -8042,13 +8042,13 @@ Label_05_7392:
 	ld c, a ; $7397
 	or a, a ; $7398
 	ld a, b ; $7399
-	jr z, Label_05_73a3 ; $739a
-Label_05_739c:
+	jr z, .step ; $739a
+.loopB:
 	sla a ; $739c
 	sla d ; $739e
 	dec c ; $73a0
-	jr nz, Label_05_739c ; $73a1
-Label_05_73a3:
+	jr nz, .loopB ; $73a1
+.step:
 	ld c, a ; $73a3
 	ld b, h ; $73a4
 	ld h, d ; $73a5
@@ -8131,12 +8131,12 @@ ClearWindowGlyphTiles:
 	ld d, h ; $7414
 	ld e, l ; $7415
 	wram_bank $07 ; $7416
-Label_05_741c:
+.loop:
 	ld hl, FontGlyphs ; $741c
 	ld c, $01 ; $741f
 	call CopyMemoryFast ; $7421
 	dec b ; $7424
-	jr nz, Label_05_741c ; $7425
+	jr nz, .loop ; $7425
 	pop hl ; $7427
 	pop de ; $7428
 	pop bc ; $7429
@@ -8301,13 +8301,13 @@ InitGlyphStreamForWindow:
 	ld de, $0000 ; $753a
 	ld a, [$d821] ; $753d
 	or a, a ; $7540
-	jr z, Label_05_754d ; $7541
+	jr z, .step ; $7541
 	ld a, [$c3bb] ; $7543
 	ld d, a ; $7546
 	ld e, $00 ; $7547
 	sra d ; $7549
 	rr e ; $754b
-Label_05_754d:
+.step:
 	ld hl, wGlyphPenX ; $754d
 	ld [hl], e ; $7550
 	inc hl ; $7551
@@ -8323,11 +8323,11 @@ Label_05_754d:
 	ld e, a ; $755f
 	ld a, [$d821] ; $7560
 	or a, a ; $7563
-	jr z, Label_05_756b ; $7564
+	jr z, .step2 ; $7564
 	ld a, [$c3bb] ; $7566
 	add a, e ; $7569
 	ld e, a ; $756a
-Label_05_756b:
+.step2:
 	ld hl, $c3b9 ; $756b
 	ld [hl], d ; $756e
 	inc hl ; $756f
@@ -8362,11 +8362,11 @@ DrawStreamGlyph:
 	ld l, a ; $759c
 	ld a, [hl+] ; $759d
 	cp a, $02 ; $759e
-	jr z, Label_05_75c3 ; $75a0
+	jr z, .step2 ; $75a0
 	cp a, $03 ; $75a2
-	jr z, Label_05_75c3 ; $75a4
+	jr z, .step2 ; $75a4
 	cp a, $01 ; $75a6
-	jr nz, Label_05_75b8 ; $75a8
+	jr nz, .step ; $75a8
 	ld e, $00 ; $75aa
 	ld d, c ; $75ac
 	sra d ; $75ad
@@ -8374,13 +8374,13 @@ DrawStreamGlyph:
 	ld a, c ; $75b1
 	add a, b ; $75b2
 	ld [$c3ba], a ; $75b3
-	jr Label_05_75c3 ; $75b6
-Label_05_75b8:
+	jr .step2 ; $75b6
+.step:
 	push af ; $75b8
 	wram_bank $07 ; $75b9
 	pop af ; $75bf
 	call DrawGlyph ; $75c0
-Label_05_75c3:
+.step2:
 	ld hl, wGlyphPenX ; $75c3
 	ld a, e ; $75c6
 	ld [hl+], a ; $75c7
@@ -8435,43 +8435,43 @@ UploadLastGlyphTiles:
 	ld b, a ; $760e
 	ld a, [$d820] ; $760f
 	cp a, b ; $7612
-	jr nz, Label_05_762c ; $7613
+	jr nz, .restore ; $7613
 	ld b, a ; $7615
 	ld a, [$d824] ; $7616
 	cp a, b ; $7619
-	jr z, Label_05_7621 ; $761a
+	jr z, .checkMessageSpeed ; $761a
 	pop hl ; $761c
 	pop de ; $761d
 	pop bc ; $761e
 	pop af ; $761f
 	ret ; $7620
-Label_05_7621:
+.checkMessageSpeed:
 	ld a, [wMessageSpeed] ; $7621
 	bit 7, a ; $7624
-	jr nz, Label_05_762c ; $7626
+	jr nz, .restore ; $7626
 	and a, $7f ; $7628
-	jr nz, Label_05_7631 ; $762a
-Label_05_762c:
+	jr nz, .step ; $762a
+.restore:
 	pop hl ; $762c
 	pop de ; $762d
 	pop bc ; $762e
 	pop af ; $762f
 	ret ; $7630
-Label_05_7631:
+.step:
 	ldh a, [hWramBank] ; $7631
 	push af ; $7633
 	wram_bank $07 ; $7634
 	ld a, [wKeepMatchStatsFlag] ; $763a
 	or a, a ; $763d
-	jr z, Label_05_7644 ; $763e
+	jr z, .step2 ; $763e
 	ld b, $5f ; $7640
-	jr Label_05_7646 ; $7642
-Label_05_7644:
+	jr .step3 ; $7642
+.step2:
 	ld b, $7f ; $7644
-Label_05_7646:
+.step3:
 	ld a, [$c3bb] ; $7646
 	cp a, b ; $7649
-	jr nc, Label_05_7677 ; $764a
+	jr nc, .restore2 ; $764a
 	ld hl, wGlyphPenX ; $764c
 	ld a, [hl+] ; $764f
 	ld h, [hl] ; $7650
@@ -8483,9 +8483,9 @@ Label_05_7646:
 	rl h ; $7659
 	ld a, h ; $765b
 	or a, l ; $765c
-	jr z, Label_05_7660 ; $765d
+	jr z, .offset ; $765d
 	dec hl ; $765f
-Label_05_7660:
+.offset:
 	add hl, hl ; $7660
 	add hl, hl ; $7661
 	add hl, hl ; $7662
@@ -8502,7 +8502,7 @@ Label_05_7660:
 	pop hl ; $7671
 	ld c, $02 ; $7672
 	call QueueVRAMCopy ; $7674
-Label_05_7677:
+.restore2:
 	pop af ; $7677
 	wram_bank ; $7678
 	pop hl ; $767c
@@ -8529,13 +8529,13 @@ DrawInlineGlyph:
 	pop hl ; $7695
 	ld a, [hl+] ; $7696
 	cp a, $02 ; $7697
-	jr z, Label_05_76c1 ; $7699
+	jr z, .step3 ; $7699
 	cp a, $03 ; $769b
-	jr z, Label_05_76c1 ; $769d
+	jr z, .step3 ; $769d
 	cp a, $01 ; $769f
-	jr z, Label_05_76a5 ; $76a1
-	jr Label_05_76b6 ; $76a3
-Label_05_76a5:
+	jr z, .step ; $76a1
+	jr .step2 ; $76a3
+.step:
 	ld e, $00 ; $76a5
 	ld d, c ; $76a7
 	sra d ; $76a8
@@ -8544,13 +8544,13 @@ Label_05_76a5:
 	add a, b ; $76ad
 	ld [$c3ba], a ; $76ae
 	ld [$c3bb], a ; $76b1
-	jr Label_05_76c1 ; $76b4
-Label_05_76b6:
+	jr .step3 ; $76b4
+.step2:
 	push af ; $76b6
 	wram_bank $07 ; $76b7
 	pop af ; $76bd
 	call DrawGlyph ; $76be
-Label_05_76c1:
+.step3:
 	ld hl, wGlyphPenX ; $76c1
 	ld a, e ; $76c4
 	ld [hl+], a ; $76c5
@@ -8636,13 +8636,13 @@ InitGlyphStreamAt:
 	ld b, a ; $7740
 	ld a, [$d820] ; $7741
 	cp a, b ; $7744
-	jr nz, Label_05_774f ; $7745
+	jr nz, .step ; $7745
 	test_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7747
-	jr nz, Label_05_774f ; $774a
+	jr nz, .step ; $774a
 	inc d ; $774c
 	ld e, c ; $774d
 	inc c ; $774e
-Label_05_774f:
+.step:
 	ld b, e ; $774f
 	ld e, $00 ; $7750
 	ld hl, $c3bb ; $7752
@@ -8676,7 +8676,7 @@ SaveGlyphPenColumns:
 	ld b, a ; $777a
 	ld a, [$d82f] ; $777b
 	cp a, b ; $777e
-	jr z, Label_05_778e ; $777f
+	jr z, .restore ; $777f
 	ld hl, $c3bb ; $7781
 	ld a, [hl+] ; $7784
 	ld b, [hl] ; $7785
@@ -8688,7 +8688,7 @@ SaveGlyphPenColumns:
 	dec hl ; $778b
 	dec hl ; $778c
 	ld [hl], c ; $778d
-Label_05_778e:
+.restore:
 	pop hl ; $778e
 	pop bc ; $778f
 	pop af ; $7790
@@ -8712,21 +8712,21 @@ FlushGlyphRow:
 	ld b, a ; $77a8
 	ld a, [$d824] ; $77a9
 	cp a, b ; $77ac
-	jr nz, Label_05_77ba ; $77ad
+	jr nz, .step ; $77ad
 	ld a, [wMessageSpeed] ; $77af
 	bit 7, a ; $77b2
-	jr nz, Label_05_77ba ; $77b4
+	jr nz, .step ; $77b4
 	and a, $7f ; $77b6
-	jr nz, Label_05_77c8 ; $77b8
-Label_05_77ba:
+	jr nz, .step2 ; $77b8
+.step:
 	ldh a, [rLCDC] ; $77ba
 	bit 7, a ; $77bc
-	jr z, Label_05_77c5 ; $77be
+	jr z, .uploadGlyphBufferDMA ; $77be
 	call UploadGlyphBufferQueued ; $77c0
-	jr Label_05_77c8 ; $77c3
-Label_05_77c5:
+	jr .step2 ; $77c3
+.uploadGlyphBufferDMA:
 	call UploadGlyphBufferDMA ; $77c5
-Label_05_77c8:
+.step2:
 	ld hl, $c3b9 ; $77c8
 	ld b, [hl] ; $77cb
 	inc hl ; $77cc
@@ -8751,25 +8751,25 @@ UploadGlyphBufferQueued:
 	wram_bank $07 ; $77e7
 	ld a, [wKeepMatchStatsFlag] ; $77ed
 	or a, a ; $77f0
-	jr z, Label_05_77f7 ; $77f1
+	jr z, .step ; $77f1
 	ld b, $60 ; $77f3
-	jr Label_05_77f9 ; $77f5
-Label_05_77f7:
+	jr .step2 ; $77f5
+.step:
 	ld b, $80 ; $77f7
-Label_05_77f9:
+.step2:
 	ld a, [$c3bb] ; $77f9
 	inc a ; $77fc
 	cp a, b ; $77fd
-	jr c, Label_05_7801 ; $77fe
+	jr c, .step3 ; $77fe
 	ld a, b ; $7800
-Label_05_7801:
+.step3:
 	ld b, $00 ; $7801
-Label_05_7803:
+.loop:
 	inc b ; $7803
 	sub a, $12 ; $7804
-	jr c, Label_05_780a ; $7806
-	jr Label_05_7803 ; $7808
-Label_05_780a:
+	jr c, .step4 ; $7806
+	jr .loop ; $7808
+.step4:
 	push bc ; $780a
 	ld hl, $0000 ; $780b
 	ld b, h ; $780e
@@ -8781,10 +8781,10 @@ Label_05_780a:
 	wram_bank $05 ; $7817
 	ld a, [wWindowTileAttr] ; $781d
 	bit 3, a ; $7820
-	jr z, Label_05_7828 ; $7822
+	jr z, .restore ; $7822
 	ld de, $2000 ; $7824
 	add hl, de ; $7827
-Label_05_7828:
+.restore:
 	pop af ; $7828
 	wram_bank ; $7829
 	push hl ; $782d
@@ -8795,7 +8795,7 @@ Label_05_7828:
 	pop de ; $7834
 	pop bc ; $7835
 	ld c, $12 ; $7836
-Label_05_7838:
+.loopB:
 	push bc ; $7838
 	push hl ; $7839
 	push de ; $783a
@@ -8810,14 +8810,14 @@ Label_05_7838:
 	pop bc ; $7847
 	ld a, [$c33f] ; $7848
 	or a, a ; $784b
-	jr nz, Label_05_7853 ; $784c
+	jr nz, .stepMatchFrame ; $784c
 	call AdvanceFrame ; $784e
-	jr Label_05_7856 ; $7851
-Label_05_7853:
+	jr .step5 ; $7851
+.stepMatchFrame:
 	farcall StepMatchFrame ; $7853
-Label_05_7856:
+.step5:
 	dec b ; $7856
-	jr nz, Label_05_7838 ; $7857
+	jr nz, .loopB ; $7857
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7859
 	pop af ; $785c
 	wram_bank ; $785d
@@ -8839,17 +8839,17 @@ UploadGlyphBufferDMA:
 	wram_bank $07 ; $7872
 	ld a, b ; $7878
 	ld b, $00 ; $7879
-Label_05_787b:
+.loop:
 	inc b ; $787b
 	sub a, $20 ; $787c
-	jr z, Label_05_7884 ; $787e
-	jr c, Label_05_7884 ; $7880
-	jr Label_05_787b ; $7882
-Label_05_7884:
+	jr z, .step ; $787e
+	jr c, .step ; $7880
+	jr .loop ; $7882
+.step:
 	ld hl, $d300 ; $7884
 	ld de, $8800 ; $7887
 	ld c, $20 ; $788a
-Label_05_788c:
+.loopB:
 	push bc ; $788c
 	push hl ; $788d
 	push de ; $788e
@@ -8865,7 +8865,7 @@ Label_05_788c:
 	add hl, bc ; $789e
 	pop bc ; $789f
 	dec b ; $78a0
-	jr nz, Label_05_788c ; $78a1
+	jr nz, .loopB ; $78a1
 	pop af ; $78a3
 	wram_bank ; $78a4
 	pop hl ; $78a8
@@ -8893,10 +8893,10 @@ UploadGlyphTileRange:
 	add hl, de ; $78c8
 	ld a, [$c3bf] ; $78c9
 	or a, a ; $78cc
-	jr z, Label_05_78d3 ; $78cd
+	jr z, .step ; $78cd
 	ld de, $2000 ; $78cf
 	add hl, de ; $78d2
-Label_05_78d3:
+.step:
 	push hl ; $78d3
 	ld h, b ; $78d4
 	ld l, c ; $78d5
@@ -8905,9 +8905,9 @@ Label_05_78d3:
 	pop de ; $78da
 	ld a, [$c3bd] ; $78db
 	cp a, $20 ; $78de
-	jr c, Label_05_78e4 ; $78e0
+	jr c, .step2 ; $78e0
 	ld a, $20 ; $78e2
-Label_05_78e4:
+.step2:
 	ld c, a ; $78e4
 	call QueueVRAMCopy ; $78e5
 	ld b, a ; $78e8
@@ -8931,13 +8931,13 @@ Label_05_78e4:
 	rl d ; $7901
 	sla e ; $7903
 	rl d ; $7905
-Label_05_7907:
+.loop:
 	ld a, [hl+] ; $7907
 	cp a, $00 ; $7908
-	jr z, Label_05_7911 ; $790a
+	jr z, .restore ; $790a
 	call DrawGlyph ; $790c
-	jr Label_05_7907 ; $790f
-Label_05_7911:
+	jr .loop ; $790f
+.restore:
 	pop hl ; $7911
 	pop de ; $7912
 	pop bc ; $7913
