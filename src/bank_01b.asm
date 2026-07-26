@@ -4135,47 +4135,47 @@ StepUnlockDebugCursor:
 	bit 5, b ; $6827
 	jr z, .bit5Clear ; $6829
 	dec d ; $682b
-	jr .step4 ; $682c
+	jr .wrapX ; $682c
 .bit5Clear:
 	bit 4, b ; $682e
 	jr z, .bit4Clear ; $6830
 	inc d ; $6832
-	jr .step4 ; $6833
+	jr .wrapX ; $6833
 .bit4Clear:
 	bit 6, b ; $6835
 	jr z, .bit6Clear ; $6837
 	dec e ; $6839
-	jr .step4 ; $683a
+	jr .wrapX ; $683a
 .bit6Clear:
 	bit 7, b ; $683c
-	jr z, .step4 ; $683e
+	jr z, .wrapX ; $683e
 	inc e ; $6840
-.step4:
+.wrapX:
 	ld a, d ; $6841
 	add a, a ; $6842
 	jr nc, .noCarry ; $6843
 	ld a, $05 ; $6845
 	dec a ; $6847
-	jr .step6 ; $6848
+	jr .storeX ; $6848
 .noCarry:
 	rra ; $684a
 	cp a, $05 ; $684b
-	jr c, .step6 ; $684d
+	jr c, .storeX ; $684d
 	xor a, a ; $684f
-.step6:
+.storeX:
 	ld d, a ; $6850
 	ld a, e ; $6851
 	add a, a ; $6852
 	jr nc, .noCarry2 ; $6853
 	ld a, $02 ; $6855
 	dec a ; $6857
-	jr .step8 ; $6858
+	jr .storeY ; $6858
 .noCarry2:
 	rra ; $685a
 	cp a, $02 ; $685b
-	jr c, .step8 ; $685d
+	jr c, .storeY ; $685d
 	xor a, a ; $685f
-.step8:
+.storeY:
 	ld e, a ; $6860
 	ld a, e ; $6861
 	add a, a ; $6862

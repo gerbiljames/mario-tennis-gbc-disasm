@@ -2741,7 +2741,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $580f
 	call ApplySlideOffsetToSpriteX ; $5812
 	call QueueSprite ; $5815
-	jr .step2 ; $5818
+	jr .stat2 ; $5818
 .lt0a:
 	ld a, l ; $581a
 	rlca ; $581b
@@ -2751,7 +2751,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $5821
 	call ApplySlideOffsetToSpriteX ; $5824
 	call QueueSprite ; $5827
-.step2:
+.stat2:
 	ld b, $0f ; $582a
 	ld a, [$d00b] ; $582c
 	ld l, a ; $582f
@@ -2783,7 +2783,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $5863
 	call ApplySlideOffsetToSpriteX ; $5866
 	call QueueSprite ; $5869
-	jr .step4 ; $586c
+	jr .stat3 ; $586c
 .lt0a2:
 	ld a, l ; $586e
 	rlca ; $586f
@@ -2793,7 +2793,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $5876
 	call ApplySlideOffsetToSpriteX ; $5879
 	call QueueSprite ; $587c
-.step4:
+.stat3:
 	ld b, $0f ; $587f
 	ld a, [$d00c] ; $5881
 	ld l, a ; $5884
@@ -2825,7 +2825,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $58b8
 	call ApplySlideOffsetToSpriteX ; $58bb
 	call QueueSprite ; $58be
-	jr .step6 ; $58c1
+	jr .stat4 ; $58c1
 .lt0a3:
 	ld a, l ; $58c3
 	rlca ; $58c4
@@ -2835,7 +2835,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $58cb
 	call ApplySlideOffsetToSpriteX ; $58ce
 	call QueueSprite ; $58d1
-.step6:
+.stat4:
 	ld b, $0f ; $58d4
 	ld a, [$d00d] ; $58d6
 	ld l, a ; $58d9

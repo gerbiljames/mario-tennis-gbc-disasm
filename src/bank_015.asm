@@ -1322,21 +1322,21 @@ TrainingCourtResultDispatch:
 	dw StrokeChallengerResultScene.celebrate ; $5385 jumptable
 	dw StrokeChallengerResultScene.speakWin ; $5387 jumptable
 	dw StrokeChallengerResultScene.partnerJoins ; $5389 jumptable
-	dw TestStrokeChallengerGameFlag.step ; $538b jumptable
-	dw TestStrokeChallengerGameFlag.step2 ; $538d jumptable
-	dw TestStrokeChallengerGameFlag.step3 ; $538f jumptable
+	dw TestStrokeChallengerGameFlag.dispatchStage ; $538b jumptable
+	dw TestStrokeChallengerGameFlag.dispatchStage2 ; $538d jumptable
+	dw TestStrokeChallengerGameFlag.dispatchStage3 ; $538f jumptable
 	dw MovePlayerToLessonCourtSpot.netResultText ; $5391 jumptable
 	dw MovePlayerToLessonCourtSpot.netResultDoubles ; $5393 jumptable
 	dw MovePlayerToLessonCourtSpot.serveResultText ; $5395 jumptable
-	dw InitServeCoachScene.step ; $5397 jumptable
-	dw InitServeCoachScene.step2 ; $5399 jumptable
-	dw InitServeCoachScene.step3 ; $539b jumptable
+	dw InitServeCoachScene.dispatchStage ; $5397 jumptable
+	dw InitServeCoachScene.dispatchStage2 ; $5399 jumptable
+	dw InitServeCoachScene.dispatchStage3 ; $539b jumptable
 	dw MovePlayerToLessonCourtSpot.serveResultTextAlt ; $539d jumptable
 	dw MovePlayerToLessonCourtSpot.strokeResultText ; $539f jumptable
 	dw MovePlayerToLessonCourtSpot.strokeResult ; $53a1 jumptable
-	dw InitNetCoachScene.step ; $53a3 jumptable
-	dw InitNetCoachScene.step2 ; $53a5 jumptable
-	dw InitNetCoachScene.step3 ; $53a7 jumptable
+	dw InitNetCoachScene.dispatchStage ; $53a3 jumptable
+	dw InitNetCoachScene.dispatchStage2 ; $53a5 jumptable
+	dw InitNetCoachScene.dispatchStage3 ; $53a7 jumptable
 TrainingCourtReentryDispatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
 	ld a, a ; $53ac
@@ -3729,7 +3729,7 @@ TestStrokeChallengerGameFlag:
 	dw $00ce ; record 3
 	dw $00ce ; record 4
 	dw $00ce ; record 5
-.step:
+.dispatchStage:
 	ld a, [$c2e3] ; $7290
 	ld a, a ; $7293
 	rst Rst00 ; $7294
@@ -3738,7 +3738,7 @@ TestStrokeChallengerGameFlag:
 	dw ServeCoachIntroDialogue_15.lesson4 ; $7299 jumptable
 	dw ServeCoachIntroDialogue_15.lesson5 ; $729b jumptable
 	dw ServeCoachIntroDialogue_15.lesson3 ; $729d jumptable
-.step2:
+.dispatchStage2:
 	ld a, [$c2e3] ; $729f
 	ld a, a ; $72a2
 	rst Rst00 ; $72a3
@@ -3750,7 +3750,7 @@ TestStrokeChallengerGameFlag:
 	dw ServeCoachIntroDialogue_15.lesson8 ; $72ae jumptable
 	dw ServeCoachIntroDialogue_15.lesson9 ; $72b0 jumptable
 	dw ServeCoachIntroDialogue_15.lesson3 ; $72b2 jumptable
-.step3:
+.dispatchStage3:
 	ld a, [$c2e3] ; $72b4
 	ld a, a ; $72b7
 	rst Rst00 ; $72b8
@@ -3933,7 +3933,7 @@ InitServeCoachScene:
 	script_speak $07 ; $752c
 	script_face $07, FACE_LEFT ; $7531
 	ret ; $7538
-.step:
+.dispatchStage:
 	ld a, [$c2e3] ; $7539
 	ld a, a ; $753c
 	rst Rst00 ; $753d
@@ -3945,7 +3945,7 @@ InitServeCoachScene:
 	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $7548 jumptable
 	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $754a jumptable
 	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $754c jumptable
-.step2:
+.dispatchStage2:
 	ld a, [$c2e3] ; $754e
 	ld a, a ; $7551
 	rst Rst00 ; $7552
@@ -3957,7 +3957,7 @@ InitServeCoachScene:
 	dw NetCoachIntroDialogue_15.initNetCoachScene9 ; $755d jumptable
 	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $755f jumptable
 	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7561 jumptable
-.step3:
+.dispatchStage3:
 	ld a, [$c2e3] ; $7563
 	ld a, a ; $7566
 	rst Rst00 ; $7567
@@ -4123,7 +4123,7 @@ InitNetCoachScene:
 	script_speak $12 ; $779d
 	script_face $12, FACE_RIGHT ; $77a2
 	ret ; $77a9
-.step:
+.dispatchStage:
 	ld a, [$c2e3] ; $77aa
 	ld a, a ; $77ad
 	rst Rst00 ; $77ae
@@ -4134,7 +4134,7 @@ InitNetCoachScene:
 	dw ReturnCoachIntroDialogue_15.initReturnCoachScene6 ; $77b7 jumptable
 	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77b9 jumptable
 	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77bb jumptable
-.step2:
+.dispatchStage2:
 	ld a, [$c2e3] ; $77bd
 	ld a, a ; $77c0
 	rst Rst00 ; $77c1
@@ -4145,7 +4145,7 @@ InitNetCoachScene:
 	dw ReturnCoachIntroDialogue_15.initReturnCoachScene11 ; $77ca jumptable
 	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77cc jumptable
 	dw ReturnCoachIntroDialogue_15.initReturnCoachScene3 ; $77ce jumptable
-.step3:
+.dispatchStage3:
 	ld a, [$c2e3] ; $77d0
 	ld a, a ; $77d3
 	rst Rst00 ; $77d4
