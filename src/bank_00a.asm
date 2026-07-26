@@ -2911,17 +2911,17 @@ FindStoryScriptEntry:
 	push af ; $53e4
 	push bc ; $53e5
 	push de ; $53e6
-Label_0a_53e7:
+.searchLoop:
 	ld a, [$c29b] ; $53e7
 	call FarReadWord ; $53ea
 	ld a, c ; $53ed
 	cp a, $ff ; $53ee
-	jr z, Label_0a_5416 ; $53f0
+	jr z, .notFound ; $53f0
 	cp a, d ; $53f2
-	jr nz, Label_0a_5410 ; $53f3
+	jr nz, .nextEntry ; $53f3
 	call CheckTriggerFacingMask ; $53f5
 	and a, a ; $53f8
-	jr z, Label_0a_5410 ; $53f9
+	jr z, .nextEntry ; $53f9
 	inc hl ; $53fb
 	inc hl ; $53fc
 	ld a, [$c29b] ; $53fd
@@ -2933,15 +2933,15 @@ Label_0a_53e7:
 	ld d, b ; $5407
 	farcall EvalFlagCondition ; $5408
 	pop de ; $540b
-	jr nz, Label_0a_5410 ; $540c
-	jr Label_0a_5419 ; $540e
-Label_0a_5410:
+	jr nz, .nextEntry ; $540c
+	jr .done ; $540e
+.nextEntry:
 	ld bc, $0008 ; $5410
 	add hl, bc ; $5413
-	jr Label_0a_53e7 ; $5414
-Label_0a_5416:
+	jr .searchLoop ; $5414
+.notFound:
 	ld hl, $0000 ; $5416
-Label_0a_5419:
+.done:
 	pop de ; $5419
 	pop bc ; $541a
 	pop af ; $541b

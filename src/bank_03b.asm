@@ -1650,34 +1650,34 @@ Label_3b_4a87:
 	ret ; $4aa2
 DrawTrophyRowPair:
 	ld c, $00 ; $4aa3
-Label_3b_4aa5:
+.row1Loop:
 	ld a, [hl+] ; $4aa5
 	or a, a ; $4aa6
-	jr z, Label_3b_4aac ; $4aa7
+	jr z, .row1Next ; $4aa7
 	call DrawWonTrophyIcon ; $4aa9
-Label_3b_4aac:
+.row1Next:
 	inc de ; $4aac
 	inc de ; $4aad
 	ld a, c ; $4aae
 	inc a ; $4aaf
 	ld c, a ; $4ab0
 	cp a, $03 ; $4ab1
-	jr nz, Label_3b_4aa5 ; $4ab3
+	jr nz, .row1Loop ; $4ab3
 	inc de ; $4ab5
 	ld c, $00 ; $4ab6
-Label_3b_4ab8:
+.row2Loop:
 	ld a, [hl+] ; $4ab8
 	or a, a ; $4ab9
-	jr z, Label_3b_4abf ; $4aba
+	jr z, .row2Next ; $4aba
 	call DrawWonTrophyIcon ; $4abc
-Label_3b_4abf:
+.row2Next:
 	inc de ; $4abf
 	inc de ; $4ac0
 	ld a, c ; $4ac1
 	inc a ; $4ac2
 	ld c, a ; $4ac3
 	cp a, $03 ; $4ac4
-	jr nz, Label_3b_4ab8 ; $4ac6
+	jr nz, .row2Loop ; $4ac6
 	ret ; $4ac8
 DrawWonTrophyIcon:
 	push af ; $4ac9

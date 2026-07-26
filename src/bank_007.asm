@@ -1063,44 +1063,44 @@ ExchangeLinkFrameByteMaster:
 	ldh a, [hLinkRxByte] ; $469a
 	ld b, a ; $469c
 	cp a, $00 ; $469d
-	jr z, Label_07_46af ; $469f
+	jr z, .badReply ; $469f
 	cp a, $ff ; $46a1
-	jr z, Label_07_46c4 ; $46a3
+	jr z, .resetLink ; $46a3
 	and a, $c0 ; $46a5
 	cp a, $80 ; $46a7
-	jr z, Label_07_46c7 ; $46a9
+	jr z, .checkDuplicate ; $46a9
 	cp a, $40 ; $46ab
-	jr z, Label_07_46c7 ; $46ad
-Label_07_46af:
+	jr z, .checkDuplicate ; $46ad
+.badReply:
 	call LinkErrorReset ; $46af
 	ld hl, hLinkCounter ; $46b2
 	inc [hl] ; $46b5
 	ld a, [hl] ; $46b6
 	cp a, $0a ; $46b7
-	jr nc, Label_07_46c1 ; $46b9
+	jr nc, .giveUp ; $46b9
 	call WaitVBlank ; $46bb
 	jp ExchangeLinkFrameByteMaster ; $46be
-Label_07_46c1:
+.giveUp:
 	call LinkErrorReset ; $46c1
-Label_07_46c4:
+.resetLink:
 	call LinkErrorReset ; $46c4
-Label_07_46c7:
+.checkDuplicate:
 	ldh a, [$ffdb] ; $46c7
 	cp a, b ; $46c9
-	jr nz, Label_07_46e6 ; $46ca
+	jr nz, .store ; $46ca
 	and a, $3f ; $46cc
 	ld hl, hLinkCounter ; $46ce
 	inc [hl] ; $46d1
 	ld a, [hl] ; $46d2
 	cp a, $02 ; $46d3
-	jr nc, Label_07_46e0 ; $46d5
+	jr nc, .reinitLink ; $46d5
 	call WaitVBlank ; $46d7
 	call WaitVBlank ; $46da
 	jp ExchangeLinkFrameByteMaster ; $46dd
-Label_07_46e0:
+.reinitLink:
 	call InitSerialLink ; $46e0
 	call LinkErrorReset ; $46e3
-Label_07_46e6:
+.store:
 	ld a, b ; $46e6
 	ldh [$ffdb], a ; $46e7
 	ldh [$ffda], a ; $46e9

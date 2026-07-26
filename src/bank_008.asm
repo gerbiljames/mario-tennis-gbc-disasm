@@ -6769,7 +6769,7 @@ Label_08_7194:
 ApplyCharMovementInput:
 	ld a, [$df1f] ; $719a
 	and a, $f0 ; $719d
-	jr z, Label_08_71dc ; $719f
+	jr z, .done ; $719f
 	swap a ; $71a1
 	add a, $86 ; $71a3
 	ld l, a ; $71a5
@@ -6778,30 +6778,30 @@ ApplyCharMovementInput:
 	ld h, a ; $71a9
 	ld a, [hl] ; $71aa
 	cp a, $ff ; $71ab
-	jr z, Label_08_71dc ; $71ad
+	jr z, .done ; $71ad
 	ld [wCharFacingDesired], a ; $71af
 	ld a, [wCharFacingDesired] ; $71b2
 	ld hl, wCharFacingShown ; $71b5
 	sub a, [hl] ; $71b8
 	bit 7, a ; $71b9
-	jr z, Label_08_71bf ; $71bb
+	jr z, .checkTurnLimit ; $71bb
 	cpl ; $71bd
 	inc a ; $71be
-Label_08_71bf:
+.checkTurnLimit:
 	cp a, $30 ; $71bf
-	jp nc, Label_08_71dc ; $71c1
+	jp nc, .done ; $71c1
 	ld a, [$df1f] ; $71c4
 	and a, PADF_RIGHT | PADF_LEFT ; $71c7
-	jr z, Label_08_71d0 ; $71c9
+	jr z, .checkVertical ; $71c9
 	ld hl, $df50 ; $71cb
 	set 6, [hl] ; $71ce
-Label_08_71d0:
+.checkVertical:
 	ld a, [$df1f] ; $71d0
 	and a, PADF_UP | PADF_DOWN ; $71d3
-	jr z, Label_08_71dc ; $71d5
+	jr z, .done ; $71d5
 	ld hl, $df50 ; $71d7
 	set 7, [hl] ; $71da
-Label_08_71dc:
+.done:
 	ret ; $71dc
 HandleServePositioning:
 	ld a, [$c7b9] ; $71dd

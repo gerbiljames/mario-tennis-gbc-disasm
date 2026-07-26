@@ -1758,26 +1758,26 @@ Label_13_5aae:
 	ret ; $5ac9
 GetDormRoomStoryStage_13:
 	test_flag FLAG_DOUBLES ; $5aca
-	jr nz, Label_13_5ae2 ; $5acd
+	jr nz, .doubles ; $5acd
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $5acf
-	jr nz, Label_13_5adf ; $5ad2
+	jr nz, .stage2 ; $5ad2
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $5ad4
-	jr nz, Label_13_5adc ; $5ad7
-Label_13_5ad9:
+	jr nz, .stage1 ; $5ad7
+.stage0:
 	ld a, $00 ; $5ad9
 	ret ; $5adb
-Label_13_5adc:
+.stage1:
 	ld a, $01 ; $5adc
 	ret ; $5ade
-Label_13_5adf:
+.stage2:
 	ld a, $02 ; $5adf
 	ret ; $5ae1
-Label_13_5ae2:
+.doubles:
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5ae2
-	jr nz, Label_13_5adf ; $5ae5
+	jr nz, .stage2 ; $5ae5
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5ae7
-	jr nz, Label_13_5adc ; $5aea
-	jr Label_13_5ad9 ; $5aec
+	jr nz, .stage1 ; $5aea
+	jr .stage0 ; $5aec
 Label_13_5aee:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5aee
 	jr z, Label_13_5afb ; $5af1

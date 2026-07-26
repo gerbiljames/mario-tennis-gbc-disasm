@@ -133,19 +133,19 @@ ApplyArrowBobOffset:
 	ld hl, $40e7 ; $40d1
 	add a, l ; $40d4
 	ld l, a ; $40d5
-	jr nc, Label_1b_40d9 ; $40d6
+	jr nc, .readOffset ; $40d6
 	inc h ; $40d8
-Label_1b_40d9:
+.readOffset:
 	ld a, [hl] ; $40d9
 	ld b, a ; $40da
 	ld a, c ; $40db
 	or a, a ; $40dc
-	jr z, Label_1b_40e3 ; $40dd
+	jr z, .subtract ; $40dd
 	ld a, b ; $40df
 	add a, e ; $40e0
 	ld e, a ; $40e1
 	ret ; $40e2
-Label_1b_40e3:
+.subtract:
 	ld a, e ; $40e3
 	sub a, b ; $40e4
 	ld e, a ; $40e5

@@ -9993,10 +9993,10 @@ ApplyChannelVolumeEnvelope:
 ApplyChannelEnvelope:
 	ld b, a ; $39df
 	and a, $f0 ; $39e0
-	jr z, Label_00_39f6 ; $39e2
+	jr z, .checkRate ; $39e2
 	ldh a, [hSndRestFlag] ; $39e4
 	or a, a ; $39e6
-	jr nz, Label_00_39f6 ; $39e7
+	jr nz, .checkRate ; $39e7
 	ld a, b ; $39e9
 	rrca ; $39ea
 	rrca ; $39eb
@@ -10007,14 +10007,14 @@ ApplyChannelEnvelope:
 	and a, $0f ; $39f2
 	or a, c ; $39f4
 	ld b, a ; $39f5
-Label_00_39f6:
+.checkRate:
 	ld a, b ; $39f6
 	and a, $07 ; $39f7
-	jr nz, Label_00_39ff ; $39f9
+	jr nz, .writeReg ; $39f9
 	ld a, b ; $39fb
 	or a, $08 ; $39fc
 	ld b, a ; $39fe
-Label_00_39ff:
+.writeReg:
 	ld a, [wSndRegBase] ; $39ff
 	add a, $12 ; $3a02
 	ld c, a ; $3a04

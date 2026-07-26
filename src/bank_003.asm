@@ -3605,17 +3605,17 @@ CheckUnlockCondition:
 	push af ; $57e8
 	wram_bank $07 ; $57e9
 	cp a, $02 ; $57ef
-	jr nc, Label_03_5804 ; $57f1
+	jr nc, .saveFlagCondition ; $57f1
 	or a, a ; $57f3
-	jr nz, Label_03_57fd ; $57f4
+	jr nz, .machineWall ; $57f4
 	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $57f6
-	jr z, Label_03_5838 ; $57f9
-	jr Label_03_581e ; $57fb
-Label_03_57fd:
+	jr z, .locked ; $57f9
+	jr .checkRecord ; $57fb
+.machineWall:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $57fd
-	jr z, Label_03_5838 ; $5800
-	jr Label_03_581e ; $5802
-Label_03_5804:
+	jr z, .locked ; $5800
+	jr .checkRecord ; $5802
+.saveFlagCondition:
 	ld a, b ; $5804
 	sub a, $02 ; $5805
 	ld hl, UnlockConditionFlagRows_03 ; $5807
@@ -3630,8 +3630,8 @@ Label_03_5804:
 	push hl ; $5817
 	pop de ; $5818
 	call TestSaveFlag ; $5819
-	jr z, Label_03_5838 ; $581c
-Label_03_581e:
+	jr z, .locked ; $581c
+.checkRecord:
 	ld a, b ; $581e
 	farcall GetDefaultMinigameRecordValue ; $581f
 	ld a, b ; $5822
@@ -3646,13 +3646,13 @@ Label_03_581e:
 	ld a, h ; $582f
 	sbc a, d ; $5830
 	ld h, a ; $5831
-	jr c, Label_03_5838 ; $5832
+	jr c, .locked ; $5832
 	ld b, $01 ; $5834
-	jr Label_03_583a ; $5836
-Label_03_5838:
+	jr .done ; $5836
+.locked:
 	xor a, a ; $5838
 	ld b, a ; $5839
-Label_03_583a:
+.done:
 	pop af ; $583a
 	wram_bank ; $583b
 	ld a, b ; $583f
