@@ -141,6 +141,48 @@ text emitters generate their own `.L4`/`.s17` anchors). It now keeps the ones
 whose offset is curated in `labels.json`, so named locals count toward the
 naming metric -- hence 8,319 named, up from 6,800 with the same source.
 
+### The character sprite banks are named, and the animation format decoded (2026-07-26)
+
+`Data_*` is what is left auto-named, and the first 2,250 of them fell out
+cleanly. **All 30 character banks (`$40`-`$5d`) share one layout**: 56 tile
+blobs at `$4130`-`$7560` (240 bytes each, two strides of 240/320) and 19
+animation scripts from `$7f4a`. So a blob's *address order* is a stable pose
+index that means the same thing for every character -- `MarioSpriteFrame07`
+and `PeachSpriteFrame07` are the same pose. Named accordingly:
+`<Char>SpriteFrame00`-`55` and `<Char>SpriteAnim00`-`18`.
+
+The index is address order rather than slot order deliberately: each
+`*SpriteFrames` table has **145 slots over those 56 blobs**, because poses
+repeat between animations (some appear in five slots). Slot order would need
+five names for one blob.
+
+**The animation scripts are 2-byte entries**, confirmed against both
+interpreters:
+
+| entry | meaning |
+| --- | --- |
+| `nn dd` (`nn` < `$f0`) | show frame `nn` for `dd` frames |
+| `ff dd` | loop: restart at the script base + `dd` |
+| `fe aa` | switch to animation `aa` |
+| `fb mm` | XOR the flip bits with `mm` (match characters only) |
+
+Two interpreters read them: `AdvanceActorAnimation` (bank `$04`) for overworld
+actors, and `StepCharAnimation` (bank `$08`) for on-court characters -- only
+the latter implements `$fb`, which is why the flip command appears in the
+character banks and not in the overworld ones. Decoded, `AlexSpriteAnim01` is
+`02 0c 04 06 03 0c 04 07 ff 00` = frames 2,4,3,4 held 12/6/12/7 frames, looping
+from the top. These are still `INCBIN` blobs; a render spec (as the actor
+scripts got) would make all 570 of them readable.
+
+What remains auto-named, by family:
+
+| count | family | to name it you first need |
+| --- | --- | --- |
+| 1,095 | blobs under `OamPtrs_*` tables (banks `$6a`, `$6f`-`$77`) | the OAM tables named -- i.e. which NPC each sprite set belongs to |
+| 479 | not in any `dw` table -- 267 loaded straight from code, 93 unreferenced | reading the loading function, one at a time (highest information per label) |
+| 363 | `$4000`-table slot targets | nothing: slot names auto-derive, so naming the blob improves both |
+| 351 | `SoundTable_*` entries (banks `$0c`, `$78`-`$7f`) | the sound-id tables mapped to `PlaySound` ids |
+
 ### No `Label_*` is left in the ROM (2026-07-26)
 
 `grep -c '^Label_' src/*.asm` is **zero**. Every jump target the disassembler
