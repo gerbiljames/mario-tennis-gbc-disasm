@@ -1,89 +1,89 @@
 SECTION "ROM Bank $7f", ROMX[$4000], BANK[$7f]
 
 SoundTable_7f:
-	dw $0000 ; $4000
+	snd_channel 0, $00 ; $4000
 	dw Music96_Trk0 ; $4002
-	dw $0220 ; $4004
+	snd_channel 1, $02 ; $4004
 	dw Music96_Trk1 ; $4006
-	dw $0000 ; $4008
+	snd_channel 0, $00 ; $4008
 	dw Music97_Trk0 ; $400a
-	dw $0000 ; $400c
+	snd_channel 0, $00 ; $400c
 	dw Music98_Trk0 ; $400e
-	dw $0300 ; $4010
+	snd_channel 0, $03 ; $4010
 	dw Music99_Trk0 ; $4012
-	dw $0000 ; $4014
+	snd_channel 0, $00 ; $4014
 	dw Music9d_Trk0 ; $4016
-	dw $0000 ; $4018
+	snd_channel 0, $00 ; $4018
 	dw Music9e_Trk0 ; $401a
-	dw $0000 ; $401c
+	snd_channel 0, $00 ; $401c
 	dw Music9f_Trk0 ; $401e
-	dw $0000 ; $4020
+	snd_channel 0, $00 ; $4020
 	dw Musica0_Trk0 ; $4022
-	dw $0000 ; $4024
+	snd_channel 0, $00 ; $4024
 	dw Musica1_Trk0 ; $4026
-	dw $0000 ; $4028
+	snd_channel 0, $00 ; $4028
 	dw Musica2_Trk0 ; $402a
-	dw $0000 ; $402c
+	snd_channel 0, $00 ; $402c
 	dw Musica3_Trk0 ; $402e
-	dw $0000 ; $4030
+	snd_channel 0, $00 ; $4030
 	dw Musica4_Trk0 ; $4032
-	dw $0000 ; $4034
+	snd_channel 0, $00 ; $4034
 	dw Musica5_Trk0 ; $4036
-	dw $0000 ; $4038
+	snd_channel 0, $00 ; $4038
 	dw Musica6_Trk0 ; $403a
-	dw $0000 ; $403c
+	snd_channel 0, $00 ; $403c
 	dw Musica7_Trk0 ; $403e
-	dw $0000 ; $4040
+	snd_channel 0, $00 ; $4040
 	dw Musica8_Trk0 ; $4042
-	dw $0000 ; $4044
+	snd_channel 0, $00 ; $4044
 	dw Musica9_Trk0 ; $4046
-	dw $0000 ; $4048
+	snd_channel 0, $00 ; $4048
 	dw Musicaa_Trk0 ; $404a
-	dw $0000 ; $404c
+	snd_channel 0, $00 ; $404c
 	dw Musicab_Trk0 ; $404e
-	dw $0000 ; $4050
+	snd_channel 0, $00 ; $4050
 	dw Musicac_Trk0 ; $4052
-	dw $0000 ; $4054
+	snd_channel 0, $00 ; $4054
 	dw Musicad_Trk0 ; $4056
-	dw $0000 ; $4058
+	snd_channel 0, $00 ; $4058
 	dw Musicae_Trk0 ; $405a
-	dw $0000 ; $405c
+	snd_channel 0, $00 ; $405c
 	dw Musicaf_Trk0 ; $405e
-	dw $0000 ; $4060
+	snd_channel 0, $00 ; $4060
 	dw Musicb0_Trk0 ; $4062
-	dw $0000 ; $4064
+	snd_channel 0, $00 ; $4064
 	dw Musicb1_Trk0 ; $4066
-	dw $0000 ; $4068
+	snd_channel 0, $00 ; $4068
 	dw Musicb2_Trk0 ; $406a
-	dw $0000 ; $406c
+	snd_channel 0, $00 ; $406c
 	dw Musicb3_Trk0 ; $406e
-	dw $0000 ; $4070
+	snd_channel 0, $00 ; $4070
 	dw Musicb4_Trk0 ; $4072
-	dw $0000 ; $4074
+	snd_channel 0, $00 ; $4074
 	dw Musicb5_Trk0 ; $4076
-	dw $0000 ; $4078
+	snd_channel 0, $00 ; $4078
 	dw Musicb6_Trk0 ; $407a
-	dw $0000 ; $407c
+	snd_channel 0, $00 ; $407c
 	dw Musicb7_Trk0 ; $407e
-	dw $0000 ; $4080
+	snd_channel 0, $00 ; $4080
 	dw Musicb8_Trk0 ; $4082
-	dw $0000 ; $4084
+	snd_channel 0, $00 ; $4084
 	dw Musicb9_Trk0 ; $4086
-	dw $0020 ; $4088
+	snd_channel 1, $00 ; $4088
 	dw Musicba_Trk0 ; $408a
-	dw $0020 ; $408c
+	snd_channel 1, $00 ; $408c
 	dw Musicbb_Trk0 ; $408e
-	dw $0020 ; $4090
+	snd_channel 1, $00 ; $4090
 	dw Musicbc_Trk0 ; $4092
-	dw $0020 ; $4094
+	snd_channel 1, $00 ; $4094
 	dw Musicbd_Trk0 ; $4096
-	dw $0020 ; $4098
+	snd_channel 1, $00 ; $4098
 	dw Musicbe_Trk0 ; $409a
-	dw $0020 ; $409c
+	snd_channel 1, $00 ; $409c
 	dw Musicbf_Trk0 ; $409e
-	dw $0020 ; $40a0
+	snd_channel 1, $00 ; $40a0
 	dw Musicc0_Trk0 ; $40a2
-	dw $0000 ; $40a4
+	snd_channel 0, $00 ; $40a4
 	dw Musicc1_Trk0 ; $40a6
 Music96_Trk0:
 	INCBIN "data/bank_07f/d_40a8.bin" ; $40a8, 36 bytes

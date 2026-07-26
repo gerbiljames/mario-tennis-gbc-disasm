@@ -447,7 +447,7 @@ class StructureCarvingMixin:
             flat = lambda cpu: base + cpu - 0x4000
             self.ptr_labels[base] = f"SoundTable_{bank:02x}"
             for i, (v, p) in enumerate(pairs):
-                self.ptr_words[base + 4 * i] = (None, "")
+                self.ptr_words[base + 4 * i] = (None, "snd_channel")
                 self.ptr_words[base + 4 * i + 2] = (flat(p), "")
             for a, b in zip(targets, targets[1:] + [0x4000 + end]):
                 self.data_blobs[flat(a)] = (b - a, "copy")

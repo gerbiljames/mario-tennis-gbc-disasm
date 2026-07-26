@@ -4365,11 +4365,26 @@ is left under that measure is mostly `map_actors` (11.6K), `actor_script`
 rather than assets, which is the side of the line the README's wording
 ("graphics, audio, text, and any code not yet analyzed") puts them on.
 
-The **sound data stays an INCBIN on purpose**. All 315 channel scripts are
-named and the engine's dispatch is documented above, but decoding them into
-`snd_*` macros would put ~130 KB of music sequence data into the repository as
-committed source -- the same category as text and graphics. The identification
-is the deliverable; the bytes stay with the user's ROM.
+**Sound got the same treatment.** The 130 KB of channel scripts were always
+INCBINs of gitignored `data/`, and they stay that way -- decoding them into
+`snd_*` macros would put the music sequences into the repository as committed
+source, so the identification is the deliverable and the bytes stay with the
+user's ROM. What *was* still inline is now out too: `sound_index` (the
+`SfxIndexTable`/`MusicIndexTable` directory, 326 bytes) and a new `sound_data`
+spec covering the driver's `SoundPitchTable`, `SoundEnvelopes`,
+`SoundChannelMaskTable`, `SoundEnvelopeTable`, `JingleSoundIds` and the
+sound-test id/label lists -- **1,264 bytes across ten tables**.
+
+That left the `SoundTable_*` pointer tables, whose rows alternate a symbolic
+stream pointer (`dw Music51_Trk0` -- recomputed from layout, reproduces
+nothing) with a literal channel word. Moving the whole table out would have
+deleted 315 stream names for the sake of 702 bytes, so the word is now
+*decoded* instead: `snd_channel 2, $01` renders the channel-struct index the
+low byte selects (always `$20`-aligned) and the byte stored into that struct,
+reassembling `dw $0140` exactly. Derived structure, like `set_flag FLAG_NAME`.
+
+Literal ROM bytes committed in `src/`: 38,380 before the palette move, 29,761
+after it, **28,123** now.
 
 
 ## Repo state

@@ -48,7 +48,7 @@ INLINE_DB_MAX = 2
 # like game text, so no such content is committed. Anything whose rows are
 # label arithmetic or pointer symbols stays inline -- rgbasm recomputes those
 # from the layout, so they reproduce nothing.
-GENERATED_SPECS = {"palettes"}
+GENERATED_SPECS = {"palettes", "sound_index", "sound_data"}
 
 _LABEL_LINE_RE = re.compile(r"^([A-Za-z_][\w.]*):$")
 _CPU_COMMENT_RE = re.compile(r"; \$([0-9a-f]{4})\b")
@@ -410,6 +410,11 @@ class Emitter:
         lbl = self.labels.get(off) or self.dis.ptr_labels.get(off)
         if lbl:
             self.lines.append(f"{lbl}:")
+        if target is None and note == "snd_channel":
+            v = self.rom[off] | (self.rom[off + 1] << 8)
+            self.lines.append(f"\tsnd_channel {(v & 0xff) // 0x20}, "
+                              f"${v >> 8:02x} ; ${offset_to_cpu(off):04x}")
+            return off + 2
         if target is None:
             tl = f"${self.rom[off] | (self.rom[off + 1] << 8):04x}"
         else:

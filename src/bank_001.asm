@@ -593,23 +593,9 @@ RunSoundTest:
 .label_01_6a8a:
 	jp .loop ; $6b61
 SoundTestStrings_01:
-	; $6b64, 17 bytes (bytes:16)
-	db $4d, $55, $53, $49, $43, $00, $45, $46, $46, $45, $43, $54, $00, $3e, $00, $20 ; 0x00
-	db $00 ; 0x10
+	INCLUDE "data/bank_001/sound_data_6b64.asm" ; $6b64, 17 bytes (sound_data)
 SoundTestSoundsA_01:
-	; $6b75, 63 bytes (bytes:16)
-	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
-	db $10, $11, $12, $13, $14, $15, $16, $17, $18, $16, $11, $12, $14, $19, $13, $15 ; 0x10
-	db $14, $1a, $1b, $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24, $25, $26, $27, $28 ; 0x20
-	db $29, $2a, $2b, $2c, $2d, $2e, $2f, $30, $31, $32, $41, $42, $43, $44, $45 ; 0x30
+	INCLUDE "data/bank_001/sound_data_6b75.asm" ; $6b75, 63 bytes (sound_data)
 SoundTestSoundsB_01:
-	; $6bb4, 114 bytes (bytes:16)
-	db $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $5a, $5b, $5c, $5d, $5e, $5f ; 0x00
-	db $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $6a, $6b, $6c, $6d, $6e, $6f ; 0x10
-	db $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $7a, $7b, $7c, $7d, $7e, $7f ; 0x20
-	db $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $8a, $8b, $8c, $8d, $8e, $8f ; 0x30
-	db $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $9a, $9b, $9c, $9d, $9e, $9f ; 0x40
-	db $a0, $a1, $a2, $a3, $a4, $a5, $a6, $a7, $a8, $a9, $aa, $ab, $ac, $ad, $ae, $af ; 0x50
-	db $b0, $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf ; 0x60
-	db $c0, $c1 ; 0x70
+	INCLUDE "data/bank_001/sound_data_6bb4.asm" ; $6bb4, 114 bytes (sound_data)
 	; $6c26, 5082 bytes fill to bank end (linker-padded)

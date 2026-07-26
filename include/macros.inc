@@ -10,6 +10,14 @@ MACRO farcall
 	db LOW(FarPtr_\1), BANK(FarPtr_\1)
 ENDM
 
+; A SoundTable entry's first word: which sound-engine channel struct the
+; track drives (StartSoundChannel indexes wSndChannels by the low byte, which
+; is always $20-aligned) and the byte it stores into that struct. Written as
+; the decoded fields so the row is derived structure, not a ROM value.
+MACRO snd_channel
+	db (\1) * $20, \2
+ENDM
+
 ; Sound/music command (handler $2fb3): one inline id byte.
 MACRO sound
 	rst Rst08

@@ -436,6 +436,10 @@ def render_spec(data: bytes, spec: str) -> str:
         return render_rect_ptrs(data)
     if kind == "sound_index":
         return render_sound_index(data)
+    if kind == "sound_data":
+        # Engine/instrument tables of the sound driver. Rendered like bytes:16;
+        # the separate spec name is what routes them out of the repository.
+        return render_byte_table(data, 16)
     if kind == "squares":
         return render_squares(data)
     if kind == "fill":

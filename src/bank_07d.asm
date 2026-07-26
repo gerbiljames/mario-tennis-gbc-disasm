@@ -1,67 +1,67 @@
 SECTION "ROM Bank $7d", ROMX[$4000], BANK[$7d]
 
 SoundTable_7d:
-	dw $0140 ; $4000
+	snd_channel 2, $01 ; $4000
 	dw Sfx25_Trk0 ; $4002
-	dw $0060 ; $4004
+	snd_channel 3, $00 ; $4004
 	dw Sfx25_Trk1 ; $4006
-	dw $0280 ; $4008
+	snd_channel 4, $02 ; $4008
 	dw Sfx25_Trk2 ; $400a
-	dw $03a0 ; $400c
+	snd_channel 5, $03 ; $400c
 	dw Sfx25_Trk3 ; $400e
-	dw $0140 ; $4010
+	snd_channel 2, $01 ; $4010
 	dw Sfx26_Trk0 ; $4012
-	dw $0060 ; $4014
+	snd_channel 3, $00 ; $4014
 	dw Sfx26_Trk1 ; $4016
-	dw $0280 ; $4018
+	snd_channel 4, $02 ; $4018
 	dw Sfx26_Trk2 ; $401a
-	dw $03a0 ; $401c
+	snd_channel 5, $03 ; $401c
 	dw Sfx26_Trk3 ; $401e
-	dw $0140 ; $4020
+	snd_channel 2, $01 ; $4020
 	dw Sfx27_Trk0 ; $4022
-	dw $0060 ; $4024
+	snd_channel 3, $00 ; $4024
 	dw Sfx27_Trk1 ; $4026
-	dw $0280 ; $4028
+	snd_channel 4, $02 ; $4028
 	dw Sfx27_Trk2 ; $402a
-	dw $03a0 ; $402c
+	snd_channel 5, $03 ; $402c
 	dw Sfx27_Trk3 ; $402e
-	dw $0140 ; $4030
+	snd_channel 2, $01 ; $4030
 	dw Sfx2a_Trk0 ; $4032
-	dw $0060 ; $4034
+	snd_channel 3, $00 ; $4034
 	dw Sfx2a_Trk1 ; $4036
-	dw $0280 ; $4038
+	snd_channel 4, $02 ; $4038
 	dw Sfx2a_Trk2 ; $403a
-	dw $03a0 ; $403c
+	snd_channel 5, $03 ; $403c
 	dw Sfx2a_Trk3 ; $403e
-	dw $0140 ; $4040
+	snd_channel 2, $01 ; $4040
 	dw Sfx2b_Trk0 ; $4042
-	dw $0060 ; $4044
+	snd_channel 3, $00 ; $4044
 	dw Sfx2b_Trk1 ; $4046
-	dw $0280 ; $4048
+	snd_channel 4, $02 ; $4048
 	dw Sfx2b_Trk2 ; $404a
-	dw $03a0 ; $404c
+	snd_channel 5, $03 ; $404c
 	dw Sfx2b_Trk3 ; $404e
-	dw $0140 ; $4050
+	snd_channel 2, $01 ; $4050
 	dw Sfx30_Trk0 ; $4052
-	dw $0060 ; $4054
+	snd_channel 3, $00 ; $4054
 	dw Sfx30_Trk1 ; $4056
-	dw $0280 ; $4058
+	snd_channel 4, $02 ; $4058
 	dw Sfx30_Trk2 ; $405a
-	dw $03a0 ; $405c
+	snd_channel 5, $03 ; $405c
 	dw Sfx30_Trk3 ; $405e
-	dw $0140 ; $4060
+	snd_channel 2, $01 ; $4060
 	dw Sfx32_Trk0 ; $4062
-	dw $0060 ; $4064
+	snd_channel 3, $00 ; $4064
 	dw Sfx32_Trk1 ; $4066
-	dw $0280 ; $4068
+	snd_channel 4, $02 ; $4068
 	dw Sfx32_Trk2 ; $406a
-	dw $03a0 ; $406c
+	snd_channel 5, $03 ; $406c
 	dw Sfx32_Trk3 ; $406e
-	dw $0000 ; $4070
+	snd_channel 0, $00 ; $4070
 	dw Music5a_Trk0 ; $4072
-	dw $0000 ; $4074
+	snd_channel 0, $00 ; $4074
 	dw Music5c_Trk0 ; $4076
-	dw $0000 ; $4078
+	snd_channel 0, $00 ; $4078
 	dw Music9c_Trk0 ; $407a
 Sfx25_Trk0:
 	INCBIN "data/bank_07d/d_407c.bin" ; $407c, 650 bytes

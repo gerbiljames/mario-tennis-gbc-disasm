@@ -58,8 +58,9 @@ byte-for-byte.
   structure). Kinds listed in `GENERATED_SPECS` are different: their rows are
   ROM *values*, so — like game text — they are generated into the gitignored
   `data/` tree at setup and `INCLUDE`d, keeping that content out of the
-  repository. `palettes` (BGR555 `dw` colors) is generated this way. Inline
-  kinds: `records:N` (fixed N-byte records), `bytes:C` (byte table, C per
+  repository. `palettes` (BGR555 `dw` colors), `sound_index` (the sound-id
+  directory) and `sound_data` (the driver's pitch/envelope/mask tables) are
+  generated this way. Inline kinds: `records:N` (fixed N-byte records), `bytes:C` (byte table, C per
   row), `ascii` (a quoted string), `font_glyph` (a `db width, height` glyph
   record, drawn as pixel art in the comments), `cart_header` (the header
   fields after the Nintendo logo), `pattern` (a repeated byte pattern, as one

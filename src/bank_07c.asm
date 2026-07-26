@@ -1,59 +1,59 @@
 SECTION "ROM Bank $7c", ROMX[$4000], BANK[$7c]
 
 SoundTable_7c:
-	dw $0140 ; $4000
+	snd_channel 2, $01 ; $4000
 	dw Sfx20_Trk0 ; $4002
-	dw $0060 ; $4004
+	snd_channel 3, $00 ; $4004
 	dw Sfx20_Trk1 ; $4006
-	dw $0280 ; $4008
+	snd_channel 4, $02 ; $4008
 	dw Sfx20_Trk2 ; $400a
-	dw $03a0 ; $400c
+	snd_channel 5, $03 ; $400c
 	dw Sfx20_Trk3 ; $400e
-	dw $0140 ; $4010
+	snd_channel 2, $01 ; $4010
 	dw Sfx21_Trk0 ; $4012
-	dw $0060 ; $4014
+	snd_channel 3, $00 ; $4014
 	dw Sfx21_Trk1 ; $4016
-	dw $0280 ; $4018
+	snd_channel 4, $02 ; $4018
 	dw Sfx21_Trk2 ; $401a
-	dw $03a0 ; $401c
+	snd_channel 5, $03 ; $401c
 	dw Sfx21_Trk3 ; $401e
-	dw $0140 ; $4020
+	snd_channel 2, $01 ; $4020
 	dw Sfx22_Trk0 ; $4022
-	dw $0060 ; $4024
+	snd_channel 3, $00 ; $4024
 	dw Sfx22_Trk1 ; $4026
-	dw $0280 ; $4028
+	snd_channel 4, $02 ; $4028
 	dw Sfx22_Trk2 ; $402a
-	dw $03a0 ; $402c
+	snd_channel 5, $03 ; $402c
 	dw Sfx22_Trk3 ; $402e
-	dw $0140 ; $4030
+	snd_channel 2, $01 ; $4030
 	dw Sfx23_Trk0 ; $4032
-	dw $0060 ; $4034
+	snd_channel 3, $00 ; $4034
 	dw Sfx23_Trk1 ; $4036
-	dw $0280 ; $4038
+	snd_channel 4, $02 ; $4038
 	dw Sfx23_Trk2 ; $403a
-	dw $03a0 ; $403c
+	snd_channel 5, $03 ; $403c
 	dw Sfx23_Trk3 ; $403e
-	dw $0140 ; $4040
+	snd_channel 2, $01 ; $4040
 	dw Sfx24_Trk0 ; $4042
-	dw $0060 ; $4044
+	snd_channel 3, $00 ; $4044
 	dw Sfx24_Trk1 ; $4046
-	dw $0280 ; $4048
+	snd_channel 4, $02 ; $4048
 	dw Sfx24_Trk2 ; $404a
-	dw $03a0 ; $404c
+	snd_channel 5, $03 ; $404c
 	dw Sfx24_Trk3 ; $404e
-	dw $0300 ; $4050
+	snd_channel 0, $03 ; $4050
 	dw Music54_Trk0 ; $4052
-	dw $0300 ; $4054
+	snd_channel 0, $03 ; $4054
 	dw Music55_Trk0 ; $4056
-	dw $0300 ; $4058
+	snd_channel 0, $03 ; $4058
 	dw Music56_Trk0 ; $405a
-	dw $0300 ; $405c
+	snd_channel 0, $03 ; $405c
 	dw Music57_Trk0 ; $405e
-	dw $0300 ; $4060
+	snd_channel 0, $03 ; $4060
 	dw Music58_Trk0 ; $4062
-	dw $0300 ; $4064
+	snd_channel 0, $03 ; $4064
 	dw Music59_Trk0 ; $4066
-	dw $0300 ; $4068
+	snd_channel 0, $03 ; $4068
 	dw Music5b_Trk0 ; $406a
 Sfx20_Trk0:
 	INCBIN "data/bank_07c/d_406c.bin" ; $406c, 454 bytes

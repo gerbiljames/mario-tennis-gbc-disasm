@@ -8448,8 +8448,7 @@ PlaySoundCmd:
 	ld a, [hl] ; $2fdd
 	jr JingleSoundIds.step3 ; $2fde
 JingleSoundIds:
-	; $2fe0, 6 bytes (bytes:6)
-	db $00, $2e, $2f, $30, $31, $32 ; 0x00
+	INCLUDE "data/bank_000/sound_data_2fe0.asm" ; $2fe0, 6 bytes (sound_data)
 .lt40:
 	ld d, a ; $2fe6
 	ldh a, [hActiveJingle] ; $2fe7
@@ -8679,172 +8678,9 @@ StopAllSound:
 	pop af ; $314f
 	ret ; $3150
 SfxIndexTable:
-	; $3151, 100 bytes (sound_index)
-	sound_entry $78, 4, 0 ; sound 0
-	sound_entry $78, 4, 4 ; sound 1
-	sound_entry $78, 4, 8 ; sound 2
-	sound_entry $78, 4, 12 ; sound 3
-	sound_entry $78, 4, 16 ; sound 4
-	sound_entry $78, 4, 20 ; sound 5
-	sound_entry $78, 4, 24 ; sound 6
-	sound_entry $79, 4, 0 ; sound 7
-	sound_entry $79, 4, 4 ; sound 8
-	sound_entry $78, 3, 28 ; sound 9
-	sound_entry $79, 4, 8 ; sound 10
-	sound_entry $79, 4, 12 ; sound 11
-	sound_entry $79, 4, 16 ; sound 12
-	sound_entry $79, 4, 20 ; sound 13
-	sound_entry $79, 4, 24 ; sound 14
-	sound_entry $7a, 4, 0 ; sound 15
-	sound_entry $7a, 4, 4 ; sound 16
-	sound_entry $7a, 4, 8 ; sound 17
-	sound_entry $7a, 4, 12 ; sound 18
-	sound_entry $7a, 4, 16 ; sound 19
-	sound_entry $7a, 4, 20 ; sound 20
-	sound_entry $7b, 4, 0 ; sound 21
-	sound_entry $7b, 4, 4 ; sound 22
-	sound_entry $7b, 4, 8 ; sound 23
-	sound_entry $7b, 4, 12 ; sound 24
-	sound_entry $7b, 3, 16 ; sound 25
-	sound_entry $7b, 4, 19 ; sound 26
-	sound_entry $7b, 4, 23 ; sound 27
-	sound_entry $7b, 4, 27 ; sound 28
-	sound_entry $7b, 4, 31 ; sound 29
-	sound_entry $7b, 4, 35 ; sound 30
-	sound_entry $7c, 4, 0 ; sound 31
-	sound_entry $7c, 4, 4 ; sound 32
-	sound_entry $7c, 4, 8 ; sound 33
-	sound_entry $7c, 4, 12 ; sound 34
-	sound_entry $7c, 4, 16 ; sound 35
-	sound_entry $7d, 4, 0 ; sound 36
-	sound_entry $7d, 4, 4 ; sound 37
-	sound_entry $7d, 4, 8 ; sound 38
-	sound_entry $7e, 4, 0 ; sound 39
-	sound_entry $7e, 4, 4 ; sound 40
-	sound_entry $7d, 4, 12 ; sound 41
-	sound_entry $7d, 4, 16 ; sound 42
-	sound_entry $7e, 4, 8 ; sound 43
-	sound_entry $79, 4, 28 ; sound 44
-	sound_entry $7a, 3, 24 ; sound 45
-	sound_entry $7b, 4, 39 ; sound 46
-	sound_entry $7d, 4, 20 ; sound 47
-	sound_entry $7b, 4, 43 ; sound 48
-	sound_entry $7d, 4, 24 ; sound 49
+	INCLUDE "data/bank_000/sound_index_3151.asm" ; $3151, 100 bytes (sound_index)
 MusicIndexTable:
-	; $31b5, 226 bytes (sound_index)
-	sound_entry $78, 1, 31 ; sound 0
-	sound_entry $78, 1, 32 ; sound 1
-	sound_entry $79, 1, 32 ; sound 2
-	sound_entry $7c, 1, 20 ; sound 3
-	sound_entry $7c, 1, 21 ; sound 4
-	sound_entry $7c, 1, 22 ; sound 5
-	sound_entry $7c, 1, 23 ; sound 6
-	sound_entry $7c, 1, 24 ; sound 7
-	sound_entry $7c, 1, 25 ; sound 8
-	sound_entry $7d, 1, 28 ; sound 9
-	sound_entry $7c, 1, 26 ; sound 10
-	sound_entry $7d, 1, 29 ; sound 11
-	sound_entry $7e, 1, 12 ; sound 12
-	sound_entry $7e, 1, 13 ; sound 13
-	sound_entry $7e, 1, 14 ; sound 14
-	sound_entry $7e, 1, 15 ; sound 15
-	sound_entry $7e, 1, 16 ; sound 16
-	sound_entry $7e, 1, 17 ; sound 17
-	sound_entry $7e, 1, 18 ; sound 18
-	sound_entry $7e, 1, 19 ; sound 19
-	sound_entry $7e, 1, 20 ; sound 20
-	sound_entry $7e, 1, 21 ; sound 21
-	sound_entry $7e, 1, 22 ; sound 22
-	sound_entry $7e, 1, 23 ; sound 23
-	sound_entry $7e, 1, 24 ; sound 24
-	sound_entry $7e, 1, 25 ; sound 25
-	sound_entry $7e, 1, 26 ; sound 26
-	sound_entry $7e, 1, 27 ; sound 27
-	sound_entry $7e, 1, 28 ; sound 28
-	sound_entry $7e, 1, 29 ; sound 29
-	sound_entry $7e, 2, 30 ; sound 30
-	sound_entry $7e, 1, 32 ; sound 31
-	sound_entry $7e, 1, 33 ; sound 32
-	sound_entry $7e, 1, 34 ; sound 33
-	sound_entry $7e, 1, 35 ; sound 34
-	sound_entry $7e, 1, 36 ; sound 35
-	sound_entry $7e, 1, 37 ; sound 36
-	sound_entry $7e, 1, 38 ; sound 37
-	sound_entry $7e, 1, 39 ; sound 38
-	sound_entry $7e, 1, 40 ; sound 39
-	sound_entry $7e, 1, 41 ; sound 40
-	sound_entry $7e, 1, 42 ; sound 41
-	sound_entry $7e, 1, 43 ; sound 42
-	sound_entry $7e, 1, 44 ; sound 43
-	sound_entry $7e, 1, 45 ; sound 44
-	sound_entry $7e, 1, 46 ; sound 45
-	sound_entry $7e, 1, 47 ; sound 46
-	sound_entry $7e, 1, 48 ; sound 47
-	sound_entry $7e, 1, 49 ; sound 48
-	sound_entry $7e, 2, 50 ; sound 49
-	sound_entry $7e, 1, 52 ; sound 50
-	sound_entry $7e, 2, 53 ; sound 51
-	sound_entry $7e, 1, 55 ; sound 52
-	sound_entry $7e, 1, 56 ; sound 53
-	sound_entry $7e, 2, 57 ; sound 54
-	sound_entry $7e, 1, 59 ; sound 55
-	sound_entry $7e, 1, 60 ; sound 56
-	sound_entry $7e, 1, 61 ; sound 57
-	sound_entry $7e, 1, 62 ; sound 58
-	sound_entry $7e, 1, 63 ; sound 59
-	sound_entry $7e, 1, 64 ; sound 60
-	sound_entry $7e, 1, 65 ; sound 61
-	sound_entry $7e, 1, 66 ; sound 62
-	sound_entry $7e, 1, 67 ; sound 63
-	sound_entry $7e, 1, 68 ; sound 64
-	sound_entry $7e, 1, 69 ; sound 65
-	sound_entry $7e, 1, 70 ; sound 66
-	sound_entry $7e, 1, 71 ; sound 67
-	sound_entry $7e, 1, 72 ; sound 68
-	sound_entry $7f, 2, 0 ; sound 69
-	sound_entry $7f, 1, 2 ; sound 70
-	sound_entry $7f, 1, 3 ; sound 71
-	sound_entry $7f, 1, 4 ; sound 72
-	sound_entry $78, 1, 33 ; sound 73
-	sound_entry $7b, 1, 47 ; sound 74
-	sound_entry $7d, 1, 30 ; sound 75
-	sound_entry $7f, 1, 5 ; sound 76
-	sound_entry $7f, 1, 6 ; sound 77
-	sound_entry $7f, 1, 7 ; sound 78
-	sound_entry $7f, 1, 8 ; sound 79
-	sound_entry $7f, 1, 9 ; sound 80
-	sound_entry $7f, 1, 10 ; sound 81
-	sound_entry $7f, 1, 11 ; sound 82
-	sound_entry $7f, 1, 12 ; sound 83
-	sound_entry $7f, 1, 13 ; sound 84
-	sound_entry $7f, 1, 14 ; sound 85
-	sound_entry $7f, 1, 15 ; sound 86
-	sound_entry $7f, 1, 16 ; sound 87
-	sound_entry $7f, 1, 17 ; sound 88
-	sound_entry $7f, 1, 18 ; sound 89
-	sound_entry $7f, 1, 19 ; sound 90
-	sound_entry $7f, 1, 20 ; sound 91
-	sound_entry $7f, 1, 21 ; sound 92
-	sound_entry $7f, 1, 22 ; sound 93
-	sound_entry $7f, 1, 23 ; sound 94
-	sound_entry $7f, 1, 24 ; sound 95
-	sound_entry $7f, 1, 25 ; sound 96
-	sound_entry $7f, 1, 26 ; sound 97
-	sound_entry $7f, 1, 27 ; sound 98
-	sound_entry $7f, 1, 28 ; sound 99
-	sound_entry $7f, 1, 29 ; sound 100
-	sound_entry $7f, 1, 30 ; sound 101
-	sound_entry $7f, 1, 31 ; sound 102
-	sound_entry $7f, 1, 32 ; sound 103
-	sound_entry $7f, 1, 33 ; sound 104
-	sound_entry $7f, 1, 34 ; sound 105
-	sound_entry $7f, 1, 35 ; sound 106
-	sound_entry $7f, 1, 36 ; sound 107
-	sound_entry $7f, 1, 37 ; sound 108
-	sound_entry $7f, 1, 38 ; sound 109
-	sound_entry $7f, 1, 39 ; sound 110
-	sound_entry $7f, 1, 40 ; sound 111
-	sound_entry $7f, 1, 41 ; sound 112
+	INCLUDE "data/bank_000/sound_index_31b5.asm" ; $31b5, 226 bytes (sound_index)
 PlaySound:
 	and a, a ; $3297
 	jp z, StopAllSound ; $3298
@@ -10228,40 +10064,9 @@ NotePeriodTable:
 	dw $0445 ; record 22
 	dw $0408 ; record 23
 SoundChannelMaskTable:
-	; $3b4d, 256 bytes (bytes:16)
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
-	db $00, $00, $00, $00, $00, $00, $00, $00, $10, $10, $10, $10, $10, $10, $10, $10 ; 0x10
-	db $00, $00, $00, $00, $10, $10, $10, $10, $10, $10, $10, $10, $20, $20, $20, $20 ; 0x20
-	db $00, $00, $00, $10, $10, $10, $10, $10, $20, $20, $20, $20, $20, $30, $30, $30 ; 0x30
-	db $00, $00, $10, $10, $10, $10, $20, $20, $20, $20, $30, $30, $30, $30, $40, $40 ; 0x40
-	db $00, $00, $10, $10, $10, $20, $20, $20, $30, $30, $30, $40, $40, $40, $50, $50 ; 0x50
-	db $00, $00, $10, $10, $20, $20, $20, $30, $30, $40, $40, $40, $50, $50, $60, $60 ; 0x60
-	db $00, $00, $10, $10, $20, $20, $30, $30, $40, $40, $50, $50, $60, $60, $70, $70 ; 0x70
-	db $00, $10, $10, $20, $20, $30, $30, $40, $40, $50, $50, $60, $60, $70, $70, $80 ; 0x80
-	db $00, $10, $10, $20, $20, $30, $40, $40, $50, $50, $60, $70, $70, $80, $80, $90 ; 0x90
-	db $00, $10, $10, $20, $30, $30, $40, $50, $50, $60, $70, $70, $80, $90, $90, $a0 ; 0xa0
-	db $00, $10, $10, $20, $30, $40, $40, $50, $60, $70, $70, $80, $90, $a0, $a0, $b0 ; 0xb0
-	db $00, $10, $20, $20, $30, $40, $50, $60, $60, $70, $80, $90, $a0, $a0, $b0, $c0 ; 0xc0
-	db $00, $10, $20, $30, $30, $40, $50, $60, $70, $80, $90, $a0, $a0, $b0, $c0, $d0 ; 0xd0
-	db $00, $10, $20, $30, $40, $50, $60, $70, $70, $80, $90, $a0, $b0, $c0, $d0, $e0 ; 0xe0
-	db $00, $10, $20, $30, $40, $50, $60, $70, $80, $90, $a0, $b0, $c0, $d0, $e0, $f0 ; 0xf0
+	INCLUDE "data/bank_000/sound_data_3b4d.asm" ; $3b4d, 256 bytes (sound_data)
 SoundPitchTable:
-	; $3c4d, 240 bytes (bytes:16)
-	db $00, $00, $01, $01, $00, $00, $ff, $ff, $00, $00, $01, $01, $00, $00, $ff, $ff ; 0x00
-	db $00, $00, $00, $00, $01, $01, $01, $01, $00, $00, $00, $00, $ff, $ff, $ff, $ff ; 0x10
-	db $00, $01, $02, $01, $00, $ff, $fe, $ff, $00, $01, $02, $01, $00, $ff, $fe, $ff ; 0x20
-	db $00, $00, $01, $01, $02, $02, $01, $01, $00, $00, $ff, $ff, $fe, $fe, $ff, $ff ; 0x30
-	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x40
-	db $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe ; 0x50
-	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x60
-	db $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02 ; 0x70
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x80
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x90
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0xa0
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0xb0
-	db $00, $ff, $fe, $fd, $fc, $fb, $fa, $f9, $f8, $f7, $f6, $f5, $f4, $f3, $f2, $f1 ; 0xc0
-	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0xd0
-	db $00, $01, $02, $02, $03, $02, $02, $01, $00, $ff, $fe, $fe, $fd, $fe, $fe, $ff ; 0xe0
+	INCLUDE "data/bank_000/sound_data_3c4d.asm" ; $3c4d, 240 bytes (sound_data)
 LoadWavePatternIfChanged:
 	ld a, [wSndLoadedWaveId] ; $3d3d
 	ld b, a ; $3d40
@@ -10392,23 +10197,7 @@ WavePatterns:
 	db $ee, $ee, $cd, $ac, $35, $23, $11, $11, $11, $11, $32, $53, $ca, $dc, $ee, $ee ; 0xe0
 	db $dd, $dd, $dd, $dd, $dd, $dd, $dd, $dd, $22, $22, $22, $22, $22, $22, $22, $22 ; 0xf0
 SoundEnvelopeTable:
-	; $3ed6, 2 bytes (records:2)
-	dw SoundEnvelopes ; record 0
+	INCLUDE "data/bank_000/sound_data_3ed6.asm" ; $3ed6, 2 bytes (sound_data)
 SoundEnvelopes:
-	; $3ed8, 240 bytes (bytes:16)
-	db $f5, $e5, $d5, $c5, $c5, $c5, $c5, $c5, $b5, $b5, $b5, $b5, $b5, $b5, $b5, $b5 ; 0x00
-	db $f3, $d0, $b0, $90, $70, $50, $30, $10, $51, $40, $30, $20, $15, $15, $15, $15 ; 0x10
-	db $89, $98, $a8, $b8, $c8, $d8, $e8, $f5, $f5, $f5, $f5, $f5, $f5, $f5, $f5, $f5 ; 0x20
-	db $b9, $c8, $d8, $e8, $f1, $d0, $b0, $90, $70, $50, $30, $15, $15, $15, $15, $15 ; 0x30
-	db $99, $a8, $b8, $c8, $d8, $e8, $f4, $f4, $f0, $e0, $d0, $b0, $90, $70, $50, $35 ; 0x40
-	db $db, $f3, $d0, $b0, $90, $81, $70, $60, $50, $40, $30, $20, $15, $15, $15, $15 ; 0x50
-	db $f1, $e0, $d0, $c0, $b0, $a0, $90, $80, $70, $60, $50, $40, $30, $20, $10, $05 ; 0x60
-	db $f1, $70, $50, $30, $20, $15, $15, $15, $15, $05, $05, $05, $05, $05, $05, $05 ; 0x70
-	db $f1, $b0, $70, $50, $30, $20, $20, $15, $15, $15, $15, $15, $15, $15, $15, $05 ; 0x80
-	db $f1, $b0, $70, $50, $30, $10, $51, $40, $30, $20, $15, $15, $15, $15, $15, $05 ; 0x90
-	db $f3, $d0, $b0, $90, $70, $50, $30, $10, $51, $40, $30, $20, $15, $15, $15, $05 ; 0xa0
-	db $09, $18, $28, $38, $48, $58, $68, $78, $88, $98, $a8, $b8, $c8, $d8, $e8, $f5 ; 0xb0
-	db $c1, $d0, $e0, $d0, $c0, $a0, $80, $40, $b8, $c8, $d8, $e8, $f8, $88, $48, $05 ; 0xc0
-	db $f1, $e0, $d0, $c0, $b0, $a0, $90, $80, $70, $60, $50, $40, $30, $20, $10, $05 ; 0xd0
-	db $29, $28, $28, $38, $38, $48, $48, $58, $68, $78, $88, $a8, $c8, $d8, $e8, $f5 ; 0xe0
+	INCLUDE "data/bank_000/sound_data_3ed8.asm" ; $3ed8, 240 bytes (sound_data)
 	; $3fc8, 56 bytes fill to bank end (linker-padded)

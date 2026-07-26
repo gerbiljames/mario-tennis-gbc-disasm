@@ -1,6 +1,13 @@
 # path  rom_offset(hex)  length(hex)  [render-spec] — consumed by tools/extract.py
 bank_000/d_000b.bin 00000b d
 bank_000/d_0104.bin 000104 30
+bank_000/sound_data_2fe0.asm 002fe0 6 sound_data
+bank_000/sound_index_3151.asm 003151 64 sound_index
+bank_000/sound_index_31b5.asm 0031b5 e2 sound_index
+bank_000/sound_data_3b4d.asm 003b4d 100 sound_data
+bank_000/sound_data_3c4d.asm 003c4d f0 sound_data
+bank_000/sound_data_3ed6.asm 003ed6 2 sound_data
+bank_000/sound_data_3ed8.asm 003ed8 f0 sound_data
 bank_001/d_4210.bin 004210 100
 bank_001/d_4410.bin 004410 600
 bank_001/palettes_5010.asm 005010 40 palettes
@@ -10,6 +17,9 @@ bank_001/d_53b0.bin 0053b0 c40
 bank_001/palettes_5ff0.asm 005ff0 40 palettes
 bank_001/d_607c.bin 00607c 887
 bank_001/d_6903.bin 006903 158
+bank_001/sound_data_6b64.asm 006b64 11 sound_data
+bank_001/sound_data_6b75.asm 006b75 3f sound_data
+bank_001/sound_data_6bb4.asm 006bb4 72 sound_data
 bank_003/text_47e9.asm 00c7e9 10
 bank_003/d_52f0.bin 00d2f0 20
 bank_003/palettes_5b20.asm 00db20 8 palettes
