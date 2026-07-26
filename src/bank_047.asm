@@ -9,323 +9,323 @@ SeanSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_47_7ce0 ; $400c per-slot OAM data
 SeanSpriteFrames:
-	dw Data_47_4130 ; $400e
-	dw Data_47_4220 ; $4010
-	dw Data_47_4310 ; $4012
-	dw Data_47_4400 ; $4014
-	dw Data_47_44f0 ; $4016
-	dw Data_47_45e0 ; $4018
-	dw Data_47_46d0 ; $401a
-	dw Data_47_47c0 ; $401c
-	dw Data_47_48b0 ; $401e
-	dw Data_47_49a0 ; $4020
-	dw Data_47_4a90 ; $4022
-	dw Data_47_4220 ; $4024
-	dw Data_47_4310 ; $4026
-	dw Data_47_4400 ; $4028
-	dw Data_47_4b80 ; $402a
-	dw Data_47_4c70 ; $402c
-	dw Data_47_4220 ; $402e
-	dw Data_47_4310 ; $4030
-	dw Data_47_4400 ; $4032
-	dw Data_47_4d60 ; $4034
-	dw Data_47_4e50 ; $4036
-	dw Data_47_46d0 ; $4038
-	dw Data_47_47c0 ; $403a
-	dw Data_47_48b0 ; $403c
-	dw Data_47_4f40 ; $403e
-	dw Data_47_5030 ; $4040
-	dw Data_47_5030 ; $4042
-	dw Data_47_5030 ; $4044
-	dw Data_47_5120 ; $4046
-	dw Data_47_5120 ; $4048
-	dw Data_47_5210 ; $404a
-	dw Data_47_5210 ; $404c
-	dw Data_47_5210 ; $404e
-	dw Data_47_5300 ; $4050
-	dw Data_47_5300 ; $4052
-	dw Data_47_53f0 ; $4054
-	dw Data_47_53f0 ; $4056
-	dw Data_47_53f0 ; $4058
-	dw Data_47_54e0 ; $405a
-	dw Data_47_54e0 ; $405c
-	dw Data_47_55d0 ; $405e
-	dw Data_47_55d0 ; $4060
-	dw Data_47_55d0 ; $4062
-	dw Data_47_56c0 ; $4064
-	dw Data_47_56c0 ; $4066
-	dw Data_47_57b0 ; $4068
-	dw Data_47_57b0 ; $406a
-	dw Data_47_57b0 ; $406c
-	dw Data_47_58a0 ; $406e
-	dw Data_47_58a0 ; $4070
-	dw Data_47_5990 ; $4072
-	dw Data_47_5990 ; $4074
-	dw Data_47_5990 ; $4076
-	dw Data_47_5a80 ; $4078
-	dw Data_47_5a80 ; $407a
-	dw Data_47_5b70 ; $407c
-	dw Data_47_5b70 ; $407e
-	dw Data_47_5b70 ; $4080
-	dw Data_47_5c60 ; $4082
-	dw Data_47_5c60 ; $4084
-	dw Data_47_5d50 ; $4086
-	dw Data_47_5d50 ; $4088
-	dw Data_47_5d50 ; $408a
-	dw Data_47_5e40 ; $408c
-	dw Data_47_5e40 ; $408e
-	dw Data_47_5f30 ; $4090
-	dw Data_47_5f30 ; $4092
-	dw Data_47_5f30 ; $4094
-	dw Data_47_6020 ; $4096
-	dw Data_47_6020 ; $4098
-	dw Data_47_6110 ; $409a
-	dw Data_47_6110 ; $409c
-	dw Data_47_6110 ; $409e
-	dw Data_47_6200 ; $40a0
-	dw Data_47_6200 ; $40a2
-	dw Data_47_62f0 ; $40a4
-	dw Data_47_62f0 ; $40a6
-	dw Data_47_62f0 ; $40a8
-	dw Data_47_63e0 ; $40aa
-	dw Data_47_63e0 ; $40ac
-	dw Data_47_64d0 ; $40ae
-	dw Data_47_64d0 ; $40b0
-	dw Data_47_64d0 ; $40b2
-	dw Data_47_65c0 ; $40b4
-	dw Data_47_65c0 ; $40b6
-	dw Data_47_66b0 ; $40b8
-	dw Data_47_66b0 ; $40ba
-	dw Data_47_66b0 ; $40bc
-	dw Data_47_67f0 ; $40be
-	dw Data_47_67f0 ; $40c0
-	dw Data_47_6930 ; $40c2
-	dw Data_47_6930 ; $40c4
-	dw Data_47_6930 ; $40c6
-	dw Data_47_6930 ; $40c8
-	dw Data_47_6930 ; $40ca
-	dw Data_47_6a20 ; $40cc
-	dw Data_47_6a20 ; $40ce
-	dw Data_47_6a20 ; $40d0
-	dw Data_47_6a20 ; $40d2
-	dw Data_47_6a20 ; $40d4
-	dw Data_47_6b10 ; $40d6
-	dw Data_47_6b10 ; $40d8
-	dw Data_47_6b10 ; $40da
-	dw Data_47_6c00 ; $40dc
-	dw Data_47_6c00 ; $40de
-	dw Data_47_6cf0 ; $40e0
-	dw Data_47_6cf0 ; $40e2
-	dw Data_47_6cf0 ; $40e4
-	dw Data_47_6de0 ; $40e6
-	dw Data_47_6de0 ; $40e8
-	dw Data_47_6ed0 ; $40ea
-	dw Data_47_6ed0 ; $40ec
-	dw Data_47_6ed0 ; $40ee
-	dw Data_47_6fc0 ; $40f0
-	dw Data_47_6fc0 ; $40f2
-	dw Data_47_70b0 ; $40f4
-	dw Data_47_70b0 ; $40f6
-	dw Data_47_70b0 ; $40f8
-	dw Data_47_70b0 ; $40fa
-	dw Data_47_70b0 ; $40fc
-	dw Data_47_71a0 ; $40fe
-	dw Data_47_71a0 ; $4100
-	dw Data_47_71a0 ; $4102
-	dw Data_47_71a0 ; $4104
-	dw Data_47_71a0 ; $4106
-	dw Data_47_7290 ; $4108
-	dw Data_47_7290 ; $410a
-	dw Data_47_7290 ; $410c
-	dw Data_47_7290 ; $410e
-	dw Data_47_7290 ; $4110
-	dw Data_47_7380 ; $4112
-	dw Data_47_7380 ; $4114
-	dw Data_47_7380 ; $4116
-	dw Data_47_7380 ; $4118
-	dw Data_47_7380 ; $411a
-	dw Data_47_7470 ; $411c
-	dw Data_47_7470 ; $411e
-	dw Data_47_7470 ; $4120
-	dw Data_47_7470 ; $4122
-	dw Data_47_7470 ; $4124
-	dw Data_47_7560 ; $4126
-	dw Data_47_7560 ; $4128
-	dw Data_47_7560 ; $412a
-	dw Data_47_7560 ; $412c
-	dw Data_47_7560 ; $412e
-Data_47_4130:
+	dw SeanSpriteFrame00 ; $400e
+	dw SeanSpriteFrame01 ; $4010
+	dw SeanSpriteFrame02 ; $4012
+	dw SeanSpriteFrame03 ; $4014
+	dw SeanSpriteFrame04 ; $4016
+	dw SeanSpriteFrame05 ; $4018
+	dw SeanSpriteFrame06 ; $401a
+	dw SeanSpriteFrame07 ; $401c
+	dw SeanSpriteFrame08 ; $401e
+	dw SeanSpriteFrame09 ; $4020
+	dw SeanSpriteFrame10 ; $4022
+	dw SeanSpriteFrame01 ; $4024
+	dw SeanSpriteFrame02 ; $4026
+	dw SeanSpriteFrame03 ; $4028
+	dw SeanSpriteFrame11 ; $402a
+	dw SeanSpriteFrame12 ; $402c
+	dw SeanSpriteFrame01 ; $402e
+	dw SeanSpriteFrame02 ; $4030
+	dw SeanSpriteFrame03 ; $4032
+	dw SeanSpriteFrame13 ; $4034
+	dw SeanSpriteFrame14 ; $4036
+	dw SeanSpriteFrame06 ; $4038
+	dw SeanSpriteFrame07 ; $403a
+	dw SeanSpriteFrame08 ; $403c
+	dw SeanSpriteFrame15 ; $403e
+	dw SeanSpriteFrame16 ; $4040
+	dw SeanSpriteFrame16 ; $4042
+	dw SeanSpriteFrame16 ; $4044
+	dw SeanSpriteFrame17 ; $4046
+	dw SeanSpriteFrame17 ; $4048
+	dw SeanSpriteFrame18 ; $404a
+	dw SeanSpriteFrame18 ; $404c
+	dw SeanSpriteFrame18 ; $404e
+	dw SeanSpriteFrame19 ; $4050
+	dw SeanSpriteFrame19 ; $4052
+	dw SeanSpriteFrame20 ; $4054
+	dw SeanSpriteFrame20 ; $4056
+	dw SeanSpriteFrame20 ; $4058
+	dw SeanSpriteFrame21 ; $405a
+	dw SeanSpriteFrame21 ; $405c
+	dw SeanSpriteFrame22 ; $405e
+	dw SeanSpriteFrame22 ; $4060
+	dw SeanSpriteFrame22 ; $4062
+	dw SeanSpriteFrame23 ; $4064
+	dw SeanSpriteFrame23 ; $4066
+	dw SeanSpriteFrame24 ; $4068
+	dw SeanSpriteFrame24 ; $406a
+	dw SeanSpriteFrame24 ; $406c
+	dw SeanSpriteFrame25 ; $406e
+	dw SeanSpriteFrame25 ; $4070
+	dw SeanSpriteFrame26 ; $4072
+	dw SeanSpriteFrame26 ; $4074
+	dw SeanSpriteFrame26 ; $4076
+	dw SeanSpriteFrame27 ; $4078
+	dw SeanSpriteFrame27 ; $407a
+	dw SeanSpriteFrame28 ; $407c
+	dw SeanSpriteFrame28 ; $407e
+	dw SeanSpriteFrame28 ; $4080
+	dw SeanSpriteFrame29 ; $4082
+	dw SeanSpriteFrame29 ; $4084
+	dw SeanSpriteFrame30 ; $4086
+	dw SeanSpriteFrame30 ; $4088
+	dw SeanSpriteFrame30 ; $408a
+	dw SeanSpriteFrame31 ; $408c
+	dw SeanSpriteFrame31 ; $408e
+	dw SeanSpriteFrame32 ; $4090
+	dw SeanSpriteFrame32 ; $4092
+	dw SeanSpriteFrame32 ; $4094
+	dw SeanSpriteFrame33 ; $4096
+	dw SeanSpriteFrame33 ; $4098
+	dw SeanSpriteFrame34 ; $409a
+	dw SeanSpriteFrame34 ; $409c
+	dw SeanSpriteFrame34 ; $409e
+	dw SeanSpriteFrame35 ; $40a0
+	dw SeanSpriteFrame35 ; $40a2
+	dw SeanSpriteFrame36 ; $40a4
+	dw SeanSpriteFrame36 ; $40a6
+	dw SeanSpriteFrame36 ; $40a8
+	dw SeanSpriteFrame37 ; $40aa
+	dw SeanSpriteFrame37 ; $40ac
+	dw SeanSpriteFrame38 ; $40ae
+	dw SeanSpriteFrame38 ; $40b0
+	dw SeanSpriteFrame38 ; $40b2
+	dw SeanSpriteFrame39 ; $40b4
+	dw SeanSpriteFrame39 ; $40b6
+	dw SeanSpriteFrame40 ; $40b8
+	dw SeanSpriteFrame40 ; $40ba
+	dw SeanSpriteFrame40 ; $40bc
+	dw SeanSpriteFrame41 ; $40be
+	dw SeanSpriteFrame41 ; $40c0
+	dw SeanSpriteFrame42 ; $40c2
+	dw SeanSpriteFrame42 ; $40c4
+	dw SeanSpriteFrame42 ; $40c6
+	dw SeanSpriteFrame42 ; $40c8
+	dw SeanSpriteFrame42 ; $40ca
+	dw SeanSpriteFrame43 ; $40cc
+	dw SeanSpriteFrame43 ; $40ce
+	dw SeanSpriteFrame43 ; $40d0
+	dw SeanSpriteFrame43 ; $40d2
+	dw SeanSpriteFrame43 ; $40d4
+	dw SeanSpriteFrame44 ; $40d6
+	dw SeanSpriteFrame44 ; $40d8
+	dw SeanSpriteFrame44 ; $40da
+	dw SeanSpriteFrame45 ; $40dc
+	dw SeanSpriteFrame45 ; $40de
+	dw SeanSpriteFrame46 ; $40e0
+	dw SeanSpriteFrame46 ; $40e2
+	dw SeanSpriteFrame46 ; $40e4
+	dw SeanSpriteFrame47 ; $40e6
+	dw SeanSpriteFrame47 ; $40e8
+	dw SeanSpriteFrame48 ; $40ea
+	dw SeanSpriteFrame48 ; $40ec
+	dw SeanSpriteFrame48 ; $40ee
+	dw SeanSpriteFrame49 ; $40f0
+	dw SeanSpriteFrame49 ; $40f2
+	dw SeanSpriteFrame50 ; $40f4
+	dw SeanSpriteFrame50 ; $40f6
+	dw SeanSpriteFrame50 ; $40f8
+	dw SeanSpriteFrame50 ; $40fa
+	dw SeanSpriteFrame50 ; $40fc
+	dw SeanSpriteFrame51 ; $40fe
+	dw SeanSpriteFrame51 ; $4100
+	dw SeanSpriteFrame51 ; $4102
+	dw SeanSpriteFrame51 ; $4104
+	dw SeanSpriteFrame51 ; $4106
+	dw SeanSpriteFrame52 ; $4108
+	dw SeanSpriteFrame52 ; $410a
+	dw SeanSpriteFrame52 ; $410c
+	dw SeanSpriteFrame52 ; $410e
+	dw SeanSpriteFrame52 ; $4110
+	dw SeanSpriteFrame53 ; $4112
+	dw SeanSpriteFrame53 ; $4114
+	dw SeanSpriteFrame53 ; $4116
+	dw SeanSpriteFrame53 ; $4118
+	dw SeanSpriteFrame53 ; $411a
+	dw SeanSpriteFrame54 ; $411c
+	dw SeanSpriteFrame54 ; $411e
+	dw SeanSpriteFrame54 ; $4120
+	dw SeanSpriteFrame54 ; $4122
+	dw SeanSpriteFrame54 ; $4124
+	dw SeanSpriteFrame55 ; $4126
+	dw SeanSpriteFrame55 ; $4128
+	dw SeanSpriteFrame55 ; $412a
+	dw SeanSpriteFrame55 ; $412c
+	dw SeanSpriteFrame55 ; $412e
+SeanSpriteFrame00:
 	INCBIN "data/bank_047/d_4130.bin" ; $4130, 240 bytes
-Data_47_4220:
+SeanSpriteFrame01:
 	INCBIN "data/bank_047/d_4220.bin" ; $4220, 240 bytes
-Data_47_4310:
+SeanSpriteFrame02:
 	INCBIN "data/bank_047/d_4310.bin" ; $4310, 240 bytes
-Data_47_4400:
+SeanSpriteFrame03:
 	INCBIN "data/bank_047/d_4400.bin" ; $4400, 240 bytes
-Data_47_44f0:
+SeanSpriteFrame04:
 	INCBIN "data/bank_047/d_44f0.bin" ; $44f0, 240 bytes
-Data_47_45e0:
+SeanSpriteFrame05:
 	INCBIN "data/bank_047/d_45e0.bin" ; $45e0, 240 bytes
-Data_47_46d0:
+SeanSpriteFrame06:
 	INCBIN "data/bank_047/d_46d0.bin" ; $46d0, 240 bytes
-Data_47_47c0:
+SeanSpriteFrame07:
 	INCBIN "data/bank_047/d_47c0.bin" ; $47c0, 240 bytes
-Data_47_48b0:
+SeanSpriteFrame08:
 	INCBIN "data/bank_047/d_48b0.bin" ; $48b0, 240 bytes
-Data_47_49a0:
+SeanSpriteFrame09:
 	INCBIN "data/bank_047/d_49a0.bin" ; $49a0, 240 bytes
-Data_47_4a90:
+SeanSpriteFrame10:
 	INCBIN "data/bank_047/d_4a90.bin" ; $4a90, 240 bytes
-Data_47_4b80:
+SeanSpriteFrame11:
 	INCBIN "data/bank_047/d_4b80.bin" ; $4b80, 240 bytes
-Data_47_4c70:
+SeanSpriteFrame12:
 	INCBIN "data/bank_047/d_4c70.bin" ; $4c70, 240 bytes
-Data_47_4d60:
+SeanSpriteFrame13:
 	INCBIN "data/bank_047/d_4d60.bin" ; $4d60, 240 bytes
-Data_47_4e50:
+SeanSpriteFrame14:
 	INCBIN "data/bank_047/d_4e50.bin" ; $4e50, 240 bytes
-Data_47_4f40:
+SeanSpriteFrame15:
 	INCBIN "data/bank_047/d_4f40.bin" ; $4f40, 240 bytes
-Data_47_5030:
+SeanSpriteFrame16:
 	INCBIN "data/bank_047/d_5030.bin" ; $5030, 240 bytes
-Data_47_5120:
+SeanSpriteFrame17:
 	INCBIN "data/bank_047/d_5120.bin" ; $5120, 240 bytes
-Data_47_5210:
+SeanSpriteFrame18:
 	INCBIN "data/bank_047/d_5210.bin" ; $5210, 240 bytes
-Data_47_5300:
+SeanSpriteFrame19:
 	INCBIN "data/bank_047/d_5300.bin" ; $5300, 240 bytes
-Data_47_53f0:
+SeanSpriteFrame20:
 	INCBIN "data/bank_047/d_53f0.bin" ; $53f0, 240 bytes
-Data_47_54e0:
+SeanSpriteFrame21:
 	INCBIN "data/bank_047/d_54e0.bin" ; $54e0, 240 bytes
-Data_47_55d0:
+SeanSpriteFrame22:
 	INCBIN "data/bank_047/d_55d0.bin" ; $55d0, 240 bytes
-Data_47_56c0:
+SeanSpriteFrame23:
 	INCBIN "data/bank_047/d_56c0.bin" ; $56c0, 240 bytes
-Data_47_57b0:
+SeanSpriteFrame24:
 	INCBIN "data/bank_047/d_57b0.bin" ; $57b0, 240 bytes
-Data_47_58a0:
+SeanSpriteFrame25:
 	INCBIN "data/bank_047/d_58a0.bin" ; $58a0, 240 bytes
-Data_47_5990:
+SeanSpriteFrame26:
 	INCBIN "data/bank_047/d_5990.bin" ; $5990, 240 bytes
-Data_47_5a80:
+SeanSpriteFrame27:
 	INCBIN "data/bank_047/d_5a80.bin" ; $5a80, 240 bytes
-Data_47_5b70:
+SeanSpriteFrame28:
 	INCBIN "data/bank_047/d_5b70.bin" ; $5b70, 240 bytes
-Data_47_5c60:
+SeanSpriteFrame29:
 	INCBIN "data/bank_047/d_5c60.bin" ; $5c60, 240 bytes
-Data_47_5d50:
+SeanSpriteFrame30:
 	INCBIN "data/bank_047/d_5d50.bin" ; $5d50, 240 bytes
-Data_47_5e40:
+SeanSpriteFrame31:
 	INCBIN "data/bank_047/d_5e40.bin" ; $5e40, 240 bytes
-Data_47_5f30:
+SeanSpriteFrame32:
 	INCBIN "data/bank_047/d_5f30.bin" ; $5f30, 240 bytes
-Data_47_6020:
+SeanSpriteFrame33:
 	INCBIN "data/bank_047/d_6020.bin" ; $6020, 240 bytes
-Data_47_6110:
+SeanSpriteFrame34:
 	INCBIN "data/bank_047/d_6110.bin" ; $6110, 240 bytes
-Data_47_6200:
+SeanSpriteFrame35:
 	INCBIN "data/bank_047/d_6200.bin" ; $6200, 240 bytes
-Data_47_62f0:
+SeanSpriteFrame36:
 	INCBIN "data/bank_047/d_62f0.bin" ; $62f0, 240 bytes
-Data_47_63e0:
+SeanSpriteFrame37:
 	INCBIN "data/bank_047/d_63e0.bin" ; $63e0, 240 bytes
-Data_47_64d0:
+SeanSpriteFrame38:
 	INCBIN "data/bank_047/d_64d0.bin" ; $64d0, 240 bytes
-Data_47_65c0:
+SeanSpriteFrame39:
 	INCBIN "data/bank_047/d_65c0.bin" ; $65c0, 240 bytes
-Data_47_66b0:
+SeanSpriteFrame40:
 	INCBIN "data/bank_047/d_66b0.bin" ; $66b0, 320 bytes
-Data_47_67f0:
+SeanSpriteFrame41:
 	INCBIN "data/bank_047/d_67f0.bin" ; $67f0, 320 bytes
-Data_47_6930:
+SeanSpriteFrame42:
 	INCBIN "data/bank_047/d_6930.bin" ; $6930, 240 bytes
-Data_47_6a20:
+SeanSpriteFrame43:
 	INCBIN "data/bank_047/d_6a20.bin" ; $6a20, 240 bytes
-Data_47_6b10:
+SeanSpriteFrame44:
 	INCBIN "data/bank_047/d_6b10.bin" ; $6b10, 240 bytes
-Data_47_6c00:
+SeanSpriteFrame45:
 	INCBIN "data/bank_047/d_6c00.bin" ; $6c00, 240 bytes
-Data_47_6cf0:
+SeanSpriteFrame46:
 	INCBIN "data/bank_047/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_47_6de0:
+SeanSpriteFrame47:
 	INCBIN "data/bank_047/d_6de0.bin" ; $6de0, 240 bytes
-Data_47_6ed0:
+SeanSpriteFrame48:
 	INCBIN "data/bank_047/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_47_6fc0:
+SeanSpriteFrame49:
 	INCBIN "data/bank_047/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_47_70b0:
+SeanSpriteFrame50:
 	INCBIN "data/bank_047/d_70b0.bin" ; $70b0, 240 bytes
-Data_47_71a0:
+SeanSpriteFrame51:
 	INCBIN "data/bank_047/d_71a0.bin" ; $71a0, 240 bytes
-Data_47_7290:
+SeanSpriteFrame52:
 	INCBIN "data/bank_047/d_7290.bin" ; $7290, 240 bytes
-Data_47_7380:
+SeanSpriteFrame53:
 	INCBIN "data/bank_047/d_7380.bin" ; $7380, 240 bytes
-Data_47_7470:
+SeanSpriteFrame54:
 	INCBIN "data/bank_047/d_7470.bin" ; $7470, 240 bytes
-Data_47_7560:
+SeanSpriteFrame55:
 	INCBIN "data/bank_047/d_7560.bin" ; $7560, 240 bytes
 Data_47_7650:
 	INCBIN "data/bank_047/d_7650.bin" ; $7650, 1680 bytes
 Data_47_7ce0:
 	INCBIN "data/bank_047/d_7ce0.bin" ; $7ce0, 580 bytes
 SeanSpriteAnims:
-	dw Data_47_7f4a ; $7f24
-	dw Data_47_7f4d ; $7f26
-	dw Data_47_7f57 ; $7f28
-	dw Data_47_7f5d ; $7f2a
-	dw Data_47_7f67 ; $7f2c
-	dw Data_47_7f6f ; $7f2e
-	dw Data_47_7f75 ; $7f30
-	dw Data_47_7f7b ; $7f32
-	dw Data_47_7f81 ; $7f34
-	dw Data_47_7f86 ; $7f36
-	dw Data_47_7f8a ; $7f38
-	dw Data_47_7f8e ; $7f3a
-	dw Data_47_7f92 ; $7f3c
-	dw Data_47_7f95 ; $7f3e
-	dw Data_47_7f98 ; $7f40
-	dw Data_47_7f9b ; $7f42
-	dw Data_47_7f9e ; $7f44
-	dw Data_47_7fa1 ; $7f46
-	dw Data_47_7fad ; $7f48
-Data_47_7f4a:
+	dw SeanSpriteAnim00 ; $7f24
+	dw SeanSpriteAnim01 ; $7f26
+	dw SeanSpriteAnim02 ; $7f28
+	dw SeanSpriteAnim03 ; $7f2a
+	dw SeanSpriteAnim04 ; $7f2c
+	dw SeanSpriteAnim05 ; $7f2e
+	dw SeanSpriteAnim06 ; $7f30
+	dw SeanSpriteAnim07 ; $7f32
+	dw SeanSpriteAnim08 ; $7f34
+	dw SeanSpriteAnim09 ; $7f36
+	dw SeanSpriteAnim10 ; $7f38
+	dw SeanSpriteAnim11 ; $7f3a
+	dw SeanSpriteAnim12 ; $7f3c
+	dw SeanSpriteAnim13 ; $7f3e
+	dw SeanSpriteAnim14 ; $7f40
+	dw SeanSpriteAnim15 ; $7f42
+	dw SeanSpriteAnim16 ; $7f44
+	dw SeanSpriteAnim17 ; $7f46
+	dw SeanSpriteAnim18 ; $7f48
+SeanSpriteAnim00:
 	INCBIN "data/bank_047/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_47_7f4d:
+SeanSpriteAnim01:
 	INCBIN "data/bank_047/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_47_7f57:
+SeanSpriteAnim02:
 	INCBIN "data/bank_047/d_7f57.bin" ; $7f57, 6 bytes
-Data_47_7f5d:
+SeanSpriteAnim03:
 	INCBIN "data/bank_047/d_7f5d.bin" ; $7f5d, 10 bytes
-Data_47_7f67:
+SeanSpriteAnim04:
 	INCBIN "data/bank_047/d_7f67.bin" ; $7f67, 8 bytes
-Data_47_7f6f:
+SeanSpriteAnim05:
 	INCBIN "data/bank_047/d_7f6f.bin" ; $7f6f, 6 bytes
-Data_47_7f75:
+SeanSpriteAnim06:
 	INCBIN "data/bank_047/d_7f75.bin" ; $7f75, 6 bytes
-Data_47_7f7b:
+SeanSpriteAnim07:
 	INCBIN "data/bank_047/d_7f7b.bin" ; $7f7b, 6 bytes
-Data_47_7f81:
+SeanSpriteAnim08:
 	INCBIN "data/bank_047/d_7f81.bin" ; $7f81, 5 bytes
-Data_47_7f86:
+SeanSpriteAnim09:
 	INCBIN "data/bank_047/d_7f86.bin" ; $7f86, 4 bytes
-Data_47_7f8a:
+SeanSpriteAnim10:
 	INCBIN "data/bank_047/d_7f8a.bin" ; $7f8a, 4 bytes
-Data_47_7f8e:
+SeanSpriteAnim11:
 	INCBIN "data/bank_047/d_7f8e.bin" ; $7f8e, 4 bytes
-Data_47_7f92:
+SeanSpriteAnim12:
 	INCBIN "data/bank_047/d_7f92.bin" ; $7f92, 3 bytes
-Data_47_7f95:
+SeanSpriteAnim13:
 	INCBIN "data/bank_047/d_7f95.bin" ; $7f95, 3 bytes
-Data_47_7f98:
+SeanSpriteAnim14:
 	INCBIN "data/bank_047/d_7f98.bin" ; $7f98, 3 bytes
-Data_47_7f9b:
+SeanSpriteAnim15:
 	INCBIN "data/bank_047/d_7f9b.bin" ; $7f9b, 3 bytes
-Data_47_7f9e:
+SeanSpriteAnim16:
 	INCBIN "data/bank_047/d_7f9e.bin" ; $7f9e, 3 bytes
-Data_47_7fa1:
+SeanSpriteAnim17:
 	INCBIN "data/bank_047/d_7fa1.bin" ; $7fa1, 12 bytes
-Data_47_7fad:
+SeanSpriteAnim18:
 	INCBIN "data/bank_047/d_7fad.bin" ; $7fad, 8 bytes
 	; $7fb5, 75 bytes fill to bank end (linker-padded)

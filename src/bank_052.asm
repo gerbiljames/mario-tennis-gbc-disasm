@@ -9,323 +9,323 @@ YoshiSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_52_7ce0 ; $400c per-slot OAM data
 YoshiSpriteFrames:
-	dw Data_52_4130 ; $400e
-	dw Data_52_4220 ; $4010
-	dw Data_52_4310 ; $4012
-	dw Data_52_4400 ; $4014
-	dw Data_52_44f0 ; $4016
-	dw Data_52_45e0 ; $4018
-	dw Data_52_46d0 ; $401a
-	dw Data_52_47c0 ; $401c
-	dw Data_52_48b0 ; $401e
-	dw Data_52_49a0 ; $4020
-	dw Data_52_4a90 ; $4022
-	dw Data_52_4220 ; $4024
-	dw Data_52_4310 ; $4026
-	dw Data_52_4400 ; $4028
-	dw Data_52_4b80 ; $402a
-	dw Data_52_4c70 ; $402c
-	dw Data_52_4220 ; $402e
-	dw Data_52_4310 ; $4030
-	dw Data_52_4400 ; $4032
-	dw Data_52_4d60 ; $4034
-	dw Data_52_4e50 ; $4036
-	dw Data_52_46d0 ; $4038
-	dw Data_52_47c0 ; $403a
-	dw Data_52_48b0 ; $403c
-	dw Data_52_4f40 ; $403e
-	dw Data_52_5030 ; $4040
-	dw Data_52_5030 ; $4042
-	dw Data_52_5030 ; $4044
-	dw Data_52_5120 ; $4046
-	dw Data_52_5120 ; $4048
-	dw Data_52_5210 ; $404a
-	dw Data_52_5210 ; $404c
-	dw Data_52_5210 ; $404e
-	dw Data_52_5300 ; $4050
-	dw Data_52_5300 ; $4052
-	dw Data_52_53f0 ; $4054
-	dw Data_52_53f0 ; $4056
-	dw Data_52_53f0 ; $4058
-	dw Data_52_54e0 ; $405a
-	dw Data_52_54e0 ; $405c
-	dw Data_52_55d0 ; $405e
-	dw Data_52_55d0 ; $4060
-	dw Data_52_55d0 ; $4062
-	dw Data_52_56c0 ; $4064
-	dw Data_52_56c0 ; $4066
-	dw Data_52_57b0 ; $4068
-	dw Data_52_57b0 ; $406a
-	dw Data_52_57b0 ; $406c
-	dw Data_52_58a0 ; $406e
-	dw Data_52_58a0 ; $4070
-	dw Data_52_5990 ; $4072
-	dw Data_52_5990 ; $4074
-	dw Data_52_5990 ; $4076
-	dw Data_52_5a80 ; $4078
-	dw Data_52_5a80 ; $407a
-	dw Data_52_5b70 ; $407c
-	dw Data_52_5b70 ; $407e
-	dw Data_52_5b70 ; $4080
-	dw Data_52_5c60 ; $4082
-	dw Data_52_5c60 ; $4084
-	dw Data_52_5d50 ; $4086
-	dw Data_52_5d50 ; $4088
-	dw Data_52_5d50 ; $408a
-	dw Data_52_5e40 ; $408c
-	dw Data_52_5e40 ; $408e
-	dw Data_52_5f30 ; $4090
-	dw Data_52_5f30 ; $4092
-	dw Data_52_5f30 ; $4094
-	dw Data_52_6020 ; $4096
-	dw Data_52_6020 ; $4098
-	dw Data_52_6110 ; $409a
-	dw Data_52_6110 ; $409c
-	dw Data_52_6110 ; $409e
-	dw Data_52_6200 ; $40a0
-	dw Data_52_6200 ; $40a2
-	dw Data_52_62f0 ; $40a4
-	dw Data_52_62f0 ; $40a6
-	dw Data_52_62f0 ; $40a8
-	dw Data_52_63e0 ; $40aa
-	dw Data_52_63e0 ; $40ac
-	dw Data_52_64d0 ; $40ae
-	dw Data_52_64d0 ; $40b0
-	dw Data_52_64d0 ; $40b2
-	dw Data_52_65c0 ; $40b4
-	dw Data_52_65c0 ; $40b6
-	dw Data_52_66b0 ; $40b8
-	dw Data_52_66b0 ; $40ba
-	dw Data_52_66b0 ; $40bc
-	dw Data_52_67f0 ; $40be
-	dw Data_52_67f0 ; $40c0
-	dw Data_52_6930 ; $40c2
-	dw Data_52_6930 ; $40c4
-	dw Data_52_6930 ; $40c6
-	dw Data_52_6930 ; $40c8
-	dw Data_52_6930 ; $40ca
-	dw Data_52_6a20 ; $40cc
-	dw Data_52_6a20 ; $40ce
-	dw Data_52_6a20 ; $40d0
-	dw Data_52_6a20 ; $40d2
-	dw Data_52_6a20 ; $40d4
-	dw Data_52_6b10 ; $40d6
-	dw Data_52_6b10 ; $40d8
-	dw Data_52_6b10 ; $40da
-	dw Data_52_6c00 ; $40dc
-	dw Data_52_6c00 ; $40de
-	dw Data_52_6cf0 ; $40e0
-	dw Data_52_6cf0 ; $40e2
-	dw Data_52_6cf0 ; $40e4
-	dw Data_52_6de0 ; $40e6
-	dw Data_52_6de0 ; $40e8
-	dw Data_52_6ed0 ; $40ea
-	dw Data_52_6ed0 ; $40ec
-	dw Data_52_6ed0 ; $40ee
-	dw Data_52_6fc0 ; $40f0
-	dw Data_52_6fc0 ; $40f2
-	dw Data_52_70b0 ; $40f4
-	dw Data_52_70b0 ; $40f6
-	dw Data_52_70b0 ; $40f8
-	dw Data_52_70b0 ; $40fa
-	dw Data_52_70b0 ; $40fc
-	dw Data_52_71a0 ; $40fe
-	dw Data_52_71a0 ; $4100
-	dw Data_52_71a0 ; $4102
-	dw Data_52_71a0 ; $4104
-	dw Data_52_71a0 ; $4106
-	dw Data_52_7290 ; $4108
-	dw Data_52_7290 ; $410a
-	dw Data_52_7290 ; $410c
-	dw Data_52_7290 ; $410e
-	dw Data_52_7290 ; $4110
-	dw Data_52_7380 ; $4112
-	dw Data_52_7380 ; $4114
-	dw Data_52_7380 ; $4116
-	dw Data_52_7380 ; $4118
-	dw Data_52_7380 ; $411a
-	dw Data_52_7470 ; $411c
-	dw Data_52_7470 ; $411e
-	dw Data_52_7470 ; $4120
-	dw Data_52_7470 ; $4122
-	dw Data_52_7470 ; $4124
-	dw Data_52_7560 ; $4126
-	dw Data_52_7560 ; $4128
-	dw Data_52_7560 ; $412a
-	dw Data_52_7560 ; $412c
-	dw Data_52_7560 ; $412e
-Data_52_4130:
+	dw YoshiSpriteFrame00 ; $400e
+	dw YoshiSpriteFrame01 ; $4010
+	dw YoshiSpriteFrame02 ; $4012
+	dw YoshiSpriteFrame03 ; $4014
+	dw YoshiSpriteFrame04 ; $4016
+	dw YoshiSpriteFrame05 ; $4018
+	dw YoshiSpriteFrame06 ; $401a
+	dw YoshiSpriteFrame07 ; $401c
+	dw YoshiSpriteFrame08 ; $401e
+	dw YoshiSpriteFrame09 ; $4020
+	dw YoshiSpriteFrame10 ; $4022
+	dw YoshiSpriteFrame01 ; $4024
+	dw YoshiSpriteFrame02 ; $4026
+	dw YoshiSpriteFrame03 ; $4028
+	dw YoshiSpriteFrame11 ; $402a
+	dw YoshiSpriteFrame12 ; $402c
+	dw YoshiSpriteFrame01 ; $402e
+	dw YoshiSpriteFrame02 ; $4030
+	dw YoshiSpriteFrame03 ; $4032
+	dw YoshiSpriteFrame13 ; $4034
+	dw YoshiSpriteFrame14 ; $4036
+	dw YoshiSpriteFrame06 ; $4038
+	dw YoshiSpriteFrame07 ; $403a
+	dw YoshiSpriteFrame08 ; $403c
+	dw YoshiSpriteFrame15 ; $403e
+	dw YoshiSpriteFrame16 ; $4040
+	dw YoshiSpriteFrame16 ; $4042
+	dw YoshiSpriteFrame16 ; $4044
+	dw YoshiSpriteFrame17 ; $4046
+	dw YoshiSpriteFrame17 ; $4048
+	dw YoshiSpriteFrame18 ; $404a
+	dw YoshiSpriteFrame18 ; $404c
+	dw YoshiSpriteFrame18 ; $404e
+	dw YoshiSpriteFrame19 ; $4050
+	dw YoshiSpriteFrame19 ; $4052
+	dw YoshiSpriteFrame20 ; $4054
+	dw YoshiSpriteFrame20 ; $4056
+	dw YoshiSpriteFrame20 ; $4058
+	dw YoshiSpriteFrame21 ; $405a
+	dw YoshiSpriteFrame21 ; $405c
+	dw YoshiSpriteFrame22 ; $405e
+	dw YoshiSpriteFrame22 ; $4060
+	dw YoshiSpriteFrame22 ; $4062
+	dw YoshiSpriteFrame23 ; $4064
+	dw YoshiSpriteFrame23 ; $4066
+	dw YoshiSpriteFrame24 ; $4068
+	dw YoshiSpriteFrame24 ; $406a
+	dw YoshiSpriteFrame24 ; $406c
+	dw YoshiSpriteFrame25 ; $406e
+	dw YoshiSpriteFrame25 ; $4070
+	dw YoshiSpriteFrame26 ; $4072
+	dw YoshiSpriteFrame26 ; $4074
+	dw YoshiSpriteFrame26 ; $4076
+	dw YoshiSpriteFrame27 ; $4078
+	dw YoshiSpriteFrame27 ; $407a
+	dw YoshiSpriteFrame28 ; $407c
+	dw YoshiSpriteFrame28 ; $407e
+	dw YoshiSpriteFrame28 ; $4080
+	dw YoshiSpriteFrame29 ; $4082
+	dw YoshiSpriteFrame29 ; $4084
+	dw YoshiSpriteFrame30 ; $4086
+	dw YoshiSpriteFrame30 ; $4088
+	dw YoshiSpriteFrame30 ; $408a
+	dw YoshiSpriteFrame31 ; $408c
+	dw YoshiSpriteFrame31 ; $408e
+	dw YoshiSpriteFrame32 ; $4090
+	dw YoshiSpriteFrame32 ; $4092
+	dw YoshiSpriteFrame32 ; $4094
+	dw YoshiSpriteFrame33 ; $4096
+	dw YoshiSpriteFrame33 ; $4098
+	dw YoshiSpriteFrame34 ; $409a
+	dw YoshiSpriteFrame34 ; $409c
+	dw YoshiSpriteFrame34 ; $409e
+	dw YoshiSpriteFrame35 ; $40a0
+	dw YoshiSpriteFrame35 ; $40a2
+	dw YoshiSpriteFrame36 ; $40a4
+	dw YoshiSpriteFrame36 ; $40a6
+	dw YoshiSpriteFrame36 ; $40a8
+	dw YoshiSpriteFrame37 ; $40aa
+	dw YoshiSpriteFrame37 ; $40ac
+	dw YoshiSpriteFrame38 ; $40ae
+	dw YoshiSpriteFrame38 ; $40b0
+	dw YoshiSpriteFrame38 ; $40b2
+	dw YoshiSpriteFrame39 ; $40b4
+	dw YoshiSpriteFrame39 ; $40b6
+	dw YoshiSpriteFrame40 ; $40b8
+	dw YoshiSpriteFrame40 ; $40ba
+	dw YoshiSpriteFrame40 ; $40bc
+	dw YoshiSpriteFrame41 ; $40be
+	dw YoshiSpriteFrame41 ; $40c0
+	dw YoshiSpriteFrame42 ; $40c2
+	dw YoshiSpriteFrame42 ; $40c4
+	dw YoshiSpriteFrame42 ; $40c6
+	dw YoshiSpriteFrame42 ; $40c8
+	dw YoshiSpriteFrame42 ; $40ca
+	dw YoshiSpriteFrame43 ; $40cc
+	dw YoshiSpriteFrame43 ; $40ce
+	dw YoshiSpriteFrame43 ; $40d0
+	dw YoshiSpriteFrame43 ; $40d2
+	dw YoshiSpriteFrame43 ; $40d4
+	dw YoshiSpriteFrame44 ; $40d6
+	dw YoshiSpriteFrame44 ; $40d8
+	dw YoshiSpriteFrame44 ; $40da
+	dw YoshiSpriteFrame45 ; $40dc
+	dw YoshiSpriteFrame45 ; $40de
+	dw YoshiSpriteFrame46 ; $40e0
+	dw YoshiSpriteFrame46 ; $40e2
+	dw YoshiSpriteFrame46 ; $40e4
+	dw YoshiSpriteFrame47 ; $40e6
+	dw YoshiSpriteFrame47 ; $40e8
+	dw YoshiSpriteFrame48 ; $40ea
+	dw YoshiSpriteFrame48 ; $40ec
+	dw YoshiSpriteFrame48 ; $40ee
+	dw YoshiSpriteFrame49 ; $40f0
+	dw YoshiSpriteFrame49 ; $40f2
+	dw YoshiSpriteFrame50 ; $40f4
+	dw YoshiSpriteFrame50 ; $40f6
+	dw YoshiSpriteFrame50 ; $40f8
+	dw YoshiSpriteFrame50 ; $40fa
+	dw YoshiSpriteFrame50 ; $40fc
+	dw YoshiSpriteFrame51 ; $40fe
+	dw YoshiSpriteFrame51 ; $4100
+	dw YoshiSpriteFrame51 ; $4102
+	dw YoshiSpriteFrame51 ; $4104
+	dw YoshiSpriteFrame51 ; $4106
+	dw YoshiSpriteFrame52 ; $4108
+	dw YoshiSpriteFrame52 ; $410a
+	dw YoshiSpriteFrame52 ; $410c
+	dw YoshiSpriteFrame52 ; $410e
+	dw YoshiSpriteFrame52 ; $4110
+	dw YoshiSpriteFrame53 ; $4112
+	dw YoshiSpriteFrame53 ; $4114
+	dw YoshiSpriteFrame53 ; $4116
+	dw YoshiSpriteFrame53 ; $4118
+	dw YoshiSpriteFrame53 ; $411a
+	dw YoshiSpriteFrame54 ; $411c
+	dw YoshiSpriteFrame54 ; $411e
+	dw YoshiSpriteFrame54 ; $4120
+	dw YoshiSpriteFrame54 ; $4122
+	dw YoshiSpriteFrame54 ; $4124
+	dw YoshiSpriteFrame55 ; $4126
+	dw YoshiSpriteFrame55 ; $4128
+	dw YoshiSpriteFrame55 ; $412a
+	dw YoshiSpriteFrame55 ; $412c
+	dw YoshiSpriteFrame55 ; $412e
+YoshiSpriteFrame00:
 	INCBIN "data/bank_052/d_4130.bin" ; $4130, 240 bytes
-Data_52_4220:
+YoshiSpriteFrame01:
 	INCBIN "data/bank_052/d_4220.bin" ; $4220, 240 bytes
-Data_52_4310:
+YoshiSpriteFrame02:
 	INCBIN "data/bank_052/d_4310.bin" ; $4310, 240 bytes
-Data_52_4400:
+YoshiSpriteFrame03:
 	INCBIN "data/bank_052/d_4400.bin" ; $4400, 240 bytes
-Data_52_44f0:
+YoshiSpriteFrame04:
 	INCBIN "data/bank_052/d_44f0.bin" ; $44f0, 240 bytes
-Data_52_45e0:
+YoshiSpriteFrame05:
 	INCBIN "data/bank_052/d_45e0.bin" ; $45e0, 240 bytes
-Data_52_46d0:
+YoshiSpriteFrame06:
 	INCBIN "data/bank_052/d_46d0.bin" ; $46d0, 240 bytes
-Data_52_47c0:
+YoshiSpriteFrame07:
 	INCBIN "data/bank_052/d_47c0.bin" ; $47c0, 240 bytes
-Data_52_48b0:
+YoshiSpriteFrame08:
 	INCBIN "data/bank_052/d_48b0.bin" ; $48b0, 240 bytes
-Data_52_49a0:
+YoshiSpriteFrame09:
 	INCBIN "data/bank_052/d_49a0.bin" ; $49a0, 240 bytes
-Data_52_4a90:
+YoshiSpriteFrame10:
 	INCBIN "data/bank_052/d_4a90.bin" ; $4a90, 240 bytes
-Data_52_4b80:
+YoshiSpriteFrame11:
 	INCBIN "data/bank_052/d_4b80.bin" ; $4b80, 240 bytes
-Data_52_4c70:
+YoshiSpriteFrame12:
 	INCBIN "data/bank_052/d_4c70.bin" ; $4c70, 240 bytes
-Data_52_4d60:
+YoshiSpriteFrame13:
 	INCBIN "data/bank_052/d_4d60.bin" ; $4d60, 240 bytes
-Data_52_4e50:
+YoshiSpriteFrame14:
 	INCBIN "data/bank_052/d_4e50.bin" ; $4e50, 240 bytes
-Data_52_4f40:
+YoshiSpriteFrame15:
 	INCBIN "data/bank_052/d_4f40.bin" ; $4f40, 240 bytes
-Data_52_5030:
+YoshiSpriteFrame16:
 	INCBIN "data/bank_052/d_5030.bin" ; $5030, 240 bytes
-Data_52_5120:
+YoshiSpriteFrame17:
 	INCBIN "data/bank_052/d_5120.bin" ; $5120, 240 bytes
-Data_52_5210:
+YoshiSpriteFrame18:
 	INCBIN "data/bank_052/d_5210.bin" ; $5210, 240 bytes
-Data_52_5300:
+YoshiSpriteFrame19:
 	INCBIN "data/bank_052/d_5300.bin" ; $5300, 240 bytes
-Data_52_53f0:
+YoshiSpriteFrame20:
 	INCBIN "data/bank_052/d_53f0.bin" ; $53f0, 240 bytes
-Data_52_54e0:
+YoshiSpriteFrame21:
 	INCBIN "data/bank_052/d_54e0.bin" ; $54e0, 240 bytes
-Data_52_55d0:
+YoshiSpriteFrame22:
 	INCBIN "data/bank_052/d_55d0.bin" ; $55d0, 240 bytes
-Data_52_56c0:
+YoshiSpriteFrame23:
 	INCBIN "data/bank_052/d_56c0.bin" ; $56c0, 240 bytes
-Data_52_57b0:
+YoshiSpriteFrame24:
 	INCBIN "data/bank_052/d_57b0.bin" ; $57b0, 240 bytes
-Data_52_58a0:
+YoshiSpriteFrame25:
 	INCBIN "data/bank_052/d_58a0.bin" ; $58a0, 240 bytes
-Data_52_5990:
+YoshiSpriteFrame26:
 	INCBIN "data/bank_052/d_5990.bin" ; $5990, 240 bytes
-Data_52_5a80:
+YoshiSpriteFrame27:
 	INCBIN "data/bank_052/d_5a80.bin" ; $5a80, 240 bytes
-Data_52_5b70:
+YoshiSpriteFrame28:
 	INCBIN "data/bank_052/d_5b70.bin" ; $5b70, 240 bytes
-Data_52_5c60:
+YoshiSpriteFrame29:
 	INCBIN "data/bank_052/d_5c60.bin" ; $5c60, 240 bytes
-Data_52_5d50:
+YoshiSpriteFrame30:
 	INCBIN "data/bank_052/d_5d50.bin" ; $5d50, 240 bytes
-Data_52_5e40:
+YoshiSpriteFrame31:
 	INCBIN "data/bank_052/d_5e40.bin" ; $5e40, 240 bytes
-Data_52_5f30:
+YoshiSpriteFrame32:
 	INCBIN "data/bank_052/d_5f30.bin" ; $5f30, 240 bytes
-Data_52_6020:
+YoshiSpriteFrame33:
 	INCBIN "data/bank_052/d_6020.bin" ; $6020, 240 bytes
-Data_52_6110:
+YoshiSpriteFrame34:
 	INCBIN "data/bank_052/d_6110.bin" ; $6110, 240 bytes
-Data_52_6200:
+YoshiSpriteFrame35:
 	INCBIN "data/bank_052/d_6200.bin" ; $6200, 240 bytes
-Data_52_62f0:
+YoshiSpriteFrame36:
 	INCBIN "data/bank_052/d_62f0.bin" ; $62f0, 240 bytes
-Data_52_63e0:
+YoshiSpriteFrame37:
 	INCBIN "data/bank_052/d_63e0.bin" ; $63e0, 240 bytes
-Data_52_64d0:
+YoshiSpriteFrame38:
 	INCBIN "data/bank_052/d_64d0.bin" ; $64d0, 240 bytes
-Data_52_65c0:
+YoshiSpriteFrame39:
 	INCBIN "data/bank_052/d_65c0.bin" ; $65c0, 240 bytes
-Data_52_66b0:
+YoshiSpriteFrame40:
 	INCBIN "data/bank_052/d_66b0.bin" ; $66b0, 320 bytes
-Data_52_67f0:
+YoshiSpriteFrame41:
 	INCBIN "data/bank_052/d_67f0.bin" ; $67f0, 320 bytes
-Data_52_6930:
+YoshiSpriteFrame42:
 	INCBIN "data/bank_052/d_6930.bin" ; $6930, 240 bytes
-Data_52_6a20:
+YoshiSpriteFrame43:
 	INCBIN "data/bank_052/d_6a20.bin" ; $6a20, 240 bytes
-Data_52_6b10:
+YoshiSpriteFrame44:
 	INCBIN "data/bank_052/d_6b10.bin" ; $6b10, 240 bytes
-Data_52_6c00:
+YoshiSpriteFrame45:
 	INCBIN "data/bank_052/d_6c00.bin" ; $6c00, 240 bytes
-Data_52_6cf0:
+YoshiSpriteFrame46:
 	INCBIN "data/bank_052/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_52_6de0:
+YoshiSpriteFrame47:
 	INCBIN "data/bank_052/d_6de0.bin" ; $6de0, 240 bytes
-Data_52_6ed0:
+YoshiSpriteFrame48:
 	INCBIN "data/bank_052/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_52_6fc0:
+YoshiSpriteFrame49:
 	INCBIN "data/bank_052/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_52_70b0:
+YoshiSpriteFrame50:
 	INCBIN "data/bank_052/d_70b0.bin" ; $70b0, 240 bytes
-Data_52_71a0:
+YoshiSpriteFrame51:
 	INCBIN "data/bank_052/d_71a0.bin" ; $71a0, 240 bytes
-Data_52_7290:
+YoshiSpriteFrame52:
 	INCBIN "data/bank_052/d_7290.bin" ; $7290, 240 bytes
-Data_52_7380:
+YoshiSpriteFrame53:
 	INCBIN "data/bank_052/d_7380.bin" ; $7380, 240 bytes
-Data_52_7470:
+YoshiSpriteFrame54:
 	INCBIN "data/bank_052/d_7470.bin" ; $7470, 240 bytes
-Data_52_7560:
+YoshiSpriteFrame55:
 	INCBIN "data/bank_052/d_7560.bin" ; $7560, 240 bytes
 Data_52_7650:
 	INCBIN "data/bank_052/d_7650.bin" ; $7650, 1680 bytes
 Data_52_7ce0:
 	INCBIN "data/bank_052/d_7ce0.bin" ; $7ce0, 580 bytes
 YoshiSpriteAnims:
-	dw Data_52_7f4a ; $7f24
-	dw Data_52_7f4d ; $7f26
-	dw Data_52_7f57 ; $7f28
-	dw Data_52_7f5d ; $7f2a
-	dw Data_52_7f6d ; $7f2c
-	dw Data_52_7f77 ; $7f2e
-	dw Data_52_7f7d ; $7f30
-	dw Data_52_7f83 ; $7f32
-	dw Data_52_7f89 ; $7f34
-	dw Data_52_7f8e ; $7f36
-	dw Data_52_7f92 ; $7f38
-	dw Data_52_7f96 ; $7f3a
-	dw Data_52_7f9a ; $7f3c
-	dw Data_52_7f9d ; $7f3e
-	dw Data_52_7fa0 ; $7f40
-	dw Data_52_7fa3 ; $7f42
-	dw Data_52_7fa6 ; $7f44
-	dw Data_52_7fa9 ; $7f46
-	dw Data_52_7fb5 ; $7f48
-Data_52_7f4a:
+	dw YoshiSpriteAnim00 ; $7f24
+	dw YoshiSpriteAnim01 ; $7f26
+	dw YoshiSpriteAnim02 ; $7f28
+	dw YoshiSpriteAnim03 ; $7f2a
+	dw YoshiSpriteAnim04 ; $7f2c
+	dw YoshiSpriteAnim05 ; $7f2e
+	dw YoshiSpriteAnim06 ; $7f30
+	dw YoshiSpriteAnim07 ; $7f32
+	dw YoshiSpriteAnim08 ; $7f34
+	dw YoshiSpriteAnim09 ; $7f36
+	dw YoshiSpriteAnim10 ; $7f38
+	dw YoshiSpriteAnim11 ; $7f3a
+	dw YoshiSpriteAnim12 ; $7f3c
+	dw YoshiSpriteAnim13 ; $7f3e
+	dw YoshiSpriteAnim14 ; $7f40
+	dw YoshiSpriteAnim15 ; $7f42
+	dw YoshiSpriteAnim16 ; $7f44
+	dw YoshiSpriteAnim17 ; $7f46
+	dw YoshiSpriteAnim18 ; $7f48
+YoshiSpriteAnim00:
 	INCBIN "data/bank_052/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_52_7f4d:
+YoshiSpriteAnim01:
 	INCBIN "data/bank_052/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_52_7f57:
+YoshiSpriteAnim02:
 	INCBIN "data/bank_052/d_7f57.bin" ; $7f57, 6 bytes
-Data_52_7f5d:
+YoshiSpriteAnim03:
 	INCBIN "data/bank_052/d_7f5d.bin" ; $7f5d, 16 bytes
-Data_52_7f6d:
+YoshiSpriteAnim04:
 	INCBIN "data/bank_052/d_7f6d.bin" ; $7f6d, 10 bytes
-Data_52_7f77:
+YoshiSpriteAnim05:
 	INCBIN "data/bank_052/d_7f77.bin" ; $7f77, 6 bytes
-Data_52_7f7d:
+YoshiSpriteAnim06:
 	INCBIN "data/bank_052/d_7f7d.bin" ; $7f7d, 6 bytes
-Data_52_7f83:
+YoshiSpriteAnim07:
 	INCBIN "data/bank_052/d_7f83.bin" ; $7f83, 6 bytes
-Data_52_7f89:
+YoshiSpriteAnim08:
 	INCBIN "data/bank_052/d_7f89.bin" ; $7f89, 5 bytes
-Data_52_7f8e:
+YoshiSpriteAnim09:
 	INCBIN "data/bank_052/d_7f8e.bin" ; $7f8e, 4 bytes
-Data_52_7f92:
+YoshiSpriteAnim10:
 	INCBIN "data/bank_052/d_7f92.bin" ; $7f92, 4 bytes
-Data_52_7f96:
+YoshiSpriteAnim11:
 	INCBIN "data/bank_052/d_7f96.bin" ; $7f96, 4 bytes
-Data_52_7f9a:
+YoshiSpriteAnim12:
 	INCBIN "data/bank_052/d_7f9a.bin" ; $7f9a, 3 bytes
-Data_52_7f9d:
+YoshiSpriteAnim13:
 	INCBIN "data/bank_052/d_7f9d.bin" ; $7f9d, 3 bytes
-Data_52_7fa0:
+YoshiSpriteAnim14:
 	INCBIN "data/bank_052/d_7fa0.bin" ; $7fa0, 3 bytes
-Data_52_7fa3:
+YoshiSpriteAnim15:
 	INCBIN "data/bank_052/d_7fa3.bin" ; $7fa3, 3 bytes
-Data_52_7fa6:
+YoshiSpriteAnim16:
 	INCBIN "data/bank_052/d_7fa6.bin" ; $7fa6, 3 bytes
-Data_52_7fa9:
+YoshiSpriteAnim17:
 	INCBIN "data/bank_052/d_7fa9.bin" ; $7fa9, 12 bytes
-Data_52_7fb5:
+YoshiSpriteAnim18:
 	INCBIN "data/bank_052/d_7fb5.bin" ; $7fb5, 8 bytes
 	; $7fbd, 67 bytes fill to bank end (linker-padded)

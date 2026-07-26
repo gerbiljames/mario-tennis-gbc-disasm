@@ -9,323 +9,323 @@ NinaSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_41_7ce0 ; $400c per-slot OAM data
 NinaSpriteFrames:
-	dw Data_41_4130 ; $400e
-	dw Data_41_4220 ; $4010
-	dw Data_41_4310 ; $4012
-	dw Data_41_4400 ; $4014
-	dw Data_41_44f0 ; $4016
-	dw Data_41_45e0 ; $4018
-	dw Data_41_46d0 ; $401a
-	dw Data_41_47c0 ; $401c
-	dw Data_41_48b0 ; $401e
-	dw Data_41_49a0 ; $4020
-	dw Data_41_4a90 ; $4022
-	dw Data_41_4220 ; $4024
-	dw Data_41_4310 ; $4026
-	dw Data_41_4400 ; $4028
-	dw Data_41_4b80 ; $402a
-	dw Data_41_4c70 ; $402c
-	dw Data_41_4220 ; $402e
-	dw Data_41_4310 ; $4030
-	dw Data_41_4400 ; $4032
-	dw Data_41_4d60 ; $4034
-	dw Data_41_4e50 ; $4036
-	dw Data_41_46d0 ; $4038
-	dw Data_41_47c0 ; $403a
-	dw Data_41_48b0 ; $403c
-	dw Data_41_4f40 ; $403e
-	dw Data_41_5030 ; $4040
-	dw Data_41_5030 ; $4042
-	dw Data_41_5030 ; $4044
-	dw Data_41_5120 ; $4046
-	dw Data_41_5120 ; $4048
-	dw Data_41_5210 ; $404a
-	dw Data_41_5210 ; $404c
-	dw Data_41_5210 ; $404e
-	dw Data_41_5300 ; $4050
-	dw Data_41_5300 ; $4052
-	dw Data_41_53f0 ; $4054
-	dw Data_41_53f0 ; $4056
-	dw Data_41_53f0 ; $4058
-	dw Data_41_54e0 ; $405a
-	dw Data_41_54e0 ; $405c
-	dw Data_41_55d0 ; $405e
-	dw Data_41_55d0 ; $4060
-	dw Data_41_55d0 ; $4062
-	dw Data_41_56c0 ; $4064
-	dw Data_41_56c0 ; $4066
-	dw Data_41_57b0 ; $4068
-	dw Data_41_57b0 ; $406a
-	dw Data_41_57b0 ; $406c
-	dw Data_41_58a0 ; $406e
-	dw Data_41_58a0 ; $4070
-	dw Data_41_5990 ; $4072
-	dw Data_41_5990 ; $4074
-	dw Data_41_5990 ; $4076
-	dw Data_41_5a80 ; $4078
-	dw Data_41_5a80 ; $407a
-	dw Data_41_5b70 ; $407c
-	dw Data_41_5b70 ; $407e
-	dw Data_41_5b70 ; $4080
-	dw Data_41_5c60 ; $4082
-	dw Data_41_5c60 ; $4084
-	dw Data_41_5d50 ; $4086
-	dw Data_41_5d50 ; $4088
-	dw Data_41_5d50 ; $408a
-	dw Data_41_5e40 ; $408c
-	dw Data_41_5e40 ; $408e
-	dw Data_41_5f30 ; $4090
-	dw Data_41_5f30 ; $4092
-	dw Data_41_5f30 ; $4094
-	dw Data_41_6020 ; $4096
-	dw Data_41_6020 ; $4098
-	dw Data_41_6110 ; $409a
-	dw Data_41_6110 ; $409c
-	dw Data_41_6110 ; $409e
-	dw Data_41_6200 ; $40a0
-	dw Data_41_6200 ; $40a2
-	dw Data_41_62f0 ; $40a4
-	dw Data_41_62f0 ; $40a6
-	dw Data_41_62f0 ; $40a8
-	dw Data_41_63e0 ; $40aa
-	dw Data_41_63e0 ; $40ac
-	dw Data_41_64d0 ; $40ae
-	dw Data_41_64d0 ; $40b0
-	dw Data_41_64d0 ; $40b2
-	dw Data_41_65c0 ; $40b4
-	dw Data_41_65c0 ; $40b6
-	dw Data_41_66b0 ; $40b8
-	dw Data_41_66b0 ; $40ba
-	dw Data_41_66b0 ; $40bc
-	dw Data_41_67f0 ; $40be
-	dw Data_41_67f0 ; $40c0
-	dw Data_41_6930 ; $40c2
-	dw Data_41_6930 ; $40c4
-	dw Data_41_6930 ; $40c6
-	dw Data_41_6930 ; $40c8
-	dw Data_41_6930 ; $40ca
-	dw Data_41_6a20 ; $40cc
-	dw Data_41_6a20 ; $40ce
-	dw Data_41_6a20 ; $40d0
-	dw Data_41_6a20 ; $40d2
-	dw Data_41_6a20 ; $40d4
-	dw Data_41_6b10 ; $40d6
-	dw Data_41_6b10 ; $40d8
-	dw Data_41_6b10 ; $40da
-	dw Data_41_6c00 ; $40dc
-	dw Data_41_6c00 ; $40de
-	dw Data_41_6cf0 ; $40e0
-	dw Data_41_6cf0 ; $40e2
-	dw Data_41_6cf0 ; $40e4
-	dw Data_41_6de0 ; $40e6
-	dw Data_41_6de0 ; $40e8
-	dw Data_41_6ed0 ; $40ea
-	dw Data_41_6ed0 ; $40ec
-	dw Data_41_6ed0 ; $40ee
-	dw Data_41_6fc0 ; $40f0
-	dw Data_41_6fc0 ; $40f2
-	dw Data_41_70b0 ; $40f4
-	dw Data_41_70b0 ; $40f6
-	dw Data_41_70b0 ; $40f8
-	dw Data_41_70b0 ; $40fa
-	dw Data_41_70b0 ; $40fc
-	dw Data_41_71a0 ; $40fe
-	dw Data_41_71a0 ; $4100
-	dw Data_41_71a0 ; $4102
-	dw Data_41_71a0 ; $4104
-	dw Data_41_71a0 ; $4106
-	dw Data_41_7290 ; $4108
-	dw Data_41_7290 ; $410a
-	dw Data_41_7290 ; $410c
-	dw Data_41_7290 ; $410e
-	dw Data_41_7290 ; $4110
-	dw Data_41_7380 ; $4112
-	dw Data_41_7380 ; $4114
-	dw Data_41_7380 ; $4116
-	dw Data_41_7380 ; $4118
-	dw Data_41_7380 ; $411a
-	dw Data_41_7470 ; $411c
-	dw Data_41_7470 ; $411e
-	dw Data_41_7470 ; $4120
-	dw Data_41_7470 ; $4122
-	dw Data_41_7470 ; $4124
-	dw Data_41_7560 ; $4126
-	dw Data_41_7560 ; $4128
-	dw Data_41_7560 ; $412a
-	dw Data_41_7560 ; $412c
-	dw Data_41_7560 ; $412e
-Data_41_4130:
+	dw NinaSpriteFrame00 ; $400e
+	dw NinaSpriteFrame01 ; $4010
+	dw NinaSpriteFrame02 ; $4012
+	dw NinaSpriteFrame03 ; $4014
+	dw NinaSpriteFrame04 ; $4016
+	dw NinaSpriteFrame05 ; $4018
+	dw NinaSpriteFrame06 ; $401a
+	dw NinaSpriteFrame07 ; $401c
+	dw NinaSpriteFrame08 ; $401e
+	dw NinaSpriteFrame09 ; $4020
+	dw NinaSpriteFrame10 ; $4022
+	dw NinaSpriteFrame01 ; $4024
+	dw NinaSpriteFrame02 ; $4026
+	dw NinaSpriteFrame03 ; $4028
+	dw NinaSpriteFrame11 ; $402a
+	dw NinaSpriteFrame12 ; $402c
+	dw NinaSpriteFrame01 ; $402e
+	dw NinaSpriteFrame02 ; $4030
+	dw NinaSpriteFrame03 ; $4032
+	dw NinaSpriteFrame13 ; $4034
+	dw NinaSpriteFrame14 ; $4036
+	dw NinaSpriteFrame06 ; $4038
+	dw NinaSpriteFrame07 ; $403a
+	dw NinaSpriteFrame08 ; $403c
+	dw NinaSpriteFrame15 ; $403e
+	dw NinaSpriteFrame16 ; $4040
+	dw NinaSpriteFrame16 ; $4042
+	dw NinaSpriteFrame16 ; $4044
+	dw NinaSpriteFrame17 ; $4046
+	dw NinaSpriteFrame17 ; $4048
+	dw NinaSpriteFrame18 ; $404a
+	dw NinaSpriteFrame18 ; $404c
+	dw NinaSpriteFrame18 ; $404e
+	dw NinaSpriteFrame19 ; $4050
+	dw NinaSpriteFrame19 ; $4052
+	dw NinaSpriteFrame20 ; $4054
+	dw NinaSpriteFrame20 ; $4056
+	dw NinaSpriteFrame20 ; $4058
+	dw NinaSpriteFrame21 ; $405a
+	dw NinaSpriteFrame21 ; $405c
+	dw NinaSpriteFrame22 ; $405e
+	dw NinaSpriteFrame22 ; $4060
+	dw NinaSpriteFrame22 ; $4062
+	dw NinaSpriteFrame23 ; $4064
+	dw NinaSpriteFrame23 ; $4066
+	dw NinaSpriteFrame24 ; $4068
+	dw NinaSpriteFrame24 ; $406a
+	dw NinaSpriteFrame24 ; $406c
+	dw NinaSpriteFrame25 ; $406e
+	dw NinaSpriteFrame25 ; $4070
+	dw NinaSpriteFrame26 ; $4072
+	dw NinaSpriteFrame26 ; $4074
+	dw NinaSpriteFrame26 ; $4076
+	dw NinaSpriteFrame27 ; $4078
+	dw NinaSpriteFrame27 ; $407a
+	dw NinaSpriteFrame28 ; $407c
+	dw NinaSpriteFrame28 ; $407e
+	dw NinaSpriteFrame28 ; $4080
+	dw NinaSpriteFrame29 ; $4082
+	dw NinaSpriteFrame29 ; $4084
+	dw NinaSpriteFrame30 ; $4086
+	dw NinaSpriteFrame30 ; $4088
+	dw NinaSpriteFrame30 ; $408a
+	dw NinaSpriteFrame31 ; $408c
+	dw NinaSpriteFrame31 ; $408e
+	dw NinaSpriteFrame32 ; $4090
+	dw NinaSpriteFrame32 ; $4092
+	dw NinaSpriteFrame32 ; $4094
+	dw NinaSpriteFrame33 ; $4096
+	dw NinaSpriteFrame33 ; $4098
+	dw NinaSpriteFrame34 ; $409a
+	dw NinaSpriteFrame34 ; $409c
+	dw NinaSpriteFrame34 ; $409e
+	dw NinaSpriteFrame35 ; $40a0
+	dw NinaSpriteFrame35 ; $40a2
+	dw NinaSpriteFrame36 ; $40a4
+	dw NinaSpriteFrame36 ; $40a6
+	dw NinaSpriteFrame36 ; $40a8
+	dw NinaSpriteFrame37 ; $40aa
+	dw NinaSpriteFrame37 ; $40ac
+	dw NinaSpriteFrame38 ; $40ae
+	dw NinaSpriteFrame38 ; $40b0
+	dw NinaSpriteFrame38 ; $40b2
+	dw NinaSpriteFrame39 ; $40b4
+	dw NinaSpriteFrame39 ; $40b6
+	dw NinaSpriteFrame40 ; $40b8
+	dw NinaSpriteFrame40 ; $40ba
+	dw NinaSpriteFrame40 ; $40bc
+	dw NinaSpriteFrame41 ; $40be
+	dw NinaSpriteFrame41 ; $40c0
+	dw NinaSpriteFrame42 ; $40c2
+	dw NinaSpriteFrame42 ; $40c4
+	dw NinaSpriteFrame42 ; $40c6
+	dw NinaSpriteFrame42 ; $40c8
+	dw NinaSpriteFrame42 ; $40ca
+	dw NinaSpriteFrame43 ; $40cc
+	dw NinaSpriteFrame43 ; $40ce
+	dw NinaSpriteFrame43 ; $40d0
+	dw NinaSpriteFrame43 ; $40d2
+	dw NinaSpriteFrame43 ; $40d4
+	dw NinaSpriteFrame44 ; $40d6
+	dw NinaSpriteFrame44 ; $40d8
+	dw NinaSpriteFrame44 ; $40da
+	dw NinaSpriteFrame45 ; $40dc
+	dw NinaSpriteFrame45 ; $40de
+	dw NinaSpriteFrame46 ; $40e0
+	dw NinaSpriteFrame46 ; $40e2
+	dw NinaSpriteFrame46 ; $40e4
+	dw NinaSpriteFrame47 ; $40e6
+	dw NinaSpriteFrame47 ; $40e8
+	dw NinaSpriteFrame48 ; $40ea
+	dw NinaSpriteFrame48 ; $40ec
+	dw NinaSpriteFrame48 ; $40ee
+	dw NinaSpriteFrame49 ; $40f0
+	dw NinaSpriteFrame49 ; $40f2
+	dw NinaSpriteFrame50 ; $40f4
+	dw NinaSpriteFrame50 ; $40f6
+	dw NinaSpriteFrame50 ; $40f8
+	dw NinaSpriteFrame50 ; $40fa
+	dw NinaSpriteFrame50 ; $40fc
+	dw NinaSpriteFrame51 ; $40fe
+	dw NinaSpriteFrame51 ; $4100
+	dw NinaSpriteFrame51 ; $4102
+	dw NinaSpriteFrame51 ; $4104
+	dw NinaSpriteFrame51 ; $4106
+	dw NinaSpriteFrame52 ; $4108
+	dw NinaSpriteFrame52 ; $410a
+	dw NinaSpriteFrame52 ; $410c
+	dw NinaSpriteFrame52 ; $410e
+	dw NinaSpriteFrame52 ; $4110
+	dw NinaSpriteFrame53 ; $4112
+	dw NinaSpriteFrame53 ; $4114
+	dw NinaSpriteFrame53 ; $4116
+	dw NinaSpriteFrame53 ; $4118
+	dw NinaSpriteFrame53 ; $411a
+	dw NinaSpriteFrame54 ; $411c
+	dw NinaSpriteFrame54 ; $411e
+	dw NinaSpriteFrame54 ; $4120
+	dw NinaSpriteFrame54 ; $4122
+	dw NinaSpriteFrame54 ; $4124
+	dw NinaSpriteFrame55 ; $4126
+	dw NinaSpriteFrame55 ; $4128
+	dw NinaSpriteFrame55 ; $412a
+	dw NinaSpriteFrame55 ; $412c
+	dw NinaSpriteFrame55 ; $412e
+NinaSpriteFrame00:
 	INCBIN "data/bank_041/d_4130.bin" ; $4130, 240 bytes
-Data_41_4220:
+NinaSpriteFrame01:
 	INCBIN "data/bank_041/d_4220.bin" ; $4220, 240 bytes
-Data_41_4310:
+NinaSpriteFrame02:
 	INCBIN "data/bank_041/d_4310.bin" ; $4310, 240 bytes
-Data_41_4400:
+NinaSpriteFrame03:
 	INCBIN "data/bank_041/d_4400.bin" ; $4400, 240 bytes
-Data_41_44f0:
+NinaSpriteFrame04:
 	INCBIN "data/bank_041/d_44f0.bin" ; $44f0, 240 bytes
-Data_41_45e0:
+NinaSpriteFrame05:
 	INCBIN "data/bank_041/d_45e0.bin" ; $45e0, 240 bytes
-Data_41_46d0:
+NinaSpriteFrame06:
 	INCBIN "data/bank_041/d_46d0.bin" ; $46d0, 240 bytes
-Data_41_47c0:
+NinaSpriteFrame07:
 	INCBIN "data/bank_041/d_47c0.bin" ; $47c0, 240 bytes
-Data_41_48b0:
+NinaSpriteFrame08:
 	INCBIN "data/bank_041/d_48b0.bin" ; $48b0, 240 bytes
-Data_41_49a0:
+NinaSpriteFrame09:
 	INCBIN "data/bank_041/d_49a0.bin" ; $49a0, 240 bytes
-Data_41_4a90:
+NinaSpriteFrame10:
 	INCBIN "data/bank_041/d_4a90.bin" ; $4a90, 240 bytes
-Data_41_4b80:
+NinaSpriteFrame11:
 	INCBIN "data/bank_041/d_4b80.bin" ; $4b80, 240 bytes
-Data_41_4c70:
+NinaSpriteFrame12:
 	INCBIN "data/bank_041/d_4c70.bin" ; $4c70, 240 bytes
-Data_41_4d60:
+NinaSpriteFrame13:
 	INCBIN "data/bank_041/d_4d60.bin" ; $4d60, 240 bytes
-Data_41_4e50:
+NinaSpriteFrame14:
 	INCBIN "data/bank_041/d_4e50.bin" ; $4e50, 240 bytes
-Data_41_4f40:
+NinaSpriteFrame15:
 	INCBIN "data/bank_041/d_4f40.bin" ; $4f40, 240 bytes
-Data_41_5030:
+NinaSpriteFrame16:
 	INCBIN "data/bank_041/d_5030.bin" ; $5030, 240 bytes
-Data_41_5120:
+NinaSpriteFrame17:
 	INCBIN "data/bank_041/d_5120.bin" ; $5120, 240 bytes
-Data_41_5210:
+NinaSpriteFrame18:
 	INCBIN "data/bank_041/d_5210.bin" ; $5210, 240 bytes
-Data_41_5300:
+NinaSpriteFrame19:
 	INCBIN "data/bank_041/d_5300.bin" ; $5300, 240 bytes
-Data_41_53f0:
+NinaSpriteFrame20:
 	INCBIN "data/bank_041/d_53f0.bin" ; $53f0, 240 bytes
-Data_41_54e0:
+NinaSpriteFrame21:
 	INCBIN "data/bank_041/d_54e0.bin" ; $54e0, 240 bytes
-Data_41_55d0:
+NinaSpriteFrame22:
 	INCBIN "data/bank_041/d_55d0.bin" ; $55d0, 240 bytes
-Data_41_56c0:
+NinaSpriteFrame23:
 	INCBIN "data/bank_041/d_56c0.bin" ; $56c0, 240 bytes
-Data_41_57b0:
+NinaSpriteFrame24:
 	INCBIN "data/bank_041/d_57b0.bin" ; $57b0, 240 bytes
-Data_41_58a0:
+NinaSpriteFrame25:
 	INCBIN "data/bank_041/d_58a0.bin" ; $58a0, 240 bytes
-Data_41_5990:
+NinaSpriteFrame26:
 	INCBIN "data/bank_041/d_5990.bin" ; $5990, 240 bytes
-Data_41_5a80:
+NinaSpriteFrame27:
 	INCBIN "data/bank_041/d_5a80.bin" ; $5a80, 240 bytes
-Data_41_5b70:
+NinaSpriteFrame28:
 	INCBIN "data/bank_041/d_5b70.bin" ; $5b70, 240 bytes
-Data_41_5c60:
+NinaSpriteFrame29:
 	INCBIN "data/bank_041/d_5c60.bin" ; $5c60, 240 bytes
-Data_41_5d50:
+NinaSpriteFrame30:
 	INCBIN "data/bank_041/d_5d50.bin" ; $5d50, 240 bytes
-Data_41_5e40:
+NinaSpriteFrame31:
 	INCBIN "data/bank_041/d_5e40.bin" ; $5e40, 240 bytes
-Data_41_5f30:
+NinaSpriteFrame32:
 	INCBIN "data/bank_041/d_5f30.bin" ; $5f30, 240 bytes
-Data_41_6020:
+NinaSpriteFrame33:
 	INCBIN "data/bank_041/d_6020.bin" ; $6020, 240 bytes
-Data_41_6110:
+NinaSpriteFrame34:
 	INCBIN "data/bank_041/d_6110.bin" ; $6110, 240 bytes
-Data_41_6200:
+NinaSpriteFrame35:
 	INCBIN "data/bank_041/d_6200.bin" ; $6200, 240 bytes
-Data_41_62f0:
+NinaSpriteFrame36:
 	INCBIN "data/bank_041/d_62f0.bin" ; $62f0, 240 bytes
-Data_41_63e0:
+NinaSpriteFrame37:
 	INCBIN "data/bank_041/d_63e0.bin" ; $63e0, 240 bytes
-Data_41_64d0:
+NinaSpriteFrame38:
 	INCBIN "data/bank_041/d_64d0.bin" ; $64d0, 240 bytes
-Data_41_65c0:
+NinaSpriteFrame39:
 	INCBIN "data/bank_041/d_65c0.bin" ; $65c0, 240 bytes
-Data_41_66b0:
+NinaSpriteFrame40:
 	INCBIN "data/bank_041/d_66b0.bin" ; $66b0, 320 bytes
-Data_41_67f0:
+NinaSpriteFrame41:
 	INCBIN "data/bank_041/d_67f0.bin" ; $67f0, 320 bytes
-Data_41_6930:
+NinaSpriteFrame42:
 	INCBIN "data/bank_041/d_6930.bin" ; $6930, 240 bytes
-Data_41_6a20:
+NinaSpriteFrame43:
 	INCBIN "data/bank_041/d_6a20.bin" ; $6a20, 240 bytes
-Data_41_6b10:
+NinaSpriteFrame44:
 	INCBIN "data/bank_041/d_6b10.bin" ; $6b10, 240 bytes
-Data_41_6c00:
+NinaSpriteFrame45:
 	INCBIN "data/bank_041/d_6c00.bin" ; $6c00, 240 bytes
-Data_41_6cf0:
+NinaSpriteFrame46:
 	INCBIN "data/bank_041/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_41_6de0:
+NinaSpriteFrame47:
 	INCBIN "data/bank_041/d_6de0.bin" ; $6de0, 240 bytes
-Data_41_6ed0:
+NinaSpriteFrame48:
 	INCBIN "data/bank_041/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_41_6fc0:
+NinaSpriteFrame49:
 	INCBIN "data/bank_041/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_41_70b0:
+NinaSpriteFrame50:
 	INCBIN "data/bank_041/d_70b0.bin" ; $70b0, 240 bytes
-Data_41_71a0:
+NinaSpriteFrame51:
 	INCBIN "data/bank_041/d_71a0.bin" ; $71a0, 240 bytes
-Data_41_7290:
+NinaSpriteFrame52:
 	INCBIN "data/bank_041/d_7290.bin" ; $7290, 240 bytes
-Data_41_7380:
+NinaSpriteFrame53:
 	INCBIN "data/bank_041/d_7380.bin" ; $7380, 240 bytes
-Data_41_7470:
+NinaSpriteFrame54:
 	INCBIN "data/bank_041/d_7470.bin" ; $7470, 240 bytes
-Data_41_7560:
+NinaSpriteFrame55:
 	INCBIN "data/bank_041/d_7560.bin" ; $7560, 240 bytes
 Data_41_7650:
 	INCBIN "data/bank_041/d_7650.bin" ; $7650, 1680 bytes
 Data_41_7ce0:
 	INCBIN "data/bank_041/d_7ce0.bin" ; $7ce0, 580 bytes
 NinaSpriteAnims:
-	dw Data_41_7f4a ; $7f24
-	dw Data_41_7f4d ; $7f26
-	dw Data_41_7f57 ; $7f28
-	dw Data_41_7f5d ; $7f2a
-	dw Data_41_7f65 ; $7f2c
-	dw Data_41_7f6f ; $7f2e
-	dw Data_41_7f75 ; $7f30
-	dw Data_41_7f7b ; $7f32
-	dw Data_41_7f81 ; $7f34
-	dw Data_41_7f86 ; $7f36
-	dw Data_41_7f8a ; $7f38
-	dw Data_41_7f8e ; $7f3a
-	dw Data_41_7f92 ; $7f3c
-	dw Data_41_7f95 ; $7f3e
-	dw Data_41_7f98 ; $7f40
-	dw Data_41_7f9b ; $7f42
-	dw Data_41_7f9e ; $7f44
-	dw Data_41_7fa1 ; $7f46
-	dw Data_41_7fad ; $7f48
-Data_41_7f4a:
+	dw NinaSpriteAnim00 ; $7f24
+	dw NinaSpriteAnim01 ; $7f26
+	dw NinaSpriteAnim02 ; $7f28
+	dw NinaSpriteAnim03 ; $7f2a
+	dw NinaSpriteAnim04 ; $7f2c
+	dw NinaSpriteAnim05 ; $7f2e
+	dw NinaSpriteAnim06 ; $7f30
+	dw NinaSpriteAnim07 ; $7f32
+	dw NinaSpriteAnim08 ; $7f34
+	dw NinaSpriteAnim09 ; $7f36
+	dw NinaSpriteAnim10 ; $7f38
+	dw NinaSpriteAnim11 ; $7f3a
+	dw NinaSpriteAnim12 ; $7f3c
+	dw NinaSpriteAnim13 ; $7f3e
+	dw NinaSpriteAnim14 ; $7f40
+	dw NinaSpriteAnim15 ; $7f42
+	dw NinaSpriteAnim16 ; $7f44
+	dw NinaSpriteAnim17 ; $7f46
+	dw NinaSpriteAnim18 ; $7f48
+NinaSpriteAnim00:
 	INCBIN "data/bank_041/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_41_7f4d:
+NinaSpriteAnim01:
 	INCBIN "data/bank_041/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_41_7f57:
+NinaSpriteAnim02:
 	INCBIN "data/bank_041/d_7f57.bin" ; $7f57, 6 bytes
-Data_41_7f5d:
+NinaSpriteAnim03:
 	INCBIN "data/bank_041/d_7f5d.bin" ; $7f5d, 8 bytes
-Data_41_7f65:
+NinaSpriteAnim04:
 	INCBIN "data/bank_041/d_7f65.bin" ; $7f65, 10 bytes
-Data_41_7f6f:
+NinaSpriteAnim05:
 	INCBIN "data/bank_041/d_7f6f.bin" ; $7f6f, 6 bytes
-Data_41_7f75:
+NinaSpriteAnim06:
 	INCBIN "data/bank_041/d_7f75.bin" ; $7f75, 6 bytes
-Data_41_7f7b:
+NinaSpriteAnim07:
 	INCBIN "data/bank_041/d_7f7b.bin" ; $7f7b, 6 bytes
-Data_41_7f81:
+NinaSpriteAnim08:
 	INCBIN "data/bank_041/d_7f81.bin" ; $7f81, 5 bytes
-Data_41_7f86:
+NinaSpriteAnim09:
 	INCBIN "data/bank_041/d_7f86.bin" ; $7f86, 4 bytes
-Data_41_7f8a:
+NinaSpriteAnim10:
 	INCBIN "data/bank_041/d_7f8a.bin" ; $7f8a, 4 bytes
-Data_41_7f8e:
+NinaSpriteAnim11:
 	INCBIN "data/bank_041/d_7f8e.bin" ; $7f8e, 4 bytes
-Data_41_7f92:
+NinaSpriteAnim12:
 	INCBIN "data/bank_041/d_7f92.bin" ; $7f92, 3 bytes
-Data_41_7f95:
+NinaSpriteAnim13:
 	INCBIN "data/bank_041/d_7f95.bin" ; $7f95, 3 bytes
-Data_41_7f98:
+NinaSpriteAnim14:
 	INCBIN "data/bank_041/d_7f98.bin" ; $7f98, 3 bytes
-Data_41_7f9b:
+NinaSpriteAnim15:
 	INCBIN "data/bank_041/d_7f9b.bin" ; $7f9b, 3 bytes
-Data_41_7f9e:
+NinaSpriteAnim16:
 	INCBIN "data/bank_041/d_7f9e.bin" ; $7f9e, 3 bytes
-Data_41_7fa1:
+NinaSpriteAnim17:
 	INCBIN "data/bank_041/d_7fa1.bin" ; $7fa1, 12 bytes
-Data_41_7fad:
+NinaSpriteAnim18:
 	INCBIN "data/bank_041/d_7fad.bin" ; $7fad, 8 bytes
 	; $7fb5, 75 bytes fill to bank end (linker-padded)

@@ -9,323 +9,323 @@ FaySpriteDesc:
 	dw $0000 ; $400a
 	dw Data_59_7ce0 ; $400c per-slot OAM data
 FaySpriteFrames:
-	dw Data_59_4130 ; $400e
-	dw Data_59_4220 ; $4010
-	dw Data_59_4310 ; $4012
-	dw Data_59_4400 ; $4014
-	dw Data_59_44f0 ; $4016
-	dw Data_59_45e0 ; $4018
-	dw Data_59_46d0 ; $401a
-	dw Data_59_47c0 ; $401c
-	dw Data_59_48b0 ; $401e
-	dw Data_59_49a0 ; $4020
-	dw Data_59_4a90 ; $4022
-	dw Data_59_4220 ; $4024
-	dw Data_59_4310 ; $4026
-	dw Data_59_4400 ; $4028
-	dw Data_59_4b80 ; $402a
-	dw Data_59_4c70 ; $402c
-	dw Data_59_4220 ; $402e
-	dw Data_59_4310 ; $4030
-	dw Data_59_4400 ; $4032
-	dw Data_59_4d60 ; $4034
-	dw Data_59_4e50 ; $4036
-	dw Data_59_46d0 ; $4038
-	dw Data_59_47c0 ; $403a
-	dw Data_59_48b0 ; $403c
-	dw Data_59_4f40 ; $403e
-	dw Data_59_5030 ; $4040
-	dw Data_59_5030 ; $4042
-	dw Data_59_5030 ; $4044
-	dw Data_59_5120 ; $4046
-	dw Data_59_5120 ; $4048
-	dw Data_59_5210 ; $404a
-	dw Data_59_5210 ; $404c
-	dw Data_59_5210 ; $404e
-	dw Data_59_5300 ; $4050
-	dw Data_59_5300 ; $4052
-	dw Data_59_53f0 ; $4054
-	dw Data_59_53f0 ; $4056
-	dw Data_59_53f0 ; $4058
-	dw Data_59_54e0 ; $405a
-	dw Data_59_54e0 ; $405c
-	dw Data_59_55d0 ; $405e
-	dw Data_59_55d0 ; $4060
-	dw Data_59_55d0 ; $4062
-	dw Data_59_56c0 ; $4064
-	dw Data_59_56c0 ; $4066
-	dw Data_59_57b0 ; $4068
-	dw Data_59_57b0 ; $406a
-	dw Data_59_57b0 ; $406c
-	dw Data_59_58a0 ; $406e
-	dw Data_59_58a0 ; $4070
-	dw Data_59_5990 ; $4072
-	dw Data_59_5990 ; $4074
-	dw Data_59_5990 ; $4076
-	dw Data_59_5a80 ; $4078
-	dw Data_59_5a80 ; $407a
-	dw Data_59_5b70 ; $407c
-	dw Data_59_5b70 ; $407e
-	dw Data_59_5b70 ; $4080
-	dw Data_59_5c60 ; $4082
-	dw Data_59_5c60 ; $4084
-	dw Data_59_5d50 ; $4086
-	dw Data_59_5d50 ; $4088
-	dw Data_59_5d50 ; $408a
-	dw Data_59_5e40 ; $408c
-	dw Data_59_5e40 ; $408e
-	dw Data_59_5f30 ; $4090
-	dw Data_59_5f30 ; $4092
-	dw Data_59_5f30 ; $4094
-	dw Data_59_6020 ; $4096
-	dw Data_59_6020 ; $4098
-	dw Data_59_6110 ; $409a
-	dw Data_59_6110 ; $409c
-	dw Data_59_6110 ; $409e
-	dw Data_59_6200 ; $40a0
-	dw Data_59_6200 ; $40a2
-	dw Data_59_62f0 ; $40a4
-	dw Data_59_62f0 ; $40a6
-	dw Data_59_62f0 ; $40a8
-	dw Data_59_63e0 ; $40aa
-	dw Data_59_63e0 ; $40ac
-	dw Data_59_64d0 ; $40ae
-	dw Data_59_64d0 ; $40b0
-	dw Data_59_64d0 ; $40b2
-	dw Data_59_65c0 ; $40b4
-	dw Data_59_65c0 ; $40b6
-	dw Data_59_66b0 ; $40b8
-	dw Data_59_66b0 ; $40ba
-	dw Data_59_66b0 ; $40bc
-	dw Data_59_67f0 ; $40be
-	dw Data_59_67f0 ; $40c0
-	dw Data_59_6930 ; $40c2
-	dw Data_59_6930 ; $40c4
-	dw Data_59_6930 ; $40c6
-	dw Data_59_6930 ; $40c8
-	dw Data_59_6930 ; $40ca
-	dw Data_59_6a20 ; $40cc
-	dw Data_59_6a20 ; $40ce
-	dw Data_59_6a20 ; $40d0
-	dw Data_59_6a20 ; $40d2
-	dw Data_59_6a20 ; $40d4
-	dw Data_59_6b10 ; $40d6
-	dw Data_59_6b10 ; $40d8
-	dw Data_59_6b10 ; $40da
-	dw Data_59_6c00 ; $40dc
-	dw Data_59_6c00 ; $40de
-	dw Data_59_6cf0 ; $40e0
-	dw Data_59_6cf0 ; $40e2
-	dw Data_59_6cf0 ; $40e4
-	dw Data_59_6de0 ; $40e6
-	dw Data_59_6de0 ; $40e8
-	dw Data_59_6ed0 ; $40ea
-	dw Data_59_6ed0 ; $40ec
-	dw Data_59_6ed0 ; $40ee
-	dw Data_59_6fc0 ; $40f0
-	dw Data_59_6fc0 ; $40f2
-	dw Data_59_70b0 ; $40f4
-	dw Data_59_70b0 ; $40f6
-	dw Data_59_70b0 ; $40f8
-	dw Data_59_70b0 ; $40fa
-	dw Data_59_70b0 ; $40fc
-	dw Data_59_71a0 ; $40fe
-	dw Data_59_71a0 ; $4100
-	dw Data_59_71a0 ; $4102
-	dw Data_59_71a0 ; $4104
-	dw Data_59_71a0 ; $4106
-	dw Data_59_7290 ; $4108
-	dw Data_59_7290 ; $410a
-	dw Data_59_7290 ; $410c
-	dw Data_59_7290 ; $410e
-	dw Data_59_7290 ; $4110
-	dw Data_59_7380 ; $4112
-	dw Data_59_7380 ; $4114
-	dw Data_59_7380 ; $4116
-	dw Data_59_7380 ; $4118
-	dw Data_59_7380 ; $411a
-	dw Data_59_7470 ; $411c
-	dw Data_59_7470 ; $411e
-	dw Data_59_7470 ; $4120
-	dw Data_59_7470 ; $4122
-	dw Data_59_7470 ; $4124
-	dw Data_59_7560 ; $4126
-	dw Data_59_7560 ; $4128
-	dw Data_59_7560 ; $412a
-	dw Data_59_7560 ; $412c
-	dw Data_59_7560 ; $412e
-Data_59_4130:
+	dw FaySpriteFrame00 ; $400e
+	dw FaySpriteFrame01 ; $4010
+	dw FaySpriteFrame02 ; $4012
+	dw FaySpriteFrame03 ; $4014
+	dw FaySpriteFrame04 ; $4016
+	dw FaySpriteFrame05 ; $4018
+	dw FaySpriteFrame06 ; $401a
+	dw FaySpriteFrame07 ; $401c
+	dw FaySpriteFrame08 ; $401e
+	dw FaySpriteFrame09 ; $4020
+	dw FaySpriteFrame10 ; $4022
+	dw FaySpriteFrame01 ; $4024
+	dw FaySpriteFrame02 ; $4026
+	dw FaySpriteFrame03 ; $4028
+	dw FaySpriteFrame11 ; $402a
+	dw FaySpriteFrame12 ; $402c
+	dw FaySpriteFrame01 ; $402e
+	dw FaySpriteFrame02 ; $4030
+	dw FaySpriteFrame03 ; $4032
+	dw FaySpriteFrame13 ; $4034
+	dw FaySpriteFrame14 ; $4036
+	dw FaySpriteFrame06 ; $4038
+	dw FaySpriteFrame07 ; $403a
+	dw FaySpriteFrame08 ; $403c
+	dw FaySpriteFrame15 ; $403e
+	dw FaySpriteFrame16 ; $4040
+	dw FaySpriteFrame16 ; $4042
+	dw FaySpriteFrame16 ; $4044
+	dw FaySpriteFrame17 ; $4046
+	dw FaySpriteFrame17 ; $4048
+	dw FaySpriteFrame18 ; $404a
+	dw FaySpriteFrame18 ; $404c
+	dw FaySpriteFrame18 ; $404e
+	dw FaySpriteFrame19 ; $4050
+	dw FaySpriteFrame19 ; $4052
+	dw FaySpriteFrame20 ; $4054
+	dw FaySpriteFrame20 ; $4056
+	dw FaySpriteFrame20 ; $4058
+	dw FaySpriteFrame21 ; $405a
+	dw FaySpriteFrame21 ; $405c
+	dw FaySpriteFrame22 ; $405e
+	dw FaySpriteFrame22 ; $4060
+	dw FaySpriteFrame22 ; $4062
+	dw FaySpriteFrame23 ; $4064
+	dw FaySpriteFrame23 ; $4066
+	dw FaySpriteFrame24 ; $4068
+	dw FaySpriteFrame24 ; $406a
+	dw FaySpriteFrame24 ; $406c
+	dw FaySpriteFrame25 ; $406e
+	dw FaySpriteFrame25 ; $4070
+	dw FaySpriteFrame26 ; $4072
+	dw FaySpriteFrame26 ; $4074
+	dw FaySpriteFrame26 ; $4076
+	dw FaySpriteFrame27 ; $4078
+	dw FaySpriteFrame27 ; $407a
+	dw FaySpriteFrame28 ; $407c
+	dw FaySpriteFrame28 ; $407e
+	dw FaySpriteFrame28 ; $4080
+	dw FaySpriteFrame29 ; $4082
+	dw FaySpriteFrame29 ; $4084
+	dw FaySpriteFrame30 ; $4086
+	dw FaySpriteFrame30 ; $4088
+	dw FaySpriteFrame30 ; $408a
+	dw FaySpriteFrame31 ; $408c
+	dw FaySpriteFrame31 ; $408e
+	dw FaySpriteFrame32 ; $4090
+	dw FaySpriteFrame32 ; $4092
+	dw FaySpriteFrame32 ; $4094
+	dw FaySpriteFrame33 ; $4096
+	dw FaySpriteFrame33 ; $4098
+	dw FaySpriteFrame34 ; $409a
+	dw FaySpriteFrame34 ; $409c
+	dw FaySpriteFrame34 ; $409e
+	dw FaySpriteFrame35 ; $40a0
+	dw FaySpriteFrame35 ; $40a2
+	dw FaySpriteFrame36 ; $40a4
+	dw FaySpriteFrame36 ; $40a6
+	dw FaySpriteFrame36 ; $40a8
+	dw FaySpriteFrame37 ; $40aa
+	dw FaySpriteFrame37 ; $40ac
+	dw FaySpriteFrame38 ; $40ae
+	dw FaySpriteFrame38 ; $40b0
+	dw FaySpriteFrame38 ; $40b2
+	dw FaySpriteFrame39 ; $40b4
+	dw FaySpriteFrame39 ; $40b6
+	dw FaySpriteFrame40 ; $40b8
+	dw FaySpriteFrame40 ; $40ba
+	dw FaySpriteFrame40 ; $40bc
+	dw FaySpriteFrame41 ; $40be
+	dw FaySpriteFrame41 ; $40c0
+	dw FaySpriteFrame42 ; $40c2
+	dw FaySpriteFrame42 ; $40c4
+	dw FaySpriteFrame42 ; $40c6
+	dw FaySpriteFrame42 ; $40c8
+	dw FaySpriteFrame42 ; $40ca
+	dw FaySpriteFrame43 ; $40cc
+	dw FaySpriteFrame43 ; $40ce
+	dw FaySpriteFrame43 ; $40d0
+	dw FaySpriteFrame43 ; $40d2
+	dw FaySpriteFrame43 ; $40d4
+	dw FaySpriteFrame44 ; $40d6
+	dw FaySpriteFrame44 ; $40d8
+	dw FaySpriteFrame44 ; $40da
+	dw FaySpriteFrame45 ; $40dc
+	dw FaySpriteFrame45 ; $40de
+	dw FaySpriteFrame46 ; $40e0
+	dw FaySpriteFrame46 ; $40e2
+	dw FaySpriteFrame46 ; $40e4
+	dw FaySpriteFrame47 ; $40e6
+	dw FaySpriteFrame47 ; $40e8
+	dw FaySpriteFrame48 ; $40ea
+	dw FaySpriteFrame48 ; $40ec
+	dw FaySpriteFrame48 ; $40ee
+	dw FaySpriteFrame49 ; $40f0
+	dw FaySpriteFrame49 ; $40f2
+	dw FaySpriteFrame50 ; $40f4
+	dw FaySpriteFrame50 ; $40f6
+	dw FaySpriteFrame50 ; $40f8
+	dw FaySpriteFrame50 ; $40fa
+	dw FaySpriteFrame50 ; $40fc
+	dw FaySpriteFrame51 ; $40fe
+	dw FaySpriteFrame51 ; $4100
+	dw FaySpriteFrame51 ; $4102
+	dw FaySpriteFrame51 ; $4104
+	dw FaySpriteFrame51 ; $4106
+	dw FaySpriteFrame52 ; $4108
+	dw FaySpriteFrame52 ; $410a
+	dw FaySpriteFrame52 ; $410c
+	dw FaySpriteFrame52 ; $410e
+	dw FaySpriteFrame52 ; $4110
+	dw FaySpriteFrame53 ; $4112
+	dw FaySpriteFrame53 ; $4114
+	dw FaySpriteFrame53 ; $4116
+	dw FaySpriteFrame53 ; $4118
+	dw FaySpriteFrame53 ; $411a
+	dw FaySpriteFrame54 ; $411c
+	dw FaySpriteFrame54 ; $411e
+	dw FaySpriteFrame54 ; $4120
+	dw FaySpriteFrame54 ; $4122
+	dw FaySpriteFrame54 ; $4124
+	dw FaySpriteFrame55 ; $4126
+	dw FaySpriteFrame55 ; $4128
+	dw FaySpriteFrame55 ; $412a
+	dw FaySpriteFrame55 ; $412c
+	dw FaySpriteFrame55 ; $412e
+FaySpriteFrame00:
 	INCBIN "data/bank_059/d_4130.bin" ; $4130, 240 bytes
-Data_59_4220:
+FaySpriteFrame01:
 	INCBIN "data/bank_059/d_4220.bin" ; $4220, 240 bytes
-Data_59_4310:
+FaySpriteFrame02:
 	INCBIN "data/bank_059/d_4310.bin" ; $4310, 240 bytes
-Data_59_4400:
+FaySpriteFrame03:
 	INCBIN "data/bank_059/d_4400.bin" ; $4400, 240 bytes
-Data_59_44f0:
+FaySpriteFrame04:
 	INCBIN "data/bank_059/d_44f0.bin" ; $44f0, 240 bytes
-Data_59_45e0:
+FaySpriteFrame05:
 	INCBIN "data/bank_059/d_45e0.bin" ; $45e0, 240 bytes
-Data_59_46d0:
+FaySpriteFrame06:
 	INCBIN "data/bank_059/d_46d0.bin" ; $46d0, 240 bytes
-Data_59_47c0:
+FaySpriteFrame07:
 	INCBIN "data/bank_059/d_47c0.bin" ; $47c0, 240 bytes
-Data_59_48b0:
+FaySpriteFrame08:
 	INCBIN "data/bank_059/d_48b0.bin" ; $48b0, 240 bytes
-Data_59_49a0:
+FaySpriteFrame09:
 	INCBIN "data/bank_059/d_49a0.bin" ; $49a0, 240 bytes
-Data_59_4a90:
+FaySpriteFrame10:
 	INCBIN "data/bank_059/d_4a90.bin" ; $4a90, 240 bytes
-Data_59_4b80:
+FaySpriteFrame11:
 	INCBIN "data/bank_059/d_4b80.bin" ; $4b80, 240 bytes
-Data_59_4c70:
+FaySpriteFrame12:
 	INCBIN "data/bank_059/d_4c70.bin" ; $4c70, 240 bytes
-Data_59_4d60:
+FaySpriteFrame13:
 	INCBIN "data/bank_059/d_4d60.bin" ; $4d60, 240 bytes
-Data_59_4e50:
+FaySpriteFrame14:
 	INCBIN "data/bank_059/d_4e50.bin" ; $4e50, 240 bytes
-Data_59_4f40:
+FaySpriteFrame15:
 	INCBIN "data/bank_059/d_4f40.bin" ; $4f40, 240 bytes
-Data_59_5030:
+FaySpriteFrame16:
 	INCBIN "data/bank_059/d_5030.bin" ; $5030, 240 bytes
-Data_59_5120:
+FaySpriteFrame17:
 	INCBIN "data/bank_059/d_5120.bin" ; $5120, 240 bytes
-Data_59_5210:
+FaySpriteFrame18:
 	INCBIN "data/bank_059/d_5210.bin" ; $5210, 240 bytes
-Data_59_5300:
+FaySpriteFrame19:
 	INCBIN "data/bank_059/d_5300.bin" ; $5300, 240 bytes
-Data_59_53f0:
+FaySpriteFrame20:
 	INCBIN "data/bank_059/d_53f0.bin" ; $53f0, 240 bytes
-Data_59_54e0:
+FaySpriteFrame21:
 	INCBIN "data/bank_059/d_54e0.bin" ; $54e0, 240 bytes
-Data_59_55d0:
+FaySpriteFrame22:
 	INCBIN "data/bank_059/d_55d0.bin" ; $55d0, 240 bytes
-Data_59_56c0:
+FaySpriteFrame23:
 	INCBIN "data/bank_059/d_56c0.bin" ; $56c0, 240 bytes
-Data_59_57b0:
+FaySpriteFrame24:
 	INCBIN "data/bank_059/d_57b0.bin" ; $57b0, 240 bytes
-Data_59_58a0:
+FaySpriteFrame25:
 	INCBIN "data/bank_059/d_58a0.bin" ; $58a0, 240 bytes
-Data_59_5990:
+FaySpriteFrame26:
 	INCBIN "data/bank_059/d_5990.bin" ; $5990, 240 bytes
-Data_59_5a80:
+FaySpriteFrame27:
 	INCBIN "data/bank_059/d_5a80.bin" ; $5a80, 240 bytes
-Data_59_5b70:
+FaySpriteFrame28:
 	INCBIN "data/bank_059/d_5b70.bin" ; $5b70, 240 bytes
-Data_59_5c60:
+FaySpriteFrame29:
 	INCBIN "data/bank_059/d_5c60.bin" ; $5c60, 240 bytes
-Data_59_5d50:
+FaySpriteFrame30:
 	INCBIN "data/bank_059/d_5d50.bin" ; $5d50, 240 bytes
-Data_59_5e40:
+FaySpriteFrame31:
 	INCBIN "data/bank_059/d_5e40.bin" ; $5e40, 240 bytes
-Data_59_5f30:
+FaySpriteFrame32:
 	INCBIN "data/bank_059/d_5f30.bin" ; $5f30, 240 bytes
-Data_59_6020:
+FaySpriteFrame33:
 	INCBIN "data/bank_059/d_6020.bin" ; $6020, 240 bytes
-Data_59_6110:
+FaySpriteFrame34:
 	INCBIN "data/bank_059/d_6110.bin" ; $6110, 240 bytes
-Data_59_6200:
+FaySpriteFrame35:
 	INCBIN "data/bank_059/d_6200.bin" ; $6200, 240 bytes
-Data_59_62f0:
+FaySpriteFrame36:
 	INCBIN "data/bank_059/d_62f0.bin" ; $62f0, 240 bytes
-Data_59_63e0:
+FaySpriteFrame37:
 	INCBIN "data/bank_059/d_63e0.bin" ; $63e0, 240 bytes
-Data_59_64d0:
+FaySpriteFrame38:
 	INCBIN "data/bank_059/d_64d0.bin" ; $64d0, 240 bytes
-Data_59_65c0:
+FaySpriteFrame39:
 	INCBIN "data/bank_059/d_65c0.bin" ; $65c0, 240 bytes
-Data_59_66b0:
+FaySpriteFrame40:
 	INCBIN "data/bank_059/d_66b0.bin" ; $66b0, 320 bytes
-Data_59_67f0:
+FaySpriteFrame41:
 	INCBIN "data/bank_059/d_67f0.bin" ; $67f0, 320 bytes
-Data_59_6930:
+FaySpriteFrame42:
 	INCBIN "data/bank_059/d_6930.bin" ; $6930, 240 bytes
-Data_59_6a20:
+FaySpriteFrame43:
 	INCBIN "data/bank_059/d_6a20.bin" ; $6a20, 240 bytes
-Data_59_6b10:
+FaySpriteFrame44:
 	INCBIN "data/bank_059/d_6b10.bin" ; $6b10, 240 bytes
-Data_59_6c00:
+FaySpriteFrame45:
 	INCBIN "data/bank_059/d_6c00.bin" ; $6c00, 240 bytes
-Data_59_6cf0:
+FaySpriteFrame46:
 	INCBIN "data/bank_059/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_59_6de0:
+FaySpriteFrame47:
 	INCBIN "data/bank_059/d_6de0.bin" ; $6de0, 240 bytes
-Data_59_6ed0:
+FaySpriteFrame48:
 	INCBIN "data/bank_059/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_59_6fc0:
+FaySpriteFrame49:
 	INCBIN "data/bank_059/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_59_70b0:
+FaySpriteFrame50:
 	INCBIN "data/bank_059/d_70b0.bin" ; $70b0, 240 bytes
-Data_59_71a0:
+FaySpriteFrame51:
 	INCBIN "data/bank_059/d_71a0.bin" ; $71a0, 240 bytes
-Data_59_7290:
+FaySpriteFrame52:
 	INCBIN "data/bank_059/d_7290.bin" ; $7290, 240 bytes
-Data_59_7380:
+FaySpriteFrame53:
 	INCBIN "data/bank_059/d_7380.bin" ; $7380, 240 bytes
-Data_59_7470:
+FaySpriteFrame54:
 	INCBIN "data/bank_059/d_7470.bin" ; $7470, 240 bytes
-Data_59_7560:
+FaySpriteFrame55:
 	INCBIN "data/bank_059/d_7560.bin" ; $7560, 240 bytes
 Data_59_7650:
 	INCBIN "data/bank_059/d_7650.bin" ; $7650, 1680 bytes
 Data_59_7ce0:
 	INCBIN "data/bank_059/d_7ce0.bin" ; $7ce0, 580 bytes
 FaySpriteAnims:
-	dw Data_59_7f4a ; $7f24
-	dw Data_59_7f4d ; $7f26
-	dw Data_59_7f57 ; $7f28
-	dw Data_59_7f5d ; $7f2a
-	dw Data_59_7f65 ; $7f2c
-	dw Data_59_7f6d ; $7f2e
-	dw Data_59_7f73 ; $7f30
-	dw Data_59_7f79 ; $7f32
-	dw Data_59_7f7f ; $7f34
-	dw Data_59_7f84 ; $7f36
-	dw Data_59_7f88 ; $7f38
-	dw Data_59_7f8c ; $7f3a
-	dw Data_59_7f90 ; $7f3c
-	dw Data_59_7f93 ; $7f3e
-	dw Data_59_7f96 ; $7f40
-	dw Data_59_7f99 ; $7f42
-	dw Data_59_7f9c ; $7f44
-	dw Data_59_7f9f ; $7f46
-	dw Data_59_7fab ; $7f48
-Data_59_7f4a:
+	dw FaySpriteAnim00 ; $7f24
+	dw FaySpriteAnim01 ; $7f26
+	dw FaySpriteAnim02 ; $7f28
+	dw FaySpriteAnim03 ; $7f2a
+	dw FaySpriteAnim04 ; $7f2c
+	dw FaySpriteAnim05 ; $7f2e
+	dw FaySpriteAnim06 ; $7f30
+	dw FaySpriteAnim07 ; $7f32
+	dw FaySpriteAnim08 ; $7f34
+	dw FaySpriteAnim09 ; $7f36
+	dw FaySpriteAnim10 ; $7f38
+	dw FaySpriteAnim11 ; $7f3a
+	dw FaySpriteAnim12 ; $7f3c
+	dw FaySpriteAnim13 ; $7f3e
+	dw FaySpriteAnim14 ; $7f40
+	dw FaySpriteAnim15 ; $7f42
+	dw FaySpriteAnim16 ; $7f44
+	dw FaySpriteAnim17 ; $7f46
+	dw FaySpriteAnim18 ; $7f48
+FaySpriteAnim00:
 	INCBIN "data/bank_059/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_59_7f4d:
+FaySpriteAnim01:
 	INCBIN "data/bank_059/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_59_7f57:
+FaySpriteAnim02:
 	INCBIN "data/bank_059/d_7f57.bin" ; $7f57, 6 bytes
-Data_59_7f5d:
+FaySpriteAnim03:
 	INCBIN "data/bank_059/d_7f5d.bin" ; $7f5d, 8 bytes
-Data_59_7f65:
+FaySpriteAnim04:
 	INCBIN "data/bank_059/d_7f65.bin" ; $7f65, 8 bytes
-Data_59_7f6d:
+FaySpriteAnim05:
 	INCBIN "data/bank_059/d_7f6d.bin" ; $7f6d, 6 bytes
-Data_59_7f73:
+FaySpriteAnim06:
 	INCBIN "data/bank_059/d_7f73.bin" ; $7f73, 6 bytes
-Data_59_7f79:
+FaySpriteAnim07:
 	INCBIN "data/bank_059/d_7f79.bin" ; $7f79, 6 bytes
-Data_59_7f7f:
+FaySpriteAnim08:
 	INCBIN "data/bank_059/d_7f7f.bin" ; $7f7f, 5 bytes
-Data_59_7f84:
+FaySpriteAnim09:
 	INCBIN "data/bank_059/d_7f84.bin" ; $7f84, 4 bytes
-Data_59_7f88:
+FaySpriteAnim10:
 	INCBIN "data/bank_059/d_7f88.bin" ; $7f88, 4 bytes
-Data_59_7f8c:
+FaySpriteAnim11:
 	INCBIN "data/bank_059/d_7f8c.bin" ; $7f8c, 4 bytes
-Data_59_7f90:
+FaySpriteAnim12:
 	INCBIN "data/bank_059/d_7f90.bin" ; $7f90, 3 bytes
-Data_59_7f93:
+FaySpriteAnim13:
 	INCBIN "data/bank_059/d_7f93.bin" ; $7f93, 3 bytes
-Data_59_7f96:
+FaySpriteAnim14:
 	INCBIN "data/bank_059/d_7f96.bin" ; $7f96, 3 bytes
-Data_59_7f99:
+FaySpriteAnim15:
 	INCBIN "data/bank_059/d_7f99.bin" ; $7f99, 3 bytes
-Data_59_7f9c:
+FaySpriteAnim16:
 	INCBIN "data/bank_059/d_7f9c.bin" ; $7f9c, 3 bytes
-Data_59_7f9f:
+FaySpriteAnim17:
 	INCBIN "data/bank_059/d_7f9f.bin" ; $7f9f, 12 bytes
-Data_59_7fab:
+FaySpriteAnim18:
 	INCBIN "data/bank_059/d_7fab.bin" ; $7fab, 8 bytes
 	; $7fb3, 77 bytes fill to bank end (linker-padded)

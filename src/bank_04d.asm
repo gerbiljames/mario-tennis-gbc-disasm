@@ -9,323 +9,323 @@ BrianSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_4d_7ce0 ; $400c per-slot OAM data
 BrianSpriteFrames:
-	dw Data_4d_4130 ; $400e
-	dw Data_4d_4220 ; $4010
-	dw Data_4d_4310 ; $4012
-	dw Data_4d_4400 ; $4014
-	dw Data_4d_44f0 ; $4016
-	dw Data_4d_45e0 ; $4018
-	dw Data_4d_46d0 ; $401a
-	dw Data_4d_47c0 ; $401c
-	dw Data_4d_48b0 ; $401e
-	dw Data_4d_49a0 ; $4020
-	dw Data_4d_4a90 ; $4022
-	dw Data_4d_4220 ; $4024
-	dw Data_4d_4310 ; $4026
-	dw Data_4d_4400 ; $4028
-	dw Data_4d_4b80 ; $402a
-	dw Data_4d_4c70 ; $402c
-	dw Data_4d_4220 ; $402e
-	dw Data_4d_4310 ; $4030
-	dw Data_4d_4400 ; $4032
-	dw Data_4d_4d60 ; $4034
-	dw Data_4d_4e50 ; $4036
-	dw Data_4d_46d0 ; $4038
-	dw Data_4d_47c0 ; $403a
-	dw Data_4d_48b0 ; $403c
-	dw Data_4d_4f40 ; $403e
-	dw Data_4d_5030 ; $4040
-	dw Data_4d_5030 ; $4042
-	dw Data_4d_5030 ; $4044
-	dw Data_4d_5120 ; $4046
-	dw Data_4d_5120 ; $4048
-	dw Data_4d_5210 ; $404a
-	dw Data_4d_5210 ; $404c
-	dw Data_4d_5210 ; $404e
-	dw Data_4d_5300 ; $4050
-	dw Data_4d_5300 ; $4052
-	dw Data_4d_53f0 ; $4054
-	dw Data_4d_53f0 ; $4056
-	dw Data_4d_53f0 ; $4058
-	dw Data_4d_54e0 ; $405a
-	dw Data_4d_54e0 ; $405c
-	dw Data_4d_55d0 ; $405e
-	dw Data_4d_55d0 ; $4060
-	dw Data_4d_55d0 ; $4062
-	dw Data_4d_56c0 ; $4064
-	dw Data_4d_56c0 ; $4066
-	dw Data_4d_57b0 ; $4068
-	dw Data_4d_57b0 ; $406a
-	dw Data_4d_57b0 ; $406c
-	dw Data_4d_58a0 ; $406e
-	dw Data_4d_58a0 ; $4070
-	dw Data_4d_5990 ; $4072
-	dw Data_4d_5990 ; $4074
-	dw Data_4d_5990 ; $4076
-	dw Data_4d_5a80 ; $4078
-	dw Data_4d_5a80 ; $407a
-	dw Data_4d_5b70 ; $407c
-	dw Data_4d_5b70 ; $407e
-	dw Data_4d_5b70 ; $4080
-	dw Data_4d_5c60 ; $4082
-	dw Data_4d_5c60 ; $4084
-	dw Data_4d_5d50 ; $4086
-	dw Data_4d_5d50 ; $4088
-	dw Data_4d_5d50 ; $408a
-	dw Data_4d_5e40 ; $408c
-	dw Data_4d_5e40 ; $408e
-	dw Data_4d_5f30 ; $4090
-	dw Data_4d_5f30 ; $4092
-	dw Data_4d_5f30 ; $4094
-	dw Data_4d_6020 ; $4096
-	dw Data_4d_6020 ; $4098
-	dw Data_4d_6110 ; $409a
-	dw Data_4d_6110 ; $409c
-	dw Data_4d_6110 ; $409e
-	dw Data_4d_6200 ; $40a0
-	dw Data_4d_6200 ; $40a2
-	dw Data_4d_62f0 ; $40a4
-	dw Data_4d_62f0 ; $40a6
-	dw Data_4d_62f0 ; $40a8
-	dw Data_4d_63e0 ; $40aa
-	dw Data_4d_63e0 ; $40ac
-	dw Data_4d_64d0 ; $40ae
-	dw Data_4d_64d0 ; $40b0
-	dw Data_4d_64d0 ; $40b2
-	dw Data_4d_65c0 ; $40b4
-	dw Data_4d_65c0 ; $40b6
-	dw Data_4d_66b0 ; $40b8
-	dw Data_4d_66b0 ; $40ba
-	dw Data_4d_66b0 ; $40bc
-	dw Data_4d_67f0 ; $40be
-	dw Data_4d_67f0 ; $40c0
-	dw Data_4d_6930 ; $40c2
-	dw Data_4d_6930 ; $40c4
-	dw Data_4d_6930 ; $40c6
-	dw Data_4d_6930 ; $40c8
-	dw Data_4d_6930 ; $40ca
-	dw Data_4d_6a20 ; $40cc
-	dw Data_4d_6a20 ; $40ce
-	dw Data_4d_6a20 ; $40d0
-	dw Data_4d_6a20 ; $40d2
-	dw Data_4d_6a20 ; $40d4
-	dw Data_4d_6b10 ; $40d6
-	dw Data_4d_6b10 ; $40d8
-	dw Data_4d_6b10 ; $40da
-	dw Data_4d_6c00 ; $40dc
-	dw Data_4d_6c00 ; $40de
-	dw Data_4d_6cf0 ; $40e0
-	dw Data_4d_6cf0 ; $40e2
-	dw Data_4d_6cf0 ; $40e4
-	dw Data_4d_6de0 ; $40e6
-	dw Data_4d_6de0 ; $40e8
-	dw Data_4d_6ed0 ; $40ea
-	dw Data_4d_6ed0 ; $40ec
-	dw Data_4d_6ed0 ; $40ee
-	dw Data_4d_6fc0 ; $40f0
-	dw Data_4d_6fc0 ; $40f2
-	dw Data_4d_70b0 ; $40f4
-	dw Data_4d_70b0 ; $40f6
-	dw Data_4d_70b0 ; $40f8
-	dw Data_4d_70b0 ; $40fa
-	dw Data_4d_70b0 ; $40fc
-	dw Data_4d_71a0 ; $40fe
-	dw Data_4d_71a0 ; $4100
-	dw Data_4d_71a0 ; $4102
-	dw Data_4d_71a0 ; $4104
-	dw Data_4d_71a0 ; $4106
-	dw Data_4d_7290 ; $4108
-	dw Data_4d_7290 ; $410a
-	dw Data_4d_7290 ; $410c
-	dw Data_4d_7290 ; $410e
-	dw Data_4d_7290 ; $4110
-	dw Data_4d_7380 ; $4112
-	dw Data_4d_7380 ; $4114
-	dw Data_4d_7380 ; $4116
-	dw Data_4d_7380 ; $4118
-	dw Data_4d_7380 ; $411a
-	dw Data_4d_7470 ; $411c
-	dw Data_4d_7470 ; $411e
-	dw Data_4d_7470 ; $4120
-	dw Data_4d_7470 ; $4122
-	dw Data_4d_7470 ; $4124
-	dw Data_4d_7560 ; $4126
-	dw Data_4d_7560 ; $4128
-	dw Data_4d_7560 ; $412a
-	dw Data_4d_7560 ; $412c
-	dw Data_4d_7560 ; $412e
-Data_4d_4130:
+	dw BrianSpriteFrame00 ; $400e
+	dw BrianSpriteFrame01 ; $4010
+	dw BrianSpriteFrame02 ; $4012
+	dw BrianSpriteFrame03 ; $4014
+	dw BrianSpriteFrame04 ; $4016
+	dw BrianSpriteFrame05 ; $4018
+	dw BrianSpriteFrame06 ; $401a
+	dw BrianSpriteFrame07 ; $401c
+	dw BrianSpriteFrame08 ; $401e
+	dw BrianSpriteFrame09 ; $4020
+	dw BrianSpriteFrame10 ; $4022
+	dw BrianSpriteFrame01 ; $4024
+	dw BrianSpriteFrame02 ; $4026
+	dw BrianSpriteFrame03 ; $4028
+	dw BrianSpriteFrame11 ; $402a
+	dw BrianSpriteFrame12 ; $402c
+	dw BrianSpriteFrame01 ; $402e
+	dw BrianSpriteFrame02 ; $4030
+	dw BrianSpriteFrame03 ; $4032
+	dw BrianSpriteFrame13 ; $4034
+	dw BrianSpriteFrame14 ; $4036
+	dw BrianSpriteFrame06 ; $4038
+	dw BrianSpriteFrame07 ; $403a
+	dw BrianSpriteFrame08 ; $403c
+	dw BrianSpriteFrame15 ; $403e
+	dw BrianSpriteFrame16 ; $4040
+	dw BrianSpriteFrame16 ; $4042
+	dw BrianSpriteFrame16 ; $4044
+	dw BrianSpriteFrame17 ; $4046
+	dw BrianSpriteFrame17 ; $4048
+	dw BrianSpriteFrame18 ; $404a
+	dw BrianSpriteFrame18 ; $404c
+	dw BrianSpriteFrame18 ; $404e
+	dw BrianSpriteFrame19 ; $4050
+	dw BrianSpriteFrame19 ; $4052
+	dw BrianSpriteFrame20 ; $4054
+	dw BrianSpriteFrame20 ; $4056
+	dw BrianSpriteFrame20 ; $4058
+	dw BrianSpriteFrame21 ; $405a
+	dw BrianSpriteFrame21 ; $405c
+	dw BrianSpriteFrame22 ; $405e
+	dw BrianSpriteFrame22 ; $4060
+	dw BrianSpriteFrame22 ; $4062
+	dw BrianSpriteFrame23 ; $4064
+	dw BrianSpriteFrame23 ; $4066
+	dw BrianSpriteFrame24 ; $4068
+	dw BrianSpriteFrame24 ; $406a
+	dw BrianSpriteFrame24 ; $406c
+	dw BrianSpriteFrame25 ; $406e
+	dw BrianSpriteFrame25 ; $4070
+	dw BrianSpriteFrame26 ; $4072
+	dw BrianSpriteFrame26 ; $4074
+	dw BrianSpriteFrame26 ; $4076
+	dw BrianSpriteFrame27 ; $4078
+	dw BrianSpriteFrame27 ; $407a
+	dw BrianSpriteFrame28 ; $407c
+	dw BrianSpriteFrame28 ; $407e
+	dw BrianSpriteFrame28 ; $4080
+	dw BrianSpriteFrame29 ; $4082
+	dw BrianSpriteFrame29 ; $4084
+	dw BrianSpriteFrame30 ; $4086
+	dw BrianSpriteFrame30 ; $4088
+	dw BrianSpriteFrame30 ; $408a
+	dw BrianSpriteFrame31 ; $408c
+	dw BrianSpriteFrame31 ; $408e
+	dw BrianSpriteFrame32 ; $4090
+	dw BrianSpriteFrame32 ; $4092
+	dw BrianSpriteFrame32 ; $4094
+	dw BrianSpriteFrame33 ; $4096
+	dw BrianSpriteFrame33 ; $4098
+	dw BrianSpriteFrame34 ; $409a
+	dw BrianSpriteFrame34 ; $409c
+	dw BrianSpriteFrame34 ; $409e
+	dw BrianSpriteFrame35 ; $40a0
+	dw BrianSpriteFrame35 ; $40a2
+	dw BrianSpriteFrame36 ; $40a4
+	dw BrianSpriteFrame36 ; $40a6
+	dw BrianSpriteFrame36 ; $40a8
+	dw BrianSpriteFrame37 ; $40aa
+	dw BrianSpriteFrame37 ; $40ac
+	dw BrianSpriteFrame38 ; $40ae
+	dw BrianSpriteFrame38 ; $40b0
+	dw BrianSpriteFrame38 ; $40b2
+	dw BrianSpriteFrame39 ; $40b4
+	dw BrianSpriteFrame39 ; $40b6
+	dw BrianSpriteFrame40 ; $40b8
+	dw BrianSpriteFrame40 ; $40ba
+	dw BrianSpriteFrame40 ; $40bc
+	dw BrianSpriteFrame41 ; $40be
+	dw BrianSpriteFrame41 ; $40c0
+	dw BrianSpriteFrame42 ; $40c2
+	dw BrianSpriteFrame42 ; $40c4
+	dw BrianSpriteFrame42 ; $40c6
+	dw BrianSpriteFrame42 ; $40c8
+	dw BrianSpriteFrame42 ; $40ca
+	dw BrianSpriteFrame43 ; $40cc
+	dw BrianSpriteFrame43 ; $40ce
+	dw BrianSpriteFrame43 ; $40d0
+	dw BrianSpriteFrame43 ; $40d2
+	dw BrianSpriteFrame43 ; $40d4
+	dw BrianSpriteFrame44 ; $40d6
+	dw BrianSpriteFrame44 ; $40d8
+	dw BrianSpriteFrame44 ; $40da
+	dw BrianSpriteFrame45 ; $40dc
+	dw BrianSpriteFrame45 ; $40de
+	dw BrianSpriteFrame46 ; $40e0
+	dw BrianSpriteFrame46 ; $40e2
+	dw BrianSpriteFrame46 ; $40e4
+	dw BrianSpriteFrame47 ; $40e6
+	dw BrianSpriteFrame47 ; $40e8
+	dw BrianSpriteFrame48 ; $40ea
+	dw BrianSpriteFrame48 ; $40ec
+	dw BrianSpriteFrame48 ; $40ee
+	dw BrianSpriteFrame49 ; $40f0
+	dw BrianSpriteFrame49 ; $40f2
+	dw BrianSpriteFrame50 ; $40f4
+	dw BrianSpriteFrame50 ; $40f6
+	dw BrianSpriteFrame50 ; $40f8
+	dw BrianSpriteFrame50 ; $40fa
+	dw BrianSpriteFrame50 ; $40fc
+	dw BrianSpriteFrame51 ; $40fe
+	dw BrianSpriteFrame51 ; $4100
+	dw BrianSpriteFrame51 ; $4102
+	dw BrianSpriteFrame51 ; $4104
+	dw BrianSpriteFrame51 ; $4106
+	dw BrianSpriteFrame52 ; $4108
+	dw BrianSpriteFrame52 ; $410a
+	dw BrianSpriteFrame52 ; $410c
+	dw BrianSpriteFrame52 ; $410e
+	dw BrianSpriteFrame52 ; $4110
+	dw BrianSpriteFrame53 ; $4112
+	dw BrianSpriteFrame53 ; $4114
+	dw BrianSpriteFrame53 ; $4116
+	dw BrianSpriteFrame53 ; $4118
+	dw BrianSpriteFrame53 ; $411a
+	dw BrianSpriteFrame54 ; $411c
+	dw BrianSpriteFrame54 ; $411e
+	dw BrianSpriteFrame54 ; $4120
+	dw BrianSpriteFrame54 ; $4122
+	dw BrianSpriteFrame54 ; $4124
+	dw BrianSpriteFrame55 ; $4126
+	dw BrianSpriteFrame55 ; $4128
+	dw BrianSpriteFrame55 ; $412a
+	dw BrianSpriteFrame55 ; $412c
+	dw BrianSpriteFrame55 ; $412e
+BrianSpriteFrame00:
 	INCBIN "data/bank_04d/d_4130.bin" ; $4130, 240 bytes
-Data_4d_4220:
+BrianSpriteFrame01:
 	INCBIN "data/bank_04d/d_4220.bin" ; $4220, 240 bytes
-Data_4d_4310:
+BrianSpriteFrame02:
 	INCBIN "data/bank_04d/d_4310.bin" ; $4310, 240 bytes
-Data_4d_4400:
+BrianSpriteFrame03:
 	INCBIN "data/bank_04d/d_4400.bin" ; $4400, 240 bytes
-Data_4d_44f0:
+BrianSpriteFrame04:
 	INCBIN "data/bank_04d/d_44f0.bin" ; $44f0, 240 bytes
-Data_4d_45e0:
+BrianSpriteFrame05:
 	INCBIN "data/bank_04d/d_45e0.bin" ; $45e0, 240 bytes
-Data_4d_46d0:
+BrianSpriteFrame06:
 	INCBIN "data/bank_04d/d_46d0.bin" ; $46d0, 240 bytes
-Data_4d_47c0:
+BrianSpriteFrame07:
 	INCBIN "data/bank_04d/d_47c0.bin" ; $47c0, 240 bytes
-Data_4d_48b0:
+BrianSpriteFrame08:
 	INCBIN "data/bank_04d/d_48b0.bin" ; $48b0, 240 bytes
-Data_4d_49a0:
+BrianSpriteFrame09:
 	INCBIN "data/bank_04d/d_49a0.bin" ; $49a0, 240 bytes
-Data_4d_4a90:
+BrianSpriteFrame10:
 	INCBIN "data/bank_04d/d_4a90.bin" ; $4a90, 240 bytes
-Data_4d_4b80:
+BrianSpriteFrame11:
 	INCBIN "data/bank_04d/d_4b80.bin" ; $4b80, 240 bytes
-Data_4d_4c70:
+BrianSpriteFrame12:
 	INCBIN "data/bank_04d/d_4c70.bin" ; $4c70, 240 bytes
-Data_4d_4d60:
+BrianSpriteFrame13:
 	INCBIN "data/bank_04d/d_4d60.bin" ; $4d60, 240 bytes
-Data_4d_4e50:
+BrianSpriteFrame14:
 	INCBIN "data/bank_04d/d_4e50.bin" ; $4e50, 240 bytes
-Data_4d_4f40:
+BrianSpriteFrame15:
 	INCBIN "data/bank_04d/d_4f40.bin" ; $4f40, 240 bytes
-Data_4d_5030:
+BrianSpriteFrame16:
 	INCBIN "data/bank_04d/d_5030.bin" ; $5030, 240 bytes
-Data_4d_5120:
+BrianSpriteFrame17:
 	INCBIN "data/bank_04d/d_5120.bin" ; $5120, 240 bytes
-Data_4d_5210:
+BrianSpriteFrame18:
 	INCBIN "data/bank_04d/d_5210.bin" ; $5210, 240 bytes
-Data_4d_5300:
+BrianSpriteFrame19:
 	INCBIN "data/bank_04d/d_5300.bin" ; $5300, 240 bytes
-Data_4d_53f0:
+BrianSpriteFrame20:
 	INCBIN "data/bank_04d/d_53f0.bin" ; $53f0, 240 bytes
-Data_4d_54e0:
+BrianSpriteFrame21:
 	INCBIN "data/bank_04d/d_54e0.bin" ; $54e0, 240 bytes
-Data_4d_55d0:
+BrianSpriteFrame22:
 	INCBIN "data/bank_04d/d_55d0.bin" ; $55d0, 240 bytes
-Data_4d_56c0:
+BrianSpriteFrame23:
 	INCBIN "data/bank_04d/d_56c0.bin" ; $56c0, 240 bytes
-Data_4d_57b0:
+BrianSpriteFrame24:
 	INCBIN "data/bank_04d/d_57b0.bin" ; $57b0, 240 bytes
-Data_4d_58a0:
+BrianSpriteFrame25:
 	INCBIN "data/bank_04d/d_58a0.bin" ; $58a0, 240 bytes
-Data_4d_5990:
+BrianSpriteFrame26:
 	INCBIN "data/bank_04d/d_5990.bin" ; $5990, 240 bytes
-Data_4d_5a80:
+BrianSpriteFrame27:
 	INCBIN "data/bank_04d/d_5a80.bin" ; $5a80, 240 bytes
-Data_4d_5b70:
+BrianSpriteFrame28:
 	INCBIN "data/bank_04d/d_5b70.bin" ; $5b70, 240 bytes
-Data_4d_5c60:
+BrianSpriteFrame29:
 	INCBIN "data/bank_04d/d_5c60.bin" ; $5c60, 240 bytes
-Data_4d_5d50:
+BrianSpriteFrame30:
 	INCBIN "data/bank_04d/d_5d50.bin" ; $5d50, 240 bytes
-Data_4d_5e40:
+BrianSpriteFrame31:
 	INCBIN "data/bank_04d/d_5e40.bin" ; $5e40, 240 bytes
-Data_4d_5f30:
+BrianSpriteFrame32:
 	INCBIN "data/bank_04d/d_5f30.bin" ; $5f30, 240 bytes
-Data_4d_6020:
+BrianSpriteFrame33:
 	INCBIN "data/bank_04d/d_6020.bin" ; $6020, 240 bytes
-Data_4d_6110:
+BrianSpriteFrame34:
 	INCBIN "data/bank_04d/d_6110.bin" ; $6110, 240 bytes
-Data_4d_6200:
+BrianSpriteFrame35:
 	INCBIN "data/bank_04d/d_6200.bin" ; $6200, 240 bytes
-Data_4d_62f0:
+BrianSpriteFrame36:
 	INCBIN "data/bank_04d/d_62f0.bin" ; $62f0, 240 bytes
-Data_4d_63e0:
+BrianSpriteFrame37:
 	INCBIN "data/bank_04d/d_63e0.bin" ; $63e0, 240 bytes
-Data_4d_64d0:
+BrianSpriteFrame38:
 	INCBIN "data/bank_04d/d_64d0.bin" ; $64d0, 240 bytes
-Data_4d_65c0:
+BrianSpriteFrame39:
 	INCBIN "data/bank_04d/d_65c0.bin" ; $65c0, 240 bytes
-Data_4d_66b0:
+BrianSpriteFrame40:
 	INCBIN "data/bank_04d/d_66b0.bin" ; $66b0, 320 bytes
-Data_4d_67f0:
+BrianSpriteFrame41:
 	INCBIN "data/bank_04d/d_67f0.bin" ; $67f0, 320 bytes
-Data_4d_6930:
+BrianSpriteFrame42:
 	INCBIN "data/bank_04d/d_6930.bin" ; $6930, 240 bytes
-Data_4d_6a20:
+BrianSpriteFrame43:
 	INCBIN "data/bank_04d/d_6a20.bin" ; $6a20, 240 bytes
-Data_4d_6b10:
+BrianSpriteFrame44:
 	INCBIN "data/bank_04d/d_6b10.bin" ; $6b10, 240 bytes
-Data_4d_6c00:
+BrianSpriteFrame45:
 	INCBIN "data/bank_04d/d_6c00.bin" ; $6c00, 240 bytes
-Data_4d_6cf0:
+BrianSpriteFrame46:
 	INCBIN "data/bank_04d/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_4d_6de0:
+BrianSpriteFrame47:
 	INCBIN "data/bank_04d/d_6de0.bin" ; $6de0, 240 bytes
-Data_4d_6ed0:
+BrianSpriteFrame48:
 	INCBIN "data/bank_04d/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_4d_6fc0:
+BrianSpriteFrame49:
 	INCBIN "data/bank_04d/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_4d_70b0:
+BrianSpriteFrame50:
 	INCBIN "data/bank_04d/d_70b0.bin" ; $70b0, 240 bytes
-Data_4d_71a0:
+BrianSpriteFrame51:
 	INCBIN "data/bank_04d/d_71a0.bin" ; $71a0, 240 bytes
-Data_4d_7290:
+BrianSpriteFrame52:
 	INCBIN "data/bank_04d/d_7290.bin" ; $7290, 240 bytes
-Data_4d_7380:
+BrianSpriteFrame53:
 	INCBIN "data/bank_04d/d_7380.bin" ; $7380, 240 bytes
-Data_4d_7470:
+BrianSpriteFrame54:
 	INCBIN "data/bank_04d/d_7470.bin" ; $7470, 240 bytes
-Data_4d_7560:
+BrianSpriteFrame55:
 	INCBIN "data/bank_04d/d_7560.bin" ; $7560, 240 bytes
 Data_4d_7650:
 	INCBIN "data/bank_04d/d_7650.bin" ; $7650, 1680 bytes
 Data_4d_7ce0:
 	INCBIN "data/bank_04d/d_7ce0.bin" ; $7ce0, 580 bytes
 BrianSpriteAnims:
-	dw Data_4d_7f4a ; $7f24
-	dw Data_4d_7f4d ; $7f26
-	dw Data_4d_7f57 ; $7f28
-	dw Data_4d_7f5d ; $7f2a
-	dw Data_4d_7f6f ; $7f2c
-	dw Data_4d_7f77 ; $7f2e
-	dw Data_4d_7f7d ; $7f30
-	dw Data_4d_7f83 ; $7f32
-	dw Data_4d_7f89 ; $7f34
-	dw Data_4d_7f8e ; $7f36
-	dw Data_4d_7f92 ; $7f38
-	dw Data_4d_7f96 ; $7f3a
-	dw Data_4d_7f9a ; $7f3c
-	dw Data_4d_7f9d ; $7f3e
-	dw Data_4d_7fa0 ; $7f40
-	dw Data_4d_7fa3 ; $7f42
-	dw Data_4d_7fa6 ; $7f44
-	dw Data_4d_7fa9 ; $7f46
-	dw Data_4d_7fb5 ; $7f48
-Data_4d_7f4a:
+	dw BrianSpriteAnim00 ; $7f24
+	dw BrianSpriteAnim01 ; $7f26
+	dw BrianSpriteAnim02 ; $7f28
+	dw BrianSpriteAnim03 ; $7f2a
+	dw BrianSpriteAnim04 ; $7f2c
+	dw BrianSpriteAnim05 ; $7f2e
+	dw BrianSpriteAnim06 ; $7f30
+	dw BrianSpriteAnim07 ; $7f32
+	dw BrianSpriteAnim08 ; $7f34
+	dw BrianSpriteAnim09 ; $7f36
+	dw BrianSpriteAnim10 ; $7f38
+	dw BrianSpriteAnim11 ; $7f3a
+	dw BrianSpriteAnim12 ; $7f3c
+	dw BrianSpriteAnim13 ; $7f3e
+	dw BrianSpriteAnim14 ; $7f40
+	dw BrianSpriteAnim15 ; $7f42
+	dw BrianSpriteAnim16 ; $7f44
+	dw BrianSpriteAnim17 ; $7f46
+	dw BrianSpriteAnim18 ; $7f48
+BrianSpriteAnim00:
 	INCBIN "data/bank_04d/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_4d_7f4d:
+BrianSpriteAnim01:
 	INCBIN "data/bank_04d/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_4d_7f57:
+BrianSpriteAnim02:
 	INCBIN "data/bank_04d/d_7f57.bin" ; $7f57, 6 bytes
-Data_4d_7f5d:
+BrianSpriteAnim03:
 	INCBIN "data/bank_04d/d_7f5d.bin" ; $7f5d, 18 bytes
-Data_4d_7f6f:
+BrianSpriteAnim04:
 	INCBIN "data/bank_04d/d_7f6f.bin" ; $7f6f, 8 bytes
-Data_4d_7f77:
+BrianSpriteAnim05:
 	INCBIN "data/bank_04d/d_7f77.bin" ; $7f77, 6 bytes
-Data_4d_7f7d:
+BrianSpriteAnim06:
 	INCBIN "data/bank_04d/d_7f7d.bin" ; $7f7d, 6 bytes
-Data_4d_7f83:
+BrianSpriteAnim07:
 	INCBIN "data/bank_04d/d_7f83.bin" ; $7f83, 6 bytes
-Data_4d_7f89:
+BrianSpriteAnim08:
 	INCBIN "data/bank_04d/d_7f89.bin" ; $7f89, 5 bytes
-Data_4d_7f8e:
+BrianSpriteAnim09:
 	INCBIN "data/bank_04d/d_7f8e.bin" ; $7f8e, 4 bytes
-Data_4d_7f92:
+BrianSpriteAnim10:
 	INCBIN "data/bank_04d/d_7f92.bin" ; $7f92, 4 bytes
-Data_4d_7f96:
+BrianSpriteAnim11:
 	INCBIN "data/bank_04d/d_7f96.bin" ; $7f96, 4 bytes
-Data_4d_7f9a:
+BrianSpriteAnim12:
 	INCBIN "data/bank_04d/d_7f9a.bin" ; $7f9a, 3 bytes
-Data_4d_7f9d:
+BrianSpriteAnim13:
 	INCBIN "data/bank_04d/d_7f9d.bin" ; $7f9d, 3 bytes
-Data_4d_7fa0:
+BrianSpriteAnim14:
 	INCBIN "data/bank_04d/d_7fa0.bin" ; $7fa0, 3 bytes
-Data_4d_7fa3:
+BrianSpriteAnim15:
 	INCBIN "data/bank_04d/d_7fa3.bin" ; $7fa3, 3 bytes
-Data_4d_7fa6:
+BrianSpriteAnim16:
 	INCBIN "data/bank_04d/d_7fa6.bin" ; $7fa6, 3 bytes
-Data_4d_7fa9:
+BrianSpriteAnim17:
 	INCBIN "data/bank_04d/d_7fa9.bin" ; $7fa9, 12 bytes
-Data_4d_7fb5:
+BrianSpriteAnim18:
 	INCBIN "data/bank_04d/d_7fb5.bin" ; $7fb5, 8 bytes
 	; $7fbd, 67 bytes fill to bank end (linker-padded)

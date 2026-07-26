@@ -9,323 +9,323 @@ BallMachineSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_5a_7ce0 ; $400c per-slot OAM data
 BallMachineSpriteFrames:
-	dw Data_5a_4130 ; $400e
-	dw Data_5a_4220 ; $4010
-	dw Data_5a_4310 ; $4012
-	dw Data_5a_4400 ; $4014
-	dw Data_5a_44f0 ; $4016
-	dw Data_5a_45e0 ; $4018
-	dw Data_5a_46d0 ; $401a
-	dw Data_5a_47c0 ; $401c
-	dw Data_5a_48b0 ; $401e
-	dw Data_5a_49a0 ; $4020
-	dw Data_5a_4a90 ; $4022
-	dw Data_5a_4220 ; $4024
-	dw Data_5a_4310 ; $4026
-	dw Data_5a_4400 ; $4028
-	dw Data_5a_4b80 ; $402a
-	dw Data_5a_4c70 ; $402c
-	dw Data_5a_4220 ; $402e
-	dw Data_5a_4310 ; $4030
-	dw Data_5a_4400 ; $4032
-	dw Data_5a_4d60 ; $4034
-	dw Data_5a_4e50 ; $4036
-	dw Data_5a_46d0 ; $4038
-	dw Data_5a_47c0 ; $403a
-	dw Data_5a_48b0 ; $403c
-	dw Data_5a_4f40 ; $403e
-	dw Data_5a_5030 ; $4040
-	dw Data_5a_5030 ; $4042
-	dw Data_5a_5030 ; $4044
-	dw Data_5a_5120 ; $4046
-	dw Data_5a_5120 ; $4048
-	dw Data_5a_5210 ; $404a
-	dw Data_5a_5210 ; $404c
-	dw Data_5a_5210 ; $404e
-	dw Data_5a_5300 ; $4050
-	dw Data_5a_5300 ; $4052
-	dw Data_5a_53f0 ; $4054
-	dw Data_5a_53f0 ; $4056
-	dw Data_5a_53f0 ; $4058
-	dw Data_5a_54e0 ; $405a
-	dw Data_5a_54e0 ; $405c
-	dw Data_5a_55d0 ; $405e
-	dw Data_5a_55d0 ; $4060
-	dw Data_5a_55d0 ; $4062
-	dw Data_5a_56c0 ; $4064
-	dw Data_5a_56c0 ; $4066
-	dw Data_5a_57b0 ; $4068
-	dw Data_5a_57b0 ; $406a
-	dw Data_5a_57b0 ; $406c
-	dw Data_5a_58a0 ; $406e
-	dw Data_5a_58a0 ; $4070
-	dw Data_5a_5990 ; $4072
-	dw Data_5a_5990 ; $4074
-	dw Data_5a_5990 ; $4076
-	dw Data_5a_5a80 ; $4078
-	dw Data_5a_5a80 ; $407a
-	dw Data_5a_5b70 ; $407c
-	dw Data_5a_5b70 ; $407e
-	dw Data_5a_5b70 ; $4080
-	dw Data_5a_5c60 ; $4082
-	dw Data_5a_5c60 ; $4084
-	dw Data_5a_5d50 ; $4086
-	dw Data_5a_5d50 ; $4088
-	dw Data_5a_5d50 ; $408a
-	dw Data_5a_5e40 ; $408c
-	dw Data_5a_5e40 ; $408e
-	dw Data_5a_5f30 ; $4090
-	dw Data_5a_5f30 ; $4092
-	dw Data_5a_5f30 ; $4094
-	dw Data_5a_6020 ; $4096
-	dw Data_5a_6020 ; $4098
-	dw Data_5a_6110 ; $409a
-	dw Data_5a_6110 ; $409c
-	dw Data_5a_6110 ; $409e
-	dw Data_5a_6200 ; $40a0
-	dw Data_5a_6200 ; $40a2
-	dw Data_5a_62f0 ; $40a4
-	dw Data_5a_62f0 ; $40a6
-	dw Data_5a_62f0 ; $40a8
-	dw Data_5a_63e0 ; $40aa
-	dw Data_5a_63e0 ; $40ac
-	dw Data_5a_64d0 ; $40ae
-	dw Data_5a_64d0 ; $40b0
-	dw Data_5a_64d0 ; $40b2
-	dw Data_5a_65c0 ; $40b4
-	dw Data_5a_65c0 ; $40b6
-	dw Data_5a_66b0 ; $40b8
-	dw Data_5a_66b0 ; $40ba
-	dw Data_5a_66b0 ; $40bc
-	dw Data_5a_67f0 ; $40be
-	dw Data_5a_67f0 ; $40c0
-	dw Data_5a_6930 ; $40c2
-	dw Data_5a_6930 ; $40c4
-	dw Data_5a_6930 ; $40c6
-	dw Data_5a_6930 ; $40c8
-	dw Data_5a_6930 ; $40ca
-	dw Data_5a_6a20 ; $40cc
-	dw Data_5a_6a20 ; $40ce
-	dw Data_5a_6a20 ; $40d0
-	dw Data_5a_6a20 ; $40d2
-	dw Data_5a_6a20 ; $40d4
-	dw Data_5a_6b10 ; $40d6
-	dw Data_5a_6b10 ; $40d8
-	dw Data_5a_6b10 ; $40da
-	dw Data_5a_6c00 ; $40dc
-	dw Data_5a_6c00 ; $40de
-	dw Data_5a_6cf0 ; $40e0
-	dw Data_5a_6cf0 ; $40e2
-	dw Data_5a_6cf0 ; $40e4
-	dw Data_5a_6de0 ; $40e6
-	dw Data_5a_6de0 ; $40e8
-	dw Data_5a_6ed0 ; $40ea
-	dw Data_5a_6ed0 ; $40ec
-	dw Data_5a_6ed0 ; $40ee
-	dw Data_5a_6fc0 ; $40f0
-	dw Data_5a_6fc0 ; $40f2
-	dw Data_5a_70b0 ; $40f4
-	dw Data_5a_70b0 ; $40f6
-	dw Data_5a_70b0 ; $40f8
-	dw Data_5a_70b0 ; $40fa
-	dw Data_5a_70b0 ; $40fc
-	dw Data_5a_71a0 ; $40fe
-	dw Data_5a_71a0 ; $4100
-	dw Data_5a_71a0 ; $4102
-	dw Data_5a_71a0 ; $4104
-	dw Data_5a_71a0 ; $4106
-	dw Data_5a_7290 ; $4108
-	dw Data_5a_7290 ; $410a
-	dw Data_5a_7290 ; $410c
-	dw Data_5a_7290 ; $410e
-	dw Data_5a_7290 ; $4110
-	dw Data_5a_7380 ; $4112
-	dw Data_5a_7380 ; $4114
-	dw Data_5a_7380 ; $4116
-	dw Data_5a_7380 ; $4118
-	dw Data_5a_7380 ; $411a
-	dw Data_5a_7470 ; $411c
-	dw Data_5a_7470 ; $411e
-	dw Data_5a_7470 ; $4120
-	dw Data_5a_7470 ; $4122
-	dw Data_5a_7470 ; $4124
-	dw Data_5a_7560 ; $4126
-	dw Data_5a_7560 ; $4128
-	dw Data_5a_7560 ; $412a
-	dw Data_5a_7560 ; $412c
-	dw Data_5a_7560 ; $412e
-Data_5a_4130:
+	dw BallMachineSpriteFrame00 ; $400e
+	dw BallMachineSpriteFrame01 ; $4010
+	dw BallMachineSpriteFrame02 ; $4012
+	dw BallMachineSpriteFrame03 ; $4014
+	dw BallMachineSpriteFrame04 ; $4016
+	dw BallMachineSpriteFrame05 ; $4018
+	dw BallMachineSpriteFrame06 ; $401a
+	dw BallMachineSpriteFrame07 ; $401c
+	dw BallMachineSpriteFrame08 ; $401e
+	dw BallMachineSpriteFrame09 ; $4020
+	dw BallMachineSpriteFrame10 ; $4022
+	dw BallMachineSpriteFrame01 ; $4024
+	dw BallMachineSpriteFrame02 ; $4026
+	dw BallMachineSpriteFrame03 ; $4028
+	dw BallMachineSpriteFrame11 ; $402a
+	dw BallMachineSpriteFrame12 ; $402c
+	dw BallMachineSpriteFrame01 ; $402e
+	dw BallMachineSpriteFrame02 ; $4030
+	dw BallMachineSpriteFrame03 ; $4032
+	dw BallMachineSpriteFrame13 ; $4034
+	dw BallMachineSpriteFrame14 ; $4036
+	dw BallMachineSpriteFrame06 ; $4038
+	dw BallMachineSpriteFrame07 ; $403a
+	dw BallMachineSpriteFrame08 ; $403c
+	dw BallMachineSpriteFrame15 ; $403e
+	dw BallMachineSpriteFrame16 ; $4040
+	dw BallMachineSpriteFrame16 ; $4042
+	dw BallMachineSpriteFrame16 ; $4044
+	dw BallMachineSpriteFrame17 ; $4046
+	dw BallMachineSpriteFrame17 ; $4048
+	dw BallMachineSpriteFrame18 ; $404a
+	dw BallMachineSpriteFrame18 ; $404c
+	dw BallMachineSpriteFrame18 ; $404e
+	dw BallMachineSpriteFrame19 ; $4050
+	dw BallMachineSpriteFrame19 ; $4052
+	dw BallMachineSpriteFrame20 ; $4054
+	dw BallMachineSpriteFrame20 ; $4056
+	dw BallMachineSpriteFrame20 ; $4058
+	dw BallMachineSpriteFrame21 ; $405a
+	dw BallMachineSpriteFrame21 ; $405c
+	dw BallMachineSpriteFrame22 ; $405e
+	dw BallMachineSpriteFrame22 ; $4060
+	dw BallMachineSpriteFrame22 ; $4062
+	dw BallMachineSpriteFrame23 ; $4064
+	dw BallMachineSpriteFrame23 ; $4066
+	dw BallMachineSpriteFrame24 ; $4068
+	dw BallMachineSpriteFrame24 ; $406a
+	dw BallMachineSpriteFrame24 ; $406c
+	dw BallMachineSpriteFrame25 ; $406e
+	dw BallMachineSpriteFrame25 ; $4070
+	dw BallMachineSpriteFrame26 ; $4072
+	dw BallMachineSpriteFrame26 ; $4074
+	dw BallMachineSpriteFrame26 ; $4076
+	dw BallMachineSpriteFrame27 ; $4078
+	dw BallMachineSpriteFrame27 ; $407a
+	dw BallMachineSpriteFrame28 ; $407c
+	dw BallMachineSpriteFrame28 ; $407e
+	dw BallMachineSpriteFrame28 ; $4080
+	dw BallMachineSpriteFrame29 ; $4082
+	dw BallMachineSpriteFrame29 ; $4084
+	dw BallMachineSpriteFrame30 ; $4086
+	dw BallMachineSpriteFrame30 ; $4088
+	dw BallMachineSpriteFrame30 ; $408a
+	dw BallMachineSpriteFrame31 ; $408c
+	dw BallMachineSpriteFrame31 ; $408e
+	dw BallMachineSpriteFrame32 ; $4090
+	dw BallMachineSpriteFrame32 ; $4092
+	dw BallMachineSpriteFrame32 ; $4094
+	dw BallMachineSpriteFrame33 ; $4096
+	dw BallMachineSpriteFrame33 ; $4098
+	dw BallMachineSpriteFrame34 ; $409a
+	dw BallMachineSpriteFrame34 ; $409c
+	dw BallMachineSpriteFrame34 ; $409e
+	dw BallMachineSpriteFrame35 ; $40a0
+	dw BallMachineSpriteFrame35 ; $40a2
+	dw BallMachineSpriteFrame36 ; $40a4
+	dw BallMachineSpriteFrame36 ; $40a6
+	dw BallMachineSpriteFrame36 ; $40a8
+	dw BallMachineSpriteFrame37 ; $40aa
+	dw BallMachineSpriteFrame37 ; $40ac
+	dw BallMachineSpriteFrame38 ; $40ae
+	dw BallMachineSpriteFrame38 ; $40b0
+	dw BallMachineSpriteFrame38 ; $40b2
+	dw BallMachineSpriteFrame39 ; $40b4
+	dw BallMachineSpriteFrame39 ; $40b6
+	dw BallMachineSpriteFrame40 ; $40b8
+	dw BallMachineSpriteFrame40 ; $40ba
+	dw BallMachineSpriteFrame40 ; $40bc
+	dw BallMachineSpriteFrame41 ; $40be
+	dw BallMachineSpriteFrame41 ; $40c0
+	dw BallMachineSpriteFrame42 ; $40c2
+	dw BallMachineSpriteFrame42 ; $40c4
+	dw BallMachineSpriteFrame42 ; $40c6
+	dw BallMachineSpriteFrame42 ; $40c8
+	dw BallMachineSpriteFrame42 ; $40ca
+	dw BallMachineSpriteFrame43 ; $40cc
+	dw BallMachineSpriteFrame43 ; $40ce
+	dw BallMachineSpriteFrame43 ; $40d0
+	dw BallMachineSpriteFrame43 ; $40d2
+	dw BallMachineSpriteFrame43 ; $40d4
+	dw BallMachineSpriteFrame44 ; $40d6
+	dw BallMachineSpriteFrame44 ; $40d8
+	dw BallMachineSpriteFrame44 ; $40da
+	dw BallMachineSpriteFrame45 ; $40dc
+	dw BallMachineSpriteFrame45 ; $40de
+	dw BallMachineSpriteFrame46 ; $40e0
+	dw BallMachineSpriteFrame46 ; $40e2
+	dw BallMachineSpriteFrame46 ; $40e4
+	dw BallMachineSpriteFrame47 ; $40e6
+	dw BallMachineSpriteFrame47 ; $40e8
+	dw BallMachineSpriteFrame48 ; $40ea
+	dw BallMachineSpriteFrame48 ; $40ec
+	dw BallMachineSpriteFrame48 ; $40ee
+	dw BallMachineSpriteFrame49 ; $40f0
+	dw BallMachineSpriteFrame49 ; $40f2
+	dw BallMachineSpriteFrame50 ; $40f4
+	dw BallMachineSpriteFrame50 ; $40f6
+	dw BallMachineSpriteFrame50 ; $40f8
+	dw BallMachineSpriteFrame50 ; $40fa
+	dw BallMachineSpriteFrame50 ; $40fc
+	dw BallMachineSpriteFrame51 ; $40fe
+	dw BallMachineSpriteFrame51 ; $4100
+	dw BallMachineSpriteFrame51 ; $4102
+	dw BallMachineSpriteFrame51 ; $4104
+	dw BallMachineSpriteFrame51 ; $4106
+	dw BallMachineSpriteFrame52 ; $4108
+	dw BallMachineSpriteFrame52 ; $410a
+	dw BallMachineSpriteFrame52 ; $410c
+	dw BallMachineSpriteFrame52 ; $410e
+	dw BallMachineSpriteFrame52 ; $4110
+	dw BallMachineSpriteFrame53 ; $4112
+	dw BallMachineSpriteFrame53 ; $4114
+	dw BallMachineSpriteFrame53 ; $4116
+	dw BallMachineSpriteFrame53 ; $4118
+	dw BallMachineSpriteFrame53 ; $411a
+	dw BallMachineSpriteFrame54 ; $411c
+	dw BallMachineSpriteFrame54 ; $411e
+	dw BallMachineSpriteFrame54 ; $4120
+	dw BallMachineSpriteFrame54 ; $4122
+	dw BallMachineSpriteFrame54 ; $4124
+	dw BallMachineSpriteFrame55 ; $4126
+	dw BallMachineSpriteFrame55 ; $4128
+	dw BallMachineSpriteFrame55 ; $412a
+	dw BallMachineSpriteFrame55 ; $412c
+	dw BallMachineSpriteFrame55 ; $412e
+BallMachineSpriteFrame00:
 	INCBIN "data/bank_05a/d_4130.bin" ; $4130, 240 bytes
-Data_5a_4220:
+BallMachineSpriteFrame01:
 	INCBIN "data/bank_05a/d_4220.bin" ; $4220, 240 bytes
-Data_5a_4310:
+BallMachineSpriteFrame02:
 	INCBIN "data/bank_05a/d_4310.bin" ; $4310, 240 bytes
-Data_5a_4400:
+BallMachineSpriteFrame03:
 	INCBIN "data/bank_05a/d_4400.bin" ; $4400, 240 bytes
-Data_5a_44f0:
+BallMachineSpriteFrame04:
 	INCBIN "data/bank_05a/d_44f0.bin" ; $44f0, 240 bytes
-Data_5a_45e0:
+BallMachineSpriteFrame05:
 	INCBIN "data/bank_05a/d_45e0.bin" ; $45e0, 240 bytes
-Data_5a_46d0:
+BallMachineSpriteFrame06:
 	INCBIN "data/bank_05a/d_46d0.bin" ; $46d0, 240 bytes
-Data_5a_47c0:
+BallMachineSpriteFrame07:
 	INCBIN "data/bank_05a/d_47c0.bin" ; $47c0, 240 bytes
-Data_5a_48b0:
+BallMachineSpriteFrame08:
 	INCBIN "data/bank_05a/d_48b0.bin" ; $48b0, 240 bytes
-Data_5a_49a0:
+BallMachineSpriteFrame09:
 	INCBIN "data/bank_05a/d_49a0.bin" ; $49a0, 240 bytes
-Data_5a_4a90:
+BallMachineSpriteFrame10:
 	INCBIN "data/bank_05a/d_4a90.bin" ; $4a90, 240 bytes
-Data_5a_4b80:
+BallMachineSpriteFrame11:
 	INCBIN "data/bank_05a/d_4b80.bin" ; $4b80, 240 bytes
-Data_5a_4c70:
+BallMachineSpriteFrame12:
 	INCBIN "data/bank_05a/d_4c70.bin" ; $4c70, 240 bytes
-Data_5a_4d60:
+BallMachineSpriteFrame13:
 	INCBIN "data/bank_05a/d_4d60.bin" ; $4d60, 240 bytes
-Data_5a_4e50:
+BallMachineSpriteFrame14:
 	INCBIN "data/bank_05a/d_4e50.bin" ; $4e50, 240 bytes
-Data_5a_4f40:
+BallMachineSpriteFrame15:
 	INCBIN "data/bank_05a/d_4f40.bin" ; $4f40, 240 bytes
-Data_5a_5030:
+BallMachineSpriteFrame16:
 	INCBIN "data/bank_05a/d_5030.bin" ; $5030, 240 bytes
-Data_5a_5120:
+BallMachineSpriteFrame17:
 	INCBIN "data/bank_05a/d_5120.bin" ; $5120, 240 bytes
-Data_5a_5210:
+BallMachineSpriteFrame18:
 	INCBIN "data/bank_05a/d_5210.bin" ; $5210, 240 bytes
-Data_5a_5300:
+BallMachineSpriteFrame19:
 	INCBIN "data/bank_05a/d_5300.bin" ; $5300, 240 bytes
-Data_5a_53f0:
+BallMachineSpriteFrame20:
 	INCBIN "data/bank_05a/d_53f0.bin" ; $53f0, 240 bytes
-Data_5a_54e0:
+BallMachineSpriteFrame21:
 	INCBIN "data/bank_05a/d_54e0.bin" ; $54e0, 240 bytes
-Data_5a_55d0:
+BallMachineSpriteFrame22:
 	INCBIN "data/bank_05a/d_55d0.bin" ; $55d0, 240 bytes
-Data_5a_56c0:
+BallMachineSpriteFrame23:
 	INCBIN "data/bank_05a/d_56c0.bin" ; $56c0, 240 bytes
-Data_5a_57b0:
+BallMachineSpriteFrame24:
 	INCBIN "data/bank_05a/d_57b0.bin" ; $57b0, 240 bytes
-Data_5a_58a0:
+BallMachineSpriteFrame25:
 	INCBIN "data/bank_05a/d_58a0.bin" ; $58a0, 240 bytes
-Data_5a_5990:
+BallMachineSpriteFrame26:
 	INCBIN "data/bank_05a/d_5990.bin" ; $5990, 240 bytes
-Data_5a_5a80:
+BallMachineSpriteFrame27:
 	INCBIN "data/bank_05a/d_5a80.bin" ; $5a80, 240 bytes
-Data_5a_5b70:
+BallMachineSpriteFrame28:
 	INCBIN "data/bank_05a/d_5b70.bin" ; $5b70, 240 bytes
-Data_5a_5c60:
+BallMachineSpriteFrame29:
 	INCBIN "data/bank_05a/d_5c60.bin" ; $5c60, 240 bytes
-Data_5a_5d50:
+BallMachineSpriteFrame30:
 	INCBIN "data/bank_05a/d_5d50.bin" ; $5d50, 240 bytes
-Data_5a_5e40:
+BallMachineSpriteFrame31:
 	INCBIN "data/bank_05a/d_5e40.bin" ; $5e40, 240 bytes
-Data_5a_5f30:
+BallMachineSpriteFrame32:
 	INCBIN "data/bank_05a/d_5f30.bin" ; $5f30, 240 bytes
-Data_5a_6020:
+BallMachineSpriteFrame33:
 	INCBIN "data/bank_05a/d_6020.bin" ; $6020, 240 bytes
-Data_5a_6110:
+BallMachineSpriteFrame34:
 	INCBIN "data/bank_05a/d_6110.bin" ; $6110, 240 bytes
-Data_5a_6200:
+BallMachineSpriteFrame35:
 	INCBIN "data/bank_05a/d_6200.bin" ; $6200, 240 bytes
-Data_5a_62f0:
+BallMachineSpriteFrame36:
 	INCBIN "data/bank_05a/d_62f0.bin" ; $62f0, 240 bytes
-Data_5a_63e0:
+BallMachineSpriteFrame37:
 	INCBIN "data/bank_05a/d_63e0.bin" ; $63e0, 240 bytes
-Data_5a_64d0:
+BallMachineSpriteFrame38:
 	INCBIN "data/bank_05a/d_64d0.bin" ; $64d0, 240 bytes
-Data_5a_65c0:
+BallMachineSpriteFrame39:
 	INCBIN "data/bank_05a/d_65c0.bin" ; $65c0, 240 bytes
-Data_5a_66b0:
+BallMachineSpriteFrame40:
 	INCBIN "data/bank_05a/d_66b0.bin" ; $66b0, 320 bytes
-Data_5a_67f0:
+BallMachineSpriteFrame41:
 	INCBIN "data/bank_05a/d_67f0.bin" ; $67f0, 320 bytes
-Data_5a_6930:
+BallMachineSpriteFrame42:
 	INCBIN "data/bank_05a/d_6930.bin" ; $6930, 240 bytes
-Data_5a_6a20:
+BallMachineSpriteFrame43:
 	INCBIN "data/bank_05a/d_6a20.bin" ; $6a20, 240 bytes
-Data_5a_6b10:
+BallMachineSpriteFrame44:
 	INCBIN "data/bank_05a/d_6b10.bin" ; $6b10, 240 bytes
-Data_5a_6c00:
+BallMachineSpriteFrame45:
 	INCBIN "data/bank_05a/d_6c00.bin" ; $6c00, 240 bytes
-Data_5a_6cf0:
+BallMachineSpriteFrame46:
 	INCBIN "data/bank_05a/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_5a_6de0:
+BallMachineSpriteFrame47:
 	INCBIN "data/bank_05a/d_6de0.bin" ; $6de0, 240 bytes
-Data_5a_6ed0:
+BallMachineSpriteFrame48:
 	INCBIN "data/bank_05a/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_5a_6fc0:
+BallMachineSpriteFrame49:
 	INCBIN "data/bank_05a/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_5a_70b0:
+BallMachineSpriteFrame50:
 	INCBIN "data/bank_05a/d_70b0.bin" ; $70b0, 240 bytes
-Data_5a_71a0:
+BallMachineSpriteFrame51:
 	INCBIN "data/bank_05a/d_71a0.bin" ; $71a0, 240 bytes
-Data_5a_7290:
+BallMachineSpriteFrame52:
 	INCBIN "data/bank_05a/d_7290.bin" ; $7290, 240 bytes
-Data_5a_7380:
+BallMachineSpriteFrame53:
 	INCBIN "data/bank_05a/d_7380.bin" ; $7380, 240 bytes
-Data_5a_7470:
+BallMachineSpriteFrame54:
 	INCBIN "data/bank_05a/d_7470.bin" ; $7470, 240 bytes
-Data_5a_7560:
+BallMachineSpriteFrame55:
 	INCBIN "data/bank_05a/d_7560.bin" ; $7560, 240 bytes
 Data_5a_7650:
 	INCBIN "data/bank_05a/d_7650.bin" ; $7650, 1680 bytes
 Data_5a_7ce0:
 	INCBIN "data/bank_05a/d_7ce0.bin" ; $7ce0, 580 bytes
 BallMachineSpriteAnims:
-	dw Data_5a_7f4a ; $7f24
-	dw Data_5a_7f4d ; $7f26
-	dw Data_5a_7f57 ; $7f28
-	dw Data_5a_7f5d ; $7f2a
-	dw Data_5a_7f5f ; $7f2c
-	dw Data_5a_7f61 ; $7f2e
-	dw Data_5a_7f69 ; $7f30
-	dw Data_5a_7f6f ; $7f32
-	dw Data_5a_7f75 ; $7f34
-	dw Data_5a_7f7a ; $7f36
-	dw Data_5a_7f7e ; $7f38
-	dw Data_5a_7f82 ; $7f3a
-	dw Data_5a_7f86 ; $7f3c
-	dw Data_5a_7f89 ; $7f3e
-	dw Data_5a_7f8c ; $7f40
-	dw Data_5a_7f8f ; $7f42
-	dw Data_5a_7f92 ; $7f44
-	dw Data_5a_7f95 ; $7f46
-	dw Data_5a_7fa1 ; $7f48
-Data_5a_7f4a:
+	dw BallMachineSpriteAnim00 ; $7f24
+	dw BallMachineSpriteAnim01 ; $7f26
+	dw BallMachineSpriteAnim02 ; $7f28
+	dw BallMachineSpriteAnim03 ; $7f2a
+	dw BallMachineSpriteAnim04 ; $7f2c
+	dw BallMachineSpriteAnim05 ; $7f2e
+	dw BallMachineSpriteAnim06 ; $7f30
+	dw BallMachineSpriteAnim07 ; $7f32
+	dw BallMachineSpriteAnim08 ; $7f34
+	dw BallMachineSpriteAnim09 ; $7f36
+	dw BallMachineSpriteAnim10 ; $7f38
+	dw BallMachineSpriteAnim11 ; $7f3a
+	dw BallMachineSpriteAnim12 ; $7f3c
+	dw BallMachineSpriteAnim13 ; $7f3e
+	dw BallMachineSpriteAnim14 ; $7f40
+	dw BallMachineSpriteAnim15 ; $7f42
+	dw BallMachineSpriteAnim16 ; $7f44
+	dw BallMachineSpriteAnim17 ; $7f46
+	dw BallMachineSpriteAnim18 ; $7f48
+BallMachineSpriteAnim00:
 	INCBIN "data/bank_05a/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_5a_7f4d:
+BallMachineSpriteAnim01:
 	INCBIN "data/bank_05a/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_5a_7f57:
+BallMachineSpriteAnim02:
 	INCBIN "data/bank_05a/d_7f57.bin" ; $7f57, 6 bytes
-Data_5a_7f5d:
+BallMachineSpriteAnim03:
 	INCBIN "data/bank_05a/d_7f5d.bin" ; $7f5d, 2 bytes
-Data_5a_7f5f:
+BallMachineSpriteAnim04:
 	INCBIN "data/bank_05a/d_7f5f.bin" ; $7f5f, 2 bytes
-Data_5a_7f61:
+BallMachineSpriteAnim05:
 	INCBIN "data/bank_05a/d_7f61.bin" ; $7f61, 8 bytes
-Data_5a_7f69:
+BallMachineSpriteAnim06:
 	INCBIN "data/bank_05a/d_7f69.bin" ; $7f69, 6 bytes
-Data_5a_7f6f:
+BallMachineSpriteAnim07:
 	INCBIN "data/bank_05a/d_7f6f.bin" ; $7f6f, 6 bytes
-Data_5a_7f75:
+BallMachineSpriteAnim08:
 	INCBIN "data/bank_05a/d_7f75.bin" ; $7f75, 5 bytes
-Data_5a_7f7a:
+BallMachineSpriteAnim09:
 	INCBIN "data/bank_05a/d_7f7a.bin" ; $7f7a, 4 bytes
-Data_5a_7f7e:
+BallMachineSpriteAnim10:
 	INCBIN "data/bank_05a/d_7f7e.bin" ; $7f7e, 4 bytes
-Data_5a_7f82:
+BallMachineSpriteAnim11:
 	INCBIN "data/bank_05a/d_7f82.bin" ; $7f82, 4 bytes
-Data_5a_7f86:
+BallMachineSpriteAnim12:
 	INCBIN "data/bank_05a/d_7f86.bin" ; $7f86, 3 bytes
-Data_5a_7f89:
+BallMachineSpriteAnim13:
 	INCBIN "data/bank_05a/d_7f89.bin" ; $7f89, 3 bytes
-Data_5a_7f8c:
+BallMachineSpriteAnim14:
 	INCBIN "data/bank_05a/d_7f8c.bin" ; $7f8c, 3 bytes
-Data_5a_7f8f:
+BallMachineSpriteAnim15:
 	INCBIN "data/bank_05a/d_7f8f.bin" ; $7f8f, 3 bytes
-Data_5a_7f92:
+BallMachineSpriteAnim16:
 	INCBIN "data/bank_05a/d_7f92.bin" ; $7f92, 3 bytes
-Data_5a_7f95:
+BallMachineSpriteAnim17:
 	INCBIN "data/bank_05a/d_7f95.bin" ; $7f95, 12 bytes
-Data_5a_7fa1:
+BallMachineSpriteAnim18:
 	INCBIN "data/bank_05a/d_7fa1.bin" ; $7fa1, 8 bytes
 	; $7fa9, 87 bytes fill to bank end (linker-padded)

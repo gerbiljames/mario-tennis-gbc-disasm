@@ -9,323 +9,323 @@ SpikeSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_48_7ce0 ; $400c per-slot OAM data
 SpikeSpriteFrames:
-	dw Data_48_4130 ; $400e
-	dw Data_48_4220 ; $4010
-	dw Data_48_4310 ; $4012
-	dw Data_48_4400 ; $4014
-	dw Data_48_44f0 ; $4016
-	dw Data_48_45e0 ; $4018
-	dw Data_48_46d0 ; $401a
-	dw Data_48_47c0 ; $401c
-	dw Data_48_48b0 ; $401e
-	dw Data_48_49a0 ; $4020
-	dw Data_48_4a90 ; $4022
-	dw Data_48_4220 ; $4024
-	dw Data_48_4310 ; $4026
-	dw Data_48_4400 ; $4028
-	dw Data_48_4b80 ; $402a
-	dw Data_48_4c70 ; $402c
-	dw Data_48_4220 ; $402e
-	dw Data_48_4310 ; $4030
-	dw Data_48_4400 ; $4032
-	dw Data_48_4d60 ; $4034
-	dw Data_48_4e50 ; $4036
-	dw Data_48_46d0 ; $4038
-	dw Data_48_47c0 ; $403a
-	dw Data_48_48b0 ; $403c
-	dw Data_48_4f40 ; $403e
-	dw Data_48_5030 ; $4040
-	dw Data_48_5030 ; $4042
-	dw Data_48_5030 ; $4044
-	dw Data_48_5120 ; $4046
-	dw Data_48_5120 ; $4048
-	dw Data_48_5210 ; $404a
-	dw Data_48_5210 ; $404c
-	dw Data_48_5210 ; $404e
-	dw Data_48_5300 ; $4050
-	dw Data_48_5300 ; $4052
-	dw Data_48_53f0 ; $4054
-	dw Data_48_53f0 ; $4056
-	dw Data_48_53f0 ; $4058
-	dw Data_48_54e0 ; $405a
-	dw Data_48_54e0 ; $405c
-	dw Data_48_55d0 ; $405e
-	dw Data_48_55d0 ; $4060
-	dw Data_48_55d0 ; $4062
-	dw Data_48_56c0 ; $4064
-	dw Data_48_56c0 ; $4066
-	dw Data_48_57b0 ; $4068
-	dw Data_48_57b0 ; $406a
-	dw Data_48_57b0 ; $406c
-	dw Data_48_58a0 ; $406e
-	dw Data_48_58a0 ; $4070
-	dw Data_48_5990 ; $4072
-	dw Data_48_5990 ; $4074
-	dw Data_48_5990 ; $4076
-	dw Data_48_5a80 ; $4078
-	dw Data_48_5a80 ; $407a
-	dw Data_48_5b70 ; $407c
-	dw Data_48_5b70 ; $407e
-	dw Data_48_5b70 ; $4080
-	dw Data_48_5c60 ; $4082
-	dw Data_48_5c60 ; $4084
-	dw Data_48_5d50 ; $4086
-	dw Data_48_5d50 ; $4088
-	dw Data_48_5d50 ; $408a
-	dw Data_48_5e40 ; $408c
-	dw Data_48_5e40 ; $408e
-	dw Data_48_5f30 ; $4090
-	dw Data_48_5f30 ; $4092
-	dw Data_48_5f30 ; $4094
-	dw Data_48_6020 ; $4096
-	dw Data_48_6020 ; $4098
-	dw Data_48_6110 ; $409a
-	dw Data_48_6110 ; $409c
-	dw Data_48_6110 ; $409e
-	dw Data_48_6200 ; $40a0
-	dw Data_48_6200 ; $40a2
-	dw Data_48_62f0 ; $40a4
-	dw Data_48_62f0 ; $40a6
-	dw Data_48_62f0 ; $40a8
-	dw Data_48_63e0 ; $40aa
-	dw Data_48_63e0 ; $40ac
-	dw Data_48_64d0 ; $40ae
-	dw Data_48_64d0 ; $40b0
-	dw Data_48_64d0 ; $40b2
-	dw Data_48_65c0 ; $40b4
-	dw Data_48_65c0 ; $40b6
-	dw Data_48_66b0 ; $40b8
-	dw Data_48_66b0 ; $40ba
-	dw Data_48_66b0 ; $40bc
-	dw Data_48_67f0 ; $40be
-	dw Data_48_67f0 ; $40c0
-	dw Data_48_6930 ; $40c2
-	dw Data_48_6930 ; $40c4
-	dw Data_48_6930 ; $40c6
-	dw Data_48_6930 ; $40c8
-	dw Data_48_6930 ; $40ca
-	dw Data_48_6a20 ; $40cc
-	dw Data_48_6a20 ; $40ce
-	dw Data_48_6a20 ; $40d0
-	dw Data_48_6a20 ; $40d2
-	dw Data_48_6a20 ; $40d4
-	dw Data_48_6b10 ; $40d6
-	dw Data_48_6b10 ; $40d8
-	dw Data_48_6b10 ; $40da
-	dw Data_48_6c00 ; $40dc
-	dw Data_48_6c00 ; $40de
-	dw Data_48_6cf0 ; $40e0
-	dw Data_48_6cf0 ; $40e2
-	dw Data_48_6cf0 ; $40e4
-	dw Data_48_6de0 ; $40e6
-	dw Data_48_6de0 ; $40e8
-	dw Data_48_6ed0 ; $40ea
-	dw Data_48_6ed0 ; $40ec
-	dw Data_48_6ed0 ; $40ee
-	dw Data_48_6fc0 ; $40f0
-	dw Data_48_6fc0 ; $40f2
-	dw Data_48_70b0 ; $40f4
-	dw Data_48_70b0 ; $40f6
-	dw Data_48_70b0 ; $40f8
-	dw Data_48_70b0 ; $40fa
-	dw Data_48_70b0 ; $40fc
-	dw Data_48_71a0 ; $40fe
-	dw Data_48_71a0 ; $4100
-	dw Data_48_71a0 ; $4102
-	dw Data_48_71a0 ; $4104
-	dw Data_48_71a0 ; $4106
-	dw Data_48_7290 ; $4108
-	dw Data_48_7290 ; $410a
-	dw Data_48_7290 ; $410c
-	dw Data_48_7290 ; $410e
-	dw Data_48_7290 ; $4110
-	dw Data_48_7380 ; $4112
-	dw Data_48_7380 ; $4114
-	dw Data_48_7380 ; $4116
-	dw Data_48_7380 ; $4118
-	dw Data_48_7380 ; $411a
-	dw Data_48_7470 ; $411c
-	dw Data_48_7470 ; $411e
-	dw Data_48_7470 ; $4120
-	dw Data_48_7470 ; $4122
-	dw Data_48_7470 ; $4124
-	dw Data_48_7560 ; $4126
-	dw Data_48_7560 ; $4128
-	dw Data_48_7560 ; $412a
-	dw Data_48_7560 ; $412c
-	dw Data_48_7560 ; $412e
-Data_48_4130:
+	dw SpikeSpriteFrame00 ; $400e
+	dw SpikeSpriteFrame01 ; $4010
+	dw SpikeSpriteFrame02 ; $4012
+	dw SpikeSpriteFrame03 ; $4014
+	dw SpikeSpriteFrame04 ; $4016
+	dw SpikeSpriteFrame05 ; $4018
+	dw SpikeSpriteFrame06 ; $401a
+	dw SpikeSpriteFrame07 ; $401c
+	dw SpikeSpriteFrame08 ; $401e
+	dw SpikeSpriteFrame09 ; $4020
+	dw SpikeSpriteFrame10 ; $4022
+	dw SpikeSpriteFrame01 ; $4024
+	dw SpikeSpriteFrame02 ; $4026
+	dw SpikeSpriteFrame03 ; $4028
+	dw SpikeSpriteFrame11 ; $402a
+	dw SpikeSpriteFrame12 ; $402c
+	dw SpikeSpriteFrame01 ; $402e
+	dw SpikeSpriteFrame02 ; $4030
+	dw SpikeSpriteFrame03 ; $4032
+	dw SpikeSpriteFrame13 ; $4034
+	dw SpikeSpriteFrame14 ; $4036
+	dw SpikeSpriteFrame06 ; $4038
+	dw SpikeSpriteFrame07 ; $403a
+	dw SpikeSpriteFrame08 ; $403c
+	dw SpikeSpriteFrame15 ; $403e
+	dw SpikeSpriteFrame16 ; $4040
+	dw SpikeSpriteFrame16 ; $4042
+	dw SpikeSpriteFrame16 ; $4044
+	dw SpikeSpriteFrame17 ; $4046
+	dw SpikeSpriteFrame17 ; $4048
+	dw SpikeSpriteFrame18 ; $404a
+	dw SpikeSpriteFrame18 ; $404c
+	dw SpikeSpriteFrame18 ; $404e
+	dw SpikeSpriteFrame19 ; $4050
+	dw SpikeSpriteFrame19 ; $4052
+	dw SpikeSpriteFrame20 ; $4054
+	dw SpikeSpriteFrame20 ; $4056
+	dw SpikeSpriteFrame20 ; $4058
+	dw SpikeSpriteFrame21 ; $405a
+	dw SpikeSpriteFrame21 ; $405c
+	dw SpikeSpriteFrame22 ; $405e
+	dw SpikeSpriteFrame22 ; $4060
+	dw SpikeSpriteFrame22 ; $4062
+	dw SpikeSpriteFrame23 ; $4064
+	dw SpikeSpriteFrame23 ; $4066
+	dw SpikeSpriteFrame24 ; $4068
+	dw SpikeSpriteFrame24 ; $406a
+	dw SpikeSpriteFrame24 ; $406c
+	dw SpikeSpriteFrame25 ; $406e
+	dw SpikeSpriteFrame25 ; $4070
+	dw SpikeSpriteFrame26 ; $4072
+	dw SpikeSpriteFrame26 ; $4074
+	dw SpikeSpriteFrame26 ; $4076
+	dw SpikeSpriteFrame27 ; $4078
+	dw SpikeSpriteFrame27 ; $407a
+	dw SpikeSpriteFrame28 ; $407c
+	dw SpikeSpriteFrame28 ; $407e
+	dw SpikeSpriteFrame28 ; $4080
+	dw SpikeSpriteFrame29 ; $4082
+	dw SpikeSpriteFrame29 ; $4084
+	dw SpikeSpriteFrame30 ; $4086
+	dw SpikeSpriteFrame30 ; $4088
+	dw SpikeSpriteFrame30 ; $408a
+	dw SpikeSpriteFrame31 ; $408c
+	dw SpikeSpriteFrame31 ; $408e
+	dw SpikeSpriteFrame32 ; $4090
+	dw SpikeSpriteFrame32 ; $4092
+	dw SpikeSpriteFrame32 ; $4094
+	dw SpikeSpriteFrame33 ; $4096
+	dw SpikeSpriteFrame33 ; $4098
+	dw SpikeSpriteFrame34 ; $409a
+	dw SpikeSpriteFrame34 ; $409c
+	dw SpikeSpriteFrame34 ; $409e
+	dw SpikeSpriteFrame35 ; $40a0
+	dw SpikeSpriteFrame35 ; $40a2
+	dw SpikeSpriteFrame36 ; $40a4
+	dw SpikeSpriteFrame36 ; $40a6
+	dw SpikeSpriteFrame36 ; $40a8
+	dw SpikeSpriteFrame37 ; $40aa
+	dw SpikeSpriteFrame37 ; $40ac
+	dw SpikeSpriteFrame38 ; $40ae
+	dw SpikeSpriteFrame38 ; $40b0
+	dw SpikeSpriteFrame38 ; $40b2
+	dw SpikeSpriteFrame39 ; $40b4
+	dw SpikeSpriteFrame39 ; $40b6
+	dw SpikeSpriteFrame40 ; $40b8
+	dw SpikeSpriteFrame40 ; $40ba
+	dw SpikeSpriteFrame40 ; $40bc
+	dw SpikeSpriteFrame41 ; $40be
+	dw SpikeSpriteFrame41 ; $40c0
+	dw SpikeSpriteFrame42 ; $40c2
+	dw SpikeSpriteFrame42 ; $40c4
+	dw SpikeSpriteFrame42 ; $40c6
+	dw SpikeSpriteFrame42 ; $40c8
+	dw SpikeSpriteFrame42 ; $40ca
+	dw SpikeSpriteFrame43 ; $40cc
+	dw SpikeSpriteFrame43 ; $40ce
+	dw SpikeSpriteFrame43 ; $40d0
+	dw SpikeSpriteFrame43 ; $40d2
+	dw SpikeSpriteFrame43 ; $40d4
+	dw SpikeSpriteFrame44 ; $40d6
+	dw SpikeSpriteFrame44 ; $40d8
+	dw SpikeSpriteFrame44 ; $40da
+	dw SpikeSpriteFrame45 ; $40dc
+	dw SpikeSpriteFrame45 ; $40de
+	dw SpikeSpriteFrame46 ; $40e0
+	dw SpikeSpriteFrame46 ; $40e2
+	dw SpikeSpriteFrame46 ; $40e4
+	dw SpikeSpriteFrame47 ; $40e6
+	dw SpikeSpriteFrame47 ; $40e8
+	dw SpikeSpriteFrame48 ; $40ea
+	dw SpikeSpriteFrame48 ; $40ec
+	dw SpikeSpriteFrame48 ; $40ee
+	dw SpikeSpriteFrame49 ; $40f0
+	dw SpikeSpriteFrame49 ; $40f2
+	dw SpikeSpriteFrame50 ; $40f4
+	dw SpikeSpriteFrame50 ; $40f6
+	dw SpikeSpriteFrame50 ; $40f8
+	dw SpikeSpriteFrame50 ; $40fa
+	dw SpikeSpriteFrame50 ; $40fc
+	dw SpikeSpriteFrame51 ; $40fe
+	dw SpikeSpriteFrame51 ; $4100
+	dw SpikeSpriteFrame51 ; $4102
+	dw SpikeSpriteFrame51 ; $4104
+	dw SpikeSpriteFrame51 ; $4106
+	dw SpikeSpriteFrame52 ; $4108
+	dw SpikeSpriteFrame52 ; $410a
+	dw SpikeSpriteFrame52 ; $410c
+	dw SpikeSpriteFrame52 ; $410e
+	dw SpikeSpriteFrame52 ; $4110
+	dw SpikeSpriteFrame53 ; $4112
+	dw SpikeSpriteFrame53 ; $4114
+	dw SpikeSpriteFrame53 ; $4116
+	dw SpikeSpriteFrame53 ; $4118
+	dw SpikeSpriteFrame53 ; $411a
+	dw SpikeSpriteFrame54 ; $411c
+	dw SpikeSpriteFrame54 ; $411e
+	dw SpikeSpriteFrame54 ; $4120
+	dw SpikeSpriteFrame54 ; $4122
+	dw SpikeSpriteFrame54 ; $4124
+	dw SpikeSpriteFrame55 ; $4126
+	dw SpikeSpriteFrame55 ; $4128
+	dw SpikeSpriteFrame55 ; $412a
+	dw SpikeSpriteFrame55 ; $412c
+	dw SpikeSpriteFrame55 ; $412e
+SpikeSpriteFrame00:
 	INCBIN "data/bank_048/d_4130.bin" ; $4130, 240 bytes
-Data_48_4220:
+SpikeSpriteFrame01:
 	INCBIN "data/bank_048/d_4220.bin" ; $4220, 240 bytes
-Data_48_4310:
+SpikeSpriteFrame02:
 	INCBIN "data/bank_048/d_4310.bin" ; $4310, 240 bytes
-Data_48_4400:
+SpikeSpriteFrame03:
 	INCBIN "data/bank_048/d_4400.bin" ; $4400, 240 bytes
-Data_48_44f0:
+SpikeSpriteFrame04:
 	INCBIN "data/bank_048/d_44f0.bin" ; $44f0, 240 bytes
-Data_48_45e0:
+SpikeSpriteFrame05:
 	INCBIN "data/bank_048/d_45e0.bin" ; $45e0, 240 bytes
-Data_48_46d0:
+SpikeSpriteFrame06:
 	INCBIN "data/bank_048/d_46d0.bin" ; $46d0, 240 bytes
-Data_48_47c0:
+SpikeSpriteFrame07:
 	INCBIN "data/bank_048/d_47c0.bin" ; $47c0, 240 bytes
-Data_48_48b0:
+SpikeSpriteFrame08:
 	INCBIN "data/bank_048/d_48b0.bin" ; $48b0, 240 bytes
-Data_48_49a0:
+SpikeSpriteFrame09:
 	INCBIN "data/bank_048/d_49a0.bin" ; $49a0, 240 bytes
-Data_48_4a90:
+SpikeSpriteFrame10:
 	INCBIN "data/bank_048/d_4a90.bin" ; $4a90, 240 bytes
-Data_48_4b80:
+SpikeSpriteFrame11:
 	INCBIN "data/bank_048/d_4b80.bin" ; $4b80, 240 bytes
-Data_48_4c70:
+SpikeSpriteFrame12:
 	INCBIN "data/bank_048/d_4c70.bin" ; $4c70, 240 bytes
-Data_48_4d60:
+SpikeSpriteFrame13:
 	INCBIN "data/bank_048/d_4d60.bin" ; $4d60, 240 bytes
-Data_48_4e50:
+SpikeSpriteFrame14:
 	INCBIN "data/bank_048/d_4e50.bin" ; $4e50, 240 bytes
-Data_48_4f40:
+SpikeSpriteFrame15:
 	INCBIN "data/bank_048/d_4f40.bin" ; $4f40, 240 bytes
-Data_48_5030:
+SpikeSpriteFrame16:
 	INCBIN "data/bank_048/d_5030.bin" ; $5030, 240 bytes
-Data_48_5120:
+SpikeSpriteFrame17:
 	INCBIN "data/bank_048/d_5120.bin" ; $5120, 240 bytes
-Data_48_5210:
+SpikeSpriteFrame18:
 	INCBIN "data/bank_048/d_5210.bin" ; $5210, 240 bytes
-Data_48_5300:
+SpikeSpriteFrame19:
 	INCBIN "data/bank_048/d_5300.bin" ; $5300, 240 bytes
-Data_48_53f0:
+SpikeSpriteFrame20:
 	INCBIN "data/bank_048/d_53f0.bin" ; $53f0, 240 bytes
-Data_48_54e0:
+SpikeSpriteFrame21:
 	INCBIN "data/bank_048/d_54e0.bin" ; $54e0, 240 bytes
-Data_48_55d0:
+SpikeSpriteFrame22:
 	INCBIN "data/bank_048/d_55d0.bin" ; $55d0, 240 bytes
-Data_48_56c0:
+SpikeSpriteFrame23:
 	INCBIN "data/bank_048/d_56c0.bin" ; $56c0, 240 bytes
-Data_48_57b0:
+SpikeSpriteFrame24:
 	INCBIN "data/bank_048/d_57b0.bin" ; $57b0, 240 bytes
-Data_48_58a0:
+SpikeSpriteFrame25:
 	INCBIN "data/bank_048/d_58a0.bin" ; $58a0, 240 bytes
-Data_48_5990:
+SpikeSpriteFrame26:
 	INCBIN "data/bank_048/d_5990.bin" ; $5990, 240 bytes
-Data_48_5a80:
+SpikeSpriteFrame27:
 	INCBIN "data/bank_048/d_5a80.bin" ; $5a80, 240 bytes
-Data_48_5b70:
+SpikeSpriteFrame28:
 	INCBIN "data/bank_048/d_5b70.bin" ; $5b70, 240 bytes
-Data_48_5c60:
+SpikeSpriteFrame29:
 	INCBIN "data/bank_048/d_5c60.bin" ; $5c60, 240 bytes
-Data_48_5d50:
+SpikeSpriteFrame30:
 	INCBIN "data/bank_048/d_5d50.bin" ; $5d50, 240 bytes
-Data_48_5e40:
+SpikeSpriteFrame31:
 	INCBIN "data/bank_048/d_5e40.bin" ; $5e40, 240 bytes
-Data_48_5f30:
+SpikeSpriteFrame32:
 	INCBIN "data/bank_048/d_5f30.bin" ; $5f30, 240 bytes
-Data_48_6020:
+SpikeSpriteFrame33:
 	INCBIN "data/bank_048/d_6020.bin" ; $6020, 240 bytes
-Data_48_6110:
+SpikeSpriteFrame34:
 	INCBIN "data/bank_048/d_6110.bin" ; $6110, 240 bytes
-Data_48_6200:
+SpikeSpriteFrame35:
 	INCBIN "data/bank_048/d_6200.bin" ; $6200, 240 bytes
-Data_48_62f0:
+SpikeSpriteFrame36:
 	INCBIN "data/bank_048/d_62f0.bin" ; $62f0, 240 bytes
-Data_48_63e0:
+SpikeSpriteFrame37:
 	INCBIN "data/bank_048/d_63e0.bin" ; $63e0, 240 bytes
-Data_48_64d0:
+SpikeSpriteFrame38:
 	INCBIN "data/bank_048/d_64d0.bin" ; $64d0, 240 bytes
-Data_48_65c0:
+SpikeSpriteFrame39:
 	INCBIN "data/bank_048/d_65c0.bin" ; $65c0, 240 bytes
-Data_48_66b0:
+SpikeSpriteFrame40:
 	INCBIN "data/bank_048/d_66b0.bin" ; $66b0, 320 bytes
-Data_48_67f0:
+SpikeSpriteFrame41:
 	INCBIN "data/bank_048/d_67f0.bin" ; $67f0, 320 bytes
-Data_48_6930:
+SpikeSpriteFrame42:
 	INCBIN "data/bank_048/d_6930.bin" ; $6930, 240 bytes
-Data_48_6a20:
+SpikeSpriteFrame43:
 	INCBIN "data/bank_048/d_6a20.bin" ; $6a20, 240 bytes
-Data_48_6b10:
+SpikeSpriteFrame44:
 	INCBIN "data/bank_048/d_6b10.bin" ; $6b10, 240 bytes
-Data_48_6c00:
+SpikeSpriteFrame45:
 	INCBIN "data/bank_048/d_6c00.bin" ; $6c00, 240 bytes
-Data_48_6cf0:
+SpikeSpriteFrame46:
 	INCBIN "data/bank_048/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_48_6de0:
+SpikeSpriteFrame47:
 	INCBIN "data/bank_048/d_6de0.bin" ; $6de0, 240 bytes
-Data_48_6ed0:
+SpikeSpriteFrame48:
 	INCBIN "data/bank_048/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_48_6fc0:
+SpikeSpriteFrame49:
 	INCBIN "data/bank_048/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_48_70b0:
+SpikeSpriteFrame50:
 	INCBIN "data/bank_048/d_70b0.bin" ; $70b0, 240 bytes
-Data_48_71a0:
+SpikeSpriteFrame51:
 	INCBIN "data/bank_048/d_71a0.bin" ; $71a0, 240 bytes
-Data_48_7290:
+SpikeSpriteFrame52:
 	INCBIN "data/bank_048/d_7290.bin" ; $7290, 240 bytes
-Data_48_7380:
+SpikeSpriteFrame53:
 	INCBIN "data/bank_048/d_7380.bin" ; $7380, 240 bytes
-Data_48_7470:
+SpikeSpriteFrame54:
 	INCBIN "data/bank_048/d_7470.bin" ; $7470, 240 bytes
-Data_48_7560:
+SpikeSpriteFrame55:
 	INCBIN "data/bank_048/d_7560.bin" ; $7560, 240 bytes
 Data_48_7650:
 	INCBIN "data/bank_048/d_7650.bin" ; $7650, 1680 bytes
 Data_48_7ce0:
 	INCBIN "data/bank_048/d_7ce0.bin" ; $7ce0, 580 bytes
 SpikeSpriteAnims:
-	dw Data_48_7f4a ; $7f24
-	dw Data_48_7f4d ; $7f26
-	dw Data_48_7f57 ; $7f28
-	dw Data_48_7f5d ; $7f2a
-	dw Data_48_7f65 ; $7f2c
-	dw Data_48_7f6d ; $7f2e
-	dw Data_48_7f73 ; $7f30
-	dw Data_48_7f79 ; $7f32
-	dw Data_48_7f7f ; $7f34
-	dw Data_48_7f84 ; $7f36
-	dw Data_48_7f88 ; $7f38
-	dw Data_48_7f8c ; $7f3a
-	dw Data_48_7f90 ; $7f3c
-	dw Data_48_7f93 ; $7f3e
-	dw Data_48_7f96 ; $7f40
-	dw Data_48_7f99 ; $7f42
-	dw Data_48_7f9c ; $7f44
-	dw Data_48_7f9f ; $7f46
-	dw Data_48_7fab ; $7f48
-Data_48_7f4a:
+	dw SpikeSpriteAnim00 ; $7f24
+	dw SpikeSpriteAnim01 ; $7f26
+	dw SpikeSpriteAnim02 ; $7f28
+	dw SpikeSpriteAnim03 ; $7f2a
+	dw SpikeSpriteAnim04 ; $7f2c
+	dw SpikeSpriteAnim05 ; $7f2e
+	dw SpikeSpriteAnim06 ; $7f30
+	dw SpikeSpriteAnim07 ; $7f32
+	dw SpikeSpriteAnim08 ; $7f34
+	dw SpikeSpriteAnim09 ; $7f36
+	dw SpikeSpriteAnim10 ; $7f38
+	dw SpikeSpriteAnim11 ; $7f3a
+	dw SpikeSpriteAnim12 ; $7f3c
+	dw SpikeSpriteAnim13 ; $7f3e
+	dw SpikeSpriteAnim14 ; $7f40
+	dw SpikeSpriteAnim15 ; $7f42
+	dw SpikeSpriteAnim16 ; $7f44
+	dw SpikeSpriteAnim17 ; $7f46
+	dw SpikeSpriteAnim18 ; $7f48
+SpikeSpriteAnim00:
 	INCBIN "data/bank_048/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_48_7f4d:
+SpikeSpriteAnim01:
 	INCBIN "data/bank_048/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_48_7f57:
+SpikeSpriteAnim02:
 	INCBIN "data/bank_048/d_7f57.bin" ; $7f57, 6 bytes
-Data_48_7f5d:
+SpikeSpriteAnim03:
 	INCBIN "data/bank_048/d_7f5d.bin" ; $7f5d, 8 bytes
-Data_48_7f65:
+SpikeSpriteAnim04:
 	INCBIN "data/bank_048/d_7f65.bin" ; $7f65, 8 bytes
-Data_48_7f6d:
+SpikeSpriteAnim05:
 	INCBIN "data/bank_048/d_7f6d.bin" ; $7f6d, 6 bytes
-Data_48_7f73:
+SpikeSpriteAnim06:
 	INCBIN "data/bank_048/d_7f73.bin" ; $7f73, 6 bytes
-Data_48_7f79:
+SpikeSpriteAnim07:
 	INCBIN "data/bank_048/d_7f79.bin" ; $7f79, 6 bytes
-Data_48_7f7f:
+SpikeSpriteAnim08:
 	INCBIN "data/bank_048/d_7f7f.bin" ; $7f7f, 5 bytes
-Data_48_7f84:
+SpikeSpriteAnim09:
 	INCBIN "data/bank_048/d_7f84.bin" ; $7f84, 4 bytes
-Data_48_7f88:
+SpikeSpriteAnim10:
 	INCBIN "data/bank_048/d_7f88.bin" ; $7f88, 4 bytes
-Data_48_7f8c:
+SpikeSpriteAnim11:
 	INCBIN "data/bank_048/d_7f8c.bin" ; $7f8c, 4 bytes
-Data_48_7f90:
+SpikeSpriteAnim12:
 	INCBIN "data/bank_048/d_7f90.bin" ; $7f90, 3 bytes
-Data_48_7f93:
+SpikeSpriteAnim13:
 	INCBIN "data/bank_048/d_7f93.bin" ; $7f93, 3 bytes
-Data_48_7f96:
+SpikeSpriteAnim14:
 	INCBIN "data/bank_048/d_7f96.bin" ; $7f96, 3 bytes
-Data_48_7f99:
+SpikeSpriteAnim15:
 	INCBIN "data/bank_048/d_7f99.bin" ; $7f99, 3 bytes
-Data_48_7f9c:
+SpikeSpriteAnim16:
 	INCBIN "data/bank_048/d_7f9c.bin" ; $7f9c, 3 bytes
-Data_48_7f9f:
+SpikeSpriteAnim17:
 	INCBIN "data/bank_048/d_7f9f.bin" ; $7f9f, 12 bytes
-Data_48_7fab:
+SpikeSpriteAnim18:
 	INCBIN "data/bank_048/d_7fab.bin" ; $7fab, 8 bytes
 	; $7fb3, 77 bytes fill to bank end (linker-padded)

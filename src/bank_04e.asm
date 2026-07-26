@@ -9,323 +9,323 @@ CurtSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_4e_7ce0 ; $400c per-slot OAM data
 CurtSpriteFrames:
-	dw Data_4e_4130 ; $400e
-	dw Data_4e_4220 ; $4010
-	dw Data_4e_4310 ; $4012
-	dw Data_4e_4400 ; $4014
-	dw Data_4e_44f0 ; $4016
-	dw Data_4e_45e0 ; $4018
-	dw Data_4e_46d0 ; $401a
-	dw Data_4e_47c0 ; $401c
-	dw Data_4e_48b0 ; $401e
-	dw Data_4e_49a0 ; $4020
-	dw Data_4e_4a90 ; $4022
-	dw Data_4e_4220 ; $4024
-	dw Data_4e_4310 ; $4026
-	dw Data_4e_4400 ; $4028
-	dw Data_4e_4b80 ; $402a
-	dw Data_4e_4c70 ; $402c
-	dw Data_4e_4220 ; $402e
-	dw Data_4e_4310 ; $4030
-	dw Data_4e_4400 ; $4032
-	dw Data_4e_4d60 ; $4034
-	dw Data_4e_4e50 ; $4036
-	dw Data_4e_46d0 ; $4038
-	dw Data_4e_47c0 ; $403a
-	dw Data_4e_48b0 ; $403c
-	dw Data_4e_4f40 ; $403e
-	dw Data_4e_5030 ; $4040
-	dw Data_4e_5030 ; $4042
-	dw Data_4e_5030 ; $4044
-	dw Data_4e_5120 ; $4046
-	dw Data_4e_5120 ; $4048
-	dw Data_4e_5210 ; $404a
-	dw Data_4e_5210 ; $404c
-	dw Data_4e_5210 ; $404e
-	dw Data_4e_5300 ; $4050
-	dw Data_4e_5300 ; $4052
-	dw Data_4e_53f0 ; $4054
-	dw Data_4e_53f0 ; $4056
-	dw Data_4e_53f0 ; $4058
-	dw Data_4e_54e0 ; $405a
-	dw Data_4e_54e0 ; $405c
-	dw Data_4e_55d0 ; $405e
-	dw Data_4e_55d0 ; $4060
-	dw Data_4e_55d0 ; $4062
-	dw Data_4e_56c0 ; $4064
-	dw Data_4e_56c0 ; $4066
-	dw Data_4e_57b0 ; $4068
-	dw Data_4e_57b0 ; $406a
-	dw Data_4e_57b0 ; $406c
-	dw Data_4e_58a0 ; $406e
-	dw Data_4e_58a0 ; $4070
-	dw Data_4e_5990 ; $4072
-	dw Data_4e_5990 ; $4074
-	dw Data_4e_5990 ; $4076
-	dw Data_4e_5a80 ; $4078
-	dw Data_4e_5a80 ; $407a
-	dw Data_4e_5b70 ; $407c
-	dw Data_4e_5b70 ; $407e
-	dw Data_4e_5b70 ; $4080
-	dw Data_4e_5c60 ; $4082
-	dw Data_4e_5c60 ; $4084
-	dw Data_4e_5d50 ; $4086
-	dw Data_4e_5d50 ; $4088
-	dw Data_4e_5d50 ; $408a
-	dw Data_4e_5e40 ; $408c
-	dw Data_4e_5e40 ; $408e
-	dw Data_4e_5f30 ; $4090
-	dw Data_4e_5f30 ; $4092
-	dw Data_4e_5f30 ; $4094
-	dw Data_4e_6020 ; $4096
-	dw Data_4e_6020 ; $4098
-	dw Data_4e_6110 ; $409a
-	dw Data_4e_6110 ; $409c
-	dw Data_4e_6110 ; $409e
-	dw Data_4e_6200 ; $40a0
-	dw Data_4e_6200 ; $40a2
-	dw Data_4e_62f0 ; $40a4
-	dw Data_4e_62f0 ; $40a6
-	dw Data_4e_62f0 ; $40a8
-	dw Data_4e_63e0 ; $40aa
-	dw Data_4e_63e0 ; $40ac
-	dw Data_4e_64d0 ; $40ae
-	dw Data_4e_64d0 ; $40b0
-	dw Data_4e_64d0 ; $40b2
-	dw Data_4e_65c0 ; $40b4
-	dw Data_4e_65c0 ; $40b6
-	dw Data_4e_66b0 ; $40b8
-	dw Data_4e_66b0 ; $40ba
-	dw Data_4e_66b0 ; $40bc
-	dw Data_4e_67f0 ; $40be
-	dw Data_4e_67f0 ; $40c0
-	dw Data_4e_6930 ; $40c2
-	dw Data_4e_6930 ; $40c4
-	dw Data_4e_6930 ; $40c6
-	dw Data_4e_6930 ; $40c8
-	dw Data_4e_6930 ; $40ca
-	dw Data_4e_6a20 ; $40cc
-	dw Data_4e_6a20 ; $40ce
-	dw Data_4e_6a20 ; $40d0
-	dw Data_4e_6a20 ; $40d2
-	dw Data_4e_6a20 ; $40d4
-	dw Data_4e_6b10 ; $40d6
-	dw Data_4e_6b10 ; $40d8
-	dw Data_4e_6b10 ; $40da
-	dw Data_4e_6c00 ; $40dc
-	dw Data_4e_6c00 ; $40de
-	dw Data_4e_6cf0 ; $40e0
-	dw Data_4e_6cf0 ; $40e2
-	dw Data_4e_6cf0 ; $40e4
-	dw Data_4e_6de0 ; $40e6
-	dw Data_4e_6de0 ; $40e8
-	dw Data_4e_6ed0 ; $40ea
-	dw Data_4e_6ed0 ; $40ec
-	dw Data_4e_6ed0 ; $40ee
-	dw Data_4e_6fc0 ; $40f0
-	dw Data_4e_6fc0 ; $40f2
-	dw Data_4e_70b0 ; $40f4
-	dw Data_4e_70b0 ; $40f6
-	dw Data_4e_70b0 ; $40f8
-	dw Data_4e_70b0 ; $40fa
-	dw Data_4e_70b0 ; $40fc
-	dw Data_4e_71a0 ; $40fe
-	dw Data_4e_71a0 ; $4100
-	dw Data_4e_71a0 ; $4102
-	dw Data_4e_71a0 ; $4104
-	dw Data_4e_71a0 ; $4106
-	dw Data_4e_7290 ; $4108
-	dw Data_4e_7290 ; $410a
-	dw Data_4e_7290 ; $410c
-	dw Data_4e_7290 ; $410e
-	dw Data_4e_7290 ; $4110
-	dw Data_4e_7380 ; $4112
-	dw Data_4e_7380 ; $4114
-	dw Data_4e_7380 ; $4116
-	dw Data_4e_7380 ; $4118
-	dw Data_4e_7380 ; $411a
-	dw Data_4e_7470 ; $411c
-	dw Data_4e_7470 ; $411e
-	dw Data_4e_7470 ; $4120
-	dw Data_4e_7470 ; $4122
-	dw Data_4e_7470 ; $4124
-	dw Data_4e_7560 ; $4126
-	dw Data_4e_7560 ; $4128
-	dw Data_4e_7560 ; $412a
-	dw Data_4e_7560 ; $412c
-	dw Data_4e_7560 ; $412e
-Data_4e_4130:
+	dw CurtSpriteFrame00 ; $400e
+	dw CurtSpriteFrame01 ; $4010
+	dw CurtSpriteFrame02 ; $4012
+	dw CurtSpriteFrame03 ; $4014
+	dw CurtSpriteFrame04 ; $4016
+	dw CurtSpriteFrame05 ; $4018
+	dw CurtSpriteFrame06 ; $401a
+	dw CurtSpriteFrame07 ; $401c
+	dw CurtSpriteFrame08 ; $401e
+	dw CurtSpriteFrame09 ; $4020
+	dw CurtSpriteFrame10 ; $4022
+	dw CurtSpriteFrame01 ; $4024
+	dw CurtSpriteFrame02 ; $4026
+	dw CurtSpriteFrame03 ; $4028
+	dw CurtSpriteFrame11 ; $402a
+	dw CurtSpriteFrame12 ; $402c
+	dw CurtSpriteFrame01 ; $402e
+	dw CurtSpriteFrame02 ; $4030
+	dw CurtSpriteFrame03 ; $4032
+	dw CurtSpriteFrame13 ; $4034
+	dw CurtSpriteFrame14 ; $4036
+	dw CurtSpriteFrame06 ; $4038
+	dw CurtSpriteFrame07 ; $403a
+	dw CurtSpriteFrame08 ; $403c
+	dw CurtSpriteFrame15 ; $403e
+	dw CurtSpriteFrame16 ; $4040
+	dw CurtSpriteFrame16 ; $4042
+	dw CurtSpriteFrame16 ; $4044
+	dw CurtSpriteFrame17 ; $4046
+	dw CurtSpriteFrame17 ; $4048
+	dw CurtSpriteFrame18 ; $404a
+	dw CurtSpriteFrame18 ; $404c
+	dw CurtSpriteFrame18 ; $404e
+	dw CurtSpriteFrame19 ; $4050
+	dw CurtSpriteFrame19 ; $4052
+	dw CurtSpriteFrame20 ; $4054
+	dw CurtSpriteFrame20 ; $4056
+	dw CurtSpriteFrame20 ; $4058
+	dw CurtSpriteFrame21 ; $405a
+	dw CurtSpriteFrame21 ; $405c
+	dw CurtSpriteFrame22 ; $405e
+	dw CurtSpriteFrame22 ; $4060
+	dw CurtSpriteFrame22 ; $4062
+	dw CurtSpriteFrame23 ; $4064
+	dw CurtSpriteFrame23 ; $4066
+	dw CurtSpriteFrame24 ; $4068
+	dw CurtSpriteFrame24 ; $406a
+	dw CurtSpriteFrame24 ; $406c
+	dw CurtSpriteFrame25 ; $406e
+	dw CurtSpriteFrame25 ; $4070
+	dw CurtSpriteFrame26 ; $4072
+	dw CurtSpriteFrame26 ; $4074
+	dw CurtSpriteFrame26 ; $4076
+	dw CurtSpriteFrame27 ; $4078
+	dw CurtSpriteFrame27 ; $407a
+	dw CurtSpriteFrame28 ; $407c
+	dw CurtSpriteFrame28 ; $407e
+	dw CurtSpriteFrame28 ; $4080
+	dw CurtSpriteFrame29 ; $4082
+	dw CurtSpriteFrame29 ; $4084
+	dw CurtSpriteFrame30 ; $4086
+	dw CurtSpriteFrame30 ; $4088
+	dw CurtSpriteFrame30 ; $408a
+	dw CurtSpriteFrame31 ; $408c
+	dw CurtSpriteFrame31 ; $408e
+	dw CurtSpriteFrame32 ; $4090
+	dw CurtSpriteFrame32 ; $4092
+	dw CurtSpriteFrame32 ; $4094
+	dw CurtSpriteFrame33 ; $4096
+	dw CurtSpriteFrame33 ; $4098
+	dw CurtSpriteFrame34 ; $409a
+	dw CurtSpriteFrame34 ; $409c
+	dw CurtSpriteFrame34 ; $409e
+	dw CurtSpriteFrame35 ; $40a0
+	dw CurtSpriteFrame35 ; $40a2
+	dw CurtSpriteFrame36 ; $40a4
+	dw CurtSpriteFrame36 ; $40a6
+	dw CurtSpriteFrame36 ; $40a8
+	dw CurtSpriteFrame37 ; $40aa
+	dw CurtSpriteFrame37 ; $40ac
+	dw CurtSpriteFrame38 ; $40ae
+	dw CurtSpriteFrame38 ; $40b0
+	dw CurtSpriteFrame38 ; $40b2
+	dw CurtSpriteFrame39 ; $40b4
+	dw CurtSpriteFrame39 ; $40b6
+	dw CurtSpriteFrame40 ; $40b8
+	dw CurtSpriteFrame40 ; $40ba
+	dw CurtSpriteFrame40 ; $40bc
+	dw CurtSpriteFrame41 ; $40be
+	dw CurtSpriteFrame41 ; $40c0
+	dw CurtSpriteFrame42 ; $40c2
+	dw CurtSpriteFrame42 ; $40c4
+	dw CurtSpriteFrame42 ; $40c6
+	dw CurtSpriteFrame42 ; $40c8
+	dw CurtSpriteFrame42 ; $40ca
+	dw CurtSpriteFrame43 ; $40cc
+	dw CurtSpriteFrame43 ; $40ce
+	dw CurtSpriteFrame43 ; $40d0
+	dw CurtSpriteFrame43 ; $40d2
+	dw CurtSpriteFrame43 ; $40d4
+	dw CurtSpriteFrame44 ; $40d6
+	dw CurtSpriteFrame44 ; $40d8
+	dw CurtSpriteFrame44 ; $40da
+	dw CurtSpriteFrame45 ; $40dc
+	dw CurtSpriteFrame45 ; $40de
+	dw CurtSpriteFrame46 ; $40e0
+	dw CurtSpriteFrame46 ; $40e2
+	dw CurtSpriteFrame46 ; $40e4
+	dw CurtSpriteFrame47 ; $40e6
+	dw CurtSpriteFrame47 ; $40e8
+	dw CurtSpriteFrame48 ; $40ea
+	dw CurtSpriteFrame48 ; $40ec
+	dw CurtSpriteFrame48 ; $40ee
+	dw CurtSpriteFrame49 ; $40f0
+	dw CurtSpriteFrame49 ; $40f2
+	dw CurtSpriteFrame50 ; $40f4
+	dw CurtSpriteFrame50 ; $40f6
+	dw CurtSpriteFrame50 ; $40f8
+	dw CurtSpriteFrame50 ; $40fa
+	dw CurtSpriteFrame50 ; $40fc
+	dw CurtSpriteFrame51 ; $40fe
+	dw CurtSpriteFrame51 ; $4100
+	dw CurtSpriteFrame51 ; $4102
+	dw CurtSpriteFrame51 ; $4104
+	dw CurtSpriteFrame51 ; $4106
+	dw CurtSpriteFrame52 ; $4108
+	dw CurtSpriteFrame52 ; $410a
+	dw CurtSpriteFrame52 ; $410c
+	dw CurtSpriteFrame52 ; $410e
+	dw CurtSpriteFrame52 ; $4110
+	dw CurtSpriteFrame53 ; $4112
+	dw CurtSpriteFrame53 ; $4114
+	dw CurtSpriteFrame53 ; $4116
+	dw CurtSpriteFrame53 ; $4118
+	dw CurtSpriteFrame53 ; $411a
+	dw CurtSpriteFrame54 ; $411c
+	dw CurtSpriteFrame54 ; $411e
+	dw CurtSpriteFrame54 ; $4120
+	dw CurtSpriteFrame54 ; $4122
+	dw CurtSpriteFrame54 ; $4124
+	dw CurtSpriteFrame55 ; $4126
+	dw CurtSpriteFrame55 ; $4128
+	dw CurtSpriteFrame55 ; $412a
+	dw CurtSpriteFrame55 ; $412c
+	dw CurtSpriteFrame55 ; $412e
+CurtSpriteFrame00:
 	INCBIN "data/bank_04e/d_4130.bin" ; $4130, 240 bytes
-Data_4e_4220:
+CurtSpriteFrame01:
 	INCBIN "data/bank_04e/d_4220.bin" ; $4220, 240 bytes
-Data_4e_4310:
+CurtSpriteFrame02:
 	INCBIN "data/bank_04e/d_4310.bin" ; $4310, 240 bytes
-Data_4e_4400:
+CurtSpriteFrame03:
 	INCBIN "data/bank_04e/d_4400.bin" ; $4400, 240 bytes
-Data_4e_44f0:
+CurtSpriteFrame04:
 	INCBIN "data/bank_04e/d_44f0.bin" ; $44f0, 240 bytes
-Data_4e_45e0:
+CurtSpriteFrame05:
 	INCBIN "data/bank_04e/d_45e0.bin" ; $45e0, 240 bytes
-Data_4e_46d0:
+CurtSpriteFrame06:
 	INCBIN "data/bank_04e/d_46d0.bin" ; $46d0, 240 bytes
-Data_4e_47c0:
+CurtSpriteFrame07:
 	INCBIN "data/bank_04e/d_47c0.bin" ; $47c0, 240 bytes
-Data_4e_48b0:
+CurtSpriteFrame08:
 	INCBIN "data/bank_04e/d_48b0.bin" ; $48b0, 240 bytes
-Data_4e_49a0:
+CurtSpriteFrame09:
 	INCBIN "data/bank_04e/d_49a0.bin" ; $49a0, 240 bytes
-Data_4e_4a90:
+CurtSpriteFrame10:
 	INCBIN "data/bank_04e/d_4a90.bin" ; $4a90, 240 bytes
-Data_4e_4b80:
+CurtSpriteFrame11:
 	INCBIN "data/bank_04e/d_4b80.bin" ; $4b80, 240 bytes
-Data_4e_4c70:
+CurtSpriteFrame12:
 	INCBIN "data/bank_04e/d_4c70.bin" ; $4c70, 240 bytes
-Data_4e_4d60:
+CurtSpriteFrame13:
 	INCBIN "data/bank_04e/d_4d60.bin" ; $4d60, 240 bytes
-Data_4e_4e50:
+CurtSpriteFrame14:
 	INCBIN "data/bank_04e/d_4e50.bin" ; $4e50, 240 bytes
-Data_4e_4f40:
+CurtSpriteFrame15:
 	INCBIN "data/bank_04e/d_4f40.bin" ; $4f40, 240 bytes
-Data_4e_5030:
+CurtSpriteFrame16:
 	INCBIN "data/bank_04e/d_5030.bin" ; $5030, 240 bytes
-Data_4e_5120:
+CurtSpriteFrame17:
 	INCBIN "data/bank_04e/d_5120.bin" ; $5120, 240 bytes
-Data_4e_5210:
+CurtSpriteFrame18:
 	INCBIN "data/bank_04e/d_5210.bin" ; $5210, 240 bytes
-Data_4e_5300:
+CurtSpriteFrame19:
 	INCBIN "data/bank_04e/d_5300.bin" ; $5300, 240 bytes
-Data_4e_53f0:
+CurtSpriteFrame20:
 	INCBIN "data/bank_04e/d_53f0.bin" ; $53f0, 240 bytes
-Data_4e_54e0:
+CurtSpriteFrame21:
 	INCBIN "data/bank_04e/d_54e0.bin" ; $54e0, 240 bytes
-Data_4e_55d0:
+CurtSpriteFrame22:
 	INCBIN "data/bank_04e/d_55d0.bin" ; $55d0, 240 bytes
-Data_4e_56c0:
+CurtSpriteFrame23:
 	INCBIN "data/bank_04e/d_56c0.bin" ; $56c0, 240 bytes
-Data_4e_57b0:
+CurtSpriteFrame24:
 	INCBIN "data/bank_04e/d_57b0.bin" ; $57b0, 240 bytes
-Data_4e_58a0:
+CurtSpriteFrame25:
 	INCBIN "data/bank_04e/d_58a0.bin" ; $58a0, 240 bytes
-Data_4e_5990:
+CurtSpriteFrame26:
 	INCBIN "data/bank_04e/d_5990.bin" ; $5990, 240 bytes
-Data_4e_5a80:
+CurtSpriteFrame27:
 	INCBIN "data/bank_04e/d_5a80.bin" ; $5a80, 240 bytes
-Data_4e_5b70:
+CurtSpriteFrame28:
 	INCBIN "data/bank_04e/d_5b70.bin" ; $5b70, 240 bytes
-Data_4e_5c60:
+CurtSpriteFrame29:
 	INCBIN "data/bank_04e/d_5c60.bin" ; $5c60, 240 bytes
-Data_4e_5d50:
+CurtSpriteFrame30:
 	INCBIN "data/bank_04e/d_5d50.bin" ; $5d50, 240 bytes
-Data_4e_5e40:
+CurtSpriteFrame31:
 	INCBIN "data/bank_04e/d_5e40.bin" ; $5e40, 240 bytes
-Data_4e_5f30:
+CurtSpriteFrame32:
 	INCBIN "data/bank_04e/d_5f30.bin" ; $5f30, 240 bytes
-Data_4e_6020:
+CurtSpriteFrame33:
 	INCBIN "data/bank_04e/d_6020.bin" ; $6020, 240 bytes
-Data_4e_6110:
+CurtSpriteFrame34:
 	INCBIN "data/bank_04e/d_6110.bin" ; $6110, 240 bytes
-Data_4e_6200:
+CurtSpriteFrame35:
 	INCBIN "data/bank_04e/d_6200.bin" ; $6200, 240 bytes
-Data_4e_62f0:
+CurtSpriteFrame36:
 	INCBIN "data/bank_04e/d_62f0.bin" ; $62f0, 240 bytes
-Data_4e_63e0:
+CurtSpriteFrame37:
 	INCBIN "data/bank_04e/d_63e0.bin" ; $63e0, 240 bytes
-Data_4e_64d0:
+CurtSpriteFrame38:
 	INCBIN "data/bank_04e/d_64d0.bin" ; $64d0, 240 bytes
-Data_4e_65c0:
+CurtSpriteFrame39:
 	INCBIN "data/bank_04e/d_65c0.bin" ; $65c0, 240 bytes
-Data_4e_66b0:
+CurtSpriteFrame40:
 	INCBIN "data/bank_04e/d_66b0.bin" ; $66b0, 320 bytes
-Data_4e_67f0:
+CurtSpriteFrame41:
 	INCBIN "data/bank_04e/d_67f0.bin" ; $67f0, 320 bytes
-Data_4e_6930:
+CurtSpriteFrame42:
 	INCBIN "data/bank_04e/d_6930.bin" ; $6930, 240 bytes
-Data_4e_6a20:
+CurtSpriteFrame43:
 	INCBIN "data/bank_04e/d_6a20.bin" ; $6a20, 240 bytes
-Data_4e_6b10:
+CurtSpriteFrame44:
 	INCBIN "data/bank_04e/d_6b10.bin" ; $6b10, 240 bytes
-Data_4e_6c00:
+CurtSpriteFrame45:
 	INCBIN "data/bank_04e/d_6c00.bin" ; $6c00, 240 bytes
-Data_4e_6cf0:
+CurtSpriteFrame46:
 	INCBIN "data/bank_04e/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_4e_6de0:
+CurtSpriteFrame47:
 	INCBIN "data/bank_04e/d_6de0.bin" ; $6de0, 240 bytes
-Data_4e_6ed0:
+CurtSpriteFrame48:
 	INCBIN "data/bank_04e/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_4e_6fc0:
+CurtSpriteFrame49:
 	INCBIN "data/bank_04e/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_4e_70b0:
+CurtSpriteFrame50:
 	INCBIN "data/bank_04e/d_70b0.bin" ; $70b0, 240 bytes
-Data_4e_71a0:
+CurtSpriteFrame51:
 	INCBIN "data/bank_04e/d_71a0.bin" ; $71a0, 240 bytes
-Data_4e_7290:
+CurtSpriteFrame52:
 	INCBIN "data/bank_04e/d_7290.bin" ; $7290, 240 bytes
-Data_4e_7380:
+CurtSpriteFrame53:
 	INCBIN "data/bank_04e/d_7380.bin" ; $7380, 240 bytes
-Data_4e_7470:
+CurtSpriteFrame54:
 	INCBIN "data/bank_04e/d_7470.bin" ; $7470, 240 bytes
-Data_4e_7560:
+CurtSpriteFrame55:
 	INCBIN "data/bank_04e/d_7560.bin" ; $7560, 240 bytes
 Data_4e_7650:
 	INCBIN "data/bank_04e/d_7650.bin" ; $7650, 1680 bytes
 Data_4e_7ce0:
 	INCBIN "data/bank_04e/d_7ce0.bin" ; $7ce0, 580 bytes
 CurtSpriteAnims:
-	dw Data_4e_7f4a ; $7f24
-	dw Data_4e_7f4d ; $7f26
-	dw Data_4e_7f57 ; $7f28
-	dw Data_4e_7f5d ; $7f2a
-	dw Data_4e_7f65 ; $7f2c
-	dw Data_4e_7f6d ; $7f2e
-	dw Data_4e_7f73 ; $7f30
-	dw Data_4e_7f79 ; $7f32
-	dw Data_4e_7f7f ; $7f34
-	dw Data_4e_7f84 ; $7f36
-	dw Data_4e_7f88 ; $7f38
-	dw Data_4e_7f8c ; $7f3a
-	dw Data_4e_7f90 ; $7f3c
-	dw Data_4e_7f93 ; $7f3e
-	dw Data_4e_7f96 ; $7f40
-	dw Data_4e_7f99 ; $7f42
-	dw Data_4e_7f9c ; $7f44
-	dw Data_4e_7f9f ; $7f46
-	dw Data_4e_7fab ; $7f48
-Data_4e_7f4a:
+	dw CurtSpriteAnim00 ; $7f24
+	dw CurtSpriteAnim01 ; $7f26
+	dw CurtSpriteAnim02 ; $7f28
+	dw CurtSpriteAnim03 ; $7f2a
+	dw CurtSpriteAnim04 ; $7f2c
+	dw CurtSpriteAnim05 ; $7f2e
+	dw CurtSpriteAnim06 ; $7f30
+	dw CurtSpriteAnim07 ; $7f32
+	dw CurtSpriteAnim08 ; $7f34
+	dw CurtSpriteAnim09 ; $7f36
+	dw CurtSpriteAnim10 ; $7f38
+	dw CurtSpriteAnim11 ; $7f3a
+	dw CurtSpriteAnim12 ; $7f3c
+	dw CurtSpriteAnim13 ; $7f3e
+	dw CurtSpriteAnim14 ; $7f40
+	dw CurtSpriteAnim15 ; $7f42
+	dw CurtSpriteAnim16 ; $7f44
+	dw CurtSpriteAnim17 ; $7f46
+	dw CurtSpriteAnim18 ; $7f48
+CurtSpriteAnim00:
 	INCBIN "data/bank_04e/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_4e_7f4d:
+CurtSpriteAnim01:
 	INCBIN "data/bank_04e/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_4e_7f57:
+CurtSpriteAnim02:
 	INCBIN "data/bank_04e/d_7f57.bin" ; $7f57, 6 bytes
-Data_4e_7f5d:
+CurtSpriteAnim03:
 	INCBIN "data/bank_04e/d_7f5d.bin" ; $7f5d, 8 bytes
-Data_4e_7f65:
+CurtSpriteAnim04:
 	INCBIN "data/bank_04e/d_7f65.bin" ; $7f65, 8 bytes
-Data_4e_7f6d:
+CurtSpriteAnim05:
 	INCBIN "data/bank_04e/d_7f6d.bin" ; $7f6d, 6 bytes
-Data_4e_7f73:
+CurtSpriteAnim06:
 	INCBIN "data/bank_04e/d_7f73.bin" ; $7f73, 6 bytes
-Data_4e_7f79:
+CurtSpriteAnim07:
 	INCBIN "data/bank_04e/d_7f79.bin" ; $7f79, 6 bytes
-Data_4e_7f7f:
+CurtSpriteAnim08:
 	INCBIN "data/bank_04e/d_7f7f.bin" ; $7f7f, 5 bytes
-Data_4e_7f84:
+CurtSpriteAnim09:
 	INCBIN "data/bank_04e/d_7f84.bin" ; $7f84, 4 bytes
-Data_4e_7f88:
+CurtSpriteAnim10:
 	INCBIN "data/bank_04e/d_7f88.bin" ; $7f88, 4 bytes
-Data_4e_7f8c:
+CurtSpriteAnim11:
 	INCBIN "data/bank_04e/d_7f8c.bin" ; $7f8c, 4 bytes
-Data_4e_7f90:
+CurtSpriteAnim12:
 	INCBIN "data/bank_04e/d_7f90.bin" ; $7f90, 3 bytes
-Data_4e_7f93:
+CurtSpriteAnim13:
 	INCBIN "data/bank_04e/d_7f93.bin" ; $7f93, 3 bytes
-Data_4e_7f96:
+CurtSpriteAnim14:
 	INCBIN "data/bank_04e/d_7f96.bin" ; $7f96, 3 bytes
-Data_4e_7f99:
+CurtSpriteAnim15:
 	INCBIN "data/bank_04e/d_7f99.bin" ; $7f99, 3 bytes
-Data_4e_7f9c:
+CurtSpriteAnim16:
 	INCBIN "data/bank_04e/d_7f9c.bin" ; $7f9c, 3 bytes
-Data_4e_7f9f:
+CurtSpriteAnim17:
 	INCBIN "data/bank_04e/d_7f9f.bin" ; $7f9f, 12 bytes
-Data_4e_7fab:
+CurtSpriteAnim18:
 	INCBIN "data/bank_04e/d_7fab.bin" ; $7fab, 8 bytes
 	; $7fb3, 77 bytes fill to bank end (linker-padded)

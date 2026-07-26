@@ -9,323 +9,323 @@ LuigiSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_5b_7ce0 ; $400c per-slot OAM data
 LuigiSpriteFrames:
-	dw Data_5b_4130 ; $400e
-	dw Data_5b_4220 ; $4010
-	dw Data_5b_4310 ; $4012
-	dw Data_5b_4400 ; $4014
-	dw Data_5b_44f0 ; $4016
-	dw Data_5b_45e0 ; $4018
-	dw Data_5b_46d0 ; $401a
-	dw Data_5b_47c0 ; $401c
-	dw Data_5b_48b0 ; $401e
-	dw Data_5b_49a0 ; $4020
-	dw Data_5b_4a90 ; $4022
-	dw Data_5b_4220 ; $4024
-	dw Data_5b_4310 ; $4026
-	dw Data_5b_4400 ; $4028
-	dw Data_5b_4b80 ; $402a
-	dw Data_5b_4c70 ; $402c
-	dw Data_5b_4220 ; $402e
-	dw Data_5b_4310 ; $4030
-	dw Data_5b_4400 ; $4032
-	dw Data_5b_4d60 ; $4034
-	dw Data_5b_4e50 ; $4036
-	dw Data_5b_46d0 ; $4038
-	dw Data_5b_47c0 ; $403a
-	dw Data_5b_48b0 ; $403c
-	dw Data_5b_4f40 ; $403e
-	dw Data_5b_5030 ; $4040
-	dw Data_5b_5030 ; $4042
-	dw Data_5b_5030 ; $4044
-	dw Data_5b_5120 ; $4046
-	dw Data_5b_5120 ; $4048
-	dw Data_5b_5210 ; $404a
-	dw Data_5b_5210 ; $404c
-	dw Data_5b_5210 ; $404e
-	dw Data_5b_5300 ; $4050
-	dw Data_5b_5300 ; $4052
-	dw Data_5b_53f0 ; $4054
-	dw Data_5b_53f0 ; $4056
-	dw Data_5b_53f0 ; $4058
-	dw Data_5b_54e0 ; $405a
-	dw Data_5b_54e0 ; $405c
-	dw Data_5b_55d0 ; $405e
-	dw Data_5b_55d0 ; $4060
-	dw Data_5b_55d0 ; $4062
-	dw Data_5b_56c0 ; $4064
-	dw Data_5b_56c0 ; $4066
-	dw Data_5b_57b0 ; $4068
-	dw Data_5b_57b0 ; $406a
-	dw Data_5b_57b0 ; $406c
-	dw Data_5b_58a0 ; $406e
-	dw Data_5b_58a0 ; $4070
-	dw Data_5b_5990 ; $4072
-	dw Data_5b_5990 ; $4074
-	dw Data_5b_5990 ; $4076
-	dw Data_5b_5a80 ; $4078
-	dw Data_5b_5a80 ; $407a
-	dw Data_5b_5b70 ; $407c
-	dw Data_5b_5b70 ; $407e
-	dw Data_5b_5b70 ; $4080
-	dw Data_5b_5c60 ; $4082
-	dw Data_5b_5c60 ; $4084
-	dw Data_5b_5d50 ; $4086
-	dw Data_5b_5d50 ; $4088
-	dw Data_5b_5d50 ; $408a
-	dw Data_5b_5e40 ; $408c
-	dw Data_5b_5e40 ; $408e
-	dw Data_5b_5f30 ; $4090
-	dw Data_5b_5f30 ; $4092
-	dw Data_5b_5f30 ; $4094
-	dw Data_5b_6020 ; $4096
-	dw Data_5b_6020 ; $4098
-	dw Data_5b_6110 ; $409a
-	dw Data_5b_6110 ; $409c
-	dw Data_5b_6110 ; $409e
-	dw Data_5b_6200 ; $40a0
-	dw Data_5b_6200 ; $40a2
-	dw Data_5b_62f0 ; $40a4
-	dw Data_5b_62f0 ; $40a6
-	dw Data_5b_62f0 ; $40a8
-	dw Data_5b_63e0 ; $40aa
-	dw Data_5b_63e0 ; $40ac
-	dw Data_5b_64d0 ; $40ae
-	dw Data_5b_64d0 ; $40b0
-	dw Data_5b_64d0 ; $40b2
-	dw Data_5b_65c0 ; $40b4
-	dw Data_5b_65c0 ; $40b6
-	dw Data_5b_66b0 ; $40b8
-	dw Data_5b_66b0 ; $40ba
-	dw Data_5b_66b0 ; $40bc
-	dw Data_5b_67f0 ; $40be
-	dw Data_5b_67f0 ; $40c0
-	dw Data_5b_6930 ; $40c2
-	dw Data_5b_6930 ; $40c4
-	dw Data_5b_6930 ; $40c6
-	dw Data_5b_6930 ; $40c8
-	dw Data_5b_6930 ; $40ca
-	dw Data_5b_6a20 ; $40cc
-	dw Data_5b_6a20 ; $40ce
-	dw Data_5b_6a20 ; $40d0
-	dw Data_5b_6a20 ; $40d2
-	dw Data_5b_6a20 ; $40d4
-	dw Data_5b_6b10 ; $40d6
-	dw Data_5b_6b10 ; $40d8
-	dw Data_5b_6b10 ; $40da
-	dw Data_5b_6c00 ; $40dc
-	dw Data_5b_6c00 ; $40de
-	dw Data_5b_6cf0 ; $40e0
-	dw Data_5b_6cf0 ; $40e2
-	dw Data_5b_6cf0 ; $40e4
-	dw Data_5b_6de0 ; $40e6
-	dw Data_5b_6de0 ; $40e8
-	dw Data_5b_6ed0 ; $40ea
-	dw Data_5b_6ed0 ; $40ec
-	dw Data_5b_6ed0 ; $40ee
-	dw Data_5b_6fc0 ; $40f0
-	dw Data_5b_6fc0 ; $40f2
-	dw Data_5b_70b0 ; $40f4
-	dw Data_5b_70b0 ; $40f6
-	dw Data_5b_70b0 ; $40f8
-	dw Data_5b_70b0 ; $40fa
-	dw Data_5b_70b0 ; $40fc
-	dw Data_5b_71a0 ; $40fe
-	dw Data_5b_71a0 ; $4100
-	dw Data_5b_71a0 ; $4102
-	dw Data_5b_71a0 ; $4104
-	dw Data_5b_71a0 ; $4106
-	dw Data_5b_7290 ; $4108
-	dw Data_5b_7290 ; $410a
-	dw Data_5b_7290 ; $410c
-	dw Data_5b_7290 ; $410e
-	dw Data_5b_7290 ; $4110
-	dw Data_5b_7380 ; $4112
-	dw Data_5b_7380 ; $4114
-	dw Data_5b_7380 ; $4116
-	dw Data_5b_7380 ; $4118
-	dw Data_5b_7380 ; $411a
-	dw Data_5b_7470 ; $411c
-	dw Data_5b_7470 ; $411e
-	dw Data_5b_7470 ; $4120
-	dw Data_5b_7470 ; $4122
-	dw Data_5b_7470 ; $4124
-	dw Data_5b_7560 ; $4126
-	dw Data_5b_7560 ; $4128
-	dw Data_5b_7560 ; $412a
-	dw Data_5b_7560 ; $412c
-	dw Data_5b_7560 ; $412e
-Data_5b_4130:
+	dw LuigiSpriteFrame00 ; $400e
+	dw LuigiSpriteFrame01 ; $4010
+	dw LuigiSpriteFrame02 ; $4012
+	dw LuigiSpriteFrame03 ; $4014
+	dw LuigiSpriteFrame04 ; $4016
+	dw LuigiSpriteFrame05 ; $4018
+	dw LuigiSpriteFrame06 ; $401a
+	dw LuigiSpriteFrame07 ; $401c
+	dw LuigiSpriteFrame08 ; $401e
+	dw LuigiSpriteFrame09 ; $4020
+	dw LuigiSpriteFrame10 ; $4022
+	dw LuigiSpriteFrame01 ; $4024
+	dw LuigiSpriteFrame02 ; $4026
+	dw LuigiSpriteFrame03 ; $4028
+	dw LuigiSpriteFrame11 ; $402a
+	dw LuigiSpriteFrame12 ; $402c
+	dw LuigiSpriteFrame01 ; $402e
+	dw LuigiSpriteFrame02 ; $4030
+	dw LuigiSpriteFrame03 ; $4032
+	dw LuigiSpriteFrame13 ; $4034
+	dw LuigiSpriteFrame14 ; $4036
+	dw LuigiSpriteFrame06 ; $4038
+	dw LuigiSpriteFrame07 ; $403a
+	dw LuigiSpriteFrame08 ; $403c
+	dw LuigiSpriteFrame15 ; $403e
+	dw LuigiSpriteFrame16 ; $4040
+	dw LuigiSpriteFrame16 ; $4042
+	dw LuigiSpriteFrame16 ; $4044
+	dw LuigiSpriteFrame17 ; $4046
+	dw LuigiSpriteFrame17 ; $4048
+	dw LuigiSpriteFrame18 ; $404a
+	dw LuigiSpriteFrame18 ; $404c
+	dw LuigiSpriteFrame18 ; $404e
+	dw LuigiSpriteFrame19 ; $4050
+	dw LuigiSpriteFrame19 ; $4052
+	dw LuigiSpriteFrame20 ; $4054
+	dw LuigiSpriteFrame20 ; $4056
+	dw LuigiSpriteFrame20 ; $4058
+	dw LuigiSpriteFrame21 ; $405a
+	dw LuigiSpriteFrame21 ; $405c
+	dw LuigiSpriteFrame22 ; $405e
+	dw LuigiSpriteFrame22 ; $4060
+	dw LuigiSpriteFrame22 ; $4062
+	dw LuigiSpriteFrame23 ; $4064
+	dw LuigiSpriteFrame23 ; $4066
+	dw LuigiSpriteFrame24 ; $4068
+	dw LuigiSpriteFrame24 ; $406a
+	dw LuigiSpriteFrame24 ; $406c
+	dw LuigiSpriteFrame25 ; $406e
+	dw LuigiSpriteFrame25 ; $4070
+	dw LuigiSpriteFrame26 ; $4072
+	dw LuigiSpriteFrame26 ; $4074
+	dw LuigiSpriteFrame26 ; $4076
+	dw LuigiSpriteFrame27 ; $4078
+	dw LuigiSpriteFrame27 ; $407a
+	dw LuigiSpriteFrame28 ; $407c
+	dw LuigiSpriteFrame28 ; $407e
+	dw LuigiSpriteFrame28 ; $4080
+	dw LuigiSpriteFrame29 ; $4082
+	dw LuigiSpriteFrame29 ; $4084
+	dw LuigiSpriteFrame30 ; $4086
+	dw LuigiSpriteFrame30 ; $4088
+	dw LuigiSpriteFrame30 ; $408a
+	dw LuigiSpriteFrame31 ; $408c
+	dw LuigiSpriteFrame31 ; $408e
+	dw LuigiSpriteFrame32 ; $4090
+	dw LuigiSpriteFrame32 ; $4092
+	dw LuigiSpriteFrame32 ; $4094
+	dw LuigiSpriteFrame33 ; $4096
+	dw LuigiSpriteFrame33 ; $4098
+	dw LuigiSpriteFrame34 ; $409a
+	dw LuigiSpriteFrame34 ; $409c
+	dw LuigiSpriteFrame34 ; $409e
+	dw LuigiSpriteFrame35 ; $40a0
+	dw LuigiSpriteFrame35 ; $40a2
+	dw LuigiSpriteFrame36 ; $40a4
+	dw LuigiSpriteFrame36 ; $40a6
+	dw LuigiSpriteFrame36 ; $40a8
+	dw LuigiSpriteFrame37 ; $40aa
+	dw LuigiSpriteFrame37 ; $40ac
+	dw LuigiSpriteFrame38 ; $40ae
+	dw LuigiSpriteFrame38 ; $40b0
+	dw LuigiSpriteFrame38 ; $40b2
+	dw LuigiSpriteFrame39 ; $40b4
+	dw LuigiSpriteFrame39 ; $40b6
+	dw LuigiSpriteFrame40 ; $40b8
+	dw LuigiSpriteFrame40 ; $40ba
+	dw LuigiSpriteFrame40 ; $40bc
+	dw LuigiSpriteFrame41 ; $40be
+	dw LuigiSpriteFrame41 ; $40c0
+	dw LuigiSpriteFrame42 ; $40c2
+	dw LuigiSpriteFrame42 ; $40c4
+	dw LuigiSpriteFrame42 ; $40c6
+	dw LuigiSpriteFrame42 ; $40c8
+	dw LuigiSpriteFrame42 ; $40ca
+	dw LuigiSpriteFrame43 ; $40cc
+	dw LuigiSpriteFrame43 ; $40ce
+	dw LuigiSpriteFrame43 ; $40d0
+	dw LuigiSpriteFrame43 ; $40d2
+	dw LuigiSpriteFrame43 ; $40d4
+	dw LuigiSpriteFrame44 ; $40d6
+	dw LuigiSpriteFrame44 ; $40d8
+	dw LuigiSpriteFrame44 ; $40da
+	dw LuigiSpriteFrame45 ; $40dc
+	dw LuigiSpriteFrame45 ; $40de
+	dw LuigiSpriteFrame46 ; $40e0
+	dw LuigiSpriteFrame46 ; $40e2
+	dw LuigiSpriteFrame46 ; $40e4
+	dw LuigiSpriteFrame47 ; $40e6
+	dw LuigiSpriteFrame47 ; $40e8
+	dw LuigiSpriteFrame48 ; $40ea
+	dw LuigiSpriteFrame48 ; $40ec
+	dw LuigiSpriteFrame48 ; $40ee
+	dw LuigiSpriteFrame49 ; $40f0
+	dw LuigiSpriteFrame49 ; $40f2
+	dw LuigiSpriteFrame50 ; $40f4
+	dw LuigiSpriteFrame50 ; $40f6
+	dw LuigiSpriteFrame50 ; $40f8
+	dw LuigiSpriteFrame50 ; $40fa
+	dw LuigiSpriteFrame50 ; $40fc
+	dw LuigiSpriteFrame51 ; $40fe
+	dw LuigiSpriteFrame51 ; $4100
+	dw LuigiSpriteFrame51 ; $4102
+	dw LuigiSpriteFrame51 ; $4104
+	dw LuigiSpriteFrame51 ; $4106
+	dw LuigiSpriteFrame52 ; $4108
+	dw LuigiSpriteFrame52 ; $410a
+	dw LuigiSpriteFrame52 ; $410c
+	dw LuigiSpriteFrame52 ; $410e
+	dw LuigiSpriteFrame52 ; $4110
+	dw LuigiSpriteFrame53 ; $4112
+	dw LuigiSpriteFrame53 ; $4114
+	dw LuigiSpriteFrame53 ; $4116
+	dw LuigiSpriteFrame53 ; $4118
+	dw LuigiSpriteFrame53 ; $411a
+	dw LuigiSpriteFrame54 ; $411c
+	dw LuigiSpriteFrame54 ; $411e
+	dw LuigiSpriteFrame54 ; $4120
+	dw LuigiSpriteFrame54 ; $4122
+	dw LuigiSpriteFrame54 ; $4124
+	dw LuigiSpriteFrame55 ; $4126
+	dw LuigiSpriteFrame55 ; $4128
+	dw LuigiSpriteFrame55 ; $412a
+	dw LuigiSpriteFrame55 ; $412c
+	dw LuigiSpriteFrame55 ; $412e
+LuigiSpriteFrame00:
 	INCBIN "data/bank_05b/d_4130.bin" ; $4130, 240 bytes
-Data_5b_4220:
+LuigiSpriteFrame01:
 	INCBIN "data/bank_05b/d_4220.bin" ; $4220, 240 bytes
-Data_5b_4310:
+LuigiSpriteFrame02:
 	INCBIN "data/bank_05b/d_4310.bin" ; $4310, 240 bytes
-Data_5b_4400:
+LuigiSpriteFrame03:
 	INCBIN "data/bank_05b/d_4400.bin" ; $4400, 240 bytes
-Data_5b_44f0:
+LuigiSpriteFrame04:
 	INCBIN "data/bank_05b/d_44f0.bin" ; $44f0, 240 bytes
-Data_5b_45e0:
+LuigiSpriteFrame05:
 	INCBIN "data/bank_05b/d_45e0.bin" ; $45e0, 240 bytes
-Data_5b_46d0:
+LuigiSpriteFrame06:
 	INCBIN "data/bank_05b/d_46d0.bin" ; $46d0, 240 bytes
-Data_5b_47c0:
+LuigiSpriteFrame07:
 	INCBIN "data/bank_05b/d_47c0.bin" ; $47c0, 240 bytes
-Data_5b_48b0:
+LuigiSpriteFrame08:
 	INCBIN "data/bank_05b/d_48b0.bin" ; $48b0, 240 bytes
-Data_5b_49a0:
+LuigiSpriteFrame09:
 	INCBIN "data/bank_05b/d_49a0.bin" ; $49a0, 240 bytes
-Data_5b_4a90:
+LuigiSpriteFrame10:
 	INCBIN "data/bank_05b/d_4a90.bin" ; $4a90, 240 bytes
-Data_5b_4b80:
+LuigiSpriteFrame11:
 	INCBIN "data/bank_05b/d_4b80.bin" ; $4b80, 240 bytes
-Data_5b_4c70:
+LuigiSpriteFrame12:
 	INCBIN "data/bank_05b/d_4c70.bin" ; $4c70, 240 bytes
-Data_5b_4d60:
+LuigiSpriteFrame13:
 	INCBIN "data/bank_05b/d_4d60.bin" ; $4d60, 240 bytes
-Data_5b_4e50:
+LuigiSpriteFrame14:
 	INCBIN "data/bank_05b/d_4e50.bin" ; $4e50, 240 bytes
-Data_5b_4f40:
+LuigiSpriteFrame15:
 	INCBIN "data/bank_05b/d_4f40.bin" ; $4f40, 240 bytes
-Data_5b_5030:
+LuigiSpriteFrame16:
 	INCBIN "data/bank_05b/d_5030.bin" ; $5030, 240 bytes
-Data_5b_5120:
+LuigiSpriteFrame17:
 	INCBIN "data/bank_05b/d_5120.bin" ; $5120, 240 bytes
-Data_5b_5210:
+LuigiSpriteFrame18:
 	INCBIN "data/bank_05b/d_5210.bin" ; $5210, 240 bytes
-Data_5b_5300:
+LuigiSpriteFrame19:
 	INCBIN "data/bank_05b/d_5300.bin" ; $5300, 240 bytes
-Data_5b_53f0:
+LuigiSpriteFrame20:
 	INCBIN "data/bank_05b/d_53f0.bin" ; $53f0, 240 bytes
-Data_5b_54e0:
+LuigiSpriteFrame21:
 	INCBIN "data/bank_05b/d_54e0.bin" ; $54e0, 240 bytes
-Data_5b_55d0:
+LuigiSpriteFrame22:
 	INCBIN "data/bank_05b/d_55d0.bin" ; $55d0, 240 bytes
-Data_5b_56c0:
+LuigiSpriteFrame23:
 	INCBIN "data/bank_05b/d_56c0.bin" ; $56c0, 240 bytes
-Data_5b_57b0:
+LuigiSpriteFrame24:
 	INCBIN "data/bank_05b/d_57b0.bin" ; $57b0, 240 bytes
-Data_5b_58a0:
+LuigiSpriteFrame25:
 	INCBIN "data/bank_05b/d_58a0.bin" ; $58a0, 240 bytes
-Data_5b_5990:
+LuigiSpriteFrame26:
 	INCBIN "data/bank_05b/d_5990.bin" ; $5990, 240 bytes
-Data_5b_5a80:
+LuigiSpriteFrame27:
 	INCBIN "data/bank_05b/d_5a80.bin" ; $5a80, 240 bytes
-Data_5b_5b70:
+LuigiSpriteFrame28:
 	INCBIN "data/bank_05b/d_5b70.bin" ; $5b70, 240 bytes
-Data_5b_5c60:
+LuigiSpriteFrame29:
 	INCBIN "data/bank_05b/d_5c60.bin" ; $5c60, 240 bytes
-Data_5b_5d50:
+LuigiSpriteFrame30:
 	INCBIN "data/bank_05b/d_5d50.bin" ; $5d50, 240 bytes
-Data_5b_5e40:
+LuigiSpriteFrame31:
 	INCBIN "data/bank_05b/d_5e40.bin" ; $5e40, 240 bytes
-Data_5b_5f30:
+LuigiSpriteFrame32:
 	INCBIN "data/bank_05b/d_5f30.bin" ; $5f30, 240 bytes
-Data_5b_6020:
+LuigiSpriteFrame33:
 	INCBIN "data/bank_05b/d_6020.bin" ; $6020, 240 bytes
-Data_5b_6110:
+LuigiSpriteFrame34:
 	INCBIN "data/bank_05b/d_6110.bin" ; $6110, 240 bytes
-Data_5b_6200:
+LuigiSpriteFrame35:
 	INCBIN "data/bank_05b/d_6200.bin" ; $6200, 240 bytes
-Data_5b_62f0:
+LuigiSpriteFrame36:
 	INCBIN "data/bank_05b/d_62f0.bin" ; $62f0, 240 bytes
-Data_5b_63e0:
+LuigiSpriteFrame37:
 	INCBIN "data/bank_05b/d_63e0.bin" ; $63e0, 240 bytes
-Data_5b_64d0:
+LuigiSpriteFrame38:
 	INCBIN "data/bank_05b/d_64d0.bin" ; $64d0, 240 bytes
-Data_5b_65c0:
+LuigiSpriteFrame39:
 	INCBIN "data/bank_05b/d_65c0.bin" ; $65c0, 240 bytes
-Data_5b_66b0:
+LuigiSpriteFrame40:
 	INCBIN "data/bank_05b/d_66b0.bin" ; $66b0, 320 bytes
-Data_5b_67f0:
+LuigiSpriteFrame41:
 	INCBIN "data/bank_05b/d_67f0.bin" ; $67f0, 320 bytes
-Data_5b_6930:
+LuigiSpriteFrame42:
 	INCBIN "data/bank_05b/d_6930.bin" ; $6930, 240 bytes
-Data_5b_6a20:
+LuigiSpriteFrame43:
 	INCBIN "data/bank_05b/d_6a20.bin" ; $6a20, 240 bytes
-Data_5b_6b10:
+LuigiSpriteFrame44:
 	INCBIN "data/bank_05b/d_6b10.bin" ; $6b10, 240 bytes
-Data_5b_6c00:
+LuigiSpriteFrame45:
 	INCBIN "data/bank_05b/d_6c00.bin" ; $6c00, 240 bytes
-Data_5b_6cf0:
+LuigiSpriteFrame46:
 	INCBIN "data/bank_05b/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_5b_6de0:
+LuigiSpriteFrame47:
 	INCBIN "data/bank_05b/d_6de0.bin" ; $6de0, 240 bytes
-Data_5b_6ed0:
+LuigiSpriteFrame48:
 	INCBIN "data/bank_05b/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_5b_6fc0:
+LuigiSpriteFrame49:
 	INCBIN "data/bank_05b/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_5b_70b0:
+LuigiSpriteFrame50:
 	INCBIN "data/bank_05b/d_70b0.bin" ; $70b0, 240 bytes
-Data_5b_71a0:
+LuigiSpriteFrame51:
 	INCBIN "data/bank_05b/d_71a0.bin" ; $71a0, 240 bytes
-Data_5b_7290:
+LuigiSpriteFrame52:
 	INCBIN "data/bank_05b/d_7290.bin" ; $7290, 240 bytes
-Data_5b_7380:
+LuigiSpriteFrame53:
 	INCBIN "data/bank_05b/d_7380.bin" ; $7380, 240 bytes
-Data_5b_7470:
+LuigiSpriteFrame54:
 	INCBIN "data/bank_05b/d_7470.bin" ; $7470, 240 bytes
-Data_5b_7560:
+LuigiSpriteFrame55:
 	INCBIN "data/bank_05b/d_7560.bin" ; $7560, 240 bytes
 Data_5b_7650:
 	INCBIN "data/bank_05b/d_7650.bin" ; $7650, 1680 bytes
 Data_5b_7ce0:
 	INCBIN "data/bank_05b/d_7ce0.bin" ; $7ce0, 580 bytes
 LuigiSpriteAnims:
-	dw Data_5b_7f4a ; $7f24
-	dw Data_5b_7f4d ; $7f26
-	dw Data_5b_7f57 ; $7f28
-	dw Data_5b_7f5d ; $7f2a
-	dw Data_5b_7f69 ; $7f2c
-	dw Data_5b_7f71 ; $7f2e
-	dw Data_5b_7f77 ; $7f30
-	dw Data_5b_7f7d ; $7f32
-	dw Data_5b_7f83 ; $7f34
-	dw Data_5b_7f88 ; $7f36
-	dw Data_5b_7f8c ; $7f38
-	dw Data_5b_7f90 ; $7f3a
-	dw Data_5b_7f94 ; $7f3c
-	dw Data_5b_7f97 ; $7f3e
-	dw Data_5b_7f9a ; $7f40
-	dw Data_5b_7f9d ; $7f42
-	dw Data_5b_7fa0 ; $7f44
-	dw Data_5b_7fa3 ; $7f46
-	dw Data_5b_7faf ; $7f48
-Data_5b_7f4a:
+	dw LuigiSpriteAnim00 ; $7f24
+	dw LuigiSpriteAnim01 ; $7f26
+	dw LuigiSpriteAnim02 ; $7f28
+	dw LuigiSpriteAnim03 ; $7f2a
+	dw LuigiSpriteAnim04 ; $7f2c
+	dw LuigiSpriteAnim05 ; $7f2e
+	dw LuigiSpriteAnim06 ; $7f30
+	dw LuigiSpriteAnim07 ; $7f32
+	dw LuigiSpriteAnim08 ; $7f34
+	dw LuigiSpriteAnim09 ; $7f36
+	dw LuigiSpriteAnim10 ; $7f38
+	dw LuigiSpriteAnim11 ; $7f3a
+	dw LuigiSpriteAnim12 ; $7f3c
+	dw LuigiSpriteAnim13 ; $7f3e
+	dw LuigiSpriteAnim14 ; $7f40
+	dw LuigiSpriteAnim15 ; $7f42
+	dw LuigiSpriteAnim16 ; $7f44
+	dw LuigiSpriteAnim17 ; $7f46
+	dw LuigiSpriteAnim18 ; $7f48
+LuigiSpriteAnim00:
 	INCBIN "data/bank_05b/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_5b_7f4d:
+LuigiSpriteAnim01:
 	INCBIN "data/bank_05b/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_5b_7f57:
+LuigiSpriteAnim02:
 	INCBIN "data/bank_05b/d_7f57.bin" ; $7f57, 6 bytes
-Data_5b_7f5d:
+LuigiSpriteAnim03:
 	INCBIN "data/bank_05b/d_7f5d.bin" ; $7f5d, 12 bytes
-Data_5b_7f69:
+LuigiSpriteAnim04:
 	INCBIN "data/bank_05b/d_7f69.bin" ; $7f69, 8 bytes
-Data_5b_7f71:
+LuigiSpriteAnim05:
 	INCBIN "data/bank_05b/d_7f71.bin" ; $7f71, 6 bytes
-Data_5b_7f77:
+LuigiSpriteAnim06:
 	INCBIN "data/bank_05b/d_7f77.bin" ; $7f77, 6 bytes
-Data_5b_7f7d:
+LuigiSpriteAnim07:
 	INCBIN "data/bank_05b/d_7f7d.bin" ; $7f7d, 6 bytes
-Data_5b_7f83:
+LuigiSpriteAnim08:
 	INCBIN "data/bank_05b/d_7f83.bin" ; $7f83, 5 bytes
-Data_5b_7f88:
+LuigiSpriteAnim09:
 	INCBIN "data/bank_05b/d_7f88.bin" ; $7f88, 4 bytes
-Data_5b_7f8c:
+LuigiSpriteAnim10:
 	INCBIN "data/bank_05b/d_7f8c.bin" ; $7f8c, 4 bytes
-Data_5b_7f90:
+LuigiSpriteAnim11:
 	INCBIN "data/bank_05b/d_7f90.bin" ; $7f90, 4 bytes
-Data_5b_7f94:
+LuigiSpriteAnim12:
 	INCBIN "data/bank_05b/d_7f94.bin" ; $7f94, 3 bytes
-Data_5b_7f97:
+LuigiSpriteAnim13:
 	INCBIN "data/bank_05b/d_7f97.bin" ; $7f97, 3 bytes
-Data_5b_7f9a:
+LuigiSpriteAnim14:
 	INCBIN "data/bank_05b/d_7f9a.bin" ; $7f9a, 3 bytes
-Data_5b_7f9d:
+LuigiSpriteAnim15:
 	INCBIN "data/bank_05b/d_7f9d.bin" ; $7f9d, 3 bytes
-Data_5b_7fa0:
+LuigiSpriteAnim16:
 	INCBIN "data/bank_05b/d_7fa0.bin" ; $7fa0, 3 bytes
-Data_5b_7fa3:
+LuigiSpriteAnim17:
 	INCBIN "data/bank_05b/d_7fa3.bin" ; $7fa3, 12 bytes
-Data_5b_7faf:
+LuigiSpriteAnim18:
 	INCBIN "data/bank_05b/d_7faf.bin" ; $7faf, 8 bytes
 	; $7fb7, 73 bytes fill to bank end (linker-padded)

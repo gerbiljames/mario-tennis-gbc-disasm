@@ -9,323 +9,323 @@ HarrySpriteDesc:
 	dw $0000 ; $400a
 	dw Data_43_7ce0 ; $400c per-slot OAM data
 HarrySpriteFrames:
-	dw Data_43_4130 ; $400e
-	dw Data_43_4220 ; $4010
-	dw Data_43_4310 ; $4012
-	dw Data_43_4400 ; $4014
-	dw Data_43_44f0 ; $4016
-	dw Data_43_45e0 ; $4018
-	dw Data_43_46d0 ; $401a
-	dw Data_43_47c0 ; $401c
-	dw Data_43_48b0 ; $401e
-	dw Data_43_49a0 ; $4020
-	dw Data_43_4a90 ; $4022
-	dw Data_43_4220 ; $4024
-	dw Data_43_4310 ; $4026
-	dw Data_43_4400 ; $4028
-	dw Data_43_4b80 ; $402a
-	dw Data_43_4c70 ; $402c
-	dw Data_43_4220 ; $402e
-	dw Data_43_4310 ; $4030
-	dw Data_43_4400 ; $4032
-	dw Data_43_4d60 ; $4034
-	dw Data_43_4e50 ; $4036
-	dw Data_43_46d0 ; $4038
-	dw Data_43_47c0 ; $403a
-	dw Data_43_48b0 ; $403c
-	dw Data_43_4f40 ; $403e
-	dw Data_43_5030 ; $4040
-	dw Data_43_5030 ; $4042
-	dw Data_43_5030 ; $4044
-	dw Data_43_5120 ; $4046
-	dw Data_43_5120 ; $4048
-	dw Data_43_5210 ; $404a
-	dw Data_43_5210 ; $404c
-	dw Data_43_5210 ; $404e
-	dw Data_43_5300 ; $4050
-	dw Data_43_5300 ; $4052
-	dw Data_43_53f0 ; $4054
-	dw Data_43_53f0 ; $4056
-	dw Data_43_53f0 ; $4058
-	dw Data_43_54e0 ; $405a
-	dw Data_43_54e0 ; $405c
-	dw Data_43_55d0 ; $405e
-	dw Data_43_55d0 ; $4060
-	dw Data_43_55d0 ; $4062
-	dw Data_43_56c0 ; $4064
-	dw Data_43_56c0 ; $4066
-	dw Data_43_57b0 ; $4068
-	dw Data_43_57b0 ; $406a
-	dw Data_43_57b0 ; $406c
-	dw Data_43_58a0 ; $406e
-	dw Data_43_58a0 ; $4070
-	dw Data_43_5990 ; $4072
-	dw Data_43_5990 ; $4074
-	dw Data_43_5990 ; $4076
-	dw Data_43_5a80 ; $4078
-	dw Data_43_5a80 ; $407a
-	dw Data_43_5b70 ; $407c
-	dw Data_43_5b70 ; $407e
-	dw Data_43_5b70 ; $4080
-	dw Data_43_5c60 ; $4082
-	dw Data_43_5c60 ; $4084
-	dw Data_43_5d50 ; $4086
-	dw Data_43_5d50 ; $4088
-	dw Data_43_5d50 ; $408a
-	dw Data_43_5e40 ; $408c
-	dw Data_43_5e40 ; $408e
-	dw Data_43_5f30 ; $4090
-	dw Data_43_5f30 ; $4092
-	dw Data_43_5f30 ; $4094
-	dw Data_43_6020 ; $4096
-	dw Data_43_6020 ; $4098
-	dw Data_43_6110 ; $409a
-	dw Data_43_6110 ; $409c
-	dw Data_43_6110 ; $409e
-	dw Data_43_6200 ; $40a0
-	dw Data_43_6200 ; $40a2
-	dw Data_43_62f0 ; $40a4
-	dw Data_43_62f0 ; $40a6
-	dw Data_43_62f0 ; $40a8
-	dw Data_43_63e0 ; $40aa
-	dw Data_43_63e0 ; $40ac
-	dw Data_43_64d0 ; $40ae
-	dw Data_43_64d0 ; $40b0
-	dw Data_43_64d0 ; $40b2
-	dw Data_43_65c0 ; $40b4
-	dw Data_43_65c0 ; $40b6
-	dw Data_43_66b0 ; $40b8
-	dw Data_43_66b0 ; $40ba
-	dw Data_43_66b0 ; $40bc
-	dw Data_43_67f0 ; $40be
-	dw Data_43_67f0 ; $40c0
-	dw Data_43_6930 ; $40c2
-	dw Data_43_6930 ; $40c4
-	dw Data_43_6930 ; $40c6
-	dw Data_43_6930 ; $40c8
-	dw Data_43_6930 ; $40ca
-	dw Data_43_6a20 ; $40cc
-	dw Data_43_6a20 ; $40ce
-	dw Data_43_6a20 ; $40d0
-	dw Data_43_6a20 ; $40d2
-	dw Data_43_6a20 ; $40d4
-	dw Data_43_6b10 ; $40d6
-	dw Data_43_6b10 ; $40d8
-	dw Data_43_6b10 ; $40da
-	dw Data_43_6c00 ; $40dc
-	dw Data_43_6c00 ; $40de
-	dw Data_43_6cf0 ; $40e0
-	dw Data_43_6cf0 ; $40e2
-	dw Data_43_6cf0 ; $40e4
-	dw Data_43_6de0 ; $40e6
-	dw Data_43_6de0 ; $40e8
-	dw Data_43_6ed0 ; $40ea
-	dw Data_43_6ed0 ; $40ec
-	dw Data_43_6ed0 ; $40ee
-	dw Data_43_6fc0 ; $40f0
-	dw Data_43_6fc0 ; $40f2
-	dw Data_43_70b0 ; $40f4
-	dw Data_43_70b0 ; $40f6
-	dw Data_43_70b0 ; $40f8
-	dw Data_43_70b0 ; $40fa
-	dw Data_43_70b0 ; $40fc
-	dw Data_43_71a0 ; $40fe
-	dw Data_43_71a0 ; $4100
-	dw Data_43_71a0 ; $4102
-	dw Data_43_71a0 ; $4104
-	dw Data_43_71a0 ; $4106
-	dw Data_43_7290 ; $4108
-	dw Data_43_7290 ; $410a
-	dw Data_43_7290 ; $410c
-	dw Data_43_7290 ; $410e
-	dw Data_43_7290 ; $4110
-	dw Data_43_7380 ; $4112
-	dw Data_43_7380 ; $4114
-	dw Data_43_7380 ; $4116
-	dw Data_43_7380 ; $4118
-	dw Data_43_7380 ; $411a
-	dw Data_43_7470 ; $411c
-	dw Data_43_7470 ; $411e
-	dw Data_43_7470 ; $4120
-	dw Data_43_7470 ; $4122
-	dw Data_43_7470 ; $4124
-	dw Data_43_7560 ; $4126
-	dw Data_43_7560 ; $4128
-	dw Data_43_7560 ; $412a
-	dw Data_43_7560 ; $412c
-	dw Data_43_7560 ; $412e
-Data_43_4130:
+	dw HarrySpriteFrame00 ; $400e
+	dw HarrySpriteFrame01 ; $4010
+	dw HarrySpriteFrame02 ; $4012
+	dw HarrySpriteFrame03 ; $4014
+	dw HarrySpriteFrame04 ; $4016
+	dw HarrySpriteFrame05 ; $4018
+	dw HarrySpriteFrame06 ; $401a
+	dw HarrySpriteFrame07 ; $401c
+	dw HarrySpriteFrame08 ; $401e
+	dw HarrySpriteFrame09 ; $4020
+	dw HarrySpriteFrame10 ; $4022
+	dw HarrySpriteFrame01 ; $4024
+	dw HarrySpriteFrame02 ; $4026
+	dw HarrySpriteFrame03 ; $4028
+	dw HarrySpriteFrame11 ; $402a
+	dw HarrySpriteFrame12 ; $402c
+	dw HarrySpriteFrame01 ; $402e
+	dw HarrySpriteFrame02 ; $4030
+	dw HarrySpriteFrame03 ; $4032
+	dw HarrySpriteFrame13 ; $4034
+	dw HarrySpriteFrame14 ; $4036
+	dw HarrySpriteFrame06 ; $4038
+	dw HarrySpriteFrame07 ; $403a
+	dw HarrySpriteFrame08 ; $403c
+	dw HarrySpriteFrame15 ; $403e
+	dw HarrySpriteFrame16 ; $4040
+	dw HarrySpriteFrame16 ; $4042
+	dw HarrySpriteFrame16 ; $4044
+	dw HarrySpriteFrame17 ; $4046
+	dw HarrySpriteFrame17 ; $4048
+	dw HarrySpriteFrame18 ; $404a
+	dw HarrySpriteFrame18 ; $404c
+	dw HarrySpriteFrame18 ; $404e
+	dw HarrySpriteFrame19 ; $4050
+	dw HarrySpriteFrame19 ; $4052
+	dw HarrySpriteFrame20 ; $4054
+	dw HarrySpriteFrame20 ; $4056
+	dw HarrySpriteFrame20 ; $4058
+	dw HarrySpriteFrame21 ; $405a
+	dw HarrySpriteFrame21 ; $405c
+	dw HarrySpriteFrame22 ; $405e
+	dw HarrySpriteFrame22 ; $4060
+	dw HarrySpriteFrame22 ; $4062
+	dw HarrySpriteFrame23 ; $4064
+	dw HarrySpriteFrame23 ; $4066
+	dw HarrySpriteFrame24 ; $4068
+	dw HarrySpriteFrame24 ; $406a
+	dw HarrySpriteFrame24 ; $406c
+	dw HarrySpriteFrame25 ; $406e
+	dw HarrySpriteFrame25 ; $4070
+	dw HarrySpriteFrame26 ; $4072
+	dw HarrySpriteFrame26 ; $4074
+	dw HarrySpriteFrame26 ; $4076
+	dw HarrySpriteFrame27 ; $4078
+	dw HarrySpriteFrame27 ; $407a
+	dw HarrySpriteFrame28 ; $407c
+	dw HarrySpriteFrame28 ; $407e
+	dw HarrySpriteFrame28 ; $4080
+	dw HarrySpriteFrame29 ; $4082
+	dw HarrySpriteFrame29 ; $4084
+	dw HarrySpriteFrame30 ; $4086
+	dw HarrySpriteFrame30 ; $4088
+	dw HarrySpriteFrame30 ; $408a
+	dw HarrySpriteFrame31 ; $408c
+	dw HarrySpriteFrame31 ; $408e
+	dw HarrySpriteFrame32 ; $4090
+	dw HarrySpriteFrame32 ; $4092
+	dw HarrySpriteFrame32 ; $4094
+	dw HarrySpriteFrame33 ; $4096
+	dw HarrySpriteFrame33 ; $4098
+	dw HarrySpriteFrame34 ; $409a
+	dw HarrySpriteFrame34 ; $409c
+	dw HarrySpriteFrame34 ; $409e
+	dw HarrySpriteFrame35 ; $40a0
+	dw HarrySpriteFrame35 ; $40a2
+	dw HarrySpriteFrame36 ; $40a4
+	dw HarrySpriteFrame36 ; $40a6
+	dw HarrySpriteFrame36 ; $40a8
+	dw HarrySpriteFrame37 ; $40aa
+	dw HarrySpriteFrame37 ; $40ac
+	dw HarrySpriteFrame38 ; $40ae
+	dw HarrySpriteFrame38 ; $40b0
+	dw HarrySpriteFrame38 ; $40b2
+	dw HarrySpriteFrame39 ; $40b4
+	dw HarrySpriteFrame39 ; $40b6
+	dw HarrySpriteFrame40 ; $40b8
+	dw HarrySpriteFrame40 ; $40ba
+	dw HarrySpriteFrame40 ; $40bc
+	dw HarrySpriteFrame41 ; $40be
+	dw HarrySpriteFrame41 ; $40c0
+	dw HarrySpriteFrame42 ; $40c2
+	dw HarrySpriteFrame42 ; $40c4
+	dw HarrySpriteFrame42 ; $40c6
+	dw HarrySpriteFrame42 ; $40c8
+	dw HarrySpriteFrame42 ; $40ca
+	dw HarrySpriteFrame43 ; $40cc
+	dw HarrySpriteFrame43 ; $40ce
+	dw HarrySpriteFrame43 ; $40d0
+	dw HarrySpriteFrame43 ; $40d2
+	dw HarrySpriteFrame43 ; $40d4
+	dw HarrySpriteFrame44 ; $40d6
+	dw HarrySpriteFrame44 ; $40d8
+	dw HarrySpriteFrame44 ; $40da
+	dw HarrySpriteFrame45 ; $40dc
+	dw HarrySpriteFrame45 ; $40de
+	dw HarrySpriteFrame46 ; $40e0
+	dw HarrySpriteFrame46 ; $40e2
+	dw HarrySpriteFrame46 ; $40e4
+	dw HarrySpriteFrame47 ; $40e6
+	dw HarrySpriteFrame47 ; $40e8
+	dw HarrySpriteFrame48 ; $40ea
+	dw HarrySpriteFrame48 ; $40ec
+	dw HarrySpriteFrame48 ; $40ee
+	dw HarrySpriteFrame49 ; $40f0
+	dw HarrySpriteFrame49 ; $40f2
+	dw HarrySpriteFrame50 ; $40f4
+	dw HarrySpriteFrame50 ; $40f6
+	dw HarrySpriteFrame50 ; $40f8
+	dw HarrySpriteFrame50 ; $40fa
+	dw HarrySpriteFrame50 ; $40fc
+	dw HarrySpriteFrame51 ; $40fe
+	dw HarrySpriteFrame51 ; $4100
+	dw HarrySpriteFrame51 ; $4102
+	dw HarrySpriteFrame51 ; $4104
+	dw HarrySpriteFrame51 ; $4106
+	dw HarrySpriteFrame52 ; $4108
+	dw HarrySpriteFrame52 ; $410a
+	dw HarrySpriteFrame52 ; $410c
+	dw HarrySpriteFrame52 ; $410e
+	dw HarrySpriteFrame52 ; $4110
+	dw HarrySpriteFrame53 ; $4112
+	dw HarrySpriteFrame53 ; $4114
+	dw HarrySpriteFrame53 ; $4116
+	dw HarrySpriteFrame53 ; $4118
+	dw HarrySpriteFrame53 ; $411a
+	dw HarrySpriteFrame54 ; $411c
+	dw HarrySpriteFrame54 ; $411e
+	dw HarrySpriteFrame54 ; $4120
+	dw HarrySpriteFrame54 ; $4122
+	dw HarrySpriteFrame54 ; $4124
+	dw HarrySpriteFrame55 ; $4126
+	dw HarrySpriteFrame55 ; $4128
+	dw HarrySpriteFrame55 ; $412a
+	dw HarrySpriteFrame55 ; $412c
+	dw HarrySpriteFrame55 ; $412e
+HarrySpriteFrame00:
 	INCBIN "data/bank_043/d_4130.bin" ; $4130, 240 bytes
-Data_43_4220:
+HarrySpriteFrame01:
 	INCBIN "data/bank_043/d_4220.bin" ; $4220, 240 bytes
-Data_43_4310:
+HarrySpriteFrame02:
 	INCBIN "data/bank_043/d_4310.bin" ; $4310, 240 bytes
-Data_43_4400:
+HarrySpriteFrame03:
 	INCBIN "data/bank_043/d_4400.bin" ; $4400, 240 bytes
-Data_43_44f0:
+HarrySpriteFrame04:
 	INCBIN "data/bank_043/d_44f0.bin" ; $44f0, 240 bytes
-Data_43_45e0:
+HarrySpriteFrame05:
 	INCBIN "data/bank_043/d_45e0.bin" ; $45e0, 240 bytes
-Data_43_46d0:
+HarrySpriteFrame06:
 	INCBIN "data/bank_043/d_46d0.bin" ; $46d0, 240 bytes
-Data_43_47c0:
+HarrySpriteFrame07:
 	INCBIN "data/bank_043/d_47c0.bin" ; $47c0, 240 bytes
-Data_43_48b0:
+HarrySpriteFrame08:
 	INCBIN "data/bank_043/d_48b0.bin" ; $48b0, 240 bytes
-Data_43_49a0:
+HarrySpriteFrame09:
 	INCBIN "data/bank_043/d_49a0.bin" ; $49a0, 240 bytes
-Data_43_4a90:
+HarrySpriteFrame10:
 	INCBIN "data/bank_043/d_4a90.bin" ; $4a90, 240 bytes
-Data_43_4b80:
+HarrySpriteFrame11:
 	INCBIN "data/bank_043/d_4b80.bin" ; $4b80, 240 bytes
-Data_43_4c70:
+HarrySpriteFrame12:
 	INCBIN "data/bank_043/d_4c70.bin" ; $4c70, 240 bytes
-Data_43_4d60:
+HarrySpriteFrame13:
 	INCBIN "data/bank_043/d_4d60.bin" ; $4d60, 240 bytes
-Data_43_4e50:
+HarrySpriteFrame14:
 	INCBIN "data/bank_043/d_4e50.bin" ; $4e50, 240 bytes
-Data_43_4f40:
+HarrySpriteFrame15:
 	INCBIN "data/bank_043/d_4f40.bin" ; $4f40, 240 bytes
-Data_43_5030:
+HarrySpriteFrame16:
 	INCBIN "data/bank_043/d_5030.bin" ; $5030, 240 bytes
-Data_43_5120:
+HarrySpriteFrame17:
 	INCBIN "data/bank_043/d_5120.bin" ; $5120, 240 bytes
-Data_43_5210:
+HarrySpriteFrame18:
 	INCBIN "data/bank_043/d_5210.bin" ; $5210, 240 bytes
-Data_43_5300:
+HarrySpriteFrame19:
 	INCBIN "data/bank_043/d_5300.bin" ; $5300, 240 bytes
-Data_43_53f0:
+HarrySpriteFrame20:
 	INCBIN "data/bank_043/d_53f0.bin" ; $53f0, 240 bytes
-Data_43_54e0:
+HarrySpriteFrame21:
 	INCBIN "data/bank_043/d_54e0.bin" ; $54e0, 240 bytes
-Data_43_55d0:
+HarrySpriteFrame22:
 	INCBIN "data/bank_043/d_55d0.bin" ; $55d0, 240 bytes
-Data_43_56c0:
+HarrySpriteFrame23:
 	INCBIN "data/bank_043/d_56c0.bin" ; $56c0, 240 bytes
-Data_43_57b0:
+HarrySpriteFrame24:
 	INCBIN "data/bank_043/d_57b0.bin" ; $57b0, 240 bytes
-Data_43_58a0:
+HarrySpriteFrame25:
 	INCBIN "data/bank_043/d_58a0.bin" ; $58a0, 240 bytes
-Data_43_5990:
+HarrySpriteFrame26:
 	INCBIN "data/bank_043/d_5990.bin" ; $5990, 240 bytes
-Data_43_5a80:
+HarrySpriteFrame27:
 	INCBIN "data/bank_043/d_5a80.bin" ; $5a80, 240 bytes
-Data_43_5b70:
+HarrySpriteFrame28:
 	INCBIN "data/bank_043/d_5b70.bin" ; $5b70, 240 bytes
-Data_43_5c60:
+HarrySpriteFrame29:
 	INCBIN "data/bank_043/d_5c60.bin" ; $5c60, 240 bytes
-Data_43_5d50:
+HarrySpriteFrame30:
 	INCBIN "data/bank_043/d_5d50.bin" ; $5d50, 240 bytes
-Data_43_5e40:
+HarrySpriteFrame31:
 	INCBIN "data/bank_043/d_5e40.bin" ; $5e40, 240 bytes
-Data_43_5f30:
+HarrySpriteFrame32:
 	INCBIN "data/bank_043/d_5f30.bin" ; $5f30, 240 bytes
-Data_43_6020:
+HarrySpriteFrame33:
 	INCBIN "data/bank_043/d_6020.bin" ; $6020, 240 bytes
-Data_43_6110:
+HarrySpriteFrame34:
 	INCBIN "data/bank_043/d_6110.bin" ; $6110, 240 bytes
-Data_43_6200:
+HarrySpriteFrame35:
 	INCBIN "data/bank_043/d_6200.bin" ; $6200, 240 bytes
-Data_43_62f0:
+HarrySpriteFrame36:
 	INCBIN "data/bank_043/d_62f0.bin" ; $62f0, 240 bytes
-Data_43_63e0:
+HarrySpriteFrame37:
 	INCBIN "data/bank_043/d_63e0.bin" ; $63e0, 240 bytes
-Data_43_64d0:
+HarrySpriteFrame38:
 	INCBIN "data/bank_043/d_64d0.bin" ; $64d0, 240 bytes
-Data_43_65c0:
+HarrySpriteFrame39:
 	INCBIN "data/bank_043/d_65c0.bin" ; $65c0, 240 bytes
-Data_43_66b0:
+HarrySpriteFrame40:
 	INCBIN "data/bank_043/d_66b0.bin" ; $66b0, 320 bytes
-Data_43_67f0:
+HarrySpriteFrame41:
 	INCBIN "data/bank_043/d_67f0.bin" ; $67f0, 320 bytes
-Data_43_6930:
+HarrySpriteFrame42:
 	INCBIN "data/bank_043/d_6930.bin" ; $6930, 240 bytes
-Data_43_6a20:
+HarrySpriteFrame43:
 	INCBIN "data/bank_043/d_6a20.bin" ; $6a20, 240 bytes
-Data_43_6b10:
+HarrySpriteFrame44:
 	INCBIN "data/bank_043/d_6b10.bin" ; $6b10, 240 bytes
-Data_43_6c00:
+HarrySpriteFrame45:
 	INCBIN "data/bank_043/d_6c00.bin" ; $6c00, 240 bytes
-Data_43_6cf0:
+HarrySpriteFrame46:
 	INCBIN "data/bank_043/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_43_6de0:
+HarrySpriteFrame47:
 	INCBIN "data/bank_043/d_6de0.bin" ; $6de0, 240 bytes
-Data_43_6ed0:
+HarrySpriteFrame48:
 	INCBIN "data/bank_043/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_43_6fc0:
+HarrySpriteFrame49:
 	INCBIN "data/bank_043/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_43_70b0:
+HarrySpriteFrame50:
 	INCBIN "data/bank_043/d_70b0.bin" ; $70b0, 240 bytes
-Data_43_71a0:
+HarrySpriteFrame51:
 	INCBIN "data/bank_043/d_71a0.bin" ; $71a0, 240 bytes
-Data_43_7290:
+HarrySpriteFrame52:
 	INCBIN "data/bank_043/d_7290.bin" ; $7290, 240 bytes
-Data_43_7380:
+HarrySpriteFrame53:
 	INCBIN "data/bank_043/d_7380.bin" ; $7380, 240 bytes
-Data_43_7470:
+HarrySpriteFrame54:
 	INCBIN "data/bank_043/d_7470.bin" ; $7470, 240 bytes
-Data_43_7560:
+HarrySpriteFrame55:
 	INCBIN "data/bank_043/d_7560.bin" ; $7560, 240 bytes
 Data_43_7650:
 	INCBIN "data/bank_043/d_7650.bin" ; $7650, 1680 bytes
 Data_43_7ce0:
 	INCBIN "data/bank_043/d_7ce0.bin" ; $7ce0, 580 bytes
 HarrySpriteAnims:
-	dw Data_43_7f4a ; $7f24
-	dw Data_43_7f4d ; $7f26
-	dw Data_43_7f57 ; $7f28
-	dw Data_43_7f5d ; $7f2a
-	dw Data_43_7f65 ; $7f2c
-	dw Data_43_7f6d ; $7f2e
-	dw Data_43_7f73 ; $7f30
-	dw Data_43_7f79 ; $7f32
-	dw Data_43_7f7f ; $7f34
-	dw Data_43_7f84 ; $7f36
-	dw Data_43_7f88 ; $7f38
-	dw Data_43_7f8c ; $7f3a
-	dw Data_43_7f90 ; $7f3c
-	dw Data_43_7f93 ; $7f3e
-	dw Data_43_7f96 ; $7f40
-	dw Data_43_7f99 ; $7f42
-	dw Data_43_7f9c ; $7f44
-	dw Data_43_7f9f ; $7f46
-	dw Data_43_7fab ; $7f48
-Data_43_7f4a:
+	dw HarrySpriteAnim00 ; $7f24
+	dw HarrySpriteAnim01 ; $7f26
+	dw HarrySpriteAnim02 ; $7f28
+	dw HarrySpriteAnim03 ; $7f2a
+	dw HarrySpriteAnim04 ; $7f2c
+	dw HarrySpriteAnim05 ; $7f2e
+	dw HarrySpriteAnim06 ; $7f30
+	dw HarrySpriteAnim07 ; $7f32
+	dw HarrySpriteAnim08 ; $7f34
+	dw HarrySpriteAnim09 ; $7f36
+	dw HarrySpriteAnim10 ; $7f38
+	dw HarrySpriteAnim11 ; $7f3a
+	dw HarrySpriteAnim12 ; $7f3c
+	dw HarrySpriteAnim13 ; $7f3e
+	dw HarrySpriteAnim14 ; $7f40
+	dw HarrySpriteAnim15 ; $7f42
+	dw HarrySpriteAnim16 ; $7f44
+	dw HarrySpriteAnim17 ; $7f46
+	dw HarrySpriteAnim18 ; $7f48
+HarrySpriteAnim00:
 	INCBIN "data/bank_043/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_43_7f4d:
+HarrySpriteAnim01:
 	INCBIN "data/bank_043/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_43_7f57:
+HarrySpriteAnim02:
 	INCBIN "data/bank_043/d_7f57.bin" ; $7f57, 6 bytes
-Data_43_7f5d:
+HarrySpriteAnim03:
 	INCBIN "data/bank_043/d_7f5d.bin" ; $7f5d, 8 bytes
-Data_43_7f65:
+HarrySpriteAnim04:
 	INCBIN "data/bank_043/d_7f65.bin" ; $7f65, 8 bytes
-Data_43_7f6d:
+HarrySpriteAnim05:
 	INCBIN "data/bank_043/d_7f6d.bin" ; $7f6d, 6 bytes
-Data_43_7f73:
+HarrySpriteAnim06:
 	INCBIN "data/bank_043/d_7f73.bin" ; $7f73, 6 bytes
-Data_43_7f79:
+HarrySpriteAnim07:
 	INCBIN "data/bank_043/d_7f79.bin" ; $7f79, 6 bytes
-Data_43_7f7f:
+HarrySpriteAnim08:
 	INCBIN "data/bank_043/d_7f7f.bin" ; $7f7f, 5 bytes
-Data_43_7f84:
+HarrySpriteAnim09:
 	INCBIN "data/bank_043/d_7f84.bin" ; $7f84, 4 bytes
-Data_43_7f88:
+HarrySpriteAnim10:
 	INCBIN "data/bank_043/d_7f88.bin" ; $7f88, 4 bytes
-Data_43_7f8c:
+HarrySpriteAnim11:
 	INCBIN "data/bank_043/d_7f8c.bin" ; $7f8c, 4 bytes
-Data_43_7f90:
+HarrySpriteAnim12:
 	INCBIN "data/bank_043/d_7f90.bin" ; $7f90, 3 bytes
-Data_43_7f93:
+HarrySpriteAnim13:
 	INCBIN "data/bank_043/d_7f93.bin" ; $7f93, 3 bytes
-Data_43_7f96:
+HarrySpriteAnim14:
 	INCBIN "data/bank_043/d_7f96.bin" ; $7f96, 3 bytes
-Data_43_7f99:
+HarrySpriteAnim15:
 	INCBIN "data/bank_043/d_7f99.bin" ; $7f99, 3 bytes
-Data_43_7f9c:
+HarrySpriteAnim16:
 	INCBIN "data/bank_043/d_7f9c.bin" ; $7f9c, 3 bytes
-Data_43_7f9f:
+HarrySpriteAnim17:
 	INCBIN "data/bank_043/d_7f9f.bin" ; $7f9f, 12 bytes
-Data_43_7fab:
+HarrySpriteAnim18:
 	INCBIN "data/bank_043/d_7fab.bin" ; $7fab, 8 bytes
 	; $7fb3, 77 bytes fill to bank end (linker-padded)

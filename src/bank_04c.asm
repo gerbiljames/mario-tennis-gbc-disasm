@@ -9,323 +9,323 @@ AllieSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_4c_7ce0 ; $400c per-slot OAM data
 AllieSpriteFrames:
-	dw Data_4c_4130 ; $400e
-	dw Data_4c_4220 ; $4010
-	dw Data_4c_4310 ; $4012
-	dw Data_4c_4400 ; $4014
-	dw Data_4c_44f0 ; $4016
-	dw Data_4c_45e0 ; $4018
-	dw Data_4c_46d0 ; $401a
-	dw Data_4c_47c0 ; $401c
-	dw Data_4c_48b0 ; $401e
-	dw Data_4c_49a0 ; $4020
-	dw Data_4c_4a90 ; $4022
-	dw Data_4c_4220 ; $4024
-	dw Data_4c_4310 ; $4026
-	dw Data_4c_4400 ; $4028
-	dw Data_4c_4b80 ; $402a
-	dw Data_4c_4c70 ; $402c
-	dw Data_4c_4220 ; $402e
-	dw Data_4c_4310 ; $4030
-	dw Data_4c_4400 ; $4032
-	dw Data_4c_4d60 ; $4034
-	dw Data_4c_4e50 ; $4036
-	dw Data_4c_46d0 ; $4038
-	dw Data_4c_47c0 ; $403a
-	dw Data_4c_48b0 ; $403c
-	dw Data_4c_4f40 ; $403e
-	dw Data_4c_5030 ; $4040
-	dw Data_4c_5030 ; $4042
-	dw Data_4c_5030 ; $4044
-	dw Data_4c_5120 ; $4046
-	dw Data_4c_5120 ; $4048
-	dw Data_4c_5210 ; $404a
-	dw Data_4c_5210 ; $404c
-	dw Data_4c_5210 ; $404e
-	dw Data_4c_5300 ; $4050
-	dw Data_4c_5300 ; $4052
-	dw Data_4c_53f0 ; $4054
-	dw Data_4c_53f0 ; $4056
-	dw Data_4c_53f0 ; $4058
-	dw Data_4c_54e0 ; $405a
-	dw Data_4c_54e0 ; $405c
-	dw Data_4c_55d0 ; $405e
-	dw Data_4c_55d0 ; $4060
-	dw Data_4c_55d0 ; $4062
-	dw Data_4c_56c0 ; $4064
-	dw Data_4c_56c0 ; $4066
-	dw Data_4c_57b0 ; $4068
-	dw Data_4c_57b0 ; $406a
-	dw Data_4c_57b0 ; $406c
-	dw Data_4c_58a0 ; $406e
-	dw Data_4c_58a0 ; $4070
-	dw Data_4c_5990 ; $4072
-	dw Data_4c_5990 ; $4074
-	dw Data_4c_5990 ; $4076
-	dw Data_4c_5a80 ; $4078
-	dw Data_4c_5a80 ; $407a
-	dw Data_4c_5b70 ; $407c
-	dw Data_4c_5b70 ; $407e
-	dw Data_4c_5b70 ; $4080
-	dw Data_4c_5c60 ; $4082
-	dw Data_4c_5c60 ; $4084
-	dw Data_4c_5d50 ; $4086
-	dw Data_4c_5d50 ; $4088
-	dw Data_4c_5d50 ; $408a
-	dw Data_4c_5e40 ; $408c
-	dw Data_4c_5e40 ; $408e
-	dw Data_4c_5f30 ; $4090
-	dw Data_4c_5f30 ; $4092
-	dw Data_4c_5f30 ; $4094
-	dw Data_4c_6020 ; $4096
-	dw Data_4c_6020 ; $4098
-	dw Data_4c_6110 ; $409a
-	dw Data_4c_6110 ; $409c
-	dw Data_4c_6110 ; $409e
-	dw Data_4c_6200 ; $40a0
-	dw Data_4c_6200 ; $40a2
-	dw Data_4c_62f0 ; $40a4
-	dw Data_4c_62f0 ; $40a6
-	dw Data_4c_62f0 ; $40a8
-	dw Data_4c_63e0 ; $40aa
-	dw Data_4c_63e0 ; $40ac
-	dw Data_4c_64d0 ; $40ae
-	dw Data_4c_64d0 ; $40b0
-	dw Data_4c_64d0 ; $40b2
-	dw Data_4c_65c0 ; $40b4
-	dw Data_4c_65c0 ; $40b6
-	dw Data_4c_66b0 ; $40b8
-	dw Data_4c_66b0 ; $40ba
-	dw Data_4c_66b0 ; $40bc
-	dw Data_4c_67f0 ; $40be
-	dw Data_4c_67f0 ; $40c0
-	dw Data_4c_6930 ; $40c2
-	dw Data_4c_6930 ; $40c4
-	dw Data_4c_6930 ; $40c6
-	dw Data_4c_6930 ; $40c8
-	dw Data_4c_6930 ; $40ca
-	dw Data_4c_6a20 ; $40cc
-	dw Data_4c_6a20 ; $40ce
-	dw Data_4c_6a20 ; $40d0
-	dw Data_4c_6a20 ; $40d2
-	dw Data_4c_6a20 ; $40d4
-	dw Data_4c_6b10 ; $40d6
-	dw Data_4c_6b10 ; $40d8
-	dw Data_4c_6b10 ; $40da
-	dw Data_4c_6c00 ; $40dc
-	dw Data_4c_6c00 ; $40de
-	dw Data_4c_6cf0 ; $40e0
-	dw Data_4c_6cf0 ; $40e2
-	dw Data_4c_6cf0 ; $40e4
-	dw Data_4c_6de0 ; $40e6
-	dw Data_4c_6de0 ; $40e8
-	dw Data_4c_6ed0 ; $40ea
-	dw Data_4c_6ed0 ; $40ec
-	dw Data_4c_6ed0 ; $40ee
-	dw Data_4c_6fc0 ; $40f0
-	dw Data_4c_6fc0 ; $40f2
-	dw Data_4c_70b0 ; $40f4
-	dw Data_4c_70b0 ; $40f6
-	dw Data_4c_70b0 ; $40f8
-	dw Data_4c_70b0 ; $40fa
-	dw Data_4c_70b0 ; $40fc
-	dw Data_4c_71a0 ; $40fe
-	dw Data_4c_71a0 ; $4100
-	dw Data_4c_71a0 ; $4102
-	dw Data_4c_71a0 ; $4104
-	dw Data_4c_71a0 ; $4106
-	dw Data_4c_7290 ; $4108
-	dw Data_4c_7290 ; $410a
-	dw Data_4c_7290 ; $410c
-	dw Data_4c_7290 ; $410e
-	dw Data_4c_7290 ; $4110
-	dw Data_4c_7380 ; $4112
-	dw Data_4c_7380 ; $4114
-	dw Data_4c_7380 ; $4116
-	dw Data_4c_7380 ; $4118
-	dw Data_4c_7380 ; $411a
-	dw Data_4c_7470 ; $411c
-	dw Data_4c_7470 ; $411e
-	dw Data_4c_7470 ; $4120
-	dw Data_4c_7470 ; $4122
-	dw Data_4c_7470 ; $4124
-	dw Data_4c_7560 ; $4126
-	dw Data_4c_7560 ; $4128
-	dw Data_4c_7560 ; $412a
-	dw Data_4c_7560 ; $412c
-	dw Data_4c_7560 ; $412e
-Data_4c_4130:
+	dw AllieSpriteFrame00 ; $400e
+	dw AllieSpriteFrame01 ; $4010
+	dw AllieSpriteFrame02 ; $4012
+	dw AllieSpriteFrame03 ; $4014
+	dw AllieSpriteFrame04 ; $4016
+	dw AllieSpriteFrame05 ; $4018
+	dw AllieSpriteFrame06 ; $401a
+	dw AllieSpriteFrame07 ; $401c
+	dw AllieSpriteFrame08 ; $401e
+	dw AllieSpriteFrame09 ; $4020
+	dw AllieSpriteFrame10 ; $4022
+	dw AllieSpriteFrame01 ; $4024
+	dw AllieSpriteFrame02 ; $4026
+	dw AllieSpriteFrame03 ; $4028
+	dw AllieSpriteFrame11 ; $402a
+	dw AllieSpriteFrame12 ; $402c
+	dw AllieSpriteFrame01 ; $402e
+	dw AllieSpriteFrame02 ; $4030
+	dw AllieSpriteFrame03 ; $4032
+	dw AllieSpriteFrame13 ; $4034
+	dw AllieSpriteFrame14 ; $4036
+	dw AllieSpriteFrame06 ; $4038
+	dw AllieSpriteFrame07 ; $403a
+	dw AllieSpriteFrame08 ; $403c
+	dw AllieSpriteFrame15 ; $403e
+	dw AllieSpriteFrame16 ; $4040
+	dw AllieSpriteFrame16 ; $4042
+	dw AllieSpriteFrame16 ; $4044
+	dw AllieSpriteFrame17 ; $4046
+	dw AllieSpriteFrame17 ; $4048
+	dw AllieSpriteFrame18 ; $404a
+	dw AllieSpriteFrame18 ; $404c
+	dw AllieSpriteFrame18 ; $404e
+	dw AllieSpriteFrame19 ; $4050
+	dw AllieSpriteFrame19 ; $4052
+	dw AllieSpriteFrame20 ; $4054
+	dw AllieSpriteFrame20 ; $4056
+	dw AllieSpriteFrame20 ; $4058
+	dw AllieSpriteFrame21 ; $405a
+	dw AllieSpriteFrame21 ; $405c
+	dw AllieSpriteFrame22 ; $405e
+	dw AllieSpriteFrame22 ; $4060
+	dw AllieSpriteFrame22 ; $4062
+	dw AllieSpriteFrame23 ; $4064
+	dw AllieSpriteFrame23 ; $4066
+	dw AllieSpriteFrame24 ; $4068
+	dw AllieSpriteFrame24 ; $406a
+	dw AllieSpriteFrame24 ; $406c
+	dw AllieSpriteFrame25 ; $406e
+	dw AllieSpriteFrame25 ; $4070
+	dw AllieSpriteFrame26 ; $4072
+	dw AllieSpriteFrame26 ; $4074
+	dw AllieSpriteFrame26 ; $4076
+	dw AllieSpriteFrame27 ; $4078
+	dw AllieSpriteFrame27 ; $407a
+	dw AllieSpriteFrame28 ; $407c
+	dw AllieSpriteFrame28 ; $407e
+	dw AllieSpriteFrame28 ; $4080
+	dw AllieSpriteFrame29 ; $4082
+	dw AllieSpriteFrame29 ; $4084
+	dw AllieSpriteFrame30 ; $4086
+	dw AllieSpriteFrame30 ; $4088
+	dw AllieSpriteFrame30 ; $408a
+	dw AllieSpriteFrame31 ; $408c
+	dw AllieSpriteFrame31 ; $408e
+	dw AllieSpriteFrame32 ; $4090
+	dw AllieSpriteFrame32 ; $4092
+	dw AllieSpriteFrame32 ; $4094
+	dw AllieSpriteFrame33 ; $4096
+	dw AllieSpriteFrame33 ; $4098
+	dw AllieSpriteFrame34 ; $409a
+	dw AllieSpriteFrame34 ; $409c
+	dw AllieSpriteFrame34 ; $409e
+	dw AllieSpriteFrame35 ; $40a0
+	dw AllieSpriteFrame35 ; $40a2
+	dw AllieSpriteFrame36 ; $40a4
+	dw AllieSpriteFrame36 ; $40a6
+	dw AllieSpriteFrame36 ; $40a8
+	dw AllieSpriteFrame37 ; $40aa
+	dw AllieSpriteFrame37 ; $40ac
+	dw AllieSpriteFrame38 ; $40ae
+	dw AllieSpriteFrame38 ; $40b0
+	dw AllieSpriteFrame38 ; $40b2
+	dw AllieSpriteFrame39 ; $40b4
+	dw AllieSpriteFrame39 ; $40b6
+	dw AllieSpriteFrame40 ; $40b8
+	dw AllieSpriteFrame40 ; $40ba
+	dw AllieSpriteFrame40 ; $40bc
+	dw AllieSpriteFrame41 ; $40be
+	dw AllieSpriteFrame41 ; $40c0
+	dw AllieSpriteFrame42 ; $40c2
+	dw AllieSpriteFrame42 ; $40c4
+	dw AllieSpriteFrame42 ; $40c6
+	dw AllieSpriteFrame42 ; $40c8
+	dw AllieSpriteFrame42 ; $40ca
+	dw AllieSpriteFrame43 ; $40cc
+	dw AllieSpriteFrame43 ; $40ce
+	dw AllieSpriteFrame43 ; $40d0
+	dw AllieSpriteFrame43 ; $40d2
+	dw AllieSpriteFrame43 ; $40d4
+	dw AllieSpriteFrame44 ; $40d6
+	dw AllieSpriteFrame44 ; $40d8
+	dw AllieSpriteFrame44 ; $40da
+	dw AllieSpriteFrame45 ; $40dc
+	dw AllieSpriteFrame45 ; $40de
+	dw AllieSpriteFrame46 ; $40e0
+	dw AllieSpriteFrame46 ; $40e2
+	dw AllieSpriteFrame46 ; $40e4
+	dw AllieSpriteFrame47 ; $40e6
+	dw AllieSpriteFrame47 ; $40e8
+	dw AllieSpriteFrame48 ; $40ea
+	dw AllieSpriteFrame48 ; $40ec
+	dw AllieSpriteFrame48 ; $40ee
+	dw AllieSpriteFrame49 ; $40f0
+	dw AllieSpriteFrame49 ; $40f2
+	dw AllieSpriteFrame50 ; $40f4
+	dw AllieSpriteFrame50 ; $40f6
+	dw AllieSpriteFrame50 ; $40f8
+	dw AllieSpriteFrame50 ; $40fa
+	dw AllieSpriteFrame50 ; $40fc
+	dw AllieSpriteFrame51 ; $40fe
+	dw AllieSpriteFrame51 ; $4100
+	dw AllieSpriteFrame51 ; $4102
+	dw AllieSpriteFrame51 ; $4104
+	dw AllieSpriteFrame51 ; $4106
+	dw AllieSpriteFrame52 ; $4108
+	dw AllieSpriteFrame52 ; $410a
+	dw AllieSpriteFrame52 ; $410c
+	dw AllieSpriteFrame52 ; $410e
+	dw AllieSpriteFrame52 ; $4110
+	dw AllieSpriteFrame53 ; $4112
+	dw AllieSpriteFrame53 ; $4114
+	dw AllieSpriteFrame53 ; $4116
+	dw AllieSpriteFrame53 ; $4118
+	dw AllieSpriteFrame53 ; $411a
+	dw AllieSpriteFrame54 ; $411c
+	dw AllieSpriteFrame54 ; $411e
+	dw AllieSpriteFrame54 ; $4120
+	dw AllieSpriteFrame54 ; $4122
+	dw AllieSpriteFrame54 ; $4124
+	dw AllieSpriteFrame55 ; $4126
+	dw AllieSpriteFrame55 ; $4128
+	dw AllieSpriteFrame55 ; $412a
+	dw AllieSpriteFrame55 ; $412c
+	dw AllieSpriteFrame55 ; $412e
+AllieSpriteFrame00:
 	INCBIN "data/bank_04c/d_4130.bin" ; $4130, 240 bytes
-Data_4c_4220:
+AllieSpriteFrame01:
 	INCBIN "data/bank_04c/d_4220.bin" ; $4220, 240 bytes
-Data_4c_4310:
+AllieSpriteFrame02:
 	INCBIN "data/bank_04c/d_4310.bin" ; $4310, 240 bytes
-Data_4c_4400:
+AllieSpriteFrame03:
 	INCBIN "data/bank_04c/d_4400.bin" ; $4400, 240 bytes
-Data_4c_44f0:
+AllieSpriteFrame04:
 	INCBIN "data/bank_04c/d_44f0.bin" ; $44f0, 240 bytes
-Data_4c_45e0:
+AllieSpriteFrame05:
 	INCBIN "data/bank_04c/d_45e0.bin" ; $45e0, 240 bytes
-Data_4c_46d0:
+AllieSpriteFrame06:
 	INCBIN "data/bank_04c/d_46d0.bin" ; $46d0, 240 bytes
-Data_4c_47c0:
+AllieSpriteFrame07:
 	INCBIN "data/bank_04c/d_47c0.bin" ; $47c0, 240 bytes
-Data_4c_48b0:
+AllieSpriteFrame08:
 	INCBIN "data/bank_04c/d_48b0.bin" ; $48b0, 240 bytes
-Data_4c_49a0:
+AllieSpriteFrame09:
 	INCBIN "data/bank_04c/d_49a0.bin" ; $49a0, 240 bytes
-Data_4c_4a90:
+AllieSpriteFrame10:
 	INCBIN "data/bank_04c/d_4a90.bin" ; $4a90, 240 bytes
-Data_4c_4b80:
+AllieSpriteFrame11:
 	INCBIN "data/bank_04c/d_4b80.bin" ; $4b80, 240 bytes
-Data_4c_4c70:
+AllieSpriteFrame12:
 	INCBIN "data/bank_04c/d_4c70.bin" ; $4c70, 240 bytes
-Data_4c_4d60:
+AllieSpriteFrame13:
 	INCBIN "data/bank_04c/d_4d60.bin" ; $4d60, 240 bytes
-Data_4c_4e50:
+AllieSpriteFrame14:
 	INCBIN "data/bank_04c/d_4e50.bin" ; $4e50, 240 bytes
-Data_4c_4f40:
+AllieSpriteFrame15:
 	INCBIN "data/bank_04c/d_4f40.bin" ; $4f40, 240 bytes
-Data_4c_5030:
+AllieSpriteFrame16:
 	INCBIN "data/bank_04c/d_5030.bin" ; $5030, 240 bytes
-Data_4c_5120:
+AllieSpriteFrame17:
 	INCBIN "data/bank_04c/d_5120.bin" ; $5120, 240 bytes
-Data_4c_5210:
+AllieSpriteFrame18:
 	INCBIN "data/bank_04c/d_5210.bin" ; $5210, 240 bytes
-Data_4c_5300:
+AllieSpriteFrame19:
 	INCBIN "data/bank_04c/d_5300.bin" ; $5300, 240 bytes
-Data_4c_53f0:
+AllieSpriteFrame20:
 	INCBIN "data/bank_04c/d_53f0.bin" ; $53f0, 240 bytes
-Data_4c_54e0:
+AllieSpriteFrame21:
 	INCBIN "data/bank_04c/d_54e0.bin" ; $54e0, 240 bytes
-Data_4c_55d0:
+AllieSpriteFrame22:
 	INCBIN "data/bank_04c/d_55d0.bin" ; $55d0, 240 bytes
-Data_4c_56c0:
+AllieSpriteFrame23:
 	INCBIN "data/bank_04c/d_56c0.bin" ; $56c0, 240 bytes
-Data_4c_57b0:
+AllieSpriteFrame24:
 	INCBIN "data/bank_04c/d_57b0.bin" ; $57b0, 240 bytes
-Data_4c_58a0:
+AllieSpriteFrame25:
 	INCBIN "data/bank_04c/d_58a0.bin" ; $58a0, 240 bytes
-Data_4c_5990:
+AllieSpriteFrame26:
 	INCBIN "data/bank_04c/d_5990.bin" ; $5990, 240 bytes
-Data_4c_5a80:
+AllieSpriteFrame27:
 	INCBIN "data/bank_04c/d_5a80.bin" ; $5a80, 240 bytes
-Data_4c_5b70:
+AllieSpriteFrame28:
 	INCBIN "data/bank_04c/d_5b70.bin" ; $5b70, 240 bytes
-Data_4c_5c60:
+AllieSpriteFrame29:
 	INCBIN "data/bank_04c/d_5c60.bin" ; $5c60, 240 bytes
-Data_4c_5d50:
+AllieSpriteFrame30:
 	INCBIN "data/bank_04c/d_5d50.bin" ; $5d50, 240 bytes
-Data_4c_5e40:
+AllieSpriteFrame31:
 	INCBIN "data/bank_04c/d_5e40.bin" ; $5e40, 240 bytes
-Data_4c_5f30:
+AllieSpriteFrame32:
 	INCBIN "data/bank_04c/d_5f30.bin" ; $5f30, 240 bytes
-Data_4c_6020:
+AllieSpriteFrame33:
 	INCBIN "data/bank_04c/d_6020.bin" ; $6020, 240 bytes
-Data_4c_6110:
+AllieSpriteFrame34:
 	INCBIN "data/bank_04c/d_6110.bin" ; $6110, 240 bytes
-Data_4c_6200:
+AllieSpriteFrame35:
 	INCBIN "data/bank_04c/d_6200.bin" ; $6200, 240 bytes
-Data_4c_62f0:
+AllieSpriteFrame36:
 	INCBIN "data/bank_04c/d_62f0.bin" ; $62f0, 240 bytes
-Data_4c_63e0:
+AllieSpriteFrame37:
 	INCBIN "data/bank_04c/d_63e0.bin" ; $63e0, 240 bytes
-Data_4c_64d0:
+AllieSpriteFrame38:
 	INCBIN "data/bank_04c/d_64d0.bin" ; $64d0, 240 bytes
-Data_4c_65c0:
+AllieSpriteFrame39:
 	INCBIN "data/bank_04c/d_65c0.bin" ; $65c0, 240 bytes
-Data_4c_66b0:
+AllieSpriteFrame40:
 	INCBIN "data/bank_04c/d_66b0.bin" ; $66b0, 320 bytes
-Data_4c_67f0:
+AllieSpriteFrame41:
 	INCBIN "data/bank_04c/d_67f0.bin" ; $67f0, 320 bytes
-Data_4c_6930:
+AllieSpriteFrame42:
 	INCBIN "data/bank_04c/d_6930.bin" ; $6930, 240 bytes
-Data_4c_6a20:
+AllieSpriteFrame43:
 	INCBIN "data/bank_04c/d_6a20.bin" ; $6a20, 240 bytes
-Data_4c_6b10:
+AllieSpriteFrame44:
 	INCBIN "data/bank_04c/d_6b10.bin" ; $6b10, 240 bytes
-Data_4c_6c00:
+AllieSpriteFrame45:
 	INCBIN "data/bank_04c/d_6c00.bin" ; $6c00, 240 bytes
-Data_4c_6cf0:
+AllieSpriteFrame46:
 	INCBIN "data/bank_04c/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_4c_6de0:
+AllieSpriteFrame47:
 	INCBIN "data/bank_04c/d_6de0.bin" ; $6de0, 240 bytes
-Data_4c_6ed0:
+AllieSpriteFrame48:
 	INCBIN "data/bank_04c/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_4c_6fc0:
+AllieSpriteFrame49:
 	INCBIN "data/bank_04c/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_4c_70b0:
+AllieSpriteFrame50:
 	INCBIN "data/bank_04c/d_70b0.bin" ; $70b0, 240 bytes
-Data_4c_71a0:
+AllieSpriteFrame51:
 	INCBIN "data/bank_04c/d_71a0.bin" ; $71a0, 240 bytes
-Data_4c_7290:
+AllieSpriteFrame52:
 	INCBIN "data/bank_04c/d_7290.bin" ; $7290, 240 bytes
-Data_4c_7380:
+AllieSpriteFrame53:
 	INCBIN "data/bank_04c/d_7380.bin" ; $7380, 240 bytes
-Data_4c_7470:
+AllieSpriteFrame54:
 	INCBIN "data/bank_04c/d_7470.bin" ; $7470, 240 bytes
-Data_4c_7560:
+AllieSpriteFrame55:
 	INCBIN "data/bank_04c/d_7560.bin" ; $7560, 240 bytes
 Data_4c_7650:
 	INCBIN "data/bank_04c/d_7650.bin" ; $7650, 1680 bytes
 Data_4c_7ce0:
 	INCBIN "data/bank_04c/d_7ce0.bin" ; $7ce0, 580 bytes
 AllieSpriteAnims:
-	dw Data_4c_7f4a ; $7f24
-	dw Data_4c_7f4d ; $7f26
-	dw Data_4c_7f57 ; $7f28
-	dw Data_4c_7f5d ; $7f2a
-	dw Data_4c_7f6d ; $7f2c
-	dw Data_4c_7f7d ; $7f2e
-	dw Data_4c_7f83 ; $7f30
-	dw Data_4c_7f89 ; $7f32
-	dw Data_4c_7f8f ; $7f34
-	dw Data_4c_7f94 ; $7f36
-	dw Data_4c_7f98 ; $7f38
-	dw Data_4c_7f9c ; $7f3a
-	dw Data_4c_7fa0 ; $7f3c
-	dw Data_4c_7fa3 ; $7f3e
-	dw Data_4c_7fa6 ; $7f40
-	dw Data_4c_7fa9 ; $7f42
-	dw Data_4c_7fac ; $7f44
-	dw Data_4c_7faf ; $7f46
-	dw Data_4c_7fbb ; $7f48
-Data_4c_7f4a:
+	dw AllieSpriteAnim00 ; $7f24
+	dw AllieSpriteAnim01 ; $7f26
+	dw AllieSpriteAnim02 ; $7f28
+	dw AllieSpriteAnim03 ; $7f2a
+	dw AllieSpriteAnim04 ; $7f2c
+	dw AllieSpriteAnim05 ; $7f2e
+	dw AllieSpriteAnim06 ; $7f30
+	dw AllieSpriteAnim07 ; $7f32
+	dw AllieSpriteAnim08 ; $7f34
+	dw AllieSpriteAnim09 ; $7f36
+	dw AllieSpriteAnim10 ; $7f38
+	dw AllieSpriteAnim11 ; $7f3a
+	dw AllieSpriteAnim12 ; $7f3c
+	dw AllieSpriteAnim13 ; $7f3e
+	dw AllieSpriteAnim14 ; $7f40
+	dw AllieSpriteAnim15 ; $7f42
+	dw AllieSpriteAnim16 ; $7f44
+	dw AllieSpriteAnim17 ; $7f46
+	dw AllieSpriteAnim18 ; $7f48
+AllieSpriteAnim00:
 	INCBIN "data/bank_04c/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_4c_7f4d:
+AllieSpriteAnim01:
 	INCBIN "data/bank_04c/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_4c_7f57:
+AllieSpriteAnim02:
 	INCBIN "data/bank_04c/d_7f57.bin" ; $7f57, 6 bytes
-Data_4c_7f5d:
+AllieSpriteAnim03:
 	INCBIN "data/bank_04c/d_7f5d.bin" ; $7f5d, 16 bytes
-Data_4c_7f6d:
+AllieSpriteAnim04:
 	INCBIN "data/bank_04c/d_7f6d.bin" ; $7f6d, 16 bytes
-Data_4c_7f7d:
+AllieSpriteAnim05:
 	INCBIN "data/bank_04c/d_7f7d.bin" ; $7f7d, 6 bytes
-Data_4c_7f83:
+AllieSpriteAnim06:
 	INCBIN "data/bank_04c/d_7f83.bin" ; $7f83, 6 bytes
-Data_4c_7f89:
+AllieSpriteAnim07:
 	INCBIN "data/bank_04c/d_7f89.bin" ; $7f89, 6 bytes
-Data_4c_7f8f:
+AllieSpriteAnim08:
 	INCBIN "data/bank_04c/d_7f8f.bin" ; $7f8f, 5 bytes
-Data_4c_7f94:
+AllieSpriteAnim09:
 	INCBIN "data/bank_04c/d_7f94.bin" ; $7f94, 4 bytes
-Data_4c_7f98:
+AllieSpriteAnim10:
 	INCBIN "data/bank_04c/d_7f98.bin" ; $7f98, 4 bytes
-Data_4c_7f9c:
+AllieSpriteAnim11:
 	INCBIN "data/bank_04c/d_7f9c.bin" ; $7f9c, 4 bytes
-Data_4c_7fa0:
+AllieSpriteAnim12:
 	INCBIN "data/bank_04c/d_7fa0.bin" ; $7fa0, 3 bytes
-Data_4c_7fa3:
+AllieSpriteAnim13:
 	INCBIN "data/bank_04c/d_7fa3.bin" ; $7fa3, 3 bytes
-Data_4c_7fa6:
+AllieSpriteAnim14:
 	INCBIN "data/bank_04c/d_7fa6.bin" ; $7fa6, 3 bytes
-Data_4c_7fa9:
+AllieSpriteAnim15:
 	INCBIN "data/bank_04c/d_7fa9.bin" ; $7fa9, 3 bytes
-Data_4c_7fac:
+AllieSpriteAnim16:
 	INCBIN "data/bank_04c/d_7fac.bin" ; $7fac, 3 bytes
-Data_4c_7faf:
+AllieSpriteAnim17:
 	INCBIN "data/bank_04c/d_7faf.bin" ; $7faf, 12 bytes
-Data_4c_7fbb:
+AllieSpriteAnim18:
 	INCBIN "data/bank_04c/d_7fbb.bin" ; $7fbb, 8 bytes
 	; $7fc3, 61 bytes fill to bank end (linker-padded)

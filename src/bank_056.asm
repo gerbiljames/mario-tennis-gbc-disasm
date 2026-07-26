@@ -9,323 +9,323 @@ JoySpriteDesc:
 	dw $0000 ; $400a
 	dw Data_56_7ce0 ; $400c per-slot OAM data
 JoySpriteFrames:
-	dw Data_56_4130 ; $400e
-	dw Data_56_4220 ; $4010
-	dw Data_56_4310 ; $4012
-	dw Data_56_4400 ; $4014
-	dw Data_56_44f0 ; $4016
-	dw Data_56_45e0 ; $4018
-	dw Data_56_46d0 ; $401a
-	dw Data_56_47c0 ; $401c
-	dw Data_56_48b0 ; $401e
-	dw Data_56_49a0 ; $4020
-	dw Data_56_4a90 ; $4022
-	dw Data_56_4220 ; $4024
-	dw Data_56_4310 ; $4026
-	dw Data_56_4400 ; $4028
-	dw Data_56_4b80 ; $402a
-	dw Data_56_4c70 ; $402c
-	dw Data_56_4220 ; $402e
-	dw Data_56_4310 ; $4030
-	dw Data_56_4400 ; $4032
-	dw Data_56_4d60 ; $4034
-	dw Data_56_4e50 ; $4036
-	dw Data_56_46d0 ; $4038
-	dw Data_56_47c0 ; $403a
-	dw Data_56_48b0 ; $403c
-	dw Data_56_4f40 ; $403e
-	dw Data_56_5030 ; $4040
-	dw Data_56_5030 ; $4042
-	dw Data_56_5030 ; $4044
-	dw Data_56_5120 ; $4046
-	dw Data_56_5120 ; $4048
-	dw Data_56_5210 ; $404a
-	dw Data_56_5210 ; $404c
-	dw Data_56_5210 ; $404e
-	dw Data_56_5300 ; $4050
-	dw Data_56_5300 ; $4052
-	dw Data_56_53f0 ; $4054
-	dw Data_56_53f0 ; $4056
-	dw Data_56_53f0 ; $4058
-	dw Data_56_54e0 ; $405a
-	dw Data_56_54e0 ; $405c
-	dw Data_56_55d0 ; $405e
-	dw Data_56_55d0 ; $4060
-	dw Data_56_55d0 ; $4062
-	dw Data_56_56c0 ; $4064
-	dw Data_56_56c0 ; $4066
-	dw Data_56_57b0 ; $4068
-	dw Data_56_57b0 ; $406a
-	dw Data_56_57b0 ; $406c
-	dw Data_56_58a0 ; $406e
-	dw Data_56_58a0 ; $4070
-	dw Data_56_5990 ; $4072
-	dw Data_56_5990 ; $4074
-	dw Data_56_5990 ; $4076
-	dw Data_56_5a80 ; $4078
-	dw Data_56_5a80 ; $407a
-	dw Data_56_5b70 ; $407c
-	dw Data_56_5b70 ; $407e
-	dw Data_56_5b70 ; $4080
-	dw Data_56_5c60 ; $4082
-	dw Data_56_5c60 ; $4084
-	dw Data_56_5d50 ; $4086
-	dw Data_56_5d50 ; $4088
-	dw Data_56_5d50 ; $408a
-	dw Data_56_5e40 ; $408c
-	dw Data_56_5e40 ; $408e
-	dw Data_56_5f30 ; $4090
-	dw Data_56_5f30 ; $4092
-	dw Data_56_5f30 ; $4094
-	dw Data_56_6020 ; $4096
-	dw Data_56_6020 ; $4098
-	dw Data_56_6110 ; $409a
-	dw Data_56_6110 ; $409c
-	dw Data_56_6110 ; $409e
-	dw Data_56_6200 ; $40a0
-	dw Data_56_6200 ; $40a2
-	dw Data_56_62f0 ; $40a4
-	dw Data_56_62f0 ; $40a6
-	dw Data_56_62f0 ; $40a8
-	dw Data_56_63e0 ; $40aa
-	dw Data_56_63e0 ; $40ac
-	dw Data_56_64d0 ; $40ae
-	dw Data_56_64d0 ; $40b0
-	dw Data_56_64d0 ; $40b2
-	dw Data_56_65c0 ; $40b4
-	dw Data_56_65c0 ; $40b6
-	dw Data_56_66b0 ; $40b8
-	dw Data_56_66b0 ; $40ba
-	dw Data_56_66b0 ; $40bc
-	dw Data_56_67f0 ; $40be
-	dw Data_56_67f0 ; $40c0
-	dw Data_56_6930 ; $40c2
-	dw Data_56_6930 ; $40c4
-	dw Data_56_6930 ; $40c6
-	dw Data_56_6930 ; $40c8
-	dw Data_56_6930 ; $40ca
-	dw Data_56_6a20 ; $40cc
-	dw Data_56_6a20 ; $40ce
-	dw Data_56_6a20 ; $40d0
-	dw Data_56_6a20 ; $40d2
-	dw Data_56_6a20 ; $40d4
-	dw Data_56_6b10 ; $40d6
-	dw Data_56_6b10 ; $40d8
-	dw Data_56_6b10 ; $40da
-	dw Data_56_6c00 ; $40dc
-	dw Data_56_6c00 ; $40de
-	dw Data_56_6cf0 ; $40e0
-	dw Data_56_6cf0 ; $40e2
-	dw Data_56_6cf0 ; $40e4
-	dw Data_56_6de0 ; $40e6
-	dw Data_56_6de0 ; $40e8
-	dw Data_56_6ed0 ; $40ea
-	dw Data_56_6ed0 ; $40ec
-	dw Data_56_6ed0 ; $40ee
-	dw Data_56_6fc0 ; $40f0
-	dw Data_56_6fc0 ; $40f2
-	dw Data_56_70b0 ; $40f4
-	dw Data_56_70b0 ; $40f6
-	dw Data_56_70b0 ; $40f8
-	dw Data_56_70b0 ; $40fa
-	dw Data_56_70b0 ; $40fc
-	dw Data_56_71a0 ; $40fe
-	dw Data_56_71a0 ; $4100
-	dw Data_56_71a0 ; $4102
-	dw Data_56_71a0 ; $4104
-	dw Data_56_71a0 ; $4106
-	dw Data_56_7290 ; $4108
-	dw Data_56_7290 ; $410a
-	dw Data_56_7290 ; $410c
-	dw Data_56_7290 ; $410e
-	dw Data_56_7290 ; $4110
-	dw Data_56_7380 ; $4112
-	dw Data_56_7380 ; $4114
-	dw Data_56_7380 ; $4116
-	dw Data_56_7380 ; $4118
-	dw Data_56_7380 ; $411a
-	dw Data_56_7470 ; $411c
-	dw Data_56_7470 ; $411e
-	dw Data_56_7470 ; $4120
-	dw Data_56_7470 ; $4122
-	dw Data_56_7470 ; $4124
-	dw Data_56_7560 ; $4126
-	dw Data_56_7560 ; $4128
-	dw Data_56_7560 ; $412a
-	dw Data_56_7560 ; $412c
-	dw Data_56_7560 ; $412e
-Data_56_4130:
+	dw JoySpriteFrame00 ; $400e
+	dw JoySpriteFrame01 ; $4010
+	dw JoySpriteFrame02 ; $4012
+	dw JoySpriteFrame03 ; $4014
+	dw JoySpriteFrame04 ; $4016
+	dw JoySpriteFrame05 ; $4018
+	dw JoySpriteFrame06 ; $401a
+	dw JoySpriteFrame07 ; $401c
+	dw JoySpriteFrame08 ; $401e
+	dw JoySpriteFrame09 ; $4020
+	dw JoySpriteFrame10 ; $4022
+	dw JoySpriteFrame01 ; $4024
+	dw JoySpriteFrame02 ; $4026
+	dw JoySpriteFrame03 ; $4028
+	dw JoySpriteFrame11 ; $402a
+	dw JoySpriteFrame12 ; $402c
+	dw JoySpriteFrame01 ; $402e
+	dw JoySpriteFrame02 ; $4030
+	dw JoySpriteFrame03 ; $4032
+	dw JoySpriteFrame13 ; $4034
+	dw JoySpriteFrame14 ; $4036
+	dw JoySpriteFrame06 ; $4038
+	dw JoySpriteFrame07 ; $403a
+	dw JoySpriteFrame08 ; $403c
+	dw JoySpriteFrame15 ; $403e
+	dw JoySpriteFrame16 ; $4040
+	dw JoySpriteFrame16 ; $4042
+	dw JoySpriteFrame16 ; $4044
+	dw JoySpriteFrame17 ; $4046
+	dw JoySpriteFrame17 ; $4048
+	dw JoySpriteFrame18 ; $404a
+	dw JoySpriteFrame18 ; $404c
+	dw JoySpriteFrame18 ; $404e
+	dw JoySpriteFrame19 ; $4050
+	dw JoySpriteFrame19 ; $4052
+	dw JoySpriteFrame20 ; $4054
+	dw JoySpriteFrame20 ; $4056
+	dw JoySpriteFrame20 ; $4058
+	dw JoySpriteFrame21 ; $405a
+	dw JoySpriteFrame21 ; $405c
+	dw JoySpriteFrame22 ; $405e
+	dw JoySpriteFrame22 ; $4060
+	dw JoySpriteFrame22 ; $4062
+	dw JoySpriteFrame23 ; $4064
+	dw JoySpriteFrame23 ; $4066
+	dw JoySpriteFrame24 ; $4068
+	dw JoySpriteFrame24 ; $406a
+	dw JoySpriteFrame24 ; $406c
+	dw JoySpriteFrame25 ; $406e
+	dw JoySpriteFrame25 ; $4070
+	dw JoySpriteFrame26 ; $4072
+	dw JoySpriteFrame26 ; $4074
+	dw JoySpriteFrame26 ; $4076
+	dw JoySpriteFrame27 ; $4078
+	dw JoySpriteFrame27 ; $407a
+	dw JoySpriteFrame28 ; $407c
+	dw JoySpriteFrame28 ; $407e
+	dw JoySpriteFrame28 ; $4080
+	dw JoySpriteFrame29 ; $4082
+	dw JoySpriteFrame29 ; $4084
+	dw JoySpriteFrame30 ; $4086
+	dw JoySpriteFrame30 ; $4088
+	dw JoySpriteFrame30 ; $408a
+	dw JoySpriteFrame31 ; $408c
+	dw JoySpriteFrame31 ; $408e
+	dw JoySpriteFrame32 ; $4090
+	dw JoySpriteFrame32 ; $4092
+	dw JoySpriteFrame32 ; $4094
+	dw JoySpriteFrame33 ; $4096
+	dw JoySpriteFrame33 ; $4098
+	dw JoySpriteFrame34 ; $409a
+	dw JoySpriteFrame34 ; $409c
+	dw JoySpriteFrame34 ; $409e
+	dw JoySpriteFrame35 ; $40a0
+	dw JoySpriteFrame35 ; $40a2
+	dw JoySpriteFrame36 ; $40a4
+	dw JoySpriteFrame36 ; $40a6
+	dw JoySpriteFrame36 ; $40a8
+	dw JoySpriteFrame37 ; $40aa
+	dw JoySpriteFrame37 ; $40ac
+	dw JoySpriteFrame38 ; $40ae
+	dw JoySpriteFrame38 ; $40b0
+	dw JoySpriteFrame38 ; $40b2
+	dw JoySpriteFrame39 ; $40b4
+	dw JoySpriteFrame39 ; $40b6
+	dw JoySpriteFrame40 ; $40b8
+	dw JoySpriteFrame40 ; $40ba
+	dw JoySpriteFrame40 ; $40bc
+	dw JoySpriteFrame41 ; $40be
+	dw JoySpriteFrame41 ; $40c0
+	dw JoySpriteFrame42 ; $40c2
+	dw JoySpriteFrame42 ; $40c4
+	dw JoySpriteFrame42 ; $40c6
+	dw JoySpriteFrame42 ; $40c8
+	dw JoySpriteFrame42 ; $40ca
+	dw JoySpriteFrame43 ; $40cc
+	dw JoySpriteFrame43 ; $40ce
+	dw JoySpriteFrame43 ; $40d0
+	dw JoySpriteFrame43 ; $40d2
+	dw JoySpriteFrame43 ; $40d4
+	dw JoySpriteFrame44 ; $40d6
+	dw JoySpriteFrame44 ; $40d8
+	dw JoySpriteFrame44 ; $40da
+	dw JoySpriteFrame45 ; $40dc
+	dw JoySpriteFrame45 ; $40de
+	dw JoySpriteFrame46 ; $40e0
+	dw JoySpriteFrame46 ; $40e2
+	dw JoySpriteFrame46 ; $40e4
+	dw JoySpriteFrame47 ; $40e6
+	dw JoySpriteFrame47 ; $40e8
+	dw JoySpriteFrame48 ; $40ea
+	dw JoySpriteFrame48 ; $40ec
+	dw JoySpriteFrame48 ; $40ee
+	dw JoySpriteFrame49 ; $40f0
+	dw JoySpriteFrame49 ; $40f2
+	dw JoySpriteFrame50 ; $40f4
+	dw JoySpriteFrame50 ; $40f6
+	dw JoySpriteFrame50 ; $40f8
+	dw JoySpriteFrame50 ; $40fa
+	dw JoySpriteFrame50 ; $40fc
+	dw JoySpriteFrame51 ; $40fe
+	dw JoySpriteFrame51 ; $4100
+	dw JoySpriteFrame51 ; $4102
+	dw JoySpriteFrame51 ; $4104
+	dw JoySpriteFrame51 ; $4106
+	dw JoySpriteFrame52 ; $4108
+	dw JoySpriteFrame52 ; $410a
+	dw JoySpriteFrame52 ; $410c
+	dw JoySpriteFrame52 ; $410e
+	dw JoySpriteFrame52 ; $4110
+	dw JoySpriteFrame53 ; $4112
+	dw JoySpriteFrame53 ; $4114
+	dw JoySpriteFrame53 ; $4116
+	dw JoySpriteFrame53 ; $4118
+	dw JoySpriteFrame53 ; $411a
+	dw JoySpriteFrame54 ; $411c
+	dw JoySpriteFrame54 ; $411e
+	dw JoySpriteFrame54 ; $4120
+	dw JoySpriteFrame54 ; $4122
+	dw JoySpriteFrame54 ; $4124
+	dw JoySpriteFrame55 ; $4126
+	dw JoySpriteFrame55 ; $4128
+	dw JoySpriteFrame55 ; $412a
+	dw JoySpriteFrame55 ; $412c
+	dw JoySpriteFrame55 ; $412e
+JoySpriteFrame00:
 	INCBIN "data/bank_056/d_4130.bin" ; $4130, 240 bytes
-Data_56_4220:
+JoySpriteFrame01:
 	INCBIN "data/bank_056/d_4220.bin" ; $4220, 240 bytes
-Data_56_4310:
+JoySpriteFrame02:
 	INCBIN "data/bank_056/d_4310.bin" ; $4310, 240 bytes
-Data_56_4400:
+JoySpriteFrame03:
 	INCBIN "data/bank_056/d_4400.bin" ; $4400, 240 bytes
-Data_56_44f0:
+JoySpriteFrame04:
 	INCBIN "data/bank_056/d_44f0.bin" ; $44f0, 240 bytes
-Data_56_45e0:
+JoySpriteFrame05:
 	INCBIN "data/bank_056/d_45e0.bin" ; $45e0, 240 bytes
-Data_56_46d0:
+JoySpriteFrame06:
 	INCBIN "data/bank_056/d_46d0.bin" ; $46d0, 240 bytes
-Data_56_47c0:
+JoySpriteFrame07:
 	INCBIN "data/bank_056/d_47c0.bin" ; $47c0, 240 bytes
-Data_56_48b0:
+JoySpriteFrame08:
 	INCBIN "data/bank_056/d_48b0.bin" ; $48b0, 240 bytes
-Data_56_49a0:
+JoySpriteFrame09:
 	INCBIN "data/bank_056/d_49a0.bin" ; $49a0, 240 bytes
-Data_56_4a90:
+JoySpriteFrame10:
 	INCBIN "data/bank_056/d_4a90.bin" ; $4a90, 240 bytes
-Data_56_4b80:
+JoySpriteFrame11:
 	INCBIN "data/bank_056/d_4b80.bin" ; $4b80, 240 bytes
-Data_56_4c70:
+JoySpriteFrame12:
 	INCBIN "data/bank_056/d_4c70.bin" ; $4c70, 240 bytes
-Data_56_4d60:
+JoySpriteFrame13:
 	INCBIN "data/bank_056/d_4d60.bin" ; $4d60, 240 bytes
-Data_56_4e50:
+JoySpriteFrame14:
 	INCBIN "data/bank_056/d_4e50.bin" ; $4e50, 240 bytes
-Data_56_4f40:
+JoySpriteFrame15:
 	INCBIN "data/bank_056/d_4f40.bin" ; $4f40, 240 bytes
-Data_56_5030:
+JoySpriteFrame16:
 	INCBIN "data/bank_056/d_5030.bin" ; $5030, 240 bytes
-Data_56_5120:
+JoySpriteFrame17:
 	INCBIN "data/bank_056/d_5120.bin" ; $5120, 240 bytes
-Data_56_5210:
+JoySpriteFrame18:
 	INCBIN "data/bank_056/d_5210.bin" ; $5210, 240 bytes
-Data_56_5300:
+JoySpriteFrame19:
 	INCBIN "data/bank_056/d_5300.bin" ; $5300, 240 bytes
-Data_56_53f0:
+JoySpriteFrame20:
 	INCBIN "data/bank_056/d_53f0.bin" ; $53f0, 240 bytes
-Data_56_54e0:
+JoySpriteFrame21:
 	INCBIN "data/bank_056/d_54e0.bin" ; $54e0, 240 bytes
-Data_56_55d0:
+JoySpriteFrame22:
 	INCBIN "data/bank_056/d_55d0.bin" ; $55d0, 240 bytes
-Data_56_56c0:
+JoySpriteFrame23:
 	INCBIN "data/bank_056/d_56c0.bin" ; $56c0, 240 bytes
-Data_56_57b0:
+JoySpriteFrame24:
 	INCBIN "data/bank_056/d_57b0.bin" ; $57b0, 240 bytes
-Data_56_58a0:
+JoySpriteFrame25:
 	INCBIN "data/bank_056/d_58a0.bin" ; $58a0, 240 bytes
-Data_56_5990:
+JoySpriteFrame26:
 	INCBIN "data/bank_056/d_5990.bin" ; $5990, 240 bytes
-Data_56_5a80:
+JoySpriteFrame27:
 	INCBIN "data/bank_056/d_5a80.bin" ; $5a80, 240 bytes
-Data_56_5b70:
+JoySpriteFrame28:
 	INCBIN "data/bank_056/d_5b70.bin" ; $5b70, 240 bytes
-Data_56_5c60:
+JoySpriteFrame29:
 	INCBIN "data/bank_056/d_5c60.bin" ; $5c60, 240 bytes
-Data_56_5d50:
+JoySpriteFrame30:
 	INCBIN "data/bank_056/d_5d50.bin" ; $5d50, 240 bytes
-Data_56_5e40:
+JoySpriteFrame31:
 	INCBIN "data/bank_056/d_5e40.bin" ; $5e40, 240 bytes
-Data_56_5f30:
+JoySpriteFrame32:
 	INCBIN "data/bank_056/d_5f30.bin" ; $5f30, 240 bytes
-Data_56_6020:
+JoySpriteFrame33:
 	INCBIN "data/bank_056/d_6020.bin" ; $6020, 240 bytes
-Data_56_6110:
+JoySpriteFrame34:
 	INCBIN "data/bank_056/d_6110.bin" ; $6110, 240 bytes
-Data_56_6200:
+JoySpriteFrame35:
 	INCBIN "data/bank_056/d_6200.bin" ; $6200, 240 bytes
-Data_56_62f0:
+JoySpriteFrame36:
 	INCBIN "data/bank_056/d_62f0.bin" ; $62f0, 240 bytes
-Data_56_63e0:
+JoySpriteFrame37:
 	INCBIN "data/bank_056/d_63e0.bin" ; $63e0, 240 bytes
-Data_56_64d0:
+JoySpriteFrame38:
 	INCBIN "data/bank_056/d_64d0.bin" ; $64d0, 240 bytes
-Data_56_65c0:
+JoySpriteFrame39:
 	INCBIN "data/bank_056/d_65c0.bin" ; $65c0, 240 bytes
-Data_56_66b0:
+JoySpriteFrame40:
 	INCBIN "data/bank_056/d_66b0.bin" ; $66b0, 320 bytes
-Data_56_67f0:
+JoySpriteFrame41:
 	INCBIN "data/bank_056/d_67f0.bin" ; $67f0, 320 bytes
-Data_56_6930:
+JoySpriteFrame42:
 	INCBIN "data/bank_056/d_6930.bin" ; $6930, 240 bytes
-Data_56_6a20:
+JoySpriteFrame43:
 	INCBIN "data/bank_056/d_6a20.bin" ; $6a20, 240 bytes
-Data_56_6b10:
+JoySpriteFrame44:
 	INCBIN "data/bank_056/d_6b10.bin" ; $6b10, 240 bytes
-Data_56_6c00:
+JoySpriteFrame45:
 	INCBIN "data/bank_056/d_6c00.bin" ; $6c00, 240 bytes
-Data_56_6cf0:
+JoySpriteFrame46:
 	INCBIN "data/bank_056/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_56_6de0:
+JoySpriteFrame47:
 	INCBIN "data/bank_056/d_6de0.bin" ; $6de0, 240 bytes
-Data_56_6ed0:
+JoySpriteFrame48:
 	INCBIN "data/bank_056/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_56_6fc0:
+JoySpriteFrame49:
 	INCBIN "data/bank_056/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_56_70b0:
+JoySpriteFrame50:
 	INCBIN "data/bank_056/d_70b0.bin" ; $70b0, 240 bytes
-Data_56_71a0:
+JoySpriteFrame51:
 	INCBIN "data/bank_056/d_71a0.bin" ; $71a0, 240 bytes
-Data_56_7290:
+JoySpriteFrame52:
 	INCBIN "data/bank_056/d_7290.bin" ; $7290, 240 bytes
-Data_56_7380:
+JoySpriteFrame53:
 	INCBIN "data/bank_056/d_7380.bin" ; $7380, 240 bytes
-Data_56_7470:
+JoySpriteFrame54:
 	INCBIN "data/bank_056/d_7470.bin" ; $7470, 240 bytes
-Data_56_7560:
+JoySpriteFrame55:
 	INCBIN "data/bank_056/d_7560.bin" ; $7560, 240 bytes
 Data_56_7650:
 	INCBIN "data/bank_056/d_7650.bin" ; $7650, 1680 bytes
 Data_56_7ce0:
 	INCBIN "data/bank_056/d_7ce0.bin" ; $7ce0, 580 bytes
 JoySpriteAnims:
-	dw Data_56_7f4a ; $7f24
-	dw Data_56_7f4d ; $7f26
-	dw Data_56_7f57 ; $7f28
-	dw Data_56_7f5d ; $7f2a
-	dw Data_56_7f65 ; $7f2c
-	dw Data_56_7f6d ; $7f2e
-	dw Data_56_7f73 ; $7f30
-	dw Data_56_7f79 ; $7f32
-	dw Data_56_7f7f ; $7f34
-	dw Data_56_7f84 ; $7f36
-	dw Data_56_7f88 ; $7f38
-	dw Data_56_7f8c ; $7f3a
-	dw Data_56_7f90 ; $7f3c
-	dw Data_56_7f93 ; $7f3e
-	dw Data_56_7f96 ; $7f40
-	dw Data_56_7f99 ; $7f42
-	dw Data_56_7f9c ; $7f44
-	dw Data_56_7f9f ; $7f46
-	dw Data_56_7fab ; $7f48
-Data_56_7f4a:
+	dw JoySpriteAnim00 ; $7f24
+	dw JoySpriteAnim01 ; $7f26
+	dw JoySpriteAnim02 ; $7f28
+	dw JoySpriteAnim03 ; $7f2a
+	dw JoySpriteAnim04 ; $7f2c
+	dw JoySpriteAnim05 ; $7f2e
+	dw JoySpriteAnim06 ; $7f30
+	dw JoySpriteAnim07 ; $7f32
+	dw JoySpriteAnim08 ; $7f34
+	dw JoySpriteAnim09 ; $7f36
+	dw JoySpriteAnim10 ; $7f38
+	dw JoySpriteAnim11 ; $7f3a
+	dw JoySpriteAnim12 ; $7f3c
+	dw JoySpriteAnim13 ; $7f3e
+	dw JoySpriteAnim14 ; $7f40
+	dw JoySpriteAnim15 ; $7f42
+	dw JoySpriteAnim16 ; $7f44
+	dw JoySpriteAnim17 ; $7f46
+	dw JoySpriteAnim18 ; $7f48
+JoySpriteAnim00:
 	INCBIN "data/bank_056/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_56_7f4d:
+JoySpriteAnim01:
 	INCBIN "data/bank_056/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_56_7f57:
+JoySpriteAnim02:
 	INCBIN "data/bank_056/d_7f57.bin" ; $7f57, 6 bytes
-Data_56_7f5d:
+JoySpriteAnim03:
 	INCBIN "data/bank_056/d_7f5d.bin" ; $7f5d, 8 bytes
-Data_56_7f65:
+JoySpriteAnim04:
 	INCBIN "data/bank_056/d_7f65.bin" ; $7f65, 8 bytes
-Data_56_7f6d:
+JoySpriteAnim05:
 	INCBIN "data/bank_056/d_7f6d.bin" ; $7f6d, 6 bytes
-Data_56_7f73:
+JoySpriteAnim06:
 	INCBIN "data/bank_056/d_7f73.bin" ; $7f73, 6 bytes
-Data_56_7f79:
+JoySpriteAnim07:
 	INCBIN "data/bank_056/d_7f79.bin" ; $7f79, 6 bytes
-Data_56_7f7f:
+JoySpriteAnim08:
 	INCBIN "data/bank_056/d_7f7f.bin" ; $7f7f, 5 bytes
-Data_56_7f84:
+JoySpriteAnim09:
 	INCBIN "data/bank_056/d_7f84.bin" ; $7f84, 4 bytes
-Data_56_7f88:
+JoySpriteAnim10:
 	INCBIN "data/bank_056/d_7f88.bin" ; $7f88, 4 bytes
-Data_56_7f8c:
+JoySpriteAnim11:
 	INCBIN "data/bank_056/d_7f8c.bin" ; $7f8c, 4 bytes
-Data_56_7f90:
+JoySpriteAnim12:
 	INCBIN "data/bank_056/d_7f90.bin" ; $7f90, 3 bytes
-Data_56_7f93:
+JoySpriteAnim13:
 	INCBIN "data/bank_056/d_7f93.bin" ; $7f93, 3 bytes
-Data_56_7f96:
+JoySpriteAnim14:
 	INCBIN "data/bank_056/d_7f96.bin" ; $7f96, 3 bytes
-Data_56_7f99:
+JoySpriteAnim15:
 	INCBIN "data/bank_056/d_7f99.bin" ; $7f99, 3 bytes
-Data_56_7f9c:
+JoySpriteAnim16:
 	INCBIN "data/bank_056/d_7f9c.bin" ; $7f9c, 3 bytes
-Data_56_7f9f:
+JoySpriteAnim17:
 	INCBIN "data/bank_056/d_7f9f.bin" ; $7f9f, 12 bytes
-Data_56_7fab:
+JoySpriteAnim18:
 	INCBIN "data/bank_056/d_7fab.bin" ; $7fab, 8 bytes
 	; $7fb3, 77 bytes fill to bank end (linker-padded)

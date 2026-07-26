@@ -9,323 +9,323 @@ DKSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_5c_7ce0 ; $400c per-slot OAM data
 DKSpriteFrames:
-	dw Data_5c_4130 ; $400e
-	dw Data_5c_4220 ; $4010
-	dw Data_5c_4310 ; $4012
-	dw Data_5c_4400 ; $4014
-	dw Data_5c_44f0 ; $4016
-	dw Data_5c_45e0 ; $4018
-	dw Data_5c_46d0 ; $401a
-	dw Data_5c_47c0 ; $401c
-	dw Data_5c_48b0 ; $401e
-	dw Data_5c_49a0 ; $4020
-	dw Data_5c_4a90 ; $4022
-	dw Data_5c_4220 ; $4024
-	dw Data_5c_4310 ; $4026
-	dw Data_5c_4400 ; $4028
-	dw Data_5c_4b80 ; $402a
-	dw Data_5c_4c70 ; $402c
-	dw Data_5c_4220 ; $402e
-	dw Data_5c_4310 ; $4030
-	dw Data_5c_4400 ; $4032
-	dw Data_5c_4d60 ; $4034
-	dw Data_5c_4e50 ; $4036
-	dw Data_5c_46d0 ; $4038
-	dw Data_5c_47c0 ; $403a
-	dw Data_5c_48b0 ; $403c
-	dw Data_5c_4f40 ; $403e
-	dw Data_5c_5030 ; $4040
-	dw Data_5c_5030 ; $4042
-	dw Data_5c_5030 ; $4044
-	dw Data_5c_5120 ; $4046
-	dw Data_5c_5120 ; $4048
-	dw Data_5c_5210 ; $404a
-	dw Data_5c_5210 ; $404c
-	dw Data_5c_5210 ; $404e
-	dw Data_5c_5300 ; $4050
-	dw Data_5c_5300 ; $4052
-	dw Data_5c_53f0 ; $4054
-	dw Data_5c_53f0 ; $4056
-	dw Data_5c_53f0 ; $4058
-	dw Data_5c_54e0 ; $405a
-	dw Data_5c_54e0 ; $405c
-	dw Data_5c_55d0 ; $405e
-	dw Data_5c_55d0 ; $4060
-	dw Data_5c_55d0 ; $4062
-	dw Data_5c_56c0 ; $4064
-	dw Data_5c_56c0 ; $4066
-	dw Data_5c_57b0 ; $4068
-	dw Data_5c_57b0 ; $406a
-	dw Data_5c_57b0 ; $406c
-	dw Data_5c_58a0 ; $406e
-	dw Data_5c_58a0 ; $4070
-	dw Data_5c_5990 ; $4072
-	dw Data_5c_5990 ; $4074
-	dw Data_5c_5990 ; $4076
-	dw Data_5c_5a80 ; $4078
-	dw Data_5c_5a80 ; $407a
-	dw Data_5c_5b70 ; $407c
-	dw Data_5c_5b70 ; $407e
-	dw Data_5c_5b70 ; $4080
-	dw Data_5c_5c60 ; $4082
-	dw Data_5c_5c60 ; $4084
-	dw Data_5c_5d50 ; $4086
-	dw Data_5c_5d50 ; $4088
-	dw Data_5c_5d50 ; $408a
-	dw Data_5c_5e40 ; $408c
-	dw Data_5c_5e40 ; $408e
-	dw Data_5c_5f30 ; $4090
-	dw Data_5c_5f30 ; $4092
-	dw Data_5c_5f30 ; $4094
-	dw Data_5c_6020 ; $4096
-	dw Data_5c_6020 ; $4098
-	dw Data_5c_6110 ; $409a
-	dw Data_5c_6110 ; $409c
-	dw Data_5c_6110 ; $409e
-	dw Data_5c_6200 ; $40a0
-	dw Data_5c_6200 ; $40a2
-	dw Data_5c_62f0 ; $40a4
-	dw Data_5c_62f0 ; $40a6
-	dw Data_5c_62f0 ; $40a8
-	dw Data_5c_63e0 ; $40aa
-	dw Data_5c_63e0 ; $40ac
-	dw Data_5c_64d0 ; $40ae
-	dw Data_5c_64d0 ; $40b0
-	dw Data_5c_64d0 ; $40b2
-	dw Data_5c_65c0 ; $40b4
-	dw Data_5c_65c0 ; $40b6
-	dw Data_5c_66b0 ; $40b8
-	dw Data_5c_66b0 ; $40ba
-	dw Data_5c_66b0 ; $40bc
-	dw Data_5c_67f0 ; $40be
-	dw Data_5c_67f0 ; $40c0
-	dw Data_5c_6930 ; $40c2
-	dw Data_5c_6930 ; $40c4
-	dw Data_5c_6930 ; $40c6
-	dw Data_5c_6930 ; $40c8
-	dw Data_5c_6930 ; $40ca
-	dw Data_5c_6a20 ; $40cc
-	dw Data_5c_6a20 ; $40ce
-	dw Data_5c_6a20 ; $40d0
-	dw Data_5c_6a20 ; $40d2
-	dw Data_5c_6a20 ; $40d4
-	dw Data_5c_6b10 ; $40d6
-	dw Data_5c_6b10 ; $40d8
-	dw Data_5c_6b10 ; $40da
-	dw Data_5c_6c00 ; $40dc
-	dw Data_5c_6c00 ; $40de
-	dw Data_5c_6cf0 ; $40e0
-	dw Data_5c_6cf0 ; $40e2
-	dw Data_5c_6cf0 ; $40e4
-	dw Data_5c_6de0 ; $40e6
-	dw Data_5c_6de0 ; $40e8
-	dw Data_5c_6ed0 ; $40ea
-	dw Data_5c_6ed0 ; $40ec
-	dw Data_5c_6ed0 ; $40ee
-	dw Data_5c_6fc0 ; $40f0
-	dw Data_5c_6fc0 ; $40f2
-	dw Data_5c_70b0 ; $40f4
-	dw Data_5c_70b0 ; $40f6
-	dw Data_5c_70b0 ; $40f8
-	dw Data_5c_70b0 ; $40fa
-	dw Data_5c_70b0 ; $40fc
-	dw Data_5c_71a0 ; $40fe
-	dw Data_5c_71a0 ; $4100
-	dw Data_5c_71a0 ; $4102
-	dw Data_5c_71a0 ; $4104
-	dw Data_5c_71a0 ; $4106
-	dw Data_5c_7290 ; $4108
-	dw Data_5c_7290 ; $410a
-	dw Data_5c_7290 ; $410c
-	dw Data_5c_7290 ; $410e
-	dw Data_5c_7290 ; $4110
-	dw Data_5c_7380 ; $4112
-	dw Data_5c_7380 ; $4114
-	dw Data_5c_7380 ; $4116
-	dw Data_5c_7380 ; $4118
-	dw Data_5c_7380 ; $411a
-	dw Data_5c_7470 ; $411c
-	dw Data_5c_7470 ; $411e
-	dw Data_5c_7470 ; $4120
-	dw Data_5c_7470 ; $4122
-	dw Data_5c_7470 ; $4124
-	dw Data_5c_7560 ; $4126
-	dw Data_5c_7560 ; $4128
-	dw Data_5c_7560 ; $412a
-	dw Data_5c_7560 ; $412c
-	dw Data_5c_7560 ; $412e
-Data_5c_4130:
+	dw DKSpriteFrame00 ; $400e
+	dw DKSpriteFrame01 ; $4010
+	dw DKSpriteFrame02 ; $4012
+	dw DKSpriteFrame03 ; $4014
+	dw DKSpriteFrame04 ; $4016
+	dw DKSpriteFrame05 ; $4018
+	dw DKSpriteFrame06 ; $401a
+	dw DKSpriteFrame07 ; $401c
+	dw DKSpriteFrame08 ; $401e
+	dw DKSpriteFrame09 ; $4020
+	dw DKSpriteFrame10 ; $4022
+	dw DKSpriteFrame01 ; $4024
+	dw DKSpriteFrame02 ; $4026
+	dw DKSpriteFrame03 ; $4028
+	dw DKSpriteFrame11 ; $402a
+	dw DKSpriteFrame12 ; $402c
+	dw DKSpriteFrame01 ; $402e
+	dw DKSpriteFrame02 ; $4030
+	dw DKSpriteFrame03 ; $4032
+	dw DKSpriteFrame13 ; $4034
+	dw DKSpriteFrame14 ; $4036
+	dw DKSpriteFrame06 ; $4038
+	dw DKSpriteFrame07 ; $403a
+	dw DKSpriteFrame08 ; $403c
+	dw DKSpriteFrame15 ; $403e
+	dw DKSpriteFrame16 ; $4040
+	dw DKSpriteFrame16 ; $4042
+	dw DKSpriteFrame16 ; $4044
+	dw DKSpriteFrame17 ; $4046
+	dw DKSpriteFrame17 ; $4048
+	dw DKSpriteFrame18 ; $404a
+	dw DKSpriteFrame18 ; $404c
+	dw DKSpriteFrame18 ; $404e
+	dw DKSpriteFrame19 ; $4050
+	dw DKSpriteFrame19 ; $4052
+	dw DKSpriteFrame20 ; $4054
+	dw DKSpriteFrame20 ; $4056
+	dw DKSpriteFrame20 ; $4058
+	dw DKSpriteFrame21 ; $405a
+	dw DKSpriteFrame21 ; $405c
+	dw DKSpriteFrame22 ; $405e
+	dw DKSpriteFrame22 ; $4060
+	dw DKSpriteFrame22 ; $4062
+	dw DKSpriteFrame23 ; $4064
+	dw DKSpriteFrame23 ; $4066
+	dw DKSpriteFrame24 ; $4068
+	dw DKSpriteFrame24 ; $406a
+	dw DKSpriteFrame24 ; $406c
+	dw DKSpriteFrame25 ; $406e
+	dw DKSpriteFrame25 ; $4070
+	dw DKSpriteFrame26 ; $4072
+	dw DKSpriteFrame26 ; $4074
+	dw DKSpriteFrame26 ; $4076
+	dw DKSpriteFrame27 ; $4078
+	dw DKSpriteFrame27 ; $407a
+	dw DKSpriteFrame28 ; $407c
+	dw DKSpriteFrame28 ; $407e
+	dw DKSpriteFrame28 ; $4080
+	dw DKSpriteFrame29 ; $4082
+	dw DKSpriteFrame29 ; $4084
+	dw DKSpriteFrame30 ; $4086
+	dw DKSpriteFrame30 ; $4088
+	dw DKSpriteFrame30 ; $408a
+	dw DKSpriteFrame31 ; $408c
+	dw DKSpriteFrame31 ; $408e
+	dw DKSpriteFrame32 ; $4090
+	dw DKSpriteFrame32 ; $4092
+	dw DKSpriteFrame32 ; $4094
+	dw DKSpriteFrame33 ; $4096
+	dw DKSpriteFrame33 ; $4098
+	dw DKSpriteFrame34 ; $409a
+	dw DKSpriteFrame34 ; $409c
+	dw DKSpriteFrame34 ; $409e
+	dw DKSpriteFrame35 ; $40a0
+	dw DKSpriteFrame35 ; $40a2
+	dw DKSpriteFrame36 ; $40a4
+	dw DKSpriteFrame36 ; $40a6
+	dw DKSpriteFrame36 ; $40a8
+	dw DKSpriteFrame37 ; $40aa
+	dw DKSpriteFrame37 ; $40ac
+	dw DKSpriteFrame38 ; $40ae
+	dw DKSpriteFrame38 ; $40b0
+	dw DKSpriteFrame38 ; $40b2
+	dw DKSpriteFrame39 ; $40b4
+	dw DKSpriteFrame39 ; $40b6
+	dw DKSpriteFrame40 ; $40b8
+	dw DKSpriteFrame40 ; $40ba
+	dw DKSpriteFrame40 ; $40bc
+	dw DKSpriteFrame41 ; $40be
+	dw DKSpriteFrame41 ; $40c0
+	dw DKSpriteFrame42 ; $40c2
+	dw DKSpriteFrame42 ; $40c4
+	dw DKSpriteFrame42 ; $40c6
+	dw DKSpriteFrame42 ; $40c8
+	dw DKSpriteFrame42 ; $40ca
+	dw DKSpriteFrame43 ; $40cc
+	dw DKSpriteFrame43 ; $40ce
+	dw DKSpriteFrame43 ; $40d0
+	dw DKSpriteFrame43 ; $40d2
+	dw DKSpriteFrame43 ; $40d4
+	dw DKSpriteFrame44 ; $40d6
+	dw DKSpriteFrame44 ; $40d8
+	dw DKSpriteFrame44 ; $40da
+	dw DKSpriteFrame45 ; $40dc
+	dw DKSpriteFrame45 ; $40de
+	dw DKSpriteFrame46 ; $40e0
+	dw DKSpriteFrame46 ; $40e2
+	dw DKSpriteFrame46 ; $40e4
+	dw DKSpriteFrame47 ; $40e6
+	dw DKSpriteFrame47 ; $40e8
+	dw DKSpriteFrame48 ; $40ea
+	dw DKSpriteFrame48 ; $40ec
+	dw DKSpriteFrame48 ; $40ee
+	dw DKSpriteFrame49 ; $40f0
+	dw DKSpriteFrame49 ; $40f2
+	dw DKSpriteFrame50 ; $40f4
+	dw DKSpriteFrame50 ; $40f6
+	dw DKSpriteFrame50 ; $40f8
+	dw DKSpriteFrame50 ; $40fa
+	dw DKSpriteFrame50 ; $40fc
+	dw DKSpriteFrame51 ; $40fe
+	dw DKSpriteFrame51 ; $4100
+	dw DKSpriteFrame51 ; $4102
+	dw DKSpriteFrame51 ; $4104
+	dw DKSpriteFrame51 ; $4106
+	dw DKSpriteFrame52 ; $4108
+	dw DKSpriteFrame52 ; $410a
+	dw DKSpriteFrame52 ; $410c
+	dw DKSpriteFrame52 ; $410e
+	dw DKSpriteFrame52 ; $4110
+	dw DKSpriteFrame53 ; $4112
+	dw DKSpriteFrame53 ; $4114
+	dw DKSpriteFrame53 ; $4116
+	dw DKSpriteFrame53 ; $4118
+	dw DKSpriteFrame53 ; $411a
+	dw DKSpriteFrame54 ; $411c
+	dw DKSpriteFrame54 ; $411e
+	dw DKSpriteFrame54 ; $4120
+	dw DKSpriteFrame54 ; $4122
+	dw DKSpriteFrame54 ; $4124
+	dw DKSpriteFrame55 ; $4126
+	dw DKSpriteFrame55 ; $4128
+	dw DKSpriteFrame55 ; $412a
+	dw DKSpriteFrame55 ; $412c
+	dw DKSpriteFrame55 ; $412e
+DKSpriteFrame00:
 	INCBIN "data/bank_05c/d_4130.bin" ; $4130, 240 bytes
-Data_5c_4220:
+DKSpriteFrame01:
 	INCBIN "data/bank_05c/d_4220.bin" ; $4220, 240 bytes
-Data_5c_4310:
+DKSpriteFrame02:
 	INCBIN "data/bank_05c/d_4310.bin" ; $4310, 240 bytes
-Data_5c_4400:
+DKSpriteFrame03:
 	INCBIN "data/bank_05c/d_4400.bin" ; $4400, 240 bytes
-Data_5c_44f0:
+DKSpriteFrame04:
 	INCBIN "data/bank_05c/d_44f0.bin" ; $44f0, 240 bytes
-Data_5c_45e0:
+DKSpriteFrame05:
 	INCBIN "data/bank_05c/d_45e0.bin" ; $45e0, 240 bytes
-Data_5c_46d0:
+DKSpriteFrame06:
 	INCBIN "data/bank_05c/d_46d0.bin" ; $46d0, 240 bytes
-Data_5c_47c0:
+DKSpriteFrame07:
 	INCBIN "data/bank_05c/d_47c0.bin" ; $47c0, 240 bytes
-Data_5c_48b0:
+DKSpriteFrame08:
 	INCBIN "data/bank_05c/d_48b0.bin" ; $48b0, 240 bytes
-Data_5c_49a0:
+DKSpriteFrame09:
 	INCBIN "data/bank_05c/d_49a0.bin" ; $49a0, 240 bytes
-Data_5c_4a90:
+DKSpriteFrame10:
 	INCBIN "data/bank_05c/d_4a90.bin" ; $4a90, 240 bytes
-Data_5c_4b80:
+DKSpriteFrame11:
 	INCBIN "data/bank_05c/d_4b80.bin" ; $4b80, 240 bytes
-Data_5c_4c70:
+DKSpriteFrame12:
 	INCBIN "data/bank_05c/d_4c70.bin" ; $4c70, 240 bytes
-Data_5c_4d60:
+DKSpriteFrame13:
 	INCBIN "data/bank_05c/d_4d60.bin" ; $4d60, 240 bytes
-Data_5c_4e50:
+DKSpriteFrame14:
 	INCBIN "data/bank_05c/d_4e50.bin" ; $4e50, 240 bytes
-Data_5c_4f40:
+DKSpriteFrame15:
 	INCBIN "data/bank_05c/d_4f40.bin" ; $4f40, 240 bytes
-Data_5c_5030:
+DKSpriteFrame16:
 	INCBIN "data/bank_05c/d_5030.bin" ; $5030, 240 bytes
-Data_5c_5120:
+DKSpriteFrame17:
 	INCBIN "data/bank_05c/d_5120.bin" ; $5120, 240 bytes
-Data_5c_5210:
+DKSpriteFrame18:
 	INCBIN "data/bank_05c/d_5210.bin" ; $5210, 240 bytes
-Data_5c_5300:
+DKSpriteFrame19:
 	INCBIN "data/bank_05c/d_5300.bin" ; $5300, 240 bytes
-Data_5c_53f0:
+DKSpriteFrame20:
 	INCBIN "data/bank_05c/d_53f0.bin" ; $53f0, 240 bytes
-Data_5c_54e0:
+DKSpriteFrame21:
 	INCBIN "data/bank_05c/d_54e0.bin" ; $54e0, 240 bytes
-Data_5c_55d0:
+DKSpriteFrame22:
 	INCBIN "data/bank_05c/d_55d0.bin" ; $55d0, 240 bytes
-Data_5c_56c0:
+DKSpriteFrame23:
 	INCBIN "data/bank_05c/d_56c0.bin" ; $56c0, 240 bytes
-Data_5c_57b0:
+DKSpriteFrame24:
 	INCBIN "data/bank_05c/d_57b0.bin" ; $57b0, 240 bytes
-Data_5c_58a0:
+DKSpriteFrame25:
 	INCBIN "data/bank_05c/d_58a0.bin" ; $58a0, 240 bytes
-Data_5c_5990:
+DKSpriteFrame26:
 	INCBIN "data/bank_05c/d_5990.bin" ; $5990, 240 bytes
-Data_5c_5a80:
+DKSpriteFrame27:
 	INCBIN "data/bank_05c/d_5a80.bin" ; $5a80, 240 bytes
-Data_5c_5b70:
+DKSpriteFrame28:
 	INCBIN "data/bank_05c/d_5b70.bin" ; $5b70, 240 bytes
-Data_5c_5c60:
+DKSpriteFrame29:
 	INCBIN "data/bank_05c/d_5c60.bin" ; $5c60, 240 bytes
-Data_5c_5d50:
+DKSpriteFrame30:
 	INCBIN "data/bank_05c/d_5d50.bin" ; $5d50, 240 bytes
-Data_5c_5e40:
+DKSpriteFrame31:
 	INCBIN "data/bank_05c/d_5e40.bin" ; $5e40, 240 bytes
-Data_5c_5f30:
+DKSpriteFrame32:
 	INCBIN "data/bank_05c/d_5f30.bin" ; $5f30, 240 bytes
-Data_5c_6020:
+DKSpriteFrame33:
 	INCBIN "data/bank_05c/d_6020.bin" ; $6020, 240 bytes
-Data_5c_6110:
+DKSpriteFrame34:
 	INCBIN "data/bank_05c/d_6110.bin" ; $6110, 240 bytes
-Data_5c_6200:
+DKSpriteFrame35:
 	INCBIN "data/bank_05c/d_6200.bin" ; $6200, 240 bytes
-Data_5c_62f0:
+DKSpriteFrame36:
 	INCBIN "data/bank_05c/d_62f0.bin" ; $62f0, 240 bytes
-Data_5c_63e0:
+DKSpriteFrame37:
 	INCBIN "data/bank_05c/d_63e0.bin" ; $63e0, 240 bytes
-Data_5c_64d0:
+DKSpriteFrame38:
 	INCBIN "data/bank_05c/d_64d0.bin" ; $64d0, 240 bytes
-Data_5c_65c0:
+DKSpriteFrame39:
 	INCBIN "data/bank_05c/d_65c0.bin" ; $65c0, 240 bytes
-Data_5c_66b0:
+DKSpriteFrame40:
 	INCBIN "data/bank_05c/d_66b0.bin" ; $66b0, 320 bytes
-Data_5c_67f0:
+DKSpriteFrame41:
 	INCBIN "data/bank_05c/d_67f0.bin" ; $67f0, 320 bytes
-Data_5c_6930:
+DKSpriteFrame42:
 	INCBIN "data/bank_05c/d_6930.bin" ; $6930, 240 bytes
-Data_5c_6a20:
+DKSpriteFrame43:
 	INCBIN "data/bank_05c/d_6a20.bin" ; $6a20, 240 bytes
-Data_5c_6b10:
+DKSpriteFrame44:
 	INCBIN "data/bank_05c/d_6b10.bin" ; $6b10, 240 bytes
-Data_5c_6c00:
+DKSpriteFrame45:
 	INCBIN "data/bank_05c/d_6c00.bin" ; $6c00, 240 bytes
-Data_5c_6cf0:
+DKSpriteFrame46:
 	INCBIN "data/bank_05c/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_5c_6de0:
+DKSpriteFrame47:
 	INCBIN "data/bank_05c/d_6de0.bin" ; $6de0, 240 bytes
-Data_5c_6ed0:
+DKSpriteFrame48:
 	INCBIN "data/bank_05c/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_5c_6fc0:
+DKSpriteFrame49:
 	INCBIN "data/bank_05c/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_5c_70b0:
+DKSpriteFrame50:
 	INCBIN "data/bank_05c/d_70b0.bin" ; $70b0, 240 bytes
-Data_5c_71a0:
+DKSpriteFrame51:
 	INCBIN "data/bank_05c/d_71a0.bin" ; $71a0, 240 bytes
-Data_5c_7290:
+DKSpriteFrame52:
 	INCBIN "data/bank_05c/d_7290.bin" ; $7290, 240 bytes
-Data_5c_7380:
+DKSpriteFrame53:
 	INCBIN "data/bank_05c/d_7380.bin" ; $7380, 240 bytes
-Data_5c_7470:
+DKSpriteFrame54:
 	INCBIN "data/bank_05c/d_7470.bin" ; $7470, 240 bytes
-Data_5c_7560:
+DKSpriteFrame55:
 	INCBIN "data/bank_05c/d_7560.bin" ; $7560, 240 bytes
 Data_5c_7650:
 	INCBIN "data/bank_05c/d_7650.bin" ; $7650, 1680 bytes
 Data_5c_7ce0:
 	INCBIN "data/bank_05c/d_7ce0.bin" ; $7ce0, 580 bytes
 DKSpriteAnims:
-	dw Data_5c_7f4a ; $7f24
-	dw Data_5c_7f4d ; $7f26
-	dw Data_5c_7f57 ; $7f28
-	dw Data_5c_7f5d ; $7f2a
-	dw Data_5c_7f83 ; $7f2c
-	dw Data_5c_7f99 ; $7f2e
-	dw Data_5c_7f9f ; $7f30
-	dw Data_5c_7fa5 ; $7f32
-	dw Data_5c_7fab ; $7f34
-	dw Data_5c_7fb0 ; $7f36
-	dw Data_5c_7fb4 ; $7f38
-	dw Data_5c_7fb8 ; $7f3a
-	dw Data_5c_7fbc ; $7f3c
-	dw Data_5c_7fbf ; $7f3e
-	dw Data_5c_7fc2 ; $7f40
-	dw Data_5c_7fc5 ; $7f42
-	dw Data_5c_7fc8 ; $7f44
-	dw Data_5c_7fcb ; $7f46
-	dw Data_5c_7fd7 ; $7f48
-Data_5c_7f4a:
+	dw DKSpriteAnim00 ; $7f24
+	dw DKSpriteAnim01 ; $7f26
+	dw DKSpriteAnim02 ; $7f28
+	dw DKSpriteAnim03 ; $7f2a
+	dw DKSpriteAnim04 ; $7f2c
+	dw DKSpriteAnim05 ; $7f2e
+	dw DKSpriteAnim06 ; $7f30
+	dw DKSpriteAnim07 ; $7f32
+	dw DKSpriteAnim08 ; $7f34
+	dw DKSpriteAnim09 ; $7f36
+	dw DKSpriteAnim10 ; $7f38
+	dw DKSpriteAnim11 ; $7f3a
+	dw DKSpriteAnim12 ; $7f3c
+	dw DKSpriteAnim13 ; $7f3e
+	dw DKSpriteAnim14 ; $7f40
+	dw DKSpriteAnim15 ; $7f42
+	dw DKSpriteAnim16 ; $7f44
+	dw DKSpriteAnim17 ; $7f46
+	dw DKSpriteAnim18 ; $7f48
+DKSpriteAnim00:
 	INCBIN "data/bank_05c/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_5c_7f4d:
+DKSpriteAnim01:
 	INCBIN "data/bank_05c/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_5c_7f57:
+DKSpriteAnim02:
 	INCBIN "data/bank_05c/d_7f57.bin" ; $7f57, 6 bytes
-Data_5c_7f5d:
+DKSpriteAnim03:
 	INCBIN "data/bank_05c/d_7f5d.bin" ; $7f5d, 38 bytes
-Data_5c_7f83:
+DKSpriteAnim04:
 	INCBIN "data/bank_05c/d_7f83.bin" ; $7f83, 22 bytes
-Data_5c_7f99:
+DKSpriteAnim05:
 	INCBIN "data/bank_05c/d_7f99.bin" ; $7f99, 6 bytes
-Data_5c_7f9f:
+DKSpriteAnim06:
 	INCBIN "data/bank_05c/d_7f9f.bin" ; $7f9f, 6 bytes
-Data_5c_7fa5:
+DKSpriteAnim07:
 	INCBIN "data/bank_05c/d_7fa5.bin" ; $7fa5, 6 bytes
-Data_5c_7fab:
+DKSpriteAnim08:
 	INCBIN "data/bank_05c/d_7fab.bin" ; $7fab, 5 bytes
-Data_5c_7fb0:
+DKSpriteAnim09:
 	INCBIN "data/bank_05c/d_7fb0.bin" ; $7fb0, 4 bytes
-Data_5c_7fb4:
+DKSpriteAnim10:
 	INCBIN "data/bank_05c/d_7fb4.bin" ; $7fb4, 4 bytes
-Data_5c_7fb8:
+DKSpriteAnim11:
 	INCBIN "data/bank_05c/d_7fb8.bin" ; $7fb8, 4 bytes
-Data_5c_7fbc:
+DKSpriteAnim12:
 	INCBIN "data/bank_05c/d_7fbc.bin" ; $7fbc, 3 bytes
-Data_5c_7fbf:
+DKSpriteAnim13:
 	INCBIN "data/bank_05c/d_7fbf.bin" ; $7fbf, 3 bytes
-Data_5c_7fc2:
+DKSpriteAnim14:
 	INCBIN "data/bank_05c/d_7fc2.bin" ; $7fc2, 3 bytes
-Data_5c_7fc5:
+DKSpriteAnim15:
 	INCBIN "data/bank_05c/d_7fc5.bin" ; $7fc5, 3 bytes
-Data_5c_7fc8:
+DKSpriteAnim16:
 	INCBIN "data/bank_05c/d_7fc8.bin" ; $7fc8, 3 bytes
-Data_5c_7fcb:
+DKSpriteAnim17:
 	INCBIN "data/bank_05c/d_7fcb.bin" ; $7fcb, 12 bytes
-Data_5c_7fd7:
+DKSpriteAnim18:
 	INCBIN "data/bank_05c/d_7fd7.bin" ; $7fd7, 8 bytes
 	; $7fdf, 33 bytes fill to bank end (linker-padded)

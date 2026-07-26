@@ -9,323 +9,323 @@ PeachSpriteDesc:
 	dw $0000 ; $400a
 	dw Data_54_7ce0 ; $400c per-slot OAM data
 PeachSpriteFrames:
-	dw Data_54_4130 ; $400e
-	dw Data_54_4220 ; $4010
-	dw Data_54_4310 ; $4012
-	dw Data_54_4400 ; $4014
-	dw Data_54_44f0 ; $4016
-	dw Data_54_45e0 ; $4018
-	dw Data_54_46d0 ; $401a
-	dw Data_54_47c0 ; $401c
-	dw Data_54_48b0 ; $401e
-	dw Data_54_49a0 ; $4020
-	dw Data_54_4a90 ; $4022
-	dw Data_54_4220 ; $4024
-	dw Data_54_4310 ; $4026
-	dw Data_54_4400 ; $4028
-	dw Data_54_4b80 ; $402a
-	dw Data_54_4c70 ; $402c
-	dw Data_54_4220 ; $402e
-	dw Data_54_4310 ; $4030
-	dw Data_54_4400 ; $4032
-	dw Data_54_4d60 ; $4034
-	dw Data_54_4e50 ; $4036
-	dw Data_54_46d0 ; $4038
-	dw Data_54_47c0 ; $403a
-	dw Data_54_48b0 ; $403c
-	dw Data_54_4f40 ; $403e
-	dw Data_54_5030 ; $4040
-	dw Data_54_5030 ; $4042
-	dw Data_54_5030 ; $4044
-	dw Data_54_5120 ; $4046
-	dw Data_54_5120 ; $4048
-	dw Data_54_5210 ; $404a
-	dw Data_54_5210 ; $404c
-	dw Data_54_5210 ; $404e
-	dw Data_54_5300 ; $4050
-	dw Data_54_5300 ; $4052
-	dw Data_54_53f0 ; $4054
-	dw Data_54_53f0 ; $4056
-	dw Data_54_53f0 ; $4058
-	dw Data_54_54e0 ; $405a
-	dw Data_54_54e0 ; $405c
-	dw Data_54_55d0 ; $405e
-	dw Data_54_55d0 ; $4060
-	dw Data_54_55d0 ; $4062
-	dw Data_54_56c0 ; $4064
-	dw Data_54_56c0 ; $4066
-	dw Data_54_57b0 ; $4068
-	dw Data_54_57b0 ; $406a
-	dw Data_54_57b0 ; $406c
-	dw Data_54_58a0 ; $406e
-	dw Data_54_58a0 ; $4070
-	dw Data_54_5990 ; $4072
-	dw Data_54_5990 ; $4074
-	dw Data_54_5990 ; $4076
-	dw Data_54_5a80 ; $4078
-	dw Data_54_5a80 ; $407a
-	dw Data_54_5b70 ; $407c
-	dw Data_54_5b70 ; $407e
-	dw Data_54_5b70 ; $4080
-	dw Data_54_5c60 ; $4082
-	dw Data_54_5c60 ; $4084
-	dw Data_54_5d50 ; $4086
-	dw Data_54_5d50 ; $4088
-	dw Data_54_5d50 ; $408a
-	dw Data_54_5e40 ; $408c
-	dw Data_54_5e40 ; $408e
-	dw Data_54_5f30 ; $4090
-	dw Data_54_5f30 ; $4092
-	dw Data_54_5f30 ; $4094
-	dw Data_54_6020 ; $4096
-	dw Data_54_6020 ; $4098
-	dw Data_54_6110 ; $409a
-	dw Data_54_6110 ; $409c
-	dw Data_54_6110 ; $409e
-	dw Data_54_6200 ; $40a0
-	dw Data_54_6200 ; $40a2
-	dw Data_54_62f0 ; $40a4
-	dw Data_54_62f0 ; $40a6
-	dw Data_54_62f0 ; $40a8
-	dw Data_54_63e0 ; $40aa
-	dw Data_54_63e0 ; $40ac
-	dw Data_54_64d0 ; $40ae
-	dw Data_54_64d0 ; $40b0
-	dw Data_54_64d0 ; $40b2
-	dw Data_54_65c0 ; $40b4
-	dw Data_54_65c0 ; $40b6
-	dw Data_54_66b0 ; $40b8
-	dw Data_54_66b0 ; $40ba
-	dw Data_54_66b0 ; $40bc
-	dw Data_54_67f0 ; $40be
-	dw Data_54_67f0 ; $40c0
-	dw Data_54_6930 ; $40c2
-	dw Data_54_6930 ; $40c4
-	dw Data_54_6930 ; $40c6
-	dw Data_54_6930 ; $40c8
-	dw Data_54_6930 ; $40ca
-	dw Data_54_6a20 ; $40cc
-	dw Data_54_6a20 ; $40ce
-	dw Data_54_6a20 ; $40d0
-	dw Data_54_6a20 ; $40d2
-	dw Data_54_6a20 ; $40d4
-	dw Data_54_6b10 ; $40d6
-	dw Data_54_6b10 ; $40d8
-	dw Data_54_6b10 ; $40da
-	dw Data_54_6c00 ; $40dc
-	dw Data_54_6c00 ; $40de
-	dw Data_54_6cf0 ; $40e0
-	dw Data_54_6cf0 ; $40e2
-	dw Data_54_6cf0 ; $40e4
-	dw Data_54_6de0 ; $40e6
-	dw Data_54_6de0 ; $40e8
-	dw Data_54_6ed0 ; $40ea
-	dw Data_54_6ed0 ; $40ec
-	dw Data_54_6ed0 ; $40ee
-	dw Data_54_6fc0 ; $40f0
-	dw Data_54_6fc0 ; $40f2
-	dw Data_54_70b0 ; $40f4
-	dw Data_54_70b0 ; $40f6
-	dw Data_54_70b0 ; $40f8
-	dw Data_54_70b0 ; $40fa
-	dw Data_54_70b0 ; $40fc
-	dw Data_54_71a0 ; $40fe
-	dw Data_54_71a0 ; $4100
-	dw Data_54_71a0 ; $4102
-	dw Data_54_71a0 ; $4104
-	dw Data_54_71a0 ; $4106
-	dw Data_54_7290 ; $4108
-	dw Data_54_7290 ; $410a
-	dw Data_54_7290 ; $410c
-	dw Data_54_7290 ; $410e
-	dw Data_54_7290 ; $4110
-	dw Data_54_7380 ; $4112
-	dw Data_54_7380 ; $4114
-	dw Data_54_7380 ; $4116
-	dw Data_54_7380 ; $4118
-	dw Data_54_7380 ; $411a
-	dw Data_54_7470 ; $411c
-	dw Data_54_7470 ; $411e
-	dw Data_54_7470 ; $4120
-	dw Data_54_7470 ; $4122
-	dw Data_54_7470 ; $4124
-	dw Data_54_7560 ; $4126
-	dw Data_54_7560 ; $4128
-	dw Data_54_7560 ; $412a
-	dw Data_54_7560 ; $412c
-	dw Data_54_7560 ; $412e
-Data_54_4130:
+	dw PeachSpriteFrame00 ; $400e
+	dw PeachSpriteFrame01 ; $4010
+	dw PeachSpriteFrame02 ; $4012
+	dw PeachSpriteFrame03 ; $4014
+	dw PeachSpriteFrame04 ; $4016
+	dw PeachSpriteFrame05 ; $4018
+	dw PeachSpriteFrame06 ; $401a
+	dw PeachSpriteFrame07 ; $401c
+	dw PeachSpriteFrame08 ; $401e
+	dw PeachSpriteFrame09 ; $4020
+	dw PeachSpriteFrame10 ; $4022
+	dw PeachSpriteFrame01 ; $4024
+	dw PeachSpriteFrame02 ; $4026
+	dw PeachSpriteFrame03 ; $4028
+	dw PeachSpriteFrame11 ; $402a
+	dw PeachSpriteFrame12 ; $402c
+	dw PeachSpriteFrame01 ; $402e
+	dw PeachSpriteFrame02 ; $4030
+	dw PeachSpriteFrame03 ; $4032
+	dw PeachSpriteFrame13 ; $4034
+	dw PeachSpriteFrame14 ; $4036
+	dw PeachSpriteFrame06 ; $4038
+	dw PeachSpriteFrame07 ; $403a
+	dw PeachSpriteFrame08 ; $403c
+	dw PeachSpriteFrame15 ; $403e
+	dw PeachSpriteFrame16 ; $4040
+	dw PeachSpriteFrame16 ; $4042
+	dw PeachSpriteFrame16 ; $4044
+	dw PeachSpriteFrame17 ; $4046
+	dw PeachSpriteFrame17 ; $4048
+	dw PeachSpriteFrame18 ; $404a
+	dw PeachSpriteFrame18 ; $404c
+	dw PeachSpriteFrame18 ; $404e
+	dw PeachSpriteFrame19 ; $4050
+	dw PeachSpriteFrame19 ; $4052
+	dw PeachSpriteFrame20 ; $4054
+	dw PeachSpriteFrame20 ; $4056
+	dw PeachSpriteFrame20 ; $4058
+	dw PeachSpriteFrame21 ; $405a
+	dw PeachSpriteFrame21 ; $405c
+	dw PeachSpriteFrame22 ; $405e
+	dw PeachSpriteFrame22 ; $4060
+	dw PeachSpriteFrame22 ; $4062
+	dw PeachSpriteFrame23 ; $4064
+	dw PeachSpriteFrame23 ; $4066
+	dw PeachSpriteFrame24 ; $4068
+	dw PeachSpriteFrame24 ; $406a
+	dw PeachSpriteFrame24 ; $406c
+	dw PeachSpriteFrame25 ; $406e
+	dw PeachSpriteFrame25 ; $4070
+	dw PeachSpriteFrame26 ; $4072
+	dw PeachSpriteFrame26 ; $4074
+	dw PeachSpriteFrame26 ; $4076
+	dw PeachSpriteFrame27 ; $4078
+	dw PeachSpriteFrame27 ; $407a
+	dw PeachSpriteFrame28 ; $407c
+	dw PeachSpriteFrame28 ; $407e
+	dw PeachSpriteFrame28 ; $4080
+	dw PeachSpriteFrame29 ; $4082
+	dw PeachSpriteFrame29 ; $4084
+	dw PeachSpriteFrame30 ; $4086
+	dw PeachSpriteFrame30 ; $4088
+	dw PeachSpriteFrame30 ; $408a
+	dw PeachSpriteFrame31 ; $408c
+	dw PeachSpriteFrame31 ; $408e
+	dw PeachSpriteFrame32 ; $4090
+	dw PeachSpriteFrame32 ; $4092
+	dw PeachSpriteFrame32 ; $4094
+	dw PeachSpriteFrame33 ; $4096
+	dw PeachSpriteFrame33 ; $4098
+	dw PeachSpriteFrame34 ; $409a
+	dw PeachSpriteFrame34 ; $409c
+	dw PeachSpriteFrame34 ; $409e
+	dw PeachSpriteFrame35 ; $40a0
+	dw PeachSpriteFrame35 ; $40a2
+	dw PeachSpriteFrame36 ; $40a4
+	dw PeachSpriteFrame36 ; $40a6
+	dw PeachSpriteFrame36 ; $40a8
+	dw PeachSpriteFrame37 ; $40aa
+	dw PeachSpriteFrame37 ; $40ac
+	dw PeachSpriteFrame38 ; $40ae
+	dw PeachSpriteFrame38 ; $40b0
+	dw PeachSpriteFrame38 ; $40b2
+	dw PeachSpriteFrame39 ; $40b4
+	dw PeachSpriteFrame39 ; $40b6
+	dw PeachSpriteFrame40 ; $40b8
+	dw PeachSpriteFrame40 ; $40ba
+	dw PeachSpriteFrame40 ; $40bc
+	dw PeachSpriteFrame41 ; $40be
+	dw PeachSpriteFrame41 ; $40c0
+	dw PeachSpriteFrame42 ; $40c2
+	dw PeachSpriteFrame42 ; $40c4
+	dw PeachSpriteFrame42 ; $40c6
+	dw PeachSpriteFrame42 ; $40c8
+	dw PeachSpriteFrame42 ; $40ca
+	dw PeachSpriteFrame43 ; $40cc
+	dw PeachSpriteFrame43 ; $40ce
+	dw PeachSpriteFrame43 ; $40d0
+	dw PeachSpriteFrame43 ; $40d2
+	dw PeachSpriteFrame43 ; $40d4
+	dw PeachSpriteFrame44 ; $40d6
+	dw PeachSpriteFrame44 ; $40d8
+	dw PeachSpriteFrame44 ; $40da
+	dw PeachSpriteFrame45 ; $40dc
+	dw PeachSpriteFrame45 ; $40de
+	dw PeachSpriteFrame46 ; $40e0
+	dw PeachSpriteFrame46 ; $40e2
+	dw PeachSpriteFrame46 ; $40e4
+	dw PeachSpriteFrame47 ; $40e6
+	dw PeachSpriteFrame47 ; $40e8
+	dw PeachSpriteFrame48 ; $40ea
+	dw PeachSpriteFrame48 ; $40ec
+	dw PeachSpriteFrame48 ; $40ee
+	dw PeachSpriteFrame49 ; $40f0
+	dw PeachSpriteFrame49 ; $40f2
+	dw PeachSpriteFrame50 ; $40f4
+	dw PeachSpriteFrame50 ; $40f6
+	dw PeachSpriteFrame50 ; $40f8
+	dw PeachSpriteFrame50 ; $40fa
+	dw PeachSpriteFrame50 ; $40fc
+	dw PeachSpriteFrame51 ; $40fe
+	dw PeachSpriteFrame51 ; $4100
+	dw PeachSpriteFrame51 ; $4102
+	dw PeachSpriteFrame51 ; $4104
+	dw PeachSpriteFrame51 ; $4106
+	dw PeachSpriteFrame52 ; $4108
+	dw PeachSpriteFrame52 ; $410a
+	dw PeachSpriteFrame52 ; $410c
+	dw PeachSpriteFrame52 ; $410e
+	dw PeachSpriteFrame52 ; $4110
+	dw PeachSpriteFrame53 ; $4112
+	dw PeachSpriteFrame53 ; $4114
+	dw PeachSpriteFrame53 ; $4116
+	dw PeachSpriteFrame53 ; $4118
+	dw PeachSpriteFrame53 ; $411a
+	dw PeachSpriteFrame54 ; $411c
+	dw PeachSpriteFrame54 ; $411e
+	dw PeachSpriteFrame54 ; $4120
+	dw PeachSpriteFrame54 ; $4122
+	dw PeachSpriteFrame54 ; $4124
+	dw PeachSpriteFrame55 ; $4126
+	dw PeachSpriteFrame55 ; $4128
+	dw PeachSpriteFrame55 ; $412a
+	dw PeachSpriteFrame55 ; $412c
+	dw PeachSpriteFrame55 ; $412e
+PeachSpriteFrame00:
 	INCBIN "data/bank_054/d_4130.bin" ; $4130, 240 bytes
-Data_54_4220:
+PeachSpriteFrame01:
 	INCBIN "data/bank_054/d_4220.bin" ; $4220, 240 bytes
-Data_54_4310:
+PeachSpriteFrame02:
 	INCBIN "data/bank_054/d_4310.bin" ; $4310, 240 bytes
-Data_54_4400:
+PeachSpriteFrame03:
 	INCBIN "data/bank_054/d_4400.bin" ; $4400, 240 bytes
-Data_54_44f0:
+PeachSpriteFrame04:
 	INCBIN "data/bank_054/d_44f0.bin" ; $44f0, 240 bytes
-Data_54_45e0:
+PeachSpriteFrame05:
 	INCBIN "data/bank_054/d_45e0.bin" ; $45e0, 240 bytes
-Data_54_46d0:
+PeachSpriteFrame06:
 	INCBIN "data/bank_054/d_46d0.bin" ; $46d0, 240 bytes
-Data_54_47c0:
+PeachSpriteFrame07:
 	INCBIN "data/bank_054/d_47c0.bin" ; $47c0, 240 bytes
-Data_54_48b0:
+PeachSpriteFrame08:
 	INCBIN "data/bank_054/d_48b0.bin" ; $48b0, 240 bytes
-Data_54_49a0:
+PeachSpriteFrame09:
 	INCBIN "data/bank_054/d_49a0.bin" ; $49a0, 240 bytes
-Data_54_4a90:
+PeachSpriteFrame10:
 	INCBIN "data/bank_054/d_4a90.bin" ; $4a90, 240 bytes
-Data_54_4b80:
+PeachSpriteFrame11:
 	INCBIN "data/bank_054/d_4b80.bin" ; $4b80, 240 bytes
-Data_54_4c70:
+PeachSpriteFrame12:
 	INCBIN "data/bank_054/d_4c70.bin" ; $4c70, 240 bytes
-Data_54_4d60:
+PeachSpriteFrame13:
 	INCBIN "data/bank_054/d_4d60.bin" ; $4d60, 240 bytes
-Data_54_4e50:
+PeachSpriteFrame14:
 	INCBIN "data/bank_054/d_4e50.bin" ; $4e50, 240 bytes
-Data_54_4f40:
+PeachSpriteFrame15:
 	INCBIN "data/bank_054/d_4f40.bin" ; $4f40, 240 bytes
-Data_54_5030:
+PeachSpriteFrame16:
 	INCBIN "data/bank_054/d_5030.bin" ; $5030, 240 bytes
-Data_54_5120:
+PeachSpriteFrame17:
 	INCBIN "data/bank_054/d_5120.bin" ; $5120, 240 bytes
-Data_54_5210:
+PeachSpriteFrame18:
 	INCBIN "data/bank_054/d_5210.bin" ; $5210, 240 bytes
-Data_54_5300:
+PeachSpriteFrame19:
 	INCBIN "data/bank_054/d_5300.bin" ; $5300, 240 bytes
-Data_54_53f0:
+PeachSpriteFrame20:
 	INCBIN "data/bank_054/d_53f0.bin" ; $53f0, 240 bytes
-Data_54_54e0:
+PeachSpriteFrame21:
 	INCBIN "data/bank_054/d_54e0.bin" ; $54e0, 240 bytes
-Data_54_55d0:
+PeachSpriteFrame22:
 	INCBIN "data/bank_054/d_55d0.bin" ; $55d0, 240 bytes
-Data_54_56c0:
+PeachSpriteFrame23:
 	INCBIN "data/bank_054/d_56c0.bin" ; $56c0, 240 bytes
-Data_54_57b0:
+PeachSpriteFrame24:
 	INCBIN "data/bank_054/d_57b0.bin" ; $57b0, 240 bytes
-Data_54_58a0:
+PeachSpriteFrame25:
 	INCBIN "data/bank_054/d_58a0.bin" ; $58a0, 240 bytes
-Data_54_5990:
+PeachSpriteFrame26:
 	INCBIN "data/bank_054/d_5990.bin" ; $5990, 240 bytes
-Data_54_5a80:
+PeachSpriteFrame27:
 	INCBIN "data/bank_054/d_5a80.bin" ; $5a80, 240 bytes
-Data_54_5b70:
+PeachSpriteFrame28:
 	INCBIN "data/bank_054/d_5b70.bin" ; $5b70, 240 bytes
-Data_54_5c60:
+PeachSpriteFrame29:
 	INCBIN "data/bank_054/d_5c60.bin" ; $5c60, 240 bytes
-Data_54_5d50:
+PeachSpriteFrame30:
 	INCBIN "data/bank_054/d_5d50.bin" ; $5d50, 240 bytes
-Data_54_5e40:
+PeachSpriteFrame31:
 	INCBIN "data/bank_054/d_5e40.bin" ; $5e40, 240 bytes
-Data_54_5f30:
+PeachSpriteFrame32:
 	INCBIN "data/bank_054/d_5f30.bin" ; $5f30, 240 bytes
-Data_54_6020:
+PeachSpriteFrame33:
 	INCBIN "data/bank_054/d_6020.bin" ; $6020, 240 bytes
-Data_54_6110:
+PeachSpriteFrame34:
 	INCBIN "data/bank_054/d_6110.bin" ; $6110, 240 bytes
-Data_54_6200:
+PeachSpriteFrame35:
 	INCBIN "data/bank_054/d_6200.bin" ; $6200, 240 bytes
-Data_54_62f0:
+PeachSpriteFrame36:
 	INCBIN "data/bank_054/d_62f0.bin" ; $62f0, 240 bytes
-Data_54_63e0:
+PeachSpriteFrame37:
 	INCBIN "data/bank_054/d_63e0.bin" ; $63e0, 240 bytes
-Data_54_64d0:
+PeachSpriteFrame38:
 	INCBIN "data/bank_054/d_64d0.bin" ; $64d0, 240 bytes
-Data_54_65c0:
+PeachSpriteFrame39:
 	INCBIN "data/bank_054/d_65c0.bin" ; $65c0, 240 bytes
-Data_54_66b0:
+PeachSpriteFrame40:
 	INCBIN "data/bank_054/d_66b0.bin" ; $66b0, 320 bytes
-Data_54_67f0:
+PeachSpriteFrame41:
 	INCBIN "data/bank_054/d_67f0.bin" ; $67f0, 320 bytes
-Data_54_6930:
+PeachSpriteFrame42:
 	INCBIN "data/bank_054/d_6930.bin" ; $6930, 240 bytes
-Data_54_6a20:
+PeachSpriteFrame43:
 	INCBIN "data/bank_054/d_6a20.bin" ; $6a20, 240 bytes
-Data_54_6b10:
+PeachSpriteFrame44:
 	INCBIN "data/bank_054/d_6b10.bin" ; $6b10, 240 bytes
-Data_54_6c00:
+PeachSpriteFrame45:
 	INCBIN "data/bank_054/d_6c00.bin" ; $6c00, 240 bytes
-Data_54_6cf0:
+PeachSpriteFrame46:
 	INCBIN "data/bank_054/d_6cf0.bin" ; $6cf0, 240 bytes
-Data_54_6de0:
+PeachSpriteFrame47:
 	INCBIN "data/bank_054/d_6de0.bin" ; $6de0, 240 bytes
-Data_54_6ed0:
+PeachSpriteFrame48:
 	INCBIN "data/bank_054/d_6ed0.bin" ; $6ed0, 240 bytes
-Data_54_6fc0:
+PeachSpriteFrame49:
 	INCBIN "data/bank_054/d_6fc0.bin" ; $6fc0, 240 bytes
-Data_54_70b0:
+PeachSpriteFrame50:
 	INCBIN "data/bank_054/d_70b0.bin" ; $70b0, 240 bytes
-Data_54_71a0:
+PeachSpriteFrame51:
 	INCBIN "data/bank_054/d_71a0.bin" ; $71a0, 240 bytes
-Data_54_7290:
+PeachSpriteFrame52:
 	INCBIN "data/bank_054/d_7290.bin" ; $7290, 240 bytes
-Data_54_7380:
+PeachSpriteFrame53:
 	INCBIN "data/bank_054/d_7380.bin" ; $7380, 240 bytes
-Data_54_7470:
+PeachSpriteFrame54:
 	INCBIN "data/bank_054/d_7470.bin" ; $7470, 240 bytes
-Data_54_7560:
+PeachSpriteFrame55:
 	INCBIN "data/bank_054/d_7560.bin" ; $7560, 240 bytes
 Data_54_7650:
 	INCBIN "data/bank_054/d_7650.bin" ; $7650, 1680 bytes
 Data_54_7ce0:
 	INCBIN "data/bank_054/d_7ce0.bin" ; $7ce0, 580 bytes
 PeachSpriteAnims:
-	dw Data_54_7f4a ; $7f24
-	dw Data_54_7f4d ; $7f26
-	dw Data_54_7f57 ; $7f28
-	dw Data_54_7f5d ; $7f2a
-	dw Data_54_7f83 ; $7f2c
-	dw Data_54_7f95 ; $7f2e
-	dw Data_54_7f9b ; $7f30
-	dw Data_54_7fa1 ; $7f32
-	dw Data_54_7fa7 ; $7f34
-	dw Data_54_7fac ; $7f36
-	dw Data_54_7fb0 ; $7f38
-	dw Data_54_7fb4 ; $7f3a
-	dw Data_54_7fb8 ; $7f3c
-	dw Data_54_7fbb ; $7f3e
-	dw Data_54_7fbe ; $7f40
-	dw Data_54_7fc1 ; $7f42
-	dw Data_54_7fc4 ; $7f44
-	dw Data_54_7fc7 ; $7f46
-	dw Data_54_7fd3 ; $7f48
-Data_54_7f4a:
+	dw PeachSpriteAnim00 ; $7f24
+	dw PeachSpriteAnim01 ; $7f26
+	dw PeachSpriteAnim02 ; $7f28
+	dw PeachSpriteAnim03 ; $7f2a
+	dw PeachSpriteAnim04 ; $7f2c
+	dw PeachSpriteAnim05 ; $7f2e
+	dw PeachSpriteAnim06 ; $7f30
+	dw PeachSpriteAnim07 ; $7f32
+	dw PeachSpriteAnim08 ; $7f34
+	dw PeachSpriteAnim09 ; $7f36
+	dw PeachSpriteAnim10 ; $7f38
+	dw PeachSpriteAnim11 ; $7f3a
+	dw PeachSpriteAnim12 ; $7f3c
+	dw PeachSpriteAnim13 ; $7f3e
+	dw PeachSpriteAnim14 ; $7f40
+	dw PeachSpriteAnim15 ; $7f42
+	dw PeachSpriteAnim16 ; $7f44
+	dw PeachSpriteAnim17 ; $7f46
+	dw PeachSpriteAnim18 ; $7f48
+PeachSpriteAnim00:
 	INCBIN "data/bank_054/d_7f4a.bin" ; $7f4a, 3 bytes
-Data_54_7f4d:
+PeachSpriteAnim01:
 	INCBIN "data/bank_054/d_7f4d.bin" ; $7f4d, 10 bytes
-Data_54_7f57:
+PeachSpriteAnim02:
 	INCBIN "data/bank_054/d_7f57.bin" ; $7f57, 6 bytes
-Data_54_7f5d:
+PeachSpriteAnim03:
 	INCBIN "data/bank_054/d_7f5d.bin" ; $7f5d, 38 bytes
-Data_54_7f83:
+PeachSpriteAnim04:
 	INCBIN "data/bank_054/d_7f83.bin" ; $7f83, 18 bytes
-Data_54_7f95:
+PeachSpriteAnim05:
 	INCBIN "data/bank_054/d_7f95.bin" ; $7f95, 6 bytes
-Data_54_7f9b:
+PeachSpriteAnim06:
 	INCBIN "data/bank_054/d_7f9b.bin" ; $7f9b, 6 bytes
-Data_54_7fa1:
+PeachSpriteAnim07:
 	INCBIN "data/bank_054/d_7fa1.bin" ; $7fa1, 6 bytes
-Data_54_7fa7:
+PeachSpriteAnim08:
 	INCBIN "data/bank_054/d_7fa7.bin" ; $7fa7, 5 bytes
-Data_54_7fac:
+PeachSpriteAnim09:
 	INCBIN "data/bank_054/d_7fac.bin" ; $7fac, 4 bytes
-Data_54_7fb0:
+PeachSpriteAnim10:
 	INCBIN "data/bank_054/d_7fb0.bin" ; $7fb0, 4 bytes
-Data_54_7fb4:
+PeachSpriteAnim11:
 	INCBIN "data/bank_054/d_7fb4.bin" ; $7fb4, 4 bytes
-Data_54_7fb8:
+PeachSpriteAnim12:
 	INCBIN "data/bank_054/d_7fb8.bin" ; $7fb8, 3 bytes
-Data_54_7fbb:
+PeachSpriteAnim13:
 	INCBIN "data/bank_054/d_7fbb.bin" ; $7fbb, 3 bytes
-Data_54_7fbe:
+PeachSpriteAnim14:
 	INCBIN "data/bank_054/d_7fbe.bin" ; $7fbe, 3 bytes
-Data_54_7fc1:
+PeachSpriteAnim15:
 	INCBIN "data/bank_054/d_7fc1.bin" ; $7fc1, 3 bytes
-Data_54_7fc4:
+PeachSpriteAnim16:
 	INCBIN "data/bank_054/d_7fc4.bin" ; $7fc4, 3 bytes
-Data_54_7fc7:
+PeachSpriteAnim17:
 	INCBIN "data/bank_054/d_7fc7.bin" ; $7fc7, 12 bytes
-Data_54_7fd3:
+PeachSpriteAnim18:
 	INCBIN "data/bank_054/d_7fd3.bin" ; $7fd3, 8 bytes
 	; $7fdb, 37 bytes fill to bank end (linker-padded)
