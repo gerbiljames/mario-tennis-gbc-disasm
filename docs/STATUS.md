@@ -26,7 +26,7 @@ Everything below is **committed** (HEAD `ae57ad6`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **8,319 of 20,736 labels are human-named** (see the caveat in the
+symbols. **10,815 of 20,746 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
 
 ### Local labels inside functions (2026-07-26)
@@ -81,10 +81,10 @@ Getting a scope wrong is not silent: a bare `.name` that binds to the wrong
 parent either fails to assemble or assembles to a different address, so
 `make compare` is a real check on the whole scheme.
 
-**1,482 local labels** are now named, working down the ROM-wide
-call-frequency list: **every function called five or more times, and all but a
-handful of those called four times, has its intra-function jump targets
-named.** What the names buy is mostly structure that was previously invisible:
+**3,949 local labels** are now named. The first pass worked down the ROM-wide
+call-frequency list (everything called four times or more); a second pass then
+took two whole subsystems to completion. What the names buy is mostly
+structure that was previously invisible:
 
 * **`DecompressData`** (220 callers) reads as the LZ decoder it is:
   `.nextControlByte` / `.nextFlag` for the 8-flag control byte, then
@@ -140,11 +140,54 @@ text emitters generate their own `.L4`/`.s17` anchors). It now keeps the ones
 whose offset is curated in `labels.json`, so named locals count toward the
 naming metric -- hence 8,319 named, up from 6,800 with the same source.
 
-Still auto-named: **6,299 `Label_*`** (down from 7,804) and the `Data_*` runs.
-They sit in the long tail: ~1,900 functions, half of which are called once or
-reached only through a dispatch table. Naming them is the same
-one-function-at-a-time work; the machinery no longer has anything to do
-with it.
+### The match engine and story mode have no `Label_*` left (2026-07-26)
+
+**Fifteen banks are now completely free of auto-named labels**: the match
+engine (`$04` actors/AI, `$07` shot physics and the serial link, `$08` the
+match simulation, `$09` court objects) and story mode (`$0a` the overworld
+loop, `$0e`-`$15` the location scripts, `$18` screen sequences, `$38`
+character select and link setup). `grep -c '^Label_' src/bank_0{04,07,08,09,0a,0e,0f,10,11,12,13,14,15,18,38}.asm`
+is zero across all of them.
+
+What surfaced on the way through:
+
+* **The serial link is a nibble protocol.** `ExchangeNibbleBlockMaster` and
+  `ExchangeNibbleBlockSlave` are mirror images: handshake, then one nibble per
+  serial round with a 2-bit tag in the top bits, then a checksum compare that
+  restarts the whole block (`.startBlock`) on a mismatch. `UnpackBytesToNibbles`
+  / `PackNibblesToBytes` are the codec either side of it, and
+  `ExchangeChecksumMaster`/`Slave` shift the checksum across four nibbles.
+* **`StepCharMovement` refuses moves rather than clamping them.** Each axis is
+  stepped into a scratch register first; if the result leaves the playable box
+  the step is dropped and bit 6 of `wCharFlags` is set (`.blockX` /
+  `.blockDepth`), which is what makes a character slide along a wall instead of
+  stopping dead.
+* **The AI is a phase machine.** `AiChoosePositionByStrategy` dispatches to
+  `.behindLanding` / `.lateralMove` / `.midCourt` / `.nearNet` / `.adaptive`,
+  and each phase ends by calling `AiAdvancePhase` -- which is why the
+  otherwise-anonymous `Label_08_796c` turned out to be a shared no-op tail
+  (`AiPhaseNoop`) that several jumptable slots point at.
+* **`RunStoryLocation` is the whole overworld loop** in one function:
+  `.runInitScript`, `.fadeIn`, then a `.frameLoop` that checks, in order, an
+  exit request, a menu request, an interact request, the facing tile, the tile
+  the player stands on, and finally the debug menu.
+* **Bank `$3e`'s four cursor walkers have twins in `$38`, `$3b` and `$18`.**
+  Naming the locals made the duplication impossible to miss: eight copies of
+  the same `.wrapRight`/`.checkLeft`/`.storeDown` walk, differing only in which
+  input source they read and which cursor variable they write.
+
+The tail of each bank was finished with a small generator
+(`auto.py`/`refine.py` in the scratch dir): a label followed only by `ret` is
+`.done`, one jumped to from a *later* address is a `.loop`, and the rest are
+named from the first instruction of their block (`script_speak` -> `.speak`,
+`script_set_position` -> `.placeActors`, ...). Roughly a fifth needed a hand
+name afterwards. Collisions inside one scope get a numeric suffix, which is
+why a few `.placeActors2`/`.applySlot2` names appear.
+
+Still auto-named: **3,813 `Label_*`** (down from 7,804) and the `Data_*` runs.
+and the `Data_*` runs. What is left lives in the menu/UI banks (`$05`, `$1a`-`$1e`,
+`$39`-`$3f`), the minigame banks (`$0b`, `$0d`, `$17`) and ROM0 -- the same
+one-function-at-a-time work, on subsystems this pass did not reach.
 
 Two process notes worth keeping:
 
