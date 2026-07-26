@@ -2227,9 +2227,9 @@ Label_3e_5084:
 OpenChoiceTabPanel:
 	ld a, b ; $5092
 	or a, a ; $5093
-	jr z, Label_3e_50ad ; $5094
+	jr z, .close ; $5094
 	ld c, $00 ; $5096
-Label_3e_5098:
+.openLoop:
 	call AdvanceFrame ; $5098
 	ld b, $10 ; $509b
 	farcall RestoreMenuBgAndDrawPanel ; $509d
@@ -2239,11 +2239,11 @@ Label_3e_5098:
 	inc a ; $50a6
 	ld c, a ; $50a7
 	cp a, $0c ; $50a8
-	jr nz, Label_3e_5098 ; $50aa
+	jr nz, .openLoop ; $50aa
 	ret ; $50ac
-Label_3e_50ad:
+.close:
 	ld c, $08 ; $50ad
-Label_3e_50af:
+.closeLoop:
 	call AdvanceFrame ; $50af
 	ld b, $11 ; $50b2
 	farcall RestoreMenuBgAndDrawPanel ; $50b4
@@ -2253,7 +2253,7 @@ Label_3e_50af:
 	dec a ; $50bd
 	ld c, a ; $50be
 	cp a, $ff ; $50bf
-	jr nz, Label_3e_50af ; $50c1
+	jr nz, .closeLoop ; $50c1
 	ret ; $50c3
 CloseChoiceTabPanel:
 	ld a, b ; $50c4
@@ -2353,21 +2353,21 @@ SetChoiceTabAttrRect:
 	push hl ; $5168
 	ld a, c ; $5169
 	or a, a ; $516a
-	jr z, Label_3e_5171 ; $516b
+	jr z, .inactiveAttr ; $516b
 	ld h, $0c ; $516d
-	jr Label_3e_5173 ; $516f
-Label_3e_5171:
+	jr .lookup ; $516f
+.inactiveAttr:
 	ld h, $0d ; $5171
-Label_3e_5173:
+.lookup:
 	push hl ; $5173
 	ld hl, ChoiceTabAttrAddrs_3e ; $5174
 	ld a, b ; $5177
 	add a, a ; $5178
 	add a, l ; $5179
 	ld l, a ; $517a
-	jr nc, Label_3e_517e ; $517b
+	jr nc, .readAddr ; $517b
 	inc h ; $517d
-Label_3e_517e:
+.readAddr:
 	ld a, [hl+] ; $517e
 	ld d, [hl] ; $517f
 	ld e, a ; $5180
@@ -2654,15 +2654,15 @@ ShowEquipmentStatusScreen:
 	call EnableLCD ; $53a7
 	script_fade_in $10 ; $53aa
 	call WaitFadeEnd ; $53af
-Label_3e_53b2:
+.inputLoop:
 	ldh a, [hInputPressed] ; $53b2
 	bit PADB_A, a ; $53b4
-	jr nz, Label_3e_53c1 ; $53b6
+	jr nz, .exit ; $53b6
 	bit 1, a ; $53b8
-	jr nz, Label_3e_53c1 ; $53ba
+	jr nz, .exit ; $53ba
 	call AdvanceFrame ; $53bc
-	jr Label_3e_53b2 ; $53bf
-Label_3e_53c1:
+	jr .inputLoop ; $53bf
+.exit:
 	sound $5f ; $53c1
 	call ClearFrameTasks ; $53c3
 	ld c, $10 ; $53c6
@@ -4163,21 +4163,21 @@ SetCourtSelect4TabAttrRect:
 	push hl ; $5fb0
 	ld a, c ; $5fb1
 	or a, a ; $5fb2
-	jr z, Label_3e_5fb9 ; $5fb3
+	jr z, .inactiveAttr ; $5fb3
 	ld h, $0c ; $5fb5
-	jr Label_3e_5fbb ; $5fb7
-Label_3e_5fb9:
+	jr .lookup ; $5fb7
+.inactiveAttr:
 	ld h, $0d ; $5fb9
-Label_3e_5fbb:
+.lookup:
 	push hl ; $5fbb
 	ld hl, CourtSelect4TabAttrAddrs_3e ; $5fbc
 	ld a, b ; $5fbf
 	add a, a ; $5fc0
 	add a, l ; $5fc1
 	ld l, a ; $5fc2
-	jr nc, Label_3e_5fc6 ; $5fc3
+	jr nc, .readAddr ; $5fc3
 	inc h ; $5fc5
-Label_3e_5fc6:
+.readAddr:
 	ld a, [hl+] ; $5fc6
 	ld d, [hl] ; $5fc7
 	ld e, a ; $5fc8

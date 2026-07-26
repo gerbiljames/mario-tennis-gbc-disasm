@@ -610,11 +610,11 @@ ShowMessageWindow:
 	call FlushTilemapToVram ; $453b
 	ld a, $1e ; $453e
 	farcall StepMatchFrames ; $4540
-Label_06_4543:
+.waitInput:
 	farcall StepMatchFrame ; $4543
 	farcall ReadMatchInputPressed ; $4546
 	and a, $0f ; $4549
-	jr z, Label_06_4543 ; $454b
+	jr z, .waitInput ; $454b
 	call RestoreBgTilemap ; $454d
 	call FlushTilemapToVram ; $4550
 	farcall StepMatchFrame ; $4553

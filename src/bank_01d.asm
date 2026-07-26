@@ -1203,11 +1203,11 @@ GetSummaryExpDigitSprite:
 	ret ; $4a13
 SaveWorkTilemapToPage:
 	or a, a ; $4a14
-	jr z, Label_1d_4a86 ; $4a15
+	jr z, .page3 ; $4a15
 	dec a ; $4a17
-	jr z, Label_1d_4a63 ; $4a18
+	jr z, .page2 ; $4a18
 	dec a ; $4a1a
-	jr z, Label_1d_4a40 ; $4a1b
+	jr z, .page1 ; $4a1b
 	wram_bank $03 ; $4a1d
 	ld hl, $d000 ; $4a23
 	ld de, $dc60 ; $4a26
@@ -1219,7 +1219,7 @@ SaveWorkTilemapToPage:
 	ld c, $24 ; $4a3a
 	call CopyMemoryFast ; $4a3c
 	ret ; $4a3f
-Label_1d_4a40:
+.page1:
 	wram_bank $03 ; $4a40
 	ld hl, $d000 ; $4a46
 	ld de, $da20 ; $4a49
@@ -1231,7 +1231,7 @@ Label_1d_4a40:
 	ld c, $24 ; $4a5d
 	call CopyMemoryFast ; $4a5f
 	ret ; $4a62
-Label_1d_4a63:
+.page2:
 	wram_bank $03 ; $4a63
 	ld hl, $d000 ; $4a69
 	ld de, $d7e0 ; $4a6c
@@ -1243,7 +1243,7 @@ Label_1d_4a63:
 	ld c, $24 ; $4a80
 	call CopyMemoryFast ; $4a82
 	ret ; $4a85
-Label_1d_4a86:
+.page3:
 	wram_bank $03 ; $4a86
 	ld hl, $d000 ; $4a8c
 	ld de, $d5a0 ; $4a8f

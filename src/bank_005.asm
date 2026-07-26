@@ -2680,7 +2680,7 @@ PushTextArgString:
 	ld a, h ; $50fb
 	and a, $f0 ; $50fc
 	cp a, $d0 ; $50fe
-	jr nz, Label_05_5114 ; $5100
+	jr nz, .maskId ; $5100
 	ld a, h ; $5102
 	and a, $0f ; $5103
 	ld b, a ; $5105
@@ -2691,12 +2691,12 @@ PushTextArgString:
 	sla a ; $510e
 	or a, b ; $5110
 	ld h, a ; $5111
-	jr Label_05_5118 ; $5112
-Label_05_5114:
+	jr .push ; $5112
+.maskId:
 	ld a, h ; $5114
 	and a, $0f ; $5115
 	ld h, a ; $5117
-Label_05_5118:
+.push:
 	ldh a, [hWramBank] ; $5118
 	push af ; $511a
 	wram_bank $05 ; $511b
@@ -2704,7 +2704,7 @@ Label_05_5118:
 	ld e, l ; $5122
 	ld a, [wTextArgStringWriteIndex] ; $5123
 	cp a, $10 ; $5126
-	jr z, Label_05_513d ; $5128
+	jr z, .done ; $5128
 	ld b, $00 ; $512a
 	ld c, a ; $512c
 	sla c ; $512d
@@ -2716,7 +2716,7 @@ Label_05_5118:
 	ld [hl], e ; $513a
 	inc hl ; $513b
 	ld [hl], d ; $513c
-Label_05_513d:
+.done:
 	pop af ; $513d
 	wram_bank ; $513e
 	pop hl ; $5142

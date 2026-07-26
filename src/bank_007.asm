@@ -815,18 +815,18 @@ PollSerialResponse:
 	ldh a, [hLinkRxByte] ; $4531
 	ld b, a ; $4533
 	cp a, $00 ; $4534
-	jr z, Label_07_4543 ; $4536
+	jr z, .noReply ; $4536
 	cp a, $ff ; $4538
-	jr z, Label_07_4543 ; $453a
+	jr z, .noReply ; $453a
 	xor a, a ; $453c
 	ldh [hLinkCounter], a ; $453d
 	scf ; $453f
 	ccf ; $4540
-	jr Label_07_4547 ; $4541
-Label_07_4543:
+	jr .done ; $4541
+.noReply:
 	call IncrementLinkFrameCounter ; $4543
 	scf ; $4546
-Label_07_4547:
+.done:
 	ei ; $4547
 	ld a, b ; $4548
 	pop bc ; $4549
@@ -1644,11 +1644,11 @@ ResyncLinkSession:
 	farcall ExchangeLinkReadySignal ; $4a67
 	ldh a, [hLinkState] ; $4a6a
 	cp a, $02 ; $4a6c
-	jr z, Label_07_4a8c ; $4a6e
+	jr z, .asSlave ; $4a6e
 	cp a, $01 ; $4a70
-	jr z, Label_07_4a77 ; $4a72
+	jr z, .asMaster ; $4a72
 	call LinkErrorReset ; $4a74
-Label_07_4a77:
+.asMaster:
 	ld a, $40 ; $4a77
 	ldh [$ffdc], a ; $4a79
 	call ShortDelay ; $4a7b
@@ -1656,13 +1656,13 @@ Label_07_4a77:
 	call ShortDelay ; $4a81
 	call ShortDelay ; $4a84
 	call ShortDelay ; $4a87
-	jr Label_07_4a93 ; $4a8a
-Label_07_4a8c:
+	jr .encode ; $4a8a
+.asSlave:
 	xor a, a ; $4a8c
 	ldh [$ffd7], a ; $4a8d
 	ld a, $80 ; $4a8f
 	ldh [$ffdc], a ; $4a91
-Label_07_4a93:
+.encode:
 	call SerialEncodeInput ; $4a93
 	farcall PrimeSlaveSerialReply ; $4a96
 	xor a, a ; $4a99

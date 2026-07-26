@@ -4571,9 +4571,9 @@ ReadSceneTilemapCell_10:
 	ld a, d ; $7ad9
 	add a, l ; $7ada
 	ld l, a ; $7adb
-	jr nc, Label_10_7adf ; $7adc
+	jr nc, .read ; $7adc
 	inc h ; $7ade
-Label_10_7adf:
+.read:
 	ld d, h ; $7adf
 	ld e, l ; $7ae0
 	ld l, c ; $7ae1

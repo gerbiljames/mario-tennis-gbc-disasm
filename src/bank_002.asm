@@ -1064,20 +1064,20 @@ RefreshMainCharacterStats:
 	ld b, a ; $47a3
 	and a, $0f ; $47a4
 	cp a, $03 ; $47a6
-	jr nz, Label_02_47ae ; $47a8
+	jr nz, .checkHighNibble ; $47a8
 	ld a, b ; $47aa
 	and a, $f0 ; $47ab
 	ld b, a ; $47ad
-Label_02_47ae:
+.checkHighNibble:
 	ld a, b ; $47ae
 	swap a ; $47af
 	and a, $0f ; $47b1
 	cp a, $01 ; $47b3
-	jr nz, Label_02_47bb ; $47b5
+	jr nz, .store ; $47b5
 	ld a, b ; $47b7
 	and a, $0f ; $47b8
 	ld b, a ; $47ba
-Label_02_47bb:
+.store:
 	ld a, b ; $47bb
 	ld [$c83c], a ; $47bc
 	ld bc, wStorySlotData ; $47bf

@@ -31,51 +31,51 @@ RunPauseMenuWindow:
 	farcall RestoreShadowTilemap ; $403f
 	farcall RenderMenuWindowText ; $4042
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $4045
-Label_1a_4048:
+.menuLoop:
 	call DrawPauseMenuSettingValues ; $4048
 	ld a, [wPauseMenuWindowId] ; $404b
 	farcall RunMenuSelectionShared ; $404e
 	push af ; $4051
 	push bc ; $4052
 	cp a, $ff ; $4053
-	jr z, Label_1a_4070 ; $4055
+	jr z, .checkEnabled ; $4055
 	ld a, [wMenuKeepOpenRowMask] ; $4057
 	bit 7, a ; $405a
-	jr z, Label_1a_4070 ; $405c
+	jr z, .checkEnabled ; $405c
 	and a, $7f ; $405e
 	ld b, a ; $4060
 	ld a, [$d830] ; $4061
 	inc a ; $4064
-Label_1a_4065:
+.rotateLoop:
 	rrc b ; $4065
 	dec a ; $4067
-	jr nz, Label_1a_4065 ; $4068
+	jr nz, .rotateLoop ; $4068
 	rlc b ; $406a
 	bit 0, b ; $406c
-	jr nz, Label_1a_407c ; $406e
-Label_1a_4070:
+	jr nz, .apply ; $406e
+.checkEnabled:
 	ld a, [wPauseMenuWindowId] ; $4070
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $4073
 	farcall CloseWindow ; $4076
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $4079
-Label_1a_407c:
+.apply:
 	pop bc ; $407c
 	pop af ; $407d
 	cp a, $ff ; $407e
-	jr z, Label_1a_408e ; $4080
+	jr z, .done ; $4080
 	add a, a ; $4082
 	add a, c ; $4083
 	ld c, a ; $4084
-	jr nc, Label_1a_4088 ; $4085
+	jr nc, .redraw ; $4085
 	inc b ; $4087
-Label_1a_4088:
+.redraw:
 	ld h, b ; $4088
 	ld l, c ; $4089
 	ld a, [hl+] ; $408a
 	ld h, [hl] ; $408b
 	ld l, a ; $408c
 	jp hl ; $408d
-Label_1a_408e:
+.done:
 	call ResetPauseMenuState ; $408e
 	ret ; $4091
 ResetPauseMenuState:
@@ -218,7 +218,7 @@ GetTilemapBufferCellDest:
 	ld [wStoryModeEntryPoint], a ; $4189
 	ld [$c294], a ; $418c
 	ld [wStoryModeExitLocationRequest], a ; $418f
-	jp Label_1a_408e ; $4192
+	jp RunPauseMenuWindow.done ; $4192
 	farcall ShowGameProgressScreen ; $4195
 	ld hl, wStoryModePlayersXPosition ; $4198
 	ld de, wStoryModeSpawnPosition ; $419b
@@ -228,19 +228,19 @@ GetTilemapBufferCellDest:
 	ld [wStoryModeEntryPoint], a ; $41a6
 	ld [$c294], a ; $41a9
 	ld [wStoryModeExitLocationRequest], a ; $41ac
-	jp Label_1a_408e ; $41af
+	jp RunPauseMenuWindow.done ; $41af
 	call AdjustMessageSpeedSetting ; $41b2
 	ld a, [$d830] ; $41b5
 	ld [wMenuInitialRow], a ; $41b8
 	ld bc, $416c ; $41bb
 	ld a, [wPauseMenuWindowId] ; $41be
-	jp Label_1a_4048 ; $41c1
+	jp RunPauseMenuWindow.menuLoop ; $41c1
 	call ToggleMusicSetting ; $41c4
 	ld a, [$d830] ; $41c7
 	ld [wMenuInitialRow], a ; $41ca
 	ld bc, $416c ; $41cd
 	ld a, [wPauseMenuWindowId] ; $41d0
-	jp Label_1a_4048 ; $41d3
+	jp RunPauseMenuWindow.menuLoop ; $41d3
 	xor a, a ; $41d6
 	ld [$cb2c], a ; $41d7
 	jp Label_1a_42ce ; $41da
@@ -267,7 +267,7 @@ Label_1a_41f8:
 	ld [wMenuInitialRow], a ; $4203
 	ld bc, $41dd ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
-	jp Label_1a_4048 ; $420c
+	jp RunPauseMenuWindow.menuLoop ; $420c
 	ld a, [$cb2a] ; $420f
 	and a, $0f ; $4212
 	and a, a ; $4214
@@ -289,7 +289,7 @@ Label_1a_4227:
 	ld [wMenuInitialRow], a ; $4232
 	ld bc, $41dd ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
-	jp Label_1a_4048 ; $423b
+	jp RunPauseMenuWindow.menuLoop ; $423b
 	call ResetPauseMenuState ; $423e
 	ld a, $c0 ; $4241
 	ld [$cb2a], a ; $4243
@@ -395,7 +395,7 @@ Label_1a_42ce:
 	ld a, $ff ; $430c
 	ld [$c294], a ; $430e
 	ld [wStoryModeExitLocationRequest], a ; $4311
-	jp Label_1a_408e ; $4314
+	jp RunPauseMenuWindow.done ; $4314
 Label_1a_4317:
 	cp a, $ff ; $4317
 	jr nz, Label_1a_4331 ; $4319
@@ -427,7 +427,7 @@ Label_1a_4331:
 	ld a, $ff ; $435b
 	ld [$c294], a ; $435d
 	ld [wStoryModeExitLocationRequest], a ; $4360
-	jp Label_1a_408e ; $4363
+	jp RunPauseMenuWindow.done ; $4363
 Label_1a_4366:
 	call BuildMinigameModePauseMenu ; $4366
 	ld a, $03 ; $4369

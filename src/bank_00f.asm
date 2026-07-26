@@ -1866,9 +1866,9 @@ ReadSceneTilemapTile_0f:
 	ld a, d ; $6419
 	add a, l ; $641a
 	ld l, a ; $641b
-	jr nc, Label_0f_641f ; $641c
+	jr nc, .read ; $641c
 	inc h ; $641e
-Label_0f_641f:
+.read:
 	ld d, h ; $641f
 	ld e, l ; $6420
 	ld l, c ; $6421

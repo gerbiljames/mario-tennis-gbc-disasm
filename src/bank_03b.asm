@@ -6287,9 +6287,9 @@ Label_3b_6e41:
 SavedDataPickerSlideOut:
 	ld a, b ; $6e56
 	or a, a ; $6e57
-	jr z, Label_3b_6e71 ; $6e58
+	jr z, .slideIn ; $6e58
 	ld c, $00 ; $6e5a
-Label_3b_6e5c:
+.outLoop:
 	call AdvanceFrame ; $6e5c
 	ld b, $09 ; $6e5f
 	farcall RestoreMenuBgAndDrawPanel ; $6e61
@@ -6299,11 +6299,11 @@ Label_3b_6e5c:
 	inc a ; $6e6a
 	ld c, a ; $6e6b
 	cp a, $0a ; $6e6c
-	jr nz, Label_3b_6e5c ; $6e6e
+	jr nz, .outLoop ; $6e6e
 	ret ; $6e70
-Label_3b_6e71:
+.slideIn:
 	ld c, $0e ; $6e71
-Label_3b_6e73:
+.inLoop:
 	call AdvanceFrame ; $6e73
 	ld b, $08 ; $6e76
 	farcall RestoreMenuBgAndDrawPanel ; $6e78
@@ -6313,7 +6313,7 @@ Label_3b_6e73:
 	dec a ; $6e81
 	ld c, a ; $6e82
 	or a, a ; $6e83
-	jr nz, Label_3b_6e73 ; $6e84
+	jr nz, .inLoop ; $6e84
 	ret ; $6e86
 MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorY] ; $6e87
@@ -6941,9 +6941,9 @@ Label_3b_7309:
 N64RecordTypeSlideOut:
 	ld a, b ; $731e
 	or a, a ; $731f
-	jr z, Label_3b_7339 ; $7320
+	jr z, .slideIn ; $7320
 	ld c, $00 ; $7322
-Label_3b_7324:
+.outLoop:
 	call AdvanceFrame ; $7324
 	ld b, $0b ; $7327
 	farcall RestoreMenuBgAndDrawPanel ; $7329
@@ -6953,11 +6953,11 @@ Label_3b_7324:
 	inc a ; $7332
 	ld c, a ; $7333
 	cp a, $0b ; $7334
-	jr nz, Label_3b_7324 ; $7336
+	jr nz, .outLoop ; $7336
 	ret ; $7338
-Label_3b_7339:
+.slideIn:
 	ld c, $0c ; $7339
-Label_3b_733b:
+.inLoop:
 	call AdvanceFrame ; $733b
 	ld b, $0a ; $733e
 	farcall RestoreMenuBgAndDrawPanel ; $7340
@@ -6967,7 +6967,7 @@ Label_3b_733b:
 	dec a ; $7349
 	ld c, a ; $734a
 	or a, a ; $734b
-	jr nz, Label_3b_733b ; $734c
+	jr nz, .inLoop ; $734c
 	ret ; $734e
 N64RecordTypeCursorSpriteTask:
 	farcall TickMenuBgScroll ; $734f

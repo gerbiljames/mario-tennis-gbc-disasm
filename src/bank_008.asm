@@ -897,7 +897,7 @@ MulMem24ByFrac:
 	ld e, a ; $4690
 	ld a, [hl] ; $4691
 	bit 7, d ; $4692
-	jr nz, Label_08_46a0 ; $4694
+	jr nz, .negate ; $4694
 	ld l, e ; $4696
 	ld h, d ; $4697
 	ld a, b ; $4698
@@ -906,7 +906,7 @@ MulMem24ByFrac:
 	ld e, l ; $469d
 	ld d, h ; $469e
 	ret ; $469f
-Label_08_46a0:
+.negate:
 	call NegateADE ; $46a0
 	ld l, e ; $46a3
 	ld h, d ; $46a4
@@ -3383,23 +3383,23 @@ MulHLByDEAbs:
 	xor a, d ; $5a1e
 	ldh [hMathSign], a ; $5a1f
 	bit 7, h ; $5a21
-	jr z, Label_08_5a2b ; $5a23
+	jr z, .absDE ; $5a23
 	xor a, a ; $5a25
 	sub a, l ; $5a26
 	ld l, a ; $5a27
 	sbc a, a ; $5a28
 	sub a, h ; $5a29
 	ld h, a ; $5a2a
-Label_08_5a2b:
+.absDE:
 	bit 7, d ; $5a2b
-	jr z, Label_08_5a35 ; $5a2d
+	jr z, .multiply ; $5a2d
 	xor a, a ; $5a2f
 	sub a, e ; $5a30
 	ld e, a ; $5a31
 	sbc a, a ; $5a32
 	sub a, d ; $5a33
 	ld d, a ; $5a34
-Label_08_5a35:
+.multiply:
 	call MulHLByDE ; $5a35
 	ret ; $5a38
 MulSignedHLByAFrac:
@@ -3940,25 +3940,25 @@ EvalWinByTwo:
 ResolvePointWinner:
 	ld a, [wPointOutcome] ; $5d9a
 	cp a, POINTOUTCOME_FAULT ; $5d9d
-	jr z, Label_08_5dba ; $5d9f
+	jr z, .noWinner ; $5d9f
 	cp a, $03 ; $5da1
-	jr z, Label_08_5dba ; $5da3
+	jr z, .noWinner ; $5da3
 	cp a, $09 ; $5da5
-	jr z, Label_08_5dbc ; $5da7
+	jr z, .fromToucher ; $5da7
 	ld a, [wLastShotCharIndex] ; $5da9
 	and a, $01 ; $5dac
-	jr z, Label_08_5db6 ; $5dae
+	jr z, .sameSide ; $5dae
 	ld a, [wPointOutcomeSide] ; $5db0
 	cpl ; $5db3
 	inc a ; $5db4
 	ret ; $5db5
-Label_08_5db6:
+.sameSide:
 	ld a, [wPointOutcomeSide] ; $5db6
 	ret ; $5db9
-Label_08_5dba:
+.noWinner:
 	xor a, a ; $5dba
 	ret ; $5dbb
-Label_08_5dbc:
+.fromToucher:
 	ld a, [wBallTouchCharIndex] ; $5dbc
 	and a, $01 ; $5dbf
 	add a, a ; $5dc1

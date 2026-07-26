@@ -5017,21 +5017,21 @@ SetSelectPanelAttrRect:
 	push hl ; $6f38
 	ld a, c ; $6f39
 	or a, a ; $6f3a
-	jr z, Label_1b_6f41 ; $6f3b
+	jr z, .inactiveAttr ; $6f3b
 	ld h, $0c ; $6f3d
-	jr Label_1b_6f43 ; $6f3f
-Label_1b_6f41:
+	jr .lookup ; $6f3f
+.inactiveAttr:
 	ld h, $0d ; $6f41
-Label_1b_6f43:
+.lookup:
 	push hl ; $6f43
 	ld hl, Data_1b_6f5e ; $6f44
 	ld a, b ; $6f47
 	add a, a ; $6f48
 	add a, l ; $6f49
 	ld l, a ; $6f4a
-	jr nc, Label_1b_6f4e ; $6f4b
+	jr nc, .readAddr ; $6f4b
 	inc h ; $6f4d
-Label_1b_6f4e:
+.readAddr:
 	ld a, [hl+] ; $6f4e
 	ld d, [hl] ; $6f4f
 	ld e, a ; $6f50
