@@ -2142,13 +2142,13 @@ StartNextDoublesRankingMatch:
 	script_set_speed ACTOR_PLAYER, $0020 ; $6596
 	script_set_speed ACTOR_PARTNER, $0020 ; $659e
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $65a6
-	jp z, Label_11_65b9 ; $65a9
+	jp z, .rank2 ; $65a9
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $65ac
-	jp z, Label_11_6642 ; $65af
+	jp z, .rank3 ; $65af
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $65b2
-	jp z, Label_11_6702 ; $65b5
+	jp z, .done ; $65b5
 	ret ; $65b8
-Label_11_65b9:
+.rank2:
 	script_face $03, FACE_RIGHT ; $65b9
 	script_wait_frames $1e ; $65c0
 	script_null_script ACTOR_PARTNER ; $65c7
@@ -2170,7 +2170,7 @@ Label_11_65b9:
 	farcall RunStoryMatch ; $663b
 	farcall RestoreOverworldAfterMatch ; $663e
 	ret ; $6641
-Label_11_6642:
+.rank3:
 	script_face $03, FACE_LEFT ; $6642
 	script_wait_frames $0f ; $6649
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6650
@@ -2199,7 +2199,7 @@ Label_11_6642:
 	farcall RunStoryMatch ; $66fb
 	farcall RestoreOverworldAfterMatch ; $66fe
 	ret ; $6701
-Label_11_6702:
+.done:
 	script_face $03, FACE_RIGHT ; $6702
 	script_wait_frames $0f ; $6709
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6710

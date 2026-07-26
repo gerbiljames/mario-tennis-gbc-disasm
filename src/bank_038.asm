@@ -2186,21 +2186,21 @@ MoveCharGridCursorRight:
 	ld a, [wMenuCursorX] ; $525e
 	inc a ; $5261
 	cp a, $03 ; $5262
-	jr nz, Label_38_527f ; $5264
+	jr nz, .store ; $5264
 	ld a, [$d811] ; $5266
 	cp a, $02 ; $5269
-	jr c, Label_38_5279 ; $526b
+	jr c, .lastPage ; $526b
 	ld a, [$d811] ; $526d
 	ld [$d81b], a ; $5270
 	xor a, a ; $5273
 	ld [$d811], a ; $5274
-	jr Label_38_527e ; $5277
-Label_38_5279:
+	jr .firstColumn ; $5277
+.lastPage:
 	ld a, $03 ; $5279
 	ld [$d811], a ; $527b
-Label_38_527e:
+.firstColumn:
 	xor a, a ; $527e
-Label_38_527f:
+.store:
 	ld [wMenuCursorX], a ; $527f
 	call BuildVisiblePageSpriteList ; $5282
 	call RefreshCharInfoPanel ; $5285
@@ -2210,22 +2210,22 @@ MoveCharGridCursorLeft:
 	ld a, [wMenuCursorX] ; $528b
 	dec a ; $528e
 	cp a, $ff ; $528f
-	jr nz, Label_38_52b0 ; $5291
+	jr nz, .store ; $5291
 	ld a, [$d811] ; $5293
 	cp a, $02 ; $5296
-	jr c, Label_38_52a6 ; $5298
+	jr c, .firstPage ; $5298
 	ld a, [$d811] ; $529a
 	ld [$d81b], a ; $529d
 	xor a, a ; $52a0
 	ld [$d811], a ; $52a1
-	jr Label_38_52ab ; $52a4
-Label_38_52a6:
+	jr .lastColumn ; $52a4
+.firstPage:
 	ld a, $03 ; $52a6
 	ld [$d811], a ; $52a8
-Label_38_52ab:
+.lastColumn:
 	call BuildVisiblePageSpriteList ; $52ab
 	ld a, $02 ; $52ae
-Label_38_52b0:
+.store:
 	ld [wMenuCursorX], a ; $52b0
 	call RefreshCharInfoPanel ; $52b3
 	sound $5e ; $52b6
@@ -3008,18 +3008,18 @@ DrawCreatedCharStats:
 	ld a, c ; $57ea
 	ld de, $0020 ; $57eb
 	ld hl, $d900 ; $57ee
-Label_38_57f1:
+.seekRecord:
 	or a, a ; $57f1
-	jr z, Label_38_57f8 ; $57f2
+	jr z, .drawStats ; $57f2
 	add hl, de ; $57f4
 	dec a ; $57f5
-	jr Label_38_57f1 ; $57f6
-Label_38_57f8:
+	jr .seekRecord ; $57f6
+.drawStats:
 	ld b, h ; $57f8
 	ld c, l ; $57f9
 	ld a, [hl] ; $57fa
 	cp a, $ff ; $57fb
-	jp z, Label_38_58b7 ; $57fd
+	jp z, .drawName ; $57fd
 	push af ; $5800
 	push bc ; $5801
 	push de ; $5802
@@ -3103,7 +3103,7 @@ Label_38_57f8:
 	ld de, $d20f ; $58af
 	ld a, $02 ; $58b2
 	call DrawDecimalNumber ; $58b4
-Label_38_58b7:
+.drawName:
 	ld de, $d601 ; $58b7
 	ld h, $00 ; $58ba
 	ld b, $12 ; $58bc
@@ -3122,9 +3122,9 @@ DrawCharNameAndType:
 	ld hl, $001b ; $58cf
 	add a, l ; $58d2
 	ld l, a ; $58d3
-	jr nc, Label_38_58d7 ; $58d4
+	jr nc, .drawName ; $58d4
 	inc h ; $58d6
-Label_38_58d7:
+.drawName:
 	ld de, $d1a6 ; $58d7
 	ld c, $20 ; $58da
 	farcall RenderTextToBuffer64 ; $58dc
@@ -3133,16 +3133,16 @@ Label_38_58d7:
 	ld hl, Data_38_58fb ; $58e1
 	add a, l ; $58e4
 	ld l, a ; $58e5
-	jr nc, Label_38_58e9 ; $58e6
+	jr nc, .readType ; $58e6
 	inc h ; $58e8
-Label_38_58e9:
+.readType:
 	ld a, [hl] ; $58e9
 	ld hl, $0099 ; $58ea
 	add a, l ; $58ed
 	ld l, a ; $58ee
-	jr nc, Label_38_58f2 ; $58ef
+	jr nc, .drawType ; $58ef
 	inc h ; $58f1
-Label_38_58f2:
+.drawType:
 	ld de, $d1e3 ; $58f2
 	ld c, $20 ; $58f5
 	farcall RenderTextToBuffer64 ; $58f7
@@ -3154,10 +3154,10 @@ Data_38_58fb:
 DrawCharSelectSlotLabel:
 	ld a, [$d811] ; $591b
 	cp a, $02 ; $591e
-	jr nc, Label_38_597e ; $5920
+	jr nc, .drawName ; $5920
 	ld a, [$df00] ; $5922
 	or a, a ; $5925
-	jr nz, Label_38_5944 ; $5926
+	jr nz, .slot2 ; $5926
 	ld hl, $d340 ; $5928
 	ld de, $d204 ; $592b
 	ld b, $05 ; $592e
@@ -3168,10 +3168,10 @@ DrawCharSelectSlotLabel:
 	ld b, $05 ; $593b
 	ld c, $01 ; $593d
 	farcall CopyTilemapRect ; $593f
-	jr Label_38_597e ; $5942
-Label_38_5944:
+	jr .drawName ; $5942
+.slot2:
 	cp a, $01 ; $5944
-	jr nz, Label_38_5964 ; $5946
+	jr nz, .slot3 ; $5946
 	ld hl, $d340 ; $5948
 	ld de, $d204 ; $594b
 	ld b, $05 ; $594e
@@ -3182,8 +3182,8 @@ Label_38_5944:
 	ld b, $05 ; $595b
 	ld c, $01 ; $595d
 	farcall CopyTilemapRect ; $595f
-	jr Label_38_597e ; $5962
-Label_38_5964:
+	jr .drawName ; $5962
+.slot3:
 	ld hl, $d340 ; $5964
 	ld de, $d204 ; $5967
 	ld b, $05 ; $596a
@@ -3194,7 +3194,7 @@ Label_38_5964:
 	ld b, $08 ; $5977
 	ld c, $01 ; $5979
 	farcall CopyTilemapRect ; $597b
-Label_38_597e:
+.drawName:
 	ld de, $d601 ; $597e
 	ld h, $08 ; $5981
 	ld b, $12 ; $5983
@@ -3210,16 +3210,16 @@ DrawCharGridSlotIcons:
 	ld hl, SubHandlers_38_59ba ; $5998
 	add a, l ; $599b
 	ld l, a ; $599c
-	jr nc, Label_38_59a0 ; $599d
+	jr nc, .readList ; $599d
 	inc h ; $599f
-Label_38_59a0:
+.readList:
 	ld a, [hl+] ; $59a0
 	ld h, [hl] ; $59a1
 	ld l, a ; $59a2
-Label_38_59a3:
+.iconLoop:
 	ld a, [hl] ; $59a3
 	or a, a ; $59a4
-	jr z, Label_38_59b4 ; $59a5
+	jr z, .done ; $59a5
 	ld c, a ; $59a7
 	inc hl ; $59a8
 	ld b, [hl] ; $59a9
@@ -3229,8 +3229,8 @@ Label_38_59a3:
 	ld e, a ; $59ad
 	inc hl ; $59ae
 	call WriteSlotIconTiles ; $59af
-	jr Label_38_59a3 ; $59b2
-Label_38_59b4:
+	jr .iconLoop ; $59b2
+.done:
 	pop af ; $59b4
 	wram_bank ; $59b5
 	ret ; $59b9
@@ -3843,7 +3843,7 @@ BuildCreatedCharRecords:
 	call ClearBytes ; $5d96
 	ld bc, $d900 ; $5d99
 	ld a, $80 ; $5d9c
-Label_38_5d9e:
+.charLoop:
 	push af ; $5d9e
 	farcall LoadCharacterRecordToBuffer ; $5d9f
 	farcall CheckCharacterUnlocked ; $5da2
@@ -3851,7 +3851,7 @@ Label_38_5d9e:
 	add hl, bc ; $5da8
 	ld a, [$d58b] ; $5da9
 	cp a, $04 ; $5dac
-	jr c, Label_38_5dc9 ; $5dae
+	jr c, .createdChar ; $5dae
 	ld a, $ff ; $5db0
 	ld [hl], a ; $5db2
 	ld hl, $0020 ; $5db3
@@ -3866,8 +3866,8 @@ Label_38_5d9e:
 	add hl, bc ; $5dc3
 	ld b, h ; $5dc4
 	ld c, l ; $5dc5
-	jp Label_38_5e5d ; $5dc6
-Label_38_5dc9:
+	jp .next ; $5dc6
+.createdChar:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $5dc9
 	ld [hl], a ; $5dcc
 	ld hl, $0001 ; $5dcd
@@ -3946,11 +3946,11 @@ Label_38_5dc9:
 	add hl, bc ; $5e5a
 	ld b, h ; $5e5b
 	ld c, l ; $5e5c
-Label_38_5e5d:
+.next:
 	pop af ; $5e5d
 	inc a ; $5e5e
 	cp a, $83 ; $5e5f
-	jp nz, Label_38_5d9e ; $5e61
+	jp nz, .charLoop ; $5e61
 	pop af ; $5e64
 	wram_bank ; $5e65
 	pop hl ; $5e69
@@ -5196,24 +5196,24 @@ CheckLinkSelectionComplete:
 	wram_bank $03 ; $66ec
 	ld a, [$d814] ; $66f2
 	cp a, $04 ; $66f5
-	jr nz, Label_38_6705 ; $66f7
+	jr nz, .checkSlots ; $66f7
 	ld a, [$d81d] ; $66f9
 	cp a, $02 ; $66fc
-	jr nz, Label_38_6705 ; $66fe
+	jr nz, .checkSlots ; $66fe
 	ld a, $01 ; $6700
 	ld [$d815], a ; $6702
-Label_38_6705:
+.checkSlots:
 	ld a, [$d814] ; $6705
 	cp a, $ff ; $6708
-	jr z, Label_38_6715 ; $670a
+	jr z, .allChosen ; $670a
 	ld a, [$d81d] ; $670c
 	cp a, $ff ; $670f
-	jr z, Label_38_6715 ; $6711
-	jr Label_38_671a ; $6713
-Label_38_6715:
+	jr z, .allChosen ; $6711
+	jr .done ; $6713
+.allChosen:
 	ld a, $02 ; $6715
 	ld [$d815], a ; $6717
-Label_38_671a:
+.done:
 	pop af ; $671a
 	wram_bank ; $671b
 	ret ; $671f
@@ -5659,18 +5659,18 @@ RetreatRemotePlayerSlot:
 	add a, a ; $6a0f
 	add a, l ; $6a10
 	ld l, a ; $6a11
-	jr nc, Label_38_6a15 ; $6a12
+	jr nc, .readList ; $6a12
 	inc h ; $6a14
-Label_38_6a15:
+.readList:
 	ld a, [hl+] ; $6a15
 	ld h, [hl] ; $6a16
 	ld l, a ; $6a17
 	ld a, [$d81d] ; $6a18
 	ld b, a ; $6a1b
-Label_38_6a1c:
+.findCurrent:
 	ld a, [hl+] ; $6a1c
 	cp a, b ; $6a1d
-	jr nz, Label_38_6a1c ; $6a1e
+	jr nz, .findCurrent ; $6a1e
 	dec hl ; $6a20
 	dec hl ; $6a21
 	ld a, [hl] ; $6a22
@@ -5701,9 +5701,9 @@ Label_38_6a1c:
 	add a, a ; $6a43
 	add a, l ; $6a44
 	ld l, a ; $6a45
-	jr nc, Label_38_6a49 ; $6a46
+	jr nc, .store ; $6a46
 	inc h ; $6a48
-Label_38_6a49:
+.store:
 	ld a, [hl] ; $6a49
 	ret ; $6a4a
 SetGridEntryTakenByCharId:
@@ -6126,21 +6126,21 @@ UpdateMenuCursorFromLinkInput:
 MoveLinkCursorUp:
 	ld a, [wMenuCursor2Y] ; $6d0b
 	or a, a ; $6d0e
-	jr z, Label_38_6d17 ; $6d0f
+	jr z, .prevPage ; $6d0f
 	dec a ; $6d11
 	ld [wMenuCursor2Y], a ; $6d12
-	jr Label_38_6d24 ; $6d15
-Label_38_6d17:
+	jr .done ; $6d15
+.prevPage:
 	ldh a, [$ffe3] ; $6d17
 	or a, a ; $6d19
 	ret z ; $6d1a
 	dec a ; $6d1b
 	cp a, $02 ; $6d1c
-	jr nz, Label_38_6d22 ; $6d1e
+	jr nz, .storePage ; $6d1e
 	ld a, $03 ; $6d20
-Label_38_6d22:
+.storePage:
 	ldh [$ffe3], a ; $6d22
-Label_38_6d24:
+.done:
 	ret ; $6d24
 MoveLinkCursorDown:
 	ld a, [wMenuCursor2Y] ; $6d25
@@ -6180,21 +6180,21 @@ MoveLinkCursorRight:
 	ld a, [wMenuCursor2X] ; $6d58
 	inc a ; $6d5b
 	cp a, $03 ; $6d5c
-	jr nz, Label_38_6d73 ; $6d5e
+	jr nz, .store ; $6d5e
 	ldh a, [$ffe3] ; $6d60
 	or a, a ; $6d62
-	jr z, Label_38_6d6e ; $6d63
+	jr z, .wrapToFirst ; $6d63
 	cp a, $01 ; $6d65
-	jr z, Label_38_6d6e ; $6d67
+	jr z, .wrapToFirst ; $6d67
 	xor a, a ; $6d69
 	ldh [$ffe3], a ; $6d6a
-	jr Label_38_6d72 ; $6d6c
-Label_38_6d6e:
+	jr .firstColumn ; $6d6c
+.wrapToFirst:
 	ld a, $03 ; $6d6e
 	ldh [$ffe3], a ; $6d70
-Label_38_6d72:
+.firstColumn:
 	xor a, a ; $6d72
-Label_38_6d73:
+.store:
 	ld [wMenuCursor2X], a ; $6d73
 	ret ; $6d76
 MoveLinkCursorLeft:
@@ -6555,19 +6555,19 @@ HandleNameEntryCursorMove:
 	sound $5e ; $7072
 	ld a, [wMenuCursorY] ; $7074
 	cp a, $05 ; $7077
-	jr nz, Label_38_708f ; $7079
+	jr nz, .done ; $7079
 	ldh a, [hInputPressed] ; $707b
 	bit PADB_RIGHT, a ; $707d
-	jr nz, Label_38_7087 ; $707f
+	jr nz, .snapRight ; $707f
 	bit 5, a ; $7081
-	jr nz, Label_38_708c ; $7083
-	jr Label_38_708f ; $7085
-Label_38_7087:
+	jr nz, .snapLeft ; $7083
+	jr .done ; $7085
+.snapRight:
 	call SnapNameEntryCursorRight ; $7087
-	jr Label_38_708f ; $708a
-Label_38_708c:
+	jr .done ; $708a
+.snapLeft:
 	call SnapNameEntryCursorLeft ; $708c
-Label_38_708f:
+.done:
 	ret ; $708f
 DrawNameEntryCursor:
 	ld c, $0f ; $7090
@@ -6605,11 +6605,11 @@ DrawNameEntryCharGrid:
 	ld c, $05 ; $7185
 	ld b, $03 ; $7187
 	ld de, $d121 ; $7189
-Label_38_718c:
+.lowerCase:
 	ld a, $20 ; $718c
 	ld [de], a ; $718e
 	inc de ; $718f
-Label_38_7190:
+.drawRows:
 	ld a, [hl+] ; $7190
 	push hl ; $7191
 	ld h, d ; $7192
@@ -6619,13 +6619,13 @@ Label_38_7190:
 	ld e, l ; $7196
 	pop hl ; $7197
 	dec c ; $7198
-	jr nz, Label_38_7190 ; $7199
+	jr nz, .drawRows ; $7199
 	ld c, $05 ; $719b
 	dec b ; $719d
-	jr nz, Label_38_718c ; $719e
+	jr nz, .lowerCase ; $719e
 	ld a, [hl] ; $71a0
 	or a, a ; $71a1
-	jr z, Label_38_71b0 ; $71a2
+	jr z, .done ; $71a2
 	ld b, $03 ; $71a4
 	push hl ; $71a6
 	ld hl, $000e ; $71a7
@@ -6633,8 +6633,8 @@ Label_38_7190:
 	ld d, h ; $71ab
 	ld e, l ; $71ac
 	pop hl ; $71ad
-	jr Label_38_718c ; $71ae
-Label_38_71b0:
+	jr .lowerCase ; $71ae
+.done:
 	pop af ; $71b0
 	wram_bank ; $71b1
 	ret ; $71b5

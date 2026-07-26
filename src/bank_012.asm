@@ -691,7 +691,7 @@ WallPracticeLevelResultScript:
 	ld [wStoryModeShowLocationName], a ; $4ab6
 	ld a, [wPointWinLoseFlag] ; $4ab9
 	cp a, $01 ; $4abc
-	jp nz, Label_12_4ad0 ; $4abe
+	jp nz, .checkLevel ; $4abe
 	ld a, [$c2b0] ; $4ac1
 	sub a, $01 ; $4ac4
 	ld a, a ; $4ac6
@@ -700,7 +700,7 @@ WallPracticeLevelResultScript:
 	dw WallPracticeExitCourtScript.variant3 ; $4aca jumptable
 	dw WallPracticeExitCourtScript.variant2 ; $4acc jumptable
 	dw WallPracticeExitCourtScript.variant1 ; $4ace jumptable
-Label_12_4ad0:
+.checkLevel:
 	ld a, [$c2b0] ; $4ad0
 	cp a, $04 ; $4ad3
 	jp z, WallPracticeScoreRetryPrompt ; $4ad5
@@ -708,10 +708,10 @@ Label_12_4ad0:
 	call WaitFadeEnd ; $4add
 	ld a, [wPointOutcome] ; $4ae0
 	cp a, $09 ; $4ae3
-	jr nz, Label_12_4aef ; $4ae5
+	jr nz, .fromOutcome ; $4ae5
 	script_set_text Text_35_246 ; $4ae7
-	jr Label_12_4b02 ; $4aed
-Label_12_4aef:
+	jr .speak ; $4aed
+.fromOutcome:
 	ld a, [wPointOutcome] ; $4aef
 	and a, $03 ; $4af2
 	add a, a ; $4af4
@@ -724,7 +724,7 @@ Label_12_4aef:
 	ld h, [hl] ; $4afd
 	ld l, a ; $4afe
 	farcall InitDialogueTextCursor ; $4aff
-Label_12_4b02:
+.speak:
 	ld a, $07 ; $4b02
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4b04
 	farcall RunDialogueYesNoPrompt ; $4b07
@@ -2193,27 +2193,27 @@ SeniorSinglesRankOfferScene:
 	script_face_toward ACTOR_PLAYER, $03 ; $5f48
 	script_set_text Text_34_60 ; $5f50
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f56
-	jr z, Label_12_5f5e ; $5f59
+	jr z, .prompt ; $5f59
 	farcall AdvanceDialogueTextCursor ; $5f5b
-Label_12_5f5e:
+.prompt:
 	ld a, $03 ; $5f5e
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f60
 	farcall RunDialogueYesNoPrompt ; $5f63
 	farcall ScriptCloseDialogueWindow ; $5f66
 	script_wait_frames $05 ; $5f69
 	and a, a ; $5f70
-	jp nz, Label_12_5fb8 ; $5f71
+	jp nz, .done ; $5f71
 	script_set_text Text_34_64 ; $5f74
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f7a
-	jr z, Label_12_5f92 ; $5f7d
+	jr z, .accepted ; $5f7d
 	farcall AdvanceDialogueTextCursor ; $5f7f
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $5f82
-	jr z, Label_12_5f92 ; $5f85
+	jr z, .accepted ; $5f85
 	farcall AdvanceDialogueTextCursor ; $5f87
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $5f8a
-	jr z, Label_12_5f92 ; $5f8d
+	jr z, .accepted ; $5f8d
 	farcall AdvanceDialogueTextCursor ; $5f8f
-Label_12_5f92:
+.accepted:
 	script_speak $03 ; $5f92
 	call RunSeniorRankingMatchIntro ; $5f97
 	script_face ACTOR_PLAYER, FACE_UP ; $5f9a
@@ -2222,7 +2222,7 @@ Label_12_5f92:
 	script_wait_idle $03 ; $5faf
 	call SeniorSinglesMatchConfirm ; $5fb4
 	ret ; $5fb7
-Label_12_5fb8:
+.done:
 	script_set_text Text_34_62 ; $5fb8
 	script_speak $03 ; $5fbe
 	farcall EndCutsceneScriptMode ; $5fc3

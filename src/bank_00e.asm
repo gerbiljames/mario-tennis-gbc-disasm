@@ -493,19 +493,19 @@ SetupGymActorsForProgress:
 	ld a, [$c2b0] ; $4681
 	sra a ; $4684
 	cp a, $01 ; $4686
-	jr z, Label_0e_4693 ; $4688
+	jr z, .stage1 ; $4688
 	cp a, $03 ; $468a
-	jr z, Label_0e_46b9 ; $468c
+	jr z, .stage2 ; $468c
 	cp a, $04 ; $468e
-	jr z, Label_0e_46e9 ; $4690
+	jr z, .done ; $4690
 	ret ; $4692
-Label_0e_4693:
+.stage1:
 	script_set_objdef $34, $04 ; $4693
 	script_set_anim $03, $01 ; $469f
 	script_set_position $04, $2700, $0f00 ; $46a6
 	script_face $04, FACE_RIGHT ; $46b1
 	ret ; $46b8
-Label_0e_46b9:
+.stage2:
 	script_set_position $07, $2900, $0700 ; $46b9
 	script_set_position $08, $2700, $0500 ; $46c4
 	script_set_position $09, $2500, $0700 ; $46cf
@@ -517,7 +517,7 @@ Label_0e_46b9:
 	add hl, de ; $46e6
 	ld [hl], a ; $46e7
 	ret ; $46e8
-Label_0e_46e9:
+.done:
 	script_set_position $07, $2900, $0700 ; $46e9
 	script_set_position $08, $2700, $0500 ; $46f4
 	script_set_position $09, $2500, $0700 ; $46ff

@@ -1447,24 +1447,24 @@ PlayScreenSequence0:
 	wram_bank $03 ; $76c5
 	xor a, a ; $76cb
 	ld [$da01], a ; $76cc
-Label_18_76cf:
+.scrollLoop:
 	call AdvanceFrame ; $76cf
 	ld a, [$da01] ; $76d2
 	inc a ; $76d5
 	ld [$da01], a ; $76d6
 	cp a, $fa ; $76d9
-	jr nz, Label_18_76cf ; $76db
+	jr nz, .scrollLoop ; $76db
 	farcall InitGrayscalePaletteFade ; $76dd
 	ld b, $3f ; $76e0
 	ld c, $3f ; $76e2
 	ld d, $1e ; $76e4
 	farcall SetupPaletteFadeMask ; $76e6
 	farcall AnimatePaletteFadeToTarget ; $76e9
-Label_18_76ec:
+.waitInput:
 	call AdvanceFrame ; $76ec
 	ldh a, [hInputPressed] ; $76ef
 	and a, PADF_A | PADF_B ; $76f1
-	jr z, Label_18_76ec ; $76f3
+	jr z, .waitInput ; $76f3
 	ld c, $10 ; $76f5
 	call BeginFadeOut ; $76f7
 	call WaitFadeEnd ; $76fa
@@ -1476,11 +1476,11 @@ Label_18_76ec:
 	ld a, $01 ; $770e
 	ld hl, QueueScreen0Sprites ; $7710
 	call RegisterFrameTask ; $7713
-Label_18_7716:
+.done:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719
 	and a, PADF_A | PADF_B ; $771b
-	jr z, Label_18_7716 ; $771d
+	jr z, .done ; $771d
 	ret ; $771f
 SetupScreen0Assets:
 	call ResetScrollAndCamera ; $7720

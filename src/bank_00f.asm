@@ -3043,26 +3043,26 @@ IslandOpenRoundDoublesNpc03_0f:
 	dw $284f ; record 3
 QueueFinishedRoundNameText:
 	test_flag FLAG_DOUBLES ; $78ec
-	jr nz, Label_0f_7901 ; $78ef
+	jr nz, .doubles ; $78ef
 	ld a, [$c2b0] ; $78f1
 	dec a ; $78f4
 	ld hl, $2861 ; $78f5
 	add a, l ; $78f8
 	ld l, a ; $78f9
-	jr nc, Label_0f_78fd ; $78fa
+	jr nc, .queue ; $78fa
 	inc h ; $78fc
-Label_0f_78fd:
+.queue:
 	call QueueShortText ; $78fd
 	ret ; $7900
-Label_0f_7901:
+.doubles:
 	ld a, [$c2b0] ; $7901
 	dec a ; $7904
 	ld hl, $2865 ; $7905
 	add a, l ; $7908
 	ld l, a ; $7909
-	jr nc, Label_0f_790d ; $790a
+	jr nc, .queueDoubles ; $790a
 	inc h ; $790c
-Label_0f_790d:
+.queueDoubles:
 	call QueueShortText ; $790d
 	ret ; $7910
 IslandOpenBreakCutscene:
@@ -3112,18 +3112,18 @@ Label_0f_79b1:
 ReplacePartnerWithStandInActor:
 	call SetPlayerAndPartnerObjectDefs ; $7a17
 	test_flag FLAG_DOUBLES ; $7a1a
-	jr z, Label_0f_7a29 ; $7a1d
+	jr z, .noPartner ; $7a1d
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7a1f
 	or a, a ; $7a22
-	jr nz, Label_0f_7a2a ; $7a23
+	jr nz, .female ; $7a23
 	ld d, $58 ; $7a25
-	jr Label_0f_7a2e ; $7a27
-Label_0f_7a29:
+	jr .apply ; $7a27
+.noPartner:
 	ret ; $7a29
-Label_0f_7a2a:
+.female:
 	ld d, $59 ; $7a2a
-	jr Label_0f_7a2e ; $7a2c
-Label_0f_7a2e:
+	jr .apply ; $7a2c
+.apply:
 	script_get_actor_state $05 ; $7a2e
 	ld c, l ; $7a33
 	ld b, h ; $7a34

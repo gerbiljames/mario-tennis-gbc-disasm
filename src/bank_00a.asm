@@ -1534,25 +1534,25 @@ UpdateScreenShake:
 	push hl ; $490b
 	ld a, [$c363] ; $490c
 	ld c, $00 ; $490f
-Label_0a_4911:
+.buildPattern:
 	scf ; $4911
 	rl c ; $4912
 	dec a ; $4914
-	jr nz, Label_0a_4911 ; $4915
+	jr nz, .buildPattern ; $4915
 	call AdvanceRandomSeed ; $4917
 	ld a, h ; $491a
 	and a, c ; $491b
-	jr nc, Label_0a_4920 ; $491c
+	jr nc, .negate ; $491c
 	cpl ; $491e
 	inc a ; $491f
-Label_0a_4920:
+.negate:
 	ld [$c368], a ; $4920
 	ld a, l ; $4923
 	and a, c ; $4924
-	jr nc, Label_0a_4929 ; $4925
+	jr nc, .store ; $4925
 	cpl ; $4927
 	inc a ; $4928
-Label_0a_4929:
+.store:
 	ld [$c369], a ; $4929
 	pop hl ; $492c
 	pop de ; $492d
@@ -2130,7 +2130,7 @@ RankingFlagList_0a_4e4b:
 SetMinigameClearFlagsAlt:
 	ld c, $09 ; $4e75
 	ld de, $0a00 ; $4e77
-Label_0a_4e7a:
+.clearLoop:
 	push de ; $4e7a
 	call ClearGameFlag ; $4e7b
 	pop de ; $4e7e
@@ -2139,7 +2139,7 @@ Label_0a_4e7a:
 	ld d, h ; $4e83
 	ld e, l ; $4e84
 	dec c ; $4e85
-	jr nz, Label_0a_4e7a ; $4e86
+	jr nz, .clearLoop ; $4e86
 	ld a, [wCharPosDepth] ; $4e88
 	add a, a ; $4e8b
 	add a, a ; $4e8c
@@ -2149,19 +2149,19 @@ Label_0a_4e7a:
 	ld c, a ; $4e92
 	inc c ; $4e93
 	ld hl, RankingFlagList_0a_4ea8 ; $4e94
-Label_0a_4e97:
+.setLoop:
 	ld a, [hl+] ; $4e97
 	ld d, [hl] ; $4e98
 	ld e, a ; $4e99
 	inc hl ; $4e9a
 	dec c ; $4e9b
-	jr z, Label_0a_4ea7 ; $4e9c
+	jr z, .done ; $4e9c
 	ld a, d ; $4e9e
 	or a, e ; $4e9f
-	jr z, Label_0a_4e97 ; $4ea0
+	jr z, .setLoop ; $4ea0
 	call SetGameFlag ; $4ea2
-	jr Label_0a_4e97 ; $4ea5
-Label_0a_4ea7:
+	jr .setLoop ; $4ea5
+.done:
 	ret ; $4ea7
 RankingFlagList_0a_4ea8:
 	; $4ea8, 34 bytes (records:2)
@@ -2187,23 +2187,23 @@ GetClearStatusResultCode:
 	ld a, [wCharPosX + 2] ; $4ecd
 	ld b, a ; $4ed0
 	or a, a ; $4ed1
-	jr z, Label_0a_4ee0 ; $4ed2
+	jr z, .doublesRow ; $4ed2
 	ld a, [wCharPosDepth] ; $4ed4
 	inc a ; $4ed7
 	inc a ; $4ed8
 	add a, a ; $4ed9
 	ld b, a ; $4eda
 	ld a, [wCharPosX + 1] ; $4edb
-	jr Label_0a_4ee3 ; $4ede
-Label_0a_4ee0:
+	jr .index ; $4ede
+.doublesRow:
 	ld a, [wCharPosDepth + 1] ; $4ee0
-Label_0a_4ee3:
+.index:
 	add a, b ; $4ee3
 	add a, l ; $4ee4
 	ld l, a ; $4ee5
-	jr nc, Label_0a_4ee9 ; $4ee6
+	jr nc, .read ; $4ee6
 	inc h ; $4ee8
-Label_0a_4ee9:
+.read:
 	ld a, [hl] ; $4ee9
 	ld [wCharPosHeight], a ; $4eea
 	ret ; $4eed
@@ -2840,7 +2840,7 @@ GetTileTriggerAtPlayer:
 	ld d, $00 ; $537d
 	and a, $0f ; $537f
 	cp a, $01 ; $5381
-	jr nz, Label_0a_539d ; $5383
+	jr nz, .done ; $5383
 	ld a, e ; $5385
 	swap a ; $5386
 	and a, $0f ; $5388
@@ -2853,9 +2853,9 @@ GetTileTriggerAtPlayer:
 	call FindStoryScriptEntry ; $5394
 	ld a, h ; $5397
 	or a, l ; $5398
-	jr nz, Label_0a_539d ; $5399
+	jr nz, .done ; $5399
 	ld d, $00 ; $539b
-Label_0a_539d:
+.done:
 	ld a, d ; $539d
 	pop hl ; $539e
 	pop de ; $539f
@@ -2865,16 +2865,16 @@ Label_0a_539d:
 	or a, d ; $53a3
 	ret z ; $53a4
 	bit 7, d ; $53a5
-	jr nz, Label_0a_53ad ; $53a7
+	jr nz, .negated ; $53a7
 	call TestGameFlag ; $53a9
 	ret ; $53ac
-Label_0a_53ad:
+.negated:
 	res 7, d ; $53ad
 	call TestGameFlag ; $53af
-	jr z, Label_0a_53b6 ; $53b2
+	jr z, .true ; $53b2
 	xor a, a ; $53b4
 	ret ; $53b5
-Label_0a_53b6:
+.true:
 	xor a, a ; $53b6
 	inc a ; $53b7
 	ret ; $53b8
@@ -4071,12 +4071,12 @@ SceneViewerSelectScene:
 	farcall RunPagedTextMenu ; $5e3b
 	ld [wCurrentScene], a ; $5e3e
 	cp a, $ff ; $5e41
-	jp z, Label_0a_5e51 ; $5e43
+	jp z, .done ; $5e43
 	ld b, $01 ; $5e46
 	call LoadAndDisplayScene ; $5e48
 	ld a, [wCurrentScene] ; $5e4b
 	call InitSceneTileAnimations ; $5e4e
-Label_0a_5e51:
+.done:
 	ret ; $5e51
 	ld hl, $0176 ; $5e52
 	ld d, $01 ; $5e55
@@ -4086,23 +4086,23 @@ Label_0a_5e51:
 	ld [$d82f], a ; $5e5f
 	farcall RestoreShadowTilemap ; $5e62
 	farcall StubNop_05_4626 ; $5e65
-Label_0a_5e68:
+.inputLoop:
 	call AdvanceFrame ; $5e68
 	ldh a, [hPlayerInputFlags] ; $5e6b
 	and a, PADF_B ; $5e6d
-	jr nz, Label_0a_5e68 ; $5e6f
+	jr nz, .inputLoop ; $5e6f
 	farcall RunMenuSelection ; $5e71
 	ld [wCurrentScene], a ; $5e74
 	ld a, [$d82f] ; $5e77
 	farcall CloseWindow ; $5e7a
 	ld a, [wCurrentScene] ; $5e7d
 	cp a, $ff ; $5e80
-	jp z, Label_0a_5e90 ; $5e82
+	jp z, .redraw ; $5e82
 	ld a, [wCurrentScene] ; $5e85
 	ld b, $01 ; $5e88
 	call LoadAndDisplayScene ; $5e8a
 	farcall RestoreShadowTilemap ; $5e8d
-Label_0a_5e90:
+.redraw:
 	ret ; $5e90
 RunSceneSelectDebugMenu:
 	push af ; $5e91

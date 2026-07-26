@@ -359,18 +359,18 @@ TournamentSiteArrivalScene:
 SetupTournamentSitePartnerActor:
 	call SetPlayerPartnerActorSprites ; $46b7
 	test_flag FLAG_DOUBLES ; $46ba
-	jr z, Label_15_46c9 ; $46bd
+	jr z, .noPartner ; $46bd
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $46bf
 	or a, a ; $46c2
-	jr nz, Label_15_46ca ; $46c3
+	jr nz, .female ; $46c3
 	ld d, $58 ; $46c5
-	jr Label_15_46ce ; $46c7
-Label_15_46c9:
+	jr .apply ; $46c7
+.noPartner:
 	ret ; $46c9
-Label_15_46ca:
+.female:
 	ld d, $59 ; $46ca
-	jr Label_15_46ce ; $46cc
-Label_15_46ce:
+	jr .apply ; $46cc
+.apply:
 	script_get_actor_state $05 ; $46ce
 	ld c, l ; $46d3
 	ld b, h ; $46d4
@@ -2256,13 +2256,13 @@ StrokeChallengerResultScene:
 WalkChallengerAwayDefeated:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6042
 	sub a, $0a ; $6045
-	jp nc, Label_15_60f6 ; $6047
+	jp nc, .done ; $6047
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $604a
 	sub a, $04 ; $604d
-	jp c, Label_15_6056 ; $604f
-	jp Label_15_60af ; $6052
+	jp c, .serveChallenger ; $604f
+	jp .netChallenger ; $6052
 	ret ; $6055
-Label_15_6056:
+.serveChallenger:
 	ld a, [$c2b1] ; $6056
 	ld bc, $0030 ; $6059
 	farcall ScriptSetActorMoveSpeed ; $605c
@@ -2295,7 +2295,7 @@ Label_15_6056:
 	farcall ScriptWaitActorMoveDone ; $60a8
 	set_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $60ab
 	ret ; $60ae
-Label_15_60af:
+.netChallenger:
 	ld a, [$c2b1] ; $60af
 	ld bc, $0030 ; $60b2
 	farcall ScriptSetActorMoveSpeed ; $60b5
@@ -2322,7 +2322,7 @@ Label_15_60af:
 	farcall ScriptWaitActorMoveDone ; $60ef
 	set_flag FLAG_NET_CHALLENGER_DEFEATED ; $60f2
 	ret ; $60f5
-Label_15_60f6:
+.done:
 	ld a, [$c2b1] ; $60f6
 	ld b, $c0 ; $60f9
 	farcall SetActorFacing ; $60fb
@@ -2976,7 +2976,7 @@ VolleyMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $68a5
 	script_wait_frames $05 ; $68a8
 	and a, a ; $68af
-	jp nz, Label_15_695d ; $68b0
+	jp nz, .done ; $68b0
 	farcall AdvanceDialogueTextCursor ; $68b3
 	ld a, $11 ; $68b6
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $68b8
@@ -2984,7 +2984,7 @@ VolleyMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $68be
 	script_wait_frames $05 ; $68c1
 	and a, a ; $68c8
-	jp nz, Label_15_695d ; $68c9
+	jp nz, .done ; $68c9
 	farcall AdvanceDialogueTextCursor ; $68cc
 	ld a, $11 ; $68cf
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $68d1
@@ -2992,8 +2992,8 @@ VolleyMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $68d7
 	script_wait_frames $05 ; $68da
 	and a, a ; $68e1
-	jp z, Label_15_6900 ; $68e2
-Label_15_68e5:
+	jp z, .accepted ; $68e2
+.prompt:
 	script_set_text Text_6e_69 ; $68e5
 	ld a, $11 ; $68eb
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $68ed
@@ -3001,8 +3001,8 @@ Label_15_68e5:
 	farcall ScriptCloseDialogueWindow ; $68f3
 	script_wait_frames $05 ; $68f6
 	and a, a ; $68fd
-	jr nz, Label_15_68e5 ; $68fe
-Label_15_6900:
+	jr nz, .prompt ; $68fe
+.accepted:
 	script_set_text Text_6e_70 ; $6900
 	script_set_anim $11, $03 ; $6906
 	script_wait_idle $11 ; $690d
@@ -3021,7 +3021,7 @@ Label_15_6900:
 	ld a, $06 ; $6957
 	farcall RunTrainingDrillByID ; $6959
 	ret ; $695c
-Label_15_695d:
+.done:
 	script_speak $11 ; $695d
 	ret ; $6962
 SmashMatchChallengeScene:
@@ -4335,24 +4335,24 @@ Label_15_7a66:
 StartPendingLessonScene:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7a67
 	cp a, $06 ; $7a6a
-	jr nc, Label_15_7a75 ; $7a6c
+	jr nc, .netLesson ; $7a6c
 	call InitServeCoachScene ; $7a6e
 	call ServeCoachWalkToCourtAndStartLesson ; $7a71
 	ret ; $7a74
-Label_15_7a75:
+.netLesson:
 	cp a, $0c ; $7a75
-	jr nc, Label_15_7a8b ; $7a77
+	jr nc, .returnLesson ; $7a77
 	call InitNetCoachScene ; $7a79
 	script_set_text Text_37_106 ; $7a7c
 	script_speak $12 ; $7a82
 	call NetCoachWalkToCourtAndStartLesson ; $7a87
 	ret ; $7a8a
-Label_15_7a8b:
+.returnLesson:
 	cp a, $12 ; $7a8b
-	jr nc, Label_15_7a95 ; $7a8d
+	jr nc, .done ; $7a8d
 	call InitReturnCoachScene ; $7a8f
 	call ReturnCoachWalkToCourtAndStartLesson ; $7a92
-Label_15_7a95:
+.done:
 	ret ; $7a95
 ServeCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7a96

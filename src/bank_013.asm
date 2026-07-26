@@ -938,17 +938,17 @@ Label_13_51ac:
 PlaceDormRoomArrivalActors_13:
 	ld a, [wStoryModeEntryPoint] ; $51b0
 	cp a, $ff ; $51b3
-	jr z, Label_13_521b ; $51b5
+	jr z, .stage3 ; $51b5
 	cp a, $01 ; $51b7
-	jr z, Label_13_51d3 ; $51b9
+	jr z, .stage2 ; $51b9
 	wram_bank $04 ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
 	jp nz, Label_13_527a ; $51c4
 	script_set_position $03, $0b00, $0a00 ; $51c7
 	ret ; $51d2
-Label_13_51d3:
+.stage2:
 	test_flag FLAG_DOUBLES ; $51d3
-	jr z, Label_13_5208 ; $51d6
+	jr z, .stage2Singles ; $51d6
 	script_set_position $03, $0b00, $0a00 ; $51d8
 	script_face $03, FACE_DOWN ; $51e3
 	script_null_script ACTOR_PARTNER ; $51ea
@@ -960,13 +960,13 @@ Label_13_51d3:
 	add hl, bc ; $5204
 	set 4, [hl] ; $5205
 	ret ; $5207
-Label_13_5208:
+.stage2Singles:
 	script_set_position $03, $0b00, $0a00 ; $5208
 	script_face $03, FACE_DOWN ; $5213
 	ret ; $521a
-Label_13_521b:
+.stage3:
 	test_flag FLAG_DOUBLES ; $521b
-	jr z, Label_13_5208 ; $521e
+	jr z, .stage2Singles ; $521e
 	script_null_script ACTOR_PARTNER ; $5220
 	script_set_position ACTOR_PARTNER, $0100, $0100 ; $5225
 	call PlaceRoommateAtPlayerTarget_13 ; $5230

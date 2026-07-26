@@ -1557,22 +1557,22 @@ RunMinigameModeFlow:
 	ld [wKeepMatchStatsFlag], a ; $5217
 	farcall RunMinigameSelect ; $521a
 	cp a, $ff ; $521d
-	jr nz, Label_10_5229 ; $521f
+	jr nz, .levelMenu ; $521f
 	ld a, $00 ; $5221
 	ld [wMenuSlideDirection], a ; $5223
 	jp RunTitleAndMainMenuLoop.menuLoop ; $5226
-Label_10_5229:
+.levelMenu:
 	ld a, $03 ; $5229
 	ld [wCurrentStorySlot], a ; $522b
 	ld a, [$cb20] ; $522e
 	ld c, a ; $5231
 	farcall RunMinigameLevelSelect ; $5232
 	cp a, $ff ; $5235
-	jr nz, Label_10_5241 ; $5237
+	jr nz, .startMinigame ; $5237
 	ld a, $00 ; $5239
 	ld [wMenuSlideDirection], a ; $523b
 	jp RunMinigameModeFlow ; $523e
-Label_10_5241:
+.startMinigame:
 	ld [wMinigameLevel], a ; $5241
 	ld a, [$cb20] ; $5244
 	ld b, a ; $5247
@@ -1583,7 +1583,7 @@ Label_10_5241:
 	add a, c ; $524e
 	farcall ShowRulesScreen ; $524f
 	cp a, $ff ; $5252
-	jr nz, Label_10_526e ; $5254
+	jr nz, .done ; $5254
 	call DisableLCDSafely ; $5256
 	farcall LoadMenuFontGfx ; $5259
 	farcall ResetScreenAndTextWindows ; $525c
@@ -1591,8 +1591,8 @@ Label_10_5241:
 	script_fade_in $10 ; $5262
 	ld a, $00 ; $5267
 	ld [wMenuSlideDirection], a ; $5269
-	jr Label_10_5229 ; $526c
-Label_10_526e:
+	jr .levelMenu ; $526c
+.done:
 	ld a, [$cb20] ; $526e
 	call GetMinigameDrillId ; $5271
 	farcall RunTrainingDrillByID ; $5274
@@ -1606,10 +1606,10 @@ Label_10_526e:
 	call WaitFadeEnd ; $528d
 	ld a, [wMatchSelectNewLevelRequest] ; $5290
 	or a, a ; $5293
-	jr nz, Label_10_5229 ; $5294
+	jr nz, .levelMenu ; $5294
 	ld a, [wPointWinLoseFlag] ; $5296
 	cp a, $01 ; $5299
-	jr z, Label_10_5229 ; $529b
+	jr z, .levelMenu ; $529b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
 	ld a, $03 ; $52a0
 	ld [wCurrentStorySlot], a ; $52a2
