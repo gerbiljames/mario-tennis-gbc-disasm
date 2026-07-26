@@ -1497,30 +1497,30 @@ ActorScript_13_588b:
 	as_jump .La
 RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
-	jr z, Label_13_58cb ; $58c1
+	jr z, .variantB ; $58c1
 	ld hl, $c2b2 ; $58c3
 	ld de, $054f ; $58c6
-	jr Label_13_58d1 ; $58c9
-Label_13_58cb:
+	jr .menuLoop ; $58c9
+.variantB:
 	ld hl, $c2b2 ; $58cb
 	ld de, $0808 ; $58ce
-Label_13_58d1:
+.menuLoop:
 	ld a, e ; $58d1
 	ld [hl+], a ; $58d2
 	ld [hl], d ; $58d3
 	ld hl, $054c ; $58d4
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $58d7
-	jr z, Label_13_58e7 ; $58da
+	jr z, .runMenu ; $58da
 	ld hl, $054d ; $58dc
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $58df
-	jr z, Label_13_58e7 ; $58e2
+	jr z, .runMenu ; $58e2
 	ld hl, $054e ; $58e4
-Label_13_58e7:
+.runMenu:
 	ld de, $0101 ; $58e7
 	ld a, $01 ; $58ea
 	farcall RunPagedTextMenu ; $58ec
 	cp a, $ff ; $58ef
-	jp z, Label_13_5927 ; $58f1
+	jp z, .done ; $58f1
 	add a, a ; $58f4
 	add a, $28 ; $58f5
 	ld l, a ; $58f7
@@ -1543,9 +1543,9 @@ Label_13_58e7:
 	farcall ScriptCloseDialogueWindow ; $5918
 	script_wait_frames $05 ; $591b
 	and a, a ; $5922
-	jr nz, Label_13_5927 ; $5923
-	jr Label_13_58d1 ; $5925
-Label_13_5927:
+	jr nz, .done ; $5923
+	jr .menuLoop ; $5925
+.done:
 	ret ; $5927
 	ld [hl], $59 ; $5928
 	ld l, b ; $592a
@@ -1565,32 +1565,34 @@ Label_13_5927:
 	ld h, [hl] ; $593d
 	ld l, a ; $593e
 	add hl, de ; $593f
+AcademyTopicSinglesRank:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5940
-	jr z, Label_13_5964 ; $5943
+	jr z, .setCursor ; $5943
 	ld a, $01 ; $5945
 	add a, l ; $5947
 	ld l, a ; $5948
-	jr nc, Label_13_594c ; $5949
+	jr nc, .rank2 ; $5949
 	inc h ; $594b
-Label_13_594c:
+.rank2:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $594c
-	jr z, Label_13_5964 ; $594f
+	jr z, .setCursor ; $594f
 	ld a, $01 ; $5951
 	add a, l ; $5953
 	ld l, a ; $5954
-	jr nc, Label_13_5958 ; $5955
+	jr nc, .rank3 ; $5955
 	inc h ; $5957
-Label_13_5958:
+.rank3:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5958
-	jr z, Label_13_5964 ; $595b
+	jr z, .setCursor ; $595b
 	ld a, $01 ; $595d
 	add a, l ; $595f
 	ld l, a ; $5960
-	jr nc, Label_13_5964 ; $5961
+	jr nc, .setCursor ; $5961
 	inc h ; $5963
-Label_13_5964:
+.setCursor:
 	farcall InitDialogueTextCursor ; $5964
 	ret ; $5967
+AcademyTopicDoublesRank:
 	ld de, $0005 ; $5968
 	ld hl, $c2b2 ; $596b
 	ld a, [hl+] ; $596e
@@ -1598,39 +1600,40 @@ Label_13_5964:
 	ld l, a ; $5970
 	add hl, de ; $5971
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5972
-	jr z, Label_13_59a2 ; $5975
+	jr z, .setCursor ; $5975
 	ld a, $01 ; $5977
 	add a, l ; $5979
 	ld l, a ; $597a
-	jr nc, Label_13_597e ; $597b
+	jr nc, .rank2 ; $597b
 	inc h ; $597d
-Label_13_597e:
+.rank2:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $597e
-	jr z, Label_13_59a2 ; $5981
+	jr z, .setCursor ; $5981
 	ld a, $01 ; $5983
 	add a, l ; $5985
 	ld l, a ; $5986
-	jr nc, Label_13_598a ; $5987
+	jr nc, .rank3 ; $5987
 	inc h ; $5989
-Label_13_598a:
+.rank3:
 	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2 ; $598a
-	jr z, Label_13_59a2 ; $598d
+	jr z, .setCursor ; $598d
 	ld a, $01 ; $598f
 	add a, l ; $5991
 	ld l, a ; $5992
-	jr nc, Label_13_5996 ; $5993
+	jr nc, .rank4 ; $5993
 	inc h ; $5995
-Label_13_5996:
+.rank4:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5996
-	jr z, Label_13_59a2 ; $5999
+	jr z, .setCursor ; $5999
 	ld a, $01 ; $599b
 	add a, l ; $599d
 	ld l, a ; $599e
-	jr nc, Label_13_59a2 ; $599f
+	jr nc, .setCursor ; $599f
 	inc h ; $59a1
-Label_13_59a2:
+.setCursor:
 	farcall InitDialogueTextCursor ; $59a2
 	ret ; $59a5
+AcademyTopicRules:
 	ld de, $000a ; $59a6
 	ld hl, $c2b2 ; $59a9
 	ld a, [hl+] ; $59ac
@@ -1638,13 +1641,13 @@ Label_13_59a2:
 	ld l, a ; $59ae
 	add hl, de ; $59af
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $59b0
-	jr z, Label_13_59bc ; $59b3
+	jr z, .setCursor ; $59b3
 	ld a, $01 ; $59b5
 	add a, l ; $59b7
 	ld l, a ; $59b8
-	jr nc, Label_13_59bc ; $59b9
+	jr nc, .setCursor ; $59b9
 	inc h ; $59bb
-Label_13_59bc:
+.setCursor:
 	farcall InitDialogueTextCursor ; $59bc
 	ret ; $59bf
 	ld de, $000c ; $59c0

@@ -1634,15 +1634,15 @@ RunSavedDataMenuFlow:
 	cp a, $ff ; $52d4
 	jp z, Label_10_4f7c ; $52d6
 	cp a, $03 ; $52d9
-	jp nc, Label_10_53d4 ; $52db
+	jp nc, .checkSavedData ; $52db
 	ld [wCurrentStorySlot], a ; $52de
 	farcall CheckStorySlot ; $52e1
-Label_10_52e4:
+.transferMenu:
 	farcall RunN64TransferItemSelect ; $52e4
 	cp a, $ff ; $52e7
 	jp z, RunSavedDataMenuFlow ; $52e9
 	or a, a ; $52ec
-	jr nz, Label_10_5315 ; $52ed
+	jr nz, .transferOption1 ; $52ed
 	ld c, $10 ; $52ef
 	call BeginFadeOut ; $52f1
 	call WaitFadeEnd ; $52f4
@@ -1655,10 +1655,10 @@ Label_10_52e4:
 	script_fade_in $10 ; $5308
 	ld a, $00 ; $530d
 	ld [wMenuSlideDirection], a ; $530f
-	jp Label_10_52e4 ; $5312
-Label_10_5315:
+	jp .transferMenu ; $5312
+.transferOption1:
 	cp a, $01 ; $5315
-	jr nz, Label_10_5345 ; $5317
+	jr nz, .transferOption2 ; $5317
 	ld c, $10 ; $5319
 	call BeginFadeOut ; $531b
 	call WaitFadeEnd ; $531e
@@ -1673,10 +1673,10 @@ Label_10_5315:
 	script_fade_in $10 ; $5338
 	ld a, $00 ; $533d
 	ld [wMenuSlideDirection], a ; $533f
-	jp Label_10_52e4 ; $5342
-Label_10_5345:
+	jp .transferMenu ; $5342
+.transferOption2:
 	cp a, $02 ; $5345
-	jr nz, Label_10_536d ; $5347
+	jr nz, .equipmentMenu ; $5347
 	ld c, $10 ; $5349
 	call BeginFadeOut ; $534b
 	call WaitFadeEnd ; $534e
@@ -1688,17 +1688,17 @@ Label_10_5345:
 	script_fade_in $10 ; $5360
 	ld a, $00 ; $5365
 	ld [wMenuSlideDirection], a ; $5367
-	jp Label_10_52e4 ; $536a
-Label_10_536d:
+	jp .transferMenu ; $536a
+.equipmentMenu:
 	farcall RunRacketShoesChoiceMenu ; $536d
 	cp a, $00 ; $5370
-	jr z, Label_10_5380 ; $5372
+	jr z, .racketSelect ; $5372
 	cp a, $01 ; $5374
-	jr z, Label_10_53aa ; $5376
+	jr z, .shoesSelect ; $5376
 	ld a, $00 ; $5378
 	ld [wMenuSlideDirection], a ; $537a
-	jp Label_10_52e4 ; $537d
-Label_10_5380:
+	jp .transferMenu ; $537d
+.racketSelect:
 	ld c, $10 ; $5380
 	call BeginFadeOut ; $5382
 	call WaitFadeEnd ; $5385
@@ -1712,8 +1712,8 @@ Label_10_5380:
 	script_fade_in $10 ; $539d
 	ld a, $00 ; $53a2
 	ld [wMenuSlideDirection], a ; $53a4
-	jp Label_10_536d ; $53a7
-Label_10_53aa:
+	jp .equipmentMenu ; $53a7
+.shoesSelect:
 	ld c, $10 ; $53aa
 	call BeginFadeOut ; $53ac
 	call WaitFadeEnd ; $53af
@@ -1727,18 +1727,18 @@ Label_10_53aa:
 	script_fade_in $10 ; $53c7
 	ld a, $00 ; $53cc
 	ld [wMenuSlideDirection], a ; $53ce
-	jp Label_10_536d ; $53d1
-Label_10_53d4:
+	jp .equipmentMenu ; $53d1
+.checkSavedData:
 	cp a, $03 ; $53d4
-	jr nz, Label_10_543d ; $53d6
-Label_10_53d8:
+	jr nz, .n64RecordMenu ; $53d6
+.savedDataMenu:
 	farcall RunSavedDataTypeSelect ; $53d8
 	cp a, $ff ; $53db
-	jr nz, Label_10_53e2 ; $53dd
+	jr nz, .savedDataOption ; $53dd
 	jp RunSavedDataMenuFlow ; $53df
-Label_10_53e2:
+.savedDataOption:
 	or a, a ; $53e2
-	jr nz, Label_10_5411 ; $53e3
+	jr nz, .minigameData ; $53e3
 	ld c, $10 ; $53e5
 	call BeginFadeOut ; $53e7
 	call WaitFadeEnd ; $53ea
@@ -1753,8 +1753,8 @@ Label_10_53e2:
 	script_fade_in $10 ; $5404
 	ld a, $00 ; $5409
 	ld [wMenuSlideDirection], a ; $540b
-	jp Label_10_53d8 ; $540e
-Label_10_5411:
+	jp .savedDataMenu ; $540e
+.minigameData:
 	ld c, $10 ; $5411
 	call BeginFadeOut ; $5413
 	call WaitFadeEnd ; $5416
@@ -1769,13 +1769,13 @@ Label_10_5411:
 	script_fade_in $10 ; $5430
 	ld a, $00 ; $5435
 	ld [wMenuSlideDirection], a ; $5437
-	jp Label_10_53d8 ; $543a
-Label_10_543d:
+	jp .savedDataMenu ; $543a
+.n64RecordMenu:
 	farcall RunN64RecordTypeSelect ; $543d
 	cp a, $ff ; $5440
 	jp z, RunSavedDataMenuFlow ; $5442
 	or a, a ; $5445
-	jr nz, Label_10_546c ; $5446
+	jr nz, .n64RecordOption1 ; $5446
 	ld c, $10 ; $5448
 	call BeginFadeOut ; $544a
 	call WaitFadeEnd ; $544d
@@ -1787,10 +1787,10 @@ Label_10_543d:
 	script_fade_in $10 ; $545f
 	ld a, $00 ; $5464
 	ld [wMenuSlideDirection], a ; $5466
-	jp Label_10_53d4 ; $5469
-Label_10_546c:
+	jp .checkSavedData ; $5469
+.n64RecordOption1:
 	cp a, $01 ; $546c
-	jr nz, Label_10_5494 ; $546e
+	jr nz, .done ; $546e
 	ld c, $10 ; $5470
 	call BeginFadeOut ; $5472
 	call WaitFadeEnd ; $5475
@@ -1802,8 +1802,8 @@ Label_10_546c:
 	script_fade_in $10 ; $5487
 	ld a, $00 ; $548c
 	ld [wMenuSlideDirection], a ; $548e
-	jp Label_10_53d4 ; $5491
-Label_10_5494:
+	jp .checkSavedData ; $5491
+.done:
 	farcall RunN64RingShotData ; $5494
 	call DisableLCDSafely ; $5497
 	farcall LoadMenuFontGfx ; $549a
@@ -1812,7 +1812,7 @@ Label_10_5494:
 	script_fade_in $10 ; $54a3
 	ld a, $00 ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
-	jp Label_10_53d4 ; $54ad
+	jp .checkSavedData ; $54ad
 	ld c, $10 ; $54b0
 	call BeginFadeOut ; $54b2
 	call WaitFadeEnd ; $54b5

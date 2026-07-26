@@ -182,85 +182,85 @@ MoveMenuCursorBox:
 	ld e, a ; $4111
 	ld a, [wMenuInputPressed] ; $4112
 	bit PADB_RIGHT, a ; $4115
-	jr z, Label_38_412e ; $4117
+	jr z, .checkLeft ; $4117
 	ld a, [wMenuCursorX] ; $4119
 	inc a ; $411c
 	add a, a ; $411d
-	jr nc, Label_38_4124 ; $411e
+	jr nc, .wrapRight ; $411e
 	ld a, b ; $4120
 	dec a ; $4121
-	jr Label_38_4129 ; $4122
-Label_38_4124:
+	jr .storeRight ; $4122
+.wrapRight:
 	rra ; $4124
 	cp a, b ; $4125
-	jr c, Label_38_4129 ; $4126
+	jr c, .storeRight ; $4126
 	xor a, a ; $4128
-Label_38_4129:
+.storeRight:
 	ld [wMenuCursorX], a ; $4129
-	jr Label_38_4177 ; $412c
-Label_38_412e:
+	jr .compare ; $412c
+.checkLeft:
 	bit 5, a ; $412e
-	jr z, Label_38_4147 ; $4130
+	jr z, .checkUp ; $4130
 	ld a, [wMenuCursorX] ; $4132
 	dec a ; $4135
 	add a, a ; $4136
-	jr nc, Label_38_413d ; $4137
+	jr nc, .wrapLeft ; $4137
 	ld a, b ; $4139
 	dec a ; $413a
-	jr Label_38_4142 ; $413b
-Label_38_413d:
+	jr .storeLeft ; $413b
+.wrapLeft:
 	rra ; $413d
 	cp a, b ; $413e
-	jr c, Label_38_4142 ; $413f
+	jr c, .storeLeft ; $413f
 	xor a, a ; $4141
-Label_38_4142:
+.storeLeft:
 	ld [wMenuCursorX], a ; $4142
-	jr Label_38_4177 ; $4145
-Label_38_4147:
+	jr .compare ; $4145
+.checkUp:
 	bit 6, a ; $4147
-	jr z, Label_38_4160 ; $4149
+	jr z, .checkDown ; $4149
 	ld a, [wMenuCursorY] ; $414b
 	dec a ; $414e
 	add a, a ; $414f
-	jr nc, Label_38_4156 ; $4150
+	jr nc, .wrapUp ; $4150
 	ld a, c ; $4152
 	dec a ; $4153
-	jr Label_38_415b ; $4154
-Label_38_4156:
+	jr .storeUp ; $4154
+.wrapUp:
 	rra ; $4156
 	cp a, c ; $4157
-	jr c, Label_38_415b ; $4158
+	jr c, .storeUp ; $4158
 	xor a, a ; $415a
-Label_38_415b:
+.storeUp:
 	ld [wMenuCursorY], a ; $415b
-	jr Label_38_4177 ; $415e
-Label_38_4160:
+	jr .compare ; $415e
+.checkDown:
 	bit 7, a ; $4160
-	jr z, Label_38_4177 ; $4162
+	jr z, .compare ; $4162
 	ld a, [wMenuCursorY] ; $4164
 	inc a ; $4167
 	add a, a ; $4168
-	jr nc, Label_38_416f ; $4169
+	jr nc, .wrapDown ; $4169
 	ld a, c ; $416b
 	dec a ; $416c
-	jr Label_38_4174 ; $416d
-Label_38_416f:
+	jr .storeDown ; $416d
+.wrapDown:
 	rra ; $416f
 	cp a, c ; $4170
-	jr c, Label_38_4174 ; $4171
+	jr c, .storeDown ; $4171
 	xor a, a ; $4173
-Label_38_4174:
+.storeDown:
 	ld [wMenuCursorY], a ; $4174
-Label_38_4177:
+.compare:
 	ld a, [wMenuCursorX] ; $4177
 	cp a, d ; $417a
-	jr nz, Label_38_4185 ; $417b
+	jr nz, .moved ; $417b
 	ld a, [wMenuCursorY] ; $417d
 	cp a, e ; $4180
-	jr nz, Label_38_4185 ; $4181
+	jr nz, .moved ; $4181
 	xor a, a ; $4183
 	ret ; $4184
-Label_38_4185:
+.moved:
 	ld a, $01 ; $4185
 	ret ; $4187
 MoveMenuCursorBoxLink:
@@ -6325,7 +6325,7 @@ RunNameEntryScreen:
 	ld a, $01 ; $6e53
 	ld hl, TickMenuBgScrollTask_38 ; $6e55
 	call RegisterFrameTask ; $6e58
-Label_38_6e5b:
+.redraw:
 	ld a, [wMenuCursorX] ; $6e5b
 	push de ; $6e5e
 	push af ; $6e5f
@@ -6340,38 +6340,38 @@ Label_38_6e5b:
 	ld c, $06 ; $6e70
 	call MoveMenuCursorBox ; $6e72
 	or a, a ; $6e75
-	jr z, Label_38_6e7b ; $6e76
+	jr z, .inputLoop ; $6e76
 	call HandleNameEntryCursorMove ; $6e78
-Label_38_6e7b:
+.inputLoop:
 	call AdvanceFrame ; $6e7b
 	ld a, [wMenuInputPressed] ; $6e7e
 	bit PADB_A, a ; $6e81
-	jr nz, Label_38_6e8f ; $6e83
+	jr nz, .pressA ; $6e83
 	bit 1, a ; $6e85
-	jr nz, Label_38_6eb0 ; $6e87
+	jr nz, .pressB ; $6e87
 	bit 2, a ; $6e89
-	jr nz, Label_38_6ea7 ; $6e8b
-	jr Label_38_6e5b ; $6e8d
-Label_38_6e8f:
+	jr nz, .beep ; $6e8b
+	jr .redraw ; $6e8d
+.pressA:
 	ld a, [wMenuCursorY] ; $6e8f
 	cp a, $05 ; $6e92
-	jr z, Label_38_6e9b ; $6e94
+	jr z, .bottomRow ; $6e94
 	call AppendCharToName ; $6e96
-	jr Label_38_6e5b ; $6e99
-Label_38_6e9b:
+	jr .redraw ; $6e99
+.bottomRow:
 	call GetNameEntryBottomRowAction ; $6e9b
 	or a, a ; $6e9e
-	jr z, Label_38_6ea7 ; $6e9f
+	jr z, .beep ; $6e9f
 	cp a, $01 ; $6ea1
-	jr z, Label_38_6ea9 ; $6ea3
-	jr Label_38_6ee3 ; $6ea5
-Label_38_6ea7:
+	jr z, .backspace ; $6ea3
+	jr .accept ; $6ea5
+.beep:
 	sound $5e ; $6ea7
-Label_38_6ea9:
+.backspace:
 	sound $62 ; $6ea9
 	call DeleteLastNameChar ; $6eab
-	jr Label_38_6e5b ; $6eae
-Label_38_6eb0:
+	jr .redraw ; $6eae
+.pressB:
 	sound $62 ; $6eb0
 	ldh a, [hWramBank] ; $6eb2
 	push af ; $6eb4
@@ -6382,10 +6382,10 @@ Label_38_6eb0:
 	wram_bank ; $6ec0
 	ld a, b ; $6ec4
 	cp a, $00 ; $6ec5
-	jr z, Label_38_6ece ; $6ec7
+	jr z, .cancel ; $6ec7
 	call DeleteLastNameChar ; $6ec9
-	jr Label_38_6e5b ; $6ecc
-Label_38_6ece:
+	jr .redraw ; $6ecc
+.cancel:
 	sound $62 ; $6ece
 	ld c, $10 ; $6ed0
 	call BeginFadeOut ; $6ed2
@@ -6395,7 +6395,7 @@ Label_38_6ece:
 	set 2, [hl] ; $6ede
 	ld a, $ff ; $6ee0
 	ret ; $6ee2
-Label_38_6ee3:
+.accept:
 	ldh a, [hWramBank] ; $6ee3
 	push af ; $6ee5
 	wram_bank $03 ; $6ee6
@@ -6405,7 +6405,7 @@ Label_38_6ee3:
 	wram_bank ; $6ef1
 	ld a, b ; $6ef5
 	cp a, $00 ; $6ef6
-	jr z, Label_38_6f26 ; $6ef8
+	jr z, .storeName ; $6ef8
 	wram_bank $03 ; $6efa
 	call TrimTrailingSpacesFromName ; $6f00
 	call GetActiveStoryNameBuffer ; $6f03
@@ -6423,7 +6423,7 @@ Label_38_6ee3:
 	set 2, [hl] ; $6f21
 	ld a, $00 ; $6f23
 	ret ; $6f25
-Label_38_6f26:
+.storeName:
 	wram_bank $03 ; $6f26
 	call GetActiveStoryNameBuffer ; $6f2c
 	ld h, b ; $6f2f
