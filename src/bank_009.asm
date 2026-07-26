@@ -603,9 +603,9 @@ DrawObjSlot:
 	push hl ; $46d6
 	ld a, [$ddff] ; $46d7
 	and a, a ; $46da
-	jr z, Label_09_46f0 ; $46db
+	jr z, FinishObjSlotUpdate.applyCurve ; $46db
 	cp a, $01 ; $46dd
-	jr z, Label_09_4718 ; $46df
+	jr z, FinishObjSlotUpdate.checkExit ; $46df
 FinishObjSlotUpdate:
 	ld hl, $ddfd ; $46e1
 	ld a, [hl] ; $46e4
@@ -615,7 +615,7 @@ FinishObjSlotUpdate:
 	ld c, $01 ; $46ea
 	call CopyMemoryFast ; $46ec
 	ret ; $46ef
-Label_09_46f0:
+.applyCurve:
 	ld hl, $ddf1 ; $46f0
 	bit 0, [hl] ; $46f3
 	ret z ; $46f5
@@ -637,7 +637,7 @@ Label_09_46f0:
 	ld l, a ; $4713
 	call QueueSpriteTemplate ; $4714
 	ret ; $4717
-Label_09_4718:
+.checkExit:
 	ld hl, $ddf1 ; $4718
 	bit 0, [hl] ; $471b
 	ret z ; $471d
@@ -677,20 +677,20 @@ Label_09_4718:
 	ret ; $4763
 	ld a, [$ddfc] ; $4764
 	rst Rst00 ; $4767
-	dw Label_09_476c ; $4768 jumptable
-	dw Label_09_4781 ; $476a jumptable
-Label_09_476c:
+	dw FinishObjSlotUpdate.freeSlot ; $4768 jumptable
+	dw FinishObjSlotUpdate.done ; $476a jumptable
+.freeSlot:
 	ld hl, $ddf1 ; $476c
 	set 0, [hl] ; $476f
 	call GetNextMoveCurveValue ; $4771
-	jp z, Label_09_477d ; $4774
+	jp z, .keepSlot ; $4774
 	ret ; $4777
 	ld hl, $ddf1 ; $4778
 	res 0, [hl] ; $477b
-Label_09_477d:
+.keepSlot:
 	ld hl, $ddfc ; $477d
 	inc [hl] ; $4780
-Label_09_4781:
+.done:
 	ret ; $4781
 GetNextMoveCurveValue:
 	ld a, [$ddfe] ; $4782
