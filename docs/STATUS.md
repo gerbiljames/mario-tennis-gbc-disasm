@@ -26,7 +26,7 @@ Everything below is **committed** (HEAD `2a60891`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **7,163 of 20,717 labels are human-named** (see the caveat in the
+symbols. **8,319 of 20,736 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
 
 ### Local labels inside functions (2026-07-26)
@@ -81,10 +81,10 @@ Getting a scope wrong is not silent: a bare `.name` that binds to the wrong
 parent either fails to assemble or assembles to a different address, so
 `make compare` is a real check on the whole scheme.
 
-**363 local labels across 60-odd of the most-called functions** were named in
-this pass, working down the ROM-wide call-frequency list (`QueueVRAMCopy` at
-613 call sites, `RegisterFrameTask` 435, `AdvanceFrame` 419, ...). What the
-names buy is mostly structure that was previously invisible:
+**1,482 local labels** are now named, working down the ROM-wide
+call-frequency list: **every function called five or more times, and all but a
+handful of those called four times, has its intra-function jump targets
+named.** What the names buy is mostly structure that was previously invisible:
 
 * **`DecompressData`** (220 callers) reads as the LZ decoder it is:
   `.nextControlByte` / `.nextFlag` for the 8-flag control byte, then
@@ -108,14 +108,55 @@ names buy is mostly structure that was previously invisible:
   tiles (VBK 0, WRAM bank 3) -- which the `.attr*` / `.tile*` prefixes make
   obvious at a glance.
 
+More of the same shape, further down the list:
+
+* **`RunSoundChannelScript`** (50 locals) is the sound driver's command
+  interpreter, and the opcode ranges now read off the labels: `.cmdA0` for the
+  extended commands, `.cmdB0` loop counters, `.cmdC0` envelopes, `.cmdD0`
+  volume slides, `.cmdF0` loop-point/end -- with `.setWaveId`, `.transpose`,
+  `.setEcho`, `.loopBlock` and friends underneath.
+* **The division helpers.** `DivHLByDE` is a restoring division with eight
+  unrolled steps per result byte (`.hiBit6` ... `.loBit0`); `DivAHLByE` and
+  `DivAHLByDE` are the 24-bit versions, one step per bit (`.bit22` ...
+  `.bit0`). `AngleFromVector16` turns out to be a *binary search* down a
+  tangent table -- `.sub7`/`.add7`/`.setBit7` per angle bit.
+* **Bank `$3e`'s four menu-cursor grid walkers.** They are the same routine
+  four times over -- local pad input, the link-frame input snapshot, and the
+  remote player's input for cursor 1 and cursor 2 -- which only became obvious
+  once `.wrapRight`/`.checkLeft`/`.storeDown` repeated verbatim in each. Three
+  of the four had no name at all before this pass.
+
+Naming the locals also flushed out a dozen **routines sitting unnamed next to
+their callers**, since a local label can only exist inside a named function:
+`WaitFadeEndLinked`, `QueueSpriteGrid`, `CopyMemoryReverseBC`,
+`FillMemoryCFast`, `WriteStatModifierToTileBuffer`, `AddSignedDEToMem24`,
+`DrawWindowGlyphRun`, `AllocWindowSlotBit`, `SendByteAwaitReplyMaster`,
+`TestUnlockFlagById`, `MoveMenuCursorGridFromLinkInput_3e`,
+`MoveMenuCursorGridRemote_3e`, `MoveMenuCursor2GridRemote_3e`, and the six
+`Draw*ResultsHeader` handlers dispatched on `wGameMode` in bank `$1e`.
+
 `tools/progress.py` used to skip every symbol containing a `.` (the macro and
 text emitters generate their own `.L4`/`.s17` anchors). It now keeps the ones
 whose offset is curated in `labels.json`, so named locals count toward the
-naming metric -- hence 7,163 named, up from 6,800 with the same source.
+naming metric -- hence 8,319 named, up from 6,800 with the same source.
 
-Still auto-named: **7,436 `Label_*`** (down from 7,804) and the `Data_*` runs.
-Naming the rest is the same one-function-at-a-time work; the machinery no
-longer has anything to do with it.
+Still auto-named: **6,299 `Label_*`** (down from 7,804) and the `Data_*` runs.
+They sit in the long tail: ~1,900 functions, half of which are called once or
+reached only through a dispatch table. Naming them is the same
+one-function-at-a-time work; the machinery no longer has anything to do
+with it.
+
+Two process notes worth keeping:
+
+* A bare flat offset in `labels.json` is `bank*0x4000 + cpu - 0x4000`, not
+  `bank*0x4000 + cpu`. Two entries were written with the wrong formula, landed
+  past the end of the ROM and were **silently dropped** -- the build stayed
+  byte-perfect because the label simply never emitted. The apply path now
+  rejects offsets past 2 MiB and accepts a `bb:aaaa` form instead.
+* Two locals with the same name under one global label are an rgbasm
+  redefinition error. This bites where a function is followed by *unnamed*
+  sibling routines, because their `Label_` heads sit in the same scope; the
+  fix is to name the sibling, not to invent a unique local name.
 
 ### No `Func_*` label is left in the ROM (2026-07-25)
 
