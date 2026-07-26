@@ -798,27 +798,27 @@ DormRoomInitScript_13:
 	ret ; $5066
 SetDormRoomEventTriggerCells_13:
 	test_flag FLAG_DOUBLES ; $5067
-	jr nz, Label_13_507c ; $506a
+	jr nz, .doubles ; $506a
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $506c
-	jr nz, Label_13_5074 ; $506f
-	jr Label_13_50de ; $5071
+	jr nz, .checkIslandSingles ; $506f
+	jr .clearTriggers ; $5071
 	ret ; $5073
-Label_13_5074:
+.checkIslandSingles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $5074
-	jr z, Label_13_508c ; $5077
-	jr Label_13_50de ; $5079
+	jr z, .enableTriggers ; $5077
+	jr .clearTriggers ; $5079
 	ret ; $507b
-Label_13_507c:
+.doubles:
 	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2 ; $507c
-	jr nz, Label_13_5084 ; $507f
-	jr Label_13_50de ; $5081
+	jr nz, .checkIslandDoubles ; $507f
+	jr .clearTriggers ; $5081
 	ret ; $5083
-Label_13_5084:
+.checkIslandDoubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5084
-	jr z, Label_13_508c ; $5087
-	jr Label_13_50de ; $5089
+	jr z, .enableTriggers ; $5087
+	jr .clearTriggers ; $5089
 	ret ; $508b
-Label_13_508c:
+.enableTriggers:
 	ld a, $f1 ; $508c
 	ld d, $08 ; $508e
 	ld e, $0e ; $5090
@@ -856,7 +856,7 @@ Label_13_508c:
 	ld e, $12 ; $50d8
 	farcall WriteBehaviorMapCell ; $50da
 	ret ; $50dd
-Label_13_50de:
+.clearTriggers:
 	ld a, $00 ; $50de
 	ld d, $08 ; $50e0
 	ld e, $0e ; $50e2
@@ -1044,7 +1044,7 @@ Label_13_52e3:
 Label_13_52e7:
 	call GetDormRoomStoryStage_13 ; $52e7
 	cp a, $01 ; $52ea
-	jp z, Label_13_5aee ; $52ec
+	jp z, DormRoomArrivalCutscene_13 ; $52ec
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52ef
 	jr z, Label_13_52fc ; $52f2
 	script_set_text Text_31_263 ; $52f4
@@ -1778,14 +1778,14 @@ GetDormRoomStoryStage_13:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5ae7
 	jr nz, .stage1 ; $5aea
 	jr .stage0 ; $5aec
-Label_13_5aee:
+DormRoomArrivalCutscene_13:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5aee
-	jr z, Label_13_5afb ; $5af1
+	jr z, .variantB ; $5af1
 	script_set_text Text_31_273 ; $5af3
-	jr Label_13_5b01 ; $5af9
-Label_13_5afb:
+	jr .placeActors ; $5af9
+.variantB:
 	script_set_text Text_31_268 ; $5afb
-Label_13_5b01:
+.placeActors:
 	script_null_script ACTOR_PARTNER ; $5b01
 	script_set_position ACTOR_PARTNER, $0b00, $1e00 ; $5b06
 	script_face ACTOR_PARTNER, FACE_DOWN ; $5b11
@@ -1794,7 +1794,7 @@ Label_13_5b01:
 	script_fade_in $04 ; $5b2a
 	call WaitFadeEnd ; $5b2f
 	test_flag FLAG_DOUBLES ; $5b32
-	jr z, Label_13_5b79 ; $5b35
+	jr z, .singles ; $5b35
 	farcall AdvanceDialogueTextCursor ; $5b37
 	script_speak $03 ; $5b3a
 	script_speak $03 ; $5b3f
@@ -1814,7 +1814,7 @@ Label_13_5b01:
 	add hl, bc ; $5b75
 	set 4, [hl] ; $5b76
 	ret ; $5b78
-Label_13_5b79:
+.singles:
 	script_speak $03 ; $5b79
 	script_set_anim ACTOR_PLAYER, $03 ; $5b7e
 	script_wait_idle ACTOR_PLAYER ; $5b85

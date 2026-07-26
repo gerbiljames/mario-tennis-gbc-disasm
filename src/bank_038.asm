@@ -2783,9 +2783,9 @@ GetPlayerSlotBoxAddress:
 	ld hl, SubHandlers_38_56c9 ; $56b1
 	add a, l ; $56b4
 	ld l, a ; $56b5
-	jr nc, Label_38_56b9 ; $56b6
+	jr nc, .readTable ; $56b6
 	inc h ; $56b8
-Label_38_56b9:
+.readTable:
 	ld a, [hl+] ; $56b9
 	ld h, [hl] ; $56ba
 	ld l, a ; $56bb
@@ -2793,9 +2793,9 @@ Label_38_56b9:
 	add a, a ; $56bf
 	add a, l ; $56c0
 	ld l, a ; $56c1
-	jr nc, Label_38_56c5 ; $56c2
+	jr nc, .readEntry ; $56c2
 	inc h ; $56c4
-Label_38_56c5:
+.readEntry:
 	ld a, [hl+] ; $56c5
 	ld b, [hl] ; $56c6
 	ld c, a ; $56c7
@@ -5441,9 +5441,9 @@ DrawRemoteSlotPortrait:
 	call DrawRemoteSlotStarMark ; $68aa
 	ld a, [$d813] ; $68ad
 	cp a, $03 ; $68b0
-	jr z, Label_38_68d0 ; $68b2
+	jr z, .slot0 ; $68b2
 	cp a, $05 ; $68b4
-	jr z, Label_38_68d0 ; $68b6
+	jr z, .slot0 ; $68b6
 	ld hl, $d120 ; $68b8
 	ld de, $9920 ; $68bb
 	ld c, $04 ; $68be
@@ -5452,8 +5452,8 @@ DrawRemoteSlotPortrait:
 	ld de, $b920 ; $68c6
 	ld c, $04 ; $68c9
 	call QueueVRAMCopy ; $68cb
-	jr Label_38_68e6 ; $68ce
-Label_38_68d0:
+	jr .done ; $68ce
+.slot0:
 	ld hl, $d0c0 ; $68d0
 	ld de, $98c0 ; $68d3
 	ld c, $04 ; $68d6
@@ -5462,7 +5462,7 @@ Label_38_68d0:
 	ld de, $b8c0 ; $68de
 	ld c, $04 ; $68e1
 	call QueueVRAMCopy ; $68e3
-Label_38_68e6:
+.done:
 	pop af ; $68e6
 	wram_bank ; $68e7
 	ret ; $68eb
@@ -6907,10 +6907,10 @@ Label_38_73ef:
 GetActiveStoryNameBuffer:
 	ld a, [wStoryCharacterSlot] ; $73fa
 	or a, a ; $73fd
-	jr nz, Label_38_7404 ; $73fe
+	jr nz, .partner ; $73fe
 	ld bc, wStoryModeNameOfMainCharacter ; $7400
 	ret ; $7403
-Label_38_7404:
+.partner:
 	ld bc, wStoryModeNameOfPartnerCharacter ; $7404
 	ret ; $7407
 RunLinkMatchSequence:

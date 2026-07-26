@@ -1255,7 +1255,7 @@ LoadOnCourtCharTilesA:
 	ret ; $5acd
 LoadOnCourtCharTilesB:
 	cp a, $ff ; $5ace
-	jr z, Label_18_5ae7 ; $5ad0
+	jr z, LoadOnCourtCharTilesFallback ; $5ad0
 	ld h, a ; $5ad2
 	ld l, $00 ; $5ad3
 	srl h ; $5ad5
@@ -1267,7 +1267,7 @@ LoadOnCourtCharTilesB:
 	ld c, $04 ; $5ae1
 	call QueueVRAMCopy ; $5ae3
 	ret ; $5ae6
-Label_18_5ae7:
+LoadOnCourtCharTilesFallback:
 	ld hl, Gfx_18_6af0 ; $5ae7
 	ld c, $04 ; $5aea
 	call QueueVRAMCopy ; $5aec

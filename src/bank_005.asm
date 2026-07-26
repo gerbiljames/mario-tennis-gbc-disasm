@@ -614,14 +614,14 @@ RestoreTilemapUnderWindow:
 	ld c, [hl] ; $43b3
 	ld a, [wCameraY + 1] ; $43b4
 	cp a, b ; $43b7
-	jr c, Label_05_43c0 ; $43b8
-	jr z, Label_05_43c0 ; $43ba
+	jr c, .gotRow ; $43b8
+	jr z, .gotRow ; $43ba
 	ld a, $20 ; $43bc
 	add a, b ; $43be
 	ld b, a ; $43bf
-Label_05_43c0:
+.gotRow:
 	ld a, b ; $43c0
-Label_05_43c1:
+.rowLoop:
 	push af ; $43c1
 	push bc ; $43c2
 	ld a, b ; $43c3
@@ -630,7 +630,7 @@ Label_05_43c1:
 	pop af ; $43c8
 	inc b ; $43c9
 	dec c ; $43ca
-	jr nz, Label_05_43c1 ; $43cb
+	jr nz, .rowLoop ; $43cb
 	pop hl ; $43cd
 	pop de ; $43ce
 	pop bc ; $43cf
@@ -3527,9 +3527,9 @@ SetWindowTextId:
 	ld a, $06 ; $55db
 	add a, l ; $55dd
 	ld l, a ; $55de
-	jr nc, Label_05_55e2 ; $55df
+	jr nc, .store ; $55df
 	inc h ; $55e1
-Label_05_55e2:
+.store:
 	ld a, e ; $55e2
 	ld [hl+], a ; $55e3
 	ld [hl], d ; $55e4

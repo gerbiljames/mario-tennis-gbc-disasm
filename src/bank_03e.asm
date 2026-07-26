@@ -2860,16 +2860,16 @@ DrawItemIcon2x2:
 	ld hl, $d240 ; $557e
 	ld a, [$d813] ; $5581
 	or a, a ; $5584
-	jr z, Label_3e_558a ; $5585
+	jr z, .gotBase ; $5585
 	ld hl, $d280 ; $5587
-Label_3e_558a:
+.gotBase:
 	ld a, c ; $558a
 	add a, a ; $558b
 	add a, l ; $558c
 	ld l, a ; $558d
-	jr nc, Label_3e_5591 ; $558e
+	jr nc, .copy ; $558e
 	inc h ; $5590
-Label_3e_5591:
+.copy:
 	ld b, $02 ; $5591
 	ld c, $02 ; $5593
 	farcall CopyTilemapRect ; $5595

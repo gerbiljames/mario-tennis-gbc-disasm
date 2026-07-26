@@ -825,9 +825,9 @@ GetGfxSourcePtr:
 	add a, a ; $6156
 	add a, l ; $6157
 	ld l, a ; $6158
-	jr nc, Label_09_615c ; $6159
+	jr nc, .read ; $6159
 	inc h ; $615b
-Label_09_615c:
+.read:
 	ld a, [hl+] ; $615c
 	ld h, [hl] ; $615d
 	ld l, a ; $615e

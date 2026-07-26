@@ -260,10 +260,10 @@ IsMinigameTargetReached:
 	sbc a, d ; $41e3
 	ld h, a ; $41e4
 	bit 7, h ; $41e5
-	jr nz, Label_0d_41ec ; $41e7
+	jr nz, .notReached ; $41e7
 	ld a, $01 ; $41e9
 	ret ; $41eb
-Label_0d_41ec:
+.notReached:
 	xor a, a ; $41ec
 	ret ; $41ed
 IsMinigameScoreLimitReached:
@@ -594,12 +594,12 @@ Label_0d_440a:
 ShowMinigamePointResult:
 	ld a, [wPointWinLoseFlag] ; $4412
 	add a, a ; $4415
-	jr c, Label_0d_441c ; $4416
+	jr c, .lostPoint ; $4416
 	sound $09 ; $4418
-	jr Label_0d_441e ; $441a
-Label_0d_441c:
+	jr .showBanner ; $441a
+.lostPoint:
 	sound $0a ; $441c
-Label_0d_441e:
+.showBanner:
 	farcall StepMatchFrame ; $441e
 	ld a, d ; $4421
 	farcall ShowCourtBanner ; $4422

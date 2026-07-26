@@ -3951,9 +3951,9 @@ WriteExpScreenStringTiles:
 	or a, a ; $6d71
 	ret z ; $6d72
 	cp a, $de ; $6d73
-	jr z, Label_1d_6d8f ; $6d75
+	jr z, .rowAbove ; $6d75
 	cp a, $df ; $6d77
-	jr z, Label_1d_6d8f ; $6d79
+	jr z, .rowAbove ; $6d79
 	ld b, a ; $6d7b
 	wram_bank $03 ; $6d7c
 	ld a, b ; $6d82
@@ -3963,17 +3963,17 @@ WriteExpScreenStringTiles:
 	ld [de], a ; $6d8b
 	inc de ; $6d8c
 	jr WriteExpScreenStringTiles ; $6d8d
-Label_1d_6d8f:
+.rowAbove:
 	call ExpScreenTilePtrUpOneRow ; $6d8f
 	ld b, a ; $6d92
 	wram_bank $03 ; $6d93
 	ld a, [de] ; $6d99
 	cp a, $73 ; $6d9a
-	jr z, Label_1d_6da4 ; $6d9c
+	jr z, .statLabel ; $6d9c
 	cp a, $8f ; $6d9e
-	jr z, Label_1d_6da4 ; $6da0
-	jr Label_1d_6dc5 ; $6da2
-Label_1d_6da4:
+	jr z, .statLabel ; $6da0
+	jr .plainTile ; $6da2
+.statLabel:
 	push bc ; $6da4
 	ld a, b ; $6da5
 	sub a, $7e ; $6da6
@@ -3981,7 +3981,7 @@ Label_1d_6da4:
 	ld c, $0f ; $6da9
 	ld a, [wStoryCharacterSlot] ; $6dab
 	or a, a ; $6dae
-	jr z, Label_1d_6dc5 ; $6daf
+	jr z, .plainTile ; $6daf
 	inc b ; $6db1
 	inc b ; $6db2
 	ld c, $0c ; $6db3
@@ -3993,7 +3993,7 @@ Label_1d_6da4:
 	pop bc ; $6dbf
 	call ExpScreenTilePtrDownOneRow ; $6dc0
 	jr WriteExpScreenStringTiles ; $6dc3
-Label_1d_6dc5:
+.plainTile:
 	ld a, b ; $6dc5
 	ld [de], a ; $6dc6
 	wram_bank $02 ; $6dc7

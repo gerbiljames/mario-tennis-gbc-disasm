@@ -2157,12 +2157,12 @@ SpawnActorFromTemplate:
 	ld d, a ; $4c68
 	call EvalFlagCondition ; $4c69
 	pop de ; $4c6c
-	jr z, Label_04_4c79 ; $4c6d
+	jr z, .withFields ; $4c6d
 	ldh a, [hRomBank] ; $4c6f
 	ld hl, ActorScript_Idle ; $4c71
 	call SpawnActor ; $4c74
-	jr Label_04_4cf3 ; $4c77
-Label_04_4c79:
+	jr .done ; $4c77
+.withFields:
 	ld a, [hl+] ; $4c79
 	ld e, a ; $4c7a
 	ld a, [hl+] ; $4c7b
@@ -2175,7 +2175,7 @@ Label_04_4c79:
 	pop hl ; $4c84
 	inc b ; $4c85
 	dec b ; $4c86
-	jr z, Label_04_4cf3 ; $4c87
+	jr z, .done ; $4c87
 	ld a, $0c ; $4c89
 	add a, c ; $4c8b
 	ld e, a ; $4c8c
@@ -2227,14 +2227,14 @@ Label_04_4c79:
 	call SetActorAnimation ; $4cc0
 	ld a, [hl] ; $4cc3
 	cp a, $00 ; $4cc4
-	jr z, Label_04_4ccf ; $4cc6
+	jr z, .setFlags ; $4cc6
 	ld a, $37 ; $4cc8
 	add a, c ; $4cca
 	ld e, a ; $4ccb
 	ld d, b ; $4ccc
 	ld a, [hl] ; $4ccd
 	ld [de], a ; $4cce
-Label_04_4ccf:
+.setFlags:
 	inc hl ; $4ccf
 	inc hl ; $4cd0
 	ld hl, $0005 ; $4cd1
@@ -2258,7 +2258,7 @@ Label_04_4ccf:
 	add hl, bc ; $4cef
 	ld a, $02 ; $4cf0
 	ld [hl], a ; $4cf2
-Label_04_4cf3:
+.done:
 	pop hl ; $4cf3
 	pop de ; $4cf4
 	pop af ; $4cf5
@@ -3064,11 +3064,11 @@ IsTerrainBlockedAtPoint:
 	ld d, h ; $534d
 	farcall ReadCollisionMapCell ; $534e
 	and a, $0f ; $5351
-	jr z, Label_04_535a ; $5353
+	jr z, .done ; $5353
 	cp a, $0f ; $5355
-	jr z, Label_04_535a ; $5357
+	jr z, .done ; $5357
 	xor a, a ; $5359
-Label_04_535a:
+.done:
 	pop de ; $535a
 	ret ; $535b
 TestPointInBox:

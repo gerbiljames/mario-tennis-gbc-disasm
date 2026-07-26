@@ -997,9 +997,9 @@ GetTennisDictionarySelectedIndex:
 	ld a, [wTennisDictScrollTop] ; $5189
 	add a, c ; $518c
 	cp a, d ; $518d
-	jr c, Label_3f_5191 ; $518e
+	jr c, .done ; $518e
 	sub a, d ; $5190
-Label_3f_5191:
+.done:
 	ret ; $5191
 ScrollTennisDictionaryToPrevLetter:
 	wram_bank $06 ; $5192

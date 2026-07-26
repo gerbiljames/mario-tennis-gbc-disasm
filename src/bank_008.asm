@@ -4443,11 +4443,11 @@ PanCamera:
 	ld e, a ; $6183
 	call ReadMatchInputPressed ; $6184
 	and a, $0b ; $6187
-	jr nz, Label_08_6191 ; $6189
+	jr nz, .done ; $6189
 	call StepMatchFrame ; $618b
 	dec b ; $618e
 	jr nz, PanCamera ; $618f
-Label_08_6191:
+.done:
 	ret ; $6191
 ResetCameraForServe:
 	call GetServeCameraTarget ; $6192
@@ -6051,9 +6051,9 @@ UpdateCharRunAnimation:
 	ld d, $02 ; $6d4b
 	ld hl, wCharFlags ; $6d4d
 	bit 4, [hl] ; $6d50
-	jr nz, Label_08_6d56 ; $6d52
+	jr nz, .setAnim ; $6d52
 	ld d, $01 ; $6d54
-Label_08_6d56:
+.setAnim:
 	call SetCharAnimation ; $6d56
 	ret ; $6d59
 StartCharSwing:

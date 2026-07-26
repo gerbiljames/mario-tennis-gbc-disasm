@@ -3635,30 +3635,30 @@ UpdateSceneScroll:
 	ld h, a ; $5979
 	ld a, [wCameraY + 1] ; $597a
 	sub a, h ; $597d
-	jr z, Label_0a_5992 ; $597e
+	jr z, .checkX ; $597e
 	bit 7, a ; $5980
-	jr nz, Label_0a_598c ; $5982
+	jr nz, .scrollUp ; $5982
 	ld bc, $fb13 ; $5984
 	call BlitBGRowFrom64 ; $5987
-	jr Label_0a_5992 ; $598a
-Label_0a_598c:
+	jr .checkX ; $598a
+.scrollUp:
 	ld bc, $fb00 ; $598c
 	call BlitBGRowFrom64 ; $598f
-Label_0a_5992:
+.checkX:
 	ld a, [$c324] ; $5992
 	ld h, a ; $5995
 	ld a, [wCameraX + 1] ; $5996
 	sub a, h ; $5999
-	jr z, Label_0a_59ae ; $599a
+	jr z, .storeCamera ; $599a
 	bit 7, a ; $599c
-	jr nz, Label_0a_59a8 ; $599e
+	jr nz, .scrollLeft ; $599e
 	ld bc, $15fa ; $59a0
 	call BlitBGColumnFrom64 ; $59a3
-	jr Label_0a_59ae ; $59a6
-Label_0a_59a8:
+	jr .storeCamera ; $59a6
+.scrollLeft:
 	ld bc, $00fa ; $59a8
 	call BlitBGColumnFrom64 ; $59ab
-Label_0a_59ae:
+.storeCamera:
 	ld a, [wCameraY] ; $59ae
 	ld l, a ; $59b1
 	ld a, [wCameraY + 1] ; $59b2

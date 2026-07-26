@@ -587,9 +587,9 @@ LoadDrillOpponentBySide:
 	and a, $01 ; $441f
 	add a, l ; $4421
 	ld l, a ; $4422
-	jr nc, Label_0b_4426 ; $4423
+	jr nc, .load ; $4423
 	inc h ; $4425
-Label_0b_4426:
+.load:
 	ld a, [hl] ; $4426
 	call LoadDrillOpponentChar ; $4427
 	ret ; $442a
