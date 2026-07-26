@@ -101,6 +101,7 @@ FetchShortTextToBuffer:
 	pop bc ; $40bb
 	pop af ; $40bc
 	ret ; $40bd
+ClearWindowGlyphPage:
 	ldh a, [hWramBank] ; $40be
 	push af ; $40c0
 	wram_bank $05 ; $40c1
@@ -110,11 +111,12 @@ FetchShortTextToBuffer:
 	pop af ; $40cf
 	wram_bank ; $40d0
 	ret ; $40d4
+QueueGlyphPageDMAOnA:
 	ldh a, [hPlayerInputFlags] ; $40d5
 	bit PADB_A, a ; $40d7
-	jr nz, Label_05_40dd ; $40d9
-	jr Label_05_40fa ; $40db
-Label_05_40dd:
+	jr nz, .startDMA ; $40d9
+	jr .done ; $40db
+.startDMA:
 	xor a, a ; $40dd
 	ldh [rVBK], a ; $40de
 	wram_bank $05 ; $40e0
@@ -131,7 +133,7 @@ Label_05_40dd:
 	ld [hl], e ; $40f7
 	inc hl ; $40f8
 	ld [hl], a ; $40f9
-Label_05_40fa:
+.done:
 	ret ; $40fa
 WriteTileToShadowMapCell:
 	push af ; $40fb
@@ -1037,27 +1039,28 @@ Label_05_4621:
 	ret ; $4625
 StubNop_05_4626:
 	ret ; $4626
+AllocWindowSlotBit:
 	push hl ; $4627
 	push bc ; $4628
 	push de ; $4629
 	ld b, $07 ; $462a
 	ld a, [$dc70] ; $462c
 	ld c, $01 ; $462f
-Label_05_4631:
+.searchLoop:
 	rrca ; $4631
-	jr nc, Label_05_463d ; $4632
+	jr nc, .claim ; $4632
 	sla c ; $4634
 	dec b ; $4636
-	jr nz, Label_05_4631 ; $4637
+	jr nz, .searchLoop ; $4637
 	ld a, $ff ; $4639
-	jr Label_05_4647 ; $463b
-Label_05_463d:
+	jr .done ; $463b
+.claim:
 	ld a, [$dc70] ; $463d
 	or a, c ; $4640
 	ld [$dc70], a ; $4641
 	ld a, $07 ; $4644
 	sub a, b ; $4646
-Label_05_4647:
+.done:
 	pop de ; $4647
 	pop bc ; $4648
 	pop hl ; $4649
@@ -3332,19 +3335,19 @@ RenderInlineString:
 	push af ; $54cf
 	ld a, [wTextStreamPtr + 1] ; $54d0
 	cp a, $c6 ; $54d3
-	jr nz, Label_05_54dd ; $54d5
+	jr nz, .checkWrap ; $54d5
 	ld a, [wTextStreamPtr] ; $54d7
 	or a, a ; $54da
-	jr z, Label_05_54f3 ; $54db
-Label_05_54dd:
+	jr z, .charLoop ; $54db
+.checkWrap:
 	dec de ; $54dd
 	ld a, [de] ; $54de
 	inc de ; $54df
 	cp a, $05 ; $54e0
-	jr z, Label_05_54f3 ; $54e2
+	jr z, .charLoop ; $54e2
 	ld a, e ; $54e4
 	and a, $1f ; $54e5
-	jr nz, Label_05_54f3 ; $54e7
+	jr nz, .charLoop ; $54e7
 	push hl ; $54e9
 	ld h, d ; $54ea
 	ld l, e ; $54eb
@@ -3353,28 +3356,28 @@ Label_05_54dd:
 	ld d, h ; $54f0
 	ld e, l ; $54f1
 	pop hl ; $54f2
-Label_05_54f3:
+.charLoop:
 	ld a, [hl] ; $54f3
 	cp a, $00 ; $54f4
-	jr z, Label_05_5553 ; $54f6
+	jr z, .done ; $54f6
 	test_flag FLAG_PROPORTIONAL_TEXT_MODE ; $54f8
-	jr nz, Label_05_5505 ; $54fb
+	jr nz, .proportional ; $54fb
 	call DrawInlineGlyph ; $54fd
 	call UploadLastGlyphTiles ; $5500
-	jr Label_05_5511 ; $5503
-Label_05_5505:
+	jr .checkMark ; $5503
+.proportional:
 	call StampGlyphTileAtPen ; $5505
 	call DrawInlineGlyph ; $5508
 	call StampGlyphTileAtPen ; $550b
 	call UploadLastGlyphTiles ; $550e
-Label_05_5511:
+.checkMark:
 	inc hl ; $5511
 	ld a, [hl] ; $5512
 	cp a, $de ; $5513
-	jr z, Label_05_551b ; $5515
+	jr z, .markChar ; $5515
 	cp a, $df ; $5517
-	jr nz, Label_05_553e ; $5519
-Label_05_551b:
+	jr nz, .nextCell ; $5519
+.markChar:
 	push hl ; $551b
 	push bc ; $551c
 	ld h, d ; $551d
@@ -3386,28 +3389,28 @@ Label_05_551b:
 	ld c, a ; $5527
 	ld a, h ; $5528
 	cp a, c ; $5529
-	jr nc, Label_05_5530 ; $552a
+	jr nc, .cellPtrOk ; $552a
 	ld bc, $0400 ; $552c
 	add hl, bc ; $552f
-Label_05_5530:
+.cellPtrOk:
 	pop af ; $5530
 	ld b, a ; $5531
 	ld a, [hl] ; $5532
 	cp a, $03 ; $5533
 	ld a, b ; $5535
-	jr nz, Label_05_553a ; $5536
+	jr nz, .writeMark ; $5536
 	sub a, $d0 ; $5538
-Label_05_553a:
+.writeMark:
 	ld [hl], a ; $553a
 	pop bc ; $553b
 	pop hl ; $553c
 	inc hl ; $553d
-Label_05_553e:
+.nextCell:
 	call DelayTextCharacter ; $553e
 	inc de ; $5541
 	ld a, e ; $5542
 	and a, $1f ; $5543
-	jr nz, Label_05_54f3 ; $5545
+	jr nz, .charLoop ; $5545
 	push hl ; $5547
 	ld h, d ; $5548
 	ld l, e ; $5549
@@ -3416,8 +3419,8 @@ Label_05_553e:
 	ld d, h ; $554e
 	ld e, l ; $554f
 	pop hl ; $5550
-	jr Label_05_54f3 ; $5551
-Label_05_5553:
+	jr .charLoop ; $5551
+.done:
 	pop af ; $5553
 	ret ; $5554
 	push af ; $5555

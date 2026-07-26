@@ -555,12 +555,12 @@ InitPlayerRecordFromTemplate:
 	ld e, a ; $4401
 	ld d, b ; $4402
 	ld c, $0c ; $4403
-Label_02_4405:
+.copyLoop:
 	ld a, [hl+] ; $4405
 	ld [de], a ; $4406
 	inc de ; $4407
 	dec c ; $4408
-	jr nz, Label_02_4405 ; $4409
+	jr nz, .copyLoop ; $4409
 	pop bc ; $440b
 	call RecomputeCharacterStats ; $440c
 	ld hl, wStoryModeNameOfMainCharacter ; $440f

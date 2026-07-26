@@ -3327,9 +3327,9 @@ GetEquippedItemId:
 	ld hl, $d800 ; $5963
 	add a, l ; $5966
 	ld l, a ; $5967
-	jr nc, Label_3e_596b ; $5968
+	jr nc, .read ; $5968
 	inc h ; $596a
-Label_3e_596b:
+.read:
 	ld a, [hl] ; $596b
 	pop hl ; $596c
 	ret ; $596d

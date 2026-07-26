@@ -255,7 +255,7 @@ TennisMachineRoomInitScript_14:
 	cp a, $07 ; $42a5
 	jp z, MachinePracticeResultScene ; $42a7
 	cp a, $ff ; $42aa
-	jp z, Label_14_4a00 ; $42ac
+	jp z, MachineCourtWalkToAttendantCutscene.practiceRoom ; $42ac
 	ret ; $42af
 MachineCourtResultScene:
 	test_flag FLAG_DOUBLES ; $42b0
@@ -888,9 +888,9 @@ MachineCourtWalkToAttendantCutscene:
 	script_wait_move ACTOR_PLAYER ; $49f3
 	script_face $05, FACE_LEFT ; $49f8
 	ret ; $49ff
-Label_14_4a00:
+.practiceRoom:
 	test_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $4a00
-	jr z, Label_14_4a38 ; $4a03
+	jr z, .done ; $4a03
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $4a05
 	script_set_position $05, $2d00, $2900 ; $4a08
 	script_face $05, FACE_DOWN ; $4a13
@@ -898,7 +898,7 @@ Label_14_4a00:
 	script_wait_frames $01 ; $4a1f
 	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $4a26
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4a31
-Label_14_4a38:
+.done:
 	ret ; $4a38
 Court2MapScripts_14:
 	; $4a39, 14 bytes (map_tree)

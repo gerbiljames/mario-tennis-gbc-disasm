@@ -832,25 +832,25 @@ RunMatchMenu:
 	add hl, de ; $46f8
 	ld bc, $0040 ; $46f9
 	call ClearAttrPriorityRegion ; $46fc
-	jr Label_06_4733 ; $46ff
-Label_06_4701:
+	jr .redraw ; $46ff
+.inputLoop:
 	farcall ReadMatchInputPressed ; $4701
 	and a, $0a ; $4704
-	jr z, Label_06_4711 ; $4706
+	jr z, .checkA ; $4706
 	sound $62 ; $4708
 	ld a, $ff ; $470a
 	ld [wMatchMenuSelection], a ; $470c
-	jr Label_06_4776 ; $470f
-Label_06_4711:
+	jr .done ; $470f
+.checkA:
 	farcall ReadMatchInputPressed ; $4711
 	and a, $01 ; $4714
-	jr z, Label_06_471c ; $4716
+	jr z, .checkLeftRight ; $4716
 	sound $5f ; $4718
-	jr Label_06_4776 ; $471a
-Label_06_471c:
+	jr .done ; $471a
+.checkLeftRight:
 	farcall ReadMatchInputRepeat ; $471c
 	and a, $30 ; $471f
-	jr z, Label_06_476e ; $4721
+	jr z, .drawCursor ; $4721
 	ld b, a ; $4723
 	ld a, [wPauseMenuItemCount] ; $4724
 	ld c, a ; $4727
@@ -858,7 +858,7 @@ Label_06_471c:
 	call MoveCursorHorizontal ; $472b
 	ld [wMatchMenuSelection], a ; $472e
 	sound $5e ; $4731
-Label_06_4733:
+.redraw:
 	farcall PrepareGlyphBuffer ; $4733
 	ld hl, wGlyphPenX ; $4736
 	ld de, $2000 ; $4739
@@ -887,11 +887,11 @@ Label_06_4733:
 	farcall StepMatchFrame ; $4765
 	call FlushTilemapToVram ; $4768
 	farcall StepMatchFrame ; $476b
-Label_06_476e:
+.drawCursor:
 	call DrawMatchMenuCursor ; $476e
 	farcall StepMatchFrame ; $4771
-	jr Label_06_4701 ; $4774
-Label_06_4776:
+	jr .inputLoop ; $4774
+.done:
 	farcall StepMatchFrame ; $4776
 	ret ; $4779
 DrawScoreboardCaption:
@@ -2663,25 +2663,25 @@ RunStoryMenu:
 	call GetStoryMenuItemCount ; $6d10
 	ld [wPauseMenuItemCount], a ; $6d13
 	call DrawStoryMenuItems ; $6d16
-	jr Label_06_6d4d ; $6d19
-Label_06_6d1b:
+	jr .redraw ; $6d19
+.inputLoop:
 	farcall ReadMatchInputPressed ; $6d1b
 	and a, $0a ; $6d1e
-	jr z, Label_06_6d2b ; $6d20
+	jr z, .checkA ; $6d20
 	sound $62 ; $6d22
 	ld a, $ff ; $6d24
 	ld [wMatchMenuSelection], a ; $6d26
-	jr Label_06_6d70 ; $6d29
-Label_06_6d2b:
+	jr .done ; $6d29
+.checkA:
 	farcall ReadMatchInputPressed ; $6d2b
 	and a, $01 ; $6d2e
-	jr z, Label_06_6d36 ; $6d30
+	jr z, .checkLeftRight ; $6d30
 	sound $5f ; $6d32
-	jr Label_06_6d70 ; $6d34
-Label_06_6d36:
+	jr .done ; $6d34
+.checkLeftRight:
 	farcall ReadMatchInputRepeat ; $6d36
 	and a, $30 ; $6d39
-	jr z, Label_06_6d68 ; $6d3b
+	jr z, .drawCursor ; $6d3b
 	ld b, a ; $6d3d
 	ld a, [wPauseMenuItemCount] ; $6d3e
 	ld c, a ; $6d41
@@ -2689,7 +2689,7 @@ Label_06_6d36:
 	call MoveCursorHorizontal ; $6d45
 	ld [wMatchMenuSelection], a ; $6d48
 	sound $5e ; $6d4b
-Label_06_6d4d:
+.redraw:
 	ld a, [wMatchMenuSelection] ; $6d4d
 	call GetStoryMenuItemId ; $6d50
 	push af ; $6d53
@@ -2703,11 +2703,11 @@ Label_06_6d4d:
 	ld de, $000e ; $6d5f
 	call DrawStoryMenuCaption ; $6d62
 	call RedrawStoryTilemapRows ; $6d65
-Label_06_6d68:
+.drawCursor:
 	call DrawStoryMenuCursor ; $6d68
 	call AdvanceFrame ; $6d6b
-	jr Label_06_6d1b ; $6d6e
-Label_06_6d70:
+	jr .inputLoop ; $6d6e
+.done:
 	call AdvanceFrame ; $6d70
 	ret ; $6d73
 GetStoryMenuItemId:

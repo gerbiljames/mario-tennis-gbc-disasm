@@ -4984,10 +4984,10 @@ CombineColorComponents:
 AddClampColorComponent:
 	add a, d ; $1ca0
 	bit 7, a ; $1ca1
-	jr z, Label_00_1ca7 ; $1ca3
+	jr z, .clampHigh ; $1ca3
 	xor a, a ; $1ca5
 	ret ; $1ca6
-Label_00_1ca7:
+.clampHigh:
 	cp a, $1f ; $1ca7
 	ret c ; $1ca9
 	ld a, $1f ; $1caa

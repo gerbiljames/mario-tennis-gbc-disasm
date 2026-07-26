@@ -78,19 +78,19 @@ ApplySpriteBobOffsetX:
 	ld hl, Data_38_4095 ; $407f
 	add a, l ; $4082
 	ld l, a ; $4083
-	jr nc, Label_38_4087 ; $4084
+	jr nc, .readOffset ; $4084
 	inc h ; $4086
-Label_38_4087:
+.readOffset:
 	ld a, [hl] ; $4087
 	ld b, a ; $4088
 	ld a, c ; $4089
 	or a, a ; $408a
-	jr z, Label_38_4091 ; $408b
+	jr z, .subtract ; $408b
 	ld a, b ; $408d
 	add a, d ; $408e
 	ld d, a ; $408f
 	ret ; $4090
-Label_38_4091:
+.subtract:
 	ld a, d ; $4091
 	sub a, b ; $4092
 	ld d, a ; $4093

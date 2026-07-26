@@ -920,9 +920,9 @@ GetResultSpriteWobbleOffset:
 	ld hl, Table_16_4dee ; $4de4
 	add a, l ; $4de7
 	ld l, a ; $4de8
-	jr nc, Label_16_4dec ; $4de9
+	jr nc, .read ; $4de9
 	inc h ; $4deb
-Label_16_4dec:
+.read:
 	ld a, [hl] ; $4dec
 	ret ; $4ded
 Table_16_4dee:

@@ -3481,13 +3481,13 @@ AddVel24ToPos32:
 	inc de ; $5a8e
 	ld a, [de] ; $5a8f
 	bit 7, a ; $5a90
-	jr nz, Label_08_5a99 ; $5a92
+	jr nz, .carryHigh ; $5a92
 	adc a, [hl] ; $5a94
 	ld [hl+], a ; $5a95
 	ret nc ; $5a96
 	inc [hl] ; $5a97
 	ret ; $5a98
-Label_08_5a99:
+.carryHigh:
 	adc a, [hl] ; $5a99
 	ld [hl+], a ; $5a9a
 	ret c ; $5a9b
@@ -3511,11 +3511,11 @@ AddDEToMem24:
 	adc a, d ; $5aab
 	ld [hl+], a ; $5aac
 	bit 7, d ; $5aad
-	jr nz, Label_08_5ab4 ; $5aaf
+	jr nz, .negative ; $5aaf
 	ret nc ; $5ab1
 	inc [hl] ; $5ab2
 	ret ; $5ab3
-Label_08_5ab4:
+.negative:
 	ret c ; $5ab4
 	dec [hl] ; $5ab5
 	ret ; $5ab6
@@ -7716,8 +7716,8 @@ Label_08_7780:
 StepCharAnimation:
 	ld a, [$df2f] ; $7791
 	and a, a ; $7794
-	jr nz, Label_08_77f6 ; $7795
-Label_08_7797:
+	jr nz, .keepFrame ; $7795
+.nextCommand:
 	ld hl, $df2c ; $7797
 	ld a, [hl+] ; $779a
 	ld h, [hl] ; $779b
@@ -7728,17 +7728,17 @@ Label_08_7797:
 	ld d, b ; $77a4
 	ld a, e ; $77a5
 	cp a, $f0 ; $77a6
-	jr c, Label_08_77e6 ; $77a8
+	jr c, .setDelay ; $77a8
 	cp a, $ff ; $77aa
-	jr z, Label_08_77bd ; $77ac
+	jr z, .jumpToFrames ; $77ac
 	cp a, $fe ; $77ae
-	jr z, Label_08_77cd ; $77b0
+	jr z, .setAnimation ; $77b0
 	cp a, $fb ; $77b2
-	jr z, Label_08_77d2 ; $77b4
+	jr z, .toggleFlip ; $77b4
 	ld a, $ff ; $77b6
 	ld [$df2f], a ; $77b8
-	jr Label_08_77f6 ; $77bb
-Label_08_77bd:
+	jr .keepFrame ; $77bb
+.jumpToFrames:
 	ld hl, $df2a ; $77bd
 	ld a, [hl+] ; $77c0
 	add a, d ; $77c1
@@ -7746,11 +7746,11 @@ Label_08_77bd:
 	ld a, [hl+] ; $77c5
 	adc a, $00 ; $77c6
 	ld [$df2d], a ; $77c8
-	jr Label_08_7797 ; $77cb
-Label_08_77cd:
+	jr .nextCommand ; $77cb
+.setAnimation:
 	call SetCharAnimation ; $77cd
-	jr Label_08_7797 ; $77d0
-Label_08_77d2:
+	jr .nextCommand ; $77d0
+.toggleFlip:
 	ld hl, $df37 ; $77d2
 	ld a, [hl] ; $77d5
 	and a, $0f ; $77d6
@@ -7760,33 +7760,33 @@ Label_08_77d2:
 	ld a, [hl] ; $77dd
 	add a, $02 ; $77de
 	ld [hl+], a ; $77e0
-	jr nc, Label_08_7797 ; $77e1
+	jr nc, .nextCommand ; $77e1
 	inc [hl] ; $77e3
-	jr Label_08_7797 ; $77e4
-Label_08_77e6:
+	jr .nextCommand ; $77e4
+.setDelay:
 	ld a, d ; $77e6
 	ld [$df2f], a ; $77e7
 	ld hl, $df2c ; $77ea
 	ld a, [hl] ; $77ed
 	add a, $02 ; $77ee
 	ld [hl+], a ; $77f0
-	jr nc, Label_08_77fa ; $77f1
+	jr nc, .storeFrame ; $77f1
 	inc [hl] ; $77f3
-	jr Label_08_77fa ; $77f4
-Label_08_77f6:
+	jr .storeFrame ; $77f4
+.keepFrame:
 	ld a, [$df33] ; $77f6
 	ld e, a ; $77f9
-Label_08_77fa:
+.storeFrame:
 	ld hl, $df2f ; $77fa
 	dec [hl] ; $77fd
 	ld hl, $df33 ; $77fe
 	ld a, [hl] ; $7801
 	cp a, e ; $7802
-	jr z, Label_08_780b ; $7803
+	jr z, .done ; $7803
 	ld [hl], e ; $7805
 	ld hl, $df30 ; $7806
 	set 6, [hl] ; $7809
-Label_08_780b:
+.done:
 	ret ; $780b
 ReadCharInput:
 	xor a, a ; $780c

@@ -189,85 +189,85 @@ MoveMenuCursor:
 	ld e, a ; $4131
 	ld a, [wMenuInputPressed] ; $4132
 	bit PADB_RIGHT, a ; $4135
-	jr z, Label_3b_414e ; $4137
+	jr z, .checkLeft ; $4137
 	ld a, [wMenuCursorX] ; $4139
 	inc a ; $413c
 	add a, a ; $413d
-	jr nc, Label_3b_4144 ; $413e
+	jr nc, .wrapRight ; $413e
 	ld a, b ; $4140
 	dec a ; $4141
-	jr Label_3b_4149 ; $4142
-Label_3b_4144:
+	jr .storeRight ; $4142
+.wrapRight:
 	rra ; $4144
 	cp a, b ; $4145
-	jr c, Label_3b_4149 ; $4146
+	jr c, .storeRight ; $4146
 	xor a, a ; $4148
-Label_3b_4149:
+.storeRight:
 	ld [wMenuCursorX], a ; $4149
-	jr Label_3b_4197 ; $414c
-Label_3b_414e:
+	jr .compare ; $414c
+.checkLeft:
 	bit 5, a ; $414e
-	jr z, Label_3b_4167 ; $4150
+	jr z, .checkUp ; $4150
 	ld a, [wMenuCursorX] ; $4152
 	dec a ; $4155
 	add a, a ; $4156
-	jr nc, Label_3b_415d ; $4157
+	jr nc, .wrapLeft ; $4157
 	ld a, b ; $4159
 	dec a ; $415a
-	jr Label_3b_4162 ; $415b
-Label_3b_415d:
+	jr .storeLeft ; $415b
+.wrapLeft:
 	rra ; $415d
 	cp a, b ; $415e
-	jr c, Label_3b_4162 ; $415f
+	jr c, .storeLeft ; $415f
 	xor a, a ; $4161
-Label_3b_4162:
+.storeLeft:
 	ld [wMenuCursorX], a ; $4162
-	jr Label_3b_4197 ; $4165
-Label_3b_4167:
+	jr .compare ; $4165
+.checkUp:
 	bit 6, a ; $4167
-	jr z, Label_3b_4180 ; $4169
+	jr z, .checkDown ; $4169
 	ld a, [wMenuCursorY] ; $416b
 	dec a ; $416e
 	add a, a ; $416f
-	jr nc, Label_3b_4176 ; $4170
+	jr nc, .wrapUp ; $4170
 	ld a, c ; $4172
 	dec a ; $4173
-	jr Label_3b_417b ; $4174
-Label_3b_4176:
+	jr .storeUp ; $4174
+.wrapUp:
 	rra ; $4176
 	cp a, c ; $4177
-	jr c, Label_3b_417b ; $4178
+	jr c, .storeUp ; $4178
 	xor a, a ; $417a
-Label_3b_417b:
+.storeUp:
 	ld [wMenuCursorY], a ; $417b
-	jr Label_3b_4197 ; $417e
-Label_3b_4180:
+	jr .compare ; $417e
+.checkDown:
 	bit 7, a ; $4180
-	jr z, Label_3b_4197 ; $4182
+	jr z, .compare ; $4182
 	ld a, [wMenuCursorY] ; $4184
 	inc a ; $4187
 	add a, a ; $4188
-	jr nc, Label_3b_418f ; $4189
+	jr nc, .wrapDown ; $4189
 	ld a, c ; $418b
 	dec a ; $418c
-	jr Label_3b_4194 ; $418d
-Label_3b_418f:
+	jr .storeDown ; $418d
+.wrapDown:
 	rra ; $418f
 	cp a, c ; $4190
-	jr c, Label_3b_4194 ; $4191
+	jr c, .storeDown ; $4191
 	xor a, a ; $4193
-Label_3b_4194:
+.storeDown:
 	ld [wMenuCursorY], a ; $4194
-Label_3b_4197:
+.compare:
 	ld a, [wMenuCursorX] ; $4197
 	cp a, d ; $419a
-	jr nz, Label_3b_41a5 ; $419b
+	jr nz, .moved ; $419b
 	ld a, [wMenuCursorY] ; $419d
 	cp a, e ; $41a0
-	jr nz, Label_3b_41a5 ; $41a1
+	jr nz, .moved ; $41a1
 	xor a, a ; $41a3
 	ret ; $41a4
-Label_3b_41a5:
+.moved:
 	ld a, $01 ; $41a5
 	ret ; $41a7
 MoveMenuCursorRepeat:
@@ -5389,10 +5389,10 @@ CheckMinigameGridExpanded:
 	ld c, $06 ; $66f2
 	call GetUnlockedStarCharAtGridSlot ; $66f4
 	cp a, $15 ; $66f7
-	jr nz, Label_3b_66fd ; $66f9
+	jr nz, .expanded ; $66f9
 	xor a, a ; $66fb
 	ret ; $66fc
-Label_3b_66fd:
+.expanded:
 	ld a, $01 ; $66fd
 	ret ; $66ff
 MinigameSelectSlideIn6:

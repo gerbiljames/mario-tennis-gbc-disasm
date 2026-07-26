@@ -2796,7 +2796,7 @@ AcademyRulesServeMatchChallengeScene:
 	ret ; $6646
 PlayerPartnerGestureCutscene:
 	test_flag FLAG_DOUBLES ; $6647
-	jr z, Label_15_667b ; $664a
+	jr z, .playerOnly ; $664a
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $664c
 	script_set_anim ACTOR_PLAYER, $03 ; $6654
 	script_wait_idle ACTOR_PLAYER ; $665b
@@ -2805,7 +2805,7 @@ PlayerPartnerGestureCutscene:
 	script_face ACTOR_PLAYER, FACE_UP ; $666c
 	script_wait_frames $0a ; $6673
 	ret ; $667a
-Label_15_667b:
+.playerOnly:
 	script_set_anim ACTOR_PLAYER, $03 ; $667b
 	script_wait_idle ACTOR_PLAYER ; $6682
 	script_wait_frames $0a ; $6687
@@ -4290,9 +4290,9 @@ ReturnCoachRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $79ab
 	script_wait_frames $05 ; $79ae
 	and a, a ; $79b5
-	jp z, Label_15_79bc ; $79b6
+	jp z, .retry ; $79b6
 	jp Label_15_7a16 ; $79b9
-Label_15_79bc:
+.retry:
 	farcall AdvanceDialogueTextCursor ; $79bc
 	script_speak $0d ; $79bf
 	call ReturnCoachWalkToCourtAndStartLesson ; $79c4
