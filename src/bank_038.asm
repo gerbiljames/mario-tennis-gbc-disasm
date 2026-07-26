@@ -75,7 +75,7 @@ DrawSelectedOptionBox:
 ApplySpriteBobOffsetX:
 	ldh a, [hVBlankCounter] ; $407b
 	and a, $0f ; $407d
-	ld hl, Data_38_4095 ; $407f
+	ld hl, SpriteBobOffsetXTable ; $407f
 	add a, l ; $4082
 	ld l, a ; $4083
 	jr nc, .readOffset ; $4084
@@ -95,7 +95,7 @@ ApplySpriteBobOffsetX:
 	sub a, b ; $4092
 	ld d, a ; $4093
 	ret ; $4094
-Data_38_4095:
+SpriteBobOffsetXTable:
 	; $4095, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplySpriteBobOffsetY:
@@ -920,7 +920,7 @@ RunMatchTypeMenuLink:
 DrawMatchTypeOptionBoxes:
 	ld a, [wMatchFormatDoubles] ; $458d
 	add a, a ; $4590
-	ld hl, Data_38_45ff ; $4591
+	ld hl, MatchTypeOptionBoxesTable0 ; $4591
 	add a, l ; $4594
 	ld l, a ; $4595
 	jr nc, .doublesBox ; $4596
@@ -942,7 +942,7 @@ DrawMatchTypeOptionBoxes:
 .gamesBox:
 	ld a, [wMatchFormatGames] ; $45b2
 	add a, a ; $45b5
-	ld hl, Data_38_4603 ; $45b6
+	ld hl, MatchTypeOptionBoxesTable1 ; $45b6
 	add a, l ; $45b9
 	ld l, a ; $45ba
 	jr nc, .gamesOption ; $45bb
@@ -964,7 +964,7 @@ DrawMatchTypeOptionBoxes:
 .setsBox:
 	ld a, [wMatchFormatSets] ; $45d8
 	add a, a ; $45db
-	ld hl, Data_38_4607 ; $45dc
+	ld hl, MatchTypeOptionBoxesTable2 ; $45dc
 	add a, l ; $45df
 	ld l, a ; $45e0
 	jr nc, .setsOption ; $45e1
@@ -985,13 +985,13 @@ DrawMatchTypeOptionBoxes:
 	call DrawSelectedOptionBox ; $45fb
 .done:
 	ret ; $45fe
-Data_38_45ff:
+MatchTypeOptionBoxesTable0:
 	; $45ff, 4 bytes (bytes:4)
 	db $18, $10, $18, $58 ; 0x00
-Data_38_4603:
+MatchTypeOptionBoxesTable1:
 	; $4603, 4 bytes (bytes:4)
 	db $38, $10, $38, $58 ; 0x00
-Data_38_4607:
+MatchTypeOptionBoxesTable2:
 	; $4607, 8 bytes (bytes:8)
 	db $58, $08, $58, $38, $58, $68, $c9, $c9 ; 0x00
 SetupMatchTypeMenuScreen:
@@ -1056,7 +1056,7 @@ DrawMatchTypeOptionLabel:
 	call GetMenuCursorLinearIndex ; $472a
 	ld b, a ; $472d
 	add a, a ; $472e
-	ld hl, Data_38_4749 ; $472f
+	ld hl, MatchTypeOptionLabelTable ; $472f
 	add a, l ; $4732
 	ld l, a ; $4733
 	jr nc, .read ; $4734
@@ -1075,7 +1075,7 @@ DrawMatchTypeOptionLabel:
 	ld c, $20 ; $4743
 	farcall RenderTextToBuffer64 ; $4745
 	ret ; $4748
-Data_38_4749:
+MatchTypeOptionLabelTable:
 	; $4749, 6 bytes (bytes:6)
 	db $01, $d2, $02, $d2, $02, $d2 ; 0x00
 AdjustMatchTypeSetting:
@@ -1291,7 +1291,7 @@ RunCharacterSelectScreen:
 	ld c, $02 ; $490c
 	call GetMenuCursorLinearIndex ; $490e
 	add a, a ; $4911
-	ld hl, Data_38_4924 ; $4912
+	ld hl, CharacterSelectScreenTable ; $4912
 	add a, l ; $4915
 	ld l, a ; $4916
 	jr nc, .done ; $4917
@@ -1303,7 +1303,7 @@ RunCharacterSelectScreen:
 	ld bc, $3018 ; $491d
 	call DrawSelectedOptionBox ; $4920
 	ret ; $4923
-Data_38_4924:
+CharacterSelectScreenTable:
 	; $4924, 8 bytes (bytes:8)
 	db $20, $08, $20, $68, $40, $08, $40, $68 ; 0x00
 LoadCharSelectCharPalettes:
@@ -1795,7 +1795,7 @@ GetSelectedCharWramBank:
 	ld a, c ; $4e12
 	add a, a ; $4e13
 	add a, b ; $4e14
-	ld hl, Data_38_4e1f ; $4e15
+	ld hl, SelectedCharWramBankTable ; $4e15
 	add a, l ; $4e18
 	ld l, a ; $4e19
 	jr nc, .read ; $4e1a
@@ -1803,14 +1803,14 @@ GetSelectedCharWramBank:
 .read:
 	ld b, [hl] ; $4e1d
 	ret ; $4e1e
-Data_38_4e1f:
+SelectedCharWramBankTable:
 	; $4e1f, 4 bytes (bytes:4)
 	db $04, $05, $06, $07 ; 0x00
 DrawCharacterSelectCursor:
 	ld c, $02 ; $4e23
 	call GetMenuCursorLinearIndex ; $4e25
 	add a, a ; $4e28
-	ld hl, Data_38_4e4a ; $4e29
+	ld hl, CharacterSelectCursorTable ; $4e29
 	add a, l ; $4e2c
 	ld l, a ; $4e2d
 	jr nc, .read ; $4e2e
@@ -1829,7 +1829,7 @@ DrawCharacterSelectCursor:
 	ld b, $00 ; $4e44
 	call QueueSprite ; $4e46
 	ret ; $4e49
-Data_38_4e4a:
+CharacterSelectCursorTable:
 	; $4e4a, 8 bytes (bytes:8)
 	db $54, $2c, $54, $6d, $6d, $2c, $6d, $6d ; 0x00
 TickMenuBgScrollTask_38:
@@ -1944,7 +1944,7 @@ DrawCharGridCursorBox:
 	ld c, $03 ; $4f4b
 	call GetMenuCursorLinearIndex ; $4f4d
 	add a, a ; $4f50
-	ld hl, Data_38_4f63 ; $4f51
+	ld hl, CharGridCursorBoxTable ; $4f51
 	add a, l ; $4f54
 	ld l, a ; $4f55
 	jr nc, .read ; $4f56
@@ -1956,7 +1956,7 @@ DrawCharGridCursorBox:
 	ld bc, $1008 ; $4f5c
 	call DrawSelectedOptionBox ; $4f5f
 	ret ; $4f62
-Data_38_4f63:
+CharGridCursorBoxTable:
 	; $4f63, 12 bytes (bytes:12)
 	db $30, $09, $30, $21, $30, $39, $4a, $09, $4a, $21, $4a, $39 ; 0x00
 SetupCharGridScreen:
@@ -1972,18 +1972,18 @@ SetupCharGridScreen:
 	ld c, $00 ; $4f85
 	call SetMenuCursorFromLinearIndex ; $4f87
 	wram_bank $01 ; $4f8a
-	ld hl, Lz_38_50a7 ; $4f90
+	ld hl, CharGridScreenGfx1 ; $4f90
 	ld de, $d000 ; $4f93
 	call DecompressData ; $4f96
 	ld hl, $d000 ; $4f99
 	ld de, $a100 ; $4f9c
 	ld c, $08 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
-	ld hl, Lz_38_50f1 ; $4fa4
+	ld hl, CharGridScreenGfx2 ; $4fa4
 	ld de, $0901 ; $4fa7
 	call LoadPalettesMasterOnly ; $4faa
 	wram_bank $01 ; $4fad
-	ld hl, Lz_38_50f9 ; $4fb3
+	ld hl, CharGridScreenGfx3 ; $4fb3
 	ld de, $d000 ; $4fb6
 	call DecompressData ; $4fb9
 	ld hl, $d000 ; $4fbc
@@ -2038,7 +2038,7 @@ SetupCharGridScreen:
 	farcall QueueWram3MapToVRAM ; $503e
 	ld de, $a000 ; $5041
 	farcall LoadFixedTileBlockAndPalette ; $5044
-	ld hl, Data_38_507f ; $5047
+	ld hl, CharGridScreenTable0 ; $5047
 	ld de, $0b05 ; $504a
 	call LoadPalettesMasterOnly ; $504d
 	ld c, $0b ; $5050
@@ -2060,16 +2060,16 @@ SetupCharGridScreen:
 	farcall LoadCompressedTileBlock ; $5078
 	farcall InitDefaultMatchSettings ; $507b
 	ret ; $507e
-Data_38_507f:
+CharGridScreenTable0:
 	; $507f, 40 bytes (bytes:16)
 	db $5f, $01, $ff, $6b, $40, $1e, $00, $00, $5f, $01, $ff, $6b, $5c, $50, $00, $00 ; 0x00
 	db $5f, $01, $ff, $6b, $df, $01, $00, $00, $5f, $01, $ff, $6b, $1f, $00, $00, $00 ; 0x10
 	db $5f, $01, $ff, $6b, $4a, $7d, $00, $00 ; 0x20
-Lz_38_50a7:
+CharGridScreenGfx1:
 	INCBIN "data/bank_038/d_50a7.bin" ; $50a7, 74 bytes
-Lz_38_50f1:
+CharGridScreenGfx2:
 	INCBIN "data/bank_038/d_50f1.bin" ; $50f1, 8 bytes
-Lz_38_50f9:
+CharGridScreenGfx3:
 	INCBIN "data/bank_038/d_50f9.bin" ; $50f9, 156 bytes
 HandleCharGridDpad:
 	ldh a, [hWramBank] ; $5195
@@ -2464,13 +2464,13 @@ DrawCharGridSlotPrompt:
 	farcall RenderTextToBuffer64 ; $545c
 	ret ; $545f
 .promptFromTable:
-	ld hl, Data_38_5490 ; $5460
+	ld hl, CharGridSlotPromptTable1 ; $5460
 	ld a, [$d813] ; $5463
 	cp a, $03 ; $5466
 	jr z, .readEntry ; $5468
 	cp a, $05 ; $546a
 	jr z, .readEntry ; $546c
-	ld hl, Data_38_5486 ; $546e
+	ld hl, CharGridSlotPromptTable0 ; $546e
 .readEntry:
 	ld a, [$d814] ; $5471
 	add a, a ; $5474
@@ -2486,10 +2486,10 @@ DrawCharGridSlotPrompt:
 	ld c, $20 ; $5480
 	farcall RenderTextToBuffer64 ; $5482
 	ret ; $5485
-Data_38_5486:
+CharGridSlotPromptTable0:
 	; $5486, 10 bytes (bytes:10)
 	db $8e, $00, $8f, $00, $90, $00, $91, $00, $92, $00 ; 0x00
-Data_38_5490:
+CharGridSlotPromptTable1:
 	; $5490, 10 bytes (bytes:10)
 	db $8e, $00, $8e, $00, $8e, $00, $8f, $00, $92, $00 ; 0x00
 DrawCharGridWaitBanner:
@@ -2578,7 +2578,7 @@ DrawCharGridCharSprites:
 	push hl ; $5553
 	ld a, c ; $5554
 	add a, a ; $5555
-	ld hl, Data_38_557d ; $5556
+	ld hl, CharGridCharSprites ; $5556
 	add a, l ; $5559
 	ld l, a ; $555a
 	jr nc, .readOffset ; $555b
@@ -2607,7 +2607,7 @@ DrawCharGridCharSprites:
 	pop af ; $5577
 	wram_bank ; $5578
 	ret ; $557c
-Data_38_557d:
+CharGridCharSprites:
 	; $557d, 12 bytes (bytes:12)
 	db $33, $0e, $33, $26, $33, $3e, $4e, $0e, $4e, $26, $4e, $3e ; 0x00
 QueueCharGridCharSprite:
@@ -3130,7 +3130,7 @@ DrawCharNameAndType:
 	farcall RenderTextToBuffer64 ; $58dc
 	pop bc ; $58df
 	ld a, c ; $58e0
-	ld hl, Data_38_58fb ; $58e1
+	ld hl, CharNameAndTypeTable ; $58e1
 	add a, l ; $58e4
 	ld l, a ; $58e5
 	jr nc, .readType ; $58e6
@@ -3147,7 +3147,7 @@ DrawCharNameAndType:
 	ld c, $20 ; $58f5
 	farcall RenderTextToBuffer64 ; $58f7
 	ret ; $58fa
-Data_38_58fb:
+CharNameAndTypeTable:
 	; $58fb, 32 bytes (bytes:16)
 	db $00, $00, $00, $00, $04, $01, $02, $02, $00, $04, $00, $03, $02, $02, $01, $04 ; 0x00
 	db $02, $04, $00, $03, $05, $05, $05, $02, $00, $04, $02, $01, $04, $00, $00, $01 ; 0x10
@@ -3350,7 +3350,7 @@ BuildCharUnlockFlags:
 .flagLoop:
 	ld a, b ; $5a96
 	add a, a ; $5a97
-	ld hl, Data_38_5b17 ; $5a98
+	ld hl, CharUnlockFlagsTable0 ; $5a98
 	add a, l ; $5a9b
 	ld l, a ; $5a9c
 	jr nc, .readFlagId ; $5a9d
@@ -3400,7 +3400,7 @@ BuildCharUnlockFlags:
 .charLoop:
 	ld a, b ; $5ade
 	add a, a ; $5adf
-	ld hl, Data_38_5b29 ; $5ae0
+	ld hl, CharUnlockFlagsTable1 ; $5ae0
 	add a, l ; $5ae3
 	ld l, a ; $5ae4
 	jr nc, .readCharId ; $5ae5
@@ -3439,11 +3439,11 @@ BuildCharUnlockFlags:
 	pop af ; $5b11
 	wram_bank ; $5b12
 	ret ; $5b16
-Data_38_5b17:
+CharUnlockFlagsTable0:
 	; $5b17, 18 bytes (bytes:16)
 	db $c0, $01, $ff, $ff, $e0, $01, $ff, $ff, $60, $01, $ff, $ff, $a0, $01, $40, $01 ; 0x00
 	db $80, $01 ; 0x10
-Data_38_5b29:
+CharUnlockFlagsTable1:
 	; $5b29, 26 bytes (bytes:16)
 	db $00, $14, $20, $14, $40, $14, $60, $14, $80, $14, $a0, $14, $c0, $14, $e0, $14 ; 0x00
 	db $00, $15, $20, $15, $40, $15, $60, $15, $80, $15 ; 0x10
@@ -3457,7 +3457,7 @@ BuildCharGridFromUnlockFlags:
 	or a, a ; $5b4e
 	jr z, .storeEmpty ; $5b4f
 	push hl ; $5b51
-	ld hl, Data_38_5b93 ; $5b52
+	ld hl, CharGridFromUnlockFlagsTable ; $5b52
 	ld a, c ; $5b55
 	add a, l ; $5b56
 	ld l, a ; $5b57
@@ -3487,7 +3487,7 @@ Data_38_5b6f:
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
 	db $00, $00, $00, $00 ; 0x20
-Data_38_5b93:
+CharGridFromUnlockFlagsTable:
 	; $5b93, 36 bytes (bytes:16)
 	db $1a, $17, $1f, $19, $1c, $18, $1e, $1b, $1d, $00, $00, $00, $00, $00, $00, $04 ; 0x00
 	db $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f, $10, $11, $12, $13, $ff ; 0x10
@@ -4304,7 +4304,7 @@ LoadCachedStorySlotName:
 	wram_bank $01 ; $60c0
 	ld a, b ; $60c6
 	add a, a ; $60c7
-	ld hl, Data_38_60e6 ; $60c8
+	ld hl, CachedStorySlotNameTable ; $60c8
 	add a, l ; $60cb
 	ld l, a ; $60cc
 	jr nc, .readPtr ; $60cd
@@ -4323,7 +4323,7 @@ LoadCachedStorySlotName:
 	pop bc ; $60e3
 	pop af ; $60e4
 	ret ; $60e5
-Data_38_60e6:
+CachedStorySlotNameTable:
 	; $60e6, 6 bytes (bytes:6)
 	db $00, $d0, $00, $d1, $00, $d2 ; 0x00
 CompactRosterGridEntries:
@@ -4519,7 +4519,7 @@ CountCharGridEntries:
 	ret ; $61ca
 SetCharGridPageCount:
 	ld a, [$d81a] ; $61cb
-	ld hl, Data_38_61db ; $61ce
+	ld hl, CharGridPageCountTable ; $61ce
 	add a, l ; $61d1
 	ld l, a ; $61d2
 	jr nc, .read ; $61d3
@@ -4528,7 +4528,7 @@ SetCharGridPageCount:
 	ld a, [hl] ; $61d6
 	ld [$d812], a ; $61d7
 	ret ; $61da
-Data_38_61db:
+CharGridPageCountTable:
 	; $61db, 28 bytes (bytes:16)
 	db $05, $05, $05, $05, $05, $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x00
 	db $09, $09, $09, $0a, $0a, $0a, $0b, $0b, $0b, $0c, $0c, $0c ; 0x10
@@ -4714,7 +4714,7 @@ HandleCpuDifficultyInput:
 DrawCpuDifficultyCursorBox:
 	ld a, [$d826] ; $633b
 	add a, a ; $633e
-	ld hl, Data_38_635d ; $633f
+	ld hl, CpuDifficultyCursorBoxTable0 ; $633f
 	add a, l ; $6342
 	ld l, a ; $6343
 	jr nc, .read ; $6344
@@ -4725,7 +4725,7 @@ DrawCpuDifficultyCursorBox:
 	ld e, a ; $6349
 	ld a, [$d826] ; $634a
 	add a, a ; $634d
-	ld hl, Data_38_6365 ; $634e
+	ld hl, CpuDifficultyCursorBoxTable1 ; $634e
 	add a, l ; $6351
 	ld l, a ; $6352
 	jr nc, .readB ; $6353
@@ -4736,10 +4736,10 @@ DrawCpuDifficultyCursorBox:
 	ld c, a ; $6358
 	call DrawSelectedOptionBox ; $6359
 	ret ; $635c
-Data_38_635d:
+CpuDifficultyCursorBoxTable0:
 	; $635d, 8 bytes (bytes:8)
 	db $80, $04, $80, $28, $80, $56, $80, $76 ; 0x00
-Data_38_6365:
+CpuDifficultyCursorBoxTable1:
 	; $6365, 8 bytes (bytes:8)
 	db $04, $20, $04, $2a, $04, $1c, $04, $27 ; 0x00
 OpenCpuDifficultyPanel:
@@ -6573,7 +6573,7 @@ DrawNameEntryCursor:
 	ld c, $0f ; $7090
 	call GetMenuCursorLinearIndex ; $7092
 	add a, a ; $7095
-	ld hl, Data_38_70a5 ; $7096
+	ld hl, NameEntryCursorTable ; $7096
 	add a, l ; $7099
 	ld l, a ; $709a
 	jr nc, .read ; $709b
@@ -6584,7 +6584,7 @@ DrawNameEntryCursor:
 	ld e, a ; $70a0
 	call QueueNameEntryCursorSprites ; $70a1
 	ret ; $70a4
-Data_38_70a5:
+NameEntryCursorTable:
 	INCBIN "data/bank_038/d_70a5.bin" ; $70a5, 180 bytes
 DrawEnterNameLabel:
 	ldh a, [hWramBank] ; $7159
@@ -6641,7 +6641,7 @@ DrawNameEntryCharGrid:
 NameEntryCharset_38:
 	INCLUDE "data/bank_038/text_71b6.asm" ; $71b6, 106 bytes
 GetNameEntryBottomRowAction:
-	ld hl, Data_38_722d ; $7220
+	ld hl, NameEntryBottomRowActionTable ; $7220
 	ld a, [wMenuCursorX] ; $7223
 	add a, l ; $7226
 	ld l, a ; $7227
@@ -6650,11 +6650,11 @@ GetNameEntryBottomRowAction:
 .read:
 	ld a, [hl] ; $722b
 	ret ; $722c
-Data_38_722d:
+NameEntryBottomRowActionTable:
 	; $722d, 15 bytes (bytes:15)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02, $02, $02, $02, $02 ; 0x00
 SnapNameEntryCursorRight:
-	ld hl, Data_38_724c ; $723c
+	ld hl, SnapNameEntryCursorRightTable ; $723c
 	ld a, [wMenuCursorX] ; $723f
 	add a, l ; $7242
 	ld l, a ; $7243
@@ -6664,11 +6664,11 @@ SnapNameEntryCursorRight:
 	ld a, [hl] ; $7247
 	ld [wMenuCursorX], a ; $7248
 	ret ; $724b
-Data_38_724c:
+SnapNameEntryCursorRightTable:
 	; $724c, 15 bytes (bytes:15)
 	db $07, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $07, $07, $07, $07 ; 0x00
 SnapNameEntryCursorLeft:
-	ld hl, Data_38_726b ; $725b
+	ld hl, SnapNameEntryCursorLeftTable ; $725b
 	ld a, [wMenuCursorX] ; $725e
 	add a, l ; $7261
 	ld l, a ; $7262
@@ -6678,7 +6678,7 @@ SnapNameEntryCursorLeft:
 	ld a, [hl] ; $7266
 	ld [wMenuCursorX], a ; $7267
 	ret ; $726a
-Data_38_726b:
+SnapNameEntryCursorLeftTable:
 	; $726b, 15 bytes (bytes:15)
 	db $0a, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $0a, $07, $07, $07, $07, $07, $0a ; 0x00
 QueueNameEntryCursorSprites:
@@ -7017,7 +7017,7 @@ RunLinkMatchSequence:
 	pop bc ; $74e1
 	ret ; $74e2
 ApplyMatchTypeSettingsLink:
-	ld hl, Data_38_751d ; $74e3
+	ld hl, MatchTypeSettingsLinkTable0 ; $74e3
 	ld a, [wMatchFormatSets] ; $74e6
 	add a, l ; $74e9
 	ld l, a ; $74ea
@@ -7026,7 +7026,7 @@ ApplyMatchTypeSettingsLink:
 .readSets:
 	ld a, [hl] ; $74ee
 	ld [wMatchTypeNumberOfSets], a ; $74ef
-	ld hl, Data_38_7520 ; $74f2
+	ld hl, MatchTypeSettingsLinkTable1 ; $74f2
 	ld a, [wMatchFormatGames] ; $74f5
 	add a, l ; $74f8
 	ld l, a ; $74f9
@@ -7049,10 +7049,10 @@ ApplyMatchTypeSettingsLink:
 	clear_flag FLAG_DOUBLES ; $7519
 .done:
 	ret ; $751c
-Data_38_751d:
+MatchTypeSettingsLinkTable0:
 	; $751d, 3 bytes (bytes:3)
 	db $01, $03, $05 ; 0x00
-Data_38_7520:
+MatchTypeSettingsLinkTable1:
 	; $7520, 2 bytes (bytes:2)
 	db $02, $06 ; 0x00
 ExchangeLinkCharSelection:

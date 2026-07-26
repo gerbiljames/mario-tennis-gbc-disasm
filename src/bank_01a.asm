@@ -574,17 +574,17 @@ DebugAddExp:
 	farcall AddPlayerExp ; $447e
 	pop bc ; $4481
 	ret ; $4482
-Data_1a_4483:
+ExtendModifierByteTable0:
 	; $4483, 24 bytes (bytes:16)
 	db $01, $01, $01, $7e, $de, $9d, $76, $72, $89, $82, $82, $de, $77, $66, $20, $20 ; 0x00
 	db $20, $20, $20, $20, $20, $20, $20, $00 ; 0x10
-Gfx_1a_449b:
+ExtendModifierByteGfx1:
 	INCBIN "data/bank_01a/d_449b.bin" ; $449b, 13 bytes
-Data_1a_44a8:
+ExtendModifierByteTable2:
 	; $44a8, 25 bytes (bytes:16)
 	db $01, $01, $01, $81, $6d, $73, $80, $de, $9d, $c3, $de, $b0, $c0, $76, $de, $20 ; 0x00
 	db $77, $74, $83, $7c, $8f, $72, $8f, $7d, $00 ; 0x10
-Gfx_1a_44c1:
+ExtendModifierByteGfx3:
 	INCBIN "data/bank_01a/d_44c1.bin" ; $44c1, 23 bytes
 ShowExpGainScreen:
 	push bc ; $44d8
@@ -1020,7 +1020,7 @@ SpriteTemplate_1a_4840:
 LoadExpScreenGfx:
 	wram_bank $01 ; $4852
 	push hl ; $4858
-	ld hl, Lz_1a_5530 ; $4859
+	ld hl, ExpScreenGfx0 ; $4859
 	ld de, $d000 ; $485c
 	call DecompressData ; $485f
 	ld hl, $d000 ; $4862
@@ -1087,22 +1087,22 @@ LoadExpScreenGfx:
 	ld c, $14 ; $4911
 	call QueueVRAMCopy ; $4913
 	wram_bank $01 ; $4916
-	ld hl, Gfx_1a_5e20 ; $491c
+	ld hl, ExpScreenGfx2 ; $491c
 	ld de, $d000 ; $491f
 	ld c, $24 ; $4922
 	call CopyMemoryFast ; $4924
-	ld hl, Gfx_1a_5be0 ; $4927
+	ld hl, ExpScreenGfx1 ; $4927
 	ld de, $d400 ; $492a
 	ld c, $24 ; $492d
 	call CopyMemoryFast ; $492f
 	ret ; $4932
 .copyMemoryFast:
 	wram_bank $01 ; $4933
-	ld hl, Gfx_1a_62a0 ; $4939
+	ld hl, ExpScreenGfx4 ; $4939
 	ld de, $d000 ; $493c
 	ld c, $24 ; $493f
 	call CopyMemoryFast ; $4941
-	ld hl, Gfx_1a_6060 ; $4944
+	ld hl, ExpScreenGfx3 ; $4944
 	ld de, $d400 ; $4947
 	ld c, $24 ; $494a
 	call CopyMemoryFast ; $494c
@@ -1861,9 +1861,9 @@ SignExtendModifierByte:
 	ld [$d151], a ; $4dbb
 	call AdvanceFrame ; $4dbe
 	call DrawExpScreenMessageBox ; $4dc1
-	ld hl, Data_1a_4483 ; $4dc4
+	ld hl, ExtendModifierByteTable0 ; $4dc4
 	call DrawPositionedStringToTileBuffer ; $4dc7
-	ld hl, Gfx_1a_449b ; $4dca
+	ld hl, ExtendModifierByteGfx1 ; $4dca
 	call DrawPositionedStringToTileBuffer ; $4dcd
 	wram_bank $01 ; $4dd0
 	ld hl, $d000 ; $4dd6
@@ -1898,9 +1898,9 @@ SignExtendModifierByte:
 	ld [$d151], a ; $4e19
 	call AdvanceFrame ; $4e1c
 	call DrawExpScreenMessageBox ; $4e1f
-	ld hl, Data_1a_44a8 ; $4e22
+	ld hl, ExtendModifierByteTable2 ; $4e22
 	call DrawPositionedStringToTileBuffer ; $4e25
-	ld hl, Gfx_1a_44c1 ; $4e28
+	ld hl, ExtendModifierByteGfx3 ; $4e28
 	call DrawPositionedStringToTileBuffer ; $4e2b
 	wram_bank $01 ; $4e2e
 	ld hl, $d000 ; $4e34
@@ -2632,27 +2632,27 @@ DrawExpBonusMessage:
 Padding_1a_5523:
 	; $5523, 13 bytes (fill)
 	ds 13, $00
-Lz_1a_5530:
+ExpScreenGfx0:
 	INCBIN "data/bank_01a/d_5530.bin" ; $5530, 1712 bytes
-Gfx_1a_5be0:
+ExpScreenGfx1:
 	INCBIN "data/bank_01a/d_5be0.bin" ; $5be0, 576 bytes
-Gfx_1a_5e20:
+ExpScreenGfx2:
 	INCBIN "data/bank_01a/d_5e20.bin" ; $5e20, 576 bytes
-Gfx_1a_6060:
+ExpScreenGfx3:
 	INCBIN "data/bank_01a/d_6060.bin" ; $6060, 576 bytes
-Gfx_1a_62a0:
+ExpScreenGfx4:
 	INCBIN "data/bank_01a/d_62a0.bin" ; $62a0, 396 bytes
-Data_1a_642c:
+StatChangeArrows0:
 	INCBIN "data/bank_01a/d_642c.bin" ; $642c, 16 bytes
-Data_1a_643c:
+StatChangeArrows1:
 	INCBIN "data/bank_01a/d_643c.bin" ; $643c, 24 bytes
-Data_1a_6454:
+StatChangeArrows2:
 	INCBIN "data/bank_01a/d_6454.bin" ; $6454, 16 bytes
-Data_1a_6464:
+StatChangeArrows3:
 	INCBIN "data/bank_01a/d_6464.bin" ; $6464, 16 bytes
-Data_1a_6474:
+StatChangeArrows4:
 	INCBIN "data/bank_01a/d_6474.bin" ; $6474, 16 bytes
-Data_1a_6484:
+StatChangeArrows5:
 	INCBIN "data/bank_01a/d_6484.bin" ; $6484, 848 bytes
 RunDebugCharViewer:
 	xor a, a ; $67d4
@@ -2721,7 +2721,7 @@ RunCharViewerSelectGrid:
 	ld de, $0808 ; $687f
 	call LoadPaletteShadow ; $6882
 	wram_bank $01 ; $6885
-	ld hl, Lz_1a_7119 ; $688b
+	ld hl, CharViewerScreenGfx0 ; $688b
 	ld de, $d000 ; $688e
 	call DecompressData ; $6891
 	ld hl, $d000 ; $6894
@@ -2882,14 +2882,14 @@ RunCharViewerSelectGrid:
 	ret ; $69ea
 LoadCharViewerGridTilemap:
 	wram_bank $01 ; $69eb
-	ld hl, Lz_1a_78b2 ; $69f1
+	ld hl, CharViewerGridTilemap0 ; $69f1
 	ld de, $d000 ; $69f4
 	call DecompressData ; $69f7
 	ld hl, $d000 ; $69fa
 	ld bc, $0240 ; $69fd
 	call CopyBank1ToBank3Buffer ; $6a00
 	wram_bank $01 ; $6a03
-	ld hl, Lz_1a_78ec ; $6a09
+	ld hl, CharViewerGridTilemap1 ; $6a09
 	ld de, $d000 ; $6a0c
 	call DecompressData ; $6a0f
 	ld hl, $d000 ; $6a12
@@ -3045,7 +3045,7 @@ LoadCharViewerScreenGfx:
 	ld de, $0008 ; $6b58
 	call LoadPaletteShadow ; $6b5b
 	wram_bank $01 ; $6b5e
-	ld hl, Lz_1a_7119 ; $6b64
+	ld hl, CharViewerScreenGfx0 ; $6b64
 	ld de, $d000 ; $6b67
 	call DecompressData ; $6b6a
 	ld hl, $d000 ; $6b6d
@@ -3057,14 +3057,14 @@ LoadCharViewerScreenGfx:
 	ld c, $80 ; $6b7e
 	call QueueVRAMCopy ; $6b80
 	wram_bank $01 ; $6b83
-	ld hl, Lz_1a_777d ; $6b89
+	ld hl, CharViewerScreenGfx1 ; $6b89
 	ld de, $d000 ; $6b8c
 	call DecompressData ; $6b8f
 	ld hl, $d000 ; $6b92
 	ld bc, $0240 ; $6b95
 	call CopyBank1ToBank3Buffer ; $6b98
 	wram_bank $01 ; $6b9b
-	ld hl, Lz_1a_7831 ; $6ba1
+	ld hl, CharViewerScreenGfx2 ; $6ba1
 	ld de, $d000 ; $6ba4
 	call DecompressData ; $6ba7
 	ld hl, $d000 ; $6baa
@@ -3332,7 +3332,7 @@ RunCharViewerInputLoop:
 	jr nz, .selectPalette ; $6df0
 	ld a, [$d001] ; $6df2
 	ld [$d003], a ; $6df5
-	ld hl, Data_1a_792f ; $6df8
+	ld hl, CharViewerInputLoopTable ; $6df8
 	add a, l ; $6dfb
 	ld l, a ; $6dfc
 	jr nc, .readAnimId ; $6dfd
@@ -3669,17 +3669,17 @@ Palette_1a_70d9:
 	dw $0260, $7e80, $0061, $7fff ; pal 5: #009c00 #00a4ff #081800 #ffffff
 	dw $1100, $19d8, $0061, $7fff ; pal 6: #004120 #c57331 #081800 #ffffff
 	dw $7fff, $03ee, $0340, $0204 ; pal 7: #ffffff #73ff00 #00d500 #208300
-Lz_1a_7119:
+CharViewerScreenGfx0:
 	INCBIN "data/bank_01a/d_7119.bin" ; $7119, 1636 bytes
-Lz_1a_777d:
+CharViewerScreenGfx1:
 	INCBIN "data/bank_01a/d_777d.bin" ; $777d, 180 bytes
-Lz_1a_7831:
+CharViewerScreenGfx2:
 	INCBIN "data/bank_01a/d_7831.bin" ; $7831, 129 bytes
-Lz_1a_78b2:
+CharViewerGridTilemap0:
 	INCBIN "data/bank_01a/d_78b2.bin" ; $78b2, 58 bytes
-Lz_1a_78ec:
+CharViewerGridTilemap1:
 	INCBIN "data/bank_01a/d_78ec.bin" ; $78ec, 67 bytes
-Data_1a_792f:
+CharViewerInputLoopTable:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 	db $10, $11, $12, $0b, $0c, $0d ; 0x10
@@ -3687,20 +3687,20 @@ RunCharDataConfirmScreen:
 	farcall InitCharDataScreenVideo ; $7945
 	farcall LoadCharDataScreenTilemaps ; $7948
 	wram_bank $01 ; $794b
-	ld hl, Lz_1a_7e53 ; $7951
+	ld hl, CharDataConfirmScreenGfx1 ; $7951
 	ld de, $dea0 ; $7954
 	call DecompressData ; $7957
 	ld hl, $dea0 ; $795a
 	ld bc, $002a ; $795d
 	call CopyBank1ToBank3BufferAlt ; $7960
 	wram_bank $01 ; $7963
-	ld hl, Lz_1a_7e75 ; $7969
+	ld hl, CharDataConfirmScreenGfx2 ; $7969
 	ld de, $dea0 ; $796c
 	call DecompressData ; $796f
 	ld hl, $dea0 ; $7972
 	ld bc, $002a ; $7975
 	call CopyBank1ToBank2BufferAlt ; $7978
-	ld hl, Data_1a_7e46 ; $797b
+	ld hl, CharDataConfirmScreenTable0 ; $797b
 	ld bc, $dea0 ; $797e
 	call ApplyTilemapPatchList_1a ; $7981
 	farcall DrawCharDataConfirmPrompt ; $7984
@@ -3978,28 +3978,28 @@ CharDataScreen_LoadGfx:
 	ld de, $0c02 ; $7b88
 	call LoadPaletteShadow ; $7b8b
 	wram_bank $01 ; $7b8e
-	ld hl, Lz_1a_7e8e ; $7b94
+	ld hl, CharDataScreenGfx0 ; $7b94
 	ld de, $d000 ; $7b97
 	call DecompressData ; $7b9a
 	ld hl, $d000 ; $7b9d
 	ld de, $a780 ; $7ba0
 	ld c, $02 ; $7ba3
 	call QueueVRAMCopy ; $7ba5
-	ld hl, Lz_1a_7e99 ; $7ba8
+	ld hl, CharDataScreenGfx1 ; $7ba8
 	ld de, $d000 ; $7bab
 	call DecompressData ; $7bae
 	ld hl, $d000 ; $7bb1
 	ld de, $a7a0 ; $7bb4
 	ld c, $02 ; $7bb7
 	call QueueVRAMCopy ; $7bb9
-	ld hl, Lz_1a_7ea4 ; $7bbc
+	ld hl, CharDataScreenGfx2 ; $7bbc
 	ld de, $d000 ; $7bbf
 	call DecompressData ; $7bc2
 	ld hl, $d000 ; $7bc5
 	ld de, $a7c0 ; $7bc8
 	ld c, $02 ; $7bcb
 	call QueueVRAMCopy ; $7bcd
-	ld hl, Lz_1a_7eaf ; $7bd0
+	ld hl, CharDataScreenGfx3 ; $7bd0
 	ld de, $d000 ; $7bd3
 	call DecompressData ; $7bd6
 	ld hl, $d000 ; $7bd9
@@ -4142,7 +4142,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7cef
 	ld a, [$d01e] ; $7cf0
 	add a, l ; $7cf3
-	ld de, Data_1a_642c ; $7cf4
+	ld de, StatChangeArrows0 ; $7cf4
 	call ComputeStatArrowSpriteX ; $7cf7
 	push de ; $7cfa
 	call QueueSprite ; $7cfb
@@ -4164,7 +4164,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d1c
 	ld a, [$d01f] ; $7d1d
 	add a, l ; $7d20
-	ld de, Data_1a_643c ; $7d21
+	ld de, StatChangeArrows1 ; $7d21
 	call ComputeStatArrowSpriteX ; $7d24
 	push de ; $7d27
 	call QueueSprite ; $7d28
@@ -4186,7 +4186,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d49
 	ld a, [$d020] ; $7d4a
 	add a, l ; $7d4d
-	ld de, Data_1a_6454 ; $7d4e
+	ld de, StatChangeArrows2 ; $7d4e
 	call ComputeStatArrowSpriteX ; $7d51
 	push de ; $7d54
 	call QueueSprite ; $7d55
@@ -4208,7 +4208,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d76
 	ld a, [$d021] ; $7d77
 	add a, l ; $7d7a
-	ld de, Data_1a_6464 ; $7d7b
+	ld de, StatChangeArrows3 ; $7d7b
 	call ComputeStatArrowSpriteX ; $7d7e
 	push de ; $7d81
 	call QueueSprite ; $7d82
@@ -4230,7 +4230,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7da3
 	ld a, [$d022] ; $7da4
 	add a, l ; $7da7
-	ld de, Data_1a_6474 ; $7da8
+	ld de, StatChangeArrows4 ; $7da8
 	call ComputeStatArrowSpriteX ; $7dab
 	push de ; $7dae
 	call QueueSprite ; $7daf
@@ -4252,7 +4252,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7dd0
 	ld a, [$d023] ; $7dd1
 	add a, l ; $7dd4
-	ld de, Data_1a_6484 ; $7dd5
+	ld de, StatChangeArrows5 ; $7dd5
 	call ComputeStatArrowSpriteX ; $7dd8
 	push de ; $7ddb
 	call QueueSprite ; $7ddc
@@ -4336,24 +4336,24 @@ OffsetStatArrowSpriteX:
 	add a, d ; $7e43
 	ld d, a ; $7e44
 	ret ; $7e45
-Data_1a_7e46:
+CharDataConfirmScreenTable0:
 	; $7e46, 13 bytes (bytes:13)
 	db $00, $00, $00, $0e, $00, $20, $0e, $0e, $00, $40, $1c, $0e, $ff ; 0x00
-Lz_1a_7e53:
+CharDataConfirmScreenGfx1:
 	INCBIN "data/bank_01a/d_7e53.bin" ; $7e53, 34 bytes
-Lz_1a_7e75:
+CharDataConfirmScreenGfx2:
 	INCBIN "data/bank_01a/d_7e75.bin" ; $7e75, 9 bytes
 Palette_1a_7e7e:
 	; $7e7e, 16 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $7e00, $7fff, $192c, $63f8 ; pal 0: #0083ff #ffffff #624a31 #c5ffc5
 	dw $7e00, $190a, $0000, $7fff ; pal 1: #0083ff #524131 #000000 #ffffff
-Lz_1a_7e8e:
+CharDataScreenGfx0:
 	INCBIN "data/bank_01a/d_7e8e.bin" ; $7e8e, 11 bytes
-Lz_1a_7e99:
+CharDataScreenGfx1:
 	INCBIN "data/bank_01a/d_7e99.bin" ; $7e99, 11 bytes
-Lz_1a_7ea4:
+CharDataScreenGfx2:
 	INCBIN "data/bank_01a/d_7ea4.bin" ; $7ea4, 11 bytes
-Lz_1a_7eaf:
+CharDataScreenGfx3:
 	INCBIN "data/bank_01a/d_7eaf.bin" ; $7eaf, 11 bytes
 	; $7eba, 326 bytes fill to bank end (linker-padded)

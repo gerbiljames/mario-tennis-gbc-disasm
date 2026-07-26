@@ -2667,27 +2667,27 @@ FirstClearExpTableMode2_1e:
 	dw $0000 ; record 27
 	dw $0000 ; record 28
 	dw $0000 ; record 29
-Data_1e_67a7:
+TrophyExpValueTable:
 	; $67a7, 48 bytes (bytes:16)
 	db $32, $00, $32, $00, $32, $00, $32, $00, $64, $00, $64, $00, $64, $00, $64, $00 ; 0x00
 	db $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00 ; 0x10
 	db $90, $01, $90, $01, $90, $01, $90, $01, $bc, $02, $bc, $02, $bc, $02, $bc, $02 ; 0x20
-Data_1e_67d7:
+MatchStatsRewardTable0:
 	; $67d7, 8 bytes (bytes:8)
 	db $02, $03, $04, $05, $06, $07, $08, $00 ; 0x00
-Data_1e_67df:
+MatchStatsRewardTable1:
 	; $67df, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $0c, $10, $14, $00 ; 0x00
-Data_1e_67e7:
+MatchStatsRewardTable2:
 	; $67e7, 8 bytes (bytes:8)
 	db $01, $02, $03, $06, $09, $0c, $0f, $00 ; 0x00
-Data_1e_67ef:
+MatchStatsRewardTable3:
 	; $67ef, 8 bytes (bytes:8)
 	db $01, $02, $03, $04, $05, $06, $07, $00 ; 0x00
-Data_1e_67f7:
+MatchStatsRewardTable4:
 	; $67f7, 8 bytes (bytes:8)
 	db $01, $02, $03, $03, $04, $04, $05, $00 ; 0x00
-Data_1e_67ff:
+MatchStatsRewardTable5:
 	; $67ff, 8 bytes (bytes:8)
 	db $01, $02, $03, $03, $04, $04, $05, $00 ; 0x00
 GetScoreBonus:
@@ -2747,7 +2747,7 @@ ComputeMatchStatsReward:
 	push hl ; $6857
 	call GetPlayerExpTier ; $6858
 	pop de ; $685b
-	ld hl, Data_1e_67d7 ; $685c
+	ld hl, MatchStatsRewardTable0 ; $685c
 	ld a, [wTotalGamesWonInMatch] ; $685f
 	call AccumulateStatExp ; $6862
 	ld l, e ; $6865
@@ -2758,34 +2758,34 @@ ComputeMatchStatsReward:
 	push hl ; $686d
 	call GetOpponentExpTier ; $686e
 	pop de ; $6871
-	ld hl, Data_1e_67df ; $6872
+	ld hl, MatchStatsRewardTable1 ; $6872
 	ld a, [wCharacter1ServiceAces] ; $6875
 	call AccumulateStatExp ; $6878
-	ld hl, Data_1e_67df ; $687b
+	ld hl, MatchStatsRewardTable1 ; $687b
 	ld a, [wCharacter3ServiceAces] ; $687e
 	call AccumulateStatExp ; $6881
-	ld hl, Data_1e_67e7 ; $6884
+	ld hl, MatchStatsRewardTable2 ; $6884
 	ld a, [wCharacter1ReturnAces] ; $6887
 	call AccumulateStatExp ; $688a
-	ld hl, Data_1e_67e7 ; $688d
+	ld hl, MatchStatsRewardTable2 ; $688d
 	ld a, [wCharacter3ReturnAces] ; $6890
 	call AccumulateStatExp ; $6893
-	ld hl, Data_1e_67ef ; $6896
+	ld hl, MatchStatsRewardTable3 ; $6896
 	ld a, [wCharacter1SmashAces] ; $6899
 	call AccumulateStatExp ; $689c
-	ld hl, Data_1e_67ef ; $689f
+	ld hl, MatchStatsRewardTable3 ; $689f
 	ld a, [wCharacter3SmashAces] ; $68a2
 	call AccumulateStatExp ; $68a5
-	ld hl, Data_1e_67f7 ; $68a8
+	ld hl, MatchStatsRewardTable4 ; $68a8
 	ld a, [wCharacter1LobShotWinners] ; $68ab
 	call AccumulateStatExp ; $68ae
-	ld hl, Data_1e_67f7 ; $68b1
+	ld hl, MatchStatsRewardTable4 ; $68b1
 	ld a, [wCharacter3LobShotWinners] ; $68b4
 	call AccumulateStatExp ; $68b7
-	ld hl, Data_1e_67ff ; $68ba
+	ld hl, MatchStatsRewardTable5 ; $68ba
 	ld a, [wCharacter1DropShotWinners] ; $68bd
 	call AccumulateStatExp ; $68c0
-	ld hl, Data_1e_67ff ; $68c3
+	ld hl, MatchStatsRewardTable5 ; $68c3
 	ld a, [wCharacter3DropShotWinners] ; $68c6
 	call AccumulateStatExp ; $68c9
 	ld l, e ; $68cc
@@ -3662,7 +3662,7 @@ ApplyRewardUnlockFlags:
 	ld a, c ; $6e20
 	add a, a ; $6e21
 	add a, a ; $6e22
-	ld hl, Data_1e_6e7d ; $6e23
+	ld hl, RewardUnlockFlagsTable ; $6e23
 	add a, l ; $6e26
 	ld l, a ; $6e27
 	jr nc, .loop ; $6e28
@@ -3698,7 +3698,7 @@ SetRewardUnlockFlag:
 	push hl ; $6e50
 	ld a, c ; $6e51
 	add a, a ; $6e52
-	ld hl, Data_1e_6e63 ; $6e53
+	ld hl, RewardUnlockFlagTable ; $6e53
 	add a, l ; $6e56
 	ld l, a ; $6e57
 	jr nc, .read ; $6e58
@@ -3710,11 +3710,11 @@ SetRewardUnlockFlag:
 	call SetGameFlag ; $6e5e
 	pop hl ; $6e61
 	ret ; $6e62
-Data_1e_6e63:
+RewardUnlockFlagTable:
 	; $6e63, 26 bytes (bytes:16)
 	db $00, $14, $20, $14, $40, $14, $60, $14, $80, $14, $a0, $14, $c0, $14, $e0, $14 ; 0x00
 	db $00, $15, $20, $15, $40, $15, $60, $15, $80, $15 ; 0x10
-Data_1e_6e7d:
+RewardUnlockFlagsTable:
 	; $6e7d, 52 bytes (bytes:16)
 	db $60, $0a, $40, $08, $60, $0a, $40, $08, $60, $0a, $40, $08, $e0, $0a, $c0, $08 ; 0x00
 	db $e0, $0a, $c0, $08, $00, $09, $00, $00, $e0, $06, $00, $00, $e0, $07, $e0, $06 ; 0x10
@@ -3922,7 +3922,7 @@ GetTrophyExpValue:
 	add a, a ; $6fec
 	add a, a ; $6fed
 	add a, b ; $6fee
-	ld hl, Data_1e_67a7 ; $6fef
+	ld hl, TrophyExpValueTable ; $6fef
 	add a, l ; $6ff2
 	ld l, a ; $6ff3
 	jr nc, .read ; $6ff4
@@ -4108,7 +4108,7 @@ ComputeTrophyExpForGroup:
 	wram_bank $06 ; $7105
 	ld a, c ; $710b
 	ld [$d038], a ; $710c
-	ld hl, Data_1e_7257 ; $710f
+	ld hl, TrophyExpForGroupTable4 ; $710f
 	add a, l ; $7112
 	ld l, a ; $7113
 	jr nc, .readThreshold ; $7114
@@ -4116,7 +4116,7 @@ ComputeTrophyExpForGroup:
 .readThreshold:
 	ld b, [hl] ; $7117
 	ld a, c ; $7118
-	ld hl, Data_1e_725d ; $7119
+	ld hl, TrophyExpForGroupTable5 ; $7119
 	add a, l ; $711c
 	ld l, a ; $711d
 	jr nc, .readMask ; $711e
@@ -4135,7 +4135,7 @@ ComputeTrophyExpForGroup:
 	add a, a ; $7132
 	add a, a ; $7133
 	add a, a ; $7134
-	ld hl, Data_1e_7227 ; $7135
+	ld hl, TrophyExpForGroupTable0 ; $7135
 	add a, l ; $7138
 	ld l, a ; $7139
 	jr nc, .readFlag1 ; $713a
@@ -4175,7 +4175,7 @@ ComputeTrophyExpForGroup:
 	add a, a ; $716f
 	add a, a ; $7170
 	add a, a ; $7171
-	ld hl, Data_1e_7229 ; $7172
+	ld hl, TrophyExpForGroupTable1 ; $7172
 	add a, l ; $7175
 	ld l, a ; $7176
 	jr nc, .readFlag2 ; $7177
@@ -4214,7 +4214,7 @@ ComputeTrophyExpForGroup:
 	add a, a ; $71aa
 	add a, a ; $71ab
 	add a, a ; $71ac
-	ld hl, Data_1e_722b ; $71ad
+	ld hl, TrophyExpForGroupTable2 ; $71ad
 	add a, l ; $71b0
 	ld l, a ; $71b1
 	jr nc, .readFlag3 ; $71b2
@@ -4254,7 +4254,7 @@ ComputeTrophyExpForGroup:
 	add a, a ; $71e7
 	add a, a ; $71e8
 	add a, a ; $71e9
-	ld hl, Data_1e_722d ; $71ea
+	ld hl, TrophyExpForGroupTable3 ; $71ea
 	add a, l ; $71ed
 	ld l, a ; $71ee
 	jr nc, .readFlag4 ; $71ef
@@ -4295,24 +4295,24 @@ ComputeTrophyExpForGroup:
 	pop de ; $7224
 	pop af ; $7225
 	ret ; $7226
-Data_1e_7227:
+TrophyExpForGroupTable0:
 	; $7227, 2 bytes (bytes:2)
 	db $00, $11 ; 0x00
-Data_1e_7229:
+TrophyExpForGroupTable1:
 	; $7229, 2 bytes (bytes:2)
 	db $20, $11 ; 0x00
-Data_1e_722b:
+TrophyExpForGroupTable2:
 	; $722b, 2 bytes (bytes:2)
 	db $40, $11 ; 0x00
-Data_1e_722d:
+TrophyExpForGroupTable3:
 	; $722d, 42 bytes (bytes:16)
 	db $60, $11, $80, $11, $a0, $11, $c0, $11, $e0, $11, $00, $12, $20, $12, $40, $12 ; 0x00
 	db $60, $12, $80, $12, $a0, $12, $c0, $12, $e0, $12, $00, $13, $20, $13, $40, $13 ; 0x10
 	db $60, $13, $80, $13, $a0, $13, $c0, $13, $e0, $13 ; 0x20
-Data_1e_7257:
+TrophyExpForGroupTable4:
 	; $7257, 6 bytes (bytes:6)
 	db $01, $02, $03, $04, $08, $0c ; 0x00
-Data_1e_725d:
+TrophyExpForGroupTable5:
 	; $725d, 6 bytes (bytes:6)
 	db $03, $03, $03, $0c, $0c, $0c ; 0x00
 ShowGameProgressScreen:

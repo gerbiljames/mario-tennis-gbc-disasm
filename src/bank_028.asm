@@ -12,7 +12,7 @@ SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 Padding_28_4012:
 	; $4012, 14 bytes (fill)
 	ds 14, $00
-Gfx_28_4020:
+MatchGraphicsGfx:
 	INCBIN "data/bank_028/d_4020.bin" ; $4020, 1472 bytes
 MatchGfxTilesA_28:
 	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
@@ -58,7 +58,7 @@ LoadMatchGraphics:
 	ld hl, $4be0 ; $5ebf
 	ld de, $0002 ; $5ec2
 	call LoadPaletteShadow ; $5ec5
-	ld hl, Gfx_28_4020 ; $5ec8
+	ld hl, MatchGraphicsGfx ; $5ec8
 	ld de, $a400 ; $5ecb
 	ld c, $40 ; $5ece
 	call QueueVRAMCopy ; $5ed0

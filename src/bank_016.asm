@@ -385,7 +385,7 @@ InitMatchWinLoseScreen:
 	ldh a, [hWramBank] ; $45bb
 	push af ; $45bd
 	wram_bank $01 ; $45be
-	ld hl, Gfx_16_4608 ; $45c4
+	ld hl, MatchWinLoseScreenGfx ; $45c4
 	ld de, $d000 ; $45c7
 	call DecompressData ; $45ca
 	ld hl, $d000 ; $45cd
@@ -410,7 +410,7 @@ InitMatchWinLoseScreen:
 	wram_bank ; $4600
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
-Gfx_16_4608:
+MatchWinLoseScreenGfx:
 	INCBIN "data/bank_016/d_4608.bin" ; $4608, 110 bytes
 DiagramHighlightPaletteTask:
 	INCBIN "data/bank_016/d_4676.bin" ; $4676, 108 bytes

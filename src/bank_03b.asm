@@ -3477,14 +3477,14 @@ MainMenuCursorSpriteTask:
 	ld c, $03 ; $5866
 	call GetMenuCursorCellIndex ; $5868
 	push af ; $586b
-	ld hl, Data_3b_592d ; $586c
+	ld hl, MainMenuCursorSpriteTaskTable1 ; $586c
 	add a, l ; $586f
 	ld l, a ; $5870
 	jr nc, .read ; $5871
 	inc h ; $5873
 .read:
 	ld c, [hl] ; $5874
-	ld hl, Data_3b_591b ; $5875
+	ld hl, MainMenuCursorSpriteTaskTable0 ; $5875
 	pop af ; $5878
 	add a, a ; $5879
 	push af ; $587a
@@ -3512,7 +3512,7 @@ MainMenuCursorSpriteTask:
 	call QueueSpriteTemplate ; $5895
 	ld c, $03 ; $5898
 	call GetMenuCursorCellIndex ; $589a
-	ld hl, Data_3b_5936 ; $589d
+	ld hl, MainMenuCursorSpriteTaskTable2 ; $589d
 	add a, l ; $58a0
 	ld l, a ; $58a1
 	jr nc, .read3 ; $58a2
@@ -3565,14 +3565,14 @@ SpriteTemplate_3b_5912:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_3b_591b:
+MainMenuCursorSpriteTaskTable0:
 	; $591b, 18 bytes (bytes:16)
 	db $2e, $fc, $2e, $26, $2e, $5c, $52, $fe, $52, $2c, $52, $5e, $68, $fc, $68, $2c ; 0x00
 	db $68, $5e ; 0x10
-Data_3b_592d:
+MainMenuCursorSpriteTaskTable1:
 	; $592d, 9 bytes (bytes:9)
 	db $10, $20, $32, $00, $00, $00, $42, $52, $62 ; 0x00
-Data_3b_5936:
+MainMenuCursorSpriteTaskTable2:
 	; $5936, 50 bytes (bytes:16)
 	db $00, $04, $00, $00, $00, $00, $00, $00, $00, $10, $08, $00, $00, $10, $10, $02 ; 0x00
 	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
@@ -4602,7 +4602,7 @@ MatchFormatCursorSpriteTask:
 	add a, $04 ; $60ee
 .step:
 	push af ; $60f0
-	ld hl, Data_3b_615d ; $60f1
+	ld hl, MatchFormatCursorSpriteTaskTable1 ; $60f1
 	add a, l ; $60f4
 	ld l, a ; $60f5
 	jr nc, .read ; $60f6
@@ -4610,7 +4610,7 @@ MatchFormatCursorSpriteTask:
 .read:
 	ld c, [hl] ; $60f9
 	pop af ; $60fa
-	ld hl, Data_3b_614f ; $60fb
+	ld hl, MatchFormatCursorSpriteTaskTable0 ; $60fb
 	add a, a ; $60fe
 	add a, l ; $60ff
 	ld l, a ; $6100
@@ -4651,10 +4651,10 @@ SpriteTemplate_3b_6146:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_3b_614f:
+MatchFormatCursorSpriteTaskTable0:
 	; $614f, 14 bytes (bytes:14)
 	db $2d, $0a, $2d, $54, $4f, $0c, $4f, $54, $6a, $00, $6a, $2c, $6a, $5d ; 0x00
-Data_3b_615d:
+MatchFormatCursorSpriteTaskTable1:
 	; $615d, 7 bytes (bytes:7)
 	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchFormatCaption:
@@ -5042,7 +5042,7 @@ MinigameSelectCursorSpriteTask:
 	ld c, $03 ; $6470
 	call GetMenuCursorCellIndex ; $6472
 	push af ; $6475
-	ld hl, Data_3b_651b ; $6476
+	ld hl, MinigameSelectCursorSpriteTaskTable1 ; $6476
 	add a, l ; $6479
 	ld l, a ; $647a
 	jr nc, .read ; $647b
@@ -5063,7 +5063,7 @@ MinigameSelectCursorSpriteTask:
 	ld e, a ; $648c
 	farcall ApplySpriteBobOffset ; $648d
 	pop af ; $6490
-	ld hl, Data_3b_64f4 ; $6491
+	ld hl, MinigameSelectCursorSpriteTaskTable0 ; $6491
 	add a, l ; $6494
 	ld l, a ; $6495
 	jr nc, .read2 ; $6496
@@ -5090,10 +5090,10 @@ GetMinigameCursorPosTable:
 	push af ; $64b8
 	call CheckMinigameGridExpanded ; $64b9
 	jr nz, .altTable ; $64bc
-	ld hl, Data_3b_650f ; $64be
+	ld hl, MinigameCursorPosTable1 ; $64be
 	jr .done ; $64c1
 .altTable:
-	ld hl, Data_3b_64fd ; $64c3
+	ld hl, MinigameCursorPosTable0 ; $64c3
 .done:
 	pop af ; $64c6
 	pop bc ; $64c7
@@ -5115,17 +5115,17 @@ SpriteTemplate_3b_64eb:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_3b_64f4:
+MinigameSelectCursorSpriteTaskTable0:
 	; $64f4, 9 bytes (bytes:9)
 	db $08, $00, $08, $00, $08, $00, $08, $08, $08 ; 0x00
-Data_3b_64fd:
+MinigameCursorPosTable0:
 	; $64fd, 18 bytes (bytes:16)
 	db $30, $fc, $30, $2c, $30, $5c, $50, $fc, $50, $2c, $50, $5e, $6c, $fc, $6c, $2c ; 0x00
 	db $6c, $5e ; 0x10
-Data_3b_650f:
+MinigameCursorPosTable1:
 	; $650f, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $14, $60, $44, $60, $44 ; 0x00
-Data_3b_651b:
+MinigameSelectCursorSpriteTaskTable1:
 	; $651b, 50 bytes (bytes:16)
 	db $00, $30, $50, $40, $20, $20, $40, $10, $30, $10, $08, $00, $00, $10, $10, $02 ; 0x00
 	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
@@ -5749,7 +5749,7 @@ SavedDataSourceCursorSpriteTask:
 	ld c, $03 ; $69df
 	call GetMenuCursorCellIndex ; $69e1
 	push af ; $69e4
-	ld hl, Data_3b_6a4f ; $69e5
+	ld hl, SavedDataSourceCursorSpriteTaskTable1 ; $69e5
 	add a, l ; $69e8
 	ld l, a ; $69e9
 	jr nc, .read ; $69ea
@@ -5757,7 +5757,7 @@ SavedDataSourceCursorSpriteTask:
 .read:
 	ld c, [hl] ; $69ed
 	pop af ; $69ee
-	ld hl, Data_3b_6a43 ; $69ef
+	ld hl, SavedDataSourceCursorSpriteTaskTable0 ; $69ef
 	add a, a ; $69f2
 	add a, l ; $69f3
 	ld l, a ; $69f4
@@ -5798,10 +5798,10 @@ SpriteTemplate_3b_6a3a:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_3b_6a43:
+SavedDataSourceCursorSpriteTaskTable0:
 	; $6a43, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $0c, $60, $4d, $60, $3e ; 0x00
-Data_3b_6a4f:
+SavedDataSourceCursorSpriteTaskTable1:
 	; $6a4f, 47 bytes (bytes:16)
 	db $00, $10, $20, $40, $30, $40, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
 	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
@@ -6449,7 +6449,7 @@ EraseSavedDataCursorSpriteTask:
 	ld c, $03 ; $6f5e
 	call GetMenuCursorCellIndex ; $6f60
 	push af ; $6f63
-	ld hl, Data_3b_6fcc ; $6f64
+	ld hl, EraseSavedDataCursorSpriteTaskTable1 ; $6f64
 	add a, l ; $6f67
 	ld l, a ; $6f68
 	jr nc, .read ; $6f69
@@ -6457,7 +6457,7 @@ EraseSavedDataCursorSpriteTask:
 .read:
 	ld c, [hl] ; $6f6c
 	pop af ; $6f6d
-	ld hl, Data_3b_6fc2 ; $6f6e
+	ld hl, EraseSavedDataCursorSpriteTaskTable0 ; $6f6e
 	add a, a ; $6f71
 	add a, l ; $6f72
 	ld l, a ; $6f73
@@ -6498,10 +6498,10 @@ SpriteTemplate_3b_6fb9:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_3b_6fc2:
+EraseSavedDataCursorSpriteTaskTable0:
 	; $6fc2, 10 bytes (bytes:10)
 	db $3a, $fe, $3a, $2c, $3a, $5c, $60, $0c, $60, $4c ; 0x00
-Data_3b_6fcc:
+EraseSavedDataCursorSpriteTaskTable1:
 	; $6fcc, 47 bytes (bytes:16)
 	db $00, $10, $20, $30, $40, $30, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
 	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
@@ -6974,7 +6974,7 @@ N64RecordTypeCursorSpriteTask:
 	ld c, $03 ; $7352
 	call GetMenuCursorCellIndex ; $7354
 	push af ; $7357
-	ld hl, Data_3b_73bc ; $7358
+	ld hl, N64RecordTypeCursorSpriteTaskTable1 ; $7358
 	add a, l ; $735b
 	ld l, a ; $735c
 	jr nc, .read ; $735d
@@ -6982,7 +6982,7 @@ N64RecordTypeCursorSpriteTask:
 .read:
 	ld c, [hl] ; $7360
 	pop af ; $7361
-	ld hl, Data_3b_73b6 ; $7362
+	ld hl, N64RecordTypeCursorSpriteTaskTable0 ; $7362
 	add a, a ; $7365
 	add a, l ; $7366
 	ld l, a ; $7367
@@ -7023,10 +7023,10 @@ SpriteTemplate_3b_73ad:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_3b_73b6:
+N64RecordTypeCursorSpriteTaskTable0:
 	; $73b6, 6 bytes (bytes:6)
 	db $50, $fc, $50, $2c, $50, $5c ; 0x00
-Data_3b_73bc:
+N64RecordTypeCursorSpriteTaskTable1:
 	; $73bc, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
 DrawN64RecordTypeGrid:
@@ -7427,7 +7427,7 @@ N64TransferItemCursorSpriteTask:
 	ld c, $02 ; $76ed
 	call GetMenuCursorCellIndex ; $76ef
 	push af ; $76f2
-	ld hl, Data_3b_7759 ; $76f3
+	ld hl, N64TransferItemCursorSpriteTaskTable1 ; $76f3
 	add a, l ; $76f6
 	ld l, a ; $76f7
 	jr nc, .read ; $76f8
@@ -7435,7 +7435,7 @@ N64TransferItemCursorSpriteTask:
 .read:
 	ld c, [hl] ; $76fb
 	pop af ; $76fc
-	ld hl, Data_3b_7751 ; $76fd
+	ld hl, N64TransferItemCursorSpriteTaskTable0 ; $76fd
 	add a, a ; $7700
 	add a, l ; $7701
 	ld l, a ; $7702
@@ -7476,10 +7476,10 @@ SpriteTemplate_3b_7748:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_3b_7751:
+N64TransferItemCursorSpriteTaskTable0:
 	; $7751, 8 bytes (bytes:8)
 	db $38, $14, $38, $4c, $60, $14, $60, $4a ; 0x00
-Data_3b_7759:
+N64TransferItemCursorSpriteTaskTable1:
 	; $7759, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00
 ShowTournamentBracket:

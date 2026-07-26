@@ -1967,7 +1967,7 @@ QueuePlaneSpriteByHeight_14:
 	ret ; $5ecd
 	; $5ece, 2 bytes (fill)
 	ds 2, $00
-Gfx_14_5ed0:
+WaterSplashObjGfx:
 	INCBIN "data/bank_014/d_5ed0.bin" ; $5ed0, 448 bytes
 SpriteTemplate_14_6090:
 	; $6090, 9 bytes (sprite_template)
@@ -1982,7 +1982,7 @@ LoadWaterSplashObjGfx_14:
 	ldh a, [hWramBank] ; $60a1
 	push af ; $60a3
 	wram_bank $01 ; $60a4
-	ld hl, Gfx_14_5ed0 ; $60aa
+	ld hl, WaterSplashObjGfx ; $60aa
 	ld de, $8200 ; $60ad
 	ld c, $1c ; $60b0
 	call QueueVRAMCopy ; $60b2
@@ -3018,7 +3018,7 @@ AnimateIslandSkyEffectSprites_14:
 	ret ; $742c
 	; $742d, 3 bytes (fill)
 	ds 3, $00
-Gfx_14_7430:
+DistantPlaneObjGfx:
 	INCBIN "data/bank_014/d_7430.bin" ; $7430, 256 bytes
 SpriteTemplate_14_7530:
 	; $7530, 9 bytes (sprite_template)
@@ -3029,7 +3029,7 @@ LoadDistantPlaneObjGfx_14:
 	ldh a, [hWramBank] ; $7539
 	push af ; $753b
 	wram_bank $01 ; $753c
-	ld hl, Gfx_14_7430 ; $7542
+	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, $a000 ; $7545
 	ld c, $10 ; $7548
 	call QueueVRAMCopy ; $754a
@@ -3062,7 +3062,7 @@ GetSceneObjectScreenPos_14:
 	ret ; $757d
 	; $757e, 2 bytes (fill)
 	ds 2, $00
-Gfx_14_7580:
+TwinkleObjGfx:
 	INCBIN "data/bank_014/d_7580.bin" ; $7580, 256 bytes
 Palette_14_7680:
 	; $7680, 8 bytes (palettes)
@@ -3072,7 +3072,7 @@ LoadTwinkleObjGfx_14:
 	ldh a, [hWramBank] ; $7688
 	push af ; $768a
 	wram_bank $01 ; $768b
-	ld hl, Gfx_14_7580 ; $7691
+	ld hl, TwinkleObjGfx ; $7691
 	ld de, $a000 ; $7694
 	ld c, $10 ; $7697
 	call QueueVRAMCopy ; $7699

@@ -4337,7 +4337,7 @@ LoadCourtSelectTitleGfx:
 	wram_bank ; $618d
 	ret ; $6191
 LoadCourtSelectTitleTiles:
-	ld hl, Lz_3e_61d4 ; $6192
+	ld hl, CourtSelectTitleTiles ; $6192
 	ld de, $d000 ; $6195
 	call DecompressData ; $6198
 	ld hl, $d000 ; $619b
@@ -4346,7 +4346,7 @@ LoadCourtSelectTitleTiles:
 	call QueueVRAMCopy ; $61a4
 	ret ; $61a7
 LoadCourtSelectTitleTiles2:
-	ld hl, Lz_3e_6273 ; $61a8
+	ld hl, CourtSelectTitleTiles2Gfx ; $61a8
 	ld de, $d100 ; $61ab
 	call DecompressData ; $61ae
 	ld hl, $d100 ; $61b1
@@ -4355,7 +4355,7 @@ LoadCourtSelectTitleTiles2:
 	call QueueVRAMCopy ; $61ba
 	ret ; $61bd
 LoadCourtSelectPanelTiles:
-	ld hl, Lz_3e_62c6 ; $61be
+	ld hl, CourtSelectPanelTiles ; $61be
 	ld de, $d200 ; $61c1
 	call DecompressData ; $61c4
 	ld hl, $d200 ; $61c7
@@ -4363,11 +4363,11 @@ LoadCourtSelectPanelTiles:
 	ld bc, $0037 ; $61cd
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
-Lz_3e_61d4:
+CourtSelectTitleTiles:
 	INCBIN "data/bank_03e/d_61d4.bin" ; $61d4, 159 bytes
-Lz_3e_6273:
+CourtSelectTitleTiles2Gfx:
 	INCBIN "data/bank_03e/d_6273.bin" ; $6273, 83 bytes
-Lz_3e_62c6:
+CourtSelectPanelTiles:
 	INCBIN "data/bank_03e/d_62c6.bin" ; $62c6, 457 bytes
 DrawCourtNameTiles:
 	ldh a, [hWramBank] ; $648f

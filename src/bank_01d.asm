@@ -153,7 +153,7 @@ LoadCharDataScreenPageGraphics:
 	ld c, $0a ; $418a
 	call QueueVRAMCopy ; $418c
 	wram_bank $01 ; $418f
-	ld hl, Lz_1d_667f ; $4195
+	ld hl, CharDataScreenPageGraphicsGfx0 ; $4195
 	ld de, $d000 ; $4198
 	call DecompressData ; $419b
 	ld hl, $d000 ; $419e
@@ -161,7 +161,7 @@ LoadCharDataScreenPageGraphics:
 	ld c, $0a ; $41a4
 	call QueueVRAMCopy ; $41a6
 	wram_bank $01 ; $41a9
-	ld hl, Lz_1d_6721 ; $41af
+	ld hl, CharDataScreenPageGraphicsGfx1 ; $41af
 	ld de, $d000 ; $41b2
 	call DecompressData ; $41b5
 	ld hl, $d000 ; $41b8
@@ -169,7 +169,7 @@ LoadCharDataScreenPageGraphics:
 	ld c, $08 ; $41be
 	call QueueVRAMCopy ; $41c0
 	wram_bank $01 ; $41c3
-	ld hl, Lz_1d_67ab ; $41c9
+	ld hl, CharDataScreenPageGraphicsGfx2 ; $41c9
 	ld de, $d000 ; $41cc
 	call DecompressData ; $41cf
 	ld hl, $d000 ; $41d2
@@ -3267,7 +3267,7 @@ SpriteTemplate_1d_666a:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-Lz_1d_667f:
+CharDataScreenPageGraphicsGfx0:
 	INCBIN "data/bank_01d/d_667f.bin" ; $667f, 141 bytes
 SpriteTemplate_1d_670c:
 	; $670c, 21 bytes (sprite_template)
@@ -3277,7 +3277,7 @@ SpriteTemplate_1d_670c:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-Lz_1d_6721:
+CharDataScreenPageGraphicsGfx1:
 	INCBIN "data/bank_01d/d_6721.bin" ; $6721, 121 bytes
 SpriteTemplate_1d_679a:
 	; $679a, 17 bytes (sprite_template)
@@ -3286,7 +3286,7 @@ SpriteTemplate_1d_679a:
 	oam_sprite $10, $18, $04, $00
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
-Lz_1d_67ab:
+CharDataScreenPageGraphicsGfx2:
 	INCBIN "data/bank_01d/d_67ab.bin" ; $67ab, 101 bytes
 SpriteTemplate_1d_6810:
 	; $6810, 11 bytes (sprite_template)
@@ -3490,7 +3490,7 @@ BuildExpDistributionScreen:
 	ld c, $02 ; $69d7
 	call QueueVRAMCopy ; $69d9
 	wram_bank $01 ; $69dc
-	ld hl, Lz_1d_79c1 ; $69e2
+	ld hl, ExpDistributionScreenGfx2 ; $69e2
 	ld de, $d000 ; $69e5
 	call DecompressData ; $69e8
 	ld hl, $d000 ; $69eb
@@ -3498,7 +3498,7 @@ BuildExpDistributionScreen:
 	ld c, $14 ; $69f1
 	call QueueVRAMCopy ; $69f3
 	wram_bank $01 ; $69f6
-	ld hl, Lz_1d_7a63 ; $69fc
+	ld hl, ExpDistributionScreenGfx3 ; $69fc
 	ld de, $d000 ; $69ff
 	call DecompressData ; $6a02
 	ld hl, $d000 ; $6a05
@@ -3506,7 +3506,7 @@ BuildExpDistributionScreen:
 	ld c, $18 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
 	wram_bank $01 ; $6a10
-	ld hl, Lz_1d_7b8a ; $6a16
+	ld hl, ExpDistributionScreenGfx4 ; $6a16
 	ld de, $d000 ; $6a19
 	call DecompressData ; $6a1c
 	ld hl, $d000 ; $6a1f
@@ -3525,7 +3525,7 @@ BuildExpDistributionScreen:
 	ld c, $0c ; $6a48
 	call QueueVRAMCopy ; $6a4a
 	wram_bank $01 ; $6a4d
-	ld hl, Lz_1d_7949 ; $6a53
+	ld hl, ExpDistributionScreenGfx0 ; $6a53
 	ld de, $d000 ; $6a56
 	call DecompressData ; $6a59
 	ld hl, $d000 ; $6a5c
@@ -3533,7 +3533,7 @@ BuildExpDistributionScreen:
 	ld c, $04 ; $6a62
 	call QueueVRAMCopy ; $6a64
 	wram_bank $01 ; $6a67
-	ld hl, Lz_1d_7983 ; $6a6d
+	ld hl, ExpDistributionScreenGfx1 ; $6a6d
 	ld de, $d000 ; $6a70
 	call DecompressData ; $6a73
 	ld hl, $d000 ; $6a76
@@ -5297,14 +5297,14 @@ SpriteTemplate_1d_7930:
 	oam_sprite $10, $18, $08, $00
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
-Lz_1d_7949:
+ExpDistributionScreenGfx0:
 	INCBIN "data/bank_01d/d_7949.bin" ; $7949, 49 bytes
 SpriteTemplate_1d_797a:
 	; $797a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Lz_1d_7983:
+ExpDistributionScreenGfx1:
 	INCBIN "data/bank_01d/d_7983.bin" ; $7983, 49 bytes
 SpriteTemplate_1d_79b4:
 	; $79b4, 13 bytes (sprite_template)
@@ -5312,9 +5312,9 @@ SpriteTemplate_1d_79b4:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-Lz_1d_79c1:
+ExpDistributionScreenGfx2:
 	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 162 bytes
-Lz_1d_7a63:
+ExpDistributionScreenGfx3:
 	INCBIN "data/bank_01d/d_7a63.bin" ; $7a63, 246 bytes
 SpriteTemplate_1d_7b59:
 	; $7b59, 49 bytes (sprite_template)
@@ -5331,7 +5331,7 @@ SpriteTemplate_1d_7b59:
 	oam_sprite $10, $30, $14, $00
 	oam_sprite $20, $30, $16, $00
 	oam_sprite_end
-Lz_1d_7b8a:
+ExpDistributionScreenGfx4:
 	INCBIN "data/bank_01d/d_7b8a.bin" ; $7b8a, 243 bytes
 SpriteTemplate_1d_7c7d:
 	; $7c7d, 49 bytes (sprite_template)

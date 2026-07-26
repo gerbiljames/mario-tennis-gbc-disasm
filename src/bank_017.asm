@@ -81,7 +81,7 @@ DataPtr_RulesScreenPalettes:
 ApplySpriteWobbleX_17:
 	ldh a, [hVBlankCounter] ; $4079
 	and a, $0f ; $407b
-	ld hl, Data_17_4093 ; $407d
+	ld hl, SpriteWobbleXTable ; $407d
 	add a, l ; $4080
 	ld l, a ; $4081
 	jr nc, .readOffset ; $4082
@@ -101,7 +101,7 @@ ApplySpriteWobbleX_17:
 	sub a, b ; $4090
 	ld d, a ; $4091
 	ret ; $4092
-Data_17_4093:
+SpriteWobbleXTable:
 	; $4093, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplySpriteWobbleY_17:
@@ -1164,14 +1164,14 @@ DrawBriefingSwingAnim:
 	push af ; $4790
 	wram_bank $03 ; $4791
 	ld a, [$d822] ; $4797
-	ld hl, Data_17_47c3 ; $479a
+	ld hl, BriefingSwingAnimTable0 ; $479a
 	add a, l ; $479d
 	ld l, a ; $479e
 	jr nc, .read ; $479f
 	inc h ; $47a1
 .read:
 	ld c, [hl] ; $47a2
-	ld hl, Data_17_47e2 ; $47a3
+	ld hl, BriefingSwingAnimTable1 ; $47a3
 	ld a, [$d822] ; $47a6
 	cp a, $06 ; $47a9
 	jr nc, .ge06 ; $47ab
@@ -1186,7 +1186,7 @@ DrawBriefingSwingAnim:
 	pop af ; $47bd
 	wram_bank ; $47be
 	ret ; $47c2
-Data_17_47c3:
+BriefingSwingAnimTable0:
 	; $47c3, 10 bytes (bytes:10)
 	db $08, $12, $1c, $36, $40, $4a, $26, $2c, $54, $5a ; 0x00
 SpriteTemplate_17_47cd:
@@ -1197,7 +1197,7 @@ SpriteTemplate_17_47cd:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-Data_17_47e2:
+BriefingSwingAnimTable1:
 	; $47e2, 13 bytes (bytes:13)
 	db $10, $08, $00, $00, $10, $10, $02, $00, $10, $18, $04, $00, $80 ; 0x00
 DrawBriefingPoleSprites:
@@ -1269,7 +1269,7 @@ DrawBriefingMarkerRotated:
 	ldh a, [hWramBank] ; $4876
 	push af ; $4878
 	wram_bank $03 ; $4879
-	ld hl, Data_17_489e ; $487f
+	ld hl, BriefingMarkerRotatedTable ; $487f
 	ld a, [$d827] ; $4882
 	add a, l ; $4885
 	ld l, a ; $4886
@@ -1286,7 +1286,7 @@ DrawBriefingMarkerRotated:
 	pop af ; $4898
 	wram_bank ; $4899
 	ret ; $489d
-Data_17_489e:
+BriefingMarkerRotatedTable:
 	; $489e, 4 bytes (bytes:4)
 	db $49, $09, $29, $69 ; 0x00
 DrawBlinkingPrompt:
@@ -5197,7 +5197,7 @@ QueueRulesPageToVRAM:
 	ret ; $7292
 LoadRulesBorderAnimTiles:
 	wram_bank $01 ; $7293
-	ld hl, Lz_17_793c ; $7299
+	ld hl, RulesBorderAnimTiles0 ; $7299
 	ld de, $d000 ; $729c
 	call DecompressData ; $729f
 	ld hl, $d000 ; $72a2
@@ -5224,7 +5224,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a580 ; $72e1
 	ld bc, $0012 ; $72e4
 	call QueueVRAMCopy ; $72e7
-	ld hl, Lz_17_7a08 ; $72ea
+	ld hl, RulesBorderAnimTiles1 ; $72ea
 	ld de, $d000 ; $72ed
 	call DecompressData ; $72f0
 	ld hl, $d000 ; $72f3
@@ -5243,7 +5243,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a5a0 ; $731a
 	ld bc, $0002 ; $731d
 	call QueueVRAMCopy ; $7320
-	ld hl, Lz_17_7a2f ; $7323
+	ld hl, RulesBorderAnimTiles2 ; $7323
 	ld de, $d000 ; $7326
 	call DecompressData ; $7329
 	ld hl, $d020 ; $732c
@@ -5262,7 +5262,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a600 ; $7353
 	ld bc, $0001 ; $7356
 	call QueueVRAMCopy ; $7359
-	ld hl, Lz_17_7a56 ; $735c
+	ld hl, RulesBorderAnimTiles3 ; $735c
 	ld de, $d000 ; $735f
 	call DecompressData ; $7362
 	ld hl, $d000 ; $7365
@@ -5289,7 +5289,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a6a0 ; $73a4
 	ld bc, $0012 ; $73a7
 	call QueueVRAMCopy ; $73aa
-	ld hl, Lz_17_7af8 ; $73ad
+	ld hl, RulesBorderAnimTiles4 ; $73ad
 	ld de, $d000 ; $73b0
 	call DecompressData ; $73b3
 	ld hl, $d000 ; $73b6
@@ -5308,7 +5308,7 @@ LoadRulesBorderAnimTiles:
 	ld de, $a6c0 ; $73dd
 	ld bc, $0002 ; $73e0
 	call QueueVRAMCopy ; $73e3
-	ld hl, Lz_17_7b18 ; $73e6
+	ld hl, RulesBorderAnimTiles5 ; $73e6
 	ld de, $d000 ; $73e9
 	call DecompressData ; $73ec
 	ld hl, $d020 ; $73ef
@@ -5433,7 +5433,7 @@ DrawRulesScreenCharacters:
 	push af ; $74dd
 	wram_bank $03 ; $74de
 	ld a, [$dc00] ; $74e4
-	ld hl, Data_17_754c ; $74e7
+	ld hl, RulesScreenCharactersTable0 ; $74e7
 	add a, l ; $74ea
 	ld l, a ; $74eb
 	jr nc, .read ; $74ec
@@ -5443,7 +5443,7 @@ DrawRulesScreenCharacters:
 	ld c, a ; $74f0
 	push bc ; $74f1
 	ld a, [$dc00] ; $74f2
-	ld hl, Data_17_7552 ; $74f5
+	ld hl, RulesScreenCharactersTable1 ; $74f5
 	add a, l ; $74f8
 	ld l, a ; $74f9
 	jr nc, .readB ; $74fa
@@ -5458,7 +5458,7 @@ DrawRulesScreenCharacters:
 	add a, c ; $750a
 	ld c, a ; $750b
 	ld a, [$dc00] ; $750c
-	ld hl, Data_17_7558 ; $750f
+	ld hl, RulesScreenCharactersTable2 ; $750f
 	add a, l ; $7512
 	ld l, a ; $7513
 	jr nc, .read2 ; $7514
@@ -5483,13 +5483,13 @@ SpriteTemplate_17_7527:
 	oam_sprite $20, $18, $0e, $00
 	oam_sprite $30, $18, $10, $00
 	oam_sprite_end
-Data_17_754c:
+RulesScreenCharactersTable0:
 	; $754c, 6 bytes (bytes:6)
 	db $00, $24, $48, $10, $34, $58 ; 0x00
-Data_17_7552:
+RulesScreenCharactersTable1:
 	; $7552, 6 bytes (bytes:6)
 	db $01, $01, $01, $09, $09, $09 ; 0x00
-Data_17_7558:
+RulesScreenCharactersTable2:
 	; $7558, 6 bytes (bytes:6)
 	db $02, $02, $02, $0a, $0a, $0a ; 0x00
 DrawRulesNextPageArrow:
@@ -5518,17 +5518,17 @@ RulesScreenPalettes:
 	dw $5eb7, $015f, $0000, $7d59 ; pal 5: #bdacbd #ff5200 #000000 #cd52ff
 	dw $2508, $2508, $2508, $2508 ; pal 6: #41414a #41414a #41414a #41414a
 	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
-Lz_17_793c:
+RulesBorderAnimTiles0:
 	INCBIN "data/bank_017/d_793c.bin" ; $793c, 204 bytes
-Lz_17_7a08:
+RulesBorderAnimTiles1:
 	INCBIN "data/bank_017/d_7a08.bin" ; $7a08, 39 bytes
-Lz_17_7a2f:
+RulesBorderAnimTiles2:
 	INCBIN "data/bank_017/d_7a2f.bin" ; $7a2f, 39 bytes
-Lz_17_7a56:
+RulesBorderAnimTiles3:
 	INCBIN "data/bank_017/d_7a56.bin" ; $7a56, 162 bytes
-Lz_17_7af8:
+RulesBorderAnimTiles4:
 	INCBIN "data/bank_017/d_7af8.bin" ; $7af8, 32 bytes
-Lz_17_7b18:
+RulesBorderAnimTiles5:
 	INCBIN "data/bank_017/d_7b18.bin" ; $7b18, 33 bytes
 Palette_17_7b39:
 	; $7b39, 64 bytes (palettes)

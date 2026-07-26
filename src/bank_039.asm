@@ -460,7 +460,7 @@ UpdateAnimatedTiles:
 LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank $01 ; $44d4
-	ld hl, Lz_39_44f6 ; $44da
+	ld hl, FixedTileBlockAndPalette ; $44da
 	ld de, $d000 ; $44dd
 	call DecompressData ; $44e0
 	ld hl, $d000 ; $44e3
@@ -471,7 +471,7 @@ LoadFixedTileBlockAndPalette:
 	ld de, $0801 ; $44ef
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
-Lz_39_44f6:
+FixedTileBlockAndPalette:
 	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 32 bytes
 Palette_39_4516:
 	; $4516, 8 bytes (palettes)
@@ -3158,7 +3158,7 @@ MoveMinigameGridCursor:
 	jr .done ; $6e47
 .checkMenuCursorX3:
 	ld a, [wMenuCursorX] ; $6e49
-	ld hl, Data_39_6eba ; $6e4c
+	ld hl, MoveMinigameGridCursorTable0 ; $6e4c
 	add a, l ; $6e4f
 	ld l, a ; $6e50
 	jr nc, .read ; $6e51
@@ -3209,7 +3209,7 @@ MoveMinigameGridCursor:
 	jr .done ; $6e9c
 .checkMenuCursorX6:
 	ld a, [wMenuCursorX] ; $6e9e
-	ld hl, Data_39_6ebd ; $6ea1
+	ld hl, MoveMinigameGridCursorTable1 ; $6ea1
 	add a, l ; $6ea4
 	ld l, a ; $6ea5
 	jr nc, .readB ; $6ea6
@@ -3224,10 +3224,10 @@ MoveMinigameGridCursor:
 	jr .done ; $6eb7
 .done:
 	ret ; $6eb9
-Data_39_6eba:
+MoveMinigameGridCursorTable0:
 	; $6eba, 3 bytes (bytes:3)
 	db $00, $02, $02 ; 0x00
-Data_39_6ebd:
+MoveMinigameGridCursorTable1:
 	; $6ebd, 3 bytes (bytes:3)
 	db $00, $02, $02 ; 0x00
 InitNumberSpriteGfx:
@@ -3358,7 +3358,7 @@ UpdateCheatCodeEntry:
 .read:
 	ld d, [hl] ; $6f87
 	ld a, c ; $6f88
-	ld hl, Data_39_6fc6 ; $6f89
+	ld hl, CheatCodeEntryTable ; $6f89
 	add a, l ; $6f8c
 	ld l, a ; $6f8d
 	jr nc, .readB ; $6f8e
@@ -3396,7 +3396,7 @@ UpdateCheatCodeEntry:
 	pop af ; $6fc0
 	wram_bank ; $6fc1
 	ret ; $6fc5
-Data_39_6fc6:
+CheatCodeEntryTable:
 	; $6fc6, 33 bytes (bytes:16)
 	db $80, $80, $10, $10, $40, $40, $20, $04, $04, $04, $10, $80, $80, $20, $20, $40 ; 0x00
 	db $40, $10, $04, $20, $80, $80, $10, $10, $40, $40, $20, $04, $04, $00, $00, $00 ; 0x10

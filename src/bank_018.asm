@@ -115,9 +115,9 @@ DataPtr_18_94:
 Padding_18_4096:
 	; $4096, 10 bytes (fill)
 	ds 10, $00
-Gfx_18_40a0:
+FontTiles:
 	INCBIN "data/bank_018/d_40a0.bin" ; $40a0, 512 bytes
-Gfx_18_42a0:
+MenuHandCursorGfx:
 	INCBIN "data/bank_018/d_42a0.bin" ; $42a0, 64 bytes
 Palette_18_42e0:
 	; $42e0, 32 bytes (palettes)
@@ -193,13 +193,13 @@ LoadMenuHandCursorGfx:
 	ld hl, Palette_18_42e0 ; $437d
 	call LoadPaletteShadow ; $4380
 	pop de ; $4383
-	ld hl, Gfx_18_42a0 ; $4384
+	ld hl, MenuHandCursorGfx ; $4384
 	ld c, $04 ; $4387
 	call QueueVRAMCopy ; $4389
 	ret ; $438c
 StubLoadFontTiles:
 	ret ; $438d
-	ld hl, Gfx_18_40a0 ; $438e
+	ld hl, FontTiles ; $438e
 	ld de, $9000 ; $4391
 	ld c, $10 ; $4394
 	call QueueVRAMCopy ; $4396
@@ -681,7 +681,7 @@ InitPlayerRecordForCharacter:
 	add hl, bc ; $4677
 	ld [hl], a ; $4678
 	ret ; $4679
-Lz_18_467a:
+ConfirmScreenGfx0:
 	INCBIN "data/bank_018/d_467a.bin" ; $467a, 2233 bytes
 Palette_18_4f33:
 	; $4f33, 64 bytes (palettes)
@@ -694,23 +694,23 @@ Palette_18_4f33:
 	dw $0045, $01c0, $36ff, $7fff ; pal 5: #291000 #007300 #ffbd6a #ffffff
 	dw $1100, $021f, $0000, $7fff ; pal 6: #004120 #ff8300 #000000 #ffffff
 	dw $5014, $5014, $5014, $5014 ; pal 7: #a400a4 #a400a4 #a400a4 #a400a4
-Lz_18_4f73:
+ConfirmScreenGfx1:
 	INCBIN "data/bank_018/d_4f73.bin" ; $4f73, 347 bytes
-Lz_18_50ce:
+ConfirmScreenGfx2:
 	INCBIN "data/bank_018/d_50ce.bin" ; $50ce, 234 bytes
-Data_18_51b8:
+YesNoLabels0:
 	; $51b8, 16 bytes (bytes:16)
 	db $8b, $8b, $dd, $de, $df, $8b, $8b, $bd, $be, $bf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
-Data_18_51c8:
+YesNoLabels1:
 	; $51c8, 16 bytes (bytes:16)
 	db $8b, $8b, $ed, $ee, $ef, $8b, $8b, $cd, $ce, $cf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
-Data_18_51d8:
+YesNoLabels2:
 	; $51d8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
-Data_18_51e8:
+YesNoLabels3:
 	; $51e8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
-Lz_18_51f8:
+ConfirmScreenGfx3:
 	INCBIN "data/bank_018/d_51f8.bin" ; $51f8, 206 bytes
 Palette_18_52c6:
 	; $52c6, 24 bytes (palettes)
@@ -726,7 +726,7 @@ InitConfirmScreen:
 	xor a, a ; $52ea
 	ld [$c783], a ; $52eb
 	ld [$c780], a ; $52ee
-	ld hl, Lz_18_467a ; $52f1
+	ld hl, ConfirmScreenGfx0 ; $52f1
 	ld de, $d000 ; $52f4
 	call DecompressData ; $52f7
 	ld hl, $d000 ; $52fa
@@ -740,15 +740,15 @@ InitConfirmScreen:
 	ld hl, Palette_18_4f33 ; $5310
 	ld de, $0008 ; $5313
 	call LoadPaletteShadow ; $5316
-	ld hl, Lz_18_50ce ; $5319
+	ld hl, ConfirmScreenGfx2 ; $5319
 	ld de, $dc00 ; $531c
 	call DecompressData ; $531f
-	ld hl, Lz_18_4f73 ; $5322
+	ld hl, ConfirmScreenGfx1 ; $5322
 	ld de, $d800 ; $5325
 	call DecompressData ; $5328
 	call StubLoadFontTiles ; $532b
 	call DrawConfirmScreenBox ; $532e
-	ld hl, Lz_18_51f8 ; $5331
+	ld hl, ConfirmScreenGfx3 ; $5331
 	ld de, $d000 ; $5334
 	call DecompressData ; $5337
 	ld hl, $d000 ; $533a
@@ -932,7 +932,7 @@ RunTwoOptionSelectB:
 	ld a, b ; $5490
 	and a, a ; $5491
 	jr z, .redraw ; $5492
-	ld de, Data_18_5892 ; $5494
+	ld de, TwoOptionSelectBTable ; $5494
 .redraw:
 	call AddBobbingOffsetXY ; $5497
 	push bc ; $549a
@@ -1020,16 +1020,16 @@ DrawGlyphSprite:
 Gfx_18_5507:
 	INCBIN "data/bank_018/d_5507.bin" ; $5507, 90 bytes
 DrawYesNoLabels:
-	ld hl, Data_18_51d8 ; $5561
+	ld hl, YesNoLabels2 ; $5561
 	ld de, $dde1 ; $5564
 	call CopyBytes11 ; $5567
-	ld hl, Data_18_51e8 ; $556a
+	ld hl, YesNoLabels3 ; $556a
 	ld de, $de01 ; $556d
 	call CopyBytes11 ; $5570
-	ld hl, Data_18_51b8 ; $5573
+	ld hl, YesNoLabels0 ; $5573
 	ld de, $d9e1 ; $5576
 	call CopyBytes11 ; $5579
-	ld hl, Data_18_51c8 ; $557c
+	ld hl, YesNoLabels1 ; $557c
 	ld de, $da01 ; $557f
 	call CopyBytes11 ; $5582
 	ret ; $5585
@@ -1133,7 +1133,7 @@ ClearTileVramBothBanks:
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
 LoadConfirmScreenSpriteGfx:
-	ld hl, Lz_18_5633 ; $55f8
+	ld hl, ConfirmScreenSpriteGfx0 ; $55f8
 	ld de, $d000 ; $55fb
 	call DecompressData ; $55fe
 	ld hl, $d000 ; $5601
@@ -1143,7 +1143,7 @@ LoadConfirmScreenSpriteGfx:
 	ld hl, Palette_18_582d ; $560c
 	ld de, $0c03 ; $560f
 	call LoadPalettesImmediate ; $5612
-	ld hl, Lz_18_5845 ; $5615
+	ld hl, ConfirmScreenSpriteGfx1 ; $5615
 	ld de, $d000 ; $5618
 	call DecompressData ; $561b
 	ld hl, $d000 ; $561e
@@ -1154,7 +1154,7 @@ LoadConfirmScreenSpriteGfx:
 	ld de, $0801 ; $562c
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
-Lz_18_5633:
+ConfirmScreenSpriteGfx0:
 	INCBIN "data/bank_018/d_5633.bin" ; $5633, 506 bytes
 Palette_18_582d:
 	; $582d, 24 bytes (palettes)
@@ -1162,9 +1162,9 @@ Palette_18_582d:
 	dw $0008, $0000, $009f, $7fff ; pal 0: #410000 #000000 #ff2000 #ffffff
 	dw $0100, $0000, $02c0, $7fff ; pal 1: #004100 #000000 #00b400 #ffffff
 	dw $2000, $0000, $7d80, $7fff ; pal 2: #000041 #000000 #0062ff #ffffff
-Lz_18_5845:
+ConfirmScreenSpriteGfx1:
 	INCBIN "data/bank_018/d_5845.bin" ; $5845, 77 bytes
-Data_18_5892:
+TwoOptionSelectBTable:
 	; $5892, 27 bytes (bytes:16)
 	db $92, $ec, $e1, $10, $6c, $7c, $d5, $e2, $92, $e8, $e7, $00, $de, $e5, $b4, $e3 ; 0x00
 	db $88, $e3, $c8, $e9, $da, $ef, $ff, $eb, $00, $00, $00 ; 0x10
@@ -1178,14 +1178,14 @@ Palette_18_58ad:
 	dw $0000, $0040, $11d6, $4e73 ; pal 4: #000000 #001000 #b47320 #9c9c9c
 	dw $0000, $0000, $0000, $0000 ; pal 5: #000000 #000000 #000000 #000000
 	db $00, $00, $00
-Gfx_18_58e0:
+CharSelectCursorGfx:
 	INCBIN "data/bank_018/d_58e0.bin" ; $58e0, 217 bytes
 Palette_18_59b9:
 	; $59b9, 8 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $7c1f, $1405, $034c, $7fff ; pal 0: #ff00ff #290029 #62d500 #ffffff
 LoadCharSelectCursorGfx:
-	ld hl, Gfx_18_58e0 ; $59c1
+	ld hl, CharSelectCursorGfx ; $59c1
 	ld de, $8400 ; $59c4
 	ld c, $0c ; $59c7
 	call QueueVRAMCopy ; $59c9
@@ -1248,7 +1248,7 @@ LoadOnCourtCharTilesA:
 	rr l ; $5abe
 	srl h ; $5ac0
 	rr l ; $5ac2
-	ld bc, Gfx_18_5af0 ; $5ac4
+	ld bc, OnCourtCharTilesAGfx ; $5ac4
 	add hl, bc ; $5ac7
 	ld c, $04 ; $5ac8
 	call QueueVRAMCopy ; $5aca
@@ -1262,21 +1262,21 @@ LoadOnCourtCharTilesB:
 	rr l ; $5ad7
 	srl h ; $5ad9
 	rr l ; $5adb
-	ld bc, Gfx_18_62f0 ; $5add
+	ld bc, OnCourtCharTilesBGfx ; $5add
 	add hl, bc ; $5ae0
 	ld c, $04 ; $5ae1
 	call QueueVRAMCopy ; $5ae3
 	ret ; $5ae6
 LoadOnCourtCharTilesFallback:
-	ld hl, Gfx_18_6af0 ; $5ae7
+	ld hl, OnCourtCharTilesFallbackGfx ; $5ae7
 	ld c, $04 ; $5aea
 	call QueueVRAMCopy ; $5aec
 	ret ; $5aef
-Gfx_18_5af0:
+OnCourtCharTilesAGfx:
 	INCBIN "data/bank_018/d_5af0.bin" ; $5af0, 2048 bytes
-Gfx_18_62f0:
+OnCourtCharTilesBGfx:
 	INCBIN "data/bank_018/d_62f0.bin" ; $62f0, 2048 bytes
-Gfx_18_6af0:
+OnCourtCharTilesFallbackGfx:
 	INCBIN "data/bank_018/d_6af0.bin" ; $6af0, 64 bytes
 Lz_18_6b30:
 	INCBIN "data/bank_018/lz_6b30.bin" ; $6b30, 67 bytes
@@ -1490,7 +1490,7 @@ SetupScreen0Assets:
 	ret ; $772c
 LookupScreen0AssetId:
 	ld a, [$cb6d] ; $772d
-	ld hl, Data_18_773a ; $7730
+	ld hl, Screen0AssetIdTable ; $7730
 	add a, l ; $7733
 	ld l, a ; $7734
 	jr nc, .read ; $7735
@@ -1498,7 +1498,7 @@ LookupScreen0AssetId:
 .read:
 	ld c, [hl] ; $7738
 	ret ; $7739
-Data_18_773a:
+Screen0AssetIdTable:
 	; $773a, 6 bytes (bytes:6)
 	db $2c, $2d, $2f, $2e, $30, $31 ; 0x00
 LoadScreen0TilesAndPalette:
@@ -1600,7 +1600,7 @@ SetupScreen1Assets:
 	ret ; $7841
 LookupScreen1AssetId:
 	ld a, [$cb6d] ; $7842
-	ld hl, Data_18_784f ; $7845
+	ld hl, Screen1AssetIdTable ; $7845
 	add a, l ; $7848
 	ld l, a ; $7849
 	jr nc, .read ; $784a
@@ -1608,7 +1608,7 @@ LookupScreen1AssetId:
 .read:
 	ld c, [hl] ; $784d
 	ret ; $784e
-Data_18_784f:
+Screen1AssetIdTable:
 	; $784f, 6 bytes (bytes:6)
 	db $32, $33, $35, $34, $36, $37 ; 0x00
 FillAllBgPalettes:
@@ -1779,7 +1779,7 @@ PlayScreenSequence2:
 	ret ; $7a06
 LookupScreen2AssetIdA:
 	ld a, [$cb6d] ; $7a07
-	ld hl, Data_18_7a14 ; $7a0a
+	ld hl, Screen2AssetIdATable ; $7a0a
 	add a, l ; $7a0d
 	ld l, a ; $7a0e
 	jr nc, .read ; $7a0f
@@ -1787,12 +1787,12 @@ LookupScreen2AssetIdA:
 .read:
 	ld c, [hl] ; $7a12
 	ret ; $7a13
-Data_18_7a14:
+Screen2AssetIdATable:
 	; $7a14, 6 bytes (bytes:6)
 	db $38, $39, $3b, $3a, $3c, $3d ; 0x00
 LookupScreen2AssetIdB:
 	ld a, [$cb6d] ; $7a1a
-	ld hl, Data_18_7a27 ; $7a1d
+	ld hl, Screen2AssetIdBTable ; $7a1d
 	add a, l ; $7a20
 	ld l, a ; $7a21
 	jr nc, .read ; $7a22
@@ -1800,7 +1800,7 @@ LookupScreen2AssetIdB:
 .read:
 	ld c, [hl] ; $7a25
 	ret ; $7a26
-Data_18_7a27:
+Screen2AssetIdBTable:
 	; $7a27, 6 bytes (bytes:6)
 	db $3e, $3f, $41, $40, $42, $43 ; 0x00
 LoadScreen2ObjTiles:

@@ -702,7 +702,7 @@ UpdateTennisDictionarySprites:
 .store:
 	ld [$cb3a], a ; $4ef3
 .countLeft:
-	ld hl, Data_3f_5028 ; $4ef6
+	ld hl, TennisDictionarySprites1 ; $4ef6
 	ld a, [$cb38] ; $4ef9
 	add a, a ; $4efc
 	add a, a ; $4efd
@@ -725,7 +725,7 @@ UpdateTennisDictionarySprites:
 	add a, a ; $4f10
 	push af ; $4f11
 	pop af ; $4f12
-	ld hl, Data_3f_5078 ; $4f13
+	ld hl, TennisDictionarySprites2 ; $4f13
 	add a, l ; $4f16
 	ld l, a ; $4f17
 	jr nc, .readB ; $4f18
@@ -817,7 +817,7 @@ UpdateTennisDictionarySprites:
 	add a, e ; $4fa8
 	add a, $14 ; $4fa9
 	ld e, a ; $4fab
-	ld hl, Data_3f_4ff6 ; $4fac
+	ld hl, TennisDictionarySprites0 ; $4fac
 	ld a, [$cb3e] ; $4faf
 	and a, $0f ; $4fb2
 	add a, l ; $4fb4
@@ -854,7 +854,7 @@ UpdateTennisDictionarySprites:
 	pop af ; $4ff0
 	wram_bank ; $4ff1
 	ret ; $4ff5
-Data_3f_4ff6:
+TennisDictionarySprites0:
 	; $4ff6, 16 bytes (bytes:16)
 	db $00, $01, $01, $02, $03, $04, $06, $08, $06, $04, $03, $02, $01, $01, $00, $00 ; 0x00
 SpriteTemplate_3f_5006:
@@ -871,9 +871,9 @@ SpriteTemplate_3f_501f:
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
 	oam_sprite_end
-Data_3f_5028:
+TennisDictionarySprites1:
 	INCBIN "data/bank_03f/d_5028.bin" ; $5028, 80 bytes
-Data_3f_5078:
+TennisDictionarySprites2:
 	INCBIN "data/bank_03f/d_5078.bin" ; $5078, 88 bytes
 SpriteTemplate_3f_50d0:
 	; $50d0, 9 bytes (sprite_template)
@@ -1377,7 +1377,7 @@ SetTennisDictionaryListFromIndexRow:
 	ret ; $5452
 GetTennisDictionaryRowFirstLetter:
 	push hl ; $5453
-	ld hl, Data_3f_545f ; $5454
+	ld hl, TennisDictionaryRowFirstLetterTable ; $5454
 	add a, l ; $5457
 	ld l, a ; $5458
 	jr nc, .read ; $5459
@@ -1386,7 +1386,7 @@ GetTennisDictionaryRowFirstLetter:
 	ld a, [hl] ; $545c
 	pop hl ; $545d
 	ret ; $545e
-Data_3f_545f:
+TennisDictionaryRowFirstLetterTable:
 	; $545f, 9 bytes (bytes:9)
 	db $00, $03, $06, $0b, $0c, $0f, $12, $15, $16 ; 0x00
 SetTennisDictionaryIndexRowFromList:
@@ -1425,7 +1425,7 @@ SetTennisDictionaryIndexRowFromList:
 	ret ; $54a0
 GetTennisDictionaryLetterRow:
 	push hl ; $54a1
-	ld hl, Data_3f_54ad ; $54a2
+	ld hl, TennisDictionaryLetterRowTable ; $54a2
 	add a, l ; $54a5
 	ld l, a ; $54a6
 	jr nc, .read ; $54a7
@@ -1434,17 +1434,17 @@ GetTennisDictionaryLetterRow:
 	ld a, [hl] ; $54aa
 	pop hl ; $54ab
 	ret ; $54ac
-Data_3f_54ad:
+TennisDictionaryLetterRowTable:
 	; $54ad, 27 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $04, $04, $04, $05 ; 0x00
 	db $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x10
 DrawTennisDictionaryIndexCursor:
 	or a, a ; $54c8
 	jr z, .compactTiles ; $54c9
-	ld hl, Data_3f_5540 ; $54cb
+	ld hl, TennisDictionaryIndexCursorTable0 ; $54cb
 	jr .gotTiles ; $54ce
 .compactTiles:
-	ld hl, Data_3f_5564 ; $54d0
+	ld hl, TennisDictionaryIndexCursorTable1 ; $54d0
 .gotTiles:
 	wram_bank $03 ; $54d3
 	ld de, $cfb3 ; $54d9
@@ -1527,12 +1527,12 @@ DrawTennisDictionaryIndexCursor:
 	call QueueVRAMCopy ; $5536
 	wram_bank $06 ; $5539
 	ret ; $553f
-Data_3f_5540:
+TennisDictionaryIndexCursorTable0:
 	; $5540, 36 bytes (bytes:16)
 	db $76, $77, $86, $87, $78, $79, $88, $89, $7a, $7b, $8a, $8b, $7c, $7d, $8c, $8d ; 0x00
 	db $7e, $7f, $8e, $8f, $a8, $a9, $b8, $b9, $aa, $ab, $ba, $bb, $ac, $ad, $bc, $bd ; 0x10
 	db $ae, $af, $be, $bf ; 0x20
-Data_3f_5564:
+TennisDictionaryIndexCursorTable1:
 	; $5564, 36 bytes (bytes:16)
 	db $96, $84, $97, $84, $98, $84, $99, $84, $9a, $84, $9b, $84, $9c, $84, $9d, $84 ; 0x00
 	db $9e, $84, $9f, $84, $c8, $84, $c9, $84, $ca, $84, $cb, $84, $cc, $84, $cd, $84 ; 0x10

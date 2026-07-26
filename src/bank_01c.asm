@@ -249,56 +249,56 @@ CharDataScreen_BuildTilemap:
 CharDataScreen_LoadUIGraphics:
 	call CharDataScreen_LoadScreen ; $4208
 	wram_bank $01 ; $420b
-	ld hl, Lz_1c_682e ; $4211
+	ld hl, CharDataScreenUIGraphicsGfx4 ; $4211
 	ld de, $d3e0 ; $4214
 	call DecompressData ; $4217
 	ld hl, $d3e0 ; $421a
 	ld bc, $0021 ; $421d
 	call CopyWram1ToWram3 ; $4220
 	wram_bank $01 ; $4223
-	ld hl, Lz_1c_6848 ; $4229
+	ld hl, CharDataScreenUIGraphicsGfx5 ; $4229
 	ld de, $d3e0 ; $422c
 	call DecompressData ; $422f
 	ld hl, $d3e0 ; $4232
 	ld bc, $0021 ; $4235
 	call CopyWram1ToWram2 ; $4238
 	wram_bank $01 ; $423b
-	ld hl, Lz_1c_684f ; $4241
+	ld hl, CharDataScreenUIGraphicsGfx6 ; $4241
 	ld de, $d410 ; $4244
 	call DecompressData ; $4247
 	ld hl, $d410 ; $424a
 	ld bc, $0018 ; $424d
 	call CopyWram1ToWram3 ; $4250
 	wram_bank $01 ; $4253
-	ld hl, Lz_1c_686b ; $4259
+	ld hl, CharDataScreenUIGraphicsGfx7 ; $4259
 	ld de, $d410 ; $425c
 	call DecompressData ; $425f
 	ld hl, $d410 ; $4262
 	ld bc, $0018 ; $4265
 	call CopyWram1ToWram2 ; $4268
 	wram_bank $01 ; $426b
-	ld hl, Lz_1c_67fe ; $4271
+	ld hl, CharDataScreenUIGraphicsGfx2 ; $4271
 	ld de, $d3a0 ; $4274
 	call DecompressData ; $4277
 	ld hl, $d3a0 ; $427a
 	ld bc, $0033 ; $427d
 	call CopyWram1ToWram3 ; $4280
 	wram_bank $01 ; $4283
-	ld hl, Lz_1c_6825 ; $4289
+	ld hl, CharDataScreenUIGraphicsGfx3 ; $4289
 	ld de, $d3a0 ; $428c
 	call DecompressData ; $428f
 	ld hl, $d3a0 ; $4292
 	ld bc, $0033 ; $4295
 	call CopyWram1ToWram2 ; $4298
 	wram_bank $01 ; $429b
-	ld hl, Lz_1c_67da ; $42a1
+	ld hl, CharDataScreenUIGraphicsGfx0 ; $42a1
 	ld de, $d380 ; $42a4
 	call DecompressData ; $42a7
 	ld hl, $d380 ; $42aa
 	ld bc, $001e ; $42ad
 	call CopyWram1ToWram3 ; $42b0
 	wram_bank $01 ; $42b3
-	ld hl, Lz_1c_67f2 ; $42b9
+	ld hl, CharDataScreenUIGraphicsGfx1 ; $42b9
 	ld de, $d380 ; $42bc
 	call DecompressData ; $42bf
 	ld hl, $d380 ; $42c2
@@ -2906,7 +2906,7 @@ Palette_1c_598c:
 	dw $0180, $0100, $0100, $7fff ; pal 5: #006200 #004100 #004100 #ffffff
 	dw $015f, $001f, $0000, $7fff ; pal 6: #ff5200 #ff0000 #000000 #ffffff
 	dw $6280, $7c00, $0000, $63ff ; pal 7: #00a4c5 #0000ff #000000 #ffffc5
-Lz_1c_59cc:
+CharDataScreenGfx0_1c:
 	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 1974 bytes
 	rst Rst18 ; $6182
 	and a, a ; $6183
@@ -2917,45 +2917,45 @@ Lz_1c_59cc:
 	adc a, e ; $6188
 Gfx_1c_6189:
 	INCBIN "data/bank_01c/d_6189.bin" ; $6189, 637 bytes
-Lz_1c_6406:
+CharDataScreenGfx1_1c:
 	INCBIN "data/bank_01c/d_6406.bin" ; $6406, 99 bytes
-Lz_1c_6469:
+CharDataScreenGfx2_1c:
 	INCBIN "data/bank_01c/d_6469.bin" ; $6469, 224 bytes
-Lz_1c_6549:
+CharDataScreenGfx3_1c:
 	INCBIN "data/bank_01c/d_6549.bin" ; $6549, 54 bytes
-Lz_1c_657f:
+CharDataScreenGfx4:
 	INCBIN "data/bank_01c/d_657f.bin" ; $657f, 73 bytes
-Lz_1c_65c8:
+CharDataScreenGfx5:
 	INCBIN "data/bank_01c/d_65c8.bin" ; $65c8, 67 bytes
-Lz_1c_660b:
+CharDataScreenGfx6:
 	INCBIN "data/bank_01c/d_660b.bin" ; $660b, 93 bytes
-Lz_1c_6668:
+CharDataScreenGfx7:
 	INCBIN "data/bank_01c/d_6668.bin" ; $6668, 58 bytes
-Lz_1c_66a2:
+CharDataScreenGfx8:
 	INCBIN "data/bank_01c/d_66a2.bin" ; $66a2, 74 bytes
-Lz_1c_66ec:
+CharDataScreenGfx9:
 	INCBIN "data/bank_01c/d_66ec.bin" ; $66ec, 72 bytes
-Lz_1c_6734:
+CharDataScreenGfx10:
 	INCBIN "data/bank_01c/d_6734.bin" ; $6734, 145 bytes
-Lz_1c_67c5:
+CharDataScreenGfx11:
 	INCBIN "data/bank_01c/d_67c5.bin" ; $67c5, 14 bytes
-Lz_1c_67d3:
+CharDataScreenGfx12:
 	INCBIN "data/bank_01c/d_67d3.bin" ; $67d3, 7 bytes
-Lz_1c_67da:
+CharDataScreenUIGraphicsGfx0:
 	INCBIN "data/bank_01c/d_67da.bin" ; $67da, 24 bytes
-Lz_1c_67f2:
+CharDataScreenUIGraphicsGfx1:
 	INCBIN "data/bank_01c/d_67f2.bin" ; $67f2, 12 bytes
-Lz_1c_67fe:
+CharDataScreenUIGraphicsGfx2:
 	INCBIN "data/bank_01c/d_67fe.bin" ; $67fe, 39 bytes
-Lz_1c_6825:
+CharDataScreenUIGraphicsGfx3:
 	INCBIN "data/bank_01c/d_6825.bin" ; $6825, 9 bytes
-Lz_1c_682e:
+CharDataScreenUIGraphicsGfx4:
 	INCBIN "data/bank_01c/d_682e.bin" ; $682e, 26 bytes
-Lz_1c_6848:
+CharDataScreenUIGraphicsGfx5:
 	INCBIN "data/bank_01c/d_6848.bin" ; $6848, 7 bytes
-Lz_1c_684f:
+CharDataScreenUIGraphicsGfx6:
 	INCBIN "data/bank_01c/d_684f.bin" ; $684f, 28 bytes
-Lz_1c_686b:
+CharDataScreenUIGraphicsGfx7:
 	INCBIN "data/bank_01c/d_686b.bin" ; $686b, 1663 bytes
 .loop:
 	ld b, b ; $6eea
@@ -2988,10 +2988,10 @@ Unused_1c_6eef:
 	nop ; $6f25
 	add a, b ; $6f26
 	nop ; $6f27
-	jr nz, Lz_1c_686b.loop ; $6f28
+	jr nz, CharDataScreenUIGraphicsGfx7.loop ; $6f28
 Gfx_1c_6f2a:
 	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 342 bytes
-Lz_1c_7080:
+CharDataScreenGfx13:
 	INCBIN "data/bank_01c/d_7080.bin" ; $7080, 150 bytes
 CharDataScreen_LoadScreen:
 	ld hl, Palette_1c_598c ; $7116
@@ -3001,7 +3001,7 @@ CharDataScreen_LoadScreen:
 	ld de, $0808 ; $7122
 	call LoadPaletteShadow ; $7125
 	wram_bank $01 ; $7128
-	ld hl, Lz_1c_7080 ; $712e
+	ld hl, CharDataScreenGfx13 ; $712e
 	ld de, $d000 ; $7131
 	call DecompressData ; $7134
 	ld hl, $d000 ; $7137
@@ -3010,7 +3010,7 @@ CharDataScreen_LoadScreen:
 	call QueueVRAMCopy ; $713f
 	farcall CharDataScreen_LoadGfx ; $7142
 	wram_bank $01 ; $7145
-	ld hl, Lz_1c_59cc ; $714b
+	ld hl, CharDataScreenGfx0_1c ; $714b
 	ld de, $d000 ; $714e
 	call DecompressData ; $7151
 	ld hl, $d000 ; $7154
@@ -3022,84 +3022,84 @@ CharDataScreen_LoadScreen:
 	ld c, $80 ; $7165
 	call QueueVRAMCopy ; $7167
 	wram_bank $01 ; $716a
-	ld hl, Lz_1c_6406 ; $7170
+	ld hl, CharDataScreenGfx1_1c ; $7170
 	ld de, $d000 ; $7173
 	call DecompressData ; $7176
 	ld hl, $d000 ; $7179
 	ld bc, $0240 ; $717c
 	call CopyWram1ToWram3 ; $717f
 	wram_bank $01 ; $7182
-	ld hl, Lz_1c_6469 ; $7188
+	ld hl, CharDataScreenGfx2_1c ; $7188
 	ld de, $d000 ; $718b
 	call DecompressData ; $718e
 	ld hl, $d000 ; $7191
 	ld bc, $0240 ; $7194
 	call CopyWram1ToWram2 ; $7197
 	wram_bank $01 ; $719a
-	ld hl, Lz_1c_6549 ; $71a0
+	ld hl, CharDataScreenGfx3_1c ; $71a0
 	ld de, $d240 ; $71a3
 	call DecompressData ; $71a6
 	ld hl, $d240 ; $71a9
 	ld bc, $0032 ; $71ac
 	call CopyWram1ToWram3 ; $71af
 	wram_bank $01 ; $71b2
-	ld hl, Lz_1c_657f ; $71b8
+	ld hl, CharDataScreenGfx4 ; $71b8
 	ld de, $d240 ; $71bb
 	call DecompressData ; $71be
 	ld hl, $d240 ; $71c1
 	ld bc, $0032 ; $71c4
 	call CopyWram1ToWram2 ; $71c7
 	wram_bank $01 ; $71ca
-	ld hl, Lz_1c_65c8 ; $71d0
+	ld hl, CharDataScreenGfx5 ; $71d0
 	ld de, $d280 ; $71d3
 	call DecompressData ; $71d6
 	ld hl, $d280 ; $71d9
 	ld bc, $0046 ; $71dc
 	call CopyWram1ToWram3 ; $71df
 	wram_bank $01 ; $71e2
-	ld hl, Lz_1c_660b ; $71e8
+	ld hl, CharDataScreenGfx6 ; $71e8
 	ld de, $d280 ; $71eb
 	call DecompressData ; $71ee
 	ld hl, $d280 ; $71f1
 	ld bc, $0046 ; $71f4
 	call CopyWram1ToWram2 ; $71f7
 	wram_bank $01 ; $71fa
-	ld hl, Lz_1c_6668 ; $7200
+	ld hl, CharDataScreenGfx7 ; $7200
 	ld de, $d2d0 ; $7203
 	call DecompressData ; $7206
 	ld hl, $d2d0 ; $7209
 	ld bc, $0032 ; $720c
 	call CopyWram1ToWram3 ; $720f
 	wram_bank $01 ; $7212
-	ld hl, Lz_1c_66a2 ; $7218
+	ld hl, CharDataScreenGfx8 ; $7218
 	ld de, $d2d0 ; $721b
 	call DecompressData ; $721e
 	ld hl, $d2d0 ; $7221
 	ld bc, $0032 ; $7224
 	call CopyWram1ToWram2 ; $7227
 	wram_bank $01 ; $722a
-	ld hl, Lz_1c_66ec ; $7230
+	ld hl, CharDataScreenGfx9 ; $7230
 	ld de, $d310 ; $7233
 	call DecompressData ; $7236
 	ld hl, $d310 ; $7239
 	ld bc, $005a ; $723c
 	call CopyWram1ToWram3 ; $723f
 	wram_bank $01 ; $7242
-	ld hl, Lz_1c_6734 ; $7248
+	ld hl, CharDataScreenGfx10 ; $7248
 	ld de, $d310 ; $724b
 	call DecompressData ; $724e
 	ld hl, $d310 ; $7251
 	ld bc, $005a ; $7254
 	call CopyWram1ToWram2 ; $7257
 	wram_bank $01 ; $725a
-	ld hl, Lz_1c_67c5 ; $7260
+	ld hl, CharDataScreenGfx11 ; $7260
 	ld de, $d370 ; $7263
 	call DecompressData ; $7266
 	ld hl, $d370 ; $7269
 	ld bc, $0009 ; $726c
 	call CopyWram1ToWram3 ; $726f
 	wram_bank $01 ; $7272
-	ld hl, Lz_1c_67d3 ; $7278
+	ld hl, CharDataScreenGfx12 ; $7278
 	ld de, $d370 ; $727b
 	call DecompressData ; $727e
 	ld hl, $d370 ; $7281
@@ -3108,28 +3108,28 @@ CharDataScreen_LoadScreen:
 	ret ; $728a
 LoadCharDataScreenTilemaps:
 	wram_bank $01 ; $728b
-	ld hl, Lz_1c_682e ; $7291
+	ld hl, CharDataScreenUIGraphicsGfx4 ; $7291
 	ld de, $d550 ; $7294
 	call DecompressData ; $7297
 	ld hl, $d550 ; $729a
 	ld bc, $0021 ; $729d
 	call CopyWram1ToWram3 ; $72a0
 	wram_bank $01 ; $72a3
-	ld hl, Lz_1c_6848 ; $72a9
+	ld hl, CharDataScreenUIGraphicsGfx5 ; $72a9
 	ld de, $d550 ; $72ac
 	call DecompressData ; $72af
 	ld hl, $d550 ; $72b2
 	ld bc, $0021 ; $72b5
 	call CopyWram1ToWram2 ; $72b8
 	wram_bank $01 ; $72bb
-	ld hl, Lz_1c_684f ; $72c1
+	ld hl, CharDataScreenUIGraphicsGfx6 ; $72c1
 	ld de, $d580 ; $72c4
 	call DecompressData ; $72c7
 	ld hl, $d580 ; $72ca
 	ld bc, $0018 ; $72cd
 	call CopyWram1ToWram3 ; $72d0
 	wram_bank $01 ; $72d3
-	ld hl, Lz_1c_686b ; $72d9
+	ld hl, CharDataScreenUIGraphicsGfx7 ; $72d9
 	ld de, $d580 ; $72dc
 	call DecompressData ; $72df
 	ld hl, $d580 ; $72e2
@@ -3302,7 +3302,7 @@ LoadCharDataScreenBgAndPalettes:
 	ld hl, wMasterPalettes + 34 ; $7431
 	farcall GrayscalePaletteColorInPlace ; $7434
 	wram_bank $01 ; $7437
-	ld hl, Lz_1c_7581 ; $743d
+	ld hl, CharDataScreenBgAndPalettes0 ; $743d
 	ld de, $d000 ; $7440
 	call DecompressData ; $7443
 	ld hl, $d000 ; $7446
@@ -3314,14 +3314,14 @@ LoadCharDataScreenBgAndPalettes:
 	ld c, $80 ; $7457
 	call QueueVRAMCopy ; $7459
 	wram_bank $01 ; $745c
-	ld hl, Lz_1c_7cdf ; $7462
+	ld hl, CharDataScreenBgAndPalettes1 ; $7462
 	ld de, $d000 ; $7465
 	call DecompressData ; $7468
 	ld hl, $d000 ; $746b
 	ld bc, $0240 ; $746e
 	call CopyWram1ToWram3 ; $7471
 	wram_bank $01 ; $7474
-	ld hl, Lz_1c_7e1f ; $747a
+	ld hl, CharDataScreenBgAndPalettes2 ; $747a
 	ld de, $d000 ; $747d
 	call DecompressData ; $7480
 	ld hl, $d000 ; $7483
@@ -3431,10 +3431,10 @@ Palette_1c_7541:
 	dw $7fff, $0092, $0380, $0000 ; pal 5: #ffffff #942000 #00e600 #000000
 	dw $7fff, $0198, $031f, $0000 ; pal 6: #ffffff #c56200 #ffc500 #000000
 	dw $7fff, $195f, $0246, $0000 ; pal 7: #ffffff #ff5231 #319400 #000000
-Lz_1c_7581:
+CharDataScreenBgAndPalettes0:
 	INCBIN "data/bank_01c/d_7581.bin" ; $7581, 1886 bytes
-Lz_1c_7cdf:
+CharDataScreenBgAndPalettes1:
 	INCBIN "data/bank_01c/d_7cdf.bin" ; $7cdf, 320 bytes
-Lz_1c_7e1f:
+CharDataScreenBgAndPalettes2:
 	INCBIN "data/bank_01c/d_7e1f.bin" ; $7e1f, 216 bytes
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

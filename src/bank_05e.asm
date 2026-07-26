@@ -2,7 +2,7 @@ SECTION "ROM Bank $5e", ROMX[$4000], BANK[$5e]
 
 	farptr FetchDialogueText_5e ; $4000
 	farptr FetchShortText_5e ; $4002
-Text_5e_4004:
+FetchTextTable_5e:
 	INCLUDE "data/bank_05e/text_4004.asm" ; $4004, 11915 bytes
 FetchDialogueText_5e:
 	push af ; $6e8f
@@ -20,7 +20,7 @@ FetchText_5e:
 	push bc ; $6e9f
 	push de ; $6ea0
 	push hl ; $6ea1
-	ld hl, Text_5e_4004 ; $6ea2
+	ld hl, FetchTextTable_5e ; $6ea2
 	sla e ; $6ea5
 	rl d ; $6ea7
 	add hl, de ; $6ea9
