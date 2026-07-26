@@ -4697,21 +4697,21 @@ UpdateCameraFromPlayer:
 	ld a, h ; $624e
 	sub a, d ; $624f
 	bit 7, a ; $6250
-	jr z, Label_0a_6259 ; $6252
+	jr z, .clampXHigh ; $6252
 	ld h, d ; $6254
 	ld l, $00 ; $6255
-	jr Label_0a_6268 ; $6257
-Label_0a_6259:
+	jr .storeX ; $6257
+.clampXHigh:
 	ld a, [$c32b] ; $6259
 	sub a, $14 ; $625c
 	ld d, a ; $625e
 	ld a, h ; $625f
 	sub a, d ; $6260
 	bit 7, a ; $6261
-	jr nz, Label_0a_6268 ; $6263
+	jr nz, .storeX ; $6263
 	ld h, d ; $6265
 	ld l, $00 ; $6266
-Label_0a_6268:
+.storeX:
 	ld b, h ; $6268
 	ld c, l ; $6269
 	pop de ; $626a
@@ -4722,21 +4722,21 @@ Label_0a_6268:
 	ld a, h ; $6273
 	sub a, d ; $6274
 	bit 7, a ; $6275
-	jr z, Label_0a_627e ; $6277
+	jr z, .clampYHigh ; $6277
 	ld h, d ; $6279
 	ld l, $00 ; $627a
-	jr Label_0a_628d ; $627c
-Label_0a_627e:
+	jr .storeY ; $627c
+.clampYHigh:
 	ld a, [$c32c] ; $627e
 	sub a, $12 ; $6281
 	ld d, a ; $6283
 	ld a, h ; $6284
 	sub a, d ; $6285
 	bit 7, a ; $6286
-	jr nz, Label_0a_628d ; $6288
+	jr nz, .storeY ; $6288
 	ld h, d ; $628a
 	ld l, $00 ; $628b
-Label_0a_628d:
+.storeY:
 	ld d, h ; $628d
 	ld e, l ; $628e
 	ld hl, wCameraX ; $628f
@@ -4751,8 +4751,8 @@ Label_0a_628d:
 	ret ; $629a
 	ld a, [$cbf0] ; $629b
 	or a, a ; $629e
-	jr nz, Label_0a_62e6 ; $629f
-Label_0a_62a1:
+	jr nz, .done ; $629f
+.checkScrollX:
 	ld hl, SpriteList_0a_62eb ; $62a1
 	ld a, [$cbf1] ; $62a4
 	add a, l ; $62a7
@@ -4762,11 +4762,11 @@ Label_0a_62a1:
 	ld h, a ; $62ac
 	ld a, [hl] ; $62ad
 	cp a, $ff ; $62ae
-	jr nz, Label_0a_62b8 ; $62b0
+	jr nz, .checkScrollY ; $62b0
 	xor a, a ; $62b2
 	ld [$cbf1], a ; $62b3
-	jr Label_0a_62a1 ; $62b6
-Label_0a_62b8:
+	jr .checkScrollX ; $62b6
+.checkScrollY:
 	ld b, a ; $62b8
 	inc hl ; $62b9
 	ld c, [hl] ; $62ba
@@ -4800,7 +4800,7 @@ Label_0a_62b8:
 	add a, $04 ; $62e0
 	ld [$cbf1], a ; $62e2
 	pop af ; $62e5
-Label_0a_62e6:
+.done:
 	dec a ; $62e6
 	ld [$cbf0], a ; $62e7
 	ret ; $62ea

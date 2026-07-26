@@ -1080,74 +1080,74 @@ Data_38_4749:
 AdjustMatchTypeSetting:
 	ld a, [wMenuInputPressed] ; $474f
 	bit PADB_LEFT, a ; $4752
-	jr nz, Label_38_475b ; $4754
+	jr nz, .decrease ; $4754
 	bit 4, a ; $4756
-	jr nz, Label_38_4791 ; $4758
+	jr nz, .increase ; $4758
 	ret ; $475a
-Label_38_475b:
+.decrease:
 	sound $5e ; $475b
 	ld c, $01 ; $475d
 	call GetMenuCursorLinearIndex ; $475f
 	or a, a ; $4762
-	jr nz, Label_38_476e ; $4763
+	jr nz, .decGames ; $4763
 	ld a, [wMatchFormatDoubles] ; $4765
 	xor a, $01 ; $4768
 	ld [wMatchFormatDoubles], a ; $476a
 	ret ; $476d
-Label_38_476e:
+.decGames:
 	cp a, $01 ; $476e
-	jr nz, Label_38_477b ; $4770
+	jr nz, .decSets ; $4770
 	ld a, [wMatchFormatGames] ; $4772
 	xor a, $01 ; $4775
 	ld [wMatchFormatGames], a ; $4777
 	ret ; $477a
-Label_38_477b:
+.decSets:
 	ld a, [wMatchFormatSets] ; $477b
 	dec a ; $477e
 	add a, a ; $477f
-	jr nc, Label_38_4787 ; $4780
+	jr nc, .decCheckMax ; $4780
 	ld a, $03 ; $4782
 	dec a ; $4784
-	jr Label_38_478d ; $4785
-Label_38_4787:
+	jr .storeDecSets ; $4785
+.decCheckMax:
 	rra ; $4787
 	cp a, $03 ; $4788
-	jr c, Label_38_478d ; $478a
+	jr c, .storeDecSets ; $478a
 	xor a, a ; $478c
-Label_38_478d:
+.storeDecSets:
 	ld [wMatchFormatSets], a ; $478d
 	ret ; $4790
-Label_38_4791:
+.increase:
 	sound $5e ; $4791
 	ld c, $01 ; $4793
 	call GetMenuCursorLinearIndex ; $4795
 	or a, a ; $4798
-	jr nz, Label_38_47a4 ; $4799
+	jr nz, .incGames ; $4799
 	ld a, [wMatchFormatDoubles] ; $479b
 	xor a, $01 ; $479e
 	ld [wMatchFormatDoubles], a ; $47a0
 	ret ; $47a3
-Label_38_47a4:
+.incGames:
 	cp a, $01 ; $47a4
-	jr nz, Label_38_47b1 ; $47a6
+	jr nz, .incSets ; $47a6
 	ld a, [wMatchFormatGames] ; $47a8
 	xor a, $01 ; $47ab
 	ld [wMatchFormatGames], a ; $47ad
 	ret ; $47b0
-Label_38_47b1:
+.incSets:
 	ld a, [wMatchFormatSets] ; $47b1
 	inc a ; $47b4
 	add a, a ; $47b5
-	jr nc, Label_38_47bd ; $47b6
+	jr nc, .incCheckMax ; $47b6
 	ld a, $03 ; $47b8
 	dec a ; $47ba
-	jr Label_38_47c3 ; $47bb
-Label_38_47bd:
+	jr .storeIncSets ; $47bb
+.incCheckMax:
 	rra ; $47bd
 	cp a, $03 ; $47be
-	jr c, Label_38_47c3 ; $47c0
+	jr c, .storeIncSets ; $47c0
 	xor a, a ; $47c2
-Label_38_47c3:
+.storeIncSets:
 	ld [wMatchFormatSets], a ; $47c3
 	ret ; $47c6
 RunCharacterSelectScreen:
@@ -3346,41 +3346,41 @@ BuildCharUnlockFlags:
 	ld bc, $0028 ; $5a8e
 	call ClearBytes ; $5a91
 	ld b, $00 ; $5a94
-Label_38_5a96:
+.flagLoop:
 	ld a, b ; $5a96
 	add a, a ; $5a97
 	ld hl, Data_38_5b17 ; $5a98
 	add a, l ; $5a9b
 	ld l, a ; $5a9c
-	jr nc, Label_38_5aa0 ; $5a9d
+	jr nc, .readFlagId ; $5a9d
 	inc h ; $5a9f
-Label_38_5aa0:
+.readFlagId:
 	ld a, [hl+] ; $5aa0
 	ld d, [hl] ; $5aa1
 	ld e, a ; $5aa2
 	ld a, d ; $5aa3
 	and a, e ; $5aa4
 	cp a, $ff ; $5aa5
-	jr z, Label_38_5ab0 ; $5aa7
+	jr z, .markUnlocked ; $5aa7
 	farcall TestSaveFlag ; $5aa9
-	jr nz, Label_38_5ab0 ; $5aac
-	jr Label_38_5abc ; $5aae
-Label_38_5ab0:
+	jr nz, .markUnlocked ; $5aac
+	jr .nextFlag ; $5aae
+.markUnlocked:
 	ld hl, $d840 ; $5ab0
 	ld a, b ; $5ab3
 	add a, l ; $5ab4
 	ld l, a ; $5ab5
-	jr nc, Label_38_5ab9 ; $5ab6
+	jr nc, .storeUnlocked ; $5ab6
 	inc h ; $5ab8
-Label_38_5ab9:
+.storeUnlocked:
 	ld a, $01 ; $5ab9
 	ld [hl], a ; $5abb
-Label_38_5abc:
+.nextFlag:
 	ld a, b ; $5abc
 	inc a ; $5abd
 	ld b, a ; $5abe
 	cp a, $09 ; $5abf
-	jr nz, Label_38_5a96 ; $5ac1
+	jr nz, .flagLoop ; $5ac1
 	ld hl, $d84f ; $5ac3
 	ld a, $01 ; $5ac6
 	ld [hl+], a ; $5ac8
@@ -3389,50 +3389,50 @@ Label_38_5abc:
 	ld a, [wCurrentStorySlot] ; $5acb
 	push af ; $5ace
 	ld c, $00 ; $5acf
-Label_38_5ad1:
+.slotLoop:
 	ld a, c ; $5ad1
 	ld [wCurrentStorySlot], a ; $5ad2
 	farcall CheckStorySlot ; $5ad5
 	push bc ; $5ad8
 	ld hl, $d852 ; $5ad9
 	ld b, $00 ; $5adc
-Label_38_5ade:
+.charLoop:
 	ld a, b ; $5ade
 	add a, a ; $5adf
 	ld hl, Data_38_5b29 ; $5ae0
 	add a, l ; $5ae3
 	ld l, a ; $5ae4
-	jr nc, Label_38_5ae8 ; $5ae5
+	jr nc, .readCharId ; $5ae5
 	inc h ; $5ae7
-Label_38_5ae8:
+.readCharId:
 	ld a, [hl+] ; $5ae8
 	ld d, [hl] ; $5ae9
 	ld e, a ; $5aea
 	call TestGameFlag ; $5aeb
-	jr nz, Label_38_5af2 ; $5aee
-	jr Label_38_5afe ; $5af0
-Label_38_5af2:
+	jr nz, .markChar ; $5aee
+	jr .nextSlot ; $5af0
+.markChar:
 	ld hl, $d852 ; $5af2
 	ld a, b ; $5af5
 	add a, l ; $5af6
 	ld l, a ; $5af7
-	jr nc, Label_38_5afb ; $5af8
+	jr nc, .nextChar ; $5af8
 	inc h ; $5afa
-Label_38_5afb:
+.nextChar:
 	ld a, $01 ; $5afb
 	ld [hl], a ; $5afd
-Label_38_5afe:
+.nextSlot:
 	ld a, b ; $5afe
 	inc a ; $5aff
 	ld b, a ; $5b00
 	cp a, $0d ; $5b01
-	jr nz, Label_38_5ade ; $5b03
+	jr nz, .charLoop ; $5b03
 	pop bc ; $5b05
 	ld a, c ; $5b06
 	inc a ; $5b07
 	ld c, a ; $5b08
 	cp a, $03 ; $5b09
-	jr nz, Label_38_5ad1 ; $5b0b
+	jr nz, .slotLoop ; $5b0b
 	pop af ; $5b0d
 	ld [wCurrentStorySlot], a ; $5b0e
 	pop af ; $5b11
@@ -4097,9 +4097,9 @@ ApplyCpuDifficultyToCharRecords:
 	add a, a ; $5f5b
 	add a, l ; $5f5c
 	ld l, a ; $5f5d
-	jr nc, Label_38_5f61 ; $5f5e
+	jr nc, .readSlot1 ; $5f5e
 	inc h ; $5f60
-Label_38_5f61:
+.readSlot1:
 	ld a, [hl+] ; $5f61
 	ld h, [hl] ; $5f62
 	ld l, a ; $5f63
@@ -4116,18 +4116,18 @@ Label_38_5f61:
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $5f78
 	call IsCreatedCharId ; $5f7b
 	or a, a ; $5f7e
-	jr nz, Label_38_5f85 ; $5f7f
+	jr nz, .slot2 ; $5f7f
 	ld a, [hl+] ; $5f81
 	ld [$ca58], a ; $5f82
-Label_38_5f85:
+.slot2:
 	ld a, [$d832] ; $5f85
 	ld hl, SubHandlers_38_5feb ; $5f88
 	add a, a ; $5f8b
 	add a, l ; $5f8c
 	ld l, a ; $5f8d
-	jr nc, Label_38_5f91 ; $5f8e
+	jr nc, .readSlot2 ; $5f8e
 	inc h ; $5f90
-Label_38_5f91:
+.readSlot2:
 	ld a, [hl+] ; $5f91
 	ld h, [hl] ; $5f92
 	ld l, a ; $5f93
@@ -4144,18 +4144,18 @@ Label_38_5f91:
 	ld a, [wPlayer2CurrentMainCharacter] ; $5fa8
 	call IsCreatedCharId ; $5fab
 	or a, a ; $5fae
-	jr nz, Label_38_5fb5 ; $5faf
+	jr nz, .slot3 ; $5faf
 	ld a, [hl+] ; $5fb1
 	ld [$ca98], a ; $5fb2
-Label_38_5fb5:
+.slot3:
 	ld a, [$d833] ; $5fb5
 	ld hl, SubHandlers_38_5feb ; $5fb8
 	add a, a ; $5fbb
 	add a, l ; $5fbc
 	ld l, a ; $5fbd
-	jr nc, Label_38_5fc1 ; $5fbe
+	jr nc, .readSlot3 ; $5fbe
 	inc h ; $5fc0
-Label_38_5fc1:
+.readSlot3:
 	ld a, [hl+] ; $5fc1
 	ld h, [hl] ; $5fc2
 	ld l, a ; $5fc3
@@ -4172,10 +4172,10 @@ Label_38_5fc1:
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $5fd8
 	call IsCreatedCharId ; $5fdb
 	or a, a ; $5fde
-	jr nz, Label_38_5fe5 ; $5fdf
+	jr nz, .done ; $5fdf
 	ld a, [hl+] ; $5fe1
 	ld [$cad8], a ; $5fe2
-Label_38_5fe5:
+.done:
 	pop af ; $5fe5
 	wram_bank ; $5fe6
 	ret ; $5fea
@@ -6059,65 +6059,65 @@ UpdateMenuCursorFromLinkInput:
 	ld e, a ; $6c9b
 	ld a, b ; $6c9c
 	xor a, $0f ; $6c9d
-	jr nz, Label_38_6ca5 ; $6c9f
+	jr nz, .checkButtons ; $6c9f
 	ld b, $20 ; $6ca1
-	jr Label_38_6cfc ; $6ca3
-Label_38_6ca5:
+	jr .storeCommand ; $6ca3
+.checkButtons:
 	ld a, b ; $6ca5
 	and a, $f0 ; $6ca6
 	ld a, b ; $6ca8
-	jr nz, Label_38_6cc7 ; $6ca9
+	jr nz, .checkRight ; $6ca9
 	ld a, b ; $6cab
 	bit 0, a ; $6cac
-	jr z, Label_38_6cbf ; $6cae
+	jr z, .checkB ; $6cae
 	ld a, [$df00] ; $6cb0
 	cp a, $01 ; $6cb3
-	jr nz, Label_38_6cbb ; $6cb5
+	jr nz, .sendSelect ; $6cb5
 	ld b, $28 ; $6cb7
-	jr Label_38_6cfc ; $6cb9
-Label_38_6cbb:
+	jr .storeCommand ; $6cb9
+.sendSelect:
 	ld b, $21 ; $6cbb
-	jr Label_38_6cfc ; $6cbd
-Label_38_6cbf:
+	jr .storeCommand ; $6cbd
+.checkB:
 	bit 1, a ; $6cbf
-	jr z, Label_38_6cc7 ; $6cc1
+	jr z, .checkRight ; $6cc1
 	ld b, $23 ; $6cc3
-	jr Label_38_6cfc ; $6cc5
-Label_38_6cc7:
+	jr .storeCommand ; $6cc5
+.checkRight:
 	bit 4, a ; $6cc7
-	jr z, Label_38_6cd1 ; $6cc9
+	jr z, .checkLeft ; $6cc9
 	call MoveLinkCursorRight ; $6ccb
-	jp Label_38_6cec ; $6cce
-Label_38_6cd1:
+	jp .afterMove ; $6cce
+.checkLeft:
 	bit 5, a ; $6cd1
-	jr z, Label_38_6cda ; $6cd3
+	jr z, .checkUp ; $6cd3
 	call MoveLinkCursorLeft ; $6cd5
-	jr Label_38_6cec ; $6cd8
-Label_38_6cda:
+	jr .afterMove ; $6cd8
+.checkUp:
 	bit 6, a ; $6cda
-	jr z, Label_38_6ce3 ; $6cdc
+	jr z, .checkDown ; $6cdc
 	call MoveLinkCursorUp ; $6cde
-	jr Label_38_6cec ; $6ce1
-Label_38_6ce3:
+	jr .afterMove ; $6ce1
+.checkDown:
 	bit 7, a ; $6ce3
-	jr z, Label_38_6cec ; $6ce5
+	jr z, .afterMove ; $6ce5
 	call MoveLinkCursorDown ; $6ce7
-	jr Label_38_6cec ; $6cea
-Label_38_6cec:
+	jr .afterMove ; $6cea
+.afterMove:
 	call GetLinkCursorSelectionCode ; $6cec
 	ld b, a ; $6cef
 	ld a, [wMenuCursor2X] ; $6cf0
 	cp a, d ; $6cf3
-	jr nz, Label_38_6d03 ; $6cf4
+	jr nz, .moved ; $6cf4
 	ld a, [wMenuCursor2Y] ; $6cf6
 	cp a, e ; $6cf9
-	jr nz, Label_38_6d03 ; $6cfa
-Label_38_6cfc:
+	jr nz, .moved ; $6cfa
+.storeCommand:
 	pop af ; $6cfc
 	wram_bank ; $6cfd
 	xor a, a ; $6d01
 	ret ; $6d02
-Label_38_6d03:
+.moved:
 	pop af ; $6d03
 	wram_bank ; $6d04
 	ld a, $01 ; $6d08
@@ -7352,82 +7352,82 @@ UnpackUnlockFlagsFromLink:
 	ld hl, $cb59 ; $7703
 	ld b, $01 ; $7706
 	ld c, $00 ; $7708
-Label_38_770a:
+.charBitLoop:
 	ld a, [hl] ; $770a
 	and a, b ; $770b
-	jr z, Label_38_771c ; $770c
+	jr z, .nextCharBit ; $770c
 	push hl ; $770e
 	ld hl, $d840 ; $770f
 	ld a, c ; $7712
 	add a, l ; $7713
 	ld l, a ; $7714
-	jr nc, Label_38_7718 ; $7715
+	jr nc, .markChar ; $7715
 	inc h ; $7717
-Label_38_7718:
+.markChar:
 	ld a, $01 ; $7718
 	ld [hl], a ; $771a
 	pop hl ; $771b
-Label_38_771c:
+.nextCharBit:
 	sla b ; $771c
 	inc c ; $771e
 	ld a, c ; $771f
 	cp a, $08 ; $7720
-	jr nz, Label_38_770a ; $7722
+	jr nz, .charBitLoop ; $7722
 	ld a, [$cb5a] ; $7724
 	or a, a ; $7727
-	jr z, Label_38_7730 ; $7728
+	jr z, .courtFlags ; $7728
 	ld hl, $d848 ; $772a
 	ld a, $01 ; $772d
 	ld [hl], a ; $772f
-Label_38_7730:
+.courtFlags:
 	ld hl, $cb5b ; $7730
 	ld b, $01 ; $7733
 	ld c, $00 ; $7735
-Label_38_7737:
+.courtBitLoop:
 	ld a, [hl] ; $7737
 	and a, b ; $7738
-	jr z, Label_38_7749 ; $7739
+	jr z, .nextCourtBit ; $7739
 	push hl ; $773b
 	ld hl, $d84f ; $773c
 	ld a, c ; $773f
 	add a, l ; $7740
 	ld l, a ; $7741
-	jr nc, Label_38_7745 ; $7742
+	jr nc, .markCourt ; $7742
 	inc h ; $7744
-Label_38_7745:
+.markCourt:
 	ld a, $01 ; $7745
 	ld [hl], a ; $7747
 	pop hl ; $7748
-Label_38_7749:
+.nextCourtBit:
 	sla b ; $7749
 	inc c ; $774b
 	ld a, c ; $774c
 	cp a, $08 ; $774d
-	jr nz, Label_38_7737 ; $774f
+	jr nz, .courtBitLoop ; $774f
 	ld hl, $cb5c ; $7751
 	ld b, $01 ; $7754
 	ld c, $00 ; $7756
-Label_38_7758:
+.itemFlags:
 	ld a, [hl] ; $7758
 	and a, b ; $7759
-	jr z, Label_38_776a ; $775a
+	jr z, .done ; $775a
 	push hl ; $775c
 	ld hl, $d857 ; $775d
 	ld a, c ; $7760
 	add a, l ; $7761
 	ld l, a ; $7762
-	jr nc, Label_38_7766 ; $7763
+	jr nc, .markItem ; $7763
 	inc h ; $7765
-Label_38_7766:
+.markItem:
 	ld a, $01 ; $7766
 	ld [hl], a ; $7768
 	pop hl ; $7769
-Label_38_776a:
+.done:
 	sla b ; $776a
 	inc c ; $776c
 	ld a, c ; $776d
 	cp a, $08 ; $776e
-	jr nz, Label_38_7758 ; $7770
+	jr nz, .itemFlags ; $7770
 	ret ; $7772
 MergeLinkUnlockFlags:
 	ld hl, $cb59 ; $7773
