@@ -1158,45 +1158,45 @@ InitCourt2SceneVariant:
 	ld a, $00 ; $4e60
 	ld [$c2b0], a ; $4e62
 	test_flag FLAG_DOUBLES ; $4e65
-	jr nz, Label_14_4e92 ; $4e68
+	jr nz, .doubles ; $4e68
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4e6a
-	jr z, Label_14_4e7e ; $4e6d
+	jr z, .stage1 ; $4e6d
 	ldh a, [hRomBank] ; $4e6f
 	ld hl, Court2ActorsAlt_14 ; $4e71
 	farcall ScriptRespawnLocationActors ; $4e74
 	farcall BeginCutsceneScriptMode ; $4e77
 	ld a, $03 ; $4e7a
-	jr Label_14_4e8e ; $4e7c
-Label_14_4e7e:
+	jr .stage3 ; $4e7c
+.stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4e7e
-	jr z, Label_14_4e87 ; $4e81
+	jr z, .stage2 ; $4e81
 	ld a, $02 ; $4e83
-	jr Label_14_4e8e ; $4e85
-Label_14_4e87:
+	jr .stage3 ; $4e85
+.stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $4e87
-	jr z, Label_14_4e91 ; $4e8a
+	jr z, .stage4 ; $4e8a
 	ld a, $01 ; $4e8c
-Label_14_4e8e:
+.stage3:
 	ld [$c2b0], a ; $4e8e
-Label_14_4e91:
+.stage4:
 	ret ; $4e91
-Label_14_4e92:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4e92
-	jr z, Label_14_4ea6 ; $4e95
+	jr z, .doublesStage2 ; $4e95
 	ldh a, [hRomBank] ; $4e97
 	ld hl, Court2ActorsAlt_14 ; $4e99
 	farcall ScriptRespawnLocationActors ; $4e9c
 	farcall BeginCutsceneScriptMode ; $4e9f
 	ld a, $06 ; $4ea2
-	jr Label_14_4e8e ; $4ea4
-Label_14_4ea6:
+	jr .stage3 ; $4ea4
+.doublesStage2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4ea6
-	jr z, Label_14_4eaf ; $4ea9
+	jr z, .done ; $4ea9
 	ld a, $05 ; $4eab
-	jr Label_14_4e8e ; $4ead
-Label_14_4eaf:
+	jr .stage3 ; $4ead
+.done:
 	ld a, $04 ; $4eaf
-	jr Label_14_4e8e ; $4eb1
+	jr .stage3 ; $4eb1
 	ret ; $4eb3
 Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)
@@ -1340,9 +1340,9 @@ InitCourt1SceneVariant:
 	ld a, $00 ; $5105
 	ld [$c2b0], a ; $5107
 	test_flag FLAG_DOUBLES ; $510a
-	jr nz, Label_14_513b ; $510d
+	jr nz, .doubles ; $510d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $510f
-	jr z, Label_14_5125 ; $5112
+	jr z, .stage1 ; $5112
 	ld a, $03 ; $5114
 	ld [$c2b0], a ; $5116
 	ldh a, [hRomBank] ; $5119
@@ -1350,22 +1350,22 @@ InitCourt1SceneVariant:
 	farcall ScriptRespawnLocationActors ; $511e
 	farcall BeginCutsceneScriptMode ; $5121
 	ret ; $5124
-Label_14_5125:
+.stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $5125
-	jr z, Label_14_5130 ; $5128
+	jr z, .stage2 ; $5128
 	ld a, $02 ; $512a
 	ld [$c2b0], a ; $512c
 	ret ; $512f
-Label_14_5130:
+.stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $5130
-	jr z, Label_14_513a ; $5133
+	jr z, .stage3 ; $5133
 	ld a, $01 ; $5135
 	ld [$c2b0], a ; $5137
-Label_14_513a:
+.stage3:
 	ret ; $513a
-Label_14_513b:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $513b
-	jr z, Label_14_5151 ; $513e
+	jr z, .doublesStage2 ; $513e
 	ld a, $06 ; $5140
 	ld [$c2b0], a ; $5142
 	ldh a, [hRomBank] ; $5145
@@ -1373,13 +1373,13 @@ Label_14_513b:
 	farcall ScriptRespawnLocationActors ; $514a
 	farcall BeginCutsceneScriptMode ; $514d
 	ret ; $5150
-Label_14_5151:
+.doublesStage2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
-	jr z, Label_14_515c ; $5154
+	jr z, .done ; $5154
 	ld a, $05 ; $5156
 	ld [$c2b0], a ; $5158
 	ret ; $515b
-Label_14_515c:
+.done:
 	ld a, $04 ; $515c
 	ld [$c2b0], a ; $515e
 	ret ; $5161

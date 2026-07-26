@@ -4036,62 +4036,62 @@ ActorScript_12_7c66:
 	as_jump ActorScript_12_7c66
 ComputeSeniorCourtStageB:
 	test_flag FLAG_DOUBLES ; $7c75
-	jr nz, Label_12_7c9c ; $7c78
+	jr nz, .doubles ; $7c78
 	ld a, $00 ; $7c7a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7c7c
-	jr z, Label_12_7c98 ; $7c7f
+	jr z, .store ; $7c7f
 	ld a, $02 ; $7c81
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7c83
-	jr z, Label_12_7c98 ; $7c86
+	jr z, .store ; $7c86
 	ld a, $04 ; $7c88
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7c8a
-	jr z, Label_12_7c98 ; $7c8d
+	jr z, .store ; $7c8d
 	ld a, $06 ; $7c8f
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7c91
-	jr z, Label_12_7c98 ; $7c94
+	jr z, .store ; $7c94
 	ld a, $08 ; $7c96
-Label_12_7c98:
+.store:
 	ld [$c2b0], a ; $7c98
 	ret ; $7c9b
-Label_12_7c9c:
+.doubles:
 	ld a, $01 ; $7c9c
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7c9e
-	jr z, Label_12_7c98 ; $7ca1
+	jr z, .store ; $7ca1
 	ld a, $03 ; $7ca3
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7ca5
-	jr z, Label_12_7c98 ; $7ca8
+	jr z, .store ; $7ca8
 	ld a, $05 ; $7caa
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7cac
-	jr z, Label_12_7c98 ; $7caf
+	jr z, .store ; $7caf
 	ld a, $07 ; $7cb1
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7cb3
-	jr z, Label_12_7c98 ; $7cb6
+	jr z, .store ; $7cb6
 	ld a, $09 ; $7cb8
-	jr Label_12_7c98 ; $7cba
+	jr .store ; $7cba
 	ld a, $00 ; $7cbc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7cbe
-	jr z, Label_12_7cdb ; $7cc1
+	jr z, .storeIsland ; $7cc1
 	inc a ; $7cc3
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7cc4
-	jr z, Label_12_7cdb ; $7cc7
+	jr z, .storeIsland ; $7cc7
 	inc a ; $7cc9
 	test_flag FLAG_DOUBLES ; $7cca
-	jr nz, Label_12_7cdf ; $7ccd
+	jr nz, .doublesIsland ; $7ccd
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7ccf
-	jr z, Label_12_7cdb ; $7cd2
+	jr z, .storeIsland ; $7cd2
 	inc a ; $7cd4
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7cd5
-	jr z, Label_12_7cdb ; $7cd8
+	jr z, .storeIsland ; $7cd8
 	inc a ; $7cda
-Label_12_7cdb:
+.storeIsland:
 	ld [$c2b0], a ; $7cdb
 	ret ; $7cde
-Label_12_7cdf:
+.doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7cdf
-	jr z, Label_12_7cdb ; $7ce2
+	jr z, .storeIsland ; $7ce2
 	inc a ; $7ce4
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7ce5
-	jr z, Label_12_7cdb ; $7ce8
+	jr z, .storeIsland ; $7ce8
 	inc a ; $7cea
-	jr Label_12_7cdb ; $7ceb
+	jr .storeIsland ; $7ceb
 	; $7ced, 787 bytes fill to bank end (linker-padded)

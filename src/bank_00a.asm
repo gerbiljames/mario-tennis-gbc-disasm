@@ -2561,33 +2561,33 @@ LoadStoryEntryPointRecord:
 	push hl ; $5172
 	ld a, [wStoryModeEntryPoint] ; $5173
 	cp a, $ff ; $5176
-	jr z, Label_0a_51ca ; $5178
+	jr z, .done ; $5178
 	ld hl, wStoryModeEntryPoint ; $517a
 	ld d, [hl] ; $517d
 	ld hl, $c286 ; $517e
 	ld a, [hl+] ; $5181
 	ld h, [hl] ; $5182
 	ld l, a ; $5183
-Label_0a_5184:
+.searchLoop:
 	ld a, [$c29b] ; $5184
 	call FarReadByte ; $5187
 	cp a, $ff ; $518a
-	jr z, Label_0a_519a ; $518c
+	jr z, .notFound ; $518c
 	cp a, d ; $518e
-	jr z, Label_0a_51a0 ; $518f
+	jr z, .copyRecord ; $518f
 	ld a, $08 ; $5191
 	add a, l ; $5193
 	ld l, a ; $5194
-	jr nc, Label_0a_5198 ; $5195
+	jr nc, .next ; $5195
 	inc h ; $5197
-Label_0a_5198:
-	jr Label_0a_5184 ; $5198
-Label_0a_519a:
+.next:
+	jr .searchLoop ; $5198
+.notFound:
 	ld hl, $c286 ; $519a
 	ld a, [hl+] ; $519d
 	ld h, [hl] ; $519e
 	ld l, a ; $519f
-Label_0a_51a0:
+.copyRecord:
 	ld a, [$c29b] ; $51a0
 	ld de, $c2c0 ; $51a3
 	ld bc, $0008 ; $51a6
@@ -2602,7 +2602,7 @@ Label_0a_51a0:
 	ld [$c29c], a ; $51c1
 	ld a, [$c2c7] ; $51c4
 	ld [$c29d], a ; $51c7
-Label_0a_51ca:
+.done:
 	pop hl ; $51ca
 	pop de ; $51cb
 	pop bc ; $51cc

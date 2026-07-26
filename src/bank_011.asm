@@ -2902,41 +2902,41 @@ LoadRankingOpponentGraphics:
 	test_flag FLAG_DOUBLES ; $730a
 	jp nz, LoadDoublesRankingOpponentGraphics ; $730d
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $7310
-	jr z, Label_11_7325 ; $7313
+	jr z, .rank2 ; $7313
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $7315
-	jr z, Label_11_7336 ; $7318
+	jr z, .rank3 ; $7318
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $731a
-	jr z, Label_11_7347 ; $731d
+	jr z, .rank4 ; $731d
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $731f
-	jr z, Label_11_7358 ; $7322
+	jr z, .done ; $7322
 	ret ; $7324
-Label_11_7325:
+.rank2:
 	script_set_actor_script $07, ActorScript_11_766b ; $7325
 	script_wait_actor_script $07 ; $7330
 	ret ; $7335
-Label_11_7336:
+.rank3:
 	script_set_actor_script $06, ActorScript_11_76cd ; $7336
 	script_wait_actor_script $06 ; $7341
 	ret ; $7346
-Label_11_7347:
+.rank4:
 	script_set_actor_script $05, ActorScript_11_7700 ; $7347
 	script_wait_actor_script $05 ; $7352
 	ret ; $7357
-Label_11_7358:
+.done:
 	script_set_actor_script $04, ActorScript_11_7745 ; $7358
 	script_wait_actor_script $04 ; $7363
 	ret ; $7368
 DrawRankingOpponentInfo:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $7369
-	jr z, Label_11_7381 ; $736c
+	jr z, .rank2 ; $736c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $736e
-	jp z, Label_11_7438 ; $7371
+	jp z, .rank3 ; $7371
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $7374
-	jp z, Label_11_74e3 ; $7377
+	jp z, .rank4 ; $7377
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $737a
-	jp z, Label_11_7590 ; $737d
+	jp z, .done ; $737d
 	ret ; $7380
-Label_11_7381:
+.rank2:
 	script_wait_frames $0f ; $7381
 	script_face_toward $07, $03 ; $7388
 	script_wait_frames $1e ; $7390
@@ -2966,7 +2966,7 @@ Label_11_7381:
 	script_wait_frames $0f ; $7429
 	script_face $07, FACE_UP ; $7430
 	ret ; $7437
-Label_11_7438:
+.rank3:
 	script_wait_frames $0f ; $7438
 	script_face_toward $06, $03 ; $743f
 	script_wait_frames $1e ; $7447
@@ -2994,7 +2994,7 @@ Label_11_7438:
 	script_wait_frames $0f ; $74d4
 	script_face $06, FACE_UP ; $74db
 	ret ; $74e2
-Label_11_74e3:
+.rank4:
 	script_wait_frames $0f ; $74e3
 	script_face_toward $05, $03 ; $74ea
 	script_wait_frames $1e ; $74f2
@@ -3022,7 +3022,7 @@ Label_11_74e3:
 	script_wait_frames $0f ; $7581
 	script_face $05, FACE_UP ; $7588
 	ret ; $758f
-Label_11_7590:
+.done:
 	script_wait_frames $0f ; $7590
 	script_face_toward $04, $03 ; $7597
 	script_wait_frames $1e ; $759f
@@ -3611,62 +3611,62 @@ ActorScript_11_7d86:
 	as_jump ActorScript_11_7d86
 ComputeRankingProgressIndex:
 	test_flag FLAG_DOUBLES ; $7d95
-	jr nz, Label_11_7dbc ; $7d98
+	jr nz, .doubles ; $7d98
 	ld a, $00 ; $7d9a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d9c
-	jr z, Label_11_7db8 ; $7d9f
+	jr z, .store ; $7d9f
 	ld a, $02 ; $7da1
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7da3
-	jr z, Label_11_7db8 ; $7da6
+	jr z, .store ; $7da6
 	ld a, $04 ; $7da8
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7daa
-	jr z, Label_11_7db8 ; $7dad
+	jr z, .store ; $7dad
 	ld a, $06 ; $7daf
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7db1
-	jr z, Label_11_7db8 ; $7db4
+	jr z, .store ; $7db4
 	ld a, $08 ; $7db6
-Label_11_7db8:
+.store:
 	ld [$c2b0], a ; $7db8
 	ret ; $7dbb
-Label_11_7dbc:
+.doubles:
 	ld a, $01 ; $7dbc
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7dbe
-	jr z, Label_11_7db8 ; $7dc1
+	jr z, .store ; $7dc1
 	ld a, $03 ; $7dc3
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7dc5
-	jr z, Label_11_7db8 ; $7dc8
+	jr z, .store ; $7dc8
 	ld a, $05 ; $7dca
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dcc
-	jr z, Label_11_7db8 ; $7dcf
+	jr z, .store ; $7dcf
 	ld a, $07 ; $7dd1
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7dd3
-	jr z, Label_11_7db8 ; $7dd6
+	jr z, .store ; $7dd6
 	ld a, $09 ; $7dd8
-	jr Label_11_7db8 ; $7dda
+	jr .store ; $7dda
 	ld a, $00 ; $7ddc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dde
-	jr z, Label_11_7dfb ; $7de1
+	jr z, .storeIsland ; $7de1
 	inc a ; $7de3
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7de4
-	jr z, Label_11_7dfb ; $7de7
+	jr z, .storeIsland ; $7de7
 	inc a ; $7de9
 	test_flag FLAG_DOUBLES ; $7dea
-	jr nz, Label_11_7dff ; $7ded
+	jr nz, .doublesIsland ; $7ded
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7def
-	jr z, Label_11_7dfb ; $7df2
+	jr z, .storeIsland ; $7df2
 	inc a ; $7df4
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7df5
-	jr z, Label_11_7dfb ; $7df8
+	jr z, .storeIsland ; $7df8
 	inc a ; $7dfa
-Label_11_7dfb:
+.storeIsland:
 	ld [$c2b0], a ; $7dfb
 	ret ; $7dfe
-Label_11_7dff:
+.doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dff
-	jr z, Label_11_7dfb ; $7e02
+	jr z, .storeIsland ; $7e02
 	inc a ; $7e04
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7e05
-	jr z, Label_11_7dfb ; $7e08
+	jr z, .storeIsland ; $7e08
 	inc a ; $7e0a
-	jr Label_11_7dfb ; $7e0b
+	jr .storeIsland ; $7e0b
 	; $7e0d, 499 bytes fill to bank end (linker-padded)

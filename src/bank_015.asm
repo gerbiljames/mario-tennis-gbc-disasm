@@ -141,57 +141,57 @@ InitTournamentSiteSceneVariant:
 	ld a, $00 ; $4271
 	ld [$c2b0], a ; $4273
 	test_flag FLAG_DOUBLES ; $4276
-	jr nz, Label_15_42c0 ; $4279
+	jr nz, .doubles ; $4279
 	ld a, $f1 ; $427b
 	ld d, $0e ; $427d
 	ld e, $14 ; $427f
 	farcall WriteBehaviorMapCell ; $4281
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4284
-	jr z, Label_15_4298 ; $4287
+	jr z, .stage1 ; $4287
 	ld hl, TournamentSiteScripts3_15 ; $4289
 	ld de, $000c ; $428c
 	farcall WriteStoryStateWord ; $428f
 	ld a, $03 ; $4292
 	ld [$c2b0], a ; $4294
 	ret ; $4297
-Label_15_4298:
+.stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4298
-	jr z, Label_15_42ac ; $429b
+	jr z, .stage2 ; $429b
 	ld hl, TournamentSiteScripts2_15 ; $429d
 	ld de, $000c ; $42a0
 	farcall WriteStoryStateWord ; $42a3
 	ld a, $02 ; $42a6
 	ld [$c2b0], a ; $42a8
 	ret ; $42ab
-Label_15_42ac:
+.stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $42ac
-	jr z, Label_15_42bf ; $42af
+	jr z, .stage3 ; $42af
 	ld hl, TournamentSiteScripts1_15 ; $42b1
 	ld de, $000c ; $42b4
 	farcall WriteStoryStateWord ; $42b7
 	ld a, $01 ; $42ba
 	ld [$c2b0], a ; $42bc
-Label_15_42bf:
+.stage3:
 	ret ; $42bf
-Label_15_42c0:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $42c0
-	jr z, Label_15_42d4 ; $42c3
+	jr z, .doublesStage2 ; $42c3
 	ld hl, TournamentSiteScripts6_15 ; $42c5
 	ld de, $000c ; $42c8
 	farcall WriteStoryStateWord ; $42cb
 	ld a, $06 ; $42ce
 	ld [$c2b0], a ; $42d0
 	ret ; $42d3
-Label_15_42d4:
+.doublesStage2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $42d4
-	jr z, Label_15_42e8 ; $42d7
+	jr z, .done ; $42d7
 	ld hl, TournamentSiteScripts5_15 ; $42d9
 	ld de, $000c ; $42dc
 	farcall WriteStoryStateWord ; $42df
 	ld a, $05 ; $42e2
 	ld [$c2b0], a ; $42e4
 	ret ; $42e7
-Label_15_42e8:
+.done:
 	ld hl, TournamentSiteScripts4_15 ; $42e8
 	ld de, $000c ; $42eb
 	farcall WriteStoryStateWord ; $42ee

@@ -2720,22 +2720,22 @@ IslandOpenSinglesMatchReturn:
 	wram_bank $04 ; $7487
 	ld a, [wMatchExitRequest] ; $748d
 	cp a, $01 ; $7490
-	jr z, Label_0f_749c ; $7492
+	jr z, .won ; $7492
 	ld a, [wMatchWinLoseFlag] ; $7494
 	cp a, $01 ; $7497
-	jp z, Label_0f_74a3 ; $7499
-Label_0f_749c:
+	jp z, .lost ; $7499
+.won:
 	call LoadIslandOpenRoundNpcs ; $749c
 	call SetPlayerAndPartnerObjectDefs ; $749f
 	ret ; $74a2
-Label_0f_74a3:
+.lost:
 	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $74a3
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $74a6
 	call CheckIslandOpenVictoryTransition ; $74a9
 	and a, a ; $74ac
-	jr z, Label_0f_74b0 ; $74ad
+	jr z, .returnToSite ; $74ad
 	ret ; $74af
-Label_0f_74b0:
+.returnToSite:
 	ldh a, [hRomBank] ; $74b0
 	ld hl, IslandOpenRoundActorsSingles_0f ; $74b2
 	farcall ScriptRespawnLocationActors ; $74b5
@@ -2789,9 +2789,9 @@ Label_0f_74b0:
 	ld hl, $2862 ; $7569
 	add a, l ; $756c
 	ld l, a ; $756d
-	jr nc, Label_0f_7571 ; $756e
+	jr nc, .done ; $756e
 	inc h ; $7570
-Label_0f_7571:
+.done:
 	call QueueShortText ; $7571
 	script_face $04, FACE_UP ; $7574
 	script_face $03, FACE_RIGHT ; $757b

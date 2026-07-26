@@ -2288,7 +2288,7 @@ ConfirmCharGridSelection:
 	ld e, a ; $5319
 	call TestAndSetGridEntryTaken ; $531a
 	or a, a ; $531d
-	jr nz, Label_38_5368 ; $531e
+	jr nz, .emptyCell ; $531e
 	call GetGridSlotFromCursor ; $5320
 	ld b, a ; $5323
 	ld hl, $da00 ; $5324
@@ -2296,50 +2296,50 @@ ConfirmCharGridSelection:
 	add a, a ; $5328
 	add a, l ; $5329
 	ld l, a ; $532a
-	jr nc, Label_38_532e ; $532b
+	jr nc, .readEntry ; $532b
 	inc h ; $532d
-Label_38_532e:
+.readEntry:
 	ld a, [hl] ; $532e
 	cp a, $ff ; $532f
-	jr z, Label_38_5368 ; $5331
+	jr z, .emptyCell ; $5331
 	ld c, a ; $5333
 	ld a, [$d814] ; $5334
 	ld hl, $d816 ; $5337
 	add a, l ; $533a
 	ld l, a ; $533b
-	jr nc, Label_38_533f ; $533c
+	jr nc, .markTaken ; $533c
 	inc h ; $533e
-Label_38_533f:
+.markTaken:
 	ld [hl], b ; $533f
 	ld a, c ; $5340
 	ld c, a ; $5341
 	call IsStarCharacter ; $5342
 	or a, a ; $5345
-	jr z, Label_38_535d ; $5346
+	jr z, .drawPortrait ; $5346
 	ld a, [$df00] ; $5348
 	cp a, $01 ; $534b
-	jr nz, Label_38_535d ; $534d
+	jr nz, .drawPortrait ; $534d
 	ld a, [$d814] ; $534f
 	ld hl, $d834 ; $5352
 	add a, l ; $5355
 	ld l, a ; $5356
-	jr nc, Label_38_535a ; $5357
+	jr nc, .markStar ; $5357
 	inc h ; $5359
-Label_38_535a:
+.markStar:
 	ld a, $01 ; $535a
 	ld [hl], a ; $535c
-Label_38_535d:
+.drawPortrait:
 	call GetGridSlotFromCursor ; $535d
 	ld b, a ; $5360
 	call DrawPlayerSlotPortrait ; $5361
 	sound $5f ; $5364
-	jr Label_38_5370 ; $5366
-Label_38_5368:
+	jr .advanceSlot ; $5366
+.emptyCell:
 	sound $62 ; $5368
 	pop af ; $536a
 	wram_bank ; $536b
 	ret ; $536f
-Label_38_5370:
+.advanceSlot:
 	call BuildVisiblePageSpriteList ; $5370
 	call GetGridSlotFromCursor ; $5373
 	ld b, a ; $5376
@@ -2348,24 +2348,24 @@ Label_38_5370:
 	add a, a ; $537b
 	add a, l ; $537c
 	ld l, a ; $537d
-	jr nc, Label_38_5381 ; $537e
+	jr nc, .allSlotsFilled ; $537e
 	inc h ; $5380
-Label_38_5381:
+.allSlotsFilled:
 	ld a, [hl] ; $5381
 	ld c, a ; $5382
 	call NeedsCpuDifficultyPrompt ; $5383
 	or a, a ; $5386
-	jr z, Label_38_5390 ; $5387
+	jr z, .refresh ; $5387
 	ld a, $01 ; $5389
 	ld [$d824], a ; $538b
-	jr Label_38_539c ; $538e
-Label_38_5390:
+	jr .done ; $538e
+.refresh:
 	call AdvanceToNextPlayerSlot ; $5390
 	cp a, $ff ; $5393
-	jr nz, Label_38_539c ; $5395
+	jr nz, .done ; $5395
 	ld a, $01 ; $5397
 	ld [$d815], a ; $5399
-Label_38_539c:
+.done:
 	call DrawCharGridSlotPrompt ; $539c
 	ld hl, $d040 ; $539f
 	ld de, $9840 ; $53a2
@@ -2380,21 +2380,21 @@ CancelCharGridSelection:
 	wram_bank $03 ; $53b3
 	call RetreatToPreviousPlayerSlot ; $53b9
 	cp a, $ff ; $53bc
-	jr nz, Label_38_53cb ; $53be
+	jr nz, .clearSlot ; $53be
 	ld a, $02 ; $53c0
 	ld [$d815], a ; $53c2
 	pop af ; $53c5
 	wram_bank ; $53c6
 	ret ; $53ca
-Label_38_53cb:
+.clearSlot:
 	sound $62 ; $53cb
 	ld hl, $d816 ; $53cd
 	ld a, [$d814] ; $53d0
 	add a, l ; $53d3
 	ld l, a ; $53d4
-	jr nc, Label_38_53d8 ; $53d5
+	jr nc, .clearTaken ; $53d5
 	inc h ; $53d7
-Label_38_53d8:
+.clearTaken:
 	ld a, [hl] ; $53d8
 	ld b, $00 ; $53d9
 	ld [hl], b ; $53db
@@ -2403,9 +2403,9 @@ Label_38_53d8:
 	add a, a ; $53e0
 	add a, l ; $53e1
 	ld l, a ; $53e2
-	jr nc, Label_38_53e6 ; $53e3
+	jr nc, .clearRecord ; $53e3
 	inc h ; $53e5
-Label_38_53e6:
+.clearRecord:
 	inc hl ; $53e6
 	inc hl ; $53e7
 	xor a, a ; $53e8
@@ -2415,18 +2415,18 @@ Label_38_53e6:
 	ld a, [$d814] ; $53f3
 	add a, l ; $53f6
 	ld l, a ; $53f7
-	jr nc, Label_38_53fb ; $53f8
+	jr nc, .refresh ; $53f8
 	inc h ; $53fa
-Label_38_53fb:
+.refresh:
 	xor a, a ; $53fb
 	ld [hl], a ; $53fc
 	ld hl, $d834 ; $53fd
 	ld a, [$d814] ; $5400
 	add a, l ; $5403
 	ld l, a ; $5404
-	jr nc, Label_38_5408 ; $5405
+	jr nc, .done ; $5405
 	inc h ; $5407
-Label_38_5408:
+.done:
 	xor a, a ; $5408
 	ld [hl], a ; $5409
 	call ClearPlayerSlotPortrait ; $540a
@@ -3452,26 +3452,26 @@ BuildCharGridFromUnlockFlags:
 	ld [$d81c], a ; $5b45
 	ld de, $da00 ; $5b48
 	ld c, $00 ; $5b4b
-Label_38_5b4d:
+.flagLoop:
 	ld a, [hl+] ; $5b4d
 	or a, a ; $5b4e
-	jr z, Label_38_5b60 ; $5b4f
+	jr z, .storeEmpty ; $5b4f
 	push hl ; $5b51
 	ld hl, Data_38_5b93 ; $5b52
 	ld a, c ; $5b55
 	add a, l ; $5b56
 	ld l, a ; $5b57
-	jr nc, Label_38_5b5b ; $5b58
+	jr nc, .storeCharId ; $5b58
 	inc h ; $5b5a
-Label_38_5b5b:
+.storeCharId:
 	ld a, [hl] ; $5b5b
 	ld [de], a ; $5b5c
 	pop hl ; $5b5d
-	jr Label_38_5b63 ; $5b5e
-Label_38_5b60:
+	jr .next ; $5b5e
+.storeEmpty:
 	ld a, $ff ; $5b60
 	ld [de], a ; $5b62
-Label_38_5b63:
+.next:
 	inc de ; $5b63
 	inc de ; $5b64
 	inc de ; $5b65
@@ -3480,7 +3480,7 @@ Label_38_5b63:
 	inc a ; $5b68
 	ld c, a ; $5b69
 	cp a, $20 ; $5b6a
-	jr nz, Label_38_5b4d ; $5b6c
+	jr nz, .flagLoop ; $5b6c
 	ret ; $5b6e
 Data_38_5b6f:
 	; $5b6f, 36 bytes (bytes:16)
@@ -4329,31 +4329,31 @@ Data_38_60e6:
 CompactRosterGridEntries:
 	ld hl, $da24 ; $60ec
 	ld c, $00 ; $60ef
-Label_38_60f1:
+.scanLoop:
 	ld a, [hl] ; $60f1
 	cp a, $ff ; $60f2
-	jr nz, Label_38_612c ; $60f4
+	jr nz, .next ; $60f4
 	push hl ; $60f6
 	ld a, $16 ; $60f7
 	sub a, c ; $60f9
 	ld b, a ; $60fa
-Label_38_60fb:
+.findNext:
 	inc hl ; $60fb
 	inc hl ; $60fc
 	inc hl ; $60fd
 	inc hl ; $60fe
 	ld a, [hl] ; $60ff
 	cp a, $04 ; $6100
-	jr c, Label_38_6109 ; $6102
+	jr c, .nextSlot ; $6102
 	ld a, [hl] ; $6104
 	cp a, $ff ; $6105
-	jr nz, Label_38_610e ; $6107
-Label_38_6109:
+	jr nz, .moveEntry ; $6107
+.nextSlot:
 	ld a, b ; $6109
 	dec a ; $610a
 	ld b, a ; $610b
-	jr nz, Label_38_60fb ; $610c
-Label_38_610e:
+	jr nz, .findNext ; $610c
+.moveEntry:
 	pop de ; $610e
 	ld a, [hl] ; $610f
 	ld [de], a ; $6110
@@ -4381,18 +4381,18 @@ Label_38_610e:
 	inc hl ; $6127
 	ld h, d ; $6128
 	ld l, e ; $6129
-	jr Label_38_6130 ; $612a
-Label_38_612c:
+	jr .done ; $612a
+.next:
 	inc hl ; $612c
 	inc hl ; $612d
 	inc hl ; $612e
 	inc hl ; $612f
-Label_38_6130:
+.done:
 	ld a, c ; $6130
 	inc a ; $6131
 	ld c, a ; $6132
 	cp a, $16 ; $6133
-	jr nz, Label_38_60f1 ; $6135
+	jr nz, .scanLoop ; $6135
 	ld a, $ff ; $6137
 	ld [hl+], a ; $6139
 	ld [hl+], a ; $613a
@@ -4410,31 +4410,31 @@ Label_38_6130:
 CompactStarGridEntries:
 	ld hl, $da00 ; $6146
 	ld c, $00 ; $6149
-Label_38_614b:
+.scanLoop:
 	ld a, [hl] ; $614b
 	cp a, $ff ; $614c
-	jr nz, Label_38_6186 ; $614e
+	jr nz, .next ; $614e
 	push hl ; $6150
 	ld a, $08 ; $6151
 	sub a, c ; $6153
 	ld b, a ; $6154
-Label_38_6155:
+.findNext:
 	inc hl ; $6155
 	inc hl ; $6156
 	inc hl ; $6157
 	inc hl ; $6158
 	ld a, [hl] ; $6159
 	cp a, $04 ; $615a
-	jr c, Label_38_6163 ; $615c
+	jr c, .nextSlot ; $615c
 	ld a, [hl] ; $615e
 	cp a, $ff ; $615f
-	jr nz, Label_38_6168 ; $6161
-Label_38_6163:
+	jr nz, .moveEntry ; $6161
+.nextSlot:
 	ld a, b ; $6163
 	dec a ; $6164
 	ld b, a ; $6165
-	jr nz, Label_38_6155 ; $6166
-Label_38_6168:
+	jr nz, .findNext ; $6166
+.moveEntry:
 	pop de ; $6168
 	ld a, [hl] ; $6169
 	ld [de], a ; $616a
@@ -4462,18 +4462,18 @@ Label_38_6168:
 	inc hl ; $6181
 	ld h, d ; $6182
 	ld l, e ; $6183
-	jr Label_38_618a ; $6184
-Label_38_6186:
+	jr .done ; $6184
+.next:
 	inc hl ; $6186
 	inc hl ; $6187
 	inc hl ; $6188
 	inc hl ; $6189
-Label_38_618a:
+.done:
 	ld a, c ; $618a
 	inc a ; $618b
 	ld c, a ; $618c
 	cp a, $08 ; $618d
-	jr nz, Label_38_614b ; $618f
+	jr nz, .scanLoop ; $618f
 	ret ; $6191
 CountCharGridEntries:
 	ld hl, $da24 ; $6192
@@ -5271,14 +5271,14 @@ ConfirmLinkGridSelection:
 	wram_bank $03 ; $6772
 	ld a, [$d814] ; $6778
 	cp a, $04 ; $677b
-	jr z, Label_38_67df ; $677d
+	jr z, .allSlotsFilled ; $677d
 	ldh a, [hLinkRemoteInput] ; $677f
 	cp a, $21 ; $6781
-	jr nz, Label_38_678b ; $6783
+	jr nz, .readEntry ; $6783
 	ld a, $22 ; $6785
 	ldh [hLinkRemoteInput], a ; $6787
-	jr Label_38_67df ; $6789
-Label_38_678b:
+	jr .allSlotsFilled ; $6789
+.readEntry:
 	ld a, [$d811] ; $678b
 	ld c, a ; $678e
 	ld a, [wMenuCursorX] ; $678f
@@ -5287,7 +5287,7 @@ Label_38_678b:
 	ld e, a ; $6796
 	call TestAndSetGridEntryTaken ; $6797
 	or a, a ; $679a
-	jr nz, Label_38_67df ; $679b
+	jr nz, .allSlotsFilled ; $679b
 	sound $5f ; $679d
 	call GetGridSlotFromCursor ; $679f
 	ld b, a ; $67a2
@@ -5296,50 +5296,50 @@ Label_38_678b:
 	add a, a ; $67a7
 	add a, l ; $67a8
 	ld l, a ; $67a9
-	jr nc, Label_38_67ad ; $67aa
+	jr nc, .markStar ; $67aa
 	inc h ; $67ac
-Label_38_67ad:
+.markStar:
 	ld a, [hl] ; $67ad
 	cp a, $ff ; $67ae
-	jr z, Label_38_67df ; $67b0
+	jr z, .allSlotsFilled ; $67b0
 	ld c, a ; $67b2
 	call IsStarCharacter ; $67b3
 	or a, a ; $67b6
-	jr z, Label_38_67ce ; $67b7
+	jr z, .emptyCell ; $67b7
 	ld a, [$df00] ; $67b9
 	cp a, $01 ; $67bc
-	jr nz, Label_38_67ce ; $67be
+	jr nz, .emptyCell ; $67be
 	ld a, [$d814] ; $67c0
 	ld hl, $d834 ; $67c3
 	add a, l ; $67c6
 	ld l, a ; $67c7
-	jr nc, Label_38_67cb ; $67c8
+	jr nc, .drawPortrait ; $67c8
 	inc h ; $67ca
-Label_38_67cb:
+.drawPortrait:
 	ld a, $01 ; $67cb
 	ld [hl], a ; $67cd
-Label_38_67ce:
+.emptyCell:
 	ld a, [$d814] ; $67ce
 	ld hl, $d816 ; $67d1
 	add a, l ; $67d4
 	ld l, a ; $67d5
-	jr nc, Label_38_67d9 ; $67d6
+	jr nc, .advanceSlot ; $67d6
 	inc h ; $67d8
-Label_38_67d9:
+.advanceSlot:
 	ld [hl], b ; $67d9
 	call DrawPlayerSlotPortrait ; $67da
-	jr Label_38_67e7 ; $67dd
-Label_38_67df:
+	jr .refresh ; $67dd
+.allSlotsFilled:
 	sound $62 ; $67df
 	pop af ; $67e1
 	wram_bank ; $67e2
 	ret ; $67e6
-Label_38_67e7:
+.refresh:
 	call BuildVisiblePageSpriteList ; $67e7
 	call AdvanceToNextPlayerSlot ; $67ea
 	cp a, $04 ; $67ed
-	jr nz, Label_38_67f1 ; $67ef
-Label_38_67f1:
+	jr nz, .done ; $67ef
+.done:
 	call DrawCharGridSlotPrompt ; $67f1
 	ld hl, $d040 ; $67f4
 	ld de, $9840 ; $67f7
@@ -5354,13 +5354,13 @@ CancelLinkGridSelection:
 	wram_bank $03 ; $6808
 	call RetreatToPreviousPlayerSlot ; $680e
 	cp a, $ff ; $6811
-	jr nz, Label_38_681b ; $6813
+	jr nz, .clearSlot ; $6813
 	pop af ; $6815
 	wram_bank ; $6816
 	ret ; $681a
-Label_38_681b:
+.clearSlot:
 	cp a, $fe ; $681b
-	jr nz, Label_38_6834 ; $681d
+	jr nz, .clearTaken ; $681d
 	xor a, a ; $681f
 	ld [wMenuCursorX], a ; $6820
 	ld [wMenuCursorY], a ; $6823
@@ -5369,15 +5369,15 @@ Label_38_681b:
 	ld [$d811], a ; $682c
 	ldh [$ffe3], a ; $682f
 	call RefreshCharInfoPanel ; $6831
-Label_38_6834:
+.clearTaken:
 	sound $62 ; $6834
 	ld hl, $d816 ; $6836
 	ld a, [$d814] ; $6839
 	add a, l ; $683c
 	ld l, a ; $683d
-	jr nc, Label_38_6841 ; $683e
+	jr nc, .clearRecord ; $683e
 	inc h ; $6840
-Label_38_6841:
+.clearRecord:
 	ld a, [hl] ; $6841
 	ld b, $00 ; $6842
 	ld [hl], b ; $6844
@@ -5386,9 +5386,9 @@ Label_38_6841:
 	add a, a ; $6849
 	add a, l ; $684a
 	ld l, a ; $684b
-	jr nc, Label_38_684f ; $684c
+	jr nc, .refresh ; $684c
 	inc h ; $684e
-Label_38_684f:
+.refresh:
 	inc hl ; $684f
 	inc hl ; $6850
 	xor a, a ; $6851
@@ -5398,18 +5398,18 @@ Label_38_684f:
 	ld a, [$d814] ; $685c
 	add a, l ; $685f
 	ld l, a ; $6860
-	jr nc, Label_38_6864 ; $6861
+	jr nc, .redraw ; $6861
 	inc h ; $6863
-Label_38_6864:
+.redraw:
 	xor a, a ; $6864
 	ld [hl], a ; $6865
 	ld hl, $d834 ; $6866
 	ld a, [$d814] ; $6869
 	add a, l ; $686c
 	ld l, a ; $686d
-	jr nc, Label_38_6871 ; $686e
+	jr nc, .done ; $686e
 	inc h ; $6870
-Label_38_6871:
+.done:
 	xor a, a ; $6871
 	ld [hl], a ; $6872
 	call ClearPlayerSlotPortrait ; $6873

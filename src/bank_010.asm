@@ -2162,50 +2162,50 @@ ConfirmDiscardSuspendedExhibMatch:
 	push bc ; $578b
 	farcall ReadExhibitionSaveBlock ; $578c
 	bit 7, a ; $578f
-	jr nz, Label_10_57f3 ; $5791
+	jr nz, .done ; $5791
 	ld a, [$c8a5] ; $5793
 	or a, a ; $5796
-	jr z, Label_10_57f3 ; $5797
+	jr z, .done ; $5797
 	ld a, [wCurrentStorySlot] ; $5799
 	ld b, a ; $579c
 	ld a, [$c8b5] ; $579d
 	bit 7, a ; $57a0
-	jr z, Label_10_57ab ; $57a2
+	jr z, .checkSlot2 ; $57a2
 	and a, $7f ; $57a4
 	srl a ; $57a6
 	cp a, b ; $57a8
-	jr z, Label_10_57d7 ; $57a9
-Label_10_57ab:
+	jr z, .prompt ; $57a9
+.checkSlot2:
 	ld a, [$c8b6] ; $57ab
 	bit 7, a ; $57ae
-	jr z, Label_10_57b9 ; $57b0
+	jr z, .checkSlot3 ; $57b0
 	and a, $7f ; $57b2
 	srl a ; $57b4
 	cp a, b ; $57b6
-	jr z, Label_10_57d7 ; $57b7
-Label_10_57b9:
+	jr z, .prompt ; $57b7
+.checkSlot3:
 	ld a, [$c8b7] ; $57b9
 	bit 7, a ; $57bc
-	jr z, Label_10_57c7 ; $57be
+	jr z, .checkSlot4 ; $57be
 	and a, $7f ; $57c0
 	srl a ; $57c2
 	cp a, b ; $57c4
-	jr z, Label_10_57d7 ; $57c5
-Label_10_57c7:
+	jr z, .prompt ; $57c5
+.checkSlot4:
 	ld a, [$c8b8] ; $57c7
 	bit 7, a ; $57ca
-	jr z, Label_10_57d5 ; $57cc
+	jr z, .noMatch ; $57cc
 	and a, $7f ; $57ce
 	srl a ; $57d0
 	cp a, b ; $57d2
-	jr z, Label_10_57d7 ; $57d3
-Label_10_57d5:
-	jr Label_10_57f3 ; $57d5
-Label_10_57d7:
+	jr z, .prompt ; $57d3
+.noMatch:
+	jr .done ; $57d5
+.prompt:
 	ld b, $02 ; $57d7
 	farcall RunEraseDataConfirmMenu ; $57d9
 	or a, a ; $57dc
-	jr z, Label_10_57ee ; $57dd
+	jr z, .discarded ; $57dd
 	xor a, a ; $57df
 	ld [$c8a5], a ; $57e0
 	ld [wKeepMatchStatsFlag], a ; $57e3
@@ -2214,12 +2214,12 @@ Label_10_57d7:
 	pop af ; $57ea
 	ld a, $00 ; $57eb
 	ret ; $57ed
-Label_10_57ee:
+.discarded:
 	pop bc ; $57ee
 	pop af ; $57ef
 	ld a, $01 ; $57f0
 	ret ; $57f2
-Label_10_57f3:
+.done:
 	pop bc ; $57f3
 	pop af ; $57f4
 	ret ; $57f5

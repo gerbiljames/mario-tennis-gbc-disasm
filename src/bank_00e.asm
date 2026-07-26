@@ -1391,26 +1391,26 @@ PushEquipmentNameTextArg:
 InitEquipmentHandoutDialogue:
 	ld a, [$c2bc] ; $4f99
 	and a, a ; $4f9c
-	jr z, Label_0e_4fa1 ; $4f9d
-	jr Label_0e_4fb0 ; $4f9f
-Label_0e_4fa1:
+	jr z, .racket ; $4f9d
+	jr .shoes ; $4f9f
+.racket:
 	call GetEquippedRacketNibble ; $4fa1
 	ld hl, $2403 ; $4fa4
 	add a, l ; $4fa7
 	ld l, a ; $4fa8
-	jr nc, Label_0e_4fac ; $4fa9
+	jr nc, .setRacketCursor ; $4fa9
 	inc h ; $4fab
-Label_0e_4fac:
+.setRacketCursor:
 	farcall InitDialogueTextCursor ; $4fac
 	ret ; $4faf
-Label_0e_4fb0:
+.shoes:
 	call GetEquippedRacketNibble ; $4fb0
 	ld hl, $240a ; $4fb3
 	add a, l ; $4fb6
 	ld l, a ; $4fb7
-	jr nc, Label_0e_4fbb ; $4fb8
+	jr nc, .setShoesCursor ; $4fb8
 	inc h ; $4fba
-Label_0e_4fbb:
+.setShoesCursor:
 	farcall InitDialogueTextCursor ; $4fbb
 	ret ; $4fbe
 RepairCounterReturnA:
@@ -2093,10 +2093,10 @@ ExhibitionAcceptedSingles:
 	ret ; $5bb9
 MarioWorldArrivalDoubles:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5bba
-	jr nz, Label_0e_5bc5 ; $5bbd
+	jr nz, .arrive ; $5bbd
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $5bbf
 	jp nz, Label_0e_69c5 ; $5bc2
-Label_0e_5bc5:
+.arrive:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $5bc5
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $5bd0
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $5bdb
@@ -2116,11 +2116,11 @@ Label_0e_5bc5:
 	script_face $13, FACE_UP ; $5c4b
 	script_wait_frames $0a ; $5c52
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5c59
-	jr nz, Label_0e_5c6e ; $5c5c
+	jr nz, .walkIn ; $5c5c
 	script_set_text Text_5e_102 ; $5c5e
 	script_speak $13 ; $5c64
 	script_speak $13 ; $5c69
-Label_0e_5c6e:
+.walkIn:
 	script_player_speed $0020 ; $5c6e
 	script_move_player $1200, $1800 ; $5c74
 	farcall WaitPlayerMoveDone ; $5c7e
@@ -2128,9 +2128,9 @@ Label_0e_5c6e:
 	script_set_anim $08, $03 ; $5c88
 	script_wait_idle $08 ; $5c8f
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5c94
-	jr nz, Label_0e_5c9e ; $5c97
+	jr nz, .approach ; $5c97
 	script_speak $08 ; $5c99
-Label_0e_5c9e:
+.approach:
 	script_player_speed $0014 ; $5c9e
 	script_set_speed ACTOR_PLAYER, $0014 ; $5ca4
 	script_set_speed ACTOR_PARTNER, $0014 ; $5cac
@@ -2149,14 +2149,14 @@ Label_0e_5c9e:
 	script_move_target $13, $0d00, $1300 ; $5d1d
 	script_wait_move $08 ; $5d28
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5d2d
-	jr z, Label_0e_5d49 ; $5d30
+	jr z, .done ; $5d30
 	script_face $08, FACE_DOWN ; $5d32
 	script_wait_frames $14 ; $5d39
 	ld a, $01 ; $5d40
 	ld [$c294], a ; $5d42
 	ld [wStoryModeExitLocationRequest], a ; $5d45
 	ret ; $5d48
-Label_0e_5d49:
+.done:
 	call MarioWorldWelcomeCutscene ; $5d49
 	script_set_position $07, $3f00, $3f00 ; $5d4c
 	script_face $0f, FACE_LEFT ; $5d57
@@ -3622,16 +3622,16 @@ LoadExhibitionMatchSettings5:
 HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c
 	cp a, $01 ; $7c0f
-	jr nz, Label_0e_7c24 ; $7c11
+	jr nz, .lost ; $7c11
 	test_flag FLAG_DOUBLES ; $7c13
-	jr nz, Label_0e_7c1f ; $7c16
+	jr nz, .won ; $7c16
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $7c18
-	jr nz, Label_0e_7c37 ; $7c1b
-	jr Label_0e_7c24 ; $7c1d
-Label_0e_7c1f:
+	jr nz, .aborted ; $7c1b
+	jr .lost ; $7c1d
+.won:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $7c1f
-	jr nz, Label_0e_7c37 ; $7c22
-Label_0e_7c24:
+	jr nz, .aborted ; $7c22
+.lost:
 	ld a, $1d ; $7c24
 	ld [wStoryModeCurrentLocation], a ; $7c26
 	ld a, $0e ; $7c29
@@ -3640,16 +3640,16 @@ Label_0e_7c24:
 	ld [$c294], a ; $7c30
 	ld [wStoryModeExitLocationRequest], a ; $7c33
 	ret ; $7c36
-Label_0e_7c37:
+.aborted:
 	test_flag FLAG_DOUBLES ; $7c37
-	jr nz, Label_0e_7c49 ; $7c3a
+	jr nz, .returnToLocation ; $7c3a
 	ld b, $02 ; $7c3c
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7c3e
 	add a, $04 ; $7c41
 	ld c, a ; $7c43
 	farcall RunStorySceneByMode ; $7c44
-	jr Label_0e_7c5b ; $7c47
-Label_0e_7c49:
+	jr .done ; $7c47
+.returnToLocation:
 	ld b, $02 ; $7c49
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7c4b
 	ld d, a ; $7c4e
@@ -3660,7 +3660,7 @@ Label_0e_7c49:
 	or a, c ; $7c56
 	ld c, a ; $7c57
 	farcall RunStorySceneByMode ; $7c58
-Label_0e_7c5b:
+.done:
 	ld a, $00 ; $7c5b
 	ld [wStoryModeCurrentLocation], a ; $7c5d
 	ld a, $0a ; $7c60
@@ -3891,62 +3891,62 @@ ActorScript_0e_7e4b:
 	as_jump ActorScript_0e_7e4b
 ComputeTrainingGymProgressIndex:
 	test_flag FLAG_DOUBLES ; $7e5a
-	jr nz, Label_0e_7e81 ; $7e5d
+	jr nz, .doubles ; $7e5d
 	ld a, $00 ; $7e5f
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e61
-	jr z, Label_0e_7e7d ; $7e64
+	jr z, .store ; $7e64
 	ld a, $02 ; $7e66
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7e68
-	jr z, Label_0e_7e7d ; $7e6b
+	jr z, .store ; $7e6b
 	ld a, $04 ; $7e6d
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7e6f
-	jr z, Label_0e_7e7d ; $7e72
+	jr z, .store ; $7e72
 	ld a, $06 ; $7e74
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7e76
-	jr z, Label_0e_7e7d ; $7e79
+	jr z, .store ; $7e79
 	ld a, $08 ; $7e7b
-Label_0e_7e7d:
+.store:
 	ld [$c2b0], a ; $7e7d
 	ret ; $7e80
-Label_0e_7e81:
+.doubles:
 	ld a, $01 ; $7e81
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7e83
-	jr z, Label_0e_7e7d ; $7e86
+	jr z, .store ; $7e86
 	ld a, $03 ; $7e88
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7e8a
-	jr z, Label_0e_7e7d ; $7e8d
+	jr z, .store ; $7e8d
 	ld a, $05 ; $7e8f
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7e91
-	jr z, Label_0e_7e7d ; $7e94
+	jr z, .store ; $7e94
 	ld a, $07 ; $7e96
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7e98
-	jr z, Label_0e_7e7d ; $7e9b
+	jr z, .store ; $7e9b
 	ld a, $09 ; $7e9d
-	jr Label_0e_7e7d ; $7e9f
+	jr .store ; $7e9f
 	ld a, $00 ; $7ea1
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3
-	jr z, Label_0e_7ec0 ; $7ea6
+	jr z, .storeIsland ; $7ea6
 	inc a ; $7ea8
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7ea9
-	jr z, Label_0e_7ec0 ; $7eac
+	jr z, .storeIsland ; $7eac
 	inc a ; $7eae
 	test_flag FLAG_DOUBLES ; $7eaf
-	jr nz, Label_0e_7ec4 ; $7eb2
+	jr nz, .doublesIsland ; $7eb2
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7eb4
-	jr z, Label_0e_7ec0 ; $7eb7
+	jr z, .storeIsland ; $7eb7
 	inc a ; $7eb9
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7eba
-	jr z, Label_0e_7ec0 ; $7ebd
+	jr z, .storeIsland ; $7ebd
 	inc a ; $7ebf
-Label_0e_7ec0:
+.storeIsland:
 	ld [$c2b0], a ; $7ec0
 	ret ; $7ec3
-Label_0e_7ec4:
+.doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ec4
-	jr z, Label_0e_7ec0 ; $7ec7
+	jr z, .storeIsland ; $7ec7
 	inc a ; $7ec9
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7eca
-	jr z, Label_0e_7ec0 ; $7ecd
+	jr z, .storeIsland ; $7ecd
 	inc a ; $7ecf
-	jr Label_0e_7ec0 ; $7ed0
+	jr .storeIsland ; $7ed0
 	; $7ed2, 302 bytes fill to bank end (linker-padded)
