@@ -827,15 +827,15 @@ ShowDrillBriefingScreen:
 	call WaitFadeEnd ; $44bb
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $44be
 	cp a, $12 ; $44c1
-	jr nc, Label_17_44e7 ; $44c3
+	jr nc, .done ; $44c3
 	sub a, $03 ; $44c5
 	cp a, $04 ; $44c7
-	jr c, Label_17_44d3 ; $44c9
+	jr c, .dispatch ; $44c9
 	sub a, $03 ; $44cb
 	cp a, $06 ; $44cd
-	jr c, Label_17_44d3 ; $44cf
+	jr c, .dispatch ; $44cf
 	sub a, $03 ; $44d1
-Label_17_44d3:
+.dispatch:
 	ld a, a ; $44d3
 	rst Rst00 ; $44d4
 	dw DrillBriefing_ServeToTargets ; $44d5 jumptable
@@ -847,7 +847,7 @@ Label_17_44d3:
 	dw DrillBriefing_ReturnToTarget ; $44e1 jumptable
 	dw DrillBriefing_ReturnLob ; $44e3 jumptable
 	dw DrillBriefing_ReturnDownLine ; $44e5 jumptable
-Label_17_44e7:
+.done:
 	call ClearFrameTasks ; $44e7
 	ret ; $44ea
 ShowCourtDiagramTestScreen:
@@ -1409,10 +1409,10 @@ WaitForInputBlinking:
 	call AdvanceFrame ; $497e
 	ldh a, [hInputRisingEdge] ; $4981
 	and a, PADF_A | PADF_B ; $4983
-	jr nz, Label_17_498c ; $4985
+	jr nz, .done ; $4985
 	call DrawBlinkingPrompt ; $4987
 	jr WaitForInputBlinking ; $498a
-Label_17_498c:
+.done:
 	ret ; $498c
 AdvanceFrameCheckInput:
 	call AdvanceFrame ; $498d

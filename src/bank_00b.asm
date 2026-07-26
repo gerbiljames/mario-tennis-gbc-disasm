@@ -364,12 +364,12 @@ CheckDrillTargetZoneMissed:
 	inc c ; $4221
 	ld a, [$c2e4] ; $4222
 	ld b, a ; $4225
-Label_0b_4226:
+.shiftLoop:
 	ld a, $00 ; $4226
 	rr b ; $4228
 	adc a, $00 ; $422a
 	dec c ; $422c
-	jr nz, Label_0b_4226 ; $422d
+	jr nz, .shiftLoop ; $422d
 	xor a, $01 ; $422f
 	pop bc ; $4231
 	ret ; $4232
@@ -536,24 +536,24 @@ PlayDrillPointEndSequence:
 	farcall SetCameraTarget ; $43b2
 	ld a, [wPointOutcome] ; $43b5
 	cp a, $06 ; $43b8
-	jr z, Label_0b_43dc ; $43ba
+	jr z, .showScore ; $43ba
 	cp a, $07 ; $43bc
-	jr z, Label_0b_43dc ; $43be
+	jr z, .showScore ; $43be
 	cp a, $01 ; $43c0
-	jr z, Label_0b_43ca ; $43c2
+	jr z, .showBanner ; $43c2
 	cp a, $03 ; $43c4
-	jr z, Label_0b_43ca ; $43c6
-	jr Label_0b_43cf ; $43c8
-Label_0b_43ca:
+	jr z, .showBanner ; $43c6
+	jr .waitBanner ; $43c8
+.showBanner:
 	add a, $00 ; $43ca
 	farcall ShowCourtBanner ; $43cc
-Label_0b_43cf:
+.waitBanner:
 	ld a, $1e ; $43cf
 	farcall StepMatchFrames ; $43d1
 	farcall HideCourtBanner ; $43d4
 	ld a, $0f ; $43d7
 	farcall StepMatchFrames ; $43d9
-Label_0b_43dc:
+.showScore:
 	farcall SpawnGameScoreDisplayObjs ; $43dc
 	ld a, $0a ; $43df
 	farcall StepMatchFrames ; $43e1
@@ -757,21 +757,21 @@ QueueDrillResultMessage:
 	ret ; $4544
 SetDrillMessageByServer:
 	cp a, $ff ; $4545
-	jr z, Label_0b_4554 ; $4547
+	jr z, .store ; $4547
 	ld c, a ; $4549
 	ld a, [wCurrentServingPlayer] ; $454a
 	xor a, $01 ; $454d
 	or a, a ; $454f
-	jr z, Label_0b_4553 ; $4550
+	jr z, .addOffset ; $4550
 	ld a, b ; $4552
-Label_0b_4553:
+.addOffset:
 	add a, c ; $4553
-Label_0b_4554:
+.store:
 	ld [$c2e6], a ; $4554
 	ret ; $4557
 SetDrillMessageByRallyParity:
 	cp a, $ff ; $4558
-	jr z, Label_0b_4570 ; $455a
+	jr z, .store ; $455a
 	ld c, a ; $455c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $455d
 	xor a, $01 ; $4560
@@ -781,20 +781,20 @@ SetDrillMessageByRallyParity:
 	add a, d ; $4568
 	and a, $01 ; $4569
 	or a, a ; $456b
-	jr z, Label_0b_456f ; $456c
+	jr z, .addOffset ; $456c
 	ld a, b ; $456e
-Label_0b_456f:
+.addOffset:
 	add a, c ; $456f
-Label_0b_4570:
+.store:
 	ld [$c2e6], a ; $4570
 	ret ; $4573
 ShowQueuedDrillMessage:
 	ld a, [$c2e6] ; $4574
 	or a, a ; $4577
-	jr nz, Label_0b_457f ; $4578
+	jr nz, .show ; $4578
 	ld a, $6c ; $457a
 	ld [$c2e6], a ; $457c
-Label_0b_457f:
+.show:
 	call ShowDrillMessageByIndex ; $457f
 	ret ; $4582
 ShowDrillMessageByIndex:

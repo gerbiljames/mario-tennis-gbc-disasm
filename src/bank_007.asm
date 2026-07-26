@@ -987,26 +987,26 @@ SendByteGetReplySlave:
 	ldh [$ffd7], a ; $4631
 	ei ; $4633
 	ld c, $64 ; $4634
-Label_07_4636:
+.waitLoop:
 	call WaitSerialTransfer ; $4636
-	jr c, Label_07_464e ; $4639
+	jr c, .retry ; $4639
 	di ; $463b
 	ldh a, [hLinkRxByte] ; $463c
 	ei ; $463e
 	cp a, $00 ; $463f
-	jr z, Label_07_464e ; $4641
+	jr z, .retry ; $4641
 	cp a, $ff ; $4643
-	jr z, Label_07_464e ; $4645
+	jr z, .retry ; $4645
 	ld b, a ; $4647
 	xor a, a ; $4648
 	ldh [hLinkCounter], a ; $4649
 	ld a, b ; $464b
-	jr Label_07_4654 ; $464c
-Label_07_464e:
+	jr .done ; $464c
+.retry:
 	dec c ; $464e
-	jr nz, Label_07_4636 ; $464f
+	jr nz, .waitLoop ; $464f
 	call LinkErrorReset ; $4651
-Label_07_4654:
+.done:
 	pop bc ; $4654
 	ret ; $4655
 UnpackBytesToNibbles:
@@ -2313,9 +2313,9 @@ FinalizeShotSpeed:
 	ld hl, rJOYP ; $52dd
 	add hl, bc ; $52e0
 	bit 7, h ; $52e1
-	jr z, Label_07_52e8 ; $52e3
+	jr z, .store ; $52e3
 	ld bc, $0100 ; $52e5
-Label_07_52e8:
+.store:
 	ld a, c ; $52e8
 	ld [$c458], a ; $52e9
 	ld a, b ; $52ec
@@ -3264,7 +3264,7 @@ NormalizeBallHeightForShot:
 	ld hl, $0060 ; $587c
 	add hl, de ; $587f
 	bit 7, h ; $5880
-	jr nz, Label_07_5898 ; $5882
+	jr nz, .done ; $5882
 	ld hl, $0060 ; $5884
 	add hl, de ; $5887
 	sra h ; $5888
@@ -3279,7 +3279,7 @@ NormalizeBallHeightForShot:
 	ld a, e ; $5895
 	ld [hl+], a ; $5896
 	ld [hl], d ; $5897
-Label_07_5898:
+.done:
 	ret ; $5898
 RaiseBallHeightForLob:
 	ld hl, wBallHeight ; $5899

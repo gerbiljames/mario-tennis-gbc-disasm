@@ -5095,9 +5095,9 @@ ApplyTilemapPatchListExpScreen:
 	ld l, c ; $7624
 	add a, l ; $7625
 	ld l, a ; $7626
-	jr nc, Label_1d_762a ; $7627
+	jr nc, .gotSrc ; $7627
 	inc h ; $7629
-Label_1d_762a:
+.gotSrc:
 	wram_bank $06 ; $762a
 	ld a, l ; $7630
 	ld [$d08e], a ; $7631
@@ -5111,7 +5111,7 @@ Label_1d_762a:
 	ld a, [hl+] ; $763f
 	ld h, [hl] ; $7640
 	ld l, a ; $7641
-Label_1d_7642:
+.copyLoop:
 	wram_bank $03 ; $7642
 	ld a, [hl] ; $7648
 	ld [de], a ; $7649
@@ -5120,7 +5120,7 @@ Label_1d_7642:
 	ld [de], a ; $7651
 	inc de ; $7652
 	dec c ; $7653
-	jr nz, Label_1d_7642 ; $7654
+	jr nz, .copyLoop ; $7654
 	pop bc ; $7656
 	pop hl ; $7657
 	inc hl ; $7658

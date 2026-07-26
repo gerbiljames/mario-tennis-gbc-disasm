@@ -447,7 +447,7 @@ Label_18_4503:
 	ret ; $4506
 LoadCharacterRecordToBuffer:
 	cp a, $84 ; $4507
-	jr z, Label_18_4522 ; $4509
+	jr z, .fixedRecord ; $4509
 	push af ; $450b
 	push bc ; $450c
 	push de ; $450d
@@ -462,7 +462,7 @@ LoadCharacterRecordToBuffer:
 	pop bc ; $451f
 	pop af ; $4520
 	ret ; $4521
-Label_18_4522:
+.fixedRecord:
 	push af ; $4522
 	ld a, $3e ; $4523
 	ld [$d58b], a ; $4525

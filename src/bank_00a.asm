@@ -571,14 +571,14 @@ ScriptSetActorPosition:
 	ld c, l ; $43bf
 	ld b, h ; $43c0
 	call GetActorStateAddr ; $43c1
-	jr z, Label_0a_43d5 ; $43c4
+	jr z, .done ; $43c4
 	ld a, l ; $43c6
 	ldh [hActorPtr], a ; $43c7
 	ld a, h ; $43c9
 	ldh [hActorPtr + 1], a ; $43ca
 	wram_bank $04 ; $43cc
 	call SetActorPositionRaw ; $43d2
-Label_0a_43d5:
+.done:
 	add sp, 4 ; $43d5
 	ret ; $43d7
 SetActorPositionRaw:
@@ -618,14 +618,14 @@ ScriptSetActorMoveTarget:
 	ld c, l ; $4406
 	ld b, h ; $4407
 	call GetActorStateAddr ; $4408
-	jr z, Label_0a_441c ; $440b
+	jr z, .done ; $440b
 	ld a, l ; $440d
 	ldh [hActorPtr], a ; $440e
 	ld a, h ; $4410
 	ldh [hActorPtr + 1], a ; $4411
 	wram_bank $04 ; $4413
 	call SetActorMoveTargetRaw ; $4419
-Label_0a_441c:
+.done:
 	add sp, 4 ; $441c
 	ret ; $441e
 SetActorMoveTargetRaw:
@@ -977,9 +977,9 @@ SetActorFacing:
 	ld a, $14 ; $45ec
 	add a, l ; $45ee
 	ld l, a ; $45ef
-	jr nc, Label_0a_45f3 ; $45f0
+	jr nc, .store ; $45f0
 	inc h ; $45f2
-Label_0a_45f3:
+.store:
 	ld [hl], b ; $45f3
 	ret ; $45f4
 FaceActorTowardActor:
@@ -1588,7 +1588,7 @@ RunStoryMatch:
 	farcall RunMatch ; $496d
 	ld a, [$c8a5] ; $4970
 	or a, a ; $4973
-	jr z, Label_0a_498c ; $4974
+	jr z, .matchAborted ; $4974
 	farcall SaveStorySlotWithTimer ; $4976
 	ld a, $00 ; $4979
 	ld [wStoryModeCurrentLocation], a ; $497b
@@ -1598,7 +1598,7 @@ RunStoryMatch:
 	ld [$c294], a ; $4985
 	ld [wStoryModeExitLocationRequest], a ; $4988
 	ret ; $498b
-Label_0a_498c:
+.matchAborted:
 	xor a, a ; $498c
 	ld [wKeepMatchStatsFlag], a ; $498d
 	ret ; $4990

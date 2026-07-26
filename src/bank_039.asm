@@ -3290,16 +3290,16 @@ DrawDecimalNumberSprites_39:
 	pop de ; $6f26
 	ld b, $00 ; $6f27
 	ld hl, $cb64 ; $6f29
-Label_39_6f2c:
+.lenLoop:
 	ld a, [hl] ; $6f2c
 	or a, a ; $6f2d
-	jr z, Label_39_6f34 ; $6f2e
+	jr z, .atEnd ; $6f2e
 	inc b ; $6f30
 	inc hl ; $6f31
-	jr Label_39_6f2c ; $6f32
-Label_39_6f34:
+	jr .lenLoop ; $6f32
+.atEnd:
 	dec hl ; $6f34
-Label_39_6f35:
+.digitLoop:
 	ld a, [hl-] ; $6f35
 	sub a, $30 ; $6f36
 	ld c, a ; $6f38
@@ -3308,9 +3308,9 @@ Label_39_6f35:
 	sub a, $08 ; $6f3d
 	ld d, a ; $6f3f
 	dec b ; $6f40
-	jr z, Label_39_6f45 ; $6f41
-	jr Label_39_6f35 ; $6f43
-Label_39_6f45:
+	jr z, .done ; $6f41
+	jr .digitLoop ; $6f43
+.done:
 	pop af ; $6f45
 	wram_bank ; $6f46
 	pop hl ; $6f4a

@@ -1611,17 +1611,17 @@ WriteTileBufferCell:
 	ld de, $0000 ; $4c68
 	call CompareBCToDE ; $4c6b
 	cp a, $00 ; $4c6e
-	jr z, Label_1a_4c7e ; $4c70
+	jr z, .zero ; $4c70
 	bit 7, h ; $4c72
-	jr nz, Label_1a_4c7a ; $4c74
+	jr nz, .negative ; $4c74
 	ld a, $2b ; $4c76
-	jr Label_1a_4c80 ; $4c78
-Label_1a_4c7a:
+	jr .writeSign ; $4c78
+.negative:
 	ld a, $2d ; $4c7a
-	jr Label_1a_4c80 ; $4c7c
-Label_1a_4c7e:
+	jr .writeSign ; $4c7c
+.zero:
 	ld a, $60 ; $4c7e
-Label_1a_4c80:
+.writeSign:
 	pop de ; $4c80
 	pop bc ; $4c81
 	push de ; $4c82
@@ -1632,12 +1632,12 @@ Label_1a_4c80:
 	inc b ; $4c8a
 	ld a, d ; $4c8b
 	cp a, $00 ; $4c8c
-	jr z, Label_1a_4cbb ; $4c8e
+	jr z, .tens ; $4c8e
 	push bc ; $4c90
 	push de ; $4c91
 	call SignExtendModifierByte ; $4c92
 	bit 7, h ; $4c95
-	jr z, Label_1a_4ca4 ; $4c97
+	jr z, .divide ; $4c97
 	push hl ; $4c99
 	pop de ; $4c9a
 	ld hl, $0000 ; $4c9b
@@ -1647,31 +1647,31 @@ Label_1a_4c80:
 	ld a, h ; $4ca1
 	sbc a, d ; $4ca2
 	ld h, a ; $4ca3
-Label_1a_4ca4:
+.divide:
 	ld de, $0064 ; $4ca4
 	call DivHLByDE ; $4ca7
 	pop de ; $4caa
 	pop bc ; $4cab
 	ld a, l ; $4cac
 	cp a, $00 ; $4cad
-	jr z, Label_1a_4cbb ; $4caf
+	jr z, .tens ; $4caf
 	push de ; $4cb1
 	ld d, $31 ; $4cb2
 	ld e, $01 ; $4cb4
 	call WriteTileBufferCell ; $4cb6
 	pop de ; $4cb9
 	inc b ; $4cba
-Label_1a_4cbb:
+.tens:
 	ld a, d ; $4cbb
 	call GetModifierTensDigit ; $4cbc
 	cp a, $00 ; $4cbf
-	jr nz, Label_1a_4ccc ; $4cc1
+	jr nz, .writeTens ; $4cc1
 	ld a, d ; $4cc3
 	sub a, $64 ; $4cc4
 	bit 7, a ; $4cc6
-	jr nz, Label_1a_4cd7 ; $4cc8
+	jr nz, .ones ; $4cc8
 	ld a, $00 ; $4cca
-Label_1a_4ccc:
+.writeTens:
 	add a, $30 ; $4ccc
 	push de ; $4cce
 	ld d, a ; $4ccf
@@ -1679,7 +1679,7 @@ Label_1a_4ccc:
 	call WriteTileBufferCell ; $4cd2
 	pop de ; $4cd5
 	inc b ; $4cd6
-Label_1a_4cd7:
+.ones:
 	ld a, d ; $4cd7
 	call GetModifierOnesDigit ; $4cd8
 	add a, $30 ; $4cdb
@@ -2044,7 +2044,7 @@ AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
 	ld a, [$d238] ; $4f36
 	and a, a ; $4f39
-	jr nz, Label_1a_4f5c ; $4f3a
+	jr nz, .updateRemaining ; $4f3a
 	ld hl, $d232 ; $4f3c
 	ld a, [hl+] ; $4f3f
 	ld d, [hl] ; $4f40
@@ -2066,10 +2066,10 @@ AdvanceExpGaugeFill:
 	ld h, a ; $4f52
 	ld a, h ; $4f53
 	or a, l ; $4f54
-	jr nz, Label_1a_4f5c ; $4f55
+	jr nz, .updateRemaining ; $4f55
 	ld a, $01 ; $4f57
 	ld [$d238], a ; $4f59
-Label_1a_4f5c:
+.updateRemaining:
 	ld hl, $d232 ; $4f5c
 	ld a, [hl+] ; $4f5f
 	ld b, [hl] ; $4f60
@@ -2085,7 +2085,7 @@ Label_1a_4f5c:
 	sbc a, b ; $4f6c
 	ld h, a ; $4f6d
 	bit 7, h ; $4f6e
-	jr nz, Label_1a_4f7b ; $4f70
+	jr nz, .clampToZero ; $4f70
 	ld d, h ; $4f72
 	ld e, l ; $4f73
 	ld hl, $d242 ; $4f74
@@ -2093,7 +2093,7 @@ Label_1a_4f5c:
 	ld [hl+], a ; $4f78
 	ld [hl], d ; $4f79
 	ret ; $4f7a
-Label_1a_4f7b:
+.clampToZero:
 	xor a, a ; $4f7b
 	ld hl, $d242 ; $4f7c
 	ld [hl+], a ; $4f7f
@@ -4272,35 +4272,35 @@ GetStatArrowSpriteAttr:
 	ret ; $7df4
 GetStatArrowTile:
 	bit 7, a ; $7df5
-	jr nz, Label_1a_7e07 ; $7df7
+	jr nz, .down ; $7df7
 	dec a ; $7df9
-	jr z, Label_1a_7e02 ; $7dfa
+	jr z, .upSingle ; $7dfa
 	dec a ; $7dfc
 	ld c, $7e ; $7dfd
 	ld h, $02 ; $7dff
 	ret ; $7e01
-Label_1a_7e02:
+.upSingle:
 	ld c, $7c ; $7e02
 	ld h, $02 ; $7e04
 	ret ; $7e06
-Label_1a_7e07:
+.down:
 	inc a ; $7e07
-	jr z, Label_1a_7e10 ; $7e08
+	jr z, .downSingle ; $7e08
 	inc a ; $7e0a
 	ld c, $7a ; $7e0b
 	ld h, $01 ; $7e0d
 	ret ; $7e0f
-Label_1a_7e10:
+.downSingle:
 	ld c, $78 ; $7e10
 	ld h, $01 ; $7e12
 	ret ; $7e14
 GetStatArrowExtraTile:
 	bit 7, a ; $7e15
-	jr nz, Label_1a_7e1e ; $7e17
+	jr nz, .down ; $7e17
 	ld c, $7c ; $7e19
 	ld h, $03 ; $7e1b
 	ret ; $7e1d
-Label_1a_7e1e:
+.down:
 	ld c, $78 ; $7e1e
 	ld h, $00 ; $7e20
 	ret ; $7e22
@@ -4325,12 +4325,12 @@ Data_1a_7e34:
 	db $f0, $f8, $00, $08 ; 0x00
 OffsetStatArrowSpriteX:
 	bit 7, a ; $7e38
-	jr nz, Label_1a_7e41 ; $7e3a
+	jr nz, .shiftLeft ; $7e3a
 	ld a, $08 ; $7e3c
 	add a, d ; $7e3e
 	ld d, a ; $7e3f
 	ret ; $7e40
-Label_1a_7e41:
+.shiftLeft:
 	ld a, $f8 ; $7e41
 	add a, d ; $7e43
 	ld d, a ; $7e44

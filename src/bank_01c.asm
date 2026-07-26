@@ -548,7 +548,7 @@ CharDataScreen_DrawStatBar:
 	ld b, a ; $4502
 	ld a, c ; $4503
 	or a, a ; $4504
-	jr nz, Label_1c_4515 ; $4505
+	jr nz, .altTable ; $4505
 	ld a, b ; $4507
 	rlca ; $4508
 	add a, $58 ; $4509
@@ -559,8 +559,8 @@ CharDataScreen_DrawStatBar:
 	ld a, [hl+] ; $4510
 	ld h, [hl] ; $4511
 	ld l, a ; $4512
-	jr Label_1c_4521 ; $4513
-Label_1c_4515:
+	jr .copyTiles ; $4513
+.altTable:
 	ld a, b ; $4515
 	rlca ; $4516
 	add a, $6e ; $4517
@@ -571,7 +571,7 @@ Label_1c_4515:
 	ld a, [hl+] ; $451e
 	ld h, [hl] ; $451f
 	ld l, a ; $4520
-Label_1c_4521:
+.copyTiles:
 	push de ; $4521
 	wram_bank $03 ; $4522
 	ld a, [hl+] ; $4528
@@ -2030,9 +2030,9 @@ GetStatDigitSpritePos:
 	rlca ; $4fdc
 	add a, l ; $4fdd
 	ld l, a ; $4fde
-	jr nc, Label_1c_4fe2 ; $4fdf
+	jr nc, .readOffsets ; $4fdf
 	inc h ; $4fe1
-Label_1c_4fe2:
+.readOffsets:
 	ld a, [hl+] ; $4fe2
 	add a, d ; $4fe3
 	ld d, a ; $4fe4
@@ -2603,12 +2603,12 @@ QueueStatChangeArrow:
 	or a, a ; $555c
 	ret z ; $555d
 	bit 7, a ; $555e
-	jr nz, Label_1c_556a ; $5560
+	jr nz, .arrowDown ; $5560
 	ld b, $0e ; $5562
 	ld c, $d0 ; $5564
 	call QueueSprite ; $5566
 	ret ; $5569
-Label_1c_556a:
+.arrowDown:
 	ld b, $0f ; $556a
 	ld c, $d2 ; $556c
 	call QueueSprite ; $556e

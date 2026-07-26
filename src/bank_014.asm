@@ -3283,9 +3283,9 @@ PlayPlaneMoveSfx_14:
 	ld a, h ; $78a7
 	srl a ; $78a8
 	and a, $01 ; $78aa
-	jr z, Label_14_78b0 ; $78ac
+	jr z, .done ; $78ac
 	sound $7b ; $78ae
-Label_14_78b0:
+.done:
 	ret ; $78b0
 ActorScript_14_78b1:
 	; $78b1, 10 bytes (actor_script)

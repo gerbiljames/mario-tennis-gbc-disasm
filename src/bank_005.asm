@@ -4435,7 +4435,7 @@ FetchDialogueText:
 	push de ; $5c1a
 	push hl ; $5c1b
 	bit 7, h ; $5c1c
-	jr nz, Label_05_5c9c ; $5c1e
+	jr nz, FetchDialogueTextFromSram ; $5c1e
 	ld d, h ; $5c20
 	ld e, l ; $5c21
 	ld b, d ; $5c22
@@ -4450,9 +4450,9 @@ FetchDialogueText:
 	add a, a ; $5c31
 	add a, l ; $5c32
 	ld l, a ; $5c33
-	jr nc, Label_05_5c37 ; $5c34
+	jr nc, .readFetcher ; $5c34
 	inc h ; $5c36
-Label_05_5c37:
+.readFetcher:
 	ld a, [hl+] ; $5c37
 	ld h, [hl] ; $5c38
 	ld l, a ; $5c39
@@ -4476,37 +4476,37 @@ DialogueTextFetchers_05:
 	dw $5c5b ; record 14
 	dw $5c5b ; record 15
 	farcall FetchDialogueText_30 ; $5c5b
-	jr Label_05_5ca3 ; $5c5e
+	jr FetchDialogueTextDone ; $5c5e
 	farcall FetchDialogueText_31 ; $5c60
-	jr Label_05_5ca3 ; $5c63
+	jr FetchDialogueTextDone ; $5c63
 	farcall FetchDialogueText_32 ; $5c65
-	jr Label_05_5ca3 ; $5c68
+	jr FetchDialogueTextDone ; $5c68
 	farcall FetchDialogueText_33 ; $5c6a
-	jr Label_05_5ca3 ; $5c6d
+	jr FetchDialogueTextDone ; $5c6d
 	farcall FetchDialogueText_34 ; $5c6f
-	jr Label_05_5ca3 ; $5c72
+	jr FetchDialogueTextDone ; $5c72
 	farcall FetchDialogueText_35 ; $5c74
-	jr Label_05_5ca3 ; $5c77
+	jr FetchDialogueTextDone ; $5c77
 	farcall FetchDialogueText_36 ; $5c79
-	jr Label_05_5ca3 ; $5c7c
+	jr FetchDialogueTextDone ; $5c7c
 	farcall FetchDialogueText_37 ; $5c7e
-	jr Label_05_5ca3 ; $5c81
+	jr FetchDialogueTextDone ; $5c81
 	farcall FetchDialogueText_6e ; $5c83
-	jr Label_05_5ca3 ; $5c86
+	jr FetchDialogueTextDone ; $5c86
 	farcall FetchDialogueText_1f ; $5c88
-	jr Label_05_5ca3 ; $5c8b
+	jr FetchDialogueTextDone ; $5c8b
 	farcall FetchDialogueText_25 ; $5c8d
-	jr Label_05_5ca3 ; $5c90
+	jr FetchDialogueTextDone ; $5c90
 	farcall FetchDialogueText_26 ; $5c92
-	jr Label_05_5ca3 ; $5c95
+	jr FetchDialogueTextDone ; $5c95
 	farcall FetchDialogueText_5e ; $5c97
-	jr Label_05_5ca3 ; $5c9a
-Label_05_5c9c:
+	jr FetchDialogueTextDone ; $5c9a
+FetchDialogueTextFromSram:
 	ld a, h ; $5c9c
 	and a, $03 ; $5c9d
 	ld h, a ; $5c9f
 	call FetchSRAMDialogueText ; $5ca0
-Label_05_5ca3:
+FetchDialogueTextDone:
 	pop hl ; $5ca3
 	pop de ; $5ca4
 	pop bc ; $5ca5
@@ -5089,17 +5089,17 @@ WriteStringToWindow:
 	push bc ; $600f
 	push de ; $6010
 	push hl ; $6011
-Label_05_6012:
+.charLoop:
 	ld b, a ; $6012
 	ld a, [hl] ; $6013
 	or a, a ; $6014
-	jr z, Label_05_6050 ; $6015
+	jr z, .done ; $6015
 	cp a, $de ; $6017
-	jr z, Label_05_6021 ; $6019
+	jr z, .markChar ; $6019
 	cp a, $df ; $601b
-	jr z, Label_05_6021 ; $601d
-	jr Label_05_6045 ; $601f
-Label_05_6021:
+	jr z, .markChar ; $601d
+	jr .writeChar ; $601f
+.markChar:
 	push bc ; $6021
 	ld a, b ; $6022
 	dec d ; $6023
@@ -5111,9 +5111,9 @@ Label_05_6021:
 	ld a, c ; $602b
 	cp a, $03 ; $602c
 	ld a, [hl] ; $602e
-	jr nz, Label_05_6033 ; $602f
+	jr nz, .writeMark ; $602f
 	sub a, $d0 ; $6031
-Label_05_6033:
+.writeMark:
 	pop bc ; $6033
 	push bc ; $6034
 	ld c, a ; $6035
@@ -5127,16 +5127,16 @@ Label_05_6033:
 	inc hl ; $6040
 	pop bc ; $6041
 	ld a, b ; $6042
-	jr Label_05_6012 ; $6043
-Label_05_6045:
+	jr .charLoop ; $6043
+.writeChar:
 	inc hl ; $6045
 	ld c, a ; $6046
 	ld a, b ; $6047
 	ld b, $80 ; $6048
 	call WriteWindowCellTileAttr ; $604a
 	inc d ; $604d
-	jr Label_05_6012 ; $604e
-Label_05_6050:
+	jr .charLoop ; $604e
+.done:
 	pop hl ; $6050
 	pop de ; $6051
 	pop bc ; $6052
@@ -7067,9 +7067,9 @@ CreateWindowFromScreenRect:
 	call AllocWindowStruct ; $6e5c
 	ld a, [$d820] ; $6e5f
 	cp a, $ff ; $6e62
-	jr z, Label_05_6e69 ; $6e64
+	jr z, .done ; $6e64
 	ld a, [$d820] ; $6e66
-Label_05_6e69:
+.done:
 	pop hl ; $6e69
 	pop de ; $6e6a
 	pop bc ; $6e6b
@@ -7224,12 +7224,12 @@ WrapCellPtrToRowStart:
 	push af ; $6f2a
 	ld a, l ; $6f2b
 	and a, $1f ; $6f2c
-	jr nz, Label_05_6f36 ; $6f2e
+	jr nz, .done ; $6f2e
 	push bc ; $6f30
 	ld bc, $ffe0 ; $6f31
 	add hl, bc ; $6f34
 	pop bc ; $6f35
-Label_05_6f36:
+.done:
 	pop af ; $6f36
 	ret ; $6f37
 ClampCellPtrToShadowMap:
@@ -7791,9 +7791,9 @@ RenderMenuWindowText:
 	push hl ; $7235
 	ld a, [$d82f] ; $7236
 	or a, a ; $7239
-	jr nz, Label_05_723f ; $723a
+	jr nz, .draw ; $723a
 	call PrepareGlyphBuffer ; $723c
-Label_05_723f:
+.draw:
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $723f
 	ld a, [$d82f] ; $7242
 	call DrawTextWindowFrame ; $7245

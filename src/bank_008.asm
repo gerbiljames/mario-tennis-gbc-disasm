@@ -3712,9 +3712,9 @@ AwardPoint:
 	add a, a ; $5c17
 	ret z ; $5c18
 	ld hl, wPlayer1PointsWon ; $5c19
-	jr nc, Label_08_5c21 ; $5c1c
+	jr nc, .increment ; $5c1c
 	ld hl, wPlayer2PointsWon ; $5c1e
-Label_08_5c21:
+.increment:
 	inc [hl] ; $5c21
 	xor a, a ; $5c22
 	ld [wServeFaultFlag], a ; $5c23
@@ -5601,9 +5601,9 @@ SetCharAnimation:
 	add a, a ; $6a03
 	add a, l ; $6a04
 	ld l, a ; $6a05
-	jr nc, Label_08_6a09 ; $6a06
+	jr nc, .readAnimPtr ; $6a06
 	inc h ; $6a08
-Label_08_6a09:
+.readAnimPtr:
 	ld a, [wCharActive] ; $6a09
 	call FarReadWordDI ; $6a0c
 	ld hl, $df2a ; $6a0f

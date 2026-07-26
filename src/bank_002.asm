@@ -634,7 +634,7 @@ RefreshPlayerStatsAndGetPtr:
 LookupStatBarLevel:
 	ld e, $00 ; $4494
 	ld d, $09 ; $4496
-Label_02_4498:
+.thresholdLoop:
 	push hl ; $4498
 	push bc ; $4499
 	ld c, [hl] ; $449a
@@ -658,7 +658,7 @@ Label_02_4498:
 	inc e ; $44b1
 	inc hl ; $44b2
 	dec d ; $44b3
-	jr nz, Label_02_4498 ; $44b4
+	jr nz, .thresholdLoop ; $44b4
 	ret ; $44b6
 ScaleStatForBarLevel:
 	ld l, [hl] ; $44b7
@@ -682,19 +682,19 @@ ScaleStatForBarLevel:
 	add hl, de ; $44d1
 	bit 7, h ; $44d2
 	pop hl ; $44d4
-	jr z, Label_02_44e3 ; $44d5
+	jr z, .clampMax ; $44d5
 	push hl ; $44d7
 	ld de, $007f ; $44d8
 	add hl, de ; $44db
 	bit 7, h ; $44dc
 	pop hl ; $44de
-	jr nz, Label_02_44e6 ; $44df
+	jr nz, .clampMin ; $44df
 	ld b, l ; $44e1
 	ret ; $44e2
-Label_02_44e3:
+.clampMax:
 	ld b, $7f ; $44e3
 	ret ; $44e5
-Label_02_44e6:
+.clampMin:
 	ld b, $81 ; $44e6
 	ret ; $44e8
 RecomputeCharacterStats:

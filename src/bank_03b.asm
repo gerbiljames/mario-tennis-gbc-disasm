@@ -94,19 +94,19 @@ ApplyCursorBounceX:
 	ld hl, $40b5 ; $409f
 	add a, l ; $40a2
 	ld l, a ; $40a3
-	jr nc, Label_3b_40a7 ; $40a4
+	jr nc, .readOffset ; $40a4
 	inc h ; $40a6
-Label_3b_40a7:
+.readOffset:
 	ld a, [hl] ; $40a7
 	ld b, a ; $40a8
 	ld a, c ; $40a9
 	or a, a ; $40aa
-	jr z, Label_3b_40b1 ; $40ab
+	jr z, .subtract ; $40ab
 	ld a, b ; $40ad
 	add a, d ; $40ae
 	ld d, a ; $40af
 	ret ; $40b0
-Label_3b_40b1:
+.subtract:
 	ld a, d ; $40b1
 	sub a, b ; $40b2
 	ld d, a ; $40b3
@@ -119,19 +119,19 @@ ApplyCursorBounceY:
 	ld hl, $40df ; $40c9
 	add a, l ; $40cc
 	ld l, a ; $40cd
-	jr nc, Label_3b_40d1 ; $40ce
+	jr nc, .readOffset ; $40ce
 	inc h ; $40d0
-Label_3b_40d1:
+.readOffset:
 	ld a, [hl] ; $40d1
 	ld b, a ; $40d2
 	ld a, c ; $40d3
 	or a, a ; $40d4
-	jr z, Label_3b_40db ; $40d5
+	jr z, .subtract ; $40d5
 	ld a, b ; $40d7
 	add a, e ; $40d8
 	ld e, a ; $40d9
 	ret ; $40da
-Label_3b_40db:
+.subtract:
 	ld a, e ; $40db
 	sub a, b ; $40dc
 	ld e, a ; $40dd
@@ -2168,18 +2168,18 @@ DecodeN64CharTrophyCounts:
 FillTrophyCountCells:
 	push de ; $4ed1
 	push bc ; $4ed2
-Label_3b_4ed3:
+.cellLoop:
 	ld a, b ; $4ed3
 	or a, a ; $4ed4
-	jr z, Label_3b_4ee0 ; $4ed5
+	jr z, .done ; $4ed5
 	ld a, $01 ; $4ed7
 	ld [de], a ; $4ed9
 	inc de ; $4eda
 	ld a, b ; $4edb
 	dec a ; $4edc
 	ld b, a ; $4edd
-	jr Label_3b_4ed3 ; $4ede
-Label_3b_4ee0:
+	jr .cellLoop ; $4ede
+.done:
 	pop bc ; $4ee0
 	pop de ; $4ee1
 	ret ; $4ee2
@@ -4511,26 +4511,26 @@ FillMatchFormatOptionCell:
 	add a, a ; $605a
 	add a, l ; $605b
 	ld l, a ; $605c
-	jr nc, Label_3b_6060 ; $605d
+	jr nc, .readAddr ; $605d
 	inc h ; $605f
-Label_3b_6060:
+.readAddr:
 	ld a, [hl+] ; $6060
 	ld d, [hl] ; $6061
 	ld e, a ; $6062
 	ld h, $0d ; $6063
 	ld a, c ; $6065
 	or a, a ; $6066
-	jr z, Label_3b_6074 ; $6067
+	jr z, .fill ; $6067
 	ld a, b ; $6069
 	ld hl, $6093 ; $606a
 	add a, l ; $606d
 	ld l, a ; $606e
-	jr nc, Label_3b_6072 ; $606f
+	jr nc, .readWidth ; $606f
 	inc h ; $6071
-Label_3b_6072:
+.readWidth:
 	ld a, [hl] ; $6072
 	ld h, a ; $6073
-Label_3b_6074:
+.fill:
 	ld b, $05 ; $6074
 	ld c, $03 ; $6076
 	farcall FillTilemapRect ; $6078

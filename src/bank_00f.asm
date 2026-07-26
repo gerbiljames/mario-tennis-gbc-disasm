@@ -3223,7 +3223,7 @@ Facings_0f_7b16:
 	db FACE_DOWN, FACE_DOWN, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_UP, FACE_UP, FACE_LEFT, FACE_RIGHT, FACE_DOWN ; 0x00
 SetPlayerAndPartnerObjectDefs:
 	test_flag FLAG_DOUBLES ; $7b20
-	jp z, Label_0f_7b3e ; $7b23
+	jp z, .mainChar ; $7b23
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7b26
 	ld d, $58 ; $7b29
 	add a, d ; $7b2b
@@ -3233,7 +3233,7 @@ SetPlayerAndPartnerObjectDefs:
 	ld b, h ; $7b33
 	farcall LoadActorObjectDefIfValid ; $7b34
 	script_set_anim ACTOR_PARTNER, $01 ; $7b37
-Label_0f_7b3e:
+.mainChar:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7b3e
 	ld d, $56 ; $7b41
 	add a, d ; $7b43

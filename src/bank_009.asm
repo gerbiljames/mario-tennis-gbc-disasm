@@ -83,7 +83,7 @@ Label_09_4094:
 UpdateScorePanelDisplay:
 	call GetPointScoreForDisplay ; $4098
 	and a, a ; $409b
-	jr nz, Label_09_40b1 ; $409c
+	jr nz, .deuce ; $409c
 	push de ; $409e
 	ld a, [$c7bd] ; $409f
 	ld b, a ; $40a2
@@ -95,7 +95,7 @@ UpdateScorePanelDisplay:
 	ld a, e ; $40ac
 	call LoadPlayer2ScoreDigitGfx ; $40ad
 	ret ; $40b0
-Label_09_40b1:
+.deuce:
 	call LoadDeuceAdvantageGfx ; $40b1
 	ret ; $40b4
 LoadOnCourtCharacterGfx:
@@ -509,9 +509,9 @@ LoadObjTemplate_09:
 	ld a, [hl+] ; $463e
 	inc hl ; $463f
 	and a, a ; $4640
-	jr z, Label_09_4646 ; $4641
+	jr z, .setDrawMode ; $4641
 	call PlaySoundManaged ; $4643
-Label_09_4646:
+.setDrawMode:
 	ld d, [hl] ; $4646
 	call SetObjDrawMode ; $4647
 	xor a, a ; $464a
@@ -545,9 +545,9 @@ StartObjExitAnim:
 	add a, $08 ; $466e
 	add a, l ; $4670
 	ld l, a ; $4671
-	jr nc, Label_09_4675 ; $4672
+	jr nc, .readEntry ; $4672
 	inc h ; $4674
-Label_09_4675:
+.readEntry:
 	ld a, [hl+] ; $4675
 	ld e, a ; $4676
 	ld a, [hl+] ; $4677

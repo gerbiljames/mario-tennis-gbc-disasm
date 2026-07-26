@@ -3699,16 +3699,16 @@ GetGridSlotFromCursor:
 	ld b, a ; $5cce
 	ld a, [$d811] ; $5ccf
 	ld c, a ; $5cd2
-Label_38_5cd3:
+.addPageLoop:
 	ld a, c ; $5cd3
 	or a, a ; $5cd4
-	jr z, Label_38_5cde ; $5cd5
+	jr z, .done ; $5cd5
 	ld a, $03 ; $5cd7
 	add a, b ; $5cd9
 	ld b, a ; $5cda
 	dec c ; $5cdb
-	jr Label_38_5cd3 ; $5cdc
-Label_38_5cde:
+	jr .addPageLoop ; $5cdc
+.done:
 	pop af ; $5cde
 	wram_bank ; $5cdf
 	ld a, b ; $5ce3

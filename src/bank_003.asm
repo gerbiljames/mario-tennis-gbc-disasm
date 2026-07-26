@@ -1693,10 +1693,10 @@ InvalidateSaveBlock:
 	inc hl ; $4b3e
 	ld c, $08 ; $4b3f
 	xor a, a ; $4b41
-Label_03_4b42:
+.clearLoop:
 	ld [hl+], a ; $4b42
 	dec c ; $4b43
-	jr nz, Label_03_4b42 ; $4b44
+	jr nz, .clearLoop ; $4b44
 	call MirrorSaveHeaderToBank1 ; $4b46
 	xor a, a ; $4b49
 	push af ; $4b4a
@@ -2089,9 +2089,9 @@ TestSaveFlag:
 	rlca ; $4d9c
 	add a, l ; $4d9d
 	ld l, a ; $4d9e
-	jr nc, Label_03_4da2 ; $4d9f
+	jr nc, .gotMask ; $4d9f
 	inc h ; $4da1
-Label_03_4da2:
+.gotMask:
 	ld a, [hl] ; $4da2
 	ld hl, sSaveFlags ; $4da3
 	ld e, d ; $4da6

@@ -2092,14 +2092,14 @@ HighlightRankingRow:
 	ld hl, RankingRowDrawHandlers_1b ; $5754
 	add a, l ; $5757
 	ld l, a ; $5758
-	jr nc, Label_1b_575c ; $5759
+	jr nc, .jumpToHandler ; $5759
 	inc h ; $575b
-Label_1b_575c:
+.jumpToHandler:
 	ld a, [hl+] ; $575c
 	ld h, [hl] ; $575d
 	ld l, a ; $575e
 	jp hl ; $575f
-Label_1b_5760:
+StubNop_1b_5760:
 	ret ; $5760
 RankingRowDrawHandlers_1b:
 	dw Label_1b_5779 ; $5761 jumptable
@@ -2120,77 +2120,77 @@ Label_1b_5779:
 	ld b, $05 ; $577f
 	ld c, $02 ; $5781
 	farcall CopyTilemapRect ; $5783
-	jp Label_1b_5760 ; $5786
+	jp StubNop_1b_5760 ; $5786
 Label_1b_5789:
 	ld hl, $d280 ; $5789
 	ld de, $d146 ; $578c
 	ld b, $04 ; $578f
 	ld c, $02 ; $5791
 	farcall CopyTilemapRect ; $5793
-	jp Label_1b_5760 ; $5796
+	jp StubNop_1b_5760 ; $5796
 Label_1b_5799:
 	ld hl, $d244 ; $5799
 	ld de, $d02a ; $579c
 	ld b, $04 ; $579f
 	ld c, $02 ; $57a1
 	farcall CopyTilemapRect ; $57a3
-	jp Label_1b_5760 ; $57a6
+	jp StubNop_1b_5760 ; $57a6
 Label_1b_57a9:
 	ld hl, $d284 ; $57a9
 	ld de, $d14a ; $57ac
 	ld b, $04 ; $57af
 	ld c, $02 ; $57b1
 	farcall CopyTilemapRect ; $57b3
-	jp Label_1b_5760 ; $57b6
+	jp StubNop_1b_5760 ; $57b6
 Label_1b_57b9:
 	ld hl, $d2c0 ; $57b9
 	ld de, $d026 ; $57bc
 	ld b, $04 ; $57bf
 	ld c, $07 ; $57c1
 	farcall CopyTilemapRect ; $57c3
-	jp Label_1b_5760 ; $57c6
+	jp StubNop_1b_5760 ; $57c6
 Label_1b_57c9:
 	ld hl, $d2c8 ; $57c9
 	ld de, $d146 ; $57cc
 	ld b, $04 ; $57cf
 	ld c, $07 ; $57d1
 	farcall CopyTilemapRect ; $57d3
-	jp Label_1b_5760 ; $57d6
+	jp StubNop_1b_5760 ; $57d6
 Label_1b_57d9:
 	ld hl, $d2c4 ; $57d9
 	ld de, $d02a ; $57dc
 	ld b, $04 ; $57df
 	ld c, $07 ; $57e1
 	farcall CopyTilemapRect ; $57e3
-	jp Label_1b_5760 ; $57e6
+	jp StubNop_1b_5760 ; $57e6
 Label_1b_57e9:
 	ld hl, $d2cc ; $57e9
 	ld de, $d14a ; $57ec
 	ld b, $04 ; $57ef
 	ld c, $07 ; $57f1
 	farcall CopyTilemapRect ; $57f3
-	jp Label_1b_5760 ; $57f6
+	jp StubNop_1b_5760 ; $57f6
 Label_1b_57f9:
 	ld hl, $d014 ; $57f9
 	ld de, $d026 ; $57fc
 	ld b, $04 ; $57ff
 	ld c, $10 ; $5801
 	farcall CopyTilemapRect ; $5803
-	jp Label_1b_5760 ; $5806
+	jp StubNop_1b_5760 ; $5806
 Label_1b_5809:
 	ld hl, $d018 ; $5809
 	ld de, $d02a ; $580c
 	ld b, $04 ; $580f
 	ld c, $10 ; $5811
 	farcall CopyTilemapRect ; $5813
-	jp Label_1b_5760 ; $5816
+	jp StubNop_1b_5760 ; $5816
 Label_1b_5819:
 	ld hl, $d014 ; $5819
 	ld de, $d026 ; $581c
 	ld b, $08 ; $581f
 	ld c, $10 ; $5821
 	farcall CopyTilemapRect ; $5823
-	jp Label_1b_5760 ; $5826
+	jp StubNop_1b_5760 ; $5826
 HighlightDoublesRankingRows:
 	ld a, [$d801] ; $5829
 	or a, a ; $582c

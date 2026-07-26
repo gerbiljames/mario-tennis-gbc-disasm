@@ -534,14 +534,14 @@ CopyMemoryBC:
 	dec b ; $03e6
 	jr nz, .loop ; $03e7
 	ret ; $03e9
-Label_00_03ea:
+CopyMemoryReverseBC:
 	ld a, [hl-] ; $03ea
 	ld [de], a ; $03eb
 	dec de ; $03ec
 	dec bc ; $03ed
 	ld a, b ; $03ee
 	or a, c ; $03ef
-	jr nz, Label_00_03ea ; $03f0
+	jr nz, CopyMemoryReverseBC ; $03f0
 	ret ; $03f2
 CopyMemoryFast:
 	ld a, $0f ; $03f3
@@ -651,10 +651,10 @@ CopyMemoryFast:
 	dec c ; $045c
 	jr nz, .copyAlignedLoop ; $045d
 	ret ; $045f
-Label_00_0460:
+FillMemoryCFast:
 	ld [hl+], a ; $0460
 	dec c ; $0461
-	jr nz, Label_00_0460 ; $0462
+	jr nz, FillMemoryCFast ; $0462
 	ret ; $0464
 ClearVRAMCopyQueue:
 	ld hl, wVRAMCopyQueue ; $0465
@@ -952,12 +952,12 @@ LoadPalettesMasterOnly:
 	add a, a ; $05e9
 	ld e, a ; $05ea
 	ld d, $c2 ; $05eb
-Label_00_05ed:
+.copyLoop:
 	ld a, [hl+] ; $05ed
 	ld [de], a ; $05ee
 	inc e ; $05ef
 	dec c ; $05f0
-	jr nz, Label_00_05ed ; $05f1
+	jr nz, .copyLoop ; $05f1
 	ret ; $05f3
 RestorePalettesFromMaster:
 	push af ; $05f4
@@ -5197,16 +5197,17 @@ WaitFadeEnd:
 .done:
 	pop af ; $1dbb
 	ret ; $1dbc
+WaitFadeEndLinked:
 	push af ; $1dbd
-Label_00_1dbe:
+.loop:
 	ldh a, [hFadeState] ; $1dbe
 	and a, a ; $1dc0
-	jr z, Label_00_1dca ; $1dc1
+	jr z, .done ; $1dc1
 	push af ; $1dc3
 	farcall SyncLinkFrame ; $1dc4
 	pop af ; $1dc7
-	jr Label_00_1dbe ; $1dc8
-Label_00_1dca:
+	jr .loop ; $1dc8
+.done:
 	pop af ; $1dca
 	ret ; $1dcb
 ApplyWhiteFade:
@@ -5464,6 +5465,7 @@ QueueSpriteTemplate:
 	ldh [hSpriteQueueIndex], a ; $1f08
 	add sp, 4 ; $1f0a
 	ret ; $1f0c
+QueueSpriteGrid:
 	push af ; $1f0d
 	push bc ; $1f0e
 	push de ; $1f0f
@@ -5474,20 +5476,20 @@ QueueSpriteTemplate:
 	ld d, h ; $1f16
 	ld e, l ; $1f17
 	pop hl ; $1f18
-Label_00_1f19:
+.rowLoop:
 	push de ; $1f19
 	push hl ; $1f1a
-Label_00_1f1b:
+.colLoop:
 	ldh a, [hSpriteQueueIndex] ; $1f1b
 	cp a, $a0 ; $1f1d
-	jr nz, Label_00_1f28 ; $1f1f
+	jr nz, .store ; $1f1f
 	add sp, 4 ; $1f21
 	pop hl ; $1f23
 	pop de ; $1f24
 	pop bc ; $1f25
 	pop af ; $1f26
 	ret ; $1f27
-Label_00_1f28:
+.store:
 	push hl ; $1f28
 	ld l, a ; $1f29
 	ld a, [wSpriteBufferPage] ; $1f2a
@@ -5509,14 +5511,14 @@ Label_00_1f28:
 	add a, $08 ; $1f3d
 	ld d, a ; $1f3f
 	dec h ; $1f40
-	jr nz, Label_00_1f1b ; $1f41
+	jr nz, .colLoop ; $1f41
 	pop hl ; $1f43
 	pop de ; $1f44
 	ld a, e ; $1f45
 	add a, $10 ; $1f46
 	ld e, a ; $1f48
 	dec l ; $1f49
-	jr nz, Label_00_1f19 ; $1f4a
+	jr nz, .rowLoop ; $1f4a
 	pop hl ; $1f4c
 	pop de ; $1f4d
 	pop bc ; $1f4e

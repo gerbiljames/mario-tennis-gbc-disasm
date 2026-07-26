@@ -633,13 +633,13 @@ Label_3e_43e6:
 SetMenuCursorFromIndex_3e:
 	ld d, $00 ; $43eb
 	ld a, c ; $43ed
-Label_3e_43ee:
+.divLoop:
 	cp a, b ; $43ee
-	jr c, Label_3e_43f5 ; $43ef
+	jr c, .store ; $43ef
 	inc d ; $43f1
 	sub a, b ; $43f2
-	jr Label_3e_43ee ; $43f3
-Label_3e_43f5:
+	jr .divLoop ; $43f3
+.store:
 	ld [wMenuCursorX], a ; $43f5
 	ld a, d ; $43f8
 	ld [wMenuCursorY], a ; $43f9
@@ -1265,26 +1265,26 @@ SetMatchRuleOptionAttrRect:
 	add a, a ; $487b
 	add a, l ; $487c
 	ld l, a ; $487d
-	jr nc, Label_3e_4881 ; $487e
+	jr nc, .readAddr ; $487e
 	inc h ; $4880
-Label_3e_4881:
+.readAddr:
 	ld a, [hl+] ; $4881
 	ld d, [hl] ; $4882
 	ld e, a ; $4883
 	ld h, $0d ; $4884
 	ld a, c ; $4886
 	or a, a ; $4887
-	jr z, Label_3e_4895 ; $4888
+	jr z, .fill ; $4888
 	ld a, b ; $488a
 	ld hl, MatchRuleOptionAttrWidths_3e ; $488b
 	add a, l ; $488e
 	ld l, a ; $488f
-	jr nc, Label_3e_4893 ; $4890
+	jr nc, .readWidth ; $4890
 	inc h ; $4892
-Label_3e_4893:
+.readWidth:
 	ld a, [hl] ; $4893
 	ld h, a ; $4894
-Label_3e_4895:
+.fill:
 	ld b, $05 ; $4895
 	ld c, $03 ; $4897
 	farcall FillTilemapRect ; $4899
