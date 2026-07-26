@@ -96,10 +96,10 @@ LoadMatchVariantGraphics:
 	dw LoadMatchVariantGraphics.loadPaletteShadow2 ; $5f18 jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow3 ; $5f1a jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f1c jumptable
-	dw LoadMatchVariantGraphics.step3 ; $5f1e jumptable
+	dw LoadMatchVariantGraphics.queueVRAMCopy ; $5f1e jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow6 ; $5f20 jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow5 ; $5f22 jumptable
-	dw LoadMatchVariantGraphics.step7 ; $5f24 jumptable
+	dw LoadMatchVariantGraphics.queueVRAMCopy2 ; $5f24 jumptable
 	dw LoadMatchVariantGraphics.loadPaletteShadow4 ; $5f26 jumptable
 	dw LoadMatchVariantGraphics.carry ; $5f28 jumptable
 .carry:
@@ -124,7 +124,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5f54
 	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
-.step3:
+.queueVRAMCopy:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
 	ld de, $a200 ; $5f5e
 	ld c, $08 ; $5f61
@@ -165,7 +165,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5fb6
 	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
-.step7:
+.queueVRAMCopy2:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
 	ld de, $a200 ; $5fc0
 	ld c, $08 ; $5fc3

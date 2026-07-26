@@ -1667,7 +1667,7 @@ ShowLinkStatusMessage:
 	jr z, .zero ; $4bb9
 	cp a, $01 ; $4bbb
 	jr z, .eq01 ; $4bbd
-	jr .step3 ; $4bbf
+	jr .renderProportionalTextAt ; $4bbf
 .zero:
 	ld hl, $0129 ; $4bc1
 	ld de, $d181 ; $4bc4
@@ -1680,7 +1680,7 @@ ShowLinkStatusMessage:
 	ld c, $12 ; $4bd4
 	farcall RenderProportionalTextAt ; $4bd6
 	jr .uploadGlyphBuffer ; $4bd9
-.step3:
+.renderProportionalTextAt:
 	ld hl, $0128 ; $4bdb
 	ld de, $d181 ; $4bde
 	ld c, $12 ; $4be1
@@ -1851,7 +1851,7 @@ LoadEraseDataConfirmScreen:
 	ld c, $14 ; $4d73
 	ld de, $8000 ; $4d75
 	farcall LoadCompressedTileBlock ; $4d78
-	jp .step2 ; $4d7b
+	jp .renderProportionalTextAt ; $4d7b
 .compare:
 	or a, a ; $4d7e
 	jr z, .zero ; $4d7f
@@ -1875,7 +1875,7 @@ LoadEraseDataConfirmScreen:
 	ld c, $14 ; $4daf
 	ld de, $8000 ; $4db1
 	farcall LoadCompressedTileBlock ; $4db4
-	jr .step2 ; $4db7
+	jr .renderProportionalTextAt ; $4db7
 .zero:
 	ld hl, $00d6 ; $4db9
 	ld de, $d0c3 ; $4dbc
@@ -1897,7 +1897,7 @@ LoadEraseDataConfirmScreen:
 	ld c, $14 ; $4de7
 	ld de, $8000 ; $4de9
 	farcall LoadCompressedTileBlock ; $4dec
-.step2:
+.renderProportionalTextAt:
 	ld hl, $007a ; $4def
 	ld de, $d1d0 ; $4df2
 	ld c, $04 ; $4df5
@@ -2897,11 +2897,11 @@ HandleEquipSelectInput:
 	jr nz, .step ; $55b6
 	bit 1, a ; $55b8
 	jr nz, .playSfx ; $55ba
-	jr .step3 ; $55bc
+	jr .moveMenuCursorGrid ; $55bc
 .step:
 	ld a, [$d812] ; $55be
 	or a, a ; $55c1
-	jr nz, .step3 ; $55c2
+	jr nz, .moveMenuCursorGrid ; $55c2
 	sound $60 ; $55c4
 	ld a, $01 ; $55c6
 	ld [$d812], a ; $55c8
@@ -2934,7 +2934,7 @@ HandleEquipSelectInput:
 	ld a, $44 ; $55fb
 	ld [$d812], a ; $55fd
 	ret ; $5600
-.step3:
+.moveMenuCursorGrid:
 	ld a, [$d810] ; $5601
 	ld b, a ; $5604
 	ld c, $01 ; $5605

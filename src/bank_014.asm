@@ -326,19 +326,19 @@ MachineCourtGameOverExitScene:
 ComputeMachineCourtProgress:
 	ld a, $00 ; $43a4
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $43a6
-	jp z, .step ; $43a9
+	jp z, .machineCourtStartLevelScene ; $43a9
 	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $43ac
 	ld a, $01 ; $43bb
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_2 ; $43bd
-	jp z, .step ; $43c0
+	jp z, .machineCourtStartLevelScene ; $43c0
 	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $43c3
 	ld a, $02 ; $43d2
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_3 ; $43d4
-	jr z, .step ; $43d7
+	jr z, .machineCourtStartLevelScene ; $43d7
 	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $43d9
 	ld a, $03 ; $43e8
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $43ea
-	jr z, .step ; $43ed
+	jr z, .machineCourtStartLevelScene ; $43ed
 	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $43ef
 	ld a, $04 ; $43fe
 	ld b, a ; $4400
@@ -355,12 +355,12 @@ ComputeMachineCourtProgress:
 	wram_bank ; $4416
 	ld a, b ; $441a
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $441b
-	jr z, .step ; $441e
+	jr z, .machineCourtStartLevelScene ; $441e
 	ld a, $05 ; $4420
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4422
-	jr z, .step ; $4425
+	jr z, .machineCourtStartLevelScene ; $4425
 	ld a, $06 ; $4427
-.step:
+.machineCourtStartLevelScene:
 	ld [$c2b0], a ; $4429
 	ret ; $442c
 TennisMachineRoomNpc05_14:
@@ -1945,21 +1945,21 @@ QueuePlaneSpriteByHeight_14:
 	ld a, [$c2b1] ; $5ea1
 	sub a, $88 ; $5ea4
 	cp a, $0a ; $5ea6
-	jr c, .step ; $5ea8
+	jr c, .queueSpriteTemplate ; $5ea8
 	ld b, $10 ; $5eaa
 	cp a, $14 ; $5eac
-	jr c, .step ; $5eae
+	jr c, .queueSpriteTemplate ; $5eae
 	ld b, $20 ; $5eb0
 	cp a, $1e ; $5eb2
-	jr c, .step ; $5eb4
+	jr c, .queueSpriteTemplate ; $5eb4
 	ld b, $30 ; $5eb6
 	cp a, $50 ; $5eb8
-	jr c, .step ; $5eba
+	jr c, .queueSpriteTemplate ; $5eba
 	ld b, $20 ; $5ebc
 	cp a, $78 ; $5ebe
-	jr c, .step ; $5ec0
+	jr c, .queueSpriteTemplate ; $5ec0
 	ld b, $10 ; $5ec2
-.step:
+.queueSpriteTemplate:
 	ld c, b ; $5ec4
 	ld hl, SpriteTemplate_14_5e50 ; $5ec5
 	ld b, $08 ; $5ec8

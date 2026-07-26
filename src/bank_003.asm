@@ -1414,12 +1414,12 @@ ValidateSaveRam:
 	ld hl, sSaveSignature ; $496c
 	ld de, SaveSignature ; $496f
 	call CompareSaveSignature ; $4972
-	jr nz, .step ; $4975
+	jr nz, .setSramBank ; $4975
 	call VerifySaveHeaderChecksum ; $4977
-	jr nz, .step ; $497a
+	jr nz, .setSramBank ; $497a
 	xor a, a ; $497c
 	jp .step2 ; $497d
-.step:
+.setSramBank:
 	ld a, $01 ; $4980
 	ldh [hSramBank], a ; $4982
 	ld [$4000], a ; $4984
@@ -3102,12 +3102,12 @@ SaveSlotDebugEditor:
 	call AdvanceFrame ; $53f8
 	ldh a, [hInputPressed] ; $53fb
 	bit PADB_UP, a ; $53fd
-	jr z, .step3 ; $53ff
+	jr z, .moveSaveEditorCursor ; $53ff
 	ld bc, $f0f8 ; $5401
 	call MoveSaveEditorCursor ; $5404
 	jr z, .loopBBBB ; $5407
 	jp .loopB ; $5409
-.step3:
+.moveSaveEditorCursor:
 	bit 5, a ; $540c
 	jr z, .bit5Clear ; $540e
 	ld bc, rIE ; $5410
@@ -3935,17 +3935,17 @@ RunScrollingTextScreen:
 	ld a, [$d230] ; $5a05
 	dec a ; $5a08
 	ld [$d230], a ; $5a09
-	jr nz, .step2 ; $5a0c
+	jr nz, .checkDebugStepMode ; $5a0c
 	ld a, $02 ; $5a0e
 	ld [$d230], a ; $5a10
 	ld a, [$d234] ; $5a13
 	and a, a ; $5a16
-	jr nz, .step2 ; $5a17
+	jr nz, .checkDebugStepMode ; $5a17
 	ldh a, [hScrollY] ; $5a19
 	inc a ; $5a1b
 	ldh [hScrollY], a ; $5a1c
 	and a, $07 ; $5a1e
-	jr nz, .step2 ; $5a20
+	jr nz, .checkDebugStepMode ; $5a20
 	ld hl, $d232 ; $5a22
 	ld a, [hl+] ; $5a25
 	ld h, [hl] ; $5a26
@@ -3960,7 +3960,7 @@ RunScrollingTextScreen:
 	wram_bank $06 ; $5a3c
 	ld a, $01 ; $5a42
 	ld [$d234], a ; $5a44
-	jr .step2 ; $5a47
+	jr .checkDebugStepMode ; $5a47
 .nonZero:
 	ld de, $0090 ; $5a49
 	call GetScrollTextRowVramAddr ; $5a4c
@@ -3983,7 +3983,7 @@ RunScrollingTextScreen:
 	ld a, e ; $5a70
 	ld [hl+], a ; $5a71
 	ld [hl], d ; $5a72
-.step2:
+.checkDebugStepMode:
 	ldh a, [hDebugStepMode] ; $5a73
 	or a, a ; $5a75
 	jr nz, .nonZero2 ; $5a76
@@ -4137,7 +4137,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	jp z, .eq07 ; $5bb7
 	cp a, $08 ; $5bba
 	jp z, .eq08 ; $5bbc
-	jp .step10 ; $5bbf
+	jp .queueSpriteTemplate ; $5bbf
 .eq00:
 	wram_bank $01 ; $5bc2
 	ld hl, CutsceneAnimFrameLZ_00 ; $5bc8
@@ -4273,7 +4273,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5d23
 	call QueueSpriteTemplate ; $5d26
 	ret ; $5d29
-.step10:
+.queueSpriteTemplate:
 	ld hl, SpriteTemplate_03_6ebd ; $5d2a
 	ld d, $fe ; $5d2d
 	ld e, $80 ; $5d2f
@@ -4305,7 +4305,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	jp z, .eq10 ; $5d6b
 	cp a, $11 ; $5d6e
 	jp z, .eq11 ; $5d70
-	jp .step10 ; $5d73
+	jp .queueSpriteTemplate ; $5d73
 .eq09:
 	wram_bank $01 ; $5d76
 	ld hl, CutsceneAnimFrameLZ_09 ; $5d7c
@@ -4441,7 +4441,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5ed7
 	call QueueSpriteTemplate ; $5eda
 	ret ; $5edd
-.step10:
+.queueSpriteTemplate:
 	ld hl, SpriteTemplate_03_6f0e ; $5ede
 	ld d, $0e ; $5ee1
 	ld e, $80 ; $5ee3
@@ -4473,7 +4473,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	jp z, .eq19 ; $5f1f
 	cp a, $1a ; $5f22
 	jp z, .eq1a ; $5f24
-	jp .step10 ; $5f27
+	jp .queueSpriteTemplate ; $5f27
 .eq12:
 	wram_bank $01 ; $5f2a
 	ld hl, CutsceneAnimFrameLZ_12 ; $5f30
@@ -4609,7 +4609,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $608b
 	call QueueSpriteTemplate ; $608e
 	ret ; $6091
-.step10:
+.queueSpriteTemplate:
 	ld hl, SpriteTemplate_03_6f5f ; $6092
 	ld d, $1e ; $6095
 	ld e, $80 ; $6097
@@ -4641,7 +4641,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	jp z, .eq22 ; $60d3
 	cp a, $23 ; $60d6
 	jp z, .eq23 ; $60d8
-	jp .step10 ; $60db
+	jp .queueSpriteTemplate ; $60db
 .eq1b:
 	wram_bank $01 ; $60de
 	ld hl, CutsceneAnimFrameLZ_1b ; $60e4
@@ -4777,7 +4777,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $623f
 	call QueueSpriteTemplate ; $6242
 	ret ; $6245
-.step10:
+.queueSpriteTemplate:
 	ld hl, SpriteTemplate_03_6f90 ; $6246
 	ld d, $2e ; $6249
 	ld e, $80 ; $624b
@@ -4809,7 +4809,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	jp z, .eq2b ; $6287
 	cp a, $2c ; $628a
 	jp z, .eq2c ; $628c
-	jp .step10 ; $628f
+	jp .queueSpriteTemplate ; $628f
 .eq24:
 	wram_bank $01 ; $6292
 	ld hl, CutsceneAnimFrameLZ_24 ; $6298
@@ -4945,7 +4945,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $63f3
 	call QueueSpriteTemplate ; $63f6
 	ret ; $63f9
-.step10:
+.queueSpriteTemplate:
 	ld hl, SpriteTemplate_03_6fbd ; $63fa
 	ld d, $36 ; $63fd
 	ld e, $80 ; $63ff
@@ -4977,7 +4977,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	jp z, .eq34 ; $643b
 	cp a, $35 ; $643e
 	jp z, .eq35 ; $6440
-	jp .step10 ; $6443
+	jp .queueSpriteTemplate ; $6443
 .eq2d:
 	wram_bank $01 ; $6446
 	ld hl, CutsceneAnimFrameLZ_2d ; $644c
@@ -5113,7 +5113,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $65a7
 	call QueueSpriteTemplate ; $65aa
 	ret ; $65ad
-.step10:
+.queueSpriteTemplate:
 	ld hl, SpriteTemplate_03_6fea ; $65ae
 	ld d, $3e ; $65b1
 	ld e, $80 ; $65b3

@@ -2867,7 +2867,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $590d
 	call ApplySlideOffsetToSpriteX ; $5910
 	call QueueSprite ; $5913
-	jr .step8 ; $5916
+	jr .getCharDataDigitSprite ; $5916
 .lt0a4:
 	ld a, l ; $5918
 	rlca ; $5919
@@ -2877,7 +2877,7 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $5920
 	call ApplySlideOffsetToSpriteX ; $5923
 	call QueueSprite ; $5926
-.step8:
+.getCharDataDigitSprite:
 	ld a, [$d13d] ; $5929
 	cp a, $20 ; $592c
 	jr z, .eq20 ; $592e
@@ -3099,7 +3099,7 @@ PromptCharDataConfirm:
 	bit PADB_A, a ; $5aad
 	jr nz, .step ; $5aaf
 	bit 1, a ; $5ab1
-	jr nz, .step2 ; $5ab3
+	jr nz, .beginFadeOut2 ; $5ab3
 	and a, $c0 ; $5ab5
 	jr z, .loop ; $5ab7
 	sound $5e ; $5ab9
@@ -3111,10 +3111,10 @@ PromptCharDataConfirm:
 	wram_bank $06 ; $5ac5
 	ld a, [$d025] ; $5acb
 	or a, a ; $5ace
-	jr nz, .step2 ; $5acf
+	jr nz, .beginFadeOut2 ; $5acf
 	sound $5f ; $5ad1
 	jr .beginFadeOut ; $5ad3
-.step2:
+.beginFadeOut2:
 	wram_bank $06 ; $5ad5
 	ld a, $01 ; $5adb
 	ld [$d025], a ; $5add
@@ -4436,10 +4436,10 @@ SweepExpBarMarkerLeft:
 	or a, a ; $7122
 	jr nz, .nonZero ; $7123
 	ld a, [$d164] ; $7125
-	jr .step2 ; $7128
+	jr .getExpBarSweepStep ; $7128
 .nonZero:
 	ld a, [$d173] ; $712a
-.step2:
+.getExpBarSweepStep:
 	add a, $36 ; $712d
 	ld [$d181], a ; $712f
 	ret ; $7132

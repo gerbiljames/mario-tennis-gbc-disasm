@@ -379,13 +379,13 @@ ReadJoypad:
 	ldh a, [hPlayerInputFlags] ; $031b
 	ld b, a ; $031d
 	or a, a ; $031e
-	jr z, .step2 ; $031f
+	jr z, .setInputRepeatTimer ; $031f
 	ldh a, [hInputRepeatButtons] ; $0321
 	and a, b ; $0323
 	jr nz, .nonZero ; $0324
 	ldh a, [hInputRepeatButtons] ; $0326
 	cp a, b ; $0328
-	jr nz, .step2 ; $0329
+	jr nz, .setInputRepeatTimer ; $0329
 .nonZero:
 	ldh a, [hInputRepeatTimer] ; $032b
 	dec a ; $032d
@@ -398,7 +398,7 @@ ReadJoypad:
 	ldh [hInputRepeatTimer], a ; $0337
 	xor a, a ; $0339
 	jr .store2 ; $033a
-.step2:
+.setInputRepeatTimer:
 	ld a, $12 ; $033c
 	ldh [hInputRepeatTimer], a ; $033e
 	ld a, b ; $0340
@@ -978,17 +978,17 @@ RestorePalettesFromMaster:
 ApplyPendingPaletteUpdates:
 	ldh a, [hPaletteDirtyFlags] ; $060d
 	rrca ; $060f
-	jr nc, .step ; $0610
+	jr nc, .checkPaletteDirtyFlags ; $0610
 	ld hl, wBGPalettes ; $0612
 	call LoadBGPaletteData ; $0615
-.step:
+.checkPaletteDirtyFlags:
 	ldh a, [hPaletteDirtyFlags] ; $0618
 	rrca ; $061a
 	rrca ; $061b
-	jr nc, .step2 ; $061c
+	jr nc, .clearPaletteDirtyFlags ; $061c
 	ld hl, wOBJPalettes ; $061e
 	call LoadOBJPaletteData ; $0621
-.step2:
+.clearPaletteDirtyFlags:
 	xor a, a ; $0624
 	ldh [hPaletteDirtyFlags], a ; $0625
 	ret ; $0627
@@ -4210,20 +4210,20 @@ UpdateDebugOverlay:
 	inc de ; $18a7
 	ldh a, [hDebugStepMode] ; $18a8
 	cp a, $03 ; $18aa
-	jr z, .step3 ; $18ac
+	jr z, .storeShowDebugConsole2 ; $18ac
 	cp a, $01 ; $18ae
 	jr z, .eq01 ; $18b0
 	ldh a, [hVBlankCounter] ; $18b2
 	and a, $01 ; $18b4
-	jr z, .step3 ; $18b6
-	jr .step2 ; $18b8
+	jr z, .storeShowDebugConsole2 ; $18b6
+	jr .storeShowDebugConsole ; $18b8
 .eq01:
 	ldh a, [hPlayerInputFlags] ; $18ba
 	bit PADB_SELECT, a ; $18bc
-.step2:
+.storeShowDebugConsole:
 	xor a, a ; $18be
 	jr .store ; $18bf
-.step3:
+.storeShowDebugConsole2:
 	ld a, $01 ; $18c1
 .store:
 	ldh [hShowDebugConsole], a ; $18c3
@@ -4608,7 +4608,7 @@ PrintHexByte:
 	call FormatHexWord ; $1ac7
 	inc hl ; $1aca
 	inc hl ; $1acb
-	jr PrintDecimalWord.step ; $1acc
+	jr PrintDecimalWord.printString ; $1acc
 PrintHexWord:
 	push af ; $1ace
 	push bc ; $1acf
@@ -4626,7 +4626,7 @@ PrintHexWord:
 	ld b, d ; $1add
 	ld c, e ; $1ade
 	call FormatHexWord ; $1adf
-	jr PrintDecimalWord.step ; $1ae2
+	jr PrintDecimalWord.printString ; $1ae2
 PrintDecimalByte:
 	push af ; $1ae4
 	push bc ; $1ae5
@@ -4643,7 +4643,7 @@ PrintDecimalByte:
 	ld l, a ; $1af3
 	ld a, $04 ; $1af4
 	call FormatDecimalNumber ; $1af6
-	jr PrintDecimalWord.step ; $1af9
+	jr PrintDecimalWord.printString ; $1af9
 Unused_00_PrintDecimalByteSigned:
 	push af ; $1afb
 	push bc ; $1afc
@@ -4661,7 +4661,7 @@ Unused_00_PrintDecimalByteSigned:
 	call SignExtendLToHL ; $1b0b
 	ld a, $04 ; $1b0e
 	call FormatDecimalNumber ; $1b10
-	jr PrintDecimalWord.step ; $1b13
+	jr PrintDecimalWord.printString ; $1b13
 PrintDecimalWord:
 	push af ; $1b15
 	push bc ; $1b16
@@ -4680,7 +4680,7 @@ PrintDecimalWord:
 	ld c, e ; $1b25
 	ld a, $06 ; $1b26
 	call FormatDecimalNumber ; $1b28
-.step:
+.printString:
 	ld h, b ; $1b2b
 	ld l, c ; $1b2c
 	pop de ; $1b2d
@@ -8198,7 +8198,7 @@ GetPerspectiveScale:
 	set 6, h ; $2e67
 	ld d, [hl] ; $2e69
 	ret ; $2e6a
-.step:
+.checkRomBank:
 	ldh a, [hRomBank] ; $2e6b
 	push af ; $2e6d
 	ld a, [$df22] ; $2e6e

@@ -399,7 +399,7 @@ MoveMenuCursorGrid:
 	ld a, [wMenuCursorLockFlags] ; $4249
 	and a, $01 ; $424c
 	ld a, h ; $424e
-	jr nz, .step27 ; $424f
+	jr nz, .checkMenuCursorLockFlags2 ; $424f
 	bit 4, a ; $4251
 	jr z, .bit4Clear2 ; $4253
 	ld a, [wMenuCursorX] ; $4255
@@ -455,7 +455,7 @@ MoveMenuCursorGrid:
 	jr .checkMenuCursorX3 ; $429a
 .bit6Clear3:
 	bit 7, a ; $429c
-	jr z, .step27 ; $429e
+	jr z, .checkMenuCursorLockFlags2 ; $429e
 	ld a, [wMenuCursorY] ; $42a0
 	inc a ; $42a3
 	add a, a ; $42a4
@@ -471,7 +471,7 @@ MoveMenuCursorGrid:
 .store12:
 	ld [wMenuCursorY], a ; $42b0
 	jr .checkMenuCursorX3 ; $42b3
-.step27:
+.checkMenuCursorLockFlags2:
 	bit 0, a ; $42b5
 	jr z, .bit0Clear ; $42b7
 	sound $5f ; $42b9
@@ -627,13 +627,13 @@ Data_1b_42f8:
 .checkMenuCursor2X:
 	ld a, [wMenuCursor2X] ; $43b0
 	cp a, d ; $43b3
-	jr nz, .step42 ; $43b4
+	jr nz, .checkMenuCursorY ; $43b4
 	ld a, [wMenuCursor2Y] ; $43b6
 	cp a, e ; $43b9
-	jr nz, .step42 ; $43ba
+	jr nz, .checkMenuCursorY ; $43ba
 	xor a, a ; $43bc
 	ret ; $43bd
-.step42:
+.checkMenuCursorY:
 	ld a, $01 ; $43be
 	ret ; $43c0
 GetMenuCursorIndex:
@@ -3293,7 +3293,7 @@ DrawCharSelectMugshots:
 	wram_bank $01 ; $6119
 	ldh a, [hInputRisingEdge] ; $611f
 	and a, PADF_START ; $6121
-	jr z, .step2 ; $6123
+	jr z, .checkInputRisingEdge ; $6123
 	ld a, [wTargetZoneX2] ; $6125
 	ld b, a ; $6128
 	ld a, [wCharSelectChar] ; $6129
@@ -3301,10 +3301,10 @@ DrawCharSelectMugshots:
 	sound $5f ; $612f
 	ld a, $fe ; $6131
 	jr .step4 ; $6133
-.step2:
+.checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $6135
 	and a, PADF_A ; $6137
-	jr z, .step3 ; $6139
+	jr z, .checkInputRisingEdge2 ; $6139
 	ld a, [wTargetZoneX2] ; $613b
 	ld b, a ; $613e
 	ld a, [wCharSelectChar] ; $613f
@@ -3312,7 +3312,7 @@ DrawCharSelectMugshots:
 	sound $5f ; $6145
 	ld a, [wCharSelectChar] ; $6147
 	jr .step4 ; $614a
-.step3:
+.checkInputRisingEdge2:
 	ldh a, [hInputRisingEdge] ; $614c
 	and a, PADF_B ; $614e
 	jr z, .moveCharSelectCursor ; $6150
@@ -3790,9 +3790,9 @@ RunDebugSaveDataMenu:
 	ld e, a ; $64df
 	ld hl, $047d ; $64e0
 	or a, d ; $64e3
-	jr nz, .step ; $64e4
+	jr nz, .createMenuWindowFromText ; $64e4
 	inc hl ; $64e6
-.step:
+.createMenuWindowFromText:
 	wram_bank $05 ; $64e7
 	ld d, $02 ; $64ed
 	ld e, $02 ; $64ef
@@ -3949,10 +3949,10 @@ UpdateUnlockDebugSelectedMugshot:
 	farcall CheckUnlockFlag ; $66aa
 	pop bc ; $66ad
 	ld a, b ; $66ae
-	jr z, .step ; $66af
+	jr z, .registerFrameTask2 ; $66af
 	farcall LoadCharacterRecordToBuffer ; $66b1
 	jr .registerFrameTask ; $66b4
-.step:
+.registerFrameTask2:
 	ld a, $20 ; $66b6
 	ld [$d58b], a ; $66b8
 .registerFrameTask:
@@ -4039,7 +4039,7 @@ RunMinigameFlagsDebugScreen:
 	wram_bank $01 ; $6778
 	ldh a, [hInputRisingEdge] ; $677e
 	and a, PADF_A ; $6780
-	jr z, .step ; $6782
+	jr z, .checkInputRisingEdge ; $6782
 	ld a, [wCharSelectChar] ; $6784
 	ld b, a ; $6787
 	push bc ; $6788
@@ -4055,17 +4055,17 @@ RunMinigameFlagsDebugScreen:
 	sound $5f ; $6796
 	ld hl, $cb1f ; $6798
 	jr .beginFadeOut ; $679b
-.step:
+.checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $679d
 	and a, PADF_B ; $679f
-	jr z, .step2 ; $67a1
+	jr z, .checkInputRisingEdge2 ; $67a1
 	sound $62 ; $67a3
 	ld hl, $cb1f ; $67a5
 	ld a, $00 ; $67a8
 	ld [hl], a ; $67aa
 	ld a, $ff ; $67ab
 	jr .beginFadeOut ; $67ad
-.step2:
+.checkInputRisingEdge2:
 	ldh a, [hInputRisingEdge] ; $67af
 	and a, PADF_START ; $67b1
 	jr z, .moveUnlockDebugCursor ; $67b3
@@ -4118,10 +4118,10 @@ MoveUnlockDebugCursor:
 	farcall CheckUnlockFlag ; $680d
 	pop bc ; $6810
 	ld a, b ; $6811
-	jr z, .step ; $6812
+	jr z, .storeCharSelectCol2 ; $6812
 	farcall LoadCharacterRecordToBuffer ; $6814
 	jr .storeCharSelectCol ; $6817
-.step:
+.storeCharSelectCol2:
 	ld a, $20 ; $6819
 	ld [$d58b], a ; $681b
 .storeCharSelectCol:
@@ -4731,12 +4731,12 @@ LoadMinigameLevelSelectGfx:
 	ld a, c ; $6cb9
 	cp a, $03 ; $6cba
 	jr nz, .loop ; $6cbc
-	jr .step2 ; $6cbe
+	jr .loadCompressedTileBlock2 ; $6cbe
 .zero:
 	ld a, c ; $6cc0
 	cp a, $04 ; $6cc1
 	jr nz, .loop ; $6cc3
-.step2:
+.loadCompressedTileBlock2:
 	ld b, $70 ; $6cc5
 	ld c, $10 ; $6cc7
 	ld de, $a000 ; $6cc9
@@ -5813,12 +5813,12 @@ LoadMinigameHighScores:
 	call ClearBytes ; $7569
 	ld de, SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; $756c
 	farcall TestSaveFlag ; $756f
-	jr z, .step ; $7572
+	jr z, .readMinigameRecord ; $7572
 	ld a, $01 ; $7574
 	ld hl, $d82b ; $7576
 	ld [hl+], a ; $7579
 	ld [hl], a ; $757a
-.step:
+.readMinigameRecord:
 	ld c, $00 ; $757b
 .loop:
 	ld a, c ; $757d

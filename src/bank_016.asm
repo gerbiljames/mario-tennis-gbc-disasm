@@ -252,11 +252,11 @@ RunMatchWinLoseScreen:
 	jr z, .step ; $448e
 	cp a, $09 ; $4490
 	jr z, .step ; $4492
-	jr .step2 ; $4494
+	jr .checkMatchWinLoseFlag ; $4494
 .step:
 	ld a, $01 ; $4496
 	jr .store ; $4498
-.step2:
+.checkMatchWinLoseFlag:
 	xor a, a ; $449a
 .store:
 	ld [$d800], a ; $449b
@@ -512,7 +512,7 @@ SetWinLosePortraitPaletteAttrs:
 .nonZero:
 	ld de, $002f ; $49bc
 	call TestGameFlagByNumber ; $49bf
-	jr z, .step3 ; $49c2
+	jr z, .fillTilemapRect ; $49c2
 	ld de, $d4ac ; $49c4
 	ld b, $03 ; $49c7
 	ld c, $03 ; $49c9
@@ -534,7 +534,7 @@ SetWinLosePortraitPaletteAttrs:
 	ld h, $0f ; $49ef
 	farcall FillTilemapRect ; $49f1
 	jr .doneB ; $49f4
-.step3:
+.fillTilemapRect:
 	ld de, $d4ad ; $49f6
 	ld b, $03 ; $49f9
 	ld c, $03 ; $49fb
@@ -1221,7 +1221,7 @@ InitMatchStatsScreen:
 SetMatchStatsPortraitPaletteAttrs:
 	ld de, $002f ; $5cdc
 	call TestGameFlagByNumber ; $5cdf
-	jr z, .step ; $5ce2
+	jr z, .fillTilemapRect ; $5ce2
 	ld de, $d481 ; $5ce4
 	ld b, $03 ; $5ce7
 	ld c, $03 ; $5ce9
@@ -1243,7 +1243,7 @@ SetMatchStatsPortraitPaletteAttrs:
 	ld h, $0f ; $5d0f
 	farcall FillTilemapRect ; $5d11
 	jr .done ; $5d14
-.step:
+.fillTilemapRect:
 	ld de, $d482 ; $5d16
 	ld b, $03 ; $5d19
 	ld c, $03 ; $5d1b

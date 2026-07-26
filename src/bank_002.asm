@@ -1149,29 +1149,29 @@ LevelUpPlayerRecord:
 	ld hl, $0038 ; $49cf
 	add hl, bc ; $49d2
 	inc [hl] ; $49d3
-	jr .step ; $49d4
+	jr .recomputeCharacterStats ; $49d4
 .compare:
 	cp a, $01 ; $49d6
 	jr nz, .compare2 ; $49d8
 	ld hl, $0039 ; $49da
 	add hl, bc ; $49dd
 	inc [hl] ; $49de
-	jr .step ; $49df
+	jr .recomputeCharacterStats ; $49df
 .compare2:
 	cp a, $02 ; $49e1
 	jr nz, .compare3 ; $49e3
 	ld hl, $003a ; $49e5
 	add hl, bc ; $49e8
 	inc [hl] ; $49e9
-	jr .step ; $49ea
+	jr .recomputeCharacterStats ; $49ea
 .compare3:
 	cp a, $03 ; $49ec
-	jr nz, .step ; $49ee
+	jr nz, .recomputeCharacterStats ; $49ee
 	ld hl, $003b ; $49f0
 	add hl, bc ; $49f3
 	inc [hl] ; $49f4
-	jr .step ; $49f5
-.step:
+	jr .recomputeCharacterStats ; $49f5
+.recomputeCharacterStats:
 	ld hl, $0018 ; $49f7
 	add hl, bc ; $49fa
 	inc [hl] ; $49fb
@@ -1987,14 +1987,14 @@ DebugStoryStatsScreen:
 	ld de, $0802 ; $4fd5
 	call PrintString ; $4fd8
 	pop de ; $4fdb
-	jp .step2 ; $4fdc
+	jp .printString ; $4fdc
 .zero:
 	ld hl, $5202 ; $4fdf
 	ld de, $0802 ; $4fe2
 	call PrintString ; $4fe5
 	call ValidateN64TransferRecord ; $4fe8
 	or a, a ; $4feb
-	jr z, .step2 ; $4fec
+	jr z, .printString ; $4fec
 	push de ; $4fee
 	ld hl, $c9b0 ; $4fef
 	ld a, [hl+] ; $4ff2
@@ -2020,7 +2020,7 @@ DebugStoryStatsScreen:
 	ld [hl+], a ; $5012
 	ld [hl+], a ; $5013
 	jr .loopB ; $5014
-.step2:
+.printString:
 	push de ; $5016
 	ld hl, $521a ; $5017
 	ld de, $0210 ; $501a
@@ -2166,7 +2166,7 @@ DebugStoryStatsScreen:
 	call AdvanceRandomSeed ; $5142
 	ldh a, [hInputPressed] ; $5145
 	bit PADB_UP, a ; $5147
-	jr z, .step3 ; $5149
+	jr z, .levelUpPlayer ; $5149
 	push de ; $514b
 	ld a, $00 ; $514c
 	ld d, $00 ; $514e
@@ -2174,7 +2174,7 @@ DebugStoryStatsScreen:
 	pop de ; $5153
 	sound $5e ; $5154
 	jp .loopB ; $5156
-.step3:
+.levelUpPlayer:
 	bit 5, a ; $5159
 	jr z, .bit5Clear ; $515b
 	push de ; $515d

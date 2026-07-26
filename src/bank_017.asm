@@ -374,7 +374,7 @@ ApplySpriteWobbleY_17:
 	ld a, [wMenuCursorLockFlags] ; $421f
 	and a, $01 ; $4222
 	ld a, h ; $4224
-	jr nz, .step27 ; $4225
+	jr nz, .checkMenuCursorLockFlags4 ; $4225
 	bit 4, a ; $4227
 	jr z, .bit4Clear2 ; $4229
 	ld a, [wMenuCursorX] ; $422b
@@ -430,7 +430,7 @@ ApplySpriteWobbleY_17:
 	jr .checkMenuCursorX3 ; $4270
 .bit6Clear3:
 	bit 7, a ; $4272
-	jr z, .step27 ; $4274
+	jr z, .checkMenuCursorLockFlags4 ; $4274
 	ld a, [wMenuCursorY] ; $4276
 	inc a ; $4279
 	add a, a ; $427a
@@ -446,7 +446,7 @@ ApplySpriteWobbleY_17:
 .store12:
 	ld [wMenuCursorY], a ; $4286
 	jr .checkMenuCursorX3 ; $4289
-.step27:
+.checkMenuCursorLockFlags4:
 	bit 0, a ; $428b
 	jr z, .bit0Clear ; $428d
 	sound $5f ; $428f
@@ -5173,13 +5173,13 @@ QueueRulesPageToVRAM:
 	ld de, $9880 ; $7256
 	ld c, $0a ; $7259
 	call QueueVRAMCopy ; $725b
-	jr .step2 ; $725e
+	jr .queueVRAMCopy ; $725e
 .nonZero:
 	ld hl, $d060 ; $7260
 	ld de, $9860 ; $7263
 	ld c, $0a ; $7266
 	call QueueVRAMCopy ; $7268
-.step2:
+.queueVRAMCopy:
 	ld hl, $d480 ; $726b
 	ld de, $b880 ; $726e
 	ld c, $02 ; $7271

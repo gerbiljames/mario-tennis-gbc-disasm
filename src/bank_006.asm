@@ -1609,9 +1609,9 @@ DrawScoreboardSprites:
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090
 	cp a, $06 ; $5093
-	jr z, ScoreboardSpriteTemplatePointers.step ; $5095
+	jr z, ScoreboardSpriteTemplatePointers.adjustSpriteCoordsForScroll ; $5095
 	cp a, $07 ; $5097
-	jr z, ScoreboardSpriteTemplatePointers.step ; $5099
+	jr z, ScoreboardSpriteTemplatePointers.adjustSpriteCoordsForScroll ; $5099
 	ret ; $509b
 ScoreboardSpriteTemplatePointers:
 	; $509c, 16 bytes (records:2)
@@ -1623,7 +1623,7 @@ ScoreboardSpriteTemplatePointers:
 	dw SpriteTemplate_06_51de ; record 5
 	dw SpriteTemplate_06_5210 ; record 6
 	dw SpriteTemplate_06_5210 ; record 7
-.step:
+.adjustSpriteCoordsForScroll:
 	ld hl, $4c0c ; $50ac
 	add hl, de ; $50af
 	ld e, l ; $50b0
@@ -1848,7 +1848,7 @@ LoadScoreboardModeGfx:
 	adc a, $5c ; $5c95
 	sub a, l ; $5c97
 	ld h, a ; $5c98
-	jr .step2 ; $5c99
+	jr .checkWramBank ; $5c99
 .eq05:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
 	add a, a ; $5c9e
@@ -1857,7 +1857,7 @@ LoadScoreboardModeGfx:
 	adc a, $5c ; $5ca2
 	sub a, l ; $5ca4
 	ld h, a ; $5ca5
-.step2:
+.checkWramBank:
 	ldh a, [hWramBank] ; $5ca6
 	push af ; $5ca8
 	wram_bank $01 ; $5ca9
@@ -3115,9 +3115,9 @@ StoryPauseMenu_SaveQuit:
 	call RunStoryMenu ; $7045
 	ld a, [wMatchMenuSelection] ; $7048
 	cp a, $ff ; $704b
-	jr z, StoryPauseMenu_ReturnToMainMenu.step ; $704d
+	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $704d
 	cp a, $02 ; $704f
-	jr z, StoryPauseMenu_ReturnToMainMenu.step ; $7051
+	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $7051
 	ld a, [wMatchMenuSelection] ; $7053
 	cp a, $01 ; $7056
 	jr z, StoryPauseMenu_ReturnToMainMenu ; $7058
@@ -3155,7 +3155,7 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld a, $01 ; $70a6
 .done:
 	ret ; $70a8
-.step:
+.storeStoryMenuFirstItem:
 	ld a, $00 ; $70a9
 	ret ; $70ab
 	ld a, $04 ; $70ac

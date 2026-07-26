@@ -811,7 +811,7 @@ DrawRankMatchLabel:
 	ld a, $34 ; $4751
 	ld [hl], a ; $4753
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4754
-	jr nz, .step2 ; $4757
+	jr nz, .checkWramBank ; $4757
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4759
 	jr nz, .checkFlag ; $475c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $475e
@@ -843,7 +843,7 @@ DrawRankMatchLabel:
 	ld a, $33 ; $4790
 	ld [hl], a ; $4792
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4793
-	jr nz, .step2 ; $4796
+	jr nz, .checkWramBank ; $4796
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $4798
 	jr nz, .checkFlag2 ; $479b
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $479d
@@ -877,7 +877,7 @@ DrawRankMatchLabel:
 	ld bc, $0020 ; $47d0
 	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
-.step2:
+.checkWramBank:
 	ldh a, [hWramBank] ; $47d7
 	push af ; $47d9
 	wram_bank $03 ; $47da
@@ -1091,7 +1091,7 @@ InitResultsScreenCharacters:
 	ld d, a ; $49a7
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $49a8
 	ld e, a ; $49ab
-	jr .step2 ; $49ac
+	jr .initChar ; $49ac
 .nonZero:
 	ld a, [$c8b9] ; $49ae
 	srl a ; $49b1
@@ -1101,13 +1101,13 @@ InitResultsScreenCharacters:
 	ld d, a ; $49b9
 	ld a, [$ca0c] ; $49ba
 	ld e, a ; $49bd
-	jr .step2 ; $49be
+	jr .initChar ; $49be
 .checkPlayer2CurrentMainCharacter:
 	ld a, [wPlayer2CurrentMainCharacter] ; $49c0
 	ld d, a ; $49c3
 	ld a, [$ca8c] ; $49c4
 	ld e, a ; $49c7
-.step2:
+.initChar:
 	ld a, d ; $49c8
 	push af ; $49c9
 	ld a, $00 ; $49ca
@@ -1149,7 +1149,7 @@ InitResultsScreenCharacters:
 	ld d, a ; $4a22
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $4a23
 	ld e, a ; $4a26
-	jr .step5 ; $4a27
+	jr .initChar2 ; $4a27
 .nonZero3:
 	ld a, [$c8b9] ; $4a29
 	srl a ; $4a2c
@@ -1159,13 +1159,13 @@ InitResultsScreenCharacters:
 	ld d, a ; $4a34
 	ld a, [$ca4c] ; $4a35
 	ld e, a ; $4a38
-	jr .step5 ; $4a39
+	jr .initChar2 ; $4a39
 .checkPlayer2CurrentPartnerCharacter:
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $4a3b
 	ld d, a ; $4a3e
 	ld a, [$cacc] ; $4a3f
 	ld e, a ; $4a42
-.step5:
+.initChar2:
 	ld a, d ; $4a43
 	push af ; $4a44
 	ld a, $02 ; $4a45
@@ -1725,16 +1725,16 @@ DrawExpDoublesPlayerPanel:
 	or a, a ; $56ff
 	jr nz, .nonZero ; $5700
 	ld bc, wStoryModeNameOfMainCharacter ; $5702
-	jr .step2 ; $5705
+	jr .copyStringToTextBuffer ; $5705
 .nonZero:
 	ld bc, $ca00 ; $5707
 	ld a, [$c8b9] ; $570a
 	cp a, $02 ; $570d
-	jr nz, .step2 ; $570f
+	jr nz, .copyStringToTextBuffer ; $570f
 	ld bc, $ca80 ; $5711
 	ld a, [$c8ba] ; $5714
 	ld [$ca98], a ; $5717
-.step2:
+.copyStringToTextBuffer:
 	push bc ; $571a
 	ld hl, $0000 ; $571b
 	add hl, bc ; $571e
@@ -1801,14 +1801,14 @@ DrawExpDoublesPartnerPanel:
 	or a, a ; $57c4
 	jr nz, .nonZero ; $57c5
 	ld bc, wStoryModeNameOfPartnerCharacter ; $57c7
-	jr .step2 ; $57ca
+	jr .copyStringToTextBuffer ; $57ca
 .nonZero:
 	ld bc, $ca40 ; $57cc
 	ld a, [$c8b9] ; $57cf
 	cp a, $02 ; $57d2
-	jr nz, .step2 ; $57d4
+	jr nz, .copyStringToTextBuffer ; $57d4
 	ld bc, $cac0 ; $57d6
-.step2:
+.copyStringToTextBuffer:
 	push bc ; $57d9
 	ld hl, $0000 ; $57da
 	add hl, bc ; $57dd
@@ -2069,13 +2069,13 @@ DrawNextExpAwardMessage:
 	ld a, [hl+] ; $5a05
 	ld d, [hl] ; $5a06
 	or a, d ; $5a07
-	jr z, .step2 ; $5a08
+	jr z, .drawProportionalTextLine ; $5a08
 	ld hl, $04c8 ; $5a0a
 	ld de, $d022 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
 	jr .restore ; $5a16
-.step2:
+.drawProportionalTextLine:
 	ld hl, $04c7 ; $5a18
 	ld de, $d022 ; $5a1b
 	ld bc, $0020 ; $5a1e
@@ -2364,17 +2364,17 @@ ProcessMatchRewards:
 	jp c, .computeMatchStatsReward ; $656b
 	ld a, [wPointWinLoseFlag] ; $656e
 	cp a, $01 ; $6571
-	jp nz, .step7 ; $6573
+	jp nz, .runExpDistributionFlow ; $6573
 	call GetFirstClearRewardExp ; $6576
 	call ShowExpAwardForMinigame ; $6579
 	ld h, d ; $657c
 	ld l, e ; $657d
 	call SetRewardGameFlag ; $657e
-	jp .step7 ; $6581
+	jp .runExpDistributionFlow ; $6581
 .checkMatchExitRequest:
 	ld a, [wMatchExitRequest] ; $6584
 	and a, a ; $6587
-	jp nz, .step7 ; $6588
+	jp nz, .runExpDistributionFlow ; $6588
 	push hl ; $658b
 	ld hl, wMinigamesCurrentScore ; $658c
 	ld a, [hl+] ; $658f
@@ -2439,7 +2439,7 @@ ProcessMatchRewards:
 	ld d, h ; $65f1
 	ld e, l ; $65f2
 	call ShowExpAwardForMinigame ; $65f3
-	jp .step7 ; $65f6
+	jp .runExpDistributionFlow ; $65f6
 .computeMatchStatsReward:
 	wram_bank $04 ; $65f9
 	call ComputeMatchStatsReward ; $65ff
@@ -2458,13 +2458,13 @@ ProcessMatchRewards:
 	call ShowExpAwardForMatch ; $6619
 	ld a, [wMatchWinLoseFlag] ; $661c
 	cp a, $01 ; $661f
-	jr nz, .step7 ; $6621
+	jr nz, .runExpDistributionFlow ; $6621
 	call SetRewardGameFlag ; $6623
 	push hl ; $6626
 	call ApplyRewardUnlockFlags ; $6627
 	pop hl ; $662a
 	call ApplyClassProgressFlags ; $662b
-	jr .step7 ; $662e
+	jr .runExpDistributionFlow ; $662e
 .eq04:
 	wram_bank $04 ; $6630
 	call ComputeMatchStatsReward ; $6636
@@ -2512,7 +2512,7 @@ ProcessMatchRewards:
 	ret nz ; $6690
 	call SetMinigameClearFlag ; $6691
 	ret ; $6694
-.step7:
+.runExpDistributionFlow:
 	ld a, h ; $6695
 	or a, l ; $6696
 	jr z, .showIslandOpenRankingBoard ; $6697
@@ -3211,9 +3211,9 @@ ApplyPendingExpAwards:
 	ld de, rIE ; $6b5a
 .scaleExpByPlayerLevel:
 	call ScaleExpByPlayerLevel ; $6b5d
-	jr nc, .step3 ; $6b60
+	jr nc, .recordDrillResult ; $6b60
 	ld de, rIE ; $6b62
-.step3:
+.recordDrillResult:
 	ld a, d ; $6b65
 	or a, e ; $6b66
 	jr z, .step4 ; $6b67

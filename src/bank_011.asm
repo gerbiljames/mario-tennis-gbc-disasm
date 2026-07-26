@@ -1120,13 +1120,13 @@ EnableAcademyCampusExit:
 	test_flag FLAG_DOUBLES ; $5482
 	jr nz, .checkFlag ; $5485
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $5487
-	jr nz, .step ; $548a
+	jr nz, .writeBehaviorMapCell ; $548a
 	ret ; $548c
 .checkFlag:
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $548d
-	jr nz, .step ; $5490
+	jr nz, .writeBehaviorMapCell ; $5490
 	ret ; $5492
-.step:
+.writeBehaviorMapCell:
 	ld a, $33 ; $5493
 	ld d, $16 ; $5495
 	ld e, $34 ; $5497
@@ -2695,7 +2695,7 @@ ActorScript_11_6e16:
 	dw ActorScript_11_6e16.parkMiddleCourtPracticePair ; $6ea9 jumptable
 	dw ActorScript_11_6e16.parkLeftCourtPracticePairRightSide ; $6eab jumptable
 	dw ActorScript_11_6e16.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
-	dw ActorScript_11_6e16.step8 ; $6eaf jumptable
+	dw ActorScript_11_6e16.waitPlayerMoveDone ; $6eaf jumptable
 .parkMiddleCourtPracticePair:
 	call ParkMiddleCourtPracticePair ; $6eb1
 	script_player_speed $0040 ; $6eb4
@@ -2773,7 +2773,7 @@ ActorScript_11_6e16:
 	call ResumeLeftCourtPractice ; $706b
 	script_face $03, FACE_DOWN ; $706e
 	ret ; $7075
-.step8:
+.waitPlayerMoveDone:
 	script_player_speed $0040 ; $7076
 	script_set_position $03, $1300, $1f00 ; $707c
 	script_set_position $04, $1a00, $0b00 ; $7087

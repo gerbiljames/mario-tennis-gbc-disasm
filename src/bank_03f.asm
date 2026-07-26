@@ -476,10 +476,10 @@ LoadTennisDictionaryScreen:
 	cp a, $06 ; $43c1
 	jr nz, .loadTennisDictionaryAssetsDefault ; $43c3
 	call LoadTennisDictionaryAssetsChar6 ; $43c5
-	jr .step2 ; $43c8
+	jr .decompressData ; $43c8
 .loadTennisDictionaryAssetsDefault:
 	call LoadTennisDictionaryAssetsDefault ; $43ca
-.step2:
+.decompressData:
 	wram_bank $03 ; $43cd
 	ld hl, TennisDictionaryListData ; $43d3
 	ld de, $d000 ; $43d6
@@ -1616,7 +1616,7 @@ HandleTennisDictionaryListInput:
 	ld [wTennisDictFlags], a ; $560e
 	ldh a, [hInputRisingEdge] ; $5611
 	bit PADB_A, a ; $5613
-	jp z, .step3 ; $5615
+	jp z, .checkTennisDictMode ; $5615
 	sound $5f ; $5618
 	call StartTennisDictionaryAnim ; $561a
 	ld a, [wTennisDictFlags] ; $561d
@@ -1682,7 +1682,7 @@ HandleTennisDictionaryListInput:
 	ld [wTennisDictFlags], a ; $569b
 	call EndTennisDictionaryAnim ; $569e
 	jp .restore ; $56a1
-.step3:
+.checkTennisDictMode:
 	bit 1, a ; $56a4
 	jr z, .bit1Clear ; $56a6
 	pop af ; $56a8
@@ -1700,7 +1700,7 @@ HandleTennisDictionaryListInput:
 .bit1Clear:
 	ldh a, [hInputPressed] ; $56be
 	bit PADB_UP, a ; $56c0
-	jr z, .step6 ; $56c2
+	jr z, .checkTennisDictCursorRow ; $56c2
 	sound $5e ; $56c4
 	ld a, [wTennisDictCursorRow] ; $56c6
 	dec a ; $56c9
@@ -1720,7 +1720,7 @@ HandleTennisDictionaryListInput:
 	ld [wTennisDictScrollTop], a ; $56e2
 	call DrawTennisDictionaryList ; $56e5
 	jr .restore ; $56e8
-.step6:
+.checkTennisDictCursorRow:
 	bit 7, a ; $56ea
 	jr z, .positive ; $56ec
 	sound $5e ; $56ee

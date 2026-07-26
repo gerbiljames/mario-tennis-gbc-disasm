@@ -2281,7 +2281,7 @@ ResetTargetHitState:
 ShootingStarTargetActorHandler:
 	ld a, [$dc72] ; $5231
 	rst Rst00 ; $5234
-	dw AdvanceTargetActorState.step ; $5235 jumptable
+	dw AdvanceTargetActorState.advanceMatchRng ; $5235 jumptable
 	dw AdvanceTargetActorState.drawTargetReticleSprite ; $5237 jumptable
 	dw AdvanceTargetActorState.drawTargetHitCountdown ; $5239 jumptable
 	dw AdvanceTargetActorState.drawTargetReticleSprite2 ; $523b jumptable
@@ -2290,7 +2290,7 @@ AdvanceTargetActorState:
 	ld hl, $dc72 ; $523f
 	inc [hl] ; $5242
 	ret ; $5243
-.step:
+.advanceMatchRng:
 	ld a, [$dc73] ; $5244
 	and a, a ; $5247
 	jr z, .zero ; $5248

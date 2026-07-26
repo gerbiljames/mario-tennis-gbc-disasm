@@ -2977,16 +2977,16 @@ RestaurantNpc0D_10:
 	farcall InitDialogueTextCursor ; $5fd7
 	ld a, [$c2b1] ; $5fda
 	cp a, $03 ; $5fdd
-	jr nz, .step ; $5fdf
+	jr nz, .advanceDialogueTextCursor ; $5fdf
 	ld a, $0d ; $5fe1
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fe3
 	farcall RunDialogueYesNoPrompt ; $5fe6
 	farcall ScriptCloseDialogueWindow ; $5fe9
 	script_wait_frames $05 ; $5fec
 	and a, a ; $5ff3
-	jr z, .step ; $5ff4
+	jr z, .advanceDialogueTextCursor ; $5ff4
 	farcall AdvanceDialogueTextCursor ; $5ff6
-.step:
+.advanceDialogueTextCursor:
 	ld a, [$c2b0] ; $5ff9
 	cp a, $03 ; $5ffc
 	jr nz, .speak ; $5ffe

@@ -1064,7 +1064,7 @@ FlushCharDataTilemapChunk:
 	jr z, .countDone ; $4972
 	dec a ; $4974
 	jr z, .countDone2 ; $4975
-	jr .step3 ; $4977
+	jr .queueVRAMCopy ; $4977
 .countDone:
 	wram_bank $03 ; $4979
 	ld hl, $d1e0 ; $497f
@@ -1091,7 +1091,7 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $49be
 	call AdvanceFrame ; $49c1
 	ret ; $49c4
-.step3:
+.queueVRAMCopy:
 	wram_bank $03 ; $49c5
 	ld hl, $d000 ; $49cb
 	ld de, $9800 ; $49ce

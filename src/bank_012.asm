@@ -520,7 +520,7 @@ WallPracticeScoreRetryPrompt:
 	cp a, $09 ; $4896
 	jr nz, .ne09 ; $4898
 	script_set_text Text_35_250 ; $489a
-	jr .step2 ; $48a0
+	jr .pushTextArgNumber ; $48a0
 .ne09:
 	ld a, [wPointOutcome] ; $48a2
 	and a, $03 ; $48a5
@@ -534,7 +534,7 @@ WallPracticeScoreRetryPrompt:
 	ld h, [hl] ; $48b0
 	ld l, a ; $48b1
 	farcall InitDialogueTextCursor ; $48b2
-.step2:
+.pushTextArgNumber:
 	ld hl, wMinigamesCurrentScore ; $48b5
 	ld a, [hl+] ; $48b8
 	ld h, [hl] ; $48b9

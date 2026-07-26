@@ -77,13 +77,13 @@ RunDebugTestMenu:
 	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $40c6
 	farcall SetSaveFlag ; $40c9
 	pop de ; $40cc
-	jr .step2 ; $40cd
+	jr .setDebugStepMode ; $40cd
 .advanceFrame:
 	bit 3, a ; $40cf
-	jr nz, .step2 ; $40d1
+	jr nz, .setDebugStepMode ; $40d1
 	call AdvanceFrame ; $40d3
 	jr .loopBB ; $40d6
-.step2:
+.setDebugStepMode:
 	ld a, $00 ; $40d8
 	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
@@ -555,7 +555,7 @@ RunSoundTest:
 	call PrintString ; $6af6
 	pop de ; $6af9
 	pop hl ; $6afa
-	jr .step11 ; $6afb
+	jr .printDecimalByte ; $6afb
 .nonZero2:
 	push hl ; $6afd
 	push de ; $6afe
@@ -571,7 +571,7 @@ RunSoundTest:
 	call PrintString ; $6b12
 	pop de ; $6b15
 	pop hl ; $6b16
-.step11:
+.printDecimalByte:
 	push de ; $6b17
 	push af ; $6b18
 	ld a, d ; $6b19

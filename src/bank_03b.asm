@@ -349,13 +349,13 @@ MoveMenuCursorRepeat:
 .checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $4214
 	cp a, d ; $4217
-	jr nz, .step8 ; $4218
+	jr nz, .checkMenuCursorX2 ; $4218
 	ld a, [wMenuCursorY] ; $421a
 	cp a, e ; $421d
-	jr nz, .step8 ; $421e
+	jr nz, .checkMenuCursorX2 ; $421e
 	xor a, a ; $4220
 	ret ; $4221
-.step8:
+.checkMenuCursorX2:
 	ld a, $01 ; $4222
 	ret ; $4224
 MoveMenuCursorLinkLocal:
@@ -379,7 +379,7 @@ MoveMenuCursorLinkLocal:
 	ld a, [wMenuCursorLockFlags] ; $4241
 	and a, $01 ; $4244
 	ld a, h ; $4246
-	jr nz, .step11 ; $4247
+	jr nz, .checkMenuCursorLockFlags2 ; $4247
 	bit 4, a ; $4249
 	jr z, .bit4Clear ; $424b
 	ld a, [wMenuCursorX] ; $424d
@@ -435,7 +435,7 @@ MoveMenuCursorLinkLocal:
 	jr .checkMenuCursorX ; $4292
 .bit6Clear:
 	bit 7, a ; $4294
-	jr z, .step11 ; $4296
+	jr z, .checkMenuCursorLockFlags2 ; $4296
 	ld a, [wMenuCursorY] ; $4298
 	inc a ; $429b
 	add a, a ; $429c
@@ -451,7 +451,7 @@ MoveMenuCursorLinkLocal:
 .store4:
 	ld [wMenuCursorY], a ; $42a8
 	jr .checkMenuCursorX ; $42ab
-.step11:
+.checkMenuCursorLockFlags2:
 	bit 0, a ; $42ad
 	jr z, .bit0Clear ; $42af
 	sound $5f ; $42b1
@@ -483,13 +483,13 @@ MoveMenuCursorLinkLocal:
 .checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $42df
 	cp a, d ; $42e2
-	jr nz, .step14 ; $42e3
+	jr nz, .checkMenuCursor2X ; $42e3
 	ld a, [wMenuCursorY] ; $42e5
 	cp a, e ; $42e8
-	jr nz, .step14 ; $42e9
+	jr nz, .checkMenuCursor2X ; $42e9
 	xor a, a ; $42eb
 	ret ; $42ec
-.step14:
+.checkMenuCursor2X:
 	ld a, $01 ; $42ed
 	ret ; $42ef
 MoveMenuCursorLinkRemote:
@@ -616,13 +616,13 @@ MoveMenuCursorLinkRemote:
 .checkMenuCursor2X:
 	ld a, [wMenuCursor2X] ; $43a8
 	cp a, d ; $43ab
-	jr nz, .step14 ; $43ac
+	jr nz, .checkMenuCursorY ; $43ac
 	ld a, [wMenuCursor2Y] ; $43ae
 	cp a, e ; $43b1
-	jr nz, .step14 ; $43b2
+	jr nz, .checkMenuCursorY ; $43b2
 	xor a, a ; $43b4
 	ret ; $43b5
-.step14:
+.checkMenuCursorY:
 	ld a, $01 ; $43b6
 	ret ; $43b8
 GetMenuCursorCellIndex:
@@ -2358,13 +2358,13 @@ DrawN64TnmtTrophyRows:
 .gotPtr:
 	ld a, [$d801] ; $5016
 	or a, a ; $5019
-	jr z, .step2 ; $501a
+	jr z, .drawN64TnmtTrophyRow ; $501a
 	ld a, $06 ; $501c
 	add a, l ; $501e
 	ld l, a ; $501f
-	jr nc, .step2 ; $5020
+	jr nc, .drawN64TnmtTrophyRow ; $5020
 	inc h ; $5022
-.step2:
+.drawN64TnmtTrophyRow:
 	ld de, $d0e5 ; $5023
 	ld c, $00 ; $5026
 .loop:
@@ -2480,10 +2480,10 @@ N64TnmtScrollArrowsTask:
 	wram_bank $03 ; $50d9
 	ld a, [$d800] ; $50df
 	or a, a ; $50e2
-	jr z, .step ; $50e3
+	jr z, .applyCursorBounceX ; $50e3
 	ld a, [$d801] ; $50e5
 	or a, a ; $50e8
-	jr nz, .step ; $50e9
+	jr nz, .applyCursorBounceX ; $50e9
 	ld de, $932f ; $50eb
 	ld c, $01 ; $50ee
 	call ApplyCursorBounceX ; $50f0
@@ -2491,7 +2491,7 @@ N64TnmtScrollArrowsTask:
 	ld c, $00 ; $50f5
 	ld h, $00 ; $50f7
 	farcall QueueStackedSpritePair ; $50f9
-.step:
+.applyCursorBounceX:
 	ld a, [$d801] ; $50fc
 	or a, a ; $50ff
 	jr z, .zero ; $5100
@@ -3201,7 +3201,7 @@ RunMainMenu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5642
 	bit PADB_A, a ; $5645
-	jr nz, .step2 ; $5647
+	jr nz, .clearFrameTasks ; $5647
 	bit 1, a ; $5649
 	jr nz, .playSfx2 ; $564b
 	bit 2, a ; $564d
@@ -3209,7 +3209,7 @@ RunMainMenu:
 	jr .loop ; $5651
 .bit2Set:
 	jr .loop ; $5653
-.step2:
+.clearFrameTasks:
 	ld a, $01 ; $5655
 	ld [$cb71], a ; $5657
 	sound $5f ; $565a
@@ -3616,10 +3616,10 @@ DrawMainMenuSelection:
 	ld a, [hl] ; $59a6
 	ld d, $04 ; $59a7
 	farcall LoadIndexedPalette_18 ; $59a9
-	jr .step2 ; $59ac
+	jr .fillTilemapRect ; $59ac
 .loadMainMenuItemPalette:
 	call LoadMainMenuItemPalette ; $59ae
-.step2:
+.fillTilemapRect:
 	wram_bank $03 ; $59b1
 	ld de, $d1e0 ; $59b7
 	ld b, $14 ; $59ba
@@ -4764,10 +4764,10 @@ RunMinigameSelect:
 	or a, a ; $623e
 	jr nz, .drawMinigameSelectGrid9 ; $623f
 	call DrawMinigameSelectGrid6 ; $6241
-	jr .step ; $6244
+	jr .storeMenuInputPressed ; $6244
 .drawMinigameSelectGrid9:
 	call DrawMinigameSelectGrid9 ; $6246
-.step:
+.storeMenuInputPressed:
 	wram_bank $03 ; $6249
 .loop:
 	ldh a, [hInputPressed] ; $624f
@@ -5841,10 +5841,10 @@ DrawSavedDataSourceGrid:
 	ld a, [hl] ; $6ab6
 	ld d, $04 ; $6ab7
 	farcall LoadIndexedPalette_18 ; $6ab9
-	jr .step2 ; $6abc
+	jr .fillTilemapRect ; $6abc
 .loadSavedDataSourceCellPalette:
 	call LoadSavedDataSourceCellPalette ; $6abe
-.step2:
+.fillTilemapRect:
 	wram_bank $03 ; $6ac1
 	ld de, $d1e0 ; $6ac7
 	ld b, $14 ; $6aca
@@ -6541,10 +6541,10 @@ DrawEraseSavedDataGrid:
 	ld a, [hl] ; $7033
 	ld d, $04 ; $7034
 	farcall LoadIndexedPalette_18 ; $7036
-	jr .step2 ; $7039
+	jr .fillTilemapRect ; $7039
 .loadEraseSavedDataCellPalette:
 	call LoadEraseSavedDataCellPalette ; $703b
-.step2:
+.fillTilemapRect:
 	wram_bank $03 ; $703e
 	ld de, $d1e0 ; $7044
 	ld b, $14 ; $7047

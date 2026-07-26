@@ -1803,7 +1803,7 @@ RunMenuSelectionShared:
 .bit6Clear:
 	ldh a, [hInputPressed] ; $4b17
 	and a, PADF_DOWN ; $4b19
-	jp z, LoadOverworldSpriteDef.step ; $4b1b
+	jp z, LoadOverworldSpriteDef.checkInputRisingEdge ; $4b1b
 	ld a, [$d831] ; $4b1e
 	ld c, a ; $4b21
 	inc b ; $4b22
@@ -1862,7 +1862,7 @@ LoadOverworldSpriteDef:
 	pop de ; $4b6b
 	ld a, b ; $4b6c
 	ld [$d830], a ; $4b6d
-	jr .step ; $4b70
+	jr .checkInputRisingEdge ; $4b70
 .isCursorOnAdjustRow:
 	call IsCursorOnAdjustRow ; $4b72
 	or a, a ; $4b75
@@ -1891,27 +1891,27 @@ LoadOverworldSpriteDef:
 	pop bc ; $4ba0
 	pop af ; $4ba1
 	jp .step7 ; $4ba2
-.step:
+.checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $4ba5
 	and a, PADF_START ; $4ba7
-	jp z, .step2 ; $4ba9
+	jp z, .checkInputPressed ; $4ba9
 	sound $62 ; $4bac
 	ld a, [$cb2a] ; $4bae
 	and a, $f0 ; $4bb1
 	ld [$cb2a], a ; $4bb3
 	ld a, $ff ; $4bb6
 	jp .store ; $4bb8
-.step2:
+.checkInputPressed:
 	ldh a, [hInputPressed] ; $4bbb
 	and a, PADF_B ; $4bbd
-	jp z, .step3 ; $4bbf
+	jp z, .isCursorOnAdjustRow2 ; $4bbf
 	sound $62 ; $4bc2
 	ld a, [$cb2a] ; $4bc4
 	and a, $f0 ; $4bc7
 	ld [$cb2a], a ; $4bc9
 	ld a, $ff ; $4bcc
 	jp .store ; $4bce
-.step3:
+.isCursorOnAdjustRow2:
 	push af ; $4bd1
 	push bc ; $4bd2
 	push de ; $4bd3
@@ -1961,14 +1961,14 @@ LoadOverworldSpriteDef:
 	ld a, $fd ; $4c29
 .store:
 	ld [$d830], a ; $4c2b
-	jr .step6 ; $4c2e
+	jr .unregisterFrameTask ; $4c2e
 .restore2:
 	pop hl ; $4c30
 	pop de ; $4c31
 	pop bc ; $4c32
 	pop af ; $4c33
 	ld a, [$d830] ; $4c34
-.step6:
+.unregisterFrameTask:
 	push af ; $4c37
 	push bc ; $4c38
 	push de ; $4c39
@@ -2650,14 +2650,14 @@ TextCmdPrintArgString:
 	ld h, a ; $50c9
 	ld a, b ; $50ca
 	wram_bank ; $50cb
-	jr .step2 ; $50cf
+	jr .copyMemoryBC ; $50cf
 .zero:
 	ld b, a ; $50d1
 	ld a, h ; $50d2
 	and a, $0f ; $50d3
 	or a, $c0 ; $50d5
 	ld h, a ; $50d7
-.step2:
+.copyMemoryBC:
 	push de ; $50d8
 	ld de, wInlineTextBuffer ; $50d9
 	ld bc, $0020 ; $50dc
@@ -2874,7 +2874,7 @@ MeasureNextArgStringWidth:
 	ld h, a ; $522d
 	ld a, b ; $522e
 	wram_bank ; $522f
-	jr .step2 ; $5233
+	jr .copyMemoryBC ; $5233
 .zero:
 	ld b, a ; $5235
 	ld a, h ; $5236
@@ -2883,7 +2883,7 @@ MeasureNextArgStringWidth:
 	ld h, a ; $523b
 	ld a, b ; $523c
 	wram_bank ; $523d
-.step2:
+.copyMemoryBC:
 	push de ; $5241
 	ld de, wInlineTextBuffer ; $5242
 	ld bc, $0020 ; $5245
@@ -5979,7 +5979,7 @@ RunDebugFlagEditor:
 	jr nz, .closeWindow ; $661e
 	ldh a, [hInputRisingEdge] ; $6620
 	bit PADB_A, a ; $6622
-	jr z, .step2 ; $6624
+	jr z, .checkInputRisingEdge ; $6624
 	call DebugToggleSelectedFlag ; $6626
 	call DebugDrawFlagsWindow1 ; $6629
 	call DebugDrawFlagsWindow2 ; $662c
@@ -5987,10 +5987,10 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6632
 	ld a, [$c719] ; $6635
 	call RedrawWindowRows ; $6638
-.step2:
+.checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $663b
 	bit PADB_START, a ; $663d
-	jr z, .step3 ; $663f
+	jr z, .checkPlayerInputFlags ; $663f
 	ld a, [$c714] ; $6641
 	inc a ; $6644
 	and a, $03 ; $6645
@@ -6001,7 +6001,7 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6653
 	ld a, [$c719] ; $6656
 	call RedrawWindowRows ; $6659
-.step3:
+.checkPlayerInputFlags:
 	ldh a, [hPlayerInputFlags] ; $665c
 	and a, $f0 ; $665e
 	jr z, .advanceFrame ; $6660
@@ -6191,7 +6191,7 @@ RunDebugWarpMenu:
 	jr nz, .closeWindow ; $67f7
 	ldh a, [hInputRisingEdge] ; $67f9
 	and a, PADF_A ; $67fb
-	jr z, .step ; $67fd
+	jr z, .checkInputPressed ; $67fd
 	ld a, [$c700] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [$c704] ; $6805
@@ -6200,7 +6200,7 @@ RunDebugWarpMenu:
 	ld [$c294], a ; $680d
 	ld [wStoryModeExitLocationRequest], a ; $6810
 	jr .closeWindow ; $6813
-.step:
+.checkInputPressed:
 	ldh a, [hInputPressed] ; $6815
 	and a, PADF_UP | PADF_DOWN ; $6817
 	jr z, .step2 ; $6819
@@ -6828,9 +6828,9 @@ WriteStringToTilemapStreamed:
 .loopB:
 	ld a, [hl] ; $6cb9
 	or a, a ; $6cba
-	jr z, .step7 ; $6cbb
+	jr z, .checkWramBank ; $6cbb
 	cp a, $03 ; $6cbd
-	jr z, .step7 ; $6cbf
+	jr z, .checkWramBank ; $6cbf
 	inc hl ; $6cc1
 	push af ; $6cc2
 	ld a, [hl] ; $6cc3
@@ -6881,7 +6881,7 @@ WriteStringToTilemapStreamed:
 	ld e, l ; $6cfe
 	pop hl ; $6cff
 	jr .loopB ; $6d00
-.step7:
+.checkWramBank:
 	ldh a, [hWramBank] ; $6d02
 	push af ; $6d04
 	wram_bank $05 ; $6d05
@@ -8534,7 +8534,7 @@ DrawInlineGlyph:
 	jr z, .step3 ; $769d
 	cp a, $01 ; $769f
 	jr z, .eq01 ; $76a1
-	jr .step2 ; $76a3
+	jr .drawGlyph ; $76a3
 .eq01:
 	ld e, $00 ; $76a5
 	ld d, c ; $76a7
@@ -8545,7 +8545,7 @@ DrawInlineGlyph:
 	ld [$c3ba], a ; $76ae
 	ld [$c3bb], a ; $76b1
 	jr .step3 ; $76b4
-.step2:
+.drawGlyph:
 	push af ; $76b6
 	wram_bank $07 ; $76b7
 	pop af ; $76bd
@@ -8712,13 +8712,13 @@ FlushGlyphRow:
 	ld b, a ; $77a8
 	ld a, [$d824] ; $77a9
 	cp a, b ; $77ac
-	jr nz, .step ; $77ad
+	jr nz, .uploadGlyphBufferQueued ; $77ad
 	ld a, [wMessageSpeed] ; $77af
 	bit 7, a ; $77b2
-	jr nz, .step ; $77b4
+	jr nz, .uploadGlyphBufferQueued ; $77b4
 	and a, $7f ; $77b6
 	jr nz, .step2 ; $77b8
-.step:
+.uploadGlyphBufferQueued:
 	ldh a, [rLCDC] ; $77ba
 	bit 7, a ; $77bc
 	jr z, .uploadGlyphBufferDMA ; $77be
