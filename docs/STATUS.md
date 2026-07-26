@@ -210,6 +210,34 @@ named from the first instruction of their block (`script_speak` -> `.speak`,
 name afterwards. Collisions inside one scope get a numeric suffix, which is
 why a few `.placeActors2`/`.applySlot2` names appear.
 
+That generator left **1,894 locals as a bare `.step`** -- its fallback when no
+rule matched. A follow-up pass cut those to **138** by naming each from the
+*branch condition that reaches it*, which is both more informative and
+checkable against the source:
+
+| reached by | name |
+| --- | --- |
+| `cp a, $05` + `jr z` / `jr nz` | `.eq05` / `.ne05` |
+| `cp a, $05` + `jr c` / `jr nc` | `.lt05` / `.ge05` |
+| `bit 7, h` + `jr z` / `jr nz` | `.positive` / `.negative` |
+| `bit 4, a` + `jr z` / `jr nz` | `.bit4Clear` / `.bit4Set` |
+| `or a, a` + `jr z` / `jr nz` | `.zero` / `.nonZero` |
+| `test_flag FLAG_DOUBLES` + `jr z` | `.notDoubles` |
+| `add a, l` + `jr nc` | `.gotPtr` |
+
+Where a label has several reference sites there is no single condition, so the
+block itself is used instead: a leading `call Foo` gives `.foo`, a store to a
+named variable gives `.storeFoo`, `xor a` + `ldh [hFoo], a` gives `.clearFoo`.
+Repeated exact shapes across the drill banks (`xor a / ret` -> `.returnZero`,
+`ld a, [$c2e3] / rst Rst00` -> `.dispatchStage`) went last.
+
+The 138 that remain are genuinely hard -- unrolled math and rendering steps
+with nothing to distinguish one from the next -- and 15 of them are
+deliberate: `MulHLByA`, `AngleFromVector` and `AngleFromVector16` use
+`.step6`...`.step1` as a *bit index*, keyed to the `.topN`/`.finishN` names
+around them. The sweep briefly rewrote `MulHLByA`'s as `.noCarryN`, which was
+true of the branch but lost that index; they were restored.
+
 At the time of this pass 3,813 `Label_*` were still left, in the menu/UI banks
 (`$05`, `$1a`-`$1e`, `$39`-`$3f`), the minigame banks (`$0b`, `$0d`, `$17`) and
 ROM0; the generator pass above finished those off.
