@@ -1311,34 +1311,34 @@ MatchSelectHandlersB_10:
 	dw RunEraseSavedDataFlow ; record 8
 	ld a, e ; $4fd8
 	cp a, $ff ; $4fd9
-	jr z, Label_10_5041 ; $4fdb
+	jr z, .backToTitle ; $4fdb
 	and a, $7f ; $4fdd
 	ld [wCurrentStorySlot], a ; $4fdf
 	farcall CheckStorySlot ; $4fe2
 	cp a, $fe ; $4fe5
-	jr z, Label_10_5041 ; $4fe7
+	jr z, .backToTitle ; $4fe7
 	farcall ApplyPendingExpAwards ; $4fe9
 	or a, a ; $4fec
-	jr z, Label_10_5006 ; $4fed
+	jr z, .checkMatchResult ; $4fed
 	call DisableLCDSafely ; $4fef
 	farcall ResetScreenAndTextWindows ; $4ff2
 	call EnableLCD ; $4ff5
 	ld a, [$c8a5] ; $4ff8
 	or a, a ; $4ffb
-	jr nz, Label_10_5006 ; $4ffc
+	jr nz, .checkMatchResult ; $4ffc
 	script_fade_in $10 ; $4ffe
 	call WaitFadeEnd ; $5003
-Label_10_5006:
+.checkMatchResult:
 	ld a, [$c8a5] ; $5006
 	or a, a ; $5009
-	jp z, Label_10_50a4 ; $500a
+	jp z, .clearMatchState ; $500a
 	ld c, $00 ; $500d
 	farcall ShowMatchResultsScreen ; $500f
 	push af ; $5012
 	call RestoreGameTimer ; $5013
 	pop af ; $5016
 	or a, a ; $5017
-	jp z, Label_10_5093 ; $5018
+	jp z, .resetScreen ; $5018
 	cp a, $ff ; $501b
 	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $501d
 	xor a, a ; $5020
@@ -1346,9 +1346,9 @@ Label_10_5006:
 	farcall SaveStorySlotWithTimer ; $5024
 	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a, a ; $502a
-	jr z, Label_10_5030 ; $502b
+	jr z, .restoreReturnPoint ; $502b
 	jp RunEraseSavedDataFlow.runMatch ; $502d
-Label_10_5030:
+.restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, $0a ; $5033
 	ld c, $01 ; $5035
@@ -1356,7 +1356,7 @@ Label_10_5030:
 	farcall SaveStorySlotWithTimer ; $503a
 	farcall EndCutsceneScriptMode ; $503d
 	ret ; $5040
-Label_10_5041:
+.backToTitle:
 	ld a, $03 ; $5041
 	ld [wAnimatedTilePeriod], a ; $5043
 	ld c, $10 ; $5046
@@ -1366,7 +1366,7 @@ Label_10_5041:
 	ld [wCurrentStorySlot], a ; $504f
 	farcall RunNewGameSetup ; $5052
 	cp a, $ff ; $5055
-	jp nz, Label_10_5073 ; $5057
+	jp nz, .newStorySlot ; $5057
 	ld a, $00 ; $505a
 	ld [wMenuSlideDirection], a ; $505c
 	call DisableLCDSafely ; $505f
@@ -1375,28 +1375,28 @@ Label_10_5041:
 	call EnableLCD ; $5068
 	script_fade_in $10 ; $506b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $5070
-Label_10_5073:
+.newStorySlot:
 	call ResetGameTimer ; $5073
 	farcall GenerateUniqueStorySaveSignature ; $5076
 	farcall SaveStorySlotWithTimer ; $5079
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $507c
-	jr nz, Label_10_508a ; $507f
+	jr nz, .exitToLocation3 ; $507f
 	ld a, $01 ; $5081
 	ld [$c294], a ; $5083
 	ld [wStoryModeExitLocationRequest], a ; $5086
 	ret ; $5089
-Label_10_508a:
+.exitToLocation3:
 	ld a, $03 ; $508a
 	ld [$c294], a ; $508c
 	ld [wStoryModeExitLocationRequest], a ; $508f
 	ret ; $5092
-Label_10_5093:
+.resetScreen:
 	call DisableLCDSafely ; $5093
 	farcall ResetScreenAndTextWindows ; $5096
 	call EnableLCD ; $5099
 	script_fade_in $10 ; $509c
 	call WaitFadeEnd ; $50a1
-Label_10_50a4:
+.clearMatchState:
 	xor a, a ; $50a4
 	ld [$c8a5], a ; $50a5
 	ld [wKeepMatchStatsFlag], a ; $50a8
@@ -1405,14 +1405,14 @@ Label_10_50a4:
 	call GetStoryContinueDestination ; $50b1
 	ld [$cb74], a ; $50b4
 	cp a, $04 ; $50b7
-	jr z, Label_10_50ca ; $50b9
+	jr z, .continueStory ; $50b9
 	farcall RunPlayAlonePartnerMenu ; $50bb
 	cp a, $ff ; $50be
-	jr nz, Label_10_50ca ; $50c0
+	jr nz, .continueStory ; $50c0
 	ld a, $00 ; $50c2
 	ld [wMenuSlideDirection], a ; $50c4
 	jp RunTitleAndMainMenuLoop.menuLoop ; $50c7
-Label_10_50ca:
+.continueStory:
 	call GetStoryContinueDestination ; $50ca
 	ld [$cb74], a ; $50cd
 	call RestoreGameTimer ; $50d0
@@ -1424,13 +1424,13 @@ Label_10_50ca:
 	farcall SaveStoryReturnPoint ; $50df
 	farcall SaveStorySlotWithTimer ; $50e2
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $50e5
-	jr nz, Label_10_50f5 ; $50e8
+	jr nz, .loadSlot ; $50e8
 	ld a, [$cb74] ; $50ea
 	ld a, a ; $50ed
 	ld [$c294], a ; $50ee
 	ld [wStoryModeExitLocationRequest], a ; $50f1
 	ret ; $50f4
-Label_10_50f5:
+.loadSlot:
 	ld a, $03 ; $50f5
 	ld [$c294], a ; $50f7
 	ld [wStoryModeExitLocationRequest], a ; $50fa
@@ -1439,20 +1439,20 @@ Label_10_50f5:
 	ld [wCurrentStorySlot], a ; $5100
 	farcall ReadExhibitionSaveBlock ; $5103
 	bit 7, a ; $5106
-	jr nz, Label_10_5137 ; $5108
+	jr nz, .noSlot ; $5108
 	ld a, [$c8a5] ; $510a
 	or a, a ; $510d
-	jr z, Label_10_5137 ; $510e
+	jr z, .noSlot ; $510e
 	ld c, $00 ; $5110
 	farcall ShowMatchResultsScreen ; $5112
 	or a, a ; $5115
-	jr z, Label_10_5124 ; $5116
+	jr z, .startStory ; $5116
 	cp a, $ff ; $5118
 	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $511a
 	ld a, [wKeepMatchStatsFlag] ; $511d
 	or a, a ; $5120
-	jp nz, Label_10_51db ; $5121
-Label_10_5124:
+	jp nz, .optionsFlow ; $5121
+.startStory:
 	call DisableLCDSafely ; $5124
 	farcall ResetScreenAndTextWindows ; $5127
 	call EnableLCD ; $512a
@@ -1460,7 +1460,7 @@ Label_10_5124:
 	script_fade_in $10 ; $512e
 	call WaitFadeEnd ; $5133
 	pop af ; $5136
-Label_10_5137:
+.noSlot:
 	xor a, a ; $5137
 	ld [$c8a8], a ; $5138
 	ld a, $03 ; $513b
@@ -1468,14 +1468,14 @@ Label_10_5137:
 	farcall InitStoryModeState ; $5140
 	farcall InitDefaultMatchSettings ; $5143
 	farcall WriteExhibitionSaveBlock ; $5146
-Label_10_5149:
+.eraseFlow:
 	farcall RunMatchFormatSelect ; $5149
 	cp a, $ff ; $514c
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $514e
 	ld c, $10 ; $5151
 	call BeginFadeOut ; $5153
 	call WaitFadeEnd ; $5156
-Label_10_5159:
+.savedDataFlow:
 	ld a, [wMatchFormatDoubles] ; $5159
 	ld b, a ; $515c
 	farcall RunExhibitionCharSelectScreen ; $515d
@@ -1492,43 +1492,43 @@ Label_10_5159:
 	farcall LoadCourtSelectGraphics ; $517a
 	pop af ; $517d
 	cp a, $ff ; $517e
-	jr nz, Label_10_5191 ; $5180
+	jr nz, .minigameFlow ; $5180
 	call EnableLCD ; $5182
 	script_fade_in $10 ; $5185
 	ld a, $00 ; $518a
 	ld [wMenuSlideDirection], a ; $518c
-	jr Label_10_5149 ; $518f
-Label_10_5191:
+	jr .eraseFlow ; $518f
+.minigameFlow:
 	ld a, $01 ; $5191
 	ld [wMenuSlideDirection], a ; $5193
 	farcall StubNop_3e ; $5196
 	ld a, [wUnlockedCourtMask] ; $5199
 	or a, a ; $519c
-	jr z, Label_10_51b6 ; $519d
+	jr z, .exhibitionFlow ; $519d
 	call EnableLCD ; $519f
 	script_fade_in $10 ; $51a2
 	farcall RunCourtSelect9Menu ; $51a7
 	cp a, $ff ; $51aa
-	jr nz, Label_10_51cd ; $51ac
+	jr nz, .linkFlow ; $51ac
 	ld a, $00 ; $51ae
 	ld [wMenuSlideDirection], a ; $51b0
-	jp z, Label_10_5159 ; $51b3
-Label_10_51b6:
+	jp z, .savedDataFlow ; $51b3
+.exhibitionFlow:
 	call EnableLCD ; $51b6
 	script_fade_in $10 ; $51b9
 	farcall RunCourtSelect4Menu ; $51be
 	cp a, $ff ; $51c1
-	jr nz, Label_10_51cd ; $51c3
+	jr nz, .linkFlow ; $51c3
 	ld a, $00 ; $51c5
 	ld [wMenuSlideDirection], a ; $51c7
-	jp z, Label_10_5159 ; $51ca
-Label_10_51cd:
+	jp z, .savedDataFlow ; $51ca
+.linkFlow:
 	ld d, a ; $51cd
 	wram_bank $04 ; $51ce
 	ld a, d ; $51d4
 	ld [wCurrentlyUsedCourt], a ; $51d5
 	call ApplyMatchTypeSettings ; $51d8
-Label_10_51db:
+.optionsFlow:
 	ld a, $03 ; $51db
 	ld [wCurrentStorySlot], a ; $51dd
 	xor a, a ; $51e0
@@ -1539,11 +1539,11 @@ Label_10_51db:
 	farcall RunMatch ; $51ec
 	ld a, [$c8a5] ; $51ef
 	or a, a ; $51f2
-	jr z, Label_10_51fd ; $51f3
+	jr z, .done ; $51f3
 	ld a, $01 ; $51f5
 	ld [$c8a8], a ; $51f7
 	farcall WriteExhibitionSaveBlock ; $51fa
-Label_10_51fd:
+.done:
 	ld a, $01 ; $51fd
 	ld [wMenuSlideDirection], a ; $51ff
 	call DisableLCDSafely ; $5202
@@ -3332,17 +3332,17 @@ Label_10_6402:
 AcademyWingInitScript_10:
 	script_set_anim $05, $06 ; $643b
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $6442
-	jr nz, Label_10_6452 ; $6445
+	jr nz, .checkDoublesFinal ; $6445
 	script_set_position $05, $0100, $0100 ; $6447
-Label_10_6452:
+.checkDoublesFinal:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6452
-	jr nz, Label_10_6462 ; $6455
+	jr nz, .byStage ; $6455
 	script_set_position $06, $0100, $0100 ; $6457
-Label_10_6462:
+.byStage:
 	call SetAcademyWingDialogueStage_10 ; $6462
 	ld a, [$c2b0] ; $6465
 	cp a, $03 ; $6468
-	jr nz, Label_10_649e ; $646a
+	jr nz, .stage4 ; $646a
 	ldh a, [hRomBank] ; $646c
 	ld hl, $739e ; $646e
 	farcall ScriptRespawnLocationActors ; $6471
@@ -3358,12 +3358,12 @@ Label_10_6462:
 	call AcademyWingHideActorByProgressFlag_10 ; $6489
 	script_set_position $03, $1d00, $3000 ; $648c
 	script_face $03, FACE_UP ; $6497
-Label_10_649e:
+.stage4:
 	ld a, [$c2b0] ; $649e
 	cp a, $01 ; $64a1
-	jr nz, Label_10_64b0 ; $64a3
+	jr nz, .stage5 ; $64a3
 	script_set_position $03, $19a0, $32c0 ; $64a5
-Label_10_64b0:
+.stage5:
 	ld a, $16 ; $64b0
 	ld [$c329], a ; $64b2
 	ld a, $28 ; $64b5
@@ -3378,25 +3378,25 @@ Label_10_64b0:
 	call EnableLCD ; $64cc
 	ld a, [wStoryModeEntryPoint] ; $64cf
 	cp a, $0d ; $64d2
-	jp z, Label_10_64e0 ; $64d4
+	jp z, .stage6 ; $64d4
 	cp a, $0f ; $64d7
 	jp z, Label_10_6fcd ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
-Label_10_64e0:
+.stage6:
 	ldh a, [hRomBank] ; $64e0
 	ld hl, $6f45 ; $64e2
 	farcall ScriptRespawnLocationActors ; $64e5
 	farcall BeginCutsceneScriptMode ; $64e8
 	script_set_anim $0a, $06 ; $64eb
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $64f2
-	jr nz, Label_10_6502 ; $64f5
+	jr nz, .placeActors ; $64f5
 	script_set_position $0a, $0100, $0100 ; $64f7
-Label_10_6502:
+.placeActors:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6502
-	jr nz, Label_10_6512 ; $6505
+	jr nz, .done ; $6505
 	script_set_position $0b, $0100, $0100 ; $6507
-Label_10_6512:
+.done:
 	script_player_speed $00f0 ; $6512
 	script_move_player $1f00, $3b00 ; $6518
 	farcall WaitPlayerMoveDone ; $6522

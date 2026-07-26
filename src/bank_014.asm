@@ -1483,9 +1483,9 @@ IslandSkyInitScript_14:
 	jp z, AdvanceFirework1Ascent_14.loadScene ; $52f7
 	cp a, $0d ; $52fa
 	jp z, AdvanceFirework1Ascent_14.loadScene ; $52fc
-	jp Label_14_5303 ; $52ff
+	jp .loadScene ; $52ff
 	ret ; $5302
-Label_14_5303:
+.loadScene:
 	set_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $5303
 	call DisableLCDSafely ; $5306
 	call LoadPlaneObjGfx_14 ; $5309
@@ -1499,7 +1499,7 @@ Label_14_5303:
 	ld hl, QueuePlaneSpriteByHeight_14 ; $531e
 	call RegisterFrameTask ; $5321
 	test_flag FLAG_DOUBLES ; $5324
-	jp z, Label_14_5352 ; $5327
+	jp z, .setPlayerObjDef ; $5327
 	script_null_script ACTOR_PARTNER ; $532a
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $532f
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $533a
@@ -1511,7 +1511,7 @@ Label_14_5303:
 	ld b, h ; $5347
 	farcall LoadActorObjectDefIfValid ; $5348
 	script_set_anim $05, $01 ; $534b
-Label_14_5352:
+.setPlayerObjDef:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5352
 	ld d, $56 ; $5355
 	add a, d ; $5357
@@ -1524,7 +1524,7 @@ Label_14_5352:
 	script_set_active ACTOR_PLAYER, $00 ; $536a
 	ld a, [wStoryModeEntryPoint] ; $5371
 	cp a, $0c ; $5374
-	jr nz, Label_14_539c ; $5376
+	jr nz, .fadeIn ; $5376
 	script_set_position ACTOR_PLAYER, $0600, $2700 ; $5378
 	xor a, a ; $5383
 	ld [wStoryModeShowLocationName], a ; $5384
@@ -1534,8 +1534,8 @@ Label_14_5352:
 	ld [$c2b0], a ; $5391
 	ld a, $a8 ; $5394
 	ld [$c2b1], a ; $5396
-	jp Label_14_5440 ; $5399
-Label_14_539c:
+	jp .afterFlight ; $5399
+.fadeIn:
 	xor a, a ; $539c
 	ld [wStoryModeShowLocationName], a ; $539d
 	script_fade_in $06 ; $53a0
@@ -1544,32 +1544,32 @@ Label_14_539c:
 	script_wait_frames $3c ; $53aa
 	script_set_position ACTOR_PLAYER, $0600, $2700 ; $53b1
 	ld h, $08 ; $53bc
-Label_14_53be:
+.planeLoop:
 	script_wait_frames $06 ; $53be
 	call PlayPlaneMoveSfx_14 ; $53c5
 	ld a, [$c2b1] ; $53c8
 	inc a ; $53cb
 	ld [$c2b1], a ; $53cc
 	dec h ; $53cf
-	jr nz, Label_14_53be ; $53d0
+	jr nz, .planeLoop ; $53d0
 	ld h, $08 ; $53d2
-Label_14_53d4:
+.planeLoop2:
 	script_wait_frames $05 ; $53d4
 	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
 	and a, $01 ; $53df
-	jr z, Label_14_53ea ; $53e1
+	jr z, .advanceStage ; $53e1
 	ld a, [$c2b0] ; $53e3
 	dec a ; $53e6
 	ld [$c2b0], a ; $53e7
-Label_14_53ea:
+.advanceStage:
 	ld a, [$c2b1] ; $53ea
 	inc a ; $53ed
 	ld [$c2b1], a ; $53ee
 	dec h ; $53f1
-	jr nz, Label_14_53d4 ; $53f2
+	jr nz, .planeLoop2 ; $53f2
 	ld h, $08 ; $53f4
-Label_14_53f6:
+.checkStage:
 	script_wait_frames $04 ; $53f6
 	call PlayPlaneMoveSfx_14 ; $53fd
 	ld a, [$c2b0] ; $5400
@@ -1579,28 +1579,28 @@ Label_14_53f6:
 	inc a ; $540a
 	ld [$c2b1], a ; $540b
 	dec h ; $540e
-	jr nz, Label_14_53f6 ; $540f
+	jr nz, .checkStage ; $540f
 	script_player_speed $0012 ; $5411
 	script_move_player_to_actor ACTOR_PLAYER ; $5417
 	ld h, $1c ; $541e
-Label_14_5420:
+.descend:
 	script_wait_frames $03 ; $5420
 	call PlayPlaneMoveSfx_14 ; $5427
 	ld a, h ; $542a
 	and a, $01 ; $542b
-	jr z, Label_14_5436 ; $542d
+	jr z, .landed ; $542d
 	ld a, [$c2b0] ; $542f
 	dec a ; $5432
 	ld [$c2b0], a ; $5433
-Label_14_5436:
+.landed:
 	ld a, [$c2b1] ; $5436
 	inc a ; $5439
 	ld [$c2b1], a ; $543a
 	dec h ; $543d
-	jr nz, Label_14_5420 ; $543e
-Label_14_5440:
+	jr nz, .descend ; $543e
+.afterFlight:
 	ld h, $00 ; $5440
-Label_14_5442:
+.placeActors:
 	script_wait_frames $03 ; $5442
 	inc h ; $5449
 	call PlayPlaneMoveSfx_14 ; $544a
@@ -1609,53 +1609,53 @@ Label_14_5442:
 	ld [$c2b1], a ; $5451
 	and a, $03 ; $5454
 	cp a, $03 ; $5456
-	jr nz, Label_14_5461 ; $5458
+	jr nz, .placeDoubles ; $5458
 	ld a, [$c2b0] ; $545a
 	dec a ; $545d
 	ld [$c2b0], a ; $545e
-Label_14_5461:
+.placeDoubles:
 	ld a, [$c2b0] ; $5461
 	cp a, $20 ; $5464
-	jr nz, Label_14_5442 ; $5466
+	jr nz, .placeActors ; $5466
 	ld h, $08 ; $5468
-Label_14_546a:
+.walkOff:
 	script_wait_frames $04 ; $546a
 	call PlayPlaneMoveSfx_14 ; $5471
 	ld a, [$c2b1] ; $5474
 	inc a ; $5477
 	ld [$c2b1], a ; $5478
 	dec h ; $547b
-	jr nz, Label_14_546a ; $547c
+	jr nz, .walkOff ; $547c
 	sound $7b ; $547e
 	ld h, $08 ; $5480
-Label_14_5482:
+.speak:
 	script_wait_frames $06 ; $5482
 	ld a, [$c2b1] ; $5489
 	inc a ; $548c
 	ld [$c2b1], a ; $548d
 	dec h ; $5490
-	jr nz, Label_14_5482 ; $5491
+	jr nz, .speak ; $5491
 	sound $7d ; $5493
 	ld h, $04 ; $5495
-Label_14_5497:
+.speakDoubles:
 	script_wait_frames $08 ; $5497
 	ld a, [$c2b1] ; $549e
 	inc a ; $54a1
 	ld [$c2b1], a ; $54a2
 	dec h ; $54a5
-	jr nz, Label_14_5497 ; $54a6
+	jr nz, .speakDoubles ; $54a6
 	ld a, [wStoryModeEntryPoint] ; $54a8
 	cp a, $0c ; $54ab
-	jr z, Label_14_54df ; $54ad
+	jr z, .setLocation ; $54ad
 	test_flag FLAG_DOUBLES ; $54af
-	jr z, Label_14_54bc ; $54b2
+	jr z, .fadeOut ; $54b2
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $54b4
-	jp z, Label_14_54df ; $54b7
-	jr Label_14_54c1 ; $54ba
-Label_14_54bc:
+	jp z, .setLocation ; $54b7
+	jr .transition ; $54ba
+.fadeOut:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $54bc
-	jr z, Label_14_54df ; $54bf
-Label_14_54c1:
+	jr z, .setLocation ; $54bf
+.transition:
 	ld c, $04 ; $54c1
 	call BeginFadeOut ; $54c3
 	call WaitFadeEnd ; $54c6
@@ -1668,7 +1668,7 @@ Label_14_54c1:
 	ld [$c294], a ; $54d8
 	ld [wStoryModeExitLocationRequest], a ; $54db
 	ret ; $54de
-Label_14_54df:
+.setLocation:
 	ld a, $40 ; $54df
 	ld [$c2b2], a ; $54e1
 	ld a, $00 ; $54e4
@@ -1721,7 +1721,7 @@ Label_14_54df:
 	script_wait_idle ACTOR_PLAYER ; $55e6
 	ld a, [wStoryModeEntryPoint] ; $55eb
 	cp a, $0c ; $55ee
-	jr nz, Label_14_5603 ; $55f0
+	jr nz, .done ; $55f0
 	ld a, $01 ; $55f2
 	ld [$c2be], a ; $55f4
 	ld [$c2bf], a ; $55f7
@@ -1729,7 +1729,7 @@ Label_14_54df:
 	ld [$c294], a ; $55fc
 	ld [wStoryModeExitLocationRequest], a ; $55ff
 	ret ; $5602
-Label_14_5603:
+.done:
 	script_move_target ACTOR_PLAYER, $0b00, $2700 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
 	script_set_active ACTOR_PLAYER, $00 ; $5613
