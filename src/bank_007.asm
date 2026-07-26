@@ -2680,14 +2680,14 @@ CheckBallInSmashRange:
 	ld h, [hl] ; $5529
 	ld l, a ; $552a
 	bit 7, h ; $552b
-	jr z, Label_07_5535 ; $552d
+	jr z, .absX ; $552d
 	xor a, a ; $552f
 	sub a, l ; $5530
 	ld l, a ; $5531
 	sbc a, a ; $5532
 	sub a, h ; $5533
 	ld h, a ; $5534
-Label_07_5535:
+.absX:
 	ld e, l ; $5535
 	ld d, h ; $5536
 	sra d ; $5537
@@ -2712,14 +2712,14 @@ Label_07_5535:
 	ld h, [hl] ; $5558
 	ld l, a ; $5559
 	bit 7, h ; $555a
-	jr z, Label_07_5564 ; $555c
+	jr z, .absDepth ; $555c
 	xor a, a ; $555e
 	sub a, l ; $555f
 	ld l, a ; $5560
 	sbc a, a ; $5561
 	sub a, h ; $5562
 	ld h, a ; $5563
-Label_07_5564:
+.absDepth:
 	ld de, $04e0 ; $5564
 	add hl, de ; $5567
 	ld e, l ; $5568

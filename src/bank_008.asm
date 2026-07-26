@@ -4755,7 +4755,7 @@ DrawNearTeamChars:
 	wram_bank $04 ; $6377
 	ld a, [hl] ; $637d
 	cp a, b ; $637e
-	jr c, Label_08_63a0 ; $637f
+	jr c, DrawNearTeamCharsDoubles ; $637f
 	wram_bank $04 ; $6381
 	ld hl, wCharSpriteSlot ; $6387
 	call DrawCharSprite ; $638a
@@ -4764,7 +4764,7 @@ DrawNearTeamChars:
 	call DrawCharSprite ; $6396
 	wram_bank $04 ; $6399
 	ret ; $639f
-Label_08_63a0:
+DrawNearTeamCharsDoubles:
 	wram_bank $06 ; $63a0
 	ld hl, wCharSpriteSlot ; $63a6
 	call DrawCharSprite ; $63a9
@@ -4780,7 +4780,7 @@ DrawFarTeamChars:
 	wram_bank $05 ; $63c9
 	ld a, [hl] ; $63cf
 	cp a, b ; $63d0
-	jr c, Label_08_63f2 ; $63d1
+	jr c, DrawFarTeamCharsDoubles ; $63d1
 	wram_bank $05 ; $63d3
 	ld hl, wCharSpriteSlot ; $63d9
 	call DrawCharSprite ; $63dc
@@ -4789,7 +4789,7 @@ DrawFarTeamChars:
 	call DrawCharSprite ; $63e8
 	wram_bank $04 ; $63eb
 	ret ; $63f1
-Label_08_63f2:
+DrawFarTeamCharsDoubles:
 	wram_bank $07 ; $63f2
 	ld hl, wCharSpriteSlot ; $63f8
 	call DrawCharSprite ; $63fb

@@ -1062,7 +1062,7 @@ DrawChartIconColumn:
 	ld h, b ; $46c2
 	ld l, c ; $46c3
 	ld c, $00 ; $46c4
-Label_3b_46c6:
+.iconLoop:
 	ld a, [de] ; $46c6
 	inc de ; $46c7
 	ld b, a ; $46c8
@@ -1075,7 +1075,7 @@ Label_3b_46c6:
 	inc a ; $46d3
 	ld c, a ; $46d4
 	cp a, $04 ; $46d5
-	jr nz, Label_3b_46c6 ; $46d7
+	jr nz, .iconLoop ; $46d7
 	ret ; $46d9
 DrawChartIconRow:
 	ld d, h ; $46da
@@ -1083,7 +1083,7 @@ DrawChartIconRow:
 	ld h, b ; $46dc
 	ld l, c ; $46dd
 	ld c, a ; $46de
-Label_3b_46df:
+.iconLoop:
 	ld a, [de] ; $46df
 	inc de ; $46e0
 	ld b, a ; $46e1
@@ -1093,19 +1093,19 @@ Label_3b_46df:
 	ld a, c ; $46e7
 	dec a ; $46e8
 	ld c, a ; $46e9
-	jr nz, Label_3b_46df ; $46ea
+	jr nz, .iconLoop ; $46ea
 	ret ; $46ec
 DrawChartCellRows:
 	push af ; $46ed
 	ld c, $00 ; $46ee
-Label_3b_46f0:
+.rowLoop:
 	pop af ; $46f0
 	push af ; $46f1
 	push bc ; $46f2
 	push hl ; $46f3
 	push de ; $46f4
 	ld c, a ; $46f5
-Label_3b_46f6:
+.cellLoop:
 	ld a, [hl+] ; $46f6
 	ld b, a ; $46f7
 	call DrawChartCellMark ; $46f8
@@ -1114,7 +1114,7 @@ Label_3b_46f6:
 	ld a, c ; $46fd
 	dec a ; $46fe
 	ld c, a ; $46ff
-	jr nz, Label_3b_46f6 ; $4700
+	jr nz, .cellLoop ; $4700
 	pop de ; $4702
 	ld hl, $0040 ; $4703
 	add hl, de ; $4706
@@ -1128,7 +1128,7 @@ Label_3b_46f6:
 	inc a ; $4710
 	ld c, a ; $4711
 	cp a, $04 ; $4712
-	jr nz, Label_3b_46f0 ; $4714
+	jr nz, .rowLoop ; $4714
 	pop af ; $4716
 	ret ; $4717
 DrawChartCellMark:
@@ -8397,13 +8397,13 @@ CheckStarChartExpanded:
 	ld b, $10 ; $7e29
 	ld a, [$dc07] ; $7e2b
 	cp a, $10 ; $7e2e
-	jr z, Label_3b_7e3b ; $7e30
+	jr z, .notExpanded ; $7e30
 	pop bc ; $7e32
 	pop af ; $7e33
 	wram_bank ; $7e34
 	ld a, $01 ; $7e38
 	ret ; $7e3a
-Label_3b_7e3b:
+.notExpanded:
 	pop bc ; $7e3b
 	pop af ; $7e3c
 	wram_bank ; $7e3d

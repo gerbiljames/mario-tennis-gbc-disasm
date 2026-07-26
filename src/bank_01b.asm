@@ -6272,13 +6272,13 @@ CheckMinigameDataScrollable:
 	ld c, $04 ; $7882
 	farcall GetUnlockedStarCharAtGridSlot ; $7884
 	cp a, $15 ; $7887
-	jr nz, Label_1b_7890 ; $7889
+	jr nz, .scrollable ; $7889
 	pop hl ; $788b
 	pop de ; $788c
 	pop bc ; $788d
 	xor a, a ; $788e
 	ret ; $788f
-Label_1b_7890:
+.scrollable:
 	pop hl ; $7890
 	pop de ; $7891
 	pop bc ; $7892

@@ -780,26 +780,26 @@ CopyStringToTextBuffer:
 	jr .copyLoop ; $4715
 DrawClassNameLabel:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4717
-	jr nz, Label_1e_4728 ; $471a
+	jr nz, .doubles ; $471a
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $471c
-	jr nz, Label_1e_473c ; $471f
+	jr nz, .varsity ; $471f
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4721
-	jr nz, Label_1e_4737 ; $4724
-	jr Label_1e_4732 ; $4726
-Label_1e_4728:
+	jr nz, .senior ; $4724
+	jr .junior ; $4726
+.doubles:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4728
-	jr nz, Label_1e_473c ; $472b
+	jr nz, .varsity ; $472b
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $472d
-	jr nz, Label_1e_4737 ; $4730
-Label_1e_4732:
+	jr nz, .senior ; $4730
+.junior:
 	ld hl, $04da ; $4732
-	jr Label_1e_473f ; $4735
-Label_1e_4737:
+	jr .draw ; $4735
+.senior:
 	ld hl, $04db ; $4737
-	jr Label_1e_473f ; $473a
-Label_1e_473c:
+	jr .draw ; $473a
+.varsity:
 	ld hl, $04dc ; $473c
-Label_1e_473f:
+.draw:
 	ld de, $d1c1 ; $473f
 	ld bc, $0020 ; $4742
 	call DrawProportionalTextLine ; $4745

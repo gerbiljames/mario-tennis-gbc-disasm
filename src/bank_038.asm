@@ -2663,7 +2663,7 @@ ClearPlayerSlotPortrait:
 	ld [hl], a ; $55d3
 	ld a, [$d814] ; $55d4
 	cp a, $02 ; $55d7
-	jr nc, Label_38_55f3 ; $55d9
+	jr nc, .slot0 ; $55d9
 	ld hl, $d0c0 ; $55db
 	ld de, $98c0 ; $55de
 	ld c, $04 ; $55e1
@@ -2672,8 +2672,8 @@ ClearPlayerSlotPortrait:
 	ld de, $b8c0 ; $55e9
 	ld c, $04 ; $55ec
 	call QueueVRAMCopy ; $55ee
-	jr Label_38_5609 ; $55f1
-Label_38_55f3:
+	jr .done ; $55f1
+.slot0:
 	ld hl, $d120 ; $55f3
 	ld de, $9920 ; $55f6
 	ld c, $04 ; $55f9
@@ -2682,7 +2682,7 @@ Label_38_55f3:
 	ld de, $b920 ; $5601
 	ld c, $04 ; $5604
 	call QueueVRAMCopy ; $5606
-Label_38_5609:
+.done:
 	ret ; $5609
 Data_38_560a:
 	; $560a, 8 bytes (bytes:8)
@@ -2694,9 +2694,9 @@ DrawPlayerSlotPortrait:
 	add a, a ; $5617
 	add a, l ; $5618
 	ld l, a ; $5619
-	jr nc, Label_38_561d ; $561a
+	jr nc, .gotSource ; $561a
 	inc h ; $561c
-Label_38_561d:
+.gotSource:
 	ld b, h ; $561d
 	ld c, l ; $561e
 	ld hl, $0000 ; $561f
@@ -2718,7 +2718,7 @@ Label_38_561d:
 	call DrawPlayerSlotDifficultyMark ; $5639
 	ld a, [$d814] ; $563c
 	cp a, $02 ; $563f
-	jr nc, Label_38_565b ; $5641
+	jr nc, .slot0 ; $5641
 	ld hl, $d0c0 ; $5643
 	ld de, $98c0 ; $5646
 	ld c, $04 ; $5649
@@ -2727,8 +2727,8 @@ Label_38_561d:
 	ld de, $b8c0 ; $5651
 	ld c, $04 ; $5654
 	call QueueVRAMCopy ; $5656
-	jr Label_38_5671 ; $5659
-Label_38_565b:
+	jr .done ; $5659
+.slot0:
 	ld hl, $d120 ; $565b
 	ld de, $9920 ; $565e
 	ld c, $04 ; $5661
@@ -2737,7 +2737,7 @@ Label_38_565b:
 	ld de, $b920 ; $5669
 	ld c, $04 ; $566c
 	call QueueVRAMCopy ; $566e
-Label_38_5671:
+.done:
 	ret ; $5671
 Data_38_5672:
 	; $5672, 8 bytes (bytes:8)

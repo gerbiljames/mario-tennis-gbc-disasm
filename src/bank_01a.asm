@@ -2134,19 +2134,19 @@ Label_1a_4f9d:
 	ret ; $4faa
 DrawExpScreenCaption:
 	and a, a ; $4fab
-	jr z, Label_1a_4fbf ; $4fac
+	jr z, .caption0 ; $4fac
 	dec a ; $4fae
-	jr z, Label_1a_4fd7 ; $4faf
+	jr z, .caption1 ; $4faf
 	dec a ; $4fb1
-	jr z, Label_1a_5000 ; $4fb2
+	jr z, .caption2 ; $4fb2
 	dec a ; $4fb4
-	jr z, Label_1a_5018 ; $4fb5
+	jr z, .caption3 ; $4fb5
 	dec a ; $4fb7
-	jr z, Label_1a_502c ; $4fb8
+	jr z, .caption4 ; $4fb8
 	dec a ; $4fba
-	jp z, Label_1a_5044 ; $4fbb
+	jp z, .caption5 ; $4fbb
 	ret ; $4fbe
-Label_1a_4fbf:
+.caption0:
 	ld hl, $04ee ; $4fbf
 	call LoadDialogueTextToBuffer ; $4fc2
 	wram_bank $01 ; $4fc5
@@ -2155,7 +2155,7 @@ Label_1a_4fbf:
 	ld e, $01 ; $4fd1
 	call DrawStringToTileBuffer ; $4fd3
 	ret ; $4fd6
-Label_1a_4fd7:
+.caption1:
 	ld hl, $04ef ; $4fd7
 	call LoadDialogueTextToBuffer ; $4fda
 	wram_bank $01 ; $4fdd
@@ -2170,7 +2170,7 @@ Label_1a_4fd7:
 	ld e, $01 ; $4ffa
 	call DrawStringToTileBuffer ; $4ffc
 	ret ; $4fff
-Label_1a_5000:
+.caption2:
 	ld hl, $04f1 ; $5000
 	call LoadDialogueTextToBuffer ; $5003
 	wram_bank $01 ; $5006
@@ -2179,7 +2179,7 @@ Label_1a_5000:
 	ld e, $01 ; $5012
 	call DrawStringToTileBuffer ; $5014
 	ret ; $5017
-Label_1a_5018:
+.caption3:
 	wram_bank $03 ; $5018
 	ld hl, $04f2 ; $501e
 	ld de, $d82b ; $5021
@@ -2187,7 +2187,7 @@ Label_1a_5018:
 	farcall RenderProportionalTextAt ; $5026
 	sound $73 ; $5029
 	ret ; $502b
-Label_1a_502c:
+.caption4:
 	ld hl, $04f3 ; $502c
 	call LoadDialogueTextToBuffer ; $502f
 	wram_bank $01 ; $5032
@@ -2196,7 +2196,7 @@ Label_1a_502c:
 	ld e, $01 ; $503e
 	call DrawStringToTileBuffer ; $5040
 	ret ; $5043
-Label_1a_5044:
+.caption5:
 	sound $00 ; $5044
 	ld hl, $04f4 ; $5046
 	call LoadDialogueTextToBuffer ; $5049

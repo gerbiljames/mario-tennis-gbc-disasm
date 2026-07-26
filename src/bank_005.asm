@@ -3852,13 +3852,13 @@ DelayTextCharacter:
 	jr z, Label_05_57dd ; $57ae
 	ld a, c ; $57b0
 	cp a, $20 ; $57b1
-	jr nz, Label_05_57b9 ; $57b3
+	jr nz, .checkSpeed ; $57b3
 	ld b, $04 ; $57b5
-	jr Label_05_57d1 ; $57b7
-Label_05_57b9:
+	jr .waitFrame ; $57b7
+.checkSpeed:
 	ld a, [$d862] ; $57b9
 	cp a, $08 ; $57bc
-	jr z, Label_05_57d1 ; $57be
+	jr z, .waitFrame ; $57be
 	push bc ; $57c0
 	ld e, a ; $57c1
 	sla e ; $57c2
@@ -3870,13 +3870,13 @@ Label_05_57b9:
 	add a, d ; $57cc
 	call PlaySoundManaged ; $57cd
 	pop bc ; $57d0
-Label_05_57d1:
+.waitFrame:
 	call AdvanceFrame ; $57d1
 	ldh a, [hPlayerInputFlags] ; $57d4
 	and a, $f3 ; $57d6
 	jr nz, Label_05_57dd ; $57d8
 	dec b ; $57da
-	jr nz, Label_05_57d1 ; $57db
+	jr nz, .waitFrame ; $57db
 Label_05_57dd:
 	pop af ; $57dd
 	wram_bank ; $57de
@@ -7961,17 +7961,17 @@ DrawGlyph:
 	add hl, bc ; $7332
 	push de ; $7333
 	ld c, $10 ; $7334
-Label_05_7336:
+.rowLoop:
 	ld a, [hl+] ; $7336
 	call PlotGlyphRow ; $7337
 	ld a, $08 ; $733a
 	add a, e ; $733c
 	ld e, a ; $733d
-	jr nc, Label_05_7341 ; $733e
+	jr nc, .nextRow ; $733e
 	inc d ; $7340
-Label_05_7341:
+.nextRow:
 	dec c ; $7341
-	jr nz, Label_05_7336 ; $7342
+	jr nz, .rowLoop ; $7342
 	pop de ; $7344
 	pop af ; $7345
 	call GetGlyphWidthByIndex ; $7346
@@ -7980,13 +7980,13 @@ Label_05_7341:
 	add a, c ; $734c
 	ld b, a ; $734d
 	bit 3, a ; $734e
-	jr z, Label_05_7359 ; $7350
+	jr z, .alignPen ; $7350
 	ld a, $80 ; $7352
 	add a, e ; $7354
 	ld e, a ; $7355
-	jr nc, Label_05_7359 ; $7356
+	jr nc, .alignPen ; $7356
 	inc d ; $7358
-Label_05_7359:
+.alignPen:
 	ld a, b ; $7359
 	and a, $07 ; $735a
 	ld b, a ; $735c

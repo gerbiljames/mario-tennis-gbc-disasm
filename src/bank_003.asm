@@ -2245,12 +2245,12 @@ EraseStorySlotSaveData:
 ClearSaveBlock:
 	ld a, h ; $4e90
 	or a, a ; $4e91
-	jr nz, Label_03_4e99 ; $4e92
+	jr nz, .clearData ; $4e92
 	call ClearSaveBlockEntry ; $4e94
-	jr Label_03_4e9c ; $4e97
-Label_03_4e99:
+	jr .done ; $4e97
+.clearData:
 	call ClearSaveBlockData ; $4e99
-Label_03_4e9c:
+.done:
 	ret ; $4e9c
 ClearSaveBlockData:
 	push hl ; $4e9d

@@ -470,16 +470,16 @@ LoadCharacterRecordToBuffer:
 	ret ; $4529
 CheckCharacterUnlocked:
 	bit 7, a ; $452a
-	jr z, Label_18_4534 ; $452c
+	jr z, .checkRange ; $452c
 	ld a, [$d58b] ; $452e
 	cp a, $ff ; $4531
 	ret ; $4533
-Label_18_4534:
+.checkRange:
 	cp a, $04 ; $4534
-	jr nc, Label_18_453b ; $4536
+	jr nc, .lookup ; $4536
 	cp a, $ff ; $4538
 	ret ; $453a
-Label_18_453b:
+.lookup:
 	push hl ; $453b
 	push de ; $453c
 	ld h, $00 ; $453d
@@ -496,49 +496,49 @@ Label_18_453b:
 	pop hl ; $454b
 	ret ; $454c
 	cp a, $10 ; $454d
-	jr nc, Label_18_4555 ; $454f
+	jr nc, .done ; $454f
 	ld a, $01 ; $4551
 	and a, a ; $4553
 	ret ; $4554
-Label_18_4555:
+.done:
 	xor a, a ; $4555
 	ret ; $4556
 CheckUnlockFlag:
 	bit 7, a ; $4557
-	jr z, Label_18_4564 ; $4559
+	jr z, TestUnlockFlagById ; $4559
 	cp a, $84 ; $455b
-	jr nz, Label_18_4562 ; $455d
+	jr nz, .locked ; $455d
 	cp a, $ff ; $455f
 	ret ; $4561
-Label_18_4562:
+.locked:
 	xor a, a ; $4562
 	ret ; $4563
-Label_18_4564:
+TestUnlockFlagById:
 	push hl ; $4564
 	push de ; $4565
 	ld hl, UnlockFlagIds_18 ; $4566
 	add a, a ; $4569
 	add a, l ; $456a
 	ld l, a ; $456b
-	jr nc, Label_18_456f ; $456c
+	jr nc, .readFlagId ; $456c
 	inc h ; $456e
-Label_18_456f:
+.readFlagId:
 	ld a, [hl+] ; $456f
 	ld d, [hl] ; $4570
 	ld e, a ; $4571
 	or a, d ; $4572
-	jr nz, Label_18_4579 ; $4573
+	jr nz, .gameFlag ; $4573
 	cp a, $ff ; $4575
-	jr Label_18_4587 ; $4577
-Label_18_4579:
+	jr .done ; $4577
+.gameFlag:
 	bit 0, e ; $4579
-	jr nz, Label_18_4582 ; $457b
+	jr nz, .saveFlag ; $457b
 	call TestGameFlag ; $457d
-	jr Label_18_4587 ; $4580
-Label_18_4582:
+	jr .done ; $4580
+.saveFlag:
 	res 0, e ; $4582
 	farcall TestSaveFlag ; $4584
-Label_18_4587:
+.done:
 	pop de ; $4587
 	pop hl ; $4588
 	ret ; $4589
@@ -1055,15 +1055,15 @@ DrawTileBlock6x2ToTilemap:
 	ld a, $1a ; $5598
 	add a, l ; $559a
 	ld l, a ; $559b
-	jr nc, Label_18_559f ; $559c
+	jr nc, .gotSource ; $559c
 	inc h ; $559e
-Label_18_559f:
+.gotSource:
 	ld a, $1a ; $559f
 	add a, e ; $55a1
 	ld e, a ; $55a2
-	jr nc, Label_18_55a6 ; $55a3
+	jr nc, .copyRows ; $55a3
 	inc d ; $55a5
-Label_18_55a6:
+.copyRows:
 	ld a, [hl+] ; $55a6
 	ld [de], a ; $55a7
 	inc de ; $55a8

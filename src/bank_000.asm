@@ -1320,7 +1320,7 @@ FarCallVector:
 	ret ; $07dc
 CopyMapRows32To64:
 	ld c, $10 ; $07dd
-Label_00_07df:
+.copyLoop:
 	ld a, [hl+] ; $07df
 	ld [de], a ; $07e0
 	inc de ; $07e1
@@ -1458,7 +1458,7 @@ Label_00_07df:
 	ld e, l ; $0865
 	pop hl ; $0866
 	dec c ; $0867
-	jp nz, Label_00_07df ; $0868
+	jp nz, .copyLoop ; $0868
 	ret ; $086b
 CopyMapToScrollBuffers:
 	push af ; $086c

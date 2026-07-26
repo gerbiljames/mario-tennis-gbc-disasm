@@ -1327,7 +1327,7 @@ DrawScoreboardEmptyPips:
 	add hl, de ; $4a5d
 	ld e, l ; $4a5e
 	ld d, h ; $4a5f
-Label_06_4a60:
+.pipLoop:
 	push bc ; $4a60
 	push de ; $4a61
 	call DrawScoreboardPipEmpty ; $4a62
@@ -1336,7 +1336,7 @@ Label_06_4a60:
 	inc d ; $4a67
 	inc d ; $4a68
 	dec c ; $4a69
-	jr nz, Label_06_4a60 ; $4a6a
+	jr nz, .pipLoop ; $4a6a
 	pop de ; $4a6c
 	ret ; $4a6d
 DrawScoreboardPipFilled:
