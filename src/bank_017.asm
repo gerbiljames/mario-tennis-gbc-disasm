@@ -1637,8 +1637,46 @@ CourtDiagramPalettes:
 	dw $035f, $01bf, $0e40, $7fff ; pal 5: #ffd500 #ff6a00 #009418 #ffffff
 	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
-CourtDiagramGfxStreams:
-	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 1637 bytes
+CourtDiagramGfx0:
+	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 59 bytes
+CourtDiagramGfx1:
+	INCBIN "data/bank_017/d_4f3d.bin" ; $4f3d, 63 bytes
+CourtDiagramGfx2:
+	INCBIN "data/bank_017/d_4f7c.bin" ; $4f7c, 143 bytes
+CourtDiagramGfx3:
+	INCBIN "data/bank_017/d_500b.bin" ; $500b, 143 bytes
+CourtDiagramGfx4:
+	INCBIN "data/bank_017/d_509a.bin" ; $509a, 147 bytes
+CourtDiagramGfx5:
+	INCBIN "data/bank_017/d_512d.bin" ; $512d, 98 bytes
+CourtDiagramGfx6:
+	INCBIN "data/bank_017/d_518f.bin" ; $518f, 98 bytes
+CourtDiagramGfx7:
+	INCBIN "data/bank_017/d_51f1.bin" ; $51f1, 143 bytes
+CourtDiagramGfx8:
+	INCBIN "data/bank_017/d_5280.bin" ; $5280, 143 bytes
+CourtDiagramGfx9:
+	INCBIN "data/bank_017/d_530f.bin" ; $530f, 145 bytes
+CourtDiagramGfx10:
+	INCBIN "data/bank_017/d_53a0.bin" ; $53a0, 105 bytes
+CourtDiagramGfx11:
+	INCBIN "data/bank_017/d_5409.bin" ; $5409, 100 bytes
+CourtDiagramGfx12:
+	INCBIN "data/bank_017/d_546d.bin" ; $546d, 74 bytes
+CourtDiagramGfx13:
+	INCBIN "data/bank_017/d_54b7.bin" ; $54b7, 33 bytes
+CourtDiagramGfx14:
+	INCBIN "data/bank_017/d_54d8.bin" ; $54d8, 39 bytes
+CourtDiagramGfx15:
+	INCBIN "data/bank_017/d_54ff.bin" ; $54ff, 18 bytes
+CourtDiagramGfx16:
+	INCBIN "data/bank_017/d_5511.bin" ; $5511, 18 bytes
+CourtDiagramGfx17:
+	INCBIN "data/bank_017/d_5523.bin" ; $5523, 19 bytes
+CourtDiagramGfx18:
+	INCBIN "data/bank_017/d_5536.bin" ; $5536, 24 bytes
+CourtDiagramGfx19:
+	INCBIN "data/bank_017/d_554e.bin" ; $554e, 25 bytes
 Palette_17_5567:
 	; $5567, 24 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each

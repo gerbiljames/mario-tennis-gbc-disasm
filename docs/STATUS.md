@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~160.5K instructions / 423,878 bytes of proven code+structured source
-(20.2% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~161.0K instructions / 424,745 bytes of proven code+structured source
+(20.3% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `110a9c8`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **17,146 of 20,761 labels are human-named** (see the caveat in the
+symbols. **17,241 of 20,856 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 2,191 data blobs.
 
@@ -4113,6 +4113,79 @@ call site to confirm it.
 
 Net: zero `Gfx_*`, zero `Label_*`, zero `Func_*` and zero locals scoped under
 a data symbol anywhere in the ROM; 17,146 of 20,761 labels human-named.
+
+
+## ROM-wide sweep for uncarved code and mis-split data (2026-07-26)
+
+Five detectors run over all 4,400-odd blobs. Scripts live only in the session
+scratch, but each is a dozen lines and the recipe is the point.
+
+**1. Byte-identical twin scan.** Index every proven instruction start; for each
+blob, look for a 16-byte window that also occurs at one of those offsets.
+Found bank `$16`'s entire shared menu-cursor helper block, `$40cd`-`$4470`,
+which banks `$17`, `$1b`, `$38`, `$3b`, `$3e` all execute and `$16` never did:
+`DrawCornerBrackets_16`, `MoveMenuCursorGrid_16`,
+`MoveMenuCursorGridFromLinkInput_16`, `MoveMenuCursorGridRemote_16`,
+`MoveMenuCursor2GridRemote_16`, `GetMenuCursorIndex_16`,
+`GetCellIndexFromCursorPtr_16`, `SetMenuCursorFromIndex_16`,
+`SetMenuCursorFromIndexToPtr_16`, `ClearWram3Row64_16`,
+`ClearWram3Row64Alt_16`. Also `$3e:$40ff` `DrawCornerBrackets_3e`, 59 bytes of
+code that had been swallowed by `SelectionBoxWobbleYTable_3e`'s extent.
+
+**The trap in that block is worth recording.** The blob boundaries the
+generator had produced were *16 bytes later* than the real function starts,
+and earlier passes had put names (`MoveMenuCursorGrid_17` etc.) on those
+boundaries. Seeding them decoded from inside an instruction -- `fa 04 cb`
+(`ld a, [$cb04]`) read from its second byte gives `04 cb 3c` (`inc b` /
+`srl h`) -- and **`make compare` still passed**, because a mis-aligned decode
+re-assembles to the same bytes. Byte-perfect rebuild is not a check on where
+a routine starts.
+
+The fix is to align against a *labelled* twin by opcode sequence rather than
+by raw bytes (the copies differ in constants): decode 12 instructions from
+each bank-`$3e` function start, slide over bank `$16` looking for the same
+`(opcode, length)` tuple. Every one of the ten mapped to exactly one address.
+The same walk then transfers all 72 of the twin's local labels
+(`.wrapRight`, `.storeLeft`, `.checkUp`, ...) instruction-for-instruction.
+
+**2. Opcode-signature twin scan.** Same idea, but signatures instead of bytes,
+so copies with different constants match. 71,884 distinct 12-instruction
+signatures indexed; **zero** blobs contain one after the bank-`$16` fix.
+
+**3. Intrinsic code shape.** Scan inside every blob for a run of >=8
+instructions ending in `ret` whose `call`/`jp` targets are all known function
+starts and whose `jr` targets stay in range: **zero**. Treat this one as
+weak evidence -- a self-test on three known routines found only one of them,
+because short routines and ones that only call ROM0 helpers score nothing.
+The twin scans are the load-bearing detectors.
+
+**4. Unreferenced code islands between data blobs.** 61 places in the ROM have
+code sandwiched between two `INCBIN`s; 15 are short. Every one of them is a
+referenced, named function (`LoadTilesetGfx`, `ShotBallPathDrop`,
+`DecompressCharacterPortrait`, ...). No false-code islands remain beyond the
+three already in `BAD_SEEDS`.
+
+**5. LZ extent audit.** Decompress every `lz_` blob and compare the stream
+length to the recorded extent. Four mismatches, all real:
+
+* Bank `$16`'s character-portrait chain had three *function-sounding* labels
+  (`RulesBorderAnimTask` `$7420`, `RulesSpinningBallSpriteTask` `$74db`,
+  `RulesScrollArrowSpriteTask` `$755e`) sitting **inside** LZ streams, which
+  truncated `PortraitGfxEmily_16` (110 -> 151 bytes), `PortraitGfxBCoz_16`
+  (146 -> 147) and `PortraitGfxUnknown_16` (9 -> 126). Removed; the region is
+  now an unbroken chain of streams that each decompress to 144 bytes.
+* `TennisDictionaryListData` (`$3f:$459c`) carried 163 bytes of slop past its
+  367-byte stream -- a second, unreferenced 1,152-byte payload, now
+  `TennisDictionaryListDataAlt`.
+
+Also carved: `$17:$4f02`, the 1,637-byte run that turned out to be 20
+back-to-back LZ streams, is now 20 named blobs `CourtDiagramGfx0`-`19`,
+one per pointer in `CourtDiagramGraphicsList`.
+
+Clean after the sweep: 0 byte-twin hits, 0 signature-twin hits, 0 shape hits,
+0 unreferenced islands, 0 LZ extent mismatches, 0 unresolved `farptr`, 0
+adjacent `INCBIN` pairs without a label between them, and 0 `Gfx_`/`Label_`/
+`Func_` symbols. 17,241 of 20,856 labels human-named.
 
 
 ## Repo state

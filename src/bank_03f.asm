@@ -581,7 +581,9 @@ TennisDictionaryListDataChar6:
 TennisDictionaryListDataDefault:
 	INCBIN "data/bank_03f/lz_4541.bin" ; $4541, 91 bytes
 TennisDictionaryListData:
-	INCBIN "data/bank_03f/lz_459c.bin" ; $459c, 530 bytes
+	INCBIN "data/bank_03f/lz_459c.bin" ; $459c, 367 bytes
+TennisDictionaryListDataAlt:
+	INCBIN "data/bank_03f/d_470b.bin" ; $470b, 163 bytes
 TennisDictionaryPalettesChar6:
 	; $47ae, 72 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each

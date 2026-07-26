@@ -157,7 +157,51 @@ ApplySelectionBoxWobbleY:
 	ld e, a ; $40ed
 	ret ; $40ee
 SelectionBoxWobbleYTable_3e:
-	INCBIN "data/bank_03e/d_40ef.bin" ; $40ef, 75 bytes
+	INCBIN "data/bank_03e/d_40ef.bin" ; $40ef, 16 bytes
+DrawCornerBrackets_3e:
+	push de ; $40ff
+	push bc ; $4100
+	ld c, $00 ; $4101
+	ld b, $09 ; $4103
+	call QueueSprite ; $4105
+	pop bc ; $4108
+	pop de ; $4109
+	push de ; $410a
+	push bc ; $410b
+	ld a, b ; $410c
+	add a, d ; $410d
+	ld d, a ; $410e
+	push de ; $410f
+	ld c, $00 ; $4110
+	ld b, $29 ; $4112
+	call QueueSprite ; $4114
+	pop de ; $4117
+	pop bc ; $4118
+	pop de ; $4119
+	push de ; $411a
+	push bc ; $411b
+	ld a, c ; $411c
+	add a, e ; $411d
+	ld e, a ; $411e
+	ld a, b ; $411f
+	add a, d ; $4120
+	ld d, a ; $4121
+	push de ; $4122
+	ld c, $00 ; $4123
+	ld b, $69 ; $4125
+	call QueueSprite ; $4127
+	pop de ; $412a
+	pop bc ; $412b
+	pop de ; $412c
+	ld a, e ; $412d
+	add a, c ; $412e
+	ld e, a ; $412f
+	push de ; $4130
+	ld c, $00 ; $4131
+	ld b, $49 ; $4133
+	call QueueSprite ; $4135
+	pop de ; $4138
+	ret ; $4139
 MoveMenuCursorGrid_3e:
 	ld a, [wMenuCursorX] ; $413a
 	ld d, a ; $413d
