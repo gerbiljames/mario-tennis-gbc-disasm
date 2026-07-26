@@ -5786,7 +5786,7 @@ DebugDrawFlagBitRow:
 	ld l, a ; $64be
 	ld h, $00 ; $64bf
 	ld c, $08 ; $64c1
-Label_05_64c3:
+.bitLoop:
 	push de ; $64c3
 	ld e, l ; $64c4
 	ld d, h ; $64c5
@@ -5794,9 +5794,9 @@ Label_05_64c3:
 	pop de ; $64c9
 	push bc ; $64ca
 	ld c, $65 ; $64cb
-	jr z, Label_05_64d1 ; $64cd
+	jr z, .writeCell ; $64cd
 	ld c, $40 ; $64cf
-Label_05_64d1:
+.writeCell:
 	ld a, b ; $64d1
 	ld b, $80 ; $64d2
 	call WriteWindowCellTileAttr ; $64d4
@@ -5805,7 +5805,7 @@ Label_05_64d1:
 	inc d ; $64d9
 	pop bc ; $64da
 	dec c ; $64db
-	jr nz, Label_05_64c3 ; $64dc
+	jr nz, .bitLoop ; $64dc
 	pop hl ; $64de
 	pop de ; $64df
 	pop bc ; $64e0

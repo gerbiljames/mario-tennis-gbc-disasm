@@ -170,16 +170,16 @@ WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $4141
-	jr z, Label_0a_4148 ; $4144
+	jr z, .wait ; $4144
 	ld a, $02 ; $4146
-Label_0a_4148:
+.wait:
 	or a, a ; $4148
-	jr z, Label_0a_4151 ; $4149
+	jr z, .done ; $4149
 	ld c, a ; $414b
 	call WaitFrames ; $414c
 	pop bc ; $414f
 	pop af ; $4150
-Label_0a_4151:
+.done:
 	ret ; $4151
 ScriptRespawnLocationActors:
 	farcall InitLocationActors ; $4152
@@ -233,10 +233,10 @@ ScriptShowSpeakerDialogue:
 	ld h, [hl] ; $41a5
 	ld l, a ; $41a6
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41a7
-	jr nz, Label_0a_41b0 ; $41aa
+	jr nz, .advanceTextId ; $41aa
 	ld a, b ; $41ac
 	farcall ShowSpeakerDialogue ; $41ad
-Label_0a_41b0:
+.advanceTextId:
 	inc hl ; $41b0
 	ld a, l ; $41b1
 	ld [$d852], a ; $41b2
@@ -867,14 +867,14 @@ MoveActorByAngle:
 	ld c, l ; $4550
 	ld b, h ; $4551
 	call GetActorStateAddr ; $4552
-	jr z, Label_0a_4566 ; $4555
+	jr z, .done ; $4555
 	ld a, l ; $4557
 	ldh [hActorPtr], a ; $4558
 	ld a, h ; $455a
 	ldh [hActorPtr + 1], a ; $455b
 	wram_bank $04 ; $455d
 	call MoveActorByAngleRaw ; $4563
-Label_0a_4566:
+.done:
 	add sp, 3 ; $4566
 	ret ; $4568
 MoveActorByAngleRaw:
@@ -2721,13 +2721,13 @@ SaveStoryReturnPoint:
 	push hl ; $5282
 	ld a, b ; $5283
 	cp a, $ff ; $5284
-	jr z, Label_0a_5292 ; $5286
+	jr z, .fromCurrent ; $5286
 	ld hl, $c8a9 ; $5288
 	ld [hl], b ; $528b
 	ld hl, $c8aa ; $528c
 	ld [hl], c ; $528f
-	jr Label_0a_52a9 ; $5290
-Label_0a_5292:
+	jr .done ; $5290
+.fromCurrent:
 	ld a, [wStoryModeCurrentLocation] ; $5292
 	ld [$c8a9], a ; $5295
 	ld hl, $c8aa ; $5298
@@ -2736,7 +2736,7 @@ Label_0a_5292:
 	ld de, $c8ab ; $52a0
 	ld bc, $0005 ; $52a3
 	call CopyMemoryBC ; $52a6
-Label_0a_52a9:
+.done:
 	pop hl ; $52a9
 	pop de ; $52aa
 	pop bc ; $52ab

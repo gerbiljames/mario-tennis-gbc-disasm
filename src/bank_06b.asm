@@ -1705,9 +1705,9 @@ ApplyCutsceneBobOffset:
 	ld hl, Data_6b_53cb ; $53be
 	add a, l ; $53c1
 	ld l, a ; $53c2
-	jr nc, Label_6b_53c6 ; $53c3
+	jr nc, .readOffset ; $53c3
 	inc h ; $53c5
-Label_6b_53c6:
+.readOffset:
 	ld a, [hl] ; $53c6
 	add a, e ; $53c7
 	ld e, a ; $53c8

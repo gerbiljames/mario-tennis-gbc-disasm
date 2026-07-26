@@ -104,19 +104,19 @@ ApplySpriteBobOffsetY:
 	ld hl, $40bf ; $40a9
 	add a, l ; $40ac
 	ld l, a ; $40ad
-	jr nc, Label_38_40b1 ; $40ae
+	jr nc, .readOffset ; $40ae
 	inc h ; $40b0
-Label_38_40b1:
+.readOffset:
 	ld a, [hl] ; $40b1
 	ld b, a ; $40b2
 	ld a, c ; $40b3
 	or a, a ; $40b4
-	jr z, Label_38_40bb ; $40b5
+	jr z, .subtract ; $40b5
 	ld a, b ; $40b7
 	add a, e ; $40b8
 	ld e, a ; $40b9
 	ret ; $40ba
-Label_38_40bb:
+.subtract:
 	ld a, e ; $40bb
 	sub a, b ; $40bc
 	ld e, a ; $40bd
@@ -4305,9 +4305,9 @@ LoadCachedStorySlotName:
 	ld hl, Data_38_60e6 ; $60c8
 	add a, l ; $60cb
 	ld l, a ; $60cc
-	jr nc, Label_38_60d0 ; $60cd
+	jr nc, .readPtr ; $60cd
 	inc h ; $60cf
-Label_38_60d0:
+.readPtr:
 	ld a, [hl+] ; $60d0
 	ld h, [hl] ; $60d1
 	ld l, a ; $60d2
@@ -4545,12 +4545,12 @@ Label_38_6206:
 IsStarCharacter:
 	ld a, c ; $6208
 	cp a, $17 ; $6209
-	jr c, Label_38_6214 ; $620b
+	jr c, .notStar ; $620b
 	cp a, $20 ; $620d
-	jr nc, Label_38_6214 ; $620f
+	jr nc, .notStar ; $620f
 	ld a, $01 ; $6211
 	ret ; $6213
-Label_38_6214:
+.notStar:
 	xor a, a ; $6214
 	ret ; $6215
 RunCpuDifficultySubmenu:

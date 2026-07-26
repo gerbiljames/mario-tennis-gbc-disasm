@@ -994,12 +994,12 @@ DecompressCharMugshot:
 	push hl ; $4e5e
 	call StubNop_1b_4e0c ; $4e5f
 	cp a, $3f ; $4e62
-	jr nz, Label_1b_4e6c ; $4e64
+	jr nz, .gotIndex ; $4e64
 	ld b, a ; $4e66
 	ld a, [wCurrentStorySlot] ; $4e67
 	add a, b ; $4e6a
 	inc a ; $4e6b
-Label_1b_4e6c:
+.gotIndex:
 	ld l, a ; $4e6c
 	ld h, $00 ; $4e6d
 	add hl, hl ; $4e6f
@@ -1029,22 +1029,22 @@ ShowRankingBoard:
 	ld a, d ; $4e93
 	ld [$d802], a ; $4e94
 	cp a, $03 ; $4e97
-	jr nz, Label_1b_4ea4 ; $4e99
+	jr nz, .checkFanfare ; $4e99
 	xor a, a ; $4e9b
 	ld [$d802], a ; $4e9c
 	ld a, $01 ; $4e9f
 	ld [$d85a], a ; $4ea1
-Label_1b_4ea4:
+.checkFanfare:
 	ld a, [$d802] ; $4ea4
 	cp a, $01 ; $4ea7
-	jr nz, Label_1b_4eaf ; $4ea9
+	jr nz, .checkSecondFanfare ; $4ea9
 	sound $2b ; $4eab
-	jr Label_1b_4eb5 ; $4ead
-Label_1b_4eaf:
+	jr .draw ; $4ead
+.checkSecondFanfare:
 	cp a, $02 ; $4eaf
-	jr nz, Label_1b_4eb5 ; $4eb1
+	jr nz, .draw ; $4eb1
 	sound $2a ; $4eb3
-Label_1b_4eb5:
+.draw:
 	call DisableLCDSafely ; $4eb5
 	call BuildRankingBoardScreen ; $4eb8
 	call EnableLCD ; $4ebb
@@ -1058,13 +1058,13 @@ Label_1b_4eb5:
 	ld c, $20 ; $4ed6
 	ld a, [$d802] ; $4ed8
 	or a, a ; $4edb
-	jr nz, Label_1b_4ee8 ; $4edc
+	jr nz, .fadeOut ; $4edc
 	ld a, [$d85a] ; $4ede
 	or a, a ; $4ee1
-	jr nz, Label_1b_4ee8 ; $4ee2
+	jr nz, .fadeOut ; $4ee2
 	sound $7f ; $4ee4
 	ld c, $02 ; $4ee6
-Label_1b_4ee8:
+.fadeOut:
 	call BeginFadeOut ; $4ee8
 	call WaitFadeEnd ; $4eeb
 	call ClearFrameTasks ; $4eee
@@ -2217,14 +2217,14 @@ HighlightDoublesRankingRow:
 	ld hl, RankingMarkerHandlers_1b ; $584a
 	add a, l ; $584d
 	ld l, a ; $584e
-	jr nc, Label_1b_5852 ; $584f
+	jr nc, .jumpToHandler ; $584f
 	inc h ; $5851
-Label_1b_5852:
+.jumpToHandler:
 	ld a, [hl+] ; $5852
 	ld h, [hl] ; $5853
 	ld l, a ; $5854
 	jp hl ; $5855
-Label_1b_5856:
+StubNop_1b_5856:
 	ret ; $5856
 RankingMarkerHandlers_1b:
 	dw Label_1b_5865 ; $5857 jumptable
@@ -2240,42 +2240,42 @@ Label_1b_5865:
 	ld b, $04 ; $586b
 	ld c, $04 ; $586d
 	farcall CopyTilemapRect ; $586f
-	jp Label_1b_5856 ; $5872
+	jp StubNop_1b_5856 ; $5872
 Label_1b_5875:
 	ld hl, $d244 ; $5875
 	ld de, $d06a ; $5878
 	ld b, $04 ; $587b
 	ld c, $04 ; $587d
 	farcall CopyTilemapRect ; $587f
-	jp Label_1b_5856 ; $5882
+	jp StubNop_1b_5856 ; $5882
 Label_1b_5885:
 	ld hl, $d248 ; $5885
 	ld de, $d066 ; $5888
 	ld b, $04 ; $588b
 	ld c, $07 ; $588d
 	farcall CopyTilemapRect ; $588f
-	jp Label_1b_5856 ; $5892
+	jp StubNop_1b_5856 ; $5892
 Label_1b_5895:
 	ld hl, $d24c ; $5895
 	ld de, $d06a ; $5898
 	ld b, $04 ; $589b
 	ld c, $07 ; $589d
 	farcall CopyTilemapRect ; $589f
-	jp Label_1b_5856 ; $58a2
+	jp StubNop_1b_5856 ; $58a2
 Label_1b_58a5:
 	ld hl, $d248 ; $58a5
 	ld de, $d066 ; $58a8
 	ld b, $08 ; $58ab
 	ld c, $07 ; $58ad
 	farcall CopyTilemapRect ; $58af
-	jp Label_1b_5856 ; $58b2
+	jp StubNop_1b_5856 ; $58b2
 Label_1b_58b5:
 	ld hl, $d250 ; $58b5
 	ld de, $d066 ; $58b8
 	ld b, $08 ; $58bb
 	ld c, $07 ; $58bd
 	farcall CopyTilemapRect ; $58bf
-	jp Label_1b_5856 ; $58c2
+	jp StubNop_1b_5856 ; $58c2
 PushRankingBoardTilemapRows:
 	ld hl, $d000 ; $58c5
 	ld de, $9800 ; $58c8

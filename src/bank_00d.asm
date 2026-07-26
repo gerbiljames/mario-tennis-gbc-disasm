@@ -1461,10 +1461,10 @@ WallPractice1Hook_BallHit:
 UpdateMinigameHudAndBallTrail:
 	ld a, [wPointWinLoseFlag] ; $4abb
 	and a, a ; $4abe
-	jr nz, Label_0d_4ac7 ; $4abf
+	jr nz, .trail ; $4abf
 	ld de, $8484 ; $4ac1
 	call DrawMinigameScore ; $4ac4
-Label_0d_4ac7:
+.trail:
 	ldh a, [hWramBank] ; $4ac7
 	push af ; $4ac9
 	wram_bank $04 ; $4aca
@@ -2558,9 +2558,9 @@ QueueMinigameHitBurstParticle:
 	ld a, $10 ; $540f
 	add a, l ; $5411
 	ld l, a ; $5412
-	jr nc, Label_0d_5416 ; $5413
+	jr nc, .readY ; $5413
 	inc h ; $5415
-Label_0d_5416:
+.readY:
 	ld a, [hl] ; $5416
 	add a, a ; $5417
 	add a, e ; $5418
@@ -2568,9 +2568,9 @@ Label_0d_5416:
 	ld a, $10 ; $541a
 	add a, l ; $541c
 	ld l, a ; $541d
-	jr nc, Label_0d_5421 ; $541e
+	jr nc, .queue ; $541e
 	inc h ; $5420
-Label_0d_5421:
+.queue:
 	push hl ; $5421
 	call QueueSprite ; $5422
 	pop hl ; $5425

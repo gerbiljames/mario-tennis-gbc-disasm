@@ -1282,11 +1282,11 @@ Label_0f_5889:
 SpeakPartnerVariantLine:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5aec
 	and a, a ; $5aef
-	jr nz, Label_0f_5afb ; $5af0
+	jr nz, .femalePartner ; $5af0
 	script_speak ACTOR_PARTNER ; $5af2
 	farcall AdvanceDialogueTextCursor ; $5af7
 	ret ; $5afa
-Label_0f_5afb:
+.femalePartner:
 	farcall AdvanceDialogueTextCursor ; $5afb
 	script_speak ACTOR_PARTNER ; $5afe
 	ret ; $5b03

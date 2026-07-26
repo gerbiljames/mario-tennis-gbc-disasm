@@ -5151,9 +5151,9 @@ CallModeHook:
 	add a, a ; $6701
 	add a, l ; $6702
 	ld l, a ; $6703
-	jr nc, Label_08_6707 ; $6704
+	jr nc, .readHook ; $6704
 	inc h ; $6706
-Label_08_6707:
+.readHook:
 	ld a, [wModeHookBank] ; $6707
 	call FarReadWord ; $670a
 	ld l, c ; $670d

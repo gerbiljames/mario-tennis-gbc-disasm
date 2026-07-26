@@ -660,13 +660,13 @@ Label_3b_43d6:
 SetMenuCursorFromCellIndex:
 	ld d, $00 ; $43db
 	ld a, c ; $43dd
-Label_3b_43de:
+.divLoop:
 	cp a, b ; $43de
-	jr c, Label_3b_43e5 ; $43df
+	jr c, .store ; $43df
 	inc d ; $43e1
 	sub a, b ; $43e2
-	jr Label_3b_43de ; $43e3
-Label_3b_43e5:
+	jr .divLoop ; $43e3
+.store:
 	ld [wMenuCursorX], a ; $43e5
 	ld a, d ; $43e8
 	ld [wMenuCursorY], a ; $43e9
@@ -5357,16 +5357,16 @@ GetUnlockedStarCharAtGridSlot:
 	ld hl, $66d8 ; $66c4
 	add a, l ; $66c7
 	ld l, a ; $66c8
-	jr nc, Label_3b_66cc ; $66c9
+	jr nc, .readMask ; $66c9
 	inc h ; $66cb
-Label_3b_66cc:
+.readMask:
 	ld b, [hl] ; $66cc
 	ld a, [$cb5d] ; $66cd
 	and a, b ; $66d0
-	jr nz, Label_3b_66d6 ; $66d1
+	jr nz, .unlocked ; $66d1
 	ld a, $15 ; $66d3
 	ret ; $66d5
-Label_3b_66d6:
+.unlocked:
 	ld a, d ; $66d6
 	ret ; $66d7
 	; $66d8, 6 bytes (bytes:8)

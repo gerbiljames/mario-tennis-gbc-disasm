@@ -774,21 +774,21 @@ QueueBGTileWrite:
 	push hl ; $050a
 	ld hl, wTileWriteQueue ; $050b
 	ld c, $10 ; $050e
-Label_00_0510:
+.findSlot:
 	ld a, [hl] ; $0510
 	or a, a ; $0511
-	jr z, Label_00_0521 ; $0512
+	jr z, .fillSlot ; $0512
 	inc hl ; $0514
 	inc hl ; $0515
 	inc hl ; $0516
 	inc hl ; $0517
 	dec c ; $0518
-	jr nz, Label_00_0510 ; $0519
+	jr nz, .findSlot ; $0519
 	pop hl ; $051b
 	ld a, $01 ; $051c
 	ldh [hVRAMQueueDirty], a ; $051e
 	ret ; $0520
-Label_00_0521:
+.fillSlot:
 	pop bc ; $0521
 	ld [hl], d ; $0522
 	inc hl ; $0523
@@ -3071,7 +3071,7 @@ Label_00_106b:
 GetSquareOfByte:
 	push af ; $106e
 	add a, a ; $106f
-	jr c, Label_00_107e ; $1070
+	jr c, .highHalf ; $1070
 	add a, $30 ; $1072
 	ld l, a ; $1074
 	adc a, $11 ; $1075
@@ -3082,7 +3082,7 @@ GetSquareOfByte:
 	ld l, a ; $107b
 	pop af ; $107c
 	ret ; $107d
-Label_00_107e:
+.highHalf:
 	add a, $30 ; $107e
 	ld l, a ; $1080
 	adc a, $12 ; $1081
@@ -7021,13 +7021,13 @@ Label_00_2811:
 WaitVBlank:
 	xor a, a ; $2814
 	ldh [hVBlankOccurred], a ; $2815
-Label_00_2817:
+.waitLoop:
 	ei ; $2817
 	nop ; $2818
 	di ; $2819
 	ldh a, [hVBlankOccurred] ; $281a
 	and a, a ; $281c
-	jr z, Label_00_2817 ; $281d
+	jr z, .waitLoop ; $281d
 	ei ; $281f
 	ret ; $2820
 ShortDelay:
