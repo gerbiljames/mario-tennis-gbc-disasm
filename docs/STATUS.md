@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `110a9c8`); the whole history
+Everything below is **committed** (HEAD `b251c6b`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -4190,5 +4190,5 @@ adjacent `INCBIN` pairs without a label between them, and 0 `Gfx_`/`Label_`/
 
 ## Repo state
 
-All work is committed (HEAD `110a9c8`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `b251c6b`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
