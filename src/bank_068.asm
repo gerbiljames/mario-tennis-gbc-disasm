@@ -44,8 +44,8 @@ DataPtr_CeremonyHallAuxTilemap:
 	dw CeremonyHallAuxTilemap ; $4028
 DataPtr_CeremonyHallAuxAttrmap:
 	dw CeremonyHallAuxAttrmap ; $402a
-DataPtr_68_2c:
-	dw Data_68_7450 ; $402c
+DataPtr_CeremonyHallSceneUnusedSlot:
+	dw CeremonyHallSceneUnusedSlot ; $402c
 DataPtr_CeremonyHallTiles:
 	dw CeremonyHallTiles ; $402e
 ClubCourtSceneConfig:
@@ -119,5 +119,5 @@ CeremonyHallAuxAttrmap:
 	INCBIN "data/bank_068/lz_73f7.bin" ; $73f7, 74 bytes
 	; $7441, 15 bytes (fill)
 	ds 15, $00
-Data_68_7450:
+CeremonyHallSceneUnusedSlot:
 	INCBIN "data/bank_068/d_7450.bin" ; $7450, 2992 bytes

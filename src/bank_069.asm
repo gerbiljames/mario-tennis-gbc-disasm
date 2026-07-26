@@ -44,8 +44,8 @@ DataPtr_ClubroomInteriorAuxTilemap:
 	dw ClubroomInteriorAuxTilemap ; $4028
 DataPtr_ClubroomInteriorAuxAttrmap:
 	dw ClubroomInteriorAuxAttrmap ; $402a
-DataPtr_69_2c:
-	dw Data_69_7660 ; $402c
+DataPtr_ClubroomInteriorSceneUnusedSlot:
+	dw ClubroomInteriorSceneUnusedSlot ; $402c
 DataPtr_ClubroomInteriorTiles:
 	dw ClubroomInteriorTiles ; $402e
 TrainingHallSceneConfig:
@@ -117,5 +117,5 @@ ClubroomInteriorAuxTilemap:
 	INCBIN "data/bank_069/lz_75c1.bin" ; $75c1, 84 bytes
 ClubroomInteriorAuxAttrmap:
 	INCBIN "data/bank_069/lz_7615.bin" ; $7615, 75 bytes
-Data_69_7660:
+ClubroomInteriorSceneUnusedSlot:
 	INCBIN "data/bank_069/d_7660.bin" ; $7660, 2464 bytes

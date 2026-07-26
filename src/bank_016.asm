@@ -1483,25 +1483,25 @@ LoadResultScreenTileGraphics:
 	ld de, $002f ; $4e16
 	call TestGameFlagByNumber ; $4e19
 	jr nz, .decompressData ; $4e1c
-	ld hl, $542e ; $4e1e
+	ld hl, MatchResultTitleGfx ; $4e1e
 	ld de, $9000 ; $4e21
 	call DecompressData ; $4e24
 	jr .loadMatchResultGfxSet ; $4e27
 .decompressData:
-	ld hl, $54bd ; $4e29
+	ld hl, MatchResultTitleGfxAlt ; $4e29
 	ld de, $9000 ; $4e2c
 	call DecompressData ; $4e2f
 .loadMatchResultGfxSet:
 	ld a, [$d800] ; $4e32
 	or a, a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
-	ld hl, $5357 ; $4e38
+	ld hl, MatchResultGfxA2 ; $4e38
 	ld de, $8900 ; $4e3b
 	call DecompressData ; $4e3e
-	ld hl, $53c1 ; $4e41
+	ld hl, MatchResultGfxB4 ; $4e41
 	ld de, $8a40 ; $4e44
 	call DecompressData ; $4e47
-	ld hl, $5bf5 ; $4e4a
+	ld hl, MatchResultGfxC9 ; $4e4a
 	ld de, $9140 ; $4e4d
 	call DecompressData ; $4e50
 	ret ; $4e53
@@ -1583,88 +1583,88 @@ GfxSetPointerTable_16:
 	dw .rec20 ; 23
 	dw .rec20 ; 24
 .rec0:
-	gfx_set Lz_16_5093, Lz_16_52bd, Lz_16_5a4f
+	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC8
 .rec1:
-	gfx_set Lz_16_5093, Lz_16_52bd, Lz_16_59a6
+	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC7
 .rec2:
-	gfx_set Lz_16_5093, Lz_16_52bd, Lz_16_58fa
+	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC6
 .rec3:
-	gfx_set Lz_16_5093, Lz_16_52bd, Lz_16_584d
+	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC5
 .rec4:
-	gfx_set Lz_16_5093, Lz_16_52bd, Lz_16_57ac
+	gfx_set MatchResultGfxA1, MatchResultGfxB3, MatchResultGfxC4
 .rec5:
-	gfx_set Lz_16_5093, Lz_16_5212, Lz_16_5a4f
+	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC8
 .rec6:
-	gfx_set Lz_16_5093, Lz_16_5212, Lz_16_59a6
+	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC7
 .rec7:
-	gfx_set Lz_16_5093, Lz_16_5212, Lz_16_58fa
+	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC6
 .rec8:
-	gfx_set Lz_16_5093, Lz_16_5212, Lz_16_584d
+	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC5
 .rec9:
-	gfx_set Lz_16_5093, Lz_16_5212, Lz_16_57ac
+	gfx_set MatchResultGfxA1, MatchResultGfxB2, MatchResultGfxC4
 .rec10:
-	gfx_set Lz_16_5093, Lz_16_5160, Lz_16_5a4f
+	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC8
 .rec11:
-	gfx_set Lz_16_5093, Lz_16_5160, Lz_16_59a6
+	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC7
 .rec12:
-	gfx_set Lz_16_5093, Lz_16_5160, Lz_16_58fa
+	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC6
 .rec13:
-	gfx_set Lz_16_5093, Lz_16_5160, Lz_16_584d
+	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC5
 .rec14:
-	gfx_set Lz_16_5093, Lz_16_5160, Lz_16_57ac
+	gfx_set MatchResultGfxA1, MatchResultGfxB1, MatchResultGfxC4
 .rec15:
-	gfx_set Lz_16_4f4d, Lz_16_5014, Lz_16_5a4f
+	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC8
 .rec16:
-	gfx_set Lz_16_4f4d, Lz_16_5014, Lz_16_5642
+	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC2
 .rec17:
-	gfx_set Lz_16_4f4d, Lz_16_5014, Lz_16_56f2
+	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC3
 .rec18:
-	gfx_set Lz_16_4f4d, Lz_16_5014, Lz_16_559e
+	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC1
 .rec19:
-	gfx_set Lz_16_4f4d, Lz_16_5014, Lz_16_5541
+	gfx_set MatchResultGfxA0, MatchResultGfxB0, MatchResultGfxC0
 .rec20:
-	gfx_set Lz_16_5357, Lz_16_53c1, Lz_16_5bf5
-Lz_16_4f4d:
+	gfx_set MatchResultGfxA2, MatchResultGfxB4, MatchResultGfxC9
+MatchResultGfxA0:
 	INCBIN "data/bank_016/lz_4f4d.bin" ; $4f4d, 199 bytes
-Lz_16_5014:
+MatchResultGfxB0:
 	INCBIN "data/bank_016/lz_5014.bin" ; $5014, 127 bytes
-Lz_16_5093:
+MatchResultGfxA1:
 	INCBIN "data/bank_016/lz_5093.bin" ; $5093, 205 bytes
-Lz_16_5160:
+MatchResultGfxB1:
 	INCBIN "data/bank_016/lz_5160.bin" ; $5160, 178 bytes
-Lz_16_5212:
+MatchResultGfxB2:
 	INCBIN "data/bank_016/lz_5212.bin" ; $5212, 171 bytes
-Lz_16_52bd:
+MatchResultGfxB3:
 	INCBIN "data/bank_016/lz_52bd.bin" ; $52bd, 154 bytes
-Lz_16_5357:
+MatchResultGfxA2:
 	INCBIN "data/bank_016/lz_5357.bin" ; $5357, 106 bytes
-Lz_16_53c1:
+MatchResultGfxB4:
 	INCBIN "data/bank_016/lz_53c1.bin" ; $53c1, 109 bytes
-Lz_16_542e:
+MatchResultTitleGfx:
 	INCBIN "data/bank_016/lz_542e.bin" ; $542e, 143 bytes
-Lz_16_54bd:
+MatchResultTitleGfxAlt:
 	INCBIN "data/bank_016/lz_54bd.bin" ; $54bd, 132 bytes
-Lz_16_5541:
+MatchResultGfxC0:
 	INCBIN "data/bank_016/lz_5541.bin" ; $5541, 93 bytes
-Lz_16_559e:
+MatchResultGfxC1:
 	INCBIN "data/bank_016/lz_559e.bin" ; $559e, 164 bytes
-Lz_16_5642:
+MatchResultGfxC2:
 	INCBIN "data/bank_016/lz_5642.bin" ; $5642, 176 bytes
-Lz_16_56f2:
+MatchResultGfxC3:
 	INCBIN "data/bank_016/lz_56f2.bin" ; $56f2, 186 bytes
-Lz_16_57ac:
+MatchResultGfxC4:
 	INCBIN "data/bank_016/lz_57ac.bin" ; $57ac, 161 bytes
-Lz_16_584d:
+MatchResultGfxC5:
 	INCBIN "data/bank_016/lz_584d.bin" ; $584d, 173 bytes
-Lz_16_58fa:
+MatchResultGfxC6:
 	INCBIN "data/bank_016/lz_58fa.bin" ; $58fa, 172 bytes
-Lz_16_59a6:
+MatchResultGfxC7:
 	INCBIN "data/bank_016/lz_59a6.bin" ; $59a6, 169 bytes
-Lz_16_5a4f:
+MatchResultGfxC8:
 	INCBIN "data/bank_016/lz_5a4f.bin" ; $5a4f, 192 bytes
 Lz_16_5b0f:
 	INCBIN "data/bank_016/lz_5b0f.bin" ; $5b0f, 230 bytes
-Lz_16_5bf5:
+MatchResultGfxC9:
 	INCBIN "data/bank_016/lz_5bf5.bin" ; $5bf5, 28 bytes
 MaybeInvertMatchWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
@@ -2251,29 +2251,29 @@ DecompressWinLosePortraitVariant:
 	ret ; $60f0
 WinLosePortraitVariantTable_16:
 	; $60f1, 16 bytes (lz_ptr_table)
-	dw Lz_16_6101 ; 0
-	dw Lz_16_6214 ; 1
-	dw Lz_16_6315 ; 2
-	dw Lz_16_6422 ; 3
-	dw Lz_16_6536 ; 4
-	dw Lz_16_6634 ; 5
-	dw Lz_16_6727 ; 6
-	dw Lz_16_684a ; 7
-Lz_16_6101:
+	dw WinLosePortrait0 ; 0
+	dw WinLosePortrait1 ; 1
+	dw WinLosePortrait2 ; 2
+	dw WinLosePortrait3 ; 3
+	dw WinLosePortrait4 ; 4
+	dw WinLosePortrait5 ; 5
+	dw WinLosePortrait6 ; 6
+	dw WinLosePortrait7 ; 7
+WinLosePortrait0:
 	INCBIN "data/bank_016/lz_6101.bin" ; $6101, 275 bytes
-Lz_16_6214:
+WinLosePortrait1:
 	INCBIN "data/bank_016/lz_6214.bin" ; $6214, 257 bytes
-Lz_16_6315:
+WinLosePortrait2:
 	INCBIN "data/bank_016/lz_6315.bin" ; $6315, 269 bytes
-Lz_16_6422:
+WinLosePortrait3:
 	INCBIN "data/bank_016/lz_6422.bin" ; $6422, 276 bytes
-Lz_16_6536:
+WinLosePortrait4:
 	INCBIN "data/bank_016/lz_6536.bin" ; $6536, 254 bytes
-Lz_16_6634:
+WinLosePortrait5:
 	INCBIN "data/bank_016/lz_6634.bin" ; $6634, 243 bytes
-Lz_16_6727:
+WinLosePortrait6:
 	INCBIN "data/bank_016/lz_6727.bin" ; $6727, 291 bytes
-Lz_16_684a:
+WinLosePortrait7:
 	INCBIN "data/bank_016/lz_684a.bin" ; $684a, 267 bytes
 DecompressCharacterPortrait:
 	ld a, b ; $6955

@@ -12,8 +12,8 @@ DataPtr_FountainCourtAuxTilemap:
 	dw FountainCourtAuxTilemap ; $4008
 DataPtr_FountainCourtAuxAttrmap:
 	dw FountainCourtAuxAttrmap ; $400a
-DataPtr_67_0c:
-	dw Data_67_5440 ; $400c
+DataPtr_FountainCourtSceneUnusedSlot:
+	dw FountainCourtSceneUnusedSlot ; $400c
 DataPtr_FountainCourtTiles:
 	dw FountainCourtTiles ; $400e
 DataPtr_CafeCourtSceneConfig:
@@ -73,7 +73,7 @@ FountainCourtAuxAttrmap:
 	INCBIN "data/bank_067/lz_53df.bin" ; $53df, 83 bytes
 	; $5432, 14 bytes (fill)
 	ds 14, $00
-Data_67_5440:
+FountainCourtSceneUnusedSlot:
 	INCBIN "data/bank_067/d_5440.bin" ; $5440, 1536 bytes
 CafeCourtSceneConfig:
 	INCBIN "data/bank_067/d_5a40.bin" ; $5a40, 42 bytes

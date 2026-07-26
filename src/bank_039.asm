@@ -158,9 +158,9 @@ ScreenAssetRecordTable:
 	dslot DataPtr_MainMenuGfx5, DataPtr_MainMenuGfx5Alias1, DataPtr_MainMenuGfx5Alias2, DataPtr_MainMenuGfx5Alias3 ; record 2
 	dslot DataPtr_Lz_3a_53fbAlias9, DataPtr_Lz_3a_53fbAlias10, DataPtr_Lz_3a_53fbAlias11, DataPtr_Lz_3a_53fbAlias12 ; record 3
 	dslot DataPtr_JapanesePlayModeTiles, DataPtr_JapanesePlayModeTilemap, DataPtr_JapanesePlayModeAttrmap, DataPtr_JapanesePlayModePalettes ; record 4
-	dslot DataPtr_3c_70, DataPtr_3c_72, DataPtr_3c_74, DataPtr_3c_76 ; record 5
-	dslot DataPtr_3c_70, DataPtr_Lz_3a_53fbAlias8, DataPtr_3a_16, DataPtr_3c_76 ; record 6
-	dslot DataPtr_3c_70, DataPtr_3a_18, DataPtr_3a_1a, DataPtr_3c_76 ; record 7
+	dslot DataPtr_CharacterSelectTiles, DataPtr_CharacterSelectTilemap, DataPtr_CharacterSelectAttrmap, DataPtr_CharacterSelectPalettes ; record 5
+	dslot DataPtr_CharacterSelectTiles, DataPtr_Lz_3a_53fbAlias8, DataPtr_3a_16, DataPtr_CharacterSelectPalettes ; record 6
+	dslot DataPtr_CharacterSelectTiles, DataPtr_3a_18, DataPtr_3a_1a, DataPtr_CharacterSelectPalettes ; record 7
 	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias1, DataPtr_Lz_3a_53fbAlias2, DataPtr_Lz_3a_53fbAlias3 ; record 8
 	dslot FarPtr_QueueWram3MapToVRAMAlias1, FarPtr_QueueWram3MapToVRAMAlias2, FarPtr_QueueWram3MapToVRAMAlias3, FarPtr_QueueWram3MapToVRAMAlias4 ; record 9
 	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias4, DataPtr_Lz_3a_53fbAlias5, DataPtr_Lz_3a_53fbAlias3 ; record 10
@@ -193,7 +193,7 @@ ScreenAssetRecordTable:
 	dslot DataPtr_VarsityTeamChartTiles, DataPtr_VarsityTeamChartTilemap, DataPtr_VarsityTeamChartAttrmap, DataPtr_VarsityTeamChartPalettes ; record 37
 	dslot DataPtr_VarsityTeamChartTiles, DataPtr_VarsityTeamChartTilemap2, DataPtr_VarsityTeamChartAttrmap2, DataPtr_VarsityTeamChartPalettes ; record 38
 	dslot DataPtr_IntroGreatestPlayerTiles, DataPtr_IntroGreatestPlayerTilemap, DataPtr_IntroGreatestPlayerAttrmap, DataPtr_IntroGreatestPlayerPalettes ; record 39
-	dslot DataPtr_Lz_6d_6ac8, DataPtr_Lz_6d_6ac8Alias1, DataPtr_Lz_6d_6ac8Alias2, DataPtr_Lz_6d_6ac8Alias3 ; record 40
+	dslot DataPtr_IntroCharacterIcon00, DataPtr_IntroCharacterIcon00Alias1, DataPtr_IntroCharacterIcon00Alias2, DataPtr_IntroCharacterIcon00Alias3 ; record 40
 	dslot DataPtr_TournamentBracketTiles, DataPtr_TournamentBracketSinglesTilemap, DataPtr_TournamentBracketSinglesAttrmap, DataPtr_TournamentBracketPalettes ; record 41
 	dslot DataPtr_TournamentBracketTiles, DataPtr_TournamentBracketDoublesTilemap, DataPtr_TournamentBracketDoublesAttrmap, DataPtr_TournamentBracketPalettes ; record 42
 	dslot DataPtr_MarioMiniGamesTiles, DataPtr_MarioMiniGamesTilemap, DataPtr_MarioMiniGamesAttrmap, DataPtr_MarioMiniGamesPalettes ; record 43
@@ -1039,14 +1039,14 @@ LoadStadiumBgGraphics:
 	ld hl, $3c0a ; $4c6f -> DataPtr_StadiumTilemap
 	ld de, $d800 ; $4c72
 	call DecompressDataFromBank ; $4c75
-	ld hl, $3c0c ; $4c78 -> DataPtr_3c_0c
+	ld hl, $3c0c ; $4c78 -> DataPtr_StadiumAttrmap
 	ld de, $d400 ; $4c7b
 	call DecompressDataFromBank ; $4c7e
-	ld hl, $3c0c ; $4c81 -> DataPtr_3c_0c
+	ld hl, $3c0c ; $4c81 -> DataPtr_StadiumAttrmap
 	ld de, $dc00 ; $4c84
 	call DecompressDataFromBank ; $4c87
 	wram_bank $01 ; $4c8a
-	ld hl, $3c0e ; $4c90 -> DataPtr_3c_0e
+	ld hl, $3c0e ; $4c90 -> DataPtr_StadiumPalettes
 	ld de, $d000 ; $4c93
 	ld bc, $0040 ; $4c96
 	call CopyDataFromBank ; $4c99

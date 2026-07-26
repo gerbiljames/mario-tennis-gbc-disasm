@@ -36,70 +36,70 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 	farptr DrawTileBlock6x2ToTilemap ; $4042
 	farptr LoadOnCourtCharTilesA ; $4044
 	farptr LoadOnCourtCharTilesB ; $4046
-DataPtr_18_48:
-	dw Lz_18_6b30 ; $4048
-DataPtr_18_4a:
-	dw Lz_18_6b73 ; $404a
-DataPtr_18_4c:
-	dw Lz_18_6bb5 ; $404c
-DataPtr_18_4e:
-	dw Lz_18_6bf3 ; $404e
-DataPtr_18_50:
-	dw Lz_18_6c23 ; $4050
-DataPtr_18_52:
-	dw Lz_18_6c4f ; $4052
-DataPtr_18_54:
-	dw Lz_18_6c7d ; $4054
-DataPtr_18_56:
-	dw Lz_18_6cb8 ; $4056
-DataPtr_18_58:
-	dw Lz_18_6cf9 ; $4058
-DataPtr_18_5a:
-	dw Lz_18_6d3c ; $405a
-DataPtr_18_5c:
-	dw Lz_18_6d7d ; $405c
-DataPtr_18_5e:
-	dw Lz_18_6db9 ; $405e
-DataPtr_18_60:
-	dw Lz_18_6deb ; $4060
-DataPtr_18_62:
-	dw Lz_18_6e18 ; $4062
-DataPtr_18_64:
-	dw Lz_18_6e4b ; $4064
-DataPtr_18_66:
-	dw Lz_18_6e88 ; $4066
-DataPtr_18_68:
-	dw Lz_18_6eca ; $4068
-DataPtr_18_6a:
-	dw Lz_18_6f13 ; $406a
-DataPtr_18_6c:
-	dw Lz_18_6f57 ; $406c
-DataPtr_18_6e:
-	dw Lz_18_6f97 ; $406e
-DataPtr_18_70:
-	dw Lz_18_6fd2 ; $4070
-DataPtr_18_72:
-	dw Lz_18_7007 ; $4072
-DataPtr_18_74:
-	dw Lz_18_7040 ; $4074
-DataPtr_18_76:
-	dw Lz_18_7082 ; $4076
-DataPtr_18_78:
-	dw Lz_18_70cb ; $4078
-DataPtr_18_7a:
-	dw Lz_18_7112 ; $407a
-DataPtr_18_7c:
-	dw Lz_18_7156 ; $407c
-DataPtr_18_7e:
-	dw Lz_18_7198 ; $407e
-DataPtr_18_80:
-	dw Lz_18_71d8 ; $4080
-DataPtr_18_82:
-	dw Lz_18_7212 ; $4082
-DataPtr_18_84:
-	dw Lz_18_724e ; $4084
-DataPtr_18_86:
-	dw Lz_18_7292 ; $4086
+DataPtr_CharRosterIcon00:
+	dw CharRosterIcon00 ; $4048
+DataPtr_CharRosterIcon01:
+	dw CharRosterIcon01 ; $404a
+DataPtr_CharRosterIcon02:
+	dw CharRosterIcon02 ; $404c
+DataPtr_CharRosterIcon03:
+	dw CharRosterIcon03 ; $404e
+DataPtr_CharRosterIcon04:
+	dw CharRosterIcon04 ; $4050
+DataPtr_CharRosterIcon05:
+	dw CharRosterIcon05 ; $4052
+DataPtr_CharRosterIcon06:
+	dw CharRosterIcon06 ; $4054
+DataPtr_CharRosterIcon07:
+	dw CharRosterIcon07 ; $4056
+DataPtr_CharRosterIcon08:
+	dw CharRosterIcon08 ; $4058
+DataPtr_CharRosterIcon09:
+	dw CharRosterIcon09 ; $405a
+DataPtr_CharRosterIcon10:
+	dw CharRosterIcon10 ; $405c
+DataPtr_CharRosterIcon11:
+	dw CharRosterIcon11 ; $405e
+DataPtr_CharRosterIcon12:
+	dw CharRosterIcon12 ; $4060
+DataPtr_CharRosterIcon13:
+	dw CharRosterIcon13 ; $4062
+DataPtr_CharRosterIcon14:
+	dw CharRosterIcon14 ; $4064
+DataPtr_CharRosterIcon15:
+	dw CharRosterIcon15 ; $4066
+DataPtr_CharRosterIcon16:
+	dw CharRosterIcon16 ; $4068
+DataPtr_CharRosterIcon17:
+	dw CharRosterIcon17 ; $406a
+DataPtr_CharRosterIcon18:
+	dw CharRosterIcon18 ; $406c
+DataPtr_CharRosterIcon19:
+	dw CharRosterIcon19 ; $406e
+DataPtr_CharRosterIcon20:
+	dw CharRosterIcon20 ; $4070
+DataPtr_CharRosterIcon21:
+	dw CharRosterIcon21 ; $4072
+DataPtr_CharRosterIcon22:
+	dw CharRosterIcon22 ; $4074
+DataPtr_CharRosterIcon23:
+	dw CharRosterIcon23 ; $4076
+DataPtr_CharRosterIcon24:
+	dw CharRosterIcon24 ; $4078
+DataPtr_CharRosterIcon25:
+	dw CharRosterIcon25 ; $407a
+DataPtr_CharRosterIcon26:
+	dw CharRosterIcon26 ; $407c
+DataPtr_CharRosterIcon27:
+	dw CharRosterIcon27 ; $407e
+DataPtr_CharRosterIcon28:
+	dw CharRosterIcon28 ; $4080
+DataPtr_CharRosterIcon29:
+	dw CharRosterIcon29 ; $4082
+DataPtr_CharRosterIcon30:
+	dw CharRosterIcon30 ; $4084
+DataPtr_CharRosterIcon31:
+	dw CharRosterIcon31 ; $4086
 DataPtr_MarioMiniGamesTilemap:
 	dw MarioMiniGamesTilemap ; $4088
 DataPtr_MarioMiniGamesAttrmap:
@@ -1299,69 +1299,69 @@ OnCourtCharTilesBGfx:
 	INCBIN "data/bank_018/d_62f0.bin" ; $62f0, 2048 bytes
 OnCourtCharTilesFallbackGfx:
 	INCBIN "data/bank_018/d_6af0.bin" ; $6af0, 64 bytes
-Lz_18_6b30:
+CharRosterIcon00:
 	INCBIN "data/bank_018/lz_6b30.bin" ; $6b30, 67 bytes
-Lz_18_6b73:
+CharRosterIcon01:
 	INCBIN "data/bank_018/lz_6b73.bin" ; $6b73, 66 bytes
-Lz_18_6bb5:
+CharRosterIcon02:
 	INCBIN "data/bank_018/lz_6bb5.bin" ; $6bb5, 62 bytes
-Lz_18_6bf3:
+CharRosterIcon03:
 	INCBIN "data/bank_018/lz_6bf3.bin" ; $6bf3, 48 bytes
-Lz_18_6c23:
+CharRosterIcon04:
 	INCBIN "data/bank_018/lz_6c23.bin" ; $6c23, 44 bytes
-Lz_18_6c4f:
+CharRosterIcon05:
 	INCBIN "data/bank_018/lz_6c4f.bin" ; $6c4f, 46 bytes
-Lz_18_6c7d:
+CharRosterIcon06:
 	INCBIN "data/bank_018/lz_6c7d.bin" ; $6c7d, 59 bytes
-Lz_18_6cb8:
+CharRosterIcon07:
 	INCBIN "data/bank_018/lz_6cb8.bin" ; $6cb8, 65 bytes
-Lz_18_6cf9:
+CharRosterIcon08:
 	INCBIN "data/bank_018/lz_6cf9.bin" ; $6cf9, 67 bytes
-Lz_18_6d3c:
+CharRosterIcon09:
 	INCBIN "data/bank_018/lz_6d3c.bin" ; $6d3c, 65 bytes
-Lz_18_6d7d:
+CharRosterIcon10:
 	INCBIN "data/bank_018/lz_6d7d.bin" ; $6d7d, 60 bytes
-Lz_18_6db9:
+CharRosterIcon11:
 	INCBIN "data/bank_018/lz_6db9.bin" ; $6db9, 50 bytes
-Lz_18_6deb:
+CharRosterIcon12:
 	INCBIN "data/bank_018/lz_6deb.bin" ; $6deb, 45 bytes
-Lz_18_6e18:
+CharRosterIcon13:
 	INCBIN "data/bank_018/lz_6e18.bin" ; $6e18, 51 bytes
-Lz_18_6e4b:
+CharRosterIcon14:
 	INCBIN "data/bank_018/lz_6e4b.bin" ; $6e4b, 61 bytes
-Lz_18_6e88:
+CharRosterIcon15:
 	INCBIN "data/bank_018/lz_6e88.bin" ; $6e88, 66 bytes
-Lz_18_6eca:
+CharRosterIcon16:
 	INCBIN "data/bank_018/lz_6eca.bin" ; $6eca, 73 bytes
-Lz_18_6f13:
+CharRosterIcon17:
 	INCBIN "data/bank_018/lz_6f13.bin" ; $6f13, 68 bytes
-Lz_18_6f57:
+CharRosterIcon18:
 	INCBIN "data/bank_018/lz_6f57.bin" ; $6f57, 64 bytes
-Lz_18_6f97:
+CharRosterIcon19:
 	INCBIN "data/bank_018/lz_6f97.bin" ; $6f97, 59 bytes
-Lz_18_6fd2:
+CharRosterIcon20:
 	INCBIN "data/bank_018/lz_6fd2.bin" ; $6fd2, 53 bytes
-Lz_18_7007:
+CharRosterIcon21:
 	INCBIN "data/bank_018/lz_7007.bin" ; $7007, 57 bytes
-Lz_18_7040:
+CharRosterIcon22:
 	INCBIN "data/bank_018/lz_7040.bin" ; $7040, 66 bytes
-Lz_18_7082:
+CharRosterIcon23:
 	INCBIN "data/bank_018/lz_7082.bin" ; $7082, 73 bytes
-Lz_18_70cb:
+CharRosterIcon24:
 	INCBIN "data/bank_018/lz_70cb.bin" ; $70cb, 71 bytes
-Lz_18_7112:
+CharRosterIcon25:
 	INCBIN "data/bank_018/lz_7112.bin" ; $7112, 68 bytes
-Lz_18_7156:
+CharRosterIcon26:
 	INCBIN "data/bank_018/lz_7156.bin" ; $7156, 66 bytes
-Lz_18_7198:
+CharRosterIcon27:
 	INCBIN "data/bank_018/lz_7198.bin" ; $7198, 64 bytes
-Lz_18_71d8:
+CharRosterIcon28:
 	INCBIN "data/bank_018/lz_71d8.bin" ; $71d8, 58 bytes
-Lz_18_7212:
+CharRosterIcon29:
 	INCBIN "data/bank_018/lz_7212.bin" ; $7212, 60 bytes
-Lz_18_724e:
+CharRosterIcon30:
 	INCBIN "data/bank_018/lz_724e.bin" ; $724e, 68 bytes
-Lz_18_7292:
+CharRosterIcon31:
 	INCBIN "data/bank_018/lz_7292.bin" ; $7292, 73 bytes
 MarioMiniGamesTilemap:
 	INCBIN "data/bank_018/lz_72db.bin" ; $72db, 304 bytes

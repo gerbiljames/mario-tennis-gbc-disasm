@@ -9,18 +9,18 @@ DataPtr_GrassCourtLabelTiles:
 	dw GrassCourtLabelTiles ; $4006
 DataPtr_CompositionCourtLabelTiles:
 	dw CompositionCourtLabelTiles ; $4008
-DataPtr_3f_0a:
-	dw Lz_3f_5af5 ; $400a
-DataPtr_3f_0c:
-	dw Lz_3f_5bc7 ; $400c
-DataPtr_3f_0e:
-	dw Lz_3f_5ca5 ; $400e
-DataPtr_3f_10:
-	dw Lz_3f_5da0 ; $4010
-DataPtr_3f_12:
-	dw Lz_3f_5e92 ; $4012
-DataPtr_3f_14:
-	dw Lz_3f_5f7d ; $4014
+DataPtr_CourtNameLabelTiles0:
+	dw CourtNameLabelTiles0 ; $400a
+DataPtr_CourtNameLabelTiles1:
+	dw CourtNameLabelTiles1 ; $400c
+DataPtr_CourtNameLabelTiles2:
+	dw CourtNameLabelTiles2 ; $400e
+DataPtr_CourtNameLabelTiles3:
+	dw CourtNameLabelTiles3 ; $4010
+DataPtr_CourtNameLabelTiles4:
+	dw CourtNameLabelTiles4 ; $4012
+DataPtr_CourtNameLabelTiles5:
+	dw CourtNameLabelTiles5 ; $4014
 DataPtr_CourtSelectGfx1:
 	dw CourtSelectGfx1 ; $4016
 DataPtr_CourtSelectGfx2:
@@ -47,38 +47,38 @@ DataPtr_MugshotTiles:
 	dw MugshotTiles ; $402c
 DataPtr_TournamentBracketTiles:
 	dw TournamentBracketTiles ; $402e
-DataPtr_3f_30:
-	dw Lz_3f_74b3 ; $4030
-DataPtr_3f_32:
-	dw Lz_3f_74d2 ; $4032
-DataPtr_3f_34:
-	dw Lz_3f_75a4 ; $4034
-DataPtr_3f_36:
-	dw Lz_3f_7679 ; $4036
-DataPtr_3f_38:
-	dw Lz_3f_76c3 ; $4038
-DataPtr_3f_3a:
-	dw Lz_3f_770e ; $403a
-DataPtr_3f_3c:
-	dw Lz_3f_7757 ; $403c
-DataPtr_3f_3e:
-	dw Lz_3f_779d ; $403e
-DataPtr_3f_40:
-	dw Lz_3f_77e0 ; $4040
-DataPtr_3f_42:
-	dw Lz_3f_7826 ; $4042
-DataPtr_3f_44:
-	dw Lz_3f_7870 ; $4044
-DataPtr_3f_46:
-	dw Lz_3f_78ba ; $4046
-DataPtr_3f_48:
-	dw Lz_3f_7904 ; $4048
-DataPtr_3f_4a:
-	dw Lz_3f_794f ; $404a
-DataPtr_3f_4c:
-	dw Lz_3f_7998 ; $404c
-DataPtr_3f_4e:
-	dw Lz_3f_79db ; $404e
+DataPtr_BracketCharIcon00:
+	dw BracketCharIcon00 ; $4030
+DataPtr_BracketCharIcon01:
+	dw BracketCharIcon01 ; $4032
+DataPtr_BracketCharIcon02:
+	dw BracketCharIcon02 ; $4034
+DataPtr_BracketCharIcon03:
+	dw BracketCharIcon03 ; $4036
+DataPtr_BracketCharIcon04:
+	dw BracketCharIcon04 ; $4038
+DataPtr_BracketCharIcon05:
+	dw BracketCharIcon05 ; $403a
+DataPtr_BracketCharIcon06:
+	dw BracketCharIcon06 ; $403c
+DataPtr_BracketCharIcon07:
+	dw BracketCharIcon07 ; $403e
+DataPtr_BracketCharIcon08:
+	dw BracketCharIcon08 ; $4040
+DataPtr_BracketCharIcon09:
+	dw BracketCharIcon09 ; $4042
+DataPtr_BracketCharIcon10:
+	dw BracketCharIcon10 ; $4044
+DataPtr_BracketCharIcon11:
+	dw BracketCharIcon11 ; $4046
+DataPtr_BracketCharIcon12:
+	dw BracketCharIcon12 ; $4048
+DataPtr_BracketCharIcon13:
+	dw BracketCharIcon13 ; $404a
+DataPtr_BracketCharIcon14:
+	dw BracketCharIcon14 ; $404c
+DataPtr_BracketCharIcon15:
+	dw BracketCharIcon15 ; $404e
 DataPtr_3f_50:
 	dw Lz_3f_7a1d ; $4050
 DataPtr_3f_52:
@@ -1850,17 +1850,17 @@ GrassCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_5974.bin" ; $5974, 195 bytes
 CompositionCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_5a37.bin" ; $5a37, 190 bytes
-Lz_3f_5af5:
+CourtNameLabelTiles0:
 	INCBIN "data/bank_03f/lz_5af5.bin" ; $5af5, 210 bytes
-Lz_3f_5bc7:
+CourtNameLabelTiles1:
 	INCBIN "data/bank_03f/lz_5bc7.bin" ; $5bc7, 222 bytes
-Lz_3f_5ca5:
+CourtNameLabelTiles2:
 	INCBIN "data/bank_03f/lz_5ca5.bin" ; $5ca5, 251 bytes
-Lz_3f_5da0:
+CourtNameLabelTiles3:
 	INCBIN "data/bank_03f/lz_5da0.bin" ; $5da0, 242 bytes
-Lz_3f_5e92:
+CourtNameLabelTiles4:
 	INCBIN "data/bank_03f/lz_5e92.bin" ; $5e92, 235 bytes
-Lz_3f_5f7d:
+CourtNameLabelTiles5:
 	INCBIN "data/bank_03f/lz_5f7d.bin" ; $5f7d, 183 bytes
 CourtSelectGfx1:
 	INCBIN "data/bank_03f/lz_6034.bin" ; $6034, 151 bytes
@@ -1897,37 +1897,37 @@ MugshotTiles:
 	INCBIN "data/bank_03f/lz_6c03.bin" ; $6c03, 1000 bytes
 TournamentBracketTiles:
 	INCBIN "data/bank_03f/lz_6feb.bin" ; $6feb, 1224 bytes
-Lz_3f_74b3:
+BracketCharIcon00:
 	INCBIN "data/bank_03f/lz_74b3.bin" ; $74b3, 31 bytes
-Lz_3f_74d2:
+BracketCharIcon01:
 	INCBIN "data/bank_03f/lz_74d2.bin" ; $74d2, 210 bytes
-Lz_3f_75a4:
+BracketCharIcon02:
 	INCBIN "data/bank_03f/lz_75a4.bin" ; $75a4, 213 bytes
-Lz_3f_7679:
+BracketCharIcon03:
 	INCBIN "data/bank_03f/lz_7679.bin" ; $7679, 74 bytes
-Lz_3f_76c3:
+BracketCharIcon04:
 	INCBIN "data/bank_03f/lz_76c3.bin" ; $76c3, 75 bytes
-Lz_3f_770e:
+BracketCharIcon05:
 	INCBIN "data/bank_03f/lz_770e.bin" ; $770e, 73 bytes
-Lz_3f_7757:
+BracketCharIcon06:
 	INCBIN "data/bank_03f/lz_7757.bin" ; $7757, 70 bytes
-Lz_3f_779d:
+BracketCharIcon07:
 	INCBIN "data/bank_03f/lz_779d.bin" ; $779d, 67 bytes
-Lz_3f_77e0:
+BracketCharIcon08:
 	INCBIN "data/bank_03f/lz_77e0.bin" ; $77e0, 70 bytes
-Lz_3f_7826:
+BracketCharIcon09:
 	INCBIN "data/bank_03f/lz_7826.bin" ; $7826, 74 bytes
-Lz_3f_7870:
+BracketCharIcon10:
 	INCBIN "data/bank_03f/lz_7870.bin" ; $7870, 74 bytes
-Lz_3f_78ba:
+BracketCharIcon11:
 	INCBIN "data/bank_03f/lz_78ba.bin" ; $78ba, 74 bytes
-Lz_3f_7904:
+BracketCharIcon12:
 	INCBIN "data/bank_03f/lz_7904.bin" ; $7904, 75 bytes
-Lz_3f_794f:
+BracketCharIcon13:
 	INCBIN "data/bank_03f/lz_794f.bin" ; $794f, 73 bytes
-Lz_3f_7998:
+BracketCharIcon14:
 	INCBIN "data/bank_03f/lz_7998.bin" ; $7998, 67 bytes
-Lz_3f_79db:
+BracketCharIcon15:
 	INCBIN "data/bank_03f/lz_79db.bin" ; $79db, 66 bytes
 Lz_3f_7a1d:
 	INCBIN "data/bank_03f/lz_7a1d.bin" ; $7a1d, 70 bytes

@@ -12,26 +12,26 @@ DataPtr_StadiumTiles:
 	dw StadiumTiles ; $4008
 DataPtr_StadiumTilemap:
 	dw StadiumTilemap ; $400a
-DataPtr_3c_0c:
-	dw Lz_3c_52e6 ; $400c
-DataPtr_3c_0e:
-	dw Data_3c_5351 ; $400e
+DataPtr_StadiumAttrmap:
+	dw StadiumAttrmap ; $400c
+DataPtr_StadiumPalettes:
+	dw StadiumPalettes ; $400e
 DataPtr_3c_10:
 	dw Lz_3c_5391 ; $4010
-DataPtr_3c_12:
-	dw Lz_3c_53d8 ; $4012
-DataPtr_3c_14:
-	dw Lz_3c_54bc ; $4014
-DataPtr_3c_16:
-	dw Lz_3c_55b4 ; $4016
-DataPtr_3c_18:
-	dw Lz_3c_569f ; $4018
-DataPtr_3c_1a:
-	dw Lz_3c_5792 ; $401a
-DataPtr_3c_1c:
-	dw Lz_3c_5879 ; $401c
-DataPtr_3c_1e:
-	dw Lz_3c_5967 ; $401e
+DataPtr_ModeSelectLabelTiles0:
+	dw ModeSelectLabelTiles0 ; $4012
+DataPtr_ModeSelectLabelTiles1:
+	dw ModeSelectLabelTiles1 ; $4014
+DataPtr_ModeSelectLabelTiles2:
+	dw ModeSelectLabelTiles2 ; $4016
+DataPtr_ModeSelectLabelTiles3:
+	dw ModeSelectLabelTiles3 ; $4018
+DataPtr_ModeSelectLabelTiles4:
+	dw ModeSelectLabelTiles4 ; $401a
+DataPtr_ModeSelectLabelTiles5:
+	dw ModeSelectLabelTiles5 ; $401c
+DataPtr_ModeSelectLabelTiles6:
+	dw ModeSelectLabelTiles6 ; $401e
 DataPtr_3c_20:
 	dw Lz_3c_599a ; $4020
 DataPtr_SharedMenuGfx27:
@@ -112,20 +112,20 @@ DataPtr_ThreeSetsLabelTiles:
 	dw ThreeSetsLabelTiles ; $406c
 DataPtr_FiveSetsLabelTiles:
 	dw FiveSetsLabelTiles ; $406e
-DataPtr_3c_70:
-	dw Lz_3c_741b ; $4070
-DataPtr_3c_72:
-	dw Lz_3c_75e0 ; $4072
-DataPtr_3c_74:
-	dw Lz_3c_766c ; $4074
-DataPtr_3c_76:
-	dw Data_3c_76c5 ; $4076
-DataPtr_3c_78:
-	dw Lz_3c_7705 ; $4078
-DataPtr_3c_7a:
-	dw Lz_3c_77ec ; $407a
-DataPtr_3c_7c:
-	dw Lz_3c_78cf ; $407c
+DataPtr_CharacterSelectTiles:
+	dw CharacterSelectTiles ; $4070
+DataPtr_CharacterSelectTilemap:
+	dw CharacterSelectTilemap ; $4072
+DataPtr_CharacterSelectAttrmap:
+	dw CharacterSelectAttrmap ; $4074
+DataPtr_CharacterSelectPalettes:
+	dw CharacterSelectPalettes ; $4076
+DataPtr_CharacterSelectLabelTiles0:
+	dw CharacterSelectLabelTiles0 ; $4078
+DataPtr_CharacterSelectLabelTiles1:
+	dw CharacterSelectLabelTiles1 ; $407a
+DataPtr_CharacterSelectLabelTiles2:
+	dw CharacterSelectLabelTiles2 ; $407c
 ModeSelectTiles:
 	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1283 bytes
 ModeSelectTilemap:
@@ -147,9 +147,9 @@ StadiumTiles:
 	INCBIN "data/bank_03c/lz_4751.bin" ; $4751, 2465 bytes
 StadiumTilemap:
 	INCBIN "data/bank_03c/lz_50f2.bin" ; $50f2, 500 bytes
-Lz_3c_52e6:
+StadiumAttrmap:
 	INCBIN "data/bank_03c/lz_52e6.bin" ; $52e6, 107 bytes
-Data_3c_5351:
+StadiumPalettes:
 	; $5351, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
@@ -162,19 +162,19 @@ Data_3c_5351:
 	dw $3acc, $6bff, $7d4a, $0000 ; pal 7: #62b473 #ffffd5 #5252ff #000000
 Lz_3c_5391:
 	INCBIN "data/bank_03c/lz_5391.bin" ; $5391, 71 bytes
-Lz_3c_53d8:
+ModeSelectLabelTiles0:
 	INCBIN "data/bank_03c/lz_53d8.bin" ; $53d8, 228 bytes
-Lz_3c_54bc:
+ModeSelectLabelTiles1:
 	INCBIN "data/bank_03c/lz_54bc.bin" ; $54bc, 248 bytes
-Lz_3c_55b4:
+ModeSelectLabelTiles2:
 	INCBIN "data/bank_03c/lz_55b4.bin" ; $55b4, 235 bytes
-Lz_3c_569f:
+ModeSelectLabelTiles3:
 	INCBIN "data/bank_03c/lz_569f.bin" ; $569f, 243 bytes
-Lz_3c_5792:
+ModeSelectLabelTiles4:
 	INCBIN "data/bank_03c/lz_5792.bin" ; $5792, 231 bytes
-Lz_3c_5879:
+ModeSelectLabelTiles5:
 	INCBIN "data/bank_03c/lz_5879.bin" ; $5879, 238 bytes
-Lz_3c_5967:
+ModeSelectLabelTiles6:
 	INCBIN "data/bank_03c/lz_5967.bin" ; $5967, 51 bytes
 Lz_3c_599a:
 	INCBIN "data/bank_03c/lz_599a.bin" ; $599a, 268 bytes
@@ -256,13 +256,13 @@ ThreeSetsLabelTiles:
 	INCBIN "data/bank_03c/lz_726a.bin" ; $726a, 218 bytes
 FiveSetsLabelTiles:
 	INCBIN "data/bank_03c/lz_7344.bin" ; $7344, 215 bytes
-Lz_3c_741b:
+CharacterSelectTiles:
 	INCBIN "data/bank_03c/lz_741b.bin" ; $741b, 453 bytes
-Lz_3c_75e0:
+CharacterSelectTilemap:
 	INCBIN "data/bank_03c/lz_75e0.bin" ; $75e0, 140 bytes
-Lz_3c_766c:
+CharacterSelectAttrmap:
 	INCBIN "data/bank_03c/lz_766c.bin" ; $766c, 89 bytes
-Data_3c_76c5:
+CharacterSelectPalettes:
 	; $76c5, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
@@ -273,10 +273,10 @@ Data_3c_76c5:
 	dw $7bde, $6318, $4a52, $318c ; pal 5: #f6f6f6 #c5c5c5 #949494 #626262
 	dw $7bde, $6318, $4a52, $318c ; pal 6: #f6f6f6 #c5c5c5 #949494 #626262
 	dw $7bde, $6318, $4a52, $318c ; pal 7: #f6f6f6 #c5c5c5 #949494 #626262
-Lz_3c_7705:
+CharacterSelectLabelTiles0:
 	INCBIN "data/bank_03c/lz_7705.bin" ; $7705, 231 bytes
-Lz_3c_77ec:
+CharacterSelectLabelTiles1:
 	INCBIN "data/bank_03c/lz_77ec.bin" ; $77ec, 227 bytes
-Lz_3c_78cf:
+CharacterSelectLabelTiles2:
 	INCBIN "data/bank_03c/lz_78cf.bin" ; $78cf, 253 bytes
 	; $79cc, 1588 bytes fill to bank end (linker-padded)

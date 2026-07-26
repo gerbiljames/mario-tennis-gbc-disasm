@@ -44,8 +44,8 @@ DataPtr_AcademyGroundsAuxTilemap:
 	dw AcademyGroundsAuxTilemap ; $4028
 DataPtr_AcademyGroundsAuxAttrmap:
 	dw AcademyGroundsAuxAttrmap ; $402a
-DataPtr_64_2c:
-	dw Data_64_7730 ; $402c
+DataPtr_AcademyGroundsSceneUnusedSlot:
+	dw AcademyGroundsSceneUnusedSlot ; $402c
 DataPtr_AcademyGroundsTiles:
 	dw AcademyGroundsTiles ; $402e
 DormBedroomSceneConfig:
@@ -119,5 +119,5 @@ AcademyGroundsAuxAttrmap:
 	INCBIN "data/bank_064/lz_76d9.bin" ; $76d9, 79 bytes
 	; $7728, 8 bytes (fill)
 	ds 8, $00
-Data_64_7730:
+AcademyGroundsSceneUnusedSlot:
 	INCBIN "data/bank_064/d_7730.bin" ; $7730, 2256 bytes

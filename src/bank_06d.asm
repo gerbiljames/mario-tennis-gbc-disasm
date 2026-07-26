@@ -39,48 +39,48 @@ DataPtr_IntroCharactersTilemap2:
 DataPtr_6d_24:
 	dw Lz_6d_6250 ; $4024
 	farptr ShowIntroCharacterScreen ; $4026
-DataPtr_Lz_6d_6ac8:
-	dw Lz_6d_6ac8 ; $4028
-DataPtr_Lz_6d_6ac8Alias1:
-	dw Lz_6d_6ac8 ; $402a
-DataPtr_Lz_6d_6ac8Alias2:
-	dw Lz_6d_6ac8 ; $402c
-DataPtr_Lz_6d_6ac8Alias3:
-	dw Lz_6d_6ac8 ; $402e
+DataPtr_IntroCharacterIcon00:
+	dw IntroCharacterIcon00 ; $4028
+DataPtr_IntroCharacterIcon00Alias1:
+	dw IntroCharacterIcon00 ; $402a
+DataPtr_IntroCharacterIcon00Alias2:
+	dw IntroCharacterIcon00 ; $402c
+DataPtr_IntroCharacterIcon00Alias3:
+	dw IntroCharacterIcon00 ; $402e
 DataPtr_TitleScreenTiles:
 	dw TitleScreenTiles ; $4030
-DataPtr_Lz_6d_6ac8Alias4:
-	dw Lz_6d_6ac8 ; $4032
-DataPtr_6d_34:
-	dw Lz_6d_6b13 ; $4034
-DataPtr_6d_36:
-	dw Lz_6d_6b5b ; $4036
-DataPtr_6d_38:
-	dw Lz_6d_6ba2 ; $4038
-DataPtr_6d_3a:
-	dw Lz_6d_6be5 ; $403a
-DataPtr_6d_3c:
-	dw Lz_6d_6c26 ; $403c
-DataPtr_6d_3e:
-	dw Lz_6d_6c69 ; $403e
-DataPtr_6d_40:
-	dw Lz_6d_6cb0 ; $4040
-DataPtr_6d_42:
-	dw Lz_6d_6cf8 ; $4042
-DataPtr_6d_44:
-	dw Lz_6d_6d41 ; $4044
-DataPtr_6d_46:
-	dw Lz_6d_6d89 ; $4046
-DataPtr_6d_48:
-	dw Lz_6d_6dd1 ; $4048
-DataPtr_6d_4a:
-	dw Lz_6d_6e16 ; $404a
-DataPtr_6d_4c:
-	dw Lz_6d_6e59 ; $404c
-DataPtr_6d_4e:
-	dw Lz_6d_6e9e ; $404e
-DataPtr_6d_50:
-	dw Lz_6d_6ee6 ; $4050
+DataPtr_IntroCharacterIcon00Alias4:
+	dw IntroCharacterIcon00 ; $4032
+DataPtr_IntroCharacterIcon01:
+	dw IntroCharacterIcon01 ; $4034
+DataPtr_IntroCharacterIcon02:
+	dw IntroCharacterIcon02 ; $4036
+DataPtr_IntroCharacterIcon03:
+	dw IntroCharacterIcon03 ; $4038
+DataPtr_IntroCharacterIcon04:
+	dw IntroCharacterIcon04 ; $403a
+DataPtr_IntroCharacterIcon05:
+	dw IntroCharacterIcon05 ; $403c
+DataPtr_IntroCharacterIcon06:
+	dw IntroCharacterIcon06 ; $403e
+DataPtr_IntroCharacterIcon07:
+	dw IntroCharacterIcon07 ; $4040
+DataPtr_IntroCharacterIcon08:
+	dw IntroCharacterIcon08 ; $4042
+DataPtr_IntroCharacterIcon09:
+	dw IntroCharacterIcon09 ; $4044
+DataPtr_IntroCharacterIcon10:
+	dw IntroCharacterIcon10 ; $4046
+DataPtr_IntroCharacterIcon11:
+	dw IntroCharacterIcon11 ; $4048
+DataPtr_IntroCharacterIcon12:
+	dw IntroCharacterIcon12 ; $404a
+DataPtr_IntroCharacterIcon13:
+	dw IntroCharacterIcon13 ; $404c
+DataPtr_IntroCharacterIcon14:
+	dw IntroCharacterIcon14 ; $404e
+DataPtr_IntroCharacterIcon15:
+	dw IntroCharacterIcon15 ; $4050
 DataPtr_CourtSelectGfx5:
 	dw CourtSelectGfx5 ; $4052
 DataPtr_CourtSelectGfx5Alias1:
@@ -125,26 +125,26 @@ DataPtr_CourtSelectGfx9:
 	dw CourtSelectGfx9 ; $407a
 DataPtr_SharedMenuGfx111:
 	dw SharedMenuGfx111 ; $407c
-DataPtr_6d_7e:
-	dw Lz_6d_731f ; $407e
-DataPtr_6d_80:
-	dw Lz_6d_73d9 ; $4080
-DataPtr_6d_82:
-	dw Lz_6d_745b ; $4082
+DataPtr_MinigameSelectIconGfx0:
+	dw MinigameSelectIconGfx0 ; $407e
+DataPtr_MinigameSelectIconGfx1:
+	dw MinigameSelectIconGfx1 ; $4080
+DataPtr_MinigameSelectIconGfx2:
+	dw MinigameSelectIconGfx2 ; $4082
 DataPtr_MinigameLevelSelectGfx0:
 	dw MinigameLevelSelectGfx0 ; $4084
 DataPtr_6d_86:
 	dw Lz_6d_758a ; $4086
 DataPtr_MinigameLevelSelectGfx1:
 	dw MinigameLevelSelectGfx1 ; $4088
-DataPtr_6d_8a:
-	dw Lz_6d_76b2 ; $408a
-DataPtr_6d_8c:
-	dw Lz_6d_7799 ; $408c
-DataPtr_6d_8e:
-	dw Lz_6d_7887 ; $408e
-DataPtr_6d_90:
-	dw Lz_6d_7970 ; $4090
+DataPtr_MinigameLabelTiles0:
+	dw MinigameLabelTiles0 ; $408a
+DataPtr_MinigameLabelTiles1:
+	dw MinigameLabelTiles1 ; $408c
+DataPtr_MinigameLabelTiles2:
+	dw MinigameLabelTiles2 ; $408e
+DataPtr_MinigameLabelTiles3:
+	dw MinigameLabelTiles3 ; $4090
 DataPtr_MarioMiniGamesTiles:
 	dw MarioMiniGamesTiles ; $4092
 TitleGfx0:
@@ -237,37 +237,37 @@ IntroCharacterScreenFrameTask:
 	ld c, $03 ; $6ac2
 	farcall QueueIntroSpriteBlock ; $6ac4
 	ret ; $6ac7
-Lz_6d_6ac8:
+IntroCharacterIcon00:
 	INCBIN "data/bank_06d/lz_6ac8.bin" ; $6ac8, 75 bytes
-Lz_6d_6b13:
+IntroCharacterIcon01:
 	INCBIN "data/bank_06d/lz_6b13.bin" ; $6b13, 72 bytes
-Lz_6d_6b5b:
+IntroCharacterIcon02:
 	INCBIN "data/bank_06d/lz_6b5b.bin" ; $6b5b, 71 bytes
-Lz_6d_6ba2:
+IntroCharacterIcon03:
 	INCBIN "data/bank_06d/lz_6ba2.bin" ; $6ba2, 67 bytes
-Lz_6d_6be5:
+IntroCharacterIcon04:
 	INCBIN "data/bank_06d/lz_6be5.bin" ; $6be5, 65 bytes
-Lz_6d_6c26:
+IntroCharacterIcon05:
 	INCBIN "data/bank_06d/lz_6c26.bin" ; $6c26, 67 bytes
-Lz_6d_6c69:
+IntroCharacterIcon06:
 	INCBIN "data/bank_06d/lz_6c69.bin" ; $6c69, 71 bytes
-Lz_6d_6cb0:
+IntroCharacterIcon07:
 	INCBIN "data/bank_06d/lz_6cb0.bin" ; $6cb0, 72 bytes
-Lz_6d_6cf8:
+IntroCharacterIcon08:
 	INCBIN "data/bank_06d/lz_6cf8.bin" ; $6cf8, 73 bytes
-Lz_6d_6d41:
+IntroCharacterIcon09:
 	INCBIN "data/bank_06d/lz_6d41.bin" ; $6d41, 72 bytes
-Lz_6d_6d89:
+IntroCharacterIcon10:
 	INCBIN "data/bank_06d/lz_6d89.bin" ; $6d89, 72 bytes
-Lz_6d_6dd1:
+IntroCharacterIcon11:
 	INCBIN "data/bank_06d/lz_6dd1.bin" ; $6dd1, 69 bytes
-Lz_6d_6e16:
+IntroCharacterIcon12:
 	INCBIN "data/bank_06d/lz_6e16.bin" ; $6e16, 67 bytes
-Lz_6d_6e59:
+IntroCharacterIcon13:
 	INCBIN "data/bank_06d/lz_6e59.bin" ; $6e59, 69 bytes
-Lz_6d_6e9e:
+IntroCharacterIcon14:
 	INCBIN "data/bank_06d/lz_6e9e.bin" ; $6e9e, 72 bytes
-Lz_6d_6ee6:
+IntroCharacterIcon15:
 	INCBIN "data/bank_06d/lz_6ee6.bin" ; $6ee6, 72 bytes
 CourtSelectGfx5:
 	INCBIN "data/bank_06d/lz_6f2e.bin" ; $6f2e, 165 bytes
@@ -281,11 +281,11 @@ CourtSelectGfx9:
 	INCBIN "data/bank_06d/lz_71e0.bin" ; $71e0, 175 bytes
 SharedMenuGfx111:
 	INCBIN "data/bank_06d/lz_728f.bin" ; $728f, 144 bytes
-Lz_6d_731f:
+MinigameSelectIconGfx0:
 	INCBIN "data/bank_06d/lz_731f.bin" ; $731f, 186 bytes
-Lz_6d_73d9:
+MinigameSelectIconGfx1:
 	INCBIN "data/bank_06d/lz_73d9.bin" ; $73d9, 130 bytes
-Lz_6d_745b:
+MinigameSelectIconGfx2:
 	INCBIN "data/bank_06d/lz_745b.bin" ; $745b, 172 bytes
 MinigameLevelSelectGfx0:
 	INCBIN "data/bank_06d/lz_7507.bin" ; $7507, 131 bytes
@@ -293,13 +293,13 @@ Lz_6d_758a:
 	INCBIN "data/bank_06d/lz_758a.bin" ; $758a, 144 bytes
 MinigameLevelSelectGfx1:
 	INCBIN "data/bank_06d/lz_761a.bin" ; $761a, 152 bytes
-Lz_6d_76b2:
+MinigameLabelTiles0:
 	INCBIN "data/bank_06d/lz_76b2.bin" ; $76b2, 231 bytes
-Lz_6d_7799:
+MinigameLabelTiles1:
 	INCBIN "data/bank_06d/lz_7799.bin" ; $7799, 238 bytes
-Lz_6d_7887:
+MinigameLabelTiles2:
 	INCBIN "data/bank_06d/lz_7887.bin" ; $7887, 233 bytes
-Lz_6d_7970:
+MinigameLabelTiles3:
 	INCBIN "data/bank_06d/lz_7970.bin" ; $7970, 232 bytes
 MarioMiniGamesTiles:
 	INCBIN "data/bank_06d/lz_7a58.bin" ; $7a58, 757 bytes

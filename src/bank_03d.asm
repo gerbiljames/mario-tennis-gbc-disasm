@@ -1,13 +1,13 @@
 SECTION "ROM Bank $3d", ROMX[$4000], BANK[$3d]
 
-DataPtr_3d_00:
-	dw Lz_3d_406e ; $4000
-DataPtr_3d_02:
-	dw Lz_3d_416f ; $4002
-DataPtr_3d_04:
-	dw Lz_3d_4271 ; $4004
-DataPtr_3d_06:
-	dw Lz_3d_4371 ; $4006
+DataPtr_N64ItemLabelTiles0:
+	dw N64ItemLabelTiles0 ; $4000
+DataPtr_N64ItemLabelTiles1:
+	dw N64ItemLabelTiles1 ; $4002
+DataPtr_N64ItemLabelTiles2:
+	dw N64ItemLabelTiles2 ; $4004
+DataPtr_N64ItemLabelTiles3:
+	dw N64ItemLabelTiles3 ; $4006
 DataPtr_N64TransferItemGfx0:
 	dw N64TransferItemGfx0 ; $4008
 DataPtr_N64TransferItemGfx1:
@@ -110,13 +110,13 @@ DataPtr_TournamentBracketDoublesTilemap:
 	dw TournamentBracketDoublesTilemap ; $406a
 DataPtr_TournamentBracketDoublesAttrmap:
 	dw TournamentBracketDoublesAttrmap ; $406c
-Lz_3d_406e:
+N64ItemLabelTiles0:
 	INCBIN "data/bank_03d/lz_406e.bin" ; $406e, 257 bytes
-Lz_3d_416f:
+N64ItemLabelTiles1:
 	INCBIN "data/bank_03d/lz_416f.bin" ; $416f, 258 bytes
-Lz_3d_4271:
+N64ItemLabelTiles2:
 	INCBIN "data/bank_03d/lz_4271.bin" ; $4271, 256 bytes
-Lz_3d_4371:
+N64ItemLabelTiles3:
 	INCBIN "data/bank_03d/lz_4371.bin" ; $4371, 246 bytes
 N64TransferItemGfx0:
 	INCBIN "data/bank_03d/lz_4467.bin" ; $4467, 180 bytes

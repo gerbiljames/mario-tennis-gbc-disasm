@@ -4914,14 +4914,14 @@ LoadMinigameSelectGfx:
 	ld de, $a500 ; $636c
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
-	ld hl, $6d7e ; $6375 -> DataPtr_6d_7e
+	ld hl, $6d7e ; $6375 -> DataPtr_MinigameSelectIconGfx0
 	ld de, $d000 ; $6378
 	call DecompressDataFromBank ; $637b
 	ld hl, $d000 ; $637e
 	ld de, $8200 ; $6381
 	ld c, $10 ; $6384
 	call QueueVRAMCopy ; $6386
-	ld hl, $6d80 ; $6389 -> DataPtr_6d_80
+	ld hl, $6d80 ; $6389 -> DataPtr_MinigameSelectIconGfx1
 	ld de, $d400 ; $638c
 	call DecompressDataFromBank ; $638f
 	ld hl, $d400 ; $6392
@@ -4929,7 +4929,7 @@ LoadMinigameSelectGfx:
 	ld c, $10 ; $6398
 	call QueueVRAMCopy ; $639a
 	call AdvanceFrame ; $639d
-	ld hl, $6d82 ; $63a0 -> DataPtr_6d_82
+	ld hl, $6d82 ; $63a0 -> DataPtr_MinigameSelectIconGfx2
 	ld de, $d000 ; $63a3
 	call DecompressDataFromBank ; $63a6
 	ld hl, $d000 ; $63a9
@@ -5587,7 +5587,7 @@ LoadSavedDataSourceGfx:
 	ldh a, [hWramBank] ; $686e
 	push af ; $6870
 	wram_bank $01 ; $6871
-	ld hl, $3c14 ; $6877 -> DataPtr_3c_14
+	ld hl, $3c14 ; $6877 -> DataPtr_ModeSelectLabelTiles1
 	ld de, $d000 ; $687a
 	call DecompressDataFromBank ; $687d
 	ld hl, $d000 ; $6880

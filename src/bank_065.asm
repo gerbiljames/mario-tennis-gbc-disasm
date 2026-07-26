@@ -12,8 +12,8 @@ DataPtr_SeasideAuxTilemap:
 	dw SeasideAuxTilemap ; $4008
 DataPtr_SeasideAuxAttrmap:
 	dw SeasideAuxAttrmap ; $400a
-DataPtr_65_0c:
-	dw Data_65_5120 ; $400c
+DataPtr_SeasideSceneUnusedSlot:
+	dw SeasideSceneUnusedSlot ; $400c
 DataPtr_SeasideTiles:
 	dw SeasideTiles ; $400e
 DataPtr_HedgeCourtSceneConfig:
@@ -28,8 +28,8 @@ DataPtr_HedgeCourtAuxTilemap:
 	dw HedgeCourtAuxTilemap ; $4018
 DataPtr_HedgeCourtAuxAttrmap:
 	dw HedgeCourtAuxAttrmap ; $401a
-DataPtr_65_1c:
-	dw Data_65_6500 ; $401c
+DataPtr_HedgeCourtSceneUnusedSlot:
+	dw HedgeCourtSceneUnusedSlot ; $401c
 DataPtr_HedgeCourtTiles:
 	dw HedgeCourtTiles ; $401e
 DataPtr_ClayCourtGroundsSceneConfig:
@@ -64,7 +64,7 @@ SeasideAuxAttrmap:
 	INCBIN "data/bank_065/lz_50c8.bin" ; $50c8, 73 bytes
 	; $5111, 15 bytes (fill)
 	ds 15, $00
-Data_65_5120:
+SeasideSceneUnusedSlot:
 	INCBIN "data/bank_065/d_5120.bin" ; $5120, 1536 bytes
 HedgeCourtSceneConfig:
 	INCBIN "data/bank_065/d_5720.bin" ; $5720, 23 bytes
@@ -91,7 +91,7 @@ HedgeCourtAuxAttrmap:
 	INCBIN "data/bank_065/lz_64b4.bin" ; $64b4, 70 bytes
 	; $64fa, 6 bytes (fill)
 	ds 6, $00
-Data_65_6500:
+HedgeCourtSceneUnusedSlot:
 	INCBIN "data/bank_065/d_6500.bin" ; $6500, 1536 bytes
 ClayCourtGroundsSceneConfig:
 	INCBIN "data/bank_065/d_6b00.bin" ; $6b00, 42 bytes
