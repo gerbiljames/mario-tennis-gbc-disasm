@@ -130,7 +130,7 @@ CursorBobOffsetTableX:
 ApplyArrowBobOffset:
 	ldh a, [hVBlankCounter] ; $40cd
 	and a, $0f ; $40cf
-	ld hl, Func_1b_40e7 ; $40d1
+	ld hl, ArrowBobOffsetTable_1b ; $40d1
 	add a, l ; $40d4
 	ld l, a ; $40d5
 	jr nc, .readOffset ; $40d6
@@ -150,17 +150,9 @@ ApplyArrowBobOffset:
 	sub a, b ; $40e4
 	ld e, a ; $40e5
 	ret ; $40e6
-Func_1b_40e7:
-	nop ; $40e7
-	nop ; $40e8
-	nop ; $40e9
-	ld bc, $0101 ; $40ea
-	ld bc, $0101 ; $40ed
-	ld bc, $0001 ; $40f0
-	nop ; $40f3
-	nop ; $40f4
-	nop ; $40f5
-	nop ; $40f6
+ArrowBobOffsetTable_1b:
+	; $40e7, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 DrawMenuCursorCornersAlt:
 	push de ; $40f7
 	push bc ; $40f8

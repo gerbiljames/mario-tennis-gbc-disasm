@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $05 (text control-code engine) stranded functions reached only through computed dispatch (control-code jump tables read through pointers). All decode 0-invalid and tile to a ret boundary; each sits directly after a ret/jp hl. Flat ROM offset = 0x05*0x4000 + (cpu - 0x4000). Includes per-source text-fetch handler stubs (5-byte farcall $bb:02 + jr) targeted by the DialogueTextFetchers/ShortTextFetchers dw tables ($5c3b/$5cc7). Plus $4c9d code, $78f3 code head ($78f3-$7915, ends at ret; $7916-$791f align pad and the FontGlyphs table at $7920 read by DrawGlyph/$7322 are data), and the 32-entry ControlCodeHandlers_05 table ($548f) targets + its 5 no-op ret stubs ($548a-$548e).",
+ "_comment": "Static code-entry seeds for bank $05 (text control-code engine) stranded functions reached only through computed dispatch (control-code jump tables read through pointers). All decode 0-invalid and tile to a ret boundary; each sits directly after a ret/jp hl. Flat ROM offset = 0x05*0x4000 + (cpu - 0x4000). Includes per-source text-fetch handler stubs (5-byte farcall $bb:02 + jr) targeted by the DialogueTextFetchers/ShortTextFetchers dw tables ($5c3b/$5cc7). Plus $4c9d code, $78f3 code head ($78f3-$7915, ends at ret; $7916-$791f align pad and the FontGlyphs table at $7920 read by DrawGlyph/$7322 are data), and the 32-entry ControlCodeHandlers_05 table ($548f) targets + its 5 no-op ret stubs ($548a-$548e). | Correction (static-seed over a table): $5e39 is the 16-word jump table the routine at $5e2a indexes (add a,a; ld hl,$5e39; ld a,[hl+]; ld h,[hl]; jp hl), not code; seeding it swept the table in as instructions. Replaced by its five distinct handler targets.",
  "rom": [
   82110,
   82133,
@@ -84,8 +84,11 @@
   89369,
   89374,
   89379,
-  89657,
+  89689,
+  89714,
   89723,
+  89730,
+  89805,
   90215,
   91016,
   91071,

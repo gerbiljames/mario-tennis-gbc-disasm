@@ -1360,7 +1360,7 @@ MatchSelectHandlersBHandler0:
 	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a, a ; $502a
 	jr z, .restoreReturnPoint ; $502b
-	jp Func_10_54ec.runMatch ; $502d
+	jp Label_10_5565.runMatch ; $502d
 .restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, $0a ; $5033
@@ -1848,7 +1848,7 @@ RunEraseSavedDataFlow:
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $54db
 	ld b, a ; $54de
 	add a, a ; $54df
-	ld hl, Func_10_54ec ; $54e0
+	ld hl, EraseSavedDataFlowHandlers_10 ; $54e0
 	add a, l ; $54e3
 	ld l, a ; $54e4
 	jr nc, .readHandler ; $54e5
@@ -1858,14 +1858,14 @@ RunEraseSavedDataFlow:
 	ld h, [hl] ; $54e9
 	ld l, a ; $54ea
 	jp hl ; $54eb
-Func_10_54ec:
-	or a, $54 ; $54ec
-	or a, $54 ; $54ee
-	or a, $54 ; $54f0
-	add hl, sp ; $54f2
-	ld d, l ; $54f3
-	ld h, l ; $54f4
-	ld d, l ; $54f5
+EraseSavedDataFlowHandlers_10:
+	; $54ec, 10 bytes (records:2)
+	dw Label_10_54f6 ; record 0
+	dw Label_10_54f6 ; record 1
+	dw Label_10_54f6 ; record 2
+	dw Label_10_5539 ; record 3
+	dw Label_10_5565 ; record 4
+Label_10_54f6:
 	ld a, b ; $54f6
 	ld [wCurrentStorySlot], a ; $54f7
 	farcall CheckStorySlot ; $54fa
@@ -1895,6 +1895,7 @@ Func_10_54ec:
 	ld a, $00 ; $5531
 	ld [wMenuSlideDirection], a ; $5533
 	jp RunEraseSavedDataFlow ; $5536
+Label_10_5539:
 	ld c, $10 ; $5539
 	call BeginFadeOut ; $553b
 	call WaitFadeEnd ; $553e
@@ -1912,6 +1913,7 @@ Func_10_54ec:
 	ld a, $00 ; $555d
 	ld [wMenuSlideDirection], a ; $555f
 	jp RunEraseSavedDataFlow ; $5562
+Label_10_5565:
 	ld c, $10 ; $5565
 	call BeginFadeOut ; $5567
 	call WaitFadeEnd ; $556a

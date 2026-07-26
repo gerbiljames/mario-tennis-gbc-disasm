@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `68512bf`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,861 of 21,550 labels are human-named** (see the caveat in the
+symbols. **19,869 of 21,560 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4733,3 +4733,50 @@ offset inside them is decoded as code: five of the eight are *trace-seeded*,
 which on this evidence means phantom trace lines of the kind `BAD_SEEDS`
 already documents, not executed code. Left alone for now -- each needs its own
 entry and reasoning there, and getting it wrong un-proves real code.
+
+## The eight false functions were bad seeds of our own (2026-07-27)
+
+The eight `Func_*` labels that were not functions all traced back to one cause,
+and it was not the traces: **seven of the eight offsets are in this repo's own
+`coverage/bank*_static_code.json` files**. Those are the curated seed lists the
+project uses for code no trace reaches, and each of these had been aimed at a
+*table* rather than at the routine after it, so the seed swept the table in as
+instructions and descent carried on through it. (`load_coverage` reads the
+static files alongside the real dumps, which is why an earlier check here
+reported them as "trace-seeded" -- they are seeded, but by hand.)
+
+Every one is a split-base lookup whose consumer sits immediately before it:
+
+| seed was | is really | code starts |
+| --- | --- | --- |
+| `$05:$5e39` | 16 handler words `RenderProportionalTextAt` dispatches control codes through (`cp a, $20; jr nc, .glyph`) | 5 handlers |
+| `$10:$54ec` | 5 handler words `RunEraseSavedDataFlow` `jp hl`s through | 3 handlers |
+| `$17:$40bd` | 16-byte `hVBlankCounter & $0f` offset table | `$40cd` |
+| `$1b:$40e7` | the same table | `$40f7` |
+| `$38:$40bf` | the same table | `$40cf` |
+| `$17:$46c2` | 8 unreferenced bytes after a `ret` | -- |
+| `$17:$46ca` | 12-word symmetric ramp for `CycleDiagramTargetPalette` | `$46e2` |
+| `$17:$4a75` | six 6-byte records for `DrawDiagramTargetPatch` | `$4a99` |
+| `$38:$6a27` | 6 pointer words `AdvanceRemotePlayerSlot` indexes by `[$d813]` | `$6a3c` |
+
+The three `$40bd`/`$40e7`/`$40bf` tables are the same 16 bytes in three banks,
+and the routines after them are **byte-identical for 911 bytes** -- a relocated
+copy, like the OAM-frame loader twins `infer_twin_tables` already handles. Only
+bank `$38`'s copy has call sites, so simply dropping the seeds would have lost
+the other two: each file now seeds the routine's real entry instead, and for
+the two jump tables it seeds every distinct handler target, which is what the
+existing bank `$10` file already does for its handler tables.
+
+All nine regions are declared in `data_tables.json` and named, so the tables
+read as what they are and the two dispatch tables resolve their handlers:
+
+```
+ProportionalTextCodeHandlers_05:
+        ; $5e39, 32 bytes (records:2)
+        dw Label_05_5ecd ; record 0
+        dw Label_05_5e72 ; record 1
+```
+
+**No `Func_*` labels remain**, and 141 bytes stopped being counted as proven
+code -- the correct direction, since they never were. `make compare` OK from
+clean.

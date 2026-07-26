@@ -101,7 +101,7 @@ SpriteBobOffsetXTable:
 ApplySpriteBobOffsetY:
 	ldh a, [hVBlankCounter] ; $40a5
 	and a, $0f ; $40a7
-	ld hl, Func_38_40bf ; $40a9
+	ld hl, SpriteBobOffsetYTable_38 ; $40a9
 	add a, l ; $40ac
 	ld l, a ; $40ad
 	jr nc, .readOffset ; $40ae
@@ -121,17 +121,9 @@ ApplySpriteBobOffsetY:
 	sub a, b ; $40bc
 	ld e, a ; $40bd
 	ret ; $40be
-Func_38_40bf:
-	nop ; $40bf
-	nop ; $40c0
-	nop ; $40c1
-	ld bc, $0101 ; $40c2
-	ld bc, $0101 ; $40c5
-	ld bc, $0001 ; $40c8
-	nop ; $40cb
-	nop ; $40cc
-	nop ; $40cd
-	nop ; $40ce
+SpriteBobOffsetYTable_38:
+	; $40bf, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 DrawUnselectedOptionBox:
 	push de ; $40cf
 	push bc ; $40d0
@@ -5649,7 +5641,7 @@ SubHandler42:
 	nop ; $69ec
 AdvanceRemotePlayerSlot:
 	ld a, [$d813] ; $69ed
-	ld hl, Func_38_6a27 ; $69f0
+	ld hl, RemotePlayerSlotLists_38 ; $69f0
 	add a, a ; $69f3
 	add a, l ; $69f4
 	ld l, a ; $69f5
@@ -5670,7 +5662,7 @@ AdvanceRemotePlayerSlot:
 	ret ; $6a08
 RetreatRemotePlayerSlot:
 	ld a, [$d813] ; $6a09
-	ld hl, Func_38_6a27 ; $6a0c
+	ld hl, RemotePlayerSlotLists_38 ; $6a0c
 	add a, a ; $6a0f
 	add a, l ; $6a10
 	ld l, a ; $6a11
@@ -5691,26 +5683,23 @@ RetreatRemotePlayerSlot:
 	ld a, [hl] ; $6a22
 	ld [$d81d], a ; $6a23
 	ret ; $6a26
-Func_38_6a27:
-	inc sp ; $6a27
-	ld l, d ; $6a28
-	inc sp ; $6a29
-	ld l, d ; $6a2a
-	inc sp ; $6a2b
-	ld l, d ; $6a2c
-	inc sp ; $6a2d
-	ld l, d ; $6a2e
-	scf ; $6a2f
-	ld l, d ; $6a30
-	scf ; $6a31
-	ld l, d ; $6a32
-	rst Rst38 ; $6a33
-	nop ; $6a34
-	ld [bc], a ; $6a35
-	rst Rst38 ; $6a36
-	rst Rst38 ; $6a37
-	nop ; $6a38
-	ld bc, rSC ; $6a39
+RemotePlayerSlotLists_38:
+	; $6a27, 12 bytes (records:2)
+	dw Data_38_6a33 ; record 0
+	dw Data_38_6a33 ; record 1
+	dw Data_38_6a33 ; record 2
+	dw Data_38_6a33 ; record 3
+	dw Data_38_6a37 ; record 4
+	dw Data_38_6a37 ; record 5
+Data_38_6a33:
+	; $6a33, 4 bytes (records:2)
+	dw $00ff ; record 0
+	dw $ff02 ; record 1
+Data_38_6a37:
+	; $6a37, 5 bytes (records:2)
+	dw $00ff ; record 0
+	dw $0201 ; record 1
+	db $ff
 	call GetGridSlotFromCursor ; $6a3c
 	ld hl, $da00 ; $6a3f
 	add a, a ; $6a42

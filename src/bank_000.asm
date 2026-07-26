@@ -17,16 +17,7 @@ Rst28:
 	ds 5, $ff ; $002b, fill
 Rst30:
 	jp TestGameFlagCmd ; $0030
-	ds 5, $ff ; $0033, fill
-Rst38:
-	rst Rst38 ; $0038
-	rst Rst38 ; $0039
-	rst Rst38 ; $003a
-	rst Rst38 ; $003b
-	rst Rst38 ; $003c
-	rst Rst38 ; $003d
-	rst Rst38 ; $003e
-	rst Rst38 ; $003f
+	ds 13, $ff ; $0033, fill
 VBlankInterrupt:
 	jp VBlankHandler ; $0040
 	ds 5, $ff ; $0043, fill

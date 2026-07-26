@@ -107,7 +107,7 @@ SpriteWobbleXTable:
 ApplySpriteWobbleY_17:
 	ldh a, [hVBlankCounter] ; $40a3
 	and a, $0f ; $40a5
-	ld hl, Func_17_40bd ; $40a7
+	ld hl, SpriteWobbleYTable_17 ; $40a7
 	add a, l ; $40aa
 	ld l, a ; $40ab
 	jr nc, .readOffset ; $40ac
@@ -127,17 +127,9 @@ ApplySpriteWobbleY_17:
 	sub a, b ; $40ba
 	ld e, a ; $40bb
 	ret ; $40bc
-Func_17_40bd:
-	nop ; $40bd
-	nop ; $40be
-	nop ; $40bf
-	ld bc, $0101 ; $40c0
-	ld bc, $0101 ; $40c3
-	ld bc, $0001 ; $40c6
-	nop ; $40c9
-	nop ; $40ca
-	nop ; $40cb
-	nop ; $40cc
+SpriteWobbleYTable_17:
+	; $40bd, 16 bytes (bytes:16)
+	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 	push de ; $40cd
 	push bc ; $40ce
 	ld c, $00 ; $40cf
@@ -1029,7 +1021,7 @@ CycleDiagramTargetPalette:
 	xor a, a ; $46a0
 .step2:
 	add a, a ; $46a1
-	ld hl, Func_17_46ca ; $46a2
+	ld hl, DiagramTargetPaletteRamp_17 ; $46a2
 	add a, l ; $46a5
 	ld l, a ; $46a6
 	jr nc, .read ; $46a7
@@ -1048,35 +1040,23 @@ CycleDiagramTargetPalette:
 	pop af ; $46bc
 	wram_bank ; $46bd
 	ret ; $46c1
-	nop ; $46c2
-	nop ; $46c3
-	ld sp, hl ; $46c4
-	ld h, a ; $46c5
-	sbc a, b ; $46c6
-	nop ; $46c7
-	rra ; $46c8
-	inc bc ; $46c9
-Func_17_46ca:
-	rra ; $46ca
-	nop ; $46cb
-	rst Rst18 ; $46cc
-	nop ; $46cd
-	rst Rst38 ; $46ce
-	ld bc, $02bf ; $46cf
-	ld a, a ; $46d2
-	inc bc ; $46d3
-	rst Rst38 ; $46d4
-	inc bc ; $46d5
-	rst Rst38 ; $46d6
-	inc bc ; $46d7
-	sbc a, a ; $46d8
-	inc bc ; $46d9
-	cp a, a ; $46da
-	ld [bc], a ; $46db
-	rst Rst38 ; $46dc
-	ld bc, $00df ; $46dd
-	rra ; $46e0
-	nop ; $46e1
+Unused_17_46c2:
+	; $46c2, 8 bytes (bytes:8)
+	db $00, $00, $f9, $67, $98, $00, $1f, $03 ; 0x00
+DiagramTargetPaletteRamp_17:
+	; $46ca, 24 bytes (records:2)
+	dw $001f ; record 0
+	dw $00df ; record 1
+	dw $01ff ; record 2
+	dw $02bf ; record 3
+	dw $037f ; record 4
+	dw $03ff ; record 5
+	dw $03ff ; record 6
+	dw $039f ; record 7
+	dw $02bf ; record 8
+	dw $01ff ; record 9
+	dw $00df ; record 10
+	dw $001f ; record 11
 DrawBriefingPlayerSprite:
 	ldh a, [hWramBank] ; $46e2
 	push af ; $46e4
@@ -1520,7 +1500,7 @@ DrawDiagramTargetPatch:
 	ld c, a ; $4a59
 	add a, a ; $4a5a
 	add a, c ; $4a5b
-	ld hl, Func_17_4a75 ; $4a5c
+	ld hl, DiagramTargetPatchRecords_17 ; $4a5c
 	add a, l ; $4a5f
 	ld l, a ; $4a60
 	jr nc, .read ; $4a61
@@ -1541,27 +1521,15 @@ DrawDiagramTargetPatch:
 	pop hl ; $4a70
 	farcall CopyTilemapRect ; $4a71
 	ret ; $4a74
-Func_17_4a75:
-	ld b, e ; $4a75
-	jp nc, $d08a ; $4a76
-	inc bc ; $4a79
-	ld [bc], a ; $4a7a
-	add a, e ; $4a7b
-	jp nc, $d0ca ; $4a7c
-	inc bc ; $4a7f
-	ld [bc], a ; $4a80
-	add a, b ; $4a81
-	jp nc, $d0c7 ; $4a82
-	inc bc ; $4a85
-	ld [bc], a ; $4a86
-	ld b, b ; $4a87
-	jp nc, $d087 ; $4a88
-	inc bc ; $4a8b
-	ld [bc], a ; $4a8c
-	ret nz ; $4a8d
-	jp nc, $d067 ; $4a8e
-	ld b, $02 ; $4a91
-	nop ; $4a93
+DiagramTargetPatchRecords_17:
+	; $4a75, 31 bytes (records:6)
+; 5 records x 6 bytes
+	dw $d243, $d08a, $0203 ; record 0
+	dw $d283, $d0ca, $0203 ; record 1
+	dw $d280, $d0c7, $0203 ; record 2
+	dw $d240, $d087, $0203 ; record 3
+	dw $d2c0, $d067, $0206 ; record 4
+	db $00
 Data_17_4a94:
 	; $4a94, 5 bytes (bytes:5)
 	db $d3, $e7, $d0, $06, $02 ; 0x00

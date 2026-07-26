@@ -4787,11 +4787,11 @@ RenderProportionalTextAt:
 .charLoop:
 	ld a, [hl] ; $5e24
 	cp a, $20 ; $5e25
-	jr nc, Func_05_5e39.glyph ; $5e27
+	jr nc, Label_05_5e82.glyph ; $5e27
 	push hl ; $5e29
 	push af ; $5e2a
 	add a, a ; $5e2b
-	ld hl, Func_05_5e39 ; $5e2c
+	ld hl, ProportionalTextCodeHandlers_05 ; $5e2c
 	add a, l ; $5e2f
 	ld l, a ; $5e30
 	jr nc, .readVector ; $5e31
@@ -4802,35 +4802,25 @@ RenderProportionalTextAt:
 	ld l, a ; $5e36
 	pop af ; $5e37
 	jp hl ; $5e38
-Func_05_5e39:
-	call RenderTextAtWindowCell ; $5e39
-	ld e, [hl] ; $5e3c
-	call $cd5e ; $5e3d
-	ld e, [hl] ; $5e40
-	ld a, e ; $5e41
-	ld e, [hl] ; $5e42
-	add a, d ; $5e43
-	ld e, [hl] ; $5e44
-	add a, d ; $5e45
-	ld e, [hl] ; $5e46
-	ld a, e ; $5e47
-	ld e, [hl] ; $5e48
-	ld a, e ; $5e49
-	ld e, [hl] ; $5e4a
-	ld a, e ; $5e4b
-	ld e, [hl] ; $5e4c
-	add a, d ; $5e4d
-	ld e, [hl] ; $5e4e
-	ld a, e ; $5e4f
-	ld e, [hl] ; $5e50
-	add a, d ; $5e51
-	ld e, [hl] ; $5e52
-	add a, d ; $5e53
-	ld e, [hl] ; $5e54
-	ld e, c ; $5e55
-	ld e, [hl] ; $5e56
-	add a, d ; $5e57
-	ld e, [hl] ; $5e58
+ProportionalTextCodeHandlers_05:
+	; $5e39, 32 bytes (records:2)
+	dw Label_05_5ecd ; record 0
+	dw Label_05_5e72 ; record 1
+	dw Label_05_5ecd ; record 2
+	dw Label_05_5ecd ; record 3
+	dw Label_05_5e7b ; record 4
+	dw Label_05_5e82 ; record 5
+	dw Label_05_5e82 ; record 6
+	dw Label_05_5e7b ; record 7
+	dw Label_05_5e7b ; record 8
+	dw Label_05_5e7b ; record 9
+	dw Label_05_5e82 ; record 10
+	dw Label_05_5e7b ; record 11
+	dw Label_05_5e82 ; record 12
+	dw Label_05_5e82 ; record 13
+	dw Label_05_5e59 ; record 14
+	dw Label_05_5e82 ; record 15
+Label_05_5e59:
 	pop hl ; $5e59
 	inc hl ; $5e5a
 	push af ; $5e5b
@@ -4843,16 +4833,19 @@ Func_05_5e39:
 	call DispatchControlCode ; $5e6c
 	inc hl ; $5e6f
 	jr RenderProportionalTextAt.charLoop ; $5e70
+Label_05_5e72:
 	pop hl ; $5e72
 	ld a, $0d ; $5e73
 	call DispatchControlCode ; $5e75
 	inc hl ; $5e78
 	jr RenderProportionalTextAt.charLoop ; $5e79
+Label_05_5e7b:
 	pop hl ; $5e7b
 	call DispatchControlCode ; $5e7c
 	inc hl ; $5e7f
 	jr RenderProportionalTextAt.charLoop ; $5e80
-	db $e1 ; $5e82
+Label_05_5e82:
+	pop hl ; $5e82
 .glyph:
 	push af ; $5e83
 	ld a, [wShadowTilemapBank] ; $5e84
@@ -4904,6 +4897,7 @@ Func_05_5e39:
 	ld e, l ; $5ec8
 	pop hl ; $5ec9
 	jp RenderProportionalTextAt.charLoop ; $5eca
+Label_05_5ecd:
 	pop hl ; $5ecd
 	ldh a, [hWramBank] ; $5ece
 	push af ; $5ed0
