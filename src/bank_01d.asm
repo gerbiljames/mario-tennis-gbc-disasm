@@ -295,9 +295,9 @@ LoadCharDataScreenPageGraphics:
 	ld hl, wStoryModeNameOfMainCharacter ; $4360
 	ld a, [wStoryCharacterSlot] ; $4363
 	or a, a ; $4366
-	jr z, Label_1d_436b ; $4367
+	jr z, .step ; $4367
 	ld l, $40 ; $4369
-Label_1d_436b:
+.step:
 	ld a, l ; $436b
 	add a, $0c ; $436c
 	ld l, a ; $436e
@@ -313,9 +313,9 @@ Label_1d_436b:
 	ld hl, wStoryModeNameOfMainCharacter ; $4382
 	ld a, [wStoryCharacterSlot] ; $4385
 	or a, a ; $4388
-	jr z, Label_1d_438d ; $4389
+	jr z, .step2 ; $4389
 	ld l, $40 ; $438b
-Label_1d_438d:
+.step2:
 	ld a, l ; $438d
 	add a, $0b ; $438e
 	ld l, a ; $4390
@@ -344,9 +344,9 @@ Label_1d_438d:
 	ld hl, wStoryModeNameOfMainCharacter ; $43c4
 	ld a, [wStoryCharacterSlot] ; $43c7
 	or a, a ; $43ca
-	jr z, Label_1d_43cf ; $43cb
+	jr z, .step3 ; $43cb
 	ld l, $40 ; $43cd
-Label_1d_43cf:
+.step3:
 	ld a, l ; $43cf
 	add a, $0c ; $43d0
 	ld l, a ; $43d2
@@ -362,9 +362,9 @@ Label_1d_43cf:
 	ld hl, wStoryModeNameOfMainCharacter ; $43e6
 	ld a, [wStoryCharacterSlot] ; $43e9
 	or a, a ; $43ec
-	jr z, Label_1d_43f1 ; $43ed
+	jr z, .step4 ; $43ed
 	ld l, $40 ; $43ef
-Label_1d_43f1:
+.step4:
 	ld a, l ; $43f1
 	add a, $0b ; $43f2
 	ld l, a ; $43f4
@@ -417,9 +417,9 @@ BuildCharDataSummaryFields:
 	ld hl, wStoryModeNameOfMainCharacter ; $4452
 	ld a, [wStoryCharacterSlot] ; $4455
 	or a, a ; $4458
-	jr z, Label_1d_445d ; $4459
+	jr z, .step ; $4459
 	ld l, $40 ; $445b
-Label_1d_445d:
+.step:
 	ld a, l ; $445d
 	add a, $00 ; $445e
 	ld l, a ; $4460
@@ -438,9 +438,9 @@ Label_1d_445d:
 	ld hl, wStoryModeNameOfMainCharacter ; $447a
 	ld a, [wStoryCharacterSlot] ; $447d
 	or a, a ; $4480
-	jr z, Label_1d_4485 ; $4481
+	jr z, .step2 ; $4481
 	ld l, $40 ; $4483
-Label_1d_4485:
+.step2:
 	ld a, l ; $4485
 	add a, $0e ; $4486
 	ld l, a ; $4488
@@ -456,9 +456,9 @@ Label_1d_4485:
 	ld hl, wStoryModeNameOfMainCharacter ; $449c
 	ld a, [wStoryCharacterSlot] ; $449f
 	or a, a ; $44a2
-	jr z, Label_1d_44a7 ; $44a3
+	jr z, .step3 ; $44a3
 	ld l, $40 ; $44a5
-Label_1d_44a7:
+.step3:
 	ld a, l ; $44a7
 	add a, $18 ; $44a8
 	ld l, a ; $44aa
@@ -479,9 +479,9 @@ Label_1d_44a7:
 	ld hl, wStoryModeNameOfMainCharacter ; $44c9
 	ld a, [wStoryCharacterSlot] ; $44cc
 	or a, a ; $44cf
-	jr z, Label_1d_44d4 ; $44d0
+	jr z, .step4 ; $44d0
 	ld l, $40 ; $44d2
-Label_1d_44d4:
+.step4:
 	ld a, l ; $44d4
 	add a, $38 ; $44d5
 	ld l, a ; $44d7
@@ -502,9 +502,9 @@ Label_1d_44d4:
 	ld hl, wStoryModeNameOfMainCharacter ; $44f6
 	ld a, [wStoryCharacterSlot] ; $44f9
 	or a, a ; $44fc
-	jr z, Label_1d_4501 ; $44fd
+	jr z, .step5 ; $44fd
 	ld l, $40 ; $44ff
-Label_1d_4501:
+.step5:
 	ld a, l ; $4501
 	add a, $39 ; $4502
 	ld l, a ; $4504
@@ -525,9 +525,9 @@ Label_1d_4501:
 	ld hl, wStoryModeNameOfMainCharacter ; $4523
 	ld a, [wStoryCharacterSlot] ; $4526
 	or a, a ; $4529
-	jr z, Label_1d_452e ; $452a
+	jr z, .step6 ; $452a
 	ld l, $40 ; $452c
-Label_1d_452e:
+.step6:
 	ld a, l ; $452e
 	add a, $3a ; $452f
 	ld l, a ; $4531
@@ -548,9 +548,9 @@ Label_1d_452e:
 	ld hl, wStoryModeNameOfMainCharacter ; $4550
 	ld a, [wStoryCharacterSlot] ; $4553
 	or a, a ; $4556
-	jr z, Label_1d_455b ; $4557
+	jr z, .step7 ; $4557
 	ld l, $40 ; $4559
-Label_1d_455b:
+.step7:
 	ld a, l ; $455b
 	add a, $3b ; $455c
 	ld l, a ; $455e
@@ -590,9 +590,9 @@ Label_1d_455b:
 	ld hl, wStoryModeNameOfMainCharacter ; $45a6
 	ld a, [wStoryCharacterSlot] ; $45a9
 	or a, a ; $45ac
-	jr z, Label_1d_45b1 ; $45ad
+	jr z, .step8 ; $45ad
 	ld l, $40 ; $45af
-Label_1d_45b1:
+.step8:
 	ld a, l ; $45b1
 	add a, $2c ; $45b2
 	ld l, a ; $45b4
@@ -605,11 +605,11 @@ Label_1d_45b1:
 	ld de, $d126 ; $45c0
 	ld a, [hl] ; $45c3
 	or a, a ; $45c4
-	jr nz, Label_1d_45cf ; $45c5
+	jr nz, .step9 ; $45c5
 	ld bc, $0006 ; $45c7
 	call CopyMemoryBC ; $45ca
-	jr Label_1d_45db ; $45cd
-Label_1d_45cf:
+	jr .step10 ; $45cd
+.step9:
 	ld h, d ; $45cf
 	ld l, e ; $45d0
 	ld a, $20 ; $45d1
@@ -620,16 +620,16 @@ Label_1d_45cf:
 	ld [hl+], a ; $45d8
 	ld [hl+], a ; $45d9
 	ld [hl], a ; $45da
-Label_1d_45db:
+.step10:
 	ld a, $01 ; $45db
 	ld [wStoryCharacterSlot], a ; $45dd
 	push af ; $45e0
 	ld hl, wStoryModeNameOfMainCharacter ; $45e1
 	ld a, [wStoryCharacterSlot] ; $45e4
 	or a, a ; $45e7
-	jr z, Label_1d_45ec ; $45e8
+	jr z, .step11 ; $45e8
 	ld l, $40 ; $45ea
-Label_1d_45ec:
+.step11:
 	ld a, l ; $45ec
 	add a, $00 ; $45ed
 	ld l, a ; $45ef
@@ -649,9 +649,9 @@ Label_1d_45ec:
 	ld hl, wStoryModeNameOfMainCharacter ; $460f
 	ld a, [wStoryCharacterSlot] ; $4612
 	or a, a ; $4615
-	jr z, Label_1d_461a ; $4616
+	jr z, .step12 ; $4616
 	ld l, $40 ; $4618
-Label_1d_461a:
+.step12:
 	ld a, l ; $461a
 	add a, $0e ; $461b
 	ld l, a ; $461d
@@ -667,9 +667,9 @@ Label_1d_461a:
 	ld hl, wStoryModeNameOfMainCharacter ; $4631
 	ld a, [wStoryCharacterSlot] ; $4634
 	or a, a ; $4637
-	jr z, Label_1d_463c ; $4638
+	jr z, .step13 ; $4638
 	ld l, $40 ; $463a
-Label_1d_463c:
+.step13:
 	ld a, l ; $463c
 	add a, $18 ; $463d
 	ld l, a ; $463f
@@ -690,9 +690,9 @@ Label_1d_463c:
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a, a ; $4664
-	jr z, Label_1d_4669 ; $4665
+	jr z, .step14 ; $4665
 	ld l, $40 ; $4667
-Label_1d_4669:
+.step14:
 	ld a, l ; $4669
 	add a, $38 ; $466a
 	ld l, a ; $466c
@@ -713,9 +713,9 @@ Label_1d_4669:
 	ld hl, wStoryModeNameOfMainCharacter ; $468b
 	ld a, [wStoryCharacterSlot] ; $468e
 	or a, a ; $4691
-	jr z, Label_1d_4696 ; $4692
+	jr z, .step15 ; $4692
 	ld l, $40 ; $4694
-Label_1d_4696:
+.step15:
 	ld a, l ; $4696
 	add a, $39 ; $4697
 	ld l, a ; $4699
@@ -736,9 +736,9 @@ Label_1d_4696:
 	ld hl, wStoryModeNameOfMainCharacter ; $46b8
 	ld a, [wStoryCharacterSlot] ; $46bb
 	or a, a ; $46be
-	jr z, Label_1d_46c3 ; $46bf
+	jr z, .step16 ; $46bf
 	ld l, $40 ; $46c1
-Label_1d_46c3:
+.step16:
 	ld a, l ; $46c3
 	add a, $3a ; $46c4
 	ld l, a ; $46c6
@@ -759,9 +759,9 @@ Label_1d_46c3:
 	ld hl, wStoryModeNameOfMainCharacter ; $46e5
 	ld a, [wStoryCharacterSlot] ; $46e8
 	or a, a ; $46eb
-	jr z, Label_1d_46f0 ; $46ec
+	jr z, .step17 ; $46ec
 	ld l, $40 ; $46ee
-Label_1d_46f0:
+.step17:
 	ld a, l ; $46f0
 	add a, $3b ; $46f1
 	ld l, a ; $46f3
@@ -801,9 +801,9 @@ Label_1d_46f0:
 	ld hl, wStoryModeNameOfMainCharacter ; $473c
 	ld a, [wStoryCharacterSlot] ; $473f
 	or a, a ; $4742
-	jr z, Label_1d_4747 ; $4743
+	jr z, .step18 ; $4743
 	ld l, $40 ; $4745
-Label_1d_4747:
+.step18:
 	ld a, l ; $4747
 	add a, $2c ; $4748
 	ld l, a ; $474a
@@ -816,11 +816,11 @@ Label_1d_4747:
 	ld de, $d133 ; $4756
 	ld a, [hl] ; $4759
 	or a, a ; $475a
-	jr nz, Label_1d_4764 ; $475b
+	jr nz, .step19 ; $475b
 	ld bc, $0006 ; $475d
 	call CopyMemoryBC ; $4760
 	ret ; $4763
-Label_1d_4764:
+.step19:
 	ld h, d ; $4764
 	ld l, e ; $4765
 	ld a, $20 ; $4766
@@ -836,12 +836,12 @@ PlotTilesAtOffsets:
 	push de ; $4771
 	ld a, [hl+] ; $4772
 	cp a, $ff ; $4773
-	jr z, Label_1d_4791 ; $4775
+	jr z, .restore ; $4775
 	add a, e ; $4777
 	ld e, a ; $4778
-	jr nc, Label_1d_477c ; $4779
+	jr nc, .read ; $4779
 	inc d ; $477b
-Label_1d_477c:
+.read:
 	ld a, [hl+] ; $477c
 	ld c, a ; $477d
 	wram_bank $03 ; $477e
@@ -852,19 +852,19 @@ Label_1d_477c:
 	ld [de], a ; $478d
 	pop de ; $478e
 	jr PlotTilesAtOffsets ; $478f
-Label_1d_4791:
+.restore:
 	pop de ; $4791
 	ret ; $4792
 DrawFourTileFlagLabel:
 	or a, a ; $4793
-	jr nz, Label_1d_47a0 ; $4794
+	jr nz, .step ; $4794
 	wram_bank $03 ; $4796
 	ld a, $01 ; $479c
-	jr Label_1d_47a8 ; $479e
-Label_1d_47a0:
+	jr .store ; $479e
+.step:
 	wram_bank $03 ; $47a0
 	ld a, $05 ; $47a6
-Label_1d_47a8:
+.store:
 	ld [hl+], a ; $47a8
 	inc a ; $47a9
 	ld [hl+], a ; $47aa
@@ -878,9 +878,9 @@ WriteNameStringTiles:
 	or a, a ; $47b1
 	ret z ; $47b2
 	cp a, $de ; $47b3
-	jr z, Label_1d_47cf ; $47b5
+	jr z, .nameTilePtrUpOneRow ; $47b5
 	cp a, $df ; $47b7
-	jr z, Label_1d_47cf ; $47b9
+	jr z, .nameTilePtrUpOneRow ; $47b9
 	ld b, a ; $47bb
 	wram_bank $03 ; $47bc
 	ld a, b ; $47c2
@@ -890,13 +890,13 @@ WriteNameStringTiles:
 	ld [de], a ; $47cb
 	inc de ; $47cc
 	jr WriteNameStringTiles ; $47cd
-Label_1d_47cf:
+.nameTilePtrUpOneRow:
 	call NameTilePtrUpOneRow ; $47cf
 	ld b, a ; $47d2
 	wram_bank $03 ; $47d3
 	ld a, [de] ; $47d9
 	or a, a ; $47da
-	jr z, Label_1d_47ef ; $47db
+	jr z, .step ; $47db
 	ld a, b ; $47dd
 	sub a, $30 ; $47de
 	ld [de], a ; $47e0
@@ -905,7 +905,7 @@ Label_1d_47cf:
 	ld [de], a ; $47e9
 	call NameTilePtrDownOneRow ; $47ea
 	jr WriteNameStringTiles ; $47ed
-Label_1d_47ef:
+.step:
 	ld a, b ; $47ef
 	ld [de], a ; $47f0
 	wram_bank $02 ; $47f1
@@ -915,10 +915,10 @@ Label_1d_47ef:
 	jr WriteNameStringTiles ; $47fc
 NameTilePtrUpOneRow:
 	push bc ; $47fe
-Label_1d_47ff:
+.loop:
 	dec de ; $47ff
 	dec c ; $4800
-	jr nz, Label_1d_47ff ; $4801
+	jr nz, .loop ; $4801
 	dec de ; $4803
 	pop bc ; $4804
 	ret ; $4805
@@ -927,9 +927,9 @@ NameTilePtrDownOneRow:
 	inc a ; $4807
 	add a, e ; $4808
 	ld e, a ; $4809
-	jr nc, Label_1d_480d ; $480a
+	jr nc, .done ; $480a
 	inc d ; $480c
-Label_1d_480d:
+.done:
 	ret ; $480d
 FormatExp24BitDecimal:
 	wram_bank $06 ; $480e
@@ -949,22 +949,22 @@ FormatExp24BitDecimal:
 	and a, a ; $482a
 	ret z ; $482b
 	ld c, a ; $482c
-Label_1d_482d:
+.loop:
 	ld de, $d093 ; $482d
 	ld a, [de] ; $4830
 	sub a, $20 ; $4831
-	jr z, Label_1d_4837 ; $4833
+	jr z, .step ; $4833
 	sub a, $10 ; $4835
-Label_1d_4837:
+.step:
 	add a, $06 ; $4837
 	cp a, $0a ; $4839
-	jr c, Label_1d_4844 ; $483b
+	jr c, .step2 ; $483b
 	sub a, $0a ; $483d
 	ld b, a ; $483f
 	ld a, $01 ; $4840
 	ld [hl], a ; $4842
 	ld a, b ; $4843
-Label_1d_4844:
+.step2:
 	add a, $30 ; $4844
 	ld [de], a ; $4846
 	ld de, $d092 ; $4847
@@ -975,18 +975,18 @@ Label_1d_4844:
 	ld [hl], a ; $484e
 	ld a, b ; $484f
 	sub a, $20 ; $4850
-	jr z, Label_1d_4856 ; $4852
+	jr z, .step3 ; $4852
 	sub a, $10 ; $4854
-Label_1d_4856:
+.step3:
 	add a, $03 ; $4856
 	cp a, $0a ; $4858
-	jr c, Label_1d_4863 ; $485a
+	jr c, .step4 ; $485a
 	sub a, $0a ; $485c
 	ld b, a ; $485e
 	ld a, $01 ; $485f
 	ld [hl], a ; $4861
 	ld a, b ; $4862
-Label_1d_4863:
+.step4:
 	add a, $30 ; $4863
 	ld [de], a ; $4865
 	ld de, $d091 ; $4866
@@ -997,18 +997,18 @@ Label_1d_4863:
 	ld [hl], a ; $486d
 	ld a, b ; $486e
 	sub a, $20 ; $486f
-	jr z, Label_1d_4875 ; $4871
+	jr z, .step5 ; $4871
 	sub a, $10 ; $4873
-Label_1d_4875:
+.step5:
 	add a, $05 ; $4875
 	cp a, $0a ; $4877
-	jr c, Label_1d_4882 ; $4879
+	jr c, .step6 ; $4879
 	sub a, $0a ; $487b
 	ld b, a ; $487d
 	ld a, $01 ; $487e
 	ld [hl], a ; $4880
 	ld a, b ; $4881
-Label_1d_4882:
+.step6:
 	add a, $30 ; $4882
 	ld [de], a ; $4884
 	ld de, $d090 ; $4885
@@ -1019,18 +1019,18 @@ Label_1d_4882:
 	ld [hl], a ; $488c
 	ld a, b ; $488d
 	sub a, $20 ; $488e
-	jr z, Label_1d_4894 ; $4890
+	jr z, .step7 ; $4890
 	sub a, $10 ; $4892
-Label_1d_4894:
+.step7:
 	add a, $05 ; $4894
 	cp a, $0a ; $4896
-	jr c, Label_1d_48a1 ; $4898
+	jr c, .step8 ; $4898
 	sub a, $0a ; $489a
 	ld b, a ; $489c
 	ld a, $01 ; $489d
 	ld [hl], a ; $489f
 	ld a, b ; $48a0
-Label_1d_48a1:
+.step8:
 	add a, $30 ; $48a1
 	ld [de], a ; $48a3
 	ld de, $d08f ; $48a4
@@ -1041,31 +1041,31 @@ Label_1d_48a1:
 	ld [hl], a ; $48ab
 	ld a, b ; $48ac
 	sub a, $20 ; $48ad
-	jr z, Label_1d_48b3 ; $48af
+	jr z, .step9 ; $48af
 	sub a, $10 ; $48b1
-Label_1d_48b3:
+.step9:
 	add a, $05 ; $48b3
 	ld hl, $d08e ; $48b5
 	add a, [hl] ; $48b8
 	cp a, $0a ; $48b9
-	jr c, Label_1d_48bf ; $48bb
+	jr c, .step10 ; $48bb
 	ld a, $09 ; $48bd
-Label_1d_48bf:
+.step10:
 	add a, $30 ; $48bf
 	ld [de], a ; $48c1
 	dec c ; $48c2
-	jp nz, Label_1d_482d ; $48c3
+	jp nz, .loop ; $48c3
 	ret ; $48c6
 CharDataValuesSyncTask:
 	wram_bank $06 ; $48c7
 	ld a, [$d149] ; $48cd
 	or a, a ; $48d0
-	jr nz, Label_1d_48d8 ; $48d1
+	jr nz, .step ; $48d1
 	ld hl, $c890 ; $48d3
-	jr Label_1d_48db ; $48d6
-Label_1d_48d8:
+	jr .step2 ; $48d6
+.step:
 	ld hl, wGameTimer + 2 ; $48d8
-Label_1d_48db:
+.step2:
 	ld de, $d14c ; $48db
 	ld a, [hl+] ; $48de
 	ld [de], a ; $48df
@@ -1080,13 +1080,13 @@ Label_1d_48db:
 	call FormatDecimalNumberUnsigned ; $48ee
 	ld a, [$d08e] ; $48f1
 	cp a, $20 ; $48f4
-	jr z, Label_1d_4907 ; $48f6
+	jr z, .step3 ; $48f6
 	call GetCharDataDigitSprite ; $48f8
 	ld de, $5d88 ; $48fb
 	ld hl, $d147 ; $48fe
 	call ApplySlideOffsetToSpriteX ; $4901
 	call QueueSprite ; $4904
-Label_1d_4907:
+.step3:
 	ld a, [$d08f] ; $4907
 	call GetCharDataDigitSprite ; $490a
 	ld de, $6588 ; $490d
@@ -1101,11 +1101,11 @@ Label_1d_4907:
 	call FormatDecimalNumberUnsigned ; $4924
 	ld a, [$d08e] ; $4927
 	cp a, $20 ; $492a
-	jr z, Label_1d_4930 ; $492c
-	jr Label_1d_4932 ; $492e
-Label_1d_4930:
+	jr z, .step4 ; $492c
+	jr .getCharDataDigitSprite ; $492e
+.step4:
 	ld a, $30 ; $4930
-Label_1d_4932:
+.getCharDataDigitSprite:
 	call GetCharDataDigitSprite ; $4932
 	ld de, $7488 ; $4935
 	ld hl, $d147 ; $4938
@@ -1120,79 +1120,79 @@ Label_1d_4932:
 	wram_bank $06 ; $4953
 	ld a, [$d12c] ; $4959
 	cp a, $20 ; $495c
-	jr z, Label_1d_496f ; $495e
+	jr z, .step5 ; $495e
 	call GetSummaryExpDigitSprite ; $4960
 	ld de, $0864 ; $4963
 	ld hl, $d147 ; $4966
 	call ApplySlideOffsetToSpriteX ; $4969
 	call QueueSprite ; $496c
-Label_1d_496f:
+.step5:
 	ld a, [$d12d] ; $496f
 	cp a, $20 ; $4972
-	jr z, Label_1d_4985 ; $4974
+	jr z, .step6 ; $4974
 	call GetSummaryExpDigitSprite ; $4976
 	ld de, $0d64 ; $4979
 	ld hl, $d147 ; $497c
 	call ApplySlideOffsetToSpriteX ; $497f
 	call QueueSprite ; $4982
-Label_1d_4985:
+.step6:
 	ld a, [$d12e] ; $4985
 	cp a, $20 ; $4988
-	jr z, Label_1d_499b ; $498a
+	jr z, .step7 ; $498a
 	call GetSummaryExpDigitSprite ; $498c
 	ld de, $1264 ; $498f
 	ld hl, $d147 ; $4992
 	call ApplySlideOffsetToSpriteX ; $4995
 	call QueueSprite ; $4998
-Label_1d_499b:
+.step7:
 	ld a, [$d139] ; $499b
 	cp a, $20 ; $499e
-	jr z, Label_1d_49b1 ; $49a0
+	jr z, .step8 ; $49a0
 	call GetSummaryExpDigitSprite ; $49a2
 	ld de, $5864 ; $49a5
 	ld hl, $d147 ; $49a8
 	call ApplySlideOffsetToSpriteX ; $49ab
 	call QueueSprite ; $49ae
-Label_1d_49b1:
+.step8:
 	ld a, [$d13a] ; $49b1
 	cp a, $20 ; $49b4
-	jr z, Label_1d_49c7 ; $49b6
+	jr z, .step9 ; $49b6
 	call GetSummaryExpDigitSprite ; $49b8
 	ld de, $5d64 ; $49bb
 	ld hl, $d147 ; $49be
 	call ApplySlideOffsetToSpriteX ; $49c1
 	call QueueSprite ; $49c4
-Label_1d_49c7:
+.step9:
 	ld a, [$d13b] ; $49c7
 	cp a, $20 ; $49ca
-	jr z, Label_1d_49dd ; $49cc
+	jr z, .checkEquippedRacket ; $49cc
 	call GetSummaryExpDigitSprite ; $49ce
 	ld de, $6264 ; $49d1
 	ld hl, $d147 ; $49d4
 	call ApplySlideOffsetToSpriteX ; $49d7
 	call QueueSprite ; $49da
-Label_1d_49dd:
+.checkEquippedRacket:
 	ld a, [wEquippedRacket] ; $49dd
 	push af ; $49e0
 	and a, $0f ; $49e1
-	jr z, Label_1d_49f5 ; $49e3
+	jr z, .restore ; $49e3
 	ld b, $0e ; $49e5
 	ld c, $d6 ; $49e7
 	ld de, $303c ; $49e9
 	ld hl, $d147 ; $49ec
 	call ApplySlideOffsetToSpriteX ; $49ef
 	call QueueSprite ; $49f2
-Label_1d_49f5:
+.restore:
 	pop af ; $49f5
 	and a, $f0 ; $49f6
-	jr z, Label_1d_4a0a ; $49f8
+	jr z, .done ; $49f8
 	ld b, $0e ; $49fa
 	ld c, $d8 ; $49fc
 	ld de, $383c ; $49fe
 	ld hl, $d147 ; $4a01
 	call ApplySlideOffsetToSpriteX ; $4a04
 	call QueueSprite ; $4a07
-Label_1d_4a0a:
+.done:
 	ret ; $4a0a
 GetSummaryExpDigitSprite:
 	sub a, $30 ; $4a0b
@@ -1407,15 +1407,15 @@ DrawCharDataPageArrowsTask:
 	wram_bank $06 ; $4c04
 	ld a, [$d143] ; $4c0a
 	or a, a ; $4c0d
-	jr nz, Label_1d_4c14 ; $4c0e
+	jr nz, .step ; $4c0e
 	ld hl, $d144 ; $4c10
 	inc [hl] ; $4c13
-Label_1d_4c14:
+.step:
 	ld a, [$d142] ; $4c14
 	or a, a ; $4c17
-	jr z, Label_1d_4c3f ; $4c18
+	jr z, .step3 ; $4c18
 	dec a ; $4c1a
-	jr z, Label_1d_4c2e ; $4c1b
+	jr z, .step2 ; $4c1b
 	ld de, $0103 ; $4c1d
 	call BobArrowSpriteLeft ; $4c20
 	ld hl, SpriteTemplate_1d_679a ; $4c23
@@ -1423,7 +1423,7 @@ Label_1d_4c14:
 	ld c, $28 ; $4c28
 	call QueueSpriteTemplate ; $4c2a
 	ret ; $4c2d
-Label_1d_4c2e:
+.step2:
 	ld de, $7f03 ; $4c2e
 	call BobArrowSpriteRight ; $4c31
 	ld hl, SpriteTemplate_1d_681b ; $4c34
@@ -1431,7 +1431,7 @@ Label_1d_4c2e:
 	ld c, $30 ; $4c39
 	call QueueSpriteTemplate ; $4c3b
 	ret ; $4c3e
-Label_1d_4c3f:
+.step3:
 	ld de, $1010 ; $4c3f
 	call BobArrowSpriteLeft ; $4c42
 	ld hl, SpriteTemplate_1d_666a ; $4c45
@@ -1490,23 +1490,23 @@ RunDrillResultInputLoop:
 	wram_bank $06 ; $4cac
 	ld a, [$d142] ; $4cb2
 	or a, a ; $4cb5
-	jr z, Label_1d_4cbf ; $4cb6
+	jr z, .loop ; $4cb6
 	dec a ; $4cb8
-	jp z, Label_1d_4da0 ; $4cb9
-	jp Label_1d_4dff ; $4cbc
-Label_1d_4cbf:
+	jp z, .loopB ; $4cb9
+	jp .loopBB ; $4cbc
+.loop:
 	call AdvanceFrame ; $4cbf
 	ldh a, [hInputRisingEdge] ; $4cc2
 	bit PADB_RIGHT, a ; $4cc4
-	jr nz, Label_1d_4cd9 ; $4cc6
+	jr nz, .playSfx ; $4cc6
 	bit 5, a ; $4cc8
-	jp nz, Label_1d_4d3a ; $4cca
+	jp nz, .playSfx2 ; $4cca
 	bit 1, a ; $4ccd
-	jp nz, Label_1d_4d9a ; $4ccf
+	jp nz, .playSfx3 ; $4ccf
 	bit 0, a ; $4cd2
-	jp nz, Label_1d_4d9d ; $4cd4
-	jr Label_1d_4cbf ; $4cd7
-Label_1d_4cd9:
+	jp nz, .playSfx4 ; $4cd4
+	jr .loop ; $4cd7
+.playSfx:
 	sound $5e ; $4cd9
 	ld hl, CharDataScreenBgScrollTask ; $4cdb
 	call UnregisterFrameTask ; $4cde
@@ -1538,8 +1538,8 @@ Label_1d_4cd9:
 	ld a, $01 ; $4d2f
 	ld hl, SlideCharDataArrowsInTask ; $4d31
 	call RegisterFrameTask ; $4d34
-	jp Label_1d_4dff ; $4d37
-Label_1d_4d3a:
+	jp .loopBB ; $4d37
+.playSfx2:
 	sound $5e ; $4d3a
 	ld hl, CharDataScreenBgScrollTask ; $4d3c
 	call UnregisterFrameTask ; $4d3f
@@ -1571,24 +1571,24 @@ Label_1d_4d3a:
 	ld a, $01 ; $4d90
 	ld hl, SlideCharDataArrowsInTask ; $4d92
 	call RegisterFrameTask ; $4d95
-	jr Label_1d_4da0 ; $4d98
-Label_1d_4d9a:
+	jr .loopB ; $4d98
+.playSfx3:
 	sound $62 ; $4d9a
 	ret ; $4d9c
-Label_1d_4d9d:
+.playSfx4:
 	sound $5f ; $4d9d
 	ret ; $4d9f
-Label_1d_4da0:
+.loopB:
 	call AdvanceFrame ; $4da0
 	ldh a, [hInputRisingEdge] ; $4da3
 	bit PADB_RIGHT, a ; $4da5
-	jr nz, Label_1d_4db3 ; $4da7
+	jr nz, .playSfx5 ; $4da7
 	bit 1, a ; $4da9
-	jr nz, Label_1d_4df9 ; $4dab
+	jr nz, .playSfx6 ; $4dab
 	bit 0, a ; $4dad
-	jr nz, Label_1d_4dfc ; $4daf
-	jr Label_1d_4da0 ; $4db1
-Label_1d_4db3:
+	jr nz, .playSfx7 ; $4daf
+	jr .loopB ; $4db1
+.playSfx5:
 	sound $5e ; $4db3
 	ld hl, SlideCharDataArrowsInTask ; $4db5
 	call UnregisterFrameTask ; $4db8
@@ -1613,24 +1613,24 @@ Label_1d_4db3:
 	ld hl, CharDataValuesSyncTask ; $4ded
 	call RegisterFrameTask ; $4df0
 	farcall StartCharDataScreenAnimTask ; $4df3
-	jp Label_1d_4cbf ; $4df6
-Label_1d_4df9:
+	jp .loop ; $4df6
+.playSfx6:
 	sound $62 ; $4df9
 	ret ; $4dfb
-Label_1d_4dfc:
+.playSfx7:
 	sound $5f ; $4dfc
 	ret ; $4dfe
-Label_1d_4dff:
+.loopBB:
 	call AdvanceFrame ; $4dff
 	ldh a, [hInputRisingEdge] ; $4e02
 	bit PADB_LEFT, a ; $4e04
-	jr nz, Label_1d_4e12 ; $4e06
+	jr nz, .playSfx8 ; $4e06
 	bit 1, a ; $4e08
-	jr nz, Label_1d_4e58 ; $4e0a
+	jr nz, .playSfx9 ; $4e0a
 	bit 0, a ; $4e0c
-	jr nz, Label_1d_4e5b ; $4e0e
-	jr Label_1d_4dff ; $4e10
-Label_1d_4e12:
+	jr nz, .playSfx10 ; $4e0e
+	jr .loopBB ; $4e10
+.playSfx8:
 	sound $5e ; $4e12
 	ld hl, SlideCharDataArrowsInTask ; $4e14
 	call UnregisterFrameTask ; $4e17
@@ -1655,11 +1655,11 @@ Label_1d_4e12:
 	ld hl, CharDataValuesSyncTask ; $4e4c
 	call RegisterFrameTask ; $4e4f
 	farcall StartCharDataScreenAnimTask ; $4e52
-	jp Label_1d_4cbf ; $4e55
-Label_1d_4e58:
+	jp .loop ; $4e55
+.playSfx9:
 	sound $62 ; $4e58
 	ret ; $4e5a
-Label_1d_4e5b:
+.playSfx10:
 	sound $5f ; $4e5b
 	ret ; $4e5d
 SlideCharDataArrowsOutTask:
@@ -1688,9 +1688,9 @@ BuildCharStatDisplay:
 	ld hl, wStoryModeNameOfMainCharacter ; $4e94
 	ld a, [wStoryCharacterSlot] ; $4e97
 	or a, a ; $4e9a
-	jr z, Label_1d_4e9f ; $4e9b
+	jr z, .step ; $4e9b
 	ld l, $40 ; $4e9d
-Label_1d_4e9f:
+.step:
 	ld a, l ; $4e9f
 	add a, $38 ; $4ea0
 	ld l, a ; $4ea2
@@ -1704,9 +1704,9 @@ Label_1d_4e9f:
 	ld hl, wStoryModeNameOfMainCharacter ; $4ead
 	ld a, [wStoryCharacterSlot] ; $4eb0
 	or a, a ; $4eb3
-	jr z, Label_1d_4eb8 ; $4eb4
+	jr z, .step2 ; $4eb4
 	ld l, $40 ; $4eb6
-Label_1d_4eb8:
+.step2:
 	ld a, l ; $4eb8
 	add a, $20 ; $4eb9
 	ld l, a ; $4ebb
@@ -1721,9 +1721,9 @@ Label_1d_4eb8:
 	ld hl, wStoryModeNameOfMainCharacter ; $4ec7
 	ld a, [wStoryCharacterSlot] ; $4eca
 	or a, a ; $4ecd
-	jr z, Label_1d_4ed2 ; $4ece
+	jr z, .step3 ; $4ece
 	ld l, $40 ; $4ed0
-Label_1d_4ed2:
+.step3:
 	ld a, l ; $4ed2
 	add a, $21 ; $4ed3
 	ld l, a ; $4ed5
@@ -1738,9 +1738,9 @@ Label_1d_4ed2:
 	ld hl, wStoryModeNameOfMainCharacter ; $4ee1
 	ld a, [wStoryCharacterSlot] ; $4ee4
 	or a, a ; $4ee7
-	jr z, Label_1d_4eec ; $4ee8
+	jr z, .step4 ; $4ee8
 	ld l, $40 ; $4eea
-Label_1d_4eec:
+.step4:
 	ld a, l ; $4eec
 	add a, $39 ; $4eed
 	ld l, a ; $4eef
@@ -1754,9 +1754,9 @@ Label_1d_4eec:
 	ld hl, wStoryModeNameOfMainCharacter ; $4efa
 	ld a, [wStoryCharacterSlot] ; $4efd
 	or a, a ; $4f00
-	jr z, Label_1d_4f05 ; $4f01
+	jr z, .step5 ; $4f01
 	ld l, $40 ; $4f03
-Label_1d_4f05:
+.step5:
 	ld a, l ; $4f05
 	add a, $22 ; $4f06
 	ld l, a ; $4f08
@@ -1771,9 +1771,9 @@ Label_1d_4f05:
 	ld hl, wStoryModeNameOfMainCharacter ; $4f14
 	ld a, [wStoryCharacterSlot] ; $4f17
 	or a, a ; $4f1a
-	jr z, Label_1d_4f1f ; $4f1b
+	jr z, .step6 ; $4f1b
 	ld l, $40 ; $4f1d
-Label_1d_4f1f:
+.step6:
 	ld a, l ; $4f1f
 	add a, $23 ; $4f20
 	ld l, a ; $4f22
@@ -1788,9 +1788,9 @@ Label_1d_4f1f:
 	ld hl, wStoryModeNameOfMainCharacter ; $4f2e
 	ld a, [wStoryCharacterSlot] ; $4f31
 	or a, a ; $4f34
-	jr z, Label_1d_4f39 ; $4f35
+	jr z, .step7 ; $4f35
 	ld l, $40 ; $4f37
-Label_1d_4f39:
+.step7:
 	ld a, l ; $4f39
 	add a, $24 ; $4f3a
 	ld l, a ; $4f3c
@@ -1805,9 +1805,9 @@ Label_1d_4f39:
 	ld hl, wStoryModeNameOfMainCharacter ; $4f48
 	ld a, [wStoryCharacterSlot] ; $4f4b
 	or a, a ; $4f4e
-	jr z, Label_1d_4f53 ; $4f4f
+	jr z, .step8 ; $4f4f
 	ld l, $40 ; $4f51
-Label_1d_4f53:
+.step8:
 	ld a, l ; $4f53
 	add a, $3a ; $4f54
 	ld l, a ; $4f56
@@ -1821,9 +1821,9 @@ Label_1d_4f53:
 	ld hl, wStoryModeNameOfMainCharacter ; $4f61
 	ld a, [wStoryCharacterSlot] ; $4f64
 	or a, a ; $4f67
-	jr z, Label_1d_4f6c ; $4f68
+	jr z, .step9 ; $4f68
 	ld l, $40 ; $4f6a
-Label_1d_4f6c:
+.step9:
 	ld a, l ; $4f6c
 	add a, $25 ; $4f6d
 	ld l, a ; $4f6f
@@ -1838,9 +1838,9 @@ Label_1d_4f6c:
 	ld hl, wStoryModeNameOfMainCharacter ; $4f7b
 	ld a, [wStoryCharacterSlot] ; $4f7e
 	or a, a ; $4f81
-	jr z, Label_1d_4f86 ; $4f82
+	jr z, .step10 ; $4f82
 	ld l, $40 ; $4f84
-Label_1d_4f86:
+.step10:
 	ld a, l ; $4f86
 	add a, $26 ; $4f87
 	ld l, a ; $4f89
@@ -1855,9 +1855,9 @@ Label_1d_4f86:
 	ld hl, wStoryModeNameOfMainCharacter ; $4f95
 	ld a, [wStoryCharacterSlot] ; $4f98
 	or a, a ; $4f9b
-	jr z, Label_1d_4fa0 ; $4f9c
+	jr z, .step11 ; $4f9c
 	ld l, $40 ; $4f9e
-Label_1d_4fa0:
+.step11:
 	ld a, l ; $4fa0
 	add a, $3b ; $4fa1
 	ld l, a ; $4fa3
@@ -1871,9 +1871,9 @@ Label_1d_4fa0:
 	ld hl, wStoryModeNameOfMainCharacter ; $4fae
 	ld a, [wStoryCharacterSlot] ; $4fb1
 	or a, a ; $4fb4
-	jr z, Label_1d_4fb9 ; $4fb5
+	jr z, .step12 ; $4fb5
 	ld l, $40 ; $4fb7
-Label_1d_4fb9:
+.step12:
 	ld a, l ; $4fb9
 	add a, $27 ; $4fba
 	ld l, a ; $4fbc
@@ -1888,9 +1888,9 @@ Label_1d_4fb9:
 	ld hl, wStoryModeNameOfMainCharacter ; $4fc8
 	ld a, [wStoryCharacterSlot] ; $4fcb
 	or a, a ; $4fce
-	jr z, Label_1d_4fd3 ; $4fcf
+	jr z, .step13 ; $4fcf
 	ld l, $40 ; $4fd1
-Label_1d_4fd3:
+.step13:
 	ld a, l ; $4fd3
 	add a, $28 ; $4fd4
 	ld l, a ; $4fd6
@@ -1905,9 +1905,9 @@ Label_1d_4fd3:
 	ld hl, wStoryModeNameOfMainCharacter ; $4fe2
 	ld a, [wStoryCharacterSlot] ; $4fe5
 	or a, a ; $4fe8
-	jr z, Label_1d_4fed ; $4fe9
+	jr z, .step14 ; $4fe9
 	ld l, $40 ; $4feb
-Label_1d_4fed:
+.step14:
 	ld a, l ; $4fed
 	add a, $29 ; $4fee
 	ld l, a ; $4ff0
@@ -1922,9 +1922,9 @@ Label_1d_4fed:
 	ld hl, wStoryModeNameOfMainCharacter ; $4ffc
 	ld a, [wStoryCharacterSlot] ; $4fff
 	or a, a ; $5002
-	jr z, Label_1d_5007 ; $5003
+	jr z, .step15 ; $5003
 	ld l, $40 ; $5005
-Label_1d_5007:
+.step15:
 	ld a, l ; $5007
 	add a, $2a ; $5008
 	ld l, a ; $500a
@@ -1977,9 +1977,9 @@ Label_1d_5007:
 	ld hl, wStoryModeNameOfMainCharacter ; $5052
 	ld a, [wStoryCharacterSlot] ; $5055
 	or a, a ; $5058
-	jr z, Label_1d_505d ; $5059
+	jr z, .step16 ; $5059
 	ld l, $40 ; $505b
-Label_1d_505d:
+.step16:
 	ld a, l ; $505d
 	add a, $00 ; $505e
 	ld l, a ; $5060
@@ -1995,9 +1995,9 @@ Label_1d_505d:
 	ld hl, wStoryModeNameOfMainCharacter ; $5075
 	ld a, [wStoryCharacterSlot] ; $5078
 	or a, a ; $507b
-	jr z, Label_1d_5080 ; $507c
+	jr z, .step17 ; $507c
 	ld l, $40 ; $507e
-Label_1d_5080:
+.step17:
 	ld a, l ; $5080
 	add a, $18 ; $5081
 	ld l, a ; $5083
@@ -2714,7 +2714,7 @@ DrawCharStatDigitsTask:
 	ld a, [$d00a] ; $57da
 	ld l, a ; $57dd
 	cp a, $0a ; $57de
-	jr c, Label_1d_581a ; $57e0
+	jr c, .step ; $57e0
 	push bc ; $57e2
 	ld h, $00 ; $57e3
 	ld a, $02 ; $57e5
@@ -2741,8 +2741,8 @@ DrawCharStatDigitsTask:
 	ld hl, $d145 ; $580f
 	call ApplySlideOffsetToSpriteX ; $5812
 	call QueueSprite ; $5815
-	jr Label_1d_582a ; $5818
-Label_1d_581a:
+	jr .step2 ; $5818
+.step:
 	ld a, l ; $581a
 	rlca ; $581b
 	ld c, a ; $581c
@@ -2751,12 +2751,12 @@ Label_1d_581a:
 	ld hl, $d145 ; $5821
 	call ApplySlideOffsetToSpriteX ; $5824
 	call QueueSprite ; $5827
-Label_1d_582a:
+.step2:
 	ld b, $0f ; $582a
 	ld a, [$d00b] ; $582c
 	ld l, a ; $582f
 	cp a, $0a ; $5830
-	jr c, Label_1d_586e ; $5832
+	jr c, .step3 ; $5832
 	push bc ; $5834
 	ld h, $00 ; $5835
 	ld a, $02 ; $5837
@@ -2783,8 +2783,8 @@ Label_1d_582a:
 	ld hl, $d145 ; $5863
 	call ApplySlideOffsetToSpriteX ; $5866
 	call QueueSprite ; $5869
-	jr Label_1d_587f ; $586c
-Label_1d_586e:
+	jr .step4 ; $586c
+.step3:
 	ld a, l ; $586e
 	rlca ; $586f
 	ld c, a ; $5870
@@ -2793,12 +2793,12 @@ Label_1d_586e:
 	ld hl, $d145 ; $5876
 	call ApplySlideOffsetToSpriteX ; $5879
 	call QueueSprite ; $587c
-Label_1d_587f:
+.step4:
 	ld b, $0f ; $587f
 	ld a, [$d00c] ; $5881
 	ld l, a ; $5884
 	cp a, $0a ; $5885
-	jr c, Label_1d_58c3 ; $5887
+	jr c, .step5 ; $5887
 	push bc ; $5889
 	ld h, $00 ; $588a
 	ld a, $02 ; $588c
@@ -2825,8 +2825,8 @@ Label_1d_587f:
 	ld hl, $d145 ; $58b8
 	call ApplySlideOffsetToSpriteX ; $58bb
 	call QueueSprite ; $58be
-	jr Label_1d_58d4 ; $58c1
-Label_1d_58c3:
+	jr .step6 ; $58c1
+.step5:
 	ld a, l ; $58c3
 	rlca ; $58c4
 	ld c, a ; $58c5
@@ -2835,12 +2835,12 @@ Label_1d_58c3:
 	ld hl, $d145 ; $58cb
 	call ApplySlideOffsetToSpriteX ; $58ce
 	call QueueSprite ; $58d1
-Label_1d_58d4:
+.step6:
 	ld b, $0f ; $58d4
 	ld a, [$d00d] ; $58d6
 	ld l, a ; $58d9
 	cp a, $0a ; $58da
-	jr c, Label_1d_5918 ; $58dc
+	jr c, .step7 ; $58dc
 	push bc ; $58de
 	ld h, $00 ; $58df
 	ld a, $02 ; $58e1
@@ -2867,8 +2867,8 @@ Label_1d_58d4:
 	ld hl, $d145 ; $590d
 	call ApplySlideOffsetToSpriteX ; $5910
 	call QueueSprite ; $5913
-	jr Label_1d_5929 ; $5916
-Label_1d_5918:
+	jr .step8 ; $5916
+.step7:
 	ld a, l ; $5918
 	rlca ; $5919
 	ld c, a ; $591a
@@ -2877,43 +2877,43 @@ Label_1d_5918:
 	ld hl, $d145 ; $5920
 	call ApplySlideOffsetToSpriteX ; $5923
 	call QueueSprite ; $5926
-Label_1d_5929:
+.step8:
 	ld a, [$d13d] ; $5929
 	cp a, $20 ; $592c
-	jr z, Label_1d_593f ; $592e
+	jr z, .step9 ; $592e
 	call GetCharDataDigitSprite ; $5930
 	ld de, $2984 ; $5933
 	ld hl, $d145 ; $5936
 	call ApplySlideOffsetToSpriteX ; $5939
 	call QueueSprite ; $593c
-Label_1d_593f:
+.step9:
 	ld a, [$d13e] ; $593f
 	cp a, $20 ; $5942
-	jr z, Label_1d_5955 ; $5944
+	jr z, .step10 ; $5944
 	call GetCharDataDigitSprite ; $5946
 	ld de, $3184 ; $5949
 	ld hl, $d145 ; $594c
 	call ApplySlideOffsetToSpriteX ; $594f
 	call QueueSprite ; $5952
-Label_1d_5955:
+.step10:
 	ld a, [$d13f] ; $5955
 	cp a, $20 ; $5958
-	jr z, Label_1d_596b ; $595a
+	jr z, .step11 ; $595a
 	call GetCharDataDigitSprite ; $595c
 	ld de, $3984 ; $595f
 	ld hl, $d145 ; $5962
 	call ApplySlideOffsetToSpriteX ; $5965
 	call QueueSprite ; $5968
-Label_1d_596b:
+.step11:
 	ld a, [$d140] ; $596b
 	cp a, $20 ; $596e
-	jr z, Label_1d_5981 ; $5970
+	jr z, .step12 ; $5970
 	call GetCharDataDigitSprite ; $5972
 	ld de, $4184 ; $5975
 	ld hl, $d145 ; $5978
 	call ApplySlideOffsetToSpriteX ; $597b
 	call QueueSprite ; $597e
-Label_1d_5981:
+.step12:
 	ld a, [$d141] ; $5981
 	call GetCharDataDigitSprite ; $5984
 	ld de, $4984 ; $5987
@@ -2956,7 +2956,7 @@ ComputeExpProgressBar:
 	farcall GetExpRemainingToNextLevel ; $59c1
 	ld a, h ; $59c4
 	or a, l ; $59c5
-	jp z, Label_1d_59da ; $59c6
+	jp z, .step ; $59c6
 	push hl ; $59c9
 	ld a, [wStoryCharacterSlot] ; $59ca
 	farcall GetExpProgressInCurrentLevel ; $59cd
@@ -2967,7 +2967,7 @@ ComputeExpProgressBar:
 	ld b, $40 ; $59d4
 	call ScaleValueToBar ; $59d6
 	ret ; $59d9
-Label_1d_59da:
+.step:
 	xor a, a ; $59da
 	ret ; $59db
 ScaleValueToBar:
@@ -2998,11 +2998,11 @@ ScaleValueToBar:
 DrawExpProgressBarTiles:
 	ld b, a ; $59fc
 	wram_bank $03 ; $59fd
-Label_1d_5a03:
+.loop:
 	ld a, b ; $5a03
 	sub a, $08 ; $5a04
-	jr c, Label_1d_5a25 ; $5a06
-	jr z, Label_1d_5a3b ; $5a08
+	jr c, .step ; $5a06
+	jr z, .step2 ; $5a08
 	ld b, a ; $5a0a
 	ld a, $08 ; $5a0b
 	rlca ; $5a0d
@@ -3017,15 +3017,15 @@ Label_1d_5a03:
 	ld a, $0a ; $5a18
 	add a, e ; $5a1a
 	ld e, a ; $5a1b
-	jr nc, Label_1d_5a1f ; $5a1c
+	jr nc, .read ; $5a1c
 	inc d ; $5a1e
-Label_1d_5a1f:
+.read:
 	ld a, [hl] ; $5a1f
 	ld [de], a ; $5a20
 	pop de ; $5a21
 	inc de ; $5a22
-	jr Label_1d_5a03 ; $5a23
-Label_1d_5a25:
+	jr .loop ; $5a23
+.step:
 	add a, $08 ; $5a25
 	rlca ; $5a27
 	add a, $51 ; $5a28
@@ -3038,13 +3038,13 @@ Label_1d_5a25:
 	ld a, $0a ; $5a31
 	add a, e ; $5a33
 	ld e, a ; $5a34
-	jr nc, Label_1d_5a38 ; $5a35
+	jr nc, .readB ; $5a35
 	inc d ; $5a37
-Label_1d_5a38:
+.readB:
 	ld a, [hl] ; $5a38
 	ld [de], a ; $5a39
 	ret ; $5a3a
-Label_1d_5a3b:
+.step2:
 	ld a, $08 ; $5a3b
 	rlca ; $5a3d
 	add a, $51 ; $5a3e
@@ -3057,9 +3057,9 @@ Label_1d_5a3b:
 	ld a, $0a ; $5a47
 	add a, e ; $5a49
 	ld e, a ; $5a4a
-	jr nc, Label_1d_5a4e ; $5a4b
+	jr nc, .readBB ; $5a4b
 	inc d ; $5a4d
-Label_1d_5a4e:
+.readBB:
 	ld a, [hl] ; $5a4e
 	ld [de], a ; $5a4f
 	ret ; $5a50
@@ -3092,34 +3092,34 @@ PromptCharDataConfirm:
 	wram_bank $06 ; $5a9a
 	ld a, $01 ; $5aa0
 	ld [$d025], a ; $5aa2
-Label_1d_5aa5:
+.loop:
 	call DrawCharDataConfirmCursor ; $5aa5
 	call AdvanceFrame ; $5aa8
 	ldh a, [hInputRisingEdge] ; $5aab
 	bit PADB_A, a ; $5aad
-	jr nz, Label_1d_5ac5 ; $5aaf
+	jr nz, .step ; $5aaf
 	bit 1, a ; $5ab1
-	jr nz, Label_1d_5ad5 ; $5ab3
+	jr nz, .step2 ; $5ab3
 	and a, $c0 ; $5ab5
-	jr z, Label_1d_5aa5 ; $5ab7
+	jr z, .loop ; $5ab7
 	sound $5e ; $5ab9
 	ld a, [$d025] ; $5abb
 	xor a, $01 ; $5abe
 	ld [$d025], a ; $5ac0
-	jr Label_1d_5aa5 ; $5ac3
-Label_1d_5ac5:
+	jr .loop ; $5ac3
+.step:
 	wram_bank $06 ; $5ac5
 	ld a, [$d025] ; $5acb
 	or a, a ; $5ace
-	jr nz, Label_1d_5ad5 ; $5acf
+	jr nz, .step2 ; $5acf
 	sound $5f ; $5ad1
-	jr Label_1d_5ae2 ; $5ad3
-Label_1d_5ad5:
+	jr .step3 ; $5ad3
+.step2:
 	wram_bank $06 ; $5ad5
 	ld a, $01 ; $5adb
 	ld [$d025], a ; $5add
 	sound $62 ; $5ae0
-Label_1d_5ae2:
+.step3:
 	ld c, $10 ; $5ae2
 	call BeginFadeOut ; $5ae4
 	call WaitFadeEnd ; $5ae7
@@ -3132,12 +3132,12 @@ DrawCharDataConfirmCursor:
 	wram_bank $06 ; $5afa
 	ld a, [$d025] ; $5b00
 	or a, a ; $5b03
-	jr nz, Label_1d_5b10 ; $5b04
+	jr nz, .step ; $5b04
 	ld bc, $0fd4 ; $5b06
 	ld de, $7a0c ; $5b09
 	call QueueSprite ; $5b0c
 	ret ; $5b0f
-Label_1d_5b10:
+.step:
 	ld bc, $0fd4 ; $5b10
 	ld de, $7a14 ; $5b13
 	call QueueSprite ; $5b16
@@ -3152,9 +3152,9 @@ BuildCharDataConfirmScreen:
 	ld hl, wStoryModeNameOfMainCharacter ; $5b26
 	ld a, [wStoryCharacterSlot] ; $5b29
 	or a, a ; $5b2c
-	jr z, Label_1d_5b31 ; $5b2d
+	jr z, .step ; $5b2d
 	ld l, $40 ; $5b2f
-Label_1d_5b31:
+.step:
 	ld a, l ; $5b31
 	add a, $0c ; $5b32
 	ld l, a ; $5b34
@@ -3170,9 +3170,9 @@ Label_1d_5b31:
 	ld hl, wStoryModeNameOfMainCharacter ; $5b48
 	ld a, [wStoryCharacterSlot] ; $5b4b
 	or a, a ; $5b4e
-	jr z, Label_1d_5b53 ; $5b4f
+	jr z, .step2 ; $5b4f
 	ld l, $40 ; $5b51
-Label_1d_5b53:
+.step2:
 	ld a, l ; $5b53
 	add a, $0b ; $5b54
 	ld l, a ; $5b56
@@ -3309,7 +3309,7 @@ RunExpDistributionFlow:
 	wram_bank $06 ; $682c
 	xor a, a ; $6832
 	ld [$d0b6], a ; $6833
-Label_1d_6836:
+.loop:
 	call ShowExpDistributionScreen ; $6836
 	wram_bank $06 ; $6839
 	ld hl, $d167 ; $683f
@@ -3324,25 +3324,25 @@ Label_1d_6836:
 	ld e, a ; $684e
 	ld a, $01 ; $684f
 	farcall AddPlayerExp ; $6851
-Label_1d_6854:
+.loopB:
 	ld c, $00 ; $6854
 	farcall CharDataScreen_Show ; $6856
 	dec a ; $6859
-	jr z, Label_1d_6873 ; $685a
+	jr z, .loopBB ; $685a
 	inc a ; $685c
-	jr nz, Label_1d_686a ; $685d
+	jr nz, .step ; $685d
 	farcall BackupCharData ; $685f
 	ld c, $01 ; $6862
 	farcall CharDataScreen_Show ; $6864
 	dec a ; $6867
-	jr z, Label_1d_689c ; $6868
-Label_1d_686a:
+	jr z, .restoreCharData ; $6868
+.step:
 	ld c, $01 ; $686a
 	farcall CharDataScreen_Show ; $686c
 	dec a ; $686f
-	jr z, Label_1d_68a1 ; $6870
+	jr z, .step2 ; $6870
 	ret ; $6872
-Label_1d_6873:
+.loopBB:
 	wram_bank $06 ; $6873
 	ld hl, $d16d ; $6879
 	ld de, $c92c ; $687c
@@ -3366,12 +3366,12 @@ Label_1d_6873:
 	ld [de], a ; $6894
 	ld a, $01 ; $6895
 	ld [$d0b6], a ; $6897
-	jr Label_1d_6836 ; $689a
-Label_1d_689c:
+	jr .loop ; $689a
+.restoreCharData:
 	farcall RestoreCharData ; $689c
-	jr Label_1d_6854 ; $689f
-Label_1d_68a1:
-	jr Label_1d_6873 ; $68a1
+	jr .loopB ; $689f
+.step2:
+	jr .loopBB ; $68a1
 ShowExpDistributionScreen:
 	push hl ; $68a3
 	sound $0c ; $68a4
@@ -3431,7 +3431,7 @@ InitLevelUpScreenState:
 	wram_bank $06 ; $6934
 	ld a, [$d0b6] ; $693a
 	or a, a ; $693d
-	jr nz, Label_1d_6967 ; $693e
+	jr nz, .step ; $693e
 	ld a, l ; $6940
 	ld [$d14e], a ; $6941
 	ld [$d150], a ; $6944
@@ -3448,7 +3448,7 @@ InitLevelUpScreenState:
 	ld [$d185], a ; $695f
 	ld a, $08 ; $6962
 	ld [$d183], a ; $6964
-Label_1d_6967:
+.step:
 	xor a, a ; $6967
 	ld [$d17f], a ; $6968
 	ld [$d180], a ; $696b
@@ -3598,22 +3598,22 @@ DrawExpPoolGauge:
 	ld h, [hl] ; $6aff
 	ld l, a ; $6b00
 	bit 7, h ; $6b01
-	jr z, Label_1d_6b0d ; $6b03
+	jr z, .step ; $6b03
 	srl h ; $6b05
 	rr l ; $6b07
 	srl d ; $6b09
 	rr e ; $6b0b
-Label_1d_6b0d:
+.step:
 	ld b, $58 ; $6b0d
 	call ScaleValueToBar ; $6b0f
 	ld de, $d161 ; $6b12
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
 	wram_bank $03 ; $6b18
-Label_1d_6b1e:
+.loop:
 	ld a, b ; $6b1e
 	sub a, $08 ; $6b1f
-	jr c, Label_1d_6b3b ; $6b21
+	jr c, .step2 ; $6b21
 	ld b, a ; $6b23
 	ld a, $08 ; $6b24
 	rlca ; $6b26
@@ -3631,8 +3631,8 @@ Label_1d_6b1e:
 	dec c ; $6b34
 	ret z ; $6b35
 	call ExpGaugePtrUpOneRow ; $6b36
-	jr Label_1d_6b1e ; $6b39
-Label_1d_6b3b:
+	jr .loop ; $6b39
+.step2:
 	add a, $08 ; $6b3b
 	rlca ; $6b3d
 	add a, $69 ; $6b3e
@@ -3649,7 +3649,7 @@ Label_1d_6b3b:
 	dec c ; $6b4b
 	ret z ; $6b4c
 	call ExpGaugePtrUpOneRow ; $6b4d
-Label_1d_6b50:
+.loopB:
 	ld hl, TilePairTable_1d_6b69 ; $6b50
 	ld a, [hl+] ; $6b53
 	ld [de], a ; $6b54
@@ -3660,14 +3660,14 @@ Label_1d_6b50:
 	dec c ; $6b59
 	ret z ; $6b5a
 	call ExpGaugePtrUpOneRow ; $6b5b
-	jr Label_1d_6b50 ; $6b5e
+	jr .loopB ; $6b5e
 ExpGaugePtrUpOneRow:
 	push bc ; $6b60
 	ld c, $20 ; $6b61
-Label_1d_6b63:
+.loop:
 	dec de ; $6b63
 	dec c ; $6b64
-	jr nz, Label_1d_6b63 ; $6b65
+	jr nz, .loop ; $6b65
 	pop bc ; $6b67
 	ret ; $6b68
 TilePairTable_1d_6b69:
@@ -3685,16 +3685,16 @@ InitExpScreenCharStats:
 	wram_bank $06 ; $6b7b
 	ld a, [$d0b6] ; $6b81
 	or a, a ; $6b84
-	jp nz, Label_1d_6ccc ; $6b85
+	jp nz, .clearStoryCharacterSlot ; $6b85
 	xor a, a ; $6b88
 	ld [wStoryCharacterSlot], a ; $6b89
 	push af ; $6b8c
 	ld hl, wStoryModeNameOfMainCharacter ; $6b8d
 	ld a, [wStoryCharacterSlot] ; $6b90
 	or a, a ; $6b93
-	jr z, Label_1d_6b98 ; $6b94
+	jr z, .step ; $6b94
 	ld l, $40 ; $6b96
-Label_1d_6b98:
+.step:
 	ld a, l ; $6b98
 	add a, $00 ; $6b99
 	ld l, a ; $6b9b
@@ -3710,9 +3710,9 @@ Label_1d_6b98:
 	ld hl, wStoryModeNameOfMainCharacter ; $6bb0
 	ld a, [wStoryCharacterSlot] ; $6bb3
 	or a, a ; $6bb6
-	jr z, Label_1d_6bbb ; $6bb7
+	jr z, .step2 ; $6bb7
 	ld l, $40 ; $6bb9
-Label_1d_6bbb:
+.step2:
 	ld a, l ; $6bbb
 	add a, $18 ; $6bbc
 	ld l, a ; $6bbe
@@ -3756,9 +3756,9 @@ Label_1d_6bbb:
 	ld hl, wStoryModeNameOfMainCharacter ; $6c08
 	ld a, [wStoryCharacterSlot] ; $6c0b
 	or a, a ; $6c0e
-	jr z, Label_1d_6c13 ; $6c0f
+	jr z, .step3 ; $6c0f
 	ld l, $40 ; $6c11
-Label_1d_6c13:
+.step3:
 	ld a, l ; $6c13
 	add a, $2c ; $6c14
 	ld l, a ; $6c16
@@ -3778,9 +3778,9 @@ Label_1d_6c13:
 	ld hl, wStoryModeNameOfMainCharacter ; $6c2e
 	ld a, [wStoryCharacterSlot] ; $6c31
 	or a, a ; $6c34
-	jr z, Label_1d_6c39 ; $6c35
+	jr z, .step4 ; $6c35
 	ld l, $40 ; $6c37
-Label_1d_6c39:
+.step4:
 	ld a, l ; $6c39
 	add a, $00 ; $6c3a
 	ld l, a ; $6c3c
@@ -3796,9 +3796,9 @@ Label_1d_6c39:
 	ld hl, wStoryModeNameOfMainCharacter ; $6c51
 	ld a, [wStoryCharacterSlot] ; $6c54
 	or a, a ; $6c57
-	jr z, Label_1d_6c5c ; $6c58
+	jr z, .step5 ; $6c58
 	ld l, $40 ; $6c5a
-Label_1d_6c5c:
+.step5:
 	ld a, l ; $6c5c
 	add a, $18 ; $6c5d
 	ld l, a ; $6c5f
@@ -3842,9 +3842,9 @@ Label_1d_6c5c:
 	ld hl, wStoryModeNameOfMainCharacter ; $6cab
 	ld a, [wStoryCharacterSlot] ; $6cae
 	or a, a ; $6cb1
-	jr z, Label_1d_6cb6 ; $6cb2
+	jr z, .step6 ; $6cb2
 	ld l, $40 ; $6cb4
-Label_1d_6cb6:
+.step6:
 	ld a, l ; $6cb6
 	add a, $2c ; $6cb7
 	ld l, a ; $6cb9
@@ -3859,16 +3859,16 @@ Label_1d_6cb6:
 	ld a, [hl] ; $6cc7
 	ld [$d17e], a ; $6cc8
 	ret ; $6ccb
-Label_1d_6ccc:
+.clearStoryCharacterSlot:
 	xor a, a ; $6ccc
 	ld [wStoryCharacterSlot], a ; $6ccd
 	push af ; $6cd0
 	ld hl, wStoryModeNameOfMainCharacter ; $6cd1
 	ld a, [wStoryCharacterSlot] ; $6cd4
 	or a, a ; $6cd7
-	jr z, Label_1d_6cdc ; $6cd8
+	jr z, .step7 ; $6cd8
 	ld l, $40 ; $6cda
-Label_1d_6cdc:
+.step7:
 	ld a, l ; $6cdc
 	add a, $00 ; $6cdd
 	ld l, a ; $6cdf
@@ -3884,9 +3884,9 @@ Label_1d_6cdc:
 	ld hl, wStoryModeNameOfMainCharacter ; $6cf4
 	ld a, [wStoryCharacterSlot] ; $6cf7
 	or a, a ; $6cfa
-	jr z, Label_1d_6cff ; $6cfb
+	jr z, .step8 ; $6cfb
 	ld l, $40 ; $6cfd
-Label_1d_6cff:
+.step8:
 	ld a, l ; $6cff
 	add a, $18 ; $6d00
 	ld l, a ; $6d02
@@ -3908,9 +3908,9 @@ Label_1d_6cff:
 	ld hl, wStoryModeNameOfMainCharacter ; $6d20
 	ld a, [wStoryCharacterSlot] ; $6d23
 	or a, a ; $6d26
-	jr z, Label_1d_6d2b ; $6d27
+	jr z, .step9 ; $6d27
 	ld l, $40 ; $6d29
-Label_1d_6d2b:
+.step9:
 	ld a, l ; $6d2b
 	add a, $00 ; $6d2c
 	ld l, a ; $6d2e
@@ -3926,9 +3926,9 @@ Label_1d_6d2b:
 	ld hl, wStoryModeNameOfMainCharacter ; $6d43
 	ld a, [wStoryCharacterSlot] ; $6d46
 	or a, a ; $6d49
-	jr z, Label_1d_6d4e ; $6d4a
+	jr z, .step10 ; $6d4a
 	ld l, $40 ; $6d4c
-Label_1d_6d4e:
+.step10:
 	ld a, l ; $6d4e
 	add a, $18 ; $6d4f
 	ld l, a ; $6d51
@@ -4005,10 +4005,10 @@ WriteExpScreenStringTiles:
 ExpScreenTilePtrUpOneRow:
 	push bc ; $6dd5
 	ld c, $20 ; $6dd6
-Label_1d_6dd8:
+.loop:
 	dec de ; $6dd8
 	dec c ; $6dd9
-	jr nz, Label_1d_6dd8 ; $6dda
+	jr nz, .loop ; $6dda
 	dec de ; $6ddc
 	pop bc ; $6ddd
 	ret ; $6dde
@@ -4016,25 +4016,25 @@ ExpScreenTilePtrDownOneRow:
 	ld a, $21 ; $6ddf
 	add a, e ; $6de1
 	ld e, a ; $6de2
-	jr nc, Label_1d_6de6 ; $6de3
+	jr nc, .done ; $6de3
 	inc d ; $6de5
-Label_1d_6de6:
+.done:
 	ret ; $6de6
 DrawExpScreenLevelNumber:
 	wram_bank $06 ; $6de7
 	ld a, [wStoryCharacterSlot] ; $6ded
 	or a, a ; $6df0
-	jr nz, Label_1d_6dfb ; $6df1
+	jr nz, .step ; $6df1
 	ld a, [$d161] ; $6df3
 	ld de, $d091 ; $6df6
-	jr Label_1d_6e01 ; $6df9
-Label_1d_6dfb:
+	jr .clearExpScreenLevelDigits ; $6df9
+.step:
 	ld a, [$d170] ; $6dfb
 	ld de, $d1b1 ; $6dfe
-Label_1d_6e01:
+.clearExpScreenLevelDigits:
 	call ClearExpScreenLevelDigits ; $6e01
 	cp a, $64 ; $6e04
-	jr nc, Label_1d_6e27 ; $6e06
+	jr nc, .step3 ; $6e06
 	push de ; $6e08
 	ld h, $00 ; $6e09
 	ld l, a ; $6e0b
@@ -4045,15 +4045,15 @@ Label_1d_6e01:
 	ld hl, $d08e ; $6e15
 	ld a, [hl] ; $6e18
 	cp a, $20 ; $6e19
-	jr z, Label_1d_6e20 ; $6e1b
+	jr z, .step2 ; $6e1b
 	call DrawExpScreenLevelDigit ; $6e1d
-Label_1d_6e20:
+.step2:
 	inc de ; $6e20
 	inc hl ; $6e21
 	ld a, [hl] ; $6e22
 	call DrawExpScreenLevelDigit ; $6e23
 	ret ; $6e26
-Label_1d_6e27:
+.step3:
 	wram_bank $03 ; $6e27
 	ld h, d ; $6e2d
 	ld l, e ; $6e2e
@@ -4070,9 +4070,9 @@ Label_1d_6e27:
 	ld a, $1d ; $6e3a
 	add a, l ; $6e3c
 	ld l, a ; $6e3d
-	jr nc, Label_1d_6e41 ; $6e3e
+	jr nc, .step4 ; $6e3e
 	inc h ; $6e40
-Label_1d_6e41:
+.step4:
 	ld a, $ac ; $6e41
 	ld [hl+], a ; $6e43
 	inc a ; $6e44
@@ -4097,9 +4097,9 @@ DrawExpScreenLevelDigit:
 	ld a, $20 ; $6e63
 	add a, e ; $6e65
 	ld e, a ; $6e66
-	jr nc, Label_1d_6e6a ; $6e67
+	jr nc, .step ; $6e67
 	inc d ; $6e69
-Label_1d_6e6a:
+.step:
 	ld a, b ; $6e6a
 	ld [de], a ; $6e6b
 	pop de ; $6e6c
@@ -4123,9 +4123,9 @@ ClearExpScreenLevelDigits:
 	ld a, $1d ; $6e89
 	add a, l ; $6e8b
 	ld l, a ; $6e8c
-	jr nc, Label_1d_6e90 ; $6e8d
+	jr nc, .step ; $6e8d
 	inc h ; $6e8f
-Label_1d_6e90:
+.step:
 	ld a, $74 ; $6e90
 	ld [hl+], a ; $6e92
 	inc a ; $6e93
@@ -4141,15 +4141,15 @@ DrawExpScreenLevelBar:
 	wram_bank $06 ; $6ea2
 	ld a, [wStoryCharacterSlot] ; $6ea8
 	or a, a ; $6eab
-	jr nz, Label_1d_6ed7 ; $6eac
+	jr nz, .step2 ; $6eac
 	ld a, [$d161] ; $6eae
 	cp a, $64 ; $6eb1
-	jr c, Label_1d_6ebe ; $6eb3
+	jr c, .step ; $6eb3
 	xor a, a ; $6eb5
 	ld [$d164], a ; $6eb6
 	ld de, $d027 ; $6eb9
-	jr Label_1d_6efe ; $6ebc
-Label_1d_6ebe:
+	jr .step4 ; $6ebc
+.step:
 	ld hl, $d165 ; $6ebe
 	ld a, [hl+] ; $6ec1
 	ld d, [hl] ; $6ec2
@@ -4162,16 +4162,16 @@ Label_1d_6ebe:
 	call ScaleValueToBar ; $6ecc
 	ld [$d164], a ; $6ecf
 	ld de, $d027 ; $6ed2
-	jr Label_1d_6efe ; $6ed5
-Label_1d_6ed7:
+	jr .step4 ; $6ed5
+.step2:
 	ld a, [$d170] ; $6ed7
 	cp a, $64 ; $6eda
-	jr c, Label_1d_6ee7 ; $6edc
+	jr c, .step3 ; $6edc
 	xor a, a ; $6ede
 	ld [$d173], a ; $6edf
 	ld de, $d147 ; $6ee2
-	jr Label_1d_6efe ; $6ee5
-Label_1d_6ee7:
+	jr .step4 ; $6ee5
+.step3:
 	ld hl, $d174 ; $6ee7
 	ld a, [hl+] ; $6eea
 	ld d, [hl] ; $6eeb
@@ -4184,14 +4184,14 @@ Label_1d_6ee7:
 	call ScaleValueToBar ; $6ef5
 	ld [$d173], a ; $6ef8
 	ld de, $d147 ; $6efb
-Label_1d_6efe:
+.step4:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff
 	wram_bank $03 ; $6f01
-Label_1d_6f07:
+.loop:
 	ld a, b ; $6f07
 	sub a, $08 ; $6f08
-	jr c, Label_1d_6f1d ; $6f0a
+	jr c, .step5 ; $6f0a
 	ld b, a ; $6f0c
 	ld a, $08 ; $6f0d
 	add a, $35 ; $6f0f
@@ -4204,8 +4204,8 @@ Label_1d_6f07:
 	dec c ; $6f18
 	ret z ; $6f19
 	inc de ; $6f1a
-	jr Label_1d_6f07 ; $6f1b
-Label_1d_6f1d:
+	jr .loop ; $6f1b
+.step5:
 	add a, $08 ; $6f1d
 	add a, $35 ; $6f1f
 	ld l, a ; $6f21
@@ -4217,14 +4217,14 @@ Label_1d_6f1d:
 	dec c ; $6f28
 	ret z ; $6f29
 	inc de ; $6f2a
-Label_1d_6f2b:
+.loopB:
 	ld hl, ExpBarFillTiles_1d ; $6f2b
 	ld a, [hl] ; $6f2e
 	ld [de], a ; $6f2f
 	inc de ; $6f30
 	dec c ; $6f31
 	ret z ; $6f32
-	jr Label_1d_6f2b ; $6f33
+	jr .loopB ; $6f33
 ExpBarFillTiles_1d:
 	; $6f35, 9 bytes (bytes:9)
 	db $0d, $1d, $2d, $0e, $1e, $2e, $0f, $1f, $2f ; 0x00
@@ -4235,7 +4235,7 @@ RunExpDistributionLoop:
 	jr z, .tick ; $6f48
 	xor a, a ; $6f4a
 	ld [$d0b6], a ; $6f4b
-	jp Label_1d_7453 ; $6f4e
+	jp CheckExpLevelDown.step2 ; $6f4e
 .tick:
 	wram_bank $06 ; $6f51
 	ld a, [$d185] ; $6f57
@@ -4391,7 +4391,7 @@ RunExpDistributionLoop:
 	res 1, [hl] ; $70bc
 	ld a, $a8 ; $70be
 	ld [$d181], a ; $70c0
-	jp Label_1d_7453 ; $70c3
+	jp CheckExpLevelDown.step2 ; $70c3
 .increaseRepeat:
 	call SweepExpBarMarkerRight ; $70c6
 	jp RunExpDistributionLoop ; $70c9
@@ -4423,7 +4423,7 @@ SweepExpBarMarkerLeft:
 	wram_bank $06 ; $7105
 	ld a, [$d181] ; $710b
 	cp a, $a8 ; $710e
-	jr z, Label_1d_711f ; $7110
+	jr z, .checkStoryCharacterSlot ; $7110
 	sub a, b ; $7112
 	ld [$d181], a ; $7113
 	cp a, $18 ; $7116
@@ -4431,15 +4431,15 @@ SweepExpBarMarkerLeft:
 	ld a, $a8 ; $7119
 	ld [$d181], a ; $711b
 	ret ; $711e
-Label_1d_711f:
+.checkStoryCharacterSlot:
 	ld a, [wStoryCharacterSlot] ; $711f
 	or a, a ; $7122
-	jr nz, Label_1d_712a ; $7123
+	jr nz, .step ; $7123
 	ld a, [$d164] ; $7125
-	jr Label_1d_712d ; $7128
-Label_1d_712a:
+	jr .step2 ; $7128
+.step:
 	ld a, [$d173] ; $712a
-Label_1d_712d:
+.step2:
 	add a, $36 ; $712d
 	ld [$d181], a ; $712f
 	ret ; $7132
@@ -4448,18 +4448,18 @@ SweepExpBarMarkerRight:
 	wram_bank $06 ; $7136
 	ld a, [$d181] ; $713c
 	cp a, $a8 ; $713f
-	jr z, Label_1d_7162 ; $7141
+	jr z, .step3 ; $7141
 	add a, b ; $7143
 	ld [$d181], a ; $7144
 	ld b, a ; $7147
 	ld a, [wStoryCharacterSlot] ; $7148
 	or a, a ; $714b
-	jr nz, Label_1d_7153 ; $714c
+	jr nz, .step ; $714c
 	ld a, [$d164] ; $714e
-	jr Label_1d_7156 ; $7151
-Label_1d_7153:
+	jr .step2 ; $7151
+.step:
 	ld a, [$d173] ; $7153
-Label_1d_7156:
+.step2:
 	add a, $36 ; $7156
 	ld c, a ; $7158
 	ld a, b ; $7159
@@ -4468,7 +4468,7 @@ Label_1d_7156:
 	ld a, $a8 ; $715c
 	ld [$d181], a ; $715e
 	ret ; $7161
-Label_1d_7162:
+.step3:
 	ld a, $18 ; $7162
 	ld [$d181], a ; $7164
 	ret ; $7167
@@ -4476,12 +4476,12 @@ GetExpBarSweepStep:
 	wram_bank $06 ; $7168
 	ld a, [wStoryCharacterSlot] ; $716e
 	or a, a ; $7171
-	jr nz, Label_1d_7179 ; $7172
+	jr nz, .step ; $7172
 	ld a, [$d164] ; $7174
-	jr Label_1d_717c ; $7177
-Label_1d_7179:
+	jr .step2 ; $7177
+.step:
 	ld a, [$d173] ; $7179
-Label_1d_717c:
+.step2:
 	add a, $18 ; $717c
 	srl a ; $717e
 	srl a ; $7180
@@ -4622,7 +4622,7 @@ AssignExpPointToChar:
 	ld [hl], d ; $7288
 	ld a, [wStoryCharacterSlot] ; $7289
 	or a, a ; $728c
-	jr nz, Label_1d_72b6 ; $728d
+	jr nz, .step ; $728d
 	ld hl, $d167 ; $728f
 	ld a, [hl+] ; $7292
 	ld d, [hl] ; $7293
@@ -4653,7 +4653,7 @@ AssignExpPointToChar:
 	call CheckExpLevelUp ; $72b0
 	ld a, $01 ; $72b3
 	ret ; $72b5
-Label_1d_72b6:
+.step:
 	ld hl, $d176 ; $72b6
 	ld a, [hl+] ; $72b9
 	ld d, [hl] ; $72ba
@@ -4688,14 +4688,14 @@ UnassignExpPointFromChar:
 	wram_bank $06 ; $72dd
 	ld a, [wStoryCharacterSlot] ; $72e3
 	or a, a ; $72e6
-	jr nz, Label_1d_7313 ; $72e7
+	jr nz, .step ; $72e7
 	ld hl, $d167 ; $72e9
 	ld a, [hl+] ; $72ec
 	ld d, [hl] ; $72ed
 	ld e, a ; $72ee
 	ld a, d ; $72ef
 	or a, e ; $72f0
-	jr z, Label_1d_7349 ; $72f1
+	jr z, .step3 ; $72f1
 	dec de ; $72f3
 	dec hl ; $72f4
 	ld a, e ; $72f5
@@ -4720,15 +4720,15 @@ UnassignExpPointFromChar:
 	ld [hl+], a ; $730c
 	ld [hl], d ; $730d
 	call CheckExpLevelDown ; $730e
-	jr Label_1d_733b ; $7311
-Label_1d_7313:
+	jr .step2 ; $7311
+.step:
 	ld hl, $d176 ; $7313
 	ld a, [hl+] ; $7316
 	ld d, [hl] ; $7317
 	ld e, a ; $7318
 	ld a, d ; $7319
 	or a, e ; $731a
-	jr z, Label_1d_7349 ; $731b
+	jr z, .step3 ; $731b
 	dec de ; $731d
 	dec hl ; $731e
 	ld a, e ; $731f
@@ -4753,7 +4753,7 @@ Label_1d_7313:
 	ld [hl+], a ; $7336
 	ld [hl], d ; $7337
 	call CheckExpLevelDown ; $7338
-Label_1d_733b:
+.step2:
 	ld hl, $d14e ; $733b
 	ld a, [hl+] ; $733e
 	ld d, [hl] ; $733f
@@ -4765,7 +4765,7 @@ Label_1d_733b:
 	ld [hl], d ; $7345
 	ld a, $01 ; $7346
 	ret ; $7348
-Label_1d_7349:
+.step3:
 	xor a, a ; $7349
 	ret ; $734a
 UploadExpScreenTilemapRows:
@@ -4792,7 +4792,7 @@ CheckExpLevelUp:
 	wram_bank $06 ; $737d
 	ld a, [wStoryCharacterSlot] ; $7383
 	or a, a ; $7386
-	jr nz, Label_1d_73b8 ; $7387
+	jr nz, .step ; $7387
 	ld hl, $d169 ; $7389
 	ld a, [hl+] ; $738c
 	ld d, [hl] ; $738d
@@ -4817,7 +4817,7 @@ CheckExpLevelUp:
 	ld [$d165], a ; $73b1
 	ld [$d166], a ; $73b4
 	ret ; $73b7
-Label_1d_73b8:
+.step:
 	ld hl, $d178 ; $73b8
 	ld a, [hl+] ; $73bb
 	ld d, [hl] ; $73bc
@@ -4846,7 +4846,7 @@ CheckExpLevelDown:
 	wram_bank $06 ; $73e7
 	ld a, [wStoryCharacterSlot] ; $73ed
 	or a, a ; $73f0
-	jr nz, Label_1d_7423 ; $73f1
+	jr nz, .step ; $73f1
 	ld hl, $d165 ; $73f3
 	ld a, [hl+] ; $73f6
 	ld d, [hl] ; $73f7
@@ -4874,7 +4874,7 @@ CheckExpLevelDown:
 	dec a ; $741e
 	ld [$d16a], a ; $741f
 	ret ; $7422
-Label_1d_7423:
+.step:
 	ld hl, $d174 ; $7423
 	ld a, [hl+] ; $7426
 	ld d, [hl] ; $7427
@@ -4902,7 +4902,7 @@ Label_1d_7423:
 	dec a ; $744e
 	ld [$d179], a ; $744f
 	ret ; $7452
-Label_1d_7453:
+.step2:
 	wram_bank $06 ; $7453
 	ld hl, $d17f ; $7459
 	set 2, [hl] ; $745c
@@ -4964,7 +4964,7 @@ Label_1d_7453:
 	wram_bank $06 ; $74f8
 	ld a, $01 ; $74fe
 	ld [$d182], a ; $7500
-	jr Label_1d_7528 ; $7503
+	jr UploadExpPromptWindowRows.loop ; $7503
 UploadExpPromptWindowRows:
 	wram_bank $03 ; $7505
 	ld hl, $d180 ; $750b
@@ -4977,20 +4977,20 @@ UploadExpPromptWindowRows:
 	ld c, $0c ; $7522
 	call QueueVRAMCopy ; $7524
 	ret ; $7527
-Label_1d_7528:
+.loop:
 	call DrawExpPromptCursor ; $7528
 	call TickLevelUpJingle ; $752b
 	call AdvanceFrame ; $752e
 	ldh a, [hInputRisingEdge] ; $7531
 	bit PADB_UP, a ; $7533
-	jr nz, Label_1d_757f ; $7535
+	jr nz, DrawExpPromptCursor.playSfx ; $7535
 	bit 7, a ; $7537
-	jr nz, Label_1d_757f ; $7539
+	jr nz, DrawExpPromptCursor.playSfx ; $7539
 	bit 0, a ; $753b
-	jr nz, Label_1d_758b ; $753d
+	jr nz, DrawExpPromptCursor.step ; $753d
 	bit 1, a ; $753f
-	jr nz, Label_1d_7594 ; $7541
-	jr Label_1d_7528 ; $7543
+	jr nz, DrawExpPromptCursor.playSfx2 ; $7541
+	jr .loop ; $7543
 UploadExpPromptWindowRowsClosing:
 	wram_bank $03 ; $7545
 	ld hl, $d180 ; $754b
@@ -5011,24 +5011,24 @@ DrawExpPromptCursor:
 	ld de, $0c7f ; $7570
 	ld a, [$d182] ; $7573
 	or a, a ; $7576
-	jr z, Label_1d_757b ; $7577
+	jr z, .queueSprite ; $7577
 	ld e, $87 ; $7579
-Label_1d_757b:
+.queueSprite:
 	call QueueSprite ; $757b
 	ret ; $757e
-Label_1d_757f:
+.playSfx:
 	sound $5e ; $757f
 	ld a, [$d182] ; $7581
 	xor a, $01 ; $7584
 	ld [$d182], a ; $7586
-	jr Label_1d_7528 ; $7589
-Label_1d_758b:
+	jr UploadExpPromptWindowRows.loop ; $7589
+.step:
 	ld a, [$d182] ; $758b
 	or a, a ; $758e
-	jr nz, Label_1d_7594 ; $758f
+	jr nz, .playSfx2 ; $758f
 	sound $5f ; $7591
 	ret ; $7593
-Label_1d_7594:
+.playSfx2:
 	sound $62 ; $7594
 	farcall RestoreCharDataScreenRow ; $7596
 	ld hl, $77e1 ; $7599
@@ -5140,7 +5140,7 @@ DrawExpToNextLevelTask:
 	ret nz ; $7671
 	ld a, [wStoryCharacterSlot] ; $7672
 	or a, a ; $7675
-	jr nz, Label_1d_76cb ; $7676
+	jr nz, .step3 ; $7676
 	wram_bank $06 ; $7678
 	ld a, [$d161] ; $767e
 	cp a, $64 ; $7681
@@ -5154,18 +5154,18 @@ DrawExpToNextLevelTask:
 	call FormatDecimalNumberUnsigned ; $768f
 	ld a, [$d08e] ; $7692
 	cp a, $20 ; $7695
-	jr z, Label_1d_76a2 ; $7697
+	jr z, .step ; $7697
 	call GetExpScreenDigitSprite ; $7699
 	ld de, $182f ; $769c
 	call QueueSprite ; $769f
-Label_1d_76a2:
+.step:
 	ld a, [$d08f] ; $76a2
 	cp a, $20 ; $76a5
-	jr z, Label_1d_76b2 ; $76a7
+	jr z, .step2 ; $76a7
 	call GetExpScreenDigitSprite ; $76a9
 	ld de, $1f2f ; $76ac
 	call QueueSprite ; $76af
-Label_1d_76b2:
+.step2:
 	ld a, [$d090] ; $76b2
 	call GetExpScreenDigitSprite ; $76b5
 	ld de, $262f ; $76b8
@@ -5175,7 +5175,7 @@ Label_1d_76b2:
 	ld de, $142e ; $76c4
 	call QueueSpriteTemplate ; $76c7
 	ret ; $76ca
-Label_1d_76cb:
+.step3:
 	wram_bank $06 ; $76cb
 	ld a, [$d170] ; $76d1
 	cp a, $64 ; $76d4
@@ -5189,18 +5189,18 @@ Label_1d_76cb:
 	call FormatDecimalNumberUnsigned ; $76e2
 	ld a, [$d08e] ; $76e5
 	cp a, $20 ; $76e8
-	jr z, Label_1d_76f5 ; $76ea
+	jr z, .step4 ; $76ea
 	call GetExpScreenDigitSprite ; $76ec
 	ld de, $1862 ; $76ef
 	call QueueSprite ; $76f2
-Label_1d_76f5:
+.step4:
 	ld a, [$d08f] ; $76f5
 	cp a, $20 ; $76f8
-	jr z, Label_1d_7705 ; $76fa
+	jr z, .step5 ; $76fa
 	call GetExpScreenDigitSprite ; $76fc
 	ld de, $1f62 ; $76ff
 	call QueueSprite ; $7702
-Label_1d_7705:
+.step5:
 	ld a, [$d090] ; $7705
 	call GetExpScreenDigitSprite ; $7708
 	ld de, $2662 ; $770b
@@ -5258,9 +5258,9 @@ DrawExpBarSweepSpriteTask:
 	ld e, $01 ; $7789
 	ld a, [wStoryCharacterSlot] ; $778b
 	or a, a ; $778e
-	jr z, Label_1d_7793 ; $778f
+	jr z, .step ; $778f
 	ld e, $49 ; $7791
-Label_1d_7793:
+.step:
 	wram_bank $06 ; $7793
 	ld a, [$d181] ; $7799
 	ld d, a ; $779c
@@ -5274,13 +5274,13 @@ TickLevelUpJingle:
 	or a, a ; $77b0
 	ret z ; $77b1
 	cp a, $ff ; $77b2
-	jr z, Label_1d_77be ; $77b4
+	jr z, .step ; $77b4
 	dec a ; $77b6
 	ld [$d186], a ; $77b7
 	ret nz ; $77ba
 	sound $0c ; $77bb
 	ret ; $77bd
-Label_1d_77be:
+.step:
 	ld a, $a0 ; $77be
 	ld [$d186], a ; $77c0
 	sound $00 ; $77c3
