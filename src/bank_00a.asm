@@ -4785,7 +4785,7 @@ UpdateCameraFromPlayer:
 	add hl, hl ; $62d1
 	add hl, hl ; $62d2
 	add hl, hl ; $62d3
-	ld bc, $62f8 ; $62d4
+	ld bc, LoadCourtSceneGraphics ; $62d4
 	add hl, bc ; $62d7
 	pop de ; $62d8
 	pop bc ; $62d9

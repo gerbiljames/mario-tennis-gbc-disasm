@@ -1753,7 +1753,7 @@ DrawSinglesRankingEntry:
 	push hl ; $5539
 	ld a, b ; $553a
 	add a, a ; $553b
-	ld hl, Data_1b_5576 ; $553c
+	ld hl, SinglesRankingEntryTable1 ; $553c
 	add a, l ; $553f
 	ld l, a ; $5540
 	jr nc, .read ; $5541
@@ -1794,20 +1794,8 @@ SinglesRankingEntryTable:
 	dw $002e ; record 9
 	dw $002a ; record 10
 	dw $0027 ; record 11
-Data_1b_5576:
-	; $5576, 24 bytes (records:2)
-	dw $d021 ; record 0
-	dw $d081 ; record 1
-	dw $d0e1 ; record 2
-	dw $d141 ; record 3
-	dw $d1a1 ; record 4
-	dw $d201 ; record 5
-	dw $d02e ; record 6
-	dw $d08e ; record 7
-	dw $d0ee ; record 8
-	dw $d14e ; record 9
-	dw $d1ae ; record 10
-	dw $d20e ; record 11
+SinglesRankingEntryTable1:
+	INCBIN "data/bank_01b/d_5576.bin" ; $5576, 24 bytes
 ClearSinglesRankingNameRects:
 	push af ; $558e
 	push bc ; $558f
@@ -1881,7 +1869,7 @@ DrawDoublesRankingEntry:
 	push hl ; $5602
 	ld a, b ; $5603
 	add a, a ; $5604
-	ld hl, Data_1b_5641 ; $5605
+	ld hl, DoublesRankingEntryTable1 ; $5605
 	add a, l ; $5608
 	ld l, a ; $5609
 	jr nc, .read ; $560a
@@ -1923,20 +1911,8 @@ DoublesRankingEntryTable:
 	dw $004b ; record 10
 	dw $004c ; record 11
 	dw $002b ; record 12
-Data_1b_5641:
-	; $5641, 24 bytes (records:2)
-	dw $d041 ; record 0
-	dw $d081 ; record 1
-	dw $d0e1 ; record 2
-	dw $d121 ; record 3
-	dw $d181 ; record 4
-	dw $d1c1 ; record 5
-	dw $d04e ; record 6
-	dw $d08e ; record 7
-	dw $d0ee ; record 8
-	dw $d12e ; record 9
-	dw $d18e ; record 10
-	dw $d1ce ; record 11
+DoublesRankingEntryTable1:
+	INCBIN "data/bank_01b/d_5641.bin" ; $5641, 24 bytes
 ClearDoublesRankingNameRects:
 	push af ; $5659
 	push bc ; $565a

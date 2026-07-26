@@ -933,7 +933,7 @@ InitMatchWinLoseScreen:
 	ld de, $a000 ; $45d0
 	ld c, $20 ; $45d3
 	call QueueVRAMCopy ; $45d5
-	ld hl, Data_16_4784 ; $45d8
+	ld hl, MatchWinLoseScreenGfx1 ; $45d8
 	ld de, $d000 ; $45db
 	call DecompressData ; $45de
 	ld hl, $d000 ; $45e1
@@ -963,7 +963,7 @@ DiagramMarkerSpriteTask:
 	INCBIN "data/bank_016/d_4736.bin" ; $4736, 30 bytes
 DiagramBallSpriteTask:
 	INCBIN "data/bank_016/d_4754.bin" ; $4754, 48 bytes
-Data_16_4784:
+MatchWinLoseScreenGfx1:
 	INCBIN "data/bank_016/d_4784.bin" ; $4784, 10 bytes
 DiagramSwingFigureSpriteTask:
 	INCBIN "data/bank_016/d_478e.bin" ; $478e, 97 bytes

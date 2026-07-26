@@ -102,8 +102,12 @@ def _pointer_load_used(dis, order, idx, o, reg, callees=None):
                          o + dis.instrs[o].size, {reg}, callees or {})
 
 
+REG_PAIRS = {"hl": ("h", "l"), "de": ("d", "e"), "bc": ("b", "c")}
+
+
 def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
     added = None   # the pair whose low byte an `add a, <low>` just indexed
+    copy = None    # a `ld <dst hi>, <src hi>` awaiting its low half
     for _ in range(limit):
         if i >= len(order):
             break
@@ -118,11 +122,28 @@ def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
             return True
         if t in ("push hl", "push de", "push bc") and t.split()[1] in ptr:
             return True
-        if ins.is_call and callees and ins.target is not None:
+        # Handing the value on: a call, or a tail call (`jp`/`jr` out of the
+        # routine), which is how the VRAM DMA helpers pass their source
+        # address down -- QueueVRAMCopy never touches hl itself, it
+        # `jp`s to StartVRAMDMAFromHL.
+        if callees and ins.target is not None and (
+                ins.is_call or (ins.is_jump and not ins.is_cond)):
             tgt = dis.farcalls[no][3] if no in dis.farcalls \
                 else target_to_offset(ins.target, no)
             if ptr & callees.get(tgt, frozenset()):
                 return True
+        # `ld b, h; ld c, l` moves the pointer to another pair; the value is
+        # the same address, so keep tracking it.
+        copied, prev_copy, copy = None, copy, None
+        for dst, (dhi, dlo) in REG_PAIRS.items():
+            for src, (shi, slo) in REG_PAIRS.items():
+                if dst == src:
+                    continue
+                if t == f"ld {dhi}, {shi}":
+                    copy = (dst, src)
+                elif prev_copy == (dst, src) and t == f"ld {dlo}, {slo}" \
+                        and src in ptr:
+                    copied = dst
         if t in ("add hl, de", "add hl, bc") and t.split(", ")[1] in ptr:
             ptr = ptr | {"hl"}
         else:
@@ -138,6 +159,8 @@ def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
                              or t.startswith(f"ld {r[1]},")
                              or t == f"pop {r}"):
                     ptr = ptr - {r}
+        if copied:
+            ptr = ptr | {copied}
         if not ptr or ins.ends_flow:
             break
         prev_end = no + ins.size
@@ -145,29 +168,44 @@ def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
     return False
 
 
-def callee_pointer_regs(dis, rounds=2):
+# Routines whose argument is an address by construction, where the body never
+# dereferences it so no scan can tell. StartVRAMDMATransfer writes bc into the
+# VRAM DMA source registers ($ff51/$ff52), which is exactly "bc is an address".
+POINTER_ARG_ROUTINES = {"StartVRAMDMATransfer": ("bc",)}
+
+
+def callee_pointer_regs(dis, overrides=None, rounds=3):
     """{entry offset: the registers that routine dereferences on entry}. A
     `ld hl, table; call Helper` only reads as a pointer setup if the helper
     treats hl as one, so this is what lets the argument-passing sites resolve.
     Iterating lets a helper that forwards its argument to another helper count
-    too."""
+    too -- QueueVRAMCopy tail-calls StartVRAMDMAFromHL, which copies hl into bc
+    and tail-calls StartVRAMDMATransfer, so it takes three rounds to get from
+    the seed below back up to the call sites."""
     order = sorted(dis.instrs)
     idx = {o: i for i, o in enumerate(order)}
     entries = set()
     for o, ins in dis.instrs.items():
-        if ins.is_call and ins.target is not None:
+        if ins.target is None:
+            continue
+        if ins.is_call or (ins.is_jump and not ins.is_cond):
             tgt = dis.farcalls[o][3] if o in dis.farcalls \
                 else target_to_offset(ins.target, o)
             if tgt in dis.instrs:
                 entries.add(tgt)
-    out = {}
+    seed = {}
+    for k, name in (overrides or {}).items():
+        if name in POINTER_ARG_ROUTINES:
+            seed[int(k, 0)] = frozenset(POINTER_ARG_ROUTINES[name])
+    out = dict(seed)
     for _ in range(rounds):
-        prev, out = out, {}
+        prev, out = out, dict(seed)
         for e in entries:
             # A helper often unpacks its other arguments before touching the
             # pointer, so give the entry scan a longer run than a call site's.
-            regs = {r for r in ("hl", "de", "bc")
-                    if _scan_ptr_use(dis, order, idx[e], e, {r}, prev, 24)}
+            regs = set(seed.get(e, ())) | {
+                r for r in ("hl", "de", "bc")
+                if _scan_ptr_use(dis, order, idx[e], e, {r}, prev, 24)}
             if regs:
                 out[e] = frozenset(regs)
         if out == prev:
@@ -175,7 +213,7 @@ def callee_pointer_regs(dis, rounds=2):
     return out
 
 
-def pointer_load_targets(dis):
+def pointer_load_targets(dis, overrides=None):
     """`ld bc/de/hl, imm` sites whose immediate is a same-bank pointer: the value
     lands on an instruction start or a data byte (never mid-instruction) and is
     provably used as a pointer (see `_pointer_load_used`). Returns
@@ -184,7 +222,7 @@ def pointer_load_targets(dis):
     rom = dis.rom
     order = sorted(dis.instrs)
     idx = {o: i for i, o in enumerate(order)}
-    callees = callee_pointer_regs(dis)
+    callees = callee_pointer_regs(dis, overrides)
     out = {}
     for o in order:
         reg = LD_IMM16_REG.get(rom[o])
@@ -222,12 +260,19 @@ def pointer_table_targets(rom, data_tables, instrs=(), labels=()):
         base = (start // BANK_SIZE) * BANK_SIZE
         if not base:
             continue  # ROM0 has no bank window to resolve against
+        # A mode_hooks table is always 8 slots, and an unused one points at the
+        # shared ROM0 `ret` -- stopping at that word would hide the handlers
+        # after it (bank $10's water-sprite hooks 4-6 are three `ret` stubs).
+        limit = start + 16 if spec == "mode_hooks" else base + BANK_SIZE
         p = start
-        while p + 1 < base + BANK_SIZE:
+        while p + 1 < min(limit, base + BANK_SIZE):
             if p != start and p in stops:
                 break
             w = rom[p] | (rom[p + 1] << 8)
             if not (BANK_SIZE <= w < 0x8000):
+                if spec == "mode_hooks":
+                    p += 2
+                    continue
                 break
             yield base + w - BANK_SIZE
             p += 2

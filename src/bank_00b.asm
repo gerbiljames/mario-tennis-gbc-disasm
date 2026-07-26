@@ -2538,7 +2538,7 @@ ServicePractice3Hook_PointStart:
 	ld [$c2e0], a ; $5219
 	ld a, $01 ; $521c
 	ld [wTargetZoneEnabled], a ; $521e
-	ld hl, $5302 ; $5221
+	ld hl, ServicePractice3TargetZones ; $5221
 	call SetDrillTargetZoneForPoint ; $5224
 	ld a, $01 ; $5227
 	ld [$c78b], a ; $5229
@@ -2643,8 +2643,8 @@ ServicePractice3SetupShotTarget:
 	dec [hl] ; $52de
 	ret ; $52df
 DrillPositions_0b_52e0:
-	; $52e0, 68 bytes (records:4)
-; 17 records x 4 bytes
+	; $52e0, 34 bytes (records:4)
+; 8 records x 4 bytes
 	dw $0000, $02a0 ; record 0
 	dw $006c, $02a0 ; record 1
 	dw $ff94, $02a0 ; record 2
@@ -2653,15 +2653,9 @@ DrillPositions_0b_52e0:
 	dw $0000, $fd60 ; record 5
 	dw $0000, $fd60 ; record 6
 	dw $006c, $fd60 ; record 7
-	dw $ffff, $ff94 ; record 8
-	dw $fd60, $0000 ; record 9
-	dw $feb0, $0000 ; record 10
-	dw $fd60, $006c ; record 11
-	dw $feb0, $0000 ; record 12
-	dw $0150, $006c ; record 13
-	dw $02a0, $ff94 ; record 14
-	dw $0150, $0000 ; record 15
-	dw $02a0, $ffff ; record 16
+	db $ff, $ff
+ServicePractice3TargetZones:
+	INCBIN "data/bank_00b/d_5302.bin" ; $5302, 34 bytes
 ServicePractice3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5324
 	call ServicePractice3QueueOutcomeMessage ; $5327

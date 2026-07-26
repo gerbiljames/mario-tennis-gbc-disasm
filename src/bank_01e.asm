@@ -4735,15 +4735,15 @@ LoadGameProgressScreenTiles:
 	call LoadPaletteShadow ; $756a
 	pop af ; $756d
 	wram_bank ; $756e
-	ld hl, $7710 ; $7572
+	ld hl, GameProgressScreenTiles0 ; $7572
 	ld de, $a000 ; $7575
 	ld c, $10 ; $7578
 	call QueueVRAMCopy ; $757a
-	ld hl, $7960 ; $757d
+	ld hl, GameProgressScreenTiles2 ; $757d
 	ld de, $a100 ; $7580
 	ld c, $04 ; $7583
 	call QueueVRAMCopy ; $7585
-	ld hl, $7820 ; $7588
+	ld hl, GameProgressScreenTiles1 ; $7588
 	ld de, $a200 ; $758b
 	ld c, $14 ; $758e
 	call QueueVRAMCopy ; $7590
@@ -4761,9 +4761,15 @@ GameProgressHeaderTilemap_1e:
 GameProgressHeaderAttrmap_1e:
 	INCBIN "data/bank_01e/d_76e2.bin" ; $76e2, 30 bytes
 Palettes_1e_7700:
-	INCLUDE "data/bank_01e/palettes_7700.asm" ; $7700, 272 bytes (palettes)
+	INCLUDE "data/bank_01e/palettes_7700.asm" ; $7700, 16 bytes (palettes)
+GameProgressScreenTiles0:
+	INCBIN "data/bank_01e/d_7710.bin" ; $7710, 256 bytes
 Palettes_1e_7810:
-	INCLUDE "data/bank_01e/palettes_7810.asm" ; $7810, 464 bytes (palettes)
+	INCLUDE "data/bank_01e/palettes_7810.asm" ; $7810, 16 bytes (palettes)
+GameProgressScreenTiles1:
+	INCBIN "data/bank_01e/d_7820.bin" ; $7820, 320 bytes
+GameProgressScreenTiles2:
+	INCBIN "data/bank_01e/d_7960.bin" ; $7960, 128 bytes
 Palettes_1e_79e0:
 	INCLUDE "data/bank_01e/palettes_79e0.asm" ; $79e0, 8 bytes (palettes)
 FillProgressListRowTiles:

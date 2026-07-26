@@ -3,7 +3,9 @@ SECTION "ROM Bank $26", ROMX[$4000], BANK[$26]
 	farptr FetchDialogueText_26 ; $4000
 	farptr FetchShortText_26 ; $4002
 FetchTextTable_26:
-	INCLUDE "data/bank_026/text_4004.asm" ; $4004, 15123 bytes
+	INCBIN "data/bank_026/d_4004.bin" ; $4004, 498 bytes
+Text_26_41f6:
+	INCLUDE "data/bank_026/text_41f6.asm" ; $41f6, 14625 bytes
 FetchDialogueText_26:
 	push af ; $7b17
 	ld a, $00 ; $7b18
@@ -27,7 +29,7 @@ FetchText_26:
 	ld e, [hl] ; $7b32
 	inc hl ; $7b33
 	ld d, [hl] ; $7b34
-	ld hl, $41f6 ; $7b35
+	ld hl, Text_26_41f6 ; $7b35
 	add hl, de ; $7b38
 	or a, a ; $7b39
 	jr nz, .nonZero ; $7b3a

@@ -3945,7 +3945,7 @@ DrawMainMenuCaption:
 	ld d, [hl] ; $5be9
 	ld e, a ; $5bea
 	ld a, b ; $5beb
-	ld hl, Data_3b_5c15 ; $5bec
+	ld hl, MainMenuCaptionTable1 ; $5bec
 	add a, a ; $5bef
 	add a, l ; $5bf0
 	ld l, a ; $5bf1
@@ -3972,17 +3972,8 @@ MainMenuCaptionTable:
 	dw $d201 ; record 6
 	dw $d201 ; record 7
 	dw $d201 ; record 8
-Data_3b_5c15:
-	; $5c15, 18 bytes (records:2)
-	dw $007d ; record 0
-	dw $007e ; record 1
-	dw $007f ; record 2
-	dw $007c ; record 3
-	dw $007c ; record 4
-	dw $007c ; record 5
-	dw $0080 ; record 6
-	dw $0081 ; record 7
-	dw $0082 ; record 8
+MainMenuCaptionTable1:
+	INCBIN "data/bank_03b/d_5c15.bin" ; $5c15, 18 bytes
 Print2DigitNumberRightAligned:
 	ld a, $02 ; $5c27
 	jr PrintNumberRightAligned.format ; $5c29
@@ -8417,7 +8408,7 @@ GetVictoryScore:
 	ld a, [$c8a8] ; $7dc8
 	or a, a ; $7dcb
 	jr z, .zero ; $7dcc
-	ld hl, Data_3b_7ddd ; $7dce
+	ld hl, VictoryScoreTable1 ; $7dce
 .zero:
 	ld a, b ; $7dd1
 	add a, l ; $7dd2
@@ -8430,9 +8421,8 @@ GetVictoryScore:
 VictoryScoreTable:
 	; $7dd9, 4 bytes (bytes:4)
 	db $03, $05, $07, $09 ; 0x00
-Data_3b_7ddd:
-	; $7ddd, 4 bytes (bytes:4)
-	db $02, $04, $06, $08 ; 0x00
+VictoryScoreTable1:
+	INCBIN "data/bank_03b/d_7ddd.bin" ; $7ddd, 4 bytes
 GetStarCharIndex:
 	sub a, $17 ; $7de1
 	ld hl, StarCharOrderTable ; $7de3

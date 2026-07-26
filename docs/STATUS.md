@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `5982a87`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,823 of 21,517 labels are human-named** (see the caveat in the
+symbols. **19,841 of 21,541 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4442,8 +4442,8 @@ not: 316 `dw $xxxx` words and 445 `ld hl/de/bc, $xxxx` immediates whose target
 had no label, because it landed inside an `INCBIN` blob or inside a declared
 table. They assemble to the right bytes, but they are addresses frozen at
 their 2001 values -- insert one byte ahead of the target and the pointer
-quietly aims at the wrong place. **132 are left, and most of those are not
-pointers at all.**
+quietly aims at the wrong place. **95 are left, and all but a handful are
+not pointers at all.**
 
 Three things were missing.
 
@@ -4574,3 +4574,60 @@ from clean throughout.
 
 All work is committed (HEAD `5982a87`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
+
+## Tail calls, and three tables that lied about their length (2026-07-26)
+
+The pointer work above left 132 bare addresses. **95 remain, and exactly one
+`dw` pointer row is among them** -- `TangentTable` record 254, whose value
+`$62ca` is a tangent, not an address.
+
+**Tail calls.** The use-gate followed a pointer into a `call`ed routine but not
+a `jp`, which is how the VRAM helpers pass their argument down: `QueueVRAMCopy`
+never touches `hl`, it `jp`s to `StartVRAMDMAFromHL`, which does `ld b, h` /
+`ld c, l` and `jr`s to `StartVRAMDMATransfer`, which writes `bc` into the VRAM
+DMA source registers. Three things were missing, and all three are needed for
+that one chain: tail calls count as handing the value on, `ld b, h; ld c, l`
+carries the pointer to another pair, and `StartVRAMDMATransfer` is seeded as
+taking an address in `bc` (`POINTER_ARG_ROUTINES`) because writing a pair to
+`$ff51`/`$ff52` *is* the dereference, and no scan can see that. The map now
+iterates three rounds to get from the seed back up to the call sites. That
+resolved all 14 `QueueVRAMCopy` sites and several singletons.
+
+**The table extents.** Each of the remaining `dw` groups was a declaration
+wrong about where its table ends, and each failed differently:
+
+* **Bank `$0f`** was declared one byte late. The reader's split base is
+  `add a, $91` / `adc a, $76` = `$7691`, but `records:2` sat at `$7692`, so
+  every word was rendered from the wrong byte pair and the "pointers"
+  (`$4f28`, `$5228`) were nonsense that landed mid-instruction. Read from
+  `$7691` the entries are `$2847`, `$284b`, `$284f` ... -- nine values sharing
+  a fetcher nibble, and the consumer is `InitDialogueTextCursor`, so it is a
+  `text_ids` table: `Text_25_70`-`82`. The off-by-one had also pushed the
+  following instruction a byte late.
+* **Bank `$10`**'s `WaterSpriteModeHooks_10` was fine; the *walk* was not. It
+  stopped at the first word outside the bank window, and slot 3 is the shared
+  ROM0 `ret` stub, so slots 4-6 were never yielded. They point at `$4beb`,
+  `$4bea` and `$4be9` -- the handler plus two of the three consecutive `ret`
+  bytes at `$4be8`, one address per slot. A `mode_hooks` table is always eight
+  slots, so the walk now runs all eight and skips ROM0 words.
+* **Bank `$1a`**'s `records:2` run at `$4ab4` was declared 107 bytes -- an odd
+  length for a word table, which is the tell. It is 32 tilemap addresses in
+  four rows of eight (`$0b38`-`$0b3f`, `$0b48`-`$0b4f`, ...); at +64 the words
+  become `$c5f5`, `$e5d5` -- `push bc` / `push af` / `push hl` / `push de`, a
+  routine prologue. Bounded to 64 bytes; the 43-byte remainder is a blob rather
+  than asserted code, since no trace has executed it.
+
+`$76a3`, the byte between the bank `$0f` table and the next instruction, is
+declared `bytes:1`: the instruction at `$76a4` is trace-proven, so the byte
+before it is a leftover, not the start of anything.
+
+18 more targets were named from their consumers, including the six whose
+derived name collided with an adjacent sibling table -- each turned out to be a
+genuine pair (`VictoryScoreTable` is `03 05 07 09`, and `VictoryScoreTable1`
+right after it is `02 04 06 08`), so they take the next index.
+
+Left: 94 `ld` immediates, of which 17 QueueSprite coordinate pairs, 15
+`ApplySlideOffsetToSpriteX` byte pairs, 17 with no pointer use at all and the
+rest of the same shape are simply not pointers. The genuine ones left are 9
+`ScriptRespawnLocationActors` actor lists (targets interior to a `map_actors`
+run, which cannot be cut) and a dozen singletons.

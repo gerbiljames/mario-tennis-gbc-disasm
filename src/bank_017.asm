@@ -5382,7 +5382,7 @@ AdvanceRulesScreenAnimFrame:
 	srl a ; $743a
 	srl a ; $743c
 	and a, $3f ; $743e
-	ld hl, Data_17_749f ; $7440
+	ld hl, RulesScreenAnimFrameTable1 ; $7440
 	add a, l ; $7443
 	ld l, a ; $7444
 	jr nc, .read ; $7445
@@ -5438,38 +5438,8 @@ RulesScreenAnimFrameTable:
 	dw $0000 ; record 13
 	dw $0001 ; record 14
 	dw $0000 ; record 15
-Data_17_749f:
-	; $749f, 60 bytes (records:2)
-	dw $0402 ; record 0
-	dw $0404 ; record 1
-	dw $0502 ; record 2
-	dw $0402 ; record 3
-	dw $0202 ; record 4
-	dw $0302 ; record 5
-	dw $0402 ; record 6
-	dw $0402 ; record 7
-	dw $0304 ; record 8
-	dw $0204 ; record 9
-	dw $0204 ; record 10
-	dw $0404 ; record 11
-	dw $0402 ; record 12
-	dw $0402 ; record 13
-	dw $0402 ; record 14
-	dw $0402 ; record 15
-	dw $0402 ; record 16
-	dw $0402 ; record 17
-	dw $0402 ; record 18
-	dw $0202 ; record 19
-	dw $0304 ; record 20
-	dw $0204 ; record 21
-	dw $0204 ; record 22
-	dw $0204 ; record 23
-	dw $0402 ; record 24
-	dw $0402 ; record 25
-	dw $0402 ; record 26
-	dw $0202 ; record 27
-	dw $0302 ; record 28
-	dw $0402 ; record 29
+RulesScreenAnimFrameTable1:
+	INCBIN "data/bank_017/d_749f.bin" ; $749f, 60 bytes
 DrawRulesScreenCharacters:
 	ldh a, [hWramBank] ; $74db
 	push af ; $74dd

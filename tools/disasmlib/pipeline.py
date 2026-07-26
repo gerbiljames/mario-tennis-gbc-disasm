@@ -118,7 +118,7 @@ def resolve_labels(dis, overrides=None, data_tables=None):
     """Name every proven offset. Returns (labels, ptr_sites, ptr_data_targets):
     the symbol table, the vetted `ld rr, imm` pointer-load sites, and the raw
     data targets those loads reach (which emit splits blobs at)."""
-    ptr_sites = pointer_load_targets(dis)
+    ptr_sites = pointer_load_targets(dis, overrides)
     # Handler-install sites store the pointer instead of dereferencing it, so
     # pointer_load_targets' use-gate skips them; resolve them explicitly.
     ptr_sites.update(actor_handler_sites(

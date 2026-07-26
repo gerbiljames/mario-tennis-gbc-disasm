@@ -950,14 +950,17 @@ WaterSpriteModeHooks_10:
 	dw Label_10_4bfc ; record 1
 	dw Label_10_4bfd ; record 2
 	dw RetStub ; record 3
-	dw $4beb ; record 4
-	dw $4bea ; record 5
-	dw $4be9 ; record 6
+	dw Label_10_4beb ; record 4
+	dw Label_10_4bea ; record 5
+	dw Label_10_4be9 ; record 6
 	dw RetStub ; record 7
 Label_10_4be8:
 	ret ; $4be8
+Label_10_4be9:
 	ret ; $4be9
+Label_10_4bea:
 	ret ; $4bea
+Label_10_4beb:
 	ld a, [wRallyLength] ; $4beb
 	cp a, $02 ; $4bee
 	jr c, .done ; $4bf0

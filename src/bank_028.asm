@@ -21,7 +21,19 @@ MatchGfxPalettesA_28:
 MatchGraphicsPalettes:
 	INCBIN "data/bank_028/d_4be0.bin" ; $4be0, 16 bytes
 MatchGfxMapsA_28:
-	INCBIN "data/bank_028/d_4bf0.bin" ; $4bf0, 4672 bytes
+	INCBIN "data/bank_028/d_4bf0.bin" ; $4bf0, 320 bytes
+MatchVariantTiles0:
+	INCBIN "data/bank_028/d_4d30.bin" ; $4d30, 256 bytes
+MatchVariantTiles1:
+	INCBIN "data/bank_028/d_4e30.bin" ; $4e30, 768 bytes
+MatchVariantTiles2:
+	INCBIN "data/bank_028/d_5130.bin" ; $5130, 832 bytes
+MatchVariantTiles3:
+	INCBIN "data/bank_028/d_5470.bin" ; $5470, 32 bytes
+MatchVariantTiles4:
+	INCBIN "data/bank_028/d_5490.bin" ; $5490, 256 bytes
+MatchSharedTiles_28:
+	INCBIN "data/bank_028/d_5590.bin" ; $5590, 2208 bytes
 MatchGfxPalettesB_28:
 	INCLUDE "data/bank_028/palettes_5e30.asm" ; $5e30, 8 bytes (palettes)
 MatchVariantGraphicsPalettes0:
@@ -106,7 +118,7 @@ LoadMatchVariantGraphics:
 	ld hl, MatchVariantGraphicsPalettes0 ; $5f43
 	ld de, $0d03 ; $5f46
 	call LoadPaletteShadow ; $5f49
-	ld hl, $4d30 ; $5f4c
+	ld hl, MatchVariantTiles0 ; $5f4c
 	ld de, $a100 ; $5f4f
 	ld c, $10 ; $5f52
 	call QueueVRAMCopy ; $5f54
@@ -123,7 +135,7 @@ LoadMatchVariantGraphics:
 	ld hl, MatchVariantGraphicsPalettes6 ; $5f6a
 	ld de, $0e02 ; $5f6d
 	call LoadPaletteShadow ; $5f70
-	ld hl, $5470 ; $5f73
+	ld hl, MatchVariantTiles3 ; $5f73
 	ld de, $a3c0 ; $5f76
 	ld c, $02 ; $5f79
 	call QueueVRAMCopy ; $5f7b
@@ -133,7 +145,7 @@ LoadMatchVariantGraphics:
 	ld hl, MatchVariantGraphicsPalettes2 ; $5f82
 	ld de, $0e02 ; $5f85
 	call LoadPaletteShadow ; $5f88
-	ld hl, $5470 ; $5f8b
+	ld hl, MatchVariantTiles3 ; $5f8b
 	ld de, $a3c0 ; $5f8e
 	ld c, $02 ; $5f91
 	call QueueVRAMCopy ; $5f93
@@ -143,11 +155,11 @@ LoadMatchVariantGraphics:
 	ld hl, MatchVariantGraphicsPalettes3 ; $5f9a
 	ld de, $0f01 ; $5f9d
 	call LoadPaletteShadow ; $5fa0
-	ld hl, $5490 ; $5fa3
+	ld hl, MatchVariantTiles4 ; $5fa3
 	ld de, $a200 ; $5fa6
 	ld c, $10 ; $5fa9
 	call QueueVRAMCopy ; $5fab
-	ld hl, $5470 ; $5fae
+	ld hl, MatchVariantTiles3 ; $5fae
 	ld de, $a3c0 ; $5fb1
 	ld c, $02 ; $5fb4
 	call QueueVRAMCopy ; $5fb6
@@ -164,7 +176,7 @@ LoadMatchVariantGraphics:
 	ld hl, MatchVariantGraphicsPalettes5 ; $5fd1
 	ld de, $0f01 ; $5fd4
 	call LoadPaletteShadow ; $5fd7
-	ld hl, $5470 ; $5fda
+	ld hl, MatchVariantTiles3 ; $5fda
 	ld de, $a3c0 ; $5fdd
 	ld c, $02 ; $5fe0
 	call QueueVRAMCopy ; $5fe2
@@ -174,11 +186,11 @@ LoadMatchVariantGraphics:
 	ld hl, MatchVariantGraphicsPalettes1 ; $5fe9
 	ld de, $0d03 ; $5fec
 	call LoadPaletteShadow ; $5fef
-	ld hl, $4e30 ; $5ff2
+	ld hl, MatchVariantTiles1 ; $5ff2
 	ld de, $a100 ; $5ff5
 	ld c, $10 ; $5ff8
 	call QueueVRAMCopy ; $5ffa
-	ld hl, $5130 ; $5ffd
+	ld hl, MatchVariantTiles2 ; $5ffd
 	ld de, $a200 ; $6000
 	ld c, $10 ; $6003
 	call QueueVRAMCopy ; $6005
@@ -188,14 +200,14 @@ LoadMatchVariantGraphics:
 	ld hl, MatchVariantGraphicsPalettes1 ; $600c
 	ld de, $0d03 ; $600f
 	call LoadPaletteShadow ; $6012
-	ld hl, $4e30 ; $6015
+	ld hl, MatchVariantTiles1 ; $6015
 	ld de, $a100 ; $6018
 	ld c, $30 ; $601b
 	call QueueVRAMCopy ; $601d
 	call LoadMatchSharedTiles_28 ; $6020
 	ret ; $6023
 LoadMatchSharedTiles_28:
-	ld hl, $5590 ; $6024
+	ld hl, MatchSharedTiles_28 ; $6024
 	ld de, $8080 ; $6027
 	ld c, $14 ; $602a
 	call QueueVRAMCopy ; $602c

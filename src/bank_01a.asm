@@ -1323,7 +1323,7 @@ DrawExpScreenYesNoBox:
 	pop bc ; $4ab1
 	pop af ; $4ab2
 	ret ; $4ab3
-	; $4ab4, 107 bytes (records:2)
+	; $4ab4, 64 bytes (records:2)
 	dw $0b38 ; record 0
 	dw $0b39 ; record 1
 	dw $0b3a ; record 2
@@ -1356,28 +1356,8 @@ DrawExpScreenYesNoBox:
 	dw $0b6d ; record 29
 	dw $0b6e ; record 30
 	dw $0b6f ; record 31
-	dw $c5f5 ; record 32
-	dw $e5d5 ; record 33
-	dw $0b0e ; record 34
-	dw $003e ; record 35
-	dw $b421 ; record 36
-	dw $794a ; record 37
-	dw $0ffe ; record 38
-	dw $1628 ; record 39
-	dw $0106 ; record 40
-	dw $fe78 ; record 41
-	dw $2809 ; record 42
-	dw $7e0c ; record 43
-	dw $2357 ; record 44
-	dw $5f7e ; record 45
-	dw $38cd ; record 46
-	dw $234c ; record 47
-	dw $1804 ; record 48
-	dw $0cef ; record 49
-	dw $e518 ; record 50
-	dw $d1e1 ; record 51
-	dw $f1c1 ; record 52
-	db $c9
+Data_1a_4af4:
+	INCBIN "data/bank_01a/d_4af4.bin" ; $4af4, 43 bytes
 DrawExpScreenNameAndLevel:
 	push af ; $4b1f
 	push bc ; $4b20
