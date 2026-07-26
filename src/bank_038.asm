@@ -351,137 +351,138 @@ MoveMenuCursorBoxLink:
 .moved:
 	ld a, $01 ; $4202
 	ret ; $4204
+MoveMenuCursorBoxRemote_38:
 	ld a, [wMenuCursorX] ; $4205
 	ld d, a ; $4208
 	ld a, [wMenuCursorY] ; $4209
 	ld e, a ; $420c
 	ldh a, [hLinkState] ; $420d
 	cp a, $02 ; $420f
-	jr z, Label_38_421e ; $4211
+	jr z, .asSlave ; $4211
 	cp a, $01 ; $4213
-	jr z, Label_38_421a ; $4215
+	jr z, .asMaster ; $4215
 	call LinkErrorReset ; $4217
-Label_38_421a:
+.asMaster:
 	ldh a, [hLinkRemoteInputBuf] ; $421a
-	jr Label_38_4220 ; $421c
-Label_38_421e:
+	jr .haveInput ; $421c
+.asSlave:
 	ldh a, [hLinkRemoteInput] ; $421e
-Label_38_4220:
+.haveInput:
 	ld h, a ; $4220
 	ld a, [wMenuCursorLockFlags] ; $4221
 	and a, $01 ; $4224
 	ld a, h ; $4226
-	jr nz, Label_38_428d ; $4227
+	jr nz, .checkLock ; $4227
 	bit 4, a ; $4229
-	jr z, Label_38_4242 ; $422b
+	jr z, .checkLeft ; $422b
 	ld a, [wMenuCursorX] ; $422d
 	inc a ; $4230
 	add a, a ; $4231
-	jr nc, Label_38_4238 ; $4232
+	jr nc, .wrapRight ; $4232
 	ld a, b ; $4234
 	dec a ; $4235
-	jr Label_38_423d ; $4236
-Label_38_4238:
+	jr .storeRight ; $4236
+.wrapRight:
 	rra ; $4238
 	cp a, b ; $4239
-	jr c, Label_38_423d ; $423a
+	jr c, .storeRight ; $423a
 	xor a, a ; $423c
-Label_38_423d:
+.storeRight:
 	ld [wMenuCursorX], a ; $423d
-	jr Label_38_42bf ; $4240
-Label_38_4242:
+	jr .compare ; $4240
+.checkLeft:
 	bit 5, a ; $4242
-	jr z, Label_38_425b ; $4244
+	jr z, .checkUp ; $4244
 	ld a, [wMenuCursorX] ; $4246
 	dec a ; $4249
 	add a, a ; $424a
-	jr nc, Label_38_4251 ; $424b
+	jr nc, .wrapLeft ; $424b
 	ld a, b ; $424d
 	dec a ; $424e
-	jr Label_38_4256 ; $424f
-Label_38_4251:
+	jr .storeLeft ; $424f
+.wrapLeft:
 	rra ; $4251
 	cp a, b ; $4252
-	jr c, Label_38_4256 ; $4253
+	jr c, .storeLeft ; $4253
 	xor a, a ; $4255
-Label_38_4256:
+.storeLeft:
 	ld [wMenuCursorX], a ; $4256
-	jr Label_38_42bf ; $4259
-Label_38_425b:
+	jr .compare ; $4259
+.checkUp:
 	bit 6, a ; $425b
-	jr z, Label_38_4274 ; $425d
+	jr z, .checkDown ; $425d
 	ld a, [wMenuCursorY] ; $425f
 	dec a ; $4262
 	add a, a ; $4263
-	jr nc, Label_38_426a ; $4264
+	jr nc, .wrapUp ; $4264
 	ld a, c ; $4266
 	dec a ; $4267
-	jr Label_38_426f ; $4268
-Label_38_426a:
+	jr .storeUp ; $4268
+.wrapUp:
 	rra ; $426a
 	cp a, c ; $426b
-	jr c, Label_38_426f ; $426c
+	jr c, .storeUp ; $426c
 	xor a, a ; $426e
-Label_38_426f:
+.storeUp:
 	ld [wMenuCursorY], a ; $426f
-	jr Label_38_42bf ; $4272
-Label_38_4274:
+	jr .compare ; $4272
+.checkDown:
 	bit 7, a ; $4274
-	jr z, Label_38_428d ; $4276
+	jr z, .checkLock ; $4276
 	ld a, [wMenuCursorY] ; $4278
 	inc a ; $427b
 	add a, a ; $427c
-	jr nc, Label_38_4283 ; $427d
+	jr nc, .wrapDown ; $427d
 	ld a, c ; $427f
 	dec a ; $4280
-	jr Label_38_4288 ; $4281
-Label_38_4283:
+	jr .storeDown ; $4281
+.wrapDown:
 	rra ; $4283
 	cp a, c ; $4284
-	jr c, Label_38_4288 ; $4285
+	jr c, .storeDown ; $4285
 	xor a, a ; $4287
-Label_38_4288:
+.storeDown:
 	ld [wMenuCursorY], a ; $4288
-	jr Label_38_42bf ; $428b
-Label_38_428d:
+	jr .compare ; $428b
+.checkLock:
 	bit 0, a ; $428d
-	jr z, Label_38_42a5 ; $428f
+	jr z, .checkUnlock ; $428f
 	sound $5f ; $4291
 	ld a, [wMenuCursorLockFlags] ; $4293
 	ld b, a ; $4296
 	and a, $01 ; $4297
-	jr nz, Label_38_42bf ; $4299
+	jr nz, .compare ; $4299
 	sound $5f ; $429b
 	ld a, b ; $429d
 	or a, $01 ; $429e
 	ld [wMenuCursorLockFlags], a ; $42a0
-	jr Label_38_42bf ; $42a3
-Label_38_42a5:
+	jr .compare ; $42a3
+.checkUnlock:
 	bit 1, a ; $42a5
-	jr z, Label_38_42bf ; $42a7
+	jr z, .compare ; $42a7
 	sound $62 ; $42a9
 	ld a, [wMenuCursorLockFlags] ; $42ab
 	ld b, a ; $42ae
 	and a, $03 ; $42af
 	ld a, b ; $42b1
-	jr nz, Label_38_42ba ; $42b2
+	jr nz, .clearLock ; $42b2
 	and a, $fa ; $42b4
 	or a, $04 ; $42b6
-	jr Label_38_42bc ; $42b8
-Label_38_42ba:
+	jr .storeLock ; $42b8
+.clearLock:
 	and a, $fe ; $42ba
-Label_38_42bc:
+.storeLock:
 	ld [wMenuCursorLockFlags], a ; $42bc
-Label_38_42bf:
+.compare:
 	ld a, [wMenuCursorX] ; $42bf
 	cp a, d ; $42c2
-	jr nz, Label_38_42cd ; $42c3
+	jr nz, .moved ; $42c3
 	ld a, [wMenuCursorY] ; $42c5
 	cp a, e ; $42c8
-	jr nz, Label_38_42cd ; $42c9
+	jr nz, .moved ; $42c9
 	xor a, a ; $42cb
 	ret ; $42cc
-Label_38_42cd:
+.moved:
 	ld a, $01 ; $42cd
 	ret ; $42cf
 Data_38_42d0:
@@ -489,123 +490,123 @@ Data_38_42d0:
 	db $fa, $06, $cb, $57, $fa, $07, $cb, $5f, $f0, $c2, $fe, $02, $28, $0b, $fe, $01 ; 0x00
 	db $28, $03, $cd, $4b, $28 ; 0x10
 	ldh a, [hLinkRemoteInput] ; $42e5
-	jr Label_38_42eb ; $42e7
+	jr .haveInput2 ; $42e7
 	ldh a, [hLinkRemoteInputBuf] ; $42e9
-Label_38_42eb:
+.haveInput2:
 	ld h, a ; $42eb
 	ld a, [wMenuCursorLockFlags] ; $42ec
 	and a, $02 ; $42ef
 	ld a, h ; $42f1
-	jr nz, Label_38_4358 ; $42f2
+	jr nz, .checkLock2 ; $42f2
 	bit 4, a ; $42f4
-	jr z, Label_38_430d ; $42f6
+	jr z, .checkLeft2 ; $42f6
 	ld a, [wMenuCursor2X] ; $42f8
 	inc a ; $42fb
 	add a, a ; $42fc
-	jr nc, Label_38_4303 ; $42fd
+	jr nc, .wrapRight2 ; $42fd
 	ld a, b ; $42ff
 	dec a ; $4300
-	jr Label_38_4308 ; $4301
-Label_38_4303:
+	jr .storeRight2 ; $4301
+.wrapRight2:
 	rra ; $4303
 	cp a, b ; $4304
-	jr c, Label_38_4308 ; $4305
+	jr c, .storeRight2 ; $4305
 	xor a, a ; $4307
-Label_38_4308:
+.storeRight2:
 	ld [wMenuCursor2X], a ; $4308
-	jr Label_38_4388 ; $430b
-Label_38_430d:
+	jr .compare2 ; $430b
+.checkLeft2:
 	bit 5, a ; $430d
-	jr z, Label_38_4326 ; $430f
+	jr z, .checkUp2 ; $430f
 	ld a, [wMenuCursor2X] ; $4311
 	dec a ; $4314
 	add a, a ; $4315
-	jr nc, Label_38_431c ; $4316
+	jr nc, .wrapLeft2 ; $4316
 	ld a, b ; $4318
 	dec a ; $4319
-	jr Label_38_4321 ; $431a
-Label_38_431c:
+	jr .storeLeft2 ; $431a
+.wrapLeft2:
 	rra ; $431c
 	cp a, b ; $431d
-	jr c, Label_38_4321 ; $431e
+	jr c, .storeLeft2 ; $431e
 	xor a, a ; $4320
-Label_38_4321:
+.storeLeft2:
 	ld [wMenuCursor2X], a ; $4321
-	jr Label_38_4388 ; $4324
-Label_38_4326:
+	jr .compare2 ; $4324
+.checkUp2:
 	bit 6, a ; $4326
-	jr z, Label_38_433f ; $4328
+	jr z, .checkDown2 ; $4328
 	ld a, [wMenuCursor2Y] ; $432a
 	dec a ; $432d
 	add a, a ; $432e
-	jr nc, Label_38_4335 ; $432f
+	jr nc, .wrapUp2 ; $432f
 	ld a, c ; $4331
 	dec a ; $4332
-	jr Label_38_433a ; $4333
-Label_38_4335:
+	jr .storeUp2 ; $4333
+.wrapUp2:
 	rra ; $4335
 	cp a, c ; $4336
-	jr c, Label_38_433a ; $4337
+	jr c, .storeUp2 ; $4337
 	xor a, a ; $4339
-Label_38_433a:
+.storeUp2:
 	ld [wMenuCursor2Y], a ; $433a
-	jr Label_38_4388 ; $433d
-Label_38_433f:
+	jr .compare2 ; $433d
+.checkDown2:
 	bit 7, a ; $433f
-	jr z, Label_38_4358 ; $4341
+	jr z, .checkLock2 ; $4341
 	ld a, [wMenuCursor2Y] ; $4343
 	inc a ; $4346
 	add a, a ; $4347
-	jr nc, Label_38_434e ; $4348
+	jr nc, .wrapDown2 ; $4348
 	ld a, c ; $434a
 	dec a ; $434b
-	jr Label_38_4353 ; $434c
-Label_38_434e:
+	jr .storeDown2 ; $434c
+.wrapDown2:
 	rra ; $434e
 	cp a, c ; $434f
-	jr c, Label_38_4353 ; $4350
+	jr c, .storeDown2 ; $4350
 	xor a, a ; $4352
-Label_38_4353:
+.storeDown2:
 	ld [wMenuCursor2Y], a ; $4353
-	jr Label_38_4388 ; $4356
-Label_38_4358:
+	jr .compare2 ; $4356
+.checkLock2:
 	bit 0, a ; $4358
-	jr z, Label_38_436e ; $435a
+	jr z, .checkUnlock2 ; $435a
 	ld a, [wMenuCursorLockFlags] ; $435c
 	ld b, a ; $435f
 	and a, $02 ; $4360
-	jr nz, Label_38_4388 ; $4362
+	jr nz, .compare2 ; $4362
 	sound $5f ; $4364
 	ld a, b ; $4366
 	or a, $02 ; $4367
 	ld [wMenuCursorLockFlags], a ; $4369
-	jr Label_38_4388 ; $436c
-Label_38_436e:
+	jr .compare2 ; $436c
+.checkUnlock2:
 	bit 1, a ; $436e
-	jr z, Label_38_4388 ; $4370
+	jr z, .compare2 ; $4370
 	sound $62 ; $4372
 	ld a, [wMenuCursorLockFlags] ; $4374
 	ld b, a ; $4377
 	and a, $03 ; $4378
 	ld a, b ; $437a
-	jr nz, Label_38_4383 ; $437b
+	jr nz, .clearLock2 ; $437b
 	and a, $f5 ; $437d
 	or a, $08 ; $437f
-	jr Label_38_4385 ; $4381
-Label_38_4383:
+	jr .storeLock2 ; $4381
+.clearLock2:
 	and a, $fd ; $4383
-Label_38_4385:
+.storeLock2:
 	ld [wMenuCursorLockFlags], a ; $4385
-Label_38_4388:
+.compare2:
 	ld a, [wMenuCursor2X] ; $4388
 	cp a, d ; $438b
-	jr nz, Label_38_4396 ; $438c
+	jr nz, .moved2 ; $438c
 	ld a, [wMenuCursor2Y] ; $438e
 	cp a, e ; $4391
-	jr nz, Label_38_4396 ; $4392
+	jr nz, .moved2 ; $4392
 	xor a, a ; $4394
 	ret ; $4395
-Label_38_4396:
+.moved2:
 	ld a, $01 ; $4396
 	ret ; $4398
 GetMenuCursorLinearIndex:
