@@ -700,20 +700,20 @@ SetMenuCursorFromIndex:
 	wram_bank $03 ; $4406
 	xor a, a ; $440c
 	ld c, $40 ; $440d
-.loopBB:
+.loop2:
 	ld [hl+], a ; $440f
 	dec c ; $4410
-	jr nz, .loopBB ; $4411
+	jr nz, .loop2 ; $4411
 	pop af ; $4413
 	wram_bank ; $4414
 	ret ; $4418
 Data_1b_4419:
 	; $4419, 13 bytes (bytes:13)
 	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0, $70, $3e, $00, $0e, $40 ; 0x00
-.loopBBB:
+.loop3:
 	ld [hl+], a ; $4426
 	dec c ; $4427
-	jr nz, .loopBBB ; $4428
+	jr nz, .loop3 ; $4428
 	pop af ; $442a
 	wram_bank ; $442b
 	ret ; $442f
@@ -1203,9 +1203,9 @@ DispatchRankingBoardAnim:
 	ld hl, RankingBoardAnimHandlers4_1b ; $5032
 	add a, l ; $5035
 	ld l, a ; $5036
-	jr nc, .readBB ; $5037
+	jr nc, .read2 ; $5037
 	inc h ; $5039
-.readBB:
+.read2:
 	ld a, [hl+] ; $503a
 	ld h, [hl] ; $503b
 	ld l, a ; $503c
@@ -1216,9 +1216,9 @@ DispatchRankingBoardAnim:
 	ld hl, RankingBoardAnimHandlers3_1b ; $5042
 	add a, l ; $5045
 	ld l, a ; $5046
-	jr nc, .readBBB ; $5047
+	jr nc, .read3 ; $5047
 	inc h ; $5049
-.readBBB:
+.read3:
 	ld a, [hl+] ; $504a
 	ld h, [hl] ; $504b
 	ld l, a ; $504c
@@ -3420,9 +3420,9 @@ RunNewGameSetup:
 	jp .beginFadeOut ; $6211
 .compare:
 	cp a, $fe ; $6214
-	jr nz, .loopBB ; $6216
+	jr nz, .loop2 ; $6216
 	jr .loopB ; $6218
-.loopBB:
+.loop2:
 	ld a, $01 ; $621a
 	farcall RollStoryRandomByte ; $621c
 	ld a, $00 ; $621f
@@ -3431,7 +3431,7 @@ RunNewGameSetup:
 	jr nz, .loopB ; $6225
 	ld a, $02 ; $6227
 	farcall RollStoryRandomByte ; $6229
-.loopBBB:
+.loop3:
 	xor a, a ; $622c
 	ld [wStoryCharacterSlot], a ; $622d
 	push af ; $6230
@@ -3452,7 +3452,7 @@ RunNewGameSetup:
 	ld b, $00 ; $6246
 	farcall RunNameEntryScreen ; $6248
 	and a, a ; $624b
-	jr nz, .loopBB ; $624c
+	jr nz, .loop2 ; $624c
 	pop af ; $624e
 	ld [wStoryCharacterSlot], a ; $624f
 	ld a, [wStoryCharacterSlot] ; $6252
@@ -3461,7 +3461,7 @@ RunNewGameSetup:
 	ld [wStoryCharacterSlot], a ; $6258
 	ld de, SAVEFLAG_OPENING_SEEN ; $625b
 	farcall TestSaveFlag ; $625e
-	jr nz, .loopBBBB ; $6261
+	jr nz, .loop4 ; $6261
 	push af ; $6263
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6264
 	inc a ; $6267
@@ -3490,9 +3490,9 @@ RunNewGameSetup:
 	pop af ; $628c
 	ld a, b ; $628d
 	and a, a ; $628e
-	jr nz, .loopBBB ; $628f
+	jr nz, .loop3 ; $628f
 	jr .restore ; $6291
-.loopBBBB:
+.loop4:
 	ld a, [$c7be] ; $6293
 	ld d, a ; $6296
 	ld a, [$c7bf] ; $6297
@@ -3510,13 +3510,13 @@ RunNewGameSetup:
 	jp RunNewGameSetup ; $62b0
 .compare2:
 	cp a, $fe ; $62b3
-	jr nz, .loopBBBBB ; $62b5
-	jr .loopBBBB ; $62b7
-.loopBBBBB:
+	jr nz, .loop5 ; $62b5
+	jr .loop4 ; $62b7
+.loop5:
 	ld a, $01 ; $62b9
 	farcall PromptCharDataConfirm ; $62bb
 	and a, a ; $62be
-	jr nz, .loopBBBB ; $62bf
+	jr nz, .loop4 ; $62bf
 	push af ; $62c1
 	ld hl, wStoryModeNameOfMainCharacter ; $62c2
 	ld a, [wStoryCharacterSlot] ; $62c5
@@ -3535,7 +3535,7 @@ RunNewGameSetup:
 	ld b, $01 ; $62d7
 	farcall RunNameEntryScreen ; $62d9
 	and a, a ; $62dc
-	jr nz, .loopBBBBB ; $62dd
+	jr nz, .loop5 ; $62dd
 .restore:
 	pop af ; $62df
 	ld [wStoryCharacterSlot], a ; $62e0
@@ -3572,7 +3572,7 @@ RunDebugSaveDataFlow:
 	ld a, $01 ; $6322
 	farcall EraseStorySlotSaveData ; $6324
 	farcall SaveStorySlotWithTimer ; $6327
-	jp .loopBB ; $632a
+	jp .loop2 ; $632a
 .loop:
 	sound $03 ; $632d
 	call RunDebugSaveDataMenu ; $632f
@@ -3687,10 +3687,10 @@ RunDebugSaveDataFlow:
 	inc hl ; $63fe
 	ld [hl+], a ; $63ff
 	farcall SaveStorySlotWithTimer ; $6400
-	jr .loopBB ; $6403
+	jr .loop2 ; $6403
 .showNoN64DataFoundScreen:
 	farcall ShowNoN64DataFoundScreen ; $6405
-.loopBB:
+.loop2:
 	call RunLevelUpStatusTrophiesMenu ; $6408
 	cp a, $ff ; $640b
 	jp z, RunDebugSaveDataFlow ; $640d
@@ -3727,13 +3727,13 @@ RunDebugSaveDataFlow:
 	farcall CharDataScreen_Show ; $644f
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6452
 	farcall SaveStorySlotWithTimer ; $6455
-	jr .loopBB ; $6458
+	jr .loop2 ; $6458
 .showCharDataScreen:
 	farcall ShowCharDataScreen ; $645a
-	jp .loopBB ; $645d
+	jp .loop2 ; $645d
 .showTrophiesPlaceholderScreen:
 	call ShowTrophiesPlaceholderScreen ; $6460
-	jp .loopBB ; $6463
+	jp .loop2 ; $6463
 	ret ; $6466
 RunLevelUpStatusTrophiesMenu:
 	push bc ; $6467
@@ -6254,9 +6254,9 @@ DrawMinigameHighScoreNumber:
 	ld hl, $d81b ; $7866
 	add a, l ; $7869
 	ld l, a ; $786a
-	jr nc, .readBB ; $786b
+	jr nc, .read2 ; $786b
 	inc h ; $786d
-.readBB:
+.read2:
 	ld a, [hl+] ; $786e
 	ld h, [hl] ; $786f
 	ld l, a ; $7870

@@ -1493,7 +1493,7 @@ RunDrillResultInputLoop:
 	jr z, .loop ; $4cb6
 	dec a ; $4cb8
 	jp z, .loopB ; $4cb9
-	jp .loopBB ; $4cbc
+	jp .loop2 ; $4cbc
 .loop:
 	call AdvanceFrame ; $4cbf
 	ldh a, [hInputRisingEdge] ; $4cc2
@@ -1538,7 +1538,7 @@ RunDrillResultInputLoop:
 	ld a, $01 ; $4d2f
 	ld hl, SlideCharDataArrowsInTask ; $4d31
 	call RegisterFrameTask ; $4d34
-	jp .loopBB ; $4d37
+	jp .loop2 ; $4d37
 .playSfx2:
 	sound $5e ; $4d3a
 	ld hl, CharDataScreenBgScrollTask ; $4d3c
@@ -1620,7 +1620,7 @@ RunDrillResultInputLoop:
 .playSfx7:
 	sound $5f ; $4dfc
 	ret ; $4dfe
-.loopBB:
+.loop2:
 	call AdvanceFrame ; $4dff
 	ldh a, [hInputRisingEdge] ; $4e02
 	bit PADB_LEFT, a ; $4e04
@@ -1629,7 +1629,7 @@ RunDrillResultInputLoop:
 	jr nz, .playSfx9 ; $4e0a
 	bit 0, a ; $4e0c
 	jr nz, .playSfx10 ; $4e0e
-	jr .loopBB ; $4e10
+	jr .loop2 ; $4e10
 .playSfx8:
 	sound $5e ; $4e12
 	ld hl, SlideCharDataArrowsInTask ; $4e14
@@ -3057,9 +3057,9 @@ DrawExpProgressBarTiles:
 	ld a, $0a ; $5a47
 	add a, e ; $5a49
 	ld e, a ; $5a4a
-	jr nc, .readBB ; $5a4b
+	jr nc, .read2 ; $5a4b
 	inc d ; $5a4d
-.readBB:
+.read2:
 	ld a, [hl] ; $5a4e
 	ld [de], a ; $5a4f
 	ret ; $5a50
@@ -3328,7 +3328,7 @@ RunExpDistributionFlow:
 	ld c, $00 ; $6854
 	farcall CharDataScreen_Show ; $6856
 	dec a ; $6859
-	jr z, .loopBB ; $685a
+	jr z, .loop2 ; $685a
 	inc a ; $685c
 	jr nz, .countLeft ; $685d
 	farcall BackupCharData ; $685f
@@ -3342,7 +3342,7 @@ RunExpDistributionFlow:
 	dec a ; $686f
 	jr z, .countDone ; $6870
 	ret ; $6872
-.loopBB:
+.loop2:
 	wram_bank $06 ; $6873
 	ld hl, $d16d ; $6879
 	ld de, $c92c ; $687c
@@ -3371,7 +3371,7 @@ RunExpDistributionFlow:
 	farcall RestoreCharData ; $689c
 	jr .loopB ; $689f
 .countDone:
-	jr .loopBB ; $68a1
+	jr .loop2 ; $68a1
 ShowExpDistributionScreen:
 	push hl ; $68a3
 	sound $0c ; $68a4

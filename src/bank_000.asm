@@ -850,7 +850,7 @@ ProcessVRAMCopyQueues:
 	ld [$2000], a ; $056f
 	ld hl, wTileWriteQueue ; $0572
 	ld c, $10 ; $0575
-.loopBB:
+.loop2:
 	ld a, [hl] ; $0577
 	or a, a ; $0578
 	jr z, .done ; $0579
@@ -874,7 +874,7 @@ ProcessVRAMCopyQueues:
 	ld [de], a ; $058f
 	pop bc ; $0590
 	dec c ; $0591
-	jr nz, .loopBB ; $0592
+	jr nz, .loop2 ; $0592
 .done:
 	ret ; $0594
 	dec c ; $0595
@@ -889,12 +889,12 @@ ProcessVRAMCopyQueues:
 	and a, $f8 ; $05a0
 	ld l, a ; $05a2
 	ld de, wVRAMCopyQueue ; $05a3
-.loopBBB:
+.loop3:
 	ld a, [hl+] ; $05a6
 	ld [de], a ; $05a7
 	inc e ; $05a8
 	dec c ; $05a9
-	jr nz, .loopBBB ; $05aa
+	jr nz, .loop3 ; $05aa
 	xor a, a ; $05ac
 	ld [de], a ; $05ad
 	jr .loopB ; $05ae
@@ -4907,7 +4907,7 @@ SortFrameTasks:
 	jr c, .next ; $1c4a
 	push bc ; $1c4c
 	ld c, $04 ; $1c4d
-.loopBB:
+.loop2:
 	ld b, [hl] ; $1c4f
 	ld a, [de] ; $1c50
 	ld [hl+], a ; $1c51
@@ -4915,7 +4915,7 @@ SortFrameTasks:
 	ld [de], a ; $1c53
 	inc de ; $1c54
 	dec c ; $1c55
-	jr nz, .loopBB ; $1c56
+	jr nz, .loop2 ; $1c56
 	pop bc ; $1c58
 	jr .next2 ; $1c59
 .next:
@@ -7660,7 +7660,7 @@ DrawWindowFrame:
 .gotPtr3:
 	dec c ; $2ba4
 	dec c ; $2ba5
-.loopBB:
+.loop2:
 	call DrawWindowFrameSides ; $2ba6
 	ld a, $20 ; $2ba9
 	add a, l ; $2bab
@@ -7669,7 +7669,7 @@ DrawWindowFrame:
 	inc h ; $2baf
 .drawWindowFrameBottom:
 	dec c ; $2bb0
-	jr nz, .loopBB ; $2bb1
+	jr nz, .loop2 ; $2bb1
 	call DrawWindowFrameBottom ; $2bb3
 	pop hl ; $2bb6
 	pop de ; $2bb7
@@ -9096,7 +9096,7 @@ UpdateSoundChannels:
 	jr nz, .nonZero ; $3415
 	ldh a, [hSndEchoCtrl] ; $3417
 	and a, $f0 ; $3419
-	jr z, .loopBB ; $341b
+	jr z, .loop2 ; $341b
 	ld hl, hSndEchoTimer ; $341d
 	dec [hl] ; $3420
 	jr nz, .countLeft ; $3421
@@ -9107,9 +9107,9 @@ UpdateSoundChannels:
 	and a, $0f ; $342a
 	or a, c ; $342c
 	ldh [hSndVolume], a ; $342d
-.loopBB:
+.loop2:
 	call MarkCurrentChannelUpdated ; $342f
-.loopBBB:
+.loop3:
 	ldh a, [hSndNoteLenReload] ; $3432
 	ldh [hSndNoteLenTimer], a ; $3434
 	call RunSoundChannelScript ; $3436
@@ -9139,7 +9139,7 @@ UpdateSoundChannels:
 	ldh a, [hSndEchoCtrl] ; $345c
 	and a, $f0 ; $345e
 	jr nz, .checkSndWaveReloadPending ; $3460
-	jr .loopBB ; $3462
+	jr .loop2 ; $3462
 .checkSndWaveReloadPending:
 	ld a, [wSndWaveReloadPending] ; $3464
 	and a, a ; $3467
@@ -9220,7 +9220,7 @@ UpdateSoundChannels:
 	rrca ; $34f2
 	and a, $c0 ; $34f3
 	or a, d ; $34f5
-.loopBBBB:
+.loop4:
 	ldh [hSndToneCtrl], a ; $34f6
 	ld a, [hl+] ; $34f8
 	swap a ; $34f9
@@ -9230,7 +9230,7 @@ UpdateSoundChannels:
 	jr z, .eq02 ; $3502
 	ld a, [hl+] ; $3504
 	ldh [hSndWaveId], a ; $3505
-.loopBBBBB:
+.loop5:
 	ld a, $ff ; $3507
 	ldh [hSndNoteOffset], a ; $3509
 	xor a, a ; $350b
@@ -9242,12 +9242,12 @@ UpdateSoundChannels:
 	ldh [hSndPanMask], a ; $3515
 	ld a, $02 ; $3517
 	ldh [hSndScriptPtr], a ; $3519
-	jp .loopBBB ; $351b
+	jp .loop3 ; $351b
 .read:
 	ld a, [hl+] ; $351e
 	ldh [hSndEnvLength], a ; $351f
 	ld a, d ; $3521
-	jr .loopBBBB ; $3522
+	jr .loop4 ; $3522
 .eq02:
 	xor a, a ; $3524
 	ldh [rAUD3ENA], a ; $3525
@@ -9278,13 +9278,13 @@ UpdateSoundChannels:
 	add hl, de ; $354b
 	ld c, $30 ; $354c
 	ld b, $10 ; $354e
-.loopBBBBBB:
+.loop6:
 	ld a, [hl+] ; $3550
 	ldh [c], a ; $3551
 	inc c ; $3552
 	dec b ; $3553
-	jr nz, .loopBBBBBB ; $3554
-	jr .loopBBBBB ; $3556
+	jr nz, .loop6 ; $3554
+	jr .loop5 ; $3556
 RunSoundChannelScript:
 	ldh a, [hSndScriptPtr] ; $3558
 	ld l, a ; $355a
@@ -9891,7 +9891,7 @@ SndTriggerNote:
 	ld a, h ; $3936
 	and a, $07 ; $3937
 	or a, $80 ; $3939
-.loopBB:
+.loop2:
 	or a, $20 ; $393b
 	ldh [hSndPeriodHi], a ; $393d
 	ld c, $14 ; $393f
@@ -9918,7 +9918,7 @@ SndTriggerNote:
 	jr z, .loopB ; $3961
 	ld a, h ; $3963
 	and a, $07 ; $3964
-	jr .loopBB ; $3966
+	jr .loop2 ; $3966
 TickVolumeSlide:
 	ld a, [wSndChannelType] ; $3968
 	cp a, $02 ; $396b

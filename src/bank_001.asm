@@ -69,7 +69,7 @@ RunDebugTestMenu:
 	call PrintString ; $40b8
 	ld a, $03 ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
-.loopBB:
+.loop2:
 	ldh a, [hInputPressed] ; $40bf
 	bit PADB_A, a ; $40c1
 	jr z, .advanceFrame ; $40c3
@@ -82,7 +82,7 @@ RunDebugTestMenu:
 	bit 3, a ; $40cf
 	jr nz, .setDebugStepMode ; $40d1
 	call AdvanceFrame ; $40d3
-	jr .loopBB ; $40d6
+	jr .loop2 ; $40d6
 .setDebugStepMode:
 	ld a, $00 ; $40d8
 	ldh [hDebugStepMode], a ; $40da
@@ -127,10 +127,10 @@ Unused_01_MenuRedraw:
 	jr z, .bit1Clear ; $4129
 	ld a, $01 ; $412b
 	ldh [hDebugStepMode], a ; $412d
-.loopBB:
+.loop2:
 	farcall StubNop_3b_44a9 ; $412f
 	farcall RunMatch ; $4132
-	jp .loopBB ; $4135
+	jp .loop2 ; $4135
 .bit1Clear:
 	bit 6, a ; $4138
 	jp z, Unused_01_MatchSetup.bit6Clear ; $413a
@@ -168,12 +168,12 @@ Unused_01_MenuRedraw:
 	call SetGameFlagByNumber ; $418a
 	ld a, $00 ; $418d
 	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
-.loopBBB:
+.loop3:
 	farcall RunMatchWinLoseScreen ; $4192
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4195
 	inc a ; $4198
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
-	jr .loopBBB ; $419c
+	jr .loop3 ; $419c
 Unused_01_MatchSetup:
 	farcall ShowEquipmentStatusScreen ; $419e
 	ld de, $002f ; $41a1

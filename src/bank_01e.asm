@@ -4896,12 +4896,12 @@ FillProgressListRowTiles:
 	ld a, $3e ; $7a00
 	ld b, $3f ; $7a02
 	ld c, $0a ; $7a04
-.loopBB:
+.loop2:
 	ld [hl+], a ; $7a06
 	ld [hl], b ; $7a07
 	inc hl ; $7a08
 	dec c ; $7a09
-	jr nz, .loopBB ; $7a0a
+	jr nz, .loop2 ; $7a0a
 	ld bc, $000c ; $7a0c
 	add hl, bc ; $7a0f
 	dec e ; $7a10

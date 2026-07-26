@@ -1985,12 +1985,12 @@ ReadSaveBlockTag:
 	ld e, a ; $4cf3
 	ld d, b ; $4cf4
 	ld c, $02 ; $4cf5
-.loopBB:
+.loop2:
 	ld a, [de] ; $4cf7
 	ld [hl+], a ; $4cf8
 	inc de ; $4cf9
 	dec c ; $4cfa
-	jr nz, .loopBB ; $4cfb
+	jr nz, .loop2 ; $4cfb
 	xor a, a ; $4cfd
 	push af ; $4cfe
 	xor a, a ; $4cff
@@ -2357,14 +2357,14 @@ ClearSaveBlockData:
 	pop hl ; $4f28
 	push hl ; $4f29
 	push bc ; $4f2a
-.loopBB:
+.loop2:
 	xor a, a ; $4f2b
 	ld [de], a ; $4f2c
 	inc de ; $4f2d
 	dec bc ; $4f2e
 	ld a, b ; $4f2f
 	or a, c ; $4f30
-	jr nz, .loopBB ; $4f31
+	jr nz, .loop2 ; $4f31
 	pop bc ; $4f33
 	pop hl ; $4f34
 	ld de, $0000 ; $4f35
@@ -2381,11 +2381,11 @@ ClearSaveBlockData:
 	ld [hl], d ; $4f49
 	inc hl ; $4f4a
 	ld c, $08 ; $4f4b
-.loopBBB:
+.loop3:
 	xor a, a ; $4f4d
 	ld [hl+], a ; $4f4e
 	dec c ; $4f4f
-	jr nz, .loopBBB ; $4f50
+	jr nz, .loop3 ; $4f50
 	xor a, a ; $4f52
 	pop bc ; $4f53
 	pop de ; $4f54
@@ -3017,7 +3017,7 @@ SaveSlotDebugEditor:
 	ld l, a ; $537d
 	ld b, $10 ; $537e
 	ld e, $01 ; $5380
-.loopBB:
+.loop2:
 	ld d, $00 ; $5382
 	push bc ; $5384
 	push de ; $5385
@@ -3033,7 +3033,7 @@ SaveSlotDebugEditor:
 	inc d ; $5392
 	inc d ; $5393
 	ld c, $04 ; $5394
-.loopBBB:
+.loop3:
 	push hl ; $5396
 	ld a, [hl+] ; $5397
 	ld l, [hl] ; $5398
@@ -3051,13 +3051,13 @@ SaveSlotDebugEditor:
 	inc d ; $53a6
 	inc d ; $53a7
 	dec c ; $53a8
-	jr nz, .loopBBB ; $53a9
+	jr nz, .loop3 ; $53a9
 	inc e ; $53ab
 	pop bc ; $53ac
 	dec b ; $53ad
-	jr nz, .loopBB ; $53ae
+	jr nz, .loop2 ; $53ae
 	pop de ; $53b0
-.loopBBBB:
+.loop4:
 	push de ; $53b1
 	ld hl, hSaveEditorCursor ; $53b2
 	ld a, [hl+] ; $53b5
@@ -3069,7 +3069,7 @@ SaveSlotDebugEditor:
 	ld de, $0011 ; $53c1
 	call PrintDecimalByte ; $53c4
 	pop de ; $53c7
-.loopBBBBB:
+.loop5:
 	ldh a, [hPlayerInputFlags] ; $53c8
 	bit PADB_A, a ; $53ca
 	jr nz, .step2 ; $53cc
@@ -3105,28 +3105,28 @@ SaveSlotDebugEditor:
 	jr z, .moveSaveEditorCursor ; $53ff
 	ld bc, $f0f8 ; $5401
 	call MoveSaveEditorCursor ; $5404
-	jr z, .loopBBBB ; $5407
+	jr z, .loop4 ; $5407
 	jp .loopB ; $5409
 .moveSaveEditorCursor:
 	bit 5, a ; $540c
 	jr z, .bit5Clear ; $540e
 	ld bc, rIE ; $5410
 	call MoveSaveEditorCursor ; $5413
-	jr z, .loopBBBB ; $5416
+	jr z, .loop4 ; $5416
 	jp .loopB ; $5418
 .bit5Clear:
 	bit 4, a ; $541b
 	jr z, .bit4Clear ; $541d
 	ld bc, $0101 ; $541f
 	call MoveSaveEditorCursor ; $5422
-	jr z, .loopBBBB ; $5425
+	jr z, .loop4 ; $5425
 	jp .loopB ; $5427
 .bit4Clear:
 	bit 7, a ; $542a
 	jr z, .positive ; $542c
 	ld bc, $1008 ; $542e
 	call MoveSaveEditorCursor ; $5431
-	jp z, .loopBBBB ; $5434
+	jp z, .loop4 ; $5434
 	jp .loopB ; $5437
 .positive:
 	bit 1, a ; $543a
@@ -3180,17 +3180,17 @@ SaveSlotDebugEditor:
 	call PrintString ; $5492
 	call WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
-	jp .loopBBBB ; $5499
+	jp .loop4 ; $5499
 .bit3Set:
 	push de ; $549c
 	ld hl, SaveResultDeletedString_03 ; $549d
 	ld de, $0511 ; $54a0
 	call PrintString ; $54a3
 	call InvalidateCurrentSlotBlock ; $54a6
-	jp .loopBBBB ; $54a9
+	jp .loop4 ; $54a9
 	db $d1 ; $54ac
 .label_03_53c8:
-	jp .loopBBBBB ; $54ad
+	jp .loop5 ; $54ad
 SaveResultFailedString_03:
 	; $54b0, 12 bytes (ascii)
 	db "FAILED     ", $00
@@ -5797,10 +5797,10 @@ ScrollCutsceneTextWindow:
 	dec e ; $7476
 	jr nz, .loopB ; $7477
 	ld e, $ff ; $7479
-.loopBB:
+.loop2:
 	call AdvanceFrame ; $747b
 	dec e ; $747e
-	jr nz, .loopBB ; $747f
+	jr nz, .loop2 ; $747f
 	inc d ; $7481
 	ld a, d ; $7482
 	cp a, b ; $7483
@@ -6219,7 +6219,7 @@ AnimatePaletteFadeToTarget:
 .zero:
 	ld de, $d1e0 ; $772e
 	ld b, $00 ; $7731
-.loopBB:
+.loop2:
 	push de ; $7733
 	push bc ; $7734
 	ld a, [de] ; $7735
@@ -6233,7 +6233,7 @@ AnimatePaletteFadeToTarget:
 	inc b ; $773f
 	ld a, b ; $7740
 	cp a, $10 ; $7741
-	jr nz, .loopBB ; $7743
+	jr nz, .loop2 ; $7743
 	ld hl, $d140 ; $7745
 	ld d, $00 ; $7748
 	ld e, $10 ; $774a

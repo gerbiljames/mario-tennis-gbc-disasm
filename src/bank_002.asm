@@ -1497,9 +1497,9 @@ Unused_02_ListForEach:
 	jr .loopB ; $4bc8
 .readB:
 	ld a, [hl+] ; $4bca
-.loopBB:
+.loop2:
 	or a, a ; $4bcb
-	jr z, .readBB ; $4bcc
+	jr z, .read2 ; $4bcc
 	push af ; $4bce
 	push hl ; $4bcf
 	ld d, $02 ; $4bd0
@@ -1507,10 +1507,10 @@ Unused_02_ListForEach:
 	pop hl ; $4bd5
 	pop af ; $4bd6
 	dec a ; $4bd7
-	jr .loopBB ; $4bd8
-.readBB:
+	jr .loop2 ; $4bd8
+.read2:
 	ld a, [hl+] ; $4bda
-.loopBBB:
+.loop3:
 	or a, a ; $4bdb
 	jr z, .zero ; $4bdc
 	push af ; $4bde
@@ -1520,15 +1520,15 @@ Unused_02_ListForEach:
 	pop hl ; $4be5
 	pop af ; $4be6
 	dec a ; $4be7
-	jr .loopBBB ; $4be8
+	jr .loop3 ; $4be8
 .zero:
 	xor a, a ; $4bea
 	ld hl, CharDataPtr_02 ; $4beb
 	add a, l ; $4bee
 	ld l, a ; $4bef
-	jr nc, .readBBB ; $4bf0
+	jr nc, .read3 ; $4bf0
 	inc h ; $4bf2
-.readBBB:
+.read3:
 	ld a, [hl+] ; $4bf3
 	ld d, [hl] ; $4bf4
 	ld e, a ; $4bf5
@@ -2161,7 +2161,7 @@ DebugStoryStatsScreen:
 	ld de, $0c0e ; $5138
 	call PrintDecimalByte ; $513b
 	pop de ; $513e
-.loopBB:
+.loop2:
 	call AdvanceFrame ; $513f
 	call AdvanceRandomSeed ; $5142
 	ldh a, [hInputPressed] ; $5145
@@ -2265,7 +2265,7 @@ DebugStoryStatsScreen:
 	pop de ; $51f3
 	jp .loopB ; $51f4
 .label_02_513f:
-	jp .loopBB ; $51f7
+	jp .loop2 ; $51f7
 MenuTilemaps_02:
 	; $51fa, 77 bytes (bytes:16)
 	db $46, $41, $49, $4c, $45, $44, $20, $00, $4c, $4f, $41, $44, $45, $44, $20, $00 ; 0x00

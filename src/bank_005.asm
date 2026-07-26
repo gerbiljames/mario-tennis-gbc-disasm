@@ -695,7 +695,7 @@ RestoreShadowTilemapRow:
 	ld d, a ; $4428
 	ld a, $05 ; $4429
 	ld bc, $0020 ; $442b
-.loopBB:
+.loop2:
 	rr d ; $442e
 	jr nc, .noCarry2 ; $4430
 	add hl, bc ; $4432
@@ -703,7 +703,7 @@ RestoreShadowTilemapRow:
 	sla c ; $4433
 	rl b ; $4435
 	dec a ; $4437
-	jr nz, .loopBB ; $4438
+	jr nz, .loop2 ; $4438
 	push de ; $443a
 	ld d, h ; $443b
 	ld e, l ; $443c
@@ -723,7 +723,7 @@ RestoreShadowTilemapRow:
 	inc h ; $445e
 .gotPtr2:
 	ld d, $20 ; $445f
-.loopBBB:
+.loop3:
 	ld a, [bc] ; $4461
 	ld [hl+], a ; $4462
 	inc bc ; $4463
@@ -740,14 +740,14 @@ RestoreShadowTilemapRow:
 	ld c, a ; $4475
 .next2:
 	dec d ; $4476
-	jr nz, .loopBBB ; $4477
+	jr nz, .loop3 ; $4477
 	ld hl, $d400 ; $4479
 	ld a, e ; $447c
 	and a, $1f ; $447d
 	ld d, a ; $447f
 	ld a, $05 ; $4480
 	ld bc, $0020 ; $4482
-.loopBBBB:
+.loop4:
 	rr d ; $4485
 	jr nc, .noCarry3 ; $4487
 	add hl, bc ; $4489
@@ -755,7 +755,7 @@ RestoreShadowTilemapRow:
 	sla c ; $448a
 	rl b ; $448c
 	dec a ; $448e
-	jr nz, .loopBBBB ; $448f
+	jr nz, .loop4 ; $448f
 	ld d, h ; $4491
 	ld e, l ; $4492
 	ld hl, $c6a0 ; $4493
@@ -945,10 +945,10 @@ DrawTileAttrRect:
 	inc hl ; $4599
 	ld c, [hl] ; $459a
 	inc hl ; $459b
-.loopBB:
+.loop2:
 	push de ; $459c
 	push bc ; $459d
-.loopBBB:
+.loop3:
 	ld a, $00 ; $459e
 	push de ; $45a0
 	call GetTilemapCellAddress ; $45a1
@@ -957,7 +957,7 @@ DrawTileAttrRect:
 	dec b ; $45a6
 	jr z, .countDone ; $45a7
 	inc d ; $45a9
-	jr .loopBBB ; $45aa
+	jr .loop3 ; $45aa
 .countDone:
 	ld a, c ; $45ac
 	pop bc ; $45ad
@@ -967,7 +967,7 @@ DrawTileAttrRect:
 	ld e, a ; $45b1
 	inc e ; $45b2
 	dec c ; $45b3
-	jr nz, .loopBB ; $45b4
+	jr nz, .loop2 ; $45b4
 	pop de ; $45b6
 	pop bc ; $45b7
 	pop af ; $45b8
@@ -3082,7 +3082,7 @@ IsTileBlockedAt:
 	ld a, $01 ; $536d
 .step:
 	ld b, $00 ; $536f
-.loopBB:
+.loop2:
 	push af ; $5371
 	push hl ; $5372
 	dec a ; $5373
@@ -3098,7 +3098,7 @@ IsTileBlockedAt:
 	ld e, a ; $537f
 	pop hl ; $5380
 	xor a, a ; $5381
-.loopBBB:
+.loop3:
 	ld a, l ; $5382
 	sub a, e ; $5383
 	ld l, a ; $5384
@@ -3108,7 +3108,7 @@ IsTileBlockedAt:
 	bit 7, h ; $5388
 	jr nz, .offset ; $538a
 	inc a ; $538c
-	jr .loopBBB ; $538d
+	jr .loop3 ; $538d
 .offset:
 	add hl, de ; $538f
 	ld c, $30 ; $5390
@@ -3119,7 +3119,7 @@ IsTileBlockedAt:
 	ld b, a ; $5398
 	pop af ; $5399
 	dec a ; $539a
-	jr nz, .loopBB ; $539b
+	jr nz, .loop2 ; $539b
 	ld a, b ; $539d
 	pop de ; $539e
 	pop bc ; $539f
@@ -6474,7 +6474,7 @@ RunDebugPaletteViewer:
 	ld a, $0f ; $6aaa
 	ld hl, DrawPaletteCursorSprites ; $6aac
 	call RegisterFrameTask ; $6aaf
-.loopBB:
+.loop2:
 	ldh a, [hInputRisingEdge] ; $6ab2
 	bit PADB_B, a ; $6ab4
 	jr nz, .closeWindow ; $6ab6
@@ -6514,7 +6514,7 @@ RunDebugPaletteViewer:
 	and a, $0f ; $6aec
 	ld [$c713], a ; $6aee
 	call AdvanceFrame ; $6af1
-	jr .loopBB ; $6af4
+	jr .loop2 ; $6af4
 .closeWindow:
 	ld a, [$c710] ; $6af6
 	call CloseWindow ; $6af9

@@ -111,7 +111,7 @@ DispatchCutsceneStateInit:
 	ld h, [hl] ; $40ac
 	ld l, a ; $40ad
 	jp hl ; $40ae
-.loopBB:
+.loop2:
 	ld a, [wCutsceneStep] ; $40af
 	inc a ; $40b2
 	ld [wCutsceneStep], a ; $40b3
@@ -243,11 +243,11 @@ IntroCutsceneState19_6b:
 Unused_6b_UpdateHandler_4159:
 	jp DispatchCutsceneStateInit.loop ; $4159
 IntroCutsceneState14Exit_6b:
-	jp DispatchCutsceneStateInit.loopBB ; $415c
+	jp DispatchCutsceneStateInit.loop2 ; $415c
 Unused_6b_ExitHandler_415f:
 	xor a, a ; $415f
 	ld [wCutsceneStepTimer], a ; $4160
-	jp DispatchCutsceneStateInit.loopBB ; $4163
+	jp DispatchCutsceneStateInit.loop2 ; $4163
 IntroCutsceneState14Init_6b:
 	ld a, $01 ; $4166
 	ld [wIntroCutsceneCheck], a ; $4168
@@ -261,7 +261,7 @@ IntroCutsceneState15Init_6b:
 IntroCutsceneState15Exit_6b:
 	xor a, a ; $4178
 	ld [wCutsceneStepTimer], a ; $4179
-	jp DispatchCutsceneStateInit.loopBB ; $417c
+	jp DispatchCutsceneStateInit.loop2 ; $417c
 IntroCutsceneState15Update_6b:
 	ld a, [wCutsceneStepTimer] ; $417f
 	inc a ; $4182
@@ -314,7 +314,7 @@ IntroCutsceneState00Exit_6b:
 	ld [wCameraX + 1], a ; $41ee
 	ld [wCameraY], a ; $41f1
 	ld [wCameraY + 1], a ; $41f4
-	jp DispatchCutsceneStateInit.loopBB ; $41f7
+	jp DispatchCutsceneStateInit.loop2 ; $41f7
 IntroCutsceneState00Update_6b:
 	ld a, [wCutsceneStepTimer] ; $41fa
 	inc a ; $41fd
@@ -401,7 +401,7 @@ IntroCutsceneState01Exit_6b:
 	ld [wCutsceneStepTimer], a ; $42f9
 	ld [wCutsceneScrollX], a ; $42fc
 	ldh [hScrollX], a ; $42ff
-	jp DispatchCutsceneStateInit.loopBB ; $4301
+	jp DispatchCutsceneStateInit.loop2 ; $4301
 IntroCutsceneState01Update_6b:
 	ld a, [wCutsceneScrollX] ; $4304
 	add a, $03 ; $4307
@@ -462,7 +462,7 @@ IntroCutsceneState02Exit_6b:
 	call WaitFadeEnd ; $43b4
 	xor a, a ; $43b7
 	ld [wCutsceneStepTimer], a ; $43b8
-	jp DispatchCutsceneStateInit.loopBB ; $43bb
+	jp DispatchCutsceneStateInit.loop2 ; $43bb
 IntroCutsceneState02Update_6b:
 	ld a, [wCutsceneStepTimer] ; $43be
 	inc a ; $43c1
@@ -526,7 +526,7 @@ IntroCutsceneState03Exit_6b:
 	ld [wCutsceneStepTimer], a ; $445c
 	ld [$cb43], a ; $445f
 	ldh [hScrollX], a ; $4462
-	jp DispatchCutsceneStateInit.loopBB ; $4464
+	jp DispatchCutsceneStateInit.loop2 ; $4464
 IntroCutsceneState03Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4467
 	inc a ; $446a
@@ -584,7 +584,7 @@ IntroCutsceneState04Exit_6b:
 	call WaitFadeEnd ; $4515
 	xor a, a ; $4518
 	ld [wCutsceneStepTimer], a ; $4519
-	jp DispatchCutsceneStateInit.loopBB ; $451c
+	jp DispatchCutsceneStateInit.loop2 ; $451c
 IntroCutsceneState04Update_6b:
 	ld a, [wCutsceneStepTimer] ; $451f
 	inc a ; $4522
@@ -684,7 +684,7 @@ IntroCutsceneState05Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupB ; $4614
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
-	jp DispatchCutsceneStateInit.loopBB ; $461d
+	jp DispatchCutsceneStateInit.loop2 ; $461d
 IntroCutsceneState05Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4620
 	inc a ; $4623
@@ -706,7 +706,7 @@ IntroCutsceneState06Exit_6b:
 	ld c, $10 ; $4644
 	call BeginFadeOut ; $4646
 	call WaitFadeEnd ; $4649
-	jp DispatchCutsceneStateInit.loopBB ; $464c
+	jp DispatchCutsceneStateInit.loop2 ; $464c
 IntroCutsceneState06Update_6b:
 	ld a, [wCutsceneStepTimer] ; $464f
 	inc a ; $4652
@@ -742,7 +742,7 @@ IntroCutsceneState07Exit_6b:
 	ld [wCameraX + 1], a ; $469d
 	ld [wCameraY], a ; $46a0
 	ld [wCameraY + 1], a ; $46a3
-	jp DispatchCutsceneStateInit.loopBB ; $46a6
+	jp DispatchCutsceneStateInit.loop2 ; $46a6
 IntroCutsceneState07Update_6b:
 	ld a, [wCameraX + 1] ; $46a9
 	cp a, $40 ; $46ac
@@ -811,7 +811,7 @@ IntroCutsceneState13Exit_6b:
 	call DisableLCDSafely ; $4741
 	xor a, a ; $4744
 	ld [wCutsceneStepTimer], a ; $4745
-	jp DispatchCutsceneStateInit.loopBB ; $4748
+	jp DispatchCutsceneStateInit.loop2 ; $4748
 IntroCutsceneState13Update_6b:
 	ld a, [wCutsceneStepTimer] ; $474b
 	inc a ; $474e
@@ -854,7 +854,7 @@ IntroCutsceneState08Exit_6b:
 	call UnregisterFrameTask ; $47cf
 	xor a, a ; $47d2
 	ldh [hScrollX], a ; $47d3
-	jp DispatchCutsceneStateInit.loopBB ; $47d5
+	jp DispatchCutsceneStateInit.loop2 ; $47d5
 IntroCutsceneState08Update_6b:
 	ld a, [wCutsceneStepTimer] ; $47d8
 	inc a ; $47db
@@ -887,7 +887,7 @@ IntroCutsceneState09Exit_6b:
 	call UnregisterFrameTask ; $481e
 	xor a, a ; $4821
 	ldh [hScrollX], a ; $4822
-	jp DispatchCutsceneStateInit.loopBB ; $4824
+	jp DispatchCutsceneStateInit.loop2 ; $4824
 IntroCutsceneState09Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4827
 	inc a ; $482a
@@ -920,7 +920,7 @@ IntroCutsceneState10Exit_6b:
 	call UnregisterFrameTask ; $486d
 	xor a, a ; $4870
 	ldh [hScrollX], a ; $4871
-	jp DispatchCutsceneStateInit.loopBB ; $4873
+	jp DispatchCutsceneStateInit.loop2 ; $4873
 IntroCutsceneState10Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4876
 	inc a ; $4879
@@ -963,7 +963,7 @@ IntroCutsceneState11Exit_6b:
 	call LoadPaletteShadow ; $48d9
 	xor a, a ; $48dc
 	ld [wCutsceneStepTimer], a ; $48dd
-	jp DispatchCutsceneStateInit.loopBB ; $48e0
+	jp DispatchCutsceneStateInit.loop2 ; $48e0
 IntroCutsceneState11Update_6b:
 	ld a, [wCutsceneStepTimer] ; $48e3
 	inc a ; $48e6
@@ -997,7 +997,7 @@ IntroCutsceneState12Exit_6b:
 	ld c, $04 ; $491f
 	call BeginFadeOut ; $4921
 	call WaitFadeEnd ; $4924
-	jp DispatchCutsceneStateInit.loopBB ; $4927
+	jp DispatchCutsceneStateInit.loop2 ; $4927
 IntroCutsceneState12Update_6b:
 	ld a, [$cb45] ; $492a
 	cp a, $0a ; $492d
@@ -1107,7 +1107,7 @@ IntroCutsceneState16Update_6b:
 IntroCutsceneState16Exit_6b:
 	xor a, a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
-	jp DispatchCutsceneStateInit.loopBB ; $4a55
+	jp DispatchCutsceneStateInit.loop2 ; $4a55
 Palettes_6b_4a58:
 	; $4a58, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -1153,7 +1153,7 @@ IntroCutsceneState17Update_6b:
 	jp z, DispatchCutsceneStateInit.loopB ; $4ae9
 	jp DispatchCutsceneStateInit.loop ; $4aec
 IntroCutsceneState17Exit_6b:
-	jp DispatchCutsceneStateInit.loopBB ; $4aef
+	jp DispatchCutsceneStateInit.loop2 ; $4aef
 IntroCutsceneState18Init_6b:
 	ld hl, Palettes_6b_756f ; $4af2
 	ld de, $0008 ; $4af5
@@ -1253,7 +1253,7 @@ IntroCutsceneState18Exit_6b:
 	wram_bank $03 ; $4bf3
 	ld a, $00 ; $4bf9
 	ldh [hShowDebugConsole], a ; $4bfb
-	jp DispatchCutsceneStateInit.loopBB ; $4bfd
+	jp DispatchCutsceneStateInit.loop2 ; $4bfd
 Palettes_6b_4c00:
 	; $4c00, 56 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -1293,7 +1293,7 @@ IntroCutsceneState19Exit_6b:
 	ld c, $04 ; $4c6e
 	call BeginFadeOut ; $4c70
 	call WaitFadeEnd ; $4c73
-	jp DispatchCutsceneStateInit.loopBB ; $4c76
+	jp DispatchCutsceneStateInit.loop2 ; $4c76
 IntroCutsceneState19Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4c79
 	inc a ; $4c7c
@@ -1408,9 +1408,9 @@ QueueCutsceneAnimatedSprites:
 	ld hl, Data_6b_4ea5 ; $4e75
 	add a, l ; $4e78
 	ld l, a ; $4e79
-	jr nc, .readBB ; $4e7a
+	jr nc, .read2 ; $4e7a
 	inc h ; $4e7c
-.readBB:
+.read2:
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f

@@ -652,12 +652,12 @@ ApplySpriteWobbleY_17:
 Data_17_43b9:
 	; $43b9, 3 bytes (bytes:3)
 	db $16, $00, $79 ; 0x00
-.loopBB:
+.loop2:
 	cp a, b ; $43bc
 	jr c, .store19 ; $43bd
 	inc d ; $43bf
 	sub a, b ; $43c0
-	jr .loopBB ; $43c1
+	jr .loop2 ; $43c1
 .store19:
 	ld [wMenuCursorX], a ; $43c3
 	ld a, d ; $43c6
@@ -666,12 +666,12 @@ Data_17_43b9:
 Data_17_43cb:
 	; $43cb, 3 bytes (bytes:3)
 	db $16, $00, $79 ; 0x00
-.loopBBB:
+.loop3:
 	cp a, b ; $43ce
 	jr c, .store20 ; $43cf
 	inc d ; $43d1
 	sub a, b ; $43d2
-	jr .loopBBB ; $43d3
+	jr .loop3 ; $43d3
 .store20:
 	ld [hl+], a ; $43d5
 	ld a, d ; $43d6
@@ -682,10 +682,10 @@ Data_17_43cb:
 	wram_bank $03 ; $43dc
 	xor a, a ; $43e2
 	ld c, $40 ; $43e3
-.loopBBBB:
+.loop4:
 	ld [hl+], a ; $43e5
 	dec c ; $43e6
-	jr nz, .loopBBBB ; $43e7
+	jr nz, .loop4 ; $43e7
 	pop af ; $43e9
 	wram_bank ; $43ea
 	ret ; $43ee
@@ -694,10 +694,10 @@ Data_17_43cb:
 	wram_bank $03 ; $43f2
 	ld a, $00 ; $43f8
 	ld c, $40 ; $43fa
-.loopBBBBB:
+.loop5:
 	ld [hl+], a ; $43fc
 	dec c ; $43fd
-	jr nz, .loopBBBBB ; $43fe
+	jr nz, .loop5 ; $43fe
 	pop af ; $4400
 	wram_bank ; $4401
 	ret ; $4405
@@ -1795,12 +1795,12 @@ DrillBriefing_ServeToTargets:
 	xor a, a ; $56f8
 	ld [$d82c], a ; $56f9
 	ld [$d82e], a ; $56fc
-.loopBB:
+.loop2:
 	call ServeToTargetsBriefing_TickAnim ; $56ff
 	ld c, $01 ; $5702
 	call AdvanceFrameCheckInput ; $5704
 	and a, a ; $5707
-	jp z, .loopBB ; $5708
+	jp z, .loop2 ; $5708
 	call ClearFrameTasks ; $570b
 	ret ; $570e
 ServeToTargetsBriefing_TickAnim:
@@ -2159,12 +2159,12 @@ DrillBriefing_SpinServe:
 	xor a, a ; $5a0a
 	ld [$d82c], a ; $5a0b
 	ld [$d82e], a ; $5a0e
-.loopBB:
+.loop2:
 	call SpinServeBriefing_TickAnim2 ; $5a11
 	ld c, $00 ; $5a14
 	call AdvanceFrameCheckInput ; $5a16
 	and a, a ; $5a19
-	jp z, .loopBB ; $5a1a
+	jp z, .loop2 ; $5a1a
 	call ClearFrameTasks ; $5a1d
 	ld a, $01 ; $5a20
 	ld hl, UpdateAnimatedTilesTask_17 ; $5a22
@@ -2192,12 +2192,12 @@ DrillBriefing_SpinServe:
 	xor a, a ; $5a5e
 	ld [$d82c], a ; $5a5f
 	ld [$d82e], a ; $5a62
-.loopBBB:
+.loop3:
 	call SpinServeBriefing_TickAnim ; $5a65
 	ld c, $01 ; $5a68
 	call AdvanceFrameCheckInput ; $5a6a
 	and a, a ; $5a6d
-	jp z, .loopBBB ; $5a6e
+	jp z, .loop3 ; $5a6e
 	call ClearFrameTasks ; $5a71
 	ret ; $5a74
 SpinServeBriefing_TickAnim:
@@ -2642,12 +2642,12 @@ DrillBriefing_ServeThroughPoles:
 	call RegisterFrameTask ; $5db7
 	ld hl, $1abe ; $5dba
 	call DrawBriefingCaption ; $5dbd
-.loopBB:
+.loop2:
 	call PoleServeBriefing_TickAnim2 ; $5dc0
 	ld c, $01 ; $5dc3
 	call AdvanceFrameCheckInput ; $5dc5
 	and a, a ; $5dc8
-	jp z, .loopBB ; $5dc9
+	jp z, .loop2 ; $5dc9
 	call ClearFrameTasks ; $5dcc
 	ret ; $5dcf
 PoleServeBriefing_TickAnim:
@@ -5461,9 +5461,9 @@ DrawRulesScreenCharacters:
 	ld hl, Data_17_7558 ; $750f
 	add a, l ; $7512
 	ld l, a ; $7513
-	jr nc, .readBB ; $7514
+	jr nc, .read2 ; $7514
 	inc h ; $7516
-.readBB:
+.read2:
 	ld b, [hl] ; $7517
 	ld de, $7e68 ; $7518
 	ld hl, SpriteTemplate_17_7527 ; $751b

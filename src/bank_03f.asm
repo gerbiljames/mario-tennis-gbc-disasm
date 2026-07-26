@@ -519,19 +519,19 @@ LoadTennisDictionaryScreen:
 	jr nz, .loopB ; $4413
 	ld c, $0b ; $4415
 	ld hl, $d052 ; $4417
-.loopBB:
+.loop2:
 	ld [hl+], a ; $441a
 	inc a ; $441b
 	dec c ; $441c
-	jr nz, .loopBB ; $441d
+	jr nz, .loop2 ; $441d
 	add a, $05 ; $441f
 	ld c, $0b ; $4421
 	ld hl, $d092 ; $4423
-.loopBBB:
+.loop3:
 	ld [hl+], a ; $4426
 	inc a ; $4427
 	dec c ; $4428
-	jr nz, .loopBBB ; $4429
+	jr nz, .loop3 ; $4429
 	wram_bank $06 ; $442b
 	call EnableLCD ; $4431
 	wram_bank $06 ; $4434
@@ -822,9 +822,9 @@ UpdateTennisDictionarySprites:
 	and a, $0f ; $4fb2
 	add a, l ; $4fb4
 	ld l, a ; $4fb5
-	jr nc, .readBB ; $4fb6
+	jr nc, .read2 ; $4fb6
 	inc h ; $4fb8
-.readBB:
+.read2:
 	ld a, [hl] ; $4fb9
 	add a, $0a ; $4fba
 	ld d, a ; $4fbc
@@ -1044,19 +1044,19 @@ WrapTennisDictionaryScanToEnd:
 	jr z, .wrapTennisDictionaryScanToEnd ; $51cd
 	cp a, $00 ; $51cf
 	jr nz, .loopB ; $51d1
-	jr .loopBB ; $51d3
+	jr .loop2 ; $51d3
 .wrapTennisDictionaryScanToEnd:
 	call WrapTennisDictionaryScanToEnd ; $51d5
-.loopBB:
+.loop2:
 	ld a, [hl-] ; $51d8
 	cp a, $40 ; $51d9
 	jr nz, .ne40 ; $51db
 	call WrapTennisDictionaryScanToEnd ; $51dd
 .ne40:
 	and a, e ; $51e0
-	jr z, .loopBB ; $51e1
+	jr z, .loop2 ; $51e1
 	dec c ; $51e3
-.loopBBB:
+.loop3:
 	ld a, [hl-] ; $51e4
 	ld d, a ; $51e5
 	and a, e ; $51e6
@@ -1067,23 +1067,23 @@ WrapTennisDictionaryScanToEnd:
 	cp a, $40 ; $51eb
 	jr z, .wrapTennisDictionaryScanToEnd2 ; $51ed
 	cp a, $00 ; $51ef
-	jr nz, .loopBBB ; $51f1
+	jr nz, .loop3 ; $51f1
 	inc hl ; $51f3
 	inc c ; $51f4
-	jr .loopBBBB ; $51f5
+	jr .loop4 ; $51f5
 .wrapTennisDictionaryScanToEnd2:
 	call WrapTennisDictionaryScanToEnd ; $51f7
 	inc hl ; $51fa
-.loopBBBB:
+.loop4:
 	ld a, [hl+] ; $51fb
 	cp a, $40 ; $51fc
 	jr nz, .ne402 ; $51fe
 	ld c, $00 ; $5200
 	ld hl, SelectionMaskGrid_3f_539e ; $5202
-	jr .loopBBBB ; $5205
+	jr .loop4 ; $5205
 .ne402:
 	and a, e ; $5207
-	jr z, .loopBBBB ; $5208
+	jr z, .loop4 ; $5208
 	ld a, c ; $520a
 	ld [wTennisDictScrollTop], a ; $520b
 	ret ; $520e
@@ -1129,7 +1129,7 @@ ScrollTennisDictionaryToNextLetter:
 	ld d, $ff ; $524c
 .eq00:
 	inc d ; $524e
-.loopBB:
+.loop2:
 	ld a, [hl+] ; $524f
 	cp a, $40 ; $5250
 	jr nz, .ne40 ; $5252
@@ -1137,7 +1137,7 @@ ScrollTennisDictionaryToNextLetter:
 	ld d, $00 ; $5257
 .ne40:
 	and a, e ; $5259
-	jr z, .loopBB ; $525a
+	jr z, .loop2 ; $525a
 	ld a, d ; $525c
 	ld [wTennisDictScrollTop], a ; $525d
 	ret ; $5260

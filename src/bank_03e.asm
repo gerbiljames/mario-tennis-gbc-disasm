@@ -4055,9 +4055,9 @@ CourtSelect4CursorSpriteTask:
 	ld hl, $5eea ; $5eb9
 	add a, l ; $5ebc
 	ld l, a ; $5ebd
-	jr nc, .readBB ; $5ebe
+	jr nc, .read2 ; $5ebe
 	inc h ; $5ec0
-.readBB:
+.read2:
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
 	ld l, a ; $5ec3
@@ -4070,9 +4070,9 @@ CourtSelect4CursorSpriteTask:
 	ld hl, CourtSelect4LabelYOffsets_3e ; $5ed0
 	add a, l ; $5ed3
 	ld l, a ; $5ed4
-	jr nc, .readBBB ; $5ed5
+	jr nc, .read3 ; $5ed5
 	inc h ; $5ed7
-.readBBB:
+.read3:
 	ld a, [hl] ; $5ed8
 	ld h, a ; $5ed9
 	ld l, $f8 ; $5eda
@@ -4739,9 +4739,9 @@ CourtSelect9CursorSpriteTask:
 	ld hl, CourtSelect9CursorTemplatePtrs_3e ; $6749
 	add a, l ; $674c
 	ld l, a ; $674d
-	jr nc, .readBB ; $674e
+	jr nc, .read2 ; $674e
 	inc h ; $6750
-.readBB:
+.read2:
 	ld a, [hl+] ; $6751
 	ld h, [hl] ; $6752
 	ld l, a ; $6753
@@ -4754,9 +4754,9 @@ CourtSelect9CursorSpriteTask:
 	ld hl, CourtSelect9LabelYOffsets_3e ; $6761
 	add a, l ; $6764
 	ld l, a ; $6765
-	jr nc, .readBBB ; $6766
+	jr nc, .read3 ; $6766
 	inc h ; $6768
-.readBBB:
+.read3:
 	ld a, [hl] ; $6769
 	ld h, a ; $676a
 	ld l, $f8 ; $676b

@@ -1325,9 +1325,9 @@ CombineExhibCellBits:
 	ld a, $10 ; $484e
 	add a, l ; $4850
 	ld l, a ; $4851
-	jr nc, .readBB ; $4852
+	jr nc, .read2 ; $4852
 	inc h ; $4854
-.readBB:
+.read2:
 	ld a, [hl] ; $4855
 	sla a ; $4856
 	sla a ; $4858
@@ -1335,9 +1335,9 @@ CombineExhibCellBits:
 	ld a, $10 ; $485b
 	add a, l ; $485d
 	ld l, a ; $485e
-	jr nc, .readBBB ; $485f
+	jr nc, .read3 ; $485f
 	inc h ; $4861
-.readBBB:
+.read3:
 	ld a, [hl] ; $4862
 	sla a ; $4863
 	sla a ; $4865
@@ -2214,7 +2214,7 @@ CheckN64TnmtSecondPage:
 	ld hl, $d835 ; $4f0b
 	ld c, $00 ; $4f0e
 	ld de, $000c ; $4f10
-.loopBB:
+.loop2:
 	ld a, [hl] ; $4f13
 	or a, a ; $4f14
 	jr z, .zero2 ; $4f15
@@ -2223,11 +2223,11 @@ CheckN64TnmtSecondPage:
 	inc a ; $4f19
 	ld c, a ; $4f1a
 	cp a, $0e ; $4f1b
-	jr nz, .loopBB ; $4f1d
+	jr nz, .loop2 ; $4f1d
 	ld hl, $d832 ; $4f1f
 	ld c, $00 ; $4f22
 	ld de, $000c ; $4f24
-.loopBBB:
+.loop3:
 	ld a, [hl] ; $4f27
 	or a, a ; $4f28
 	jr nz, .returnOne ; $4f29
@@ -2236,7 +2236,7 @@ CheckN64TnmtSecondPage:
 	inc a ; $4f2d
 	ld c, a ; $4f2e
 	cp a, $10 ; $4f2f
-	jr nz, .loopBBB ; $4f31
+	jr nz, .loop3 ; $4f31
 .returnOne:
 	ld a, $01 ; $4f33
 	ret ; $4f35
@@ -3501,9 +3501,9 @@ MainMenuCursorSpriteTask:
 	ld hl, $58ba ; $5887
 	add a, l ; $588a
 	ld l, a ; $588b
-	jr nc, .readBB ; $588c
+	jr nc, .read2 ; $588c
 	inc h ; $588e
-.readBB:
+.read2:
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
 	ld l, a ; $5891
@@ -3515,9 +3515,9 @@ MainMenuCursorSpriteTask:
 	ld hl, Data_3b_5936 ; $589d
 	add a, l ; $58a0
 	ld l, a ; $58a1
-	jr nc, .readBBB ; $58a2
+	jr nc, .read3 ; $58a2
 	inc h ; $58a4
-.readBBB:
+.read3:
 	ld a, [hl] ; $58a5
 	pop de ; $58a6
 	ld hl, $17f8 ; $58a7
@@ -5066,9 +5066,9 @@ MinigameSelectCursorSpriteTask:
 	ld hl, Data_3b_64f4 ; $6491
 	add a, l ; $6494
 	ld l, a ; $6495
-	jr nc, .readBB ; $6496
+	jr nc, .read2 ; $6496
 	inc h ; $6498
-.readBB:
+.read2:
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
 	ld hl, SpriteTemplate_3b_64ca ; $649d
@@ -5718,7 +5718,7 @@ LoadSavedDataSourceGfx:
 	or a, a ; $69ac
 	jr z, .zero2 ; $69ad
 	ld c, $00 ; $69af
-.loopBB:
+.loop2:
 	call AdvanceFrame ; $69b1
 	ld b, $07 ; $69b4
 	farcall RestoreMenuBgAndDrawPanel ; $69b6
@@ -5728,11 +5728,11 @@ LoadSavedDataSourceGfx:
 	inc a ; $69bf
 	ld c, a ; $69c0
 	cp a, $0d ; $69c1
-	jr nz, .loopBB ; $69c3
+	jr nz, .loop2 ; $69c3
 	ret ; $69c5
 .zero2:
 	ld c, $0c ; $69c6
-.loopBBB:
+.loop3:
 	call AdvanceFrame ; $69c8
 	ld b, $06 ; $69cb
 	farcall RestoreMenuBgAndDrawPanel ; $69cd
@@ -5742,7 +5742,7 @@ LoadSavedDataSourceGfx:
 	dec a ; $69d6
 	ld c, a ; $69d7
 	or a, a ; $69d8
-	jr nz, .loopBBB ; $69d9
+	jr nz, .loop3 ; $69d9
 	ret ; $69db
 SavedDataSourceCursorSpriteTask:
 	farcall TickMenuBgScroll ; $69dc
@@ -7771,9 +7771,9 @@ HighlightBracketPlayerRow:
 	add a, a ; $798b
 	add a, l ; $798c
 	ld l, a ; $798d
-	jr nc, .readBB ; $798e
+	jr nc, .read2 ; $798e
 	inc h ; $7990
-.readBB:
+.read2:
 	ld a, [hl+] ; $7991
 	ld d, [hl] ; $7992
 	ld e, a ; $7993
@@ -7786,9 +7786,9 @@ HighlightBracketPlayerRow:
 	add a, a ; $79a3
 	add a, l ; $79a4
 	ld l, a ; $79a5
-	jr nc, .readBBB ; $79a6
+	jr nc, .read3 ; $79a6
 	inc h ; $79a8
-.readBBB:
+.read3:
 	ld a, [hl+] ; $79a9
 	ld d, [hl] ; $79aa
 	ld e, a ; $79ab
