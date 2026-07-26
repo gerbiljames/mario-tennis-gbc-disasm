@@ -73,11 +73,11 @@ GetPointScoreForDisplay:
 	ld e, a ; $4089
 	ld a, [wCurrentServingPlayer] ; $408a
 	and a, $01 ; $408d
-	jr z, Label_09_4094 ; $408f
+	jr z, .readDeuce ; $408f
 	ld a, d ; $4091
 	ld d, e ; $4092
 	ld e, a ; $4093
-Label_09_4094:
+.readDeuce:
 	ld a, [wDeuceIndicator] ; $4094
 	ret ; $4097
 UpdateScorePanelDisplay:
@@ -234,7 +234,7 @@ SpawnServeIndicatorObjs:
 	call SetObjSpriteTemplate ; $4257
 	ld a, [wScoreboardLayout] ; $425a
 	cp a, $03 ; $425d
-	jr z, Label_09_4274 ; $425f
+	jr z, .player2Indicator ; $425f
 	ld a, [wServingCharCourtPos] ; $4261
 	ld hl, ServeIndicatorObjTemplates_09 ; $4264
 	ld bc, $dd90 ; $4267
@@ -242,7 +242,7 @@ SpawnServeIndicatorObjs:
 	call GetPlayer2ServeIndicatorSprites ; $426d
 	call SetObjSpriteTemplate ; $4270
 	ret ; $4273
-Label_09_4274:
+.player2Indicator:
 	ld a, [wServingCharCourtPos] ; $4274
 	and a, $02 ; $4277
 	ret nz ; $4279

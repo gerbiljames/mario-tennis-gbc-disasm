@@ -370,10 +370,10 @@ StepActorScript:
 	add hl, bc ; $4233
 	ld a, [hl] ; $4234
 	or a, a ; $4235
-	jr z, Label_04_423a ; $4236
+	jr z, .stepJump ; $4236
 	dec [hl] ; $4238
 	ret ; $4239
-Label_04_423a:
+.stepJump:
 	push bc ; $423a
 	ld hl, $0000 ; $423b
 	add hl, bc ; $423e
@@ -383,7 +383,7 @@ Label_04_423a:
 	ld d, a ; $4242
 	ld a, [hl+] ; $4243
 	ld [$daf7], a ; $4244
-Label_04_4247:
+.applyGravity:
 	push bc ; $4247
 	ld a, [$daf7] ; $4248
 	ld l, e ; $424b
@@ -410,7 +410,7 @@ ActorScriptOpcodeReturn:
 	ld [hl], d ; $4267
 	inc hl ; $4268
 	or a, a ; $4269
-	jr nz, Label_04_4247 ; $426a
+	jr nz, StepActorScript.applyGravity ; $426a
 	pop bc ; $426c
 	ret ; $426d
 UpdateActorJumpPhysics:
@@ -1074,11 +1074,11 @@ ActorScriptOp_WaitMove:
 	add a, $05 ; $45fd
 	ld l, a ; $45ff
 	bit 7, [hl] ; $4600
-	jr nz, Label_04_4608 ; $4602
+	jr nz, .noAdvance ; $4602
 	inc de ; $4604
 	ld a, $01 ; $4605
 	ret ; $4607
-Label_04_4608:
+.noAdvance:
 	xor a, a ; $4608
 	ret ; $4609
 ActorScriptOp_Halt:
@@ -1959,7 +1959,7 @@ LoadActorObjectDef:
 	add hl, bc ; $4b29
 	ld a, [hl] ; $4b2a
 	cp a, $63 ; $4b2b
-	jr nz, Label_04_4b51 ; $4b2d
+	jr nz, .initFields ; $4b2d
 	ld [hl], $02 ; $4b2f
 	push bc ; $4b31
 	ld hl, $dad8 ; $4b32
@@ -1978,7 +1978,7 @@ LoadActorObjectDef:
 	ld de, $0a01 ; $4b4a
 	call LoadPalettesMasterOnly ; $4b4d
 	pop bc ; $4b50
-Label_04_4b51:
+.initFields:
 	ld hl, $0020 ; $4b51
 	add hl, bc ; $4b54
 	ld [hl], $02 ; $4b55
@@ -2099,13 +2099,13 @@ GetObjectDefCount:
 	push hl ; $4c0c
 	ld hl, ObjectIdList_04_4f75 ; $4c0d
 	ld c, $ff ; $4c10
-Label_04_4c12:
+.searchLoop:
 	inc c ; $4c12
 	ld a, [hl+] ; $4c13
 	ld b, a ; $4c14
 	ld a, [hl+] ; $4c15
 	or a, b ; $4c16
-	jr nz, Label_04_4c12 ; $4c17
+	jr nz, .searchLoop ; $4c17
 	ld a, c ; $4c19
 	pop hl ; $4c1a
 	pop bc ; $4c1b
@@ -2115,9 +2115,9 @@ LookupTileId:
 	ld hl, TileIdLookup_04_4c29 ; $4c1e
 	add a, l ; $4c21
 	ld l, a ; $4c22
-	jr nc, Label_04_4c26 ; $4c23
+	jr nc, .read ; $4c23
 	inc h ; $4c25
-Label_04_4c26:
+.read:
 	ld a, [hl] ; $4c26
 	pop hl ; $4c27
 	ret ; $4c28
@@ -3428,13 +3428,13 @@ ActorSlotPtrToIndex:
 	ld a, $ff ; $5516
 	inc h ; $5518
 	dec h ; $5519
-	jr z, Label_04_5523 ; $551a
+	jr z, .done ; $551a
 	ld de, $3000 ; $551c
 	add hl, de ; $551f
 	add hl, hl ; $5520
 	add hl, hl ; $5521
 	ld a, h ; $5522
-Label_04_5523:
+.done:
 	pop hl ; $5523
 	pop de ; $5524
 	ret ; $5525
@@ -3443,12 +3443,12 @@ DrawAndAnimateActor:
 	ld hl, $0030 ; $5529
 	add hl, bc ; $552c
 	bit 7, [hl] ; $552d
-	jr nz, Label_04_5538 ; $552f
+	jr nz, .drawAndAnimate ; $552f
 	bit 3, [hl] ; $5531
 	ret z ; $5533
 	call AdvanceActorAnimation ; $5534
 	ret ; $5537
-Label_04_5538:
+.drawAndAnimate:
 	call AdvanceActorAnimation ; $5538
 	call UpdateActorFacingFromHeading ; $553b
 	call QueueActorFrameTileCopy ; $553e
@@ -3710,12 +3710,12 @@ UpdateActorFacingFromHeading:
 	add hl, bc ; $56a6
 	ld a, [hl] ; $56a7
 	cp a, d ; $56a8
-	jr z, Label_04_56b2 ; $56a9
+	jr z, .done ; $56a9
 	ld [hl], d ; $56ab
 	ld hl, $0030 ; $56ac
 	add hl, bc ; $56af
 	set 6, [hl] ; $56b0
-Label_04_56b2:
+.done:
 	ret ; $56b2
 DirectionToFacing_04:
 	; $56b3, 16 bytes (enum:FACE:8)

@@ -1420,10 +1420,10 @@ ExchangeHandshakeBlockMaster:
 	ld hl, wTextBuffer ; $48fe
 	ld c, $28 ; $4901
 	ld a, $02 ; $4903
-Label_07_4905:
+.fillLoop:
 	ld [hl+], a ; $4905
 	dec c ; $4906
-	jr nz, Label_07_4905 ; $4907
+	jr nz, .fillLoop ; $4907
 	ld de, wTextBuffer ; $4909
 	ld c, $28 ; $490c
 	call ExchangeNibbleBlockMaster ; $490e
@@ -1432,10 +1432,10 @@ ExchangeHandshakeBlockSlave:
 	ld hl, wTextBuffer ; $4912
 	ld c, $28 ; $4915
 	ld a, $08 ; $4917
-Label_07_4919:
+.fillLoop:
 	ld [hl+], a ; $4919
 	dec c ; $491a
-	jr nz, Label_07_4919 ; $491b
+	jr nz, .fillLoop ; $491b
 	ld de, wTextBuffer ; $491d
 	ld c, $28 ; $4920
 	call ExchangeNibbleBlockSlave ; $4922
@@ -2054,9 +2054,9 @@ ComposeLinkStateByte:
 	ld hl, LinkStateBytePtrs_07 ; $4d04
 	add a, l ; $4d07
 	ld l, a ; $4d08
-	jr nc, Label_07_4d0c ; $4d09
+	jr nc, .readEntry ; $4d09
 	inc h ; $4d0b
-Label_07_4d0c:
+.readEntry:
 	push hl ; $4d0c
 	ld a, [hl+] ; $4d0d
 	ld h, [hl] ; $4d0e
@@ -2425,14 +2425,14 @@ AddPlayerMomentumToShot:
 	rr l ; $5387
 	ld a, [wCharCourtPos] ; $5389
 	and a, $02 ; $538c
-	jr nz, Label_07_5396 ; $538e
+	jr nz, .store ; $538e
 	xor a, a ; $5390
 	sub a, l ; $5391
 	ld l, a ; $5392
 	sbc a, a ; $5393
 	sub a, h ; $5394
 	ld h, a ; $5395
-Label_07_5396:
+.store:
 	ld a, l ; $5396
 	ld [$c45c], a ; $5397
 	ld a, h ; $539a
@@ -2444,12 +2444,12 @@ Label_07_5396:
 ApplyCharFlagShotSpeedPenalty:
 	ld hl, wCharFlags ; $53a2
 	bit 1, [hl] ; $53a5
-	jr z, Label_07_53af ; $53a7
+	jr z, .done ; $53a7
 	ld hl, $f400 ; $53a9
 	add hl, bc ; $53ac
 	ld c, l ; $53ad
 	ld b, h ; $53ae
-Label_07_53af:
+.done:
 	ret ; $53af
 ExecuteShot:
 	ld hl, wBallHitEvent ; $53b0
@@ -2594,7 +2594,7 @@ ApplyShotRecoil:
 	ld [hl], d ; $54ab
 	ld hl, wCharFlags ; $54ac
 	bit 1, [hl] ; $54af
-	jr nz, Label_07_54c9 ; $54b1
+	jr nz, .done ; $54b1
 	ld hl, wCharVelX ; $54b3
 	ld a, [hl+] ; $54b6
 	ld h, [hl] ; $54b7
@@ -2609,7 +2609,7 @@ ApplyShotRecoil:
 	ld a, e ; $54c6
 	ld [hl+], a ; $54c7
 	ld [hl], d ; $54c8
-Label_07_54c9:
+.done:
 	ret ; $54c9
 ShotRecoilVarPtrs_07:
 	; $54ca, 10 bytes (records:2)
@@ -2664,14 +2664,14 @@ NudgeShotByPlayerMomentum:
 	rr l ; $5512
 	ld a, [wCharCourtPos] ; $5514
 	and a, $02 ; $5517
-	jr nz, Label_07_5521 ; $5519
+	jr nz, .addMomentum ; $5519
 	xor a, a ; $551b
 	sub a, l ; $551c
 	ld l, a ; $551d
 	sbc a, a ; $551e
 	sub a, h ; $551f
 	ld h, a ; $5520
-Label_07_5521:
+.addMomentum:
 	add hl, bc ; $5521
 	ld c, l ; $5522
 	ld b, h ; $5523
@@ -2940,14 +2940,14 @@ ComputeAimBaseOffset:
 	ld h, [hl] ; $56c1
 	ld l, a ; $56c2
 	bit 7, h ; $56c3
-	jr z, Label_07_56cd ; $56c5
+	jr z, .quarter ; $56c5
 	xor a, a ; $56c7
 	sub a, l ; $56c8
 	ld l, a ; $56c9
 	sbc a, a ; $56ca
 	sub a, h ; $56cb
 	ld h, a ; $56cc
-Label_07_56cd:
+.quarter:
 	sra h ; $56cd
 	rr l ; $56cf
 	sra h ; $56d1
@@ -3412,13 +3412,13 @@ ExecuteShotSmash:
 	ret ; $59a7
 ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
-	jr z, Label_07_59b8 ; $59ab
+	jr z, .neutralShot ; $59ab
 	ld a, [$df15] ; $59ad
 	cp a, $07 ; $59b0
 	jr z, ExecuteShotSmash ; $59b2
 	cp a, $08 ; $59b4
 	jr z, ExecuteShotSmash ; $59b6
-Label_07_59b8:
+.neutralShot:
 	call NormalizeBallHeightForShot ; $59b8
 	call ApplyShotTypePresets ; $59bb
 	call ComputeShotTrajectory ; $59be
@@ -3448,11 +3448,11 @@ ExecuteShotServeFlat:
 	ld l, a ; $59f1
 	ld de, $0140 ; $59f2
 	add hl, de ; $59f5
-	jr c, Label_07_5a00 ; $59f6
+	jr c, .done ; $59f6
 	ld a, $01 ; $59f8
 	ld [wSpecialShotFlag], a ; $59fa
 	ld [$c4a6], a ; $59fd
-Label_07_5a00:
+.done:
 	ret ; $5a00
 SetSpecialShotFlagFromBallHeight:
 	ld hl, wBallHeight ; $5a01
@@ -4169,7 +4169,7 @@ StubNop_07_5f24:
 	ret ; $5f24
 TargetZoneBounceHook_07:
 	farcall IsBallInTargetZone ; $5f25
-	jr z, Label_07_5f48 ; $5f28
+	jr z, .done ; $5f28
 	farcall AdvanceMatchRng ; $5f2a
 	ld h, $00 ; $5f2d
 	ld l, a ; $5f2f
@@ -4190,7 +4190,7 @@ TargetZoneBounceHook_07:
 	ld e, l ; $5f43
 	ld d, h ; $5f44
 	farcall SetTargetZoneCorner2 ; $5f45
-Label_07_5f48:
+.done:
 	ret ; $5f48
 TargetZoneBallHitHook_07:
 	set_flag $0c, 4 ; $5f49
@@ -4219,9 +4219,9 @@ TargetZonePointEndHook_07:
 	ld a, [wCharacter1ServiceAces] ; $5f84
 	ld hl, wCharacter2ServiceAces ; $5f87
 	cp a, [hl] ; $5f8a
-	jr nz, Label_07_5f8e ; $5f8b
+	jr nz, .abortMatch ; $5f8b
 	ret ; $5f8d
-Label_07_5f8e:
+.abortMatch:
 	ld a, $ff ; $5f8e
 	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
