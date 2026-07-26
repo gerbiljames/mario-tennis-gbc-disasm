@@ -1563,46 +1563,46 @@ MulHLByA:
 	jr z, .mul128 ; $0944
 	add hl, hl ; $0946
 	add a, a ; $0947
-	jr nc, .noCarry ; $0948
+	jr nc, .step6 ; $0948
 	add hl, de ; $094a
 .top6:
 	jr z, .finish6 ; $094b
-.noCarry:
+.step6:
 	add hl, hl ; $094d
 	add a, a ; $094e
-	jr nc, .noCarry2 ; $094f
+	jr nc, .step5 ; $094f
 	add hl, de ; $0951
 .top5:
 	jr z, .finish5 ; $0952
-.noCarry2:
+.step5:
 	add hl, hl ; $0954
 	add a, a ; $0955
-	jr nc, .noCarry3 ; $0956
+	jr nc, .step4 ; $0956
 	add hl, de ; $0958
 .top4:
 	jr z, .finish4 ; $0959
-.noCarry3:
+.step4:
 	add hl, hl ; $095b
 	add a, a ; $095c
-	jr nc, .noCarry4 ; $095d
+	jr nc, .step3 ; $095d
 	add hl, de ; $095f
 .top3:
 	jr z, .finish3 ; $0960
-.noCarry4:
+.step3:
 	add hl, hl ; $0962
 	add a, a ; $0963
-	jr nc, .noCarry5 ; $0964
+	jr nc, .step2 ; $0964
 	add hl, de ; $0966
 .top2:
 	jr z, .finish2 ; $0967
-.noCarry5:
+.step2:
 	add hl, hl ; $0969
 	add a, a ; $096a
-	jr nc, .noCarry6 ; $096b
+	jr nc, .step1 ; $096b
 	add hl, de ; $096d
 .top1:
 	jr z, .finish1 ; $096e
-.noCarry6:
+.step1:
 	add hl, hl ; $0970
 	add hl, de ; $0971
 	pop de ; $0972
