@@ -427,20 +427,20 @@ FindRosterEntry:
 	push af ; $44ef
 	push bc ; $44f0
 	ld b, a ; $44f1
-Label_18_44f2:
+.searchLoop:
 	ld a, [hl] ; $44f2
 	cp a, b ; $44f3
-	jr z, Label_18_4503 ; $44f4
+	jr z, .found ; $44f4
 	cp a, $ff ; $44f6
-	jr z, Label_18_4503 ; $44f8
+	jr z, .found ; $44f8
 	ld a, $08 ; $44fa
 	add a, l ; $44fc
 	ld l, a ; $44fd
-	jr nc, Label_18_4501 ; $44fe
+	jr nc, .next ; $44fe
 	inc h ; $4500
-Label_18_4501:
-	jr Label_18_44f2 ; $4501
-Label_18_4503:
+.next:
+	jr .searchLoop ; $4501
+.found:
 	add hl, de ; $4503
 	pop bc ; $4504
 	pop af ; $4505
@@ -641,17 +641,17 @@ InitPlayerRecordForCharacter:
 	ld d, a ; $463c
 	ldh a, [hPlayerInputFlags] ; $463d
 	bit PADB_SELECT, a ; $463f
-	jr z, Label_18_464e ; $4641
+	jr z, .fromTemplate ; $4641
 	ldh a, [hDebugStepMode] ; $4643
 	or a, a ; $4645
-	jr z, Label_18_464e ; $4646
+	jr z, .fromTemplate ; $4646
 	ld a, b ; $4648
 	farcall LoadMainCharacterFromRoster ; $4649
-	jr Label_18_4652 ; $464c
-Label_18_464e:
+	jr .storeRecord ; $464c
+.fromTemplate:
 	ld a, b ; $464e
 	farcall InitPlayerRecordFromTemplate ; $464f
-Label_18_4652:
+.storeRecord:
 	pop af ; $4652
 	add a, a ; $4653
 	add a, $c0 ; $4654
@@ -665,9 +665,9 @@ Label_18_4652:
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a, a ; $4664
-	jr z, Label_18_4669 ; $4665
+	jr z, .partnerSlot ; $4665
 	ld l, $40 ; $4667
-Label_18_4669:
+.partnerSlot:
 	pop af ; $4669
 	ld b, h ; $466a
 	ld c, l ; $466b

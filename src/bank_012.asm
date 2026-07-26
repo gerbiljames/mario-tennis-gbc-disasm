@@ -2242,9 +2242,9 @@ SeniorDoublesRankOfferScene:
 	script_face_toward ACTOR_PLAYER, $03 ; $6018
 	script_set_text Text_34_110 ; $6020
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $6026
-	jr z, Label_12_602e ; $6029
+	jr z, .prompt ; $6029
 	farcall AdvanceDialogueTextCursor ; $602b
-Label_12_602e:
+.prompt:
 	ld a, $03 ; $602e
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6030
 	farcall RunDialogueYesNoPrompt ; $6033
@@ -2254,12 +2254,12 @@ Label_12_602e:
 	jp nz, Label_12_6087 ; $6041
 	script_set_text Text_34_113 ; $6044
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $604a
-	jr z, Label_12_605a ; $604d
+	jr z, .accepted ; $604d
 	farcall AdvanceDialogueTextCursor ; $604f
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $6052
-	jr z, Label_12_605a ; $6055
+	jr z, .accepted ; $6055
 	farcall AdvanceDialogueTextCursor ; $6057
-Label_12_605a:
+.accepted:
 	script_speak $03 ; $605a
 	call RunSeniorRankingMatchIntro ; $605f
 	script_face ACTOR_PLAYER, FACE_UP ; $6062

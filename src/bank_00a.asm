@@ -4468,27 +4468,27 @@ UpdateSceneViewerScroll:
 	pop hl ; $60cd
 	ld a, [wCameraY + 1] ; $60ce
 	cp a, h ; $60d1
-	jr z, Label_0a_60e4 ; $60d2
-	jr c, Label_0a_60de ; $60d4
+	jr z, .checkVertical ; $60d2
+	jr c, .scrollLeft ; $60d4
 	ld bc, $fb13 ; $60d6
 	call BlitBGRowFrom64 ; $60d9
-	jr Label_0a_60e4 ; $60dc
-Label_0a_60de:
+	jr .checkVertical ; $60dc
+.scrollLeft:
 	ld bc, $fb00 ; $60de
 	call BlitBGRowFrom64 ; $60e1
-Label_0a_60e4:
+.checkVertical:
 	pop hl ; $60e4
 	ld a, [wCameraX + 1] ; $60e5
 	cp a, h ; $60e8
-	jr z, Label_0a_60fb ; $60e9
-	jr c, Label_0a_60f5 ; $60eb
+	jr z, .store ; $60e9
+	jr c, .scrollUp ; $60eb
 	ld bc, $15fa ; $60ed
 	call BlitBGColumnFrom64 ; $60f0
-	jr Label_0a_60fb ; $60f3
-Label_0a_60f5:
+	jr .store ; $60f3
+.scrollUp:
 	ld bc, $00fa ; $60f5
 	call BlitBGColumnFrom64 ; $60f8
-Label_0a_60fb:
+.store:
 	ld a, [wCameraY] ; $60fb
 	ld c, a ; $60fe
 	ld a, [wCameraY + 1] ; $60ff
@@ -5298,23 +5298,23 @@ UpdateMinigameTarget:
 	ld hl, $dcf2 ; $65e8
 	ld a, [hl] ; $65eb
 	and a, a ; $65ec
-	jr z, Label_0a_65f0 ; $65ed
+	jr z, .hit ; $65ed
 	dec [hl] ; $65ef
-Label_0a_65f0:
+.hit:
 	call RunMinigameTargetScript ; $65f0
 	call MoveMinigameTargetTowardGoal ; $65f3
 	ld a, [$c7a4] ; $65f6
 	and a, a ; $65f9
-	jr nz, Label_0a_6607 ; $65fa
+	jr nz, .expire ; $65fa
 	call DrawMinigameTarget ; $65fc
 	call CheckBallHitsMinigameTarget ; $65ff
 	call HandleMinigameTargetHit ; $6602
-	jr Label_0a_6610 ; $6605
-Label_0a_6607:
+	jr .done ; $6605
+.expire:
 	call DrawMinigameTargetAlt ; $6607
 	call CheckBallHitsMinigameTargetAlt ; $660a
 	call HandleMinigameTargetHitAlt ; $660d
-Label_0a_6610:
+.done:
 	pop de ; $6610
 	ld hl, $dcf0 ; $6611
 	ld c, $01 ; $6614
@@ -5557,11 +5557,11 @@ DeflectBallOffMinigameTarget:
 	and a, $03 ; $6774
 	ld a, a ; $6776
 	rst Rst00 ; $6777
-	dw Label_0a_6780 ; $6778 jumptable
-	dw Label_0a_678d ; $677a jumptable
-	dw Label_0a_67a5 ; $677c jumptable
-	dw Label_0a_67b2 ; $677e jumptable
-Label_0a_6780:
+	dw DeflectBallOffMinigameTarget.pushX ; $6778 jumptable
+	dw DeflectBallOffMinigameTarget.pushUp ; $677a jumptable
+	dw DeflectBallOffMinigameTarget.pushDepth ; $677c jumptable
+	dw DeflectBallOffMinigameTarget.reverse ; $677e jumptable
+.pushX:
 	ld de, $0600 ; $6780
 	ld hl, wBallVelocityX ; $6783
 	ld a, [hl] ; $6786
@@ -5571,7 +5571,7 @@ Label_0a_6780:
 	adc a, d ; $678a
 	ld [hl+], a ; $678b
 	ret ; $678c
-Label_0a_678d:
+.pushUp:
 	ld bc, $0800 ; $678d
 	ld hl, wBallVelocityHeight ; $6790
 	ld a, c ; $6793
@@ -5588,7 +5588,7 @@ Label_0a_678d:
 	ld [hl+], a ; $67a2
 	ld [hl], d ; $67a3
 	ret ; $67a4
-Label_0a_67a5:
+.pushDepth:
 	ld de, $fa00 ; $67a5
 	ld hl, wBallVelocityX ; $67a8
 	ld a, [hl] ; $67ab
@@ -5598,7 +5598,7 @@ Label_0a_67a5:
 	adc a, d ; $67af
 	ld [hl+], a ; $67b0
 	ret ; $67b1
-Label_0a_67b2:
+.reverse:
 	ld bc, $f400 ; $67b2
 	ld hl, wBallVelocityHeight ; $67b5
 	ld a, c ; $67b8

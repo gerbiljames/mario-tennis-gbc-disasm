@@ -2516,7 +2516,7 @@ DrawCharGridScrollArrows:
 	wram_bank $03 ; $54cf
 	ld a, [$d814] ; $54d5
 	cp a, $04 ; $54d8
-	jr z, Label_38_553f ; $54da
+	jr z, .done ; $54da
 	ld de, $0245 ; $54dc
 	ld c, $01 ; $54df
 	call ApplySpriteBobOffsetX ; $54e1
@@ -2531,39 +2531,39 @@ DrawCharGridScrollArrows:
 	call QueueSprite ; $54f7
 	ld a, [$d811] ; $54fa
 	or a, a ; $54fd
-	jr z, Label_38_5513 ; $54fe
+	jr z, .checkUpArrow ; $54fe
 	cp a, $03 ; $5500
-	jr z, Label_38_5513 ; $5502
+	jr z, .checkUpArrow ; $5502
 	ld de, $2a25 ; $5504
 	ld c, $01 ; $5507
 	call ApplySpriteBobOffsetY ; $5509
 	ld c, $14 ; $550c
 	ld b, $0f ; $550e
 	call QueueSprite ; $5510
-Label_38_5513:
+.checkUpArrow:
 	ld a, [$d811] ; $5513
 	cp a, $01 ; $5516
-	jr z, Label_38_553f ; $5518
+	jr z, .done ; $5518
 	or a, a ; $551a
-	jr nz, Label_38_5524 ; $551b
+	jr nz, .drawDownArrow ; $551b
 	ld a, [$d823] ; $551d
 	cp a, $07 ; $5520
-	jr c, Label_38_553f ; $5522
-Label_38_5524:
+	jr c, .done ; $5522
+.drawDownArrow:
 	ld a, [$d811] ; $5524
 	ld b, a ; $5527
 	ld a, [$d812] ; $5528
 	dec a ; $552b
 	dec a ; $552c
 	cp a, b ; $552d
-	jr z, Label_38_553f ; $552e
+	jr z, .done ; $552e
 	ld de, $2a63 ; $5530
 	ld c, $00 ; $5533
 	call ApplySpriteBobOffsetY ; $5535
 	ld c, $16 ; $5538
 	ld b, $0f ; $553a
 	call QueueSprite ; $553c
-Label_38_553f:
+.done:
 	pop af ; $553f
 	wram_bank ; $5540
 	ret ; $5544
@@ -4228,28 +4228,28 @@ ApplyStarFlagsToCharRecords:
 	wram_bank $03 ; $601f
 	ld a, [$ca0e] ; $6025
 	or a, a ; $6028
-	jr nz, Label_38_6031 ; $6029
+	jr nz, .slot2 ; $6029
 	ld a, [$d834] ; $602b
 	ld [$ca0e], a ; $602e
-Label_38_6031:
+.slot2:
 	ld a, [$ca4e] ; $6031
 	or a, a ; $6034
-	jr nz, Label_38_603d ; $6035
+	jr nz, .slot3 ; $6035
 	ld a, [$d835] ; $6037
 	ld [$ca4e], a ; $603a
-Label_38_603d:
+.slot3:
 	ld a, [$ca8e] ; $603d
 	or a, a ; $6040
-	jr nz, Label_38_6049 ; $6041
+	jr nz, .slot4 ; $6041
 	ld a, [$d836] ; $6043
 	ld [$ca8e], a ; $6046
-Label_38_6049:
+.slot4:
 	ld a, [$cace] ; $6049
 	or a, a ; $604c
-	jr nz, Label_38_6055 ; $604d
+	jr nz, .done ; $604d
 	ld a, [$d837] ; $604f
 	ld [$cace], a ; $6052
-Label_38_6055:
+.done:
 	pop af ; $6055
 	wram_bank ; $6056
 	ret ; $605a
@@ -5084,23 +5084,23 @@ ApplyRemoteCharSelection:
 	call SetGridEntryTakenByCharId ; $662b
 	pop bc ; $662e
 	cp a, $ff ; $662f
-	jr z, Label_38_664f ; $6631
+	jr z, .done ; $6631
 	push bc ; $6633
 	call DrawRemoteSlotPortrait ; $6634
 	call BuildVisiblePageSpriteList ; $6637
 	pop bc ; $663a
 	ld a, [$d81d] ; $663b
 	cp a, $00 ; $663e
-	jr nz, Label_38_6648 ; $6640
+	jr nz, .slot2 ; $6640
 	ld a, c ; $6642
 	ld [$d81f], a ; $6643
-	jr Label_38_664c ; $6646
-Label_38_6648:
+	jr .advanceSlot ; $6646
+.slot2:
 	ld a, c ; $6648
 	ld [$d820], a ; $6649
-Label_38_664c:
+.advanceSlot:
 	call AdvanceRemotePlayerSlot ; $664c
-Label_38_664f:
+.done:
 	pop af ; $664f
 	wram_bank ; $6650
 	ret ; $6654
@@ -6794,28 +6794,28 @@ DeleteLastNameChar:
 	push af ; $7343
 	call GetEnteredNameLength ; $7344
 	and a, a ; $7347
-	jr z, Label_38_7373 ; $7348
+	jr z, .done ; $7348
 	wram_bank $03 ; $734a
 	ld hl, $d800 ; $7350
-Label_38_7353:
+.findEnd:
 	ld a, [hl+] ; $7353
 	cp a, $00 ; $7354
-	jr nz, Label_38_7353 ; $7356
+	jr nz, .findEnd ; $7356
 	dec hl ; $7358
-Label_38_7359:
+.deleteChar:
 	dec hl ; $7359
 	ld a, [hl] ; $735a
 	ld [hl], $00 ; $735b
 	cp a, $de ; $735d
-	jr z, Label_38_7359 ; $735f
+	jr z, .deleteChar ; $735f
 	cp a, $df ; $7361
-	jr z, Label_38_7359 ; $7363
+	jr z, .deleteChar ; $7363
 	call DrawEnteredName ; $7365
 	ld hl, $d0a0 ; $7368
 	ld de, $98a0 ; $736b
 	ld c, $04 ; $736e
 	call QueueVRAMCopy ; $7370
-Label_38_7373:
+.done:
 	pop af ; $7373
 	wram_bank ; $7374
 	ret ; $7378
@@ -6862,19 +6862,19 @@ TrimTrailingSpacesFromName:
 	push af ; $73b0
 	wram_bank $03 ; $73b1
 	ld hl, $d80a ; $73b7
-Label_38_73ba:
+.scanLoop:
 	ld a, [hl] ; $73ba
 	cp a, $20 ; $73bb
-	jr nz, Label_38_73c3 ; $73bd
+	jr nz, .checkEnd ; $73bd
 	xor a, a ; $73bf
 	ld [hl-], a ; $73c0
-	jr Label_38_73ba ; $73c1
-Label_38_73c3:
+	jr .scanLoop ; $73c1
+.checkEnd:
 	or a, a ; $73c3
-	jr nz, Label_38_73c9 ; $73c4
+	jr nz, .done ; $73c4
 	dec hl ; $73c6
-	jr Label_38_73ba ; $73c7
-Label_38_73c9:
+	jr .scanLoop ; $73c7
+.done:
 	pop af ; $73c9
 	wram_bank ; $73ca
 	ret ; $73ce
@@ -7019,33 +7019,33 @@ ApplyMatchTypeSettingsLink:
 	ld a, [wMatchFormatSets] ; $74e6
 	add a, l ; $74e9
 	ld l, a ; $74ea
-	jr nc, Label_38_74ee ; $74eb
+	jr nc, .readSets ; $74eb
 	inc h ; $74ed
-Label_38_74ee:
+.readSets:
 	ld a, [hl] ; $74ee
 	ld [wMatchTypeNumberOfSets], a ; $74ef
 	ld hl, Data_38_7520 ; $74f2
 	ld a, [wMatchFormatGames] ; $74f5
 	add a, l ; $74f8
 	ld l, a ; $74f9
-	jr nc, Label_38_74fd ; $74fa
+	jr nc, .readGames ; $74fa
 	inc h ; $74fc
-Label_38_74fd:
+.readGames:
 	ld a, [hl] ; $74fd
 	ld [wMatchTypeNumberOfGames], a ; $74fe
 	ld a, [wMatchFormatDoubles] ; $7501
 	ld [wMatchIsDoubles], a ; $7504
 	or a, a ; $7507
-	jr z, Label_38_7514 ; $7508
+	jr z, .singles ; $7508
 	ld a, $04 ; $750a
 	ld [wOnCourtCharCount], a ; $750c
 	set_flag FLAG_DOUBLES ; $750f
-	jr Label_38_751c ; $7512
-Label_38_7514:
+	jr .done ; $7512
+.singles:
 	ld a, $02 ; $7514
 	ld [wOnCourtCharCount], a ; $7516
 	clear_flag FLAG_DOUBLES ; $7519
-Label_38_751c:
+.done:
 	ret ; $751c
 Data_38_751d:
 	; $751d, 3 bytes (bytes:3)

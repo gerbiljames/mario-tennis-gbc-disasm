@@ -1448,14 +1448,14 @@ RepairCounterCheckEquipChanged:
 	call WaitFadeEnd ; $501e
 	call CompareEquippedRacketToMinigameFlag ; $5021
 	cp a, $ff ; $5024
-	jp nz, Label_0e_5056 ; $5026
+	jp nz, .repairRacket ; $5026
 	ld a, [$c2bc] ; $5029
 	ld hl, $2401 ; $502c
 	add a, l ; $502f
 	ld l, a ; $5030
-	jr nc, Label_0e_5034 ; $5031
+	jr nc, .askRepair ; $5031
 	inc h ; $5033
-Label_0e_5034:
+.askRepair:
 	farcall InitDialogueTextCursor ; $5034
 	call PushEquipmentNameTextArg ; $5037
 	ld a, $0e ; $503a
@@ -1467,7 +1467,7 @@ Label_0e_5034:
 	jp nz, Label_0e_5080 ; $504d
 	ld a, [$c2bc] ; $5050
 	jp Label_0e_4e6a ; $5053
-Label_0e_5056:
+.repairRacket:
 	ld a, [wEquippedRacket] ; $5056
 	ld [wWaterSpriteMinigameFlag], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c

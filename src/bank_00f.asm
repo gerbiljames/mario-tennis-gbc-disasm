@@ -2008,7 +2008,7 @@ LoadIslandOpenRoundNpcs:
 	ld a, $00 ; $6651
 	ld [$c2b0], a ; $6653
 	test_flag FLAG_DOUBLES ; $6656
-	jr nz, Label_0f_66b8 ; $6659
+	jr nz, LoadIslandOpenRoundNpcsDoubles ; $6659
 	ld a, $f1 ; $665b
 	ld d, $0e ; $665d
 	ld e, $14 ; $665f
@@ -2049,7 +2049,7 @@ LoadIslandOpenRoundNpcs:
 	ld [$c2b0], a ; $66b4
 .done:
 	ret ; $66b7
-Label_0f_66b8:
+LoadIslandOpenRoundNpcsDoubles:
 	ld a, $e1 ; $66b8
 	ld d, $0e ; $66ba
 	ld e, $14 ; $66bc
@@ -2059,7 +2059,7 @@ Label_0f_66b8:
 	ld e, $14 ; $66c5
 	farcall WriteBehaviorMapCell ; $66c7
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $66ca
-	jr z, Label_0f_66e6 ; $66cd
+	jr z, .round2 ; $66cd
 	ldh a, [hRomBank] ; $66cf
 	ld hl, IslandOpenRound3ActorsDoubles_0f ; $66d1
 	farcall ScriptRespawnLocationActors ; $66d4
@@ -2069,9 +2069,9 @@ Label_0f_66b8:
 	ld a, $03 ; $66e0
 	ld [$c2b0], a ; $66e2
 	ret ; $66e5
-Label_0f_66e6:
+.round2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $66e6
-	jr z, Label_0f_6702 ; $66e9
+	jr z, .round1 ; $66e9
 	ldh a, [hRomBank] ; $66eb
 	ld hl, IslandOpenRound2ActorsDoubles_0f ; $66ed
 	farcall ScriptRespawnLocationActors ; $66f0
@@ -2081,7 +2081,7 @@ Label_0f_66e6:
 	ld a, $02 ; $66fc
 	ld [$c2b0], a ; $66fe
 	ret ; $6701
-Label_0f_6702:
+.round1:
 	ldh a, [hRomBank] ; $6702
 	ld hl, IslandOpenRound1ActorsDoubles_0f ; $6704
 	farcall ScriptRespawnLocationActors ; $6707
@@ -2695,15 +2695,15 @@ Label_0f_7458:
 	ret ; $745b
 CheckIslandOpenVictoryTransition:
 	test_flag FLAG_DOUBLES ; $745c
-	jr nz, Label_0f_7468 ; $745f
+	jr nz, .doubles ; $745f
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7461
-	jr nz, Label_0f_746f ; $7464
-	jr Label_0f_7484 ; $7466
-Label_0f_7468:
+	jr nz, .transition ; $7464
+	jr .stay ; $7466
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7468
-	jr nz, Label_0f_746f ; $746b
-	jr Label_0f_7484 ; $746d
-Label_0f_746f:
+	jr nz, .transition ; $746b
+	jr .stay ; $746d
+.transition:
 	ld a, $1b ; $746f
 	ld [wStoryModeCurrentLocation], a ; $7471
 	ld a, $08 ; $7474
@@ -2713,7 +2713,7 @@ Label_0f_746f:
 	ld [wStoryModeExitLocationRequest], a ; $747e
 	ld a, $01 ; $7481
 	ret ; $7483
-Label_0f_7484:
+.stay:
 	ld a, $00 ; $7484
 	ret ; $7486
 IslandOpenSinglesMatchReturn:

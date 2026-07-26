@@ -3071,7 +3071,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_wait_actor_script $03 ; $720a
 	script_face_toward ACTOR_PLAYER, $0d ; $720f
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7217
-	jr z, Label_13_724d ; $721a
+	jr z, .variantB ; $721a
 	farcall AdvanceDialogueTextCursor ; $721c
 	script_set_anim $0d, $02 ; $721f
 	script_wait_idle $0d ; $7226
@@ -3080,8 +3080,8 @@ SinglesTravelingTeamVictoryCutscene:
 	script_set_anim $0d, $03 ; $7238
 	script_set_anim ACTOR_PLAYER, $03 ; $723f
 	script_wait_idle ACTOR_PLAYER ; $7246
-	jr Label_13_727c ; $724b
-Label_13_724d:
+	jr .celebrate ; $724b
+.variantB:
 	script_set_anim $0d, $02 ; $724d
 	script_wait_idle $0d ; $7254
 	script_speak $0d ; $7259
@@ -3090,7 +3090,7 @@ Label_13_724d:
 	script_set_anim ACTOR_PLAYER, $03 ; $726d
 	script_wait_idle ACTOR_PLAYER ; $7274
 	farcall AdvanceDialogueTextCursor ; $7279
-Label_13_727c:
+.celebrate:
 	script_face $09, FACE_DOWN ; $727c
 	script_set_anim $09, $04 ; $7283
 	script_wait_idle $09 ; $728a
@@ -3120,9 +3120,9 @@ Label_13_727c:
 	script_wait_idle $0d ; $732b
 	script_face_toward ACTOR_PLAYER, $0d ; $7330
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7338
-	jr z, Label_13_7340 ; $733b
+	jr z, .done ; $733b
 	farcall AdvanceDialogueTextCursor ; $733d
-Label_13_7340:
+.done:
 	script_speak $0d ; $7340
 	script_face_toward $0d, ACTOR_PLAYER ; $7345
 	script_set_anim ACTOR_PLAYER, $03 ; $734d
@@ -3206,7 +3206,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PARTNER, $03 ; $7525
 	script_wait_idle ACTOR_PARTNER ; $752c
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7531
-	jp z, Label_13_7672 ; $7534
+	jp z, .variantB ; $7534
 	script_set_text Text_31_26 ; $7537
 	script_speak ACTOR_PARTNER ; $753d
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7542
@@ -3259,8 +3259,8 @@ DoublesTravelingTeamVictoryCutscene:
 	script_wait_frames $14 ; $765c
 	script_set_anim ACTOR_PLAYER, $03 ; $7663
 	script_wait_idle ACTOR_PLAYER ; $766a
-	jp Label_13_7769 ; $766f
-Label_13_7672:
+	jp .celebrate ; $766f
+.variantB:
 	script_set_text Text_31_24 ; $7672
 	script_speak ACTOR_PARTNER ; $7678
 	script_set_anim ACTOR_PARTNER, $02 ; $767d
@@ -3303,7 +3303,7 @@ Label_13_7672:
 	script_wait_frames $14 ; $7756
 	script_set_anim ACTOR_PLAYER, $03 ; $775d
 	script_wait_idle ACTOR_PLAYER ; $7764
-Label_13_7769:
+.celebrate:
 	script_set_text Text_31_28 ; $7769
 	script_wait_frames $14 ; $776f
 	script_speak $08 ; $7776
@@ -3339,9 +3339,9 @@ Label_13_7769:
 	script_set_anim ACTOR_PARTNER, $03 ; $784d
 	script_wait_idle ACTOR_PARTNER ; $7854
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7859
-	jr z, Label_13_7861 ; $785c
+	jr z, .done ; $785c
 	farcall AdvanceDialogueTextCursor ; $785e
-Label_13_7861:
+.done:
 	script_speak ACTOR_PARTNER ; $7861
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7866
 	script_set_anim ACTOR_PLAYER, $03 ; $786e
