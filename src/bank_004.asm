@@ -98,12 +98,12 @@ SpawnActor:
 	pop hl ; $40a7
 	pop de ; $40a8
 	pop af ; $40a9
-	jr Label_04_40af ; $40aa
+	jr InitActorSlotFields ; $40aa
 SetActorScript:
 	inc b ; $40ac
 	dec b ; $40ad
 	ret z ; $40ae
-Label_04_40af:
+InitActorSlotFields:
 	push af ; $40af
 	push bc ; $40b0
 	push af ; $40b1
@@ -875,7 +875,7 @@ ActorScriptOp_Move:
 	ld h, d ; $44e4
 	call FarReadByte ; $44e5
 	inc de ; $44e8
-	jr Label_04_4500 ; $44e9
+	jr ApplyActorHeadingStep ; $44e9
 ActorScriptOp_MoveRel:
 	inc de ; $44eb
 	ld a, [$daf7] ; $44ec
@@ -891,7 +891,7 @@ ActorScriptOp_MoveRel:
 	ld l, a ; $44fd
 	pop af ; $44fe
 	add a, [hl] ; $44ff
-Label_04_4500:
+ApplyActorHeadingStep:
 	push af ; $4500
 	ld a, [$daf7] ; $4501
 	ld l, e ; $4504
@@ -2664,7 +2664,7 @@ GetPointAheadOfActorFixed:
 	and a, $1c ; $50d5
 	ld d, a ; $50d7
 	ld a, $40 ; $50d8
-	jr Label_04_50ea ; $50da
+	jr IndexPlayerControlTable ; $50da
 GetPointAheadOfActorRanged:
 	rrca ; $50dc
 	rrca ; $50dd
@@ -2677,7 +2677,7 @@ GetPointAheadOfActorRanged:
 	add a, a ; $50e7
 	add a, a ; $50e8
 	add a, a ; $50e9
-Label_04_50ea:
+IndexPlayerControlTable:
 	add a, d ; $50ea
 	add a, $72 ; $50eb
 	ld l, a ; $50ed

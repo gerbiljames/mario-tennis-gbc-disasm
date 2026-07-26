@@ -1086,7 +1086,7 @@ AssignCourtPositions:
 	ld a, [wTiebreakerIndicator] ; $47e6
 	and a, a ; $47e9
 	jp nz, FlipFarBothCharPositions.done ; $47ea
-	jr Label_08_4808 ; $47ed
+	jr GetGamePositionHandler ; $47ed
 FinalizeServeSideOrientation:
 	call CheckServerEndChanged ; $47ef
 	call UpdateViewFlipState ; $47f2
@@ -1096,7 +1096,7 @@ FinalizeServeSideOrientation:
 	call ForEachCharBank ; $47fe
 	wram_bank $04 ; $4801
 	ret ; $4807
-Label_08_4808:
+GetGamePositionHandler:
 	ld a, [wOnCourtCharCountMinus1] ; $4808
 	add a, a ; $480b
 	add a, $3f ; $480c
@@ -3333,7 +3333,7 @@ ApplyCameraProjection:
 	sub a, h ; $59dd
 	ld h, a ; $59de
 	call MulHLByDE ; $59df
-Label_08_59e2:
+NegateMulResultLow:
 	ldh a, [hMulResult] ; $59e2
 	cpl ; $59e4
 	add a, $01 ; $59e5
@@ -3376,7 +3376,7 @@ MulHLByDESigned32:
 	call MulHLByDE ; $5a13
 	ldh a, [hMathSign] ; $5a16
 	bit 7, a ; $5a18
-	jr nz, Label_08_59e2 ; $5a1a
+	jr nz, NegateMulResultLow ; $5a1a
 	ret ; $5a1c
 MulHLByDEAbs:
 	ld a, h ; $5a1d
@@ -7863,36 +7863,36 @@ ReadCharPadInput:
 	jp z, .checkCpu ; $787f
 	ld a, [wCharState] ; $7882
 	rst Rst00 ; $7885
-	dw Label_08_796c ; $7886 jumptable
+	dw AiPhaseNoop ; $7886 jumptable
 	dw AiRallyStateNetPlayer ; $7888 jumptable
 	dw AiRecoverStateNetPlayer ; $788a jumptable
 	dw AiServeState ; $788c jumptable
-	dw Label_08_796c ; $788e jumptable
-	dw Label_08_796c ; $7890 jumptable
-	dw Label_08_796c ; $7892 jumptable
-	dw Label_08_796c ; $7894 jumptable
+	dw AiPhaseNoop ; $788e jumptable
+	dw AiPhaseNoop ; $7890 jumptable
+	dw AiPhaseNoop ; $7892 jumptable
+	dw AiPhaseNoop ; $7894 jumptable
 .checkCpu:
 	ld a, [wCharState] ; $7896
 	rst Rst00 ; $7899
-	dw Label_08_796c ; $789a jumptable
+	dw AiPhaseNoop ; $789a jumptable
 	dw AiRallyStateBaseliner ; $789c jumptable
 	dw AiRecoverStateBaseliner ; $789e jumptable
 	dw AiServeState ; $78a0 jumptable
-	dw Label_08_796c ; $78a2 jumptable
-	dw Label_08_796c ; $78a4 jumptable
-	dw Label_08_796c ; $78a6 jumptable
-	dw Label_08_796c ; $78a8 jumptable
+	dw AiPhaseNoop ; $78a2 jumptable
+	dw AiPhaseNoop ; $78a4 jumptable
+	dw AiPhaseNoop ; $78a6 jumptable
+	dw AiPhaseNoop ; $78a8 jumptable
 .store:
 	ld a, [wCharState] ; $78aa
 	rst Rst00 ; $78ad
-	dw Label_08_796c ; $78ae jumptable
+	dw AiPhaseNoop ; $78ae jumptable
 	dw AiRallyStateSingles ; $78b0 jumptable
 	dw AiRecoverStateSingles ; $78b2 jumptable
 	dw AiServeState ; $78b4 jumptable
-	dw Label_08_796c ; $78b6 jumptable
-	dw Label_08_796c ; $78b8 jumptable
-	dw Label_08_796c ; $78ba jumptable
-	dw Label_08_796c ; $78bc jumptable
+	dw AiPhaseNoop ; $78b6 jumptable
+	dw AiPhaseNoop ; $78b8 jumptable
+	dw AiPhaseNoop ; $78ba jumptable
+	dw AiPhaseNoop ; $78bc jumptable
 CheckCharNearTarget:
 	ld hl, wCharPosX + 1 ; $78be
 	ld a, [hl+] ; $78c1
@@ -8019,7 +8019,7 @@ AiSteerTowardBall:
 AiAdvancePhase:
 	ld hl, $df1a ; $7968
 	inc [hl] ; $796b
-Label_08_796c:
+AiPhaseNoop:
 	ret ; $796c
 AiRushToBallLanding:
 	ld hl, $fea0 ; $796d
@@ -8074,23 +8074,23 @@ AiMoveLaterallyToBallLine:
 	pop de ; $79cc
 	call SetCharTarget ; $79cd
 	jp AiAdvancePhase ; $79d0
-Label_08_79d3:
+AiSetMirroredTarget:
 	call SetCharTargetMirrored ; $79d3
 	jp AiAdvancePhase ; $79d6
 AiIsIncomingDropOrLobShot:
 	ld a, [wCurrentShotType] ; $79d9
 	cp a, SHOTTYPE_DROP ; $79dc
-	jr z, Label_08_79ef ; $79de
+	jr z, ReturnOne_08 ; $79de
 AiIsIncomingLobShot:
 	ld a, [wCurrentShotType] ; $79e0
 	cp a, SHOTTYPE_LOB ; $79e3
-	jr z, Label_08_79ef ; $79e5
+	jr z, ReturnOne_08 ; $79e5
 	ld a, [wFallbackTrajectoryFlag] ; $79e7
 	and a, a ; $79ea
-	jr nz, Label_08_79ef ; $79eb
+	jr nz, ReturnOne_08 ; $79eb
 	xor a, a ; $79ed
 	ret ; $79ee
-Label_08_79ef:
+ReturnOne_08:
 	ld a, $01 ; $79ef
 	ret ; $79f1
 AiServeState:
@@ -8100,8 +8100,8 @@ AiServeState:
 	dw AiServeSteerToSpot ; $79f8 jumptable
 	dw AiServePressToss ; $79fa jumptable
 	dw AiServeStrike ; $79fc jumptable
-	dw Label_08_7ae7 ; $79fe jumptable
-	dw Label_08_796c ; $7a00 jumptable
+	dw AiServeApplyAim ; $79fe jumptable
+	dw AiPhaseNoop ; $7a00 jumptable
 AiServeWalkToSpot:
 	ld a, [$df2e] ; $7a02
 	cp a, $10 ; $7a05
@@ -8227,7 +8227,7 @@ AiServeStrike:
 	call AiPressFirstShotButton ; $7ae0
 	ld hl, $df1a ; $7ae3
 	inc [hl] ; $7ae6
-Label_08_7ae7:
+AiServeApplyAim:
 	call AiApplyServeAim ; $7ae7
 	ret ; $7aea
 AiApplyServeAim:
@@ -8511,7 +8511,7 @@ AiRecoverStateSingles:
 	rst Rst00 ; $7ca7
 	dw AiChooseHomePosition ; $7ca8 jumptable
 	dw AiReturnToPositionPhase ; $7caa jumptable
-	dw Label_08_796c ; $7cac jumptable
+	dw AiPhaseNoop ; $7cac jumptable
 AiChooseHomePosition:
 	ld a, [$df7f] ; $7cae
 	rst Rst00 ; $7cb1
@@ -8551,7 +8551,7 @@ AiChooseHomePosition:
 	rr l ; $7ce4
 	sra h ; $7ce6
 	rr l ; $7ce8
-	jp Label_08_79d3 ; $7cea
+	jp AiSetMirroredTarget ; $7cea
 AiReturnToPositionPhase:
 	call AiSteerTowardTarget ; $7ced
 	call CheckCharNearTarget ; $7cf0
@@ -8568,7 +8568,7 @@ AiRallyStateSingles:
 	dw AiTrackBallPhase ; $7d02 jumptable
 	dw AiWaitThenPickShot ; $7d04 jumptable
 	dw AiSwingControlSingles ; $7d06 jumptable
-	dw Label_08_796c ; $7d08 jumptable
+	dw AiPhaseNoop ; $7d08 jumptable
 AiSetReactionDelay:
 	ld a, [$df50] ; $7d0a
 	bit 4, a ; $7d0d
@@ -8691,17 +8691,17 @@ AiSwingControlSingles:
 AiRecoverStateNetPlayer:
 	ld a, [$df1a] ; $7df2
 	rst Rst00 ; $7df5
-	dw Label_08_7e08 ; $7df6 jumptable
+	dw AiTrackBallTargetX ; $7df6 jumptable
 	dw AiReturnToPositionPhase ; $7df8 jumptable
-	dw Label_08_796c ; $7dfa jumptable
+	dw AiPhaseNoop ; $7dfa jumptable
 AiRecoverStateBaseliner:
 	ld a, [$df1a] ; $7dfc
 	rst Rst00 ; $7dff
 	dw AiAdvancePhase ; $7e00 jumptable
 	dw AiBaselinerShadowPartner ; $7e02 jumptable
 	dw AiReturnToPositionPhase ; $7e04 jumptable
-	dw Label_08_796c ; $7e06 jumptable
-Label_08_7e08:
+	dw AiPhaseNoop ; $7e06 jumptable
+AiTrackBallTargetX:
 	ld hl, wBallTargetX ; $7e08
 	ld a, [hl+] ; $7e0b
 	ld h, [hl] ; $7e0c
@@ -8749,9 +8749,9 @@ AiRallyStateNetPlayer:
 	dw AiDoublesTrackBallPhase ; $7e5a jumptable
 	dw AiWaitThenPickShot ; $7e5c jumptable
 	dw AiSwingControlDoubles ; $7e5e jumptable
-	dw Label_08_796c ; $7e60 jumptable
-	dw Label_08_796c ; $7e62 jumptable
-	dw Label_08_796c ; $7e64 jumptable
+	dw AiPhaseNoop ; $7e60 jumptable
+	dw AiPhaseNoop ; $7e62 jumptable
+	dw AiPhaseNoop ; $7e64 jumptable
 	dw AiNetPlayerPoachCheck ; $7e66 jumptable
 AiRallyStateBaseliner:
 	ld a, [$df1a] ; $7e68
@@ -8761,9 +8761,9 @@ AiRallyStateBaseliner:
 	dw AiDoublesTrackBallPhase ; $7e70 jumptable
 	dw AiWaitThenPickShot ; $7e72 jumptable
 	dw AiSwingControlDoubles ; $7e74 jumptable
-	dw Label_08_796c ; $7e76 jumptable
-	dw Label_08_796c ; $7e78 jumptable
-	dw Label_08_796c ; $7e7a jumptable
+	dw AiPhaseNoop ; $7e76 jumptable
+	dw AiPhaseNoop ; $7e78 jumptable
+	dw AiPhaseNoop ; $7e7a jumptable
 	dw AiNetPlayerPoachCheck ; $7e7c jumptable
 .checkRally:
 	ld a, [wRallyLength] ; $7e7e
