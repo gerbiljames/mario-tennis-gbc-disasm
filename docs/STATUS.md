@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `2a19188`); the whole history
+Everything below is **committed** (HEAD `3d59d11`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **18,949 of 20,856 labels are human-named** (see the caveat in the
+symbols. **19,226 of 20,861 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 2,191 data blobs.
 
@@ -4266,7 +4266,73 @@ lines are now collapsed in `_emit_bank`.
 18,949 of 20,856 labels human-named.
 
 
+## Every blob identified (2026-07-26)
+
+The 51,668 bytes still under an auto `Data_`/`Lz_` name after the sound and
+sprite passes are now **zero**. Every one of them turned out to be the target
+of a `$4000` slot, so the work was finding the code that computes the slot
+number -- three dispatchers cover almost all of it.
+
+**`LoadCompressedTileBlock` (`$39:$468b`)** takes a block id in `b`, indexes
+`TileBlockPtrs_39` (122 one-slot records) and decompresses that slot into
+VRAM. All **156** call sites in the ROM set `b` from a constant, so
+backtracking each one yields (block id, enclosing loader) and names the
+target: `LoadMainMenuGfx` -> `MainMenuGfx0`-`7`, `LoadCourtSelectGraphics` ->
+`CourtSelectGfx0`-`9`, `LoadCutsceneTileset` -> `CutsceneGfx0`-`6`, and so on
+for 110 blobs across nine banks. Blocks pulled in by several unrelated
+loaders are shared UI furniture and keep a neutral `SharedMenuGfx<nn>`.
+
+**`LoadScreenAssetRecord` (`$39:$407e`)** takes a record id in `c` and
+consumes a 4-slot `dslot` record (Tiles, Tilemap, Attrmap, Palettes) from
+`ScreenAssetRecordTable`. Only ten of its 70 records still held unnamed
+slots, and the same `ld c, $NN` backtrack named them -- most usefully
+`SetupCharacterSelectScreen` -> record 5 -> bank `$3c` slots `$70`-`$76`.
+
+**The story scene banks** (`$5f`-`$69`) use `SceneGfxSlotTable` in bank `$0a`:
+8 slots per scene -- config, palettes, tilemap, attrmap, aux tilemap, aux
+attrmap, one more, tiles. The loader pushes slots 1-7 and pops them into
+WRAM1 `$d000` (64 raw bytes = the palettes, which pins the mapping), WRAM3
+`$d000`, WRAM2 `$d000`, WRAM6 `$d000`/`$d400` (the collision and behaviour
+maps) and WRAM6 `$d800` -- **and pops one slot into `hl` and immediately
+overwrites it**. That discarded slot is index 6, whose targets are not LZ
+streams and which no other code reads; they are named
+`<Scene>SceneUnusedSlot`.
+
+For the runs with no named caller, the *decompressed output size* names the
+role, and the run length identifies the set: 64 bytes = a 16x16 icon, 240 = a
+15-tile label strip, 256 = an icon set, 1024 = a tilemap or attrmap, 4096 = a
+tileset. Three runs are exactly one item per roster entry or bracket seat --
+bank `$18` slots `$48`-`$86` are **32** consecutive 64-byte icons
+(`CharRosterIcon00`-`31`, matching the 32-name roster), bank `$3f` slots
+`$30`-`$54` hold **16** (`BracketCharIcon00`-`15`) and bank `$6d` slots
+`$32`-`$50` another **16** (`IntroCharacterIcon00`-`15`).
+
+Two stragglers were worth the extra look:
+
+* **The char-select cursor** (`$18:$59fe`, 108 bytes) decodes completely:
+  `DrawCharSelectCursor` reads a 32-entry animation table with
+  `hVBlankCounter & $1f`, adds a state bit, indexes a 4-entry pointer table at
+  `$5a1e` and queues the 17-byte sprite template it points at. The blob is now
+  `CharSelectCursorAnimTable` + `CharSelectCursorTemplatePtrs` +
+  `CharSelectCursorTemplate0`-`3`. `ApplySpriteBobOffset_18` reads a 64-entry
+  ramp at `$5a79`, which makes the unreferenced 7-entry ramp at `$5507` an
+  unused one of the same kind.
+* **`$14:$56ea`**, the blob that resisted two earlier passes, is graphics
+  after all. `LoadPlaneObjGfx_14` copies from `$5650` exactly as
+  `LoadPlaneObjGfx2_14` copies `IslandObjTiles_14` from `$5a50`; an
+  `actor_script` spec had over-run 154 bytes past its real end and buried the
+  start. Labelling `$5650` recovers one clean 1024-byte `PlaneObjTiles_14`,
+  the same size as its twin. **A blob that looks unidentifiable is often just
+  a blob whose start is wrong.**
+
+Result: **0 unidentified blobs; 100% of raw blob bytes sit under a curated
+name**, 89.3% of the non-fill ROM overall. What is left auto-named is 211
+labels on structures already rendered inline in the source (mostly
+`SpriteTemplate_*`) plus 10 on bank-end fill. 19,226 of 20,861 labels
+human-named.
+
+
 ## Repo state
 
-All work is committed (HEAD `2a19188`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `3d59d11`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
